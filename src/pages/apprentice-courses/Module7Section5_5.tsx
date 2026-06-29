@@ -16,10 +16,10 @@ const Module7Section5_5 = () => {
       id: 1,
       question: 'Why is live testing considered dangerous?',
       options: [
-        'A splice between fibres with different backscatter coefficients',
+        'It always damages the test instrument',
         'It exposes electricians to shock, burns, and arc flash',
-        'Competent person scheme membership or building control notification',
-        'Using four diodes that conduct in pairs on each half cycle',
+        'It invalidates the installation certificate',
+        'It requires a second qualified electrician present',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section5_5 = () => {
       id: 2,
       question: 'What regulation underpins the requirement to avoid live testing?',
       options: [
-        'Selling price £1,190, client pays £1,071',
-        'System with earthing electrode',
+        'Building Regulations Part P',
+        'BS 7671 Wiring Regulations',
         'Electricity at Work Regulations 1989',
-        'Forces increase significantly',
+        'Health and Safety at Work Act 1974',
       ],
       correctAnswer: 2,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section5_5 = () => {
       id: 5,
       question: 'What type of PPE should be worn during live testing?',
       options: [
-        'The local authority (Environmental Health)',
+        'High-visibility vest and ear defenders',
         'Insulated gloves and safety glasses',
-        'Fluid density and its variations',
-        'Waste and Resources Action Programme',
+        'A dust mask and knee pads',
+        'A hard hat and steel toe-caps only',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module7Section5_5 = () => {
       id: 6,
       question: 'Why must GS38-compliant leads be used for live testing?',
       options: [
-        'Step 3 — High-intensity interventions for moderate to severe depression',
-        'Automatically dimming artificial lighting in response to available natural light',
+        'They make the instrument readings more accurate',
+        'They allow testing on any category of circuit',
         'They have safety features like fused leads and reduced exposed metal',
-        'Slight differences in fibre backscatter characteristics',
+        'They remove the need to wear PPE during testing',
       ],
       correctAnswer: 2,
       explanation:
@@ -103,9 +103,9 @@ const Module7Section5_5 = () => {
       question: 'What must apprentices never do during live testing?',
       options: [
         'Work without close supervision from a competent person',
-        'Mixing RCD-protected and non-protected neutrals',
-        'Avoid it where possible — complete work from ground level if feasible',
-        'To verify operation under simulated failure',
+        'Wear insulated gloves while handling the leads',
+        'Keep non-essential people away from the area',
+        'Record the reason for working live',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +115,10 @@ const Module7Section5_5 = () => {
       id: 9,
       question: 'In the refurbishment project example, what went wrong when testing sockets live?',
       options: [
-        'Understanding the customer\\\\\\\\\\\\\\\'s lifestyle and needs',
+        'The wrong category-rated meter was used',
         'Probes slipped causing a short circuit and flashover',
-        'Dividing the house into different temperature-controlled areas',
-        'Stop, investigate, and do not assume circuit is dead',
+        'The circuit had not been correctly identified',
+        'The proving unit failed during the test',
       ],
       correctAnswer: 1,
       explanation:
@@ -128,10 +128,10 @@ const Module7Section5_5 = () => {
       id: 10,
       question: 'How was RCD testing carried out safely in the second example?',
       options: [
-        'High resistance connections or inadequate cable sizing',
-        'They are metal and within the building',
+        'By testing without isolating anything first',
+        'By working alone to save time',
         'With supervision, PPE, GS38 leads, and controlled area',
-        'Sufficient information to verify design and enable safe operation',
+        'By using a socket tester instead of an MFT',
       ],
       correctAnswer: 2,
       explanation:

@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     id: 'cdm-designer',
     question: "Under CDM 2015, who is considered a 'designer'?",
     options: [
-      'Delta primary, star secondary with 11 o\\\\\\\'clock phase shift',
+      'Only the architect named on the building contract',
       'Anyone who prepares or modifies designs affecting H&S',
-      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
-      'Square root — flow is proportional to the square root of the DP',
+      'Only chartered engineers registered with a professional body',
+      'Solely the principal contractor managing the site',
     ],
     correctIndex: 1,
     explanation:
@@ -60,10 +60,10 @@ const quickCheckQuestions = [
     id: 'residual-risk',
     question: "What is a 'significant residual risk'?",
     options: [
-      'General electrical safety duties on duty-holders at work',
-      'The employer is in breach of the SRSC Regulations and can be prosecuted',
+      'Any obvious hazard that a competent contractor would expect',
+      'A risk that has been fully eliminated at design stage',
       'A risk that cannot be eliminated and is not obvious to competent contractors',
-      'Efficacy limits, controls and upward light restrictions',
+      'A routine matter already covered by standard compliance',
     ],
     correctIndex: 2,
     explanation:
@@ -73,9 +73,9 @@ const quickCheckQuestions = [
     id: 'communication',
     question: 'How should design risks be communicated to contractors?',
     options: [
-      'BS EN 60903 (live working — insulating gloves)',
-      'To provide mechanical protection and support for cables',
-      'To join two tubes at any angle other than 90 degrees',
+      'Verbally on site once construction has already started',
+      'Only after practical completion of the works',
+      'By relying on the contractor to identify them independently',
       'Through the design risk register and H&S file information',
     ],
     correctIndex: 3,
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'What are the main duty holder categories under CDM 2015?',
     options: [
-      'A written document describing how work will be carried out safely, step by step',
-      'Alternate standards at alternate lifts, creating a diamond or staggered pattern',
+      'Client, Architect, Quantity Surveyor, Site Manager, Operative',
+      'Employer, Employee, Self-employed, Visitor, Public',
       'Client, Principal Designer, Designer, Principal Contractor, Contractor',
-      'Testing at the midpoint to determine which half contains the fault',
+      'Developer, Planner, Inspector, Installer, Maintainer',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What must designers consider when preparing designs?',
     options: [
-      'Details of work done, tests performed, and compliance with standards',
-      'A document containing information for future maintenance and construction work',
-      '"The circuits were tested and found to be satisfactory."',
+      'Only the hazards present during the construction phase',
+      'Only the cost and programme implications of the design',
+      'Only the hazards faced by the principal contractor',
       'Hazards during construction, maintenance, use and demolition',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should a design risk register include?',
     options: [
-      'Main switchboard installation and energisation',
+      'A full schedule of test results for every circuit',
       'Hazard, design decisions, residual risks, information for others',
-      'To help maintain the natural curvature of the spine and keep the back straight',
-      'Overload currents (sustained moderate overcurrents)',
+      'The detailed method statements for each contractor task',
+      'Only the hazards that are obvious to any competent person',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'When should design risk assessment begin?',
     options: [
-      'Insulated gloves and safety glasses',
-      'Low coercivity (soft magnetic material)',
+      'Once construction work has started on site',
+      'At practical completion, for the H&S file',
       'From the earliest design stages',
-      'Re-prove dead when you return',
+      'Only after the principal contractor is appointed',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What electrical information might be needed for the H&S file?',
     options: [
-      'Using screened/shielded twisted-pair cables with the screen earthed at one end',
-      'Record tests performed and recommend further investigation',
-      'In locations with sleeping accommodation and high fire risk locations',
+      'The tender pricing breakdown for the electrical package',
+      'The contractor’s internal labour allocation records',
+      'The day-to-day site diary kept during installation',
       'As-built drawings, isolation procedures, residual risks, maintenance requirements',
     ],
     correctAnswer: 3,
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of drawing annotations for CDM?',
     options: [
-      'Sealing where cables pass through fire barriers',
+      'To record the cost of each item shown on the drawing',
       'To highlight residual risks and required precautions on drawings',
-      'To ensure the tester is working correctly and hasn\\\\\\\\\\\\\\\'t failed during testing',
-      'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
+      'To indicate the manufacturer of each piece of equipment',
+      'To show the installation sequence for the contractor',
     ],
     correctAnswer: 1,
     explanation:

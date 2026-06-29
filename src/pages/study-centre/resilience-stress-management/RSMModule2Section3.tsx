@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Reivich and Shatte (2002) identified seven resilience abilities. Which of the following is one of them?',
     options: [
-      'Physical strength and endurance',
       'Self-efficacy — belief in your ability to manage situations effectively',
+      'Physical strength and endurance',
       'Financial wealth and material security',
       'Avoidance of all stressful situations',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Self-efficacy — the belief in your own ability to manage situations and achieve goals — is one of the seven resilience abilities identified by Reivich and Shatte. The full list is: emotion regulation, impulse control, causal analysis, self-efficacy, realistic optimism, empathy, and reaching out. Each can be developed through deliberate practice.',
   },
@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     options: [
       'The holes that let stress drain out of the bucket',
       'The water that fills the bucket to the brim',
-      'The tap that refills the bucket when it gets low',
       'The material the bucket is made from',
+      'The tap that refills the bucket when it gets low',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In the resilience bucket metaphor, stressors are the holes or drain that empty the bucket (depleting your resilience reserves). Protective factors are the tap that refills it — things like social connections, physical health, financial stability, and coping skills that replenish your capacity to handle adversity. The goal is to keep the bucket fuller than it is empty by maximising your protective factors while managing your stressors.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does "causal analysis" mean in the context of resilience?',
     options: [
-      'Blaming other people for everything that goes wrong',
       'The ability to accurately identify the causes of problems without over-simplifying',
+      'Blaming other people for everything that goes wrong',
       'Ignoring the causes of problems and focusing only on solutions',
       "Analysing the causes of other people's problems while ignoring your own",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Causal analysis is the ability to accurately identify the real causes of problems without oversimplifying, overgeneralising, or automatically blaming yourself or others. Good causal analysis leads to more effective problem-solving because you are addressing the actual causes rather than surface symptoms or incorrect assumptions.',
   },
@@ -143,11 +143,11 @@ const quizQuestions = [
       'Why is "reaching out" considered a resilience ability rather than a sign of weakness?',
     options: [
       'Because asking for help means you can delegate your problems to someone else',
-      'Because reaching out requires self-awareness, courage, and the ability to use social resources effectively',
       'Because reaching out is only done by people who have been formally diagnosed with mental health conditions',
       'Because reaching out is the same as complaining, which relieves stress',
+      'Because reaching out requires self-awareness, courage, and the ability to use social resources effectively',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reaching out is classified as a resilience ability because it requires multiple strengths: the self-awareness to recognise when you need help, the courage to ask for it (especially in cultures where this is stigmatised), and the interpersonal skills to use social resources effectively. Far from being a sign of weakness, it is one of the most important resilience skills you can develop.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'An electrician who has a strong mate network, good physical health, and solid problem-solving skills but is under financial pressure from late-paying clients. According to the resilience model, this person:',
     options: [
+      'Has resilience that is being partially depleted by a risk factor but supported by multiple protective factors',
       'Has zero resilience because they have a risk factor',
       'Is fully resilient because their protective factors outnumber their risk factors',
-      'Has resilience that is being partially depleted by a risk factor but supported by multiple protective factors',
       'Should ignore the financial pressure because their other factors compensate for it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Resilience is a balance between protective factors and risk factors. This electrician has strong protective factors (social connections, health, problem-solving) that help buffer the impact of their risk factor (financial pressure). They are not immune to stress, but they have resources to draw upon. The financial pressure should still be addressed — protective factors compensate but do not eliminate the need to manage stressors.',
   },
@@ -171,10 +171,10 @@ const quizQuestions = [
     options: [
       'Protective factors are fixed at birth and cannot be developed',
       'Risk factors are always permanent and cannot be reduced',
-      'Both protective factors and risk factors can change over time, and individuals can actively strengthen protective factors',
       'You need to eliminate all risk factors before protective factors have any effect',
+      'Both protective factors and risk factors can change over time, and individuals can actively strengthen protective factors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Both protective factors and risk factors are dynamic — they change over time in response to circumstances, choices, and deliberate effort. You can actively strengthen your protective factors (by building social connections, improving physical health, developing coping skills) and reduce some risk factors (by addressing debt, reducing isolation, seeking help for substance misuse). You do not need to eliminate all risk factors first — building protective factors in parallel is both valid and effective.',
   },

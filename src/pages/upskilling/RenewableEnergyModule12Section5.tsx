@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What distinguishes periodic inspection + testing (Chapter 65) from initial verification (Chapter 64)?',
     options: [
-      'Identical',
-      'Chapter 64 Initial Verification = the one-time check done during erection + on completion before being put into service (Reg 641.1). Establishes the install is compliant + safe at the outset. Chapter 65 Periodic Inspection + Testing = ongoing periodic checks throughout the install life. Reg 651.1: where required, periodic inspection + testing of every electrical installation shall be carried out. Different purposes: IV proves compliance at install; periodic confirms continued satisfactory condition for continued service',
-      'Random',
-      'Same thing',
+      'Chapter 64 is the one-time check at install proving initial compliance; Chapter 65 is the ongoing periodic check confirming the installation remains in a satisfactory condition for continued service',
+      'Chapter 64 is the ongoing periodic check and Chapter 65 is the one-time check at install',
+      'Chapter 64 covers testing while Chapter 65 covers inspection, each done once at install',
+      'They are the same thing carried out twice for paperwork',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Chapter 64 vs Chapter 65: (1) Chapter 64 — Initial Verification per Reg 641: every installation shall, during erection + on completion before being put into service, be inspected + tested to verify so far as is reasonably practicable that the requirements of BS 7671 have been met. One-time at install (or per major alteration). Output: EIC + Schedule of Inspections + Schedule of Test Results. (2) Chapter 65 — Periodic Inspection + Testing per Reg 651: where required, periodic inspection + testing of every electrical installation shall be carried out in order to determine, so far as is reasonably practicable, whether the installation is in a satisfactory condition for continued service. Ongoing through the install life. Output: Electrical Installation Condition Report (EICR). (3) Frequency — Reg 652.1 determines frequency having regard to type of installation + equipment + use + operation + maintenance + external influences. Typical: 5 yr domestic rented; 10 yr domestic owner-occupied; varies for commercial / industrial. (4) For LCT — Chapter 65 EICR-equivalent extends standard AC EICR with technology-specific elements; covered in this section + §12.3 for BESS-specific. (5) Documentation — IV outputs EIC at install; EICR outputs condition report at each periodic. Cert evidence bundle integrates both across the install lifecycle.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Per Reg 652.1, what factors determine the frequency of periodic inspection + testing?',
     options: [
-      'Calendar only',
-      'Reg 652.1: the frequency shall be determined having regard to the type of installation + equipment, its use + operation, the frequency + quality of maintenance + the external influences to which it may be subjected. Plus results + recommendations of previous certificates + condition reports. For LCT this means: domestic vs commercial; type of generator / source; outdoor exposure; usage intensity (PV ~daily cycling, EV daily charging); maintenance regime; weather / location; previous EICR findings — all factor in. Not a one-size-fits-all calendar',
-      'Random',
-      'Fixed at 5 yr',
+      'A fixed calendar period applied to every installation alike',
+      'Solely the age of the consumer unit, regardless of use or environment',
+      'The type of installation and equipment, its use and operation, the maintenance regime, external influences and previous report findings',
+      'It is permanently fixed at 5 years for all installations',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 652.1 frequency determination factors: (1) Type of installation + equipment — domestic vs commercial vs industrial; new vs old supply; LCT type + technology; equipment age + condition. (2) Use + operation — daily cycling (PV self-consumption, EV daily charge) vs occasional (emergency backup, weekend use); peak loading vs gentle; duration (hours per day). (3) Maintenance — frequency + quality of maintenance (manufacturer monitoring contract, annual service visits, customer self-checks); previous interventions + record. (4) External influences — weather (outdoor exposure, temperature extremes, humidity, salt air for coastal); environment (dust, vibration, vermin); adjacent activity (construction, vehicle impact, accidental contact). (5) Previous certificates + condition reports — results + recommendations of prior EICR / IV; any reported defects or near-misses; trends in test values. (6) Typical UK 2025-26 default cycles: domestic rented 5 yr; domestic owner-occupied 10 yr; commercial 5 yr; industrial 3 yr; specific environments (medical, swimming pools) shorter. (7) LCT specifics: standard property cycle aligned + BMS continuous + manufacturer scheduled monitoring + customer annual touchpoint + technology-specific considerations (e.g. outdoor PV inverter may warrant tighter cycle than indoor). Cert evidence bundle records the frequency rationale per install.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What are EICR classification codes (C1, C2, C3, FI) + how apply to LCT findings?',
     options: [
-      'No codes',
-      'EICR coding per IET / NICEIC / BS 7671 industry guidance: C1 = Danger present, risk of injury, immediate remedial action required (e.g. exposed live conductor, missing earth on EV charger). C2 = Potentially dangerous, urgent remedial action required (e.g. missing OPDD on outdoor EV, Type AC RCD on LCT circuit). C3 = Improvement recommended (e.g. older RCD lacks Type B for new BESS, no AFDD where current rules now suggest). FI = Further Investigation required (e.g. SoH drop premature, intermittent BMS fault). LCT findings classified per the same framework + reported in the EICR + customer notified',
-      'Random',
-      'C1 only',
+      'EICRs use no classification codes for findings',
+      'Only a single C1 code exists, applied to every finding regardless of severity',
+      'A simple pass/fail mark per circuit, with no graded severity or further-investigation category',
+      'C1 danger present, C2 potentially dangerous, C3 improvement recommended, FI further investigation — applied the same way to LCT',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'EICR classification codes (BS 7671 industry guidance / NICEIC + IET conventions): (1) C1 — Danger present, risk of injury. Immediate remedial action required. Examples on LCT: exposed live conductor at PV combiner box; missing protective conductor on EV charger; failed isolator that doesn\'t actually isolate; thermal damage at BESS DC busbar (visible char or melting); Type AC RCD on EV circuit (under current Reg 531.3.3 + Reg 722.531). (2) C2 — Potentially dangerous, urgent remedial action required. Examples: missing OPDD on outdoor EV charger (per current Reg 722.411.4); cell imbalance + over-temp events accumulating on BESS without intervention; insulation degraded but still functional; loose connection at AC supply to PV inverter (high resistance, heat). (3) C3 — Improvement recommended. Not unsafe but below current standard. Examples: older Type A RCD adequate for current install but not future-proof; no AFDD on circuits where current A4:2026 rules now suggest; PV install pre-2018 Section 712 (still functional but not to current spec). (4) FI — Further Investigation. Issue identified that requires deeper diagnosis. Examples: BMS reporting intermittent fault not yet root-caused; SoH trend anomaly worth investigating; loop impedance reading at upper limit needs verification. (5) Coding applied per finding + reported in EICR; customer informed of action required + timeline; cert evidence bundle updated.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'PV EICR-equivalent — what items extend the standard AC EICR?',
     options: [
-      'No extension',
-      'PV-specific EICR items: (1) DC string IR re-test per Section 712 + Table 64 + manufacturer; (2) Reg 712.421.101 IMD verification + self-test; (3) DC isolator + AC isolator integrity per Section 537; (4) module condition (visible damage, hot spots, soiling, vegetation impingement); (5) mounting + earthing of PV array per Section 712; (6) anti-islanding per Reg 551.7.5; (7) inverter functional + firmware + DoC review; (8) yield review against modelled output (early indicator of issues); (9) warning notices per Reg 712.514 intact; (10) thermal imaging of DC + AC connections per Reg 653.2',
-      'AC only',
-      'Random',
+      'The standard AC EICR covers everything; nothing is added for PV',
+      'DC string IR re-test, IMD verification, isolator and module checks, array earthing, anti-islanding and yield review',
+      'Only the standard AC checks apply, with no DC-side items',
+      'Only a yield-figure read-off from the inverter display, with no physical testing',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Domestic owner-occupied property with PV + BESS + EV charger. How frequently should the EICR-equivalent be performed?',
     options: [
-      'Every year',
-      'Per Reg 652.1: typically 10 yr aligned with domestic owner-occupied AC EICR cycle. PLUS continuous BMS monitoring (BESS) + customer annual portal review + manufacturer scheduled monitoring where contracted. The 10 yr provides the comprehensive periodic; the continuous + annual + manufacturer monitoring provides the lifecycle picture between. Special considerations: outdoor LCT + intensive cycling + previous findings may warrant tighter cycle (5-7 yr). Cert evidence bundle records the rationale',
-      'Random',
-      'Never',
+      'Every single year without exception, regardless of use, exposure or previous findings',
+      'Every 5 years, the same as a rented domestic property, purely because LCT is present',
+      'Typically 10 years, aligned with the owner-occupied AC EICR cycle and continuous BMS monitoring, tightened where exposure or findings warrant',
+      'It never needs an EICR-equivalent once installed, since the BMS monitors it continuously',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EICR-equivalent frequency for domestic LCT site: (1) Standard owner-occupied cycle — 10 yr per industry convention (or sooner per Reg 652.1 factors). (2) Continuous BMS monitoring — BESS + inverter BMS continuously monitors + alerts; portal accessible to customer + installer. (3) Customer annual touchpoint — portal review + self-check; installer summary email or annual visit (paid service). (4) Manufacturer scheduled monitoring — many BESS + PV manufacturers offer paid annual or quarterly monitoring services; firmware updates applied; remote diagnostics. (5) Specific factors that tighten cycle: outdoor PV / BESS / EV exposure to weather extremes; intensive cycling (commercial-scale residential, e.g. grid arbitrage); previous EICR findings requiring follow-up; warranty approaching threshold; LCT manufacturer service interval requirements. (6) Specific factors that may extend cycle: well-maintained site with manufacturer annual service + clean BMS reporting + customer engaged; minimal external influence exposure. (7) Cert evidence bundle records the chosen frequency rationale at each EICR + reviews at next periodic. (8) UK 2025-26 typical: domestic 10 yr standard with annual + continuous monitoring between; commercial 5 yr; rented 5 yr. (9) The EICR-equivalent is comprehensive (BS 7671 EICR + LCT-specific extensions); the continuous + annual is operational + condition monitoring + early-warning.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'EICR-equivalent finds: (a) PV DC string IR dropped from 30 MΩ at commissioning to 4 MΩ at year-5; (b) PV yield down 8% vs modelled. How classify + report?',
     options: [
-      'No issue',
-      'C2 (potentially dangerous, urgent remedial action). 4 MΩ approaches Table 64 minimum 1 MΩ threshold + 87% drop from commissioning baseline = significant deterioration. Combined with 8% yield reduction = systemic issue (likely module degradation, junction-box ingress, or DC cable insulation degradation). C2 because: ongoing degradation trajectory + reduces but not eliminates safety margin + warrants intervention before next periodic. Actions: investigate root cause (which string? which modules? thermal imaging?); manufacturer warranty engagement; customer informed; remediation plan; re-test post-remediation',
-      'Random',
-      'C3 only',
+      'No issue at all — both readings sit comfortably within normal year-5 expectations',
+      'C1 (danger present, immediate isolation), because 4 MΩ is already below the Table 64 minimum',
+      'C3 only, treating it as a merely recommended improvement to be revisited at the next periodic',
+      'C2 (potentially dangerous, urgent action) — an 87% IR drop nearing the Table 64 minimum plus 8% yield loss points to systemic deterioration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Classification + reporting: (1) Why C2: (a) 87% IR drop from baseline indicates substantial insulation deterioration; (b) 4 MΩ is above Table 64 minimum 1 MΩ but trajectory suggests it will hit threshold within next periodic interval; (c) yield reduction confirms systemic issue beyond simple wear. Urgent investigation + intervention needed; not immediate danger (C1) but not just improvement (C3). (2) Root cause investigation options: thermal imaging of each string + junction boxes (hot spots indicate cell degradation, junction-box failure); module-level IR isolation (which string + which modules contribute); manufacturer engagement (PV module warranty typically 10-25 yr; warranty may cover premature degradation). (3) Likely causes: junction-box humidity ingress over years; cell-level degradation (PEC, micro-cracks); DC cable insulation degradation (UV + thermal); inverter electronics issue. (4) Actions: produce EICR report with C2 classification; customer informed of finding + recommended action timeline (e.g. 1-3 months investigation); manufacturer warranty claim if appropriate; remediation (replace affected modules / junction boxes / cables); post-remediation re-test to verify restoration. (5) Cert evidence bundle: EICR report + BMS / portal data + thermal images + manufacturer correspondence + remediation record + post-remediation test results. (6) Customer education: explain findings + warranty position + remediation cost + expected outcome.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'EV charger EICR-equivalent — what items extend the standard AC EICR?',
     options: [
-      'No extension',
-      'EV-specific EICR items: (1) Reg 722.411.4 OPDD presence + functional test (where supported) + log review; (2) Reg 722.531 RCD type + RDC-DD verification + functional test; (3) charger physical condition + cable + connector integrity; (4) earthing arrangement verification (PME + OPDD architecture OR TT earth electrode resistance); (5) functional charge test cycle; (6) firmware + CMS / OCPP comms (commercial) verification; (7) warning notices intact; (8) cable management + ingress protection; (9) thermal imaging of AC supply terminations',
-      'AC only',
-      'Random',
+      'OPDD self-test, RCD/RDC-DD verification, charger and cable condition, earthing checks and a functional charge test',
+      'The standard AC EICR covers everything, with no EV-specific additions needed at all',
+      'Only the standard AC circuit checks apply to an EV charger; nothing extra is required',
+      'Only a firmware-version check via the charger app, with no actual electrical testing carried out',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EV charger EICR-equivalent extends standard AC EICR with EV-specific items: (1) Reg 722.411.4 OPDD — integrated in most modern domestic chargers; trigger self-test where manufacturer-supported + record result; review event log for any prior trips; visual inspection of status indicators. (2) Reg 722.531 RCD + RDC-DD — Type A + RDC-DD typical for modern chargers OR Type B; functional test per BS EN 61557-6; RDC-DD functional per manufacturer. (3) Charger physical condition — enclosure integrity, mounting secure, signs of corrosion / damage / vandalism; cable condition + connector integrity (latch, contacts visible, no signs of arcing); display + LEDs functional. (4) Earthing arrangement — confirm PME + OPDD architecture OR TT earth electrode resistance per Reg 643.7.3 + Reg 411.5.3 trend against commissioning. (5) Functional charge test — connect test load or vehicle; verify charge cycle initiates + completes; emergency stop tested; communication with vehicle handshake verified. (6) Firmware + CMS — installed firmware version + manufacturer updates applied; for commercial chargers OCPP communication to central management system verified + cloud connectivity confirmed. (7) Warning notices — manufacturer warning + isolation labelling intact. (8) Cable management — strain relief; cable holster / dock secure; ingress protection (IP rating) intact. (9) Thermal imaging — AC supply terminations (loose connection = I²R heat = hot spot); contactor + protection device contacts. (10) Customer education refreshed — emergency stop location + procedure; fault response; contacts.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'EICR-equivalent on a heat pump (ASHP outdoor unit + indoor controller). What items?',
     options: [
-      'No EICR for heat pump',
-      'Heat pump EICR-equivalent: (1) outdoor unit electrical install per Reg 642 + manufacturer (vibration impact on terminations, weatherproofing, frame integrity); (2) Reg 643 testing on dedicated supply circuit (continuity, IR, polarity, loop impedance, RCD operation Type A or Type B per manufacturer); (3) earthing arrangement (TT or PME with appropriate architecture); (4) VSD compressor electronics — manufacturer commissioning re-check + fault history; (5) BMS communications + control wiring integrity; (6) refrigerant + thermal check (specialist refrigerant engineer scope); (7) functional verification; (8) firmware + manufacturer service per schedule',
-      'Random',
-      'Refrigerant only',
+      'A heat pump needs no electrical EICR-equivalent of any kind once it has been commissioned',
+      'Only a refrigerant check by an F-gas qualified engineer is required at the periodic interval',
+      'Outdoor unit inspection, Reg 643 testing on the dedicated circuit, earthing, VSD/control checks and functional verification',
+      'Only a continuity test on the outdoor unit casing, since the rest is the manufacturer\'s responsibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat pump EICR-equivalent (M8 covered heat pumps; here we cover the EICR-equivalent for periodic): (1) Outdoor unit electrical install — vibration impact on terminations over time (loose connections common); weatherproofing intact (no signs of moisture ingress at electrical compartment); frame mounting integrity; outdoor unit not impeded by debris / vegetation / new structures. (2) Reg 643 testing on dedicated heat pump supply circuit — continuity (R1+R2, R2); IR at 500 V per Table 64; polarity; loop impedance at the outdoor unit isolator; RCD operation (Type A or Type B per heat pump manufacturer DoC — VSD compressors may produce DC fault leakage warranting Type B); PFC. (3) Earthing arrangement — confirm architecture (TT or PME with appropriate protection); earth electrode resistance trend (TT); protective conductor integrity. (4) VSD compressor electronics — manufacturer commissioning re-check via service interface; fault history review; firmware updates applied; any recurring trip events investigated. (5) BMS + control wiring — communication with central heating control; thermostat / room sensor; weather compensation sensor; wiring integrity + label intact. (6) Refrigerant + thermal check — specialist refrigerant engineer scope (F-gas qualified); not within electrician\'s EICR-equivalent but coordinated visit may include both trades. (7) Functional verification — heat pump starts + reaches setpoint + cycle behaviour normal; defrost cycle + auxiliary heater (where applicable) functional. (8) Firmware + manufacturer service — manufacturer typically recommends annual service visit; document service record + EICR-equivalent findings. (9) Cert evidence bundle update.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Wind turbine EICR-equivalent — what specialist items?',
     options: [
-      'No EICR',
-      'Wind turbine EICR-equivalent: (1) mast + turbine structural inspection (specialist competency — typically annual by manufacturer / specialist); (2) electrical install at base + control room — Section 551 + Section 712-equivalent; Reg 643 testing on AC supply circuit; (3) DC interim bus IR (where present); (4) anti-islanding per Reg 551.7.5 + EREC G98 / G99; (5) RCD type + Reg 415.1 verification (VSD turbine electronics may warrant Type B); (6) lightning protection per BS EN 62305 (M11 covered); (7) earthing arrangement + bonding; (8) functional + DNO + grid synchronisation verification',
-      'Random',
-      'AC only',
+      'A wind turbine needs no periodic EICR-equivalent at all once it is commissioned and exporting',
+      'Only the lightning protection system, inspected by a structural engineer working entirely alone',
+      'Only the standard AC circuit checks apply, with no turbine-specific or generation items added',
+      'Structural and base electrical inspection, DC bus IR, anti-islanding, lightning protection, earthing/bonding and grid-sync checks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Wind turbine EICR-equivalent (M9 covered wind install): (1) Mast + turbine structural — typically specialist competency (rope access / climbing for taller masts; manufacturer service contractor). The BS 7671 electrician\'s scope is the electrical install; the structural / mechanical is the turbine specialist. Coordinated visit common. (2) Electrical install at base + control room — Section 551 generating set framework + Section 712-equivalent (where wind-PV combined sites use Section 712 conventions); Reg 643 testing on AC supply circuit (continuity, IR, polarity, loop impedance, RCD, PFC). (3) DC interim bus — where present (some inverter topologies have DC link between rectifier + grid-tie inverter); IR per Table 64 + manufacturer + outdoor exposure considerations. (4) Anti-islanding per Reg 551.7.5 — turbine inverter self-test or DNO-witnessed simulated grid-loss. (5) EREC G98 / G99 — generation export verified compliant; DNO reference confirmed; export limit adhered to. (6) RCD architecture — VSD turbine electronics may produce DC fault leakage warranting Type B; verify per manufacturer DoC + Reg 415.1. (7) Lightning protection — BS EN 62305 LPS (Lightning Protection System) inspection + bonding verification + SPD condition (Surge Protective Devices may need replacement after lightning events). M11 covered. (8) Earthing + bonding — turbine mast earthing electrode + bonding to extraneous-conductive-parts; resistance verification. (9) Functional + grid sync — turbine running profile + export compliant + DNO data alignment. (10) Cert evidence bundle: EICR-equivalent + manufacturer service + DNO correspondence + EREC G99 sign-off (where applicable).',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'Combined site multi-source LCT EICR-equivalent — how is the sequence + coordination handled?',
     options: [
-      'Each separately',
-      'Coordinated EICR-equivalent for multi-source LCT: (1) plan single visit covering all sources to leverage efficiency + minimise customer disruption; (2) extract BMS + portal data pre-visit for all sources; (3) sequence: AC EICR baseline → per-source extensions (PV, BESS, EV, heat pump) → multi-source Reg 551.4.2 RCD effectiveness + Reg 551.7.5 anti-islanding cross-source; (4) coordinated reporting — single EICR or per-source reports referenced; (5) cert evidence bundle integrates per-source MCS handover packs + manufacturer service records; (6) customer single-touchpoint conversation covering findings + actions',
-      'Random',
-      'PV only',
+      'Each source is inspected in a completely separate, uncoordinated visit by a different verifier',
+      'A single coordinated visit: pre-visit data extraction, AC baseline then per-source extensions, then multi-source RCD and anti-islanding checks',
+      'Per-source extensions only, skipping the AC baseline entirely because each source self-monitors',
+      'Only the PV system is inspected at a combined site; the other sources are left out of scope',
     ],
     correctAnswer: 1,
     explanation:

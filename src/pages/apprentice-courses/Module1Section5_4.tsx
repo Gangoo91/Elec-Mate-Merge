@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What should be your first action when arriving on a new construction site?',
     options: [
-      'The battery is ageing and has lost capacity',
+      'Begin first-fixing the nearest circuit',
       'Attend site induction and safety briefing',
-      'Excellent electrical conductivity',
-      'Use a toolbox with protective inserts',
+      'Set up your tools at the welfare cabin',
+      'Locate the main distribution board',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What does a red prohibition notice on site equipment mean?',
     options: [
-      'Check accessibility and condition',
-      'An intermittent fault that comes and goes',
+      'Equipment is due for routine inspection',
+      'Equipment requires PPE to operate',
       'Equipment is dangerous and must not be used',
-      'Automated door locks with monitoring',
+      'Equipment has passed its safety check',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'When should you report a near miss incident?',
     options: [
-      'Controlling fresh air intake in HVAC systems',
-      'No - incorrect positioning loses marks',
-      'Dust tight and protected against water jets',
+      'Only if someone was actually injured',
+      'At the end of the working week',
+      'Only if your supervisor witnessed it',
       'Immediately, even if no harm occurred',
     ],
     correctIndex: 3,
@@ -60,10 +60,10 @@ const Module1Section5_4 = () => {
       id: 1,
       question: 'What should be your first action when arriving on a new construction site?',
       options: [
-        'Watts per square metre (W/m²)',
+        'Start unloading materials from the van',
         'Attend site induction and safety briefing',
-        'Repeatedly checking their phone or watch',
-        'To record and manage deviations from requirements',
+        'Find the nearest power supply to test',
+        'Introduce yourself to the other trades',
       ],
       correctAnswer: 1,
       explanation:
@@ -73,10 +73,10 @@ const Module1Section5_4 = () => {
       id: 2,
       question: 'What does a red prohibition notice on site equipment mean?',
       options: [
-        'Dust masks or respirators appropriate to the dust type',
-        'Raise their legs, ensure fresh air, and monitor them',
+        'Equipment is reserved for a specific trade',
+        'Equipment is scheduled for testing today',
         'Equipment is dangerous and must not be used',
-        'To maintain minimum flow when TRVs close',
+        'Equipment needs additional PPE to operate',
       ],
       correctAnswer: 2,
       explanation:
@@ -86,9 +86,9 @@ const Module1Section5_4 = () => {
       id: 3,
       question: 'When should you report a near miss incident?',
       options: [
-        'Generic cabling for customer premises',
-        'Use laminated cores in transformers',
-        'End-use category (lighting, heating, etc.)',
+        'Only if it caused damage to equipment',
+        'During the next toolbox talk',
+        'Only if more than one person saw it',
         'Immediately, even if no harm occurred',
       ],
       correctAnswer: 3,
@@ -99,9 +99,9 @@ const Module1Section5_4 = () => {
       question: 'What information must be included in a site safety briefing?',
       options: [
         'Site-specific hazards, emergency procedures, and PPE requirements',
-        'Design to industry benchmarks with flexibility',
-        'Want to support colleagues and negotiate on industry issues',
-        'Making misleading claims about environmental benefits to appear more sustainable',
+        'The project budget and labour rates for each trade',
+        'A full list of materials ordered for the job',
+        'The personal contact details of every worker on site',
       ],
       correctAnswer: 0,
       explanation:
@@ -111,10 +111,10 @@ const Module1Section5_4 = () => {
       id: 5,
       question: 'Who can remove a prohibition notice from equipment?',
       options: [
-        'Investigate the cause before resetting',
+        'Anyone who needs to use the equipment',
         'Only a competent person after resolving the hazard',
-        'Energy consumption and trend analysis reports',
-        'Minimise disruption and ensure safety',
+        'The first worker to start their shift',
+        'Any qualified electrician on site',
       ],
       correctAnswer: 1,
       explanation:
@@ -137,9 +137,9 @@ const Module1Section5_4 = () => {
       id: 7,
       question: 'How often should site safety procedures be reviewed?',
       options: [
-        'Equipment to be suitable and maintained',
-        'The valve opens completely',
-        'Torque screwdriver for critical connections',
+        'Only once, at the start of the project',
+        'Only after a serious accident occurs',
+        'Never — they are fixed for the whole job',
         'Regularly and when conditions change',
       ],
       correctAnswer: 3,
@@ -151,9 +151,9 @@ const Module1Section5_4 = () => {
       question: 'What is the purpose of a permit to work system?',
       options: [
         'To control high-risk activities with formal procedures',
-        'Galvanised steel conduit with weatherproof fittings',
-        'Within or immediately adjacent to the luminaire itself',
-        'Probes, leads, fuses, and barriers for test equipment',
+        'To record the hours each worker spends on site',
+        'To grant access to the site car park',
+        'To order materials needed for the next task',
       ],
       correctAnswer: 0,
       explanation:
@@ -176,10 +176,10 @@ const Module1Section5_4 = () => {
       id: 10,
       question: 'What must be recorded in the accident book?',
       options: [
-        '15-25% depending on risk and complexity',
-        'Be used only for genuinely unavoidable residual emissions',
+        'Only accidents that need hospital treatment',
+        'Only accidents reportable to the HSE',
         'All accidents and injuries, no matter how minor',
-        'Age, wear, and environmental factors',
+        'Only accidents involving site visitors',
       ],
       correctAnswer: 2,
       explanation:

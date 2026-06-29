@@ -16,10 +16,10 @@ const Module6Section1_5 = () => {
       id: 1,
       question: 'What is the main role of a Level 2 learner in inspection and testing?',
       options: [
-        'False triggering from heat sources or incorrect positioning',
+        'To sign off completed Electrical Installation Certificates',
         'To understand procedures and assist under supervision',
-        'Degree or equivalent in electrical engineering',
-        'h = Nu × k/D (Nusselt number × thermal conductivity / diameter)',
+        'To carry out periodic inspections independently',
+        'To design circuits and specify protective devices',
       ],
       correctAnswer: 1,
       explanation:
@@ -27,20 +27,19 @@ const Module6Section1_5 = () => {
     },
     {
       id: 2,
-      question:
-        'True or False: Level 2 learners are allowed to sign Electrical Installation Certificates.',
-      options: ['True', 'False'],
+      question: 'Are Level 2 learners allowed to sign Electrical Installation Certificates?',
+      options: ['Yes, for circuits they have tested', 'No, only qualified competent persons can sign'],
       correctAnswer: 1,
       explanation:
-        'False. Only qualified, competent persons can sign electrical certificates. Level 2 learners assist but do not have certification authority.',
+        'Only qualified, competent persons can sign electrical certificates. Level 2 learners assist but do not have certification authority.',
     },
     {
       id: 3,
-      question: 'Name two tests that Level 2 learners are expected to be aware of.',
+      question: 'Which pair of tests are Level 2 learners expected to be aware of?',
       options: [
-        'To prevent condensate carryover into the ductwork',
-        'Upgrading transceivers on existing fibres',
-        'Vertical-Cavity Surface-Emitting Laser',
+        'Earth electrode resistance and phase rotation',
+        'Prospective fault current and arc-flash energy',
+        'Thermal imaging and harmonic analysis',
         'Continuity and insulation resistance testing',
       ],
       correctAnswer: 3,
@@ -52,9 +51,9 @@ const Module6Section1_5 = () => {
       question: 'What is the difference between inspection and testing?',
       options: [
         'Inspection = visual check, Testing = measurement using instruments',
-        'Whether the learners are applying what they learned on the job',
-        'Competent persons, supervisors, and experienced workers',
-        'All observations, defects, and compliance issues',
+        'Inspection = instrument measurement, Testing = visual check',
+        'They are two names for exactly the same activity',
+        'Inspection is for new work, Testing is for existing work only',
       ],
       correctAnswer: 0,
       explanation:
@@ -62,25 +61,25 @@ const Module6Section1_5 = () => {
     },
     {
       id: 5,
-      question: 'What is the first rule before carrying out any electrical testing?',
+      question: 'What is the first rule before carrying out any dead testing?',
       options: [
-        'Check the weather',
-        'Safe isolation',
-        'Read the manual',
-        'Call the supervisor',
+        'Select the correct test instrument',
+        'Connect the test leads to the circuit',
+        'Record the circuit details on the certificate',
+        'Carry out safe isolation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
-        'Safe isolation is the fundamental first step before any electrical testing to ensure the safety of all personnel involved.',
+        'Safe isolation is the fundamental first step before any dead testing to ensure the safety of all personnel involved.',
     },
     {
       id: 6,
       question: 'What type of responsibility do Level 2 learners NOT have?',
       options: [
-        'Employer, training provider (college), and apprentice',
-        'Trips between 3 and 5 times rated current',
+        'Preparing instruments and record sheets',
+        'Assisting with safe isolation under guidance',
         'Certification and unsupervised live testing',
-        'Varies with cable size and construction - from tables',
+        'Recording readings dictated by a supervisor',
       ],
       correctAnswer: 2,
       explanation:
@@ -90,9 +89,9 @@ const Module6Section1_5 = () => {
       id: 7,
       question: "What should a Level 2 learner do if they don't understand a testing instruction?",
       options: [
-        'Overfilling and creating sharp bends',
-        'Distribution of power to sub-circuits',
-        'Disconnect, Isolate, Secure, Prove Dead, Earth',
+        'Carry on and hope the result is correct',
+        'Guess the intended method from experience',
+        'Stop work and leave the job for the day',
         'Ask for clarification before proceeding',
       ],
       correctAnswer: 3,
@@ -104,9 +103,9 @@ const Module6Section1_5 = () => {
       question: 'What is recorded to show testing has been carried out safely and correctly?',
       options: [
         'Certificates (EIC, Minor Works, EICR)',
-        'Maintained mode for constant visibility',
-        'Heart palpitations and shortness of breath',
-        'AHU shutdown and access door release',
+        'A verbal handover to the client',
+        'A photo of the consumer unit',
+        'A note in the installer\'s personal diary',
       ],
       correctAnswer: 0,
       explanation:
@@ -116,10 +115,10 @@ const Module6Section1_5 = () => {
       id: 9,
       question: 'What is the next stage of training after Level 2?',
       options: [
-        'Different criteria - typically ≤0.05Ω for main bonding',
+        'AM2 end-point assessment only',
         'Level 3 – carrying out full inspection and testing independently',
-        'An electrical fault such as broken rotor bars or uneven air gap',
-        'Continuously monitor insulation resistance of IT systems',
+        'A Level 1 introductory certificate',
+        'A degree in electrical engineering',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,10 +128,10 @@ const Module6Section1_5 = () => {
       id: 10,
       question: 'In the real-world example, what role did the Level 2 apprentice play in testing?',
       options: [
-        'The nominal voltage at which the device is designed to operate',
-        'Safety Extra Low Voltage - separated from earth',
+        'They signed the certificate for the circuit',
+        'They worked alone on the live installation',
         'They set up the instrument and read out results under supervision',
-        'Automatically adjusting systems based on actual space usage',
+        'They decided whether the readings met BS 7671',
       ],
       correctAnswer: 2,
       explanation:

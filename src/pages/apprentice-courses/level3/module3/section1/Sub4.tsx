@@ -177,9 +177,9 @@ const quizQuestions = [
     question: 'Why is a heating element near 100 % efficient but a motor only ~85-90 %?',
     options: [
       'A heater turns ALL its electrical energy into the desired output (heat); a motor wastes some as heat instead of motion',
-      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
-      'The change in secondary voltage from no-load to full-load, expressed as a percentage',
-      'Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)',
+      'A heater runs on DC while a motor runs on AC, and AC is inherently less efficient',
+      'A motor has a higher power factor, which always reduces its measured efficiency',
+      'A heater is rated in kW and a motor in kVA, so the figures cannot be compared directly',
     ],
     correctAnswer: 0,
     explanation:

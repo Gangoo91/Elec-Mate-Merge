@@ -158,9 +158,9 @@ const Module2Section2_5: React.FC = () => {
       question: 'On Economy 7 tariff, when is electricity typically cheapest?',
       options: [
         'Night hours (00:30-07:30)',
-        'Prove the circuit is dead',
-        'Stop work and alert others',
-        'Main earthing conductor size',
+        'Evening peak (16:00-19:00)',
+        'Midday hours (11:00-14:00)',
+        'The same rate at all times of day',
       ],
       correctAnswer: 0,
       explanation: 'Economy 7 offers cheaper rates during night hours, typically 00:30-07:30.',

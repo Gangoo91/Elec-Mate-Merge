@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'segregation',
     question: 'What is the purpose of internal separation (segregation) within a control panel?',
     options: [
-      'Starting with specific, closed questions and gradually broadening to open questions to build confidence before exploring wider topics',
-      'To provide protection against contact with live parts of adjacent functional units and to minimise the effects of arcing faults',
-      'Plan with your employer and training provider to access activities that will generate evidence for the missing KSBs, allowing sufficient time before the EPA',
-      'No — training must include assessment of competence to ensure workers can actually apply the techniques in their real workplace tasks',
+      'To reduce the overall physical size and weight of the panel enclosure',
+      'To guard against contact with adjacent live parts and limit arcing faults',
+      'To increase the continuous current rating of the main busbar system',
+      'To eliminate the need for an IP-rated enclosure around the assembly',
     ],
     correctIndex: 1,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
       'What is the most common cause of premature component failure inside a control panel?',
     options: [
       'Excessive internal temperature due to inadequate thermal management',
-      'Maximum current between live conductors during fault',
-      'Remove or control any element of the fire triangle',
-      'The vertical distance between two consecutive ledger levels',
+      'Mechanical vibration from nearby rotating machinery',
+      'Use of copper rather than aluminium busbars',
+      'Specifying too high an IP rating for the enclosure',
     ],
     correctIndex: 0,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'documentation',
     question: 'Which documents must be supplied with a control panel to comply with IEC 61439?',
     options: [
-      'The DC bus capacitors may retain a lethal charge for several minutes after isolation — manufacturer\\\\\\\'s specified discharge time must be observed',
-      'Technical documentation including single-line diagram, layout drawing, circuit diagrams, component schedules, temperature rise data and routine test results',
-      'MCBs to BS EN 60898 (Types B, C and D), and similar overcurrent devices to BS EN 61009-1 (RCBOs) at U₀ = 230 V.',
-      'Testing with leads open-circuited (should read infinity/overrange) and short-circuited (should read approximately zero), and checking the battery condition',
+      'Only a single nameplate showing the rated voltage and current',
+      'A wiring diagram and an IP rating certificate, with no other records required',
+      'Single-line and layout drawings, circuit diagrams, schedules and test results',
+      'A copy of the BS 7671 installation certificate for the supplying circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'IEC 61439 requires comprehensive technical documentation: single-line diagram showing the electrical arrangement; layout drawings showing component positions; circuit diagrams (schematic and wiring diagrams); component schedules listing all items with ratings; temperature rise verification data; short-circuit withstand verification; and routine test certificates for each panel. This documentation is essential for maintenance and modification work.',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'The IP rating of a control panel refers to:',
     options: [
-      'Capacitors installed to improve power factor by supplying reactive power locally',
-      'A spur, broken ring, or high-resistance joint at a socket — investigation required',
+      'Its rated short-circuit withstand current under fault conditions',
+      'The maximum internal temperature rise permitted by IEC 61439',
       'Its degree of protection against ingress of solid objects and water',
-      'To provide verified environmental data about a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s lifecycle impacts',
+      'The continuous current-carrying capacity of the main busbars',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'Internal separation Form 3b provides:',
     options: [
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
-      'Adequate spacing for heat dissipation and access for maintenance, as specified by the component manufacturer',
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
+      'No internal separation at all, with all live parts exposed when the door opens',
+      'Separation of the busbars from the functional units only, with units left open',
+      'Full compartmentalisation, separating every outgoing terminal from the busbars',
+      'Busbars separated from units, units from each other, and their terminals too',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'When designing a control panel layout, DIN rail-mounted components should have:',
     options: [
-      'Adequate spacing for heat dissipation and access for maintenance, as specified by the component manufacturer',
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
+      'Adequate spacing for heat dissipation and maintenance access, per the maker',
+      'The smallest possible spacing so the maximum number of components fits per rail',
+      'Their terminals facing the rear of the enclosure to keep the front uncluttered',
+      'Identical spacing for every component regardless of the maker recommendations',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'The purpose of a gland plate on a control panel is:',
     options: [
-      'It demonstrates competence, commitment to standards, and ethical conduct',
+      'To act as the main earthing terminal for all incoming circuit protective conductors',
       'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
-      'Plastic trunking will fail under fire conditions, compromising circuit integrity',
-      'A current-carrying conductor in a magnetic field experiences a force',
+      'To dissipate heat generated by the busbars away from the internal components',
+      'To carry the full load current between the incoming supply and the functional units',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'A control panel thermal management calculation must consider:',
     options: [
-      'Adequate spacing for heat dissipation and access for maintenance, as specified by the component manufacturer',
-      'Segregation of power and control circuits, correct cable routing, screened cables, EMC glands and filters to prevent electromagnetic interference',
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
+      'Only the rated current of the main incoming breaker, ignoring component losses',
+      'Solely the nominal supply voltage and the prospective fault current at the busbars',
+      'Component losses, ambient temperature, surface area, ventilation and IP rating',
+      'The number of functional units and the form of internal separation specified',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'Anti-condensation heaters in a control panel are used to:',
     options: [
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
-      'Segregation of power and control circuits, correct cable routing, screened cables, EMC glands and filters to prevent electromagnetic interference',
-      'Visual inspection, insulation resistance test, dielectric withstand test (if applicable), protective circuit continuity and verification of wiring and function',
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
+      'Pre-heat the busbars to their rated operating temperature before energising',
+      'Provide supplementary heat output to warm the room the panel is installed in',
+      'Keep electronic components warm so they respond faster when switched on',
+      'Stop condensation forming on components when idle, avoiding insulation failures',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'The door interlock on a control panel typically:',
     options: [
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
-      'Visual inspection, insulation resistance test, dielectric withstand test (if applicable), protective circuit continuity and verification of wiring and function',
-      'Segregation of power and control circuits, correct cable routing, screened cables, EMC glands and filters to prevent electromagnetic interference',
-      'Adequate spacing for heat dissipation and access for maintenance, as specified by the component manufacturer',
+      'Stops the door opening while the main switch is ON, and switching ON while open',
+      'Trips the main switch automatically if the internal temperature exceeds its limit',
+      'Locks the door shut permanently once the panel has been commissioned and tested',
+      'Sounds an alarm whenever the door is opened, but does not affect the main switch',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The main busbar system in a control panel carries:',
     options: [
-      'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
-      'The full load current of all connected circuits, distributing power from the main incoming supply to individual functional units',
-      'Adequate spacing for heat dissipation and access for maintenance, as specified by the component manufacturer',
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
+      'Only the control-circuit current for the contactor coils and indicator lamps',
+      'The full load current, distributing power from the supply to each functional unit',
+      'Only the earth fault current returning to the supply during a fault condition',
+      'The current of a single functional unit at a time, switched in turn by the main switch',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'When modifying an existing control panel, the maintenance technician must:',
     options: [
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
-      'Ensure the modification complies with the original design verification, update documentation, and verify that thermal management and short-circuit ratings are not compromised',
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
+      'Replace the entire panel, as any modification to an IEC 61439 assembly is barred',
+      'Only update the single-line diagram, since other documents are unaffected by changes',
+      'Keep the original verification valid, update the docs, and recheck thermal and fault ratings',
+      'Increase the IP rating of the enclosure to compensate for the added components',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'EMC (Electromagnetic Compatibility) considerations in panel design include:',
     options: [
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Segregation of power and control circuits, correct cable routing, screened cables, EMC glands and filters to prevent electromagnetic interference',
+      'Routing all power and signal cables together in a single duct to save panel space',
+      'Removing all earth connections to prevent circulating currents between components',
+      'Increasing the switching frequency of VSDs to reduce conducted emissions',
+      'Segregating power and control circuits and using screened cables, EMC glands and filters',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'The routine tests required by IEC 61439 for each completed panel include:',
     options: [
-      'Visual inspection, insulation resistance test, dielectric withstand test (if applicable), protective circuit continuity and verification of wiring and function',
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
-      'Internal heat generation from all components (losses), ambient temperature, enclosure surface area, ventilation method and IP rating',
-      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
+      'Inspection, dielectric or insulation test, protective continuity and function checks',
+      'A full short-circuit withstand test on every panel before it leaves the factory',
+      'A temperature rise test under full rated load run for at least eight hours per panel',
+      'An arc fault containment test to IEC 61641 performed on each panel as standard',
     ],
     correctAnswer: 0,
     explanation:

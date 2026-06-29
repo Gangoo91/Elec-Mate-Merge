@@ -37,11 +37,11 @@ const quickCheckQuestions = [
     question: 'What is a key benefit of using a scaffolding contractor who holds NASC membership?',
     options: [
       'NASC members are exempt from local authority scaffold licensing requirements',
-      'NASC members are audited to ensure compliance with industry standards including SG4, SG6, TG20, and relevant British Standards',
       'NASC members can erect scaffolds without any form of inspection regime',
+      'NASC members are audited to ensure compliance with industry standards including SG4, SG6, TG20, and relevant British Standards',
       'NASC membership replaces the need for a scaffold design under any circumstances',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'NASC member companies are regularly audited against a comprehensive set of criteria including compliance with NASC guidance notes (SG4, SG6, TG20), health and safety management systems, training and competence of operatives, insurance, and adherence to British and European standards. This gives clients confidence in the quality and safety of the scaffolding work.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 3,
     question: 'When using the TG20 eGuide, which of the following inputs is NOT required?',
     options: [
+      "The name of the scaffolding contractor's insurance provider",
       'The site postcode and altitude',
       'The scaffold height and bay length',
-      "The name of the scaffolding contractor's insurance provider",
       'The tie pattern and cladding type',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The TG20 eGuide requires technical inputs including the site postcode, altitude, exposure category, scaffold type, height, bay length, lift height, number of boarded lifts, tie pattern, and cladding type. It does not require the name of the contractor's insurance provider — that is a commercial matter, not a structural parameter.",
   },
@@ -117,10 +117,10 @@ const quizQuestions = [
     options: [
       'TG20 will automatically approve the scaffold as standard',
       'TG20 will generate a compliance sheet confirming it meets standard parameters',
-      'TG20 will flag the scaffold as non-standard, requiring a bespoke scaffold design',
       'TG20 does not apply to scaffolds over 20 metres in height',
+      'TG20 will flag the scaffold as non-standard, requiring a bespoke scaffold design',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A 35-metre tall scaffold that is fully sheeted in a coastal location with an unusual tie pattern is very likely to fall outside TG20 standard configurations. The combination of height, full sheeting (which significantly increases wind load), coastal exposure (higher wind speeds), and a non-standard tie pattern would almost certainly result in the eGuide flagging the scaffold as non-standard. A bespoke scaffold design from a competent engineer would be required.',
   },
@@ -158,10 +158,10 @@ const quizQuestions = [
     options: [
       'A verbal agreement with the site manager',
       'A risk assessment only, with no structural calculations',
-      'A bespoke scaffold design from a competent scaffold designer or structural engineer',
       "A letter confirming the scaffold is safe based on the contractor's experience",
+      'A bespoke scaffold design from a competent scaffold designer or structural engineer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If the scaffold falls outside TG20 standard configurations, a bespoke scaffold design must be produced by a competent scaffold designer or structural engineer. This design must include detailed calculations for loads, wind forces, tie capacities, foundation bearing pressures, and other structural considerations specific to the project. A verbal agreement, risk assessment alone, or experience-based letter is not sufficient.',
   },

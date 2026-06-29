@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'A harness was last given a thorough examination 7 months ago. It has been used regularly and passes the daily visual check each morning. Is it legally compliant under LOLER?',
     options: [
-      'Yes — the daily visual check is sufficient as long as it passes',
-      'No — LOLER requires a thorough examination by a competent person at least every 6 months for equipment used for carrying persons',
-      'Yes — LOLER only applies to cranes and hoists, not harnesses',
-      'No — harnesses need a thorough examination every 3 months',
+      'No — LOLER requires a thorough examination at least every 6 months',
+      'Yes — the passing daily visual check is sufficient on its own',
+      'Yes — LOLER covers only cranes and hoists, not personal harnesses',
+      'No — a harness needs a thorough examination every 3 months',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under LOLER 1998, harnesses, lanyards, and SRLs (self-retracting lifelines) used as part of a personal fall protection system require a thorough examination by a competent person at least every 6 months. At 7 months, this harness is overdue and must not be used until examined.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     question:
       'A scaffold was last inspected on Monday. Today is the following Tuesday (8 days later). A worker asks if the scaffold is safe to use. What is the correct answer?',
     options: [
-      'Yes — the 7-day inspection is just a guideline',
-      'No — Schedule 7 of the Work at Height Regulations requires scaffold inspection at intervals not exceeding 7 days, so it is overdue',
-      'Yes — the inspection is only required every 14 days',
-      'No — but only if the scaffold is above 4 metres',
+      'Yes — the 7-day inspection interval is only an advisory guideline',
+      'Yes — a scaffold inspection is required only once every 14 days',
+      'No — Schedule 7 sets a maximum 7-day interval, so it is overdue',
+      'No — but only if the scaffold is more than 4 metres in height',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Schedule 7 of the Work at Height Regulations 2005 requires that scaffolds are inspected at intervals not exceeding 7 days by a competent person, with the results recorded in writing. At 8 days, the scaffold is overdue for inspection and must not be used until inspected.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'How often must scaffolds be inspected under Schedule 7 of the Work at Height Regulations 2005?',
     options: [
-      'Daily, before each use',
       'At intervals not exceeding 7 days',
+      'Daily, before each use',
       'Monthly, by a competent person',
       'Every 6 months under LOLER',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Schedule 7 requires scaffolds to be inspected by a competent person at intervals not exceeding 7 days. This is in addition to pre-use checks by the user. The inspection must be recorded in writing and the report kept on site.',
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Under LOLER 1998, how frequently must a harness used for personal fall protection be given a thorough examination?',
-    options: ['Every 12 months', 'Every 6 months', 'Every 3 months', 'Only when damage is noticed'],
-    correctAnswer: 1,
+    options: ['Every 12 months', 'Every 3 months', 'Every 6 months', 'Only when damage is noticed'],
+    correctAnswer: 2,
     explanation:
       'LOLER 1998 requires that lifting equipment used for carrying persons (including harnesses, lanyards, and SRLs when used as fall arrest) must receive a thorough examination at least every 6 months. Some manufacturers recommend more frequent examination.',
   },
@@ -121,8 +121,8 @@ const quizQuestions = [
     options: [
       'Only a CISRS-qualified inspector',
       'The user, before every use',
-      'The site safety officer, once per week',
       "The ladder manufacturer's representative",
+      'The site safety officer, once per week',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,11 +134,11 @@ const quizQuestions = [
       'A LOLER thorough examination report identifies an imminent risk of serious personal injury. What must the competent person do?',
     options: [
       'Record the defect and schedule a repair within 28 days',
-      'Notify the employer and also report directly to the HSE',
       'Tell the user to be careful and continue using the equipment',
       'Return for a re-examination in 3 months',
+      'Notify the employer and also report directly to the HSE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When a thorough examination reveals an existing or imminent risk of serious personal injury, the competent person must notify the employer immediately AND send a report to the relevant enforcing authority (usually the HSE). The equipment must be taken out of service until the defect is rectified.',
   },
@@ -146,8 +146,8 @@ const quizQuestions = [
     id: 5,
     question:
       'For how long must scaffold inspection reports be retained after the work at that location is completed?',
-    options: ['They can be discarded immediately', 'For 3 months', 'For 12 months', 'For 5 years'],
-    correctAnswer: 1,
+    options: ['For 3 months', 'They can be discarded immediately', 'For 12 months', 'For 5 years'],
+    correctAnswer: 0,
     explanation:
       'Schedule 7 of the Work at Height Regulations 2005 requires that scaffold inspection reports are kept on site while the scaffold is in use, and then retained for 3 months after the work at that location is completed.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'What information must an equipment register contain for each item?',
     options: [
-      'Only the purchase price and supplier name',
-      'Unique ID, date of first use, inspection history, thorough exam dates, and withdrawal date',
-      "Only the manufacturer's name and model number",
-      'Only the date it was last used',
+      'Only the original purchase price and the supplier name',
+      "Only the manufacturer's name and the equipment model number",
+      'Unique ID, first-use date, inspection and exam history, withdrawal date',
+      'Only the date on which the item was most recently used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An equipment register should contain: unique identification number, description (type, manufacturer, model), date of first use, complete inspection history, thorough examination dates and results, maintenance records, and date of withdrawal from service. This provides a complete lifecycle record for each item.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A scaffold has been exposed to severe weather (high winds and heavy rain) overnight. What must happen before it is used?',
     options: [
-      'Nothing extra — the 7-day inspection covers weather events',
-      'A pre-use visual check by the user is sufficient',
-      'It must be inspected by a competent person before being used, as required by Schedule 7',
-      'Only the base level needs checking',
+      'Nothing extra — the routine 7-day inspection already covers weather',
+      'It must be inspected by a competent person before it is used again',
+      'A pre-use visual check by the user is sufficient in this situation',
+      'Only the base level and ground conditions need to be re-checked',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Schedule 7 of the Work at Height Regulations 2005 requires inspection after any event likely to have affected the scaffold's strength or stability, including adverse weather. This is an additional inspection requirement beyond the standard 7-day cycle and must be carried out by a competent person before the scaffold is used.",
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'How long must LOLER thorough examination reports be retained?',
     options: [
-      'Until the next thorough examination',
-      'Until the next thorough examination plus 2 years, or 2 years — whichever is longer',
-      'For 6 months',
-      'Permanently — they must never be discarded',
+      'Only until the next thorough examination is carried out',
+      'For 6 months from the date of the examination',
+      'Permanently — the reports must never be discarded',
+      'Until the next examination plus 2 years, or 2 years if none',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LOLER 1998 requires that thorough examination reports are kept until the next thorough examination is carried out, and then for an additional 2 years after that. If no further examination takes place (e.g., the equipment is withdrawn from service), the report must be kept for 2 years from the date of the last examination.',
   },

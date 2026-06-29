@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'Under CDM 2015, who must the Principal Contractor be?',
     options: [
-      'Any competent individual or organisation appointed by the client',
       'A contractor — someone who carries out or manages construction work',
+      'Any competent individual or organisation appointed by the client',
       'A chartered health and safety practitioner',
       'The largest contractor on site by turnover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Principal Contractor must be a contractor — that is, an organisation or individual who carries out or manages construction work. This is a specific requirement of CDM 2015. The role cannot be filled by a consultant, designer, or other professional who does not carry out or manage construction work.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'What must the construction phase plan include?',
     options: [
       'Only emergency contact numbers and a site layout drawing',
-      'Management arrangements, site rules, health and safety arrangements, and specific risk procedures',
       'A full list of every worker who will attend site during the project',
       "The Principal Designer's risk assessment for all design elements",
+      'Management arrangements, site rules, health and safety arrangements, and specific risk procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The construction phase plan must set out the management arrangements for the project, site rules, health and safety arrangements (including welfare), and procedures for dealing with specific risks such as work at height, confined spaces, excavations, and work near services. It is a practical, working document tailored to the project.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       'Which of the following is NOT a typical component of a site induction delivered by the Principal Contractor?',
     options: [
       'Site rules and access arrangements',
-      'Emergency procedures and muster points',
       "Each worker's individual employment contract terms",
+      'Emergency procedures and muster points',
       'Significant risks specific to the site and welfare arrangements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Site inductions cover site rules, emergency procedures, welfare arrangements, significant risks, and reporting procedures. Individual employment contract terms are a matter between the worker and their employer — they are not part of the Principal Contractor's site induction.",
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'How does the Principal Contractor manage interfaces between multiple contractors on site?',
     options: [
-      'By allowing each contractor to manage their own work independently',
       'By reviewing method statements, sharing risk assessments, and holding regular coordination meetings',
+      'By allowing each contractor to manage their own work independently',
       'By requiring all contractors to use the same subcontractors',
       'By delegating all coordination to the Principal Designer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Principal Contractor must actively manage contractor interfaces by reviewing method statements, ensuring risk assessments are shared, and holding regular coordination meetings. Simply allowing contractors to work independently would fail to discharge the duty to coordinate cooperation under Regulation 13.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'What does Regulation 14 of CDM 2015 require the Principal Contractor to do?',
     options: [
       'Appoint a dedicated safety officer for the project',
-      'Consult and engage with workers and their representatives on health and safety matters',
       'Submit weekly reports to the Health and Safety Executive',
       'Provide personal protective equipment to every worker on site',
+      'Consult and engage with workers and their representatives on health and safety matters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 14 requires the Principal Contractor to consult and engage with workers and their representatives on matters connected with the project that may affect their health, safety, or welfare. This includes providing information, listening to concerns, and acting on feedback. It is about active, two-way communication.',
   },

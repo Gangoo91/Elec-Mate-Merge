@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     question:
       "According to Steven Hayes's concept of psychological flexibility, what are the three core capacities?",
     options: [
-      'Thinking positively, avoiding conflict, and staying busy',
       'Being present (mindful awareness), opening up (accepting difficult thoughts and feelings), and doing what matters (acting on values)',
+      'Thinking positively, avoiding conflict, and staying busy',
       'Controlling emotions, planning ahead, and seeking social support',
       'Positive self-talk, goal setting, and stress avoidance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Steven Hayes defines psychological flexibility through three interconnected capacities: being present (engaging with the current moment rather than dwelling on the past or worrying about the future), opening up (making room for difficult thoughts and feelings rather than fighting them), and doing what matters (identifying your values and taking committed action aligned with them, even when it is uncomfortable).',
   },
@@ -89,8 +89,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which stage of the Kubler-Ross Change Curve typically involves the person trying to negotiate a return to the old way of doing things?',
-    options: ['Denial', 'Anger', 'Bargaining', 'Depression'],
-    correctAnswer: 2,
+    options: ['Bargaining', 'Denial', 'Anger', 'Depression'],
+    correctAnswer: 0,
     explanation:
       "Bargaining is the stage where people attempt to negotiate, compromise, or find workarounds to avoid fully accepting the change. In a workplace context, this might sound like: 'Can we just keep doing it the old way for this project?' or 'What if we only implement part of the change?' While bargaining can sometimes lead to genuine improvements, it often represents resistance to the reality that the old way is no longer available.",
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       "In Covey's model, what happens to people who focus predominantly on their Circle of Concern rather than their Circle of Influence?",
     options: [
       'They become more influential because they understand the bigger picture',
-      'They experience frustration, helplessness, and their Circle of Influence shrinks',
       'They become better leaders because they worry about everything',
       'Nothing changes — both approaches produce the same results',
+      'They experience frustration, helplessness, and their Circle of Influence shrinks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Covey observed that people who focus their energy on their Circle of Concern — things they worry about but cannot directly affect — experience increasing frustration, helplessness, and anxiety. Their reactive energy produces no results, which leads to learned helplessness. Over time, their Circle of Influence actually shrinks because they are not investing in the things they can affect. Conversely, people who focus proactively on their Circle of Influence see it gradually expand.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'Which of the following is an example of focusing on your Circle of Influence during a site disruption?',
     options: [
+      'Reorganising your team to maximise productivity in the areas that are still accessible',
       'Complaining about the weather that has delayed the project',
       'Worrying about whether the client will reduce the contract value',
-      'Reorganising your team to maximise productivity in the areas that are still accessible',
       'Blaming the project manager for not planning for the disruption',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Reorganising your team to work productively in available areas is a proactive, Circle of Influence action — you are taking direct control of something you can affect. Complaining about weather, worrying about client decisions, and blaming the project manager are all Circle of Concern activities: they consume energy without producing results. The weather is uncontrollable, the client's decision is outside your direct influence, and blame is retrospective rather than constructive.",
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     options: [
       'Immediately implement the biggest change to get it over with',
       'Wait until someone tells you exactly what to do',
-      'Identify the specific impacts on your work, separate facts from assumptions, and determine your first small actionable step',
       'Delegate all change-related tasks to junior members of the team',
+      'Identify the specific impacts on your work, separate facts from assumptions, and determine your first small actionable step',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Breaking change into manageable steps begins with clarity: understanding exactly what has changed, separating facts from assumptions or fears, and identifying the first small, concrete step you can take. This prevents overwhelm (trying to change everything at once), avoidance (waiting for instructions), and abdication (delegating responsibility). The first step should be small enough that it feels achievable but meaningful enough that it creates momentum.',
   },

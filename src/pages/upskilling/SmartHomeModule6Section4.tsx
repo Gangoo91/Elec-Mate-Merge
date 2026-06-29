@@ -13,34 +13,34 @@ const quickCheckQuestions = [
   {
     question: "What is a 'bridge' in smart home terminology?",
     options: [
-      'A physical network cable',
       'A device that translates between different protocols or systems',
-      'A type of light switch',
-      'A cloud server',
+      'A length of physical network cabling between two devices',
+      'A wall-mounted light switch with smart capability',
+      'A remote cloud server hosting the manufacturer app',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A bridge is a device that translates between different protocols or systems, allowing devices that cannot communicate directly to work together. For example, a Hue Bridge translates between Zigbee and Wi-Fi.',
   },
   {
     question: 'What is a common method for integrating IR-controlled devices into a smart home?',
     options: [
-      'Replacing the device entirely',
+      'Replacing the device with a newer Wi-Fi model entirely',
+      'Connecting the device directly to the home Wi-Fi network',
+      'Pairing the device over Bluetooth to a phone or hub',
       'Using an IR blaster that receives smart commands and transmits IR signals',
-      'Connecting them directly via Wi-Fi',
-      'Using Bluetooth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IR blasters receive commands from smart home systems (via Wi-Fi or Zigbee) and transmit infrared signals to legacy devices like TVs, air conditioning units, and audio equipment.',
   },
   {
     question: 'What challenge might arise when integrating legacy devices with smart systems?',
     options: [
-      'Legacy devices become too fast',
-      'No feedback on device state - the smart system may not know if commands were received',
-      'Increased power consumption of 50%',
-      'Legacy devices stop working entirely',
+      'Legacy devices respond faster than the hub can reliably track',
+      'No feedback on device state, so command receipt is unconfirmed',
+      'Standby power consumption rises by roughly 50 percent on the circuit',
+      'Legacy devices stop working entirely whenever the hub is offline',
     ],
     correctAnswer: 1,
     explanation:
@@ -52,34 +52,34 @@ const quizQuestions = [
   {
     question: 'What does an IR blaster do?',
     options: [
-      'Blocks infrared signals',
       'Converts smart commands to infrared signals for legacy devices',
-      'Connects devices via Ethernet',
-      'Provides backup power',
+      'Blocks stray infrared signals from interfering with remotes',
+      'Connects legacy devices to the network via Ethernet cabling',
+      'Provides battery backup power during a mains outage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IR blasters receive smart home commands (via Wi-Fi or hub) and convert them to infrared signals that legacy devices like TVs, air conditioners, and audio equipment can understand.',
   },
   {
     question: 'Why might you use a smart relay module?',
     options: [
-      'To replace Wi-Fi routers',
+      'To replace the home Wi-Fi router with a smart equivalent unit',
+      'To improve the broadband speed across the whole property',
+      'To reduce the standing electricity bill on lighting circuits',
       'To add smart control to existing wired switches or appliances',
-      'To improve internet speed',
-      'To reduce electricity bills',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Smart relay modules fit behind existing switches or in junction boxes, allowing legacy wired lighting and appliances to be controlled via smart home systems without replacing visible hardware.',
   },
   {
     question: 'What is a potential issue with using multiple bridges from different manufacturers?',
     options: [
-      'They always conflict',
+      'They will always conflict with one another in operation',
       'Increased complexity and potential for configuration conflicts',
-      'They cannot coexist',
-      'They slow down Wi-Fi significantly',
+      'They are physically unable to coexist on the same network',
+      'They noticeably slow down the home Wi-Fi network',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
   {
     question: 'What should be documented when integrating legacy devices?',
     options: [
-      'Only the device serial numbers',
+      'Only the serial numbers of each integrated device',
+      'Just the original purchase date of each device',
       'Integration method, limitations, and any workarounds used',
-      'Just the purchase date',
-      'Only the manufacturer contact details',
+      'Only the manufacturer support contact details',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Documentation should include how each device was integrated, any limitations (like one-way control), workarounds for common issues, and configuration details for future troubleshooting.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'What is the benefit of using a universal hub like Home Assistant for legacy integration?',
     options: [
-      'It eliminates all bridges',
+      'It removes the need for any protocol bridges at all',
       'It can integrate many different protocols and bridges into one interface',
-      'It makes legacy devices faster',
-      'It requires no configuration',
+      'It makes legacy devices respond noticeably faster',
+      'It works straight out of the box with no configuration',
     ],
     correctAnswer: 1,
     explanation:

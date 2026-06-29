@@ -38,9 +38,9 @@ const checks = [
     question:
       'A customer says she’s “going solar” — what is the first question you should ask before quoting electrical work?',
     options: [
-      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase — because the fundamental psychological nutrients for self-motivated behaviour are present',
-      'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
-      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
+      'Which direction the roof faces and what the pitch angle is, so you can estimate the annual yield before pricing the panels and inverter.',
+      'Whether she has off-street parking, because the solar inverter has to sit within a metre of the customer’s car for the export metering to work.',
+      'What size battery she wants, since every solar installation has to include lithium storage to be connected to the grid under current rules.',
       'Whether the panels are solar PV (electrical, generates power) or solar thermal (plumbing, heats water) — the two get the same name on the high street but only PV is in your scope.',
     ],
     correctIndex: 3,
@@ -52,10 +52,10 @@ const checks = [
     question:
       'Which BS 7671 Part 7 section governs the electrical installation of a solar PV system in a UK home?',
     options: [
-      'Provides evidence of due diligence and compliance',
+      'Section 701 (Locations containing a bath or shower).',
       'Section 712 (Solar photovoltaic (PV) power supply systems).',
-      'The total earth fault loop impedance at the furthest point',
-      '450mm from floor level (accessibility guidance)',
+      'Section 722 (Electric vehicle charging installations).',
+      'Section 704 (Construction and demolition site installations).',
     ],
     correctIndex: 1,
     explanation:
@@ -67,9 +67,9 @@ const checks = [
       'A heat pump (air-source or ground-source) is a “micro-renewable” — but in what sense? It uses electricity, doesn’t it?',
     options: [
       'It uses electricity, but a small input drives a much larger heat output by moving heat from outside air or the ground into the house — typically 3 kW of heat for every 1 kW of electricity (a Coefficient of Performance around 3).',
-      'Standard or Enhanced fire-resistant cable (e.g. FP200 / Firetuf), separation from other circuits, and fire-rated supports/clips that survive collapse temperatures',
-      '10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.',
-      'The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained',
+      'It burns a renewable fuel such as wood pellets or biogas, so the electricity it draws is only for the controls and the circulating pump rather than for making heat.',
+      'It generates its own electricity from the temperature difference between the outside air and the house, exporting the surplus back to the grid like a small solar panel.',
+      'It is renewable only because it runs on a time-of-use tariff and charges overnight, shifting its electricity use to when the grid is greenest rather than producing any heat itself.',
     ],
     correctIndex: 0,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     question:
       'A customer wants an air-source heat pump. From the electrician’s point of view, what new electrical work is normally involved?',
     options: [
-      'An Electrical Installation Certificate (EIC), accompanied by a Schedule of Inspections AND a Schedule of Test Results — the three-document set required by Section 644 for full initial verification.',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
+      'A spur off the nearest 32 A ring final, fused down to 13 A at a switched FCU, because a heat pump draws no more than a domestic appliance.',
+      'A 16 A lighting-circuit extension in 1.5 mm² T&E, since the heat pump’s controls run at the same load as a few downlights.',
       'A dedicated 32 A radial circuit (often 6 mm² T&E, sometimes 4 mm² depending on the heat pump rating) from the consumer unit, with its own MCB/RCBO and a local rotary isolator beside the outdoor unit.',
-      'Implement regular safety inspections, formal audits of the CPP and risk controls, near-miss reporting, toolbox talks, lessons-learned reviews, worker consultation forums, trend analysis of incidents, and regular CPP updates based on findings',
+      'A three-phase 415 V supply, because every domestic air-source heat pump requires a three-phase upgrade before it can be connected.',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question:
       'Solar PV and solar thermal both sit on the roof and both run on sunlight. What’s the practical difference for an apprentice electrician?',
     options: [
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'Per CAR 2012 Reg 6 (assessment) + Reg 8 (licensed work) + HSE guidance L143. Considers: type of asbestos (chrysotile/amosite/crocidolite); friability; quantity; nature of work (removal vs encapsulation vs observation); duration; exposure level.',
-      'Natural England is the government\\\\\\\\\\\\\\\'s statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters',
+      'Solar PV and solar thermal are the same product sold under two names; the only difference is the warranty length, so the install work is identical for the electrician.',
+      'Solar thermal generates the electricity and solar PV heats the water — the names are simply swapped round from what most customers expect.',
+      'Both are purely plumbing jobs; the electrician is never involved in either because all the wiring is pre-terminated at the factory.',
       'Solar PV generates DC electricity (your job) and feeds an inverter; solar thermal heats a glycol fluid loop that pre-heats the hot water cylinder (a plumber’s job, with only minor electrical work for the pump and controller).',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
       'A “domestic” wind turbine — say, on a farmhouse with a tall mast — is typically what power range, and what BS 7671 territory governs the connection?',
     options: [
       'Up to 50 kW; the connection is governed by the same generation rules as PV — BS 7671 Section 551 (low voltage generating sets) and the ENA G98/G99 framework.',
-      'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
-      'Wet surfaces increase the risk of slipping during climbing, and waterlogged ground may not support the tower adequately',
-      'EAWR (almost always Reg 4, sometimes Reg 14 or 16) — brought by the Health and Safety Executive (HSE), or in a domestic context the Local Authority. HASAWA s.7 may be charged in parallel.',
+      'Up to 50 kW; the connection has its own dedicated BS 7671 Part 7 section, Section 710 (wind installations), separate from the PV rules.',
+      'Up to 500 kW; domestic wind is always three-phase HV work governed by the Distribution Code rather than BS 7671 at all.',
+      'Up to 5 kW; the connection is treated as a portable generator under Section 551.4.3 (standby supplies) and never runs in parallel with the grid.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Battery storage (lithium-ion) tied into a domestic PV system — what additional regulation territory does it bring with it?',
     options: [
-      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
+      'None at all — once a battery is downstream of the PV inverter it is treated as ordinary load and inherits no extra rules beyond the standard ring-final requirements.',
       'It brings DC isolation requirements, additional DC overcurrent protection, fire-segregation considerations and (for grid-tied operation) the same G98/G99 anti-islanding requirements that apply to the PV inverter — typically all wrapped up by a hybrid inverter that handles PV plus battery.',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
-      'Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note "no documentation available" as a limitation against affected items on the schedule.',
+      'Only a bonding requirement — the battery enclosure has to be supplementary-bonded to the PV array frame and nothing else changes electrically.',
+      'Only a labelling requirement — a single warning notice at the consumer unit covers everything, with no impact on isolation, overcurrent or fire protection.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'Micro-CHP (Combined Heat and Power) at domestic scale — what’s the principle?',
     options: [
-      'The TN type — TN-S, TN-C-S (PME), TT — because earthing arrangement, main earthing conductor sizing, main bonding sizing, EV protection method, and Zs at every final circuit all depend on it.',
-      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
+      'A bank of PV panels combined with a battery, generating electricity by day and storing it for the evening — the heat is a by-product of the inverter.',
+      'A heat pump that runs in reverse during summer, dumping waste heat to the outside air while generating electricity from the temperature difference.',
       'A small generator (often a Stirling engine or fuel cell) burns gas to make heat AND electricity at the same time, with the heat captured for hot water and the electricity used in the house or exported.',
-      'Team members will increasingly respond from the Adapted Child ego state, becoming compliant but disengaged, or from the Rebellious Child state, creating conflict',
+      'A standby diesel generator that only runs in a power cut, providing both heat and electricity to the property during the outage.',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     question:
       'A small stream runs through a customer’s land. They ask about micro-hydro. What’s the realistic scale for a private install?',
     options: [
-      'A source of electrical energy that must be treated as live whenever daylight is present, requiring safe systems of work, competent persons, and appropriate isolation procedures — the duty holder has the same obligations as for any other electrical system',
-      'From notification of pregnancy onwards — the risk assessment should be carried out as soon as the employer is notified and reviewed as the pregnancy progresses',
-      'PM work orders are pre-planned, recurring tasks aimed at preventing failure, while corrective work orders respond to failures that have already occurred',
+      '5–50 MW — micro-hydro at private scale is really a small commercial power station and always needs a transmission-level connection agreement.',
+      'Under 1 kW in every case — a domestic stream can only ever run a trickle-charger for a battery, never a grid-tied system.',
+      'Fixed at exactly 3.68 kW regardless of the site, because all micro-generation is capped at the single-phase G98 threshold.',
       '1–100 kW depending on the head (vertical drop) and the flow rate — at the small end, the same kind of single-phase grid-connected system as a PV install; at the larger end, three-phase and a full G99 application.',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
       'Why do we lump heat pumps in with “micro-renewables” when they consume electricity rather than producing it?',
     options: [
       'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
-      'Default credentials must be changed, firmware kept up to date, internet-facing components segregated where possible, and data shared with third-party platforms reviewed for privacy and security implications',
-      'Theft, accidental damage, fire and loss of tools across various circumstances — on site, in transit, from vehicles. Check policy exclusions carefully: many exclude \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'theft from unattended vehicle overnight\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' unless specifically extended; many limit cover per item.',
-      'The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits',
+      'Because the electricity they consume is always supplied from a renewable tariff, so the carbon credit comes from the energy supplier rather than the appliance itself.',
+      'Because the refrigerant they use is a renewable gas that is regenerated each cycle, which is what classes them as a renewable technology.',
+      'Because they generate more electricity than they consume through a small turbine in the outdoor fan, exporting the surplus back to the grid.',
     ],
     correctAnswer: 0,
     explanation:

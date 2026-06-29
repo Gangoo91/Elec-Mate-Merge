@@ -27,16 +27,16 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'What is the maximum recommended saddle spacing for horizontal PVC conduit?',
-    options: ['2.5m', '1.2m', '3.0m'],
-    correctIndex: 1,
+    options: ['1.2m', '2.5m', '3.0m'],
+    correctIndex: 0,
     explanation:
       'PVC conduit requires closer spacing (1.2m max) due to its flexibility and thermal expansion properties compared to steel conduit.',
   },
   {
     id: 3,
     question: 'Which fixing type is most suitable for heavy loads in concrete ceilings?',
-    options: ['Wall plugs', 'Drop-in anchors', 'Self-tapping screws'],
-    correctIndex: 1,
+    options: ['Wall plugs', 'Self-tapping screws', 'Drop-in anchors'],
+    correctIndex: 2,
     explanation:
       'Drop-in anchors provide the highest load capacity and most secure fixing for heavy containment systems in concrete substrates.',
   },
@@ -49,45 +49,49 @@ const Module4Section4_1 = () => {
     {
       id: 1,
       question: 'What is the typical maximum saddle spacing for horizontal steel conduit?',
-      options: ['1.2 m', '2.5 m', '3.0 m'],
-      correctAnswer: 1,
+      options: ['2.5 m', '1.2 m', '3.0 m'],
+      correctAnswer: 0,
       explanation:
         'Steel conduit can be supported at 2.5m intervals due to its structural strength and rigidity compared to PVC.',
     },
     {
       id: 2,
       question: 'Which fixing is most suitable for securing to concrete ceilings for heavy loads?',
-      options: ['Wood screws', 'Drop-in anchors', 'Hollow wall anchors'],
-      correctAnswer: 1,
+      options: ['Wood screws', 'Hollow wall anchors', 'Drop-in anchors'],
+      correctAnswer: 2,
       explanation:
         'Drop-in anchors provide the highest load capacity and most secure connection to concrete substrates.',
     },
     {
       id: 3,
       question:
-        "True or False: It's acceptable to drill into a surface without checking for hidden services if you're confident in the layout.",
-      options: ['True', 'False'],
+        "Is it acceptable to drill into a surface without checking for hidden services if you're confident in the layout?",
+      options: [
+        'Yes - experience makes detection unnecessary',
+        'No - always use detection equipment first',
+        'Yes - provided the power is switched off',
+      ],
       correctAnswer: 1,
       explanation:
-        'False. Always use detection equipment to check for hidden services - confidence in layout is not sufficient for safety.',
+        'Always use detection equipment to check for hidden services - confidence in layout is not sufficient for safety.',
     },
     {
       id: 4,
       question: 'What type of fixing is best for damp environments?',
       options: [
         'Standard steel fixings',
-        'Stainless steel or galvanised fixings',
         'Plastic fixings only',
+        'Stainless steel or galvanised fixings',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Stainless steel or galvanised fixings resist corrosion in damp conditions, ensuring long-term installation integrity.',
     },
     {
       id: 5,
       question: 'Why is PVC conduit spaced closer than steel conduit?',
-      options: ['PVC is heavier', 'PVC is more flexible and sags more easily', 'PVC is cheaper'],
-      correctAnswer: 1,
+      options: ['PVC is more flexible and sags more easily', 'PVC is heavier', 'PVC is cheaper'],
+      correctAnswer: 0,
       explanation:
         "PVC's flexibility means it requires closer support spacing to prevent sagging and maintain proper cable protection.",
     },
@@ -95,11 +99,11 @@ const Module4Section4_1 = () => {
       id: 6,
       question: 'Name two common fixing mistakes.',
       options: [
+        'Drilling pilot holes and clearing dust from the hole',
         'Over-tightening and using wrong fixing type',
-        'Under-tightening and correct spacing',
-        'Proper marking and level installation',
+        'Marking out runs and levelling the bracket',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Over-tightening can deform containment, while wrong fixing types may not provide adequate support or fail under load.',
     },
@@ -107,11 +111,11 @@ const Module4Section4_1 = () => {
       id: 7,
       question: 'What extra consideration should be made when working near vibrating equipment?',
       options: [
-        'Use standard fixings',
         'Use vibration-resistant fixings and locking nuts',
+        'Use standard fixings',
         'Increase spacing between supports',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Vibration can loosen standard fixings over time, so vibration-resistant fixings and locking nuts prevent failure.',
     },
@@ -120,10 +124,10 @@ const Module4Section4_1 = () => {
       question: 'Why should supports be added near bends and junctions?',
       options: [
         'To look more professional',
-        'To provide extra strength and prevent sagging or movement',
         'To use more materials',
+        'To provide extra strength and prevent sagging or movement',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Bends and junctions create stress concentration points requiring additional support to maintain structural integrity.',
     },

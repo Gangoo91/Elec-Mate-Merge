@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'According to decades of research, what is the single strongest protective factor against stress and mental health problems?',
     options: [
-      'High income and financial security',
       'Social connection and supportive relationships',
+      'High income and financial security',
       'Physical fitness and regular exercise',
       'Access to professional therapy and counselling',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Research consistently identifies social connection as the strongest protective factor against stress, depression, anxiety and a range of mental health problems. The Harvard Study of Adult Development, one of the longest-running studies in history, found that the quality of relationships is the single best predictor of health and happiness across the lifespan — more powerful than income, physical health or career success.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       'What is the primary purpose of the Mates in Mind programme in the construction industry?',
     options: [
       'To provide free counselling for construction workers',
-      'To raise awareness, address stigma and improve mental health support in the construction sector',
       'To train construction workers as qualified therapists',
       'To conduct annual mental health screenings on construction sites',
+      'To raise awareness, address stigma and improve mental health support in the construction sector',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Mates in Mind is a UK charity that works specifically with the construction industry to raise awareness of mental health, address the stigma that prevents people from seeking help, and improve the mental health support available within the sector. It provides resources including toolbox talks, manager training, and signposting to professional support — all designed for the realities of construction working life.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'What is the most important thing you can do when a colleague opens up about their mental health?',
     options: [
+      'Listen actively without judgement and let them know you are there for them',
       'Immediately offer advice and solutions',
       'Tell them about your own similar experiences',
-      'Listen actively without judgement and let them know you are there for them',
       'Suggest they take time off work to recover',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Active listening without judgement is the most powerful form of peer support. When someone opens up, they usually need to be heard, not fixed. Jumping straight to advice, sharing your own story, or suggesting solutions can feel dismissive — even when well-intentioned. Simply listening, acknowledging what they are going through, and letting them know you care is often more helpful than any specific advice you could offer.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
     question: 'The Lighthouse Club construction helpline provides which of the following services?',
     options: [
       'Free legal advice for construction disputes only',
-      'Financial, emotional, physical and wellbeing support for construction workers and their families',
       'Job placement services for unemployed construction workers',
       'Health and safety training courses for site managers',
+      'Financial, emotional, physical and wellbeing support for construction workers and their families',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Lighthouse Club is the only charity dedicated to the construction community. Their helpline (0345 605 1956) provides a comprehensive range of support including financial emergency assistance, emotional and wellbeing support, occupational health advice, and legal guidance. They also provide support for families of construction workers, recognising that workplace stress affects the whole household.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'Which of the following is NOT a key helpline or support organisation for construction workers?',
     options: [
       'Lighthouse Club (0345 605 1956)',
-      'Samaritans (116 123)',
       'Construction Skills Certification Scheme (CSCS)',
+      'Samaritans (116 123)',
       "Andy's Man Club (free weekly groups)",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "CSCS (Construction Skills Certification Scheme) is a skills and competence card scheme for construction, not a mental health support service. The Lighthouse Club, Samaritans and Andy's Man Club all provide direct mental health and wellbeing support relevant to construction workers. The Lighthouse Club is specifically for the construction community; the Samaritans provide 24/7 emotional support for anyone; and Andy's Man Club runs free weekly peer support groups for men.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is a toolbox talk in the context of mental health awareness?',
     options: [
-      'A formal mental health assessment conducted by a qualified professional',
       'A short, informal team briefing on a specific health or wellbeing topic, delivered on site',
+      'A formal mental health assessment conducted by a qualified professional',
       'A mandatory training course that all construction workers must complete annually',
       'A one-to-one counselling session between a worker and their line manager',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A toolbox talk is a short (typically 10-15 minute), informal team briefing delivered on site, usually at the start of the working day or during a break. Traditionally used for health and safety topics, toolbox talks are increasingly being used to raise awareness of mental health, normalise conversations about wellbeing, and signpost support resources. Mates in Mind provides ready-made toolbox talk resources specifically designed for construction audiences.',
   },
@@ -188,11 +188,11 @@ const quizQuestions = [
       'Why is social connection particularly challenging for self-employed electricians and sole traders?',
     options: [
       'Self-employed workers do not experience stress',
-      'Sole traders typically work alone, lack a built-in team, have irregular contact with peers, and may miss workplace support structures',
       'Self-employed workers are not eligible for any mental health support services',
       'Social connection is only beneficial for employed workers, not the self-employed',
+      'Sole traders typically work alone, lack a built-in team, have irregular contact with peers, and may miss workplace support structures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Self-employed electricians and sole traders face unique challenges: they often work alone for extended periods, do not have a built-in team or workplace social structure, miss out on informal peer support that happens naturally in team environments, and may lack access to employer-provided wellbeing resources. This isolation is a significant risk factor for mental health problems, which is why building deliberate social connections — through trade groups, peer networks, professional associations and community activities — is particularly important for the self-employed.',
   },

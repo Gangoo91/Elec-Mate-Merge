@@ -11,12 +11,12 @@ const quizQuestions = [
     question:
       'What is the most important criterion when evaluating whether a digital tool is worth adopting?',
     options: [
-      'Whether it has the most features of any tool in its category',
       'Whether it saves more time than it costs to learn and maintain',
+      'Whether it has the most features of any tool in its category',
       'Whether it is the cheapest option available',
       'Whether your competitors are using it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fundamental test for any tool is the return on time invested. A tool that takes 10 hours to learn but saves 2 hours per week pays for itself in 5 weeks. A tool with impressive features that takes 40 hours to learn and saves 15 minutes per week will never pay back the investment. Always evaluate tools by net time saved, not by feature count.',
   },
@@ -26,9 +26,9 @@ const quizQuestions = [
       'What does the "if it is not in the calendar, it does not exist" principle mean in practice?',
     options: [
       'Only attend events that appear in your calendar app',
-      'Every commitment, job, reminder, and deadline must be recorded in your calendar to be considered real',
-      'Delete any tasks that are not scheduled for today',
-      'Use the calendar only for client-facing appointments',
+      'Every commitment and deadline must be in the calendar to be treated as real',
+      'Delete any task that is not scheduled for today',
+      'Reserve the calendar solely for client-facing appointments',
     ],
     correctAnswer: 1,
     explanation:
@@ -38,12 +38,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the "one-tool trap" in digital organisation?',
     options: [
-      'Using only one tool for everything, forcing it into roles it was not designed for',
       'Having too many tools that overlap in functionality',
-      'Relying on a free tool that might become paid',
+      'Relying on a free tool that may later become paid',
+      'Forcing one tool into roles it was never designed for',
       'Using only paper-based systems instead of digital tools',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'The one-tool trap occurs when you try to force a single tool to handle every function \u2014 using a notes app as a calendar, a spreadsheet as a CRM, or an email inbox as a task list. Each function has tools designed specifically for it, and using the right tool for each function is more efficient than wrestling one tool into doing everything poorly.',
   },
@@ -53,11 +53,11 @@ const quizQuestions = [
       'Which combination of digital tools covers the essential needs of a sole-trader electrician?',
     options: [
       'Social media scheduler, website builder, and email marketing platform',
-      'Calendar, invoicing/accounting, certification app, cloud storage, and a notes/task app',
-      'Project management suite, enterprise CRM, and a dedicated server',
-      'Only a smartphone with the default apps is sufficient',
+      'Project management suite, enterprise CRM, and a dedicated office server',
+      'A single smartphone with only its default apps and nothing more',
+      'Calendar, invoicing, certification app, cloud storage, and a notes app',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A sole trader needs tools for scheduling (calendar), finances (invoicing/accounting), compliance (certification app), document storage (cloud), and task/note management. These five categories cover the core operational needs. Additional tools may be useful, but these are the essential foundations that every electrical business requires.',
   },
@@ -65,12 +65,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the key benefit of automating recurring invoices?',
     options: [
-      'It allows you to charge higher prices',
-      'It eliminates the manual step of creating and sending invoices for regular clients, ensuring consistent cash flow',
-      'It removes the need for an accounting system',
-      'It guarantees faster payment from all clients',
+      'It removes the manual step of invoicing regular clients, steadying cash flow',
+      'It allows you to charge regular clients higher prices',
+      'It removes the need for a separate accounting system',
+      'It guarantees faster payment from every client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Recurring invoice automation removes a manual admin task that is easily forgotten. For electricians with regular maintenance contracts (e.g. PAT testing, EICR programmes for letting agents), automated invoicing ensures the invoice is sent on the agreed date every month or quarter without requiring you to remember and manually create it. This consistency improves cash flow.',
   },
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is cloud storage considered essential rather than optional for electricians?',
     options: [
-      'Because it is cheaper than buying a computer',
-      'Because it provides automatic backup, multi-device access, and protection against device loss or failure',
-      'Because clients legally require cloud-based documentation',
-      'Because it replaces the need for a filing system',
+      'Because it is cheaper than buying a dedicated office computer',
+      'Because it gives automatic backup, multi-device access, and loss protection',
+      'Because clients are legally required to hold cloud-based documentation',
+      'Because it removes any need for a physical filing system',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,12 +92,12 @@ const quizQuestions = [
     question:
       'When evaluating a new digital tool, what is a practical first step before committing?',
     options: [
-      'Purchase the annual subscription immediately to get the best price',
-      'Use the free trial or free tier for 2\u20134 weeks on real jobs to assess whether it genuinely saves time',
-      'Read every online review before making any decision',
-      'Ask a colleague to set it up for you',
+      'Buy the annual subscription straight away to lock in the best price',
+      'Read every available online review before deciding either way',
+      'Trial the free tier for 2\u20134 weeks on real jobs to test the time saving',
+      'Ask a colleague to set the tool up and configure it for you',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 2\u20134 week trial on real work is the only reliable way to assess whether a tool fits your workflow. Online reviews tell you about other people\u2019s experience; a trial tells you about yours. Use it on actual jobs, not hypothetical scenarios, and track whether it genuinely saves time versus your current method.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the recommended approach to mileage tracking for electricians?',
     options: [
-      'Estimate your mileage at the end of the tax year',
-      'Use an automatic mileage tracking app that records journeys via GPS, eliminating manual logging',
-      'Keep a paper logbook in the glove box and write down every journey',
-      'Only track mileage for journeys over 50 miles',
+      'Estimate the year’s total mileage at the end of the tax year',
+      'Keep a paper logbook in the glove box and note every journey',
+      'Only track mileage for business journeys over 50 miles',
+      'Use a GPS mileage app that logs every journey automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Automatic mileage tracking apps use GPS to record every business journey without any manual input. This eliminates the daily discipline of writing down odometer readings, ensures no journeys are missed, and provides HMRC-compliant reports at tax time. For electricians who may visit 3\u20135 sites per day, manual logging is unreliable and time-consuming.',
   },
@@ -326,9 +326,9 @@ export default function TMOModule4Section2() {
             question="A sole-trader electrician currently manages everything through WhatsApp messages to himself, a paper diary, and a shoebox of receipts. Which essential tool category should he adopt first for the biggest impact?"
             options={[
               'A project management suite with Gantt charts and resource allocation',
-              'A digital calendar as the single source of truth for all commitments and deadlines',
-              'A social media management platform to grow his business',
-              'An enterprise CRM system to track all client interactions',
+              'A digital calendar as the single source of truth for every commitment',
+              'A social media management platform to grow and market his business',
+              'An enterprise CRM system to track every client interaction in detail',
             ]}
             correctIndex={1}
             explanation="The calendar is the foundation. Until all commitments live in one place, everything else is built on sand. A digital calendar is free, takes minutes to set up, and immediately eliminates the risk of forgotten jobs, missed deadlines, and double-bookings. Once the calendar is established, add invoicing, then cloud storage, building one layer at a time."
@@ -503,10 +503,10 @@ export default function TMOModule4Section2() {
             id="tmo-4-2-integration"
             question="An electrician tracks his jobs in a paper diary, sends invoices from a Word template via email, stores certificates on his phone's camera roll, and keeps receipts in a carrier bag. What is the primary problem with this setup?"
             options={[
-              'He is not using enough tools',
-              'Nothing integrates, data is siloed in disconnected systems, and retrieval is slow and unreliable',
-              'Paper diaries are illegal for business use',
-              'He should be using a single app for everything instead',
+              'He is simply not using enough separate tools for the job',
+              'Nothing integrates: data is siloed and retrieval is slow and unreliable',
+              'Paper diaries are not legally permitted for business record-keeping',
+              'He should be running a single app to handle everything instead',
             ]}
             correctIndex={1}
             explanation="The core problem is disconnected systems. Job data in a paper diary cannot be linked to invoices in Word or certificates in the camera roll. Nothing is backed up. Retrieval requires physical searching. A letting agent asking for a certificate from 6 months ago requires scrolling through hundreds of camera roll photos. Connected digital tools solve all of these problems."

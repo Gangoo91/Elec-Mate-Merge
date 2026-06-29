@@ -9,21 +9,21 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m3s3-check1',
     question: 'What is the minimum RCD type required for EV charging according to BS 7671?',
-    options: ['Type AC RCD', 'Type A RCD', 'Type B RCD', 'No RCD required'],
-    correctIndex: 1,
+    options: ['Type A RCD', 'Type AC RCD', 'Type B RCD', 'No RCD required'],
+    correctIndex: 0,
     explanation:
-      'Regulation 722.531.2.101 specifies Type A RCD as the minimum requirement for EV charging, with Type B preferred for enhanced protection against all residual current types including smooth DC.',
+      'Regulation 722.531.3.101 sets a Type A RCD as the minimum, but only where DC fault protection is provided separately — typically a 6mA DC residual current detection device (RDC-DD) within the chargepoint, or a Type B RCD which detects smooth DC directly.',
   },
   {
     id: 'evcharging-m3s3-check2',
     question: 'How should circuit breakers be sized for sustained EV loading?',
     options: [
-      'Equal to the design current',
+      'Exactly equal to the design current',
+      'At double the design current for headroom',
       'MCB rating ≥ design current and ≤ cable capacity',
-      'As large as possible',
-      'Double the design current',
+      'The largest rating the busbar will accept',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'MCB rating should be greater than or equal to the design current (Ib) and less than or equal to the cable current-carrying capacity (Iz), accounting for sustained loading and derating factors.',
   },
@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m3s3-check3',
     question: 'When are SPDs (Surge Protection Devices) required for EV charging?',
     options: [
-      'Never required',
-      'Always mandatory',
+      'They are never required for EV charging',
+      'They are mandatory on every EV installation',
+      'They are only needed on three-phase installations',
       'Based on risk assessment, especially for outdoor installations',
-      'Only for three-phase installations',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'SPDs are required based on risk assessment, particularly for outdoor installations and areas with high lightning activity. They protect sensitive EV charging equipment from transient overvoltages.',
   },

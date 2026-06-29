@@ -66,12 +66,12 @@ const checks = [
     id: 'maths-prefix-check',
     question: 'Your insulation tester reads 250 MΩ. What is that in ohms?',
     options: [
-      '0.25 Ω',
-      '2,500,000 Ω',
       '250,000,000 Ω',
+      '2,500,000 Ω',
+      '0.25 Ω',
       '250,000 Ω',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Mega means × 1,000,000. 250 × 1,000,000 = 250,000,000 Ω. Massive — which is exactly what you want from insulation between live and earth.',
   },
@@ -115,7 +115,7 @@ const quizQuestions = [
     options: [
       'R = I ÷ V',
       'R = V × I',
-      'R = V + I',
+      'R = I × V',
       'R = V ÷ I',
     ],
     correctAnswer: 3,

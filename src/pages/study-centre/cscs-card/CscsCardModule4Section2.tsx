@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'asbestos-ban-year',
     question: 'In what year was asbestos fully banned in the United Kingdom?',
     options: [
-      '1985 — after the first wave of asbestos-related deaths were reported',
-      '1992 — when the first Control of Asbestos Regulations were introduced',
       '1999 — when all forms of asbestos were prohibited in the UK',
+      '1992 — when the first Control of Asbestos Regulations were introduced',
+      '1985 — after the first wave of asbestos-related deaths were reported',
       '2006 — when the Health and Safety Executive updated its guidance',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Asbestos was fully banned in the UK in 1999. Blue (crocidolite) and brown (amosite) asbestos were banned in 1985, but white (chrysotile) asbestos continued to be used until 1999. Any building constructed or refurbished before 2000 may contain asbestos-containing materials (ACMs).',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is NOT one of the three main types of asbestos?',
     options: [
-      'Chrysotile (white asbestos)',
-      'Amosite (brown asbestos)',
       'Vermiculite (grey asbestos)',
+      'Amosite (brown asbestos)',
       'Crocidolite (blue asbestos)',
+      'Chrysotile (white asbestos)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The three main types of asbestos are chrysotile (white), amosite (brown), and crocidolite (blue). Vermiculite is a different mineral altogether, although some vermiculite deposits were contaminated with asbestos. There is no such thing as 'grey asbestos' as a recognised type.",
   },
@@ -91,8 +91,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Approximately how many asbestos-related deaths occur per year in the United Kingdom?',
-    options: ['Around 500', 'Around 2,000', 'Around 5,000', 'Around 10,000'],
-    correctAnswer: 2,
+    options: ['Around 500', 'Around 5,000', 'Around 2,000', 'Around 10,000'],
+    correctAnswer: 1,
     explanation:
       'There are approximately 5,000 asbestos-related deaths per year in the UK. This includes around 2,500 deaths from mesothelioma and a similar number from asbestos-related lung cancer and asbestosis. Asbestos remains the single greatest cause of work-related deaths in the UK.',
   },
@@ -116,10 +116,10 @@ const quizQuestions = [
     options: [
       'Fuse box and consumer unit backings',
       'Textured ceiling coatings (Artex)',
-      'Modern PVC trunking installed in 2020',
       'Floor tiles beneath a cable route',
+      'Modern PVC trunking installed in 2020',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Modern PVC trunking installed in 2020 would not contain asbestos because asbestos has been banned in the UK since 1999. Fuse box backings, textured coatings (Artex), and floor tiles in pre-2000 buildings could all contain asbestos and must be treated with caution.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       'Under Regulation 4 of the Control of Asbestos Regulations 2012, the duty holder must do all of the following EXCEPT:',
     options: [
-      'Find or presume the location of asbestos-containing materials',
-      'Assess the condition of any ACMs found and record them in a register',
       'Personally remove all ACMs from the premises within 12 months',
+      'Assess the condition of any ACMs found and record them in a register',
+      'Find or presume the location of asbestos-containing materials',
       'Inform anyone who might work on or disturb ACMs about their location and condition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The duty to manage does NOT require the duty holder to remove all ACMs. In many cases, asbestos in good condition is safer left in place and managed rather than disturbed through removal. The duty holder must find ACMs, assess their condition, create a management plan, maintain a register, and inform workers — but removal is only required when ACMs are damaged, deteriorating, or likely to be disturbed by planned work.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the typical latency period between asbestos exposure and the development of asbestos-related disease?',
-    options: ['1 to 5 years', '5 to 10 years', '15 to 60 years', 'Over 100 years'],
-    correctAnswer: 2,
+    options: ['1 to 5 years', '15 to 60 years', '5 to 10 years', 'Over 100 years'],
+    correctAnswer: 1,
     explanation:
       'Asbestos-related diseases have a very long latency period — typically between 15 and 60 years from the time of exposure. This means that a worker exposed to asbestos today may not develop symptoms until decades later. Mesothelioma, for example, is typically diagnosed 30 to 40 years after initial exposure. This long latency period is one of the reasons why asbestos-related deaths continue to be so high despite the 1999 ban.',
   },
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: 'Which category of asbestos work requires an HSE-licensed contractor?',
     options: [
       'Removing a single asbestos cement roof sheet in good condition',
-      'Removing asbestos insulation (lagging) from pipework',
       'Painting over asbestos insulating board in good condition',
+      'Removing asbestos insulation (lagging) from pipework',
       'Cleaning up small amounts of loose asbestos-containing debris',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Removing asbestos insulation (lagging) from pipework is licensed work that must be carried out by an HSE-licensed contractor. Asbestos insulation, sprayed coatings, and lagging are the highest-risk ACMs and their removal always requires a licence. Removing a single asbestos cement sheet in good condition is typically non-licensed work. Painting over AIB in good condition may be non-licensed, and cleaning up small amounts of debris may be NNLW depending on the circumstances.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'Before starting electrical work in a pre-2000 building, what should you ALWAYS check first?',
     options: [
       'Whether the building has a valid Electrical Installation Condition Report',
-      "Whether the building's asbestos register has been checked for your work area",
       'Whether the building has a current fire risk assessment on display',
       "Whether the building's energy performance certificate is up to date",
+      "Whether the building's asbestos register has been checked for your work area",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Before starting any work in a building that may contain asbestos — particularly pre-2000 buildings — you must always check the asbestos register for your specific work area. The register will tell you the known locations and condition of ACMs. If the register does not cover your work area, or if no register exists, you must raise this with the duty holder before starting work. Never assume an area is free of asbestos just because it looks modern or has been recently decorated.',
   },

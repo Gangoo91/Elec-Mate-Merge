@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'A transformer works by:',
     options: [
-      'They must be removed before the tower is moved',
+      'A direct electrical connection between primary and secondary',
       'Mutual induction between two coils on a magnetic core',
-      'Different power factors affecting total current',
-      'Breaking capacity ≥ Ipf at installation point',
+      'Mechanical rotation of one winding past the other',
+      'Rectifying the AC supply to a smoothed DC output',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'In an ideal transformer, input apparent power equals:',
     options: [
       'Output (V1 × I1 = V2 × I2)',
-      'Manual Handling Assessment Charts',
-      'Water, foam, or dry powder',
-      'All electronic components',
+      'Twice the output power',
+      'Output plus the iron and copper losses',
+      'Output divided by the turns ratio',
     ],
     correctAnswer: 0,
     explanation: 'Power conservation. V1 × I1 = V2 × I2. Real transformers have small losses.',
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'An isolation transformer has:',
     options: [
-      'For the life of the installation (indefinitely for client), minimum six years for contractor',
-      'A hydraulic crimping tool with the manufacturer-specified die set matched to the lug barrel size',
+      'A turns ratio of at least 10:1 to step the voltage down',
+      'A single tapped winding shared between input and output',
       'Primary and secondary at the same voltage, no electrical connection between them',
-      'A protective conductor connecting exposed-conductive-parts to the main earthing terminal',
+      'Its secondary permanently bonded to the primary neutral',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,9 +172,9 @@ const quizQuestions = [
     question: 'Short-circuit test on a transformer measures:',
     options: [
       'Copper losses (winding I²R)',
-      'Q_C = P × (tan φ₁ − tan φ₂)',
-      'Output (V1 × I1 = V2 × I2)',
-      'To evaluate adequacy and compliance',
+      'Iron losses (hysteresis and eddy)',
+      'The magnetising current at no load',
+      'The insulation resistance to the core',
     ],
     correctAnswer: 0,
     explanation:

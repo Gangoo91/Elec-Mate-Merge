@@ -86,83 +86,103 @@ const EnergyEfficiencyModule4Section4: React.FC = () => {
   const quizQuestions = [
     {
       question:
-        'According to research, what is the typical payback period for behavioural energy programmes?',
-      options: ['3-5 years', '1-2 years', 'Less than 6 months', '5-10 years'],
+        'What is the typical payback period for behavioural energy programmes?',
+      options: ['Less than 6 months', '1-2 years', '3-5 years', '5-10 years'],
       correctAnswer: 'Less than 6 months',
+      explanation:
+        'Because behavioural measures are usually no-cost or low-cost yet deliver 5-20% savings, they typically pay back in under six months — among the fastest returns in energy management.',
     },
     {
-      question: 'Which of the following is NOT typically considered a behavioural measure?',
+      question: 'Which of the following is NOT a behavioural measure?',
       options: [
-        'Switching off lights when leaving',
-        'Installing LED lighting',
-        'Closing windows when heating is on',
+        'Switching off lights when leaving a room',
+        'Closing windows while the heating is on',
+        'Installing LED lighting throughout the building',
         'Reporting equipment faults promptly',
       ],
-      correctAnswer: 'Installing LED lighting',
+      correctAnswer: 'Installing LED lighting throughout the building',
+      explanation:
+        'Fitting LED lighting is a physical (capital) measure, not a behavioural one. The others all involve people changing how they act rather than changing the equipment.',
     },
     {
       question:
-        'What is the recommended frequency for energy awareness communications to maintain engagement without causing fatigue?',
+        'What communication frequency is recommended to keep energy awareness high without causing fatigue?',
       options: ['Daily', 'Weekly to fortnightly', 'Monthly', 'Quarterly'],
       correctAnswer: 'Weekly to fortnightly',
+      explanation:
+        'Weekly-to-fortnightly messaging sustains engagement while avoiding the message fatigue that comes with daily communication or the loss of momentum from monthly or quarterly contact.',
     },
     {
       question:
-        'Which psychological principle suggests that people are more motivated by potential losses than equivalent gains?',
-      options: ['Social proof', 'Loss aversion', 'Reciprocity', 'Authority bias'],
+        'Which psychological principle holds that people are more motivated by potential losses than by equivalent gains?',
+      options: ['Social proof', 'Reciprocity', 'Loss aversion', 'Authority bias'],
       correctAnswer: 'Loss aversion',
+      explanation:
+        'Loss aversion means a potential loss feels more significant than an equivalent gain, so framing wasted energy as money lost is often more persuasive than the same figure framed as a saving.',
     },
     {
       question:
-        'What percentage of UK commercial building energy is typically wasted through poor occupant behaviour?',
-      options: ['5%', '10-15%', '20-30%', '40-50%'],
+        'Roughly what percentage of UK commercial building energy is typically wasted through poor occupant behaviour?',
+      options: ['About 5%', '10-15%', '20-30%', '40-50%'],
       correctAnswer: '20-30%',
+      explanation:
+        'Studies suggest 20-30% of commercial building energy is wasted through behaviour — lights and equipment left on, open windows and poor setpoints — which is why behaviour change offers such large savings.',
     },
     {
       question:
         'Which metric is most useful for tracking the success of a behavioural change programme?',
       options: [
         'Total energy consumption',
-        'Energy intensity (kWh/m2)',
-        'Number of employees trained',
-        'Cost per kWh',
+        'The number of employees trained',
+        'Energy intensity (kWh/m²)',
+        'Cost per kWh from the supplier',
       ],
-      correctAnswer: 'Energy intensity (kWh/m2)',
+      correctAnswer: 'Energy intensity (kWh/m²)',
+      explanation:
+        'Energy intensity normalises consumption by floor area, allowing fair comparison over time and between sites. Raw totals shift with occupancy and weather, and tariff price is outside the programme’s control.',
     },
     {
       question: 'What is the "Hawthorne Effect" in the context of energy behaviour?',
       options: [
-        'Energy savings increase when people know they are being observed',
-        'Energy consumption rises in winter months',
+        'Energy consumption naturally rises during winter months',
+        'Energy savings increase simply because people know they are being observed',
         'People use more energy at home than at work',
-        'Older employees are more energy conscious',
+        'Older employees tend to be more energy conscious',
       ],
-      correctAnswer: 'Energy savings increase when people know they are being observed',
+      correctAnswer: 'Energy savings increase simply because people know they are being observed',
+      explanation:
+        'The Hawthorne Effect describes behaviour changing because people know they are being monitored. It can inflate early results, so baselines should be set before a programme is announced.',
     },
     {
       question: 'Which approach is most effective for sustaining long-term behavioural change?',
       options: [
         'One-off training sessions',
         'Financial penalties for waste',
+        'Mandatory compliance policies on their own',
         'Continuous engagement with regular reinforcement',
-        'Mandatory compliance policies only',
       ],
       correctAnswer: 'Continuous engagement with regular reinforcement',
+      explanation:
+        'Behaviour drifts back without upkeep, so ongoing communication, refreshed champions and recognition keep change alive. One-off training or penalties alone rarely produce lasting habits.',
     },
     {
       question: 'What is the recommended ratio of Green Champions to staff for effective coverage?',
       options: ['1:10', '1:25-50', '1:100', '1:200'],
       correctAnswer: '1:25-50',
+      explanation:
+        'Around one Green Champion per 25-50 staff gives enough local peer influence and coverage across teams without over-stretching volunteers or diluting the role.',
     },
     {
-      question: 'Which type of energy feedback display has shown the highest engagement rates?',
+      question: 'Which type of energy feedback display tends to achieve the highest engagement?',
       options: [
-        'Numerical kWh displays',
-        'Traffic light systems with comparative data',
+        'Plain numerical kWh displays',
         'Cost-only displays',
         'Carbon emission counters',
+        'Traffic light systems with comparative data',
       ],
       correctAnswer: 'Traffic light systems with comparative data',
+      explanation:
+        'Simple, visual traffic light displays that compare current use against a target are easy to read at a glance and prompt action, outperforming raw kWh, cost-only or carbon figures.',
     },
   ];
 

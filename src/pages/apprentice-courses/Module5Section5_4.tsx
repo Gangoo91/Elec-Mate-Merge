@@ -99,9 +99,9 @@ const Module5Section5_4 = () => {
       question: 'What is the best way to prevent conflicts before installation?',
       options: [
         'Check and follow coordinated site drawings',
-        'Safety, accessibility, aesthetics, or compliance',
-        'The householder who commissioned the work',
-        'In steel conduit with proper earthing',
+        'Install your services as quickly as possible',
+        'Always take the most direct route',
+        'Start before the other trades arrive',
       ],
       correctAnswer: 0,
       explanation:
@@ -111,10 +111,10 @@ const Module5Section5_4 = () => {
       id: 5,
       question: 'Why is it important not to block access panels?',
       options: [
-        'Test quarterly or recommended test frequency',
+        'To keep the installation looking tidy',
         'Because maintenance and safety access must be preserved',
-        'Variable output causing grid balancing issues',
-        'Ultrasonic (clamp-on transit time) flow meter',
+        'To save on the cost of materials',
+        'To make the cable run shorter',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,10 +124,10 @@ const Module5Section5_4 = () => {
       id: 6,
       question: 'Who is responsible for deciding service routing on site?',
       options: [
-        'Increase cable size for derating',
-        'Estimated rectification cost',
+        'Each electrician individually',
+        'The material supplier',
         'The site manager or coordinator',
-        'Weekly or fortnightly to prevent backlog',
+        'Whichever trade arrives first',
       ],
       correctAnswer: 2,
       explanation:
@@ -151,9 +151,9 @@ const Module5Section5_4 = () => {
       question: 'In risers and ceilings, how should you install services?',
       options: [
         'Neatly in line with agreed grid systems',
-        'Adequate terminal size and heat dissipation',
-        'Prevent spread of fire and smoke',
-        'The skin is red, blistered, and extremely painful',
+        'Wherever there is the most free space',
+        'As close to other services as possible',
+        'Without checking the coordination drawings',
       ],
       correctAnswer: 0,
       explanation:
@@ -163,10 +163,10 @@ const Module5Section5_4 = () => {
       id: 9,
       question: 'Give one example of a common conflict between electrical and plumbing.',
       options: [
-        'How bandwidth decreases with increasing fibre length',
+        'Two electricians sharing one ladder',
         'Trunking running where pipework is installed',
-        'How easily a material allows magnetic flux to pass',
-        'Whether the scene is safe (DANGER)',
+        'A delay in the cable delivery',
+        'A disagreement over working hours',
       ],
       correctAnswer: 1,
       explanation:

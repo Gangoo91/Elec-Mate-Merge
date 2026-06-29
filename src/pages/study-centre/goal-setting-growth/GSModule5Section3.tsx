@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'In Chris McChesney&rsquo;s 4 Disciplines of Execution (4DX), the &ldquo;Wildly Important Goal&rdquo; (WIG) principle states that you should focus on no more than one or two goals at a time. Why does this matter for an electrician planning their year?',
     options: [
-      'Because electricians are not capable of managing multiple priorities at once',
-      'Because spreading focus across too many goals leads to mediocre progress on all of them &mdash; concentrated effort on the wildly important few produces breakthrough results',
-      'Because regulatory bodies only allow electricians to pursue one qualification per year',
-      'Because it is easier to write one goal on a calendar than several',
+      'Because spreading focus across too many goals dilutes them all, while concentrating on a few drives breakthroughs',
+      'Because electricians as a group are simply not capable of managing multiple competing priorities at once',
+      'Because the regulatory bodies will only permit an electrician to pursue one qualification in any given year',
+      'Because it is administratively easier to write a single goal onto a wall calendar than to write several',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The WIG principle is grounded in the research finding that execution drops dramatically as the number of active goals increases. McChesney found that teams focusing on two or three goals would typically achieve two or three with excellence, while teams with four to ten goals typically achieved only one or two. When you try to advance everything simultaneously &mdash; a new qualification, a business expansion, a fitness goal, a financial target &mdash; your attention and energy are diluted. For an electrician, this means choosing the one or two goals that will have the greatest impact on your career or life in the coming year and giving them concentrated attention, rather than setting a long wish list of aspirations that receive scattered effort. This does not mean ignoring everything else &mdash; it means identifying what is wildly important and making that the priority.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'An electrician has been working towards their 2391 Inspection &amp; Testing qualification for 18 months but has failed the exam twice and lost motivation. They have already spent &pound;1,200 on courses and revision materials. According to the persist vs pivot vs stop framework, what should they do?',
     options: [
-      'Stop immediately &mdash; two failures proves the goal is unachievable',
-      'Persist with exactly the same approach &mdash; the money already spent means they must continue',
-      'Analyse why they failed (knowledge gaps, exam technique, study method), determine whether a change in strategy could produce a different result, and then decide whether to persist with a new approach, pivot to a related goal, or stop',
-      'Pivot to a completely different career outside the electrical industry',
+      'Stop immediately, on the basis that two failed attempts prove the goal is simply unachievable for them',
+      'Persist with exactly the same approach, since the money already spent means they have no choice but to continue',
+      'Analyse the cause of the failures, then decide whether to persist with a new approach, pivot, or stop',
+      'Pivot away to a completely different career outside the electrical industry altogether and start again',
     ],
     correctIndex: 2,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrician&rsquo;s ECS card expires in March 2027. The current BS 7671 amendment cycle suggests a new amendment may arrive in 2026. Their NICEIC annual assessment is in September, and their self-assessment tax return is due 31 January. If they want to plan their year strategically, which approach demonstrates the best use of a career progression calendar?',
     options: [
-      'Ignore all deadlines and deal with each one as it arrives &mdash; planning is a waste of time',
-      'Map all known deadlines onto a single calendar at the start of the year, identify preparation windows for each, and schedule study or admin time in advance so nothing is left to the last minute',
-      'Focus only on the ECS card renewal because it is the most important deadline',
-      'Wait until November to start thinking about the January tax return',
+      'Ignore all the deadlines and deal with each one only as it arrives, treating any planning as wasted time',
+      'Focus solely on the ECS card renewal, on the grounds that it is comfortably the most important deadline',
+      'Wait until late November before starting to think at all about the self-assessment tax return due in January',
+      'Map all deadlines onto one calendar at the year start, find each preparation window, and schedule the work in advance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A career progression calendar maps all known deadlines, renewal dates, exam windows, and regulatory changes onto a single timeline so that the electrician can prepare proactively rather than reactively. In this scenario, the electrician has at least four significant deadlines: the ECS card renewal (March 2027, but requiring CPD evidence gathered throughout the prior year), a potential BS 7671 amendment (requiring study time), the NICEIC annual assessment (September, requiring preparation of documentation and site readiness), and the self-assessment tax return (31 January, requiring financial records to be in order). Mapping these onto a calendar reveals preparation windows: for example, gathering CPD evidence throughout the year rather than scrambling in February, starting 18th Edition update study as soon as the amendment is published, preparing NICEIC documentation in July and August, and organising tax records quarterly rather than in a January panic. This proactive approach reduces stress, improves compliance, and frees up mental energy for actual work.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'In Chris McChesney&rsquo;s 4 Disciplines of Execution, what is a &ldquo;Wildly Important Goal&rdquo; (WIG)?',
     options: [
-      'Any goal that takes more than a year to achieve',
-      'The one or two goals that will make everything else easier or irrelevant if achieved &mdash; the goals that matter most and deserve concentrated focus',
-      'A goal that is so difficult it is unlikely to be achieved',
-      'A goal set by your employer rather than by yourself',
+      'The one or two goals that, if achieved, make everything else easier and deserve concentrated focus',
+      'Any goal that is large enough to take more than a full year of effort to achieve',
+      'A goal that is set so deliberately difficult that it is in practice unlikely to ever be achieved',
+      'A goal that has been set for you by your employer rather than one you chose for yourself',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Wildly Important Goal (WIG) is the one or two goals that, if achieved, would have the most significant impact on your career or life. The WIG principle is based on the finding that execution declines as the number of active goals increases. McChesney&rsquo;s research across thousands of teams found that the sweet spot is one or two WIGs at any given time. These are the goals that deserve your best effort and concentrated attention. Everything else is either a supporting activity or a lower-priority item that gets maintained but not aggressively pursued. For an electrician, the WIG might be &ldquo;pass the 2391 exam by July&rdquo; or &ldquo;grow my business to &pound;100k turnover this year&rdquo; &mdash; the single most important objective that, if achieved, would transform your career trajectory.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'What is a &ldquo;lead measure&rdquo; in the 4DX framework, and how does it differ from a &ldquo;lag measure&rdquo;?',
     options: [
-      'A lead measure is your final result; a lag measure is the activity that produces the result',
-      'A lead measure is the predictive, influenceable activity you control; a lag measure is the outcome or result that comes after the activity',
-      'A lead measure is set by your manager; a lag measure is set by yourself',
-      'Lead and lag measures are the same thing, just measured at different times of year',
+      'A lead measure is your final result, whereas a lag measure is the activity that produces that result',
+      'A lead measure is the one set by your manager, whereas a lag measure is the one you set for yourself',
+      'Lead and lag measures are really the same thing, simply measured at different times of the year',
+      'A lead measure is the predictive activity you control; a lag measure is the outcome that comes afterwards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lead measures and lag measures are fundamentally different in the 4DX framework. A lag measure is the end result &mdash; the thing you ultimately want to achieve. For an electrician, this might be &ldquo;pass the 2391 exam&rdquo; or &ldquo;earn &pound;60,000 this year&rdquo;. The problem with lag measures is that by the time you measure them, the outcome is already determined &mdash; you can&rsquo;t change the exam result after the exam. A lead measure is the specific activity that drives the lag measure &mdash; the thing you can control and influence right now. For the 2391 example, a lead measure might be &ldquo;complete five hours of structured study per week&rdquo; or &ldquo;complete two practice exams per month&rdquo;. Lead measures are predictive (if you do the activity consistently, the result will follow) and influenceable (you can decide to study tonight or not). The 4DX framework argues that most people obsess over lag measures while neglecting lead measures, which is like trying to lose weight by standing on the scales more often rather than changing your diet and exercise.',
   },
@@ -117,10 +117,10 @@ const quizQuestions = [
     question:
       'The &ldquo;sunk cost fallacy&rdquo; is particularly relevant to annual goal review. Which of the following best describes this fallacy?',
     options: [
-      'The tendency to set goals that are too expensive to achieve',
-      'The tendency to continue investing time, money, or effort into something because of what has already been invested, even when continuing no longer makes rational sense',
-      'The tendency to underestimate how much a goal will cost before starting',
-      'The belief that expensive goals are more valuable than free ones',
+      'The tendency to set yourself goals that are simply too expensive to ever realistically achieve',
+      'The tendency to keep investing in something because of what you have already spent, even when continuing makes no sense',
+      'The tendency to badly underestimate how much a given goal will end up costing you before you start',
+      'The mistaken belief that expensive, costly goals are inherently more valuable than free ones',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     question:
       'An electrician&rsquo;s ECS (Electrotechnical Certification Scheme) card typically requires renewal on what cycle, and what must they demonstrate for renewal?',
     options: [
-      'Every year, with no specific requirements beyond payment',
-      'Every 10 years, with a single online test',
-      'Every 3 to 5 years, demonstrating ongoing competence through CPD, qualifications, and evidence of current practice',
-      'ECS cards never expire once issued',
+      'Every single year, with no specific requirements to satisfy beyond paying the renewal fee',
+      'Every 10 years, with renewal granted on the basis of a single short online test',
+      'Every 3 to 5 years, demonstrating ongoing competence via CPD, qualifications and current practice',
+      'ECS cards never expire at all and require no renewal of any kind once they are first issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -145,12 +145,12 @@ const quizQuestions = [
     question:
       'The &ldquo;persist vs pivot vs stop&rdquo; decision framework suggests evaluating underperforming goals against three criteria. Which of the following is NOT one of those criteria?',
     options: [
-      'Has the external environment changed in a way that makes the goal less relevant or achievable?',
-      'Have you given the goal a genuine, strategic effort with good execution, or have you been inconsistent or used a poor approach?',
       'Has the amount of money you have already spent exceeded your original budget?',
+      'Have you given the goal a genuine, strategic effort with good execution, or have you been inconsistent or used a poor approach?',
+      'Has the external environment changed in a way that makes the goal less relevant or achievable?',
       'Does this goal still align with your values, interests, and long-term career vision?',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The persist vs pivot vs stop framework evaluates goals based on three forward-looking criteria: strategic fit (does the goal still align with your values and career direction?), execution quality (have you actually given the goal your best effort with effective strategies, or have you been half-hearted?), and environmental relevance (has something changed externally that makes the goal less viable or important?). Notice that the amount of money already spent is NOT one of the criteria &mdash; that would be the sunk cost fallacy. The question is not &ldquo;how much have I invested?&rdquo; but &ldquo;given where I am now, is continuing the best use of my future time and resources?&rdquo; If the answer to the three criteria is broadly positive, persist (perhaps with a changed strategy). If the goal direction is right but the specific target needs adjusting, pivot. If the goal is no longer aligned, no longer achievable, or no longer relevant, stop &mdash; regardless of past investment.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'Why is seasonal planning particularly important for self-employed electricians when setting annual goals?',
     options: [
-      'Because electrical regulations change with the seasons',
-      'Because the electrical industry has predictable seasonal patterns &mdash; busier periods (spring/summer for domestic work, autumn for heating) and quieter periods (mid-winter) &mdash; which affect when study, training, and admin are most realistic',
-      'Because self-employed electricians only work during summer months',
-      'Because exam dates are only available in winter',
+      'Because the electrical regulations themselves change predictably with each passing season of the year',
+      'Because self-employed electricians realistically only ever find paying work during the summer months',
+      'Because the trade has predictable seasonal peaks and lulls that change when study, training and admin are realistic',
+      'Because the official qualification exam dates are only ever made available during the winter months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Self-employed electricians experience predictable seasonal demand patterns that directly affect their capacity for non-work activities like study, training, and business development. Spring and summer are typically the busiest periods for domestic work (home improvements, extensions, garden rooms, outdoor electrics), while heating-related work peaks in autumn. Mid-winter (late November through January) and the post-Christmas period are often quieter. Strategic annual planning means aligning goals with these patterns: scheduling intensive study or qualification courses during quieter periods when lost work income is minimised, using busy periods to maximise earnings, and planning admin tasks (accounts, tax returns, insurance renewals) outside of peak earning months. An electrician who books a two-week exam preparation course in June is sacrificing their highest-earning weeks. The same course in January costs the same in fees but far less in lost earnings.',
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'In the 4DX framework, what is the purpose of a &ldquo;cadence of accountability&rdquo;?',
     options: [
-      'To create pressure by having your boss check on your progress',
-      'To establish a regular rhythm of brief check-ins (typically weekly) where you review your scoreboard, report on commitments, and make new commitments &mdash; creating consistent forward momentum',
-      'To punish yourself when you miss a deadline',
-      'To set up automated email reminders for every goal',
+      'To create pressure by having your boss or supervisor check up on your progress at intervals',
+      'To give yourself a way to punish yourself each time you happen to miss an agreed deadline',
+      'To set up a system of automated email and calendar reminders for every goal you are pursuing',
+      'To establish a regular rhythm of brief check-ins where you review the scoreboard and make fresh commitments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The cadence of accountability is the fourth and arguably most critical discipline in the 4DX framework. It creates a regular, predictable rhythm of brief progress reviews that keep goals alive in the face of daily demands. For a self-employed electrician, this might be a 15-minute weekly review every Sunday evening where you check your scoreboard (am I on pace?), report on last week&rsquo;s commitments (did I complete the study hours I planned?), and make specific commitments for the coming week (what exactly will I do this week to advance my goal?). The key word is &ldquo;cadence&rdquo; &mdash; it must be regular and predictable, not sporadic. Without this discipline, even well-set goals and well-defined lead measures fade into the background as the urgent demands of daily work take over. The weekly review acts as a reset, pulling your attention back to what is wildly important before the week&rsquo;s whirlwind begins.',
   },
@@ -187,10 +187,10 @@ const quizQuestions = [
     question:
       'Which of the following best describes the recommended approach to celebrating annual achievements during the annual review?',
     options: [
-      'Skip celebration entirely &mdash; focusing on what you still need to achieve is more productive',
-      'Celebrate only if you achieved 100% of your goals for the year',
-      'Before setting new goals, deliberately review and recognise what you achieved, what you learned, and how you grew during the past year &mdash; acknowledging progress builds motivation and self-efficacy for the year ahead',
-      'Celebrate by taking the entire month of January off from goal setting',
+      'Skip any celebration entirely, on the basis that focusing on what is still unachieved is more productive',
+      'Celebrate only in the years where you happened to achieve a full 100% of the goals you had set',
+      'Before setting new goals, deliberately review what you achieved, learned and how you grew, to build motivation',
+      'Celebrate by taking the entire month of January completely off from any goal setting at all',
     ],
     correctAnswer: 2,
     explanation:

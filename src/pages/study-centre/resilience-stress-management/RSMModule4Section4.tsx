@@ -23,14 +23,14 @@ const quickCheckQuestions = [
     question:
       'A CIS subcontractor receives a payment of £2,000 after the 20% CIS deduction has been applied. How much should they ideally set aside from the gross payment for their total tax liability?',
     options: [
-      'Nothing — the 20% CIS deduction covers all their tax',
-      'An additional 5-10% on top of the CIS deduction, because CIS may not cover all tax, National Insurance and student loan repayments',
-      '50% of the payment for safety',
-      'The full £2,000 should be saved',
+      'Nothing extra — the 20% CIS deduction covers the entire tax liability',
+      'An additional 5-10% of the gross payment, on top of the CIS deduction',
+      'An additional 50% of the gross payment, as a cautious safety margin',
+      'The full net £2,000, held back in case the whole amount is owed',
     ],
     correctIndex: 1,
     explanation:
-      'The 20% CIS deduction is a payment on account towards your tax bill, but it may not cover your full liability. Depending on your total earnings, expenses and personal circumstances, you may owe additional Income Tax, Class 2 and Class 4 National Insurance contributions, and student loan repayments. Setting aside an additional 5-10% on top of the CIS deduction (so 25-30% of gross income in total) provides a buffer that prevents the January tax shock.',
+      'Setting aside a further 5-10% on top of the CIS deduction gives roughly 25-30% of gross in total — a buffer for the parts CIS does not cover. The 20% CIS deduction is a payment on account towards your tax bill, but it may not cover your full liability. Depending on your total earnings, expenses and personal circumstances, you may owe additional Income Tax, Class 2 and Class 4 National Insurance contributions, and student loan repayments. Setting aside an additional 5-10% on top of the CIS deduction (so 25-30% of gross income in total) provides a buffer that prevents the January tax shock.',
   },
   {
     id: 'rsm4-s4-emergency',
@@ -93,10 +93,10 @@ const quizQuestions = [
     question:
       'According to research, what is the number one source of stress for self-employed tradespeople in the UK?',
     options: [
-      'Difficult clients and customer complaints',
-      'Physical demands of the work',
-      'Financial stress — irregular income, tax obligations and lack of safety net',
-      'Long working hours and commuting',
+      'Difficult clients, customer complaints and disputes over payment',
+      'Physical demands of the work and the toll of manual labour',
+      'Financial stress — irregular income, tax obligations and no safety net',
+      'Long working hours and the daily commuting between job sites',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the recommended target for an emergency fund?',
     options: [
-      '1 month of gross income',
       '3 months of essential expenses',
+      '1 month of gross income',
       '6 months of total income',
       '12 months of all expenses including luxuries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The recommended target is 3 months of essential expenses — the minimum you need to cover rent or mortgage, utilities, food, transport and insurance if your income stopped completely. For most tradespeople, essential expenses are significantly less than total income, making the target more achievable than it might seem. This fund provides a buffer against illness, injury, quiet periods and unexpected expenses without resorting to high-interest debt.',
   },
@@ -134,11 +134,11 @@ const quizQuestions = [
     question: 'What is HMRC\'s "Time to Pay" arrangement?',
     options: [
       'An automatic extension on all tax deadlines for construction workers',
-      'A negotiated payment plan that allows you to pay a tax bill in instalments over an agreed period',
-      'A scheme that forgives tax debt for people in financial hardship',
-      'A penalty waiver for first-time late payments',
+      'A scheme that writes off tax debt for people in financial hardship',
+      'A penalty waiver granted automatically on a first late payment',
+      'A negotiated plan to pay a tax bill in instalments over an agreed period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "HMRC's Time to Pay arrangement is a negotiated instalment plan that allows you to spread a tax bill over an agreed period (typically 6-12 months). You must contact HMRC proactively — ideally before the payment deadline. HMRC will assess your financial situation and agree a monthly payment amount that is manageable. Interest still accrues on the outstanding amount, but penalties for non-payment can often be avoided if the arrangement is set up in time.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Which of the following is the most important financial action for a newly self-employed electrician?',
     options: [
-      'Buying the best tools and equipment available',
-      'Setting up a separate savings account and automatically transferring 25-30% of every payment into it for tax',
-      'Taking out a large business loan to fund growth',
-      'Spending all early income on marketing and advertising',
+      'Buying the best tools and equipment available straight away',
+      'Taking out a large business loan to fund rapid early growth',
+      'Automatically moving 25-30% of every payment into a separate tax account',
+      'Spending all early income on marketing and advertising the business',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Automatically setting aside money for tax from day one is the single most important financial habit for a newly self-employed tradesperson. The CIS system means that some tax is deducted at source, but this may not cover the full liability. By setting up a separate account and transferring 25-30% of every gross payment into it immediately, you ensure the money is there when the tax bill arrives. This simple habit prevents the most common and most damaging financial crisis for self-employed tradespeople: the unexpected tax bill.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'The Lighthouse Club provides financial support for construction workers. Which of the following accurately describes their service?',
     options: [
-      'They provide loans at competitive interest rates',
-      'They provide grants, financial advice, emotional support and signposting specifically for the construction community',
-      'They provide tax return preparation services',
-      'They provide business consulting for construction companies',
+      'Emergency grants, financial advice and emotional support for the construction community',
+      'Commercial loans to construction workers at competitive interest rates',
+      'Tax return preparation and self-assessment filing for subcontractors',
+      'Business consulting and growth advice for construction companies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Lighthouse Club is the only charity dedicated exclusively to the construction community. Their services include emergency financial grants (for situations like eviction risk, utility disconnection, or inability to buy food), ongoing financial advice, emotional and wellbeing support, and signposting to specialist services. They understand the specific financial challenges of construction work — CIS, irregular income, self-employment — and their support is tailored accordingly.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'Which organisation provides free, impartial debt advice and can negotiate with creditors on your behalf?',
     options: [
       'HMRC',
-      'The Federation of Master Builders',
       'StepChange Debt Charity',
+      'The Federation of Master Builders',
       'The Health and Safety Executive',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'StepChange Debt Charity provides free, impartial, expert debt advice. They can help you create a budget, negotiate with creditors, set up debt management plans, and explore options including Individual Voluntary Arrangements (IVAs) if needed. Their service is completely free (unlike commercial debt management companies that charge fees) and they are authorised and regulated by the Financial Conduct Authority. They have specific experience helping self-employed people, including tradespeople.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'An electrician has been ignoring letters from HMRC about an unpaid tax bill for six months. Based on the guidance in this section, what should they do now?',
     options: [
-      'Continue ignoring the letters and hope the debt goes away',
-      'Wait until they have enough money to pay the full amount before contacting HMRC',
-      'Contact HMRC immediately, explain their situation honestly, and ask about a Time to Pay arrangement',
-      'Close their business and start again under a different name',
+      'Continue ignoring the letters and hope the debt eventually goes away',
+      'Wait until they have saved enough to pay the full amount before contacting HMRC',
+      'Close the business and start again trading under a different name',
+      'Contact HMRC immediately and ask about a Time to Pay arrangement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Contacting HMRC immediately is critical. Every month of delay increases the penalties and interest, reduces the options available, and increases the stress. HMRC is far more willing to negotiate with people who contact them proactively than with people who ignore correspondence. Even six months late, making contact and being honest about the situation is the right step. HMRC's Time to Pay line (0300 200 3835) handles these situations daily. Getting free advice from the Lighthouse Club or StepChange before calling HMRC can also help prepare for the conversation.",
   },

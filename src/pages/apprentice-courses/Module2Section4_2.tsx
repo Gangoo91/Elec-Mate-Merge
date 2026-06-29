@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 10,
     question: 'Which device reduces AC ripple after rectification?',
     options: [
-      'The inverter can be damaged',
-      'Behind voltage (clockwise)',
+      'A step-down transformer',
+      'A diode bridge',
       'Inductor/capacitor filter',
-      'Reduces steady-state error',
+      'A current-limiting resistor',
     ],
     correctAnswer: 2,
     explanation: 'Filters (capacitors/inductors) smooth ripple on DC rails.',

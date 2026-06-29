@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'rcm-primary-goal',
     question: 'The primary goal of reliability-centred maintenance (RCM) is to:',
     options: [
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'Blood pooling in the legs when a person is suspended in a harness, which can cause death within 15 to 30 minutes',
-      'Determine the most appropriate maintenance strategy for each asset based on its function, failure modes and the consequences of failure',
-      'Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow',
+      'Overhaul every asset at fixed time intervals to keep all equipment in as-new condition',
+      'Minimise maintenance spending by carrying out the fewest possible tasks on every asset',
+      'Select the right maintenance strategy for each asset from its function and failure consequences',
+      'Eliminate all equipment breakdowns by replacing components before they reach end of life',
     ],
     correctIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'rcm-fmea',
     question: 'In RCM, a Failure Modes and Effects Analysis (FMEA) is used to:',
     options: [
-      'By examining shift patterns, working hours, break frequency, workload distribution, time of day, and the worker\\\\\\\\\\\\\\\'s reported physical state before the incident',
-      'Typically 0.6-0.8 for traditional dwellings (categories rarely peak at the same instant); pushing toward 0.8-0.95 for heat-pump and EV-rich dwellings (cold-morning categories align more).',
-      'The "responsible person" (typically the employer) must report — online via HSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reporting portal, equivalent to F2508',
-      'Identify and document all the ways an asset can fail, the causes of each failure mode, and the effects and consequences of each failure on operations, safety and the environment',
+      'Schedule every asset for overhaul on a fixed calendar interval regardless of its condition',
+      'Calculate the purchase cost and depreciation of each asset over its full working life',
+      'Rank technicians by the number of breakdowns they have repaired during the year',
+      'Document how an asset can fail, the cause of each mode, and its effects and consequences',
     ],
     correctIndex: 3,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'rcm-hidden-failure',
     question: "A 'hidden failure' in RCM terminology is a failure that:",
     options: [
-      'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
-      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
-      'Because PNB has the neutral and earth bonded only at the consumer\\\\\\\\\\\\\\\'s intake (not the DNO source), giving different fault path characteristics that the inspector must record',
-      'Is not evident to the operating crew under normal circumstances — it will only become apparent when a demand is placed on the system, such as a protective device that has failed but will only be noticed when it is called upon to operate',
+      'Occurs inside a sealed enclosure and can only be seen by fully dismantling the equipment',
+      'Is deliberately concealed by an operator to avoid having to report a breakdown',
+      'Develops so slowly that it is never detectable by any condition monitoring technique',
+      'Is not evident in normal operation and only shows when a demand is placed on the system',
     ],
     correctIndex: 3,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Reliability-centred maintenance was originally developed in the:',
     options: [
-      'To ensure sensors provide accurate readings for proper system control',
+      'UK rail industry in the 1950s to manage steam locomotive overhauls',
       'US commercial aviation industry in the late 1960s and 1970s, led by engineers at United Airlines',
-      'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
-      'Widespread urticarial rash, swollen tongue, wheezing, and rapidly falling blood pressure',
+      'Japanese automotive industry in the 1980s as part of total productive maintenance',
+      'European power generation sector in the 1990s following several major blackouts',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: "A 'functional failure' in RCM terminology means:",
     options: [
-      'The failure mode has a detectable deterioration period (P-F interval) long enough to allow a planned response before functional failure occurs',
-      'Only a small proportion (approximately 11%) of failure modes — most failure modes in complex equipment show no age-related increase in failure probability',
-      'A specific event or process that causes a functional failure, described in enough detail to enable an appropriate maintenance strategy to be selected',
-      'The asset is unable to fulfil one or more of its required functions to the performance standard expected by the user in its operating context',
+      'Only a complete breakdown where the asset stops working entirely and cannot run at all',
+      'Any cosmetic or appearance defect that does not affect how the asset actually performs',
+      'The point at which the asset reaches the end of its designed working life on the register',
+      'The asset can no longer meet the performance standard the user requires in its context',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'A failure mode in RCM is defined as:',
     options: [
-      'A specific event or process that causes a functional failure, described in enough detail to enable an appropriate maintenance strategy to be selected',
-      'Run-to-failure (corrective maintenance only), provided the failure consequences are acceptable — or redesign if the consequences are not acceptable',
-      'The asset is unable to fulfil one or more of its required functions to the performance standard expected by the user in its operating context',
-      'Maintenance exists to preserve the functions that the user requires of the asset, so the functions must be clearly defined before failure analysis can begin',
+      'A specific event or process that causes a functional failure',
+      'The loss of a function the user requires of the asset in its operating context',
+      'The consequence the failure has on safety, the environment or production output',
+      'The maintenance task chosen to manage a particular cause of failure',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       "RCM demonstrated that the traditional assumption 'the older an item, the more likely it is to fail' applies to:",
     options: [
-      'Run-to-failure (corrective maintenance only), provided the failure consequences are acceptable — or redesign if the consequences are not acceptable',
-      'The asset is unable to fulfil one or more of its required functions to the performance standard expected by the user in its operating context',
-      'Only a small proportion (approximately 11%) of failure modes — most failure modes in complex equipment show no age-related increase in failure probability',
-      'Maintenance exists to preserve the functions that the user requires of the asset, so the functions must be clearly defined before failure analysis can begin',
+      'Every failure mode in complex equipment, confirming the value of fixed-interval overhaul',
+      'About two thirds of failure modes, which follow a clear wear-out pattern with age',
+      'Only about 11% of failure modes — most show no age-related rise in failure probability',
+      'No failure modes at all, since equipment failure is always completely and purely random',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'A condition-based maintenance task in RCM is appropriate when:',
     options: [
-      'A specific event or process that causes a functional failure, described in enough detail to enable an appropriate maintenance strategy to be selected',
-      'Maintenance exists to preserve the functions that the user requires of the asset, so the functions must be clearly defined before failure analysis can begin',
-      'Only a small proportion (approximately 11%) of failure modes — most failure modes in complex equipment show no age-related increase in failure probability',
-      'The failure mode has a detectable deterioration period (P-F interval) long enough to allow a planned response before functional failure occurs',
+      'The failure happens instantly with no detectable warning before functional failure',
+      'The consequences of failure are purely economic and very low cost to put right',
+      'The asset has a clear age-related wear-out pattern best managed by scheduled replacement',
+      'The failure has a detectable P-F interval long enough to allow a planned response',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: 'A scheduled restoration or discard task in RCM is appropriate when:',
     options: [
-      'The failure mode exhibits a clear age-related failure pattern and the task restores the item to a condition where it can perform its function reliably for a further defined period',
-      'Maintenance exists to preserve the functions that the user requires of the asset, so the functions must be clearly defined before failure analysis can begin',
-      'A specific event or process that causes a functional failure, described in enough detail to enable an appropriate maintenance strategy to be selected',
-      'Detect hidden failures in protective devices and standby systems by periodically testing them to confirm they can still perform their function when required',
+      'The failure mode has a clear age-related wear-out pattern with a definable safe-life interval',
+      'The failure mode is random with no relationship between age and probability of failure',
+      'The failure is hidden and only revealed when the protective device is called upon to act',
+      'There is a long, detectable P-F interval that makes condition monitoring straightforward',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'When RCM determines that no proactive maintenance task is technically feasible or worth doing, the default strategy is:',
     options: [
-      'Maintenance exists to preserve the functions that the user requires of the asset, so the functions must be clearly defined before failure analysis can begin',
-      'Run-to-failure (corrective maintenance only), provided the failure consequences are acceptable — or redesign if the consequences are not acceptable',
-      'Only a small proportion (approximately 11%) of failure modes — most failure modes in complex equipment show no age-related increase in failure probability',
-      'The asset is unable to fulfil one or more of its required functions to the performance standard expected by the user in its operating context',
+      'Always overhaul the asset at a fixed interval as a general fall-back precaution',
+      'Run-to-failure if consequences are acceptable, otherwise redesign the asset',
+      'Increase the frequency of condition monitoring until some feasible task is found',
+      'Remove the asset from service permanently to avoid any further risk of failure',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'A failure-finding task in RCM is specifically designed to:',
     options: [
-      'Run-to-failure (corrective maintenance only), provided the failure consequences are acceptable — or redesign if the consequences are not acceptable',
-      'The asset is unable to fulfil one or more of its required functions to the performance standard expected by the user in its operating context',
-      'Detect hidden failures in protective devices and standby systems by periodically testing them to confirm they can still perform their function when required',
-      'Only a small proportion (approximately 11%) of failure modes — most failure modes in complex equipment show no age-related increase in failure probability',
+      'Restore a worn component to as-new condition at a fixed calendar interval',
+      'Monitor a gradually deteriorating component using vibration or thermography',
+      'Periodically test protective devices and standby systems to find hidden failures',
+      'Decide whether a particular failure mode should simply be run to failure',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 11,
     question: 'The international standard that defines the requirements for an RCM process is:',
     options: [
-      'Sell the van privately, settle the finance, and pocket the £3,000 equity',
-      'Installing sensor cables in the same containment as HVAC fan power cables',
-      'Clearly advise them of the danger, make a note of their location, and report it to the incident controller',
-      'SAE JA1011 — Evaluation Criteria for Reliability-Centered Maintenance (RCM) Processes',
+      'BS 7671 — Requirements for Electrical Installations',
+      'ISO 9001 — Quality Management Systems',
+      'BS EN 60204 — Safety of Machinery: Electrical Equipment',
+      'SAE JA1011 — Evaluation Criteria for RCM Processes',
     ],
     correctAnswer: 3,
     explanation:
@@ -217,10 +217,10 @@ const quizQuestions = [
     question:
       'In the context of ST1426, understanding RCM principles enables the maintenance technician to:',
     options: [
-      'Understand why different maintenance strategies are applied to different assets, contribute to FMEA and RCM reviews, and make better decisions about maintenance priorities based on failure consequences rather than simply equipment age',
-      'Right not to suffer detriment for raising a H&S concern, refusing dangerous work, leaving the workplace in serious and imminent danger, or being a designated H&S representative. Detriment = sacking, demotion, removal from job, disciplinary, victimisation, harassment.',
-      'No-blame reporting; easy reporting mechanism; structured analysis (5-whys, root cause); feedback to team; visible changes in practice; trend tracking; celebrate reporting (the act, not the near-miss); leadership modelling.',
-      'A Minor Electrical Installation Works Certificate (MEIWC) for additions/alterations to a single circuit, or an Electrical Installation Certificate (EIC) for new circuits/installations',
+      'Understand why strategies differ, contribute to RCM reviews, and prioritise by consequence',
+      'Avoid all planned maintenance and rely entirely on repairing equipment after it breaks down',
+      'Apply a single fixed-interval overhaul to every asset to keep the maintenance plan simple',
+      'Leave all maintenance strategy decisions to managers without contributing technical knowledge',
     ],
     correctAnswer: 0,
     explanation:

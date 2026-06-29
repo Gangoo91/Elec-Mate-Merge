@@ -29,12 +29,12 @@ const quickCheckQuestions = [
   {
     question: 'What is the purpose of a daily emotional check-in?',
     options: [
-      'To diagnose mental health conditions',
       'To briefly notice and label your current emotional state so you can respond to it consciously',
+      'To diagnose mental health conditions',
       'To suppress negative emotions before they affect your work',
       'To record everything that happened during the day in detail',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A daily emotional check-in is a brief, purposeful pause to notice what you are feeling and label it. It takes only a few seconds and its purpose is to bring unconscious emotional states into awareness so you can choose how to respond, rather than being driven by emotions you have not recognised.',
   },
@@ -55,11 +55,11 @@ const quickCheckQuestions = [
       'Viktor Frankl argued that the "space between stimulus and response" is where our freedom lies. What is the key self-awareness skill needed to access that space?',
     options: [
       'The ability to suppress all emotions instantly',
-      'The ability to pause and notice your internal state before reacting automatically',
       'The ability to avoid all triggering situations completely',
+      'The ability to pause and notice your internal state before reacting automatically',
       'The ability to predict what other people will do',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Frankl's insight is that we can choose our response rather than reacting automatically — but only if we can pause and notice what is happening internally. That moment of noticing (self-awareness) is what creates the space. Every technique in this section — check-ins, body scanning, breathing, and reflective practice — is designed to strengthen that capacity to pause and notice.",
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 1,
     question: 'The recommended three-checkpoint daily emotional check-in occurs at which moments?',
     options: [
-      'Before breakfast, after lunch, and before bed',
       'Morning (in the van), midday (lunch break), and evening (driving home)',
+      'Before breakfast, after lunch, and before bed',
       'Only when something goes wrong during the day',
       'Every hour on the hour throughout the working day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The three-checkpoint approach anchors the check-in to natural transitions in the working day: the morning commute (before arriving on site), the lunch break (midday pause), and the evening commute (end of day reflection). These moments already have natural pauses, making the habit easier to maintain.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'The three-minute breathing space from MBSR/MBCT involves which three steps?',
     options: [
       'Inhale deeply, hold your breath, exhale slowly',
-      'Awareness (notice current experience), Gathering (focus on the breath), Expanding (widen awareness to the whole body)',
       'Count to ten, visualise a calm place, open your eyes',
       'Breathe through the left nostril, then the right, then both',
+      'Awareness (notice current experience), Gathering (focus on the breath), Expanding (widen awareness to the whole body)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The three-minute breathing space has three distinct phases: (1) Awareness — noticing your current thoughts, feelings, and bodily sensations; (2) Gathering — narrowing attention to the physical sensation of breathing; (3) Expanding — widening awareness from the breath to the whole body and the broader environment.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     options: [
       'The Vietnam War',
       'The Great Depression of the 1930s',
-      'The Holocaust and his time in Nazi concentration camps',
       'His work as a university professor in Vienna',
+      'The Holocaust and his time in Nazi concentration camps',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Frankl was an Austrian psychiatrist who survived multiple Nazi concentration camps, including Auschwitz and Dachau. His book describes his experiences and the psychological insights he gained, including the observation that humans retain the freedom to choose their attitude in any circumstances.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 7,
     question: 'Jon Kabat-Zinn is the founder of:',
     options: [
+      'Mindfulness-Based Stress Reduction (MBSR)',
       'Rational Emotive Behaviour Therapy (REBT)',
       'The Johari Window',
-      'Mindfulness-Based Stress Reduction (MBSR)',
       'The Dunning-Kruger effect',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Jon Kabat-Zinn founded the Mindfulness-Based Stress Reduction (MBSR) programme at the University of Massachusetts Medical Centre in 1979. MBSR brought mindfulness practices from Buddhist contemplative traditions into mainstream Western medicine and psychology.',
   },

@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m5s1-check1',
     question: 'What is the primary benefit of implementing Dynamic Load Management?',
     options: [
-      'Faster charging speeds for all vehicles',
       'Maximising infrastructure utilisation and avoiding costly upgrades',
-      'Reducing the number of chargers needed',
-      'Eliminating the need for RCD protection',
+      'Guaranteeing faster charging speeds for every vehicle',
+      'Reducing the number of charge points that can be installed',
+      'Removing the need for RCD protection on the circuits',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'DLM maximises utilisation of existing electrical infrastructure by intelligently allocating available power to EV charging, preventing overloads and avoiding costly electrical supply upgrades.',
   },
@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       'In equal distribution DLM, how is power allocated with 50kW available and 5 active sessions?',
     options: [
-      '50kW to first vehicle only',
-      '10kW per vehicle',
+      '50kW to the first vehicle only',
       '25kW to two priority vehicles',
-      'Variable based on battery size',
+      'Variable, based on each battery size',
+      '10kW per vehicle',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Equal distribution divides available power equally: 50kW ÷ 5 active sessions = 10kW per vehicle. This is simple, fair, and predictable but may not optimise total charging throughput.',
   },

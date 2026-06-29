@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     question:
       'An electrician completes a consumer unit change for a domestic client. The agreed price was £1,800. The client pays £1,200 and says "that is what I think the job is worth." Under the Late Payment of Commercial Debts (Interest) Act 1998, which of the following is TRUE?',
     options: [
-      'The Act only applies to commercial contracts between businesses, not domestic clients',
-      'The electrician can charge statutory interest on the outstanding £600 at 8% above the Bank of England base rate',
-      'The Act requires the electrician to go to court before any interest can be charged',
-      'The client can decide what a job is worth after it is completed',
+      'The Act only applies to commercial contracts, not to domestic clients like this one',
+      'The electrician can charge statutory interest on the £600 at 8% above base rate',
+      'The Act requires the electrician to go to court first before any interest can be charged',
+      'The client is entitled to decide what the job is worth once it has been completed',
     ],
     correctIndex: 0,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'A client asks an electrician to add four additional light points during a kitchen rewire, saying "while you are here, it won\'t take long." The electrician\'s original quote did not include these points. What is the most likely outcome if the electrician agrees without discussing additional cost?',
     options: [
-      'The client will appreciate the extra work and pay more without being asked',
-      'The electrician will complete the work faster because they are already on site',
-      'An expectation gap will develop — the electrician will expect additional payment, the client will expect it to be included, and conflict will arise at invoicing stage',
-      'The additional work will have no financial impact because the materials cost is minimal',
+      'The client will appreciate the extra light points and pay more without being asked',
+      'The electrician will get the extra work done quickly as they are already on site',
+      'An expectation gap forms — the electrician expects payment, the client expects it included',
+      'The extra work has no financial impact because the materials cost so little to buy',
     ],
     correctIndex: 2,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrician arrives on a commercial site to begin second fix but discovers that the plasterer has not finished and the walls are still wet. The site manager says "just work around it." This is an example of which conflict trigger?',
     options: [
-      'Money dispute — the electrician is not being paid enough',
-      'Quality dispute — the plastering is substandard',
-      'Programme and timing conflict — other trades are not ready, preventing the electrician from completing their work as scheduled',
-      'Territory conflict — the plasterer is deliberately blocking the electrician',
+      'Money dispute — the electrician feels they are not being paid enough for the job',
+      'Programme and timing conflict — preceding trades are not ready, blocking the second fix',
+      'Quality dispute — the plastering work itself is below the required standard',
+      'Territory conflict — the plasterer is deliberately blocking the electrician on site',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'This is a classic programme and timing conflict. The electrician cannot complete their second fix to the required standard on wet plaster — accessories will not seat properly, there is a risk of moisture ingress into back boxes, and the finish will be compromised. The instruction to "just work around it" places the electrician in a difficult position: comply and risk a substandard installation, or refuse and risk being seen as uncooperative. The root cause is almost always a programme that was unrealistic from the outset, combined with a failure to coordinate trade sequences properly. The professional response is to document the situation (photographs, email to the site manager confirming the issue and the instruction received), explain the technical risks clearly, and propose a revised sequence that allows both trades to complete their work properly.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following is the single most common trigger for conflict between electricians and domestic clients?',
     options: [
-      'Technical disagreements about cable sizing',
-      'Money — disputes about price, payment timing, variation costs, and what is included in the quote',
-      'Personality clashes between the electrician and client',
-      'Disagreements about the colour of accessories',
+      'Money — disputes over price, payment timing, variations and quote inclusions',
+      'Technical disagreements about cable sizing and circuit design choices',
+      'Personality clashes between the electrician and the domestic client',
+      'Disagreements about the colour and finish of sockets and switches',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Money is consistently the most common trigger for conflict in domestic electrical work. This encompasses a wide range of disputes: disagreements about the quoted price versus the final invoice, late payment or non-payment, the cost of additional work ("while you are here" requests), disputes about what was and was not included in the original quotation, and retention holdbacks on larger projects. Money disputes are particularly volatile because they combine financial stakes (which affect livelihoods) with emotional elements (feeling undervalued, exploited, or cheated). The vast majority of money disputes can be prevented by clear, detailed quotations that specify exactly what is included, explicit payment terms agreed in advance, and immediate written confirmation of any variations.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'The Late Payment of Commercial Debts (Interest) Act 1998 allows:',
     options: [
-      'Any person to charge interest on any late payment regardless of the type of contract',
-      'Businesses to charge statutory interest on overdue commercial debts at 8% above the Bank of England base rate',
-      'Domestic clients to withhold payment if they are dissatisfied with the work',
-      'Main contractors to delay subcontractor payments by up to 120 days',
+      'Any person to charge interest on any late payment, whatever the type of contract',
+      'Businesses to charge statutory interest on overdue commercial debts at 8% above base rate',
+      'Domestic clients to withhold payment whenever they are dissatisfied with the work',
+      'Main contractors to delay paying their subcontractors by up to 120 days as standard',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'A domestic client says "while you are here, can you add a few extra sockets?" The electrician agrees without discussing cost. At invoicing, the client disputes the additional charges. This conflict was most likely caused by:',
     options: [
-      'The client deliberately trying to get free work',
-      'The electrician charging too much for the additional work',
-      'A scope expectation gap — the additional work was agreed verbally without explicit cost confirmation, creating different assumptions in each party',
+      'The client deliberately setting out to get the extra sockets done for free',
+      'The electrician charging far too much for the additional sockets fitted',
+      'A scope expectation gap — extra work agreed verbally without confirming the cost',
       'The Consumer Rights Act 2015 requiring all additional work to be free of charge',
     ],
     correctAnswer: 2,
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       'Under the Consumer Rights Act 2015, when an electrician provides a service to a domestic client, the service must be:',
     options: [
-      'Free of charge if the client is dissatisfied',
-      'Completed within 24 hours regardless of complexity',
-      'Performed with reasonable care and skill, within a reasonable time (if no time is agreed), and for a reasonable price (if no price is agreed)',
-      'Guaranteed for 10 years',
+      'Provided free of charge whenever the client is dissatisfied with the result',
+      'Completed within 24 hours of starting, regardless of the job complexity',
+      'Guaranteed in full against any defect for a fixed period of 10 years',
+      'Performed with reasonable care and skill, within a reasonable time and price if none is agreed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Consumer Rights Act 2015 replaced the Supply of Goods and Services Act 1982 for most consumer contracts. Under the Act, services supplied to consumers must be performed with reasonable care and skill, completed within a reasonable time (if no specific time was agreed), and provided at a reasonable price (if no specific price was agreed). These are implied terms that apply automatically to every consumer service contract. For electricians, this means that if a dispute arises about quality, timing, or price, the court will assess whether the service met the standard of "reasonable care and skill" — which in practice means the standard expected of a competent electrician following current regulations and good practice.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'An electrician is working as a subcontractor on a commercial project. The main contractor has not paid the last two invoices (total value £8,000). Under the Housing Grants, Construction and Regeneration Act 1996 (the Construction Act), the electrician has the right to:',
     options: [
-      'Leave the site immediately without notice',
-      "Suspend work after giving at least 7 days' written notice specifying the grounds for suspension",
-      "Seize the main contractor's equipment as security",
-      'Refuse to work on any future project for the same contractor',
+      "Suspend work after giving at least 7 days' written notice stating the grounds",
+      'Leave the site immediately without giving any notice to the main contractor',
+      "Seize the main contractor's plant and equipment and hold it as security",
+      'Refuse to work on any future project for the same main contractor again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Construction Act (as amended by the Local Democracy, Economic Development and Construction Act 2009) gives subcontractors the right to suspend performance for non-payment. However, this right is not immediate — the subcontractor must first give at least 7 days' written notice of their intention to suspend, clearly stating the grounds for suspension. During any period of legitimate suspension, the subcontractor is entitled to an extension of time and cannot be penalised for the delay. This right is a significant protection for subcontractors, but it must be exercised correctly — suspending without proper notice could constitute a breach of contract by the subcontractor.",
   },
@@ -157,10 +157,10 @@ const quizQuestions = [
     question:
       'Which of the following is an example of a "territory and respect" conflict on a construction site?',
     options: [
-      'Two electricians debating the correct cable size for a circuit',
-      'A plumber running pipes through an area that damages completed electrical work, without coordinating in advance',
-      'A project manager scheduling a progress meeting',
-      'An architect issuing a revised drawing',
+      'Two electricians debating the correct cable size for a final circuit',
+      'A plumber running pipes through completed electrical work without coordinating first',
+      'A project manager scheduling a routine weekly progress meeting on site',
+      'An architect issuing a revised drawing showing a minor layout change',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'Communication failures are a common conflict trigger in construction. Which of the following is the BEST example of a communication failure leading to conflict?',
     options: [
-      'A client sending a clear email confirming their requirements before work starts',
-      'An electrician and client agreeing changes verbally on site with no written confirmation, leading to disputes about what was actually agreed',
-      'A project manager distributing meeting minutes after a coordination meeting',
-      'An electrician providing a detailed written quotation before starting work',
+      'A client sending a clear email confirming their requirements before any work starts',
+      'A project manager distributing written meeting minutes after a coordination meeting',
+      'An electrician and client agreeing changes verbally with no written record of what was said',
+      'An electrician providing a detailed, itemised written quotation before starting work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Verbal-only agreements are one of the most common and most preventable sources of conflict in construction. When changes or additional work are agreed verbally on site, both parties leave the conversation with their own understanding of what was said — and those understandings frequently differ. Without written confirmation, there is no evidence to resolve the dispute when it surfaces weeks later at invoicing stage. The other options (clear emails, meeting minutes, written quotations) are all examples of good communication practice that prevents conflict. The fix is straightforward: always confirm agreements in writing, even informally (a text message or email is sufficient). The habit of writing things down prevents the majority of communication-based disputes.',
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       'Power imbalances between main contractors and subcontractors are a significant conflict trigger because:',
     options: [
-      'Main contractors are always wrong in disputes with subcontractors',
-      'Subcontractors have more legal protections than main contractors',
-      "The subcontractor's dependence on the main contractor for future work creates pressure to accept unfair treatment rather than risk the relationship",
-      'Power imbalances only exist in the construction industry',
+      'Main contractors are always in the wrong in any dispute with a subcontractor',
+      'Subcontractors actually hold more legal protections than the main contractor does',
+      'Power imbalances of this kind only ever exist within the construction industry',
+      'Dependence on the contractor for future work pressures subcontractors to accept unfair treatment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Power imbalances are a structural feature of the construction industry's subcontracting model. Main contractors control access to projects, future work, and often payment. This creates a dynamic where subcontractors may accept unfair terms, absorb disputed costs, or tolerate poor treatment because they fear losing access to future work if they push back. This is not about individual bad behaviour (though that exists) — it is about a structural power dynamic that makes conflict resolution inherently unequal. Understanding this dynamic is important because it affects how subcontractors approach disputes: they may need to balance asserting their rights with preserving the commercial relationship. The Construction Act provides some protection (payment rights, adjudication), but the power imbalance remains a significant factor in how conflicts develop and resolve.",
   },

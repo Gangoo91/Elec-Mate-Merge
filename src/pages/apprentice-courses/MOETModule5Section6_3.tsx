@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is WirelessHART and what makes it suitable for industrial process environments?',
     options: [
-      'Because driving with the platform elevated increases the risk of overturning due to a higher centre of gravity, and most MEWP categories are not rated for elevated travel',
-      'DCS provides tightly integrated, high-speed control for a single plant; SCADA provides supervisory monitoring and control over geographically dispersed assets',
+      'A high-bandwidth video protocol used for CCTV and operator terminals on the plant floor',
+      'A wired fieldbus standard that replaces the 4-20 mA current loop on every instrument',
       'A wireless mesh networking protocol based on the HART standard, designed for process instrumentation with self-healing redundancy and security',
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+      'A consumer wireless standard adapted from home automation with no encryption or redundancy',
     ],
     correctIndex: 2,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'iiot-definition',
     question: 'What is the Industrial Internet of Things (IIoT)?',
     options: [
-      'Stop, ask the supervisor, do not drill into a wall the drawing pack does not cover until you have either an as-built or a cable detector confirms the area is clear',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
+      'A consumer network of smart home devices such as thermostats and doorbells',
+      'A replacement for PLCs that performs all real-time safety-critical control directly',
       'The connection of industrial equipment and sensors to networks and cloud platforms for data collection, analysis, and optimisation',
-      'It must achieve the required Performance Level (PL) through appropriate architecture, component reliability, diagnostic coverage, and common cause failure avoidance',
+      'A single wireless protocol that all industrial sensors are required to use',
     ],
     correctIndex: 2,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'edge-computing-role',
     question: 'What is an edge computing device in an industrial IoT architecture?',
     options: [
-      'Assuming you know what your supervisor thinks about you without any evidence — "He thinks I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m useless"',
-      'Yes — Regulation 12(4) requires the construction phase plan to be reviewed, updated and revised as necessary throughout the project',
+      'A cloud server located in a remote data centre that stores all plant data',
+      'A wireless field transmitter that measures a single process variable',
       'A local processing device that analyses data near the source before sending selected information to the cloud, reducing latency and bandwidth',
-      'To define what the regulations cover and the basic safety principles that underpin all requirements',
+      'A handheld terminal used by operators to acknowledge alarms on the plant floor',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'mqtt-protocol',
     question: 'What is MQTT and why is it widely used in IIoT systems?',
     options: [
-      'It is a detailed document describing the step-by-step procedure for carrying out the work safely, including all required precautions',
-      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
+      'A wireless radio standard operating in the 2.4 GHz band for field instruments',
+      'A high-power cabling system for distributing supplies to industrial sensors',
       'A lightweight publish/subscribe messaging protocol ideal for IoT communication between devices, gateways, and cloud platforms',
-      'A report of an occupational disease — specifically, work-related musculoskeletal disorder affecting the back',
+      'A database format used to archive historical process data in the cloud',
     ],
     correctIndex: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is ISA100.11a and how does it relate to WirelessHART?',
     options: [
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
-      'A device that bridges between the wireless sensor network and the wired control system (DCS, PLC, or SCADA)',
+      'A licensed long-range cellular standard that competes with 5G rather than with WirelessHART',
+      'A wired fieldbus standard that WirelessHART devices fall back to when the radio link drops',
       'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
-      'IoT data must be extracted from the OT network via one-way data diodes or secured gateways in a DMZ, never by bridging the control network directly to the internet',
+      'A consumer Wi-Fi profile that WirelessHART gateways use to reach the cloud',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     question:
       'What advantage does a mesh network topology provide for industrial wireless communication?',
     options: [
-      'A device that bridges between the wireless sensor network and the wired control system (DCS, PLC, or SCADA)',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
-      'IoT data must be extracted from the OT network via one-way data diodes or secured gateways in a DMZ, never by bridging the control network directly to the internet',
+      'It removes the need for a wireless gateway by letting every node talk directly to the cloud',
+      'It guarantees deterministic real-time control, making it suitable for safety-critical loops',
+      'It allows devices to run mains-powered only, eliminating the need for battery management',
       'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'What is a wireless gateway in an industrial system?',
     options: [
       'A device that bridges between the wireless sensor network and the wired control system (DCS, PLC, or SCADA)',
-      'A virtual model of a physical asset continuously updated with real-time sensor data, enabling simulation and optimisation',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
-      'Long-range, low-power wide-area networking for monitoring applications covering large areas such as remote sites, pipelines, and utilities',
+      'A battery-powered field transmitter that measures a single process variable wirelessly',
+      'A repeater node whose only function is to extend the range of the wireless mesh network',
+      'A handheld configurator used by technicians to commission individual wireless transmitters',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the typical battery life of a WirelessHART field transmitter?',
     options: [
-      'Long-time, short-time, instantaneous, and ground fault settings',
+      '3-6 months, requiring frequent scheduled replacement',
       '5-10 years depending on update rate and configuration',
-      'They must be CAT III or CAT IV rated with finger guards',
-      'Not paying attention or ignoring instructions',
+      '20-30 years, lasting the full life of the plant',
+      '24-48 hours before mains recharging is required',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is a digital twin in the context of industrial IoT?',
     options: [
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
-      'Wireless signals can be intercepted or jammed; industrial wireless protocols must include encryption, authentication, and intrusion detection',
+      'A redundant backup transmitter installed alongside each critical sensor for failover',
+      'A duplicate copy of the cloud database held on an edge device for offline resilience',
       'A virtual model of a physical asset continuously updated with real-time sensor data, enabling simulation and optimisation',
-      'Providing scalable data storage, analytics, machine learning, dashboarding, and remote access for industrial data collected from edge devices',
+      'A second identical machine kept running in parallel so production never stops during maintenance',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'What security concern is specific to industrial wireless networks?',
     options: [
-      'Yes — private 5G networks offer ultra-low latency, high bandwidth, and massive device density, making them attractive for mobile robots, AGVs, and flexible manufacturing',
-      'A virtual model of a physical asset continuously updated with real-time sensor data, enabling simulation and optimisation',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
+      'Wireless devices draw so much current that they overload the supply, creating a fire risk',
+      'Wireless data rates are too high for managed switches to inspect, hiding malware in traffic',
+      'Wireless transmitters cannot be encrypted because AES interferes with the radio frequency',
       'Wireless signals can be intercepted or jammed; industrial wireless protocols must include encryption, authentication, and intrusion detection',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'What is LoRaWAN used for in industrial applications?',
     options: [
       'Long-range, low-power wide-area networking for monitoring applications covering large areas such as remote sites, pipelines, and utilities',
-      'IoT data must be extracted from the OT network via one-way data diodes or secured gateways in a DMZ, never by bridging the control network directly to the internet',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
+      'High-bandwidth video streaming from CCTV cameras across the plant floor to operator stations',
+      'Deterministic real-time motion control of coordinated multi-axis servo drives on production lines',
+      'Short-range, high-data-rate links between a PLC and its local I/O modules inside a panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the role of cloud platforms in industrial IoT deployments?',
     options: [
-      'A device that bridges between the wireless sensor network and the wired control system (DCS, PLC, or SCADA)',
+      'Performing the real-time safety-critical control loops in place of the plant PLCs and DCS',
       'Providing scalable data storage, analytics, machine learning, dashboarding, and remote access for industrial data collected from edge devices',
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
-      'Wireless signals can be intercepted or jammed; industrial wireless protocols must include encryption, authentication, and intrusion detection',
+      'Supplying the AES-128 encryption keys directly to each wireless field transmitter',
+      'Generating the radio frequency-hopping schedule used by the wireless mesh network',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'What four layers make up a typical IIoT architecture?',
     options: [
-      'They may give false readings and cannot verify absence of voltage',
-      'Mechanical alignment features ensuring correct orientation',
+      'Power layer, control layer, safety layer, and display layer',
+      'Input layer, processing layer, output layer, and storage layer',
       'Sensor/device layer, edge layer, network layer, and cloud/platform layer',
-      'Workers must be consulted on health and safety matters including risk assessment',
+      'Physical layer, data link layer, transport layer, and session layer',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'Why is OT/IT network separation essential when deploying industrial IoT?',
     options: [
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
-      'Yes — private 5G networks offer ultra-low latency, high bandwidth, and massive device density, making them attractive for mobile robots, AGVs, and flexible manufacturing',
+      'OT and IT networks use incompatible IP addressing that prevents them sharing the same switch',
+      'Separation is only needed to stop office staff seeing confidential production figures',
+      'It allows the control network to run at a higher data rate than the office network allows',
       'IoT data must be extracted from the OT network via one-way data diodes or secured gateways in a DMZ, never by bridging the control network directly to the internet',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'Is private 5G technology relevant for industrial automation applications?',
     options: [
       'Yes — private 5G networks offer ultra-low latency, high bandwidth, and massive device density, making them attractive for mobile robots, AGVs, and flexible manufacturing',
-      'Providing scalable data storage, analytics, machine learning, dashboarding, and remote access for industrial data collected from edge devices',
-      'Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes',
-      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
+      'No — 5G is a consumer mobile-phone technology that has no role on an industrial site',
+      'No — 5G operates only in licensed bands that industrial plants are not permitted to use',
+      'No — 5G cannot penetrate metal structures, so it is unusable inside any factory building',
     ],
     correctAnswer: 0,
     explanation:

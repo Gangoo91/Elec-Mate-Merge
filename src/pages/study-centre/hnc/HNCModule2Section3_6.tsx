@@ -13,44 +13,44 @@ const quickCheckQuestions = [
     question: "What is the primary purpose of an economiser cycle in an AHU?",
     options: [
       "To increase heating capacity",
-      "To reduce cooling energy by using outdoor air",
       "To improve filtration efficiency",
+      "To reduce cooling energy by using outdoor air",
       "To increase fan speed"
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation: "Economiser cycles use cool outdoor air to provide free cooling when ambient conditions are favourable, significantly reducing mechanical cooling energy consumption."
   },
   {
     question: "In mixed air calculations, what does the lever rule determine?",
     options: [
       "Fan pressure",
-      "The resultant mixture state on the psychrometric chart",
+      "Coil surface area",
       "Duct velocity",
-      "Coil surface area"
+      "The resultant mixture state on the psychrometric chart"
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation: "The lever rule locates the mixed air condition on a straight line between return and outdoor air states, positioned inversely proportional to the mass flow rates."
   },
   {
     question: "Why is reheat used in some HVAC systems?",
     options: [
-      "To increase humidity",
       "To achieve humidity control after overcooling for dehumidification",
+      "To increase humidity",
       "To reduce fan energy",
       "To filter air"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation: "Reheat warms air that has been cooled below the required supply temperature to achieve dehumidification while delivering air at the correct temperature for sensible cooling."
   },
   {
     question: "What minimum outdoor air percentage is typically required for ventilation?",
     options: [
       "0%",
-      "5-10%",
       "10-25%",
+      "5-10%",
       "50-75%"
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation: "Building regulations and CIBSE guidance typically require 10-25% minimum outdoor air for adequate ventilation, depending on occupancy and activity levels."
   }
 ];
@@ -58,25 +58,25 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     question: "An AHU mixes 2 kg/s of outdoor air at 5°C with 8 kg/s of return air at 22°C. What is the mixed air temperature?",
-    options: ["15.0°C", "18.6°C", "13.5°C", "20.1°C"],
-    correctIndex: 1,
+    options: ["15.0°C", "13.5°C", "18.6°C", "20.1°C"],
+    correctIndex: 2,
     explanation: "Mixed temperature = (2×5 + 8×22)/(2+8) = (10 + 176)/10 = 186/10 = 18.6°C. The lever rule shows 20% outdoor air reduces return temperature by 20% of the difference."
   },
   {
     question: "When should an economiser cycle switch from free cooling to mechanical cooling?",
     options: [
       "When outdoor temperature exceeds return air temperature",
-      "When outdoor enthalpy exceeds return air enthalpy",
+      "When fan speed reaches maximum",
       "When outdoor humidity exceeds 80%",
-      "When fan speed reaches maximum"
+      "When outdoor enthalpy exceeds return air enthalpy"
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation: "Enthalpy-based economiser control is more accurate than temperature alone, switching to mechanical cooling when outdoor enthalpy exceeds return air enthalpy."
   },
   {
     question: "In a reheat system supplying air at 13°C, the cooling coil outlet is 10°C. What is the reheat load for 5 kg/s airflow?",
-    options: ["10 kW", "15 kW", "20 kW", "25 kW"],
-    correctIndex: 1,
+    options: ["15 kW", "10 kW", "20 kW", "25 kW"],
+    correctIndex: 0,
     explanation: "Reheat load = ṁ × cp × ΔT = 5 × 1.0 × (13 - 10) = 5 × 3 = 15 kW. This represents energy wasted but necessary for humidity control."
   },
   {
@@ -87,25 +87,25 @@ const quizQuestions = [
   },
   {
     question: "A building requires 2.5 m³/s total supply air with 15% minimum outdoor air. What is the minimum fresh air rate?",
-    options: ["0.25 m³/s", "0.375 m³/s", "0.50 m³/s", "0.625 m³/s"],
-    correctIndex: 1,
+    options: ["0.25 m³/s", "0.50 m³/s", "0.375 m³/s", "0.625 m³/s"],
+    correctIndex: 2,
     explanation: "Minimum outdoor air = 2.5 × 0.15 = 0.375 m³/s. This ensures adequate ventilation for occupants regardless of economiser operation."
   },
   {
     question: "What component controls the mixed air ratio in a typical AHU?",
-    options: ["Supply fan", "Mixing dampers", "Cooling coil", "Filter bank"],
-    correctIndex: 1,
+    options: ["Supply fan", "Filter bank", "Cooling coil", "Mixing dampers"],
+    correctIndex: 3,
     explanation: "Mixing dampers (outdoor air, return air, and exhaust dampers) modulate to control the proportion of outdoor and return air entering the AHU."
   },
   {
     question: "In a face and bypass coil arrangement, what happens when bypass increases?",
     options: [
-      "Coil capacity increases",
       "Supply air temperature rises (heating coil) or falls less (cooling coil)",
+      "Coil capacity increases",
       "Airflow rate decreases",
       "Coil pressure drop increases"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation: "Increasing bypass allows more air to avoid the coil, reducing the effective heat transfer and moderating the supply air temperature for part-load control."
   },
   {
@@ -121,25 +121,25 @@ const quizQuestions = [
   },
   {
     question: "An economiser saves 150 kWh per day during 180 suitable days per year. At £0.15/kWh, what is the annual saving?",
-    options: ["£2,700", "£4,050", "£5,400", "£6,750"],
-    correctIndex: 1,
+    options: ["£2,700", "£5,400", "£4,050", "£6,750"],
+    correctIndex: 2,
     explanation: "Annual saving = 150 × 180 × 0.15 = 27,000 × 0.15 = £4,050. Economiser cycles provide significant energy savings in temperate climates."
   },
   {
     question: "What is the typical return air temperature in a comfort cooling application?",
-    options: ["18-20°C", "22-24°C", "26-28°C", "30-32°C"],
-    correctIndex: 1,
+    options: ["18-20°C", "30-32°C", "26-28°C", "22-24°C"],
+    correctIndex: 3,
     explanation: "Return air at 22-24°C reflects typical room conditions in comfort applications, with the supply-return differential indicating the sensible cooling provided."
   },
   {
     question: "In a 100% outdoor air system, what additional component is essential compared to recirculation systems?",
     options: [
-      "Larger cooling coil",
       "Heat recovery device",
+      "Larger cooling coil",
       "Additional filter",
       "Larger supply fan"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation: "Heat recovery (run-around coils, plate exchangers, or thermal wheels) is essential in 100% OA systems to recover energy from exhaust air and reduce heating/cooling loads."
   },
   {

@@ -24,7 +24,7 @@ const Module4Section1_2 = () => {
     {
       id: 1,
       question:
-        'What is the maximum horizontal safe zone distance from a wall corner according to BS 7671?',
+        'According to BS 7671, what is the maximum distance from a wall corner for a cable to be within a prescribed (safe) zone?',
       options: [
         '100 mm',
         '150 mm',
@@ -33,25 +33,30 @@ const Module4Section1_2 = () => {
       ],
       correctAnswer: 1,
       explanation:
-        'BS 7671 specifies 150mm as the maximum horizontal safe zone distance from a wall corner.',
+        'A prescribed zone extends within 150 mm of an angle formed by two adjoining walls (Reg 522.6.202).',
     },
     {
       id: 2,
       question:
-        'True or False: Safe zones apply to all cable runs, even if they are surface mounted.',
-      options: ['True', 'False'],
+        'Do safe zones apply to all cable runs, including surface-mounted cables?',
+      options: [
+        'Yes, they apply to every cable run',
+        'No, they apply only to concealed cables in walls',
+        'Yes, but only to outdoor cable runs',
+        'No, they apply only to armoured cables',
+      ],
       correctAnswer: 1,
       explanation:
-        'False – safe zones only apply to concealed cables in walls at less than 50mm depth.',
+        'Safe (prescribed) zones apply to cables concealed in walls/partitions; surface-mounted cables are visible and protected differently.',
     },
     {
       id: 3,
       question: 'Name one factor that affects cable route selection.',
       options: [
-        'Batteries require replacement every 3–5 years',
-        'You lose marks and paperwork is incomplete',
-        'Thoughts, feelings, and behaviours',
-        'Safety, accessibility, aesthetics, or compliance',
+        'The age of the consumer unit',
+        'The colour of the wall finish',
+        'The brand of the cable detector',
+        'Safety, accessibility, aesthetics or compliance',
       ],
       correctAnswer: 3,
       explanation:
@@ -59,25 +64,25 @@ const Module4Section1_2 = () => {
     },
     {
       id: 4,
-      question: 'How often should twin and earth cables be fixed vertically?',
+      question: 'How often should twin and earth cables typically be fixed when run vertically?',
       options: [
-        'Every 300mm',
-        'Every 200mm',
-        'Every 500mm',
-        'Every 600mm',
+        'Every 300 mm',
+        'Every 200 mm',
+        'Every 500 mm',
+        'Every 600 mm',
       ],
       correctAnswer: 0,
       explanation:
-        'Twin and earth cables should typically be fixed every 300mm when run vertically.',
+        'Twin and earth cables should typically be fixed every 300 mm when run vertically.',
     },
     {
       id: 5,
       question: 'Give one example of a hazard that could damage a cable.',
       options: [
-        'To contain and protect cables and wiring',
-        'Heat, sharp edges, or mechanical impact',
-        'A break in continuity of the conductor',
-        'Red with white asbestos warning',
+        'A correctly sized protective device',
+        'Heat, sharp edges or mechanical impact',
+        'An unbroken conductor with good continuity',
+        'A cable run inside a safe zone',
       ],
       correctAnswer: 1,
       explanation:
@@ -87,21 +92,21 @@ const Module4Section1_2 = () => {
       id: 6,
       question: 'What should be done before drilling fixing points?',
       options: [
-        'The battery is ageing and has lost capacity',
-        'Hydraulic benders or specialised forming equipment',
-        'Check for hidden services with a detector',
-        'Insulated tools, gloves, mats, footwear',
+        'Energise the circuit to check it is working',
+        'Fit the cable clips along the route',
+        'Check for hidden services with a cable/pipe detector',
+        'Apply the final faceplates to the accessories',
       ],
       correctAnswer: 2,
       explanation: 'Always check for hidden services using a cable/pipe detector before drilling.',
     },
     {
       id: 7,
-      question: 'Which type of fixing is best for masonry walls?',
+      question: 'Which type of fixing is best for a masonry wall?',
       options: [
-        'Burn gel sachets and trauma dressings',
-        '6 metres (or as specified by the DNO)',
-        'Miswired polarity on the RS-485 bus',
+        'Spring toggles',
+        'Cavity wall anchors',
+        'Self-adhesive clips',
         'Masonry anchors or wall plugs',
       ],
       correctAnswer: 3,
@@ -111,10 +116,10 @@ const Module4Section1_2 = () => {
       id: 8,
       question: 'Why is route efficiency important in electrical installation?',
       options: [
-        'Reduces material use, voltage drop, and installation time',
-        'Risk of shock when maintaining equipment that appears off',
-        'To act as shock absorbers between vertebrae',
-        '"They\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re planning to complete the first fix by Friday."',
+        'It reduces material use, voltage drop and installation time',
+        'It increases the current rating of the cables',
+        'It removes the need to check for hidden services',
+        'It allows safe zones to be ignored',
       ],
       correctAnswer: 0,
       explanation:
@@ -126,7 +131,7 @@ const Module4Section1_2 = () => {
   const quickChecks = [
     {
       id: 'safe-zone-check',
-      question: 'What is the maximum distance from a wall corner that is considered a safe zone?',
+      question: 'What is the maximum distance from a wall corner that is considered a safe (prescribed) zone?',
       options: [
         '150mm',
         '100mm',
@@ -135,29 +140,29 @@ const Module4Section1_2 = () => {
       ],
       correctIndex: 0,
       explanation:
-        'BS 7671 specifies that cables can be run within 150mm of a wall corner as part of safe zones.',
+        'BS 7671 specifies that a prescribed zone extends within 150 mm of a wall angle/corner (Reg 522.6.202).',
     },
     {
       id: 'hazard-check',
       question: 'Why should you avoid routing cables near heating pipes?',
       options: [
-        'Heat can damage cable insulation and reduce lifespan',
-        'Record results circuit-by-circuit as you go',
-        'A licensed asbestos removal contractor',
-        'Occupational asthma (respiratory sensitiser)',
+        'Heat can damage the cable insulation and reduce its lifespan',
+        'It makes the cable harder to identify later',
+        'It prevents the use of cable clips',
+        'It increases the cost of the cable detector',
       ],
       correctIndex: 0,
       explanation:
-        'Heat from pipes can damage cable insulation, reduce current carrying capacity, and shorten cable life.',
+        'Heat from pipes can damage cable insulation, reduce current-carrying capacity, and shorten cable life.',
     },
     {
       id: 'marking-check',
       question: 'Give one method for marking a cable route accurately.',
       options: [
-        'To prevent condensation forming on the beam surfaces',
-        'Using chalk lines, laser levels, or string lines',
-        'Current capacity vs. rated capacity',
-        'Higher temperature increases conductivity',
+        'Estimating the route by eye as you go',
+        'Using chalk lines, laser levels or string lines',
+        'Marking each fixing point only after the cable is clipped',
+        'Routing the cable diagonally across the wall',
       ],
       correctIndex: 1,
       explanation:

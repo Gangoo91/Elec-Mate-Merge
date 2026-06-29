@@ -16,10 +16,10 @@ const Module6Section3_6 = () => {
       id: 1,
       question: 'Which instrument is safest for proving dead?',
       options: [
-        'The DB\\\\\\\\\\\\\\\'s outgoing line terminal',
-        'Two-pole voltage tester (GS38 compliant)',
-        'A device that converts DC to AC',
-        'With specific, accurate technical descriptions',
+        'A neon screwdriver',
+        'A GS38-compliant two-pole voltage tester',
+        'A non-contact voltage pen',
+        'A digital multimeter',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module6Section3_6 = () => {
       id: 2,
       question: 'What is an IR tester used for?',
       options: [
-        'An unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment',
-        'The designer, installer, and verifier/commissioning engineer',
+        'Measuring the supply voltage at a socket',
+        'Proving a circuit dead before work',
         'Checking insulation resistance between conductors and earth',
-        'Risk of damage, theft, or cluttered storage',
+        'Measuring the current drawn by an appliance',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module6Section3_6 = () => {
       id: 3,
       question: 'Can continuity testers be used on live circuits?',
       options: [
-        'They must be competent or supervised',
-        'Self-excited (shunt/series/compound)',
-        'Switching power to the motor',
+        'Yes, on any circuit up to 230V',
+        'Yes, provided an RCD is fitted',
+        'Yes, but only for a few seconds',
         'No — only on isolated circuits',
       ],
       correctAnswer: 3,
@@ -69,11 +69,11 @@ const Module6Section3_6 = () => {
       question: 'What instrument would you use for ring final circuit verification?',
       options: [
         'IR tester',
-        'Continuity tester',
         'Voltage pen',
         'Multimeter',
+        'Continuity tester',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Continuity testers are specifically designed for verifying unbroken paths in conductors, including ring final circuits.',
     },

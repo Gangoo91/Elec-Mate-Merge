@@ -36,12 +36,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why should you never improvise a replacement for a missing locking clip?',
     options: [
-      'It looks unprofessional',
       'Improvised clips may not provide the designed holding force and can fail under load',
+      'It looks unprofessional',
       "It voids the tower's insurance",
       'Only PASMA instructors are allowed to replace clips',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Locking clips are engineered components designed to withstand specific loads and forces. Cable ties, wire, tape, or other improvised substitutes cannot provide the same holding force and are likely to fail under dynamic loading or wind.',
   },
@@ -50,11 +50,11 @@ const quizQuestions = [
     question: 'What cleaning agent should NOT be used on aluminium tower components?',
     options: [
       'Warm soapy water',
-      'Caustic or alkaline cleaning products',
       'A soft brush and clean water',
       'A damp cloth',
+      'Caustic or alkaline cleaning products',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Caustic or alkaline cleaning products attack aluminium and can cause corrosion, pitting, and weakening of the metal. Only mild, pH-neutral cleaning agents should be used on aluminium components.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 7,
     question: 'Who should make the decision to condemn and replace a tower component?',
     options: [
-      'Any tower user can condemn a component',
-      'Only the site manager',
       "A competent person following the manufacturer's guidance",
+      'Only the site manager',
+      'Any tower user can condemn a component',
       "Only the manufacturer's representative",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The decision to condemn and replace components should be made by a competent person with reference to the manufacturer's guidance on acceptable tolerances and rejection criteria. Manufacturers provide specific guidance on when components must be removed from service.",
   },
@@ -103,10 +103,10 @@ const quizQuestions = [
     options: [
       'No consequence if the repair is well done',
       'A small fine from the HSE',
-      "It may void the manufacturer's warranty and compromise structural integrity",
       'The component must be re-tested by a third party',
+      "It may void the manufacturer's warranty and compromise structural integrity",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Unauthorised repairs — such as welding, drilling, or bending components back into shape — can compromise the structural integrity of the component and void the manufacturer's warranty. Only the manufacturer or their authorised agent should carry out repairs.",
   },
@@ -118,12 +118,12 @@ const quickCheckQuestions = [
     question:
       'You are carrying out a pre-use check and discover a horizontal brace with a noticeable bow in the middle. It still clips into the frame at both ends. What should you do?',
     options: [
-      'Use the tower — the brace is still connected at both ends',
-      'Straighten the brace by hand and then use the tower',
       'Remove the brace, tag it as defective, replace with a good brace, and report the defect',
+      'Straighten the brace by hand and then use the tower',
+      'Use the tower — the brace is still connected at both ends',
       'Add an extra brace alongside the bent one for additional support',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A bent brace must be removed from service, tagged as defective, and replaced with a serviceable component. Attempting to straighten it can introduce further weakness. Adding an extra brace does not compensate for a defective one — the defective component must be removed.',
   },
@@ -134,10 +134,10 @@ const quickCheckQuestions = [
     options: [
       'Apply the brake more firmly and continue using the tower',
       "Replace the castor with one from a different manufacturer's tower system",
-      'Replace the castor with the correct manufacturer-approved replacement and retest',
       'Wedge a piece of wood under the wheel to prevent rolling',
+      'Replace the castor with the correct manufacturer-approved replacement and retest',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'A castor with a flat spot or faulty brake must be replaced with the correct manufacturer-approved replacement. Components are not interchangeable between different tower systems. Improvised solutions like wedging are unsafe.',
   },

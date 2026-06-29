@@ -55,9 +55,9 @@ const AM2Module4Section1 = () => {
         'What is the first electrical test that must be carried out before any live testing?',
       options: [
         'Continuity of protective conductors',
-        'Grid connection requirements',
-        'That settings match designer\\\\\\\\\\\\\\\'s requirements',
-        'Gradual voltage increase to test voltage',
+        'Earth fault loop impedance at the origin',
+        'Prospective fault current at the board',
+        'RCD trip-time at rated residual current',
       ],
       correctIndex: 0,
       explanation:
@@ -80,9 +80,9 @@ const AM2Module4Section1 = () => {
       id: 'live-testing-rule',
       question: 'When can live testing commence during AM2 assessment?',
       options: [
-        'Central battery systems require significantly more cable',
-        'Denial → Anger → Bargaining → Depression → Acceptance',
-        'An unlimited fine and/or up to two years\\\\\\\\\\\\\\\' imprisonment',
+        'As soon as the supply has been safely isolated',
+        'Once the visual inspection has been completed',
+        'At any point, provided correct PPE is worn',
         'Only after all dead tests are complete and satisfactory',
       ],
       correctIndex: 3,
@@ -109,10 +109,10 @@ const AM2Module4Section1 = () => {
       id: 2,
       question: 'During AM2 assessment, which aspect is most critical for assessor evaluation?',
       options: [
-        'At planned intervals (typically annually minimum)',
-        'Selecting specific data to focus on',
+        'Completing the tests as quickly as possible',
+        'Achieving the lowest possible Zs readings',
         'Following GN3 sequence methodically and safely',
-        'A fixed ratio between two process variables',
+        'Using the most expensive test instruments',
       ],
       correctAnswer: 2,
       explanation:
@@ -122,9 +122,9 @@ const AM2Module4Section1 = () => {
       id: 3,
       question: 'What happens if you perform live tests before completing dead tests?',
       options: [
-        'All conditions must be true',
-        'The site manager and responsible electricians',
-        'Ensure accurate measurements',
+        'The results are simply recorded as provisional',
+        'A verbal warning is given but testing continues',
+        'The assessor repeats the test on your behalf',
         'Automatic failure for unsafe practice',
       ],
       correctAnswer: 3,
@@ -136,9 +136,9 @@ const AM2Module4Section1 = () => {
       question: 'Which test must be performed to verify ring circuit integrity?',
       options: [
         'Continuity of ring final circuit conductors',
-        'Conformity with relevant health and safety standards',
-        'Within 600mm of meter, consumer side',
-        'Clear, accurate, complete, and timely information',
+        'Insulation resistance between line and earth',
+        'Earth fault loop impedance at the origin',
+        'Prospective fault current at the board',
       ],
       correctAnswer: 0,
       explanation:
@@ -148,10 +148,10 @@ const AM2Module4Section1 = () => {
       id: 5,
       question: 'What is the correct sequence for insulation resistance testing?',
       options: [
-        'It keeps the header row visible while scrolling through data below',
+        'Test earth to neutral, then earth to line, then line to neutral',
         'Test line to neutral, then line to earth, then neutral to earth',
-        'It helps prevent recurrence and may identify systemic issues',
-        'Preserving the fire scene and any evidence for investigation',
+        'Test line to earth only, as the other readings are not required',
+        'Test all three combinations simultaneously in one operation',
       ],
       correctAnswer: 1,
       explanation:
@@ -201,10 +201,10 @@ const AM2Module4Section1 = () => {
       id: 9,
       question: 'What must be disconnected before insulation resistance testing?',
       options: [
-        'Current sources in parallel simply add algebraically',
+        'The main earthing conductor at the earth bar',
         'Electronic equipment and surge protective devices',
-        'Electrical installations in buildings and their surrounds',
-        'Competence varies with work complexity',
+        'The protective conductors at every accessory',
+        'The neutral conductor at the consumer unit',
       ],
       correctAnswer: 1,
       explanation:
@@ -856,10 +856,10 @@ const AM2Module4Section1 = () => {
             </p>
             <p>
               <strong>7. RCD Operation and Timing.</strong> Test Requirements: Trip at 50% rated
-              current (½×IΔn): Should NOT trip. Trip at 100% rated current (1×IΔn): Must trip within
-              300ms (general-purpose) / 40ms (Type S: 200ms). A4:2026 deleted the 5×IΔn test —
-              single AC test at 1×IΔn only. AM2 Critical: Test both positive and negative half
-              cycles.
+              current (½×IΔn): Should NOT trip. Trip at 100% rated current (1×IΔn): general-purpose
+              non-delay RCD must trip within 300ms maximum; delay 'S'-type between 130ms and 500ms.
+              A4:2026 deleted Table 3A and the 5×IΔn test — single AC test at 1×IΔn only. AM2
+              Critical: Test both positive and negative half cycles.
             </p>
             <p>
               <strong>8. Voltage Measurements.</strong> Verify supply voltage at consumer unit and
@@ -932,9 +932,10 @@ const AM2Module4Section1 = () => {
             </p>
             <p>
               <strong>RCD Testing — Trip Time.</strong> Test at ½×IΔn (should not trip — confirms
-              RCD won't nuisance-trip). Test at 1×IΔn (must trip within 300ms for general-purpose
-              RCD; 40ms for Type S). A4:2026 — single AC test at 1×IΔn only (the 5×IΔn test from
-              earlier amendments was deleted). Test all RCD devices individually.
+              RCD won't nuisance-trip). Test at 1×IΔn (general-purpose non-delay RCD must trip within
+              300ms maximum; delay 'S'-type between 130ms and 500ms). A4:2026 — single AC test at
+              1×IΔn only; Table 3A and the 5×IΔn test from earlier amendments were deleted. Test all
+              RCD devices individually.
             </p>
             <p>
               <strong>Earth Fault Loop Impedance — Zs Values.</strong> Measure Ze (external loop
@@ -1000,10 +1001,10 @@ const AM2Module4Section1 = () => {
             doInstead={
               <>
                 Single AC test at <strong>1×IΔn</strong> per Reg 643.8 + manual test button — that's
-                the entire RCD verification routine for AM2 day. Trip ≤ 300 ms (general-purpose), ≤
-                200 ms (Type S), and ≤ 40 ms is the figure you cite for additional protection in
-                Chapter 41. No 5×, no ½× pre-test on AM2 (some MFTs run that automatically — it is
-                not part of the verification you record).
+                the entire RCD verification routine for AM2 day. Trip ≤ 300 ms (general-purpose
+                non-delay), 130–500 ms (delay 'S'-type), and ≤ 40 ms is the figure you cite for
+                additional protection in Chapter 41. No 5×, no ½× pre-test on AM2 (some MFTs run that
+                automatically — it is not part of the verification you record).
               </>
             }
           />
@@ -1145,7 +1146,7 @@ const AM2Module4Section1 = () => {
                 question:
                   "What's the actual A4:2026 RCD test routine — I've seen conflicting things online?",
                 answer:
-                  "A4:2026 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone. The verification routine is: single AC test at 1×IΔn (general-purpose RCD must trip ≤ 300 ms; Type S ≤ 200 ms; ≤ 40 ms is the figure for additional protection per Chapter 41), plus the manual test button. That's it. Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
+                  "A4:2026 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone. The verification routine is: single AC test at 1×IΔn (general-purpose non-delay RCD must trip ≤ 300 ms; delay 'S'-type 130–500 ms; ≤ 40 ms is the figure for additional protection per Chapter 41), plus the manual test button. That's it. Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
               },
               {
                 question: 'Why is B32 Zsmax 1.37 Ω now and not the older 1.44 Ω I was taught?',

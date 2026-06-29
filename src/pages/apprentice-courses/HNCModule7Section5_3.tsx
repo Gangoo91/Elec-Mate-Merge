@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What is a harmonic in an electrical power system?',
     options: [
       'A sinusoidal component at a multiple of the fundamental frequency',
-      'Verifying compliance with regulations through inspection and testing',
-      'Textured decorative coatings (such as Artex) applied before 2000',
-      'The date of test, type of test, any defects found and remedial action taken',
+      'A momentary spike in voltage caused by a lightning strike',
+      'The reactive power drawn by an inductive load',
+      'A slow drift in supply frequency away from 50 Hz',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       'Why are triplen harmonics (3rd, 9th, 15th) particularly problematic in three-phase systems?',
     options: [
       'They add arithmetically in the neutral conductor',
-      'Standard PVC cables were used instead of fire-resistant cables',
-      'To prevent tools falling and creating hazards below',
-      'Grommets or bushes to protect against sharp edges',
+      'They cancel completely in the phase conductors',
+      'They flow only in the protective earth conductor',
+      'They are filtered out automatically by the supply transformer',
     ],
     correctIndex: 0,
     explanation:
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'passive-filter-type',
     question: 'A passive harmonic filter typically consists of:',
     options: [
-      'Delta-T greater than 40°C above ambient',
-      'Observations, Feelings, Needs, Requests',
+      'A microprocessor that measures and cancels harmonic currents',
+      'A bank of bleed resistors connected across the supply',
       'Inductors and capacitors tuned to specific frequencies',
-      'Work from supply to load, isolating sections systematically',
+      'A second rectifier phase-shifted by 30 degrees',
     ],
     correctIndex: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: 'A VSD operating a 30 kW motor will predominantly produce which harmonic orders?',
     options: [
-      'At least 10 minutes under representative load conditions',
-      'Oversized neutral conductor with triplen harmonic filter',
-      'Prevent resonance with the supply at harmonic frequencies',
+      '2nd, 4th, 6th, 8th (even harmonics)',
+      '3rd, 9th, 15th (triplen harmonics)',
+      'Only the fundamental at 50 Hz with no harmonics',
       '5th, 7th, 11th, 13th (characteristic harmonics)',
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'What is the primary effect of harmonic currents on transformer windings?',
     options: [
       'Additional heating due to increased eddy current and skin effect losses',
-      'At least 10 minutes under representative load conditions',
-      'Prevent resonance with the supply at harmonic frequencies',
-      'K-rated transformer, oversized neutrals, and centralised active filtering',
+      'A permanent increase in the transformer turns ratio',
+      'A reduction in the no-load magnetising current',
+      'Improved efficiency due to better magnetic coupling',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A K-13 rated transformer indicates it can handle:',
     options: [
-      '5th, 7th, 11th, 13th (characteristic harmonics)',
+      'A maximum of 13 harmonic orders before it must be replaced',
       'Harmonic loading equivalent to K-factor of 13',
-      'Oversized neutral conductor with triplen harmonic filter',
-      'Prevent resonance with the supply at harmonic frequencies',
+      'A supply containing no more than 13% total harmonic distortion',
+      'A load of exactly 13 kVA at the fundamental frequency',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'Which mitigation technique would be most effective for a building with many single-phase non-linear loads causing neutral overheating?',
     options: [
-      '5th, 7th, 11th, 13th (characteristic harmonics)',
-      'Harmonic loading equivalent to K-factor of 13',
+      'A 12-pulse rectifier on the incoming supply transformer',
+      'A series AC line reactor fitted to each lighting circuit',
       'Oversized neutral conductor with triplen harmonic filter',
-      'Additional heating due to increased eddy current and skin effect losses',
+      'A single tuned passive filter for the 5th harmonic only',
     ],
     correctAnswer: 2,
     explanation:
@@ -177,9 +177,9 @@ const quizQuestions = [
     question: 'What is the main advantage of using a 12-pulse VSD configuration over a 6-pulse?',
     options: [
       'Reduced 5th and 7th harmonic generation',
-      'Unexplained nuisance tripping of circuit breakers',
-      'Harmonic loading equivalent to K-factor of 13',
-      '5th, 7th, 11th, 13th (characteristic harmonics)',
+      'A lower purchase cost and simpler installation',
+      'Elimination of all harmonics from the supply',
+      'A higher motor speed range at the same frequency',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'When measuring THD with a power quality analyser, the measurement should typically be taken over:',
     options: [
-      '5th, 7th, 11th, 13th (characteristic harmonics)',
+      'A single instantaneous reading at switch-on',
       'At least 10 minutes under representative load conditions',
-      'Harmonic loading equivalent to K-factor of 13',
-      'Unexplained nuisance tripping of circuit breakers',
+      'Only at no-load with all equipment switched off',
+      'A few seconds during the worst-case inrush current',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'Detuned harmonic filters include a reactor in series with the capacitor to:',
     options: [
-      'K-rated transformer, oversized neutrals, and centralised active filtering',
-      '5th, 7th, 11th, 13th (characteristic harmonics)',
+      'Increase the reactive power the capacitor can deliver',
+      'Raise the resonant frequency above the 13th harmonic',
       'Prevent resonance with the supply at harmonic frequencies',
-      'Oversized neutral conductor with triplen harmonic filter',
+      'Convert the capacitor bank into an active harmonic filter',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     question:
       'Which symptom is most likely to indicate a harmonic problem in an electrical installation?',
     options: [
-      'Prevent resonance with the supply at harmonic frequencies',
-      'Injecting currents equal and opposite to the harmonic currents',
-      'Reduced 5th and 7th harmonic generation',
+      'A steady improvement in measured power factor over time',
+      'Cooler-than-normal running of transformers and cables',
+      'A reduction in the supply voltage during peak demand only',
       'Unexplained nuisance tripping of circuit breakers',
     ],
     correctAnswer: 3,
@@ -232,9 +232,9 @@ const quizQuestions = [
       'For a new commercial building with substantial IT load and LED lighting, which design approach best addresses harmonics?',
     options: [
       'K-rated transformer, oversized neutrals, and centralised active filtering',
-      'Prevent resonance with the supply at harmonic frequencies',
-      'Additional heating due to increased eddy current and skin effect losses',
-      'Injecting currents equal and opposite to the harmonic currents',
+      'Standard transformer with undersized neutral to save cable cost',
+      'A single power factor correction capacitor bank with no detuning',
+      'Relying solely on the supply network to absorb the harmonics',
     ],
     correctAnswer: 0,
     explanation:

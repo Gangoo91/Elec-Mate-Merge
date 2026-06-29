@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a design risk assessment and a construction risk assessment?',
     options: [
-      'A design risk assessment is completed after the project is built; a construction risk assessment is completed before',
       'A design risk assessment focuses on hazards created or influenced by design decisions; a construction risk assessment focuses on hazards arising from the construction process itself',
+      'A design risk assessment is completed after the project is built; a construction risk assessment is completed before',
       'A design risk assessment is only required for projects over £10 million',
       'There is no difference — they are the same document under CDM 2015',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A design risk assessment specifically addresses hazards that are created, increased, or influenced by design decisions — for example, specifying a fragile roofing material that creates a fall risk during maintenance. A construction risk assessment, by contrast, focuses on hazards that arise from the construction process itself, such as crane operations or excavation methods. Designers must consider both buildability and whole-life risks.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: "The 'so far as is reasonably practicable' (SFAIRP) test requires designers to:",
     options: [
       'Eliminate every conceivable risk regardless of cost',
-      'Balance the cost, time, and effort of risk reduction against the degree of risk',
       'Only address risks that have previously caused fatalities',
       'Defer all risk decisions to the principal contractor',
+      'Balance the cost, time, and effort of risk reduction against the degree of risk',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The SFAIRP test, established in Edwards v National Coal Board [1949], requires that risks be reduced unless the sacrifice (in cost, time, or effort) is grossly disproportionate to the risk. This does not mean eliminating every risk at any cost — it means weighing the severity and likelihood of harm against the practicability of removing or reducing it. The burden of proof lies with the duty holder to show that further reduction would be grossly disproportionate.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'Under CDM 2015, when must a designer begin the design risk assessment process?',
     options: [
-      'Only after planning permission has been granted',
       'At the earliest stage of design, when decisions have the greatest influence on buildability and safety',
+      'Only after planning permission has been granted',
       'Only once the principal contractor has been appointed',
       'After the construction phase has started, to capture real-world risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Designers must begin risk assessment at the earliest possible stage of design, when decisions have the greatest potential to eliminate or reduce hazards. Early-stage decisions — such as structural form, material selection, and site layout — fundamentally shape the risks that arise during construction, maintenance, and demolition. Waiting until later stages significantly limits the designer's ability to design out hazards.",
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of hazard elimination through design?',
     options: [
       'Specifying a safety harness system for roof maintenance',
-      'Designing a building with all services accessible from within the building, removing the need for external access at height',
       'Adding warning signs to identify fragile roof panels',
       'Requiring the contractor to produce a method statement for high-risk work',
+      'Designing a building with all services accessible from within the building, removing the need for external access at height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Designing services to be accessible from within the building eliminates the hazard of working at height for maintenance. This is the highest level of the risk control hierarchy — removing the hazard entirely through design. Specifying harness systems or adding warning signs are forms of risk reduction, not elimination. Requiring method statements transfers risk management responsibility to the contractor rather than addressing it through design.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'Which hazard identification technique involves a structured, systematic review of potential deviations from design intent?',
     options: [
-      'Toolbox talk',
       'HAZOP (Hazard and Operability Study)',
+      'Toolbox talk',
       'Induction briefing',
       'Site walkabout',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A HAZOP (Hazard and Operability Study) is a structured, systematic examination of a process or design to identify potential deviations from design intent and the hazards they could cause. It uses guide words (such as 'more', 'less', 'reverse', 'other than') applied to each element of the design to prompt consideration of what could go wrong. HAZOP is particularly valuable for complex M&E installations, process engineering, and systems with multiple interacting components.",
   },
@@ -145,11 +145,11 @@ const quizQuestions = [
     question: 'Pre-construction information (PCI) provided by the client should include:',
     options: [
       'Only the project budget and programme',
-      'Information about existing structures, ground conditions, hazardous materials, and any restrictions affecting design or construction',
       'The names of all subcontractors who will work on the project',
       'A completed design risk assessment for every element of the building',
+      'Information about existing structures, ground conditions, hazardous materials, and any restrictions affecting design or construction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under CDM 2015 Regulation 4, the client must provide pre-construction information (PCI) that is relevant to the design and construction of the project. This includes information about existing structures (including asbestos surveys), ground conditions, buried services, contamination, access restrictions, neighbouring properties, and any health and safety issues from previous construction work on the site. Designers rely on PCI to carry out effective risk assessment — without it, critical hazards may be missed.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
       'Which of the following is a common design risk in M&E (mechanical and electrical) installations?',
     options: [
       'Specifying excessively wide corridors',
-      'Using too many windows in the facade',
       'Routing services through confined spaces that are difficult to access for maintenance',
+      'Using too many windows in the facade',
       'Selecting paint colours that are not aesthetically pleasing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Routing services through confined spaces — such as ceiling voids, risers, or underground chambers — creates significant risks during both installation and future maintenance. Workers may face restricted access, poor ventilation, difficulty evacuating in an emergency, and potential exposure to hazardous atmospheres. M&E designers should consider accessibility, maintenance frequency, and emergency egress when routing services, and should aim to locate equipment in spaces that are safe and practical to access.',
   },

@@ -48,9 +48,9 @@ export const eventTriggersQuizData: QuizQuestion[] = [
       'How should automated notification systems handle critical alarms if the primary notification method fails?',
     options: [
       'Use backup notification channels and escalation procedures',
-      'Design redundant automation paths for critical functions',
-      'Key performance indicators relevant to the audience',
-      'Daily summaries for facility managers, weekly for energy managers',
+      'Suppress the alarm until the primary channel is restored',
+      'Log the alarm locally and wait for the next operator login',
+      'Retry the same channel repeatedly until it succeeds',
     ],
     correctAnswer: 0,
     explanation:
@@ -61,10 +61,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What is the optimal frequency for generating energy consumption reports in most commercial buildings?',
     options: [
-      'User authentication and encrypted communications',
+      'Real-time reports streamed continuously to every user',
       'Daily summaries for facility managers, weekly for energy managers',
-      'Key performance indicators relevant to the audience',
-      'Test during non-occupied hours with proper notifications',
+      'A single comprehensive report issued annually',
+      'Hourly reports sent to all building occupants',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,11 +85,11 @@ export const eventTriggersQuizData: QuizQuestion[] = [
   },
   {
     id: 7,
-    question: 'What type of data should be prioritized in automated building performance reports?',
+    question: 'What type of data should be prioritised in automated building performance reports?',
     options: [
-      'Use backup notification channels and escalation procedures',
-      'Daily summaries for facility managers, weekly for energy managers',
-      'Calendar-based scheduling with smooth transitions',
+      'Raw, unfiltered sensor logs from every connected device',
+      'Only data that confirms the system is operating normally',
+      'Maximum data volume to demonstrate system capability',
       'Key performance indicators relevant to the audience',
     ],
     correctAnswer: 3,
@@ -128,10 +128,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What security measure is most important for protecting automated building control systems?',
     options: [
-      'Calendar-based scheduling with smooth transitions',
-      'Break into multiple simpler triggers',
+      'Relying on physical access control to the plant room alone',
+      'Keeping all controllers on the default manufacturer passwords',
       'User authentication and encrypted communications',
-      'Implement appropriate time delays and hysteresis',
+      'Connecting controllers directly to the public internet for access',
     ],
     correctAnswer: 2,
     explanation:

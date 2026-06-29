@@ -25,14 +25,14 @@ const quickCheckQuestions = [
     question:
       'The ground controls on a MEWP are not responding and the operator is stranded at height. You have confirmed that no APU is fitted. What is the NEXT step?',
     options: [
-      'Call the fire brigade immediately',
       'Locate the emergency/manual lowering handle or valve at the base of the machine',
+      'Call the fire brigade immediately',
       'Climb a ladder to reach the operator',
       'Wait for the hire company to send an engineer',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'When ground controls are inoperable and no APU is available, the next step is to locate and use the emergency or manual lowering system. This is typically a handle or valve at the base of the machine that allows the platform to lower under gravity in a controlled manner. Calling emergency services (Option C) is only used when ALL mechanical means have failed. Never climb to the operator — this is an untrained rescue from height.',
+      'When ground controls are inoperable and no APU is available, the next step is to locate and use the emergency or manual lowering system. This is typically a handle or valve at the base of the machine that allows the platform to lower under gravity in a controlled manner. Calling the fire brigade is only used when ALL mechanical means have failed. Never climb to the operator — this is an untrained rescue from height.',
   },
   {
     id: 'mewp-ground-rescue-person',
@@ -50,8 +50,8 @@ const quickCheckQuestions = [
   {
     id: 'mewp-rescue-drill-frequency',
     question: 'How often should rescue drill practice be carried out as a minimum recommendation?',
-    options: ['Monthly', 'Every 3 months', 'Every 6 months', 'Annually'],
-    correctIndex: 2,
+    options: ['Monthly', 'Every 3 months', 'Annually', 'Every 6 months'],
+    correctIndex: 3,
     explanation:
       'Rescue drills should be practised at least every 6 months. This ensures that all personnel involved remain competent and confident with the procedures, the equipment works correctly, and any issues are identified before a real emergency occurs. More frequent drills may be appropriate where personnel change regularly or new machine types are introduced.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'During a rescue using ground controls, what must the ground rescue person confirm BEFORE lowering the platform?',
     options: [
+      'That the area above and below the platform is clear of obstructions',
       'That the operator has removed their harness',
       'That the site manager has given written authorisation',
-      'That the area above and below the platform is clear of obstructions',
       'That the hire company has been notified',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Before lowering the platform, the ground rescue person must visually confirm that the area above and below the platform is clear of obstructions. Lowering onto an obstruction could cause further injury to the operator, damage the machine, or create a crushing hazard for anyone below. The operator should keep their harness on throughout the rescue.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     options: [
       'Must hold a full IPAF operator licence',
       'Must be a qualified first aider',
-      'Must be physically present at ground level during ALL elevated operations',
       'Must have at least 5 years of construction experience',
+      'Must be physically present at ground level during ALL elevated operations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The ground rescue person must be physically present at ground level during ALL elevated operations. They must not leave the vicinity and must not be assigned other duties that would prevent immediate response. They do not need an IPAF licence, but they must be competent with the specific machine's ground controls. First aid training is beneficial but not a mandatory requirement for the role.",
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'How often should rescue drills be practised, and what must be recorded?',
     options: [
-      'Annually — record participants only',
       'Every 6 months minimum — record date, participants, scenario, time taken, and issues identified',
+      'Annually — record participants only',
       'Monthly — record pass or fail result',
       'Only when new staff join — no formal record required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rescue drills should be practised every 6 months as a minimum. Each drill must be recorded with the date, participants, scenario practised, time taken, and any issues identified. A debrief should follow every drill to discuss what went well and what needs improvement. New personnel must participate in a drill before being assigned as ground rescue person.',
   },
@@ -185,10 +185,10 @@ const quizQuestions = [
     options: [
       'Run to the outriggers and attempt to stabilise the machine',
       'Use the ground controls to lower the platform as quickly as possible',
-      'Evacuate the area immediately — do NOT attempt to stabilise the machine — call 999',
       'Instruct the operator to jump clear of the platform',
+      'Evacuate the area immediately — do NOT attempt to stabilise the machine — call 999',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If a MEWP is tilting or overturning, the ground rescue person must evacuate the area immediately and call 999. Do NOT attempt to stabilise the machine — a tilting MEWP weighing several tonnes cannot be stopped by a person, and the attempt would place you directly in the crush zone. The operator should brace inside the platform and keep their harness connected. Fire and rescue services have specialist equipment for this scenario.',
   },

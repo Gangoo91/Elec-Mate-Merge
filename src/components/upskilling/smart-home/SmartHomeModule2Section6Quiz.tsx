@@ -11,105 +11,110 @@ export const SmartHomeModule2Section6Quiz = () => {
 
   const questions = [
     {
-      question: 'Define compatibility in smart home systems:',
+      question: 'How is compatibility best defined in smart home systems?',
       options: [
-        'Devices must be from the same manufacturer',
-        'Ability of devices to work together within an ecosystem',
-        'Devices must use the same power supply',
-        'Devices must be installed on the same day',
+        'All devices must come from the same manufacturer',
+        'The ability of devices to work together within an ecosystem',
+        'All devices must share the same power supply',
+        'All devices must be installed on the same day',
       ],
       correct: 1,
       explanation:
-        'Compatibility refers to the ability of devices to work together within an ecosystem, regardless of manufacturer, as long as they support compatible protocols and platforms.',
+        'Compatibility is the ability of devices to work together within an ecosystem, regardless of manufacturer, provided they support compatible protocols and platforms.',
     },
     {
       question: 'What is the role of a bridge?',
       options: [
-        'To provide power to devices',
-        'To translate between protocols or ecosystems',
-        'To increase Wi-Fi signal strength',
-        'To store device data locally',
-      ],
-      correct: 1,
-      explanation:
-        "A bridge acts as a translator between different protocols or ecosystems, enabling devices that wouldn't normally communicate to work together.",
-    },
-    {
-      question: 'Give one example of a popular bridge:',
-      options: ['Amazon Echo Dot', 'Philips Hue Bridge', 'Samsung TV', 'Google Nest Thermostat'],
-      correct: 1,
-      explanation:
-        'The Philips Hue Bridge is a classic example of a smart home bridge, translating between Zigbee bulbs and Wi-Fi/cloud services.',
-    },
-    {
-      question: "What's the main drawback of using bridges?",
-      options: [
-        "They're too expensive",
-        'They use too much power',
-        'They add complexity and potential failure points',
-        'They only work with new devices',
+        'To supply electrical power to connected devices',
+        'To boost the strength of the Wi-Fi signal',
+        'To translate between different protocols or ecosystems',
+        'To store all device data locally',
       ],
       correct: 2,
       explanation:
-        'Bridges add complexity to the system and create additional potential failure points. If a bridge fails, all connected devices become uncontrollable.',
+        'A bridge acts as a translator between protocols or ecosystems, letting devices that would not otherwise communicate work together.',
+    },
+    {
+      question: 'Which of these is a well-known example of a bridge?',
+      options: ['Amazon Echo Dot', 'Samsung smart TV', 'Google Nest Thermostat', 'Philips Hue Bridge'],
+      correct: 3,
+      explanation:
+        'The Philips Hue Bridge is a classic smart home bridge, translating between Zigbee bulbs and Wi-Fi or cloud services.',
+    },
+    {
+      question: 'What is the main drawback of using bridges?',
+      options: [
+        'They add complexity and extra points of failure',
+        'They are always far more expensive than hubs',
+        'They draw a large amount of standby power',
+        'They only work with brand-new devices',
+      ],
+      correct: 0,
+      explanation:
+        'Bridges add complexity and another point of failure; if the bridge fails, all of the devices that rely on it become uncontrollable.',
     },
     {
       question: 'Which protocol do Philips Hue bulbs use?',
       options: ['Wi-Fi', 'Zigbee', 'Z-Wave', 'Bluetooth'],
       correct: 1,
       explanation:
-        'Philips Hue bulbs use the Zigbee protocol, which is why they require the Hue Bridge to connect to Wi-Fi networks and voice assistants.',
+        'Philips Hue bulbs use Zigbee, which is why they need the Hue Bridge to link to Wi-Fi networks and voice assistants.',
     },
     {
-      question: 'Why is latency sometimes higher when using a bridge?',
+      question: 'Why can latency be higher when a bridge is used?',
       options: [
-        'Bridges are slow processors',
-        'Additional protocol translation and routing steps',
-        'Bridges require internet connectivity',
-        'Bridges are wirelessly connected',
+        'Bridges always use slow processors',
+        'Commands need extra protocol translation and routing steps',
+        'Bridges must connect through the internet',
+        'Bridges are connected wirelessly by design',
       ],
       correct: 1,
       explanation:
-        'Bridges add latency because commands must be translated between protocols and routed through additional steps, increasing total response time.',
+        'A bridge adds latency because commands must be translated between protocols and routed through extra steps, increasing total response time.',
     },
     {
-      question: 'True or False: Home Assistant can act as a software bridge:',
-      options: ['True', 'False'],
-      correct: 0,
+      question: 'Which statement about Home Assistant acting as a software bridge is correct?',
+      options: [
+        'It cannot bridge protocols and only controls Wi-Fi devices',
+        'It only works as a bridge with paid cloud add-ons',
+        'It can act as a software bridge across multiple protocols',
+        'It must run on dedicated bridge hardware to function',
+      ],
+      correct: 2,
       explanation:
-        'True. Home Assistant is a software platform that can act as a bridge, supporting multiple protocols and enabling integration between different ecosystems.',
+        'Home Assistant is a software platform that can act as a bridge, supporting multiple protocols and integrating different ecosystems.',
     },
     {
       question: 'What should installers always check before buying devices?',
       options: [
-        'Device colour options',
-        "Compatibility with client's chosen ecosystem",
-        'Manufacturer warranty length',
-        'Device physical dimensions',
+        'The range of colour options available',
+        "Compatibility with the client's chosen ecosystem",
+        'The length of the manufacturer warranty',
+        'The physical dimensions of the device',
       ],
       correct: 1,
       explanation:
-        "Installers should always verify compatibility with the client's chosen ecosystem, including protocol support and platform integration, before purchasing devices.",
+        "Installers should confirm compatibility with the client's chosen ecosystem, including protocol and platform support, before purchasing any devices.",
     },
     {
-      question: 'What future standard is designed to reduce the need for bridges?',
-      options: ['Zigbee 4.0', 'Wi-Fi 7', 'Matter protocol', 'Bluetooth 6.0'],
-      correct: 2,
+      question: 'Which standard is designed to reduce the need for bridges?',
+      options: ['Zigbee 4.0', 'Wi-Fi 7', 'Bluetooth 6.0', 'Matter'],
+      correct: 3,
       explanation:
-        'Matter (formerly Project CHIP) is designed to create universal compatibility across smart home ecosystems, reducing the need for bridges.',
+        'Matter (formerly Project CHIP) aims to provide universal compatibility across smart home ecosystems, reducing the need for separate bridges.',
     },
     {
       question:
-        "Scenario: A client buys a Zigbee sensor but only has a Wi-Fi hub. What's the solution?",
+        'A client buys a Zigbee sensor but only has a Wi-Fi hub. What is the best solution?',
       options: [
-        'Return the sensor',
-        'Buy a different hub with Zigbee support or add a bridge',
-        'Use the sensor with Bluetooth instead',
-        'Convert the sensor to Wi-Fi',
+        'Return the sensor as unusable',
+        'Use a hub with Zigbee support or add a bridge',
+        'Try to pair the sensor over Bluetooth instead',
+        'Attempt to convert the sensor to Wi-Fi',
       ],
       correct: 1,
       explanation:
-        'The solution is to either replace the hub with one that has built-in Zigbee support, or add a bridge device that can translate between Zigbee and Wi-Fi.',
+        'The fix is to use a hub with built-in Zigbee support, or add a bridge that translates between Zigbee and the existing Wi-Fi network.',
     },
   ];
 

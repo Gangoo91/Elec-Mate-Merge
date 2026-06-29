@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'visual-signs-overheating',
     question: 'Which of the following is a visual sign of overheating in an electrical connection?',
     options: [
-      'Cable type, installation method, environmental conditions, and load considerations',
-      'One person should be designated as the coordinator, giving clear verbal commands',
-      'To verify installation completeness and identify defects before energisation',
-      'Brown or black discolouration on conductor insulation or plastic enclosure material near the connection',
+      'A bright, clean, shiny copper surface at the terminal connection',
+      'Condensation forming on the outside surface of the metal enclosure',
+      'A green powdery deposit spreading along the length of the busbar',
+      'Brown or black discolouration of the insulation near the connection',
     ],
     correctIndex: 3,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'A loud humming or buzzing from a contactor that normally operates quietly indicates:',
     options: [
-      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
-      'Have a private, direct conversation to understand the cause and set clear expectations',
-      'To ensure that conditions are periodically reassessed and the permit is not left open beyond the period for which hazards have been evaluated',
-      'A possible fault such as a damaged shading ring, misaligned armature, contaminated pole faces or low coil voltage',
+      'Normal operation, because all AC contactors hum continuously in service',
+      'That the contactor is carrying rather less than its rated load current',
+      'That the control circuit voltage is slightly higher than normal for the coil',
+      'A fault such as a damaged shading ring, dirty pole faces or low coil voltage',
     ],
     correctIndex: 3,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'burning-smell',
     question: 'You detect a faint burning or acrid smell near a motor control centre. You should:',
     options: [
-      'They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification',
-      'Approximately 1.0-1.5 Nm — typical for cage-clamp / screw terminals on small CSAs in domestic RCBOs (Hager NDN, Schneider Resi9, Wylex NHX). Confirm with the actual manufacturer when accessible.',
-      'Report it immediately, investigate using safe methods (thermal imaging if available), and if the smell is strong or worsening, consider de-energising the affected section',
-      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
+      'Ignore it, since electrical equipment always smells slightly when it is warm',
+      'Open every panel door at once to locate the source of the smell quickly',
+      'Report it, investigate safely, and de-energise the section if it worsens',
+      'Wait until the next scheduled inspection before investigating the smell',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 2,
     question: 'A systematic walkthrough inspection of an electrical installation should:',
     options: [
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
+      'Cover only the items that were found to have failed at the last inspection',
+      'Be carried out as quickly as possible to minimise disruption to production',
+      'Follow a planned route and checklist, recording all findings as you go',
+      'Focus solely on the main switchboard and ignore the final circuits below it',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 3,
     question: 'White or green deposits on copper busbars or terminals indicate:',
     options: [
-      'Use the back of your hand (to detect temperature) at a safe distance first, then use a vibration pen or stethoscope for detailed assessment',
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
-      'A safety concern — distribution boards should be closed and secured to prevent unauthorised access, protect the IP rating, and prevent accidental contact with live parts',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
+      'A protective anti-oxidant coating deliberately applied at manufacture',
+      'The normal natural colour of copper, which requires no further action',
+      'Heat damage caused by sustained overloading of the copper busbar',
+      'Corrosion — white from galvanic action, green from copper plus moisture',
     ],
     correctAnswer: 3,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 4,
     question: 'Evidence of vermin activity in an electrical panel includes:',
     options: [
-      'Droppings, nesting material, gnawed cable insulation, and urine staining on components',
-      'Rotor-to-stator contact caused by bearing wear, shaft deflection or mounting problems',
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Possible partial discharge or arcing — a potentially dangerous condition requiring immediate investigation',
+      'Droppings, nesting material, gnawed cable insulation and urine staining',
+      'A fine, evenly spread film of dust on every surface with no other marks',
+      'A uniform brown discolouration across all of the cable insulation present',
+      'Bright, clean copper terminals with a freshly applied coat of protective grease',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 5,
     question: 'When feeling for vibration on a motor bearing housing, you should:',
     options: [
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
-      'Use the back of your hand (to detect temperature) at a safe distance first, then use a vibration pen or stethoscope for detailed assessment',
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
+      'Grip the bearing housing firmly with your palm while the motor runs',
+      'Use the back of your hand first, then a vibration pen or stethoscope',
+      'Stop the motor before checking, as vibration cannot be felt while running',
+      'Place your ear directly against the bearing housing to listen to it run',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 6,
     question: 'An audible crackling or spitting sound from inside an HV switchboard indicates:',
     options: [
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
+      'Normal expansion noise as the busbars warm under load',
+      'A cooling fan blade fouling its guard inside the panel',
       'Possible partial discharge or arcing — a potentially dangerous condition requiring immediate investigation',
-      'The cable has been exposed to excessive heat, likely from a loose connection, overloaded circuit or poor ventilation at the terminal box',
+      'Loose mounting bolts vibrating against the panel frame',
     ],
     correctAnswer: 2,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'Water staining or evidence of moisture ingress in an electrical panel should be classified as:',
     options: [
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
-      'A potentially dangerous condition — moisture reduces insulation resistance, promotes corrosion, and can create conductive paths',
+      'A cosmetic issue that needs no action if the panel still works normally',
+      'A normal result of condensation that always clears on its own in time',
+      'An improvement that usefully helps cool the equipment inside the panel',
+      'A dangerous condition — it lowers insulation resistance and aids corrosion',
     ],
     correctAnswer: 3,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'During a walkthrough, you notice a distribution board with its door hanging open and no lock fitted. This is:',
     options: [
-      'A safety concern — distribution boards should be closed and secured to prevent unauthorised access, protect the IP rating, and prevent accidental contact with live parts',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
-      'A potentially dangerous condition — moisture reduces insulation resistance, promotes corrosion, and can create conductive paths',
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
+      'A safety concern — an open board risks contact with live parts and loses IP rating',
+      'Acceptable, and beneficial, since the open door improves cooling airflow inside',
+      'A minor cosmetic fault only, as the protective devices still work with it open',
+      'A deliberate maintenance setting to leave as found for the next inspector',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'A motor that previously ran smoothly but now has an audible metallic scraping sound is likely experiencing:',
     options: [
-      'Possible partial discharge or arcing — a potentially dangerous condition requiring immediate investigation',
+      'A slightly high supply voltage causing the windings to hum more loudly than usual',
       'Rotor-to-stator contact caused by bearing wear, shaft deflection or mounting problems',
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Droppings, nesting material, gnawed cable insulation, and urine staining on components',
+      'Normal running-in noise from a recently lubricated bearing that will fade after a few hours',
+      'Magnetostriction of the stator core, a harmless effect that produces a faint twice-mains-frequency hum',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 10,
     question: 'The smell of ozone near HV equipment may indicate:',
     options: [
-      'Possible partial discharge or arcing — a potentially dangerous condition requiring immediate investigation',
-      'Rotor-to-stator contact caused by bearing wear, shaft deflection or mounting problems',
+      'Overheated transformer oil reacting with the air to give off a sweet, oily odour',
+      'Battery gassing from a nearby UPS releasing a sharp sulphur smell',
       'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
-      'Droppings, nesting material, gnawed cable insulation, and urine staining on components',
+      'A harmless smell of warm dust burning off the busbars as they reach operating temperature',
     ],
     correctAnswer: 2,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 11,
     question: 'When conducting a visual inspection, the most effective approach is to:',
     options: [
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
-      'Possible partial discharge or arcing — a potentially dangerous condition requiring immediate investigation',
-      'Use a structured checklist, take your time, look systematically from top to bottom and left to right, and document everything you find',
+      'Scan as quickly as you can to cover the maximum amount of equipment',
+      'Rely on memory afterwards rather than keeping a written record of findings',
+      'Inspect only the components that are already known to have failed before',
+      'Use a checklist, work top-to-bottom systematically, and document everything',
     ],
     correctAnswer: 3,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 12,
     question: 'Discoloured or melted cable insulation near a motor terminal box indicates:',
     options: [
-      'The cable has been exposed to excessive heat, likely from a loose connection, overloaded circuit or poor ventilation at the terminal box',
-      'Use the back of your hand (to detect temperature) at a safe distance first, then use a vibration pen or stethoscope for detailed assessment',
-      'Follow a planned route covering all accessible electrical equipment, using a structured checklist and recording all findings',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
+      'Excessive heat, likely from a loose connection, overload or poor ventilation',
+      'A harmless colour change from ageing of the PVC, needing no further action',
+      'Normal sun-fading of the insulation that occurs on every motor whatever its load',
+      'A factory heat-resistant coating that is meant to darken once commissioned',
     ],
     correctAnswer: 0,
     explanation:

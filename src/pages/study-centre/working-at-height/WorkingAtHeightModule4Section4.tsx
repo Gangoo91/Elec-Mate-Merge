@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'At Beaufort Force 5 (fresh breeze, 19-24 mph), what action should be taken regarding scaffold and ladder work at height?',
     options: [
-      'Continue working with extra PPE',
       'Stop most scaffold and ladder work at height',
-      'Only stop if workers complain about the wind',
-      'Double the number of tie points on the scaffold',
+      'Continue working provided extra PPE is worn',
+      'Only stop if workers report difficulty with the wind',
+      'Add extra tie points and continue as normal',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Beaufort Force 5 (fresh breeze, 19-24 mph) is the threshold at which most scaffold and ladder work at height must be stopped. At this wind speed, small trees in leaf begin to sway and handling materials or maintaining balance at height becomes dangerous. Work with large panels or sheeting should actually stop even earlier at Force 4.',
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     id: 'wah-m4s4-lightning-rule',
     question: 'What is the 30/30 rule for lightning safety during work at height?',
     options: [
-      'Work for 30 minutes, then take a 30-minute break',
-      'If less than 30 seconds between lightning flash and thunder, stop work. Wait 30 minutes after the last flash before resuming',
-      'Stay at least 30 metres from any metallic structure for 30 minutes during a storm',
-      'Lightning is only dangerous within 30 metres of the strike point for 30 seconds',
+      'Work for 30 minutes, then take a 30-minute sheltered break',
+      'Stay 30 metres from any metallic structure for 30 minutes in a storm',
+      'Under 30 seconds flash to thunder: stop, then wait 30 minutes after',
+      'Treat lightning as dangerous within 30 metres of a strike for 30 seconds',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The 30/30 rule states: if the time between seeing a lightning flash and hearing the thunder is less than 30 seconds, you are within strike range and must stop all outdoor work at height and take shelter immediately. Wait at least 30 minutes after the last observed flash or thunder before resuming work.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     options: [
       '1 metre',
       '3 metres (or as defined by HSE GS6 guidance)',
-      '10 metres',
+      '10 metres (or as defined by HSE GS6 guidance)',
       'No exclusion zone is needed if the operator is wearing rubber gloves',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      "HSE guidance GS6 'Avoiding danger from overhead power lines' recommends minimum clearance distances. For voltages up to 33kV, a minimum clearance of 3 metres from the nearest conductor is typically required, though this varies with voltage and specific circumstances. The distribution network operator (DNO) should be consulted for site-specific guidance. Rubber gloves provide NO protection against overhead line voltages.",
+      "HSE guidance GS6 'Avoiding danger from overhead power lines' advises that, as a general rule, work and plant should be kept at least 10 metres clear of overhead lines. Where a safety zone with barriers is set up, the barrier is positioned a minimum of 6 metres horizontally from the nearest conductor for lines up to 132kV, with greater distances for higher voltages and where the voltage is unknown. The exact safe distance varies with the line and must be confirmed with the distribution network operator (DNO). Rubber gloves provide NO protection against overhead line voltages.",
   },
 ];
 
@@ -94,12 +94,12 @@ const quizQuestions = [
     question:
       'At what Beaufort Force should ALL work at height be stopped regardless of task type?',
     options: [
-      'Force 4 — moderate breeze (13-18 mph)',
-      'Force 5 — fresh breeze (19-24 mph)',
       'Force 6 — strong breeze (25-31 mph)',
+      'Force 5 — fresh breeze (19-24 mph)',
+      'Force 4 — moderate breeze (13-18 mph)',
       'Force 8 — gale (39-46 mph)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'At Beaufort Force 6 (strong breeze, 25-31 mph), ALL work at height must stop. At this wind speed, large branches are in motion, umbrellas are difficult to use, and maintaining balance or controlling equipment at height is extremely dangerous. Some operations (crane work, large panel handling) should stop at even lower wind speeds.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       'Why is ice on scaffold boards particularly dangerous even when temperatures are above freezing?',
     options: [
-      'Ice damages the scaffold boards permanently',
-      'Black ice can form from overnight temperatures and remain even as air temperature rises above freezing, creating an invisible slip hazard',
-      'Ice makes the scaffold too heavy to support workers',
-      'Ice only forms below -5 degrees Celsius',
+      'Ice permanently damages and weakens the scaffold boards',
+      'Black ice can persist as air rises above freezing, an invisible hazard',
+      'Ice makes the whole scaffold too heavy to support the workers',
+      'Ice can only form once the temperature is below -5 degrees Celsius',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 3,
     question: 'What effect does heavy rain have on ladder use?',
     options: [
-      'No effect — ladders are designed to be used in all weather',
-      'Rain reduces grip on rungs, impairs visibility, and makes hand tools slippery',
-      'Rain only affects wooden ladders, not aluminium ones',
-      'Rain improves grip because it cleans the rungs',
+      'It has no effect, since ladders are designed for use in all weather',
+      'It affects only wooden ladders and not aluminium ones at all',
+      'It reduces grip on rungs, cuts visibility and makes tools slippery',
+      'It actually improves grip because the rungs are washed clean by rain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heavy rain reduces grip on ladder rungs (both hands and feet), impairs visibility through safety glasses, and makes hand tools slippery. Water on aluminium rungs creates a significant slip hazard. Additionally, rain soaking into clothing causes cold stress and fatigue, further increasing fall risk. Electrical work on ladders in rain creates additional electrocution risks.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What is the primary risk when MEWP outriggers are deployed on soft or waterlogged ground?',
     options: [
-      'The outriggers may rust',
-      'The ground may not support the load, causing the outrigger to sink and the MEWP to become unstable or overturn',
-      'The MEWP battery may get wet',
-      'The outrigger pads may get muddy',
+      'The outrigger pads may slowly corrode in the wet ground',
+      'The MEWP battery compartment may take in rainwater and fail',
+      'The outrigger feet may become coated in mud and lose traction',
+      'The ground may give way, letting an outrigger sink and the MEWP overturn',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If the ground is soft, waterlogged, or has been disturbed (such as recently backfilled trenches), the outrigger pads may sink under the load of the MEWP. This causes the machine to become unstable and can lead to overturning — one of the most dangerous MEWP incidents. Ground conditions must be assessed and, if necessary, timber mats, steel plates, or engineered spreader pads must be used to distribute the load.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What document provides HSE guidance on avoiding danger from overhead power lines?',
-    options: ['Approved Code of Practice L74', 'HSE GS6', 'BS EN 131 Part 1', 'INDG401'],
-    correctAnswer: 1,
+    options: ['HSE GS6', 'Approved Code of Practice L74', 'BS EN 131 Part 1', 'INDG401'],
+    correctAnswer: 0,
     explanation:
       "HSE Guidance Note GS6 'Avoiding danger from overhead power lines' is the primary guidance document for managing the risks of working near overhead power lines. It covers safe clearance distances, the use of goal posts, banksmen, and the requirements for consultation with the distribution network operator.",
   },
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is a key concern when working at height in cold conditions?',
     options: [
-      'Workers may complain about the temperature',
-      'Cold reduces hand dexterity and grip strength, increases fatigue, and numbs the ability to detect grip loss on ladders and handrails',
-      'Cold weather only affects outdoor work above 10 metres',
+      'Workers are likely to complain about the cold temperature',
+      'Cold cuts hand dexterity and grip and numbs the sense of grip loss',
+      'Cold weather only affects outdoor work carried out above 10 metres',
       'Cold weather makes falls less dangerous because the ground is harder',
     ],
     correctAnswer: 1,
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of an exclusion zone around work at height?',
     options: [
-      'To keep the work area tidy',
-      'To prevent members of the public and other workers from being struck by falling materials, tools, or persons',
-      'To give the workers more space for their equipment',
-      'To mark the area for future construction work',
+      'To keep the work area tidy and clear of any clutter',
+      'To give the workers more room to lay out their equipment',
+      'To mark out the area for future phases of the construction',
+      'To stop the public and others being struck by falling tools or people',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exclusion zones prevent people at ground level from being struck by falling materials, tools, debris, or — in the worst case — a falling person. The size of the exclusion zone depends on the height of the work, the type of work being done, and the potential for materials to bounce or roll after landing. Barriers, signage, and banksmen should be used to enforce the exclusion zone.',
   },
@@ -933,11 +933,13 @@ export default function WorkingAtHeightModule4Section4() {
                 <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Minimum clearance distances:</strong> HSE
-                    Guidance Note GS6 specifies minimum safe distances from overhead power lines.
-                    For lines up to 33kV, a minimum of 3 metres clearance from the nearest
-                    conductor. For lines above 33kV (including 132kV and 400kV transmission lines),
-                    greater clearances are required. The distribution network operator (DNO) must be
-                    consulted.
+                    Guidance Note GS6 advises keeping work and plant at least 10 metres clear of
+                    overhead lines as a general rule. Where a safety zone with barriers is
+                    established, the barrier is set a minimum of 6 metres horizontally from the
+                    nearest conductor for lines up to 132kV, with greater clearances for
+                    higher-voltage transmission lines (275kV and 400kV) and where the voltage is
+                    unknown. The distribution network operator (DNO) must be consulted to confirm
+                    the exact safe distance for the specific line.
                   </p>
                   <p>
                     <strong className="text-white">Goal posts:</strong> Physical barrier structures

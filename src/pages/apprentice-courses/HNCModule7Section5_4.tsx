@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'ct-burden',
     question: 'What happens if a CT circuit is operated with an open secondary?',
     options: [
-      'The reason and limitation in the report',
+      'The secondary current rises to a dangerous level',
       'Dangerous high voltages develop across the secondary',
-      'Moisture content stays same, RH decreases',
-      'In breathing zones, 1-2m above floor level in occupied spaces',
+      'The CT simply reads zero with no further effect',
+      'The primary circuit is automatically disconnected',
     ],
     correctIndex: 1,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'What is the standard secondary current output for measurement CTs in the UK?',
     options: [
       'Both 1A and 5A are standard',
-      'Only the person who applied it',
-      'Part 6 — Inspection and Testing',
-      'BS EN 361 — Full body harnesses',
+      'Only 5A is used in the UK',
+      'Only 1A is used in the UK',
+      '100mA is the standard secondary output',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'An AMR (Automatic Meter Reading) system typically transmits data using:',
     options: [
-      'Simplicity and universal compatibility',
-      'A silence period of 3.5 character times',
-      'Tenants, HVAC, lighting, small power, and specialist loads',
+      'Manual readings taken by a meter reader',
+      'A direct serial cable to each individual meter',
+      'Pulse outputs read only at the billing meter',
       'Fixed communication networks (wired or wireless)',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
       'According to CIBSE TM39, which loads should have dedicated sub-meters in a commercial building?',
     options: [
       'Tenants, HVAC, lighting, small power, and specialist loads',
-      'As close as practicable to the point of entry to the building',
-      'It contributes to professional knowledge and is documented',
-      'Weather-resistant and corrosion-resistant',
+      'Only the main incoming supply at the origin',
+      'Socket-outlet circuits in occupied areas only',
+      'Lighting circuits above 1kW connected load only',
     ],
     correctAnswer: 0,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'What is the primary advantage of pulse output metering over Modbus communication?',
     options: [
       'Simplicity and universal compatibility',
-      'Fixed communication networks (wired or wireless)',
-      'Both 1A and 5A are standard',
-      'The load capacity of the secondary circuit',
+      'It reports real-time power and power quality data',
+      'It supports the longest cable runs of any method',
+      'It allows two-way communication with the meter',
     ],
     correctAnswer: 0,
     explanation:

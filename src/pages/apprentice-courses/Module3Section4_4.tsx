@@ -17,12 +17,12 @@ const Module3Section4_4 = () => {
       id: 1,
       question: 'Which type of gland is designed for outdoor SWA cable use?',
       options: [
-        'BW gland',
         'CW gland',
+        'BW gland',
         'E1W gland',
         'Plastic gland',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'CW glands are designed for outdoor use with SWA cable, providing weatherproof sealing and protection.',
     },
@@ -30,10 +30,10 @@ const Module3Section4_4 = () => {
       id: 2,
       question: 'What is the main purpose of glanding SWA cable?',
       options: [
-        'Strain relief and ingress protection',
-        'Visual inspection and insulation resistance',
-        'Provide mechanical retention and earth continuity',
-        'High-speed storage networking protocol commonly using fibre',
+        'To increase the current-carrying capacity of the cable',
+        'To improve the insulation resistance of the cores',
+        'To provide mechanical retention and earth continuity',
+        'To reduce the voltage drop along the cable run',
       ],
       correctAnswer: 2,
       explanation:
@@ -51,12 +51,12 @@ const Module3Section4_4 = () => {
       id: 4,
       question: 'Name one tool required for installing a cable gland.',
       options: [
-        'Adjustable spanner',
-        'Hammer',
-        'Drill',
-        'Screwdriver only',
+        'A claw hammer',
+        'A wood chisel',
+        'A hacksaw blade',
+        'An adjustable spanner',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         'Use appropriate spanners or a torque wrench to tighten gland components to manufacturer specifications.',
     },
@@ -64,12 +64,12 @@ const Module3Section4_4 = () => {
       id: 5,
       question: 'Why is it important to fan out armour strands before fitting a gland?',
       options: [
-        'CIBSE LG7 (SLL Lighting Guide 7)',
-        'To ensure even clamping and earth connection',
-        'Cannot be inadvertently re-energised by others',
-        'Lights not working despite live being present',
+        'To ensure even clamping and a reliable earth connection',
+        'To make the cable easier to bend into position',
+        'To allow the inner cores to be stripped more quickly',
+        'To reduce the overall diameter of the cable end',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Evenly fanned armour allows uniform clamping and reliable earth bonding through the gland.',
     },
@@ -77,12 +77,12 @@ const Module3Section4_4 = () => {
       id: 6,
       question: 'Which jointing method is commonly used in external environments?',
       options: [
-        'Ferrule',
-        'Screw terminal',
+        'Ferrule crimp',
         'Resin-filled joint',
-        'Solder',
+        'Screw terminal block',
+        'Soldered joint',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Resin-filled joints provide environmental sealing and are widely used outdoors/underground.',
     },
@@ -103,14 +103,14 @@ const Module3Section4_4 = () => {
       id: 8,
       question: 'Give one example of a common mistake when fitting a cable gland.',
       options: [
-        'Over-tightening gland nuts',
-        'Following manufacturer instructions',
-        'Testing earth continuity',
-        'Using correct torque settings',
+        'Selecting the gland size to match the cable diameter',
+        'Sealing the gland to maintain the required IP rating',
+        'Bunching the armour wires unevenly to one side',
+        'Fitting a shroud over the gland where specified',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
-        'Over-tightening can damage the armour or sheath, compromising mechanical security and sealing.',
+        'Bunching the armour to one side instead of fanning it evenly gives poor clamping and an unreliable earth connection. Over-tightening, which can damage the armour or sheath, is another common error.',
     },
   ];
 

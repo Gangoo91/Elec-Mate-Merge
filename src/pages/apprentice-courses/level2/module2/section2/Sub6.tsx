@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'How is efficiency calculated?',
     options: [
-      'Twisting under load places shear forces on the spine, increasing injury risk',
+      'Efficiency = total energy in ÷ useful energy out (× 100 for percentage)',
       'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
-      'Write the email, save as draft, re-read it the next day before deciding to send',
-      'To provide an earth reference for unearthed systems',
+      'Efficiency = energy lost as heat ÷ total energy in (× 100 for percentage)',
+      'Efficiency = useful energy out × total energy in (× 100 for percentage)',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why can no real machine ever be 100% efficient?',
     options: [
-      'After any event likely to have affected its stability, such as adverse weather',
-      'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
+      'Because energy is always destroyed as a machine runs',
+      'Because a machine can never produce as much energy as it consumes by law',
       'Because some energy always converts into "less useful" forms like heat, sound and friction',
-      'To control the transition speed between current and new lighting states',
+      'Because friction adds extra energy that has to be removed again',
     ],
     correctAnswer: 2,
     explanation:

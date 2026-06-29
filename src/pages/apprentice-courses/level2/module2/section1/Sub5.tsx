@@ -93,54 +93,54 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      "What does 'CAT III' on a multimeter mean?",
+      "What does 'CAT III' on a multimeter or its leads mean?",
     options: [
-      'Locations with specific risks requiring additional protection measures',
-      'To ensure emergency shutdowns and safety systems work correctly',
       'It is rated for measurements on fixed installations including distribution boards',
-      'A written document describing how work will be carried out safely, step by step',
+      'It can be immersed in water to IP67 for outdoor measurements',
+      'It is the third revision of the meter\'s firmware/calibration standard',
+      'It is rated only for plug-in appliances and socket-outlet circuits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'CAT III rating covers measurements on fixed installations like distribution boards. CAT IV is for the supply origin/incomer, CAT II for plug-in appliances. Use the wrong CAT rating and an internal arc-flash event becomes a real risk.',
+      'CAT III covers measurements on fixed installations like distribution boards. CAT IV is for the supply origin/incomer, CAT II for plug-in appliances. Use too low a CAT rating and an internal arc-flash event becomes a real risk.',
   },
   {
     id: 3,
     question: 'Which instrument is used to measure earth fault loop impedance (Zs)?',
     options: [
-      'Represent workers on safety matters and investigate concerns',
-      'Power and data cables in office environments',
-      'Details of activities, dates, and learning outcomes',
+      'A clamp meter set to the AC current range',
+      'A two-pole voltage indicator with a proving unit',
+      'A standard digital multimeter on the ohms (Ω) range',
       'A multifunction tester (MFT) on the loop impedance setting',
     ],
     correctAnswer: 3,
     explanation:
-      'A multifunction tester (MFT) has a dedicated loop impedance test that injects a small current and measures the resulting voltage drop to calculate Zs. Standard multimeters cannot do this.',
+      'A multifunction tester (MFT) has a dedicated loop impedance test that injects a current and measures the resulting voltage drop to calculate Zs. A multimeter on ohms cannot measure a live loop, and a clamp meter only reads current.',
   },
   {
     id: 4,
     question:
       'You set a multimeter to current (A) mode and connect the leads across a 230 V socket. What happens?',
     options: [
+      "The meter reads the supply voltage of 230 V as normal on the display",
+      "Both the timer circuit and the live conductor are isolated automatically",
       "The meter's internal fuse blows almost instantly because you've created a near-short across the supply",
-      "Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999",
-      "Both the timer/delta circuit fault and welded star contacts are possible causes",
-      "By maintaining optimal temperature, lighting, and air quality conditions",
+      "Nothing happens — current mode has very high internal resistance and blocks the current",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      "Current mode has very low internal resistance. Putting low resistance across 230 V creates a huge fault current, which the HBC fuse inside is designed to interrupt. With no fuse / wrong CAT rating, the meter explodes.",
+      "Current mode has very low internal resistance. Putting low resistance across 230 V creates a huge fault current, which the HBC fuse inside is designed to interrupt. With no fuse / wrong CAT rating, the meter can explode.",
   },
   {
     id: 5,
     question: 'Per HSE GS38, before using a voltage indicator to prove dead you must:',
     options: [
-      'When the coil sides cut the field lines at right angles (perpendicular to the field)',
+      'Set the meter to the highest AC voltage range and short the two leads together',
+      'Confirm the device carries a current UKAS calibration sticker for that day',
       'Prove it on a known live source (or proving unit) BEFORE and AFTER the dead test',
-      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
-      'Technology delivering electrical power along with data on Ethernet cables',
+      'Check the circuit is isolated by reading its resistance on the ohms range first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Prove the device works on a known live source before AND after the dead test. Catches faulty leads, flat batteries and damaged probes — anything that could give a false "dead" indication.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: "What's a clamp meter best at, that a normal multimeter can't easily do?",
     options: [
-      'Whether mass is on warm (internal) or cold (external) side',
-      'To ensure they can support the load safely',
+      'Measuring insulation resistance in megohms',
+      'Proving a circuit is dead before work begins',
       'Measuring current without breaking the circuit',
-      'Completely disconnect supply for maintenance',
+      'Reading the prospective fault current at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'Insulation resistance must NOT be measured on a live circuit because:',
     options: [
-      "Hands-free device control for mobility-limited users",
-      "Reputational impact and potential removal if consistently off-track without remediation",
-      "To enable safe and effective identification of escape routes leading to final exits",
-      "It will give an inaccurate reading and may damage the meter or the circuit",
+      "The reading will be too high to fit on the meter's display range",
+      "It will only work correctly on a three-phase supply, not single-phase",
+      "The test current is too small to register against a live load",
+      "It will give a meaningless reading and may damage the meter or the circuit",
     ],
     correctAnswer: 3,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'A two-pole voltage indicator (Martindale, Drummond, Megger MTL etc.) is preferred over a multimeter for proving dead because:',
     options: [
+      'It gives a more precise numerical voltage reading than a digital multimeter',
+      'It can measure earth fault loop impedance at the same time as voltage',
+      'It runs without batteries, so a flat battery can never give a false dead reading',
       'It cannot be set to the wrong function — it only does voltage detection, with built-in current limiting per GS38',
-      'Zs = 0.75 Ω. Pass — 0.75 Ω is below the corrected limit of 1.37 × 0.8 = 1.10 Ω.',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'Hazardous to the aquatic environment — the substance is toxic to aquatic life with long-lasting effects',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Two-pole indicators are single-purpose: they detect voltage between two points with built-in current limiting and the correct CAT rating. Multimeters can be set to the wrong function (current, ohms) which is a common cause of test-equipment incidents.',
   },

@@ -70,9 +70,9 @@ const AM2Module1Section3 = () => {
       question: 'In fault diagnosis, how many faults must you normally identify to pass?',
       options: [
         'At least 3 out of 4 faults',
-        '30 minutes on Friday afternoon',
-        'Within 24 hours of the request',
-        'By pressing the test button only',
+        'All 4 faults with no exceptions',
+        'At least 1 out of 4 faults',
+        'At least 2 out of 4 faults',
       ],
       correctAnswer: 0,
       explanation:

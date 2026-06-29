@@ -61,9 +61,9 @@ const quickCheckQuestions = [
     question: "According to Pascal's law, pressure applied to a confined fluid:",
     options: [
       'Is transmitted equally in all directions',
-      'Ensure metalwork is at earth potential',
-      'Clearly and legibly in permanent ink or digitally',
-      'They improve appearance and make maintenance easier',
+      'Acts only downwards due to gravity',
+      'Decreases with distance from the applied force',
+      'Is greatest at the point where it is applied',
     ],
     correctIndex: 0,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: "In a building's LPHW system, why does pressure increase at lower floor levels?",
     options: [
-      'Pre-agreed terms, pricing and streamlined ordering',
-      'Ensure circuit is isolated and discharged',
-      'Moisture, heat, mechanical damage, or aging',
+      'Because water cools and contracts at lower levels',
+      'Because the pump is usually located in the basement',
+      'Because pipe diameters reduce towards the lower floors',
       'Due to hydrostatic pressure from the water column above',
     ],
     correctAnswer: 3,
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: "Pascal's law is the fundamental principle behind:",
     options: [
-      'Pa·s (Pascal-seconds)',
+      'Thermal expansion of pipework',
       'Hydraulic lifts and presses',
-      'Atmospheric pressure',
-      'Density and viscosity',
+      'The buoyancy of submerged objects',
+      'Turbulent flow in pipes',
     ],
     correctAnswer: 1,
     explanation:

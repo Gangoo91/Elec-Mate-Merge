@@ -70,9 +70,9 @@ const checks = [
     question:
       'A casualty is unconscious but breathing normally after a shock. What position do you put them in?',
     options: [
-      'The effective diameter of the light-carrying region',
-      'Achieve Chartered Engineer (CEng) status within five years',
-      'Protect themselves and deliver what\\\\\\\\\\\\\\\'s agreed',
+      'Flat on their back with their legs raised above the heart',
+      'Sitting upright against a wall to help them breathe',
+      'Face down with the head turned to one side',
       'Recovery position — on their side, top knee bent forward',
     ],
     correctIndex: 3,
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'What do you tell the 999 operator FIRST about an electrical incident?',
     options: [
-      'Escape route lighting at pedestrian walkways and exits',
-      'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
+      'The make and rating of the breaker that was being worked on',
+      'That you have already moved the casualty to a safer spot',
       'Say it’s an electrical injury and confirm the supply is now isolated',
-      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
+      'That you are a qualified electrician and not a first aider',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why is "isolate first, treat second" drilled into every electrician from day one?',
     options: [
-      'Find every programme location where a specific address or tag is used',
-      'Cable route coordination, power supply planning, and interface requirements',
-      'A new interoperability standard unifying smart home ecosystems',
+      'It stops the casualty’s muscles from gripping the conductor any tighter',
+      'It preserves the scene so the investigation can see what happened',
+      'It means the 999 operator can dispatch an ambulance more quickly',
       'A live casualty is a live conductor — touch them and you join the circuit',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
       'You can’t safely reach the isolation point — the casualty is hung up on a HV overhead line. What now?',
     options: [
       'Stay back, call 999 and the DNO, do not approach until the line is confirmed dead',
-      'To make suitable arrangements for managing the project to ensure health and safety',
-      'Power loss increases with the square of current, causing heating',
-      'All employers must make a suitable and sufficient assessment of risks to employees and others',
+      'Use a dry wooden broom to push the casualty clear of the line',
+      'Throw a rope over the line to short it to earth before approaching',
+      'Approach low and slow, keeping one hand behind your back',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why use the recovery position for an unconscious casualty who IS breathing?',
     options: [
-      'Appropriate guards, a dead man\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s switch, and is properly maintained',
-      'Confirm isolation is effective and circuit is safe to work on',
+      'It raises the legs to improve blood flow back to the heart',
+      'It makes it easier to start chest compressions if they stop breathing',
       'It keeps the airway clear and lets fluids drain so they don’t choke',
-      'Negotiating terms and conditions and supporting members',
+      'It keeps them still so any spinal injury isn’t made worse',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'A mate took a shock through one hand, jumped clear, and says they feel fine. What do you do?',
     options: [
-      'Section 443 (with installation rules in 534)',
-      'To provide a known voltage source to prove a voltage indicator',
-      'Identifying the root cause of a problem by asking "why" repeatedly',
+      'Let them carry on working if there’s no visible burn mark',
+      'Sit them down for ten minutes, then send them back to the job',
+      'Log it in the accident book but no medical check is needed',
       'Get them checked at hospital, even if they say they’re fine',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
       'You’ve treated the casualty, paramedics have taken them. What about the scene?',
     options: [
       'Leave the scene as it is, lock off the supply, photograph it, and tell the supervisor',
-      'Hazard identification, first aid measures, handling and storage, exposure controls, and disposal information',
-      'Possess such knowledge and experience, or be under appropriate supervision',
-      'To prevent loose strands causing faults and ensure secure terminations',
+      'Tidy the work area and re-energise so the job can carry on',
+      'Remove the lock-off and finish the termination yourself',
+      'Clear away the tools and cable ends before anyone else sees them',
     ],
     correctAnswer: 0,
     explanation:

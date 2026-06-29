@@ -48,12 +48,12 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
       question:
         'According to BS EN 16247, what must the executive summary of an energy audit report include?',
       options: [
-        'Only the total cost of recommended measures',
         'Ranked energy saving opportunities with estimated savings and investment costs',
-        'Detailed technical specifications of all equipment',
-        'A complete history of energy consumption',
+        'Only the total cost of all recommended measures',
+        'Detailed technical specifications of every item of equipment',
+        'A complete year-by-year history of energy consumption',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'BS EN 16247 requires the executive summary to include ranked energy saving opportunities with their estimated savings (in kWh and cost) and required investment costs, enabling decision-makers to quickly assess priorities.',
     },
@@ -61,8 +61,8 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
       id: 'qc2-carbon-factors',
       question:
         'What is the approximate UK grid electricity carbon conversion factor (2023/24) published by DESNZ?',
-      options: ['0.527 kgCO₂e/kWh', '0.207 kgCO₂e/kWh', '0.384 kgCO₂e/kWh', '0.612 kgCO₂e/kWh'],
-      correctIndex: 1,
+      options: ['0.527 kgCO₂e/kWh', '0.384 kgCO₂e/kWh', '0.207 kgCO₂e/kWh', '0.612 kgCO₂e/kWh'],
+      correctIndex: 2,
       explanation:
         'The UK grid electricity factor has decreased significantly to approximately 0.207 kgCO₂e/kWh (location-based, 2023/24) due to increased renewable generation. This is published annually by DESNZ (Department for Energy Security and Net Zero) in the GHG Conversion Factors.',
     },
@@ -70,8 +70,8 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
       id: 'qc3-payback',
       question:
         'A lighting upgrade costs £12,000 and saves £3,000 per year in energy costs. What is the simple payback period?',
-      options: ['2 years', '3 years', '4 years', '5 years'],
-      correctIndex: 2,
+      options: ['3 years', '4 years', '5 years', '6 years'],
+      correctIndex: 1,
       explanation:
         'Simple payback = Capital Cost ÷ Annual Savings = £12,000 ÷ £3,000 = 4 years. This basic calculation helps clients understand how quickly their investment will be recovered through energy savings.',
     },
@@ -82,6 +82,8 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
       question: 'What standard defines the requirements for energy audit reports in the UK and EU?',
       options: ['ISO 50001', 'BS EN 16247', 'CIBSE TM54', 'ASHRAE Level II'],
       correctAnswer: 'BS EN 16247',
+      explanation:
+        'BS EN 16247 is the European standard specifically setting out the requirements, methodology and reporting for energy audits. ISO 50001 is an energy management system standard, not an audit report standard.',
     },
     {
       question:
@@ -93,11 +95,15 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
         'The efficiency rating',
       ],
       correctAnswer: 'The magnitude of energy flow',
+      explanation:
+        'In a Sankey diagram the width of each arrow is drawn proportional to the quantity of energy it carries, making large losses and end-uses immediately visible.',
     },
     {
       question: 'Which scope of carbon emissions covers purchased electricity?',
       options: ['Scope 1', 'Scope 2', 'Scope 3', 'Scope 4'],
       correctAnswer: 'Scope 2',
+      explanation:
+        'Scope 2 covers indirect emissions from purchased energy such as grid electricity, heat and steam. Scope 1 is direct on-site combustion; Scope 3 is wider value-chain emissions; Scope 4 is not a GHG Protocol scope.',
     },
     {
       question: 'What does NPV stand for in investment analysis?',
@@ -108,28 +114,38 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
         'Nominal Price Variable',
       ],
       correctAnswer: 'Net Present Value',
+      explanation:
+        'Net Present Value discounts all future cash flows back to today using a discount rate; a positive NPV means the investment adds value over its life.',
     },
     {
       question:
         'For a project with £50,000 investment and £10,000 annual savings, what is the simple payback?',
       options: ['3 years', '4 years', '5 years', '6 years'],
       correctAnswer: '5 years',
+      explanation:
+        'Simple payback = capital cost ÷ annual saving = £50,000 ÷ £10,000 = 5 years.',
     },
     {
       question: 'What unit is used for UK carbon conversion factors?',
       options: ['kgCO₂/kWh', 'kgCO₂e/kWh', 'tCO₂/MWh', 'gCO₂/Wh'],
       correctAnswer: 'kgCO₂e/kWh',
+      explanation:
+        'DESNZ factors are given in kgCO₂e/kWh - kilograms of carbon dioxide equivalent per kilowatt-hour - so all greenhouse gases are captured on a single CO₂-equivalent basis.',
     },
     {
       question: 'Which section of an energy audit report should contain the methodology used?',
       options: ['Executive summary', 'Introduction and scope', 'Analysis section', 'Appendices'],
       correctAnswer: 'Introduction and scope',
+      explanation:
+        'The methodology, boundaries, data sources and limitations belong in the introduction and scope section so the reader understands how the findings were derived before reading them.',
     },
     {
       question:
         'What percentage of total energy consumption typically needs to be covered by sub-metering for a Type 2 audit?',
       options: ['50%', '70%', '80%', '90%'],
       correctAnswer: '90%',
+      explanation:
+        'A Type 2 (detailed) audit typically requires measurement covering around 90% of total energy consumption to give confidence in the breakdown of significant energy uses.',
     },
     {
       question: 'In energy balance calculations, what should input energy equal?',
@@ -140,11 +156,15 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
         'Demand minus supply',
       ],
       correctAnswer: 'Useful output plus losses',
+      explanation:
+        'By conservation of energy, energy in must equal useful output plus losses; a shortfall points to unmeasured loads or metering errors.',
     },
     {
       question: 'What is the recommended maximum payback period for "quick win" energy measures?',
       options: ['1 year', '2 years', '3 years', '5 years'],
       correctAnswer: '2 years',
+      explanation:
+        'Quick wins are conventionally defined as low-cost measures with a payback of under about 2 years, making them easy to justify and implement first.',
     },
   ];
 

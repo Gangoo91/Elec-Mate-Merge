@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     id: 'cr-3-3-check2',
     question: 'What does the "H" in the HEARD framework stand for?',
     options: [
-      'Handle the situation immediately',
       'Hear them out fully without interrupting',
+      'Handle the situation immediately',
       'Highlight the terms and conditions that apply',
       'Hope the complaint resolves itself naturally',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The "H" in the HEARD framework stands for "Hear them out" — meaning you listen fully to the client\'s complaint without interrupting, defending yourself, or offering solutions prematurely. This is the most important step because the client needs to feel genuinely heard before they are ready to engage with solutions. Research consistently shows that clients who feel their complaint was listened to are significantly more likely to accept the proposed resolution, even if it is not everything they wanted. Interrupting or becoming defensive at this stage almost always escalates the situation.',
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       "Under the Consumer Rights Act 2015, what is the consumer's first remedy when a service has not been provided with reasonable care and skill?",
     options: [
       'A full refund of the entire contract price',
-      'The right to have the work redone (repair/repeat performance)',
       'Automatic compensation of 50% of the contract value',
       'The right to hire another contractor and charge you the difference',
+      'The right to have the work redone (repair/repeat performance)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Under the Consumer Rights Act 2015, the consumer\'s first remedy when a service has not been provided with reasonable care and skill is the right to have the work redone — known as "repeat performance" or the right to repair. This means the trader must redo the work to bring it to the required standard, at no additional cost, within a reasonable time, and without causing significant inconvenience. Only if the repair is impossible, or if the trader fails to complete the repair within a reasonable time, does the consumer then have the right to a price reduction. This tiered approach protects both the consumer and the tradesperson.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the service recovery paradox?',
     options: [
-      'The tendency for clients to complain more when service is actually excellent',
       'The finding that a well-handled complaint can create more loyalty than if the problem never occurred',
+      'The tendency for clients to complain more when service is actually excellent',
       'The principle that offering a discount prevents all future complaints',
       'The observation that complaints always increase during busy periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The service recovery paradox, identified by Tax and Brown (1998), is the finding that a well-handled complaint can actually create more customer loyalty than if the problem had never occurred in the first place. This happens because effective complaint handling demonstrates the character, values, and commitment of the business in a way that routine good service cannot. The client thinks, "Something went wrong, but they handled it brilliantly — I can trust them." This is why complaints should be viewed as opportunities to strengthen relationships, not just problems to be solved.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'What is the correct order of the HEARD framework?',
     options: [
       'Handle, Evaluate, Act, Resolve, Document',
-      'Hear them out, Empathise, Apologise (where appropriate), Resolve, Do follow up',
       'Help, Explain, Accept, Redirect, Dismiss',
+      'Hear them out, Empathise, Apologise (where appropriate), Resolve, Do follow up',
       'Hear, Escalate, Assign, Review, Determine',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The correct order is: Hear them out (listen fully without interrupting), Empathise (show you understand their frustration), Apologise where appropriate (empathy without necessarily admitting fault), Resolve (propose a clear solution and agree next steps), and Do follow up (check back to confirm they are satisfied). The order matters because each step builds on the previous one. You cannot effectively empathise if you have not fully heard the complaint, and you cannot resolve if you have not demonstrated understanding first. Skipping to "resolve" without the preceding steps often leads to the client rejecting perfectly reasonable solutions.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
       'Which of the following is a sign that a complaint might be a tactic to avoid payment rather than a genuine issue?',
     options: [
       'The complaint is specific and raised promptly after the issue was discovered',
-      'The complaint is vague, raised just before payment is due, and escalates when payment is requested',
       'The client provides photographs documenting the alleged issue',
       'The client contacts you directly rather than going to social media',
+      'The complaint is vague, raised just before payment is due, and escalates when payment is requested',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Payment avoidance complaints tend to be vague ("I am not happy with the quality"), arise suspiciously close to when payment is due (rather than when the issue was discovered), and escalate when payment is requested. By contrast, genuine complaints are typically specific ("the socket in the kitchen does not work"), are raised promptly when the issue is noticed, and the client is willing to discuss the specific problem. However, it is important not to assume bad faith — always investigate the specific complaint on its merits before drawing conclusions. Document everything and invoice for the undisputed portion separately.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'Under the Consumer Rights Act 2015, what must the trader do when performing a repair (repeat performance)?',
     options: [
       'Complete the repair within 24 hours',
-      'Provide a cash refund instead if the client prefers',
       'Complete the repair at no extra cost, within a reasonable time, and without significant inconvenience',
+      'Provide a cash refund instead if the client prefers',
       'Pay for an independent inspector to verify the repair',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Under the Consumer Rights Act 2015, when a service has not been provided with reasonable care and skill, the trader must perform the repair (repeat performance) at no additional cost to the consumer, within a reasonable time, and without causing significant inconvenience. What constitutes "reasonable time" depends on the nature of the work — rewiring a room might reasonably take a few days to schedule, but an unsafe socket should be addressed urgently. The key point is that the consumer should not be worse off because of the need for a repair. Only if the repair is impossible or fails can the consumer then claim a price reduction.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the difference between empathy and admission of fault?',
     options: [
-      'There is no difference — any expression of understanding implies fault',
       "Empathy acknowledges the client's experience; admission of fault accepts responsibility for causing it",
+      'There is no difference — any expression of understanding implies fault',
       'Empathy is a legal defence; admission of fault is a criminal offence',
       'Empathy requires a written statement; admission of fault can be verbal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Empathy and admission of fault are fundamentally different. Empathy acknowledges the client\'s experience and feelings: "I can see why that is frustrating" or "I understand this is not what you expected." These statements validate the client\'s emotional state without accepting responsibility. Admission of fault accepts responsibility for causing the problem: "I did that incorrectly" or "That was my mistake." In complaint handling, leading with empathy is almost always appropriate, whereas admitting fault should only happen when you have investigated and confirmed that the issue was genuinely your error. Premature admission of fault can have insurance and liability implications.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     options: [
       'Only when the client has issued court proceedings',
       'Only when the complaint involves personal injury',
-      'As soon as reasonably practicable after becoming aware of any potential claim involving property damage, financial loss, or legal threats',
       'You should never notify your insurer about a complaint — it will increase your premium',
+      'As soon as reasonably practicable after becoming aware of any potential claim involving property damage, financial loss, or legal threats',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'You should notify your insurance company as soon as reasonably practicable after becoming aware of any potential claim. This includes allegations of property damage (public liability), claims of financial loss from faulty advice or design (professional indemnity), personal injury claims, or any situation where the client has engaged a solicitor or threatened legal action. Most insurance policies contain a condition requiring prompt notification, and failing to notify in time can void your coverage entirely. Notifying your insurer does not automatically mean a claim will be made or that your premium will increase — it simply puts them on notice so they can advise you on how to proceed.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
     question: 'Why is following up after resolving a complaint (the "D" in HEARD) important?',
     options: [
       'It is a legal requirement under the Consumer Rights Act 2015',
-      'It provides evidence for your insurance company',
       'It confirms the client is satisfied, demonstrates ongoing commitment, and completes the service recovery process to build loyalty',
+      'It provides evidence for your insurance company',
       'It prevents the client from changing their mind about the resolution',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Following up after resolving a complaint is important because it confirms the client is satisfied with the resolution, demonstrates that you genuinely care about their experience (not just about closing the complaint), and completes the service recovery process that builds long-term loyalty. A simple text or call a few days later — "Hi [Name], just checking the [issue] is all sorted now. Any problems at all, just let me know" — takes 30 seconds but has a disproportionate impact on client perception. It transforms a complaint experience into a relationship-building moment, which is exactly what the service recovery paradox predicts.',
   },

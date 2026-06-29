@@ -66,7 +66,7 @@ export const dataCablingModule1Section3Quiz: QuizQuestion[] = [
       'Use only passive components for maximum reliability',
       'Use only active components for maximum functionality',
       'Use a hybrid approach combining passive infrastructure with strategically placed active components',
-      'Alternate between passive and active components randomly',
+      'Replace all passive cabling with active equipment to simplify upgrades',
     ],
     correct: 2,
     explanation:

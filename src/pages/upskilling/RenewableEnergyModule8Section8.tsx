@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'What is the heat pump commissioning sequence per BS 7671 Part 6?',
     options: [
-      'Switch on',
-      'Sequence: (1) Pre-energise visual inspection per Reg 642 — installation correct, polarity, conductor terminations, IP / IK at outdoor; (2) Reg 643 testing per circuit (heat pump + immersion + controls + zone valves) — continuity, IR, polarity, ADS / Zs, RCD trip-time at 1× and 5× IΔn, prospective fault current; (3) Functional test — compressor + immersion + zone valves + thermostats + controls + tariff integration; (4) Schedule of Inspections + Schedule of Test Results + EIC',
-      'Random order',
-      'Customer tests',
+      'Energise the compressor first to confirm it runs, then carry out continuity and insulation resistance with the circuit live',
+      'Visual inspection (Reg 642), then dead and live tests per circuit (Reg 643), then functional test, then EIC and schedules',
+      'Live tests (Zs, RCD trip-time) before any dead tests, since loop impedance is the most important value on a heat pump circuit',
+      'Functional test of the heat pump before the dead and live tests, so the compressor warms the system through the inspection',
     ],
     correctIndex: 1,
     explanation:
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'What test instruments does the commissioning electrician need?',
     options: [
-      'Just a screwdriver',
-      'Multi-function tester compliant with BS EN 61557 (e.g. Megger MFT1731 / MFT1741, Fluke 1664 FC, Kewtech KT64DL, Metrel MI3155). Type B-capable IF heat pump declares Type B per manufacturer DoC. Phase-sequence tester for three-phase install. Thermal imaging camera (optional) for higher-tier EICR. Calibration certificates within manufacturer service interval (typically annual). Cert evidence bundle records each instrument model + serial + calibration date',
-      'Customer\'s tools',
-      'No instruments',
+      'A calibrated BS EN 61557 multi-function tester, Type B-capable if the DoC requires it, plus a phase-sequence tester for three-phase',
+      'A plug-in socket tester alone, which confirms polarity and earth presence and is sufficient evidence for the Schedule of Test Results',
+      'A clamp meter to read the running current of the compressor, from which Zs and RCD trip-time can be calculated without a dedicated tester',
+      'A standard 230 V insulation tester only; loop impedance and RCD trip-time are declared by the manufacturer rather than measured on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Heat pump commissioning instrument requirements per Reg 643.1 + BS EN 61557: (1) Multi-function tester compliant with BS EN 61557 — UK 2025-26 typical products: Megger MFT1731 (mainstream domestic), Megger MFT1741 (premium), Fluke 1664 FC, Kewtech KT64DL (commercial-grade), Metrel MI3155 (specialist). Capabilities required: continuity (R1+R2), insulation resistance (1000 V DC ranges), loop impedance (Zs), RCD trip-time (1× and 5× IΔn), prospective fault current, low-current Zs (no-trip mode). (2) Type B-capable instrument required if heat pump manufacturer DoC declares Type B RCD needed — most UK 2025-26 multi-function testers support Type B testing on the premium models. (3) Phase-sequence tester for three-phase install — many multi-function testers include this; standalone testers also available (e.g. Megger PSC-100). (4) Thermal imaging camera (FLIR or equivalent) — optional for higher-tier EICR; useful at cylinder + CU + outdoor unit for thermal anomaly detection. (5) Calibration certificates within manufacturer service interval (typically annual for Megger, Fluke, Kewtech). Cert evidence bundle records: instrument model + serial + calibration date per test.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'What does the heat pump install EIC document?',
     options: [
-      'Just signature',
-      'Per BS 7671 Appendix 6 model form: (1) Customer + installer details + supply characteristics; (2) Schedule of Inspections covering items inspected (visual + functional); (3) Schedule of Test Results — per-circuit IR + R1+R2 + Zs + RCD trip-time + prospective fault current + functional; (4) Declaration by competent person + signature + date; (5) Recommendations for next inspection (typically 5-year cycle); (6) Notice + warning labels per Reg 514. EIC delivered to MCS company for handover pack',
-      'Photograph only',
-      'Customer signature',
+      'Only the installer’s declaration and competent-person scheme number; the test values are recorded separately on the commissioning report',
+      'A schedule of test results for the heat pump circuit alone, with the rest of the installation excluded because only the new circuit was worked on',
+      'Per Appendix 6: details and supply characteristics, Schedule of Inspections, Schedule of Test Results, declaration and next-inspection recommendation',
+      'The supply characteristics and the customer’s signature, with the schedules of inspection and test results issued only on request',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Electrical Installation Certificate (EIC) per BS 7671 Appendix 6 + Chapter 64: (1) Customer details + installer details + property address + supply characteristics (TN-S / TN-C-S / TT; max demand; nominal voltage; nominal frequency; Ze; PFC; prospective fault current at origin). (2) Schedule of Inspections (Reg 642) — comprehensive checklist of items inspected; each ticked or noted as N/A. (3) Schedule of Test Results (Reg 643) — per-circuit table with: circuit ID + description + protective device + cable + R1+R2 + IR + Zs (measured + maximum permitted) + RCD trip-time at IΔn + at 5 × IΔn + prospective fault current + functional. (4) Declaration by competent person (UK Part P competent person scheme — NICEIC, NAPIT, Stroma, ELECSA + others) + signature + date + certificate number. (5) Recommendations: typical 5-year EICR cycle for commercial / 10-year for domestic; specific to heat pump install. (6) Notice + warning labels per Reg 514 — RCD test notice + safety notice + circuit identification. (7) Schedule of Departures (if any departures from BS 7671 made). EIC delivered to the MCS company for inclusion in the customer handover pack alongside F-Gas record + sizing calc + commissioning report.',
   },
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'What is the EICR cycle for a domestic heat pump install?',
     options: [
-      'Never',
-      '10-year cycle typical for domestic (per IET guidance + Electrical Safety Standards in the Private Rented Sector Regs 2020 5-year cycle for landlord-rented domestic); 5-year cycle for commercial. Heat-pump-specific EICR items beyond standard installation EICR: per-circuit RCD trip-time check (heat pump dedicated + immersion + controls + zone valves); Type B RCD verification (if applicable); manufacturer DoC review; weather compensation curve operational verification; legionella cycle verification; control wiring functional',
-      '50 years',
-      'No cycle',
+      'Annually for all domestic heat pump installs, matching the F-Gas leak-check interval so both are carried out on the same visit',
+      '10-year for owner-occupied domestic (5-year for rented), plus heat-pump-specific checks on the RCDs, controls and legionella cycle',
+      'Only when the property is sold, since a domestic heat pump install has no recommended periodic inspection interval otherwise',
+      '3-year cycle fixed by BS 7671 for any installation containing low carbon technology, regardless of tenure or use of the property',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'Standard UK 2025-26 domestic ASHP install — commissioning + handover delivery?',
     options: [
-      'Same day',
-      'Typical: 1-2 days electrical scope (depending on supply assessment + CU change scope). Sequence: pre-energise visual inspection; Reg 643 testing per circuit; functional test of heat pump + immersion + zone valves + controls + tariff integration; Schedule of Inspections + Schedule of Test Results + EIC; customer handover education. EIC delivered to MCS company for inclusion in customer handover pack alongside F-Gas record + sizing calc + commissioning report',
-      'No commissioning',
-      'Customer tests',
+      'Energise first and run the heat pump for a week, then carry out the dead tests once the customer confirms it is heating correctly',
+      '1-2 days electrical scope: visual inspection, per-circuit testing, functional test, EIC and schedules, then customer handover',
+      'Issue a Minor Works Certificate only, since adding a heat pump circuit to an existing board does not require a full EIC',
+      'Leave the EIC to the MCS company to complete from the installer’s notes, as the electrical certificate is their handover deliverable',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,24 +95,24 @@ const quizQuestions = [
     question:
       'Three-phase heat pump install — what differs in commissioning?',
     options: [
-      'Same',
-      'Per-phase Zs verification at outdoor unit (L1-PE, L2-PE, L3-PE each ≤ Table 41.3); phase rotation verified L1→L2→L3 with phase-sequence tester BEFORE energising compressor; 4-pole RCD trip-time tested on each phase individually; functional test of compressor across all 3 phases + defrost cycle; balanced load verification; EREC G99 DNO confirmation if formal application made. Cert evidence bundle per-phase results',
-      'Single-phase only',
-      'No verification',
+      'Only the cable size changes; all the dead and live tests are carried out on L1 alone, since the three phases are electrically identical',
+      'Phase rotation is irrelevant for a heat pump compressor, so the only addition is measuring Zs once on any phase and recording it three times',
+      'Per-phase Zs, phase rotation checked before energising, 4-pole RCD trip-time per phase, and balanced-load verification',
+      'A G99 application is mandatory before energising any three-phase heat pump, and no commissioning tests may be done until the DNO witnesses them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Three-phase heat pump commissioning adds per-phase verification: (1) Per-phase Zs at outdoor unit terminals — L1-PE, L2-PE, L3-PE measured separately; each ≤ Table 41.3 limit for the protective device; per-phase imbalance within ~10% expected. (2) Phase rotation verification — phase-sequence tester used BEFORE energising heat pump compressor; L1→L2→L3 confirmed clockwise. Wrong rotation causes compressor fault. (3) 4-pole RCD trip-time tested on EACH phase individually — induce fault on L1, verify trip; reset; L2; reset; L3. Trip-time at 1× IΔn and at 5× IΔn per phase. (4) Functional test — three-phase compressor starts smoothly; defrost cycle exercised; immersion functional (note immersion typically single-phase even on three-phase supply — connected to L1 or balanced across phases at the wiring centre). (5) Balanced load verification at running steady-state — measured per-phase current should be within 10% of average. (6) EREC G99 DNO confirmation if formal application made — submit completion notice to DNO. Cert evidence bundle: per-phase results documented + phase rotation verified + 4-pole RCD trip-time per phase + functional test + DNO completion.',
   },
   {
     question: 'MCS handover pack — what does the electrical EIC contribute?',
     options: [
-      'Nothing',
-      'EIC is one input to the MCS handover pack. Other inputs from other trades: MCS sizing calc (room-by-room heat loss per BS EN 12831; whole-house SAP / PHPP); product details + DoC + warranty; F-Gas record (REFCOM Cat 1 person + refrigerant type + quantity + leak check); commissioning report (heat pump operational performance + COP at design point + flow temperatures); customer handover documentation. MCS company orchestrates; electrical EIC sits within the pack',
-      'Just signature',
-      'No contribution',
+      'The EIC replaces the MCS sizing calc and commissioning report, since once the electrical certificate is signed the heating-side paperwork is not required for the BUS grant',
+      'The EIC is filed separately with the DNO and never enters the MCS pack, because the network operator holds the electrical record rather than the customer',
+      'The EIC is one input to the pack, alongside the MCS sizing calc, product DoC, F-Gas record and commissioning report',
+      'The EIC contributes only the installer’s competent-person scheme number; the actual test results are recorded by the MCS commissioning engineer instead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MCS handover pack incorporates ALL the trades’ deliverables: (1) MCS sizing calc — room-by-room heat loss per BS EN 12831 or equivalent; whole-house heat loss per SAP / PHPP. (2) Product details — heat pump model + serial + manufacturer + DoC + product warranty (typically 5-10 years). (3) F-Gas record — REFCOM Cat 1 person’s name + accreditation number + refrigerant type (R32, R290 etc.) + quantity charged + leak check + commissioning date. (4) Commissioning report — heat pump operational performance + COP at design point + primary flow / return temperatures + DHW reheat time + defrost cycle observation. (5) BS 7671 EIC — electrical install certificate (from the electrical scope — this course’s deliverable). (6) Customer handover documentation — operating instructions + maintenance schedule + service contact + warranty + Boiler Upgrade Scheme grant paperwork. (7) DNO correspondence — supply notification + reference. MCS company orchestrates + issues the pack. BUS grant claim through Ofgem requires the complete pack. Cert evidence bundle for the electrical scope = the EIC + Schedule of Inspections + Schedule of Test Results + commissioning notes + cross-references to the other trades’ deliverables.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'Customer handover education — what should the electrician cover?',
     options: [
-      'Nothing',
-      '(1) Heat pump priority logic (compressor primary, immersion supplemental); (2) Customer-facing app + indoor controller interface; (3) OAT sensor location + role (don’t obstruct or shade artificially); (4) Outdoor unit clearance + ventilation requirements (don’t enclose); (5) Defrost cycle expected behaviour (water dripping from outdoor unit is normal); (6) Legionella cycle (typically weekly off-peak — runs longer + hotter than normal); (7) Service contact + warranty + emergency isolator location; (8) Tariff integration + cheap-window usage if applicable',
-      'Customer DIY',
-      'No handover',
+      'Only the location of the consumer unit and the main switch; the rest of the operation is covered solely by the manufacturer’s printed manual',
+      'Priority logic, the app and controller, OAT sensor and outdoor clearance, defrost and legionella behaviour, and the isolator location',
+      'Advise the customer to run the immersion as the primary heat source in cold weather, switching the compressor off below 0 °C to protect it from the frost',
+      'Hand over the controller passwords so the customer can adjust the refrigerant charge and defrost timing themselves between annual services',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
   {
     question: 'EICR year 5 on a heat pump install — what is checked?',
     options: [
-      'Random',
-      'Standard BS 7671 EICR scope + heat-pump-specific: per-circuit RCD trip-time degradation check (heat pump dedicated + immersion + controls + zone valves); Type B RCD verification if applicable; outdoor cable + isolator visual condition (UV / IP degradation); cylinder over-temp cut-out functional test; weather compensation curve operational verification (sensor reading vs known thermometer); legionella cycle verification (sample cylinder temperature during cycle); control wiring functional per zone',
-      'No EICR',
-      'Skip',
+      'Only the heat pump circuit in isolation; the rest of the installation is outside the EICR scope once a dedicated LCT circuit has been added',
+      'The standard EICR scope plus heat-pump items: RCD trip-time degradation, outdoor cable and isolator condition, over-temp cut-out and legionella checks',
+      'A refrigerant leak check and COP measurement only, since the electrical install was certified at handover and does not need re-testing at year 5',
+      'A visual inspection of the consumer unit alone, with no live testing, because dead and live tests are only required at the original installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +145,12 @@ const quizQuestions = [
     question:
       'Heat pump cert evidence bundle structure — what does it integrate?',
     options: [
-      'Single page',
-      'Structured digital folder: (1) Design — MCS sizing + SAP / PHPP + manufacturer product selection; (2) Supply assessment + DNO correspondence; (3) Electrical install — per-circuit EIC + Schedule of Inspections + Schedule of Test Results + protective device + cable + Zs + RCD trip-time + voltage drop calc; (4) F-Gas record (Cat 1 person scope, cross-referenced); (5) MCS handover pack at top level; (6) Customer handover documentation; (7) Service / EICR schedule. UK 2025-26 mature practice: shared workspace (SharePoint / Confluence / similar)',
-      'Paper only',
-      'No structure',
+      'The EIC and nothing else — the design, F-Gas and commissioning records are held by the respective trades and never collated into one bundle',
+      'A single commissioning report combining all trades into one signed sheet, replacing the separate EIC, sizing calc and F-Gas record',
+      'A structured folder collating the design, supply assessment, electrical install, F-Gas record, MCS pack and service schedule',
+      'Only the BUS grant claim form, since Ofgem requires that document alone and the technical records are retained internally by the installer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat pump install cert evidence bundle structure (UK 2025-26 mature practice — shared digital workspace): (1) Design — MCS company’s sizing calc (BS EN 12831 room-by-room + SAP / PHPP whole-house); manufacturer product selection rationale; Boiler Upgrade Scheme grant claim documentation. (2) Supply assessment — Reg 311.1 max demand calc + existing supply capacity + DNO correspondence + reference + completion. (3) Electrical install (this course’s scope) — per-circuit EIC + Schedule of Inspections + Schedule of Test Results + protective device + cable + Zs + RCD trip-time + voltage drop calc + manufacturer DoC references (RCD type, cable armour-as-CPC, etc.). (4) F-Gas record — REFCOM Cat 1 person scope, cross-referenced with the electrical install date sequencing. (5) MCS handover pack at the top level — incorporates the other deliverables + product warranty + commissioning report. (6) Customer handover documentation — operating instructions + service contact + tariff integration education. (7) Service / EICR schedule — typical 10-year cycle for domestic owner-occupied; recommended service intervals from manufacturer; F-Gas leak check schedule (annual for refrigerant >5 tonnes CO2-eq). Shared workspace: SharePoint / Confluence / similar; MCS company owns the workspace; electrical installer + F-Gas Cat 1 person + heating engineer all upload their deliverables.',
   },

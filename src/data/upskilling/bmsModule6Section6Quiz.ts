@@ -11,10 +11,10 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What is remote monitoring in a BMS?',
     options: [
-      'Missed alerts due to system misconfiguration',
+      'A backup battery that keeps controllers running during a power cut',
       'Authorised staff can view and control BMS functions off-site',
-      'An instant notification when problems occur',
-      'Staff can respond instantly from any location',
+      'A local touchscreen mounted on the front of the control panel',
+      'An automatic shutdown of plant when a fault is detected',
     ],
     correctAnswer: 1,
     explanation:
@@ -51,9 +51,9 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     question: 'What is a fault alert?',
     options: [
       'An instant notification when problems occur',
-      'To ensure alerts reach staff if one method fails',
-      'Missed alerts due to system misconfiguration',
-      'Staff can respond instantly from any location',
+      'A scheduled weekly summary of system performance',
+      'A manual log entry made by maintenance staff',
+      'A warning label fixed to the front of the panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -76,10 +76,10 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 6,
     question: 'Why is escalation important in fault alerts?',
     options: [
-      'Missed alerts due to system misconfiguration',
-      'Staff can respond instantly from any location',
+      'It reduces the total number of alerts the system generates',
+      'It automatically clears faults once they have been logged',
       'It ensures critical issues reach appropriate staff levels',
-      'To ensure alerts reach staff if one method fails',
+      'It increases the sensitivity of the fault detection thresholds',
     ],
     correctAnswer: 2,
     explanation:
@@ -89,9 +89,9 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 7,
     question: 'What is one risk of relying only on remote monitoring?',
     options: [
-      'To ensure alerts reach staff if one method fails',
-      'It ensures critical issues reach appropriate staff levels',
-      'Testing notifications with trial alerts to all recipients',
+      'Higher energy consumption from continuous data transmission',
+      'Slower control response because data must travel off-site',
+      'Increased wear on field sensors from constant polling',
       'Missed alerts due to system misconfiguration',
     ],
     correctAnswer: 3,
@@ -115,10 +115,10 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step ensures alerts are received by staff?',
     options: [
-      'To ensure alerts reach staff if one method fails',
+      'Confirming the controller clocks are synchronised',
       'Testing notifications with trial alerts to all recipients',
-      'Authorised staff can view and control BMS functions off-site',
-      'An instant notification when problems occur',
+      'Checking the supply voltage at each controller',
+      'Recording the IP address of every networked device',
     ],
     correctAnswer: 1,
     explanation:

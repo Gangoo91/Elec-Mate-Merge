@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'stable-power',
     question: 'Why must controllers be powered and stable before software upload?',
     options: [
-      'To reduce upload time',
       'To prevent memory corruption and upload failures',
+      'To reduce the total upload time',
       'To improve network communication speed',
-      'To save battery power on laptops',
+      "To save battery power on the engineer's laptop",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Stable power is essential to maintain controller memory during upload and prevent program corruption. Unstable power can corrupt the upload, damage controller memory, or cause programming failures that require complete reprogramming.',
   },
@@ -76,11 +76,11 @@ const quizQuestion = {
     'In a data centre BMS project, why did software uploads repeatedly fail on VAV controllers?',
   options: [
     'The programming software version was incompatible',
-    'Network switches were overloaded with traffic',
-    'RS-485 communication wiring had reversed polarity',
-    'Controllers had insufficient memory for the program',
+    'The network switches were overloaded with traffic',
+    'The controllers had insufficient memory for the program',
+    'The RS-485 communication wiring had reversed polarity',
   ],
-  correctAnswer: 2,
+  correctAnswer: 3,
   explanation:
     'The RS-485 communication wiring had reversed polarity due to incorrect colour coding interpretation. Basic communication worked due to RS-485 fault tolerance, but complex uploads failed due to data integrity issues. The project experienced a two-week delay while polarity was corrected.',
 };

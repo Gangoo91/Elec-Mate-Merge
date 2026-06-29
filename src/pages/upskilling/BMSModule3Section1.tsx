@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'hvac-check1',
     question: 'Why would a BMS increase AHU airflow when CO₂ levels rise?',
     options: [
-      'To reduce energy consumption',
-      'To indicate higher occupancy requiring more fresh air',
-      'To test the ventilation system',
-      'To cool down the space',
+      'Rising CO₂ indicates higher occupancy, so more fresh air is needed',
+      'Rising CO₂ means the space is too cold and needs warming',
+      'Rising CO₂ confirms the filters need replacing',
+      'Rising CO₂ shows the fans are running too slowly',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Higher CO₂ levels indicate more people in the space, requiring increased fresh air ventilation to maintain air quality and comfort for occupants.',
   },
@@ -24,10 +24,10 @@ const quickCheckQuestions = [
     id: 'hvac-check2',
     question: 'Why do FCUs often suit hotels and offices more than AHUs?',
     options: [
-      'FCUs are cheaper to install',
+      'FCUs need no ductwork at all anywhere in the building',
       'FCUs provide individual room/zone control',
-      'FCUs use less electricity',
-      "FCUs don't require maintenance",
+      'FCUs always recover more heat than an AHU',
+      'FCUs filter air to a higher standard than an AHU',
     ],
     correctIndex: 1,
     explanation:
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'What is the benefit of sequencing multiple chillers rather than running all of them constantly?',
     options: [
-      'It reduces installation costs',
+      'It reduces the initial installation cost of the plant',
+      'It removes the need for chilled water pumps',
       'It matches cooling output to demand, avoiding waste',
-      'It makes maintenance easier',
-      'It reduces noise levels',
+      'It allows smaller-diameter pipework to be used',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Sequencing chillers matches cooling output to actual demand, running only what's needed. Multiple chillers at part-load are less efficient than fewer chillers at optimal load.",
   },
@@ -52,11 +52,11 @@ const quickCheckQuestions = [
     question: 'How does scheduling boilers through BMS reduce wasted fuel?',
     options: [
       'By running boilers at maximum output all day',
-      'By heating spaces only when occupied or just before occupancy',
-      'By using electric heating instead',
+      'By switching the building to electric heating instead',
       'By reducing the number of boilers installed',
+      'By heating spaces only when occupied or just before occupancy',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'BMS scheduling allows boilers to heat spaces only when needed or just before occupancy, rather than maintaining temperature continuously during unoccupied periods, significantly reducing fuel consumption.',
   },

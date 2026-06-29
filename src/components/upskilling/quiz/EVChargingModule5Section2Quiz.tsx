@@ -15,101 +15,101 @@ const quizQuestions: QuizQuestion[] = [
   {
     question: 'What is the primary function of a Home Energy Management System (HEMS)?',
     options: [
-      'Monitor electricity consumption only',
-      'Coordinate energy flows between multiple sources and loads',
-      'Control only solar panel operation',
-      'Manage battery charging exclusively',
+      'To monitor household electricity consumption only',
+      'To coordinate energy flows between multiple sources and loads',
+      'To control the solar panels in isolation',
+      'To manage the home battery charging only',
     ],
     correctAnswer: 1,
     explanation:
-      'HEMS coordinates energy flows between multiple sources (solar, grid, battery) and loads (home, EV) to optimise efficiency and costs.',
+      'A HEMS coordinates energy flows between sources (solar, grid, battery) and loads (home, EV) to optimise efficiency and running costs.',
   },
   {
     question:
-      'What percentage of solar self-consumption can typically be achieved with integrated EV/PV/Battery systems?',
-    options: ['40-50%', '55-65%', '70-80%', '85-95%'],
-    correctAnswer: 3,
+      'What solar self-consumption can typically be achieved with a well-designed integrated EV/PV/battery system?',
+    options: ['85-95%', '40-50%', '55-65%', '70-80%'],
+    correctAnswer: 0,
     explanation:
-      'Well-designed integrated systems can achieve 85-95% solar self-consumption through intelligent load management and battery storage.',
+      'Well-designed integrated systems can reach 85-95% solar self-consumption through intelligent load shifting and battery storage.',
   },
   {
     question:
-      'Which communication protocol is specifically designed for EV charge point integration?',
-    options: ['SunSpec Modbus', 'OCPP (Open Charge Point Protocol)', 'CAN Bus', 'Zigbee'],
-    correctAnswer: 1,
+      'Which communication protocol is designed specifically for EV charge point integration?',
+    options: ['SunSpec Modbus', 'CAN Bus', 'OCPP (Open Charge Point Protocol)', 'Zigbee'],
+    correctAnswer: 2,
     explanation:
-      'OCPP is the industry standard protocol specifically designed for EV charge point communication and control.',
+      'OCPP (Open Charge Point Protocol) is the open industry standard for communication between charge points and management systems.',
   },
   {
-    question: "How does 'excess solar charging' mode operate?",
+    question: "How does an 'excess solar charging' mode operate?",
     options: [
-      'Charges EV only during peak sunlight hours',
-      'EV charging power matches surplus PV generation',
-      'Uses only battery power for EV charging',
-      'Prevents any grid electricity usage',
+      'It charges the EV only during peak sunlight hours',
+      'It draws only stored battery power to charge the EV',
+      'It prevents any grid electricity from being used at all',
+      'It matches EV charging power to the surplus PV generation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Excess solar charging dynamically adjusts EV charging power to match surplus PV generation, maximising solar utilisation.',
+      'Excess solar charging dynamically modulates the EV charging current so it tracks the surplus PV generation, maximising solar use.',
   },
   {
     question:
-      'What is the typical electricity bill reduction achieved with integrated HEMS systems?',
-    options: ['20-30%', '35-45%', '50-60%', '60-80%'],
-    correctAnswer: 3,
+      'What electricity bill reduction is typically claimed for a well-integrated HEMS?',
+    options: ['20-30%', '35-45%', '60-80%', '50-60%'],
+    correctAnswer: 2,
     explanation:
-      'Integrated HEMS systems typically achieve 60-80% reduction in electricity bills through intelligent energy management.',
+      'Integrated HEMS solutions are typically marketed as achieving a 60-80% reduction in electricity bills through intelligent energy management.',
   },
   {
-    question: 'Which factor is most important for battery priority management in HEMS?',
+    question: 'Which factor is most important for battery priority management in a HEMS?',
     options: [
-      'Battery temperature only',
       'Hierarchical charging based on tariff periods',
-      'Maximum charging speed',
-      'Battery age',
+      'The battery cell temperature alone',
+      'The maximum possible charging speed',
+      'The age of the battery alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Battery priority management uses hierarchical charging strategies, prioritising home battery over EV during peak tariff periods.',
+      'Battery priority management uses a hierarchy based on tariff periods, typically favouring the home battery over the EV during peak-price windows.',
   },
   {
-    question: 'What is the main advantage of predictive control algorithms in HEMS?',
+    question: 'What is the main advantage of predictive control algorithms in a HEMS?',
     options: [
-      'Faster charging speeds',
-      'Reduced equipment costs',
-      'Weather-based generation forecasting for optimisation',
-      'Simpler installation requirements',
+      'They deliver faster EV charging speeds',
+      'They reduce the cost of the hardware',
+      'They use weather-based forecasting to optimise scheduling',
+      'They simplify the physical installation',
     ],
     correctAnswer: 2,
     explanation:
-      'Predictive algorithms use weather forecasting to predict solar generation and optimise charging schedules accordingly.',
+      'Predictive algorithms use weather forecasts to estimate solar generation and optimise charging and storage schedules in advance.',
   },
   {
-    question: 'How does time-of-use optimisation benefit integrated EV charging systems?',
+    question: 'How does time-of-use optimisation benefit an integrated EV charging system?',
     options: [
-      'Increases charging speed',
-      'Reduces equipment maintenance',
-      'Schedules charging during lowest electricity price periods',
-      'Improves battery lifespan only',
+      'It schedules charging during the lowest electricity price periods',
+      'It increases the maximum charging speed',
+      'It reduces the equipment maintenance burden',
+      'It improves only the battery lifespan',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Time-of-use optimisation schedules charging during periods of lowest electricity prices to minimise costs.',
+      'Time-of-use optimisation shifts charging into the cheapest tariff periods, minimising the cost of the energy used.',
   },
   {
     question:
-      'What size solar PV system typically provides sufficient energy for average daily EV driving?',
+      'What size solar PV array typically provides enough energy for average daily EV driving?',
     options: ['2-3kW', '4-6kW', '8-10kW', '12-15kW'],
     correctAnswer: 1,
     explanation:
-      'A 4-6kW solar system typically provides 15-25kWh daily generation, sufficient for 60-100 miles of daily EV driving.',
+      'A 4-6kW array typically yields around 15-25kWh on a good day, enough for roughly 60-100 miles of daily EV driving.',
   },
   {
-    question: 'What is the typical payback period for integrated EV/PV/Battery systems?',
+    question: 'What is the typical payback period claimed for an integrated EV/PV/battery system?',
     options: ['2-3 years', '5-8 years', '10-12 years', '15-20 years'],
     correctAnswer: 1,
     explanation:
-      'Integrated systems typically achieve 5-8 year payback periods including government incentives and reduced grid dependency.',
+      'Integrated systems are typically quoted with a 5-8 year payback once incentives and reduced grid dependency are taken into account.',
   },
 ];
 

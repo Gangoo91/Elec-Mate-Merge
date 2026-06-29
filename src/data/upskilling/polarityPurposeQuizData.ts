@@ -5,10 +5,10 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is polarity testing essential before energising a circuit?',
     options: [
-      'Combined neutral and protective conductor in supply, separate in installation',
+      'To confirm the measured earth fault loop impedance is within limits',
       'To ensure switches and protective devices operate on the line conductor',
-      'The total power (combination of real and reactive power)',
-      'Notify the scheme and provide certificate to customer and local authority',
+      'To verify the insulation resistance exceeds the minimum value',
+      'To prove continuity of the circuit protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'What happens if a switch is incorrectly wired to the neutral conductor?',
     options: [
-      'To enable safe shutdown and evacuation',
-      'Competence varies with work complexity',
+      'The circuit will not energise at all',
+      'The protective device will nuisance trip',
       'The circuit remains live when switched off',
-      'Sinusoidal AC residual current only',
+      'The line conductor becomes safely isolated',
     ],
     correctAnswer: 2,
     explanation:
@@ -86,20 +86,20 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
       'Alternating current at mains frequency',
       'High current to simulate normal operation',
       'No current - visual inspection only',
-      'Low direct current for safety',
+      'Low test current from a continuity tester',
     ],
     correctAnswer: 3,
     explanation:
-      'Polarity testing uses low DC current (typically 4-200mA) to safely test dead circuits before energisation.',
+      'Polarity is verified on a dead, isolated circuit using the low-resistance continuity range of a multifunction or insulation/continuity tester before energisation.',
   },
   {
     id: 8,
     question: 'Why is polarity particularly critical for protective devices?',
     options: [
       'They must operate on the line conductor to provide proper protection',
-      'Mandatory energy and carbon reporting for qualifying large UK companies',
-      'Use equivalent annual cost (EAC) to compare different lifespans',
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'They are rated only for connection to the neutral conductor',
+      'They depend on correct polarity to measure earth fault loop impedance',
+      'They will not reset unless wired to the protective conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     question:
       'In a domestic installation, what is the most common consequence of reversed polarity at a socket outlet?',
     options: [
-      'To reduce overwhelm and focus on the next step',
+      'The socket outlet will refuse to accept a plug',
       'Electrical equipment may have live cases when switched off',
-      'Essential loads maximum demand plus starting currents',
-      'Leakage currents can flow, creating safety hazards',
+      'The ring final circuit continuity reading will be too high',
+      'The RCD protecting the circuit will fail to trip on a fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,13 +123,13 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'Which regulation in BS 7671 specifically requires polarity testing?',
     options: [
-      'Section 411 - Protective earthing',
-      'Section 514 - Identification',
-      'Section 612 - Testing',
-      'Section 522 - Selection and erection',
+      'Regulation 643.3 - Insulation resistance',
+      'Regulation 643.2 - Continuity of conductors',
+      'Regulation 643.6 - Polarity',
+      'Regulation 643.7 - Earth fault loop impedance',
     ],
     correctAnswer: 2,
     explanation:
-      'Section 612 of BS 7671 covers testing requirements, including the mandatory polarity testing that must be performed before energisation of any installation.',
+      'Regulation 643.6 of BS 7671 requires polarity to be verified before energisation, confirming single-pole devices are in the line conductor and that line, neutral and earth are correctly connected.',
   },
 ];

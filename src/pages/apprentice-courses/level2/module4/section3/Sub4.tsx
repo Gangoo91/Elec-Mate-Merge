@@ -56,9 +56,9 @@ const checks = [
       'For a cold bend on 25 mm PVC conduit, the minimum bend radius is approximately:',
     options: [
       '6× OD (so ~150 mm radius for 25 mm conduit).',
-      'Remove from service immediately',
-      'Ceiling 0.7, Walls 0.5, Floor 0.2',
-      'True (but must be recorded as a limitation)',
+      '1× OD (so ~25 mm radius for 25 mm conduit).',
+      '20× OD (so ~500 mm radius for 25 mm conduit).',
+      'There is no minimum — PVC conduit can be bent to any radius cold.',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     question:
       'BS 7671 Reg 521.10.202 (introduced via A4:2026 / Amendment 4) requires non-combustible cable supports against premature collapse in fire — applying:',
     options: [
-      'A framework where treatment is matched to severity, starting with least intensive and stepping up if needed',
+      'Only on cables installed in escape routes such as corridors and staircases.',
       'Throughout the installation, not just on escape routes (A4:2026 expanded the previous escape-route-only requirement).',
-      'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
-      'Noise, exhaust emissions, fuel storage bunding, oil containment and planning permission',
+      'Only on cables installed outdoors or in unheated plant rooms.',
+      'Only on circuits supplying fire-alarm and emergency-lighting systems.',
     ],
     correctIndex: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     question:
       'Steel conduit run on a wall, 1.5 m intervals between saddles. Standard practice for change-of-direction support is:',
     options: [
-      'PPE must be maintained in an efficient state, in efficient working order, and in good repair',
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
+      'No additional saddle is needed at bends — the fitting itself supports the conduit.',
+      'A saddle at the midpoint between every pair of boxes, regardless of bends.',
       'A saddle within ~150-200 mm of every box, fitting and change of direction.',
-      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
+      'A saddle only where the conduit changes from horizontal to vertical.',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     question:
       'PVC trunking has lid clips that secure the cover to the body. On a long horizontal run, lid clips should be:',
     options: [
-      '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
-      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
-      'The regulations do not specify a minimum temperature; risk assessment should consider the effects of cold, ice, and wind chill',
+      'One at each end only — the lid is self-retaining along the middle of the run.',
+      'One every ~3 m, matching the standard length of a trunking stick.',
+      'One every ~50 mm, giving a continuous clamped seam along the lid.',
       'One every ~600 mm — closer at ends and at any point where the lid might be lifted by passing traffic.',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
       'Cable basket runs in a service riser typically need expansion provision on:',
     options: [
       'Long vertical or horizontal steel runs (>30 m) — typically using slotted bolt holes or sliding splices to allow thermal expansion.',
-      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
-      'Continuity of protective conductors (Regulation 643.2.1), including main and supplementary bonding',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'Every run regardless of length, because steel basket cannot tolerate any thermal movement.',
+      'Only at the point where the basket changes from horizontal to vertical.',
+      'Only on basket runs carrying data cables, which are sensitive to movement.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'Bend radius for 6 mm² T&E (twin and CPC) is typically:',
     options: [
-      'Forgetting to bring necessary tools to site',
+      '3× cable overall diameter (factory minimum).',
       '6× cable overall diameter (factory minimum).',
-      'The type of hazard posed by the substance',
-      'To prevent unauthorised access to the work area',
+      '8× cable overall diameter (factory minimum).',
+      '12× cable overall diameter (factory minimum).',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'A T&E cable runs along a ceiling void in a flat above a commercial unit. Reg 521.10.202 (A4:2026) means it must be supported by:',
     options: [
-      'The most effective type of preventive action — elimination removes the failure mode entirely rather than relying on human intervention to manage it',
-      'EAWR Reg 4(2) — the duty to maintain systems in safe condition. This duty does not stop when an inspection finds a defect; it continues until the defect is remedied.',
+      'Plastic cable ties at close intervals, since the void is not itself an escape route.',
+      'Adhesive cable clips bonded to the joists with high-temperature glue.',
       'Non-combustible supports (metal clips, metal cable ties, or fire-rated systems) so cables do not prematurely collapse in fire — applies throughout the installation now, not just escape routes.',
-      'Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.',
+      'No fixed support at all, provided the cable rests on top of the ceiling joists.',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     question:
       'A 32 m horizontal run of 25 mm steel conduit needs an expansion coupler because:',
     options: [
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
-      'Hand the schedule to the supervisor for sign-off, then lift it into the formal design pack (cable schedule, single-line, EIC issue draft) before procurement starts.',
-      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
+      'Steel contracts as it warms, so the coupler stops the run pulling its threaded joints apart.',
+      'The coupler is purely for earth continuity along a long steel conduit run.',
+      'Long runs must be electrically isolated into sections, which the coupler provides.',
       'Steel expands ~12 µm per m per °C; over 32 m a 30°C swing gives ~11 mm of expansion that has to be accommodated to prevent stress on the saddles and threaded joints.',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
       'Cable cleats (heavy-duty cable supports for SWA on tray) are used because:',
     options: [
       'They restrain the cable against the considerable mechanical forces created by short-circuit fault currents in heavy cables (sub-mains, distribution).',
-      'Share your knowledge and experience patiently, explain the reasoning behind procedures (not just the steps), supervise safety-critical tasks, and encourage them to ask questions',
-      'Set out who can work alone, what risk assessment applies, communication/check-in arrangements, and high-risk activities that need a buddy',
-      'Use intrinsically safe (Ex i) test equipment, obtain a permit-to-work, gas-test the area, wear anti-static PPE, and only use methods compliant with the area\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s zone classification',
+      'They electrically bond the armour of the SWA to the metal tray for earth continuity.',
+      'They space the cable off the tray to improve current-carrying capacity by air cooling.',
+      'They protect the cable sheath from abrasion against the edges of the perforated tray.',
     ],
     correctAnswer: 0,
     explanation:

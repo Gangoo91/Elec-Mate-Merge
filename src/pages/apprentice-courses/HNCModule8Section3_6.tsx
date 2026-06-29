@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question:
       'According to BS EN 378, what is the minimum leak test pressure for the high-pressure side of an R410A system?',
     options: [
-      'Tender pricing breakdowns',
-      'Finger guards and fused leads',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      '10 bar (0.5 x design pressure)',
+      '14 bar (equal to atmospheric pressure)',
+      '50 bar (2.0 x design pressure)',
       '31 bar (1.1 x design pressure)',
     ],
     correctIndex: 3,
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     question:
       'Under F-Gas Regulations, what certification is required to handle refrigerants with GWP &gt; 2500?',
     options: [
-      'A defined point when changes become significantly more costly',
+      'A water hygiene certificate under L8 and HSG274',
       'Category I, II, III or IV depending on activity',
-      'Cross-sectional area of conductor',
-      'Installation earth electrode separate from supply earth',
+      'An 18th Edition BS 7671 qualification only',
+      'No certification is required for any refrigerant work',
     ],
     correctIndex: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of the standing vacuum test?',
     options: [
-      'Insufficient refrigerant charge or restricted flow to evaporator',
-      'Sensible cooling capacity and temperature drop across the coil',
+      'To confirm the refrigerant charge is at the correct weight',
+      'To measure the superheat and subcooling of the system',
       'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
-      'The client or their representative observing key tests and signing off results',
+      'To check the electrical supply voltage at the compressor',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: 'According to CIBSE Code M, commissioning records must include:',
     options: [
-      'Insufficient refrigerant charge or restricted flow to evaporator',
-      'The client or their representative observing key tests and signing off results',
-      'System operation, maintenance requirements, emergency procedures, and documentation location',
+      'Only the final invoice and the manufacturer warranty card',
+      'The installer name and the date of installation alone',
+      'A simple pass or fail statement with no supporting data',
       'Design parameters, measured values, and any deviations with explanations',
     ],
     correctAnswer: 3,
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does an abnormally high superheat reading indicate?',
     options: [
-      'Design parameters, measured values, and any deviations with explanations',
+      'An overcharge of refrigerant flooding the evaporator',
       'Insufficient refrigerant charge or restricted flow to evaporator',
-      'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
-      'Calibrated within the previous 12 months with certificates available',
+      'Excessive airflow across the condenser coil',
+      'A faulty pressure relief valve on the high side',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'During commissioning, the air-on and air-off temperatures across a cooling coil should be measured to verify:',
     options: [
-      'Insufficient refrigerant charge or restricted flow to evaporator',
-      'Design parameters, measured values, and any deviations with explanations',
+      'The refrigerant charge weight in the system',
+      'The electrical power factor of the compressor',
       'Sensible cooling capacity and temperature drop across the coil',
-      'Calibrated within the previous 12 months with certificates available',
+      'The GWP and CO2 equivalent of the refrigerant',
     ],
     correctAnswer: 2,
     explanation:
@@ -177,9 +177,9 @@ const quizQuestions = [
     question: 'What information must be included on a system data plate under F-Gas requirements?',
     options: [
       'Refrigerant type, charge quantity, and GWP',
-      'DNO transformers and cables are rated in kVA, not kW',
-      '3% of nominal voltage for lighting, 5% for other uses',
-      'Seek clarification and approval for any deviations',
+      'The compressor model number and its maximum running current',
+      'The site postcode and the name of the original installer',
+      'The pipe run length and the factory pre-charge weight only',
     ],
     correctAnswer: 0,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 9,
     question: 'The commissioning witness test typically involves:',
     options: [
-      'Sensible cooling capacity and temperature drop across the coil',
+      'The installer carrying out the tests entirely unsupervised',
       'The client or their representative observing key tests and signing off results',
-      'Design parameters, measured values, and any deviations with explanations',
-      'Calibrated within the previous 12 months with certificates available',
+      'An automated data logger recording results with no observer',
+      'A desktop review of paperwork with no site attendance',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,23 +202,23 @@ const quizQuestions = [
     id: 10,
     question: 'O&M manuals for air conditioning systems should include:',
     options: [
-      'The client or their representative observing key tests and signing off results',
-      'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
-      'Operating procedures, maintenance schedules, as-built drawings, test certificates, and spare parts information',
-      'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
+      'Only the manufacturer warranty card and a contact phone number',
+      'Just the as-built wiring diagram, with operating detail given verbally',
+      'Operating procedures, maintenance schedules, drawings, and test certificates',
+      'A single-page summary listing the refrigerant type and charge weight',
     ],
     correctAnswer: 2,
     explanation:
-      'O&M manuals must be comprehensive, including: system descriptions, operating procedures, maintenance schedules (PPM), manufacturer data sheets, as-built drawings, commissioning records, test certificates, spare parts lists, and emergency procedures.',
+      'O&M manuals must be comprehensive, including: system descriptions, operating procedures, maintenance schedules (PPM), manufacturer data sheets, as-built drawings, commissioning records, test certificates, spare parts lists, and emergency procedures. A warranty card, a single diagram, or a one-page summary alone are all insufficient for safe long-term operation.',
   },
   {
     id: 11,
     question:
       'When using an electronic leak detector, the sensitivity should be set to detect leaks of:',
     options: [
-      'Visual inspection and testing',
-      'Yes, with appropriate protection',
-      'Dressed neatly with no tangles',
+      '500 g/year for F-gas systems',
+      '100 g/year for F-gas systems',
+      '50 g/year for F-gas systems',
       '5 g/year for F-gas systems',
     ],
     correctAnswer: 3,
@@ -229,23 +229,23 @@ const quizQuestions = [
     id: 12,
     question: 'Performance verification of a chiller should include measurement of:',
     options: [
-      'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
-      'The client or their representative observing key tests and signing off results',
-      'Sensible cooling capacity and temperature drop across the coil',
-      'Design parameters, measured values, and any deviations with explanations',
+      'Chilled water flow, entering/leaving temperatures, electrical input, and COP',
+      'The refrigerant charge weight and the GWP value stamped on the label',
+      'Only the discharge pressure read from the high-side gauge at start-up',
+      'The ambient air temperature in the plant room at the time of testing',
     ],
     correctAnswer: 0,
     explanation:
-      'Comprehensive chiller verification requires measuring: chilled water flow rate and temperatures (entering/leaving), condenser water or air temperatures, electrical power input, and calculating the coefficient of performance (COP) to compare against rated values.',
+      'Comprehensive chiller verification requires measuring: chilled water flow rate and temperatures (entering/leaving), condenser water or air temperatures, electrical power input, and calculating the coefficient of performance (COP) to compare against rated values. Charge weight, a single pressure reading, or plant-room ambient alone do not verify performance.',
   },
   {
     id: 13,
     question: 'BSRIA commissioning procedures specify that test instruments should be:',
     options: [
-      'Insufficient refrigerant charge or restricted flow to evaporator',
+      'Brand new and unused for every single commissioning job',
       'Calibrated within the previous 12 months with certificates available',
-      'Sensible cooling capacity and temperature drop across the coil',
-      'The client or their representative observing key tests and signing off results',
+      'Calibrated only once when first purchased by the company',
+      'Of any type provided readings look broadly reasonable',
     ],
     correctAnswer: 1,
     explanation:
@@ -255,14 +255,14 @@ const quizQuestions = [
     id: 14,
     question: 'The handover meeting for an air conditioning system should cover:',
     options: [
-      'Calibrated within the previous 12 months with certificates available',
-      'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
-      'System operation, maintenance requirements, emergency procedures, and documentation location',
-      'Operating procedures, maintenance schedules, as-built drawings, test certificates, and spare parts information',
+      'The final account and any outstanding payment terms with the client',
+      'A demonstration of the installer brazing technique on a spare joint',
+      'System operation, maintenance, emergency procedures, and document location',
+      'The route the refrigerant pipework takes through the building voids',
     ],
     correctAnswer: 2,
     explanation:
-      'Handover meetings should comprehensively cover: system operation demonstration, routine maintenance requirements, emergency shutdown procedures, location of isolation valves and controls, O&M documentation location, training records, and key contact details for support.',
+      'Handover meetings should comprehensively cover: system operation demonstration, routine maintenance requirements, emergency shutdown procedures, location of isolation valves and controls, O&M documentation location, training records, and key contact details for support. Commercial terms, installation technique, or pipe routing are not the purpose of handover.',
   },
 ];
 

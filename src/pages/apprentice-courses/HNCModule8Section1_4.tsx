@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary consideration when sizing pipework for a two-pipe heating system?',
     options: [
-      'To ensure only the device nearest the fault operates, minimising supply disruption',
-      'Cross-connection method for confirming ring continuity',
+      'Matching the pipe colour to the radiator finish for appearance',
+      'Using the largest available pipe to guarantee maximum flow',
       'Keeping velocity below 1.5 m/s and pressure drop within pump capacity',
-      'Contour lines connecting points of equal illuminance',
+      'Selecting pipe to suit the boiler manufacturer rather than the flow rate',
     ],
     correctIndex: 2,
     explanation:
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     id: 'trv-function',
     question: 'How does a thermostatic radiator valve (TRV) regulate room temperature?',
     options: [
-      'If no attendance after 48 hours, contractor may proceed',
-      'To maintain all conductive parts at the same potential',
+      'By switching the boiler on and off directly from the valve head',
+      'By sensing the flow water temperature and adjusting the pump speed',
       'By sensing air temperature and modulating flow through the radiator',
-      'A fracture of any bone other than a finger, thumb, or toe',
+      'By measuring the return water temperature and closing the lockshield',
     ],
     correctIndex: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     id: 3,
     question: 'In a two-pipe system, where should TRVs NOT be installed?',
     options: [
-      'Output reduces by approximately 63%',
-      'All radiators should reach temperature simultaneously',
-      '15-20 kPa - include safety margin',
+      'On the radiator furthest from the boiler',
+      'On any radiator in a bedroom',
+      'On the largest radiator in the system',
       'In the room containing the room thermostat',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question:
       'A heating system has an index circuit pressure drop of 15 kPa. What pump head is required?',
     options: [
-      'In the room containing the room thermostat',
-      'Output reduces by approximately 63%',
-      'To maintain minimum flow when TRVs close',
+      'Exactly 15 kPa - match the index circuit',
+      '7-8 kPa - half the index circuit',
+      '30-35 kPa - double the index circuit',
       '15-20 kPa - include safety margin',
     ],
     correctAnswer: 3,
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why are double panel radiators (Type 22) popular in modern installations?',
     options: [
+      'They eliminate the need for a circulating pump',
+      'They operate without any water flowing through them',
       'They provide high output from a compact size',
-      'In the room containing the room thermostat',
-      'Output reduces by approximately 63%',
-      '15-20 kPa - include safety margin',
+      'They do not require balancing during commissioning',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Type 22 (double panel, double convector) radiators have two water panels and two convector fins, providing up to 100% more output than a Type 11 of the same height and length, ideal where wall space is limited.',
   },
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'What is the purpose of a bypass valve in a heating system with TRVs?',
     options: [
       'To maintain minimum flow when TRVs close',
-      'Output reduces by approximately 63%',
-      'They provide high output from a compact size',
-      'In the room containing the room thermostat',
+      'To increase the flow temperature to all radiators',
+      'To allow the room thermostat to control individual radiators',
+      'To replace the need for lockshield valves when balancing',
     ],
     correctAnswer: 0,
     explanation:

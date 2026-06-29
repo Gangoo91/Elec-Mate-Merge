@@ -28,11 +28,16 @@ const Module6Section2_3 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Cables can be run diagonally if concealed in plaster.',
-      options: ['True', 'False'],
+      question: 'Which statement about running concealed cables diagonally is correct?',
+      options: [
+        'It is allowed if the cable is buried in plaster',
+        'Concealed cables must not be run diagonally; they must follow safe zones',
+        'It is allowed for lighting circuits only',
+        'It is allowed if the cable is at least 30 mm deep',
+      ],
       correctAnswer: 1,
       explanation:
-        'False - cables must not be run diagonally when concealed. They must follow safe zones.',
+        'Concealed cables must not be run diagonally; they must follow recognised horizontal or vertical safe zones.',
     },
     {
       id: 3,
@@ -49,16 +54,16 @@ const Module6Section2_3 = () => {
     },
     {
       id: 4,
-      question: 'Give one reason why diagonal runs are unsafe.',
+      question: 'Why are diagonal cable runs unsafe?',
       options: [
-        'They increase the chance of accidental drilling',
-        'Water-based or gel polymer compounds safe for cables',
-        'FTP cables include an overall foil shield around all pairs',
-        'The type of electrical system the equipment is rated for',
+        'They increase the chance of accidental drilling into the cable',
+        'They reduce the current-carrying capacity of the cable',
+        'They cause the cable insulation to overheat',
+        'They make the circuit draw more power',
       ],
       correctAnswer: 0,
       explanation:
-        'Diagonal runs are unsafe because they increase the chance of accidental drilling into cables.',
+        'Diagonal runs are unsafe because their unpredictable position increases the chance of accidental drilling or nailing into cables.',
     },
     {
       id: 5,
@@ -102,14 +107,14 @@ const Module6Section2_3 = () => {
       id: 8,
       question: 'Where should cables be installed in relation to sockets and switches?',
       options: [
-        'Directly above or below in vertical zones',
-        'Gather information and symptoms',
-        'Lower fault current and higher regulation',
-        'The metal casing of a Class I appliance',
+        'Directly above or below them in vertical zones',
+        'At a 45-degree angle towards the nearest corner',
+        'At least one metre away from the accessory',
+        'Only along the skirting board at floor level',
       ],
       correctAnswer: 0,
       explanation:
-        'Cables should run directly above or below sockets and switches in vertical zones.',
+        'Cables should run directly above or below sockets and switches in the permitted vertical zones.',
     },
     {
       id: 9,
@@ -128,14 +133,14 @@ const Module6Section2_3 = () => {
       id: 10,
       question: 'Why is it important to follow cable zone rules?',
       options: [
-        'Personal Contract Purchase',
-        'Toxic metal contamination',
-        'To ensure safety and compliance',
-        'System shuts down for safety',
+        'To reduce the amount of cable used on the job',
+        'To allow a smaller protective device to be fitted',
+        'To ensure safety and compliance with BS 7671',
+        'To make the cables easier to colour-code',
       ],
       correctAnswer: 2,
       explanation:
-        'Following cable zone rules ensures safety, compliance with BS 7671, and reduces future risks of damage.',
+        'Following cable zone rules ensures safety, compliance with BS 7671, and reduces future risks of damage from drilling or fixing.',
     },
   ];
 

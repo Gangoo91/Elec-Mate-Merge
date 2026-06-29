@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     id: 'ca-factor',
     question: 'What does the correction factor Ca account for?',
     options: [
-      'Verified against designer\\\\\\\\\\\\\\\'s specification',
-      'Dust protected, splash proof',
-      'Site supervisor or project manager',
+      'The number of circuits grouped together',
+      'Cables surrounded by thermal insulation',
+      'The cross-sectional area of the conductor',
       'Ambient temperature different from 30°C',
     ],
     correctIndex: 3,
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     id: 'ci-factor',
     question: 'When must the Ci (thermal insulation) factor be applied?',
     options: [
-      'Writing clearly with correct spelling, grammar, and punctuation',
-      'Emergency procedures, site rules, hazards and welfare facilities',
-      'LENI = (Installed power × Annual hours × Controls factor) / Floor area',
+      'When the ambient temperature exceeds 30°C',
+      'When more than three circuits are grouped together',
+      'When the cable is installed on a perforated tray',
       'When cables pass through or are surrounded by thermal insulation',
     ],
     correctIndex: 3,
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       'A cable runs through 400mm of thermal insulation in a ceiling void. What Ci factor applies?',
     options: [
-      '0.5 (exceeds 400mm threshold)',
-      'Polarised Light Microscopy',
-      'RCD and overcurrent protection',
-      'Overcomes contact resistance',
+      '0.5 (worst-case derating at the 400mm threshold)',
+      '0.87 (same as a 40°C ambient correction)',
+      '1.0 (no derating needed below 500mm)',
+      '0.7 (same as four grouped circuits)',
     ],
     correctAnswer: 0,
     explanation:

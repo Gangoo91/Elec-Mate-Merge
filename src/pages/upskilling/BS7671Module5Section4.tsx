@@ -27,10 +27,10 @@ const inlineChecks = [
     question:
       'You are about to replace a damaged 32 A socket-outlet on a TN-C-S domestic circuit. Which BS 7671 function are you actually relying on to make the work safe?',
     options: [
-      'Functional switching (Reg 537.5) — flip the local light switch off',
-      'Switching for mechanical maintenance (Reg 463.1) — turn off the appliance switch',
-      'Isolation (Reg 462.1 / 537.2) — secure disconnection of the circuit conductors with a verified means and a lock-off',
-      'Emergency switching (Reg 537.4) — hit the nearest stop button',
+      'Functional switching (Reg 537.5) — flip the local light switch off before working',
+      'Switching for mechanical maintenance (Reg 463.1) — turn off the appliance switch only',
+      'Isolation (Reg 462.1 / 537.2) — secure, verified disconnection of the conductors with a lock-off',
+      'Emergency switching (Reg 537.4) — hit the nearest stop button to drop the supply',
     ],
     correctIndex: 2,
     explanation:
@@ -41,10 +41,10 @@ const inlineChecks = [
     question:
       'You are designing a 100 A main switch for a TN-C-S (PME) domestic consumer unit. Which conductor must NOT be broken by the switch?',
     options: [
-      'The line conductor — line is always continuous',
-      'The protective earth (PE) — but the neutral can be broken',
-      'The PEN conductor — Reg 461.2 prohibits switching or isolating the combined protective + neutral conductor in TN-C / TN-C-S systems',
-      'No conductor restrictions apply to the main switch',
+      'The line conductor, which must stay continuous through the switch at all times',
+      'The protective earth (PE), though the neutral may be freely broken by the switch',
+      'The PEN conductor — Reg 461.2 prohibits switching the combined protective + neutral in TN-C-S',
+      'No conductor restriction applies, so the main switch may break any combination',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const inlineChecks = [
     question:
       'A workshop bench saw has a red mushroom-head stop button on the operator panel. Which BS 7671 function does this perform, and where must it be located?',
     options: [
-      'Functional switching — anywhere convenient to the operator',
-      'Emergency switching (Reg 537.4) — readily accessible, identifiable, and able to disconnect the relevant supply rapidly without exposing the operator to additional risk',
-      'Isolation — only at the supply origin',
-      'Switching for mechanical maintenance — adjacent to the motor',
+      'Functional switching — sited anywhere convenient to the operator at the bench',
+      'Emergency switching (Reg 537.4) — readily accessible and identifiable, to disconnect the supply rapidly',
+      'Isolation — provided only at the supply origin in the distribution board',
+      'Switching for mechanical maintenance — mounted adjacent to the motor housing',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const inlineChecks = [
     question:
       'A rotary isolator is fitted to feed a rooftop air-handling unit. The isolator handle has positions marked but no other indication. Reg 537.2 requires what additional feature for the device to qualify as a means of isolation?',
     options: [
-      'Nothing — a marked handle is sufficient',
-      'Reliable indication of the OPEN / CLOSED position of the contacts (not just the handle), achieved either by direct visible contact gap, mechanically linked indicator, or compliance with a product standard that mandates positive contact indication',
-      'A red LED only',
-      'A separate voltmeter wired across the load side',
+      'Nothing further, since a handle marked OPEN / CLOSED is sufficient on its own',
+      'Reliable indication of the actual contact position — visible gap, linked indicator, or positive-break compliance',
+      'A red LED on the front of the isolator, taken as the position indication',
+      'A separate voltmeter wired permanently across the load side of the contacts',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const inlineChecks = [
     question:
       'You have switched the circuit OFF at the local isolator and proved dead with a GS 38 voltage indicator. The customer is on site. To complete safe isolation per HSE guidance and BS 7671 Reg 537.2.7, what is the next mandatory step?',
     options: [
-      'Hang a paper "do not switch on" sign and start work',
-      'Apply a padlock (or equivalent secured device) to the isolator so it cannot be re-energised by another person, attach a personal warning label, and retain the key on your person',
-      'Photograph the isolator and proceed',
-      'Tell the customer not to touch it and start work',
+      'Hang a paper "do not switch on" sign on the isolator and start the work',
+      'Apply a padlock to the isolator, attach a personal warning label, and keep the key on your person',
+      'Photograph the isolator in its off position as a record and then proceed',
+      'Ask the customer not to touch the isolator and then start the work',
     ],
     correctIndex: 1,
     explanation:
@@ -97,10 +97,10 @@ const inlineChecks = [
     question:
       'A commercial dishwasher needs its drum belt replaced. The maintenance engineer wants to operate the local rotary switch to make the work safe. Which BS 7671 function applies, and what does the regulation actually require?',
     options: [
-      'Isolation — full disconnection per Reg 462',
-      'Switching for mechanical maintenance (Reg 463.1) — must prevent inadvertent restoration during the work and break ALL line conductors of the supply',
-      'Functional switching — any rocker switch is acceptable',
-      'Emergency switching — hit the e-stop',
+      'Isolation (Reg 462) — full secure disconnection of the conductors before the belt change',
+      'Switching for mechanical maintenance (Reg 463.1) — break all line conductors and prevent restart',
+      'Functional switching (Reg 537.5) — any rocker switch on the appliance is acceptable',
+      'Emergency switching (Reg 537.4) — hit the e-stop to make the machine safe',
     ],
     correctIndex: 1,
     explanation:
@@ -111,10 +111,10 @@ const inlineChecks = [
     question:
       'On a fixed installation an emergency switching device is placed inside a locked cupboard for "security". Why does this fail Reg 537.4?',
     options: [
-      'It does not — security overrides accessibility',
-      'Because Reg 537.4.2 requires the means of operating the emergency switching device to be readily accessible at any place where the danger may occur — a locked cupboard introduces a delay and a potential failure (key not present) that defeats the rapid-disconnection purpose',
-      'It only fails if the lock is broken',
-      'It fails because emergency switches must always be outside, not inside',
+      'It does not fail, since the security benefit overrides the accessibility requirement',
+      'Reg 537.4.2 requires the operating means to be readily accessible where danger occurs — a locked cupboard defeats that',
+      'It fails only in the event that the cupboard lock is later broken or jammed',
+      'It fails because emergency switches must always be mounted outside, never inside',
     ],
     correctIndex: 1,
     explanation:
@@ -129,11 +129,11 @@ const quizQuestions = [
       'BS 7671 Section 537 distinguishes four functions. Which option correctly maps each to its primary BS 7671 reference?',
     options: [
       'Isolation (461.2), mechanical maintenance (462.1), emergency (463.1), functional (537.4)',
-      'Isolation (462 / 537.2), switching for mechanical maintenance (463 / 537.3), emergency switching (537.4), functional switching (537.5)',
-      'All four are governed by Reg 537.1 alone',
-      'Isolation and emergency are the same function under Reg 461',
+      'All four switching functions are governed by Reg 537.1 alone, with no separate references',
+      'Isolation and emergency switching are treated as a single combined function under Reg 461',
+      'Isolation (462 / 537.2), mechanical maintenance (463 / 537.3), emergency (537.4), functional (537.5)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 462 sets the design intent for isolation; Reg 537.2 lists the device requirements. Section 463 sets intent for switching for mechanical maintenance; Reg 537.3 lists the device requirements. Reg 537.4 covers emergency switching (and emergency stopping, where the danger is mechanical). Reg 537.5 covers functional switching — normal operational control. Each function has different device requirements, different positioning rules and different risk profiles.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'A single-phase 230 V isolator on a TN-C-S consumer unit submain. How many poles must the isolator break, and which conductor must remain unbroken?',
     options: [
-      'Single-pole, breaks line only — neutral and PEN remain unbroken',
-      'Double-pole, breaks line and neutral (post-MET, where N is split from PEN); the PEN itself, upstream of the MET, must NEVER be broken (Reg 461.2)',
-      'Triple-pole — breaks line, neutral and earth',
-      'No restrictions — any switch will do',
+      'Double-pole, breaking line and post-MET neutral; the PEN upstream of the MET is never broken',
+      'Single-pole, breaking the line only and leaving the neutral and PEN both unbroken',
+      'Triple-pole, breaking line, neutral and the protective earth conductor all together',
+      'No pole restriction, so any single-pole switch is acceptable as the isolator here',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Single-phase TN-C-S installations split N from PEN at the MET. Downstream of the MET, the neutral is just a neutral and may be switched. A double-pole isolator on a sub-main breaks both line and neutral simultaneously, giving full disconnection of the live conductors. The PEN, upstream of the MET, is the combined PE+N coming from the DNO — Reg 461.2 prohibits switching it under any circumstance. The protective earth conductor (PE / CPC) is also never broken by the isolator — it must remain continuous to maintain the fault-protection earth path on adjacent equipment.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'Reg 537.2.5 / 537.2.6 sets the requirement for indicating the position of an isolator. Which combination of features SATISFIES the regulation for a small commercial DB main switch?',
     options: [
-      'Handle marked ON / OFF only',
-      'BS EN 60947-3 switch-disconnector with positive contact indication, plus padlocking facility and a label identifying the circuit isolated',
-      'A neon indicator lamp alone',
-      'A multimeter clipped to the load terminals',
+      'A handle marked ON / OFF only, with no separate reliable contact-position indication',
+      'A neon indicator lamp on the front of the device, taken as the sole position indication',
+      'A BS EN 60947-3 switch-disconnector with positive contact indication, padlocking and a label',
+      'A multimeter left clipped across the load terminals, read as the position indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 537.2.5 requires reliable indication of the position of the contacts. A BS EN 60947-3 switch-disconnector with positive (or "guaranteed") contact indication ensures that an OFF handle position can only occur with the contacts physically separated. Reg 537.2.7 requires the device be capable of being secured in the OFF position (padlocking facility). Reg 537.2.4 (and Reg 514) requires labelling identifying which circuits the device isolates. Together these are the device-level requirements; a handle-only switch falls short of all three.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'A workshop bench saw has a red mushroom-head emergency stop. The motor draws 12 A. Which standard governs the e-stop device itself, and what is the role of the contactor in the supply?',
     options: [
-      'BS 7671 alone; no contactor required',
-      'BS EN ISO 13850 (machinery e-stop) governs the actuator and stop function category; in practice the e-stop drives a control circuit that opens a contactor (BS EN 60947-4) which actually breaks the motor current — meeting Reg 537.4 by ensuring rapid disconnection without the operator switching the full load themselves',
-      'BS EN 60898 (MCB) — the e-stop is just an MCB',
-      'No standard applies; e-stops are advisory',
+      'BS 7671 alone governs the e-stop, and no contactor is required in the supply',
+      'BS EN ISO 13850 governs the actuator; the e-stop drops out a contactor that breaks the motor current',
+      'BS EN 60898 governs it — the emergency stop is simply an MCB by another name',
+      'No standard applies; emergency stops are advisory devices with no requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'Reg 537.2.7 requires a means of isolation to be secured against inadvertent reclosure. A two-electrician crew is replacing a 100 A submain. What is the correct lock-off arrangement?',
     options: [
-      'One electrician fits a padlock; the other relies on the first',
-      'A multi-lock hasp is fitted to the isolator; EACH electrician fits their OWN personal padlock with their own unique key; the supply cannot be restored until ALL personal padlocks are removed by their respective owners',
-      'Apply a single padlock and share the key',
-      'A signed paper notice is sufficient when more than one person is present',
+      'One electrician fits a padlock and the other relies on the first person\'s lock',
+      'Apply a single padlock to the isolator and share the one key between the two of them',
+      'A signed paper notice on the isolator is sufficient when more than one person is present',
+      'A multi-lock hasp takes each electrician\'s own padlock; the supply returns only when all locks are removed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-person lock-out / tag-out (LOTO) is built around the principle that no single person controls the supply on behalf of others. A hasp accepts multiple padlocks; each worker locks on at the start of their work and removes their lock only when they personally are clear and confirm they no longer need the supply de-energised. This is the safe-system-of-work backbone in HSG 85 and EAWR Reg 13 — sharing keys, "I will lock for both of us", or paper notices all break the principle of personal control of personal energy.',
   },
@@ -198,12 +198,12 @@ const quizQuestions = [
     question:
       'A commercial kitchen has a wall-mounted red mushroom-head "all off" button at the entrance, intended to disconnect cookers, fryers and extraction in an emergency. What BS 7671 reg governs this device, and what is the practical consequence on the design?',
     options: [
-      'Reg 462.1 — must be lockable',
-      'Reg 537.4 — emergency switching for fixed installations: must be readily accessible at the entrance, identifiable, labelled, and capable of breaking the full prospective load including motor inrush; in practice the wall button drives a contactor or shunt-trip on the kitchen DB',
-      'Reg 537.5 — functional switching, any switch acceptable',
-      'No reg governs it; it is advisory',
+      'Reg 537.4 emergency switching — readily accessible, breaking the full load via a contactor or shunt-trip',
+      'Reg 462.1 isolation — the device need only be capable of being locked off at the board',
+      'Reg 537.5 functional switching — any convenient on/off switch at the entrance is acceptable',
+      'No regulation governs this device, since an all-off button is purely an advisory convenience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A kitchen "all-off" emergency switch is a textbook Reg 537.4 application — disconnect supply rapidly to remove an unexpected danger (fire, runaway equipment, gas leak with electrical ignition risk, person trapped). Reg 537.4.4 requires the operating means at any place where danger may arise (entrance is correct). Reg 537.4.5 lets you implement it as a switch directly, or via a contactor / shunt-trip-equipped circuit-breaker provided the auxiliary supply is reliable. Labelling per Reg 537.4.3 must identify the circuits cut. Resetting must be deliberate so the supply does not auto-restore.',
   },
@@ -212,12 +212,12 @@ const quizQuestions = [
     question:
       'A site electrician finds a 63 A TPN submain isolator labelled only "Isolator". The DB it feeds serves three workshops. What BS 7671 / installation-cert observation applies?',
     options: [
-      'Pass — the device is correct',
-      'C3 / FI — Reg 537.2.4 / Reg 514 requires the means of isolation to identify the circuit(s) it controls; an unlabelled or generically-labelled main isolator is non-compliant labelling and creates a real safe-isolation risk if the wrong device is locked off',
-      'C1 — immediate danger',
-      'No code — labelling is optional',
+      'Pass, since the device itself is correct and labelling carries no observation',
+      'C1 immediate danger, since an under-labelled isolator is live and dangerous as found',
+      'C3 / FI under Reg 537.2.4 / Reg 514 — the isolator must identify what it controls',
+      'No code applies, since circuit labelling on a sub-mains isolator is entirely optional',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 514 (identification and labelling) and Reg 537.2.4 require the means of isolation to be clearly labelled to identify what it isolates. Multi-DB sites with generic "Isolator" labels are a routine source of safe-isolation incidents — the wrong device gets locked off and the worker proves dead at the local outlet, which is dead for unrelated reasons. The correct observation is typically C3 (improvement recommended) where the labelling is missing but the risk is mitigated by other circuit identification, or FI (further investigation) where the labelling is so absent that the isolation function cannot be verified at all.',
   },
@@ -226,10 +226,10 @@ const quizQuestions = [
     question:
       'Which conductor — in any system earthing arrangement — may NEVER be interrupted by an isolator, switch-fuse or any switching device?',
     options: [
-      'The neutral in a TN-S system',
-      'The protective earth (CPC) — and the PEN conductor in TN-C / TN-C-S systems (Reg 461.2). The CPC must remain continuous so adjacent equipment retains its fault-protection earth path even while the isolated circuit is dead',
-      'The line conductor on a single-phase circuit',
-      'The neutral in any TT system',
+      'The neutral conductor in a TN-S earthing system',
+      'The protective earth (CPC), and the PEN in TN-C / TN-C-S (Reg 461.2)',
+      'The line conductor on a single-phase final circuit',
+      'The neutral conductor in any TT earthing system',
     ],
     correctAnswer: 1,
     explanation:

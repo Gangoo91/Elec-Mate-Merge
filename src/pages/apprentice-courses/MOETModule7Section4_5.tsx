@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'conduct-meaning',
     question: "What does 'professional conduct' mean in engineering maintenance?",
     options: [
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      'Consistently demonstrating reliability, integrity, accountability, respect for others, commitment to safety, and a positive approach to work — behaving in a way that upholds the standards of the engineering profession',
-      'Using a gin wheel, material hoist, or crane to lift materials mechanically between levels, with the receiving area clear and workers clear of the load path',
-      'Don’t remove it. Contact the named person. If they genuinely cannot return, follow the formal lock removal process (usually requires manager + safety officer + recorded reason)',
+      'Holding the highest level of technical qualification available, since competence alone defines professionalism',
+      'Consistently behaving in a way that upholds the standards of the engineering profession',
+      'Behaving correctly only while being directly observed by a supervisor or assessor',
+      'Completing tasks as quickly as possible, even if some procedural steps have to be skipped',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'conduct-safety',
     question: 'How does professional conduct relate to safety in engineering maintenance?',
     options: [
-      'Professional conduct requires treating safety as non-negotiable — following procedures consistently, challenging unsafe practices, reporting hazards, wearing PPE correctly, and never taking shortcuts with safety regardless of time pressure or convenience',
-      'For some lower-risk asbestos work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s above non-licensed threshold but below licensed - e.g. limited AIB removal, certain encapsulation work. Trained operatives + written plan + 14-day HSE notification + medical surveillance + records.',
-      'Yes — if new information comes to light (e.g. injury upgraded from over-3-day to over-7-day, fatality follows initial specified-injury report) the report can be updated through the portal. Honest amendment is much better than leaving an inaccurate report on file.',
-      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
+      'Professional conduct treats safety as non-negotiable, with no shortcuts regardless of time pressure',
+      'Safety procedures can be relaxed by an experienced technician, as professionalism brings the judgement to know when shortcuts are acceptable',
+      'Safety is the responsibility of the supervisor alone, so a professional technician simply follows whatever instructions they are given',
+      'Professional conduct and safety are separate matters — conduct is about behaviour towards people, while safety is purely a technical concern',
     ],
     correctIndex: 0,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'Why is commitment to continuous professional development (CPD) part of professional conduct?',
     options: [
-      'Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.',
-      'Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable',
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
-      'Engineering technology, regulations and best practices evolve continuously, so maintaining and developing your competence through ongoing learning is a professional obligation — not just for your benefit but for the safety of those affected by your work',
+      'Once you have passed your apprenticeship your competence is fixed, so CPD is only relevant to those seeking promotion',
+      'CPD is purely an employer responsibility, so technicians need only attend whatever mandatory training is arranged for them',
+      'CPD is about collecting certificates to impress clients rather than maintaining genuine competence',
+      'Technology and regulations evolve, so maintaining your competence through ongoing learning is a professional obligation',
     ],
     correctIndex: 3,
     explanation:
@@ -54,14 +54,14 @@ const quickCheckQuestions = [
     id: 'conduct-mistakes',
     question: 'When you make a genuine mistake at work, what does professional conduct require?',
     options: [
-      'From notification of pregnancy onwards — the risk assessment should be carried out as soon as the employer is notified and reviewed as the pregnancy progresses',
-      'Recognise the combination of hazards as significant, evaluate the risk as substantial, and recommend the board be de-energised for inspection and remedial work before maintenance proceeds',
-      'It depends on the model — common BS 951 clamps come in ratings to suit 6 mm², 10 mm², 16 mm² and 25 mm² conductors. Always select a clamp rated to match (or exceed) the bonding conductor CSA.',
-      'Acknowledge the mistake promptly and honestly, take corrective action where possible, inform your supervisor if there are safety or quality implications, and learn from the experience to prevent recurrence',
+      'Quietly correct it yourself and avoid mentioning it, so that your reputation for reliable work is not damaged',
+      'Wait to see whether anyone notices before deciding whether the mistake needs to be reported at all',
+      'Move on to the next task immediately, since dwelling on errors slows the team down and lowers morale',
+      'Acknowledge the mistake promptly and honestly, correct it, and inform your supervisor if needed',
     ],
     correctIndex: 3,
     explanation:
-      'Everyone makes mistakes — what defines a professional is how they handle them. Prompt acknowledgement prevents the consequences from worsening. Corrective action demonstrates responsibility. Informing your supervisor ensures safety is maintained. Learning from the experience shows growth. The EPA assessor values honest, accountable behaviour far more than a pretence of perfection.',
+      'Everyone makes mistakes — what defines a professional is how they handle them. Take corrective action where possible and learn from the experience to prevent recurrence. Prompt acknowledgement prevents the consequences from worsening. Corrective action demonstrates responsibility. Informing your supervisor ensures safety is maintained. Learning from the experience shows growth. The EPA assessor values honest, accountable behaviour far more than a pretence of perfection.',
   },
 ];
 
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Professional reliability in the workplace means:',
     options: [
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
-      'Consistently meeting commitments — arriving on time, completing work to agreed standards and deadlines, being dependable so that colleagues and supervisors can trust you to deliver',
-      'Inform your employer (or someone with responsibility for H&S) of the danger or shortcoming AND co-operate to enable the employer to comply with their statutory duties.',
-      '(a) live conductors; and (b) live conductors and the protective conductor connected to the earthing arrangement. During the test of (b), line and neutral may be connected together.',
+      'Taking on as many tasks as possible at once to show willingness, even if some are left unfinished',
+      'Consistently meeting commitments so colleagues and supervisors can trust you to deliver',
+      'Always agreeing to whatever you are asked, regardless of whether you can realistically deliver it',
+      'Only committing to tasks you are certain to enjoy, so your motivation never drops below a high level',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'Integrity in engineering maintenance includes:',
     options: [
-      'Treating all colleagues with dignity and respect, valuing different perspectives and experiences, being inclusive in communication and teamwork, and challenging discrimination or harassment appropriately',
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Doing quality work even when no one is watching, being honest about mistakes, accurately recording test results and work completed, and never signing off work that does not meet standards',
-      'Acknowledging the mistake promptly, taking steps to correct it, informing your supervisor if there are safety or quality implications, and learning from the experience to prevent recurrence',
+      'Following procedures only when a supervisor is present, and relaxing standards once you are working unsupervised',
+      'Recording a test result as satisfactory based on experience of similar equipment, even when you did not actually take the measurement',
+      'Doing quality work when unobserved, recording results accurately, and never signing off substandard work',
+      'Signing off work that is almost finished as complete, on the basis that the remaining steps are minor and unlikely to matter',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'When you make a mistake at work, professional conduct requires:',
     options: [
-      'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
-      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
-      'Raising the concern appropriately — speaking to the colleague directly if safe to do so, or reporting it to a supervisor if the situation is dangerous or if direct intervention is not appropriate',
+      'Quietly correcting the mistake yourself and saying nothing, so that your reputation for reliable work is not damaged',
+      'Waiting to see whether anyone notices before deciding whether the mistake needs to be reported at all',
+      'Looking for a way to attribute the error to faulty equipment or unclear instructions so that the blame does not fall on you',
       'Acknowledging the mistake promptly, taking steps to correct it, informing your supervisor if there are safety or quality implications, and learning from the experience to prevent recurrence',
     ],
     correctAnswer: 3,
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'Respecting diversity in the workplace means:',
     options: [
-      'Treating all colleagues with dignity and respect, valuing different perspectives and experiences, being inclusive in communication and teamwork, and challenging discrimination or harassment appropriately',
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
-      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
-      'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
+      'Treating colleagues with dignity, valuing different perspectives, and challenging discrimination appropriately',
+      'Expecting everyone to adapt to a single way of communicating and working, since consistency matters more than accommodating differences',
+      'Treating colleagues respectfully only while a manager is watching, and ignoring inappropriate behaviour the rest of the time',
+      'Avoiding working with anyone whose background or communication style differs from your own, to reduce the chance of misunderstandings',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Professional appearance and presentation in engineering includes:',
     options: [
-      'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
-      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Doing quality work even when no one is watching, being honest about mistakes, accurately recording test results and work completed, and never signing off work that does not meet standards',
+      'Wearing whatever is most comfortable on site, since appearance has no bearing on how your work or your employer is judged',
+      'Wearing PPE correctly, keeping clothing and work areas presentable, and representing your employer positively',
+      'Putting on the correct PPE only for client visits, and working without it when no customer is present',
+      'Keeping your work area tidy only at the end of the apprenticeship when the assessor is due to observe you',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'Accountability as a professional behaviour means:',
     options: [
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Acknowledging the mistake promptly, taking steps to correct it, informing your supervisor if there are safety or quality implications, and learning from the experience to prevent recurrence',
+      'Accepting responsibility only for the parts of a job that went well, while distancing yourself from anything that went wrong',
+      'Pointing to your supervisor or the instructions you were given whenever the outcome of your work is questioned',
       'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
-      'Doing quality work even when no one is watching, being honest about mistakes, accurately recording test results and work completed, and never signing off work that does not meet standards',
+      'Only being answerable for your work during a formal review or audit, rather than from day to day',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 7,
     question: 'A positive attitude to work in engineering maintenance is demonstrated by:',
     options: [
-      'Acknowledging the mistake promptly, taking steps to correct it, informing your supervisor if there are safety or quality implications, and learning from the experience to prevent recurrence',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
-      'Treating all colleagues with dignity and respect, valuing different perspectives and experiences, being inclusive in communication and teamwork, and challenging discrimination or harassment appropriately',
-      'Approaching tasks willingly, being open to learning from challenges and mistakes, supporting colleagues constructively, and maintaining motivation even when work is routine or difficult',
+      'Appearing constantly cheerful and never raising any concerns, even about genuine safety or workload problems',
+      'Taking on only the interesting jobs willingly while avoiding or complaining about routine and unpopular tasks',
+      'Pushing yourself to work flat out at all times, treating tiredness or routine work as signs of a poor attitude',
+      'Approaching tasks willingly, learning from challenges, and staying motivated even when work is routine',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'Environmental responsibility as part of professional conduct includes:',
     options: [
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Being punctual, properly prepared, dressed appropriately, communicating clearly and respectfully with the assessor, demonstrating safe working practices, and responding to questions honestly and thoughtfully',
-      'Doing quality work even when no one is watching, being honest about mistakes, accurately recording test results and work completed, and never signing off work that does not meet standards',
+      'Disposing of waste correctly, minimising energy use, and considering the environmental impact of decisions',
+      'Disposing of used oils and fluorescent tubes with general waste, since separating hazardous materials slows the job down',
+      'Treating environmental rules as the employer’s concern alone, so a technician need only act on them when specifically instructed',
+      'Leaving any spill or contamination for the cleaning team to deal with rather than containing it yourself',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'Continuous professional development (CPD) as an apprentice might include:',
     options: [
-      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
-      'Being punctual, properly prepared, dressed appropriately, communicating clearly and respectfully with the assessor, demonstrating safe working practices, and responding to questions honestly and thoughtfully',
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
+      'Waiting until you have qualified before doing any CPD, since development is only relevant once your apprenticeship is complete',
+      'Actively seeking learning, reading industry publications, and setting personal improvement goals',
+      'Collecting as many training certificates as possible to impress clients, regardless of whether you actually learned anything',
+      'Attending only the mandatory training your employer arranges, and never reading or researching anything beyond the set curriculum',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'Professional conduct during the EPA itself includes:',
     options: [
-      'Doing quality work even when no one is watching, being honest about mistakes, accurately recording test results and work completed, and never signing off work that does not meet standards',
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Being punctual, properly prepared, dressed appropriately, communicating clearly and respectfully with the assessor, demonstrating safe working practices, and responding to questions honestly and thoughtfully',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
+      'Bending safe-working rules to finish practical tasks faster, since speed is what the assessor is mainly looking for',
+      'Guessing confidently at any question you are unsure of rather than admitting you do not know the answer',
+      'Being punctual and prepared, communicating respectfully, working safely, and answering questions honestly',
+      'Behaving formally only at the start, then relaxing your professional standards once the assessment is under way',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'If you witness a colleague behaving unsafely, professional conduct requires:',
     options: [
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
-      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
-      'Raising the concern appropriately — speaking to the colleague directly if safe to do so, or reporting it to a supervisor if the situation is dangerous or if direct intervention is not appropriate',
+      'Saying nothing, since challenging a more experienced colleague is not an apprentice’s place',
+      'Ignoring it unless the colleague is in your own team, as other teams’ safety is not your responsibility',
+      'Waiting until an accident actually happens before raising the matter, so you have firm proof of the risk',
+      'Raising the concern appropriately — speaking to the colleague directly, or reporting it to a supervisor',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'Professional registration (such as EngTech with the IET) after completing your apprenticeship:',
     options: [
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
+      'Gives formal recognition of your competence, requires ongoing CPD, and enhances your career prospects',
+      'Is a legal requirement for any maintenance technician, and you cannot work unsupervised without it',
+      'Is awarded automatically on completion of the EPA, with no further application or evidence of CPD needed',
+      'Is a one-off qualification that, once gained, never needs to be maintained or supported by ongoing development',
     ],
     correctAnswer: 0,
     explanation:

@@ -41,38 +41,38 @@ const checks = [
     question:
       "On a domestic install in an OCCUPIED home (vs an empty void property), what's the single biggest preparation difference an apprentice often misses?",
     options: [
-      "UK charity raising mental health awareness across the construction industry. Provides training programmes (Mental Health First Aider courses), workplace toolkits, awareness campaigns and signposting to support services. Doesn't directly provide counselling — focuses on creating mental-health-aware workplaces. Website matesinmind.org.",
-      "Customer-facing protection — dust sheets and floor protection on the route from van to work area, conversation with the customer about which rooms will be no-go zones during the work, awareness of who else is in the property (children, pets, elderly relatives, vulnerable adults), agreed working hours, and the constant background of HASAWA s.3 duty to non-employees. None of that applies in a void property.",
-      "Alternative Dispute Resolution — out-of-court mechanisms for resolving consumer disputes (mediation, conciliation, arbitration). Under the Alternative Dispute Resolution for Consumer Disputes Regulations 2015 you must signpost customers to a certified ADR provider when an internal complaint is unresolved (you're not always required to USE ADR but you must offer it). MCS-registered installers must be members of an approved ADR scheme via RECC or HIES.",
-      "EPAO (End-Point Assessment Organisation) assessors deliver the End-Point Assessment for Apprenticeship Standards — the formal independent assessment at the end of the apprenticeship. EPAOs are independent bodies (separate from the training college) — examples include NET (National Electrotechnical Training), JTL, City & Guilds. EPAO assessors typically need TAQA L3 plus EPAO-specific training and current industry experience.",
+      "More thorough fabric and services exploration, because an empty property lets you lift floors and open walls to map concealed runs freely.",
+      "Customer-facing protection — floor protection, agreed no-go rooms, awareness of children/pets/vulnerable occupants, and the HASAWA s.3 duty to non-employees.",
+      "Confirming the chain of custody for keys and the live-meter status, because security and metering shift to the apprentice when the home is occupied.",
+      "Setting up temporary task lighting and lone-working check-ins, because an occupied home is often unlit and worked alone.",
     ],
     correctIndex: 1,
     explanation:
-      "Occupied-domestic prep is half about the wiring system and half about managing the people in the property. The customer is paying you, but they are also a non-employee under HASAWA s.3 — the duty to protect them runs alongside the work. Floor protection is a small example with a big effect on the customer's experience and on your firm's repeat work, and it's the kind of detail an apprentice notices once and remembers.",
+      "Occupied-domestic prep is half about the wiring system and half about managing the people in the property. The customer is paying you, but they are also a non-employee under HASAWA s.3 — the duty to protect them runs alongside the work. Floor protection, agreed no-go rooms and awareness of who else is in the property are the additions a void property never demands. It's the kind of detail an apprentice notices once and remembers.",
   },
   {
     id: 'mod4-s2-sub4-cdm',
     question:
       "You arrive at a notifiable construction site as a sub-contractor on day one. Before you do any work, what's the FIRST formal step?",
     options: [
-      "Employers, self-employed, employees and managers — Reg 3 places duties on each. Some duties are absolute, some are SFAIRP. The employee duty (Reg 3(2)) is to co-operate with the employer's compliance and to comply with EAWR personally so far as it relates to matters within their control.",
-      "Site induction with the principal contractor (CDM 2015 Reg 13). The induction covers the construction phase plan, site rules, welfare arrangements, emergency procedures, specific site hazards, and any pre-construction information from the principal designer. Until you've been inducted you're not signed in to the site H&S system and the principal contractor cannot lawfully let you work.",
-      "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
-      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
+      "Carry out your own dynamic risk assessment of the work area and record it in your job pack before anything the site organisation asks of you.",
+      "Site induction with the principal contractor (CDM 2015 Reg 13), covering site rules, welfare, emergencies and hazards before you can lawfully work.",
+      "Locate the site welfare, first-aid facilities and the fire assembly point, so you know how to respond in an emergency before any work begins.",
+      "Hand your RAMS and qualifications to the site manager for filing, lodging the paperwork with the principal contractor before you enter the work area.",
     ],
     correctIndex: 1,
     explanation:
-      "CDM 2015 Reg 13 places the induction duty on the principal contractor, and Reg 15 places the corresponding duty on the worker to co-operate with the safety arrangements. Skipping the induction is a textbook s.7 / Reg 15 breach. The induction also gives you site-specific information that no RAMS could have included — current trade clashes, live services, asbestos survey results, no-go zones.",
+      "CDM 2015 Reg 13 places the induction duty on the principal contractor, and Reg 15 places the corresponding duty on the worker to co-operate with the safety arrangements. Until you have been inducted you are not signed in to the site H&S system and cannot lawfully work. Skipping the induction is a textbook s.7 / Reg 15 breach, and the induction gives you site-specific information no RAMS could have included — current trade clashes, live services, asbestos survey results, no-go zones.",
   },
   {
     id: 'mod4-s2-sub4-healthcare',
     question:
       "You're working in a hospital and need to isolate a circuit for a panel-board change. What's the additional prep step that doesn't apply in a typical commercial install?",
     options: [
-      "(1) Visual — case undamaged, leads not nicked, probes have intact finger barriers, no melted plastic, screen clean. (2) Calibration — sticker date in date for every instrument; calibration register up to date. (3) Function — two-pole tester proves on Martindale GVD2; multimeter shows expected voltage on a known-live socket; MFT self-test passes; clamp meter reads expected current on a known load; socket tester shows correct lights on a known-good socket; VDE drivers show no crack in insulation. 5–8 minutes per shift; the routine catches every instrument fault that has caused an incident.",
-      "Two-step measurement. (1) Measure the supply voltage at the consumer unit (or the origin of the circuit) under no-load — typically 235-245 V on UK 230 V supply. (2) Apply a known significant load at the furthest point of the circuit (e.g. plug in a 2 kW load — fan heater, kettle, test load resistor). Measure the voltage at the same point. Voltage drop = (no-load voltage) - (loaded voltage). Express as percentage of nominal: drop / 230 x 100. Compare against Reg 525 limits.",
-      "Coordination with clinical estates / facilities team BEFORE isolation, because the circuit may serve clinical equipment with patient-safety implications. Hospitals have IPS (isolated power systems) for some clinical areas, UPS-backed circuits for others, and dual-redundant supplies for critical care. Isolating without coordination can take a ventilator off the grid. The estates team will have a planned outage window, an alternative supply route, and a documented permit-to-isolate that has to be agreed before any switching happens.",
-      "Safely isolate the installation from the supply. The earthing conductor is the protective earth path — while the supply is live, removing it could leave exposed-conductive-parts undefined relative to earth, and any earth-fault current would have nowhere to go. GN3 explicit: 'For safety reasons, the installation shall be isolated from the supply before disconnecting the earthing conductor.'",
+      "Wear infection-control PPE — scrubs, hair cover and overshoes — before entering, because clinical-area dress requirements do not apply on a normal commercial job.",
+      "Carry out a more rigorous safe-isolation proving sequence with a calibrated two-pole tester, because hospital circuits demand a higher standard of proving dead.",
+      "Coordinate with the clinical estates / facilities team BEFORE isolation, because the circuit may feed IPS, UPS-backed or dual-redundant clinical loads under a permit-to-isolate.",
+      "Notify the local DNO before isolation, because clinical premises are on a protected supply and the network operator must record any planned hospital interruption.",
     ],
     correctIndex: 2,
     explanation:
@@ -88,24 +88,24 @@ const quizQuestions = [
     question:
       "What's the headline difference between domestic and commercial prep workflows for a typical first-fix job?",
     options: [
-      "Where a 'provision, criterion or practice', a physical feature, or a lack of an auxiliary aid puts a disabled person at a substantial disadvantage compared with others, the employer must take such steps as it is reasonable to take to avoid the disadvantage. Three sub-duties — adjust the practice, adjust the physical feature, provide the auxiliary aid. The duty is anticipatory in some contexts (services) and reactive in employment (kicks in when the employer knows or ought reasonably to know).",
-      "Customer-management overhead. Domestic = single homeowner, conversational, dust sheets, agreed working hours, kids and pets to consider. Commercial = sign-in/sign-out, contractor induction, principal contractor coordination, working out-of-hours where the business operates during the day, retail floor lifts and office desk-shifts to plan around. The wiring may be similar; the choreography around the work is wildly different.",
-      "Walk the customer through the report on site or by booked call — explain the overall classification, walk through each C1/C2/FI observation, agree the remedial works priority, confirm the make-safe actions taken (if any) for C1 items, give the customer the report in writing with attached photos where available, and confirm the next inspection date recommendation. Document the handover.",
-      "Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn't affected.",
+      "The cable and accessories used — domestic runs twin-and-earth and plastic accessories while commercial uses SWA in metal containment, so the materials list changes most.",
+      "Customer-management overhead — domestic is a conversational single homeowner, while commercial adds sign-in, induction, principal-contractor coordination and out-of-hours working.",
+      "The certification — domestic first-fix is signed on an EIC while commercial uses a Minor Works Certificate, so the prep difference is which form you complete at the end.",
+      "The test instruments required — domestic needs only a socket and two-pole tester while commercial needs a full multifunction tester, so the difference is the kit in the van.",
     ],
     correctAnswer: 1,
     explanation:
-      "The technical install can be similar but the prep is completely different. Apprentices who have only worked domestic find the formal sign-in / induction / paperwork chain on a commercial site jarring at first; those who start in commercial sometimes underestimate the customer-management skill needed in a domestic setting. Both are real and both have to be learned.",
+      "The technical install can be similar but the prep is completely different. Domestic is a single homeowner — conversational, dust sheets, agreed hours, kids and pets. Commercial adds sign-in/sign-out, contractor induction, principal-contractor coordination and out-of-hours working around floor lifts and desk-shifts. Apprentices who have only worked domestic find the formal paperwork chain on a commercial site jarring at first; those who start in commercial underestimate the customer-management skill a domestic setting needs.",
   },
   {
     id: 2,
     question:
       "What's an industrial site's most common 'prep' constraint that a domestic-only apprentice wouldn't have encountered?",
     options: [
-      "Risk Assessment = identifies hazards, evaluates risks, specifies controls. Method Statement = sets out the safe sequence of work, the people, the equipment, the controls in operation. RAMS is the combined document. RA tells you WHAT the risks are; MS tells you HOW to do the work safely.",
-      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
-      "Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn't affected.",
-      "Table 41.3 values are calculated assuming the cable is at its maximum operating temperature. Tests are normally performed when the cable is at ambient (~20 °C) where its resistance is lower. The 0.8 factor (Cmin / temperature correction) corrects the Table value down to a measured-temperature comparison.",
+      "Higher supply voltages — industrial sites run on 400V three-phase rather than 230V single-phase, so the isolation procedure has to be relearned for a different voltage band.",
+      "Heavier cable — industrial circuits use large SWA and busbar trunking, so the prep constraint is the manual-handling assessment for moving the larger cable drums.",
+      "Production stop-times — continuous or shift-based production means isolation work has to fit scheduled outages, coordinated with plant operations and the site LOTO system.",
+      "Specialist certification — industrial installs need a separate industrial EIC and a higher-grade testing ticket, so an apprentice cannot sign off and must wait for a senior tester.",
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       "Under CDM 2015 Reg 4, what duties does the CLIENT (the person commissioning the construction work) have?",
     options: [
-      "Three reasons. Practical — site tools migrate; marking yours stops it disappearing into a sub-contractor's pouch. Insurance — if a tool causes an accident, the firm needs to know whose competent person was meant to be checking it. Accountability — under PUWER you're personally responsible for the tools you use; marking tells the supervisor (and the HSE if it ever gets there) that the tool was assigned to a named operative who had the duty of pre-use inspection.",
-      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
-      "Make suitable arrangements for managing the project (resources, time, competent appointments), provide pre-construction information to designers and contractors, ensure the principal designer and principal contractor (where required) are appointed, and co-operate with all duty-holders. The client duties are real and enforceable — the HSE has prosecuted clients (including domestic clients in some cases) for failing to make those arrangements.",
+      "Carry out the site induction for every worker, write and maintain the construction phase plan, and provide the Schedule 2 welfare facilities — running the day-to-day safety of the site.",
+      "Design out hazards at source under the principles of prevention, coordinate the pre-construction phase, and prepare the health and safety file — owning the design-stage duties.",
+      "Report hazards on site, co-operate with the principal contractor, and use the provided equipment in accordance with training — duties mirroring those of any worker on the project.",
+      "Make suitable arrangements for managing the project, provide pre-construction information, ensure the principal designer and principal contractor are appointed, and co-operate with all duty-holders.",
     ],
     correctAnswer: 3,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       "What's a 'construction phase plan' under CDM 2015, and who's responsible for it?",
     options: [
-      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
-      "A coordination check run in tools like Navisworks or Revit's built-in clash detection that finds geometric collisions between disciplines — e.g. a cable tray running through a structural beam, an HVAC duct passing through a fire compartment without a fire-stop, electrical conduit crossing a sprinkler pipe at the same height.",
-      "The line conductor is not easily accessible at the CU end (e.g. busbar trunking systems), the circuit is part of a complex distribution network where you want to isolate the CPC verification, or the wander lead is more practical on a large commercial site (one person at the MET, radio contact with the tester at the accessory).",
-      "Hot work (gas torch, grinding sparks, welding) on commercial premises, confined-space entry (ducts, voids, lift shafts), live electrical work under EAWR Reg 14, and high-energy switching on industrial / healthcare sites. The permit is a formal document authorising the specific activity within a specific time window, listing the precautions, and signed by the issuing authority and the operative.",
+      "A document prepared by the principal contractor before work starts, setting out the site H&S arrangements — welfare, induction, site rules, hazard controls, emergency procedures.",
+      "A document prepared by the principal designer at the end of the project, recording as-built information and residual risks for whoever maintains the building in future.",
+      "A document prepared by the client setting out budget, programme and key dates, handed to the principal contractor for resourcing — a commercial schedule rather than a safety document.",
+      "A document prepared by each individual contractor describing the safe sequence of their own task — every trade writes its own and there is no single site-wide version.",
     ],
     correctAnswer: 0,
     explanation:
@@ -144,38 +144,38 @@ const quizQuestions = [
     question:
       "On a retail fit-out, why is out-of-hours working often the default for electrical work?",
     options: [
-      "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
-      "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
-      "Podium step or low tower scaffold. The work is two-handed (cutting trunking, fixing brackets, dropping cable in), of moderate duration (more than 30 minutes), and at a height where a fall would cause serious injury. A ladder fails the one-handed-work and short-duration tests. A tower fully boarded with guardrails is the prevent-a-fall control; a podium step gives the same protection over a smaller height range. PASMA training is required for tower assembly.",
-      "Sole trader: 5 years from the 31 January Self Assessment deadline for that tax year — so effectively 5 years and 10 months from the end of the tax year. Ltd company: 6 years from the end of the company's accounting period. VAT registered: 6 years for VAT records. Practical advice: keep all records 7+ years. Cloud accounting (Xero, QuickBooks, FreeAgent) makes this easier — records stored indefinitely.",
+      "Because electricity is cheaper on an off-peak tariff overnight, so retail clients schedule work after midnight to cut the energy cost of test equipment and temporary lighting.",
+      "Because retail trading can't be disrupted — floor lifts, dust and circuit isolation all interfere with shoppers, so work runs out-of-hours (typically 8pm to 6am).",
+      "Because the Working Time Regulations limit construction noise in occupied premises to outside business hours, confining any drilling or chasing to the night-time window.",
+      "Because retail premises only de-energise overnight, so the circuits are simply not available to isolate until the shop's main switch is opened at close of trade.",
     ],
     correctAnswer: 1,
     explanation:
-      "Retail out-of-hours working is a different prep model from a typical domestic 9-to-5 job. The site is unmanned during your shift (or has a skeleton security team), so you carry your own emergency contact, set up your own welfare, and observe the agreed start/finish times strictly. Hand-back paperwork records what you've done and what's been left isolated, ready for the morning shift. CDM 2015 still applies on the larger fit-outs.",
+      "Retail trading hours can't be disrupted — floor lifts, ceiling-tile removal, dust generation and circuit isolation all interfere with shoppers and staff, so the work runs out-of-hours. Prep includes agreed access times, security pass arrangements, fire-alarm coordination and a formal hand-back at end of shift. The site is unmanned (or skeleton security), so you carry your own emergency contact and welfare. Hand-back paperwork records what's done and what's left isolated for the morning shift.",
   },
   {
     id: 6,
     question:
       "What's a 'lockout-tagout' (LOTO) interface on an industrial site, and how does it differ from a typical domestic safe isolation?",
     options: [
-      "When you need to see the SHAPE of the voltage / current waveform over time — not just its RMS value. Typical L3 use cases: (1) Diagnosing harmonic distortion on a circuit where TRMS multimeter readings look fine but the load is mis-behaving. (2) Spotting voltage transients (spikes, sags, swells) that are too brief for a multimeter to capture but trip protective devices. (3) Diagnosing intermittent faults that show up as glitches. (4) Verifying VFD output waveforms. Modern handheld scopes (Fluke 125B, Megger Power Quality analysers, Hantek HT06) are battery-powered and field-usable. L3 apprentices don't usually own one but should know when to ask for one.",
-      "The customer makes the COMMERCIAL decision (cost / convenience trade-off). The firm makes the SAFETY / COMPLIANCE decision (which options satisfy BS 7671 + current standards). Apprentice presents options with trade-offs in plain English; customer chooses; firm executes the chosen option within the safety constraint. Customer cannot choose 'below BS 7671' — that's the firm's professional duty floor. The boundary: customer chooses between compliant options; firm refuses non-compliant requests.",
-      "Industrial LOTO is a multi-person, multi-lock system. Each operative working on a piece of plant fits their OWN lock to a hasp on the isolation device, so the supply cannot be re-energised until every individual lock has been removed by the operative who fitted it. Tags identify each operative and the work they're doing. It interfaces with plant operations because the same isolation can affect mechanical, hydraulic, pneumatic and electrical sources of stored energy. Domestic safe isolation is a single-operative procedure on a single circuit.",
-      "Type AC — detects AC residual currents only; obsolete for most new installations under BS 7671 A2:2022. Type A — detects AC and pulsating DC residual currents; current default for general use. Type F — detects AC + pulsating DC + composite multi-frequency residuals; required for circuits with VFDs, Class 1 PCs / servers. Type B — detects all of the above PLUS smooth DC residual currents; required for EV chargers (BS 7671 722.531), some PV inverters, three-phase rectifier loads. The choice depends on the load. Wrong type = won't detect the actual residual current = false sense of protection.",
+      "A single padlock fitted by the supervisor to the main incomer, locking out the whole building — differing from domestic isolation only in being on the main switch, not one breaker.",
+      "An electronic permit issued from a control room that remotely de-energises the circuit with no physical lock — differing from domestic isolation in switching from a distance.",
+      "A multi-person, multi-lock system — each operative fits their OWN lock to a hasp, so the supply can't be re-energised until every lock is removed by whoever fitted it.",
+      "A tagging-only system where each operative hangs a warning tag but no physical lock is used — differing from domestic isolation in relying on the tag and discipline, not a lock-off.",
     ],
     correctAnswer: 2,
     explanation:
-      "LOTO scales the safe-isolation principle for industrial environments where multiple energy sources, multiple operatives and shift changes all overlap. The Provision and Use of Work Equipment Regulations 1998 Reg 19 covers isolation from sources of energy. The OSHA 'Control of Hazardous Energy' standard is the US version that has heavily influenced UK industrial practice. As an apprentice on an industrial site you'll be issued your own personal lock and trained on the local LOTO procedure during induction.",
+      "Industrial LOTO scales the safe-isolation principle for environments where multiple energy sources, multiple operatives and shift changes overlap. Tags identify each operative and their work, and the same isolation can affect mechanical, hydraulic, pneumatic and electrical stored energy — unlike domestic single-circuit isolation. PUWER 1998 Reg 19 covers isolation from sources of energy. As an apprentice you'll be issued your own personal lock and trained on the local LOTO procedure during induction.",
   },
   {
     id: 7,
     question:
       "Why do schools require additional preparation steps for electrical work compared with a typical office?",
     options: [
-      "Table 41.3 values are calculated assuming the cable is at its maximum operating temperature. Tests are normally performed when the cable is at ambient (~20 °C) where its resistance is lower. The 0.8 factor (Cmin / temperature correction) corrects the Table value down to a measured-temperature comparison.",
-      "Loose terminals can short against neighbouring batteries or against tools and metal fixings, generating heat and potentially triggering a thermal runaway. Cardboard provides no fire resistance. A van interior in summer can reach 50-60 degC, raising the rest state of every cell. If one cell vents the entire box can propagate the runaway. The right arrangement is a metal or fire-resistant container with cell-tray separation or terminal taping, kept out of direct sun, and emptied to a recycling point regularly.",
-      "A director's loan account (DLA) is the running record of money flowing between a director and the Ltd company — money the director lends to the company (positive DLA balance for the director) or money the director takes out of the company beyond declared salary and dividends (negative / overdrawn DLA, which is a director's loan from the company). Overdrawn DLAs above £10,000 attract benefit-in-kind tax; long-term overdrawn DLAs attract Section 455 tax (32.5% on the loan).",
-      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
+      "Acoustic restrictions — strict noise limits under the Building Bulletin 93 standard mean drilling or chasing must be assessed against decibel limits that don't apply to an office.",
+      "Higher fire-detection standards — schools need a more demanding category of alarm coverage, so the prep is coordinating with a more complex multi-zone detection system.",
+      "Asbestos prevalence — many schools date from the 1960s-70s system-build era, so the added prep is an asbestos survey an office of similar age would not require.",
+      "Safeguarding — children present in term time restricts working hours, requires DBS-checked operatives, and adds rules around photography, conversation and movement.",
     ],
     correctAnswer: 3,
     explanation:
@@ -186,14 +186,14 @@ const quizQuestions = [
     question:
       "Healthcare premises have specific electrical requirements under HTM 06-01. What's the headline implication for an apprentice doing prep on a hospital site?",
     options: [
-      "Coordinate with the estates / facilities team BEFORE any isolation, recognise that some areas have IPS (isolated power systems) and UPS-backed supplies, never operate switchgear without authorisation, and use the formal hospital permit-to-work system. Some clinical equipment cannot tolerate any interruption — anaesthesia, ventilation, dialysis. The prep window for clinical-area work is often weeks rather than days because of the planning involved.",
-      "Investigate. Expected R2 for 20 m of 1.5 mm² Cu is approximately 0.24 Ω. 0.85 Ω is roughly 3.5 × the expected value — strongly suggests a poor termination (loose terminal at an accessory, oxidised connection in a junction box) or a partly broken CPC. Trace through the circuit, retighten or replace the suspect connection, retest.",
-      "3 percent for lighting circuits, 5 percent for other circuits (sockets, fixed loads). Measured from the origin of the installation to the load. Verified by calculation during design (cable size + length + load) and confirmed by measurement under load during commissioning if there\\\\\\\\'s any doubt. On long runs (above 30-40 m), voltage drop becomes the limiting factor in cable size selection — often requiring a larger cable than overcurrent protection alone would dictate.",
-      "C&I is a specialised electrical-technician discipline covering process control systems, instrumentation, PLCs, SCADA and DCS. Typical route: Approved Electrician + HNC/HND in Electrical/Electronic or Process Control + employer-specific training (Siemens, Rockwell, Schneider PLC training). Common employers: process industries (food, pharma, water utilities), petrochemical, large manufacturing.",
+      "Coordinate with estates / facilities BEFORE any isolation, never operate switchgear without authorisation, and work through the formal hospital permit-to-work system.",
+      "All hospital wiring must be in mineral-insulated (MICC) cable to survive a fire, so the prep is sourcing and terminating MICC for every circuit regardless of the area it serves.",
+      "Hospitals operate at a non-standard supply voltage for medical equipment, so the prep is reconfiguring test instruments to the higher voltage before any measurement.",
+      "Every circuit in a hospital must be on a Type B RCD, so the prep is confirming the correct type and swapping any Type A or Type AC devices before energising.",
     ],
     correctAnswer: 0,
     explanation:
-      "HTM 06-01 sets out the hospital electrical-services framework. The headline rule for an apprentice: no unauthorised switching, ever. The estates team owns the plant and the permit system; you work within that framework. Even minor work in a clinical area is coordinated with the clinical staff because patient routines, ward shifts and equipment dependencies all overlap with the planned work.",
+      "HTM 06-01 sets out the hospital electrical-services framework. The headline rule for an apprentice: no unauthorised switching, ever. Some areas have IPS (isolated power systems) and UPS-backed supplies, and some clinical loads — anaesthesia, ventilation, dialysis — cannot tolerate any interruption, so the prep window is often weeks rather than days. The estates team owns the plant and the permit system; you work within that framework, coordinating even minor clinical-area work with the clinical staff.",
   },
 ];
 

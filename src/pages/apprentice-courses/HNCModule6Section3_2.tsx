@@ -65,7 +65,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'BREEAM best practice for WCs is an effective flush volume of 4.0 litres or less. The effective flush volume accounts for dual flush mechanisms using the formula: (full flush + reduced flush) / 3.',
+      'BREEAM best practice for WCs is an effective flush volume of 4.0 litres or less. The effective flush volume accounts for dual flush mechanisms using the Water Efficiency Calculator formula, which weights the reduced (smaller) flush as used twice for every full flush: (full flush + 2 × reduced flush) / 3.',
   },
   {
     id: 'greywater-definition',
@@ -156,21 +156,21 @@ const quizQuestions = [
     options: [
       '(Full flush + Reduced flush) / 2',
       '(Full flush x 2 + Reduced flush) / 3',
+      '(Full flush + Reduced flush x 2) / 3',
       '(Full flush + Reduced flush) / 3',
-      'Full flush x 0.67',
     ],
     correctAnswer: 2,
     explanation:
-      'The effective flush volume for dual flush WCs is calculated as (full flush volume + reduced flush volume) / 3. This formula accounts for typical usage patterns where the reduced flush is used more frequently.',
+      'The effective flush volume for dual flush WCs is calculated as (full flush volume + (2 × reduced flush volume)) / 3. The Water Efficiency Calculator assumes the reduced flush is used twice for every full flush, so the smaller volume is weighted twice in the average.',
   },
   {
     id: 7,
     question:
       'For a non-domestic building, which areas must have sub-metering for full Wat 02 credits?',
     options: [
-      'The competent person who carried out the inspection.',
-      'Automatically dimming artificial lighting in response to available natural light',
-      'Tendency for AC current to flow near the conductor surface',
+      'Only the incoming mains supply to the building',
+      'Only areas occupied by more than ten people',
+      'Only the external irrigation supply to landscaped areas',
       'All major water uses including WCs, kitchens, and any process uses',
     ],
     correctAnswer: 3,
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What evidence is required for Wat 01 compliance at design stage?',
     options: [
-      'The percentage voltage drop at full load due to resistance and reactance',
+      'A signed maintenance contract for the sanitary fittings',
       'Completed BREEAM water calculator with specified fittings',
-      'To avoid confusion and track which areas have been tested',
-      'A circuit that produces a fraction of the input voltage',
+      'A water company bill showing twelve months of consumption',
+      'Confirmation that the building is connected to mains drainage',
     ],
     correctAnswer: 1,
     explanation:
@@ -362,7 +362,7 @@ const HNCModule6Section3_2 = () => {
             <p><strong>Flow Rates and Flush Volumes</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>WC (single flush):</strong> 6.0 litres — 4.0 litres — Per flush volume</li>
-              <li><strong>WC (dual flush):</strong> 6.0 litres effective — 4.0 litres effective — (Full + Reduced) / 3</li>
+              <li><strong>WC (dual flush):</strong> 6.0 litres effective — 4.0 litres effective — (Full + 2 × Reduced) / 3</li>
               <li><strong>Urinal (per bowl/hour):</strong> 7.5 litres — 0 litres (waterless) — Or demand-flush systems</li>
               <li><strong>WHB tap:</strong> 6 l/min — 4 l/min — Flow restrictors or aerators</li>
               <li><strong>Shower:</strong> 10 l/min — 6 l/min — Low-flow showerheads</li>
@@ -392,10 +392,10 @@ const HNCModule6Section3_2 = () => {
             </ul>
             <p><strong>Effective Flush Volume Calculation Example</strong></p>
             <p><span>Dual flush WC:</span> 4.5 litre full / 3.0 litre reduced</p>
-            <p><span>Formula:</span> (Full + Reduced) / 3</p>
-            <p><span>Calculation:</span> (4.5 + 3.0) / 3 = 2.5 litres effective</p>
-            <p>This exceeds best practice (4.0L) requirement</p>
-            <p><strong>Best practice:</strong> Specify dual flush WCs with 4.5/3.0 litre or lower flush volumes - the effective flush of 2.5 litres significantly exceeds the best practice threshold.</p>
+            <p><span>Formula:</span> (Full + 2 × Reduced) / 3</p>
+            <p><span>Calculation:</span> (4.5 + 2 × 3.0) / 3 = 10.5 / 3 = 3.5 litres effective</p>
+            <p>This meets the best practice (4.0L) requirement</p>
+            <p><strong>Best practice:</strong> Specify dual flush WCs with 4.5/3.0 litre or lower flush volumes - the effective flush of 3.5 litres meets the best practice threshold of 4.0 litres.</p>
           </ConceptBlock>
 
           <InlineCheck {...quickCheckQuestions[1]} />
@@ -501,7 +501,7 @@ const HNCModule6Section3_2 = () => {
             </p>
             <p><strong>Scenario:</strong> Office building, 500 occupants, calculate water consumption improvement.</p>
             <p>Fitting Schedule:</p>
-            <p>WCs (50 nr) | Baseline 6.0L | Proposed 4.5/3.0L dual (effective 2.5L)</p>
+            <p>WCs (50 nr) | Baseline 6.0L | Proposed 4.5/3.0L dual (effective 3.5L)</p>
             <p>WHB taps (60 nr) | Baseline 6 l/min | Proposed 4 l/min spray taps</p>
             <p>Urinals (20 nr) | Baseline 7.5 l/bowl/hr | Proposed waterless</p>
             <p>Kitchen taps (5 nr) | Baseline 12 l/min | Proposed 8 l/min</p>
@@ -564,7 +564,7 @@ const HNCModule6Section3_2 = () => {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>WHB tap baseline: <strong>6 l/min</strong>, best practice:  <strong>4 l/min</strong></li>
               <li>Shower baseline: <strong>10 l/min</strong>, best practice:  <strong>6 l/min</strong></li>
-              <li>WC effective flush: <strong>(Full + Reduced) / 3</strong></li>
+              <li>WC effective flush: <strong>(Full + 2 × Reduced) / 3</strong></li>
               <li>Leak detection sensitivity: <strong>1 litre/minute</strong></li>
               <li>Maximum credits (Wat 01): <strong>55% improvement = 5 credits</strong></li>
             </ul>

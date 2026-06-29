@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'Under the Regulatory Reform (Fire Safety) Order 2005, who carries the legal duty for ensuring emergency lighting is installed, maintained and tested?',
     options: [
-      'The electrician who carried out the most recent work.',
-      'The local fire and rescue service inspecting the premises.',
-      'The "responsible person" — typically the employer, building owner, occupier, or any person who has, to any extent, control of the premises. The duty cannot be delegated by contract; engaging a contractor does not transfer the legal liability. The responsible person remains accountable for ensuring fire safety provisions, including emergency escape lighting, are present, suitable and maintained.',
-      'The luminaire manufacturer under product liability.',
+      'The electrician or contractor who carried out the most recent work on the system.',
+      'The local fire and rescue service that inspects and enforces at the premises.',
+      'The "responsible person" — the employer, owner, occupier or anyone in control of the premises.',
+      'The luminaire manufacturer, under product-liability and supply-of-goods law.',
     ],
     correctIndex: 2,
     explanation:
@@ -37,9 +37,9 @@ const inlineChecks = [
     question:
       'BS 5266-1:2025 expanded the scope of "emergency lighting" relative to the 2016 edition. Which of the following is now within the scope of the standard?',
     options: [
-      'Only escape route lighting on defined fire-escape routes.',
-      'Escape lighting (escape route + open area + high-risk task), local-area lighting for occupants permitted to remain, AND standby lighting where continued normal activity is required during mains failure. Borrowed light from adjacent areas is explicitly EXCLUDED as a contribution to the design — it is treated as unreliable.',
-      'Only luminaires marked with the green running-man pictogram.',
+      'Only escape-route lighting on defined fire-escape routes through the premises.',
+      'Escape lighting, local-area lighting for occupants permitted to remain, and standby lighting where normal activity must continue.',
+      'Only the luminaires marked with the green running-man escape pictogram.',
       'Only systems using a central battery — self-contained units sit outside the standard.',
     ],
     correctIndex: 1,
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Under the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8, when must a workplace be provided with emergency lighting?',
     options: [
-      'Only if the workplace has more than 20 employees.',
-      'Only on Saturdays and Sundays.',
-      'Where workers are particularly exposed to danger in the event of failure of artificial lighting — i.e. wherever a sudden loss of normal lighting would create a risk to the safety of persons at work or those who may be present. The regulation is risk-based, not size-based; it applies to small premises with high-risk tasks just as much as to large ones with simple offices.',
-      'Only in premises with explosive atmospheres.',
+      'Only where the workplace has more than 20 employees on site at any one time.',
+      'Only during weekend and out-of-hours operation, when daylight is unavailable.',
+      'Where workers are specially exposed to danger if the artificial lighting fails — a risk test, not a size test.',
+      'Only in premises that contain a potentially explosive or flammable atmosphere.',
     ],
     correctIndex: 2,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A retail premises is found to have no working emergency lighting on its primary fire-exit route. Which of the following describes the realistic enforcement and penalty exposure?',
     options: [
-      'A small spot fine paid on the day.',
-      'Removal of the building from the council tax register.',
-      'Enforcement notice or prohibition notice from the fire and rescue authority under RRO 2005 Articles 30/31; on prosecution, fine on summary conviction or unlimited fine on indictment under Article 32; potential custodial sentence (up to 2 years) for serious failures; insurer voiding cover; civil liability if a person is injured during an evacuation. The responsible person is named in the proceedings — not the contractor.',
-      'No legal exposure — emergency lighting is "good practice" only.',
+      'A small fixed-penalty spot fine, payable to the fire authority on the day.',
+      'Removal of the premises from the local council business-rates register.',
+      'Enforcement or prohibition notice, prosecution under Article 32 (unlimited fine, up to 2 years custody), voided insurance and civil liability.',
+      'No legal exposure, as emergency lighting is treated as "good practice" only.',
     ],
     correctIndex: 2,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'What are the FOUR primary purposes that BS 5266-1:2025 identifies for emergency lighting?',
     options: [
-      'Decorative, security, advertising, mood.',
-      '(1) Escape route lighting — illumination of the means of escape so occupants can leave the premises safely; (2) Open-area / anti-panic lighting — illumination of larger areas to reduce panic and allow occupants to find their way to a defined escape route; (3) High-risk task area lighting — illumination so occupants can shut down a hazardous process safely before evacuating; (4) Standby lighting — illumination so normal activity can continue (now in 2025 scope, where required by use).',
-      'Only escape route — the others are commercial preferences.',
-      'Only standby — the rest are firefighter equipment.',
+      'Escape-route lighting, open-area / anti-panic lighting, high-risk task lighting, and standby lighting where activity must continue.',
+      'Escape route lighting, exit-sign illumination, firefighter-access lighting, and external perimeter security lighting around the building.',
+      'Escape route lighting, anti-panic lighting, high-risk task lighting, and decorative façade lighting to mark the building at night.',
+      'Escape route lighting, anti-panic lighting, standby lighting, and corridor security lighting to deter intruders during an outage.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5266-1:2025 identifies four functional categories. The 2025 expansion adds standby and explicitly recognises local-area lighting (BS EN 1838:2024). Escape, anti-panic, and high-risk task are the long-standing three; standby and local-area complete the picture for premises where occupants may need to continue an activity or remain in place during the outage.',
   },
@@ -96,26 +96,26 @@ const quizQuestions = [
     question:
       'Which UK statute imposes the primary general duty for fire safety on the "responsible person", including duties relating to emergency lighting?',
     options: [
-      'The Building Act 1984.',
-      'The Regulatory Reform (Fire Safety) Order 2005 (the RRO). It applies to almost all non-domestic premises in England and Wales (with parallel regimes in Scotland and Northern Ireland). The responsible person — typically the employer, owner, occupier or person in control — must conduct a fire risk assessment (Art 9), provide and maintain emergency routes and exits (Art 14), maintain fire safety equipment (Art 17), and is criminally liable under Art 32 for failures.',
-      'BS 5266-1.',
-      'The Consumer Rights Act 2015.',
+      'The Regulatory Reform (Fire Safety) Order 2005, applying to almost all non-domestic premises in England and Wales.',
+      'The Building Act 1984, which through the Building Regulations places the primary fire-safety duty on the building owner once a completion certificate is issued.',
+      'BS 5266-1, the British Standard whose recommendations carry statutory force and create the legal duty to provide emergency lighting.',
+      'The Health and Safety at Work etc Act 1974, which is the sole statute imposing fire-safety duties in non-domestic premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The RRO 2005 is the principal statute. It is supplemented by the Health and Safety at Work etc Act 1974 (general duty of care to employees and others affected by the work activity) and the Workplace (Health, Safety and Welfare) Regulations 1992 (Reg 8 — emergency lighting in workplaces). BS 5266-1 is the technical standard the responsible person uses to deliver compliance — it does not, on its own, create the legal duty.',
+      'The RRO 2005 is the principal statute. The responsible person must conduct a fire risk assessment (Art 9), provide and maintain emergency routes and exits (Art 14), maintain fire safety equipment (Art 17), and is criminally liable under Art 32. It is supplemented by the Health and Safety at Work etc Act 1974 and the Workplace (Health, Safety and Welfare) Regulations 1992 (Reg 8). BS 5266-1 is the technical standard used to deliver compliance — it does not, on its own, create the legal duty.',
   },
   {
     id: 3,
     question:
       'A fire risk assessment under RRO 2005 Article 9 must consider lighting failure as a hazard. What is the assessment required to determine?',
     options: [
-      'Whether the lights are aesthetically pleasing.',
-      'Whether, on failure of normal lighting, occupants can still see well enough to identify and follow the means of escape, recognise hazards, locate firefighting equipment and fire alarm call points, and (where applicable) shut down high-risk equipment safely. The output drives the design brief for the emergency lighting system — categories of luminaire, locations, levels of illumination, duration.',
-      'The CRI (Colour Rendering Index) of the normal lighting.',
-      'The wattage of normal lighting only — emergency lighting is sized by the manufacturer.',
+      'The colour rendering index (CRI) of the normal lighting, so the emergency lighting can be specified to match the same colour temperature.',
+      'The total connected lighting load only, since the emergency lighting battery capacity is then sized in proportion to the normal lighting wattage.',
+      'Whether, on lighting failure, occupants can still follow the escape route, recognise hazards, find firefighting equipment and call points, and shut down high-risk plant.',
+      'Only the duration of the standby battery, which the luminaire manufacturer fixes at 3 hours regardless of the premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Article 9 of the RRO requires a "suitable and sufficient" assessment of fire risk. Lighting failure is one of the hazards that must be assessed; the output is a written record (where 5+ employees) and an action plan. Emergency lighting is the engineered control. The assessment drives the design — the design does not drive the assessment.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'The 2025 edition of BS 5266-1 introduced an explicit exclusion that previous editions did not state as forcefully. What is it?',
     options: [
-      'LED luminaires are excluded.',
-      '"Borrowed light" — relying on light spilling in from an adjacent space — is no longer counted as a valid contribution to the design. The premises must be illuminated directly by the emergency lighting system. The reasoning: borrowed light is unreliable. The adjacent space may itself be in darkness, the door may be closed, the borrowed source may have failed at the same time as the local source.',
-      'Maintained luminaires are excluded.',
-      'Anti-panic lighting is excluded.',
+      'Maintained luminaires are excluded from escape routes, so only non-maintained fittings may be used to illuminate a means of escape.',
+      'Self-contained luminaires are excluded; only central-battery systems may now be used to satisfy the standard for new installations.',
+      'Daylight is excluded as a contribution, so emergency lighting must be designed for full output even in spaces with extensive glazing.',
+      '"Borrowed light" — light spilling in from an adjacent space — is no longer counted as a valid contribution; each space must be illuminated directly.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 2025 borrowed-light exclusion is one of the most consequential changes from 2016. Previously, designers could plead borrowed light from an adjacent illuminated area; now they cannot. Every space that needs emergency lighting must have luminaires positioned to illuminate it directly. This affects designs for stair-half-landings, lobbies, plant rooms behind glazed walls, and similar spaces that previously relied on neighbouring spill.',
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'Which of the following premises types is MOST LIKELY to require emergency lighting, in the absence of any other factor?',
     options: [
-      'A single private dwelling occupied solely by its owners.',
-      'An open-air car park with overhead daylight only.',
-      'A multi-storey office block with internal corridors longer than 30 m and no natural daylight in those corridors. Internal corridors of this length and character are flagged in Approved Document B Volume 2 cl. 5 and BS 5266-1 as triggers; combined with absence of natural daylight, they create a clear case for emergency escape lighting on the corridor route.',
-      'A garden shed on a residential plot.',
+      'A single private dwelling occupied solely by its owners, with no shared communal areas.',
+      'An open-air car park lit only by overhead daylight during its hours of operation.',
+      'A multi-storey office block with internal corridors longer than 30 m and no natural daylight in those corridors.',
+      'A detached single-storey workshop with full-height glazing on three walls, used only in daylight hours.',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,26 +152,26 @@ const quizQuestions = [
     question:
       'A premises has emergency lighting that was correctly installed 20 years ago, has been tested annually, and currently passes its 3-hour discharge test. The 2025 BS 5266-1 introduces a NEW periodic verification requirement that this premises has never undertaken. What is it?',
     options: [
-      'Annual replacement of the luminaires.',
-      'Photometric verification every 5 years — a survey, using a calibrated luxmeter, that the actual measured illuminance on escape routes, in open areas, and at high-risk points still meets the BS EN 1838:2024 levels (1 lx escape route across the full width with edge exclusions, 0.5 lx anti-panic, 15 lx high-risk task). The survey accounts for lamp lumen depreciation, dirt accumulation, decorative changes that block light, and changes to room layout that have shifted the light pattern.',
-      'Pumping of fresh battery acid into the cells.',
-      'Repainting the luminaires.',
+      'A 5-yearly photometric survey, using a calibrated luxmeter, confirming the measured illuminance still meets the BS EN 1838:2024 levels.',
+      'A mandatory 5-yearly replacement of every battery, regardless of measured condition, to guarantee the 3-hour duration is retained.',
+      'A 5-yearly recalibration of the central-battery charger output, to confirm the float voltage still matches the cell manufacturer specification.',
+      'A 5-yearly insulation-resistance test of every emergency-lighting final circuit, recorded against the original commissioning values.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 5-year photometric verification is one of the most significant 2025 changes. Annual functional discharge tests prove the system runs for 3 hours; they do not prove the floor is still being illuminated to the required level. Lumen depreciation, dirt, and layout changes mean a 20-year-old system passing duration tests can have illuminance well below the BS EN 1838 levels. The 5-year survey closes that gap.',
+      'The 5-year photometric verification is one of the most significant 2025 changes. The survey confirms the measured illuminance still meets BS EN 1838:2024 (1 lx escape-route centre-line across the full width with edge exclusions, 0.5 lx anti-panic, 15 lx high-risk task), accounting for lumen depreciation, dirt and layout changes. Annual functional discharge tests prove the system runs for 3 hours; they do not prove the floor is still illuminated to the required level. A 20-year-old system passing duration tests can have illuminance well below the BS EN 1838 levels.',
   },
   {
     id: 7,
     question:
       'A small office (4 employees) has no emergency lighting at all. The owner argues that the Workplace Regulations 1992 do not apply because she has fewer than 5 employees. Is the argument correct?',
     options: [
-      'Yes — fewer than 5 employees means no Workplace Regulations apply.',
-      'No. The "5 employee" threshold relates to the requirement for a WRITTEN risk assessment record under MHSWR 1999 — not to the substantive duty under the Workplace Regulations 1992. The Workplace Regulations Reg 8 apply to all workplaces regardless of employee count. The RRO 2005 also applies. The owner remains the responsible person; she must still assess and provide suitable emergency lighting where workers are specially exposed to danger on lighting failure.',
-      'Yes — domestic businesses are exempt.',
-      'No, but only because the office has an electric kettle.',
+      'Yes — the Workplace Regulations 1992 only bite at 5 or more employees, so a 4-person office is outside their scope entirely.',
+      'Yes — the 5-employee threshold means neither the Workplace Regulations 1992 nor the RRO 2005 apply, so no emergency lighting is required.',
+      'No — the threshold is irrelevant because the Workplace Regulations 1992 were repealed and replaced by the RRO 2005 in this respect.',
+      'No. The 5-employee threshold relates to a WRITTEN risk-assessment record under MHSWR 1999, not the substantive duty — Workplace Reg 8 and the RRO 2005 apply at any headcount.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Common confusion. The 5-employee threshold under MHSWR 1999 Reg 3 relates to the need to RECORD the risk assessment in writing — small employers may keep it informally. The substantive duties (assess risks, provide controls, including emergency lighting where needed) apply at any size. The Workplace Regulations 1992 Reg 8 applies regardless of headcount.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Why does the 2025 edition of BS 5266-1 explicitly list HIGH-RISK AREAS with a tighter electrical-supply requirement (≥ 2 separate circuits, ≤ 20 luminaires per fault)?',
     options: [
-      'Because high-risk areas use more electricity.',
-      'Because in high-risk areas (e.g. those with hazardous machinery or chemical processes), a localised electrical fault that takes out a large bank of emergency luminaires would leave occupants unable to safely shut down or escape from the hazard. Splitting the emergency luminaires across at least 2 separate circuits, each fault-isolated to ≤ 20 luminaires, ensures any single fault leaves a substantial proportion of luminaires functioning. It is a redundancy-by-segmentation requirement.',
-      'For aesthetic reasons.',
-      'Because high-risk areas must use halogen lamps.',
+      'So a single circuit fault cannot disable a whole bank of luminaires in a hazardous area — redundancy by segmentation across separate circuits.',
+      'Because high-risk areas draw more current, so the luminaires must be spread across multiple circuits to avoid overloading any single final circuit.',
+      'Because high-risk task lighting needs the higher 15 lx level, which a single circuit cannot supply without exceeding its volt-drop limit over the run.',
+      'Because high-risk areas are required to use sustained (maintained) luminaires, and maintained fittings must always be split across two or more circuits.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New in 2025. The historic risk: a single circuit fault could disable an entire bank of emergency luminaires in a hazardous area at exactly the moment they are needed. The 2025 rule requires segmentation across at least 2 separate circuits so a single fault cannot disable the protection. 20-luminaire-per-fault cap limits the local damage zone of any one fault. The whole package is electrical-distribution redundancy translated into a code requirement.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'In law, who can be prosecuted under the RRO 2005 if an inadequate or missing emergency lighting installation contributes to injury during an evacuation?',
     options: [
-      'Only the original installer.',
-      'Only the building manufacturer.',
-      'The "responsible person" (employer / owner / occupier / person with control), the duty-holder for the premises. Officers of a body corporate may also face personal prosecution under Article 32 where the failure was attributable to their consent, connivance or neglect. Contractors do not displace the responsible-person duty; they may face separate proceedings under HSAW 1974 or be sued in civil law, but the criminal liability under the RRO sits with the responsible person.',
-      'Only the police.',
+      'Only the contractor who installed the system, since the criminal duty transfers to whoever carried out the most recent work on it.',
+      'Only the maintenance company holding the current service contract, because they are the competent person responsible for the system.',
+      'The "responsible person" (employer / owner / occupier / person in control); company officers may also be prosecuted personally under Article 32 for consent, connivance or neglect.',
+      'Only the local fire and rescue authority that issued the enforcement notice, as the body that approved the premises for occupation.',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     question:
       'Which of the following best describes the relationship between BS 5266-1, the RRO 2005, and Approved Document B?',
     options: [
-      'They contradict each other.',
-      'They are independent and conflicting.',
-      'The RRO 2005 imposes the LEGAL DUTY (the "what — provide adequate emergency lighting"); Approved Document B Volume 2 cl. 5 is statutory guidance under the Building Regulations giving practical means of compliance for new buildings; BS 5266-1:2025 is the technical British Standard giving detailed design, installation, maintenance and verification methodology. Following BS 5266-1 is one accepted route to demonstrating compliance with the RRO and the Building Regs. They form a layered legal-and-technical regime, each addressing a different question.',
-      'They cover entirely separate subjects.',
+      'They are three alternatives — complying with any one of them discharges the duty, so a designer may follow BS 5266-1 instead of the RRO 2005.',
+      'BS 5266-1 sits at the top as the legal duty, with the RRO 2005 and Approved Document B being subordinate guidance on how to meet the standard.',
+      'They are layered: the RRO 2005 imposes the legal duty, Approved Document B is statutory guidance for new build, and BS 5266-1:2025 is the technical standard delivering compliance.',
+      'They cover entirely separate subjects — the RRO 2005 deals only with means of escape, while emergency lighting falls solely under Approved Document B.',
     ],
     correctAnswer: 2,
     explanation:

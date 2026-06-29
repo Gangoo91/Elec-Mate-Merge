@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m3s5-check2',
     question: 'What is Vehicle-to-Grid (V2G) technology?',
     options: [
-      'One-way charging only',
-      'Bidirectional charging allowing EVs to export power to the grid',
-      'Wireless charging',
-      'Solar panel connection',
+      'Bidirectional charging allowing EVs to export power back to the grid',
+      'One-way charging that only draws power from the grid',
+      'Wireless inductive charging without a plug-in connection',
+      'A direct connection between solar panels and the vehicle',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'V2G enables bidirectional power flow, allowing EVs to export stored energy back to the grid during peak demand, creating revenue opportunities for vehicle owners.',
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     question:
       'A new residential development of 50 homes wants future-proof EV charging. What infrastructure strategy should you recommend?',
     options: [
-      'Single 7kW charger per home, no expansion planning',
-      'Install the cheapest solution and upgrade later',
       'Dual EV capability, smart charging, PV-ready, ducted routes for expansion',
-      'Only install rapid chargers in communal areas',
+      'A single 7kW charger per home with no provision for expansion',
+      'The cheapest compliant solution now, upgrading each home later',
+      'Only communal rapid chargers shared across the whole development',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Future-proofing requires: dual EV capability (40% will have 2+ EVs by 2030), smart charging for load management, PV-ready infrastructure for renewable integration, and ducted cable routes for future upgrades. This maximises long-term value.',
   },

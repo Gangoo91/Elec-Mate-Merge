@@ -1063,12 +1063,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-1',
     question: "What's the most appropriate way to greet a new colleague on a UK construction site?",
     options: [
-      "A firm handshake and 'Good morning'",
       'A casual wave from across the site',
+      "A firm handshake and 'Good morning'",
       'Wait for them to approach you first',
       'Just nod and continue working',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'A firm handshake with a polite greeting shows professionalism and respect in UK workplace culture. It sets a positive tone for the working relationship.',
   },
@@ -1076,12 +1076,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-2',
     question: "When having tea breaks on site, what's considered good etiquette?",
     options: [
-      'Take breaks whenever you want',
       "Offer to make tea for others when it's your turn",
-      "Always bring your own tea and don't share",
+      'Take your break separately to stay focused',
+      'Always make your own and keep to yourself',
       'Skip tea breaks to show dedication',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Taking turns to make tea for the team is a traditional part of UK workplace culture that builds camaraderie. It's one of the easiest ways to be accepted on a new site.",
   },
@@ -1104,11 +1104,11 @@ export const quizQuestions: QuizQuestion[] = [
       "A colleague is making discriminatory comments disguised as 'banter'. What's the best response?",
     options: [
       'Laugh along to fit in',
-      '"I don\'t find those kinds of jokes funny. Let\'s keep things professional."',
-      'Report them anonymously without saying anything',
       'Make a similar joke back',
+      'Report them anonymously without saying anything',
+      '"I don\'t find those kinds of jokes funny. Let\'s keep things professional."',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Setting a clear, professional boundary is the most effective first step. It addresses the behaviour directly while maintaining workplace relationships.',
   },
@@ -1116,12 +1116,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-5',
     question: "What does 'first fix' mean in the electrical trade?",
     options: [
-      'Repairing a fault for the first time',
       'Initial electrical installation before plastering',
+      'Repairing a fault for the first time',
       'The first day on a new job',
       'Testing circuits for the first time',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'First fix refers to the initial electrical installation work done before plastering and decorating, including running cables and installing back boxes.',
   },
@@ -1131,11 +1131,11 @@ export const quizQuestions: QuizQuestion[] = [
       "Your supervisor gives you complex instructions you don't fully understand. What should you do?",
     options: [
       'Nod and figure it out as you go',
-      'Repeat the instructions back to confirm your understanding',
       'Ask a colleague instead of the supervisor',
+      'Repeat the instructions back to confirm your understanding',
       'Wait until you make a mistake then ask',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Repeating instructions back catches misunderstandings before they become mistakes. It takes 30 seconds and shows you're engaged and thorough.",
   },
@@ -1145,10 +1145,10 @@ export const quizQuestions: QuizQuestion[] = [
     options: [
       "They're being dishonest",
       "They're not interested in the conversation",
-      'In many cultures, this is a sign of respect',
       'They have poor social skills',
+      'In many cultures, this is a sign of respect',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In many cultures worldwide, avoiding direct eye contact with authority figures or in certain situations is a sign of respect, not disinterest.',
   },
@@ -1156,12 +1156,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-8',
     question: "You're asked to skip electrical tests to save time. What's the correct response?",
     options: [
+      'Explain that the tests are required by BS 7671 and offer to work faster elsewhere',
       "Do as you're told — the supervisor knows best",
       'Skip the tests but document that you were told to',
-      'Explain that the tests are required by BS 7671 and offer to work faster elsewhere',
       'Just do the tests anyway without telling anyone',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Tests required by BS 7671 are legal requirements. Explaining this professionally while offering alternatives shows both knowledge and teamwork.',
   },
@@ -1170,11 +1170,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: "What's the recommended way to handle receiving critical feedback?",
     options: [
       'Get defensive and explain why you did it that way',
-      'Listen without interrupting, thank the person, and ask for specific examples',
       'Agree with everything to avoid conflict',
       "Ignore it — you know what you're doing",
+      'Listen without interrupting, thank the person, and ask for specific examples',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The most successful apprentices actively seek out feedback. Listening, thanking, and asking for specifics shows maturity and a genuine desire to improve.',
   },
@@ -1183,11 +1183,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: "What does 'making good' mean on site?",
     options: [
       'Doing a good job',
-      'Making friends with colleagues',
       'Repairing surfaces after installation work',
+      'Making friends with colleagues',
       'Arriving early to make a good impression',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Making good means repairing any damage to walls, ceilings, or surfaces caused during electrical installation work. It's about leaving the site clean and tidy.",
   },
@@ -1196,11 +1196,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: 'A client asks you a question about costs. How should you respond?',
     options: [
       'Give them a rough estimate to be helpful',
-      '"That\'s a great question — let me check with my supervisor and get back to you with accurate information."',
       "Tell them it's not your department",
+      '"That\'s a great question — let me check with my supervisor and get back to you with accurate information."',
       'Make up a number that sounds reasonable',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'As an apprentice, you should never make promises about costs. Referring to your supervisor shows professionalism and prevents misunderstandings.',
   },
@@ -1209,11 +1209,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: 'What does showing initiative as an apprentice look like?',
     options: [
       'Taking on complex tasks without supervision',
-      'Tidying your work area, preparing materials, and asking what to learn next',
       'Telling experienced electricians better ways to do things',
       'Working through breaks to impress the boss',
+      'Tidying your work area, preparing materials, and asking what to learn next',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Initiative means being proactive within your competence level — tidying up, preparing, and showing eagerness to learn. It doesn't mean exceeding your qualification level.",
   },
@@ -1222,12 +1222,12 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       "A team member needs short breaks for religious observance. What's the appropriate attitude?",
     options: [
-      'They should do it on their own time',
       'Plan the work schedule to accommodate their needs',
+      'They should do it on their own time',
       "It's unfair to the rest of the team",
       'They should keep it private',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Religious observance is protected by UK equality law. Treating it as a normal part of workplace planning shows professionalism and creates an inclusive team.',
   },
@@ -1236,19 +1236,19 @@ export const quizQuestions: QuizQuestion[] = [
     question: "What's the best time to arrive on a building site?",
     options: [
       'Exactly on time',
-      '10-15 minutes before the official start',
       '30 minutes early to make an impression',
+      '10-15 minutes before the official start',
       "It doesn't matter as long as you finish your work",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Arriving 10-15 minutes early means you're ready to work at the start time. Use this time to check tools, read site notices, and prepare for the day.",
   },
   {
     id: 'quiz-15',
     question: "What does 'CU' stand for in the electrical trade?",
-    options: ['Cable Unit', 'Consumer Unit', 'Current Unit', 'Copper Utility'],
-    correctIndex: 1,
+    options: ['Cable Unit', 'Current Unit', 'Copper Utility', 'Consumer Unit'],
+    correctIndex: 3,
     explanation:
       'CU stands for Consumer Unit — the main distribution board in a domestic property that houses circuit breakers and RCDs.',
   },
@@ -1256,12 +1256,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-16',
     question: 'Which communication method is best for reporting a safety issue?',
     options: [
-      'Send a text message',
       'Face-to-face with your supervisor',
+      'Send a text message',
       'Email at the end of the day',
       'Mention it at the next team meeting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Safety issues require immediate face-to-face communication. This ensures the message is received, understood, and acted upon straight away.',
   },
@@ -1271,11 +1271,11 @@ export const quizQuestions: QuizQuestion[] = [
       "What's the best way to handle a misunderstanding with a colleague from a different cultural background?",
     options: [
       'Avoid them to prevent further conflict',
-      "Assume they're wrong and you're right",
       "Have a calm, private conversation to understand each other's perspective",
+      "Assume they're wrong and you're right",
       'Report it to HR immediately',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Most cultural misunderstandings are resolved through open, respectful conversation. Seeking to understand before being understood builds stronger working relationships.',
   },

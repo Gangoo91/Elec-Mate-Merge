@@ -23,32 +23,32 @@ const inlineChecks = [
   {
     id: 'm7s2-22kw-power',
     question: 'A 22 kW three-phase Mode 3 wallbox delivers what current per phase?',
-    options: ['16 A per phase', '32 A per phase (32 A × 3 × 400 V × √3 ≈ 22.2 kW)', '63 A per phase', '100 A per phase'],
-    correctIndex: 1,
+    options: ['32 A per phase (√3 × 400 V × 32 A ≈ 22.2 kW)', '16 A per phase', '63 A per phase', '100 A per phase'],
+    correctIndex: 0,
     explanation:
       '22 kW three-phase Mode 3 = 32 A per phase at 400 V three-phase (line-to-line). Math: 400 V × 32 A × √3 ≈ 22,168 W ≈ 22 kW. The standard UK commercial AC Mode 3 charger draws 32 A per phase across L1, L2, L3 + N. Same per-phase current as a single-phase 7 kW Mode 3 wallbox, but three phases simultaneously deliver triple the power. Cable + RCBO sizing per phase identical to single-phase Mode 3 (cable ≥ 32 A continuous), but with three live conductors instead of one.',
   },
   {
     id: 'm7s2-4-pole-type-b',
     question: 'What RCD architecture is correct for a three-phase 22 kW Mode 3 wallbox without integrated RDC-PD?',
-    options: ['Type AC single-pole', '4-pole Type B RCD (L1+L2+L3+N switched) per BS EN 62423 — detects AC + pulsating DC + smooth DC across all phases simultaneously. Where the wallbox has integrated 3-phase RDC-PD, 4-pole Type A is acceptable instead', 'Single-pole Type B', 'No RCD'],
-    correctIndex: 1,
+    options: ['A Type AC single-pole RCD on the incoming line feeding all three phases together', 'A single-pole Type B RCD switching L1 only, leaving L2 and L3 without residual protection', 'A 4-pole Type B RCD per BS EN 62423, or a 4-pole Type A where the wallbox has integrated RDC-PD', 'No RCD at all, relying entirely on the wallbox internal electronics for fault disconnection'],
+    correctIndex: 2,
     explanation:
       'Three-phase EV install needs a 4-pole RCD switching all three phases + neutral together. Type B per BS EN 62423 (4-pole variant) covers AC + pulsating DC + smooth DC across all phases. Alternative: 4-pole Type A + wallbox-integrated three-phase RDC-PD (the Reg 722.531.3.101 architecture from M6.3 scales to three-phase). Cost: 4-pole Type B RCBO ~£400-£700 typically; 4-pole Type A ~£100-£150 (with wallbox RDC-PD covering smooth DC). Most UK 2025-26 three-phase wallboxes (Easee Home 22 kW, EO Charging Genius, MyEnergi Zappi 22 kW) include integrated three-phase RDC-PD enabling the Type A architecture.',
   },
   {
     id: 'm7s2-dno-threshold',
     question: 'A single 22 kW three-phase Mode 3 wallbox = 32 A per phase. What is the DNO notification position?',
-    options: ['No notification needed', 'Above G98 Type A threshold (≤16 A per phase). G99 typically required if the install has any generation (BESS / V2G / PV) co-located. Pure-load 22 kW wallbox alone may be acceptable via G98 fast-track in some DNO areas; always consult the DNO at design stage', 'Always full G99', 'Only if export'],
-    correctIndex: 1,
+    options: ['No DNO notification is ever needed for a single wallbox, whatever the per-phase current', 'A full G99 application is always mandatory for any 22 kW wallbox without exception or consultation', 'Notification is needed only if the site exports power to the grid, never for pure import load', 'At 32 A per phase it exceeds the G98 ≤16 A threshold; generation forces G99 — consult the DNO'],
+    correctIndex: 3,
     explanation:
       'EREC G98 Type A covers single-phase ≤16 A per phase OR three-phase ≤16 A per phase. A 22 kW three-phase wallbox at 32 A per phase EXCEEDS G98 Type A on the per-phase current threshold. Pure-load chargers (no generation) sometimes still fall under G98 fast-track notification depending on the DNO’s local interpretation — consult the DNO at design stage. Where the site has any co-located generation (BESS / V2G / PV), G99 formal application applies. Cert evidence bundle records the DNO correspondence + reference number + the regulatory framework used (G98 vs G99).',
   },
   {
     id: 'm7s2-per-phase-zs',
     question: 'How is Zs verified at commissioning on a three-phase EV circuit?',
-    options: ['Single measurement at the wallbox', 'Per-phase: measure L1-PE, L2-PE, L3-PE Zs independently at the wallbox terminals. Each phase’s Zs must be ≤ Table 41.3 value for the protective device. Phase imbalance can produce different Zs values per phase even on the same circuit (cable impedance, supply imbalance, transformer effects)', 'No Zs needed', 'Customer measures it'],
-    correctIndex: 1,
+    options: ['Per-phase: measure L1-PE, L2-PE and L3-PE independently at the wallbox, each ≤ the Table 41.3 limit', 'A single combined measurement at the wallbox terminals is sufficient for the whole circuit', 'No Zs measurement is needed on a three-phase EV circuit once the RCD test has passed', 'The customer measures Zs from the vehicle display and reports the figure to the installer'],
+    correctIndex: 0,
     explanation:
       'Three-phase Zs verification per Reg 411 = per-phase. Measure L1-PE, L2-PE, L3-PE individually at the wallbox terminals. Use a Type B-capable Zs tester (Megger MFT1731, Fluke 1664 FC) configured for three-phase loop. Each measured Zs must be ≤ Table 41.3 value for the protective device type and rating. Phase imbalance produces different Zs per phase — common UK 2025-26 scenario: L1-PE = 0.45 Ω, L2-PE = 0.51 Ω, L3-PE = 0.48 Ω (all within limit for 32 A Type B B-curve). Cert evidence bundle records all three phase Zs measurements + instrument used.',
   },
@@ -57,43 +57,43 @@ const inlineChecks = [
 const quizQuestions = [
   {
     question: 'A workplace wants three 22 kW three-phase chargers on a three-phase 100 A supply. What is the design constraint?',
-    options: ['No issue', '3 × 32 A per phase = 96 A per phase nominal — close to but under the 100 A supply per phase. Add household / business base load and DLM becomes mandatory (Reg 722.311.201). Without DLM: install over-capacity. With DLM coordinated across the 3 wallboxes: supply limit configured, EV throttling distributed per-charger fairly', 'Need 200 A supply', 'Install at 7 kW only'],
+    options: ['There is no design constraint; three 22 kW chargers fit comfortably under the 100 A supply', '3 × 32 A = 96 A per phase plus base load over-runs the 100 A supply, so DLM is mandatory', 'A 200 A supply must be installed before three 22 kW chargers can be run from the premises', 'The chargers must be downrated to 7 kW each to fit within the three-phase supply capacity'],
     correctAnswer: 1,
     explanation:
       'Three 22 kW wallboxes = 3 × 32 A per phase = 96 A per phase NOMINAL when all three charge simultaneously. With business base load (5-20 A per phase typical for small business) + supply limit 100 A → over-capacity. Reg 722.311.201 carve-out + DLM is the engineering answer (M6.4 covered DLM principles; M7.5 covers multi-charger DLM). Wallbox configured with shared CT clamp on incoming tails + supply limit (95 A per phase typical with margin) + multi-charger coordination via CPMS / OCPP. Cert evidence bundle records the DLM topology + the per-phase max demand calc.',
   },
   {
     question: 'Three-phase 22 kW Mode 3 wallbox phase rotation matters because:',
-    options: ['It doesn’t', 'Phase rotation MUST be correct (L1 → L2 → L3 sequence) for the wallbox’s on-board electronics + vehicle’s on-board charger to operate correctly. Wrong rotation causes wallbox fault on commissioning (most modern units self-detect + display fault); some older units may attempt to charge then fail. Verify rotation with phase-sequence tester at commissioning before energising the wallbox', 'Vehicle decides', 'Only L1 matters'],
-    correctAnswer: 1,
+    options: ['It does not matter; the wallbox accepts any phase rotation and self-corrects internally', 'The vehicle decides the rotation at plug-in, so the installer need not check it at commissioning', 'Correct L1→L2→L3 rotation is needed; wrong rotation faults the unit, so verify before energising', 'Only the L1 connection matters on a three-phase wallbox; L2 and L3 order is irrelevant'],
+    correctAnswer: 2,
     explanation:
       'Three-phase rotation L1 → L2 → L3 (clockwise) is the UK / European standard. Three-phase EV chargers + their connected vehicles’ on-board chargers expect this rotation. Wrong rotation (L1 → L3 → L2) causes the wallbox to detect a fault during pre-charge self-test + display error. Some older units may proceed but reduce to single-phase fall-back. Always verify rotation with phase-sequence tester (most multi-function testers include this) BEFORE first energisation of the wallbox. Cert evidence bundle records the rotation check result.',
   },
   {
     question: 'BS EN IEC 62196-2 Type 2 connector — which pins are active on a three-phase Mode 3 install?',
-    options: ['Only L1', 'All seven pins active: L1, L2, L3 (three phases), N (neutral), PE (protective earth), CP (Control Pilot signalling), PP (Proximity Pilot cable rating). Three-phase charging uses all power pins simultaneously vs single-phase which leaves L2 + L3 unconnected', 'Only PE and N', 'Only CP'],
-    correctAnswer: 1,
+    options: ['Only the L1 power pin carries current, with L2 and L3 left as spare mechanical pins', 'Only the PE and N pins are active, with the line pins disabled in three-phase mode', 'All seven pins: L1, L2, L3, N, PE, CP and PP — three-phase uses every power pin', 'Only the CP signalling pin is used, with power delivered separately through the body'],
+    correctAnswer: 2,
     explanation:
       'Type 2 connector has seven pins designed to support BOTH single-phase and three-phase charging. Three-phase install uses all power pins: L1 + L2 + L3 (each carrying ~32 A) + N (neutral, carrying imbalance current — typically small under balanced 3-phase EV load) + PE. CP (Control Pilot) signals max current via PWM duty cycle; PP (Proximity Pilot) signals cable current rating via resistance coding. Same Type 2 cable handles both single-phase and three-phase use; the wallbox + vehicle negotiate the actual charging mode via CP signalling. Cert evidence bundle records the three-phase mode confirmed at commissioning.',
   },
   {
     question: 'For a three-phase 32 A Mode 3 install, what is the typical cable size on a ~10 m run?',
-    options: ['1.5 mm² T+E', '6 mm² 5-core (3 phases + N + PE) or 6 mm² 4-core SWA with external CPC — same per-phase current carrying capacity calc as M6.4 single-phase (32 A continuous, Method C ~41 A). Voltage drop calc per Reg 525 / Appendix 4 — three-phase voltage drop formula uses √3 factor, so VD ≈ 60% of single-phase equivalent for same cable / length', '2.5 mm² 3-core', '25 mm² SWA always'],
-    correctAnswer: 1,
+    options: ['6 mm² 5-core (3L + N + PE) or 6 mm² 4-core SWA with armour CPC, rated 32 A continuous', '1.5 mm² twin-and-earth, the same cable size as a typical domestic lighting final circuit', '2.5 mm² 3-core flex, run direct from the consumer unit to the three-phase wallbox', '25 mm² SWA in every case regardless of run length, for maximum future headroom'],
+    correctAnswer: 0,
     explanation:
       '6 mm² 5-core SWA or T+E is the typical UK 2025-26 three-phase 32 A wallbox cable for ~10 m runs. Per-phase current rating same as M6.4 single-phase (32 A continuous, Method C ~41 A). Voltage drop benefit: three-phase VD = (single-phase VD) ÷ √3, so 6 mm² over 10 m at 32 A: ~1.3% three-phase vs ~2.2% single-phase. Long runs (20-30 m) may use 10 mm² for headroom; outdoor sections use SWA. 5-core (3L + N + PE) gives all four functional conductors in one cable; 4-core SWA uses the armour as CPC + provides 3L + N. Cert evidence bundle records the cable calc + voltage drop + per-phase current carrying capacity.',
   },
   {
     question: 'Phase balancing on a three-phase EV site — why does it matter?',
-    options: ['Doesn’t matter', 'Three-phase Mode 3 wallboxes charge balanced (32 A per phase). But MIXED single-phase + three-phase wallboxes on the same site can create imbalance. Single-phase wallboxes draw on ONE phase only; if all single-phase chargers are on L1 (lazy installer practice), L1 is heavily loaded while L2 + L3 are not. Balance single-phase wallbox phase assignments across L1 / L2 / L3 to keep the supply balanced', 'Vehicle decides', 'Only relevant at 22 kW'],
-    correctAnswer: 1,
+    options: ['It does not matter on any EV site, since the DNO transformer absorbs any imbalance', 'The vehicle on-board charger handles phase balancing automatically during the session', 'Single-phase wallboxes load one phase, so they must be spread across L1/L2/L3 to stay balanced', 'It is only relevant on 22 kW three-phase chargers, never on single-phase wallboxes'],
+    correctAnswer: 2,
     explanation:
       'Phase balancing is the engineering discipline of distributing single-phase loads across L1, L2, L3 to keep the three-phase supply balanced. On a mixed site (some 7 kW single-phase + some 22 kW three-phase wallboxes), the single-phase wallboxes must be distributed across all three phases — NOT all wired to L1. Example: 6 single-phase wallboxes = 2 on L1, 2 on L2, 2 on L3. The three-phase wallboxes are inherently balanced. DNO supply integrity, transformer loading, voltage drop, and protective device coordination all benefit from balanced loading. Cert evidence bundle records each charger’s phase assignment + the resulting site balance calculation.',
   },
   {
     question: 'A three-phase wallbox develops a fault on one phase. What’s the protective behaviour?',
-    options: ['Continues charging on the other 2 phases', 'The 4-pole RCBO operates and disconnects all three phases + neutral together. The wallbox cannot continue charging because all three phases must be present + balanced for Mode 3 three-phase to function. Modern wallboxes detect the fault via internal monitoring and report via OCPP / app; some can fall back to single-phase charging on the remaining healthy phase but this is manufacturer-specific', 'Customer keeps charging', 'Wallbox explodes'],
-    correctAnswer: 1,
+    options: ['It simply continues charging on the other two healthy phases with no disconnection', 'The customer keeps charging with no protective action taken by the wallbox or the RCBO', 'The unit overheats from the unbalanced load until the cable insulation eventually fails', 'The 4-pole RCBO disconnects all three phases and N together and the wallbox reports the fault'],
+    correctAnswer: 3,
     explanation:
       '4-pole RCBO operates on ALL phases + N together on a fault — design intent. Single-phase fault detection (e.g. L1 earth fault) trips the device; all three phases disconnect; wallbox enters fault state via CP signalling. Vehicle stops drawing. Some wallboxes can fall back to single-phase charging on the remaining healthy phase (manufacturer-specific feature — Tesla Wall Connector and some EO models support this; others don’t). The RCBO clears the fault; wallbox manual reset / OCPP-triggered reset returns service. Cert evidence bundle records the fault-mode response + manufacturer documentation.',
   },

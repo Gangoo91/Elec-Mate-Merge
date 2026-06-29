@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a Schedule 1 and a Schedule 2 project under the Town and Country Planning (EIA) Regulations 2017?',
     options: [
-      'Schedule 1 projects are voluntary; Schedule 2 projects are mandatory',
       'Schedule 1 projects always require an EIA; Schedule 2 projects require screening to determine whether an EIA is needed',
+      'Schedule 1 projects are voluntary; Schedule 2 projects are mandatory',
       'Schedule 1 projects are only for government developments; Schedule 2 projects are for private developments',
       'Schedule 1 projects require a Strategic Environmental Assessment; Schedule 2 projects require an Environmental Impact Assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Schedule 1 projects always require an EIA due to their scale and nature (e.g. power stations, chemical installations, motorways). Schedule 2 projects require a screening opinion from the local planning authority to determine whether the project is likely to have significant environmental effects and therefore needs an EIA. Screening considers factors such as size, location sensitivity, and potential impact.',
   },
@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'eia-environmental-statement',
     question: 'What is the purpose of the non-technical summary within an Environmental Statement?',
     options: [
-      'To provide a simplified version of the project drawings for contractors',
-      'To present the key findings in accessible language so that the public and non-specialist consultees can understand the environmental effects',
-      'To replace the full Environmental Statement when the project is minor',
-      'To provide a legal disclaimer for the developer',
+      'To provide a simplified version of the project drawings for use by site contractors',
+      'To present the key findings in plain language so the public and non-specialists can understand them',
+      'To replace the full Environmental Statement where the proposed project is relatively minor',
+      'To provide a legal disclaimer protecting the developer against future environmental claims',
     ],
     correctIndex: 1,
     explanation:
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'The current UK regulations governing EIA for planning applications are the:',
     options: [
-      'Environmental Protection Act 1990',
       'Town and Country Planning (EIA) Regulations 2017',
+      'Environmental Protection Act 1990',
       'Environment Act 2021',
       'Planning and Compulsory Purchase Act 2004',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Town and Country Planning (Environmental Impact Assessment) Regulations 2017 are the principal regulations governing EIA for planning applications in England. They transposed the requirements of EU Directive 2014/52/EU (amending Directive 2011/92/EU, itself a consolidation of the original 1985 Directive 85/337/EEC). The 2017 Regulations set out which projects require EIA, the screening and scoping procedures, the content of the Environmental Statement, and the consultation requirements.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'Which of the following is a Schedule 1 project that ALWAYS requires an EIA?',
     options: [
       'Construction of a new secondary school',
-      'A small wind farm with 3 turbines',
       'A crude oil refinery or thermal power station over 300MW',
+      'A small wind farm with 3 turbines',
       'Extension of an existing residential development by 50 homes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Crude oil refineries and thermal power stations with a heat output of 300MW or more are Schedule 1 projects under the 2017 Regulations. Schedule 1 projects always require an EIA regardless of their location or other factors. Other Schedule 1 projects include motorways, chemical installations, large waste disposal sites, and large dams. Schools, small wind farms, and residential extensions are not Schedule 1 projects, although they may be Schedule 2 depending on their scale and location.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'The purpose of the scoping stage in EIA is to:',
     options: [
-      'Decide whether to grant planning permission',
-      'Identify the key environmental topics and the scope of assessment to be covered in the Environmental Statement',
-      'Calculate the cost of the development',
-      'Monitor the construction phase for compliance',
+      'Decide whether the local planning authority should grant planning permission',
+      'Calculate the overall cost of the proposed development for the developer',
+      'Monitor the construction phase for compliance with the planning conditions',
+      'Identify the key environmental topics and depth of assessment for the Environmental Statement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scoping identifies the key environmental topics and the level of detail that the Environmental Statement must address. It allows the developer, the local planning authority, and statutory consultees (such as Natural England, the Environment Agency, and Historic England) to agree on what needs to be assessed before the full EIA work begins. A scoping opinion from the LPA is not mandatory but is strongly recommended. It prevents the developer from wasting resources assessing topics that are not significant, and ensures that genuinely significant topics are covered properly.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a mandatory topic that must be assessed in an EIA under the 2017 Regulations?',
     options: [
+      "The developer's financial viability",
       'Biodiversity (flora and fauna)',
       'Population and human health',
-      "The developer's financial viability",
       'Climate (greenhouse gas emissions and vulnerability)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The developer's financial viability is not a topic assessed in the EIA. The 2017 Regulations require assessment of: population and human health; biodiversity; land, soil, water, air, and climate; material assets, cultural heritage, and landscape; and the interaction between these factors. Financial viability may be relevant to other aspects of the planning application (e.g. affordable housing contributions) but it is not an environmental topic within the scope of EIA.",
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "In the mitigation hierarchy, 'compensate' means:",
     options: [
-      'Paying a fine to the local authority for environmental damage',
-      'Offsetting residual environmental impacts that cannot be avoided, reduced, or remedied — for example through biodiversity offsetting',
-      'Reducing the scale of the development',
-      'Relocating the project to a less sensitive site',
+      'Paying a fine to the local authority as a penalty for the environmental damage caused',
+      'Offsetting residual impacts that cannot be avoided, reduced, or remedied — e.g. biodiversity offsetting',
+      'Reducing the overall scale of the development to lessen its environmental footprint',
+      'Relocating the whole project to an alternative, less environmentally sensitive site',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'A Construction Environmental Management Plan (CEMP) is typically:',
     options: [
-      'A document prepared after the development is completed',
-      'A plan secured through a planning condition that sets out how environmental impacts will be managed during the construction phase',
-      'A replacement for the Environmental Statement',
-      'A voluntary document that has no legal standing',
+      'A document that is prepared only after the development has been fully completed',
+      'A direct replacement for the Environmental Statement submitted with the application',
+      'A plan secured by a planning condition setting out how impacts are managed during construction',
+      'A purely voluntary document with no legal standing or enforceability whatsoever',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A CEMP is a practical document that sets out how environmental impacts will be managed during the construction phase of a development. It is typically secured through a planning condition (a requirement attached to the planning permission). The CEMP covers topics such as dust and air quality management, noise and vibration control, water pollution prevention, ecological protection, waste management, and working hours. It translates the mitigation commitments in the Environmental Statement into practical, enforceable measures for the construction contractor.',
   },
@@ -180,11 +180,11 @@ const quizQuestions = [
     question: 'Strategic Environmental Assessment (SEA) in the UK is governed by:',
     options: [
       'The Town and Country Planning (EIA) Regulations 2017',
-      'The Environmental Assessment of Plans and Programmes Regulations 2004',
       'The Environment Act 2021',
       'The Wildlife and Countryside Act 1981',
+      'The Environmental Assessment of Plans and Programmes Regulations 2004',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SEA in the UK is governed by the Environmental Assessment of Plans and Programmes Regulations 2004, which transposed EU Directive 2001/42/EC (the SEA Directive) into UK law. These regulations require certain plans and programmes (such as local development plans, transport strategies, and waste management plans) to undergo environmental assessment before they are adopted. SEA is distinct from EIA, which applies to individual development projects rather than strategic plans.',
   },

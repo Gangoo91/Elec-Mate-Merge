@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'self-awareness',
     question: 'Why is self-awareness considered the foundation of all emotional intelligence?',
     options: [
-      'Because it is the easiest domain to develop',
       'Because you cannot manage, motivate, or empathise effectively without first understanding your own emotions',
+      'Because it is the easiest domain to develop',
       'Because it was the first domain Goleman discovered',
       'Because self-awareness is the only domain that matters in construction',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Self-awareness is the foundation because every other EI competency depends on it. You cannot regulate emotions you do not recognise (self-regulation). You cannot sustain motivation without understanding what drives you. You cannot empathise with others if you cannot first identify emotions in yourself. And you cannot use social skills effectively without awareness of your own impact on others.',
   },
@@ -90,8 +90,8 @@ const quizQuestions = [
   {
     id: 1,
     question: "How many domains does Goleman's emotional intelligence model contain?",
-    options: ['Three', 'Four', 'Five', 'Six'],
-    correctAnswer: 2,
+    options: ['Five', 'Three', 'Four', 'Six'],
+    correctAnswer: 0,
     explanation:
       "Goleman's model contains five domains: self-awareness, self-regulation, motivation, empathy, and social skills. These are further broken down into 25 specific competencies.",
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
       "In Goleman's model, which two domains are considered 'personal competencies' (focused inward)?",
     options: [
       'Empathy and social skills',
-      'Self-awareness and self-regulation',
       'Motivation and empathy',
+      'Self-awareness and self-regulation',
       'Self-regulation and social skills',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Self-awareness and self-regulation are the personal competencies — they are focused inward on understanding and managing your own emotions. Empathy and social skills are the social competencies — they are focused outward on understanding and influencing others. Motivation bridges the two.',
   },
@@ -123,11 +123,11 @@ const quizQuestions = [
     question: 'Which of the following is a key competency within the self-regulation domain?',
     options: [
       'Emotional self-awareness',
-      'Impulse control and trustworthiness',
       'Reading the room',
       'Building rapport',
+      'Impulse control and trustworthiness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Impulse control and trustworthiness are key competencies within self-regulation. Emotional self-awareness belongs to self-awareness. 'Reading the room' relates to empathy. Building rapport is a social skill.",
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'A construction foreman notices rising tension between two subcontractor teams and arranges a coordination meeting before conflict erupts. Which two EI domains is the foreman primarily using?',
     options: [
-      'Self-awareness and self-regulation',
       'Empathy and social skills',
+      'Self-awareness and self-regulation',
       'Motivation and self-awareness',
       'Self-regulation and motivation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The foreman is using empathy (perceiving the emotional state of the teams and understanding the potential for conflict) and social skills (taking proactive action to manage the situation through communication and conflict resolution). This is a perfect example of the outward-facing 'social competencies' in action.",
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
     question: 'Why are Goleman\'s five domains described as "building sequentially"?',
     options: [
       'Because you can only develop one domain per year',
-      'Because each domain builds on and depends upon the domains that come before it',
       'Because Goleman published them in five separate books over five years',
+      'Because each domain builds on and depends upon the domains that come before it',
       'Because they correspond to five stages of career development',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The domains build sequentially because each depends on the ones before it. Self-awareness is the foundation — you cannot regulate emotions you don't recognise. Self-regulation builds on self-awareness. Motivation draws on both. Empathy extends awareness outward. Social skills integrate everything. Skipping a foundational domain undermines the ones above it.",
   },

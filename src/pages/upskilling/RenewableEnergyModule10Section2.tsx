@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is the Electrical Energy Management System (EEMS) recognised by BS 7671 Chapter 82?',
     options: [
-      'Optional billing software',
-      'The EEMS is the coordination layer of a PEI that manages: source priority (which source supplies the load when multiple are available), load priority (which loads run when generation is limited), tariff arbitrage (when to import / export / charge BESS based on ToU prices), export limiting (G100 enforcement), island-mode transitions, and demand response. Chapter 82 recognises the EEMS as part of the PEI scope.',
-      'Just the inverter',
-      'Just the meter',
+      'The coordination layer of a PEI managing source and load priority, tariffs and export limiting',
+      'Optional billing software that records import and export readings for the energy supplier',
+      'The inverter alone, deciding on its own when to charge and discharge the battery storage',
+      'The smart meter, which the DNO uses to enforce the agreed maximum import capacity limit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 Chapter 82 (per the Reg 826.7 contents block) includes ELECTRICAL ENERGY MANAGEMENT SYSTEM (EEMS) explicitly within scope. The EEMS is the brain of a multi-source PEI: it decides which source feeds which load at what time, given the available generation, BESS state-of-charge, EV state-of-charge, tariff schedule, weather forecast, customer preferences, and any DNO export constraint (G100). Without an EEMS, a multi-source PEI operates by default rules (BESS charges when PV surplus, discharges when load > generation) but cannot optimise across tariffs, schedule loads around generation forecasts, or enforce export limits dynamically. The EEMS is implementation: vendor (SolarEdge / Tesla / GivEnergy / Enphase / Sonnen / Solis cloud) or third-party (Home Assistant + Modbus + Sense + custom logic). BS 7671 doesn’t prescribe how to implement — it recognises the role and that an EEMS is part of the PEI cert evidence bundle.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Default priority logic in a UK 2025-26 domestic PV + BESS + EV PEI is typically:',
     options: [
-      'Random',
-      'Self-consumption first: PV → local load (house) first; PV surplus → charge BESS; PV surplus + BESS full → export to grid (paid via SEG); when PV insufficient → discharge BESS; when BESS depleted → import from grid. Adding EV: PV / BESS → EV during cheap-rate / surplus hours; switch to grid import during off-peak ToU window if economic. Customer-configurable in vendor EMS.',
-      'Always export',
-      'Always import',
+      'Always export all PV to the grid first and buy power back for the house at the import rate',
+      'Always import from the grid and only ever use the PV to charge the BESS for later resale',
+      'Self-consumption first — PV to load, then BESS, then export; BESS discharges before import',
+      'Charge the BESS from the grid continuously and never use PV directly for the house load',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The UK 2025-26 typical priority logic in a domestic PV + BESS + (optional) EV PEI: (1) PV generation goes to local load first (self-consumption) — avoids paying import tariff (~25-30p/kWh) and the SEG export rate (~5-15p/kWh) is lower, so self-consumption is the most valuable kWh; (2) PV surplus charges the BESS — stored for evening / overnight use; (3) PV surplus + BESS full → export to grid via SEG; (4) PV insufficient → BESS discharges to cover load; (5) BESS depleted → import from grid. With ToU tariff (Octopus Agile / Go / Intelligent Octopus, EDF GoElectric, E.ON Next Drive): the EMS may override to charge BESS from grid during cheap-rate window (e.g. 00:30-04:30 at 7-15p/kWh) for later use during expensive peak hours. EV charging integrates: PV / BESS → EV during day if surplus; or grid → EV during cheap-rate window. Customer-configurable priority in the vendor EMS app. Vendor implementations: SolarEdge "Smart Energy Management", Tesla "Powerwall", GivEnergy "GivTCP / Self-Use mode", Enphase "Self-Consumption", Solis "Self-Use".',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What protocols typically interconnect EMS, inverters, BESS, and EV chargers in a UK 2025-26 PEI?',
     options: [
-      'Wi-Fi only',
-      'Modbus RTU (RS-485) + Modbus TCP (Ethernet) for inverters / BESS; OCPP 1.6 / 2.0.1 (open standard, JSON over WebSocket) for EV chargers; SunSpec / IEC 61850 for solar industry; proprietary cloud APIs (Tesla / SolarEdge / Enphase) for vendor stack. MQTT increasingly used in third-party integrations (Home Assistant, openHAB). Multi-vendor sites = protocol mix.',
-      'No protocols',
-      'Only proprietary',
+      'Wi-Fi only, with no industrial control protocols involved at any point in the system',
+      'Solely proprietary vendor protocols that cannot interoperate between manufacturers',
+      'No protocols are needed at all because each device runs fully independently of the others',
+      'Modbus for inverters/BESS, OCPP for EV chargers, SunSpec/IEC 61850, plus cloud APIs and MQTT',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'UK 2025-26 PEI protocol landscape: (1) Modbus RTU (RS-485 serial) + Modbus TCP (Ethernet) — the industrial standard for inverter + BESS data + control; almost every solar / BESS inverter exposes Modbus registers (SolarEdge, Solis, Growatt, Huawei, Fronius). Register maps published by vendor. (2) OCPP — Open Charge Point Protocol — the EV charger standard for charger management; OCPP 1.6 widespread, OCPP 2.0.1 emerging. JSON over WebSocket. Most CPOs and EMS vendors support OCPP. (3) SunSpec — standardised Modbus register layout for solar industry; subset adopted by many inverter vendors. (4) IEC 61850 — utility-grade substation automation; rare in residential, common in commercial / industrial. (5) Proprietary cloud APIs — vendor cloud (Tesla, SolarEdge monitoring, Enphase Enlighten, GivEnergy GivTCP) with documented or undocumented APIs. (6) MQTT — lightweight pub-sub increasingly used in third-party integrations (Home Assistant, openHAB, Node-RED). Multi-vendor PEI = mix of protocols; EMS implementation cost depends heavily on which vendors are present.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'Difference between vendor EMS (e.g. Tesla, SolarEdge) and third-party EMS (e.g. Home Assistant, Sense):',
     options: [
-      'No difference',
-      'Vendor EMS: tightly integrated with that vendor’s hardware (PV inverter, BESS, app); optimised for self-consumption + simple ToU; limited support for other vendors’ equipment; included in hardware cost; setup straightforward. Third-party EMS: vendor-agnostic; supports Modbus / OCPP / MQTT across multiple manufacturers; flexibility for custom logic, ToU arbitrage, tariff-following, V2G coordination; needs integration work; not certified by BS 7671 but cert evidence bundle records what is installed.',
-      'Random',
-      'Both identical',
+      'There is no practical difference; both are fully interchangeable on any hardware',
+      'Vendor EMS is vendor-agnostic, while third-party EMS only works with one maker’s kit',
+      'Vendor EMS is tightly integrated and simple; third-party EMS is agnostic but needs more work',
+      'Both are functionally identical, except that the vendor EMS is always cheaper to install',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Vendor EMS strengths: shipped with hardware, low setup overhead, vendor-supported, single-vendor warranty path, customer-friendly app. Weaknesses: locked into one vendor (mixing inverters between SolarEdge + Tesla means using one’s EMS as primary + losing the other’s integration depth), simpler optimisation logic (typically just self-consumption + simple ToU schedule), limited V2G + tariff arbitrage capability. Examples: SolarEdge "Smart Energy Management", Tesla "Powerwall + Powerflow", GivEnergy "GivTCP", Enphase "Solargraf / Enlighten", Sonnen "Sonnen Manager", Solis "S6 EMS". Third-party EMS strengths: vendor-agnostic, supports Modbus + OCPP + MQTT across vendors, custom logic (e.g. follow Octopus Agile half-hourly tariff + forecast → charge BESS), V2G coordination, integration with Home Assistant automations + voice assistants. Weaknesses: integration time (40-100 hours for a custom Home Assistant + Modbus setup), no single warranty path, technical homeowner / installer required. Examples: Home Assistant + custom integrations, openHAB, Node-RED, Sense (consumption monitoring + insights, lighter EMS), Emporia, Hildebrand. Cert evidence bundle records the EMS architecture + protocols + commissioning state without judging vendor vs third-party.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer has SolarEdge 5 kW inverter + SolarEdge Energy Bank BESS + Easee Charge EV charger. The vendor SolarEdge EMS does NOT natively support the Easee charger. How can the installer integrate?',
     options: [
-      'Replace Easee with SolarEdge',
-      'Three options: (a) accept the limitation — SolarEdge runs PV + BESS, Easee runs EV charging independently (no coordination, simple); (b) add a third-party EMS (Home Assistant or similar) on top that reads SolarEdge via Modbus TCP + controls Easee via OCPP — enables coordinated logic but needs integration work; (c) replace one component to align vendors (cost). UK 2025-26 typical: option (a) for cost-conscious / simple, option (b) for advanced users / installers offering EMS as a service.',
-      'No options',
-      'Cannot integrate',
+      'There are no options at all; the two systems can never be made to work together',
+      'The only available fix is to replace the Easee charger with a SolarEdge-branded charger',
+      'Integration is impossible because OCPP and Modbus protocols cannot coexist on one site',
+      'Accept independent operation, add a third-party EMS over Modbus/OCPP, or align the vendors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-vendor PEI integration is a real UK 2025-26 challenge — customers shop on price + feature for each component separately, ending with a 3-4 vendor mix. The installer reality: (1) Accept the limitation — vendor EMS handles its own kit, EV charger runs independently. Customer loses the optimisation of "charge EV from PV surplus" if both can’t talk. Simple, no setup cost. (2) Third-party EMS overlay — Home Assistant (free, open source) with Modbus TCP integration for SolarEdge + OCPP integration for Easee. Custom automations: "if PV generation > 3 kW for 5 minutes AND EV plugged in AND BESS > 80% then start EV charge at 3 kW; if PV drops below 2 kW, pause EV charge". Setup time 20-40 hours, installer fee £1-3k. Increasingly offered as installer add-on service. (3) Vendor alignment — replace Easee with SolarEdge EV charger (if available) or replace SolarEdge with Tesla full stack. Cost-prohibitive for retrofits. Cert evidence: EMS architecture document recording vendors + protocols + integration approach + commissioning behaviour.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'What does OCPP (Open Charge Point Protocol) provide that a closed proprietary EV charger protocol does not?',
     options: [
-      'Nothing different',
-      'OCPP is a vendor-neutral open standard for EV charger management. Any OCPP-compliant charger can be managed by any OCPP-compliant backend (CPO platform, EMS, billing system). Enables charger vendor swap without backend re-integration, multi-vendor fleets on one platform, third-party EMS coordination. UK 2025-26: OCPP 1.6J widespread; OCPP 2.0.1 (Smart Charging Profile, ISO 15118 V2G) emerging.',
-      'Random',
-      'Less compatible',
+      'A vendor-neutral open standard — any compliant charger works with any compliant backend',
+      'It provides nothing a proprietary protocol does not, beyond having a different name',
+      'It makes chargers less compatible because it locks them to a single backend vendor',
+      'It only handles billing data and cannot send any charging schedules to the charger',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OCPP is the IEC / IEA / OCA-managed open standard for EV charger ↔ backend communication. Why it matters: (1) Vendor independence — charger vendor (Easee, Zappi, Wallbox, ABB, EO, Pod Point) and backend platform (Octopus / Ohme / fleet management / custom EMS) can be mixed without lock-in. (2) Multi-vendor fleet management — a workplace installs 12 EV chargers from 3 different vendors; one OCPP platform manages all of them: scheduling, load balancing, billing, fault reporting. (3) Smart charging — OCPP 1.6 Smart Charging Profile + OCPP 2.0.1 expanded smart charging + ISO 15118 V2G Plug-and-Charge — enables EMS to send dynamic charging schedules to the charger based on tariff / generation / load. (4) Future-proofing — customer replaces charger in year 7; new charger drops in to existing OCPP backend. UK 2025-26 reality: virtually all CPO-operated public chargers run OCPP; most residential chargers also OCPP-capable (often dual-mode — vendor cloud OR self-hosted OCPP). Cert evidence: charger product DoC noting OCPP version + commissioning record of backend connection.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'EMS Common pattern: use cheap-rate Octopus Go / Agile to charge BESS at 7p/kWh between 00:30-04:30, then discharge during 16:00-19:00 peak at 30p/kWh import equivalent. How is this configured?',
     options: [
-      'Manually each day',
-      'Configured ONCE in the EMS as a recurring schedule. Vendor EMS (Tesla "Time-based Control", SolarEdge "Time-of-Use", GivEnergy "Eco" / "Timed Charge", Solis "Time-of-Use") all support tariff-window scheduling. For dynamic tariffs (Octopus Agile, half-hourly varying), third-party EMS (Home Assistant + Octopus integration) follows the published next-day prices + charges during the cheapest half-hours. The EMS handles inverter + BESS state automatically.',
-      'No way to configure',
-      'Random',
+      'The occupant must manually start and stop the battery every day at the right times',
+      'There is no way to configure tariff windows on a domestic BESS controller at all',
+      'Set once as a schedule in the EMS — vendor EMS for fixed ToU, third-party for dynamic Agile',
+      'It can only be done by the DNO changing the smart-meter settings remotely on request',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BESS tariff arbitrage = the dominant UK 2025-26 economic case for retrofit BESS (paired with PV or standalone). Implementation: (1) Vendor EMS — every major vendor supports ToU scheduling. Tesla "Time-Based Control" sets peak / off-peak / shoulder windows + charge / discharge behaviour per window. SolarEdge "Time of Use" same concept. GivEnergy has dedicated "Eco" / "Timed Charge" / "Timed Discharge" + ability to follow Agile via the GivTCP / OpenAPI route. Solis S6 "Time of Use Mode". (2) Static tariffs (Octopus Go: 00:30-04:30 at 7-9p/kWh) — fixed schedule, set once in EMS app, EMS handles state. (3) Dynamic tariffs (Octopus Agile: 48 half-hourly prices per day, published next day) — vendor EMS rarely supports natively; third-party (Home Assistant + ha-agile + automations) pulls next-day prices via Octopus API + schedules BESS to charge during cheapest 4 half-hours. Increasingly common: PredBat (open source) for BESS arbitrage + solar forecast. Economics: 10 kWh BESS × £0.23/kWh arbitrage × 300 cycles/year = £690/yr saved — typical payback 7-10 years. Cert evidence: EMS schedule configuration record + customer handover acknowledging operating mode.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'Is the EMS itself in scope of BS 7671 verification?',
     options: [
-      'Yes, electrical safety only',
-      'The EMS’s ELECTRICAL elements (its power supply, communications wiring, any DIN-rail controller) are in scope of BS 7671 — Reg 411 / 415 / 530 series for the supply circuit + Reg 528 segregation if low-voltage signal cabling near LV power. The EMS’s SOFTWARE / LOGIC is NOT BS 7671 scope — functional safety / cybersecurity / data protection are separate domains. Cert evidence records the electrical install side + the EMS commissioning behaviour but the software validation sits outside BS 7671.',
-      'Not in scope',
-      'Random',
+      'The whole EMS, including its software logic and cybersecurity, is fully verified under BS 7671',
+      'Its electrical parts (PSU, comms wiring, controller) are in scope; software and cyber are not',
+      'The EMS is entirely outside BS 7671 scope, including even its mains power supply circuit',
+      'Only the mobile app and the cloud account are within the scope of BS 7671 verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What is "load shedding" in an EMS context and when is it needed?',
     options: [
-      'Random',
-      'Load shedding = the EMS automatically disconnects non-essential loads when total demand exceeds available supply. Needed when: (a) island mode and local generation < load (BESS draining too fast); (b) DNO supply available but at capped capacity (e.g. behind a smart-meter ANM connection); (c) site has limited service capacity and EV + heat pump + cooking peak together would exceed it. Implemented via EMS-controlled contactors / smart relays on non-essential circuits.',
-      'Always shed all',
-      'No purpose',
+      'The EMS disconnecting all of the loads at once whenever any fault is detected on the supply',
+      'A billing feature that records which appliances used the most energy over the billing month',
+      'A purely theoretical concept that has no practical use in domestic electrical installations',
+      'The EMS shedding non-essential loads when demand exceeds supply — island, capped or constrained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Load shedding is the EMS technique of intentionally disconnecting non-essential loads when total demand would otherwise exceed available supply. UK 2025-26 use cases: (1) Island mode load shedding — PEI in island mode, BESS at 30% SoC, load > generation. EMS sheds: EV charging first (delays not catastrophic), then heat pump (or runs at reduced setpoint), then non-essential lighting. Critical loads (fridge, freezer, lighting circuit, communication) protected. Implementation: EMS-controlled contactor / smart relay on non-essential circuits. (2) DNO capacity-constrained connections — a connection limited to e.g. 60 A single-phase (DNO ANM — Active Network Management) requires the EMS to prevent total load + import exceeding the cap. EV charger + heat pump + cooking simultaneously could exceed; EMS pauses EV charge. (3) Light commercial peak shaving — BESS discharges during peak to avoid breaching a capacity limit; EMS load-sheds backup if BESS depleted. Hardware: smart relays (Shelly, Sonoff Pro, vendor-specific), DIN-rail contactors with EMS digital output control, Modbus-controlled circuit isolators. Reg 511 + Reg 530 + Reg 132 / Reg 311.1 max demand reconciliation. Cert evidence: load-shedding logic documented + priority sequence + commissioning test.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'How does Reg 311.1 (max demand) interact with EMS-managed PEI?',
     options: [
-      'No interaction',
-      'Reg 311.1 max demand assumes a deterministic load profile. EMS-managed PEI changes that: actual import from DNO can be SHIFTED in time (BESS discharges during peak) or REDUCED (load shedding prevents simultaneous loads). The DNO service capacity must still cover the worst case where EMS / BESS fails (degraded mode = unmanaged); but EMS-managed normal operation allows a smaller effective import than the unmanaged sum-of-loads would suggest. Documented in PEI design.',
-      'EMS supersedes Reg 311.1',
-      'Random',
+      'There is no interaction; max demand is unaffected by any EMS or storage on the site',
+      'The EMS supersedes Reg 311.1, so the max demand assessment can be skipped entirely',
+      'Service capacity still covers the EMS-fail worst case, but managed import is lower in use',
+      'Max demand must be the sum of all loads plus the full BESS charging current as well',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 311.1 max demand assessment historically assumes a deterministic-but-pessimistic load profile (sum of loads × diversity factor). EMS-managed PEI introduces nuance: (1) Worst-case max demand — if EMS / BESS fails (degraded mode = unmanaged), the installation reverts to the sum-of-loads-with-diversity. DNO service capacity must cover this case. Reg 311.1 max demand assessment remains the basis. (2) Managed max demand — EMS-controlled scheduling + BESS discharge actively prevents simultaneous peak. Effective import from DNO is lower than worst-case. Used for cost optimisation (avoiding the cost of a service upgrade) but NOT as the basis of Reg 311.1 cable sizing. (3) ANM connections — some DNOs offer capped-capacity connections (e.g. 80 A instead of 100 A) where the customer’s EMS guarantees they won’t exceed; cheaper connection, with EMS as the constraint. The DNO ANM agreement codifies this; Reg 311.1 still references the cap. (4) Documentation — PEI design records: (a) the Reg 311.1 worst-case demand (cable + service basis); (b) the EMS-managed expected demand; (c) the degraded-mode behaviour (what happens if EMS fails). Cert evidence: both unmanaged max demand AND EMS-managed scheduling captured + DNO connection agreement referenced.',
   },

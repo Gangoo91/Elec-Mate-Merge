@@ -51,60 +51,60 @@ const quizQuestions = [
   {
     question: 'What does a Philips Hue Bridge primarily do?',
     options: [
-      'Boost Wi-Fi signal',
+      'Boost the home Wi-Fi signal',
+      'Store lighting scenes offline',
+      'Provide battery backup to lights',
       'Connect Zigbee lights to IP networks',
-      'Store lighting scenes',
-      'Provide battery backup',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Hue Bridge acts as a Zigbee coordinator, connecting Zigbee-based Hue lights to your IP network for control via apps and voice assistants.',
   },
   {
     question: 'When mapping device compatibility, what should you document first?',
     options: [
-      'Device prices',
       'Existing protocols and hubs in use',
-      'Warranty information',
-      'Installation dates',
+      'The price of each device',
+      'Device warranty information',
+      'Original installation dates',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Understanding existing protocols and hubs is essential for determining what new devices will be compatible or what bridges may be needed.',
   },
   {
     question: 'What is a limitation of using multiple bridges in one installation?',
     options: [
-      'They share the same IP address',
+      'They all share the same IP address',
+      'They draw too much power from the mains',
       'Complex automation across bridges can be unreliable',
-      'They consume too much power',
-      'They are always incompatible',
+      'They are always mutually incompatible',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Automations that span multiple bridges may experience delays or failures as commands must traverse multiple systems, increasing complexity and potential failure points.',
   },
   {
     question: 'How does Matter aim to reduce bridge requirements?',
     options: [
-      'By eliminating all wireless protocols',
       'By providing a common application layer',
-      'By using only cloud services',
-      'By requiring specific hardware',
+      'By eliminating all wireless protocols',
+      'By routing everything through cloud services',
+      'By requiring a single specific hardware hub',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Matter provides a unified application layer that allows devices from different manufacturers to communicate directly, reducing the need for proprietary bridges.',
   },
   {
     question: 'What should you advise customers about vendor-specific ecosystems?',
     options: [
-      'Always choose the cheapest option',
+      'Always choose the cheapest available option',
+      'Avoid every proprietary system on principle',
+      'Standardise rigidly on a single brand',
       'Consider long-term compatibility and openness',
-      'Avoid all proprietary systems',
-      'Only use one brand',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Advising customers to consider long-term compatibility, ecosystem openness, and potential exit strategies helps them make informed decisions about smart home investments.',
   },

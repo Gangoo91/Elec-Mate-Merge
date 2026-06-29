@@ -47,9 +47,9 @@ const checks = [
     question: 'What’s the difference between an NTC and a PTC thermistor?',
     options: [
       'NTC resistance falls as temperature rises; PTC resistance rises as temperature rises.',
-      'Infrared radiation emitted by objects, which correlates to their surface temperature',
-      'A tangible or intangible output produced as a result of project work',
-      '5 to 7 centimetres above the wound, between the wound and the heart',
+      'NTC resistance rises as temperature rises; PTC resistance falls as temperature rises.',
+      'NTC senses light level; PTC senses temperature.',
+      'NTC works on DC only; PTC works on AC only.',
     ],
     correctIndex: 0,
     explanation:
@@ -59,9 +59,9 @@ const checks = [
     id: 'ntc-application',
     question: 'A 10 kΩ NTC thermistor is sat against the heatsink of a power MOSFET in a switch-mode PSU. What’s its job?',
     options: [
-      'A hard hat (safety helmet) to protect against falling objects from above',
-      'Regular inspections, staged testing, compliance checks, and documented reviews',
-      'When prospective fault current exceeds the breaking capacity of downstream devices',
+      'Limit the inrush current when the supply is first switched on.',
+      'Smooth the DC output ripple from the rectifier.',
+      'Provide a fixed voltage reference for the control chip.',
       'Sense the heatsink temperature so the chip can throttle back or shut down before the MOSFET cooks.',
     ],
     correctIndex: 3,
@@ -75,10 +75,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is an LDR?',
     options: [
-      'Determine the maximum demand of the installation, having due regard to diversity, before selecting cables and protective devices.',
+      'A "Low-Drop Rectifier" — a diode that conducts with very little forward voltage loss.',
       'A "Light-Dependent Resistor" — a resistor whose value changes with the amount of light falling on it.',
-      'Stitching integrity, webbing for cuts or abrasion, buckle operation, D-ring condition, and label legibility',
-      'Provide a mechanical lifting aid such as a vacuum lifter or pallet to workbench height conveyor',
+      'A "Linear Dimming Relay" — a relay that fades a lighting load up and down.',
+      'A "Load Detection Resistor" — a fixed resistor used to sense whether a load is connected.',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 2,
     question: 'A typical LDR varies between roughly which two resistance values, dark to bright?',
     options: [
-      'Flammable — the substance, vapour or gas can ignite easily',
-      'Storage systems located on the customer side of the meter',
+      'A few hundred Ω in pitch dark, 1 MΩ in bright sunlight.',
       '1 MΩ in pitch dark, a few hundred Ω in bright sunlight.',
-      'Notify the client/engineer and submit an alternative for approval',
+      'A steady 10 kΩ regardless of the light level.',
+      'A few ohms in the dark, a few kΩ in sunlight.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Typical CdS LDR: ~1 MΩ dark, ~10 kΩ in office light, ~200 Ω in direct sunlight. Massive range — that’s why a simple voltage divider feeding a comparator is enough to make a dusk-till-dawn switch.',
   },
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where is a PTC thermistor commonly used as a self-resetting protective device?',
     options: [
-      'To prevent trip hazards, reduce overloading risks, and maintain clear access and escape routes',
+      'To prevent overloading, reduce trip hazards and maintain clear escape routes around equipment',
       'In series with a load — when the current rises and heats the PTC, its resistance shoots up and limits the current. Cools down, resets.',
-      'Use written communication (printed schedule + email), face them clearly when speaking so they can lip-read, and offer to use a BSL interpreter for complex discussions',
-      'That senior management failures were a substantial element in the gross breach of duty of care',
+      'In parallel with a load — it shorts the current to earth when the load overheats, then re-opens',
+      'As a fixed voltage reference — it holds a steady drop regardless of the current through it',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 6,
     question: 'A dusk-till-dawn outdoor lamp uses an LDR and a small relay. Roughly how does it work?',
     options: [
-      'Face-to-face (or video for distributed teams) — covers scope, programme, RAMS, key contacts and unanswered questions',
-      'Photograph the damage, document the date and time, and then raise the issue directly with the plumber in a calm, professional manner',
+      'The LDR is wired in series with the lamp, so its falling resistance in the dark lets enough current through to light it directly.',
+      'A thermistor senses the drop in air temperature at dusk and switches the relay when it crosses a set point.',
       'A voltage divider with the LDR feeds a comparator chip. When light falls below a set level, the comparator switches the relay coil and the lamp comes on.',
-      'A completed work order, updated test records, permit to work cancellation, and confirmation that all safety interlocks have been tested and are operative',
+      'A small timer counts the hours from the last switch-on and energises the relay on a fixed 12-hour cycle.',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 7,
     question: 'A customer’s outdoor PIR lamp keeps switching on by itself in hot weather. What might be involved?',
     options: [
-      'Power restored, all covers refitted, labels updated, customer briefed, work area swept and waste removed, certificate left with customer or emailed, and instruments returned to vehicle',
-      'Stop. Lifting the tile is disturbance — even a corner. Don\'t touch it. Refer to the dutyholder\'s asbestos register; if there isn\'t one, demand a survey is commissioned before any work above the ceiling continues.',
-      'So the tester can verify the design assumptions during initial verification — measured Ze at the origin and measured Zs at each circuit end can be compared against the design values on the SLD. Mismatch flags either a measurement issue or a design assumption that did not hold (e.g. cable installed differently to design).',
-      'PIRs detect changes in infrared (heat). On hot days, sun-warmed surfaces moving relative to the sensor (clouds passing, breeze through trees) can trigger it. Look at the unit\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s adjustment dials.',
+      'The LDR has failed, so the lamp now treats hot bright afternoons as night-time and stays on.',
+      'Heat has raised the resistance of the lamp circuit, causing it to latch on until the cable cools.',
+      'The relay contacts have welded shut in the heat, holding the lamp permanently energised.',
+      'PIRs detect changes in infrared (heat). On hot days, sun-warmed surfaces moving relative to the sensor (clouds passing, breeze through trees) can trigger it. Turn the sensitivity down on the adjustment dials.',
     ],
     correctAnswer: 3,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: 'You\'re fitting underfloor heating with a digital thermostat. The thermostat uses a small probe with two wires. What\'s most likely inside the probe tip?',
     options: [
       'An NTC thermistor — its changing resistance lets the thermostat work out floor temperature accurately.',
-      'Accept — 1.5 mm² ≥ 1.32 mm² so the adiabatic equation passes. Document the calc on the design sheet.',
-      'Because airborne fibres may still be present on the worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s body and clothing during decontamination',
-      'Isolate the supply (if safe), call for help, assess the casualty, begin CPR if not breathing normally',
+      'An LDR — it senses how much light reaches the floor to judge whether the room is occupied.',
+      'A small fixed resistor — it simply confirms the probe cable is connected and not broken.',
+      'A miniature relay — it switches the heating mat directly from inside the probe tip.',
     ],
     correctAnswer: 0,
     explanation:

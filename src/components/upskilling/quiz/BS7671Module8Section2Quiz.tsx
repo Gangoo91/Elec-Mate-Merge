@@ -12,64 +12,64 @@ const BS7671Module8Section2Quiz = () => {
 
   const questions = [
     {
-      question: "What's the purpose of an MEIWC?",
+      question: 'What is a Minor Electrical Installation Works Certificate (MEIWC) used for?',
       options: [
-        'New installations',
-        'Minor electrical works',
-        'Periodic inspection',
-        'Major alterations',
+        'A complete new consumer unit or installation',
+        'Additions or alterations to an existing circuit',
+        'A periodic inspection of an existing installation',
+        'Major rewiring and structural alterations',
       ],
       correct: 1,
       explanation:
-        'MEIWC (Minor Electrical Installation Works Certificate) is used for minor works like adding sockets or lighting points to existing circuits.',
+        'An MEIWC covers minor work that does not include a new circuit, such as adding a socket or lighting point to an existing circuit.',
     },
     {
-      question: 'When do you use a disconnection time chart?',
+      question: 'When would you use a protective device time/current (disconnection time) chart?',
       options: [
-        'For voltage drop',
-        'For cable sizing',
-        'For fault protection verification',
-        'For load calculations',
+        'To check the voltage drop on a circuit',
+        'To select the cable cross-sectional area',
+        'To carry out maximum demand calculations',
+        'To verify the device disconnects within the required time',
+      ],
+      correct: 3,
+      explanation:
+        'Time/current characteristics confirm a protective device will operate within the required disconnection time for the measured fault loop impedance.',
+    },
+    {
+      question: 'What is typically listed on a visual inspection checklist?',
+      options: [
+        'Only the recorded test results',
+        'Equipment condition and compliance items',
+        'Detailed load calculations',
+        'Full cable specifications',
+      ],
+      correct: 1,
+      explanation:
+        'A visual inspection checklist covers items such as equipment condition, correct installation, secure connections, labelling and regulatory compliance.',
+    },
+    {
+      question: 'Which factor is applied to derate a cable’s current-carrying capacity?',
+      options: [
+        'The earth fault loop impedance (Zs)',
+        'The voltage drop allowance',
+        'The grouping factor (Cg)',
+        'The device time/current curve',
       ],
       correct: 2,
       explanation:
-        'Disconnection time charts are used to verify that protective devices provide adequate fault protection within required time limits.',
+        'The grouping factor (Cg) reduces a cable’s rating where several loaded cables are bunched together, because mutual heating limits how much current each can carry.',
     },
     {
-      question: "What's listed on a visual inspection checklist?",
+      question: 'How do checklists help during an audit?',
       options: [
-        'Only test results',
-        'Equipment condition and compliance items',
-        'Load calculations',
-        'Cable specifications',
+        'They remove the need to carry out testing',
+        'They mainly serve to reduce labour costs',
+        'They speed the job up by skipping steps',
+        'They give systematic, repeatable verification',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
-        'Visual inspection checklists include items like equipment condition, proper installation, labelling, and compliance with regulations.',
-    },
-    {
-      question: 'Name a chart used for derating cable capacity.',
-      options: [
-        'Zs tables',
-        'Grouping factor (Cg) charts',
-        'Voltage drop tables',
-        'Time/current curves',
-      ],
-      correct: 1,
-      explanation:
-        'Grouping factor (Cg) charts show derating factors when multiple cables are grouped together, reducing their current-carrying capacity.',
-    },
-    {
-      question: 'How do checklists assist with audits?',
-      options: [
-        'They replace testing',
-        'They provide systematic verification',
-        'They reduce costs',
-        'They speed up work',
-      ],
-      correct: 1,
-      explanation:
-        'Checklists provide systematic verification that all required checks have been completed, making audits more thorough and consistent.',
+        'Checklists ensure every required check is completed and recorded the same way each time, making audits more thorough and consistent.',
     },
   ];
 

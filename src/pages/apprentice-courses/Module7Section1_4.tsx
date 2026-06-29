@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What causes deterioration faults over time?',
     options: [
-      'Protective devices operate immediately',
-      'Permanent magnet synchronous motor (PMSM)',
-      'Continuity test from armouring to MET',
+      'Errors made during the original circuit design',
+      'Poor workmanship during the installation',
+      'Physical impact from external sources',
       'Age, wear, and environmental factors',
     ],
     correctIndex: 3,
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'Give an example of external damage that could cause electrical faults.',
     options: [
       'Construction work damaging cables',
-      'L101 — Safe Work in Confined Spaces',
-      'Sprayed asbestos coatings',
-      'The Control of Asbestos Regulations 2012',
+      'Insulation breaking down with age',
+      'A cable undersized for its load at design',
+      'A terminal left loose during installation',
     ],
     correctIndex: 0,
     explanation:
@@ -99,10 +99,10 @@ const Module7Section1_4 = () => {
       id: 3,
       question: 'What is a common example of a design fault?',
       options: [
-        'Energy efficiency of fixed building services',
-        'Investigate and retest if necessary',
-        'Fails to trip at test current',
-        'Insufficient cable rating for load',
+        'A terminal screw left loose by the installer',
+        'Insulation degraded by years of heat exposure',
+        'A cable severed by a contractor drilling a wall',
+        'Insufficient cable rating for the connected load',
       ],
       correctAnswer: 3,
       explanation:
@@ -112,10 +112,10 @@ const Module7Section1_4 = () => {
       id: 4,
       question: 'Which of these is an installation fault?',
       options: [
-        'Incorrect polarity connections',
-        'Frequency rating and performance',
-        'Behaviour = Motivation, Ability, Prompt',
-        'The shielding benefits are negated',
+        'Incorrect polarity at a connection',
+        'A protective device undersized at design',
+        'Insulation cracking after many years in service',
+        'A cable crushed by later building works',
       ],
       correctAnswer: 0,
       explanation:
@@ -125,10 +125,10 @@ const Module7Section1_4 = () => {
       id: 5,
       question: 'What causes deterioration faults over time?',
       options: [
-        'Intermittency and variability',
+        'Errors in the original load calculations',
         'Age, wear, and environmental factors',
-        'Disconnect or bypass it to prevent damage',
-        'Trips between 3 and 5 times rated current',
+        'Poor workmanship at first fix',
+        'Accidental impact during later building works',
       ],
       correctAnswer: 1,
       explanation:
@@ -138,10 +138,10 @@ const Module7Section1_4 = () => {
       id: 6,
       question: 'Give an example of external damage that could cause electrical faults.',
       options: [
-        'It compensates for cable resistance',
-        '60 seconds to discharge to <50V',
+        'A circuit designed without enough spare capacity',
+        'Connections that loosen from poor tightening',
         'Construction work damaging cables',
-        'Stand clear and not touch the casualty',
+        'Insulation breaking down with prolonged heat',
       ],
       correctAnswer: 2,
       explanation:
@@ -149,25 +149,25 @@ const Module7Section1_4 = () => {
     },
     {
       id: 7,
-      question: 'Which fault category is most likely to cause immediate danger?',
+      question: 'Which fault category is typically present from the very first day the installation is energised?',
       options: [
-        'No protective conductor connection',
-        'Unlimited fine and/or up to 5 years imprisonment',
-        'Accessible heights for switches and controls',
-        'Any category can cause immediate danger',
+        'Deterioration fault',
+        'External damage fault',
+        'Design fault',
+        'Wear-and-tear fault',
       ],
-      correctAnswer: 3,
+      correctAnswer: 2,
       explanation:
-        'Any category of fault can create immediate danger depending on the specific circumstances and location of the fault.',
+        'A design fault, such as an undersized cable, exists from day one because the error was made before installation. Deterioration and external damage faults develop later.',
     },
     {
       id: 8,
       question: 'What is the key difference between design and installation faults?',
       options: [
         'Design faults occur during planning, installation faults during construction',
-        'It specifies photometric performance requirements for emergency lighting',
-        'Adding a socket outlet to an existing circuit (not in special location)',
-        'Efficient design, operation, and cost control of electrical systems',
+        'Design faults appear only after years of service, installation faults from day one',
+        'Design faults are caused by outside impact, installation faults by ageing',
+        'Design faults are always dangerous, installation faults never are',
       ],
       correctAnswer: 0,
       explanation:
@@ -175,14 +175,14 @@ const Module7Section1_4 = () => {
     },
     {
       id: 9,
-      question: 'How can deterioration faults be prevented?',
+      question: 'How can deterioration faults best be managed and delayed?',
       options: [
-        'They cannot be prevented',
-        'Regular inspection and maintenance',
-        'Better installation only',
-        'Improved design only',
+        'By upgrading the original circuit design',
+        'By improving installation workmanship alone',
+        'By fitting mechanical protection to cables',
+        'Regular inspection, maintenance and timely replacement',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Deterioration faults can be prevented or delayed through regular inspection, maintenance, and timely replacement of aging components.',
     },
@@ -190,10 +190,10 @@ const Module7Section1_4 = () => {
       id: 10,
       question: 'Why is it important to understand fault categories?',
       options: [
-        'MCS (Microgeneration Certification Scheme)',
-        'It is not specific, measurable, or time-bound',
+        'It removes the need to carry out any inspection or testing',
+        'It guarantees a fault can never happen again',
         'Helps determine prevention strategies and responsibility',
-        'To separate circuits of different categories to prevent interference',
+        'It sets the disconnection time for the protective device',
       ],
       correctAnswer: 2,
       explanation:

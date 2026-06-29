@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Cable I²R heating mainly depends on…',
     options: [
-      'No more than twice the mounting height',
-      'Automatic Disconnection of Supply',
+      'The supply voltage and the length of time it runs',
+      'The ambient temperature and the colour of the insulation',
       'Current and the cable’s resistance',
-      'Independent assessment of competence',
+      'The frequency of the supply and the cable’s capacitance',
     ],
     correctAnswer: 2,
     explanation:

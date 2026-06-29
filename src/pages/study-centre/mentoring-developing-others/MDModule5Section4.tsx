@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'A mentor asks their apprentice: "How am I doing as your mentor? Is there anything I could do differently to help you learn better?" This is an example of:',
     options: [
       'A sign of weakness — mentors should not ask for feedback from learners',
-      'Good practice — seeking feedback from the mentee is one of the most valuable sources of information about your mentoring effectiveness',
       'Inappropriate — it puts the apprentice in an uncomfortable position',
+      'Good practice — seeking feedback from the mentee is one of the most valuable sources of information about your mentoring effectiveness',
       "Unnecessary — the apprentice's progress is the only measure of mentoring quality",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Seeking feedback from the mentee is one of the most powerful things a mentor can do for their own development. The apprentice is the person who directly experiences your mentoring, and their perspective provides insights that no self-reflection or external observation can match. Far from being a sign of weakness, it demonstrates confidence, humility, and a genuine commitment to improvement — exactly the qualities you want to model for your apprentice.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following qualifications is specifically designed for people who mentor and coach others in the workplace?',
     options: [
-      'City & Guilds 2382 (18th Edition)',
       'ILM Level 3 Certificate in Coaching and Mentoring',
+      'City & Guilds 2382 (18th Edition)',
       'CITB Site Supervisors Safety Training Scheme (SSSTS)',
       'NVQ Level 3 in Electrotechnical Services',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The ILM (Institute of Leadership and Management) Level 3 Certificate in Coaching and Mentoring is specifically designed for people who mentor or coach others in the workplace. It covers mentoring theory, practical skills, and reflective practice. For electricians who mentor apprentices, this qualification formalises and develops the skills they are already using, and it is recognised across all industries. It is an excellent CPD pathway for those who want to develop their mentoring practice.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'What is the primary benefit of seeking feedback from your mentee about your mentoring practice?',
     options: [
       'It makes the mentee feel important',
-      'It provides direct insight into how your mentoring is experienced by the person who matters most — the learner',
       'It shifts responsibility for the mentoring relationship onto the mentee',
       'It is a formal requirement of all mentoring qualifications',
+      'It provides direct insight into how your mentoring is experienced by the person who matters most — the learner',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The mentee is the person who directly experiences your mentoring, which makes their feedback uniquely valuable. Self-reflection tells you what you think you are doing; mentee feedback tells you what you are actually doing and how it is being received. The gap between intention and impact is often significant, and only the mentee can reveal it. This feedback is the most direct route to improving your practice.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     id: 5,
     question: 'The ILM Level 3 Certificate in Coaching and Mentoring is:',
     options: [
-      'An electrical qualification that includes a mentoring module',
       'A standalone qualification specifically for people who mentor or coach others in the workplace',
+      'An electrical qualification that includes a mentoring module',
       'A mandatory requirement for anyone mentoring an apprentice',
       'Only available to people in management positions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The ILM Level 3 Certificate in Coaching and Mentoring is a standalone qualification designed for anyone who mentors or coaches others in the workplace, regardless of their industry or position. It covers mentoring theory, practical skills, and reflective practice. It is not mandatory for mentoring apprentices, but it is a valuable CPD pathway that formalises and develops mentoring skills. It is recognised across all industries and is available to anyone, not just managers.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'A mentor who has successfully developed five apprentices through their qualifications applies for a site supervisor role. How does their mentoring experience support this application?',
     options: [
       'It does not — mentoring and site supervision are completely different skills',
-      'It demonstrates leadership, communication, and people management skills that are directly relevant to supervision',
       'It only helps if they have a formal mentoring qualification',
       'It shows they prefer mentoring to practical work, which may count against them',
+      'It demonstrates leadership, communication, and people management skills that are directly relevant to supervision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mentoring directly develops and demonstrates the core skills required for supervisory and management roles: leadership (guiding others toward goals), communication (giving clear instructions and constructive feedback), people management (adapting your approach to different individuals), problem-solving (handling difficult situations), and developing others (building team capability). These are exactly the competencies that employers look for when promoting to site supervisor, and mentoring experience provides concrete evidence of them.',
   },
@@ -175,11 +175,11 @@ const quizQuestions = [
     question: 'What is the "ripple effect" in the context of mentoring?',
     options: [
       'The negative impact that a bad mentoring experience has on an apprentice',
-      'The idea that good mentoring creates future mentors — each person you develop well goes on to develop others in turn',
       'The way that mentoring feedback ripples through an organisation',
+      'The idea that good mentoring creates future mentors — each person you develop well goes on to develop others in turn',
       'The financial impact of mentoring on company profitability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The ripple effect describes the multiplying impact of good mentoring. When you mentor an apprentice well, you do not just develop one electrician — you develop someone who, when they become experienced enough, will go on to mentor the next generation in the same thoughtful, effective way. Your influence extends far beyond the apprentices you personally work with; it echoes through every person they develop in turn. This is the mentor's true legacy: not just the work they did, but the people they created.",
   },

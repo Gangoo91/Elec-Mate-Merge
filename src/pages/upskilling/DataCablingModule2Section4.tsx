@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A site uses T568B at the patch panel end and T568A at the wall outlet end of every horizontal link. What is the immediate consequence?',
     options: [
-      'Crossover cable — works for everything.',
-      'Crossover wiring — pin pairs are swapped end-to-end. Modern Auto-MDI-X PHYs (every Ethernet PHY since gigabit) auto-detect and correct this for two-pair Ethernet, but for 4-pair 1000BASE-T / 10GBASE-T any pair swap creates a non-compliant channel. The wire-map test fails and the channel will not certify to Class EA. The fix is to choose ONE scheme (T568B is the UK office default) and apply it at both ends of every link.',
-      'No effect — TIA permits either at either end.',
-      'Better noise rejection.',
+      'A working crossover cable that functions correctly for every Ethernet speed.',
+      'A crossover — pairs swapped end-to-end; it fails wire-map and breaks 1000BASE-T / 10GBASE-T certification.',
+      'No effect — TIA permits either scheme at either end of a link.',
+      'Improved noise rejection from the mixed pin-pair arrangement.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'How much pair untwist is permitted at the IDC (insulation displacement contact) of a Cat6A keystone, per BS EN 50174-2 / TIA-568.2-E?',
     options: [
-      '50 mm.',
-      '\u2264 13 mm of untwisted pair length at the IDC for Cat6A. The aim is to keep the pair twist as close to the contact as physically possible \u2014 every millimetre of untwisted pair degrades the balance, raises NEXT, raises return loss, and erodes Class EA margin. Cat5e tolerates up to 13 mm; Cat6A demands the same number but the impact of exceeding it is far greater because the bandwidth is 5\u00d7 higher.',
-      '25 mm \u2014 same as Cat5.',
-      'No limit.',
+      '50 mm of untwisted pair at the IDC.',
+      '\u2264 13 mm of untwisted pair at the IDC \u2014 keep the twist as close to the contact as possible.',
+      '25 mm at the IDC, the same as legacy Cat5.',
+      'No limit on untwist length for Cat6A.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 §716.526.101 sets a current rating for the connecting hardware on PoE-carrying cabling. What is the rating, per which contact?',
     options: [
-      '500 mA per pair.',
-      'The connecting hardware shall comply with BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per CONTACT. Where connected equipment may be separated under load (i.e. unplugging a live PoE patch lead), the connecting hardware must additionally meet the endurance test in BS EN 60512-9-3 at the appropriate disconnection load.',
-      '1 A per pair.',
-      '100 mA per pin.',
+      '500 mA per pair, continuous.',
+      '750 mA per contact, continuous, per BS ISO/IEC 11801-1 — plus BS EN 60512-9-3 endurance for live-disconnect cases.',
+      '1 A per pair, continuous.',
+      '100 mA per pin, continuous.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A consolidation point (CP) is being added in the open-plan ceiling void to feed a flexible furniture layout. What is the design rule from BS EN 50173-1 / TIA-568.0-E?',
     options: [
-      'Add as many CPs as you like.',
-      'A CP is permitted as ONE additional connection in the permanent link between the floor distributor and the work-area outlet. It shall be at least 15 m of cable from the FD; the run beyond it must be enough to reach the WAO within the 90 m permanent-link total. CPs add an insertion-loss penalty and a connector pair to the channel, so they are an engineered concession \u2014 not a casual junction box.',
-      'CPs are not allowed in commercial cabling.',
-      'CPs only apply to fibre.',
+      'Add as many consolidation points to the link as the layout needs.',
+      'One CP per link, \u2265 15 m from the FD, within the 90 m permanent-link total \u2014 an engineered concession, not a casual junction.',
+      'Consolidation points are not permitted in commercial structured cabling.',
+      'Consolidation points apply only to fibre, never to copper.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is an "8P8C" connector and is it the same as an "RJ45"?',
     options: [
-      'They are different connectors.',
-      '8P8C = 8 positions, 8 contacts. It is the modular connector used for balanced twisted-pair Ethernet — what every Cat5e / Cat6 / Cat6A / Cat8.1 termination plugs into. "RJ45" is the original Bell System designation for a similar 8-position telephone jack; the term is universally (if technically loosely) used as a synonym for 8P8C. Cat8.2 specifically uses non-RJ45 connectors (TERA / GG45) for the higher-bandwidth performance margin.',
-      '8P8C is fibre, RJ45 is copper.',
-      'RJ45 is bigger than 8P8C.',
+      'Entirely different connectors with different pin counts and incompatible form-factors.',
+      '8P8C is the fibre connector and RJ45 is the copper twisted-pair one.',
+      'The same 8-position 8-contact modular jack — "8P8C" is the precise term, "RJ45" the loose Bell-telephony synonym.',
+      'RJ45 is a physically larger plug than the 8P8C used on Cat6A patch leads.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Strictly, 8P8C is the modular-connector specification (8 positions, 8 contacts) and RJ45 is the original Bell System Registered Jack designation for an 8-position telephone connector. In practice the two terms are used interchangeably for Ethernet connectors. Cat5e through Cat8.1 all use the 8P8C / RJ45 form-factor. Cat8.2 / Class II is the exception — it uses non-RJ45 connectors (TERA, GG45) to achieve its 2000 MHz performance with a different mechanical design.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the practical difference between T568A and T568B wiring?',
     options: [
-      'T568A is for Europe, T568B is for the USA.',
-      'They are two different colour-to-pin assignments. Pairs 1 and 4 (blue, brown) are identical in both schemes; pairs 2 and 3 (orange, green) are SWAPPED between the two schemes. Auto-MDI-X (every Ethernet PHY since gigabit) auto-detects pair swap for 2-pair Ethernet; for 1000BASE-T / 10GBASE-T any pair swap creates a non-compliant channel. UK convention is T568B at every termination — pick one and stick to it across the whole job.',
-      'T568A is faster than T568B.',
-      'T568A is for fibre.',
+      'Two colour-to-pin assignments — pairs 1 and 4 identical, pairs 2 and 3 swapped between them.',
+      'T568A is the European national scheme; T568B is the USA national scheme.',
+      'T568A clocks a higher data rate than T568B on the same cable.',
+      'T568A is the fibre pin-out and T568B is the copper pin-out.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Both schemes assign the four pairs across the same 8 positions; pairs 1 (blue/white-blue, pins 4-5) and 4 (brown/white-brown, pins 7-8) are identical in both. Pairs 2 (orange/white-orange) and 3 (green/white-green) are SWAPPED between the two schemes. T568A puts green on pins 1-2 and orange on pins 3-6; T568B is the reverse. Mixing the two at the two ends of a link creates a crossover. Auto-MDI-X handles 10/100BASE-T crossover but 1000BASE-T / 10GBASE-T require all 4 pairs in correct positions. UK convention: T568B everywhere.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why does the standard limit untwisted-pair length to ≤ 13 mm at the IDC for Cat6A?',
     options: [
-      'It looks tidier.',
-      'Every millimetre of untwisted pair past the limit destroys the cable\u2019s balance, raises NEXT and return loss, and erodes Class EA margin. The pair\u2019s common-mode rejection comes from the geometric symmetry of the twist; un-twisting more than 13 mm leaves a section where the two conductors have different exposure to noise sources and to each other. The fix is to strip the jacket the minimum necessary, lay each pair into the keystone\u2019s lacing path with the twist preserved as close to the IDC as possible, and punch down with the correct tool.',
-      'BS 7671 mandates 13 mm.',
-      'Tools cannot reach further.',
+      'Because a shorter untwist simply looks tidier and more professional in the keystone.',
+      'Because BS 7671 itself specifically mandates the 13 mm untwist limit for data cabling.',
+      'Because impact tools physically cannot reach further than 13 mm into the lacing path.',
+      'Because untwisting past 13 mm breaks the pair geometry, raising NEXT and return loss and eroding Class EA margin.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The geometric symmetry of the twist is what gives the pair its balance and noise rejection. Un-twisting beyond the standard limit (\u2264 13 mm at the IDC for Cat6A per TIA-568.2-E and BS EN 50174-2) creates a section where the two conductors have different exposure to noise and to other pairs \u2014 NEXT rises, return loss degrades. Cat5e tolerates the same untwist length but at lower bandwidth the impact is smaller. At Cat6A's 500 MHz, sloppy untwist is the single most common cause of marginal Class EA channels.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'What does BS 7671:2018+A4:2026 §716.526.101 require of connecting hardware on a PoE-carrying cabling system?',
     options: [
-      'Connectors must be brass.',
-      'Connecting hardware shall comply with BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per contact. Where connected equipment may be separated under load (i.e. live unplugging), connecting hardware must additionally meet the endurance test in BS EN 60512-9-3 at the appropriate disconnection load.',
-      'Connectors must be gold-plated.',
-      'Connectors must be pre-2018 RJ45.',
+      'BS ISO/IEC 11801-1 compliance and 750 mA per contact continuous, plus BS EN 60512-9-3 endurance where live-disconnect is foreseen.',
+      'A solid-brass connector body throughout, with no plated or composite contacts permitted.',
+      'Gold plating on every contact to a minimum thickness specified by the manufacturer.',
+      'A pre-2018 legacy RJ45 design carried over from the 17th Edition only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Verbatim from \u00a7716.526.101: 750 mA per CONTACT continuous, plus BS EN 60512-9-3 endurance testing for live-disconnect cases. The 750 mA matches the cable-side hard cap (\u00a7716.523.2.101). Modern Cat6A and above keystones / patch panels from reputable manufacturers list the rating in their datasheet; verify the connector\u2019s rated current per contact at specification stage. The endurance-test rule is what stops cheap connectors that would arc-erode after a few hundred live disconnections under PoE load \u2014 a real issue in the early days of Type 4 PoE++.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'What are the three common patch-panel types and how do they differ in install workflow?',
     options: [
-      'There is only one type of patch panel.',
-      'Punchdown patch panels have permanently-soldered IDC terminations on the rear; you punch each cable in with an impact tool. Modular (also called "snap-in" or keystone) patch panels are an empty chassis with 24 / 48 keystone cutouts; you terminate each cable into a keystone separately on the bench, then snap them into the chassis. Tool-less (also called "cable-rated" or 110-style with cap) panels grip the conductors mechanically with a screw or lever cam without an impact tool. Each has trade-offs in install speed, repairability, and Class certification.',
-      'Patch panels are obsolete.',
-      'Only fibre patch panels exist.',
+      'Only one type of copper patch panel is in common commercial use today.',
+      'Patch panels are obsolete and no longer specified on modern structured cabling.',
+      'Punchdown (fixed IDC, impact tool), modular keystone (bench-terminated jacks snapped into a chassis), and tool-less (screw or cam grip).',
+      'Only fibre patch panels exist for current structured-cabling installs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Punchdown panels: traditional, fast for skilled installers, repair = re-punch the bad pair, all-or-nothing chassis. Modular / keystone panels: terminate keystones individually on the bench (better lighting, controlled environment), snap into chassis, swap out a single bad keystone without disturbing neighbours. Tool-less panels: fastest first-fit, mixed reputation for long-term reliability under PoE thermal load, careful manufacturer choice required. The 2026 commercial default for high-density Cat6A under PoE is modular keystone panels with screened keystones \u2014 the bench termination yields the most repeatable Class EA results.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a "consolidation point" (CP) and what are the design rules for it?',
     options: [
-      'A separate floor distributor.',
-      'A single intermediate connection in the permanent link, between the FD and the work-area outlet, used to support flexible / re-locatable furniture layouts. Standards (BS EN 50173-1, TIA-568.0-E) permit ONE CP per link, place it \u2265 15 m from the FD, and require the total permanent link length (FD to WAO, with the CP) to remain \u2264 90 m. The CP adds an insertion-loss penalty and an extra connector pair to the channel.',
-      'CPs are not permitted.',
-      'CPs are mandatory for every link.',
+      'A separate floor distributor serving its own independent group of work-area outlets.',
+      'A junction box that is expressly prohibited in commercial structured cabling.',
+      'A mandatory intermediate connection required on every horizontal permanent link.',
+      'One optional intermediate connection in the permanent link for flexible layouts \u2014 \u2265 15 m from the FD, link still \u2264 90 m.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Consolidation points support flexible furniture layouts \u2014 the cable arrives at a known location in the ceiling void or floor box, terminates into a CP plate, and a re-locatable run continues from the CP to the actual outlet position. This lets the workplace be re-laid without a re-pull of the main horizontal. Standards limit one CP per link, place it \u2265 15 m from the FD (so the CP-to-WAO segment is short and re-routable), and the total permanent link must stay \u2264 90 m. Field-test as a permanent link with the CP in circuit; the CP eats some margin so don\u2019t overuse it.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'On a screened (F/UTP / U/FTP / S/FTP) Cat6A install, why does the choice of keystone matter as much as the choice of cable?',
     options: [
-      'Keystones come in nicer colours.',
-      'A screened cable terminating into an unshielded keystone is a non-compliance: the screen is not bonded at that end and is electrically useless. \u00a7716.526.101 requires connecting hardware comply with BS ISO/IEC 11801-1 (which specifies screened versions for screened cabling) AND \u00a7444.5.3.1 mandates that any metallic screen be bonded to the equipotential bonding network. Mixing screened cable with unshielded keystones fails both rules.',
-      'Cable and keystone are unrelated.',
-      'Only the cable colour matters.',
+      'Because keystones are available in a wider range of front-bezel colours than the cable itself.',
+      'An unshielded keystone leaves the screen unbonded and useless, failing both \u00a7716.526.101 and \u00a7444.5.3.1.',
+      'Because the cable and the keystone are electrically unrelated parts of the channel.',
+      'Because only the cable construction, never the keystone, affects a screened install.',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does the BS EN 60512-9-3 endurance test in §716.526.101 actually verify?',
     options: [
-      'Connector colour-fastness.',
-      'It verifies the connector\u2019s ability to be repeatedly engaged and separated UNDER ELECTRICAL LOAD \u2014 i.e. plugged and unplugged with PoE current flowing \u2014 without arc erosion of the contacts degrading the contact resistance below specification. The test specifies a number of mating cycles at a specified disconnection load; the connector\u2019s rated separation count under PoE must exceed the anticipated lifetime separation count in service.',
-      'Tensile strength.',
-      'Plastic UV-resistance.',
+      'The colour-fastness of the connector body under prolonged indoor lighting.',
+      'The tensile (pull-out) strength of the terminated cable at the strain relief.',
+      'Repeated mate / unmate under live PoE load without arc erosion drifting contact resistance out of spec.',
+      'The UV and ozone resistance of the connector plastic over its service life.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 60512-9-3 (Test 9c, mechanical operation with electrical load) repeatedly engages and separates the connector under a specified DC load (the PoE current). After the test, the contact resistance is measured to confirm it has not degraded beyond the BS ISO/IEC 11801-1 limit due to arc erosion. Cheap connectors that pass insertion-loss / NEXT specs at zero current can fail dramatically after a few hundred live PoE disconnections \u2014 contact pitting, contact resistance drift, eventual signal loss. \u00a7716.526.101 hooks the BS EN 60512-9-3 standard into the BS 7671 framework for PoE applications where live disconnection is foreseen.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'You inherit a brownfield site with mixed T568A and T568B terminations. What is the right repair strategy?',
     options: [
-      'Mix and match \u2014 it doesn\u2019t matter.',
-      'Audit every link with a wire-map and standardise on ONE scheme (T568B is the UK office default). Re-terminate the minority scheme to match the majority, document the standard scheme on the as-built drawings, retest. Mixed schemes create stealth crossovers that auto-MDI-X masks for 10/100BASE-T but break 1000BASE-T / 10GBASE-T. Standardising is a one-time cost; living with mixed wiring is a permanent fault-finding tax.',
-      'Refuse to work on the site.',
-      'Document the chaos and walk away.',
+      'Mix and match the two schemes freely \u2014 it makes no practical difference to the link.',
+      'Refuse to work on the site until the building is fully re-cabled from scratch.',
+      'Document the mixed wiring, leave it exactly as found, and hand the site back.',
+      'Wire-map every link, standardise on one scheme (T568B in the UK), re-terminate the minority and retest.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mixed T568A / T568B terminations are a brownfield reality. Auto-MDI-X masks the issue for 10/100BASE-T (which only uses 2 pairs and tolerates pair swaps), so the system works for ordinary office traffic and the underlying mismatch goes unnoticed. The first time anyone tries 1 G or 10 G to that desk, the link fails or runs unstable. The right repair is a wire-map audit, standardise on one scheme (T568B in the UK), re-terminate the minority, and document the standard. It is annoying work but cheap compared to chasing intermittent gigabit faults indefinitely.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'A specifier asks you to choose between "RJ45 keystone" and "shuttered RJ45 outlet" for a school refit. What\u2019s the difference and when does each matter?',
     options: [
-      'They are identical.',
-      'A shuttered RJ45 outlet has a spring-loaded dust shutter at the front of the port that closes when no plug is inserted. It keeps dust, debris, and small foreign objects out of the contact area; in environments where children might insert pencils / coins / paperclips into open RJ45s (schools, nurseries, public-facing reception areas), shuttered outlets are a sensible safety / longevity choice. Plain (un-shuttered) keystones are fine for routine office and back-of-house environments.',
-      'Shuttered outlets are slower.',
-      'Shuttered outlets are fibre-only.',
+      'A shuttered outlet has a spring-loaded dust shutter — a longevity/safety choice for schools and public areas; plain keystones suit routine office use.',
+      'They are functionally identical, with the shutter being a purely cosmetic front-bezel feature.',
+      'Shuttered outlets run at a lower data rate than plain keystones of the same Category.',
+      'Shuttered outlets are made exclusively for fibre terminations, not copper.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Shuttered keystones / outlets have a small plastic flap behind the front of the port, spring-loaded closed; the RJ45 plug pushes it open as it engages and it springs shut on disconnection. Functionally they protect the contact area from dust, debris, and accidental foreign-object insertion. In schools, nurseries, public reception, healthcare and similar environments \u2014 they are the right choice on the basis of longevity (less dust contamination of contacts) and safety (less likelihood of objects being inserted with PoE present). For routine office / IDF / managed environments, plain keystones are fine and slightly cheaper.',
   },

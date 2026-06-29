@@ -38,8 +38,8 @@ const quickCheckQuestions = [
   {
     question:
       'Using Bloom\u2019s Taxonomy, the question "Why do we test continuity of the circuit protective conductor?" is at which level?',
-    options: ['Remember', 'Understand', 'Apply', 'Analyse'],
-    correctIndex: 1,
+    options: ['Understand', 'Remember', 'Apply', 'Analyse'],
+    correctIndex: 0,
     explanation:
       'Asking "Why" requires the learner to explain the purpose or reasoning behind a procedure, which is at the Understand level of Bloom\u2019s Taxonomy. Remember-level questions would ask "What" (recall facts), while Apply-level questions would ask the learner to demonstrate the procedure.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is a Remember-level question on Bloom\u2019s Taxonomy?',
     options: [
-      '"Why do we perform an earth fault loop impedance test?"',
       '"What instrument is used to measure insulation resistance?"',
+      '"Why do we perform an earth fault loop impedance test?"',
       '"Show me how you would connect the leads for a continuity test"',
       '"What could cause an unexpectedly high reading?"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Remember-level questions ask learners to recall facts: "What is...?", "Name the...", "List the...". Asking what instrument is used requires simple recall of factual knowledge. The other options test understanding (why), application (show me), and analysis (what could cause).',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     options: [
       'Technical competence in performing the task',
       'Safe working practices and use of PPE',
-      'The speed at which the apprentice completes the task compared to a qualified electrician',
       'Correct selection and use of tools and instruments',
+      'The speed at which the apprentice completes the task compared to a qualified electrician',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'While time management is relevant, comparing an apprentice\u2019s speed directly to a qualified electrician is unfair and inappropriate. Apprentices are still developing their competence and will naturally work more slowly. The focus should be on whether they perform the task correctly and safely, not on whether they match an experienced professional\u2019s pace.',
   },

@@ -5,10 +5,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What are function blocks in BMS programming?',
     options: [
-      'Details of faulty component and replacement specifications',
+      'Physical terminal blocks that wire field devices to a controller',
       'Graphical building blocks used to create control logic',
-      'Ingress Protection against solids and liquids',
-      'Largest motor at 125% or higher, others at full load',
+      'Pre-set alarm thresholds stored in the head-end software',
+      'Sections of trunking that house the bus cabling',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 2,
     question: 'Give one example of a common function block.',
     options: [
-      'Electrical panel',
-      'Cable tray',
+      'Isolator switch',
+      'Distribution board',
       'AND/OR gate',
-      'Power supply',
+      'Busbar trunking',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 9,
     question: 'Why is programming/testing done with electricians present?',
     options: [
-      'To ensure fault protection is functional before live testing',
+      'To allow the software engineer to delegate all wiring decisions',
       'To verify wiring matches programming and test physical responses',
-      'How refractive index varies across the fibre cross-section',
-      'A temporary manual override that reverts after a set time',
+      'To reduce the number of commissioning visits to a single day',
+      'To avoid the need for an as-built record of the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     question:
       'In the real-world example, what programming error caused a fan to run during a fire alarm?',
     options: [
-      'In every room with windows providing natural light',
-      'Privacy modes with scheduled/triggered recording',
+      'A sensor wired to the wrong analogue input channel',
+      'A setpoint entered in the wrong temperature units',
       'Incorrect OR logic instead of AND/NOT logic',
-      'By showing equipment running outside of scheduled hours',
+      'A timer schedule left in its factory default state',
     ],
     correctAnswer: 2,
     explanation:

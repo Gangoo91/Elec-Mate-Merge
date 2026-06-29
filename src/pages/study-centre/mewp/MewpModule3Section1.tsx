@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     id: 'mewp-preuse-when',
     question: 'When must a pre-use inspection be carried out on a MEWP?',
     options: [
+      'Daily or at the start of each shift, before use',
       'Only when the machine looks damaged',
       'Once a week on Monday mornings',
-      'Daily or at the start of each shift, before use',
       'Only after a thorough examination has expired',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "A pre-use inspection must be carried out daily or at the start of each shift before the MEWP is used. IPAF also recommends a brief check after use. It is the operator's responsibility to complete this inspection every time.",
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'When inspecting a full body harness before use, which of the following should you check?',
     options: [
       'Only the colour of the webbing',
-      'Webbing condition, hardware function, and that labels are legible and within inspection date',
       'Just the D-ring and nothing else',
       'Only the lanyard length',
+      'Webbing condition, hardware function, and that labels are legible and within inspection date',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A full body harness pre-use check must cover the webbing (cuts, fraying, abrasion, chemical or UV damage, stitching integrity), all hardware (buckles, D-rings, connectors for function and condition), and labels (legibility and that the harness is within its inspection date).',
   },
@@ -113,8 +113,8 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the maximum interval for a thorough examination certificate on a MEWP used for lifting persons?',
-    options: ['12 months', '6 months', '3 months', '24 months'],
-    correctAnswer: 1,
+    options: ['6 months', '12 months', '3 months', '24 months'],
+    correctAnswer: 0,
     explanation:
       'Under LOLER 1998, any lifting equipment used for lifting persons (including MEWPs) must have a thorough examination at least every 6 months. The current certificate must be available on site.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'Running at full speed',
       'Elevated to maximum height',
-      'Isolated (switched off, controls at neutral)',
       'Connected to an external power supply',
+      'Isolated (switched off, controls at neutral)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The machine must be ISOLATED before carrying out the physical inspection. This means the machine is switched off with all controls in the neutral position, ensuring the operator's safety during the checks.",
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'What should you do FIRST if you discover a fault during the pre-use inspection?',
     options: [
-      'Continue using the machine carefully',
       'Isolate the machine immediately',
+      'Continue using the machine carefully',
       'Ask another operator to check it',
       'Wait until the end of the shift to report it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first action is to ISOLATE the machine immediately. Then tag it, report the fault to your employer and the MEWP owner/hire company, and do not use it until the fault has been rectified by a competent person.',
   },
@@ -162,8 +162,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Approximately what proportion of rental company-reported MEWP accidents occur during delivery and collection?',
-    options: ['About one tenth', 'About one quarter', 'About one third', 'About one half'],
-    correctAnswer: 2,
+    options: ['About one tenth', 'About one quarter', 'About one half', 'About one third'],
+    correctAnswer: 3,
     explanation:
       'About one third of rental company-reported accidents occur during delivery and collection. This highlights why familiarisation on each specific machine — including understanding its transport and set-up procedures — is so important.',
   },

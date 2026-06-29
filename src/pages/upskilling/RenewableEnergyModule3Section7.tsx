@@ -26,10 +26,10 @@ const inlineChecks = [
     question:
       'BS EN 62446-1:2016+A1:2018 is the UK / international standard for PV system commissioning. What does it cover?',
     options: [
-      'Just visual inspection',
-      'Documentation requirements, visual inspection, electrical test, commissioning test report, and Schedule of Test Results. Covers continuity testing, polarity verification, IV-curve measurement (recommended for larger installs), insulation resistance test, functional test of isolators and protective devices, and the baseline records for future diagnostic reference',
-      'Just paperwork',
-      'Inverter cleaning',
+      'Visual inspection of the modules and mounting only',
+      'Documentation, inspection, electrical tests, the test report and Schedule of Test Results',
+      'Commissioning paperwork only, with no electrical testing required',
+      'Inverter and module cleaning and maintenance schedules only',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const inlineChecks = [
     question:
       'Continuity testing on the PV side per BS EN 62446-1 — what\'s being tested and what\'s the typical result?',
     options: [
-      'Voltage only',
-      'Continuity of the equipotential bonding (module frames to rail to bonding conductor to MET) and of the protective earthing (CPC). Tested with a continuity tester (R < 0.5 Ω typically). Confirms the bonding network is electrically continuous — no high-resistance joints from corrosion, loose torque, or missing anti-corrosion gel. Records the resistance measurement per cable segment in the Schedule of Test Results',
-      'Customer satisfaction',
-      'Module colour matching',
+      'String open-circuit voltage at each module interface only',
+      'Continuity of the equipotential bonding and protective earthing, typically R < 0.5 Ω',
+      'Customer satisfaction with the finished installation appearance',
+      'Colour and finish matching of the modules across the array',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const inlineChecks = [
     question:
       'Polarity verification on the PV DC side. What\'s the discipline, and why does it matter?',
     options: [
-      'Polarity doesn\'t matter',
-      'Verify positive and negative connections at every interface — module to module, string to combiner, combiner to inverter. Reversed polarity at the inverter input damages the inverter; reversed polarity on a string would prevent normal operation. Test method: measure V_oc with multimeter at each interface, confirm polarity matches the design pack. The Schedule of Test Results records the measurements',
-      'Inverter sorts it out',
-      'No testing needed',
+      'Polarity is irrelevant on the DC side of a PV array',
+      'Verify positive and negative at every interface; reversed polarity damages the inverter',
+      'The inverter detects and corrects reversed polarity automatically',
+      'No polarity testing is needed if the strings are colour-coded',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const inlineChecks = [
     question:
       'I-V curve measurement during commissioning. What does it show, and is it required for all installs?',
     options: [
-      'Required for all installs',
-      'The I-V curve shows the string\'s current vs voltage characteristic at the test conditions. Compared against modelled / nameplate expectation, identifies under-performing modules, shading, mismatch, and module-level faults. RECOMMENDED for larger installs (typically >10 kWp) and for commissioning installs where individual module performance verification is wanted. NOT mandatory for typical UK domestic — V_oc and I_sc string measurements suffice for the standard install',
-      'Just for show',
-      'No purpose',
+      'It is mandatory for every PV install, however small',
+      'It shows the string I-V characteristic; recommended for larger installs, not mandatory domestically',
+      'It is purely cosmetic and adds nothing to the commissioning record',
+      'It serves no diagnostic purpose and is never used in practice',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const inlineChecks = [
     question:
       'Insulation resistance (IR) test on the PV DC side per BS EN 62446-1. What\'s the test voltage and pass criterion?',
     options: [
-      'Test at 12 V',
-      'Test voltage typically 500 V DC or 1,000 V DC for system V_oc_max up to 500 V or 1,000 V respectively (per the standard\'s table). Test method: array short-circuited at the inverter end; insulation resistance measured between (positive+negative tied) and earth. Pass criterion typically ≥1 MΩ for systems up to 100 kW. Lower IR indicates degraded insulation, water ingress, or earth fault — full investigation required',
-      'No IR test',
-      'Customer signature only',
+      'Test at 12 V DC, with a pass criterion of any non-zero reading',
+      'Test at 500 or 1,000 V DC by system voltage; pass criterion typically ≥1 MΩ',
+      'No insulation resistance test is required on the DC side at all',
+      'A customer signature in place of any electrical measurement',
     ],
     correctIndex: 1,
     explanation:
@@ -96,10 +96,10 @@ const inlineChecks = [
     question:
       'Functional test of isolators and protective devices per BS EN 62446-1. What\'s being verified?',
     options: [
-      'Visual inspection only',
-      'Each isolator and protective device tested under simulated fault / operating conditions: DC isolator opens / closes under load (rated DC switching capability per BS EN 60947-3 DC-21); AC isolator / RCBO trips on simulated earth fault (RCD test button + manual trip test); string fuses verified by visual inspection and (where practical) electrical continuity. The Schedule of Test Results records each device\'s test result',
-      'Skip the test',
-      'Customer photographs only',
+      'Visual inspection of each device label and rating only',
+      'Each isolator and protective device operated under simulated fault or operating conditions',
+      'The functional test may be skipped where devices are factory-tested',
+      'Customer photographs of each device in place of operation',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const inlineChecks = [
     question:
       'The Schedule of Test Results (SoTR) per BS EN 62446-1 — what does it contain, and what\'s its purpose?',
     options: [
-      'Just a sticker',
-      'A structured record of every commissioning test result: continuity per cable / bonding segment; polarity per interface; V_oc / I_sc / V_mp / I_mp per string at test conditions; I-V curve (where measured); insulation resistance; functional test of each isolator and protective device. Provides the baseline record for future EICR diagnostic reference and the audit trail for MCS / DNO. Archived in the cert evidence bundle for the install life',
-      'Customer\'s favourite biscuit',
-      'No purpose',
+      'A commissioning sticker fixed to the inverter enclosure',
+      'A structured record of every test result, providing the baseline for future diagnostics',
+      'A summary of the customer\'s expected annual savings only',
+      'An internal contractor note with no formal purpose',
     ],
     correctIndex: 1,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'During commissioning, the installer measures V_oc on a single string of 14 modules. Modelled V_oc at the test conditions (irradiance 600 W/m², cell temperature ~35°C) is 565 V. Measured V_oc is 540 V. Diagnose?',
     options: [
-      'Install OK',
-      'Within typical commissioning tolerance (~5%). 540 V vs modelled 565 V is a 4.4% difference — could be (a) modules cooler than estimated (V_oc rises at lower cell temperature, so cooler modules would actually give HIGHER V_oc — not the explanation here); (b) one module under-performing (V_oc per module ~38.6 V vs expected ~40.4 V); (c) test conditions slightly different from assumed; (d) measurement uncertainty. Acceptable for commissioning — record the result in the SoTR. If measured V_oc is more than 10% below modelled, investigate per-module',
-      'Always fail',
-      'Reject the install',
+      'Within typical commissioning tolerance at ~4.4%; record it and proceed',
+      'A clear fail — any deviation below the modelled V_oc means the string must be rejected',
+      'Evidence of a reversed module — the string should be re-wired before energisation',
+      'A short-circuited bypass diode — replace the affected module immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 62446-1 commissioning tolerance is typically ~5-10% on V_oc / I_sc measurements vs modelled. The 4.4% difference here is within the acceptable band — could be module-by-module variation, test condition uncertainty, or measurement uncertainty. Record in the SoTR with the test conditions. If measured V_oc were more than 10% below modelled, investigate per-module (which one is under-performing?) before commissioning. The Schedule of Test Results captures the measurement and the rationale for the result.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'IR test on a 6 kWp PV install. System V_oc_max = 600 V. Test voltage chosen?',
     options: [
-      '12 V',
-      'Per BS EN 62446-1 — system V_oc_max 600 V is above the 500 V threshold for the 500 V DC test, so use 1,000 V DC test voltage. Test method: array short-circuited at the inverter; IR meter measures resistance between the (positive+negative tied) short and earth. Pass criterion ≥1 MΩ. Record measurement, test voltage, irradiance, ambient temperature in the SoTR',
-      '500 V always',
-      '10,000 V',
+      '500 V DC, because the standard fixes a single 500 V test voltage for all PV arrays',
+      '250 V DC, matching the half-system voltage for a short-circuited array',
+      '1,000 V DC, because V_oc_max of 600 V is above the 500 V threshold',
+      '5,000 V DC, to stress the insulation well above the operating voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 62446-1 test voltage table: 500 V DC test for system V_oc_max ≤ 500 V; 1,000 V DC test for system V_oc_max > 500 V. The 6 kWp install with V_oc_max 600 V triggers the 1,000 V DC test. Pass criterion ≥1 MΩ for systems up to 100 kW. Test conditions (irradiance, ambient temperature) recorded with the measurement — IR varies with humidity and temperature, so the conditions matter for future diagnostic comparison.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Functional test of the DC isolator. The installer opens the isolator under load. The handle moves but the contacts don\'t fully separate (mechanical fault). Action?',
     options: [
-      'Continue commissioning',
-      'STOP. The DC isolator is the safety isolation between the array (live during daylight) and the inverter; a mechanical fault that prevents full contact separation is a safety hazard — the isolator can\'t safely break the circuit under load. Rectification: substitute the isolator with a correctly-functioning unit of the same or better spec (rated for V_oc_max, I_sc_max, BS EN 60947-3 DC-21 utilisation category). Re-test functional. Update the cert evidence bundle component schedule with the substitute. SoTR records the rectification',
-      'Hammer it shut',
-      'Bypass with a link',
+      'Continue commissioning, since the isolator handle still moves and indicates open',
+      'Operate the isolator several more times to free the contacts, then proceed',
+      'Temporarily link out the isolator and complete commissioning, replacing it later',
+      'Stop and substitute the isolator with a correctly-functioning unit of the same spec, then re-test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'DC isolator failure during commissioning is a safety-critical finding. The isolator is the primary safety isolation for the DC side; a mechanical fault preventing full contact separation means the isolator can\'t safely break the circuit under load. Rectification: substitute with a correctly-functioning isolator. The substitute must match the spec — V_oc_max, I_sc_max, BS EN 60947-3 DC-21. The SoTR records the rectification.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'Continuity test on the equipotential bonding. The measured resistance from a module frame to the MET is 2.5 Ω. Pass or fail?',
     options: [
-      'Pass',
-      'FAIL. Typical BS EN 62446-1 pass criterion is R < 0.5 Ω end-to-end for bonding continuity. 2.5 Ω is high — indicates a high-resistance joint somewhere in the chain (corrosion at a rail joint, loose torque on a bonding clamp, missing anti-corrosion gel, broken / damaged bonding conductor). Investigate: isolate the section, re-test the module-to-rail link, rail-to-rail joints, rail-to-bonding-conductor, bonding-conductor-to-MET. Rectify the high-resistance joint. Re-test',
-      'Customer\'s choice',
-      'No criterion exists',
+      'Fail — 2.5 Ω is well above the R < 0.5 Ω limit, so investigate the high-resistance joint',
+      'PASS — 2.5 Ω is comfortably within the 5 Ω bonding-continuity limit',
+      'PASS — bonding continuity has no fixed pass criterion under BS EN 62446-1',
+      'PASS — any reading below the 50 Ω earth-electrode limit is acceptable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Continuity pass criterion per BS EN 62446-1 is typically R < 0.5 Ω end-to-end for the bonding network. 2.5 Ω is 5× the threshold — fail. Causes: (a) high-resistance joint at rail-to-rail (corrosion, missing anti-corrosion gel); (b) loose torque on a bonding clamp; (c) damaged bonding conductor (kink, cut, water ingress at termination). Diagnose by testing in sections — measure module-to-rail, rail-to-rail joints individually, rail-to-bonding-conductor, bonding-conductor-to-MET. Identify the high-R section, rectify, re-test, re-record in the SoTR.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'I-V curve measurement on a 10 kWp commercial install. One string\'s measured I-V curve shows a distinct "step" partway down the curve. Diagnose?',
     options: [
-      'Normal',
-      'The "step" indicates one or more modules in the string are bypassed by their bypass diodes — likely partial shading on the module, or a module-level fault (cracked cells, mismatched module). Walk the array and identify the affected modules. Action: (a) if shading — confirm with shade-analysis tool, consider module-level optimisation retrofit; (b) if cracked module — replace the module, re-test; (c) if installation fault — rectify and re-test. The SoTR records the I-V curve and the diagnostic finding',
-      'I-V curves always have steps',
-      'No issue',
+      'Normal — a healthy string always shows a single step at the maximum power point',
+      'A wiring fault at the inverter input that will clear once the array warms up',
+      'Bypass-diode activation — likely shading or a module fault; walk the array to find it',
+      'A sign the I-V tracer is mis-calibrated and the test should be repeated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A distinct "step" in the I-V curve indicates bypass-diode activation — one or more cell groups in the string are bypassed. Causes: (a) partial shading on the affected modules (confirm with shade-analysis tool); (b) module-level fault (cracked cells, mismatched module type / size, faulty bypass diode that\'s permanently bypassed); (c) installation fault (broken connection within a module, shading from a localised obstruction). Diagnose by walking the array, identifying the affected modules, and matching to root cause. The SoTR records the I-V curve characteristic and the diagnostic outcome.',
   },
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'BS EN 62446-1 IR test result on a 6 kWp install: measured IR = 0.3 MΩ at 1,000 V test voltage. Pass or fail?',
     options: [
-      'Pass',
-      'FAIL — below the 1 MΩ pass criterion for systems up to 100 kW. Investigation triggers: (a) is the test condition aggravating — high humidity, recent rain, condensation on modules / connectors? Re-test in dry conditions; (b) module-level fault — degraded insulation in one or more modules; (c) earth fault somewhere on the DC side — accidental connection between live DC and earth via damaged cable / connector / module backsheet. Isolate sections to localise; rectify; re-test. SoTR records the result',
-      'No criterion',
-      'Always pass',
+      'PASS — 0.3 MΩ is above the 0.1 MΩ minimum for systems up to 100 kW',
+      'PASS — the IR test has no fixed pass criterion, only a recorded value',
+      'PASS — any non-zero IR reading is acceptable provided the array generates',
+      'Fail — below the 1 MΩ criterion; re-test dry and investigate for a DC-side earth fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 62446-1 IR pass criterion ≥1 MΩ for systems up to 100 kW. 0.3 MΩ is below — fail. Investigation: (1) test conditions — high humidity / rain / condensation aggravate IR; re-test in dry conditions; (2) module-level fault — degraded insulation in one or more modules (rare at commissioning); (3) earth fault on the DC side — damaged cable / connector / module backsheet creating an inadvertent DC-to-earth path. Diagnose by sectioning: test per string, per cable run, per module. Localise the fault; rectify; re-test; re-record in SoTR.',
   },
@@ -211,12 +211,12 @@ const quizQuestions = [
     question:
       'Polarity test at the inverter DC input. The installer measures DC voltage with multimeter red probe on the "+" terminal of the inverter input. Reading = -540 V. Action?',
     options: [
-      'Connect anyway',
-      'STOP — polarity reversed. Reverse polarity at the inverter input typically destroys the inverter on energisation (input diodes / MOSFETs fail). Investigation: (1) trace the DC cable back from the inverter input to the combiner / string output, identifying where the polarity reversal occurred; (2) rectify the connection (swap positive and negative at the affected interface); (3) re-test polarity; (4) only then proceed with inverter energisation. The SoTR records the polarity finding and the rectification',
-      'Reverse the inverter',
-      'Hammer it in',
+      'Stop — polarity reversed; trace and rectify the connection before any energisation',
+      'Connect anyway — the inverter\'s input protection blocks reverse polarity safely',
+      'Swap the multimeter probes and re-read, since the reading is just an instrument artefact',
+      'Re-configure the inverter\'s input to accept the reversed polarity in software',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reverse polarity at the inverter DC input is a high-consequence install fault — typically destroys the inverter on energisation. The polarity test at the inverter input catches this BEFORE energisation, allowing rectification. Investigation: trace the DC cable from inverter back to combiner / string output; identify where positive and negative were swapped; rectify the connection; re-test polarity. The SoTR records the finding and the rectification. The cert evidence bundle archives the corrected as-installed wiring.',
   },
@@ -225,12 +225,12 @@ const quizQuestions = [
     question:
       'Commissioning completion. The Schedule of Test Results (SoTR) is signed off. What\'s the next step in the cert evidence bundle?',
     options: [
-      'Throw it away',
-      'Customer handover pack. The cert evidence bundle assembles: (1) MCS MIS 3002 design pack (site survey, modelling, schematic, schedule, calculations); (2) install photographs (DC, AC, mounting, flashing, labels); (3) BS EN 62446-1 commissioning records and SoTR; (4) MCS certificate; (5) EREC G98 / G99 notification / approval; (6) DNO confirmation; (7) customer information pack (operating, maintenance, warranty, emergency contacts). Customer signs receipt of the handover pack; bundle archived for the install life',
-      'Customer never sees it',
-      'Skip handover',
+      'File the SoTR with the contractor only — the customer does not need a copy',
+      'Submit the SoTR to the DNO in place of the EREC G98 / G99 notification',
+      'Assemble the full cert evidence bundle and hand it over to the customer for signature',
+      'Discard the SoTR once the inverter has run successfully for 24 hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'After commissioning, the cert evidence bundle is assembled and handed over to the customer. Contents: (1) MCS MIS 3002 design pack; (2) install photographs; (3) BS EN 62446-1 commissioning records and SoTR; (4) MCS certificate; (5) EREC G98 / G99 notification / approval; (6) DNO confirmation; (7) customer information pack (operating manual, maintenance schedule, warranty details, emergency contacts). Customer signs receipt; the bundle is archived for the install life (typically 25 years). Section 8 covers the integrated reading of the bundle — every Section 712 clause mapped to the bundle\'s evidence.',
   },

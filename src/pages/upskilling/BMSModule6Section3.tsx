@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'dashboard-importance',
     question: 'Why are dashboards important for facility managers?',
     options: [
-      'They replace the need for trained staff',
       'They convert complex technical data into clear, actionable information',
-      'They reduce the number of sensors needed',
+      'They replace the need for trained operations staff',
+      'They reduce the number of field sensors needed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Dashboards convert complex technical data into clear, actionable information that allows facility managers to quickly assess building performance, identify problems, and make informed decisions.',
   },
@@ -22,11 +22,11 @@ const quickCheckQuestions = [
     id: 'dashboard-kpi',
     question: 'Give one example of a KPI that might be displayed on a BMS dashboard.',
     options: [
-      'Number of cables installed',
+      'Number of cables installed in the building',
+      'The supplier contact details for each device',
       'Percentage of time within comfort temperature band',
-      'Supplier contact details',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Common KPIs include '% time within comfort band' (showing how often spaces meet target conditions), 'energy efficiency ratio', 'equipment availability', or 'alarm response time'.",
   },
@@ -34,9 +34,9 @@ const quickCheckQuestions = [
     id: 'miswired-sensors',
     question: 'What can happen if sensors are miswired or incorrectly labelled?',
     options: [
-      'Dashboards display faster',
+      'Dashboards display data more quickly',
       'Operators make incorrect decisions based on false data',
-      'Energy costs are reduced',
+      'Building energy costs are automatically reduced',
     ],
     correctIndex: 1,
     explanation:
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
     id: 'network-reliability',
     question: 'Why is network reliability important for dashboard operation?',
     options: [
-      'It makes dashboards look better',
+      'It makes the dashboard graphics look better',
+      'It reduces the cost of communications cabling',
       'Dashboards depend on continuous data feeds to remain useful',
-      'It reduces cable costs',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Dashboards rely on continuous data feeds from field devices. Network dropouts mean dashboards can't update with current information, making them unreliable for monitoring and decision-making.",
   },

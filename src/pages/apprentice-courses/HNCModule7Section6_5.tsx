@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of pre-commissioning checks?',
     options: [
       'To verify installation completeness and identify defects before energisation',
-      'Testing systems under both heating and cooling conditions',
-      'Gravity causes the load to shift downwards, so the lower person naturally takes more weight',
-      'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
+      'To record the final earth fault loop impedance at every outlet',
+      'To confirm the supply voltage and frequency match the design values',
+      'To balance the connected load evenly across all three phases',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'dead-testing',
     question: 'Which tests must be completed before the installation is energised?',
     options: [
-      'Missing grommets and exposed copper conductors',
-      'Adjusting activity timing to avoid resource overallocation',
-      'Continuity, insulation resistance, and polarity verification',
-      'Building services engineer or ventilation specialist',
+      'Earth fault loop impedance, prospective fault current and RCD operation',
+      'Functional testing of switching, controls and emergency lighting',
+      'Continuity, insulation resistance and polarity verification',
+      'Phase rotation, voltage measurement and load balancing checks',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'eicr-purpose',
     question: 'What is the purpose of the Electrical Installation Certificate (EIC)?',
     options: [
-      'Accessible trunking and containment systems with mechanical fixings',
+      'To record the periodic condition of an existing installation over time',
       'To certify that the installation complies with BS 7671 and is safe for use',
-      'The ratio of real power to apparent power at the fundamental frequency',
-      'Infrared radiation emitted by objects, which correlates to their surface temperature',
+      'To list the maintenance schedule for the installed equipment',
+      'To confirm the installation has been notified to Building Control',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'What document should be completed first during visual inspection before any testing?',
     options: [
-      'To translate between different protocols and connect to the internet',
+      'Schedule of Test Results recording all measured values',
       'Pre-commissioning checklist verifying installation completeness',
-      'Imposter syndrome as described by Clance and Imes (1978)',
-      'Building user surveys, energy analysis, and environmental monitoring',
+      'Electrical Installation Certificate signed by the competent person',
+      'As-built drawings showing the final distribution layout',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,12 +110,12 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'When testing continuity of protective conductors, what is the purpose of comparing R1+R2 values?',
+      'When measuring continuity of protective conductors, why is the R1+R2 value important?',
     options: [
-      'After all safety tests are complete and the installation is energised',
-      'All dead tests are satisfactory and the supply characteristics are known',
-      'Schedule of Inspections and Schedule of Test Results',
-      'To verify earth fault loop impedance will be within limits',
+      'It confirms the minimum insulation resistance of 1.0 MΩ is achieved',
+      'It verifies the RCD will trip within the required disconnection time',
+      'It proves the polarity of the line and neutral conductors is correct',
+      'Added to Ze it gives Zs, which must be within BS 7671 limits',
     ],
     correctAnswer: 3,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'During polarity testing, which connections must be verified as correct?',
     options: [
-      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
-      'Single-pole switches in line conductor, centre contact of ES lampholders to line, and correct phase rotation',
-      'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
-      'It ensures consistent, accurate data that can be used in calculations and comparisons',
+      'Protective conductor continuity at every accessory and the main earthing terminal',
+      'Single-pole switches in the line conductor, ES lampholder centre contacts to line, and correct phase rotation',
+      'Insulation resistance between line and neutral at every point of the circuit',
+      'Earth fault loop impedance at the origin and at the furthest point of each circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,25 +150,25 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What is the maximum trip time for a 30mA RCD at 150mA test current?',
+    question: 'What is the maximum trip time for a general (non-delay) 30mA RCD tested at its rated residual operating current (1 × IΔn = 30mA) under BS 7671:2018+A4:2026?',
     options: [
       '300ms',
       '200ms',
       '40ms',
       '1 second',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'When tested at 5 times rated residual current (5 x 30mA = 150mA), the RCD must trip within 40ms per BS EN 61008/61009. This verifies the RCD will provide fast disconnection under high fault currents.',
+      'A4:2026 redrafted RCD verification: regardless of RCD Type, a single AC test at the rated residual operating current (1 × IΔn) is used. A general non-delay RCD must disconnect within 300 ms maximum at 1 × IΔn (Reg 643.8 NOTE). Appendix 3 Table 3A and the older 5 × IΔn / 40 ms test have been deleted in A4:2026.',
   },
   {
     id: 7,
     question: 'What test equipment is used to measure prospective fault current (PFC)?',
     options: [
-      'The rate of flow of charge past a point',
-      'Store safely for future reference',
-      'Isolate the affected circuit and clearly inform the client',
-      'Earth loop impedance tester with PFC function',
+      'An insulation resistance tester set to the 500 V DC range',
+      'A low-resistance ohmmeter used for continuity testing',
+      'A clamp meter measuring load current at the distribution board',
+      'An earth loop impedance tester with a PFC measurement function',
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: 'When should functional testing of emergency lighting be performed?',
     options: [
-      'After all safety tests are complete and the installation is energised',
-      'To verify earth fault loop impedance will be within limits',
-      'To report on the condition of an existing installation and identify defects',
-      'All dead tests are satisfactory and the supply characteristics are known',
+      'After all safety tests are complete and the installation is safely energised',
+      'Before any continuity or insulation resistance testing has started',
+      'During the initial visual inspection, before any electrical testing',
+      'Only at the first periodic inspection after the installation is handed over',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What document must accompany the EIC to record all test results?',
     options: [
-      'Only if the terminal is designed to accommodate them safely',
-      'Schedule of Inspections and Schedule of Test Results',
-      'Match the phasing of building occupation',
-      'Lower magnitude 5th and 7th harmonics',
+      'A Minor Works Certificate for each circuit tested',
+      'A Schedule of Inspections and a Schedule of Test Results',
+      'A set of as-built drawings showing the final layout',
+      'A Building Regulations Part P notification certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of an EICR (Electrical Installation Condition Report)?',
     options: [
-      'To verify earth fault loop impedance will be within limits',
-      'All dead tests are satisfactory and the supply characteristics are known',
+      'To certify that a new installation complies with BS 7671 before first use',
+      'To record the test results for a single added circuit on an existing board',
       'To report on the condition of an existing installation and identify defects',
-      'After all safety tests are complete and the installation is energised',
+      'To notify Building Control that notifiable electrical work has been completed',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'Before energising an installation, which of the following must be confirmed?',
     options: [
-      'To verify earth fault loop impedance will be within limits',
-      'Schedule of Inspections and Schedule of Test Results',
-      'After all safety tests are complete and the installation is energised',
+      'Functional testing of all controls and emergency lighting is complete',
+      'Earth fault loop impedance has been measured at every final circuit',
+      'All RCDs have been tested at their rated residual operating current',
       'All dead tests are satisfactory and the supply characteristics are known',
     ],
     correctAnswer: 3,

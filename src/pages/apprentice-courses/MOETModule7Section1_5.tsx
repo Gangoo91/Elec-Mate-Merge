@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'Why is it important to read ALL options before selecting your answer?',
     options: [
       'The first option might seem correct but a later option may be more complete or accurate',
-      'Avoiding expressing your own opinions or needs to prevent conflict',
-      'Gap between design predictions and actual operational energy use',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
+      'Reading every option guarantees you can never run short of time in the exam',
+      'The exam marks you down automatically if you do not read all four options',
+      'The last option listed is statistically the most likely to be correct',
     ],
     correctIndex: 0,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'Which of the following is the MOST important physical preparation for exam day?',
     options: [
       'Getting adequate sleep the night before and eating a proper breakfast',
-      'Ib is design current, In is device rating, Iz is cable capacity',
-      'It can bulge or herniate, pressing on nearby nerves',
-      'Because each branch forms a loop with the source, and KVL applies',
+      'Drinking several strong coffees to stay alert',
+      'Staying up late for a final cramming session',
+      'Skipping breakfast to avoid feeling sluggish',
     ],
     correctIndex: 0,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: "Research on the 'first instinct fallacy' shows that:",
     options: [
       'Carefully considered changes are more often correct than the original answer',
-      'To understand cost, reliability, and transition challenges',
-      'Healthy ring (Step 3 = (r1+r2)/4 = 1.05/4 = 0.2625Ω; matches measured 0.26Ω across all sockets)',
-      'Battery backup failure losing settings, or mechanism wear',
+      'Your first answer is always correct and should never be changed',
+      'Changing answers always reduces your final score',
+      'The first option listed is statistically the most likely answer',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 2,
     question: 'The process of elimination is most useful when:',
     options: [
-      '15-20 minutes early to allow time to settle and reduce rushing anxiety',
-      'Move to the next question, and return later — a change of focus often triggers recall',
+      'You already know the answer with complete certainty before reading the options',
+      'A question asks for a single numerical value from a calculation',
       'You are uncertain and need to narrow down the options systematically',
-      'Photo ID, a pen (if paper-based), permitted calculator, and water',
+      'You have run out of time and must guess on every remaining question',
     ],
     correctAnswer: 2,
     explanation:
@@ -82,9 +82,9 @@ const quizQuestions = [
     id: 3,
     question: 'On the morning of the EPA knowledge test, you should:',
     options: [
-      'Move to the next question, and return later — a change of focus often triggers recall',
-      '15-20 minutes early to allow time to settle and reduce rushing anxiety',
-      'The correct answer is likely one of these two — the difference between them is the key detail',
+      'Skip breakfast so you are not distracted by digestion',
+      'Cram as much new material as possible before you leave',
+      'Arrive at the last minute to minimise waiting anxiety',
       'Eat well, do light revision of key facts only, and arrive with time to settle',
     ],
     correctAnswer: 3,
@@ -96,9 +96,9 @@ const quizQuestions = [
     question: "If you experience a 'mind blank' during the exam, the recommended approach is to:",
     options: [
       'Move to the next question, and return later — a change of focus often triggers recall',
-      'Take a break, avoid analysing individual questions, and focus on preparing for the next EPA component',
-      'Use the time to review all answers, checking for misread questions and unanswered items',
-      '15-20 minutes early to allow time to settle and reduce rushing anxiety',
+      'Stare at the question until the answer eventually comes to you',
+      'Guess randomly on every remaining question and finish early',
+      'Leave the question blank and tell the invigilator you are stuck',
     ],
     correctAnswer: 0,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 5,
     question: "Absolute words like 'always' and 'never' in answer options are often indicators of:",
     options: [
-      'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
+      'The correct answer, because they show the writer is confident',
       'A distractor, because most rules in electrical maintenance have exceptions',
-      'Eat well, do light revision of key facts only, and arrive with time to settle',
-      'You are uncertain and need to narrow down the options systematically',
+      'A question that should be left blank and skipped',
+      'A calculation question requiring a numerical answer',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,9 +134,9 @@ const quizQuestions = [
     id: 7,
     question: 'When two options appear very similar, it usually means:',
     options: [
-      'Take a break, avoid analysing individual questions, and focus on preparing for the next EPA component',
-      'A distractor, because most rules in electrical maintenance have exceptions',
-      'You are uncertain and need to narrow down the options systematically',
+      'Both options are wrong and the answer lies elsewhere',
+      'The question is faulty and should be reported',
+      'You should always pick the longer of the two options',
       'The correct answer is likely one of these two — the difference between them is the key detail',
     ],
     correctAnswer: 3,
@@ -148,9 +148,9 @@ const quizQuestions = [
     question: 'What items should you bring to the EPA knowledge test?',
     options: [
       'Photo ID, a pen (if paper-based), permitted calculator, and water',
-      'Eat well, do light revision of key facts only, and arrive with time to settle',
-      'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
-      '15-20 minutes early to allow time to settle and reduce rushing anxiety',
+      'Your revision notes and textbook to consult during the test',
+      'Your mobile phone, kept on silent, in case you need to check a fact',
+      'A printed copy of last year past paper to refer to if you get stuck',
     ],
     correctAnswer: 0,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 9,
     question: 'The recommended breathing technique for managing exam anxiety is:',
     options: [
-      'The correct answer is likely one of these two — the difference between them is the key detail',
+      'Rapid shallow breathing to increase alertness',
       'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
-      'Photo ID, a pen (if paper-based), permitted calculator, and water',
-      'A distractor, because most rules in electrical maintenance have exceptions',
+      'Holding your breath for as long as possible to refocus',
+      'Breathing only through the mouth to take in more air',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 10,
     question: 'If you finish the exam with 10 minutes remaining, you should:',
     options: [
-      'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
-      'A distractor, because most rules in electrical maintenance have exceptions',
+      'Submit immediately to avoid second-guessing yourself',
+      'Change several answers at random to feel productive',
       'Use the time to review all answers, checking for misread questions and unanswered items',
-      'You are uncertain and need to narrow down the options systematically',
+      'Leave the room early since the test is complete',
     ],
     correctAnswer: 2,
     explanation:
@@ -186,9 +186,9 @@ const quizQuestions = [
     id: 11,
     question: 'On-the-day routine should include arriving at the test centre:',
     options: [
-      'You are uncertain and need to narrow down the options systematically',
-      'Photo ID, a pen (if paper-based), permitted calculator, and water',
-      'Eat well, do light revision of key facts only, and arrive with time to settle',
+      'Exactly on time so you do not have to wait around',
+      'A few minutes late to avoid pre-exam nerves',
+      'Over an hour early to do final cramming in the car park',
       '15-20 minutes early to allow time to settle and reduce rushing anxiety',
     ],
     correctAnswer: 3,
@@ -200,9 +200,9 @@ const quizQuestions = [
     question: 'After completing the EPA knowledge test, you should:',
     options: [
       'Take a break, avoid analysing individual questions, and focus on preparing for the next EPA component',
-      'Eat well, do light revision of key facts only, and arrive with time to settle',
-      'The correct answer is likely one of these two — the difference between them is the key detail',
-      'Use the time to review all answers, checking for misread questions and unanswered items',
+      'Immediately compare every answer with other candidates',
+      'Try to recall and re-mark each question to estimate your score',
+      'Worry about questions you found difficult until results arrive',
     ],
     correctAnswer: 0,
     explanation:
@@ -436,8 +436,9 @@ const MOETModule7Section1_5 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">The Rule of Reason</h3>
               <p className="text-sm text-white">
                 Only change an answer if you can state a specific reason. "I now remember that
-                Regulation 411.3.3 requires 0.2 seconds for TT systems, not 0.4 seconds" is a valid
-                reason. "I just feel like option C might be better" is not. This simple rule
+                Table 41.1 (Regulation 411.3.2) gives 0.2 seconds for a 230&nbsp;V TT final circuit,
+                not 0.4 seconds" is a valid reason. "I just feel like another option might be better"
+                is not. This simple rule
                 prevents anxiety-driven changes while allowing knowledge-driven corrections.
               </p>
             </div>

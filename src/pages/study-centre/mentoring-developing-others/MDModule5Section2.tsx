@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'According to Self-Determination Theory, which three psychological needs must be met for a person to be intrinsically motivated?',
     options: [
-      'Money, status, and recognition',
       'Autonomy, competence, and relatedness',
+      'Money, status, and recognition',
       'Safety, comfort, and certainty',
       'Challenge, competition, and reward',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Deci and Ryan's Self-Determination Theory (1985) identifies three innate psychological needs that drive intrinsic motivation: autonomy (feeling you have choice and control), competence (feeling you are capable and improving), and relatedness (feeling connected to others and that you belong). When all three are met, people are naturally motivated to learn and grow without needing external rewards or threats.",
   },
@@ -52,11 +52,11 @@ const quickCheckQuestions = [
       "An apprentice is bored during first fix because the work feels too easy and repetitive. According to Csikszentmihalyi's flow theory, what should the mentor do?",
     options: [
       'Tell them that boredom is part of the job and they need to accept it',
-      'Increase the challenge level to better match their growing skill — perhaps adding time targets or more complex layouts',
       'Move them straight to second fix even though they have not completed first fix competencies',
+      'Increase the challenge level to better match their growing skill — perhaps adding time targets or more complex layouts',
       'Reduce the amount of first fix work they have to do',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Flow theory states that engagement (flow) occurs when the challenge level is well matched to the person's skill level. If skill is high but challenge is low, the result is boredom. The solution is to increase the challenge to match the growing skill — for example, setting time targets for first fix, introducing more complex layouts, or asking the apprentice to plan the cable routes independently. Skipping to second fix bypasses essential competencies, while simply accepting boredom guarantees disengagement.",
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Which psychologist developed Self-Determination Theory, identifying autonomy, competence, and relatedness as the three basic psychological needs?',
     options: [
-      'Carol Dweck',
-      'Mihaly Csikszentmihalyi',
       'Edward Deci and Richard Ryan',
+      'Mihaly Csikszentmihalyi',
+      'Carol Dweck',
       'Abraham Maslow',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Self-Determination Theory was developed by Edward Deci and Richard Ryan, first published in 1985. Their research demonstrated that intrinsic motivation is sustained when three basic psychological needs are satisfied: autonomy (feeling in control of one's own behaviour), competence (feeling effective and capable), and relatedness (feeling connected to others).",
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
       'A mentor lets an apprentice choose which room to wire first. Which psychological need from Self-Determination Theory does this primarily support?',
     options: [
       'Competence — it makes them feel more skilled',
-      'Relatedness — it connects them to the team',
       'Autonomy — it gives them a sense of choice and control',
+      'Relatedness — it connects them to the team',
       'Safety — it reduces the risk of making mistakes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Offering choices, even small ones, primarily supports the need for autonomy. When an apprentice feels they have some control over their work — even something as simple as choosing which room to start with — they are more engaged and motivated than when every decision is made for them. Autonomy does not mean no supervision; it means appropriate agency within defined boundaries.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       "According to Carol Dweck's research, what is the most important difference between a fixed mindset and a growth mindset?",
     options: [
       'Fixed mindset people are less intelligent than growth mindset people',
-      'Fixed mindset believes ability is innate; growth mindset believes ability is developed through effort and practice',
       'Growth mindset means always being positive; fixed mindset means being realistic',
+      'Fixed mindset believes ability is innate; growth mindset believes ability is developed through effort and practice',
       'Fixed mindset is better for physical trades; growth mindset is better for academic subjects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dweck\'s core finding is that people with a fixed mindset believe abilities are innate and unchangeable ("you either have it or you do not"), while people with a growth mindset believe abilities are developed through effort, practice, and effective strategies. This is not about intelligence — it is about the belief system that shapes how you respond to challenges, setbacks, and the effort required to improve.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     options: [
       'Learned helplessness — the apprentice will expect the mentor to always rescue them',
       'A fixed mindset — it focuses on what went wrong',
-      'A growth mindset — it normalises failure as part of learning and focuses on effort and strategy',
       'Complacency — the apprentice will not try harder if mistakes are treated kindly',
+      'A growth mindset — it normalises failure as part of learning and focuses on effort and strategy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This response cultivates a growth mindset by doing three things: acknowledging the effort (not just the outcome), normalising the mistake as part of the learning process (not as evidence of inability), and redirecting toward strategy ("let us figure out a different approach"). This teaches the apprentice that mistakes are information, not verdicts, and that improvement comes from adjusting strategies, not from having innate talent.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       "In Csikszentmihalyi's flow model, what happens when a task is too easy for the person's skill level?",
     options: [
-      'They enter a flow state',
-      'They become anxious',
       'They become bored and disengaged',
+      'They become anxious',
+      'They enter a flow state',
       'They become more motivated to work harder',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "When skill level is high but the challenge is low, the result is boredom and disengagement. Flow — the state of complete absorption and optimal performance — only occurs when challenge and skill are well matched. This is why repetitive tasks that were once challenging become tedious as the apprentice's skill grows: the challenge has not kept pace with their development, and the mentor needs to increase complexity to maintain engagement.",
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       "A mentor celebrates an apprentice's first independent consumer unit installation in front of the whole team. This primarily supports which motivational need?",
     options: [
       'Autonomy — it gives them more independence',
-      'Competence and relatedness — it affirms their ability and connects them to the team',
       'Extrinsic reward — it is the same as giving them a bonus',
+      'Competence and relatedness — it affirms their ability and connects them to the team',
       'Competition — it motivates other apprentices to catch up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Public recognition of an achievement supports both competence (the apprentice feels their growing ability is recognised and valued) and relatedness (they feel part of the team, respected by their peers). This is different from extrinsic reward because the recognition is social and relational, not transactional. The apprentice does not just feel rewarded — they feel seen, valued, and connected.',
   },
@@ -197,10 +197,10 @@ const quizQuestions = [
     options: [
       '"Some people just are not maths people. Focus on what you are good at."',
       '"You need to try harder. There is no excuse for not being able to do basic calculations."',
-      '"You are finding Zs calculations difficult right now, but we can break it down step by step. Let us start with the formula and practise until it clicks."',
       '"Do not worry about the maths — the testers do the calculations for you."',
+      '"You are finding Zs calculations difficult right now, but we can break it down step by step. Let us start with the formula and practise until it clicks."',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This response models a growth mindset. It reframes the difficulty as temporary and specific ("finding Zs calculations difficult right now") rather than permanent and global ("rubbish at maths"). It offers a concrete strategy (break it down, start with the formula, practise), and it conveys confidence that the apprentice can improve. The other responses either reinforce a fixed mindset, dismiss the difficulty, or create pressure without support.',
   },

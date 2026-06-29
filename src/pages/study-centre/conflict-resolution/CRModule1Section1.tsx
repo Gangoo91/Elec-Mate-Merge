@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A plumber and an electrician on a domestic refurbishment disagree about the routing of a hot water pipe that conflicts with a cable run. Neither will budge, the job stalls for a day, and the client threatens to withhold payment. Is this constructive or destructive conflict?',
     options: [
-      'Constructive — the disagreement shows they both care about doing a good job',
-      'Destructive — it has stalled progress, damaged the client relationship, and neither party has offered a solution',
-      'Neither — it is simply a technical disagreement with no emotional component',
-      'It depends entirely on who is right about the routing',
+      'Destructive — it has stalled the job, damaged the client relationship, and produced no solution',
+      'Constructive — the disagreement simply shows they both care about doing a good job',
+      'Neither — it is a purely technical disagreement with no real emotional component',
+      'It depends entirely on which of the two trades is actually right about the routing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This is destructive conflict because it has produced tangible negative outcomes: the job has stalled, the client is dissatisfied, and neither party has moved towards a resolution. The original disagreement about routing may have been legitimate and could have been constructive if handled differently — for example, by jointly reviewing the plans, consulting the architect, or finding an alternative route that accommodates both services. The key distinction is not whether the disagreement exists but what happens because of it. Constructive conflict leads to better solutions; destructive conflict leads to damage.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrician discovers that a client has been consistently late paying invoices. Rather than raising the issue, they decide to "just get on with it" and hope the problem resolves itself. Which of the following best describes why this approach typically fails?',
     options: [
-      'Late payment is illegal, so the electrician should simply stop working immediately',
-      'Avoiding the conversation allows resentment to build, the payment pattern continues, and the electrician eventually loses the client in a worse way than if they had addressed it early',
-      'The electrician should add a surcharge without discussing it',
-      'Conflict avoidance is always the best strategy with paying clients',
+      'Late payment is illegal, so the electrician should simply stop all work immediately',
+      'The electrician should quietly add a late-payment surcharge without discussing it first',
+      'Conflict avoidance is reliably the best strategy to use with any paying client',
+      'Avoiding it lets resentment build and the pattern continue, costing the client anyway',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Conflict avoidance with payment issues almost always makes the problem worse, not better. When the electrician avoids raising the issue, several things happen simultaneously: the client receives an implicit message that late payment is acceptable, the electrician accumulates resentment that affects the quality of the working relationship, and the financial impact compounds over time. Eventually, the electrician either loses the client explosively (after a final straw moment) or walks away feeling bitter. Had the conversation happened early — framed professionally as a discussion about payment terms — the outcome would almost certainly have been better: either the client adjusts their behaviour, or the electrician learns that this is not a client worth retaining.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'According to ACAS, conflict in the workplace is best defined as:',
     options: [
-      'Any situation where two people dislike each other',
       'A disagreement or clash between individuals or groups with differing needs, goals, or values',
+      'Any situation where two people dislike each other',
       'A formal grievance submitted through HR',
       'Physical confrontation between colleagues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ACAS defines conflict broadly as a disagreement or clash between individuals or groups with differing needs, goals, or values. This definition is deliberately wide — it encompasses everything from a quiet disagreement about how a task should be done to a full-blown dispute over payment. The key elements are difference (in needs, goals, or values) and tension (the disagreement creates friction). It does not require personal animosity, formal processes, or physical confrontation. Understanding this broad definition is important because it helps you recognise conflict early, before it escalates.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is the best example of constructive conflict?',
     options: [
-      'Two electricians argue about the best cable route, refuse to speak to each other, and the project manager has to intervene',
-      'Two electricians disagree about the best cable route, discuss the pros and cons of each option, and agree on a route that satisfies both building regulations and practical access requirements',
-      'Two electricians disagree about the best cable route, and one gives in immediately to avoid an argument',
-      'Two electricians disagree about the best cable route, and the site manager makes the decision without consulting either',
+      'Two electricians argue about the best cable route, stop speaking to each other, and the project manager has to step in to break the deadlock',
+      'Two electricians disagree about the cable route, weigh the pros and cons, and agree a route that satisfies both the regulations and practical access',
+      'Two electricians disagree about the best cable route, and one gives in straight away purely to avoid having an argument on site',
+      'Two electricians disagree about the best cable route, and the site manager simply imposes a decision without consulting either of them',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'ACAS research estimates that UK workplace conflict costs approximately:',
     options: [
-      '5 million working days and £500 per employee per year',
-      '28.5 million working days per year, with an average cost of £1,000–£3,000 per affected employee',
-      '100 million working days and £10,000 per employee per year',
-      'There is no reliable data on the cost of workplace conflict',
+      '5 million working days and around £500 per affected employee per year',
+      '100 million working days and around £10,000 per affected employee per year',
+      '28.5 million working days, at £1,000–£3,000 per affected employee per year',
+      'There is no reliable national data on the cost of workplace conflict',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ACAS estimates 28.5 million working days lost per year due to workplace conflict. The CIPD (Chartered Institute of Personnel and Development) further quantifies the cost at £1,000–£3,000 per affected employee. These costs include sickness absence, reduced productivity, management time spent on disputes, legal costs, and staff turnover. For a small electrical firm with 5 employees, even one unresolved conflict could cost £5,000–£15,000 in direct and indirect costs. These figures demonstrate why conflict resolution skills are not just "soft skills" but have a direct financial impact.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'An electrician finishes a rewire and the client complains about the position of a socket outlet. The electrician knows the position was agreed in writing before work started. The most likely underlying cause of this conflict is:',
     options: [
-      'The client is deliberately trying to avoid paying',
-      'The electrician installed the socket in the wrong position',
-      "A mismatch between the client's expectations (what they imagined) and the agreed specification (what was documented)",
-      'Socket positions are never discussed before work starts',
+      'The client is deliberately manufacturing a complaint to avoid paying',
+      'The electrician installed the socket in the wrong position by mistake',
+      'Socket positions can never realistically be agreed before work starts',
+      "A mismatch between what the client imagined and the agreed written specification",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Most client disputes about completed work stem from a gap between expectation and reality. The client may have agreed to a socket position on a drawing but visualised it differently in their mind. When they see the finished result, it does not match their mental image — even though it matches the written agreement. This is not dishonesty; it is a genuine mismatch between imagination and reality. Understanding this helps the electrician respond with empathy rather than defensiveness. The preventive measure is to use visual aids, mark positions on walls before first fix, and confirm with the client in person — not just on paper.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Which of the following best describes why many tradespeople avoid raising conflicts with clients?',
     options: [
-      'Tradespeople are naturally conflict-averse personalities',
-      'A combination of fear of losing the client, concern about reputation damage through reviews, the "just get on with it" trade culture, and discomfort with confrontation',
-      'There is no financial incentive to resolve conflicts',
-      'Clients are always right, so there is nothing to raise',
+      'Fear of losing the client, reputation worries, trade culture, and discomfort with confrontation',
+      'Tradespeople tend, by personality, to be naturally conflict-averse individuals',
+      'There is no real financial incentive for a tradesperson to resolve conflicts',
+      'The client is always right, so there is genuinely nothing worth raising',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tradespeople avoid conflict for multiple interconnected reasons. Fear of losing a client (and future referrals) is significant, especially for sole traders who rely heavily on word-of-mouth. The threat of negative online reviews adds a modern pressure that did not exist a generation ago. The construction industry culture of "just get on with it" normalises absorbing problems rather than addressing them. And many tradespeople simply have not been trained in how to have difficult conversations professionally. The irony is that avoiding conflict almost always creates worse outcomes than addressing it early and professionally.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'The concept of "conflict as information" means:',
     options: [
-      'You should keep detailed written records of every disagreement',
-      'Every conflict reveals useful data — about unmet needs, unclear expectations, misaligned values, or systemic problems — that can be used to improve working practices',
-      'Information should never be shared during a conflict',
-      'Conflicts only arise when people have insufficient information',
+      'You should keep detailed written records of every single disagreement that arises',
+      'Information should never be shared with the other party during a live conflict',
+      'Every conflict reveals useful data about unmet needs and unclear expectations',
+      'Conflicts only ever arise when one party has insufficient information to act',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Viewing conflict as information is a fundamental shift in perspective. Instead of seeing conflict as a problem to be eliminated, you see it as a signal to be decoded. A payment dispute might reveal that your payment terms are unclear. A scope disagreement might reveal that your quotation process needs more detail. A clash with another trade might reveal that the programme is unrealistic. In each case, the conflict is telling you something useful — something you can act on to prevent similar problems in the future. This does not make the conflict pleasant, but it makes it productive.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A client asks an electrician to add three extra double sockets "while you are here" on a fixed-price job. The electrician agrees without discussing additional cost. This scenario is most likely to lead to conflict because:',
     options: [
-      'Adding extra sockets is a breach of building regulations',
-      'The electrician has created an unspoken expectation gap — they will feel resentful about unpaid work, while the client believes the additions were included',
-      'Fixed-price contracts always lead to disputes',
-      'The client was testing the electrician to see if they could be taken advantage of',
+      'Adding extra sockets is a breach of the wiring regulations on a fixed-price job',
+      'Fixed-price contracts always lead to disputes whenever any extra work is requested',
+      'The client was deliberately testing whether the electrician could be taken advantage of',
+      'The electrician has created an expectation gap: they expect payment, the client expects it included',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a classic "expectation gap" conflict that is extremely common in domestic electrical work. By agreeing without discussing cost, the electrician has created two problems: they will feel resentment about doing unpaid work (a need that was not communicated), and the client now believes that additional requests are included in the price (an expectation that was not corrected). The conflict may not surface immediately, but it will emerge — either through the electrician\'s reduced enthusiasm for the job, a future refusal that seems inconsistent, or a final invoice that includes charges the client did not expect. The solution is simple but requires confidence: acknowledge the request, explain that it is outside the original scope, and provide a cost for the additional work before proceeding.',
   },

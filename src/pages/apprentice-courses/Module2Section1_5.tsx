@@ -68,10 +68,10 @@ const quizQuestions = [
     id: 5,
     question: 'When would you need a True RMS multimeter instead of an average-responding meter?',
     options: [
-      'It establishes your current baseline so you can measure progress accurately',
+      'When measuring a clean 50Hz mains supply at a socket outlet',
       'When measuring non-sinusoidal waveforms (like from inverters)',
-      'To limit current and provide starting voltage',
-      'Provides evidence of due diligence and compliance',
+      'When measuring small DC voltages from a battery',
+      'When checking continuity on an isolated circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 7,
     question: "Your multimeter's continuity function beeps when the resistance is:",
     options: [
-      'The meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fuse will blow instantly',
-      'For high currents without breaking the circuit',
-      'Current readings are always zero or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Exactly equal to the supply voltage',
+      'Above about 1 MΩ (an open circuit)',
+      'Anywhere between 100Ω and 1,000Ω',
       'Below about 50Ω (depending on meter)',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: "What symptom indicates your multimeter's current measurement fuse has blown?",
     options: [
       "Current readings are always zero or 'OL'",
-      "Isolate and de-energise the circuit",
-      "The meter's fuse will blow instantly",
-      "Because all current in a series circuit is the same",
+      'Voltage readings become unstable and drift',
+      'The display backlight stops working',
+      'Resistance readings show a permanent short circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,23 +121,23 @@ const quizQuestions = [
     id: 9,
     question: 'Why must current measurements be made in series with the circuit?',
     options: [
-      'For high currents without breaking the circuit',
-      'Because all current in a series circuit is the same',
-      'When measuring non-sinusoidal waveforms (like from inverters)',
-      'Current readings are always zero or \\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\'',
+      'So the meter measures the voltage across the load',
+      'So all the load current flows through the meter',
+      'So the meter does not load the circuit at all',
+      'So the meter can read current without isolation',
     ],
     correctAnswer: 1,
     explanation:
-      "Current is the same throughout a series circuit. To measure the current flowing through a component, the meter must be inserted in series so all current flows through the meter's shunt.",
+      "To read the current through a component, the meter must be inserted in series so that all of the load current passes through the meter's internal shunt and is measured.",
   },
   {
     id: 10,
     question: 'When might you choose a clamp meter over a multimeter for current measurement?',
     options: [
-      'Below about 50Ω (depending on meter)',
-      'The meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fuse will blow instantly',
+      'When you need very precise readings of tiny currents',
+      'When the circuit must stay completely de-energised',
       'For high currents without breaking the circuit',
-      'Because all current in a series circuit is the same',
+      'When measuring resistance and continuity instead',
     ],
     correctAnswer: 2,
     explanation:

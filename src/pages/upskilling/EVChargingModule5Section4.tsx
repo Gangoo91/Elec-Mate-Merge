@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m5s4-check3',
     question: 'What is the primary benefit of departure-time charging?',
     options: [
-      'Faster charging speeds',
-      'Guaranteed vehicle ready when needed',
-      'Lower installation costs',
-      'Reduced cable wear',
+      'The vehicle is guaranteed to be ready by the time it is needed',
+      'The charger delivers a faster peak charging speed',
+      'The installation cost of the charger is lower',
+      'The charging cable suffers less mechanical wear',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Departure-time charging works backwards from when you need the vehicle, ensuring it's fully charged by your specified time whilst maximising off-peak charging during the cheapest rate periods.",
   },
@@ -68,10 +68,10 @@ const quizQuestions = [
     options: [
       'Around £200 per year',
       'Around £450 per year',
-      'Around £870 per year',
       'Around £1,500 per year',
+      'Around £870 per year',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Standard: 40kWh × 26p × 156 charges = £1,622. Off-peak: 40kWh × 12p × 156 charges = £749. Saving: £1,622 - £749 = £873 per year (54% reduction).',
   },

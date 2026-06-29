@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'gateway-translator',
     question: 'Why are gateways often compared to translators?',
     options: [
-      'Because they both need electricity',
-      'Because they convert between different protocols/languages',
-      'Because they are expensive',
+      'Because they convert between different protocols, much like languages',
+      'Because they both rely on a mains electricity supply',
+      'Because they sit at the centre of the network',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Gateways convert data between different communication protocols - just like translators convert between human languages. Both enable communication between parties that would otherwise not understand each other.',
   },
@@ -22,11 +22,11 @@ const quickCheckQuestions = [
     id: 'modbus-bacnet-gateway',
     question: 'When would a Modbus-to-BACnet gateway be used?',
     options: [
-      'Connecting Wi-Fi to Ethernet',
+      'Bridging a Wi-Fi network onto a wired Ethernet network',
+      'Linking a fire alarm panel to a security access system',
       'Connecting energy meters (Modbus) to a BMS (BACnet)',
-      'Connecting fire alarms to security',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Energy meters typically communicate via Modbus, while BMS systems often use BACnet. The gateway allows the BMS to read energy consumption data from Modbus meters for centralised monitoring.',
   },
@@ -67,12 +67,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary function of a protocol gateway in a building automation system?',
     options: [
-      'To provide backup power during outages',
+      'To provide backup power to controllers during outages',
+      'To increase the raw network speed and bandwidth',
+      'To store long-term historical building data',
       'To convert data between different communication protocols',
-      'To increase network speed and bandwidth',
-      'To store historical building data',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A protocol gateway's primary function is to convert data between different communication protocols, enabling devices that speak different 'languages' to communicate through a unified BMS.",
   },

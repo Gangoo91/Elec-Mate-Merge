@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Why is DC insulation resistance testing different from standard AC IR?',
     options: [
-      'No difference',
-      'DC IR testers apply a stable DC voltage between live conductors + earth, measure the leakage current. For LCT: PV string Voc may be 600-1000 V open-circuit, so a 250 V or 500 V tester underestimates the real-world stress; 1000 V tester used per Table 64 and manufacturer guidance. BESS DC bus typically 48-800 V depending on system; test voltage chosen per manufacturer + Table 64. DC IR results also drift with irradiance (PV) + SoC (BESS) — readings depend on operating state',
-      'AC only',
-      'Identical procedures',
+      'Test voltage follows the DC nominal value per Table 64, equipment is more sensitive, and readings drift with irradiance and state of charge',
+      'There is no real difference; the same 500 V test and procedure apply to both AC and DC circuits',
+      'DC insulation resistance cannot be measured and is verified only by the manufacturer at the factory',
+      'DC IR is always tested at 250 V regardless of the circuit voltage, unlike AC which uses 500 V',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'DC IR vs AC IR specifics: (1) Test voltage selection — AC IR per Reg 643.3 + Table 64 typically 500 V DC for LV installations; for DC LCT the manufacturer + Table 64 guide higher voltages where Voc / DC nominal warrants (PV with Voc 1000 V uses 1000 V IR tester per manufacturer + Section 712). (2) Equipment sensitivity — PV inverter DC input has surge protection, capacitors, IMD electronics; test voltage above the manufacturer-permitted limit damages the inverter. Reg 643.3.3 + manufacturer DoC must be followed. (3) Operating-state drift — PV string IR varies with irradiance (humid panels in damp morning have different IR than dry midday); BESS DC bus IR varies with SoC + electrolyte condition. Document the test conditions. (4) Polarity — DC IR per Reg 712: live conductors + protective conductor; verify test voltage applied between PV positive + earth, negative + earth, positive + negative as relevant. (5) Procedure — disconnect equipment per Reg 643.3.3, apply test voltage, record reading, repeat at the 250 V DC test where required for equipment-connected verification.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Per Reg 643.3.2 + Table 64, what test voltage applies to PV string IR testing?',
     options: [
-      '24 V only',
-      'Table 64 sets test voltage per nominal circuit voltage. SELV / PELV ≤50 V uses 250 V DC test. Low voltage up to 500 V (typical LV AC) uses 500 V DC. Over 500 V uses 1000 V DC. For PV: the DC string nominal voltage governs the test voltage; modern PV strings with Voc 600-1000 V use 1000 V DC test per Table 64 + manufacturer guidance. Equipment-connected re-test at 250 V DC per Reg 643.3.3',
-      'No test',
-      'Random',
+      'A 24 V test, matching the SELV battery voltage commonly used in DC systems',
+      'No insulation resistance test is required on the DC side of a PV array',
+      'Table 64 sets the voltage by band, so a string with Voc 600–1000 V uses the 1000 V DC test',
+      'A fixed 500 V test always applies to PV regardless of string Voc',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Table 64 (Minimum values of insulation resistance) — referenced by Reg 643.3.2 — sets test voltages + minimum IR by nominal circuit voltage band: (1) SELV + PELV ≤50 V: test voltage 250 V DC, minimum IR 0.5 MΩ. (2) Up to and including 500 V (with the exception of SELV + PELV): test voltage 500 V DC, minimum IR 1 MΩ. (3) Above 500 V: test voltage 1000 V DC, minimum IR 1 MΩ. For LCT: PV string at Voc 600-1000 V → 1000 V DC test per Table 64 + manufacturer DoC. BESS DC bus typically 48-100 V (residential) or higher (commercial) → 500 V DC test typical; verify per manufacturer. EV DC fast at CHAdeMO / CCS voltages → manufacturer commissioning + appropriate test voltage. Reg 643.3.3: where equipment is likely to influence the test result or be damaged, the test is applied prior to connection — then a 250 V DC test applied between live conductors + protective conductor after equipment connected. Cert evidence bundle: pre-connection IR + post-connection 250 V re-test per Reg 643.3.3.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'How does Reg 712.421.101 IMD verification fit into PV DC initial verification?',
     options: [
-      'Not relevant',
-      'Reg 712.421.101.1: IMD shall be installed (except where 712.421.101.2 applies) to verify insulation status on the DC side throughout the array life cycle. BS EN 61557-8 standard applies. At IV: (1) inspect IMD presence (typically integrated in modern inverter); (2) verify IMD function via manufacturer self-test; (3) record IMD trip threshold (kohm range); (4) confirm IMD trip path (disable inverter / alarm); (5) IMD complements (not replaces) the DC string IR test. Modern inverters do an IMD self-test before every connection',
-      'IMD = IR',
-      'Optional',
+      'It is not relevant to PV initial verification and applies only to commercial installations',
+      'The IMD test simply replaces the DC string IR test, so only one of the two needs to be done',
+      'It is optional and can be omitted whenever the inverter passes its grid-synchronisation check',
+      'At IV you inspect the IMD, run its self-test and confirm the trip path; it complements rather than replaces the string IR test',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 712.421.101 IMD requirement: (1) Mandatory presence — except where Reg 712.421.101.2 applies (galvanic separation between AC + DC sides + other conditions); verify the exception before omitting. (2) Standard — BS EN 61557-8 (insulation monitoring devices). (3) Lifecycle function — IMD monitors insulation continuously throughout the PV array life, not just at IV. (4) Implementation — most modern PV inverters have integrated IMD that self-tests on each grid connection + alarms on insulation degradation. (5) IV verification — at install: inspect IMD presence; trigger IMD self-test via inverter commissioning interface; record IMD type + BS EN 61557-8 DoC; document trip threshold (typically configured per manufacturer in the kohm range — e.g. inverter alarms at 1 MΩ then trips at lower threshold); confirm trip path (inverter disconnects + alarm raised + portal alert). (6) Documentation — cert evidence bundle records: IMD make + model + DoC + self-test result + trip threshold. (7) Operational — IMD running fault path is a key piece of customer monitoring portal data alongside yield (covered §12.7).',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What is unique about BESS DC bus IR + IV at initial verification?',
     options: [
-      'Same as PV',
-      'BESS DC bus IV has unique aspects: (1) BMS-commissioning gate — the BMS must be commissioned per manufacturer before the DC bus is energised (cell balance, communications, fault tolerance); (2) IR test voltage per manufacturer + Table 64 (typically 500 V DC for residential 48 V battery bus, higher for 400-800 V commercial); (3) capacitor discharge time — BESS inverters have substantial DC link capacitors that retain charge after disconnect; (4) cell-string-level IR may need separate testing per manufacturer; (5) post-commissioning, BMS reports SoC + SoH baseline that becomes the cert evidence record',
-      'No difference',
-      'No testing',
+      'It is identical to PV string verification and uses the same 1000 V test in every case',
+      'BMS commissioning comes first, the test voltage follows the bus voltage per Table 64, capacitor discharge is observed, and the SoC/SoH baseline is recorded',
+      'There is no meaningful difference between BESS and any other DC circuit at initial verification',
+      'No testing is needed because the manufacturer’s BMS continuously monitors the bus in service',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'PV install: 12 modules per string, Voc 40 V per module, 2 strings parallel. What IR test voltage applies + how is the test performed?',
     options: [
-      '250 V everywhere',
-      'String Voc = 12 × 40 V = 480 V open-circuit per string; 2 strings in parallel doesn\'t increase Voc (parallel adds Isc). Per Table 64 the test voltage at 480 V falls in the up-to-500 V band (test voltage 500 V DC, minimum 1 MΩ). Some manufacturers + verifiers use 1000 V for headroom + future-proofing. Procedure: cover PV array OR open string isolators; disconnect strings from inverter DC input; apply 500 V (or 1000 V per manufacturer) between PV positive + earth, negative + earth, positive + negative; record. Re-test at 250 V DC after equipment connected per Reg 643.3.3',
-      'No test',
-      '24 V test',
+      'String Voc is 480 V (parallel adds current, not voltage), so a 500 V DC test applies — or 1000 V for cold-weather headroom',
+      '250 V is used everywhere on the DC side regardless of the string voltage, in line with the SELV band of Table 64',
+      'No DC test is performed because parallel strings cancel out and the array produces no hazardous voltage',
+      'A fixed 24 V test applies, as parallel PV strings are treated as SELV circuits under Table 64',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PV string IR: string Voc 480 V at standard test conditions (Voc rises in cold conditions per the temperature coefficient — typical -0.3 %/°C below STC 25°C; at -10°C the Voc rises ~10% — so 480 V at STC becomes ~530 V at -10°C, which crosses the Table 64 500 V band threshold). Conservative approach: use 1000 V DC test where Voc may approach or exceed 500 V at coldest operating temperature. Procedure per Reg 643.3 + Section 712: (1) Cover PV array OR open string isolators OR perform at low-irradiance time (early morning) — but the array still produces some voltage. (2) Disconnect string from inverter DC input. (3) Apply IR test between PV positive + protective earth conductor: record reading. (4) Repeat between PV negative + protective earth: record. (5) Repeat between PV positive + negative (with the array effectively shorted at the string level via the tester for the duration of the test): record. (6) Reg 643.3.3 re-test at 250 V DC between live + CPC after equipment connected. Minimum IR per Table 64 = 1 MΩ; modern PV arrays typically MΩ to 10s of MΩ; damp or aged arrays may approach the threshold. Cert evidence bundle: per-string IR results + test voltage + irradiance / weather conditions at time of test.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BESS install: 10 kWh residential battery, 48 V nominal DC bus, BMS commissioned by manufacturer engineer. What IV remains for the electrician?',
     options: [
-      'Nothing',
-      'BMS commissioning is the manufacturer-side prerequisite. Electrician scope remaining: (1) Reg 642 inspection — disconnected-from-supply check of BESS DC + AC terminations, isolators, warning notices, cable routing; (2) Reg 643 testing on the AC side of BESS — continuity, IR at 500 V, polarity, loop impedance, RCD operation (Type B if BESS electronics produce DC fault leakage), PFC; (3) DC bus IR per manufacturer (typically 500 V DC test for 48 V bus per Table 64); (4) Reg 551.7.5 anti-islanding verification (BESS inverter disconnects on simulated grid loss); (5) Cert evidence bundle integrates BMS commissioning record + IV results + EIC',
-      'AC only',
-      'Random',
+      'Nothing remains; once the manufacturer has commissioned the BMS the whole install is fully certified',
+      'Only the AC-side terminations are left; no DC bus testing or anti-islanding check falls to the electrician',
+      'Reg 642 inspection, Reg 643 AC testing, DC bus IR per the manufacturer and an anti-islanding check — integrated with the BMS record',
+      'The electrician picks whichever tests seem relevant on the day; no defined remaining scope exists for the BESS circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BESS install IV split between manufacturer + electrician: (1) Manufacturer commissioning engineer: BMS commissioning (cell balance, communications, fault tolerance), DC bus connection + initial energisation, SoC + SoH baseline. (2) Electrician IV scope: (a) Reg 642 inspection — disconnected from supply; BESS DC terminations torque-checked + correct polarity; AC terminations; isolators; warning notices per Reg 514 + manufacturer; cable routing per Section 522. (b) Reg 643 testing on AC side: continuity (R1+R2, R2 on the BESS AC supply circuit); IR at 500 V per Reg 643.3 + Table 64; polarity; loop impedance Zs at the BESS AC isolation point; RCD operation — Type B 30 mA verified per BS EN 61557-6 because the BESS inverter electronics may produce DC fault leakage (check manufacturer DoC for the BESS); PFC. (c) DC bus IR per manufacturer — typically 500 V DC test for 48 V nominal bus per Table 64 ≤500 V band; some manufacturers specify higher. (d) Reg 551.7.5 anti-islanding: simulate grid loss + verify the BESS inverter disconnects within the specified time. (e) Functional test: BESS charges + discharges correctly; BMS communicates; alarms function. (3) Documentation: manufacturer BMS commissioning record + electrician\'s EIC + Schedule of Test Results + cert evidence bundle.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'EV DC fast charger commissioning — why is the DC IV procedure handled mainly by the manufacturer commissioning engineer?',
     options: [
-      'No reason',
-      'EV DC fast (CCS, CHAdeMO) operates at 200-1000 V DC depending on vehicle + charger. The DC side has substantial converter electronics + safety circuits + communication with the vehicle (handshake before DC supplied). The DC IV procedure is therefore manufacturer-specific: bespoke test rigs, vehicle simulation, manufacturer software access. The electrician\'s scope is the AC supply side IV (continuity, IR, ADS, RCD), the protective conductor + earthing, the DC connector physical install + cable routing — but the DC commissioning itself is manufacturer commissioning engineer territory',
-      'EV is AC',
-      'Random',
+      'There is no particular reason; any electrician can commission the DC side with a standard multi-function tester',
+      'DC fast charging is actually AC under the bonnet, so the manufacturer has no special commissioning role',
+      'The electrician commissions the high-voltage DC side, while the manufacturer only supplies and delivers the unit',
+      'The DC side (200–1000 V) has bespoke converter electronics, safety circuits and a vehicle handshake needing manufacturer rigs and software; the electrician handles the AC supply IV and install',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EV DC fast charging is a specialist commissioning area: (1) Voltage range — CCS Combo 200-1000 V DC per vehicle; CHAdeMO 50-500 V DC typical; Tesla Supercharger proprietary. (2) Power levels — domestic AC charging is 7-22 kW; commercial DC fast is 50-350 kW. (3) Commissioning complexity — DC side has bespoke power electronics (active rectifier, DC-DC converter), thermal management, communication protocol with the vehicle (ISO 15118 / CHAdeMO protocol), safety circuits (isolation monitoring, ground fault detection), software calibration. (4) Manufacturer engineer scope — DC side commissioning: handshake verification, calibration, vehicle simulation tests using manufacturer software + bespoke test loads; firmware updates; communication with central management system (CMS / OCPP). (5) Electrician scope — AC supply IV (continuity, IR, polarity, ADS, RCD Type B + RDC-DD per Section 722 manufacturer DoC, loop impedance, PFC); protective conductor + earthing per Reg 722.411.4 (OPDD or alternative architecture if PME + outdoor); DC connector physical install + cable routing + ingress protection. (6) Joint sign-off — manufacturer commissioning record + electrician\'s EIC + cert evidence bundle integrates both.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'Why is irradiance / weather state important when recording PV string IR results?',
     options: [
-      'It is not',
-      'PV string IR drifts with operating state: humid mornings + damp panels show lower IR (more leakage through the moisture path); dry sunny conditions show higher IR; mid-winter cold + dry shows different again. The IR reading at any single moment doesn\'t tell the whole story unless conditions are recorded. Best practice: record date + time + weather + irradiance / module temperature; baseline IR at commissioning; periodic monitoring trends against baseline to detect degradation',
-      'Random',
-      'No effect',
+      'It is not important; the IR reading is identical in any weather, so the conditions need not be recorded',
+      'PV string IR drifts with operating state — damp lowers it, dry raises it — so recording date, weather, irradiance and module temperature lets you baseline and trend it',
+      'Weather is recorded only for the customer’s interest and has no real bearing on the IR test result',
+      'Irradiance and humidity have no effect on insulation resistance and influence only the energy yield',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 specifies a 250 V DC re-test after equipment is connected. Why?',
     options: [
-      'No reason',
-      'Reg 643.3.3: where connected equipment is likely to influence the measurement or result of the test, or be damaged, the test shall be applied prior to the connection of such equipment. Following connection of the equipment, a test at 250 V DC shall be applied between live conductors and the protective conductor. The 250 V re-test is the lower-voltage check that confirms no fault path exists with equipment connected — verifies the IR with the real-world load topology without risking damage to sensitive equipment electronics',
-      'Random',
-      'No re-test required',
+      'There is no reason; the 250 V figure is simply a historical convention carried over with no technical basis',
+      'The lower 250 V test verifies the as-installed insulation with equipment connected — low enough not to damage electronics, high enough to catch real degradation',
+      'The 250 V re-test replaces the pre-connection test entirely, so only a single IR test is ever performed',
+      'No re-test at all is required once the higher-voltage pre-connection test has already passed',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Micro-hydro install with DC interim bus (rare but exists) — how is DC IV approached?',
     options: [
-      'Cannot test',
-      'Some micro-hydro systems have a DC interim bus between the turbine + AC inverter. DC IV approach: (1) the manufacturer DoC governs — every micro-hydro DC bus is bespoke; (2) Table 64 + Reg 643.3 framework still applies — test voltage per nominal DC voltage band; (3) BS EN 61557-2 instrument; (4) consider weather + water exposure — micro-hydro DC cabling is typically buried / outdoor cable; (5) consider DC capacitors + DC link discharge time. The Section 551 + Section 712 framework adapted to the manufacturer\'s system design',
-      'AC only',
-      'Random',
+      'A micro-hydro DC bus cannot be insulation-tested at all and is verified solely by the turbine supplier',
+      'Micro-hydro generation is AC throughout the system, so there is never any DC bus to insulation-test',
+      'There is no defined approach; the electrician improvises a bespoke test procedure for each system',
+      'The manufacturer DoC governs the bespoke bus, but the Table 64 and Reg 643.3 framework still applies — voltage by band, BS EN 61557-2 instrument, allowing for water exposure and capacitor discharge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Micro-hydro DC interim bus IV: (1) Bespoke nature — micro-hydro installs are typically small-volume bespoke designs from specialist manufacturers (Powerspout, Stream Engine, Powerpal, etc); the DC bus architecture varies per turbine + grid-tie inverter combination. Manufacturer DoC mandates the test procedure. (2) Voltage range — micro-hydro DC bus typically 24-300 V depending on system; Table 64 + Reg 643.3 framework applies with test voltage per nominal band. (3) BS EN 61557-2 IR tester; the typical multi-function tester covers this. (4) Weather + water exposure — micro-hydro cabling is typically buried / outdoor / wet-environment; pay attention to gland integrity + cable IR vs water ingress; cert evidence bundle records weather conditions at IR test. (5) DC capacitors + discharge — the grid-tie inverter has DC link capacitors that retain charge; observe manufacturer discharge wait time. (6) Functional verification — turbine spinning + DC bus charging + inverter exporting to grid + Reg 551.7.5 anti-islanding verified. (7) Documentation — manufacturer commissioning record + EIC + Schedule of Test Results + cert evidence bundle records the bespoke DC bus IV per manufacturer instruction. M9 §9.7 covered the micro-hydro install scope; here we cover the DC IV specifics.',
   },

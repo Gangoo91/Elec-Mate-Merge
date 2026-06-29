@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'tncs-pme',
     question: 'What is the alternative name for a TN-C-S earthing system in the UK?',
     options: [
-      'Supported by records and evidence',
-      'Standard Assessment Procedure',
+      'Separately Earthed Neutral (SEN)',
+      'Combined Earth and Neutral Terminal (CENT)',
       'Protective Multiple Earthing (PME)',
-      'Prove dead yourself before starting work',
+      'Direct Earth Return (DER)',
     ],
     correctIndex: 2,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       'According to the adiabatic equation, what does k represent when calculating minimum cpc size?',
     options: [
       'A factor depending on conductor material and insulation',
-      'Lower current for same power → smaller cables, less I²R loss',
-      'Low-voltage DC, which an inverter then converts to 230 V AC at 50 Hz',
-      'Yes — 50 × 0.030 = 1.5 V, well inside the 50 V limit.',
+      'The prospective earth fault current at the point of the fault',
+      'The maximum permitted disconnection time for the circuit',
+      'The cross-sectional area of the associated line conductor',
     ],
     correctIndex: 0,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the designation 'TN' indicate about an earthing system?",
     options: [
-      'Metal gas, water, oil pipes, structural steel, and other services entering the building',
-      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
+      'The source is isolated from earth and the installation uses its own earth electrode',
+      'Both the source and the installation are earthed via independent earth electrodes',
       'The source is directly earthed and exposed-conductive-parts are connected to that earth',
-      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
+      'The neutral and protective conductors remain combined throughout the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,16 +109,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'What is the typical maximum earth fault loop impedance (Ze) for a TN-S system?',
+    question: 'What is the typical maximum declared earth fault loop impedance (Ze) for a TN-S system?',
     options: [
       '21Ω',
       '0.8Ω',
       '200Ω',
       '0.35Ω',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'The typical maximum Ze for a TN-S system is 0.35Ω. This low impedance is achieved because the fault return path is via the metallic cable sheath, providing a low-resistance connection back to the source.',
+      'The typical maximum declared Ze for a TN-S system is 0.8Ω, with the fault return path via the metallic cable sheath. The lower 0.35Ω figure is the typical declared maximum for a TN-C-S (PME) supply.',
   },
   {
     id: 4,
@@ -126,9 +126,9 @@ const quizQuestions = [
       'Why must additional precautions be taken with PME supplies when providing earthing to outbuildings?',
     options: [
       'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
-      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
-      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
-      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
+      'The earth fault loop impedance is too low to allow protective devices to operate',
+      'PME earthing increases the resistance of the circuit protective conductor',
+      'Outbuildings always have a higher prospective fault current than the main building',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'The main earthing terminal must be connected to which of the following?',
     options: [
-      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
+      'Only the means of earthing, with circuit protective conductors taken to the neutral bar',
       'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
-      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
-      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
+      'Only the main protective bonding conductors for gas and water services',
+      'The neutral conductor and the line conductors at the origin of the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of supplementary equipotential bonding?',
     options: [
-      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
-      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
-      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
+      'To provide the main fault current return path back to the source transformer',
+      'To replace the need for a circuit protective conductor on final circuits',
+      'To lower the earth electrode resistance of a TT installation',
       'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'Which extraneous-conductive-parts require main protective bonding?',
     options: [
       'Metal gas, water, oil pipes, structural steel, and other services entering the building',
-      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
-      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
-      'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
+      'Plastic water and waste pipes, which can carry static charge into the building',
+      'The exposed metalwork of Class II double-insulated appliances',
+      'Internal metal pipework located more than 600mm beyond the service entry',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'For an earth electrode serving a TT installation, what test should be performed and what is the typical maximum acceptable resistance?',
     options: [
-      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
+      'Insulation resistance test, with a minimum acceptable value of 1 megohm',
       'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
-      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
-      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
+      'Earth fault loop impedance test, with a maximum acceptable value of 0.35Ω',
+      'Continuity test of the protective conductor, with a maximum of 0.05Ω',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is an IT earthing system primarily used for?',
     options: [
-      'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
-      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
+      'Standard domestic installations supplied from an underground cable network',
+      'Rural installations fed by overhead lines where no DNO earth is provided',
       'Installations requiring high continuity of supply where a first fault should not cause disconnection',
-      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
+      'Temporary supplies on construction sites where PME is not permitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
       'When using Table 54.7 of BS 7671 for cpc sizing, what determines the minimum cpc size?',
     options: [
       'The cross-sectional area of the line conductor',
-      'Analyzing network topology and optimizing device placement',
-      'Engineering Recommendation G5/4-1',
-      'Single line diagrams, settings, and coordination curves',
+      'The prospective earth fault current at the consumer unit',
+      'The rated residual operating current of any RCD fitted',
+      'The total length of the final circuit being protected',
     ],
     correctAnswer: 0,
     explanation:
@@ -322,7 +322,7 @@ const HNCModule7Section6_3 = () => {
             </ul>
             <p><strong>UK Earthing Systems Comparison</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>TN-S:</strong> Cable sheath/armouring — ≤ 0.35Ω — Older urban supplies, industrial</li>
+              <li><strong>TN-S:</strong> Cable sheath/armouring — ≤ 0.8Ω — Older urban supplies, industrial</li>
               <li><strong>TN-C-S (PME):</strong> Supply neutral (PEN) — ≤ 0.35Ω — Modern domestic/commercial</li>
               <li><strong>TT:</strong> Earth electrode — ≤ 21Ω (typically) — Rural, overhead supplies, outbuildings</li>
               <li><strong>IT:</strong> Isolated or high impedance — Variable — Critical systems, hospitals, process plants</li>
@@ -532,7 +532,7 @@ const HNCModule7Section6_3 = () => {
               <strong>Key Values to Remember:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>TN-S typical Ze: <strong>0.35Ω maximum</strong></li>
+              <li>TN-S typical Ze: <strong>0.8Ω maximum</strong></li>
               <li>TN-C-S typical Ze: <strong>0.35Ω maximum</strong></li>
               <li>Main bonding minimum: <strong>6mm² copper</strong></li>
               <li>Main bonding maximum: <strong>25mm² copper</strong></li>

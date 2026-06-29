@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'feedforward-purpose',
     question: 'What is the main advantage of feedforward control over pure feedback control?',
     options: [
-      'Material specifications, test results, compliance standards, and batch numbers',
+      'It does not require any sensors to be fitted to the process',
       'It can take corrective action before a disturbance affects the process output',
-      'To allow current flow in the rotor by relative motion between field and rotor',
-      'Phase to earth, and phase to phase on all combinations',
+      'It is always cheaper to implement than feedback control',
+      'It eliminates the need for a final control element',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'control-element',
     question: "Which component in a control loop is the 'final control element'?",
     options: [
-      'To record defects or incomplete items requiring correction before handover',
-      'Brief them on progress, allow them to witness the remaining duration test',
-      'That it meets the essential health and safety requirements set out in UK/EU regulations',
+      'The sensor that measures the process variable',
+      'The controller that calculates the error signal',
+      'The transmitter that converts the signal to 4-20 mA',
       'The device that physically adjusts the process, such as a control valve or variable speed drive',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'A domestic toaster that runs for a fixed time regardless of bread colour is an example of:',
     options: [
-      'Supply air temperature control',
+      'Closed loop control with feedback',
       'Open loop control without feedback',
-      'Transit time difference of sound waves',
-      'Electrical boxes and conduits',
+      'Cascade control with two loops',
+      'Feedforward control of a disturbance',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is NOT a component of a basic control loop?',
     options: [
-      'A fixed ratio between two process variables',
-      'The setpoint for the secondary controller',
-      'The actual measured value of the controlled condition',
-      'Programmable logic controller (PLC) in every case',
+      'A sensor or transmitter to measure the process variable',
+      'A controller to compare the measurement with the setpoint',
+      'A final control element to adjust the process',
+      'A programmable logic controller (PLC) in every case',
     ],
     correctAnswer: 3,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a cascade control arrangement, the output of the primary controller becomes:',
     options: [
-      'A fixed ratio between two process variables',
+      'The measured process variable of the secondary controller',
       'The setpoint for the secondary controller',
-      'Programmable logic controller (PLC) in every case',
-      'The actual measured value of the controlled condition',
+      'A direct drive signal to the final control element',
+      'The setpoint for the primary controller itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: "What does 'dead time' mean in process control?",
     options: [
-      'Hazardous waste (mercury content) — segregate, store upright in a labelled container and consign to a permitted carrier',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'To confirm work is complete, the area is safe, and controls can be removed',
+      'The period when the controller is switched to manual mode',
+      'The time taken for the process to reach 63% of its final value',
+      'The interval between scheduled calibration checks',
       'The delay between a change in controller output and the first measurable effect on the process variable',
     ],
     correctAnswer: 3,
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'process variable' in a control loop is:",
     options: [
-      'A fixed ratio between two process variables',
+      'The desired target value the operator enters into the controller',
       'The actual measured value of the controlled condition',
-      'Programmable logic controller (PLC) in every case',
-      'The setpoint for the secondary controller',
+      'The output signal sent to the final control element',
+      'The difference between the setpoint and the measurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is the 4-20 mA standard preferred over 0-20 mA for industrial process signals?',
     options: [
-      'The employer, or in relation to premises not connected with work, the person who has control of the premises',
-      'The scaffold must NOT be used — it is incomplete, dangerous, or condemned',
+      'It carries twice as much power to drive the final control element',
+      'It allows a higher maximum current for greater measurement range',
       'The live zero at 4 mA allows differentiation between a true zero reading and a cable fault',
-      'Ensure clear vision of the steps, use handrails where possible, and take one step at a time',
+      'It is immune to all forms of electrical interference unlike 0-20 mA',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
       'Under ST1426, understanding process control principles is important for maintenance technicians because:',
     options: [
       'They need to diagnose faults in automated systems, understand control strategies and communicate with instrumentation engineers',
-      'A calibration check box (e.g. resistance check unit, test box) at intervals — and at each suspected damage event — to confirm continued accuracy between calibrations',
-      'Safe approach distances and safe working practices near electricity distribution network equipment',
-      'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
+      'They are required to design and commission new control loops from scratch',
+      'They must write the control algorithms used by the PLC or DCS',
+      'They are responsible for setting the production targets for the plant',
     ],
     correctAnswer: 0,
     explanation:

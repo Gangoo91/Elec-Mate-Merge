@@ -5,35 +5,35 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the role of a gateway in a BMS?',
     options: [
-      '±5mm for exact positioning requirements',
+      'To boost the signal voltage on long cable runs',
       'To convert messages from one protocol to another',
-      'May reveal patterns or recurring issues',
-      'Enhanced IP ratings, RCD protection, and bonding',
+      'To store historical trend data for reporting',
+      'To provide backup power during a mains failure',
     ],
     correctAnswer: 1,
     explanation:
-      'A gateway converts messages from one protocol to another, enabling different systems to communicate through the BMS.',
+      'A gateway converts messages from one protocol to another, enabling systems that speak different languages (e.g. BACnet, Modbus, KNX) to communicate through the BMS.',
   },
   {
     id: 2,
     question: 'Why are gateways compared to translators?',
     options: [
-      "To indicate which protocols are being converted and ensure proper maintenance",
-      "It allows KNX-controlled devices to appear as BACnet objects for central monitoring",
+      'They store every message so it can be replayed later',
+      'They split one signal into several identical copies',
       "They convert different protocol 'languages' so systems can understand each other",
-      "That data is visible on both the source device and target system",
+      'They amplify weak signals to extend the network reach',
     ],
     correctAnswer: 2,
     explanation:
-      "Gateways are like translators because they convert different protocol 'languages' (like BACnet, Modbus, KNX) so systems using different protocols can understand and communicate with each other.",
+      "Gateways are like translators because they convert different protocol 'languages' (such as BACnet, Modbus and KNX) so systems using different protocols can understand and communicate with each other.",
   },
   {
     id: 3,
     question: 'Give one example of a Modbus-to-BACnet gateway application.',
     options: [
-      'In control panels or equipment rooms, close to the systems they link',
-      'It allows KNX-controlled devices to appear as BACnet objects for central monitoring',
-      'That data is visible on both the source device and target system',
+      'Connecting two BACnet controllers on the same network segment',
+      'Providing a wireless link between two KNX lines',
+      'Powering a group of 24V DC field sensors',
       'Converting energy meter data from Modbus format to BACnet for BMS integration',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     question: 'What is the benefit of using a KNX-to-BACnet gateway?',
     options: [
       'It allows KNX-controlled devices to appear as BACnet objects for central monitoring',
-      'Converting energy meter data from Modbus format to BACnet for BMS integration',
-      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
-      'That data is visible on both the source device and target system',
+      'It removes the need to address KNX devices individually',
+      'It supplies the KNX bus with its required operating voltage',
+      'It increases the maximum cable length of the BACnet network',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why do gateways help make systems more future-proof?',
     options: [
-      'It allows KNX-controlled devices to appear as BACnet objects for central monitoring',
+      'They automatically update device firmware over the network',
       'They allow mixing devices from different vendors and adding new subsystems without replacing everything',
-      'To indicate which protocols are being converted and ensure proper maintenance',
-      'Converting energy meter data from Modbus format to BACnet for BMS integration',
+      'They eliminate the need for periodic commissioning checks',
+      'They convert all analogue signals into a single digital standard',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,14 +70,14 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Where are gateways typically installed?',
     options: [
-      'To convert messages from one protocol to another',
-      'That data is visible on both the source device and target system',
+      'Outdoors near the building entrance for easy access',
+      'Inside the main incoming electricity meter cabinet',
       'In control panels or equipment rooms, close to the systems they link',
-      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
+      'Within the ceiling void above each occupied room',
     ],
     correctAnswer: 2,
     explanation:
-      "Gateways are typically mounted in control panels or equipment rooms, positioned close to the systems they're linking for optimal cable runs and accessibility.",
+      "Gateways are typically mounted in control panels or equipment rooms, positioned close to the systems they're linking for shorter cable runs and easier accessibility.",
   },
   {
     id: 7,
@@ -85,51 +85,51 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     options: [
       '240V AC mains supply',
       'Battery power only',
-      'No power supply needed',
+      'Power over Ethernet exclusively',
       '24V DC with protection',
     ],
     correctAnswer: 3,
     explanation:
-      'Gateways often require 24V DC power supply with proper protection, similar to other control system devices.',
+      'Gateways often require a 24V DC power supply with suitable protection, in common with many other control system field devices.',
   },
   {
     id: 8,
     question: 'Why must gateway terminals be labelled clearly?',
     options: [
-      'To indicate which protocols are being converted and ensure proper maintenance',
-      'It allows KNX-controlled devices to appear as BACnet objects for central monitoring',
-      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
-      'That data is visible on both the source device and target system',
+      'To indicate which protocols are being converted and aid future maintenance',
+      'To meet the manufacturer warranty conditions',
+      'To show the operating temperature range of each terminal',
+      'To record the date the gateway was commissioned',
     ],
     correctAnswer: 0,
     explanation:
-      'Clear labelling of gateway terminals is essential to indicate which protocols are being converted, making troubleshooting and future maintenance much easier.',
+      'Clear labelling of gateway terminals indicates which protocols and which networks each side connects to, making troubleshooting and future maintenance much easier.',
   },
   {
     id: 9,
     question: 'What should be tested on both sides of a gateway during commissioning?',
     options: [
-      'To indicate which protocols are being converted and ensure proper maintenance',
-      'That data is visible on both the source device and target system',
-      'To convert messages from one protocol to another',
-      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
+      'The insulation resistance of the supply cabling',
+      'That data passes correctly and is visible on both the source device and target system',
+      'The ambient humidity around the enclosure',
+      'The earth fault loop impedance of the panel',
     ],
     correctAnswer: 1,
     explanation:
-      "During commissioning, it's crucial to verify that data is visible on both sides - the source device (e.g., Modbus meter) and the target system (e.g., BACnet workstation).",
+      'During commissioning, verify that data passes correctly across the gateway and is visible on both sides - the source device (e.g. a Modbus meter) and the target system (e.g. a BACnet workstation).',
   },
   {
     id: 10,
     question:
       'In the real-world example, what wiring error prevented meters from showing up initially?',
     options: [
-      'Site supervisor or project manager',
-      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
+      'The supply fuse to the gateway was the wrong rating',
+      'The data cable was run alongside a mains cable causing interference',
       'Miswired polarity on the RS-485 bus',
-      'Back, neck, shoulders, arms, and legs',
+      'The gateway was set to the wrong baud rate',
     ],
     correctAnswer: 2,
     explanation:
-      "In the hospital example, some meters didn't show up because electricians had miswired the polarity on the RS-485 bus, which is a common installation error.",
+      "In the hospital example, some meters didn't appear because the RS-485 bus polarity (A/B data lines) had been miswired, which is a common installation error on serial networks.",
   },
 ];

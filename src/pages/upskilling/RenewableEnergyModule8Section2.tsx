@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'How is max demand calculated for a heat pump install per Reg 311.1?',
     options: [
-      'Sum every rated input',
-      'Sum the rated continuous electrical inputs of each load on the circuit / installation, apply diversity per the design context, and identify the peak coincident demand. For a typical UK 2025-26 domestic ASHP install: compressor continuous input (1.5-4 kW) + immersion backup (3 kW, may not run simultaneously with compressor) + circulation pumps (100-300 W) + controls (50-150 W) + existing site base load. Diversity reflects that some loads do not coincide at peak',
-      'Take the largest only',
-      'No calc needed',
+      'Sum the rated continuous inputs of each load, apply diversity, and identify the peak coincident demand',
+      'Sum every rated input at full value with no diversity applied to any of the loads',
+      'Take only the single largest load on the installation and ignore all of the rest',
+      'No calculation is needed because the cut-out fuse rating always exceeds the heat pump demand',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 311.1 max demand calc: sum of rated continuous electrical inputs with applied diversity factor reflecting the design context. For a typical UK 2025-26 domestic ASHP install: (1) compressor continuous input — typically 1.5-4 kW for 5-12 kW thermal output (COP ~3); use manufacturer rated input not the COP-derived theoretical; (2) immersion backup — 3 kW typical; design coincidence rule decides whether to include at full rating (boost cycle could coincide with compressor in some control strategies); (3) circulation pumps — 100-300 W typical; usually coincident with compressor; (4) controls + sensors — 50-150 W; coincident with anything running; (5) existing site base load — cooker / appliances / lighting per existing-load assessment. Apply diversity per IET / OSG guidance + designer judgement. Cert evidence bundle records each load + diversity assumption + the peak coincident max demand.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'EREC G98 vs G99 — which applies to a typical 8 kW thermal ASHP on single-phase supply?',
     options: [
-      'Always G99 formal',
-      'Pure-load heat pump (no co-located generation) at ≤16 A per phase on existing single-phase supply: usually DNO heat pump notification portal (per-phase ≤16 A typical fast-track threshold borrowed from G98). 8 kW thermal ASHP ≈ 2.5-3 kW electrical input continuous (~11-13 A on 230 V) — well within G98 Type A threshold for pure load. G99 only triggered by co-located generation (PV / BESS / V2G) or three-phase installs above 16 A per phase. Always consult the DNO at design stage — local practice varies',
-      'Always G98 fast-track',
-      'No DNO involvement',
+      'Always a G99 formal pre-installation application, whatever the heat pump size or running current',
+      'Always a G98 fast-track notification, even when PV, BESS or V2G is co-located on the same site',
+      'A pure-load 8 kW ASHP (~11-13 A) goes via the DNO heat pump portal; G99 only on co-located generation',
+      'No DNO involvement is needed for any pure-load heat pump on an existing single-phase supply',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'EREC G98 covers Type A small-scale generation (single-phase ≤16 A per phase OR three-phase ≤16 A per phase) — fast-track post-installation notification. G99 covers larger installs + generation. For a typical 8 kW thermal ASHP single-phase pure-load install: ~11-13 A running on 230 V; below the 16 A per phase G98 threshold for pure-load notification (many DNOs require notification of significant pure load too, via the Energy Networks Association heat pump notification process). G99 formal triggered by: co-located generation (PV + BESS + V2G); three-phase installs above 16 A per phase; large heat pumps (16+ kW thermal three-phase). UK 2025-26 reality: always consult the local DNO at design stage — some DNOs prefer notification of all heat pump installs regardless of current; some have streamlined heat pump portal forms. Cert evidence bundle records the DNO correspondence + reference number + the regulatory framework used.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'At what point does a heat pump install typically move to three-phase?',
     options: [
-      'Always single-phase',
-      'Single-phase economic limit: ~12-13 kW thermal output (corresponding to ~4-5 kW electrical input continuous, ~17-22 A on 230 V — close to the practical single-phase circuit + supply limits). Above this, three-phase becomes preferred: balanced 6-8 A per phase, smaller cable, less voltage drop, easier supply capacity. Three-phase heat pumps typical for 16+ kW thermal (large detached / agricultural / light commercial / GSHP higher loads)',
-      'Always three-phase',
-      '50 kW threshold',
+      'Heat pumps are always single-phase regardless of the thermal output specified',
+      'Heat pumps are always three-phase, even the smallest of the domestic units',
+      'Three-phase only becomes necessary at a 50 kW thermal threshold, above any domestic install',
+      'Around ~12-13 kW thermal (~17-22 A on 230 V), where single-phase becomes uneconomic',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Single-phase economic limit for heat pumps: ~12-13 kW thermal output (~4-5 kW electrical input continuous, ~17-22 A on 230 V). Beyond this single-phase becomes uneconomic for cable + protective device + supply capacity reasons. Three-phase ASHP / GSHP typically begin at 16 kW thermal (Mitsubishi Ecodan three-phase, Daikin Altherma 3 H HT three-phase 16-19 kW, Vaillant aroTHERM Plus three-phase 18-25 kW). Three-phase advantages: balanced 6-8 A per phase, smaller cable, less voltage drop, easier supply capacity. UK 2025-26 most existing domestic supplies are single-phase only; three-phase ASHP install typically requires DNO upgrade (3-12 months typical lead time, £3-15k cost). Cert evidence bundle records: phase choice rationale + per-phase current + DNO correspondence + reference.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Typical UK 2025-26 DNO supply upgrade lead time for single-phase 100 A → three-phase?',
     options: [
-      'Same day',
-      '3-12 months typical depending on DNO area + complexity. Single-phase upgrade (100 A → 100 A enhanced cable) is faster (4-8 weeks typical). Three-phase upgrade (single-phase to three-phase 100 A) involves: customer application + DNO design + planning + outage scheduling + new cable install + new metering. London + south-east often longer due to capacity pressure. Cost £3-15k typical (free where the DNO determines existing capacity is inadequate for a reasonable demand — varies)',
-      '5 years',
-      'No upgrade ever',
+      'Same day — the DNO swaps the supply over on the very first survey visit',
+      '3-12 months typically: application, design, outage, new cable and metering, ~£3-15k',
+      'A minimum of 5 years, as three-phase upgrades require national grid reinforcement first',
+      'No upgrade is ever possible from single-phase to three-phase on an existing dwelling',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       '4-bed semi-detached, existing 100 A single-phase supply, proposing 8 kW thermal ASHP. What is the supply assessment?',
     options: [
-      'Need three-phase',
-      'Existing 100 A single-phase capacity ~23 kW. Heat pump load: 8 kW thermal ≈ 2.5-3 kW electrical input continuous + 3 kW immersion (not coincident with compressor in normal control) + 200 W pumps + existing base load 5-7 kW (cooker + appliances + lighting). Peak with diversity ~10-12 kW — well within 23 kW supply capacity. DNO heat pump notification portal. No supply upgrade required. Typical scope for the dominant UK 2025-26 retrofit pattern',
-      'Need 200 A',
-      'No load calc',
+      'The existing 100 A supply (~23 kW) covers the ~10-12 kW peak with diversity, so notify the DNO but no upgrade',
+      'A three-phase upgrade is essential because any 8 kW heat pump exceeds a single-phase supply',
+      'A 200 A single-phase supply is needed, as heat pumps always require double the existing capacity',
+      'No load calculation is needed — the DNO confirms adequacy from the meter point reference alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard retrofit scenario. Existing 100 A single-phase = ~23 kW supply capacity. Heat pump load components (per Reg 311.1): (1) compressor 2.5-3 kW continuous; (2) immersion 3 kW (typically NOT coincident with compressor in normal control — boost cycle scheduled outside compressor operation); (3) circulation pumps 200 W coincident; (4) controls 100 W coincident; (5) existing site base load 5-7 kW (assessed via meter reading + customer interview). Peak with diversity: ~10-12 kW max demand — well within 23 kW capacity. DNO heat pump notification portal. No supply upgrade required. Dominant UK 2025-26 retrofit gas-swap pattern fits this profile. Cert evidence bundle records the max demand calc + diversity assumptions + DNO correspondence.',
   },
@@ -96,34 +96,34 @@ const quizQuestions = [
     question:
       '5-bed detached with proposed 16 kW thermal ASHP + future EV + PV + BESS. Supply design?',
     options: [
-      'Single-phase 100 A',
-      'Three-phase 100 A required. 16 kW thermal ASHP ≈ 5-6 kW electrical input continuous (8-9 A per phase three-phase) + future 7 kW EV (10 A single-phase or 32 A three-phase if upgraded to 22 kW EV) + PV inverter ~3 kW + BESS 5-6 kW per phase peak discharge. Three-phase load profile: 25-30 A per phase peak; well within 100 A three-phase. Site is Chapter 82 PEI (Prosumer’s Electrical Installation). G99 formal application (co-located generation + larger heat pump)',
-      'Two single-phase supplies',
-      'Domestic 60 A',
+      'A single-phase 100 A supply, since the heat pump, EV, PV and BESS never run at the same time',
+      'Two separate single-phase supplies to the property, one for the heat and one for the EV charger',
+      'Three-phase 100 A — ~25-30 A per phase peak; a Chapter 82 PEI site needing a G99 application',
+      'A domestic 60 A supply is ample because PV and BESS offset all of the heat pump and EV load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '5-bed detached with electrified heat + EV + PV + BESS is a Chapter 82 PEI (Prosumer’s Electrical Installation) site. Three-phase 100 A supply: 16 kW thermal ASHP ≈ 5-6 kW electrical input continuous (8-9 A per phase) + future 7 kW single-phase EV (10 A on L1 say) or 22 kW three-phase EV (32 A per phase) + PV inverter ~3 kW (1-1.5 A per phase generation) + BESS 5-6 kW per phase peak discharge. Peak three-phase load ~25-30 A per phase — well within 100 A three-phase capacity. G99 formal application: co-located generation (PV + BESS) + larger heat pump. Cert evidence bundle: three-phase max demand calc + EREC G99 application + DNO connection agreement + PEI Chapter 82 integration documentation. UK 2025-26 best-practice for new-build / major-refurb with full electrification.',
   },
   {
     question: 'A rural cottage with existing 60 A single-phase supply, 10 kW thermal ASHP proposed. Issue?',
     options: [
-      'No issue',
-      '60 A single-phase = ~14 kW supply capacity. Heat pump 10 kW thermal ≈ 3-3.5 kW electrical + 3 kW immersion (potentially coincident in boost cycles) + base load 4-6 kW (rural cottage typical) = 10-12 kW peak with diversity — close to / at the 14 kW supply limit. Supply upgrade to 100 A single-phase typically required (4-8 weeks DNO lead time + £1-3k). Alternative: smaller ASHP (7-8 kW thermal) + better insulation + heating-system optimisation',
-      'Use 1 kW heat pump',
-      'No supply needed',
+      'There is no issue — a 60 A supply comfortably handles any domestic heat pump plus base load',
+      'No supply at all is needed because a rural cottage can run a heat pump from a standby generator',
+      'Specify a 1 kW heat pump so that the existing 60 A supply is never stressed at peak demand',
+      'A 60 A supply (~14 kW) puts the ~10-12 kW peak at the limit, so upgrade to 100 A or downsize the ASHP',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rural cottage with 60 A single-phase = ~14 kW supply capacity (older / smaller properties often 60 A). Heat pump 10 kW thermal load + base load = ~10-12 kW peak with diversity — close to / at supply limit; risk of nuisance tripping + voltage drop + supply complaint from DNO. Solutions: (1) upgrade supply to 100 A single-phase (typically 4-8 weeks + £1-3k); (2) downsize heat pump to 7-8 kW thermal + improve building fabric insulation to reduce heat loss; (3) hybrid heat pump with gas / oil backup for cold-peak demand. UK 2025-26 rural reality: existing supply assessment is critical early; many rural properties have older supplies inadequate for full electrification without upgrade. Cert evidence bundle records the assessment + DNO correspondence + the chosen solution.',
   },
   {
     question: 'DNO notification — who is responsible for it on a heat pump install?',
     options: [
-      'Customer',
-      'The MCS-certified installer company is contractually responsible for the customer-facing DNO interaction; the electrical installer (subcontracted scope) typically prepares the technical notification (load calc + supply assessment + reference + completion date). MCS company submits to the DNO portal. Joint responsibility in practice; clear scope-of-works at quote stage. UK 2025-26 most DNOs have a dedicated heat pump notification portal (e.g. UKPN heatpumpnotification.co.uk)',
-      'Random',
-      'No notification',
+      'The customer alone, who must register the heat pump with the energy supplier before any work begins',
+      'Joint — the MCS company is customer-facing while the electrician prepares the technical notification',
+      'The DNO itself, which detects the new load from smart-meter telemetry and self-notifies automatically',
+      'Nobody — pure-load heat pumps are exempt from any DNO notification requirement whatsoever',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,24 +132,24 @@ const quizQuestions = [
   {
     question: 'Diversity factor for compressor + immersion + circulation pumps — typical assumption?',
     options: [
-      'Apply 100% to all',
-      'Compressor + circulation pumps + controls: coincident (100%) — they all run together when heat pump is operating. Immersion backup: typically NOT coincident with compressor at design level — control strategy schedules immersion outside compressor running (boost cycles, legionella heat-up). Diversity for immersion: 0% in normal coincident max demand calc; 100% if the control allows simultaneous operation (some installs do; check the control logic). Conservative design assumes 100% if uncertain',
-      'No diversity',
-      'Always 50%',
+      'Apply 100% diversity to every load including the immersion, regardless of the control strategy used',
+      'Apply a flat 50% to every load on the circuit as a standard rule of thumb across the install',
+      'Compressor, pumps and controls are coincident (100%); the immersion is usually 0% if scheduled apart',
+      'Apply no diversity at all, as heat pump loads must always be summed at their full rated value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Diversity factors for heat pump install max demand calc: (1) compressor + circulation pumps + controls — coincident (100%); they always run together when the heat pump is operating. (2) Immersion backup — design control strategy typically schedules immersion outside compressor running (boost cycles, legionella heat-up at off-peak hours); diversity often 0% in normal max demand calc (immersion does not coincide with compressor). BUT some installs allow simultaneous operation (e.g. boost cycle override during high demand); conservative design assumes 100% if control strategy uncertain. UK 2025-26 mature install practice: confirm the control strategy at design stage; document the diversity assumption in the cert evidence bundle. The IET / OSG guidance gives example diversity factors; designer judgement applies for the specific install context.',
   },
   {
     question: 'Heat-pump-ready supply upgrade — what does it mean for a customer planning a future heat pump?',
     options: [
-      'Same as install',
-      'Customer commits to heat pump direction; electrical installer upgrades the supply NOW (3-12 months ahead of heat pump install). Single-phase to three-phase upgrade, or 60 A to 100 A single-phase, depending on heat pump target. Includes: customer DNO application, outage scheduling, new metering, new CU + dedicated way reserved for heat pump. Customer pays the upgrade cost upfront; the heat pump install months later proceeds without DNO delay. Useful when DNO lead times threaten the customer’s heating-system timeline',
-      'Not possible',
-      'Same as solar',
+      'It is identical to the heat pump install itself, just billed on a separate invoice later',
+      'It is the same process as a solar PV connection, governed entirely by EREC G99 rules',
+      'It is not possible to upgrade a supply before the heat pump is physically present on site',
+      'The supply is upgraded now (3-12 months ahead), with a reserved CU way, so the later install has no DNO delay',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heat-pump-ready supply upgrade: customer commits to a heat pump direction; electrical installer upgrades the supply now, months before the heat pump install. Typical scenarios: (1) single-phase to three-phase upgrade for a future 16+ kW thermal ASHP; (2) 60 A to 100 A single-phase upgrade for an older rural property. Process: customer DNO application now; outage + new cable + new metering scheduled; new CU with dedicated way reserved for future heat pump (labelled "future heat pump"); cable terminated at junction box at future outdoor unit location (or coiled at CU if heat pump location not yet decided). When the heat pump arrives 3-12 months later, MCS company connects to the pre-installed termination. Useful when DNO lead times would otherwise delay the customer’s heating system. UK 2025-26 emerging electrical service offering. Cert evidence bundle: upgrade scope + the future heat pump model expected + the planned connection.',
   },

@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'According to Covey, what is the highest level on the listening ladder, and how does it differ from attentive listening?',
     options: [
-      'Selective listening — you filter for the parts that interest you',
       "Empathic listening — you seek to understand the other person's frame of reference, not just their words",
+      'Selective listening — you filter for the parts that interest you',
       'Attentive listening — you pay full attention to every word spoken',
       'Pretend listening — you nod and make appropriate sounds without processing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Empathic listening is the highest level on Covey's listening ladder. Unlike attentive listening, where you pay full attention to the words being spoken, empathic listening goes further by seeking to understand the speaker's frame of reference, their emotions, and the meaning behind their words. It is listening with the intent to understand, not merely to hear or respond.",
   },
@@ -39,23 +39,23 @@ const quickCheckQuestions = [
     question:
       'A client says, "This is taking forever and costing me a fortune." Which reflective listening response best demonstrates empathic listening?',
     options: [
-      '"It hasn\'t actually taken that long compared to most jobs."',
-      '"I understand you\'re feeling frustrated about both the timeline and the cost. Can you tell me which is the bigger concern right now?"',
-      '"Don\'t worry, we\'ll get it done."',
-      '"You should have expected this — rewires always take time."',
+      '"It hasn\'t actually taken that long compared to most rewires we do."',
+      '"Don\'t worry about it — we\'ll get the job finished for you soon."',
+      '"You should have expected this; a full rewire always takes time and money."',
+      '"I can hear you\'re frustrated about both the timeline and the cost — which is the bigger worry?"',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      "The second option demonstrates empathic listening because it reflects back the client's feelings (frustration), acknowledges both concerns (timeline and cost), and invites further dialogue. It shows that you have heard not just the words but the emotion behind them, and it creates space for the client to clarify what matters most. The other options dismiss, minimise, or lecture — all common listening failures.",
+      "The empathic response reflects back the client's feelings (frustration), acknowledges both concerns (timeline and cost), and invites further dialogue. It shows that you have heard not just the words but the emotion behind them, and it creates space for the client to clarify what matters most. The other responses dismiss, minimise, or lecture — all common listening failures.",
   },
   {
     id: 'cr-2-1-check3',
     question: "Why is validation important even when you disagree with someone's position?",
     options: [
-      'Because you should always agree to avoid conflict',
-      'Because pretending to agree builds trust faster than honesty',
-      "Because acknowledging someone's feelings reduces their defensiveness and opens them to hearing your perspective",
-      'Because validation means accepting that you are wrong',
+      'Because you should always agree with people to keep the peace and avoid conflict',
+      'Because pretending to agree builds trust with the other person faster than honesty does',
+      "Because acknowledging someone's feelings lowers their defensiveness and opens them to your view",
+      'Because validation is, in practice, a way of accepting that you were in the wrong all along',
     ],
     correctIndex: 2,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     id: 2,
     question: "Which of Covey's Seven Habits directly relates to empathic listening?",
     options: [
+      'Habit 5: Seek First to Understand, Then to Be Understood',
       'Habit 1: Be Proactive',
       'Habit 3: Put First Things First',
-      'Habit 5: Seek First to Understand, Then to Be Understood',
       'Habit 7: Sharpen the Saw',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Habit 5 — "Seek First to Understand, Then to Be Understood" — is the habit most directly connected to empathic listening. Covey argued that most people listen with the intent to reply rather than with the intent to understand. By reversing this order — understanding before responding — you build trust and dramatically improve the quality of communication. This habit is especially powerful in conflict situations where both parties feel unheard.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     options: [
       'Making eye contact with the speaker',
       'Asking clarifying questions',
-      'Mentally preparing your rebuttal while the other person is still talking',
       'Summarising what you have heard at the end of the conversation',
+      'Mentally preparing your rebuttal while the other person is still talking',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Mentally preparing your rebuttal while someone is still speaking is one of the most common listening failures. When you are composing your response, you are no longer fully attending to what the speaker is saying — you are processing your own thoughts instead. This means you often respond to what you expected them to say rather than what they actually said. Active listening requires you to resist this urge and stay fully present with the speaker's words, tone, and meaning until they have finished.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'A site manager says, "I\'m fine, just get on with it." What does empathic listening suggest you should pay attention to?',
     options: [
-      'Only the words — if they say they are fine, accept it and move on',
-      'Their body language, tone of voice, and the context of the conversation, which may tell a different story from the words',
-      "Nothing — it is not your job to read other people's emotions",
-      'The words, but repeat them back louder to make sure they meant it',
+      'Their body language, tone of voice, and context, which may tell a different story from the words',
+      'Only the literal words spoken — if they say they are fine, accept it and move straight on',
+      "Nothing at all — reading other people's emotions on site is not part of your job",
+      'The words alone, but repeated back louder to be sure that they really meant what they said',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Empathic listening pays attention to the whole message, not just the words. Research suggests that a large proportion of communication is nonverbal — tone, facial expression, posture, and context. When someone says "I\'m fine" with a clenched jaw, crossed arms, and a terse tone, the nonverbal signals are contradicting the verbal message. Empathic listening means reading these signals and responding to the full picture, perhaps by saying, "You say you\'re fine, but you seem a bit tense. Is there anything I can help with?"',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 7,
     question: 'What role does silence play in active listening?',
     options: [
-      'Silence is a failure of communication and should be filled immediately',
-      'Silence creates discomfort that forces the other person to concede their point',
-      'Silence gives the speaker space to think, process emotions, and share more deeply than they would if you filled every pause',
-      'Silence is only useful in formal mediation settings, not in everyday conversations',
+      'Silence is a failure of communication and should always be filled in immediately',
+      'Silence creates discomfort that pressures the other person into conceding their point',
+      'Silence is only useful in formal mediation settings, never in everyday site conversations',
+      'Silence gives the speaker space to think, process emotions, and often share more deeply',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Silence is one of the most powerful and underused tools in active listening. When you resist the urge to fill every pause, you give the speaker space to gather their thoughts, process their emotions, and often share deeper insights that they would not have reached if you had interrupted. Many of the most important things people say come after a pause — the first statement is often the surface-level version, and the deeper truth emerges in the silence that follows. Learning to be comfortable with brief silences transforms the quality of your listening.',
   },
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 8,
     question: 'What does "validation without agreement" mean in the context of active listening?',
     options: [
-      'Telling someone they are right even when you believe they are wrong',
-      "Ignoring the other person's feelings to remain neutral",
-      "Acknowledging and respecting someone's emotional experience without necessarily agreeing with their position or conclusion",
-      'Validating only the facts and dismissing the emotions as irrelevant',
+      'Telling someone they are right about the issue even when you believe they are wrong',
+      "Ignoring the other person's feelings entirely in order to keep yourself neutral",
+      "Respecting someone's emotional experience without agreeing with their position or conclusion",
+      'Validating only the bare facts of the situation and dismissing the emotions as irrelevant',
     ],
     correctAnswer: 2,
     explanation:

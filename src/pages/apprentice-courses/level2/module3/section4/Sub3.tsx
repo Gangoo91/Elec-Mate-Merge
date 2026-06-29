@@ -37,10 +37,10 @@ const checks = [
     question:
       'Per BS 7671 Part 2, an exposed-conductive-part is best described as:',
     options: [
-      'That access is safe, ladders are secured and extend above the platform, and stairways are clear',
-      'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
+      'Any metal part of a building that could introduce earth potential from outside the installation.',
+      'A conductor that is normally live in service, such as the line or neutral of a circuit.',
       'A conductive part of equipment that can be touched and is NOT normally live but which CAN become live under fault conditions.',
-      'Own up to it, put it right properly at your own expense, document the corrective action, and treat it as CPD — what went wrong and how to stop it recurring.',
+      'A part that is permanently connected to earth and can never rise above earth potential.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,28 +51,28 @@ const checks = [
     question:
       'A double-insulated (Class II) appliance is fitted with a moulded plug that has only line and neutral pins (no earth pin). Why is this compliant — and what symbol identifies the appliance?',
     options: [
-      'Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.',
-      'Class II equipment uses double or reinforced insulation as protection against electric shock instead of relying on a CPC connection. The square-within-a-square symbol (concentric squares) marks the appliance as Class II — it has no exposed-conductive-parts requiring CPC connection.',
-      '75 degrees from the horizontal — the 1:4 rule. The base sits one unit out from the wall for every four units of vertical height. So for a ladder reaching 4m up the wall, the base sits 1m out. Steeper than 75 degrees and the ladder is liable to topple backwards; shallower and the feet can slip out.',
-      'The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place',
+      'It is faulty — every mains appliance must have an earth pin to be compliant.',
+      'It is Class II equipment, using double or reinforced insulation instead of a CPC, identified by the concentric-squares symbol.',
+      'It is SELV equipment, identified by a circle-in-a-triangle symbol, supplied below 50 V AC.',
+      'It is Class I equipment with the earth provided by a separate fly-lead inside the plug top.',
     ],
     correctIndex: 1,
     explanation:
-      'Double insulation provides two layers of protection between live parts and any touchable surface, so the surface can never become live under a single fault. No exposed-conductive-part = no CPC required. The symbol (BS EN 60417-5172) is two concentric squares — see it on Class II drills, hairdryers, kettles, hairclippers, etc.',
+      'Class II equipment uses double or reinforced insulation as protection against electric shock instead of relying on a CPC connection, so it has no exposed-conductive-parts requiring earthing. Double insulation provides two layers of protection between live parts and any touchable surface, so the surface can never become live under a single fault. The symbol (BS EN 60417-5172) is two concentric squares — see it on Class II drills, hairdryers, kettles, hairclippers, etc.',
   },
   {
     id: 'm3-s4-sub3-back-box',
     question:
       'You’re fitting a metal-clad single switched socket on a kitchen wall. The CPC has been pulled into the back-box but not connected to the back-box’s earth terminal — only to the socket’s earth terminal. Is this compliant?',
     options: [
-      'Selling a non-MCS install means the customer can never claim SEG even later, may struggle to evidence compliance during a house sale, and may face insurance issues. The MCS install is also covered by the MCS workmanship warranty scheme. The cost difference is small and the protection is significant.',
-      'Reading the supply (TN type, declared Ze, PSCC, intake fuse), reading the brief (current loads, foreseeable future loads, customer constraints), then working circuit by circuit from Ib through device through Zs to a consolidated schedule.',
-      'Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks',
-      'No — both the metal back-box AND the metal socket faceplate are exposed-conductive-parts. Each must be connected to the CPC, normally via a fly-lead or via the fixing screws securing a metal faceplate to a metal back-box (provided that connection is verified by continuity test).',
+      'Yes — earthing the socket faceplate is enough, because the box is bolted to it and shares the connection anyway.',
+      'Yes — a metal back-box is never an exposed-conductive-part, so only the faceplate ever needs an earth terminal.',
+      'No — only the back-box needs the CPC; the faceplate is adequately earthed through the metal wall fixings.',
+      'No — both the back-box and the faceplate are exposed-conductive-parts and each must be connected to the CPC.',
     ],
     correctIndex: 3,
     explanation:
-      'A metal back-box is itself an exposed-conductive-part — it can become live if the line conductor inside chafes through to it. Standard practice: a green/yellow earth fly-lead from the back-box earth terminal to the socket earth terminal, OR (where a metal faceplate is securely fixed to a metal back-box by metal screws) the screws themselves can serve as the connection if continuity is verified. All-plastic back-box + plastic socket = no fly-lead needed.',
+      'Both the metal back-box AND the metal socket faceplate are exposed-conductive-parts — either can become live if the line conductor inside chafes through to it. Standard practice: a green/yellow earth fly-lead from the back-box earth terminal to the socket earth terminal, OR (where a metal faceplate is securely fixed to a metal back-box by metal screws) the screws themselves can serve as the connection if continuity is verified at test. All-plastic back-box + plastic socket = no fly-lead needed.',
   },
 ];
 
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'Which of these is NOT an exposed-conductive-part?',
     options: [
-      'To ensure it is working correctly and give confidence the circuit is dead',
+      'The metal casing of an electric shower.',
       'A copper water pipe carrying mains water through the kitchen.',
-      'Negative stress that overwhelms coping ability and impairs functioning',
-      'Continuity test showing higher than expected resistance',
+      'The metal body of an extractor fan.',
+      'The steel armour of an SWA cable used as a CPC.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,38 +96,38 @@ const quizQuestions = [
     question:
       'Why is the Class II symbol (concentric squares) important for an apprentice to recognise on site?',
     options: [
-      'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
-      'Continuously adjusts the operating voltage and current of the PV array to extract maximum power under varying irradiance and temperature conditions',
-      'It tells you the appliance has been double-insulated by the manufacturer to provide protection without relying on a CPC — so you don’t add an earth wire to the casing thinking you’re improving safety.',
-      'Correct material and csa per Reg 543, secure connection at MET (BS 951 clamp) with a label per Reg 514.13.1, and protection against mechanical/corrosion damage',
+      'It tells you the appliance must be fitted with a 30 mA RCD before it can be used on site.',
+      'It marks the appliance as SELV, so it can be used in a bathroom zone without restriction.',
+      'It tells you the appliance is double-insulated and needs no CPC on its casing — so you don’t add an earth wire.',
+      'It indicates the appliance is rated IP44, suitable for outdoor use without further protection.',
     ],
     correctAnswer: 2,
     explanation:
-      'Adding an earth wire to a Class II appliance is at best pointless and at worst dangerous — if you compromise the double insulation while wiring in your "improvement", you’ve removed the only protection the appliance had. Recognise the symbol, leave it alone.',
+      'The concentric-squares symbol marks the appliance as double-insulated by the manufacturer, providing protection without relying on a CPC. Adding an earth wire to a Class II appliance is at best pointless and at worst dangerous — if you compromise the double insulation while wiring in your "improvement", you’ve removed the only protection the appliance had. Recognise the symbol, leave it alone.',
   },
   {
     id: 3,
     question:
       'The metal armour of an SWA cable is used as the CPC on a sub-main run. The armour is itself an exposed-conductive-part. What two requirements does this set?',
     options: [
-      'Complete an arc flash risk assessment, determine the incident energy level, select appropriate arc-rated PPE, establish arc flash boundaries, and have a safe system of work in place',
-      'The responsible person must establish appropriate procedures to be followed in the event of serious and imminent danger, nominate competent persons, and ensure persons are able to stop work and go to a place of safety',
-      'A four-step breathing pattern (inhale for 4 counts, hold for 4 counts, exhale for 4 counts, hold for 4 counts) that activates the parasympathetic nervous system to reduce stress and restore calm',
-      'The armour must be sized to handle the prospective fault current (Reg 543.1.3 / Table 54.7 calculations) AND must be reliably terminated at both ends with appropriate SWA glands and earth tags so its continuity back to the MET is guaranteed.',
+      'It must be sleeved green/yellow along its whole length AND insulation-resistance tested before energising.',
+      'It must be bonded to the gas and water services AND fitted with its own separate 30 mA RCD.',
+      'It must be doubled up with a second SWA run in parallel AND derated for grouping factors.',
+      'It must be sized for the prospective fault current AND reliably terminated with SWA glands and earth tags at both ends.',
     ],
     correctAnswer: 3,
     explanation:
-      'When the armour is doubling up as both the cable’s mechanical protection AND the CPC, it has to be sized for the fault current it might carry (so it doesn’t melt before the protective device clears the fault) and it has to be solidly connected at every termination via the gland’s earth tag. Loose glands = broken CPC.',
+      'When the armour is doubling up as both the cable’s mechanical protection AND the CPC, it has to be sized for the fault current it might carry (Reg 543.1.3 / Table 54.7) so it doesn’t melt before the protective device clears the fault, and it has to be solidly connected at every termination via the gland’s earth tag. Loose glands = broken CPC.',
   },
   {
     id: 4,
     question:
       'A pendant ceiling rose has been fitted with no earth core — the previous electrician just connected line and neutral. The fitting is plastic, suspended from a plastic rose, with a Class II lampholder. Is this compliant under Reg 411.3.1.1?',
     options: [
-      'Yes — Reg 411.3.1.1 has one specific exception: a lampholder having no exposed-conductive-parts and suspended from such a point. An all-plastic Class II pendant from an all-plastic rose meets that exception.',
-      'Domestic loft spaces and cellars can be confined spaces if they are substantially enclosed with foreseeable risks such as poor ventilation and gas accumulation',
-      'A notice served by the fire authority prohibiting or restricting the use of all or part of the premises because the use involves a risk of death or serious injury to relevant persons that is so serious that the use should be prohibited or restricted',
-      'Fixed mindset (Dweck) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 assuming ability is static and there is nothing more to learn prevents growth and may mean their practice becomes outdated',
+      'Yes — Reg 411.3.1.1 exempts a lampholder with no exposed-conductive-parts suspended from such a point, which this all-plastic pendant meets.',
+      'No — every accessory without exception must have a CPC connected, including all-plastic ceiling roses and lampholders.',
+      'No — lighting circuits must always carry a CPC to every point because metal fittings could be retrofitted later.',
+      'Yes — but only if the circuit is additionally protected by a 30 mA RCD at the consumer unit first.',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'A consumer unit replacement quote includes "fit metal-bodied CU and earth all metal back-boxes throughout flat". Why is the back-box earthing line item necessary specifically because the CU is metal?',
     options: [
-      'The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first',
-      'Metal CUs (as required by Amendment 3 onwards in domestic) are exposed-conductive-parts in their own right — but the regulation also drives consistent earthing practice across the property, and any metal back-box anywhere in the installation should already have been earthed regardless of CU material. The line item makes the existing requirement explicit in the quote.',
-      'Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.',
-      'Strictly there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no formal pre-requisite — anyone can sit 2391-52 if they can pass the exam and practical. In practice most providers expect candidates to hold C&G 2365-03 (or equivalent NVQ Level 3) and to have meaningful site experience. AM2 isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t formally required but is the strong norm because the practical content assumes installation competence.',
+      'Because a metal CU changes the earthing system to TT, so every back-box now needs its own electrode.',
+      'It doesn’t change the rule — every metal back-box was always an exposed-conductive-part; the line item just makes the existing requirement explicit.',
+      'Because metal back-boxes only need earthing when the consumer unit is metal; with a plastic CU they can be left unbonded.',
+      'Because the metal CU acts as the MET, so all back-boxes must be bonded directly to its enclosure with a fly-lead.',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'Two exposed-conductive-parts are within arm’s reach of each other in a kitchen — the metal extractor hood and the stainless steel sink (where the sink is itself supplied via a bonded electrical pump). BS 7671 calls these "simultaneously accessible". What does the regulation require?',
     options: [
-      'Yes — a client can fulfil these roles provided they have the necessary skills, knowledge, experience and organisational capability',
-      'A hospital operating theatre or a process plant where supply continuity matters more than instant disconnection.',
+      'Each must be supplied from a separate consumer unit so a fault on one cannot affect the other.',
+      'Each must be fitted with its own dedicated earth electrode driven into the ground.',
       'Each must be connected to the same earthing system, individually, in groups or collectively (Reg 411.3.1.1).',
-      'The employer must review and update the first aid needs assessment to reflect the new hazard',
+      'Neither needs a CPC because they are bonded together by the kitchen worktop.',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     question:
       'You see a stainless steel splashback fitted behind a hob. There’s no electrical equipment within it. Is the splashback an exposed-conductive-part?',
     options: [
-      'Affixed inside the CU door (for the immediate user reference) plus included in the handover pack as a stand-alone document. Future fault diagnosis depends on accurate circuit-to-board labelling at the CU itself.',
-      'Power restored, all covers refitted, labels updated, customer briefed, work area swept and waste removed, certificate left with customer or emailed, and instruments returned to vehicle',
-      'Intervene to stop the immediate behaviour if safe to do so, support the apprentice, and report the incident through the appropriate grievance or welfare channels',
-      'No — it’s not part of any electrical equipment, so it can’t become live under a fault. It might be an extraneous-conductive-part (if it could introduce a potential from elsewhere — Sub 4.4 covers that), but it isn’t exposed.',
+      'Yes — any large metal surface in a kitchen is automatically an exposed-conductive-part.',
+      'Yes — because it is within arm’s reach of the hob, which is electrical equipment.',
+      'Yes — and it must be earthed with a CPC run back to the consumer unit.',
+      'No — it isn’t part of any electrical equipment, so it can’t become live under a fault.',
     ],
     correctAnswer: 3,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'On site you find an old all-metal-cased radiator-style heater plugged into a 13 A socket. Looking at the casing there’s no Class II symbol and the supply lead has three cores (L, N and E). What does the green/yellow earth core inside the heater connect to, and why?',
     options: [
-      'It connects to the metal casing of the heater. The casing is an exposed-conductive-part — Class I equipment requires CPC connection so a fault from the heating element to the casing causes fault current to flow back through the CPC and trip the protective device.',
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
-      'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
-      'Application of the rating factor (Ca) for thermal insulation per BS 7671 Appendix 4 — Method 100 (cable surrounded by insulation) typically applies a 0.5 derating, requiring larger CSA. Visual inspection checks the design accounts for installation method.',
+      'It connects to the metal casing — a Class I exposed-conductive-part needing CPC connection so a fault trips the device.',
+      'It connects to the neutral terminal inside the heater, providing a return path for the load current.',
+      'It is left unconnected inside the appliance, since a metal-cased heater is treated as Class II.',
+      'It connects to the heating element itself, limiting the element’s maximum operating temperature.',
     ],
     correctAnswer: 0,
     explanation:

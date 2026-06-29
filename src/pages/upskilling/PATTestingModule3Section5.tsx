@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'A duty-holder asks why the previous “annual PAT” schedule was wrong and what risk-based means in practice. Best one-line answer?',
     options: [
-      'Annual PAT is law; nothing has changed.',
-      'HSG107 replaced fixed-interval PAT with a risk-based regime: frequency is set per equipment type, environment, frequency of use and user awareness — not a single calendar interval for everything.',
-      'PAT is no longer required.',
-      'Frequency is set by the manufacturer’s warranty.',
+      'Annual PAT is fixed in law and applies to every appliance.',
+      'Risk-based means frequency is set per equipment, environment, use and user awareness — not a single interval.',
+      'PAT is no longer required for any portable equipment.',
+      'Frequency is fixed solely by the manufacturer’s warranty terms.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 from the HSE moved the regime from a fixed-interval (one-size-fits-all annual) approach to a risk-based one. The IET CoP 5th Edition adopts the same framing — frequency is decided by environment, equipment type, use frequency, and user awareness, not by a default annual rule.',
+      'HSG107 from the HSE moved the regime from a fixed-interval (one-size-fits-all annual) approach to a risk-based one. The IET CoP 5th Edition adopts the same framing — frequency is decided by environment, equipment type, use frequency, and user awareness, not by a default annual rule. No specific interval, and no PAT exemption, is written into law.',
   },
   {
     id: 'patm3-s5-table-71',
     question:
       'IET CoP Table 7.1 gives indicative inspection frequencies. What is the correct way for a duty-holder to use it?',
     options: [
-      'Apply the numbers directly as the inspection schedule for every site.',
-      'Use it as a starting point — apply the indicative frequency from Table 7.1, then adjust up or down for this site’s actual environment, history, and equipment, and document the decision.',
-      'Ignore it — Table 7.1 is advisory only.',
-      'Use it only for office environments.',
+      'Apply the numbers directly as the fixed schedule for every site.',
+      'Use it as a starting point, then adjust for the actual site and document the decision.',
+      'Ignore it entirely — Table 7.1 is advisory and carries no weight.',
+      'Apply it only to low-risk office environments and nowhere else.',
     ],
     correctIndex: 1,
     explanation:
-      'IET CoP Table 7.1 is explicitly indicative. The duty-holder’s risk assessment takes the table as the starting point and adjusts for the actual conditions — and documents the reasoning. Failing to adjust is as poor as ignoring the table.',
+      'IET CoP Table 7.1 is explicitly indicative. The duty-holder’s risk assessment takes the table as the starting point and adjusts up or down for this site’s actual environment, history and equipment, then records the reasoning. Failing to adjust is as poor as ignoring the table.',
   },
   {
     id: 'patm3-s5-shorten',
     question:
       'A workshop’s annual PAT cycle finds 8 % of items failing the formal visual inspection — most for damaged flexes and cracked plug bodies. What does HSG107 risk-based principle suggest the duty-holder should do?',
     options: [
-      'Keep the annual cycle — the regime is finding the defects.',
-      'Shorten the cycle. A high failure rate means defects are developing faster than the current cycle catches them safely; shorten the formal inspection interval and use the failure-trend data to drive the change.',
-      'Change inspectors.',
-      'Move to a 5-yearly cycle to save money.',
+      'Keep the annual cycle unchanged — the regime is already finding the defects.',
+      'Shorten the cycle, using the failure-trend data to drive the change.',
+      'Keep the cycle but replace the inspectors carrying out the work.',
+      'Extend to a 5-yearly cycle to reduce the inspection cost.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 expects the duty-holder to use failure-rate data to adjust frequency. A high (or rising) fail rate means the cycle is catching damage too late; the response is a shorter cycle, equipment changes, or both. A static schedule that ignores its own findings is not a risk-based regime.',
+      'HSG107 expects the duty-holder to use failure-rate data to adjust frequency. A high (or rising) fail rate means defects are developing faster than the cycle catches them safely; the response is a shorter formal-inspection interval, equipment changes, or both. A static schedule that ignores its own findings is not a risk-based regime, and extending the cycle would make the problem worse.',
   },
   {
     id: 'patm3-s5-user-checks',
     question:
       'On a construction site, a 110 V transformer-fed drill is used daily by site crews. The site has weekly toolbox checks but the formal PAT inspection is monthly. Where do user checks fit?',
     options: [
-      'User checks are not part of the regime.',
-      'User checks (look at the lead, the plug, the appliance every time before use) sit at the start of every cycle and catch the most recent damage. HSG107 gives them an explicit role alongside formal visual inspection — they are the daily layer of the risk-based regime.',
-      'User checks replace formal inspection on construction sites.',
-      'User checks are recorded as PAT inspections on the register.',
+      'User checks have no formal place in the inspection regime.',
+      'User checks before each use are the daily layer that catches the most recent damage.',
+      'User checks replace formal visual inspection entirely on construction sites.',
+      'User checks are logged as combined inspection-and-test on the PAT register.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 puts user checks at the front of the inspection regime — the user is the most frequent inspector. Formal visual inspection (by a competent person) is layered on top at lower frequency, and combined inspection-and-test is layered on top of that at the lowest frequency. Each layer catches different defects.',
+      'HSG107 puts user checks at the front of the inspection regime — the user looks at the lead, plug and appliance before every use and is the most frequent inspector. Formal visual inspection (by a competent person) is layered on top at lower frequency, and combined inspection-and-test below that at the lowest. They supplement, not replace, the formal layers and are not recorded as a PAT inspection.',
   },
 ];
 
@@ -82,24 +82,24 @@ const quizQuestions = [
     question:
       'HSG107 introduced the “risk-based” approach to portable appliance inspection. What does this replace?',
     options: [
-      'It replaces visual inspection entirely',
-      'It replaces a one-size-fits-all fixed-interval (typically annual) regime with a frequency that depends on equipment type, environment, frequency of use and user awareness',
-      'It replaces electrical testing with paperwork',
-      'It replaces the duty-holder’s responsibility',
+      'The requirement to carry out any form of visual inspection.',
+      'The legal responsibility that sits with the duty-holder.',
+      'A one-size-fits-all fixed-interval (typically annual) regime.',
+      'The need for electrical testing, replacing it with documentation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'HSG107 explicitly moved the HSE position away from “annual PAT for everything” to a risk-based frequency. The IET CoP 5th Edition follows the same framing. Annual remains correct for some equipment in some environments — but as the result of a risk assessment, not as a default.',
+      'HSG107 explicitly moved the HSE position away from “annual PAT for everything” to a risk-based frequency set by equipment type, environment, frequency of use and user awareness. The IET CoP 5th Edition follows the same framing. Annual remains correct for some equipment in some environments — but as the result of a risk assessment, not as a default. Visual inspection, testing and the duty-holder’s legal responsibility all remain.',
   },
   {
     id: 2,
     question:
-      'IET CoP 5th Edition Table 7.1 gives indicative frequencies. Which of the following best describes the typical office environment frequency for Class I IT equipment that is rarely moved?',
+      'IET CoP 5th Edition Table 7.1 gives indicative frequencies. Which of the following best describes the typical office-environment frequency for Class I IT equipment that is rarely moved?',
     options: [
-      'Daily user check; weekly formal inspection',
-      'Formal visual inspection at intervals measured in years; combined inspection-and-test at longer intervals — typically every few years for static IT equipment in low-risk environments',
-      'Hourly inspection',
-      'No inspection required',
+      'A daily user check with a weekly formal inspection of every item.',
+      'Formal visual inspection on year-scale intervals, with combined inspection-and-test on a longer cycle still.',
+      'A formal inspection before every single use of the equipment.',
+      'No inspection of any kind is required for static IT equipment.',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,28 +109,28 @@ const quizQuestions = [
     id: 3,
     question: 'Risk-based frequency setting takes account of which set of factors per HSG107?',
     options: [
-      'Equipment age only',
-      'Equipment type, environment, frequency of use, manufacturer instructions, user awareness, history of defects, and equipment integrity',
-      'Cost of inspection',
-      'Number of staff in the workplace',
+      'The age of the equipment, taken in isolation from everything else.',
+      'The cost of carrying out each individual inspection.',
+      'The total number of staff employed across the workplace.',
+      'Equipment type, environment, use, manufacturer instructions, user awareness and history.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'HSG107 names a multi-factor list: equipment type, environment, manufacturer recommendations, soundness, age, environment, frequency of use and duty cycle. The IET CoP 5th Edition Ch 7 carries the same list. Risk-based means using all of these factors, documented, to set frequency.',
+      'HSG107 names a multi-factor list: equipment type, environment, manufacturer recommendations, soundness, age, frequency of use, user awareness, defect history and duty cycle. The IET CoP 5th Edition Ch 7 carries the same list. Risk-based means using all of these factors, documented, to set frequency — not age, cost or headcount on their own.',
   },
   {
     id: 4,
     question:
       'A duty-holder has used a fixed annual PAT regime for 10 years. The records show consistently low fail rates (under 1 %) and no defects in service between cycles. HSG107-style risk-based response?',
     options: [
-      'Continue with annual',
-      'Use the data: a low fail rate indicates the cycle is comfortably ahead of the failure curve. The duty-holder may extend the cycle for the appropriate equipment classes — within reason — and document the decision based on the recorded fail-rate data',
-      'Stop inspecting',
-      'Switch to 6-monthly to be safer',
+      'Extend the cycle for the appropriate equipment classes and document the decision.',
+      'Keep the annual cycle unchanged, since the regime is finding no defects.',
+      'Stop inspecting the equipment altogether to save inspection cost.',
+      'Switch to a 6-monthly cycle as a precaution despite the low fail rate.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Risk-based works in both directions. A persistently low fail rate is data the duty-holder uses to extend cycles where appropriate — the regime is responsive, not static. The change is documented and only applies to equipment classes / environments where the data supports it.',
+      'Risk-based works in both directions. A persistently low fail rate is data the duty-holder uses to extend cycles where appropriate — the regime is responsive, not static. The change is documented and only applies to equipment classes / environments where the data supports it. A low fail rate shows the cycle is comfortably ahead of the failure curve.',
   },
   {
     id: 5,
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'A new piece of office equipment is brought in. When is the first inspection per IET CoP / HSG107?',
     options: [
-      'After 12 months — same as the rest of the office',
-      'On receipt — a formal visual inspection of new equipment confirms it arrived in compliant condition. Combined inspection-and-test then aligns with the appropriate cycle for the equipment class and environment',
-      'At the next maintenance window',
-      'Never — new equipment is exempt',
+      'After 12 months, on the same cycle as the rest of the office.',
+      'At the next scheduled maintenance window for the building.',
+      'On receipt — a formal visual inspection confirms it arrived in compliant condition, then it joins the cycle for its class.',
+      'New equipment is exempt and needs no first inspection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IET CoP and HSG107 expect a receipt-inspection of new equipment to confirm BS 1363 plug compliance, fuse rating, sheath integrity and labelling. New does not mean compliant — counterfeit BS 1363 plugs and incorrect fuses are common findings on new equipment. After receipt, the cycle aligns with the equipment class.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'On a construction site, the appropriate user-check frequency for hand-held 110 V power-tools is:',
     options: [
-      'Annually',
-      'Every use — the user looks at the lead, plug and tool before connecting and after any incident; defects found are reported and the tool quarantined',
-      'Once on site induction',
-      'Never — it is the inspector’s job',
+      'Once a year, aligned with the combined inspection-and-test cycle.',
+      'Before every use — the user checks the lead, plug and tool, reports defects and quarantines the tool.',
+      'Once only, as part of the site induction process.',
+      'Never, because checking the tool is solely the inspector’s job.',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 8,
     question: 'A duty-holder sets the inspection regime; who carries it out per IET CoP / HSG107?',
     options: [
-      'A trained competent person — formal visual inspection and combined inspection-and-test must be carried out by someone with the knowledge, experience and access to the right test equipment for the work',
-      'Anyone in the workplace',
-      'Only chartered electrical engineers',
-      'The HSE',
+      'A competent person with the knowledge, experience and access to the right test instruments for the work.',
+      'Any member of staff in the workplace, with no particular requirement.',
+      'Only a chartered electrical engineer registered with a professional body.',
+      'The HSE, as part of its statutory inspection duties.',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,28 +191,28 @@ const quizQuestions = [
     question:
       'A regular IT-room PAT cycle has not produced a single failure in five years. The IT room is climate-controlled, the equipment is static, the users are office staff. Risk-based regime change?',
     options: [
-      'Keep the cycle as-is',
-      'Use the data to extend the cycle — formal visual inspection moves to longer intervals; combined inspection-and-test similarly. Document the basis. User checks and incident-driven inspections continue regardless of cycle changes',
-      'Stop inspecting',
-      'Move to weekly inspection',
+      'Keep the cycle exactly as it is, since the environment is unchanged.',
+      'Stop inspecting the IT-room equipment entirely, as it has never failed.',
+      'Extend the formal visual and combined inspection-and-test intervals, documenting the basis.',
+      'Move to a weekly inspection cycle to be on the safe side.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Persistently zero-failure data over multiple cycles in a low-risk environment is exactly the case HSG107 expects to drive cycle extension. The change is documented; the lower-frequency layers (user check, incident response) are not affected.',
+      'Persistently zero-failure data over multiple cycles in a low-risk environment is exactly the case HSG107 expects to drive cycle extension. The change is documented; the lower-frequency layers (user check, incident-driven inspections) continue and are not affected.',
   },
   {
     id: 10,
     question:
       'A risk-based inspection regime that ignores its own data and never adjusts intervals is:',
     options: [
-      'Best practice — consistency is key',
-      'Not actually risk-based — it is fixed-interval inspection in disguise. HSG107 expects the regime to respond to recorded data (failure rates, environmental changes, equipment changes) and to adjust',
-      'Acceptable on Class II equipment',
-      'Acceptable for offices',
+      'Best practice, because consistency of intervals is the key principle.',
+      'Not actually risk-based — it is fixed-interval inspection in disguise.',
+      'Acceptable, provided the equipment is all Class II.',
+      'Acceptable, provided the workplace is a low-risk office.',
     ],
     correctAnswer: 1,
     explanation:
-      'A regime that does not change in response to its own findings is fixed-interval by another name. HSG107’s risk-based principle is iterative — observe, record, adjust. A duty-holder who never adjusts has not embraced the principle, regardless of paperwork.',
+      'A regime that does not change in response to its own findings is fixed-interval by another name. HSG107 expects the regime to respond to recorded data and adjust — its risk-based principle is iterative (observe, record, adjust). A duty-holder who never adjusts has not embraced the principle, regardless of paperwork.',
   },
 ];
 

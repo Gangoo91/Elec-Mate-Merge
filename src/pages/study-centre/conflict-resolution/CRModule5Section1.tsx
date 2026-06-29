@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A domestic electrician provides a client with an "estimate" of £4,200 for a full rewire. After completion, the final invoice comes to £5,800 due to unforeseen complications. The client refuses to pay more than £4,200. Who is most likely in the right, and why?',
     options: [
-      'The electrician — estimates always change, so the client should expect to pay the final amount',
-      'The client — an estimate creates a reasonable expectation of the approximate cost, and a 38% increase without prior agreement is unreasonable, but the electrician could have protected themselves by using a quote with a clear variation procedure',
-      'Neither — all electrical work is subject to price changes and this is simply how the trade operates',
-      'The client — estimates are legally identical to quotes and cannot be exceeded under any circumstances',
+      'The client — an estimate creates a reasonable expectation, and a 38% rise without prior agreement is unreasonable',
+      'The electrician — estimates always change, so the client should expect to pay whatever the final figure comes to',
+      'Neither — all electrical work is subject to price changes, and this is simply how the trade operates',
+      'The client — estimates are legally identical to quotes and can never be exceeded under any circumstances',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'While an estimate is not a fixed price, it does create a reasonable expectation. A 38% increase without prior communication or agreement is likely to be considered unreasonable by a court or ombudsman. The electrician should have used a fixed-price quote for the defined scope, with a clear variation procedure for unforeseen work. When complications arose during the job, they should have stopped, informed the client of the additional cost, obtained written agreement before proceeding, and documented the variation. This scenario perfectly illustrates why the distinction between quote and estimate matters and why a clear variation procedure is essential.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'An electrician agrees verbally with a client to add four extra downlighters during a kitchen installation, at an additional cost of £320. When the invoice arrives, the client denies the conversation happened and refuses to pay for the extras. What should the electrician have done differently?',
     options: [
-      'Refused to do any additional work under any circumstances',
-      'Added the cost silently to the final invoice without mentioning it',
-      'Sent a brief confirmation email or text immediately after the verbal agreement, stating the additional work, cost, and that it was agreed on a specific date',
-      'Insisted on a formally signed contract amendment before touching any additional work',
+      'Refused to carry out any additional work outside the original quote under any circumstances',
+      'Added the cost of the extra downlighters silently to the final invoice without mentioning it',
+      'Sent a brief confirmation text after the agreement, stating the work, cost and date agreed',
+      'Insisted on a formally drafted and signed contract amendment before touching any extra work',
     ],
     correctIndex: 2,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is the LEAST important element to include in a domestic electrical quote?',
     options: [
-      'The exact scope of work (what is and is not included)',
-      'Payment terms and deposit requirements',
+      'The exact scope of work, setting out what is and is not included',
       'The brand and colour of every individual cable clip to be used',
-      'A variation procedure for additional work',
+      'Payment terms, deposit requirements and the final payment due date',
+      'A variation procedure for pricing and agreeing additional work',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'While specifying materials at a general level is good practice (for example, stating the brand and type of consumer unit, or the grade of cable), specifying the brand and colour of every individual cable clip is excessive detail that adds no value and makes the document unnecessarily long. The other three elements — scope, payment terms, and variation procedure — are all critical for preventing disputes. A clear scope prevents arguments about what was included. Payment terms prevent cash flow problems and late payment. A variation procedure ensures that any changes are agreed and documented before they happen. These are the elements that actually prevent conflict.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'What is the single most effective tool for preventing conflict in domestic electrical work?',
     options: [
-      'A verbal agreement between the electrician and client',
       'A clear, written agreement (quote with T&Cs) signed before work begins',
+      'A verbal agreement between the electrician and client',
       'A detailed technical specification that the client will not understand',
       'A recommendation from a mutual friend',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A clear written agreement signed before work begins is overwhelmingly the most effective conflict prevention tool available to electricians. It sets expectations for both parties, defines the scope (what is included and what is not), establishes payment terms, and provides a variation procedure for changes. Research consistently shows that the majority of domestic electrical disputes arise from unclear or absent written terms. A written agreement does not guarantee that conflicts will never occur, but it dramatically reduces their frequency and provides a solid foundation for resolution when they do arise.',
   },
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'An electrician provides a quote of £3,500 for a consumer unit replacement. During the work, they discover the earthing arrangement needs upgrading. What is the correct procedure?',
     options: [
-      'Complete the earthing work and add the cost to the final invoice',
-      'Stop work, inform the client of the additional requirement and cost, obtain written agreement before proceeding, and document the variation',
-      'Ignore the earthing issue and complete only the consumer unit work',
-      'Complete the earthing work for free to maintain good client relations',
+      'Complete the earthing upgrade and add the additional cost to the final invoice',
+      'Stop, inform the client of the cost, get written agreement, then document the variation',
+      'Ignore the earthing issue and complete only the consumer unit work as quoted',
+      'Complete the earthing upgrade free of charge to maintain good client relations',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'Which of the following correctly describes the difference between a quote and an estimate?',
     options: [
-      'They are legally identical terms with no practical difference',
-      'A quote is a fixed price for a defined scope; an estimate is an approximation that may vary, but still creates a reasonable expectation',
-      'An estimate is more expensive than a quote because it includes contingency',
-      'A quote is only used for commercial work; estimates are for domestic work',
+      'They are legally identical terms with no practical difference between them',
+      'An estimate is always more expensive than a quote because it includes contingency',
+      'A quote is a fixed price for a defined scope; an estimate is an approximation that may vary',
+      'A quote is only used for commercial work, whereas estimates are used for domestic work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A quote is a fixed price for a clearly defined scope of work. Once accepted, it creates a binding obligation — the electrician cannot charge more than the quoted amount for the work described. An estimate is an educated approximation of the likely cost, and the final price can legitimately vary. However, an estimate still creates a reasonable expectation, and any significant increase should be communicated and agreed before the additional cost is incurred. Using the wrong term creates disputes: an electrician who calls their price an "estimate" when they mean a fixed price may find the client expecting flexibility, while one who calls it a "quote" when they expect the price to change will face legitimate complaints about exceeding the agreed amount.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'What should an electrician include in their standard payment terms for domestic work?',
     options: [
-      'Only the total price — nothing else is necessary',
-      'Payment due date (e.g. 14 days), deposit requirements, stage payment schedule for larger jobs, accepted payment methods, and late payment consequences',
-      'A statement that payment is due "whenever the client is ready"',
-      'Payment terms should only be discussed after the work is completed',
+      'Only the total price, since nothing else needs to be set out in advance',
+      'A statement that payment is simply due whenever the client feels ready to pay',
+      'Nothing in advance, because payment terms should only be discussed once work is complete',
+      'Due date, deposit, stage payments, accepted methods and late payment consequences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Comprehensive payment terms are essential for preventing cash flow problems and payment disputes. The terms should specify when payment is due (commonly 14 days from invoice or completion), whether a deposit is required (common for larger jobs or material-heavy work), stage payment arrangements for extended projects, accepted payment methods, and the consequences of late payment (such as statutory interest under the Late Payment of Commercial Debts (Interest) Act 1998). Vague payment terms like "payment on completion" without a specific timeframe create ambiguity that leads to conflict. Clear, specific terms set expectations from the outset.',
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       "An electrician verbally agrees to install three additional double sockets during a rewire. The client later denies the conversation. What is the electrician's best protection?",
     options: [
-      'The electrician has no protection — verbal agreements are not legally binding',
-      'The electrician should always have a witness present for every conversation',
-      'A confirmation email or text sent immediately after the verbal agreement, stating the work, cost, and date agreed',
-      'The electrician should refuse to do any work that is not in the original quote',
+      'A confirmation text sent straight after the agreement, stating the work, cost and date',
+      'Having an independent witness present for every conversation held with the client',
+      'There is no protection at all, because verbal agreements are not legally binding',
+      'Refusing to carry out any work that does not appear in the original written quote',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The confirmation email or text is the most practical and effective protection available. It does not need to be formal — a simple message like "Hi, just confirming our chat today: 3 extra double sockets at £X plus VAT, agreed on [date]" creates a contemporaneous written record. This is admissible as evidence in small claims court, gives the client an opportunity to dispute or clarify immediately, and establishes a professional standard that discourages future misunderstandings. While verbal agreements are legally binding, the problem is always proof. A text message sent within minutes of the conversation is strong evidence of what was agreed.',
   },
@@ -157,24 +157,24 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is NOT typically included in a domestic electrical quote?',
     options: [
-      'Detailed scope of work (what is and is not included)',
-      "The electrician's favourite football team",
-      'Payment terms and schedule',
-      'A clear variation procedure for additional work',
+      'A detailed scope of work, stating what is and is not included',
+      "A full itemised list of the electrician's hourly labour rate calculations",
+      'Payment terms and the agreed payment schedule for the job',
+      'A clear variation procedure for pricing additional work',
     ],
     correctAnswer: 1,
     explanation:
-      'A professional electrical quote should include the scope of work (clearly stating what is and is not included), the fixed price, payment terms and schedule, a variation procedure, a timeline for the work, cancellation terms, and contact details. Personal information such as sporting preferences has no place in a professional document. Every element of a quote should serve one purpose: creating clarity between electrician and client about what will happen, when it will happen, how much it will cost, and what to do if anything changes. Unnecessary content dilutes the professional impact of the document.',
+      'A professional electrical quote should include the scope of work (clearly stating what is and is not included), the fixed price, payment terms and schedule, a variation procedure, a timeline for the work, cancellation terms, and contact details. A quote presents a single fixed price for the defined work; a full breakdown of internal hourly labour rate calculations is not normally included and simply invites the client to argue line by line. Every element of a quote should serve one purpose: creating clarity about what will happen, when, how much it will cost, and what to do if anything changes.',
   },
   {
     id: 7,
     question:
       'A client wants to proceed with a kitchen rewire but says "I do not sign contracts — I trust you." What is the most professional response?',
     options: [
-      'Accept their verbal agreement and proceed — trust is more important than paperwork',
-      'Refuse the job immediately and walk away without explanation',
-      'Explain that written agreements protect both parties, that it is standard professional practice, and that you require a signed agreement before starting any work',
-      'Ask a third party to witness the verbal agreement instead',
+      'Accept their verbal agreement and proceed, since trust matters more than paperwork',
+      'Refuse the job immediately and walk away without offering any explanation',
+      'Explain that written agreements protect both parties, and require one before starting',
+      'Ask a neutral third party to witness the verbal agreement on the day instead',
     ],
     correctAnswer: 2,
     explanation:
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       'Under the Consumer Rights Act 2015, which of the following rights does a domestic client have regarding electrical services?',
     options: [
-      'The right to demand the work is done for free if they are not completely satisfied',
-      'The right to a repeat performance or price reduction if the service does not conform to the contract or meet a reasonable standard of care and skill',
-      'The right to cancel any contract within 30 days regardless of whether work has started',
-      'The right to withhold all payment until 90 days after completion',
+      'The right to demand the entire job is redone free of charge if they are not completely satisfied',
+      'The right to cancel any contract within 30 days regardless of whether work has already started',
+      'The right to withhold all payment until at least 90 days after the work is completed',
+      'The right to a repeat performance or price reduction if the service is not done with reasonable care and skill',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Consumer Rights Act 2015 provides that services must be performed with reasonable care and skill, within a reasonable time (if no time is agreed), and for a reasonable price (if no price is agreed). If the service fails to meet these standards, the consumer has the right to require repeat performance (the electrician must redo the work at no additional cost) or a price reduction. These rights apply to all domestic electrical work and cannot be excluded by contract terms. This is precisely why having clear written terms is so important: they define what "reasonable" means for your specific job, set an agreed price and timeline, and reduce the scope for subjective interpretation of what was promised.',
   },

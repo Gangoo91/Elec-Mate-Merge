@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'information-before-work',
     question: 'When must the dutyholder provide information about ACMs to contractors?',
     options: [
-      'Before work begins — contractors must see the asbestos register before starting',
       'Within 7 days of work commencing',
       'Only if the contractor specifically requests the information',
+      'Before work begins — contractors must see the asbestos register before starting',
       'After work is completed, as part of the project close-out',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Regulation 4 requires the dutyholder to provide information about known or presumed ACMs to anyone who might disturb them BEFORE work begins. This includes showing the asbestos register and relevant parts of the management plan so that workers can plan their activities safely.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'Does the duty to manage asbestos under Regulation 4 apply to private domestic dwellings?',
     options: [
-      'No — Regulation 4 applies only to non-domestic premises, but HSE strongly recommends the same approach for homes',
       'Yes — all buildings are covered equally by Regulation 4',
+      'No — Regulation 4 applies only to non-domestic premises, but HSE strongly recommends the same approach for homes',
       'Only if the dwelling was built before 1985',
       'Only if the dwelling is rented out to tenants',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Regulation 4 of CAR 2012 applies to non-domestic premises (offices, shops, schools, hospitals, etc.) and the common parts of residential buildings (hallways, stairwells, plant rooms). It does not apply to private domestic dwellings, although the HSE strongly recommends that homeowners take the same approach to managing asbestos in their homes.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'If the dutyholder cannot be clearly identified, who is responsible under Regulation 4?',
     options: [
+      'The person with the greatest degree of control over the premises',
       'The local authority',
       'The Health and Safety Executive',
-      'The person with the greatest degree of control over the premises',
       'No one — the duty lapses until ownership is clarified',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'If the dutyholder cannot be identified (for example, because ownership or maintenance responsibility is unclear), the person or organisation with the greatest degree of control over the premises is treated as the dutyholder and must fulfil the Regulation 4 obligations.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     options: [
       'The fire risk assessment',
       "The building's planning permission file",
-      'The asbestos register',
       'The CDM health and safety file',
+      'The asbestos register',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The asbestos register is the document that records the location, type, extent, and condition of all known or presumed ACMs in the building. It must be kept up to date and made available to anyone who might disturb ACMs.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'What additional requirement does CDM 2015 place on clients before refurbishment work begins?',
     options: [
-      'The client must carry out the asbestos removal themselves',
       'The client must provide pre-construction information about ACMs to the principal designer and principal contractor',
+      'The client must carry out the asbestos removal themselves',
       'The client must close the building for the duration of the refurbishment',
       'The client must obtain a new asbestos licence from the HSE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under CDM 2015, the client must provide pre-construction information — including details from the asbestos register and any survey reports — to the principal designer and principal contractor before construction or refurbishment work begins. A Refurbishment & Demolition survey may also be required.',
   },
@@ -162,10 +162,10 @@ const quizQuestions = [
     options: [
       'A fixed penalty notice of £5,000',
       'A fine of up to £20,000',
-      'An unlimited fine',
       'A written warning from the HSE',
+      'An unlimited fine',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Failure to comply with Regulation 4 is a criminal offence. Organisations can face unlimited fines upon conviction. Individuals (directors, managers) can face personal fines and up to 2 years' imprisonment. The HSE can also issue improvement or prohibition notices.",
   },

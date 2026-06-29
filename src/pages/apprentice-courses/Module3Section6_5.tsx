@@ -40,8 +40,13 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: A consumer unit must have a circuit schedule.',
-    options: ['True', 'False'],
+    question: 'Does a consumer unit need a circuit schedule under BS 7671?',
+    options: [
+      'Yes - it must show circuit purpose and device ratings',
+      'No - a schedule is only needed for commercial boards',
+      'No - labelling each MCB is sufficient on its own',
+      'Only if the board has more than six circuits',
+    ],
     correctAnswer: 0,
     explanation:
       'BS 7671 requires consumer units to have circuit schedules showing circuit purpose and protective device ratings.',
@@ -50,12 +55,12 @@ const quizQuestions = [
     id: 4,
     question: 'Name one warning notice required under BS 7671.',
     options: [
-      'Dual supply warning',
-      'High voltage present',
       'No smoking sign',
+      'Dual supply warning',
       'Emergency contact details',
+      'Fire exit direction sign',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'BS 7671 requires warning notices for dual supplies, RCD coverage, isolation points, and other safety-critical situations.',
   },
@@ -76,10 +81,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which labelling method is most suitable for marine environments?',
     options: [
-      'At both the control unit and outlet',
-      'Assertiveness and cooperativeness',
+      'Self-adhesive vinyl labels',
+      'Handwritten masking tape',
       'Laser-etched stainless steel',
-      'Colour temperature and RGB control',
+      'Heat-shrink polyolefin markers',
     ],
     correctAnswer: 2,
     explanation:
@@ -89,9 +94,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to mark spare conductors?',
     options: [
-      'Explosion risk and chemical compatibility of equipment',
-      'Specialist earth electrode tester with auxiliary electrodes',
-      'Lower breaking capacity, slower operation, less precise',
+      'To increase their current-carrying capacity',
+      'To improve the appearance of the board',
+      'To allow them to be used without testing',
       'To prevent accidental connection and confusion',
     ],
     correctAnswer: 3,
@@ -103,9 +108,9 @@ const quizQuestions = [
     question: 'What must be displayed where both pre- and post-2004 wiring colours exist?',
     options: [
       'Warning notice indicating mixed wiring colours',
-      'Investigate and retest if necessary',
-      'Phone for calling 999, but nothing that delays you',
-      'Equal to or greater than the actual PSCC at that point',
+      'A schedule of insulation resistance values',
+      'A notice giving the prospective fault current',
+      'A label stating the earth fault loop impedance',
     ],
     correctAnswer: 0,
     explanation:
@@ -133,9 +138,9 @@ const quickCheckQuestions = [
     question: 'Name one type of durable label suitable for industrial environments.',
     options: [
       'Engraved Traffolyte labels',
-      'Stagnation (total) pressure',
-      'Voltage at the supply point',
-      'Potential difference (voltage)',
+      'Handwritten masking tape',
+      'Pencil marks on the cable',
+      'Temporary paper tags',
     ],
     correctIndex: 0,
     explanation:
@@ -145,9 +150,9 @@ const quickCheckQuestions = [
     id: 'label-durability',
     question: 'Why must labels be legible for the life of the installation?',
     options: [
-      'Non-linear effects (Brillouin/Raman scattering)',
-      'For minor work not involving a new circuit',
-      'Ipsc = U₀ ÷ (Ze + circuit impedance)',
+      'To increase the current rating of the circuits',
+      'To reduce the number of circuits required',
+      'To remove the need for a circuit schedule',
       'To ensure ongoing safety and efficient maintenance',
     ],
     correctIndex: 3,

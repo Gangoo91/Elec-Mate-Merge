@@ -56,10 +56,10 @@ const checks = [
     question:
       'Cg, Ca, Ci and Cf are all correction factors that go in the denominator of the required-It calculation. Which way do they push the required tabulated cable size?',
     options: [
-      'The Managers and Professionals test',
+      'Down — derating reduces required size',
       'Up — derating increases required size',
-      'Inspect and clean connector end-faces',
-      'Poor workmanship and vibration',
+      'No change — they cancel out in pairs',
+      'It depends on the protective device rating',
     ],
     correctIndex: 1,
     explanation:
@@ -186,9 +186,9 @@ const quizQuestions = [
       'BS 7671 Appendix 4 contains:',
     options: [
       'Tabulated current-carrying capacities, voltage drop tables, Reference Methods and correction factors',
-      'The employer must review and update the first aid needs assessment to reflect the new hazard',
-      'Each must be connected to the same earthing system, individually, in groups or collectively (Reg 411.3.1.1).',
-      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
+      'The maximum earth fault loop impedance (Zs) limits for every protective device',
+      'The standard circuit arrangements for ring, radial and lighting final circuits',
+      'The inspection schedule and test sequence for an initial verification',
     ],
     correctAnswer: 0,
     explanation:

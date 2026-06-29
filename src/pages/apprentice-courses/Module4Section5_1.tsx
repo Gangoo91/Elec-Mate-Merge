@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which regulation sets out accessibility heights for sockets and switches?',
     options: [
-      '0.027 × p^0.65 (L/s per m²)',
-      'Loose or intermittent connections',
+      'BS 7671 Chapter 41',
+      'The Electricity at Work Regulations 1989',
       'Building Regulations Part M',
-      'Uniformity ratio 40:1 maximum',
+      'The Health & Safety at Work Act',
     ],
     correctAnswer: 2,
     explanation:
@@ -68,26 +68,25 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'True or False: Switches are generally mounted at 900mm above floor level in new builds.',
+    question: 'At what height are switches generally mounted to the centre in new builds under Part M?',
     options: [
-      'Only in bathrooms',
-      'True',
-      'Only for commercial buildings',
-      'False',
+      '900mm',
+      '600mm',
+      '1500mm',
+      '1200mm',
     ],
     correctAnswer: 3,
     explanation:
-      'False. Switches are generally mounted at 1200mm to the centre from finished floor level in new builds according to Part M.',
+      'Switches are generally mounted at 1200mm to the centre from finished floor level in new builds according to Part M.',
   },
   {
     id: 4,
     question: 'Name two types of back boxes.',
     options: [
       'Flush-mounted and surface-mounted',
-      'The metalwork becomes live and dangerous',
-      'Likelihood × Severity = Risk level',
-      'Asbestos-containing materials',
+      'Insulated and non-insulated',
+      'Single-phase and three-phase',
+      'Indoor-rated and weatherproof',
     ],
     correctAnswer: 0,
     explanation:
@@ -97,10 +96,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why are grommets used in back boxes?',
     options: [
-      'MCBs always have a higher breaking capacity than HRC fuses',
+      'To improve the earth continuity of the box',
       'To protect cables from sharp edges and prevent insulation damage',
-      'Earthing connects to earth, bonding connects metalwork together',
-      'To prevent unauthorised access to the work area',
+      'To increase the current rating of the accessory',
+      'To hold the faceplate firmly in place',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,9 +122,9 @@ const quizQuestions = [
     id: 7,
     question: 'What should be done before energising a newly installed socket outlet?',
     options: [
-      '500W to 1kW per outlet for general assessment',
-      'If you miss a habit once, make sure you get back to it the next day',
-      'To provide evidence of compliance and ensure safety',
+      'Apply a temporary supply to test the lamps',
+      'Fit the faceplate and leave testing until later',
+      'Record the installation in the job sheet only',
       'Carry out polarity, continuity, and insulation resistance tests',
     ],
     correctAnswer: 3,
@@ -137,9 +136,9 @@ const quizQuestions = [
     question: 'Give one practical tip to ensure socket outlets are aligned in a row.',
     options: [
       'Use a laser level or temporarily fit all faceplates before final fixing',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      'A dangerous occurrence that must be reported to the HSE',
+      'Fit each socket as soon as its box is in, without checking',
+      'Measure from the ceiling rather than the floor',
+      'Align each socket to the nearest skirting board only',
     ],
     correctAnswer: 0,
     explanation:

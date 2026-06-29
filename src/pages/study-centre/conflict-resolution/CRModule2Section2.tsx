@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'cr-2-2-check1',
     question: 'What is the key difference between an observation and an evaluation in NVC?',
     options: [
-      'Observations use longer sentences; evaluations use shorter ones',
-      'Observations describe what you can see or measure without judgement; evaluations add interpretation, blame, or generalisation',
-      'Evaluations are always negative; observations are always positive',
-      'There is no meaningful difference — they are interchangeable terms',
+      'An observation describes what you can see or measure; an evaluation adds blame or generalisation',
+      'An observation uses longer, fuller sentences; an evaluation is always kept brief and to the point',
+      'An evaluation is always negative in tone, whereas an observation is always positive and upbeat',
+      'There is no meaningful difference in NVC — the two are essentially interchangeable terms',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'In NVC, an observation is a factual, verifiable statement about what happened — "The invoice was due 14 days ago and has not been paid." An evaluation adds interpretation, judgement, or generalisation — "You never pay on time." The distinction is crucial because observations invite dialogue, while evaluations trigger defensiveness. When people hear an evaluation, they instinctively defend themselves rather than engage with the issue.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     id: 'cr-2-2-check3',
     question: 'In NVC, what makes a request different from a demand?',
     options: [
-      'Requests are spoken quietly; demands are spoken loudly',
-      'A request is specific, positive, and actionable, and the speaker is genuinely willing to hear "no"; a demand carries an implicit threat of punishment or consequence',
-      'Requests are only used with clients; demands are only used with colleagues',
-      'There is no difference — all requests are really demands in disguise',
+      'A request is spoken quietly and politely, whereas a demand is spoken loudly and firmly',
+      'A request is only ever used with clients, whereas a demand is only used with your colleagues',
+      'There is no real difference, because every request is really just a demand in polite disguise',
+      'A request is specific and the speaker can accept "no"; a demand carries a threat of consequence',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In NVC, a true request is specific (it asks for a concrete action), positive (it says what you want rather than what you don\'t want), actionable (the other person can actually do it), and — most importantly — the speaker is genuinely willing to hear "no" without punishing or withdrawing. A demand, by contrast, carries an implicit or explicit consequence for refusal. When people sense that "no" is not really an option, they experience the request as coercion, which breeds resentment rather than cooperation.',
   },
@@ -95,8 +95,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Who developed the Nonviolent Communication framework?',
-    options: ['Stephen Covey', 'Marshall Rosenberg', 'Daniel Goleman', 'Kerry Patterson'],
-    correctAnswer: 1,
+    options: ['Marshall Rosenberg', 'Stephen Covey', 'Daniel Goleman', 'Kerry Patterson'],
+    correctAnswer: 0,
     explanation:
       'Marshall Rosenberg developed NVC in the 1960s and published his seminal book "Nonviolent Communication: A Language of Life" in 2003. Rosenberg was a clinical psychologist who was influenced by Carl Rogers\' person-centred approach and by his own experiences growing up in turbulent Detroit. He spent decades teaching NVC in conflict zones around the world, including the Middle East, Rwanda, and Northern Ireland.',
   },
@@ -118,13 +118,13 @@ const quizQuestions = [
     question: 'Which of the following is an observation rather than an evaluation?',
     options: [
       '"You are always late."',
-      '"You arrived at 9:15 this morning — the agreed start time was 8:30."',
       '"You don\'t care about being punctual."',
+      '"You arrived at 9:15 this morning — the agreed start time was 8:30."',
       '"You have no respect for other people\'s time."',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The second option is a pure observation — it states a verifiable fact (arrival time) without adding judgement, blame, or generalisation. The other three options are evaluations: "always late" generalises, "don\'t care" assumes motivation, and "no respect" attacks character. In NVC, observations are the foundation of productive dialogue because they are difficult to argue with — the person either arrived at 9:15 or they did not. Evaluations, by contrast, immediately provoke defensiveness.',
+      'Stating the arrival time against the agreed start time is a pure observation — it states a verifiable fact without adding judgement, blame, or generalisation. The evaluations all add interpretation: "always late" generalises, "don\'t care" assumes motivation, and "no respect" attacks character. In NVC, observations are the foundation of productive dialogue because they are difficult to argue with — the person either arrived at 9:15 or they did not. Evaluations, by contrast, immediately provoke defensiveness.',
   },
   {
     id: 4,
@@ -132,19 +132,19 @@ const quizQuestions = [
       '"I feel that you are being unfair." Is this a genuine feeling or a thought disguised as a feeling?',
     options: [
       'A genuine feeling',
-      "A thought disguised as a feeling — it is actually an evaluation of the other person's behaviour",
       'Neither — it is a request',
       'A genuine feeling because it starts with "I feel"',
+      "A thought disguised as a feeling — it is actually an evaluation of the other person's behaviour",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a thought disguised as a feeling. The words "I feel that..." are almost always followed by a thought, interpretation, or judgement rather than a genuine emotion. "I feel that you are being unfair" is actually saying "I think you are being unfair" — it is an evaluation of the other person, not a description of your internal emotional state. A genuine NVC feeling would be: "I feel frustrated" or "I feel hurt." The test is simple: can you replace "I feel" with "I think" and the sentence still makes sense? If so, it is a thought, not a feeling.',
   },
   {
     id: 5,
     question: 'Which of the following is a universal human need as defined in NVC?',
-    options: ['A pay rise', 'Autonomy', 'A new van', 'More holiday time'],
-    correctAnswer: 1,
+    options: ['Autonomy', 'A pay rise', 'A new van', 'More holiday time'],
+    correctAnswer: 0,
     explanation:
       'In NVC, needs are universal qualities that all humans share — they are not specific strategies for meeting those needs. Autonomy is a universal human need (everyone needs some degree of autonomy). A pay rise, a new van, and more holiday time are strategies — specific means of meeting underlying needs like security, competence, or rest. The distinction matters because when people confuse strategies with needs, negotiations become positional ("I want X") rather than interest-based ("I need Y, and there may be several ways to achieve it").',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What is the NVC approach to receiving someone else's angry or accusatory language?",
     options: [
-      'Respond with equal anger to show you are not a pushover',
-      'Ignore them completely and walk away',
-      'Listen empathically for the observations, feelings, needs, and requests behind their words, even when expressed badly',
-      'Correct their grammar and suggest they rephrase using NVC',
+      'Respond with equal anger and volume to show them that you are not a pushover',
+      'Listen past the words for the observations, feelings, needs, and requests beneath them',
+      'Ignore them completely, walk away, and refuse to engage with the conversation at all',
+      'Correct their grammar and tell them to rephrase the whole thing properly using NVC',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'NVC includes not only how you express yourself but how you receive others. When someone says something aggressive or accusatory, Rosenberg taught that you can listen past the words to hear the underlying feelings and needs. "You\'re completely incompetent!" might translate to an observation (the work has not met their expectations), a feeling (frustration or anxiety), a need (quality, reliability), and an unexpressed request (fix the problem). This empathic reception does not mean accepting abuse — it means understanding the message behind the delivery, which gives you much better information for resolving the situation.',
   },
@@ -166,25 +166,25 @@ const quizQuestions = [
     question:
       'A plumber says to an electrician: "Your cables are in my way again — you lot never think about anyone else." How might this translate into NVC?',
     options: [
-      'It cannot be translated — it is too aggressive for NVC',
-      '"When I see cables routed across my pipe runs, I feel frustrated because I need clear access to do my work efficiently. Would you be willing to discuss cable routing before we start each area?"',
-      '"I feel that electricians are selfish."',
-      '"You should move your cables because I said so."',
+      'It cannot be translated into NVC at all, because the statement is simply far too aggressive',
+      '"I feel that electricians, as a trade, are fundamentally selfish and inconsiderate people."',
+      '"When cables cross my pipe runs I feel frustrated, because I need clear access. Can we discuss routing first?"',
+      '"You should move your cables out of my way right now, simply because I am telling you to."',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The second option demonstrates a full NVC translation: it starts with an observation (cables routed across pipe runs), states a feeling (frustrated), names the need (clear access for efficient work), and makes a specific request (discuss cable routing in advance). The original statement combines an observation ("cables are in my way") with evaluations ("you lot never think about anyone else") and implied demands. By translating the aggressive language into NVC, the plumber\'s legitimate concern becomes a constructive conversation rather than an accusation.',
+      'A full NVC translation starts with an observation (cables routed across pipe runs), states a feeling (frustrated), names the need (clear access for efficient work), and makes a specific request (discuss cable routing in advance). The original statement combines an observation ("cables are in my way") with evaluations ("you lot never think about anyone else") and implied demands. By translating the aggressive language into NVC, the plumber\'s legitimate concern becomes a constructive conversation rather than an accusation.',
   },
   {
     id: 8,
     question: 'Why does Rosenberg argue that NVC is "nonviolent" rather than just "nice"?',
     options: [
-      'Because NVC avoids all conflict and always agrees with the other person',
-      "Because NVC is never assertive — it only focuses on the other person's needs",
-      'Because NVC removes the violence of blame, judgement, and coercion from communication while remaining direct, honest, and assertive about needs',
-      'Because NVC was designed exclusively for use in war zones',
+      'Because NVC avoids all conflict entirely and always ends up agreeing with the other person',
+      "Because NVC is never assertive at all — it only ever focuses on the other person's needs",
+      'Because NVC was designed exclusively for use in war zones and other extreme conflict settings',
+      'Because NVC removes the violence of blame and coercion while staying direct, honest, and assertive',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Rosenberg drew the term "nonviolent" from Gandhi\'s philosophy of ahimsa (non-harm). He argued that everyday communication is full of subtle violence: blame, judgement, labelling, comparison, and coercion. NVC removes these elements not by becoming soft or avoidant, but by replacing them with honesty, clarity, and empathy. An NVC speaker is direct about their needs and clear about their requests — they simply express these without attacking, blaming, or coercing the other person. This makes NVC more assertive than passive, and more honest than aggressive.',
   },

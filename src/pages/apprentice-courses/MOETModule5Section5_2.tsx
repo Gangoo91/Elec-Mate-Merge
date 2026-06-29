@@ -14,23 +14,23 @@ const quickCheckQuestions = [
     id: 'qc1',
     question: 'What is a multifunction process calibrator?',
     options: [
-      'A portable instrument that can source, simulate, and measure process signals including mA, V, resistance, thermocouple, and frequency',
-      'Focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
-      'Isolate both the DC side (PV array isolator) and AC side (inverter and AC isolator), and be aware that PV panels generate DC voltage whenever exposed to light',
-      'The complete set of knowledge, practical skills, and professional behaviours defined in the ST1426 apprenticeship standard',
+      'A portable instrument that can source, simulate, and measure process signals',
+      'A fixed panel meter that displays the current flowing in a single control loop',
+      'A handheld device used solely to test the insulation resistance of field cables',
+      'A software package for designing and documenting the layout of a control panel',
     ],
     correctIndex: 0,
     explanation:
-      'Multifunction calibrators combine multiple signal sourcing and measurement capabilities in a single portable instrument for field calibration and troubleshooting.',
+      'Multifunction calibrators combine multiple signal sourcing and measurement capabilities (mA, V, resistance, thermocouple, frequency) in a single portable instrument for field calibration and troubleshooting.',
   },
   {
     id: 'qc2',
     question: 'What does a HART communicator allow you to do?',
     options: [
-      'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
+      'Measure the insulation resistance of the transmitter wiring to earth',
       'Communicate digitally with HART-enabled smart transmitters for configuration, calibration, and diagnostics',
-      'Proper lubrication reduces friction losses in the bearings, lowering energy consumption and extending bearing life',
-      'All mandatory fields including observations, test results, and the overall condition',
+      'Generate a high-voltage test signal to prove the loop is dead',
+      'Clamp around a conductor to read its current without breaking the loop',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'qc3',
     question: 'Why is an oscilloscope useful for control system troubleshooting?',
     options: [
-      'The directions of the principal designer and relevant requirements of the construction phase plan',
-      'Fixed mindset avoids challenges to protect self-image; growth mindset embraces them as opportunities to develop',
+      'It records calibration data and prints certificates automatically',
+      'It simulates an RTD sensor output by providing a precise resistance',
       'It displays time-varying electrical signals, allowing analysis of waveforms, timing, noise, and transient events',
-      'Because hazards from nearby processes, storage, or services can migrate into the space being assessed through walls, pipes, or the ground',
+      'It measures the resistance of insulation to detect moisture ingress',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: 'What does the CAT III voltage rating indicate?',
     options: [
-      'Required energy efficiency upgrades when extending or renovating larger buildings',
-      'To provide stability to a freestanding scaffold that cannot be tied to a building',
-      'The entry wound may appear small while internal damage can be extensive, and infection risk is high',
-      'The instrument is rated for distribution-level circuits including fixed wiring, control panels, and switchboards',
+      'The instrument is rated only for battery-powered, low-energy electronic equipment',
+      'The instrument is rated only for appliance-level socket outlet final circuits',
+      'The instrument is rated for the incoming supply at the origin of the installation',
+      'The instrument is rated for distribution-level circuits, panels and switchboards',
     ],
     correctIndex: 3,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary use of a loop calibrator in the field?',
     options: [
-      'When an offence is committed with their consent, connivance, or through their neglect',
-      'Sourcing and measuring 4-20 mA signals for testing transmitters and control loop components',
-      'A tie that passes through the building (e.g., through a window opening) and is anchored on the inside',
-      'What category of electrical environment the meter is rated to use safely on, and the max voltage in that category',
+      'Analysing the signal quality and error rate on a Profibus DP network',
+      'Sourcing and measuring 4-20 mA signals to test transmitters and loop components',
+      'Measuring the insulation resistance between live conductors and earth',
+      'Displaying high-speed voltage waveforms for signal timing analysis',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,23 +82,23 @@ const quizQuestions = [
     id: 2,
     question: 'What function does a decade resistance box serve in control system testing?',
     options: [
-      'Ensure instruments are rated for the voltage category of the circuit, use appropriate PPE, and follow safe isolation procedures',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
+      'Generating a precise 4-20 mA current to drive a control loop input',
+      'Measuring current non-invasively by clamping around a single conductor',
+      'Providing precise, adjustable resistance values to simulate RTD sensors',
+      'Capturing waveforms to investigate noise and timing on signal lines',
     ],
     correctAnswer: 2,
     explanation:
-      'Decade boxes provide accurately known resistance values, allowing simulation of RTD sensor outputs for testing and calibrating temperature measurement systems.',
+      'Decade boxes provide accurately known resistance values, allowing simulation of RTD sensor outputs for testing and calibrating temperature transmitters and measurement systems.',
   },
   {
     id: 3,
     question: 'What is a current clamp meter used for in control system work?',
     options: [
-      'Damaged leads can expose the technician to hazardous voltages and compromise measurement accuracy',
-      'Distribution-level circuits including fixed installation wiring, distribution boards, and control panels',
-      'Automatically recording measurement data over time for trend analysis and intermittent fault diagnosis',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
+      'Simulating an RTD output to calibrate a temperature transmitter',
+      'Configuring a smart transmitter over the HART digital protocol',
+      'Recording multi-channel measurement data over time for trend analysis',
+      'Measuring current without breaking the circuit by clamping a conductor',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What does an insulation resistance tester (megger) measure?',
     options: [
       'The resistance of electrical insulation to detect degradation, moisture ingress, or damage',
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
+      'The current drawn by a motor while it is running under load',
+      'The signal quality and error rate on an industrial fieldbus',
+      'The precise resistance value needed to simulate an RTD sensor',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a data logger used for in control system testing?',
     options: [
-      'To diagnose communication issues on industrial networks (Ethernet, Profibus, Modbus) by analysing traffic, errors, and timing',
-      'Automatically recording measurement data over time for trend analysis and intermittent fault diagnosis',
-      'Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
+      'Measuring the insulation resistance of a field cable to earth',
+      'Automatically recording measurement data over time for trend analysis',
+      'Generating a precise 4-20 mA signal to simulate a transmitter output',
+      'Providing precise, adjustable resistance values to simulate RTD sensors',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the advantage of a documenting process calibrator?',
     options: [
-      'Ensure instruments are rated for the voltage category of the circuit, use appropriate PPE, and follow safe isolation procedures',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
-      'Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders',
+      'It can be used safely without regard to the circuit voltage category rating',
+      'It measures motor current non-invasively without breaking into the loop wiring',
+      'It automatically records calibration data and generates certificates electronically',
+      'It removes the need to ever calibrate the reference instrument itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,24 +147,24 @@ const quizQuestions = [
     id: 7,
     question: 'When would you use a network analyser for control system troubleshooting?',
     options: [
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
-      'Distribution-level circuits including fixed installation wiring, distribution boards, and control panels',
-      'To diagnose communication issues on industrial networks (Ethernet, Profibus, Modbus) by analysing traffic, errors, and timing',
+      'To simulate an RTD sensor when calibrating a temperature transmitter',
+      'To measure the insulation resistance of a network bus cable to earth',
+      'To source a precise 4-20 mA signal into a PLC controller input card',
+      'To diagnose communication issues on industrial fieldbus and Ethernet networks',
     ],
     correctAnswer: 3,
     explanation:
-      'Network analysers capture and analyse industrial network traffic, identify communication errors, measure bus timing, detect collisions, and help diagnose intermittent network problems.',
+      'Network analysers capture and analyse industrial network traffic (Ethernet, Profibus, Modbus), identify communication errors, measure bus timing, detect collisions, and help diagnose intermittent network problems.',
   },
   {
     id: 8,
     question:
       'What safety precaution is essential when using test instruments on live control systems?',
     options: [
-      'Ensure instruments are rated for the voltage category of the circuit, use appropriate PPE, and follow safe isolation procedures',
-      'Damaged leads can expose the technician to hazardous voltages and compromise measurement accuracy',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
+      'Ensure instruments are rated for the circuit voltage category and use appropriate PPE',
+      'Use the lowest possible measurement range to reduce instrument battery drain',
+      'Connect the instrument to the circuit before checking that it is switched on',
+      'Choose an instrument with the brightest display for on-site visibility',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,23 +174,23 @@ const quizQuestions = [
     id: 9,
     question: 'What is a milliamp (mA) source used for?',
     options: [
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
-      'Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders',
-      'The resistance of electrical insulation to detect degradation, moisture ingress, or damage',
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
+      'Recording calibration data and producing certificates automatically',
+      'Generating a precise 4-20 mA signal to simulate a transmitter output',
+      'Measuring the resistance of insulation to detect moisture or damage',
+      'Analysing the signal quality and error rate on a Profibus network',
     ],
     correctAnswer: 1,
     explanation:
-      'An mA source generates a precise current signal that simulates a transmitter output, allowing the technician to test and verify the receiving end of the loop independently.',
+      'An mA source generates a precise current signal that simulates a transmitter output, allowing the technician to test and verify receivers, controllers and recorders at the receiving end of the loop independently.',
   },
   {
     id: 10,
     question: 'What is the CAT III voltage rating category?',
     options: [
-      'Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
+      'Battery-powered and electronic equipment only',
+      'Appliance-level circuits supplied from a socket outlet',
       'Distribution-level circuits including fixed installation wiring, distribution boards, and control panels',
-      'Damaged leads can expose the technician to hazardous voltages and compromise measurement accuracy',
+      'The origin of the installation, such as the incoming supply and meters',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'Why should test leads be inspected before each use?',
     options: [
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
-      'Damaged leads can expose the technician to hazardous voltages and compromise measurement accuracy',
+      'Inspecting the leads recharges the instrument battery ready for use',
+      'Inspecting the leads improves the accuracy of the network analyser',
+      'Inspection is only required after the instrument has been dropped',
+      'Damaged leads can expose the technician to hazardous live voltages',
     ],
     correctAnswer: 3,
     explanation:
@@ -213,14 +213,14 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of a Profibus tester?',
     options: [
-      'Analysing Profibus DP/PA bus quality, signal levels, and communication errors for commissioning and fault diagnosis',
-      'Measuring current flow without breaking the circuit by clamping around a conductor',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
-      'Ensure instruments are rated for the voltage category of the circuit, use appropriate PPE, and follow safe isolation procedures',
+      'Analysing Profibus DP/PA bus quality, signal levels and communication errors',
+      'Measuring the running current drawn by a motor on the control panel',
+      'Simulating an RTD sensor in order to calibrate a temperature transmitter',
+      'Testing the insulation resistance of the network bus cable to earth',
     ],
     correctAnswer: 0,
     explanation:
-      'Profibus testers (e.g. Softing BC-600-PB) analyse bus signal quality, measure voltage levels, detect communication errors, identify reflections, and diagnose termination problems on Profibus networks.',
+      'Profibus testers (e.g. Softing BC-600-PB) analyse bus signal quality, measure voltage levels, detect communication errors, identify reflections, and diagnose termination problems on Profibus networks. They support both commissioning and fault diagnosis.',
   },
 ];
 

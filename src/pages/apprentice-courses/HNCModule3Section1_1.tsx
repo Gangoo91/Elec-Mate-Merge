@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is voltage?',
     options: [
-      'PWM (chopped) approximating a sine wave at variable frequency',
+      'The rate at which electric charge flows through a conductor',
       'The electrical potential difference between two points',
-      'To navigate around obstacles while maintaining parallel runs',
-      'Providing networking, influence, and development opportunities',
+      'The opposition a conductor offers to the flow of current',
+      'The rate at which a circuit transfers electrical energy',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,14 +127,14 @@ const quizQuestions = [
     question:
       'A commercial building has 50 LED luminaires each rated at 45W. What is the total lighting load?',
     options: [
-      'Both B and C are correct',
-      '2250W',
       '2.25kW',
-      '1125W',
+      '4.5kW',
+      '1.125kW',
+      '0.9kW',
     ],
     correctAnswer: 0,
     explanation:
-      'Total power = 50 × 45W = 2250W = 2.25kW. Both answers represent the same value in different units.',
+      'Total power = 50 × 45W = 2250W = 2.25kW.',
   },
   {
     id: 5,
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is P = I²R particularly important for cable sizing?',
     options: [
-      'Insulation, continuity, RCD, and loop impedance testing',
+      'Power loss falls as the current rises, so larger loads are easier to supply',
       'Power loss increases with the square of current, causing heating',
-      'To avoid conflicts like lights switching on at full brightness in bright daylight',
-      'Ventricular fibrillation (VF) and pulseless ventricular tachycardia (pVT)',
+      'Power loss depends only on the cable length, not the current carried',
+      'Power loss is fixed by the supply voltage and is unaffected by the load',
     ],
     correctAnswer: 1,
     explanation:

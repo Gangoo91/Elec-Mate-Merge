@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'sbem-purpose',
     question: 'What is the primary purpose of SBEM (Simplified Building Energy Model)?',
     options: [
-      'Installation drawings and plans',
+      'Structural load and beam-sizing calculations',
       'Part L compliance for non-dwellings',
-      'An open-top skip in a well-ventilated yard',
-      'Spring return, normally open',
+      'Detailed CFD airflow modelling in atria',
+      'Lighting lux level and glare calculations',
     ],
     correctIndex: 1,
     explanation:
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'ies-capability',
     question: 'Which of these is NOT a typical capability of IES VE?',
     options: [
-      'BS 7671 IET Wiring Regulations',
+      'Dynamic thermal simulation',
       'Structural load calculations',
-      'Reason for incomplete testing',
-      'Medium Dependent Interface Crossover',
+      'Daylight and shading analysis',
+      'Natural ventilation airflow modelling',
     ],
     correctIndex: 1,
     explanation:
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'energyplus-origin',
     question: 'EnergyPlus is developed and maintained by:',
     options: [
-      'Tabulated current-carrying capacity',
-      'Engineering Recommendation G5/5',
+      'The Building Research Establishment (BRE)',
+      'IES Ltd of Glasgow',
       'The US Department of Energy',
-      'Equal to the supply voltage',
+      'EDSL (Environmental Design Solutions Ltd)',
     ],
     correctIndex: 2,
     explanation:
@@ -73,9 +73,9 @@ const quickCheckQuestions = [
     question: 'Dynamic Simulation Modelling (DSM) is required instead of SBEM when:',
     options: [
       'Building over 1,000m² or complex systems',
-      'Customer satisfaction through consistent quality',
-      'All three phases L1, L2, L3 and neutral',
-      'Valid, Authentic, Current, Sufficient, Reliable',
+      'The building is a single-storey domestic dwelling',
+      'The client requests an Energy Performance Certificate',
+      'The project is at the early concept design stage',
     ],
     correctIndex: 0,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'Which software tool is most appropriate for early-stage concept design energy assessment?',
     options: [
-      'Section 4: First Aid Measures',
+      'Full CFD airflow analysis of every space',
       'SBEM or simplified steady-state tools',
-      'Mercury content requiring specialist disposal',
-      'Every 5 years or at change of tenancy',
+      'A detailed EnergyPlus model with sub-hourly timesteps',
+      'A complete TM52 overheating assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'TAS Building Designer is published by:',
     options: [
-      'Standard inputs and methods for Part L calculations',
-      'Daylight, thermal comfort, and energy credits',
+      'IES Ltd',
+      'The US Department of Energy',
       'EDSL (Environmental Design Solutions Ltd)',
-      'An EPC rating and BER/TER comparison',
+      'NREL (National Renewable Energy Laboratory)',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'The NCM (National Calculation Methodology) defines:',
     options: [
-      'EDSL (Environmental Design Solutions Ltd)',
-      'Team familiarity, licensing, and project requirements',
-      'A user-friendly interface for EnergyPlus',
+      'The minimum EPC rating required for a building to be let',
+      'The list of software packages approved for DSM compliance',
+      'The hourly weather data recorded at each UK met station',
       'Standard inputs and methods for Part L calculations',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which tool would you use for detailed natural ventilation analysis in an atrium?',
     options: [
-      'Circuit details and test conditions',
+      'SBEM with the iSBEM interface',
       'CFD software or IES MacroFlo',
-      'UV resistance and temperature rating',
-      'Verified by testing before repair',
+      'Manual degree-day calculations',
+      'A structural finite-element package',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'For BREEAM assessments, which analyses typically require simulation software?',
     options: [
-      'Standard inputs and methods for Part L calculations',
-      'EDSL (Environmental Design Solutions Ltd)',
-      'An EPC rating and BER/TER comparison',
+      'Water consumption and rainwater harvesting credits',
+      'Responsible sourcing of materials credits',
+      'Construction site waste management credits',
       'Daylight, thermal comfort, and energy credits',
     ],
     correctAnswer: 3,
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: 'What is the relationship between SBEM and approved DSM software?',
     options: [
-      'DSM must demonstrate equivalent or better results than SBEM baseline',
-      'An open-source platform supporting EnergyPlus and other tools',
-      'Team familiarity, licensing, and project requirements',
-      'Hourly or sub-hourly temperature outputs for occupied hours',
+      'Approved DSM tools must use the same NCM assumptions as SBEM',
+      'DSM and SBEM use entirely different occupancy and weather data',
+      'SBEM must be run first and its results imported into the DSM tool',
+      'DSM replaces SBEM for all buildings regardless of size or complexity',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which software capability is essential for TM52 overheating assessment?',
     options: [
-      'An open-source platform supporting EnergyPlus and other tools',
+      'Monthly average temperature outputs for the whole building',
       'Hourly or sub-hourly temperature outputs for occupied hours',
-      'DSM must demonstrate equivalent or better results than SBEM baseline',
-      'Team familiarity, licensing, and project requirements',
+      'A single peak summer design-day temperature calculation',
+      'Annual energy consumption totals broken down by fuel',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'OpenStudio is best described as:',
     options: [
-      'Hourly or sub-hourly temperature outputs for occupied hours',
-      'Standard inputs and methods for Part L calculations',
+      'A UK government Part L compliance calculator',
+      'A proprietary CFD analysis package from IES',
       'An open-source platform supporting EnergyPlus and other tools',
-      'Daylight, thermal comfort, and energy credits',
+      'A standalone BIM authoring tool like Revit',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'When choosing between IES VE and TAS, the primary consideration is usually:',
     options: [
-      'A user-friendly interface for EnergyPlus',
-      'An open-source platform supporting EnergyPlus and other tools',
-      'Daylight, thermal comfort, and energy credits',
+      'Only one of them is approved for Part L DSM compliance',
+      'One uses EnergyPlus and the other does not, affecting accuracy',
+      'They produce fundamentally different BER and TER results',
       'Team familiarity, licensing, and project requirements',
     ],
     correctAnswer: 3,

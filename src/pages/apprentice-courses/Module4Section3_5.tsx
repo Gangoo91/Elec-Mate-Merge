@@ -15,21 +15,21 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main cause of kinking when bending conduit?',
     options: [
-      'Using wrong size conduit',
-      'Bending too quickly without support',
-      'Measuring incorrectly',
+      'Bending too quickly without proper support',
+      'Using a slightly oversized conduit',
+      'Measuring the bend mark incorrectly',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Kinking occurs when excessive force is applied too quickly without proper support, causing the conduit to buckle internally.',
   },
   {
     id: 2,
-    question: 'How should over-bending be corrected?',
+    question: 'How should minor over-bending be corrected?',
     options: [
-      'Start again with new conduit',
-      'Gently re-bend in opposite direction',
-      'Apply more force',
+      'Apply more force in the same direction',
+      'Gently re-bend in the opposite direction',
+      'Heat the conduit until it softens fully',
     ],
     correctIndex: 1,
     explanation:
@@ -37,9 +37,13 @@ const quickCheckQuestions = [
   },
   {
     id: 3,
-    question: 'Why is bend radius critical per BS 7671?',
-    options: ['For visual appearance', 'To protect cable insulation', 'To save materials'],
-    correctIndex: 1,
+    question: 'Why is the correct bend radius critical?',
+    options: [
+      'It saves on the amount of conduit used',
+      'It improves the visual appearance only',
+      'It protects the cable insulation from damage',
+    ],
+    correctIndex: 2,
     explanation:
       'Correct bend radius prevents cable stress and insulation damage, ensuring electrical safety and compliance.',
   },
@@ -49,8 +53,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the main cause of kinking in conduit?',
-    options: ['Overheating PVC', 'Using too much force without support', 'Cutting too short'],
-    correctAnswer: 1,
+    options: ['Using too much force without support', 'Overheating the PVC conduit', 'Cutting the conduit too short'],
+    correctAnswer: 0,
     explanation:
       'Kinking occurs when excessive force is applied without proper support, causing the conduit walls to buckle inward.',
   },
@@ -64,21 +68,25 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: Misalignment is usually caused by poor marking or positioning.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
+    question: 'What is the most common cause of misalignment in a bend?',
+    options: [
+      'Using a conduit that is too large',
+      'Bending the conduit too slowly',
+      'Poor marking or incorrect positioning in the tool',
+    ],
+    correctAnswer: 2,
     explanation:
-      'True. Most misalignment issues stem from inaccurate marking or incorrect positioning in the bending tool.',
+      'Most misalignment issues stem from inaccurate marking or incorrect positioning in the bending tool.',
   },
   {
     id: 4,
-    question: 'How can you correct over-bending?',
+    question: 'How can you correct minor over-bending?',
     options: [
-      'Cut out and start again',
       'Gently re-bend in the opposite direction',
-      'Apply more force',
+      'Apply more force in the same direction',
+      'Cut out the bend and start again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Over-bending can often be corrected by carefully applying counter-pressure, but avoid repeated working of the same area.',
   },
@@ -86,9 +94,9 @@ const quizQuestions = [
     id: 5,
     question: 'What happens if the bend radius is too tight?',
     options: [
-      'Better cable protection',
-      'Risk of cable damage and non-compliance',
-      'Faster installation',
+      'The installation is completed faster',
+      'There is a risk of cable damage and non-compliance',
+      'The cable is given better protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,15 +105,15 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Name one prevention method for flattening.',
-    options: ['Use bigger conduit', 'Use the correct former and steady pressure', 'Work faster'],
-    correctAnswer: 1,
+    options: ['Work as quickly as possible', 'Use a larger size of conduit', 'Use the correct former and steady pressure'],
+    correctAnswer: 2,
     explanation:
       'Using the correct size former with steady, controlled pressure prevents the conduit from deforming during bending.',
   },
   {
     id: 7,
-    question: 'Which regulation covers bend radius requirements?',
-    options: ['BS 7671', 'Building Regulations', 'Health & Safety at Work Act'],
+    question: 'Which standard specifies minimum bend radii to protect fixed wiring cables?',
+    options: ['BS 7671', 'The Building Regulations', 'The Health & Safety at Work Act'],
     correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) specifies minimum bend radii to protect cables from mechanical damage.',
@@ -114,9 +122,9 @@ const quizQuestions = [
     id: 8,
     question: 'Why should you avoid repeated bending in the same spot?',
     options: [
-      'It takes too long',
+      'It takes too long to complete',
       'It weakens the conduit and can cause cracks',
-      'It looks untidy',
+      'It simply looks untidy',
     ],
     correctAnswer: 1,
     explanation:

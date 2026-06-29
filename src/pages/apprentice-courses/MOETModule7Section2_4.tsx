@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'What is the first step when troubleshooting a PLC-controlled system that is not operating correctly?',
     options: [
+      'Download and re-upload the PLC program from a backup to clear any corruption',
+      'Replace the PLC processor module, as this is the most common point of failure',
       'Check the physical inputs and outputs — are the sensors detecting, are the actuators receiving signals?',
-      'The underlying systemic failures (management, procedures, training, design) that allowed the accident chain to develop',
-      'A competent person, at the start of each shift and after any event likely to have affected stability',
-      'Microgeneration Certification Scheme - required for installer competence and grant eligibility',
+      'Increase the scan time of the PLC to give the inputs longer to register',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Most PLC system faults are in the field wiring, sensors, or actuators — not in the PLC program itself. Checking physical I/O first (using LED indicators, measuring voltages at terminals, and observing sensor operation) eliminates the most common fault causes before considering the program.',
   },
@@ -29,9 +29,9 @@ const quickCheckQuestions = [
     question:
       'Why is the ability to read ladder logic diagrams important for a maintenance technician?',
     options: [
-      'Any work equipment provided for use or used at work — including hand tools, power tools, test instruments and ladders',
-      'It reduces the catastrophic impact of unexpected events like illness, redundancy, or gaps between contracts',
-      'Stop and raise an RFI — joist depth is a structural constraint, the designer needs to resolve the route.',
+      'It allows you to rewrite the PLC program to remove the fault permanently',
+      'It is the only way to measure the supply voltage at each input terminal',
+      'It removes the need to use a multimeter when testing field wiring',
       'It allows you to understand the intended sequence of operation and identify where the control logic is not progressing, narrowing the fault location',
     ],
     correctIndex: 3,
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 'relay-logic-fault',
     question: 'In a relay-based control circuit, how do you determine if a relay coil has failed?',
     options: [
-      "Measure the coil resistance with a multimeter — compare to the manufacturer's specification; an open circuit or significantly wrong reading indicates failure",
-      "Until the next inspection or until the tower is dismantled, whichever is later; on construction sites at least 3 months",
-      "Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language",
-      "Use a tracking system (list, spreadsheet or app) to monitor all tasks, their deadlines and current status, reviewing and updating it regularly to ensure nothing is missed",
+      "Listen for a clicking sound when the circuit is energised — no click always means the coil has failed",
+      "Measure the coil resistance with a multimeter — an open circuit or wrong reading indicates failure",
+      "Replace the relay and see if the fault clears, since coil testing cannot be done in situ",
+      "Measure the voltage across the contacts — a reading of zero confirms the coil has burnt out",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Measuring coil resistance is a definitive test. An open-circuit reading (OL) confirms a burnt-out coil. A reading significantly different from the manufacturer's specification suggests degradation. You should also check the coil supply voltage is present — a healthy coil with no supply voltage is not a coil fault but a supply fault.",
   },
@@ -56,14 +56,14 @@ const quickCheckQuestions = [
     question:
       'When using the PLC force function to test an output, what critical safety precaution must you observe?',
     options: [
-      'Operators are trained to perform basic care tasks (visual inspections, cleaning, lubrication, minor adjustments) and to detect and report early signs of equipment deterioration, complementing the maintenance team\\\\\\\\\\\\\\\'s more specialised work',
-      'Providing centralised monitoring and control of all building services, enabling automated load shedding, demand limiting, scheduling of non-essential loads, and real-time power monitoring with alarm management',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
-      'Ensure the area around the actuator is clear, the forced output will not create a hazardous movement, and all forces are removed after testing to prevent unexpected operation when normal control resumes',
+      'Force every output in the program at once so the whole sequence can be observed together',
+      'Leave the force in place after testing so the output keeps operating until the next visit',
+      'Apply the force only while the machine is running under normal automatic control',
+      'Ensure the actuator area is clear and remove all forces immediately after testing',
     ],
     correctIndex: 3,
     explanation:
-      'Forcing a PLC output bypasses the normal control logic and directly activates the physical output device. This means safety interlocks in the programme are bypassed. You must ensure: the actuator area is clear of personnel, the forced movement will not cause damage or injury, and all forces are removed after testing. Leaving a force in place is extremely dangerous — it can cause unexpected operation.',
+      'Forcing a PLC output bypasses the normal control logic and directly activates the physical output device, bypassing safety interlocks in the programme. You must ensure the actuator area is clear of personnel, the forced movement will not cause damage or injury, and all forces are removed after testing. Leaving a force in place is extremely dangerous — it can cause unexpected operation when normal control resumes.',
   },
 ];
 
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'A PLC input LED is illuminated but the program does not recognise the input. The most likely cause is:',
     options: [
-      'Extinguish any burning clothing, cool burns with water, cover loosely, treat for shock, get emergency help',
+      'The sensor wired to that input has failed and is no longer providing a signal',
       'The input module or the connection between the input terminal and the PLC processor has a fault',
-      'Ranking fears from least to most anxiety-provoking and working through them progressively',
-      'Learning and productivity are not mutually exclusive \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 well-planned learning during normal work benefits both',
+      'The field wiring to the input terminal is open circuit',
+      'The supply voltage to the sensor is too low for it to operate',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: 'When reading a ladder logic diagram, a normally open (NO) contact in series means:',
     options: [
-      'Temperature difference between different directions from occupant',
-      'Communication protocols, sensor calibration and system response',
+      'The rung will always be true unless that input is active (ON)',
+      'The rung will be true only when that input is de-energised (OFF)',
       'The rung will only be true (energised) when that input is active (ON)',
-      'Compliance with standards, correct installation, and absence of damage',
+      'The rung is true regardless of the state of that input',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,9 +100,9 @@ const quizQuestions = [
     question:
       'A motor starter contactor chatters (rapidly opens and closes). The most likely cause is:',
     options: [
-      'The rung will only be true (energised) when that input is active (ON)',
-      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
-      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
+      'The main power contacts have welded together and cannot separate',
+      'The motor overload relay has been set to too high a current value',
+      'The contactor is correctly rated but the motor is drawing too much current',
       'The coil supply voltage is too low, or there is an intermittent connection in the control circuit',
     ],
     correctAnswer: 3,
@@ -115,9 +115,9 @@ const quizQuestions = [
       'A star-delta motor starter fails to change from star to delta. The most likely area to investigate is:',
     options: [
       'The changeover timer, the delta contactor, and the changeover auxiliary contacts',
-      'Category 3 or 4 (redundant channels with monitoring and fault detection)',
-      'A downstream device is protected by an upstream device with higher breaking capacity',
-      'To provide initial support, listen non-judgementally, and guide the person towards appropriate help',
+      'The main isolator and the incoming supply fuses',
+      'The motor windings and the thermal overload element',
+      'The start and stop push buttons on the control station',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'When checking PLC outputs, a forced output test is used to:',
     options: [
-      'Using a systematic approach, reading drawings and logic diagrams, safely testing signals, clearly explaining your reasoning, and documenting findings',
-      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
-      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
+      'Permanently override the program so the output stays on after the test is finished',
+      'Temporarily activate an output to verify the module and field wiring, bypassing the logic',
+      'Measure the scan time of the PLC processor while the control program is running',
+      'Read the status of an input sensor without disturbing the connected field wiring',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'A safety interlock on a machine guard prevents the machine from operating when the guard is open. If the machine will not start with the guard closed, you should first:',
     options: [
-      'The coil supply voltage is too low, or there is an intermittent connection in the control circuit',
-      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
-      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
-      'Using a systematic approach, reading drawings and logic diagrams, safely testing signals, clearly explaining your reasoning, and documenting findings',
+      'Bypass the interlock switch temporarily to confirm the rest of the circuit works',
+      'Replace the PLC processor, since a failed processor is the most likely cause',
+      'Check the interlock switch is making contact, verifying with a multimeter at its terminals',
+      'Increase the control supply voltage to overcome any high-resistance connection',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,24 +155,24 @@ const quizQuestions = [
     question:
       'In a control panel, DIN rail-mounted terminal blocks serve which primary maintenance purpose?',
     options: [
-      'Systematically verify that the correct signals are present at each stage of the circuit, identifying where the signal path is broken',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
-      'The coil supply voltage is too low, or there is an intermittent connection in the control circuit',
-      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
+      'Stepping the control voltage down from 230 V AC to 24 V DC for the PLC inputs',
+      'Providing short-circuit protection for each field cable entering the panel',
+      'Isolating the control circuit automatically when a fault current is detected',
+      'Providing accessible, organised connection points that simplify fault diagnosis',
     ],
     correctAnswer: 3,
     explanation:
-      'Terminal blocks provide organised, accessible connection points that simplify maintenance. Field wiring terminates at the terminal blocks, and internal panel wiring connects the other side to the control devices. This means you can disconnect and test field wiring without disturbing the control device connections.',
+      'Terminal blocks provide organised, accessible connection points between field wiring and control devices that simplify maintenance. Field wiring terminates at the terminal blocks, and internal panel wiring connects the other side to the control devices. This means you can disconnect and test field wiring without disturbing the control device connections.',
   },
   {
     id: 8,
     question:
       "Checking for 'expected voltages' at test points during troubleshooting allows you to:",
     options: [
-      'Systematically verify that the correct signals are present at each stage of the circuit, identifying where the signal path is broken',
-      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
-      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
+      'Verify the correct signals are present at each stage, locating where the path is broken',
+      'Confirm the PLC program has been written correctly without reading the ladder logic',
+      'Measure the insulation resistance of the control circuit conductors to earth',
+      'Determine the correct torque setting for each terminal in the control panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -183,10 +183,10 @@ const quizQuestions = [
     question:
       'A proximity sensor on a conveyor system is not detecting product. Your systematic approach would be:',
     options: [
-      'Systematically verify that the correct signals are present at each stage of the circuit, identifying where the signal path is broken',
-      'Check the sensor LED indicator, verify supply voltage, check the sensing gap, clean the sensor face, test the output signal, then check wiring to the PLC',
-      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
+      'Replace the PLC input module first, as it is the most likely cause of the fault',
+      'Check the LED, supply voltage and sensing gap, clean the face, then trace the wiring',
+      'Force the corresponding PLC input on and leave the sensor in place untested',
+      'Increase the conveyor speed so the sensor has more time to detect the product',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,38 +196,38 @@ const quizQuestions = [
     id: 10,
     question: 'During the EPA, demonstrating control system troubleshooting competence means:',
     options: [
-      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
-      'Check the sensor LED indicator, verify supply voltage, check the sensing gap, clean the sensor face, test the output signal, then check wiring to the PLC',
-      'Using a systematic approach, reading drawings and logic diagrams, safely testing signals, clearly explaining your reasoning, and documenting findings',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
+      'Memorising the I/O addresses of one specific PLC brand before the assessment',
+      'Working as quickly as possible to find the fault, regardless of method or safety',
+      'Working systematically with drawings, testing safely and explaining your reasoning',
+      'Replacing each suspect component in turn until the system operates correctly again',
     ],
     correctAnswer: 2,
     explanation:
-      'The EPA assesses your systematic approach, not your knowledge of specific PLC brands. Demonstrate: ability to read circuit diagrams and ladder logic, systematic signal tracing, safe testing practices, clear communication of your diagnostic reasoning, and proper documentation.',
+      'The EPA assesses your systematic approach, not your knowledge of specific PLC brands. Demonstrate the ability to read circuit diagrams and ladder logic, systematic signal tracing, safe testing practices, clear communication of your diagnostic reasoning, and proper documentation.',
   },
   {
     id: 11,
     question:
       'When tracing a fault in a 24 V DC control circuit, you measure 24 V at the relay coil input terminal but 0 V across the coil. This indicates:',
     options: [
-      'Using a systematic approach, reading drawings and logic diagrams, safely testing signals, clearly explaining your reasoning, and documenting findings',
-      'The coil supply voltage is too low, or there is an intermittent connection in the control circuit',
-      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
-      'The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal',
+      'The coil is healthy and operating normally, drawing its full rated current',
+      'The supply voltage is too high and is damaging the relay coil winding',
+      'The relay contacts have welded closed and are holding the output energised',
+      'The connection between the input terminal and the coil is broken or faulty',
     ],
     correctAnswer: 3,
     explanation:
-      'If 24 V is present at the input terminal but does not reach the coil, the fault is in the path between them. This could be a broken conductor, a loose screw terminal, a corroded connection, or a failed intermediate connection. This is a classic example of signal tracing narrowing the fault to a specific section of the circuit.',
+      'If 24 V is present at the input terminal but does not reach the coil, the fault is in the path between them — possibly a broken conductor, a loose screw terminal, a corroded connection, or a failed intermediate connection. This is a classic example of signal tracing narrowing the fault to a specific section of the circuit.',
   },
   {
     id: 12,
     question:
       'A control system uses both PLC-controlled and hardwired relay circuits. When troubleshooting, you should:',
     options: [
-      'Identify which technology controls the faulty function by reading the drawings, then apply the appropriate diagnostic technique for that part of the system — I/O status for PLC, multimeter tracing for relay circuits',
-      'A first aid kit, oxygen resuscitation equipment, automated external defibrillator (AED), and blankets as a minimum — with additional items based on the specific risk assessment',
-      'When there is reason to suspect it is no longer valid, after a significant change in the matters to which it relates, or after a fire or near-miss incident',
-      'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
+      'Identify which technology controls the faulty function, then apply the right technique',
+      'Assume the PLC is at fault first, since electronics fail more often than relays do',
+      'Replace all the relays in the panel before investigating the PLC program at all',
+      'Bypass the relay circuits so the fault can be isolated to the PLC on its own',
     ],
     correctAnswer: 0,
     explanation:

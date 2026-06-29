@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'mcsa-purpose',
     question: 'What does Motor Current Signature Analysis (MCSA) primarily detect?',
     options: [
-      'To prevent accidental contact with hidden services',
-      'It allows contractor innovation while meeting required standards',
+      'Supply cable insulation resistance to earth',
+      'The exact winding temperature under load',
       'Mechanical faults through current spectrum analysis',
-      'Team familiarity, licensing, and project requirements',
+      'The remaining grease life in the bearings',
     ],
     correctIndex: 2,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
       'In vibration analysis, what does a dominant vibration at 2× line frequency (100Hz in the UK) typically indicate?',
     options: [
       'Electrical problems such as broken rotor bars or air gap eccentricity',
-      'Enhanced protection and frequent inspection schedules',
-      'Ask for clarification immediately before starting work',
-      'Preventive maintenance based on usage patterns and manufacturer recommendations',
+      'Mechanical imbalance of the rotor or coupling',
+      'Loose foundation bolts or soft-foot mounting',
+      'Lubrication breakdown in the drive-end bearing',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,16 +167,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'According to BS EN 60034-1, what is the maximum allowable winding temperature rise for Class F insulation?',
+      'According to BS EN 60034-1, what is the maximum allowable winding temperature rise for Class F insulation (by resistance, 40°C ambient)?',
     options: [
       '80°C',
-      '105°C',
-      '155°C',
       '125°C',
+      '155°C',
+      '105°C',
     ],
     correctAnswer: 3,
     explanation:
-      'Class F insulation permits a maximum winding temperature rise of 105°C above a 40°C ambient, giving a maximum winding temperature of 145°C. However, many motors use Class F insulation with Class B temperature rise (80°C) for extended life.',
+      'Class F insulation permits a maximum winding temperature rise of 105°C above a 40°C ambient, giving a maximum winding temperature of 145°C. Many motors use Class F insulation with Class B temperature rise (80°C) for extended life.',
   },
   {
     id: 8,
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'What is the primary purpose of a planned preventive maintenance (PPM) schedule for electrical machines?',
     options: [
-      'High task direction, low relationship support',
-      'Equipment condition, environment, technique',
+      'To replace all components at fixed intervals regardless of need',
+      'To respond to breakdowns only once they have occurred',
       'To prevent unexpected failures and extend equipment life',
-      'Trip time and operating current of the RCD',
+      'To reduce the number of test instruments required on site',
     ],
     correctAnswer: 2,
     explanation:

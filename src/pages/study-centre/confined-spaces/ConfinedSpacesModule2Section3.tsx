@@ -11,10 +11,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary role of the appointed supervisor in a confined space safe system of work?',
     options: [
-      'To enter the confined space and carry out the work themselves',
-      'To ensure the SSoW is properly implemented and that all control measures are in place before and during entry',
-      'To write the risk assessment after the work is completed',
-      'To provide atmospheric testing equipment to the entrants',
+      'To enter the confined space and carry out the work personally',
+      'To ensure the safe system of work is properly implemented throughout',
+      'To write up the risk assessment once the work has been completed',
+      'To supply the atmospheric testing equipment used by the entrants',
     ],
     correctIndex: 1,
     explanation:
@@ -26,9 +26,9 @@ const quickCheckQuestions = [
       'What is the primary purpose of lockout/tagout (LOTO) procedures before confined space entry?',
     options: [
       'To prevent unauthorised personnel from entering the space',
-      'To ensure all energy sources, mechanical equipment, and piped services are positively isolated so they cannot be accidentally re-energised or reconnected',
-      'To label the confined space with the names of all entrants',
-      'To test the atmosphere inside the confined space',
+      'To positively isolate all energy sources and piped services',
+      'To label the confined space with the names of all the entrants',
+      'To test the atmosphere inside the confined space before entry',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     id: 'ssow-atmos-testing',
     question: 'When should atmospheric testing of a confined space first be carried out?',
     options: [
-      'After the first entrant has entered and reported back',
-      'From outside the space before anyone enters, using remote probes or sampling lines',
-      'Only if workers report feeling unwell during the entry',
-      'At the end of the working period to check exposure levels',
+      'After the first entrant has gone in and reported back to the team',
+      'From outside the space before anyone enters, using remote probes',
+      'Only if workers report feeling unwell at some point during the entry',
+      'At the end of the working period to check overall exposure levels',
     ],
     correctIndex: 1,
     explanation:
@@ -78,12 +78,12 @@ const quizQuestions = [
     question:
       'Which of the following is the FIRST step in developing a safe system of work for confined space entry?',
     options: [
-      'Selecting the correct PPE for the entrants',
-      'Carrying out a thorough risk assessment specific to the space and the task',
-      'Briefing the entrants on the emergency procedures',
-      'Testing the atmosphere inside the confined space',
+      'Carrying out a risk assessment specific to the space and the task',
+      'Selecting the correct PPE and RPE for each of the entrants',
+      'Briefing the entrants on the agreed emergency procedures',
+      'Testing the atmosphere inside the confined space from outside',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The risk assessment is always the first step. Without understanding the specific hazards of the confined space and the work to be carried out, it is impossible to determine the correct control measures, PPE, monitoring requirements, or emergency procedures. Everything in the SSoW flows from the risk assessment.',
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the term 'positive isolation' mean in the context of LOTO procedures?",
     options: [
-      'Placing a warning sign on the equipment',
-      'Asking someone to watch the isolation switch',
-      'Physically disconnecting or locking energy sources so they cannot be accidentally re-energised',
-      'Turning off equipment using the normal operating controls',
+      'Placing a written warning sign on the relevant equipment',
+      'Asking a colleague to keep watch over the isolation switch',
+      'Physically locking energy sources so they cannot be re-energised',
+      'Turning off the equipment using its normal operating controls',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,11 +106,11 @@ const quizQuestions = [
       'What three gases must be tested for as a MINIMUM before entry into any confined space?',
     options: [
       'Carbon monoxide, hydrogen, and nitrogen',
-      'Oxygen, flammable gases/vapours, and toxic gases',
       'Methane, propane, and butane',
       'Oxygen, carbon dioxide, and argon',
+      'Oxygen, flammable gases/vapours, and toxic gases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'As a minimum, the atmosphere must be tested for oxygen level (normal range 19.5%–20.9%), flammable gases/vapours (must be below 10% of the lower explosive limit), and toxic gases (such as carbon monoxide or hydrogen sulphide, depending on the space). Additional gases may need to be tested depending on the specific hazards identified in the risk assessment.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'Why must atmospheric testing be carried out at different levels within the confined space?',
     options: [
-      'Because testing equipment only works at certain heights',
-      'Because different gases have different densities — some accumulate at low level, others at high level',
+      'Because gases differ in density — some settle low, others rise high',
+      'Because the testing equipment only works at certain set heights',
       'Because the regulations require a minimum of three test readings',
-      'Because the space may have different temperatures at different levels',
+      'Because the space may be at different temperatures at each level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Different gases have different densities relative to air. Heavier-than-air gases (such as carbon dioxide, hydrogen sulphide, and many solvent vapours) tend to accumulate at low levels, whilst lighter-than-air gases (such as methane and hydrogen) rise to the top. Testing at multiple levels — top, middle, and bottom — ensures that pockets of hazardous gas are detected regardless of where they have accumulated.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: "What is the role of the 'top person' during a confined space entry?",
     options: [
-      'To carry out the work inside the confined space',
-      'To remain at the entry point at all times, maintain communication with the entrant, and raise the alarm if anything goes wrong',
-      'To supervise all other work taking place on the site',
-      'To supply tools and materials to the entrants as needed',
+      'To carry out the work inside the confined space themselves',
+      'To supervise all of the other work taking place across the site',
+      'To pass tools and materials in to the entrants as they need them',
+      'To stay at the entry point, keep communication and raise the alarm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The top person (also called the standby person or attendant) must remain at the entry point at ALL times during the entry. Their duties include maintaining continuous communication with the entrant(s), monitoring the condition of entrants, keeping a log of who is in the space, preventing unauthorised entry, and raising the alarm and initiating the emergency procedure if anything goes wrong. They must NEVER enter the confined space themselves — doing so has led to multiple fatalities.',
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'Why might forced (mechanical) ventilation be required before and during confined space entry?',
     options: [
-      'To keep the entrants cool and comfortable',
-      'To maintain a safe atmosphere by introducing fresh air and diluting or displacing hazardous gases',
-      'To dry out the confined space before entry',
-      'To reduce the noise level inside the space',
+      'To keep the entrants cool and comfortable while they work',
+      'To maintain a safe atmosphere by introducing fresh air',
+      'To dry out the inside of the confined space before entry',
+      'To reduce the noise level inside the space during the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       'What type of electrical equipment must be used in a confined space with a potentially flammable atmosphere?',
     options: [
-      'Standard 230V equipment with an RCD',
-      'Battery-powered equipment only',
-      'Intrinsically safe (ATEX-rated) equipment that cannot produce sparks or sufficient heat to ignite the atmosphere',
-      'Any equipment is acceptable if the atmosphere has been tested',
+      'Standard 230V equipment protected by an RCD at the supply',
+      'Battery-powered equipment only, of any standard type',
+      'Intrinsically safe (ATEX-rated) equipment that cannot ignite vapour',
+      'Any equipment is acceptable once the atmosphere has been tested',
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       'What must take place immediately before entrants enter a confined space, even if all preparations are complete?',
     options: [
-      'A tea break so that all workers are refreshed',
-      'A pre-entry briefing covering the SSoW, hazards, control measures, communications, and emergency procedures',
-      'A test entry by the supervisor to check conditions',
-      'A phone call to the HSE to notify them of the entry',
+      'A final visual inspection of the entrants’ PPE and RPE only',
+      'A pre-entry briefing on hazards, controls and emergency procedures',
+      'A short test entry by the supervisor to check the conditions',
+      'A phone call to the HSE to notify them in advance of the entry',
     ],
     correctAnswer: 1,
     explanation:

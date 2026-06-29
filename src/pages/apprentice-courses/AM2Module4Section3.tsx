@@ -53,9 +53,9 @@ const AM2Module4Section3 = () => {
       id: 'certificate-type',
       question: 'Which certificate is used to hand over completed installation results in AM2?',
       options: [
-        'Public Interest Disclosure Act 1998',
-        'Actual metered energy consumption',
-        'Wastewater from basins, showers, and baths',
+        'Minor Electrical Installation Works Certificate',
+        'Electrical Installation Condition Report (EICR)',
+        'PAT testing record sheet',
         'Electrical Installation Certificate (EIC)',
       ],
       correctIndex: 3,
@@ -67,9 +67,9 @@ const AM2Module4Section3 = () => {
       question: "Why is writing '0.00 Ω' for Zs wrong?",
       options: [
         "Unrealistic reading - assessor knows it's a 'book answer'",
-        "To identify at-risk behaviours and reinforce safe practices",
-        "Water, gas, oil, air conditioning and structural steelwork",
-        "Use proper stripping tools to avoid nicking the conductor",
+        "Zs should always be recorded in milliohms, not ohms",
+        "Zs cannot be measured on a single-phase installation",
+        "It exceeds the maximum permitted value for the device",
       ],
       correctIndex: 0,
       explanation:
@@ -79,10 +79,10 @@ const AM2Module4Section3 = () => {
       id: 'recording-timing',
       question: 'When should you record test results in AM2?',
       options: [
-        'Fail for non-compliance with specification',
+        'Only after all testing is complete, from memory',
         'Immediately as you test, not afterwards',
-        'Self-certify notifiable electrical work',
-        'Burn marks or discolouration',
+        'Only the values that fall outside the permitted limits',
+        'At the next inspection, once the values are confirmed',
       ],
       correctIndex: 1,
       explanation:
@@ -95,10 +95,10 @@ const AM2Module4Section3 = () => {
       id: 1,
       question: 'What certificate must you complete for AM2 test results?',
       options: [
-        'The Managers and Professionals test',
+        'Electrical Installation Condition Report (EICR)',
         'Electrical Installation Certificate (EIC)',
-        'Remove fuses, inform occupants, and post notices',
-        'Circuit will not function as intended',
+        'Minor Electrical Installation Works Certificate',
+        'Portable Appliance Testing (PAT) certificate',
       ],
       correctAnswer: 1,
       explanation:
@@ -108,10 +108,10 @@ const AM2Module4Section3 = () => {
       id: 2,
       question: 'Why must you avoid leaving blanks on paperwork?',
       options: [
-        'Labels, handover notes, and record books/logs',
-        'Refractive index difference at glass-air interface',
+        'Blanks are acceptable as long as the tests passed',
+        'Blanks can be filled in by the assessor afterwards',
         'You lose marks and paperwork is incomplete',
-        'You own the van at the end of the agreement',
+        'Blanks make the certificate easier to read',
       ],
       correctAnswer: 2,
       explanation:
@@ -121,9 +121,9 @@ const AM2Module4Section3 = () => {
       id: 3,
       question: "What's wrong with writing '∞' for insulation resistance?",
       options: [
-        'It sets targets for 2025 requiring homes to be zero-carbon ready',
-        'Knowledge, skills, and behaviours required for the occupation',
-        'Misreading questions and careless errors',
+        'Insulation resistance should be recorded in ohms, not megohms',
+        'Infinity is below the minimum acceptable value of 1 MΩ',
+        'Insulation resistance is not recorded on the EIC',
         'Should record meter limit (e.g. >200 MΩ) not infinity',
       ],
       correctAnswer: 3,
@@ -147,10 +147,10 @@ const AM2Module4Section3 = () => {
       id: 5,
       question: 'What result would you expect for continuity of CPCs?',
       options: [
-        'It causes shadows and glare',
+        'Very high values (hundreds of megohms)',
         'Small values (fractions of an ohm)',
-        'Health and safety management',
-        'Safety - to prevent dangerous potentials',
+        'A value of exactly zero ohms on every circuit',
+        'A reading in milliseconds, like an RCD trip time',
       ],
       correctAnswer: 1,
       explanation:
@@ -161,10 +161,10 @@ const AM2Module4Section3 = () => {
       question:
         "What's the correct way to record an insulation resistance result above the meter limit?",
       options: [
-        "Elimination of the electrical hazard",
-        "Ipsc = U₀ ÷ (Ze + circuit impedance)",
+        "Write the infinity symbol",
+        "Write 'satisfactory' with no value",
         "Write '>200 MΩ' or meter limit",
-        "The same through all components",
+        "Leave the box blank, as the value is off the scale",
       ],
       correctAnswer: 2,
       explanation:
@@ -188,9 +188,9 @@ const AM2Module4Section3 = () => {
       question: "Why is '0.00 Ω' as a Zs result marked wrong?",
       options: [
         'Unrealistic - all circuits have some impedance',
-        'Adjusting PID parameters for optimal performance',
-        'In the pocket of the person doing the work',
-        'Periodically as part of maintenance schedule',
+        'Zs should always read above the device maximum',
+        'Zs is measured in megohms, so 0.00 is too small',
+        'Zs cannot be tested until the circuit is dead',
       ],
       correctAnswer: 0,
       explanation:

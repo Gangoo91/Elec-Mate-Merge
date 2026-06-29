@@ -18,24 +18,24 @@ const quickCheckQuestions = [
     question:
       'Under CDM 2015, what must a client do before construction work — including scaffold erection — begins on site?',
     options: [
-      'Appoint a principal designer and principal contractor (where more than one contractor is involved), ensure suitable welfare facilities are provided, and allow sufficient time and resources for the work to be carried out safely',
-      'Erect the scaffold themselves and inspect it daily',
-      'Submit a design certificate to the Health and Safety Executive',
-      'Hire only CISRS-carded scaffolders and no other trades',
+      'Make suitable arrangements for managing the project, including the required duty-holder appointments, welfare, and adequate time and resources',
+      'Personally erect the scaffold and carry out a documented inspection of it every day',
+      'Submit a stamped scaffold design certificate to the Health and Safety Executive for approval',
+      'Engage only CISRS-carded scaffolders and exclude all other trades from the site',
     ],
     correctIndex: 0,
     explanation:
-      'CDM 2015 Regulation 4 requires the client to make suitable arrangements for managing a project, including appointing a principal designer and principal contractor where more than one contractor is involved, ensuring adequate welfare facilities, and allowing sufficient time and resources for safe planning and execution.',
+      'CDM 2015 Regulation 4 requires the client to make suitable arrangements for managing a project. In practice this means appointing a principal designer and principal contractor where more than one contractor is involved, ensuring adequate welfare facilities, and allowing sufficient time and resources for safe planning and execution. The client does not erect the scaffold, and scaffold designs are not submitted to the HSE for approval.',
   },
   {
     id: 'temporary-works-coordinator',
     question:
       'What is the primary role of the temporary works coordinator (TWC) on a construction project?',
     options: [
-      'To erect and dismantle all scaffolding on the project',
-      'To manage the temporary works procedure — ensuring designs are produced, checked, approved, and that erection and dismantling are carried out in accordance with the design',
-      'To inspect scaffolds after every shift change',
-      'To submit scaffold designs to the local authority for planning approval',
+      'To physically erect and dismantle all of the scaffolding on the project',
+      'To manage the temporary works procedure from design through to controlled dismantling',
+      'To carry out a fresh formal inspection of every scaffold after each shift change',
+      'To submit the scaffold designs to the local authority for planning approval',
     ],
     correctIndex: 1,
     explanation:
@@ -45,12 +45,12 @@ const quickCheckQuestions = [
     id: 'scaffold-handover',
     question: 'What must happen before a scaffold is handed over to the user and loaded?',
     options: [
-      "The scaffold must be painted in the contractor's brand colours",
-      'The scaffold must be inspected by a competent person, a handover certificate (or scaffold tag/permit to use) must be issued confirming it is fit for purpose, and the scaffold register must be updated',
-      'The scaffold must be left for 48 hours to allow the ground to settle',
-      'The scaffold must be photographed and the images sent to the HSE',
+      "The scaffold must be repainted in the contractor's brand colours before any trade uses it",
+      'The scaffold must be left standing for 48 hours to allow the ground beneath it to settle',
+      'A competent person must inspect it, issue a handover certificate or tag, and update the register',
+      'The scaffold must be photographed and the images submitted to the HSE before first use',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Before a scaffold can be used, a competent person must inspect it and confirm it has been erected in accordance with the design. A handover certificate or scaffold tag is issued, the scaffold register is updated, and only then may the scaffold be loaded and used by other trades.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     question:
       'Under CDM 2015, which duty holder is responsible for ensuring that a project is managed so that health and safety risks are controlled, including risks from scaffolding?',
     options: [
+      'The client',
       'The principal contractor',
       'The scaffold inspector',
-      'The client',
       'The Health and Safety Executive',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'CDM 2015 places the overarching duty on the client to make suitable arrangements for managing a project. While the principal contractor manages site-level coordination, it is the client who must ensure adequate time, resources, and competent appointments are in place — including for scaffold design and erection.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'What is the role of the temporary works supervisor (TWS) in the scaffold erection process?',
     options: [
-      'To design the scaffold and produce the calculation package',
-      'To supervise the erection on site, ensuring the scaffold is built in accordance with the design, and to report completion to the temporary works coordinator',
-      'To carry out the independent design check required by BS 5975',
-      'To issue the F10 notification to the HSE',
+      'To design the scaffold and produce the full structural calculation package',
+      'To carry out the independent design check required under BS 5975',
+      'To prepare and issue the F10 project notification to the HSE',
+      'To supervise erection on site and report completion to the temporary works coordinator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The temporary works supervisor (TWS) is the person on site who supervises the erection, ensures it follows the approved design and method statement, checks that materials are in good condition, and reports completion to the TWC so that the final inspection and handover can take place.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'Before a scaffold design is approved for erection, what check must be carried out under BS 5975?',
     options: [
-      'A thermal imaging check of the scaffold components',
-      'An independent design check by a person not involved in producing the original design',
-      'A wind-speed forecast for the next 30 days',
-      "A check that the scaffold colour matches the client's branding",
+      'An independent design check by a competent person not involved in the original design',
+      'A site approval check carried out solely by the scaffolders who produced the design',
+      'A planning-approval check submitted to and signed off by the local authority',
+      'A verbal sign-off of the design by the client before erection begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5975:2019 requires an independent design check — sometimes called a Category 2 or Category 3 check depending on the risk level. The check must be carried out by a competent person who was not involved in producing the original design, to provide an independent verification that the design is safe and adequate.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'Under CDM 2015 Regulation 13, contractors must not begin work on site unless which condition is met regarding scaffolding they will use?',
     options: [
-      'The scaffold has been inspected by the client personally',
-      'Reasonable steps have been taken to ensure the scaffold is safe, erected by competent persons, and inspected at the required intervals',
-      'The scaffold has been in place for at least seven calendar days',
-      'The scaffold has been tested with twice the intended working load',
+      'The scaffold has been inspected by the client in person before any work starts',
+      'The scaffold has been standing in place for at least seven calendar days',
+      'The scaffold has been proof-loaded to twice its intended working load',
+      'Reasonable steps confirm the scaffold is safe, competently erected, and inspected at the required intervals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 13 requires contractors to ensure that reasonable steps have been taken to prevent risks. For scaffolding, this means satisfying themselves that the scaffold has been designed, erected by competent persons, inspected by a competent person, and approved for use before they or their workers step onto it.',
   },
@@ -178,14 +178,14 @@ const quizQuestions = [
     id: 8,
     question: 'An erection sequence drawing is required for which type of scaffold?',
     options: [
-      'Only scaffolds over 50 metres in height',
-      'Only birdcage scaffolds inside buildings',
-      'Any scaffold that cannot be erected safely by following a standard configuration — including complex, unusual, or high-risk scaffolds where the method of building the scaffold itself introduces risk',
-      'Only scaffolds erected by apprentices',
+      'Only standard independent scaffolds over 50 metres in height',
+      'Only birdcage scaffolds erected inside occupied buildings',
+      'Any complex, unusual, or high-risk scaffold that cannot be safely erected by a standard approach',
+      'Only scaffolds erected by apprentices under direct supervision',
     ],
     correctAnswer: 2,
     explanation:
-      'An erection sequence drawing (or method statement with step-by-step build instructions) is required whenever the scaffold configuration is complex, unusual, or high-risk and cannot be safely erected by following a standard approach. This includes cantilever scaffolds, heavily loaded scaffolds, scaffolds over water, and any configuration where the partially-built scaffold could be unstable.',
+      'An erection sequence drawing (or method statement with step-by-step build instructions) is required whenever the scaffold configuration is complex, unusual, or high-risk and cannot be safely erected by following a standard approach. This includes cantilever scaffolds, heavily loaded scaffolds, scaffolds over water, and any configuration where the partially-built scaffold could be unstable. It is not triggered simply by height, location, or who erects it.',
   },
 ];
 

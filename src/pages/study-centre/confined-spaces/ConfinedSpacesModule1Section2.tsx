@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'A large open-topped storage tank is 2.5 metres deep with a single access ladder. There is no mechanical ventilation. Would this be classified as a confined space?',
     options: [
-      'No — it is open-topped so air can circulate freely',
-      'Yes — it has limited access/egress, is substantially enclosed, and has a foreseeable risk of oxygen depletion or toxic atmosphere accumulation',
-      'Only if someone has already been injured inside it',
-      'Only if it contains hazardous chemicals',
+      'No — being open-topped lets air circulate freely throughout the depth',
+      'Yes — it is substantially enclosed with a foreseeable specified risk',
+      'No — it only counts once someone has already been injured inside it',
+      'No — it only counts when it currently holds hazardous chemicals',
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     id: 'cs-register',
     question: 'What is the primary purpose of a site-specific confined space register?',
     options: [
-      'To record the names of everyone who has entered confined spaces',
-      'To list all identified confined spaces on a site so that risks are assessed, controls are planned, and no space is overlooked',
-      'To satisfy insurance requirements only',
-      'To replace the need for individual risk assessments',
+      'To record the names of everyone who has ever entered confined spaces',
+      'To list every identified confined space so no space is overlooked',
+      'To satisfy the requirements of the site insurance policy only',
+      'To replace the need for individual confined space risk assessments',
     ],
     correctIndex: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is NOT typically classified as an industrial confined space?',
     options: [
-      'A reaction vessel in a chemical plant',
       'A large open-plan warehouse with roller shutter doors at each end',
+      'A reaction vessel in a chemical plant',
       'A grain silo',
       'A steam boiler during maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A large open-plan warehouse with roller shutter doors at both ends is well ventilated with multiple unrestricted access points. It is not substantially enclosed in a way that creates a reasonably foreseeable specified risk. Reaction vessels, silos, and boilers are classic confined spaces due to limited access, restricted ventilation, and the potential for toxic or oxygen-depleted atmospheres.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       'An electrician is asked to work inside a lift shaft to replace wiring. Which confined space characteristics does a lift shaft present?',
     options: [
-      'Substantially enclosed with limited access, risk of falling, and potential for oxygen depletion if ventilation is poor',
-      'Only a fall hazard — it is not a confined space',
-      'A confined space only when the lift car is at the bottom',
-      'A confined space only in buildings taller than 10 storeys',
+      'A fall hazard only — a lift shaft is never a confined space',
+      'A confined space only while the lift car is parked at the bottom',
+      'A confined space only in buildings taller than ten storeys',
+      'Substantially enclosed with limited access, fall and oxygen-depletion risk',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A lift shaft is substantially enclosed with limited access points (typically a single door at each floor level). It can present risks of oxygen depletion (especially if fire suppression gases are present), falling objects, and entrapment if the lift car moves. It meets the legal definition of a confined space regardless of building height.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'During a site walkround to identify confined spaces, which of the following steps should be completed FIRST?',
     options: [
-      'Issue permits to work for all identified spaces',
-      'Carry out atmospheric monitoring inside each space',
-      'Review existing drawings, process information, and previous survey records to understand what spaces exist on site',
-      'Arrange rescue equipment at each identified space',
+      'Review existing drawings, process information and previous survey records',
+      'Issue permits to work for all the spaces identified on site',
+      'Carry out atmospheric monitoring inside each space on site',
+      'Arrange rescue equipment at each identified space on site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The first step in any confined space identification exercise is a desk-based review of existing information: drawings, P&IDs, asset registers, previous surveys, and process information. This builds a preliminary list of potential confined spaces before anyone goes near them. Physical walkrounds, atmospheric monitoring, and control measures come later in the process.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A spray booth in a factory has mechanical extract ventilation that runs during normal operations. Could it become a confined space?',
     options: [
-      'No — it has mechanical ventilation so it cannot be a confined space',
-      'Yes — if the ventilation fails or is switched off, flammable or toxic vapours can accumulate rapidly in the enclosed booth',
-      'Only if the booth is smaller than 2 cubic metres',
-      'Only if someone enters the booth while spraying is in progress',
+      'No — having mechanical ventilation means it can never be a confined space',
+      'Yes — but only if the booth is smaller than two cubic metres in volume',
+      'Yes — but only while someone is actively spraying inside the booth',
+      'Yes — if the ventilation fails, flammable or toxic vapours build rapidly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Spray booths are a commonly missed confined space. During normal operation with functioning ventilation, the atmosphere may be adequately controlled. However, if the ventilation fails, is switched off for maintenance, or is inadequate for the solvents being used, flammable and toxic vapour concentrations can build rapidly. The booth is substantially enclosed by design (to contain overspray) and typically has limited access points.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     question:
       'What information should a confined space register contain for each identified space?',
     options: [
-      'Only the location and a photograph',
-      'The location, description, identified hazards, required control measures, and reference to the specific risk assessment',
-      'Only the name of the person responsible for the space',
-      'A list of people who have previously entered the space',
+      'Only the location of the space and a single photograph of it',
+      'Location, description, hazards, controls and the risk assessment reference',
+      'Only the name of the person nominated as responsible for the space',
+      'Only a list of everyone who has previously entered the space',
     ],
     correctAnswer: 1,
     explanation:
@@ -198,11 +198,11 @@ const quizQuestions = [
       'Which of the following agricultural confined spaces has caused multiple fatalities in the UK due to toxic gas exposure?',
     options: [
       'An open field grain store with natural ventilation',
-      'A slurry pit or slurry tank',
       'A tractor cab',
+      'A slurry pit or slurry tank',
       'A standard farm workshop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Slurry pits and slurry tanks are among the most dangerous confined spaces in agriculture. Decomposing slurry produces hydrogen sulphide (H₂S), methane (CH₄), carbon dioxide (CO₂), and ammonia (NH₃). H₂S is particularly lethal — it can cause unconsciousness in a single breath at high concentrations. Multiple fatalities have occurred in the UK when farmers or workers have entered slurry pits without atmospheric monitoring or rescue arrangements, often in attempts to rescue animals or other people who have already collapsed.',
   },

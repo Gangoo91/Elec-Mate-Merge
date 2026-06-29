@@ -24,38 +24,38 @@ const inlineChecks = [
     id: 'm6s1-purpose-of-iv',
     question: 'In one sentence, what is the objective of initial verification under Reg 641.1?',
     options: [
-      'To prove the design is the cheapest possible solution within Part 5',
-      'To confirm — by inspection and testing — that the new installation, alteration or addition complies with BS 7671 and is safe to be put into service',
-      'To produce a Schedule of Test Results that can be used as a quotation for further work',
-      'To satisfy the DNO that the cut-out fuse rating is correct before energisation',
+      'To prove the design is the cheapest compliant solution available within Part 5',
+      'To confirm by inspection and testing that the work complies with BS 7671 and is safe to put into service',
+      'To produce a Schedule of Test Results usable as a quotation for further remedial work',
+      'To satisfy the DNO that the cut-out fuse rating is correct before final energisation',
     ],
     correctIndex: 1,
     explanation:
-      "Reg 641.1 frames initial verification as confirmation of compliance with BS 7671 by inspection (Reg 642.2) and testing (Reg 642.3 / Section 643). The output is the EIC plus its schedules, signed by the Designer, Installer and Inspector — the document that says 'this is safe to energise and put into service'. Cost, DNO fuse rating and quotations sit elsewhere.",
+      "Reg 641.1 frames initial verification as confirmation of compliance with BS 7671 by inspection (Reg 642.2) and testing (Reg 642.3 / Section 643), covering new installations, alterations and additions. The output is the EIC plus its schedules, signed by the Designer, Installer and Inspector — the document that says 'this is safe to energise and put into service'. Cost, DNO fuse rating and quotations sit elsewhere.",
   },
   {
     id: 'm6s1-642-1-design-data',
     question:
       'You arrive on site to verify a new commercial board. The contractor hands you the keys but no paperwork. What does Reg 642.1 require BEFORE you start?',
     options: [
-      'Nothing — start testing and document afterwards',
-      'A verbal confirmation from the installer that the cables are the right size',
-      'The design data: assessment of general characteristics (Section 311 onwards), drawings, schedules and any calculations the inspector needs to determine compliance',
-      'Only a copy of the previous EICR for that property',
+      'Nothing further — start testing and document the readings afterwards',
+      'A verbal confirmation from the installer that the cables are correctly sized',
+      'The design data — Section 311 characteristics, drawings, schedules and calculations',
+      'Only a copy of the previous EICR issued for that property',
     ],
     correctIndex: 2,
     explanation:
-      "Reg 642.1 makes it explicit: information per Section 132.12 and Chapter 51 — drawings, schedules of items, calculations — shall be made available to the inspector. Without that data the inspector cannot compare 'as designed' against 'as installed', cannot confirm Zs limits against the chosen device, and cannot demonstrate Reg 132.1.1 has been met. No data, no defensible cert.",
+      "Reg 642.1 makes it explicit: information per Reg 132.12 and Reg 514.9.1 — drawings, schedules of items, calculations and the assessment of general characteristics — shall be made available to the inspector. Without that data the inspector cannot compare 'as designed' against 'as installed', cannot confirm Zs limits against the chosen device, and cannot demonstrate compliance. No data, no defensible cert.",
   },
   {
     id: 'm6s1-inspection-before-test',
     question:
       'A trainee suggests doing the dead tests first to save time, then walking the inspection while the customer is on a call. Why is this the wrong order?',
     options: [
-      'Because IR results are invalid before noon',
-      'Because Reg 642.2 requires visual inspection to precede testing — a missing CPC, wrong device or damaged enclosure is a danger to the tester before any meter is connected',
-      'Because the manufacturer of the test equipment forbids it',
-      'There is no such requirement; testing can come first if the installer agrees',
+      'Because dead-test results are only valid if taken before the live tests',
+      'Because Reg 642.2 requires visual inspection to precede testing — defects spotted first protect the tester',
+      'Because test-equipment manufacturers forbid inspecting an energised installation',
+      'Because the installer must witness the inspection but not the testing',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'On the EIC for a small alteration done by a sole-trader, who signs the three role boxes (Designer, Installer, Inspector)?',
     options: [
-      'Only the customer signs — the contractor signs as a witness',
-      'A different competent person must sign each role',
-      'One competent person can sign all three roles when one person fulfils all three responsibilities; each role still requires a separate signature and date',
-      'Only the inspector signs; designer and installer are optional',
+      'Only the customer signs, with the contractor signing as a witness to the work',
+      'A different competent person must legitimately sign each of the three roles',
+      'One competent person signs all three roles, each with a separate signature and date',
+      'Only the inspector signs; the designer and installer boxes are left optional',
     ],
     correctIndex: 2,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'A specialist control panel installed under BS EN 61439 cannot, by design, meet a particular BS 7671 requirement. What does Reg 120.3 require you to do?',
     options: [
-      'Refuse to certify and walk away — departures are forbidden',
-      'Tick "satisfactory" on the cert and move on; departures are an internal matter',
-      'Record the departure on the EIC, demonstrate the degree of safety afforded is not less than that obtained by full compliance, and have it signed off by a competent person — burden of justification sits with the designer',
-      'Email the Linesman and let the DNO decide',
+      'Refuse to certify and walk away, since departures from BS 7671 are never permitted',
+      'Tick "satisfactory" and move on, treating the departure as an internal matter only',
+      'Record the departure on the EIC and justify that safety is not reduced',
+      'Refer the departure to Building Control and let them rule on equivalence',
     ],
     correctIndex: 2,
     explanation:
@@ -94,14 +94,14 @@ const inlineChecks = [
     question:
       'When completing the EIC for a new domestic rewire, where do you record the recommended period to the next inspection?',
     options: [
-      'It is not recorded on the EIC; it is added on the next EICR',
-      'On the EIC under "Recommendations" / "Next Inspection" — the inspector records the recommended date for the next periodic inspection (typically 10 years for domestic, 5 years for commercial / rented)',
-      'Only the DNO sets the next inspection date',
-      'It is set automatically at 1 year for every installation',
+      'It is not recorded on the EIC; it is first added on the next periodic EICR',
+      'On the EIC under "Recommendations" — the inspector records the next-inspection date',
+      'Only the DNO sets the next inspection date, based on the supply arrangement',
+      'It is fixed automatically at 1 year for every type of installation',
     ],
     correctIndex: 1,
     explanation:
-      "Section 631 + Appendix 6: the EIC carries a 'recommended date for next inspection' field. Best Practice Guide 4 / IET Guidance Note 3 give the typical intervals (10 years domestic, 5 years commercial/rented, shorter for high-risk environments). The figure is a recommendation, not a statutory requirement — but it is the inspector's expert opinion and forms part of the safety case.",
+      "Section 631 + Appendix 6: the EIC carries a 'recommended date for next inspection' field. IET Guidance Note 3 / BPG 4 give typical intervals (10 years domestic, 5 years commercial/rented, shorter for high-risk environments). The figure is a recommendation, not a statutory requirement — but it is the inspector's expert opinion and forms part of the safety case.",
   },
   {
     id: 'm6s1-a4-schedule-changes',
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'Reg 641.1 sets the objective of initial verification. Which option captures it most precisely?',
     options: [
-      'To check that the installation is "as designed" without testing',
-      'To confirm by inspection and testing that the installation, alteration or addition complies with BS 7671 and that any defects revealed have been corrected before being put into service',
-      'To produce a Schedule of Test Results with no inspection element',
-      'To allow the DNO to commission the supply',
+      'To check that the installation is "as designed" by inspection without any testing',
+      'To confirm by inspection and testing that the work complies and defects are made good first',
+      'To produce a Schedule of Test Results with no inspection element required',
+      'To allow the DNO to commission and energise the supply at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,8 +141,8 @@ const quizQuestions = [
     options: [
       'Drawings, charts and schedules of items installed (per Reg 514.9.1)',
       'Calculations of design current, cable size, voltage drop and Zs targets',
-      "The contractor's quoted price for the work",
-      'Assessment of general characteristics per Section 311 (maximum demand, system earthing, conditions of external influence)',
+      "The contractor's quoted price and commercial terms agreed for the work",
+      'Assessment of general characteristics per Section 311 (demand, earthing, external influence)',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'A trainee proposes a verification sequence: dead tests, energise, live tests, then walk the inspection while the supply is on. Why does Reg 642.2 reject this?',
     options: [
-      'The trainee should always energise first to confirm the supply is present',
-      'Reg 642.2 requires visual inspection to precede testing, normally with the installation disconnected — partly to confirm safety of the tester before connecting meters, partly to spot defects that would invalidate the test results',
-      "It does not reject it — the order is the inspector's discretion",
-      'Energising first is mandatory in TT systems only',
+      'It does not — energising first is correct, to confirm the supply is present before testing',
+      'It does not — the order of inspection and testing is left to the inspector\'s discretion',
+      'It does not — energising before inspection is mandatory specifically on TT systems',
+      'Reg 642.2 requires visual inspection to precede testing, normally with the supply disconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 642.2: inspection shall precede testing and shall normally be done with the installation disconnected from the supply. The order matters because (a) connecting test leads to a damaged accessory or missing CPC could injure the tester, and (b) some test results (continuity, IR) can only be properly interpreted in the context of what the inspection has confirmed about the installation's construction.",
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'What does Reg 642.3 require, and what document underpins HOW the testing is carried out?',
     options: [
-      'Reg 642.3 mandates testing be carried out per Section 643, which sets out the tests to be applied (continuity, IR, polarity, EFLI, RCD operating times etc.) and their sequence',
-      'Reg 642.3 only applies to industrial installations',
-      'Reg 642.3 says any test the inspector chooses is acceptable',
-      'Reg 642.3 mandates that only the DNO can perform testing',
+      'Testing per Section 643, which sets out the tests and the sequence in which they apply',
+      'Testing only of industrial installations; domestic work needs inspection alone',
+      'Any tests the inspector chooses, in any order they judge appropriate on the day',
+      'Testing that may only be performed by the DNO before the supply is connected',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'On a small alteration to a domestic circuit done by a one-person contracting business, who signs the three EIC role boxes (Designer, Installer, Inspector)?',
     options: [
-      'Only the customer',
-      'A different person for each role — sole-traders may not sign all three',
-      'One competent person may sign all three roles where one person fulfils all three responsibilities; each role still requires its own signature and date',
-      'The DNO must sign at least one box',
+      'Only the customer signs, accepting the work on the contractor\'s behalf',
+      'A different competent person for each role — sole-traders may not sign all three',
+      'The DNO must counter-sign at least one of the three role boxes',
+      'One competent person signs all three roles, each with its own signature and date',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The three role boxes are three responsibilities, not three separate people. Where one competent person designs, installs and inspects-and-tests the work — common for small alterations and sole-trader jobs — they sign all three boxes. Each signature and date is captured separately so there is a clear record of who took on each responsibility.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'A specialist control panel cannot meet a particular BS 7671 requirement by virtue of its product standard (BS EN 61439). What does Reg 120.3 require?',
     options: [
-      'The departure is forbidden — refuse to certify',
-      'Tick "satisfactory" on the EIC and move on; departures are an internal matter',
-      'Record the departure on the EIC, demonstrate that the degree of safety afforded is not less than that of full compliance, and have a competent person sign it off; the burden of justification sits with the designer',
-      'Email the Building Control officer and let them decide',
+      'The departure is forbidden, so the inspector must refuse to certify the panel',
+      'Tick "satisfactory" on the EIC and move on, as departures are an internal matter',
+      'Record the departure on the EIC and justify that the safety afforded is not reduced',
+      'Refer the departure to Building Control and let the officer decide on equivalence',
     ],
     correctAnswer: 2,
     explanation:
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'On a new domestic rewire EIC, where on the certificate is the recommended date for the next inspection captured, and what typically determines its length?',
     options: [
-      'It is not on the EIC; it appears on the next EICR only',
-      "On the EIC under 'Recommendations' — the inspector records a recommended date informed by the type of installation, environment and use (typically 10 years domestic, 5 years commercial / rented, shorter for high-risk environments)",
-      'It is fixed at 1 year by statute',
-      'It is set by the DNO',
+      'It is not on the EIC; it appears only on the next periodic EICR',
+      "On the EIC under 'Recommendations' — informed by installation type, environment and use",
+      'It is fixed at 1 year for every installation by statutory requirement',
+      'It is set by the DNO according to the supply earthing arrangement',
     ],
     correctAnswer: 1,
     explanation:

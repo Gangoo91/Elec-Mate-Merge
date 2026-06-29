@@ -12,16 +12,16 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'eawr-reg4',
-    question: 'Under EAWR 1989 Regulation 4(2), the duty to maintain electrical systems is:',
+    question: 'Under EAWR 1989 Regulation 4(2), the duty to maintain electrical systems is best described as:',
     options: [
-      'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Suitable for the environment and adequately protected',
-      'An absolute duty — there is no defence based on cost or difficulty',
+      'A duty that applies only to high-voltage systems',
+      'A voluntary code of practice with no legal force',
+      'A duty owed only by the equipment manufacturer',
+      'A duty so as to prevent danger, which HSE guidance treats as effectively absolute',
     ],
     correctIndex: 3,
     explanation:
-      "Regulation 4(2) of the Electricity at Work Regulations 1989 is an absolute duty — it states that electrical systems shall be maintained so as to prevent danger. Unlike many health and safety duties, there is no 'so far as reasonably practicable' qualifier. If an electrical system is not maintained and danger results, the duty holder is guilty of a criminal offence.",
+      "Regulation 4(2) requires that systems be maintained so as to prevent danger, so far as is reasonably practicable. The HSE Memorandum of Guidance clarifies that the maintenance duty is, in effect, treated as absolute — if a system is not maintained and danger results, the duty holder commits a criminal offence.",
   },
   {
     id: 'eicr-interval',
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'Which of the following is an example of statutory (legally required) maintenance?',
     options: [
       'Testing fire alarm systems in compliance with the Regulatory Reform (Fire Safety) Order 2005',
-      'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
-      'The primary attachment point for fall arrest — it positions the arrest force at the centre of the back',
-      'Temporarily reducing or switching off non-critical loads when demand is high',
+      'Carrying out a thermographic survey of a distribution board',
+      'Re-torquing terminal connections during routine maintenance',
+      'Topping up the grease in motor bearings on a fixed schedule',
     ],
     correctIndex: 0,
     explanation:
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Electricity at Work Regulations 1989 apply to:',
     options: [
-      'Do not use the scaffold and report the missing tag to your supervisor immediately',
+      'Only high-voltage systems above 1000 V',
       'All work activities involving electrical systems, regardless of voltage or location',
-      'To provide an energy rating and recommendations for the building',
-      'Be individually removable so other employees cannot access personal data',
+      'Only domestic electrical installations',
+      'Only new installations during initial verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 2,
     question: 'PUWER 1998 Regulation 5 requires that work equipment is:',
     options: [
-      'Danger present — risk of injury; immediate remedial action required',
-      'Inspection, testing and verification of electrical installations including periodic inspection',
+      'Replaced with new equipment every five years',
+      'Inspected only when a fault has already occurred',
       'Maintained in an efficient state, in efficient working order and in good repair',
-      'The duty holder — typically the employer, building owner or person in control of the premises',
+      'Tested only by the original equipment manufacturer',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ const quizQuestions = [
     id: 3,
     question: 'BS 7671 Part 6 covers:',
     options: [
-      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
-      'The duty holder — typically the employer, building owner or person in control of the premises',
-      'Danger present — risk of injury; immediate remedial action required',
+      'The design of protective devices and circuit arrangements',
+      'The selection and erection of wiring systems',
+      'Earthing arrangements and protective conductors',
       'Inspection, testing and verification of electrical installations including periodic inspection',
     ],
     correctAnswer: 3,
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       "Under the Regulatory Reform (Fire Safety) Order 2005, the 'responsible person' must:",
     options: [
-      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
-      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
+      'Carry out a five-yearly EICR on the electrical installation',
+      'Maintain only the emergency lighting, not the fire alarm',
       'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
-      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
+      'Appoint an external contractor to assume all legal responsibility',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,9 +137,9 @@ const quizQuestions = [
     id: 7,
     question: 'The difference between statutory and non-statutory maintenance is:',
     options: [
-      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
-      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
-      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
+      'Statutory maintenance applies only to high-voltage systems',
+      'Non-statutory maintenance is illegal and must be avoided',
+      'Statutory maintenance is carried out annually and non-statutory monthly',
       'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
     ],
     correctAnswer: 3,
@@ -151,9 +151,9 @@ const quizQuestions = [
     question: 'Insurance companies typically require evidence of:',
     options: [
       'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
-      'The load can shift or the truck can run away if the handler loses control, particularly going downhill',
-      'One every ~600 mm — closer at ends and at any point where the lid might be lifted by passing traffic.',
-      'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
+      'A verbal assurance from the premises occupier',
+      'A single inspection carried out when the building was built',
+      'Maintenance records held only by the insurance broker',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'The EICR classification code C1 means:',
     options: [
-      'Loose terminal, damaged cable, or incorrect routing',
+      'Improvement recommended — advisory only',
       'Danger present — risk of injury; immediate remedial action required',
-      'Simplified representation of circuits and equipment',
-      'Screened/shielded cable with symmetrical construction',
+      'Potentially dangerous — urgent remedial action required',
+      'Further investigation required without delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under EAWR 1989, who has a duty to maintain electrical systems?',
     options: [
-      'Maintained in an efficient state, in efficient working order and in good repair',
-      'Danger present — risk of injury; immediate remedial action required',
+      'Only the original electrical contractor who installed the system',
+      'Only the distribution network operator (DNO)',
       'The duty holder — typically the employer, building owner or person in control of the premises',
-      'Inspection, testing and verification of electrical installations including periodic inspection',
+      'Only the local authority building control department',
     ],
     correctAnswer: 2,
     explanation:
@@ -189,9 +189,9 @@ const quizQuestions = [
     id: 11,
     question: 'A periodic inspection (EICR) should include:',
     options: [
-      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
-      'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
-      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
+      'A visual inspection only, with no electrical testing required',
+      'Testing of every circuit at full load while energised',
+      'A fire risk assessment of the whole premises',
       'Visual inspection, testing (insulation resistance, earth continuity, polarity, RCD, loop impedance) and sampling of circuits as appropriate',
     ],
     correctAnswer: 3,
@@ -204,9 +204,9 @@ const quizQuestions = [
       'BS 7671 regulation 135.1 states that the period between inspections should be determined by:',
     options: [
       'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
-      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
-      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
-      'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
+      'A fixed interval of five years for every installation',
+      'The preference of the person carrying out the inspection',
+      'The age of the consumer unit alone',
     ],
     correctAnswer: 0,
     explanation:

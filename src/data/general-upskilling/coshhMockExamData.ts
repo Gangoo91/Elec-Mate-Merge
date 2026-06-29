@@ -93,9 +93,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'COSHH regulations apply to which types of hazardous substances?',
     options: [
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s body (e.g., blood, urine)',
-      'The fraction of airborne particles that is inhaled through the nose and mouth during breathing',
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
+      'Only manufactured chemicals supplied with a safety data sheet',
+      'Only substances that are flammable, explosive, or corrosive',
+      'Only solid materials that produce dust when cut or ground',
       'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
     ],
     correctAnswer: 3,
@@ -127,10 +127,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: 'What are the four main routes by which hazardous substances can enter the body?',
     options: [
-      '40 years from the date of the last entry',
+      'Inhalation, ingestion, radiation, vibration',
       'Inhalation, ingestion, absorption, injection',
-      'Legionella bacteria causing Legionnaires\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' disease',
-      'Control of Substances Hazardous to Health',
+      'Contact, combustion, evaporation, condensation',
+      'Inhalation, conduction, convection, ingestion',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,9 +162,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What is the difference between an acute health effect and a chronic health effect?',
     options: [
-      'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'A general duty to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees',
+      'Acute effects are always permanent; chronic effects are always temporary and reversible',
+      'Acute effects only affect the skin; chronic effects only affect the lungs',
+      'Acute effects are caused by chemicals; chronic effects are caused by biological agents',
       'Acute effects occur rapidly after short exposure; chronic effects develop gradually after repeated or prolonged exposure',
     ],
     correctAnswer: 3,
@@ -215,10 +215,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       "What does the GHS08 'health hazard' pictogram (silhouette of a person with a starburst on the chest) indicate?",
     options: [
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
-      'A chronic respiratory condition caused by sensitisation or irritation from workplace substances',
+      'The substance is corrosive and will cause immediate skin and eye burns on contact',
+      'The substance is acutely toxic and may cause death from a single short exposure',
       'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
-      'Provide specific information, instruction, and training on the new substance and its controls before exposure begins',
+      'The substance is flammable and presents a fire or explosion hazard',
     ],
     correctAnswer: 2,
     explanation:
@@ -251,9 +251,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is 'respirable dust'?",
     options: [
       "Dust particles small enough to penetrate deep into the lungs, beyond the body's natural defences",
-      "Stop using it immediately, leave the hazardous area, and obtain a replacement",
-      "A substance that can cause or contribute to the development of cancer",
-      "Hazard identification, exposure controls, toxicological information, and first-aid measures",
+      "Visible dust that settles quickly and is captured by the nose and throat",
+      "Any dust that has a workplace exposure limit assigned in EH40",
+      "Dust produced only when cutting materials that contain crystalline silica",
     ],
     correctAnswer: 0,
     explanation:
@@ -284,10 +284,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: "What is a 'sensitiser' in the context of COSHH?",
     options: [
-      'Toxic fumes including hydrogen chloride, dioxins, and furans from burning PVC insulation',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
+      'A substance that increases the flammability or reactivity of other chemicals',
+      'A substance that becomes harmful only when heated above its boiling point',
       'A substance that triggers an allergic reaction after repeated exposure, meaning even tiny future exposures cause a response',
-      'Serial peak flow measurements can reveal work-related patterns showing reduced lung function during work periods',
+      'A substance that loses its hazardous properties after a single exposure',
     ],
     correctAnswer: 2,
     explanation:
@@ -336,10 +336,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 17,
     question: 'What type of substance is an isocyanate?',
     options: [
-      'A doctor registered with the GMC, or a nurse qualified in occupational health, as appropriate to the surveillance required',
+      'A naturally occurring mineral fibre used in older insulation and fireproofing materials',
       'A highly reactive chemical found in two-pack paints, foams, and adhesives that is a major cause of occupational asthma',
-      'Dispose of as hazardous waste or contaminated waste as per the COSHH assessment and SDS',
-      'A web-based tool that helps small businesses carry out COSHH assessments and identify control measures',
+      'A heavy metal that accumulates in the body and damages the nervous system',
+      'A solvent vapour that causes narcosis and is highly flammable in confined spaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -370,9 +370,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 19,
     question: "What is the difference between 'inhalable dust' and 'respirable dust'?",
     options: [
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
-      'Inflammation of the skin caused or made worse by substances encountered at work',
-      'It contains leaks and spills to prevent environmental contamination and spread',
+      'Inhalable dust is hazardous, while respirable dust is harmless nuisance dust',
+      'Inhalable dust is measured over 8 hours, while respirable dust is measured over 15 minutes',
+      'Inhalable dust comes from wood, while respirable dust comes from stone',
       'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
     ],
     correctAnswer: 3,
@@ -388,9 +388,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: 'How might a worker be exposed to hazardous substances through the injection route?',
     options: [
       'Through a cut or puncture wound that allows a substance to enter the bloodstream directly',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
-      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s face',
-      'A substance that can cause heritable genetic mutations in living cells',
+      'By breathing in airborne dust, fume, or vapour through the nose and mouth',
+      'By swallowing a substance transferred from contaminated hands to food',
+      'By a substance soaking through intact skin into the bloodstream',
     ],
     correctAnswer: 0,
     explanation:
@@ -438,9 +438,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'What type of health effect is occupational asthma?',
     options: [
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
-      'Remove the clothing carefully, avoiding further skin contact, and follow decontamination procedures in the COSHH assessment',
-      'When there is reason to believe it is no longer valid, or when there has been a significant change in the work',
+      'An acute effect that appears immediately on first exposure and clears within minutes of leaving the area',
+      'A skin condition caused only by direct contact with corrosive substances',
+      'A short-term narcotic effect caused by inhaling high concentrations of solvent vapour',
       'A chronic respiratory condition caused by sensitisation or irritation from workplace substances',
     ],
     correctAnswer: 3,
@@ -472,10 +472,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'Exposure to which type of substance can cause metal fume fever?',
     options: [
-      'Classification, Labelling and Packaging of substances and mixtures',
+      'Lead fumes from soldering and stripping old painted surfaces',
       'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
-      'Carcinogenic, Mutagenic, or toxic to Reproduction substance',
-      'Report it to their employer and seek occupational health assessment',
+      'Silica dust from cutting concrete, brick, and mortar',
+      'Solvent vapours from paints, adhesives, and cleaning agents',
     ],
     correctAnswer: 1,
     explanation:
@@ -489,10 +489,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'What is the primary danger of working with solvents in a poorly ventilated area?',
     options: [
-      'A doctor registered with the GMC, or a nurse qualified in occupational health, as appropriate to the surveillance required',
-      'Irrigate the eye immediately with clean water for at least 15-20 minutes, then seek medical attention',
+      'The vapours condense on cold surfaces and cause electrical short circuits',
+      'The solvents react with oxygen to release toxic carbon monoxide gas',
       'Solvent vapours can cause dizziness, unconsciousness, and potentially death by narcosis, and many are flammable',
-      'The supplier must provide them and the employer must make them accessible to employees',
+      'The solvents corrode metal tools and damage cable insulation over time',
     ],
     correctAnswer: 2,
     explanation:
@@ -507,9 +507,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following best describes 'absorption' as a route of entry for hazardous substances?",
     options: [
-      'Make proper use of control measures and PPE provided by the employer, and report defects',
-      'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
-      'Suitable and sufficient information, instruction and training',
+      'Breathing in airborne fumes, vapours, or dust into the lungs',
+      'Swallowing a substance through contaminated hands or food',
+      'A substance entering through a cut, graze, or puncture wound',
       'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
     ],
     correctAnswer: 3,
@@ -525,9 +525,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is meant by the term 'Workplace Exposure Limit' (WEL)?",
     options: [
       'The maximum airborne concentration of a hazardous substance averaged over a reference period to which a worker may be exposed by inhalation',
-      'A standardised phrase describing recommended measures to minimise or prevent adverse effects from exposure, storage, or disposal',
-      'Provide specific information, instruction, and training on the new substance and its controls before exposure begins',
-      'A substance that triggers an allergic reaction after repeated exposure, meaning even tiny future exposures cause a response',
+      'The total quantity of a hazardous substance an employer is permitted to store on site at any one time',
+      'The maximum dose of a substance a worker can safely absorb through the skin in a single shift',
+      'The concentration of a substance below which it is considered completely non-hazardous',
     ],
     correctAnswer: 0,
     explanation:
@@ -541,10 +541,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'What are the two reference periods used for Workplace Exposure Limits?',
     options: [
-      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
+      '1-hour average and 24-hour average',
       '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
-      'Hazard identification, exposure controls, toxicological information, and first-aid measures',
-      'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
+      '30-minute peak limit and weekly cumulative limit',
+      '4-hour shift average and 10-minute ceiling limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -558,9 +558,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: "What type of hazardous substance is 'respirable crystalline silica' (RCS)?",
     options: [
-      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
-      'A fine mineral dust generated by cutting, drilling, or grinding materials containing silica such as concrete, sandstone, and morite',
+      'A condensed metal vapour fume produced when welding galvanised steel',
+      'A gaseous solvent vapour released when paints and adhesives evaporate',
+      'A fine mineral dust generated by cutting, drilling, or grinding materials containing silica such as concrete, sandstone, and granite',
       'Tiny liquid droplets suspended in air, typically produced by spraying, splashing, or condensation',
     ],
     correctAnswer: 2,
@@ -576,9 +576,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'How can hazardous substances enter the body via the ingestion route on a construction site?',
     options: [
-      'The time taken for a chemical to permeate through the glove material',
-      'That employers prevent or adequately control exposure to hazardous substances',
-      'Persistent organic pollutant; probable carcinogen and endocrine disruptor',
+      'By breathing in airborne dust and fume while working',
+      'By a substance soaking through unbroken skin into the bloodstream',
+      'By a substance entering through a cut or puncture wound',
       'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
     ],
     correctAnswer: 3,
@@ -594,9 +594,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'vapour' in the context of hazardous substances?",
     options: [
       'The gaseous form of a substance that is normally a liquid or solid at room temperature',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
-      'An HSE publication listing Workplace Exposure Limits for hazardous substances',
-      'Through a cut or puncture wound that allows a substance to enter the bloodstream directly',
+      'Tiny solid particles formed when a metal is heated and its vapour condenses in air',
+      'Fine liquid droplets suspended in air, produced by spraying or splashing',
+      'Solid particles produced by cutting, grinding, or sanding a material',
     ],
     correctAnswer: 0,
     explanation:
@@ -610,10 +610,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question: "What is a 'mist' in the context of hazardous substances?",
     options: [
-      'The supplier must provide them and the employer must make them accessible to employees',
+      'The gaseous form of a substance that is normally liquid at room temperature',
       'Tiny liquid droplets suspended in air, typically produced by spraying, splashing, or condensation',
-      'Solvent vapours can cause dizziness, unconsciousness, and potentially death by narcosis, and many are flammable',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'Very fine solid particles formed when a heated metal vapour condenses in air',
+      'Solid particles released by cutting, drilling, or grinding a material',
     ],
     correctAnswer: 1,
     explanation:
@@ -645,9 +645,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: "What is the 'synergistic effect' in relation to hazardous substance exposure?",
     options: [
-      'Contain the spill, apply appropriate absorbent material from the spill kit, and dispose of waste correctly',
-      'A chronic respiratory condition caused by sensitisation or irritation from workplace substances',
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
+      'When a substance becomes less harmful after being diluted with another substance',
+      'When the body gradually builds up a tolerance to a substance after repeated exposure',
+      'When a single substance produces different effects in different workers',
       'When exposure to two or more substances together produces a combined effect greater than the sum of their individual effects',
     ],
     correctAnswer: 3,
@@ -664,9 +664,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       "What is meant by 'total inhalable dust' in the context of workplace exposure monitoring?",
     options: [
       'The fraction of airborne particles that is inhaled through the nose and mouth during breathing',
-      'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
-      'Before first exposure and then at regular intervals, typically every 1-6 months depending on risk',
-      'The employer must review the risk assessment, control measures, and consider moving the employee to non-exposed work',
+      'Only the finest particles that reach the deepest alveolar region of the lungs',
+      'The total weight of all dust that settles on surfaces in a work area',
+      'Dust that has been chemically analysed and found to contain crystalline silica',
     ],
     correctAnswer: 0,
     explanation:
@@ -699,10 +699,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following substances is a common cause of occupational contact dermatitis on construction sites?',
     options: [
-      'Section 8 — Exposure controls/personal protection',
-      'Facial stubble or a beard in the seal area',
+      'Dry timber sawdust from cutting softwood battens',
+      'Clean water used for mixing and dust suppression',
       'Wet cement (due to its alkaline pH and chromium content)',
-      'The Health and Safety at Work etc. Act 1974',
+      'PVC cable insulation handled during installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -716,9 +716,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: "What is a 'narcotic' effect in relation to solvent exposure?",
     options: [
-      'Before first exposure and then at regular intervals, typically every 1-6 months depending on risk',
-      'Serial peak flow measurements can reveal work-related patterns showing reduced lung function during work periods',
-      'To ensure the assessment remains valid, control measures are effective, and changes in substances or processes are captured',
+      'A permanent allergic sensitisation of the airways after a single exposure',
+      'A burning sensation on the skin caused by direct chemical contact',
+      'A long-term scarring of the lungs from inhaling fine dust particles',
       'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
     ],
     correctAnswer: 3,
@@ -808,9 +808,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: 'What is a Safety Data Sheet (SDS)?',
     options: [
       "A document provided by the manufacturer or supplier giving detailed information about a substance's hazards, safe handling, storage, and emergency measures",
-      "When exposure to two or more substances together produces a combined effect greater than the sum of their individual effects",
-      "Because construction dust often contains respirable crystalline silica, and even 'low-toxicity' dusts can cause lung disease at high or prolonged exposures",
-      "To maintain a comprehensive list of all hazardous substances used or generated in the workplace, linked to their assessments and SDSs",
+      "A certificate issued by the HSE confirming that a substance is safe to use at work",
+      "A record kept by the employer of every worker who has used a particular substance",
+      "A label applied to the container showing only the product name and supplier address",
     ],
     correctAnswer: 0,
     explanation:
@@ -860,9 +860,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'What is EH40?',
     options: [
-      'Classification, Labelling and Packaging of substances and mixtures',
-      'A chronic respiratory condition caused by sensitisation or irritation from workplace substances',
-      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
+      'A COSHH Approved Code of Practice giving guidance on risk assessments',
+      'A British Standard specifying the design of local exhaust ventilation systems',
+      'An HSE form used to report occupational diseases to enforcing authorities',
       'An HSE publication listing Workplace Exposure Limits for hazardous substances',
     ],
     correctAnswer: 3,
@@ -896,10 +896,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Under COSHH, what must an employer do BEFORE any work with hazardous substances begins?',
     options: [
-      'Through a cut or puncture wound that allows a substance to enter the bloodstream directly',
+      'Obtain a licence from the Health and Safety Executive for the work',
       'Carry out a risk assessment and implement appropriate control measures',
-      'Substitute the substance with a less hazardous alternative',
-      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s face',
+      'Notify the local authority of the substances being used on site',
+      'Arrange health surveillance for every employee on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -913,10 +913,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Which of the following is NOT a step in the COSHH risk assessment process?',
     options: [
-      'A substance that can cause heritable genetic mutations in living cells',
-      'Wet cement (due to its alkaline pH and chromium content)',
+      'Identify the hazardous substances present and who might be exposed',
+      'Evaluate the level, type, and duration of exposure to decide on controls',
       'Calculate the cost of replacing the substance with a less hazardous alternative',
-      'Inflammation of the skin caused or made worse by substances encountered at work',
+      'Record the significant findings and review the assessment regularly',
     ],
     correctAnswer: 2,
     explanation:
@@ -930,9 +930,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'When must a COSHH risk assessment be reviewed?',
     options: [
-      'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
-      'Emergency procedures including appropriate first aid, and warning and communication systems',
-      'To ensure the assessment remains valid, control measures are effective, and changes in substances or processes are captured',
+      'Only once every five years, regardless of any changes in the work',
+      'Only after an employee has already suffered a work-related illness',
+      'Only when requested to do so by an HSE inspector during an audit',
       'When there is reason to believe it is no longer valid, or when there has been a significant change in the work',
     ],
     correctAnswer: 3,
@@ -964,10 +964,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What is the hierarchy of control measures under COSHH (in order of preference)?',
     options: [
-      'At least every 14 months, or every 6 months for certain specified processes',
+      'PPE → administrative controls → engineering controls → substitution → elimination',
       'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'A spot or short-term measurement giving an approximate indication of gas concentration',
-      'The time taken for a chemical to permeate through the glove material',
+      'Engineering controls → PPE → substitution → elimination → administrative controls',
+      'Substitution → PPE → elimination → engineering controls → administrative controls',
     ],
     correctAnswer: 1,
     explanation:
@@ -1050,10 +1050,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'For how long must health surveillance records be kept under COSHH?',
     options: [
-      'GHS06 — Acute Toxicity (severe)',
-      'Type A gas filter with medium capacity (class 2)',
+      '5 years from the date of the last entry',
+      '10 years from the date of the last entry',
       '40 years from the date of the last entry',
-      'Dusts, fumes, and chemical vapours',
+      '3 years from the date of the last entry',
     ],
     correctAnswer: 2,
     explanation:
@@ -1067,9 +1067,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'Regulation 12 of COSHH requires employers to provide workers with what?',
     options: [
-      'It contains leaks and spills to prevent environmental contamination and spread',
-      'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
-      'To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached',
+      'A personal supply of respiratory protective equipment purchased at the employee\'s own expense',
+      'Free annual medical examinations regardless of the substances they are exposed to',
+      'Written permission from the HSE before any hazardous substance may be used',
       'Suitable and sufficient information, instruction, and training about the hazardous substances they work with',
     ],
     correctAnswer: 3,
@@ -1102,10 +1102,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What does the CLP Regulation stand for?',
     options: [
-      'Inflammation of the skin caused or made worse by substances encountered at work',
+      'Control, Labelling and Prevention of hazardous substances',
       'Classification, Labelling and Packaging of substances and mixtures',
-      'Calculate the cost of replacing the substance with a less hazardous alternative',
-      'Section 8 — Exposure controls/personal protection',
+      'Chemical Limits and Protection in the workplace',
+      'Categorisation, Listing and Permitting of dangerous goods',
     ],
     correctAnswer: 1,
     explanation:
@@ -1119,10 +1119,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'What is the role of the REACH Regulation in relation to COSHH?',
     options: [
-      'Mineral oil can cause skin irritation, oil acne, and dermatitis on prolonged or repeated skin contact, and oil mist can irritate the respiratory tract',
-      'When the risk assessment identifies that employees are exposed to a substance linked to an identifiable disease or adverse health effect, and there is a reasonable likelihood of it occurring',
+      'REACH sets the legal Workplace Exposure Limits that COSHH enforces',
+      'REACH replaced COSHH as the main UK law for controlling workplace exposure',
       'REACH deals with the registration, evaluation, authorisation, and restriction of chemicals placed on the market, while COSHH deals with workplace exposure controls',
-      'A document provided by the manufacturer or supplier giving detailed information about a substance\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s hazards, safe handling, storage, and emergency measures',
+      'REACH applies only to imported chemicals, while COSHH applies only to UK-made chemicals',
     ],
     correctAnswer: 2,
     explanation:
@@ -1136,9 +1136,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'Under COSHH, what is the legal status of a Workplace Exposure Limit listed in EH40?',
     options: [
-      'Only when all other reasonably practicable measures are insufficient',
-      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
-      'Toxic fumes including hydrogen chloride, dioxins, and furans from burning PVC insulation',
+      'It is advisory guidance only and carries no legal force',
+      'It is a voluntary target that employers may choose to adopt',
+      'It applies only to substances classified as carcinogens',
       'It is legally enforceable — exposure must not exceed the WEL unless specific conditions are met',
     ],
     correctAnswer: 3,
@@ -1154,9 +1154,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is an 'Approved Code of Practice' (ACOP) in relation to COSHH?",
     options: [
       'A document that gives practical advice on how to comply with the regulations — not following it means you must show an equally effective method',
-      'Irrigate the eye immediately with clean water for at least 15-20 minutes, then seek medical attention',
-      'Mineral oil can cause skin irritation, oil acne, and dermatitis on prolonged or repeated skin contact, and oil mist can irritate the respiratory tract',
-      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
+      'A legally binding limit on the airborne concentration of a substance',
+      'A mandatory list of substances that are banned from all workplaces',
+      'A supplier-issued document detailing a single product\'s hazards and handling',
     ],
     correctAnswer: 0,
     explanation:
@@ -1171,10 +1171,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What duty does the Health and Safety at Work etc. Act 1974 Section 2 place on employers regarding hazardous substances?',
     options: [
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
+      'A duty to provide free personal protective equipment to every employee',
       'A general duty to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees',
-      'To protect workers from risks of fire and explosion from dangerous substances in the workplace',
-      'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
+      'A duty to report all use of hazardous substances to the Health and Safety Executive',
+      'A duty to carry out health surveillance on all employees every six months',
     ],
     correctAnswer: 1,
     explanation:
@@ -1188,10 +1188,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'Which of the following does an employee have a legal duty to do under COSHH?',
     options: [
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'Respiratory irritation and pulmonary oedema at high concentrations',
+      'Carry out their own COSHH risk assessment before starting work',
+      'Purchase their own respiratory protective equipment and gloves',
       'Make proper use of control measures and PPE provided by the employer, and report defects',
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
+      'Arrange their own health surveillance with an occupational health provider',
     ],
     correctAnswer: 2,
     explanation:
@@ -1206,9 +1206,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'A COSHH assessment identifies that a substance is a respiratory sensitiser. What is the highest priority action?',
     options: [
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s body (e.g., blood, urine)',
-      'Toxic fumes including hydrogen chloride, dioxins, and furans from burning PVC insulation',
-      'Self-contained breathing apparatus (SCBA) or airline breathing apparatus',
+      'Issue all exposed workers with disposable FFP3 respirators',
+      'Rely on improved general room ventilation to dilute the substance',
+      'Place a warning sign in the area and restrict access to trained staff',
       'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
     ],
     correctAnswer: 3,
@@ -1224,9 +1224,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: 'What information must a hazardous substance label display under CLP regulations?',
     options: [
       'Product identifier, GHS hazard pictograms, signal word, hazard statements, precautionary statements, and supplier details',
-      'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
-      'A spot or short-term measurement giving an approximate indication of gas concentration',
-      'To ensure the assessment remains valid, control measures are effective, and changes in substances or processes are captured',
+      'Only the chemical formula and the date the product was manufactured',
+      'The Workplace Exposure Limit and the result of the latest air monitoring',
+      'The name of the employee responsible for storing and using the substance',
     ],
     correctAnswer: 0,
     explanation:
@@ -1258,10 +1258,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'Under COSHH, what must an employer do if five or more people are employed?',
     options: [
-      'Elimination, substitution, engineering controls, administrative controls, PPE',
-      'At least every 14 months, or every 6 months for certain specified processes',
+      'Appoint a full-time health and safety officer to oversee COSHH',
+      'Provide health surveillance for every employee on the payroll',
       'Record the significant findings of the COSHH assessment in writing',
-      'Carry out a risk assessment and implement appropriate control measures',
+      'Notify the Health and Safety Executive before any work begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -1328,10 +1328,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'Under COSHH, when is health surveillance legally required?',
     options: [
-      'Identification of foreseeable emergencies, procedures for spill containment, fire response, evacuation routes, communication systems, and roles/responsibilities',
-      'The maximum airborne concentration of a hazardous substance averaged over a reference period to which a worker may be exposed by inhalation',
+      'Whenever any hazardous substance with a safety data sheet is used',
+      'Only after an employee has reported symptoms of ill health',
       'When the risk assessment identifies that employees are exposed to a substance linked to an identifiable disease or adverse health effect, and there is a reasonable likelihood of it occurring',
-      'A document that gives practical advice on how to comply with the regulations — not following it means you must show an equally effective method',
+      'Only for employees who have worked for the company for more than five years',
     ],
     correctAnswer: 2,
     explanation:
@@ -1365,9 +1365,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Under the Management of Health and Safety at Work Regulations 1999, what must employers do in addition to COSHH assessments?',
     options: [
       'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
-      'The maximum airborne concentration of a hazardous substance averaged over a reference period to which a worker may be exposed by inhalation',
-      'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
-      'It contains leaks and spills to prevent environmental contamination and spread',
+      'Provide every employee with a personal copy of each safety data sheet',
+      'Test all local exhaust ventilation systems every six months without exception',
+      'Keep all hazardous substance records for a minimum of 40 years',
     ],
     correctAnswer: 0,
     explanation:
@@ -1382,10 +1382,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What information from a Safety Data Sheet is most directly useful when writing a COSHH risk assessment?',
     options: [
-      'Dispose of as hazardous waste or contaminated waste as per the COSHH assessment and SDS',
+      'The product price, batch number, and manufacturing date',
       'Hazard identification, exposure controls, toxicological information, and first-aid measures',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
+      'The transport classification and packaging dimensions only',
+      'The company logo, marketing claims, and warranty terms',
     ],
     correctAnswer: 1,
     explanation:
@@ -1400,10 +1400,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR), which COSHH-related conditions are reportable?',
     options: [
-      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
-      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
+      'Minor skin irritation that clears up within a single shift',
+      'Temporary headaches and dizziness from short-term solvent exposure',
       'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
-      'Serial peak flow measurements can reveal work-related patterns showing reduced lung function during work periods',
+      'Eye watering caused by working near dust without eye protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -1417,9 +1417,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: "What is a 'hazard statement' (H-statement) on a CLP chemical label?",
     options: [
-      'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
+      'A phrase advising how to store and dispose of the substance safely',
+      'A code showing which personal protective equipment must be worn',
+      'A number giving the Workplace Exposure Limit for the substance',
       'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
     ],
     correctAnswer: 3,
@@ -1435,9 +1435,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'precautionary statement' (P-statement) on a CLP chemical label?",
     options: [
       'A standardised phrase describing recommended measures to minimise or prevent adverse effects from exposure, storage, or disposal',
-      'The employer must review the risk assessment, control measures, and consider moving the employee to non-exposed work',
-      'A fine mineral dust generated by cutting, drilling, or grinding materials containing silica such as concrete, sandstone, and morite',
-      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
+      'A phrase describing the nature and severity of the hazard itself',
+      'A code identifying which GHS pictogram must appear on the label',
+      'A number giving the legal Workplace Exposure Limit for the substance',
     ],
     correctAnswer: 0,
     explanation:
@@ -1459,8 +1459,8 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     options: [
       'Polychlorinated biphenyls (PCBs)',
       'Respirable crystalline silica (RCS) dust',
-      'The employer (or self-employed person)',
-      '40 years from the date of the last entry',
+      'Mercury vapour',
+      'Carbon monoxide gas',
     ],
     correctAnswer: 1,
     explanation:
@@ -1475,10 +1475,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What hazardous substance is an electrician most likely exposed to when soldering copper pipe joints or cable terminations?',
     options: [
-      'Type A gas filter with medium capacity (class 2)',
-      'Occupational asthma (respiratory sensitiser)',
+      'Silica dust from the soldered joint',
+      'Asbestos fibres from the cable insulation',
       'Lead and rosin (colophony) fumes from solder and flux',
-      'Wet cement (due to its alkaline pH and chromium content)',
+      'Isocyanate vapour from the flux',
     ],
     correctAnswer: 2,
     explanation:
@@ -1493,9 +1493,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of hazardous substance can be released when drilling into painted surfaces in buildings constructed before 1980?',
     options: [
-      'Butyl rubber gloves',
-      'GHS06 — Acute Toxicity (severe)',
-      'Loud noise from machinery',
+      'Asbestos fibres from the paint binder',
+      'Mercury vapour from the pigment',
+      'Carbon monoxide from the drill motor',
       'Lead-containing paint dust',
     ],
     correctAnswer: 3,
@@ -1512,9 +1512,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Which hazardous substance might electricians encounter when working in loft spaces with older insulation materials?',
     options: [
       'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
-      'Carry out a risk assessment and implement appropriate control measures',
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
+      'Isocyanate vapour from spray-applied foam',
+      'Zinc oxide fume from galvanised fixings',
+      'Chlorine gas from treated timber',
     ],
     correctAnswer: 0,
     explanation:
@@ -1529,10 +1529,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main COSHH concern when using PVC solvent cement (glue) to join plastic conduit?',
     options: [
-      'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
+      'The cement releases respirable crystalline silica dust as it cures',
       'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
-      'Toxic fumes including hydrogen chloride, dioxins, and furans from burning PVC insulation',
+      'The cement produces lead fume when the joint is heated',
+      'The cement gives off asbestos fibres as it hardens',
     ],
     correctAnswer: 1,
     explanation:
@@ -1548,9 +1548,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What hazardous substance can be encountered when an electrician works near or disturbs old fluorescent light fittings?',
     options: [
       'Zinc oxide fume from galvanised steel',
-      'Section 8 — Exposure controls/personal protection',
+      'Respirable crystalline silica from the glass',
       'Mercury vapour from broken fluorescent tubes',
-      'Fuel, oxygen, and a source of ignition',
+      'Isocyanate vapour from the tube coating',
     ],
     correctAnswer: 2,
     explanation:
@@ -1565,9 +1565,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What hazardous substance may be present in older electrical switchgear and transformers manufactured before the mid-1980s?',
     options: [
-      'Loud noise from machinery',
-      'Control of Substances Hazardous to Health',
-      'Local Exhaust Ventilation',
+      'Respirable crystalline silica',
+      'Man-made mineral fibres',
+      'Zinc oxide fume',
       'Polychlorinated biphenyls (PCBs)',
     ],
     correctAnswer: 3,
@@ -1584,9 +1584,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What is the primary health risk from wood dust generated during first fix electrical work in timber-framed buildings?',
     options: [
       'Hardwood dust is a recognised carcinogen (nasal cancer) and both hardwood and softwood dust can cause occupational asthma and dermatitis',
-      'Contain the spill, apply appropriate absorbent material from the spill kit, and dispose of waste correctly',
-      'Some lubricants contain irritants or sensitisers that can cause skin reactions, and vapours can accumulate in confined spaces',
-      'Identification of foreseeable emergencies, procedures for spill containment, fire response, evacuation routes, communication systems, and roles/responsibilities',
+      'Wood dust is harmless natural material and poses no real health risk',
+      'Wood dust only causes minor eye irritation that clears within minutes',
+      'Wood dust is dangerous solely because it is highly flammable',
     ],
     correctAnswer: 0,
     explanation:
@@ -1601,10 +1601,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What biological hazard should be considered when electricians work in underground cable ducts, drains, or basements where rodents may be present?',
     options: [
-      "Self-contained breathing apparatus (SCBA) or airline breathing apparatus",
+      "Metal fume fever from zinc-coated cable supports",
       "Leptospirosis (Weil's disease) from contact with water or surfaces contaminated with rat urine",
-      "The time taken for a chemical to permeate through the glove material",
-      "The science of anticipating, recognising, evaluating, and controlling workplace health hazards",
+      "Silicosis from disturbed concrete dust in the duct",
+      "Occupational dermatitis from contact with cable lubricant",
     ],
     correctAnswer: 1,
     explanation:
@@ -1619,10 +1619,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What hazardous substance is released when copper cables are stripped by burning off the insulation?',
     options: [
-      '5 years (or 40 years for personal exposure records of identifiable employees)',
-      'A substance that can cause or contribute to the development of cancer',
+      'Harmless water vapour and carbon dioxide only',
+      'Respirable crystalline silica dust from the copper',
       'Toxic fumes including hydrogen chloride, dioxins, and furans from burning PVC insulation',
-      'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
+      'Zinc oxide fume from the copper conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -1637,9 +1637,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What COSHH hazard is associated with the use of cable-pulling lubricants in confined trunking or conduit runs?',
     options: [
-      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
-      'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
-      'A fine mineral dust generated by cutting, drilling, or grinding materials containing silica such as concrete, sandstone, and morite',
+      'The lubricant releases respirable crystalline silica as it dries',
+      'The lubricant generates lead fume when the cable is energised',
+      'The lubricant produces asbestos fibres when it sets hard',
       'Some lubricants contain irritants or sensitisers that can cause skin reactions, and vapours can accumulate in confined spaces',
     ],
     correctAnswer: 3,
@@ -1656,9 +1656,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       "Why is construction dust classified as a significant health hazard even when it appears to be 'ordinary' dust?",
     options: [
       "Because construction dust often contains respirable crystalline silica, and even 'low-toxicity' dusts can cause lung disease at high or prolonged exposures",
-      "Mineral oil can cause skin irritation, oil acne, and dermatitis on prolonged or repeated skin contact, and oil mist can irritate the respiratory tract",
-      "A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness",
-      "Acute effects occur rapidly after short exposure; chronic effects develop gradually after repeated or prolonged exposure",
+      "Because all construction dust is classified as a biological agent under COSHH",
+      "Because construction dust is always flammable and presents an explosion risk",
+      "Because construction dust is corrosive and damages the skin on contact",
     ],
     correctAnswer: 0,
     explanation:
@@ -1673,10 +1673,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What hazardous substance can be released when cutting galvanised metal cable tray or trunking with a disc cutter?',
     options: [
-      'The substance involved, quantity, location, number of casualties, and any SDS information available',
+      'Respirable crystalline silica dust from the metal',
       'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
-      'Before first exposure and then at regular intervals, typically every 1-6 months depending on risk',
-      'Record the significant findings of the COSHH assessment in writing',
+      'Asbestos fibres released from the corrosion-protection layer',
+      'Mercury vapour released from the cutting disc',
     ],
     correctAnswer: 1,
     explanation:
@@ -1691,10 +1691,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the COSHH hazard when working with two-pack epoxy resin products used for cable joints and potting compounds?',
     options: [
-      'Remove the clothing carefully, avoiding further skin contact, and follow decontamination procedures in the COSHH assessment',
-      'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
+      'The product releases respirable crystalline silica dust as it cures',
+      'The product gives off lead fume when the joint is energised',
       'The resin and hardener components can cause severe skin sensitisation (allergic contact dermatitis) and respiratory sensitisation',
-      'Product identifier, GHS hazard pictograms, signal word, hazard statements, precautionary statements, and supplier details',
+      'The product produces asbestos fibres when mixed together',
     ],
     correctAnswer: 2,
     explanation:
@@ -1709,9 +1709,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following biological hazards can affect electricians working on or near air-conditioning and cooling systems?',
     options: [
-      "Lead and rosin (colophony) fumes from solder and flux",
-      "Suitable and sufficient information, instruction and training",
-      "Zinc oxide fume from galvanised steel",
+      "Leptospirosis from rodent urine in the plant room",
+      "Anthrax spores from contaminated ductwork insulation",
+      "Tetanus from rusty metal in the cooling unit",
       "Legionella bacteria causing Legionnaires' disease",
     ],
     correctAnswer: 3,
@@ -1728,9 +1728,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What hazardous substance is present in SF6 (sulphur hexafluoride) gas used in high-voltage switchgear?',
     options: [
       'SF6 is non-toxic in its pure form but becomes hazardous when decomposed by electrical arcing, producing toxic by-products including sulphur dioxide',
-      'The maximum airborne concentration of a hazardous substance averaged over a reference period to which a worker may be exposed by inhalation',
-      'The employer must review the risk assessment, control measures, and consider moving the employee to non-exposed work',
-      'Provide specific information, instruction, and training on the new substance and its controls before exposure begins',
+      'SF6 is a respiratory sensitiser that causes occupational asthma at very low levels',
+      'SF6 is a recognised carcinogen that causes nasal cancer on long-term exposure',
+      'SF6 is highly flammable and presents a serious fire risk in switchgear',
     ],
     correctAnswer: 0,
     explanation:
@@ -1745,10 +1745,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What COSHH-relevant hazard is created when using angle grinders to cut chases in brickwork for electrical cables?',
     options: [
-      'A general duty to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees',
+      'Lead fume released from the brickwork mortar',
       'High concentrations of respirable dust including crystalline silica, requiring dust suppression or extraction',
-      'It contains leaks and spills to prevent environmental contamination and spread',
-      'It is legally enforceable — exposure must not exceed the WEL unless specific conditions are met',
+      'Asbestos fibres released from the brickwork',
+      'Solvent vapours that build up in the chase',
     ],
     correctAnswer: 1,
     explanation:
@@ -1763,10 +1763,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the COSHH risk from mineral insulating oil found in older transformers and switchgear?',
     options: [
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
-      'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
+      'The oil releases respirable crystalline silica dust during maintenance',
+      'The oil gives off zinc oxide fume when heated by the equipment',
       'Mineral oil can cause skin irritation, oil acne, and dermatitis on prolonged or repeated skin contact, and oil mist can irritate the respiratory tract',
-      'A general duty to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees',
+      'The oil produces asbestos fibres as it ages in the transformer',
     ],
     correctAnswer: 2,
     explanation:
@@ -1781,9 +1781,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a hazardous substance commonly used in fire-stopping and sealing around electrical penetrations?',
     options: [
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
+      'Galvanised steel fixing brackets',
+      'Bare copper earthing conductors',
+      'Mineral wool cavity insulation',
       'Intumescent sealants and mastics which may contain irritants, sensitisers, or isocyanates',
     ],
     correctAnswer: 3,
@@ -1800,9 +1800,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What hazardous substance can electricians be exposed to when lifting floor tiles or ceiling tiles in buildings constructed between the 1950s and 1990s?',
     options: [
       'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
-      'Emergency procedures including appropriate first aid, and warning and communication systems',
-      'At least every 14 months, or every 6 months for certain specified processes',
+      'Zinc oxide fume from galvanised tile fixings',
+      'Respirable crystalline silica from the tile grout',
+      'Mercury vapour from the tile adhesive',
     ],
     correctAnswer: 0,
     explanation:
@@ -1852,9 +1852,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What class of biological hazard might an electrician encounter when rewiring in an old loft space contaminated with pigeon droppings?',
     options: [
-      'Legionella bacteria causing Legionnaires\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' disease',
-      'Carcinogenic, Mutagenic, or toxic to Reproduction substance',
-      'Powered air-purifying respirator with loose-fitting hood',
+      'Respirable crystalline silica dust',
+      'Lead-containing paint particles',
+      'Man-made mineral fibres',
       'Biological agents including fungi and bacteria',
     ],
     correctAnswer: 3,
@@ -1884,10 +1884,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician is installing containment in a room where spray painting is taking place. Which type of hazard is isocyanate paint most associated with?',
     options: [
-      'Biological agents including fungi and bacteria',
+      'Skin corrosion and chemical burns on contact',
       'Occupational asthma (respiratory sensitiser)',
-      'GHS06 — Acute Toxicity (severe)',
-      '40 years from the date of the last entry',
+      'Silicosis from inhaled mineral dust',
+      'Metal fume fever from inhaled fume',
     ],
     correctAnswer: 1,
     explanation:
@@ -1916,9 +1916,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What does the GHS hazard pictogram showing a person with a starburst on their chest indicate?',
     options: [
-      'It is a simple asphyxiant that displaces oxygen',
-      'Control of Substances Hazardous to Health',
-      'Regulation 8 — Use of control measures',
+      'Acute toxicity that may cause death from a single dose',
+      'Corrosive damage to skin, eyes, and metals',
+      'A flammable substance that presents a fire risk',
       'Serious health hazard (CMR, sensitiser, STOT)',
     ],
     correctAnswer: 3,
@@ -1933,9 +1933,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'When pulling cables through ceiling voids in a hospital, what type of hazardous substance might be present in old lagging around pipework?',
     options: [
       'Asbestos-containing materials',
-      'Monitoring exposure at the workplace',
-      'Zinc oxide fume from galvanised steel',
-      'Inhalation and skin absorption',
+      'Respirable crystalline silica dust',
+      'Man-made mineral fibre insulation',
+      'Lead-containing paint flakes',
     ],
     correctAnswer: 0,
     explanation:
@@ -2007,10 +2007,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following fumes is most likely to cause metal fume fever in an electrician working near welding operations?',
     options: [
-      'Dusts, fumes, and chemical vapours',
+      'Lead fume from soldering operations',
       'Zinc oxide fume from galvanised steel',
-      'It is a simple asphyxiant that displaces oxygen',
-      'Type A gas filter with medium capacity (class 2)',
+      'Silica dust from concrete cutting',
+      'Solvent vapour from degreasing agents',
     ],
     correctAnswer: 1,
     explanation:
@@ -2023,10 +2023,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of health hazard does SF₆ (sulphur hexafluoride) present when used in high-voltage switchgear?',
     options: [
-      'Fuel, oxygen, and a source of ignition',
-      'Section 8 — Exposure controls/personal protection',
+      'It is a respiratory sensitiser causing occupational asthma',
+      'It is a recognised carcinogen causing lung cancer',
       'It is a simple asphyxiant that displaces oxygen',
-      'The employer, with duties on employees to cooperate',
+      'It is corrosive and causes severe skin and eye burns',
     ],
     correctAnswer: 2,
     explanation:
@@ -2039,9 +2039,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Under COSHH, what must an employer provide to employees who are exposed to substances hazardous to health?',
     options: [
-      'The time taken for a chemical to permeate through the glove material',
-      'Carcinogenic, Mutagenic, or toxic to Reproduction substance',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'A cash allowance to buy their own protective equipment',
+      'A signed waiver releasing the employer from liability',
+      'A guarantee of alternative work away from all hazardous substances',
       'Suitable and sufficient information, instruction and training',
     ],
     correctAnswer: 3,
@@ -2056,9 +2056,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What hazard do PCBs (polychlorinated biphenyls) present, which may be found in older electrical equipment such as capacitors and transformers?',
     options: [
       'Persistent organic pollutant; probable carcinogen and endocrine disruptor',
-      'The likelihood and duration of an explosive atmosphere occurring in an area',
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
-      'Carry out a risk assessment and implement appropriate control measures',
+      'A simple asphyxiant that displaces oxygen in confined spaces',
+      'A respiratory sensitiser that is a leading cause of occupational asthma',
+      'A corrosive liquid that causes immediate skin and eye burns',
     ],
     correctAnswer: 0,
     explanation:
@@ -2071,10 +2071,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary health effect of nitrogen dioxide (NO₂), which can be produced by diesel-powered generators on site?',
     options: [
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
+      'Skin sensitisation and allergic contact dermatitis',
       'Respiratory irritation and pulmonary oedema at high concentrations',
-      'Self-contained breathing apparatus (SCBA) or airline breathing apparatus',
-      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
+      'Narcosis and central nervous system depression',
+      'Metal fume fever with delayed flu-like symptoms',
     ],
     correctAnswer: 1,
     explanation:
@@ -2102,9 +2102,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: "What does the term 'respirable dust fraction' refer to in occupational hygiene?",
     options: [
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
-      'To carry out routine visual skin inspections and questionnaires, and refer any concerns to occupational health',
+      'Large particles that settle quickly and are visible to the eye',
+      'Particles trapped in the nose and throat before reaching the lungs',
+      'Any particle that has a workplace exposure limit in EH40',
       'Airborne particles small enough to reach the gas exchange region of the lungs (alveoli)',
     ],
     correctAnswer: 3,
@@ -2119,9 +2119,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Under COSHH, what is the legal requirement regarding safety data sheets (SDS) for hazardous substances used at work?',
     options: [
       'The supplier must provide them and the employer must make them accessible to employees',
-      'High concentrations of respirable dust including crystalline silica, requiring dust suppression or extraction',
-      'Adequate ventilation must be provided to prevent accumulation of hazardous vapours or gases',
-      'Suitable and sufficient information, instruction and training',
+      'The employee must write their own data sheet before using a substance',
+      'The HSE must issue a data sheet for every chemical sold in the UK',
+      'A data sheet is only required for substances classified as carcinogens',
     ],
     correctAnswer: 0,
     explanation:
@@ -2165,9 +2165,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'How often must LEV systems be thoroughly examined and tested under COSHH Regulation 9?',
     options: [
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
-      'Evacuate the area immediately, prevent ignition sources, and ventilate before re-entry',
-      'Classification, Labelling and Packaging of substances and mixtures',
+      'Once a week before the system is first switched on',
+      'Only when the system appears to be working poorly',
+      'At least once every five years from installation',
       'At least every 14 months, or every 6 months for certain specified processes',
     ],
     correctAnswer: 3,
@@ -2212,10 +2212,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must RPE (Respiratory Protective Equipment) be face-fit tested for the individual wearer?',
     options: [
-      "The volume of air forcibly exhaled in the first one second",
-      "Evacuate the area immediately, prevent ignition sources, and ventilate before re-entry",
+      "To confirm the filter has not passed its expiry date",
+      "To measure how long the wearer can work before taking a break",
       "To ensure an adequate seal between the facepiece and the wearer's face",
-      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations",
+      "To check that the respirator is comfortable to wear for long periods",
     ],
     correctAnswer: 2,
     explanation:
@@ -2245,9 +2245,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What type of RPE is suitable for a worker with facial hair who needs respiratory protection?',
     options: [
       'Powered air-purifying respirator with loose-fitting hood',
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
-      'The time taken for a chemical to permeate through the glove material',
-      'The Health and Safety at Work etc. Act 1974',
+      'A tight-fitting FFP3 disposable respirator',
+      'A tight-fitting half-mask with A2P3 filters',
+      'A tight-fitting full-face respirator',
     ],
     correctAnswer: 0,
     explanation:
@@ -2275,10 +2275,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'According to COSHH, when should PPE be considered as a control measure?',
     options: [
-      'Inflammation of the skin caused or made worse by substances encountered at work',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'As the first and cheapest control measure to apply',
+      'Before any risk assessment has been carried out',
       'Only when all other reasonably practicable measures are insufficient',
-      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
+      'Whenever a substance has any safety data sheet at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -2339,10 +2339,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of DSEAR (Dangerous Substances and Explosive Atmospheres Regulations 2002)?',
     options: [
-      'A substance that can cause or contribute to the development of cancer',
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
+      'To control exposure to substances that cause long-term lung disease',
+      'To set Workplace Exposure Limits for toxic gases and vapours',
       'To protect workers from risks of fire and explosion from dangerous substances in the workplace',
-      'Absorbent materials, PPE (gloves, goggles, apron), waste bags, and instructions',
+      'To require health surveillance for workers exposed to carcinogens',
     ],
     correctAnswer: 2,
     explanation:
@@ -2354,9 +2354,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: "Under DSEAR, what does 'ATEX zone classification' determine?",
     options: [
-      'Only when all other reasonably practicable measures are insufficient',
-      'Hazard identification, exposure controls, toxicological information, and first-aid measures',
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
+      'The maximum airborne concentration of a toxic substance permitted',
+      'The level of respiratory protection required for workers in the area',
+      'The fire resistance rating of the building structure in the area',
       'The likelihood and duration of an explosive atmosphere occurring in an area',
     ],
     correctAnswer: 3,
@@ -2401,10 +2401,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'What does bunding or secondary containment achieve in hazardous substance storage?',
     options: [
-      'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
-      'Dispose of as hazardous waste or contaminated waste as per the COSHH assessment and SDS',
+      'It keeps stored chemicals at a constant safe temperature',
+      'It prevents incompatible chemicals from reacting on the shelf',
       'It contains leaks and spills to prevent environmental contamination and spread',
-      'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
+      'It removes hazardous vapours from the storage area by ventilation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2417,9 +2417,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be included in a COSHH spill kit for a workshop using solvent-based products?',
     options: [
-      'Elimination, substitution, engineering controls, administrative controls, PPE',
-      'Record the significant findings of the COSHH assessment in writing',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
+      'A fire blanket, sand bucket, and smoke detector',
+      'Spare filters, face-fit testing kit, and a respirator',
+      'A first aid box, eyewash bottle, and burns dressing only',
       'Absorbent materials, PPE (gloves, goggles, apron), waste bags, and instructions',
     ],
     correctAnswer: 3,
@@ -2434,9 +2434,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Why is it important to check that RPE filters are appropriate for the specific hazardous substance?',
     options: [
       'Different filter types protect against different classes of substance; the wrong filter provides no protection',
-      'The PPE conforms to the relevant essential health and safety requirements and standards',
-      'Through a cut or puncture wound that allows a substance to enter the bloodstream directly',
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
+      'All filters are identical and any one will work for any substance',
+      'The filter colour only affects the comfort of the wearer',
+      'Filter choice only matters for disposable respirators, not reusable ones',
     ],
     correctAnswer: 0,
     explanation:
@@ -2464,10 +2464,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What is the purpose of a qualitative face-fit test using bitter or sweet aerosol?',
     options: [
-      'A highly reactive chemical found in two-pack paints, foams, and adhesives that is a major cause of occupational asthma',
-      'Inflammation of the skin caused or made worse by substances encountered at work',
+      'To measure the exact concentration of dust inside the facepiece',
+      'To confirm the filter is rated for the chemical being used',
       'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'To test how long the respirator filter will last in use',
     ],
     correctAnswer: 2,
     explanation:
@@ -2480,9 +2480,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the key advantage of quantitative face-fit testing over qualitative testing?',
     options: [
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
-      'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
+      'It is quicker and cheaper to carry out than a taste test',
+      'It does not require the wearer to be present during testing',
+      'It works for wearers with beards and other facial hair',
       'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
     ],
     correctAnswer: 3,
@@ -2497,9 +2497,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Under COSHH, who is responsible for ensuring that control measures including PPE are properly used?',
     options: [
       'The employer, with duties on employees to cooperate',
-      'Category III — serious, irreversible or fatal risks',
-      'Legionella bacteria causing Legionnaires\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' disease',
-      'Control of Substances Hazardous to Health',
+      'The Health and Safety Executive inspector for the area',
+      'The manufacturer who supplied the hazardous substance',
+      'Each individual employee, acting entirely on their own',
     ],
     correctAnswer: 0,
     explanation:
@@ -2511,10 +2511,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: "What does 'COSHH essentials' refer to in HSE guidance?",
     options: [
-      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
+      'A legally binding list of banned substances published by the HSE',
       'A web-based tool that helps small businesses carry out COSHH assessments and identify control measures',
-      'Solvent vapours can cause dizziness, unconsciousness, and potentially death by narcosis, and many are flammable',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
+      'A British Standard governing the design of respiratory protection',
+      'A mandatory training certificate required before handling chemicals',
     ],
     correctAnswer: 1,
     explanation:
@@ -2527,10 +2527,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct procedure for disposing of used chemical-resistant gloves that have been in contact with hazardous substances?',
     options: [
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
+      'Rinse them under a tap and reuse them on the next job',
+      'Place them in the general waste bin with all other rubbish',
       'Dispose of as hazardous waste or contaminated waste as per the COSHH assessment and SDS',
-      'Man-made mineral fibres (MMMF) from glass wool or mineral wool insulation',
+      'Burn them on site to destroy any residual chemicals',
     ],
     correctAnswer: 2,
     explanation:
@@ -2542,9 +2542,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'What does the CE/UKCA marking on PPE indicate?',
     options: [
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
-      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s face',
+      'The PPE has been personally face-fit tested for the wearer',
+      'The PPE was manufactured in the United Kingdom',
+      'The PPE is the cheapest option that meets minimum needs',
       'The PPE conforms to the relevant essential health and safety requirements and standards',
     ],
     correctAnswer: 3,
@@ -2559,9 +2559,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'An electrician is working in a confined space with potential for hydrogen sulphide (H₂S) exposure. What type of RPE is most appropriate?',
     options: [
       'Self-contained breathing apparatus (SCBA) or airline breathing apparatus',
-      'Inflammation of the skin caused or made worse by substances encountered at work',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'An FFP3 disposable filtering facepiece respirator',
+      'A half-mask respirator with a Type B gas filter',
+      'A powered air-purifying respirator with a particle filter',
     ],
     correctAnswer: 0,
     explanation:
@@ -2574,10 +2574,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What PPE category under the PPE Regulation covers respiratory protective equipment designed to protect against serious or irreversible health risks?',
     options: [
-      'Control of Substances Hazardous to Health',
+      'Category I — minimal risks such as superficial injury',
       'Category III — serious, irreversible or fatal risks',
-      'Record the significant findings of the COSHH assessment in writing',
-      'Legionella bacteria causing Legionnaires\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' disease',
+      'Category II — intermediate risks not in Category I or III',
+      'Category 0 — no notified body assessment required',
     ],
     correctAnswer: 1,
     explanation:
@@ -2622,9 +2622,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Why should aerosol-generating procedures (e.g., spray application of chemicals) receive special consideration in a COSHH assessment?',
     options: [
       'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'It contains leaks and spills to prevent environmental contamination and spread',
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s body (e.g., blood, urine)',
-      'An HSE publication listing Workplace Exposure Limits for hazardous substances',
+      'Aerosols are always non-toxic and therefore present no health risk',
+      'Spray application uses less substance and so reduces all exposure',
+      'Aerosols can only enter the body through the skin, not the lungs',
     ],
     correctAnswer: 0,
     explanation:
@@ -2637,10 +2637,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct action if an employee notices their RPE filter is damaged or the facepiece is cracked?',
     options: [
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
+      'Carry on using it until the end of the current task',
       'Stop using it immediately, leave the hazardous area, and obtain a replacement',
-      'Leptospirosis bacteria from rat urine in contaminated water',
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
+      'Apply tape over the crack and continue working',
+      'Swap to a lower-rated filter to finish the job',
     ],
     correctAnswer: 1,
     explanation:
@@ -2653,10 +2653,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of engineering controls such as enclosed systems or glove boxes in COSHH compliance?',
     options: [
-      'Emergency procedures including appropriate first aid, and warning and communication systems',
-      'Calculate the cost of replacing the substance with a less hazardous alternative',
+      'To make the substance easier and quicker to apply by hand',
+      'To remove the need for any risk assessment of the substance',
       'To totally contain hazardous substances and prevent any release into the workplace atmosphere',
-      'The employer must review the risk assessment, control measures, and consider moving the employee to non-exposed work',
+      'To allow the substance to be used without any further controls or PPE in any situation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2701,10 +2701,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the employer's duty regarding PPE maintenance under the Personal Protective Equipment at Work Regulations 1992?",
     options: [
-      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
+      'PPE only needs replacing once it has completely failed in use',
       'PPE must be maintained in an efficient state, in efficient working order, and in good repair',
-      'It is legally enforceable — exposure must not exceed the WEL unless specific conditions are met',
-      'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
+      'PPE maintenance is the responsibility of each individual worker, not the employer',
+      'PPE may be shared between workers without cleaning between uses',
     ],
     correctAnswer: 1,
     explanation:
@@ -2717,10 +2717,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of eye protection is appropriate when handling corrosive chemicals such as battery acid?',
     options: [
-      "Zinc oxide fume from the galvanised coating, which can cause metal fume fever",
-      "Persistent organic pollutant; probable carcinogen and endocrine disruptor",
+      "Standard open-sided safety spectacles to EN 166",
+      "A tinted welding visor to EN 169",
       "Chemical splash goggles to EN 166 with '3' marking for liquid droplets",
-      "To ensure an adequate seal between the facepiece and the wearer's face",
+      "A dust mask worn over the eyes and nose",
     ],
     correctAnswer: 2,
     explanation:
@@ -2733,9 +2733,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the key requirement for chemical storage areas under COSHH with respect to ventilation?',
     options: [
-      'Only when all other reasonably practicable measures are insufficient',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
+      'The area must be kept completely sealed and airtight at all times',
+      'The area must be heated to keep all chemicals above freezing',
+      'No ventilation is needed if the containers are kept closed',
       'Adequate ventilation must be provided to prevent accumulation of hazardous vapours or gases',
     ],
     correctAnswer: 3,
@@ -2750,9 +2750,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'When selecting gloves for protection against chemical hazards, what European standard should they conform to?',
     options: [
       'EN 374 (protection against chemicals and micro-organisms)',
-      'Stop work, do not handle them, and report to the supervisor',
-      'The Health and Safety at Work etc. Act 1974',
-      'Type A gas filter with medium capacity (class 2)',
+      'EN 388 (protection against mechanical risks)',
+      'EN 166 (personal eye protection)',
+      'EN 149 (filtering facepiece respirators)',
     ],
     correctAnswer: 0,
     explanation:
@@ -2765,10 +2765,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'Under COSHH Regulation 10, when is workplace air monitoring required?',
     options: [
-      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
+      'On every site, daily, regardless of the substances in use',
       'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
-      'Stop using it immediately, leave the hazardous area, and obtain a replacement',
-      'Acute effects occur rapidly after short exposure; chronic effects develop gradually after repeated or prolonged exposure',
+      'Only after an employee has reported feeling unwell',
+      'Only when an HSE inspector specifically requests it',
     ],
     correctAnswer: 1,
     explanation:
@@ -2780,10 +2780,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'What is the purpose of biological monitoring in the context of COSHH?',
     options: [
-      "To check if the wearer can detect the test aerosol through the facepiece, indicating a leak",
-      "Dispose of as hazardous waste or contaminated waste as per the COSHH assessment and SDS",
+      "To measure the concentration of a substance in the workplace air",
+      "To test how well a respirator seals against the wearer's face",
       "To measure the level of a substance or its metabolite in a worker's body (e.g., blood, urine)",
-      "To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached",
+      "To monitor the temperature and humidity of the working environment",
     ],
     correctAnswer: 2,
     explanation:
@@ -2795,9 +2795,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'How long must employers keep records of COSHH exposure monitoring?',
     options: [
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'Through a cut or puncture wound that allows a substance to enter the bloodstream directly',
-      'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
+      '6 months from the date the monitoring was carried out',
+      '1 year, then they may be securely destroyed',
+      '3 years for all monitoring records without exception',
       '5 years (or 40 years for personal exposure records of identifiable employees)',
     ],
     correctAnswer: 3,
@@ -2811,9 +2811,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: 'Under COSHH Regulation 11, when is health surveillance required for employees?',
     options: [
       'When there is an identifiable disease or adverse health effect related to the exposure, and a valid technique exists to detect it',
-      'Tiny liquid droplets suspended in air, typically produced by spraying, splashing, or condensation',
-      'Acute effects occur rapidly after short exposure; chronic effects develop gradually after repeated or prolonged exposure',
-      'Irrigate the eye immediately with clean water for at least 15-20 minutes, then seek medical attention',
+      'For every employee on the site, regardless of what they are exposed to',
+      'Only for employees who have already developed a work-related illness',
+      'Only when an HSE inspector orders it during a site visit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2825,10 +2825,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'What is spirometry used to assess in occupational health surveillance?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'The condition of the skin on the hands and forearms',
       'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
-      'PPE must be maintained in an efficient state, in efficient working order, and in good repair',
-      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
+      'The level of a substance present in a blood or urine sample',
+      'The hearing threshold across a range of sound frequencies',
     ],
     correctAnswer: 1,
     explanation:
@@ -2856,9 +2856,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of health surveillance is appropriate for workers regularly exposed to substances that can cause occupational dermatitis?',
     options: [
-      'Inhalation, ingestion, absorption, injection',
-      'At least every 14 months, or every 6 months for certain specified processes',
-      'Suitable and sufficient information, instruction and training',
+      'Spirometry and lung function testing',
+      'Blood and urine biological monitoring',
+      'Audiometry and hearing threshold testing',
       'Regular skin inspections and skin condition questionnaires',
     ],
     correctAnswer: 3,
@@ -2873,9 +2873,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'How often should skin checks be carried out for workers exposed to substances that can cause dermatitis?',
     options: [
       'Before first exposure and then at regular intervals, typically every 1-6 months depending on risk',
-      'Calculate the cost of replacing the substance with a less hazardous alternative',
-      'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
-      'The substance involved, quantity, location, number of casualties, and any SDS information available',
+      'Only once, when the worker first joins the company',
+      'Only after the worker has already developed a skin complaint',
+      'Once every 10 years throughout the worker\'s career',
     ],
     correctAnswer: 0,
     explanation:
@@ -2887,10 +2887,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What is the Biological Monitoring Guidance Value (BMGV) used for?',
     options: [
-      'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
+      'Setting the legal airborne concentration limit for a substance',
       'Providing a benchmark to help interpret biological monitoring results for groups of workers',
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
-      'A substance that can cause or contribute to the development of cancer',
+      'Defining the maximum quantity of a substance that may be stored on site',
+      'Specifying the minimum protection factor required for respiratory equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -2902,10 +2902,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'Who is qualified to carry out statutory health surveillance under COSHH?',
     options: [
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
-      'A substance that triggers an allergic reaction after repeated exposure, meaning even tiny future exposures cause a response',
+      'Any supervisor who has read the relevant safety data sheets',
+      'The worker themselves, using a self-assessment questionnaire',
       'A doctor registered with the GMC, or a nurse qualified in occupational health, as appropriate to the surveillance required',
-      'Irrigate the eye immediately with clean water for at least 15-20 minutes, then seek medical attention',
+      'The substance supplier\'s technical representative',
     ],
     correctAnswer: 2,
     explanation:
@@ -2917,9 +2917,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'How long must health surveillance records be kept under COSHH?',
     options: [
-      'At least 15 minutes of continuous flow',
-      'Group 1 — carcinogenic to humans',
-      'Polychlorinated biphenyls (PCBs)',
+      '1 year from the date of the last entry',
+      '5 years from the date of the last entry',
+      '10 years from the date of the last entry',
       '40 years from the date of the last entry',
     ],
     correctAnswer: 3,
@@ -2934,9 +2934,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       "What should happen if health surveillance identifies that an employee's health has been significantly harmed by exposure to a hazardous substance?",
     options: [
       'The employer must review the risk assessment, control measures, and consider moving the employee to non-exposed work',
-      'A highly reactive chemical found in two-pack paints, foams, and adhesives that is a major cause of occupational asthma',
-      'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
+      'The employer should keep the result confidential and take no further action',
+      'The employee must resign and find work with a different employer',
+      'The employer should issue additional PPE and continue exactly as before',
     ],
     correctAnswer: 0,
     explanation:
@@ -2948,10 +2948,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'What is the purpose of a personal air sampling pump used in exposure monitoring?',
     options: [
-      "A spot or short-term measurement giving an approximate indication of gas concentration",
+      "To pump fresh air into a confined space to maintain a safe atmosphere",
       "To draw a measured volume of air through a filter or sorbent tube in the wearer's breathing zone to measure exposure",
-      "Product identifier, GHS hazard pictograms, signal word, hazard statements, precautionary statements, and supplier details",
-      "The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas",
+      "To supply filtered air to a powered respirator worn by the worker",
+      "To extract contaminated air at source through a local exhaust ventilation hood",
     ],
     correctAnswer: 1,
     explanation:
@@ -2979,9 +2979,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following occupational diseases must be reported under RIDDOR when caused by workplace exposure?',
     options: [
-      'Chemical splash goggles to EN 166 with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' marking for liquid droplets',
-      'Respiratory irritation and pulmonary oedema at high concentrations',
-      'Classification, Labelling and Packaging of substances and mixtures',
+      'A one-off headache from short-term solvent exposure',
+      'Mild eye watering from working near airborne dust',
+      'Temporary nausea after entering a poorly ventilated room',
       'Occupational asthma caused by a known respiratory sensitiser',
     ],
     correctAnswer: 3,
@@ -2996,9 +2996,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'What is the correct first response if a colleague collapses after suspected exposure to a toxic gas in a confined space?',
     options: [
       'Do not enter; raise the alarm, call emergency services, and use rescue equipment if trained',
-      'To draw a measured volume of air through a filter or sorbent tube in the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s breathing zone to measure exposure',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
+      'Rush in immediately to drag the casualty out as fast as possible',
+      'Hold your breath and enter quickly to assess the casualty',
+      'Wait until the casualty recovers before doing anything',
     ],
     correctAnswer: 0,
     explanation:
@@ -3011,10 +3011,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       "What immediate first aid action should be taken if a corrosive chemical splashes into someone's eyes?",
     options: [
-      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
+      'Rub the eye firmly to remove the chemical and then bandage it',
       'Irrigate the eye immediately with clean water for at least 15-20 minutes, then seek medical attention',
-      'Adequate ventilation must be provided to prevent accumulation of hazardous vapours or gases',
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
+      'Apply a neutralising chemical directly into the affected eye',
+      'Keep the eye tightly shut and wait for the stinging to pass',
     ],
     correctAnswer: 1,
     explanation:
@@ -3027,10 +3027,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What information must be provided to emergency services when reporting a chemical incident?',
     options: [
-      'To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached',
-      'Some lubricants contain irritants or sensitisers that can cause skin reactions, and vapours can accumulate in confined spaces',
+      'Only the name of the person who reported the incident',
+      'Only the cost of the substances that have been spilled',
       'The substance involved, quantity, location, number of casualties, and any SDS information available',
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
+      'Only the time the incident was first noticed',
     ],
     correctAnswer: 2,
     explanation:
@@ -3043,9 +3043,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Under COSHH, what must employers have in place for dealing with accidents, incidents, and emergencies involving hazardous substances?',
     options: [
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
-      'Airborne particles small enough to reach the gas exchange region of the lungs (alveoli)',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'A signed waiver from each worker accepting the risks involved',
+      'A daily count of how much of each substance has been used',
+      'A list of every supplier the substances were purchased from',
       'Emergency procedures including appropriate first aid, and warning and communication systems',
     ],
     correctAnswer: 3,
@@ -3075,10 +3075,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'How should a small chemical spill of a non-volatile, non-reactive liquid be managed on site?',
     options: [
-      'Stop using it immediately, leave the hazardous area, and obtain a replacement',
+      'Wash it straight down the nearest drain with plenty of water',
       'Contain the spill, apply appropriate absorbent material from the spill kit, and dispose of waste correctly',
-      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
-      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
+      'Leave it to evaporate naturally and continue working nearby',
+      'Sweep it up dry with a brush and put it in the general waste bin',
     ],
     correctAnswer: 1,
     explanation:
@@ -3090,10 +3090,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'What is the purpose of the COSHH assessment review process?',
     options: [
-      'Suitable and sufficient information, instruction, and training about the hazardous substances they work with',
-      'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
+      'To calculate the cost of replacing each hazardous substance',
+      'To record which employees have used each substance and when',
       'To ensure the assessment remains valid, control measures are effective, and changes in substances or processes are captured',
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
+      'To decide which suppliers should provide future chemicals',
     ],
     correctAnswer: 2,
     explanation:
@@ -3106,9 +3106,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What training must be provided to employees who may be involved in spill response for hazardous substances?',
     options: [
-      'To totally contain hazardous substances and prevent any release into the workplace atmosphere',
-      'Acute effects occur rapidly after short exposure; chronic effects develop gradually after repeated or prolonged exposure',
-      'Solvent vapours can cause dizziness, unconsciousness, and potentially death by narcosis, and many are flammable',
+      'Training in manual handling and lifting techniques only',
+      'Training in basic fire warden duties and evacuation only',
+      'Training in first aid resuscitation techniques only',
       'Training in spill response procedures, use of spill kits, appropriate PPE, and waste disposal',
     ],
     correctAnswer: 3,
@@ -3123,9 +3123,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'A direct-reading gas detector shows a reading of 80% LEL (Lower Explosive Limit) in a plant room. What action should be taken?',
     options: [
       'Evacuate the area immediately, prevent ignition sources, and ventilate before re-entry',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
-      'Make proper use of control measures and PPE provided by the employer, and report defects',
-      'Intumescent sealants and mastics which may contain irritants, sensitisers, or isocyanates',
+      'Continue working but switch off the gas detector to stop the alarm',
+      'Ignore the reading as 80% LEL is still within the safe working range',
+      'Light a flame to burn off the gas and reduce the concentration',
     ],
     correctAnswer: 0,
     explanation:
@@ -3138,10 +3138,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of continuous air monitoring using fixed gas detectors in areas where hazardous gases may accumulate?',
     options: [
-      'A chronic respiratory condition caused by sensitisation or irritation from workplace substances',
+      'To record the names of everyone who enters the monitored area',
       'To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached',
-      'Suitable and sufficient information, instruction, and training about the hazardous substances they work with',
-      'It contains leaks and spills to prevent environmental contamination and spread',
+      'To measure the temperature and humidity of the working environment',
+      'To extract contaminated air from the area at source',
     ],
     correctAnswer: 1,
     explanation:
@@ -3169,9 +3169,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of detector tube (Draeger tube) measurement is considered in occupational hygiene?',
     options: [
-      'Chemical splash goggles to EN 166 with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' marking for liquid droplets',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
-      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s face',
+      'A continuous 8-hour average measurement of airborne dust',
+      'A laboratory analysis of a blood or urine sample',
+      'A long-term fixed measurement that triggers an automatic alarm',
       'A spot or short-term measurement giving an approximate indication of gas concentration',
     ],
     correctAnswer: 3,
@@ -3186,9 +3186,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       'Under COSHH, what must happen if monitoring reveals that a workplace exposure limit has been exceeded?',
     options: [
       'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
-      'Intumescent sealants and mastics which may contain irritants, sensitisers, or isocyanates',
-      'Lung function, specifically the volume and flow of air that can be inhaled and exhaled',
-      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
+      'The employer may continue the work unchanged as the limit is only advisory',
+      'The employer should simply repeat the monitoring until a lower reading is obtained',
+      'The employer must stop all work on the entire site for 12 months',
     ],
     correctAnswer: 0,
     explanation:
@@ -3200,10 +3200,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is occupational hygiene?',
     options: [
-      'Make proper use of control measures and PPE provided by the employer, and report defects',
+      'The legal duty of employers to provide free protective equipment',
       'The science of anticipating, recognising, evaluating, and controlling workplace health hazards',
-      'High concentrations of respirable dust including crystalline silica, requiring dust suppression or extraction',
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
+      'The branch of medicine that treats injuries caused by electric shock',
+      'The system of cleaning and sterilising tools between jobs',
     ],
     correctAnswer: 1,
     explanation:
@@ -3216,10 +3216,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What action should an electrician take if they develop a persistent skin rash that they suspect is related to a substance used at work?',
     options: [
-      'Stop using it immediately, leave the hazardous area, and obtain a replacement',
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
+      'Ignore it and keep working until it clears up on its own',
+      'Apply a stronger cleaning solvent to remove the irritation',
       'Report it to their employer and seek occupational health assessment',
-      'The time taken for a chemical to permeate through the glove material',
+      'Swap to a different brand of the same substance without telling anyone',
     ],
     correctAnswer: 2,
     explanation:
@@ -3231,9 +3231,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What is the significance of a peak flow diary in occupational asthma surveillance?',
     options: [
-      'A spot or short-term measurement giving an approximate indication of gas concentration',
-      'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
-      'Inhalable dust is captured by the nose and throat; respirable dust penetrates deep into the lungs',
+      'It records the concentration of dust in the workplace air each day',
+      'It logs which respirator filters the worker has used each shift',
+      'It measures the worker\'s body temperature before and after work',
       'Serial peak flow measurements can reveal work-related patterns showing reduced lung function during work periods',
     ],
     correctAnswer: 3,
@@ -3247,9 +3247,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: 'How should contaminated clothing be handled after a chemical splash incident?',
     options: [
       'Remove the clothing carefully, avoiding further skin contact, and follow decontamination procedures in the COSHH assessment',
-      'The science of anticipating, recognising, evaluating, and controlling workplace health hazards',
-      'A highly reactive chemical found in two-pack paints, foams, and adhesives that is a major cause of occupational asthma',
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
+      'Leave the clothing on until the end of the shift to save time',
+      'Brush the contamination off the clothing and carry on working',
+      'Take the clothing home and wash it with the normal family laundry',
     ],
     correctAnswer: 0,
     explanation:
@@ -3262,10 +3262,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'Under COSHH Regulation 13, what must be available in areas where employees may be exposed to hazardous substances?',
     options: [
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
+      'A copy of every employee\'s personal exposure monitoring record',
       'Suitable first aid facilities and arrangements, including trained first aiders',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
-      'Respiratory irritation and pulmonary oedema at high concentrations',
+      'A daily log of the quantity of each substance used',
+      'A notice listing the price and supplier of each chemical',
     ],
     correctAnswer: 1,
     explanation:
@@ -3277,10 +3277,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: 'What is the recommended minimum flow duration for an emergency eyewash station?',
     options: [
-      'Occupational asthma (respiratory sensitiser)',
-      'Dusts, fumes, and chemical vapours',
+      'At least 30 seconds of continuous flow',
+      'At least 2 minutes of continuous flow',
       'At least 15 minutes of continuous flow',
-      'Polychlorinated biphenyls (PCBs)',
+      'At least 60 minutes of continuous flow',
     ],
     correctAnswer: 2,
     explanation:
@@ -3292,9 +3292,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: 'What record-keeping is required for COSHH training provided to employees?',
     options: [
-      'A doctor registered with the GMC, or a nurse qualified in occupational health, as appropriate to the surveillance required',
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
-      'Emergency procedures including appropriate first aid, and warning and communication systems',
+      'Only the total number of staff employed at the site',
+      'Only the cost of delivering the training course',
+      'No records are required, as training is informal',
       'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
     ],
     correctAnswer: 3,
@@ -3308,9 +3308,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question: "What is the HSE's enforcement expectation regarding COSHH training frequency?",
     options: [
       'Regular refresher training should be provided, with frequency based on risk level, typically annually for higher-risk activities',
-      'Some lubricants contain irritants or sensitisers that can cause skin reactions, and vapours can accumulate in confined spaces',
-      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
-      'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
+      'Training is a one-off event that never needs to be repeated',
+      'Refresher training is only needed once every twenty years',
+      'Refresher training is only required after an accident has occurred',
     ],
     correctAnswer: 0,
     explanation:
@@ -3323,10 +3323,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       'What must be included in a COSHH emergency plan for a site using large quantities of flammable solvents?',
     options: [
-      'SF6 is non-toxic in its pure form but becomes hazardous when decomposed by electrical arcing, producing toxic by-products including sulphur dioxide',
+      'A list of the price and supplier of each solvent on site',
       'Identification of foreseeable emergencies, procedures for spill containment, fire response, evacuation routes, communication systems, and roles/responsibilities',
-      'A doctor registered with the GMC, or a nurse qualified in occupational health, as appropriate to the surveillance required',
-      'To ensure the assessment remains valid, control measures are effective, and changes in substances or processes are captured',
+      'A record of every worker\'s home address and phone number',
+      'A schedule of when each solvent container was last refilled',
     ],
     correctAnswer: 1,
     explanation:
@@ -3339,10 +3339,10 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the role of a 'responsible person' in COSHH health surveillance for skin checks?",
     options: [
-      'A substance that triggers an allergic reaction after repeated exposure, meaning even tiny future exposures cause a response',
-      'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
+      'To diagnose skin diseases and prescribe medical treatment for workers',
+      'To carry out detailed clinical examinations and biological monitoring',
       'To carry out routine visual skin inspections and questionnaires, and refer any concerns to occupational health',
-      'Solvent vapours can cause dizziness, unconsciousness, and potentially death by narcosis, and many are flammable',
+      'To approve which substances may be used in the workplace',
     ],
     correctAnswer: 2,
     explanation:
@@ -3354,9 +3354,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: 'What is the purpose of a COSHH assessment register or inventory?',
     options: [
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
-      'A document that gives practical advice on how to comply with the regulations — not following it means you must show an equally effective method',
-      'The substance may cause long-term health effects such as cancer, organ damage, or respiratory sensitisation',
+      'To record the names of every worker who has attended training',
+      'To list the prices and suppliers of all chemicals bought on site',
+      'To log the daily air monitoring results for each work area',
       'To maintain a comprehensive list of all hazardous substances used or generated in the workplace, linked to their assessments and SDSs',
     ],
     correctAnswer: 3,
@@ -3371,9 +3371,9 @@ export const coshhQuestionBank: StandardMockQuestion[] = [
       "Under COSHH, what is the employer's duty regarding employees who transfer to work involving exposure to a new hazardous substance?",
     options: [
       'Provide specific information, instruction, and training on the new substance and its controls before exposure begins',
-      'Dust particles small enough to penetrate deep into the lungs, beyond the body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s natural defences',
-      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
-      'High concentrations of respirable dust including crystalline silica, requiring dust suppression or extraction',
+      'Allow the employee to start work and provide training within the first month',
+      'Assume existing general training covers all new substances',
+      'Issue the safety data sheet only, with no further instruction',
     ],
     correctAnswer: 0,
     explanation:

@@ -40,9 +40,9 @@ const checks = [
       'You are terminating 2.5 mm² T&E into the screw terminal of a 13 A socket. Strip length per the manufacturer (MK, Hager, Schneider) typical instruction is approximately:',
     options: [
       '8-12 mm — full terminal grip on the conductor.',
-      'Product-specific knowledge and installation competence',
-      'Prevent strain on conductor connections',
-      'Correct on/off times as programmed',
+      '2-3 mm — just enough copper to make electrical contact.',
+      '20-25 mm — a long tail gives a more secure connection.',
+      'Strip length does not matter as long as some copper enters the terminal.',
     ],
     correctIndex: 0,
     explanation:
@@ -54,9 +54,9 @@ const checks = [
       'Hager NDN132A RCBO terminal torque per the manufacturer&rsquo;s data sheet is 1.2 Nm. You over-tighten "by feel" with a screwdriver. What is the most likely failure mode?',
     options: [
       'Crushed conductor strands → reduced effective CSA → high-resistance joint → eventual loop test fail or thermal damage.',
-      'To enable safe and effective identification of escape routes leading to final exits',
-      'Safe isolation procedures, permit to work systems, and live working controls for electrical maintenance',
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
+      'The terminal screw thread strips, so the conductor immediately falls out of the device.',
+      'The RCBO trips instantly the first time the circuit is energised.',
+      'Nothing — a tighter terminal always gives a better, lower-resistance connection.',
     ],
     correctIndex: 0,
     explanation:
@@ -67,9 +67,9 @@ const checks = [
     question:
       'You are terminating a 4 mm² fine-stranded flex (CL5 or CL6) into a cage-clamp / push-in terminal of a control panel. What termination preparation is mandatory?',
     options: [
-      'Showing the person that you are engaged, interested, and paying attention to what they are saying',
-      'To separate pedestrians from vehicles and ensure safe movement of people and plant',
-      'Have multiple language subtitles, use clear visuals, avoid colloquialisms, and include a short comprehension check at the end',
+      'Tin the stripped strands with solder before inserting into the terminal.',
+      'Twist the strands tightly and double them back on themselves before insertion.',
+      'Fit a heat-shrink sleeve over the strands to hold them together.',
       'Crimp a ferrule (bootlace ferrule, sometimes called a "wire end") onto the stripped conductor before insertion.',
     ],
     correctIndex: 3,
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'Reg 526.1 (BS 7671) requires every termination to provide:',
     options: [
-      'To formally record that equipment has been isolated and is safe to work on',
+      'A minimum insulation resistance of 1 MΩ measured across the joint.',
       'Durable electrical continuity, adequate mechanical strength and protection.',
-      'Check instrument calibration and prove on known values',
-      'Reduce the reactive current drawn from the supply, allowing more real power to be delivered',
+      'A disconnection time of no more than 0.4 seconds under fault conditions.',
+      'A green/yellow sleeve over every conductor entering the terminal.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'You are terminating into a manufacturer-specified terminal, but the data sheet is missing. Best practice torque value for a domestic RCBO circuit terminal:',
     options: [
-      'A rapid combustion of fine combustible dust particles dispersed in air within an enclosed space, occurring in industries such as flour mills, woodworking, and grain storage',
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
-      'Approximately 1.0-1.5 Nm — typical for cage-clamp / screw terminals on small CSAs in domestic RCBOs (Hager NDN, Schneider Resi9, Wylex NHX). Confirm with the actual manufacturer when accessible.',
-      'A sudden rush of pooled, toxin-laden blood from the legs back to the heart and kidneys can cause reflow syndrome, potentially resulting in cardiac arrest or acute renal failure',
+      'Approximately 0.2-0.4 Nm — barely more than finger-tight to avoid crushing the conductor strands.',
+      'Approximately 8-12 Nm — matching a sub-main MCCB terminal for mechanical security.',
+      'Approximately 1.0-1.5 Nm — typical for cage-clamp / screw terminals on small CSAs in domestic RCBOs.',
+      'Approximately 5-6 Nm — the universal default applied across all consumer-unit terminals.',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'A "loop in, loop out" termination at a 13 A socket means:',
     options: [
-      'Switch off and lock off the main switch first to prevent the touch-voltage hazard arising if a fault develops while the earth is removed',
-      'Ice can form on rungs, platforms and handholds creating extreme slip hazards, and cold reduces manual dexterity',
-      'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
-      'Two cables (one in from the previous socket, one out to the next) land in the same terminal — typical for a ring final or a daisy-chained radial.',
+      'A single cable enters and a single cable leaves through opposite knockouts of the same back-box.',
+      'The line conductor loops straight through while the neutral and CPC terminate at the socket only.',
+      'The cable is looped back on itself within the terminal to double the effective contact area.',
+      'Two cables — one in from the previous socket, one out to the next — land in the same terminal.',
     ],
     correctAnswer: 3,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
       'Reg 526.9 (A4:2026 update) requires:',
     options: [
       'One terminal, one conductor — unless the terminal is specifically designed and approved for multiple conductors.',
-      'Physical dependence can develop quickly, withdrawal can be dangerous, and combining them with alcohol or opioids can be fatal',
-      'The reference standard\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s unique identification number, calibration certificate number, and calibration due date',
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m just not good enough — some people are natural electricians and I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not one of them"',
+      'Every terminal must accept a minimum of three conductors to allow for future spurs.',
+      'All conductors at a single point must be soldered together before terminating.',
+      'Conductors of different CSA may always be combined in any screw terminal.',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Crimped lugs (compression terminations) are typically used for:',
     options: [
-      'It creates a web of mutual referrals, shared knowledge, and collaborative problem-solving that benefits all parties',
-      'Heavy CSA conductors (25 mm² and above) where screw terminals are impractical, and any cable terminating into a stud (compression hardware).',
-      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
-      'To formally confirm that the scaffold has been erected in accordance with the design and is safe for use by the specified trades',
+      'Lighting circuits below 1.5 mm² where ordinary screw terminals would crush the small conductor.',
+      'Heavy CSA conductors (25 mm² and above) and any cable terminating onto a stud, where screw terminals are impractical.',
+      'Any flexible cord on a portable appliance, fitted in place of a moulded plug top.',
+      'Final ring-circuit sockets, where the loop terminals are unable to grip two conductors.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'A nicked conductor (the strip cut went too deep and removed a few strands) should be:',
     options: [
-      'Test at different times of day and with various ambient conditions',
-      'Must ensure installations are safe and maintain records proving this',
+      'Tinned with solder to bridge the missing strands before terminating.',
+      'Terminated as-is, since a few missing strands make no practical difference.',
       'Cut back to the undamaged conductor and re-stripped at the new length.',
-      'For identification during maintenance, fault finding and future modifications',
+      'Wrapped with extra insulation tape to compensate for the lost copper.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 526.5 requires every termination to be made:',
     options: [
-      'Systematically verify that the correct signals are present at each stage of the circuit, identifying where the signal path is broken',
-      'Confirm payment terms in writing on the quote and acceptance — and follow the Late Payment of Commercial Debts Act if they slip',
-      'Short-duration, low-disturbance work such as drilling a single hole through an asbestos cement product while using appropriate controls',
+      'At least 150 mm from any other cable to prevent electromagnetic interference.',
+      'Only by a person holding a current 18th Edition qualification certificate.',
+      'Using copper conductors only — aluminium terminations are prohibited indoors.',
       'Within a suitable accessory, an equipment enclosure, or an enclosure partially formed of non-combustible material — i.e. NOT dangling in free air or in a cable bundle.',
     ],
     correctAnswer: 3,
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'You are terminating a 25 mm² SWA into a switch fuse. The cable has steel wire armour, three line conductors and a CPC. The correct termination sequence is:',
     options: [
-      'Bond the armour to the gland, terminate the gland into the enclosure with banjo washer for earth continuity, strip and ferrule the conductors, terminate per the device terminal arrangement, torque to manufacturer spec.',
-      'G98 covers parallel-connected generation up to and including 16 A per phase (informal post-installation notification to the DNO); G99 covers generation greater than 16 A per phase (full pre-installation application to the DNO, with the DNO able to refuse or impose conditions).',
-      'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
-      'Warning signs, internal coping strategies, people and social settings for distraction, people to ask for help, professionals and agencies to contact, making the environment safe',
+      'Bond the armour at the gland with a banjo washer for earth continuity, then strip, ferrule and terminate the cores to spec.',
+      'Strip and terminate the cores at the device first, then cut the armour flush and leave it unbonded inside the enclosure.',
+      'Terminate all four conductors into the line terminals and bond the steel armour across to the neutral bar.',
+      'Cut the steel armour back to the outer sheath and rely on the cores alone for both supply and earth.',
     ],
     correctAnswer: 0,
     explanation:

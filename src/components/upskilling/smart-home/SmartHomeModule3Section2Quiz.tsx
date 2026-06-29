@@ -36,48 +36,48 @@ export const SmartHomeModule3Section2Quiz = () => {
     {
       question: 'What is a schedule in smart lighting?',
       options: [
-        'A list of bulb brands',
+        'A list of compatible bulb brands',
+        'The installation timeline for the project',
         'Automated control based on time or triggers',
-        'An installation timeline',
-        'A maintenance plan',
+        'A routine maintenance plan',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'A schedule is automated lighting control triggered by time, events, or environmental conditions.',
     },
     {
       question: 'List two types of schedules.',
       options: [
-        'Fast and slow',
         'Time-based and event-based',
+        'Fast and slow',
         'Wired and wireless',
         'Indoor and outdoor',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Time-based schedules use clock/solar time, while event-based schedules respond to sensors or device states.',
     },
     {
       question: 'How can scenes improve security?',
       options: [
-        'They make lights brighter',
-        'They can simulate occupancy when away',
-        'They save more energy',
-        'They last longer',
+        'They make the lights noticeably brighter',
+        'They reduce overall energy use',
+        'They can simulate occupancy when the home is empty',
+        'They make the bulbs last longer',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Security scenes can simulate normal occupancy patterns with random lighting when the house is empty.',
+        'Security scenes can simulate normal occupancy patterns by switching lights on and off realistically when the house is empty.',
     },
     {
       question: 'What tools can be used to program schedules?',
       options: [
-        'Only expensive professional systems',
+        'Only expensive professional control systems',
+        'Manual wall switches only',
+        'Hand-written computer code only',
         'Mobile apps, voice assistants, and smart hubs',
-        'Manual switches only',
-        'Computer programming only',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Many tools exist for schedule programming, from simple mobile apps to advanced home automation hubs.',
     },
@@ -97,23 +97,23 @@ export const SmartHomeModule3Section2Quiz = () => {
       question: "What's one best practice for naming scenes?",
       options: [
         'Use numbers like Scene 1, Scene 2',
+        'Use technical jargon only',
         'Keep names clear and activity-based',
-        'Use technical terms only',
-        'Use random names',
+        'Name scenes after the bulb model used',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         "Clear, activity-based names like 'Reading Light' or 'Movie Night' make scenes intuitive to use.",
     },
     {
       question: 'Why might a cloud-based schedule fail?',
       options: [
-        'Bulbs are too old',
-        'No internet connection',
-        'Lights are too bright',
-        'Wrong colour temperature',
+        'The bulbs are too old',
+        'The lights are set too bright',
+        'The colour temperature is wrong',
+        'There is no internet connection',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Cloud-based schedules depend on internet connectivity and will fail when offline.',
     },
@@ -121,12 +121,12 @@ export const SmartHomeModule3Section2Quiz = () => {
       question:
         'Scenario: A client works night shifts and sleeps during the day. What kind of schedule would you recommend for their bedroom lighting?',
       options: [
-        'Standard sunrise wake-up schedule',
-        'Blackout mode during day with gradual evening wake-up',
-        'Always bright lights',
-        'Random lighting patterns',
+        'Blackout by day with a gradual evening wake-up',
+        'A standard sunrise wake-up at 7am each morning',
+        'Bright daytime lighting to keep them alert at home',
+        'A fixed evening-only schedule with no wake-up ramp',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Night shift workers need blackout during normal daytime hours and gradual brightening in the evening when they wake up.',
     },

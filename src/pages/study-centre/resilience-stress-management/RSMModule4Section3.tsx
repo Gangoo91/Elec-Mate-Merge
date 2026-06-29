@@ -22,8 +22,8 @@ const quickCheckQuestions = [
     id: 'rsm4-s3-wtr',
     question:
       'Under the Working Time Regulations 1998, what is the maximum average working week unless the worker has signed a voluntary opt-out?',
-    options: ['40 hours', '48 hours', '52 hours', '60 hours'],
-    correctIndex: 1,
+    options: ['48 hours', '40 hours', '52 hours', '60 hours'],
+    correctIndex: 0,
     explanation:
       'The Working Time Regulations 1998 set a maximum average working week of 48 hours (averaged over a 17-week reference period). Workers can sign a voluntary opt-out to exceed this, but the opt-out must be genuinely voluntary — employers cannot force it as a condition of employment. The regulations also guarantee minimum rest periods: 11 consecutive hours between shifts, one full day off per week (or two days off per fortnight), and a 20-minute break during any shift longer than 6 hours.',
   },
@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'What is the most common reason tradespeople struggle to say no to additional work?',
     options: [
       'They genuinely enjoy all work equally',
-      'Fear of losing future work, damaging their reputation, or letting people down',
       'They are contractually obligated to accept all requests',
       'They do not understand how to say no politely',
+      'Fear of losing future work, damaging their reputation, or letting people down',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The fear of losing work, damaging their reputation, or letting people down is the primary reason tradespeople struggle with boundaries. In a relationship-driven industry where word of mouth is critical, saying no can feel risky. However, research on workplace burnout consistently shows that the inability to set boundaries is one of the strongest predictors of burnout, reduced quality of work, and ultimately, career failure — the very outcomes that tradespeople fear from saying no.',
   },
@@ -114,8 +114,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Research by Stanford economist John Pencavel found that worker output per hour drops significantly after how many hours per week?',
-    options: ['35 hours', '40 hours', '50 hours', '60 hours'],
-    correctAnswer: 2,
+    options: ['50 hours', '35 hours', '40 hours', '60 hours'],
+    correctAnswer: 0,
     explanation:
       "Pencavel's research found that productivity per hour begins to drop sharply after about 50 hours per week. By 55 hours, the extra hours are producing almost no additional output. Beyond 60 hours, total output actually decreases compared to a 50-hour week. This means that working 60 or 70 hours per week is not just unsustainable — it is actively counter-productive.",
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     options: [
       'Normal hard work that will pay off eventually',
       'A temporary phase that will pass on its own',
-      'Burnout caused by chronic overwork without adequate recovery',
       'A medical condition unrelated to working hours',
+      'Burnout caused by chronic overwork without adequate recovery',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This pattern — increasing errors, persistent fatigue and relationship problems following sustained excessive work hours without rest — is a textbook description of occupational burnout. Burnout is characterised by emotional exhaustion, depersonalisation (feeling detached from your work and the people around you), and reduced personal accomplishment. It does not resolve on its own; it requires deliberate changes to workload, rest and boundaries.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'Which of the following is an example of setting a realistic expectation with a client?',
     options: [
-      '"I can probably get that done by Friday" (when you know it will take until the following Wednesday)',
       '"The job will take five working days. I will start on Monday and finish by Friday the following week, allowing for any unforeseen issues."',
+      '"I can probably get that done by Friday" (when you know it will take until the following Wednesday)',
       '"I\'ll see what I can do" (without committing to a date)',
       '"I can do it this weekend if I work Saturday and Sunday"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Giving a clear, honest timeframe with built-in contingency is the most professional and sustainable approach. It manages the client\'s expectations realistically, avoids the stress of an impossible deadline, and protects your reputation — because delivering on time (or early) is far better for your reputation than promising Friday and delivering Wednesday. Vague commitments ("probably", "I\'ll see") and overcommitting (working weekends) both create stress and erode trust.',
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
       'An electrician has been working 12-hour days, 6 days per week for three months. They believe they are being more productive. Based on the evidence, what is most likely happening?',
     options: [
       'They are producing significantly more output than someone working 8-hour days, 5 days per week',
-      'Their total output is probably only slightly higher (or the same) as a 50-hour week, but their error rate has increased significantly',
       'They are producing twice the output of someone working normal hours',
       'Productivity is unaffected by working hours',
+      'Their total output is probably only slightly higher (or the same) as a 50-hour week, but their error rate has increased significantly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "At 72 hours per week (12 hours x 6 days), the research indicates that productivity per hour is dramatically reduced. Total output is likely only marginally higher — or the same — as it would be at 50 hours per week, while error rates, accident risk and health consequences have increased significantly. The electrician's subjective perception of being more productive is contradicted by the evidence on diminishing returns from excessive working hours.",
   },

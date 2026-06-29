@@ -64,10 +64,10 @@ const checks = [
     id: 'l3-m3-2-1-band',
     question: 'Why is silicon called a semiconductor?',
     options: [
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
-      'Reduce the activation energy so it takes 20 seconds less effort to begin',
+      'It conducts perfectly at room temperature like a metal',
+      'It has no electrons available to carry current at all',
       'Its energy band gap is small enough that doping or heat can free electrons into conduction',
-      'Only if the person is taken directly from the site to hospital for treatment',
+      'Its resistance is completely independent of temperature',
     ],
     correctIndex: 2,
     explanation:
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'A good conductor has:',
     options: [
-      '3-5 years minimum, 7 years recommended',
+      'A wide energy gap to the conduction band',
       'Many free electrons in the conduction band',
-      'To reduce reflections by eliminating air gaps',
-      'No neutral current in balanced loads',
+      'A full valence band and no free carriers',
+      'A very high resistivity at room temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,9 +106,9 @@ const quizQuestions = [
     id: 3,
     question: 'Aluminium is preferred over copper for some applications because:',
     options: [
-      'Only if approved by manufacturer for switching duty',
-      'Safety Electrical Connection — Do Not Remove.',
-      'The minimum base dimension (the shorter side)',
+      'It has a much lower resistivity than copper',
+      'It needs a smaller CSA than copper for the same current',
+      'It terminates directly into brass without any treatment',
       'It is much lighter and cheaper for the same conductance',
     ],
     correctAnswer: 3,
@@ -155,9 +155,9 @@ const quizQuestions = [
     id: 7,
     question: 'Mineral insulated copper-clad cable (MICC) is preferred for:',
     options: [
-      'Isolate circuit and disconnect equipment',
-      'No, it only proves the mechanical trip mechanism',
-      'Positive acceptance of change and secure relationships',
+      'Flexible appliance leads and trailing flex',
+      'Cheap domestic ring final circuits',
+      'Buried direct underground feeder runs only',
       'Fire-survival circuits like emergency lighting and alarm',
     ],
     correctAnswer: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'Insulators differ from conductors at the atomic level because:',
     options: [
       'Their electrons are tightly bound and the band gap to conduction is large',
-      'Between live conductors and between each live conductor and earth',
-      'The unique software address assigned to each input and output point for use in the program',
-      'Provides an asbestos register and a refurbishment/demolition survey identifying ACMs',
+      'Their valence and conduction bands overlap completely',
+      'They contain many free electrons in the conduction band',
+      'Their resistivity falls sharply as voltage increases',
     ],
     correctAnswer: 0,
     explanation:

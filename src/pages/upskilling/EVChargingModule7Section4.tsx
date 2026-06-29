@@ -62,11 +62,11 @@ const quizQuestions = [
       'An installer is preparing for their first OZEV audit in 4 weeks. What should be their priority action?',
     options: [
       'Wait until the week before to gather documents',
-      'Conduct internal document review and organise archives',
-      'Focus only on recent installations',
+      'Focus only on the most recent installations',
+      'Conduct an internal document review and organise archives',
       'Delete outdated records to simplify the audit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Comprehensive document review and organisation is critical. Verify completeness of all project files, check document versions are current, organise both physical and digital archives, and prepare a document index.',
   },

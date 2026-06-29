@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is NOT typically listed as an emergency scenario that a MEWP rescue plan must address?',
     options: [
-      'Operator medical emergency such as a heart attack',
       "The operator's lunch break overrunning",
+      'Operator medical emergency such as a heart attack',
       'Hydraulic failure stranding the platform at height',
       'Fire on or near the machine',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A rescue plan must address genuine emergency scenarios that could strand or endanger personnel at height. An overrunning lunch break is not an emergency scenario. Operator medical emergencies, hydraulic failures, and fire are all scenarios that require specific planned responses.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'What is the universally recognised emergency signal when visual communication is required from a MEWP platform?',
     options: [
       'One arm raised above the head',
-      'Both arms waving above the head',
       'Pointing downwards with one hand',
       'Tapping the top of the hard hat',
+      'Both arms waving above the head',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The internationally recognised emergency signal from a MEWP platform is both arms waving above the head. This means EMERGENCY STOP and is universally understood. All communication methods and signals must be agreed before work begins.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 2,
     question: 'A rescue plan must be communicated to relevant personnel at what point?',
     options: [
-      'After the first elevation of the day',
       'Before any elevation begins',
+      'After the first elevation of the day',
       'Only when an emergency occurs',
       'At the weekly site meeting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The rescue plan must be communicated to ALL relevant personnel BEFORE any elevation begins. Every person involved must understand their role, the procedures, and the communication methods before the MEWP is operated at height.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'Which of the following is a scenario that a MEWP rescue plan must specifically address?',
     options: [
       'The operator forgetting their PPE in the site cabin',
-      'Platform entrapment against a structure',
       'A delay in the delivery of materials to site',
+      'Platform entrapment against a structure',
       'The operator needing a comfort break',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Platform entrapment against a structure is a recognised emergency scenario that can strand the operator at height. The rescue plan must include a specific response procedure for this scenario, including how to free the platform or rescue the operator by alternative means.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     options: [
       'Every five years',
       'Only when an accident occurs',
-      'At least annually',
       'Only when the HSE visits',
+      'At least annually',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A rescue plan must be reviewed at least annually. It must also be updated following any fall or emergency incident, change in equipment, change in site conditions, change in operational details, or change in personnel. It is a living document that must be kept current.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'Only after all other rescue options have been exhausted',
       'Only if the operator is visibly injured',
-      'Early — do not wait until all other options have failed',
       'Only if the site supervisor authorises the call',
+      'Early — do not wait until all other options have failed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Emergency services should be called EARLY in any MEWP emergency. Do not wait until all other rescue options have been tried and failed. Ambulance response times can be significant, so calling early ensures medical assistance arrives as quickly as possible while on-site rescue procedures are carried out simultaneously.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following must be identified BY NAME or ROLE in the rescue plan?',
     options: [
-      "The MEWP manufacturer's sales representative",
       'Trained rescue personnel',
+      "The MEWP manufacturer's sales representative",
       'The site security guard',
       "The client's project manager",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The rescue plan must identify trained rescue personnel by name and/or role. In an emergency, there must be no ambiguity about who is responsible for carrying out the rescue. These individuals must be present on site, trained, and competent to execute the rescue procedures.',
   },

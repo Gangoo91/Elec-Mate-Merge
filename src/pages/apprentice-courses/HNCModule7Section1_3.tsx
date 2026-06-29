@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'In the cable sizing equation It ≥ Ib / (Ca × Cg × Ci × Cc), what does It represent?',
     options: [
-      'Safe isolation, first aid and evacuation procedures',
+      'The design current the circuit carries in normal service',
       'The tabulated current-carrying capacity from BS 7671',
-      'Installing and commissioning solar photovoltaic systems',
-      'Yes — it must be recorded as failing BS 7671 requirements',
+      'The rated current of the protective device',
+      'The prospective fault current at the origin of the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: "In the adiabatic equation S = √(I²t) / k, what does 'k' represent?",
     options: [
-      'Cable is totally surrounded by thermal insulation over 0.5m',
-      'All three: current capacity, voltage drop, and fault withstand',
-      'Starting current affects voltage drop but not continuous rating',
+      'The disconnection time of the protective device in seconds',
+      'The prospective fault current at the point of the fault',
+      'The ambient temperature correction factor for the cable',
       'A factor dependent on conductor and insulation materials',
     ],
     correctAnswer: 3,
@@ -221,9 +221,9 @@ const quizQuestions = [
     question:
       'For a motor circuit with starting current of 6× full load current, what consideration affects cable sizing?',
     options: [
-      'Cable is totally surrounded by thermal insulation over 0.5m',
-      'Yes, it is within the 5% limit for final circuits',
-      'All three: current capacity, voltage drop, and fault withstand',
+      'The cable must be sized on the full starting current for thermal capacity',
+      'Starting current has no effect on either voltage drop or cable sizing',
+      'The protective device must be rated at 6× the full load current',
       'Starting current affects voltage drop but not continuous rating',
     ],
     correctAnswer: 3,
@@ -234,10 +234,10 @@ const quizQuestions = [
     id: 12,
     question: 'When selecting cable size, the final choice must satisfy:',
     options: [
-      'All three: current capacity, voltage drop, and fault withstand',
-      'Cable is totally surrounded by thermal insulation over 0.5m',
-      'Starting current affects voltage drop but not continuous rating',
-      'Yes, it is within the 5% limit for final circuits',
+      'Current-carrying capacity, voltage drop and fault-current withstand together',
+      'Current-carrying capacity only, as voltage drop is checked separately later',
+      'Voltage drop only, since the protective device handles fault protection',
+      'Fault-current withstand only, as the other checks are advisory',
     ],
     correctAnswer: 0,
     explanation:

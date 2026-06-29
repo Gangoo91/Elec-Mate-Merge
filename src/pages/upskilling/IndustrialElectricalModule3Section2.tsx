@@ -84,74 +84,94 @@ const IndustrialElectricalModule3Section2: React.FC = () => {
       question: 'What is the standard depth dimension for a TS35-7.5 DIN rail as per EN 60715?',
       options: ['5.5mm', '7.5mm', '15mm', '35mm'],
       correctAnswer: '7.5mm',
+      explanation:
+        'The "7.5" in TS35-7.5 (TH35-7.5) is the rail depth in millimetres; 35mm is the top-hat width. The 15mm-deep version is the heavier-duty TS32/TH35-15.',
     },
     {
       question:
-        'When installing DIN rail in an enclosure, what is the recommended distance from the rail to the enclosure side wall?',
-      options: ['Minimum 10mm', 'Minimum 25mm', 'Minimum 50mm', 'No minimum requirement'],
+        'When installing DIN rail in an enclosure, what is the recommended minimum distance from the rail to the enclosure side wall?',
+      options: ['Minimum 10mm', 'Minimum 25mm', 'Minimum 50mm', 'There is no minimum'],
       correctAnswer: 'Minimum 25mm',
+      explanation:
+        'A minimum of 25mm to the side wall allows for component bodies, wiring, cooling airflow and tool access. Less than this crowds terminations and restricts ventilation.',
     },
     {
       question:
-        'Which accessory must be fitted at both ends of a DIN rail to prevent components from sliding off during vibration?',
+        'Which accessory must be fitted at both ends of a DIN rail to stop components sliding off under vibration?',
       options: ['Rail couplers', 'End stops/end brackets', 'Mounting clips', 'Terminal markers'],
       correctAnswer: 'End stops/end brackets',
+      explanation:
+        'End stops (end brackets) clamp onto the rail at each end to retain the assembled components against vibration and shipping movement. Couplers join rails and markers label terminals.',
     },
     {
       question:
-        'For components weighing more than 500g, what additional mounting requirement applies per EN 60439-1?',
+        'For components weighing more than 500g, what additional mounting requirement applies under BS EN 61439?',
       options: [
-        'Use of thicker DIN rail only',
-        'Additional mechanical fixing independent of DIN rail clip',
-        'Double DIN rail arrangement',
+        'The use of a thicker DIN rail only',
+        'An additional mechanical fixing independent of the DIN rail clip',
+        'A double DIN rail arrangement only',
         'Horizontal mounting only',
       ],
-      correctAnswer: 'Additional mechanical fixing independent of DIN rail clip',
+      correctAnswer: 'An additional mechanical fixing independent of the DIN rail clip',
+      explanation:
+        'Heavy components over ~500g need a supplementary fixing (e.g. a bracket to the backplate) because the rail clip alone is rated for static loads and can fatigue under vibration.',
     },
     {
       question: 'What is the purpose of using slotted DIN rail mounting holes in enclosures?',
       options: [
-        'To reduce material cost',
+        'To reduce the cost of materials',
+        'To increase ventilation through the backplate',
         'To allow for thermal expansion and alignment adjustment',
-        'To increase ventilation',
-        'To reduce enclosure weight',
+        'To reduce the overall enclosure weight',
       ],
       correctAnswer: 'To allow for thermal expansion and alignment adjustment',
+      explanation:
+        'Slotted holes let the rail be levelled and shifted slightly during installation and accommodate thermal movement, preventing stress on fixings as the panel heats and cools.',
     },
     {
       question:
-        'When mounting PLCs adjacent to contactors, what minimum separation is typically required to prevent electromagnetic interference?',
-      options: ['No separation needed', '25mm', '50mm', '100mm'],
+        'When mounting PLCs adjacent to contactors, what minimum separation is typically recommended to limit electromagnetic interference?',
+      options: ['No separation is needed', '25mm', '50mm', '100mm'],
       correctAnswer: '50mm',
+      explanation:
+        'Around 50mm between sensitive electronics such as PLCs and switching devices like contactors helps limit coupled noise; 100mm is the typical figure for noisier sources like VSDs.',
     },
     {
       question:
-        'What material thickness is specified for standard TS35 DIN rail to support industrial component loading?',
+        'What steel thickness is typical for standard TS35 DIN rail used to support industrial component loading?',
       options: ['0.5mm', '1.0mm', '1.5mm', '2.0mm'],
       correctAnswer: '1.0mm',
+      explanation:
+        'Standard steel TS35 rail is about 1.0mm thick, giving adequate stiffness for normal component loads. Thinner rail deflects under load; heavier-duty rails are used for very heavy assemblies.',
     },
     {
       question:
-        'According to AS/NZS 3439.1, what is the maximum ambient temperature assumption for standard equipment ratings in enclosures?',
+        'Under BS EN 61439, what maximum ambient air temperature is assumed for standard equipment ratings in an enclosure?',
       options: ['25 degrees C', '35 degrees C', '40 degrees C', '55 degrees C'],
       correctAnswer: '40 degrees C',
+      explanation:
+        'BS EN 61439 assemblies are rated against a 40 degrees C ambient (24h average 35 degrees C). Operating above this requires derating of the installed devices.',
     },
     {
       question:
-        'When cutting DIN rail, what tool provides the cleanest cut while maintaining rail profile integrity?',
+        'When cutting DIN rail, which tool gives the cleanest cut while maintaining the rail profile?',
       options: [
-        'Angle grinder with cutting disc',
-        'Hacksaw',
-        'Purpose-designed DIN rail cutter',
-        'Tin snips',
+        'An angle grinder with a cutting disc',
+        'A hacksaw',
+        'A purpose-designed DIN rail cutter',
+        'A pair of tin snips',
       ],
-      correctAnswer: 'Purpose-designed DIN rail cutter',
+      correctAnswer: 'A purpose-designed DIN rail cutter',
+      explanation:
+        'A dedicated rail cutter shears the rail squarely without distorting the top-hat profile or leaving heavy burrs, unlike a hacksaw, grinder or snips which deform or contaminate the rail.',
     },
     {
       question:
-        'What is the standard centre-to-centre spacing for multiple DIN rails mounted vertically in an enclosure?',
+        'What is the typical centre-to-centre spacing for multiple DIN rails mounted vertically in an enclosure?',
       options: ['100mm', '125mm', '150mm', '200mm'],
       correctAnswer: '150mm',
+      explanation:
+        'A nominal 150mm centre-to-centre spacing between stacked rails leaves room for the components plus the cable duct that usually runs between rows for tidy wiring.',
     },
   ];
 

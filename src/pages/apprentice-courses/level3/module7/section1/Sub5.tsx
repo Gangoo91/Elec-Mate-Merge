@@ -40,9 +40,9 @@ const checks = [
     question:
       "What's Unite the Union's role in the electrical industry?",
     options: [
-      "The single-line diagram (SLD) — it fixes the topology, the protective device layout and the fault paths. Every other document (schedules, layouts, calc sheets) hangs off the SLD topology. Drafting cables first means re-drafting them when the SLD topology shifts.",
-      "England has its set; Wales has its own equivalent set (similar but not identical); Scotland has Building Standards Technical Handbooks (different framework); Northern Ireland has its own. Direction of travel is broadly aligned but specifics differ. Check the relevant jurisdiction.",
-      "Location of the new CU and main isolator; how the RCDs work and the monthly test-button routine; what each circuit is labelled as; any new features (SPDs, AFDDs, smart switches) plus their manuals; the recommended next inspection date; the contact route for any post-handover issues.",
+      "Unite is the competent-person scheme for electrical contracting, authorising firms to self-certify Part P work. It registers contractors, runs the annual assessment visit and holds the public register of qualified electrical businesses across England, Wales and NI.",
+      "Unite is the awarding body that writes and marks the C&G 2365 and the AM2. It sets the electrical apprenticeship syllabus and issues the qualifications, and the worker-side input to JIB pay is handled by a separate organisation entirely.",
+      "Unite is the employer body that negotiates JIB pay rates on behalf of electrical contracting firms. It represents the management side in collective bargaining, lobbies Government for the industry's commercial interests, and sets the rates that firms agree to pay.",
       "Unite is the main trade union for electrical contracting in England, Wales and NI. It represents workers in the JIB collective bargaining process (negotiating annual JIB pay rates with ECA), supports individual members in workplace disputes, runs union-sponsored training, lobbies on industry policy, and is the worker-side voice on the JIB Apprentice Code of Practice.",
     ],
     correctIndex: 3,
@@ -55,9 +55,9 @@ const checks = [
       "Can your employer prevent you from joining a trade union?",
     options: [
       "No. The right to join (or not join) a trade union is protected by the Trade Union and Labour Relations (Consolidation) Act 1992. Employers cannot dismiss, demote, refuse to hire, or treat less favourably any worker because they're a trade union member or because they take part in lawful trade union activities. Anti-union discrimination is unlawful.",
-      "Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.",
-      "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
-      "No. PAT (Portable Appliance Testing) is one layer of inspection — typically annual for offices, every 3 months for harsh construction-site use. PUWER Reg 5 ALSO requires user pre-use visual checks every shift AND periodic competent-person in-service inspections between PATs. A tool can pass PAT in January and develop a damaged cable in February — the user check is what catches it.",
+      "Yes, but only during your probationary period. An employer may bar union membership for the first six months of employment to assess your loyalty to the firm, after which the right to join applies. The bar must be written into the contract to be enforceable.",
+      "Yes, if the firm is non-JIB. Union membership rights only apply on JIB-graded contracts; an employer outside the JIB framework is free to make non-membership a condition of employment, because TULRCA covers only the unionised sector.",
+      "Yes, if a closed-shop agreement is in place. Where the employer and an existing union agree a closed shop, the employer can require all staff to be members of that one union and refuse anyone who wishes to join a different union or none.",
     ],
     correctIndex: 0,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     question:
       "Are most UK electricians union members?",
     options: [
-      "Consistently demonstrating: (1) framing work as a learning problem (\\\\\\\"what can we learn from this?\\\\\\\"), (2) acknowledging your own fallibility (\\\\\\\"I may have missed something — what do you see?\\\\\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
-      "Part 2 — definitions. Every key term in BS 7671 has a verbatim definition in Part 2, and that definition is the legal vocabulary the inspector and the courts use. 'Extraneous-conductive-part' = 'a conductive part liable to introduce a potential, generally Earth potential, and not forming part of the electrical installation' — that exact wording is what decides whether the metal pipework needs main bonding.",
+      "Yes. Union membership is compulsory for any electrician working on a JIB-graded contract, because the JIB Working Rule Agreement is a closed shop. Since most commercial electrical work is JIB-graded, the overwhelming majority of UK electricians are members by requirement.",
+      "Yes. The ECS card scheme automatically enrols every card-holder into Unite as a condition of issue, so any electrician holding a current ECS card is a union member whether they realise it or not. Density across the trade is therefore close to 100%.",
       "No. UK trade union density across the workforce is around 22% (ONS). In the electrical contracting trade union density is higher than the national average on traditional JIB-graded contractors, particularly large M&E firms working on infrastructure and big commercial. It's lower on smaller domestic-focused firms and on self-employed electricians. Union membership is a personal choice — many electricians never join, others see it as essential.",
-      "Most HASAWA offences are triable either way — the prosecution chooses Magistrates' (summary) or Crown (indictment). Magistrates' Court can impose unlimited fines on H&S offences (since 2015) and up to 6 months imprisonment. Crown Court can impose unlimited fines and up to 2 years imprisonment for individuals (longer for some related offences like Corporate Manslaughter — life). The Sentencing Council Definitive Guideline applies in both courts.",
+      "No. Trade union membership has been banned in the electrical contracting industry since the 1990s, so no UK electricians are members. Workplace representation is instead handled entirely by the JIB, which acts on workers' behalf without any union involvement.",
     ],
     correctIndex: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: "What does GMB do in the electrical industry?",
     options: [
-      "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
+      "GMB is the competent-person scheme used mainly by facilities-management firms to self-certify electrical maintenance work. It assesses members and holds a register, operating as the maintenance-sector equivalent of NICEIC rather than as a union.",
       "GMB is a UK general trade union representing workers across construction, building services and many other industries. In the electrical sector GMB has historic presence particularly in maintenance, facilities-management and public-sector electrical work. GMB is a JIB signatory union alongside Unite for collective bargaining purposes — though Unite is the larger electrical-trade union.",
-      "Fire / explosion, asphyxiation (oxygen deficiency or harmful atmosphere), drowning (free-flowing solid / liquid), hyperthermia (high temperature). Plus serious injury from entrapment. The Regs apply when the space is substantially enclosed AND any specified risk is foreseeable.",
-      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
+      "GMB is the trade association for facilities-management and public-sector electrical employers. It lobbies on behalf of those firms and represents the employer side in public-sector pay negotiations, sitting opposite Unite at the bargaining table.",
+      "GMB is the grading body that issues competence cards to public-sector and facilities-management electricians, equivalent to ECS in the contracting sector. Maintenance electricians carry a GMB card for site access on public-sector estates.",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: "What's a 'shop steward' on a JIB-graded site?",
     options: [
-      "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
-      "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
+      "A senior manager appointed by the employer to act as the firm's point of contact with the union. The shop steward represents the company's interests in dealings with workers and is paid a management salary to handle industrial-relations matters on the employer's behalf.",
+      "A full-time paid official employed directly by the union's head office, sent to a site to recruit new members. The shop steward is a union employee rather than a worker on the site, and moves between workplaces signing people up.",
       "An elected workplace union representative — elected by union members at the firm or site to represent their interests in dealing with the employer. The shop steward is the first port of call for individual workplace issues (pay disputes, disciplinary, health and safety concerns). On larger sites there may be multiple stewards covering different trades or shifts.",
-      "A trained operative who attaches loads to a crane (slinging) and signals the crane operator (signalling) during a lift. Both functions require formal CPCS or equivalent training. Lift operations are governed by LOLER 1998 (Lifting Operations and Lifting Equipment Regulations) which requires lifts to be planned by a competent person and supervised throughout.",
+      "A Government-appointed conciliator who sits on site to mediate disputes between workers and management. The shop steward is an independent ACAS officer with statutory powers to settle pay and conditions disagreements before they reach a tribunal.",
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: "What's collective bargaining and how does it set JIB pay?",
     options: [
-      "When you see signs of abuse, neglect, undue pressure, vulnerability or risk that go beyond the scope of an electrical job. Report internally to your firm\\\\\\\\'s safeguarding lead (where one exists) or contracts manager; signpost to local authority adult/children\\\\\\\\'s social care if appropriate. Care Act 2014 (England) places statutory duties on local authorities; you don\\\\\\\\'t make the assessment but you can raise the concern.",
-      "EN ISO 20345 (safety footwear) for general work; specific S-grade ratings (S1, S1P, S3 etc) indicate features (toe protection, midsole protection, antistatic, water resistance). For electrical work the mark to look for is the EH (Electrical Hazard) rating or class S2/S3 with insulating sole.",
-      "BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.",
+      "Collective bargaining is the process where the Government sets a statutory minimum wage for the electrical trade each year, which all employers must then pay. The JIB simply publishes the Government-set figure, and neither workers nor employers have any input into the rate.",
+      "Collective bargaining is where each electrician negotiates their own pay rate directly with their employer at their annual review. The JIB rate card is only a non-binding suggestion, and the actual rate is whatever the individual and the firm agree between them.",
+      "Collective bargaining is the process where the main contractor sets the pay rates for every sub-contractor's workers on a project. Because the main contractor controls the budget, it dictates the JIB rates that apply on its sites, and the sub-contractors pass these on to their staff.",
       "Collective bargaining is the process where worker representatives (Unite + GMB) and employer representatives (ECA) sit down each year to negotiate the JIB Working Rule Agreement — pay rates, hours, holidays, sick pay, pension, overtime, allowances. The agreed rates apply across all JIB-graded contracts. The mechanism is voluntary (no statute compels it) but the outcomes set the industry-standard floor.",
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: "Do you have to be a union member to get JIB pay rates?",
     options: [
       "No. JIB pay rates apply to all employees on JIB-graded contracts regardless of union membership. The collectively-bargained rates are incorporated into the employment contract by reference to the JIB Working Rule Agreement. Union members and non-union members on the same JIB-graded contract are paid the same JIB rate.",
-      "Cross — the connection is not electrically and mechanically sound (Reg 542.4.2). Comment: corrosion at MET connection. Action: clean, retighten with anti-corrosion compound, retest continuity, recommend regular re-inspection.",
-      "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
-      "The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness",
+      "Yes. Only paid-up union members receive the full JIB rate; non-members on the same contract are paid a reduced 'non-member rate', typically around 10% lower, because they do not contribute to the bargaining that sets the rate.",
+      "Yes. The JIB rate is reserved for Unite members, and non-members fall back to the National Minimum Wage. Joining the union is the only way to access the collectively-bargained rate on a JIB-graded contract.",
+      "Yes, but only for the first year. New employees must be union members to start on the JIB rate, after which membership becomes optional and the rate continues regardless. The requirement is a probationary condition tied to the contract.",
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What's typical Unite membership cost for an electrician?",
     options: [
-      "Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.",
+      "A flat £500/year for every member regardless of grade or earnings, paid as a single annual lump sum. There are no reduced rates for apprentices or students, and the subscription is not tax-deductible because it is treated as a personal expense.",
       "Roughly £15-20/month for full Unite membership for a working electrician, with reduced rates for apprentices, students and the unemployed. Cost is tax-deductible against income tax for trade union subscriptions. In return members get representation in disputes, legal advice, training discounts, member-only insurance products and the Unite member benefits programme.",
-      "Per BS EN 62305 and BS 7671 Reg 411.3.1.2, the LPS earth electrode network is typically bonded to the building\\\\\\\\'s MET — either directly or via a spark gap (isolating SPD) depending on the LPS class and system designer\\\\\\\\'s arrangement. This prevents large potential differences between the LPS earth and the electrical earth during a strike.",
-      "The firm probably won't recover the cost of the additional work in dispute. Verbal variations are binding in principle but hard to prove in practice. Courts and ombudsmen weight written contractual evidence above verbal recollection. The labour, materials and time spent on the undocumented variation sit on the firm's profit margin. Multiplied across many small variations on many jobs it's a material drag on profitability and a leading cause of bad debt.",
+      "A percentage of your gross pay — typically 5% — deducted at source by the employer before you are paid, in the same way as pension contributions. The rate rises with your JIB grade, so an Approved Electrician pays more than an apprentice.",
+      "Nothing — Unite membership is free to all electricians because the union is funded by the employer levy that firms pay into the JIB. The only cost is for optional add-ons such as legal cover, which members can buy separately.",
     ],
     correctAnswer: 1,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: "What's a 'collective grievance' versus an 'individual grievance'?",
     options: [
-      "A genuine shift to: \\\\\\\"This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager\\\\\\\" — with the motivation to act matching the new belief",
-      "UK-SPEC (UK Standard for Professional Engineering Competence) is the published competence standard against which Engineering Council professional registrations (EngTech, IEng, CEng) are assessed. It defines five competence areas (knowledge and understanding, design, leadership and management, communication, professional commitment) and the level of evidence required at each tier. Available free at engc.org.uk.",
+      "Individual grievance = a complaint raised against one named colleague, such as a personality clash. Collective grievance = a complaint raised against the whole workforce by the employer. The two run in opposite directions, one worker-to-worker and one employer-to-workers.",
+      "Individual grievance = a verbal complaint that does not need to be recorded. Collective grievance = a written complaint that must be logged. The distinction is purely about whether the issue is put in writing, not about how many workers are affected.",
       "Individual grievance = one worker raises a workplace issue with the employer (typically follows the ACAS Code of Practice). Collective grievance = a group of workers (often via the union shop steward) raises an issue affecting multiple workers — pay rates, working conditions, restructuring proposals, health and safety concerns. Different procedures and different ACAS guidance apply to each.",
-      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
+      "Individual grievance = a complaint about pay. Collective grievance = a complaint about health and safety. The two terms describe the subject of the complaint rather than the number of workers involved, and each must be raised through a different department.",
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: "Can apprentices join a union?",
     options: [
-      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
-      "Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.",
-      "A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician",
+      "No — apprentices are barred from union membership until they have passed the AM2 and become qualified electricians. Until then they are classed as trainees rather than workers, and TULRCA membership rights do not apply to them.",
+      "Only with their employer's written permission, which must be renewed each year. Because an apprentice is on a training contract, the employer controls whether they may join a union, and can withdraw consent at any point during the apprenticeship.",
+      "Only through their college rather than their employer — apprentices join via a student-union route while studying, and this lapses the moment they finish college. They cannot join the workplace union directly while still an apprentice.",
       "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: "What's the Trade Union and Labour Relations (Consolidation) Act 1992?",
     options: [
       "TULRCA 1992 is the consolidating UK statute on trade union law and collective labour relations. It covers the right to join (and not join) a union, protection from anti-union discrimination, recognition for collective bargaining, industrial action ballot requirements, picketing rules, and union internal governance. It's the foundational statute that protects union members.",
-      "Visual inspection items at the installation level — connection of conductors, identification of conductors, presence of required diagrams and labels, presence of barriers / enclosures / SPDs / RCDs, suitability of equipment for the location, etc. A tick-list grouped by category.",
-      "Independent verification. The dead-test calculation depends on Ze (one measurement) plus R1+R2 (one or many readings, depending on circuit). The live Zs measurement is one direct reading. Comparing the two catches errors in either method, gives confidence in the result, and provides a single value to compare against Table 41.3 with the 0.8 multiplier applied.",
-      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
+      "TULRCA 1992 is the statute that sets the JIB pay rates and grading structure for the electrical contracting industry. It fixes the hourly rates by law each year and defines the Apprentice-to-Technician grade ladder, removing the need for any negotiation between the two sides.",
+      "TULRCA 1992 is the health-and-safety statute governing electrical work, sitting alongside the Electricity at Work Regulations. It places duties on employers to provide safe systems of work and protects workers who raise safety concerns from dismissal.",
+      "TULRCA 1992 is the Act that established the competent-person scheme system and authorised bodies such as NICEIC and NAPIT to self-certify Part P work. It is the regulatory foundation for electrical self-certification in dwellings rather than a labour-relations statute.",
     ],
     correctAnswer: 0,
     explanation:

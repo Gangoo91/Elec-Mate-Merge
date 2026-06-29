@@ -41,10 +41,10 @@ const checks = [
     id: 'wahr-definition-check',
     question: 'How do the Work at Height Regulations 2005 define "working at height"?',
     options: [
-      'To prevent disorientation and ensure safe evacuation',
-      'Multi-core cables clipped direct to a non-metallic surface in still air.',
+      'Any work carried out at least 2 metres above ground level',
+      'Any work above the height of an average stepladder',
       'Anywhere you could fall a distance liable to cause personal injury',
-      'A formal instruction to change the scope, specification, or timing of works',
+      'Any work on a scaffold, tower or MEWP platform',
     ],
     correctIndex: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when do the Regs kick in?',
     options: [
-      'Device ID (and possibly IP addresses or node IDs)',
+      'Only above 2 metres from the ground',
       'Anywhere a fall could cause personal injury',
-      'Gather information, analyse, hypothesise, test, rectify',
-      'Neutral current flow and voltage asymmetry',
+      'Only when using a ladder or scaffold',
+      'Only above the height of one storey',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is a confined space under the 1997 Regulations?',
     options: [
-      'Removed safely from the platform and lowered to the ground',
+      'Any room without windows or natural ventilation',
       'Any space substantially enclosed where there’s a foreseeable specified risk',
-      'Hydrogen produced using renewable electricity through electrolysis of water',
-      'Occupational asthma caused by a known respiratory sensitiser',
+      'Any space you have to crouch or crawl to enter',
+      'Any underground room such as a basement or cellar',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Normal air is about 21% oxygen. At what level does it become a danger?',
     options: [
-      'BS EN 60947-6-1 for transfer switching equipment',
-      'PEEL: Point, Evidence, Explain, Link',
+      'Only below 10% — anything above that is perfectly safe',
+      'Only above 25% — a slight drop below 21% does no harm',
       'Below 19.5% (deficient) or above 23.5% (enriched)',
-      'Joining two scaffold tubes end to end to extend their length',
+      'Exactly at 21% — any change at all is immediately fatal',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'What’s the law on ladder pre-use checks?',
     options: [
-      'A workplace organisation method: Sort, Set in order, Shine, Standardise, Sustain',
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
-      'Seal off the area with polythene sheeting and warning signs, and set up a decontamination unit',
+      'A recorded inspection once a year is enough — no daily check needed',
+      'Only brand-new ladders need checking; older ones are exempt',
+      'A formal written inspection is required before every single use',
       'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3–12 months)',
     ],
     correctAnswer: 3,

@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Why is anti-islanding protection a safety-critical requirement, not just a power-quality nicety?',
     options: [
-      "To prevent the inverter exporting too much power and overloading the customer's supply fuse",
-      'To protect repair crews working on a "dead" section of network from a hidden energised feeder, prevent voltage/frequency drift outside spec, and stop equipment damage when supplies are restored out-of-phase',
-      "To stop the customer's meter spinning backwards",
-      'To comply with Building Regulations Part L energy targets',
+      "To stop the inverter exporting too much power and overloading the customer's main supply fuse",
+      'To protect repair crews from a hidden energised feeder, stop voltage/frequency drift, and prevent out-of-phase reclosure damage',
+      "To stop the customer's import meter spinning backwards during export",
+      'To meet the energy-efficiency targets in Building Regulations Part L',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A new battery storage system is being added to an existing domestic CU. The CU has a single 30 mA Type AC RCD covering all final circuits. What is the WRONG topology under A4:2026?',
     options: [
-      'Battery inverter wired to a dedicated way upstream of the existing RCD',
       'Battery inverter connected to the load side of the existing 30 mA Type AC RCD',
+      'Battery inverter wired to a dedicated way upstream of the existing RCD',
       'Battery inverter wired to its own dedicated RCBO of the correct type',
       'Battery inverter wired into a new PEI distribution board with bidirectional protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 551.7.1 (A4:2026 indent (d)) prohibits connecting a source to the load side of an RCD. Connecting the battery inverter on the load side of the existing RCD means: (a) the RCD's coil sees source-driven currents it was never calibrated to interpret, (b) the source can re-energise the load side after a trip, and (c) the Type AC RCD is in any case unsuitable for inverter-driven smooth/pulsating DC residual currents. The correct topology: dedicated RCBO of the correct type (often Type A or Type B per the inverter manufacturer's installation manual), or a dedicated PEI distribution board with bidirectional protection per Reg 530.3.201.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the role of BS 7671 versus G98/G99 in delivering anti-islanding protection?',
     options: [
-      'BS 7671 sets the trip times and protection settings; G98/G99 sets the cable sizes',
-      'G98/G99 governs the grid-interface protection settings, type-test and registration; BS 7671 governs the installation-side requirements (parallel-source rules per 551.7, bidirectional consideration per 530.3.201, prosumer requirements per Section 826)',
+      'BS 7671 sets the grid trip times and protection settings; G98/G99 sets the cable sizes',
       'They are identical documents — G98 is just BS 7671 Section 712 in another format',
-      'G98/G99 only applies to commercial generators above 100 kW',
+      'G98/G99 govern the grid-interface protection, type-test and registration; BS 7671 governs the installation side (551.7, 530.3.201, Section 826)',
+      'G98/G99 apply only to commercial generators rated above 100 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "They are complementary, not duplicate. ENA G98 / G99 are DNO connection standards: they define the grid-interface protection set-points (V/Hz stages, ROCOF, vector shift), the inverter type-test that proves anti-islanding compliance (BS EN 50549), and the registration / acceptance process. BS 7671 handles the customer-side wiring: how the source is connected to the installation, what protective devices are needed, how the prosumer installation is laid out and certified. The inverter manufacturer's G98/G99 type-test certificate is the evidence both you and the DNO rely on.",
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     id: 7,
     question: 'Reg 551.7.1 indent (c) is also new in A4:2026. What does it require?',
     options: [
-      'A 30 mA RCD upstream of every PV inverter',
-      'A suitable protective device where the direction of energy flow is bidirectional',
+      'A 30 mA RCD fitted upstream of every PV inverter',
       'An emergency-stop button accessible from outside the property',
-      'A documented risk assessment by a chartered electrical engineer',
+      'A documented risk assessment signed by a chartered electrical engineer',
+      'A suitable protective device wherever the direction of energy flow is bidirectional',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 551.7.1 indent (c) (A4:2026) requires a suitable protective device wherever energy flow is bidirectional. "Suitable" means the device is rated for current flow in both directions and its protection algorithm (overcurrent, residual current, arc fault) remains valid regardless of direction. Together with indent (d) (no source on the load side of an RCD) this formalises into the regs what was previously just inverter-manufacturer best practice. Reg 530.3.201 sits behind both: the broader requirement to consider direction during equipment selection.',
   },
@@ -221,10 +221,10 @@ const quizQuestions = [
     question:
       'A G98 inverter loses the grid (DNO opens the upstream feeder). According to BS EN 50549-1, within what order-of-magnitude time must it stop exporting?',
     options: [
-      'Within 5 minutes — the inverter logs and reports the event',
-      'Within a fraction of a second to a few seconds depending on the detection mode (V/Hz stages typically 0.2 s — 1.5 s; ROCOF / vector shift around 0.5 s; LoM "must trip within" requirements per BS EN 50549-1)',
-      'Within 30 minutes — a re-connect timer governs the next attempt',
-      'There is no time limit — the inverter simply waits for the grid to come back',
+      'Within 5 minutes — the inverter logs and reports the loss-of-mains event',
+      'Within a fraction of a second to a few seconds by mode (V/Hz stages ~0.2–1.5 s; ROCOF / vector shift ~0.5 s) per BS EN 50549-1',
+      'Within 30 minutes — a reconnection timer governs the next export attempt',
+      'There is no time limit — the inverter simply waits for the grid to return',
     ],
     correctAnswer: 1,
     explanation:

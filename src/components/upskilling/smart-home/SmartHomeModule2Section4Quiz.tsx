@@ -6,94 +6,119 @@ import { CheckCircle, XCircle, BookOpen } from 'lucide-react';
 const quizData = [
   {
     id: 1,
-    question: 'Define wireless interference.',
+    question: 'What is wireless interference?',
     options: [
       'When devices compete for the same frequency',
-      'When signals travel too far',
-      'When batteries run low',
-      'When cables are damaged',
+      'When a signal travels further than expected',
+      'When device batteries run low',
+      'When a cable becomes damaged',
     ],
     correct: 0,
+    explanation:
+      'Wireless interference occurs when multiple devices contend for the same frequency, degrading or disrupting their signals.',
   },
   {
     id: 2,
-    question: 'Name two common causes of interference in homes.',
+    question: 'Which pair are common causes of wireless interference in homes?',
     options: [
-      'Power outages and internet problems',
-      'Overlapping Wi-Fi routers and microwaves',
-      'Cold weather and humidity',
-      'Old devices and new devices',
+      'Power outages and broadband faults',
+      'Cold weather and high humidity',
+      'Overlapping Wi-Fi routers and microwave ovens',
+      'A mix of old and new devices',
     ],
-    correct: 1,
+    correct: 2,
+    explanation:
+      'Overlapping Wi-Fi routers and microwave ovens both crowd the 2.4 GHz band, a common source of interference in homes.',
   },
   {
     id: 3,
-    question: 'Which frequency band do both Wi-Fi and Zigbee use?',
+    question: 'Which frequency band do both Wi-Fi and Zigbee commonly use?',
     options: ['5 GHz', 'Sub-1 GHz', '2.4 GHz', '6 GHz'],
     correct: 2,
+    explanation:
+      'Both Wi-Fi and Zigbee operate in the 2.4 GHz band, which is why they can interfere with each other if not planned carefully.',
   },
   {
     id: 4,
-    question: 'True or False: Z-Wave avoids Wi-Fi interference by using sub-1 GHz.',
-    options: ['True', 'False'],
+    question: 'How does Z-Wave largely avoid interference with Wi-Fi?',
+    options: [
+      'It operates in the sub-1 GHz band',
+      'It shares the same 2.4 GHz band as Wi-Fi',
+      'It only ever uses wired connections',
+      'It transmits at much higher power',
+    ],
     correct: 0,
+    explanation:
+      'Z-Wave uses the sub-1 GHz band, separate from the 2.4 GHz band used by Wi-Fi and Zigbee, which avoids most of that interference.',
   },
   {
     id: 5,
     question: 'What are Wi-Fi channels used for?',
     options: [
-      'Increasing battery life',
-      'Separating wireless signals',
-      'Improving device speed',
-      'Reducing power consumption',
+      'Extending the device battery life',
+      'Separating wireless signals to reduce overlap',
+      'Increasing the raw device speed',
+      'Lowering overall power consumption',
     ],
     correct: 1,
+    explanation:
+      'Channels divide a Wi-Fi band into separate sub-bands, so choosing non-overlapping channels reduces interference between networks.',
   },
   {
     id: 6,
-    question: 'Give an example of a high-bandwidth smart home device.',
-    options: ['Light switch', 'Temperature sensor', 'Security camera', 'Door sensor'],
-    correct: 2,
+    question: 'Which is an example of a high-bandwidth smart home device?',
+    options: ['A light switch', 'A temperature sensor', 'A door contact sensor', 'A security camera'],
+    correct: 3,
+    explanation:
+      'A security camera streams video and so needs high bandwidth, unlike simple sensors that send only small amounts of data.',
   },
   {
     id: 7,
-    question: 'Give an example of a low-bandwidth smart home device.',
-    options: ['Video doorbell', 'Smart speaker', 'Thermostat', 'Security camera'],
+    question: 'Which is an example of a low-bandwidth smart home device?',
+    options: ['A video doorbell', 'A smart speaker', 'A thermostat', 'A security camera'],
     correct: 2,
+    explanation:
+      'A thermostat sends only small, infrequent updates, making it a low-bandwidth device compared with cameras or speakers.',
   },
   {
     id: 8,
-    question: 'Why might devices drop offline in a crowded network?',
+    question: 'Why might devices drop offline on a crowded network?',
     options: [
-      'Too much interference and competition',
-      'Devices are too old',
-      'Power supply issues',
-      'Internet is too slow',
+      'The devices are simply too old to work',
+      'There is too much interference and contention for bandwidth',
+      'The power supply to the devices is faulty',
+      'The internet connection itself is too slow',
     ],
-    correct: 0,
+    correct: 1,
+    explanation:
+      'On a crowded network, interference and competition for bandwidth cause packets to be lost, so devices can drop offline.',
   },
   {
     id: 9,
     question: 'What is one strategy to reduce interference between Wi-Fi and Zigbee?',
     options: [
-      'Use the same channels',
-      'Place hubs together',
-      'Separate channels and hub placement',
-      'Turn off one system',
+      'Set both systems to the same channel',
+      'Place the hubs directly together',
+      'Separate the channels used and the hub placement',
+      'Switch off one of the two systems',
     ],
     correct: 2,
+    explanation:
+      'Using separate channels and keeping the hubs apart reduces overlap between Wi-Fi and Zigbee in the shared 2.4 GHz band.',
   },
   {
     id: 10,
     question:
-      "Scenario: You install 10 Wi-Fi cameras and they keep buffering. What's likely the cause?",
+      'You install 10 Wi-Fi cameras and they keep buffering. What is the most likely cause?',
     options: [
-      'Cameras are defective',
-      'Insufficient bandwidth/overcrowded network',
-      'Wrong passwords',
-      'Poor lighting',
+      'All of the cameras are defective',
+      'Insufficient bandwidth on an overcrowded network',
+      'The cameras have the wrong passwords',
+      'There is poor lighting in the rooms',
     ],
     correct: 1,
+    explanation:
+      'Ten cameras streaming at once can overwhelm the available bandwidth, so an overcrowded network is the most likely cause of buffering.',
   },
 ];
 

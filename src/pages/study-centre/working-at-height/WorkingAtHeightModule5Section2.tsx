@@ -30,12 +30,12 @@ const quickCheckQuestions = [
     question:
       'A scaffold collapses on a construction site but nobody is injured. Does this need to be reported under RIDDOR?',
     options: [
-      'No — RIDDOR only applies when someone is injured',
       'Yes — scaffold collapse is a dangerous occurrence and must be reported regardless of injury',
+      'No — RIDDOR only applies when someone is injured',
       'Only if the scaffold was above 4 metres high',
       'Only if the HSE requests the information',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Scaffold collapse is classified as a dangerous occurrence under RIDDOR 2013 and must be reported regardless of whether anyone was injured. Dangerous occurrences are events with the potential to cause serious harm — the fact that no one was hurt this time does not remove the reporting obligation.',
   },
@@ -44,11 +44,11 @@ const quickCheckQuestions = [
       "An investigation identifies that a worker fell because they were not wearing a harness. The investigation concludes that the immediate cause was 'failure to wear PPE.' Is this a sufficient root cause?",
     options: [
       'Yes — the worker did not follow the rules, so the root cause is identified',
-      'No — root cause analysis must go deeper: why were they not wearing it? Was it available? Were they trained? Was it enforced?',
       'Yes — PPE failure is always the root cause of falls',
+      'No — root cause analysis must go deeper: why were they not wearing it? Was it available? Were they trained? Was it enforced?',
       'No — root cause analysis is only needed for fatal accidents',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The immediate cause (not wearing a harness) is the surface-level finding. Root cause analysis asks 'why?' repeatedly to find underlying failures: Was the harness provided? Was the worker trained? Was there supervision? Was the risk assessment adequate? These systemic failures are the true root causes.",
   },
@@ -57,11 +57,11 @@ const quickCheckQuestions = [
       'A worker on a scaffold trips over a loose board and nearly falls through a gap in the platform. They are uninjured. Should this be reported?',
     options: [
       'No — it was just a trip, not a real incident',
-      'Only if the supervisor decides it is worth reporting',
       'Yes — it is a near miss and should be reported through the site near-miss reporting system',
+      'Only if the supervisor decides it is worth reporting',
       'Only if the worker wants to report it',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Near misses are leading indicators of future accidents. This near miss reveals two hazards (loose board and gap in platform) that could cause a serious fall. Reporting it allows the organisation to fix the hazards before someone is injured. A strong near-miss reporting culture is one of the most effective accident prevention tools.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 1,
     question: "Under RIDDOR 2013, which of the following must be reported as a 'specified injury'?",
     options: [
-      'A bruised knee from a minor trip',
       'A fractured wrist (not fingers or toes)',
+      'A bruised knee from a minor trip',
       'A small cut requiring a plaster',
       'A headache from dehydration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fractures (other than to fingers, thumbs, or toes) are classified as specified injuries under RIDDOR 2013 and must be reported immediately. Minor injuries such as bruises, small cuts, and headaches are not RIDDOR-reportable.',
   },
@@ -110,9 +110,9 @@ const quizQuestions = [
       'A worker sustains an injury at work and is unable to carry out their normal duties for 8 working days. When must this be reported under RIDDOR?',
     options: [
       'Immediately by telephone',
-      'Within 7 days of the incident',
-      'Within 15 days of the incident',
       'It does not need to be reported',
+      'Within 15 days of the incident',
+      'Within 7 days of the incident',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     options: [
       'To identify which worker was at fault',
       'To determine the amount of compensation to pay',
-      'To identify underlying systemic failures that allowed the incident to occur',
       'To complete the insurance claim paperwork',
+      'To identify underlying systemic failures that allowed the incident to occur',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Root cause analysis looks beyond the immediate cause (what happened) to identify the underlying systemic failures (why it happened). These might include inadequate training, poor planning, defective equipment, lack of supervision, or failures in the safety management system. Fixing root causes prevents recurrence.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 5,
     question: 'During an incident investigation, when should photographs of the scene be taken?',
     options: [
-      'Only after the HSE inspector arrives',
       'As soon as possible after the scene is made safe and casualties are attended to',
+      'Only after the HSE inspector arrives',
       'The next morning in better light',
       'Only if a fatality has occurred',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Photographs should be taken as soon as the scene is safe and casualty care is under way. Evidence can be lost or altered quickly — weather, clean-up, equipment movement, or other work can change the scene. Photographic evidence is critical for the investigation and any subsequent legal proceedings.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
     question: 'What is the most important principle of a near-miss reporting culture?',
     options: [
       'Workers should only report near misses if their supervisor asks them to',
-      'Near-miss reports are only useful for statistical purposes',
       'Workers can report without fear of blame — the focus is on learning and prevention',
+      'Near-miss reports are only useful for statistical purposes',
       'Near misses only need to be reported if they involve equipment failure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A no-blame reporting culture encourages workers to report near misses without fear of disciplinary action. The purpose is to identify hazards and fix them before they cause actual harm. If workers fear punishment, they will not report, and valuable safety intelligence is lost.',
   },
@@ -191,10 +191,10 @@ const quizQuestions = [
     options: [
       'Interview witnesses',
       'Report to the HSE',
-      'Administer first aid to the casualty',
       'Identify root causes',
+      'Administer first aid to the casualty',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The correct sequence is: Incident occurs, Make safe (remove ongoing hazards), First aid (treat casualties), then Report (RIDDOR if applicable), Investigate, Root cause analysis, Corrective actions, and Review. Casualty care always comes before paperwork.',
   },

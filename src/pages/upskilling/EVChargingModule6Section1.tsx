@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m6s1-check1',
     question: 'What is the correct sequence when proving a circuit dead?',
     options: [
-      'Test circuit, test tester, isolate',
-      'Test tester, test circuit, test tester again',
-      'Isolate, test circuit, re-energise',
-      'Test circuit only if visible break confirmed',
+      'Test the tester on a known live source, test the circuit, test the tester again',
+      'Test the circuit first, then prove the tester, then isolate',
+      'Isolate, test the circuit, then re-energise to confirm',
+      'Test the circuit only once a visible break in the contacts is confirmed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The safe isolation procedure requires testing your voltage indicator on a known live source, then testing the circuit, then re-testing your indicator to prove it's still functioning correctly.",
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     question:
       'During a site survey, you discover a TN-C-S (PME) earthing system with no earth electrode. What is the most significant safety implication for EV charging?',
     options: [
-      'The installation cannot proceed',
-      'Open PEN fault could make the charger dangerous',
-      'RCD protection is not required',
-      'Earth fault loop impedance will be too high',
+      'The installation cannot legally proceed at all',
+      'RCD protection is no longer required on the circuit',
+      'Earth fault loop impedance will inevitably be too high',
+      'An open PEN fault could make the charger body dangerous',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An open PEN fault in a PME system could cause dangerous voltages on exposed metalwork. BS 7671 requires additional protective measures for EV charging on PME systems, including earth electrodes or protective multiple earthing arrangements.',
   },

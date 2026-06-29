@@ -17,13 +17,14 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What do MCBs protect against?',
     options: [
-      'Mihaly Csikszentmihalyi, 1990',
       'Overload and short-circuit faults',
-      'The resistance of the phase conductor',
-      'Locate and repair leaks, then retest',
+      'Earth leakage and electric shock',
+      'Transient overvoltages from lightning',
+      'Voltage drop along long cable runs',
     ],
-    correctIndex: 1,
-    explanation: 'MCBs protect against both overload and short-circuit faults.',
+    correctIndex: 0,
+    explanation:
+      'MCBs protect against both overload and short-circuit faults; earth leakage and shock protection is the role of an RCD.',
   },
   {
     id: 2,
@@ -35,7 +36,8 @@ const quickCheckQuestions = [
       '10 mA',
     ],
     correctIndex: 2,
-    explanation: '30 mA is the typical trip sensitivity for domestic RCD installations.',
+    explanation:
+      '30 mA is the standard trip sensitivity for additional (personal) protection in domestic installations.',
   },
   {
     id: 3,
@@ -48,7 +50,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'Type B MCBs are most commonly used in domestic circuits as they trip at 3-5 times rated current.',
+      'Type B MCBs are most commonly used in domestic circuits as they trip on magnetic operation at 3-5 times rated current.',
   },
 ];
 
@@ -61,26 +63,27 @@ const Module5Section2_3 = () => {
       id: 1,
       question: 'What do MCBs protect against?',
       options: [
-        'Wood, Bruner and Ross (1976)',
         'Overload and short-circuit faults',
-        'Save lives - people before property',
-        'The board manufacturer\\\\\\\\\\\\\\\'s brand reputation',
+        'Earth leakage to exposed metalwork',
+        'Transient overvoltages from switching surges',
+        'Excessive voltage drop on long circuits',
       ],
-      correctAnswer: 1,
-      explanation: 'MCBs protect against both overload and short-circuit faults.',
+      correctAnswer: 0,
+      explanation:
+        'MCBs protect against overload and short-circuit (fault) currents; they do not detect earth leakage or limit voltage drop.',
     },
     {
       id: 2,
       question: 'What do RCDs protect against?',
       options: [
-        'Allow discharge time before testing',
-        'Brushes wear, sparking, RFI emission',
+        'Sustained overloads on the line conductor',
+        'High-current short circuits between line and neutral',
         'Earth leakage currents and electric shock',
-        'O₂ at 20.8%, LEL at 0%, CO at 0 ppm, H₂S at 0 ppm',
+        'Harmonic distortion on the supply waveform',
       ],
       correctAnswer: 2,
       explanation:
-        'RCDs protect against earth leakage currents and reduce the risk of electric shock.',
+        'RCDs detect the small imbalance caused by earth leakage and disconnect quickly to reduce the risk of electric shock.',
     },
     {
       id: 3,
@@ -92,7 +95,8 @@ const Module5Section2_3 = () => {
         '30 mA',
       ],
       correctAnswer: 3,
-      explanation: '30 mA is the typical trip sensitivity for domestic RCD installations.',
+      explanation:
+        '30 mA is the standard sensitivity for additional (personal) protection in domestic installations.',
     },
     {
       id: 4,
@@ -104,19 +108,25 @@ const Module5Section2_3 = () => {
         'Type D',
       ],
       correctAnswer: 0,
-      explanation: 'Type B MCBs are most commonly used in domestic circuits.',
+      explanation:
+        'Type B MCBs are standard for domestic circuits as they trip magnetically at 3-5 times rated current, suiting low fault levels.',
     },
     {
       id: 5,
-      question: 'True or False: An MCB can provide protection against electric shock.',
-      options: ['True', 'False'],
+      question: 'Which statement about MCBs and electric shock protection is correct?',
+      options: [
+        'An MCB alone provides reliable protection against electric shock',
+        'An MCB protects against overload and short circuit, not shock; an RCD provides shock protection',
+        'An MCB trips on earth leakage as low as 30 mA',
+        'An MCB and an RCD perform exactly the same protective function',
+      ],
       correctAnswer: 1,
       explanation:
-        'False - MCBs protect against overload and short circuits. RCDs provide shock protection.',
+        'MCBs respond to overload and short-circuit currents; protection against electric shock from earth leakage is provided by an RCD.',
     },
     {
       id: 6,
-      question: 'What BS 7671 regulation requires RCD protection for sockets ≤32 A?',
+      question: 'What BS 7671 regulation requires RCD protection for socket-outlets rated up to 32 A?',
       options: [
         'Regulation 434.1',
         'Regulation 433.1',
@@ -125,7 +135,7 @@ const Module5Section2_3 = () => {
       ],
       correctAnswer: 2,
       explanation:
-        'Regulation 411.3.3 requires RCD protection for sockets ≤32 A in domestic installations.',
+        'Regulation 411.3.3 requires RCD protection for socket-outlets with a rated current not exceeding 32 A.',
     },
     {
       id: 7,
@@ -137,11 +147,12 @@ const Module5Section2_3 = () => {
         '6 A',
       ],
       correctAnswer: 3,
-      explanation: '6 A MCB is typically used for lighting circuits with 1.5 mm² cable.',
+      explanation:
+        '6 A is the typical MCB rating for a domestic lighting circuit wired in 1.5 mm² cable.',
     },
     {
       id: 8,
-      question: 'Which MCB type would you likely use for industrial machinery?',
+      question: 'Which MCB type would you most likely use for heavy industrial machinery with high inrush?',
       options: [
         'Type D',
         'Type C',
@@ -150,33 +161,33 @@ const Module5Section2_3 = () => {
       ],
       correctAnswer: 0,
       explanation:
-        'Type D MCBs are typically used for industrial applications with heavy machinery.',
+        'Type D MCBs trip at 10-20 times rated current, tolerating the high inrush of large motors and welding plant without nuisance tripping.',
     },
     {
       id: 9,
-      question: 'How often should RCDs be tested with the built-in test button?',
+      question: 'How often is a user typically advised to test an RCD with the built-in test button?',
       options: [
-        'Monthly',
-        'Every 6 months',
-        'Every 3 months',
-        'Annually',
+        'Only at the periodic inspection interval',
+        'Every six months',
+        'Once when first installed',
+        'Every five years',
       ],
       correctAnswer: 1,
       explanation:
-        'RCDs should be tested every 6 months using the test button (or as per manufacturer guidance).',
+        'Users are typically advised to press the test button about every six months (or as the manufacturer or labelling states) to confirm the RCD still trips.',
     },
     {
       id: 10,
       question: 'Why is it important to coordinate MCB and RCD selection?',
       options: [
-        'Acquiring new skills, dealing with challenges, and extending your comfort zone',
-        'Circuit details, protective device ratings, and cable information',
+        'To make the consumer unit cheaper to install',
+        'To allow thinner cables than the regulations require',
         'To ensure protection against both overloads and electric shock without nuisance tripping',
-        'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
+        'To remove the need for periodic inspection and testing',
       ],
       correctAnswer: 2,
       explanation:
-        'Coordination ensures protection against both overloads and electric shock while preventing nuisance tripping.',
+        'Coordinating the devices ensures the circuit is protected against both overload/fault currents and earth leakage while avoiding unwanted nuisance tripping.',
     },
   ];
 

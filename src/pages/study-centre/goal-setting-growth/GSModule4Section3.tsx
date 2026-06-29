@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician completed their NVQ Level 3 five years ago and has not undertaken any further training or study since. They state: &ldquo;I qualified once &mdash; that&rsquo;s all I need.&rdquo; Which of the following best explains why this position is problematic in the electrical industry?',
     options: [
-      'It is only problematic if they work for a large company &mdash; sole traders do not need CPD',
-      'BS 7671 has been amended multiple times since their qualification, new technologies have emerged, and competent person scheme membership requires evidence of ongoing learning &mdash; standing still means falling behind',
-      'It is not problematic &mdash; a Level 3 qualification is valid for life and covers all future changes',
-      'CPD is only required for engineers, not electricians',
+      'The regulations, technologies and scheme requirements have all moved on, so standing still means falling behind',
+      'It is only problematic if they work for a large company, since sole traders are exempt from any CPD requirement',
+      'It is not problematic, because a Level 3 qualification is valid for life and covers all future regulation changes',
+      'It is not problematic, because CPD obligations apply only to registered engineers and never to working electricians',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The electrical industry changes constantly. Since any five-year period will typically include at least one amendment to BS 7671 (e.g. A1:2020, A2:2022, A3:2024), plus new technologies (EV charging points, battery energy storage systems, arc fault detection devices), plus changes to Building Regulations Part P and competent person scheme requirements, an electrician who does not engage in CPD will quickly become out of date. Competent person schemes such as NICEIC and NAPIT require annual assessments that test knowledge of current regulations. ECS card renewal requires evidence of ongoing competence. The IET requires CPD for all professional registrations. The statement &ldquo;I qualified once &mdash; that&rsquo;s all I need&rdquo; reflects a fundamental misunderstanding of how professional competence works in a rapidly evolving industry. CPD is not optional &mdash; it is the mechanism by which electricians maintain their right to practise safely and legally.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'The Engineering Council&rsquo;s UK-SPEC framework requires professionally registered individuals (EngTech, IEng, CEng) to undertake CPD. What is the primary purpose of this requirement?',
     options: [
-      'To generate revenue for the Engineering Council through course fees',
-      'To ensure that registered professionals maintain competence relevant to their current and future practice, protecting the public and the profession',
-      'To prevent older engineers from continuing to work past retirement age',
-      'To create unnecessary bureaucracy for working electricians',
+      'To generate ongoing revenue for the Engineering Council through compulsory course fees',
+      'To keep registered professionals competent for current and future practice, protecting the public',
+      'To discourage older engineers from continuing to practise once they pass retirement age',
+      'To create additional administrative bureaucracy that working electricians must comply with',
     ],
     correctIndex: 1,
     explanation:
@@ -88,14 +88,14 @@ const quizQuestions = [
     question:
       'CPD stands for Continuing Professional Development. Which of the following best describes what CPD encompasses?',
     options: [
-      'Only formal classroom-based training courses leading to certificates',
-      'Any structured or unstructured learning activity that maintains and develops professional competence, including formal courses, self-directed study, on-the-job learning, and peer interaction',
-      'Only activities that are directly paid for by an employer',
-      'Only activities approved by the IET or Engineering Council',
+      'Any learning activity that maintains and develops professional competence, formal or informal',
+      'Only formal classroom-based training courses that lead to a recognised certificate',
+      'Only learning activities that are directly arranged and paid for by an employer',
+      'Only activities formally accredited and approved by the IET or Engineering Council',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'CPD encompasses a very broad range of learning activities, not just formal courses. The IET, Engineering Council, and all competent person schemes recognise multiple forms of CPD: formal training (courses, qualifications, conferences), self-directed study (reading regulations, technical publications, online learning), on-the-job learning (new installation types, complex fault finding, mentoring), and professional interaction (peer discussion, technical forums, professional body events). The critical factor is not the format of the activity but whether it maintains or develops your professional competence. An electrician who spends two hours carefully studying the changes introduced by BS 7671 Amendment 3:2024 has undertaken valuable CPD, even though no certificate was issued and no course fee was paid.',
+      'CPD encompasses a very broad range of learning activities, not just formal courses. The IET, Engineering Council, and all competent person schemes recognise multiple forms of CPD: formal training (courses, qualifications, conferences), self-directed study (reading regulations, technical publications, online learning), on-the-job learning (new installation types, complex fault finding, mentoring), and professional interaction (peer discussion, technical forums, professional body events). The critical factor is not the format of the activity but whether it maintains or develops your professional competence. An electrician who spends two hours carefully studying the changes introduced by a BS 7671 amendment has undertaken valuable CPD, even though no certificate was issued and no course fee was paid.',
   },
   {
     id: 2,
@@ -109,19 +109,19 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671:2018 (the 18th Edition) has been amended three times: Amendment 1:2020 (A1:2020), Amendment 2:2022 (A2:2022), and Amendment 3:2024 (A3:2024). A3:2024 was issued on 31 July 2024 and adds Regulation 530.3.201 concerning bidirectional and unidirectional devices. Each amendment introduces changes that affect how electrical installations are designed, installed, inspected, and tested. Electricians who do not keep up with these amendments risk non-compliant work. This is one of the most compelling reasons why CPD is not optional in the electrical trade &mdash; the regulations that govern your work change regularly, and ignorance of the current requirements is not a defence.',
+      'BS 7671:2018 (the 18th Edition) has been amended through a sequence of published amendments: Amendment 1:2020 (A1:2020), Amendment 2:2022 (A2:2022), and Amendment 3:2024 (A3:2024), with Amendment 4:2026 (A4:2026) the most recent. Each amendment introduces changes that affect how electrical installations are designed, installed, inspected, and tested &mdash; for example the requirement in Regulation 530.3.201 to take account of unidirectional versus bidirectional protective devices, relevant to solar PV and battery storage. Electricians who do not keep up with these amendments risk non-compliant work. This is one of the most compelling reasons why CPD is not optional in the electrical trade &mdash; the regulations that govern your work change regularly, and ignorance of the current requirements is not a defence.',
   },
   {
     id: 3,
     question:
       'An electrician holds EngTech MIET registration through the IET. Which of the following statements about their CPD obligations is correct?',
     options: [
-      'They are exempt from CPD because EngTech is a lifetime qualification',
-      'They must undertake and record annual CPD that covers technical, professional, and personal development, and may be subject to random audit by the Engineering Council',
-      'They only need to complete CPD every five years when their registration is renewed',
-      'CPD is recommended but not mandatory for EngTech holders',
+      'They are permanently exempt from CPD because EngTech is awarded as a lifetime qualification',
+      'They only need to complete CPD once every five years, when their registration falls due for renewal',
+      'They must record annual CPD across technical, professional and personal development, subject to random audit',
+      'CPD is merely recommended good practice for EngTech holders and is not actually mandatory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All professionally registered engineers (EngTech, IEng, CEng) are required by the Engineering Council to undertake CPD as a condition of maintaining their registration. This is set out in the UK-SPEC (UK Standard for Professional Engineering Competence). CPD must be planned, recorded, and evidenced. It should cover multiple areas: technical competence (keeping up with regulations, new technologies, best practice), professional skills (communication, project management, commercial awareness), and personal development (leadership, mentoring, career planning). The Engineering Council conducts random audits, and registrants may be asked to provide their CPD records at any time. Failure to maintain adequate CPD can result in professional registration being revoked. For electricians holding EngTech MIET, this means CPD is a non-negotiable annual commitment, not a one-off box-ticking exercise.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'NICEIC and NAPIT are competent person schemes that allow electricians to self-certify notifiable electrical work under Building Regulations Part P. How do these schemes verify ongoing competence?',
     options: [
-      'They do not &mdash; once registered, competence is assumed indefinitely',
-      'They require members to pass a written exam every month',
-      'They conduct annual assessments that test knowledge of current regulations and inspect a sample of completed work, and they issue technical bulletins on regulation changes',
-      'They only check competence at initial registration and never again',
+      'Through annual assessments that test current regulations and inspect a sample of completed work',
+      'They do not verify it at all, since competence is assumed indefinitely once a member is registered',
+      'They require every member to sit and pass a formal written regulations exam each and every month',
+      'They check competence only at initial registration and then never re-assess it for the lifetime of membership',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Competent person schemes such as NICEIC and NAPIT maintain standards through ongoing verification. This typically includes annual assessments where a scheme assessor visits the registered business, tests the qualified supervisor&rsquo;s knowledge of current BS 7671 requirements and safe working practices, and inspects a sample of completed work (including electrical installation certificates, minor works certificates, and the physical installations). The schemes also issue technical bulletins, guidance notes, and updates on regulation changes to help members stay current. Failure to meet the required standard at assessment can result in additional support visits, remedial action requirements, or ultimately removal from the scheme. This system means that CPD is effectively built into scheme membership &mdash; you cannot pass your annual assessment if you have not kept up with changes to BS 7671 and current best practice.',
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'An electrician wants to claim CITB training grants to help fund their CPD. Which of the following is a requirement for accessing CITB grants?',
     options: [
-      'The electrician must be under 25 years old',
-      'The electrician (or their employer) must be registered with CITB and be levy-paying or a registered small employer',
-      'CITB grants are only available for university-level qualifications',
-      'CITB funding has been discontinued and is no longer available',
+      'The electrician must be under 25 years old to qualify for any CITB training grant',
+      'CITB grants are restricted to university-level degree and postgraduate qualifications only',
+      'CITB training funding has now been discontinued entirely and is no longer available to anyone',
+      'The electrician or their employer must be CITB-registered and either levy-paying or a registered small employer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Construction Industry Training Board (CITB) provides training grants to support skills development in the construction industry, including electrical installation. To access grants, the employer must be registered with CITB &mdash; this applies to most construction businesses. Levy-paying employers (those with a wage bill above the threshold) and registered small employers can both access grants, though the amounts and processes differ. CITB grants cover a wide range of training, from short courses and manufacturer training to formal qualifications like the 2391 or 2394/2395 Inspection and Testing awards. The grants do not cover the full cost but provide a meaningful contribution. Self-employed electricians may also be able to access CITB support through their registration as a principal contractor. Checking CITB eligibility and applying for grants is a practical step that many electricians overlook, potentially missing out on hundreds or thousands of pounds of training funding each year.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'Which of the following represents the BEST approach to planning a CPD programme for the coming year?',
     options: [
-      'Wait until your scheme assessment is due and then cram several courses into one week',
-      'Identify knowledge gaps and career goals, plan a mix of formal and informal activities spread throughout the year, record activities and outcomes as you go, and review progress quarterly',
-      'Complete only the minimum mandatory training required by your employer and nothing more',
-      'Focus exclusively on formal courses because informal learning does not count as CPD',
+      'Wait until your scheme assessment is due, then cram several courses into a single week',
+      'Complete only the minimum mandatory training your employer requires and undertake nothing further',
+      'Plan a mix of formal and informal activities across the year against your goals, recording and reviewing as you go',
+      'Focus exclusively on formal accredited courses, on the basis that informal learning does not count as CPD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Effective CPD planning follows a structured cycle: identify needs (what are your knowledge gaps? what does your career plan require? what has changed in regulations or technology?), plan activities (a mix of formal courses, self-directed study, on-the-job learning, and peer interaction, spread across the year), undertake the activities, record what you did and what you learned, and review and reflect on progress. This approach is recommended by the IET, the Engineering Council, and all competent person schemes. Cramming CPD into a single week before an assessment is ineffective because learning requires spaced repetition and time for reflection. Focusing only on mandatory employer training misses the point &mdash; CPD should be driven by your professional needs, not just your employer&rsquo;s minimum requirements. And informal learning absolutely counts, provided it is relevant, recorded, and reflected upon.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'ECS (Electrotechnical Certification Scheme) cards are valid for a specified period and require renewal. Which of the following is TRUE about the renewal process?',
     options: [
-      'ECS cards are valid for life and never need renewal',
-      'Renewal is automatic &mdash; you just pay the fee and a new card is issued',
-      'Renewal requires evidence of ongoing competence, which may include completing relevant CPD, holding current qualifications, and demonstrating continued professional activity',
-      'ECS cards can only be renewed by sitting the full AM2 practical assessment again',
+      'ECS cards are issued for life and therefore never need to be renewed at all',
+      'Renewal is fully automatic: you simply pay the fee and a new card is issued without further evidence',
+      'An ECS card can only be renewed by sitting the full AM2 practical assessment over again each time',
+      'Renewal requires evidence of ongoing competence, such as relevant CPD, current qualifications and continued activity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'ECS cards (the industry&rsquo;s skills identification scheme, managed by the JIB) are valid for specified periods, typically 3-5 years depending on the card type. Renewal is not automatic &mdash; it requires evidence that the cardholder has maintained their competence during the card&rsquo;s validity period. This may include evidence of CPD activities, holding current and relevant qualifications, and demonstrating continued professional activity in the electrical sector. The specific requirements vary by card type and grade. Some renewals may require completion of an online assessment or evidence of having worked in the relevant occupational area. The key point is that an ECS card is not a lifetime certificate &mdash; it is a time-limited credential that must be actively maintained through ongoing professional development. Electricians who let their CPD lapse may find renewal more difficult or may need to provide additional evidence of competence.',
   },
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'An electrician records the following in their CPD log: &ldquo;Attended training. Learned stuff. 8 hours.&rdquo; Why is this CPD record inadequate?',
     options: [
-      'It is not inadequate &mdash; recording the activity and hours is sufficient',
-      'It lacks specific detail about what training was attended, who provided it, what topics were covered, what was learned, and how it applies to professional practice &mdash; making it impossible to verify or demonstrate meaningful learning',
-      'CPD records do not need to include hours, only certificates',
-      'The record is fine but should also include the cost of the training',
+      'It is not inadequate, since recording the activity and the number of hours is entirely sufficient',
+      'It lacks detail on the provider, topics, what was learned and how it applies, so the learning cannot be verified',
+      'CPD records do not need to include hours at all, only the supporting attendance certificates',
+      'The record is essentially fine, but it should also state the cost of the training that was attended',
     ],
     correctAnswer: 1,
     explanation:

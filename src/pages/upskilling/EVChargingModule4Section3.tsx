@@ -10,8 +10,8 @@ const quickCheckQuestions = [
     id: 'evcharging-m4s3-check1',
     question:
       'What is the typical accuracy class required for CTs monitoring 22kW three-phase EV chargers?',
-    options: ['Class 3', 'Class 1', 'Class 0.5', 'Class 0.1'],
-    correctIndex: 2,
+    options: ['Class 3', 'Class 1', 'Class 0.2S', 'Class 0.5'],
+    correctIndex: 3,
     explanation:
       'Class 0.5 accuracy is typically required for 22kW three-phase chargers. This provides adequate precision for load monitoring and billing accuracy while being cost-effective for commercial installations.',
   },
@@ -19,20 +19,20 @@ const quickCheckQuestions = [
     id: 'evcharging-m4s3-check2',
     question: 'What is a critical safety requirement when working with current transformers?',
     options: [
-      'Always use copper cables',
       'Secondary circuits must never be open-circuited during operation',
-      'CTs must be painted bright colours',
-      'CTs should be installed horizontally only',
+      'Primary conductors must always be solid copper',
+      'CT cases must be earthed at both ends of the cable',
+      'CTs should only ever be installed in a horizontal plane',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'CT secondary circuits must never be open-circuited during operation. An open secondary can cause dangerous high voltages and damage the CT. Shorting links must be used during installation and testing.',
   },
   {
     id: 'evcharging-m4s3-check3',
-    question: 'What is the standard undervoltage trip setting for EV charging voltage relays?',
-    options: ['80% (184V)', '85% (196V)', '90% (207V)', '95% (219V)'],
-    correctIndex: 2,
+    question: 'What is the typical undervoltage trip setting for EV charging voltage relays?',
+    options: ['80% (184V)', '90% (207V)', '85% (196V)', '95% (219V)'],
+    correctIndex: 1,
     explanation:
       '90% of nominal (207V) is the typical undervoltage trip setting for EV charging. This provides enhanced protection for sensitive charging equipment while allowing for normal voltage fluctuations.',
   },

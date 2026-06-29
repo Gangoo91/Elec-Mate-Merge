@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'What is the most accurate description of the On-Site Guide\'s role in the BS 7671 documentation stack?',
     options: [
-      'A legally binding extension of BS 7671',
-      'A mass-market practical reference for the general electrician, distilling the most common-use parts of BS 7671 into operational form — non-statutory but accepted as competent-practice evidence',
-      'An academic textbook for apprentices',
-      'A consumer-facing safety pamphlet',
+      'A legally binding statutory extension of BS 7671',
+      'A non-statutory practical distillation of the most-used parts of BS 7671',
+      'An academic textbook written for first-year apprentices',
+      'A consumer-facing safety pamphlet for householders',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'Guidance Note 3 (GN3) sits in the BS 7671 documentation stack as:',
     options: [
-      'A legal interpretation of BS 7671 by HSE',
-      'The practical companion to BS 7671 Part 6 (Inspection and Testing), containing test procedures, instrument guidance and example completed model forms',
-      'A consumer-facing safety document',
-      'A draft of the 19th Edition',
+      'A legal interpretation of BS 7671 issued by the HSE',
+      'The practical companion to BS 7671 Part 6 (Inspection and Testing)',
+      'A consumer-facing safety document for end users',
+      'An early draft of the forthcoming 19th Edition',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const inlineChecks = [
       'GN3 defines "relevant criteria" for inspection and testing as:',
     options: [
       'Whatever the inspector judges acceptable on the day',
-      'The requirements of BS 7671 that apply to the particular inspection or test — unless the designer has specified particular requirements for that installation, in which case the designer-specified requirements are the relevant criteria',
-      'British Standards only',
-      'The manufacturer instructions alone',
+      'The applicable BS 7671 requirements, overridden by any designer-specified requirements',
+      'The wider body of British Standards, applied in full',
+      'The equipment manufacturer instructions, applied alone',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'GN3 sets a clear sequence: inspect first, then test. What is the rule on defects identified during inspection?',
     options: [
-      'Defer correction until after testing',
-      'Tests shall not be conducted if safety might be impaired by defects — defects shall be corrected prior to testing',
-      'Test the defective circuit at lower voltage',
-      'Continue testing regardless',
+      'Defer correction until after the full test sequence is complete',
+      'Tests shall not be conducted where safety might be impaired; correct defects first',
+      'Test the defective circuit at a reduced voltage to stay safe',
+      'Continue testing regardless and note the defects as observations',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'The On-Site Guide signposts the requirement for warning notices on PV systems. Where should the warning notices appear?',
     options: [
-      'Only inside the inverter enclosure',
-      'At appropriate locations — typically at the incomer / consumer unit and on the roof — to inform of live PV conductors',
-      'Only in the customer handover pack',
-      'Only on equipment rated above 230 V',
+      'Only inside the inverter enclosure where the DC enters',
+      'At appropriate locations such as the incomer / consumer unit and the roof',
+      'Only in the customer handover pack left at completion',
+      'Only on equipment rated above 230 V on the AC side',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'GN3 sets the rule on test instruments. What is the basic obligation?',
     options: [
-      'Instruments shall be calibrated only when they appear inaccurate',
-      'Instruments shall be periodically calibrated — and may be supplemented between formal calibrations by use of a proprietary "check box" with clearly defined characteristics',
-      'Calibration is only required for instruments above 1 kV',
-      'Instruments are accepted as accurate from new',
+      'Instruments are calibrated only when they appear to be reading inaccurately',
+      'Instruments shall be periodically calibrated, supplemented by check-box verification',
+      'Calibration is only required for instruments rated above 1 kV',
+      'Instruments are accepted as accurate from new without further checks',
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const inlineChecks = [
     question:
       'A PI insurer is reviewing your renewal evidence on LCT contracting work. Which set of documents would they most expect to see consulted on each cert?',
     options: [
-      'BS 7671 only',
-      'BS 7671 + OSG + GN3 + the relevant IET Code of Practice + manufacturer instructions',
-      'OSG only — the simplified version is sufficient',
-      'GN3 only — that covers everything',
+      'BS 7671 alone, as the single authoritative reference',
+      'BS 7671, OSG, GN3, the relevant IET Code of Practice and manufacturer instructions',
+      'The OSG alone, on the basis that the simplified version is sufficient',
+      'GN3 alone, on the basis that it already covers everything',
     ],
     correctIndex: 1,
     explanation:
@@ -125,96 +125,96 @@ const quizQuestions = [
     question:
       'On a domestic PV install, the On-Site Guide signposts a specific physical requirement that BS 7671 sets but doesn\'t fully visualise. Which?',
     options: [
-      'Warning notices for PV systems — durable notices at appropriate locations to inform of live PV conductors',
-      'Cable colour-coding for AC and DC',
-      'Inverter ambient temperature range',
-      'Roof-tile compatibility checks',
+      'Cable colour-coding to distinguish the AC mains from the PV DC conductors at the consumer unit',
+      'The inverter ambient temperature range that must be maintained for the warranty to remain valid',
+      'Roof-tile compatibility checks confirming the mounting system suits the specific tile profile',
+      'Warning notices for PV systems — durable notices at appropriate locations indicating live PV conductors',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
-      'The OSG provides the practical signposting on where and how to fit warning notices on PV systems — at the incomer / consumer unit and on the roof / array location. BS 7671 Section 712 sets the underlying requirement; the OSG operationalises it.',
+      'The OSG provides the practical signposting on where and how to fit PV warning notices — at the incomer/consumer unit and at the array location. BS 7671 Section 712 sets the underlying requirement; the OSG operationalises it.',
   },
   {
     id: 2,
     question:
-      'An inspector arrives on site to test a 6 kWp PV install. The DC isolator label has fallen off, a PV module is loose at one corner, and the inverter\'s warning notice has weathered to illegible. What does GN3 say about proceeding with testing?',
+      'An inspector arrives to test a 6 kWp PV install. The DC isolator label has fallen off, a module is loose at one corner, and the inverter warning notice has weathered to illegible. What does GN3 say about proceeding with testing?',
     options: [
-      'Test first, log the defects in the report',
-      'Defects shall be corrected prior to testing — tests shall not be conducted where safety might be impaired',
-      'Test the AC side only',
-      'Re-test in six months',
+      'Carry out all tests first, then log the three defects as observations in the report',
+      'Test the AC side only and defer the DC-side tests until the array defects are made good',
+      'Defects shall be corrected before testing — tests shall not be conducted where safety might be impaired',
+      'Proceed with testing and schedule a return visit within six months to re-inspect the defects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'GN3 is explicit on the sequence. Inspection comes first, defects are corrected before testing, then testing validates the corrected installation. The loose module is a mechanical safety defect; the missing label is an operational-safety defect; the illegible warning notice is a regulatory-compliance defect. All three should be corrected before testing.',
+      'GN3 is explicit on sequence: inspection first, defects corrected, then testing validates the corrected installation. The loose module is a mechanical defect, the missing label an operational-safety defect and the illegible notice a compliance defect — all corrected before testing.',
   },
   {
     id: 3,
     question:
       'On a hybrid PV+BESS install, the designer has specified custom DC isolation and a particular BMS commissioning protocol that exceed the BS 7671 minimum. The inspector arrives, finds the test methodology in GN3, applies it strictly to BS 7671 — and ignores the designer\'s specification. What did the inspector get wrong?',
     options: [
-      'Nothing — BS 7671 is the only relevant criterion',
-      'The "relevant criteria" doctrine in GN3 — where the designer has specified particular requirements, those are the relevant criteria for inspection and test',
-      'The inspector should have used a different instrument',
-      'The inspector should have tested the BESS only',
+      'The "relevant criteria" doctrine — where the designer specifies particular requirements, those become the criteria for inspection and test',
+      'Nothing — BS 7671 is the only relevant criterion and the designer specification can be disregarded',
+      'The instrument choice — a hybrid install requires a different multifunction tester than a basic PV array',
+      'The scope — the inspector should have tested only the BESS portion and left the PV to the designer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'GN3 defines "relevant criteria" as the BS 7671 requirements applicable to the particular inspection or test, unless the designer has specified particular requirements — in which case the designer-specified requirements are the relevant criteria. On LCT installs with custom DC isolation, BESS fire detection or commissioning protocols, the designer\'s spec is non-optional input to the inspection.',
+      'GN3 defines "relevant criteria" as the applicable BS 7671 requirements unless the designer has specified particular requirements, in which case the designer-specified requirements are the relevant criteria. On LCT installs with custom DC isolation, BESS fire detection or commissioning protocols, the designer spec is a non-optional input to the inspection.',
   },
   {
     id: 4,
     question:
       'GN3 Section 2.6 is the reference for what?',
     options: [
-      'Descriptions of the tests required by BS 7671 Part 6',
-      'Building Regulations notification procedures',
-      'MCS-specific commissioning steps',
-      'Stripe pricing for inspection services',
+      'Building Regulations notification procedures for notifiable electrical work in dwellings',
+      'MCS-specific commissioning steps for grant-funded renewable installations',
+      'Descriptions of the tests required by BS 7671 Part 6 — sequence, methodology and acceptance criteria',
+      'The competent-person scheme registration requirements for self-certifying inspectors',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'GN3 Section 2.6 contains the detailed descriptions of the tests referenced in Guidance Note 3 — sequence, methodology, acceptance criteria.',
+      'GN3 Section 2.6 contains the detailed descriptions of the tests referenced in Guidance Note 3 — the sequence, methodology and acceptance criteria for each test required by BS 7671 Part 6.',
   },
   {
     id: 5,
     question:
       'An installer issuing an EIC for a PV install treats the certificate as the sole evidence of work done. A PI insurer asks for the full evidence bundle on renewal. Which framing best captures what the insurer expects to see?',
     options: [
-      'The EIC alone is the full record',
-      'EIC + the BS 7671 reg references applied + OSG signposts followed + GN3 test methodology applied + the IET CoP for the technology + manufacturer instructions followed',
-      'EIC + the customer\'s feedback',
-      'EIC + photos of the install',
+      'The signed EIC alone, which is the complete and self-contained record of the work done',
+      'The EIC plus dated photographs of the finished installation taken at handover',
+      'The EIC plus the BS 7671 references, OSG signposts, GN3 methodology, IET CoP and manufacturer instructions applied',
+      'The EIC plus a signed customer satisfaction and feedback form from the handover meeting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PI insurers, MCS auditors and EICR inspectors look for the layered evidence bundle. The EIC is the cert; the BS 7671 references demonstrate the regulatory floor; the OSG signposts demonstrate practical compliance; the GN3 methodology demonstrates competent inspection-and-test; the IET CoP demonstrates technology-specific competence.',
+      'PI insurers, MCS auditors and EICR inspectors look for the layered evidence bundle: the EIC is the cert, BS 7671 references show the regulatory floor, OSG signposts show practical compliance, GN3 shows competent inspection-and-test and the IET CoP shows technology-specific competence.',
   },
   {
     id: 6,
     question:
       'GN3 includes a rule on test instruments: they shall be periodically calibrated, with proprietary "check boxes" used between calibrations. What is a proprietary check box?',
     options: [
-      'A waterproof storage box for test instruments',
-      'A device having clearly defined characteristics used to check instrument readings — providing known values or simulated conditions so that an instrument\'s output can be verified between formal calibrations',
-      'A software application',
-      'A box ticked on the EIC form',
+      'A device with clearly defined characteristics used to verify instrument readings against known values between formal calibrations',
+      'A rugged waterproof storage box that protects test instruments from damage between site visits',
+      'A software application that logs instrument readings and flags those outside the expected range',
+      'A pre-printed tick box on the EIC form confirming that the instrument calibration is in date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A proprietary check box is a verification device with clearly defined electrical characteristics — known resistance values, known capacitance, known loop impedance — that an instrument can be tested against between formal calibrations.',
+      'A proprietary check box is a verification device with clearly defined electrical characteristics — known resistance, capacitance or loop impedance — that an instrument can be tested against between formal calibrations to confirm it is still reading correctly.',
   },
   {
     id: 7,
     question:
       'GN3 distinguishes between "should" and "shall" in its own wording. What is the distinction?',
     options: [
-      'They are synonymous',
-      '"Shall" indicates mandatory regulation; "should" indicates recommended practice — GN3 uses "should" for guidance recommendations within the Note, distinguishing from the mandatory "shall" used in the BS 7671 regulations themselves',
-      '"Shall" applies to apprentices only',
-      '"Should" is for residential, "shall" for commercial',
+      '"Shall" indicates a mandatory requirement, while "should" indicates recommended practice that is strong guidance but not mandatory',
+      'The two words are used interchangeably and carry exactly the same weight throughout GN3',
+      '"Shall" applies to apprentice-led work while "should" applies to work done by a qualified electrician',
+      '"Should" applies to residential installations and "shall" applies to commercial installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '"Shall" in BS 7671 is mandatory regulatory language. "Should" in GN3 is recommended practice — strong guidance but not a regulatory requirement in itself. Departing from a "should" in GN3 is not a regulatory breach; departing from a "shall" in BS 7671 is.',
   },
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'The On-Site Guide and GN3 are non-statutory. What gives them weight in practice?',
     options: [
-      'A government order',
-      'Their status as the accepted IET-published reference for competent installer and inspector practice — used by courts, PI insurers, MCS auditors and EICR inspectors as evidence of how a competent installer / inspector would have approached the work',
-      'They are mandatory for all electrical work',
-      'They are mandatory only for MCS-funded work',
+      'A statutory instrument that makes the publications legally binding on all electrical work in the UK',
+      'Their status as the accepted IET reference for competent practice, used by courts, insurers and auditors',
+      'A government order requiring their use on every domestic and commercial installation',
+      'A condition of MCS funding that makes them binding only on grant-funded installations',
     ],
     correctAnswer: 1,
     explanation:

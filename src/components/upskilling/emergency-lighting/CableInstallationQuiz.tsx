@@ -17,122 +17,122 @@ export const CableInstallationQuiz = () => {
   const questions = [
     {
       question:
-        'What type of cable is most commonly used for maximum fire resistance in high-risk installations?',
+        'Which cable type provides the highest fire resistance in high-risk installations?',
       options: [
-        'Standard PVC twin & earth',
-        'Enhanced fire-resistant LSZH (F1)',
+        'Standard PVC twin and earth',
         'Mineral Insulated Copper Cable (MICC)',
-        'Standard fire-resistant cable (F2)',
+        'Enhanced fire-resistant LSZH cable',
+        'Standard fire-resistant cable',
       ],
-      correct: 2,
+      correct: 1,
       explanation:
         'MICC maintains circuit integrity at temperatures exceeding 1,000°C and provides the highest level of fire resistance.',
     },
     {
       question:
-        'What is the survival time requirement for enhanced fire-resistant cable (Category F1)?',
+        'What is the survival time for enhanced fire-resistant cable when tested to BS EN 50200 (PH 120)?',
       options: ['30 minutes', '60 minutes', '90 minutes', '120 minutes'],
       correct: 3,
       explanation:
-        'Enhanced fire-resistant cables (Category F1) must survive for 120 minutes under test conditions per BS EN 50200.',
+        'Enhanced fire-resistant cables achieving classification PH 120 to BS EN 50200 maintain circuit integrity for 120 minutes under test conditions.',
     },
     {
       question: 'Why is LSZH cable often specified in emergency lighting systems?',
       options: [
-        'It provides better electrical conductivity',
-        'It reduces toxic fumes and smoke opacity in fire conditions',
+        'It offers noticeably better electrical conductivity',
+        'It reduces toxic fumes and smoke density in a fire',
         'It is cheaper than standard PVC cable',
-        'It is easier to install than other cable types',
+        'It is significantly easier to install',
       ],
       correct: 1,
       explanation:
-        'LSZH (Low Smoke Zero Halogen) cable minimises smoke opacity and eliminates halogen gases that cause respiratory harm.',
+        'LSZH (Low Smoke Zero Halogen) cable reduces smoke density and avoids the halogen gases that cause respiratory harm and hinder evacuation.',
     },
     {
       question:
-        'Which BS regulation requires fire-resistant fixings for emergency lighting cables?',
+        'Which BS 7671 regulation gives requirements for the methods of support of wiring systems?',
       options: [
         'BS 5266-1 Section 7.2',
-        'BS 7671 Regulation 521.10.202',
         'BS EN 50200 Clause 4.3',
+        'BS 7671 Regulation 521.10.202',
         'BS 7629-1 Annex A',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'BS 7671 Regulation 521.10.202 requires emergency lighting cables to be supported by non-combustible materials.',
+        'BS 7671 Regulation 521.10.202 gives the requirements for methods of support of wiring systems, so cables are not left unsupported by premature collapse in a fire.',
     },
     {
-      question: 'What happens if plastic clips are used to support emergency lighting cables?',
+      question: 'What is the problem with using plastic clips to support emergency lighting cables?',
       options: [
-        'They provide adequate support if spaced correctly',
-        'They melt at 120-180°C causing cables to collapse',
-        'They are acceptable for self-contained systems only',
-        'They meet regulations if cables are MICC type',
+        'They provide adequate support only if very closely spaced',
+        'They soften and melt early in a fire, letting cables collapse',
+        'They are acceptable only for self-contained systems',
+        'They are acceptable only where MICC cable is used',
       ],
       correct: 1,
       explanation:
-        'Plastic clips melt at 120-180°C, typically within 2-3 minutes of fire exposure, causing cables to collapse.',
+        'Plastic clips soften and melt early in a fire, allowing the supported cables to fall and break the circuit before evacuation is complete.',
     },
     {
       question:
         'How long must emergency lighting circuits remain operational in most public buildings?',
       options: [
-        '30 minutes minimum',
-        '1 hour minimum (3 hours where occupants sleep)',
+        '30 minutes in all cases',
+        '1 hour minimum, or 3 hours where occupants sleep',
         '2 hours in all circumstances',
-        'Until fire services arrive',
+        'Only until the fire service arrives',
       ],
       correct: 1,
       explanation:
-        'BS 5266-1 requires minimum 1-hour operation for standard public buildings, 3 hours for sleeping accommodation.',
+        'BS 5266-1 sets a 1-hour minimum for many public premises, increasing to 3 hours where there is sleeping accommodation or where re-entry is needed.',
     },
     {
-      question: 'Why must emergency circuits be segregated from normal lighting circuits?',
+      question: 'Why must emergency lighting circuits be segregated from normal lighting circuits?',
       options: [
-        'To reduce electromagnetic interference',
-        'To prevent faults from spreading between systems during fire',
-        'To simplify voltage drop calculations',
-        'It is a recommendation but not mandatory',
+        'To reduce electromagnetic interference between them',
+        'To prevent a fault on one system damaging the other in a fire',
+        'To simplify the voltage-drop calculation',
+        'It is only a recommendation, not a requirement',
       ],
       correct: 1,
       explanation:
-        'Segregation prevents faults on normal power circuits from damaging emergency lighting cables during a fire.',
+        'Segregation prevents a fault on the normal lighting circuit from damaging the emergency lighting supply during a fire.',
     },
     {
-      question: 'Which system type requires more extensive fire-resistant cabling?',
+      question: 'Which system type generally requires more extensive fire-resistant cabling?',
       options: [
-        'Self-contained systems require more cable',
-        'Both require the same amount of cabling',
-        'Central battery systems require significantly more cable',
-        'Neither system requires fire-resistant cable',
+        'Self-contained systems need more cable',
+        'Both systems need the same amount of cable',
+        'Central battery systems need significantly more cable',
+        'Neither system needs fire-resistant cable',
       ],
       correct: 2,
       explanation:
-        'Central battery systems require extensive fire-resistant cabling because all power originates from a single battery room.',
+        'Central battery systems need extensive fire-resistant cabling because all power is distributed from a single battery room to every luminaire.',
     },
     {
-      question: 'Name one method of protecting emergency lighting cables from mechanical damage:',
+      question: 'Which method protects emergency lighting cables from mechanical damage?',
       options: [
-        'Plastic conduit with warning tape',
         'Metal trunking or conduit',
+        'Plastic conduit with warning tape',
         'Bundling with other services for protection',
         'Surface mounting with identification labels',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
-        'Metal trunking or conduit provides mechanical protection. Plastic containment is not acceptable as it melts during fire.',
+        'Metal trunking or conduit provides robust mechanical protection; plastic containment is unsuitable as it melts and collapses in a fire.',
     },
     {
-      question: 'What problem occurred in the London shopping centre case study?',
+      question: 'In the shopping centre case study, what caused the emergency lighting to fail?',
       options: [
-        'Luminaires were incorrectly positioned',
-        'Standard PVC cables were used instead of fire-resistant cables',
-        'Battery backup was undersized',
-        'Lux levels were below minimum requirements',
+        'The luminaires were incorrectly positioned',
+        'Standard PVC cables and plastic clips were used instead of fire-rated support',
+        'The battery backup was undersized for the load',
+        'The measured lux levels were below the minimum',
       ],
       correct: 1,
       explanation:
-        'The shopping centre used standard PVC cables with plastic clips, requiring complete rewiring at £80,700 plus £95,000 lost revenue.',
+        'Standard PVC cables on plastic clips collapsed early in the fire, and the system had to be completely rewired with fire-rated cable and supports.',
     },
   ];
 

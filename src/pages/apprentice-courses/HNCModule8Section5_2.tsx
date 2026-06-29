@@ -41,11 +41,11 @@ const quickCheckQuestions = [
     question: 'How does an NTC thermistor behave as temperature increases?',
     options: [
       'Resistance increases exponentially',
-      'Resistance stays constant',
       'Resistance decreases',
+      'Resistance stays constant',
       'Resistance increases linearly',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'NTC (Negative Temperature Coefficient) thermistors decrease in resistance as temperature rises. This non-linear characteristic makes them highly sensitive but requires linearisation in the BMS for accurate readings.',
   },
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'What is the main advantage of 4-20mA signals over 0-10V signals?',
     options: [
       'Immunity to cable resistance and noise',
-      'Direction of induced current',
-      'Pushing is generally safer than pulling',
-      'Listen, Empathise, Ask, Paraphrase, Summarise',
+      'Higher measurement resolution than voltage signals',
+      'Lower power consumption at the transmitter',
+      'No need for a power supply at the sensor',
     ],
     correctIndex: 0,
     explanation:
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'calibration-frequency',
     question: 'How often should critical HVAC sensors typically be calibrated?',
     options: [
-      'Every 6-12 months',
       'Every month',
       'Only when faulty',
       'Every 5 years',
+      'Every 6-12 months',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Critical HVAC sensors should typically be calibrated every 6-12 months depending on the application criticality. Sensors in critical environments such as laboratories or cleanrooms may require more frequent calibration. Calibration records must be maintained for compliance.',
   },
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What does a differential pressure sensor measure in a VAV system?',
     options: [
       'Airflow rate via pressure drop across a flow station',
-      'Plan equipment use and resolve potential conflicts',
-      'Verify the generator is isolated and cannot start automatically',
-      'Protective device may not operate quickly enough',
+      'The absolute static pressure inside the supply duct',
+      'The temperature difference across the heating coil',
+      'The humidity of the air entering the terminal unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question:
       'Which sensor type is most suitable for measuring chilled water flow rate in a large AHU?',
     options: [
-      'Conduction, convection, radiation',
-      'Output (V1 × I1 = V2 × I2)',
-      'Energy Use Intensity (EUI)',
+      'Turbine flow meter',
+      'Orifice plate flow meter',
+      'Variable area (rotameter) flow meter',
       'Electromagnetic flow meter',
     ],
     correctAnswer: 3,
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is three-wire configuration preferred for Pt100 sensors over two-wire?',
     options: [
-      'Plus or minus 0.1 to 0.3 degrees C',
+      'It allows the sensor to operate at higher temperatures',
       'It compensates for cable resistance',
-      'Capacitive humidity sensor',
-      'Electromagnetic flow meter',
+      'It provides a backup wire if one conductor fails',
+      'It reduces the supply current drawn by the sensor',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'What parameter does an ultrasonic flow meter measure to calculate flow rate?',
     options: [
-      'Raise temperature without adding moisture',
-      'RCD test gives inconsistent results',
+      'The pressure drop across an orifice in the pipe',
+      'The rotational speed of an internal impeller',
       'Transit time difference of sound waves',
-      'Inform the supervisor immediately',
+      'The voltage induced by the conductive fluid',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of a sensor averaging element in a large duct?',
     options: [
-      'High starting torque of series and good speed regulation of shunt',
-      'Upstream devices to wait for downstream to clear faults',
-      'To ensure medical equipment and procedures can continue during power failures',
+      'To measure the highest temperature found anywhere in the duct',
+      'To speed up the sensor response to sudden temperature changes',
+      'To provide a backup reading if the main sensor fails',
       'To measure temperature at multiple points and provide a representative average',
     ],
     correctAnswer: 3,

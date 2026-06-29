@@ -13,10 +13,10 @@ export const ReadinessQuiz = () => {
     {
       question: 'What should be verified before starting any electrical testing?',
       options: [
-        'That all tools are calibrated',
-        'That the visual inspection is complete and the circuit is safe and isolated',
-        'That the client has paid',
-        'That lunch break is over',
+        'That all test instruments have valid calibration certificates',
+        'That the visual inspection is complete and the circuit is isolated',
+        'That the consumer unit has been upgraded within the last 5 years',
+        'That every circuit on the board has been individually labelled',
       ],
       correct: 1,
       explanation:
@@ -25,19 +25,19 @@ export const ReadinessQuiz = () => {
     {
       question: 'Why should loads be disconnected during insulation resistance testing?',
       options: [
-        'To save electricity',
-        'To avoid damaging connected equipment and obtain accurate readings',
-        'To make the test faster',
-        "It's not necessary",
+        'To avoid damaging equipment and to obtain accurate readings',
+        'To reduce the energy used by the installation during the test',
+        'To make the testing process noticeably quicker to complete',
+        'It is not necessary if the loads are switched off at the socket',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Loads must be disconnected to prevent damage to electronic equipment and ensure accurate insulation resistance readings.',
     },
     {
       question: 'What is the minimum acceptable insulation resistance for most circuits?',
-      options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
-      correct: 1,
+      options: ['0.5 MΩ', '2.0 MΩ', '1.0 MΩ', '5.0 MΩ'],
+      correct: 2,
       explanation:
         'BS 7671 requires a minimum insulation resistance of 1.0 MΩ for most electrical circuits, though higher values are often achieved.',
     },
@@ -45,23 +45,23 @@ export const ReadinessQuiz = () => {
       question: 'When should test instruments be verified with a proving unit?',
       options: [
         'Once per day',
-        'Before and after each use',
         'Once per week',
         'Only when calibration is due',
+        'Before and after each use',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Test instruments, especially voltage testers, must be verified with a proving unit before and after each use to ensure they are working correctly.',
     },
     {
       question: 'What should you do if the installation earthing arrangements are unclear?',
       options: [
-        'Assume standard TN-S arrangement',
-        'Record as a limitation and investigate before proceeding',
-        'Skip earth testing',
-        'Guess based on building age',
+        'Record it as a limitation and investigate before proceeding',
+        'Assume a standard TN-S arrangement and carry on testing',
+        'Skip the earth testing and complete the rest of the schedule',
+        'Estimate the arrangement based on the age of the building',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Unclear earthing arrangements must be investigated and understood before testing can proceed safely. Record any limitations clearly.',
     },
@@ -69,23 +69,23 @@ export const ReadinessQuiz = () => {
       question: 'Which protective devices should be checked before testing begins?',
       options: [
         'Only the main switch',
-        'RCDs/RCBOs, MCBs, and isolation switches',
         'Just emergency lighting circuits',
+        'RCDs/RCBOs, MCBs, and isolation switches',
         'Only recently installed devices',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'All protective devices including RCDs, RCBOs, MCBs, and isolation switches should be visually checked and functionally tested before electrical testing.',
     },
     {
       question: 'What is the correct sequence for safe isolation?',
       options: [
-        'Switch off, lock off, test dead, test tester',
         'Test tester, switch off, test dead, lock off',
         'Lock off, switch off, test dead, test tester',
         'Test dead, switch off, lock off, test tester',
+        'Switch off, lock off, test dead, test tester',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'The correct sequence is: Switch off, secure (lock off), test dead with voltage tester, then test the tester with a proving unit.',
     },
@@ -93,23 +93,23 @@ export const ReadinessQuiz = () => {
       question: 'Why must all parallel paths be identified before testing?',
       options: [
         'To calculate circuit length',
-        'To ensure accurate test results and prevent false readings',
         'To determine cable size',
+        'To ensure accurate test results and prevent false readings',
         'For cost estimation',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'Parallel paths can affect test results, particularly for insulation resistance and earth fault loop impedance tests, leading to false readings.',
     },
     {
       question: 'What documentation must be available before commencing testing?',
       options: [
-        'Just the electrical certificate',
-        'Circuit schedules, installation certificates, and previous test results',
-        'Only building plans',
-        'Insurance documents',
+        'Circuit schedules, installation certificates, and previous results',
+        'Only the most recent electrical installation certificate',
+        'Only the architectural plans for the building or property',
+        "Only the property owner's insurance and warranty documents",
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Complete documentation including circuit schedules, installation certificates, and previous test results is essential for proper testing.',
     },
@@ -117,11 +117,11 @@ export const ReadinessQuiz = () => {
       question: 'When should you refuse to proceed with testing?',
       options: [
         'If the client seems difficult',
-        'If safety cannot be assured or isolation is impossible',
         "If it's raining outside",
         'If documentation is in a different language',
+        'If safety cannot be assured or isolation is impossible',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Testing should never proceed if safety cannot be assured, proper isolation is impossible, or if there are significant safety concerns.',
     },

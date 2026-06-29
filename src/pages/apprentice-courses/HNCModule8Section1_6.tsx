@@ -71,9 +71,9 @@ const quickCheckQuestions = [
       'Under Building Regulations Part L, which document must be provided at handover for new heating installations?',
     options: [
       'Building log book with commissioning records',
-      'Monthly function tests and annual full-duration tests',
-      'Assess the risks and decide on necessary precautions',
-      'Inhalation, skin absorption, ingestion, and injection',
+      'A copy of the original tender documentation',
+      'A signed health and safety risk assessment only',
+      'The manufacturer\'s warranty card for the boiler only',
     ],
     correctIndex: 0,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'According to BSRIA guidance, what is the primary purpose of system flushing before commissioning?',
     options: [
-      'Being struck by falling objects (tools, materials or components)',
+      'To add corrosion inhibitor evenly throughout the system',
       'To remove debris, flux residues and installation contaminants',
-      'To confirm the supply has correct phase and neutral identification',
-      'LED lighting systems powered and controlled through Ethernet cables',
+      'To pressure test the system for leaks before filling',
+      'To balance the flow rates through each circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'What is the recommended test pressure for a sealed heating system hydraulic pressure test?',
     options: [
-      'The index radiator (furthest from pump/highest resistance)',
-      'Corrosion inhibitor and biocide treatment',
+      'Equal to the maximum working pressure',
+      '0.5 times working pressure or 1 bar (whichever is greater)',
       '1.5 times working pressure or 3 bar (whichever is greater)',
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
+      'Three times working pressure or 6 bar (whichever is greater)',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'When filling a heating system, why should the fill point be at the lowest point of the system?',
     options: [
-      'Manufacturer\\\\\\\\\\\\\\\'s recommended concentration verified by test',
-      'The index radiator (furthest from pump/highest resistance)',
-      '1.5 times working pressure or 3 bar (whichever is greater)',
+      'To reach the highest pressure at the boiler first',
+      'To flush remaining debris towards the fill point',
+      'To prevent the corrosion inhibitor from settling',
       'To allow air to rise and escape through vents as water enters',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'What is the purpose of proportional balancing when commissioning a heating system?',
     options: [
       'To achieve design flow rates through each circuit relative to the index circuit',
-      'To allow air to rise and escape through vents as water enters',
-      '1.5 times working pressure or 3 bar (whichever is greater)',
-      'The index radiator (furthest from pump/highest resistance)',
+      'To remove the last traces of air from the system',
+      'To set the boiler flow and return temperatures',
+      'To verify the system holds pressure overnight',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'During commissioning, what indicates that a system has been adequately flushed?',
     options: [
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
+      'The system pressure holds steady for one hour',
       'Discharge water runs clear with no visible debris',
-      '1.5 times working pressure or 3 bar (whichever is greater)',
-      'The index radiator (furthest from pump/highest resistance)',
+      'All radiators reach the same surface temperature',
+      'The pump achieves its design flow rate',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What water treatment is typically required after flushing and before final filling?',
     options: [
-      'Multi-factor authentication (biometrics + PIN/card)',
-      'Normal and emergency lighting from separate lamps',
+      'Chlorination to the level used for drinking water',
+      'A descaling acid wash of the whole system',
       'Corrosion inhibitor and biocide treatment',
-      'Public Interest Disclosure Act 1998 (PIDA)',
+      'Softening of the fill water using a salt-based unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'What document provides the benchmark commissioning procedures for HVAC systems in the UK?',
     options: [
-      'Minimum to maximum flow range',
-      'One-third of DOL starting torque',
-      'Insulation resistance between conductors',
+      'BS 7671 (the IET Wiring Regulations)',
+      'CIBSE Guide A (environmental design)',
+      'The manufacturer\'s boiler installation manual',
       'BSRIA commissioning guides (BG series)',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'When balancing radiator circuits, which radiator should be balanced first?',
     options: [
       'The index radiator (furthest from pump/highest resistance)',
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
-      'Corrosion inhibitor and biocide treatment',
-      'To allow air to rise and escape through vents as water enters',
+      'The radiator nearest the pump (lowest resistance)',
+      'The radiator with the largest heat output',
+      'The radiator on the upper floor of the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'What is the minimum information required on a commissioning certificate for Building Regulations compliance?',
     options: [
-      'When withdrawable functionality and high breaking capacity are required',
+      'The total cost of the materials and labour used',
       'Design flow rates, achieved flow rates, test pressures and commissioning engineer details',
-      'A downstream device is protected by an upstream device with higher breaking capacity',
-      'Calmly repeating your position without getting drawn into arguments',
+      'A list of the operatives present during the work',
+      'The delivery dates of the major plant items',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of the witnessed performance test during commissioning?',
     options: [
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
-      'To achieve design flow rates through each circuit relative to the index circuit',
+      'To confirm the system holds its test pressure',
+      'To set the corrosion inhibitor to the correct concentration',
       'To verify system achieves design performance under realistic operating conditions',
-      'To allow air to rise and escape through vents as water enters',
+      'To remove any remaining air from the highest points',
     ],
     correctAnswer: 2,
     explanation:
@@ -222,9 +222,9 @@ const quizQuestions = [
     question:
       'Under BS 7593, what concentration of corrosion inhibitor is typically required for sealed heating systems?',
     options: [
-      "To allow air to rise and escape through vents as water enters",
-      "1.5 times working pressure or 3 bar (whichever is greater)",
-      "The index radiator (furthest from pump/highest resistance)",
+      "A fixed 1% concentration regardless of product",
+      "A fixed 5% concentration for all sealed systems",
+      "No inhibitor, provided the fill water is softened",
       "Manufacturer's recommended concentration verified by test",
     ],
     correctAnswer: 3,
@@ -237,9 +237,9 @@ const quizQuestions = [
       'What handover documentation must be provided to comply with Building Regulations Part L for a new commercial heating installation?',
     options: [
       'Building log book with O&M manuals, commissioning records and energy metering data',
-      '1.5 times working pressure or 3 bar (whichever is greater)',
-      'To achieve design flow rates through each circuit relative to the index circuit',
-      'To verify system achieves design performance under realistic operating conditions',
+      'A single-page benchmark certificate, as used for domestic work',
+      'The pressure test certificate on its own',
+      'The manufacturer\'s warranty registration only',
     ],
     correctAnswer: 0,
     explanation:

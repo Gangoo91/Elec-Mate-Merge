@@ -27,8 +27,8 @@ const quickCheckQuestions = [
     id: 'soft-landings-purpose',
     question: 'What is the primary purpose of the Soft Landings framework?',
     options: [
-      'To remove the resistance of the leads from the measurement',
-      'Dynamic effects synchronized with content or music',
+      'To accelerate the construction programme and reduce the build time',
+      'To allocate retention money between the client and contractor',
       'To show the project team structure and reporting relationships',
       'To bridge the gap between design intent and operational performance',
     ],
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question:
       'Which personnel must receive training before building handover under best practice guidance?',
     options: [
-      'Varies with cable size and construction - from tables',
-      'Secure connections and accessibility',
-      'To ensure work is completed safely and efficiently',
+      'The architect and structural design team only',
+      'The planning authority building control officers',
+      'The original tender estimators and quantity surveyors',
       'Facilities management team and operational staff',
     ],
     correctIndex: 3,
@@ -69,9 +69,9 @@ const quickCheckQuestions = [
     question: 'When should Post-Occupancy Evaluation (POE) typically be conducted?',
     options: [
       'At 12 months and optionally at 3 years post-occupation',
-      'Installing containment systems and routing cables',
-      'The difference between synchronous speed and actual rotor speed',
-      'By promoting automation for lighting, HVAC, and shading systems',
+      'Immediately at practical completion before occupation',
+      'Only once, at the very end of the building lease',
+      'Monthly throughout the entire defects liability period',
     ],
     correctIndex: 0,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: "What is the contractor's obligation during the defects liability period?",
     options: [
-      'A minimum of one full day, with follow-up sessions',
-      'To optimise systems for heating and cooling seasons after initial occupation',
+      'To carry out routine planned maintenance free of charge',
+      'To provide replacement consumables such as filters and lamps',
       'To rectify defects in workmanship and materials at their own cost',
-      'Normal operation, emergency procedures, and basic fault diagnosis',
+      'To upgrade systems to the latest standards at no extra cost',
     ],
     correctAnswer: 2,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
       'What is the recommended minimum duration of operational training for complex building services?',
     options: [
       'A minimum of one full day, with follow-up sessions',
-      'Normal operation, emergency procedures, and basic fault diagnosis',
-      'To rectify defects in workmanship and materials at their own cost',
-      'Resident on-site support and fine-tuning of building systems',
+      'A single 30-minute briefing on the handover day',
+      'A two-hour session limited to the building owner only',
+      'No formal training, relying on the O&M manuals alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "BSRIA Soft Landings identifies which of the following as a key activity during the 'Initial Aftercare' stage?",
     options: [
-      '1 year, 2 years, and 5 years post-occupation',
+      'Setting the performance targets and defining team roles',
       'Resident on-site support and fine-tuning of building systems',
-      'To optimise systems for heating and cooling seasons after initial occupation',
-      'To rectify defects in workmanship and materials at their own cost',
+      'Reviewing the concept design for operational efficiency',
+      'Conducting the final long-term energy trend analysis',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Post-Occupancy Evaluation (POE) typically assesses which of the following?',
     options: [
-      'Resident on-site support and fine-tuning of building systems',
-      'To optimise systems for heating and cooling seasons after initial occupation',
+      'The accuracy of the contractor’s original tender price',
+      'The structural load capacity of the building frame',
       'Building performance, occupant satisfaction, and comparison with design predictions',
-      'The final certificate is issued after expiry of the defects period and rectification of notified defects',
+      'The site logistics and welfare arrangements during construction',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'FM team training for electrical systems should include which of the following?',
     options: [
       'Normal operation, emergency procedures, and basic fault diagnosis',
-      'Representatives from the design team, contractor, and building services engineer',
-      'Building performance, occupant satisfaction, and comparison with design predictions',
-      'A minimum of one full day, with follow-up sessions',
+      'Detailed circuit design calculations and cable sizing methods',
+      'The commercial terms and pricing of the maintenance contract',
+      'Manufacturing tolerances of the installed switchgear components',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary purpose of seasonal commissioning?',
     options: [
-      'Building performance, occupant satisfaction, and comparison with design predictions',
-      'Normal operation, emergency procedures, and basic fault diagnosis',
+      'To replace all filters and consumables before each season',
+      'To recalculate the building’s energy performance certificate',
       'To optimise systems for heating and cooling seasons after initial occupation',
-      'Representatives from the design team, contractor, and building services engineer',
+      'To release the second half of the retention to the contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     question:
       "Under Soft Landings, who should attend the 'resident on-site' period during initial aftercare?",
     options: [
-      'To optimise systems for heating and cooling seasons after initial occupation',
-      'To rectify defects in workmanship and materials at their own cost',
-      'Building performance, occupant satisfaction, and comparison with design predictions',
+      'The local authority building control officer only',
+      'The quantity surveyor and the client’s solicitor',
+      'The original tender estimating team from the contractor',
       'Representatives from the design team, contractor, and building services engineer',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
       'What is the relationship between the defects liability period and the final certificate?',
     options: [
       'The final certificate is issued after expiry of the defects period and rectification of notified defects',
-      'To optimise systems for heating and cooling seasons after initial occupation',
-      'Building performance, occupant satisfaction, and comparison with design predictions',
-      'Representatives from the design team, contractor, and building services engineer',
+      'The final certificate is issued at practical completion before the defects period starts',
+      'The final certificate ends the defects period early and waives any outstanding defects',
+      'The final certificate is issued only if no defects are ever reported during the period',
     ],
     correctAnswer: 0,
     explanation:

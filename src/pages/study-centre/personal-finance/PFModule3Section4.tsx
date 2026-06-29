@@ -217,8 +217,8 @@ export default function PFModule3Section4() {
           <InlineCheck
             id="pf-3-4-check1"
             question="How many days do you have to withdraw from most credit agreements under the Consumer Credit Act?"
-            options={['7 days', '14 days', '28 days', '30 days']}
-            correctIndex={1}
+            options={['14 days', '7 days', '28 days', '30 days']}
+            correctIndex={0}
             explanation="The Consumer Credit Act provides a 14-day cooling-off period for most regulated credit agreements. You can withdraw without giving a reason, though you must repay any credit received within 30 days."
           />
 
@@ -444,8 +444,8 @@ export default function PFModule3Section4() {
           <InlineCheck
             id="pf-3-4-check2"
             question="Up to what combined value are tools of trade protected from seizure by bailiffs?"
-            options={['£500', '£1,000', '£1,350', '£2,500']}
-            correctIndex={2}
+            options={['£500', '£1,000', '£2,500', '£1,350']}
+            correctIndex={3}
             explanation="Under the Taking Control of Goods Regulations 2013, tools, equipment, and items necessary for the debtor's employment, business, or trade are exempt from seizure up to a combined value of £1,350."
           />
 
@@ -838,8 +838,8 @@ export default function PFModule3Section4() {
                 id: 1,
                 question:
                   'What is the cooling-off period for most credit agreements under the Consumer Credit Act 1974?',
-                options: ['7 days', '14 days', '28 days', '30 days'],
-                correctAnswer: 1,
+                options: ['14 days', '7 days', '28 days', '30 days'],
+                correctAnswer: 0,
                 explanation:
                   'The Consumer Credit Act provides a 14-day right to withdraw from most regulated credit agreements without giving a reason.',
               },
@@ -858,10 +858,10 @@ export default function PFModule3Section4() {
                 options: [
                   'Yes, for any debt',
                   'Yes, but only with a court order',
-                  'No — they can only enter peacefully on the first visit',
                   'No — they can never enter your home',
+                  'No — they can only enter peacefully on the first visit',
                 ],
-                correctAnswer: 2,
+                correctAnswer: 3,
                 explanation:
                   'On the first visit, bailiffs can only enter peacefully (e.g., through an unlocked door). They cannot force entry on the first visit for most debt types. Exceptions exist for HMRC debts and criminal fines.',
               },
@@ -878,8 +878,8 @@ export default function PFModule3Section4() {
                 id: 5,
                 question:
                   'How long does a financial company have to issue a final response to your complaint before you can go to the Financial Ombudsman?',
-                options: ['4 weeks', '6 weeks', '8 weeks', '12 weeks'],
-                correctAnswer: 2,
+                options: ['4 weeks', '6 weeks', '12 weeks', '8 weeks'],
+                correctAnswer: 3,
                 explanation:
                   'Financial companies have eight weeks to issue a final response. After that, or if you are unhappy with the response, you can escalate to the Financial Ombudsman Service.',
               },
@@ -887,8 +887,8 @@ export default function PFModule3Section4() {
                 id: 6,
                 question:
                   'Under the Consumer Contracts Regulations 2013, how many days do you have to cancel an online purchase?',
-                options: ['7 days', '14 days', '21 days', '30 days'],
-                correctAnswer: 1,
+                options: ['14 days', '7 days', '21 days', '30 days'],
+                correctAnswer: 0,
                 explanation:
                   'You have 14 days to cancel a distance purchase without giving a reason. The clock starts the day after you receive the goods.',
               },
@@ -913,10 +913,10 @@ export default function PFModule3Section4() {
                 options: [
                   'The right is waived',
                   'The cancellation period extends to 30 days',
-                  'The cancellation period extends to 12 months',
                   'The seller must pay a fine',
+                  'The cancellation period extends to 12 months',
                 ],
-                correctAnswer: 2,
+                correctAnswer: 3,
                 explanation:
                   'If the seller fails to inform you of your 14-day cancellation right, the period extends to 12 months from the original deadline. This is a significant penalty for non-compliance.',
               },

@@ -42,23 +42,23 @@ const checks = [
     id: 'm5-s4-sub5-pfc',
     question: 'Prospective Fault Current (PFC) reported on the EIC is:',
     options: [
-      'The Code for Sustainable Homes was a non-mandatory sustainability rating system (1 to 6 stars) for new-build dwellings, used between 2007 and 2015 in England. It was withdrawn for new applications in March 2015 and replaced by enhanced Part L of the Building Regulations and (for higher-rated developments) by local-authority-specific sustainability requirements. You may still meet the Code referenced on older properties (a Code Level 4 or Level 5 home from 2010-2014 will have been built to Code spec) but it isn\\\\\\\'t the current standard for new applications.',
-      'Risk Assessment + Method Statement. The risk assessment identifies hazards, evaluates the risk and lists the controls (required by Management of Health & Safety at Work Regs 1999 Reg 3). The method statement sets out HOW the work will be done safely, step by step. Together they\\\\\\\'re the working H&S document for a job — the inspector after an incident asks for both.',
-      'A statutory cost-recovery scheme (Health and Safety (Fees) Regulations) that allows the HSE to charge dutyholders for inspector time spent investigating \\\\\\\'material breaches\\\\\\\' of H&S law. Charged at an hourly rate (currently around £170/hr — check HSE for the latest figure). Triggered when an inspector identifies a material breach and writes a letter, notice or report. The fee is for inspector time only, separate from any prosecution costs or fines.',
-      'The HIGHER of the two: PSCC (Prospective Short Circuit Current, measured L-N) and PEFC (Prospective Earth Fault Current, measured L-E). The reported PFC is used to verify the breaking capacity of the protective devices — every device upstream of the test point must have a breaking capacity (Icn) at least equal to the PFC. For a typical UK domestic with TN-C-S supply: PSCC may be 800-2000 A; PEFC 400-1200 A; PFC reported is the higher value.',
+      'The LOWER of PSCC (measured L-N) and PEFC (measured L-E), because the device only needs to break the smaller of the two fault currents.',
+      'The SUM of PSCC and PEFC, because a combined line-neutral-earth fault makes both currents flow together and the device must break their total.',
+      'The PEFC only (measured L-E), because breaking capacity concerns earth faults and the line-neutral short-circuit current is covered by the RCD.',
+      'The HIGHER of PSCC (measured L-N) and PEFC (measured L-E), reported to verify protective device breaking capacity.',
     ],
     correctIndex: 3,
     explanation:
-      'PFC = max(PSCC, PEFC). The higher value is what the protective devices must be able to break safely. On TN-C-S supplies PSCC is typically the higher value because the L-N path has lower impedance than L-E (the latter includes the consumer\'s neutral-earth bond and the supplier\'s combined PEN). Modern MFTs (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) compute PFC automatically from the dual L-N and L-E measurements during a 3-lead Zs test.',
+      'PFC = max(PSCC, PEFC). The higher value is what the protective devices must be able to break safely — every device upstream of the test point must have a breaking capacity (Icn) at least equal to the PFC. For a typical UK domestic TN-C-S supply PSCC may be 800-2000 A and PEFC 400-1200 A; PSCC is usually higher because the L-N path has lower impedance than L-E (which includes the consumer\'s neutral-earth bond and the supplier\'s combined PEN). Modern MFTs (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) compute PFC automatically from the dual L-N and L-E measurements during a 3-lead Zs test.',
   },
   {
     id: 'm5-s4-sub5-no-need-pfc',
     question: 'Under what condition does BS 7671 / GN3 say you do NOT need to measure or calculate PFC at the origin?',
     options: [
-      'In dwellings or similar premises where a consumer unit to BS EN 61439-3 is used AND the maximum prospective fault current declared by the distributor is 16 kA. The combination of a CU rated for 16 kA fault current AND the distributor\\\\\\\\\\\\\\\'s declared 16 kA cap means the PFC at the origin will not exceed the CU\\\\\\\\\\\\\\\'s breaking capacity by design — no measurement needed. Outside dwellings, or with a non-BS EN 61439-3 distribution board, or where the distributor declares above 16 kA, measurement / calculation IS required.',
-      'Over-torquing crushes the conductor strands, deforms the terminal, can crack the device housing, and reduces the long-term mechanical and electrical reliability of the connection. It also voids the manufacturer\\\\\\\'s warranty (most warranties are explicitly conditional on the specified torque) and creates a Reg 526.1 risk because a damaged connection is no longer \\\\\\\'durable\\\\\\\'.',
-      'A 4 µF cap charged to 230 V peak (~325 V) stores 0.21 J. Modern bin-mounted ballasts have integral bleed resistors that drop the voltage in 1 minute; older ballasts may not. The voltage is enough to give a sharp shock but not normally fatal. Standard discharge: wait 1 minute after isolation; verify with a meter (DC voltage between cap terminals should read &lt;30 V); if still charged, short the cap terminals through a 5–10 kΩ resistor with insulated leads. Never short with a screwdriver — pits the contacts and the discharge arc can weld. The hazard is real but manageable; the panic some apprentices show is excessive.',
-      'Leave the tag in place. The tag means a competent person has identified a fault and quarantined the tool. Removing the tag without authority is a HASAWA s.7 breach (failure to co-operate with the employer\\\\\\\'s safety arrangements) AND likely a PUWER Reg 4 breach (using equipment that\\\\\\\'s not been certified suitable). Either find an alternative tool or speak to the supervisor.',
+      'In dwellings or similar premises using a consumer unit to BS EN 61439-3 where the distributor declares maximum prospective fault current of 16 kA.',
+      'On any installation where a 30 mA RCD is fitted at the origin, because the RCD limits fault current and removes the need to verify breaking capacity.',
+      'On any TN-S supply, because the separate supplier earth conductor guarantees the prospective fault current stays below 6 kA at the origin.',
+      'On any installation rated under 100 A, because below this rating the distributor cannot deliver a fault current high enough to exceed a standard 6 kA device.',
     ],
     correctIndex: 0,
     explanation:
@@ -68,14 +68,14 @@ const checks = [
     id: 'm5-s4-sub5-pfc-formula',
     question: 'How does an MFT derive the PFC from a loop impedance measurement?',
     options: [
-      'PFC = nominal mains voltage / measured loop impedance. For a UK 230 V supply with measured Zs of 0.5 Omega: PFC = 230 / 0.5 = 460 A. The instrument applies this formula automatically from its loop impedance measurement; some MFTs display PFC as a separate reading after the Zs test, others compute on demand. The formula assumes nominal supply voltage; for accurate PFC during periods of low supply voltage, multiply the displayed PFC by (actual voltage / 230) for correction.',
-      'Ask what they\\\\\\\'re comparing against — often cheap quotes exclude things your quote includes (testing, certification, branded materials, insured workmanship, scheme guarantee). Walk through your quotation explaining each element. If the gap remains large, the cheap quote is probably non-compliant — wish them well and let them go. Never undercut your true cost to win work.',
-      'Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman\\\\\\\'s ASQ) was a better predictor of success than traditional hiring criteria',
-      'The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm\\\\\\\'s behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).',
+      'PFC = measured loop impedance / nominal mains voltage. For a 230 V supply with Zs of 0.5 Omega: PFC = 0.5 / 230 = 0.0022, scaled to amps by the instrument.',
+      'PFC = nominal mains voltage / measured loop impedance. For a 230 V supply with Zs of 0.5 Omega: PFC = 230 / 0.5 = 460 A.',
+      'PFC = nominal mains voltage x measured loop impedance. For a 230 V supply with Zs of 0.5 Omega: PFC = 230 x 0.5 = 115 A, with higher impedance giving a higher prospective current.',
+      'PFC = device breaking capacity / measured loop impedance. The instrument reads the device Icn from its setting and divides by Zs to give the prospective current at that point.',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
-      'PFC = U / Z is the basic Ohm\'s law derivation — voltage divided by loop impedance gives the prospective current. Modern MFTs do this automatically. The reading is "prospective" because it\'s the current that WOULD flow under a bolted (zero-impedance) fault at the test point — the actual fault current would be slightly less if there\'s any fault impedance.',
+      'PFC = U / Z is the basic Ohm\'s law derivation — voltage divided by loop impedance gives the prospective current. The instrument applies this automatically from its loop impedance measurement; some MFTs display PFC as a separate reading after the Zs test, others compute on demand. The formula assumes nominal supply voltage; for accurate PFC during periods of low supply voltage, multiply the displayed PFC by (actual voltage / 230). The reading is "prospective" because it\'s the current that WOULD flow under a bolted (zero-impedance) fault at the test point — the actual fault current would be slightly less if there\'s any fault impedance.',
   },
 ];
 
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'On a typical UK domestic with TN-C-S supply, BS EN 61439-3 consumer unit, and a 100 A BS 1361 Type II main fuse upstream, what\'s the practical approach to PFC verification?',
     options: [
-      'G98 covers parallel-connected generation up to and including 16 A per phase (informal post-installation notification to the DNO); G99 covers generation greater than 16 A per phase (full pre-installation application to the DNO, with the DNO able to refuse or impose conditions).',
-      'GN3 allows omission of origin PFC measurement for this combination — BS EN 61439-3 CU rated 16 kA, TN-C-S supply with distributor-declared PFC at 16 kA maximum. Take the distributor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s declared 16 kA as the design value, document on the EIC. For non-conforming installations or commercial / industrial work, direct measurement is required.',
-      'Describe: "The last three invoices were paid 30+ days late." Express: "I value our relationship, but late payment creates cash flow difficulties." Specify: "I need invoices paid within 14-day terms." Consequences: "This allows me to continue prioritising your work"',
-      'Carrying out any building, civil engineering or engineering construction work; including alteration, renovation, demolition, conversion, repair, maintenance, decoration, removal of structures, installation, removal, maintenance of mechanical / electrical / similar services.',
+      'Always measure the PFC directly at the origin, because the BS EN 61439-3 exemption applies only to commercial installations and a domestic CU must have its origin PFC measured.',
+      'GN3 allows omission of origin PFC measurement here — take the distributor\'s declared 16 kA as the design value and document it on the EIC.',
+      'Calculate the PFC from the cable size and length using the GN1 tables, because the distributor declaration only covers the supply side and not the consumer unit.',
+      'Apply a 0.8 correction to the distributor 16 kA figure for busbar resistance, recording 12.8 kA on the EIC as the design value.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'PSCC and PEFC are different. What does each represent?',
     options: [
-      'A missing 514.13.1 main-earth notice is typically C3 (improvement recommended) where the earthing connection itself is sound, but can escalate to C2 (potentially dangerous) where the connection is at risk of being disturbed. A missing 514.9.1 schematic is normally C3. Codes depend on the specific install context and the inspector\\\\\\\'s professional judgement — these are typical not absolute.',
-      'The Electrical Contractors\\\\\\\' Association — the largest trade association for electrical contractors in England, Wales and Northern Ireland. Membership signals quality, access to ECA technical guidance, ECA insurance products, ECA Apprentice scheme (for member firms taking on apprentices), and joint co-running of the JIB. ECA is not a CPS — you still need separate CPS membership for Part P self-certification.',
-      'PSCC (Prospective Short Circuit Current) = the current that would flow in an L-N short-circuit fault, measured by the MFT applying brief test current via the L-N loop. Represents short-circuit fault scenarios. PEFC (Prospective Earth Fault Current) = the current that would flow in an L-E earth fault, measured by the MFT applying brief test current via the L-E loop. Represents earth-fault scenarios. The two are measured separately during a 3-lead Zs test; the higher value is reported as Ipf (PFC) for breaking-capacity verification.',
-      'Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation',
+      'PSCC is the prospective fault current measured in dry conditions and PEFC the same fault measured in wet conditions; the two readings bracket the seasonal range and the higher is reported.',
+      'PSCC is the prospective current at the origin only and PEFC the same current recalculated at the furthest point of the final circuit; the two are added to give total fault energy.',
+      'PSCC is the prospective current in an L-N short-circuit fault and PEFC the prospective current in an L-E earth fault, each measured separately during the 3-lead Zs test.',
+      'PSCC is the prospective current under a three-phase fault and PEFC under a single-phase fault; the two apply only to three-phase supplies and are equal on a single-phase domestic installation.',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,23 +110,23 @@ const quizQuestions = [
     id: 3,
     question: 'Why does the protective device breaking capacity (Icn) need to exceed the PFC at the device\'s installation point?',
     options: [
-      'They apply together. Section 712 covers the PV-side electrical requirements (DC isolation, string protection, inverter compliance, AC connection). Section 826 covers the EESS aspects (battery isolation, BMS, fire safety, signage). The hybrid inverter is a single piece of equipment that has to comply with both — the manufacturer\\\\\\\'s certification typically demonstrates compliance with both sections. The IET Codes of Practice for Grid-Connected PV and for EESS both reference each other. A4:2026 has clarified the interaction in places where ambiguity existed in the 18th Edition.',
-      'External label identifying the property as having a PV system (typically near the meter and at the main isolator); internal labels at the AC isolator (identifying it as the PV AC isolator, not a generic isolator), at the DC isolator (warning that the array remains energised in light), at the inverter (warning of dual supply), and on the consumer unit (identifying the PV final circuit). The labelling is for the customer (so they know what their isolators do), the next electrician (so they understand the install years later), and the fire-fighter (so they know the building has PV before forcing entry). Section 514 of BS 7671 covers identification; Section 712 and the IET CoP add PV-specific requirements.',
-      'The F-Gas Regulations (the EU Fluorinated Greenhouse Gases Regulation retained in UK law plus the UK Fluorinated Greenhouse Gases Regulations 2015) require any work on a sealed refrigerant circuit (charging, recovery, leak testing, brazing into the circuit) to be carried out by an F-Gas-certified person. Companies handling F-Gas refrigerants must hold a company F-Gas certificate. The L3 electrician\\\\\\\'s scope is the electrical supply, isolation, controls, smart integration and external bonding. The trade boundary is firm — the electrician calls in an F-Gas-certified engineer for any refrigerant work.',
-      'A protective device opens a fault circuit by interrupting fault current. The breaking capacity (Icn) is the maximum current the device can safely interrupt without damage to the device or risk of the fault current continuing across the device contacts. If the actual fault current (PFC) exceeds Icn, the device may fail to clear the fault — contacts may weld together, the device case may rupture, the fault may persist. For a typical Type B 32 A MCB the Icn is typically 6 kA; for a CU the busbar Icn is typically 16 kA. Both must exceed the PFC at their installation point.',
+      'Because the breaking capacity sets the maximum load current the device can carry continuously, and exceeding the PFC would cause it to overheat under normal operation.',
+      'Because the breaking capacity determines how quickly the device disconnects under fault, and a value below the PFC would make disconnection exceed the Table 41.1 limit.',
+      'Because the breaking capacity must match the RCD residual operating current, and a mismatch would prevent additional protection at 30 mA.',
+      'Because if the actual fault current exceeds Icn the device may fail to clear the fault safely — contacts welding, case rupturing, or the fault persisting.',
     ],
     correctAnswer: 3,
     explanation:
-      'The breaking capacity is the safety-critical specification. A device that can\'t break the prospective fault current safely is a hazard. This is why PFC measurement / declaration matters — it\'s how you verify the protective devices are fit for the supply they\'re on. Most UK domestic devices are rated 6 kA Icn, sufficient for typical UK supplies up to about 1 kA actual PFC. For commercial / industrial installations with higher PFC, higher-rated devices (10 kA, 25 kA) are needed.',
+      'The breaking capacity (Icn) is the maximum current a device can safely interrupt without damage or the fault current continuing across the contacts. If the PFC exceeds Icn the device may fail to clear the fault — a safety-critical hazard. For a typical Type B 32 A MCB the Icn is 6 kA; a CU busbar is typically 16 kA; both must exceed the PFC at their installation point. Most UK domestic devices are 6 kA Icn, sufficient for supplies up to about 1 kA actual PFC. Commercial / industrial installations with higher PFC need 10 kA or 25 kA devices.',
   },
   {
     id: 4,
     question: 'A4:2026 / BS 7671 Reg 525 voltage drop limits are typically:',
     options: [
-      '3 percent for lighting circuits, 5 percent for other circuits (sockets, fixed loads). Measured from the origin of the installation to the load. Verified by calculation during design (cable size + length + load) and confirmed by measurement under load during commissioning if there\\\\\\\'s any doubt. On long runs (above 30-40 m), voltage drop becomes the limiting factor in cable size selection — often requiring a larger cable than overcurrent protection alone would dictate.',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
-      'Standard placement: on the case, near the model / serial number, where it\\\'s visible during normal use. Should show: lab name, calibration date, next-due date (typically 1 year for MFT/multimeter, 2 years for two-pole), unique certificate reference. Some labs include a barcode that links to the digital certificate. The sticker is the operative\\\'s quick check that the instrument is in date — no need to dig out the certificate. Stickers must be replaced after each calibration cycle; old stickers should be removed (multiple stickers cause confusion about which is current).',
-      'Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.',
+      '3 percent for lighting circuits, 5 percent for other circuits, measured from the origin of the installation to the load.',
+      '5 percent for lighting circuits, 3 percent for other circuits, the larger allowance going to lighting because some dimming is acceptable while socket loads need a tighter limit.',
+      '10 percent for all circuits, measured from the supply transformer to the load, because the distributor allows up to 10 percent variation at the supply terminals.',
+      '2 percent for lighting and 4 percent for other circuits, measured from the distribution board rather than the origin of the installation.',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,36 +136,36 @@ const quizQuestions = [
     id: 5,
     question: 'How do you measure voltage drop in service on a long socket-outlet circuit?',
     options: [
-      'Runs the day-to-day site operation for the sub-contractor — daily briefings, allocating work to gangs, ordering materials, liaising with the main contractor\\\\\\\'s site team, signing off install milestones, managing the apprentice\\\\\\\'s day-job tasks. Typically an Approved Electrician or Technician with several years on site. The Foreman is the apprentice\\\\\\\'s most immediate supervisor and often the person who calibrates the apprentice\\\\\\\'s portfolio with the workplace Mentor.',
-      'Two-step measurement. (1) Measure the supply voltage at the consumer unit (or the origin of the circuit) under no-load — typically 235-245 V on UK 230 V supply. (2) Apply a known significant load at the furthest point of the circuit (e.g. plug in a 2 kW load — fan heater, kettle, test load resistor). Measure the voltage at the same point. Voltage drop = (no-load voltage) - (loaded voltage). Express as percentage of nominal: drop / 230 x 100. Compare against Reg 525 limits.',
-      'Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.',
-      'Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle',
+      'Measure Zs at the furthest socket and multiply by the design current, because voltage drop equals Zs times the load current and a single loop reading gives it directly.',
+      'Measure the no-load voltage at the origin, then the loaded voltage at the furthest point under a known 2 kW load; the difference is the drop.',
+      'Measure the insulation resistance at the furthest socket, because a low IR reading indicates leakage that lowers the voltage at the load.',
+      'Measure the supply voltage at the origin only, under no load, and take the shortfall from nominal 230 V as the voltage drop across the circuit.',
     ],
     correctAnswer: 1,
     explanation:
-      'The two-point measurement under load gives the actual voltage drop in service. A 2 kW load draws about 8.7 A — significant on a 32 A circuit. Voltage drop measured this way reflects the cable resistance and any termination losses. For a Reg 525 verification, compare to the 5 percent limit (11.5 V on 230 V) for socket circuits or 3 percent (6.9 V) for lighting.',
+      'Two-point measurement under load gives the actual in-service voltage drop. (1) Measure no-load voltage at the consumer unit — typically 235-245 V on UK supply. (2) Apply a significant load at the furthest point (a 2 kW fan heater, kettle or test resistor draws about 8.7 A — significant on a 32 A circuit). Drop = no-load minus loaded; express as drop / 230 x 100. Compare to the Reg 525 limit (11.5 V for socket circuits, 6.9 V for lighting). This reflects cable resistance and any termination losses.',
   },
   {
     id: 6,
     question: 'What\'s the relationship between Zs (loop impedance) and voltage drop?',
     options: [
-      'Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or \\\\\\\'snips\\\\\\\') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.',
-      'Because recycling preserves the material value (the metal, the polymer, the glass) for re-use in new manufacturing, whereas energy recovery destroys the material and recovers only the chemical energy. Under the waste hierarchy, keeping materials in productive use is preferred over extracting one-time energy from them. Energy from waste sits above landfill because at least some value (electricity / heat) is recovered, but it sits below recycling because the material is lost.',
-      'They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.',
-      'Three reasons. (1) Speed of selection — colour-coded ferrules let you grab the right size at a glance from a sorted ferrule kit. (2) Inspection — supervisor or QA can check at a glance that the ferrule colour matches the conductor CSA on every termination. (3) Standardisation — DIN 46228-4 is recognised across Europe, so any supplier\\\\\\\'s ferrules match any other\\\\\\\'s. The colour code IS the inspection mechanism.',
+      'They are inversely related — a high Zs always gives a low voltage drop, because a high loop impedance limits the current that can flow and so the drop across the cable.',
+      'They are unrelated — Zs depends only on the supply and earth path while voltage drop depends only on the load, so the two share no common cable component.',
+      'They share the cable resistance component — both are dominated by the cable line conductor, so a borderline result on one often signals a borderline result on the other.',
+      'Voltage drop is simply Zs expressed as a percentage of 230 V, so the two are the same measurement in different units and either can be derived from the other.',
     ],
     correctAnswer: 2,
     explanation:
-      'Both tests share the cable resistance contribution. A long run with high R1+R2 will have both a higher Zs (worse fault clearance) and a higher voltage drop (worse normal-operation quality). When one fails, check the other. The fixes are typically the same — larger cable, shorter run, fewer joints, better terminations.',
+      'Both tests share the cable resistance contribution — Zs uses line + CPC resistance, voltage drop uses line + neutral, both dominated by the cable\'s line conductor. A long run with high R1+R2 has both a higher Zs (worse fault clearance) and a higher voltage drop (worse normal-operation quality). The tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies service quality. When one fails, check the other; the fixes are typically the same — larger cable, shorter run, fewer joints, better terminations.',
   },
   {
     id: 7,
     question: 'A 32 A radial socket circuit feeds an EV charger 35 m from the CU via 6 mm cable. What\'s the expected voltage drop at full charge (32 A)?',
     options: [
-      'Panels are warrantied 25 years and often deliver useful output well beyond. Inverters are warrantied 5-12 years depending on type (string inverters typically 10-12 years; microinverters often 25 years). Most domestic PV systems will need at least one inverter replacement during the 25-year panel lifetime. The replacement is straightforward — disconnect old, fit replacement of compatible spec, recommission, update the EIC. The cost should be factored into the system\\\\\\\'s whole-life economic case rather than treated as a surprise.',
-      'Compliance-only — the firm does the work, issues the certificate, files the documentation, meets the regulations, repeats. Learning organisation — the firm does all of that PLUS captures lessons from each job (what worked, what didn\\\\\\\'t, what to change), feeds them back into training and procedure, and improves over time. The difference shows up in fault recurrence rates (learning firms have fewer comebacks), in apprentice progression speed (learning firms develop competence faster), in customer satisfaction (learning firms build patterns that customers come to trust). The L3 apprentice\\\\\\\'s job is to support the learning side — bring observations from visits back to the office, contribute to toolbox talks, suggest procedure improvements. Most firms aspire to be learning organisations; the apprentice\\\\\\\'s input is part of how they become one.',
-      'Reg 4(3) — failure to carry out the work activity safely (the safe-isolation procedure) — likely as the lead charge. Reg 13 — failure to take adequate precautions to prevent equipment becoming live again. Reg 14 if there\\\\\\\'s evidence of deliberate live working without the three conditions met. Reg 16 if the operative was inadequately competent or supervised. Plus HASAWA s.7 against the individual operative and s.2 against the firm. A multi-charge indictment is the norm for serious electrical incidents.',
-      'Approximately 4.6 V or 2.0 percent of 230 V. Calculation: 6 mm copper cable has approximately 7.3 mV per A per metre voltage drop. 32 A x 35 m x 7.3 mV = 8.18 V single-direction. For circuit voltage drop the full path is line + neutral so multiply by 2 / cable factors per GN1: but the standard cable tables give the per-A-per-m value already accounting for the full loop. Check GN1 Table A1 for the exact value for the cable type. For 6 mm flat T+E with thermosetting insulation: typical 7.3 mV/A/m so 32 x 35 x 7.3 / 1000 = 8.18 V or 3.6 percent — within 5 percent socket limit but close. Worth checking the EV charger spec for its actual demand under typical use (often 28-30 A continuous, not full 32 A).',
+      'Approximately 1.6 V or 0.7 percent of 230 V. Calculation: 6 mm copper has about 1.4 mV per A per metre, so 32 x 35 x 1.4 = 1.57 V single-direction — well within the 5 percent limit.',
+      'Approximately 16.4 V or 7.1 percent of 230 V. Calculation: 6 mm copper has about 14.6 mV per A per metre, so 32 x 35 x 14.6 = 16.35 V — over the 5 percent limit, so the cable must be upsized.',
+      'Approximately 0.26 V or 0.1 percent of 230 V. Calculation: voltage drop equals the EV charger load divided by the cable cross-sectional area, so 32 / 6 = 5.3, scaled down to millivolts.',
+      'Approximately 8.2 V or 3.6 percent of 230 V. Calculation: 6 mm copper at 7.3 mV/A/m, so 32 x 35 x 7.3 / 1000 = 8.18 V — within the 5 percent socket limit but close.',
     ],
     correctAnswer: 3,
     explanation:
@@ -175,14 +175,14 @@ const quizQuestions = [
     id: 8,
     question: 'PFC verification at supply origin on a small commercial installation (200 A 3-phase TN-S supply): what would you expect to see?',
     options: [
-      'Higher than typical UK domestic. PSCC may be 5-15 kA depending on the supply transformer size and the cable run from substation to consumer. PEFC typically 50-80 percent of PSCC. Protective devices need higher Icn — typically 10 kA or 25 kA for the main switchgear and downstream MCBs / RCBOs at the distribution boards. Direct measurement at the origin is required (the BS EN 61439-3 16 kA exemption applies only to dwellings). Document on the EIC against the device Icn ratings.',
-      'Fail the device. Issue a Code C2 (potentially dangerous) on the EICR if applicable, document on the Schedule of Test Results, replace the RCD or RCBO. A trip time exceeding the 300 ms manufacturer\\\\\\\\\\\\\\\'s declared limit means the device cannot be relied upon to disconnect within the Table 41.1 system requirement. The RCD is approaching end of life and may fail to operate at all on the next fault. Replace, retest, document the remediation. Do not leave the installation in service relying on a failed RCD.',
-      'Because they certify different things. The EIC certifies the electrical installation against BS 7671. The manufacturer commissioning record certifies the equipment itself was started up and configured to the manufacturer\\\\\\\'s specified parameters — flow temperature, pump speed, weather compensation curve, refrigerant charge weight, inverter limits, network export-limitation settings, software firmware version. Manufacturer warranty cover usually requires evidence of correct commissioning and typically references this record. Without it the warranty defaults; without the EIC the BS 7671 compliance line is broken.',
-      'Construction (Design and Management) Regulations 2015 (CDM 2015), Statutory Instrument 2015/51. CDM 2015 covers ALL construction work, with extra duties triggered when the project is \\\\\\\'notifiable\\\\\\\' (longer than 30 working days with more than 20 workers simultaneously, or exceeding 500 person-days). It sets duties for clients, principal designers, principal contractors, contractors and workers — including the apprentice\\\\\\\'s duty under Reg 8 to co-operate, take reasonable care and report defects.',
+      'Higher than typical UK domestic — PSCC may be 5-15 kA, devices need 10-25 kA Icn, and direct measurement at the origin is required.',
+      'Lower than typical UK domestic, because the three-phase supply spreads the fault current across three lines so each sees roughly a third of the single-phase PFC and 6 kA devices suffice.',
+      'The same as a typical UK domestic supply — about 1-2 kA — because PFC depends on the substation cable run, which is similar for small commercial and domestic premises.',
+      'Exactly 16 kA by declaration, because small commercial installations use the same BS EN 61439-3 dwelling exemption and record the distributor figure without measurement.',
     ],
     correctAnswer: 0,
     explanation:
-      'Commercial supplies typically have higher PFC than domestic because the supply transformers are larger and the cables shorter. The 16 kA dwelling exemption does not apply. Direct measurement is required and the protective devices must have Icn meeting or exceeding the measured PFC. Modern industrial MCBs and switchgear are available with Icn up to 50 kA or higher.',
+      'Commercial supplies typically have higher PFC than domestic because the supply transformers are larger and the cables shorter. PSCC may be 5-15 kA depending on transformer size and substation cable run, with PEFC typically 50-80 percent of PSCC. The 16 kA dwelling exemption does not apply — direct measurement at the origin is required, and the protective devices (main switchgear and downstream MCBs / RCBOs) must have Icn meeting or exceeding the measured PFC, typically 10 kA or 25 kA. Modern industrial MCBs and switchgear are available with Icn up to 50 kA or higher.',
   },
 ];
 

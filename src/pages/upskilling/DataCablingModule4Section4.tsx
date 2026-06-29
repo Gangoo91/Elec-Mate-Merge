@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What is the primary North American / international administration standard for telecommunications cabling labelling and identifier records?',
     options: [
-      'BS EN 50173-1.',
-      'ANSI/TIA-606-D (2021) — Administration Standard for Telecommunications Infrastructure. Defines identifier hierarchy, labelling format, records discipline, change management for structured cabling.',
-      'BS 7671.',
-      'BS 5266.',
+      'ANSI/TIA-606-D (2021), the administration standard for telecommunications infrastructure.',
+      'BS EN 50173-1, the generic cabling system performance and link-budget standard.',
+      'BS 7671, the wiring regulations covering electrical installation safety.',
+      'BS 5266, the code of practice for emergency lighting in buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-606-D (2021) is the dedicated administration standard. It defines the identifier hierarchy (site / building / floor / TR / patch panel / port), labelling format on cable / outlet / panel, the records the contractor must produce at handover, and the change-management discipline for moves / adds / changes. Aligned with BS EN 50174-1 §6 in the European / UK domain.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'What is the European / UK equivalent of TIA-606-D, and where does the labelling clause sit within it?',
     options: [
-      'BS 7671 §444.6.2.',
-      'BS EN 50174-1 §6 — the Administration / Quality Assurance section of BS EN 50174-1 (Information technology cabling installation: Specification and quality assurance). Cited from BS 7671 §444.410(a) as the standard to apply for control / signalling / communication circuits inside buildings.',
-      'BS EN 50310 §4.',
-      'BS EN 50173-1 §3.',
+      'BS 7671 §444.6.2, the EMC segregation clause for sensitive circuits.',
+      'BS EN 50310 §4, the telecoms bonding and earthing network clause.',
+      'BS EN 50174-1 §6, the administration and quality-assurance clause.',
+      'BS EN 50173-1 §3, the generic structured-cabling definitions clause.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50174-1 §6 is the European labelling / administration clause. The wider standard BS EN 50174-1 covers specification and quality assurance for cabling installation. §444.410(a) of BS 7671 explicitly cites it as the standard to apply for control / signalling / communication circuits — bringing the labelling discipline formally into BS 7671 compliance.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 regulation places BS EN 50174-1 (and therefore its labelling / administration discipline) into the wiring-regs compliance envelope?',
     options: [
-      '§411.3.1.',
-      '§444.410 — verbatim: "Within a building, the requirements and recommendations of the following standards shall be applied for control, signalling and communication circuits: (a) BS EN 50174-1: Information technology — Cabling installation: Installation specification and quality assurance; (b) BS EN 50174-2: ...; (c) BS EN 50310: ..."',
-      '§528.3.5.',
-      '§544.1.2.',
+      '§411.3.1, the requirement for protective earthing and automatic disconnection.',
+      '§528.3.5, the prohibition on running general cables in a lift or hoist well.',
+      '§544.1.2, the sizing requirement for main protective bonding conductors.',
+      '§444.410, which applies BS EN 50174-1/-2 and 50310 to comms circuits.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§444.410 is the gateway clause. By citing BS EN 50174-1 explicitly, BS 7671:2018+A4:2026 brings the labelling / administration discipline of BS EN 50174-1 §6 into the wiring-regs compliance envelope. On a UK 2026 cabling job, BS 7671 §444.410 + BS EN 50174-1 §6 + TIA-606-D give the full administration framework.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'A patch panel port is labelled "B1-03-TRB-PP2-08". What does the identifier mean?',
     options: [
-      'A random label.',
-      'Hierarchical identifier: Building 1, Floor 03, Telecoms Room B, Patch Panel 2, Port 08. The same string appears on the cable label, the outlet label and the connection record so the link is uniquely identified end-to-end. TIA-606-D / BS EN 50174-1 §6 both use this hierarchy with site / campus / building / floor / TR / panel / port nesting.',
-      'A part number.',
-      'A serial number for the cable.',
+      'A hierarchy: Building 1, Floor 03, Telecoms Room B, Patch Panel 2, Port 08.',
+      'A randomly generated reference with no structure or meaning behind it.',
+      'A manufacturer part number identifying the model of patch panel installed.',
+      'A factory serial number printed on the cable jacket during manufacture.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'B1-03-TRB-PP2-08 reads building / floor / TR / panel / port — the standard hierarchical nesting from TIA-606-D / BS EN 50174-1 §6. The same identifier appears on the cable both ends, on the outlet faceplate, on the patch-panel port, and in the connection-records database. Anyone can find any link from any end. The hierarchy can extend upward (site / campus) for multi-site jobs.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'You are pulling a Cat6A horizontal cable. At how many points along the cable should the identifier appear?',
     options: [
-      'Once, at one end only.',
-      "At BOTH ends — at the work-area outlet termination and at the patch-panel termination — using durable labels (engraved, laser-printed adhesive or factory-pre-printed cable labels) that survive 15-20 years of dressing, retermination and environmental exposure. Some specs additionally require labels at the cable's entry / exit at floor / wall penetrations or in long runs.",
-      'On the cable jacket itself only.',
-      'No labelling is required.',
+      'Once, at the patch-panel end only, since the outlet end is found by tracing.',
+      'At both ends — outlet and patch panel — with durable labels that last the cable life.',
+      'On the cable jacket printing only, relying on the manufacturer batch markings.',
+      'No labelling is required, provided the connection-records database is complete.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'A facilities team wants to colour-code patch leads to distinguish service types — what is the typical convention?',
     options: [
-      'Colour-coding is not permitted.',
-      'A common convention (TIA-606-D allows colour-coding as optional): blue for voice, white for data, red for fire alarm / safety / life-safety, green for CCTV / security, yellow for utility or non-corporate networks, purple for KVM / management. The colour is a fast visual cue; the unique identifier remains the authoritative label. The site agrees the scheme at design stage and documents it in the administration record.',
-      'Only black is permitted.',
-      'Colours are decorative and have no meaning.',
+      'Colour-coding of patch leads is not permitted under the cabling administration standards.',
+      'Only black patch leads are permitted, for visual consistency across the whole frame.',
+      'Patch-lead colours are purely decorative and must never be relied on to carry meaning.',
+      'An optional agreed scheme — e.g. blue voice, red fire — documented in the records.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Colour conventions exist (blue voice, white data, red fire / safety, green CCTV / security, yellow utility, purple management) but TIA-606-D allows the site to agree its own scheme. The convention is documented in the administration record so the next contractor can read it. The unique identifier remains authoritative — colour is a supplementary visual cue.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'What is the practical consequence of poor labelling discipline on a 100-link office cabling job?',
     options: [
-      'No consequence — labels are decorative.',
-      'Every fault investigation becomes a forensic exercise; every move / add / change risks disturbing the wrong link; the next contractor cannot plan a refresh without re-mapping the building first; the building owner cannot evidence administration discipline at FRA / insurance review. The 15-20 year life of the cabling collapses to "until the first fault" because nothing can be confidently changed without disturbing other links.',
-      'Faster install.',
-      'Lower cost.',
+      'No real consequence, since the labels are decorative and the cables work regardless.',
+      'Every fault and change becomes a risk-laden manual trace, collapsing the cabling lifespan.',
+      'A faster install overall, because time is not spent printing and fitting durable labels.',
+      'A lower total cost, because the records database can be skipped along with the labels.',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'A handover documentation pack for a 100-link Cat6A office install should include what records?',
     options: [
-      'A list of cable types.',
-      '(a) The connection-records database listing every link by identifier with both end-terminations, cable type, length, current status; (b) as-built drawings showing pathways, outlet positions, TR / FD locations, basket / containment routes; (c) test results for every link (TIA-1152-A / BS EN 50346, including insertion loss, NEXT, return loss, propagation delay, DC resistance unbalance for PoE); (d) labelling-scheme key explaining the identifier format and any colour-coding conventions; (e) fire-stopping register linked to cable IDs (Module 4 Section 3).',
-      'The product invoices.',
-      'Photos only.',
+      'Records database, as-built drawings, per-link test results, labelling key and fire-stop register.',
+      'A list of the cable types and connector parts used across the whole job, and nothing more.',
+      'The supplier product invoices for the installed materials, retained for warranty purposes only.',
+      'A folder of photographs taken during the installation, indexed by the date each was captured.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-606-D / BS EN 50174-1 §6 require all of these at handover. The connection-records database is the live administration system; as-built drawings are the spatial map; test results are the performance certification; the labelling-scheme key explains how to read the identifiers; the fire-stopping register links physical penetrations to cable IDs. Together they let the building owner / facilities team operate and maintain the cabling for its full life.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'On a multi-floor building with multiple TRs per floor, how should the identifier hierarchy be structured?',
     options: [
-      'Use only port numbers.',
-      'Use a top-down hierarchy: site / campus (if multiple sites), building, floor, TR / FD, patch panel, port — concatenated with separators. Optional: prefix for service type or VLAN. Document the format in the administration record so future contractors read identifiers consistently. The hierarchy mirrors the structured-cabling six-zone topology — entrance facility, equipment room, backbone, TR, horizontal, work area.',
-      'Use random IDs.',
-      'Use the building floor plan numbers only.',
+      'Use port numbers alone, with no building, floor or telecoms-room levels above them.',
+      'Use randomly assigned identifiers for each link, recorded only in the database.',
+      'Use a top-down hierarchy — building, floor, TR, panel, port — with separators.',
+      'Use only the room numbers shown on the architect building floor plan as the labels.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The hierarchy mirrors the structured-cabling topology. From the top: site / campus (rare on single-site jobs), building, floor, TR / FD, patch panel, port. On smaller jobs the top levels collapse — a single building drops the site / campus prefix. The format is documented in the administration record. Once agreed, every label in the building uses the same format — no exceptions.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'A subsequent contractor is asked to add 4 cables to an existing patch panel and notices the existing labels are inconsistent — some hand-written, some pre-printed, some missing. What is the correct response?',
     options: [
-      'Match the inconsistent style to fit in.',
-      'Pause and discuss with the building owner / facilities team. Propose a re-label of the existing cables to a consistent scheme as part of the works, with updated administration record. Adding more cables without consistent labelling perpetuates the problem and degrades the cabling administration further. The cost of re-labelling at the same time is small; the cost of leaving the inconsistency is paid every time a subsequent fault investigation has to manually trace a link.',
-      'Add the new cables without labelling.',
-      'Refuse the work.',
+      'Match the new labels to the inconsistent existing styles so the additions blend in.',
+      'Add the four new cables without any labelling, leaving the panel as it was found.',
+      'Refuse the additional work outright because of the inconsistent existing labels.',
+      'Pause and propose re-labelling to one scheme as part of the works, updating records.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inconsistent labelling is a degraded administration system. Adding to it makes it worse. The competent response is to flag it and propose a re-label as part of the works, with updated records. Building owners / facilities teams generally appreciate the offer — re-labelling at the same time as planned works is a fraction of the cost of a separate re-labelling project. If the budget rejects it, document the constraint in the as-built record.',
   },

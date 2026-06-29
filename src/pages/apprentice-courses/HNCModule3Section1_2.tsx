@@ -117,9 +117,9 @@ const quizQuestions = [
     question: "Why do NTC thermistors not follow Ohm's Law exactly?",
     options: [
       'Their resistance changes with temperature',
-      '2-3 metres for optimal coverage',
-      '"EICR_2024_Thompson_42-High-Street.pdf"',
-      'In appropriate conditions to prevent damage',
+      'They only conduct current in one direction',
+      'They store charge rather than resisting current',
+      'They have no measurable resistance at all',
     ],
     correctAnswer: 0,
     explanation:

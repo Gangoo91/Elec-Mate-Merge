@@ -26,7 +26,7 @@ const inlineChecks = [
       'Why is a twisted pair "balanced", and what does that buy you electrically over a single-ended (coax-style) signal?',
     options: [
       'Balanced means the two conductors are the same length, so the signal arrives in phase.',
-      'Balanced means the transmitter drives equal-and-opposite voltages onto the two conductors of the pair, so the receiver looks at the DIFFERENCE between them — any noise picked up identically on both wires (common-mode) cancels at the receiver, while the wanted signal (differential) survives.',
+      'Balanced means the pair is driven with equal-and-opposite voltages, so common-mode noise cancels at the receiver.',
       'Balanced means each pair is shielded individually — the shield is what gives the noise rejection.',
       'Balanced means the two conductors carry the same current in the same direction.',
     ],
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A wholesaler offers "Cat6A cable" at a sharp price. The end client wants a Class EA channel handed over with test results. Are these the same thing?',
     options: [
-      'Yes — Cat6A and Class EA are interchangeable terms.',
-      'No — Category describes the cable / components you bought; Class describes the channel performance you can certify after installation. Cat6A components installed badly will fail a Class EA channel test. The contractor warrants Class — not the printing on the cable jacket.',
-      'No — Class EA is fibre, Cat6A is copper.',
-      'Yes — but only if you also buy Cat6A patch leads.',
+      'Yes — Cat6A and Class EA are interchangeable terms for the same thing.',
+      'No — Category describes the components bought; Class describes the channel you certify after install.',
+      'No — Class EA is an optical-fibre channel, whereas Cat6A is a copper cable.',
+      'Yes — but only if you also buy matching Cat6A patch leads for the channel.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Within a 4-pair Cat6A cable the four pairs have different twist rates. What is that for?',
     options: [
-      'To make the cable look more professional.',
-      'To equalise the cable diameter under jacket — so the cable is round.',
-      'To minimise pair-to-pair coupling (NEXT — near-end crosstalk) inside the cable. If two adjacent pairs had the same twist rate they would couple strongly along the entire run; differing twist rates de-correlate the coupling so it cancels out across the length.',
-      'To allow each pair to carry a different bandwidth.',
+      'To make the finished cable look more professional under the jacket.',
+      'To equalise the cable diameter under the jacket so the cable stays round.',
+      'To minimise pair-to-pair coupling (NEXT — near-end crosstalk) inside the cable.',
+      'To allow each pair to carry a different slice of the available bandwidth.',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 §716.521.101 lists the cable Categories permitted to carry ELV DC power (PoE) over balanced cabling. Which list is correct?',
     options: [
-      'Cat3, Cat4, Cat5 only.',
-      'Cat5, Cat6, Cat6A only.',
-      'Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 — or other cables defined in BS EN 50173-1 by reference to BS EN 50288 series.',
-      'Any cable rated for 50 V DC.',
+      'Cat3, Cat4 and Cat5 only — the older voice-grade categories.',
+      'Cat5, Cat6 and Cat6A only — anything above Cat6A is excluded.',
+      'Cat5, 6, 6A, 7, 7A, 8.1 or 8.2 (or equivalents defined in BS EN 50173-1).',
+      'Any cable at all, provided it is rated for at least 50 V DC.',
     ],
     correctIndex: 2,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does "differential signalling" mean in the context of balanced twisted pair?',
     options: [
-      'The two conductors carry signals at slightly different times.',
-      'The transmitter drives the two conductors with equal and opposite voltages, and the receiver decodes the difference between them — a scheme that lets common-mode noise (picked up identically on both conductors) cancel at the receiver.',
-      'Each pair carries a different protocol.',
-      'The two conductors are made of different materials.',
+      'The two conductors carry the same signal but at slightly different times.',
+      'Each pair carries a different protocol along the same sheath.',
+      'The two conductors are made of different metals to shift the impedance.',
+      'The two conductors are driven with equal and opposite voltages and the receiver decodes their difference.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Differential signalling drives +V and -V onto the two conductors of a pair. The receiver looks at the difference (V_a \u2212 V_b). External noise that couples identically into both conductors (common-mode) subtracts to zero at the receiver. The wanted signal — equal and opposite — doubles in the subtraction. Combined with the twist (which guarantees the two conductors share the same noise field along the run), differential signalling is what lets unshielded twisted pair carry gigabit-class signals across 100 m without a metallic screen.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'A 1991 office cabled to Cat3 wants to support 1 Gbps Ethernet to every desk. Why is the cable the immediate problem?',
     options: [
-      'Cat3 was banned by BS 7671 in 2008.',
-      'Cat3 is rated to 16 MHz and was specified for 10BASE-T (10 Mbps) and voice. 1000BASE-T (gigabit) requires 100 MHz — the bandwidth of Cat5e / Class D — and the cable physically cannot carry the higher-frequency components needed to encode gigabit. The cable is the limiter; no amount of better switches or shorter runs fixes it.',
-      'Cat3 cable fails BS 7671 \u00a7716.',
-      'Cat3 has only two pairs.',
+      'Cat3 was banned outright by BS 7671 in the 2008 amendment.',
+      'Cat3 contains only two twisted pairs, too few for gigabit.',
+      'Cat3 cable fails the new PoE requirements of BS 7671 \u00a7716.',
+      'Cat3 is rated to only 16 MHz, while 1000BASE-T needs the 100 MHz bandwidth of Cat5e.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Each Category has a defined frequency rating that the cable's electrical design (twist rate, conductor geometry, dielectric, jacket) is built to support. Cat3 = 16 MHz (10BASE-T, voice). Cat5e = 100 MHz (1000BASE-T). Cat6 = 250 MHz. Cat6A = 500 MHz (10GBASE-T at 100 m). Cat7A = 1000 MHz. Cat8.1 / 8.2 = 2000 MHz (25/40GBASE-T at 30 m). When the application's frequency requirement exceeds the cable's rating, no installation heroics will fix it — the cable becomes the bottleneck.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which Class corresponds to which Category, in the EN/ISO vs TIA mapping?',
     options: [
-      'Class D = Cat6A, Class E = Cat7, Class F = Cat8.',
-      'Class D \u2248 Cat5e (100 MHz), Class E \u2248 Cat6 (250 MHz), Class EA \u2248 Cat6A (500 MHz), Class F \u2248 Cat7 (600 MHz), Class FA \u2248 Cat7A (1000 MHz), Class I \u2248 Cat8.1 (2000 MHz), Class II \u2248 Cat8.2 (2000 MHz).',
-      'Class A = Cat5e, Class B = Cat6, Class C = Cat6A.',
-      'Categories and Classes are unrelated.',
+      'Class D \u2248 Cat5e, Class E \u2248 Cat6, Class EA \u2248 Cat6A, Class FA \u2248 Cat7A, Class I \u2248 Cat8.1.',
+      'Class D \u2248 Cat6A, Class E \u2248 Cat7, Class EA \u2248 Cat8 — each one Category higher.',
+      'Class A \u2248 Cat5e, Class B \u2248 Cat6, Class C \u2248 Cat6A — lettered A onward.',
+      'Categories and Classes are unrelated and cannot be mapped to each other.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EN/ISO uses Class terminology (D / E / EA / F / FA / I / II) while TIA uses Category terminology (5e / 6 / 6A / 7 / 7A / 8.1 / 8.2). They map closely. Note: Cat7 / Cat7A / Class F / FA are ISO-only — there is no equivalent TIA Category, because TIA jumped from Cat6A straight to Cat8 for the data-centre top-of-rack market. Cat6A / Class EA is the practical 2026 default for new commercial horizontal installs.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why does every pair inside a 4-pair UTP cable have a different twist rate?',
     options: [
-      'Manufacturing convenience.',
-      'To minimise NEXT (near-end crosstalk) between pairs. Identical twist rates would lock adjacent pairs into a fixed geometric relationship along the whole run and couple their fields strongly; differing twist rates de-correlate that coupling so it averages out.',
-      'To match the colour code.',
-      'To support PoE current sharing.',
+      'Manufacturing convenience on the production line.',
+      'To match each pair to its colour code under the jacket.',
+      'To minimise NEXT (near-end crosstalk), since differing twist rates de-correlate pair-to-pair coupling.',
+      'To balance PoE current sharing evenly across the four pairs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pair-to-pair crosstalk (NEXT) is the single biggest performance enemy inside a 4-pair cable. Twist itself guarantees common-mode noise rejection from outside. Different twist rates between pairs guarantee that the inter-pair geometric relationship constantly slides along the run, so the magnetic coupling between any two pairs averages to near-zero. Combined with conductor geometry (separators in Cat6 / Cat6A) and the jacket geometry, this is what lets 4 unshielded pairs share one cable at 500 MHz.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A surveyor recommends Cat6A as the default for a new commercial fit-out instead of Cat6. What is the strongest 2026 argument?',
     options: [
-      'Cat6A is cheaper than Cat6.',
-      'Cat6A delivers Class EA at the full 100 m channel for 10GBASE-T, has the bandwidth headroom (500 MHz vs 250 MHz) to absorb future PoE-driven services, and is on the BS 7671 \u00a7716.521.101 permitted list for ELV DC distribution. Cat6 is rated to 10G only at 55 m de-rated, has half the bandwidth, and gives no service-independence headroom for the building life.',
-      'Cat6A is a UK-only standard.',
-      'BS 7671 mandates Cat6A.',
+      'Cat6A is cheaper per metre than Cat6 for the same performance.',
+      'Cat6A is a UK-only standard not recognised internationally.',
+      'BS 7671 legally mandates Cat6A for all commercial work.',
+      'Cat6A delivers 10GBASE-T at the full 100 m channel and has the bandwidth headroom Cat6 lacks.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cat6 supports 10GBASE-T but only to a de-rated channel (typically 55 m, with strict alien-crosstalk constraints) — not the standard 100 m channel. Cat6A is the 10GBASE-T standard at the full 100 m. With the building lifecycle-cost argument from M1S1 in mind, Cat6A absorbs the foreseeable services (10G to the desk, Type 4 PoE, IP voice, BMS) over a 15-20 year life. BS 7671 does not "mandate" Cat6A but \u00a7716.521.101 lists it among the permitted PoE-carrying Categories. Cat6 is on that list too — but its bandwidth headroom is much thinner.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'What does BS 7671:2018+A4:2026 \u00a7716.521.101 require regarding cable Category for ELV DC distribution over balanced cabling?',
     options: [
-      'Only Cat6A or higher is permitted.',
-      'ICT cables used for the distribution of DC power shall comply with Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 — or other cables as defined in BS EN 50173-1 by reference to the BS EN 50288 series.',
-      'Any cable rated for 50 V is permitted.',
-      'Only shielded cables are permitted.',
+      'ICT cables for DC power shall comply with Cat5, 6, 6A, 7, 7A, 8.1 or 8.2 (or equivalents in BS EN 50173-1).',
+      'Only Cat6A or a higher category is permitted to carry the DC power.',
+      'Any cable rated for at least 50 V may be used for the DC power.',
+      'Only shielded (screened) cable types are permitted to carry the DC power.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Verbatim from \u00a7716.521.101: the permitted list is Cat5, Cat6, Cat6A, Cat7, Cat7A, Cat8.1, Cat8.2 — or "other cables as defined in BS EN 50173-1 by reference to the specifications given in BS EN 50288 series." Cat3 / Cat4 are NOT permitted. Read alongside \u00a7716.523.2.101 (load current \u2264 750 mA per conductor) and \u00a7716.526.101 (connecting hardware \u2265 750 mA per contact), this defines the regulatory envelope for any PoE deployment in the UK from 15 April 2026.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does the "e" in "Cat5e" stand for, and why was Cat5e introduced after Cat5?',
     options: [
-      'Electrical — it indicated Cat5 with electrical certification.',
-      'Enhanced — Cat5e tightened the NEXT, return-loss and delay-skew specifications relative to Cat5 so the same 100 MHz cable could reliably support 1000BASE-T (gigabit), which uses all four pairs simultaneously in both directions and is far more sensitive to pair imbalance than 100BASE-TX was.',
-      'Enterprise.',
-      'Ethernet.',
+      'Electrical — it marked a Cat5 cable carrying electrical certification.',
+      'Enterprise — a grade aimed at large enterprise networks.',
+      'Enhanced — Cat5e tightened the NEXT and return-loss limits so the same 100 MHz cable could run gigabit.',
+      'Ethernet — it denoted the first Ethernet-rated twisted pair.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '"Enhanced". Cat5 (1991) was specified for 100BASE-TX, which uses two pairs (one TX, one RX) and tolerates the original NEXT / return-loss limits. 1000BASE-T (1999) uses all four pairs simultaneously, in both directions on each pair, with PAM-5 line coding — which exposed Cat5\u2019s pair-to-pair imbalance. Cat5e tightened the channel parameters (specifically NEXT, PSNEXT, return loss, ELFEXT and delay skew) within the same 100 MHz envelope so 1000BASE-T could run reliably. Cat5e is the legacy minimum for new installs; Cat5 is obsolete.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'What is the difference between Cat8.1 and Cat8.2, and where do they actually live in real installations?',
     options: [
-      'Cat8.1 is copper, Cat8.2 is fibre.',
-      'Cat8.1 = TIA Class I; uses RJ45 connectors. Cat8.2 = TIA Class II; uses non-RJ45 connectors (e.g. TERA / GG45). Both are rated to 2000 MHz and support 25/40GBASE-T, but only over a 30 m channel, so they live in data-centre top-of-rack (TOR) deployments — not in horizontal cabling to work areas.',
-      'Cat8.1 is for outdoor use; Cat8.2 is for indoor use.',
-      'They are identical.',
+      'Cat8.1 is a copper cable, whereas Cat8.2 is an optical-fibre cable.',
+      'Cat8.1 is rated for outdoor use; Cat8.2 is rated for indoor use only.',
+      'They are identical cables with two different marketing names.',
+      'Cat8.1 keeps the RJ45 connector; Cat8.2 uses non-RJ45 (TERA / GG45) — both data-centre top-of-rack, not horizontal.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cat8.1 / Class I uses RJ45 (8P8C) connectors — backwards-compatible with everything below it. Cat8.2 / Class II uses non-RJ45 connectors (TERA, GG45) — higher-performance but interface-incompatible. Both reach 2000 MHz but the channel is 30 m max — that's why they only fit in data-centre top-of-rack server-to-switch links, where 25/40GBASE-T over copper is cheaper than fibre over short distances. They are not horizontal-cabling Categories — Cat6A remains the practical default for office horizontal.",
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'What is the practical 2026 default Category for a new UK commercial horizontal install, and what justifies it?',
     options: [
-      'Cat5e — cheapest acceptable.',
-      'Cat6A / Class EA — 500 MHz bandwidth, 10GBASE-T at the full 100 m channel, headroom for Type 4 PoE thermal loading and emerging services, on the BS 7671 \u00a7716.521.101 permitted list, and the lifecycle-cost case (M1S1) closes within 4-5 years against ad-hoc point-to-point.',
-      'Cat8.1 — future-proof.',
-      'Cat7 — maximum performance.',
+      'Cat6A / Class EA — 10GBASE-T at the full 100 m channel with headroom for Type 4 PoE and emerging services.',
+      'Cat5e — the cheapest category still acceptable for the job.',
+      'Cat8.1 — chosen as the most future-proof copper category.',
+      'Cat7 — chosen for the maximum available copper performance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cat6A / Class EA is the 2026 commercial horizontal default. It delivers 10GBASE-T at the full 100 m channel, has 2\u00d7 the bandwidth of Cat6 (500 MHz vs 250 MHz), absorbs Type 4 PoE++ thermal loading with sensible bundle management, and sits on the BS 7671 \u00a7716.521.101 permitted list. Cat5e is the legacy minimum but offers no headroom. Cat8 is data-centre TOR only. Cat7 / 7A are ISO-only and rare in UK horizontal — Cat6A covers the same use cases at less cost.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'Why does balanced twisted-pair NOT need a metallic screen for its noise rejection to work in office environments?',
     options: [
-      'Office environments have no electromagnetic noise.',
-      'Because the noise rejection comes from the BALANCE of the pair (differential signalling + twist), not from a screen. The pair rejects common-mode noise by subtraction at the receiver. A screen adds protection against very high-frequency or very strong external fields and against alien crosstalk — but for ordinary office EMI, an unshielded balanced pair is sufficient. Shielded variants exist for industrial / high-EMI / high-PoE / data-centre cases.',
-      'Because all office cables are run in steel containment.',
-      'Because EMC regulations force noise sources to be silent.',
+      'Office environments simply contain no electromagnetic noise to reject.',
+      'Because all office cabling is run inside earthed steel containment.',
+      'Because the rejection comes from the balance of the pair (differential signalling plus twist), not from a screen.',
+      'Because EMC regulations force every noise source nearby to stay silent.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The twisted-pair value proposition is that BALANCE plus DIFFERENTIAL signalling delivers noise rejection without a screen. Common-mode noise is rejected at the receiver by subtraction. The twist guarantees the two conductors see the same noise field along the run. UTP works because the balance is good — not because there is no noise. Screened variants (F/UTP, U/FTP, S/FTP, F/FTP — covered in M2S2) raise the noise margin further, are mandatory or strongly preferred in heavy-EMI environments, and become more relevant under continuous high-current PoE where alien crosstalk between bundles rises.',
   },

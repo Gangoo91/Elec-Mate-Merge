@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 requires the fire alarm primary supply to be taken from where in the building?',
     options: [
-      'From the nearest convenient socket-outlet on a final ring circuit.',
-      "A DEDICATED 230 V AC final circuit, taken directly from a point as close as practicable to the origin of the consumer's installation (the main switch / consumer unit), with no other load shared on the circuit. The circuit serves the fire alarm system only — no sockets, no lighting, no auxiliary loads — so that operating, fault-finding or maintaining any other circuit cannot remove power from the fire alarm.",
-      'From any spare way on a sub-distribution board, sized for the load.',
-      'From the kitchen ring main, fused at 13 A.',
+      "A dedicated 230 V AC final circuit taken from a point as close as practicable to the origin of the consumer's installation, serving the fire alarm system only — no sockets, lighting or auxiliary loads — so that work on any other circuit cannot remove power from the fire alarm.",
+      'A spare way on the nearest sub-distribution board, sized for the fire alarm load and provided with its own labelled means of isolation at that board.',
+      'A fused spur taken locally from the final ring circuit serving the room in which the control and indicating equipment is installed.',
+      'A dedicated circuit at the origin shared with the emergency lighting supply, so that both life-safety systems are fed from one common protected circuit.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'BS 5839-1:2025 clause 19 (Power supplies — consolidated 2025) is unambiguous. The primary supply is a DEDICATED final circuit taken from the origin. Sharing the circuit with other loads exposes the fire alarm to operations that have nothing to do with the fire alarm — a tripped MCB on a kitchen socket should never silence the CIE.',
+      'BS 5839-1:2025 clause 19 (Power supplies — consolidated 2025) is unambiguous. The primary supply is a DEDICATED final circuit taken from the origin and serving the fire alarm alone. Sharing the circuit with any other load — even another life-safety system — exposes the fire alarm to operations that have nothing to do with it.',
   },
   {
     id: 'fam4-s1-isolator',
     question:
       'The lockable isolator at the consumer unit serving the fire alarm primary supply must be labelled with which exact wording?',
     options: [
-      '"Fire alarm — caution".',
-      '"FIRE ALARM SYSTEM — DO NOT SWITCH OFF" — the wording is mandated by BS 5839-1 and serves a dual purpose: it identifies the circuit so that maintenance personnel do not isolate it as part of routine work, and it makes the consequence of switching it off legally and operationally clear. The label must be permanent, legible, and visible on the lockable means of isolation.',
-      '"Mains isolator — fire".',
-      '"230 V AC supply — life safety".',
+      '"Fire alarm supply — isolate with care", reminding maintenance staff to take precautions before operating the device for any reason.',
+      '"230 V AC life-safety supply — authorised persons only", restricting operation of the isolator to competent maintenance personnel.',
+      '"FIRE ALARM SYSTEM — DO NOT SWITCH OFF", on a permanent, legible, visible label fitted to the lockable means of isolation.',
+      '"Mains isolator — fire detection circuit", naming the system so that an electrician can trace the supply back from the control panel.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The wording is prescribed because labelling discipline directly affects life safety. A label that merely says "fire alarm" invites a maintenance electrician to think it is a working label rather than a permanent identification. The "DO NOT SWITCH OFF" instruction prevents the most common cause of fire alarm power loss — accidental isolation during unrelated work.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'Following BS 7671 Amendment 2:2022 (now consolidated in BS 7671:2018+A4:2026) and IEC 60445:2021, the FUNCTIONAL EARTH conductor in a fire alarm installation must be identified by which colour and alphanumeric mark?',
     options: [
-      'Green-and-yellow with the mark "PE".',
-      'Pink, with the alphanumeric designation "FE" — the change came in via BS 7671 Amendment 2:2022 incorporating IEC 60445:2021. The previous identification (cream) is superseded. BS 5839-1:2025 has reflected this change. Pink + "FE" identifies a functional earth conductor — used for noise / EMC / signalling reference — which is NOT a protective earth and must not be confused with the green-and-yellow circuit protective conductor.',
-      'Cream — same as before, no change.',
-      'Blue, with the mark "N".',
+      'Green-and-yellow with the mark "PE", because a functional earth is still a form of earth and shares the protective-conductor identification.',
+      'Cream, unchanged from the previous edition, because the functional-earth identification was not affected by Amendment 2:2022.',
+      'Pink, with the alphanumeric designation "FE", superseding the previous cream identification under Amendment 2:2022 / IEC 60445:2021.',
+      'Blue with the mark "N", grouping the functional earth with the neutral because both are reference conductors rather than current-carrying lines.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The pink + "FE" identification is one of the most often-missed 2025 updates. Functional earth and protective earth do different jobs and must be visually distinct. Mixing the two identifications — colouring an FE conductor green-and-yellow, or terminating an FE wire onto the protective earth bar — creates a false earth path that can corrupt detection signalling or, worse, present as a CPC on test.',
   },
@@ -65,12 +65,12 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 has clarified the cable colour for fire alarm cabling. Which statement is correct?',
     options: [
-      'Fire alarm cables may be any colour.',
-      'All fire alarm cables AND the LV mains supply feeding the fire alarm system should be a single, common colour, with red being preferred. The 2025 clarification is that the rule extends to the dedicated 230 V AC mains feed, not just the detection / sounder circuits — so the entire electrical supply chain to the fire alarm reads as red, end-to-end, making misidentification on later works much harder.',
-      'Detection circuits must be red, sounder circuits must be white.',
-      'Mains cables must be grey, fire alarm circuits must be red.',
+      'All fire alarm cables AND the LV mains supply should be a single common colour, red preferred; the 2025 rule extends to the dedicated 230 V AC mains feed, not just the detection / sounder circuits.',
+      'Detection circuits must be red and sounder circuits white, so that the two functions can be told apart at a glance during commissioning and fault-finding.',
+      'The mains feed must be standard grey twin-and-earth and only the fire alarm circuits proper need be red, keeping the dedicated final circuit visually conventional.',
+      'Fire alarm cables may be any colour provided each cable is permanently labelled at both ends to identify it as part of the fire detection system.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 5839-1:2025 clause 16 (Cabling, labelling and identification per the FIA Guide) makes the position explicit. A common red colour from the consumer unit through to every detection / sounder / interface circuit means a future electrician opening a void or trace cannot confuse fire alarm wiring with general low-voltage cabling. The previous edition was ambiguous about the mains feed colour; the 2025 standard removes the ambiguity.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which of the following correctly describes the BS 5839-1:2025 primary power requirements for a fire detection and fire alarm system?',
     options: [
-      'Any 230 V supply taken from a convenient socket on a ring circuit.',
-      'A DEDICATED 230 V AC final circuit, taken from a point as close as practicable to the origin of the installation, protected by a circuit-breaker at the consumer unit, with a lockable means of isolation labelled "FIRE ALARM SYSTEM — DO NOT SWITCH OFF". No other loads on the circuit.',
-      'A 12 V DC supply from a separate PSU.',
-      'A 110 V AC reduced low-voltage supply from a transformer.',
+      'A 110 V AC reduced low-voltage supply derived from a centre-tapped transformer at the origin, mirroring the supply arrangement used for portable site tools.',
+      'A 230 V AC supply taken from any convenient socket on a final ring circuit, provided it is protected by a 30 mA RCD and labelled at the outlet.',
+      'A DEDICATED 230 V AC final circuit from near the origin, protected at the consumer unit, with lockable labelled isolation and no other loads.',
+      'A 12 V DC supply derived from a separate standby PSU local to the control panel, so the system runs entirely independently of the mains installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5839-1:2025 clause 19 sets out the dedicated final circuit, lockable isolation, prescribed labelling, and origin-point connection. All four elements are non-negotiable for a compliant primary supply.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       "Why does BS 5839-1:2025 require the primary supply to be taken from a point as close as practicable to the origin of the consumer's installation?",
     options: [
-      'Cost.',
-      'Because the further down the distribution chain the supply is taken, the more circuit-breakers, switches, isolators and joints there are between the supply and the fire alarm system — every one of which is a potential failure point or accidental-isolation point. A connection at the origin minimises the opportunities for accidental disconnection during maintenance of unrelated circuits.',
-      'Easier to install.',
-      'Lower voltage drop.',
+      'Because every breaker, switch, isolator or joint between origin and panel is a potential failure or accidental-isolation point; an origin connection minimises that chain.',
+      'Because connecting at the origin gives a shorter cable run and therefore a lower voltage drop to the control panel, keeping the supply within the permitted percentage.',
+      'Because taking the supply from the origin is cheaper and quicker to install than running a dedicated cable to a remote sub-distribution board.',
+      'Because the origin is the only position where a 30 mA RCD can be guaranteed, and the fire alarm supply must always be RCD-protected.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The reasoning is reliability through architectural simplicity. Each upstream device that can isolate the circuit is a failure mode. Taking the supply from the origin makes the chain as short as it can be.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 cross-references BS 7671:2018+A4:2026 Section 560 (Safety services) for the fire alarm supply. What does Section 560 mandate that is relevant to the fire alarm circuit?',
     options: [
-      'Coloured wiring only.',
-      'Safety services, including fire detection and fire alarm systems, are to be provided by an electrical supply that is independent of the normal electrical supply or that is protected such that fire affecting the normal supply does not also disable the safety service. Section 560 also covers cable selection (fire-resistant), supply protection coordination, and the segregation requirements that prevent a fault on a non-safety circuit from de-energising a safety circuit.',
-      'A maximum cable length of 10 metres.',
-      'RCD protection at 30 mA for all safety circuits.',
+      'That all safety-service circuits be given additional protection by a 30 mA RCD, so that any earth fault is cleared rapidly without disabling the supply.',
+      'That the wiring of safety services be limited to a maximum cable run of 10 metres from the origin, to keep the supply impedance low.',
+      'That safety-service cabling use a single common colour for ease of identification, but with no specific requirement for the supply arrangement itself.',
+      'That safety services have an independent or protected supply, plus fire-resistant cable selection, protection coordination and segregation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Section 560 sets the wiring-regulations envelope for safety-services circuits. BS 5839-1 sits inside that envelope — the fire alarm primary supply is a Section 560 safety service, and the dedicated-circuit, fire-resistant-cable, lockable-isolation rules of BS 5839-1 align with the BS 7671 framework.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A consumer unit protective device for a fire alarm primary supply has been specified by the CIE manufacturer. The installer fits a higher-rated MCB "to give some margin". Why is this wrong?',
     options: [
-      'It is not wrong.',
-      "The protective device rating is set by the CIE manufacturer based on the design of the equipment's primary supply path: internal fusing, transformer ratings, surge protection. Fitting a HIGHER-rated MCB defeats the manufacturer's upstream protection coordination. A fault inside the CIE that the manufacturer expected to be cleared by a 6 A MCB will not be cleared promptly by a 16 A MCB; damage spreads further, and the fire alarm may stop functioning long before the upstream protection trips.",
-      'It is wrong because of cost.',
-      'It is wrong because of cable size only.',
+      "It is not wrong at all — a higher-rated device only trips later, so the extra margin simply reduces nuisance tripping without affecting safety.",
+      "It is wrong only because the larger MCB requires a larger cable CSA to be co-ordinated with it, adding unnecessary installation cost.",
+      "The rating coordinates with the CIE's internal fusing; a higher-rated MCB fails to clear a fault promptly, so damage spreads before it trips.",
+      "It is wrong because the manufacturer's rating is the only value permitted by BS 7671, and any departure makes the installation notifiable under Part P.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Protective device ratings are a coordination decision, not a single-component decision. The MCB at the consumer unit must coordinate with the protection inside the CIE. The manufacturer's specification is the engineering envelope.",
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A typical fire alarm CIE primary supply is fed via a small 6 A MCB at the consumer unit. The installer queries why the standby battery — capable of sourcing many amps in alarm — is being fed through such a small protective device. The correct explanation is...?',
     options: [
-      'The MCB is wrong.',
-      "The MCB protects the 230 V AC mains feed to the CIE, NOT the battery. The battery is downstream of the CIE's internal charging / inverter circuitry. In normal operation the mains feed only needs to power the CIE's standby load and the battery charger — typically well under 1 A. In alarm, current is drawn primarily from the BATTERY, not the mains. The 6 A MCB is therefore correctly sized for what it actually has to deliver: standby load + charger inrush.",
-      'The battery should be removed.',
-      'A 32 A MCB should be used.',
+      "The MCB protects the 230 V mains feed, not the battery; in alarm the current comes from the battery, so 6 A correctly covers standby load plus charger inrush.",
+      "The MCB is under-rated and should be replaced with a 32 A device so it can carry the full alarm-load current drawn when all sounders operate together.",
+      "The standby battery should be removed from the protected circuit and given its own dedicated supply so that alarm current never passes through the consumer-unit MCB.",
+      "The 6 A MCB is a typographical error in the design; fire alarm primary supplies are always protected at 16 A to allow for sounder inrush at the moment of activation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Understanding the current paths in standby vs alarm is fundamental to fire alarm design. The mains MCB never sees the alarm current — that comes from the battery, through the CIE's internal switching, to the alarm circuits. The mains supply only has to keep the standby load running and keep the battery charged.",
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       "BS 5839-1:2025 has consolidated the previous 2017 edition's separate clauses (clauses 25 and 29 in the 2017 edition) into a single clause on power supplies. Why does this matter to the installer?",
     options: [
-      'Easier to find.',
-      'Easier to find — but more importantly, it ENDS the previous structural ambiguity. The 2017 edition split mains-supply rules between two clauses (general installation and isolation), which sometimes produced apparent contradictions or gaps depending on which clause an inspector happened to read first. Consolidation into a single clause removes that ambiguity and gives one definitive set of rules, in one place, for the primary supply.',
-      'Number of pages.',
-      'Less text.',
+      'It reduces the overall page count of the standard, making the printed document cheaper to produce and quicker to consult on site.',
+      'It relaxes the previous requirements, so installations compliant under the old clauses 25 and 29 no longer have to meet the same standard.',
+      'It introduces entirely new power-supply rules that did not exist in the 2017 edition, requiring all existing installations to be upgraded.',
+      'It ends the 2017 ambiguity where mains-supply rules were split across two clauses; one consolidated clause now gives a single definitive set of rules.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standards consolidation is rarely cosmetic. The 2025 single-clause structure for power supplies eliminates the cross-referencing problem the 2017 edition produced and should be the first thing referenced when designing or auditing a primary supply.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     question:
       'On a fire alarm installation the inspector finds the primary supply taken from a 13 A fused spur off the kitchen ring final circuit. The fused spur has been labelled "Fire alarm — do not switch off". What is the correct verdict?',
     options: [
-      'Compliant — labelling is in place.',
-      'NON-COMPLIANT. Labelling does not redeem an architectural defect. Sharing a fire alarm supply with a kitchen ring exposes the system to every kettle, fridge, microwave and dishwasher fault on that ring; an MCB trip from the kitchen will silence the fire alarm. BS 5839-1:2025 demands a DEDICATED final circuit. The remedy is to install a new dedicated MCB at the consumer unit, run a new dedicated circuit to the CIE, and decommission the spur.',
-      'Compliant — fused spur counts as dedicated.',
-      'Compliant — kitchen rings are robust.',
+      'Compliant — the correct prescribed label is fitted, which satisfies the BS 5839-1:2025 requirement for identification of the supply.',
+      'NON-COMPLIANT. Sharing a kitchen ring lets an unrelated MCB trip silence the panel; a dedicated final circuit is required, so install a new MCB at the origin and decommission the spur.',
+      'Compliant — a fused spur taken from a ring counts as a dedicated final circuit because it has its own fuse protecting only the fire alarm.',
+      'Compliant — kitchen ring circuits are robust and rarely trip, so the small residual risk is acceptable for a labelled supply.',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Which statement most accurately captures the BS 5839-1:2025 cable-colour position for fire alarm wiring?',
     options: [
-      'Any colour is acceptable provided cables are labelled at the ends.',
-      'A SINGLE COMMON COLOUR for all fire alarm cabling AND for the dedicated low-voltage mains supply, with red being preferred. The 2025 clarification is that the colour rule applies end-to-end, including the 230 V mains feed from the consumer unit to the CIE — not just the extra-low-voltage detection / sounder circuits. End-to-end colour discipline reduces the chance of misidentification during later works in voids and risers.',
-      'Detection circuits must be red, sounder circuits must be white.',
-      'Cables must be unmarked.',
+      'A single common colour for all fire alarm cabling AND the dedicated LV mains supply, red preferred, applied end-to-end including the 230 V feed to the CIE.',
+      'Any colour is acceptable for the cabling provided every cable is permanently labelled at each end to identify it as part of the fire alarm system.',
+      'Detection circuits must be red and sounder circuits white, so the two functions are visually distinguished during installation and maintenance.',
+      'The detection and sounder circuits should be red, but the dedicated mains feed must remain standard grey twin-and-earth to match the rest of the consumer unit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2025 standard treats the colour identification as a system-wide property — every conductor that exists to support fire detection and fire alarm operation, including its primary mains feed, is the same colour, and that colour is preferentially red.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'The fire alarm primary supply must include "lockable means of isolation". What does that requirement imply for the device chosen at the consumer unit?',
     options: [
-      'Any switch with a label.',
-      'A means of isolation that can be secured in the OFF position by a lock — typically a lockable circuit-breaker, a lockable isolator, or a circuit-breaker fitted with a proprietary lock-off device. The lock prevents inadvertent re-energisation during maintenance, AND prevents unauthorised isolation. Both directions of locking matter: locking off (during fault repair on the fire alarm itself) and locking on (preventing nuisance isolation by unauthorised persons).',
-      'A keyswitch on the CIE.',
-      'A padlocked door on the consumer unit.',
+      'A padlock fitted to the consumer-unit door, preventing access to all the circuit-breakers inside including the dedicated fire alarm device.',
+      'A keyswitch on the front of the control panel, so that the supply can only be interrupted by a competent person holding the key.',
+      'Any switch in the circuit fitted with a permanent warning label identifying it as the fire alarm supply and instructing that it not be operated.',
+      'A device that can be secured in the OFF position by a lock — a lockable circuit-breaker, lockable isolator, or MCB with a proprietary lock-off accessory.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lockable isolation is a specific electrical concept: the device itself has a means of being secured by a lock in either position. A general-purpose padlock on the consumer unit door is not a lockable means of isolation in the BS 5839-1 sense, because it does not lock the device itself.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'The primary supply to the CIE is found, on inspection, to have NO functional earth connection at the CIE end, even though one is specified by the CIE manufacturer. The earth is present in the supply cable — pink with the "FE" mark — but is left disconnected at the CIE terminal. The likely consequences are...?',
     options: [
-      'No consequence.',
-      "The CIE is operating without its specified noise / EMC reference. Symptoms can include intermittent earth fault indications on monitored loops (because the loop monitoring relies on a stable reference), spurious detection-signal noise, increased false alarm risk, and on some designs corruption of digital communication on the addressable loop. The fix is to terminate the FE conductor onto the CIE's functional-earth terminal as the manufacturer specifies — and the inspector should also verify that the FE has not been mistakenly landed on the protective earth bar somewhere upstream.",
-      'The CIE will not power on.',
-      'Cosmetic only.',
+      'No consequence at all — the functional earth is only a manufacturer recommendation and the panel operates identically with or without it.',
+      'The CIE will fail to power on, because the functional earth carries the return path for the panel logic supply.',
+      'The CIE runs without its EMC reference, risking intermittent earth-fault indications, signal noise, false alarms and corrupted loop communication; terminate the FE correctly.',
+      'A purely cosmetic non-conformity that should be noted on the certificate but has no effect on system performance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Functional earth is a real engineering requirement, not a discretionary nicety. Modern addressable CIEs depend on it for stable signalling. A disconnected FE produces symptoms that can look like detection faults — the troubleshooting trail leads back to the FE termination, not the loop devices.',
   },

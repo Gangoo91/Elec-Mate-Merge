@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'You designed, installed, inspected and tested a domestic alteration yourself as a single competent person. How is Section C of the EIC signed?',
     options: [
-      'Sign once at the bottom — one person, one signature',
-      'Sign all three blocks (FOR DESIGN, FOR CONSTRUCTION, FOR INSPECTION AND TESTING). Reg 644.4 requires the persons responsible for each role to sign for that role; where one competent person covers all three, they sign all three blocks',
-      'Leave the design block blank because the customer ordered the work',
-      'Only the inspection block matters',
+      'Sign once at the bottom, since one person carried out all of the work',
+      'Sign all three blocks — design, construction, and inspection and testing',
+      'Leave the design block blank, because the customer ordered the work',
+      'Sign only the inspection and testing block, as that is the verification step',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A4:2026 added a new earthing-arrangement option to Section F of the EIC. What is it, and what is the regulatory basis?',
     options: [
-      'TN-S (X), Reg 411.5',
-      'TN-C-S (PNB) — protective neutral bonding, where the consumer creates the N-PE bond at the cut-out rather than relying on a distributor PME bond. Reg 312.2.1.1 (A4 update) sets the PNB requirements',
-      'IT-A, Reg 312.3',
-      'PEN, Reg 543',
+      'A new TN-S (X) sub-type for supplies with a separate earth conductor, Reg 411.5',
+      'TN-C-S (PNB) — protective neutral bonding, with the N-PE bond made at the cut-out',
+      'A new IT-A arrangement for isolated supplies with one earthed point, Reg 312.3',
+      'A standalone PEN conductor earthing arrangement for the final circuits, Reg 543',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'You are replacing an existing consumer unit on a domestic installation. No new circuits are introduced — only the CU is replaced and existing circuits are reterminated. Which certificate is required?',
     options: [
-      'Minor Works (MEIWC) — no new circuits',
-      'EIC — case (c) of the EIC notes lists “replacement of a consumer unit / distribution board” as one of the four cases for EIC issuance. CU replacement requires an EIC, full stop',
-      'EICR',
-      'No certificate required for like-for-like replacement',
+      'A Minor Works Certificate, because no new circuits have been introduced',
+      'An EIC, because consumer unit replacement is one of the four EIC cases',
+      'An EICR, because the existing circuits are being inspected and retested',
+      'No certificate at all, because this is a like-for-like replacement',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You are issuing an EIC for an addition (one new socket). The client says “the existing installation is fine, just leave Section I blank”. Can you?',
     options: [
-      'Yes — Section I is optional',
-      'No — Reg 644.1.2 requires the inspector to record any defects found, so far as is reasonably practicable, in the existing installation. If you found nothing, write that in Section I (“No defects observed in the existing installation during the course of the addition. Inspection limited to the parts made accessible by the works”). A blank Section I on an addition EIC is a Reg 644.1.2 non-compliance',
-      'Only if the customer signs a waiver',
-      'Section I only applies to EICRs',
+      'Yes, because Section I is an optional part of the certificate',
+      'No, because Reg 644.1.2 requires existing-installation defects to be recorded',
+      'Only if the customer signs a waiver accepting the blank section',
+      'Yes, because Section I applies only to EICRs, not to an EIC',
     ],
     correctIndex: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Section D of the A4:2026 EIC ("NEXT INSPECTION") is short. What does it now require the designer(s) to record, and what is its regulatory basis?',
     options: [
-      'A guarantee of installation life of at least 10 years',
-      'A recommendation that this installation is further inspected and tested after an interval of not more than X years/months — derived from Reg 644.4 (interval to first periodic inspection) and Reg 651/652',
-      "The installer's warranty",
-      'The Building Regulations notification reference',
+      'A guarantee that the installation will last for at least ten years',
+      'The installer’s own warranty period for the completed installation work',
+      'A recommended interval, in years or months, before the next inspection and test',
+      'The Building Regulations notification reference issued for the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section D records: "I/We, the designer(s), recommend that this installation is further inspected and tested after an interval of not more than ............ years/months". The recommendation is required by Reg 644.4 ("The recommendation for the interval between initial verification and the first periodic inspection shall be recorded on the Certificate"). The interval should consider the installation type, environment, and Reg 651/652 frequency guidance.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       'On the A4:2026 EIC Section H (Schedule of Inspections), which item number corresponds to AFDD operational confirmation, and which regulations does it cite?',
     options: [
       'Item 4.0 — Reg 411.1',
-      'Item 4.23 — Reg 421.1.7, Reg 532.6, Reg 651.2(e)',
       'Item 5.12 — Reg 411.3.4',
       'Item 6.1 — Reg 701.411.3.3',
+      'Item 4.23 — Reg 421.1.7, Reg 532.6, Reg 651.2(e)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Item 4.23 reads: "Confirmation of indication that AFDD(s) are operational (421.1.7; 532.6; 651.2(e))". This was added at A4:2026 to align with the new Reg 421.1.7 AFDD recommendation. Item 4.0 is the parent "Consumer Unit / Distribution Board" group; item 5.12 is the new RCD-not-exceeding-30-mA item including its bullet for "Final circuits supplying luminaires within domestic (household) premises (411.3.4)" — also an A4 reorganisation.',
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'Section I of the EIC is "COMMENTS ON EXISTING INSTALLATION". When does this section have to be completed?',
     options: [
-      'Always, even on a new install',
-      'Only on an EICR — never on an EIC',
-      'In the case of an addition or alteration — see Reg 644.1.2 (which requires recording any defects found in the existing installation, so far as is reasonably practicable)',
-      'When the customer asks',
+      'Always, on every certificate including a brand-new installation',
+      'Only on an EICR, and never on an Electrical Installation Certificate',
+      'On an addition or alteration, recording any defects found in the existing installation',
+      'Only when the customer specifically asks for it to be completed',
     ],
     correctAnswer: 2,
     explanation:
@@ -146,12 +146,12 @@ const quizQuestions = [
     id: 6,
     question: 'When is an EIC the correct certificate (rather than a Minor Works or an EICR)?',
     options: [
-      'Only for new installations',
-      'For initial certification of a new installation; for additions / alterations introducing one or more new circuits; for replacement of a consumer unit or distribution board; or for multiple additions / alterations / remedial works as an alternative to multiple Minor Works',
-      'Only for industrial installations',
-      'Whenever the customer requests it',
+      'For a new installation, new circuits, a consumer unit replacement, or multiple alterations',
+      'Only for brand-new installations, and never for additions or alterations',
+      'Only for industrial installations, and never for domestic or commercial work',
+      'Whenever the customer requests one, regardless of the type of work involved',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The EIC notes for the producer list four cases: (a) initial certification of a new installation; (b) addition or alteration where one or more new circuits have been introduced; (c) replacement of a consumer unit / distribution board; (d) multiple additions / alterations / remedial works to existing as an alternative to multiple Minor Works. EIC is not used for periodic — that is the EICR. For an addition or alteration that does NOT extend to new circuits, a Minor Works (MEIWC) may be used.',
   },
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       'What does "consumer\'s means of isolation" refer to on the A4:2026 inspection schedule, and where does it appear?',
     options: [
-      'Item 1.2 of the residential SoI (Schedule of Inspection): "Consumer\'s means of isolation (where present)" — under Section 1.0 INTAKE EQUIPMENT (visual inspection only)',
-      'It is the cooker switch',
-      'It is the RCD test button',
-      'A new product range',
+      'Item 1.2 under Intake Equipment — the customer-side isolator for the consumer unit',
+      'The cooker switch that locally isolates the cooker circuit from the supply',
+      'The RCD test button used by the occupier for the six-monthly functional check',
+      'The main protective bonding clamp at the gas and water service entry points',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'Item 4.13 of the EIC Schedule of Inspection reads: "Compatibility of protective devices, bases and other components; correct type and rating (No signs of unacceptable thermal damage, arcing or overheating)". Which regulations does it cite?',
     options: [
-      'Reg 411.1',
+      'Reg 411.1 only, covering protection against electric shock',
+      'Reg 643.7 only, covering earth fault loop impedance testing',
+      'Reg 132.1 only, covering the characteristics of the supply',
       'Regs 411.3.2, 411.4, 411.5, 411.6 and Sections 432, 433',
-      'Reg 643.7 only',
-      'Reg 132.1 only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Item 4.13 cites "(411.3.2; 411.4; 411.5; 411.6; Sections 432, 433)" — covering ADS for fault and shock protection, fault current protection, overload protection (Section 433), and short-circuit protection (Section 432). The "no signs of thermal damage" check is the visual flag for an OCPD that has operated under stress and may not operate correctly next time.',
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'Item 5.12 of the A4:2026 Schedule of Inspection lists circuits requiring 30 mA RCD additional protection. Which of the following is in the bullet list, and is new at A4?',
     options: [
-      'All EV charge points (722.531)',
-      'Final circuits supplying luminaires within domestic (household) premises (411.3.4) — added at A4:2026',
-      'All medical equipment',
-      'PV inverters only',
+      'Final circuits supplying luminaires within domestic premises (411.3.4)',
+      'All EV charge point final circuits without exception (722.531)',
+      'All circuits supplying medical electrical equipment in any premises',
+      'PV inverter and string circuits only, on the DC side of the array',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Item 5.12 bullets: all socket-outlets ≤ 32 A unless an exception applies (411.3.3); supply of mobile equipment ≤ 32 A for outdoor use (411.3.3); cables concealed in walls at depth < 50 mm (522.6.202; Table 52.1); cables in walls/partitions containing metal parts regardless of depth (Table 52.1); and "Final circuits supplying luminaires within domestic (household) premises (411.3.4)" — the lighting-circuit RCD requirement promoted at A4:2026.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'Section J of the EIC ("SCHEDULES") is the attachments declaration. What does it state?',
     options: [
-      'A list of customer assets',
-      '"The schedule(s) and continuation sheet(s) listed are part of this document and this certificate is valid only when they are attached to it"',
-      'A health and safety statement',
-      'The fee schedule',
+      'A list of the customer’s assets that are covered by the installation work',
+      'A health and safety method statement for the certified installation works',
+      'That the listed schedules are part of the document and must be attached to it',
+      'The fee schedule and payment terms for the certification work carried out',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section J reads: "Continuation sheet(s) for Section(s) ............. Schedule(s) of Inspection ............. Schedule(s) of Circuit Details and Schedule(s) of Test Results. The schedule(s) and continuation sheet(s) listed are part of this document and this certificate is valid only when they are attached to it." This is the formal attachments declaration that operationalises Reg 644.3. Without the schedules, the certificate is not valid.',
   },

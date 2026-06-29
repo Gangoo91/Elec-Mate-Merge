@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'contact-factor',
     question: 'A cooling coil with a contact factor of 0.85 means:',
     options: [
-      'The handler has less than one year of service with the employer',
+      'The coil removes 85% of the total cooling load',
       '85% of the air contacts the coil surface effectively',
-      'A temporary manual override that reverts after a set time',
-      'Battery backup will maintain supply after mains isolation',
+      'The off-coil temperature is 85% of the entering temperature',
+      'The coil operates at 85% of its rated water flow rate',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'rows-depth',
     question: 'Why do cooling coils typically have 4-8 rows while heating coils have 1-2 rows?',
     options: [
-      'Cooling involves larger temperature differences and dehumidification',
-      'The continual improvement cycle at the core of an Environmental Management System',
-      'Participating — share ideas and facilitate decision-making together',
-      'The equivalent circuit seen by a load as a voltage source in series with a resistance',
+      'Cooling requires latent heat removal and a higher contact factor than heating',
+      'Cooling coils carry water at a much higher pressure than heating coils',
+      'Heating coils must handle a far larger air volume flow rate',
+      'Cooling coils use copper tubes while heating coils use steel',
     ],
     correctIndex: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What determines whether a cooling coil operates 'wet' or 'dry'?",
     options: [
-      'Time for metal halides to vaporise and reach operating temperature',
+      'Whether the chilled water flow rate exceeds the return flow rate',
       'Whether the coil surface is below the entering air dew point',
-      'Legacy single-channel long-haul links (not DWDM)',
-      'Both normal supply AND any standby/generator supply',
+      'Whether the coil has more than four rows of tubes',
+      'Whether the face velocity is above or below 3 m/s',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: "The 'grand sensible heat factor' (GSHF) for a coil is:",
     options: [
-      'Manual adjustment to controller output',
-      '1.5 times the rating of protective device',
-      'Direction of induced current',
+      'The ratio of latent to sensible coil load',
+      'The ratio of off-coil to on-coil temperature',
+      'The ratio of contact factor to bypass factor',
       'The ratio of sensible to total coil load',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     id: 11,
     question: 'The log mean temperature difference (LMTD) for a coil is used to:',
     options: [
-      'Installing capacitors to counteract inductive reactive power',
-      'It creates a brief high current and measures voltage drop',
-      'To highlight residual risks and required precautions on drawings',
+      'Calculate the condensate flow rate from the drain pan',
+      'Set the maximum face velocity to prevent carryover',
+      'Determine the dehumidification capacity of the coil',
       'Determine the effective temperature driving force for heat transfer',
     ],
     correctAnswer: 3,
@@ -228,9 +228,9 @@ const quizQuestions = [
     question: "A 'direct expansion' (DX) coil differs from a chilled water coil because:",
     options: [
       'Refrigerant evaporates inside the coil tubes',
-      'Limits current and drops voltage in a controlled way.',
-      'Oval conduit or suitable protection against nails',
-      'External earth fault loop impedance',
+      'It cannot provide any dehumidification of the air',
+      'It always requires more rows than a chilled water coil',
+      'It uses water heated above 80°C as the working fluid',
     ],
     correctAnswer: 0,
     explanation:

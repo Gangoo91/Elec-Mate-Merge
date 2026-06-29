@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What does it mean to be a "Renewable Electrician" beyond standard electrician scope?',
     options: [
-      'Same scope',
-      'The Renewable Electrician combines: (1) BS 7671 18th Edition + A4:2026 foundation (the baseline competency); (2) LCT-specific competencies — Section 712 PV, Chapter 57 BESS, Section 722 EV, Section 551 generating sets, Reg 722.411.4 outdoor LCT, Chapter 65 EICR-equivalent; (3) manufacturer-certified-installer status across relevant technologies; (4) multi-trade coordination ability (MCS company, refrigerant specialist, civils, planning); (5) systems thinking — multi-source integration vs technology-by-technology. The identity is BS 7671 expert + LCT specialist + customer-facing professional + lifecycle thinker',
-      'Random',
-      'Just PV',
+      'A BS 7671 foundation plus LCT competencies, manufacturer certification and systems thinking',
+      'The same scope as a standard electrician, with general domestic and commercial work but no LCT specialisation',
+      'A non-electrical project-management role coordinating other trades without holding BS 7671 competency',
+      'Solar PV installation only, without BESS, EV or heat-pump competency',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Renewable Electrician identity components: (1) BS 7671 18th Edition + A4:2026 foundation — the baseline competency is fully-qualified electrician with current standard knowledge; not a separate trade but a deepening + specialisation. (2) LCT-specific competencies — across the technologies covered in this course: Section 712 (PV M2-M4), Chapter 57 (BESS M5), Section 722 (EV M6-M7), Part 4-7 + manufacturer (heat pumps M8), Section 551 generating sets (other LCT M9), Chapter 82 PEI + integration (M10), Chapter 81 + lightning + fault (M11), Chapter 64 + 65 verification + EICR-equivalent (M12). (3) Manufacturer-certified-installer status — most LCT manufacturers require certified installer training for warranty + commissioning; the Renewable Electrician maintains current certification across the relevant manufacturers. (4) Multi-trade coordination — MCS company orchestrates; refrigerant specialist (F-gas) for heat pumps; civils + Environment Agency for hydro; planning + structural for wind; the electrician integrates the BS 7671 install with the technology-specific trades. (5) Systems thinking — multi-source LCT is not the sum of technologies but an integrated energy system; the Renewable Electrician designs + verifies + supports the integration. (6) Customer-facing — handover + ongoing engagement + lifecycle management = relationship + business. (7) UK 2025-26 market reality: shortage of competent Renewable Electricians vs demand; rates + opportunities reflect this; the identity is professionally + commercially valuable.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'How do M1-M11 + M12 fit together in the Renewable Electrician\'s mental model?',
     options: [
-      'Linear list',
-      'Layered model: M1 = renewable / LCT landscape + decarbonisation context (the why). M2-M4 = PV (the dominant LCT, foundational + most-frequent install). M5 = BESS (storage, increasingly paired with PV). M6-M7 = EV charging (mass-market growth path). M8 = heat pumps (the heating decarbonisation pillar, BUS-grant-driven). M9 = other LCT (wind, solar thermal, biomass, CHP, hydro, hydrogen). M10 = hybrid + EMS + smart export (multi-source integration). M11 = Chapter 81 + lightning + fault levels (regulatory framework integration). M12 = verification + EICR + handover (lifecycle discipline). All under BS 7671:2018+A4:2026 + the cert evidence bundle audit trail',
-      'Random',
-      'Reverse order',
+      'A flat linear list of unrelated topics studied in any order with no underlying structure',
+      'A strict reverse sequence learned from M12 verification back to M1 foundations',
+      'Two independent tracks — a PV/BESS track and an EV/heat-pump track that never connect',
+      'A layered model: context, each technology, multi-source integration, regulatory framework, then verification, all under BS 7671',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'M1-M12 layered mental model: (1) M1 Foundations — renewable / LCT landscape + UK decarbonisation context + regulatory frameworks (BS 7671, MCS, EREC G98 / G99, BUS, SEG); sets the why + the system. (2) M2-M4 Solar PV — dominant LCT in UK 2025-26 + foundational install pattern; Section 712 + Reg 712.421.101 IMD + anti-islanding + EREC + MIS 3002. (3) M5 BESS — storage increasingly paired with PV; Chapter 57 + Section 551 + BMS lifecycle. (4) M6-M7 EV charging — mass-market growth path; Section 722 + Reg 722.411.4 + OPDD + RDC-DD. (5) M8 Heat pumps — heating decarbonisation pillar; BUS grant gateway; Part 4-7 + manufacturer commissioning + MIS 3005. (6) M9 Other LCT — wind / solar thermal / biomass / CHP / hydro / hydrogen; Section 551 unifying framework + per-MIS technology standards. (7) M10 Hybrid + EMS + smart export — multi-source integration; Chapter 82 PEI; SEG + EREC G100; V2G; grid-forming. (8) M11 Chapter 81 + lightning + fault levels — regulatory framework integration + BS EN 62305 LPS + fault contribution from multi-source. (9) M12 Verification + EICR + handover — lifecycle discipline; Chapter 64 IV + Chapter 65 EICR + MCS handover pack + customer education + cert evidence bundle. (10) Cross-cutting: BS 7671:2018+A4:2026 throughout + cert evidence bundle audit trail + skilled-person competency + customer-facing professional standard. (11) The layered model means each module deepens specific competency while contributing to the integrated Renewable Electrician identity.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What does the upcoming mock exam aim to assess?',
     options: [
-      'Memorisation only',
-      'The mock exam assesses applied competency across M1-M12: (1) regulatory knowledge — reg cites + meaning + application (Section 712 / Chapter 57 / Section 722 / Section 551 / Chapter 64 / Chapter 65); (2) technology-specific scenarios — PV / BESS / EV / heat pump / wind / hydro / CHP / hydrogen; (3) multi-source integration — Chapter 82 PEI + Reg 551.4.2 + Reg 551.7.5; (4) verification + EICR-equivalent + cert evidence bundle; (5) customer-facing scenarios — handover + fault response + lifecycle. Not memorisation — applied judgement on real-world install + verification + lifecycle problems',
-      'Random',
-      'Pure theory',
+      'Memorisation of reg numbers and facts only, with no applied judgement on real scenarios',
+      'Only the final module (M12) verification content, ignoring the technology modules entirely',
+      'Applied competency across M1-M12: regulation, technology scenarios, integration, verification and customer judgement',
+      'Pure theory and definitions, with no link to real-world installation or verification work',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Mock exam structure + purpose: (1) Regulatory knowledge — reg cites + meaning + application across the BS 7671 + LCT framework; Section 712 PV; Chapter 57 BESS; Section 722 EV; Section 551 generating sets; Chapter 64 IV; Chapter 65 EICR; Reg 722.411.4 outdoor LCT; Reg 712.421.101 IMD; Reg 551.7.5 anti-islanding; Reg 415.1 RCD; Reg 642 / 643 inspection + testing. (2) Technology-specific scenarios — applied problems on PV / BESS / EV / heat pumps / wind / solar thermal / biomass / CHP / micro-hydro / hydrogen + emerging LCT. (3) Multi-source integration — Chapter 82 PEI; Reg 551.4.2 multi-source RCD effectiveness; coordinated architecture; integrated EICR-equivalent. (4) Verification + EICR + cert evidence bundle — Chapter 64 IV procedures; Chapter 65 periodic; classification codes (C1/C2/C3/FI); MCS handover pack; cert evidence bundle integration. (5) Customer-facing scenarios — handover meeting; fault response; warranty events; property sale transitions. (6) Format — applied judgement on realistic install + verification + lifecycle problems; not memorisation. (7) Preparation — review M1-M12 systematically; practice scenario application; consolidate the integrated mental model; cert evidence bundle thinking. (8) Outcome — passing the mock exam validates the Renewable Electrician competency; supports professional standing + customer + manufacturer + DNO + Ofgem credibility.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What continued professional development (CPD) is appropriate beyond this course?',
     options: [
-      'Nothing',
-      'CPD beyond this course: (1) BS 7671 amendments — A4:2026 may be followed by future amendments; track + study + apply; (2) MCS standard updates — MIS 3001-3008 evolve; product approval lists updated; track; (3) manufacturer-certified-installer training — maintain certifications + new manufacturer products + technology evolutions; (4) emerging LCT — hydrogen, fuel cells, V2G, grid-forming inverters, advanced BMS chemistries; (5) industry CPD — IET, NICEIC, ECA, IEEE conferences + courses; (6) hands-on practice — install + verification + EICR experience builds competency; (7) cert evidence bundle review — your own installs taught backwards; (8) peer + manufacturer + DNO engagement — community learning',
-      'Random',
-      'Already finished',
+      'No further development is needed once the course and mock exam are complete',
+      'Tracking BS 7671 and MCS updates, maintaining manufacturer certifications and ongoing industry CPD',
+      'Re-sitting this exact same course every year, covering no new material or technologies',
+      'Reading only this course material occasionally, with no manufacturer or industry engagement',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Course recap synthesis: what are the BS 7671 regs MOST frequently cited across M1-M12?',
     options: [
-      'Random',
-      'Top cross-cutting regs: (1) Reg 411.4 / 411.5 ADS + earthing arrangements; (2) Reg 415.1 30 mA RCD additional protection; (3) Reg 531.3.3 Type AC restriction + Type B / RDC-DD selection; (4) Reg 551.7.5 anti-islanding; (5) Reg 551.7.2.1 supply-side connection + BESS as generating set; (6) Reg 551.4.2 multi-source RCD effectiveness; (7) Reg 641.1-644.5 initial verification; (8) Reg 651-653 periodic inspection; (9) Reg 712.421.101 PV IMD; (10) Reg 722.411.4 outdoor EV PME restriction; (11) Reg 643.3 IR + Table 64. These regs anchor the LCT framework',
-      'Only one reg',
-      'No pattern',
+      'Only Part 1 fundamental principles are cited, with the numbered regulations rarely recurring',
+      'A single isolation regulation recurs throughout, with no protection or verification regs',
+      'ADS and earthing, 30 mA RCD, RCD type, anti-islanding, verification, PV IMD and outdoor EV',
+      'Mostly Part 7 special-location regs, with the core protection chapters seldom appearing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Top cross-cutting regs across M1-M12: (1) Reg 411.4 + 411.5 ADS — fundamental fault protection across all LCT circuits; loop impedance + ADS time verified per Reg 643.7. (2) Reg 415.1 — 30 mA RCD additional protection; categorical for LCT circuits. (3) Reg 531.3.3 — Type AC restriction + matched-type selection (Type A + RDC-DD or Type B per LCT electronics). (4) Reg 551.7.5 — anti-islanding for generating sets; M2-M4 PV + M5 BESS + M9 wind / CHP / hydro all subject. (5) Reg 551.7.2.1 — supply-side connection + BESS as generating set. (6) Reg 551.4.2 — multi-source RCD effectiveness across combinations; critical for M10 integration + M12 verification. (7) Reg 641.1-644.5 — initial verification framework; M12 Section 1 core. (8) Reg 651-653 — periodic inspection + EICR; M12 Sections 3 + 5 core. (9) Reg 712.421.101 — PV IMD; M2-M4 + M12 Section 2. (10) Reg 722.411.4 — outdoor EV PME restriction; M6-M7 + M12 Section 4; A4:2026 deleted the former indent (a) so methods are now lettered (b)–(e). (11) Reg 643.3 + Table 64 — IR testing; M12 Section 2 DC IR focus. (12) Other regs heavily referenced: Reg 712.514 PV warning notices; Reg 514.9.1 diagrams; Reg 642.3 inspection items; Reg 643.7 ADS verification; Reg 415.1.1 30 mA additional protection operative; Reg 537 isolation + switching; Reg 542 earthing electrodes; Reg 411.5.3 TT system. (13) The regs cluster around: fault protection + additional protection + verification + LCT-specific extensions + multi-source coordination.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'UK 2025-26 LCT retrofit pipeline — what is the dominant install pattern?',
     options: [
-      'PV only',
-      'Dominant UK 2025-26 retrofit pattern: PV (often as first LCT addition; ~6 kWp typical for 3-4 bed semi) + BESS (added in same install or 1-3 yr later; ~10-13 kWh typical) + heat pump (BUS grant driven; ASHP ~10-15 kWth typical; replacing gas boiler) + EV charger (often added when EV purchased). Multi-source integration emerges over years rather than all at once. Section 712 + Chapter 57 + Reg 722.411.4 + MIS 3005 BUS heat pump = the core competency stack. Cert evidence bundle integrates over time',
-      'Random',
-      'No pattern',
+      'PV first, then BESS, then a BUS-grant heat pump and an EV charger — building up over years',
+      'PV is the only LCT ever installed on UK homes, with no storage, heat pumps or chargers added',
+      'Heat pump first in almost all cases, with PV and BESS only ever added years afterwards',
+      'EV charger first for most households, installed before any generation or storage at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'UK 2025-26 dominant retrofit pipeline: (1) PV first — typically the first LCT addition for many households; 4-8 kWp typical for 3-4 bed semi; MCS 3002 + EREC G98 fast-track; SEG export tariff. (2) BESS added — often in same install (new-build PV + BESS combo) or 1-3 yr later (PV first, then BESS as customer experiences self-consumption value); 8-13 kWh typical residential; Chapter 57 + Section 551. (3) Heat pump retrofit — BUS-grant-driven (£7,500 ASHP) at end-of-life of existing gas boiler or as proactive decarbonisation; MIS 3005 + Part 4-7 + manufacturer commissioning; typically 10-15 kWth for 3-4 bed semi. (4) EV charger — added when household acquires EV (private or company car); Section 722 + Reg 722.411.4 + OPDD-integrated charger; 7 kW domestic AC charging dominant. (5) Multi-source integration — emerges over years rather than all at once for most households; new-build increasingly delivers integrated multi-source at handover. (6) Core competency stack: Section 712 PV + Chapter 57 BESS + Reg 722.411.4 outdoor EV + MIS 3005 heat pump + Section 551 generating sets + Chapter 64 + 65 verification. (7) Cert evidence bundle integrates per-addition over the property lifetime. (8) UK 2025-26 grant + policy direction: BUS heat pump grant continues; SEG remains; PV + BESS receive market support but no headline grant; EV charging is mature retail market. (9) Forward look 2026-30: integrated install patterns growing; V2G expanding; commercial + industrial LCT scaling.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Mock exam preparation — what is the recommended approach?',
     options: [
-      'Cram the night before',
-      'Recommended approach: (1) review M1-M12 systematically — not memorisation but mental-model consolidation; (2) revisit the key regs (Reg 411 / 415 / 551 / 641-644 / 651-653 / 712 / 722); (3) practice applied scenarios — for any LCT install describe Reg + verification + cert evidence bundle; (4) test your multi-source thinking — coordinate Section 712 + Chapter 57 + Section 722 + Section 551 verification matrix; (5) revisit common mistakes from each module; (6) use the FAQs as quick-fire prompts; (7) cert evidence bundle thinking — what would you record for this install + verification + EICR; (8) rest before exam; engaged not exhausted',
-      'Random',
-      'Skip review',
+      'Cram the whole course in a single session the night before the exam',
+      'Skip any review and rely on prior on-site knowledge alone on the day',
+      'Memorise the reg numbers in strict order without practising any applied scenarios',
+      'Review M1-M12 systematically, revisit key regs, practise scenarios and rest before the exam',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mock exam preparation approach: (1) Systematic review — go through M1-M12 module overviews + key takeaways; not memorisation but consolidation of the integrated mental model. (2) Key regs — revisit the cross-cutting regs: Reg 411.4 + 411.5 ADS; Reg 415.1 RCD; Reg 531.3.3 RCD type; Reg 551.7.5 anti-islanding + 551.7.2.1 + 551.4.2; Reg 641-644 IV; Reg 651-653 EICR; Reg 712.421.101 PV IMD; Reg 722.411.4 outdoor EV; Reg 643.3 IR + Table 64. (3) Applied scenarios — for any LCT install (single-source or multi-source) walk through: design considerations + applicable Section / Chapter regs + verification framework + cert evidence bundle. (4) Multi-source thinking — coordinate verification matrix across sources: per-source IV + Reg 551.4.2 + Reg 551.7.5 cross-source + outdoor LCT open-PEN architecture. (5) Common mistakes — review the CommonMistake sections in each module; pattern-recognition helps avoid in exam + practice. (6) FAQs as quick-fire — the FAQ sections cover common knowledge points; quick scan helps reinforce. (7) Cert evidence bundle thinking — for any scenario, what would you record + how does it integrate with MCS handover pack + customer + DNO. (8) Rest + nutrition + hydration before exam; engaged not exhausted. (9) On exam day: read questions carefully + identify the LCT technology / verification stage / customer-facing context; apply the mental model; answer methodically.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'What does the Renewable Electrician\'s career look like UK 2025-30?',
     options: [
-      'Plateau',
-      'Growth trajectory: (1) LCT install demand growing across PV + BESS + heat pumps + EV — BUS grant + SEG + decarbonisation targets driving; (2) competent LCT installers in short supply vs demand — premium rates + opportunities; (3) integration + multi-source LCT becoming standard — Renewable Electrician\'s integrated competency increasingly valuable; (4) commercial + industrial LCT scaling — larger projects + grid services + smart export + V2G; (5) lifecycle services growing — EICR-equivalent + monitoring + warranty + repair; (6) emerging tech — hydrogen, fuel cells, advanced BMS, grid-forming; (7) policy direction — UK 2030 + 2050 net-zero targets; (8) professional standing — manufacturer + DNO + Ofgem + customer recognition',
-      'Random',
-      'Decline',
+      'A flat plateau with no change in demand or opportunity across the decade',
+      'A growth trajectory: rising LCT demand, installer shortage, integration as standard and policy support',
+      'A steady decline as LCT installation work dries up and existing systems are removed',
+      'A short-lived boom that ends entirely once the current BUS grant scheme closes',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Beyond the mock exam — what next?',
     options: [
-      'Stop learning',
-      'Beyond mock exam: (1) apply the M1-M12 framework in actual installs + verifications + EICR-equivalents — practice is the consolidation; (2) maintain BS 7671 + LCT-specific competencies via CPD; (3) build manufacturer-certified-installer status across key LCT brands; (4) cert evidence bundle discipline on every install — your own portfolio; (5) customer relationship + ongoing engagement — the business + safety case; (6) industry engagement — IET / NICEIC / Solar Energy UK / HPF membership + events; (7) peer networking + knowledge sharing; (8) track A4:2026 + future BS 7671 amendments + UK policy + emerging LCT; (9) consider mentoring / apprentice training role',
-      'Random',
-      'Memorise only',
+      'Apply the framework on real installs, maintain CPD and certifications, keep cert evidence discipline and engage with industry',
+      'Stop learning entirely, as the qualification is now considered fully complete',
+      'Specialise in a single LCT technology and drop the others to simplify ongoing CPD',
+      'Continue only by memorising new regulations, without any practical installation application',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Beyond mock exam — career pathway: (1) Apply M1-M12 framework — actual install + verification + EICR-equivalent practice is where the consolidation happens; deliberate reflection on each install builds tacit competency; cert evidence bundle as the personal portfolio. (2) Maintain CPD — BS 7671 amendments + MCS standard updates + manufacturer training cycles + emerging LCT awareness. (3) Manufacturer-certified-installer status — key LCT brands (Tesla, GivEnergy, Sonnen, Solis, Fronius, Mitsubishi, Daikin, Vaillant, Zappi, Ohme, etc); maintain certification cycles; access to manufacturer support + warranty + commercial advantages. (4) Cert evidence bundle discipline — every install + verification + EICR-equivalent builds the personal portfolio; supports customer + warranty + audit + professional reputation + property value preservation. (5) Customer relationship — handover meeting discipline + annual touchpoint + EICR-equivalent + warranty support + property sale transitions = business + safety case. (6) Industry engagement — IET (Institution of Engineering + Technology) + NICEIC + ECA + Solar Energy UK + Heat Pump Federation + electric vehicles industry bodies — membership + events + CPD + networking + standards influence. (7) Peer networking — installer community + manufacturer technical + DNO engineers + Ofgem submissions; community learning. (8) Track regulatory + policy + tech evolution — A4:2026 + future amendments + UK 2030 / 2050 targets + emerging LCT. (9) Mentor + apprentice training — the next generation of Renewable Electricians; pay it forward; deepen your own understanding via teaching. (10) Professional standing matures over years; this course is foundation + actual practice + CPD + community build the career.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Final synthesis: what is the single most important habit for a Renewable Electrician?',
     options: [
-      'Speed',
-      'Cert evidence bundle discipline. Every install + verification + EICR-equivalent + customer touchpoint feeds the cert evidence bundle. Comprehensive lifecycle record supports: customer safety + customer confidence + warranty + insurance + audit + property sale + your professional reputation + the wider safety case for LCT adoption. Without cert evidence bundle discipline = silent failures + warranty disputes + safety incidents + reputation damage. With cert evidence bundle discipline = comprehensive support + smooth operations + professional standing + business growth',
-      'Random',
-      'Memorisation',
+      'Working as fast as possible on every job to maximise the number of installs',
+      'Memorising as many BS 7671 regulation numbers as possible from memory',
+      'Always choosing the cheapest compliant components to win more competitive quotes',
+      'Cert evidence bundle discipline — a comprehensive lifecycle record supporting safety, warranty and reputation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cert evidence bundle discipline as the single most important habit: (1) Comprehensive lifecycle record — every install (MCS handover pack + EIC + Schedule + commissioning + warranty + photos / thermal + customer touchpoint + sign-off) + every periodic visit (EICR-equivalent + BMS data + thermal + manufacturer correspondence + customer touchpoint) + every event (warranty claim + alarm response + firmware update + service visit). (2) Customer safety — the audit trail supports identification of issues before they become incidents; lifecycle picture catches degradation + drift. (3) Customer confidence — comprehensive documentation = customer knows what they have + trusts the installer + supports property value at sale. (4) Warranty + insurance — claims supported by comprehensive evidence; disputes minimised. (5) Audit — installer audit + DNO + Ofgem + manufacturer audit; comprehensive records protect. (6) Property sale — well-documented LCT install adds property value; poorly-documented detracts; cert evidence bundle is the audit anchor at sale. (7) Professional reputation — the installer\'s portfolio over years = the reputation = the business; cert evidence bundle is the proof. (8) Safety case for LCT — UK 2025-26 + 2050 LCT adoption depends on the wider industry maintaining safety + quality; every installer\'s discipline contributes. (9) Without cert evidence bundle discipline — silent failures + warranty disputes + safety incidents + reputation damage. (10) With discipline — comprehensive support + smooth operations + professional standing + business growth + safety case for the LCT industry. (11) Habit because it\'s repetitive + lifelong + cumulative — the discipline pays back over years.',
   },

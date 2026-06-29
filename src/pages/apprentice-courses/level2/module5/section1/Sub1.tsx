@@ -45,10 +45,10 @@ const checks = [
     question:
       "It's your first day on a commercial fit-out. The main contractor's Site Manager walks past the welfare cabin and tells you to drop everything and help carry plasterboard up to the second floor. Your own electrical contractor's Site Supervisor has just briefed you to first-fix containment in the comms room. What's the right move?",
     options: [
-      "Prevailing \\\"tough it out\\\" and \\\"leave feelings at the gate\\\" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration",
-      "Politely tell the Site Manager you've been tasked by your own supervisor on a different priority, and offer to ask your supervisor to come over so the two managers can re-prioritise. You take instructions on the work face from your own contractor's chain (Site Supervisor → Project Engineer → Contracts Manager). The main contractor's Site Manager co-ordinates between contractors but does not give direct instructions to a sub-contractor's apprentice.",
-      "Ask what they're comparing against — often cheap quotes exclude things your quote includes (testing, certification, branded materials, insured workmanship, scheme guarantee). Walk through your quotation explaining each element. If the gap remains large, the cheap quote is probably non-compliant — wish them well and let them go. Never undercut your true cost to win work.",
-      "Five years from issue. Renewal requires a current ECS Health & Safety Assessment pass (which itself is only valid for 3 years) plus current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
+      "Drop the containment job straight away — the main contractor's Site Manager is the most senior person on site, so their instruction overrides your supervisor's.",
+      "Politely explain you've been tasked by your own supervisor on a different priority, and offer to fetch your supervisor so the two managers can re-prioritise.",
+      "Carry on with your containment and ignore the Site Manager — you only answer to your own electrical contractor and the main contractor has no say over you.",
+      "Down tools and wait for the two managers to sort it out between themselves before doing any work at all.",
     ],
     correctIndex: 1,
     explanation:
@@ -59,10 +59,10 @@ const checks = [
     question:
       "On a £4m commercial refit, what's the practical difference between the Project Manager (PM) and the Site Manager (SM)?",
     options: [
-      "The Project Manager is client-facing and owns the programme, the budget and the contract. They sit in an office most of the week and visit site weekly. The Site Manager runs the site day to day — daily plan, trade co-ordination, welfare, safety walks, snag-list. The PM is who the client talks to about delays and money. The SM is who the trades talk to about the work itself.",
-      "Claims arising from professional advice, designs, specifications or instructions you provide that cause financial loss to a client. Distinct from Public Liability — PI covers economic loss from advice / design; PL covers injury / property damage from physical work.",
-      "Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.",
-      "A documented record of the location, condition and type of asbestos-containing materials in non-domestic premises (and the common parts of multi-occupied residential). The dutyholder (typically owner/landlord) must maintain it; provide it to anyone working on the fabric.",
+      "The PM is client-facing and owns the programme, budget and contract, visiting weekly; the SM runs the site day to day — daily plan, trade co-ordination, welfare and safety walks.",
+      "The PM and SM are the same job with two names; firms use whichever title they prefer and there is no real difference in what they do.",
+      "The SM is senior to the PM and owns the contract, while the PM just keeps the daily site diary and reports up to the SM.",
+      "The PM handles only the electrical work and the SM handles only the building work; they each run a separate trade on site.",
     ],
     correctIndex: 0,
     explanation:
@@ -73,10 +73,10 @@ const checks = [
     question:
       "What does an electrical Foreman (or Site Supervisor) actually do that the Project Engineer and Contracts Manager don't?",
     options: [
-      "Digital and durable — typically PDF for the drawings and schedules, native files (DWG, RVT, IFC) where the building owner has compatible software, and a structured index. Hard-copy printout if the building owner needs one. On HRRBs, format must support the BSA 2022 golden thread requirements (accessible, structured, digital).",
-      "Ask for and record their Environment Agency (or SEPA / NRW / NIEA) Waste Carrier Registration number, then verify it on the public Environment Agency Waste Carrier register before transferring the waste. Keep the waste transfer note showing the carrier number, vehicle registration, waste description and EWC code, signed by both parties. Retain for at least two years. A two-minute online check is the difference between compliant and not.",
-      "The Foreman directs the work at the face — who pulls which cable, in what sequence, before what trade. They sign off small works, run the daily morning brief, allocate apprentices to electricians, and feed back any problems up the chain. The Project Engineer designs and resolves technical queries; the Contracts Manager owns the contract, programme and money. The Foreman is the only one of the three who is in the work area all day.",
-      "Yes — Reg 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. The verifier should confirm by manufacturer declaration, marking, datasheet or test report that the equipment conforms to BS EN 61851 and that any socket-outlet or vehicle connector conforms to BS EN IEC 62196-2. Where evidence is present, the AFDD exemption applies legitimately.",
+      "The Foreman produces the cable calculations and resolves design queries, while the Project Engineer runs the morning brief at the work face.",
+      "The Foreman owns the contract and the money, while the Project Engineer and Contracts Manager only visit site when there is a dispute.",
+      "The Foreman directs the work at the face — who pulls which cable, in what sequence — runs the daily brief and allocates apprentices, and is the only one of the three in the work area all day.",
+      "The Foreman has no day-to-day role and only steps in to sign off the finished installation at hand-over.",
     ],
     correctIndex: 2,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       "Who in the site management team is the client's main day-to-day point of contact on a typical commercial project?",
     options: [
-      "Prove the voltage indicator works on a known live source (often a proving unit), test the conductors at the work location to confirm dead, then re-prove the indicator on the known live source to confirm it didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fail during the test.",
-      "The Project Manager (PM). The PM owns the contract, the programme and the budget on the contractor's side, and is the person the client phones when there's a question about money, dates, scope or a serious problem. The Site Manager runs the site day to day but the client-facing seat sits with the PM.",
-      "Politely decline. Explain that the firm has a no-tips policy because it keeps the relationship clean — the firm has already been paid for the work via the invoice, and accepting an extra payment from a customer can look like an inducement to give favourable certificates or quotes in future. Offer instead that they could leave a Google review or recommend the firm.",
-      "Verify the bond clamp is still on consumer-side metal pipework (post-meter, before any branch). If yes, no change needed. The PE supply doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding (not extraneous-conductive); the consumer steel pipework still does and gets bonded as before.",
+      "The Foreman, because they are in the work area all day and know exactly how the job is progressing.",
+      "The Project Manager (PM), who owns the contract, programme and budget on the contractor's side and is who the client phones about money, dates, scope or a serious problem.",
+      "The Site Manager, because they run the site day to day and are the most senior person physically on site.",
+      "The Approved Electrician, because they hold the technical competence to answer the client's questions directly.",
     ],
     correctAnswer: 1,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       "What's the role of a Charge-hand on an electrical install?",
     options: [
-      "A three-step end-to-end measurement of r1, rn and r2, followed by cross-connection of the line/neutral loops and the line/cpc loops, with readings at each socket expected to be approximately constant and equal to (r1 + rn)/4 (and similarly for L–cpc)",
-      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
-      "Charge-hand is a senior trade lead — typically an experienced Approved Electrician who runs a small gang of electricians and apprentices on a specific area of the work, reporting up to the Foreman. On a larger job there can be several Charge-hands under one Foreman, each leading a wing or a floor.",
-      "Electrical-specific design suites that combine BS 7671 calculation engines with schedule generation and CAD drafting in one environment. They produce SLDs, schedules, calc sheets and Revit-exportable models from one shared dataset, removing the duplication between calc tool and CAD tool.",
+      "A junior apprentice whose job is making the tea and running errands for the rest of the gang during the working day.",
+      "The desk-based technical role that produces the cable calculations and resolves design queries from site.",
+      "A senior trade lead — typically an experienced Approved Electrician — who runs a small gang on a specific area and reports up to the Foreman.",
+      "The most senior manager on site, who owns the contract with the main contractor and signs off variations.",
     ],
     correctAnswer: 2,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       "On the electrical contractor's side of the chain, what does the Contracts Manager own?",
     options: [
-      "Lead or coordinate the evacuation per the building's fire-safety strategy, ensure everyone exits via planned routes, account for personnel at the muster point, liaise with the fire service when they arrive, prevent re-entry until all-clear given. Defined under the Regulatory Reform (Fire Safety) Order 2005.",
-      "Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures",
-      "(1) Eliminate — could the work be done quieter? (2) Substitute — manual torque wrench? (3) Engineer — quieter tool, sound-absorbing barriers? (4) Administrative — limit duration, exclude others from area. (5) PPE — ear defenders LAST. Noise at Work Regs 2005 require risk assessment at 80dB action level.",
-      "The Contracts Manager owns the commercial relationship with the main contractor (or client direct) — the programme, the variations, the labour resourcing, the invoicing. They sit above the Project Engineer and the Site Supervisor, often running several jobs in parallel. They're rarely on any one site full-time but they're the senior decision-maker for that contract.",
+      "The day-to-day allocation of tasks at the work face and the running of the gang's morning brief.",
+      "The cable calculations, protective device settings and the sign-off of as-installed drawings.",
+      "The pre-use inspection of tools and the maintenance of the site's lifting equipment.",
+      "The commercial relationship with the main contractor — the programme, variations, labour resourcing and invoicing — sitting above the Project Engineer, often running several jobs at once.",
     ],
     correctAnswer: 3,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       "What's the difference between an Approved Electrician and an Apprentice Mentor?",
     options: [
-      "Approved Electrician is a competence grade — the JIB grade above Electrician, awarded after AM2 plus experience and CPD. Mentor is a role — an experienced electrician (usually Approved or above) who is formally allocated to support a specific apprentice through portfolio, on-site learning and the AM2. The same person is often both.",
-      "A periodic inspection of an EXISTING installation — assessing whether the installation remains safe for continued use, identifying observations and classifying them C1/C2/C3/FI, and recommending a next inspection date. Distinct from the EIC, which certifies new work or major alterations.",
-      "The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap",
-      "Three layers — pre-use visual inspection by the operative every shift (cable, plug, casing, guard, switch, brushes for corded tools); periodic in-service inspection (formal visual check by a competent person); and PAT (Portable Appliance Testing) on the documented site interval. Sub 1.3 covers this in detail. The point: PUWER Reg 5 isn't 'PAT once a year'. It's an ongoing duty with multiple layers.",
+      "Approved Electrician is a JIB competence grade above Electrician; Mentor is a role — an experienced electrician formally allocated to support a specific apprentice through portfolio, on-site learning and AM2. Often the same person.",
+      "Approved Electrician and Mentor are both JIB grades, with Mentor sitting one step above Approved Electrician on the ladder.",
+      "Approved Electrician is a workplace role with no formal qualification, while Mentor is the JIB grade awarded after AM2 plus experience.",
+      "They are two names for the same thing — an electrician who has passed AM2 and supervises apprentices day to day.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,12 +146,12 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      "Under CDM 2015 Reg 12 what does the Principal Contractor (typically the main contractor) have to ensure for every worker arriving on a notifiable site?",
+      "Under CDM 2015 what must the Principal Contractor (typically the main contractor) ensure for every worker arriving on a notifiable site?",
     options: [
-      "Replace the periodic inspection with reliance on the O&M regime under GN3 guidance — formal periodic can be reduced or replaced where an effective management system with competent permanent on-site maintenance staff is in place. The decision must be documented and the management regime evidenced.",
-      "The Principal Contractor must ensure a suitable site induction is provided. The induction covers the construction phase plan, site rules, welfare arrangements, emergency procedures and the specific hazards on that site. This is how the management chain transfers safety information to the people doing the work.",
-      "A three-step end-to-end measurement of r1, rn and r2, followed by cross-connection of the line/neutral loops and the line/cpc loops, with readings at each socket expected to be approximately constant and equal to (r1 + rn)/4 (and similarly for L–cpc)",
-      "Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions",
+      "That every worker holds a current ECS card and has personally signed the construction phase plan before starting.",
+      "That a suitable site induction is provided, covering site rules, welfare, emergency procedures and the specific hazards on that site.",
+      "That every worker has passed AM2 or its trade equivalent before being allowed onto the work face.",
+      "That each worker provides their own PPE and lifting equipment, inspected and certified by their own employer.",
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       "The loudest, most confident voice on a site briefing is usually the most senior person there. True or false?",
     options: [
-      "Because it informs the supervisor\\\\\\\\'s framing — \\\\\\\"the consequence cascade isn\\\\\\\\'t hypothetical; it\\\\\\\\'s structured by the Sentencing Council guideline; here\\\\\\\\'s roughly where this incident would land\\\\\\\". Plus director liability under s.37 + Sentencing Council means the L3\\\\\\\\'s observations to senior management land with weight.",
-      "A director's loan account (DLA) is the running record of money flowing between a director and the Ltd company — money the director lends to the company (positive DLA balance for the director) or money the director takes out of the company beyond declared salary and dividends (negative / overdrawn DLA, which is a director's loan from the company). Overdrawn DLAs above £10,000 attract benefit-in-kind tax; long-term overdrawn DLAs attract Section 455 tax (32.5% on the loan).",
-      "False — seniority on site is signalled by the badge on the hard hat, the title in the morning brief and the position in the chain of command. Loud confidence is often the trade person who has been on the longest, not the person who is in charge. Quiet, calm direction is more often the sign of a senior manager. When in doubt, ask 'who's the Site Manager today?' rather than listening for volume.",
-      "Buildings of 18 m or more in height (typically 7 storeys or more) containing two or more residential units. The HRRB regime came in after the Grenfell Tower fire and brings additional fire-safety requirements including (depending on the specific building regulations) recommended AFDDs (Reg 421.1.7) on socket circuits, mandatory linked smoke detection, and enhanced fire compartmentation. The regime is administered by the Health and Safety Executive (Building Safety Regulator) for the highest-risk buildings.",
+      "True — the person who speaks loudest at the brief is given that role precisely because they can be heard over a noisy site.",
+      "True — site convention is that the most senior manager always leads the briefing in the loudest voice so everyone knows who is in charge.",
+      "False — seniority is signalled by the badge on the hard hat, the title in the brief and the position in the chain; loud confidence is often just the longest-serving trade person, not the boss.",
+      "False — there is no chain of command on a modern site, so no one is more senior than anyone else regardless of how they speak.",
     ],
     correctAnswer: 2,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       "What does HASAWA s.2 require an employer to do that connects to having a clear management structure?",
     options: [
-      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
-      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
-      "The handover pack — a single document (paper or digital) listing every piece of equipment installed with the manufacturer's part number, the serial number, the warranty period and a link to the user manual. Plus contact details for in-warranty service and the firm's after-care number.",
-      "HASAWA s.2 requires every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. Section 2(2)(a) explicitly requires the provision of safe systems of work, and a clear management structure with defined supervisory responsibilities is part of that. An employer who can't say who supervises whom is in breach of s.2.",
+      "Provide every employee with a written copy of the construction phase plan before they start work.",
+      "Ensure each employee carries their own public liability insurance to cover any harm they cause on site.",
+      "Display the names and contact numbers of all sub-contractors at the site entrance at all times.",
+      "Ensure, so far as is reasonably practicable, the health, safety and welfare of employees — including safe systems of work, of which a clear management and supervisory structure is part.",
     ],
     correctAnswer: 3,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       "On a typical day, who gives an apprentice their actual work instructions on a commercial fit-out?",
     options: [
-      "The electrical contractor's Foreman or Charge-hand at the morning brief — they translate the day's programme into specific tasks for each pair of hands. The Approved Electrician you're paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.",
-      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
-      "Toolbox talks are short pre-shift safety briefings on a single topic — the RAMS for the day, a recent near-miss, a seasonal hazard. They keep the formal RAMS active in the day-to-day work. Recorded with attendance. Together with the RAMS sign-on they form the daily safety briefing chain.",
-      "The JIB Apprentice Grading scheme tracks an apprentice's progress through training and uses recorded competence (often drawn from the diary, portfolio and review forms) to support grade progression. JIB grades are tied to industry-standard pay rates under the JIB Working Rules; progressing through the grades requires evidence, and the diary is part of the evidence chain.",
+      "The electrical contractor's Foreman or Charge-hand at the morning brief, who allocate the day's tasks; the Approved Electrician you're paired with then directs the work at the face.",
+      "The main contractor's Site Manager, who gives every operative on site their tasks directly regardless of which contractor employs them.",
+      "The client's M&E consultant, who attends each morning to set the day's work for the electrical apprentices.",
+      "Whoever is most senior in the welfare cabin at the start of the shift, irrespective of trade or employer.",
     ],
     correctAnswer: 0,
     explanation:

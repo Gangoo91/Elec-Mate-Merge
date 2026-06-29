@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'method-statement-purpose',
     question: 'What is the primary purpose of a method statement?',
     options: [
-      'Take a deliberate pause, use controlled breathing, and if possible request a short break before continuing the discussion',
-      'Failure of one or more output transistors (IGBTs) within the drive, or a very low impedance fault on the output',
-      '17 UN global goals addressing economic, social, and environmental challenges by 2030',
-      'To describe step-by-step how a task will be carried out safely, identifying hazards and controls for each step',
+      'To describe step-by-step how a task will be done safely, with hazards and controls per step',
+      'To replace the separate risk assessment so only one document is needed',
+      'To certify, as a legal record, that the finished installation is compliant',
+      'To record the cost and materials used once the job has been completed',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'A method statement describes the step-by-step sequence of work activities, identifying the hazards associated with each step and the control measures that will be applied. It is a practical, operational document that translates the findings of the risk assessment into a workable plan that the team can follow on site. It complements but does not replace the risk assessment.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'Under the Construction (Design and Management) Regulations 2015, method statements are most closely linked to which CDM document?',
     options: [
       'The pre-construction information pack',
-      'The F10 notification',
-      'The health and safety file',
       'The construction phase plan',
+      'The health and safety file',
+      'The F10 notification',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'The construction phase plan is the CDM document that sets out how health and safety will be managed during the construction phase. Method statements form part of the construction phase plan, providing the detailed work procedures for specific tasks. The principal contractor is responsible for ensuring the construction phase plan is in place and that method statements from all contractors are coordinated.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'method-statement-review',
     question: 'When should a method statement be reviewed and updated?',
     options: [
-      'To provide mechanical protection against impact, crushing and penetration during installation and service',
-      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
-      'Whenever there is a significant change in the work method, site conditions, personnel, or when the original method proves inadequate',
+      'Once a year as part of the company audit cycle, regardless of site conditions',
+      'Never, because once signed off a method statement is fixed and must not be changed',
+      'Only after an accident has occurred on site and an investigation is opened',
+      'Whenever the work method, conditions or personnel change, or the method proves inadequate',
     ],
     correctIndex: 3,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'The key elements of a method statement include:',
     options: [
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
-      'The risk assessment identifies hazards and evaluates risks; the method statement describes how the work will be done safely, incorporating the controls identified in the risk assessment',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
-      'Walk through the method statement step by step, explain the hazards and controls, answer questions, and confirm everyone understands before signing',
+      'The supervisor\'s name, the start date and a general note to work carefully',
+      'The company directors, their contact details and the firm\'s insurance policy number',
+      'Task description, step-by-step sequence, hazards and controls per step, responsible persons, emergency arrangements and resources',
+      'The final test results and the schedule of test results recorded after completion',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     question:
       'The relationship between a risk assessment and a method statement is best described as:',
     options: [
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
-      'The location of first aid provision, emergency procedures for the specific hazards of the task, rescue arrangements for confined spaces or working at height, and the procedure for reporting incidents',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
+      'They are two names for exactly the same document',
+      'The method statement must always be written before the risk assessment',
+      'The risk assessment replaces the method statement on low-risk jobs',
       'The risk assessment identifies hazards and evaluates risks; the method statement describes how the work will be done safely, incorporating the controls identified in the risk assessment',
     ],
     correctAnswer: 3,
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'When briefing a work team on a method statement, the person in charge should:',
     options: [
-      'Walk through the method statement step by step, explain the hazards and controls, answer questions, and confirm everyone understands before signing',
-      'The principal contractor for the construction phase plan, and each contractor for their own work methods',
-      'The risk assessment identifies hazards and evaluates risks; the method statement describes how the work will be done safely, incorporating the controls identified in the risk assessment',
-      'Stop work, assess the changed conditions, and update the method statement (and risk assessment if necessary) before proceeding',
+      'Walk through it step by step, explain hazards and controls, take questions and confirm understanding before signing',
+      'Hand out copies for signature without any discussion, to keep the briefing brief and save time',
+      'Brief only the most senior team member and rely on them to pass it on to the others',
+      'Read out only the emergency arrangements and leave the team to read the work steps themselves',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'Under CDM 2015, who is responsible for ensuring that method statements are in place for construction work?',
     options: [
-      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
+      'The client alone, who must personally write every method statement',
       'The principal contractor for the construction phase plan, and each contractor for their own work methods',
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
-      'Stop work, assess the changed conditions, and update the method statement (and risk assessment if necessary) before proceeding',
+      'The Health and Safety Executive, who issue them to each site',
+      'The individual worker, who decides whether one is needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'A method statement for an electrical panel changeover should include:',
     options: [
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
-      'Breaking the entire task down into individual sequential steps, each describing a specific activity, the hazards present during that step, and the controls to be applied',
-      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
+      'Only the isolation step in detail, treating the rest of the job as routine work',
+      'Only the testing and commissioning carried out at the very end of the changeover',
+      'The complete sequence: preparation, isolation, changeover, testing, commissioning, reinstatement and handover',
+      'A general note that the changeover must be carried out safely by competent persons',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'Emergency arrangements in a method statement should include:',
     options: [
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
-      'Breaking the entire task down into individual sequential steps, each describing a specific activity, the hazards present during that step, and the controls to be applied',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
-      'The location of first aid provision, emergency procedures for the specific hazards of the task, rescue arrangements for confined spaces or working at height, and the procedure for reporting incidents',
+      'The name and signature of the author, with emergency response left to site rules',
+      'A generic statement to dial 999, applicable to any incident on any project',
+      'The list of tools and PPE required, from which the team can infer the response',
+      'First aid provision, task-specific emergency procedures, rescue arrangements and the incident-reporting process',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: 'A method statement sign-off sheet records:',
     options: [
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
-      'Breaking the entire task down into individual sequential steps, each describing a specific activity, the hazards present during that step, and the controls to be applied',
+      'The names of everyone briefed, confirming they understand the hazards, controls and their responsibilities',
+      'The quantities of materials delivered to site and the supplier delivery note references',
+      'The test results obtained after the installation has been energised and commissioned',
+      'The daily weather conditions recorded on site throughout the project programme',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'If conditions on site differ from those described in the method statement, you should:',
     options: [
-      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
+      'Continue with the original method to avoid delaying the programme',
       'Stop work, assess the changed conditions, and update the method statement (and risk assessment if necessary) before proceeding',
-      'Walk through the method statement step by step, explain the hazards and controls, answer questions, and confirm everyone understands before signing',
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
+      'Improvise a new method on the spot without recording it',
+      'Carry on but skip the steps that no longer seem to apply',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: "A 'step-by-step task breakdown' in a method statement means:",
     options: [
-      'Stop work, assess the changed conditions, and update the method statement (and risk assessment if necessary) before proceeding',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
-      'Breaking the entire task down into individual sequential steps, each describing a specific activity, the hazards present during that step, and the controls to be applied',
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
+      'A single paragraph summarising the whole job and its main hazards in general terms',
+      'A list of every tool needed for the task, set out in the order they are picked up',
+      'Dividing the task into sequential steps, each with its specific activity, hazards and controls',
+      'A timeline showing the planned start and finish times for each phase of the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,10 +216,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, maintenance technicians should be able to:',
     options: [
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
-      'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
-      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
+      'Contribute to method statements for their work, follow them on site and flag when they need updating',
+      'Delegate all safety planning to the site manager and simply carry out the instructions given',
+      'Work without method statements on routine tasks, provided they are sufficiently experienced',
+      'Sign off method statements as briefed without needing to read the individual work steps',
     ],
     correctAnswer: 0,
     explanation:

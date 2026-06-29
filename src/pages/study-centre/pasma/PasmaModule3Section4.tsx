@@ -79,20 +79,20 @@ const quizQuestions = [
     id: 1,
     question: 'A tower overturns when which of the following occurs?',
     options: [
-      'The tower is too heavy',
       'The centre of gravity moves outside the base area',
+      'The tower is too heavy',
       'The castors are unlocked',
       'The tower is painted incorrectly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A tower overturns when the centre of gravity moves outside the base area. This can be caused by wind loading, operatives reaching sideways, pushing or pulling from the platform, uneven loading, or impact from vehicles or equipment.',
   },
   {
     id: 2,
     question: 'What is the maximum height-to-base ratio for a mobile tower used INDOORS?',
-    options: ['2.5:1', '3:1', '3.5:1', '4:1'],
-    correctAnswer: 2,
+    options: ['2.5:1', '3:1', '4:1', '3.5:1'],
+    correctAnswer: 3,
     explanation:
       'The indoor maximum height-to-base ratio is 3.5:1. For example, a double-width tower with a 1.35m minimum base dimension can reach a maximum platform height of 4.725m indoors without stabilisers.',
   },
@@ -110,19 +110,19 @@ const quizQuestions = [
     question: 'What must outriggers rest on to be effective?',
     options: [
       'Any surface, including grass',
-      'Firm ground or sole boards, positioned equally on all sides',
       'Only concrete surfaces',
+      'Firm ground or sole boards, positioned equally on all sides',
       'They can be suspended in the air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Outriggers must rest on firm ground or sole boards and be positioned equally on all sides of the tower. If the ground is soft, sole boards spread the load. Unequal positioning reduces their effectiveness and can create an imbalanced tower.',
   },
   {
     id: 5,
     question: 'At what Beaufort Force should work CEASE on a mobile tower?',
-    options: ['Force 2', 'Force 3', 'Force 4', 'Force 6'],
-    correctAnswer: 2,
+    options: ['Force 4', 'Force 2', 'Force 3', 'Force 6'],
+    correctAnswer: 0,
     explanation:
       'Work should cease at Beaufort Force 4 (approximately 17 mph / 13 knots). At this wind speed, conditions on the platform become unsafe for working. The tower structure itself may withstand up to Force 6, but the people on it cannot work safely.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
     id: 8,
     question:
       'A single-width tower (0.85m base) is being used indoors. What is the maximum freestanding platform height?',
-    options: ['2.55m', '2.975m', '3.40m', '4.25m'],
-    correctAnswer: 1,
+    options: ['2.55m', '3.40m', '4.25m', '2.975m'],
+    correctAnswer: 3,
     explanation:
       'Indoor ratio is 3.5:1. Maximum height = base dimension x 3.5 = 0.85m x 3.5 = 2.975m. Single-width towers reach their maximum freestanding height quickly due to the narrow base, which is why stabilisers are often required.',
   },

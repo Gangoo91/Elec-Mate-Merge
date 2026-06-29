@@ -42,11 +42,11 @@ const quickCheckQuestions = [
     question: 'A 4-pole motor runs at 1440 rpm on a 50Hz supply. What is the slip?',
     options: [
       '2%',
-      '8%',
-      '6%',
       '4%',
+      '6%',
+      '8%',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Slip s = (Ns - Nr) / Ns x 100% = (1500 - 1440) / 1500 x 100% = 4%. Typical full-load slip for induction motors is 2-6%. The rotor must slip behind the rotating field to induce current.',
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What produces the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'The planned/unplanned ratio (or reactive/proactive split)',
+      'A direct current applied to the rotor through slip rings',
       'Three-phase currents displaced by 120 degrees in the stator windings',
-      'To prevent damage to final fittings and finishes',
-      'When working near watercourses or installing certain equipment',
+      'Permanent magnets mounted on the rotating squirrel cage',
+      'A mechanical commutator switching the stator coils in sequence',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why must there be slip in an induction motor for it to produce torque?',
     options: [
-      'To compensate for reduced cooling at low speeds',
-      'Maximum winding temperature of 155 degrees C',
+      'To allow the rotor to spin faster than the stator field',
+      'To keep the power factor close to unity at full load',
       'To induce voltage and current in the rotor conductors',
-      'S4 - Intermittent periodic duty with starting',
+      'To limit the starting current to a safe level',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which factor has the greatest impact on motor efficiency losses?',
     options: [
-      'Power is proportional to speed cubed',
+      'Windage and friction losses in the bearings',
       'Copper losses (I squared R) in windings',
-      'S4 - Intermittent periodic duty with starting',
-      'Maximum winding temperature of 155 degrees C',
+      'Stray load losses from leakage flux',
+      'Iron losses from hysteresis in the laminations',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'Which duty cycle applies to a motor used for crane hoisting with defined on/off periods?',
     options: [
-      'Copper losses (I squared R) in windings',
+      'S1 - Continuous running duty at constant load',
       'S4 - Intermittent periodic duty with starting',
-      'Maximum winding temperature of 155 degrees C',
-      'To induce voltage and current in the rotor conductors',
+      'S2 - Short-time duty for a single defined period',
+      'S6 - Continuous operation periodic duty',
     ],
     correctAnswer: 1,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     question:
       'When selecting a motor for a variable speed application, why might you choose a motor with higher power rating?',
     options: [
-      'Maximum winding temperature of 155 degrees C',
-      'Power is proportional to speed cubed',
-      'Copper losses (I squared R) in windings',
+      'To raise the synchronous speed of the rotating field',
+      'To reduce the slip at full load to almost zero',
+      'To allow direct-on-line starting without a drive',
       'To compensate for reduced cooling at low speeds',
     ],
     correctAnswer: 3,
@@ -235,13 +235,13 @@ const quizQuestions = [
       'A 15kW IE3 motor costs 800 pounds more than an equivalent IE2 motor. If electricity costs 15p/kWh and the motor runs 4000 hours/year, what is the approximate payback period?',
     options: [
       '1-2 years',
-      'More than 5 years',
+      'More than 8 years',
       'Less than 1 year',
       '3-4 years',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
-      'IE3 is typically 2% more efficient than IE2 at this rating. Annual savings = 15kW x 0.02 x 4000h x 0.15 pounds = 180 pounds/year. Payback = 800/180 = 4.4 years. However, larger motors and higher running hours give faster payback, often under 2 years.',
+      'IE3 is typically about 2% more efficient than IE2 at this rating. Annual saving = 15kW x 0.02 x 4000h x 0.15 pounds = 180 pounds/year. Payback = 800 / 180 = 4.4 years, which falls in the 3-4 year band. Higher running hours or a larger price gap would shift this — more hours give faster payback, a bigger premium gives slower payback.',
   },
 ];
 

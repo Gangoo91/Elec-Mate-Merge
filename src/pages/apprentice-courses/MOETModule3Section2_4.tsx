@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What semiconductor devices do soft starters use to control the motor voltage?',
     options: [
       'Back-to-back thyristors (SCRs)',
-      'Test each line to neutral separately',
-      'Cross-connect termination',
-      'Steel tape measure or laser measure',
+      'Insulated gate bipolar transistors (IGBTs)',
+      'Power diodes in a bridge arrangement',
+      'Field-effect transistors (MOSFETs)',
     ],
     correctIndex: 0,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'How long should you wait after isolating a VSD before opening the enclosure?',
     options: [
       "At least 5 minutes (check manufacturer's data)",
-      "Potentially dangerous - urgent remedial action required",
-      "Eliminate wrong options and guess",
-      "The person who carried out inspection and testing",
+      "No wait is needed once the supply is isolated",
+      "Around 30 seconds for the capacitors to discharge",
+      "Until the cooling fans have fully stopped",
     ],
     correctIndex: 0,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What does V/f control maintain constant?',
     options: [
       'Voltage-to-frequency ratio',
-      'Fan and filter maintenance',
-      'Back-to-back thyristors (SCRs)',
-      '5th, 7th, 11th and 13th',
+      'Output current magnitude',
+      'DC bus voltage level',
+      'Inverter switching frequency',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What semiconductor devices do soft starters use?',
     options: [
-      '5th, 7th, 11th and 13th',
+      'Insulated gate bipolar transistors (IGBTs)',
       'Back-to-back thyristors (SCRs)',
-      'Engineering Recommendation G5/4-1',
-      'Torque reduces (field weakening)',
+      'Power diodes in a six-pulse bridge',
+      'Power MOSFETs in parallel',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'What UK standard sets harmonic emission limits for installations?',
     options: [
-      'Back-to-back thyristors (SCRs)',
+      'BS 7671 Appendix 4',
       'Engineering Recommendation G5/4-1',
-      'Voltage-to-frequency ratio',
-      'Screened (shielded) cable',
+      'BS EN 61000-3-2',
+      'Engineering Recommendation P28',
     ],
     correctAnswer: 1,
     explanation:
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'What happens if you run a motor above base speed (above 50 Hz)?',
     options: [
       'Torque reduces (field weakening)',
-      'Screened (shielded) cable',
-      'Voltage-to-frequency ratio',
-      'Engineering Recommendation G5/4-1',
+      'Torque increases with the higher frequency',
+      'Torque stays constant up to twice base speed',
+      'The motor stalls and the drive trips',
     ],
     correctAnswer: 0,
     explanation:

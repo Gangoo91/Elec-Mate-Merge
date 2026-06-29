@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'pf-definition',
     question: 'Power factor is the ratio of:',
     options: [
-      'BS EN 60309-2 (commando/CEE) socket',
-      'Up to 90% or higher heat recovery',
-      'DC does not produce a changing magnetic flux',
+      'Reactive power (kVAr) to apparent power (kVA)',
+      'Apparent power (kVA) to real power (kW)',
+      'Reactive power (kVAr) to real power (kW)',
       'Real power (kW) to apparent power (kVA)',
     ],
     correctIndex: 3,
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What causes a lagging power factor in building services?',
     options: [
-      'The test current passes through earth causing imbalance',
+      'Capacitive loads such as long underground cables',
       'Inductive loads such as motors and transformers',
-      'Measure end-to-end resistance of each conductor (L, N, E)',
-      'Enabling - provides framework for regulations',
+      'Purely resistive loads such as heaters',
+      'Over-correction by oversized capacitor banks',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is reactive power?',
     options: [
-      'Measure multiple parameters: V, I, kW, kVA, kVAr, PF, harmonics',
-      'To take reasonable care of themselves and others affected by their actions',
-      'To capture system performance data over time for analysis and verification',
+      'The total power supplied by the DNO transformer',
+      'The useful power that performs work at the load',
+      'The power lost as heat in the cable resistance',
       'Power that oscillates between source and load without doing work',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where should power factor correction capacitors ideally be installed?',
     options: [
-      'To prevent insulation damage on sharp edges',
+      'On the DNO side of the supply meter',
       'As close to the inductive loads as practical',
-      '24 hours maximum as per BS 5266-1',
-      'An ID card confirming qualifications and competence',
+      'Directly across the output of every VSD',
+      'At the furthest point from any inductive load',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why might automatic power factor correction be needed?',
     options: [
-      'Power stored and returned by inductors and capacitors',
-      'Kinetic (water) → mechanical (turbine/generator) → electrical',
-      'Verify the generator is isolated and cannot start automatically',
+      'To raise the supply voltage during peak demand',
+      'To filter harmonic currents from non-linear loads',
+      'To provide standby power during a mains failure',
       'To handle variable loads that change power factor',
     ],
     correctAnswer: 3,
@@ -178,12 +178,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'What is the effect of over-correction (power factor > 1.0 leading)?',
+    question: 'What is the effect of over-correction (a leading power factor)?',
     options: [
       'Voltage rise at the point of connection',
-      'Load requirements and current demand',
-      'They can lock clients into using a single vendor',
-      'The condenser outlet (liquid line)',
+      'A reduction in the real power consumed',
+      'Elimination of all harmonic distortion',
+      'An increase in the supply frequency',
     ],
     correctAnswer: 0,
     explanation:

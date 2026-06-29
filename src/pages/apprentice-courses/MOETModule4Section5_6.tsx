@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'comm-definition',
     question: 'What is the primary objective of electrical commissioning?',
     options: [
-      'To provide all information needed to safely operate, maintain, and modify the installation, including as-built drawings, equipment data sheets, test certificates, and maintenance schedules',
-      'To systematically verify that all electrical systems and equipment operate safely, correctly, and to their design specification before being placed into normal service',
-      'Short-duration, low-disturbance work such as drilling a single hole through an asbestos cement product while using appropriate controls',
-      'Use BS 7671 — it is the underlying standard, the OSG is a derivative work; check whether the OSG edition is older than the BS 7671 amendment you are designing to.',
+      'To gather all the operate, maintain and modify information for the finished installation',
+      'To verify all systems operate safely and to specification before going into service',
+      'To calculate the design current and select the protective devices for each circuit',
+      'To produce the quotation and agree the contract price for the installation work',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'comm-precheck',
     question: 'Why must pre-commissioning checks be completed before any equipment is energised?',
     options: [
-      'Legal, never sensible — selling a non-MCS install means the customer can never claim SEG, can’t sell the house with a renewables certificate, and may invalidate their building insurance. The DNO G98/G99 paperwork is still mandatory regardless of MCS status.',
-      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
-      'A defined subset — most non-trivial work in special locations (bathroom Zone 0/1, swimming pool, sauna, etc.); installation of a new circuit; replacement of a consumer unit. Like-for-like accessory replacement, repairs, additions to an existing circuit OUTSIDE special locations are NOT notifiable.',
-      'Because energising equipment without verifying correct installation, connections, and settings could result in immediate damage to equipment, injury to personnel, or fire — pre-commissioning checks identify and correct deficiencies while the system is safe (de-energised)',
+      'Because they are only required by the equipment manufacturer to validate the warranty',
+      'Because they reduce the total time the installation team needs to spend on site overall',
+      'Because BS 7671 forbids any testing of an installation once it has been energised',
+      'Because energising before checks risks damage, injury or fire while faults stay hidden',
     ],
     correctIndex: 3,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'comm-sequence',
     question: 'What is the correct general sequence for energising an electrical installation?',
     options: [
-      'It must achieve the required Performance Level (PL) through appropriate architecture, component reliability, diagnostic coverage, and common cause failure avoidance',
-      'Energise from the source outwards — supply first, then main switchboard, then distribution boards, then individual circuits — verifying correct operation at each stage before proceeding',
-      'Providing initial support to someone experiencing a mental health crisis, listening non-judgementally and guiding them towards professional help',
-      'Thank the assessor for their time, reflect on how the assessment went (what went well, what could be improved), and wait for the formal result through the proper channels — results typically take a few weeks to be confirmed',
+      'Energise all final circuits first, then work back towards the incoming supply',
+      'Energise from the source outwards — supply, switchboard, boards, circuits — verifying each stage',
+      'Energise the entire installation simultaneously, to check that it all works at once',
+      'Energise the largest load first, then add the smaller circuits in order of size',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'comm-soak',
     question: 'What is the purpose of a soak test (extended run test) during commissioning?',
     options: [
-      'All permits, risk assessments, atmospheric monitoring records, training records, equipment inspection records, CCTV footage, witness statements, and the scene itself',
-      'A 10-digit Unique Taxpayer Reference issued by HMRC when you register for Self Assessment as a self-employed individual. You need it to file your annual tax return and for all HMRC correspondence. Apply within 3 months of starting trade.',
-      'To operate the equipment under normal load conditions for an extended period to identify any intermittent faults, overheating, abnormal vibration, or performance drift that would not be detected during brief functional testing',
-      'From notification of pregnancy onwards — the risk assessment should be carried out as soon as the employer is notified and reviewed as the pregnancy progresses',
+      'To clean the equipment internally by running it submerged in a coolant fluid',
+      'To verify the insulation resistance of the cables before the supply is connected',
+      'To run under load for an extended period to find faults, overheating or drift',
+      'To confirm the equipment can withstand a deliberate short-circuit fault current',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Commissioning of electrical systems should be carried out by:',
     options: [
-      'Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions',
-      'Competent persons with knowledge of the system design, equipment operation, and testing procedures, who have been briefed on the specific requirements of the installation',
-      'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
-      'Workplace conditions can change after the formal risk assessment was written, and new hazards can emerge during the work',
+      'Any available operative, since commissioning requires no specific knowledge',
+      'Competent persons who know the design, equipment and tests, briefed on the installation',
+      'The client alone, who has the best understanding of how the system will be used',
+      'The equipment manufacturer only, who must attend every commissioning on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A pre-commissioning checklist for a motor control centre (MCC) should include:',
     options: [
-      'Ensure the commissioning records are filed as baseline data for future maintenance, establish the preventive maintenance schedule based on manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommendations and commissioning findings, and monitor early-life performance for any issues',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks',
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
+      'Only a visual check that the panel doors are closed and the labels are legible',
+      'A measurement of the final running current of each motor under its full load',
+      'Terminations, torque, device ratings, phase rotation, clean interior and interlocks',
+      'Confirmation that the client has signed the handover certificate in advance',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'Phase rotation (phase sequence) must be verified before energising three-phase equipment because:',
     options: [
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'During the design and planning stage, with the commissioning requirements, sequence, responsibilities, and acceptance criteria defined before installation begins',
-      'Verification of correct operation in all modes: normal (mains-powered), battery (mains-failure), bypass (maintenance), and transfer between modes, including verification of transfer times and output voltage/frequency under load',
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
+      'Incorrect phase rotation increases the supply voltage above the equipment rating',
+      'Incorrect phase rotation prevents the protective devices from being correctly rated',
+      'Incorrect phase rotation causes the insulation resistance of the cables to fall',
+      'It runs motors backwards, risking driven equipment and phase-sensitive relays',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'During commissioning, a motor draws significantly higher current than its nameplate rating. The commissioning engineer should:',
     options: [
-      'Stop the motor immediately, investigate the cause (which could be mechanical overload, incorrect supply voltage, winding fault, or incorrect motor specification), and do not restart until the cause is identified and rectified',
-      'Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'During the design and planning stage, with the commissioning requirements, sequence, responsibilities, and acceptance criteria defined before installation begins',
+      'Stop the motor at once, investigate the cause, and do not restart until it is rectified',
+      'Allow the motor to keep running, as high current is normal during commissioning',
+      'Increase the rating of the overload protection so the motor stops tripping out',
+      'Reduce the supply voltage to bring the current down to the nameplate value',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'The commissioning of a UPS (uninterruptible power supply) system should include:',
     options: [
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
-      'Verification of correct operation in all modes: normal (mains-powered), battery (mains-failure), bypass (maintenance), and transfer between modes, including verification of transfer times and output voltage/frequency under load',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s operational status at handover',
+      'Verification of the mains-powered mode only, as the battery mode rarely operates',
+      'All modes — normal, battery, bypass and transfer — with times and output under load',
+      'A simple visual inspection of the battery terminals without any functional test',
+      'A check of the output voltage in bypass mode only, with no load connected',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'A commissioning programme for a new building electrical installation should be developed:',
     options: [
-      'Identify hot spots indicating high-resistance connections, overloaded conductors, unbalanced loads, or failing components under normal operating conditions',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'During the design and planning stage, with the commissioning requirements, sequence, responsibilities, and acceptance criteria defined before installation begins',
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
+      'Only after the installation is complete and the system has already been energised',
+      'On the day of handover, once the client has confirmed the final requirements',
+      'During design and planning, with the sequence, roles and criteria set in advance',
+      'After the first fault occurs, so the programme can address real problems found',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'After replacing a variable speed drive (VSD) during maintenance, the commissioning process should include:',
     options: [
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'Ensure the commissioning records are filed as baseline data for future maintenance, establish the preventive maintenance schedule based on manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommendations and commissioning findings, and monitor early-life performance for any issues',
-      'Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation',
+      'Connecting the drive and leaving it on its factory default parameters',
+      'A visual check of the drive display only, with no test run of the motor',
+      'Confirming the drive powers up, then returning the system straight to service',
+      'Setting all parameters from the record and test-running the motor at various speeds',
     ],
     correctAnswer: 3,
     explanation:
@@ -164,10 +164,10 @@ const quizQuestions = [
     id: 8,
     question: 'Thermal imaging during commissioning is used to:',
     options: [
-      'Identify hot spots indicating high-resistance connections, overloaded conductors, unbalanced loads, or failing components under normal operating conditions',
-      'The client or their representative observing the commissioning tests and verifying the results, providing independent confirmation that the system meets the specified requirements',
-      'During the design and planning stage, with the commissioning requirements, sequence, responsibilities, and acceptance criteria defined before installation begins',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
+      'Identify hot spots from loose connections, overloads, unbalance or failing components',
+      'Measure the insulation resistance between the conductors while the system is dead',
+      'Confirm the correct phase rotation at each three-phase distribution board on site',
+      'Record the exact dimensions of the switchgear for the as-built drawing set',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'A witness test during commissioning involves:',
     options: [
-      'Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks',
-      'The client or their representative observing the commissioning tests and verifying the results, providing independent confirmation that the system meets the specified requirements',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      'Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system\\\\\\\\\\\\\\\'s operational status at handover',
+      'A second technician repeating every test to check the first technician\'s work',
+      'The client or their representative observing the tests and verifying the results',
+      'Testing the installation without informing anyone, to catch hidden faults',
+      'A legal statement signed by a witness confirming the installer was on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'The commissioning record (documentation pack) should include:',
     options: [
-      "Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation",
-      "During the design and planning stage, with the commissioning requirements, sequence, responsibilities, and acceptance criteria defined before installation begins",
-      "Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system's operational status at handover",
-      "Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays",
+      "Only a single pass or fail statement covering the whole installation",
+      "Just the manufacturer data sheets for the equipment that was installed",
+      "Checklists, certificates, settings, thermal and soak records, snags and handover status",
+      "The contractor's invoice and a copy of the agreed contract price only",
     ],
     correctAnswer: 2,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 11,
     question: "A 'snag list' in the context of commissioning refers to:",
     options: [
-      'Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s operational status at handover',
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
-      'Identify hot spots indicating high-resistance connections, overloaded conductors, unbalanced loads, or failing components under normal operating conditions',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
+      'The list of tools and test equipment required to carry out the commissioning',
+      'A schedule of the planned preventive maintenance tasks for the installation',
+      'The sequence in which the circuits should be energised during commissioning',
+      'A list of minor defects found at commissioning, to be fixed before or soon after handover',
     ],
     correctAnswer: 3,
     explanation:
@@ -217,10 +217,10 @@ const quizQuestions = [
     question:
       "After commissioning is complete and the system is handed over, the maintenance technician's responsibility is to:",
     options: [
-      "Ensure the commissioning records are filed as baseline data for future maintenance, establish the preventive maintenance schedule based on manufacturer's recommendations and commissioning findings, and monitor early-life performance for any issues",
-      "The client or their representative observing the commissioning tests and verifying the results, providing independent confirmation that the system meets the specified requirements",
-      "Stop the motor immediately, investigate the cause (which could be mechanical overload, incorrect supply voltage, winding fault, or incorrect motor specification), and do not restart until the cause is identified and rectified",
-      "Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays",
+      "File the records as the baseline, set the maintenance schedule, and watch early-life performance",
+      "Discard the commissioning records, since they are no longer needed after handover",
+      "Re-commission the entire installation from scratch every month as a routine task",
+      "Hand all responsibility to the client and take no further interest in the system",
     ],
     correctAnswer: 0,
     explanation:

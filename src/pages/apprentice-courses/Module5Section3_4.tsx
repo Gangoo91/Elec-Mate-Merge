@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is minimising disruption to other trades important?',
     options: [
-      'Absorption of current by the insulation (polarisation)',
+      'It removes the need to follow the site programme',
       'To keep projects on schedule and reduce conflict',
-      'The difference between predicted and actual energy consumption',
-      'The driven turns 3× slower with 3× the torque',
+      'It allows electrical work to skip second fix',
+      'It means other trades can be ignored on site',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Give one example of a common clash between electrical and another trade.',
     options: [
-      'Strong encryption, regular updates, and network segmentation',
-      'Using multiple sensors or methods to confirm actual intrusions',
+      'Electricians testing circuits after handover',
+      'Electricians ordering materials before first fix',
       'Electricians running cables while plastering is ongoing',
-      'Higher ceilings require more sensitivity',
+      'Electricians attending a site coordination meeting',
     ],
     correctIndex: 2,
     explanation:
@@ -60,10 +60,10 @@ const Module5Section3_4 = () => {
       id: 1,
       question: 'Why is minimising disruption to other trades important?',
       options: [
-        'Verified against designer\\\\\\\'s specification',
+        'It removes the need to attend coordination meetings',
         'To keep projects on schedule and reduce conflict',
-        'Responsible, Accountable, Consulted, Informed',
-        'It\\\\\\\'s converted to heat, sound, or other forms',
+        'It allows first fix to be skipped entirely',
+        'It means the site programme can be ignored',
       ],
       correctAnswer: 1,
       explanation:
@@ -134,9 +134,9 @@ const Module5Section3_4 = () => {
       id: 7,
       question: 'What is a consequence of poor coordination?',
       options: [
-        'A unit of solid angle in three-dimensional space',
-        'Protective devices operate immediately',
-        'Current cannot complete its path',
+        'Faster overall project completion',
+        'Lower material costs for the job',
+        'Improved relationships between trades',
         'Rework, delays, or damaged installations',
       ],
       correctAnswer: 3,
@@ -148,9 +148,9 @@ const Module5Section3_4 = () => {
       question: 'Why should electricians attend site meetings?',
       options: [
         'To plan work alongside other trades',
-        'Easily scalable without rewiring',
-        'Neatly in line with agreed grid systems',
-        'Switching a fan on or off',
+        'To avoid having to follow the site programme',
+        'To order materials directly from suppliers',
+        'To sign off other trades\' completed work',
       ],
       correctAnswer: 0,
       explanation:
@@ -160,10 +160,10 @@ const Module5Section3_4 = () => {
       id: 9,
       question: 'What should you do if another trade damages your installation?',
       options: [
-        'Loud machinery on a building site',
+        'Quietly repair it and say nothing',
         'Report it to the supervisor immediately',
-        'The permanent live conductors (loop terminals)',
-        '4:1 (standard 4x more accurate)',
+        'Wait until the next site meeting to mention it',
+        'Leave it and note it on the final certificate',
       ],
       correctAnswer: 1,
       explanation:
@@ -173,10 +173,10 @@ const Module5Section3_4 = () => {
       id: 10,
       question: 'Give one way to reduce disruption during multi-trade work in confined spaces.',
       options: [
-        'False - written records provide important backup',
-        'Testing insulation effectiveness',
+        'Work as fast as possible to clear the space first',
+        'Bring extra workers to finish before other trades',
         'Agree work times/areas with other trades',
-        'In individual rooms or zones for localised control',
+        'Start work without checking the site programme',
       ],
       correctAnswer: 2,
       explanation:

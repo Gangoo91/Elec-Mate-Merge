@@ -15,10 +15,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 1,
     question: 'What is the general definition of an electrical fault?',
     options: [
-      'Supervisor, client, and responsible person immediately',
+      'A planned interruption of supply for maintenance work',
       'Any defect that prevents a circuit from functioning safely or correctly',
-      'Fault conditions create abnormal current flow and safety risks',
-      'Loose connections, overloaded circuits, or supply problems',
+      'A circuit operating normally but at reduced load',
+      'Any circuit that draws more than its design current',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,10 +31,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 2,
     question: 'How does a fault condition differ from normal operation in a circuit?',
     options: [
-      'Supervisor, client, and responsible person immediately',
-      'Heat generation, voltage drop, and potential fire risk',
+      'Current is shared evenly between all connected loads',
+      'The supply voltage rises above its nominal value',
       'Fault conditions create abnormal current flow and safety risks',
-      'Lower impedance ensures higher fault current and faster disconnection',
+      'Power factor improves while current stays within design limits',
     ],
     correctAnswer: 2,
     explanation:
@@ -47,9 +47,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 3,
     question: 'What does a short circuit involve?',
     options: [
-      'For legal compliance, safety tracking, and future reference',
-      'Leakage currents can flow, creating safety hazards',
-      'Systematically dividing the circuit to isolate the fault location',
+      'A break in the protective conductor near the load',
+      'A small leakage current flowing to earth through insulation',
+      'A loose terminal developing a high resistance over time',
       'Unintended contact between line and neutral or line-to-line conductors',
     ],
     correctAnswer: 3,
@@ -64,9 +64,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What is an earth fault?',
     options: [
       'When live conductors make contact with earth or earthed metalwork',
-      'Polarity testing with appropriate test instruments',
-      'Any defect that prevents a circuit from functioning safely or correctly',
-      'Any fault that creates risk of shock, fire, or burns',
+      'When line and neutral conductors touch each other directly',
+      'When a conductor is broken and current cannot flow',
+      'When line and neutral are connected the wrong way round',
     ],
     correctAnswer: 0,
     explanation:
@@ -79,10 +79,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 5,
     question: 'What is an open circuit?',
     options: [
-      'A fault affects safety, a defect may not immediately compromise safety',
+      'A circuit drawing excessive current beyond its rating',
       'When a conductor is broken or disconnected, stopping current flow',
-      'Check calibration dates and perform prove unit tests',
-      'Record all test results with locations and conditions',
+      'A circuit with a low-resistance path between live conductors',
+      'A circuit where live conductors contact earthed metalwork',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 6,
     question: 'What happens when insulation breaks down in a cable?',
     options: [
-      'Isolate the circuit and implement temporary safety measures',
-      'Ensure safe isolation and prove dead testing',
+      'The conductor cross-sectional area increases',
+      'Current flow stops completely in the circuit',
       'Leakage currents can flow, creating safety hazards',
-      'To determine maximum fault currents for equipment rating',
+      'The circuit voltage automatically reduces to a safe level',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 7,
     question: 'Why is reversed polarity considered a fault?',
     options: [
-      'Any fault that creates risk of shock, fire, or burns',
-      'Damaged insulation, loose connections, or foreign objects',
-      'Appropriate PPE, safe working practices, and correct procedures',
+      'It increases the current rating of the circuit',
+      'It causes the protective device to operate too quickly',
+      'It improves the earth fault loop impedance',
       'Conductors are connected incorrectly, creating safety risks',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What are the main categories of electrical fault causes?',
     options: [
       'Installation errors, environmental factors, and component failures',
-      'To prevent accidents, legal non-compliance, and property damage',
-      'Record all test results with locations and conditions',
-      'Regular calibration, inspection, and servicing according to manufacturer instructions',
+      'Continuity tests, insulation tests, and polarity tests',
+      'Supervisors, clients, and responsible persons',
+      'Visual, audible, and thermal symptoms',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 9,
     question: 'Why is it important to correctly identify faults during testing?',
     options: [
-      'For legal compliance, safety tracking, and future reference',
+      'To reduce the time spent on routine documentation',
       'To prevent accidents, legal non-compliance, and property damage',
-      'Updated drawings, test certificates, and modification records',
-      'Conductors are connected incorrectly, creating safety risks',
+      'To avoid the need for any protective devices',
+      'To allow circuits to operate above their rated current',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 10,
     question: 'According to BS 7671, what constitutes a dangerous fault condition?',
     options: [
-      'Supervisor, client, and responsible person immediately',
-      'To test systematically and interpret results correctly',
+      'Any fault that increases the energy bill of the installation',
+      'Any fault that causes a minor cosmetic defect only',
       'Any fault that creates risk of shock, fire, or burns',
-      'Protective equipment detects and isolates faults to prevent danger',
+      'Any fault that affects the appearance of the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,9 +175,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 11,
     question: 'What is the difference between a fault and a defect in electrical installations?',
     options: [
-      'Systematically dividing the circuit to isolate the fault location',
-      'Details of work done, tests performed, and compliance with standards',
-      'Damaged insulation, loose connections, or foreign objects',
+      'A fault occurs only on new work, a defect only on existing work',
+      'A fault is found by testing, a defect only by visual inspection',
+      'A fault is always permanent, a defect is always temporary',
       'A fault affects safety, a defect may not immediately compromise safety',
     ],
     correctAnswer: 3,
@@ -192,9 +192,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'How do transient faults differ from permanent faults?',
     options: [
       'Transient faults are temporary and may clear themselves',
-      'The safety category for overvoltage protection',
-      'Very low resistance path between conductors that should be separate',
-      'Record all test results with locations and conditions',
+      'Transient faults always require a circuit to be rewired',
+      'Transient faults only affect three-phase installations',
+      'Transient faults cannot be detected by any test instrument',
     ],
     correctAnswer: 0,
     explanation:
@@ -223,10 +223,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 14,
     question: 'Why might a circuit appear to work normally while having a hidden fault?',
     options: [
-      "Fault conditions create abnormal current flow and safety risks",
-      "Conductors are connected incorrectly, creating safety risks",
+      "The protective device removes all hidden faults automatically",
+      "A working circuit can never contain a fault",
       "Some faults don't immediately affect operation but create safety risks",
-      "Unintended contact between line and neutral or line-to-line conductors",
+      "Hidden faults always cause an immediate loss of supply",
     ],
     correctAnswer: 2,
     explanation:
@@ -258,9 +258,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'Which of these is a common cause of open circuit faults?',
     options: [
       'Loose or poorly tightened connections',
-      'Ensure safe isolation and prove dead testing',
-      'Possible arcing or loose connections',
-      'Overheating components or insulation breakdown',
+      'Excess moisture lowering insulation resistance',
+      'Two live conductors touching each other',
+      'Reversed line and neutral at a socket outlet',
     ],
     correctAnswer: 0,
     explanation:
@@ -289,10 +289,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 18,
     question: 'What characterises a short circuit fault?',
     options: [
-      'Protective equipment detects and isolates faults to prevent danger',
-      'Appropriate tests to verify the fault is cleared and safety is restored',
+      'A high-resistance joint that slowly overheats',
+      'A broken conductor that interrupts current flow',
       'Very low resistance path between conductors that should be separate',
-      'Fault conditions create abnormal current flow and safety risks',
+      'A small leakage current passing to earth',
     ],
     correctAnswer: 2,
     explanation:
@@ -305,9 +305,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 19,
     question: 'What typically happens when a short circuit occurs?',
     options: [
-      'Moisture, heat, mechanical damage, or aging',
-      'Overheating components or insulation breakdown',
-      'Loose or poorly tightened connections',
+      'The current gradually falls to zero',
+      'The supply voltage rises sharply',
+      'A small leakage current flows to earth',
       'Protective devices operate immediately',
     ],
     correctAnswer: 3,
@@ -322,9 +322,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What can cause short circuit faults?',
     options: [
       'Damaged insulation, loose connections, or foreign objects',
-      'Determines if protective devices can safely interrupt fault current',
-      'Conductors are connected incorrectly, creating safety risks',
-      'Overheating components or insulation breakdown',
+      'A break in the line conductor at a terminal',
+      'A high-resistance connection at an accessory',
+      'Correctly torqued terminations in dry conditions',
     ],
     correctAnswer: 0,
     explanation:
@@ -337,10 +337,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 21,
     question: 'How is an earth fault different from a short circuit?',
     options: [
-      'Fault conditions create abnormal current flow and safety risks',
+      'Earth faults only occur on three-phase circuits',
       'Earth faults involve contact with earth or earthed parts',
-      'Some faults don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t immediately affect operation but create safety risks',
-      'To prevent accidents, legal non-compliance, and property damage',
+      'Earth faults never cause a protective device to operate',
+      'Earth faults are caused only by reversed polarity',
     ],
     correctAnswer: 1,
     explanation:
@@ -353,10 +353,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 22,
     question: 'What safety risk does an earth fault create?',
     options: [
-      'Leakage currents increase, creating safety risks',
-      'To isolate the fault to a specific section or component',
+      'A gradual rise in the supply frequency',
+      'A loss of supply with no safety consequence',
       'Risk of electric shock from touchable metalwork',
-      'Incorrect connection of line and neutral conductors',
+      'Improved protection against overcurrent',
     ],
     correctAnswer: 2,
     explanation:
@@ -369,9 +369,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 23,
     question: 'What type of protective device is specifically designed to detect earth faults?',
     options: [
-      'Can mask or exaggerate fault symptoms',
-      'Possible arcing or loose connections',
-      'Loose or poorly tightened connections',
+      'An isolating switch',
+      'A surge protection device (SPD)',
+      'A miniature circuit breaker (MCB)',
       'RCD (Residual Current Device)',
     ],
     correctAnswer: 3,
@@ -386,9 +386,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What is insulation resistance and why is it important?',
     options: [
       'The resistance between conductors and earth, preventing dangerous currents',
-      'Appropriate tests to verify the fault is cleared and safety is restored',
-      'Fault current must exceed device rating for operation within required time',
-      'When investigating supply problems or intermittent faults',
+      'The resistance of a conductor that limits its current rating',
+      'The impedance of the earth fault loop during a fault',
+      'The contact resistance of a terminal connection',
     ],
     correctAnswer: 0,
     explanation:
@@ -401,10 +401,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 25,
     question: 'What happens when insulation resistance decreases?',
     options: [
-      'For legal compliance, safety tracking, and future reference',
+      'The circuit voltage rises above nominal',
       'Leakage currents increase, creating safety risks',
-      'Fault conditions create abnormal current flow and safety risks',
-      'Damaged insulation, loose connections, or foreign objects',
+      'The protective conductor becomes disconnected',
+      'The supply current falls to zero',
     ],
     correctAnswer: 1,
     explanation:
@@ -433,9 +433,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 27,
     question: 'What causes insulation resistance to deteriorate?',
     options: [
-      'To isolate the fault to a specific section or component',
-      'To test systematically and interpret results correctly',
-      'Prove dead, test, prove unit working',
+      'Correctly torqued terminations',
+      'Use of the correct cable size for the load',
+      'Regular pressing of the RCD test button',
       'Moisture, heat, mechanical damage, or aging',
     ],
     correctAnswer: 3,
@@ -450,9 +450,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What is a polarity fault?',
     options: [
       'Incorrect connection of line and neutral conductors',
-      'Leakage currents can flow, creating safety hazards',
-      'Any fault that creates risk of shock, fire, or burns',
-      'The safety category for overvoltage protection',
+      'A break in the circuit protective conductor',
+      'A low-resistance path between two live conductors',
+      'A leakage current flowing to earth through insulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -465,10 +465,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 29,
     question: 'Why is correct polarity important for safety?',
     options: [
-      'Test voltage, temperature, humidity, and surface contamination',
+      'It increases the rated current of the circuit',
       'Ensures switches and fuses interrupt the line conductor',
-      'Ensure safe isolation and prove dead testing',
-      'When investigating supply problems or intermittent faults',
+      'It lowers the earth fault loop impedance',
+      'It removes the need for an RCD on the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -481,10 +481,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 30,
     question: 'How can polarity faults be detected?',
     options: [
-      'Loose connections, overloaded circuits, or supply problems',
-      'Protective devices operate immediately',
+      'By measuring insulation resistance only',
+      'By pressing the RCD test button',
       'Polarity testing with appropriate test instruments',
-      'Risk of electric shock from touchable metalwork',
+      'By measuring the prospective fault current',
     ],
     correctAnswer: 2,
     explanation:
@@ -497,9 +497,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 31,
     question: 'What is a high resistance connection?',
     options: [
-      'Lower impedance ensures higher fault current and faster disconnection',
-      'Some faults don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t immediately affect operation but create safety risks',
-      'Systematic approach, safety first, proper documentation, and continuous improvement',
+      'A connection deliberately made to limit fault current',
+      'A direct short between line and neutral conductors',
+      'A connection that improves continuity of the circuit',
       'A connection that has developed excessive resistance due to poor contact',
     ],
     correctAnswer: 3,
@@ -514,9 +514,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What problems do high resistance connections cause?',
     options: [
       'Heat generation, voltage drop, and potential fire risk',
-      'When a conductor is broken or disconnected, stopping current flow',
-      'To determine maximum fault currents for equipment rating',
-      'Supervisor, client, and responsible person immediately',
+      'A complete loss of supply with no heating effect',
+      'An increase in the circuit insulation resistance',
+      'Faster operation of the protective device',
     ],
     correctAnswer: 0,
     explanation:
@@ -529,10 +529,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 33,
     question: 'How can high resistance connections be prevented?',
     options: [
-      'Some faults don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t immediately affect operation but create safety risks',
+      'By using undersized conductors to limit current',
       'Proper installation techniques and regular maintenance',
-      'Leakage currents increase, creating safety risks',
-      'Supervisor, client, and responsible person immediately',
+      'By leaving terminals slightly loose for expansion',
+      'By omitting the protective conductor where possible',
     ],
     correctAnswer: 1,
     explanation:
@@ -548,10 +548,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 34,
     question: 'What are the main categories of fault symptoms?',
     options: [
-      'Overloading, loose connections, or high resistance contacts',
-      'Ensure emergency lighting remains functional during testing',
+      'Continuity, insulation, polarity, and earth loop',
+      'Installation, environmental, component, and aging',
       'Visual, audible, electrical, and thermal symptoms',
-      'Moisture, heat, mechanical damage, or aging',
+      'Basic, intermediate, advanced, and critical',
     ],
     correctAnswer: 2,
     explanation:
@@ -564,9 +564,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 35,
     question: 'What visual signs might indicate electrical faults?',
     options: [
-      'Gather information about the fault symptoms',
-      'Heat generation, voltage drop, and potential fire risk',
-      'Appropriate PPE, safe working practices, and correct procedures',
+      'A buzzing or crackling sound from an accessory',
+      'A burning smell from a socket outlet',
+      'Warmth felt at a connection point',
       'Scorch marks, melted insulation, or visible damage',
     ],
     correctAnswer: 3,
@@ -578,12 +578,12 @@ export const module7QuestionBank: QuestionBank[] = [
   },
   {
     id: 36,
-    question: 'What burning smell might indicate about an electrical installation?',
+    question: 'What might a burning smell indicate about an electrical installation?',
     options: [
       'Overheating components or insulation breakdown',
-      'To ensure earth fault protection is working correctly',
-      'Prove dead, test, prove unit working',
-      'Polarity testing with appropriate test instruments',
+      'A break in the line conductor stopping current flow',
+      'Reversed polarity at a socket outlet',
+      'An over-sensitive RCD tripping at half its rating',
     ],
     correctAnswer: 0,
     explanation:
@@ -596,10 +596,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 37,
     question: 'What does a crackling or buzzing sound from electrical equipment suggest?',
     options: [
-      'Overheating components or insulation breakdown',
+      'A break in the protective conductor',
       'Possible arcing or loose connections',
-      'Moisture, heat, mechanical damage, or aging',
-      'RCD (Residual Current Device)',
+      'Correct operation under normal load',
+      'High insulation resistance in the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -612,10 +612,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 38,
     question: 'What could cause lights to flicker intermittently?',
     options: [
-      'Ensure emergency lighting remains functional during testing',
-      'Damaged insulation, loose connections, or foreign objects',
+      'A correctly rated protective device',
+      'High insulation resistance on the circuit',
       'Loose connections, overloaded circuits, or supply problems',
-      'Incorrect connection of line and neutral conductors',
+      'A circuit operating well within its design current',
     ],
     correctAnswer: 2,
     explanation:
@@ -628,9 +628,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 39,
     question: 'Why might socket outlets become warm during use?',
     options: [
-      'Fault current must exceed device rating for operation within required time',
-      'According to legal and company requirements, typically several years',
-      'When investigating supply problems or intermittent faults',
+      'Because the circuit insulation resistance is too high',
+      'Because the line and neutral are correctly connected',
+      'Because the RCD is tripping at half its rated current',
       'Overloading, loose connections, or high resistance contacts',
     ],
     correctAnswer: 3,
@@ -645,9 +645,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What does frequent tripping of circuit breakers indicate?',
     options: [
       'Overloading, short circuits, earth faults, or protective device problems',
-      'Installation errors, environmental factors, and component failures',
-      'Proper installation techniques and regular maintenance',
-      'Damaged insulation, loose connections, or foreign objects',
+      'A circuit operating well within its rated capacity',
+      'Correct selection of cable for the load',
+      'A high insulation resistance reading on the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -660,10 +660,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 41,
     question: 'How should you respond to the smell of burning from electrical equipment?',
     options: [
-      'Installation errors, environmental factors, and component failures',
+      'Continue using the equipment and monitor it over time',
       'Immediately isolate the supply and investigate safely',
-      'Gather information about the fault symptoms',
-      'For legal compliance, safety tracking, and future reference',
+      'Increase the load to confirm the smell returns',
+      'Open a window and wait for the smell to clear',
     ],
     correctAnswer: 1,
     explanation:
@@ -676,10 +676,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 42,
     question: 'What thermal symptoms might indicate developing faults?',
     options: [
-      'Fault conditions create abnormal current flow and safety risks',
-      'To prevent accidents, legal non-compliance, and property damage',
+      'Scorch marks and visibly melted insulation',
+      'A buzzing or crackling sound from an accessory',
       'Excessive heat at connections, warm cable insulation, or hot components',
-      'Systematic approach, safety first, proper documentation, and continuous improvement',
+      'Flickering lights and intermittent operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -694,9 +694,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 43,
     question: 'What is the first step in a logical fault-finding process?',
     options: [
-      'The safety category for overvoltage protection',
-      'Protective devices operate immediately',
-      'Polarity testing with appropriate test instruments',
+      'Immediately replace the suspected faulty component',
+      'Carry out an insulation resistance test on every circuit',
+      'Energise the circuit and observe what happens',
       'Gather information about the fault symptoms',
     ],
     correctAnswer: 3,
@@ -711,9 +711,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'Why is it important to understand the circuit operation before fault-finding?',
     options: [
       'To test systematically and interpret results correctly',
-      'A known voltage source to test that test equipment is working',
-      'Damaged insulation, loose connections, or foreign objects',
-      'To ensure earth fault protection is working correctly',
+      'To avoid the need to isolate the circuit before working',
+      'To remove the requirement for any test instruments',
+      'To allow the circuit to be left energised during testing',
     ],
     correctAnswer: 0,
     explanation:
@@ -724,12 +724,12 @@ export const module7QuestionBank: QuestionBank[] = [
   },
   {
     id: 45,
-    question: 'What should be done before starting any electrical testing?',
+    question: 'What should be done before starting any dead electrical testing?',
     options: [
-      'Leakage currents can flow, creating safety hazards',
+      'Energise the circuit to confirm the fault is present',
       'Ensure safe isolation and prove dead testing',
-      'Any fault that creates risk of shock, fire, or burns',
-      'To test systematically and interpret results correctly',
+      'Record all previous test results from the certificate',
+      'Notify the client that the work is complete',
     ],
     correctAnswer: 1,
     explanation:
@@ -742,10 +742,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 46,
     question: "What is the 'divide and conquer' approach to fault-finding?",
     options: [
-      'Fault conditions create abnormal current flow and safety risks',
-      'Any defect that prevents a circuit from functioning safely or correctly',
+      'Replacing every component in the circuit one at a time',
+      'Testing only the first and last accessory on a circuit',
       'Systematically dividing the circuit to isolate the fault location',
-      'Excessive heat at connections, warm cable insulation, or hot components',
+      'Sharing the fault investigation between two electricians',
     ],
     correctAnswer: 2,
     explanation:
@@ -758,9 +758,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 47,
     question: 'When should you use visual inspection in fault-finding?',
     options: [
-      'Proper installation techniques and regular maintenance',
-      'Use monitoring equipment and systematic observation',
-      'Visual, audible, electrical, and thermal symptoms',
+      'Only after all electrical tests have been completed',
+      'Only when test instruments are unavailable',
+      'Only on circuits that are still energised',
       'As the first step before any electrical testing',
     ],
     correctAnswer: 3,
@@ -775,9 +775,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What should you look for during visual inspection?',
     options: [
       'Damage, loose connections, burnt components, or signs of overheating',
-      'Identifies overheating components and high resistance connections',
-      'Loose connections, overloaded circuits, or supply problems',
-      'Incorrect connection of line and neutral conductors',
+      'The exact insulation resistance value of each circuit',
+      'The measured earth fault loop impedance at the board',
+      'The recorded trip time of every RCD on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -790,10 +790,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 49,
     question: 'How should test results be recorded during fault-finding?',
     options: [
-      'Proper installation techniques and regular maintenance',
+      'Only the final result needs to be noted',
       'Record all test results with locations and conditions',
-      'Transient faults are temporary and may clear themselves',
-      'Ensures only the closest protective device to the fault operates',
+      'Results should be memorised rather than written down',
+      'Only failing results need to be recorded',
     ],
     correctAnswer: 1,
     explanation:
@@ -806,10 +806,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 50,
     question: 'What is the purpose of testing at multiple points in a circuit?',
     options: [
-      'Ensure emergency lighting remains functional during testing',
-      'Overheating components or insulation breakdown',
+      'To use up the remaining battery life of the instrument',
+      'To satisfy the minimum number of tests required by law',
       'To isolate the fault to a specific section or component',
-      'Appropriate tests to verify the fault is cleared and safety is restored',
+      'To confirm the supply voltage is correct at each point',
     ],
     correctAnswer: 2,
     explanation:
@@ -822,9 +822,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 51,
     question: 'When might you need to use live testing during fault-finding?',
     options: [
-      'Installation errors, environmental factors, and component failures',
-      'Updated drawings, test certificates, and modification records',
-      'Details of work done, tests performed, and compliance with standards',
+      'For every fault, as it is always quicker than dead testing',
+      'Only when no test instruments are available',
+      'Whenever a circuit can be safely isolated instead',
       'When investigating supply problems or intermittent faults',
     ],
     correctAnswer: 3,
@@ -841,9 +841,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What is the most important consideration when selecting test equipment?',
     options: [
       'Safety rating appropriate for the voltage and environment',
-      'Ensure safe isolation and prove dead testing',
-      'Appropriate gloves, safety glasses, and protective clothing',
-      'To determine maximum fault currents for equipment rating',
+      'The lowest purchase cost available from the supplier',
+      'The brightest display for use in dark areas',
+      'The lightest weight for ease of carrying',
     ],
     correctAnswer: 0,
     explanation:
@@ -856,10 +856,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 53,
     question: 'What does CAT rating on test equipment refer to?',
     options: [
-      'Can mask or exaggerate fault symptoms',
+      'The maximum current the instrument can measure',
       'The safety category for overvoltage protection',
-      'To isolate the fault to a specific section or component',
-      'Record all test results with locations and conditions',
+      'The accuracy class of the instrument display',
+      'The calibration interval recommended by the maker',
     ],
     correctAnswer: 1,
     explanation:
@@ -872,10 +872,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 54,
     question: 'Before using any electrical test equipment, what should always be done?',
     options: [
-      'Can mask or exaggerate fault symptoms',
-      'Leakage currents can flow, creating safety hazards',
+      'Reset the instrument to its factory settings',
+      'Record the previous user of the instrument',
       'Check calibration dates and perform prove unit tests',
-      'When live conductors make contact with earth or earthed metalwork',
+      'Charge the battery to exactly fifty percent',
     ],
     correctAnswer: 2,
     explanation:
@@ -888,9 +888,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 55,
     question: 'What safety precautions are essential when using test equipment?',
     options: [
-      'Systematically dividing the circuit to isolate the fault location',
-      'Heat generation, voltage drop, and potential fire risk',
-      'Loose connections, overloaded circuits, or supply problems',
+      'Working as quickly as possible to limit exposure',
+      'Removing fuses from the instrument before testing',
+      'Testing only in pairs to share responsibility',
       'Appropriate PPE, safe working practices, and correct procedures',
     ],
     correctAnswer: 3,
@@ -905,9 +905,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: "What is a 'prove unit' and why is it important?",
     options: [
       'A known voltage source to test that test equipment is working',
-      'Fault symptoms, location, cause, tests performed, and corrective action',
-      'Test voltage, temperature, humidity, and surface contamination',
-      'Appropriate tests to verify the fault is cleared and safety is restored',
+      'A device that records test results automatically',
+      'A clamp that measures current without breaking the circuit',
+      'A label confirming the instrument has been calibrated',
     ],
     correctAnswer: 0,
     explanation:
@@ -934,16 +934,16 @@ export const module7QuestionBank: QuestionBank[] = [
   },
   {
     id: 58,
-    question: 'What is the correct procedure for voltage testing?',
+    question: 'What is the correct safe-isolation voltage testing procedure?',
     options: [
-      'Protective devices operate immediately',
-      'Gather information about the fault symptoms',
-      'Prove dead, test, prove unit working',
-      'The safety category for overvoltage protection',
+      'Test for dead, then energise, then test again',
+      'Prove the tester on the circuit, then leave it connected',
+      'Prove the unit working, test for dead, prove the unit working again',
+      'Test for dead once and proceed if no voltage is shown',
     ],
     correctAnswer: 2,
     explanation:
-      'The correct procedure is: prove the tester works, test for dead, prove the tester still works - ensuring reliable results.',
+      'The correct procedure is to prove the tester works on a known source, test the circuit for dead, then prove the tester still works - ensuring reliable results.',
     section: '7.5.4',
     difficulty: 'intermediate',
     topic: 'Voltage Testing Procedure',
@@ -952,9 +952,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 59,
     question: 'What PPE should be worn when fault-finding on electrical equipment?',
     options: [
-      'Systematically dividing the circuit to isolate the fault location',
-      'Incorrect connection of line and neutral conductors',
-      'Ensures switches and fuses interrupt the line conductor',
+      'High-visibility clothing only',
+      'A hard hat and steel-toe boots only',
+      'No PPE is needed once the circuit is isolated',
       'Appropriate gloves, safety glasses, and protective clothing',
     ],
     correctAnswer: 3,
@@ -969,9 +969,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'How should test equipment be maintained?',
     options: [
       'Regular calibration, inspection, and servicing according to manufacturer instructions',
-      'Protective equipment detects and isolates faults to prevent danger',
-      'A fault affects safety, a defect may not immediately compromise safety',
-      'Updated drawings, test certificates, and modification records',
+      'Stored permanently to avoid wear from use',
+      'Replaced with a new unit after every job',
+      'Cleaned only when visibly dirty, with no other checks',
     ],
     correctAnswer: 0,
     explanation:
@@ -986,10 +986,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 61,
     question: 'Why is accurate fault recording important?',
     options: [
-      'Prioritise by safety risk, then operational impact',
+      'It removes the need to isolate circuits before work',
       'For legal compliance, safety tracking, and future reference',
-      'To prevent accidents, legal non-compliance, and property damage',
-      'A fault affects safety, a defect may not immediately compromise safety',
+      'It reduces the time taken to carry out the repair',
+      'It allows protective devices to be omitted from the design',
     ],
     correctAnswer: 1,
     explanation:
@@ -1002,10 +1002,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 62,
     question: 'What information should be included in a fault report?',
     options: [
-      'Unintended contact between line and neutral or line-to-line conductors',
-      'According to legal and company requirements, typically several years',
+      'Only the name of the electrician who attended',
+      'Only the date the fault was first reported',
       'Fault symptoms, location, cause, tests performed, and corrective action',
-      'When live conductors make contact with earth or earthed metalwork',
+      'Only the cost of the replacement parts used',
     ],
     correctAnswer: 2,
     explanation:
@@ -1018,9 +1018,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 63,
     question: 'Who should be notified when a dangerous fault is discovered?',
     options: [
-      'Overheating components or insulation breakdown',
-      'According to legal and company requirements, typically several years',
-      'Protective devices operate immediately',
+      'Only the manufacturer of the faulty component',
+      'No one until the next scheduled inspection',
+      'Only the apprentice assisting on site',
       'Supervisor, client, and responsible person immediately',
     ],
     correctAnswer: 3,
@@ -1035,9 +1035,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What should be done if a fault cannot be safely rectified immediately?',
     options: [
       'Isolate the circuit and implement temporary safety measures',
-      'A known voltage source to test that test equipment is working',
-      'Heat generation, voltage drop, and potential fire risk',
-      'Loose connections, overloaded circuits, or supply problems',
+      'Leave the circuit energised and return the following week',
+      'Increase the protective device rating to keep the supply on',
+      'Bypass the protective device to maintain the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -1050,10 +1050,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 65,
     question: 'What testing should be performed after fault rectification?',
     options: [
-      'Overloading, loose connections, or high resistance contacts',
+      'No further testing is needed once the part is replaced',
       'Appropriate tests to verify the fault is cleared and safety is restored',
-      'Any fault that creates risk of shock, fire, or burns',
-      'When live conductors make contact with earth or earthed metalwork',
+      'Only a visual check of the repaired connection',
+      'Only the RCD test button needs to be pressed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1066,10 +1066,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 66,
     question: 'How should recurring faults be handled?',
     options: [
-      'As the first step before any electrical testing',
-      'Visual, audible, electrical, and thermal symptoms',
+      'Reset the protective device each time without investigation',
+      'Replace the same component repeatedly as needed',
       'Investigate underlying causes and implement permanent solutions',
-      'Ensure emergency lighting remains functional during testing',
+      'Ignore them if the circuit still functions between trips',
     ],
     correctAnswer: 2,
     explanation:
@@ -1082,9 +1082,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 67,
     question: 'What should be included in fault rectification certificates?',
     options: [
-      'Conductors are connected incorrectly, creating safety risks',
-      'Some faults don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t immediately affect operation but create safety risks',
-      'A connection that has developed excessive resistance due to poor contact',
+      'Only the date the work was carried out',
+      'Only the name of the client who reported the fault',
+      'Only the cost of the labour and materials',
       'Details of work done, tests performed, and compliance with standards',
     ],
     correctAnswer: 3,
@@ -1099,9 +1099,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'How long should fault records be retained?',
     options: [
       'According to legal and company requirements, typically several years',
-      'Damage, loose connections, burnt components, or signs of overheating',
-      'Leakage currents increase, creating safety risks',
-      'Overloading, loose connections, or high resistance contacts',
+      'Until the circuit is next switched off',
+      'For no longer than twenty-four hours',
+      'Only until the client has paid the invoice',
     ],
     correctAnswer: 0,
     explanation:
@@ -1116,10 +1116,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 69,
     question: 'What is the relationship between fault current and protective device operation?',
     options: [
-      'Safety rating appropriate for the voltage and environment',
+      'Fault current must stay below the device rating to trip it',
       'Fault current must exceed device rating for operation within required time',
-      'Record all test results with locations and conditions',
-      'To isolate the fault to a specific section or component',
+      'Fault current has no effect on protective device timing',
+      'Lower fault current always gives faster disconnection',
     ],
     correctAnswer: 1,
     explanation:
@@ -1132,10 +1132,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 70,
     question: 'How do earth fault loop impedance values affect fault detection?',
     options: [
-      'Record all test results with locations and conditions',
-      'Appropriate gloves, safety glasses, and protective clothing',
+      'Higher impedance ensures higher fault current and faster disconnection',
+      'Impedance has no effect on the disconnection time',
       'Lower impedance ensures higher fault current and faster disconnection',
-      'Determines if protective devices can safely interrupt fault current',
+      'Lower impedance reduces fault current and slows disconnection',
     ],
     correctAnswer: 2,
     explanation:
@@ -1148,9 +1148,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 71,
     question: 'What factors can affect the accuracy of insulation resistance measurements?',
     options: [
-      'Incorrect connection of line and neutral conductors',
-      'Protective equipment detects and isolates faults to prevent danger',
-      'Damaged insulation, loose connections, or foreign objects',
+      'The colour of the cable sheath being tested',
+      'The make of the consumer unit only',
+      'The time of day the test is carried out',
       'Test voltage, temperature, humidity, and surface contamination',
     ],
     correctAnswer: 3,
@@ -1165,9 +1165,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'Why might RCD testing be important during fault investigation?',
     options: [
       'To ensure earth fault protection is working correctly',
-      'Identifies overheating components and high resistance connections',
-      'Ensures switches and fuses interrupt the line conductor',
-      'When investigating supply problems or intermittent faults',
+      'To measure the prospective short-circuit current',
+      'To confirm the line and neutral are correctly connected',
+      'To verify the insulation resistance of each circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1180,10 +1180,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 73,
     question: 'What is the significance of prospective fault current in fault analysis?',
     options: [
-      'Use monitoring equipment and systematic observation',
+      'It sets the minimum insulation resistance required',
       'Determines if protective devices can safely interrupt fault current',
-      'To test systematically and interpret results correctly',
-      'For legal compliance, safety tracking, and future reference',
+      'It fixes the maximum trip time of an RCD',
+      'It determines the correct polarity of the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -1196,10 +1196,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 74,
     question: 'How should intermittent faults be approached?',
     options: [
-      'Investigate underlying causes and implement permanent solutions',
-      'Fault conditions create abnormal current flow and safety risks',
+      'Assume they have cleared themselves and take no action',
+      'Replace the consumer unit as a first step',
       'Use monitoring equipment and systematic observation',
-      'When live conductors make contact with earth or earthed metalwork',
+      'Wait until the fault becomes permanent before testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -1212,9 +1212,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 75,
     question: 'What is the role of thermal imaging in fault detection?',
     options: [
-      'A fault affects safety, a defect may not immediately compromise safety',
-      'Test voltage, temperature, humidity, and surface contamination',
-      'Transient faults are temporary and may clear themselves',
+      'Measures the insulation resistance of a circuit',
+      'Confirms the polarity of socket outlets',
+      'Records the trip time of protective devices',
       'Identifies overheating components and high resistance connections',
     ],
     correctAnswer: 3,
@@ -1233,9 +1233,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'What safety considerations apply when working on emergency lighting circuits?',
     options: [
       'Ensure emergency lighting remains functional during testing',
-      'Safety rating appropriate for the voltage and environment',
-      'Prioritise by safety risk, then operational impact',
-      'According to legal and company requirements, typically several years',
+      'Disconnect all emergency lighting for the duration of the work',
+      'Test emergency lighting only when the building is occupied',
+      'Leave emergency lighting on its battery supply permanently',
     ],
     correctAnswer: 0,
     explanation:
@@ -1248,10 +1248,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 77,
     question: 'How should fault-finding be prioritised when multiple faults exist?',
     options: [
-      'The safety category for overvoltage protection',
+      'Fix the easiest fault first regardless of its risk',
       'Prioritise by safety risk, then operational impact',
-      'Ensure emergency lighting remains functional during testing',
-      'Fault conditions create abnormal current flow and safety risks',
+      'Address the fault in the most expensive equipment first',
+      'Tackle faults in the order they were reported',
     ],
     correctAnswer: 1,
     explanation:
@@ -1264,10 +1264,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 78,
     question: 'What documentation is required when modifying circuits during fault rectification?',
     options: [
-      'A known voltage source to test that test equipment is working',
-      'Ensure safe isolation and prove dead testing',
+      'A purchase receipt for the replacement parts only',
+      'A verbal note to the client with no written record',
       'Updated drawings, test certificates, and modification records',
-      'Record all test results with locations and conditions',
+      'The calibration certificate of the test instrument only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1280,9 +1280,9 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 79,
     question: 'What is the significance of discrimination in protective device coordination?',
     options: [
-      'Overheating components or insulation breakdown',
-      'Ensure emergency lighting remains functional during testing',
-      'Incorrect connection of line and neutral conductors',
+      'Ensures all protective devices operate together on a fault',
+      'Ensures the main switch operates before any downstream device',
+      'Ensures protective devices never operate on a genuine fault',
       'Ensures only the closest protective device to the fault operates',
     ],
     correctAnswer: 3,
@@ -1297,9 +1297,9 @@ export const module7QuestionBank: QuestionBank[] = [
     question: 'How do voltage variations affect fault symptoms?',
     options: [
       'Can mask or exaggerate fault symptoms',
-      "Voltage variations don't affect faults",
-      'Always improve fault detection',
-      'Only affect new equipment',
+      'They always make a fault easier to locate',
+      'They only affect the protective device, not the symptoms',
+      'They change the polarity of the circuit conductors',
     ],
     correctAnswer: 0,
     explanation:
@@ -1316,10 +1316,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 81,
     question: 'What is the purpose of fault level studies in electrical installations?',
     options: [
-      'Investigate underlying causes and implement permanent solutions',
+      'To determine the minimum insulation resistance required',
       'To determine maximum fault currents for equipment rating',
-      'Use monitoring equipment and systematic observation',
-      'When investigating supply problems or intermittent faults',
+      'To set the recommended interval for RCD button testing',
+      'To establish the correct polarity of each final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -1336,10 +1336,10 @@ export const module7QuestionBank: QuestionBank[] = [
     id: 250,
     question: 'What are the key principles of effective electrical fault management?',
     options: [
-      'To prevent accidents, legal non-compliance, and property damage',
-      'Damage, loose connections, burnt components, or signs of overheating',
+      'Speed of repair above all other considerations',
+      'Keeping the lowest possible record of work done',
       'Systematic approach, safety first, proper documentation, and continuous improvement',
-      'Conductors are connected incorrectly, creating safety risks',
+      'Replacing components before carrying out any tests',
     ],
     correctAnswer: 2,
     explanation:

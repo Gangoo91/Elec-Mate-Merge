@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'When comparing LED retrofit versus complete luminaire replacement, which factor most commonly favours replacement?',
     options: [
-      'Divides proportionally to resistance',
-      'No, proper testing with measured currents is required',
+      'Lower initial capital cost than a retrofit',
+      'Faster installation with no rewiring needed',
       'Better thermal management and longer life',
-      'Balance loads across all three phases',
+      'Retention of the existing luminaire appearance',
     ],
     correctAnswer: 2,
     explanation:

@@ -584,7 +584,7 @@ const FunctionalSkillsModule1Section1 = () => {
           question="A 400V three-phase supply has a measured voltage drop of 14V. What is the percentage voltage drop?"
           options={['2.8%', '3.2%', '3.5%', '4.0%']}
           correctIndex={2}
-          explanation="Percentage drop = (14 ÷ 400) × 100 = 3.5%. This is within the 5% limit set by BS 7671 for power circuits, but close to the 3% limit for lighting."
+          explanation="Percentage drop = (14 ÷ 400) × 100 = 3.5%. This is within the 5% limit BS 7671 recommends for power circuits, but exceeds the 3% recommended for lighting circuits."
         />
 
         {/* Section 05 — BIDMAS Order of Operations */}

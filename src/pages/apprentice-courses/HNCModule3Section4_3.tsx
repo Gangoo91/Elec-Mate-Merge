@@ -62,9 +62,9 @@ const quickCheckQuestions = [
     question: 'What is the primary effect of significant load unbalance on a three-phase system?',
     options: [
       'Neutral current flow and voltage asymmetry',
-      'Corrosion, loose connections, damage',
-      '0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)',
-      'Ignoring, pretending, selective, attentive, empathic',
+      'A reduction in the line voltage across all three phases',
+      'An increase in the supply frequency above 50 Hz',
+      'Cancellation of all harmonic currents in the neutral',
     ],
     correctIndex: 0,
     explanation:
@@ -75,10 +75,10 @@ const quickCheckQuestions = [
     question:
       'In commercial buildings with predominantly single-phase non-linear loads, how should the neutral be sized?',
     options: [
-      'Accurate measurement of low resistances',
+      'At half the phase conductor cross-section',
       'Up to double the phase conductor size',
-      'Guaranteed available power',
-      'Protected Extra Low Voltage',
+      'Always smaller than the line conductors',
+      'It can be omitted entirely on these systems',
     ],
     correctIndex: 1,
     explanation:
@@ -133,9 +133,9 @@ const quizQuestions = [
     question: 'What is voltage unbalance typically expressed as?',
     options: [
       'The ratio of negative sequence to positive sequence voltage, as a percentage',
-      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
-      'Approximately 0.3 decades (30% of a decade) of horizontal separation',
-      'Minimum separation to detect two adjacent reflective events',
+      'The difference between line voltage and phase voltage in volts',
+      'The total harmonic distortion of the supply waveform',
+      'The phase angle error away from 120° between phases',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A distribution board has: Red = 8kW, Yellow = 6kW, Blue = 10kW single-phase loads at unity power factor. What is the current unbalance?',
+      'A distribution board has: Red = 8kW, Yellow = 6kW, Blue = 10kW single-phase loads at unity power factor. What are the phase currents?',
     options: [
-      'Commissioning certificate or witness record',
-      'Continuity test along the conductor length',
+      'Red: 26.1A, Yellow: 34.8A, Blue: 43.5A',
+      'Red: 43.5A, Yellow: 26.1A, Blue: 34.8A',
       'Red: 34.8A, Yellow: 26.1A, Blue: 43.5A',
-      'Risk Assessment for Pushing and Pulling',
+      'Red: 8.0A, Yellow: 6.0A, Blue: 10.0A',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,9 +172,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why do triplen harmonics (3rd, 9th, 15th...) add in the neutral rather than cancel?',
     options: [
-      'Implement responsive design with prioritised information',
-      'Underground installations and areas requiring mechanical protection',
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
+      'They are displaced by 120° like the fundamental currents',
+      'They flow only in the line conductors, not the neutral',
+      'They are filtered out by the distribution transformer',
       'They are all in phase with each other across the three phases',
     ],
     correctAnswer: 3,
@@ -187,9 +187,9 @@ const quizQuestions = [
       'What is the recommended practice for balancing single-phase loads across a three-phase distribution board?',
     options: [
       'Distribute loads so each phase carries approximately equal current',
-      'Safety glasses or goggles rated for impact and potentially arc flash',
-      'Leads to confusion, duplication of work, or project delays',
-      'The basic unit of matter consisting of protons, neutrons, and electrons',
+      'Connect all the largest loads to a single dedicated phase',
+      'Place every lighting circuit on one phase and power on another',
+      'Leave one phase unloaded to act as a spare for future use',
     ],
     correctAnswer: 0,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'In a 100A three-phase distribution board for an office building, what neutral size would be appropriate if heavy non-linear loads are expected?',
     options: [
-      'Moisture, dust, heat, or UV light',
-      'Damage, kinks, and repairs',
+      '50A rated (50% of phase)',
+      '100A rated (equal to phase, no oversizing needed)',
       '150-200A rated (150-200% of phase)',
-      'Separated Extra-Low Voltage',
+      'No neutral required for non-linear loads',
     ],
     correctAnswer: 2,
     explanation:

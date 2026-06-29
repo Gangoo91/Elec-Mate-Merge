@@ -65,10 +65,10 @@ const checks = [
     question:
       'On a small industrial IT system feeding an operating theatre, an insulation monitoring device (IMD) starts beeping with a fault indication. There is no obvious smoke, no breaker tripped, no equipment fault. What does this mean and what is the response?',
     options: [
-      'Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a \\\\\\\\\\\\\\\'suitable and sufficient\\\\\\\\\\\\\\\' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.',
-      'Unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\' imprisonment. The Sentencing Council Definitive Guideline (2016) sets the sentencing bands by reference to culpability and harm. For individuals, custodial sentences are real — particularly under s.37 director-liability cases and s.7 personal-duty cases following a fatality.',
-      'A first fault to earth has occurred. The system stays energised by design (continuity of supply matters in critical settings) but the fault must be located and rectified as soon as practical, before a second fault on a different conductor causes auto-disconnection at TN/TT-style fault current levels',
-      'Plan, Organise, Control, Monitor, Review. The cycle that turns risk assessment into operational reality. Reg 5 requires effective arrangements for the planning, organisation, control, monitoring and review of the preventive measures.',
+      'A second fault has occurred and the supply has automatically disconnected — restore power and reset the breaker.',
+      'A nuisance trip in the IMD itself — silence the alarm and continue, as no real fault exists on an IT system.',
+      'A first fault to earth has occurred. The system stays energised by design, but the fault must be found and fixed promptly.',
+      'A loss of the source earth — the transformer star point has lost its connection and must be re-earthed immediately.',
     ],
     correctIndex: 2,
     explanation:
@@ -79,10 +79,10 @@ const checks = [
     question:
       'On a domestic TN-C-S kitchen extension you measure 950 ohm between the incoming gas pipe and the MET. The water comes in via plastic pipe and the internal stub is short copper. What needs main protective bonding?',
     options: [
-      'Bond gas (950 ohm is below 1667 ohm — it is extraneous). Do NOT bond the internal copper water stub if the incomer is plastic and the stub is not connected to anything that could introduce a potential — it is unlikely to be extraneous (NOTE to Reg 411.3.1.2)',
-      'Earthing and bonding connections that are not part of a circuit and may not be obviously necessary (e.g., main bonding conductors, supplementary bonding), to prevent their removal by uninformed persons',
-      'To provide a low-impedance earth reference for the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation on TN-C-S or TN-S supplies — connected back through the service cable PEN (or PE) to the secondary substation earth.',
-      'Because someone touching exposed metalwork on a distribution circuit (sub-main supplying a downstream board) is far less likely than someone touching the casing of a kettle on a final circuit — the touch-current risk profile is lower.',
+      'Bond gas (950 ohm is below 1667 ohm, so extraneous); leave the internal copper water stub on the plastic incomer unbonded.',
+      'Bond both the gas and the internal copper water stub, since any metal pipework in a kitchen must be bonded.',
+      'Bond neither — 950 ohm is above the safe limit, so the gas pipe is not extraneous and needs nothing.',
+      'Bond the water stub only — the plastic gas incomer means the gas pipe cannot possibly be extraneous.',
     ],
     correctIndex: 0,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'You walk into a domestic property. The cut-out has a single combined earth/neutral conductor arriving from the DNO, and the earthing conductor to the MET clamps to the neutral block. What do you do FIRST about the earthing arrangement?',
     options: [
-      'A low-resistance ohmmeter (continuity tester) measuring the resistance of the conduit between the distribution board earth terminal and the furthest accessory on each circuit, confirming it meets the R2 value used in cable calculations',
-      'Confirm it is TN-C-S (PME), check the MET earthing conductor csa is correct for PME (typically 16 mm² minimum on a domestic — half the supply neutral or 16 mm² whichever is greater, per Reg 543), and that main protective bonding to gas / water is sized correctly (10 mm² minimum on PME, or 25 mm² where the neutral exceeds 35 mm²)',
-      'Because energising equipment without verifying correct installation, connections, and settings could result in immediate damage to equipment, injury to personnel, or fire — pre-commissioning checks identify and correct deficiencies while the system is safe (de-energised)',
-      'HASAWA s.2(2)(a) — "the provision and maintenance of plant and systems of work that are, so far as is reasonably practicable, safe and without risks to health". Plus EAWR Reg 4, MHSWR Reg 5, and the specific regulations for each work activity (PUWER, COSHH, WAH, etc).',
+      'Drive a local earth electrode at the property, because every supply needs its own earth rod.',
+      'Confirm it is TN-C-S (PME) and check the earthing conductor and main bonding are sized correctly for PME.',
+      'Assume it is TN-S and design the bonding at 6 mm², since that is the most common older arrangement.',
+      'Phone the DNO to convert the supply to TT before doing any further work on the installation.',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'On a TT installation feeding a rural office, the earth electrode resistance Ra measures 35 ohm. The origin RCD is 100 mA S-type with 30 mA RCDs / RCBOs on each final circuit. Does Ra x I-delta-n meet the 50 V touch-voltage limit (Reg 411.5.3)?',
     options: [
-      'To ensure single-pole devices (switches, fuses, MCBs) are connected in the LINE conductor only (not neutral), preventing equipment remaining live when switched off',
-      'Up to 12 months imprisonment and/or an unlimited fine in the magistrates\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' court, or up to 5 years and/or an unlimited fine in the Crown Court',
-      'Yes — 35 x 0.1 = 3.5 V, well inside the 50 V limit. And 35 ohm is well under the 500 ohm Table 41.5 maximum Zs for a 100 mA RCD',
-      'To assist with evacuation, check designated areas are clear, and report to the assembly point',
+      'No — 35 x 0.1 = 3.5 V, which exceeds the 50 V limit and fails Reg 411.5.3.',
+      'No — the electrode resistance must be below 1 ohm before a TT installation can comply.',
+      'Yes — 35 x 0.1 = 3.5 V, well inside the 50 V limit and under the 500 ohm Table 41.5 max.',
+      'It cannot be determined without first measuring the prospective fault current at the origin.',
     ],
     correctAnswer: 2,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'A first-year apprentice tells you the IT system in the operating theatre "does not have any earth, so we do not need to bond anything". What is wrong with this?',
     options: [
-      'Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within zones, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.',
-      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
-      'Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school\\\\\\\\\\\\\\\'s safeguarding lead is a key contact during prep.',
-      'IT systems still have exposed-conductive-parts that must be earthed (locally or interconnected via a protective conductor — see Reg 411.6.2). They still need protective equipotential bonding of extraneous parts. The "I" in IT means the source is isolated (or earthed via high impedance), not that the installation has no earthing',
+      'Nothing — on an IT system the source is unearthed, so bonding genuinely is not required.',
+      'Only the patient-contact equipment needs bonding; the rest of the theatre can be left.',
+      'The IMD provides all the earthing the installation needs, so no separate CPCs are required.',
+      'IT exposed parts must still be earthed and extraneous parts still bonded — the "I" means the SOURCE is isolated.',
     ],
     correctAnswer: 3,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'Which of these is the most common over-bonding mistake on a modern UK new-build?',
     options: [
-      'Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance',
-      'Bonding internal copper water pipework where the incoming water service is plastic — the internal copper has no external earth path so is unlikely to be extraneous (NOTE to Reg 411.3.1.2)',
-      'Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed',
-      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
+      'Leaving the incoming gas service unbonded because the meter has a plastic insulating coupling.',
+      'Bonding internal copper water pipework where the incoming water service is plastic.',
+      'Sizing the main bonding at 6 mm² on a PME supply instead of the required 10 mm².',
+      'Bonding the structural steel of the building but forgetting the incoming metal gas service.',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A static caravan park provides supplies to individual pitches via TT (each pitch has its own electrode, the DNO supply does not provide earth). What is the typical origin protection arrangement on each pitch?',
     options: [
-      'The Approved Electrician you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re paired with for that task. They direct the work at the immediate face, show you how to do it and check your work before sign-off. The Foreman or Charge-hand allocates the pairing; the Approved Electrician runs the pairing day to day.',
-      'Circuit ID, conductor csa (live + cpc), reference method, OCPD type/rating, R1+R2 (or R2), insulation resistance, polarity, Zs, RCD operating current and trip time, plus AFDD where fitted',
-      '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
-      'On the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s side of any insulating section, and within 600 mm of the meter outlet union or, where this is impracticable, as near as practicable to the point of entry of the pipe into the building',
+      'A Type B MCB on the pitch supply, since the local electrode gives a low enough Zs.',
+      'No special protection — the pitch electrode does the same job as a TN-C-S supplier earth.',
+      '30 mA RCD at the pitch — TT requires RCD protection because the high electrode resistance stops an MCB tripping in time.',
+      'A 300 mA RCD only, because additional protection is not needed on outdoor caravan pitches.',
     ],
     correctAnswer: 2,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'You measure Zs at the furthest socket on the new kitchen ring (TN-C-S, B32 RCBO). Reading: 1.05 ohm. Maximum permitted (Table 41.3 with 0.8 correction): 1.10 ohm. What does this tell you?',
     options: [
-      'Suppression involves pushing emotions down and pretending they do not exist, while regulation involves acknowledging emotions and choosing constructive ways to express or manage them',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'Because electronics with capacitive or low-impedance protection paths (SPDs, LED driver capacitors, EMC filters in inverters) will either short the test signal (giving a false low reading) or be destroyed by the 500 V DC stress they were never designed to withstand.',
-      'The circuit is just compliant on the worst-case hot-cable basis. The disconnection time will be met but with very little margin — investigate whether the run is unusually long, the CPC csa is undersized, or the connections are slack before signing it off',
+      'The circuit has failed — 1.05 ohm exceeds the 1.10 ohm corrected limit, so do not energise.',
+      'The reading is meaningless without first applying a further 0.8 correction to the measured value.',
+      'The circuit passes comfortably — 1.05 ohm leaves ample margin below the table value.',
+      'It is just compliant on the hot-cable basis — within the limit but with very little margin, so investigate before sign-off.',
     ],
     correctAnswer: 3,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A second fault occurs on a different live conductor of an IT system, and exposed-conductive-parts are interconnected by a protective conductor (Reg 411.6.5(a)). What happens?',
     options: [
-      'Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects',
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors',
-      'RCBO 50 A Type B 6 kA Icn 30 mA Type A; 10 mm² T&E cable; Ib = 9500 / 230 = 41.3 A so In = 50 A (next standard rating); 10 mm² T&E Reference Method C tabulated It approximately 64 A so Iz greater than or equal to In comfortably; design max Zs Type B 50 A approximately 0.87 ohms per Table 41.3 A4:2026.',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
+      'Auto-disconnection occurs in the same TN disconnection times (Table 41.1) — the second fault closes a TN-style fault loop.',
+      'Nothing changes — the IMD simply raises a second alarm and the system keeps running indefinitely.',
+      'The supply voltage doubles across the two faulted conductors, damaging connected equipment.',
+      'The source earth disconnects automatically, isolating the transformer star point from the installation.',
     ],
     correctAnswer: 0,
     explanation:

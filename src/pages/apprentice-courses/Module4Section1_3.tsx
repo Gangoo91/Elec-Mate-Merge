@@ -16,12 +16,12 @@ const Module4Section1_3 = () => {
     {
       id: 1,
       question:
-        'Which cable type would you select for outdoor installation requiring mechanical protection?',
+        'Which cable type would you select for an outdoor installation requiring mechanical protection?',
       options: [
-        'The employer, free of charge',
+        'Flat twin and earth (T&E)',
         'Steel wire armoured (SWA)',
-        'Three phases with no neutral',
-        'Mechanical fixings with gaskets',
+        'PVC-insulated singles',
+        'Flexible cord (flex)',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,22 +29,27 @@ const Module4Section1_3 = () => {
     },
     {
       id: 2,
-      question: 'True or False: The cheapest tool option is always the best for the job.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'When choosing a tool for a job, which factor should take priority?',
+      options: [
+        'Choosing whichever tool is cheapest to buy',
+        'Choosing the tool with the most attachments',
+        'Choosing a tool that is suitable and of good quality',
+        'Choosing the heaviest tool for durability',
+      ],
+      correctAnswer: 2,
       explanation:
-        'False – quality and suitability are more important than cost for professional electrical work.',
+        'Quality and suitability for the task are more important than cost for safe, professional electrical work.',
     },
     {
       id: 3,
       question: 'What marking should PPE have to confirm compliance in the UK?',
       options: [
-        'Manufacturer logo',
-        'BS marking only',
-        'No marking required',
+        'The manufacturer logo only',
+        'A BS reference number only',
         'CE or UKCA marking',
+        'No marking is required',
       ],
-      correctAnswer: 3,
+      correctAnswer: 2,
       explanation:
         'CE or UKCA marking confirms that PPE meets required safety and performance standards in the UK.',
     },
@@ -52,10 +57,10 @@ const Module4Section1_3 = () => {
       id: 4,
       question: 'Give two examples of mechanical containment systems.',
       options: [
-        'Conduit, trunking, tray, basket',
-        'A pallet truck or trolley',
-        'Fatigue and reduced concentration',
-        'Loss when fibre axes are not parallel',
+        'Conduit and trunking',
+        'A pallet truck and a trolley',
+        'A multimeter and a clamp meter',
+        'A consumer unit and an isolator',
       ],
       correctAnswer: 0,
       explanation:
@@ -65,35 +70,35 @@ const Module4Section1_3 = () => {
       id: 5,
       question: 'What PPE is required when drilling masonry?',
       options: [
-        'Ceiling tiles, partition walls, and fire protection panels',
-        'Eye protection, dust mask, hearing protection',
-        'Skipping the re-prove step after isolation',
-        '50mm minimum insulation with perimeter strip',
+        'A high-visibility vest and gloves only',
+        'Eye protection, a dust mask, and hearing protection',
+        'Insulated gloves and a face shield only',
+        'A safety harness and a hard hat only',
       ],
       correctAnswer: 1,
       explanation:
-        'Drilling masonry requires eye protection from debris, dust mask for respiratory protection, and hearing protection from noise.',
+        'Drilling masonry requires eye protection from debris, a dust mask for respiratory protection, and hearing protection from noise.',
     },
     {
       id: 6,
-      question: 'Name one risk of using the wrong cable size.',
+      question: 'Name one risk of using an undersized cable for a circuit.',
       options: [
-        'A document describing the QMS scope, processes, and procedures',
-        'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
-        'Overheating, voltage drop, potential fire hazard',
-        'Ventricular fibrillation - potentially fatal',
+        'It improves the voltage at the load',
+        'It reduces the installation cost only',
+        'Overheating, excessive voltage drop, and fire risk',
+        'It increases the current-carrying capacity',
       ],
       correctAnswer: 2,
       explanation:
-        'Wrong cable size can cause overheating, excessive voltage drop, and create fire hazards.',
+        'An undersized cable can cause overheating, excessive voltage drop, and create fire hazards.',
     },
     {
       id: 7,
       question: 'How should insulated tools be stored?',
       options: [
-        'Combined distance and angle measurement for precise positioning',
-        'To suppress airborne fibre release by keeping the material damp',
-        'Multiple scenes for different activities (sleeping, reading, etc.)',
+        'Loose in a drawer with other metal tools',
+        'In direct sunlight to keep them dry',
+        'Submerged in light oil to prevent rust',
         'In a clean, dry place, away from sharp or abrasive items',
       ],
       correctAnswer: 3,
@@ -102,12 +107,12 @@ const Module4Section1_3 = () => {
     },
     {
       id: 8,
-      question: 'What does CE or UKCA marking indicate?',
+      question: 'What does CE or UKCA marking on a product indicate?',
       options: [
-        'They meet required safety and performance standards',
-        'The site supervisor or project manager',
-        'Before bulk containment installation commences',
-        'Use measures that minimise the distance and consequences of a fall',
+        'It meets required safety and performance standards',
+        'It was manufactured within the United Kingdom',
+        'It is the cheapest option available',
+        'It has been individually tested by the buyer',
       ],
       correctAnswer: 0,
       explanation:
@@ -119,12 +124,12 @@ const Module4Section1_3 = () => {
   const quickChecks = [
     {
       id: 'material-check',
-      question: 'What factor is most important when selecting cable insulation type?',
+      question: 'What factor is most important when selecting a cable insulation type?',
       options: [
-        'Poor connections or undersized conductors',
-        'Environmental conditions and temperature',
-        'New installation certificate',
-        'HSG107 — Maintaining portable electric equipment',
+        'The colour of the cable sheath',
+        'The environmental conditions and operating temperature',
+        'The brand name of the manufacturer',
+        'The length of the cable drum',
       ],
       correctIndex: 1,
       explanation:
@@ -134,10 +139,10 @@ const Module4Section1_3 = () => {
       id: 'tool-check',
       question: 'Why is tool quality important in electrical work?',
       options: [
-        'Carbon dioxide (CO2) emissions per unit of energy',
-        'Timber floorboards in a Victorian house',
+        'It reduces the cost of materials on a job',
+        'It removes the need to wear PPE',
         'Quality tools ensure safety, accuracy, and reliability',
-        'Temperature differences creating buoyancy',
+        'It allows tools to be used without insulation',
       ],
       correctIndex: 2,
       explanation:
@@ -147,10 +152,10 @@ const Module4Section1_3 = () => {
       id: 'ppe-check',
       question: 'When should PPE be inspected?',
       options: [
-        'Discrimination (selectivity or coordination)',
+        'Only once a year by the manufacturer',
         'Before each use and periodically per manufacturer guidance',
-        'Gather information about the fault symptoms',
-        'May be available through some memberships',
+        'Only after it has visibly failed',
+        'Only when a new job begins',
       ],
       correctIndex: 1,
       explanation:

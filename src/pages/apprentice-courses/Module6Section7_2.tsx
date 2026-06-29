@@ -29,10 +29,10 @@ const Module6Section7_2 = () => {
       id: 2,
       question: 'What type of work requires an EIC?',
       options: [
-        'The ratio of true power to apparent power',
-        'Open plan offices over 60m² and sports halls',
+        'Replacing a single damaged socket front',
+        'Periodic inspection of an existing installation',
         'New installations and major alterations',
-        'Where cables penetrate fire-resistant construction',
+        'Adding one extra light to an existing circuit',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,9 +56,9 @@ const Module6Section7_2 = () => {
       question: 'What key information is recorded on an EIC?',
       options: [
         'Installation details, test results, and signatures',
-        'Dynamically assigning upstream time slots based on demand',
-        'Yes, it is within the 5% limit for final circuits',
-        'How many AC cycles happen per second',
+        'Only the date the work was completed',
+        'A list of the tools used on the job',
+        'The client\'s payment and invoice details',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module6Section7_2 = () => {
       id: 5,
       question: 'Why must the EIC include signatures from the designer, installer, and tester?',
       options: [
-        'Mechanical fasteners and plug-in connections',
+        'To make the certificate look more official',
         'To ensure accountability at every stage',
-        'The efficiency of time utilisation on the project',
-        'Meets European safety standards',
+        'So the client knows who to pay',
+        'Because the insurer designs the form',
       ],
       correctAnswer: 1,
       explanation:
@@ -79,19 +79,19 @@ const Module6Section7_2 = () => {
     },
     {
       id: 6,
-      question: 'True or False: An EIC is optional if the client does not request it.',
-      options: ['True', 'False'],
+      question: 'Is an EIC optional if the client does not request it?',
+      options: ['Yes, it is only issued on request', 'No, it is mandatory for new work regardless'],
       correctAnswer: 1,
       explanation:
-        'False. An EIC is mandatory for new installations and major alterations regardless of client requests.',
+        'An EIC is mandatory for new installations and major alterations regardless of whether the client requests it.',
     },
     {
       id: 7,
       question: 'Who is legally responsible for signing an EIC?',
       options: [
-        'Issue corrected certificates',
-        'Warning of presence of more than one supply',
-        'Ignoring — making no effort to listen at all',
+        'The client who ordered the work',
+        'Any apprentice on the project',
+        'The building control officer',
         'Only competent and qualified persons',
       ],
       correctAnswer: 3,
@@ -103,9 +103,9 @@ const Module6Section7_2 = () => {
       question: 'What risk does a client face if no EIC is issued for a new installation?',
       options: [
         'Non-compliance, insurance issues, and potential liability',
-        'Quick-install connector using mechanical clamping without epoxy',
-        'Difficulty concentrating, indecisiveness, and negative thinking patterns',
-        'Voltage monitoring and automatic switching to battery',
+        'A longer warranty period on the installation',
+        'A reduction in their electricity standing charge',
+        'Faster approval of any future alterations',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +115,10 @@ const Module6Section7_2 = () => {
       id: 9,
       question: 'How does an EIC help future electricians?',
       options: [
-        'Predictive maintenance alerts based on system performance',
-        'Shows original installation details and test baselines',
-        'To guide occupants safely towards final exits during emergencies',
-        'Multiple variables and diagnostics over two wires',
+        'It guarantees the installation will never need re-testing',
+        'It shows the original installation details and test baselines',
+        'It removes the need for a future EICR',
+        'It automatically updates when the wiring changes',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,10 +129,10 @@ const Module6Section7_2 = () => {
       question:
         "In the real-world example, why did the contractor's client face problems with insurance?",
       options: [
-        'Risk of electrocution or fire',
-        'To comply with regulations',
+        'The installation failed its earth loop impedance test',
+        'The client had not paid the contractor in full',
         'No EIC was issued to prove compliance',
-        'To avoid damage from high test voltages',
+        'The distribution board was the wrong colour',
       ],
       correctAnswer: 2,
       explanation:

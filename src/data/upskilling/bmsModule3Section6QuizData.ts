@@ -5,10 +5,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the difference between an alarm response and a safety shutdown?',
     options: [
-      '1 lux for at least 3 hours after supply failure, with uniformity max-to-min not exceeding 40:1.',
+      'An alarm response shuts plant down immediately; a safety shutdown only logs the event for later review',
       'Alarm responses notify and may trigger corrective actions; safety shutdowns override normal operation to protect life and property',
-      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
-      'It raises the centre of gravity, creates an unstable working position and increases fall height with no protection above the guardrails',
+      'There is no difference; the two terms describe the same BMS action',
+      'An alarm response is hard-wired; a safety shutdown is always actioned manually by the operator',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Give one example of an equipment alarm.',
     options: [
-      'Seasonal Affective Disorder (SAD)',
-      'Guardrails, mid-rails and toeboards',
+      'High CO₂ level detected in an occupied office',
+      'Room temperature drifting above its comfort setpoint',
       'Fan failure or pump fault detected by the BMS',
-      'Green (confident), amber (partial), red (significant gap)',
+      'Occupancy detected outside of normal working hours',
     ],
     correctAnswer: 2,
     explanation:
@@ -45,9 +45,9 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     question: 'Why are safety shutdowns more critical than standard alarms?',
     options: [
       'They override normal operation to prevent life-threatening situations or equipment damage',
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'A miswired relay connecting the fire alarm output to the wrong BMS input',
-      'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
+      'They are logged to the trend history, whereas standard alarms are not',
+      'They can be acknowledged remotely, whereas standard alarms cannot',
+      'They occur far more frequently than standard alarms during normal operation',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What happens to AHUs during a fire alarm?',
     options: [
-      'Shut down the chiller to prevent catastrophic damage',
+      'They ramp up to full speed to purge the building of smoke',
       'They shut down to prevent smoke spread through ductwork',
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'Fan failure or pump fault detected by the BMS',
+      'They continue running on their normal occupancy schedule',
+      'They switch to recirculation mode to maintain comfort conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What protective action might the BMS take if a chiller overheats?',
     options: [
-      'Induction burn from proximity to high-frequency conductors',
-      '60 seconds and 30 seconds into the test',
+      'Increase the chilled water setpoint to reduce the load',
+      'Log the high temperature but allow the chiller to keep running',
       'Shut down the chiller to prevent catastrophic damage',
-      'Duty to keep workplace safe and without risks to health',
+      'Switch the chiller to its maximum cooling output',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What devices do electricians install to allow safe shutdown of circuits?',
     options: [
-      'Single-phase 32A or three-phase',
-      'Combining multiple DC string outputs',
-      'The layout (general arrangement) drawing',
+      'Passive infrared occupancy sensors',
+      'Analogue 4-20 mA pressure transmitters',
+      'Daylight-linked dimming photocells',
       'Emergency relays and contactors',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     question: 'Why must alarm circuits be labelled separately from control wiring?',
     options: [
       'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
-      'They override normal operation to prevent life-threatening situations or equipment damage',
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'A miswired relay connecting the fire alarm output to the wrong BMS input',
+      'To allow the alarm circuits to be run at a higher voltage than control wiring',
+      'To reduce the total length of cable needed across the installation',
+      'Because alarm circuits do not require any cable identification under the regulations',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step is required to test shutdown sequences?',
     options: [
-      'A miswired relay connecting the fire alarm output to the wrong BMS input',
+      'Review the trend logs from the previous month for any past alarms',
       'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'Shut down the chiller to prevent catastrophic damage',
-      'They shut down to prevent smoke spread through ductwork',
+      'Increase every sensor logging frequency to its maximum setting',
+      'Disable the safety interlocks so the plant can run continuously',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, what prevented the AHU from shutting down during a fire alarm test?',
     options: [
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'Shut down the chiller to prevent catastrophic damage',
+      'The AHU time delay had been set too long to react in time',
+      'The fire alarm panel battery was flat during the test',
       'A miswired relay connecting the fire alarm output to the wrong BMS input',
-      'They override normal operation to prevent life-threatening situations or equipment damage',
+      'The BMS controller had lost its network connection to the head-end',
     ],
     correctAnswer: 2,
     explanation:

@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'overload-vs-shortcircuit',
     question: 'What is the key difference between an overload current and a short-circuit current?',
     options: [
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
+      'An overload only occurs on three-phase circuits; a short-circuit only on single-phase circuits',
       'An overload occurs in a sound circuit due to excess demand; a short-circuit results from a fault of negligible impedance',
-      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
-      'Contract — processing necessary for the performance of the contract (or to take pre-contract steps at the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s request)',
+      'An overload is cleared by the RCD; a short-circuit is cleared by the main switch',
+      'An overload flows to earth; a short-circuit flows only between line and neutral',
     ],
     correctIndex: 1,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       "In protection coordination, what does 'total discrimination' between two devices in series mean?",
     options: [
       'The downstream device always trips before the upstream device, for all fault currents up to its breaking capacity',
-      'Analysis of what happened, what worked well, what failed, and recommendations for preventing recurrence',
-      'Information about the project, including known hazards, that the client must provide to designers and contractors as soon as practicable',
-      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
+      'Both devices always trip together to ensure the fault is cleared as quickly as possible',
+      'The upstream device always trips first to protect the more expensive downstream device',
+      'Neither device trips until the fault current exceeds both their breaking capacities',
     ],
     correctIndex: 0,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
       'When the prospective fault current exceeds the breaking capacity of a downstream MCB, the installation can be made compliant by:',
     options: [
       'Using back-up protection from an upstream HRC fuse with a verified coordination combination',
-      'Their electrons are tightly bound and the band gap to conduction is large',
-      '32A or greater — the cable rating (Iz) must be at least equal to the protective device rating (In)',
-      'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
+      'Fitting an additional 30 mA RCD upstream of the MCB to share the fault current',
+      'Increasing the cable cross-sectional area so it carries the fault current safely',
+      'Lengthening the circuit cable to add impedance and reduce the prospective fault current',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 6,
     question: 'Earth fault loop impedance (Zs) is important for overcurrent protection because:',
     options: [
-      'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
-      'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
+      'It sets the maximum continuous current the circuit can carry under normal load',
+      'It determines the voltage drop seen by equipment at the end of the circuit',
       'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
-      'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
+      'It fixes the breaking capacity that the protective device must be rated to',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
       'Cascading (also called series connection or let-through energy coordination) allows:',
     options: [
       'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
-      'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
-      'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
-      'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
+      'A downstream device to be omitted entirely where an upstream device already protects the circuit',
+      'Two devices of the same rating to be wired in parallel to double the breaking capacity',
+      'A circuit to operate without overload protection provided short-circuit protection is fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'When checking protection coordination during periodic inspection, a maintenance technician should verify:',
     options: [
-      'A specific risk assessment must be carried out for young persons before they start work',
-      'Whether flow is laminar or turbulent (the ratio of inertial to viscous forces)',
+      'Only that each circuit is labelled correctly at the distribution board',
+      'Only that the RCD test button operates and resets the device',
       'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
-      'A risk that a reasonable, competent person could anticipate might occur given the nature of the space and the work to be done',
+      'Only that the cable colours match the current BS 7671 harmonised colours',
     ],
     correctAnswer: 2,
     explanation:
@@ -207,9 +207,9 @@ const quizQuestions = [
     id: 11,
     question: "The term 'let-through energy' of a protective device refers to:",
     options: [
-      'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
-      'Using back-up protection from an upstream HRC fuse with a verified coordination combination',
-      'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
+      'The continuous power the device dissipates as heat during normal operation',
+      'The energy stored in the device that is released when it is reset after tripping',
+      'The minimum energy required to operate the device under overload conditions',
       'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
     ],
     correctAnswer: 3,

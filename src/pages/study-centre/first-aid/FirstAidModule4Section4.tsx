@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A colleague on a construction site has been working in direct sun for several hours. They complain of a headache and dizziness, their skin is pale and clammy, and they are sweating heavily. What is the most appropriate first aid action?',
     options: [
-      'Tell them to carry on working but drink more water',
-      'Move them to a cool/shaded area, lie them down with legs raised, remove excess clothing, cool the skin, and give sips of cool water',
-      'Call 999 immediately — this is heat stroke',
-      'Apply ice packs directly to the chest and abdomen',
+      'Tell them to carry on working in the sun but to drink more water',
+      'Call 999 immediately, as these signs indicate full heat stroke',
+      'Lay them down and apply ice packs directly to the chest and abdomen',
+      'Move them to shade, lie them down with legs raised, cool them, and give sips of water',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'These are the classic signs of heat exhaustion: headache, dizziness, pale/clammy skin, and heavy sweating. The correct treatment is to move to a cool/shaded area, lie down with legs raised, remove excess clothing, cool the skin with tepid water or damp cloths, and give sips of cool water if conscious. Monitor for 30 minutes — if they do not improve, call 999 as they may be progressing to heat stroke.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'A worker on a construction site has been outside in sub-zero temperatures. Their fingers are white, waxy, and numb. What is the correct first aid treatment?',
     options: [
-      'Rub their hands vigorously to restore circulation',
-      'Plunge their hands into hot water to rewarm quickly',
-      'Warm the affected area gently using body heat (e.g. tuck hands under armpits), do not rub, do not use direct heat, and seek medical attention',
-      'Apply a heat pack directly to the affected fingers',
+      'Rub their hands together vigorously to restore the circulation quickly',
+      'Plunge their hands straight into hot water to rewarm them rapidly',
+      'Warm the area gently with body heat, do not rub, and seek medical attention',
+      'Apply a chemical heat pack directly onto the affected numb fingers',
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'Which of the following is the KEY difference between heat exhaustion and heat stroke?',
     options: [
-      'Heat exhaustion causes sweating; heat stroke never causes sweating',
-      'Heat exhaustion involves confusion and altered consciousness; heat stroke does not',
-      'Heat stroke involves confusion, altered consciousness, and a core temperature above 40\u00B0C — it is always a medical emergency',
-      'There is no significant difference — they are different names for the same condition',
+      'Heat exhaustion causes sweating, whereas heat stroke never causes any sweating',
+      'Heat exhaustion involves confusion and altered consciousness, but heat stroke does not',
+      'Heat stroke involves confusion and a core temperature above 40\u00B0C; it is an emergency',
+      'There is no real difference; they are two names for exactly the same condition',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'A casualty with suspected heat stroke is conscious but confused. While waiting for the ambulance, what is the priority action?',
     options: [
-      'Give them paracetamol to reduce their temperature',
-      'Rapid cooling — remove clothing, apply cold water, cold packs to neck/armpits/groin, and fan the casualty',
-      'Keep them warm with a blanket to prevent shock',
-      'Sit them upright and give them hot tea',
+      'Give them paracetamol to bring their raised core temperature down',
+      'Cool rapidly: remove clothing, apply cold water, and fan the casualty',
+      'Keep them warm by wrapping them in a blanket to prevent the onset of shock',
+      'Sit them fully upright and give them a hot, sweet drink such as tea',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,20 +116,20 @@ const quizQuestions = [
     question:
       'A casualty with heat exhaustion has been resting in the shade, drinking water, and being cooled with damp cloths for 40 minutes. They are not improving and are becoming more confused. What should you do?',
     options: [
-      'Continue the same treatment — it can take up to 2 hours to recover',
       'Call 999 — failure to improve within 30 minutes suggests progression to heat stroke',
+      'Continue the same treatment — it can take up to 2 hours to recover',
       'Give them an energy drink instead of water',
       'Move them back into the sun to help them acclimatise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heat exhaustion should improve within 30 minutes of appropriate treatment (shade, cooling, fluids). If the casualty is NOT improving within 30 minutes, or is getting worse (especially if confusion develops), this suggests progression to heat stroke. Call 999 immediately. Increasing confusion is a particularly concerning sign as it indicates the brain is being affected by the elevated temperature.',
   },
   {
     id: 4,
     question: 'At what core body temperature is hypothermia defined?',
-    options: ['Below 37\u00B0C', 'Below 36\u00B0C', 'Below 35\u00B0C', 'Below 32\u00B0C'],
-    correctAnswer: 2,
+    options: ['Below 37\u00B0C', 'Below 36\u00B0C', 'Below 32\u00B0C', 'Below 35\u00B0C'],
+    correctAnswer: 3,
     explanation:
       'Hypothermia is defined as a core body temperature below 35\u00B0C. Normal body temperature is approximately 37\u00B0C. Hypothermia is classified as mild (35\u201332\u00B0C), moderate (32\u201328\u00B0C), and severe (below 28\u00B0C). Each stage has progressively more dangerous symptoms, with severe hypothermia carrying a significant risk of cardiac arrest.',
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'Why is the cessation of shivering in a hypothermic casualty considered an ominous sign?',
     options: [
-      'It means the casualty is warming up and no longer needs to shiver',
-      'It indicates the body has exhausted its ability to generate heat — hypothermia is progressing to moderate or severe',
-      'It means the casualty has warmed their muscles sufficiently',
-      'Shivering always stops naturally after 10 minutes regardless of temperature',
+      'It means the casualty is warming up and no longer needs to shiver to stay warm',
+      'It indicates the body can no longer generate heat; hypothermia is worsening',
+      'It means the casualty has warmed their muscles sufficiently through movement',
+      'Shivering always stops naturally after 10 minutes whatever the core temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'Why should you NOT apply direct heat (hot water bottles on bare skin, sitting close to a heater) to a hypothermic casualty?',
     options: [
-      'It will burn their skin because they cannot feel the heat',
-      'Rapid external warming causes peripheral vasodilation, leading to afterdrop — cold blood from the extremities rushes to the core, further dropping core temperature and risking cardiac arrest',
-      'Direct heat has no effect on hypothermia',
-      'It will cause the casualty to sweat, making them colder',
+      'It will burn the numb skin because the casualty cannot feel the heat',
+      'Direct heat has no real effect, so it neither helps nor harms the casualty',
+      'Rapid external warming causes afterdrop, dropping core temperature and risking arrest',
+      'It will make the casualty sweat heavily, which then chills them even further',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Applying direct heat to a hypothermic casualty causes peripheral vasodilation — the blood vessels near the skin open up, increasing blood flow from the cold extremities to the warm core. This cold blood returning to the core causes 'afterdrop' — a further drop in core temperature that can trigger fatal cardiac arrhythmias. Gradual warming with blankets, dry clothing, and warm drinks (if conscious) is safer because it allows the body to warm evenly without sudden circulatory changes.",
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'A worker with frostbitten fingers has been brought indoors. The fingers are white, waxy, and numb. There is a risk they may need to go back outside before rescue arrives. Should you rewarm the fingers?',
     options: [
-      'Yes — always rewarm frostbite as quickly as possible',
       'No — do NOT rewarm if there is a risk of refreezing, as refreezing causes significantly worse tissue damage',
+      'Yes — always rewarm frostbite as quickly as possible',
       'Yes — but only using hot water above 40\u00B0C',
       'It does not matter — frostbite damage is permanent regardless of treatment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If there is any risk that the frostbitten tissue may refreeze, you should NOT attempt to rewarm it. Refreezing after thawing causes dramatically worse tissue damage than leaving the tissue frozen. It is better to keep the tissue frozen and get the casualty to definitive medical care where controlled rewarming can take place in a safe environment. Only rewarm frostbite if you are certain the tissue will remain warm once thawed.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'On a construction site in summer, which of the following is the most effective strategy for preventing heat illness?',
     options: [
-      'Providing salt tablets to all workers at the start of the shift',
-      'Scheduling heavy work during the coolest parts of the day, providing frequent rest breaks in shade, ensuring cool water is readily available, and monitoring workers for early signs',
-      'Telling workers to remove all PPE during hot weather',
-      'Providing energy drinks instead of water to replace electrolytes',
+      'Providing salt tablets to every worker at the start of each shift',
+      'Telling all workers to remove their required PPE during hot weather',
+      'Providing energy drinks instead of water to replace lost electrolytes',
+      'Scheduling heavy work for cooler hours, with shaded rest breaks and cool water',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most effective prevention strategy combines multiple measures: scheduling heavy or physically demanding work for cooler parts of the day (early morning, late afternoon), providing frequent rest breaks in shaded or cool areas, ensuring cool drinking water is readily available at all times, adjusting work/rest cycles, and actively monitoring workers for early signs of heat exhaustion. Salt tablets are not recommended as standard practice. PPE should not be removed where it is required for safety — instead, work patterns should be adjusted. Water is the best fluid for hydration in most circumstances.',
   },

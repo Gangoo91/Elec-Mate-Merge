@@ -13,19 +13,19 @@ const quickCheckQuestions = [
   {
     question: 'What is a lighting scene?',
     options: [
-      'A single light setting',
       'A pre-programmed combination of multiple light settings',
+      'A single light setting',
       'A light fixture type',
       'A wiring configuration',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A lighting scene is a pre-programmed combination of brightness levels, colours, and states across multiple lights that can be activated with a single command.',
   },
   {
     question: 'What type of schedule activates based on time of day?',
-    options: ['Event-based', 'Time-based', 'Condition-based', 'Manual'],
-    correctIndex: 1,
+    options: ['Event-based', 'Condition-based', 'Manual', 'Time-based'],
+    correctIndex: 3,
     explanation:
       'Time-based schedules trigger at specific times (e.g., 7am, sunset) regardless of other factors. They are the simplest form of automated scheduling.',
   },
@@ -47,12 +47,12 @@ const quizQuestions = [
   {
     question: 'Which is an example of a condition-based schedule?',
     options: [
-      'Lights on at 7am',
       'Lights dim when TV turns on',
+      'Lights on at 7am',
       'Lights off at midnight',
       'Lights on for 10 minutes',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Condition-based schedules trigger based on events or states (TV turning on) rather than time. They respond to what is happening in the home.',
   },
@@ -60,11 +60,11 @@ const quizQuestions = [
     question: 'What is the benefit of sunrise/sunset-based scheduling?',
     options: [
       'Simpler programming',
-      'Automatically adjusts to seasonal daylight changes',
       'Lower power consumption',
       'Works without internet',
+      'Automatically adjusts to seasonal daylight changes',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Sunrise/sunset scheduling automatically adjusts throughout the year, ensuring lights come on at dusk regardless of the time of year.',
   },
@@ -84,11 +84,11 @@ const quizQuestions = [
     question: 'What information should you gather before programming scenes?',
     options: [
       "Customer's favourite colours",
-      "Customer's daily routines and lighting preferences",
       'Number of social media followers',
+      "Customer's daily routines and lighting preferences",
       'Brand of furniture',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Understanding daily routines (wake time, meal times, bedtime) and lighting preferences ensures scenes match actual usage patterns.',
   },

@@ -36,7 +36,7 @@ export const smartHomeModule6Section3QuizQuestions: QuizQuestion[] = [
   {
     id: 3,
     question: 'What type of logic do voice assistants use to interpret commands?',
-    options: ['Random logic', 'IF-THEN logic', 'Sequential logic only', 'Manual logic'],
+    options: ['Analogue signal logic', 'IF-THEN logic', 'Binary arithmetic logic', 'Fuzzy proximity logic'],
     correct: 1,
     explanation:
       'Voice assistants use IF-THEN logic to interpret commands and trigger appropriate actions based on conditions and rules.',
@@ -110,10 +110,10 @@ export const smartHomeModule6Section3QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What is one common mistake when creating routines for clients?',
     options: [
-      'Making them too simple',
+      'Using clear, descriptive device names',
       'Creating over-complicated logic that may confuse end users',
-      'Testing them thoroughly',
-      'Documenting them properly',
+      'Confirming the client’s daily habits first',
+      'Building in a simple manual override',
     ],
     correct: 1,
     explanation:

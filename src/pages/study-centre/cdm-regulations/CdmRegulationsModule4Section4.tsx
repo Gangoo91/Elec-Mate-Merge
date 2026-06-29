@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A designer completes their element of the design but does not share information about a residual risk with the principal designer or other designers. They argue it is not their job to coordinate. Is this correct?',
     options: [
+      'No — Regulation 8 requires cooperation, which includes sharing risk information',
       'Yes — each designer is only responsible for their own design element',
-      'No — Regulation 8 requires every person with a CDM duty to cooperate with other duty holders, which includes sharing risk information',
       'Yes — only the principal designer has a coordination duty',
       'No — but only if the client specifically requests cooperation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 8 of CDM 2015 places a duty on every person with a CDM duty to cooperate with other duty holders. This is not optional and does not depend on the client requesting it. A designer who identifies a residual risk that could affect other trades or design elements must share that information so that the risk can be managed collectively. Failure to cooperate is a breach of the Regulations.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     options: [
       'Contractor A — they should have checked below before starting',
       'Contractor B — they should not have worked below another trade',
-      'The principal contractor — it is their duty to coordinate contractors and manage shared spaces and conflicting activities',
       'Nobody — it is normal for trades to work near each other on construction sites',
+      'The principal contractor — coordinating conflicting activities is their duty',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The principal contractor has an explicit duty under CDM 2015 to coordinate the activities of contractors on site, particularly where their work creates interface risks. Working directly above another trade is a classic example of conflicting activities that require a permit-to-work system, time separation, or physical separation. The principal contractor should have identified this conflict through look-ahead planning and coordination meetings.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'A designer and a contractor disagree about whether a particular construction method is safe. The designer insists on their approach, but the contractor says it is not buildable on site. Neither will compromise. What is the correct escalation route?',
     options: [
       'The contractor should simply do what the designer says because designers outrank contractors',
+      'Escalate to the principal designer and/or client, with a competent person and the HSE consulted if unresolved',
       'The contractor should ignore the designer and use their own method without telling anyone',
-      'The matter should be escalated to the principal designer and/or the client, with input from a competent person if needed, and the HSE can be consulted if the dispute cannot be resolved',
       'The work should stop permanently until both parties agree',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'CDM 2015 does not create a hierarchy where designers outrank contractors. Both have duties to ensure health and safety. Where there is a genuine disagreement about safe methods of work, the matter should be escalated to the principal designer (for design issues) or the client. A competent person should provide an independent assessment. If the dispute cannot be resolved internally, the HSE can be consulted for guidance. Work in the disputed area should not proceed until the matter is resolved safely.',
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'Under CDM 2015, which duty holder has the primary responsibility for coordinating the design team during the pre-construction phase?',
     options: [
+      'The principal designer',
       'The client',
       'The principal contractor',
-      'The principal designer',
       'The lead designer from the largest consultancy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The principal designer is responsible for planning, managing, monitoring, and coordinating health and safety in the pre-construction phase, including coordinating the design team. While the client appoints the principal designer and has overarching duties, and the principal contractor coordinates the construction phase, it is the principal designer who coordinates design work to ensure that risks are identified and managed across all design elements.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     options: [
       'Only the client and the principal designer',
       'Only the principal designer and the principal contractor',
-      'Every person on whom a duty is placed by the CDM Regulations',
       'Only contractors and workers on the construction site',
+      'Every person on whom a duty is placed by the CDM Regulations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 8 states that every person on whom a duty is placed by the CDM Regulations must cooperate with any other person working on or in relation to the project. This includes the client, principal designer, principal contractor, designers, contractors, and workers. The duty is universal and applies at all phases of the project.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'A design coordination meeting identifies a clash between the structural steel design and the mechanical services routing. What is the most appropriate action?',
     options: [
+      'The principal designer records the interface issue, assigns responsibility, and tracks it to resolution',
       'The structural engineer changes their design because steel is more adaptable',
       'The mechanical engineer re-routes the services because services are less important than structure',
-      'The principal designer records the interface issue, assigns responsibility for resolution, sets a deadline, and tracks the action to completion',
       'Both designers are told to sort it out between themselves',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The principal designer's role is to manage design interfaces systematically. When a clash is identified, it should be recorded in the design interface register, responsibility for proposing a solution should be assigned (considering the health and safety implications of each option), a deadline for resolution should be set, and the action should be tracked to completion. Simply telling designers to sort it out, or assuming one discipline always takes priority, does not constitute proper coordination.",
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
       "A contractor on site discovers that the work of another contractor has created an unexpected hazard. Under CDM 2015, what is the discovering contractor's first obligation?",
     options: [
       'Report the hazard to the HSE immediately',
+      'Inform the principal contractor and the other contractor so the hazard can be managed',
       'Stop all work on the entire site',
-      'Cooperate by informing the principal contractor and the other contractor so that the hazard can be assessed and managed',
       'Continue their own work and let the other contractor deal with it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The duty of cooperation under Regulation 8 means that every contractor must share information about hazards that could affect other parties. The discovering contractor should report the hazard to the principal contractor (who coordinates site activities) and inform the other contractor. The principal contractor will then assess the situation and determine what action is needed. Simply ignoring it or waiting for someone else to notice it breaches the cooperation duty.',
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
     question: 'What is the purpose of a design interface register?',
     options: [
       'To record the names and contact details of all designers on the project',
-      "To identify where different designers' work overlaps or connects, track interface issues, and record how they are resolved",
       'To list the software packages used by each design team',
+      "To identify where designers' work connects and track interface issues to resolution",
       'To calculate the design fees payable to each consultant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A design interface register is a coordination tool managed by the principal designer. It identifies every point where one designer's work meets or overlaps with another's, records the risks or coordination issues at each interface, assigns responsibility for resolving each issue, and tracks progress to resolution. It is a practical tool for ensuring that nothing falls through the gaps between different designers' responsibilities.",
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
       'Which of the following is the best example of effective information sharing on a CDM project?',
     options: [
       'Each contractor keeps their risk assessments in their own office and produces them only if asked',
-      'The principal contractor maintains a shared notice board, holds regular briefings, and uses a digital platform where risk assessments, method statements, and emergency procedures are accessible to all contractors',
       'The client sends a single email at the start of the project with all relevant health and safety information',
       'Designers share their drawings but not their risk assessments because risk assessments are confidential',
+      'The principal contractor maintains a shared notice board, regular briefings, and a digital platform of key documents for all contractors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Effective information sharing requires active, ongoing communication through multiple channels. The principal contractor should maintain a shared notice board displaying current safety information, hold regular briefings and coordination meetings, and provide a digital platform where key documents (risk assessments, method statements, emergency procedures, incident reports) are accessible to all who need them. Risk assessments are not confidential — they must be shared with anyone whose work could be affected by the risks identified.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
       "The HSE investigates an incident on a construction site and finds that two contractors' activities conflicted with each other, contributing to the accident. No coordination arrangements were in place. Who is most likely to face enforcement action?",
     options: [
       'Only the two contractors whose activities conflicted',
+      'The principal contractor for failing to coordinate, and potentially the contractors for failing to cooperate',
       'Only the workers who were injured',
-      'The principal contractor, because they have the duty to coordinate contractor activities on site, and potentially the contractors themselves for failing to cooperate',
       'The client, because the client is always responsible for everything on a CDM project',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The principal contractor has a specific duty to plan, manage, monitor, and coordinate the construction phase, including coordinating contractor activities. If they failed to identify conflicting activities and establish coordination arrangements, they will face enforcement action. However, the individual contractors also have a duty to cooperate under Regulation 8 — if they knew about the conflict and did not raise it, they could also face action. The HSE takes a proportionate approach and will consider the specific failures of each party.',
   },

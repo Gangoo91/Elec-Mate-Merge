@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary function of a distribution board?',
     options: [
-      'Potentially dangerous - urgent remedial action required',
+      'To step the incoming supply voltage down to 230 V',
       'To distribute power to final circuits with individual protection',
-      'To reduce touch voltage between simultaneously accessible conductive parts',
-      'Industrial distribution boards, motor circuits and commercial switchgear',
+      'To correct the power factor of the incoming supply',
+      'To convert the incoming AC supply into DC for the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'When calculating ways for a three-phase board, how are single-phase circuits counted?',
     options: [
-      'To minimise neutral current and prevent overloading',
-      'When dead testing is not practicable',
+      'Each counts as 3 ways across all three phases',
+      'Each counts as half a way on the neutral busbar',
       'Each counts as 1 way on its allocated phase',
-      'Drawings showing what was actually installed',
+      'Single-phase circuits cannot be fitted to a three-phase board',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'What should be labelled according to Regulation 514.9.1?',
     options: [
-      'A goal focused on the type of person you want to become',
-      'Checking common failure points before rare ones',
-      'Prosecute employees who refuse to lift',
+      'Only the main switch position on the board',
+      'Only the prospective fault current at the board',
+      'Only the date the installation was first energised',
       'Type of circuit, circuit reference and RCD info',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'Why is phase balancing important in three-phase distribution boards?',
     options: [
       'To minimise neutral current and prevent overloading',
-      'Keep communications cables separate from mains power cables',
-      'Legal requirement and proof of compliance',
-      'Non-combustible material or metal enclosure',
+      'To increase the prospective fault current at the board',
+      'To allow the use of smaller protective devices',
+      'To raise the supply voltage on the lightly loaded phase',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of cable entry arrangements in distribution boards?',
     options: [
-      'Environmental conditions and temperature',
-      '"Safety Electrical Connection — Do Not Remove"',
+      'To increase the current rating of the busbars',
+      'To improve the power factor of the connected circuits',
       'To maintain IP rating and prevent vermin ingress',
-      'Show sizes, support spacing, and load capacity information',
+      'To reduce the prospective fault current at the board',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'When must RCD protection be provided at distribution boards?',
     options: [
-      'Average performance over a heating season',
-      'Specific training in fire alarm systems to BS 5839',
-      'Access restrictions and conservation requirements',
+      'Only for circuits rated above 100A',
+      'Only for three-phase circuits',
+      'Only for dedicated fixed-equipment circuits',
       'For all socket outlets up to 32A in most locations',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'What spacing is typically required between adjacent distribution boards?',
     options: [
       '300mm minimum for ventilation',
-      '50% of rated residual current',
-      'Torque decreases as flux weakens',
-      'Safety for emergency responders',
+      'No spacing is needed between boards',
+      '50mm minimum for cable entry only',
+      '2000mm minimum for emergency egress',
     ],
     correctAnswer: 0,
     explanation:
@@ -200,18 +200,18 @@ const quizQuestions = [
       'IP2X',
       'IP4X',
     ],
-    correctIndex: 1,
+    correctAnswer: 1,
     explanation:
-      'Outside bathroom zones 0, 1 and 2, equipment should be at least IPX1 for splash protection. IP44 is commonly specified for bathrooms to protect against splashing water.',
+      'IP44 is commonly specified for equipment in bathrooms (outside zones 0, 1 and 2) to protect against splashing water from all directions.',
   },
   {
     id: 10,
     question: 'What information must be displayed at the origin of an installation?',
     options: [
-      'To prevent overcrowding, damage, and theft',
-      'The British Standards Institution (BSI)',
+      'The name of the installing contractor only',
+      'The total length of cable used in the installation',
       'Maximum demand, earthing type, and nominal voltage',
-      'At least 1.6 times the downstream fuse rating',
+      'The purchase cost of the distribution equipment',
     ],
     correctAnswer: 2,
     explanation:

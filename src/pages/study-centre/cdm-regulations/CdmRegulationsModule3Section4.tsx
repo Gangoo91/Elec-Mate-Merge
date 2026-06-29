@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 6 of CDM 2015, which of the following triggers a requirement to notify HSE?',
     options: [
+      'More than 30 working days with more than 20 workers at any one time, OR exceeding 500 person-days',
       'Any project involving more than one contractor',
-      'A project lasting more than 30 working days with more than 20 workers simultaneously, OR exceeding 500 person-days',
       'Every construction project regardless of size',
       'Only demolition projects lasting more than 14 days',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 6 requires notification to HSE when a project is expected to last more than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days of construction work. Both thresholds are alternatives \u2014 exceeding either one triggers the duty to notify.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'Under Regulation 6(3), where must the F10 notification (or a copy) be displayed on site?',
     options: [
       'Only in the principal contractor\u2019s head office',
-      'In the site office or at the main entrance to the site, visible to workers',
       'It does not need to be displayed \u2014 only filed with HSE',
+      'In the site office or at the main entrance to the site, visible to workers',
       'In the client\u2019s registered business premises',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Regulation 6(3) requires that the F10 notification, or a copy of it, must be displayed in the construction site office or at the approach to the site (typically the main entrance) so that it is visible to every worker on the project. It must be kept up to date throughout the construction phase.',
   },
@@ -80,11 +80,11 @@ const quizQuestions = [
       'A construction project is planned to last 35 working days with a peak of 15 workers on site at any one time. The total estimated person-days are 420. Does this project require notification to HSE?',
     options: [
       'Yes \u2014 it exceeds 30 working days',
-      'No \u2014 it does not meet either threshold because it has fewer than 20 simultaneous workers and fewer than 500 person-days',
       'Yes \u2014 any project over 30 days must be notified regardless of workforce size',
       'No \u2014 notification is only required for demolition projects',
+      'No \u2014 it has fewer than 20 simultaneous workers and fewer than 500 person-days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The project lasts more than 30 working days but will never have more than 20 workers simultaneously, so it does not meet the first threshold. The total person-days (420) are below 500, so it does not meet the second threshold either. Both conditions of the first threshold must be met (more than 30 days AND more than 20 simultaneous workers), and the 500 person-day alternative is not exceeded. Therefore, notification is not required.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'Who has the legal duty under CDM 2015 to ensure the F10 notification is submitted to HSE?',
     options: [
+      'The client',
       'The principal designer',
       'The principal contractor',
-      'The client',
       'The CDM coordinator',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under CDM 2015, the duty to notify HSE rests squarely with the client. Whilst the client may instruct the principal designer or principal contractor to complete and submit the F10 on their behalf, the legal responsibility remains with the client. The role of CDM coordinator no longer exists under CDM 2015 \u2014 it was replaced by the principal designer.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
     question: 'Under Regulation 6(3), where must the F10 notification be displayed?',
     options: [
       'Only in the client\u2019s head office',
-      'In the construction site office or at the main entrance, visible to workers',
       'It only needs to be held electronically in the health and safety file',
       'At the nearest HSE regional office',
+      'In the construction site office or at the main entrance, visible to workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 6(3) requires the F10, or a copy, to be displayed in the site office or at the approach to the site so that it is visible to every worker. This ensures that all workers on the project can see that the project has been notified to HSE and can check the key details. The displayed copy must be kept up to date.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'A project was originally planned to last 25 working days with 10 workers but has been extended to 40 working days with 25 workers at peak. What must the client do?',
     options: [
+      'Submit an F10 to HSE as soon as practicable, because it now exceeds the thresholds',
       'Nothing \u2014 notification was not required at the start, so it is not required now',
-      'Submit an F10 notification to HSE as soon as practicable, because the project now exceeds the notification thresholds',
       'Wait until the project is complete and then notify HSE retrospectively',
       'Only notify HSE if there has been an accident on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When a project crosses the notification thresholds during its lifetime \u2014 whether due to programme extensions, increased workforce, or scope changes \u2014 the client must submit an F10 as soon as practicable. The duty to notify is not fixed at the start of the project; it applies whenever the thresholds are crossed. Retrospective notification after project completion would be a breach of the Regulations.',
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
     question: 'How does HSE primarily use the information submitted on F10 notifications?',
     options: [
       'To calculate the amount of tax owed by the client',
-      'To target proactive inspections, gather sector intelligence, and plan resource allocation',
       'To approve or reject construction projects before they can proceed',
+      'To target proactive inspections, gather intelligence, and plan resources',
       'To issue building control certificates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HSE uses F10 data to target proactive inspections (visiting sites where risks are likely to be highest), gather intelligence about the construction sector (types of work, locations, sizes of projects), and plan resource allocation (deploying inspectors where they are most needed). The F10 is NOT an approval process \u2014 submitting it does not mean HSE has approved the project, and HSE does not have the power to approve or reject construction projects.',
   },
@@ -163,10 +163,10 @@ const quizQuestions = [
     options: [
       'A verbal warning from the local authority',
       'A small administrative fine of \u00a3100',
-      'Criminal prosecution by HSE, potentially resulting in an unlimited fine',
       'No consequence \u2014 notification is voluntary',
+      'Criminal prosecution by HSE, potentially resulting in an unlimited fine',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Failure to notify HSE of a notifiable project is a criminal offence under CDM 2015. HSE can prosecute the client, and the courts can impose an unlimited fine. In serious cases, particularly where the failure to notify is part of a wider pattern of non-compliance, individual directors or managers can also face personal prosecution. Enforcement notices (improvement or prohibition notices) may also be served.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'A large development is being built in three separate phases over two years. How should notification be handled?',
     options: [
+      'Assess each phase individually against the thresholds and submit a separate F10 for each phase that qualifies',
       'A single F10 covers all phases regardless of timing',
-      'Each phase should be assessed individually against the notification thresholds, and separate F10 notifications submitted for each phase that qualifies',
       'Only the final phase needs to be notified because it is closest to completion',
       'Phased projects are exempt from notification requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For phased projects, each phase should be assessed individually against the notification thresholds. If a phase meets the criteria (more than 30 working days with more than 20 simultaneous workers, or more than 500 person-days), it requires its own F10 notification. A single F10 may cover the entire project if all phases are managed as one continuous project, but where phases are distinct (different contractors, different timescales, significant gaps between phases), separate notifications are appropriate.',
   },

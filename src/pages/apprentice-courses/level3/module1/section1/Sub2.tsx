@@ -45,42 +45,42 @@ const checks = [
     question:
       "When can EAWR Reg 14 ever permit live working on a circuit above 50V AC?",
     options: [
-      "No — each extraneous-conductive-part must have its own dedicated main protective bonding conductor running back to the MET (or via a properly designed bonding bar). Daisy-chaining means a disconnection at one part disables bonding to the next, and the conductor’s integrity becomes dependent on the previous clamp.",
-      "Only when ALL THREE conditions in Reg 14 are met simultaneously — (a) it is unreasonable in all the circumstances for the conductor to be dead; AND (b) it is reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions (including PPE, insulated tools, controlled access, competent person, second person where appropriate) are taken to prevent injury. All three. The bar is deliberately high.",
-      "Stop. The data sheet specifies ferrules for a reason — stranded conductors crushed under a screw terminal can spread, lose strands, and form a high-resistance joint that runs hot. Working outside the manufacturer's instructions breaches BS 7671 Reg 510.3 (which ties selection and erection to those instructions) and risks failing Reg 526.1 (durable connection). Get the ferrules and crimping tool, or get a written supervisor sign-off that the deviation has been assessed and the manufacturer warranty implications accepted.",
-      "Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don't admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.",
+      "Whenever the customer or client asks for it, because customer convenience is a recognised exception under Reg 14.",
+      "Only when all three Reg 14 conditions are met at once — unreasonable to be dead, reasonable to be live, and suitable precautions taken.",
+      "Whenever the operative is wearing insulated gloves and using insulated tools, since PPE alone satisfies Reg 14.",
+      "Whenever any one of the three Reg 14 conditions is met, because the conditions are alternatives rather than cumulative.",
     ],
     correctIndex: 1,
     explanation:
-      "Remember from L2 — safe isolation is the default. EAWR Reg 14 is the narrow gateway out of that default. The HSE has prosecuted electricians for live work on circuits where dead-working would have been straightforward (lost commercial time isn't 'unreasonable'). All three limbs of Reg 14 must be defensible in writing — a one-line risk assessment doesn't satisfy it.",
+      "The three limbs are cumulative — all of them must hold: (a) unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions (PPE, insulated tools, controlled access, competent person, second person where appropriate) taken to prevent injury. Safe isolation is the default; Reg 14 is the narrow gateway out of it. The HSE has prosecuted electricians for live work where dead-working would have been straightforward — lost commercial time isn't 'unreasonable'. All three limbs must be defensible in writing; a one-line risk assessment doesn't satisfy it.",
   },
   {
     id: 'l3-m1-s1-sub2-reg16',
     question:
       "An L2 apprentice in your team asks you to sign their initial verification certificate for a small kitchen circuit because the supervisor isn't on site. Under EAWR Reg 16, what's the L3-level call?",
     options: [
-      "Don't quote firm numbers until the MCS heat-loss calc and emitter sizing are done. The certified designer's pack will give the realistic flow temperature, SCOP estimate and indoor design temperatures the system will deliver. If insulation is marginal, the calc may recommend fabric upgrades first to bring the heat-loss within sensible heat-pump capacity. Quoting numbers off the cuff before the design is finished is how customers end up with mismatched expectations and disappointed reviews. The right answer: 'the design pack will give us the firm numbers — let me get back to you'.",
-      "Reg 722.411.4 applies to TN systems and addresses requirements where a PME earthing facility would otherwise be used as the means of earthing for the protective conductor contact(s) of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors. It sets alternative methods (b) to (e) that shall be used instead of using the PME facility directly as the charging-point protective-earth connection.",
-      "Phase sequence test confirms the order of phase rotation (L1, L2, L3 or A, B, C in correct sequence) on three-phase supplies. Wrong sequence reverses the rotation of three-phase induction motors and pumps — can cause damage to driven plant and wrong direction of conveyors / lifts. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) — three probe leads, instrument indicates correct or reversed sequence. Required at three-phase commissioning and after any maintenance that may have disturbed phase identification (e.g. cable replacement, supply transformer changes).",
-      "Refuse and escalate. EAWR Reg 16 prohibits anyone from being engaged in work that requires technical knowledge or experience to prevent danger unless they possess it themselves OR are under such degree of supervision as is appropriate having regard to the nature of the work. You are not yet a Qualified Supervisor under the BS 7671 sense — and the certificate is a legal document. Sign-off without competence is a Reg 16 breach, and the certificate is fraudulent.",
+      "Sign it — once you have passed your L2 exams you hold the same sign-off authority as a qualified electrician under Reg 16.",
+      "Sign it, but only in pencil, so the supervisor can confirm or amend the entry when they return to site.",
+      "Sign it on the L2 apprentice's behalf using their name, since the work was carried out by them and not by you.",
+      "Refuse and escalate — you are not yet a Qualified Supervisor and signing off without competence breaches Reg 16.",
     ],
     correctIndex: 3,
     explanation:
-      "L3 is the boundary year — you're more competent than an L2 mate but not yet a fully qualified electrician with sign-off authority. Reg 16 doesn't grant authority by job title; it requires actual technical knowledge and experience. The kindest thing you can do for the L2 apprentice (and for yourself) is escalate — not sign.",
+      "EAWR Reg 16 prohibits anyone from being engaged in work requiring technical knowledge or experience to prevent danger unless they possess it themselves OR are under such degree of supervision as is appropriate to the nature of the work. The certificate is a legal document; signing it without the competence to underwrite it is a Reg 16 breach and the certificate is fraudulent. L3 is the boundary year — you're more competent than an L2 mate but not yet a fully qualified electrician with sign-off authority. Reg 16 doesn't grant authority by job title; it requires actual technical knowledge and experience. The kindest thing you can do for the L2 apprentice (and yourself) is escalate — not sign.",
   },
   {
     id: 'l3-m1-s1-sub2-eawr-bs7671',
     question:
       "What's the relationship between EAWR 1989 and BS 7671:2018+A4:2026 (now A4:2026)?",
     options: [
-      "As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared",
-      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
-      "EAWR is statute — primary legal duty. BS 7671 is non-statutory; it's the IET code of practice. Following BS 7671 is treated by the courts as evidence that you've discharged the EAWR duty (essentially a 'safe harbour'). Departing from BS 7671 doesn't automatically breach EAWR, but you have to demonstrate the alternative is at least as safe — and the burden is on you.",
-      "Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman's ASQ) was a better predictor of success than traditional hiring criteria",
+      "BS 7671 is the statute and EAWR is the non-statutory code — following EAWR is evidence of complying with BS 7671.",
+      "They are the same document published under two names; BS 7671 is simply the everyday title for EAWR 1989.",
+      "EAWR is statute; BS 7671 is the non-statutory IET code, and following it is treated as evidence of discharging the EAWR duty.",
+      "Both are non-statutory codes of practice with no legal force; compliance with either is entirely voluntary.",
     ],
     correctIndex: 2,
     explanation:
-      "This is one of the most important L3 conceptual moves. EAWR is the legal hook. BS 7671 is the technical playbook that demonstrates compliance. A4:2026 is the current edition — knowing the relationship lets you answer 'why does the regs book matter?' with the right legal framing.",
+      "EAWR is statute — the primary legal duty. BS 7671 is non-statutory, the IET code of practice, and compliance is treated by the courts as evidence you've discharged the EAWR duty (essentially a 'safe harbour'). Departing from BS 7671 doesn't automatically breach EAWR, but you must then demonstrate the alternative is at least as safe — and the burden is on you. EAWR is the legal hook; BS 7671 is the technical playbook that demonstrates compliance. A4:2026 is the current edition.",
   },
 ];
 
@@ -89,88 +89,88 @@ const quizQuestions = [
     id: 1,
     question: "Who does EAWR 1989 apply to?",
     options: [
-      "Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse",
-      "Employers, self-employed, employees and managers — Reg 3 places duties on each. Some duties are absolute, some are SFAIRP. The employee duty (Reg 3(2)) is to co-operate with the employer's compliance and to comply with EAWR personally so far as it relates to matters within their control.",
-      "The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first",
-      "Between 50 MΩ and over the meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maximum range (typically &gt; 200 MΩ or &gt; 999 MΩ depending on model). The 1 MΩ minimum is for borderline acceptance; a well-installed dry circuit with no contributing components should read tens or hundreds of MΩ. Readings between 1-50 MΩ warrant investigation even though they pass — there is leakage from somewhere.",
+      "Only registered electrical contractors and their named Qualified Supervisors — apprentices and labourers fall outside its scope.",
+      "Employers, the self-employed, employees and managers — Reg 3 places duties on each, including a personal duty on the employee.",
+      "Only the duty holder named on the EICR — everyone else on site works under that single person's responsibility.",
+      "Only those working on circuits above 230 V — low-voltage and extra-low-voltage work is excluded from EAWR.",
     ],
     correctAnswer: 1,
     explanation:
-      "EAWR Reg 3 stacks duties on every party — much like HASAWA s.2/s.3/s.7. The L3 step is realising EAWR has its own personal-duty hook on the employee, not just the corporate one.",
+      "Reg 3 stacks duties on every party — much like HASAWA s.2/s.3/s.7. Some duties are absolute, some are SFAIRP. The employee duty (Reg 3(2)) is to co-operate with the employer's compliance and to comply with EAWR personally so far as it relates to matters within their control. The L3 step is realising EAWR has its own personal-duty hook on the employee, not just the corporate one.",
   },
   {
     id: 2,
     question: "What does EAWR Reg 4 require?",
     options: [
-      "Direct application to the Local Authority Building Control (LABC) office before the work starts, with a Building Notice or Full Plans application; LABC inspects and issues a completion certificate. Significantly more expensive and slower than CPS routes — most contractors register with a scheme for this reason.",
-      "Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is 'EV-ready' from construction",
-      "That all systems shall, so far as is reasonably practicable, be of such construction as to prevent danger; that they be maintained so as to prevent (so far as is reasonably practicable) such danger; that work activities on or near systems be carried out so as not to give rise to danger; and that protective equipment be suitable for the use, properly maintained and properly used.",
-      "A material breach is one which an inspector reasonably opines is sufficiently serious that it warrants written notification — letter, notice or report. The HSE's Enforcement Management Model is the published decision tool. Once a material breach is identified, FFI invoicing starts from the inspector's first time spent on the matter.",
+      "That every installation be inspected and tested at intervals not exceeding five years, with an EICR issued to the duty holder.",
+      "That all electrical work in dwellings be notified to Building Control or self-certified under a Competent Person Scheme.",
+      "That systems be constructed and maintained to prevent danger (SFAIRP), work activities not give rise to danger, and protective equipment be suitable, maintained and properly used.",
+      "That every operative carry a valid ECS/JIB card appropriate to their grade before working on any electrical system.",
     ],
     correctAnswer: 2,
     explanation:
-      "Reg 4 covers system construction, system maintenance, work activities and protective equipment. It's the broadest single regulation in EAWR. The 'maintained to prevent danger' limb is what catches firms that install correctly but never inspect or test.",
+      "Reg 4 covers system construction, system maintenance, work activities and protective equipment — all qualified 'so far as is reasonably practicable'. It's the broadest single regulation in EAWR. The 'maintained to prevent danger' limb is what catches firms that install correctly but never inspect or test.",
   },
   {
     id: 3,
     question: "What does EAWR Reg 13 require?",
     options: [
-      "Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.",
-      "The person responsible for the design of the installation — this might be a separate consulting engineer on a large project, or the same electrician as construction/test on a small domestic job. The signature confirms responsibility for design compliance.",
-      "The architect must consider how the glazing will be safely cleaned throughout the building's life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries",
-      "That adequate precautions be taken to prevent electrical equipment, which has been made dead in order to prevent danger while work is carried out on or near that equipment, from becoming electrically charged during the work if danger may thereby arise. In practice — lock-off, tag-out, prove dead.",
+      "That a written permit-to-work be issued for every electrical task, regardless of voltage or the nature of the work.",
+      "That all live conductors be insulated or placed out of reach so that no person can make accidental contact with them.",
+      "That a residual current device be fitted to every final circuit to provide additional protection against electric shock.",
+      "That adequate precautions be taken to stop equipment made dead for work from becoming charged again during that work — in practice lock-off, tag-out, prove dead.",
     ],
     correctAnswer: 3,
     explanation:
-      "Reg 13 is the legal hook for the safe-isolation procedure you learned at L2. Lock-off and tag-out aren't best practice — they're how you discharge a Reg 13 duty. Skipping them is an EAWR breach regardless of whether the circuit is actually re-energised.",
+      "Reg 13 requires adequate precautions to prevent equipment made dead, in order to prevent danger while work is carried out on or near it, from becoming electrically charged during the work where danger may thereby arise. It is the legal hook for the safe-isolation procedure you learned at L2. Lock-off and tag-out aren't best practice — they're how you discharge a Reg 13 duty. Skipping them is an EAWR breach regardless of whether the circuit is actually re-energised.",
   },
   {
     id: 4,
     question: "What's the EAWR Reg 14 'three-test' for live working?",
     options: [
-      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three must be satisfied. The bar is deliberately high — the HSE prosecutes Reg 14 breaches harshly because the consequences are usually fatal.",
-      "The responsible person must ensure that the premises, any facilities, equipment, and devices provided for fire safety are subject to a suitable system of maintenance and are maintained in an efficient state, in efficient working order, and in good repair",
-      "Section 8 — Exposure controls / personal protection. This section gives the workplace exposure limits (where applicable), the engineering controls (ventilation, containment) and the recommended PPE (gloves to a specific EN standard, eye protection, respiratory protection, body protection). It's the section you read before the work starts to confirm you have the right kit.",
-      "Other trades working above, beside or below you. Plumbers cutting overhead, joiners with battery saws, decorators with wet paint and dust sheets, scaffolders moving boards. Their work creates falling-object risk, slip risk and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round needs to take account of who else is on site, not just your own activity.",
+      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three.",
+      "(a) Insulated gloves worn; OR (b) insulated tools used; OR (c) a second person present. Any one of the three permits live working.",
+      "(a) The voltage is below 400 V; AND (b) the operative is JIB-graded; AND (c) the customer has given written consent to live working.",
+      "(a) A permit-to-work issued; OR (b) the circuit proved dead first; OR (c) a risk assessment completed. Any one route makes live working lawful.",
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 14 is the live-working gateway. The three-test must be evidenced in writing on a permit or RAMS — verbal 'this is fine' won't survive an HSE inspection. Lost commercial time is not 'unreasonable'.",
+      "Reg 14 is the live-working gateway and the bar is deliberately high — the HSE prosecutes breaches harshly because the consequences are usually fatal. The three-test must be evidenced in writing on a permit or RAMS; verbal 'this is fine' won't survive an HSE inspection. Lost commercial time is not 'unreasonable'.",
   },
   {
     id: 5,
     question: "What does EAWR Reg 16 require regarding competence?",
     options: [
-      "A missing 514.13.1 main-earth notice is typically C3 (improvement recommended) where the earthing connection itself is sound, but can escalate to C2 (potentially dangerous) where the connection is at risk of being disturbed. A missing 514.9.1 schematic is normally C3. Codes depend on the specific install context and the inspector's professional judgement — these are typical not absolute.",
-      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work.",
-      "Local Authority Environmental Health Officers (EHOs) for retail, offices, leisure, residential. Office of Rail and Road for railways. Marine and Coastguard Agency for shipping. Civil Aviation Authority for aviation. Office for Nuclear Regulation for nuclear sites. The HSE itself for construction, manufacturing, mines, quarries, agriculture and most other industrial settings.",
-      "CAR 2012 Reg 10 — anyone who is or may be exposed to asbestos must receive adequate training. UKATA / IATP-certified asbestos awareness (1-day) is the typical baseline for trades. Higher levels (non-licensed work, licensed work) require more advanced training.",
+      "Every person working on an electrical system must hold a recognised qualification such as the City & Guilds 2365 before starting any work.",
+      "No person shall do work where technical knowledge or experience is needed to prevent danger unless they possess it or are under appropriate supervision.",
+      "Competence must be re-assessed and formally re-certified every twelve months by the employer's Qualified Supervisor.",
+      "Only competence in safe isolation is required; all other electrical knowledge can be acquired on the job without supervision.",
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 16 is the competence regulation. Two routes — possess the knowledge yourself, OR work under appropriate supervision. At L3 you sit in the middle: you have more knowledge than an L2 mate but you're not yet a qualified electrician. Knowing where you sit on the Reg 16 spectrum is part of the L3 step.",
+      "Reg 16 is the competence regulation. The full wording: no person shall be engaged in work where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless they possess such knowledge or experience, or are under such degree of supervision as may be appropriate having regard to the nature of the work. Two routes — possess the knowledge yourself, OR work under appropriate supervision. At L3 you sit in the middle: more knowledge than an L2 mate, not yet a qualified electrician.",
   },
   {
     id: 6,
     question: "How does BS 7671 relate to EAWR?",
     options: [
-      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
-      "Citation in the design pack — DNO Form 1 reference number, manufacturer datasheet name and revision, IET Guidance Note edition and section, BS 7671 reg or table number. Each input traceable to its source on a single page.",
-      "BS 7671 is non-statutory but compliance is treated by the courts as evidence of discharging the EAWR duty. It's a 'safe harbour' — follow BS 7671 and the prosecution has to work much harder to prove you breached EAWR. Depart from BS 7671 and you have to demonstrate the alternative is at least as safe.",
-      "Recommended (per the wording of Reg 421.1.7) — discuss with the customer, present the cost vs benefit, and let them decide. Document the conversation. AFDDs are a sensible choice for the bedroom and lounge socket circuits in particular; less of a priority on shower, immersion, hob and dedicated EV circuits.",
+      "BS 7671 is statute and EAWR is the voluntary code; complying with EAWR is evidence of meeting BS 7671.",
+      "They are unrelated documents — BS 7671 governs wiring and EAWR governs fire safety, with no legal overlap.",
+      "BS 7671 is non-statutory but compliance is treated by the courts as evidence of discharging the EAWR duty — a 'safe harbour'.",
+      "BS 7671 fully replaces EAWR for any installation certified after 2018, so EAWR no longer applies to modern work.",
     ],
     correctAnswer: 2,
     explanation:
-      "The safe-harbour framing is the L3 move. The current edition is A4:2026 — knowing the edition matters because departures from older editions can be problematic if the design dates from before the current standard.",
+      "Follow BS 7671 and the prosecution has to work much harder to prove you breached EAWR; depart from it and you must demonstrate the alternative is at least as safe. The safe-harbour framing is the L3 move. The current edition is A4:2026 — the edition matters because departures from older editions can be problematic if the design dates from before the current standard.",
   },
   {
     id: 7,
     question: "Under EAWR, what's the practical difference between Reg 4(1) and Reg 4(2)?",
     options: [
-      "Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within zones, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.",
-      "Depositing controlled waste, or knowingly permitting the deposit of controlled waste, in or on land without an environmental permit; treating, keeping or disposing of controlled waste without a permit; treating, keeping or disposing of controlled waste in a manner likely to cause pollution of the environment or harm to human health. Fly-tipping is the headline s.33 offence.",
-      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
-      "Reg 4(1) is about system construction — building it safe. Reg 4(2) is about system maintenance — keeping it safe. A firm can install correctly (4(1)) and still breach (4(2)) by failing to inspect, test and maintain. EICR work is the legal mechanism for discharging Reg 4(2) on installations after the initial verification.",
+      "Reg 4(1) applies to domestic installations and Reg 4(2) applies to commercial installations — the two cover different premises.",
+      "Reg 4(1) is the SFAIRP duty and Reg 4(2) is the absolute duty — only Reg 4(2) can ever be breached without a defence.",
+      "Reg 4(1) covers the line conductors and Reg 4(2) covers the protective conductors — they split the duty by conductor type.",
+      "Reg 4(1) is system construction — building it safe; Reg 4(2) is system maintenance — keeping it safe, discharged through EICR.",
     ],
     correctAnswer: 3,
     explanation:
@@ -181,14 +181,14 @@ const quizQuestions = [
     question:
       "What's the L3-specific shift in how EAWR Reg 16 (competence) applies to you?",
     options: [
-      "At L2 you were always 'under supervision' — that was the second limb of Reg 16. At L3 you're moving towards being able to satisfy the first limb (possess the technical knowledge). You also start being looked to by L2 mates as a quasi-supervisor. Knowing where the Reg 16 line sits — for yourself and for the people who ask you to sign things — is the L3 competence judgement.",
-      "Record as a non-compliance — Reg 542.4 requires the means to disconnect the earthing conductor for testing (test link), and accessibility for inspection of the earth electrode is required for periodic verification of Ra. Recommend installation of a test link and an inspection pit/marker.",
-      "The right of access under UK GDPR Article 15 (a 'subject access request' or SAR). The firm has one calendar month to respond, free of charge in most cases. The response must include the personal data being processed, the purposes, the categories, the recipients, the retention period, and the source of the data if not from the data subject.",
-      "Graphical symbols for diagrams — the recognised symbol set for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, lamps, instruments and most building-services components used on UK electrical drawings.",
+      "You move from the supervision limb towards being able to satisfy the own-knowledge limb, while L2 mates start treating you as a quasi-supervisor.",
+      "At L3 Reg 16 no longer applies to you, because the regulation only governs unqualified labourers and L2 apprentices.",
+      "At L3 you automatically gain full sign-off authority, so the supervision limb of Reg 16 ceases to apply to any task you take on.",
+      "At L3 Reg 16 requires you to supervise every L2 apprentice on site personally, regardless of your own competence for the task.",
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 16 is essentially the legal version of the question 'are you ready to do this alone?'. At L3 the answer is 'sometimes yes, sometimes no, and knowing the difference is the skill'. Honesty about competence boundaries is what keeps you on the right side of Reg 16.",
+      "At L2 you were always under supervision (the second limb). At L3 you start being able to satisfy the first limb (possess the technical knowledge) for some tasks, and you're increasingly looked to by L2 mates. Reg 16 is the legal version of 'are you ready to do this alone?' — at L3 the answer is 'sometimes yes, sometimes no, and knowing the difference is the skill'. Honesty about competence boundaries keeps you on the right side of Reg 16.",
   },
 ];
 

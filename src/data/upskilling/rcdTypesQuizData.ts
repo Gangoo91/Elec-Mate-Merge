@@ -3,7 +3,8 @@ import type { QuizQuestion } from '@/types/quiz';
 export const rcdTypesQuizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Which RCD type is mandatory for EV charging installations?',
+    question:
+      'EV charging installations require protection against smooth DC residual current. Which RCD type provides this when a separate 6 mA DC detection device is not fitted?',
     options: [
       'Type A',
       'Type B',
@@ -12,7 +13,7 @@ export const rcdTypesQuizData: QuizQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Type B RCDs are mandatory for EV charging as they can detect pure DC residual currents that may occur in EV charging systems.',
+      'Regulation 722.531.3.101 requires protection against DC fault current for EV charging. A Type B RCD detects smooth DC residual current directly; alternatively a Type A RCD may be combined with a 6 mA RDC-DD (BS IEC 62955).',
   },
   {
     id: 2,
@@ -29,16 +30,16 @@ export const rcdTypesQuizData: QuizQuestion[] = [
   },
   {
     id: 3,
-    question: 'Why is Type AC becoming unsuitable for modern installations?',
+    question: 'Why is Type AC becoming unsuitable for many modern installations?',
     options: [
-      'All of the listed verifications',
-      'Converting curved sensor response to linear output',
-      'Measure and check against the drawing',
-      'Electronic equipment creates DC components',
+      'It has a slower disconnection time than other RCD types',
+      'It cannot be used on TN-S earthing systems',
+      'It has a lower rated residual operating current than Type A',
+      'Electronic equipment can create DC components it cannot detect',
     ],
     correctAnswer: 3,
     explanation:
-      'Modern electronic equipment with switch-mode power supplies can create DC components in fault currents, which Type AC RCDs cannot detect reliably.',
+      'Modern electronic equipment with switch-mode power supplies can produce DC components in residual currents, which a Type AC RCD cannot detect reliably. Regulation 531.3.3 restricts Type AC to circuits where such DC components cannot occur.',
   },
   {
     id: 4,
@@ -51,16 +52,16 @@ export const rcdTypesQuizData: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Type F RCDs are required for variable frequency drives as they can detect high-frequency residual currents up to 20kHz.',
+      'Type F RCDs are designed for single-phase equipment fed through frequency converters, tripping on composite (mixed-frequency) residual currents and pulsating DC. Where a frequency converter can produce smooth DC residual current, a Type B device is required instead.',
   },
   {
     id: 5,
     question: 'What is the main application for Type F RCDs?',
     options: [
-      'When dead testing is not practicable',
-      'Equipment with frequency converters',
-      'The transformer, push, or bell unit',
-      'Purely resistive loads like heaters',
+      'Final circuits supplying only fixed resistive heating loads',
+      'Single-phase equipment with frequency converters, such as inverter-drive appliances',
+      'Three-phase motor circuits on a TN-C-S supply',
+      'Socket-outlet circuits in domestic bathrooms',
     ],
     correctAnswer: 1,
     explanation:

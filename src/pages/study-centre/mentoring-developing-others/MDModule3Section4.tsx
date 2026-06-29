@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice discloses that they are experiencing severe anxiety and cannot sleep. What is the appropriate response from a mentor?',
     options: [
+      "Listen supportively, acknowledge their difficulty, and signpost them to professional support such as their GP, Mates in Mind, or the company's EAP",
       'Diagnose the apprentice with an anxiety disorder and recommend medication',
       'Tell the apprentice to toughen up — construction is a hard industry',
-      "Listen supportively, acknowledge their difficulty, and signpost them to professional support such as their GP, Mates in Mind, or the company's EAP",
       'Take no action because mental health is a private matter',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The mentor should listen supportively, acknowledge the apprentice\'s difficulty without minimising it, and signpost them to appropriate professional support. Mentors are not mental health professionals — they should not attempt to diagnose or treat conditions. However, they play a crucial role in noticing signs, creating a safe space for disclosure, and connecting the apprentice with the right resources. Ignoring the issue or telling someone to "toughen up" can cause serious harm.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
       'Which of the following is a particular financial pressure commonly faced by electrical apprentices?',
     options: [
       'Excessive overtime payments that create tax complications',
-      'Low apprentice wages combined with the cost of tools, travel, and college materials',
       'Having to pay for their own AM2 assessment at a cost of over five thousand pounds',
       'Being required to purchase their own company vehicle in the first year',
+      'Low apprentice wages combined with the cost of tools, travel, and college materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Apprentices are typically on the lowest wages in the team but face significant costs: hand tools and PPE (which can cost several hundred pounds), travel to site (which may change weekly), college materials and textbooks, and general living costs. This financial pressure is compounded by being a young person in an adult working environment where more experienced colleagues may not realise how tight money is. Mentors should be aware of this pressure and connect apprentices with any available support (JIB grants, employer tool allowances, etc.).',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'Which organisation specifically focuses on mental health in the construction industry?',
     options: [
-      'The Health and Safety Executive (HSE)',
       'Mates in Mind',
+      'The Health and Safety Executive (HSE)',
       'The Joint Industry Board (JIB)',
       'The Institution of Engineering and Technology (IET)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Mates in Mind is a charity specifically focused on improving mental health and wellbeing in the construction industry. They provide resources, training, and support for both employers and individuals. Other organisations such as the HSE, JIB, and CITB address mental health as part of their broader remit, but Mates in Mind is the specialist construction mental health organisation.',
   },
@@ -171,11 +171,11 @@ const quizQuestions = [
       'An older worker regularly makes comments like "back in my day, apprentices didn\'t complain." This is best described as:',
     options: [
       'Harmless nostalgia that the apprentice should not take personally',
-      'Potentially dismissive and undermining behaviour that could contribute to a hostile work environment',
       'Constructive feedback that will help the apprentice develop resilience',
       'A protected form of free speech that cannot be challenged',
+      'Potentially dismissive and undermining behaviour that could contribute to a hostile work environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "While individual comments may seem minor, a pattern of dismissive remarks creates a hostile environment that can undermine the apprentice's confidence, discourage them from raising concerns, and normalise a culture where apprentice wellbeing is not valued. The mentor should address this behaviour directly with the individual, explaining the impact it has on the apprentice and the team, and escalate if it continues.",
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'What is the most important element of creating a safe reporting pathway for apprentices who experience bullying?',
     options: [
-      'Having a suggestion box in the site office',
       'Ensuring the apprentice trusts that reports will be taken seriously, acted upon, and that they will be protected from retaliation',
+      'Having a suggestion box in the site office',
       'Telling the apprentice to deal with it themselves first before escalating',
       'Making the reporting process as complicated as possible to filter out minor complaints',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Trust is the foundation of any reporting pathway. The apprentice must believe that their report will be taken seriously, that meaningful action will follow, and that they will not face retaliation for speaking up. If apprentices do not trust the process, they will not use it — and bullying will continue unchecked. The mentor plays a critical role in building this trust through their own consistent behaviour and by following through on every report they receive.',
   },

@@ -66,11 +66,11 @@ const checks = [
     question: 'Supplementary bonding in a Section 701 bathroom is required where:',
     options: [
       'Self-certify via the NICEIC scheme — issue an EIC, log on the NICEIC portal, NICEIC notifies building control on behalf of the contractor and a Building Regulations Compliance Certificate is issued.',
-      'Dry powder — multi-purpose: Class A, B, C, electrical. Effective; messy aftermath; disrupts visibility (don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t use in confined space if escape compromised). NOT for Class F (cooking oil).',
-      'EN 166 = the safety eyewear standard. "1" = optical class 1 (highest, for permanent wear). "F" = low-energy impact (45 m/s). For higher-impact work look for "B" (medium, 120 m/s) or "A" (high, 190 m/s). Other letters: T (temperature extremes), K (surface scratch), N (anti-fog).',
       'It is no longer required where ADS disconnection times are met, all circuits have RCD additional protection at 30 mA, and all extraneous-conductive-parts in the location are connected to the main earthing terminal — Reg 701.415.2 omission criteria.',
+      'EN 166 = the safety eyewear standard. "1" = optical class 1 (highest, for permanent wear). "F" = low-energy impact (45 m/s). For higher-impact work look for "B" (medium, 120 m/s) or "A" (high, 190 m/s). Other letters: T (temperature extremes), K (surface scratch), N (anti-fog).',
+      'Dry powder — multi-purpose: Class A, B, C, electrical. Effective; messy aftermath; disrupts visibility in a confined space if escape is compromised. NOT for Class F (cooking oil).',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Reg 701.415.2 allows omission of supplementary bonding in a Section 701 bathroom IF: (a) all circuits comply with disconnection times, (b) all circuits have additional protection by 30 mA RCD, (c) all extraneous-conductive-parts of the location are connected to the main earthing terminal. All three must be met. If any condition fails, supplementary bonding is required. Visual inspection checks the conditions and the supplementary bonding presence accordingly.',
   },
@@ -95,7 +95,7 @@ const quizQuestions = [
     question: 'On a TN-S installation, Ze (external earth fault loop impedance) is:',
     options: [
       'Autonomy (the desire to direct our own lives), mastery (the urge to get better at something that matters), and purpose (the yearning to do what we do in the service of something larger than ourselves)',
-      'The print may have been resized (photocopy reduction or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'fit-to-page\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'), so scale measurements are unreliable. Use the dimension lines and figures instead',
+      'The print may have been resized (photocopy reduction or \'fit-to-page\'), so scale measurements are unreliable. Use the dimension lines and figures instead',
       'The impedance of the earth fault loop external to the installation — measured at the origin with the main switch open. For TN-S, typical values 0.1 to 0.8 ohm. Confirmed at initial verification.',
       'Bonding internal copper water pipework where the incoming water service is plastic — the internal copper has no external earth path so is unlikely to be extraneous (NOTE to Reg 411.3.1.2)',
     ],
@@ -135,7 +135,7 @@ const quizQuestions = [
     options: [
       'Schedule and track all PM tasks, record accurate failure data (failure codes, causes, actions), manage condition monitoring data, track spare parts, generate maintenance KPIs, and provide the data needed for continuous improvement analysis',
       'The relationship Ra times IΔn must not exceed 50 V — for a 30 mA RCD this gives a theoretical maximum of 1667 ohm, but stability over time is the practical concern. Reg 411.5.3 requires the value chosen to ensure reliable disconnection.',
-      'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
+      'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
       'Adequate fire safety training at the time of recruitment and on being exposed to new or increased risks, repeated periodically, and adapted to take account of new or changed risks',
     ],
     correctAnswer: 1,
@@ -160,8 +160,8 @@ const quizQuestions = [
     question: 'In a kitchen with a metal sink and metal water pipes, supplementary bonding to the sink is:',
     options: [
       'No-blame reporting; easy reporting mechanism; structured analysis (5-whys, root cause); feedback to team; visible changes in practice; trend tracking; celebrate reporting (the act, not the near-miss); leadership modelling.',
-      'Discuss professionally with the trade contact first, escalate to the site manager / principal contractor if it affects your work, document any decisions that change scope, and never let it impact the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s view of the project.',
-      'Full incident details — date, time, location, casualty(ies) details, what happened, what they were doing, what equipment/substance involved, the kind of accident, the injury, who else was involved, any witness information, action taken since. Full and accurate completion is the responsible person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s job; gathering the facts is often the L3 operative\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s job.',
+      'Discuss professionally with the trade contact first, escalate to the site manager / principal contractor if it affects your work, document any decisions that change scope, and never let it impact the customer\'s view of the project.',
+      'Full incident details — date, time, location, casualty(ies) details, what happened, what they were doing, what equipment/substance involved, the kind of accident, the injury, who else was involved, any witness information, action taken since. Full and accurate completion is the responsible person\'s job; gathering the facts is often the L3 operative\'s job.',
       'Required only if the sink is in a Section 701 location (bathroom). In a kitchen, the metal water pipes are bonded at the main bonding (extraneous-conductive-parts to MET). The sink is incidentally connected via the pipes — separate supplementary bonding is not required by BS 7671 in a domestic kitchen.',
     ],
     correctAnswer: 3,

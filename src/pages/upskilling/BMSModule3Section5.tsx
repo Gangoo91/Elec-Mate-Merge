@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'override-time-limits',
     question: 'Why is it important for overrides to be time-limited or logged?',
     options: [
-      'To reduce the cost of system operation',
-      "To prevent energy waste and ensure overrides don't disable safety functions permanently",
-      'To make the system easier to install',
-      'To reduce the number of sensors needed',
+      'To prevent energy waste and avoid disabling safety functions',
+      'To reduce the running cost of the BMS controllers',
+      'To make the control system quicker to install on site',
+      'To reduce the number of field sensors that are required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Time-limited and logged overrides prevent energy waste from forgotten manual settings and ensure safety functions aren't permanently disabled. Documentation also provides accountability and helps identify system operation patterns.",
   },
@@ -25,10 +25,10 @@ const quickCheckQuestions = [
     question:
       'Why would a building waste energy if seasonal settings were not programmed correctly?',
     options: [
-      'The building would use more sensors',
-      'Systems might heat and cool simultaneously or operate at inappropriate setpoints year-round',
-      'More maintenance would be required',
-      'The BMS would stop working completely',
+      'The building would require more field sensors',
+      'Systems might heat and cool at once or use wrong setpoints',
+      'More routine maintenance visits would be required',
+      'The BMS controllers would stop working completely',
     ],
     correctIndex: 1,
     explanation:
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'safety-separation',
     question: 'Why must electricians separate safety overrides from comfort overrides?',
     options: [
-      'To reduce installation costs',
-      'To prevent safety systems from being compromised by comfort control failures',
-      'To make the system easier to operate',
-      'To comply with manufacturer warranties',
+      'To reduce the overall installation costs of the job',
+      'To make the system easier for occupants to operate',
+      'To stop comfort control failures compromising safety systems',
+      'To comply with the equipment manufacturer warranties',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Safety overrides (fire, emergency) must be separated from comfort overrides to prevent life safety systems from being compromised by comfort control failures. This ensures emergency systems remain operational even if HVAC controls fail.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     id: 'seasonal-commissioning',
     question: 'What is a key commissioning requirement when testing seasonal changeover functions?',
     options: [
-      'Test only during actual seasonal changes',
-      'Simulate seasonal conditions by adjusting outdoor sensor readings to verify automatic operation',
-      'Skip testing and rely on manufacturer settings',
-      'Only test manual override functions',
+      'Test only during the actual seasonal changes',
+      'Skip testing and rely on manufacturer default settings',
+      'Test only the manual override functions on site',
+      'Adjust outdoor sensor readings to verify automatic operation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commissioning must simulate seasonal conditions by adjusting outdoor sensor readings to verify that automatic changeover functions work correctly at the programmed thresholds, without waiting for actual seasonal changes.',
   },

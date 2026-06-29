@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'Which mitigation measure is most effective for reducing 5th and 7th harmonics from VSDs?',
     options: [
-      'They add arithmetically in the neutral',
-      'Passive LC filters tuned to harmonic frequencies',
-      'Injecting currents equal and opposite to the harmonic currents',
-      'Pst (short-term) and Plt (long-term)',
+      'Oversizing the neutral conductor to 150% of the phase size',
+      'Passive LC filters tuned to the harmonic frequencies',
+      'Adding standard (undetuned) power factor correction capacitors',
+      'Increasing the supply cable cross-sectional area',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +146,12 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'Flicker is measured in units of:',
+    question: 'Flicker severity is quantified using the indices:',
     options: [
-      'They add arithmetically in the neutral',
-      'Detuned or harmonic-filtered capacitor banks',
+      'THD and TDD',
+      'kVAr and cosφ',
       'Pst (short-term) and Plt (long-term)',
-      'Engineering Recommendation G5/5',
+      'dB and Hz',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,9 +176,9 @@ const quizQuestions = [
       'What type of power factor correction is most suitable for installations with significant harmonic content?',
     options: [
       'Detuned or harmonic-filtered capacitor banks',
-      '80% of apparent power is real power',
-      'Between 110% and 180% of nominal',
-      'They add arithmetically in the neutral',
+      'Standard fixed capacitor banks switched manually',
+      'Larger capacitors connected directly across the busbar',
+      'Synchronous condensers sized only for the fundamental',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     question:
       'Which document provides guidance on harmonic limits for connections to UK distribution networks?',
     options: [
-      'Pst (short-term) and Plt (long-term)',
-      'Between 110% and 180% of nominal',
+      'Engineering Recommendation G59',
+      'Engineering Recommendation G99',
       'Engineering Recommendation G5/5',
-      'They add arithmetically in the neutral',
+      'Engineering Recommendation G100',
     ],
     correctAnswer: 2,
     explanation:

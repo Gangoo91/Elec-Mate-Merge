@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'func-safety-def',
     question: 'What is functional safety?',
     options: [
-      'An NHS service providing evidence-based psychological therapies for anxiety and depression, accessible via self-referral',
-      'Create a phase shift to produce a rotating magnetic field for starting a single-phase motor',
+      'The safety provided by passive measures such as fixed guards, barriers and enclosures',
+      'The electrical safety of a machine in terms of insulation, earthing and shock protection',
       'The part of overall safety that depends on a system operating correctly in response to its inputs',
-      'That the principal designer is provided with any information relevant to the health and safety file',
+      'The safe condition achieved by isolating and locking off a machine before maintenance',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'safety-lifecycle',
     question: 'What is the safety lifecycle?',
     options: [
-      'Stop and chase deeper to 50 mm so the box sits 3 mm below the finished plaster line.',
-      'Ib ≤ In ≤ Iz, with Vd, I²R and Zs all separately verified within their respective limits.',
+      'The rated service life of a safety component before it must be replaced',
+      'The interval between successive proof tests of a safety function',
       'A structured series of phases from concept through decommissioning for managing functional safety',
-      'At regular intervals as part of PPM, with frequency adjusted based on environmental conditions',
+      'The period during which a Declaration of Conformity remains valid',
     ],
     correctIndex: 2,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of a risk assessment in functional safety?',
     options: [
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
-      'Consistently delivering work that meets or exceeds standards',
+      'To record the maintenance history of each safety component over its life',
+      'To confirm that the machine has been correctly isolated before work begins',
       'To identify hazards, estimate risk and determine the required risk reduction measures',
-      'Apps automatically calculate test result pass/fail criteria and reduce human error',
+      'To calculate the electrical load and protective device ratings for the machine',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'What are the three steps of risk reduction according to ISO 12100?',
     options: [
-      'To avoid forgetting or mixing up readings',
-      'Extra strain relief due to cable flexibility',
-      'At least 10 years after the last machine in the series is manufactured',
+      'Identify hazards, isolate the machine, issue a permit to work',
+      'Risk assessment, method statement, toolbox talk',
+      'Elimination, substitution, personal protective equipment',
       'Inherently safe design, safeguarding, information for use',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What is a Safety Requirement Specification (SRS)?',
     options: [
       'A document defining the safety functions, their required performance and the conditions under which they must operate',
-      'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
-      'To identify hazards, estimate risk and determine the required risk reduction measures',
-      'Periodic testing to detect dangerous hidden failures that are not revealed by automatic diagnostics',
+      'A record of every proof test carried out on the safety system during its life',
+      'The list of harmonised standards applied during the conformity assessment',
+      'The manufacturer’s signed declaration that the machine meets the essential requirements',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is proof testing in the context of functional safety?',
     options: [
-      'To identify hazards, estimate risk and determine the required risk reduction measures',
+      'The factory test carried out on a safety component before it leaves the manufacturer',
       'Periodic testing to detect dangerous hidden failures that are not revealed by automatic diagnostics',
-      'It is the overarching functional safety standard for E/E/PE systems, from which sector-specific standards are derived',
-      'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
+      'The continuous self-monitoring performed automatically by the safety controller',
+      'The one-off validation test carried out when the safety system is first commissioned',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the difference between a systematic failure and a random hardware failure?',
     options: [
-      'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
-      'The probability of a safety-related system satisfactorily performing the required safety function under all stated conditions within a stated period of time',
+      'Systematic failures occur during operation; random failures only occur during testing',
+      'Systematic failures affect software; random failures only affect mechanical parts',
       'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
-      'Periodic testing to detect dangerous hidden failures that are not revealed by automatic diagnostics',
+      'Systematic failures are predictable in advance; random failures cannot be reduced by any means',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'What does the UKCA/CE marking on machinery indicate regarding safety?',
     options: [
-      'To identify hazards, estimate risk and determine the required risk reduction measures',
-      'It is the overarching functional safety standard for E/E/PE systems, from which sector-specific standards are derived',
-      'Periodic testing to detect dangerous hidden failures that are not revealed by automatic diagnostics',
+      'That an independent test house has certified the machine as safe to use',
+      'That the machine has passed its most recent periodic proof test',
+      'That the Health and Safety Executive has approved the machine for sale',
       'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'What is a Technical File in the context of the Machinery Directive?',
     options: [
       'Documentation demonstrating how the machine meets the essential requirements, including risk assessment, calculations and test reports',
-      'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
-      'A document defining the safety functions, their required performance and the conditions under which they must operate',
-      'The probability of a safety-related system satisfactorily performing the required safety function under all stated conditions within a stated period of time',
+      'The operating and maintenance manual supplied to the end user with the machine',
+      'The signed Declaration of Conformity that accompanies the machine on sale',
+      'The schedule of proof tests and inspections to be carried out during service',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'What role does IEC 61508 play in functional safety?',
     options: [
-      'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
+      'It is the machinery-specific standard that defines Performance Levels a to e',
       'It is the overarching functional safety standard for E/E/PE systems, from which sector-specific standards are derived',
-      'A document defining the safety functions, their required performance and the conditions under which they must operate',
-      'To identify hazards, estimate risk and determine the required risk reduction measures',
+      'It is the legal directive requiring machinery on the market to be safe',
+      'It is the risk assessment methodology standard setting out three-step risk reduction',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: "What is meant by 'safety integrity'?",
     options: [
-      'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
-      'A standard whose reference is published in the Official Journal of the EU, providing a presumption of conformity with the essential requirements it covers',
+      'The mechanical strength and durability of a machine’s guards and enclosures',
+      'The completeness of the documentation held in the machine’s Technical File',
       'The probability of a safety-related system satisfactorily performing the required safety function under all stated conditions within a stated period of time',
-      'A document defining the safety functions, their required performance and the conditions under which they must operate',
+      'The degree to which a machine complies with the essential health and safety requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under the Machinery Directive, for how long must the Technical File be retained?',
     options: [
-      'S = √(I²t)/k relating fault current, time, and conductor constant',
-      'Lock off with personal lock and apply warning labels',
-      'Agreeing with the truth in criticism without becoming defensive, which defuses aggression',
+      'At least 3 years after the machine is first placed on the market',
+      'At least 5 years after the machine is sold to the end user',
+      'For the entire operational life of the machine plus 2 years',
       'At least 10 years after the last machine in the series is manufactured',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: "What does 'harmonised standard' mean in the context of the Machinery Directive?",
     options: [
       'A standard whose reference is published in the Official Journal of the EU, providing a presumption of conformity with the essential requirements it covers',
-      'The probability of a safety-related system satisfactorily performing the required safety function under all stated conditions within a stated period of time',
-      'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
-      'It is the overarching functional safety standard for E/E/PE systems, from which sector-specific standards are derived',
+      'A standard that is legally mandatory and must be applied to every machine without exception',
+      'A standard agreed jointly by the manufacturer and the end user for a specific machine',
+      'A standard that has been adopted identically by every country in the world',
     ],
     correctAnswer: 0,
     explanation:

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'When should you communicate your quality standards and site rules to a new subcontractor arriving on your work area?',
     options: [
+      'From the very first day, before they begin any work',
       'After they have completed their first week of work so you can see their natural standard',
       'Only if they make a mistake or produce substandard work',
-      'From the very first day, before they begin any work',
       'At the end of the project during the snagging process',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'You should communicate your expectations from the very first day, before any work begins. Never assume subcontractors know your standards — they have been on different sites with different supervisors. Setting clear expectations at the outset prevents misunderstandings, rework, and conflict later.',
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
       'If another trade damages your completed work, what is the recommended professional approach?',
     options: [
       "Shout at the other trade's workers to make sure they understand",
-      'Ignore it and fix it yourself to avoid confrontation',
       'Approach the matter professionally, document the damage with photographs, and raise it through proper channels',
+      'Ignore it and fix it yourself to avoid confrontation',
       'Damage their work in retaliation to make the point',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "The professional approach is to document the damage with photographs, approach the other trade's supervisor calmly and factually, and if direct discussion does not resolve it, raise the issue through the site management chain. Professional, documented communication protects you and maintains working relationships.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'On a multi-trade construction site, the most common source of conflict between trades is:',
     options: [
-      'Disagreements about pay rates between different employers',
       'Sequencing and access disputes — who works where and when',
+      'Disagreements about pay rates between different employers',
       'Personal grudges between individual workers',
       'Disputes about which trade has the most important role',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Sequencing and access disputes are the most common source of conflict between trades on construction sites. These arise when multiple trades need to work in the same area, when one trade's work depends on another completing theirs first, or when containment routes clash. Effective coordination and communication prevent most of these conflicts.",
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
       'The best way to avoid containment route clashes between electrical and mechanical services is:',
     options: [
       'Install your containment first so that other trades have to work around you',
-      'Pre-plan using drawings and markups, agreeing routes and penetrations before work starts',
       'Wait for the architect to resolve all routing decisions',
       'Install containment wherever is most convenient and relocate if there is a clash',
+      'Pre-plan using drawings and markups, agreeing routes and penetrations before work starts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pre-planning using drawings and markups is the most effective way to avoid containment clashes. Before starting, meet with other trade supervisors to agree containment routes, penetration locations, and access routes. This prevents the costly and frustrating process of moving installed work because of avoidable clashes.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'Building professional relationships with other trade supervisors is valuable because:',
     options: [
-      'It allows you to get preferential treatment over other trades',
       'The construction industry is small, you will work with these people again, and good relationships make sites run more smoothly',
+      'It allows you to get preferential treatment over other trades',
       'It means you never have to raise formal complaints about poor work',
       'It guarantees that other trades will never damage your work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The construction industry is smaller than most people realise. You will encounter the same trade supervisors, foremen, and managers on future projects. A reputation for being fair, competent, and professional opens doors. Good relationships also make day-to-day coordination smoother and help resolve problems quickly and amicably.',
   },
@@ -171,11 +171,11 @@ const quizQuestions = [
       "When addressing quality issues with another trade's work that affects your installation, you should:",
     options: [
       'Bypass their supervisor and go directly to their operatives',
-      'Document the issue, approach their supervisor professionally, and escalate through the site management chain if needed',
       'Post about the issue on social media to shame the company',
       'Modify your own installation to work around the problem without telling anyone',
+      'Document the issue, approach their supervisor professionally, and escalate through the site management chain if needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The professional approach is to document the issue (with photographs), speak to the other trade's supervisor directly, and if the issue is not resolved, escalate through the site management chain. Always keep the conversation factual and professional. Document all communications in case the issue becomes a formal dispute.",
   },
@@ -185,11 +185,11 @@ const quizQuestions = [
       'Which of the following trades does an electrical supervisor typically need to coordinate with?',
     options: [
       'Only the mechanical (HVAC) trade, as they are the closest to electrical work',
-      'Only trades that are part of the same employer',
       'Multiple trades including mechanical, plumbing, data/comms, fire alarm, drylining, plastering, painting, and flooring',
+      'Only trades that are part of the same employer',
       "Only the principal contractor's directly employed workforce",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'An electrical supervisor must coordinate with many trades: mechanical (HVAC), plumbing, data/communications, fire alarm, drylining, plastering, painting, flooring, and others. Each trade has its own programme, culture, and priorities. Effective coordination across all of them is essential for smooth project delivery.',
   },

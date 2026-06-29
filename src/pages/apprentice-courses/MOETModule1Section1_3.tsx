@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Lock-Out / Tag-Out procedures are required to protect workers from:',
     options: [
-      'Between line, neutral and earth at the point of test',
+      'Electric shock only, from the mains electrical supply',
       'The unexpected release of hazardous energy during maintenance or servicing',
-      'Return water temperature too close to supply, reducing system capacity',
-      'Readings increase progressively around the ring then drop',
+      'Slips, trips and falls in the plant room',
+      'Exposure to asbestos in older switchrooms',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following energy sources must be considered during a LOTO procedure?',
     options: [
-      'Tags are supplementary warnings — they must be used with locks, not instead of them',
-      'The DC bus capacitors may retain lethal voltage and must be verified as discharged',
+      'Electrical energy only, as it is the most dangerous',
+      'Electrical and mechanical energy only',
       'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
-      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
+      'Only the energy sources listed on the equipment nameplate',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'The correct sequence for the six-step LOTO procedure is:',
     options: [
       'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
-      'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
-      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
-      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
+      'Isolate, lock out/tag out, shut down, prepare, perform work, verify isolation',
+      'Shut down, perform work, isolate, verify isolation, lock out/tag out, prepare',
+      'Lock out/tag out, isolate, shut down, prepare, verify isolation, perform work',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'When performing LOTO on a motor control centre (MCC), which of the following stored energy sources must be specifically addressed?',
     options: [
-      'At least annually, by an authorised person not involved in the procedure being inspected',
-      'Provide a written warning identifying who applied the lockout, why, and when',
+      'Only the main incoming three-phase supply',
+      'The incoming supply and the motor mechanical drive only',
       'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
-      'Tags are supplementary warnings — they must be used with locks, not instead of them',
+      'The incoming supply and any pneumatic actuators only',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 7,
     question: 'During a shift changeover, the correct LOTO procedure requires:',
     options: [
-      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
-      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
-      'At least annually, by an authorised person not involved in the procedure being inspected',
-      'The outgoing worker removes their lock and the incoming worker immediately applies theirs, maintaining continuous lockout',
+      'The outgoing worker removes their lock so the incoming worker can apply theirs',
+      'The supervisor removes all locks and re-applies a single master lock',
+      'The incoming worker relies on the existing lock until they fit their own later',
+      'The incoming worker applies their lock before the outgoing worker removes theirs, maintaining continuous lockout',
     ],
     correctAnswer: 3,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     question: 'How often should LOTO procedures be formally inspected and reviewed?',
     options: [
       'At least annually, by an authorised person not involved in the procedure being inspected',
-      'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
-      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
-      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
+      'Only when an incident or near-miss has occurred',
+      'Every five years, by the original equipment manufacturer',
+      'Monthly, by the person who normally carries out the procedure',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under the Health and Safety at Work Act 1974, employers must:',
     options: [
-      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
-      'At least annually, by an authorised person not involved in the procedure being inspected',
+      'Allow workers to provide their own padlocks and tags at their own cost',
+      'Report every lockout to the HSE within ten days',
       'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
-      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
+      'Appoint a single nominated person to apply all locks on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'A common cause of LOTO-related fatalities is:',
     options: [
       'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
-      'Provide a written warning identifying who applied the lockout, why, and when',
-      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
-      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
+      'Using a padlock that is too small for the isolating device',
+      'Applying more than one lock to a single isolation point',
+      'Recording the wrong time on the danger tag',
     ],
     correctAnswer: 0,
     explanation:

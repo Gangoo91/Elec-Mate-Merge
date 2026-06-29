@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'A supplementary bond protects a circuit on a 20 A B-curve MCB. From the Reg 415.2.2 formula, what is the maximum permitted bond resistance R?',
     options: [
-      '50 / 20 = 2.50 Ω',
       'Ia at 5 s for a 20 A B-curve ≈ 100 A. R ≤ 50/100 = 0.50 Ω.',
-      '50 / 0.030 = 1666 Ω (using IΔn).',
-      'No fixed limit — supplementary bonding has no acceptance criterion.',
+      'Using the rated current directly: R ≤ 50 / 20 = 2.50 Ω.',
+      'Using the 30 mA RCD residual current: R ≤ 50 / 0.030 = 1666 Ω.',
+      'There is no fixed limit — supplementary bonding has no numerical acceptance criterion.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'For an overcurrent device Reg 415.2.2 uses the 5 s operating current, not the rated In. A 20 A B-curve MCB trips on the magnetic threshold at roughly 5×In ≈ 100 A. 50 V / 100 A = 0.50 Ω. Using IΔn for the RCD instead would give a far looser limit and would not protect against overcurrent faults that do not trip the RCD.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'A bathroom is on a TN-C-S supply. The CU has RCBOs (30 mA) on every circuit serving the bathroom. Main bonding to gas and water is in place. The Zs reading on one of the bathroom circuits is 0.18 Ω above the Table 41.1 limit for the device. May supplementary bonding be omitted under Reg 701.415.2?',
     options: [
-      'Yes — RCBOs alone satisfy the omission rule.',
-      'No — Reg 701.415.2 requires ALL of (d), (e) and (f). Condition (d) requires every final circuit to comply with Reg 411.3.2 disconnection times — the Zs failure breaks that condition. Supplementary bonding remains a requirement until the Zs issue is resolved.',
-      'Yes, with a recorded departure for the Zs.',
-      'Yes, because RCBOs cover both ADS and additional protection.',
+      'Yes — a 30 mA RCBO on every bathroom circuit alone satisfies the omission rule.',
+      'Yes, provided the Zs failure is recorded on the certificate as a departure.',
+      'No — the Zs failure breaks condition (d), so supplementary bonding must stay.',
+      'Yes — the RCBOs deliver ADS and additional protection, covering every condition.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The omission rule is conjunctive. Two of three is a fail. Until the Zs is brought within Reg 411.3.2 limits, condition (d) is not met and supplementary bonding remains required. Document the Zs failure as the reason supplementary bonding is being retained, and remediate the Zs issue if the customer wants the supplementary bonding removed later.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'You probe between a chrome-plated radiator (served by plastic-bodied TRVs and plastic pipe) and the MET. Insulation tester reads 38 kΩ at 500 V. Per the GN3 / industry threshold, what is the correct action?',
     options: [
-      'Bond it — every metal item in a bathroom must be bonded.',
-      'Do NOT bond it — 38 kΩ ≥ 22 kΩ threshold means the radiator is not an extraneous-conductive-part. Bonding it would import earth potential into the bathroom and increase risk, not reduce it.',
-      'Bond it only on TT supplies.',
-      'Re-test using a buzzer.',
+      'Bond it — every metal item within a bathroom must be supplementary bonded as routine.',
+      'Bond it, but only where the installation is supplied from a TT earthing arrangement.',
+      'Re-test with a continuity buzzer, as the insulation tester is the wrong instrument here.',
+      'Do NOT bond it — 38 kΩ is above the 22 kΩ threshold, so it is not extraneous.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Part 2 defines an extraneous-conductive-part by its ability to introduce a potential. ≥ 22 kΩ to MET means the radiator is electrically isolated and is not extraneous. Bonding it would actively connect a previously-isolated conductive part to the bonding network — exporting earth potential into the location during a fault. Document the test result on the certificate.',
   },
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'On an EICR you find a 2.5 mm² unsheathed supplementary bonding conductor clipped along a wall. There is no mechanical protection. Reg 544.2.2 applies. Code?',
     options: [
-      'C3 — improvement recommended only.',
-      'No code — supplementary bonding is informative.',
-      'C2 — Reg 544.2.2 requires CSA ≥ 4 mm² where mechanical protection is not provided. 2.5 mm² unprotected is non-compliant and the conductor is liable to mechanical damage that could break the bond. Standard BPG 4 coding for that defect is C2.',
-      'C1 — danger present, immediate action.',
+      'C3 — improvement recommended only, since the bond is present and continuous.',
+      'No code — supplementary bonding conductor sizing is informative, not coded on an EICR.',
+      'C2 — 2.5 mm² unprotected is undersized under Reg 544.2.3 and liable to damage.',
+      'C1 — danger present, requiring immediate action before the inspection proceeds.',
     ],
     correctIndex: 2,
     explanation:
-      'Reg 544.2.2 sets 4 mm² as the unprotected minimum. 2.5 mm² unprotected is both undersized and physically vulnerable. The danger materialises only under fault, so it is not C1, but the existing arrangement is non-compliant and needs remediation — BPG 4 standard coding is C2.',
+      'Reg 544.2.3 sets 4 mm² as the unprotected minimum (2.5 mm² applies only where sheathed or mechanically protected). 2.5 mm² unprotected is both undersized and physically vulnerable. The danger materialises only under fault, so it is not C1, but the existing arrangement is non-compliant and needs remediation — BPG 4 standard coding is C2.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 415.2.2 sets the acceptance criterion for supplementary bonding. What is the formula and what does each term mean?',
     options: [
-      'R ≤ 230/Ia, where Ia is the rated current of the protective device',
       'R ≤ 50/Ia in AC systems, where Ia is the operating current of the protective device — for an RCD that is IΔn, for an overcurrent device the 5 s operating current',
-      'R ≤ 0.05 Ω regardless of device',
-      'R ≤ Ze/2',
+      'R ≤ 230/Ia in AC systems, where Ia is the rated current of the protective device',
+      'R ≤ 0.05 Ω as a fixed limit, applied regardless of the protective device',
+      'R ≤ Ze/2, derived from half the external earth-fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 415.2.2 states R < 50V/Ia in AC systems (R < 120V/Ia in DC). Ia is defined explicitly: for RCDs it is IΔn (the rated residual operating current); for overcurrent devices it is the 5 s operating current read from the time-current curve. The 50 V derives from the conventional touch voltage limit.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A bathroom is in a building with a properly executed Reg 411.3.1.2 main protective bonding system. Reg 701.415.2 permits supplementary bonding to be omitted. What three conditions must ALL be met?',
     options: [
-      'All circuits have RCBOs, all metalwork is plastic, and the bath is non-conductive',
-      '(d) all final circuits comply with Reg 411.3.2 disconnection times, (e) all final circuits have additional protection by a 30 mA RCD per Reg 415.1.1, and (f) all extraneous-conductive-parts of the location are effectively connected to the protective equipotential bonding per Reg 411.3.1.2',
-      'Two of the three are sufficient if the third is recorded as a departure',
-      'Only conditions (d) and (e) — (f) is informative',
+      'All circuits have RCBOs, all metalwork in the room is plastic, and the bath is non-conductive',
+      'Any two of the three conditions, provided the third is recorded as a departure on the certificate',
+      'Disconnection times met (d), 30 mA RCD on every circuit (e), and all extraneous parts bonded (f)',
+      'Only conditions (d) and (e) need be met — condition (f) is informative rather than mandatory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 701.415.2 lists conditions (d), (e) and (f) and says "all of the following conditions are met". Miss any one and supplementary bonding is required. The note adds that effectiveness of the extraneous-conductive-part connection may be assessed using Reg 415.2.2 — i.e. the same R ≤ 50/Ia criterion.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'You are continuity-testing a supplementary bond between a steel bath and a copper hot pipe. Your low-resistance ohmmeter reads 0.42 Ω. The bond is downstream of a 32 A B-curve MCB protecting the local circuit. What is the verdict?',
     options: [
-      'Pass — under 1 Ω is always acceptable',
-      'Fail — calculate Ia at 5 s for a 32 A B-curve (≈160 A), so R limit = 50/160 = 0.31 Ω → 0.42 Ω fails. Investigate the joint',
-      'Pass — the criterion only applies in medical locations',
-      'Fail — supplementary bonding must always read below 0.05 Ω',
+      'Pass — any supplementary bond reading under 1 Ω is always acceptable',
+      'Pass — the R ≤ 50/Ia criterion applies only in medical Group 2 locations',
+      'Fail — supplementary bonding must always read below a fixed 0.05 Ω limit',
+      'Fail — 0.42 Ω exceeds the 50/Ia limit for the device, so investigate the joint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 415.2.2: R ≤ 50/Ia. For a 32 A B-curve MCB the 5 s operating current is the magnetic threshold (3–5×In), so Ia ≈ 160 A. 50/160 = 0.31 Ω. A reading of 0.42 Ω exceeds the criterion — the bond does not limit touch voltage to 50 V under fault conditions for that device. Investigate the termination, not the meter.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A bathroom has a chrome-plated radiator served by plastic-bodied TRVs and copper pipework that disappears into the wall in plastic conduit before joining a soldered copper run downstream. Is the radiator an extraneous-conductive-part?',
     options: [
-      'Yes — anything metallic in the bathroom is extraneous',
-      'Not necessarily — by definition an extraneous-conductive-part is liable to introduce a potential, generally Earth potential. Plastic isolation interrupts that path. Test the resistance to MET; if it is high (≥ 22 kΩ at 500 V), the part is not extraneous and does not need bonding',
-      'Yes, because it is in a special location',
-      'It depends on whether the bathroom has a window',
+      'Not necessarily — measure its resistance to MET; ≥ 22 kΩ means it is not extraneous',
+      'Yes — anything metallic within the bathroom is by definition an extraneous-conductive-part',
+      'Yes — being within a Part 7 special location makes the radiator automatically extraneous',
+      'It depends on whether the bathroom is internal or has an openable window to the outside',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part 2 defines an extraneous-conductive-part by what it does — introduces a potential, generally Earth potential, into the installation. The GN3 / industry method is to measure resistance to the MET; the commonly cited threshold is ≥ 22 kΩ at 500 V (giving < 50 V touch voltage with realistic body impedance). If the radiator is genuinely isolated from earth by the plastic break, it is not extraneous. Bonding it would actually import a potential into the bathroom.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'Reg 415.2.1 lists what supplementary bonding must include. Which option below correctly states the duty?',
     options: [
-      'All metal in the room',
-      'All simultaneously accessible exposed-conductive-parts of fixed equipment AND extraneous-conductive-parts, including (where practicable) the main metallic reinforcement of constructional reinforced concrete; plus connection to the protective conductors of all equipment including socket-outlets',
-      'Only sockets and switches',
-      'Only the bath, basin and shower tray',
+      'Every metallic item in the room, whether or not it is connected to earth or in reach',
+      'Only the accessible socket-outlets and accessory switches within the location',
+      'Simultaneously accessible exposed- and extraneous-conductive-parts, plus all CPCs including socket-outlets',
+      'Only the bath, the basin and the shower tray, with their associated taps',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 415.2.1 is explicit: simultaneously accessible exposed-conductive-parts of fixed equipment AND extraneous-conductive-parts, including reinforced concrete reinforcement where practicable, AND the supplementary bonding system shall be connected to the protective conductors of all equipment including those of socket-outlets. Forgetting the socket-outlet CPC connection is a common defect.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'You are inspecting a 1990s bathroom. Supplementary bonding is in place between the bath, taps and pipework. The installation is on a TN-S supply with main bonding to the gas and water at the meter. Two of the three Reg 701.415.2 omission conditions are met but the bathroom circuit has no 30 mA RCD. Can you remove the supplementary bonding?',
     options: [
-      'Yes — main bonding alone is sufficient',
-      'No — Reg 701.415.2 requires ALL three conditions (d), (e) and (f) to be met. Missing (e) means supplementary bonding remains a requirement. Leave it in place and verify it',
-      'Only if the customer signs a waiver',
-      'Yes, but record a C2 on the EICR',
+      'Yes — properly executed main protective bonding alone is sufficient to allow removal',
+      'Only if the customer signs a waiver accepting removal of the supplementary bonding',
+      'Yes, provided a C2 observation is recorded on the next EICR to note the missing RCD',
+      'No — condition (e) is unmet, so the supplementary bonding must stay in place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The omission conditions are conjunctive — all three must be met. Without 30 mA RCD additional protection on the bathroom final circuits (condition e), supplementary bonding stays. Removing it would create a Reg 415.2 non-compliance and exposes you to a clear professional negligence claim if a fault later causes injury.',
   },
@@ -166,26 +166,26 @@ const quizQuestions = [
     question:
       'On a periodic inspection you find a supplementary bonding conductor of 2.5 mm² unprotected single (no sheath) clipped along a wall. Reg 544.2.2 limits apply. Code?',
     options: [
-      'C3 — improvement recommended',
-      'C2 — potentially dangerous. Reg 544.2.2 requires a CSA ≥ 4 mm² where mechanical protection is not provided. 2.5 mm² unprotected is non-compliant and the conductor is liable to mechanical damage',
-      'C1 — danger present',
-      'No code — not in scope',
+      'C2 — 2.5 mm² unprotected is undersized under Reg 544.2.3 and liable to damage',
+      'C3 — improvement recommended, since the bond is present and electrically continuous',
+      'C1 — danger present, requiring immediate action before the inspection continues',
+      'No code — supplementary bonding conductor sizing is outside the scope of an EICR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 544.2.2: where mechanical protection is not provided, the supplementary bonding conductor connecting an exposed-conductive-part to an extraneous-conductive-part shall have a cross-sectional area not less than 4 mm². 2.5 mm² unprotected is non-compliant and physically vulnerable to damage that could break the bond — a C2 is the standard coding for that situation.',
+      'Reg 544.2.3: where mechanical protection is not provided, a supplementary bonding conductor shall have a cross-sectional area not less than 4 mm² (2.5 mm² is permitted only where sheathed or otherwise mechanically protected). 2.5 mm² unprotected is non-compliant and physically vulnerable to damage that could break the bond — a C2 is the standard coding for that situation.',
   },
   {
     id: 8,
     question:
       'GN3 Ch 5 framing for special locations: the supplementary bonding verification is composed of two activities. Which option correctly names them?',
     options: [
-      'Visual + Zs measurement',
-      'Visual inspection of the bond (presence, route, terminations, CSA, mechanical protection) AND a continuity test by resistance measurement using a low-resistance ohmmeter to confirm a low-resistance bond and acceptance against R ≤ 50/Ia',
-      'Insulation resistance + earth electrode test',
-      'RCD test + polarity test',
+      'A visual inspection of the bond, followed by a measurement of the circuit Zs',
+      'An insulation-resistance test of the bond, then an earth-electrode resistance test',
+      'Visual inspection of the bond, plus a continuity test against the R ≤ 50/Ia criterion',
+      'An RCD operation test, followed by a polarity test at the bonded equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The bond is verified by both inspection and test. The visual confirms the bond exists, is correctly sized, mechanically protected if needed, and lands at the right places. The continuity test by low-resistance ohmmeter confirms the bond is electrically effective. Either alone is insufficient — a present-but-loose bond can fail Reg 415.2.2 silently.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'In the Reg 415.2.2 calculation, you see two values for Ia depending on the protective device. Why?',
     options: [
-      'The values are arbitrary',
-      'For an RCD, disconnection happens at the rated residual operating current (IΔn) — typically 30 mA for additional protection. For an overcurrent device, disconnection happens at the magnetic trip current, conventionally taken at 5 s for the supplementary bonding criterion. Different mechanisms, different currents',
-      'RCDs have higher Ia values than MCBs',
-      'They are interchangeable',
+      'The two Ia values are arbitrary and either may be used at the inspector’s discretion',
+      'RCDs always have a higher Ia than MCBs, so the RCD figure is used wherever both are present',
+      'The two values are interchangeable because both devices disconnect at the same fault current',
+      'An RCD disconnects at IΔn; an overcurrent device at its 5 s magnetic trip current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The criterion is touch-voltage based: U = R × Ia. For an RCD the 30 mA rated residual operating current is what disconnects supply, so Ia = IΔn. For overcurrent devices the magnetic trip current at 5 s is used (conservative — gives the highest Ia, hence the tightest R). Reg 415.2.2 makes this explicit in the definition of Ia.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'You find a kitchen with a metal sink, copper pipework and metal-cased Class I appliances. The kitchen is NOT a special location under Part 7. The customer asks why there is no supplementary bonding. What is the correct, brief professional response?',
     options: [
-      'Kitchens always need supplementary bonding',
-      'Supplementary bonding is required by Reg 415.2 only where the protective measure of automatic disconnection of supply (ADS) cannot be relied upon to disconnect within the required time, or where Part 7 imposes it. Kitchens outside the bath/shower zones are not a Part 7 special location, and a properly executed main bonding + ADS satisfies basic protection. Bonding the sink is not a default duty',
-      'It used to be required but was deleted in 2008',
-      'It is required only on TT systems',
+      'A kitchen is not a Part 7 special location, so main bonding plus ADS is enough — no sink bond',
+      'Kitchens always need supplementary bonding due to the metal sink, pipework and Class I appliances',
+      'It used to be required for kitchen sinks but the requirement was deleted from the standard in 2008',
+      'Supplementary bonding of a kitchen sink is required only where the installation is on a TT system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Supplementary bonding is not a blanket duty across all kitchens. It is mandated by Reg 415.2 where ADS is unreliable for the disconnection time, or by Part 7 for specified special locations (701, 702, 706, 710, etc.). A kitchen on a properly bonded TN-C-S installation with compliant circuits does not need supplementary bonding. Conflating "metal in the room" with "must be bonded" is a Pre-17th Edition reflex that A4:2026 still does not endorse.',
   },

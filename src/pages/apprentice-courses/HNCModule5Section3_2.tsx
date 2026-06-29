@@ -58,11 +58,11 @@ const quickCheckQuestions = [
     question: 'What is a typical preliminaries percentage for a medium-sized MEP project?',
     options: [
       '40-50%',
-      '25-30%',
       '8-15%',
+      '25-30%',
       '2-5%',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Preliminaries for MEP works typically range from 8-15% of measured works value, covering site establishment, supervision, temporary services, and project-specific requirements.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'inflation-allowance',
     question: 'Tender price inflation allowance is applied to cover:',
     options: [
-      'Calmly repeating your position without getting drawn into arguments',
-      'Avoid entry entirely if the work can be done from outside the space',
+      'The contingency held back for unforeseen site conditions',
+      'The contractor profit margin on the measured works',
       'Price movements between estimate date and mid-point of construction',
-      'Competence and confidence reinforce each other in a positive cycle',
+      'Overhead costs incurred at the contractor head office',
     ],
     correctIndex: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'Construction risk contingency covers:',
     options: [
-      'For projects tendering in 12+ months with long construction periods',
-      'Temporary offices, welfare facilities, and site security',
-      'Head office costs, insurances, and company administration',
+      'Anticipated design changes as the design develops',
+      'Material price increases between tender and construction',
+      'The contractor’s profit margin on the measured works',
       'Unforeseen site conditions and construction uncertainties',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: "Main contractor's overheads typically cover:",
     options: [
       'Head office costs, insurances, and company administration',
-      'Unforeseen site conditions and construction uncertainties',
-      'Temporary offices, welfare facilities, and site security',
-      'For projects tendering in 12+ months with long construction periods',
+      'Site-specific supervision, welfare, and temporary services',
+      'Measured labour and material costs of the installation',
+      'Anticipated price inflation over the construction period',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,13 +140,13 @@ const quizQuestions = [
       'A project has base cost of GBP 2.5M. With 12% preliminaries, 5% overheads, and 4% profit, what is the tender total?',
     options: [
       'GBP 3,025,000',
-      'GBP 3,087,750',
+      'GBP 3,057,600',
       'GBP 3,150,000',
       'GBP 2,775,000',
     ],
     correctAnswer: 1,
     explanation:
-      'Base GBP 2.5M + Prelims (12% of 2.5M = GBP 300,000) = GBP 2.8M. OH&P typically applied to total: GBP 2.8M x 1.05 x 1.04 = GBP 3,087,600 (approximately GBP 3,087,750).',
+      'Base GBP 2.5M + Prelims (12% of 2.5M = GBP 300,000) = GBP 2.8M. OH&P applied compounded to the sub-total: GBP 2.8M x 1.05 x 1.04 = GBP 3,057,600.',
   },
   {
     id: 6,
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'Site establishment costs within preliminaries include:',
     options: [
-      'Head office costs, insurances, and company administration',
-      'For projects tendering in 12+ months with long construction periods',
-      'Unforeseen site conditions and construction uncertainties',
+      'Head office rent, central staff, and company administration',
+      'The measured cost of cable, containment, and equipment',
+      'Performance bonds and professional indemnity insurance',
       'Temporary offices, welfare facilities, and site security',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'When should inflation allowance be highest in a cost plan?',
     options: [
       'For projects tendering in 12+ months with long construction periods',
-      'Head office costs, insurances, and company administration',
-      'Unforeseen site conditions and construction uncertainties',
-      'Temporary offices, welfare facilities, and site security',
+      'For short-duration fit-outs starting immediately',
+      'For projects with a fully completed detailed design',
+      'For refurbishment works with uncertain existing conditions',
     ],
     correctAnswer: 0,
     explanation:

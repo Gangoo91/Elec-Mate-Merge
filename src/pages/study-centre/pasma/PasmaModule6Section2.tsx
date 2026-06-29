@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'In a likelihood × severity risk matrix, a hazard rated 4 (likelihood) × 4 (severity) gives a risk score of 16. What action level does this fall into?',
     options: [
-      'Green — acceptable risk, no action needed',
-      'Amber — moderate risk, reduce if reasonably practicable',
+      'Green — acceptable risk, so no further action is needed',
+      'Amber — moderate risk, reduce it where reasonably practicable',
       'Red — high risk, work must not proceed until risk is reduced',
-      'White — not applicable to tower work',
+      'White — risk matrices do not apply to mobile tower work',
     ],
     correctIndex: 2,
     explanation:
@@ -43,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'What should you do if wind speed increases significantly while you are working on a mobile tower?',
     options: [
-      'Continue working but hold on tighter',
-      'Stop work, carry out a dynamic risk assessment, and descend if conditions are unsafe',
-      'Ask a colleague whether they think it is windy',
-      'Wait for the site manager to notice and tell you to stop',
+      'Continue working as normal but hold on to the guardrails more tightly',
+      'Stop work, carry out a dynamic risk assessment, and descend if it is unsafe',
+      'Ask a nearby colleague whether they personally think it is too windy',
+      'Wait for the site manager to notice the wind and tell you to stop',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the FIRST step in the HSE 5-step risk assessment process?',
     options: [
-      'Record your findings and share them with the team',
       'Identify the hazards present in the workplace',
+      'Record your findings and share them with the team',
       'Decide on the control measures to implement',
       'Review the previous risk assessment from last year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Step 1 is to identify the hazards — look at the work activity, the workplace, and the equipment to determine what could cause harm. You cannot evaluate risk or decide on controls until you have identified what the hazards actually are.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'When assessing tower-specific hazards, which of the following should be included in the assessment?',
     options: [
-      'Only the height of the tower and the platform load',
-      'Ground conditions, overhead services, weather exposure, nearby traffic, public access, manual handling, emergency access, and lighting',
-      'Only whether the operatives have PASMA cards',
-      'Only the colour and brand of the tower',
+      'Only the overall height of the tower and the maximum platform load',
+      'Ground conditions, overhead services, weather, traffic, public access, and emergency access',
+      'Only whether the operatives carrying out the work hold valid PASMA cards',
+      'Only the colour, brand, and hire source of the tower being used',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,11 +111,11 @@ const quizQuestions = [
       'In a 5×5 risk matrix, a risk score of 8 (likelihood 2 × severity 4) falls into which category?',
     options: [
       'Green — low risk, acceptable',
-      'Amber — medium risk, reduce if reasonably practicable',
       'Red — high risk, do not proceed',
       'Risk matrices do not apply to tower work',
+      'Amber — medium risk, reduce if reasonably practicable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A risk score of 8 falls into the amber zone (5–12), meaning the risk is medium. Work can proceed, but additional control measures should be implemented where reasonably practicable to reduce the risk further. The assessment should be monitored and reviewed during the work.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'Which hierarchy should be followed when selecting control measures for tower work hazards?',
     options: [
-      'PPE first, then engineering controls, then elimination',
-      'Administrative controls only — everything else is too expensive',
+      'PPE first, then engineering controls, then substitution, then elimination',
+      'Administrative controls only, because every other control is too costly',
       'Eliminate, substitute, engineering controls, administrative controls, PPE',
-      'There is no specific order — choose whatever is cheapest',
+      'No specific order applies — select whichever control is cheapest to provide',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'A method statement for mobile tower work should include which of the following?',
     options: [
-      'Only the tower height and the names of operatives',
-      'The assembly sequence, team roles, equipment list, emergency procedures, and specific risk controls',
-      'Only the date the work is scheduled',
-      'A photograph of the finished tower',
+      'The assembly sequence, team roles, equipment list, emergency procedures, and risk controls',
+      'Only the planned tower height and the names of the operatives involved',
+      'Only the date on which the tower work has been scheduled to begin',
+      'A single photograph of the finished tower in its working position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A method statement must be comprehensive: it covers the step-by-step assembly sequence, defined roles for each team member, a full equipment and component list, emergency and rescue procedures, and the specific control measures identified in the risk assessment. It translates the risk assessment into practical, actionable instructions.',
   },
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is a dynamic risk assessment?',
     options: [
-      'A risk assessment carried out by a dynamic personality',
-      'A continuous, real-time assessment of changing conditions during work, with authority to stop if conditions become unsafe',
-      'A risk assessment that is only completed after the work is finished',
-      'A risk assessment written on a digital tablet instead of paper',
+      'A risk assessment carried out by someone with a dynamic personality',
+      'A continuous, real-time assessment of changing conditions, with authority to stop work',
+      'A risk assessment that is only completed once the work has finished',
+      'A risk assessment written on a digital tablet rather than on paper',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'Which of the following should trigger a review of the risk assessment during tower work?',
     options: [
-      'Only a formal instruction from the HSE',
-      'A near-miss incident, a change in weather conditions, new work activity starting nearby, or a change in ground conditions',
-      'Nothing — once completed, a risk assessment is valid indefinitely',
-      'Only a fatal accident',
+      'Only a formal written instruction issued directly by the HSE',
+      'Nothing — once completed, a risk assessment remains valid indefinitely',
+      'Only a fatal accident occurring on the site during the work',
+      'A near-miss, a change in weather, new work nearby, or changed ground conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk assessments must be reviewed whenever conditions change. Triggers include: near-miss incidents, changes in weather, new activities starting nearby, changes in ground conditions, different personnel, changes to the scope of work, and any incident or injury. Waiting for a serious event before reviewing means the review comes too late.',
   },

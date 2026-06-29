@@ -12,16 +12,16 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'elv-application',
-    question: 'Name one example of a low voltage application using ELV cable.',
+    question: 'Name one example of an application that uses extra-low voltage (ELV) cable.',
     options: [
-      'Lighting circuits',
-      'Doorbell systems',
-      'Cooker circuits',
-      'Socket outlets',
+      'A doorbell system',
+      'A ring final circuit',
+      'A cooker circuit',
+      'An immersion heater circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Doorbell systems operate at extra-low voltage (typically 12-24V) making them safe from electric shock risk.',
+      'Doorbell systems operate at extra-low voltage (typically 8-24V), making them safe from electric shock risk.',
   },
   {
     id: 'cat6-distance',
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'cable-separation',
     question: 'Why should data cables be kept separate from mains cables?',
     options: [
-      'VFD - energy saving in standby mode',
+      'To make the data cable easier to identify',
+      'To increase the data cable current rating',
       'To reduce electromagnetic interference',
-      'Through site supervision and formal procedures',
-      'Within 600mm of the meter or point of entry',
+      'To allow a smaller protective device to be used',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Mains cables can induce electromagnetic interference in data cables, causing signal degradation and network issues.',
   },
@@ -104,23 +104,23 @@ const quizQuestions = [
     id: 5,
     question: 'Why should the bend radius of a data cable be observed during installation?',
     options: [
-      'Working on live low voltage equipment with high fault current',
-      'To avoid damaging insulation or signal performance',
-      'Breathe in for 4, hold for 4, out for 4, hold for 4',
-      'High assertiveness, high cooperativeness',
+      'To increase the current-carrying capacity of the cable',
+      'To avoid damaging the conductors or degrading signal performance',
+      'To allow the cable to share a conduit with mains cables',
+      'To reduce the cost of the structured cabling',
     ],
     correctAnswer: 1,
     explanation:
-      'Exceeding bend radius can damage internal conductors and degrade signal quality, affecting network performance.',
+      'Exceeding the minimum bend radius can damage internal conductors and degrade signal quality, affecting network performance.',
   },
   {
     id: 6,
-    question: 'What is the main purpose of shielding in signal cables?',
+    question: 'What is the main purpose of shielding (screening) in signal cables?',
     options: [
-      'Gas and oil fault protection',
-      'Risk Assessment and Method Statement',
-      'Reduce electromagnetic interference',
-      '100π rad/s (approximately 314 rad/s)',
+      'To provide mechanical protection against impact',
+      'To increase the voltage the cable can carry',
+      'To reduce electromagnetic interference',
+      'To improve the fire resistance of the cable',
     ],
     correctAnswer: 2,
     explanation:

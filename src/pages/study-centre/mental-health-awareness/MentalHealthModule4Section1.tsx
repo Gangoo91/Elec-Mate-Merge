@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Why is it important to continue checking in with a colleague after their initial disclosure about mental health difficulties?',
     options: [
-      'So you can report their progress to management on a weekly basis',
       'Because recovery is not linear and ongoing support shows genuine care, reducing the risk of relapse or deterioration',
+      'So you can report their progress to management on a weekly basis',
       'To make sure they are not taking advantage of any workplace adjustments',
       'Because one conversation is usually enough to resolve most mental health problems',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Recovery from mental health difficulties is rarely a straight line. There will be good days and bad days, steps forward and steps back. Continuing to check in shows that your concern was genuine, not performative. It also helps identify early signs of deterioration before a full relapse occurs. The key is to check in without being intrusive — a simple 'How are things going?' can be enough.",
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       "When supporting a colleague's return to work after a period of mental health-related absence, what is the MOST important principle?",
     options: [
       'Get them back to full duties as quickly as possible so they feel normal again',
-      'Plan the return carefully, use a phased approach, and hold regular check-ins during the first weeks',
       'Avoid mentioning their absence so they do not feel uncomfortable',
       'Assign them only the simplest tasks to avoid putting any pressure on them',
+      'Plan the return carefully, use a phased approach, and hold regular check-ins during the first weeks',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The return to work after mental health-related absence should be carefully planned before the person comes back. A phased return — starting with reduced hours or modified duties and building up gradually — is recommended by the HSE and NICE. Regular check-ins during the first weeks help identify any difficulties early. Rushing someone back to full duties risks relapse, while being overly protective can undermine their confidence and sense of belonging in the team.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "Under the Equality Act 2010, when does a mental health condition become a 'disability' requiring reasonable adjustments?",
     options: [
-      'Only when a formal psychiatric diagnosis has been made by a consultant',
       "When the condition has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities",
+      'Only when a formal psychiatric diagnosis has been made by a consultant',
       'Only when the person has been off work for more than four consecutive weeks',
       'Mental health conditions are never classified as disabilities under the Equality Act',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Equality Act 2010 defines disability as a physical or mental impairment that has a substantial and long-term (lasting or likely to last 12 months or more) adverse effect on the person's ability to carry out normal day-to-day activities. A formal diagnosis is not required — what matters is the effect on the person. Depression, anxiety, PTSD, OCD, bipolar disorder, and schizophrenia can all qualify.",
   },
@@ -131,11 +131,11 @@ const quizQuestions = [
       "When planning a colleague's return to work after mental health-related absence, what should happen BEFORE their first day back?",
     options: [
       'Nothing — just let them come back and see how it goes',
-      'A return-to-work conversation to discuss adjustments, a phased plan, and what support will be in place',
       'A meeting with the full team to discuss how to treat the returning colleague',
       'A formal assessment by an occupational health specialist (this is legally required before any return)',
+      'A return-to-work conversation to discuss adjustments, a phased plan, and what support will be in place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Best practice (recommended by the HSE and NICE) is to have a private return-to-work conversation before the person's first day back. This should cover what adjustments they need, whether a phased return is appropriate, what duties they will start with, who their point of contact is for support, and any concerns they have. Planning before the return reduces anxiety and prevents the common mistake of expecting someone to return to full duties immediately.",
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'Which of the following is something you should NOT do when supporting a colleague with mental health difficulties?',
     options: [
-      'Check in regularly to see how they are doing',
       'Make assumptions about what tasks they can and cannot handle without asking them',
+      'Check in regularly to see how they are doing',
       'Include them in team activities and social events as normal',
       'Be patient when their recovery is slower than expected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Making assumptions about what someone can or cannot do based on their mental health condition is both unhelpful and potentially discriminatory. Always ask the person directly what support they need and what they feel able to manage. Some people recovering from depression may want to take on challenging tasks as part of their recovery; others may need a lighter workload temporarily. The person themselves is always the best judge of their own capabilities.',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
       'The HSE recommends phased returns to work after mental health-related absence. What does a phased return typically involve?',
     options: [
       'Returning to full hours immediately but with no overtime for the first month',
-      'Starting with reduced hours or modified duties and gradually building back to the full role over an agreed period',
       'Working from home for the first month before returning to site',
       'Having a colleague supervise all their work for the first six weeks',
+      'Starting with reduced hours or modified duties and gradually building back to the full role over an agreed period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A phased return typically starts with reduced hours (perhaps half-days or three days per week) and/or modified duties (perhaps less physically demanding or less isolated tasks), gradually building back to the person's full role over an agreed period — usually two to six weeks, depending on the individual and the nature of their absence. The pace should be guided by how the person is coping, with regular check-ins to adjust the plan as needed.",
   },

@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'material-assessment-highest',
     question: 'In a material assessment, which product type scores the HIGHEST risk?',
     options: [
+      'Asbestos cement products',
       'Sprayed coatings and lagging',
       'Asbestos insulating board (AIB)',
-      'Asbestos cement products',
       'Floor tiles',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Sprayed coatings and lagging score the highest (12 points) in the product type variable because they are friable — meaning the fibres are loosely bound and easily released into the air when disturbed, even by air movement or minor contact.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'management-plan-contents',
     question: 'Which of the following must the asbestos management plan include?',
     options: [
-      'The asbestos register, assessment results, management decisions, monitoring schedule, and procedures for work near ACMs',
       'Only the locations of ACMs and the name of the surveyor',
       'A list of licensed removal contractors in the local area',
+      'The asbestos register, assessment results, management decisions, monitoring schedule, and procedures for work near ACMs',
       'The original building plans from when the property was constructed',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The management plan must include the asbestos register, assessment results for each ACM, the management decision for each ACM (leave, encapsulate, enclose, or remove), a monitoring schedule, and clear procedures for anyone carrying out work that might disturb ACMs.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: 'What must the asbestos register contain for each identified ACM?',
     options: [
-      'Location, type of asbestos (if known), condition assessment, and risk score',
       'Only the room name and a photograph',
       'The name of the person who installed the material',
       'The date when the material will be removed',
+      'Location, type of asbestos (if known), condition assessment, and risk score',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The register must record the location of each ACM, the type of asbestos (if identified by analysis or presumed), a condition assessment, and a risk score derived from the material and priority assessments. Floor plans or drawings showing ACM locations should also be included where practical.',
   },
@@ -89,8 +89,8 @@ const quizQuestions = [
     id: 2,
     question:
       'In the material assessment scoring, what score does asbestos insulating board (AIB) receive for product type?',
-    options: ['4', '6', '10', '12'],
-    correctAnswer: 2,
+    options: ['10', '4', '6', '12'],
+    correctAnswer: 0,
     explanation:
       'Asbestos insulating board (AIB) scores 10 for product type. It is a high-risk material because, although not as friable as sprayed coatings (which score 12), AIB can release significant quantities of fibres when cut, drilled, broken, or when the surface deteriorates.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'The type of asbestos fibre present',
       'The condition of the ACM surface',
-      'How the building is used and the likelihood of the ACM being disturbed',
       'Whether the ACM is sealed or exposed',
+      'How the building is used and the likelihood of the ACM being disturbed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The priority assessment considers building-use factors: normal occupant activity, likelihood of disturbance, human exposure potential, and maintenance activity near the ACM. The material assessment focuses on the ACM's inherent properties — product type, damage, surface treatment, and fibre type.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 6,
     question: 'Who should be shown the asbestos register BEFORE starting work in a building?',
     options: [
+      'All contractors and maintenance staff who might disturb ACMs',
       'Only the building owner',
       'Only licensed asbestos removal contractors',
-      'All contractors and maintenance staff who might disturb ACMs',
       'Only the Health and Safety Executive',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The register must be made available to anyone who needs it, including all contractors and maintenance staff who might disturb ACMs during their work. Contractors must be shown relevant sections of the register BEFORE starting work so they know where ACMs are located and can take appropriate precautions.',
   },
@@ -159,8 +159,8 @@ const quizQuestions = [
     id: 8,
     question:
       'A material assessment gives an ACM a total score of 14. What risk category does this indicate?',
-    options: ['Very low risk', 'Low risk', 'Medium risk', 'High risk'],
-    correctAnswer: 3,
+    options: ['Very low risk', 'Low risk', 'High risk', 'Medium risk'],
+    correctAnswer: 2,
     explanation:
       'A total material assessment score of 14 or above indicates high risk. The ACM is likely to be friable, damaged, or of a particularly hazardous type and condition. It requires urgent management action — typically enclosure or removal — and must not be disturbed by any work activity until appropriate controls are in place.',
   },

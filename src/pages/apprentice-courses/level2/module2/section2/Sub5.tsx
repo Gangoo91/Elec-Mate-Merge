@@ -61,9 +61,9 @@ const checks = [
       'A motor is rated 500 W mechanical output. What does that mean in plain terms?',
     options: [
       'It does 500 J of mechanical work every second',
-      'Warning of presence of more than one supply',
-      'As Low As Reasonably Practicable',
-      'Orders placed but not yet invoiced',
+      'It draws exactly 500 W of electrical power from the supply',
+      'It can lift a 500 N load to any height you need',
+      'It uses 500 J of energy in total before it stops',
     ],
     correctIndex: 0,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is power?',
     options: [
-      'Allow capacitive discharge before touching conductors',
+      'The total amount of work an object can do',
       'The rate at which work is done (or energy is transferred)',
-      'Cables must run within prescribed safe zones to avoid accidental damage',
-      'The tongue withdraws from the switch head, breaking the safety circuit',
+      'The force needed to move a load a fixed distance',
+      'The energy stored in an object when it is lifted up',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why might you choose a higher-power tool for a job?',
     options: [
-      'The battery is ageing and has lost capacity',
-      'Making meaningful progress in small steps',
+      'To use less total energy to finish the same job',
+      'Because higher-power tools are always more efficient',
       'To do the job faster — same energy, less time',
-      'Test armour and internal CPC separately',
+      'Because it will run cooler than a lower-power tool',
     ],
     correctAnswer: 2,
     explanation:

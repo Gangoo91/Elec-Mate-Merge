@@ -16,10 +16,10 @@ const Module7Section5_2 = () => {
       id: 1,
       question: 'Why is checking test instruments before use essential?',
       options: [
-        'Main earthing terminal to means of earthing',
+        'To speed up the testing process',
         'To ensure they are safe and provide accurate readings',
-        'Installing socket 100mm higher than specified',
-        'Designs building systems at a higher technical/professional level',
+        'To avoid having to record the results',
+        'To reduce the cost of the instruments',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section5_2 = () => {
       id: 2,
       question: 'What should be inspected during a visual check?',
       options: [
-        'Current readings are always zero or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-        'Replacing 25 kg bags of cement with 15 kg bags',
+        'The price label on the instrument',
+        'The colour of the carry case',
         'The casing, leads, probes, and fuses',
-        'Apply appropriate safety margins',
+        'The number of ranges on the dial',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module7Section5_2 = () => {
       id: 3,
       question: 'Why must leads and probes comply with GS38?',
       options: [
-        'Any amputation including fingers, toes, or limbs',
-        'Structured cabling and network infrastructure',
-        '1×IΔn only — the 5×IΔn AC test was deleted in Amendment 4:2026',
+        'To make the instrument easier to carry',
+        'To increase the measuring range of the instrument',
+        'To reduce the cost of replacement leads',
         'To minimise the risk of accidental contact with live parts',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section5_2 = () => {
       question: 'How can a voltage indicator be proven accurate before use?',
       options: [
         'Test it against a proving unit or known live supply',
-        'In breathing zones, 1-2m above floor level in occupied spaces',
-        'Prohibition, warning, mandatory, emergency, fire safety signs',
-        'Every 1.5-3 metres depending on load',
+        'Check the calibration label has not expired',
+        'Inspect the leads for visible damage',
+        'Confirm the batteries have been recently replaced',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section5_2 = () => {
       id: 5,
       question: 'Why should accuracy be checked both before and after isolation?',
       options: [
-        "Clean, dry place away from contamination and damage",
+        "To save time on the next job",
         "To ensure the instrument hasn't failed during the test period",
-        "Prevent fire spread through containment openings",
-        "Replacing suspect components with known good ones",
+        "To extend the calibration interval",
+        "To reduce wear on the test leads",
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module7Section5_2 = () => {
       id: 6,
       question: 'What is the role of calibration in test equipment?',
       options: [
-        'Control logic, mappings, setpoints, and schedules',
-        'Extraneous-conductive-parts to main earthing terminal',
+        'To extend the battery life of the instrument',
+        'To make the instrument compatible with all circuits',
         'To ensure results remain within required tolerances',
-        'Seek clarification from the design team before proceeding',
+        'To remove the need for a visual inspection',
       ],
       correctAnswer: 2,
       explanation:
@@ -103,9 +103,9 @@ const Module7Section5_2 = () => {
       question: 'What should you do if an instrument fails a safety check?',
       options: [
         'Remove it from service and report it immediately',
-        'State limitations and their potential impact on safety',
-        'Authorised staff can view and control BMS functions off-site',
-        'Investigate for earth faults and insulation breakdown',
+        'Use it only for low-voltage circuits',
+        'Continue using it but record the fault',
+        'Repair the instrument yourself before use',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +115,10 @@ const Module7Section5_2 = () => {
       id: 9,
       question: 'In the real-world example, what caused the electrician to receive a shock?',
       options: [
-        "When an immediate safety hazard needs to be addressed without delay",
+        "The test leads were the wrong category rating",
         "The instrument's internal fuse had blown but wasn't detected",
-        "To monitor risks and ensure safety compliance",
-        "To get input from those who understand the work and risks",
+        "The wrong measurement range had been selected",
+        "The circuit had not been correctly identified",
       ],
       correctAnswer: 1,
       explanation:
@@ -128,10 +128,10 @@ const Module7Section5_2 = () => {
       id: 10,
       question: 'How did the apprentice in the second example confirm isolation correctly?',
       options: [
-        'Required inspection of electrical installations at defined intervals',
-        'Energy consumption and trend analysis reports',
+        'Relied on the consumer unit labelling alone',
+        'Checked the calibration certificate was in date',
         'Followed the Prove-Test-Prove procedure with a proving unit',
-        'Investigate and rectify the cause before energising',
+        'Used a socket tester at the point of work',
       ],
       correctAnswer: 2,
       explanation:

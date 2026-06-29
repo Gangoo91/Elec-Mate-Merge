@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ring-final',
     question: 'What distinguishes a ring final circuit from a radial circuit?',
     options: [
-      'Dynamic assessments are performed in real-time to address changing conditions',
-      'Automatic lighting activation during security events for deterrence',
+      'A ring circuit must always be protected by a 20 A device, a radial by a 32 A device',
+      'A ring circuit can only supply socket outlets, whereas a radial can supply lighting too',
       'A ring circuit has cable that starts and finishes at the same terminals in the consumer unit',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
+      'A ring circuit requires three conductors per cable, a radial requires only two',
     ],
     correctIndex: 2,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'spur-rule',
     question: 'Under BS 7671, how many non-fused spurs may be connected to a ring final circuit?',
     options: [
-      'No more than two per socket outlet on the ring',
-      'An unlimited number, provided the total load does not exceed 32 A',
       'One non-fused spur per socket outlet or junction box on the ring',
+      'An unlimited number, provided the total load does not exceed 32 A',
+      'No more than two per socket outlet on the ring',
       'No non-fused spurs are permitted',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'BS 7671 permits one non-fused spur from each socket outlet or junction box on the ring. Each non-fused spur can supply one single or one twin socket outlet (or one fused connection unit). Non-fused spurs must be wired in cable of the same size as the ring cable (2.5 mm²). The total number of non-fused spurs should not exceed the number of socket outlets and fixed appliances connected directly on the ring.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Under BS 7671:2018+A3:2024, what additional protection is required for socket outlets rated up to 32 A in all locations?',
     options: [
-      'Vague terms like "approximately", "if required", "as necessary" without further definition',
-      'To convert technical data into actionable information for decision-making',
+      'An RCD with a rated residual operating current not exceeding 100 mA',
       'An RCBO or RCD with a rated residual operating current not exceeding 30 mA',
-      'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
+      'A time-delayed (Type S) RCD to provide discrimination with the main switch',
+      'A surge protection device installed at the origin of the installation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Regulation 411.3.3 of BS 7671:2018+A3:2024 requires that socket outlets with a rated current not exceeding 32 A are provided with additional protection by an RCD with a rated residual operating current (IΔn) not exceeding 30 mA. This applies to all locations, not just domestic premises. The RCD provides additional protection against electric shock in the event of a direct contact fault.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'ring-test',
     question: 'What is the purpose of the R1+R2 ring continuity test on a ring final circuit?',
     options: [
-      'A serious criminal offence where an organisation\\\\\\\'s failure causes death',
-      'A record of defects, incomplete items and remedial works required before handover',
+      'To confirm the insulation resistance between live conductors meets the minimum value',
+      'To verify that the RCD disconnects within the required time at its rated current',
+      'To measure the prospective short-circuit current at the consumer unit',
       'To confirm the ring is continuous and to measure the earth fault loop impedance at each socket',
-      'Systematic approach, safety first, proper documentation, and continuous improvement',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The R1+R2 ring continuity test confirms that the ring is continuous (no breaks in the line, neutral or earth conductors) and provides the R1+R2 value at each socket outlet on the ring. This value, when added to the external earth fault loop impedance (Ze), gives the total earth fault loop impedance (Zs) at each point, which must not exceed the maximum value for the protective device to disconnect within the required time.',
   },
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'A fused spur from a ring final circuit is connected via a:',
     options: [
       'Fused connection unit (FCU) fitted with a 3 A or 13 A fuse',
-      'To maintain IP rating and prevent ingress',
-      'Current carrying capacity, voltage drop, and fault protection',
-      'To ensure the health, safety and welfare of all employees at work',
+      'Junction box with a 30 mA RCD built into the terminal block',
+      'Double-pole isolating switch rated at 45 A',
+      'Standard 13 A socket outlet wired in 1.0 mm² cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Which of the following socket outlet types would be used for a three-phase industrial supply?',
     options: [
-      'An electric cooker rated at 10 kW',
-      '13 A plugs, socket outlets and adaptors',
+      'BS 1363 (13 A rectangular-pin) socket',
+      'BS 546 (round-pin) socket',
       'BS EN 60309-2 (commando/CEE) socket',
-      'The ring is broken at or near that point',
+      'BS 1363-2 (combined socket and USB) outlet',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'During the ring continuity test, the cross-connection is made between:',
     options: [
-      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
-      'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'The equivalent circuit seen by a load as a voltage source in series with a resistance',
+      'The line conductor and the earth conductor of the same end of the ring',
+      'Both ends of the line conductor, joined together at the consumer unit',
+      'The neutral conductor and the earth conductor of the same end of the ring',
       'The line conductor of one end of the ring and the neutral conductor of the other end (and vice versa)',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question: 'A dedicated circuit is required for which of the following appliances?',
     options: [
       'An electric cooker rated at 10 kW',
-      '13 A plugs, socket outlets and adaptors',
-      'The ring is broken at or near that point',
-      'BS EN 60309-2 (commando/CEE) socket',
+      'A table lamp rated at 60 W',
+      'A wall-mounted clock on a 2 A round-pin supply',
+      'A single twin socket outlet for general use',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of shutters on a BS 1363 socket outlet?',
     options: [
-      'By notifying building control before starting and arranging inspection',
+      'To improve the electrical contact between the plug pins and the socket terminals',
       'To prevent the insertion of objects other than a correctly shaped plug pin',
-      'Ask relevant follow-up questions to deepen understanding and show continued interest',
-      'Match communication style to technical knowledge and role requirements',
+      'To provide a degree of weatherproofing for outdoor socket outlets',
+      'To indicate when the socket outlet is switched on by exposing a coloured marker',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'USB socket outlets installed in a ring final circuit must:',
     options: [
-      'Diagnose mental health conditions or prescribe treatment',
-      'They override normal operation to prevent life-threatening situations or equipment damage',
+      'Be supplied from a separate dedicated radial circuit, never the ring',
+      'Be fitted with their own individual 5 A fuse on the load side',
       'Be connected through an RCD and comply with the relevant product standard',
-      'Agreeing with the truth in criticism without becoming defensive, which defuses aggression',
+      'Be limited to a maximum of two USB outlets per ring final circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     question:
       'When testing a ring final circuit, what does a significantly higher R1+R2 reading at one socket indicate?',
     options: [
-      '13 A plugs, socket outlets and adaptors',
-      'An electric cooker rated at 10 kW',
-      'BS EN 60309-2 (commando/CEE) socket',
+      'The insulation resistance at that socket is below the minimum value',
+      'That socket is carrying more load than the others on the ring',
+      'The RCD protecting the circuit is faulty and needs replacing',
       'The ring is broken at or near that point',
     ],
     correctAnswer: 3,

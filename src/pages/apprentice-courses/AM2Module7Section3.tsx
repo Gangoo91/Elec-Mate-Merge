@@ -41,9 +41,9 @@ const AM2Module7Section3 = () => {
       id: 'unsafe-practice',
       question: 'What does unsafe practice in AM2 usually result in?',
       options: [
-        'Special test procedures required due to earthing arrangement',
-        'An inverted-U curve — performance peaks at moderate arousal then declines',
-        'Cling film applied lengthways over the burn',
+        'A formal warning followed by a chance to continue',
+        'A small deduction from the overall mark',
+        'Extra time to correct the unsafe action',
         'Automatic failure, regardless of performance in other areas',
       ],
       correctIndex: 3,
@@ -54,10 +54,10 @@ const AM2Module7Section3 = () => {
       id: 'cpc-fail',
       question: 'If you attempt to energise a circuit without CPC connected, what happens?',
       options: [
-        'To secure and align electrical accessories',
-        'It operates at the correct temperature setting',
+        'It is acceptable provided the circuit is RCD protected',
+        'It is allowed if you reconnect the CPC straight afterwards',
         'Automatic fail - dangerous and non-compliant',
-        'Occupational asthma (respiratory sensitiser)',
+        'It only loses a mark if the assessor notices',
       ],
       correctIndex: 2,
       explanation:
@@ -83,10 +83,10 @@ const AM2Module7Section3 = () => {
       id: 1,
       question: 'Why is safety the top priority in AM2?',
       options: [
-        "GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)",
+        "Because the AM2 is mainly a test of working speed",
         "NET's primary objective is to prove you are safe to work unsupervised",
-        "A fault specific to that individual device or its circuit",
-        "Annually or as per manufacturer's recommendations",
+        "Because neat workmanship is the only thing assessors mark",
+        "Because the theory exam already covers the practical skills",
       ],
       correctAnswer: 1,
       explanation:
@@ -120,25 +120,25 @@ const AM2Module7Section3 = () => {
     },
     {
       id: 4,
-      question: 'What regulation requires safe working practices?',
+      question: 'Which documents underpin safe working practices in the AM2?',
       options: [
-        'Both BS 7671 and GS38',
-        'GS38',
-        'BS 7671 (current edition)',
-        'HSE guidelines only',
+        'BS 7671 (current edition) together with HSE GS38',
+        'GS38 on its own, covering all practices',
+        'BS 7671 on its own, covering all practices',
+        'The manufacturer’s instructions on their own',
       ],
       correctAnswer: 0,
       explanation:
-        'Both BS 7671 (current edition — BS 7671:2018+A4:2026) and HSE GS38 require safe working practices and proper test equipment use.',
+        'Both BS 7671 (current edition — BS 7671:2018+A4:2026) and HSE GS38 underpin safe working practices and proper test equipment use.',
     },
     {
       id: 5,
       question: 'Why should CPCs always be sleeved and connected immediately?',
       options: [
-        "To ensure safety and compliance",
+        "To make the consumer unit look tidier",
         "It's required by BS 7671 for safety",
-        "As Low As Reasonably Practicable",
-        "Yes, if suitable IP rating",
+        "To save green/yellow sleeving for later use",
+        "Only if the circuit is not RCD protected",
       ],
       correctAnswer: 1,
       explanation:
@@ -156,9 +156,9 @@ const AM2Module7Section3 = () => {
       id: 7,
       question: 'What is GS38 and why is it important?',
       options: [
-        'False triggering from heat sources or incorrect positioning',
-        'To ensure earth fault protection is working correctly',
-        'To give practical guidance on complying with legal duties',
+        'British Standard setting out wiring colours for fixed installations',
+        'Regulation defining maximum permitted earth loop impedance values',
+        'Standard for the construction and rating of consumer units',
         'Safety standard for electrical test equipment and probes',
       ],
       correctAnswer: 3,
@@ -182,10 +182,10 @@ const AM2Module7Section3 = () => {
       id: 9,
       question: 'How can you show the assessor you are working safely?',
       options: [
-        'When waste is transferred from one party to another',
+        'Work as quickly as possible to finish ahead of time',
         'Talk through safety steps and make actions visible',
-        'The maximum number of concurrent jobs you take on',
-        'Unforeseen site conditions and construction uncertainties',
+        'Keep your method to yourself to avoid distraction',
+        'Wait until the end and explain everything at once',
       ],
       correctAnswer: 1,
       explanation:

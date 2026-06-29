@@ -83,9 +83,9 @@ export const escapeRouteCoverageQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What is a common installation fault with directional signage?',
     options: [
-      "Above exits and at changes of direction",
-      "They must be integrated to provide continuous guidance",
-      "To ensure quick location during emergencies",
+      "Signs mounted slightly above standard eye-line height",
+      "Signs viewed from a greater distance than recommended",
+      "Internally illuminated signs used instead of externally lit ones",
       "Arrows that don't match the actual escape route layout",
     ],
     correctAnswer: 3,
@@ -109,10 +109,10 @@ export const escapeRouteCoverageQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is the purpose of walking the escape route during the design stage?',
     options: [
-      'To automatically operate equipment based on predetermined schedules',
+      'To measure the exact lux level achieved at every floor point',
       'To identify points requiring extra luminaires and potential obstructions',
-      'Sending commands to all devices on the bus simultaneously',
-      'To prove that the holder has the required training and qualifications for their occupation',
+      'To confirm the rated duration of the emergency luminaire batteries',
+      'To record the cable routes for the as-installed wiring diagram',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const escapeRouteCoverageQuizData: QuizQuestion[] = [
     id: 10,
     question: 'Why can wide corridors be a compliance risk if not correctly lit?',
     options: [
-      'To ensure quick location during emergencies',
-      'Above exits and at changes of direction',
+      'They always require fire-rated cabling on every luminaire',
+      'They must be fitted with maintained rather than non-maintained luminaires',
       'They may need both escape route and anti-panic lighting',
-      'Arrows that don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t match the actual escape route layout',
+      'They demand a longer minimum battery duration than standard routes',
     ],
     correctAnswer: 2,
     explanation:

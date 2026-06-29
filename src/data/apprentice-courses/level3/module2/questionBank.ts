@@ -49,10 +49,10 @@ export const module2Questions: QuestionBank[] = [
     id: 2,
     question: 'What is the main purpose of the 2021 Part L amendments?',
     options: [
-      'A centralised heating system distributing heat to multiple buildings from a central source',
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
+      'To achieve a 10% reduction in CO2 emissions for new homes compared to previous standards',
+      'To make solar PV mandatory on the roof of every new dwelling',
       'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
-      'The calculated annual CO2 emissions from the actual dwelling design',
+      'To phase out gas boilers immediately in all existing homes',
     ],
     correctAnswer: 2,
     explanation:
@@ -82,9 +82,9 @@ export const module2Questions: QuestionBank[] = [
     question: "What does 'U-value' measure in building construction?",
     options: [
       'Rate of heat transfer through a building element (thermal transmittance)',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
-      'An emissions reduction target aligned with climate science to limit global warming',
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'The total volume of air contained within a building element',
+      'The proportion of daylight passing through a window',
+      'The structural load-bearing capacity of a wall or floor',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,10 +162,10 @@ export const module2Questions: QuestionBank[] = [
     id: 9,
     question: "What does 'thermal bridging' refer to?",
     options: [
-      'Using AI to identify individual appliance consumption from whole-building smart meter data',
+      'Linking two heating systems together so they share a common flow temperature',
       'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
+      'The process of transferring heat from extract air to incoming fresh air',
+      'A continuous layer of insulation that wraps unbroken around the whole building',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,10 +178,10 @@ export const module2Questions: QuestionBank[] = [
     id: 10,
     question: "What is 'air permeability' in Part L?",
     options: [
-      'Equipment for charging electric vehicle batteries from the electrical supply',
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
+      'The rate at which fresh air is mechanically supplied to occupied rooms',
+      'The proportion of a room that must be openable for natural ventilation',
       'The measure of air leakage through the building fabric under pressure',
-      'Using data and analytics to predict when equipment will need maintenance before failure',
+      'The minimum number of air changes per hour required in a wet room',
     ],
     correctAnswer: 2,
     explanation:
@@ -194,9 +194,9 @@ export const module2Questions: QuestionBank[] = [
     id: 11,
     question: 'What is the typical air permeability target for new dwellings?',
     options: [
-      'Up to 90% or higher heat recovery',
-      'Energy Performance Certificate',
-      'Conservation of fuel and power',
+      '25 m³/(h·m²) @ 50 Pa or better',
+      '15 m³/(h·m²) @ 50 Pa or better',
+      '50 m³/(h·m²) @ 50 Pa or better',
       '8 m³/(h·m²) @ 50 Pa or better',
     ],
     correctAnswer: 3,
@@ -211,9 +211,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is SAP in relation to Part L?',
     options: [
       'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
-      'Real-time monitoring, simulation, optimisation, and predictive maintenance',
-      'Mono is more efficient and black in appearance; poly is slightly less efficient and blue-ish',
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
+      'Solar Array Positioning - the method for optimising panel orientation',
+      'Structural Adequacy Protocol - a check on a building\'s load-bearing capacity',
+      'Site Access Permit - authorisation required before starting building work',
     ],
     correctAnswer: 0,
     explanation:
@@ -226,10 +226,10 @@ export const module2Questions: QuestionBank[] = [
     id: 13,
     question: 'What is SBEM used for?',
     options: [
-      'Outdoor temperature below which supplementary heating is needed',
+      'Calculating the structural strength of steel building frames',
       'Calculating non-domestic building energy performance',
-      'Financial penalties up to £150,000 for non-domestic properties',
-      'A worldwide standard for home and building automation',
+      'Calculating domestic dwelling energy performance only',
+      'Calculating the lighting design levels for a workspace',
     ],
     correctAnswer: 1,
     explanation:
@@ -258,9 +258,9 @@ export const module2Questions: QuestionBank[] = [
     id: 15,
     question: 'What is the primary emission factor used in Part L calculations?',
     options: [
-      'Calculating non-domestic building energy performance',
-      'When a building is built, sold, or rented',
-      'BACnet, Modbus, KNX, or DALI for lighting',
+      'Nitrogen oxide (NOx) emissions per unit of energy',
+      'Sulphur dioxide (SO2) emissions per unit of energy',
+      'Particulate matter (PM2.5) emissions per unit of energy',
       'Carbon dioxide (CO2) emissions per unit of energy',
     ],
     correctAnswer: 3,
@@ -275,9 +275,9 @@ export const module2Questions: QuestionBank[] = [
     question: "What does 'fabric first' approach mean in Part L compliance?",
     options: [
       'Prioritising the building envelope (insulation, airtightness) before adding renewable technologies',
-      'Using an EV battery to power home appliances, acting as a home battery',
-      'Part S (Infrastructure for electric vehicles) and Part P (Electrical Safety)',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'Installing renewable technologies first, then upgrading insulation only if budget allows',
+      'Choosing the cheapest construction materials to keep the building cost down',
+      'Completing all internal finishes before the structural shell is built',
     ],
     correctAnswer: 0,
     explanation:
@@ -292,8 +292,8 @@ export const module2Questions: QuestionBank[] = [
     options: [
       'The calculated annual CO2 emissions from the actual dwelling design',
       'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
-      'Automatic control of building services like HVAC, lighting, and security',
-      'Solar cells integrated into building materials like roof tiles, facades, or windows',
+      'An imaginary average UK home used to set the national EPC band boundaries',
+      'A show home built to demonstrate the highest achievable energy standards',
     ],
     correctAnswer: 1,
     explanation:
@@ -306,10 +306,10 @@ export const module2Questions: QuestionBank[] = [
     id: 18,
     question: 'What is the Target Emission Rate (TER)?',
     options: [
-      'The measure of air leakage through the building fabric under pressure',
-      'Recording total electricity generated by the PV system for payment or monitoring',
+      'The maximum air leakage rate permitted through the building fabric',
+      'The actual measured CO2 emissions recorded during the first year of occupation',
       'The CO2 emission rate the building must achieve, based on the notional dwelling',
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'The minimum percentage of energy that must come from on-site renewables',
     ],
     correctAnswer: 2,
     explanation:
@@ -322,9 +322,9 @@ export const module2Questions: QuestionBank[] = [
     id: 19,
     question: 'What is the Dwelling Emission Rate (DER)?',
     options: [
-      'A building that generates more energy than it consumes over a year',
-      'The measure of air leakage through the building fabric under pressure',
-      'Rate of heat transfer through a building element (thermal transmittance)',
+      'The target CO2 emission rate derived from the notional dwelling',
+      'The annual energy bill in pounds for a typical occupant of the dwelling',
+      'The rate of heat loss through a single building element',
       'The calculated annual CO2 emissions from the actual dwelling design',
     ],
     correctAnswer: 3,
@@ -339,9 +339,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What glazing requirement typically applies under Part L?',
     options: [
       'Double glazing minimum with low-e coating and U-value around 1.4 W/m²K or better',
-      'Replacing fossil fuel heating with electric systems like heat pumps',
-      'A solar system connected to the mains grid, exporting excess generation',
-      'Inductive loads like motors and transformers drawing reactive power',
+      'Single glazing is permitted provided the frames are thermally broken',
+      'Triple glazing with a U-value of 3.0 W/m²K or better is mandatory',
+      'Any glazing is acceptable as long as the total window area is below 25%',
     ],
     correctAnswer: 0,
     explanation:
@@ -354,10 +354,10 @@ export const module2Questions: QuestionBank[] = [
     id: 21,
     question: 'What is controlled fitting under Part L?',
     options: [
-      'Charging for the most power used in a billing period, not just total consumption',
+      'A light fitting that is dimmed automatically by an occupancy sensor',
       'Building services that must meet minimum efficiency standards when replaced',
-      'Inductive charging transferring power without physical cable connection',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'A fitting that may only be installed by a registered electrician',
+      'A radiator valve that controls the room temperature to a fixed setpoint',
     ],
     correctAnswer: 1,
     explanation:
@@ -370,10 +370,10 @@ export const module2Questions: QuestionBank[] = [
     id: 22,
     question: 'What must be provided for a new dwelling under Part L?',
     options: [
-      'An electricity network using digital technology to optimise generation, distribution, and consumption',
-      'A rating system for actual operational energy performance of commercial buildings',
+      'A ten-year warranty covering all installed heating equipment',
+      'A guarantee that energy bills will not exceed a stated annual figure',
       'Information about efficient operation of heating, ventilation, and hot water systems',
-      'Leadership in Energy and Environmental Design - an international green building rating',
+      'A signed contract obliging the occupant to use a specific energy supplier',
     ],
     correctAnswer: 2,
     explanation:
@@ -386,9 +386,9 @@ export const module2Questions: QuestionBank[] = [
     id: 23,
     question: 'What is a Primary Energy target in Part L?',
     options: [
-      'Mono is more efficient and black in appearance; poly is slightly less efficient and blue-ish',
-      'Automatic lighting control based on detecting presence or absence of people',
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
+      'A target covering only the energy used directly within the dwelling',
+      'A target for the carbon emissions of the heating system alone',
+      'A target for the energy used by the most important room in the house',
       'A target for total primary energy consumption including generation and distribution losses',
     ],
     correctAnswer: 3,
@@ -403,9 +403,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the role of commissioning under Part L?',
     options: [
       'Ensuring fixed building services are installed and adjusted to operate efficiently',
-      'Aggregated distributed energy resources acting together as a single power plant',
-      'A solar system connected to the mains grid, exporting excess generation',
-      'A heat pump that extracts heat from outside air and transfers it indoors',
+      'Appointing the contractor who will carry out the building works',
+      'Calculating the dwelling emission rate before construction begins',
+      'Issuing the Energy Performance Certificate once the building is sold',
     ],
     correctAnswer: 0,
     explanation:
@@ -418,10 +418,10 @@ export const module2Questions: QuestionBank[] = [
     id: 25,
     question: 'What documentation must be provided for Part L compliance?',
     options: [
-      'Replacing fossil fuel heating with electric systems like heat pumps',
+      'Only the architect\'s drawings and a structural calculation',
       'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
-      'Power consumption varies with the cube of speed (Affinity Laws)',
+      'A site waste management plan and a noise assessment only',
+      'A planning permission certificate and party wall agreement',
     ],
     correctAnswer: 1,
     explanation:
@@ -434,10 +434,10 @@ export const module2Questions: QuestionBank[] = [
     id: 26,
     question: 'What is an air pressure test?',
     options: [
-      'Replacing fossil fuel heating with electric systems like heat pumps',
-      '800-1000ppm, with outdoor levels around 400ppm',
+      'A test of the mains water pressure supplied to the building',
+      'A test of the gas supply pipework for leaks before connection',
       'A test to measure air leakage rate through the building envelope',
-      'LED lighting systems powered and controlled through Ethernet cables',
+      'A test of the flue draught on a newly installed boiler',
     ],
     correctAnswer: 2,
     explanation:
@@ -450,9 +450,9 @@ export const module2Questions: QuestionBank[] = [
     id: 27,
     question: 'When is an air pressure test mandatory for dwellings?',
     options: [
-      'A heat pump that extracts heat from outside air and transfers it indoors',
-      'Automatic reversal to remove ice build-up on the outdoor unit',
-      'Regulations setting minimum EPC ratings for rental properties',
+      'Only for dwellings that are over three storeys high',
+      'Only when a dwelling is being sold or re-let',
+      'Only for dwellings heated by a heat pump rather than gas',
       'For all new dwellings or where required by Building Control',
     ],
     correctAnswer: 3,
@@ -467,9 +467,9 @@ export const module2Questions: QuestionBank[] = [
     question: "What is 'g-value' for glazing?",
     options: [
       'Solar heat gain coefficient - proportion of solar radiation transmitted through glazing',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
-      'Storing excess renewable generation for use when production is low',
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
+      'The rate of heat conducted through the glazing (its thermal transmittance)',
+      'The proportion of visible light reflected back off the glass surface',
+      'The acoustic insulation value of the glazing unit in decibels',
     ],
     correctAnswer: 0,
     explanation:
@@ -482,10 +482,10 @@ export const module2Questions: QuestionBank[] = [
     id: 29,
     question: "What is meant by 'consequential improvements' in Part L?",
     options: [
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'Repairs that must follow on automatically after any building defect is found',
       'Required energy efficiency upgrades when extending or renovating larger buildings',
-      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'Improvements recommended in an EPC report that the owner may choose to ignore',
+      'Upgrades funded entirely by a government grant when a property changes hands',
     ],
     correctAnswer: 1,
     explanation:
@@ -498,10 +498,10 @@ export const module2Questions: QuestionBank[] = [
     id: 30,
     question: 'What minimum lighting efficiency is typically required under Part L?',
     options: [
-      'Convert DC electricity from panels to AC electricity for use or export',
-      'Direct energy trading between producers and consumers without traditional utilities',
+      '25% of fixed lighting outlets must have efficient fittings (typically LED)',
+      '50% of fixed lighting outlets must have efficient fittings (typically LED)',
       '75% of fixed lighting outlets must have efficient fittings (typically LED)',
-      'Installing capacitors to counteract inductive reactive power',
+      '100% of fixed lighting outlets must have efficient fittings (typically LED)',
     ],
     correctAnswer: 2,
     explanation:
@@ -535,9 +535,9 @@ export const module2Questions: QuestionBank[] = [
     question: "What does 'COP' stand for in heat pump terminology?",
     options: [
       'Coefficient of Performance - ratio of heat output to electrical input',
-      'Large battery installations storing electricity to balance grid supply and demand',
-      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
-      'Individual control of each luminaire for flexibility, energy savings, and tuning',
+      'Cost of Power - the running cost of the heat pump per kilowatt-hour',
+      'Compressor Operating Pressure - the working pressure of the refrigerant circuit',
+      'Continuous Output Power - the maximum heat output the unit can sustain',
     ],
     correctAnswer: 0,
     explanation:
@@ -566,10 +566,10 @@ export const module2Questions: QuestionBank[] = [
     id: 34,
     question: 'Why are heat pumps considered renewable?',
     options: [
-      'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
-      'A test to measure air leakage rate through the building envelope',
+      'They burn a renewable biofuel instead of natural gas',
+      'They generate their own electricity from a built-in solar cell',
       'They extract renewable heat from the environment (air, ground, or water)',
-      'A target for total primary energy consumption including generation and distribution losses',
+      'They store surplus grid electricity for later release as heat',
     ],
     correctAnswer: 2,
     explanation:
@@ -582,9 +582,9 @@ export const module2Questions: QuestionBank[] = [
     id: 35,
     question: 'What is demand-side response in energy management?',
     options: [
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
-      'Rate of heat transfer through a building element (thermal transmittance)',
+      'Increasing generation at a power station to meet rising consumer demand',
+      'A supplier raising its tariff in response to higher wholesale gas prices',
+      'The time taken for a heating system to respond after the thermostat is changed',
       'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
     ],
     correctAnswer: 3,
@@ -599,9 +599,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a smart meter?',
     options: [
       'A digital meter that records energy use and communicates with the supplier remotely',
-      'Regulations setting minimum EPC ratings for rental properties',
-      'Another term for district heating - distributing heat from central source to buildings',
-      'An industry body promoting sustainable building practices and policy',
+      'A meter that automatically switches the supply off when a bill is unpaid',
+      'A meter that only records peak demand for maximum demand charging',
+      'A handheld device an engineer uses to take manual meter readings',
     ],
     correctAnswer: 0,
     explanation:
@@ -614,10 +614,10 @@ export const module2Questions: QuestionBank[] = [
     id: 37,
     question: 'What is the benefit of time-of-use tariffs?',
     options: [
-      'An inverter that manages both solar PV and battery storage in one unit',
+      'They guarantee a single fixed unit rate for the whole of the contract',
       'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
-      'Technology that captures CO2 directly from ambient air for storage or use',
-      'A virtual replica of a building integrating real-time data for monitoring and simulation',
+      'They remove the standing charge from the customer\'s electricity bill',
+      'They cap the total amount a household can be charged in any month',
     ],
     correctAnswer: 1,
     explanation:
@@ -630,10 +630,10 @@ export const module2Questions: QuestionBank[] = [
     id: 38,
     question: 'What is Power Factor in electrical systems?',
     options: [
-      'Aggregated distributed energy resources acting together as a single power plant',
-      'Using hydrogen gas (potentially blended with natural gas or 100%) for building heating',
+      'The ratio of voltage to current in a purely resistive circuit',
+      'The multiplier used to convert kilowatts into horsepower',
       'The ratio of real power to apparent power, indicating how efficiently power is used',
-      'Inductive charging transferring power without physical cable connection',
+      'The factor by which supply voltage must be derated for long cable runs',
     ],
     correctAnswer: 2,
     explanation:
@@ -646,9 +646,9 @@ export const module2Questions: QuestionBank[] = [
     id: 39,
     question: 'What causes poor power factor in electrical installations?',
     options: [
-      'Below about 55°C (return temperature below dew point ~54°C)',
-      'Monitoring CO2, humidity, VOCs, and particulates to ensure healthy indoor environments',
-      'A new interoperability standard unifying smart home ecosystems',
+      'Purely resistive loads such as heaters and incandescent lamps',
+      'A supply voltage that is slightly higher than the nominal 230 V',
+      'Long cable runs that increase the circuit resistance',
       'Inductive loads like motors and transformers drawing reactive power',
     ],
     correctAnswer: 3,
@@ -663,9 +663,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'How is power factor correction achieved?',
     options: [
       'Installing capacitors to counteract inductive reactive power',
-      'Building services that must meet minimum efficiency standards when replaced',
-      'PV generates electricity; thermal heats water or air',
-      'Maximum Power Point Tracking - optimising power extraction from panels',
+      'Increasing the supply voltage to reduce the current drawn',
+      'Adding extra inductors in series with the inductive loads',
+      'Reducing the cable cross-sectional area to raise the resistance',
     ],
     correctAnswer: 0,
     explanation:
@@ -678,10 +678,10 @@ export const module2Questions: QuestionBank[] = [
     id: 41,
     question: 'What is the energy efficiency label rating scale for appliances?',
     options: [
-      'Pass, Good, Very Good, Excellent, Outstanding',
+      '1 to 10 (with 10 being most efficient)',
       'A to G (with A being most efficient)',
-      '8 m³/(h·m²) @ 50 Pa or better',
-      'Building Energy Management System',
+      'Bronze, Silver, Gold, Platinum',
+      'A to G (with G being most efficient)',
     ],
     correctAnswer: 1,
     explanation:
@@ -710,9 +710,9 @@ export const module2Questions: QuestionBank[] = [
     id: 43,
     question: 'What is occupancy sensing in lighting control?',
     options: [
-      'Inductive charging transferring power without physical cable connection',
-      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'Dimming lights automatically in response to available daylight',
+      'Adjusting the colour temperature of lights through the day',
+      'Counting how many people enter a building for fire-safety purposes',
       'Automatic lighting control based on detecting presence or absence of people',
     ],
     correctAnswer: 3,
@@ -727,9 +727,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is daylight harvesting?',
     options: [
       'Automatically dimming artificial lighting in response to available natural light',
-      'Using AI and data to predict and optimise future energy consumption patterns',
-      'A preset combination of light levels and colours for different activities or moods',
-      'It has a secondary heat exchanger that recovers latent heat by condensing water vapour from flue gases',
+      'Capturing solar energy with rooftop panels to power the lighting circuit',
+      'Switching lights on automatically when a room becomes occupied',
+      'Using mirrors and light pipes to channel sunlight deep into a building',
     ],
     correctAnswer: 0,
     explanation:
@@ -742,10 +742,10 @@ export const module2Questions: QuestionBank[] = [
     id: 45,
     question: 'What is a Variable Speed Drive (VSD)?',
     options: [
-      'A programmable thermostat with WiFi, learning capability, and remote control',
+      'A mechanical gearbox that changes a motor\'s output speed by selecting gears',
       'An electronic device that controls motor speed by varying the frequency of power supply',
-      'An electricity network using digital technology to optimise generation, distribution, and consumption',
-      'An international treaty on climate change limiting global warming to 1.5-2°C',
+      'A soft-starter that limits inrush current but runs the motor at fixed speed',
+      'A device that controls motor speed by varying the supply voltage only',
     ],
     correctAnswer: 1,
     explanation:
@@ -758,10 +758,10 @@ export const module2Questions: QuestionBank[] = [
     id: 46,
     question: 'Why do VSDs save energy on centrifugal fans and pumps?',
     options: [
-      'Systematic assessment of energy use to identify savings opportunities',
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
+      'Power consumption varies directly in proportion to speed (linear relationship)',
+      'They eliminate the reactive power drawn by the motor windings',
       'Power consumption varies with the cube of speed (Affinity Laws)',
-      'Equipment that uses electricity to split water into hydrogen and oxygen',
+      'They recover braking energy and feed it back into the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -774,9 +774,9 @@ export const module2Questions: QuestionBank[] = [
     id: 47,
     question: 'What is a heat recovery ventilation system?',
     options: [
-      'Charging for the most power used in a billing period, not just total consumption',
-      'Automatically dimming artificial lighting in response to available natural light',
-      'When a solar system continues to power a circuit that has been disconnected from the grid',
+      'A system that recovers waste heat from a boiler flue to preheat hot water',
+      'A natural ventilation system relying on opening windows and trickle vents',
+      'A heat pump that recovers heat from the ground to warm the building',
       'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
     ],
     correctAnswer: 3,
@@ -791,9 +791,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What efficiency can MVHR systems achieve?',
     options: [
       'Up to 90% or higher heat recovery',
-      'Building Energy Management System',
-      'About 150-200g CO2/kWh (and falling)',
-      'From 15W (PoE) to 90W+ (PoE++/802.3bt)',
+      'Around 30-40% heat recovery at best',
+      'Up to 50% heat recovery in well-sealed buildings',
+      'Close to 100% heat recovery with no fan energy used',
     ],
     correctAnswer: 0,
     explanation:
@@ -822,10 +822,10 @@ export const module2Questions: QuestionBank[] = [
     id: 50,
     question: "What makes a boiler 'condensing'?",
     options: [
-      'Automated systems that identify operational faults and their likely causes in building systems',
-      'An electronic device that controls motor speed by varying the frequency of power supply',
+      'It condenses incoming mains water before heating it for greater efficiency',
+      'It runs at a higher flow temperature so it heats the home more quickly',
       'It has a secondary heat exchanger that recovers latent heat by condensing water vapour from flue gases',
-      'Intelligent charging that optimises timing based on tariffs, grid demand, or renewable availability',
+      'It uses an electric immersion element to top up the gas burner output',
     ],
     correctAnswer: 2,
     explanation:
@@ -839,9 +839,9 @@ export const module2Questions: QuestionBank[] = [
     question:
       'What is the recommended minimum flow temperature for condensing boilers to condense?',
     options: [
-      'CIBSE guidance for predicting actual operational energy use in buildings',
-      'Heating using organic materials like wood pellets, chips, or logs',
-      'Calculating non-domestic building energy performance',
+      'Above about 80°C (return temperature kept well above the dew point)',
+      'Exactly 70°C, the standard radiator design flow temperature',
+      'Below about 35°C, matching underfloor heating flow temperatures',
       'Below about 55°C (return temperature below dew point ~54°C)',
     ],
     correctAnswer: 3,
@@ -856,9 +856,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a Seasonal Coefficient of Performance (SCOP)?',
     options: [
       'Average efficiency of a heat pump over an entire heating season',
-      'A plug adapter allowing remote control and monitoring of connected devices',
-      'Building services that must meet minimum efficiency standards when replaced',
-      'Required energy efficiency upgrades when extending or renovating larger buildings',
+      'The peak instantaneous efficiency measured at the warmest outdoor temperature',
+      'The efficiency of a heat pump measured only on the coldest design day',
+      'The combined efficiency of the heat pump and its backup immersion heater',
     ],
     correctAnswer: 0,
     explanation:
@@ -871,10 +871,10 @@ export const module2Questions: QuestionBank[] = [
     id: 53,
     question: 'What is phantom or standby power?',
     options: [
-      'A new interoperability standard unifying smart home ecosystems',
+      'A sudden voltage spike that occurs when an appliance is switched on',
       'Electricity consumed by devices when switched off but still plugged in',
-      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
-      'CIBSE guidance for predicting actual operational energy use in buildings',
+      'Power lost as heat in the cables between the meter and the appliance',
+      'Reactive power drawn by motors that does no useful work',
     ],
     correctAnswer: 1,
     explanation:
@@ -887,10 +887,10 @@ export const module2Questions: QuestionBank[] = [
     id: 54,
     question: 'What is the purpose of an energy audit?',
     options: [
-      'Using hydrogen gas (potentially blended with natural gas or 100%) for building heating',
-      'Another term for district heating - distributing heat from central source to buildings',
+      'A financial review of an organisation\'s annual energy spending for tax purposes',
+      'A safety inspection of the electrical installation to BS 7671',
       'Systematic assessment of energy use to identify savings opportunities',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'A check that the energy supplier has billed the customer correctly',
     ],
     correctAnswer: 2,
     explanation:
@@ -903,9 +903,9 @@ export const module2Questions: QuestionBank[] = [
     id: 55,
     question: 'What is sub-metering used for?',
     options: [
-      'Storing energy as heat or cold for later use in heating or cooling systems',
-      '17 UN global goals addressing economic, social, and environmental challenges by 2030',
-      'A lease including environmental commitments from landlord and tenant',
+      'Providing a backup meter in case the main supplier meter fails',
+      'Measuring the voltage and current quality of the incoming supply',
+      'Recording exported electricity from a renewable generator for payment',
       'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
     ],
     correctAnswer: 3,
@@ -920,9 +920,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a kilowatt-hour (kWh)?',
     options: [
       'A unit of energy equal to using 1000 watts for one hour',
-      'PV generates electricity; thermal heats water or air',
-      'A government grant towards installing heat pumps or biomass boilers',
-      'A device showing real-time energy usage and costs from the smart meter',
+      'A unit of power equal to 1000 watts measured at any instant',
+      'A unit of current equal to 1000 amps flowing for one hour',
+      'A unit of energy equal to using 100 watts for one hour',
     ],
     correctAnswer: 0,
     explanation:
@@ -935,10 +935,10 @@ export const module2Questions: QuestionBank[] = [
     id: 57,
     question: 'What is the difference between energy and power?',
     options: [
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
+      'Energy is the rate of use (kW); power is energy over time (kWh)',
       'Power is the rate of energy use (kW); energy is power over time (kWh)',
-      'Direct energy trading between producers and consumers without traditional utilities',
-      'Double glazing minimum with low-e coating and U-value around 1.4 W/m²K or better',
+      'They mean the same thing and are interchangeable units',
+      'Energy is measured in volts; power is measured in amps',
     ],
     correctAnswer: 1,
     explanation:
@@ -951,10 +951,10 @@ export const module2Questions: QuestionBank[] = [
     id: 58,
     question: 'What is load shedding in energy management?',
     options: [
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
-      'Network of connected sensors and devices enabling data collection and automated control',
+      'Spreading the electrical load evenly across all three supply phases',
+      'Gradually increasing load to avoid a sudden inrush at switch-on',
       'Deliberately reducing electrical load by switching off non-essential equipment during peak demand',
-      'Recording total electricity generated by the PV system for payment or monitoring',
+      'Transferring load onto a standby generator during a mains failure',
     ],
     correctAnswer: 2,
     explanation:
@@ -967,9 +967,9 @@ export const module2Questions: QuestionBank[] = [
     id: 59,
     question: 'What is maximum demand charging?',
     options: [
-      '75% of fixed lighting outlets must have efficient fittings (typically LED)',
-      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
-      'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
+      'Charging the customer the highest unit rate available during peak hours',
+      'A penalty charged when total annual consumption exceeds a set limit',
+      'Charging based solely on the total kWh consumed in the period',
       'Charging for the most power used in a billing period, not just total consumption',
     ],
     correctAnswer: 3,
@@ -984,9 +984,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the typical carbon intensity of UK grid electricity (2024)?',
     options: [
       'About 150-200g CO2/kWh (and falling)',
-      'Conservation of fuel and power',
-      'BACnet, Modbus, KNX, or DALI for lighting',
-      'Building Energy Management System',
+      'About 500-600g CO2/kWh (and rising)',
+      'About 1000g CO2/kWh (roughly the same as burning coal)',
+      'Effectively 0g CO2/kWh as the grid is now fully renewable',
     ],
     correctAnswer: 0,
     explanation:
@@ -1003,10 +1003,10 @@ export const module2Questions: QuestionBank[] = [
     id: 61,
     question: 'What is the difference between solar PV and solar thermal?',
     options: [
-      'A building that generates more energy than it consumes over a year',
+      'PV heats water or air; thermal generates electricity',
       'PV generates electricity; thermal heats water or air',
-      'For all new dwellings or where required by Building Control',
-      'A wireless protocol designed for smart home device communication',
+      'PV works only in summer; thermal works only in winter',
+      'PV is mounted on the ground; thermal is always roof-mounted',
     ],
     correctAnswer: 1,
     explanation:
@@ -1019,10 +1019,10 @@ export const module2Questions: QuestionBank[] = [
     id: 62,
     question: 'What is the typical efficiency of a modern solar PV panel?',
     options: [
-      'PV generates electricity; thermal heats water or air',
-      'About 150-200g CO2/kWh (and falling)',
+      '2-5% for standard panels, up to 8% for premium',
+      '40-50% for standard panels, up to 60% for premium',
       '18-22% for standard panels, up to 25%+ for premium',
-      'When a building is built, sold, or rented',
+      '70-80% for standard panels, up to 90% for premium',
     ],
     correctAnswer: 2,
     explanation:
@@ -1035,9 +1035,9 @@ export const module2Questions: QuestionBank[] = [
     id: 63,
     question: 'What is a grid-tied solar PV system?',
     options: [
-      'A device showing real-time energy usage and costs from the smart meter',
-      'Calculating non-domestic building energy performance',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
+      'A solar system that operates entirely off-grid using batteries only',
+      'A solar system that supplies DC directly to appliances without an inverter',
+      'A solar system limited to charging a single electric vehicle',
       'A solar system connected to the mains grid, exporting excess generation',
     ],
     correctAnswer: 3,
@@ -1052,9 +1052,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the function of a solar inverter?',
     options: [
       'Convert DC electricity from panels to AC electricity for use or export',
-      '17 UN global goals addressing economic, social, and environmental challenges by 2030',
-      'An inverter that manages both solar PV and battery storage in one unit',
-      'Using smartphone location to automatically adjust heating when occupants leave or approach',
+      'Convert AC grid electricity into DC to charge the panels at night',
+      'Step the panel voltage up to grid distribution voltage for export',
+      'Track the sun across the sky by tilting the panel array',
     ],
     correctAnswer: 0,
     explanation:
@@ -1067,10 +1067,10 @@ export const module2Questions: QuestionBank[] = [
     id: 65,
     question: 'What is MPPT in solar PV systems?',
     options: [
-      'Distributing available power across multiple charge points to prevent overload',
+      'Maximum Permitted Panel Temperature - the thermal limit of the modules',
       'Maximum Power Point Tracking - optimising power extraction from panels',
-      'Technology delivering electrical power along with data on Ethernet cables',
-      'Hydrogen produced using renewable electricity through electrolysis of water',
+      'Multi-Phase Power Transfer - balancing output across three phases',
+      'Mains Protection and Power Trip - the anti-islanding safety device',
     ],
     correctAnswer: 1,
     explanation:
@@ -1083,10 +1083,10 @@ export const module2Questions: QuestionBank[] = [
     id: 66,
     question: 'What is the Smart Export Guarantee (SEG)?',
     options: [
-      'A rating system for actual operational energy performance of commercial buildings',
-      'Storing energy by pumping water uphill, then releasing it through turbines when needed',
+      'A guarantee that a PV system will export a fixed amount of energy each year',
+      'A government grant covering the upfront cost of installing solar panels',
       'A scheme requiring energy suppliers to pay for exported renewable electricity',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'A warranty guaranteeing inverter performance for 25 years',
     ],
     correctAnswer: 2,
     explanation:
@@ -1099,9 +1099,9 @@ export const module2Questions: QuestionBank[] = [
     id: 67,
     question: 'What is the typical lifespan of solar PV panels?',
     options: [
-      'Up to 90% or higher heat recovery',
-      '80-150+ lumens per watt',
-      '0.26 W/m²K or better',
+      '3-5 years before they must be replaced',
+      '8-10 years with rapid degradation',
+      '50-60 years with no measurable degradation',
       '25-30 years with degradation',
     ],
     correctAnswer: 3,
@@ -1116,9 +1116,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is an air source heat pump (ASHP)?',
     options: [
       'A heat pump that extracts heat from outside air and transfers it indoors',
-      'Technology that captures CO2 directly from ambient air for storage or use',
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'A fan unit that simply blows warm air around a room electrically',
+      'A heat pump that extracts heat from the ground via buried pipes',
+      'A boiler that heats air rather than water for distribution',
     ],
     correctAnswer: 0,
     explanation:
@@ -1131,10 +1131,10 @@ export const module2Questions: QuestionBank[] = [
     id: 69,
     question: 'What is a ground source heat pump (GSHP)?',
     options: [
-      '17 UN global goals addressing economic, social, and environmental challenges by 2030',
+      'A heat pump that extracts heat from the outside air via a fan unit',
       'A heat pump extracting heat from the ground via buried pipes or boreholes',
-      'Technology allowing EVs to discharge power back to the grid or building',
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
+      'A heat pump that draws heat from a building\'s own waste water',
+      'A ground-mounted solar array that powers a conventional electric heater',
     ],
     correctAnswer: 1,
     explanation:
@@ -1147,10 +1147,10 @@ export const module2Questions: QuestionBank[] = [
     id: 70,
     question: 'Why do heat pumps work best with underfloor heating?',
     options: [
-      'Outdoor temperature below which supplementary heating is needed',
-      'Installing capacitors to counteract inductive reactive power',
+      'Underfloor heating requires a higher flow temperature, matching the heat pump',
+      'Underfloor heating allows the heat pump to run only at night on cheap power',
       'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
-      'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
+      'Underfloor heating removes the need for any insulation in the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -1163,9 +1163,9 @@ export const module2Questions: QuestionBank[] = [
     id: 71,
     question: 'What is the Boiler Upgrade Scheme (BUS)?',
     options: [
-      'Power is the rate of energy use (kW); energy is power over time (kWh)',
-      'Financial penalties up to £150,000 for non-domestic properties',
-      'A new interoperability standard unifying smart home ecosystems',
+      'A scheme requiring suppliers to pay for exported renewable electricity',
+      'A grant towards replacing an old gas boiler with a new gas boiler',
+      'A finance scheme spreading the cost of a heat pump over 10 years',
       'A government grant towards installing heat pumps or biomass boilers',
     ],
     correctAnswer: 3,
@@ -1180,9 +1180,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is battery storage used for in renewable systems?',
     options: [
       'Storing excess renewable generation for use when production is low',
-      'Real-time monitoring, simulation, optimisation, and predictive maintenance',
-      'Equipment that uses electricity to split water into hydrogen and oxygen',
-      'Upgrading existing buildings with improved insulation, heating, and technologies',
+      'Converting DC from the panels into AC for use in the home',
+      'Increasing the voltage of the panels to allow longer cable runs',
+      'Cooling the inverter to keep it operating within its temperature limits',
     ],
     correctAnswer: 0,
     explanation:
@@ -1227,9 +1227,9 @@ export const module2Questions: QuestionBank[] = [
     id: 75,
     question: 'What is a micro wind turbine?',
     options: [
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
-      'Hydrogen produced using renewable electricity through electrolysis of water',
-      'Intelligent charging that optimises timing based on tariffs, grid demand, or renewable availability',
+      'A large utility-scale turbine rated above 1MW for grid supply',
+      'A turbine driven by water flow rather than wind in a small stream',
+      'A handheld anemometer used to measure wind speed before installation',
       'A small wind turbine (typically under 6kW) for domestic or small commercial use',
     ],
     correctAnswer: 3,
@@ -1244,9 +1244,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What affects the viability of micro wind installations?',
     options: [
       'Wind speed, turbulence, obstacles, planning permission, and grid connection',
-      'A rating system for actual operational energy performance of commercial buildings',
-      'Rate of heat transfer through a building element (thermal transmittance)',
-      'Using batteries to reduce maximum demand by discharging during peak consumption periods',
+      'The colour of the turbine blades and the height of the mast only',
+      'Only the rated power of the turbine, regardless of the site',
+      'Solely the number of daylight hours at the installation location',
     ],
     correctAnswer: 0,
     explanation:
@@ -1259,10 +1259,10 @@ export const module2Questions: QuestionBank[] = [
     id: 77,
     question: 'What is a micro-CHP system?',
     options: [
-      'A programmable thermostat with WiFi, learning capability, and remote control',
+      'A small heat pump combined with a hot water cylinder in one unit',
       'Combined Heat and Power system that generates both electricity and useful heat',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'Equipment that uses electricity to split water into hydrogen and oxygen',
+      'A compact PV inverter with integrated battery management',
+      'A miniature district heating network serving a single street',
     ],
     correctAnswer: 1,
     explanation:
@@ -1275,10 +1275,10 @@ export const module2Questions: QuestionBank[] = [
     id: 78,
     question: 'What is biomass heating?',
     options: [
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
+      'Heating using natural gas extracted from decomposing landfill waste',
+      'Heating water using the metabolic heat given off by livestock',
       'Heating using organic materials like wood pellets, chips, or logs',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      'Heating using captured methane piped directly from a sewage works',
     ],
     correctAnswer: 2,
     explanation:
@@ -1291,9 +1291,9 @@ export const module2Questions: QuestionBank[] = [
     id: 79,
     question: 'What is the RHI being replaced by?',
     options: [
-      'Installing capacitors to counteract inductive reactive power',
-      'Heating using organic materials like wood pellets, chips, or logs',
-      'A to G (with A being most efficient)',
+      'The Feed-in Tariff (FiT) for ongoing generation payments',
+      'The Smart Export Guarantee (SEG) for exported electricity',
+      'The Energy Company Obligation (ECO) for fuel-poor households',
       'The Boiler Upgrade Scheme (BUS) for upfront grants',
     ],
     correctAnswer: 3,
@@ -1308,9 +1308,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is an EV charge point?',
     options: [
       'Equipment for charging electric vehicle batteries from the electrical supply',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'A lease including environmental commitments from landlord and tenant',
-      'Leadership in Energy and Environmental Design - an international green building rating',
+      'The point on a route where an electric vehicle must stop to refuel',
+      'A meter that records the mileage driven by an electric vehicle',
+      'A roadside socket supplying compressed air to electric vehicle tyres',
     ],
     correctAnswer: 0,
     explanation:
@@ -1323,10 +1323,10 @@ export const module2Questions: QuestionBank[] = [
     id: 81,
     question: 'What are the typical power levels for home EV chargers?',
     options: [
-      'A to G (with A being most efficient)',
+      '50-150kW (typically rapid DC for single-phase)',
       '7-22kW (typically 7kW for single-phase)',
-      'Building Energy Management System',
-      'Conservation of fuel and power',
+      '1-2kW (typically trickle charging only)',
+      '230-400kW (typically ultra-rapid for domestic use)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1339,10 +1339,10 @@ export const module2Questions: QuestionBank[] = [
     id: 82,
     question: 'What Building Regulations apply to new EV charge point installations?',
     options: [
-      'Energy Company Obligation - requiring energy suppliers to fund energy efficiency improvements',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'Part F (Ventilation) and Part L (Conservation of fuel and power)',
+      'Part B (Fire safety) and Part M (Access to buildings)',
       'Part S (Infrastructure for electric vehicles) and Part P (Electrical Safety)',
-      'The measure of air leakage through the building fabric under pressure',
+      'Part A (Structure) and Part O (Overheating)',
     ],
     correctAnswer: 2,
     explanation:
@@ -1355,9 +1355,9 @@ export const module2Questions: QuestionBank[] = [
     id: 83,
     question: 'What is V2G (Vehicle to Grid)?',
     options: [
-      'Automatic lighting control based on detecting presence or absence of people',
-      'LED lighting that can adjust colour temperature from warm to cool white',
-      'Glass that changes tint when voltage is applied, controlling light and heat transmission',
+      'A roadside fast-charging network connecting motorway service stations',
+      'A scheme guaranteeing free grid electricity to electric vehicle owners',
+      'A communication protocol letting EVs share their location with the grid',
       'Technology allowing EVs to discharge power back to the grid or building',
     ],
     correctAnswer: 3,
@@ -1387,10 +1387,10 @@ export const module2Questions: QuestionBank[] = [
     id: 85,
     question: 'What is the difference between monocrystalline and polycrystalline solar panels?',
     options: [
-      'A centralised heating system distributing heat to multiple buildings from a central source',
+      'Mono generates DC while poly generates AC directly without an inverter',
       'Mono is more efficient and black in appearance; poly is slightly less efficient and blue-ish',
-      'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'Poly is more efficient and black in appearance; mono is less efficient and blue-ish',
+      'Mono is for solar thermal heating; poly is for electricity generation',
     ],
     correctAnswer: 1,
     explanation:
@@ -1403,10 +1403,10 @@ export const module2Questions: QuestionBank[] = [
     id: 86,
     question: 'What is a hybrid inverter?',
     options: [
-      'Using AI and data to predict and optimise future energy consumption patterns',
-      'Upgrading existing buildings with improved insulation, heating, and technologies',
+      'An inverter that runs on both mains power and a backup generator',
+      'An inverter combining single-phase and three-phase outputs',
       'An inverter that manages both solar PV and battery storage in one unit',
-      'Storing energy as heat or cold for later use in heating or cooling systems',
+      'An inverter that switches between solar PV and wind turbine inputs',
     ],
     correctAnswer: 2,
     explanation:
@@ -1419,9 +1419,9 @@ export const module2Questions: QuestionBank[] = [
     id: 87,
     question: 'What is islanding in solar PV systems?',
     options: [
-      'Maximum Power Point Tracking - optimising power extraction from panels',
-      'A heat pump that extracts heat from outside air and transfers it indoors',
-      'Mandatory energy audit for large UK organisations every 4 years',
+      'Mounting panels on a separate frame isolated from the roof structure',
+      'Splitting a large array into smaller independent strings',
+      'A drop in output caused by partial shading of one panel',
       'When a solar system continues to power a circuit that has been disconnected from the grid',
     ],
     correctAnswer: 3,
@@ -1436,9 +1436,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the purpose of a generation meter in solar PV systems?',
     options: [
       'Recording total electricity generated by the PV system for payment or monitoring',
-      'Building Research Establishment Environmental Assessment Method - a sustainability rating',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
-      'Lighting designed to support human health and circadian rhythm through colour and intensity changes',
+      'Recording only the electricity exported to the grid for SEG payments',
+      'Measuring the household\'s total imported electricity from the supplier',
+      'Monitoring the DC string voltage to protect the inverter',
     ],
     correctAnswer: 0,
     explanation:
@@ -1451,10 +1451,10 @@ export const module2Questions: QuestionBank[] = [
     id: 89,
     question: 'What is MCS certification?',
     options: [
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'Mains Compliance Standard - a wiring test for grid-connected systems',
       'Microgeneration Certification Scheme - required for installer competence and grant eligibility',
-      'A transformer providing simple separation between the AC and DC sides, OR an RCD type B on the AC side',
-      'Prevention → Preparing for re-use → Recycling → Other recovery (including energy recovery) → Disposal as last resort',
+      'Manufacturer\'s Conformity Statement - a product warranty document',
+      'Metered Consumption Scheme - a tariff for measuring exported energy',
     ],
     correctAnswer: 1,
     explanation:
@@ -1467,10 +1467,10 @@ export const module2Questions: QuestionBank[] = [
     id: 90,
     question: 'What is a heat pump hot water cylinder?',
     options: [
-      'Power consumption varies with the cube of speed (Affinity Laws)',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
+      'A small, uninsulated tank that stores high-temperature water briefly',
+      'A pressurised gas cylinder holding the heat pump refrigerant charge',
       'A larger, well-insulated cylinder designed for lower-temperature heat pump operation',
-      'Distributing available power across multiple charge points to prevent overload',
+      'A header tank that maintains pressure in the heat pump\'s sealed circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1483,9 +1483,9 @@ export const module2Questions: QuestionBank[] = [
     id: 91,
     question: 'What is defrost cycle in air source heat pumps?',
     options: [
-      'A framework for domestic retrofit projects ensuring quality and risk management',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
-      'Calculating non-domestic building energy performance',
+      'A weekly boost cycle that pasteurises the hot water cylinder',
+      'A summer mode that reverses the unit to provide cooling',
+      'A start-up sequence that warms the compressor oil before running',
       'Automatic reversal to remove ice build-up on the outdoor unit',
     ],
     correctAnswer: 3,
@@ -1500,9 +1500,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the bivalent point for heat pumps?',
     options: [
       'Outdoor temperature below which supplementary heating is needed',
-      'Mandatory energy and carbon reporting for qualifying large UK companies',
-      'Making misleading claims about environmental benefits to appear more sustainable',
-      'Technology delivering electrical power along with data on Ethernet cables',
+      'The flow temperature at which the heat pump achieves its highest COP',
+      'The point at which a heat pump switches from heating to cooling mode',
+      'The minimum buffer-tank volume required for stable operation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1515,10 +1515,10 @@ export const module2Questions: QuestionBank[] = [
     id: 93,
     question: 'What regulations govern EV charger installation in dwellings?',
     options: [
-      'Maximum Power Point Tracking - optimising power extraction from panels',
+      'Part F (ventilation) and the Gas Safety (Installation and Use) Regulations',
       'Part P (electrical safety), Part S (EV infrastructure), and relevant equipment standards',
-      'Using data and analytics to predict when equipment will need maintenance before failure',
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
+      'Only the manufacturer\'s installation instructions, with no statutory regulation',
+      'Part B (fire safety) and the Construction (Design and Management) Regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -1531,10 +1531,10 @@ export const module2Questions: QuestionBank[] = [
     id: 94,
     question: 'What is smart charging for EVs?',
     options: [
-      'Using an EV battery to power home appliances, acting as a home battery',
-      'Part P (electrical safety), Part S (EV infrastructure), and relevant equipment standards',
+      'Charging an EV at the fastest possible rate regardless of cost',
+      'Charging that automatically stops once the battery reaches 80%',
       'Intelligent charging that optimises timing based on tariffs, grid demand, or renewable availability',
-      'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
+      'Wirelessly charging an EV without any physical cable connection',
     ],
     correctAnswer: 2,
     explanation:
@@ -1547,9 +1547,9 @@ export const module2Questions: QuestionBank[] = [
     id: 95,
     question: 'What is peak shaving with battery storage?',
     options: [
-      'Evaluating environmental impacts throughout a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life from raw materials to disposal',
-      'CIBSE guidance for predicting actual operational energy use in buildings',
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'Charging batteries only during peak periods to maximise capacity',
+      'Trimming the peak voltage of the supply to protect sensitive equipment',
+      'Limiting the battery charge to 80% to extend its service life',
       'Using batteries to reduce maximum demand by discharging during peak consumption periods',
     ],
     correctAnswer: 3,
@@ -1568,9 +1568,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is building automation?',
     options: [
       'Automatic control of building services like HVAC, lighting, and security',
-      'Storing energy by pumping water uphill, then releasing it through turbines when needed',
-      'A virtual replica of a building integrating real-time data for monitoring and simulation',
-      'Financial penalties up to £150,000 for non-domestic properties',
+      'The use of robots to carry out the physical construction of a building',
+      'Pre-fabricating building components off-site for rapid assembly',
+      'Automatically generating the building\'s structural design from a brief',
     ],
     correctAnswer: 0,
     explanation:
@@ -1583,10 +1583,10 @@ export const module2Questions: QuestionBank[] = [
     id: 97,
     question: 'What is a BMS (Building Management System)?',
     options: [
-      'A plug adapter allowing remote control and monitoring of connected devices',
+      'A facilities team responsible for cleaning and maintaining a building',
       'A centralised system for monitoring and controlling building services',
-      'A heat pump extracting heat from the ground via buried pipes or boreholes',
-      'Using batteries to reduce maximum demand by discharging during peak consumption periods',
+      'A software package for managing a building\'s lease and rental income',
+      'A logbook recording all maintenance carried out on a building',
     ],
     correctAnswer: 1,
     explanation:
@@ -1599,10 +1599,10 @@ export const module2Questions: QuestionBank[] = [
     id: 98,
     question: 'What protocol is commonly used for building automation?',
     options: [
-      'Conservation of fuel and power',
-      'PV generates electricity; thermal heats water or air',
+      'HTTP, FTP, and SMTP for web traffic',
+      'USB, HDMI, and Bluetooth for consumer devices',
       'BACnet, Modbus, KNX, or DALI for lighting',
-      'Energy Performance Certificate',
+      'TCP/IP only, with no building-specific protocols',
     ],
     correctAnswer: 2,
     explanation:
@@ -1615,9 +1615,9 @@ export const module2Questions: QuestionBank[] = [
     id: 99,
     question: 'What is DALI in lighting control?',
     options: [
-      'Automatically dimming artificial lighting in response to available natural light',
-      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
-      'Inductive charging transferring power without physical cable connection',
+      'A type of dimmer switch that varies the mains voltage to the lamp',
+      'A wireless protocol that controls lights over a building\'s WiFi network',
+      'A sensor that measures the colour temperature of natural daylight',
       'Digital Addressable Lighting Interface - a protocol for digital lighting control',
     ],
     correctAnswer: 3,
@@ -1632,9 +1632,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the benefit of addressable lighting control?',
     options: [
       'Individual control of each luminaire for flexibility, energy savings, and tuning',
-      'A virtual replica of a building integrating real-time data for monitoring and simulation',
-      'Direct emissions (1), indirect from purchased energy (2), and value chain emissions (3)',
-      'A rating system for actual operational energy performance of commercial buildings',
+      'It removes the need for any wiring between luminaires',
+      'It allows all lights to be switched only as a single group',
+      'It doubles the light output of each luminaire for the same power',
     ],
     correctAnswer: 0,
     explanation:
@@ -1647,10 +1647,10 @@ export const module2Questions: QuestionBank[] = [
     id: 101,
     question: 'What is KNX?',
     options: [
-      'Heating using organic materials like wood pellets, chips, or logs',
+      'A proprietary protocol used only by a single lighting manufacturer',
       'A worldwide standard for home and building automation',
-      '800-1000ppm, with outdoor levels around 400ppm',
-      'Financial penalties up to £150,000 for non-domestic properties',
+      'A wireless standard limited to domestic smart speakers',
+      'A type of fire-rated cable used in building automation wiring',
     ],
     correctAnswer: 1,
     explanation:
@@ -1663,10 +1663,10 @@ export const module2Questions: QuestionBank[] = [
     id: 102,
     question: 'What is a smart thermostat?',
     options: [
-      'Storing energy as heat or cold for later use in heating or cooling systems',
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'A mechanical bimetallic-strip thermostat with a manual dial only',
+      'A wall sensor that measures humidity rather than temperature',
       'A programmable thermostat with WiFi, learning capability, and remote control',
-      'A centralised heating system distributing heat to multiple buildings from a central source',
+      'A frost thermostat that only switches heating on below freezing',
     ],
     correctAnswer: 2,
     explanation:
@@ -1679,9 +1679,9 @@ export const module2Questions: QuestionBank[] = [
     id: 103,
     question: 'What is geofencing in smart heating control?',
     options: [
-      'A centralised heating system distributing heat to multiple buildings from a central source',
-      'An inverter that manages both solar PV and battery storage in one unit',
-      'Compensating for emissions by investing in projects that reduce CO2 elsewhere',
+      'Installing physical barriers around an outdoor heat pump unit',
+      'Dividing a building into separate heating zones with individual stats',
+      'Limiting the maximum temperature a thermostat can be set to',
       'Using smartphone location to automatically adjust heating when occupants leave or approach',
     ],
     correctAnswer: 3,
@@ -1696,9 +1696,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a smart plug?',
     options: [
       'A plug adapter allowing remote control and monitoring of connected devices',
-      'Individual control of each luminaire for flexibility, energy savings, and tuning',
-      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
-      'Technology allowing EVs to discharge power back to the grid or building',
+      'A fused plug that automatically resets after a trip',
+      'A travel adapter that converts foreign plug shapes to UK sockets',
+      'A plug that steps down the mains voltage for low-voltage devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -1711,10 +1711,10 @@ export const module2Questions: QuestionBank[] = [
     id: 105,
     question: 'What is Z-Wave?',
     options: [
-      'Making misleading claims about environmental benefits to appear more sustainable',
+      'A type of cable shielding used to reduce electromagnetic interference',
       'A wireless protocol designed for smart home device communication',
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'A waveform analysis tool for diagnosing power quality issues',
+      'A wired bus standard for commercial HVAC controls',
     ],
     correctAnswer: 1,
     explanation:
@@ -1727,10 +1727,10 @@ export const module2Questions: QuestionBank[] = [
     id: 106,
     question: 'What is Zigbee?',
     options: [
-      'Heating using organic materials like wood pellets, chips, or logs',
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
+      'A high-bandwidth wired protocol for streaming video in buildings',
+      'A cellular network standard used by smart electricity meters',
       'A low-power wireless mesh protocol for smart home and IoT devices',
-      '75% of fixed lighting outlets must have efficient fittings (typically LED)',
+      'A proprietary cloud platform for storing building sensor data',
     ],
     correctAnswer: 2,
     explanation:
@@ -1743,9 +1743,9 @@ export const module2Questions: QuestionBank[] = [
     id: 107,
     question: 'What is Matter in smart home technology?',
     options: [
-      'Inductive charging transferring power without physical cable connection',
-      'An inverter that manages both solar PV and battery storage in one unit',
-      'A heat pump extracting heat from the ground via buried pipes or boreholes',
+      'A wireless charging standard for smart home battery devices',
+      'A voice assistant developed to compete with existing platforms',
+      'A type of low-voltage cabling used for smart home installations',
       'A new interoperability standard unifying smart home ecosystems',
     ],
     correctAnswer: 3,
@@ -1760,9 +1760,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is PoE (Power over Ethernet)?',
     options: [
       'Technology delivering electrical power along with data on Ethernet cables',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
-      'A system minimising waste by reusing, recycling, and regenerating materials',
-      'PV generates electricity; thermal heats water or air',
+      'A method of sending mains power down standard ring final circuits',
+      'A protocol for transmitting data over the mains power wiring',
+      'A backup power supply that keeps a network running during outages',
     ],
     correctAnswer: 0,
     explanation:
@@ -1775,10 +1775,10 @@ export const module2Questions: QuestionBank[] = [
     id: 109,
     question: 'What power levels can PoE provide?',
     options: [
-      'When a building is built, sold, or rented',
+      'From 1W to 5W maximum for all PoE standards',
       'From 15W (PoE) to 90W+ (PoE++/802.3bt)',
-      '800-1000ppm, with outdoor levels around 400ppm',
-      'Conservation of fuel and power',
+      'From 100W to 500W for high-power devices',
+      'A fixed 12W on every PoE standard',
     ],
     correctAnswer: 1,
     explanation:
@@ -1791,10 +1791,10 @@ export const module2Questions: QuestionBank[] = [
     id: 110,
     question: 'What is PoE lighting?',
     options: [
-      'Technology delivering electrical power along with data on Ethernet cables',
-      'A lease including environmental commitments from landlord and tenant',
+      'Lighting powered directly from a building\'s solar PV array',
+      'Mains-voltage lighting controlled wirelessly over WiFi',
       'LED lighting systems powered and controlled through Ethernet cables',
-      'Equipment that uses electricity to split water into hydrogen and oxygen',
+      'Emergency lighting fed from a central battery inverter',
     ],
     correctAnswer: 2,
     explanation:
@@ -1807,9 +1807,9 @@ export const module2Questions: QuestionBank[] = [
     id: 111,
     question: 'What is the benefit of PoE lighting in commercial buildings?',
     options: [
-      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
-      'Automatic lighting control based on detecting presence or absence of people',
-      'Digital Addressable Lighting Interface - a protocol for digital lighting control',
+      'It removes the need for any data cabling in the building',
+      'It allows luminaires to run at full mains voltage for higher output',
+      'It eliminates the need for any lighting control software',
       'Granular control, energy monitoring per fixture, and integration with building systems',
     ],
     correctAnswer: 3,
@@ -1824,9 +1824,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a smart lighting scene?',
     options: [
       'A preset combination of light levels and colours for different activities or moods',
-      'Distributed ledger technology enabling transparent, secure energy transactions and trading',
-      'Deliberately reducing electrical load by switching off non-essential equipment during peak demand',
-      'The ratio of real power to apparent power, indicating how efficiently power is used',
+      'A live camera view of a room used to monitor lighting faults',
+      'The maximum number of luminaires a single controller can address',
+      'A diagram showing how all the lighting circuits are wired',
     ],
     correctAnswer: 0,
     explanation:
@@ -1839,10 +1839,10 @@ export const module2Questions: QuestionBank[] = [
     id: 113,
     question: 'What is human-centric lighting (HCL)?',
     options: [
-      'Microgeneration Certification Scheme - required for installer competence and grant eligibility',
+      'Lighting positioned at a fixed height to suit the average person',
       'Lighting designed to support human health and circadian rhythm through colour and intensity changes',
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
-      'A preset combination of light levels and colours for different activities or moods',
+      'Lighting that switches off automatically when no people are present',
+      'Lighting controlled entirely by manual switches rather than sensors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1855,10 +1855,10 @@ export const module2Questions: QuestionBank[] = [
     id: 114,
     question: 'What is tuneable white lighting?',
     options: [
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
-      'An inverter that manages both solar PV and battery storage in one unit',
+      'LED lighting that can change between any colour of the rainbow (RGB)',
+      'White lighting whose brightness can be dimmed but not its colour',
       'LED lighting that can adjust colour temperature from warm to cool white',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      'Lighting that automatically tunes itself to match the wall colour',
     ],
     correctAnswer: 2,
     explanation:
@@ -1871,9 +1871,9 @@ export const module2Questions: QuestionBank[] = [
     id: 115,
     question: 'What is an IoT sensor in buildings?',
     options: [
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
-      'Using AI to identify individual appliance consumption from whole-building smart meter data',
-      'A low-power wireless mesh protocol for smart home and IoT devices',
+      'A manually-read gauge that an engineer checks during inspections',
+      'A standalone alarm that sounds locally but sends no data',
+      'A central server that stores all building management records',
       'An internet-connected sensor that collects and transmits data about building conditions',
     ],
     correctAnswer: 3,
@@ -1888,9 +1888,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is indoor air quality (IAQ) monitoring?',
     options: [
       'Monitoring CO2, humidity, VOCs, and particulates to ensure healthy indoor environments',
-      'A solar system connected to the mains grid, exporting excess generation',
-      'An electronic device that controls motor speed by varying the frequency of power supply',
-      'A small wind turbine (typically under 6kW) for domestic or small commercial use',
+      'Measuring only the indoor air temperature against the set point',
+      'Checking the airtightness of the building fabric under pressure',
+      'Recording the volume of fresh air supplied by the ventilation fans',
     ],
     correctAnswer: 0,
     explanation:
@@ -1903,10 +1903,10 @@ export const module2Questions: QuestionBank[] = [
     id: 117,
     question: 'What CO2 level typically triggers increased ventilation?',
     options: [
-      '18-22% for standard panels, up to 25%+ for premium',
+      '200-300ppm, with outdoor levels around 50ppm',
       '800-1000ppm, with outdoor levels around 400ppm',
-      'Pass, Good, Very Good, Excellent, Outstanding',
-      'Below about 55°C (return temperature below dew point ~54°C)',
+      '5000-6000ppm, with outdoor levels around 2000ppm',
+      '100-150ppm, with outdoor levels around 20ppm',
     ],
     correctAnswer: 1,
     explanation:
@@ -1919,10 +1919,10 @@ export const module2Questions: QuestionBank[] = [
     id: 118,
     question: 'What is demand-controlled ventilation (DCV)?',
     options: [
-      'A target for total primary energy consumption including generation and distribution losses',
-      'A system minimising waste by reusing, recycling, and regenerating materials',
+      'Ventilation that runs continuously at a fixed maximum rate',
+      'Ventilation provided solely by opening windows on demand',
       'Automatic ventilation adjustment based on occupancy or air quality sensors',
-      'Granular control, energy monitoring per fixture, and integration with building systems',
+      'Ventilation switched on manually by occupants when needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -1935,9 +1935,9 @@ export const module2Questions: QuestionBank[] = [
     id: 119,
     question: 'What is a building digital twin?',
     options: [
-      'A heat pump that extracts heat from outside air and transfers it indoors',
-      'As grid electricity becomes cleaner, electric heating produces fewer emissions than gas',
-      'Building Information Modelling - digital representation with data about building elements',
+      'A second identical building constructed nearby as a backup',
+      'A scanned PDF archive of all the building\'s paper drawings',
+      'A static 3D model used only during the design stage',
       'A virtual replica of a building integrating real-time data for monitoring and simulation',
     ],
     correctAnswer: 3,
@@ -1952,9 +1952,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is BIM in building design?',
     options: [
       'Building Information Modelling - digital representation with data about building elements',
-      'Technology that captures CO2 directly from ambient air for storage or use',
-      'Storing excess renewable generation for use when production is low',
-      'A government grant towards installing heat pumps or biomass boilers',
+      'Building Inspection Method - the procedure for Building Control sign-off',
+      'Basic Insulation Material - the standard fabric used in new builds',
+      'Building Integrity Monitor - a sensor that detects structural movement',
     ],
     correctAnswer: 0,
     explanation:
@@ -1967,10 +1967,10 @@ export const module2Questions: QuestionBank[] = [
     id: 121,
     question: 'What is a smart meter In-Home Display (IHD)?',
     options: [
-      'CIBSE guidance for predicting actual operational energy use in buildings',
+      'The smart meter itself, mounted inside the consumer unit',
       'A device showing real-time energy usage and costs from the smart meter',
-      'For all new dwellings or where required by Building Control',
-      'Solar cells integrated into building materials like roof tiles, facades, or windows',
+      'A wall thermostat that displays the indoor temperature',
+      'A control panel for switching individual appliances on and off',
     ],
     correctAnswer: 1,
     explanation:
@@ -1983,10 +1983,10 @@ export const module2Questions: QuestionBank[] = [
     id: 122,
     question: 'What is load balancing in EV charging?',
     options: [
-      'Power is the rate of energy use (kW); energy is power over time (kWh)',
-      'Using data and analytics to predict when equipment will need maintenance before failure',
+      'Sharing the charging load equally across the three supply phases',
+      'Alternating charging between the vehicle and a home battery',
       'Distributing available power across multiple charge points to prevent overload',
-      'A centralised heating system distributing heat to multiple buildings from a central source',
+      'Limiting charging to overnight hours to balance the grid',
     ],
     correctAnswer: 2,
     explanation:
@@ -1999,9 +1999,9 @@ export const module2Questions: QuestionBank[] = [
     id: 123,
     question: 'What is an energy dashboard?',
     options: [
-      'Information about efficient operation of heating, ventilation, and hot water systems',
-      'An internet-connected sensor that collects and transmits data about building conditions',
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
+      'A control panel for manually switching building services on and off',
+      'A sensor that measures total energy used by a single circuit',
+      'A printed annual report summarising a building\'s energy bills',
       'A visual display presenting real-time energy consumption data and trends',
     ],
     correctAnswer: 3,
@@ -2016,9 +2016,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is predictive maintenance in building systems?',
     options: [
       'Using data and analytics to predict when equipment will need maintenance before failure',
-      'Financial penalties up to £150,000 for non-domestic properties',
-      'Technology that captures CO2 directly from ambient air for storage or use',
-      'LED lighting that can adjust colour temperature from warm to cool white',
+      'Carrying out maintenance only after equipment has broken down',
+      'Servicing all equipment on a fixed calendar schedule regardless of condition',
+      'Replacing equipment automatically at the end of its warranty period',
     ],
     correctAnswer: 0,
     explanation:
@@ -2031,10 +2031,10 @@ export const module2Questions: QuestionBank[] = [
     id: 125,
     question: 'What is fault detection and diagnostics (FDD)?',
     options: [
-      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
+      'A handheld instrument for tracing cable faults in an installation',
       'Automated systems that identify operational faults and their likely causes in building systems',
-      'Electricity consumed by devices when switched off but still plugged in',
-      'An electronic device that controls motor speed by varying the frequency of power supply',
+      'A maintenance logbook recording all faults reported by occupants',
+      'A residual current device that disconnects on an earth fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -2067,9 +2067,9 @@ export const module2Questions: QuestionBank[] = [
     id: 127,
     question: 'When must an EPC be provided?',
     options: [
-      '7-22kW (typically 7kW for single-phase)',
-      'PV generates electricity; thermal heats water or air',
-      'A worldwide standard for home and building automation',
+      'Only when a building changes its use class',
+      'Only once every ten years regardless of occupancy',
+      'Only when a building is first connected to the grid',
       'When a building is built, sold, or rented',
     ],
     correctAnswer: 3,
@@ -2084,9 +2084,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Who can produce an EPC?',
     options: [
       'An accredited domestic or non-domestic energy assessor',
-      'Coefficient of Performance - ratio of heat output to electrical input',
-      'Systematic assessment of energy use to identify savings opportunities',
-      'Convert DC electricity from panels to AC electricity for use or export',
+      'Any qualified electrician registered with a competent person scheme',
+      'The local authority Building Control officer only',
+      'The estate agent marketing the property',
     ],
     correctAnswer: 0,
     explanation:
@@ -2099,10 +2099,10 @@ export const module2Questions: QuestionBank[] = [
     id: 129,
     question: 'What does the EPC recommendations report contain?',
     options: [
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'A legally binding list of works the owner must complete within a year',
       'Cost-effective improvements to increase the energy efficiency rating',
-      'Average efficiency of a heat pump over an entire heating season',
-      'Rate of heat transfer through a building element (thermal transmittance)',
+      'A schedule of electrical defects found during inspection',
+      'The names of approved contractors who must carry out any works',
     ],
     correctAnswer: 1,
     explanation:
@@ -2115,10 +2115,10 @@ export const module2Questions: QuestionBank[] = [
     id: 130,
     question: 'What is MEES (Minimum Energy Efficiency Standards)?',
     options: [
-      'A government grant towards installing heat pumps or biomass boilers',
-      'For all new dwellings or where required by Building Control',
+      'Standards setting the minimum insulation thickness for new builds',
+      'Standards for the minimum efficiency of new boilers and heat pumps',
       'Regulations setting minimum EPC ratings for rental properties',
-      'The Boiler Upgrade Scheme (BUS) for upfront grants',
+      'Standards setting the minimum lighting efficacy in commercial buildings',
     ],
     correctAnswer: 2,
     explanation:
@@ -2131,9 +2131,9 @@ export const module2Questions: QuestionBank[] = [
     id: 131,
     question: 'What exemptions exist for MEES requirements?',
     options: [
-      'A virtual replica of a building integrating real-time data for monitoring and simulation',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
-      'A target for total primary energy consumption including generation and distribution losses',
+      'Any property owned by a registered charity is automatically exempt',
+      'All properties built before 1990 are permanently exempt',
+      'Properties let on tenancies longer than ten years are exempt',
       'If improvements are not cost-effective (payback over 7 years), wall insulation would damage property, or consent not obtained',
     ],
     correctAnswer: 3,
@@ -2148,9 +2148,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What penalty can landlords face for MEES non-compliance?',
     options: [
       'Financial penalties up to £150,000 for non-domestic properties',
-      'An international treaty on climate change limiting global warming to 1.5-2°C',
-      'Electricity consumed by devices when switched off but still plugged in',
-      'A programmable thermostat with WiFi, learning capability, and remote control',
+      'Automatic forfeiture of the property to the local authority',
+      'A criminal record and mandatory custodial sentence',
+      'A permanent ban from owning any rental property',
     ],
     correctAnswer: 0,
     explanation:
@@ -2163,10 +2163,10 @@ export const module2Questions: QuestionBank[] = [
     id: 133,
     question: 'What is a DEC (Display Energy Certificate)?',
     options: [
-      'Power is the rate of energy use (kW); energy is power over time (kWh)',
+      'A certificate confirming a building\'s electrical installation is safe',
       'A certificate showing actual energy use in public buildings over 250m²',
-      'Large battery installations storing electricity to balance grid supply and demand',
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'A certificate showing the designed energy performance of a new home',
+      'A certificate required before a building can be connected to the grid',
     ],
     correctAnswer: 1,
     explanation:
@@ -2179,10 +2179,10 @@ export const module2Questions: QuestionBank[] = [
     id: 134,
     question: 'What is the difference between an EPC and a DEC?',
     options: [
-      'Replacing fossil fuel heating with electric systems like heat pumps',
-      'Automatically dimming artificial lighting in response to available natural light',
+      'An EPC applies to public buildings; a DEC applies to private homes',
+      'A DEC is based on design performance; an EPC shows actual measured use',
       'EPC is based on calculated/design performance; DEC shows actual measured energy use',
-      'Monitoring CO2, humidity, VOCs, and particulates to ensure healthy indoor environments',
+      'An EPC is valid for one year; a DEC is valid for ten years',
     ],
     correctAnswer: 2,
     explanation:
@@ -2195,9 +2195,9 @@ export const module2Questions: QuestionBank[] = [
     id: 135,
     question: 'What is an ESOS (Energy Savings Opportunity Scheme) audit?',
     options: [
-      'Technology delivering electrical power along with data on Ethernet cables',
-      'Building services that must meet minimum efficiency standards when replaced',
-      'When a household cannot afford to adequately heat their home',
+      'A voluntary energy audit available to any household on request',
+      'An annual electrical safety inspection of commercial premises',
+      'A one-off audit required only when a building is first occupied',
       'Mandatory energy audit for large UK organisations every 4 years',
     ],
     correctAnswer: 3,
@@ -2212,9 +2212,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is SECR (Streamlined Energy and Carbon Reporting)?',
     options: [
       'Mandatory energy and carbon reporting for qualifying large UK companies',
-      'Making misleading claims about environmental benefits to appear more sustainable',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
-      'Rate of heat transfer through a building element (thermal transmittance)',
+      'A voluntary scheme for households to report their energy use',
+      'A simplified method of calculating a building\'s EPC rating',
+      'A government grant scheme for carbon reduction projects',
     ],
     correctAnswer: 0,
     explanation:
@@ -2227,10 +2227,10 @@ export const module2Questions: QuestionBank[] = [
     id: 137,
     question: 'What is an air conditioning inspection report?',
     options: [
-      'Regulations setting minimum EPC ratings for rental properties',
+      'A report confirming the refrigerant charge has been topped up',
       'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
-      'A device that generates electricity from hydrogen and oxygen through chemical reaction',
-      'A government scheme providing insulation grants to improve energy efficiency',
+      'A daily maintenance log kept by the building\'s facilities team',
+      'A certificate confirming the AC unit meets noise emission limits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2259,9 +2259,9 @@ export const module2Questions: QuestionBank[] = [
     id: 139,
     question: 'What is the TM54 methodology?',
     options: [
-      'Using data and analytics to predict when equipment will need maintenance before failure',
-      'Automatic reversal to remove ice build-up on the outdoor unit',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
+      'A method for calculating a building\'s embodied carbon at design stage',
+      'A testing standard for the airtightness of ductwork',
+      'A framework for assessing overheating risk in dwellings',
       'CIBSE guidance for predicting actual operational energy use in buildings',
     ],
     correctAnswer: 3,
@@ -2276,9 +2276,9 @@ export const module2Questions: QuestionBank[] = [
     question: "What is the 'performance gap' in buildings?",
     options: [
       'The difference between designed/predicted and actual operational energy performance',
-      'A test to measure air leakage rate through the building envelope',
-      'Hydrogen produced using renewable electricity through electrolysis of water',
-      'A lease including environmental commitments from landlord and tenant',
+      'The gap between a building\'s EPC rating and its asking price',
+      'The shortfall between renewable generation and total demand',
+      'The difference in temperature between adjacent heating zones',
     ],
     correctAnswer: 0,
     explanation:
@@ -2291,10 +2291,10 @@ export const module2Questions: QuestionBank[] = [
     id: 141,
     question: 'What is net zero carbon in buildings?',
     options: [
-      'When a solar system continues to power a circuit that has been disconnected from the grid',
+      'A building that uses no electricity at all from the grid',
       'A building that produces zero net carbon emissions over a year through efficiency and renewables',
-      'Independent body advising UK government on emissions targets and progress',
-      'Charging for the most power used in a billing period, not just total consumption',
+      'A building constructed entirely from carbon-free materials',
+      'A building that emits zero carbon only during its construction phase',
     ],
     correctAnswer: 1,
     explanation:
@@ -2307,10 +2307,10 @@ export const module2Questions: QuestionBank[] = [
     id: 142,
     question: 'What is embodied carbon in buildings?',
     options: [
-      "A building designed to ultra-low energy standards with minimal heating demand",
-      "The difference between designed/predicted and actual operational energy performance",
+      "The carbon emitted by the building's heating system during occupation",
+      "The carbon stored permanently within the building's timber structure",
       "The carbon emissions from materials, construction, and eventual demolition - the building's lifecycle",
-      "Direct energy trading between producers and consumers without traditional utilities",
+      "The carbon emitted by occupants travelling to and from the building",
     ],
     correctAnswer: 2,
     explanation:
@@ -2323,9 +2323,9 @@ export const module2Questions: QuestionBank[] = [
     id: 143,
     question: 'What is NABERS UK?',
     options: [
-      'Type B (or Type A combined with appropriate residual DC monitoring)',
-      'Digital Addressable Lighting Interface - a protocol for digital lighting control',
-      'Charging for the most power used in a billing period, not just total consumption',
+      'A rating system for the embodied carbon of construction materials',
+      'A design-stage methodology for predicting a building\'s energy use',
+      'A certification scheme for renewable energy installers',
       'A rating system for actual operational energy performance of commercial buildings',
     ],
     correctAnswer: 3,
@@ -2340,9 +2340,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is BREEAM?',
     options: [
       'Building Research Establishment Environmental Assessment Method - a sustainability rating',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'Glass that changes tint when voltage is applied, controlling light and heat transmission',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      'British Renewable Energy and Emissions Assessment Model - a carbon calculator',
+      'Building Regulations Energy Efficiency Assessment Method - a compliance check',
+      'British Register of Environmental and Energy Assessors and Managers',
     ],
     correctAnswer: 0,
     explanation:
@@ -2355,10 +2355,10 @@ export const module2Questions: QuestionBank[] = [
     id: 145,
     question: 'What BREEAM ratings are available?',
     options: [
-      'Carbon dioxide (CO2) emissions per unit of energy',
+      'A to G (with A being most efficient)',
       'Pass, Good, Very Good, Excellent, Outstanding',
-      'From 15W (PoE) to 90W+ (PoE++/802.3bt)',
-      'BACnet, Modbus, KNX, or DALI for lighting',
+      'Certified, Silver, Gold, Platinum',
+      'One to five stars',
     ],
     correctAnswer: 1,
     explanation:
@@ -2371,10 +2371,10 @@ export const module2Questions: QuestionBank[] = [
     id: 146,
     question: 'What is LEED certification?',
     options: [
-      'Financial penalties up to £150,000 for non-domestic properties',
-      'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
+      'Low Emission Energy Directive - an EU rule on building emissions',
+      'Lighting Energy Efficiency Database - a register of efficient luminaires',
       'Leadership in Energy and Environmental Design - an international green building rating',
-      'An electronic device that controls motor speed by varying the frequency of power supply',
+      'Local Environmental and Energy Declaration - a UK planning document',
     ],
     correctAnswer: 2,
     explanation:
@@ -2387,9 +2387,9 @@ export const module2Questions: QuestionBank[] = [
     id: 147,
     question: 'What is a Passivhaus building?',
     options: [
-      'A unit of energy equal to using 1000 watts for one hour',
-      'Making misleading claims about environmental benefits to appear more sustainable',
-      'Off-site manufacturing and innovative construction techniques reducing waste and time',
+      'A building that generates all its energy from passive solar gain alone',
+      'A building with no active heating system fitted at all',
+      'A building that relies solely on natural ventilation with no mechanical systems',
       'A building designed to ultra-low energy standards with minimal heating demand',
     ],
     correctAnswer: 3,
@@ -2419,10 +2419,10 @@ export const module2Questions: QuestionBank[] = [
     id: 149,
     question: 'What is the Green Building Council?',
     options: [
-      'The ratio of real power to apparent power, indicating how efficiently power is used',
+      'A government department enforcing the Building Regulations',
       'An industry body promoting sustainable building practices and policy',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
-      'Building services that must meet minimum efficiency standards when replaced',
+      'A local authority committee approving planning applications',
+      'A certification scheme awarding EPC ratings to buildings',
     ],
     correctAnswer: 1,
     explanation:
@@ -2435,10 +2435,10 @@ export const module2Questions: QuestionBank[] = [
     id: 150,
     question: 'What is the Building Regulations Part O about?',
     options: [
-      'A to G (with A being most efficient)',
-      'A low-power wireless mesh protocol for smart home and IoT devices',
+      'Ventilation requirements in new buildings',
+      'Drainage and waste disposal in dwellings',
       'Overheating mitigation in new residential buildings',
-      'For all new dwellings or where required by Building Control',
+      'Electrical safety in domestic installations',
     ],
     correctAnswer: 2,
     explanation:
@@ -2472,9 +2472,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the circular economy in construction?',
     options: [
       'A system minimising waste by reusing, recycling, and regenerating materials',
-      'A heat pump that extracts heat from outside air and transfers it indoors',
-      'Systematic assessment of energy use to identify savings opportunities',
-      'Information about efficient operation of heating, ventilation, and hot water systems',
+      'An economic model where construction firms trade only within their region',
+      'A building layout designed around a central circular atrium',
+      'A funding model where profits are reinvested back into the same project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2487,10 +2487,10 @@ export const module2Questions: QuestionBank[] = [
     id: 153,
     question: 'What is a carbon footprint?',
     options: [
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'The physical land area taken up by a carbon-storage facility',
       'The total greenhouse gas emissions caused by an individual, organisation, or product',
-      'A system minimising waste by reusing, recycling, and regenerating materials',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
+      'The amount of carbon permanently stored in a building\'s materials',
+      'The annual carbon tax payable by a large organisation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2503,10 +2503,10 @@ export const module2Questions: QuestionBank[] = [
     id: 154,
     question: 'What is lifecycle assessment (LCA)?',
     options: [
-      "Using an EV battery to power home appliances, acting as a home battery",
-      "An emissions reduction target aligned with climate science to limit global warming",
+      "Assessing only the carbon emitted while a product is in use",
+      "A maintenance schedule covering a product's expected service life",
       "Evaluating environmental impacts throughout a product's life from raw materials to disposal",
-      "The ratio of real power to apparent power, indicating how efficiently power is used",
+      "Estimating how many years a product will last before replacement",
     ],
     correctAnswer: 2,
     explanation:
@@ -2519,9 +2519,9 @@ export const module2Questions: QuestionBank[] = [
     id: 155,
     question: 'What is scope 1, 2, and 3 emissions?',
     options: [
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
-      'Using smartphone location to automatically adjust heating when occupants leave or approach',
+      'Emissions from gas (1), electricity (2), and water use (3) respectively',
+      'Three increasing severity bands of an organisation\'s carbon penalty',
+      'Emissions measured at low (1), medium (2), and high (3) confidence levels',
       'Direct emissions (1), indirect from purchased energy (2), and value chain emissions (3)',
     ],
     correctAnswer: 3,
@@ -2536,9 +2536,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is carbon offsetting?',
     options: [
       'Compensating for emissions by investing in projects that reduce CO2 elsewhere',
-      'A preset combination of light levels and colours for different activities or moods',
-      'Intelligent charging that optimises timing based on tariffs, grid demand, or renewable availability',
-      'A heat pump extracting heat from the ground via buried pipes or boreholes',
+      'Subtracting renewable generation from an organisation\'s electricity bill',
+      'Capturing CO2 from a flue and storing it permanently underground',
+      'Delaying emissions reductions until a future target date',
     ],
     correctAnswer: 0,
     explanation:
@@ -2551,10 +2551,10 @@ export const module2Questions: QuestionBank[] = [
     id: 157,
     question: 'What is a Science Based Target?',
     options: [
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
+      'A research funding target set by government for climate science',
       'An emissions reduction target aligned with climate science to limit global warming',
-      'A digital meter that records energy use and communicates with the supplier remotely',
-      'The CO2 emission rate the building must achieve, based on the notional dwelling',
+      'A target number of renewable installations a contractor must complete',
+      'A legally enforceable emissions cap set by the Climate Change Committee',
     ],
     correctAnswer: 1,
     explanation:
@@ -2567,10 +2567,10 @@ export const module2Questions: QuestionBank[] = [
     id: 158,
     question: 'What is the purpose of the Climate Change Committee?',
     options: [
-      'Using machine learning to optimise building operations, predict faults, and improve efficiency',
-      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
+      'Negotiating international climate treaties on behalf of the UK',
+      'Distributing government grants for renewable energy projects',
       'Independent body advising UK government on emissions targets and progress',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'Enforcing carbon penalties on companies that exceed their limits',
     ],
     correctAnswer: 2,
     explanation:
@@ -2583,9 +2583,9 @@ export const module2Questions: QuestionBank[] = [
     id: 159,
     question: 'What is greenwashing?',
     options: [
-      'Direct energy trading between producers and consumers without traditional utilities',
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
-      'Mandatory energy and carbon reporting for qualifying large UK companies',
+      'Cleaning solar panels to maintain their generation efficiency',
+      'Planting vegetation on a building\'s roof to improve insulation',
+      'Reusing grey water from sinks to flush toilets in a building',
       'Making misleading claims about environmental benefits to appear more sustainable',
     ],
     correctAnswer: 3,
@@ -2600,9 +2600,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What are Sustainable Development Goals (SDGs)?',
     options: [
       '17 UN global goals addressing economic, social, and environmental challenges by 2030',
-      'Regulations setting minimum EPC ratings for rental properties',
-      'Maximum Power Point Tracking - optimising power extraction from panels',
-      'Information about efficient operation of heating, ventilation, and hot water systems',
+      'A set of UK Building Regulations covering sustainable construction',
+      'Carbon reduction targets that apply only to developing countries',
+      'A voluntary checklist of green features for new housing developments',
     ],
     correctAnswer: 0,
     explanation:
@@ -2615,10 +2615,10 @@ export const module2Questions: QuestionBank[] = [
     id: 161,
     question: 'What is the Paris Agreement?',
     options: [
-      'An industry body promoting sustainable building practices and policy',
+      'A European standard for the energy rating of buildings',
       'An international treaty on climate change limiting global warming to 1.5-2°C',
-      'The CO2 emission rate the building must achieve, based on the notional dwelling',
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'A UK law committing the nation to net zero by 2050',
+      'A trade agreement governing the import of renewable equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -2631,10 +2631,10 @@ export const module2Questions: QuestionBank[] = [
     id: 162,
     question: 'What is ESG in business?',
     options: [
-      'Automatic reversal to remove ice build-up on the outdoor unit',
-      'An industry body promoting sustainable building practices and policy',
+      'Energy, Sustainability, and Generation - a renewable certification',
+      'Emissions Scope Grouping - a way of classifying carbon sources',
       'Environmental, Social, and Governance - criteria for assessing corporate sustainability',
-      'A building that generates more energy than it consumes over a year',
+      'Efficiency Standards and Guidance - rules for building services',
     ],
     correctAnswer: 2,
     explanation:
@@ -2647,9 +2647,9 @@ export const module2Questions: QuestionBank[] = [
     id: 163,
     question: 'What is a green lease?',
     options: [
-      'Using hydrogen gas (potentially blended with natural gas or 100%) for building heating',
-      'Individual control of each luminaire for flexibility, energy savings, and tuning',
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
+      'A lease that can only be granted on buildings rated EPC band A',
+      'A short-term lease offered at a discount to encourage occupancy',
+      'A lease that transfers all energy costs to the landlord',
       'A lease including environmental commitments from landlord and tenant',
     ],
     correctAnswer: 3,
@@ -2664,9 +2664,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is the electrification of heat?',
     options: [
       'Replacing fossil fuel heating with electric systems like heat pumps',
-      'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
-      'Carbon dioxide (CO2) emissions per unit of energy',
-      'Heating using organic materials like wood pellets, chips, or logs',
+      'Adding electric immersion backup to an existing gas boiler',
+      'Generating electricity from waste heat in industrial processes',
+      'Blending hydrogen into the gas grid to lower heating emissions',
     ],
     correctAnswer: 0,
     explanation:
@@ -2679,10 +2679,10 @@ export const module2Questions: QuestionBank[] = [
     id: 165,
     question: 'Why is grid decarbonisation important for building emissions?',
     options: [
-      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
+      'It reduces the standing charge component of electricity bills',
       'As grid electricity becomes cleaner, electric heating produces fewer emissions than gas',
-      'Compensating for emissions by investing in projects that reduce CO2 elsewhere',
-      'An internet-connected sensor that collects and transmits data about building conditions',
+      'It allows buildings to disconnect from the grid entirely',
+      'It increases the carbon intensity of gas relative to electricity',
     ],
     correctAnswer: 1,
     explanation:
@@ -2695,10 +2695,10 @@ export const module2Questions: QuestionBank[] = [
     id: 166,
     question: 'What is hydrogen heating?',
     options: [
-      'Automated systems that identify operational faults and their likely causes in building systems',
-      'Measuring energy consumption of individual circuits, areas, or equipment for analysis',
+      'Using a hydrogen fuel cell to power an electric heat pump',
+      'Heating water by passing electricity through it (electrolysis)',
       'Using hydrogen gas (potentially blended with natural gas or 100%) for building heating',
-      'Heating using organic materials like wood pellets, chips, or logs',
+      'Recovering heat released when hydrogen is produced industrially',
     ],
     correctAnswer: 2,
     explanation:
@@ -2711,9 +2711,9 @@ export const module2Questions: QuestionBank[] = [
     id: 167,
     question: 'What is district heating?',
     options: [
-      'Storing excess renewable generation for use when production is low',
-      'Using machine learning to optimise building operations, predict faults, and improve efficiency',
-      'Aggregated distributed energy resources acting together as a single power plant',
+      'A heating system that serves only a single large building',
+      'A heat pump installed in every individual dwelling on an estate',
+      'Underfloor heating distributed throughout the rooms of a house',
       'A centralised heating system distributing heat to multiple buildings from a central source',
     ],
     correctAnswer: 3,
@@ -2728,9 +2728,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a heat network?',
     options: [
       'Another term for district heating - distributing heat from central source to buildings',
-      'A new interoperability standard unifying smart home ecosystems',
-      'A low-power wireless mesh protocol for smart home and IoT devices',
-      'Environmental, Social, and Governance - criteria for assessing corporate sustainability',
+      'A network of thermostats wirelessly linked across a single home',
+      'The pipework connecting a heat pump to its individual radiators',
+      'A data network monitoring temperatures across a building\'s rooms',
     ],
     correctAnswer: 0,
     explanation:
@@ -2743,10 +2743,10 @@ export const module2Questions: QuestionBank[] = [
     id: 169,
     question: 'What is modern methods of construction (MMC)?',
     options: [
-      'Outdoor temperature below which supplementary heating is needed',
+      'A set of updated Building Regulations for new construction',
       'Off-site manufacturing and innovative construction techniques reducing waste and time',
-      'Automated systems that identify operational faults and their likely causes in building systems',
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'A digital modelling standard used during the design of buildings',
+      'The use of low-carbon concrete in traditional on-site building',
     ],
     correctAnswer: 1,
     explanation:
@@ -2759,10 +2759,10 @@ export const module2Questions: QuestionBank[] = [
     id: 170,
     question: 'What is retrofit in building terms?',
     options: [
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
-      'Required energy efficiency upgrades when extending or renovating larger buildings',
+      'Designing energy efficiency into a building from the outset',
+      'Returning a building to its original historic condition',
       'Upgrading existing buildings with improved insulation, heating, and technologies',
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'Demolishing an old building and rebuilding it to modern standards',
     ],
     correctAnswer: 2,
     explanation:
@@ -2775,9 +2775,9 @@ export const module2Questions: QuestionBank[] = [
     id: 171,
     question: 'What is the PAS 2035 standard?',
     options: [
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
-      'The measure of air leakage through the building fabric under pressure',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'A target year by which all homes must reach EPC band C',
+      'A standard for the airtightness testing of new dwellings',
+      'A standard setting minimum efficiency for new boilers',
       'A framework for domestic retrofit projects ensuring quality and risk management',
     ],
     correctAnswer: 3,
@@ -2792,9 +2792,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is fuel poverty?',
     options: [
       'When a household cannot afford to adequately heat their home',
-      'A unit of energy equal to using 1000 watts for one hour',
-      'Installing capacitors to counteract inductive reactive power',
-      'Independent body advising UK government on emissions targets and progress',
+      'When a region runs short of fuel supplies during a cold winter',
+      'When a property has no mains gas connection available',
+      'When a household uses more energy than the national average',
     ],
     correctAnswer: 0,
     explanation:
@@ -2807,10 +2807,10 @@ export const module2Questions: QuestionBank[] = [
     id: 173,
     question: 'What is the ECO scheme?',
     options: [
-      'Required energy efficiency upgrades when extending or renovating larger buildings',
+      'Energy Conservation Order - a legal duty to insulate rental homes',
       'Energy Company Obligation - requiring energy suppliers to fund energy efficiency improvements',
-      'Digital Addressable Lighting Interface - a protocol for digital lighting control',
-      'A building designed to ultra-low energy standards with minimal heating demand',
+      'Environmental Compliance Obligation - a carbon reporting requirement',
+      'Efficient Construction Objective - a target for new build emissions',
     ],
     correctAnswer: 1,
     explanation:
@@ -2823,10 +2823,10 @@ export const module2Questions: QuestionBank[] = [
     id: 174,
     question: 'What is the Great British Insulation Scheme?',
     options: [
-      'Coefficient of Performance - ratio of heat output to electrical input',
-      'The measure of air leakage through the building fabric under pressure',
+      'A standard setting minimum U-values for insulation products',
+      'A manufacturer trade body certifying insulation materials',
       'A government scheme providing insulation grants to improve energy efficiency',
-      'Direct emissions (1), indirect from purchased energy (2), and value chain emissions (3)',
+      'A national database recording insulation installed in every home',
     ],
     correctAnswer: 2,
     explanation:
@@ -2839,9 +2839,9 @@ export const module2Questions: QuestionBank[] = [
     id: 175,
     question: 'What is stranded assets risk in buildings?',
     options: [
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
-      'Below about 55°C (return temperature below dew point ~54°C)',
+      'Risk that a building is left empty due to a downturn in the rental market',
+      'Risk that building equipment fails before the end of its warranty',
+      'Risk that a building is damaged by extreme weather events',
       'Risk that buildings become unmarketable or devalued due to poor energy performance',
     ],
     correctAnswer: 3,
@@ -2860,9 +2860,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is Vehicle-to-Home (V2H)?',
     options: [
       'Using an EV battery to power home appliances, acting as a home battery',
-      'A test to measure air leakage rate through the building envelope',
-      'A visual display presenting real-time energy consumption data and trends',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'Charging an EV directly from a home solar array only',
+      'Using the home supply to preheat an EV cabin before a journey',
+      'Routing an EV charger through the home consumer unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2875,10 +2875,10 @@ export const module2Questions: QuestionBank[] = [
     id: 177,
     question: 'What is wireless EV charging?',
     options: [
-      'Coefficient of Performance - ratio of heat output to electrical input',
+      'Charging an EV using a portable battery pack carried in the boot',
       'Inductive charging transferring power without physical cable connection',
-      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
-      'Part P (electrical safety), Part S (EV infrastructure), and relevant equipment standards',
+      'Charging that is controlled remotely via a smartphone app',
+      'Charging an EV from an overhead pantograph contact',
     ],
     correctAnswer: 1,
     explanation:
@@ -2891,10 +2891,10 @@ export const module2Questions: QuestionBank[] = [
     id: 178,
     question: 'What is solid-state battery technology?',
     options: [
-      'A building designed to ultra-low energy standards with minimal heating demand',
-      'Using batteries to reduce maximum demand by discharging during peak consumption periods',
+      'Batteries with no moving parts, switched electronically rather than mechanically',
+      'Batteries fixed permanently in place rather than removable',
       'Batteries using solid electrolyte instead of liquid, offering higher energy density and safety',
-      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
+      'Batteries made from a single solid block of lithium metal',
     ],
     correctAnswer: 2,
     explanation:
@@ -2907,9 +2907,9 @@ export const module2Questions: QuestionBank[] = [
     id: 179,
     question: 'What is green hydrogen?',
     options: [
-      'Granular control, energy monitoring per fixture, and integration with building systems',
-      'A device that generates electricity from hydrogen and oxygen through chemical reaction',
-      'Technology that captures CO2 directly from ambient air for storage or use',
+      'Hydrogen produced from natural gas with the carbon captured and stored',
+      'Hydrogen produced from coal gasification at low cost',
+      'Hydrogen dyed green so it can be distinguished in pipework',
       'Hydrogen produced using renewable electricity through electrolysis of water',
     ],
     correctAnswer: 3,
@@ -2924,9 +2924,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is an electrolyser?',
     options: [
       'Equipment that uses electricity to split water into hydrogen and oxygen',
-      'Convert DC electricity from panels to AC electricity for use or export',
-      'Technology delivering electrical power along with data on Ethernet cables',
-      'PV generates electricity; thermal heats water or air',
+      'Equipment that burns hydrogen to generate electricity and heat',
+      'Equipment that compresses hydrogen gas for storage in tanks',
+      'Equipment that measures the electrical conductivity of water',
     ],
     correctAnswer: 0,
     explanation:
@@ -2939,10 +2939,10 @@ export const module2Questions: QuestionBank[] = [
     id: 181,
     question: 'What is a fuel cell?',
     options: [
-      'Average efficiency of a heat pump over an entire heating season',
+      'A rechargeable battery cell that stores hydrogen for later use',
       'A device that generates electricity from hydrogen and oxygen through chemical reaction',
-      'Microgeneration Certification Scheme - required for installer competence and grant eligibility',
-      'A building designed to ultra-low energy standards with minimal heating demand',
+      'A tank that stores liquid fuel for a backup generator',
+      'A small combustion engine that burns hydrogen to drive a generator',
     ],
     correctAnswer: 1,
     explanation:
@@ -2955,10 +2955,10 @@ export const module2Questions: QuestionBank[] = [
     id: 182,
     question: 'What is carbon capture and storage (CCS)?',
     options: [
-      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
-      'Maximum Power Point Tracking - optimising power extraction from panels',
+      'Storing carbon credits in a register for future trading',
+      'Capturing waste heat from industry and storing it for reuse',
       'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'Absorbing CO2 by planting trees on degraded land',
     ],
     correctAnswer: 2,
     explanation:
@@ -2971,9 +2971,9 @@ export const module2Questions: QuestionBank[] = [
     id: 183,
     question: 'What is direct air capture (DAC)?',
     options: [
-      'Charging for the most power used in a billing period, not just total consumption',
-      'Evaluating environmental impacts throughout a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life from raw materials to disposal',
-      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
+      'Capturing CO2 directly from a power station flue before release',
+      'Drawing fresh air directly into a building without ductwork',
+      'Capturing rainwater directly from the air for reuse',
       'Technology that captures CO2 directly from ambient air for storage or use',
     ],
     correctAnswer: 3,
@@ -2988,9 +2988,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is building-integrated photovoltaics (BIPV)?',
     options: [
       'Solar cells integrated into building materials like roof tiles, facades, or windows',
-      'A low-power wireless mesh protocol for smart home and IoT devices',
-      'Granular control, energy monitoring per fixture, and integration with building systems',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      'Standard PV panels mounted on a frame above a flat roof',
+      'A control system linking PV output to the building management system',
+      'Ground-mounted solar arrays sited next to a building',
     ],
     correctAnswer: 0,
     explanation:
@@ -3003,10 +3003,10 @@ export const module2Questions: QuestionBank[] = [
     id: 185,
     question: 'What is a smart grid?',
     options: [
-      'An internet-connected sensor that collects and transmits data about building conditions',
+      'A grid of smart meters installed in every home in a region',
       'An electricity network using digital technology to optimise generation, distribution, and consumption',
-      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
-      '75% of fixed lighting outlets must have efficient fittings (typically LED)',
+      'A localised microgrid powered entirely by on-site renewables',
+      'A grid layout that uses higher voltages to reduce transmission losses',
     ],
     correctAnswer: 1,
     explanation:
@@ -3019,10 +3019,10 @@ export const module2Questions: QuestionBank[] = [
     id: 186,
     question: 'What is grid-scale battery storage?',
     options: [
-      'EPC is based on calculated/design performance; DEC shows actual measured energy use',
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
+      'A small home battery sized to store one day of domestic use',
+      'The combined storage of many EV batteries when plugged in',
       'Large battery installations storing electricity to balance grid supply and demand',
-      'LED lighting that can adjust colour temperature from warm to cool white',
+      'Backup batteries kept at substations only for control systems',
     ],
     correctAnswer: 2,
     explanation:
@@ -3035,9 +3035,9 @@ export const module2Questions: QuestionBank[] = [
     id: 187,
     question: 'What is pumped hydro storage?',
     options: [
-      'The calculated annual CO2 emissions from the actual dwelling design',
-      'Automatically dimming artificial lighting in response to available natural light',
-      'Electricity consumed by devices when switched off but still plugged in',
+      'Storing energy as pressurised water in a sealed tank',
+      'Generating electricity from the flow of a tidal estuary',
+      'Storing heat in a large insulated water tank for later use',
       'Storing energy by pumping water uphill, then releasing it through turbines when needed',
     ],
     correctAnswer: 3,
@@ -3052,9 +3052,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is a virtual power plant (VPP)?',
     options: [
       'Aggregated distributed energy resources acting together as a single power plant',
-      'Financial penalties up to £150,000 for non-domestic properties',
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
-      'A rating system for actual operational energy performance of commercial buildings',
+      'A computer simulation of a power station used for training operators',
+      'A backup generator that starts automatically during a grid outage',
+      'A planned power station that has not yet been built',
     ],
     correctAnswer: 0,
     explanation:
@@ -3067,10 +3067,10 @@ export const module2Questions: QuestionBank[] = [
     id: 189,
     question: 'What is peer-to-peer energy trading?',
     options: [
-      'A device that generates electricity from hydrogen and oxygen through chemical reaction',
+      'Wholesale trading of energy between two large generators',
       'Direct energy trading between producers and consumers without traditional utilities',
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
-      'Mono is more efficient and black in appearance; poly is slightly less efficient and blue-ish',
+      'Switching energy supplier to get the best available tariff',
+      'Selling exported electricity back to the grid under the SEG',
     ],
     correctAnswer: 1,
     explanation:
@@ -3083,10 +3083,10 @@ export const module2Questions: QuestionBank[] = [
     id: 190,
     question: 'What is blockchain in energy applications?',
     options: [
-      'The CO2 emission rate the building must achieve, based on the notional dwelling',
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
+      'A physical barrier preventing power flowing back into the grid',
+      'A method of grouping circuits into protected blocks within a panel',
       'Distributed ledger technology enabling transparent, secure energy transactions and trading',
-      'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
+      'A scheduling system that blocks charging during peak grid demand',
     ],
     correctAnswer: 2,
     explanation:
@@ -3099,9 +3099,9 @@ export const module2Questions: QuestionBank[] = [
     id: 191,
     question: 'What is artificial intelligence (AI) in building management?',
     options: [
-      'Automated systems that identify operational faults and their likely causes in building systems',
-      'A heat pump extracting heat from the ground via buried pipes or boreholes',
-      'Equipment for charging electric vehicle batteries from the electrical supply',
+      'A rule-based timer that switches services on and off at fixed times',
+      'A remote human operator monitoring the building via cameras',
+      'A standardised protocol for connecting building automation devices',
       'Using machine learning to optimise building operations, predict faults, and improve efficiency',
     ],
     correctAnswer: 3,
@@ -3116,9 +3116,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is predictive energy management?',
     options: [
       'Using AI and data to predict and optimise future energy consumption patterns',
-      '17 UN global goals addressing economic, social, and environmental challenges by 2030',
-      'Mandatory energy audit for large UK organisations every 4 years',
-      'Monitoring CO2, humidity, VOCs, and particulates to ensure healthy indoor environments',
+      'Forecasting next year\'s energy bills based on past invoices alone',
+      'Manually adjusting building services in response to the weather forecast',
+      'Predicting when energy tariffs will change so contracts can be renewed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3131,10 +3131,10 @@ export const module2Questions: QuestionBank[] = [
     id: 193,
     question: 'What is thermal energy storage (TES)?',
     options: [
-      'Direct emissions (1), indirect from purchased energy (2), and value chain emissions (3)',
+      'Storing electricity in a battery to power an electric heater later',
       'Storing energy as heat or cold for later use in heating or cooling systems',
-      'Combined Heat and Power system that generates both electricity and useful heat',
-      'A preset combination of light levels and colours for different activities or moods',
+      'Insulating a building so it retains heat for longer',
+      'Recovering heat from exhaust air to warm incoming fresh air',
     ],
     correctAnswer: 1,
     explanation:
@@ -3147,10 +3147,10 @@ export const module2Questions: QuestionBank[] = [
     id: 194,
     question: 'What is a phase change material (PCM)?',
     options: [
-      'Systematic assessment of energy use to identify savings opportunities',
-      'A device showing real-time energy usage and costs from the smart meter',
+      'A material whose colour changes with temperature to indicate heat',
+      'A material that changes the phase angle of an AC supply',
       'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
-      'A preset combination of light levels and colours for different activities or moods',
+      'A material that converts heat directly into electricity',
     ],
     correctAnswer: 2,
     explanation:
@@ -3163,9 +3163,9 @@ export const module2Questions: QuestionBank[] = [
     id: 195,
     question: 'What is dynamic glazing?',
     options: [
-      'When a solar system continues to power a circuit that has been disconnected from the grid',
-      'A transformer providing simple separation between the AC and DC sides, OR an RCD type B on the AC side',
-      'Systematic assessment of energy use to identify savings opportunities',
+      'Glazing with integrated PV cells that generate electricity',
+      'Glazing that can be opened and closed by a motorised actuator',
+      'Toughened glazing designed to withstand high impact loads',
       'Glass that can change its light/heat transmission properties electronically or automatically',
     ],
     correctAnswer: 3,
@@ -3180,9 +3180,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What is electrochromic glass?',
     options: [
       'Glass that changes tint when voltage is applied, controlling light and heat transmission',
-      'EPC is based on calculated/design performance; DEC shows actual measured energy use',
-      'Storing energy as heat or cold for later use in heating or cooling systems',
-      'A building designed to ultra-low energy standards with minimal heating demand',
+      'Glass that generates a small voltage when sunlight strikes it',
+      'Glass coated with a thin film that reflects all infrared heat',
+      'Glass that changes tint passively in response to temperature only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3195,10 +3195,10 @@ export const module2Questions: QuestionBank[] = [
     id: 197,
     question: 'What is a positive energy building?',
     options: [
-      'Automatic control of building services like HVAC, lighting, and security',
+      'A building that consumes exactly zero net energy over a year',
       'A building that generates more energy than it consumes over a year',
-      'Convert DC electricity from panels to AC electricity for use or export',
-      'Aggregated distributed energy resources acting together as a single power plant',
+      'A building powered entirely from the grid with no on-site generation',
+      'A building rated EPC band A for its designed energy performance',
     ],
     correctAnswer: 1,
     explanation:
@@ -3211,10 +3211,10 @@ export const module2Questions: QuestionBank[] = [
     id: 198,
     question: 'What is the Internet of Things (IoT) in buildings?',
     options: [
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
-      'Cost-effective improvements to increase the energy efficiency rating',
+      'The broadband connection that provides internet access to occupants',
+      'A cloud platform for storing a building\'s design drawings',
       'Network of connected sensors and devices enabling data collection and automated control',
-      'Building Information Modelling - digital representation with data about building elements',
+      'A standardised wiring protocol for connecting building services',
     ],
     correctAnswer: 2,
     explanation:
@@ -3227,9 +3227,9 @@ export const module2Questions: QuestionBank[] = [
     id: 199,
     question: 'What is energy disaggregation?',
     options: [
-      'Off-site manufacturing and innovative construction techniques reducing waste and time',
-      'Charging for the most power used in a billing period, not just total consumption',
-      'The measure of air leakage through the building fabric under pressure',
+      'Splitting an energy bill fairly between tenants of a shared building',
+      'Separating renewable generation from grid import on a meter',
+      'Fitting a separate sub-meter to every individual circuit',
       'Using AI to identify individual appliance consumption from whole-building smart meter data',
     ],
     correctAnswer: 3,
@@ -3244,9 +3244,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'What are digital twins being used for in buildings?',
     options: [
       'Real-time monitoring, simulation, optimisation, and predictive maintenance',
-      'Making misleading claims about environmental benefits to appear more sustainable',
-      'The measure of air leakage through the building fabric under pressure',
-      'A heat pump that extracts heat from outside air and transfers it indoors',
+      'Producing the marketing brochures used to sell a building',
+      'Replacing the need for any physical sensors in the building',
+      'Storing a one-off snapshot of the building at handover only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3270,7 +3270,7 @@ export const module2Questions: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Section 712 (Solar PV) limits DC voltage to 1000 V DC for residential applications. Higher voltage strings (up to 1500 V) are permitted only in commercial installations subject to additional protective measures.',
+      'For domestic PV the DC system is kept within the low-voltage band, conventionally up to 1000 V DC. Higher string voltages (up to 1500 V DC) are used on larger commercial/utility arrays with additional protective measures; BS 7671 Section 712 also caps the voltage to earth (Ugc) at 120 V DC.',
     section: '2.8',
     topic: 'BS 7671 Special Locations',
     difficulty: 'advanced',
@@ -3279,10 +3279,10 @@ export const module2Questions: QuestionBank[] = [
     id: 202,
     question: 'Under BS 7671 Reg 712.411.3.2.1.2, where the inverter does not provide simple separation, what additional protective measure is required?',
     options: [
-      'Charging for the most power used in a billing period, not just total consumption',
-      'Monitoring CO2, humidity, VOCs, and particulates to ensure healthy indoor environments',
+      'A Type AC RCD on the AC side, which is always sufficient for PV inverters',
+      'An additional DC isolator fitted on the AC side of the inverter',
       'A transformer providing simple separation between the AC and DC sides, OR an RCD type B on the AC side',
-      'Distributing available power across multiple charge points to prevent overload',
+      'Doubling the CPC size on the DC string cabling to the array',
     ],
     correctAnswer: 2,
     explanation:
@@ -3295,9 +3295,9 @@ export const module2Questions: QuestionBank[] = [
     id: 203,
     question: 'Under BS 7671 Section 722 (EV charging), what does Reg 722.411.4 require for a PEN-conductor fault detection on a TN-C-S supply?',
     options: [
-      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
-      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
-      'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
+      'A Type AC RCD rated at 30 mA fitted at the origin of the final circuit',
+      'A second PEN conductor run in parallel to halve the fault current',
+      'A surge protection device installed adjacent to the charge point',
       'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
     ],
     correctAnswer: 3,
@@ -3312,9 +3312,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under BS 7671 Reg 722.531.3.101, what RCD type is required for an EV charging point unless the equipment provides equivalent protection?',
     options: [
       'Type B (or Type A combined with appropriate residual DC monitoring)',
-      '75% of fixed lighting outlets must have efficient fittings (typically LED)',
-      'A framework for domestic retrofit projects ensuring quality and risk management',
-      'A system minimising waste by reusing, recycling, and regenerating materials',
+      'Type AC, which is always adequate for an EV charging point',
+      'Type S (time-delayed) at the origin of the installation',
+      'Type F, providing protection against high-frequency residual currents',
     ],
     correctAnswer: 0,
     explanation:
@@ -3325,16 +3325,16 @@ export const module2Questions: QuestionBank[] = [
   },
   {
     id: 205,
-    question: 'BS 7671 Section 753 covers heating cables and embedded heating systems. What is the maximum permitted touch temperature for accessible surfaces of an underfloor heating system?',
+    question: 'Under BS 7671 Section 753 (Reg 753.424.201), what maximum temperature must be applied within the zone where floor or ceiling heating units are installed?',
     options: [
-      'A scheme requiring energy suppliers to pay for exported renewable electricity',
-      '35°C generally for floors regularly walked on barefoot (warmer permitted in border zones)',
-      'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
-      'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
+      '35°C, achieved by a thermostat, thermal cut-out or other temperature-limiting measure',
+      '80°C, achieved by a thermostat, thermal cut-out or other temperature-limiting measure',
+      '120°C, achieved by a thermostat, thermal cut-out or other temperature-limiting measure',
+      '200°C, achieved by a thermostat, thermal cut-out or other temperature-limiting measure',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Section 753 with EN 60335-2-96 limits accessible floor surface temperature to about 35°C in occupied zones to prevent burns and discomfort. Border zones near walls may exceed this. RCD protection 30 mA is also required.',
+      'BS 7671 Reg 753.424.201 requires at least one measure (thermostat, thermal cut-out or overtemperature protection) to limit the temperature within the heating-unit zone to a maximum of 80°C. A 30 mA RCD is also required for floor and ceiling heating systems.',
     section: '2.8',
     topic: 'BS 7671 Special Locations',
     difficulty: 'advanced',
@@ -3343,10 +3343,10 @@ export const module2Questions: QuestionBank[] = [
     id: 206,
     question: 'For a TN-C-S (PNB) supply supplying a heat pump with an outdoor unit, what specific concern must your design address per BS 7671?',
     options: [
-      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
-      'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
+      'The risk of excessive volt drop on the long cable run to the outdoor unit',
+      'The risk of harmonic distortion from the heat pump\'s inverter overheating the neutral',
       'PEN-conductor open-circuit risk to outdoor metalwork — apply Section 722-style measures: earth electrode, residual current detection, or use of a dedicated supplier-issued separate earth (TT outdoor)',
-      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
+      'The risk that condensation from the outdoor unit corrodes the earth electrode connection',
     ],
     correctAnswer: 2,
     explanation:
@@ -3359,9 +3359,9 @@ export const module2Questions: QuestionBank[] = [
     id: 207,
     question: 'BS 7671 Reg 712.521.1 requires PV DC cables to be sized considering what additional factor compared with normal AC cables?',
     options: [
-      'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
-      'Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection',
-      'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
+      '80% of the module short-circuit current Isc, since DC cables run cooler than AC',
+      'Exactly the inverter\'s rated AC output current, ignoring the DC string current',
+      'Only the open-circuit voltage Voc, with current rating left to the inverter',
       '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
     ],
     correctAnswer: 3,
@@ -3376,9 +3376,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'For a battery storage system (Section 8 of BS 7671), what disconnection means must be provided?',
     options: [
       'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      'Prevention → Preparing for re-use → Recycling → Other recovery (including energy recovery) → Disposal as last resort',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
-      'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
+      'A single AC isolator at the consumer unit only, since the battery is extra-low voltage',
+      'A lockable cover over the battery terminals, with no separate isolator required',
+      'A 30 mA RCD on the DC side, which provides all necessary means of disconnection',
     ],
     correctAnswer: 0,
     explanation:
@@ -3391,10 +3391,10 @@ export const module2Questions: QuestionBank[] = [
     id: 209,
     question: 'Under BS 7671 A4:2026, what is the new requirement around AFDDs for solar PV / battery storage circuits?',
     options: [
-      'Using machine learning to optimise building operations, predict faults, and improve efficiency',
+      'AFDDs are now banned on PV and battery circuits because of nuisance tripping',
       'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
-      'Building Information Modelling - digital representation with data about building elements',
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
+      'AFDDs replace the need for any RCD protection on PV and battery circuits',
+      'AFDDs are required only on the DC side and never on the AC side of an inverter',
     ],
     correctAnswer: 1,
     explanation:
@@ -3407,10 +3407,10 @@ export const module2Questions: QuestionBank[] = [
     id: 210,
     question: 'Under BS 7671 Reg 712.411.4, what is the requirement around equipotential bonding of metallic PV mounting structures?',
     options: [
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
-      'EVCP loads are continuous and high-utilisation — apply appropriate Cg and Ca correction factors, consider cumulative diversity for multiple chargers, and ensure final-circuit protective device rating coordinates with both EVCP rating and DNO supply capacity',
-      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
-      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
+      'All metallic mounting frames must always be main-bonded back to the MET regardless of the equipment class',
+      'Mounting frames must be bonded with a minimum 25 mm² conductor in every installation',
+      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
+      'Mounting frames must never be earthed, to avoid creating an islanding hazard',
     ],
     correctAnswer: 2,
     explanation:
@@ -3423,9 +3423,9 @@ export const module2Questions: QuestionBank[] = [
     id: 211,
     question: 'Under MCS MIS 3002 (PV), what minimum competence is required for the installer of a domestic solar PV system?',
     options: [
-      'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
-      'Extended Producer Responsibility (EPR) for packaging — producers and brand-owners pay the full net cost of managing the household packaging they place on the market, with reporting from 2024',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
+      'Any electrician registered with a competent person scheme may install PV without further certification',
+      'Only the DNO is permitted to install a domestic solar PV system',
+      'No formal competence is required provided the system is below the G98 threshold',
       'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
     ],
     correctAnswer: 3,
@@ -3440,9 +3440,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under MCS MIS 3005 (heat pumps), what design output calculation must installers follow?',
     options: [
       'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
-      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
-      'New schedule columns capture EV-specific data including PEN-fault detection method, RCD type, charge-point rating and special-location considerations — supporting accurate dutyholder records',
-      'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
+      'A simple rule of thumb of 100 W per square metre of floor area, regardless of fabric',
+      'Sizing the heat pump to match the kW rating of the boiler it replaces',
+      'Sizing based on the SAP rating taken straight from the property\'s EPC',
     ],
     correctAnswer: 0,
     explanation:
@@ -3455,10 +3455,10 @@ export const module2Questions: QuestionBank[] = [
     id: 213,
     question: 'F-Gas Regulation (EU/UK 517/2014 retained) restricts who can do what work on heat pump refrigerant circuits?',
     options: [
-      'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
+      'Any qualified electrician may break into refrigerant pipework provided they wear PPE',
       'Only F-Gas-certified personnel may install, maintain, decommission or do leak checks on equipment containing fluorinated greenhouse gas refrigerants — electricians without F-Gas certification can only do the electrical work',
-      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
-      'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
+      'Refrigerant work is unrestricted as long as the charge is below 5 tonnes CO₂e',
+      'Only the manufacturer is permitted to carry out any work on the refrigerant circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -3471,10 +3471,10 @@ export const module2Questions: QuestionBank[] = [
     id: 214,
     question: 'Under ENA EREC G98, what is the maximum capacity for a single-phase generator (e.g. small PV) connected to the public network without prior approval?',
     options: [
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      '32 A per phase (≈7.36 kW single-phase, ≈22 kW three-phase) — notified after commissioning',
+      '13 A per phase (≈3 kW single-phase, ≈9 kW three-phase) — notified before commissioning',
       '16 A per phase (≈3.68 kW single-phase, ≈11 kW three-phase) — installer notifies the DNO after commissioning',
-      'A building that produces zero net carbon emissions over a year through efficiency and renewables',
+      '63 A per phase (≈14.5 kW single-phase, ≈43 kW three-phase) — notified after commissioning',
     ],
     correctAnswer: 2,
     explanation:
@@ -3487,9 +3487,9 @@ export const module2Questions: QuestionBank[] = [
     id: 215,
     question: 'Under ENA EREC G99, what process must be followed for connecting a generator above the G98 thresholds?',
     options: [
-      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
-      'A DC isolator must be provided at each PV array adjacent to the inverter, suitable for switching DC under load and clearly identified for rapid emergency disconnection',
-      'Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection',
+      'Install the generator first, then notify the DNO within 28 days as for G98',
+      'No application is needed; the generator may connect once it passes commissioning tests',
+      'Apply to Ofgem rather than the DNO, who then arranges the connection',
       'Submit a G99 application to the DNO BEFORE installation, providing system details and protection settings — DNO assesses network impact, may require modifications, and approval must be received before energisation',
     ],
     correctAnswer: 3,
@@ -3504,9 +3504,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'For a heat pump system, what is the difference between COP and SCOP and which should the customer focus on?',
     options: [
       'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
-      'Only F-Gas-certified personnel may install, maintain, decommission or do leak checks on equipment containing fluorinated greenhouse gas refrigerants — electricians without F-Gas certification can only do the electrical work',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
-      'Failure to manage WEEE (mercury-containing tubes, refrigerants, batteries) — driving most environmental enforcement; followed by uncontrolled site discharges',
+      'COP is the seasonal average; SCOP is the single-point peak — the customer should focus on COP',
+      'COP measures heating; SCOP measures cooling — both matter equally to running cost',
+      'COP and SCOP are identical figures; the customer can focus on either one',
     ],
     correctAnswer: 0,
     explanation:
@@ -3519,10 +3519,10 @@ export const module2Questions: QuestionBank[] = [
     id: 217,
     question: 'Under Building Regulations Part L 2021 (England), what is the maximum permitted flow temperature for new domestic heating systems to ensure they\'re heat-pump-ready?',
     options: [
-      'A statutory five-year cap on UK emissions; public sector procurement increasingly demands suppliers report their carbon and demonstrate reduction plans aligned to Net Zero',
+      '80°C maximum design flow temperature for new wet space heating systems, matching traditional boiler practice',
       '55°C maximum design flow temperature for new wet space heating systems — encouraging emitter sizing that suits low-temperature heat pumps',
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
+      '35°C maximum design flow temperature for new wet space heating systems, requiring underfloor heating only',
+      'There is no maximum; flow temperature is left entirely to the installer',
     ],
     correctAnswer: 1,
     explanation:
@@ -3535,10 +3535,10 @@ export const module2Questions: QuestionBank[] = [
     id: 218,
     question: 'Under BS 7671 Section 712, what specific consideration applies to PV DC isolators after A4:2026 update?',
     options: [
-      'Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest',
-      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
+      'A single AC isolator at the consumer unit is sufficient; no DC isolator is needed',
+      'The DC isolator may be an ordinary plug and socket rated for AC use',
       'A DC isolator must be provided at each PV array adjacent to the inverter, suitable for switching DC under load and clearly identified for rapid emergency disconnection',
-      'Part S (Infrastructure for charging electric vehicles) requires new non-residential buildings with 10+ parking spaces to provide 1 EV charge point and cable routes for 1 in 5 spaces',
+      'The DC isolator must be located outside the building boundary at the meter position',
     ],
     correctAnswer: 2,
     explanation:
@@ -3551,9 +3551,9 @@ export const module2Questions: QuestionBank[] = [
     id: 219,
     question: 'For a domestic battery storage installation, where in the property should the battery NOT be located per IET Code of Practice for Electrical Energy Storage Systems?',
     options: [
-      'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
-      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
-      'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
+      'In an attached garage with adequate ventilation and a stable temperature',
+      'In a detached outbuilding away from the main dwelling',
+      'On an external north-facing wall shaded from direct sunlight',
       'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
     ],
     correctAnswer: 3,
@@ -3568,9 +3568,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'For an EV charging point on a domestic supply, what cable rating consideration must the designer apply?',
     options: [
       'EVCP loads are continuous and high-utilisation — apply appropriate Cg and Ca correction factors, consider cumulative diversity for multiple chargers, and ensure final-circuit protective device rating coordinates with both EVCP rating and DNO supply capacity',
-      'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
-      'New schedule columns capture EV-specific data including PEN-fault detection method, RCD type, charge-point rating and special-location considerations — supporting accurate dutyholder records',
-      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
+      'EVCP loads are intermittent, so the cable can be sized at half the charge-point rating',
+      'EVCP loads benefit from full diversity, so a 2.5 mm² cable is always adequate',
+      'EVCP cables need no correction factors because the charger limits its own current',
     ],
     correctAnswer: 0,
     explanation:
@@ -3583,10 +3583,10 @@ export const module2Questions: QuestionBank[] = [
     id: 221,
     question: 'Under BS 7671 A4:2026, what does the introduction of TN-C-S (PNB) terminology mean?',
     options: [
-      'Failure to manage WEEE (mercury-containing tubes, refrigerants, batteries) — driving most environmental enforcement; followed by uncontrolled site discharges',
+      'It introduces a brand-new earthing arrangement that replaces the TT system',
       'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
-      'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
-      'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
+      'It means the neutral and earth must now be kept separate all the way to the supply transformer',
+      'It is a new label for a TN-S system where the earth is provided by a separate cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -3599,10 +3599,10 @@ export const module2Questions: QuestionBank[] = [
     id: 222,
     question: 'Under MCS, what is the role of the SAP (Standard Assessment Procedure) calculation in heat pump design?',
     options: [
-      'If improvements are not cost-effective (payback over 7 years), wall insulation would damage property, or consent not obtained',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'SAP is used directly to size the heat pump and select its kW output',
+      'SAP replaces the need for any heat-loss calculation on a heat pump job',
       'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
-      'PEN-conductor open-circuit risk to outdoor metalwork — apply Section 722-style measures: earth electrode, residual current detection, or use of a dedicated supplier-issued separate earth (TT outdoor)',
+      'SAP determines the design flow temperature for the heat pump emitters',
     ],
     correctAnswer: 2,
     explanation:
@@ -3615,9 +3615,9 @@ export const module2Questions: QuestionBank[] = [
     id: 223,
     question: 'For an EV charger, what does ISO 15118 (plug-and-charge) standard cover?',
     options: [
-      'Around 75-80% lower CO₂ emissions than 2013 Part L, achieved through low-carbon heating (typically heat pumps) and high fabric efficiency — no fossil-fuel heating in new homes',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
-      'Part S (Infrastructure for charging electric vehicles) requires new non-residential buildings with 10+ parking spaces to provide 1 EV charge point and cable routes for 1 in 5 spaces',
+      'The physical dimensions and pin layout of the Type 2 charging connector',
+      'The maximum cable length permitted between an EVCP and the vehicle',
+      'The fire-safety separation distances required around an EV charge point',
       'Vehicle-to-grid communication standard enabling automatic billing, smart charging, V2G/V2H bi-directional power flow, and secure identification — going beyond simple Mode 3 charging',
     ],
     correctAnswer: 3,
@@ -3632,9 +3632,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under the Smart Charge Point Regulations 2021, what features must domestic and workplace EV charging points sold in GB include by default?',
     options: [
       'Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection',
-      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
-      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'A minimum charge rate of 22 kW and a tethered Type 2 cable on every unit',
+      'A built-in payment card reader and a public-facing display screen',
+      'Compulsory three-phase supply and a dedicated DNO-approved meter',
     ],
     correctAnswer: 0,
     explanation:
@@ -3647,10 +3647,10 @@ export const module2Questions: QuestionBank[] = [
     id: 225,
     question: 'Under BS 7671 A4:2026, what new requirement applies to certificate schedules for EV charging circuits?',
     options: [
-      'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
+      'EV charging circuits are now exempt from being recorded on the schedule of test results',
       'New schedule columns capture EV-specific data including PEN-fault detection method, RCD type, charge-point rating and special-location considerations — supporting accurate dutyholder records',
-      'Only F-Gas-certified personnel may install, maintain, decommission or do leak checks on equipment containing fluorinated greenhouse gas refrigerants — electricians without F-Gas certification can only do the electrical work',
-      'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
+      'A separate certificate must be issued by the DNO rather than the installer',
+      'The schedule must now record the vehicle make and model the charger will serve',
     ],
     correctAnswer: 1,
     explanation:
@@ -3667,10 +3667,10 @@ export const module2Questions: QuestionBank[] = [
     id: 226,
     question: 'Under the WEEE Regulations 2013 (UK retained), what duties does an electrical contractor have when removing old electrical equipment?',
     options: [
-      'Failure to manage WEEE (mercury-containing tubes, refrigerants, batteries) — driving most environmental enforcement; followed by uncontrolled site discharges',
-      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
+      'Dispose of all removed equipment in the general waste skip on site',
+      'Return all old equipment to the original manufacturer, who must legally accept it',
       'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
-      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
+      'Crush and bury the equipment on site to recover the scrap metal value',
     ],
     correctAnswer: 2,
     explanation:
@@ -3683,9 +3683,9 @@ export const module2Questions: QuestionBank[] = [
     id: 227,
     question: 'Under the Hazardous Waste Regulations 2005, what is required when removing fluorescent tubes containing mercury?',
     options: [
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
-      'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
-      'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
+      'Break the tubes on site to reduce their volume before disposal in general waste',
+      'Treat them as ordinary WEEE; mercury content does not make them hazardous',
+      'Place them straight in the recycling skip with other glass items',
       'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
     ],
     correctAnswer: 3,
@@ -3700,9 +3700,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under the F-Gas Regulation, what leak-checking frequency applies to a heat pump containing 5 tonnes CO₂-equivalent of refrigerant?',
     options: [
       'Annual leak check by F-Gas-certified personnel where charge ≥ 5 tonnes CO₂e, or every 2 years where charge < 5 tonnes; frequencies double if a leak detection system is installed and operational',
-      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
-      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
+      'Monthly leak checks regardless of charge size, carried out by any competent electrician',
+      'No leak checks are required below 50 tonnes CO₂e of refrigerant charge',
+      'A single leak check at installation only, with no further checks needed thereafter',
     ],
     correctAnswer: 0,
     explanation:
@@ -3715,10 +3715,10 @@ export const module2Questions: QuestionBank[] = [
     id: 229,
     question: 'Under the GHG Protocol, what are Scope 1, 2 and 3 emissions for an electrical contractor?',
     options: [
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'Scope 1 = the largest emissions; Scope 2 = medium; Scope 3 = smallest and easiest to measure',
       'Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest',
-      '55°C maximum design flow temperature for new wet space heating systems — encouraging emitter sizing that suits low-temperature heat pumps',
-      'Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers',
+      'Scope 1 = office emissions; Scope 2 = site emissions; Scope 3 = travel emissions only',
+      'Scope 1 = purchased electricity; Scope 2 = vans and fuel; Scope 3 = nothing for a small contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -3731,10 +3731,10 @@ export const module2Questions: QuestionBank[] = [
     id: 230,
     question: 'For an installer aiming to reduce Scope 3 emissions on a project, what is the most effective practice?',
     options: [
-      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
-      'Vehicle-to-grid communication standard enabling automatic billing, smart charging, V2G/V2H bi-directional power flow, and secure identification — going beyond simple Mode 3 charging',
+      'Switch the office electricity supply to a renewable tariff',
+      'Replace the firm\'s diesel vans with electric vehicles',
       'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'Install a heat pump to replace the gas heating in the firm\'s offices',
     ],
     correctAnswer: 2,
     explanation:
@@ -3747,9 +3747,9 @@ export const module2Questions: QuestionBank[] = [
     id: 231,
     question: 'Under the Environment Act 2021, what new producer responsibility applies to packaging waste?',
     options: [
-      'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
-      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
+      'A ban on all single-use plastic packaging from 2024 onwards',
+      'A requirement that all packaging be made from recycled material only',
+      'A duty on consumers to return packaging to the retailer for a deposit refund',
       'Extended Producer Responsibility (EPR) for packaging — producers and brand-owners pay the full net cost of managing the household packaging they place on the market, with reporting from 2024',
     ],
     correctAnswer: 3,
@@ -3764,9 +3764,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under ISO 14001 (environmental management systems), what is the first step a contractor must take?',
     options: [
       'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
-      'Packaging must be minimised to satisfy required function, designed for recovery (reuse, recycling, energy or composting), and contain only restricted levels of heavy metals',
-      'Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection',
-      'If improvements are not cost-effective (payback over 7 years), wall insulation would damage property, or consent not obtained',
+      'Set a net zero carbon target before assessing any of their activities',
+      'Appoint an external auditor to certify the organisation immediately',
+      'Purchase carbon offsets to neutralise the organisation\'s emissions',
     ],
     correctAnswer: 0,
     explanation:
@@ -3779,10 +3779,10 @@ export const module2Questions: QuestionBank[] = [
     id: 233,
     question: 'Under the Climate Change Act 2008 (as amended 2019), what is the UK\'s legally binding emissions target?',
     options: [
-      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
+      'An 80% cut in greenhouse gas emissions by 2050 against a 1990 baseline',
       'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
-      'New schedule columns capture EV-specific data including PEN-fault detection method, RCD type, charge-point rating and special-location considerations — supporting accurate dutyholder records',
-      '125% of the module short-circuit current Isc at STC, plus voltage drop over potentially long DC runs, with cable type rated for outdoor UV exposure',
+      'Net Zero greenhouse gas emissions by 2030 against a 2010 baseline',
+      'A voluntary aim to reduce emissions with no legally binding deadline',
     ],
     correctAnswer: 1,
     explanation:
@@ -3795,10 +3795,10 @@ export const module2Questions: QuestionBank[] = [
     id: 234,
     question: 'Under the Pollution Prevention and Control regime, what is a permit and when does an electrical contractor need one?',
     options: [
-      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
-      'EVCP loads are continuous and high-utilisation — apply appropriate Cg and Ca correction factors, consider cumulative diversity for multiple chargers, and ensure final-circuit protective device rating coordinates with both EVCP rating and DNO supply capacity',
-      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'A permit is required by every electrical contractor before any work on a building',
+      'A permit is a planning consent issued by the local authority for construction',
+      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\'t need one but must comply with permit conditions when working at a permitted site',
+      'A permit is the dutyholder\'s written authorisation to work on a live circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3811,9 +3811,9 @@ export const module2Questions: QuestionBank[] = [
     id: 235,
     question: 'Under the Control of Pollution (Oil Storage) Regulations, what containment is required for diesel storage on site?',
     options: [
-      'A DC isolator must be provided at each PV array adjacent to the inverter, suitable for switching DC under load and clearly identified for rapid emergency disconnection',
-      'Specify lower-embodied-carbon materials, prefab where possible, optimise van routes to cut transport, source materials from local merchants, and segregate waste for recycling not landfill',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'A bund sized for 50% of the largest container, fitted with a drain valve for rainwater',
+      'A single drip tray under the tap, with the tank standing on bare ground',
+      'No containment is required provided the store is under cover from rain',
       'Secondary containment (bund) sized for 110% of the largest container or 25% of total stored, whichever is greater, with no drainage outlet — preventing spills reaching watercourses or soakaways',
     ],
     correctAnswer: 3,
@@ -3828,9 +3828,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'When a heat pump containing R32 refrigerant reaches end of life, what disposal route is mandatory?',
     options: [
       'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
-      'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'The refrigerant may be safely vented to atmosphere as R32 has a low GWP',
+      'The whole unit can be placed in a general scrap-metal skip once isolated',
+      'The refrigerant can be removed by any electrician provided the room is ventilated',
     ],
     correctAnswer: 0,
     explanation:
@@ -3843,10 +3843,10 @@ export const module2Questions: QuestionBank[] = [
     id: 237,
     question: 'Under the Waste (England and Wales) Regulations 2011, what is the waste hierarchy you must apply?',
     options: [
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
+      'Disposal first → Recovery → Recycling → Re-use → Prevention as a last resort',
       'Prevention → Preparing for re-use → Recycling → Other recovery (including energy recovery) → Disposal as last resort',
-      'Network of connected sensors and devices enabling data collection and automated control',
-      'Evaluating environmental impacts throughout a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life from raw materials to disposal',
+      'Recycling → Disposal → Re-use → Prevention → Recovery in any order',
+      'Segregate → Store → Transfer → Record, with no preference order applied',
     ],
     correctAnswer: 1,
     explanation:
@@ -3859,10 +3859,10 @@ export const module2Questions: QuestionBank[] = [
     id: 238,
     question: 'On a project to retrofit LED lighting, what is the right approach to the existing fluorescent tubes and ballasts?',
     options: [
-      'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
-      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
+      'Place all tubes and ballasts in the general waste skip to keep the job simple',
+      'Leave the old fittings in place and simply wire the new LEDs alongside them',
       'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
+      'Crush the tubes on site to recover the glass, then bin the ballasts as scrap',
     ],
     correctAnswer: 2,
     explanation:
@@ -3875,9 +3875,9 @@ export const module2Questions: QuestionBank[] = [
     id: 239,
     question: 'Under the Climate Change Act, what is a Carbon Budget and why does it matter to a contractor bidding for public work?',
     options: [
-      'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
-      'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
-      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
+      'The annual sum government sets aside to fund carbon capture projects',
+      'A voluntary spending limit a contractor sets on low-carbon materials',
+      'The per-project carbon allowance a client grants to its main contractor',
       'A statutory five-year cap on UK emissions; public sector procurement increasingly demands suppliers report their carbon and demonstrate reduction plans aligned to Net Zero',
     ],
     correctAnswer: 3,
@@ -3892,9 +3892,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'For an EV charging installation in a public car park, what specific Building Regulations Part S requirement applies?',
     options: [
       'Part S (Infrastructure for charging electric vehicles) requires new non-residential buildings with 10+ parking spaces to provide 1 EV charge point and cable routes for 1 in 5 spaces',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
-      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'Part S requires every parking space to have a fully installed 22 kW charge point',
+      'Part S applies only to residential buildings and exempts public car parks entirely',
+      'Part S requires charge points only where the supply already has spare capacity',
     ],
     correctAnswer: 0,
     explanation:
@@ -3907,10 +3907,10 @@ export const module2Questions: QuestionBank[] = [
     id: 241,
     question: 'Under Building Regulations Part L 2021 (England), what is the Future Homes Standard target for new homes from 2025?',
     options: [
-      'Either an earth electrode of suitable resistance, or a device that disconnects the EVCP from the supply within 5 s of detecting a PEN open-circuit fault, or O-PEN protection',
+      'Around 31% lower CO₂ emissions than 2013 Part L, the same as the 2021 interim step',
       'Around 75-80% lower CO₂ emissions than 2013 Part L, achieved through low-carbon heating (typically heat pumps) and high fabric efficiency — no fossil-fuel heating in new homes',
-      'Annual leak check by F-Gas-certified personnel where charge ≥ 5 tonnes CO₂e, or every 2 years where charge < 5 tonnes; frequencies double if a leak detection system is installed and operational',
-      'Secondary containment (bund) sized for 110% of the largest container or 25% of total stored, whichever is greater, with no drainage outlet — preventing spills reaching watercourses or soakaways',
+      '100% lower CO₂ emissions, requiring every new home to be fully off-grid',
+      'Around 50% lower CO₂ emissions, while still allowing gas boilers in new homes',
     ],
     correctAnswer: 1,
     explanation:
@@ -3923,10 +3923,10 @@ export const module2Questions: QuestionBank[] = [
     id: 242,
     question: 'Under MCS, what is the MCS Installation Database (MID) and why does it matter to the consumer?',
     options: [
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      'Extended Producer Responsibility (EPR) for packaging — producers and brand-owners pay the full net cost of managing the household packaging they place on the market, with reporting from 2024',
+      'A private database of installer contact details with no consumer relevance',
+      'A manufacturer\'s warranty register that the consumer must sign up to separately',
       'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
-      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
+      'A government list of approved equipment, unrelated to individual installations',
     ],
     correctAnswer: 2,
     explanation:
@@ -3939,9 +3939,9 @@ export const module2Questions: QuestionBank[] = [
     id: 243,
     question: 'Under the Smart Export Guarantee (SEG), what obligation does a licensed electricity supplier have?',
     options: [
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
+      'Every licensed supplier must pay a fixed government-set rate for all exported energy',
+      'Suppliers must install a free generation meter for any customer with solar PV',
+      'Suppliers must buy back exported electricity only from customers on their own tariff',
       'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
     ],
     correctAnswer: 3,
@@ -3955,10 +3955,10 @@ export const module2Questions: QuestionBank[] = [
     id: 244,
     question: 'Under MCS MIS 3005, what handover documentation must the customer receive after a heat pump installation?',
     options: [
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
-      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
-      'Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re locked out of growing markets like heat pumps, EV, PV and battery',
-      'EVCP loads are continuous and high-utilisation — apply appropriate Cg and Ca correction factors, consider cumulative diversity for multiple chargers, and ensure final-circuit protective device rating coordinates with both EVCP rating and DNO supply capacity',
+      'MCS Certificate, manufacturer\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'Only a verbal handover demonstrating how to use the thermostat',
+      'Just the manufacturer\'s instruction leaflet that came with the unit',
+      'Only the electrical installation certificate for the heat pump\'s supply circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -3971,10 +3971,10 @@ export const module2Questions: QuestionBank[] = [
     id: 245,
     question: 'The HSE prosecution statistics consistently show what root cause behind environmental enforcement against electrical contractors?',
     options: [
-      'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
+      'Failure to wear the correct PPE when handling hazardous materials',
       'Failure to manage WEEE (mercury-containing tubes, refrigerants, batteries) — driving most environmental enforcement; followed by uncontrolled site discharges',
-      'If improvements are not cost-effective (payback over 7 years), wall insulation would damage property, or consent not obtained',
-      'A statutory five-year cap on UK emissions; public sector procurement increasingly demands suppliers report their carbon and demonstrate reduction plans aligned to Net Zero',
+      'Failure to obtain planning permission before installing equipment',
+      'Failure to register installations on the MCS Installation Database',
     ],
     correctAnswer: 1,
     explanation:
@@ -3987,10 +3987,10 @@ export const module2Questions: QuestionBank[] = [
     id: 246,
     question: 'Under the Packaging (Essential Requirements) Regulations 2015, what duty applies to packaging used in the supply chain?',
     options: [
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      'Secondary containment (bund) sized for 110% of the largest container or 25% of total stored, whichever is greater, with no drainage outlet — preventing spills reaching watercourses or soakaways',
+      'All packaging must be made entirely from recycled cardboard',
+      'Packaging must be returned to the manufacturer after a single use',
       'Packaging must be minimised to satisfy required function, designed for recovery (reuse, recycling, energy or composting), and contain only restricted levels of heavy metals',
-      'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
+      'Packaging must be clearly labelled with the producer\'s carbon footprint',
     ],
     correctAnswer: 2,
     explanation:
@@ -4003,9 +4003,9 @@ export const module2Questions: QuestionBank[] = [
     id: 247,
     question: 'For a contractor installing a battery storage system, what end-of-life consideration must be discussed at design stage?',
     options: [
-      'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
-      'A statutory five-year cap on UK emissions; public sector procurement increasingly demands suppliers report their carbon and demonstrate reduction plans aligned to Net Zero',
-      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
+      'Lithium batteries can be placed in the household recycling bin at end of life',
+      'No end-of-life planning is needed as batteries last the life of the building',
+      'The battery can simply be left in place and disconnected when it fails',
       'Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers',
     ],
     correctAnswer: 3,
@@ -4020,9 +4020,9 @@ export const module2Questions: QuestionBank[] = [
     question: 'Under the Carbon Trust\'s Net Zero Standard, what is "Science-Based Targets" alignment?',
     options: [
       'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
-      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
-      'Recommended for final circuits supplying or fed from PV/battery installations to mitigate arc-fault risk on long DC and AC runs',
-      'Only F-Gas-certified personnel may install, maintain, decommission or do leak checks on equipment containing fluorinated greenhouse gas refrigerants — electricians without F-Gas certification can only do the electrical work',
+      'A target based on what a business can comfortably afford rather than climate science',
+      'A government-mandated cap that every UK business must legally achieve by 2030',
+      'A research funding target for universities working on climate science',
     ],
     correctAnswer: 0,
     explanation:
@@ -4035,10 +4035,10 @@ export const module2Questions: QuestionBank[] = [
     id: 249,
     question: 'For PV/battery installations, what cyber-security consideration is now expected per the IET Code of Practice?',
     options: [
-      'Net Zero greenhouse gas emissions by 2050 (compared with 1990 baseline), with interim five-yearly carbon budgets monitored by the Climate Change Committee',
+      'Cyber-security is the installer\'s responsibility only until handover, then it transfers entirely to the customer',
       'Default credentials must be changed, firmware kept up to date, internet-facing components segregated where possible, and data shared with third-party platforms reviewed for privacy and security implications',
-      'PEN-conductor open-circuit risk to outdoor metalwork — apply Section 722-style measures: earth electrode, residual current detection, or use of a dedicated supplier-issued separate earth (TT outdoor)',
-      'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
+      'The system should be kept permanently offline so no cyber-security measures are needed',
+      'Only the inverter manufacturer is permitted to apply any security settings',
     ],
     correctAnswer: 1,
     explanation:
@@ -4051,10 +4051,10 @@ export const module2Questions: QuestionBank[] = [
     id: 250,
     question: 'Looking ahead, what is the main commercial driver for a small electrical contractor to invest in environmental and sustainability competence?',
     options: [
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
-      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
-      'Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re locked out of growing markets like heat pumps, EV, PV and battery',
-      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
+      'Environmental competence reduces the contractor\'s own electricity bills',
+      'It is a legal requirement for every contractor regardless of the work they do',
+      'Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\'re locked out of growing markets like heat pumps, EV, PV and battery',
+      'Environmental qualifications exempt the contractor from Building Regulations',
     ],
     correctAnswer: 2,
     explanation:

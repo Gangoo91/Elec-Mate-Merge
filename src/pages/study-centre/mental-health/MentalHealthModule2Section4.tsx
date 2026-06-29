@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       "A colleague has been unusually withdrawn for weeks, barely speaking at break times, and you've noticed they look exhausted every day. You want to approach them using the ALGEE action plan. What should your FIRST step be?",
     options: [
-      "Tell them you've noticed they seem depressed and suggest they see a GP",
       "Approach them in a quiet, private moment and ask how they're doing in an open, non-judgemental way",
+      "Tell them you've noticed they seem depressed and suggest they see a GP",
       'Send them a text message with a link to the NHS Talking Therapies website',
       'Speak to their supervisor and ask them to arrange an occupational health referral',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The first step in ALGEE is 'Approach, assess and assist with any crisis.' This means choosing a quiet, private moment to have a conversation. Start by simply asking how they are in an open, non-judgemental way. Do not jump straight to suggesting professional help or diagnose them — listen first. Speaking to a supervisor without their knowledge could breach trust and make the situation worse.",
   },
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       "You've encouraged a colleague to see their GP about their anxiety. They're nervous about the appointment. What would be MOST helpful to tell them?",
     options: [
-      '"The GP will probably just give you medication — it\'s really straightforward."',
-      '"You can describe your symptoms, the GP will assess you, and they might suggest talking therapy, medication, or both. You can also self-refer to NHS Talking Therapies."',
-      '"Just tell the GP you need a sick note and some time off work."',
-      '"Don\'t worry about it — the GP has seen much worse than your anxiety."',
+      '"The GP will probably just hand you medication — it is really straightforward."',
+      '"Describe your symptoms, the GP will assess you, and you can also self-refer."',
+      '"Just tell the GP you need a sick note and a bit of time off work."',
+      '"Don\'t worry about it — the GP has seen far worse than your anxiety."',
     ],
     correctIndex: 1,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does ALGEE stand for in the Mental Health First Aid action plan?',
     options: [
-      'Assess, Listen, Guide, Encourage, Educate',
-      'Approach, Listen, Give reassurance, Encourage professional help, Encourage other supports',
-      'Ask, Learn, Guide, Empathise, Evaluate',
-      'Approach, Locate, Get help, Escort, Evaluate',
+      'Approach, Listen, Give reassurance, Encourage help, Encourage supports',
+      'Assess, Listen, Guide, Encourage, Educate the person fully',
+      'Ask, Learn, Guide, Empathise, Evaluate the situation',
+      'Approach, Locate, Get help, Escort, Evaluate the outcome',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ALGEE stands for: Approach, assess and assist with any crisis; Listen non-judgementally; Give reassurance and information; Encourage appropriate professional help; Encourage other supports. This is the core action plan taught in MHFA courses worldwide and provides a structured framework for supporting someone experiencing a mental health problem.',
   },
@@ -121,10 +121,10 @@ const quizQuestions = [
     options: [
       '"I\'m here for you — you don\'t have to go through this alone."',
       '"That sounds really difficult. Thank you for telling me."',
-      '"Just think positive — there are people much worse off than you."',
       '"I may not fully understand what you\'re going through, but I care."',
+      '"Just think positive — there are people much worse off than you."',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Telling someone to 'think positive' or that 'others have it worse' minimises their experience and implies their depression is a choice or a matter of perspective. Depression is a clinical condition, not a lack of gratitude. These comments can increase shame and guilt, making the person less likely to seek help. Supportive responses acknowledge the difficulty without trying to fix or dismiss it.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'NHS Talking Therapies (formerly IAPT) offers several evidence-based treatments. Which therapy is MOST commonly offered as a first-line treatment for anxiety and depression?',
     options: [
+      'CBT (Cognitive Behavioural Therapy)',
       'EMDR (Eye Movement Desensitisation and Reprocessing)',
       'Psychoanalysis',
-      'CBT (Cognitive Behavioural Therapy)',
       'Hypnotherapy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'CBT (Cognitive Behavioural Therapy) is the most widely recommended and commonly offered first-line psychological treatment for depression and anxiety through NHS Talking Therapies. It is recommended by NICE guidelines and has a strong evidence base. CBT focuses on identifying and changing unhelpful patterns of thinking and behaviour. EMDR is primarily used for PTSD. Psychoanalysis and hypnotherapy are not standard NHS Talking Therapies treatments.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'When supporting someone with depression or anxiety, what is the role of a Mental Health First Aider regarding medication?',
     options: [
       'Advise the person on which medication might be best for their symptoms',
-      'Encourage them to try natural remedies before medication',
-      'Understand what the person may be going through but NEVER advise on medication — that is exclusively the role of medical professionals',
-      'Suggest they stop taking medication if they report side effects',
+      'Encourage them to try natural remedies before starting any medication',
+      'Suggest they stop taking their medication if they report side effects',
+      'Offer understanding but never advise on medication — that is for professionals',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "A Mental Health First Aider's role regarding medication is to understand what someone may be going through (e.g., side effects, waiting for medication to take effect, withdrawal symptoms) but NEVER to advise on medication. You must not recommend starting, stopping, changing, or adjusting medication — that is exclusively the role of doctors and pharmacists. If someone reports concerning side effects, encourage them to speak to their GP.",
   },
@@ -190,11 +190,11 @@ const quizQuestions = [
       'Which of the following self-help strategies has the STRONGEST evidence base for helping with mild to moderate depression?',
     options: [
       'Taking vitamin supplements',
-      'Watching motivational videos',
       'Regular physical exercise (150 minutes per week of moderate-intensity activity)',
+      'Watching motivational videos',
       'Keeping a gratitude journal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Regular physical exercise has the strongest evidence base for mild to moderate depression and is recommended by NICE as a treatment option. The NHS recommends 150 minutes of moderate-intensity exercise per week. Exercise increases endorphins, serotonin, and noradrenaline production. While gratitude journaling and other strategies may help some people, exercise is the only self-help intervention with sufficient clinical evidence to be included in NICE depression guidelines as a standalone treatment recommendation.',
   },
@@ -204,11 +204,11 @@ const quizQuestions = [
       "You've been supporting a colleague with anxiety. They tell you they've self-referred to NHS Talking Therapies. What is the typical waiting time they should expect?",
     options: [
       'They should be seen within 48 hours',
-      'Typically 6 to 18 weeks, though it varies by area',
       'There is no waiting time — treatment starts immediately after self-referral',
+      'Typically 6 to 18 weeks, though it varies by area',
       'At least 12 months in most parts of the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Typical waiting times for NHS Talking Therapies are 6 to 18 weeks, although this varies significantly by area. The NHS constitution target is that 75% of people should begin treatment within 6 weeks, and 95% within 18 weeks. While waiting, the person may be offered guided self-help materials, online CBT courses, or signposted to other resources. It's helpful to prepare your colleague for this wait and encourage them to use self-help strategies in the meantime.",
   },

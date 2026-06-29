@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'Resonance occurs when:',
     options: [
       'X_L = X_C, so net reactance is zero',
-      'A skills card confirming competence level',
-      'Mechanical Ventilation with Heat Recovery',
-      'Magnetomotive force (mmf)',
+      'R equals X_L, so impedance is at its maximum',
+      'X_C is twice X_L, so the circuit is purely capacitive',
+      'The supply frequency is exactly 50 Hz regardless of L and C',
     ],
     correctAnswer: 0,
     explanation:

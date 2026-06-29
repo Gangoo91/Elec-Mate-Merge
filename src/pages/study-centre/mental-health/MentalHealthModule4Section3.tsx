@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       "A colleague describes someone with a personality disorder as having a 'character flaw'. How should you understand personality disorders instead?",
     options: [
-      'They are a sign of weakness and poor upbringing',
       'They are deeply ingrained patterns of behaviour that affect cognition, emotional responses, interpersonal functioning, and impulse control',
+      'They are a sign of weakness and poor upbringing',
       'They are temporary mood problems that resolve on their own',
       'They only affect people who have experienced prison or homelessness',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Personality disorders are deeply ingrained patterns of behaviour that deviate from cultural expectations and affect cognition, emotional responses, interpersonal functioning, and impulse control. They usually emerge in adolescence or early adulthood. They are NOT a character flaw, a sign of weakness, or a choice. They are recognised mental health conditions that often have roots in adverse childhood experiences and trauma.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 1,
     question: 'Personality disorders typically first emerge during which life stage?',
     options: [
-      'Early childhood (ages 2-5)',
       'Adolescence or early adulthood',
+      'Early childhood (ages 2-5)',
       'Middle age (ages 40-50)',
       'Old age (ages 65+)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Personality disorders usually emerge during adolescence or early adulthood. This is the developmental period when personality consolidates and patterns of relating to others, managing emotions, and responding to stress become established. Whilst the roots often lie in childhood experiences (particularly adverse childhood experiences), the recognisable patterns of a personality disorder typically become apparent in adolescence and early adulthood.',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     options: [
       'Intense and unstable relationships',
       'Fear of abandonment',
-      'Persistent auditory hallucinations',
       'Emotional instability and impulsivity',
+      'Persistent auditory hallucinations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Persistent auditory hallucinations are NOT a key feature of BPD/EUPD — they are more commonly associated with psychotic disorders such as schizophrenia. The key features of BPD/EUPD include intense and unstable relationships, fear of abandonment, emotional instability, impulsivity, self-harm, identity disturbance, and dissociation. Whilst some people with BPD/EUPD may experience brief, stress-related paranoid thoughts or dissociative symptoms, persistent hallucinations are not characteristic of the condition.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       "Why does telling someone with emotional dysregulation to 'just calm down' typically NOT work?",
     options: [
-      'Because they are choosing to be upset and refuse to cooperate',
       'Because they have difficulty managing emotional responses — the intensity and duration of their reactions are beyond simple voluntary control',
+      'Because they are choosing to be upset and refuse to cooperate',
       "Because they have not been taught what the word 'calm' means",
       'Because they enjoy the attention they receive from being distressed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Telling someone with emotional dysregulation to 'calm down' does not work because their difficulty managing emotional responses is beyond simple voluntary control. Emotional dysregulation means that emotional reactions are more intense, last longer, and are harder to recover from than for most people. The person is not choosing to be upset — their emotional regulation system is different. Telling them to calm down is like telling someone with a broken leg to 'just walk normally'. It invalidates their experience and typically increases distress because they already wish they could calm down but cannot.",
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'Giving firm, direct instructions about what they should do',
       'Setting strict boundaries and maintaining emotional distance',
-      'Validation — acknowledging that their feelings are real and understandable',
       'Offering practical solutions to their problems',
+      'Validation — acknowledging that their feelings are real and understandable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Validation is the single most important skill. Validation means acknowledging that the person's feelings are real and understandable, even if you cannot fully understand the intensity of their reaction. It does not mean agreeing with everything or approving of every behaviour. A validating response might be: 'I can see that you are in a lot of pain right now, and that must be really difficult.' Validation helps de-escalate emotional crises, builds trust, and communicates that you take the person seriously. Without validation, other support strategies are far less effective.",
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
     question: 'Which specialist therapy was developed specifically for BPD/EUPD?',
     options: [
       'Cognitive Behavioural Therapy (CBT)',
-      'Eye Movement Desensitisation and Reprocessing (EMDR)',
       'Dialectical Behaviour Therapy (DBT)',
+      'Eye Movement Desensitisation and Reprocessing (EMDR)',
       'Person-Centred Counselling',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dialectical Behaviour Therapy (DBT) was developed specifically for BPD/EUPD by Dr Marsha Linehan. It combines cognitive behavioural techniques with mindfulness and acceptance strategies. DBT teaches four key skill sets: mindfulness, distress tolerance, emotional regulation, and interpersonal effectiveness. It is the most researched and evidence-based treatment for BPD/EUPD. Whilst CBT, EMDR, and person-centred counselling can all be helpful for various mental health conditions, DBT was designed specifically to address the core difficulties of BPD/EUPD.',
   },

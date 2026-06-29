@@ -83,9 +83,9 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 7,
     question: 'Why is fail-safe wiring used for fire-BMS interlocks?',
     options: [
-      'Simulating alarm conditions and checking BMS response',
-      'They must unlock to allow free evacuation',
-      'Fire panel relay outputs were wired to wrong BMS input terminals',
+      'To reduce the cable cross-sectional area required for the interlock',
+      'To allow the interlock to be reset remotely from the BMS head end',
+      'To prevent nuisance alarms during routine plant maintenance',
       'To ensure broken circuits still generate alarm signals',
     ],
     correctAnswer: 3,
@@ -123,10 +123,10 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     question:
       'In the real-world example, what mistake prevented AHUs from shutting down initially?',
     options: [
-      'To prevent smoke spread throughout the building',
-      'To perform critical safety shutdowns and control access during emergencies',
+      'The AHU motors had been isolated for maintenance and not re-energised',
+      'The fire detection zones had been disabled at the fire panel',
       'Fire panel relay outputs were wired to wrong BMS input terminals',
-      'To maintain fire integrity and prevent cross-contamination of safety circuits',
+      'The BMS controller software had not been commissioned',
     ],
     correctAnswer: 2,
     explanation:

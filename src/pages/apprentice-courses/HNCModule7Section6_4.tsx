@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'coordination-purpose',
     question: 'What is the primary purpose of protective device coordination?',
     options: [
-      'To confirm the routes are wide enough, strong enough, and clear of obstructions for the MEWP to travel safely',
+      'To ensure every protective device in the system trips simultaneously on any fault',
       'To ensure only the device nearest the fault operates, isolating the minimum portion of the system',
-      'It releases endorphins, reduces cortisol, improves sleep, and builds neuroplasticity',
-      'Risk assessment names the hazards and controls; method statement says how the work will be done in safe order',
+      'To increase the breaking capacity of each device above the prospective fault current',
+      'To limit the let-through energy of the supply transformer during a short circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'tcc-curve',
     question: 'What does a time-current characteristic (TCC) curve display?',
     options: [
-      'Change in process output per unit change in input',
-      'Millivolts (typically 0-50 mV depending on type)',
-      'Check connections first, then replace if still faulty',
+      'Supply voltage versus load current at the point of supply',
+      'Let-through energy versus prospective fault current',
+      'Conductor temperature rise versus time during a fault',
       'Operating time versus fault current magnitude',
     ],
     correctIndex: 3,
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'software-tools',
     question: 'Which software packages are commonly used for coordination studies?',
     options: [
-      'Density differences due to temperature gradients',
-      'Before plastering, during construction phase',
+      'AutoCAD, Revit, and SketchUp',
+      'MATLAB, LabVIEW, and Simulink',
       'ETAP, SKM PowerTools, and Amtech ProDesign',
-      'Moisture ingress or corroded connections',
+      'PowerPoint, Excel, and Visio',
     ],
     correctIndex: 2,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "In IEC 60909, what does the voltage factor 'c' account for?",
     options: [
-      'Psychological support and debriefing, recognising potential trauma',
+      'The power factor of the connected load at the fault point',
       'Variation of system voltage and equipment impedance from nominal values',
-      'Multi-fibre Termination Push-on (trademarked MPO variant)',
-      'To ensure the building reaches setpoint at occupancy time',
+      'The DC time constant of the fault circuit',
+      'The temperature coefficient of the conductor resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the initial symmetrical short-circuit current (I"k)?',
     options: [
-      'It affects the DC component and peak asymmetrical current',
-      'Initial contribution of 4-6 times full load current, decaying rapidly',
+      'The peak instantaneous value reached in the first half-cycle of the fault',
+      'The steady-state fault current remaining after the DC offset has decayed',
       'The RMS value of the AC symmetrical component at the instant of fault',
-      'Equipment dynamic withstand capability (making capacity)',
+      'The average current over the full duration of the fault clearance',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the peak short-circuit current (ip) used to determine?',
     options: [
-      'It affects the DC component and peak asymmetrical current',
-      'The RMS value of the AC symmetrical component at the instant of fault',
-      'Device ratings, settings, clearing times, and coordination margins',
+      'The thermal withstand rating of downstream cables',
+      'The minimum disconnection time required by BS 7671',
+      'The breaking capacity rating needed at steady state',
       'Equipment dynamic withstand capability (making capacity)',
     ],
     correctAnswer: 3,
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What is meant by 'selectivity' in protective device coordination?",
     options: [
-      'A communication scheme between protective devices to enhance selectivity',
+      'The ability of every device to trip together to de-energise the whole installation',
       'The ability to isolate only the faulted circuit whilst maintaining supply to healthy circuits',
-      'Device ratings, settings, clearing times, and coordination margins',
-      'Thermal energy passed through the protective device during fault clearance',
+      'The ability of a device to interrupt the maximum prospective fault current',
+      'The ability to choose the cheapest device that still meets the load rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'What contribution do induction motors make to fault current?',
     options: [
-      'Equipment dynamic withstand capability (making capacity)',
-      'The RMS value of the AC symmetrical component at the instant of fault',
-      'Device ratings, settings, clearing times, and coordination margins',
+      'They draw no additional current and reduce the overall fault level',
+      'A sustained contribution equal to full load current for the whole fault',
+      'A contribution only on earth faults, never on phase-to-phase faults',
       'Initial contribution of 4-6 times full load current, decaying rapidly',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: "In a coordination study, what does the term 'let-through energy' (I²t) represent?",
     options: [
       'Thermal energy passed through the protective device during fault clearance',
-      'A communication scheme between protective devices to enhance selectivity',
-      'The RMS value of the AC symmetrical component at the instant of fault',
-      'Equipment dynamic withstand capability (making capacity)',
+      'The reactive energy stored in the cable during normal operation',
+      'The total energy the supply transformer can deliver before saturating',
+      'The mechanical energy released by the breaker contacts when opening',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is zone selective interlocking (ZSI)?',
     options: [
-      'Device ratings, settings, clearing times, and coordination margins',
+      'A mechanical lock that prevents two adjacent breakers closing together',
       'A communication scheme between protective devices to enhance selectivity',
-      'It affects the DC component and peak asymmetrical current',
-      'Equipment dynamic withstand capability (making capacity)',
+      'A fixed time delay added to every device on the distribution board',
+      'A method of increasing a breaker breaking capacity by paralleling units',
     ],
     correctAnswer: 1,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     id: 11,
     question: 'Why is the X/R ratio important in short-circuit calculations?',
     options: [
-      'Thermal energy passed through the protective device during fault clearance',
-      'A communication scheme between protective devices to enhance selectivity',
-      'The RMS value of the AC symmetrical component at the instant of fault',
+      'It sets the maximum disconnection time permitted by BS 7671',
+      'It determines the rated voltage at which the device can operate',
+      'It fixes the steady-state RMS fault current regardless of timing',
       'It affects the DC component and peak asymmetrical current',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
       'In coordination study documentation, what should be included in the protective device schedule?',
     options: [
       'Device ratings, settings, clearing times, and coordination margins',
-      'It affects the DC component and peak asymmetrical current',
-      'A communication scheme between protective devices to enhance selectivity',
-      'The RMS value of the AC symmetrical component at the instant of fault',
+      'Only the manufacturer and catalogue number of each device',
+      'The X/R ratio and DC time constant at every node in the network',
+      'The arc flash incident energy and PPE category for each panel',
     ],
     correctAnswer: 0,
     explanation:

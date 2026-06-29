@@ -14,8 +14,8 @@ const quickCheckQuestions = [
   {
     id: 'hvac-trigger',
     question: 'What type of sensor might trigger a BMS to adjust ventilation in a meeting room?',
-    options: ['Light sensor', 'CO₂ sensor', 'Door sensor', 'Water sensor'],
-    correctIndex: 1,
+    options: ['Light sensor', 'Door contact sensor', 'Water leak sensor', 'CO₂ sensor'],
+    correctIndex: 3,
     explanation:
       'A CO₂ sensor monitors air quality and occupancy levels. When CO₂ rises in a meeting room, the BMS automatically increases ventilation to maintain healthy indoor air quality.',
   },
@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'lighting-savings',
     question: 'How does daylight harvesting reduce energy consumption?',
     options: [
-      'By turning off all lights at night',
       'By dimming or switching off lights when natural light is sufficient',
-      'By using only LED bulbs',
-      'By reducing building size',
+      'By turning off all lights at night automatically',
+      'By specifying only LED light fittings',
+      'By reducing the glazed area of the building',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Daylight harvesting automatically dims or switches off lights when natural daylight is sufficient, reducing energy consumption by up to 40% in perimeter areas.',
   },

@@ -16,10 +16,10 @@ const Module7Section5_1 = () => {
       id: 1,
       question: 'Why is selecting the correct test equipment important?',
       options: [
-        'Specialist earth electrode tester with auxiliary electrodes',
+        'It allows testing to be carried out without isolation',
         'It prevents inaccurate results, wasted time, and safety risks',
-        'Appropriate mechanical protection such as conduit or trunking',
-        'Replacing equipment under warranty or for traceability',
+        'It removes the need to follow a test sequence',
+        'It guarantees the installation will pass certification',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section5_1 = () => {
       id: 2,
       question: 'What does a continuity tester confirm?',
       options: [
-        'At tender stage with confirmed lead times',
-        'All four outriggers must be fully extended and set on firm level ground',
+        'The insulation resistance between live conductors',
+        'The prospective fault current at the origin',
         'Whether conductors are continuous and properly connected',
-        'To join two tubes at any angle other than 90 degrees',
+        'The earth fault loop impedance of the circuit',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module7Section5_1 = () => {
       id: 3,
       question: 'What type of tester measures insulation quality?',
       options: [
-        'Moisture ingress and excessive heat',
-        'Type, severity, and urgency',
-        '1 lux along the centre line',
+        'Earth fault loop impedance tester',
+        'Low-resistance ohmmeter',
+        'Prospective fault current tester',
         'Insulation resistance tester',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section5_1 = () => {
       question: 'What advantage does a multifunction tester offer?',
       options: [
         'It combines several essential tests in one instrument',
-        'Delays, poor workmanship, or failed inspections',
-        'Designers, manufacturers, importers, and suppliers',
-        'Reassess escape route lighting coverage',
+        'It removes the need for safe isolation procedures',
+        'It can be used on live circuits without any risk',
+        'It does not require periodic calibration',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section5_1 = () => {
       id: 5,
       question: "Why can't socket testers replace proper calibrated testing?",
       options: [
-        'Pairing a behaviour you need to do with a behaviour you want to do',
+        'They only work on three-phase circuits',
         'They can only provide basic fault indication, not detailed measurements',
-        'Inhalation, ingestion, skin/eye contact, injection',
-        'To capture knowledge from project experiences for future benefit',
+        'They require an external power supply to operate',
+        'They are not permitted on domestic installations',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module7Section5_1 = () => {
       id: 6,
       question: 'What must always be checked before using a test instrument?',
       options: [
-        "Learning user patterns and predictive automation",
-        "A fracture, other than to fingers, thumbs, or toes",
+        "The colour of the instrument casing",
+        "Whether it is the most expensive model available",
         "The manufacturer's instructions and suitability for the job",
-        "Due to hydrostatic pressure from the water column above",
+        "The date the instrument was purchased",
       ],
       correctAnswer: 2,
       explanation:
@@ -116,10 +116,10 @@ const Module7Section5_1 = () => {
       question:
         'In the real-world example, why did the plug-in tester fail to identify the lighting fault?',
       options: [
-        'Measured data from similar buildings',
+        'It was not calibrated within the last 12 months',
         'It could not detect a broken neutral conductor',
-        'They ensure safe, efficient, and future-proof installations',
-        'That there is no breakdown between conductors or to earth',
+        'It had been set to the wrong measurement range',
+        'The battery in the tester had gone flat',
       ],
       correctAnswer: 1,
       explanation:
@@ -130,10 +130,10 @@ const Module7Section5_1 = () => {
       question:
         'What fault was identified once the correct RCD testing instrument was used in the second example?',
       options: [
-        'To predict and plan for income and expense patterns',
-        'Thermocouples can measure much higher temperatures',
+        'A loose terminal at the consumer unit',
+        'An undersized protective conductor',
         'Insulation breakdown in a damp junction box',
-        'Both ceiling height and furniture layout',
+        'A reversed line and neutral connection',
       ],
       correctAnswer: 2,
       explanation:

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A subcontractor has arrived late for the third time this week, delaying your programme. Using the DESC model, what should you do first?',
     options: [
-      'Tell them you are frustrated and demand they explain themselves',
       'Describe the specific behaviour objectively without blame or emotion',
+      'Tell them you are frustrated and demand they explain themselves',
       'Specify the consequences if they are late again',
       'Express how their lateness makes you feel and move straight to consequences',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The DESC model always starts with Describe: state the observable facts without blame, emotion, or judgement. For example, "You arrived at 9:45 this morning. This is the third time this week you have arrived after the agreed 8:00 start." This neutral opening prevents defensiveness and sets a factual foundation for the rest of the conversation.',
   },
@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'A client keeps pressuring you to add extra sockets without adjusting the price. You have already explained that it is outside the agreed scope. They continue to push. Which assertive technique should you use?',
     options: [
       'Fogging &mdash; agree with their general point but maintain your position',
-      'Broken record &mdash; calmly repeat your position using the same or similar words each time',
       'Aggressive escalation &mdash; raise your voice to show you are serious',
       'Passive acceptance &mdash; agree to the extra work to maintain the relationship',
+      'Broken record &mdash; calmly repeat your position using the same or similar words each time',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The broken record technique involves calmly and persistently repeating your position without being drawn into arguments or justifications. For example: "I understand you would like the extra sockets. That work is outside the agreed scope, and I am happy to quote for it separately." Repeat this core message each time they push, without escalating or backing down.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'Which of the following is an assertive right in a professional context?',
     options: [
       'The right to always get your own way in negotiations',
-      'The right to say no without feeling guilty',
       "The right to ignore other people's feelings when communicating",
+      'The right to say no without feeling guilty',
       'The right to avoid all conflict by staying silent',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'One of the core assertive rights defined by Bower &amp; Bower is the right to say no without feeling guilty. Assertiveness is not about winning or dominating &mdash; it is about expressing your needs, opinions, and boundaries clearly and respectfully while also respecting the rights of others. You have the right to decline requests, set boundaries, and prioritise your own workload without guilt.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does DESC stand for in the Bower &amp; Bower model?',
     options: [
-      'Discuss, Evaluate, Summarise, Conclude',
       'Describe, Express, Specify, Consequences',
+      'Discuss, Evaluate, Summarise, Conclude',
       'Define, Explain, Solve, Communicate',
       'Determine, Establish, State, Confirm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DESC stands for Describe (state the facts objectively), Express (share how you feel or the impact), Specify (state what you want to happen), and Consequences (outline the positive outcome of change or the negative outcome if nothing changes). The model was developed by Sharon Anthony Bower and Gordon H. Bower in their book "Asserting Yourself" (1976).',
   },
@@ -91,11 +91,11 @@ const quizQuestions = [
     question: 'In the "Describe" step of DESC, which of the following is the best example?',
     options: [
       '"You are always late and it is really annoying"',
-      '"You arrived at 9:30 today. The agreed start time on the programme is 8:00"',
       '"Everyone has noticed you are never on time"',
       '"I feel like you do not respect my time"',
+      '"You arrived at 9:30 today. The agreed start time on the programme is 8:00"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Describe step requires objective, factual language without blame, exaggeration, or emotional statements. "You arrived at 9:30 today. The agreed start time is 8:00" states observable facts that cannot be disputed. Words like "always", "never", and "everyone" are generalisations that invite defensiveness. Feelings and impact belong in the Express step, not the Describe step.',
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       'A main contractor pressures you to cut corners on testing to save time. You have already refused once and they are pushing again. What combination of techniques is most appropriate?',
     options: [
-      'Fogging followed by passive compliance',
       'Broken record combined with DESC to restate your position with structure',
+      'Fogging followed by passive compliance',
       'Aggressive refusal with a raised voice to end the conversation',
       'Avoiding the conversation entirely and hoping they forget',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Combining the broken record technique (calmly restating your position) with DESC structure gives you the strongest professional response. For example: "I understand the programme is tight [fogging/acknowledgement]. The testing is a legal requirement under BS 7671, and I cannot sign off certificates for work that has not been properly tested [Describe + Express]. I need the time agreed in the programme to complete testing fully [Specify]. If we work to the agreed schedule, I can have the certificates ready on Friday [Consequences]." This is firm, professional, and solution-focused.',
   },

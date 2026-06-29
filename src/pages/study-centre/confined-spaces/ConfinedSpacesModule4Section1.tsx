@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of a permit-to-work system for confined space entry?',
     options: [
-      'To ensure a written record exists of work completed for invoicing purposes',
       'To provide a formal, systematic check that all safety precautions have been taken before entry is authorised',
+      'To ensure a written record exists of work completed for invoicing purposes',
       'To satisfy insurance requirements for documentation',
       'To assign blame if an incident occurs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The permit-to-work is a formal, documented system that ensures every required safety precaution has been verified before entry is authorised. It acts as a final checkpoint \u2014 covering isolation, atmospheric testing, ventilation, PPE, rescue provisions, and briefing. It is not merely administrative paperwork; it is a life-critical control measure that prevents entry until all conditions are confirmed safe.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       'During electrical isolation for confined space entry, what must be done after the supply is switched off?',
     options: [
       'A warning sign is placed on the isolator and no further action is needed',
-      'The circuit must be proved dead using an approved voltage indicator, then locked off with a personal lock',
       "The fuse is removed and placed in the supervisor's pocket",
+      'The circuit must be proved dead using an approved voltage indicator, then locked off with a personal lock',
       'The circuit breaker is taped in the off position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'After switching off, the circuit must be proved dead at the point of work using an approved voltage indicator (GS38 compliant) that has been tested immediately before and after use on a known live source (proving unit). A personal padlock with a unique key must then be applied to the isolator to prevent re-energisation. This follows BS 7671 safe isolation procedures. Warning signs, tape, and removing fuses alone are not adequate \u2014 they can be bypassed or overridden by others.',
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
       'Why must atmospheric testing be carried out at multiple levels inside a confined space?',
     options: [
       'To calibrate the gas detector at different temperatures',
-      'Because gases stratify by density \u2014 heavier gases sink to the bottom and lighter gases rise to the top',
       'Regulations require at least three readings for statistical accuracy',
       'To check whether the ventilation fan is working at all heights',
+      'Because gases stratify by density \u2014 heavier gases sink to the bottom and lighter gases rise to the top',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Gases stratify by density within a confined space. Heavier-than-air gases (such as carbon dioxide, hydrogen sulphide, and many solvent vapours) sink to the bottom, whilst lighter-than-air gases (such as methane and hydrogen) rise to the top. Oxygen depletion may occur at one level but not another. Testing at top, middle, and bottom ensures hazards are detected regardless of where they accumulate. A single reading at the entry point could miss a lethal concentration at the bottom of the space.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'What is the acceptable oxygen range for entry into a confined space without breathing apparatus?',
     options: [
-      '20.9% exactly \u2014 any deviation requires breathing apparatus',
       '19.5% to 23.5%',
+      '20.9% exactly \u2014 any deviation requires breathing apparatus',
       '16% to 25%',
       '18% to 21%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The acceptable oxygen range is 19.5% to 23.5%. Normal atmospheric oxygen is 20.9%. Below 19.5% indicates oxygen depletion (a gas may be displacing oxygen or a chemical reaction consuming it) and presents a risk of impaired judgement, unconsciousness, and death. Above 23.5% indicates oxygen enrichment, which creates a severe fire and explosion risk \u2014 materials that would not normally burn can ignite spontaneously in an oxygen-enriched atmosphere.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'After purging a confined space with inert gas, what critical step must be completed before entry?',
     options: [
       'Entry can proceed immediately because the inert gas has removed all hazards',
-      'The space must be ventilated with fresh air to restore a breathable atmosphere before entry',
       'The inert gas concentration must be increased to 100%',
+      'The space must be ventilated with fresh air to restore a breathable atmosphere before entry',
       'Workers should wear standard dust masks to filter the inert gas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inert gas purging (typically using nitrogen) displaces flammable or toxic gases, but it also displaces oxygen. An atmosphere of nitrogen is immediately fatal \u2014 a person will lose consciousness within seconds and die within minutes. After purging, the space must be thoroughly ventilated with fresh air until atmospheric testing confirms oxygen is within 19.5\u201323.5% and all other readings are safe. Never enter a space that has been inert-gas purged without completing this ventilation step.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     options: [
       'Confirming that ladders are secured and platforms are stable',
       'Assessing whether the entry point is large enough for rescue with a stretcher',
-      'Painting the entry point a bright colour for visibility',
       'Ensuring the entry and exit routes are clear and unobstructed',
+      'Painting the entry point a bright colour for visibility',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Pre-entry access and egress checks include confirming that entry and exit routes are clear and unobstructed, ladders are secured, platforms are stable, and the entry point size has been assessed for both normal access and emergency rescue (including stretcher extraction if needed). Painting the entry point a bright colour is not a regulatory requirement. The focus is on physical safety and the ability to enter, work, and be rescued through the available openings.',
   },

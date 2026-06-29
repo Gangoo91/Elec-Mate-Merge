@@ -23,14 +23,14 @@ const inlineChecks = [
     question:
       'A client insists "PAT testing" must be done annually because the law says so. What is the technically accurate position?',
     options: [
-      'Correct — annual PAT testing is a legal requirement under EAWR.',
-      '"PAT testing" is not a legal term. The law (EAWR Reg 4(2)) requires the duty-holder to maintain electrical systems in a safe condition. The IET Code of Practice and HSE HSG107 recommend a documented programme of in-service inspection and testing — frequency is risk-based, not fixed annually.',
-      'Only the IET CoP makes annual testing mandatory.',
-      'PUWER Reg 6 sets a 12-month maximum interval for all portable equipment.',
+      'Correct — annual PAT testing is a legal requirement under EAWR Reg 4(2).',
+      '"PAT testing" is not a legal term; EAWR Reg 4(2) requires risk-based maintenance, not a fixed annual cycle.',
+      'Only the IET Code of Practice makes annual testing mandatory in commercial premises.',
+      'PUWER Reg 6 sets a fixed 12-month maximum interval for all portable equipment.',
     ],
     correctIndex: 1,
     explanation:
-      'No statute uses the phrase "PAT testing" or sets a fixed interval. EAWR Reg 4(2) imposes the maintenance duty; HSG107 and the IET CoP give risk-based guidance on how to discharge it. Selling clients a fixed annual cycle as "the law" is a common but inaccurate compliance pitch.',
+      'No statute uses the phrase "PAT testing" or sets a fixed interval. EAWR Reg 4(2) imposes the maintenance duty; HSG107 and the IET CoP give risk-based guidance on how to discharge it — frequency is set by the type of equipment, environment, user and defect history, not bought as an annual cycle. Selling clients a fixed annual cycle as "the law" is a common but inaccurate compliance pitch.',
   },
   {
     id: 'patm1-s1-scope',
@@ -51,14 +51,14 @@ const inlineChecks = [
     question:
       'Who carries the EAWR Reg 4(2) "system maintenance" duty for portable equipment in a leased office building?',
     options: [
-      'The landlord, in all cases.',
-      'The PAT engineer who turns up once a year.',
-      'The "duty-holder" — usually the employer / occupier whose equipment it is and whose employees use it; tenancy contract may transfer aspects but the statutory duty remains on the user organisation.',
-      'The HSE inspector after a workplace inspection.',
+      'The landlord of the building, in all cases.',
+      'The PAT engineer engaged to test the equipment.',
+      'The duty-holder — usually the employer/occupier whose equipment it is and whose staff use it.',
+      'The HSE inspector who carries out the workplace inspection.',
     ],
     correctIndex: 2,
     explanation:
-      'EAWR Reg 3 defines the duty-holder broadly. For portable equipment in daily workplace use the duty-holder is the employer/occupier. Sub-contracting the test does not sub-contract the statutory duty (HSG107 §15-17).',
+      'EAWR Reg 3 defines the duty-holder broadly. For portable equipment in daily workplace use the duty-holder is the employer/occupier. A tenancy contract may transfer aspects of practical responsibility, but sub-contracting the test does not sub-contract the statutory duty (HSG107 §15-17).',
   },
   {
     id: 'patm1-s1-evidence',
@@ -66,13 +66,13 @@ const inlineChecks = [
       "After an electric shock incident, an HSE inspector asks for evidence the duty-holder has maintained portable equipment 'so far as reasonably practicable'. What is the minimum acceptable evidence trail?",
     options: [
       "A box of pass/fail labels with this year's date stickered on each appliance.",
-      'A documented programme: equipment register, risk assessment that drives frequencies, user-check guidance, formal visual + combined inspection-and-test records, defect/repair history and re-test results — all retrievable.',
-      'A verbal assurance from the engineer that "everything passed".',
-      'The original purchase receipts for the appliances.',
+      'A documented programme: register, risk-assessed frequencies, inspection-and-test records, defect/repair history — all retrievable.',
+      'A verbal assurance from the engineer that every item passed on the day.',
+      'The original purchase receipts and warranties for the appliances.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 §22-25 makes records the practical demonstration of compliance. Pass labels alone are not records. The defendable trail is the programme, not the stickers — including evidence that frequencies were chosen by risk assessment, not bought by the page.',
+      'HSG107 §22-25 makes records the practical demonstration of compliance. The defendable trail is the programme — equipment register, user-check guidance, formal visual and combined inspection-and-test records, defect/repair history and re-test results — including evidence that frequencies were chosen by risk assessment, not bought by the page. Pass labels alone are not records.',
   },
 ];
 
@@ -81,54 +81,54 @@ const quizQuestions = [
     id: 1,
     question: 'Which legal instrument actually sits behind what the trade calls "PAT testing"?',
     options: [
+      'The Electricity at Work Regulations 1989, Reg 4(2).',
       'The IET Code of Practice for In-service Inspection and Testing of Electrical Equipment.',
-      'The Electricity at Work Regulations 1989 — particularly Reg 4(2), the "system maintenance" duty.',
-      'BS 7671:2018+A4:2026 Chapter 64.',
+      'BS 7671:2018+A4:2026, Chapter 64 on inspection.',
       'A standalone "Portable Appliance Testing Act" of 1989.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'EAWR 1989 Reg 4(2) is the foundation: "As may be necessary to prevent danger, all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger." HSG107 and the IET CoP are guidance / industry consensus on how to discharge that duty — they are not the law itself.',
+      'EAWR 1989 Reg 4(2), the "system maintenance" duty, is the foundation: "As may be necessary to prevent danger, all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger." HSG107 and the IET CoP are guidance / industry consensus on how to discharge that duty — they are not the law itself.',
   },
   {
     id: 2,
     question:
       'A duty-holder argues PAT testing is unnecessary because "BS 7671 covers everything". Why is that wrong?',
     options: [
-      'BS 7671 is only advisory.',
-      'BS 7671 covers the fixed installation up to and including socket-outlets and final connections to fixed equipment. It does not cover the in-service condition of equipment connected via plug and socket — that is the IET CoP / HSG107 territory.',
-      'BS 7671 was withdrawn by the A4 amendment.',
-      'PAT replaces BS 7671 in commercial premises.',
+      'Because BS 7671 is only an advisory document with no statutory force.',
+      'Because BS 7671 was withdrawn and replaced by the A4 amendment in 2026.',
+      'Because BS 7671 covers the fixed installation, not equipment plugged into it.',
+      'Because PAT replaces BS 7671 entirely in commercial premises over a set size.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Reg 110.1.1 of BS 7671 expressly excludes equipment in normal use after connection — that is precisely the gap HSG107 and the IET CoP fill. Confusing the two is a common defence that does not survive an HSE interview under caution.',
+      'BS 7671 covers the fixed installation up to socket-outlets and final connections, but not the in-service condition of equipment connected via plug and socket — that is IET CoP / HSG107 territory. Reg 110.1.1 expressly excludes equipment in normal use after connection. Confusing the two is a common defence that does not survive an HSE interview under caution.',
   },
   {
     id: 3,
     question:
       'HSG107 (4th Edition) makes the case that an over-extensive PAT programme can itself create risk. Why?',
     options: [
-      'It is expensive.',
-      'Excessive disconnection / re-connection introduces wear at terminations, mechanical handling damages cables, and routine over-testing drowns the records that matter — meaning real defects get missed.',
-      'It triggers Reg 4(2) liabilities.',
-      'It requires a different test instrument.',
+      'Because it costs more per item than a leaner risk-based programme.',
+      'Because it automatically triggers extra Reg 4(2) liabilities on the duty-holder.',
+      'Because it requires a higher-specification class of test instrument.',
+      'Because excessive disconnection wears terminations and over-testing buries real defects.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'HSG107 §10 and the IET CoP are explicit that frequency must be proportionate. The HSE position is that a low-risk Class II IT lead in an office should not be on the same regime as a 110 V site transformer — and putting them on the same calendar is poor risk-based maintenance.',
+      'Excessive disconnection / re-connection wears terminations, handling damages cables, and over-testing drowns the records that matter — so real defects get missed. HSG107 §10 and the IET CoP are explicit that frequency must be proportionate: a low-risk Class II IT lead in an office should not be on the same regime as a 110 V site transformer.',
   },
   {
     id: 4,
     question:
       'The phrase "in-service inspection and testing of electrical equipment" appears repeatedly in the IET CoP. What is the deliberate emphasis of "in-service"?',
     options: [
-      'Equipment that has been pre-approved by the IET.',
-      'Equipment in current operational use after installation — distinguishing it from manufacturer type-testing and from BS 7671 initial verification of fixed wiring.',
-      'Equipment under a service contract.',
-      'Equipment that is immobile.',
+      'Equipment in current operational use after installation, not on a manufacturer test bench.',
+      'Equipment that has been pre-approved and type-tested by the IET before sale.',
+      'Equipment that is covered by an ongoing maintenance service contract.',
+      'Equipment that is immobile and permanently fixed in place.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The IET CoP (5th Edition, 2020) Foreword and §3 clarify the scope: equipment in service. The point is to mark off where the manufacturer's type-test ends and the user / duty-holder's maintenance regime begins.",
   },
@@ -151,26 +151,26 @@ const quizQuestions = [
     question:
       'A new client tells you their previous engineer "PAT tested" 800 items in a single morning. From a competence-and-evidence perspective, what is the warning sign?',
     options: [
-      'Nothing — fast workers are good workers.',
-      'The arithmetic. A genuine inspection (visual + functional + electrical, with records) is rarely faster than 4-6 minutes per item including paperwork. 800 items in a morning is ~22 seconds each — incompatible with HSG107 §40-44 visual inspection and IET CoP Ch 14 instrument-test workflow.',
-      'The price quoted.',
-      'The fact that the previous engineer used an analogue tester.',
+      'Nothing — fast workers are simply efficient and should be trusted.',
+      'The price the previous engineer quoted for the whole job.',
+      'The arithmetic: 800 items in a morning is roughly 22 seconds each, far too fast for a genuine inspection.',
+      'The fact that the previous engineer used an older analogue tester.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'This is the canonical "pass-label-on-the-bottom" engagement. From the duty-holder\'s point of view, accepting 22-seconds-per-item paperwork as evidence of EAWR Reg 4(2) compliance is what fails an HSE investigation, not the price.',
+      'A genuine inspection — visual, functional and electrical, with records — is rarely under 4-6 minutes per item, so ~22 seconds each is incompatible with HSG107 §40-44 and IET CoP Ch 14 workflow. This is the canonical "pass-label-on-the-bottom" engagement. From the duty-holder\'s point of view, accepting that paperwork as evidence of EAWR Reg 4(2) compliance is what fails an HSE investigation, not the price.',
   },
   {
     id: 7,
     question:
       'Section 2(1) of the Health and Safety at Work etc Act 1974 requires every employer to ensure, "so far as is reasonably practicable", the health, safety and welfare of employees. How does that connect to PAT?',
     options: [
-      'It does not — HSWA is unrelated to electrical work.',
-      'HSWA is the over-arching duty. EAWR Reg 4(2) is the electrical-specific duty. PUWER Reg 5/6 is the work-equipment-specific duty. HSG107 + IET CoP = sector guidance on how to satisfy all three for portable equipment.',
-      'HSWA replaces EAWR for portable appliances.',
-      'HSWA only applies if the equipment is over 1 kW.',
+      'HSWA is the over-arching duty that EAWR, PUWER and the sector guidance sit beneath.',
+      'It does not — HSWA is unrelated to electrical work in the workplace.',
+      'HSWA replaces EAWR entirely for portable appliances.',
+      'HSWA only applies where the equipment is rated over 1 kW.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The legal pyramid is HSWA → EAWR → PUWER → HSG107 / IET CoP. Knowing where in that pyramid your evidence sits is what makes a programme defendable rather than just compliant-looking.',
   },
@@ -179,26 +179,26 @@ const quizQuestions = [
     question:
       'An office manager says "we don\'t do PAT testing because we have no high-risk equipment". From an HSG107 perspective, what is the correct response?',
     options: [
-      'They are right — low-risk environments are exempt.',
-      'Indg236 is explicit that low-risk environments still need a maintenance regime — typically reduced to user checks plus periodic formal visual inspection, with electrical testing only on a small subset (e.g. extension leads, cleaners). The duty does not disappear; the frequency adjusts.',
-      'PAT is mandatory regardless.',
-      'They should consult their landlord.',
+      'They are right — low-risk environments are wholly exempt from the duty.',
+      'PAT is mandatory on a fixed annual cycle regardless of the risk level.',
+      'They should simply consult their landlord and follow whatever it advises.',
+      'Indg236 is explicit that low-risk environments still need a maintenance regime, just a lighter one.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Indg236 ("Maintaining portable electric equipment in low-risk environments") is the HSE\'s direct response to over-zealous testing in offices. It still requires a maintenance regime — risk-proportionate, but not zero.',
+      'Indg236 ("Maintaining portable electric equipment in low-risk environments") is the HSE\'s direct response to over-zealous testing in offices. It still requires a maintenance regime — usually reduced to user checks plus periodic formal visual, with electrical testing on a small subset. The duty does not disappear; the frequency adjusts.',
   },
   {
     id: 9,
     question:
       'Why does the IET Code of Practice deliberately stop short of mandating fixed test intervals?',
     options: [
-      'The IET committee could not agree.',
-      'Because intervals must be set by risk assessment of the equipment, environment, user, and history of defects — a fixed interval would either over-test some equipment (creating wear and false confidence) or under-test other equipment (missing real defects).',
-      'Because EAWR overrides the IET CoP.',
-      'Because BS 7671 sets the intervals instead.',
+      'Because intervals must be set by risk assessment of equipment, environment, user and history.',
+      'Because the IET committee could not reach agreement on suitable intervals.',
+      'Because the EAWR overrides the IET CoP on the question of frequency.',
+      'Because BS 7671 sets the intervals for in-service equipment instead.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The IET CoP Table 7.1 publishes "initial frequencies" as a starting suggestion only and explicitly tells the duty-holder to revise them based on the inspection / test history. Fixed mandated intervals would defeat the risk-based foundation of the whole regime.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'A claim is brought by an injured employee against the employer following an electrical shock from a faulty extension lead. The employer produces a stack of pass-labels but no equipment register, no risk-assessed frequencies, no defect history. In court, why is this evidence almost worthless?',
     options: [
-      'Because pass labels are forged.',
-      'Because pass labels evidence only that someone affixed a label. They do not evidence what was inspected, against what acceptance criteria, by whom, with what instrument, against what frequency, or what defects were found and fixed. HSG107 §22-25 makes the records of the programme — not the stickers — the defendable artefact.',
-      'Because the labels are not a legal requirement.',
-      'Because the colour scheme on the labels was wrong.',
+      'Because the pass labels are presumed by the court to be forged.',
+      'Because pass labels are not themselves a legal requirement under EAWR.',
+      'Because a pass label evidences only that someone affixed it, not what was actually inspected or fixed.',
+      'Because the colour scheme used on the pass labels was wrong.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The court asks: did you have a system, did you operate it, can you show me you did? Stickers on items answer none of those. The programme — register, risk assessment, inspection records, instrument readings, defect log, repair evidence, re-test results — is what discharges the EAWR / HSWA burden.',
   },

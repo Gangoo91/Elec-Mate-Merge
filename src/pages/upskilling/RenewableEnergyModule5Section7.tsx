@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Chapter 57 + PAS 63100:2024 handle BESS siting differently in dwellings vs other premises. Which statement is correct?',
     options: [
-      'PAS 63100 only applies to non-dwellings',
-      'Dwellings — install per manufacturer instructions and PAS 63100:2024. Non-dwellings — location and fire protection selected per the premises’ fire strategy',
-      'Both routes ignore the manufacturer instructions',
-      'Both routes require a dedicated battery room',
+      'PAS 63100 applies only to non-dwellings, with dwellings left to manufacturer instructions',
+      'Dwellings follow PAS 63100:2024; non-dwellings follow the premises’ fire strategy',
+      'Both routes ignore the manufacturer instructions and rely on Chapter 57 alone',
+      'Both routes require a dedicated, fire-separated battery room regardless of pack size',
     ],
     correctIndex: 1,
     explanation:
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Reg 570.6.8.202 requires a permanent warning notice at every point of access to a battery room or battery enclosure. What must the notice indicate?',
     options: [
-      'Only the chemistry of the cells',
-      'That live parts may still be energized after isolation — the regulation gives "BATTERY - Live parts can remain energized after isolation" as the example wording',
-      'Only the maximum DC voltage',
-      'The customer’s contact details',
+      'That live parts may remain energised after isolation, per the regulation’s example wording',
+      'Only the cell chemistry, so responders know the battery type on arrival',
+      'Only the maximum DC voltage present at the battery terminals',
+      'The customer’s contact details and the installer’s emergency number',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 570.6.8.202 — permanent warning at each point of access indicating that live parts may still be energized after isolation. The regulation supplies "BATTERY - Live parts can remain energized after isolation" as example wording; equivalent text is accepted. Applies to both battery rooms AND battery enclosures, so both a dedicated battery room and a wall-mounted BESS cabinet on a garage wall need the notice. Reg 570.6.8.201 additionally requires a separate notice at the consumer unit / DB indicating the presence and location of the BESS.',
   },
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A customer install uses a transformerless hybrid inverter. The PV/battery side and the AC side do NOT have simple separation. Which RCD type is required on the AC side for fault protection?',
     options: [
-      'Type AC — standard for all installs',
-      'Type A — fine because hybrids only produce sinusoidal current',
-      'Type B to BS EN 62423 — because a transformerless inverter can feed DC fault current into the AC installation, and Type AC / A cannot detect smooth DC faults',
-      'No RCD required',
+      'Type AC — the standard general-purpose type used for all installs',
+      'Type A — adequate, since hybrid inverters only ever produce sinusoidal current',
+      'Type B to BS EN 62423 — Type AC/A cannot detect the smooth DC fault current a transformerless inverter can feed',
+      'No RCD is required, because the inverter provides its own internal protection',
     ],
     correctIndex: 2,
     explanation:
@@ -68,11 +68,11 @@ const inlineChecks = [
       'Reg 643.3.2 (Table 64) sets minimum insulation resistance values for the AC side of the install. On a 230 V single-phase circuit to the BESS, what test voltage and acceptance minimum apply?',
     options: [
       '250 V DC, 0.5 MΩ minimum',
-      '500 V DC, 1.0 MΩ minimum',
       '1000 V DC, 1.0 MΩ minimum',
       'No IR test required on BESS circuits',
+      '500 V DC, 1.0 MΩ minimum',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Table 64 minima: circuits up to and including 500 V (excluding SELV / PELV) — 1.0 MΩ at 500 V DC test. SELV / PELV would be 0.5 MΩ at 250 V DC; circuits above 500 V would be 1.0 MΩ at 1000 V DC. Reg 643.3.1 sets the two measurements (between live conductors, and between live conductors and the protective conductor). On a BESS install the AC final circuit to the inverter is tested per the same rules as any other 230 V circuit; the DC side has its own manufacturer-defined commissioning procedure that is separate from Part 6 IR testing.',
   },
@@ -84,9 +84,9 @@ const quizQuestions = [
       'You are siting a new 9.5 kWh LFP BESS for a UK domestic customer. Which of these locations is correctly precluded by PAS 63100:2024 and Chapter 57 siting guidance?',
     options: [
       'Wall-mounted in the integral garage on a non-combustible backboard with manufacturer clearances respected',
-      'Floor-stack in a utility room adjacent to the consumer unit, with means of isolation reachable from the kitchen door',
-      'Wall-mounted in a loft conversion bedroom directly behind the bed-head, behind plasterboard — no clearance to nearby furnishings, no fire-rated separation',
-      'External wall of a brick outbuilding under a fire-rated weatherproof enclosure with manufacturer-approved temperature range',
+      'Floor-stack in a utility room beside the consumer unit, with isolation reachable from the kitchen door',
+      'Wall-mounted in a loft-conversion bedroom behind the bed-head on plasterboard, no clearance, no fire separation',
+      'On the external wall of a brick outbuilding in a fire-rated weatherproof enclosure within the rated temperature range',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Reg 570.6.5.201 demands isolation on every power port of the PCE. On a typical UK domestic hybrid inverter install with separate floor-stack battery, how many EXTERNAL isolators does the installer need to provide?',
     options: [
+      '4 — PV DC + battery DC + AC grid + AC EPS',
       '1 — just the AC',
       '2 — AC grid + DC battery',
-      '4 — PV DC + battery DC + AC grid + AC EPS',
       '6 — every cable in the install',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Standard hybrid topology with battery as separate floor-stack: PV DC (MPPT inputs) + battery DC + AC grid + AC EPS = 4 external power ports on the hybrid PCE. Each needs its own means of isolation per Reg 570.6.5.201. Where the battery is INTEGRATED into the same sealed cabinet as the inverter (some all-in-one SKUs), the manufacturer’s internal isolation is taken as compliant for the internal battery-PCE port; the installer’s duty drops to the 3 external ports.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'On a transformerless hybrid inverter PV+BESS install, the installer fits a standard Type AC RCD on the AC final circuit. The customer’s next EICR flags this. Why?',
     options: [
-      'Type AC is correct — the EICR finding is mistaken',
-      'Reg 712.411.3.2.1.2 requires Type B (BS EN 62423) where the inverter does not provide at least simple separation between AC and DC sides, because a transformerless inverter can feed smooth DC fault currents that Type AC cannot detect',
-      'Type AC is undersized for the inverter’s nameplate current',
-      'No RCD is needed; the EICR should remove the device',
+      'Type AC is correct here — the EICR finding is mistaken and can be disregarded',
+      'Reg 712.411.3.2.1.2 needs Type B (BS EN 62423) — Type AC cannot detect the smooth DC fault current',
+      'Type AC is undersized for the inverter’s nameplate current rather than the wrong type',
+      'No RCD is needed at all; the EICR should call for the device to be removed',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A customer’s LFP BESS is wall-mounted in an integral garage. Reg 570.6.8.201 and 570.6.8.202 require warning notices. Where do they go?',
     options: [
-      'Only at the BESS cabinet itself',
-      'Only at the consumer unit',
-      '570.6.8.201 — at the consumer unit / DB supplied by the battery, indicating presence and location of the BESS. 570.6.8.202 — at every point of access to the BESS enclosure, indicating that live parts may remain energized after isolation. Both notices, not either / or',
-      'Anywhere the customer chooses to put them',
+      'Only at the BESS cabinet itself, at the single point of access to the enclosure',
+      'Only at the consumer unit, since that is where the next electrician begins work',
+      'Anywhere convenient that the customer chooses to put the supplied labels',
+      '570.6.8.201 at the CU/DB the battery supplies, and 570.6.8.202 at every point of access to the enclosure — both, not either',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Two distinct notices. 570.6.8.201 — at the consumer unit (or each DB) supplied by the battery, indicating BESS presence and location. 570.6.8.202 — at each point of access to the BESS room or enclosure, indicating that live parts may remain energized after isolation; example text "BATTERY - Live parts can remain energized after isolation". The notices serve different audiences: 570.6.8.201 alerts the next electrician opening the CU; 570.6.8.202 alerts anyone opening the cabinet itself.',
   },
@@ -136,9 +136,9 @@ const quizQuestions = [
       'You are commissioning a new 9.5 kWh LFP BESS. Reg 643.3.1 requires insulation resistance measurements between (i) live conductors and (ii) live conductors and the protective conductor connected to the earthing arrangement. Where in the BESS install does this Part 6 IR test apply?',
     options: [
       'The whole install end-to-end, including the manufacturer’s internal cell-to-cell wiring',
-      'The AC final circuit from the consumer unit to the inverter AC terminals, per the standard Part 6 procedure; the manufacturer’s DC commissioning procedure is separate and follows BS EN IEC 62485 / manufacturer steps',
-      'Only the manufacturer’s DC side',
-      'No IR test applies to BESS installs',
+      'The AC final circuit from the CU to the inverter terminals; the DC side follows the manufacturer’s separate procedure',
+      'Only the manufacturer’s DC side, tested per BS EN IEC 62485 rather than Part 6',
+      'No Part 6 IR test applies to BESS installs, as they are all manufacturer-commissioned',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A customer handover pack for a new BESS install should record specific items so the next EICR / service has the information it needs. Which of these is essential?',
     options: [
-      'Just the install date',
-      'Manufacturer model, chemistry, nameplate kWh, usable kWh, commissioning baseline capacity test, RCD type, Reg 570.5.1 selection rationale, Reg 570.6.5.201 isolator schedule, warning-notice locations, BMS app credentials / pairing, EPS scope (if EPS) — and the cert evidence bundle indices into Section 712 / Chapter 57 / Chapter 82 packs',
-      'Only the customer’s name',
-      'A photograph of the BESS',
+      'Just the install date and a brief note of the work carried out',
+      'Only the customer’s name and the inverter manufacturer’s warranty card',
+      'A dated photograph of the installed BESS cabinet and its surroundings',
+      'Model, chemistry, nameplate/usable kWh, baseline capacity, RCD type, isolator schedule, notice locations and BMS credentials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A defensible handover pack records: identity (manufacturer / model / chemistry), nameplate vs usable, baseline commissioning capacity test (against which future EICR capacity tests compare), the protection picture (RCD type, isolator schedule, notice positions), Reg 570.5.1 rationale, BMS pairing credentials, EPS scope. Cert evidence bundle indices into Section 712 PV pack + Chapter 57 BESS pack + Chapter 82 PEI pack. The customer keeps a copy; the installer keeps a copy. The next electrician opening the CU at year 5 can pick up the install without having to reconstruct what was done.',
   },

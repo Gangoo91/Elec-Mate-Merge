@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary function of standards (uprights) in a tube-and-fitting scaffold?',
     options: [
-      'To provide horizontal bracing across the width of the scaffold',
       "To carry the scaffold's load vertically down to the ground through base plates and sole boards",
+      'To provide horizontal bracing across the width of the scaffold',
       'To support guard rails and toe boards only',
       'To connect the scaffold to the building facade',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Standards (also called uprights) are the vertical tubes that carry the full load of the scaffold — including the self-weight of the structure, the working platforms, materials stored on the platforms, and the workers themselves — down to the ground. They must be plumb (vertical), properly spaced at regular intervals (typically 2.1 m to 2.7 m apart along the length), and each standard must rest on a base plate which in turn sits on a sole board to distribute the load over the ground surface. Inner standards run along the building face and outer standards run along the outside of the scaffold.',
   },
@@ -84,8 +84,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What are the vertical tubes in a scaffold that carry the load to the ground called?',
-    options: ['Ledgers', 'Transoms', 'Standards (uprights)', 'Braces'],
-    correctAnswer: 2,
+    options: ['Standards (uprights)', 'Ledgers', 'Transoms', 'Braces'],
+    correctAnswer: 0,
     explanation:
       'Standards (also known as uprights) are the vertical tubes that carry the entire scaffold load — self-weight, platform loads, materials, and workers — vertically down to the ground through base plates and sole boards. Inner standards are positioned along the building face and outer standards run along the outside of the scaffold. Standards must be plumb (vertical), properly spaced, and each must rest on a base plate.',
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
     question: 'Ledgers run in which direction on a scaffold?',
     options: [
       'Vertically, connecting base plates to the top lift',
-      'Diagonally, providing rigidity to the structure',
       'Horizontally along the length of the scaffold, connecting standards',
+      'Diagonally, providing rigidity to the structure',
       'Horizontally across the width of the scaffold, connecting inner and outer standards',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Ledgers are horizontal tubes that run along the length (longitudinal direction) of the scaffold, connecting standards together. There are inner ledgers (along the building face) and outer ledgers (along the outside of the scaffold) at each lift height. Ledgers tie the scaffold together longitudinally and provide support points for transoms. They are connected to the standards using right-angle couplers.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     options: [
       'The diagonal bracing system',
       "The scaffold's connection to the building",
-      'The working platforms (scaffold boards)',
       'The guard rails and toe boards only',
+      'The working platforms (scaffold boards)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Transoms are horizontal tubes that run across the width of the scaffold, connecting the inner and outer standards (or more precisely, the inner and outer ledgers). Their primary function is to support the working platform boards. Transoms must be level and properly coupled at both ends. In an independent scaffold, transoms span between the inner and outer ledgers using right-angle couplers. In a putlog scaffold, putlogs (a type of transom) have a flattened blade end that is inserted into the mortar joints of the brickwork.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 5,
     question: 'What would happen to a scaffold if all diagonal braces were removed?',
     options: [
+      'The scaffold would collapse because it would have no rigidity and could not resist lateral loads (racking)',
       'Nothing — braces are only required for scaffolds over 10 metres high',
       'The scaffold would lose some aesthetic appearance but remain structurally sound',
-      'The scaffold would collapse because it would have no rigidity and could not resist lateral loads (racking)',
       'The scaffold would only be unsafe in high winds',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Without diagonal braces, a scaffold has no triangulation and therefore no resistance to lateral forces. The rectangular frames formed by standards and ledgers can easily distort into parallelograms — a phenomenon known as racking. Even relatively small lateral forces (such as wind, workers moving materials, or the impact of materials being loaded onto the platform) would cause the scaffold to rack and collapse. Braces are essential at every stage of erection, not just on the completed scaffold. Both ledger braces (in the vertical plane of the scaffold face) and plan braces (in the horizontal plane) are required.',
   },

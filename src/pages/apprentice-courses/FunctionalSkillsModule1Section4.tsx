@@ -94,7 +94,7 @@ const FunctionalSkillsModule1Section4 = () => {
       ],
       correctAnswer: 2,
       explanation:
-        'Voltage variation = maximum − minimum = 242 − 218 = 24 V. This exceeds the permitted +10%/−6% tolerance band (207 V to 253 V), so while within limits, the variation is significant.',
+        'Voltage variation = maximum − minimum = 242 − 218 = 24 V. Both readings stay inside the permitted +10%/−6% tolerance band (207 V to 253 V), but a 24 V swing across the day is still significant and worth investigating.',
     },
     {
       id: 7,

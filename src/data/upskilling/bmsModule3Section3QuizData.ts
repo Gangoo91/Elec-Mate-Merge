@@ -5,10 +5,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of time scheduling in BMS?',
     options: [
-      'Weekly schedule with different weekday/weekend patterns',
+      'To log historical equipment runtimes for billing purposes',
       'To automatically operate equipment based on predetermined schedules',
-      'Systems gradually reduce operation after a delay period',
-      'A temporary manual override that reverts after a set time',
+      'To raise an alarm whenever equipment is switched on',
+      'To prevent any manual control of equipment by operators',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,8 +18,8 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Which type of schedule is best for a standard office building?',
     options: [
-      'Automatically adjusting systems based on actual space usage',
-      'A temporary manual override that reverts after a set time',
+      'A fixed schedule identical for every day of the week',
+      'On-demand operation triggered only by manual switches',
       'Weekly schedule with different weekday/weekend patterns',
       '24/7 continuous operation with varied intensity',
     ],
@@ -31,9 +31,9 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is occupancy detection primarily used for in BMS?',
     options: [
-      'Systems automatically adjust start/stop times based on external temperature',
-      'A temporary manual override that reverts after a set time',
-      'Minimal operation with frost protection and security systems active',
+      'Recording the identity of individuals entering a space',
+      'Counting the exact number of people for fire register purposes',
+      'Locking doors automatically when a space becomes empty',
       'Automatically adjusting systems based on actual space usage',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     question: 'Which sensor technology is most commonly used for occupancy detection?',
     options: [
       'PIR (Passive Infrared) sensors',
-      'Industry-wide retirement savings scheme',
-      'Spring return, normally open',
-      'Two-pole voltage indicator (GS38)',
+      'Thermocouple temperature probes',
+      'Differential pressure transmitters',
+      'Photoelectric daylight sensors',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 5,
     question: "What is an 'override' function in BMS scheduling?",
     options: [
-      'Minimal operation with frost protection and security systems active',
+      'A permanent change that replaces the programmed schedule',
       'A temporary manual override that reverts after a set time',
-      'To automatically operate equipment based on predetermined schedules',
-      'Systems gradually reduce operation after a delay period',
+      'A lockout that disables operator control entirely',
+      'An alarm raised when a schedule fails to execute',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Which of these is a benefit of optimum start/stop control?',
     options: [
-      'Minimal operation with frost protection and security systems active',
-      'Weekly schedule with different weekday/weekend patterns',
+      'It removes the need for any time scheduling at all',
+      'It runs plant continuously to guarantee comfort',
       'Systems automatically adjust start/stop times based on external temperature',
-      'To automatically operate equipment based on predetermined schedules',
+      'It fixes start times to the same point every day regardless of weather',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What happens when occupancy sensors detect no movement in a space?',
     options: [
-      'To automatically operate equipment based on predetermined schedules',
-      'Weekly schedule with different weekday/weekend patterns',
-      'Ventilation adjusted based on occupancy levels and CO2 readings',
+      'Systems shut down instantly the moment movement stops',
+      'Systems ignore the sensor and continue at full output',
+      'Systems switch to maximum ventilation as a precaution',
       'Systems gradually reduce operation after a delay period',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     question: 'Which schedule type would be most appropriate for a hospital?',
     options: [
       '24/7 continuous operation with varied intensity',
-      'Weekly schedule with different weekday/weekend patterns',
-      'Systems gradually reduce operation after a delay period',
-      'A temporary manual override that reverts after a set time',
+      'Standard weekday-only operation with weekends off',
+      'Occupancy-only operation that shuts down when empty',
+      'A single daily on/off cycle matching office hours',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 10,
     question: 'How should holiday schedules be programmed in a BMS?',
     options: [
-      'A temporary manual override that reverts after a set time',
-      'Ventilation adjusted based on occupancy levels and CO2 readings',
+      'Full normal operation in case staff attend unexpectedly',
+      'Complete shutdown of all systems including frost protection',
       'Minimal operation with frost protection and security systems active',
-      'Weekly schedule with different weekday/weekend patterns',
+      'The same weekday pattern used during normal working weeks',
     ],
     correctAnswer: 2,
     explanation:

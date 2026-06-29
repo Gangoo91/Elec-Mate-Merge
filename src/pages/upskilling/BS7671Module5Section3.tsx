@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'You are running 4 lengths of 2.5 mm² T+E equivalent (treated as singles for fill purposes — 6 × 2.5 mm² singles total) and 2 × 1.5 mm² singles in 20 mm steel conduit, with two right-angle bends in a straight run. Per the OSG / IEE conduit cable factor approach, which decision is correct?',
     options: [
-      'Use the straight-run table — bends do not reduce capacity',
-      'Use the bends-and-sets table for 20 mm conduit, compare cable factor sum vs the column for two bends, and step up to 25 mm if exceeded',
-      'Ignore conduit fill — only trunking has a fill rule',
-      'Apply 45% by cross-sectional area to the conduit',
+      'Use the straight-run table for 20 mm conduit, since bends do not reduce capacity',
+      'Use the bends-and-sets table for 20 mm conduit and step up to 25 mm if the factor is exceeded',
+      'Ignore conduit fill for this run, since only trunking carries a space-factor rule',
+      'Apply the 45% cross-sectional-area space factor directly to the 20 mm conduit',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Cable trunking in BS 7671 practice — what is the conventional space-factor rule of thumb most installers and the OSG cite?',
     options: [
-      '100% area can be filled provided cables are neatly dressed',
-      'No more than 45% of the trunking internal cross-sectional area should be occupied by cables (OSG cable factor approach), to allow for heat dissipation, pulling, and future additions',
-      '60% area is the BS 7671 mandated maximum',
-      'There is no fill rule — only conduit has one',
+      'Up to 100% of the area may be filled provided cables are neatly dressed in',
+      'No more than about 45% of the internal cross-sectional area should be occupied by cables',
+      '60% of the internal area is the maximum mandated as a numerical rule in BS 7671',
+      'No fill rule applies to trunking, since only conduit carries a cable-factor limit',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'You are terminating a 4 × 6 mm² SWA into a metal-clad isolator with a brass CW gland and the steel-wire armour as the CPC. The isolator gland-plate is painted. Which of the following is the correct sequence to ensure compliance with Reg 543 / 522.6 / 522.8?',
     options: [
-      'Tighten the gland to compress the armour cone and rely on the paint as cosmetic — current can still pass',
-      'Strip back the paint around the gland hole, fit a banjo earth tag (or earthing nut) under the gland, terminate the armour into the cone, and bond the banjo tag to the enclosure earth bar with a separately sized earthing conductor where required',
-      'Cut the armour off, fit a normal stuffing gland, and run a separate green/yellow as the CPC — armour is decorative',
-      'Sleeve the armour in green/yellow and connect it to neutral inside the isolator',
+      'Tighten the gland onto the painted plate and rely on the cone, since fault current still passes through paint',
+      'Strip the paint at the gland hole, fit a banjo earth tag under the gland, and bond it to the enclosure earth bar',
+      'Cut the armour off, fit a stuffing gland, and run a separate green/yellow CPC, treating the armour as decorative',
+      'Sleeve the armour in green/yellow and connect it to the neutral bar inside the isolator',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A workshop install puts a metal-clad RCBO board in a corner where forklift trucks regularly pass within 300 mm. What is the right BS 7671 / external-influence call?',
     options: [
-      'No special action — the consumer unit case is metal so it is fine',
-      'Apply Reg 522.6 (external influence AG — mechanical impact). For AG3 / high impact, additional protection (steel cage, robust enclosure, or relocation) is required; specify enclosure with a higher IK rating per BS EN 62262 (e.g. IK08 or above)',
-      'Move to a plastic enclosure — plastic is more impact-tolerant',
-      'IK ratings are advisory and not part of BS 7671',
+      'No special action needed, since the metal consumer-unit case is impact-resistant as supplied',
+      'Apply Reg 522.6 for AG3 mechanical impact: specify a higher IK rating (IK08 or above) or add a barrier',
+      'Move to a plastic enclosure, since plastic is more tolerant of forklift impact than steel',
+      'No action under BS 7671, since IK impact ratings are advisory rather than regulatory',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A new fire alarm cable (Band I, BS 5839 enhanced FP-rated cable) runs in the same plastic trunking as a Band II 230 V lighting circuit. Which BS 7671 rule has been broken and how do you fix it?',
     options: [
-      'Reg 528 — segregation between Band I and Band II circuits has been breached. Either separate the circuits into separate trunkings, use a compartmented trunking with a metallic barrier between bands, or insulate every Band I cable for the highest voltage present (impractical for FP cable).',
-      'No rule broken — fire alarm cable is allowed in any trunking',
-      'Reg 411 — earthing is the issue',
-      'Reg 134 — workmanship is the only concern',
+      'Reg 528 segregation is breached: separate the bands, use compartmented metallic-barrier trunking, or insulate up',
+      'No rule broken, since fire alarm cable is permitted in any shared plastic trunking',
+      'Reg 411 is the issue, since shared trunking compromises the earthing arrangement',
+      'Reg 134 workmanship is the only concern, since segregation is a quality matter not a rule',
     ],
     correctIndex: 0,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'After running a 70 mm PVC conduit between two fire compartments through a 60-minute fire-rated wall, what does Reg 527.2 require?',
     options: [
-      'Nothing — the conduit is the seal',
-      'Reinstate the fire compartmentation around AND inside the conduit using a tested fire-stopping system rated to the same fire resistance as the wall (e.g. intumescent collar, fire-rated mortar, foam to a tested system); record the system used on the EIC',
-      'Wrap the conduit in foil tape — that is sufficient',
-      'Reg 527 only applies to plant rooms',
+      'Nothing further, since the conduit passing through is itself the fire seal',
+      'Reinstate the fire resistance around AND inside the conduit with a tested fire-stop rated to match the wall',
+      'Wrap the conduit in foil tape at the wall face, which is sufficient for 60 minutes',
+      'No action, since Reg 527 fire-stopping applies only to plant-room penetrations',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Which is the correct selection rule between cable tray, cable ladder and cable basket?',
     options: [
-      'They are interchangeable — pick whichever is cheapest',
-      'Tray (perforated, light/medium loading, good for SWA and multi-core), Ladder (open rungs, heavy long-span SWA, good ventilation, structural strength), Basket (light loading, mainly data/comms/control — not designed to support heavy SWA over long spans)',
-      'Basket is for SWA only',
-      'Ladder is only for outdoors',
+      'They are interchangeable for any cable, so select whichever option is cheapest',
+      'Tray for light/medium loading, ladder for heavy long-span SWA, basket for light data/comms/control',
+      'Basket is the only choice for SWA, with tray and ladder reserved for data cabling',
+      'Ladder is for outdoor runs only, with tray and basket used everywhere indoors',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 regulation set covers the cable enclosure / containment selection — including conduit, trunking and ducting — and the requirement for cables to be installed in a manner suitable for the system?',
     options: [
-      'Reg 411 — protection against electric shock',
-      'Reg 521.10 (cable enclosures / containment) and Reg 521.5 (cable types) — the Section 521 selection of wiring systems family',
-      'Reg 134 only — workmanship',
-      'Reg 651 — periodic inspection',
+      'Reg 521.5 (cable types) and Reg 521.10 (cable enclosures) — the Section 521 wiring-system family',
+      'Reg 411 (protection against electric shock) and Reg 543 (protective conductors)',
+      'Reg 134 (workmanship) and Reg 132.12 (accessibility for maintenance)',
+      'Reg 651 (periodic inspection) and Reg 653 (condition reporting)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 521 deals with the SELECTION of wiring systems by type. Reg 521.5 lists permitted cable types and supports; Reg 521.10 deals with cable enclosures (conduit, trunking, ducting) — including the requirement that the system shall be such that cables are not subjected to undue mechanical stress and can be drawn in or replaced without damage. Reg 522 then deals with EXTERNAL INFLUENCES on the chosen system — including the mechanical-impact rule under Reg 522.6 and installation conditions under Reg 522.8.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'For a steel conduit forming the CPC of a circuit, what specifically must be demonstrated under BS 7671?',
     options: [
-      'The conduit is painted to prevent corrosion',
-      'The conduit is electrically continuous (Reg 543.3.6 — every joint, coupling, bend and accessory tightened to make a low-resistance metallic connection), the impedance is verified by an R1+R2 / Zs measurement, and any flexible section is bonded by a separate CPC across the flexible portion',
-      'The conduit run has no bends',
-      'The conduit has the same colour as the cables inside it',
+      'The conduit is painted along its length to prevent surface corrosion at every coupling',
+      'The conduit run is installed entirely without any bends, sets or draw-in boxes',
+      'The conduit is electrically continuous, verified by R1+R2 / Zs, with a separate CPC across any flexible section',
+      'The conduit is colour-matched to the cables drawn into it for easy identification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Steel conduit may be used as a CPC (Reg 543.2.2). To rely on it: every coupling, bend, box and accessory must be properly engaged (running couplers tightened, brass bushes biting into the box), the run must be confirmed by R1+R2 (or measured Zs) such that the loop impedance permits ADS within Table 41.1, and flexible final sections (e.g. flexible conduit to a motor) MUST have a separate green/yellow CPC bridging the flexible part — flexible conduit is NOT a reliable CPC. Reg 522.8.11 also requires that any conduit/trunking which can collect water has drainage provision.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'A 90 mm SWA run is being supported on cable ladder across a 6 m unsupported plant-room span. Which group of regulations and standards governs the spacing of supports and the choice of clip / cleat?',
     options: [
-      'Reg 411 plus the OSG',
-      'Reg 522.8 (mechanical stress) and Appendix 4 / cable manufacturer support tables, with cable cleats tested to BS EN 61914 where short-circuit forces are credible',
-      'Reg 134 alone',
-      'There is no support spacing rule',
+      'Reg 411 (shock protection) together with the On-Site Guide',
+      'Reg 522.8 and manufacturer support tables, with cable cleats tested to BS EN 61914',
+      'Reg 134 (workmanship) alone governs the support spacing',
+      'There is no support-spacing rule for SWA on cable ladder',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,11 +169,11 @@ const quizQuestions = [
       'Reg 522.6 (mechanical impact) refers to external influence AG. Which BS standard provides the IK rating system for impact resistance of enclosures, and which IK rating corresponds to a 20 J impact?',
     options: [
       'BS 7671 itself — IK10',
-      'BS EN 62262 — IK10 corresponds to 20 J',
       'BS EN 60529 — IK10 means dust-tight',
       'There is no IK rating system',
+      'BS EN 62262 — IK10 corresponds to 20 J',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 62262 (Degrees of protection provided by enclosures for electrical equipment against external mechanical impacts — IK code) defines IK00 (unprotected) through IK10 (20 J impact resistance). It complements the IP code (BS EN 60529 — ingress protection against solid foreign objects and water). For AG3 (high mechanical impact) environments — Appendix 5 of BS 7671 — equipment must be selected with an IK rating matched to the assessed impact energy, OR additional mechanical protection must be provided (steel guard, cage, kerb, location out of the impact zone).',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'You are running fire alarm cabling for a Cat L1 system per BS 5839-1, in an escape route. What BS 7671 / BS 5839 combination drives your cable selection AND your support method?',
     options: [
-      'Standard FP200 cable on plastic cable ties — adequate',
-      'Enhanced fire-rated cable to BS 8434-2 / BS EN 50200 PH120 (e.g. FP400, FP PLUS, MICC) supported by metallic clips, saddles or trays — Reg 521.10.202 prohibits non-metallic supports for cables in escape routes where they could fall in a fire and become a tripping/entanglement hazard for occupants or fire and rescue services',
-      'Twin and earth on plastic clips',
-      'No specific requirement applies',
+      'Enhanced fire-rated cable on metallic clips, saddles or trays per Reg 521.10.202',
+      'Standard FP200 cable on ordinary plastic cable ties at 300 mm intervals',
+      'Standard twin-and-earth cable on plastic clips throughout the escape route',
+      'Any general-purpose cable, since escape routes carry no special support rule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5839-1 (and BS 5266-1 for emergency lighting) drive the cable performance — standard fire-rated for most areas, enhanced fire-rated where prolonged operation is critical (e.g. premises with sleeping risk, single-stair buildings, evacuation lifts). Reg 521.10.202 of BS 7671 is the support rule: cables in escape routes must be installed using methods that resist premature collapse in a fire — metallic clips, saddles, or fully metallic containment. Plastic cable ties / plastic-only saddles are explicitly NOT acceptable as the primary support method for cables in escape routes, even where the cable itself is fire rated.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'On a TN-C-S installation, a metal trunking is being used to enclose Band II circuits. What earthing arrangement does Reg 543 / 521 require?',
     options: [
-      'No earthing — the trunking is decorative',
-      'The metal trunking shall be electrically continuous (every coupling tight, copper-link bonded across expansion joints), bonded to the MET as an exposed-conductive-part, and where used as a CPC must be sized per Reg 543.1 — typically requiring a verified R1+R2 measurement',
-      'Bond it to neutral',
-      'Earth one end only',
+      'No earthing needed, since metal trunking is only mechanical containment',
+      'Bond the trunking to the neutral bar at the board, treating it as a return path',
+      'Electrically continuous, bonded to the MET as an exposed-conductive-part, sized per Reg 543.1',
+      'Earth the trunking at one end of the run only, relying on the lid for the rest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Metal trunking is an exposed-conductive-part of the wiring system (Reg 411.3.1.1 — protective earthing of exposed-conductive-parts). It shall be electrically continuous and bonded to the MET. If it is being relied on as the CPC of the circuits within (rather than running a separate green/yellow), it must comply with Reg 543.1 cross-sectional sizing AND have its impedance verified by R1+R2 / Zs measurement so ADS within Table 41.1 is demonstrable. Expansion joints must be bridged by a copper bonding link — they are mechanical joints, not electrical ones.',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'Which option correctly describes the BS 7671 approach to MICC (mineral-insulated copper-cable, often Pyro)?',
     options: [
-      'It is obsolete and not allowed under BS 7671',
-      'MICC is a recognised cable type (Reg 521.5) with excellent fire performance — a copper sheath, magnesium-oxide insulation, copper conductors. Common uses: fire alarm risers, sprinkler systems, kitchen extract motors, plant rooms. Termination requires a BS 6207-2 sealing pot and a moisture-tight gland — MgO is hygroscopic. The copper sheath can be used as the CPC (Reg 543.2.2)',
-      'MICC must always have a plastic oversheath',
-      'MICC needs no termination',
+      'An obsolete cable type no longer permitted for new installation under BS 7671',
+      'A fire-performance cable whose copper sheath is a CPC and whose hygroscopic MgO needs a sealing-pot termination',
+      'A cable that must always carry a plastic oversheath, fitted before any termination',
+      'A cable needing no special termination, since the sheath can safely be left bare',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A Band II ring final and a fire alarm Band I cable enter the same metal compartmented trunking. Which Reg 528 condition makes this acceptable?',
     options: [
-      'It is never acceptable',
-      'Acceptable where the trunking has separate compartments separated by a CONTINUOUS EARTHED METALLIC BARRIER (Reg 528.1 (ii)), with each band in its own compartment, and the metallic barrier is bonded to the MET as an exposed-conductive-part',
-      'Acceptable provided cables are different colours',
-      'Acceptable provided the fire alarm cable is rated 600/1000 V',
+      'Never acceptable, since the two bands may not share any common enclosure',
+      'Acceptable provided the cables of each band are run in clearly different colours',
+      'Acceptable provided the fire alarm cable is rated 600/1000 V for the run',
+      'Acceptable where each band is in its own compartment behind a continuous earthed metallic barrier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 528.1 lists the three permitted methods to mix Band I and Band II: (i) every Band I cable insulated for the highest voltage present, (ii) cables run in separate compartments of a trunking system with a continuous earthed metallic barrier between them, or (iii) cables run in physically separate conduits / trunkings / ducts. Compartmented metal trunking is the practical workshop solution — the barrier MUST be continuous (every joint and bend covered, no missing sections at fittings) and earthed back to the MET. Plastic compartmented trunking does NOT satisfy (ii) on its own — there is no metallic barrier.',
   },

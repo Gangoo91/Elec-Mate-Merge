@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A4:2026 added a new regulation group 419 (alternative protective measures). What scenario is it written for?',
     options: [
-      'Industrial installations only',
-      'Cases where automatic disconnection of supply per Reg 411.3.2 cannot be achieved — typically electronic supplies with limited prospective fault current (inverters, DC-side PV, laboratory bench supplies)',
-      'Functional earthing for ICT equipment',
-      'EV charging on TN-C-S supplies',
+      'Heavy industrial installations and their distribution boards only',
+      'Cases where automatic disconnection per Reg 411.3.2 cannot be achieved on limited-fault-current supplies',
+      'Functional earthing arrangements for sensitive ICT equipment',
+      'EV charging installations connected to TN-C-S (PME) supplies',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     id: 'm1s4-deletions',
     question: 'Which Appendix and which Annex have been DELETED under A4:2026?',
     options: [
-      'Appendix 4 and Annex A41',
-      'Appendix 17 (energy efficiency) and Annex B443 (CRL formula method) — content of App 17 promoted to new Chapter 81; CRL method content moved to product / EMC standards',
-      'Appendix 6 and Annex A444',
-      'Appendix 3 and Annex B41',
+      'Appendix 4 (cable tables) and Annex A41 (shock protection)',
+      'Appendix 17 (energy efficiency) and Annex B443 (CRL formula method)',
+      'Appendix 6 (model forms) and Annex A444 (EM disturbances)',
+      'Appendix 3 (device curves) and Annex B41 (disconnection times)',
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const inlineChecks = [
     question:
       'A new earthing-arrangement option appears on the EIC and EICR cover page under A4:2026. What is it?',
     options: [
-      'TN-S (split-concentric)',
+      'TN-S (split-concentric service cable)',
       'TN-C-S (PNB) — protective neutral bonding, distinct from PME',
-      'TT (open electrode)',
-      'IT (bonded star)',
+      'TT (installation with an open earth electrode)',
+      'IT (bonded-star earthing arrangement)',
     ],
     correctIndex: 1,
     explanation:
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'A4:2026 added a new regulation group 419. What is its purpose, and where does it sit in the standard?',
     options: [
-      'Industrial AFDD requirements; sits in Chapter 7',
-      'Alternative protective measures where ADS per Reg 411.3.2 is not feasible — typically electronic supplies with limited fault current; sits in Chapter 41 (Section 419)',
-      'PME open-PEN protection on EV chargers; sits in Section 722',
-      'Functional earthing for ICT equipment; sits in Section 545',
+      'Alternative protective measures where ADS within Table 41.1 times is not feasible; in Chapter 41',
+      'Industrial arc-fault detection device requirements, sitting in a new part of Chapter 7',
+      'PME open-PEN protection for EV chargepoints, sitting within Section 722 of Part 7',
+      'Functional earthing for ICT equipment, sitting within the new Section 545 of Part 5',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 419 is a new normative route for designers where an OPD or RCD cannot achieve ADS within Table 41.1 times — inverters, DC-side PV, lab supplies. ICT functional earthing got its own new Section 545; PME open-PEN protection is in 722; AFDD is in 421.1.7. Each is a distinct A4 addition and the certification implications differ.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'A4:2026 introduced new Chapters and a new Section that did not exist pre-A4. Which set is correct?',
     options: [
-      'Chapter 41 + Section 701',
-      'Chapter 57 (stationary secondary batteries), Chapter 81 (energy efficiency), Section 545 (ICT functional earthing) and Section 716 (Power over Ethernet)',
-      'Chapter 31 + Section 705',
-      'Chapter 41 + Section 722',
+      'Chapter 41 (protection against electric shock) and Section 701 (bathrooms)',
+      'Chapter 31 (purposes and supplies) and Section 705 (agricultural premises)',
+      'Chapter 41 (protection against shock) and Section 722 (EV charging points)',
+      'Chapters 57 and 81 plus Sections 545 and 716 (batteries, efficiency, ICT earthing, PoE)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4 added: Chapter 57 (BESS / stationary batteries / hybrid PV+battery), Chapter 81 (energy efficiency — replacing the deleted informative Appendix 17), Section 716 (Power over Ethernet — references BS EN 50173-1 and BS EN IEC 62368-3) and Section 545 (functional earthing for ICT equipment). Section 710 (medical) had a major revision but is not new. Chapters 41, 31 and Sections 701, 705, 722 all pre-existed.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 3,
     question: 'A4:2026 changed how the FI code is treated on a periodic Condition Report. How?',
     options: [
-      'FI is now mandatory on every observation',
-      'FI is no longer used',
-      'Code FI no longer needs to be marked as unsatisfactory by default',
-      'FI is now equivalent to C1',
+      'FI must now be applied to every observation recorded on the report by default',
+      'The FI code has been withdrawn entirely and is no longer available to inspectors',
+      'Code FI no longer needs to render the overall report unsatisfactory by default',
+      'FI is now treated as equivalent to a C1 immediate-danger classification',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'On a TN-C-S (PME) supply, you are wiring a 7 kW EV charge point. Reg 722.312.2.1 (new in A4) makes one option non-compliant. Which?',
     options: [
-      'Splitting N and PE at the consumer unit and running the EV circuit as TN-S, with an open-PEN protection device at the charger',
       'Including a PEN conductor in the EV-charging circuit and relying on the DNO PEN integrity',
+      'Splitting N and PE at the consumer unit and running the EV circuit as TN-S with open-PEN protection at the charger',
       'Applying a separate earth electrode for the EV charger and treating the EV island as TT',
-      'Using a Type A RCBO upstream of a charger with internal 6 mA DC fault detection',
+      'Using a Type A RCBO upstream of a charger that has internal 6 mA DC fault detection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 722.312.2.1 expressly prohibits inclusion of a PEN conductor within an EV-charging circuit on a TN system. The compliant routes are (a) split N and PE before the EV circuit (run as TN-S) typically with an open-PEN protection device, or (b) apply one of the alternative protective measures in Section 722 — for example a separate earth electrode taking the EV onto a TT-like island. The conductive vehicle body amplifies open-PEN touch-current risk.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which surge-protection material has been DELETED under A4:2026?',
     options: [
-      'Reg 443.4 (risk classification) and Section 534 (selection of SPDs)',
-      'Reg 443.5 (calculated risk level / CRL method), Annex A443 (informative SPD examples), Annex B443 and Appendix 17',
-      'Section 444 (EMC) and Annex B41',
-      'Reg 530.3 (operational conditions) only',
+      'Reg 443.4 (risk classification) together with the whole of Section 534 (selection of SPDs)',
+      'Section 444 (EMC measures) together with informative Annex B41',
+      'Reg 530.3 (operational conditions) only, with the rest of surge protection unchanged',
+      'Reg 443.5 (CRL method), Annex A443 (informative SPD examples), Annex B443 and the old Appendix 17',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4 simplifies surge protection: Reg 443.5 (CRL method) and Annex B443 (CRL formula content) are deleted, along with Annex A443 (informative SPD examples) and Appendix 17 (energy efficiency, promoted to Chapter 81). The simplified Reg 443.4.1 risk-classification approach is now the single SPD route in BS 7671. SPD product-level details flow through BS EN 61643 product standards rather than informative annexes.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which Reg 411.3.3 amendment best describes the A4 wording?',
     options: [
-      'Mandatory 30 mA RCD on all socket-outlets up to 32 A; no exceptions',
-      'Mandatory 30 mA RCD on (a) sockets used by ordinary persons / children, (b) other-location sockets up to 32 A, and (c) mobile equipment outdoors — with the (b) category exceptable by documented risk assessment by a skilled person (electrically)',
-      '30 mA RCD only required on outdoor sockets',
-      '30 mA RCD only required when documented in the design file',
+      'Mandatory 30 mA RCD on ordinary-person and outdoor sockets; other ≤32 A sockets exceptable by risk assessment',
+      'Mandatory 30 mA RCD on all socket-outlets up to 32 A with no permitted exceptions whatsoever',
+      '30 mA RCD required only on socket-outlets located outdoors, never on any indoor sockets',
+      '30 mA RCD required only where the designer has documented the need in the design file',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 411.3.3 (as amended through A4) keeps the three-category structure: (a) BA1/BA2 ordinary-person / children sockets — never exceptable; (b) other-location sockets — exceptable via documented risk assessment by a skilled person, attached to the EIC; (c) mobile equipment outdoors — never exceptable. A4 also tightened the wording so the category covered is socket-outlets up to 32 A, and made clear the risk-assessment exception is non-domestic only.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.1 was redrafted under A4:2026 to address bidirectional energy flow (PV, battery, V2H). Which two indents are new or substantively changed?',
     options: [
-      'Indents (a) and (b) only',
-      'Indent (c) — requires a suitable protective device where energy flow is bidirectional — and indent (d) — prohibits connection of a parallel source to the load side of an RCD under specified conditions',
-      'Indent (e) — requires Type B RCDs only — and indent (f) — bans solar inverters',
-      'No substantive change',
+      'Indents (a) and (b) only, covering generator set rating and synchronising arrangements',
+      'No substantive change was made; the redraft was purely editorial reordering',
+      'Indent (c) — a bidirectional-capable protective device — and (d) — no parallel source on the load side of an RCD',
+      'Indent (e) — Type B RCDs only — and indent (f) — a ban on solar inverters under 5 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 551.7.1 (c) requires that, where energy flow is bidirectional, the protective device must be suitable for bidirectional operation — many older OPDs and RCDs are unidirectional. Reg 551.7.1 (d) bans connecting a parallel source to the load side of an RCD where the source could re-energise the loop and defeat the trip mechanism. Both indents map directly onto Section 530 (530.3.201 — bidirectional protection requirements) which is also new in A4.',
   },
@@ -220,10 +220,10 @@ const quizQuestions = [
     question:
       'You are coding a pre-A4 dwelling install on an EICR being issued in May 2026. The lighting circuit is on an MCB with no RCD. What is the right approach?',
     options: [
-      'Mark satisfactory — no comment, lighting circuits never need RCD',
-      "Apply C2 by default — A4 is in force so anything non-RCD on lighting is automatically 'potentially dangerous'",
-      'Code per the actual safety risk now — C3 (improvement recommended) where the install is otherwise sound and risk is low; C2 (potentially dangerous) where there is a real-world shock-risk amplifier (damaged accessories, extensive metal-bodied luminaires, BA2 occupants) — and reference Reg 411.3.4 as the in-force benchmark',
-      'Code C1 (danger present) — A4 makes any non-RCD lighting an immediate danger',
+      'Mark satisfactory with no comment, since lighting circuits have never required an RCD',
+      "Apply C2 by default, because A4 is in force so any non-RCD lighting is now 'potentially dangerous'",
+      'Code on actual present-day risk — C3 if otherwise sound, C2 if a real risk amplifier exists',
+      'Code C1 (danger present), because A4 makes any non-RCD lighting an immediate danger',
     ],
     correctAnswer: 2,
     explanation:

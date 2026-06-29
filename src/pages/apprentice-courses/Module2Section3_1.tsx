@@ -16,9 +16,9 @@ const quickCheckQuestions = [
     question: 'What is the key characteristic of current in a series circuit?',
     options: [
       'Current is the same everywhere',
-      'Loose connections or overloading',
-      'The management contractor',
-      'Completing the work within 24 hours',
+      'Current divides between the components',
+      'Current is largest at the first component',
+      'Current is zero across the resistors',
     ],
     correctIndex: 0,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'parallel-voltage',
     question: 'What happens to voltage in parallel branches?',
     options: [
-      'Stacked boxes or sacks on a flat surface',
+      'Voltage divides equally between the branches',
       'Voltage is the same across each branch',
-      'At least 1 MΩ per volt of range selected',
-      'P = (2π × n × T) / 60 where n is RPM',
+      'Voltage is highest in the first branch',
+      'Voltage drops to zero in every branch',
     ],
     correctIndex: 1,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     question: 'Why are car headlights wired in parallel rather than series?',
     options: [
       'Each light gets full voltage and works independently',
-      'After completing full GS38 procedure and posting warning notices',
-      'To assist with evacuation and ensure areas are clear',
-      'Loss of supply PEN could make installation conductive parts live',
+      'It uses less wiring than a series arrangement',
+      'It makes both headlights share the supply voltage',
+      'It allows the headlights to draw less total current',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is a key advantage of parallel circuits in electrical installations?',
     options: [
-      'Physical intersection of two objects',
-      'Pressure measured relative to atmospheric pressure',
+      'They use less cable than a series circuit',
+      'They increase the total resistance of the circuit',
       'Components can be controlled independently',
-      'To prevent dark edges that could hide obstacles',
+      'They reduce the supply voltage at each device',
     ],
     correctAnswer: 2,
     explanation:

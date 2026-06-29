@@ -10,8 +10,8 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the maximum safe working load (SWL) per platform on a standard mobile access tower?',
-    options: ['150kg', '200kg', '275kg', '500kg'],
-    correctAnswer: 2,
+    options: ['275kg', '200kg', '150kg', '500kg'],
+    correctAnswer: 0,
     explanation:
       'The maximum safe working load per platform is 275kg. This includes the combined weight of all personnel, tools, and materials on that platform. Exceeding this limit risks structural failure.',
   },
@@ -41,8 +41,8 @@ const quizQuestions = [
     id: 4,
     question:
       'What maximum lateral (horizontal) force is a mobile access tower typically designed to withstand at platform level?',
-    options: ['10kg', '20kg', '50kg', '100kg'],
-    correctAnswer: 1,
+    options: ['10kg', '50kg', '100kg', '20kg'],
+    correctAnswer: 3,
     explanation:
       'Mobile access towers are typically designed to withstand a lateral force of 20kg (approximately 200N) at platform level. This represents the force from leaning, pushing against walls, or wind. Exceeding this can cause the tower to overturn.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     question:
       'Wind speed is measured as Beaufort 6 at the site. What should you do with the tower?',
     options: [
-      'Continue working but reduce the number of people on the platform',
-      'Tie the tower to a permanent structure and continue',
       'Work should have already ceased at Beaufort 4 — descend immediately and secure the tower',
+      'Tie the tower to a permanent structure and continue',
+      'Continue working but reduce the number of people on the platform',
       'Move the tower indoors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Work should have ceased at Beaufort 4 (17 mph). At Beaufort 6 (27 mph), the tower should already be unoccupied and secured. Towers are typically rated to withstand Beaufort 6 in their unoccupied state, but must not be used for work above Beaufort 4.',
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
       'An operative weighing 90kg is on the platform with a toolbox weighing 15kg and materials weighing 180kg. Is the platform overloaded?',
     options: [
       'No — total is 285kg which is within the 950kg tower limit',
-      'Yes — total is 285kg which exceeds the 275kg per-platform limit',
       "No — the operative's weight does not count towards the platform load",
       'It depends on the tower height',
+      'Yes — total is 285kg which exceeds the 275kg per-platform limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The total platform load is 90 + 15 + 180 = 285kg, which exceeds the 275kg per-platform limit by 10kg. The platform is overloaded. All personnel weight, tools, and materials must be included in the calculation. The tower total limit of 950kg is a separate check.',
   },

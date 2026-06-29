@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the legal status of BS 5266-1:2025 in the UK regulatory regime, and how does following it deliver compliance with the legal duties under the Regulatory Reform (Fire Safety) Order 2005?',
     options: [
-      'BS 5266-1:2025 is statute — the police can prosecute under it.',
-      'It is a Code of Practice published as a British Standard. It is RECOMMENDATORY rather than statutory; it is not itself law. However, following BS 5266-1:2025 is the standard route to demonstrating compliance with the LEGAL duties imposed by the RRO 2005, the Workplace Regulations 1992, the HSAW Act 1974, and the Building Regulations Approved Document B. Departing from it is legally possible but the burden of justification falls on the responsible person — they must show their alternative method delivers an equivalent or better outcome. In practice, regulators, fire risk assessors and insurers all start from "did you follow BS 5266-1" and any departure attracts scrutiny.',
-      'It has no legal effect at all.',
-      'It applies only in Scotland.',
+      'It is statute in its own right, and an enforcing authority can prosecute directly under it.',
+      'It is a recommendatory Code of Practice — not law, but the standard route to compliance.',
+      'It has no legal effect at all and is purely advisory marketing guidance from the manufacturers.',
+      'It applies only in Scotland, under the Building (Scotland) Regulations and Technical Handbooks.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'BS EN 1838:2024 and BS EN 50172:2024 are both European Norm standards adopted in the UK with effect from 2024. What is the principal difference between them in terms of subject matter?',
     options: [
-      'They are identical — duplicates of each other.',
-      'BS EN 1838:2024 covers the LIGHTING APPLICATION — what illuminance levels must be achieved, where, and within what switch-on time (1 lx escape, 0.5 lx anti-panic, 15 lx high-risk, full-width-of-escape-route, ratio limits, switch-on times). BS EN 50172:2024 covers the SYSTEM REQUIREMENTS — how the emergency lighting system as a whole must be designed, installed, commissioned, tested and documented (test schedule: daily / monthly / annual / 5-year photometric, log book requirements, system architecture). The two complement each other: 1838 is the lighting performance standard; 50172 is the system requirements standard.',
-      'BS EN 1838 is for hospitals only.',
-      'BS EN 50172 is withdrawn.',
+      'They are identical documents — direct duplicates of each other with the same scope and content.',
+      'BS EN 1838:2024 is the lighting-application standard; BS EN 50172:2024 is the system standard.',
+      'BS EN 1838 applies only to hospitals and healthcare premises, not to general commercial buildings.',
+      'BS EN 50172 has been withdrawn with no replacement; only BS EN 1838 now applies in the UK.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'When does BS 5266-1:2025 take effect, and what does that mean for designs in progress at that date?',
     options: [
-      'It took effect on 1 January 2024.',
-      'It came into effect on 31 OCTOBER 2025, superseding BS 5266-1:2016. Designs issued before that date were valid against the 2016 edition; designs issued from that date onwards must comply with the 2025 edition. Designs in progress at the changeover date should be reviewed against the 2025 edition before issue — particularly the borrowed-light exclusion, the high-risk segmentation rule, and the 5-year photometric verification expectation. Existing installations are not retrospectively non-compliant; they are reviewed against the 2025 edition at the next photometric verification cycle.',
-      'It will take effect in 2030.',
-      'It never takes effect — only the EN takes effect.',
+      'It took effect on 1 January 2024, superseding the previous 2016 edition immediately.',
+      'It took effect on 31 October 2025; designs in progress should be reviewed before issue.',
+      'It will not take effect until a long transitional period finally ends in the year 2030.',
+      'It never formally takes effect — only the parallel European Norm BS EN 1838 applies.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 Section 560 covers safety services. How does it relate to the emergency lighting standards (BS 5266-1, BS EN 1838, BS EN 50172, BS EN 50171, BS EN 60598-2-22)?',
     options: [
-      'Section 560 supersedes BS 5266-1.',
-      'Section 560 of BS 7671 covers the ELECTRICAL INSTALLATION aspects of safety services (including emergency lighting) — the supply arrangement, the source of supply (Reg 560.10), the wiring, the protection from disconnection, the segregation. The other standards cover the lighting performance and system requirements. The two domains complement: BS 7671 §560 ensures the electrical infrastructure delivering the emergency supply meets the wiring regulations; BS 5266 / EN 1838 / EN 50172 ensure the lighting it powers performs as required. A2026 amendment to BS 7671 has refined Section 560 — particularly Reg 560.10 on sources of supply.',
-      'They cover entirely separate subjects with no overlap.',
-      'Section 560 applies only to fire alarms.',
+      'Section 560 supersedes BS 5266-1 and is the single lead document for emergency lighting.',
+      'Section 560 covers the electrical-installation side; the lighting standards cover performance.',
+      'They cover entirely separate subjects with no overlap, cross-reference or shared scope at all.',
+      'Section 560 applies only to fire-alarm systems and their wiring, not to emergency lighting.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which UK standard is the principal Code of Practice for emergency escape lighting?',
     options: [
-      'BS 7671:2018+A4:2026.',
-      'BS 5266-1:2025 — the British Standard "Code of Practice for emergency escape lighting", effective 31 October 2025, superseding BS 5266-1:2016. It is the principal UK technical document for designing, installing, commissioning, operating, and maintaining emergency lighting. It is recommendatory rather than statutory; following it is the standard route to demonstrating compliance with the legal duties under the RRO 2005, Workplace Regulations 1992, HSAW Act 1974, and Building Regulations.',
-      'BS EN 1838:2024.',
-      'BS EN 50172:2024.',
+      'BS 7671:2018+A4:2026 — the IET Wiring Regulations for the electrical installation.',
+      'BS EN 1838:2024 — the European lighting application standard for illuminance levels.',
+      'BS 5266-1:2025 — the UK "Code of Practice for emergency escape lighting".',
+      'BS EN 50172:2024 — the European system requirements and testing-regime standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1:2025 is the UK Code of Practice. The European Norms (BS EN 1838 for lighting application, BS EN 50172 for system requirements, BS EN 50171 for central battery equipment, BS EN 60598-2-22 for luminaires) are the European-level technical standards that BS 5266-1 calls up as normative references. Together they form the integrated UK regime.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BS EN 1838:2024 specifies which of the following emergency lighting requirements?',
     options: [
-      'Only the duration of emergency lighting.',
-      'The illuminance levels and uniformity ratios for each category (1 lx full width for escape route, 0.5 lx for anti-panic, 15 lx for high-risk task), the switch-on times (5 s / 60 s for escape and anti-panic, 0.5 s for high-risk), the maximum-to-minimum illumination ratios (40:1 anti-panic, 10:1 high-risk), the new full-width-with-edge-exclusions requirement for escape routes (NEW in 2024 — supersedes the 2013 centre-line + central-band wording), the recommendations for local-area lighting, and the photometric measurement methodology. The standard is the European-level performance specification for the lighting itself.',
-      'Only the wiring of luminaires.',
-      'The colour of the running-man pictogram.',
+      'The illuminance levels, uniformity ratios and switch-on times for escape, anti-panic and high-risk lighting.',
+      'Only the rated duration of the emergency lighting, expressed in hours of battery autonomy.',
+      'Only the wiring and circuit arrangement supplying the emergency luminaires on each escape route.',
+      'Only the colour, shape and dimensions of the running-man exit-sign pictogram.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 1838 is the lighting application standard. The 2024 edition introduces the full-width-of-escape-route requirement with explicit edge exclusions (replacing the 2013 centre-line + central-band wording) and formally recognises local-area lighting. The illuminance levels, ratios, and switch-on times are the core content; designers calculate to these targets; commissioning verifies them; the 5-year photometric survey re-verifies them.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'BS EN 50172:2024 specifies the testing regime for emergency lighting. What is its standard test schedule?',
     options: [
-      'Annual test only.',
-      'Daily visual check of central battery indicator panel (where applicable); monthly functional test (each luminaire — typically a brief energise from battery via the test facility); annual full-duration discharge test (verify the system runs for the rated 3-hour duration at the required illuminance); 5-year photometric verification (NEW in 2024 — survey actual measured illuminance against the BS EN 1838 levels). The test results are recorded in a log book retained for at least 5 years (longer for some sectors). Faults identified must be rectified and the rectification recorded.',
-      'Five-yearly test only.',
-      'No formal test regime.',
+      'A single annual full-duration discharge test, with no daily, monthly or five-yearly checks.',
+      'A single five-yearly photometric survey, with no daily, monthly or annual functional checks.',
+      'No formal periodic test regime is specified by the standard; testing is left to the duty holder.',
+      'Daily indicator check, monthly functional test, annual full discharge and a 5-year photometric survey.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The four-tier test schedule is the BS EN 50172:2024 framework. Daily for central battery (visual indicator check). Monthly functional test of each luminaire. Annual full discharge. 5-year photometric. The 5-year photometric is the 2024 introduction and is the new audit point. The log book per §6 of the standard is the legal record; without it the responsible person cannot demonstrate Article 17 (RRO) maintenance compliance.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'BS EN 50171 covers:',
     options: [
-      'Domestic light bulbs.',
-      'Central power supply systems (battery, charger, monitoring) for emergency safety services including emergency lighting. Specifies performance, monitoring, testing, charging, environmental conditions, labelling, integration with the lighting system. Required where a central battery system is installed; the central battery equipment must comply with BS EN 50171 and the manufacturer must provide a declaration of compliance. Distinct from BS EN 50172 (the lighting system as a whole) and BS EN 60598-2-22 (the luminaire as a product).',
-      'Smoke detectors.',
-      'Solar PV installations.',
+      'Domestic lamps, light bulbs and general-purpose lighting fittings for dwellings.',
+      'Central power supply systems (battery, charger, monitoring) for emergency safety services.',
+      'Smoke and heat detectors, sounders and control panels for fire-alarm systems.',
+      'Solar PV arrays, inverters and battery-storage installations for buildings.',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'BS EN 60598-2-22 is the product standard for:',
     options: [
-      'Emergency luminaires (the fitting itself, including its construction, electrical safety, photometric performance, charging electronics, and battery integration). Manufacturers declare compliance with BS EN 60598-2-22 alongside BS EN 60598-1 (general luminaires). The standard covers maintained, non-maintained, sustained / combined operating modes; classifies luminaires by type; specifies marking and rating-plate symbology. A compliant luminaire data sheet must reference BS EN 60598-2-22.',
-      'Cable trays.',
-      'Smoke detectors.',
-      'Fire extinguishers.',
+      'Cable trays, trunking and containment systems for safety-service wiring.',
+      'Smoke detectors, heat detectors and manual call points for fire alarms.',
+      'Emergency luminaires — the fitting itself, including construction, safety and battery integration.',
+      'Portable and fixed fire extinguishers and their wall-mounting brackets.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'BS EN 60598-2-22 is the product standard. Every emergency luminaire on a UK project must be compliant with it. Specification documents and procurement orders should require it. On audit, cross-reference the luminaire data sheet against the standard\'s declaration of mode, duration, IP rating, photometric data, battery type, and changeover behaviour.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'What is the relationship between BS 5266-1 and BS EN 1838 / BS EN 50172?',
     options: [
-      'They contradict each other.',
-      'They are entirely separate.',
-      'BS 5266-1:2025 is the UK Code of Practice — the integrating document. It calls up BS EN 1838:2024 (lighting application — illuminance levels, switch-on, ratios) and BS EN 50172:2024 (system requirements — testing, log book, design) as normative references. It also calls up BS EN 50171 (central battery equipment) and BS EN 60598-2-22 (luminaire product). The European Norms set the European-level technical baselines; BS 5266-1 adapts them to UK practice and adds UK-specific elements (e.g. the high-risk segmentation rule). A UK design follows BS 5266-1 and the European Norms it references; the European Norms alone would not capture the UK-specific overlay.',
-      'BS 5266-1 has been replaced by BS EN 1838.',
+      'BS 5266-1:2025 is the integrating UK Code of Practice; it calls up the European Norms as normative references.',
+      'They directly contradict each other on the required escape-route illuminance levels.',
+      'They are entirely separate documents with no cross-references or normative links at all.',
+      'BS 5266-1 has been fully withdrawn and replaced by the European Norm BS EN 1838.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The UK regime uses BS 5266-1 as the integrating Code of Practice and the European Norms as the technical building blocks. Specifying "design to BS 5266-1:2025" implicitly invokes BS EN 1838:2024, BS EN 50172:2024, BS EN 50171, BS EN 60598-2-22, plus the BS 7671 Section 560 wiring rules. All are needed; together they form the design framework.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'BS 5266-7 has historical relevance but is no longer the current technical reference. What replaced it?',
     options: [
-      'It still applies.',
-      'It was withdrawn and replaced by adoption of the European Norm BS EN 1838 (originally 2013, now 2024). The current reference for emergency lighting illuminance levels, switch-on times, and ratios is BS EN 1838:2024 — directly adopted as a British Standard. BS 5266-1:2025 calls up BS EN 1838:2024 as a normative reference. References to BS 5266-7 in older specifications and design notes should be updated.',
-      'It became BS 5266-3.',
-      'It was renumbered as BS 5266-99.',
+      'It still applies unchanged as the current technical reference for the lighting application.',
+      'It was renumbered to become BS 5266-3, retaining the same lighting-application content.',
+      'It was renumbered as BS 5266-99 and remains the active application standard for the UK.',
+      'It was withdrawn and superseded by the European Norm BS EN 1838 (now the 2024 edition).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5266-7 is a withdrawn legacy document. The European Norm process replaced national lighting-application standards with the BS EN 1838 series. Old specifications referencing BS 5266-7 should be updated to BS EN 1838:2024. Designers reading legacy specs need to map old references to current standards.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'Where does BS 5266-1:2025 sit in relation to ICEL guidance and LIA technical statements?',
     options: [
-      'They contradict each other.',
-      'ICEL (the Industry Committee for Emergency Lighting) and the LIA (Lighting Industry Association) are industry bodies that produce supplementary guidance, technical statements, and best-practice notes. Their output is RECOMMENDATORY supplementary material — useful for navigating practical design and installation questions that BS 5266-1:2025 does not detail at that level. They sit ALONGSIDE BS 5266-1, not above it. ICEL Approved Contractor registration is a competence credential; LIA membership is also a competence credential. Neither replaces the standard but both supplement it.',
-      'ICEL is statutory.',
-      'LIA is part of HSE.',
+      'ICEL and LIA guidance directly contradicts the standard on key design requirements.',
+      'ICEL and LIA produce supplementary guidance that sits alongside BS 5266-1, not above it.',
+      'ICEL guidance is statutory and legally overrides BS 5266-1 where the two differ.',
+      'The LIA is a division of the HSE holding direct enforcement and prosecution powers.',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,26 +194,26 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 Section 560 covers safety services. Which of the following is one of the regulations within Section 560 that is most directly relevant to emergency lighting?',
     options: [
-      'Reg 411.3.4 — automatic disconnection times.',
-      'Reg 560.10 — Sources of supply (refined under A4:2026). Specifies the supply arrangement for safety services including emergency lighting — independent source, switching arrangements, monitoring, transfer time. Other relevant regs include Reg 560.5 (circuits — segregation and identification), Reg 560.6 (wiring systems — fire-resistant cable in some applications), Reg 560.7 (separation from non-safety circuits), and Reg 560.8 (general source-of-supply requirements). The 2026 amendment refined the regulations after consultation.',
-      'Reg 433.1 — overload protection.',
-      'Reg 132 — chapter on assessment.',
+      'Reg 411.3.4 — the automatic disconnection times for fault protection.',
+      'Reg 433.1 — the coordination of protection against overload current.',
+      'The Section 560 source-of-supply regulations — independent supply, switching and transfer time.',
+      'Reg 132 — the assessment of general characteristics of the installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Section 560 is dedicated to safety services. Reg 560.10 in particular addresses sources of supply — the topic that bridges the lighting system (BS 5266) and the electrical installation (BS 7671). The A4:2026 amendment refined Reg 560.10 to clarify supply arrangements. Anyone designing emergency lighting must read Section 560 alongside BS 5266-1:2025; the certificate trail covers both.',
+      'Section 560 is dedicated to safety services. Its source-of-supply regulations bridge the lighting system (BS 5266) and the electrical installation (BS 7671). Anyone designing emergency lighting must read Section 560 alongside BS 5266-1:2025; the certificate trail covers both. Reg 411.3.4, 433.1 and 132 belong to unrelated parts of BS 7671.',
   },
   {
     id: 10,
     question:
       'Approved Document B and the equivalents in Wales, Scotland and Northern Ireland are STATUTORY GUIDANCE under the Building Regulations. How does this differ from BS 5266-1:2025?',
     options: [
-      'They are identical documents.',
-      'Approved Document B is statutory guidance issued under the Building Regulations 2010 (with parallel documents in Wales / Scotland / Northern Ireland). It TELLS YOU WHERE emergency lighting is required as a means of compliance with the Building Regulations for new build / material alteration. BS 5266-1:2025 is a British Standard — recommendatory not statutory — that TELLS YOU HOW to deliver the lighting. Approved Document B explicitly references BS 5266-1 as the route to demonstrating technical compliance. Together they cover location and engineering. Approved Document B is enforced by Building Control (now the Building Safety Regulator for higher-risk buildings); BS 5266-1 is followed for the engineering and is referenced by enforcers.',
-      'BS 5266-1 is statutory; Approved Document B is recommendatory.',
-      'Neither has any legal effect.',
+      'Approved Document B is statutory guidance saying WHERE emergency lighting is required; BS 5266-1:2025 says HOW to deliver it.',
+      'They are identical documents covering the same scope, content and legal status throughout.',
+      'BS 5266-1 is statutory law, while Approved Document B is merely recommendatory guidance.',
+      'Neither document has any legal effect whatsoever; both are purely advisory good practice.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Both have legal weight but in different ways. Approved Document B is statutory guidance — a recognised route to compliance with the Building Regulations. BS 5266-1 is the technical British Standard that delivers the engineering compliance the Approved Document presumes. RRO 2005 is the broader fire-safety statute that applies in occupation. Each layer adds something; together they form the legal-and-technical regime.',
   },

@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'schedule-purpose',
     question: 'What is the primary purpose of an equipment schedule?',
     options: [
-      'Wattage, lumen output, IP rating, emergency duration, manufacturer data',
-      'The zero or minimum value of the measured range',
-      'Use it properly, report defects, store it correctly',
+      'To replace the need for layout drawings entirely',
+      'To record the as-installed test results for the EIC',
+      'To provide the contractor with pricing rates per item',
       'To provide detailed tabular data complementing drawings',
     ],
     correctIndex: 3,
@@ -47,9 +47,9 @@ const quickCheckQuestions = [
     question: 'What information must a cable schedule include?',
     options: [
       'Cable reference, size, type, route, length and protective device',
-      'Maximum demand assessment, tariff selection, and load management',
-      'Both reduce touch voltages and provide fault path',
-      'At every change of direction to ensure visibility',
+      'Only the cable reference and the manufacturer name',
+      'The luminaire lux levels and uniformity ratios',
+      'The room finishes and decoration schedule',
     ],
     correctIndex: 0,
     explanation:
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'luminaire-schedule',
     question: 'Why do luminaire schedules include lighting calculation references?',
     options: [
-      'Enhanced corrosion protection and moisture barriers',
+      'To record the cable size feeding each luminaire',
       'To link specified luminaires to design calculations proving compliance',
-      'Network security, encryption, and access controls',
-      'An RCBO or RCD with a rated residual operating current not exceeding 30 mA',
+      'To list the emergency battery manufacturer for each fitting',
+      'To define the maintenance interval for each luminaire',
     ],
     correctIndex: 1,
     explanation:
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     id: 'data-sheet',
     question: 'What distinguishes a data sheet from a schedule?',
     options: [
-      'Very low resistance path between conductors that should be separate',
-      'Connections, supports, protection, labeling, and general workmanship',
-      'The difference in electrical potential between two points',
+      'A data sheet lists many items, a schedule covers one product',
+      'A data sheet is a commercial pricing document only',
+      'A data sheet shows physical locations on the floor plan',
       'Data sheets give detailed technical specifications for a single product type',
     ],
     correctIndex: 3,
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'What format is commonly used for schedules in building services?',
     options: [
-      'Can cause time-dependent reading changes',
-      'Role-based access with appropriate permissions',
+      'Free-text paragraphs describing each item',
+      'A scaled plan drawing with symbols',
       'Tabular format with columns and rows',
-      'At least 200 mA to ensure reliable measurement',
+      'A single-line diagram of the distribution',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'What should a luminaire schedule include for emergency lighting?',
     options: [
       'Emergency duration, type, battery test information and location',
-      'The Approved Electrician or Technician grade who supervises their work',
-      'The person on whose behalf the inspection is carried out',
-      'They provide discrimination with downstream instantaneous RCDs',
+      'Only the manufacturer and catalogue number',
+      'The decorative finish and trim colour options',
+      'The room occupancy figures and fire load',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'How should schedule references link to layout drawings?',
     options: [
-      'To reinforce safe habits and update new workers',
+      'By recording grid coordinates only, with no tags',
       'Using unique tags that appear on both documents',
-      'Fuel, oxygen, and a source of ignition',
-      'Comprehensive logging and diagnostic capabilities',
+      'By matching the colour coding of each cable',
+      'By listing items alphabetically in both documents',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a distribution board schedule?',
     options: [
-      'Maximum expected load taking diversity into account',
-      'High-density cable with very small outer diameter for microduct installation',
+      'To show the physical mounting position of the board',
+      'To list only the incoming supply characteristics',
       'To detail all circuits, protective devices, cable sizes and loads',
-      'Proper isolation, venting, and pressure relief procedures',
+      'To record the board manufacturer warranty terms',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'When should data sheets be requested from manufacturers?',
     options: [
-      'Whenever working on or near electrical equipment',
-      'Converting curved sensor response to linear output',
-      'When there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a risk of falling and no physical barrier',
+      'Only after the equipment has been installed',
+      'Only when a defect is found during commissioning',
+      'They are never needed if a schedule exists',
       'During design development to verify equipment meets requirements',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What does 'IP rating' on an equipment data sheet indicate?",
     options: [
       'Ingress Protection against solids and liquids',
-      'Overheating, interference, equipment malfunction',
-      'Passive infrared (PIR) with microwave (dual-tech)',
-      'Add EV charger load with appropriate diversity',
+      'Internal Power rating in kilowatts',
+      'Impact Protection against mechanical damage',
+      'Insulation Performance class of the wiring',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'How should schedule revisions be managed?',
     options: [
-      'False - IR testing is required regardless of installation age',
+      'Overwrite the original with no record of changes',
       'Track changes with revision numbers and dates, highlight amendments',
-      'It identifies hot spots in electrical equipment',
-      'Cables can be drawn in without damage and heat dissipation is adequate',
+      'Issue a new schedule under a different project number',
+      'Leave revisions to the contractor to record on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What coordination check should be performed between schedules and specifications?',
     options: [
-      'High anxiety with physical symptoms such as trembling and nausea',
-      'To accommodate final positioning and thermal movement',
+      'Confirm the schedule uses a larger font than the spec',
+      'Check the specification is shorter than the schedule',
       'Verify scheduled items match specification requirements',
-      'Drawings showing what was actually installed',
+      'Ensure both documents share the same drawing border',
     ],
     correctAnswer: 2,
     explanation:

@@ -13,8 +13,8 @@ const quickCheckQuestions = [
   {
     id: 'standards-qc1',
     question: 'Which standard series is primarily used in North America for structured cabling?',
-    options: ['ISO/IEC 11801', 'TIA-568', 'BS 7671', 'EN 50173'],
-    correctIndex: 1,
+    options: ['TIA-568', 'ISO/IEC 11801', 'BS 7671', 'EN 50173'],
+    correctIndex: 0,
     explanation:
       'TIA-568 is the primary standard series used in North America, while ISO/IEC 11801 is the international equivalent used more widely in Europe and elsewhere.',
   },
@@ -23,11 +23,11 @@ const quickCheckQuestions = [
     question: 'What does TIA-568.3-D specifically cover?',
     options: [
       'Copper cabling only',
-      'Optical fibre cabling components',
       'Wireless systems',
       'Power over Ethernet',
+      'Optical fibre cabling components',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'TIA-568.3-D is the optical fibre cabling components standard, covering fibre types, connectors, and performance requirements for fibre optic systems.',
   },
@@ -52,11 +52,11 @@ const quizQuestions = [
     question: 'What does TIA stand for?',
     options: [
       'Technical Installation Association',
-      'Telecommunications Industry Association',
       'Testing and Inspection Authority',
+      'Telecommunications Industry Association',
       'Technology Infrastructure Alliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TIA stands for Telecommunications Industry Association, the US-based organisation that develops cabling standards.',
   },
@@ -73,11 +73,11 @@ const quizQuestions = [
     question: 'What fibre types does OM1 refer to?',
     options: [
       'Singlemode fibre',
-      '62.5/125 multimode fibre',
       '50/125 laser-optimised multimode',
       'Plastic optical fibre',
+      '62.5/125 multimode fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OM1 refers to legacy 62.5/125 multimode fibre, which has lower bandwidth than modern OM3/OM4/OM5 50/125 fibres.',
   },
@@ -95,11 +95,11 @@ const quizQuestions = [
     question: 'What does ISO/IEC 11801-1 cover?',
     options: [
       'Home cabling only',
-      'Generic cabling for customer premises',
       'Data centre cabling only',
+      'Generic cabling for customer premises',
       'Industrial cabling only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ISO/IEC 11801-1 covers generic cabling for customer premises, providing the foundation for the entire 11801 series.',
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
     question: "What does 'channel' mean in cabling standards?",
     options: [
       'A single fibre strand',
-      'The complete end-to-end transmission path including patch cords',
       'A cable pathway',
+      'The complete end-to-end transmission path including patch cords',
       'A frequency band',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A channel is the complete end-to-end transmission path from equipment to equipment, including permanent link and all patch cords.',
   },

@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'A field tester reports a Cat6A channel with 22 dB insertion loss at 250 MHz against a 26 dB limit. Pass or fail, and what does the result mean physically?',
     options: [
-      'Fail — 22 dB is too high.',
-      'Pass — at 250 MHz the channel must lose less than the 26 dB Class EA limit. The 22 dB result means the channel attenuates the wanted signal by a factor of about 12.6 (22 dB) — well within the budget. Lower insertion loss = more signal arrives at the far end = bigger margin against the receiver\u2019s decoding threshold.',
-      'Fail — insertion loss should be 0 dB.',
-      'Cannot tell from the data.',
+      'Pass — 22 dB is below the 26 dB Class EA limit at 250 MHz, with comfortable margin.',
+      'Fail — 22 dB exceeds the Class EA insertion-loss budget allowed at 250 MHz.',
+      'Fail — a fully compliant channel should show close to 0 dB insertion loss.',
+      'Cannot tell — the result needs the cable length before it can be interpreted.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Insertion loss is the attenuation (in dB) introduced by the channel at a given frequency. The Class limit at 250 MHz for Class EA is around 26 dB; a 22 dB result is a comfortable PASS — the channel loses less signal than the budget allows. Insertion loss rises with frequency (higher-frequency components attenuate more in a given length of cable), with cable length, and with cable temperature. Sustained PoE current heats the cable and raises insertion loss — \u00a7716.523.1.101 NOTE 1 says exactly this.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'A channel report shows NEXT margin of +4 dB at 100 MHz, but PSNEXT margin of -1 dB at the same frequency. The link fails. Why does PSNEXT fail when NEXT passes?',
     options: [
-      'NEXT and PSNEXT are unrelated.',
-      'PSNEXT (power-sum NEXT) sums the contributions of every OTHER pair into the pair under test, while NEXT is the worst pair-to-pair coupling. With four pairs all active simultaneously (1000BASE-T / 10GBASE-T), each pair receives combined disturbance from its three neighbours. PSNEXT can fail even when individual NEXT passes — and 1000BASE-T / 10GBASE-T need PSNEXT margin, not just NEXT margin.',
-      'PSNEXT is fibre-only.',
-      'NEXT is for short channels, PSNEXT for long channels.',
+      'NEXT and PSNEXT are entirely unrelated measurements that share no common cause.',
+      'PSNEXT is an optical-fibre-only parameter and is irrelevant to copper channels.',
+      'PSNEXT sums every other pair into the test pair, so it can fail where NEXT passes.',
+      'NEXT applies only to short channels, while PSNEXT applies only to long channels.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'NEXT (near-end crosstalk) is measured pair-to-pair, worst case. PSNEXT (power-sum NEXT) is the SUMMED disturbance from ALL OTHER pairs into the pair under test. Older Ethernet (10BASE-T, 100BASE-TX) used two pairs and care about NEXT only. Modern Ethernet from 1000BASE-T onwards uses ALL FOUR pairs simultaneously and care about PSNEXT — every pair sees combined disturbance from all three of its neighbours. A channel can pass NEXT (worst pair-to-pair OK) but fail PSNEXT (combined disturbance breaches the limit). Class EA / Cat6A specifications include PSNEXT and PSANEXT (alien power-sum) limits explicitly.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'BS 7671 §716.523.1.101 NOTE 1 warns about the link between PoE current, cable temperature, and channel performance. What is the physical chain?',
     options: [
-      'PoE damages the cable jacket directly.',
-      'Sustained DC current heats the conductors (I\u00b2R losses); in dense bundles the heat compounds because every loaded cable warms its neighbours; cable temperature rise increases conductor resistivity (copper is 0.4 % per \u00b0C) which raises insertion loss; raised insertion loss erodes channel margin and degrades transmission performance — the precise wording of NOTE 1.',
-      'PoE causes magnetic saturation of the steel containment.',
-      'Higher current produces higher-frequency noise.',
+      'PoE current directly burns and chemically degrades the cable jacket over time.',
+      'Higher PoE current injects extra high-frequency switching noise onto the pairs.',
+      'PoE current magnetically saturates any steel containment surrounding the cable.',
+      'Sustained DC current heats the conductors; the rise raises insertion loss and erodes margin.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       '\u00a7716.523.1.101 NOTE 1 (verbatim): "Any temperature rise of the data cables due to the load current they carry, or other causes, will increase the attenuation/insertion loss of the cables. Thus the performance of information transmission channels can be degraded." The chain is: PoE current \u2192 I\u00b2R conductor heating \u2192 bundle thermal compounding \u2192 cable temperature rise \u2192 insertion loss rises (copper resistivity rises with temperature, dielectric losses rise too) \u2192 channel margin shrinks. NOTE 2 then references PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2 and ISO/IEC TS 29125 for bundle planning and design — and the \u00a7716.523.2.101 hard cap of 750 mA per conductor is the regulatory ceiling that bounds it.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'Where in the standards do you find the actual numerical limits for Class EA channel parameters (insertion loss, NEXT, PSNEXT, ACR-F, return loss, etc.) at every test frequency?',
     options: [
-      'BS 7671:2018+A4:2026 \u00a7716.',
-      'BS EN 50173-1 (and ISO/IEC 11801-1, and ANSI/TIA-568.2-E) — these are the documents that set the per-frequency parameter limits for each Class. The field tester loads the appropriate Class profile and PASS / FAIL is computed against those limits. BS 7671 \u00a7716 references back to BS EN 50173-1 (\u00a7716.523.1.101 — design current limit "as specified in BS EN 50173-1") but does not republish the per-frequency Class tables.',
-      'TIA TSB-184-A.',
-      'BS EN 60825-2.',
+      'BS EN 50173-1, with ISO/IEC 11801-1 and ANSI/TIA-568.2-E, sets per-frequency Class limits.',
+      'BS 7671:2018+A4:2026 \u00a7716, the new section 716 covering PoE installations.',
+      'TIA TSB-184-A, the North American PoE bundle de-rating telecoms bulletin.',
+      'BS EN 60825-2, the optical-fibre communication-system laser-safety standard.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The numerical Class limits live in BS EN 50173-1 (and the parallel ISO/IEC 11801-1 and ANSI/TIA-568.2-E). BS 7671 \u00a7716 references back to BS EN 50173-1 — for example, \u00a7716.523.1.101 says "The design current in any conductor shall not exceed the limit specified in BS EN 50173-1." The wiring regulations do not republish the per-frequency Class tables; they sit in the cabling-performance standards. The field tester loads the appropriate Class profile (D, E, EA, F, FA, I, II) and tests against the BS EN 50173-1 / TIA-568.2-E limits at every specified frequency point.',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'What is "insertion loss" in a balanced cabling channel, and what physically causes it to rise with frequency?',
     options: [
-      'It is the loss caused by faulty connectors only.',
-      'Insertion loss is the attenuation (in dB) introduced by the channel at a given test frequency. It rises with frequency because higher-frequency components attenuate more in a given length of conductor (skin effect, dielectric losses), with channel length, and with cable temperature. Class limits scale with frequency — the higher the Category bandwidth, the steeper the insertion loss can be allowed to rise without breaching the limit.',
-      'It is the loss of the receiver chip.',
-      'It is the difference between channel and permanent-link length.',
+      'The loss caused only by faulty or poorly crimped connectors at the patch panel.',
+      'The attenuation the channel adds, rising with frequency, length and temperature.',
+      'The signal loss inside the receiver chip silicon at the far-end active equipment.',
+      'The length difference between the measured channel and the 90 m permanent link.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'How do NEXT, PSNEXT and PSANEXT differ, and which one matters most for 10GBASE-T over Cat6A?',
     options: [
-      'They are identical measurements.',
-      'NEXT (near-end crosstalk) = worst pair-to-pair coupling at the near end. PSNEXT (power-sum NEXT) = total summed disturbance from all OTHER pairs into the pair under test. PSANEXT (power-sum alien NEXT) = total summed disturbance from adjacent CABLES into the pair under test. 10GBASE-T uses all four pairs and is the first Ethernet to be alien-crosstalk-sensitive, so PSANEXT margin matters as much as PSNEXT — and both more than worst-case NEXT.',
-      'PSNEXT is fibre, NEXT is copper.',
-      'NEXT is for short cables only.',
+      'They are three identical crosstalk measurements published under different names.',
+      'NEXT is measured on short channels and PSNEXT only on long backbone runs.',
+      'PSNEXT applies to fibre channels while NEXT applies to copper twisted-pair.',
+      'NEXT is worst pair-to-pair, PSNEXT sums all other pairs, PSANEXT sums adjacent cables.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'NEXT (worst pair-pair, single-cable). PSNEXT (sum of other pairs into target pair, single-cable). PSANEXT (sum of adjacent CABLES into target pair, between cables in a bundle — alien crosstalk). 10GBASE-T uses 4 pairs simultaneously, full-duplex on each, with PAM-16 line coding — exquisitely sensitive to inter-pair AND inter-cable crosstalk. Cat6A is the first Category to specify alien-crosstalk parameters (PSANEXT, PSAACR-F) precisely because of 10GBASE-T. In hot loaded bundles, PSANEXT margin shrinks first; that is one of the reasons F/UTP / U/FTP shielded variants restore margin.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is "return loss" and why does it matter for high-speed transmission?',
     options: [
-      'The loss of cable that needs to be returned to the supplier.',
-      'Return loss is the dB ratio of forward to reflected signal — high return loss = little reflection, good. It measures impedance match along the channel. Reflections from impedance discontinuities (rough terminations, bend kinks, length mismatches, cheap patch leads) cause echoes that distort the receiver\u2019s view; modern Ethernet PHYs include echo cancellers, but they have a limit and high reflections eat margin.',
-      'It is identical to insertion loss.',
-      'It only applies to fibre.',
+      'The total length of cable that must be returned to the supplier as offcuts.',
+      'Simply another name for the channel insertion-loss attenuation measurement.',
+      'The dB ratio of forward to reflected signal — high means a good impedance match.',
+      'A reflection parameter that applies only to optical-fibre channels, not copper.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Return loss is the impedance-match metric: how much of the forward signal reflects back from impedance discontinuities along the channel. Specified in dB; HIGHER return loss is BETTER (more dB = less reflected energy). Sources of poor return loss: rough terminations (untwisted-pair length too long inside the connector, asymmetric crimp), tight bends that distort cable geometry, length mismatches between pairs, badly-made patch leads. Modern Ethernet uses echo cancellation but has a limit — a marginal return-loss channel will cause intermittent linking and packet loss before it visibly fails.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does "delay skew" measure, and why does 1000BASE-T / 10GBASE-T care about it?',
     options: [
-      'The angle of the cable as it leaves the panel.',
-      'Delay skew = the difference in propagation delay between the four pairs of the cable, measured in nanoseconds across the channel length. 1000BASE-T and 10GBASE-T transmit on all four pairs simultaneously and the receiver re-aligns the four streams; if one pair propagates significantly faster than another, the receiver\u2019s alignment window is exceeded and bit errors result. The Class limit is around 50 ns max delay skew across a 100 m channel.',
-      'It is identical to NEXT.',
-      'It only matters for fibre.',
+      'The propagation-delay difference between the four pairs, limited to about 50 ns / 100 m.',
+      'The physical angle at which the cable bundle leaves the rear of the patch panel.',
+      'Simply another name for the near-end crosstalk (NEXT) coupling measurement.',
+      'A timing parameter that only matters for multimode optical-fibre channels.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Different pairs have slightly different physical lengths (because of the different twist rates) and different propagation velocities (because the dielectric varies slightly). Delay skew is the time difference between the fastest and slowest pair across the channel. The Class limit is around 50 ns / 100 m. 1000BASE-T and 10GBASE-T transmit on all four pairs simultaneously and re-align them at the receiver; if delay skew is excessive, the receiver alignment window is exceeded and bit errors result. The fix is the cable design itself — manufacturers tune dielectric and twist rates to keep delay skew within limit.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why does 1 Gbps Ethernet (1000BASE-T) need 100 MHz cable bandwidth? Why not 1 GHz?',
     options: [
-      '1000BASE-T uses 1 GHz baud rate.',
-      'Spectral efficiency. 1000BASE-T uses 4 pairs simultaneously, full duplex on each, with PAM-5 line coding at 125 Mbaud per pair — total = 4 \u00d7 125 \u00d7 2 (full duplex) = 1000 Mbps useful, and the spectrum needed to carry 125 Mbaud PAM-5 fits within ~100 MHz cable bandwidth. The clever bit is in the encoding and the use of all four pairs, not in raw baud rate.',
-      '1 GHz cable does not exist.',
-      '100 MHz is the FCC limit.',
+      '1000BASE-T runs at a full 1 GHz symbol (baud) rate on every pair simultaneously.',
+      '100 MHz is the maximum cable bandwidth the FCC permits for in-building wiring.',
+      'No commercial twisted-pair cable capable of carrying a 1 GHz signal exists yet.',
+      'Spectral efficiency — four pairs, full-duplex, PAM-5 at 125 Mbaud fit 1 Gbps in ~100 MHz.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '1000BASE-T (1999) achieves 1 Gbps useful throughput inside a 100 MHz Cat5e channel by using 4 pairs simultaneously, full-duplex on each, with PAM-5 line coding at 125 Mbaud per pair: 4 \u00d7 125 Mbaud \u00d7 2 (full duplex) \u00d7 ~2 bits/baud (PAM-5 with overhead) \u2248 1 Gbps. 10GBASE-T (2006) does the same trick at 500 MHz with PAM-16 line coding for Cat6A. The cable bandwidth (100 MHz, 250 MHz, 500 MHz) is the analogue spectrum the cable carries; the digital throughput is far higher because of clever encoding and parallel pairs.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'What is the BS 7671 §716.523.1.101 design-current rule and what does its NOTE 1 warn about for transmission performance?',
     options: [
-      '\u00a7716.523.1.101 caps current at 100 mA per pair.',
-      '\u00a7716.523.1.101 (verbatim): "The design current in any conductor shall not exceed the limit specified in BS EN 50173-1." NOTE 1: "Any temperature rise of the data cables due to the load current they carry, or other causes, will increase the attenuation/insertion loss of the cables. Thus the performance of information transmission channels can be degraded." NOTE 2 references PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2 and ISO/IEC TS 29125 for bundle planning.',
-      '\u00a7716.523.1.101 mandates fibre.',
-      '\u00a7716.523.1.101 only applies above 250 V.',
+      '\u00a7716.523.1.101 directly caps the PoE design current at a flat 100 mA per pair.',
+      '\u00a7716.523.1.101 sets design current via BS EN 50173-1; NOTE 1 warns heating raises insertion loss.',
+      '\u00a7716.523.1.101 mandates optical fibre instead of copper for all PoE-powered runs.',
+      '\u00a7716.523.1.101 applies only to data circuits operating above 250 V to earth.',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'Where do the per-frequency numerical limits for each Class come from?',
     options: [
-      'BS 7671:2018+A4:2026.',
-      'BS EN 50173-1 (and the parallel ISO/IEC 11801-1 and ANSI/TIA-568.2-E). These standards specify the per-frequency parameter limits — insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, alien crosstalk — at every test frequency for each Class. The field tester loads the appropriate Class profile and tests against those limits.',
-      'TIA TSB-184-A.',
-      'IEEE 802.3bt.',
+      'BS 7671:2018+A4:2026, the UK wiring regulations covering PoE installations.',
+      'TIA TSB-184-A, the North American PoE bundle de-rating telecoms bulletin.',
+      'BS EN 50173-1, with ISO/IEC 11801-1 and ANSI/TIA-568.2-E, per-frequency by Class.',
+      'IEEE 802.3bt, the PoE Type 3 / Type 4 power-delivery protocol standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50173-1 / ISO/IEC 11801-1 / ANSI/TIA-568.2-E specify the Class limits at every test frequency. BS 7671 §716.523.1.101 references back to BS EN 50173-1 for the design-current limit but does NOT republish the per-frequency Class tables. The field tester (Fluke DSX, Viavi, etc.) loads the relevant Class profile and computes PASS / FAIL against those limits, with margin. TIA TSB-184-A covers PoE bundle de-rating; IEEE 802.3bt is the PoE protocol standard — neither defines the cabling Class limits.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'Why is "DC resistance unbalance" a critical PoE-era parameter that pre-PoE Cat5e installations rarely measured?',
     options: [
-      'It only matters in fibre.',
-      'PoE delivers DC power across one or more pairs, with the centre-tap of each pair carrying the supply / return. If the two conductors of a pair have different DC resistance (for example because the manufacturer used slightly different copper purity in the strands, or because the termination has different contact resistances), unequal current flows in the two halves and the imbalance shows up as common-mode voltage at the receiver — eroding CMRR. TIA-568.2-E and TSB-184-A added DC resistance unbalance as a tested parameter precisely because of PoE.',
-      'It is the same as insertion loss.',
-      'It is irrelevant in modern cable.',
+      'PoE splits DC across each pair, so unequal conductor resistance erodes common-mode rejection.',
+      'It is a transmission parameter that only ever matters in optical-fibre channels.',
+      'It is simply an alternative trade name for the same insertion-loss measurement.',
+      'It is an obsolete legacy parameter, irrelevant to modern Cat6A cable construction.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PoE relies on the centre-tap of each pair being DC-balanced — supply and return current divide equally between the two conductors of each pair. If the two halves have unequal DC resistance, current divides unequally; the imbalance creates a common-mode voltage at the receiver and erodes the receiver\u2019s common-mode rejection. TIA-568.2-E and TIA TSB-184-A added DC resistance and DC resistance unbalance as tested channel parameters because of PoE. Pre-PoE Cat5e installs rarely measured these — they came from voice / data testing where DC was negligible. Modern field testers measure both as standard.',
   },
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'A 90 m Cat6A permanent link tests with 1.2 dB return loss margin and 0.8 dB ACR-F margin at 500 MHz. Both pass. Should you be comfortable handing it over?',
     options: [
-      'Yes — anything that passes is fine.',
-      'Concerned. Marginal pass at the upper bandwidth limit usually indicates a workmanship issue — over-stripped jacket exposing too much untwisted pair at the IDC, sharp bend close to the connector, an inconsistent crimp. Margins of < 2 dB at the highest test frequency tend to drift toward fail with temperature, age, or load. The professional move is to pull the worst connector, re-terminate, and retest before handover; long-term reliability requires margin, not bare pass.',
-      'No — it should be re-pulled with new cable.',
-      'Yes — return the patch lead.',
+      'Yes — any channel that returns a PASS result is automatically fine to hand over.',
+      'Concerned — a sub-2 dB margin at the top frequency drifts toward fail under load.',
+      'No — the whole link should be re-pulled from scratch with brand-new Cat6A cable.',
+      'Yes — simply swap out the patch lead at each end and the margin is restored.',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'How does sustained Type 4 PoE++ in a 96-cable bundle affect the rated channel performance, and what does the standards framework say?',
     options: [
-      'No effect — PoE is too small.',
-      'Sustained DC current dissipates I\u00b2R as heat per conductor; in a 96-cable bundle the heat compounds because each loaded cable warms its neighbours; cable temperature rise increases insertion loss (\u00a7716.523.1.101 NOTE 1) and erodes alien-crosstalk margin (PSANEXT). The framework: BS 7671 \u00a7716.523.2.101 hard caps current at 750 mA per conductor; \u00a7716.523.1.101 NOTE 2 references PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2 and ISO/IEC TS 29125 for bundle planning; TIA TSB-184-A gives the practical bundle de-rating curves.',
-      'It improves performance because warm copper conducts better.',
-      'PoE only flows in fibre.',
+      'No effect — the sustained PoE current is far too small to warm the bundle at all.',
+      'No effect on copper \u2014 PoE current is carried only over the optical-fibre cores.',
+      'It improves channel performance, because warmer copper conducts the signal better.',
+      'Heat compounds across the bundle, raising insertion loss and eroding PSANEXT margin.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bundle thermal effects compound with bundle size. Cable temperature rise raises insertion loss (NOTE 1) and erodes PSANEXT margin (the inter-cable alien-crosstalk parameter that 10GBASE-T cares about). The standards framework: \u00a7716.523.2.101 = 750 mA per conductor hard cap; \u00a7716.523.1.101 NOTE 2 = bundle-planning references (PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2, ISO/IEC TS 29125). TIA TSB-184-A gives the practical de-rating curves used by designers. Practical responses: limit bundle size (typically 24-48 cables for Type 4 PoE), use 23 AWG / LP-rated cable, separate hot bundles from cold bundles, and consider screened constructions to restore alien-crosstalk margin.',
   },

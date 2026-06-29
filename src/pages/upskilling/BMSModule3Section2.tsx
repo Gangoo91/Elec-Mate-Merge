@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'control-check2',
     question: 'Why is differential pressure control essential in chilled water systems?',
     options: [
-      'It reduces the cost of installation',
       'It prevents pump cavitation and ensures proper flow to all coils',
-      'It eliminates the need for temperature sensors',
-      'It makes the system run quieter',
+      'It reduces the initial cost of installation',
+      'It removes the need for temperature sensors',
+      'It mainly makes the pumps run more quietly',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Differential pressure control maintains the pressure difference needed for proper water flow through all coils, preventing pump cavitation, ensuring remote coils receive adequate flow, and maintaining efficient heat transfer throughout the system.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'control-check3',
     question: 'What is the key advantage of pressure-independent VAV boxes over simple dampers?',
     options: [
-      'They are less expensive to install',
+      'They are cheaper to install than plain dampers',
+      'They require noticeably less maintenance',
+      'They draw less electrical power in operation',
       'They maintain accurate airflow control regardless of duct pressure variations',
-      'They require less maintenance',
-      'They use less electrical power',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Pressure-independent VAV boxes include integral flow sensors and controllers that maintain accurate airflow regardless of duct pressure variations, ensuring consistent zone control even as other zones' demands change.",
   },

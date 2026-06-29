@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'An employer decides to issue RPE to all workers instead of installing local exhaust ventilation (LEV) on a soldering station. Is this approach acceptable under COSHH?',
     options: [
-      'No — collective measures such as LEV must be prioritised over personal protection like RPE',
       'Yes — RPE is acceptable as long as it is properly fitted and maintained',
+      'No — collective measures such as LEV must be prioritised over personal protection like RPE',
       'Yes — the employer can choose whichever control is cheapest',
       'No — RPE is banned under COSHH regulations',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Under COSHH Regulation 7, employers must prioritise collective protection measures (such as LEV) over personal protection (such as RPE). RPE should only be used as a last resort or as a temporary measure while engineering controls are being implemented. LEV protects everyone in the area automatically, whereas RPE depends on each individual wearing it correctly, having the right size, and maintaining it properly. The employer would need to demonstrate that LEV is not reasonably practicable before relying on RPE alone.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       "What does 'so far as is reasonably practicable' (SFAIRP) mean in the context of selecting controls?",
     options: [
-      'The employer must weigh the risk against the cost, time, and effort of control measures — and implement controls unless the cost is grossly disproportionate to the risk',
-      'The employer only needs to implement controls if they cost nothing',
-      'The employer can ignore the hierarchy if they believe the risk is low',
-      'SFAIRP only applies to licensed asbestos work, not COSHH',
+      'Controls only have to be implemented if they can be added at no cost',
+      'The hierarchy can be ignored wherever the employer judges the risk to be low',
+      'Controls are required unless their cost is grossly disproportionate to the risk',
+      'It applies only to licensed asbestos work and not to general COSHH duties',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'SFAIRP means the employer must balance the level of risk against the sacrifice (cost, time, effort) needed to reduce it. Controls must be implemented unless the cost is grossly disproportionate to the benefit. Importantly, the greater the risk, the more the employer is expected to spend on controls. This is not a licence to do nothing — the burden of proof lies with the employer to show that further controls are not reasonably practicable. SFAIRP applies across all health and safety legislation, including COSHH.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       "Under COSHH Regulation 7, what is the employer's primary duty regarding hazardous substances?",
     options: [
-      'To provide PPE to all workers',
       'To prevent exposure, or where this is not reasonably practicable, to adequately control it',
+      'To provide PPE to all workers',
       'To train workers to avoid hazardous substances',
       'To carry out annual health surveillance on all employees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'COSHH Regulation 7 places a duty on employers to either prevent exposure to hazardous substances or, where prevention is not reasonably practicable, to adequately control exposure. Prevention is always the first priority. Adequate control means applying the hierarchy of control measures in the correct order, starting with elimination at the top and PPE at the bottom.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why is PPE/RPE considered the least effective level in the hierarchy of control?',
     options: [
-      'Because PPE is always uncomfortable to wear',
-      'Because PPE only protects the individual wearing it and depends on correct selection, fitting, training, and consistent use',
-      'Because PPE is the most expensive control measure',
-      'Because UK law prohibits the use of PPE on construction sites',
+      'Because PPE is always uncomfortable and slows the worker down',
+      'Because PPE is the most expensive control measure to buy and replace',
+      'Because it protects only the wearer and relies on correct fit, training, and use',
+      'Because UK law prohibits the use of PPE on most construction sites',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PPE is the least effective level because it relies entirely on individual behaviour. It only protects the person wearing it (not others nearby), it must be correctly selected for the specific hazard, properly fitted (RPE requires face-fit testing), workers must be trained in its correct use, and it must be consistently worn and properly maintained. If any of these factors fail, the worker is unprotected. Higher-level controls like engineering controls protect everyone in the area automatically without relying on individual compliance.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'A contractor is cutting concrete blocks on site, generating silica dust. Which engineering control would be most appropriate?',
     options: [
-      'Issuing dust masks to all workers on site',
-      'On-tool extraction (water suppression or vacuum extraction fitted to the cutting tool)',
-      'Rotating workers so no one is exposed for more than 30 minutes',
-      'Putting up warning signs about silica dust',
+      'Issuing FFP3 dust masks to every worker present on the site',
+      'Rotating workers so no one cuts for more than 30 minutes at a time',
+      'Putting up warning signs about silica dust around the cutting area',
+      'On-tool extraction — water suppression or vacuum fitted to the cutter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On-tool extraction — either water suppression or a vacuum extraction system fitted directly to the cutting tool — is the correct engineering control for concrete cutting. It captures or suppresses dust at the point of generation before it becomes airborne. Dust masks (PPE) are the lowest level of the hierarchy. Rotating workers is an administrative control. Warning signs alone are not a control measure. The engineering control should be applied first, with other measures layered on top if needed.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 5,
     question: "What does 'collective protection' mean in the context of COSHH controls?",
     options: [
-      'Issuing the same type of PPE to every worker',
-      'Measures that protect all workers in the area without relying on individual action, such as LEV or enclosure',
-      'Holding a group safety meeting before starting work',
-      'Providing collective insurance cover for chemical exposure claims',
+      'Measures that protect everyone in the area without individual action, such as LEV',
+      'Issuing the same type of PPE to every worker on the team',
+      'Holding a group safety meeting with all staff before starting work',
+      'Providing collective insurance cover against chemical exposure claims',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Collective protection refers to control measures that protect all workers in the area without requiring individual action. Examples include local exhaust ventilation (LEV), total enclosure of a process, automated systems that remove the need for manual handling of hazardous substances, and general ventilation. These are preferred over personal protection (PPE/RPE) because they protect everyone automatically and do not depend on each worker correctly using their equipment.',
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is an example of elimination in electrical work?',
     options: [
-      'Using low-VOC adhesive instead of standard adhesive',
-      'Installing LEV above a soldering workstation',
-      'Using push-fit connectors instead of soldered joints, removing the need for flux and solder entirely',
-      'Wearing chemical-resistant gloves when handling solvents',
+      'Using a low-VOC adhesive in place of a standard solvent adhesive',
+      'Installing local exhaust ventilation above the soldering workstation',
+      'Using push-fit connectors instead of soldered joints, so no flux is needed',
+      'Wearing chemical-resistant gloves whenever handling solvents and cleaners',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'A risk assessment identifies that a combination of controls is needed: LEV on a soldering station, reduced exposure times, and RPE for peak-exposure tasks. Which principle does this demonstrate?',
     options: [
-      'The employer is wasting money by using too many controls',
-      'The layered approach — rarely is a single control measure sufficient, so multiple controls from different levels are combined',
-      'The employer is not following the hierarchy correctly',
-      'RPE should never be used alongside engineering controls',
+      'The employer is wasting money by stacking up too many controls',
+      'The employer has failed to follow the hierarchy of control correctly',
+      'RPE should never be used alongside any engineering control measure',
+      'The layered approach — combining controls from different levels for depth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This demonstrates the layered (or combined) approach to control. In practice, it is rarely sufficient to rely on a single control measure. Combining controls from different levels of the hierarchy provides defence in depth — if one control fails or is insufficient, others are in place. In this example, LEV (engineering) is the primary control, reduced exposure time (administrative) adds a further safeguard, and RPE (personal protection) provides additional protection during peak-exposure tasks. This is good practice and is encouraged by the HSE.',
   },

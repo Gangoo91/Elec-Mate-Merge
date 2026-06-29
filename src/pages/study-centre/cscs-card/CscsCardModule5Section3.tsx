@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 12 of the Electricity at Work Regulations 1989, when is it permissible to work on or near live electrical equipment?',
     options: [
-      'Whenever the work needs to be completed quickly',
       'Only when it is unreasonable in all circumstances for the equipment to be made dead',
+      'Whenever the work needs to be completed quickly',
       'When the worker holds a valid ECS card',
       'When a risk assessment has been completed and filed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 12 prohibits working on or near live equipment except where it is unreasonable in all the circumstances for it to be dead. This is a very narrow exception — the default position is always that equipment must be made dead before work begins. Even when live working is justified, additional precautions such as insulated tools, barriers, and accompaniment by a competent person are required.',
   },
@@ -83,8 +83,8 @@ const quizQuestions = [
     id: 1,
     question:
       'At what level of current can electric shock cause ventricular fibrillation and death?',
-    options: ['As little as 10mA', 'As little as 50mA', 'As little as 500mA', 'Only above 1A'],
-    correctAnswer: 1,
+    options: ['As little as 10mA', 'As little as 500mA', 'Only above 1A', 'As little as 50mA'],
+    correctAnswer: 3,
     explanation:
       'Ventricular fibrillation — the uncoordinated quivering of the heart that prevents it from pumping blood — can occur at currents as low as 50mA (0.05A) passing through the body. This is a tiny fraction of the current flowing through a typical domestic circuit. The severity of electric shock depends on the current magnitude, the path through the body (particularly if it crosses the heart), and the duration of exposure.',
   },
@@ -116,8 +116,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the minimum safe distance from overhead power lines carrying 132kV?',
-    options: ['1 metre', '3 metres', '6 metres', '9 metres'],
-    correctAnswer: 1,
+    options: ['3 metres', '1 metre', '6 metres', '9 metres'],
+    correctAnswer: 0,
     explanation:
       'The minimum safe distance from overhead power lines carrying up to 132kV is at least 3 metres. For higher voltages (275kV and 400kV), the minimum safe distance increases to 6 metres. These distances must be maintained by all persons, vehicles, plant, and materials at all times. Goal posts, barriers, and banksmen may be used to enforce these exclusion zones.',
   },

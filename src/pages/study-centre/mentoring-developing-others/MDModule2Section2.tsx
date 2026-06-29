@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'open-vs-closed',
     question: 'Which of the following is an open question?',
     options: [
+      'How did you approach the fault-finding on that board?',
       'Did you test the circuit?',
       'Was the RCD tripping?',
-      'How did you approach the fault-finding on that board?',
       'Have you finished the containment run?',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Open questions begin with words like how, what, why, tell me about, or describe. They cannot be answered with a simple yes or no and encourage the learner to think, reflect, and explain. "How did you approach the fault-finding on that board?" invites a detailed response.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of Socratic questioning in a mentoring context?',
     options: [
       'To test the learner\u2019s knowledge with trick questions',
-      'To guide the learner to discover the answer for themselves through a sequence of questions',
       'To demonstrate the mentor\u2019s superior knowledge',
+      'To guide the learner to discover the answer for themselves through a sequence of questions',
       'To speed up the conversation by asking yes/no questions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Socratic questioning is named after the ancient Greek philosopher Socrates, who taught by asking questions rather than giving lectures. In mentoring, the purpose is to guide the learner towards understanding by asking a carefully structured sequence of questions that build on each other.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       'In Covey\u2019s five levels of listening, which is the highest and most effective level?',
     options: [
       'Selective listening',
+      'Empathic listening',
       'Attentive listening',
       'Pretend listening',
-      'Empathic listening',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Empathic listening is the highest level in Covey\u2019s model. It means listening with the genuine intent to understand the other person\u2019s perspective, feelings, and meaning \u2014 not just their words. This level of listening builds deep trust and is the foundation of effective mentoring.',
   },
@@ -76,16 +76,16 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which type of question is "Tell me about the fault-finding process you followed"?',
-    options: ['Closed question', 'Leading question', 'Open question', 'Hypothetical question'],
-    correctAnswer: 2,
+    options: ['Open question', 'Leading question', 'Closed question', 'Hypothetical question'],
+    correctAnswer: 0,
     explanation:
       '"Tell me about..." is an open question because it invites the learner to give a detailed, extended response. It cannot be answered with a simple yes or no.',
   },
   {
     id: 2,
     question: 'What does the "R" in the RASA active listening framework stand for?',
-    options: ['Reflect', 'Receive', 'Respond', 'Repeat'],
-    correctAnswer: 1,
+    options: ['Reflect', 'Respond', 'Repeat', 'Receive'],
+    correctAnswer: 3,
     explanation:
       'RASA stands for Receive, Appreciate, Summarise, Ask. The first step \u2014 Receive \u2014 means giving the speaker your full attention, maintaining eye contact, and showing that you are ready to listen.',
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
     question: 'What is the correct order of the funnel technique?',
     options: [
       'Specific questions first, then broader questions',
-      'Broad, open questions first, gradually narrowing to specific, focused questions',
       'Only closed questions throughout',
+      'Broad, open questions first, gradually narrowing to specific, focused questions',
       'Alternate between open and closed questions randomly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The funnel technique starts with broad, open questions ("How did the first fix go?") and progressively narrows to more specific, focused questions ("Where exactly did the continuity test fail?") to explore the topic in detail.',
   },
@@ -106,8 +106,8 @@ const quizQuestions = [
     id: 4,
     question:
       'Which of Covey\u2019s five levels of listening involves only hearing what you want to hear?',
-    options: ['Ignoring', 'Pretend listening', 'Selective listening', 'Attentive listening'],
-    correctAnswer: 2,
+    options: ['Ignoring', 'Selective listening', 'Pretend listening', 'Attentive listening'],
+    correctAnswer: 1,
     explanation:
       'Selective listening means hearing only the parts of the conversation that interest you or confirm what you already think. You filter out the rest. This is a common trap for busy mentors who think they already know what the learner is going to say.',
   },
@@ -115,20 +115,20 @@ const quizQuestions = [
     id: 5,
     question: 'A Socratic questioning sequence on RCD protection might begin with which question?',
     options: [
-      'An RCD protects against earth leakage current, doesn\u2019t it?',
       'What do you think the purpose of an RCD is?',
+      'An RCD protects against earth leakage current, doesn\u2019t it?',
       'You do know what an RCD does, right?',
       'The answer is that an RCD detects imbalance between line and neutral \u2014 do you understand?',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Socratic sequence begins with an open, non-judgmental question that invites the learner to think and respond. "What do you think the purpose of an RCD is?" allows the learner to share their current understanding, which the mentor can then build upon with further questions.',
   },
   {
     id: 6,
     question: 'What does the "S" in RASA stand for?',
-    options: ['Speak', 'Support', 'Summarise', 'Suggest'],
-    correctAnswer: 2,
+    options: ['Speak', 'Support', 'Suggest', 'Summarise'],
+    correctAnswer: 3,
     explanation:
       'The S in RASA stands for Summarise. After receiving and appreciating what the speaker has said, the listener summarises the key points back to confirm understanding. This shows the speaker that they have been heard and helps catch any misunderstandings.',
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'Why is it important for a mentor to use silence after asking an open question?',
     options: [
       'To make the learner feel uncomfortable',
-      'To give the learner time to think and formulate their answer',
       'Because silence is required by the GROW model',
+      'To give the learner time to think and formulate their answer',
       'To demonstrate authority and control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Silence after an open question gives the learner time to think. Many mentors feel uncomfortable with silence and rush to fill it \u2014 either by answering their own question or by asking another one. Resist this urge. The learner needs processing time, especially for complex or reflective questions.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the main challenge of active listening on a construction site?',
     options: [
-      'Active listening is not possible in a construction environment',
       'Environmental noise, distractions, and time pressure make it harder to give full attention',
+      'Active listening is not possible in a construction environment',
       'Construction workers do not respond well to listening techniques',
       'Active listening requires a formal meeting room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Construction sites are noisy, busy, and full of distractions. Active listening requires conscious effort in this environment. Moving to a quieter space for important conversations, facing the speaker directly, and minimising distractions all help. Active listening does not require a formal setting \u2014 it requires intention.',
   },

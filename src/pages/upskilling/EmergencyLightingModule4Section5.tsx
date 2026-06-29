@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Modern self-test emergency luminaires typically communicate via DALI Type 1 / DALI-2 with edition 2 emergency commands. What does this protocol enable?',
     options: [
-      'Lower power consumption only.',
-      'Cheaper installation.',
-      'Per-luminaire ADDRESSING and STATUS REPORTING. Each luminaire on the DALI bus has a unique short address (0-63 per channel, expandable). The gateway can poll each luminaire individually for status (battery state, lamp state, last-test result, fault flags), trigger tests on individual luminaires or groups, and read back results. DALI-2 with the edition 2 emergency commands is the modern standard for digital emergency lighting control. The gateway aggregates the per-luminaire data into a system-wide view that can be displayed locally, sent to a BMS, or pushed to a cloud monitoring service. The protocol is the foundation for automated test scheduling and exception-based maintenance.',
-      'Brighter lamps.',
+      'Lower power consumption from the luminaire drivers as a side-effect of digital control.',
+      'A cheaper installation, because the 2-wire bus replaces all the mains wiring to each fitting.',
+      'Per-luminaire addressing and status reporting on the bus, with individual test commands.',
+      'Brighter lamp output, because the digital driver runs the LEDs harder than an analogue one.',
     ],
     correctIndex: 2,
     explanation:
-      'DALI Type 1 / DALI-2 with edition 2 emergency commands gives per-luminaire addressing and status reporting. Each luminaire is individually visible on the bus. The gateway aggregates and presents the data; the protocol carries the test commands and the result data.',
+      'DALI Type 1 / DALI-2 with edition 2 emergency commands gives per-luminaire addressing and status reporting. Each luminaire has a unique short address (0-63 per channel), so the gateway polls it for battery state, lamp state, last-test result and fault flags, triggers individual or group tests, and reads back results. The gateway aggregates the per-luminaire data into a system-wide view for local display, BMS, or cloud — the foundation for automated test scheduling and exception-based maintenance.',
   },
   {
     id: 'elm4-s5-newschedule',
     question:
       'BS 5266-1:2025 introduces a 5-year photometric verification IN ADDITION to the traditional monthly + annual schedule. What does the photometric check audit?',
     options: [
-      'Battery voltage only.',
-      'It audits whether the luminaire still delivers BS EN 1838 illuminance levels (lux) on the escape route at end-of-life. Battery sizing assumes the lamp delivers rated lumen output throughout duration; over years of service the lamp output declines (lumen depreciation) and at end-of-life the actual delivered lux on the floor may have fallen below the BS EN 1838 minimum (1 lx escape route, higher for high-risk and open areas) — even though the duration test still passes (the luminaire is still on). The 5-year photometric verification measures the actual delivered illuminance using a calibrated lux meter at the design points and compares against the BS EN 1838 requirement. Failure triggers lamp replacement or luminaire replacement, regardless of whether the duration test was passing.',
-      'Cable resistance.',
-      'Just visual.',
+      'The standby battery voltage at the start and end of the discharge cycle.',
+      'Whether the luminaire still delivers the BS EN 1838 illuminance (lux) on the escape route.',
+      'The conductor resistance of the emergency final circuits against their installed values.',
+      'Whether the housing and diffuser are clean and undamaged on a visual walk-round only.',
     ],
     correctIndex: 1,
     explanation:
-      'The 5-year photometric is NEW in 2025. It addresses a gap in the traditional regime: a luminaire passes "duration" (it stays on) but fails "lux on the floor". The photometric check is the outcome verification that the system delivers the BS EN 1838 design lux at end-of-life.',
+      'The 5-year photometric is NEW in 2025. Battery sizing assumes rated lumen output throughout duration, but over years lamp output declines (lumen depreciation), so delivered lux on the floor can fall below the BS EN 1838 minimum (1 lx escape route, higher for open and high-risk areas) even while the duration test still passes — the luminaire is still on. The check measures actual delivered illuminance with a calibrated lux meter at the design points; failure triggers lamp or luminaire replacement regardless of the duration result. It is the outcome verification of BS EN 1838 design lux at end-of-life.',
   },
   {
     id: 'elm4-s5-paper',
     question:
       'A self-test emergency lighting system automatically runs the monthly functional test and annual 3-hour duration test, and uploads results to a cloud monitoring service. Is the paper logbook still required?',
     options: [
-      'No — automated records are enough.',
-      'YES. BS EN 50172:2024 and BS 5266-1:2025 expect the duty-holder to maintain a logbook of test results, faults, corrective actions, and modifications — auditable, retained for the operational life of the installation. The automated system PROVIDES the data; the logbook (paper or electronic) is the AUDIT TRAIL the duty-holder keeps. Many installations now use electronic logbooks fed automatically from the self-test data, with the duty-holder counter-signing reviews. But the logbook remains required. An auditor or post-incident investigator looks at the logbook first, checks the test history, the fault response, the modifications, and only then drills into the underlying data. Without the logbook the audit trail is incomplete even if the automated system has all the data.',
-      'Only if the system is offline.',
-      'Only for fire alarms.',
+      'No — the cloud-held automated test records satisfy the record-keeping requirement on their own.',
+      'Yes — the duty-holder must still keep a reviewed, signed logbook as the audit trail.',
+      'Only when the monitoring system is offline and cannot upload its own records to the cloud.',
+      'Only the fire-alarm system needs a logbook; emergency lighting is covered by the cloud data.',
     ],
     correctIndex: 1,
     explanation:
-      "Logbook (paper or electronic) is still required. Automated test data is the input; the logbook is the duty-holder's reviewed and signed record. Auditors expect both — the data from the system and the logbook from the duty-holder.",
+      "Logbook (paper or electronic) is still required. BS EN 50172:2024 and BS 5266-1:2025 expect the duty-holder to maintain an auditable record of test results, faults, corrective actions and modifications, retained for the operational life of the installation. The automated system provides the data; the logbook is the duty-holder's reviewed, signed audit trail. An auditor or investigator examines the logbook first — test history, fault response, modifications — and only then drills into the underlying data. Without it the audit trail is incomplete even if the system holds everything.",
   },
   {
     id: 'elm4-s5-cyber',
     question:
       "An IP-connected emergency lighting monitoring system sits on the same network as the building's general IT. What cyber-security consideration applies?",
     options: [
-      'No issue — emergency lighting is a building system, not IT.',
-      'The same considerations BS 5839-1:2025 raises for fire alarm systems apply by analogy to emergency lighting: the IP-connected system is potentially exposed to network attacks that could (a) suppress alarms / fault notifications, (b) inject false test results making the system appear compliant when it is not, (c) DoS the gateway disabling the monitoring function, or (d) provide a foothold to attack other safety systems. Mitigations: network segmentation (emergency lighting on its own VLAN with controlled gateway), strong authentication on gateway access, regular firmware updates, monitoring of gateway access logs, vendor security advisories. The principle is treating the emergency lighting controller as a SAFETY-CRITICAL ASSET requiring the same cyber hygiene as any other life-safety system.',
-      'Only if the network is wireless.',
-      'Cyber security is for IT only.',
+      'None — emergency lighting is a building service, so it is outside the scope of cyber risk.',
+      'It is a safety-critical asset and needs the same cyber hygiene as any life-safety system.',
+      'A risk only where the gateway link is wireless; a wired IP connection carries no exposure.',
+      'Cyber security is purely an IT-department matter and does not extend to lighting controllers.',
     ],
     correctIndex: 1,
     explanation:
-      'IP-connected life-safety systems are potential cyber targets. BS 5839-1:2025 raised this for fire alarms; the same logic applies to emergency lighting monitoring. Network segmentation, authentication, updates, monitoring — all standard cyber controls applied to safety-critical assets.',
+      'IP-connected life-safety systems are potential cyber targets. BS 5839-1:2025 raised this for fire alarms and the same logic applies by analogy: an attacker could suppress fault notifications, inject false test results, DoS the gateway during a real event, or use it as a foothold to other safety systems. Mitigations: network segmentation (own VLAN), strong authentication on gateway access, regular firmware updates, access-log monitoring and tracking vendor security advisories — treating the controller as a safety-critical asset.',
   },
 ];
 
@@ -82,139 +82,139 @@ const quizQuestions = [
     question:
       'What is the dominant digital communication protocol for modern emergency lighting self-test luminaires?',
     options: [
-      'KNX only.',
-      'DALI Type 1 / DALI-2 with edition 2 emergency commands. Per-luminaire addressing on a 2-wire bus, status reporting, group test commands, fault flagging. The gateway polls each luminaire and aggregates into a system-wide view. Wireless protocols (BLE, Zigbee, proprietary RF) are also used in some retrofit applications, but DALI dominates wired installations.',
-      'Modbus only.',
-      'Analog 0-10 V only.',
+      'DALI Type 1 / DALI-2 with edition 2 emergency commands on a 2-wire addressable bus.',
+      'KNX, the building-automation bus that carries per-luminaire emergency test commands as standard.',
+      'Modbus RTU, polling each luminaire as a register-mapped slave on an RS-485 bus.',
+      'Analogue 0-10 V dimming control, with the dim level encoding the luminaire battery state.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'DALI Type 1 / DALI-2 with edition 2 emergency commands is the standard for digital emergency lighting. Wireless (BLE, Zigbee, proprietary RF) supplements DALI in retrofits where running a 2-wire bus is impractical.',
+      'DALI Type 1 / DALI-2 with edition 2 emergency commands is the standard for digital emergency lighting: per-luminaire addressing, status reporting, group test commands and fault flagging, with the gateway polling each luminaire and aggregating a system-wide view. Wireless (BLE, Zigbee, proprietary RF) supplements DALI in retrofits where running a 2-wire bus is impractical, but DALI dominates wired installations.',
   },
   {
     id: 2,
     question:
       'BS 5266-1:2025 introduces a 5-year photometric check in addition to the traditional monthly functional and annual 3-hour duration tests. What does it verify?',
     options: [
-      'Battery voltage only.',
-      'That the luminaires still deliver BS EN 1838 illuminance levels (lux) on the escape route at end-of-life. Lumen depreciation can mean the luminaire passes duration (it stays on) but delivers less lux on the floor than required. The photometric check measures actual delivered illuminance with a calibrated lux meter at design points and compares against BS EN 1838 minimums.',
-      'Cable insulation only.',
-      'Bulb shape.',
+      'That the standby battery still holds its rated terminal voltage at the start of the duration test.',
+      'That the emergency lighting final circuits still meet their original insulation-resistance values.',
+      'That the changeover time on mains failure is still within the 0.5 s required by BS EN 1838.',
+      'That the luminaires still deliver the BS EN 1838 illuminance (lux) on the escape route.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 5-year photometric check is NEW in 2025. It audits delivered illuminance, not just whether the luminaire is on. Catches lumen depreciation that duration testing misses.',
+      'The 5-year photometric check is NEW in 2025. It audits delivered illuminance, not just whether the luminaire is on. Lumen depreciation can mean a luminaire passes duration (it stays on) but delivers less lux on the floor than required; the check measures actual delivered illuminance with a calibrated lux meter at the design points and compares against BS EN 1838 minimums, catching depreciation that duration testing misses.',
   },
   {
     id: 3,
     question:
       'A wireless emergency lighting monitoring system uses BLE (Bluetooth Low Energy) for luminaire-to-gateway communication. What is the typical advantage in retrofit applications?',
     options: [
-      'Lower lamp output.',
-      'No bus cable to install. Each luminaire has a small BLE radio; the gateway is anywhere within range and the luminaires communicate over the air. Retrofit cost is dominated by installing the luminaires; running a DALI bus afterwards through finished ceilings is expensive. BLE removes that cost. Trade-offs: range limited (typically 10-30 m, more with mesh extension), interference / co-existence with other 2.4 GHz systems, security model differs from wired bus, battery drain on the radio (small but real). Suits small-to-medium retrofits; less common in new-build where cabling is laid in the build.',
-      'Higher resolution.',
-      'No advantages.',
+      'It allows the luminaires to run at lower output and so extend battery autonomy.',
+      'It gives higher-resolution lux reporting than a wired DALI bus can carry.',
+      'No data bus cable to install — the luminaires talk to the gateway over the air.',
+      'It removes the need for a separate mains supply to each luminaire.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BLE / wireless removes the bus-cable cost in retrofits. Trade-offs: range, interference, security, radio battery drain. Suits retrofit; new-build typically uses DALI.',
+      'BLE / wireless removes the bus-cable cost in retrofits. Retrofit cost is dominated by installing the luminaires; running a DALI bus afterwards through finished ceilings is expensive, and BLE removes that cost. Trade-offs: range is limited (typically 10-30 m, more with mesh), 2.4 GHz interference / co-existence, a different security model from a wired bus, and a small but real radio battery drain. Suits small-to-medium retrofits; new-build typically uses DALI cabled into the build.',
   },
   {
     id: 4,
     question:
       'What is the role of a Building Management System (BMS) in emergency lighting monitoring?',
     options: [
-      'It runs the lamps directly.',
-      "The BMS aggregates emergency lighting status alongside HVAC, fire alarm, security, and other building systems into a unified operator interface. The emergency lighting gateway reports status (system OK, faults, test events, battery alarms) to the BMS via a standard protocol (BACnet, Modbus, REST API, MQTT). The duty-holder uses the BMS dashboard for daily checks; the BMS sends alerts on faults; integration with the building's ticketing system creates work orders automatically. The BMS does NOT replace the dedicated emergency lighting gateway — it provides the building-wide overlay above it.",
-      'It replaces the cabinet.',
-      'It is unrelated.',
+      'It aggregates emergency lighting status alongside other building systems in one interface.',
+      'The BMS drives the emergency luminaires directly, switching each one to battery on mains failure.',
+      'The BMS replaces the central battery cabinet, supplying the luminaires from the building UPS.',
+      'The BMS performs the monthly and annual tests itself, removing the need for a dedicated gateway.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BMS = building-wide overlay. The dedicated emergency lighting gateway runs the system; the BMS aggregates the status alongside other building systems for operator presentation and work-order generation.',
+      'BMS = building-wide overlay. The emergency lighting gateway reports status (system OK, faults, test events, battery alarms) to the BMS via a standard protocol (BACnet, Modbus, REST API, MQTT); the BMS surfaces it alongside HVAC, fire alarm and security, sends fault alerts, and can auto-create work orders through the ticketing system. It does NOT replace the dedicated gateway, which runs the system — the BMS provides the operator-facing overlay above it.',
   },
   {
     id: 5,
     question: 'What is the role of automated self-test scheduling in modern emergency lighting?',
     options: [
-      'It does no work.',
-      'Automated scheduling runs the monthly functional test and the annual duration test on each luminaire on a planned calendar without operator intervention. The schedule typically staggers the duration tests across the building (e.g. 1/12th of the luminaires per month) to avoid having the whole system off-duty on battery simultaneously. Test results are captured per-luminaire and uploaded to the gateway / BMS / cloud. Failures are alarmed in real time. The duty-holder reviews exception reports rather than running tests manually. Saves substantial labour and improves test quality (the test runs on time every time, recorded automatically).',
-      'It tests the wrong things.',
-      'It is illegal.',
+      'It replaces the annual duration test, so only the automated monthly test is then needed.',
+      'It runs all luminaires into a full duration test simultaneously each month to save time.',
+      'It substitutes a calculated battery-life estimate for any physical discharge testing.',
+      'It runs the monthly and annual tests per-luminaire on a planned, staggered calendar.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Automated scheduling = tests run on calendar without operator. Staggered to avoid whole-system simultaneous discharge. Results captured per-luminaire. Duty-holder reviews exceptions, not every test. Substantial labour saving and test quality improvement.',
+      'Automated scheduling runs the monthly functional and annual duration tests on each luminaire without operator intervention. The schedule typically staggers duration tests across the building (e.g. 1/12th of luminaires per month) to avoid the whole system being off-duty on battery at once. Results are captured per-luminaire and uploaded to the gateway / BMS / cloud, failures are alarmed in real time, and the duty-holder reviews exception reports rather than running tests manually — substantial labour saving and better test quality, as every test runs on time and is recorded.',
   },
   {
     id: 6,
     question:
       'A duty-holder receives an automated email at 10 PM saying "Luminaire 04-12-08 failed monthly functional test — battery fault". What is the appropriate response?',
     options: [
-      'Ignore until next inspection.',
-      "Log the alarm, raise a work order for the maintenance contractor to attend within the response time defined in the maintenance contract (typically 24-72 hours for a single-luminaire fault), and confirm fault rectified at next visit. Update the logbook. The automated system has done the detection; the duty-holder's response is the corrective action loop. Faults that are not resolved promptly drift the system out of compliance — automated detection without prompt rectification is no better than no detection.",
-      'Replace the building.',
-      'Delete the email.',
+      'Leave it until the next scheduled periodic inspection, since the system logged the fault itself.',
+      'Reset the gateway to clear the alarm, on the basis that a single failed test is usually a glitch.',
+      'Log it, raise a work order within the contract response time, and confirm rectified next visit.',
+      'Disable the automated email alerts so the duty-holder is not disturbed out of hours.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Automated detection is half the job; corrective action is the other half. Log → work order → attend → resolve → update logbook. Failure to close the loop is failure of the maintenance regime even if the detection is perfect.',
+      "Automated detection is half the job; corrective action is the other half. Raise a work order for the contractor to attend within the maintenance-contract response time (typically 24-72 hours for a single-luminaire fault), confirm the fault rectified, and update the logbook. Faults left unresolved drift the system out of compliance — automated detection without prompt rectification is no better than no detection. Log → work order → attend → resolve → update logbook.",
   },
   {
     id: 7,
     question:
       'Why is a paper or electronic logbook still required even with full automated self-test and cloud monitoring?',
     options: [
-      'No reason.',
-      "BS EN 50172:2024 / BS 5266-1:2025 expect the duty-holder to maintain an auditable record of test results, faults, corrective actions, and modifications — retained for the operational life of the installation. The automated system PROVIDES the data; the logbook is the duty-holder's reviewed and signed record. An auditor or post-incident investigator examines the logbook first to check test history, fault response, and modifications, then drills into the underlying data if needed. Without the logbook the audit trail is incomplete even if the automated system has all the data.",
-      'It is decorative.',
-      'Only for fire alarms.',
+      'It is the duty-holder\'s curated, reviewed and signed audit trail above the raw data.',
+      'A logbook is only required where the system has no cloud monitoring to retain the data.',
+      'A logbook is only required for fire-alarm systems, not for emergency lighting.',
+      'The logbook is a legacy formality with no role once automated monitoring is in place.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "Logbook = duty-holder's reviewed audit trail. Automated data is the input; logbook is the curated, signed, retained record. Both are required.",
+      "BS EN 50172:2024 / BS 5266-1:2025 expect the duty-holder to maintain an auditable record of test results, faults, corrective actions and modifications, retained for the operational life of the installation. The automated system provides the data; the logbook is the reviewed, signed record. An auditor or investigator examines the logbook first — test history, fault response, modifications — then drills into the underlying data only if needed. Without it the audit trail is incomplete even if the system holds everything. Both are required.",
   },
   {
     id: 8,
     question:
       'An IP-connected emergency lighting monitoring system sits on the building general LAN. What cyber-security control should be applied first?',
     options: [
-      'Disable the network entirely.',
-      'Network segmentation — place the emergency lighting gateway on its own VLAN with controlled access from the general LAN to that VLAN (firewall rules, access control lists). Combined with strong authentication on the gateway, regular firmware updates, monitoring of access logs, and vendor security advisories. The principle: the emergency lighting controller is a SAFETY-CRITICAL ASSET that must not be exposed to the same threat surface as user laptops and printers. BS 5839-1:2025 raised this concept for fire alarms; the same logic applies to emergency lighting.',
-      'Use a default admin password.',
-      'Cyber security is for IT only.',
+      'Disable the building network entirely so the gateway cannot be reached from outside.',
+      'Leave the manufacturer default admin password in place so support engineers can always access it.',
+      'Treat cyber security as an IT-department matter only, with no controls on the lighting gateway.',
+      'Network segmentation — put the gateway on its own VLAN with controlled access from the LAN.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Network segmentation first — emergency lighting on its own VLAN. Plus authentication, updates, log monitoring. Treat the controller as a safety-critical asset with appropriate cyber hygiene.',
+      'Network segmentation first — place the gateway on its own VLAN with controlled access from the general LAN (firewall rules, access control lists), combined with strong authentication, regular firmware updates, access-log monitoring and tracking vendor security advisories. The principle: the emergency lighting controller is a safety-critical asset that must not share the threat surface of user laptops and printers. BS 5839-1:2025 raised this for fire alarms; the same logic applies here.',
   },
   {
     id: 9,
     question:
       'A self-test luminaire reports "battery test complete — capacity 75% of rated". What is the duty-holder\'s decision criterion?',
     options: [
-      'Always replace.',
-      'Compare against the design ageing factor (typically 80% of rated at end-of-design-life for SLA). 75% is BELOW the typical 80% threshold, meaning the battery has degraded faster than the design assumption. Plan replacement in the next maintenance cycle (do not wait until annual duration test). Track trend across multiple monthly tests to confirm the reading. If repeated low readings: replace immediately. The 80% threshold is the practical end-of-life trigger; readings below indicate the battery may not deliver full duration in a real event.',
-      'Ignore the reading.',
-      'Run the lamp brighter.',
+      'Replace the battery immediately on any reading below 100% of rated capacity.',
+      'Ignore the reading, since the duration test is the only valid measure of battery health.',
+      'Compare against the ~80% end-of-life threshold; 75% is below it, so plan replacement.',
+      'Increase the lamp output to compensate for the reduced battery capacity.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Design ageing factor (1.25 SLA) corresponds to ≥ 80% rated capacity at end of design life. 75% is below threshold → plan replacement soon. Track trend; act on confirmed sub-threshold readings.',
+      'The design ageing factor (1.25 for SLA) corresponds to roughly 80% of rated capacity at end of design life. 75% is below that threshold, so the battery has degraded faster than the design assumption: plan replacement in the next maintenance cycle rather than waiting for the annual duration test, and track the trend across monthly tests to confirm. Repeated sub-threshold readings mean replace immediately, as the battery may not deliver full duration in a real event.',
   },
   {
     id: 10,
     question:
       'How does the 2025 5-year photometric check change the maintenance regime relative to the traditional functional + duration cycle?',
     options: [
-      'It removes other tests.',
-      'It ADDS a 5-yearly photometric verification (using a calibrated lux meter at design points) to the existing monthly functional + annual duration regime. The photometric check audits delivered illuminance against BS EN 1838 minimums; lumen depreciation that duration testing misses is caught here. Most luminaires will pass at 5 years; aged luminaires (especially those with non-LED lamps or lower-quality LED drivers) may fail and trigger lamp or luminaire replacement. Modern self-test electronics may eventually automate part of this (estimating delivered lux from internal LED current and aging models), but as at 2026 the formal photometric check is a manual verification with a lux meter.',
-      'It happens monthly.',
-      'It does nothing.',
+      'It ADDS a 5-yearly photometric verification on top of the monthly and annual regime.',
+      'It replaces the annual duration test, so the regime becomes monthly functional plus 5-yearly photometric.',
+      'It is carried out monthly in place of the functional test, using a calibrated lux meter each time.',
+      'It changes nothing in practice, because passing the duration test guarantees the design lux level.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 5-year photometric check ADDS to the existing regime. Monthly functional, annual duration, and (NEW) 5-year photometric. Catches lumen depreciation. Most luminaires pass; aged ones may fail and trigger replacement.',
+      'The 5-year photometric check ADDS to the existing regime: monthly functional, annual duration, and (NEW) 5-year photometric using a calibrated lux meter at the design points. It audits delivered illuminance against BS EN 1838 minimums, catching lumen depreciation that duration testing misses. Most luminaires pass at 5 years; aged ones (non-LED lamps or lower-quality drivers) may fail and trigger lamp or luminaire replacement. As at 2026 it is a manual lux-meter verification, though self-test electronics may eventually estimate delivered lux.',
   },
 ];
 

@@ -11,8 +11,8 @@ const DESCRIPTION = 'Communication standards and device connectivity in smart ho
 const quickCheckQuestions = [
   {
     question: 'What frequency band does Zigbee typically operate on?',
-    options: ['868 MHz', '2.4 GHz', '5 GHz', '433 MHz'],
-    correctIndex: 1,
+    options: ['2.4 GHz', '868 MHz', '5 GHz', '433 MHz'],
+    correctIndex: 0,
     explanation:
       'Zigbee primarily operates on the 2.4 GHz band globally, though it can also use 868 MHz in Europe and 915 MHz in North America for specific applications.',
   },
@@ -27,11 +27,11 @@ const quickCheckQuestions = [
     question: 'What is the primary advantage of Z-Wave over Zigbee?',
     options: [
       'Faster data speeds',
-      'Less interference from Wi-Fi',
       'Lower cost',
+      'Less interference from Wi-Fi',
       'More device support',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Z-Wave operates on sub-GHz frequencies (around 868-908 MHz), which means it experiences less interference from Wi-Fi networks that use 2.4 GHz.',
   },
@@ -41,8 +41,8 @@ const quizQuestions = [
   {
     question:
       'Which wireless protocol operates in the sub-GHz frequency range to avoid Wi-Fi interference?',
-    options: ['Zigbee', 'Z-Wave', 'Thread', 'Bluetooth LE'],
-    correctIndex: 1,
+    options: ['Z-Wave', 'Zigbee', 'Thread', 'Bluetooth LE'],
+    correctIndex: 0,
     explanation:
       'Z-Wave operates at 868 MHz (Europe) or 908 MHz (US/Canada), avoiding the crowded 2.4 GHz band used by Wi-Fi.',
   },
@@ -50,25 +50,25 @@ const quizQuestions = [
     question: 'What is a key characteristic of mesh networking in smart homes?',
     options: [
       'Requires direct line of sight',
-      'Each device can only connect to the hub',
       'Devices relay signals to extend range',
+      'Each device can only connect to the hub',
       'Uses infrared signals',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Mesh networking allows devices to relay signals to each other, extending the effective range and improving reliability.',
   },
   {
     question: 'Which protocol was specifically designed for smart home automation?',
-    options: ['Wi-Fi', 'Bluetooth', 'Z-Wave', 'NFC'],
-    correctIndex: 2,
+    options: ['Z-Wave', 'Wi-Fi', 'Bluetooth', 'NFC'],
+    correctIndex: 0,
     explanation:
       'Z-Wave was specifically designed for smart home automation, while Wi-Fi and Bluetooth were developed for general data transfer.',
   },
   {
     question: 'What is the maximum number of devices supported by a single Z-Wave network?',
-    options: ['32', '64', '128', '232'],
-    correctIndex: 3,
+    options: ['32', '232', '128', '64'],
+    correctIndex: 1,
     explanation:
       'Z-Wave supports up to 232 devices per network, which is suitable for most residential smart home installations.',
   },
@@ -77,10 +77,10 @@ const quizQuestions = [
     options: [
       'It requires a proprietary hub from a single manufacturer',
       'It operates only on battery power',
-      'It supports thousands of devices per network',
       'It cannot use mesh networking',
+      'It supports thousands of devices per network',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Zigbee can support over 65,000 devices per network theoretically, making it highly scalable for large installations.',
   },

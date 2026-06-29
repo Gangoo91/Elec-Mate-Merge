@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of using OEM (Original Equipment Manufacturer) spare parts?',
     options: [
-      'They are guaranteed to match the original specification exactly, maintaining warranty validity and ensuring compatibility with the equipment',
-      'When it started, which RCD is tripping, whether they have noticed any patterns, and whether any new appliances have been connected',
-      'Adequate fire safety training at the time of recruitment and on being exposed to new or increased risks, repeated periodically, and adapted to take account of new or changed risks',
-      'Giving the speaker your full attention, not interrupting, then summarising back what you heard to confirm understanding',
+      'Guaranteed exact specification match, maintaining warranty and compatibility',
+      'They are always the cheapest option available on the open market',
+      'They never require any incoming inspection before being fitted to equipment',
+      'They have the shortest procurement lead time of any source of supply',
     ],
     correctIndex: 0,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'obsolescence',
     question: 'What is the BEST strategy for managing component obsolescence?',
     options: [
-      'Proactive monitoring of manufacturer end-of-life notices, identifying alternatives before discontinuation, and holding strategic stock of critical obsolescent components',
-      'The supply source impedance, the line conductor, the CPC, the installation earth electrode, and the general mass of earth back to the source earth',
-      'Circuit reference, conductor sizes, R1+R2, R2 (where applicable), IR live-live and live-earth, polarity, Zs, RCD trip times at 1× and 5×, AFDD test, all with limits and pass/fail',
-      'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
+      'Monitor end-of-life notices, qualify alternatives early, and stock critical obsolescent parts',
+      'Wait until a component fails, then search the market for any available replacement',
+      'Replace the whole item of equipment immediately whenever any single part is discontinued',
+      'Buy the cheapest unbranded equivalent on the market as soon as stock runs low',
     ],
     correctIndex: 0,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'Which criterion is MOST important when deciding whether to hold a component as a critical spare?',
     options: [
-      "In series with the contactor coil in the control circuit, so it breaks the control circuit on overload",
-      "The risks, ergonomic requirements, health of the wearer, characteristics of the workstation, and compatibility with other PPE",
-      "Take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions",
-      "The consequence of the component's failure on safety, production and the lead time to obtain a replacement",
+      "The physical size of the component and the storage space it would occupy",
+      "The colour scheme and the type of packaging the manufacturer supplies it in",
+      "Whether the component is sourced from an OEM or from a third-party supplier",
+      "The consequence of its failure on safety and production, plus replacement lead time",
     ],
     correctIndex: 3,
     explanation:
@@ -59,10 +59,10 @@ const quizQuestions = [
     question:
       'When sourcing a third-party replacement for an OEM component, the minimum requirement is:',
     options: [
-      'The completed work order, risk assessment, method statement, safe isolation certificate, motor test results (insulation resistance, rotation check), commissioning record, and a reflective account of the task with lessons learnt',
-      'The third-party component must meet or exceed all critical specifications of the original including voltage, current, temperature ratings, certifications and dimensional compatibility',
-      'In the Blind Spot \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the mentor should provide specific, factual feedback using the SBI model to bring it into the Open area',
-      'Inner conductors with insulation, an inner PVC sheath, a layer of galvanised steel wire armour, and an outer PVC (or LSZH) sheath. Available in 2, 3, 4 or 5 cores from 1.5 mm² up to 400 mm² CSA.',
+      'It must be physically able to fit into the same mounting space as the original',
+      'It must meet or exceed every critical specification — electrical, thermal, dimensional and certification',
+      'It must be cheaper than the OEM part in order to justify the substitution',
+      'It must carry the same brand name and logo as the original component',
     ],
     correctAnswer: 1,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 2,
     question: 'Traceability of spare parts means:',
     options: [
-      "Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers",
-      "Visual inspection for damage, verification of part number and specification against the order, checking certificates of conformity, verifying quantity, and confirming storage requirements are met",
-      "Being able to identify the component's manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation",
-      "The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment's specific design documentation",
+      "Keeping spare parts in a locked store with access restricted to authorised staff",
+      "Recording only the date on which a part was fitted to the equipment",
+      "Tracing a part's manufacturer, batch, date, spec and supply chain through to installation",
+      "Labelling the storage shelf with the part number and the quantity held",
     ],
     correctAnswer: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "A critical spare for a 400 kW motor's main contactor has been stored in the spares store for 3 years. Before fitting, you should:",
     options: [
-      'A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'It may not meet the claimed safety ratings, certifications or performance specifications, potentially leading to failure under fault conditions with risk of fire, explosion or electrocution',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
+      'Fit it straight away, since a sealed spare cannot deteriorate while in storage',
+      'Return it to the supplier for a freshly manufactured unit before fitting it',
+      'Energise it on the test bench at full voltage to confirm that it still works',
+      'Inspect for damage and corrosion, check coil and contacts, and confirm it is within shelf-life',
     ],
     correctAnswer: 3,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 4,
     question: 'Which document provides the definitive technical specification for a spare part?',
     options: [
-      "The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment's specific design documentation",
-      "A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative",
-      "Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers",
-      "Being able to identify the component's manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation",
+      "The manufacturer's datasheet, backed by the relevant BS/EN standard and design documents",
+      "The delivery note that was supplied with the component at goods-in",
+      "The CMMS work order that records the details of the original fault",
+      "The supplier's online product listing or printed catalogue entry",
     ],
     correctAnswer: 0,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 5,
     question: 'Stock management for maintenance spares should ensure:',
     options: [
-      'Yes — UKCA (UK Conformity Assessed) marking is the UK equivalent of CE marking for the GB market and confirms the product meets the relevant UK technical requirements',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'It may not meet the claimed safety ratings, certifications or performance specifications, potentially leading to failure under fault conditions with risk of fire, explosion or electrocution',
-      'Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s identification, part number and batch information; and may include specific storage instructions',
+      'The largest possible quantity of every part is always held in stock',
+      'Stock levels balance availability against cost, with FIFO rotation and reorder triggers',
+      'Only OEM parts are ever held, regardless of their cost or lead time',
+      'The newest stock is always issued first to keep the parts held current',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'If an MCB has a UKCA marking but not a CE marking, is it acceptable for use in a UK installation?',
     options: [
-      'The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific design documentation',
-      'Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s identification, part number and batch information; and may include specific storage instructions',
-      'Yes — UKCA (UK Conformity Assessed) marking is the UK equivalent of CE marking for the GB market and confirms the product meets the relevant UK technical requirements',
-      'Being able to identify the component\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation',
+      'No — only CE-marked products may lawfully be used anywhere in the UK',
+      'No — an MCB must carry both the UKCA and the CE mark to be valid',
+      'Yes — UKCA is the UK equivalent of CE for the GB market and confirms compliance',
+      'Yes — but only if a separate test certificate is also obtained for it',
     ],
     correctAnswer: 2,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Why should electrical spare parts be stored in their original packaging where possible?',
     options: [
-      "A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative",
-      "Yes — UKCA (UK Conformity Assessed) marking is the UK equivalent of CE marking for the GB market and confirms the product meets the relevant UK technical requirements",
-      "Non-approved spare parts are fitted, the drive is opened by non-authorised personnel, parameter settings are changed without manufacturer approval, or the drive is operated outside its specified environmental conditions",
-      "Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer's identification, part number and batch information; and may include specific storage instructions",
+      "Because removing the packaging automatically voids the product warranty",
+      "Because the original packaging is needed to return the part for a credit",
+      "Because spare parts must legally remain sealed until the day they are fitted",
+      "It protects against damage and moisture and carries identification and storage data",
     ],
     correctAnswer: 3,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'When a spare part is used, the CMMS (Computerised Maintenance Management System) should be updated to record:',
     options: [
-      'The part number, description, serial/batch number, date of issue, who issued it, which equipment it was fitted to, and the work order number',
-      'The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific design documentation',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative',
+      'Part details, batch, issue date, issuer, the equipment fitted to, and work order number',
+      'Only the part number and the quantity of stock remaining afterwards',
+      'Only the name of the technician who physically fitted the part',
+      'Nothing — the CMMS updates the spares records entirely automatically',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 9,
     question: "What is a 'last-time buy' in the context of obsolescence management?",
     options: [
-      'The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment\\\\\\\\\\\\\\\'s specific design documentation',
-      'A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'Non-approved spare parts are fitted, the drive is opened by non-authorised personnel, parameter settings are changed without manufacturer approval, or the drive is operated outside its specified environmental conditions',
+      'The final purchase made from a supplier before the financial year-end',
+      'A bulk buy before discontinuation, giving buffer stock until an alternative is ready',
+      'The cheapest possible purchase of a component near the end of its production life',
+      'A single replacement bought only after the original part has already failed',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 10,
     question: 'Quality assurance for incoming spare parts should include:',
     options: [
-      'Being able to identify the component\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation',
-      'The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific design documentation',
-      'Visual inspection for damage, verification of part number and specification against the order, checking certificates of conformity, verifying quantity, and confirming storage requirements are met',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
+      'Fitting the part immediately and checking it only if a fault later occurs',
+      'Accepting the delivery on trust without opening the outer packaging',
+      'Checking damage, part number, certificates, quantity and storage against the order',
+      'Recording only the quantity received against the relevant purchase order',
     ],
     correctAnswer: 2,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 11,
     question: 'Warranty on a variable speed drive is typically voided if:',
     options: [
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s identification, part number and batch information; and may include specific storage instructions',
-      'Non-approved spare parts are fitted, the drive is opened by non-authorised personnel, parameter settings are changed without manufacturer approval, or the drive is operated outside its specified environmental conditions',
+      'The drive is operated continuously at its full rated output load',
+      'The drive is mounted inside an approved control panel enclosure',
+      'The drive is serviced only by a manufacturer-authorised service engineer',
+      'Non-approved parts, unauthorised opening, parameter changes or out-of-spec operation',
     ],
     correctAnswer: 3,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 12,
     question: 'A counterfeit electrical component poses which specific danger?',
     options: [
-      'It may not meet the claimed safety ratings, certifications or performance specifications, potentially leading to failure under fault conditions with risk of fire, explosion or electrocution',
-      'A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative',
-      'Appropriate stock levels balancing availability against holding cost, with regular stock checks, FIFO rotation, proper storage conditions and reorder point triggers',
-      'The technical datasheet from the manufacturer, supplemented by the relevant BS/EN standard and the equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific design documentation',
+      'It may miss its claimed ratings and fail under fault, risking fire or electrocution',
+      'It always costs more to buy than the genuine OEM equivalent part',
+      'It always has a longer procurement lead time than a genuine component',
+      'It can only ever be fitted by a manufacturer-authorised service engineer',
     ],
     correctAnswer: 0,
     explanation:

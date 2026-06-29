@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A client asks: "the OTDR shows 0.92 dB on this link — does that mean the channel insertion loss is 0.92 dB?" What is the correct technical answer?',
     options: [
-      'Yes — OTDR measures end-to-end insertion loss directly.',
-      'No — OTDR measures backscatter return at every point along the fibre, allowing it to MAP the link\u2019s loss profile (per-splice, per-connector, fibre attenuation slope, end reflection). It produces an estimate of overall loss but is NOT the certified end-to-end insertion-loss measurement. The certified end-to-end loss number comes from a Tier 1 light-source-and-power-meter (LSPM / OLTS) test in both directions, at the relevant wavelengths. OTDR (Tier 2) is the diagnostic / characterisation test; OLTS (Tier 1) is the certification test.',
-      'Yes — OTDR is the only valid loss measurement.',
-      'OTDR cannot measure loss at all.',
+      'Yes — the OTDR estimate is the certified end-to-end insertion loss.',
+      'No — OTDR estimates loss from backscatter; the certified figure comes from a Tier 1 OLTS test.',
+      'Yes — OTDR is the only standards-recognised loss measurement for fibre.',
+      'No — OTDR cannot derive any loss figure, only event positions.',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'Why are launch and tail (receive) cords mandatory for an OTDR test on a short fibre link?',
     options: [
-      'They make the link physically longer.',
-      'They displace the OTDR\u2019s "dead zone" — the initial section of fibre where the launch pulse saturates the receiver and back-reflection from the front-panel connector dominates the trace — outside the link being tested. Without a launch cord, the first connector and first 50-100 m of fibre are masked. A tail cord similarly lets the OTDR characterise the far-end connector. Length: typically 100-1000 m, fibre type matched to the link.',
-      'They reduce the backscatter coefficient.',
-      'They are decorative.',
+      'They make the link physically longer so the loss budget is easier to pass.',
+      'They displace the near-end dead zone outside the link so the first connector is characterised.',
+      'They reduce the fibre backscatter coefficient and so lower the measured loss.',
+      'They protect the front-panel connector from wear during repeated testing.',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'Why are fibre splice losses tested BIDIRECTIONALLY (from each end) and the results averaged?',
     options: [
-      'To save time.',
-      'A unidirectional OTDR splice-loss measurement can be misleading: differences in backscatter coefficient between the two sides of the splice (e.g. one fibre with slightly higher backscatter than the other) introduce a "ghost" loss or apparent gain that is not real loss. Measuring from each direction and averaging cancels the backscatter-coefficient asymmetry and gives the true splice loss. Standard practice for splice characterisation is bidirectional, dual-wavelength.',
-      'Single-direction measurements are illegal.',
-      'The splicer requires bidirectional input.',
+      'To save time by halving the number of separate traces needed.',
+      'Averaging both directions cancels backscatter-coefficient asymmetry and gives the true splice loss.',
+      'Single-direction OTDR measurements are prohibited by the cabling standards.',
+      'The fusion splicer requires a reading from each end before it will complete the joint.',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'An OTDR trace shows a small reflection peak with no associated loss step at a position that does not correspond to any known cable feature. What is the most likely cause?',
     options: [
-      'A break in the fibre.',
-      'A "ghost reflection" — an artefact caused by the OTDR pulse partially reflecting from a strong reflective event (typically the far-end connector or a high-return-loss connector pair), travelling back along the fibre, partially re-reflecting at the launch end, and travelling forward again. The double-reflection appears at twice the distance to the strong reflector. It is not a real fibre event. Confirm by measuring the position; ghost = 2 × strong-reflector distance.',
-      'A polish-grade mismatch.',
-      'A cable-jacket fault.',
+      'A break in the fibre at that exact position requiring repair.',
+      'A ghost reflection — a re-reflection artefact appearing at twice the distance to a strong reflector.',
+      'A polish-grade mismatch between a UPC and an APC connector pair.',
+      'A cable-jacket fault letting moisture reach the fibre coating.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'What does an OTDR (Optical Time Domain Reflectometer) actually measure, and why is it called a "time-domain" instrument?',
     options: [
-      'Direct end-to-end optical power loss.',
-      'It launches a short optical pulse into the fibre and measures the backscattered light vs time. Distance is calculated from time using the speed of light in the fibre (≈ 200 000 km/s, ~5 µs per km round-trip). The trace shows relative power vs distance, capturing fibre attenuation slope, splice loss steps, connector reflection peaks, and the end-of-fibre reflection. From this, per-event loss, total link loss and event locations can be derived.',
-      'Refractive index.',
-      'Polarisation-mode dispersion only.',
+      'Backscattered light vs time after a launched pulse, converting time-of-flight to distance to map per-event loss.',
+      'Direct calibrated end-to-end optical power loss, by comparing input and output power simultaneously.',
+      'The refractive index of the fibre core, from which the channel loss is then inferred.',
+      'Polarisation-mode dispersion only, expressed as a time delay between the two polarisation states.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OTDR is fundamentally a time-of-flight + backscatter instrument. It transmits a short pulse and measures the returned light over time. Two physical phenomena produce the return: Rayleigh backscatter (uniform, low-level, exists everywhere) and Fresnel reflection (large, localised, occurs at refractive-index discontinuities — connector endfaces, mechanical splices, fibre breaks, end-of-fibre). The trace is a logarithmic plot of returned power vs round-trip distance, calibrated through the group index of refraction.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the difference between Tier 1 and Tier 2 fibre testing?',
     options: [
-      'Tier 1 is harder than Tier 2.',
-      'Tier 1 (basic certification) is light-source plus power meter (LSPM / OLTS) — calibrated injection at one end, calibrated measurement at the other, the difference is the channel insertion loss. Required for warranty and certification. Tier 2 (extended certification) is OTDR — characterises the link\u2019s loss profile event by event, finds and locates faults, baselines the link for future maintenance. Both are typically performed at commissioning of a fibre system; Tier 1 is the formal pass / fail; Tier 2 is the diagnostic and as-built characterisation.',
-      'Tier 1 is for multimode and Tier 2 is for single-mode.',
-      'They are the same test.',
+      'Tier 1 is simply a harder pass threshold than Tier 2 on the same instrument.',
+      'Tier 1 is OLTS certified end-to-end insertion loss; Tier 2 is OTDR per-event characterisation.',
+      'Tier 1 is for multimode fibre and Tier 2 is for single-mode fibre.',
+      'They are the same test run twice for redundancy at commissioning.',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does "pulse width" do on an OTDR setting, and why is there a trade-off?',
     options: [
-      'A longer pulse is always better.',
-      'Pulse width controls the energy per pulse and therefore the dynamic range (how far down the fibre the OTDR can see) AND the resolution (how close two events can be and still be resolved separately). Wider pulses (e.g. 1 µs, 10 µs) give greater dynamic range — useful for long links and high-loss links — but worse resolution: events within the pulse-width worth of distance are merged. Narrower pulses (e.g. 5 ns, 30 ns) give better resolution — useful for in-building links with closely-spaced splices and connectors — but less dynamic range. The trade-off is fundamental.',
-      'Pulse width changes the wavelength.',
-      'Pulse width is a calibration setting.',
+      'A longer pulse is always better, giving both more range and finer resolution at once.',
+      'Pulse width changes the wavelength of the launched light from 1310 nm to 1550 nm.',
+      'Pulse width is purely a calibration setting and has no effect on what the trace can resolve.',
+      'Wider pulses give more range but coarser resolution; narrower pulses give finer resolution but less range.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OTDR pulse width is the physical duration of the optical pulse launched into the fibre. Wider pulse = more energy = more backscatter signal = greater dynamic range — but the pulse also occupies more distance in the fibre (1 µs ≈ 200 m round-trip). Two events within that 200 m round-trip will appear as one merged event. Narrower pulse = less energy = less dynamic range, but tighter event resolution. Field practice is to use the narrowest pulse that gives adequate signal-to-noise for the link length — typically a few short-pulse traces near the launch end and a wider-pulse trace for the far end on long links.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'On an OTDR trace, what does each of the following features represent: (a) a sloping line, (b) a small step down with no peak, (c) a step down with a peak above the trend, (d) a large peak at the end of the trace?',
     options: [
-      'They all represent fibre faults.',
-      '(a) The fibre attenuation slope (gradual loss with distance, in dB/km). (b) A fusion splice — a small loss step but no reflection because fusion produces a continuous glass joint. (c) A connector pair or mechanical splice — a loss step PLUS a reflection from the refractive-index discontinuity at the mating face. (d) The end-of-fibre reflection — typically the last connector, or an open fibre end (which gives a strong Fresnel reflection from the glass-air interface).',
-      'They are all noise.',
-      'Only the end peak is a real event.',
+      '(a) fibre attenuation slope; (b) fusion splice; (c) connector pair / mechanical splice; (d) end-of-fibre reflection.',
+      '(a)-(d) all represent fibre faults requiring remedial action before sign-off.',
+      '(a)-(d) are all instrument noise carrying no real physical meaning.',
+      'Only the large end peak is a real event; (a)-(c) are trace artefacts.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reading an OTDR trace is a learned skill that comes down to interpreting four basic features. Slope = fibre attenuation. Loss step without peak = fusion splice. Loss step with peak = connector pair or mechanical splice (mating faces are refractive-index discontinuities). Strong peak at end = end of fibre. A loss step WITH NO peak in the middle of the trace and elevated apparent loss could be a microbend, a stressed cable, or a poor splice; further investigation needed.',
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'Why are launch and tail cords always specified for an OTDR test, and what length is appropriate?',
     options: [
-      'They serve no real purpose.',
-      'The launch cord moves the OTDR\u2019s near-end "dead zone" (where the launch pulse saturates the receiver and front-panel connector reflection dominates) outside the link under test, so the first connector of the link is properly characterised. The tail cord similarly allows the far-end connector to be characterised by providing backscatter on both sides of it. Length: typically 100-500 m for in-building MM; 500-2000 m for OS2 SM long-haul. Match the fibre type and connector polish to the link.',
-      'They are only used on damaged fibres.',
-      'They are required only for single-mode.',
+      'They serve no real purpose and are an optional convenience only.',
+      'They push the dead zone outside the link so the first and last connectors are characterised.',
+      'They are only used when investigating fibres already known to be damaged.',
+      'They are required only for single-mode and never for multimode links.',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is OTDR splice-loss measurement done bidirectionally and the results averaged?',
     options: [
-      'To save time.',
-      'A unidirectional OTDR splice-loss reading is influenced by the backscatter-coefficient difference between the two fibres on either side of the splice — manufacturing variation in fibre backscatter can produce APPARENT gain (negative loss) in one direction and exaggerated loss in the other. Averaging readings from both ends cancels the artefact and gives the true splice loss. Industry practice: bidirectional + dual-wavelength (1310 + 1550 for SM, 850 + 1300 for MM).',
-      'It is required by BS 7671.',
-      'Bidirectional measurement increases dynamic range.',
+      'To save time on site by halving the number of separate traces required.',
+      'Because BS 7671 explicitly requires bidirectional fibre splice-loss testing.',
+      'Because measuring from both ends increases the OTDR\u2019s dynamic range.',
+      'Averaging both ends cancels backscatter-coefficient asymmetry, giving the true splice loss.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OTDR splice-loss is derived from the height difference between the backscatter levels on either side of the splice — a measurement that can be skewed if the two fibres have slightly different backscatter coefficients. Bidirectional averaging cancels the asymmetry. This is industry-standard splice-characterisation practice and is built into modern OTDR analysis software. Dual-wavelength testing (1310 + 1550 for SM, 850 + 1300 for MM) catches wavelength-dependent issues like macrobends, which appear on long-wavelength but not short-wavelength.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is a "ghost reflection" on an OTDR trace, and how do you identify one?',
     options: [
-      'A real fibre fault.',
-      'An artefact caused by the launched pulse partially reflecting off a strong reflective event (typically the far-end connector or a high-return-loss mid-span connector), travelling back to the launch, partially re-reflecting again at the launch end (or off the front-panel connector), and travelling forward to be received again. The result is a small reflection PEAK with NO associated loss STEP, located at exactly 2 × (or 3 ×, etc.) the distance to the strong reflector. Confirm by measurement; suppress by using lower-reflection connectors (APC) or by reducing pulse energy.',
-      'A polish-grade mismatch event.',
-      'Cable manufacturing variation.',
+      'A re-reflection artefact: a peak with no loss step, located at twice the distance to a strong reflector.',
+      'A real fibre fault — typically a break or crush — that must be repaired before sign-off.',
+      'A polish-grade mismatch between a UPC and an APC connector at a single mating face.',
+      'Normal cable manufacturing variation in the fibre backscatter coefficient along the run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ghosts are common, particularly with high-return-loss reflectors. Their signature is unmistakable once you know it: a small peak, no associated loss, at twice the distance to a strong reflective event. Modern OTDR analysis software flags them automatically. Suppression strategies: use APC connectors (lower return loss), reduce pulse energy, use coarser averaging settings to reduce single-shot ghost amplitude. They are not real events — do not raise a fault report against a ghost.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'A 200 m OS2 link tests at 1.7 dB total OLTS insertion loss at 1310 nm. The calculated budget was 1.3 dB. What is the most likely cause of the 0.4 dB excess, and how do you find it?',
     options: [
-      'The fibre is faulty.',
-      'A contaminated connector or a marginal splice. Most likely a connector pair with degraded cleanliness adding ~0.4 dB. Find it: run an OTDR (Tier 2) trace at 1310 nm with appropriate launch / tail cords, identify the per-event loss values, look for the connector or splice that is 0.4 dB above its expected typical loss. Inspect the suspect connector with a fibre microscope per IEC 61300-3-35, clean if not pass, re-test.',
-      'Pulse width was wrong.',
-      'The transceiver budget has changed.',
+      'The fibre itself is faulty and the whole run must be replaced.',
+      'The OLTS pulse width was set wrongly, inflating the reading by 0.4 dB.',
+      'A contaminated connector or marginal splice — locate it with an OTDR, then inspect and clean.',
+      'The transceiver link budget has changed, so the cabling itself is within spec.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Excess insertion loss vs the calculated budget is almost always a contaminated connector or marginal splice. The OTDR (Tier 2) is the diagnostic tool: it identifies WHICH event is excessive and WHERE on the link. Then visual inspection per IEC 61300-3-35 confirms contamination, cleaning recovers the link, and re-test confirms the recovery. The investigation flow — calculate budget → OLTS test → if excess, run OTDR → identify excess event → inspect and clean — is standard fibre commissioning / troubleshooting practice.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 9,
     question: 'Which IEC standard governs fibre cabling test methods?',
     options: [
-      'BS 7671 §716.',
-      'IEC 61280 series — test procedures for fibre-optic communication subsystems. Defines OLTS / OPM measurement methods (61280-4-1 for MM, 61280-4-2 for SM), OTDR measurement methods, return-loss measurement, and so on. The TIA equivalent in North America is ANSI/TIA-526 series; the EU adoption is BS EN 61280. Most field test instruments are calibrated and traceable against these standards.',
-      'ISO 9001.',
-      'BS EN 50173-1.',
+      'BS 7671 Section 716 — the wiring-regulations clause on power over data cabling.',
+      'ISO 9001 — the generic quality-management-system standard.',
+      'BS EN 50173-1 — the generic-cabling performance (Class) standard.',
+      'IEC 61280 series — test procedures for fibre-optic communication subsystems.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IEC 61280 is the international fibre-cabling test-method series. Subparts cover OLTS (61280-4-1 MM, 61280-4-2 SM), OTDR (61280-4-3, -4-4), return loss (61280-4-4 and others), and specialty measurements. BS EN 61280 is the EU-adopted version used in UK practice. Field test instruments report against these methods (e.g. "61280-4-1 method 1 reference"), allowing two test sets in different parts of the world to produce comparable, traceable results. Always specify the test method in the certification deliverables.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'The fibre standards prescribe testing in BOTH directions and at TWO wavelengths. Why both?',
     options: [
-      'Excessive caution.',
-      'Bidirectional testing (testing from each end and averaging) cancels backscatter-coefficient asymmetry artefacts that distort unidirectional OTDR splice-loss readings. Dual-wavelength testing (1310 + 1550 nm SM, 850 + 1300 nm MM) detects wavelength-dependent issues — primarily macrobends and microbends, which attenuate long wavelengths much more than short wavelengths. A bend that costs 0.3 dB at 1310 nm may cost 1.5 dB or more at 1550 nm; one-wavelength testing would miss it. Both disciplines together give a confident, repeatable, defensible certification.',
-      'It doubles the test fee.',
-      'Different standards require different methods.',
+      'Bidirectional cancels backscatter asymmetry; dual-wavelength catches bend loss that hits long wavelengths hardest.',
+      'It is excessive caution that the standards mandate purely for liability reasons.',
+      'It is done only to justify doubling the test fee charged to the client.',
+      'Different standards each require a different single method, so all are run to be safe.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Bidirectional + dual-wavelength is the certification gold standard. Bidirectional cancels the splice-loss artefact; dual-wavelength catches bend-induced loss because long wavelengths are far more sensitive to macro/microbends than short ones. A link that passes at 1310 nm but fails at 1550 nm has a bend somewhere — find it by comparing the two OTDR traces. Modern field test sets perform bi-directional, dual-wavelength tests automatically and report the worst-case result.',
   },

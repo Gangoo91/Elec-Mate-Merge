@@ -28,12 +28,12 @@ const quickCheckQuestions = [
   {
     question: 'In the Johari Window, the "blind spot" quadrant refers to:',
     options: [
-      'Things you know about yourself but hide from others',
       'Things others can see about you but you cannot see yourself',
+      'Things you know about yourself but hide from others',
       'Things nobody knows — neither you nor others',
       'Things that are open and known to everyone',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The blind spot quadrant contains information about you that other people can observe (your habits, mannerisms, impact on others) but that you are not aware of yourself. Feedback from trusted colleagues is the primary way to reduce this quadrant.',
   },
@@ -125,11 +125,11 @@ const quizQuestions = [
       "According to the Dunning-Kruger effect, what typically happens as a person's competence increases?",
     options: [
       'Their confidence increases at the same rate as their competence',
-      'Their confidence initially drops as they realise how much they do not know',
       'Their confidence remains permanently low',
       'They become more arrogant and refuse feedback',
+      'Their confidence initially drops as they realise how much they do not know',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Dunning-Kruger effect shows that after an initial peak of overconfidence (when competence is low), confidence typically drops as the person gains enough knowledge to recognise the complexity of the field. This is sometimes called the "valley of despair." Confidence then gradually rebuilds on a more realistic foundation as true expertise develops.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 5,
     question: 'When giving feedback using the SBI model, "Situation" means:',
     options: [
-      "Describing the person's general personality",
       'Stating when and where the specific event occurred',
+      "Describing the person's general personality",
       'Explaining how you feel about the person overall',
       'Comparing the person to their colleagues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "S" in SBI specifies the when and where of the event: "During yesterday\'s toolbox talk" or "When we were working on the second-floor distribution board on Monday." This grounds the feedback in a specific, observable moment rather than making vague generalisations.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
     question: 'The primary way to reduce your blind spot area in the Johari Window is to:',
     options: [
       'Spend more time in self-reflection and journaling',
-      'Actively seek honest feedback from colleagues, supervisors, and mentors',
       'Hide your weaknesses more effectively',
       'Ignore what others think and focus only on your own self-assessment',
+      'Actively seek honest feedback from colleagues, supervisors, and mentors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Because blind spots are things others can see but you cannot, the only reliable way to reduce them is to actively seek feedback from people who observe you regularly. Self-reflection alone cannot reveal blind spots — by definition, you are not aware of them.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'An apprentice receives feedback that they speak too quietly during toolbox talks. Instead of getting defensive, they think: "That is useful — I will work on projecting my voice." This response demonstrates:',
     options: [
-      'A fixed mindset — they are accepting they have a permanent weakness',
       'A growth mindset — they see the feedback as an opportunity to develop a skill',
+      'A fixed mindset — they are accepting they have a permanent weakness',
       'The Dunning-Kruger effect — they are overestimating their speaking ability',
       'Emotional suppression — they are hiding their true feelings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This is a classic growth mindset response: treating feedback as actionable information rather than a judgement of innate ability. The apprentice does not take the feedback as evidence that they are "bad at presenting" (fixed mindset), but as a specific skill they can practise and improve.',
   },

@@ -69,10 +69,10 @@ export const mockQuestions = [
     id: 2,
     text: 'When testing a circuit with a voltage indicator, what should you do before relying on the results?',
     options: [
-      'To ensure immediate activation when normal lighting fails, without requiring human intervention',
-      'L -> fault -> cpc -> MET -> earth electrode -> earth (soil) -> DNO supply electrode -> back to transformer',
+      'Test the circuit under investigation first, then check the indicator on a proving unit afterwards',
+      'Confirm the indicator was calibrated within the last 12 months and proceed',
       'Test on a known live circuit, test the circuit under investigation, and test on a known live circuit again',
-      'Do NOT touch the tower; warn others to stay clear; call the network operator and emergency services; do not approach until confirmed safe',
+      'Check the indicator lamps illuminate when the test button is pressed, then proceed',
     ],
     correctAnswer: 2,
     explanation:
@@ -82,9 +82,9 @@ export const mockQuestions = [
     id: 3,
     text: 'What is the purpose of an RCD (Residual Current Device)?',
     options: [
-      'Profits are taxed at Corporation Tax rates before being distributed',
-      'A current transient (spike) occurs at the star-to-delta changeover point',
-      'Reverse the lifting technique — bend the knees and hips, keep the back straight',
+      'To protect circuits against sustained overload by tripping on excess current',
+      'To limit the prospective fault current at the origin of the installation',
+      'To suppress voltage transients caused by switching inductive loads',
       'To protect against earth leakage current by monitoring imbalances between live and neutral',
     ],
     correctAnswer: 3,

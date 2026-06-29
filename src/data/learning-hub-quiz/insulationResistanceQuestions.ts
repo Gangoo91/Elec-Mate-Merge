@@ -152,9 +152,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'How long should the test voltage be applied for a stable reading?',
     options: [
       'Until the reading stabilises (typically 1 minute)',
-      'Absorption of charge by insulation over time',
-      'Red to line conductor, black to earth/CPC',
-      'IR reading that drops significantly over time under test',
+      'For exactly 5 seconds regardless of the reading',
+      'Until the lowest possible value is reached',
+      'Only momentarily, then release immediately',
     ],
     correctAnswer: 0,
     explanation:
@@ -183,10 +183,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-12',
     question: 'What should be linked together during insulation testing of a single circuit?',
     options: [
-      'Discharge through the test instrument or suitable resistor',
-      'IR reading that drops significantly over time under test',
+      'The earth and neutral conductors at the main terminal',
+      'All circuit protective conductors at the earth bar',
       'Line and Neutral conductors at the distribution board',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      'The line conductors of adjacent circuits together',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,10 +199,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-13',
     question: 'What component commonly causes low insulation readings in lighting circuits?',
     options: [
-      'Disconnect or bypass',
+      'The protective conductor termination',
       'The lampholder or luminaire',
-      'Investigate and locate the fault',
-      'Decreasing values over time',
+      'The circuit breaker at the consumer unit',
+      'The earthing conductor to the electrode',
     ],
     correctAnswer: 1,
     explanation:
@@ -231,9 +231,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-15',
     question: 'Why is insulation resistance tested with DC voltage rather than AC?',
     options: [
-      'No measurable leakage - excellent insulation',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
-      'Possible intermittent fault or deteriorating insulation',
+      'AC test sets are not available to most electricians',
+      'DC is safer to apply to a de-energised circuit',
+      'AC would trip any connected RCD during the test',
       'DC provides stable readings without capacitive effects',
     ],
     correctAnswer: 3,
@@ -263,10 +263,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-17',
     question: 'After IR testing, what must be done to safely discharge cables?',
     options: [
-      'To avoid damage to lamps and false low readings',
+      'Leave the cables open-circuit to dissipate naturally',
       'Discharge through the test instrument or suitable resistor',
-      'Red to line conductor, black to earth/CPC',
-      'Test may damage some types - consult manufacturer',
+      'Short line to neutral with an insulated screwdriver',
+      'Re-energise the circuit briefly to clear the charge',
     ],
     correctAnswer: 1,
     explanation:
@@ -279,10 +279,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-18',
     question: 'What trend in IR readings during periodic testing indicates deterioration?',
     options: [
-      'Decreasing values over time',
-      'Disconnect or remove',
-      'Longer cables give lower readings',
-      'Investigate and locate the fault',
+      'Decreasing values over successive tests',
+      'Steadily increasing values over successive tests',
+      'Values that remain constant year on year',
+      'A single reading at exactly the minimum value',
     ],
     correctAnswer: 0,
     explanation:
@@ -296,9 +296,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question:
       'What fault would cause a low L-N insulation resistance but acceptable L-E and N-E readings?',
     options: [
-      'No measurable leakage - excellent insulation',
-      'Absorption of charge by insulation over time',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      'A broken protective conductor (open CPC)',
+      'A neutral-to-earth fault near the load',
+      'A high-resistance earth electrode connection',
       'Line to neutral fault (short circuit)',
     ],
     correctAnswer: 3,
@@ -360,10 +360,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-23',
     question: 'What causes the "polarisation index" effect during IR testing?',
     options: [
-      'Test may damage some types - consult manufacturer',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      'Heating of the conductor by the test current',
+      'Capacitive charging current from the supply',
       'Absorption of charge by insulation over time',
-      'To include all wiring in the test',
+      'Magnetic coupling between adjacent conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -376,9 +376,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-24',
     question: 'What is the typical IR value that would prompt investigation even if above minimum?',
     options: [
-      'To include all wiring in the test',
-      'Decreasing values over time',
-      'Red to line conductor, black to earth/CPC',
+      'Any value below 200 MΩ on new installations',
+      'Exactly 1 MΩ on new installations',
+      'Any value above 50 MΩ on new installations',
       '5 MΩ or below on new installations',
     ],
     correctAnswer: 3,
@@ -426,10 +426,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question:
       'What could cause a gradually decreasing insulation resistance reading while applying test voltage?',
     options: [
-      'The lampholder or luminaire',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      'A fully charged, perfectly dry cable',
+      'Dielectric absorption settling in good insulation',
       'Contamination or moisture absorption',
-      '5 MΩ or below on new installations',
+      'Normal behaviour requiring no further action',
     ],
     correctAnswer: 2,
     explanation:
@@ -442,9 +442,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-28',
     question: 'How does temperature affect insulation resistance readings?',
     options: [
-      'Very high - often hundreds of MΩ or more',
-      'Longer cables give lower readings',
-      'Line to neutral fault (short circuit)',
+      'Higher temperature = higher resistance',
+      'Temperature has no effect on the reading',
+      'Only temperatures below freezing affect readings',
       'Higher temperature = lower resistance',
     ],
     correctAnswer: 3,
@@ -459,9 +459,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'What should be verified before IR testing on EV charging equipment?',
     options: [
       'Specific manufacturer guidance and disconnection of control electronics',
-      'All live conductors (line and neutral) connected together',
-      'Polarity verification and any remaining tests (Zs, RCD)',
-      'Disconnect IT equipment; risk of damage from test voltage',
+      'That the vehicle is plugged in and charging during the test',
+      'That a 1000 V DC test voltage is selected for the charge point',
+      'That the SPD is left connected to protect the electronics',
     ],
     correctAnswer: 0,
     explanation:
@@ -491,10 +491,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question:
       'When testing individual circuits, which conductors should be grouped together for testing to earth?',
     options: [
-      'Progressively isolate circuits until faulty circuit identified',
+      'The protective conductors of all circuits together',
       'All live conductors (line and neutral) connected together',
-      'When testing the entire installation with all breakers closed',
-      'Insulation resistance tester (megger) with appropriate voltage outputs',
+      'Only the line conductor, with neutral left isolated',
+      'The earthing conductor and the main bonding together',
     ],
     correctAnswer: 1,
     explanation:
@@ -508,9 +508,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'What type of instrument should be used for insulation resistance testing?',
     options: [
       'Insulation resistance tester (megger) with appropriate voltage outputs',
-      'DC provides stable readings without capacitive effects',
-      'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
-      'To detect short circuits or reduced insulation between live conductors',
+      'A low-ohms continuity tester on its 200 mA range',
+      'A clamp meter measuring leakage current under load',
+      'A standard multimeter on its highest resistance range',
     ],
     correctAnswer: 0,
     explanation:
@@ -524,9 +524,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question:
       'What action is required if a three-phase motor is connected to the circuit being tested?',
     options: [
-      'Minimum IR values apply regardless of insulation class',
-      'Progressively isolate circuits until faulty circuit identified',
-      'When testing the entire installation with all breakers closed',
+      'Leave the motor connected and accept a low reading',
+      'Increase the test voltage to overcome the windings',
+      'Test only between the motor windings, not to earth',
       'Disconnect the motor or test the circuit up to the motor terminals',
     ],
     correctAnswer: 3,
@@ -540,10 +540,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-34',
     question: 'Which components are particularly susceptible to damage from 500V DC testing?',
     options: [
-      'When testing the entire installation with all breakers closed',
-      'Disconnect the motor or test the circuit up to the motor terminals',
+      'Standard MCBs and main isolating switches',
+      'Copper busbars and steel consumer unit enclosures',
       'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
-      'Discharge through the test instrument or suitable resistor',
+      'PVC-insulated twin and earth cabling',
     ],
     correctAnswer: 2,
     explanation:
@@ -556,10 +556,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-35',
     question: 'What does a reading of "infinity" (∞) on an IR tester indicate?',
     options: [
-      'DC provides stable readings without capacitive effects',
+      'A direct short circuit between the conductors',
       'No measurable leakage - excellent insulation',
-      'Line to neutral fault (short circuit)',
-      'All live conductors (line and neutral) connected together',
+      'A flat instrument battery giving a false reading',
+      'The test leads are open or not connected',
     ],
     correctAnswer: 1,
     explanation:
@@ -573,9 +573,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'Why should all lamps be removed from their holders before IR testing?',
     options: [
       'To avoid damage to lamps and false low readings',
-      'Disconnect IT equipment; risk of damage from test voltage',
-      'Absorption of charge by insulation over time',
-      'When testing the entire installation with all breakers closed',
+      'To increase the overall insulation resistance reading',
+      'To allow the lampholders to be tested individually',
+      'To prevent the circuit breaker from tripping during the test',
     ],
     correctAnswer: 0,
     explanation:
@@ -588,9 +588,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-37',
     question: 'How should a multifunction tester be connected for an IR test between L-E?',
     options: [
-      'To avoid damage to lamps and false low readings',
-      'To include all wiring in the test',
-      'Live-Neutral, Live-Earth, Neutral-Earth',
+      'Red to neutral, black to the line conductor',
+      'Both leads to the line conductor only',
+      'Red to earth/CPC, black to the neutral conductor',
       'Red to line conductor, black to earth/CPC',
     ],
     correctAnswer: 3,
@@ -604,10 +604,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-38',
     question: 'What precaution applies when testing IR on circuits connected to IT equipment?',
     options: [
-      'When testing the entire installation with all breakers closed',
-      'Red to line conductor, black to earth/CPC',
+      'Leave IT equipment connected to test it in service',
+      'Raise the test voltage to 1000 V DC for IT circuits',
       'Disconnect IT equipment; risk of damage from test voltage',
-      'Absorption of charge by insulation over time',
+      'IT equipment has no effect and can be ignored',
     ],
     correctAnswer: 2,
     explanation:
@@ -620,10 +620,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-39',
     question: 'What is indicated by inconsistent IR readings during testing?',
     options: [
-      'Until the reading stabilises (typically 1 minute)',
+      'Perfectly sound insulation with no defects',
       'Possible intermittent fault or deteriorating insulation',
-      'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
-      'Line and Neutral conductors at the distribution board',
+      'A correctly calibrated and recently serviced tester',
+      'An expected result on any new installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -636,10 +636,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-40',
     question: 'What is the purpose of testing between L and N (live conductors)?',
     options: [
-      'When testing the entire installation with all breakers closed',
+      'To verify the continuity of the protective conductor',
       'To detect short circuits or reduced insulation between live conductors',
-      'Progressively isolate circuits until faulty circuit identified',
-      'Until the reading stabilises (typically 1 minute)',
+      'To confirm correct polarity at the socket-outlets',
+      'To measure the earth fault loop impedance of the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -652,10 +652,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-41',
     question: 'What could cause an IR reading that initially rises then falls during testing?',
     options: [
-      'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
-      'Progressively isolate circuits until faulty circuit identified',
+      'A perfectly dry cable with sound insulation',
+      'A flat battery in the insulation tester',
       'Moisture in cable or contamination being heated by test current',
-      'Natural ageing and degradation of insulation materials',
+      'Capacitive charging current settling to a steady state',
     ],
     correctAnswer: 2,
     explanation:
@@ -668,9 +668,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-42',
     question: 'When is it acceptable to test multiple circuits together?',
     options: [
-      'Polarity verification and any remaining tests (Zs, RCD)',
-      'Insulation resistance tester (megger) with appropriate voltage outputs',
-      'DC provides stable readings without capacitive effects',
+      'Only when each circuit protects different equipment',
+      'Whenever the circuits share the same RCD',
+      'Never - every circuit must always be tested alone',
       'When testing the entire installation with all breakers closed',
     ],
     correctAnswer: 3,
@@ -685,9 +685,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'What documentation is required when recording IR test results?',
     options: [
       'Test voltage used, readings for all tests (L-E, N-E, L-N), and circuit reference',
-      'To detect short circuits or reduced insulation between live conductors',
-      'Insulation resistance tester (megger) with appropriate voltage outputs',
-      'Discharge through the test instrument or suitable resistor',
+      'Only the single lowest reading obtained across the installation',
+      'The ambient temperature and humidity at the time of test only',
+      'A simple pass or fail with no numerical values recorded',
     ],
     correctAnswer: 0,
     explanation:
@@ -700,10 +700,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-44',
     question: 'How should RCBOs be handled during IR testing?',
     options: [
-      'Polarity verification and any remaining tests (Zs, RCD)',
+      'They can always be tested at the full 1000 V DC safely',
       'Test may damage some types - consult manufacturer',
-      'Absorption of charge by insulation over time',
-      'To avoid damage to lamps and false low readings',
+      'They never affect the reading and need no consideration',
+      'They must be replaced after every insulation test',
     ],
     correctAnswer: 1,
     explanation:
@@ -716,10 +716,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-45',
     question: 'What is the relationship between cable insulation class and minimum IR values?',
     options: [
-      'Live-Neutral, Live-Earth, Neutral-Earth',
-      'Red to line conductor, black to earth/CPC',
+      'Higher insulation classes require higher minimum IR values',
+      'Lower insulation classes are exempt from minimum IR values',
       'Minimum IR values apply regardless of insulation class',
-      'To avoid damage to lamps and false low readings',
+      'Insulation class sets the test voltage, not the circuit voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -732,9 +732,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-46',
     question: 'What is the minimum IR reading typically expected for mineral-insulated cable?',
     options: [
-      'Longer cables give lower readings',
-      'Contamination or moisture absorption',
-      'Line to neutral fault (short circuit)',
+      'Around the 1 MΩ minimum, the same as PVC cable',
+      'Below 0.5 MΩ until the cable has been seasoned',
+      'Exactly 2 MΩ, fixed by the magnesium oxide',
       'Very high - often hundreds of MΩ or more',
     ],
     correctAnswer: 3,
@@ -749,9 +749,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'What indicates a cable may have water ingress?',
     options: [
       'IR reading that drops significantly over time under test',
-      'To avoid damage to lamps and false low readings',
-      'Discharge through the test instrument or suitable resistor',
-      'No measurable leakage - excellent insulation',
+      'An IR reading that rises steadily towards infinity',
+      'A perfectly stable reading well above 200 MΩ',
+      'No change in the reading between L-E and N-E tests',
     ],
     correctAnswer: 0,
     explanation:
@@ -765,10 +765,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question:
       'Why might an older installation have lower (but acceptable) IR values than a new one?',
     options: [
-      'IR reading that drops significantly over time under test',
+      'Older installations were tested at a lower voltage',
       'Natural ageing and degradation of insulation materials',
-      'Minimum IR values apply regardless of insulation class',
-      'Disconnect the motor or test the circuit up to the motor terminals',
+      'The minimum IR value was higher when it was installed',
+      'Older cables have a larger conductor cross-section',
     ],
     correctAnswer: 1,
     explanation:
@@ -781,10 +781,10 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     id: 'ir-49',
     question: 'What test should be performed after IR testing and before energising?',
     options: [
-      'Insulation resistance tester (megger) with appropriate voltage outputs',
-      'Possible intermittent fault or deteriorating insulation',
+      'A repeat of the insulation resistance test at 1000 V',
+      'A second continuity test of the protective conductors',
       'Polarity verification and any remaining tests (Zs, RCD)',
-      'Absorption of charge by insulation over time',
+      'An earth electrode resistance test on every circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -798,9 +798,9 @@ export const insulationResistanceQuestions: QuizQuestion[] = [
     question: 'What is the typical sequence for fault-finding when overall IR is low?',
     options: [
       'Progressively isolate circuits until faulty circuit identified',
-      'DC provides stable readings without capacitive effects',
-      'To detect short circuits or reduced insulation between live conductors',
-      'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
+      'Increase the test voltage until a reading is obtained',
+      'Replace the consumer unit before any further testing',
+      'Accept the low reading if the installation still works',
     ],
     correctAnswer: 0,
     explanation:

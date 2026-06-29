@@ -97,7 +97,7 @@ export const bmsModule7Section6QuizData = [
       'To reduce the training time required',
       'To avoid overwhelming operators with technical details',
       "To limit the contractor's support obligations",
-      'To minimize the risk of system damage',
+      'To minimise the risk of accidental system damage',
     ],
     correct: 1,
     explanation:

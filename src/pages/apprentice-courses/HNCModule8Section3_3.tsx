@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'chiller-types',
     question: 'What is the main advantage of water-cooled chillers over air-cooled chillers?',
     options: [
-      'To reduce voltage drop and heating',
-      'Safe use of electrical test equipment',
+      'They require no water and no maintenance at all',
+      'They can be installed indoors with no heat rejection',
       'Higher efficiency and better COP',
-      'Tool finance for diagnostic equipment',
+      'They are always cheaper to install than air-cooled units',
     ],
     correctIndex: 2,
     explanation:
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     id: 'primary-secondary',
     question: 'What is the purpose of a bypass in a primary-secondary pumping system?',
     options: [
-      'Switch off and lock out electrical supplies, close isolation valves, and vent trapped pressure',
-      'He assumed the breaker was faulty instead of recognising a possible short circuit',
+      'To filter debris out of the chilled water before the chiller',
+      'To raise the chilled water temperature for free cooling',
       'To allow variable secondary flow whilst maintaining constant primary flow',
-      'Identifying the gap between current competence and required competence',
+      'To provide a drain point for emptying the system',
     ],
     correctIndex: 2,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     question:
       'In a primary-secondary system, what happens when the secondary flow exceeds the primary flow?',
     options: [
-      'Knowledge, Skills, and Attitudes',
-      'Only the epidermis (outer layer of skin)',
-      'The MEP coordinator or BIM manager',
+      'The chillers automatically increase their flow to match',
+      'The bypass closes and isolates the secondary circuit',
+      'Excess chilled water flows back through the bypass to return',
       'Warm return water mixes with chilled supply',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of a plate heat exchanger in a free cooling system?',
     options: [
-      'To prevent freezing in exposed pipework or during free cooling',
-      'The difference between entering and leaving water temperatures',
-      'Elimination of secondary pumps and reduced energy consumption',
+      'To boost the chilled water flow rate during periods of peak demand',
+      'To store cooling capacity for release during compressor operation',
+      'To filter particulate matter out of the condenser water circuit',
       'To separate the chilled water circuit from the condenser water circuit',
     ],
     correctAnswer: 3,
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is glycol sometimes added to chilled water systems?',
     options: [
-      'Return water temperature too close to supply, reducing system capacity',
-      'To vary flow to terminal units based on load',
+      'To improve the heat transfer capacity of the chilled water',
+      'To raise the boiling point and allow higher operating temperatures',
       'To prevent freezing in exposed pipework or during free cooling',
-      'Elimination of secondary pumps and reduced energy consumption',
+      'To reduce pumping energy by lowering the water viscosity',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     question:
       'What is the purpose of two-port control valves in a variable flow chilled water system?',
     options: [
-      'Pre-agreed terms, pricing and streamlined ordering',
-      'File or ream to remove sharp edges',
-      'A persistent fault still exists on the circuit',
+      'To divert constant flow around the terminal unit',
+      'To maintain a fixed flow rate regardless of demand',
+      'To isolate the terminal unit for maintenance only',
       'To vary flow to terminal units based on load',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
     question: 'What is low delta T syndrome and why is it problematic?',
     options: [
       'Return water temperature too close to supply, reducing system capacity',
-      'To control pump speed to maintain required pressure at the index circuit',
-      'To separate the chilled water circuit from the condenser water circuit',
-      'Elimination of secondary pumps and reduced energy consumption',
+      'Supply water temperature dropping below the chiller freeze setpoint',
+      'A larger than designed temperature rise that overloads the chillers',
+      'Excessive pump head causing high velocity and pipework erosion',
     ],
     correctAnswer: 0,
     explanation:
@@ -243,10 +243,10 @@ const quizQuestions = [
     question:
       'What is the purpose of a differential pressure sensor in a variable speed pumping system?',
     options: [
-      'The difference between entering and leaving water temperatures',
+      'To measure the temperature difference across the chiller evaporator',
       'To control pump speed to maintain required pressure at the index circuit',
-      'To prevent freezing in exposed pipework or during free cooling',
-      'To separate the chilled water circuit from the condenser water circuit',
+      'To detect air locks by sensing pressure loss in the pipework',
+      'To trigger chiller staging based on the system flow rate',
     ],
     correctAnswer: 1,
     explanation:
@@ -256,10 +256,10 @@ const quizQuestions = [
     id: 14,
     question: 'What is the typical fill material used in modern induced draught cooling towers?',
     options: [
-      'Regular maintenance and monitoring',
-      'General office administration',
+      'Galvanised steel mesh panels',
+      'Copper finned heat-exchange coils',
       'PVC or polypropylene film or splash fill',
-      'To provide earth fault protection',
+      'Ceramic honeycomb refractory blocks',
     ],
     correctAnswer: 2,
     explanation:

@@ -24,7 +24,7 @@ const DESCRIPTION =
 const quizQuestions = [
   {
     id: 1,
-    question: 'What is the typical mounting height for switches in new builds under Part M?',
+    question: 'What is the typical mounting height for switches in new builds under Part M guidance?',
     options: [
       '450 mm',
       '1200 mm',
@@ -37,33 +37,38 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'Which BS 7671 requirement applies to almost all socket outlets?',
+    question: 'Which BS 7671 requirement applies to almost all socket-outlets in dwellings?',
     options: [
-      'Earth-free installation',
-      'RCBO protection',
-      'RCD protection',
-      'Overload protection only',
+      'They must be installed as an earth-free location',
+      'They must have overload protection only',
+      'They must have additional RCD protection',
+      'They must be supplied through an isolating transformer',
     ],
     correctAnswer: 2,
     explanation:
-      'RCD protection is required for almost all socket outlets in accordance with BS 7671.',
+      'Additional protection by a 30 mA RCD is required for almost all socket-outlets in dwellings in accordance with BS 7671.',
   },
   {
     id: 3,
-    question: 'True or False: Switched live conductors must always be sleeved brown.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
+    question: 'How should a switched live (e.g. a blue core used as a switch wire) be identified?',
+    options: [
+      'Left blue, with no additional marking',
+      'Sleeved or marked brown at each termination',
+      'Sleeved green and yellow at each termination',
+      'Marked with black tape at the consumer unit only',
+    ],
+    correctAnswer: 1,
     explanation:
-      'True. Switched live conductors must be identified with brown sleeving or brown core to clearly identify them.',
+      'A switched live must be identified with brown sleeving (or a brown core) at its terminations so it is not mistaken for a neutral.',
   },
   {
     id: 4,
-    question: 'Name one reason to use an FCU.',
+    question: 'What is one reason to use a fused connection unit (FCU)?',
     options: [
-      'To provide a fused spur for a fixed appliance',
-      'Visual and noise impact on communities',
-      'For easy identification, maintenance, and troubleshooting',
-      'Vertical-Cavity Surface-Emitting Laser',
+      'To provide a fused spur and local isolation for a fixed appliance',
+      'To increase the supply voltage to the appliance',
+      'To remove the need for any circuit protective device',
+      'To convert a radial circuit into a ring circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -74,51 +79,51 @@ const quizQuestions = [
     question: 'What must be done before installing any accessory?',
     options: [
       'Fit the faceplate first',
-      'Isolate the supply',
-      'Test the load',
-      'Install the fuse',
+      'Isolate the supply and prove dead',
+      'Apply load to the circuit',
+      'Install the fuse in the FCU',
     ],
     correctAnswer: 1,
     explanation:
-      'The supply must always be isolated before installing any electrical accessory for safety.',
+      'The supply must always be isolated and proved dead before installing any electrical accessory for safety.',
   },
   {
     id: 6,
-    question: 'Why is torqueing terminals important?',
+    question: 'Why is torquing terminals to the correct value important?',
     options: [
-      "The effective diameter of the light-carrying region",
-      "A licensed asbestos removal contractor",
-      "To ensure safe, secure connections that won't loosen",
-      "Something with potential to cause harm",
+      'It increases the current rating of the cable',
+      'It removes the need to sleeve the CPC',
+      'It ensures safe, secure connections that will not loosen',
+      'It reduces the fuse rating required for the circuit',
     ],
     correctAnswer: 2,
     explanation:
-      "Proper torqueing ensures safe, secure connections that won't loosen over time, preventing overheating and fire risk.",
+      'Proper torquing ensures safe, secure connections that will not loosen over time, preventing overheating and fire risk.',
   },
   {
     id: 7,
-    question: 'Which type of switch is used to control a light from two locations?',
+    question: 'Which type of switch is used to control a single light from two locations?',
     options: [
-      'One-way',
-      'Dimmer',
-      'Intermediate',
-      'Two-way',
+      'One-way switch',
+      'Dimmer switch',
+      'Intermediate switch',
+      'Two-way switch',
     ],
     correctAnswer: 3,
-    explanation: 'Two-way switches are used to control a light from two different locations.',
+    explanation: 'Two-way switches (one at each position) are used to control a light from two different locations.',
   },
   {
     id: 8,
-    question: 'Name one safety consideration for installing sockets outdoors.',
+    question: 'What is one safety consideration when installing sockets outdoors?',
     options: [
-      'Use weatherproof sockets with IP rating and RCD protection',
-      'Steel toe-capped boots with anti-static soles',
-      'Use revision clouds, updated revision table, and maintain drawing history',
-      'Visual inspection, testing, documentation',
+      'Use weatherproof sockets with a suitable IP rating and RCD protection',
+      'Use indoor sockets but seal the faceplate with tape',
+      'Omit the earth connection to avoid corrosion',
+      'Fit a higher-rated fuse to allow for the longer cable run',
     ],
     correctAnswer: 0,
     explanation:
-      'Outdoor sockets must be weatherproof with appropriate IP rating and RCD protection for safety.',
+      'Outdoor sockets must be weatherproof with an appropriate IP rating and RCD protection for safety.',
   },
 ];
 
@@ -142,27 +147,27 @@ const quickCheckQuestions = [
     id: 'rcd-protection',
     question: 'Why is RCD protection required for most socket outlets?',
     options: [
+      'To provide additional protection against electric shock',
       'To comply with manufacturer warranties',
-      'To reduce installation costs',
-      'To protect against electric shock',
-      'To improve socket performance',
+      'To reduce the installation cost of the circuit',
+      'To increase the socket current rating',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
-      'RCD protection is required for most socket outlets to protect against electric shock, especially in case of earth faults.',
+      'RCD protection is required for most socket outlets to provide additional protection against electric shock, especially in case of earth faults.',
   },
   {
     id: 'terminal-torque',
     question: 'What can happen if terminals are not properly torqued?',
     options: [
-      'Improved electrical performance',
-      'Better cable flexibility',
+      'The cable becomes more flexible',
       'Terminal loosening and overheating',
-      'Reduced material costs',
+      'The circuit operates at a lower voltage',
+      'The material cost of the job is reduced',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'Improperly torqued terminals can loosen over time, creating high resistance connections that generate heat and potentially cause fires.',
+      'Improperly torqued terminals can loosen over time, creating high-resistance connections that generate heat and potentially cause fires.',
   },
 ];
 

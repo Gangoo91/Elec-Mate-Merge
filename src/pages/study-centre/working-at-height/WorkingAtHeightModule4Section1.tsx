@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       "What four attributes make a person 'competent' under the Work at Height Regulations 2005?",
     options: [
-      'Age, fitness, willingness, and availability',
       'Training, experience, knowledge, and ability to recognise hazards',
+      'Age, fitness, willingness, and availability',
       'Qualifications, CSCS card, first aid certificate, and IOSH membership',
       'Height tolerance, physical strength, site induction, and PPE ownership',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 4 of the WAH Regs 2005 requires that planning and supervision are carried out by a person with sufficient training, experience, knowledge, and the ability to recognise limitations and hazards. It is not about age or physical attributes — it is about demonstrated competence in the specific work being planned.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'At what wind speed should most scaffold and ladder work at height be stopped?',
     options: [
       'Force 3 — gentle breeze (8-12 mph)',
-      'Force 5 — fresh breeze (19-24 mph)',
       'Force 7 — near gale (32-38 mph)',
+      'Force 5 — fresh breeze (19-24 mph)',
       'Force 9 — strong gale (47-54 mph)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Beaufort Force 5 (fresh breeze, 19-24 mph) is the threshold at which most scaffold and ladder work at height must be stopped. At this wind speed, small trees sway and handling lightweight materials or equipment at height becomes dangerous. Some operations with large sheeting or panels may need to stop even earlier at Force 4.',
   },
@@ -52,11 +52,11 @@ const quickCheckQuestions = [
     question: 'When must a rescue plan be in place for work at height?',
     options: [
       'Only if the work exceeds 4 metres in height',
-      'Only when harnesses or fall arrest systems are used',
       'Before work at height starts — it must not be improvised after an incident',
+      'Only when harnesses or fall arrest systems are used',
       'Within 24 hours of the work commencing',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Regulation 4(1) of the WAH Regs 2005 requires that emergency procedures, including rescue, are planned before any work at height begins. A rescue plan that is created after someone has already fallen is not a plan — it is a reaction. The plan must be tested, communicated, and have the necessary equipment available on site before work starts.',
   },
@@ -90,20 +90,20 @@ const quizQuestions = [
     id: 1,
     question: 'Under which regulation is the planning of work at height a legal requirement?',
     options: [
-      'Health and Safety at Work etc. Act 1974 Section 2',
       'Work at Height Regulations 2005 Regulation 4',
+      'Health and Safety at Work etc. Act 1974 Section 2',
       'Construction (Design and Management) Regulations 2015 Regulation 8',
       'Management of Health and Safety at Work Regulations 1999 Regulation 3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 4 of the Work at Height Regulations 2005 specifically requires that every employer shall ensure that work at height is properly planned, appropriately supervised, and carried out in a manner that is, so far as is reasonably practicable, safe.',
   },
   {
     id: 2,
     question: 'What is the maximum recommended duration for using a ladder as a working platform?',
-    options: ['15 minutes', '30 minutes', '1 hour', 'No time limit applies to ladders'],
-    correctAnswer: 1,
+    options: ['15 minutes', '1 hour', '30 minutes', 'No time limit applies to ladders'],
+    correctAnswer: 2,
     explanation:
       'HSE guidance recommends that a ladder should only be used as a work platform for tasks lasting up to 30 minutes in one position. Longer tasks require more suitable access equipment such as scaffold, MEWP, or podium steps that provide a stable working platform.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT one of the four attributes of a competent person?',
     options: [
       'Sufficient training for the task',
-      'Practical experience in the work',
       'Possession of a valid CSCS card',
+      'Practical experience in the work',
       'Ability to recognise their own limitations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Competence under the WAH Regs is defined by training, experience, knowledge, and the ability to recognise hazards and limitations. Whilst a CSCS card may be a site access requirement, it is not one of the four legal attributes of competence under the regulations.',
   },
@@ -125,11 +125,11 @@ const quizQuestions = [
     question: 'What is the primary purpose of a toolbox talk before commencing work at height?',
     options: [
       'To satisfy the site safety audit requirements',
-      'To communicate the plan, hazards, and controls to the workforce',
       'To record attendance for payroll purposes',
       'To distribute personal protective equipment',
+      'To communicate the plan, hazards, and controls to the workforce',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A toolbox talk communicates the specific hazards, control measures, emergency procedures, and individual responsibilities for the planned work at height. It ensures every worker understands the plan before work begins. Attendance records and PPE distribution may happen at the same time, but they are not the primary purpose.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'At what Beaufort Force should work with large panels or sheeting at height be treated with extra caution?',
     options: [
-      'Force 2 — light breeze (4-7 mph)',
       'Force 4 — moderate breeze (13-18 mph)',
+      'Force 2 — light breeze (4-7 mph)',
       'Force 6 — strong breeze (25-31 mph)',
       'Force 8 — gale (39-46 mph)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'At Beaufort Force 4 (moderate breeze, 13-18 mph), large flat surfaces such as panels, boards, and sheeting can act as sails and catch the wind. Extra caution must be exercised when handling these materials at height, and consideration should be given to stopping this type of work before the general WAH wind threshold of Force 5.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
     question: 'What must a rescue plan include as a minimum?',
     options: [
       'Only the phone number for the emergency services',
-      'The type of rescue (self, assisted, or technical), equipment needed, trained personnel, and communication method',
       'A written document signed by the HSE inspector',
+      'The type of rescue (self, assisted, or technical), equipment needed, trained personnel, and communication method',
       'Insurance details and next-of-kin contact information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A rescue plan must identify the type of rescue appropriate to the work (self-rescue, assisted rescue, or technical rescue), the equipment that will be used, the personnel who are trained to carry it out, and how the alarm will be raised and communicated. It must be proportionate to the risk but must always exist before work at height begins.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'Because higher-risk tasks cost more money and need a manager present',
       'Because the regulations require a fixed supervisor-to-worker ratio',
-      'Because inexperienced workers, complex tasks, and higher hazards require closer oversight to prevent incidents',
       'Because insurance companies set the supervision requirements',
+      'Because inexperienced workers, complex tasks, and higher hazards require closer oversight to prevent incidents',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The WAH Regs require that work is appropriately supervised. This means the level of supervision must match the level of risk. A competent, experienced worker doing a simple task at low height may need minimal supervision. An inexperienced worker, a complex task, or work near a leading edge with fall risks requires close, direct supervision by a competent person.',
   },

@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       "A Mental Health First Aider notices they feel increasingly detached from colleagues who come to them for support, and they have started to dread hearing about people's problems. They feel guilty about this because they used to care deeply. What is this most likely an example of?",
     options: [
-      'General work-related stress that will pass on its own',
-      "Compassion fatigue &mdash; secondary traumatic stress from repeated exposure to others' distress",
-      'A sign that they are not suited to the MHFA role',
-      'Clinical depression requiring immediate medication',
+      "Compassion fatigue &mdash; secondary traumatic stress from supporting others' distress",
+      'General work-related stress that will simply pass on its own in time',
+      'A clear sign that they are not suited to the MHFA role at all',
+      'Clinical depression that requires immediate medication and referral',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "This is a classic presentation of compassion fatigue &mdash; the emotional and physical exhaustion that develops from repeated exposure to others' distress. Unlike general burnout, compassion fatigue is specifically linked to the helping role. It does NOT mean the person is unsuited to the role &mdash; it means they need to prioritise their own self-care, access supervision, and consider whether they need a temporary break. Compassion fatigue is common, predictable, and treatable.",
   },
@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     question:
       'A colleague sends you a text at 11pm asking to talk because they are feeling low. You are off duty and exhausted after a long day. As an MHFA, what is the most appropriate response?',
     options: [
-      'Ignore the message &mdash; you are off duty and it is not your problem',
-      'Reply immediately and talk for as long as they need, regardless of how you feel',
-      'Acknowledge their message, signpost them to 24/7 crisis support (Samaritans 116 123), and arrange to speak during working hours',
-      'Tell them they should not be contacting you outside of work',
+      'Ignore the message entirely, since you are off duty and it is not your problem',
+      'Reply at once and talk for as long as they need, regardless of how you feel',
+      'Acknowledge them, signpost to Samaritans (116 123), and arrange to talk in work hours',
+      'Tell them firmly that they should not be contacting you outside of work',
     ],
     correctIndex: 2,
     explanation:
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'After a particularly difficult conversation with a colleague who disclosed suicidal thoughts, an MHFA sits down to write in their reflective journal. Which of the following questions is MOST useful for reflective practice?',
     options: [
-      '"Why did I not fix their problem?"',
-      '"What did I do well, what could I improve, and what did I learn from this experience?"',
-      '"How can I make sure this never happens again?"',
-      '"Should I have told their manager about what they said?"',
+      '"Why was I not able to fix their problem for them during that conversation?"',
+      '"How can I make absolutely sure that nothing like this ever happens again?"',
+      '"Should I have gone behind their back and told their manager what they said?"',
+      '"What did I do well, what could I improve, and what did I learn from this?"',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Effective reflective practice focuses on three key questions: What went well? What could I improve? What did I learn? This is not about self-criticism or trying to "fix" people &mdash; it is about continuous learning and professional development. Reflective practice helps MHFAs process difficult experiences, identify their own development needs, and build confidence over time. It is a tool for growth, not guilt.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Which of the following BEST describes why self-care is important for Mental Health First Aiders?',
     options: [
-      'It is a legal requirement under the Health and Safety at Work Act 1974',
       'It ensures the MHFA can continue to provide effective support without burning out or developing compassion fatigue',
+      'It is a legal requirement under the Health and Safety at Work Act 1974',
       'It is only important for MHFAs who support more than 10 people per month',
       'Self-care is a personal choice and has no impact on the quality of support provided',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Self-care is essential because an MHFA who is emotionally exhausted, burnt out, or suffering from compassion fatigue cannot provide effective support to others. You cannot pour from an empty cup. Self-care is not selfish &mdash; it is a professional responsibility that directly affects the quality and sustainability of the support you provide. While there is no specific legal requirement for MHFA self-care, employers have a general duty of care under the Health and Safety at Work Act to protect employee wellbeing, which extends to the demands of the MHFA role.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 2,
     question: 'Compassion fatigue is BEST defined as:',
     options: [
-      'Feeling tired after a long day at work',
-      "The emotional and physical exhaustion caused by repeated exposure to others' traumatic experiences and distress",
-      'A clinical diagnosis that requires medication',
+      'Simply feeling tired after a long and busy day at work',
+      'A formal clinical diagnosis that always requires medication',
       'A sign that the MHFA should immediately resign from the role',
+      "Emotional and physical exhaustion from repeated exposure to others' distress",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Compassion fatigue is the emotional and physical exhaustion that develops from the cumulative effect of supporting others through their distress and traumatic experiences. It is sometimes called secondary traumatic stress. Symptoms include emotional exhaustion, reduced empathy, cynicism, irritability, and physical symptoms such as headaches and fatigue. It is NOT a clinical diagnosis requiring medication, and it does NOT mean the person should resign. It is a normal, predictable response to the demands of helping roles, and it can be addressed through self-care, supervision, boundaries, and professional support.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 3,
     question: 'Vicarious trauma differs from compassion fatigue because it specifically involves:',
     options: [
-      'Physical injury sustained while helping others',
-      'Feeling tired after a conversation',
-      "A shift in worldview and sense of personal safety caused by exposure to others' traumatic experiences",
-      'Disagreements with colleagues about how to support someone',
+      'A physical injury sustained while physically helping others',
+      'Feeling tired and a little drained after a long conversation',
+      "A shift in worldview and sense of personal safety from others' trauma",
+      'Disagreements with colleagues about how best to support someone',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'An MHFA is contacted by three different colleagues in one week, all experiencing significant mental health difficulties. The MHFA is starting to feel overwhelmed. What is the MOST appropriate action?',
     options: [
-      'Continue supporting all three without telling anyone, because that is their role',
-      'Tell all three colleagues they cannot help and refuse to engage',
-      'Speak to their MHFA supervisor or coordinator, debrief on the cases, and discuss whether to hand over some support to another MHFA',
-      'Take a week off sick without telling anyone why',
+      'Speak to their supervisor, debrief, and consider handing over to another MHFA',
+      'Continue supporting all three alone without telling anyone, as it is their role',
+      'Tell all three colleagues they cannot help them and refuse to engage further',
+      'Take a week off sick straight away without telling anyone the reason why',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most appropriate action is to access supervision. Speaking to an MHFA supervisor or coordinator allows the MHFA to debrief, process the emotional impact, and discuss practical options &mdash; including handover to another MHFA if the volume of support exceeds their current capacity. MHFAs should never try to manage everything alone. Supervision exists specifically for these situations. Refusing to engage entirely or continuing while overwhelmed are both harmful approaches.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is an example of good boundary-setting for an MHFA?',
     options: [
-      'Being available by phone 24 hours a day, 7 days a week',
-      'Never saying no to a request for support, even when exhausted',
-      'Explaining that you are available during working hours and signposting to 24/7 crisis services for out-of-hours support',
-      'Telling colleagues not to bring their problems to you',
+      'Being available by phone 24 hours a day, 7 days a week, without fail',
+      'Never saying no to a request for support, even when completely exhausted',
+      'Telling colleagues firmly not to bring any of their problems to you',
+      'Being available in working hours and signposting to 24/7 services after that',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Good boundary-setting means being clear about when you are available, while ensuring people always have access to support even when you are not. Signposting to 24/7 services like Samaritans (116 123) and the Shout Crisis Text Line (text SHOUT to 85258) ensures continuity of support. Being available 24/7 is unsustainable and will lead to burnout. Never saying no is a failure to protect your own wellbeing. Telling people not to bring problems is dismissive and defeats the purpose of the role.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'An employer appoints MHFAs but provides no ongoing supervision, debriefing, or support for them. This is:',
     options: [
-      'Perfectly acceptable &mdash; MHFAs are volunteers and do not need employer support',
-      "A failure of the employer's duty of care &mdash; MHFAs need supervision, debriefing, and access to professional support",
-      'Only a problem if an MHFA formally complains',
-      "The MHFA's own responsibility to arrange",
+      'Perfectly acceptable, as MHFAs are volunteers who do not need any employer support',
+      'Only a problem if and when an MHFA decides to formally complain about it',
+      "A failure of the employer's duty of care, as MHFAs need supervision and support",
+      "Entirely the MHFA's own responsibility to source and arrange for themselves",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Employers who appoint MHFAs have a duty of care to support them in that role. This includes providing regular supervision (ideally monthly), structured debriefing after difficult conversations or incidents, access to professional support such as counselling or an Employee Assistance Programme, and ongoing training and refresher courses. An MHFA programme without adequate support for the MHFAs themselves is not only ethically problematic but can lead to compassion fatigue, vicarious trauma, and burnout &mdash; which ultimately undermines the entire programme.',
   },
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 8,
     question: 'Reflective practice for MHFAs involves:',
     options: [
-      'Writing a detailed report about every person you support, including their personal details',
-      'Regularly reviewing your own practice &mdash; what went well, what could improve, and what you learned &mdash; to support continuous development',
-      'Asking colleagues to rate your performance after each conversation',
-      'Comparing yourself to other MHFAs to see who is performing best',
+      'Writing a detailed report about every person you support, including personal details',
+      'Regularly reviewing your own practice: what went well, what could improve, what you learned',
+      'Asking your colleagues to formally rate your performance after each conversation',
+      'Comparing yourself to other MHFAs to work out who is performing the best',
     ],
     correctAnswer: 1,
     explanation:

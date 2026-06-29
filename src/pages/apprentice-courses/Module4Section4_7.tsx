@@ -42,10 +42,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which regulation covers working at height in the UK?',
     options: [
-      'Part L compliance for non-dwellings',
+      'Electricity at Work Regulations 1989',
       'Work at Height Regulations 2005',
-      'High-frequency random pattern',
-      'Horizontal movement to the left',
+      'Provision and Use of Work Equipment Regulations 1998',
+      'Manual Handling Operations Regulations 1992',
     ],
     correctAnswer: 1,
     explanation:
@@ -53,11 +53,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: Extension ladders are suitable for prolonged installation work.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'What are extension ladders suitable for?',
+    options: [
+      'Prolonged two-handed installation work',
+      'Use as a permanent working platform',
+      'Access only, not prolonged work',
+      'Any task provided a harness is worn',
+    ],
+    correctAnswer: 2,
     explanation:
-      "False. Extension ladders are only for access, not prolonged work. They don't provide a stable working platform for extended tasks.",
+      "Extension ladders are only for access, not prolonged work. They don't provide a stable working platform for extended tasks.",
   },
   {
     id: 3,
@@ -102,10 +107,10 @@ const quizQuestions = [
     id: 6,
     question: 'When should fall arrest equipment be used?',
     options: [
-      "Batteries require replacement every 3–5 years",
-      "Internal diameter, alignment, and cable pulling capability",
+      'On every task above 1 metre without exception',
+      'Only when working outdoors in poor weather',
       "When there's a risk of falling and no physical barrier",
-      "Each device rated for full prospective fault current at its location",
+      'Only when more than one person is working at height',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +120,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why should you avoid overreaching on a ladder?',
     options: [
-      'Depends on cross-sectional area',
-      'Insulation resistance tester',
-      'To prevent smoke spread throughout the building',
+      'It slows down the work unnecessarily',
+      'It puts extra strain on the ladder feet',
+      'It makes tools harder to reach',
       'It can cause loss of balance and falls',
     ],
     correctAnswer: 3,
@@ -129,9 +134,9 @@ const quizQuestions = [
     question: 'What is the benefit of using tool lanyards?',
     options: [
       'Prevents tools from dropping and injuring people below',
-      'Competence and confidence reinforce each other in a positive cycle',
-      'A person with relevant knowledge, skills, and experience',
-      'Remove or control any element of the fire triangle',
+      'Keeps tools within easy reach on the platform',
+      'Stops tools being stolen from the site',
+      'Reduces the weight of tools carried up the ladder',
     ],
     correctAnswer: 0,
     explanation:

@@ -37,10 +37,10 @@ const checks = [
     question:
       'You have just verified safe isolation on a freshly installed domestic CU. Which test do you carry out FIRST per the BS 7671 dead-test sequence?',
     options: [
-      'Provides the overarching framework for managing physical assets over their entire lifecycle, within which RCM provides the specific methodology for determining maintenance requirements',
+      'Insulation resistance — testing the insulation between conductors first proves the cable is sound before any other reading is taken.',
       'Continuity of protective conductors (R1+R2 for circuit CPCs and continuity of bonding conductors). Continuity comes first because every other test downstream assumes a working earth path back to the MET.',
-      'Report the death immediately to the HSE by telephone, follow up with a written report within 10 days, secure and preserve the scene, conduct a thorough investigation to establish root cause, and implement corrective actions to prevent recurrence',
-      'The person or organisation with responsibility for maintenance or repair of non-domestic premises, or who has control of that part of the premises',
+      'Polarity — confirming line, neutral and earth are on the correct terminals must come first so the other readings are taken on correctly connected conductors.',
+      'Earth electrode resistance — establishing the quality of the earth connection is the foundation for every other dead test, so it is done first.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,9 +51,9 @@ const checks = [
     question:
       'You bought factory-tested cable and have just installed it on a new circuit. Can you skip the post-installation continuity test on the basis that the cable was tested by the manufacturer?',
     options: [
-      'Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate\\\\\\\\\\\\\\\'s warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.',
-      'Part 4 — protection for safety. Specifically Chapter 41 (protection against electric shock), where Reg 411.3.3 (RCD on socket-outlets up to 32 A) and Reg 411.3.4 (RCD on luminaires in domestic premises) live. Part 4 is where every shock / overcurrent / thermal protection question lands.',
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed tools left on the walkway on three occasions this week (observation). I feel worried (feeling) because someone could trip and be seriously injured (need for safety). Would you be willing to use the tool belt and return tools to the kit bag after each use? (request)"',
+      'Yes — a manufacturer\'s factory test certificate covers the conductors, so a post-installation continuity test simply duplicates work already done and can be omitted.',
+      'Yes, provided you record the cable\'s batch number on the STR — the batch traceability replaces the need for an on-site continuity reading.',
+      'Only on a radial circuit — factory testing is sufficient for radials, but a ring final still needs its continuity proving because of the loop.',
       'No — Reg 643.2.1 requires continuity of conductors and connections to be verified by measurement of resistance after installation, regardless of any pre-installation test. Installation can damage cable (back-box pinches, terminal swaps, damaged sheaths) and the post-install test is the only verification that the installed circuit works end-to-end.',
     ],
     correctIndex: 3,
@@ -64,12 +64,12 @@ const checks = [
     id: 'm4-s6-sub7-ze-when',
     question: 'Where does the Ze measurement at the MET fit into the test sequence?',
     options: [
-      'Because the retail trading hours can\\\\\\\'t be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.',
-      'Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs',
-      'Construction site practice (HSE INDG291 and CDM-driven site rules) requires reduced low-voltage 110 V CTE (centre-tapped earthed) supplies for portable tools — fed by a site transformer. The voltage to earth is 55 V on each leg, which dramatically reduces shock energy if a tool fault develops. 230 V tools are not banned by statute but are considered the wrong tool for the construction environment under PUWER Reg 4 — and most principal contractors enforce 110 V as a site rule.',
       'Ze is a LIVE test — it requires the supply to be energised and the measurement is taken at the MET with the installation isolated. It is part of the live test sequence after first energisation, but its value is needed for the dead-test sequence Zs calculations (Zs = Ze + R1+R2). On a new install, Ze is typically measured early in the live-test phase but estimated from DNO published values during dead-test design verification.',
+      'Ze is the first dead test — you measure it at the MET with the supply isolated, before continuity, because every Zs calculation depends on it.',
+      'Ze is measured at the same time as insulation resistance, using the 500 V DC test signal injected from the MET to earth, midway through the dead sequence.',
+      'Ze is not measured at all on a new installation — you always use the DNO\'s published worst-case figure and never take a live reading.',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Ze is measured live with a loop tester at the MET. On a new install you measure Ze first thing after first energisation, then use it to verify Zs at every circuit by combining with the dead-test R1+R2 readings. During the dead-test phase you can use the DNO\'s published worst-case Ze (0.35 Ω TN-C-S, 0.8 Ω TN-S, 21 Ω TT) to verify your design, then re-confirm with the actual measured Ze post-energisation.',
   },
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'The BS 7671 Section 643 dead-test sequence in correct order:',
     options: [
-      'A new regulatory regime for higher-risk buildings including a Building Safety Regulator, mandatory safety case reports, and a residents\\\\\\\' engagement strategy',
+      'Insulation resistance → continuity of CPCs → polarity → ring final continuity → earth electrode (TT only). Then live tests.',
       'Safe isolation verified → continuity of CPCs (incl bonding) → ring final continuity → insulation resistance → polarity → earth electrode (TT only). Then LIVE: Ze, PFC, Zs at far end, RCD trip times, functional.',
-      'A person who is proposing to undergo, is undergoing, or has undergone a process to reassign their sex — they have the protected characteristic from the moment they propose it',
-      'The client or their representative observing the commissioning tests and verifying the results, providing independent confirmation that the system meets the specified requirements',
+      'Polarity → insulation resistance → continuity of CPCs → ring final continuity → earth electrode (TT only). Then live tests.',
+      'Continuity of CPCs → polarity → insulation resistance → Ze at the MET → RCD trip times. All carried out dead before energising.',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 2,
     question: 'For an 8-circuit domestic CU swap-out, single-phase, TN-C-S, all RCBOs (Type A 30 mA), how many R1+R2 readings will you take at minimum during the dead-test sequence?',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
+      'One — a single R1+R2 reading at the main switch covers the whole board, because all the circuit CPCs share the same earth bar.',
+      'Sixteen — two readings per circuit (one at the board, one at the furthest point), giving complete coverage of each circuit\'s CPC.',
       'Eight — one per circuit. (Plus three end-to-end r1, rn, r2 per ring final, so any kitchen / sockets ring will have 4-5 readings depending on whether you also do all eight cross-connection sockets per ring.)',
-      'Use 250V test voltage where the equipment manufacturer permits, OR test live conductors connected together to earth (without between live and neutral), interpreting accordingly',
+      'Four — one per pair of circuits, because adjacent circuits sharing a cable route can be tested together to save time.',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,9 +106,9 @@ const quizQuestions = [
     id: 3,
     question: 'IR test: what test voltage and acceptance value for a standard 230 V circuit per A4:2026 Table 64?',
     options: [
-      'Workmanship/materials defects are usually covered by your guarantee/scheme insurance-backed warranty (e.g. NICEIC PCG, NAPIT IBG); explain how to make a claim',
-      'The rate and direction of change — a steadily declining trend indicates deteriorating insulation requiring investigation',
-      'Wasted attendance (van and labour mobilised for nothing), abortive material drops and a knock-on delay claim against the main contractor',
+      '250 V DC, 0.5 MΩ minimum — the lower test voltage avoids damaging any accessories on the circuit.',
+      '1000 V DC, 1.0 MΩ minimum — the higher voltage is used on 230 V circuits to stress-test the insulation to twice working voltage.',
+      '500 V AC, 100 MΩ minimum — an AC test at mains voltage with a high acceptance value to match new-cable performance.',
       '500 V DC, 1.0 MΩ minimum (with the 250 V DC follow-up at 1 MΩ minimum after reconnection of any electronics that were disconnected per Reg 643.3.3).',
     ],
     correctAnswer: 3,
@@ -120,9 +120,9 @@ const quizQuestions = [
     question: 'When you reach the polarity test in the dead sequence, what specifically are you verifying per Reg 643.6?',
     options: [
       '(a) Every fuse and single-pole control / protective device is in the line conductor only; (b) ES and BC lampholder outer / screwed contacts are on neutral; (c) wiring is correctly connected throughout.',
-      'BSR can serve compliance notices; can ultimately direct evacuation if risk is severe; PAP can be prosecuted for failure to maintain safety case; Defective Premises Act + civil claims if defects later cause harm.',
-      'It should be formally cancelled by the issuing authority, confirming all personnel have exited, all equipment removed, and the space returned to a safe condition',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
+      '(a) The supply voltage is within 230 V +10%/−6%; (b) the earth-loop impedance is below the table limit; (c) the RCD trips within 300 ms.',
+      '(a) Insulation resistance is above 1 MΩ; (b) the CPC is continuous; (c) every accessory is fed in the correct cable size.',
+      '(a) The neutral is bonded to earth at the board; (b) every protective device is double-pole; (c) the earth electrode resistance is below 200 Ω.',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'A circuit feeding an EV charger — what additional disconnections do you need before the IR test?',
     options: [
-      'Earth electrodes — design, materials, installation, and target resistance values. Referenced from BS 7671 for TT installations and for installations containing generators or static converters (inverters). Provides the engineering background for sizing, depth, conductor material, soil conditioning to achieve a target electrode resistance.',
-      'Disconnect at the EV charger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
+      'None — an EV charger is a fixed appliance designed to withstand the 500 V DC test, so you test the circuit with the charger left connected and read it normally.',
+      'Disconnect at the EV charger\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).',
+      'Disconnect the main earthing conductor at the MET so the charger\'s own earth electrode does not parallel the test path and lower the reading.',
+      'Disconnect the RCD protecting the charger circuit, because its sensing electronics will short the 500 V DC test signal to earth and give a false low reading.',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'On a 12-circuit CU you have completed all dead tests. One circuit fails IR (reads 0.7 MΩ). You investigate and find a back-box where the cable sheath has been pinched against a sharp burr on the metal box. After re-routing and protecting the cable, what is the correct next action?',
     options: [
-      'Charge-hand is a senior trade lead — typically an experienced Approved Electrician who runs a small gang of electricians and apprentices on a specific area of the work, reporting up to the Foreman. On a larger job there can be several Charge-hands under one Foreman, each leading a wing or a floor.',
-      'A document accompanying the transfer of controlled waste from the producer to the next holder. Must contain a description of the waste, the European Waste Catalogue (EWC) code, the SIC (Standard Industrial Classification) code of the producer\\\\\\\'s activity, the quantity, the carrier\\\\\\\'s licence details, the destination, and signatures of both parties. Kept for 2 years (3 years for Hazardous Waste Consignment Notes).',
+      'Just re-test the IR on that one circuit — the pinch only affected insulation, so once the IR passes there is no need to revisit any other reading.',
+      'Re-test every circuit on the board from scratch — a single fault on one circuit invalidates the whole dead-test sequence, so the full set must be repeated.',
       'Per Reg 643.7.2 (paraphrased): "If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified." So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.',
-      'On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property\\\\\\\'s earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.',
+      'Record the original 0.7 MΩ reading on the STR with a note that it was repaired — there is no need to re-test once the cause has been removed.',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,9 +158,9 @@ const quizQuestions = [
     id: 7,
     question: 'After all dead tests pass, you energise the CU. What is the FIRST live test you carry out?',
     options: [
-      'Annual turnover (revenue). Large = £50m+; Medium = £10m-£50m; Small = £2m-£10m; Micro = under £2m. Some "very large" companies have separate higher band where turnover greatly exceeds £50m.',
-      'Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
+      'Insulation resistance at 500 V DC across the whole installation, to confirm nothing was disturbed during energisation before any loop testing begins.',
+      'RCD trip times at every outgoing way — testing the protective devices first ensures the board is safe before any other live measurement is taken.',
+      'Zs at the furthest socket of every circuit, working from the most remote point back towards the board to confirm disconnection times.',
       'Live polarity confirmation at the CU (using an approved voltage indicator) plus Ze measurement at the MET. Live polarity confirms the supply is correctly connected (meter tails not swapped); Ze gives you the supply-side impedance for Zs verification.',
     ],
     correctAnswer: 3,
@@ -172,9 +172,9 @@ const quizQuestions = [
     question: 'A 32 A Type B RCBO ring final on TN-C-S. You measure (live test) Zs at the furthest socket = 0.78 Ω. Ze you measured earlier = 0.30 Ω. From the dead-test you computed Zs = 0.75 Ω. A4:2026 Table 41.3 max Zs for B32 = 1.37 Ω. Decide.',
     options: [
       'Pass — both measured (0.78) and calculated (0.75) Zs values are below the 0.8-corrected limit of 1.10 Ω. The 0.03 Ω agreement between measured and calculated is well within expected tolerance and confirms both methods give consistent results.',
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
-      'Audible AND visible — typically a beacon strobe in addition to the chime, positioned where it can be seen from the main living area and bedrooms. Provision for vibrating-pad accessory should be included for profoundly deaf users.',
-      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
+      'Fail — the measured Zs of 0.78 Ω exceeds the calculated value of 0.75 Ω, and any measured value above the calculated value is a fail.',
+      'Fail — 0.78 Ω is above the 0.4 s disconnection limit of 0.55 Ω for a B32 device, so the circuit does not disconnect fast enough.',
+      'Cannot decide — the measured and calculated values disagree, so the result is inconclusive and the circuit must be re-tested before a decision is made.',
     ],
     correctAnswer: 0,
     explanation:

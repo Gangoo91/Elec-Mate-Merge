@@ -26,23 +26,23 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a fall arrest system and a fall restraint system?',
     options: [
-      'Fall arrest uses a harness, fall restraint uses a helmet',
       'Fall arrest stops a fall after it begins, fall restraint prevents the user from reaching the edge',
+      'Fall arrest uses a harness, fall restraint uses a helmet',
       'Fall arrest is for heights above 10 m, fall restraint is for below 10 m',
       'There is no difference — the terms are interchangeable',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A fall restraint system prevents the worker from reaching the fall edge entirely (the lanyard is short enough to stop them getting there). A fall arrest system allows the worker to reach the edge but stops the fall after it has begun, using a shock absorber to limit deceleration forces.',
   },
   {
     id: 'qc2',
     question:
-      'According to EN 795, what is the minimum anchor point strength for a single-user personal fall protection anchor?',
+      'According to EN 795, what is the minimum static strength an anchor device must be able to withstand?',
     options: ['6 kN', '10 kN', '12 kN', '15 kN'],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'EN 795 specifies a minimum strength of 12 kN for multi-user anchors. For a single-user personal anchor point, 10 kN is the accepted minimum strength, though many manufacturers recommend 12 kN as a safety margin.',
+      'EN 795 requires anchor devices for personal fall protection to withstand a minimum static strength of 12 kN. This provides a substantial safety margin over the peak arrest forces (limited to 6 kN by the energy absorber) generated in a fall.',
   },
   {
     id: 'qc3',
@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'Can I use a fall arrest harness with any anchor point I can find on site?',
     answer:
-      'No. You must only connect to anchor points that have been specifically assessed and certified for fall arrest use. An anchor point must meet EN 795 requirements and be rated for at least 10 kN (single user) or 12 kN (multi-user). Structural elements like handrails, pipe brackets, or conduit fixings are NOT suitable anchor points — they may not withstand the forces generated during a fall arrest event.',
+      'No. You must only connect to anchor points that have been specifically assessed and certified for fall arrest use. An anchor point must meet EN 795 requirements and be capable of withstanding a minimum static strength of 12 kN. Structural elements like handrails, pipe brackets, or conduit fixings are NOT suitable anchor points — they may not withstand the forces generated during a fall arrest event.',
   },
   {
     question: 'What happens if my shock absorber deploys but I do not actually fall?',
@@ -89,8 +89,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which European standard governs the design of full body harnesses for fall arrest?',
-    options: ['EN 354', 'EN 355', 'EN 358', 'EN 361'],
-    correctAnswer: 3,
+    options: ['EN 361', 'EN 355', 'EN 358', 'EN 354'],
+    correctAnswer: 0,
     explanation:
       'EN 361 specifies requirements for full body harnesses used as a component in a personal fall protection system. EN 354 covers lanyards, EN 355 covers energy absorbers, and EN 358 covers work positioning.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
       'When calculating total clearance distance for a fall arrest system, which of the following must be included?',
     options: [
       'Lanyard length only',
-      'Lanyard length + shock absorber deployment + body height + safety margin',
       'Harness extension + lanyard length only',
+      'Lanyard length + shock absorber deployment + body height + safety margin',
       'Fall distance to anchor point only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Total clearance = free fall distance (lanyard length) + shock absorber deployment (typically 1.75 m) + body height below D-ring (typically 1.5 m) + safety margin (usually 1 m). All components must be added to ensure the person does not strike the surface below.',
   },
@@ -124,8 +124,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Which EN 795 class describes a horizontal flexible anchor line?',
-    options: ['Class A', 'Class B', 'Class C', 'Class D'],
-    correctAnswer: 2,
+    options: ['Class A', 'Class B', 'Class D', 'Class C'],
+    correctAnswer: 3,
     explanation:
       'EN 795 classes: A = structural anchor, B = temporary transportable anchor, C = horizontal flexible anchor line (wire rope or webbing), D = horizontal rigid anchor rail, E = deadweight anchor.',
   },
@@ -133,8 +133,8 @@ const quizQuestions = [
     id: 5,
     question:
       'A self-retracting lifeline (SRL) complying with EN 360 limits free fall distance to approximately:',
-    options: ['0.3 m', '0.6 m', '2 m', '4 m'],
-    correctAnswer: 1,
+    options: ['0.6 m', '0.3 m', '2 m', '4 m'],
+    correctAnswer: 0,
     explanation:
       'SRLs lock automatically when the extraction speed exceeds a set threshold, limiting the free fall distance to approximately 0.6 m — significantly less than a standard 2 m lanyard, which reduces the total fall forces and clearance distance required.',
   },
@@ -143,11 +143,11 @@ const quizQuestions = [
     question: 'Where is the rear D-ring on a full body harness typically located?',
     options: [
       'On the chest strap',
-      'Between the shoulder blades on the back',
       'On the left hip',
+      'Between the shoulder blades on the back',
       'On the waist belt at the front',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rear (dorsal) D-ring is positioned between the shoulder blades. This is the primary attachment point for fall arrest lanyards, as it keeps the body upright during and after a fall and distributes forces through the shoulder and thigh straps.',
   },
@@ -155,8 +155,8 @@ const quizQuestions = [
     id: 7,
     question:
       'What maximum force must an energy absorber limit the peak arrest force to, as specified by EN 355?',
-    options: ['4 kN', '6 kN', '8 kN', '10 kN'],
-    correctAnswer: 1,
+    options: ['4 kN', '8 kN', '10 kN', '6 kN'],
+    correctAnswer: 3,
     explanation:
       'EN 355 stipulates that the energy absorber must limit the peak arrest force transmitted to the body to no more than 6 kN. Forces above this level can cause serious spinal and internal injuries.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'Which of the following is NOT a valid reason to remove a harness from service immediately?',
     options: [
       'The harness has been used to arrest a fall',
-      'Webbing shows signs of chemical staining and stiffness',
       'The harness has been stored in a dry cupboard for 3 months',
+      'Webbing shows signs of chemical staining and stiffness',
       "The manufacturer's label is illegible",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Storing a harness properly in a dry, UV-free location is correct practice — it is not a reason to discard it. However, a fall arrest event, chemical damage, and an illegible label are all valid reasons for immediate removal from service.',
   },

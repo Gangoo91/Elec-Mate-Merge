@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'Which type of fire extinguisher is specifically designed for cooking oil and deep fat fryer fires (Class F)?',
     options: [
-      'CO\u2082 extinguisher (black label)',
-      'Foam extinguisher (cream label)',
       'Wet chemical extinguisher (yellow label)',
+      'Foam extinguisher (cream label)',
+      'CO\u2082 extinguisher (black label)',
       'Dry powder extinguisher (blue label)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The wet chemical extinguisher (yellow label) is the only type specifically designed for Class F fires involving cooking oils and fats. It works through a process called saponification, where the wet chemical agent reacts with the burning oil to form a non-combustible soap-like substance on the surface. This simultaneously cools the oil below its auto-ignition temperature and creates a seal that prevents re-ignition. No other extinguisher type should be used on deep fat fryer fires \u2014 water and foam will cause a violent eruption of burning oil, CO\u2082 can splash the oil, and dry powder does not cool sufficiently to prevent re-ignition.',
   },
@@ -99,8 +99,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under the BS EN 3 colour coding system, what colour band identifies a foam extinguisher?',
-    options: ['Red', 'Black', 'Cream', 'Blue'],
-    correctAnswer: 2,
+    options: ['Cream', 'Black', 'Red', 'Blue'],
+    correctAnswer: 0,
     explanation:
       'Foam extinguishers are identified by a cream colour band on a red body. Under BS EN 3, all portable fire extinguishers in the UK have a red body with a colour band indicating the type: red for water, cream for foam, black for CO\u2082, blue for dry powder, and yellow for wet chemical. This standardised colour coding system ensures that users can quickly identify the correct extinguisher type in an emergency.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Foam (cream label)',
       'CO\u2082 (black label)',
-      'Dry powder (blue label)',
       'Wet chemical (yellow label)',
+      'Dry powder (blue label)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'The wet chemical extinguisher (yellow label) is the only type specifically designed for Class F fires involving cooking oils and fats. It works through saponification \u2014 the chemical agent reacts with the burning oil to create a non-combustible soap-like film on the surface, while simultaneously cooling the oil below its auto-ignition temperature. Other extinguisher types are dangerous on cooking oil fires: water causes violent eruption, CO\u2082 can splash the oil, and powder does not cool sufficiently.',
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
       'What is a significant limitation of CO\u2082 extinguishers that creates a risk of re-ignition?',
     options: [
       'They leave a residue that can re-ignite',
-      'They have no cooling effect, so the fire can restart when oxygen returns',
       'They react with certain metals to produce heat',
       'They are too small to fully extinguish most fires',
+      'They have no cooling effect, so the fire can restart when oxygen returns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CO\u2082 extinguishers work by displacing oxygen around the fire, but they provide virtually no cooling effect. This means the hot material or liquid remains at or above its ignition temperature. Once the CO\u2082 gas dissipates and oxygen returns to the area \u2014 which can happen very quickly, especially outdoors or in ventilated spaces \u2014 the fire can re-ignite. This is why CO\u2082 extinguishers are rated for Class B (flammable liquids) and electrical fires, but not for Class A (solid combustibles) where deep-seated smouldering can persist.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why are dry powder extinguishers considered hazardous in enclosed spaces?',
     options: [
-      'The powder is flammable and can cause a secondary fire',
       'The discharge creates a dense cloud causing severe visibility reduction and inhalation risk',
+      'The powder is flammable and can cause a secondary fire',
       'The powder reacts with water to produce toxic fumes',
       'The powder is corrosive to skin and eyes on contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dry powder extinguishers discharge a dense cloud of fine particles that causes severe visibility reduction \u2014 occupants may be unable to see exits, escape routes, or even the fire itself. Additionally, the fine powder creates a serious inhalation hazard, particularly for people with respiratory conditions. In enclosed spaces, this combination of zero visibility and breathing difficulty can be more dangerous than the fire itself. For this reason, UK fire safety guidance recommends against using powder extinguishers indoors. They remain appropriate for outdoor use, vehicle fires, and industrial settings with good ventilation.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'How does a foam extinguisher work on a flammable liquid (Class B) fire?',
     options: [
       'It chemically neutralises the liquid fuel',
-      'It cools the liquid below its flash point through rapid evaporation',
       'It forms a film over the liquid surface, smothering the fire and sealing in vapours',
+      'It cools the liquid below its flash point through rapid evaporation',
       'It absorbs the flammable vapours from the air above the liquid',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Foam extinguishers, particularly AFFF (aqueous film-forming foam) types, work on Class B fires by forming a thin film over the surface of the burning liquid. This film smothers the fire by cutting off the oxygen supply and seals in the flammable vapours, preventing them from escaping to feed the flames. The foam also has a cooling effect on the fuel surface. When applying foam to a liquid fire, it should be directed at a nearby surface so it flows gently across the liquid \u2014 never aimed directly into the liquid, as this can splash burning fuel.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
     question: 'Which types of fire must a water extinguisher (red label) NEVER be used on?',
     options: [
       'Class A (wood, paper, textiles) fires only',
-      'Class B (flammable liquids), electrical, Class F (cooking oils), and Class D (metals) fires',
       'Class C (flammable gases) fires only',
+      'Class B (flammable liquids), electrical, Class F (cooking oils), and Class D (metals) fires',
       'Only fires involving live electrical equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Water extinguishers must NEVER be used on Class B (flammable liquid) fires \u2014 water is denser than most flammable liquids, sinks beneath the surface, and boils violently, causing the burning liquid to erupt and spread. They must NEVER be used on live electrical equipment \u2014 water conducts electricity, creating an electrocution risk. They must NEVER be used on Class F (cooking oil) fires \u2014 the extreme temperatures (over 300\u00b0C) cause water to flash to steam instantaneously, creating a fireball of burning oil. They must NEVER be used on Class D (metal) fires \u2014 metals such as magnesium react violently with water. Water extinguishers are suitable only for Class A fires (ordinary combustibles: wood, paper, textiles, plastics).',
   },
@@ -188,8 +188,8 @@ const quizQuestions = [
     id: 8,
     question:
       'How often must portable fire extinguishers receive a full annual service by a competent engineer?',
-    options: ['Every 6 months', 'Every 12 months (annually)', 'Every 2 years', 'Every 5 years'],
-    correctAnswer: 1,
+    options: ['Every 6 months', 'Every 2 years', 'Every 5 years', 'Every 12 months (annually)'],
+    correctAnswer: 3,
     explanation:
       'Under BS 5306-3, all portable fire extinguishers must receive a full annual service (every 12 months) by a competent service engineer. This is in addition to the monthly visual inspections carried out by the premises\u2019 responsible person. The annual service is a thorough technical inspection that checks the weight, pressure, condition, and functionality of the extinguisher. Beyond the annual service, extended services are required at specific intervals: every 5 years for water, foam, and wet chemical types (discharge test and refill), and every 10 years for CO\u2082 (hydraulic pressure test) and powder (full discharge and refill).',
   },

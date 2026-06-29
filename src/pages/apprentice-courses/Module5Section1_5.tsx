@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What information is found in the title block?',
     options: [
-      'Providing accessible thermal mass',
+      'The names of the installation team',
       'Drawing type, project details, scale, and date',
-      'Mark only what\\\\\\\'s complete - incomplete = lost marks',
-      'To anticipate future error based on rate of change',
+      'A full list of materials to be ordered',
+      'The total project budget and labour costs',
     ],
     correctIndex: 1,
     explanation:
@@ -30,10 +30,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should all notes be read carefully?',
     options: [
-      'Fire panel relay outputs were wired to wrong BMS input terminals',
-      'Based on installation type, use, and condition found',
+      'They simply repeat the drawing legend',
+      'They list the names of approved suppliers',
       'They often contain essential instructions like material requirements',
-      'To ensure exits are clearly visible and accessible during evacuation',
+      'They record who last revised the drawing',
     ],
     correctIndex: 2,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must specifications and drawings be used together?',
     options: [
-      'To convert an oral instruction into a written record',
-      'Building Regulations requirements and future EV adoption',
-      'Extending the programme increases costs and may breach contract dates',
+      'Specifications replace the need to read drawings',
+      'Drawings list prices and specifications list quantities',
+      'Both documents contain identical information for backup',
       'Drawings show where to install, specifications show how to install',
     ],
     correctIndex: 3,
@@ -63,10 +63,10 @@ const Module5Section1_5 = () => {
       id: 1,
       question: 'What key details are found in the title block of a drawing?',
       options: [
-        'Current lags voltage by 53° (inductive)',
+        'A schedule of test results',
         'Project details, drawing type, scale, and date',
-        'Isolate circuit and disconnect loads',
-        'Automatic capacitor switching based on load',
+        'The maximum demand of each circuit',
+        'A list of approved cable manufacturers',
       ],
       correctAnswer: 1,
       explanation:
@@ -74,12 +74,12 @@ const Module5Section1_5 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Notes on drawings are optional to follow.',
+      question: 'Are notes on drawings optional to follow?',
       options: [
-        'Multiple variables and diagnostics over two wires',
-        'Preparation, calm discipline, and self-checking',
-        'False - they are mandatory and often contain critical information',
-        'To prevent loose strands causing faults and ensure secure terminations',
+        'Yes - they are only guidance for the designer',
+        'Yes - unless the client specifically insists',
+        'No - they are mandatory and often contain critical information',
+        'Yes - the main drawing always takes priority',
       ],
       correctAnswer: 2,
       explanation:
@@ -89,9 +89,9 @@ const Module5Section1_5 = () => {
       id: 3,
       question: 'What do circuit codes such as L1/03 represent?',
       options: [
-        'The Hazardous Waste (England and Wales) Regulations 2005',
-        'Marking a calendar with an X for each day you complete a habit',
-        'Requiring health and safety planning and coordination',
+        'The cable size in square millimetres',
+        'The recommended installation date',
+        'The required cable colour code',
         'Specific circuit numbers linked to the distribution board',
       ],
       correctAnswer: 3,
@@ -128,10 +128,10 @@ const Module5Section1_5 = () => {
       id: 6,
       question: 'Why is cross-referencing drawings and specifications important?',
       options: [
-        'Encourages a fuller, more detailed response from the person',
-        'To ensure materials arrive when needed and in correct quantities',
+        'It removes the need to follow the drawing legend',
+        'It allows you to skip the distribution schedule',
         'Because drawings show where, specifications show how/what',
-        'To help them process the emotional impact and maintain their own wellbeing',
+        'It guarantees the materials will be delivered on time',
       ],
       correctAnswer: 2,
       explanation:
@@ -168,10 +168,10 @@ const Module5Section1_5 = () => {
       id: 9,
       question: 'What do safe zones in drawings ensure?',
       options: [
-        'Ensuring waste is transferred only to authorised persons with correct documentation',
+        'That cables use the smallest possible CSA',
         'That cables are run in positions where they are less likely to be damaged',
-        'A motor circuit with significant inrush current on starting',
-        'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
+        'That circuits are protected by the cheapest available device',
+        'That all cables are concealed regardless of position',
       ],
       correctAnswer: 1,
       explanation:

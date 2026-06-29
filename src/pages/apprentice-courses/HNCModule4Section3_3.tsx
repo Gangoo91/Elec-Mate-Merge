@@ -134,9 +134,9 @@ const quizQuestions = [
       'When measuring prospective fault current at an installation, which test instruments are used?',
     options: [
       'Loop impedance tester or prospective fault current meter',
-      'Unlimited fine and/or imprisonment for up to 2 years',
-      'End of RIBA Stage 3/4 (Technical Design)',
-      'Space, weight, ventilation, and connection capacity requirements',
+      'Insulation resistance tester at 500 V DC',
+      'A clamp meter on the main earthing conductor',
+      'An RCD test instrument at the final socket',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question:
       'What correction factor should be applied to tabulated cable resistance values for fault calculations?',
     options: [
-      'Correct colour coding or marking as per BS 7671',
-      'To ensure all items are systematically checked',
-      'Reduce smoke and toxic fumes in fire',
+      'Multiply by 0.8 (voltage tolerance correction)',
+      'Divide by 1.2 (cold conductor correction)',
+      'No correction is needed for fault calculations',
       'Multiply by 1.2 (temperature correction)',
     ],
     correctAnswer: 3,

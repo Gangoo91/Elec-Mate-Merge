@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'substitution-example',
     question: 'Which is an example of substitution in building services?',
     options: [
-      'Transmitter cannot source enough voltage, signal drops',
-      'Mistakes and unsafe working practices',
-      'To level the tower on slightly uneven ground',
       'Replacing solvent-based adhesive with water-based',
+      'Installing a guard around exposed busbars',
+      'Issuing a permit to work before live testing',
+      'Providing arc-rated gloves to the operative',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Substitution replaces a hazardous substance or process with a less hazardous alternative. Replacing solvent-based adhesive with water-based reduces exposure to harmful fumes.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'engineering-control',
     question: 'Which of the following is an engineering control?',
     options: [
-      'Local exhaust ventilation',
-      'Link budget or power budget',
-      'DC voltage at a specified level',
-      'To prevent strand separation',
+      'A site induction covering the hazards',
+      'Local exhaust ventilation at the soldering bench',
+      'A toolbox talk on safe manual handling',
+      'Hi-vis clothing for all operatives',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Local exhaust ventilation (LEV) is an engineering control that physically removes hazardous fumes at source. It doesn't rely on worker behaviour or PPE.",
   },
@@ -74,12 +74,12 @@ const quickCheckQuestions = [
     id: 'ppe-position',
     question: "Why is PPE considered the 'last resort' in the hierarchy of control?",
     options: [
+      'It is the most expensive control measure to provide',
+      'It is only permitted for electrical work, not other hazards',
       'It relies on correct usage and only protects the wearer',
-      'Faults introduce abnormal conditions and safety risks',
-      'Selecting efficient equipment and optimising circuit arrangements',
-      'Stay calm, reassure them, and help them focus on slow breathing',
+      'It removes the hazard entirely but takes longest to install',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "PPE is the least effective control because it relies entirely on correct selection, fitting and consistent use. It only protects the individual wearer and doesn't eliminate or reduce the hazard itself.",
   },
@@ -133,9 +133,9 @@ const quizQuestions = [
       'An electrician needs to work on a live distribution board. What combination of controls should be applied?',
     options: [
       'Elimination (isolate if possible), engineering (barriers), administrative (permit), PPE',
-      'Internal air movement is lower, reducing convective heat transfer',
-      'A legal requirement imposed by an Act of Parliament or Regulations',
-      'To provide legal evidence of compliance and demonstrate ongoing maintenance',
+      'PPE alone, since live working always requires insulating gloves',
+      'Administrative procedures only, as barriers cannot be used near live parts',
+      'Engineering barriers only, with no permit needed for competent persons',
     ],
     correctAnswer: 0,
     explanation:
@@ -171,16 +171,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'A building services contractor replaces 110V power tools with battery-powered alternatives for site work. This is an example of:',
+      'A building services contractor replaces 110V power tools with battery-powered alternatives for site work. Which level of the hierarchy does this most clearly represent?',
     options: [
-      'Elimination - removing the electrical shock hazard',
-      'Substitution - replacing mains power with battery',
-      'Engineering control - using lower voltage',
-      'Both A and B are correct',
+      'Administrative control - changing the tool issue procedure',
+      'PPE - protecting the operative from electric shock',
+      'A purely cosmetic change with no hierarchy benefit',
+      'Substitution - replacing a mains supply with a battery source',
     ],
     correctAnswer: 3,
     explanation:
-      "This could be viewed as elimination (no trailing cables, no shock from mains) or substitution (replacing mains with battery). Both interpretations are valid - the key point is it's high in the hierarchy.",
+      "Replacing a mains-powered tool with a battery-powered one substitutes a lower-risk energy source for a higher-risk one, removing trailing leads and reducing shock risk. It sits high in the hierarchy as a substitution measure.",
   },
   {
     id: 8,
@@ -236,12 +236,12 @@ const quizQuestions = [
   },
   {
     id: 12,
-    question: 'Which combination represents applying multiple levels of the hierarchy correctly?',
+    question: 'Which approach represents applying multiple levels of the hierarchy correctly?',
     options: [
       'Eliminate where possible, guard remaining hazards, train staff, provide PPE',
-      'They are more reliable and don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t depend on human behaviour',
-      'Elimination (isolate if possible), engineering (barriers), administrative (permit), PPE',
-      'Use an alternative cable route that avoids the asbestos',
+      'Issue PPE first, then add engineering controls only if incidents occur',
+      'Rely solely on administrative procedures and warning signage',
+      'Apply whichever single control is cheapest to implement',
     ],
     correctAnswer: 0,
     explanation:

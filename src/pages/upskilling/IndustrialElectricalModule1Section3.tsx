@@ -48,12 +48,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary function of a Motor Control Centre (MCC)?',
     options: [
-      'To generate electrical power for motors',
       'To centralise motor starters, protection devices, and control equipment in one assembly',
+      'To generate electrical power for the motors it serves',
       'To convert AC power to DC for motor operation',
-      'To measure power consumption only',
+      'To measure motor power consumption only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An MCC centralises motor starters, protection devices, and control equipment in a unified assembly for efficient industrial motor control.',
   },
@@ -64,10 +64,10 @@ const quizQuestions = [
     options: [
       'MCB (Miniature Circuit Breaker)',
       'MCCB (Moulded Case Circuit Breaker)',
-      'ACB (Air Circuit Breaker)',
       'RCD (Residual Current Device)',
+      'ACB (Air Circuit Breaker)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'ACBs (Air Circuit Breakers) handle 800A-6300A and are used for main incomers due to their high current capacity and adjustable protection settings.',
   },
@@ -87,8 +87,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What material is commonly used for bus bars in MCC panels due to its conductivity?',
-    options: ['Aluminium only', 'Steel', 'Copper or aluminium', 'Brass'],
-    correctAnswer: 2,
+    options: ['Aluminium only', 'Steel', 'Brass', 'Copper or aluminium'],
+    correctAnswer: 3,
     explanation:
       'Both copper and aluminium are commonly used for bus bars, with copper offering higher conductivity and aluminium being lighter and more economical.',
   },
@@ -104,8 +104,8 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the working distance typically used for arc flash calculations at an MCC?',
-    options: ['300mm', '455mm (18 inches)', '610mm (24 inches)', '900mm'],
-    correctAnswer: 1,
+    options: ['455mm (18 inches)', '300mm', '610mm (24 inches)', '900mm'],
+    correctAnswer: 0,
     explanation:
       '455mm (18 inches) is the standard working distance for arc flash calculations at MCCs per IEEE 1584.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Which test is performed on circuit breakers to verify they will trip at the correct current values?',
     options: [
-      'Insulation resistance test',
       'Primary injection test',
+      'Insulation resistance test',
       'Earth loop impedance test',
       'Polarity test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Primary injection testing injects high current through the main contacts to verify the complete protection system operates at the correct values.',
   },
@@ -656,7 +656,7 @@ const IndustrialElectricalModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">
-                Inspection Frequencies (BS 7671 Table 3A)
+                Inspection Frequencies (IET Guidance Note 3)
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>

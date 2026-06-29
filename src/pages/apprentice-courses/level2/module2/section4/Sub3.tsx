@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'Where do you meet parallel wiring on a typical UK domestic install?',
     options: [
       'A ring final circuit serving multiple sockets',
-      'You own the van at the end of the agreement',
-      'Verify operation of switches and controls',
-      'Power and data cables in office environments',
+      'Two switches at the top and bottom of a staircase controlling one light',
+      'The line and neutral tails between the meter and the consumer unit',
+      'A single immersion heater fed by its own dedicated radial',
     ],
     correctAnswer: 0,
     explanation:

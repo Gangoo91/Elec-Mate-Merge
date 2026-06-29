@@ -25,18 +25,18 @@ const quickCheckQuestions = [
     id: 'vde-importance',
     question: 'Why is it important to use insulated screwdrivers in electrical work?',
     options: [
-      'To improve grip',
       'To ensure insulation against electric shock',
-      'To make them lighter',
+      'To give a stronger grip on tight terminals',
+      'To make the tool lighter to carry',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on or near live electrical equipment.',
   },
   {
     id: 'long-nose-pliers',
     question: 'Which type of pliers would you use to grip small components in a tight space?',
-    options: ['Combination pliers', 'Long-nose pliers', 'Water pump pliers'],
+    options: ['Water pump pliers', 'Long-nose pliers', 'Combination pliers'],
     correctIndex: 1,
     explanation:
       'Long-nose pliers have a narrow, elongated jaw design that makes them ideal for reaching into confined spaces and gripping small components precisely.',
@@ -45,18 +45,18 @@ const quickCheckQuestions = [
     id: 'wrong-screwdriver',
     question: 'Name one reason why using the wrong size screwdriver can cause problems.',
     options: [
-      'It damages the screw head or tool',
-      'It makes work faster',
-      'It improves electrical connections',
+      'It speeds the job up at the cost of accuracy',
+      'It strengthens the electrical connection',
+      'It damages the screw head or the tool tip',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Using the wrong size screwdriver can strip screw heads, damage the tool tip, or result in poor connections that could fail or overheat.',
   },
   {
     id: 'cable-protection',
     question: 'What should be installed at entry points to protect cable insulation?',
-    options: ['Insulation tape', 'Grommets or bushes', 'Paint'],
+    options: ['A layer of insulation tape', 'Grommets or bushes', 'A coat of protective paint'],
     correctIndex: 1,
     explanation:
       'Grommets or bushes provide a smooth, protective surface that prevents sharp edges from cutting through cable insulation during installation or movement.',
@@ -68,12 +68,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why should screwdrivers used in electrical work be VDE-rated?',
     options: [
-      'In protective conduit or trunking',
       'To ensure insulation against electric shock',
-      'Oval conduit or suitable protection against nails',
-      'Ten (line-line, line-N, line-E for each line, plus N-E)',
+      'To allow a higher torque on terminal screws',
+      'To resist corrosion in damp environments',
+      'To make the blade harder and longer lasting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on live electrical equipment.',
   },
@@ -82,34 +82,39 @@ const quizQuestions = [
     question: 'Which tool is used for stripping insulation from conductors without damaging them?',
     options: [
       'Hacksaw',
-      'Pliers',
       'Cable strippers',
-      'Screwdriver',
+      'Combination pliers',
+      'Slotted screwdriver',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Cable strippers are specifically designed to remove insulation cleanly without cutting into or damaging the copper conductors underneath.',
   },
   {
     id: 3,
-    question: 'True or False: Side cutters are suitable for cutting steel wire armour.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'Which tool is the correct choice for cutting through steel wire armour (SWA)?',
+    options: [
+      'Side cutters used at the very tip of the jaws',
+      'Long-nose pliers worked back and forth',
+      'A specialist SWA cutter or a hacksaw',
+      'Standard cable strippers set to the widest gauge',
+    ],
+    correctAnswer: 2,
     explanation:
-      'False. Side cutters are designed for small conductors. Steel wire armour requires specialist SWA cutters or hacksaws to avoid tool damage.',
+      'Side cutters are designed for small conductors. Steel wire armour requires specialist SWA cutters or a hacksaw to avoid tool damage and achieve a clean cut.',
   },
   {
     id: 4,
     question: 'Name one type of screwdriver head commonly used in electrical work.',
     options: [
-      'Slotted',
-      'Robertson',
-      'Hex',
-      'Star',
+      'Robertson (square drive)',
+      'Tri-wing',
+      'Clutch head',
+      'Slotted (flat blade)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
-      'Slotted screwdrivers are one of the most common types used in electrical work, along with Phillips, Pozidriv, and Torx for various screw heads.',
+      'Slotted (flat-blade) screwdrivers are one of the most common types used in electrical work, along with Phillips, Pozidriv and Torx for various screw heads.',
   },
   {
     id: 5,
@@ -128,10 +133,10 @@ const quizQuestions = [
     id: 6,
     question: 'Give one reason for keeping plier jaws clean.',
     options: [
-      'Preventing falls in scaffolding operations',
-      'Carry out the work alone to keep numbers down',
+      'To stop the handles becoming electrically live',
+      'To reduce the overall weight of the tool',
       'To maintain a strong grip and prevent slipping',
-      'Parallel earth paths through bonding or water pipes',
+      'To keep the spring mechanism from rusting open',
     ],
     correctAnswer: 2,
     explanation:

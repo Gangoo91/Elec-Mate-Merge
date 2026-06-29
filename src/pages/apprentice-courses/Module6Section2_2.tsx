@@ -16,10 +16,10 @@ const Module6Section2_2 = () => {
       id: 1,
       question: 'What does scorching on sockets usually indicate?',
       options: [
-        'False - only safety-critical defects require action',
+        'Normal wear from frequent everyday use',
         'Overheating due to loose or faulty connections',
-        'Environmental effects reducing safety of connections',
-        'Causes overheating and difficulty in maintenance',
+        'A reversed line and neutral connection',
+        'Correct operation of the protective device',
       ],
       correctAnswer: 1,
       explanation:
@@ -40,12 +40,12 @@ const Module6Section2_2 = () => {
     },
     {
       id: 3,
-      question: 'True or False: Cosmetic scratches on accessories always need rectification.',
+      question: 'Which statement about cosmetic scratches on accessories is correct?',
       options: [
-        'Tighten or replace it to prevent arcing/overheating',
-        'Overheating due to loose or faulty connections',
-        'Environmental effects reducing safety of connections',
-        'False - only safety-critical defects require action',
+        'They must always be replaced immediately',
+        'They make the circuit unsafe to energise',
+        'They count as a safety-critical defect',
+        'Only safety-critical defects require rectification',
       ],
       correctAnswer: 3,
       explanation:
@@ -68,10 +68,10 @@ const Module6Section2_2 = () => {
       id: 5,
       question: 'What does corrosion on terminals suggest?',
       options: [
-        'False - only safety-critical defects require action',
-        'Environmental effects reducing safety of connections',
-        'Reversed polarity or missing grommets',
-        'Overheating due to loose or faulty connections',
+        'A recently completed high-quality installation',
+        'Environmental effects weakening the connections',
+        'That the circuit is correctly earthed',
+        'A deliberately reversed polarity for testing',
       ],
       correctAnswer: 1,
       explanation:
@@ -79,12 +79,12 @@ const Module6Section2_2 = () => {
     },
     {
       id: 6,
-      question: 'Give one example of incorrect installation practice.',
+      question: 'Which of the following is an example of incorrect installation practice?',
       options: [
-        'Much higher speed (10–25 krpm vs 1500–3000)',
-        'A cloud-based specification writing platform',
+        'Using the correct cable colours throughout',
+        'Securing accessories with all fixing screws',
         'Reversed polarity or missing grommets',
-        'Purchasing renewable energy certificates (RECs)',
+        'Fitting the correct rating of protective device',
       ],
       correctAnswer: 2,
       explanation:
@@ -94,10 +94,10 @@ const Module6Section2_2 = () => {
       id: 7,
       question: 'Why is overcrowding in consumer units dangerous?',
       options: [
-        'Reversed polarity or missing grommets',
-        'Environmental effects reducing safety of connections',
-        'False - only safety-critical defects require action',
-        'Causes overheating and difficulty in maintenance',
+        'It improves the airflow through the enclosure',
+        'It reduces the current drawn by each circuit',
+        'It makes the protective devices trip faster',
+        'It causes overheating and hampers safe maintenance',
       ],
       correctAnswer: 3,
       explanation:
@@ -107,10 +107,10 @@ const Module6Section2_2 = () => {
       id: 8,
       question: 'What should be done if a socket outlet is loose?',
       options: [
-        'Tighten or replace it to prevent arcing/overheating',
-        'Overheating due to loose or faulty connections',
-        'Reversed polarity or missing grommets',
-        'False - only safety-critical defects require action',
+        'Tighten or replace it to prevent arcing and overheating',
+        'Leave it as a purely cosmetic issue',
+        'Increase the rating of the protective device',
+        'Disconnect the CPC to make it safe',
       ],
       correctAnswer: 0,
       explanation:
@@ -133,10 +133,10 @@ const Module6Section2_2 = () => {
       id: 10,
       question: 'Why must visual inspections precede testing?',
       options: [
-        'False - only safety-critical defects require action',
-        'Tighten or replace it to prevent arcing/overheating',
+        'To save time by skipping some of the tests',
+        'Because testing instruments are unreliable',
         'To identify unsafe conditions that could make testing hazardous',
-        'Overheating due to loose or faulty connections',
+        'Because BS 7671 prohibits testing new installations',
       ],
       correctAnswer: 2,
       explanation:

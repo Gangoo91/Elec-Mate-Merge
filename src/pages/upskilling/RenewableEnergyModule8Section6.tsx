@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Why does a heat pump install include an immersion backup element in the DHW cylinder?',
     options: [
-      'Decorative',
-      'Three purposes: (1) BOOST — supplements heat pump during high DHW demand or low outdoor temperature; (2) LEGIONELLA cycle — periodic (typically weekly) raising of DHW to ≥60 °C to kill Legionella bacteria (heat pump alone may not always reach 60 °C in design conditions); (3) FAULT FALLBACK — if heat pump faults, immersion provides DHW backup until repair. Typically 3 kW element; dedicated electrical circuit',
-      'Always running',
-      'Not needed',
+      'Three roles: boost in high demand or cold weather, the weekly Legionella cycle to ≥60 °C, and fault fallback if the heat pump fails — a 3 kW element on its own circuit',
+      'It runs continuously alongside the compressor as a co-equal primary heat source for the cylinder',
+      'It is a frost-protection heater for the cylinder pipework only, energised by the OAT sensor in winter',
+      'It is omitted on modern dual-coil cylinders, where the second coil replaces any need for an immersion',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Immersion backup element is standard in heat pump DHW cylinder integration. Three operational roles: (1) BOOST during high DHW demand (multiple showers in a row) or low outdoor temperature when heat pump COP drops; (2) LEGIONELLA pasteurisation cycle — Health + Safety Executive HSG274 framework recommends maintaining stored DHW ≥60 °C; industry practice for heat pumps is a periodic (typically weekly) pasteurisation cycle to kill Legionella pneumophila bacteria; heat pump alone may not consistently reach 60 °C in cold weather (efficient operating range typically 35-55 °C primary flow); (3) FAULT FALLBACK — if compressor / refrigerant fault occurs, immersion provides DHW (and central heating with controls re-configuration) until repair. Typically 3 kW element on dedicated 16 A circuit. Heat pump control schedules immersion outside compressor running (boost cycles + scheduled legionella cycle + fault override).',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Which BS 7671 Section / Reg covers the immersion electrical install?',
     options: [
-      'None',
-      'Section 554 (Current-using equipment): Reg 554.2 heaters for liquids or other substances having immersed heating elements (554.2.1 over-temperature device) + Reg 554.3.x for single-phase water heaters with uninsulated heating elements immersed in water. Reg 415.1.1 30 mA additional protection. Reg 314 dedicated circuit. Reg 411.4 ADS. Mature integrated regulatory framework',
-      'Section 700',
-      'Section 600',
+      'Section 701, the bathroom special-location section, because the cylinder stores hot water for the bathroom',
+      'Section 600 inspection and testing, which sets the design requirements for fixed water heaters',
+      'Section 554: Reg 554.2 / 554.2.1 (immersed elements + over-temperature device) and Reg 554.3 (uninsulated element), with Reg 415.1.1, Reg 314 and Reg 411.4',
+      'No BS 7671 regulation applies; the immersion is governed solely by the cylinder manufacturer instructions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Within Section 554 (Current-using equipment), Reg 554.2 addresses heaters for liquids or other substances having immersed heating elements — Reg 554.2.1 mandates the automatic over-temperature device; Reg 554.3.x addresses single-phase water heaters with uninsulated heating elements immersed in water (the standard DHW cylinder immersion). Note Reg 554.1 covers electrode water heaters and boilers, which is a different appliance type and does not apply here. Related: Reg 415.1.1 30 mA additional protection applies (standard for any final circuit with socket-outlet or domestic-context); Reg 314 division of installation supports dedicated circuit; Reg 411.4 ADS. The framework is mature + standard — the immersion has been part of UK DHW cylinder design for decades. Cert evidence bundle records: per-circuit EIC + Section 554 compliance verified + functional test of thermostat + thermal cut-out.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What is a dual-coil DHW cylinder + why is it used with heat pumps?',
     options: [
-      'Not real',
-      'Cylinder with TWO indirect heat exchanger coils — primary coil for the heat pump primary loop (lower coil, larger surface area for low temperature operation); upper coil for legacy / future boiler integration (if present); plus immersion at the top of the cylinder. Heat pump uses the lower coil; immersion at the top boosts the top of the cylinder for DHW outlet. Stratification optimised',
-      'Single coil',
-      'No coils',
+      'A cylinder with two immersion elements and no indirect coils, both fed from the same 16 A circuit',
+      'A single-coil cylinder fitted with a twin-element immersion, marketed as dual-coil for heat pump use',
+      'A cylinder with one coil split into two ports, used to feed both the heat pump and the underfloor loop',
+      'Two indirect coils — a larger lower coil for the heat pump (low primary temperature) and an upper coil for boiler integration — with the immersion at the top for stratification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Dual-coil DHW cylinder: two indirect heat exchanger coils inside the cylinder. Heat pump primary coil (lower, larger surface area — optimised for low temperature heat pump primary flow 35-55 °C); upper coil for legacy boiler integration or future system upgrade (some hybrid configurations); immersion element at the top of the cylinder. Stratification: hot water rises naturally; heat pump heats the bulk of the cylinder via the lower coil; immersion boosts the top of the cylinder where the DHW outlet draws from. Customer experience: consistent DHW temperature even during heat pump warm-up. UK 2025-26 typical: 200-300 L dual-coil unvented cylinder; Mixergy / Telford / OSO / similar brands. Cert evidence bundle records the cylinder model + DoC + electrical connection to immersion + thermostat circuit.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'How does the heat pump control coordinate compressor + immersion?',
     options: [
-      'Both random',
-      'Heat-pump-priority logic: compressor runs first; if cylinder demand exceeds compressor capacity or COP would be poor (cold outdoor + high DHW demand) → immersion activates supplementally; immersion does NOT run during efficient compressor operation. Legionella cycle: scheduled (typically weekly off-peak); immersion + compressor coordinated to reach ≥60 °C briefly. Fault fallback: if compressor fault, immersion auto-takes over (with customer notification)',
-      'No coordination',
-      'Customer manual',
+      'Immersion-priority logic: the element runs first and the compressor supplements it, to guarantee a hot tap on demand',
+      'Heat-pump-priority logic: the compressor runs first; the immersion only supplements in high demand or poor COP, the Legionella cycle, or fault fallback',
+      'No coordination — both are wired to the same contactor and energise together whenever the cylinder calls',
+      'The customer manually selects compressor or immersion at the cylinder before each heating period',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       '3 kW immersion in a 200 L unvented cylinder — what circuit design?',
     options: [
-      'No protection',
-      'Dedicated 16 A Type A RCBO C-curve (BS EN 61009 + BS EN 62423) + 30 mA additional protection per Reg 415.1.1 + 2.5 mm² T+E cable (Method C ~24 A capacity at standard ambient — adequate for 13 A continuous immersion). Reg 554 framework: 554.2 heaters with immersed heating elements + 554.2.1 over-temperature cut-out + 554.3 uninsulated heating elements. Functional test: immersion thermostat + cylinder over-temp cut-out + heat pump control integration',
-      '32 A B-curve',
-      'No RCD',
+      'Dedicated 16 A Type A RCBO C-curve + 30 mA per Reg 415.1.1, 2.5 mm² T+E (Method C ~24 A) under Reg 554, with functional test of thermostat + over-temp cut-out',
+      'No protective device at the board, relying on the cylinder thermostat alone to break the supply',
+      'A 32 A B-curve MCB with no RCD on 6 mm² cable, treating the immersion like a cooker circuit',
+      'No RCD fitted, on the basis that a resistive immersion element cannot present an earth-fault shock risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard 3 kW immersion install: 16 A dedicated circuit. Type A RCBO (BS EN 61009 + BS EN 62423) covers AC + pulsating DC (some thermostat electronics may include rectified DC). C-curve handles immersion start (essentially resistive load, low inrush — B curve could work but C is the standard default). 2.5 mm² T+E cable Method C ~24 A capacity at standard ambient (single-phase) — adequate for 13 A continuous (3 kW / 230 V). 30 mA additional protection per Reg 415.1. Reg 554 framework: 554.2 heaters for liquids having immersed heating elements; 554.2.1 over-temperature cut-out (the cylinder over-temp cut-out is mandatory + integrates with the electrical supply trip); 554.3 specifically for uninsulated heating elements immersed in water (standard immersion). Reg 314 division supports dedicated circuit. Reg 411.4 ADS verified. Cert evidence bundle: 16 A Type A RCBO + 2.5 mm² T+E + Section 554 verification + functional test of thermostat + cylinder cut-out + heat pump control integration.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'Dual-coil DHW cylinder — what does the electrical installer need to wire?',
     options: [
-      'Nothing',
-      'Immersion element (top of cylinder; 3 kW typical; 16 A dedicated circuit per above); immersion thermostat (mechanical or electronic control of immersion ON/OFF); cylinder over-temp thermal cut-out (manufacturer-fitted; resets manually); control wiring back to heat pump controller (priority logic + cycle scheduling). Hydraulic engineer fits the cylinder; electrical installer wires the immersion + thermostat + cut-out + control signals',
-      'Just heat pump',
-      'No wiring',
+      'Nothing — the cylinder arrives fully wired and pre-commissioned from the factory',
+      'The 3 kW immersion on its 16 A circuit, the immersion thermostat, the over-temp cut-out and the control wiring back to the heat pump controller',
+      'Only a fused spur to the immersion; the thermostat and cut-out are wired by the cylinder manufacturer on site',
+      'Only the control wiring; the immersion and thermostat are connected by the plumber as part of the cylinder fit',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Why does Reg 554.2.1 thermal cut-out matter for immersion safety?',
     options: [
-      'No reason',
-      'Reg 554.2.1: Every heater for liquid or other substance shall incorporate or be provided with an automatic device to prevent a dangerous rise in temperature. The cylinder over-temp thermal cut-out is the safety device — trips at high temperature (typically 80-90 °C) before water reaches dangerous level; isolates immersion supply; prevents scalding + cylinder damage + steam pressure build-up. Manual reset required after operation (deliberate intervention)',
-      'Decorative',
-      'Customer responsibility',
+      'It is fitted only to satisfy the cylinder warranty and has no role in BS 7671 compliance',
+      'It is a thermal fuse that resets itself automatically once the cylinder cools, requiring no intervention',
+      'Reg 554.2.1 requires an automatic device against a dangerous temperature rise: the cut-out trips at ~80-90 °C, isolates the supply and needs manual reset, preventing scalding and steam build-up',
+      'It is a temperature gauge for the installer to read at service visits, not a device that breaks the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 554.2.1 is the safety regulation behind the over-temp thermal cut-out: every heater for liquid or other substance must incorporate or be provided with an automatic device to prevent a dangerous rise in temperature. For DHW cylinders, the over-temp cut-out is factory-fitted by the cylinder manufacturer; trips at ~80-90 °C; isolates immersion electrical supply; requires manual reset (deliberate intervention so the customer / engineer can investigate the cause). Prevents: scalding of users at the tap (cold-water mix designed for 60 °C max); thermal damage to cylinder + connected pipework; steam pressure build-up in unvented cylinders (catastrophic failure risk). Cert evidence bundle: functional test of the over-temp cut-out at commissioning (typically by deliberate overheat with thermostat bypassed in controlled condition); manufacturer DoC reference; manual reset procedure documented for customer handover.',
   },
@@ -122,22 +122,22 @@ const quizQuestions = [
     question:
       'Legionella cycle — what is the BS 7671 framework + how is it managed?',
     options: [
-      'No regulation',
-      'Not directly a BS 7671 regulation — Legionella control is per HSE HSG274 + Approved Code of Practice L8 (Health + Safety at Work Act framework). Heat pump controller schedules a weekly cycle raising DHW ≥60 °C briefly (Legionella pneumophila killed at ≥60 °C in minutes). Electrical install supports via the heat pump + immersion coordination. Customer handover includes the cycle configuration + verification + manual override for service visits',
-      'Customer DIY',
-      'No cycle needed',
+      'It is governed directly by a dedicated regulation in Part 7 of BS 7671 covering hot-water hygiene',
+      'It is a customer DIY task with no defined framework, left entirely to the householder to manage',
+      'No Legionella cycle is needed once a heat pump heats the DHW, as the circulating flow prevents stagnation',
+      'Not directly a BS 7671 matter — control sits under HSE HSG274 / ACoP L8, with the controller scheduling a weekly cycle to ≥60 °C via heat pump and immersion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Legionella control framework: NOT directly a BS 7671 regulation (BS 7671 is the wiring regs, not water hygiene regs). The framework: HSE HSG274 + Approved Code of Practice L8 (under the Health + Safety at Work Act 1974); BS 8580 risk assessment; relevant for domestic + commercial DHW systems. Heat pump-specific concern: efficient heat pump operating temperature (primary flow 35-55 °C) means DHW may not consistently reach 60 °C — Legionella growth risk. Mitigation: scheduled legionella cycle in the heat pump controller. Typical weekly cycle: 60-65 °C DHW for 1-2 hours at off-peak (e.g. 02:00 Monday). Heat pump + immersion coordinated to reach the setpoint briefly. Verification: temperature probe at cylinder outlet during commissioning + at periodic service visits. Cert evidence bundle records: legionella cycle configuration + frequency + setpoint + verification result. Customer handover: cycle explained + override procedure for service visits.',
   },
   {
     question: 'Immersion vs heat pump for water heating — economic + COP question?',
     options: [
-      'Same cost',
-      'Heat pump COP ~3 for DHW (lower than space heating COP because higher DHW temperature requirement). Immersion COP = 1 (100% efficient direct electric). At current UK 2025-26 electricity prices: heat pump DHW ~1/3 the cost of immersion-only DHW per kWh delivered. Immersion intended for backup / boost / legionella — NOT primary DHW heating',
-      'Immersion cheaper',
-      'No difference',
+      'They cost the same per kWh delivered, so the choice between them is purely about speed of heat-up',
+      'Heat pump DHW (COP ~3) costs roughly a third of immersion (COP 1) per kWh, so the immersion is for backup / boost / Legionella, not primary heating',
+      'The immersion is the cheaper option per kWh, so it should carry the bulk of routine DHW heating',
+      'The difference is too small to matter, so customers can run on whichever source is more convenient',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +146,12 @@ const quizQuestions = [
   {
     question: 'Cylinder enclosure thermal + Reg 422.3.2 — application?',
     options: [
-      'No application',
-      'Reg 422.3.2 applies where dust / fibres sufficient to cause a fire hazard could accumulate on an enclosure — then surface temperature shall not exceed 90 °C normal / 115 °C fault. Relevant to the immersion access cover + cylinder enclosure where the cylinder sits in a dusty / fibrous cupboard or store. DHW cylinder body insulated (~50 mm foam typically) so external surface temperature low even with full immersion run. Immersion access cover thermal compliance verified per cylinder manufacturer DoC',
-      '500 °C',
-      'No limits',
+      'Where dust/fibres could accumulate, it caps the enclosure at 90 °C normal / 115 °C fault; the cylinder skin stays cool, but a dusty store cupboard warrants the check',
+      'It sets a fixed 70 °C surface limit on the cylinder skin, applied to every install regardless of location',
+      'It has no application to a DHW cylinder, since stored hot water never reaches a hazardous surface temperature',
+      'It applies only to the immersion access cover, never to the cylinder body or the surrounding cupboard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 422.3.2 sets enclosure surface temperature limits — 90 °C normal operation, 115 °C fault — where materials such as dust or fibres sufficient to cause a fire hazard could accumulate on the enclosure. It is a location / fire-hazard-driven check, not a universal cap on every cylinder surface. DHW cylinder considerations: (1) Cylinder body is heavily insulated (typically 50 mm rigid polyurethane foam between inner cylinder shell + outer skin). External surface temperature stays low even with full immersion run + cylinder hot — typically 25-35 °C external skin. (2) Immersion access cover at top of cylinder: typically a plastic / metal removable cover allowing access to the immersion electrical terminals. Manufacturer DoC declares thermal compliance. (3) Cylinder cupboard enclosure: where the cylinder + immersion + circulation pumps + heat pump indoor unit + electrical CU share a built-in cupboard with restricted ventilation AND dust / fibres could accumulate, assess the enclosure against the 422.3.2 limits — designer assesses + provides ventilation if needed. Cert evidence bundle: cylinder manufacturer DoC + thermal compliance verified visually at commissioning + any thermal imaging if commercial.',
   },

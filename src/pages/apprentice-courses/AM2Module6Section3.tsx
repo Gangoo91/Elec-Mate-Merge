@@ -128,10 +128,10 @@ const AM2Module6Section3 = () => {
       id: 4,
       question: "What's the best strategy if you're unsure of an answer?",
       options: [
-        'Eliminate wrong options and guess',
-        'The same for all branches',
-        'Bare copper exposed, CPCs unsleeved',
-        'To protect workers from residual risks',
+        'Eliminate wrong options and make your best guess',
+        'Leave it blank and move on to the next question',
+        'Spend as long as it takes to be completely certain',
+        'Always pick the longest answer option',
       ],
       correctAnswer: 0,
       explanation:
@@ -139,11 +139,16 @@ const AM2Module6Section3 = () => {
     },
     {
       id: 5,
-      question: 'True or false: There is negative marking for wrong answers.',
-      options: ['True', 'False'],
+      question: 'How are wrong answers treated in the AM2 knowledge test marking?',
+      options: [
+        'Each wrong answer deducts a mark from your score',
+        'Wrong answers simply score zero, with no deduction',
+        'Three wrong answers cancel out one correct answer',
+        'Wrong answers are ignored and the question is re-set',
+      ],
       correctAnswer: 1,
       explanation:
-        "False - there's no negative marking, so always answer every question even if you're guessing.",
+        'There is no negative marking, so a wrong answer simply scores zero. Always answer every question, even if you are guessing.',
     },
     {
       id: 6,
@@ -162,10 +167,10 @@ const AM2Module6Section3 = () => {
       id: 7,
       question: "What's the danger of rushing through the test?",
       options: [
-        'Switching off breakers and removing fuses',
-        'Energy efficiency, comfort, and productivity',
-        'Adding a single socket outlet to an existing circuit',
-        'Misreading questions and careless errors',
+        'You finish too early and waste the spare time',
+        'The test locks you out of earlier questions',
+        'You run out of questions before the time ends',
+        'Misreading questions and making careless errors',
       ],
       correctAnswer: 3,
       explanation:

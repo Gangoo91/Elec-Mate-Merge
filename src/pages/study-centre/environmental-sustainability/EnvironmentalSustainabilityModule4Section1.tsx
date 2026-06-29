@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'Under the Air Quality Standards Regulations 2010, what is the 24-hour mean limit value for PM10 (particulate matter with a diameter of 10 micrometres or less)?',
     options: [
-      '25 \u00b5g/m\u00b3, not to be exceeded more than 7 times per year',
       '50 \u00b5g/m\u00b3, not to be exceeded more than 35 times per calendar year',
+      '25 \u00b5g/m\u00b3, not to be exceeded more than 7 times per year',
       '75 \u00b5g/m\u00b3, not to be exceeded more than 18 times per calendar year',
       '100 \u00b5g/m\u00b3, not to be exceeded more than 10 times per calendar year',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Air Quality Standards Regulations 2010 set a 24-hour mean limit value for PM10 of 50 \u00b5g/m\u00b3, which must not be exceeded more than 35 times in a single calendar year. The annual mean limit value for PM10 is 40 \u00b5g/m\u00b3. These limits are legally binding and apply across England, Wales, and Scotland. Construction sites that generate dust emissions contributing to an exceedance of these limits can face enforcement action from local authorities under the Environmental Protection Act 1990, including the service of abatement notices requiring immediate cessation of dust-generating activities until adequate control measures are in place.',
   },
@@ -44,11 +44,11 @@ const quickCheckQuestions = [
       'What is the Workplace Exposure Limit (WEL) for respirable crystalline silica (RCS) dust in the UK, as set by EH40?',
     options: [
       '0.05 mg/m\u00b3 (8-hour TWA)',
-      '0.1 mg/m\u00b3 (8-hour TWA)',
       '0.5 mg/m\u00b3 (8-hour TWA)',
+      '0.1 mg/m\u00b3 (8-hour TWA)',
       '1.0 mg/m\u00b3 (8-hour TWA)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The Workplace Exposure Limit (WEL) for respirable crystalline silica (RCS) in the UK is 0.1 mg/m\u00b3 as an 8-hour time-weighted average (TWA), as set out in EH40/2005 (Table 1). RCS is classified as a Category 1A carcinogen under the CLP Regulation, meaning there is sufficient evidence that it causes cancer in humans. Prolonged exposure to RCS above the WEL can cause silicosis (irreversible scarring of the lungs), chronic obstructive pulmonary disease (COPD), and lung cancer. Construction activities that generate RCS include cutting, grinding, and drilling concrete, brick, stone, morite, and sandstone. Under COSHH Regulation 11, employers must ensure that exposure does not exceed the WEL and must implement control measures following the hierarchy of controls.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'Under the Environmental Protection Act 1990, which section gives local authorities the power to serve an abatement notice for dust nuisance arising from a construction site?',
     options: [
-      'Section 34 (Duty of Care for waste)',
       'Section 80 (abatement notices for statutory nuisances)',
+      'Section 34 (Duty of Care for waste)',
       'Section 33 (prohibition on unauthorised deposit of waste)',
       'Section 71 (power to obtain information about land)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 80 of the Environmental Protection Act 1990 empowers local authorities to serve an abatement notice where they are satisfied that a statutory nuisance exists, or is likely to occur or recur. Dust from construction sites can constitute a statutory nuisance under Section 79(1)(d) as dust or other effluvia arising on industrial, trade, or business premises. The abatement notice can require the responsible person to abate the nuisance and prevent its recurrence, and can specify the steps or works required. Non-compliance without reasonable excuse is a criminal offence with fines of up to \u00a320,000.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'Which type of dust generated on construction sites is classified as a Category 1A carcinogen under the CLP Regulation?',
     options: [
       'General construction dust from timber cutting',
-      'Demolition dust from plasterboard',
       'Respirable crystalline silica (RCS) from cutting concrete, brick, or stone',
+      'Demolition dust from plasterboard',
       'Trackout dust from vehicle movements on unsurfaced roads',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Respirable crystalline silica (RCS) is classified as a Category 1A carcinogen under the CLP Regulation (EC No. 1272/2008), meaning there is sufficient evidence from human studies that it causes cancer. RCS is generated when materials containing crystalline silica \u2014 such as concrete, brick, sandstone, mortar, and granite \u2014 are cut, drilled, ground, or otherwise mechanically disturbed. The fine particles (typically less than 10 \u00b5m) penetrate deep into the lungs and can cause silicosis, COPD, and lung cancer. The UK Workplace Exposure Limit for RCS is 0.1 mg/m\u00b3 (8-hour TWA) as set out in EH40/2005.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of wheel washing facilities at the exit of a construction site?',
     options: [
-      'To clean vehicles for aesthetic reasons before they enter public roads',
-      'To prevent trackout of mud and dust onto public highways, which would be re-suspended as PM10 by passing traffic',
-      'To reduce water consumption on the construction site',
-      'To comply with vehicle insurance requirements for construction plant',
+      'To clean vehicles for appearance before they enter public roads',
+      'To reduce the overall water consumption on the construction site',
+      'To meet vehicle insurance requirements for construction plant on site',
+      'To prevent trackout of mud and dust that traffic re-suspends as PM10',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Wheel washing facilities are installed at construction site exits to prevent trackout \u2014 the transfer of mud, soil, and dust from the construction site onto the public highway by the tyres and bodies of vehicles leaving the site. Once deposited on the road surface, this material dries and is re-suspended as airborne particulate matter (PM10) by the turbulence created by passing traffic. Trackout can affect air quality over a considerable distance from the site \u2014 studies have shown elevated PM10 levels up to 500 metres from site exits where trackout is not controlled. The IAQM guidance identifies trackout as one of the four main sources of dust from construction sites, alongside demolition, earthworks, and construction activities.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       "What does 'NRMM' stand for in the context of construction site air quality management, and why is it significant?",
     options: [
+      'Non-Road Mobile Machinery \u2014 diesel plant that emits significant NOx and PM',
       'National Road Maintenance Manual \u2014 a guidance document for highway works',
-      'Non-Road Mobile Machinery \u2014 diesel-powered plant and equipment used on construction sites that is a significant source of NOx and PM emissions',
-      'Noise and Resonance Mitigation Measures \u2014 requirements for reducing noise and vibration',
-      'Natural Resource Management Model \u2014 a framework for managing environmental impacts',
+      'Noise and Resonance Mitigation Measures \u2014 controls for noise and vibration',
+      'Natural Resource Management Model \u2014 a framework for environmental impacts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NRMM stands for Non-Road Mobile Machinery and refers to diesel-powered plant and equipment used on construction sites, including excavators, dumpers, generators, compressors, telehandlers, and mobile cranes. NRMM is a significant source of nitrogen oxides (NOx) and particulate matter (PM) emissions, which contribute to poor air quality in urban areas. The London NRMM Low Emission Zone was established to require minimum engine emission standards for NRMM used on major development sites, starting with Stage IIIB across Greater London and Stage IV in the Central Activity Zone. Other local authorities are increasingly adopting similar requirements through planning conditions.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'What is a dust deposition gauge, and how does it differ from a continuous particulate monitor?',
     options: [
-      'A dust deposition gauge and a continuous particulate monitor are identical instruments that measure PM10 in real time',
-      'A dust deposition gauge is a passive device that collects dust over a period (typically 2\u20134 weeks) for laboratory analysis, while a continuous particulate monitor measures airborne particulate concentrations in real time',
-      'A dust deposition gauge measures wind speed and direction, while a continuous particulate monitor measures dust',
-      'A dust deposition gauge is used indoors only, while a continuous particulate monitor is used outdoors only',
+      'They are identical instruments that both measure airborne PM10 in real time on site',
+      'A deposition gauge collects settled dust over weeks for lab analysis; a continuous monitor reads concentrations in real time',
+      'A deposition gauge measures wind speed and direction; a continuous monitor measures airborne dust concentration',
+      'A deposition gauge is used indoors only; a continuous monitor is used outdoors only on construction sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,11 +192,11 @@ const quizQuestions = [
       'Under planning law, what document typically sets out the dust management requirements that a construction site must comply with?',
     options: [
       'The Building Regulations Approved Documents',
-      'The Construction Environmental Management Plan (CEMP), often required as a planning condition',
       'The Fire Risk Assessment for the building',
+      'The Construction Environmental Management Plan (CEMP), often required as a planning condition',
       'The CDM Health and Safety Plan only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Construction Environmental Management Plan (CEMP) is the document that typically sets out the dust management requirements for a construction site. CEMPs are commonly required as a condition of planning permission, particularly for major developments or sites in sensitive areas (Air Quality Management Areas, near schools or hospitals, near ecological designations). The CEMP must be submitted to and approved by the local planning authority before construction work begins. It will typically include a dust risk assessment, a dust management plan specifying the control measures to be applied, monitoring arrangements, trigger levels and action plans, complaints procedures, and reporting requirements. The CEMP may also incorporate requirements from Section 106 agreements and local authority Air Quality Action Plans.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'Which of the following is a key recommendation of the BRE (Building Research Establishment) guidance on controlling dust from construction sites?',
     options: [
-      'Dust control measures should only be implemented when complaints are received',
-      'A proactive, risk-based approach to dust management should be adopted, with control measures planned and implemented before dust-generating activities commence',
-      'Monitoring is unnecessary if the site is more than 100 metres from residential properties',
-      'Water suppression should only be used during summer months',
+      'Dust control measures should be implemented only once complaints are received from neighbours',
+      'Monitoring is unnecessary where the site lies more than 100 metres from residential properties',
+      'Water suppression should be applied only during the drier summer months of the year',
+      'A proactive, risk-based approach should plan and apply controls before dust-generating work starts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The BRE guidance on controlling particles, vapour, and noise pollution from construction sites (BR456) emphasises a proactive, risk-based approach to dust management. This means that dust control measures should be planned and implemented before dust-generating activities begin, not as a reactive response to complaints. The guidance recommends carrying out a dust risk assessment at the planning stage, identifying the activities most likely to generate dust, selecting appropriate control measures for each activity, implementing those measures before work starts, monitoring their effectiveness throughout the works, and adjusting the approach if monitoring or complaints indicate that controls are insufficient. This proactive approach is consistent with the IAQM guidance and is now considered standard best practice across the UK construction industry.',
   },

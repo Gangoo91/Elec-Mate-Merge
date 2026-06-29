@@ -15,11 +15,11 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is deburring essential before pulling cables?',
     options: [
-      'To make conduit look better',
-      'To prevent cable insulation damage',
-      'To reduce conduit weight',
+      'To prevent damage to the cable insulation',
+      'To make the conduit look better',
+      'To reduce the weight of the conduit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Deburring removes sharp edges that could cut or damage cable insulation during installation, preventing electrical faults.',
   },
@@ -34,8 +34,8 @@ const quickCheckQuestions = [
   {
     id: 3,
     question: 'When should chamfering be applied to conduit ends?',
-    options: ['Always on all conduit', 'Only for solvent-weld joints', 'Never required'],
-    correctIndex: 1,
+    options: ['On all conduit, without exception', 'It is never required', 'Mainly for solvent-weld joints'],
+    correctIndex: 2,
     explanation:
       'Chamfering improves fitting entry and adhesive distribution for solvent-weld joints.',
   },
@@ -45,32 +45,32 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the main risk of failing to deburr conduit?',
-    options: ['Poor visual appearance', 'Damaging cable insulation', 'Making conduit heavier'],
-    correctAnswer: 1,
+    options: ['Damaging the cable insulation', 'Poor visual appearance', 'Making the conduit heavier'],
+    correctAnswer: 0,
     explanation:
       'Burrs create sharp edges that can nick or cut cable insulation during installation, potentially causing electrical faults.',
   },
   {
     id: 2,
     question: 'Which tool is best for cutting PVC conduit?',
-    options: ['Cold chisel', 'Rotary pipe cutter', "Plumber's wrench"],
+    options: ['A cold chisel', 'A rotary pipe cutter', "A plumber's wrench"],
     correctAnswer: 1,
     explanation:
       'A rotary pipe cutter provides clean, square cuts in PVC conduit with minimal effort and reduced risk of cracking.',
   },
   {
     id: 3,
-    question: 'True or False: Burrs only occur on metal conduit.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'On which conduit can burrs form during cutting?',
+    options: ['Only on metal conduit', 'Only on PVC conduit', 'Both PVC and metal conduit'],
+    correctAnswer: 2,
     explanation:
-      'False. Both PVC and metal conduit can develop burrs during cutting that must be removed to protect cables.',
+      'Both PVC and metal conduit can develop burrs during cutting that must be removed to protect cables.',
   },
   {
     id: 4,
     question: 'Name one tool for internal deburring.',
-    options: ['Round file or deburring tool', 'Hammer', 'Spirit level'],
-    correctAnswer: 0,
+    options: ['A claw hammer', 'A round file or deburring tool', 'A spirit level'],
+    correctAnswer: 1,
     explanation:
       'Round files and dedicated deburring tools are designed to smooth internal edges safely and effectively.',
   },
@@ -78,11 +78,11 @@ const quizQuestions = [
     id: 5,
     question: 'Why is a chamfer applied to PVC conduit ends for solvent welds?',
     options: [
-      'To make it look better',
+      'To make the joint look better',
+      'To make the conduit stronger',
       'To improve fit and adhesive spread',
-      'To make it stronger',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Chamfering creates a bevelled edge that helps the conduit enter the fitting easily and allows better adhesive distribution for a stronger joint.',
   },
@@ -90,27 +90,27 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of securing conduit before cutting?',
     options: [
+      'To make the work look professional',
       'To ensure a straight cut and prevent movement',
-      'To make it look professional',
-      'To save time',
+      'To save time on the job',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Securing conduit prevents movement during cutting, ensuring accuracy and safety while maintaining a square cut.',
   },
   {
     id: 7,
     question: 'What should be checked on metal conduit threads before joining?',
-    options: ['Colour matching', 'Cleanliness and freedom from oil or swarf', 'Weight'],
+    options: ['The colour of the thread', 'Cleanliness and freedom from oil or swarf', 'The weight of the conduit'],
     correctAnswer: 1,
     explanation:
       'Clean threads free from oil, swarf, or debris ensure proper threading and secure mechanical connections.',
   },
   {
     id: 8,
-    question: 'Which regulation requires proper preparation of conduit to prevent cable damage?',
-    options: ['BS 7671', 'Highway Code', 'Building Regulations'],
-    correctAnswer: 0,
+    question: 'Which standard requires conduit installation to protect cables from mechanical damage?',
+    options: ['The Highway Code', 'The Building Regulations', 'BS 7671'],
+    correctAnswer: 2,
     explanation:
       'BS 7671 (IET Wiring Regulations) requires that conduit installation protects cables from mechanical damage.',
   },

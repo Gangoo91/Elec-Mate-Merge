@@ -5,10 +5,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the minimum required information for documenting test results?',
     options: [
-      'Ambient temperature and any factors affecting measurements',
+      'Only the final pass or fail outcome for each circuit',
       'Circuit ID, measured values, maximum permitted values, and pass/fail assessment',
-      'Serial number, calibration date, and certificate reference',
-      'Document as non-compliance and specify corrective actions',
+      'Just the measured values without any reference limits',
+      'The client name and installation address only',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 2,
     question: 'What must be done if test results exceed BS 7671 maximum permitted values?',
     options: [
-      'Serial number, calibration date, and certificate reference',
-      'Ambient temperature and any factors affecting measurements',
+      'Record the values as a pass with an explanatory note',
+      'Average the failing value with adjacent compliant circuits',
       'Document as non-compliance and specify corrective actions',
-      'Verify all results are within limits and calculations are correct',
+      'Round the result down to the nearest permitted value',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 3,
     question: 'How should test equipment details be recorded?',
     options: [
-      'Document the values and recommend monitoring or improvement',
-      'Verify all results are within limits and calculations are correct',
-      'Password protection and secure backup copies',
+      'Manufacturer brand name only',
+      'The purchase price and supplier of the instrument',
+      'Instrument model number with no calibration record',
       'Serial number, calibration date, and certificate reference',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     question: 'What environmental information should be documented during testing?',
     options: [
       'Ambient temperature and any factors affecting measurements',
-      'Serial number, calibration date, and certificate reference',
-      'Document as non-compliance and specify corrective actions',
-      'Detailed justification and assessment of equivalent safety',
+      'The outdoor weather forecast for the following week',
+      'The time of sunrise and sunset on the test day',
+      'The colour of the consumer unit enclosure',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 5,
     question: 'Who can sign electrical installation certificates?',
     options: [
-      'Password protection and secure backup copies',
+      'Any electrician on site regardless of involvement',
       'Only a competent person responsible for the work',
-      'Document as non-compliance and specify corrective actions',
-      'For the life of the installation plus inspection intervals',
+      'The client commissioning the installation work',
+      'The wholesaler who supplied the materials',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 6,
     question: 'How should digital test data be protected?',
     options: [
-      'Print immediately and discard digital copies',
-      'No protection needed',
+      'Stored as a single editable file shared by email',
+      'Held only on the instrument until the next download',
       'Password protection and secure backup copies',
-      'Only save on the test equipment',
+      'Kept on one local drive with no version history',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What should be done with test results that are borderline acceptable?',
     options: [
-      'For the life of the installation plus inspection intervals',
-      'Password protection and secure backup copies',
-      'Only a competent person responsible for the work',
+      'Record them as a clear fail and condemn the circuit',
+      'Omit them from the certificate to avoid confusion',
+      'Adjust the readings until they sit mid-range',
       'Document the values and recommend monitoring or improvement',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     question: 'How long should test records be retained?',
     options: [
       'For the life of the installation plus inspection intervals',
-      'Document the values and recommend monitoring or improvement',
-      'Detailed justification and assessment of equivalent safety',
-      'Serial number, calibration date, and certificate reference',
+      'Only until the invoice for the work has been paid',
+      'A maximum of twelve months from the test date',
+      'Until the certificate is handed to the client',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What must be included when documenting departures from BS 7671?',
     options: [
-      'Verify all results are within limits and calculations are correct',
+      'A simple note that a departure has been made',
       'Detailed justification and assessment of equivalent safety',
-      'Only a competent person responsible for the work',
-      'Password protection and secure backup copies',
+      'Only the regulation number that has been departed from',
+      'Written approval from the equipment manufacturer',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 10,
     question: 'What verification step is essential before issuing certificates?',
     options: [
-      'Document the values and recommend monitoring or improvement',
-      'Detailed justification and assessment of equivalent safety',
+      'Confirm the client has settled the final invoice',
+      'Check the instrument battery level is above half',
       'Verify all results are within limits and calculations are correct',
-      'Circuit ID, measured values, maximum permitted values, and pass/fail assessment',
+      'Ensure a copy has been emailed to the wholesaler',
     ],
     correctAnswer: 2,
     explanation:

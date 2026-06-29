@@ -28,20 +28,20 @@ const quickCheckQuestions = [
   {
     question:
       'A client is hesitant about upgrading their consumer unit. Which of Cialdini\'s principles would be MOST ethically effective if you show them that "9 out of 10 homeowners on this street have upgraded to a dual-RCD board"?',
-    options: ['Reciprocity', 'Social proof', 'Authority', 'Scarcity'],
-    correctIndex: 1,
+    options: ['Social proof', 'Reciprocity', 'Authority', 'Scarcity'],
+    correctIndex: 0,
     explanation:
       "This is social proof in action. People are heavily influenced by what others similar to them are doing. Showing that neighbours have made the same decision reduces the perceived risk and uncertainty of the upgrade. This is ethical because the information is true and the recommendation is genuinely in the client's interest.",
   },
   {
     question: 'What is the key difference between framing and anchoring in a persuasion context?',
     options: [
-      'They are the same thing with different names',
-      'Framing is about how you present information to highlight different aspects; anchoring is about setting a reference point that influences subsequent judgements',
-      'Framing only works in writing; anchoring only works in speech',
-      'Anchoring is ethical but framing is manipulative',
+      'They are essentially the same technique described under two different names',
+      'Framing only works in written quotes, while anchoring only works in speech',
+      'Anchoring is always ethical, whereas framing is inherently manipulative',
+      'Framing highlights different aspects; anchoring sets a reference point for judgement',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Framing is about how you present information &mdash; emphasising the positive or negative aspects of the same facts to influence perception. Anchoring is about setting a reference point (usually a number) that then influences all subsequent judgements. Both are powerful persuasion tools that can be used ethically in construction contexts.',
   },
@@ -50,11 +50,11 @@ const quickCheckQuestions = [
       'An electrician recommends an upgrade that the client does not strictly need but would genuinely improve safety. This is an example of:',
     options: [
       'Manipulative selling that should be avoided',
-      'Ethical influence &mdash; using professional expertise to guide a client toward a better outcome',
       'Scarcity &mdash; creating urgency where none exists',
+      'Ethical influence &mdash; using professional expertise to guide a client toward a better outcome',
       'Authority bias &mdash; abusing the power imbalance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Recommending a genuine safety improvement is ethical influence at its best. You are using your professional expertise (authority) to guide the client toward a better outcome. The key ethical test is: would you make this same recommendation if it were your own home? If yes, it is ethical influence. If no, it is manipulation.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
     id: 2,
     question:
       'An electrician tells a homeowner: "Replacing your fuseboard is not mandatory right now, but if you are planning to sell within two years, the buyer\'s surveyor will almost certainly flag it." This uses which principle?',
-    options: ['Reciprocity', 'Scarcity', 'Commitment and consistency', 'Authority'],
-    correctAnswer: 1,
+    options: ['Reciprocity', 'Commitment and consistency', 'Authority', 'Scarcity'],
+    correctAnswer: 3,
     explanation:
       'This is scarcity applied ethically. The electrician is highlighting a genuine time-limited opportunity &mdash; doing the work now, while they are already on site, avoids future cost and disruption. The scarcity is real (the opportunity to do it during this visit at lower cost), not manufactured.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     question:
       'Framing a safety upgrade as "protecting your family" rather than "meeting regulation 314.1" is an example of:',
     options: [
-      'Manipulation &mdash; hiding the real reason behind emotional language',
-      "Framing &mdash; presenting the same information in a way that resonates with the client's values",
-      'Scarcity &mdash; implying their family is in danger',
-      'Authority &mdash; using your expertise to intimidate',
+      "Framing &mdash; presenting the same information in terms that match the client's values",
+      'Manipulation &mdash; deliberately hiding the real reason behind emotional language',
+      'Scarcity &mdash; implying their family is in immediate and present danger',
+      'Authority &mdash; using your professional expertise to intimidate the client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "This is framing. The regulation IS about protecting people &mdash; you are simply presenting the same information in language that connects with what the client actually cares about. Clients rarely care about regulation numbers, but they care deeply about their family's safety. This is not deception; it is effective communication.",
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: 'The commitment and consistency principle suggests that people who have:',
     options: [
-      'Been given a free gift will always buy from you',
-      'Made a small commitment are more likely to follow through with a larger related commitment',
-      'Seen authority figures will always obey them',
-      'Been told something is scarce will always panic-buy',
+      'Been given a free gift will always go on to buy something from you',
+      'Made a small commitment are more likely to follow through on a larger one',
+      'Seen an authority figure once will always obey them without question',
+      'Been told something is scarce will always rush in and panic-buy it',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is the MOST ethical application of the authority principle?',
     options: [
-      'Wearing a branded uniform to look more professional than you are',
-      'Referencing specific BS 7671 regulations to explain why a recommendation is necessary',
-      'Telling the client they have no choice but to follow your advice',
-      'Using technical jargon to confuse the client into agreeing',
+      'Referencing the specific BS 7671 regulation that makes a recommendation necessary',
+      'Wearing a branded uniform purely to look more professional than you really are',
+      'Telling the client firmly they have no choice but to follow your advice',
+      'Using dense technical jargon to confuse the client into simply agreeing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ethical authority means using your genuine expertise to guide clients toward safe, compliant decisions. Referencing specific regulations demonstrates that your recommendation is grounded in objective standards, not personal opinion. This builds trust and helps the client understand the "why" behind your advice. Using jargon to confuse or claiming they have no choice is manipulation, not influence.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'Anchoring works by:',
     options: [
-      'Tying the client to a contract they cannot cancel',
-      'Setting an initial reference point that influences all subsequent judgements about value or price',
-      'Making the client feel guilty about not accepting the first offer',
-      'Presenting multiple options so the client is confused',
+      'Tying the client into a binding contract they are unable to cancel later',
+      'Making the client feel guilty about not accepting your very first offer',
+      'Presenting so many different options that the client becomes confused',
+      'Setting an initial reference point that influences later judgements of value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Anchoring is a cognitive bias where the first piece of information (the "anchor") disproportionately influences subsequent decisions. In construction pricing, presenting a comprehensive quote first (the anchor) makes a mid-range option seem more reasonable. This is why it is important to present the full-scope option before the reduced-scope alternative.',
   },
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 8,
     question: 'The ethical boundary of influence in construction is best described as:',
     options: [
-      'Never recommending anything beyond what the client specifically asked for',
-      'Using your expertise to guide clients toward genuinely beneficial decisions while being transparent about your reasoning and respecting their right to choose',
-      'Always giving the cheapest option to avoid any appearance of upselling',
-      'Only making recommendations when regulations force you to',
+      'Never recommending anything beyond exactly what the client specifically asked for',
+      'Guiding clients toward beneficial decisions transparently while respecting their choice',
+      'Always offering only the cheapest option to avoid any appearance of upselling',
+      'Only ever making a recommendation when the regulations force you to do so',
     ],
     correctAnswer: 1,
     explanation:

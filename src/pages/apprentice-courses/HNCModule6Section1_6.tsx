@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Who is legally responsible for commissioning a valid EPC for a new building?',
     options: [
-      'To convert AC mains to DC for charging batteries and supplying inverter',
+      'The local authority Building Control surveyor',
       'The person carrying out the building work (typically the developer)',
-      'An appointed person and a suitably stocked first aid kit',
-      'Only when dead working is unreasonable and suitable precautions are taken',
+      'The first tenant or purchaser of the completed building',
+      'The accredited energy assessor who carries out the survey',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'A commissioning certificate for an HVAC system should include:',
     options: [
-      'Operating procedures, maintenance schedules, and equipment data',
-      'There is no minimum; buildings must meet Part L requirements',
+      'The tender price breakdown for the mechanical installation',
+      'A full set of as-built architectural floor plans',
       'Test results demonstrating the system meets design intent',
-      'Total useful floor area greater than 500m²',
+      'The manufacturer warranty registration for each component',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'The building log book requirement under Part L applies to buildings with:',
     options: [
-      'Building work complies with the Building Regulations',
-      'At practical completion, before final handover',
-      'Notice of commissioning (Regulation 44)',
+      'Total useful floor area greater than 100m²',
+      'Total useful floor area greater than 250m²',
+      'Total useful floor area greater than 1,000m²',
       'Total useful floor area greater than 500m²',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
       'Which document provides evidence that fixed building services have been commissioned in accordance with approved procedures?',
     options: [
       'Notice of commissioning (Regulation 44)',
-      'Total useful floor area greater than 500m²',
-      'At practical completion, before final handover',
-      'The BER does not exceed the TER',
+      'The Energy Performance Certificate (EPC)',
+      'The building log book (CIBSE TM31)',
+      'The Health and Safety File (CDM Regulations)',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'As-built documentation should be submitted:',
     options: [
-      'Test results demonstrating the system meets design intent',
+      'Before construction begins, alongside the tender drawings',
       'At practical completion, before final handover',
-      'Building work complies with the Building Regulations',
-      'Notice of commissioning (Regulation 44)',
+      'Only if the client specifically requests it after occupation',
+      'At the end of the defects liability period with the final account',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'What is the minimum EPC rating required for new non-domestic buildings under current regulations?',
     options: [
-      'Total useful floor area greater than 500m²',
-      'Building work complies with the Building Regulations',
+      'A rating of A is required for all new non-domestic buildings',
+      'A rating of B is the fixed legal minimum at construction',
       'There is no minimum; buildings must meet Part L requirements',
-      'Test results demonstrating the system meets design intent',
+      'A rating of C must be achieved before an EPC can be issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'O&M manuals for building services should include:',
     options: [
-      'Ensure smooth transition from construction to operation',
-      'At practical completion, before final handover',
-      'Test results demonstrating the system meets design intent',
+      'The contractor’s tender pricing and commercial correspondence',
+      'The planning application drawings and consultation responses',
+      'The design-stage SBEM calculations and energy targets only',
       'Operating procedures, maintenance schedules, and equipment data',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'Part L evidence for a new building must demonstrate that:',
     options: [
       'The BER does not exceed the TER',
-      'All materials are locally sourced',
-      'The building looks attractive',
-      'The building can accommodate future expansion',
+      'The building achieves a BREEAM Excellent rating',
+      'All materials carry BES 6001 responsible sourcing certification',
+      'The air permeability exceeds the design target value',
     ],
     correctAnswer: 0,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: 'Soft landings procedures are designed to:',
     options: [
-      'Total useful floor area greater than 500m²',
-      'Test results demonstrating the system meets design intent',
-      'Notice of commissioning (Regulation 44)',
+      'Reduce the embodied carbon of the construction materials used',
+      'Speed up the Building Control inspection and sign-off process',
+      'Lower the contractor’s preliminaries and management costs',
       'Ensure smooth transition from construction to operation',
     ],
     correctAnswer: 3,

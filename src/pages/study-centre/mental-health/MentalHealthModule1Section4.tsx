@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'mh-soler-model',
     question: "In the SOLER model for active listening, what does the 'L' stand for?",
     options: [
-      'Look away to give space',
       'Lean in slightly towards the speaker',
+      'Look away to give space',
       'Listen without responding',
       'Lower your voice when speaking',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The 'L' in the SOLER model stands for 'Lean in' — leaning slightly towards the person you are speaking with shows attentiveness and genuine interest in what they are saying. It signals that you are engaged and present in the conversation without being physically intrusive.",
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'Which of the following is a judgemental response that should be avoided when someone discloses a mental health difficulty?',
     options: [
       '"That sounds really difficult — thank you for telling me."',
-      '"Have you tried just not thinking about it?"',
       '"I\'m here for you — take your time."',
+      '"Have you tried just not thinking about it?"',
       '"How long have you been feeling this way?"',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Saying 'Have you tried just not thinking about it?' is a minimising and judgemental response. It implies the person has not tried hard enough to help themselves and reduces a complex mental health experience to a simple act of willpower. Supportive alternatives acknowledge the person's feelings and encourage them to share at their own pace.",
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
       'Which of the following is an example of a good open question to use in a mental health conversation?',
     options: [
       '"Are you feeling OK?"',
-      '"Did something happen at work?"',
       '"What has been going on for you lately?"',
+      '"Did something happen at work?"',
       '"Do you want me to call someone?"',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "'What has been going on for you lately?' is an open question because it cannot be answered with a simple 'yes' or 'no'. It invites the person to share their experience in their own words, at their own pace. The other options are closed questions that limit the response to a single word or short phrase.",
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 1,
     question: "What does the 'S' in the SOLER active listening model stand for?",
     options: [
-      'Speak clearly and slowly',
       'Sit squarely — face the person',
+      'Speak clearly and slowly',
       'Stay silent until they finish',
       'Summarise what they have said',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'S' in SOLER stands for 'Sit squarely', meaning you should position yourself facing the person to show that you are giving them your full attention. This does not mean sitting rigidly — it means orienting your body towards them in an open, engaged posture.",
   },
@@ -117,8 +117,8 @@ const quizQuestions = [
     id: 2,
     question:
       "Which psychologist is most closely associated with the concept of 'unconditional positive regard'?",
-    options: ['Sigmund Freud', 'Carl Rogers', 'Aaron Beck', 'B.F. Skinner'],
-    correctAnswer: 1,
+    options: ['Sigmund Freud', 'Aaron Beck', 'B.F. Skinner', 'Carl Rogers'],
+    correctAnswer: 3,
     explanation:
       'Carl Rogers (1902–1987) developed the concept of unconditional positive regard as one of the three core conditions for therapeutic change. It means accepting and valuing a person without judgement, regardless of what they say or do. In a mental health first aid context, this means treating the person with warmth and respect even if you do not understand or agree with their behaviour.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is NOT a feature of a non-judgemental approach?',
     options: [
-      'Suspending your own opinions and biases',
       'Telling the person what they should do to feel better',
+      'Suspending your own opinions and biases',
       "Validating the person's emotions as real and important",
       "Accepting the person's experience without trying to fix it",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Telling someone what they should do is directive and judgemental — it implies you know better than them how to manage their own experience. A non-judgemental approach involves listening, validating, and accepting without trying to fix, advise, or direct. You can offer information about available support, but the decision to act must remain with the person.',
   },
@@ -169,10 +169,10 @@ const quizQuestions = [
     options: [
       '"You seem really depressed — are you OK?"',
       '"Everyone\'s noticed you\'ve not been yourself."',
-      '"I\'ve noticed you seem a bit different lately, and I wanted to check in."',
       '"You need to talk to someone about your problems."',
+      '"I\'ve noticed you seem a bit different lately, and I wanted to check in."',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "'I've noticed you seem a bit different lately, and I wanted to check in' uses a gentle 'I' statement, avoids labelling or diagnosing, and opens the door without pressure. The other options either use diagnostic language ('depressed'), invoke social pressure ('everyone's noticed'), or are directive ('you need to').",
   },

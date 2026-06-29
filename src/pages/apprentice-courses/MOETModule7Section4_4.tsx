@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'initiative-meaning',
     question: "What does 'showing initiative' mean in the context of engineering maintenance?",
     options: [
-      'A culture in which near-misses are reported, analysed, learned from and used to improve the system. Typically supported by no-blame reporting, structured analysis (e.g. 5-whys), feedback to the team, and visible changes in practice. Heinrich\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pyramid frames near-misses as the leading indicator of major incidents.',
-      'Identifying potential problems or improvements proactively and taking appropriate action — such as reporting hazards, suggesting efficiency improvements, or addressing issues before they become critical — while working within your level of authority',
-      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
-      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
+      'Waiting to be told exactly what to do before taking any action at all',
+      'Spotting problems or improvements proactively and acting within your authority',
+      'Attempting any repair yourself, regardless of whether it is within your competence',
+      'Always deferring every decision to a supervisor to avoid making a mistake',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'problem-approach',
     question: 'When faced with an unfamiliar fault on a piece of equipment, the best approach is:',
     options: [
-      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
-      'Death OR physical or mental impairment resulting in lifelong dependency on third party care for basic needs OR significantly reduced life expectancy.',
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
-      'Apply a structured diagnostic approach: gather information about the symptoms, consult technical documentation, form a hypothesis, test it methodically, and escalate if the fault is beyond your competence',
+      'Replace components one at a time by trial and error until it works',
+      'Guess the most likely cause and act on it without gathering information',
+      'Leave the fault for a more experienced colleague without investigating',
+      'Gather the symptoms, check the documentation, form and test a hypothesis, and escalate if needed',
     ],
     correctIndex: 3,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'When should you escalate a problem to your supervisor rather than attempting to solve it yourself?',
     options: [
-      'Model inclusive language; identify and accommodate reasonable adjustments where colleagues need them; ensure PEEPs are in place where required; intervene against discriminatory behaviour; document; escalate persistent issues.',
-      'Stop work, leave tools, follow the planned escape route (identified during your dynamic risk assessment on arrival) to the muster point, ensure non-employees evacuate with you, await account-for and the all-clear from the responsible person.',
-      'Arguing for the higher controls before defaulting to PPE. The L3 supervisor pushes back on "just give them masks" and asks "what engineering controls have we considered?". Documents the hierarchy reasoning. Inverts only when genuinely no higher control is reasonably practicable.',
-      'When the problem is beyond your current competence, involves safety risks you are not authorised to manage, requires specialist equipment or knowledge you do not have, or could have significant consequences if handled incorrectly',
+      'When it is beyond your competence, carries safety risks, or needs specialist knowledge',
+      'Only after you have already attempted the repair and made the fault worse',
+      'Never — an apprentice should always solve every problem independently',
+      'Only when the supervisor specifically asks you to report your progress',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Knowing when to escalate is a professional skill, not a sign of weakness. You should escalate when: the work is beyond your competence level, there are safety implications you cannot manage, specialist knowledge or equipment is needed, or the consequences of getting it wrong are significant. The assessor values appropriate escalation as evidence of professional judgement.',
   },
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of root cause analysis over simply fixing the immediate symptom?',
     options: [
-      'Where the employer employs five or more persons, the significant findings of the fire risk assessment must be recorded, including the fire safety measures in place and any groups of persons identified as being especially at risk',
-      'Oversized equipment, poor power factor, lighting left on in unoccupied areas, worn drive belts, air leaks, and equipment running outside its optimal parameters',
-      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing it from recurring — whereas symptom treatment only fixes the immediate effect and the same fault is likely to happen again',
-      'Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.',
+      'It is always faster than simply replacing the failed component',
+      'It removes the need to verify that the repair was successful',
+      'It addresses the underlying cause to prevent recurrence, not just the immediate effect',
+      'It allows the technician to skip documenting the fault entirely',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'Showing initiative in the workplace might include:',
     options: [
-      'The formal checkpoint between on-programme learning and end-point assessment, where pre-requisites are verified and the apprentice is confirmed as ready to be assessed independently by the EPAO',
-      'Identifying a recurring fault pattern and reporting it to your supervisor with a suggestion for a permanent solution, or noticing a safety hazard and taking immediate appropriate action',
-      'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
-      'It is denser than air and accumulates at low levels, is an asphyxiant that displaces oxygen, and at higher concentrations acts as a direct toxin affecting the central nervous system',
+      'Waiting for written instructions before reporting any fault you observe',
+      'Reporting a recurring fault with a suggested fix, or acting promptly on a safety hazard',
+      'Carrying out repairs on systems you have not yet been trained to work on',
+      'Ignoring minor issues until they develop into a full breakdown',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'A structured problem-solving approach for maintenance fault diagnosis typically follows:',
     options: [
-      'Repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing',
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
-      'Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s process for suggesting improvements',
+      'Replace the most accessible component first, then work outwards by trial and error',
+      'Wait for the fault to recur so more symptoms can be observed before acting',
+      'Define the problem, gather information, test each likely cause, fix, verify, and document',
+      'Energise the equipment repeatedly until the fault clears on its own',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 3,
     question: 'Root cause analysis differs from symptom treatment in that:',
     options: [
-      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
-      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
+      'Root cause analysis is always quicker because it skips the diagnostic stage',
+      'Root cause analysis only applies to mechanical faults, not electrical ones',
+      'Root cause analysis avoids the need to repair the immediate fault at all',
+      'It addresses the underlying cause to prevent recurrence, not just the immediate effect',
     ],
     correctAnswer: 3,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 4,
     question: 'When you identify a potential improvement to a maintenance procedure, you should:',
     options: [
-      "Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation's process for suggesting improvements",
-      "Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions",
-      "Repeatedly asking 'why?' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing",
-      "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
+      "Document the suggestion and raise it through your organisation's improvement process",
+      "Implement the change yourself immediately without telling anyone",
+      "Keep the idea to yourself in case it turns out to be wrong",
+      "Wait until your end-point assessment to mention it for the first time",
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Creative problem-solving in maintenance might involve:',
     options: [
-      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
-      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
+      'Bypassing a safety interlock to keep production running during a fault',
+      'Devising a safe temporary workaround while a permanent fix is sourced',
+      'Ignoring the manufacturer documentation in favour of personal preference',
+      'Using whatever part is nearest to hand regardless of its specification',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'When documenting a problem you solved for your portfolio, you should describe:',
     options: [
-      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
-      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
-      'The problem and its impact, your diagnostic approach, the options you considered, why you chose the solution you did, how you implemented it, and the outcome — including any follow-up actions',
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
+      'Only the final outcome, since the assessor is not interested in your method',
+      'Just the time it took you, so the assessor can judge your speed',
+      'The problem, your diagnostic approach, the options considered, the fix, and the outcome',
+      'A brief note that the equipment is now working, with no further detail',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'If your first attempt at solving a problem does not work, you should:',
     options: [
-      'Repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing',
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
-      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
+      'Repeat exactly the same action several more times in case it eventually works',
+      'Abandon the systematic method and start swapping components to see what helps',
+      'Assume the equipment is beyond repair and recommend replacement',
+      'Reassess the diagnosis, adjust your hypothesis, and try a different approach',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: 'Taking initiative as an apprentice means:',
     options: [
-      'Being proactive within your level of authority — asking questions, volunteering for learning opportunities, suggesting improvements, and taking appropriate action when you identify issues — while recognising when to seek guidance',
-      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
-      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
-      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
+      'Being proactive within your authority and recognising when to seek guidance',
+      'Taking on any task, including work beyond your training, to prove yourself',
+      'Making changes to safety-critical systems without seeking approval first',
+      'Avoiding questions so that you appear to already know everything',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: "The '5 Whys' technique for root cause analysis involves:",
     options: [
-      "Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again",
-      "Repeatedly asking 'why?' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing",
-      "Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help",
-      "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
+      "Asking five different colleagues for their opinion on the likely cause",
+      "Repeatedly asking 'why?' to drill down from the symptom to the underlying cause",
+      "Testing five possible components in turn until the faulty one is found",
+      "Listing the five most expensive parts and replacing them in order",
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'During the EPA, initiative and problem-solving are assessed through:',
     options: [
-      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
-      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
-      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
-      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
+      'A single written multiple-choice examination at the end of the programme',
+      'An interview with your employer rather than an independent assessor',
+      'Portfolio evidence of problems you solved, explored in the professional discussion and observation',
+      'A peer review carried out by other apprentices on the same course',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     question:
       'When working as part of a team to solve a complex problem, showing initiative means:',
     options: [
-      "Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process",
-      "Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again",
-      "The problem and its impact, your diagnostic approach, the options you considered, why you chose the solution you did, how you implemented it, and the outcome — including any follow-up actions",
-      "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
+      "Taking over the whole task yourself so the team does not slow you down",
+      "Staying silent so as not to challenge more experienced colleagues",
+      "Waiting to be assigned a specific task before contributing anything",
+      "Contributing ideas, sharing knowledge, and volunteering for tasks within your competence",
     ],
     correctAnswer: 3,
     explanation:
@@ -216,10 +216,10 @@ const quizQuestions = [
     id: 12,
     question: 'A fishbone (Ishikawa) diagram is used in problem-solving to:',
     options: [
-      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
-      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
-      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
-      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
+      'Organise potential causes into categories so all contributing factors are considered',
+      'Calculate the probable cost of repairing each component that has failed',
+      'Schedule the sequence of planned maintenance tasks across the year',
+      'Record the step-by-step repair instructions for a confirmed fault',
     ],
     correctAnswer: 0,
     explanation:

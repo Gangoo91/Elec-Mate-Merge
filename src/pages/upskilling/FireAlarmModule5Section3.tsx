@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 21.2.4 sets the distance below ceiling for the sensitive element of fire detectors. What are the figures for smoke and heat?',
     options: [
-      '0 mm to 50 mm for both.',
-      'Smoke: 25 mm to 600 mm below the ceiling. Heat: 25 mm to 150 mm below the ceiling. The numbers are unchanged from 2017 — only the clause re-numbering changed in 2025 (was 22.3 e). The lower bound (25 mm) keeps the sensing chamber clear of the dead-air boundary layer at the ceiling; the upper bound matches the smoke / heat plume spread expected at typical ceilings.',
-      'No range — flush to ceiling only.',
-      'Whatever fits.',
+      'Smoke and heat alike: 0 mm to 50 mm below the ceiling for both detector types.',
+      'Smoke: 25 mm to 600 mm below the ceiling. Heat: 25 mm to 150 mm below the ceiling.',
+      'No range given — the sensing element must sit flush to the ceiling for both types.',
+      'Smoke: 25 mm to 150 mm. Heat: 25 mm to 600 mm — the wider band given to heat.',
     ],
     correctIndex: 1,
     explanation:
-      'The 25 mm to 600 mm (smoke) / 25 mm to 150 mm (heat) range is one of the most-cited numbers in BS 5839-1. The 2025 revision keeps the figures and only re-numbers the clause. Below 25 mm the sensing chamber is in the dead-air layer; above the upper bound the plume has dispersed.',
+      'The 25-600 mm (smoke) / 25-150 mm (heat) range is one of the most-cited numbers in BS 5839-1. The figures are unchanged from 2017; the 2025 revision only re-numbers the clause (was 22.3 e). Below 25 mm the sensing chamber sits in the dead-air boundary layer at the ceiling; above the upper bound the plume has dispersed. The heat band is tighter because the heat plume reaches less far from the ceiling than smoke.',
   },
   {
     id: 'fam5-s3-heat-sleeping',
     question:
       'Under BS 5839-1:2025 §14, where should heat detectors NOT be installed in new L2 / L3 systems?',
     options: [
-      'Plant rooms.',
-      'In rooms in which people sleep. The 2025 revision recategorises sleeping rooms as high-risk and excludes heat detectors from sleeping room protection in new L2 / L3 work. Use a smoke detector or a multi-sensor with a smoke element instead. The change is not retrospective; existing systems continue. New work must reflect the rule.',
-      'Anywhere with a ceiling.',
-      'Any garage.',
+      'In plant rooms and boiler rooms, where high ambient temperatures cause false heat alarms.',
+      'In rooms in which people sleep — use smoke or a smoke-element multi-sensor instead.',
+      'In kitchens and laundries, where cooking and steam would otherwise trigger the heat element.',
+      'In integral garages, where vehicle exhaust heat could mask a developing fire.',
     ],
     correctIndex: 1,
     explanation:
-      'The 2025 §14 / §15 changes reflect that early warning of fire in sleeping accommodation requires smoke detection. Heat detectors only respond when the fire has reached the heat-detection threshold — too late for someone asleep. Smoke detection (point or multi-sensor with smoke element) gives earlier warning.',
+      'The 2025 revision recategorises sleeping rooms as high-risk and excludes heat detectors from sleeping-room protection in new L2 / L3 work. Heat detectors only respond once the fire reaches the heat-detection threshold — too late for someone asleep. Smoke detection (point or multi-sensor with smoke element) gives earlier warning. The change is not retrospective; existing systems continue, but new work must reflect the rule.',
   },
   {
     id: 'fam5-s3-mcp',
     question:
       'BS 5839-1:2025 sets the manual call point (MCP) mounting height as 1.4 m with what tolerance?',
     options: [
-      '+/- 1 m.',
-      '+200 mm and -300 mm — so an acceptable range of 1.1 m to 1.6 m measured from FFL to the centreline of the operating element. The 1.4 m datum is the design height; the tolerance permits relaxation in service to suit door frames, dado rails and other fixed obstructions. The 2025 revision clarified the tolerance figures explicitly.',
-      'No tolerance.',
-      'Whatever the wall height permits.',
+      '+/- 1 m, giving an acceptable range of 0.4 m to 2.4 m about the 1.4 m datum.',
+      '+200 mm and -300 mm, giving an acceptable range of 1.1 m to 1.6 m from FFL.',
+      'No tolerance at all — the operating element must be set at exactly 1.4 m AFFL.',
+      '+/- 300 mm symmetrical, giving a range of 1.1 m to 1.7 m about the datum.',
     ],
     correctIndex: 1,
     explanation:
-      'The 2025 revision makes the 1.4 m mounting height tolerance explicit: +200 mm and -300 mm. Acceptable range 1.1 m to 1.6 m. The 2017 revision was less clear. MCPs above 1.6 m or below 1.1 m are non-compliant in new work.',
+      'The 2025 revision makes the tolerance explicit: +200 mm and -300 mm, measured from FFL to the centreline of the operating element — an acceptable range of 1.1 m to 1.6 m. The 1.4 m datum is the design height; the tolerance permits relaxation to suit door frames, dado rails and other fixed obstructions. MCPs above 1.6 m or below 1.1 m are non-compliant in new work.',
   },
   {
     id: 'fam5-s3-linear',
     question:
       'BS 5839-1:2025 has given recognition to two BS EN product standards for linear heat cable. Which are they?',
     options: [
-      'BS EN 54-3 and BS EN 54-7.',
-      'BS EN 54-22 (resettable line type heat detectors) and BS EN 54-28 (non-resettable line type heat detectors). Linear heat cable is increasingly used in environments where point detectors are impractical (cable trays, conveyors, parking decks, escalators). The 2025 revision aligns BS 5839-1 product expectations with the BS EN 54 family.',
-      'BS EN 54-22 only.',
-      'BS EN 54-28 only.',
+      'BS EN 54-3 (sounders) and BS EN 54-7 (point smoke detectors), applied to the cable.',
+      'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) line-type heat detectors.',
+      'BS EN 54-22 (resettable) only — non-resettable cable remains outside the standard.',
+      'BS EN 54-28 (non-resettable) only — resettable cable remains outside the standard.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) — both new normative references in BS 5839-1:2025 §3 reflecting the increased use of linear heat cable. Resettable cable returns to service after activation; non-resettable cable is replaced. Selection follows the application: high-recurrence environments favour resettable, single-event environments may use non-resettable.',
+      'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) — both new normative references in BS 5839-1:2025 §3, reflecting the increased use of linear heat cable where point detectors are impractical (cable trays, conveyors, parking decks, escalators). Resettable cable returns to service after activation; non-resettable cable is replaced. High-recurrence environments favour resettable; single-event environments may use non-resettable.',
   },
 ];
 
@@ -82,138 +82,138 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 21.2.4 (re-numbered from 2017 22.3 e) sets the position of the sensitive element of point detectors below ceilings as...?',
     options: [
-      'Flush to the ceiling.',
-      'Smoke detectors: 25 mm to 600 mm below the ceiling. Heat detectors: 25 mm to 150 mm below the ceiling. The lower bound keeps the sensing chamber clear of the ceiling boundary layer where smoke and heat are slow to reach; the upper bound captures the plume before it disperses. Numbers are unchanged from 2017; 2025 only re-numbers the clause.',
-      '50 mm flat for everything.',
-      '500 mm minimum.',
+      'Smoke detectors: 25 mm to 600 mm below ceiling. Heat detectors: 25 mm to 150 mm.',
+      'Smoke and heat alike: the sensing element flush to the ceiling, with no gap beneath it.',
+      'Smoke and heat alike: a single fixed 50 mm gap below ceiling, regardless of type.',
+      'Smoke detectors: 25 mm to 150 mm below ceiling. Heat detectors: 25 mm to 600 mm.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Smoke 25-600 mm, heat 25-150 mm below ceiling. One of the most-cited rules in the standard. Sensing element is positioned within the band; not flush, not arbitrarily deep.',
+      'Smoke 25-600 mm, heat 25-150 mm below ceiling — one of the most-cited rules in the standard. The lower bound keeps the sensing chamber clear of the ceiling boundary layer where air movement is minimal; the upper bound captures the plume before it disperses. The heat band is the tighter one because the heat plume reaches less far from the ceiling than smoke. Numbers are unchanged from 2017; 2025 only re-numbers the clause.',
   },
   {
     id: 2,
     question:
       'In a new Category L2 system installed under BS 5839-1:2025, what detector type should be used in a bedroom?',
     options: [
-      'Heat detector.',
-      'A smoke detector or a multi-sensor detector that includes a smoke sensing element, configured to respond to smoke. The 2025 revision §14 / §15 excludes heat detectors from sleeping rooms in new L2 / L3 work. Sleeping rooms are now classed as high-risk; smoke detection gives earlier warning than heat for someone asleep.',
-      'Any of the above.',
-      'No detector.',
+      'A heat detector, since the bedroom sits above a kitchen and heat is less false-alarm prone.',
+      'A line-type beam detector, projected across the bedroom at high level for full coverage.',
+      'A smoke detector or a smoke-element multi-sensor, configured to respond to smoke.',
+      'A manual call point only, on the basis the occupant will raise the alarm themselves.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Smoke or smoke-mode multi-sensor in sleeping rooms in new L2 / L3 work. Heat is excluded by the 2025 revision. Existing systems continue; new work follows the rule.',
+      'Smoke or smoke-mode multi-sensor in sleeping rooms in new L2 / L3 work. The 2025 revision §14 / §15 excludes heat detectors from sleeping rooms — sleeping rooms are now classed as high-risk and smoke detection gives earlier warning for someone asleep. Heat is excluded regardless of a kitchen below; the exclusion has no use-based exception. Existing systems continue; new work follows the rule.',
   },
   {
     id: 3,
     question:
       'Manual call point mounting height per BS 5839-1:2025 is 1.4 m to the operating element with a tolerance of...?',
     options: [
-      '+/- 0 mm — exactly 1.4 m.',
-      '+200 mm / -300 mm. Acceptable range 1.1 m to 1.6 m. The 2025 revision states the tolerance explicitly. The MCP is reachable by an adult of average height while standing; the lower limit allows for wall-mounted obstructions; the upper limit prevents fitments above standing reach.',
-      '+500 mm / -500 mm.',
-      'Anywhere on the wall.',
+      'Zero tolerance — the MCP must be set at exactly 1.4 m to the operating element.',
+      '+500 mm / -500 mm, an acceptable range of 0.9 m to 1.9 m, to suit any wall feature.',
+      '+/- 200 mm symmetrical, an acceptable range of 1.2 m to 1.6 m about the 1.4 m datum.',
+      '+200 mm / -300 mm, an acceptable range of 1.1 m to 1.6 m measured from FFL.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'MCP at 1.4 m, +200 / -300 mm tolerance, range 1.1-1.6 m. The 2025 explicit-tolerance statement removes a long-standing area of debate.',
+      'MCP at 1.4 m, +200 / -300 mm tolerance, range 1.1-1.6 m — the tolerance is asymmetric, not symmetrical. The MCP stays reachable by a standing adult of average height; the lower limit allows for wall-mounted obstructions and the upper limit prevents fitments above standing reach. The 2025 explicit-tolerance statement removes a long-standing area of debate.',
   },
   {
     id: 4,
     question:
       'A beam detector consists of a transmitter and a receiver mounted across a large open space. Alignment must be...?',
     options: [
-      'Approximate.',
-      'Precise, per the manufacturer’s alignment tool (typically a sight, target and signal-strength indicator), with the beam set within the manufacturer-specified angular tolerance, the beam path clear of obstructions throughout the working envelope, and a record of the as-installed alignment on the commissioning documentation. Misalignment causes spurious alarms or missed signals; the alignment is critical-path commissioning.',
-      'Vague.',
-      'Pointed at the floor.',
+      'Precise, per the manufacturer’s alignment tool, with a clear path and documented setting.',
+      'Set roughly by eye, since the receiver tolerates a wide spread and self-corrects in software.',
+      'Aimed slightly downward toward the floor so rising smoke crosses the beam path sooner.',
+      'Fixed once at the factory, so no on-site alignment of transmitter to receiver is required.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Beam alignment is a precision activity. Manufacturer alignment tool, signal-strength target, clear beam path, documented as-installed setting. Misalignment is the dominant beam-detector failure mode in service.',
+      'Beam alignment is a precision activity: manufacturer alignment tool (sight, target and signal-strength indicator), beam set within the manufacturer angular tolerance, path clear of obstructions throughout the working envelope, and the as-installed alignment recorded on the commissioning documentation. There is no self-correction for a roughly-aimed beam; misalignment is the dominant beam-detector failure mode in service.',
   },
   {
     id: 5,
     question: 'Sounder coverage for a Category L system per BS 5839-1:2025 is...?',
     options: [
-      'Whatever sounds loudest.',
-      'A minimum of 65 dB(A) at all accessible points in the protected area, increasing to 75 dB(A) at the bed-head in sleeping accommodation, and at least 5 dB above any background noise lasting 30 seconds or longer. The audibility test verifies the levels at handover and at every periodic service.',
-      '50 dB(A) only.',
-      '90 dB(A) everywhere.',
+      'A flat 50 dB(A) at all points, with no separate requirement for sleeping accommodation.',
+      '65 dB(A) at accessible points, 75 dB(A) at the bed-head, and 5 dB above sustained background.',
+      'A flat 90 dB(A) everywhere in the building, including unoccupied plant rooms and risers.',
+      'A minimum of 75 dB(A) everywhere, reduced to 65 dB(A) at the bed-head so as not to disturb sleep.',
     ],
     correctAnswer: 1,
     explanation:
-      '65 dB(A) general / 75 dB(A) bed-head / 5 dB above sustained background. The figures are calibrated to wake a sleeping occupant (bed-head) and overcome plausible background (5 dB margin). Verified at commissioning by sound-level survey.',
+      '65 dB(A) at all accessible points / 75 dB(A) at the bed-head / at least 5 dB above any background noise lasting 30 seconds or longer. The figures are calibrated to wake a sleeping occupant (bed-head is the HIGHER level, not lower) and overcome plausible background (5 dB margin). Verified by sound-level survey at handover and at every periodic service.',
   },
   {
     id: 6,
     question:
       'Where a visual alarm device (VAD) is the primary signal for evacuation (e.g. for hearing-impaired occupants), it must comply with...?',
     options: [
-      'Aesthetic preference.',
-      'BS EN 54-23 — covering light intensity, coverage volume, and verified by calculation or by a manufacturer’s coverage table. The VAD has a defined cuboid or cylinder of coverage at a specified light intensity (cd / m²); the design verifies the layout produces continuous coverage across the protected area for an occupant whose attention can only be gained visually.',
-      'A flag pole.',
-      'Daylight alone.',
+      'BS EN 54-3 — the product standard for fire-alarm sounders, applied to the visual device.',
+      'BS EN 54-7 — the standard for point smoke detectors, since the VAD shares the housing.',
+      'No specific product standard; the choice is left to the designer’s aesthetic preference.',
+      'BS EN 54-23 — covering light intensity and coverage volume, verified by table or calculation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 54-23 is the product standard for VADs. Coverage volume defined by the manufacturer per the standard; design layout produces continuous coverage. Where VAD is primary, BS EN 54-23 is the governing reference.',
+      'BS EN 54-23 is the product standard for VADs (BS EN 54-3 is for sounders, 54-7 for smoke detectors). The VAD has a defined cuboid or cylindrical coverage volume at a specified light intensity (cd / m²); the design verifies the layout produces continuous coverage across the protected area for an occupant whose attention can only be gained visually. Where the VAD is the primary signal, BS EN 54-23 is the governing reference.',
   },
   {
     id: 7,
     question:
       'BS 5839-1:2025 §3 introduces new normative references for linear heat cable. Which products are now covered?',
     options: [
-      'Smoke detectors only.',
-      'BS EN 54-22 (resettable line type heat detectors) and BS EN 54-28 (non-resettable line type heat detectors) — explicitly recognising linear heat cable as a system component covered by the standard. Recognition aligns BS 5839-1 with the EN 54 product family.',
-      'Conventional MCPs only.',
-      'Sounder bases only.',
+      'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) line-type heat detectors.',
+      'BS EN 54-5 (point heat detectors) and BS EN 54-7 (point smoke detectors), re-applied to cable.',
+      'BS EN 54-11 (manual call points) and BS EN 54-3 (sounders), covering the cable’s end devices.',
+      'BS EN 54-20 (aspirating smoke detectors) and BS EN 54-12 (line-type optical smoke detectors).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 54-22 and BS EN 54-28 — both new normative references in 2025. Linear heat cable is increasingly used in cable-tray, conveyor, parking and escalator applications.',
+      'BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) — both new normative references in 2025, specifically for line-type heat detection. They explicitly recognise linear heat cable as a system component, aligning BS 5839-1 with the EN 54 product family. Linear heat cable is increasingly used in cable-tray, conveyor, parking and escalator applications.',
   },
   {
     id: 8,
     question: 'Detector documentation at install per BS 5839-1:2025 §15 / §20 should record...?',
     options: [
-      'Nothing.',
-      'Detector address, location (room, position), type (optical, ionisation, multi-sensor with operating mode set, heat with class, beam, linear heat) and the configuration (e.g. multi-sensor mode programmed). Recorded at install and made available to the commissioning technician and to the operating and maintenance manual. The 2025 revision §15 places greater emphasis on detector-selection records.',
-      'The colour of the carpet only.',
-      'A guess.',
+      'Only the total detector count for the building, for the purpose of ordering spares.',
+      'Only the loop number, with individual detector addresses left to be found at the next service.',
+      'Each detector’s address, location, type and configuration (e.g. multi-sensor mode set).',
+      'Only the manufacturer and model, since type and configuration can be read off the panel later.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Address, location, type, configuration. The 2025 revision §15 (greater emphasis on selection and application) and §20.11 (record of detector type and configuration) tighten the documentation expectation. The maintainer reads the record at every service.',
+      'A full per-detector record — address, location (room, position), type (optical, ionisation, multi-sensor with mode set, heat with class, beam, linear heat) and configuration — not just a count or a model. The 2025 revision §15 (greater emphasis on selection and application) and §20.11 (record of type and configuration) tighten the expectation; the record goes to the commissioning technician and the O&M manual, and the maintainer reads it at every service.',
   },
   {
     id: 9,
     question:
       'A closely-spaced beam configuration in 21.2 of BS 5839-1:2025 has been clarified as...?',
     options: [
-      'Beams more than 5 m apart.',
-      'Beams approximately 1 m or less centre-to-centre. The 2017 revision left "closely spaced" undefined; the 2025 revision fixes it. Closely-spaced beams trap smoke and require additional detector positions per the spacing rules.',
-      'Beams of any spacing.',
-      'Beams over 10 m apart.',
+      'Beams more than 5 m apart centre-to-centre across the protected open space.',
+      'Beams of any spacing at all, provided they share a single common transmitter.',
+      'Beams more than 10 m apart, spanning the full width of a large open space.',
+      'Beams approximately 1 m or less centre-to-centre across the protected open space.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Closely-spaced beams are now defined as approximately 1 m or less centre-to-centre. The 2025 clarification removes a long-standing ambiguity.',
+      'Closely-spaced beams are now defined as approximately 1 m or less centre-to-centre — a small spacing, not a wide one. The 2017 revision left "closely spaced" undefined; the 2025 revision fixes it. Closely-spaced structural beams trap smoke and require additional detector positions per the spacing rules.',
   },
   {
     id: 10,
     question:
       'A detector base installed at first-fix without the head — to be plugged in at second-fix — should be protected against what during the construction phase?',
     options: [
-      'Nothing — it is fine bare.',
-      'Dust ingress (drilling and cutting dust will contaminate sensing elements that arrive later), paint and decorating overspray, mechanical impact, and accidental disconnection of terminations. Manufacturer dust caps fit the base during the construction phase; heads are fitted at second-fix only after the area is clean. The maintainer arriving to a contaminated base finds detectors signalling fault or producing false alarms in service.',
-      'Cosmetic damage only.',
-      'Heat only.',
+      'Dust ingress, paint overspray, mechanical impact and accidental disconnection of terminations.',
+      'Cosmetic surface marking only — the live electronics sit in the head, which is fitted later.',
+      'Excess heat only, since the bare base is most vulnerable to thermal damage during the build.',
+      'Nothing in particular — a bare base is sealed enough to be left open through construction.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Dust caps protect bases during construction. The base is wired and tested at first-fix; the head is fitted at second-fix only when the area is clean and dry. Skipping the dust caps leads to contaminated detectors and false alarms in service.',
+      'Manufacturer dust caps protect bases during the construction phase against drilling and cutting dust (which contaminates the sensing elements fitted later), decorating overspray, impact and disconnection. The base is wired and tested at first-fix; the head is fitted at second-fix only once the area is clean and dry. Skipping the dust caps leads to contaminated detectors signalling fault or producing false alarms in service.',
   },
 ];
 

@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is coordinating equipment important on site?',
     options: [
-      'Measure end-to-end resistance of each conductor (L, N, E)',
+      'It reduces the number of qualified electricians a job needs',
       'To ensure team members have what they need to work efficiently and safely',
-      'Immediately, where the inspector believes there is a risk of serious personal injury',
-      'Enabling components to be separated and reused at end of life',
+      'It removes the need for a risk assessment before starting work',
+      'It allows tools to be used beyond their service intervals',
     ],
     correctIndex: 1,
     explanation:
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one common issue caused by poor coordination.',
     options: [
-      'At every change of direction to ensure visibility',
-      'At least three: emergency fund, tax provision, and general savings',
+      'Tools wearing out faster than expected',
+      'Workers carrying too many of their own hand tools',
       'Multiple workers needing the same specialist tool at once',
-      'The cross-sectional area of the line conductor',
+      'Equipment being serviced more often than necessary',
     ],
     correctIndex: 2,
     explanation:
@@ -48,9 +48,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'How can equipment availability be tracked effectively?',
     options: [
-      'Work requires load calculations and design assessment',
-      'Low sampling rate relative to signal frequency',
-      'Inhalation and skin absorption',
+      'By relying on workers to remember who took what',
+      'By buying duplicates of every shared item',
+      'By storing all equipment in one locked container',
       'Using sign-in/out logs or booking systems',
     ],
     correctIndex: 3,
@@ -64,10 +64,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is equipment coordination important?',
     options: [
-      'Correct the wiring error and retest before energisation',
+      'To reduce the supervision needed on a project',
       'To ensure team members have what they need to work efficiently and safely',
-      'The time specified for the circuit type (0.4s for final, 5s for distribution)',
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
+      'To avoid having to record tool inspections',
+      'To let teams skip the daily site briefing',
     ],
     correctAnswer: 1,
     explanation:
@@ -75,10 +75,12 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: Poor coordination can lead to disputes and downtime.',
+    question: 'Which is the most likely consequence of poor equipment coordination?',
     options: [
-      "False - coordination doesn't affect team dynamics",
-      'True - poor coordination causes conflicts and delays',
+      'Faster completion of every task',
+      'Disputes over shared resources and downtime',
+      'Lower wear and tear on shared tools',
+      'A reduced need for site storage',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,9 +104,9 @@ const quizQuestions = [
     question: 'What is a simple system for tracking who has equipment?',
     options: [
       'A sign-in/out or booking log',
-      'Kinking or creating uneven bends',
-      'Green rectangle or square',
-      'Protect people and property',
+      'A colour-coded storage shelf',
+      'A monthly stock count',
+      'A manufacturer warranty card',
     ],
     correctAnswer: 0,
     explanation:
@@ -114,10 +116,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should be done at daily team briefings?',
     options: [
-      'To enable safe jacket removal without cutting tools',
+      'Carry out portable appliance testing of every tool',
       'Plan equipment use and resolve potential conflicts',
-      'Verify continuity and earth fault loop impedance',
-      'A bi-energy machine that can switch between electric and diesel',
+      'Complete the installation certificate paperwork',
+      'Order replacement stock for the following week',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,9 +142,9 @@ const quizQuestions = [
     id: 7,
     question: 'How should equipment be returned after use?',
     options: [
-      'Current at or above locked rotor current for extended period',
-      'Triple-N harmonics add in the neutral rather than cancelling',
-      'Degree or higher qualification in building services',
+      'Left wherever the last task finished',
+      'Returned only at the end of the project',
+      'Passed straight to the next worker without checking',
       'In good condition, stored, and ready for the next user',
     ],
     correctAnswer: 3,
@@ -155,8 +157,8 @@ const quizQuestions = [
     options: [
       'Basic hand tools',
       'Only PPE',
-      'All tools including specialist equipment',
-      'No tools at all',
+      'All tools including specialist access equipment',
+      'Only test instruments',
     ],
     correctAnswer: 0,
     explanation:
@@ -166,10 +168,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is communication important in equipment coordination?',
     options: [
-      'When the MCB trips immediately — this indicates a dead short',
+      'It removes the need for any booking system',
       'It prevents clashes and ensures fair use of shared resources',
-      'Lower WIP limits generally reduce lead time for each job',
-      'Until the end of construction work at the site',
+      'It guarantees tools never need maintenance',
+      'It allows tasks to run without a schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,10 +181,10 @@ const quizQuestions = [
     id: 10,
     question: 'What was the problem in the warehouse lighting project example?',
     options: [
-      'Reduces energy costs and environmental impact',
-      'Protection against finger contact with live parts',
+      'The wrong lamps were ordered for the fittings',
+      'The lifting equipment failed its inspection',
       'Two teams needed the same scissor lift at once, causing delays',
-      'Emergency lighting is required regardless of ceiling height in occupied spaces',
+      'There were not enough electricians on site',
     ],
     correctAnswer: 2,
     explanation:

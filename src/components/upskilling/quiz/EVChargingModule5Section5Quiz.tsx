@@ -14,8 +14,8 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     question: 'What power levels are expected for ultra-fast charging systems by 2027?',
-    options: ['200-350kW', '500-750kW', '800-1000kW', '1500-2000kW'],
-    correctAnswer: 1,
+    options: ['500-750kW', '200-350kW', '800-1000kW', '1500-2000kW'],
+    correctAnswer: 0,
     explanation:
       'Near-future ultra-fast charging systems (2025-2027) are expected to achieve 500-750kW with silicon carbide power electronics.',
   },
@@ -35,8 +35,8 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     question: 'What frequency is specified in SAE J2954 for wireless EV charging?',
-    options: ['50kHz', '85kHz', '125kHz', '200kHz'],
-    correctAnswer: 1,
+    options: ['50kHz', '125kHz', '200kHz', '85kHz'],
+    correctAnswer: 3,
     explanation:
       'SAE J2954 specifies 85kHz as the standard frequency for wireless EV charging to ensure interoperability and safety.',
   },
@@ -55,12 +55,12 @@ const quizQuestions: QuizQuestion[] = [
   {
     question: 'Which technology enables V2G systems to provide grid stabilisation services?',
     options: [
-      'Unidirectional inverters',
       'Bidirectional inverters',
+      'Unidirectional inverters',
       'AC-DC converters only',
       'Simple rectifiers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Bidirectional inverters enable V2G systems to both charge from and discharge to the grid, providing various grid services including frequency regulation.',
   },
@@ -79,20 +79,20 @@ const quizQuestions: QuizQuestion[] = [
   {
     question: 'How will autonomous vehicles impact charging infrastructure design?',
     options: [
-      'No significant changes required',
-      'Only faster charging needed',
+      'No significant changes will be required',
       'Automated connection systems and potentially wireless charging',
-      'Manual intervention will increase',
+      'Only faster charging speeds will be needed',
+      'Manual intervention at the charger will increase',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Autonomous vehicles will require automated connection systems and may drive adoption of wireless charging to enable unmanned operations.',
   },
   {
     question:
       'What is the expected timeline for commercial deployment of dynamic wireless charging?',
-    options: ['2024-2025', '2026-2028', '2030-2032', 'After 2035'],
-    correctAnswer: 1,
+    options: ['2024-2025', '2030-2032', 'After 2035', '2026-2028'],
+    correctAnswer: 3,
     explanation:
       'Dynamic wireless charging is expected to see commercial deployment between 2026-2028, following static wireless charging adoption.',
   },

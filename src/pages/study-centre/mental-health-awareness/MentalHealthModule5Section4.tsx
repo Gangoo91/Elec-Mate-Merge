@@ -21,8 +21,8 @@ const quickCheckQuestions = [
     id: 'mh5s4-lighthouse-helpline',
     question:
       "What is the telephone number for the Lighthouse Club's Construction Industry Helpline?",
-    options: ['0800 587 5678', '0345 605 1956', '116 123', '0300 123 3393'],
-    correctIndex: 1,
+    options: ['0345 605 1956', '0800 587 5678', '116 123', '0300 123 3393'],
+    correctIndex: 0,
     explanation:
       "The Lighthouse Club's Construction Industry Helpline number is 0345 605 1956. This helpline is available 24/7 and provides emotional, financial, and legal support specifically for construction workers and their families. It is one of the most important numbers anyone in the construction industry can know. The Samaritans number is 116 123, and Mind's Infoline is 0300 123 3393 — both are also valuable resources, but the Lighthouse Club helpline is specifically designed for the construction industry.",
   },
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     options: [
       'Write a comprehensive mental health policy for their company',
       'Commission a Deloitte-style research project into mental health costs',
-      'Have one genuine conversation with a colleague about how they are doing',
       'Become a qualified mental health professional',
+      'Have one genuine conversation with a colleague about how they are doing',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "While policies, research, and qualifications are all valuable, the most powerful thing any construction worker can do TODAY is have one genuine conversation with a colleague. Not the quick 'you alright, mate?' as you walk past, but actually stopping, making eye contact, and genuinely listening to the answer. One conversation can be the difference between someone getting help and someone suffering in silence. It costs nothing, takes five minutes, and could save a life. Culture change starts with individual actions, and every single person in construction can contribute.",
   },
@@ -82,8 +82,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Mates in Mind was founded in which year?',
-    options: ['2010', '2014', '2017', '2020'],
-    correctAnswer: 2,
+    options: ['2017', '2014', '2010', '2020'],
+    correctAnswer: 0,
     explanation:
       'Mates in Mind was founded in 2017, established by the Health in Construction Leadership Group in response to the disproportionately high rates of mental ill-health and suicide in the construction industry. Since its founding, Mates in Mind has trained thousands of construction workers and partnered with hundreds of companies to improve mental health awareness and support across the industry.',
   },
@@ -124,8 +124,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Which organisation provides the 24/7 helpline number 116 123?',
-    options: ['Mind', 'CALM (Campaign Against Living Miserably)', 'Samaritans', 'Lighthouse Club'],
-    correctAnswer: 2,
+    options: ['Mind', 'CALM (Campaign Against Living Miserably)', 'Lighthouse Club', 'Samaritans'],
+    correctAnswer: 3,
     explanation:
       '116 123 is the Samaritans helpline number. It is available 24 hours a day, 365 days a year, is free to call from any phone, and is completely confidential. The Samaritans are not just for people who are suicidal — they support anyone who is struggling with any emotional difficulty. They are trained listeners who provide a safe space to talk without judgement. The Samaritans also accept emails (jo@samaritans.org) for people who find it easier to write than to speak.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 6,
     question: 'CALM (Campaign Against Living Miserably) focuses specifically on:',
     options: [
-      "Women's mental health in the workplace",
       'Preventing suicide, particularly among men',
+      "Women's mental health in the workplace",
       'Providing medication for mental health conditions',
       'Training mental health professionals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CALM (Campaign Against Living Miserably) is a charity specifically focused on preventing suicide, particularly among men. Men account for approximately 75% of all suicides in the UK, and CALM works to change the culture that prevents men from seeking help. They provide a helpline (0800 58 58 58, 5pm–midnight daily), a webchat service, and campaign actively to challenge the stigma around male mental health. Given that construction is a male-dominated industry with high suicide rates, CALM is an especially relevant resource.',
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
       'Which of the following is the MOST effective first step an individual construction worker can take to support mental health in their workplace?',
     options: [
       'Drafting a formal proposal for a company-wide mental health programme',
-      'Learning one helpline number and having one genuine conversation with a colleague',
       "Conducting an independent audit of the company's mental health provision",
+      'Learning one helpline number and having one genuine conversation with a colleague',
       'Researching the latest academic literature on workplace mental health',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The most effective first step is the simplest: learn one helpline number (such as the Lighthouse Club on 0345 605 1956 or Samaritans on 116 123) and have one genuine conversation with a colleague about how they are doing. Grand plans and formal proposals have their place, but culture change happens through individual daily actions. If every construction worker learned one number and had one conversation, the impact would be enormous. Small actions, done consistently, create the culture change that saves lives.',
   },
@@ -163,10 +163,10 @@ const quizQuestions = [
     options: [
       'There are very few resources available specifically for construction workers',
       'Resources exist but they are expensive and only available to large companies',
-      'There is a wide range of free, accessible resources specifically designed for the construction industry, including helplines, charities, training, and peer support',
       'Mental health resources are only useful for people with diagnosed clinical conditions',
+      'There is a wide range of free, accessible resources specifically designed for the construction industry, including helplines, charities, training, and peer support',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The construction industry now has access to a wide range of free and accessible mental health resources. The Lighthouse Club helpline is available 24/7 for any construction worker. Mates in Mind provides training and resources for companies of all sizes. Andy's Man Club offers free weekly peer support groups across the UK. Mind, Samaritans, and CALM provide free support for anyone. The Building Mental Health framework is freely available. Many of these resources are specifically designed for the construction industry and understand its unique culture and challenges. The resources exist — the challenge is making sure every worker knows about them.",
   },

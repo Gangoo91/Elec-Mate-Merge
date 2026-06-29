@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary cause of harmonic distortion in modern electrical installations?',
     options: [
-      'Resistive heating loads',
       'Non-linear loads such as VFDs and LED drivers',
+      'Resistive heating loads',
       'Incandescent lighting',
       'Electric motors running at full load',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Non-linear loads like Variable Frequency Drives (VFDs), LED drivers, switch-mode power supplies, and electronic equipment draw current in pulses rather than smooth sine waves, creating harmonic frequencies that distort the supply waveform.',
   },
@@ -41,8 +41,8 @@ const quickCheckQuestions = [
     id: 'pq-check-2',
     question:
       'According to EN 50160, what is the maximum permitted Total Harmonic Distortion (THD) for LV supply voltage?',
-    options: ['5%', '8%', '10%', '15%'],
-    correctIndex: 1,
+    options: ['5%', '10%', '15%', '8%'],
+    correctIndex: 3,
     explanation:
       'EN 50160 specifies that THD of the supply voltage should not exceed 8% under normal operating conditions, including all harmonics up to the 40th order. Individual harmonic limits also apply.',
   },
@@ -74,12 +74,12 @@ const quizQuestions = [
     id: 2,
     question: "Which harmonic orders are considered 'triplen' harmonics?",
     options: [
-      '2nd, 4th, 6th (even multiples)',
       '3rd, 9th, 15th (multiples of 3)',
+      '2nd, 4th, 6th (even multiples)',
       '5th, 7th, 11th (odd non-triplen)',
       '1st, 2nd, 3rd (fundamental and first two)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Triplen harmonics are multiples of 3 (3rd, 9th, 15th, 21st, etc.) and are zero-sequence harmonics that add in the neutral.',
   },
@@ -113,8 +113,8 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the Pst (short-term flicker severity) limit for LV supplies under EN 50160?',
-    options: ['0.5', '1.0', '1.5', '2.0'],
-    correctAnswer: 1,
+    options: ['0.5', '1.5', '2.0', '1.0'],
+    correctAnswer: 3,
     explanation:
       'EN 50160 specifies a Pst (short-term flicker severity) limit of 1.0 for LV supplies.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Which type of equipment is most susceptible to damage from harmonic heating effects?',
     options: [
-      'Resistive heaters',
       'Transformers and capacitors',
+      'Resistive heaters',
       'Incandescent lamps',
       'Simple contactors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Transformers experience additional eddy current and hysteresis losses from harmonics. Capacitors can suffer from harmonic resonance causing dramatic overcurrents.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main cause of voltage flicker in industrial installations?',
     options: [
-      'Harmonic distortion',
       'Large motor starting and arc furnaces',
+      'Harmonic distortion',
       'Power factor correction capacitors',
       'Underground cable charging',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Large motor starting (which can draw 6-8x FLC) and arc furnaces (due to erratic arc impedance) are the main causes of voltage flicker.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'A K-rated transformer is specifically designed to handle:',
     options: [
       'High ambient temperatures',
-      'Harmonic-rich loads',
       'Frequent overloads',
+      'Harmonic-rich loads',
       'High fault levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'K-rated transformers are designed to handle harmonic-rich loads without derating. K-factor ratings (K-4, K-13, K-20) indicate harmonic handling capability.',
   },

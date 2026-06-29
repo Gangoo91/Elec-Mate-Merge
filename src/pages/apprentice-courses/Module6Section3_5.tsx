@@ -66,20 +66,25 @@ const Module6Section3_5 = () => {
     },
     {
       id: 5,
-      question: 'True or False: A multimeter is recommended for proving dead.',
-      options: ['True', 'False'],
+      question: 'Which statement about using a multimeter to prove dead is correct?',
+      options: [
+        'It is the recommended instrument for proving dead',
+        'It can give false or confusing readings and is not recommended',
+        'It is only acceptable on three-phase circuits',
+        'It is preferred over a two-pole tester for safety',
+      ],
       correctAnswer: 1,
       explanation:
-        "False. Multimeters can give false or confusing readings and aren't recommended for proving dead.",
+        "Multimeters can give false or confusing readings and aren't recommended for proving dead; a GS38-compliant two-pole tester should be used.",
     },
     {
       id: 6,
       question: 'What could happen if you skip the re-prove step?',
       options: [
-        'They must be competent or supervised',
-        'Resistance values add together',
-        'You may trust a faulty tester',
-        'Fused Connection Unit, 13 amp',
+        'The proving unit battery would drain faster',
+        'The circuit could become re-energised by itself',
+        'You may trust a tester that has failed during testing',
+        'The test leads would need recalibrating',
       ],
       correctAnswer: 2,
       explanation:
@@ -115,14 +120,14 @@ const Module6Section3_5 = () => {
       id: 9,
       question: 'Why are voltage pens not acceptable for proving dead?',
       options: [
-        'Both are measured in watts; 1 W = 1 J/s in both cases',
-        'They only detect potential presence, not confirm dead',
-        'Cable resistance increases with temperature',
-        'Regularly based on competency assessment',
+        'They can only be used on three-phase supplies',
+        'They only detect a potential field, not confirm dead',
+        'They require an external power source to work',
+        'They are too slow to give a reading',
       ],
       correctAnswer: 1,
       explanation:
-        'Voltage pens only detect the presence of potential fields, they cannot reliably confirm a circuit is dead.',
+        'Voltage pens only detect the presence of potential fields; they cannot reliably confirm a circuit is dead.',
     },
     {
       id: 10,

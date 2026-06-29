@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary factor that determines the severity of an electric shock injury?',
     options: [
-      'Induction burn from proximity to high-frequency conductors',
+      'The voltage of the supply alone, regardless of any other factor',
       'The magnitude of current flowing through the body and its duration',
-      'Never miss twice in a row; get back on track immediately',
-      'Ensuring cables and equipment survive fault conditions',
+      'The colour of the insulation on the conductor touched',
+      'The make and model of the equipment being worked on',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following best describes the mechanism of electric shock?',
     options: [
-      'Ensuring photos are clear, well-lit, captioned with your role, and taken with permission',
+      'Static charge building up on the surface of the skin over time',
       'Current flows through the body between two points at different potential, disrupting normal biological function',
-      'Same dead-polarity test as a standard socket (line at LINE terminal); functional check via charging a known device confirms output polarity',
-      'There is no set minimum — readings should be taken to confirm the atmosphere is safe',
+      'Radiant heat from a conductor warming the body without contact',
+      'Magnetic fields from cables inducing a voltage in the bloodstream',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which secondary injury is MOST commonly associated with electric shock at height?',
     options: [
-      'Induction burn from proximity to high-frequency conductors',
+      'Hearing loss from the noise of the supply being interrupted',
       'Falls caused by involuntary muscle contraction or startle response',
-      'Employers, self-employed persons and employees — all who may be affected',
-      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
+      'Long-term respiratory illness from inhaling ozone',
+      'Repetitive strain injury from gripping the conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'At 50 Hz AC, the body is particularly vulnerable because:',
     options: [
-      'Falls caused by involuntary muscle contraction or startle response',
-      'Touching a 230 V live conductor with wet hands while standing on a damp concrete floor',
+      'At 50 Hz the skin offers almost no electrical resistance at all',
+      '50 Hz produces far more heat in the body than any other frequency',
       '50 Hz is close to the frequency range that most effectively causes ventricular fibrillation',
-      'Employers, self-employed persons and employees — all who may be affected',
+      '50 Hz current cannot be detected by any residual current device',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'The Electricity at Work Regulations 1989 place duties on:',
     options: [
-      'Falls caused by involuntary muscle contraction or startle response',
-      'Touching a 230 V live conductor with wet hands while standing on a damp concrete floor',
-      '50 Hz is close to the frequency range that most effectively causes ventricular fibrillation',
+      'Only the manufacturer of the electrical equipment',
+      'Only the Distribution Network Operator supplying the premises',
+      'Only employers, with no duties placed on individual workers',
       'Employers, self-employed persons and employees — all who may be affected',
     ],
     correctAnswer: 3,

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main danger of a loose connection?',
     options: [
-      'To avoid calibration discrepancies',
+      'It causes the supply voltage to rise above normal',
       'Overheating and potential fire risk',
-      'A suitable and sufficient risk assessment',
-      'It optimises solar irradiance capture',
+      'It reduces the current drawn by the circuit',
+      'It improves continuity at the terminal',
     ],
     correctIndex: 1,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should you record all fault rectification work?',
     options: [
-      'It could not detect a broken neutral conductor',
-      'A government financial incentive for renewable heating',
-      'Learning normal patterns to identify anomalies',
+      'To increase the labour time charged to the customer',
+      'To avoid having to re-test the circuit afterwards',
+      'To remove the need for a risk assessment',
       'For site documentation and quality assurance',
     ],
     correctIndex: 3,
@@ -68,16 +68,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: You should re-test the installation after correcting a fault.',
+    question: 'Why should you re-test the installation after correcting a fault?',
     options: [
-      'Only for major faults',
-      'Only if required by regulations',
-      'True',
-      'False',
+      'To increase the value of the job for invoicing',
+      'It is only necessary for faults on the main supply',
+      'To verify the repair and confirm no new faults were introduced',
+      'Re-testing is not required once the fault is cleared',
     ],
     correctAnswer: 2,
     explanation:
-      'True - Re-testing after fault correction verifies the repair and ensures no new faults were introduced.',
+      'Re-testing after fault correction verifies the repair and ensures no new faults were introduced before the circuit is returned to service.',
   },
   {
     id: 3,
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which test instrument is used to check insulation condition?',
     options: [
-      '70-95% depending on size and type',
+      'Low resistance ohmmeter',
       'Insulation resistance tester',
-      '1 lux on the centre line of travel',
-      'Sensible heat / Total heat',
+      'Earth loop impedance tester',
+      'Approved voltage indicator',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 6,
     question: "Why is it important to tighten terminals to the manufacturer's torque settings?",
     options: [
-      'All observations, defects, and compliance issues',
-      'To provide additional connection points for sensors and actuators',
+      'To make the terminal easier to undo at the next inspection',
+      'To increase the current-carrying capacity of the conductor',
       'To prevent loose connections and ensure optimal contact',
-      'Materials with conductivity between conductors and insulators',
+      'To allow the use of a smaller cable size',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,9 +135,9 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason to test at both first fix and second fix stages.',
     options: [
-      'A measure of how accurately colours appear; minimum Ra 80',
-      'Connect it to earth and provide mechanical protection',
-      'Properly installed, mounted, and adjusted',
+      'To reduce the number of test instruments needed on site',
+      'To avoid having to issue a certificate at completion',
+      'Because second fix testing replaces first fix testing',
       'To identify faults early before they become expensive',
     ],
     correctAnswer: 3,
@@ -149,9 +149,9 @@ const quizQuestions = [
     question: 'Why should you address only one fault at a time?',
     options: [
       'To avoid confusion and ensure each repair is verified',
-      'Two capacitors: large for start, small for run',
-      'Between live conductors and between each live conductor and earth',
-      'Valid, Authentic, Current, Sufficient, Reliable',
+      'Because tools can only be used on one circuit at a time',
+      'So the supply never needs to be isolated more than once',
+      'Because regulations forbid correcting more than one fault',
     ],
     correctAnswer: 0,
     explanation:

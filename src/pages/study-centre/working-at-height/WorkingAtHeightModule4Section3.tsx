@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'wah-m4s3-method-statement',
     question: 'What is the primary purpose of a method statement for work at height?',
     options: [
-      'To provide a legal defence in court after an incident',
-      'To describe the safe system of work — the sequence of operations, hazards, controls, and equipment required for the task',
-      'To calculate the cost of the work',
-      "To satisfy the client's tender requirements",
+      'To describe the safe system of work for carrying out the task',
+      'To provide a legal defence in court after an incident occurs',
+      'To calculate the labour and material cost of the work',
+      "To satisfy the requirements set out in the client's tender",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A method statement (safe system of work) describes exactly how the work will be carried out safely. It sets out the step-by-step sequence, identifies hazards at each stage, specifies the controls, lists the equipment required, and defines the competence required of the workers. It is a planning and communication tool, not just a legal document.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'wah-m4s3-suspension-trauma',
     question: 'Why is suspension trauma a critical concern in rescue planning for work at height?',
     options: [
-      'It only affects workers who are afraid of heights',
-      'It causes blood to pool in the legs during harness suspension, potentially leading to unconsciousness within 15-30 minutes and death if rescue is not rapid',
-      'It is a minor inconvenience that resolves once the worker is lowered',
-      'It only occurs when harnesses are not worn correctly',
+      'It only affects workers who are already afraid of working at heights',
+      'It is a minor inconvenience that clears once the worker is lowered down',
+      'Pooled blood can cause unconsciousness within 15-30 minutes without rescue',
+      'It only occurs when a harness has not been put on and worn correctly',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Suspension trauma (also called harness hang syndrome) occurs when a person is suspended motionless in a harness after a fall. Blood pools in the legs due to the harness straps restricting venous return. Without rescue, the person can lose consciousness within 15-30 minutes and cardiac arrest can follow. This is why rescue plans must ensure rapid rescue — a plan that relies solely on emergency services may not be fast enough.',
   },
@@ -51,10 +51,10 @@ const quickCheckQuestions = [
     id: 'wah-m4s3-rescue-rehearsal',
     question: 'Why must rescue plans be rehearsed rather than just written down?',
     options: [
-      'It provides a training record for the safety file',
-      'Because a written plan that has never been practised may fail when needed — rehearsal reveals gaps in equipment, training, timing, and communication',
-      'The HSE requires a video of every rescue drill',
-      'It gives workers something to do during quiet periods',
+      'It provides a useful training record to keep in the safety file',
+      'A plan never practised may fail; rehearsal reveals the gaps first',
+      'The HSE requires a recorded video of every rescue drill carried out',
+      'It gives the workers something useful to do during quiet periods',
     ],
     correctIndex: 1,
     explanation:
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT typically included in a method statement for work at height?',
     options: [
-      'The step-by-step sequence of operations',
-      'The hazards identified at each stage and the controls to be applied',
       'The financial cost of the equipment hire',
+      'The hazards identified at each stage and the controls to be applied',
+      'The step-by-step sequence of operations',
       'The competence requirements for the workers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A method statement includes the scope, sequence, hazards, controls, equipment, competence requirements, and emergency procedures. Financial costs are a commercial matter and are not part of the safety method statement.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
       'Under which regulation must emergency procedures including rescue be planned for work at height?',
     options: [
       'Construction (Design and Management) Regulations 2015 Regulation 12',
-      'Work at Height Regulations 2005 Regulation 4(1)',
       'Management of Health and Safety at Work Regulations 1999 Regulation 5',
+      'Work at Height Regulations 2005 Regulation 4(1)',
       'Personal Protective Equipment at Work Regulations 1992 Regulation 7',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 4(1) of the Work at Height Regulations 2005 specifically requires that the planning of work at height includes emergency procedures, including rescue. This is a duty placed on the employer or person controlling the work.',
   },
@@ -118,8 +118,8 @@ const quizQuestions = [
     id: 3,
     question: 'What are the three types of rescue that a rescue plan should consider?',
     options: [
-      'Fast rescue, slow rescue, and no rescue',
-      'Self-rescue, assisted rescue, and technical rescue (emergency services or specialist team)',
+      'Fast rescue, slow rescue, and no rescue at all',
+      'Self-rescue, assisted rescue, and technical rescue',
       'Ground rescue, air rescue, and water rescue',
       'Planned rescue, unplanned rescue, and accidental rescue',
     ],
@@ -130,8 +130,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Suspension trauma can cause unconsciousness within what time frame?',
-    options: ['5-10 seconds', '15-30 minutes', '2-4 hours', '24 hours'],
-    correctAnswer: 1,
+    options: ['5-10 seconds', '2-4 hours', '24 hours', '15-30 minutes'],
+    correctAnswer: 3,
     explanation:
       'Suspension trauma can cause unconsciousness within 15-30 minutes of a person being suspended motionless in a harness. In some cases, particularly where the person is injured or has pre-existing conditions, it can occur even faster. This is why rescue must be rapid and why relying solely on emergency services may not be sufficient.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of trauma straps fitted to a full-body harness?',
     options: [
-      'To make the harness more comfortable during normal work',
-      'To allow a suspended person to stand in the straps and use leg muscles to pump blood, delaying suspension trauma',
-      'To attach tools to the harness',
-      'To extend the length of the harness lanyard',
+      'To let a suspended person stand and pump blood, delaying trauma',
+      'To make the harness more comfortable during normal everyday work',
+      'To provide a point for attaching tools to the harness',
+      'To extend the working length of the harness lanyard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Trauma straps are loops of webbing that allow a suspended person to stand upright in the straps and use their leg muscles. This pumping action helps push blood back towards the heart, delaying the onset of suspension trauma. They are a delay measure that buys time until rescue arrives — they are not a substitute for rapid rescue.',
   },
@@ -165,8 +165,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Which rescue equipment is specifically designed to lower a suspended person to the ground?',
-    options: ['A scaffold tube', 'A rescue descent device', 'A safety helmet', 'An anemometer'],
-    correctAnswer: 1,
+    options: ['A scaffold tube', 'A safety helmet', 'An anemometer', 'A rescue descent device'],
+    correctAnswer: 3,
     explanation:
       "A rescue descent device is a mechanical device that allows a trained rescuer to lower a suspended person to the ground in a controlled manner. It typically attaches to the casualty's harness and uses a friction-based or ratchet mechanism to provide a controlled descent. Rescue descent devices must be readily accessible and the rescue team must be trained in their use.",
   },
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 8,
     question: 'Why should the rescue plan be integrated into the method statement?',
     options: [
-      'To reduce the number of documents on site',
-      'Because the rescue plan must be specific to the work being done — the rescue method depends on the equipment, location, and height',
-      'Because the HSE requires a single combined document',
-      'To save printing costs',
+      'To reduce the number of separate documents held on site',
+      'Because the rescue method depends on the equipment, location and height',
+      'Because the HSE requires it as a single combined document',
+      'To save on the printing costs of separate documents',
     ],
     correctAnswer: 1,
     explanation:

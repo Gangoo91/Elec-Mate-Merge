@@ -130,9 +130,9 @@ const quizQuestions = [
       'What is the purpose of a differential pressure regulating valve (DPRV) in a water system?',
     options: [
       'To maintain constant flow through terminal units',
-      'Pre-commissioning cleaning of water systems',
-      'The circuit with the greatest resistance to flow',
-      'Filters, fans, ductwork, coils, controls',
+      'To measure the total system flow at the pump',
+      'To remove entrained air from the circuit',
+      'To raise the water temperature before the coil',
     ],
     correctAnswer: 0,
     explanation:
@@ -184,9 +184,9 @@ const quizQuestions = [
     question: 'When pressure testing a refrigeration system, what gas should be used?',
     options: [
       'Oxygen-free nitrogen (OFN)',
-      'RS-485 twisted-pair cable',
-      'Hole saw or knockout punch',
-      'Gateway or protocol converter',
+      'Compressed air from a site compressor',
+      'The working refrigerant at design pressure',
+      'Oxygen, to maximise the test pressure',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does BSRIA BG 29 cover?',
     options: [
-      'To maintain constant flow through terminal units',
+      'Air leakage testing of ductwork systems',
       'Pre-commissioning cleaning of water systems',
-      'The circuit with the greatest resistance to flow',
-      'Filters, fans, ductwork, coils, controls',
+      'Commissioning of refrigeration plant',
+      'Balancing of variable air volume terminals',
     ],
     correctAnswer: 1,
     explanation:
@@ -237,9 +237,9 @@ const quizQuestions = [
     question: 'What documentation must be provided upon completion of mechanical commissioning?',
     options: [
       'Commissioning records, O&M manuals, and as-built drawings',
-      'Filters, fans, ductwork, coils, controls',
-      'The circuit with the greatest resistance to flow',
-      'To maintain constant flow through terminal units',
+      'Only a verbal confirmation that the system runs',
+      'The original tender drawings, unaltered',
+      'A single certificate of practical completion only',
     ],
     correctAnswer: 0,
     explanation:

@@ -97,10 +97,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 86,
     question: 'What is a &ldquo;keystone habit&rdquo; as defined by Charles Duhigg?',
     options: [
-      'Use the simplest possible tracking method, such as marking an X on a calendar',
-      'Completing a daily tool check before starting work',
+      'A habit so deeply ingrained it can never be broken',
+      'The very first habit a person forms in childhood',
       'A single habit that triggers a cascade of other positive changes',
-      'After I complete the final test on an installation, I will take three photographs',
+      'A habit that only works when paired with a financial reward',
     ],
     correctAnswer: 2,
     explanation:
@@ -346,9 +346,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'What is a &ldquo;context-dependent habit&rdquo; and why is it relevant to tradespeople?',
     options: [
       'A habit triggered by a specific environment or situation rather than a time of day',
-      'When ability is high, less motivation is needed for the behaviour to occur',
-      'Keep your study materials out and open so starting requires 20 seconds less effort',
-      'Tiny improvements accumulate over time to produce remarkable results',
+      'A habit that only forms once a behaviour has been repeated for at least 66 days',
+      'A habit performed automatically regardless of any surrounding cue or environment',
+      'A habit that depends on the size of the reward rather than the trigger',
     ],
     correctAnswer: 0,
     explanation:
@@ -434,10 +434,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrician wants to break the habit of leaving admin until Friday afternoon. Using the inversion of the 4 Laws, which strategy addresses &ldquo;Make it difficult&rdquo;?',
     options: [
-      'Pairing a behaviour you need to do with a behaviour you want to do',
+      'Promise a colleague a reward each Friday the admin is left until the afternoon',
       'Set up their system so Friday admin access is blocked unless daily entries are completed',
-      'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
-      'A single habit that triggers a cascade of other positive changes',
+      'Put a sticky note on the laptop reminding them not to leave admin until Friday',
+      'Schedule the admin for Friday but set an early-morning calendar alert',
     ],
     correctAnswer: 1,
     explanation:
@@ -470,9 +470,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Which PPE habit formation strategy best applies the 1st Law (&ldquo;Make it obvious&rdquo;)?',
     options: [
-      'Start with two press-ups after brushing your teeth and celebrate immediately',
-      'When the enjoyable activity was exclusively available during the target behaviour',
-      'Use the simplest possible tracking method, such as marking an X on a calendar',
+      'Rewarding yourself with a coffee each time you remember to wear your PPE',
+      'Choosing the most comfortable, lightweight PPE so it is easier to put on',
+      'Promising a colleague you will wear your PPE every day this week',
       'Placing PPE at the van door so it is the first thing you see when arriving on site',
     ],
     correctAnswer: 3,
@@ -579,10 +579,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'A site manager notices that electricians on their team rarely wear eye protection despite regular reminders. Using all four inversions of Clear&rsquo;s Laws, which combined strategy would be most effective?',
     options: [
-      'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
+      'Lock the safety glasses away in the site office, issue them only on request, and rely on weekly verbal reminders at the morning briefing',
       'Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily',
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
-      'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
+      'Issue a disciplinary warning to anyone seen without glasses and post the rule in the company handbook',
+      'Increase motivation by explaining the long-term risk of eye injuries in a one-off toolbox talk',
     ],
     correctAnswer: 1,
     explanation:
@@ -597,10 +597,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'How does Phillippa Lally&rsquo;s habit formation curve differ from a linear model, and what is the practical implication?',
     options: [
-      'Set up their system so Friday admin access is blocked unless daily entries are completed',
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
+      'It follows an exponential curve where automaticity accelerates fastest near the end, so the final week matters most',
+      'It follows a flat line until day 66, when the habit suddenly becomes fully automatic overnight',
       'It follows an asymptotic curve where early gains are rapid but automaticity plateaus, meaning early consistency matters most',
-      'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
+      'It follows a perfectly linear curve, so each day contributes an identical amount of automaticity',
     ],
     correctAnswer: 2,
     explanation:
@@ -615,9 +615,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An experienced electrician wants to transition from reactive problem-solving to proactive CPD. Integrating Fogg&rsquo;s B = MAP model with Clear&rsquo;s framework, which approach addresses the weakest link?',
     options: [
-      'It follows an asymptotic curve where early gains are rapid but automaticity plateaus, meaning early consistency matters most',
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
-      'Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily',
+      'Maximise all three of motivation, ability and prompt at once, since the model requires every element to be at its peak',
+      'Focus solely on raising motivation through inspirational goals, as motivation is the dominant factor in the model',
+      'Wait until a strong prompt naturally appears, since prompts cannot be designed deliberately',
       'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
     ],
     correctAnswer: 3,
@@ -634,9 +634,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'How does Baumeister&rsquo;s ego depletion theory interact with Duhigg&rsquo;s habit loop in explaining why tradespeople may abandon good habits by Friday afternoon?',
     options: [
       'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
-      'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
-      'It follows an asymptotic curve where early gains are rapid but automaticity plateaus, meaning early consistency matters most',
+      'Willpower grows stronger through the week, so by Friday workers deliberately choose to abandon habits they no longer value',
+      'The habit loop resets every Friday, erasing the cue and reward built up during the week',
+      'Ego depletion only affects motivation in the mornings, so afternoon habits are unaffected by the time of week',
     ],
     correctAnswer: 0,
     explanation:
@@ -651,10 +651,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Katherine Milkman&rsquo;s research found that temptation bundling was most effective under which condition?',
     options: [
-      'Keep your study materials out and open so starting requires 20 seconds less effort',
+      'When the enjoyable activity was offered as a reward only after the target behaviour',
       'When the enjoyable activity was exclusively available during the target behaviour',
-      'Tiny improvements accumulate over time to produce remarkable results',
-      'Missing a single day has no measurable impact on long-term habit formation',
+      'When participants were allowed unlimited access to the enjoyable activity at any time',
+      'When the target behaviour was already something participants found enjoyable',
     ],
     correctAnswer: 1,
     explanation:
@@ -669,10 +669,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrical contractor wants to create a company-wide safety culture shift. Using Duhigg&rsquo;s keystone habits concept and Clear&rsquo;s identity-based approach, which strategy is most likely to succeed?',
     options: [
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
-      'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
+      'Roll out a long checklist covering every possible safety behaviour at once and require sign-off on all of them daily',
+      'Set an annual outcome target of zero incidents and review progress only at the year-end company meeting',
       'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
-      'Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily',
+      'Offer a one-off cash bonus to the site with the fewest reported incidents each quarter',
     ],
     correctAnswer: 2,
     explanation:
@@ -687,9 +687,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Considering Wendy Wood&rsquo;s research on context-dependent memory and BJ Fogg&rsquo;s prompt design, how should a multi-site electrician structure their end-of-day admin habit?',
     options: [
-      'It follows an asymptotic curve where early gains are rapid but automaticity plateaus, meaning early consistency matters most',
-      'Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily',
-      'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
+      'Tie the admin to a fixed location such as the home office desk, completing it only after returning home each evening',
+      'Rely on a willpower-based decision to do the admin whenever the working day happens to finish',
+      'Schedule a fixed clock-time reminder at 5pm regardless of which site the electrician is on that day',
       'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
     ],
     correctAnswer: 3,

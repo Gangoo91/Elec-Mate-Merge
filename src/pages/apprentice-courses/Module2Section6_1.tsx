@@ -35,15 +35,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'For AC, which statement is true about power factor (pf)?',
+    question: 'For an AC circuit, which statement about power factor (pf) is correct?',
     options: [
-      'pf is always 1',
-      'pf only affects current, not power',
-      'pf only applies to DC',
-      'Real power P = V × I × pf',
+      'Real power P = V × I × pf for the same V and I',
+      'Apparent power S is always less than real power P',
+      'Power factor is fixed at 1 for any AC load',
+      'Power factor affects voltage but not current',
     ],
-    correctAnswer: 3,
-    explanation: 'In AC, real power P (kW) = voltage × current × power factor.',
+    correctAnswer: 0,
+    explanation:
+      'Real power P (kW) = V × I × pf. Because pf ≤ 1, real power is always less than or equal to apparent power S (kVA).',
   },
   {
     id: 4,

@@ -55,9 +55,9 @@ const checks = [
       'A 35 mm metal flush back-box is being fixed into a solid brick wall, chased to the right depth. What fixing do you use through the back-box knockout fixing holes?',
     options: [
       'Frame fixings or wood-style screws into nylon wall plugs sized for the screw.',
-      'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'A competent person with sufficient training, experience, and knowledge',
-      'Phase rotation, starting current and defrost cycle operation',
+      'Plasterboard spring-toggle fixings pushed into the chase.',
+      'Self-tapping screws driven straight into the brick without a plug.',
+      'Masonry nails hammered through the fixing holes into the mortar joint.',
     ],
     correctIndex: 0,
     explanation:
@@ -68,9 +68,9 @@ const checks = [
     question:
       'You have just fixed a back-box flush in a chased masonry wall. The face of the box is sitting 3 mm proud of the surrounding plaster. What happens at second fix?',
     options: [
-      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
-      'It confirms the component meets the essential safety requirements of relevant UK/EU product standards and can be legally placed on the market',
-      'They may be experiencing compassion fatigue or vicarious trauma and should access supervision, review their boundaries, and consider temporarily stepping back from the role',
+      'The plasterer will simply skim over the box, hiding it completely before second fix.',
+      'Nothing — a 3 mm proud box is well within the accepted setting-out tolerance.',
+      'The faceplate will sit perfectly flush because its lip is designed to take up the difference.',
       'The faceplate sits on the box and tilts slightly proud of the wall, the screws pinch the cable behind, and the faceplate edge gaps from the wall.',
     ],
     correctIndex: 3,
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'A 25 mm flush metal back-box has knockouts on which faces?',
     options: [
-      'Loosen both fixings, re-set the box flat, verify level and twist with a small spirit level, retighten.',
+      'Only the back face — side cable entry is not possible on a flush box.',
       'Back face and side faces; some boxes have a deeper rear knockout for cable entry.',
-      'Provide a mechanical lifting aid such as a vacuum lifter or pallet to workbench height conveyor',
-      'Produces an output proportional to the current error signal',
+      'Only the two side faces — the back is solid to grip the chase floor.',
+      'Only the front rim, where the faceplate screws thread in.',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'Plasterboard back-boxes (dry-line boxes) are fixed by:',
     options: [
-      'A committee where employers and employee representatives discuss and review health and safety measures',
-      'To provide additional protection against electric shock by detecting earth leakage',
+      'Plasterboard plugs pushed into holes drilled around the perimeter of the box.',
+      'A bead of grab adhesive on the rear flange holding the box to the board.',
       'Spring-loaded jaws that hinge out behind the plasterboard and grip when the front screws are tightened.',
-      'Quantity surveyor — measures work, values variations and prepares payment applications',
+      'Wood screws driven through the box face into the plasterboard sheet.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'A surface back-box (pattress) is mounted because:',
     options: [
-      'To ensure the ground can support the weight of the MEWP without sinking, shifting, or collapsing',
-      'Incorrect — employers have a legal duty under HSWA 1974 and MHSWR 1999 to assess and manage work-related stress risks',
-      'Intense fear and avoidance of social situations due to worry about being judged or embarrassed',
+      'It is always cheaper than a flush box, so it is the default choice on every job.',
+      'BS 7671 requires all sockets in domestic kitchens to be surface-mounted.',
+      'A surface box gives better cooling to the accessory than a flush box.',
       'The substrate cannot be chased (solid concrete, structural steel, glass) or the install is intended to be visible/temporary.',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
       'You are fixing a 47 mm deep back-box for a 45 A cooker switch. The brick wall is chased but the chase is only 42 mm deep. What do you do?',
     options: [
       'Stop and chase deeper to 50 mm so the box sits 3 mm below the finished plaster line.',
-      'The standard does not set a single limit; it depends on the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual',
-      'Look for creative solutions where both parties get something they value',
-      'When they show signs of excessive warping, splitting, decay, or damage beyond acceptable limits',
+      'Fit the box as-is and let it stand 5 mm proud — the cooker plate will cover it.',
+      'Pack the chase floor with packers to bring the box face forward to the plaster line.',
+      'Swap to a 35 mm box so it fits the existing 42 mm chase depth.',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'A back-box is being mounted into a stud wall but the stud lies right behind the box position. Best response?',
     options: [
-      'To record energy consumption and maintenance activities throughout building operation',
+      'Notch the front edge of the stud so the box can be recessed into it.',
       'Move the box ±50 mm sideways to clear the stud, or use a dry-line box with a side-fixing flange that catches the stud.',
-      'Manufacturer instructions, safety data sheets, accident records, industry guidance, and worker input',
-      'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
+      'Drill straight through the stud and pull the cable through the hole into the box.',
+      'Fix the box directly to the face of the stud with no plasterboard cut-out at all.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'You are fixing a row of 6 dado trunking outlet boxes. The trunking has been pre-installed and is level. To get the boxes level with each other you should:',
     options: [
-      'Method 100, 101 or 103 (in thermal insulation) — these columns build the Ci derate into the tabulated value, so you do not double-apply.',
-      'That the label is present, legible, and the tower configuration matches the label\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated maximum platform height and load class',
+      'Measure each box individually up from the floor and fix it to the wall behind the trunking.',
+      'Fix the boxes first, then bend the trunking to follow whatever line the boxes create.',
       'Snap the boxes onto the dado trunking using its integral mounting clips/plates — the trunking sets the level.',
-      'Information, instruction, training and supervision necessary for health and safety',
+      'Set each box with its own spirit level and ignore the trunking line entirely.',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 522.8 sets requirements for protection against mechanical stress. For a flush back-box this primarily means:',
     options: [
-      'Impaired judgment + reaction time means you’re more likely to make a fatal mistake on a live system; HASAWA s.7 makes it personally on you',
-      'Without genuine commitment, even well-structured goals fail to direct behaviour because the individual does not invest sufficient effort or persistence',
-      'You have not confirmed quantity or condition — protects against signing for items you haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t verified, but limits a later claim',
+      'The box must be earthed to the main earthing terminal by a dedicated bonding conductor.',
+      'The box must be made of metal so it can act as the circuit protective conductor.',
+      'The box must be painted with a fire-retardant coating before the faceplate goes on.',
       'Cable entries must be grommeted, the box must be deep enough that the cable does not pinch, and the box must be securely fixed so movement does not stress the conductors.',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
       'You discover a back-box you fixed yesterday is sitting 5 mm twisted (one corner higher than the diagonally opposite corner). Best fix?',
     options: [
       'Loosen both fixings, re-set the box flat, verify level and twist with a small spirit level, retighten.',
-      'The psychological discomfort caused by bright luminaires in the field of view',
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
-      'A water sampling technique that detects great crested newt DNA in pond water without the need to capture animals',
+      'Leave it — the faceplate gasket will take up a 5 mm twist without any visible gap.',
+      'Tap the high corner with a hammer until the box drops flat in the chase.',
+      'Pack the low corner with a folded grommet to bring the box face square.',
     ],
     correctAnswer: 0,
     explanation:

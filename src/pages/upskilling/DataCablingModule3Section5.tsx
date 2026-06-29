@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A specification calls for "Tier 1 + Tier 2 commissioning, bidirectional, dual-wavelength". What two test instruments must the contractor bring on site?',
     options: [
-      'A multimeter and a megger.',
-      'An OLTS (Optical Loss Test Set — calibrated light source plus power meter, for Tier 1 end-to-end insertion-loss certification) AND an OTDR (Optical Time Domain Reflectometer, for Tier 2 per-event characterisation). Both must support bidirectional and dual-wavelength operation (1310 + 1550 nm SM, 850 + 1300 nm MM). Launch / tail cords matched to fibre type and polish.',
-      'A fibre microscope only.',
-      'A continuity tester only.',
+      'A multimeter and an insulation-resistance tester (megger).',
+      'An OLTS for Tier 1 insertion loss and an OTDR for Tier 2 characterisation.',
+      'A fibre microscope only, used for endface inspection of every connector.',
+      'A continuity tester only, used to confirm the fibre is unbroken end-to-end.',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'What does "one-cord, two-cord or three-cord reference method" mean for an OLTS test, and why does it matter?',
     options: [
-      'It refers to how the launch cords are bundled.',
-      'It refers to how the OLTS instrument is REFERENCED before the link test — calibrating away cord losses so only the link itself is measured. One-cord (Method 1) references through a single cord and is the most stringent; the link test then includes both connector pairs at the link ends. Two-cord and three-cord methods reference through two or three cords and exclude one or more of the link end-connectors from the measurement. The choice of method changes the measured value — TIA-526-14 / IEC 61280-4-1 specify which method applies for each test scenario.',
-      'It is a setting on the fibre microscope.',
-      'It refers to fibre count.',
+      'It refers to how the launch and tail cords are physically bundled together.',
+      'It sets how the OLTS is referenced, which decides which end connectors are included.',
+      'It is an image-capture setting on the fibre microscope / video probe.',
+      'It refers to the number of fibre cores tested in a single sweep.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     id: 'datacabling-m3s5-encircled-flux',
     question: 'For multimode OLTS testing, why is the "encircled flux" launch condition specified?',
     options: [
-      'It is a marketing requirement.',
-      'Multimode fibre supports many propagation modes, and the way light is launched into the fibre (over-filled, under-filled, or controlled "encircled flux") changes how the modes are populated and therefore the measured insertion loss. Different launch conditions can produce different measured losses on the same physical link. The encircled flux launch condition (defined in TIA-526-14-C / IEC 61280-4-1) standardises the modal launch profile so measurements are repeatable across instruments and laboratories.',
-      'It only applies to single-mode.',
-      'It is the same as the channel reference.',
+      'It is a marketing requirement with no effect on the measured loss.',
+      'It standardises the modal launch profile so MM measurements are repeatable across instruments.',
+      'It only applies to single-mode fibre, never to multimode.',
+      'It is just another name for the channel reference configuration.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A manufacturer\u2019s warranty for a structured fibre cabling system requires what testing evidence at commissioning?',
     options: [
-      'A simple continuity test.',
-      'Typically: bidirectional Tier 1 OLTS testing at the relevant wavelengths, against the calculated channel budget; bidirectional Tier 2 OTDR characterisation; IEC 61300-3-35 endface inspection records for every connector; documented as-built record per BS EN 50174-1 / TIA-606-D; and conformance to the manufacturer\u2019s installation guidelines. Missing any of these typically voids the system warranty.',
-      'A photo of the patch panel.',
-      'Only a power-on test.',
+      'A simple continuity test confirming light reaches the far end.',
+      'A full package: Tier 1 OLTS, Tier 2 OTDR, endface inspection and documented as-built records.',
+      'A dated photo of the patch panel and labelling for the project file.',
+      'Only a power-on test showing the active link carries traffic.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the practical difference between Tier 1 and Tier 2 fibre testing?',
     options: [
-      'Tier 1 is faster than Tier 2.',
-      'Tier 1 (OLTS / LSPM) is the certified end-to-end insertion-loss test — calibrated light source at one end, calibrated power meter at the other, the difference is the channel loss. This is the warranty pass / fail. Tier 2 (OTDR) is the per-event diagnostic / characterisation test — maps the loss profile along the link. Most projects specify both at commissioning; Tier 1 is the formal certification, Tier 2 is the diagnostic baseline.',
-      'Tier 1 is for outdoor and Tier 2 for indoor.',
-      'Tier 2 is optional.',
+      'Tier 1 OLTS is the certified end-to-end insertion-loss pass / fail; Tier 2 OTDR is per-event characterisation.',
+      'Tier 1 is simply a faster version of the Tier 2 test, using the same OTDR instrument.',
+      'Tier 1 is used for outdoor (external) fibre and Tier 2 for indoor (in-building) fibre.',
+      'Tier 2 is entirely optional and is never required for any manufacturer warranty.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tier 1 = OLTS = certified channel insertion loss vs the calculated budget. Tier 2 = OTDR = per-event characterisation. Both are typically required at commissioning of a permanent fibre system. Tier 1 is the formal pass / fail; Tier 2 is the loss-profile baseline used for future fault-finding and any service upgrade re-verification. The manufacturer warranty typically requires both.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'What does "reference method" mean in OLTS testing, and why does the standard specify three methods?',
     options: [
-      'It is a calibration setting.',
-      'Reference method specifies how the OLTS is "zeroed" against the test cords — Method 1 (one-cord) is the most stringent and includes both end-connector pairs of the link in the measurement. Method 2 (two-cord) excludes one end-connector. Method 3 (three-cord) excludes both end-connectors. Different test scenarios use different methods (the standards IEC 61280-4-1 SM and TIA-526-14 MM specify which); the same link measured under different methods will give different results, which is why the method must always be stated in the certification document.',
-      'It is the speed at which the test runs.',
-      'It refers to which wavelength is used.',
+      'It is simply a calibration setting that has no effect on the measured loss value.',
+      'It refers to the speed at which the OLTS test sweeps through the link.',
+      'It sets how the OLTS is referenced against the cords, deciding which end connectors are measured.',
+      'It refers to which of the two test wavelengths is used as the primary reference.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The reference method is part of the OLTS test specification — IEC 61280-4-1 (multimode) and IEC 61280-4-2 (single-mode) define Methods 1, 2 and 3, with TIA-526-14 (MM) and TIA-526-7 (SM) being the equivalent North American specifications. The choice of method affects WHICH connector pairs are included in the measured loss. The certification document must always state the method used so the result is reproducible and defensible.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'For multimode OLTS testing, what is the role of the "encircled flux" launch condition?',
     options: [
-      'It only applies to single-mode.',
-      'Multimode fibre supports many propagation modes, and the modal-power distribution at the launch point affects the measured loss because high-order modes are stripped by bends and connectors more readily than low-order modes. Encircled flux (EF) is the standardised modal launch profile defined in IEC 61280-4-1 / TIA-526-14-C; using an EF-compliant launch (built-in or mandrel-wrap) gives repeatable measurements across instruments, days and operators.',
-      'Encircled flux is a polish grade.',
-      'It is a fibre core size.',
+      'Encircled flux applies only to single-mode fibre, never to multimode.',
+      'Encircled flux is a connector polish grade, like UPC or APC.',
+      'Encircled flux is a fibre core size, distinguishing 50 µm from 62.5 µm cores.',
+      'It is the standardised modal launch profile that makes MM loss measurements repeatable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multimode launch matters. An over-filled launch populates high-order modes that are stripped by bends; an under-filled launch under-populates them. Either gives a different measured loss to a controlled launch. Encircled flux is the standardised launch profile defined by ratio thresholds at specific radii from the fibre axis. Modern instruments either include EF-compliant launches or use mandrel-wrap of the launch cord (typically 5 turns around a 25 mm or 50 mm mandrel for 50/125 µm) to strip high-order modes and approximate EF.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'What does "permanent link" vs "channel" mean for fibre testing, and which is typically the warranty-tested entity?',
     options: [
-      'They are the same for fibre.',
-      'Permanent link (sometimes called "fixed link") is the installed cable from one termination to the other, including the connectors at each end of the field cable. Channel includes everything from active equipment to active equipment — adds the patch leads at each end. Manufacturer warranties typically apply to the permanent link (the installed asset), so the certification is generally permanent-link tested against the calculated permanent-link budget. The channel is what the user experiences and is also tested in many specifications.',
-      'Channel is the cheaper test.',
-      'Permanent link is for copper only.',
+      'For fibre the two terms describe exactly the same tested entity.',
+      'Permanent link is the installed cable (no patches); channel adds the patch leads and is port-to-port. Warranty is usually against the permanent link.',
+      'Channel testing is simply the cheaper of the two test set-ups.',
+      'Permanent link is a copper-only concept and does not apply to fibre.',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A specification calls for testing at 1310 nm and 1550 nm. Why both, and what does each catch?',
     options: [
-      'Just for completeness.',
-      '1310 nm and 1550 nm are the two principal SM transmission windows. 1310 nm is the lower-attenuation window for the historical "second window" (around 0.32-0.4 dB/km). 1550 nm is the lowest-attenuation window for the "third window" (around 0.20-0.25 dB/km — used for long-haul). Testing at both catches wavelength-dependent issues: macrobends and microbends attenuate 1550 nm much more than 1310 nm, so a bend that is 0.3 dB at 1310 nm can be 1.5 dB or more at 1550 nm. Single-wavelength testing would miss it.',
-      'Multimode requires both.',
-      'BS 7671 requires both.',
+      'They are the two SM windows; bends attenuate 1550 nm far more, so dual testing catches bend loss.',
+      'It is done purely for completeness; one wavelength would give the same compliance result.',
+      'Only multimode fibre requires testing at the two wavelengths; single-mode needs just one.',
+      'BS 7671 explicitly mandates testing single-mode fibre at both 1310 nm and 1550 nm.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dual-wavelength testing is mandatory for defensible certification because macrobends are wavelength-dependent. A link tested only at 1310 may pass; the same link at 1550 may fail. Modern services increasingly use 1550 (DWDM, long-haul, RF over fibre) or both wavelengths, so a 1310-only certification could approve a link that fails in service at 1550. Both wavelengths together = defensible result.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the role of IEC 61300-3-35 in fibre certification?',
     options: [
-      'It governs fibre attenuation.',
-      'IEC 61300-3-35 is the international standard for visual acceptance criteria of fibre connector endfaces — defining inspection zones (Core, Cladding, Adhesive, Contact / Outer), allowable defect counts and sizes per zone, scratch / pit / contamination classifications, and pass / fail thresholds. Modern fibre microscopes / video probes implement 61300-3-35 in firmware: capture image, segment into zones, count and size defects, report pass / fail. The certification record typically includes a 61300-3-35 inspection result for every connector.',
-      'It is a connector body specification.',
-      'It is a copper testing standard.',
+      'It governs fibre attenuation limits in dB/km for each grade of fibre.',
+      'It is a connector body (housing) mechanical specification for SC and LC connectors.',
+      'It is the visual acceptance standard for connector endfaces — inspection zones and defect pass / fail.',
+      'It is a copper twisted-pair cabling test standard, not a fibre standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IEC 61300-3-35 is the visual-acceptance standard for connector endfaces. It is what makes "this connector is clean enough" a defensible measurement rather than an opinion. Modern field test sets capture endface images and apply 61300-3-35 automatically. The certification deliverable typically includes a per-connector pass / fail report alongside the OLTS / OTDR data.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'What documentation does a manufacturer typically require to honour a 15-25 year cabling-system warranty?',
     options: [
-      'A photograph of the building.',
-      'Typically: Tier 1 OLTS test results (bidirectional, dual-wavelength) for every channel, Tier 2 OTDR characterisation traces, IEC 61300-3-35 endface inspection records for every connector, documented as-built records per BS EN 50174-1 / TIA-606-D (labelling, drawings, identifiers), the contractor\u2019s installation conformance to the manufacturer\u2019s guidelines, and certification by a manufacturer-trained installer. The deliverable is a commissioning package, not a single test report.',
-      'Only the OLTS test.',
-      'A signed letter from the client.',
+      'A dated photograph of the completed building exterior.',
+      'A full commissioning package: Tier 1 OLTS, Tier 2 OTDR, endface inspection, as-built records and installer conformance.',
+      'Only the OLTS insertion-loss test results for each channel.',
+      'A signed acceptance letter from the client confirming handover.',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'A small contractor delivers an OLTS test report only — no OTDR, no endface inspection. What is the warranty / certification consequence?',
     options: [
-      'No consequence — the cable works.',
-      'Most cabling-system manufacturer warranties require Tier 1 + Tier 2 + IEC 61300-3-35 evidence for the warranty to be valid. An OLTS-only test will typically not satisfy the warranty conditions for a commercial 15-25 year warranty. The cabling may pass the OLTS test technically, but the warranty is not earned. The client is at risk; the contractor is exposed if a fault is found later that an OTDR or endface inspection would have caught at commissioning.',
-      'Only OTDR is required.',
-      'There is no certification standard.',
+      'No consequence — provided the cable works, the OLTS report is sufficient on its own.',
+      'Only the OTDR test is actually required; the OLTS test the contractor supplied is redundant.',
+      'There is no certification standard for fibre, so any single test report is acceptable.',
+      'An OLTS-only report typically fails the warranty conditions; the manufacturer warranty is not earned.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Documentation IS the warranty trigger. An OLTS-only test report meets some specifications but does not meet typical commercial cabling-system warranty conditions. The risk runs both ways — client loses warranty cover, contractor is exposed for any future failure. The professional discipline is the full commissioning package: Tier 1 + Tier 2 + endface inspection + as-built records + (where required) manufacturer-installer certification.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'Why must the certification record always state the OLTS reference method (1, 2 or 3)?',
     options: [
-      'For administrative neatness.',
-      'Because the same physical link will measure differently under different reference methods. Method 1 (one-cord) includes both end-connector pairs in the measurement and gives the most stringent (highest) loss reading; Method 3 (three-cord) excludes both end-connector pairs and gives the lowest reading. Without the method stated, the loss number is ambiguous — a future inspector cannot verify the reading and cannot reproduce the test. Stating the method ties the number to a defined procedure.',
-      'It is required by BS 7671.',
-      'It is a copyright requirement.',
+      'Because the same link measures differently under each method, so the loss number is ambiguous without it.',
+      'Purely for administrative neatness; the method has no effect on the measured value.',
+      'Because BS 7671 explicitly requires the OLTS reference method to be stated on the certificate.',
+      'Because the standards bodies hold copyright over the method names and require attribution.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The certification number is meaningless without the reference method. IEC 61280-4-1 / -4-2 and the TIA equivalents define Methods 1, 2 and 3. The same link will measure differently under each. The certification document must always state the method used so the test is reproducible and defensible. Modern field test instruments record the method automatically in the test report.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'Why is it considered good practice to perform a bidirectional OLTS test rather than just from end A to end B?',
     options: [
-      'Bidirectional is required by law.',
-      'Bidirectional OLTS testing measures from each end and either takes the worst-case or averages — this catches asymmetric installation issues (e.g. a poorly-cleaved end-connector at one end that performs differently in transmit vs receive direction at MM, or wavelength-dependent asymmetries from mode propagation). It also provides a robust defensible result. The TIA / ISO / IEC commissioning guidance specifies bidirectional measurement for any defensible certification.',
-      'It is faster.',
-      'Single-direction is for single-mode only.',
+      'Bidirectional testing is required by law and a single-direction test is unlawful.',
+      'Bidirectional testing is simply faster than testing once from end A to end B.',
+      'Measuring from each end catches asymmetric install faults a single direction would miss.',
+      'Single-direction testing is acceptable for single-mode fibre but never for multimode.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bidirectional testing is the certification gold standard. Some installation faults appear asymmetrically — direction-dependent connector cleanliness issues, modal-launch asymmetries on MM, splicer artefacts. A single-direction test could pass a marginal link; bidirectional catches the asymmetry. Modern field test sets perform bidirectional OLTS automatically and report the worst-case (or average per spec) result.',
   },

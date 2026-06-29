@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'gateway-what',
     question: 'What is the EPA gateway?',
     options: [
-      'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'The formal checkpoint between on-programme learning and end-point assessment, where pre-requisites are verified and the apprentice is confirmed as ready to be assessed independently by the EPAO',
-      'Power circuits carry the main load current to drive equipment; control circuits carry low-current signals to control the operation of the power circuit',
+      'The first day of the apprenticeship, where the training plan and KSBs are agreed between the apprentice, employer and provider',
+      'An optional mid-point review where the apprentice can choose to bring forward part of their end-point assessment',
+      'The formal checkpoint between on-programme learning and end-point assessment, where pre-requisites are verified',
+      'The final certificate-issuing stage where the EPAO confirms the overall grade and notifies the apprenticeship register',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'gateway-portfolio',
     question: 'What portfolio requirements must be met at gateway for the MOET EPA?',
     options: [
-      "The portfolio must contain sufficient evidence mapped to the standard's KSBs, meeting the minimum requirements specified by the EPAO — typically including work logs, reflective accounts, witness statements and a KSB mapping matrix",
-      "To operate the equipment under normal load conditions for an extended period to identify any intermittent faults, overheating, abnormal vibration, or performance drift that would not be detected during brief functional testing",
-      "Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low",
-      "Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork",
+      "The portfolio must contain sufficient evidence mapped to the standard's KSBs, meeting the EPAO's minimum requirements",
+      "Only a single reflective account summarising the apprentice's best piece of work is needed, as the professional discussion covers everything else in detail",
+      "The portfolio is not required at gateway and is instead built up by the assessor during the practical observation on the day of assessment",
+      "A copy of the employer's company policies and procedures, with the apprentice's signature confirming they have read each one during the apprenticeship",
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'gateway-qualifications',
     question: 'Which qualifications are typically required before the gateway can be opened?',
     options: [
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
-      'Safe working practices, systematic fault diagnosis, competent use of tools and test equipment, quality workmanship, effective communication, and professional conduct throughout the task',
-      'Level 3 Diploma in the relevant discipline, Level 2 English and maths (GCSE grade 4/C or Functional Skills Level 2), and any other mandatory qualifications specified in the ST1426 assessment plan',
-      'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
+      'Only the Level 2 Diploma, since the Level 3 qualification is awarded automatically once the EPA is passed',
+      'A current first aid certificate and an in-date asbestos awareness course, with no academic qualifications needed at this stage',
+      'Level 3 Diploma, Level 2 English and maths, and any other qualifications specified in the assessment plan',
+      'A degree-level qualification in engineering, as the MOET standard sits at Level 5 on the framework',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'gateway-epao',
     question: "What is the EPAO's role in the gateway process?",
     options: [
-      'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
-      'The EPAO receives and verifies the gateway submission, confirms all mandatory pre-requisites have been met, and then assigns an assessor and schedules the EPA components within the specified timeframe',
-      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
-      'Offensive, intimidating, malicious, or insulting behaviour, or an abuse of power, that undermines, humiliates, or causes physical or emotional harm to someone',
+      'The EPAO delivers the off-the-job training and signs off the apprentice as workplace-competent before the gateway meeting',
+      'The EPAO verifies the gateway submission, then assigns an assessor and schedules the EPA components',
+      'The EPAO chairs the tripartite gateway review and makes the final decision on whether the employer has provided enough training',
+      'The EPAO issues the Level 3 Diploma and the English and maths certificates once the portfolio has been approved',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The EPA gateway must be opened before:',
     options: [
-      'Spacing per OSG Table 4.5/4.6, mechanical protection at penetrations, fire-stopping at floor/wall penetrations (Reg 527.2), and capping/grommets where cables enter enclosures',
-      'Any EPA assessment component can take place — the practical observation, professional discussion and any other components cannot be scheduled until the gateway is formally confirmed',
-      'It overgeneralises Mehrabian\\\\\\\'s findings, which only apply to the communication of feelings and attitudes when verbal and non-verbal cues are incongruent',
-      'A voltage divider with the LDR feeds a comparator chip. When light falls below a set level, the comparator switches the relay coil and the lamp comes on.',
+      'The apprentice can begin their off-the-job training and start logging the required 20% hours',
+      'Any EPA assessment component can take place — none can be scheduled until the gateway is formally confirmed',
+      'The employer is allowed to enrol the apprentice on the Level 3 Diploma with the training provider',
+      'The apprentice can sit the resit of any qualification they have not yet passed during the programme',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: "The EPAO's role in the gateway process is to:",
     options: [
-      'A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum requirements for quantity and type of evidence',
-      'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
-      'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
+      'Deliver the apprentice’s on-programme training and confirm they are workplace-competent before sign-off',
+      'Chair the tripartite gateway review and decide whether the employer has provided sufficient training',
+      'Verify the gateway submission from the training provider, then schedule the EPA assessment components',
+      'Issue the Level 3 Diploma and English and maths certificates once the portfolio has been approved',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'If a mandatory qualification certificate is not yet available at the gateway meeting, you should:',
     options: [
-      'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
-      'A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO\\\\\\\\\\\\\\\'s minimum requirements for quantity and type of evidence',
-      'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
-      'Confirm with the training provider when results will be confirmed, and delay the gateway submission until the qualification is evidenced — most EPAOs require confirmed results, not pending ones',
+      'Open the gateway anyway and provide the certificate to the assessor on the day of the practical observation',
+      'Ask the EPAO to award the qualification on your behalf based on the evidence held in your portfolio',
+      'Substitute the missing qualification with an extra reflective account that demonstrates equivalent knowledge',
+      'Delay the gateway submission until the qualification is evidenced, as most EPAOs require confirmed results',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'The portfolio submitted at gateway should include:',
     options: [
-      "A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO's minimum requirements for quantity and type of evidence",
-      "Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms",
-      "At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review",
-      "Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened",
+      "Evidence from across the apprenticeship, mapped to KSBs, meeting the EPAO's minimum requirements",
+      "Only the evidence gathered in the final three months of the apprenticeship, as earlier work is considered out of date",
+      "A single bound document written entirely by the training provider on the apprentice's behalf to ensure consistency",
+      "Copies of every job sheet and timesheet from the whole apprenticeship, submitted without any mapping or commentary",
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'The timeframe between gateway opening and the first EPA component is typically:',
     options: [
-      'A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum requirements for quantity and type of evidence',
-      'Specified in the assessment plan — usually 2-4 weeks, allowing time for the EPAO to assign an assessor, for the assessor to review your portfolio, and for final preparation',
-      'The shortfall must be addressed before the gateway can be opened — your employer and training provider should agree a plan to complete the remaining hours within a realistic timeframe',
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
+      'On the same day as the gateway meeting, so that the apprentice can be assessed while the evidence is fresh',
+      'Specified in the assessment plan — usually 2-4 weeks, allowing time to assign an assessor and prepare',
+      'A fixed period of six months set by law and identical for every apprenticeship standard',
+      'Decided solely by the employer, who chooses any date that suits the workplace schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'If the gateway reveals that your off-the-job training hours are slightly below the 20% minimum:',
     options: [
-      'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
-      'Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened',
-      'The shortfall must be addressed before the gateway can be opened — your employer and training provider should agree a plan to complete the remaining hours within a realistic timeframe',
-      'Specified in the assessment plan — usually 2-4 weeks, allowing time for the EPAO to assign an assessor, for the assessor to review your portfolio, and for final preparation',
+      'The shortfall can be ignored if your portfolio and qualifications are otherwise complete and strong',
+      'The missing hours can be made up by adding extra reflective accounts to the portfolio instead',
+      'The shortfall must be addressed before the gateway opens, with a plan to complete the remaining hours',
+      'The EPAO can grant a waiver for the missing hours provided the employer signs a declaration',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'The gateway submission to the EPAO typically includes:',
     options: [
-      'Confirm with the training provider when results will be confirmed, and delay the gateway submission until the qualification is evidenced — most EPAOs require confirmed results, not pending ones',
-      'While the core requirements (qualifications, sign-off, portfolio) are set by the standard, EPAOs may specify additional requirements such as minimum evidence quantities, specific evidence formats, or additional documentation in their EPA specification',
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
-      'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
+      'Only the apprentice’s CV and a covering letter explaining why they are ready to be assessed',
+      'A draft of the practical task the apprentice intends to be observed carrying out during the EPA',
+      'The assessor’s marking grid and grade descriptors, completed in advance by the training provider',
+      'Signed declarations from both parties, qualification evidence, off-the-job hours, the portfolio, and any EPAO forms',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     question:
       'An apprentice who has achieved all qualifications but whose portfolio is incomplete should:',
     options: [
-      "Complete the portfolio before the gateway is opened — the portfolio is a gateway requirement and must meet the EPAO's minimum standards before the submission can be made",
-      "Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened",
-      "A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO's minimum requirements for quantity and type of evidence",
-      "Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe",
+      "Complete the portfolio before the gateway opens, as it must meet the EPAO's minimum standards first",
+      "Open the gateway on the strength of the qualifications and finish the portfolio during the EPA window",
+      "Ask the assessor to base the grade on the qualifications alone, treating the portfolio as optional",
+      "Submit the incomplete portfolio and rely on the professional discussion to fill any evidence gaps",
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'Different EPAOs may have slightly different gateway requirements because:',
     options: [
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
-      'While the core requirements (qualifications, sign-off, portfolio) are set by the standard, EPAOs may specify additional requirements such as minimum evidence quantities, specific evidence formats, or additional documentation in their EPA specification',
-      'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
-      'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
+      'Each EPAO is free to change the mandatory qualifications and the off-the-job percentage to suit its own model',
+      'The core requirements are set by the standard, but EPAOs may add their own evidence and format requirements',
+      'The assessment plan is only a guideline, so EPAOs can decide which parts of it they wish to apply',
+      'Gateway requirements are set independently by each college and have no national consistency',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'If the gateway is successfully opened and then you become unavailable for the scheduled EPA:',
     options: [
-      'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
-      'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
-      'Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened',
-      'Complete the portfolio before the gateway is opened — the portfolio is a gateway requirement and must meet the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum standards before the submission can be made',
+      'The gateway is automatically cancelled and the whole submission must be built and approved again from scratch',
+      'You forfeit your place and must wait a full twelve months before the EPA can be rescheduled',
+      'Contact the EPAO and training provider immediately — most allow rescheduling without re-opening the gateway',
+      'The assessment goes ahead in your absence and is graded on the portfolio evidence alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 11,
     question: 'The KSB mapping matrix in your portfolio serves to:',
     options: [
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
-      'Specified in the assessment plan — usually 2-4 weeks, allowing time for the EPAO to assign an assessor, for the assessor to review your portfolio, and for final preparation',
-      'A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum requirements for quantity and type of evidence',
-      'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
+      'Record the dates on which each piece of evidence was created so the assessor can check it is recent',
+      'List the qualifications you have achieved and the awarding body that issued each certificate',
+      'Summarise the off-the-job training hours you have logged across the apprenticeship period',
+      'Show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard',
     ],
     correctAnswer: 3,
     explanation:
@@ -216,10 +216,10 @@ const quizQuestions = [
     id: 12,
     question: 'Planning for the gateway should ideally begin:',
     options: [
-      'At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review',
-      'Signed employer and training provider declarations, evidence of mandatory qualifications achieved, confirmation of off-the-job hours completed, the portfolio of evidence, and any EPAO-specific gateway forms',
-      'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
-      'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
+      'At least 3 months before the planned EPA date, allowing time to close gaps and obtain certificates',
+      'In the final week before the EPA, once you are confident the assessment date is fixed',
+      'Only after the EPAO has formally assigned an assessor to your case',
+      'On the first day of the apprenticeship, before any on-programme learning has taken place',
     ],
     correctAnswer: 0,
     explanation:

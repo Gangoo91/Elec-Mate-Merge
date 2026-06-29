@@ -16,10 +16,10 @@ const Module6Section1_4 = () => {
       id: 1,
       question: 'What is inspection in electrical work?',
       options: [
-        'Timing, conditions, frequency, and triggering events',
+        'Measuring circuit resistance with an instrument',
         'A visual check to confirm compliance and workmanship',
-        'To modulate airflow to a zone based on temperature demand',
-        'SBEM (Simplified Building Energy Model)',
+        'Energising the circuit to confirm it works',
+        'Calculating the maximum demand of the installation',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,9 +42,9 @@ const Module6Section1_4 = () => {
       id: 3,
       question: 'What is testing in electrical work?',
       options: [
-        'Single-incident, complex (repeated), and vicarious',
-        'Ratio of optical power in \\\\\\\\\\\\\\\'1\\\\\\\\\\\\\\\' state to power in \\\\\\\\\\\\\\\'0\\\\\\\\\\\\\\\' state',
-        'To accommodate different cable diameters in the same gland',
+        'A visual examination of the cable routes',
+        'A check of the labelling at the consumer unit',
+        'A review of the installation drawings',
         'Measuring electrical characteristics using instruments',
       ],
       correctAnswer: 3,
@@ -53,12 +53,12 @@ const Module6Section1_4 = () => {
     },
     {
       id: 4,
-      question: 'Name one example of a test.',
+      question: 'Which of these is an example of a test?',
       options: [
         'Insulation resistance testing',
-        'Sharp edges and metal fragments',
-        'Sensor location and air circulation',
-        'Future-ready architecture',
+        'Checking cables are clipped securely',
+        'Confirming the IP rating suits the location',
+        'Verifying the circuit chart is legible',
       ],
       correctAnswer: 0,
       explanation:
@@ -66,20 +66,20 @@ const Module6Section1_4 = () => {
     },
     {
       id: 5,
-      question: 'True or False: Testing can replace the need for inspection.',
-      options: ['True', 'False'],
+      question: 'Can testing replace the need for inspection?',
+      options: ['Yes, instruments detect every fault', 'No, both inspection and testing are essential'],
       correctAnswer: 1,
       explanation:
-        'False. Testing cannot reveal poor workmanship or construction issues that are visible - both inspection and testing are essential.',
+        'Testing cannot reveal poor workmanship or visible construction issues, so both inspection and testing are essential.',
     },
     {
       id: 6,
       question: 'Why can inspection alone not ensure safety?',
       options: [
-        'Uses exhaust gas energy to compress intake air, increasing engine power output and efficiency',
-        'Clamps are correct type, tight, and on clean metal surfaces',
+        'It takes too long to complete on large jobs',
+        'It can only be done by a qualified person',
         'It cannot detect hidden faults like loose connections or insulation breakdown',
-        'To guide the operator, watch for hazards, and communicate using hand signals or radio',
+        'It requires the installation to be energised first',
       ],
       correctAnswer: 2,
       explanation:
@@ -100,12 +100,12 @@ const Module6Section1_4 = () => {
     },
     {
       id: 8,
-      question: 'What certificate records inspection and testing results?',
+      question: 'What certificate records inspection and testing results for new work?',
       options: [
-        'Electrical Installation Certificate (EIC) or Minor Works Certificate',
-        'Emergency lighting to allow potentially dangerous processes to be shut down safely',
-        'Correct identification, location, and accessibility',
-        'Qualified and competent person responsible for the design and installation',
+        'An Electrical Installation Certificate (EIC) or Minor Works Certificate',
+        'A risk assessment and method statement (RAMS)',
+        'A portable appliance testing (PAT) record',
+        'A Building Control completion notice only',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,23 +115,23 @@ const Module6Section1_4 = () => {
       id: 9,
       question: 'What tool is typically used for continuity testing?',
       options: [
-        'Using presence detection and scheduling',
+        'A voltage indicator and proving unit',
         'A multifunction tester or continuity tester',
-        'Reliability and redundancy (N+1 or greater)',
-        'Limit fault current in case of errors',
+        'A clamp meter on the live conductor',
+        'An insulation resistance tester at 500V',
       ],
       correctAnswer: 1,
       explanation:
-        'Continuity testing requires electrical instruments such as a multifunction tester or dedicated continuity tester.',
+        'Continuity testing requires electrical instruments such as a multifunction tester or dedicated low-ohm continuity tester.',
     },
     {
       id: 10,
       question: 'Why must both inspection and testing be completed before energising?',
       options: [
-        'A minimum number depending on the size and nature of the area, as specified in HSG264 guidance',
-        'In at least two separate locations with version control, date stamps and change notes',
+        'To reduce the cost of the installation',
+        'To satisfy the client more quickly',
         'To ensure both visible construction and hidden electrical integrity are safe and compliant',
-        'Report immediately to supervisor and make area safe if possible',
+        'Because testing must always come before inspection',
       ],
       correctAnswer: 2,
       explanation:

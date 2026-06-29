@@ -38,8 +38,8 @@ const quickCheckQuestions = [
   {
     id: 'mewp-loler-interval',
     question: 'Under LOLER 1998, how often must a MEWP undergo a thorough examination?',
-    options: ['Every 3 months', 'Every 6 months', 'Every 12 months', 'Every 24 months'],
-    correctIndex: 1,
+    options: ['Every 3 months', 'Every 12 months', 'Every 6 months', 'Every 24 months'],
+    correctIndex: 2,
     explanation:
       'LOLER (Lifting Operations and Lifting Equipment Regulations 1998) requires a thorough examination of MEWPs at intervals not exceeding 6 months. This is because the platform carries people — equipment used to lift people must be examined twice as frequently as equipment used to lift goods only (which is 12 months).',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     id: 3,
     question: 'IPAF category 3a covers which type of MEWP?',
     options: [
-      'Static vertical (scissor lift on outriggers)',
-      'Static boom (boom lift on outriggers)',
       'Mobile vertical (self-propelled scissor lift)',
+      'Static boom (boom lift on outriggers)',
+      'Static vertical (scissor lift on outriggers)',
       'Mobile boom (self-propelled boom lift)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Category 3a = Mobile Vertical. The '3' means mobile (can travel with the platform elevated) and the 'a' means vertical (scissor-type, not boom-type). This covers self-propelled scissor lifts.",
   },
@@ -134,11 +134,11 @@ const quizQuestions = [
     question: 'What must always be in place before any MEWP operation begins?',
     options: [
       'A crane to provide backup lifting',
-      'A rescue plan',
       'A structural engineer on standby',
       'A minimum of three operatives',
+      'A rescue plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A rescue plan must always be in place before any MEWP operation. It must detail how a stranded operative will be rescued if the platform fails to lower. The plan should include personnel, equipment, timescales, and emergency contacts.',
   },
@@ -171,10 +171,10 @@ const quizQuestions = [
     options: [
       'Articulated boom lift',
       'Telescopic boom lift',
-      'Vertical mast lift',
       'Truck-mounted platform',
+      'Vertical mast lift',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Vertical mast lifts have a very compact footprint and are specifically designed for confined spaces such as narrow warehouse aisles. Boom lifts are too wide and require outrigger space that is not available between racking.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'An exclusion zone around a MEWP is established to:',
     options: [
-      'Mark the area where only IPAF-trained operatives may enter',
       'Prevent pedestrians and vehicles from entering the area where the MEWP could topple or drop objects',
+      'Mark the area where only IPAF-trained operatives may enter',
       'Indicate the maximum outreach of the boom',
       "Show where the machine's ground pressure exceeds safe limits",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Exclusion zones protect pedestrians and vehicles from the risk of the MEWP overturning, dropping tools/materials, or the boom swinging into personnel. The zone size depends on the MEWP type, reach, and task being carried out.',
   },

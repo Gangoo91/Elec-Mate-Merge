@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which cable type is most suitable for direct burial in domestic gardens?',
     options: [
-      'Safety monitoring and control',
+      'Twin and Earth (PVC)',
       'Steel Wire Armoured (SWA)',
-      'Visual inspection and testing',
-      'At least 3 out of 4 faults',
+      'Flexible PVC cord',
+      'LSZH singles',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     question:
       'When installing cables over thermal insulation, what adjustment is typically required?',
     options: [
-      'Exceeding pulling tension limits',
-      '12 litres per second per person',
+      'Reduce the cable size to save material',
+      'Use a smaller protective device only',
       'Increase cable size for derating',
-      'A transformer that increases voltage',
+      'Apply extra mechanical clips',
     ],
     correctAnswer: 2,
     explanation:
@@ -271,9 +271,9 @@ const quizQuestions = [
     question:
       'What is the primary consideration when selecting cable for bathroom underfloor heating?',
     options: [
-      'Web portals with secure login',
-      'Over-stripped insulation exposing copper',
-      'The sale was delayed and additional costs occurred',
+      'Low cost and easy availability',
+      'Bright sheath colour for identification',
+      'Maximum flexibility for coiling',
       'Heat resistance and moisture protection',
     ],
     correctAnswer: 3,
@@ -297,10 +297,10 @@ const quizQuestions = [
     id: 9,
     question: 'When would you select LSZH cable over standard PVC?',
     options: [
-      'Earth fault loop impedance and RCD operation',
+      'For all domestic ring final circuits',
       'In escape routes and public buildings',
-      'Safe vehicle movements and driver competence',
-      'Proper tooling and technique',
+      'Wherever cable cost must be minimised',
+      'Only for underground cable runs',
     ],
     correctAnswer: 1,
     explanation:
@@ -310,10 +310,10 @@ const quizQuestions = [
     id: 10,
     question: 'What factor determines the minimum burial depth for underground cables?',
     options: [
-      '2 extinguishers per floor (Class A rated)',
-      'Power sum equal level far end crosstalk',
+      'The colour of the cable sheath',
+      'The supply voltage of the circuit',
       'Location and risk of mechanical damage',
-      'To avoid confusion and keep communication clear',
+      'The number of conductors in the cable',
     ],
     correctAnswer: 2,
     explanation:

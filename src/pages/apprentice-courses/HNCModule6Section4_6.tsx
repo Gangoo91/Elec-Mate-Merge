@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'carbon-hierarchy',
     question: 'In the carbon reduction hierarchy, which approach should be prioritised first?',
     options: [
-      'Clean, dry place away from contamination and damage',
-      'Ultrasonic (clamp-on transit time) flow meter',
+      'Offset residual emissions with verified credits',
+      'Switch existing systems to low-carbon energy sources',
       'Avoid carbon-intensive activities where possible',
-      'Identify the correct circuit using drawings/spec',
+      'Improve the efficiency of existing equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       "According to the UKGBC framework, 'net-zero carbon in operation' for a building requires:",
     options: [
-      'UKGBC Net Zero Carbon Buildings Framework',
-      'Be used only for genuinely unavoidable residual emissions',
+      'Zero energy consumption from the building during occupancy',
+      'Offsetting all emissions without reducing energy use first',
       'Reduced operational energy with residual emissions offset',
-      'Switching to low or zero-carbon energy sources',
+      'Embodied carbon reductions during the construction phase only',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'The Science Based Targets initiative (SBTi) requires corporate targets to be aligned with:',
     options: [
-      'Switching to low or zero-carbon energy sources',
-      'The cumulative amount of carbon that can be emitted while meeting a target',
+      'The minimum standards set by Part L of the Building Regulations',
+      'The carbon factors published annually by the UK Government',
       'Paris Agreement temperature goals (1.5degC or well-below 2degC)',
-      'Reduced operational energy with residual emissions offset',
+      'The local planning authority’s net-zero policy',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'carbon budget' in pathway planning refers to:",
     options: [
-      'Reduced operational energy with residual emissions offset',
+      'The money set aside to purchase carbon offset credits',
       'The cumulative amount of carbon that can be emitted while meeting a target',
-      'Designing and specifying low-carbon MEP systems that minimise operational emissions',
-      'Be used only for genuinely unavoidable residual emissions',
+      'The annual carbon emissions of a single piece of plant',
+      'The cost of decarbonising a building over its lifetime',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'What is the primary role of building services engineers in achieving net-zero buildings?',
     options: [
-      'Tracing a relay coil to its associated contacts by matching designation numbers shown on the drawing',
-      'All parties who sign accept responsibility for their respective roles',
+      'Setting the organisation’s overall net-zero target date',
+      'Purchasing carbon offset credits on behalf of the client',
       'Designing and specifying low-carbon MEP systems that minimise operational emissions',
-      'Quality, suitability, compliance with standards, and environmental conditions',
+      'Verifying the building’s net-zero claim for marketing purposes',
     ],
     correctAnswer: 2,
     explanation:
@@ -224,9 +224,9 @@ const quizQuestions = [
     question:
       'Which verification standard specifically addresses net-zero carbon buildings in the UK?',
     options: [
-      'Chilled water for cooling systems',
-      'Identify goals and actions for career advancement',
-      'Equivalent resistance of parallel combinations',
+      'BS 7671 Requirements for Electrical Installations',
+      'The GHG Protocol Scope 1, 2 and 3 standard',
+      'ISO 14001 Environmental Management Systems',
       'UKGBC Net Zero Carbon Buildings Framework',
     ],
     correctAnswer: 3,

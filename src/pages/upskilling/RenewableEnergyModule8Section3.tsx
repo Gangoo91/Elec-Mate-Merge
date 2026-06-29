@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Why does Reg 421.11 + Reg 421.1.4 apply to a heat pump outdoor unit?',
     options: [
-      'Doesn’t apply',
-      'A heat pump outdoor unit is fixed equipment that generates / concentrates heat in normal operation (compressor body + outdoor coil + fan). Reg 421.11 requires protection of persons + livestock + property against harmful effects of heat or fire; Reg 421.1.4 requires sufficient distance to fixed objects / building elements so they are not subjected to dangerous temperatures in normal conditions. Manufacturer install manual specifies clearance, ventilation, vibration isolation — read TOGETHER with BS 7671 not in place of it',
-      'Only for indoor',
-      'Only PV',
+      'The outdoor unit is fixed equipment generating heat in normal operation, so Reg 421.11 and Reg 421.1.4 apply alongside the manufacturer clearances',
+      'They apply only to indoor current-using equipment such as the consumer unit, so an outdoor unit is covered solely by its manufacturer instructions',
+      'They apply only to PV arrays and other sources of generation, not to heat-producing current-using equipment',
+      'They are disapplied once the unit sits outside the building envelope, where Section 705 takes over instead',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 421.11 is the foundational fixed-equipment thermal-protection regulation: protection of persons, livestock and property against harmful effects of heat or fire generated in electrical installations. Reg 421.1.4 specifically targets fixed equipment causing concentration / focusing of heat — must be at sufficient distance from fixed objects / building elements so that those elements are not subjected to dangerous temperature in normal conditions. Heat pump outdoor unit fits both: compressor body + outdoor coil + fan generate heat in normal operation (compressor + condenser side); defrost cycle creates intermittent thermal pulses. The manufacturer install manual specifies clearance dimensions (typically 200-500 mm to walls + 1-2 m in front of fan) + ventilation requirements + vibration isolation pads. BS 7671 + manufacturer instructions read together. Cert evidence bundle records: manufacturer install manual reference + clearance verified at install + adjacent material thermal-safe.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Reg 422.3.2 enclosure temperature limits — when do they apply on a heat pump install?',
     options: [
-      'No application',
-      'Reg 422.3.2 applies where dust or fibres sufficient to cause a fire hazard could accumulate on an enclosure — then enclosure surface temperature shall not exceed 90 °C in normal conditions or 115 °C under fault. On a heat pump install this is a location-driven check: any enclosure (CU, DHW cylinder cover, outdoor isolator) sited where combustible dust/fibres could build up must be assessed against these limits. It is not a blanket cap on every surface in a clean dwelling',
-      '500 °C',
-      'No limits',
+      'It sets a fixed 70 °C surface limit on every enclosure in the dwelling, applied uniformly regardless of location',
+      'It applies only to the outdoor unit casing, since indoor enclosures are covered by Reg 421.1.4 instead',
+      'Where dust or fibres that could cause a fire hazard may accumulate on an enclosure, capping its surface at 90 °C normal / 115 °C fault — a location-driven check',
+      'It applies everywhere as a blanket cap, so every consumer unit and isolator must be temperature-tested at handover',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 422.3.2 applies specifically where materials such as dust or fibres sufficient to cause a fire hazard could accumulate on an enclosure of electrical equipment — in that condition the enclosure surface shall not exceed 90 °C in normal conditions or 115 °C under fault. The figures are a fire-hazard-accumulation safeguard, not a universal limit on every CU, cylinder cover or isolator surface. So the application is location-driven: where a heat pump CU, DHW cylinder immersion cover or outdoor isolator sits in a dusty / fibrous environment (e.g. a loft, store or workshop where deposits build up), assess the enclosure surface temperature against the limits. Modern compliant equipment carries manufacturer DoC confirming surface temperatures; cert evidence bundle records the DoC reference + visual inspection at commissioning + any thermal imaging at EICR.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Reg 522.2.1 wiring protection from external heat sources — where on a heat pump install?',
     options: [
-      'No relevance',
-      'Cable runs near hot pipework (primary heating flow / return at 35-55 °C typical for heat pump systems vs 70-80 °C for legacy boilers; lower temperature reduces but does not eliminate the concern); cable runs near the outdoor unit body (the compressor body + outdoor coil generate heat in normal operation); cable runs through compartments with restricted ventilation. Method per Reg 522.2.1: shielding, distance, higher-rated cable, local reinforcement, or selection accounting for the additional temperature rise',
-      'Only solar',
-      'Only EV',
+      'Only to solar PV cable runs on the roof, where direct sunlight raises the conductor temperature',
+      'Only to EV charger circuits, since heat pump primary flow is too cool to affect adjacent cabling',
+      'Only inside the consumer unit, where grouped circuit breakers raise the local ambient temperature',
+      'Where cable runs near hot primary pipework (35-55 °C), the warm outdoor unit body or poorly ventilated compartments — addressed by shielding, distance or higher-rated cable',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 522.2.1 sets out methods to protect wiring systems from external heat sources: (a) shielding; (b) placing sufficiently far from the source of heat; (c) selecting a system with due regard for the additional temperature rise which may occur; (d) local reinforcement or substitution of insulating material. Heat pump-relevant scenarios: (1) primary heating flow / return pipework at 35-55 °C (typical heat pump operating temperature; lower than legacy 70-80 °C boiler systems but still significant if cable runs in contact); (2) cable runs near outdoor unit body (compressor + coil generate heat in normal operation); (3) cable runs through DHW cupboard with cylinder + immersion (restricted ventilation + warm-air accumulation); (4) cable runs through loft / roof void exposed to summer ambient temperatures. Cert evidence bundle records: cable route survey + heat source proximity + chosen protection method per Reg 522.2.1.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'IP + IK ratings for heat pump outdoor unit + outdoor isolator — what should the installer verify?',
     options: [
-      'No requirements',
-      'Outdoor unit IP rating: typically IPX4 minimum (splash-water resistance per BS EN 60529); IK rating typically IK07 minimum (mechanical impact resistance per BS EN 62262 — protects against accidental impact). Outdoor isolator: IPX4 / IK07 typical; some sites need higher (IPX5 splash-water + IK10 high-impact in vandalism-prone or exposed locations). Cable glands rated to maintain enclosure IP. Cert evidence bundle records the ratings as installed',
-      'IP00',
-      'Same as indoor',
+      'IPX1 / IK02 is sufficient for any outdoor unit, since a roof overhang keeps direct rain off the enclosure',
+      'Outdoor unit and isolator typically IPX4 / IK07 minimum (IPX5 / IK10 if exposed or vandal-prone), with glands chosen to maintain the enclosure rating',
+      'IP20 indoor ratings are acceptable outdoors because the factory casing is already weatherproof',
+      'IP68 / IK10 is mandatory on every outdoor enclosure, as all garden equipment must survive temporary submersion',
     ],
     correctIndex: 1,
     explanation:
@@ -83,22 +83,22 @@ const quizQuestions = [
     question:
       'Outdoor unit siting — what clearance + thermal considerations apply?',
     options: [
-      'Right against wall',
-      'Per manufacturer install manual + Reg 421.1.4: typically 200-500 mm to walls + 1-2 m in front of fan + 300-500 mm above + ventilation airflow path unobstructed. Defrost cycle thermal pulses + condensate drip pattern + noise impact on neighbours (PDR 42 dB(A) at 1m from neighbouring building). Hot pipework (primary flow / return) routed away from cable per Reg 522.2.1. Cable glands maintain enclosure IP per BS EN 60529',
-      'Indoor only',
-      'No clearance',
+      'Per the manual + Reg 421.1.4: ~200-500 mm to walls, 1-2 m in front of the fan, unobstructed airflow, condensate drainage and ≤42 dB(A) at the boundary',
+      'Mounted hard against the wall with no rear clearance, since the fan draws and discharges air only from the front face',
+      'Sited only indoors in a ventilated plant room, because an outdoor coil cannot meet the manufacturer airflow figures',
+      'No clearance once the unit is bolted to a solid concrete base, as a rigid base removes the airflow requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outdoor unit siting integrates multiple constraints. Thermal (Reg 421.1.4 + manufacturer instructions): 200-500 mm clearance to walls, 1-2 m in front of fan (airflow); 300-500 mm above (top air discharge on some models); ventilation airflow unobstructed. Operational: condensate drip pattern (drainage required, away from paths + vegetation); defrost cycle pulses (intermittent water dripping from defrost melt). Noise: PDR (Permitted Development Rights) requires ≤42 dB(A) at 1m from neighbouring building (planning permission needed otherwise — check the customer’s property + neighbouring properties). Cable protection (Reg 522.2.1): cable route away from hot primary pipework; through outdoor wall via gland-sealed entry maintaining enclosure IP. Cert evidence bundle records: siting drawing + clearance dimensions + noise calc + condensate drainage detail + cable route + IP / IK ratings.',
   },
   {
     question: 'Defrost cycle — what is it electrically + thermally?',
     options: [
-      'Not real',
-      'Defrost cycle: heat pump reverses refrigerant flow temporarily (~5-15 min) to melt frost off the outdoor coil. Electrically: compressor continues running (no electrical anomaly); reversing valve operates + fan stops temporarily; immersion may activate as backup heat if customer is calling for heat. Thermally: outdoor unit drips condensate as frost melts; nearby cable / pipework experiences intermittent water + thermal cycling. Drainage + cable routing accommodate this',
-      'Refrigerant leak',
-      'Customer fault',
+      'A refrigerant leak the F-Gas engineer must repair before the unit will restart, signalled by frost on the coil',
+      'A brief reverse of refrigerant flow (~5-15 min) to melt coil frost: compressor runs, fan stops, immersion may cover heat and condensate drips',
+      'A customer-induced fault from setting the room thermostat too high, which the controller logs as an error',
+      'A summer-only cooling mode that the controller runs to dry the coil, never occurring in winter operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,34 +107,34 @@ const quizQuestions = [
   {
     question: 'Outdoor isolator — where + what type?',
     options: [
-      'Indoor only',
-      'Locally accessible at the outdoor unit per BS EN 60947-3 isolator (visible break + lockable in OFF). Position: typically 1-2 m from outdoor unit on the wall (or pole-mounted if free-standing unit); 1-1.5 m mounting height for accessibility. IP / IK rating outdoor (IPX4 / IK07 minimum). Used for safe isolation during service / maintenance / refrigerant work. Reg 537 isolation + switching framework applies',
-      'No isolator',
-      'Same as indoor',
+      'At the consumer unit only, since BS 7671 does not permit a second isolation point on the same final circuit',
+      'No local isolator, because the 30 mA RCBO at the board already provides means of isolation for service work',
+      'A 13 A switched fused connection unit indoors, as the outdoor unit is double-insulated and needs no local switch',
+      'A locally accessible BS EN 60947-3 isolator (visible break, lockable OFF) ~1-2 m from the unit at 1-1.5 m height, outdoor-rated IPX4 / IK07, per Reg 537',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Outdoor isolator at heat pump outdoor unit: locally accessible BS EN 60947-3 isolator with visible break + lockable in OFF position. Position 1-2 m from outdoor unit (typical), 1-1.5 m mounting height for accessibility. IP / IK outdoor rated (typical IPX4 / IK07 minimum). Function: safe isolation during service / maintenance / refrigerant work — the F-Gas Cat 1 person needs the electrical supply isolated to make refrigerant connections safely; the electrician / service engineer needs isolation to work on the outdoor unit electrical compartment. Reg 537 isolation + switching framework applies (Hager JK20 / Wylex IP66 / similar UK 2025-26 typical product). Cert evidence bundle records: isolator product + location + IP / IK + commissioning visible-break + lockable-OFF verification.',
   },
   {
     question: 'Cable from indoor CU to outdoor unit — what type + protection?',
     options: [
-      '1.5 mm² T+E indoor',
-      'Outdoor section: SWA (Steel Wire Armoured) cable, typically 3-core 10 mm² (single-phase) or 5-core 6-10 mm² (three-phase) per Appendix 4 sustained current calc. Armour as CPC where designed (Reg 543) or separate green-yellow CPC. Gland-sealed entry to indoor + outdoor enclosures maintaining IP rating. Mechanical protection per Reg 522.6 (cable in conduit / through structural penetrations protected against damage)',
-      'Bare wire',
-      'No outdoor cable',
+      'Bare single conductors clipped to the external wall and sleeved at the ends to save on cable cost',
+      'Standard T+E run direct across the garden and clipped to the fence, the same as an indoor ring final',
+      'Outdoor SWA (3-core 10 mm² single-phase or 5-core three-phase) sized per Appendix 4, armour or separate CPC per Reg 543, gland-sealed for IP',
+      '1.5 mm² flexible flex on a plug and socket, since the outdoor unit is treated as a portable appliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Outdoor cable from indoor CU to outdoor unit: SWA (Steel Wire Armoured) is standard. Typical 3-core 10 mm² for single-phase 32 A heat pump circuit (or 6 mm² for smaller installs); 5-core 6-10 mm² for three-phase. Cable sized per Appendix 4 sustained current carrying capacity + voltage drop calc (run length + per-phase / line current). Armour as CPC where designed per Reg 543 + manufacturer DoC (separate green-yellow CPC if armour not relied on). Gland-sealed entry at indoor + outdoor enclosures maintaining IP rating. Mechanical protection per Reg 522.6: cable in conduit through building penetrations; SWA outdoor; UV-resistant outer sheath where exposed to sunlight; clipped at appropriate intervals. Cert evidence bundle records: cable type + cross-section + length + route + gland details + CPC arrangement (armour or separate).',
   },
   {
     question: 'Condensate drainage from outdoor unit — electrical implication?',
     options: [
-      'No implication',
-      'Condensate (water from coil dehumidification + defrost cycle) drips from outdoor unit base. Typical 1-3 L per defrost cycle in winter; less in summer. Must drain to suitable point (gravel + soakaway, surface water drain, or gravity to suitable disposal). Cable + isolator location away from drip pattern; outdoor cable run protected; condensate must not pool around unit base (icing risk creates trip hazard + thermal damage to cable insulation if standing water freezes against cable)',
-      'No water',
-      'Customer fault',
+      'No electrical implication, because all defrost condensate is captured in an internal sump and evaporated by the compressor',
+      'Condensate (1-3 L per defrost cycle) must drain away, with cable and isolator sited clear of the drip pattern and any pooling that could ice up',
+      'The outdoor unit produces no water, so siting the cable below the unit is perfectly acceptable',
+      'Standing water is purely a plumbing matter, so the electrician can ignore it when locating the isolator',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,12 +143,12 @@ const quizQuestions = [
   {
     question: 'IP rating BS EN 60529 — first digit vs second digit?',
     options: [
-      'No meaning',
-      'IP first digit: protection against solid foreign objects (0-6). 6 = dust-tight; 5 = dust-protected. IP second digit: protection against ingress of water (0-9). 4 = splash from any direction; 5 = water jet; 6 = powerful water jet; 7 = temporary submersion. UK 2025-26 outdoor heat pump unit + outdoor isolator typically IPX4 (X = unspecified / not relevant for solid-object protection in this context) — splash from any direction. Cable glands selected to maintain the enclosure rating',
-      'Random',
-      'No rating',
+      'First digit = solid objects (0-6; 6 = dust-tight); second digit = water (0-9; 4 = splash, 5 = jet, 7 = temporary submersion). Outdoor kit is typically IPX4',
+      'First digit = water ingress and second digit = solid objects, the reverse of the BS EN 60529 order',
+      'First digit = impact resistance and second digit = water, combining the IP and IK codes into one',
+      'Both digits describe water only, with the first for rain and the second for pressure-washing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IP rating per BS EN 60529: two-digit code XY where X = solid object protection (0-6; 6 = dust-tight) + Y = water ingress protection (0-9; 4 = splash from any direction, 5 = water jet, 6 = powerful water jet, 7 = temporary submersion, 9 = high-pressure / high-temperature water jets). Outdoor heat pump enclosures typically IPX4 or IPX5: splash-resistant against any direction (rain) or water jet (pressure washing); X indicates unspecified first digit (solid-object protection less critical for these specific enclosures, or alternative rating per manufacturer). Manufacturer DoC declares the rating per outdoor unit + outdoor isolator. Cable glands must maintain the rating: UK 2025-26 standard practice is metric brass glands with rubber sealing washers + neoprene sleeves to match cable diameter. Cert evidence bundle records the IP rating per enclosure + verified visual inspection at commissioning.',
   },

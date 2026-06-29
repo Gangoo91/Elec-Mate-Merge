@@ -13,10 +13,10 @@ const quickCheckQuestions = [
   {
     question: 'What is the primary goal of a customer handover session?',
     options: [
-      'To demonstrate technical expertise',
+      'To demonstrate the installer\'s technical expertise to the customer',
       'To ensure the customer can confidently operate and maintain the system',
-      'To upsell additional products',
-      'To complete paperwork quickly',
+      'To upsell additional products and accessories on the day',
+      'To complete the remaining paperwork as quickly as possible',
     ],
     correctIndex: 1,
     explanation:
@@ -25,10 +25,10 @@ const quickCheckQuestions = [
   {
     question: 'When demonstrating app functionality, what approach is most effective?',
     options: [
-      'Show every feature available',
-      'Let the customer discover features themselves',
+      'Show every single feature available in the app in one long session',
+      'Let the customer discover all of the features for themselves later',
       'Focus on daily use features first, with advanced features as follow-up',
-      'Only show features they specifically ask about',
+      'Only show the specific features the customer directly asks you about',
     ],
     correctIndex: 2,
     explanation:
@@ -37,10 +37,10 @@ const quickCheckQuestions = [
   {
     question: 'What documentation should be left with the customer after handover?',
     options: [
-      'Just the invoice',
+      'Just the final invoice for the installation work',
       'System overview, login details, emergency procedures, and support contacts',
-      'Manufacturer manuals only',
-      'No documentation is needed',
+      'Only the printed manufacturer manuals for each device',
+      'Nothing, as the app contains all the guidance needed',
     ],
     correctIndex: 1,
     explanation:
@@ -53,45 +53,45 @@ const quizQuestions = [
     question: 'How should you handle a customer who seems overwhelmed during app training?',
     options: [
       'Continue with the full demonstration to complete the handover',
+      'Suggest they read the manufacturer manual on their own later',
       'Slow down, focus on essentials, and offer a follow-up session',
-      'Suggest they read the manual instead',
-      'Skip the training entirely',
+      'Skip the remaining training and leave them to work it out',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Recognising customer comfort levels and adapting the training pace ensures better retention and reduces anxiety about new technology.',
   },
   {
     question: 'What should be included in the system overview document?',
     options: [
-      'Technical specifications only',
       'Device list, network details, account information, and basic troubleshooting',
-      'Marketing materials',
-      'Installation photographs only',
+      'The detailed technical specifications of each installed device only',
+      'Product marketing materials and manufacturer brochures only',
+      'Photographs taken at various stages during the installation only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A practical system overview helps customers and future technicians understand the installation without needing to investigate from scratch.',
   },
   {
     question: 'When is the best time to conduct the customer handover?',
     options: [
-      'Before installation is complete',
-      'Immediately after completion when system is fresh in mind',
-      'Several days after installation',
-      'Only if the customer requests it',
+      'Before the installation work has been fully completed',
+      'Several days after the installation has been finished',
+      'Only if the customer specifically requests a handover',
+      'Immediately after completion when the system is fresh in mind',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Handover immediately after completion allows demonstration of the actual installed system while details are fresh, enabling practical hands-on training.',
   },
   {
     question: 'What voice command training approach is most effective?',
     options: [
-      'Give the customer a written list of commands',
+      'Give the customer a written list of commands to read later',
       'Have the customer practice commands during the session',
       'Demonstrate commands without customer participation',
-      'Voice commands are not important to cover',
+      'Skip voice commands as they are rarely used',
     ],
     correctIndex: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
   {
     question: 'How should you explain the process for getting system support?',
     options: [
-      'Tell them to search online',
-      'Provide clear contacts for different types of issues (your company vs manufacturer)',
-      'Say you will always be available 24/7',
-      'Avoid discussing support to prevent concern',
+      'Tell them to search online for their own solutions when problems arise',
+      'Promise that you will personally be available to them at any time 24/7',
+      'Provide clear contacts for different issues (your company vs manufacturer)',
+      'Avoid discussing support at all so as not to cause them any concern',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Clear support pathways prevent customer frustration. Differentiating between installation support and manufacturer support sets appropriate expectations.',
   },

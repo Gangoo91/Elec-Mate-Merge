@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     id: 'cdm-m1s4-single-contractor',
     question: 'On a single contractor project, which duty holder roles are NOT required?',
     options: [
-      'Client and contractor',
       'Principal designer and principal contractor',
+      'Client and contractor',
       'Designer and worker',
       'Contractor and designer',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'On a single contractor project — where only one contractor will carry out the construction work — there is no requirement to appoint a principal designer (PD) or principal contractor (PC). The client still has duties, and the single contractor takes on additional responsibilities that would otherwise fall to the PC. This is the simplest CDM scenario and applies to many small electrical jobs where only one contracting firm is involved.',
   },
@@ -35,11 +35,11 @@ const quickCheckQuestions = [
       'A project is notifiable to the HSE when it exceeds which of the following thresholds?',
     options: [
       'More than 10 working days with more than 5 workers at any one time',
-      'More than 30 working days with more than 20 workers at any one time, OR more than 500 person-days',
       'More than 60 working days regardless of the number of workers',
       'Any project with a value exceeding £250,000',
+      'More than 30 working days with more than 20 workers at any one time, OR more than 500 person-days',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A project is notifiable to the HSE when it will last more than 30 working days AND have more than 20 workers working simultaneously at any point, OR when the project exceeds 500 person-days of construction work in total. The notification is made using an F10 form, which must be submitted to the HSE as soon as practicable before the construction phase begins. The F10 must also be displayed on site.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
       'On a project with more than one contractor, who must the client appoint IN WRITING before the construction phase begins?',
     options: [
       'A CDM coordinator and a site safety officer',
-      'A principal designer and a principal contractor',
       'A health and safety consultant and an architect',
       'A project manager and a clerk of works',
+      'A principal designer and a principal contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On any project involving more than one contractor, the client must appoint a principal designer (PD) and a principal contractor (PC) in writing. These appointments must be made as soon as practicable and before the construction phase begins. The PD coordinates health and safety during the pre-construction phase, while the PC manages health and safety during the construction phase. Failure to make these appointments is a breach of CDM 2015.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which form is used to notify the HSE about a notifiable project?',
     options: [
-      'Form F2508 (RIDDOR report)',
       'Form F10 (CDM notification)',
+      'Form F2508 (RIDDOR report)',
       'Form F9 (asbestos notification)',
       'Form EIC (Electrical Installation Certificate)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The F10 form is used to notify the HSE about a notifiable construction project. It must be submitted as soon as practicable before the construction phase begins and must include details such as the project address, client details, PD and PC details, start date, planned duration, and the estimated maximum number of workers. A copy of the F10 notification must be displayed on site throughout the construction phase.',
   },
@@ -145,11 +145,11 @@ const quizQuestions = [
       "On a domestic project with multiple contractors, who takes on the domestic client's CDM duties?",
     options: [
       'The principal designer',
-      'The principal contractor',
       'The local building control inspector',
       'The domestic client retains all duties',
+      'The principal contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "On a domestic project with multiple contractors, the domestic client's duties automatically transfer to the principal contractor. This recognises that domestic clients cannot reasonably be expected to understand and discharge CDM duties. The exception is where the domestic client chooses to appoint a principal designer in writing — in that case, the PD takes on the client duties instead of the PC.",
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'An electrician is rewiring a house as a sole contractor. Which statement is correct?',
     options: [
-      'CDM does not apply because it is a domestic property',
       "CDM applies, the electrician is the sole contractor and takes on additional duties, and the domestic client's duties transfer to the electrician",
+      'CDM does not apply because it is a domestic property',
       'CDM applies but only if the rewire takes more than 30 days',
       'CDM only applies if the electrician employs more than 5 workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CDM applies to ALL construction work, including domestic properties. As the sole contractor on a domestic project, the electrician takes on additional contractor duties AND the domestic client's duties automatically transfer to them. This means the electrician is responsible for planning, managing, and monitoring the work safely, ensuring adequate welfare facilities are available, and preparing a proportionate construction phase plan. CDM does not require the work to exceed any duration or worker threshold to apply.",
   },
@@ -186,11 +186,11 @@ const quizQuestions = [
       'A maintenance contract involves a team of 4 electricians working across 15 commercial sites over 12 months. How does CDM apply?',
     options: [
       'CDM does not apply because it is maintenance, not construction',
-      'CDM applies to the overall contract but each site visit is assessed individually for PD/PC and notification requirements',
       'CDM only applies if each site visit lasts more than 30 days',
+      'CDM applies to the overall contract but each site visit is assessed individually for PD/PC and notification requirements',
       'The client only needs to appoint a PD — no PC is required for maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CDM applies to maintenance work because it falls within the definition of construction work under the regulations. For a multi-site maintenance contract, CDM applies to the overall arrangement, but each individual site or project within the contract must be assessed on its own merits for PD/PC appointments and notification requirements. If any individual site involves more than one contractor, PD and PC appointments are needed for that site. The overall client must still provide pre-construction information for each site.',
   },

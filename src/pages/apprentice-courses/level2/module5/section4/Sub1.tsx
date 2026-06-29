@@ -45,40 +45,40 @@ const checks = [
     question:
       "A customer rings up and says 'I want a price for a kitchen rewire'. You email them a number for £2,800 with a one-line description. Two weeks later they want you to start. What's missing before any tools come out, and why does it matter?",
     options: [
-      "A written quote that fully scopes the work (number of circuits, accessories, run routes, what's included, what's excluded), a contract setting payment terms and variations, and a customer signature confirming both. Without those you've got a vague verbal agreement that the Consumer Rights Act 2015 will treat as enforceable on the customer's terms — meaning if they later say 'I assumed downlights were included' you'll struggle to prove otherwise.",
-      "Yes. The Electrical Installation Certificate is the legal record that the install meets BS 7671, required by Reg 644.1.1. It's their evidence of competent work for insurance, future house sale (HIP/EICR comparison), warranty claims and any future electrician needing to know what was tested. Walk them through the front sheet, the schedule of test results, and the recommended retest interval before you leave — and post-issue a digital copy to their email so it can't be lost.",
-      "Set the meter to INRUSH mode. Clamp around one phase (or the L of a single-phase motor). Press start to arm the capture. Operate the load (start the motor). The meter captures the peak current in the first 100 ms after the rising edge of current — typically 6–10× the running current for an induction motor, higher for HVAC compressors. Useful for diagnosing nuisance trips on an undersized breaker (the inrush exceeds the magnetic trip threshold on a Type B breaker; replace with Type C or D for high-inrush loads).",
-      "EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture",
+      "A written quote that fully scopes the work — circuits, accessories, run routes, inclusions and exclusions — plus a contract and the customer's signature confirming both.",
+      "Nothing more in writing — the £2,800 email is itself a binding fixed-price quote, so you can start work and simply invoice that figure once it's finished.",
+      "Only a deposit invoice — take 50% up front to secure materials, then begin, with scope and exclusions agreed verbally on the day as work progresses.",
+      "Only the Electrical Installation Certificate — issue that at the end and it covers you legally, so a detailed quote is genuinely optional.",
     ],
     correctIndex: 0,
     explanation:
-      "A price on its own isn't a quote, and a quote isn't a contract. The Consumer Rights Act 2015 s.49 says services must be performed with reasonable care and skill, and s.50 makes any pre-contract statement that influenced the customer part of the contract by default. If you didn't write down what was excluded, the courts will read in what the customer reasonably expected. The fix is a proper quote that lists scope, price, exclusions, payment milestones and start/finish dates, signed by both sides before tools come out.",
+      "A price on its own isn't a quote, and a quote isn't a contract. The Consumer Rights Act 2015 s.49 says services must be performed with reasonable care and skill, and s.50 makes any pre-contract statement that influenced the customer part of the contract by default. If you didn't write down what was excluded, the courts will read in what the customer reasonably expected. The fix is a proper quote that lists scope, price, exclusions, payment milestones and start/finish dates, signed by both sides before tools come out — and if the customer later says 'I assumed downlights were included' the written scope settles it.",
   },
   {
     id: 'mod5-s4-sub1-cert-purpose',
     question:
       "You've finished a domestic CU change. You hand the customer the EIC and they say 'oh just stick it in the drawer, I don't need to read it'. Should you push back, and what does the cert actually do for them?",
     options: [
-      "Partnership = two or more people trading together without forming a Ltd company. Partnership is governed by the Partnership Act 1890 (very old statute). Each partner has unlimited personal liability for partnership debts including those incurred by other partners. Tax: each partner files Self Assessment on their share of profits. Less common than sole trader (one-person) or Ltd (limited liability) because you get unlimited liability AND have to share decisions with another partner.",
-      "The Construction Phase Plan is the Principal Contractor's plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.",
-      "Yes. The Electrical Installation Certificate is the legal record that the install meets BS 7671, required by Reg 644.1.1. It's their evidence of competent work for insurance, future house sale (HIP/EICR comparison), warranty claims and any future electrician needing to know what was tested. Walk them through the front sheet, the schedule of test results, and the recommended retest interval before you leave — and post-issue a digital copy to their email so it can't be lost.",
-      "A dutyholder is a person on whom statute imposes a duty regardless of contract. Employer, self-employed person, employee, occupier, manufacturer, designer, importer — each has statute-imposed duties under HASAWA or its associated regulations. Contractual reallocation of the risk doesn't transfer the statutory duty. You can't 'contract out' of HASAWA.",
+      "No, don't push back — the cert is really an internal record for the contractor scheme audit, so a drawer is the right place for it.",
+      "Yes, but only because they need it to claim the manufacturer warranty on the consumer unit — that is the cert's single purpose.",
+      "Yes — the EIC is their legal proof of competent work, needed for insurance, house sale and any future electrician, so walk them through it.",
+      "No, don't push back — an EIC is only required on commercial work, so for a domestic CU change handing over an EIC was a mistake anyway.",
     ],
     correctIndex: 2,
     explanation:
-      "BS 7671 Reg 644.1.1 requires an EIC to be issued to the person ordering the work for every new installation, addition or alteration. Its purpose is fourfold: it's the legal proof of competent install, it satisfies Building Regulations Part P notification (when notified through a scheme), it's the baseline for any future EICR, and it's evidence the customer needs for buildings/contents insurance. 'Stick it in a drawer' is the apprentice's cue to walk the customer through what they're holding so they understand what to do with it.",
+      "BS 7671 Reg 644.1 requires an EIC to be issued to the person ordering the work for every new installation, addition or alteration. Its purpose is fourfold: it's the legal proof of competent install, it satisfies Building Regulations Part P notification (when notified through a scheme), it's the baseline for any future EICR, and it's evidence the customer needs for buildings/contents insurance. 'Stick it in a drawer' is the apprentice's cue to walk the customer through the front sheet, the schedule of test results and the recommended retest interval, then post-issue a digital copy to their email so it can't be lost.",
   },
   {
     id: 'mod5-s4-sub1-cut-out-location',
     question:
       "Six months after a kitchen install, the customer rings the office in a panic — there's a smell of burning and they need to kill the supply. They can't find the cut-out. What should the install paperwork have done to make this a 30-second answer instead of a 30-minute search?",
     options: [
-      "The EIC front sheet should have recorded the cut-out location in plain English ('under-stairs cupboard, behind the boxing'), the as-installed drawing should mark its position on the floor plan, and the user instruction pack should include a one-page 'in an emergency' card with the cut-out location, the main switch location and the firm's out-of-hours number. The customer shouldn't be searching when they need to switch off.",
-      "Powers under HASAWA Part I — inspection and entry (s.20), improvement notices (s.21), prohibition notices (s.22), seizure and rendering harmless of articles or substances (s.25), prosecution (s.33). HSE inspectors can enter premises at any reasonable time, take photos, take samples, take statements, examine documents, require production of records, dismantle equipment.",
-      "A BSI Publicly Available Specification — \\\\\\\"PAS 63100:2024 Electrical installations. Protection against fire of battery energy storage systems intended for use in dwellings\\\\\\\" — that sets out fire safety requirements for domestic battery storage, including location restrictions, separation distances from sleeping accommodation and escape routes, fire detection requirements and segregation from combustibles.",
-      "CompEx (Competency in Explosive Atmospheres) is the standard UK competence scheme for electrical work in hazardous areas — petrochemical, offshore, fuel storage, paint shops, distilleries. Different equipment standards (Ex-rated equipment, intrinsic safety, increased safety, flameproof enclosures), different installation methods (cable glanding to maintain Ex protection), different inspection regimes. CompEx Ex01-04 covers gas-protected installations; Ex05-06 covers dust-protected.",
+      "Nothing on the paperwork could help — the cut-out belongs to the DNO, so the customer just rings the network operator's emergency line and waits.",
+      "The invoice should have listed the cut-out as a chargeable item, prompting the customer to remember its location from their billing paperwork.",
+      "The retest interval is what matters — knowing the next EICR is due in ten years tells the customer it's safe, so locating the cut-out is unnecessary.",
+      "The EIC front sheet, the as-installed drawing and a one-page 'in an emergency' card should all record the cut-out and main switch locations.",
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "The cut-out and the main switch locations are the two pieces of information a customer needs in an emergency. Recording them clearly on the EIC, the drawing and a separate emergency card is what turns a panicked phone call into a 30-second answer. BS 7671 doesn't mandate the emergency card explicitly but the Code of Practice on aftercare expects it, and customer-experience-led firms make it part of every handover pack. It also reduces your out-of-hours call volume.",
   },
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       "Which document specifies the SCOPE of the work, the PRICE, what's included, what's excluded and the payment terms — before any work starts?",
     options: [
-      "Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system's operational status at handover",
-      "The quote (or estimate, if the price is provisional). It captures scope, price, exclusions, payment milestones, lead-times and any assumptions. A signed quote forms the basis of the contract under the Consumer Rights Act 2015 — anything not in the quote is open to interpretation by the customer.",
-      "At L2 you were always 'under supervision' — that was the second limb of Reg 16. At L3 you're moving towards being able to satisfy the first limb (possess the technical knowledge). You also start being looked to by L2 mates as a quasi-supervisor. Knowing where the Reg 16 line sits — for yourself and for the people who ask you to sign things — is the L3 competence judgement.",
-      "When conditions change; after a near-miss or incident; when new equipment / substances are introduced; when new operatives are involved; when regulations change; periodically (typically annually as a baseline). Review is part of MHSWR Reg 3 obligations.",
+      "The invoice. It finalises the price and what was included, so it is where scope, exclusions and payment terms are set for the customer to agree.",
+      "The quote (or estimate, if provisional). It captures scope, price, exclusions, payment milestones, lead-times and any assumptions before work starts.",
+      "The job sheet. It records the agreed scope and price before the visit, and is the document the customer signs to lock in inclusions and exclusions.",
+      "The Electrical Installation Certificate. As the legal output of the job, it is also where scope, price and payment terms are formally recorded.",
     ],
     correctAnswer: 1,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       "A customer signs a quote. Under the Consumer Rights Act 2015, what does s.49 require of you when you actually do the work?",
     options: [
-      "The set torque has been reached. Inside the handle is a calibrated spring-loaded cam mechanism. As torque rises the cam loads the spring; at the preset value the cam slips and you feel/hear an audible click and a tactile drop in resistance. That signals 'stop turning' — keep going past the click and you over-torque the connection.",
-      "Voltage difference between feet planted on the ground in the vicinity of an earth fault — current flowing through the ground creates voltage gradient; a person standing across that gradient experiences step potential. Significant near HV faults; can cause shock through the legs.",
-      "That the service is performed with 'reasonable care and skill'. This is a statutory implied term that can't be excluded by your terms and conditions. If the work falls below the standard a competent electrician would deliver, the customer has a right to repeat performance or a price reduction under s.55 and s.56.",
-      "To plan, manage and monitor the construction phase and co-ordinate matters relating to it to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety. The PC produces the Construction Phase Plan and updates it as the project evolves.",
+      "That the work is completed within the exact number of days quoted, with a fixed penalty payable to the customer for every day it overruns.",
+      "That you guarantee the install will never develop a fault, making you liable to return free of charge for the lifetime of the property whatever the cause.",
+      "That the service is performed with 'reasonable care and skill' — a statutory implied term that can't be excluded by your terms and conditions.",
+      "That you must use the cheapest compliant materials available, with any saving on the quoted materials price refunded to the customer at the end.",
     ],
     correctAnswer: 2,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       "What's the PURPOSE of a job sheet (sometimes called a worksheet or visit record)?",
     options: [
-      "A break somewhere in the line conductor of the ring — a loose terminal in a back-box, a damaged cable inside a void, or a cable not actually returned to the CU. Investigate before going any further. Step 2 and Step 3 are meaningless until Step 1 readings are sensible.",
-      "Underfloor voids (some); plant rooms with limited ventilation; lift shafts; ductwork; basement / cellar in some cases; switchroom in industrial settings; tank work for instrumentation; manholes for cable jointing.",
-      "Neither — they conflict. The conflict must be resolved before any document issues. Trace back to the calc sheet (cable CCC and design Ib) to see which rating the calc supports, fix the wrong document, log the change in the revision history, and re-issue. A pack with internal conflict cannot be issued for construction.",
-      "To record what was actually done on the visit — labour hours, materials used, parts replaced, tests performed, customer comments, photos. It's the contemporaneous record that supports the invoice, feeds into the cert, and protects the firm if there's a later complaint about scope or quality.",
+      "To set out the fixed price and exclusions the customer agrees before work starts — signed at the quoting stage and is what the contract is built on.",
+      "To act as the legal proof the installation meets BS 7671 — it carries the test results and retest interval and is what the customer keeps for insurance.",
+      "To notify the local authority of notifiable work under Building Regulations Part P — submitted to the council (or via the scheme) to register the job.",
+      "To record what was actually done on the visit — labour, materials, tests, comments and photos — supporting the invoice and feeding into the cert.",
     ],
     correctAnswer: 3,
     explanation:
@@ -134,38 +134,38 @@ const quizQuestions = [
     question:
       "Which BS 7671 regulation requires an Electrical Installation Certificate (EIC) to be issued for new installations, additions and alterations?",
     options: [
-      "Reg 644.1.1 — 'Upon completion of inspection and testing of an installation or an addition or alteration to an installation, an Electrical Installation Certificate based on the model in Appendix 6, together with a Schedule of Inspections (or Schedule of Items Inspected) and a Schedule of Test Results, shall be given to the person ordering the work.'",
-      "The 110 V supply on site is centre-tapped earthed (CTE), so the voltage between either leg and earth is only 55 V. A faulty tool that ends up with the case live to one leg only puts 55 V between the casing and the operative, not 230 V. Combined with a 30 mA RCD at the transformer this dramatically reduces shock energy and survivability if something goes wrong.",
-      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity and voltage drop tables), Appendix 15 (ring and radial final circuit arrangements) and Appendix 17 (energy efficiency). Knowing the appendices by topic is half of installer navigation.",
-      "Following BS 7671 raises a presumption that the underlying statutory duty (EAWR Reg 4) has been met. The legal logic: HSR25 (HSE's guidance to EAWR) cites BS 7671 as a means of demonstrating EAWR compliance. So evidence of BS 7671 compliance = evidence of EAWR compliance, by reference. Departing from BS 7671 is allowed but flips the burden — you have to prove your alternative method was at least as safe.",
+      "Reg 644.1 — an EIC based on the Appendix 6 model must be issued to the person ordering the work, with the schedules required by Reg 644.3.",
+      "Reg 644.1.1 — the regulation requiring the EIC, carrying the model form reference and the duty to give the certificate to the person who ordered it.",
+      "Reg 644.5 — the regulation mandating the EIC for new installations, additions and alterations, with the schedules attached as appendices to it.",
+      "Reg 631.1 — the regulation requiring the EIC to be issued on completion of every new install, addition or alteration once inspection and testing are done.",
     ],
     correctAnswer: 0,
     explanation:
-      "BS 7671 Reg 644.1.1 is the legal hook for the EIC. The model forms in Appendix 6 set the layout. The cert is issued to the person ordering the work — usually the customer, sometimes the principal contractor on a commercial job. It must include the schedule of inspections and the schedule of test results.",
+      "BS 7671 Reg 644.1 is the legal hook for the EIC — it requires the certificate to be issued to the person ordering the work on completion of verification of a new installation, addition or alteration. The model forms in Appendix 6 set the layout, and Reg 644.3 requires the Schedule of Inspections and the Schedule of Test Results to accompany the certificate. (Reg 644.1.1 is a related but different rule — it requires defects found during inspection of a new installation to be corrected before the certificate is issued.)",
   },
   {
     id: 5,
     question:
       "What's the PURPOSE of the user instructions handed over with a fire alarm panel, an EV charger or a smart heating control?",
     options: [
-      "On the client side — typically held by the building facilities manager (printed and digital), with a copy held by the building owner and a soft copy retained by the contractor for warranty and PI purposes. It is the reference for all future maintenance, fault diagnosis, periodic inspection (EICR) and any alteration project.",
-      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
-      "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
-      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
+      "To give the customer the technical detail a future electrician needs — cable sizes, circuit references, test values — so they can fault-find without re-testing.",
+      "To let the customer operate the install correctly, recognise faults, run user-level checks (e.g. weekly fire-alarm test) and know when to call you back.",
+      "To satisfy the manufacturer's warranty registration — the pack is really the warranty paperwork, proving competent install and unlocking the guarantee.",
+      "To record what the customer was shown at handover so they can't later claim they weren't trained — a liability document for the firm, signed by them.",
     ],
     correctAnswer: 1,
     explanation:
-      "User instructions are part of the handover legally implied under Consumer Rights Act 2015 (services must be fit for purpose) and explicitly required for fire alarm systems under BS 5839-1 (logbook + user instructions), for EV chargers under BS EN IEC 61851 / installer guidance, and for many other systems via the manufacturer's instructions. 'They can google it' isn't a defence when the customer trips a fault and floods the boiler room.",
+      "User instructions enable the customer to operate the install, recognise fault conditions and discharge their own legal duties — such as the fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005. They are part of the handover legally implied under Consumer Rights Act 2015 (services must be fit for purpose) and explicitly required for fire alarm systems under BS 5839-1 (logbook + user instructions), for EV chargers under BS EN IEC 61851 / installer guidance, and for many other systems via the manufacturer's instructions. 'They can google it' isn't a defence when the customer trips a fault and floods the boiler room.",
   },
   {
     id: 6,
     question:
       "What goes on an as-installed drawing that wouldn't be on the original design drawing?",
     options: [
-      "Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).",
-      "Earth electrodes — design, materials, installation, and target resistance values. Referenced from BS 7671 for TT installations and for installations containing generators or static converters (inverters). Provides the engineering background for sizing, depth, conductor material, soil conditioning to achieve a target electrode resistance.",
-      "The actual cable routes, fitting positions, junction-box locations, cable sizes used (where they differ from design), any deviations from the design and the reasons for them. As-installed drawings record what's actually in the wall, ceiling and floor void — so the next electrician (or the customer's plumber drilling for a new radiator) knows what they're dealing with.",
-      "Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman's ASQ) was a better predictor of success than traditional hiring criteria",
+      "The agreed price and payment milestones — the as-installed drawing is the commercial record of what was charged for each room of the job.",
+      "The recommended retest interval and next EICR date — the as-installed drawing is where the inspection schedule and maintenance dates live.",
+      "The actual cable routes, fitting positions, junction-box locations, cable sizes used and any deviations from the design — what's really in the fabric.",
+      "The manufacturer's part numbers and warranty periods for every accessory — the as-installed drawing is essentially the warranty register.",
     ],
     correctAnswer: 2,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       "A customer rings six months after a CU change saying 'I can't find the manual for the new RCBO'. What handover document should have prevented that call?",
     options: [
-      "A poor or loose termination at one end (most often the MET) or at the BS 951 clamp itself — oxidised contact face, screw not torqued, ferrule damaged. The cable resistance alone should be ~7 mOhm; 0.85 ohm means about 0.84 ohm of contact resistance somewhere.",
-      "No — it’s not part of any electrical equipment, so it can’t become live under a fault. It might be an extraneous-conductive-part (if it could introduce a potential from elsewhere — Sub 4.4 covers that), but it isn’t exposed.",
-      "An EIC (Electrical Installation Certificate) for the new circuit, the inverter manufacturer’s commissioning sheet, the DNO G98/G99 commissioning notice (filed with the DNO), the MCS certificate (issued by the MCS scheme), and the building regulations notification.",
-      "The handover pack — a single document (paper or digital) listing every piece of equipment installed with the manufacturer's part number, the serial number, the warranty period and a link to the user manual. Plus contact details for in-warranty service and the firm's after-care number.",
+      "The Electrical Installation Certificate — it lists every device, so the customer reads the RCBO model off the test schedule and downloads the manual.",
+      "The job sheet — the contemporaneous visit record names the parts fitted, so the customer's copy lets them identify the RCBO and find the manual online.",
+      "The invoice — the itemised bill lists the RCBO as a line item with its price, which is enough for the customer to identify it and source the manual.",
+      "The handover pack — a single record of every item installed, with part and serial numbers, warranty period and a link to each user manual.",
     ],
     correctAnswer: 3,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       "A landlord asks for a copy of an EICR you carried out two years ago because they're selling the flat. The original is in their tenant's drawer somewhere. What's your obligation, and why does it matter that you can produce one?",
     options: [
-      "You should have kept a copy in the firm's records (paper or digital). Most contractor schemes (NICEIC, NAPIT, ELECSA) require record retention of 6 years minimum, and the Limitation Act 1980 sets the same window for civil claims arising from negligence. Re-issuing a copy is straightforward if you have the records, embarrassing if you don't.",
-      "Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.",
-      "The reasons for the chosen frequency, including a note that licensing requirements were the basis. GN3 is explicit: even where set periods imposed by local authority licensing apply, the inspector shall still record on the EICR that those set periods were applied and the reason.",
-      "A heat pump struggles in a poorly-insulated house with undersized radiators — it’s designed to deliver lots of low-temperature heat, not a little high-temperature heat. The realistic CoP will be poor (closer to 2 than 3), the running costs will surprise the customer, and the property may need insulation upgrades and rad-replacement first. Be honest before quoting.",
+      "You should have kept a copy in the firm's records — schemes require 6 years' retention and the Limitation Act 1980 sets the same window, so re-issue is easy.",
+      "You have no obligation and shouldn't re-issue — the EICR belongs solely to the tenant, so delete your copy and tell the landlord to commission a fresh one.",
+      "You must charge for a full re-inspection — an old EICR copy has no validity once issued, so the only usable document means attending and testing again.",
+      "You should refer the landlord to the original tenant — retention is the duty holder's job, not the contractor's, so the firm keeps nothing after sign-off.",
     ],
     correctAnswer: 0,
     explanation:
@@ -238,7 +238,7 @@ const faqs = [
     question:
       "What's the legal minimum I have to give a domestic customer at the end of a job?",
     answer:
-      "Under BS 7671 Reg 644.1.1, an EIC for any new installation, addition or alteration (or a Minor Works Certificate where the work scope is limited per Reg 644.5). Under the Building Regulations Part P, notification of notifiable work to the local authority (or via your scheme membership). Under the Consumer Rights Act 2015, an invoice that reflects the agreed price plus any agreed variations. In practice you also need: as-installed information for any new circuit, manufacturer instructions for any new equipment installed, and aftercare contact details. The handover pack is how you bundle all of that together.",
+      "Under BS 7671 Reg 644.1, an EIC for any new installation, addition or alteration (or a Minor Works Certificate where the work doesn't include a new circuit, the alternative allowed by Reg 644.4.201). Under the Building Regulations Part P, notification of notifiable work to the local authority (or via your scheme membership). Under the Consumer Rights Act 2015, an invoice that reflects the agreed price plus any agreed variations. In practice you also need: as-installed information for any new circuit, manufacturer instructions for any new equipment installed, and aftercare contact details. The handover pack is how you bundle all of that together.",
   },
 ];
 
@@ -268,7 +268,7 @@ export default function Sub1() {
             points={[
               "There are eight customer-facing documents on a typical electrical job — quote, contract, job sheet, invoice, certificate, user instructions, manufacturer data and as-installed drawings. Each one has a distinct purpose and a legal hook.",
               "The quote scopes the work and locks the price. The contract turns the quote into a binding agreement under the Consumer Rights Act 2015. Anything you didn't write down, the customer gets to fill in their own version of.",
-              "The certificate (EIC, EICR, MWC, scheme cert) is the legal record of competent work, required by BS 7671 Reg 644.1.1. The handover pack is the customer's living reference — emergency cut-out location, manuals, warranty info, your number for when something goes wrong.",
+              "The certificate (EIC, EICR, MWC, scheme cert) is the legal record of competent work, required by BS 7671 Reg 644.1. The handover pack is the customer's living reference — emergency cut-out location, manuals, warranty info, your number for when something goes wrong.",
             ]}
           />
 
@@ -277,7 +277,7 @@ export default function Sub1() {
               "Identify the purpose of information given to customers (Unit 210 AC 2.3, verbatim).",
               "List the eight customer-facing documents typically issued on an electrical install — quote, contract, job sheet, invoice, certificate, user instructions, manufacturer data and as-installed drawings — and explain the purpose of each.",
               "State the duty under the Consumer Rights Act 2015 s.49 to perform services with reasonable care and skill.",
-              "State the duty under BS 7671 Reg 644.1.1 to issue an Electrical Installation Certificate to the person ordering the work.",
+              "State the duty under BS 7671 Reg 644.1 to issue an Electrical Installation Certificate to the person ordering the work.",
               "Explain why recording the cut-out location and main switch position in the handover pack matters in an emergency.",
               "Recognise the role of the handover pack as the customer's day-to-day reference, and why it differs from the certificate.",
             ]}
@@ -463,7 +463,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="Certificates — EIC, EICR, MWC, scheme certificate"
-            plainEnglish="The certificate is the legal record that the install meets BS 7671 (or, for an EICR, the report on whether an existing install meets it). For new work you issue an EIC (full install or addition) or an MWC (minor alteration limited per Reg 644.5). For inspection-only work you issue an EICR. For scheme-notified work you issue a scheme cert (NICEIC, NAPIT etc.) which doubles as the Building Regs Part P notification."
+            plainEnglish="The certificate is the legal record that the install meets BS 7671 (or, for an EICR, the report on whether an existing install meets it). For new work you issue an EIC (full install or addition) or an MWC (minor alteration not involving a new circuit, the alternative allowed by Reg 644.4.201). For inspection-only work you issue an EICR. For scheme-notified work you issue a scheme cert (NICEIC, NAPIT etc.) which doubles as the Building Regs Part P notification."
             onSite="The cert is the apprentice's most-handled customer document because it's the formal output of the test results you've been writing on the schedule. Your job is to make sure the front sheet is filled in correctly (cut-out location, supply characteristics, earthing arrangement, position 'inspected by'), the schedule of inspections is honest (every line ticked or marked N/A with a reason), and the schedule of test results matches what your MFT measured."
           >
             <p>
@@ -472,12 +472,13 @@ export default function Sub1() {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>EIC (Electrical Installation Certificate)</strong> — for new installs,
-                additions and alterations beyond minor. Required by BS 7671 Reg 644.1.1.
+                additions and alterations beyond minor. Required by BS 7671 Reg 644.1.
               </li>
               <li>
                 <strong>MWC (Minor Electrical Installation Works Certificate)</strong> — for
-                additions and alterations that don't include a new circuit (Reg 644.5). Common
-                for adding a socket or replacing a fitting.
+                additions and alterations that don't include a new circuit or a replacement
+                consumer unit (the alternative allowed by Reg 644.4.201). Common for adding a
+                socket or replacing a fitting.
               </li>
               <li>
                 <strong>EICR (Electrical Installation Condition Report)</strong> — for periodic
@@ -613,28 +614,29 @@ export default function Sub1() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A2:2022 — Reg 644.1.1"
+            source="BS 7671:2018+A2:2022 — Reg 644.1"
             clause={
               <>
-                &quot;Upon completion of inspection and testing of an installation or an addition
-                or alteration to an installation, an Electrical Installation Certificate based
-                on the model in Appendix 6, together with a Schedule of Inspections (or
-                Schedule of Items Inspected) and a Schedule of Test Results, shall be given to
-                the person ordering the work.&quot;
+                &quot;Except where Regulation 644.4.201 applies, upon completion of the
+                verification of a new installation or an addition or alteration to an existing
+                installation, including the replacement of a distribution board or consumer
+                unit, an Electrical Installation Certificate based on the model given in
+                Appendix 6 shall be issued to the person ordering the work.&quot;
               </>
             }
             meaning={
               <>
-                Reg 644.1.1 is the legal hook for the EIC. &quot;Person ordering the work&quot;
+                Reg 644.1 is the legal hook for the EIC. &quot;Person ordering the work&quot;
                 is usually the customer for domestic work, often the principal contractor on
-                commercial. The cert MUST be accompanied by both schedules &mdash; an EIC on
-                its own without the schedules is incomplete and won&apos;t satisfy the reg or
-                the contractor scheme audit. Issuing the cert is what closes the regulatory
-                loop &mdash; without it the install is technically non-compliant even if the
-                wiring is perfect.
+                commercial. Reg 644.3 then requires the certificate to be accompanied by the
+                Schedule(s) of Inspection and the Schedule(s) of Circuit Details and Test
+                Results &mdash; an EIC on its own without the schedules is incomplete and
+                won&apos;t satisfy the reg or the contractor scheme audit. Issuing the cert is
+                what closes the regulatory loop &mdash; without it the install is technically
+                non-compliant even if the wiring is perfect.
               </>
             }
-            cite="Source: BS 7671:2018+A2:2022, Reg 644.1.1 — verbatim from the Wiring Regulations."
+            cite="Source: BS 7671:2018+A2:2022, Reg 644.1 — verbatim from the Wiring Regulations."
           />
 
           <InlineCheck
@@ -835,7 +837,7 @@ export default function Sub1() {
               "There are eight customer-facing documents on a typical electrical job — quote, contract, job sheet, invoice, certificate, user instructions, manufacturer data and as-installed drawings. Each has a defined purpose and a legal hook.",
               "The quote scopes the work AND locks the price. A bare price isn't a quote — it's an invitation to dispute. The exclusions paragraph is the single most important part because it prevents misunderstanding.",
               "Consumer Rights Act 2015 s.49 requires services to be performed with 'reasonable care and skill'. It can't be excluded by your T&Cs and applies regardless of what the contract says.",
-              "BS 7671 Reg 644.1.1 requires an EIC (with both schedules) to be issued to the person ordering the work for every new install, addition or alteration. Without it the install is non-compliant even if the wiring is perfect.",
+              "BS 7671 Reg 644.1 requires an EIC (with the schedules required by Reg 644.3) to be issued to the person ordering the work for every new install, addition or alteration. Without it the install is non-compliant even if the wiring is perfect.",
               "The handover pack is the customer's living reference — cert, drawings, manuals, warranty info, your number and an emergency-shutdown card with the cut-out location. Walk them through it before you leave.",
               "The cut-out location and main switch position should be recorded on the EIC front sheet, the as-installed drawing AND the emergency card. Three places — because in a panic the customer will only find one of them.",
               "Job sheets are the contemporaneous record of one visit. Photos in, signature on the screen, PDF emailed to the customer when you close the visit. Your strongest defence in a complaint.",

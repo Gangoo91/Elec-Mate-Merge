@@ -170,10 +170,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why must electricians understand units clearly?',
     options: [
-      'Drawing a regular income from your invested pot',
-      'Design documentation and operating sequences',
+      'Only to complete the paperwork after a job',
+      'Mainly to impress clients with technical terms',
       'For safety, component selection, and testing',
-      'A gross breach of duty of care by senior management',
+      'Only when working on three-phase systems',
     ],
     correctAnswer: 2,
     explanation:

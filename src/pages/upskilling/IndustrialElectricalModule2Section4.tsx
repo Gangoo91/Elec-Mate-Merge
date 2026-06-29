@@ -82,14 +82,16 @@ const IndustrialElectricalModule2Section4: React.FC = () => {
 
   const quizQuestions = [
     {
-      question: 'According to BS EN ISO 13850, what colour must an emergency stop actuator be?',
+      question: 'According to BS EN ISO 13850, what colour scheme must an emergency stop actuator have?',
       options: [
-        'Red on any background',
-        'Red on a yellow background',
-        'Red on a white background',
-        'Orange on a black background',
+        'Red actuator on any background',
+        'Red actuator on a yellow background',
+        'Red actuator on a white background',
+        'Orange actuator on a black background',
       ],
-      correctAnswer: 'Red on a yellow background',
+      correctAnswer: 'Red actuator on a yellow background',
+      explanation:
+        'BS EN ISO 13850 requires a red actuator against a yellow background so the emergency stop is instantly recognisable and distinct from ordinary controls.',
     },
     {
       question:
@@ -101,16 +103,20 @@ const IndustrialElectricalModule2Section4: React.FC = () => {
         'Automatic reset after 5 seconds',
       ],
       correctAnswer: 'Latching (maintained) with manual reset',
+      explanation:
+        'An E-stop must latch in the actuated position and require a deliberate manual reset, and that reset must not by itself restart the machine.',
     },
     {
       question: 'In a dual-channel safety circuit, what is the purpose of cross-monitoring?',
       options: [
         'To increase the switching speed',
-        'To detect discrepancies between channels indicating a fault',
+        'To detect discrepancies between channels that indicate a fault',
         'To provide backup power during emergencies',
         'To reduce wiring costs',
       ],
-      correctAnswer: 'To detect discrepancies between channels indicating a fault',
+      correctAnswer: 'To detect discrepancies between channels that indicate a fault',
+      explanation:
+        'Cross-monitoring compares the two independent channels; if they disagree, a fault (such as a welded contact or short) is detected and the system goes to a safe state.',
     },
     {
       question: 'What does SIL stand for in functional safety?',
@@ -121,60 +127,74 @@ const IndustrialElectricalModule2Section4: React.FC = () => {
         'Secure Installation Level',
       ],
       correctAnswer: 'Safety Integrity Level',
+      explanation:
+        'SIL means Safety Integrity Level (IEC 62061/61508), a measure of the reliability of a safety function based on its probability of dangerous failure.',
     },
     {
       question:
-        'Which standard specifically covers the safety of machinery through safety-related control systems?',
+        'Which standard specifically covers the design of safety-related parts of machinery control systems using Performance Levels?',
       options: ['BS 7671', 'BS EN ISO 13849-1', 'BS EN 60204-1', 'BS EN 50110'],
       correctAnswer: 'BS EN ISO 13849-1',
+      explanation:
+        'BS EN ISO 13849-1 sets out the Performance Level (PL) methodology for safety-related control systems; BS 7671 is the wiring regulations and BS EN 60204-1 covers machine electrical equipment generally.',
     },
     {
       question:
-        'What minimum IP rating is typically required for E-stop devices in industrial environments?',
+        'What minimum IP rating is typically specified for E-stop devices in general industrial environments?',
       options: ['IP20', 'IP44', 'IP54', 'IP65'],
       correctAnswer: 'IP65',
+      explanation:
+        'IP65 (dust-tight and protected against water jets) is the usual minimum for industrial E-stops so dust and washdown do not impair operation; washdown areas may need IP67.',
     },
     {
       question:
-        'How often should safety-related control systems be functionally tested according to best practice?',
+        'How often should safety-related control systems be functionally proof-tested as best practice?',
       options: [
         'Only during initial commissioning',
-        'Annually or as determined by risk assessment',
-        'Every 5 years',
-        'Only after an incident',
+        'Annually, or at the interval set by the risk assessment',
+        'Once every five years regardless of use',
+        'Only after an incident has occurred',
       ],
-      correctAnswer: 'Annually or as determined by risk assessment',
+      correctAnswer: 'Annually, or at the interval set by the risk assessment',
+      explanation:
+        'Proof testing is typically carried out at least annually, with the precise interval determined by the manufacturer\'s data and the site risk assessment, and the results recorded.',
     },
     {
       question: 'What is the purpose of a guard interlock with guard locking?',
       options: [
-        'To prevent the guard from being painted',
-        'To prevent guard opening until dangerous conditions have ceased',
-        'To allow guard opening during machine operation',
-        'To eliminate the need for E-stop buttons',
+        'To stop the guard being painted over',
+        'To keep the guard locked shut until dangerous conditions have ceased',
+        'To allow the guard to be opened during machine operation',
+        'To remove the need for E-stop buttons',
       ],
-      correctAnswer: 'To prevent guard opening until dangerous conditions have ceased',
+      correctAnswer: 'To keep the guard locked shut until dangerous conditions have ceased',
+      explanation:
+        'Guard locking holds the guard closed until the hazard has stopped (e.g. spindle at zero speed), used where run-down time exceeds the time to reach the danger zone.',
     },
     {
-      question: 'In Category 2 stop function, what happens to power to machine actuators?',
+      question: 'In a Category 2 stop function, what happens to the power to the machine actuators?',
       options: [
         'Power is removed immediately',
-        'Power is removed after controlled stop',
+        'Power is removed after a controlled stop',
         'Power remains available during and after stopping',
         'Power is reduced to 50%',
       ],
       correctAnswer: 'Power remains available during and after stopping',
+      explanation:
+        'A Category 2 stop brings the machine to a controlled standstill but keeps power applied to hold position; for this reason it is not permitted as an emergency stop (which must be Category 0 or 1).',
     },
     {
       question:
         'What documentation must be maintained for safety-related control systems under the Machinery Directive?',
       options: [
         "Only the manufacturer's data sheets",
-        'Functional safety assessment, validation records, and test documentation',
+        'A functional safety assessment, validation records and test documentation',
         'Just the installation certificate',
-        'Only wiring diagrams',
+        'Only the wiring diagrams',
       ],
-      correctAnswer: 'Functional safety assessment, validation records, and test documentation',
+      correctAnswer: 'A functional safety assessment, validation records and test documentation',
+      explanation:
+        'Compliance requires the risk assessment/PL determination, design and validation records, and ongoing proof-test documentation kept throughout the machine\'s life.',
     },
   ];
 

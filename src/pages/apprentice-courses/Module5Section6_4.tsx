@@ -10,12 +10,14 @@ const quizQuestions = [
     id: 1,
     question: 'What is a common cause of misunderstandings on site?',
     options: [
-      'Connecting parts to same potential',
+      'Following the site method statement',
       'Poorly explained instructions',
-      'Chemical anchors or expansion bolts',
-      'Unique key lock with danger label',
+      'Checking work against the drawings',
+      'Confirming details with the supervisor',
     ],
     correctAnswer: 1,
+    explanation:
+      'Poorly explained or unclear instructions are a leading cause of miscommunication on site, often made worse by jargon, noise and assumptions.',
   },
   {
     id: 2,
@@ -24,97 +26,115 @@ const quizQuestions = [
       'Clear instructions and good progress',
       'Fast work completion and happy workers',
       'Confused expressions and work done incorrectly',
-      'Quiet site and efficient work',
+      'A quiet site and steady, efficient work',
     ],
     correctAnswer: 2,
+    explanation:
+      'Confused expressions, hesitation and work being carried out incorrectly are common signs that an instruction has been misunderstood.',
   },
   {
     id: 3,
     question: 'What should you do if you are unsure of an instruction?',
     options: [
-      'Ask for simpler terms or request to see a drawing',
-      'Site drawings, specifications, or BS 7671 regulations',
-      'Errors, rework, delays, and possible safety hazards',
+      'Make your best guess and carry on to save time',
+      'Wait and see how other workers interpret it',
+      'Carry out the part you do understand and skip the rest',
       'Stop and ask for clarification immediately',
     ],
     correctAnswer: 3,
+    explanation:
+      'If you are unsure, stop and ask for clarification straight away. Guessing risks errors, rework and safety hazards.',
   },
   {
     id: 4,
     question: "Explain the 'Repeat Back' method.",
     options: [
       'Summarising instructions back to the supervisor to confirm accuracy',
-      'Site drawings, specifications, or BS 7671 regulations',
-      'To avoid mistakes and ensure the correct task is carried out',
-      'It builds trust and ensures everyone works to the same standard',
+      'Writing every instruction down word for word in a notebook',
+      'Asking a colleague to repeat the instruction for you',
+      'Carrying out the task and reporting back once finished',
     ],
     correctAnswer: 0,
+    explanation:
+      "The 'Repeat Back' method means summarising the instruction in your own words to the person who gave it, confirming you have understood it correctly.",
   },
   {
     id: 5,
     question: 'Why is it important to clarify conflicting instructions?',
     options: [
-      'Summarising instructions back to the supervisor to confirm accuracy',
+      'To decide which supervisor is more senior on site',
       'To avoid mistakes and ensure the correct task is carried out',
-      'Ask for clarification immediately before starting work',
-      'Ask for simpler terms or request to see a drawing',
+      'To delay the work until someone else takes responsibility',
+      'To show you can spot errors made by others',
     ],
     correctAnswer: 1,
+    explanation:
+      'Clarifying conflicting instructions prevents mistakes by establishing which instruction takes priority before any work is carried out.',
   },
   {
     id: 6,
     question: 'What resource should you refer to if instructions are unclear?',
     options: [
-      'Ask for simpler terms or request to see a drawing',
-      'Errors, rework, delays, and possible safety hazards',
+      'Whatever the nearest colleague happens to remember',
+      'Your own previous experience on a different job',
       'Site drawings, specifications, or BS 7671 regulations',
-      'Stop and ask for clarification immediately',
+      'A general internet search for the task',
     ],
     correctAnswer: 2,
+    explanation:
+      'Site drawings, specifications and the BS 7671 Wiring Regulations provide authoritative guidance when verbal instructions are unclear.',
   },
   {
     id: 7,
     question: 'How can clarification improve teamwork?',
     options: [
-      'Ask for clarification immediately before starting work',
-      'Confused expressions and work done incorrectly',
-      'To avoid mistakes and ensure the correct task is carried out',
+      'It removes the need for supervisors on site',
+      'It allows individuals to work in isolation',
+      'It speeds work up by skipping checks',
       'It builds trust and ensures everyone works to the same standard',
     ],
     correctAnswer: 3,
+    explanation:
+      'Asking for clarification builds trust between colleagues and ensures everyone is working to the same understanding and standard.',
   },
   {
     id: 8,
     question: 'True or False: Asking questions shows you are inexperienced.',
     options: [
       'False — it shows professionalism and commitment to safety',
-      'Ask for simpler terms or request to see a drawing',
-      'Confused expressions and work done incorrectly',
-      'Stop and ask for clarification immediately',
+      'True — experienced workers never need to ask',
+      'True — it slows the rest of the team down',
+      'False — but only apprentices should ask questions',
     ],
     correctAnswer: 0,
+    explanation:
+      'Asking questions when unsure is a sign of professionalism and a commitment to safety; even experienced electricians clarify when something is unclear.',
   },
   {
     id: 9,
     question: 'What is the risk of not asking for clarification?',
     options: [
-      'To avoid mistakes and ensure the correct task is carried out',
+      'Improved trust and a better working standard',
       'Errors, rework, delays, and possible safety hazards',
-      'It builds trust and ensures everyone works to the same standard',
-      'Stop and ask for clarification immediately',
+      'Faster completion of the task in hand',
+      'A reputation for working independently',
     ],
     correctAnswer: 1,
+    explanation:
+      'Failing to clarify can lead to errors, costly rework, programme delays and serious safety hazards.',
   },
   {
     id: 10,
     question: "What should you do if technical jargon is used and you don't understand it?",
     options: [
-      'Confused expressions and work done incorrectly',
-      'Ask for clarification immediately before starting work',
+      'Pretend to understand and work it out as you go',
+      'Look up the term later once the task is finished',
       'Ask for simpler terms or request to see a drawing',
-      'Errors, rework, delays, and possible safety hazards',
+      'Ignore the jargon and focus on the rest of the instruction',
     ],
     correctAnswer: 2,
+    explanation:
+      'If technical jargon is unclear, ask for it to be explained in simpler terms or request a drawing so you fully understand before starting work.',
   },
 ];
 
@@ -124,9 +144,9 @@ const quickCheckQuestions = [
     question: 'What should you do if you receive unclear instructions?',
     options: [
       'Ask for clarification immediately before starting work',
-      'Stop and ask for clarification immediately',
-      'Site drawings, specifications, or BS 7671 regulations',
-      'Errors, rework, delays, and possible safety hazards',
+      'Make a reasonable assumption and begin the task',
+      'Start the work and raise it at the next break',
+      'Ask a colleague to interpret it for you',
     ],
     correctIndex: 0,
     explanation:
@@ -149,10 +169,10 @@ const quickCheckQuestions = [
     id: 'clarify3',
     question: 'How should you respond if two supervisors give conflicting instructions?',
     options: [
-      'Uncontrolled air leakage through the building envelope',
-      'Overheating due to loose or faulty connections',
+      'Follow whichever instruction was given most recently',
+      'Choose the instruction that is quickest to carry out',
       'Politely explain the conflict and ask which should take priority',
-      'To discharge stored energy and protect against inadvertent re-energisation',
+      'Carry on with neither until the supervisors agree',
     ],
     correctIndex: 2,
     explanation:
@@ -162,9 +182,9 @@ const quickCheckQuestions = [
     id: 'clarify4',
     question: 'Why is it professional to ask questions when unsure?',
     options: [
-      'The project specification and quality requirements',
-      'Test values, instruments used, environmental conditions, and observations',
-      'UK legislation mandating fire safety including emergency lighting',
+      'It transfers responsibility for the work to the supervisor',
+      'It allows you to avoid difficult tasks',
+      'It shows you know more than your colleagues',
       'It demonstrates commitment to doing the job correctly and safely',
     ],
     correctIndex: 3,

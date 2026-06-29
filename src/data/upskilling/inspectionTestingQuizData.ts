@@ -6,10 +6,10 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       'What is the primary standard that governs electrical inspection and testing in the UK?',
     options: [
-      'Electricity at Work Regulations 1989',
+      'BS 5839 (Fire detection and alarm systems)',
       'BS 7671 (IET Wiring Regulations)',
-      'Voltage drop calculations',
-      'Electrical Installation Certificate (EIC)',
+      'BS EN 61439 (Low-voltage switchgear assemblies)',
+      'BS 6004 (Electric cables for fixed wiring)',
     ],
     correctAnswer: 1,
     explanation:
@@ -58,10 +58,10 @@ export const quizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Who can carry out electrical inspection and testing?',
     options: [
-      'For high-risk work like confined spaces, hot work, electrical isolation',
+      'Any qualified electrician who holds a current ECS or JIB gold card',
       'Competent persons with appropriate knowledge, training and experience',
-      'Temporarily reverses to remove ice from the outdoor coil',
-      'Fault current flowing through multiple protective devices',
+      'Only personnel directly employed by an NICEIC-registered contractor',
+      'Anyone supervised by a duty holder, regardless of their own training',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,7 +79,7 @@ export const quizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits rated up to 500V. This ensures adequate insulation between live conductors and between live conductors and earth.',
+      'BS 7671 Table 64 requires a minimum insulation resistance of 1 MΩ for circuits rated up to 500V, measured at a test voltage of 500V DC. (SELV/PELV circuits are tested at 250V DC with a 0.5 MΩ minimum.)',
   },
   {
     id: 7,

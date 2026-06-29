@@ -27,11 +27,11 @@ const quickCheckQuestions = [
     id: 'insulation-tester',
     question: 'What is the purpose of an insulation resistance tester?',
     options: [
-      'To measure current flow',
       'To test insulation quality between conductors',
-      'To check voltage levels',
+      'To measure the current flowing in a circuit',
+      'To check the supply voltage at a socket',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Insulation resistance testers apply high test voltage (typically 500V DC) to detect insulation breakdown and verify the quality of insulation between conductors and earth.',
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     id: 'calibration-importance',
     question: 'Why must test instruments be calibrated regularly?',
     options: [
-      'To make them look professional',
+      'To make the digital display brighter',
+      'To extend the warranty on the instrument',
       'To ensure accuracy and compliance',
-      'To increase their value',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.',
   },
@@ -98,11 +98,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: You can perform an insulation resistance test on a live circuit.',
-    options: ['True', 'False'],
+    question: 'In what state must a circuit be before an insulation resistance test is carried out?',
+    options: [
+      'Energised and under full load',
+      'Safely isolated and de-energised',
+      'Energised but with no load connected',
+      'Energised with the main switch in the off position only',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. Insulation resistance tests must only be performed on de-energised circuits to prevent equipment damage and ensure safety.',
+      'Insulation resistance tests must only be performed on safely isolated, de-energised circuits to prevent equipment damage and ensure the tester reads the insulation, not the supply.',
   },
   {
     id: 4,
@@ -134,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main purpose of an RCD tester?',
     options: [
-      'Visual inspection and insulation resistance',
-      'Protocol choice and network capacity',
-      'Measure trip time and trip current',
-      'Temperature correction factor (Cmin 0.95)',
+      'To measure the earth fault loop impedance of a final circuit',
+      'To verify the insulation resistance between live conductors',
+      'To measure the trip time and trip current of an RCD',
+      'To confirm the polarity of socket-outlet connections',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is regular calibration important for test equipment?',
     options: [
-      'No, it only proves the mechanical trip mechanism',
-      'Multiples of fundamental frequency causing distortion',
-      'P = sqrt(3) x V_L x I_L x cos(phi)',
+      'It extends the battery life of the instrument',
+      'It removes the need to prove a voltage indicator',
+      'It allows the meter to be used on higher voltages',
       'To ensure accuracy and compliance with standards',
     ],
     correctAnswer: 3,

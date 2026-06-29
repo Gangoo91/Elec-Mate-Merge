@@ -9,29 +9,30 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m1s4-check1',
     question: 'What is the maximum RCD rating permitted for EV charging under BS 7671 Section 722?',
-    options: ['100mA', '300mA', '30mA', '10mA'],
-    correctIndex: 2,
+    options: ['100mA', '300mA', '10mA', '30mA'],
+    correctIndex: 3,
     explanation:
-      'BS 7671 Section 722 requires RCD protection with a maximum rating of 30mA for EV charging installations to provide adequate protection against electric shock.',
+      'BS 7671 Section 722 requires each charging point to be protected by an RCD with a rated residual operating current not exceeding 30mA, providing additional protection against electric shock.',
   },
   {
     id: 'evcharging-m1s4-check2',
-    question: 'Which RCD type is preferred for EV charging installations?',
-    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
-    correctIndex: 2,
+    question:
+      'Which RCD type does BS 7671 Section 722 require where the charger gives no DC fault protection?',
+    options: ['Type B', 'Type AC', 'Type A', 'Type F'],
+    correctIndex: 0,
     explanation:
-      'Type B RCDs are preferred for EV charging as they can detect all fault current types including smooth DC, which may occur with certain EV charger configurations. Type A is the minimum requirement.',
+      'Where the charging equipment provides no electrical separation or its own DC fault protection, BS 7671 Section 722 requires a Type B RCD, which detects smooth DC residual currents that lower-grade types miss. A Type A may be used only where the unit provides its own 6mA DC fault detection.',
   },
   {
     id: 'evcharging-m1s4-check3',
     question: 'For which installations does G98 apply?',
     options: [
       'All commercial installations',
-      'Connections >16A per phase',
       'Connections ≤16A per phase',
+      'Connections >16A per phase',
       'Only DC rapid chargers',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'G98 applies to smaller connections of 16A or less per phase, covering most domestic single-phase installations and small commercial charging points up to approximately 11kW (3-phase).',
   },

@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 expects the Control and Indicating Equipment (CIE) to be sited so it is accessible to the fire and rescue service on first attendance. Which siting is BEST aligned with that expectation?',
     options: [
-      'On the top floor in a locked plant room with no signage.',
-      'In a permanently staffed reception adjacent to the principal protected entrance the FRS will use, mounted at a height a standing operator can read without aids, with clear signage showing CIE location at the entrance and unobstructed access from outside the building. The point is that the FRS arrives, enters and reads the panel within seconds, not minutes.',
-      'In a basement risers cupboard behind a stack of stored chairs.',
-      'In an occupier-only area accessible only with a manager’s key.',
+      'On the top floor in a locked plant room with no signage to direct the FRS.',
+      'At the principal protected entrance, signed from outside, with unobstructed key-free access.',
+      'In a basement riser cupboard behind a stack of stored chairs and other items.',
+      'In an occupier-only area accessible only with a manager’s key during office hours.',
     ],
     correctIndex: 1,
     explanation:
-      'CIE siting is a fire-service-access decision, not a tidy-cupboard decision. Reception or principal entrance, signed from outside, accessible without keys or stored items in the way. The FRS first reads the CIE for zone information; delay reading it delays the response.',
+      'CIE siting is a fire-service-access decision, not a tidy-cupboard decision. Reception or principal entrance, signed from outside, mounted so a standing operator reads it without aids, accessible without keys or stored items in the way. The FRS first reads the CIE for zone information; delay reading it delays the response.',
   },
   {
     id: 'fam5-s2-mounting',
     question:
       'CIE mounting height — what is the working principle for a CIE display whose centreline you can choose?',
     options: [
-      'As high as possible to keep it out of the way.',
-      'Centreline of the active display in the 1.4 to 1.6 m range so that a standing operator of average height can read every indicator and operate every control without aids and without bending. Where the CIE is wall-mounted with a large active display, the upper edge stays within reach (so reset / silence / evacuate buttons are not above shoulder height) and the lower edge stays above 700 mm so it is not obscured by floor furniture.',
-      'On the floor.',
-      'On the ceiling.',
+      'As high on the wall as practical, to keep the panel clear of passing traffic.',
+      'Active-display centreline in the 1.4 to 1.6 m range, readable by a standing operator.',
+      'At skirting level, low on the wall, to keep the display out of direct sightlines.',
+      'At high level near the ceiling, where the indicators are visible from across the room.',
     ],
     correctIndex: 1,
     explanation:
-      'The mounting height supports operation under stress by an operator who may be unfamiliar with the equipment. 1.4-1.6 m centreline is the customary range. Higher than that pushes controls out of reach; lower means controls are obscured by furniture.',
+      'The mounting height supports operation under stress by an operator who may be unfamiliar with the equipment. A 1.4-1.6 m centreline lets a standing operator of average height read every indicator and operate reset / silence / evacuate without aids or bending. Higher than that pushes controls out of reach; lower means they are obscured by floor furniture.',
   },
   {
     id: 'fam5-s2-cyber',
     question:
       'BS 5839-1:2025 introduces a new clause (43.4) on remote services and cyber security. Which physical control is recommended?',
     options: [
-      'Leave the comms cabinet unlocked for ease of access.',
-      'Physical lock-off of the comms cabinet that contains the CIE network connection, anti-tamper plugs on patch leads going into and out of the CIE network port, and a method of authentication of any request to accept a remote connection before remote access is allowed. The intent is that an attacker cannot plug a laptop into the CIE network port and gain control without the locked cabinet being opened or the authentication being bypassed.',
-      'Public Wi-Fi for the CIE.',
-      'No physical security — software handles it.',
+      'Leave the comms cabinet unlocked so any visiting engineer can connect quickly.',
+      'Physical lock-off of the comms cabinet, with anti-tamper plugs on CIE network patch leads.',
+      'Connect the CIE to the building’s public Wi-Fi so remote service is always available.',
+      'Rely on software alone for security, with no physical controls at the network port.',
     ],
     correctIndex: 1,
     explanation:
-      'Clause 43.4 (new in 2025) places explicit weight on physical and authentication controls for the CIE network connection. Locked comms cabinet, anti-tamper plugs, authentication of remote-connection requests. The CIE is now a connected device and must be secured as one.',
+      'Clause 43.4 (new in 2025) places explicit weight on physical and authentication controls for the CIE network connection: locked comms cabinet, anti-tamper plugs, and authentication of any remote-connection request before access is allowed. The intent is that an attacker cannot plug a laptop into the network port and gain control without opening the locked cabinet or defeating the authentication. The CIE is now a connected device and must be secured as one.',
   },
   {
     id: 'fam5-s2-falsenotice',
     question:
       'The 2025 false-alarm notice (Figure 1 of the FIA Guide) is recommended to be fixed where, and to read what?',
     options: [
-      'Inside the panel where no-one can see it.',
-      'On or adjacent to the CIE so it is the first thing a person looking at the panel reads, stating that the system has an active connection to the FRS via an ARC and giving the ARC contact telephone number. The intent is to remind premises management that any unannounced test will trigger an ARC despatch — reducing unnecessary FRS attendances and complying with the FRS call-challenging policy direction.',
-      'Behind the panel where it cannot be read.',
-      'On the front door of the building only.',
+      'Inside the panel door, where it is hidden from anyone operating the controls.',
+      'On or adjacent to the CIE, stating the active ARC connection and the ARC telephone number.',
+      'Behind the panel against the wall, where the printed text cannot readily be read.',
+      'On the building’s front door only, away from where the panel is actually operated.',
     ],
     correctIndex: 1,
     explanation:
-      'The false-alarm notice is a pre-test prompt. Fixed near the CIE, visible to anyone about to operate or test the panel, stating the active ARC connection and the ARC number. Premises management calls the ARC before testing; the ARC suspends despatch; the test runs; the ARC is unsuspended. This single label has driven a measurable reduction in unwanted FRS calls in the 2025 commentary.',
+      'The false-alarm notice is a pre-test prompt, fixed so it is the first thing a person looking at the panel reads. It states the system has an active FRS connection via an ARC and gives the ARC number. Premises management calls the ARC before testing; the ARC suspends despatch; the test runs; the ARC is unsuspended. This reduces unnecessary FRS attendances and complies with the FRS call-challenging policy direction — a single label that has driven a measurable reduction in unwanted FRS calls in the 2025 commentary.',
   },
 ];
 
@@ -81,137 +81,137 @@ const quizQuestions = [
     id: 1,
     question: 'BS 5839-1:2025 expects the CIE siting to support what primary user need?',
     options: [
-      'Easy access for the cleaner.',
-      'Access for the fire and rescue service on attendance — so the FRS can read zone information, suppress sounders if instructed, and confirm fire location within seconds of arrival. Other access needs (operator, maintainer) are secondary; the FRS-access need is primary because the CIE is the FRS’s first information point.',
-      'Display advertising.',
-      'Storage cupboard.',
+      'Access for the fire and rescue service on attendance, as its first information point.',
+      'Easy day-to-day access for the cleaning contractor and facilities maintenance staff.',
+      'Maximum privacy, so the panel is hidden well away from public and visitor view.',
+      'Proximity to a power socket, to simplify and shorten the mains supply connection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The CIE is the FRS information interface. Siting decisions follow that priority: principal protected entrance, signed from outside, accessible without keys or obstructions.',
+      'The CIE is the FRS information interface — on arrival the FRS reads zone information, suppresses sounders if instructed, and confirms fire location within seconds. Operator and maintainer access are secondary. Siting follows that priority: principal protected entrance, signed from outside, accessible without keys or obstructions.',
   },
   {
     id: 2,
     question: 'CIE mains supply termination — best practice is...?',
     options: [
-      'Plug-and-socket on a 13A socket.',
-      'Hard-wired termination from a dedicated, clearly labelled, lockable-off final circuit, fed from before any switching device that could be operated by occupants in error, with the disconnecting means accessible only to authorised personnel and clearly labelled "FIRE ALARM — DO NOT SWITCH OFF". The CIE is on a Category 5 / non-maintained supply that cannot be disconnected by routine action.',
-      'Spurred off the lighting circuit.',
-      'No mains supply needed.',
+      'A plug-and-socket connection on a switched 13 A socket-outlet sited near the panel.',
+      'A fused spur taken from the nearest general lighting circuit on that same floor.',
+      'Hard-wired from a dedicated, labelled, lockable-off final circuit for authorised persons only.',
+      'A connection to the nearest ring final circuit, via an unswitched fused connection unit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'CIE mains is dedicated and protected against accidental disconnection. Hard-wired, labelled, lockable, accessible only to authorised personnel. Plug-and-socket is non-compliant; spurring off shared circuits creates accidental-isolation risk.',
+      'CIE mains is dedicated and protected against accidental disconnection: hard-wired (no plug-and-socket), labelled "FIRE ALARM — DO NOT SWITCH OFF", lockable-off, fed from before any switching device an occupant could operate in error, and accessible only to authorised personnel. Plug-and-socket is non-compliant; spurring off shared circuits creates accidental-isolation risk.',
   },
   {
     id: 3,
     question:
       'CIE battery installation — what does BS 5839-1:2025 §16 require to be marked on the batteries?',
     options: [
-      'A barcode.',
-      'The date of installation, fixed as a label on the battery and acknowledged by the standard as the long-standing custom of marking with a permanent marker. The date drives the replacement schedule (typically 4-year design life for VRLA batteries, confirmed by manufacturer data); without the date the maintainer cannot know whether the battery is end-of-life or recently fitted.',
-      'The serial number only.',
-      'Nothing — batteries are unlabelled.',
+      'A barcode encoding the manufacturer’s warranty terms and supply-chain details.',
+      'The battery serial number only, recorded purely for stock-control purposes.',
+      'Nothing at all — fire-alarm standby batteries are deliberately left unmarked.',
+      'The date of installation, as a label or permanent-marker mark on the battery.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 §16 acknowledges the labelling of batteries with the installation date. The date is the lifecycle datum. A permanent-marker date is sufficient; an applied label is preferred. Without it, replacement planning is guesswork.',
+      'BS 5839-1:2025 §16 acknowledges the long-standing custom of marking batteries with the installation date. The date is the lifecycle datum that drives the replacement schedule (typically a 4-year design life for VRLA batteries, per manufacturer data). A permanent-marker date is sufficient; an applied label is preferred. Without it, replacement planning is guesswork.',
   },
   {
     id: 4,
     question:
       'CIE earthing — the CIE is fed from the building LV supply. The earthing system is...?',
     options: [
-      'No earth — CIE is double-insulated.',
-      'Connected per BS 7671 to the building’s main earthing terminal, with the CIE protective conductor sized per BS 7671 Table 54.7 (or calculated to the adiabatic equation), terminated to the dedicated CIE earth bar / terminal in the panel, and identified per IEC 60445:2021 (green-and-yellow for CPC, with the new 2022/2025 requirement that functional earth is identified PINK or marked "FE"). Functional earth and protective earth are distinct conductors.',
-      'Connected to the cold-water pipe.',
-      'Connected to the radiator.',
+      'Connected per BS 7671 to the main earthing terminal, CPC to the CIE earth bar.',
+      'No earth needed — the CIE is treated as double-insulated (Class II) throughout.',
+      'Connected to the nearest cold-water service pipe, used as the earthing point.',
+      'Connected to the central-heating radiator pipework local to the CIE panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'CIE earthing is BS 7671 territory: CPC sized per Table 54.7 or adiabatic, terminated to the CIE earth bar, identified green-and-yellow. The 2022 amendment to BS 7671 (and the 2025 BS 5839-1 alignment) introduces PINK / "FE" identification for functional earth as a distinct conductor.',
+      'CIE earthing is BS 7671 territory: CPC sized per Table 54.7 or the adiabatic equation, terminated to the dedicated CIE earth bar, identified green-and-yellow. The 2022 amendment to BS 7671 (and the 2025 BS 5839-1 alignment) introduces PINK / "FE" identification for functional earth, which is a distinct conductor from the protective earth.',
   },
   {
     id: 5,
     question:
       'The 2025 cyber security clause (43.4) recommends what for a method of authentication of a request to accept a remote connection?',
     options: [
-      'No authentication.',
-      'A method of authentication included in the CIE or gateway software before remote access is allowed, with a thorough risk assessment conducted before any remote service that involves read, control or write functions, and explicit responsibility on the responsible individual to ensure the system is fully operational on completion of the remote service. The remote-connection authentication is a control on top of the physical lock-off of the comms cabinet.',
-      'Public anonymous access.',
-      'A sticky note on the panel with the password.',
+      'No authentication — remote connections are accepted automatically to avoid any delay.',
+      'Authentication in the CIE or gateway software before any remote access is allowed.',
+      'Open anonymous access, so any field engineer can connect without supplying credentials.',
+      'A single shared password written on a label fixed to the front face of the panel.',
     ],
     correctAnswer: 1,
     explanation:
-      'Clause 43.4 introduces layered controls: physical lock-off, anti-tamper plugs, authentication for remote connection, risk assessment for remote service, post-service verification of CIE operability. A connected CIE is an attack surface; the controls treat it as one.',
+      'Clause 43.4 introduces layered controls: physical lock-off, anti-tamper plugs, authentication for remote connection, a risk assessment before any remote read / control / write service, and the responsible individual confirming the system is fully operational on completion. A connected CIE is an attack surface; the controls treat it as one.',
   },
   {
     id: 6,
     question:
       'A false-alarm notice (Figure 1 of the FIA Guide) is recommended near the CIE for what purpose?',
     options: [
-      'Decoration.',
-      'Pre-test reminder. The notice tells anyone about to operate or test the panel that the system has an active connection to the FRS via an ARC, and gives the ARC telephone number. Premises management calls the ARC to suspend despatch before any test; the ARC suspends; the test runs; the ARC despatch is restored. The notice is a procedural prompt that reduces unwanted FRS calls and aligns with the FRS call-challenging policy direction.',
-      'A warning that the panel is haunted.',
-      'A notice that the building is for sale.',
+      'To record the date the panel was last serviced, as an entry for the logbook.',
+      'To display the maximum permitted occupancy figure for the protected premises.',
+      'To list every zone number and its physical location for the operator’s reference.',
+      'Pre-test reminder of the active ARC connection, giving the ARC telephone number.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 2025 false-alarm notice is a deliberate procedural intervention. Premises management sees the notice, makes the ARC call before testing, the ARC suspends, the test runs cleanly, no unwanted FRS attendance.',
+      'The notice tells anyone about to operate or test the panel that the system has an active FRS connection via an ARC. Premises management calls the ARC to suspend despatch before any test; the ARC suspends; the test runs; despatch is restored. It is a procedural prompt that reduces unwanted FRS calls and aligns with the FRS call-challenging policy direction.',
   },
   {
     id: 7,
     question:
       'CIE mains supply isolation device — BS 5839-1:2025 has consolidated the recommendations into a single clause. What does it require?',
     options: [
-      'Isolation by occupants.',
-      'A clearly identified, dedicated isolating device, accessible only to authorised persons, that disconnects the CIE supply for maintenance purposes — typically a lockable-off MCB or isolator in the distribution board, labelled FIRE ALARM PANEL DO NOT SWITCH OFF, with the lock-off device fitted and managed under permit-to-work. The 2017 revision had the requirement split between clauses 25 and 29; the 2025 revision consolidates it.',
-      'No isolation device.',
-      'Isolation by everybody.',
+      'A dedicated, labelled, lockable-off isolating device for authorised persons only.',
+      'A readily accessible wall switch that any building occupant can use to isolate the panel.',
+      'No isolating device at all — the CIE is wired directly with no means of disconnection.',
+      'A shared isolator that also feeds the general lighting served on the same circuit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 §19 (Power supplies) consolidates the previous split-clause guidance: dedicated isolating device, authorised access, clearly labelled, lockable-off. The maintenance use case drives the design — the device exists for the maintainer’s safety, not for occupant convenience.',
+      'BS 5839-1:2025 §19 (Power supplies) consolidates the previous split-clause guidance (2017 clauses 25 and 29) into a single clause: a clearly identified, dedicated isolating device — typically a lockable-off MCB or isolator labelled FIRE ALARM PANEL DO NOT SWITCH OFF, managed under permit-to-work. The maintenance use case drives the design — the device exists for the maintainer’s safety, not for occupant convenience.',
   },
   {
     id: 8,
     question: 'CIE batteries — the standby capacity calculation is driven by what factor?',
     options: [
-      'The price of the batteries.',
-      'The standby load (current drawn by the CIE and all powered devices in quiescent condition) plus the alarm load (current during an alarm) over the standby duration required by the design (typically 24 h standby followed by 30 min alarm for Category L systems with ARC monitoring; longer for systems without ARC). The chosen battery capacity (Ah) provides the energy with margin (de-rating for end-of-life capacity, temperature, depth of discharge).',
-      'The size of the panel.',
-      'The colour of the cable.',
+      'The physical size of the panel enclosure and the space available for the batteries.',
+      'The unit price of the batteries and the planned maintenance budget for the contract.',
+      'The standby and alarm load currents over the standby and alarm durations required.',
+      'The number of zones provided on the panel, regardless of the current each one draws.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Battery sizing is a load-and-duration calculation. Standby current × standby hours + alarm current × alarm minutes, with margin for ageing and temperature. The output is the Ah rating; the chosen battery meets or exceeds it. Under-sized batteries trip on quiescent load before they ever see an alarm.',
+      'Battery sizing is a load-and-duration calculation: standby current × standby hours + alarm current × alarm minutes, with margin for ageing, temperature and depth of discharge. Typical durations are 24 h standby then 30 min alarm for Category L systems with ARC monitoring (longer without ARC). The output is the Ah rating; the chosen battery meets or exceeds it. Under-sized batteries trip on quiescent load before they ever see an alarm.',
   },
   {
     id: 9,
     question: 'The CIE earthing connection is identified by which conductor colour?',
     options: [
-      'Red.',
-      'Green-and-yellow for the protective earth (CPC) per BS 7671. Functional earth — a separate conductor for EMC / signal-reference purposes — is identified PINK or marked "FE" per BS 7671 Amendment 2 and IEC 60445:2021, adopted in BS 5839-1:2025. Functional earth was previously identified by cream; the 2025 change aligns with the IEC standard.',
-      'Brown.',
-      'Black.',
+      'Red, to distinguish the fire-alarm protective earth from general installation earths.',
+      'Brown, matching the line conductor used for the dedicated fire-alarm final circuit.',
+      'Black, in line with the neutral conductor identification used elsewhere on the panel.',
+      'Green-and-yellow for the protective earth (CPC) per BS 7671 across the installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Two distinct conductors: green-and-yellow protective earth (BS 7671), pink (or "FE" marked) functional earth (IEC 60445:2021). The 2025 revision flags the colour change from cream to pink for functional earth as a cabling and identification update.',
+      'Two distinct conductors: green-and-yellow protective earth (CPC) per BS 7671, and functional earth (a separate EMC / signal-reference conductor) identified PINK or marked "FE" per BS 7671 Amendment 2 and IEC 60445:2021, adopted in BS 5839-1:2025. Functional earth was previously identified by cream; the 2025 change aligns with the IEC standard.',
   },
   {
     id: 10,
     question:
       'CIE installation — the single most important commissioning prerequisite that the install team must put in place is...?',
     options: [
-      'Cleaning the panel.',
-      'A documented, accurate, addressable map of the system as installed: zone numbers vs. physical zones, addresses vs. devices, cause-and-effect linkages programmed and verified, mains supply identified and labelled, batteries installed and dated, earthing terminated and tested, false-alarm notice fitted, mounting compliant. The commissioning engineer arrives to a panel that is mechanically complete and electrically ready; commissioning verifies the system, it does not finish the install.',
-      'Painting the panel.',
-      'Adding decorations.',
+      'A mechanically complete, labelled panel with documented address and zone mapping.',
+      'A final clean of the panel enclosure, inside and out, carried out before handover.',
+      'A fresh coat of paint applied to the panel so it matches the building’s decor.',
+      'A stock of spare detectors left on top of the panel for the maintainer to use.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The dividing line between installation and commissioning is sharp. Install delivers a mechanically complete, electrically connected, labelled panel with documented mapping. Commissioning verifies. A panel that is "mostly done" forces the commissioning engineer to finish installation work, eats programme time, and risks signing off an incomplete system.',
+      'Install delivers a mechanically complete, electrically connected, labelled panel: zones vs. physical areas, addresses vs. devices, mains identified, batteries dated, earthing terminated and tested, false-alarm notice fitted, mounting compliant, with documented mapping. Commissioning then verifies the system — it does not finish the install. A panel that is "mostly done" forces the commissioning engineer to complete installation work, eats programme time, and risks signing off an incomplete system.',
   },
 ];
 

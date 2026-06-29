@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'pasma-platform-latch',
     question: 'What must happen to the trapdoor on a tower platform before work begins?',
     options: [
-      'It must be removed entirely for ventilation',
       'It must close fully and the latch must engage correctly',
+      'It must be removed entirely for ventilation',
       'It should be propped open so the operative can escape quickly',
       'It only needs to be checked on the first day of use',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The trapdoor must close fully and the latch must engage correctly. An open or unlatched trapdoor creates a fall hazard through the platform opening and compromises the integrity of the working platform.',
   },
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
     question: 'At what Beaufort Force must work on a mobile scaffold tower cease?',
     options: [
       'Force 3 (gentle breeze)',
-      'Force 4 (moderate breeze)',
       'Force 6 (strong breeze)',
       'Force 8 (gale)',
+      'Force 4 (moderate breeze)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Work must cease at Beaufort Force 4 or above. Mobile scaffold towers are lightweight structures with a high centre of gravity, making them particularly susceptible to wind loading. At Force 4 (moderate breeze, 13-18 mph) the risk becomes unacceptable.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       'How often must a pre-use visual check be carried out on an erected mobile scaffold tower?',
     options: [
-      'Once a week',
       'Before every shift or working day',
+      'Once a week',
       'Only after adverse weather',
-      'Monthly',
+      'Once a month',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A pre-use visual check must be carried out before every work shift or every working day before anyone works from the tower. This is a daily requirement, not weekly.',
   },
@@ -121,8 +121,8 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the maximum permissible gap in edge protection (e.g. between guardrail and toeboard)?',
-    options: ['250mm', '370mm', '470mm', '600mm'],
-    correctAnswer: 2,
+    options: ['250mm', '370mm', '600mm', '470mm'],
+    correctAnswer: 3,
     explanation:
       'The maximum permissible gap must not exceed 470mm. This means with a 950mm guardrail and a 150mm toeboard, a mid-rail is required to ensure no gap exceeds 470mm.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 5,
     question: 'During a platform check, which of the following is a fail condition?',
     options: [
+      'The trapdoor does not close or latch correctly',
       'The platform has a slight amount of dust on it',
       'The platform locking hooks are engaged on all sides',
-      'The trapdoor does not close or latch correctly',
       'The platform is level and fully decked',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A trapdoor that does not close or latch correctly is a fail condition. This creates a fall hazard through the platform opening. Dust can be swept away, but a faulty trapdoor mechanism is a safety-critical defect.',
   },
@@ -158,10 +158,10 @@ const quizQuestions = [
     options: [
       'Ambient temperature below 10°C',
       'Light rain with no wind',
-      'Wind speed at or above Beaufort Force 4',
       'Overcast sky with good visibility',
+      'Wind speed at or above Beaufort Force 4',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Wind speed at or above Beaufort Force 4 (moderate breeze, 13-18 mph) requires work to stop and operatives to descend. Mobile towers are particularly vulnerable to wind loading due to their lightweight construction and height-to-base ratio.',
   },

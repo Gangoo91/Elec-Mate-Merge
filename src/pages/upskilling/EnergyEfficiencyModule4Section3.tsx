@@ -84,10 +84,10 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       question:
         'Under Building Regulations Part L, what is the minimum requirement for heating system controls in new non-domestic buildings?',
       options: [
-        'Simple on/off time switch only',
         'Time and temperature control with zone capability',
-        'Manual control by building users',
-        'Thermostat only without timing',
+        'A simple on/off time switch only',
+        'Manual control left to the building users',
+        'A room thermostat only, without timing',
       ],
       correctAnswer: 'Time and temperature control with zone capability',
     },
@@ -95,9 +95,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       question:
         'What is the primary advantage of weather compensation control over fixed flow temperature systems?',
       options: [
-        'Lower installation cost',
-        'Simpler programming requirements',
+        'Lower initial installation cost',
         'Reduced energy consumption by matching output to demand',
+        'Simpler controller programming',
         'Faster response to setpoint changes',
       ],
       correctAnswer: 'Reduced energy consumption by matching output to demand',
@@ -105,40 +105,40 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
     {
       question: 'In BMS terminology, what is a "setback" strategy?',
       options: [
-        'Returning the system to factory defaults',
+        'Returning the system to factory default settings',
+        'Installing redundant backup control systems',
         'Reducing temperature setpoints during unoccupied periods',
-        'Installing backup control systems',
-        'Reverting to manual override mode',
+        'Reverting the controller to manual override mode',
       ],
       correctAnswer: 'Reducing temperature setpoints during unoccupied periods',
     },
     {
       question: 'Which communication topology does Modbus RTU typically use?',
       options: [
-        'Star topology with central hub',
+        'Star topology with a central hub',
         'Ring topology with token passing',
-        'Multi-drop RS-485 serial bus',
         'Mesh wireless network',
+        'Multi-drop RS-485 serial bus',
       ],
       correctAnswer: 'Multi-drop RS-485 serial bus',
     },
     {
       question: 'What is demand limiting in the context of building energy management?',
       options: [
-        'Restricting the number of building users',
         'Automatically shedding loads to stay within maximum demand targets',
+        'Restricting the number of people using the building',
         'Limiting the size of new equipment installations',
-        'Reducing the operating hours of the building',
+        'Reducing the building’s overall operating hours',
       ],
       correctAnswer: 'Automatically shedding loads to stay within maximum demand targets',
     },
     {
       question: 'How does load cycling differ from load shedding?',
       options: [
-        'Load cycling is permanent, shedding is temporary',
+        'Load cycling is permanent, whereas shedding is temporary',
+        'They are identical strategies under different names',
         'Load cycling rotates equipment operation, shedding removes loads entirely',
-        'They are identical strategies with different names',
-        'Load cycling only applies to lighting systems',
+        'Load cycling applies only to lighting systems',
       ],
       correctAnswer: 'Load cycling rotates equipment operation, shedding removes loads entirely',
     },
@@ -146,9 +146,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       question: 'What is the typical scan rate for a BMS monitoring critical HVAC parameters?',
       options: [
         'Once per hour',
-        'Every 15-30 seconds',
         'Once per day',
-        'Continuous real-time (sub-second)',
+        'Continuous real-time (sub-millisecond)',
+        'Every 15-30 seconds',
       ],
       correctAnswer: 'Every 15-30 seconds',
     },
@@ -159,23 +159,23 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Export all generation to the grid',
         'Shift flexible loads to periods of high generation',
         'Disconnect the PV system during peak demand',
-        'Run heating systems at night only',
+        'Run all heating systems at night only',
       ],
       correctAnswer: 'Shift flexible loads to periods of high generation',
     },
     {
-      question: 'What does BACnet MSTP stand for?',
+      question: 'What does BACnet MS/TP stand for?',
       options: [
-        'Master Slave Token Passing',
         'Multiple System Transfer Protocol',
         'Managed Service Transmission Point',
+        'Master-Slave/Token-Passing',
         'Main Server Terminal Port',
       ],
-      correctAnswer: 'Master Slave Token Passing',
+      correctAnswer: 'Master-Slave/Token-Passing',
     },
     {
       question:
-        'According to CIBSE guidance, what is the recommended night setback temperature for commercial office heating?',
+        'According to CIBSE guidance, what is a typical recommended night setback temperature for commercial office heating?',
       options: [
         '5°C (frost protection only)',
         '10-12°C',

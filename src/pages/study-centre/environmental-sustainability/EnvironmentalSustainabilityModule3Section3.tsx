@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'Under the Water Resources Act 1991, what is required before abstracting water from a river or borehole for construction use?',
     options: [
-      'A COSHH assessment',
       'An abstraction licence from the Environment Agency',
+      'A COSHH assessment',
       'A Building Regulations Part G certificate',
       'A trade effluent consent from the local water company',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Water Resources Act 1991 requires anyone abstracting more than 20 cubic metres per day from inland waters, underground strata, or tidal waters to hold an abstraction licence issued by the Environment Agency. This protects water resources from over-extraction and ensures that ecological flow rates are maintained. Unlicensed abstraction is a criminal offence that can result in prosecution, fines, and remediation costs.',
   },
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     question:
       'Which dust suppression method uses significantly less water than traditional hosing?',
     options: [
-      'Open-ended hosepipes at maximum pressure',
-      'Flooding the entire site with water tankers',
-      'Misting systems with fine water droplets and surfactant additives',
-      'Continuous sprinkler irrigation across all work areas',
+      'Open-ended hosepipes run continuously at maximum pressure',
+      'Flooding the entire site repeatedly with water tankers',
+      'Misting systems with fine droplets and surfactant additives',
+      'Continuous sprinkler irrigation across all open work areas',
     ],
     correctIndex: 2,
     explanation:
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'Under the Water Resources Act 1991, what is the threshold above which an abstraction licence is required for taking water from a river?',
     options: [
+      '20 cubic metres per day',
       '5 cubic metres per day',
       '10 cubic metres per day',
-      '20 cubic metres per day',
       '50 cubic metres per day',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An abstraction licence is required from the Environment Agency for taking more than 20 cubic metres per day from inland waters, underground strata, or tidal waters. Below this threshold, abstraction may be exempt, but other restrictions and conditions may still apply. The licence system protects water resources from over-abstraction and ensures sustainable management of rivers, lakes, and groundwater.',
   },
@@ -108,11 +108,11 @@ const quizQuestions = [
       'Which of the following is a closed-loop water conservation system commonly used on construction sites?',
     options: [
       'Open hosepipe dust suppression',
-      'Mains-fed welfare facilities',
       'Recirculating wheel wash with settlement tank',
+      'Mains-fed welfare facilities',
       'Direct river abstraction for concrete mixing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A recirculating (closed-loop) wheel wash system collects the dirty water from vehicle wheel washing, passes it through a settlement tank to remove suspended solids, and recirculates the cleaned water back to the wash. This can reduce wheel wash water consumption by 80-90% compared with single-use systems. The settled silt is periodically removed and disposed of appropriately. Closed-loop systems are a key water conservation measure on sites with high vehicle movements.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
     question: 'What is the purpose of a surfactant additive in water used for dust suppression?',
     options: [
       'To increase water pressure in hoses',
-      'To reduce surface tension so water droplets bind more effectively to dust particles',
       'To kill bacteria in recycled water',
+      'To reduce surface tension so water droplets bind more effectively to dust particles',
       'To change the colour of the water for visibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Surfactant additives reduce the surface tension of water, allowing smaller droplets to form and bind more effectively to fine dust particles. This means less water is needed to achieve the same or better dust suppression effect. Surfactants are particularly effective when used with misting systems, as the combination of fine droplets and reduced surface tension captures airborne particulates far more efficiently than plain water from a hosepipe.',
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     options: [
       'Air-entraining agents',
       'Retarders',
-      'Water-reducing admixtures (plasticisers and superplasticisers)',
       'Accelerators',
+      'Water-reducing admixtures (plasticisers and superplasticisers)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Water-reducing admixtures — including plasticisers (which typically reduce water demand by 5-15%) and superplasticisers (which can reduce water demand by 15-30%) — allow the water-to-cement ratio to be reduced whilst maintaining or improving workability. This produces stronger, more durable concrete with less water. Reducing water demand in concrete mixes is one of the most effective water conservation measures on construction sites, given that concrete production is often the single largest water use.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the recommended approach for managing concrete washout water on site?',
     options: [
-      'Discharge it directly into the nearest surface water drain',
-      'Allow it to soak into the ground wherever convenient',
-      'Collect it in a designated washout area, settle the solids, and recycle the water or dispose of it appropriately',
-      'Mix it with welfare wastewater and send it to the foul sewer',
+      'Contain it in a lined washout area, settle solids, then recycle or dispose of it',
+      'Discharge it directly into the nearest surface water drain to the highway',
+      'Allow it to soak away through unprotected ground across the work area',
+      'Combine it with welfare wastewater and run it straight to the foul sewer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Concrete washout water is highly alkaline (pH 11-13) and contains suspended solids, chromium, and other contaminants. It must never be discharged to surface water drains or allowed to soak into unprotected ground. Best practice is to collect all washout water in a designated, lined containment area or washout tank, allow solids to settle, treat or neutralise the water if necessary, and either recycle it for further washout or dispose of it through an appropriately consented route. Settlement solids are typically removed by a licensed waste carrier.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'What is the purpose of bunded fuel storage areas in relation to water quality protection?',
     options: [
-      'To keep fuel containers warm during winter',
-      'To provide secondary containment preventing fuel leaks from reaching drains, watercourses, and groundwater',
-      'To reduce fuel evaporation and save money',
-      'To make fuel containers easier to stack',
+      'To insulate fuel containers and prevent freezing in cold weather',
+      'To reduce fuel evaporation losses and lower running costs',
+      'To provide secondary containment if fuel leaks from the primary container',
+      'To stabilise fuel containers and make them easier to stack safely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bunded storage areas provide secondary containment around fuel tanks, drums, and containers. The bund must have a capacity of at least 110% of the largest container or 25% of the total stored volume, whichever is greater. If fuel leaks from the primary container, the bund catches and contains it, preventing it from reaching surface water drains, watercourses, or groundwater. Bunds must be impermeable, regularly inspected, and kept free of rainwater accumulation. This is a legal requirement under the Oil Storage Regulations 2001 and the Environmental Permitting Regulations 2016.',
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'What is a typical water consumption benchmark used for monitoring construction site performance?',
     options: [
-      'Litres per worker per hour',
-      'Gallons per lorry movement',
+      'Litres of water used per worker per hour on site',
+      'Gallons of water used per lorry movement off site',
+      'Cubic metres of water per tonne of excavated soil',
       'Litres per square metre of completed floor area (litres/m\u00B2)',
-      'Cubic metres per tonne of excavated soil',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The most widely used benchmark for construction water consumption is litres per square metre of completed gross internal floor area (litres/m\u00B2). This metric allows meaningful comparison across projects of different sizes and types. Typical benchmarks range from 4 to 20 litres/m\u00B2 depending on the project type, with targets becoming progressively tighter as the industry improves. BREEAM and many client sustainability requirements use this metric. Regular monitoring against benchmarks allows early identification of excessive consumption and drives continuous improvement.',
   },

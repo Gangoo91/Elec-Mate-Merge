@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the function of the 'cool down' period in a generator shutdown sequence?",
     options: [
-      'Carbon buildup from light loading prevented by regular load testing',
-      'To prevent generator overload by disconnecting non-essential loads',
+      'To recharge the starter battery bank before the generator is shut down',
+      'To allow the automatic mains failure panel to reset its timers',
       'To allow the engine to cool before stopping to prevent damage',
-      'Test records, maintenance logs, and periodic inspection reports',
+      'To purge unburnt fuel from the exhaust system before shutdown',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which component in a diesel generator provides cranking power for engine starting?',
     options: [
-      'BS 1192 / AEC (UK) layer naming',
-      'Automated door locks with monitoring',
-      'To ensure visibility and prevent falls',
+      'The alternator excitation system',
+      'The fuel injection pump and governor',
+      'The automatic voltage regulator',
       'The starter motor and battery bank',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
       'What derating factor should be applied to a generator installed at 1,000m above sea level?',
     options: [
       'Approximately 3-4% per 300m above 150m',
-      'Local processing with opt-in cloud features',
-      'Volt-free contacts or BACnet/Modbus',
-      'LSOH (Low Smoke Zero Halogen) cable',
+      'Approximately 1% per 100m above sea level',
+      'Approximately 10% fixed regardless of the altitude',
+      'No derating is required below 2,000m altitude',
     ],
     correctAnswer: 0,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
       'What documentation must be maintained for a standby generator installation under BS 7671?',
     options: [
       'Test records, maintenance logs, and periodic inspection reports',
-      'Carbon buildup from light loading prevented by regular load testing',
-      'To prevent generator overload by disconnecting non-essential loads',
-      'To allow the engine to cool before stopping to prevent damage',
+      'Only the original manufacturer warranty certificate',
+      'Only a verbal handover to the site facilities manager',
+      'Only the fuel delivery receipts from the supplier',
     ],
     correctAnswer: 0,
     explanation:

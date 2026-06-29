@@ -47,11 +47,11 @@ const quickCheckQuestions = [
       "A near miss occurred on site yesterday when a MEWP's outrigger sank into soft ground that was not identified in the risk assessment. What action is required?",
     options: [
       'Add a note to the existing risk assessment and carry on',
-      'Stop work, review and update the risk assessment, re-brief the team',
       'Report the near miss but continue with the existing assessment',
       'Wait until the annual review date to update the assessment',
+      'Stop work, review and update the risk assessment, re-brief the team',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Any near miss or incident requires an immediate review and update of the risk assessment. Work should stop until the assessment has been revised, new controls put in place, and all affected workers re-briefed. Waiting for an annual review or simply adding a note is not sufficient.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
     question: "What does 'suitable and sufficient' mean in the context of a risk assessment?",
     options: [
       'It must be written by a qualified health and safety consultant',
-      'It must identify all hazards, evaluate risks, and be proportionate to the level of risk',
       'It must be at least 10 pages long to cover all eventualities',
+      'It must identify all hazards, evaluate risks, and be proportionate to the level of risk',
       'It must be approved by the HSE before work can begin',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "'Suitable and sufficient' means the assessment must identify all significant hazards, evaluate the level of risk, and determine appropriate control measures — but it should be proportionate. A simple, low-risk task does not need a 20-page document. The assessment must be thorough enough to demonstrate that hazards have been properly considered.",
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'Within one week of work starting',
       'Only if a worker specifically requests it',
-      'Before the work begins, typically via a toolbox talk',
       'After the work is completed, as a record',
+      'Before the work begins, typically via a toolbox talk',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Risk assessment findings must be communicated to all affected workers before the work begins. This is typically done through a toolbox talk or site briefing. Workers must understand the hazards and controls before they start working.',
   },

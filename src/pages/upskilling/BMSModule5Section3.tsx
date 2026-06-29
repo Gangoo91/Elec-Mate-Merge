@@ -10,19 +10,19 @@ const quickCheckQuestions = [
     id: 'modbus-simple',
     question: 'Why is Modbus often described as simple compared to BACnet?',
     options: [
-      'It runs faster than BACnet',
       'It uses basic data registers and simple addressing',
-      "It's newer technology than BACnet",
+      'It runs faster than BACnet in all cases',
+      "It's much newer technology than BACnet",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Modbus is considered simple because it uses basic data registers and simple addressing schemes, without the complex object-oriented data structures found in BACnet.',
   },
   {
     id: 'modbus-devices',
     question: 'How many devices can typically be supported on a single Modbus RTU segment?',
-    options: ['16 devices', '32 devices', '127 devices'],
-    correctIndex: 1,
+    options: ['16 devices', '127 devices', '32 devices'],
+    correctIndex: 2,
     explanation:
       'A single Modbus RTU segment typically supports up to 32 devices (including the master). This can be extended with repeaters, but 32 is the standard practical limit.',
   },
@@ -30,11 +30,11 @@ const quickCheckQuestions = [
     id: 'modbus-tcp-advantage',
     question: 'What is one advantage of Modbus TCP/IP over RTU?',
     options: [
-      "It's cheaper to install",
       'Much faster communication and more scalable',
+      "It's cheaper to install",
       "It's simpler to configure",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Modbus TCP/IP is much faster (100 Mbps vs 115 kbps) and more scalable than RTU, supporting many more devices and simultaneous connections.',
   },

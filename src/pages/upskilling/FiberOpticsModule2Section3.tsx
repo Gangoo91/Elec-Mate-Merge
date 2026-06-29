@@ -40,16 +40,16 @@ const quizQuestions = [
   {
     id: 1,
     question: 'LC connectors were developed by which company?',
-    options: ['Siemens', 'Lucent Technologies', 'Corning', 'Amphenol'],
-    correctAnswer: 1,
+    options: ['Lucent Technologies', 'Siemens', 'Corning', 'Amphenol'],
+    correctAnswer: 0,
     explanation:
       'LC connectors were developed by Lucent Technologies (now part of Nokia) in the late 1990s.',
   },
   {
     id: 2,
     question: 'What is the ferrule diameter of SC connectors?',
-    options: ['1.25mm', '2.5mm', '3.0mm', '1.0mm'],
-    correctAnswer: 1,
+    options: ['1.0mm', '1.25mm', '3.0mm', '2.5mm'],
+    correctAnswer: 3,
     explanation: 'SC connectors use a 2.5mm ferrule diameter, the same as ST and FC connectors.',
   },
   {
@@ -70,19 +70,19 @@ const quizQuestions = [
     question: 'What does MTP stand for in MTP connectors?',
     options: [
       'Multi-fibre Termination Push-on',
-      'Mechanical Transfer Push-on',
       'Multi-Terminal Plug',
       'Module Trunk Port',
+      'Mechanical Transfer Push-on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "MTP stands for Mechanical Transfer Push-on, which is US Conec's enhanced version of the MPO standard.",
   },
   {
     id: 5,
     question: 'The primary advantage of LC over SC connectors is:',
-    options: ['Lower cost', 'Higher port density', 'Better polish quality', 'Faster termination'],
-    correctAnswer: 1,
+    options: ['Higher port density', 'Lower cost', 'Better polish quality', 'Faster termination'],
+    correctAnswer: 0,
     explanation:
       "LC's smaller 1.25mm ferrule allows twice the port density of SC connectors in the same panel space.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 8,
     question: "The 'push-pull' latching mechanism is used by:",
     options: [
-      'ST and FC connectors',
       'LC and SC connectors',
+      'ST and FC connectors',
       'MTP connectors only',
-      'All fibre connectors',
+      'All fibre connectors equally',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'LC and SC connectors both use push-pull latching mechanisms for easy connection in tight spaces.',
   },
@@ -131,8 +131,8 @@ const quizQuestions = [
   {
     id: 10,
     question: 'When connecting different connector types, you would use a:',
-    options: ['Connector reducer', 'Hybrid adaptor', 'Mode conditioner', 'Attenuator'],
-    correctAnswer: 1,
+    options: ['Connector reducer', 'Mode conditioner', 'Hybrid adaptor', 'In-line attenuator'],
+    correctAnswer: 2,
     explanation:
       'Hybrid adaptors have different connector types on each side, enabling connection between LC and SC, for example.',
   },

@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'During a pre-installation site survey, the architect drawings show a 600 mm void above the suspended ceiling. On site you measure 280 mm. What do you do before quoting cable containment?',
     options: [
-      'Trust the drawings — drawings are the authoritative source.',
-      'Issue a Technical Query (TQ) or Request for Information (RFI) to the design team, record the measured void, photograph the area with a tape rule visible, and pause containment selection until the design is reviewed. Cable trays sized for 600 mm clearance will not fit; clipping direct to soffit may breach fire-resisting compartment lines; the design must change before procurement. The site reality always overrides the drawing once it is documented.',
-      'Force the original cable tray in by bending it.',
-      'Move the detectors to a different room.',
+      'Raise a TQ/RFI, record and photograph the measured void, and pause containment until reviewed.',
+      'Trust the drawings — the design drawings are the authoritative source for the void depth.',
+      'Force the original cable tray into the 280 mm void by bending it to fit the space.',
+      'Move the detectors to a different room where the void matches the design clearance.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 5839-1:2025 clause 7 (Placement of interfaces) and CDM 2015 both expect designs to reflect site reality. A void measured at 280 mm cannot accept containment designed for 600 mm. The professional response is a written TQ/RFI with photographic evidence; the contract administrator coordinates the design change. Forcing the original spec creates non-compliant work and personal liability.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'Under CDM 2015, who is responsible for ensuring the fire alarm installer has a written Risk Assessment and Method Statement (RAMS) for the work?',
     options: [
-      'The detector manufacturer.',
-      'The Principal Contractor (PC) coordinates RAMS for all trades on a notifiable project, but the fire alarm contractor remains the duty-holder for producing their own RAMS that addresses the specific hazards of THEIR scope — working at height, hot works (if any), live-cabling near other services, dust from drilling, lone working out of hours, and disruption to the existing detection during phased installation. The PC reviews and accepts; the fire alarm contractor authors and signs.',
-      'The building owner alone.',
-      'No one — RAMS are optional.',
+      'The detector manufacturer, as part of the product supply package for the system.',
+      'The building owner alone, as the party commissioning the installation works.',
+      'The fire alarm contractor authors and signs their own RAMS; the PC coordinates and accepts it.',
+      'No one — RAMS are optional on a fire alarm installation of this kind.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'CDM 2015 places duties on the client, principal designer, principal contractor and contractor. The contractor (fire alarm installer) is the duty-holder for the RAMS describing their specific work. The PC coordinates between trades. Both functions are required — the PC does not absolve the contractor of authoring their own RAMS.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 clause 7 says interfaces (e.g. ancillary relay units that drive door retainers, AOV interfaces, lift homing interfaces) should be located such that they are accessible for maintenance. Which of these placements is NON-COMPLIANT?',
     options: [
-      'Surface-mounted in a riser cupboard with full hinged door access.',
-      "Inside an HV switchgear panel that requires power-down of an unrelated load and attendance by a different contractor before the interface enclosure can be opened. The point of clause 7 is to align with CDM 2015 — maintenance personnel must be able to reach the interface without exposing themselves to additional risks or relying on third-party attendance. Burying the interface inside another contractor's panel defeats both the maintainability and the safety intent of the clause.",
-      'Above a permanent walkway with a fixed ladder providing safe access.',
-      'In a clearly labelled enclosure adjacent to the CIE.',
+      'Surface-mounted in a riser cupboard with full hinged door access for the maintainer.',
+      'Above a permanent walkway with a fixed ladder providing safe routine access.',
+      'In a clearly labelled enclosure mounted directly adjacent to the CIE control panel.',
+      'Inside an HV switchgear panel needing power-down and another contractor before it can be opened.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Clause 7 (new for 2025) explicitly aligns interface placement with CDM 2015 maintenance access. Locating an interface inside an HV switchgear cabinet that needs another contractor in attendance breaches both the clause and the broader CDM duty.',
   },
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Phased installation in an occupied office requires what BEFORE the new system can be switched into service for any zone?',
     options: [
-      'Nothing — switch on whenever convenient.',
-      'A documented changeover plan agreed with the Responsible Person under the RRO 2005, a permit-to-work for the cut-over window, the existing detection maintained as the primary system in the unconverted zones, the new system tested back-to-back with the existing in the converted zones, and a recorded changeover certificate. Occupants must not at any point be left without functioning detection covering their working area.',
-      'Just disable the old panel and turn the new one on.',
-      'Wait for an actual fire to test it.',
+      'Nothing — switch the new zone into service whenever it is convenient to the install team.',
+      'A documented changeover plan agreed with the Responsible Person, under a permit-to-work, with both systems live until verified.',
+      'Just disable the old panel and turn the new one on across the whole building at once.',
+      'Wait for an actual fire in the building to prove the new system works as intended.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'A pre-installation site survey for a fire alarm system on a refurbishment project should compare what TWO things in particular?',
     options: [
-      'The cost of cable versus the cost of containment.',
-      'The architect / M&E consultant drawings against the actual site reality — measured void depths, real ceiling heights, existing services routed through the same containment, fire-resisting compartments that are not on the drawings, structural beams that limit detector spacing, and access for future maintenance. Drawings are the design intent; the survey verifies what can actually be built.',
-      'The colour of the panel against the colour of the wall.',
-      'The lunch break times of two trades.',
+      'The design drawings against the actual site reality — void depths, ceiling heights, services and compartments.',
+      'The cost of cable versus the cost of containment for the installation budget.',
+      'The manufacturer datasheet against the current wholesaler trade price list.',
+      "The previous year's programme against this year's installation programme.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The whole purpose of the pre-installation survey is to find the gaps between the design and the building. Voids smaller than drawn, services running where the design assumed clear space, fire compartments not shown on the drawings — these are the items that drive design changes, programme changes and additional cost. Catching them at survey is cheap; catching them at first-fix is expensive.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 7 (placement of interfaces) is new emphasis aligned with which other UK regulation?',
     options: [
-      'GDPR.',
-      "The Construction (Design and Management) Regulations 2015 (CDM 2015) — the duty to design the work so that maintenance can be carried out safely, without exposing maintenance personnel to additional risks. An interface buried inside another trade's enclosure, or sited where attendance by a third party is needed before access, fails this duty. Interfaces must be accessible without disturbing unrelated systems.",
-      'The Bribery Act.',
-      'The Equality Act.',
+      'The Building Regulations Approved Document M, covering access to and use of buildings.',
+      'The Provision and Use of Work Equipment Regulations (PUWER 1998) for site plant.',
+      'The Construction (Design and Management) Regulations 2015 — the duty to design for safe maintenance.',
+      'The Equality Act, in respect of accessible building and workplace provision.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Clause 7 in the 2025 revision pulls the placement of interfaces into alignment with CDM 2015. The intent is the same — maintenance safety. The interface is a long-life component; the maintainer needs to reach it for years to come.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'A material take-off (MTO) for a fire alarm installation should be produced from...?',
     options: [
-      'The lump-sum price.',
-      "The design drawings, specification and the verified site survey, NOT from the design alone. The MTO converts the design into a procurement list (cable lengths with allowance for routing wastage, detector quantities by type, MCPs by location, sounders, VADs, ancillaries, cable supports, fixings, glands, identification labels, tools and consumables). It feeds lead-time planning, phased delivery, and the buyer's purchase orders. An MTO produced from drawings alone, without site verification, will under- or over-order on every project.",
-      'The previous job.',
-      'A guess based on the contractor’s gut feeling.',
+      'The lump-sum contract price agreed for the installation works.',
+      'The previous job of similar size, scaled to this building.',
+      'The manufacturer’s standard kit list for a system of this category.',
+      'The design drawings, specification and the verified site survey — not from the design alone.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Material take-off is the bridge between design and procurement. It must be evidence-based: design drawings + specification + survey. Routing wastage and contingency are added on top, not used to mask poor measurement.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'In an occupied premises, the existing fire detection must be maintained operational during a phased installation. The RESPONSIBLE PERSON for that detection during the project is...?',
     options: [
-      'The fire alarm contractor.',
-      'The Responsible Person (RP) under the Regulatory Reform (Fire Safety) Order 2005 — usually the building owner, occupier or employer — does not transfer to the contractor. The contractor has duties (CDM, contract, BS 5839-1) but the statutory RP duty stays with the dutyholder under the RRO. The contractor coordinates with the RP; the changeover plan is agreed jointly.',
-      'The architect.',
-      'No-one — the duty pauses during construction.',
+      'The Responsible Person under the RRO 2005 — the duty stays with the dutyholder, not the contractor.',
+      'The fire alarm contractor, who takes on the statutory duty for the project duration.',
+      'The architect, as the lead designer responsible for the building during the works.',
+      'No-one — the Responsible Person duty pauses while construction is under way.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The RRO 2005 places the duty on the Responsible Person and that duty is continuous. Construction does not suspend it. The contractor's job is to make sure the work supports — not breaks — the RP's ability to discharge that duty.",
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'Coordination with the structural team matters at survey because...?',
     options: [
-      'They might want a coffee.',
-      'Detector spacing rules under BS 5839-1:2025 21.2 are sensitive to ceiling geometry — closely-spaced beams (now defined as approximately 1 m or less centre-to-centre per the 2025 revision), ducts and obstructions deeper than 250 mm, and cell-style ceilings all change detector quantity and position. The structural drawings reveal beam depths and locations that may not be on the M&E layout. Catching this at survey lets you re-coordinate; catching it at install means moving fixed detectors.',
-      'They need the panel address.',
-      'They will install the cable.',
+      'They set the fire alarm panel network address for the loop.',
+      'They are the trade responsible for pulling the fire alarm cable.',
+      'Ceiling geometry drives detector spacing under 21.2 — beams and obstructions change detector quantity and position.',
+      'They are responsible for signing off the building fire risk assessment.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5839-1:2025 21.2.12 (treating obstructions as walls if depth exceeds 10% of ceiling height and gap above is less than 300 mm) and the new clarification of "closely-spaced beams" (approx. 1 m or less centre-to-centre) make structural geometry a detector-positioning issue. Coordinate at survey, not at install.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'The Risk Assessment and Method Statement (RAMS) for a fire alarm installation must address...?',
     options: [
-      'Only the detector type.',
-      'The full set of hazards generated by the work: working at height (ladders, towers, MEWPs), drilling and dust (silica, asbestos awareness, control measures), hot works if any (permit, fire watch), working live or near live (isolation procedures, lock-off / tag-out), lone working out of hours (check-in regime, emergency contacts), and the impact on existing fire detection during phased work. Each hazard gets a method statement entry that the operatives sign back to confirm understanding before work starts.',
-      'The cable colour.',
-      'Just the price.',
+      'Only the detector type selected for each individual room shown on the layout drawing.',
+      'The cable colour code and the circuit identification labelling scheme for the install only.',
+      'Just the agreed contract price, the payment schedule and the installation programme dates.',
+      'The full set of work hazards — height, dust, hot works, working live, lone working, existing detection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'RAMS is a risk-driven document. The hazards of fire alarm installation are well known and consistent; the controls must be specific to the site and signed back by the operatives. A generic RAMS pulled from a template without site-specific entries is a CDM compliance failure.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       'Asbestos awareness during a refurbishment fire alarm installation — the correct approach is to...?',
     options: [
-      'Drill anywhere; it will be fine.',
-      "Obtain and review the building's Asbestos Management Survey or, for refurbishment work, the Refurbishment & Demolition Survey (R&D survey) BEFORE any drilling, fixing or routing through ceilings, walls, voids or floors. Where ACMs are identified on the survey, the work either avoids them or proceeds under a licensed contractor with an HSE Notification of Notifiable Non-Licensed Work (NNLW) or licensed work. A pre-drill check against the survey is a non-negotiable RAMS item.",
-      'Test the dust afterwards.',
-      'Use a softer drill bit.',
+      'Review the Asbestos Management or R&D survey before any drilling, fixing or routing through the fabric.',
+      'Drill first and have the resulting dust sampled and analysed afterwards.',
+      'Rely on the age of the building alone to judge the likely asbestos risk.',
+      'Wear a dust mask and proceed with drilling without checking the asbestos survey.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CAR 2012 (Control of Asbestos Regulations) places a duty on the dutyholder to manage asbestos. Drilling without checking the survey is a personal criminal offence as well as a health risk. The survey is the gateway document; the RAMS records that the survey has been reviewed.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Lead-time planning for a fire alarm installation matters because...?',
     options: [
-      'It does not matter.',
-      'Long-lead items — the CIE itself if it is a non-stocked addressable platform, voice-alarm amplifiers, beam detectors, aspirating systems, and any specials — drive the critical-path of the programme. Containment, cable, standard detectors and MCPs are typically stocked. The take-off and the lead-time list are produced together; the buyer issues purchase orders early enough that delivery aligns with the sequenced installation. A surprise four-week lead time on a panel discovered at week one of an eight-week programme is a project failure.',
-      'Cable arrives quickly.',
-      'Detectors are always the bottleneck.',
+      'All fire alarm components are ex-stock, so procurement timing is irrelevant.',
+      'Standard detectors are always the critical-path bottleneck on a project.',
+      'Long-lead items — a non-stocked CIE, VA amplifiers, beam or aspirating systems — drive the critical path of the programme.',
+      'Cable always has the longest lead time of any item on a project.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Programme failures on fire alarm installs are usually procurement failures. The take-off feeds the buyer; the buyer feeds the manufacturer; the manufacturer's lead time feeds the programme. Lead-time risk is identified at survey, not on the day of install.",
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'A site survey for a sleeping-risk premises (Category L2 with sleeping rooms) under BS 5839-1:2025 needs to take into account a NEW 2025 detector restriction. That restriction is...?',
     options: [
-      'Heat detectors are now mandatory in all sleeping rooms.',
-      'Heat detectors should NOT be used in rooms in which people sleep, in either Category L2 or Category L3 systems for new installations. The 2025 revision recategorises sleeping rooms as high-risk and excludes heat from sleeping room protection. The change is not retrospective — existing systems continue — but new installations and system upgrades must use a smoke or multi-sensor detector in any sleeping room. The survey must record every sleeping room and the chosen detector type.',
-      'Only optical smoke detectors are allowed anywhere.',
-      'Heat detectors are mandatory only in kitchens.',
+      'Heat detectors are now mandatory in all sleeping rooms across the building.',
+      'Only optical smoke detectors are now allowed anywhere in the installation.',
+      'Heat detectors are now mandatory only in kitchens and similar high-heat rooms.',
+      'Heat detectors should NOT be used in rooms where people sleep, in new L2 or L3 installations.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5839-1:2025 §14 and §15 (use and selection of detectors) reclassify sleeping rooms as high-risk. Heat detectors are not permitted in sleeping rooms in new L2/L3 work. Existing installations are not retrospective. Survey rooms by use, not by name on the drawing.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     id: 10,
     question: 'The single most useful artefact to produce from a pre-installation survey is...?',
     options: [
-      'A photograph of the front of the building.',
-      'A marked-up site survey report with measured ceiling heights, void depths, identified obstructions, photographs cross-referenced to drawing locations, a list of design queries (TQs/RFIs) raised against the design team, the agreed phasing approach with the Responsible Person, and a confirmed material take-off and lead-time list. This single document is the bridge between design, procurement and installation; the project either runs from it or runs into trouble.',
-      'A colour scheme.',
-      'A list of detector model numbers only.',
+      'A marked-up survey report with measurements, photographs, the TQ/RFI register, phasing and the take-off.',
+      'A single photograph of the front elevation of the building.',
+      'A spreadsheet of the contract value broken down floor by floor.',
+      'A list of the detector model numbers to be installed, and nothing more.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A complete survey report is the only document that holds together design, procurement, programme and the Responsible Person's duty. Skip any of those threads and the install hits problems that are visible at first-fix and expensive at second-fix.",
   },

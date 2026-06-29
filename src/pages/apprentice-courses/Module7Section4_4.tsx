@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: '1',
     question: 'What does splitting and isolating a circuit mean?',
     options: [
-      'Providing all workers with personal fall arrest systems regardless of risk',
+      'Connecting all circuits in parallel to share the load evenly',
       'Dividing the circuit into sections and testing each separately',
-      'Maintaining safe traffic and pedestrian segregation',
-      'That the circuit is isolated and confirmed dead',
+      'Replacing the protective device with a higher-rated one',
+      'Isolating only the consumer unit and leaving final circuits live',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     id: '2',
     question: 'How can this method be applied to a ring final circuit?',
     options: [
-      'Maximum current that could flow during a short circuit',
-      'A partnership of CDP, UN Global Compact, WRI, and WWF',
+      'Measure insulation resistance across the whole ring at once',
+      'Replace every socket outlet on the ring in turn',
       'Disconnect at mid-point and test each half separately',
-      'All entrants must immediately evacuate the confined space',
+      'Test only the first and last socket on the ring',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: '3',
     question: 'How should zones be created in large commercial installations?',
     options: [
-      'Significant findings, people at risk, control measures',
-      'Use reduced voltage supplies (110V or lower), RCD protection',
-      'Level 3 Diploma in Installing Electrotechnical Systems',
+      'By disconnecting the main earthing conductor first',
+      'By isolating one socket at a time across the whole building',
+      'By relying on a single insulation resistance test at the origin',
       'Using distribution boards and sub-boards as natural division points',
     ],
     correctIndex: 3,
@@ -56,9 +56,9 @@ const quickCheckQuestions = [
     question: 'Why is accurate labelling essential during split-and-isolate testing?',
     options: [
       'To track which sections have been tested and avoid confusion',
-      'Multiple methods: landline, mobile, radio, alarms',
-      'Electrolytic capacitor (aluminium or tantalum)',
-      'Investigation to identify root cause before taking action',
+      'To meet the minimum cable size requirements of BS 7671',
+      'To reduce the prospective fault current at the origin',
+      'To allow the circuit to be left live during testing',
     ],
     correctIndex: 0,
     explanation:
@@ -74,10 +74,10 @@ const Module7Section4_4 = () => {
       id: 1,
       question: 'What does splitting and isolating a circuit mean?',
       options: [
-        'Reduced current spike during star-delta transition',
+        'Increasing the supply voltage to force a fault to show',
         'Testing parts of a circuit separately instead of all at once',
-        'Based on operating characteristics and time-current curves',
-        'Calculating non-domestic building energy performance',
+        'Connecting two circuits together to compare readings',
+        'Replacing the cable before any testing is carried out',
       ],
       correctAnswer: 1,
       explanation:
@@ -87,10 +87,10 @@ const Module7Section4_4 = () => {
       id: 2,
       question: 'Why does dividing the circuit help in fault diagnosis?',
       options: [
-        'Cutting the sides of an excavation back to a safe angle to prevent collapse',
-        'Clearly identified, accessible, and capable of being secured in the OFF position',
+        'It increases the fault current so the fault is easier to find',
+        'It removes the need to isolate the circuit before testing',
         'It halves the problem each time, quickly narrowing down the fault location',
-        'Power requirements, security needs, environmental protection, and access requirements',
+        'It guarantees the fault is always at the mid-point of the circuit',
       ],
       correctAnswer: 2,
       explanation:
@@ -100,9 +100,9 @@ const Module7Section4_4 = () => {
       id: 3,
       question: 'How can this method be applied to a ring final circuit?',
       options: [
-        'Progressively isolate circuits until faulty circuit identified',
-        'To automatically operate equipment based on predetermined schedules',
-        'Standard PVC cables were used instead of fire-resistant cables',
+        'Disconnect the CPC and test the line conductors only',
+        'Test continuity of the whole ring in a single reading',
+        'Replace the ring with a radial before any testing',
         'Disconnect at mid-point and test each half separately',
       ],
       correctAnswer: 3,
@@ -114,9 +114,9 @@ const Module7Section4_4 = () => {
       question: 'What fault was found in the real-world housing site example?',
       options: [
         'CPC not connected properly at a socket',
-        'Fire protection and thermal insulation',
-        'To prevent condensate carryover into the ductwork',
-        'Battery level checks and system health monitoring',
+        'A short circuit between line and neutral at the board',
+        'An undersized cable causing excessive voltage drop',
+        'A reversed polarity at the consumer unit incomer',
       ],
       correctAnswer: 0,
       explanation:
@@ -126,10 +126,10 @@ const Module7Section4_4 = () => {
       id: 5,
       question: 'Why is record-keeping important during split-and-isolate testing?',
       options: [
-        'A tool for prioritising tasks by urgency and importance',
+        'It removes the need to retest the circuit after repair',
         'To avoid confusion and track which areas have been tested',
-        'Polarity tester or plug-in socket tester',
-        'Achieve comfortable conditions at start of occupancy',
+        'It allows the circuit to remain energised throughout',
+        'It increases the disconnection time of the protective device',
       ],
       correctAnswer: 1,
       explanation:
@@ -139,10 +139,10 @@ const Module7Section4_4 = () => {
       id: 6,
       question: 'Can this method be applied to lighting circuits?',
       options: [
-        'Limitations and extent of inspection performed',
-        'A device that limits the force transmitted to the body during fall arrest; EN 355',
+        'No, lighting circuits must always be tested as a whole',
+        'No, the method only works on ring final circuits',
         'Yes, by splitting at junction boxes or isolating groups of lights',
-        'Cable type, size, length, and circuit designation',
+        'Yes, but only after the supply voltage has been raised',
       ],
       correctAnswer: 2,
       explanation:
@@ -167,9 +167,9 @@ const Module7Section4_4 = () => {
       question: 'How should zones be created in large commercial installations?',
       options: [
         'Using distribution boards or sub-boards as natural division points',
-        'Carbon emissions balanced by offsets or removals over the building lifecycle',
-        'Stop high-risk activities, provide shelter, monitor conditions',
-        'Planning, managing, and coordinating health and safety during pre-construction phase',
+        'By splitting the main earthing conductor into sections',
+        'By isolating the whole building from the supply at once',
+        'By testing every accessory individually from the start',
       ],
       correctAnswer: 0,
       explanation:
@@ -179,10 +179,10 @@ const Module7Section4_4 = () => {
       id: 9,
       question: 'What is the main advantage of splitting circuits into zones?',
       options: [
-        'To maintain IP rating and prevent ingress of dust/water/pests',
+        'It removes the need to isolate the circuit before testing',
         'Quickly narrows down fault location by halving the problem',
-        'Making good of plaster, decoration and disposal of old materials',
-        'Earthing arrangements, supply characteristics, and main protective devices',
+        'It increases the rating of the protective device',
+        'It guarantees no new faults can ever be introduced',
       ],
       correctAnswer: 1,
       explanation:
@@ -192,10 +192,10 @@ const Module7Section4_4 = () => {
       id: 10,
       question: 'In the warehouse example, what fault was located using this method?',
       options: [
-        'HRC fuses or MCCBs rated for capacitor switching duty',
-        'The Health and Safety (First-Aid) Regulations 1981',
+        'A faulty RCD that would not trip on test',
+        'An overloaded final circuit tripping the main switch',
         'Loose neutral conductor in a junction box',
-        'Identify, isolate, secure, prove dead, prove tester',
+        'A damaged earth electrode at the origin',
       ],
       correctAnswer: 2,
       explanation:

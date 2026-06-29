@@ -91,8 +91,8 @@ const quizQuestions = [
     id: 1,
     question:
       'In the Thomas-Kilmann model, which conflict mode is characterised by LOW assertiveness and LOW cooperativeness?',
-    options: ['Competing', 'Accommodating', 'Avoiding', 'Collaborating'],
-    correctAnswer: 2,
+    options: ['Avoiding', 'Competing', 'Accommodating', 'Collaborating'],
+    correctAnswer: 0,
     explanation:
       "Avoiding is the conflict mode where you neither pursue your own concerns (low assertiveness) nor the other person's (low cooperativeness). You sidestep, postpone, or withdraw from the conflict entirely. While sometimes appropriate, chronic avoidance leaves important issues unresolved.",
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'Which de-escalation technique involves repeating the same calm request regardless of how the other person responds?',
     options: [
       'Active listening',
-      'The broken record technique',
       'Validating emotions',
       'Creating physical space',
+      'The broken record technique',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The broken record technique involves calmly and firmly repeating your position or request without getting drawn into arguments, justifications, or emotional escalation. For example: "I understand you are frustrated, but I need you to put your hard hat back on." Repeat calmly each time they push back, without adding new arguments or raising your voice.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       "Google's Project Aristotle found that the number one factor in high-performing teams was:",
     options: [
-      'Having the smartest individuals',
       'Psychological safety',
+      'Having the smartest individuals',
       'Strong hierarchical leadership',
       'Working the longest hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Google's two-year study of 180 teams (Project Aristotle) found that psychological safety was by far the most important factor in team effectiveness, more important than team composition, individual talent, or any other variable. Teams where members felt safe to take risks and be vulnerable with each other consistently outperformed those where they did not.",
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
     question: 'How does emotional intelligence contribute to psychological safety?',
     options: [
       'By ensuring nobody ever disagrees',
-      'By helping leaders respond to vulnerability with respect rather than punishment',
       'By eliminating all negative emotions from the workplace',
+      'By helping leaders respond to vulnerability with respect rather than punishment',
       'By making sure everyone agrees with the manager',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Psychological safety is created when leaders and colleagues respond to vulnerability — mistakes, questions, concerns — with respect, curiosity, and support rather than blame, ridicule, or punishment. This requires empathy (understanding the other person's risk), self-regulation (managing your own frustration), and social skill (responding in a way that encourages future openness).",
   },

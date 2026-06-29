@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'According to the Manual Handling Operations Regulations 1992, which of the following best describes manual handling?',
     options: [
-      'Any activity that involves using machinery to move a load',
       'Transporting or supporting a load by hand or bodily force, including lifting, lowering, pushing, pulling, carrying, or moving',
+      'Any activity that involves using machinery to move a load',
       'Only the lifting and carrying of heavy objects weighing more than 25 kg',
       'Moving objects using mechanical aids such as trolleys and hoists',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The MHOR 1992 defines manual handling as any transporting or supporting of a load (including lifting, putting down, pushing, pulling, carrying, or moving) by hand or bodily force. There is no minimum weight threshold — the definition covers all loads where bodily force is used.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
     question: 'Which of the following is a common manual handling task for an electrician?',
     options: [
       'Reading a wiring diagram at a desk',
-      'Carrying cable drums and pulling heavy cables through containment',
       'Using a laptop to complete test certificates',
       'Discussing a project plan with the site manager',
+      'Carrying cable drums and pulling heavy cables through containment',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Carrying cable drums, pulling heavy cables through conduit and trunking, lifting distribution boards, and moving ladders and tools are all common manual handling tasks for electricians. These activities involve transporting or supporting a load by hand or bodily force and therefore fall within the scope of the MHOR 1992.',
   },
@@ -81,12 +81,12 @@ const quizQuestions = [
     id: 1,
     question: 'The Manual Handling Operations Regulations 1992 define manual handling as:',
     options: [
-      'Any lifting operation involving loads over 20 kg',
       'Transporting or supporting a load by hand or bodily force',
+      'Any lifting operation involving loads over 20 kg',
       'Using mechanical equipment to move materials on site',
       'Any activity that causes back pain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The MHOR 1992 defines manual handling as any transporting or supporting of a load (including lifting, putting down, pushing, pulling, carrying, or moving) by hand or bodily force. There is no minimum weight threshold.',
   },
@@ -105,10 +105,10 @@ const quizQuestions = [
     options: [
       'Upper limbs (shoulders, arms, wrists)',
       'Lower limbs (knees, ankles, feet)',
-      'The lower back (lumbar region)',
       'The neck (cervical region)',
+      'The lower back (lumbar region)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The lower back (lumbar region) is the most commonly injured body region in manual handling incidents, accounting for approximately 40% of all manual handling injuries. The lumbar spine bears the greatest compressive load during lifting and is particularly vulnerable when the spine is flexed or twisted.',
   },
@@ -144,11 +144,11 @@ const quizQuestions = [
     question: 'Which of the following is a common manual handling hazard specific to electricians?',
     options: [
       'Reading circuit diagrams',
-      'Carrying cable drums and pulling heavy SWA cable',
       'Using a multimeter to test circuits',
       'Writing risk assessments at a desk',
+      'Carrying cable drums and pulling heavy SWA cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Carrying cable drums (which can weigh 50 kg or more) and pulling heavy steel wire armoured (SWA) cable through containment are common manual handling hazards for electricians. These tasks involve significant force, awkward postures, and sustained effort.',
   },
@@ -169,8 +169,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Approximately what percentage of all workplace injuries reported in the UK are related to manual handling?',
-    options: ['About 10%', 'About 20%', 'About 30%', 'About 50%'],
-    correctAnswer: 2,
+    options: ['About 30%', 'About 10%', 'About 20%', 'About 50%'],
+    correctAnswer: 0,
     explanation:
       'Approximately 30% of all workplace injuries reported to the HSE are related to manual handling, making it one of the largest single categories of workplace injury. This figure has remained broadly consistent over many years, demonstrating the ongoing scale of the problem.',
   },

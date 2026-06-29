@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'back-to-back',
     question: "What does a 'back-to-back' subcontract clause achieve?",
     options: [
+      'Allows the subcontractor to set their own programme independently',
+      'Guarantees the subcontractor a fixed lump-sum price with no variations',
       'Passes identical obligations and risks from main contract to subcontract',
-      'Inductive and capacitive loads storing and releasing energy',
-      'They vary with the square of the load current (I squared R)',
-      'Energy audits - requirements, methodology and reporting',
+      'Removes the main contractor from any liability to the client',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Back-to-back clauses mirror the main contract terms into the subcontract, passing down obligations, risks, and conditions so the subcontractor is bound by the same requirements as the main contractor.',
   },
@@ -58,10 +58,10 @@ const quickCheckQuestions = [
     question:
       'Under the Housing Grants, Construction and Regeneration Act 1996, pay-when-paid clauses are:',
     options: [
-      'Additional strain relief and environmental sealing',
+      'Fully enforceable provided they are clearly stated in the subcontract',
       'Unenforceable except where the payer is insolvent',
-      'Escalate the issue to the supervisor or project manager',
-      'Much faster communication and more scalable',
+      'Permitted only on contracts with a value below £1 million',
+      'Enforceable only when the client agrees to them in writing',
     ],
     correctIndex: 1,
     explanation:
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     question: 'Flow-down clauses in subcontracts are used to:',
     options: [
       'Transfer obligations from the main contract to subcontractors',
-      'Specify accuracy requirements, calibration status, and training needs',
-      'Highest level of qualification and competence',
-      'Monitoring and updating material levels daily',
+      'Reduce the subcontractor\'s price by removing duplicated requirements',
+      'Give the subcontractor direct contractual rights against the client',
+      'Set out the main contractor\'s internal approval procedures only',
     ],
     correctIndex: 0,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'A main contractor on a hospital M&E project must ensure their electrical subcontractor complies with NHS-specific requirements. Which mechanism achieves this?',
     options: [
-      '1:4 ratio (1 out for every 4 up)',
-      'V_line = sqrt(3) x V_phase',
+      'A verbal instruction at the pre-start meeting',
+      'The subcontractor\'s own quality policy document',
       'Flow-down clauses in the subcontract',
-      'The Risk Assessment & Method Statement (RAMS)',
+      'A separate side agreement directly between the client and subcontractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'An electrical subcontractor completes work on 15th March. Under the Construction Act, by when must they submit an application for payment?',
     options: [
-      'To provide security for remedying defects discovered after completion',
-      'They should occur before work begins and regularly throughout the project',
-      'Submit a formal notice of delay and extension of time claim',
+      'Within 24 hours of completing the works, regardless of the contract',
+      'Only after the main contractor has been paid by the client',
       'By the date specified in the contract or a reasonable time before the due date',
+      'At any point before the defects liability period ends',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'The Construction Act requires payment application by the date specified in the contract. If not specified, applications should be submitted a reasonable time before the due date to allow the paying party to process the claim.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of retention in subcontracts?',
     options: [
+      'To cover the main contractor\'s overheads and profit on the package',
+      'To fund acceleration measures if the programme falls behind',
+      'To provide an advance payment to the subcontractor before mobilisation',
       'To provide security for remedying defects discovered after completion',
-      'The main contractor should compensate the subcontractor',
-      'Submit a formal notice of delay and extension of time claim',
-      'To ensure designs comply with specifications and coordinate with other trades',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Retention (typically 3-5%) is held to provide the main contractor with funds to remedy any defects that become apparent during the defects liability period. Half is usually released at practical completion, half after the defects period.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'A building services subcontractor is instructed to work weekends to recover programme delay. Who is responsible for the additional costs if the delay was caused by late information from the main contractor?',
     options: [
-      'Submit a formal notice of delay and extension of time claim',
+      'The subcontractor must absorb the cost as part of their tendered price',
+      'The client pays the subcontractor directly without involving the main contractor',
       'The main contractor should compensate the subcontractor',
-      '7 days written notice after the final date for payment',
-      'To provide security for remedying defects discovered after completion',
+      'The costs are shared equally between all parties on the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "When acceleration or additional working is required due to the main contractor's default (late information, access denial), the main contractor should compensate the subcontractor for additional costs incurred. Back-to-back provisions should allow the main contractor to recover from the client if applicable.",
   },
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'contra-charging' mean in subcontract management?",
     options: [
-      "Detailed activities, durations, dependencies, resource allocation and key milestones",
-      "They should occur before work begins and regularly throughout the project",
+      "Charging the subcontractor a premium for using the main contractor's plant",
+      "Splitting a payment between two subcontractors working on the same task",
       "Deducting costs from a subcontractor's payment for work they should have done or damage they caused",
-      "To ensure designs comply with specifications and coordinate with other trades",
+      "Adding the main contractor's mark-up to materials supplied to the subcontractor",
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which statement about subcontractor coordination meetings is correct?',
     options: [
-      'To ensure designs comply with specifications and coordinate with other trades',
-      'Detailed activities, durations, dependencies, resource allocation and key milestones',
-      '7 days written notice after the final date for payment',
+      'They are only needed when a dispute or claim has already arisen',
+      'They should be held once at handover to review the completed works',
+      'They are the responsibility of the client rather than the main contractor',
       'They should occur before work begins and regularly throughout the project',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
       "An M&E subcontractor's work is delayed because the structural frame is 4 weeks late. What should the subcontractor do first?",
     options: [
       'Submit a formal notice of delay and extension of time claim',
-      '7 days written notice after the final date for payment',
-      'They should occur before work begins and regularly throughout the project',
-      'The main contractor should compensate the subcontractor',
+      'Demobilise the workforce and suspend the subcontract immediately',
+      'Wait until practical completion and then submit a final account claim',
+      'Accelerate their own works to recover the lost time at their own cost',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: "What information should a subcontractor's programme contain?",
     options: [
-      'They should occur before work begins and regularly throughout the project',
+      'Only the subcontractor\'s start and finish dates for the package',
       'Detailed activities, durations, dependencies, resource allocation and key milestones',
-      'By the date specified in the contract or a reasonable time before the due date',
-      'To provide security for remedying defects discovered after completion',
+      'A breakdown of the subcontractor\'s tendered prices and profit margins',
+      'A list of the labour and plant the main contractor will provide free of charge',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'Under JCT subcontract terms, what is the typical notice period required before suspending work for non-payment?',
     options: [
-      'Submit a formal notice of delay and extension of time claim',
-      'To provide security for remedying defects discovered after completion',
+      '24 hours written notice after the final date for payment',
+      '28 days written notice after the final date for payment',
       '7 days written notice after the final date for payment',
-      'The main contractor should compensate the subcontractor',
+      '14 days written notice after the final date for payment',
     ],
     correctAnswer: 2,
     explanation:
@@ -236,9 +236,9 @@ const quizQuestions = [
     question: 'What is the primary purpose of subcontractor design submission reviews?',
     options: [
       'To ensure designs comply with specifications and coordinate with other trades',
-      '7 days written notice after the final date for payment',
-      'By the date specified in the contract or a reasonable time before the due date',
-      'Detailed activities, durations, dependencies, resource allocation and key milestones',
+      'To transfer full design liability from the subcontractor to the main contractor',
+      'To value the design work for inclusion in the next interim payment',
+      'To allow the client to select a different subcontractor if they prefer',
     ],
     correctAnswer: 0,
     explanation:

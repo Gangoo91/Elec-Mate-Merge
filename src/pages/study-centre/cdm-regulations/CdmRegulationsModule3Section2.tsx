@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 'cpp-responsibility',
     question: 'Who is responsible for preparing the construction phase plan?',
     options: [
-      'The client',
-      'The principal contractor (or the sole contractor on single-contractor projects)',
-      'The principal designer',
-      'The Health and Safety Executive',
+      'The client who commissions the project',
+      'The principal contractor, or the sole contractor on single-contractor jobs',
+      'The principal designer coordinating the pre-construction phase',
+      'The Health and Safety Executive as the enforcing authority',
     ],
     correctIndex: 1,
     explanation:
@@ -31,11 +31,11 @@ const quickCheckQuestions = [
     question: 'When must the construction phase plan be in place?',
     options: [
       'Within the first week of construction starting',
-      'Before the construction phase begins',
       'Only after the first contractor arrives on site',
       'It is only required for notifiable projects',
+      'Before the construction phase begins',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The construction phase plan must be prepared before the construction phase begins. This is a firm legal requirement under CDM 2015 — construction work must not start until a suitable plan is in place. The plan does not need to be complete in every detail on day one, but it must contain sufficient information to manage the initial phases safely, and it must be developed and updated as the project progresses.',
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     id: 'cpp-proportionate',
     question: "What does it mean for a construction phase plan to be 'proportionate'?",
     options: [
-      'It must be at least 50 pages long for every project',
       'The level of detail should match the size, complexity, and risk of the project',
+      'It must be at least 50 pages long for every project',
       'It only applies to projects lasting more than 30 days',
       'It must be written in a standard HSE template format',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Proportionate means the plan's level of detail should match the size, complexity, and risk profile of the project. A small, straightforward job like replacing a consumer unit might only need a few pages covering the key risks and arrangements. A large multi-phase commercial project with many contractors will need a detailed plan covering complex coordination, multiple risk procedures, and extensive management arrangements. The goal is to manage real risks, not to generate paperwork for its own sake.",
   },
@@ -93,9 +93,9 @@ const quizQuestions = [
       'Which of the following MUST be included in a construction phase plan under Regulation 12(2)?',
     options: [
       'A description of the project, management structure, and health and safety arrangements',
-      "The client's budget and programme",
-      "Architect's drawings and specifications",
-      'A list of all subcontractor profit margins',
+      'The client’s detailed budget breakdown and the commercial delivery programme',
+      'The full set of architect’s drawings, specifications and bills of quantities',
+      'A complete list of every subcontractor’s profit margins and commercial mark-ups',
     ],
     correctAnswer: 0,
     explanation:
@@ -107,11 +107,11 @@ const quizQuestions = [
       'On a project where there is only one contractor and no principal contractor has been appointed, who must prepare the construction phase plan?',
     options: [
       'The client must prepare it',
-      'The sole contractor must prepare it',
       'The principal designer must prepare it',
       'No plan is required for single-contractor projects',
+      'The sole contractor must prepare it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On single-contractor projects where no principal contractor has been appointed, the sole contractor takes on the responsibility for preparing the construction phase plan. CDM 2015 applies to all construction projects, regardless of size or the number of contractors. The plan can be simpler and more proportionate for a small project, but it must still exist before construction begins.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary purpose of site rules within the construction phase plan?',
     options: [
-      'To ensure the site looks tidy for client visits',
       'To set out the standards of behaviour and safety controls that everyone on site must follow',
-      "To record the site's planning permission conditions",
-      'To list the contractual obligations between the client and principal contractor',
+      'To ensure the site looks tidy and well presented whenever the client visits',
+      'To record the planning permission conditions imposed on the site by the authority',
+      'To list the contractual obligations agreed between the client and principal contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site rules set out the standards of behaviour and safety controls that everyone on site must follow. They typically cover access and egress, PPE requirements, permit-to-work systems, traffic management, housekeeping, welfare arrangements, and emergency procedures. Site rules ensure consistent health and safety standards across all contractors and workers on the project.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Which of these activities would typically require a specific risk procedure in the CPP?',
     options: [
-      'Ordering stationery for the site office',
+      'Ordering stationery and consumables for the site office',
+      'Scheduling routine progress and coordination meetings',
+      'Selecting the site canteen menu and catering arrangements',
       'Working at height, hot works, excavations, and confined space entry',
-      'Scheduling progress meetings',
-      'Selecting the site canteen menu',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The construction phase plan must include specific procedures for activities that carry particular risks. These typically include working at height, hot works, excavations, confined space entry, electrical work isolation, asbestos encounters, lifting operations, and any other high-risk activities identified in the risk assessment. Each procedure should set out how the activity will be managed safely, the controls required, and the competency standards for those carrying out the work.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
     question: 'A small domestic rewiring project with one electrician working alone would require:',
     options: [
       'No construction phase plan at all',
-      'A full 50-page construction phase plan',
       'A simple, proportionate construction phase plan covering the key risks',
+      'A full 50-page construction phase plan',
       'Only a verbal briefing with the homeowner',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Even small projects require a construction phase plan, but the plan must be proportionate to the risks. A single-electrician domestic rewire would need a simple plan — perhaps a few pages or a marked-up method statement — covering the key risks (electrical isolation, working in confined spaces, asbestos awareness for older properties), emergency arrangements, and welfare provisions. The plan should focus on managing real risks, not generating unnecessary paperwork.',
   },

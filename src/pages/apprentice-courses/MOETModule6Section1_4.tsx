@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'title-block-purpose',
     question: 'What is the primary purpose of the title block on an engineering drawing?',
     options: [
-      'Long vertical or horizontal steel runs (>30 m) — typically using slotted bolt holes or sliding splices to allow thermal expansion.',
-      'A space that is substantially enclosed AND has a reasonably foreseeable risk of serious injury from hazardous conditions',
-      'To provide essential identification and reference information including drawing number, title, scale, projection, revision status and approval signatures',
-      'Free-fall distance, energy absorber deployment, harness stretch, D-ring shift, and a safety clearance below the worker\\\\\\\\\\\\\\\'s feet',
+      'To list every dimension and tolerance shown on the drawing in a single table',
+      'To provide a legend explaining all the symbols used throughout the drawing body',
+      'To provide key identification information — drawing number, title, scale, revision and approvals',
+      'To record the names of everyone who has viewed or borrowed a copy of the drawing',
     ],
     correctIndex: 2,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Why is the drawing number the most important piece of information on an engineering drawing?',
     options: [
-      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
-      'It is the unique identifier used to retrieve, reference, cross-reference and manage the drawing throughout the life of the installation',
-      'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
-      'The maximum concentration of the gas or vapour in air above which the mixture is too rich to support combustion',
+      'It indicates the scale at which the drawing has been produced',
+      'It is the unique identifier used to retrieve, reference and manage the drawing',
+      'It shows the order in which the drawings were created on the project',
+      'It records the file size and storage location of the digital drawing',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'revision-table',
     question: 'A revision table on a drawing shows:',
     options: [
-      'All permits, risk assessments, atmospheric monitoring records, training records, equipment inspection records, CCTV footage, witness statements, and the scene itself',
-      'A chronological record of all changes made to the drawing, including revision letter, date, description of change and who authorised it',
-      'A unitless number representing the cross-sectional area the cable takes up in the enclosure (including air space allowance)',
-      'Simple, immediately implementable changes that significantly reduce conflict risk — such as always sending a confirmation text after phone agreements',
+      'A list of every component and material quantity required to build the item',
+      'A chronological record of changes: revision letter, date, description and who authorised it',
+      'A schedule of the dimensions and tolerances that must be inspected',
+      'An index of all the other drawings cross-referenced from this sheet',
     ],
     correctIndex: 1,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question:
       'The standard paper sizes used for engineering drawings in the UK follow which series?',
     options: [
-      'A question that tests factual recall, such as identifying PPE or safety signs',
-      'Quality drops, deadlines slip, and stress increases as you context-switch between jobs',
-      'The perimeter increases, reducing the L×W / Hm(L+W) ratio',
+      'The ISO B series: B0, B1, B2, B3, B4 used for technical drawings',
+      'The Imperial series: Letter, Legal, Tabloid and Ledger sizes',
+      'The ISO C series: C0, C1, C2, C3, C4 used for envelopes and drawings',
       'The ISO A series: A0 (largest standard), A1, A2, A3, A4 (smallest common size)',
     ],
     correctIndex: 3,
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The title block on an engineering drawing is positioned:',
     options: [
-      'Manufacturer, model, specific technical data and approval requirements',
+      'In the top left corner, so it is the first thing read when scanning the sheet',
       'In the bottom right corner of the drawing sheet, visible when the drawing is folded to A4 size',
-      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
-      'Explain the underlying theory and regulation references before the practical task',
+      'In the centre of the sheet, surrounded by the drawing views',
+      'Along the left-hand binding margin, running vertically up the sheet',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'A drawing scale of 1:2 means:',
     options: [
-      'By reducing the calculated BER through on-site generation offset',
-      'The bracing must be fitted in the correct orientation and on the correct faces as specified by the manufacturer',
+      'The drawing is twice the actual size — every 2 mm on the drawing represents 1 mm in reality',
+      'The drawing shows two views of the same component side by side',
       'The drawing is half the actual size — every 1 mm on the drawing represents 2 mm in reality',
-      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
+      'The drawing must be photocopied at 200% to reach its true size',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'The border around an engineering drawing serves to:',
     options: [
-      'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
-      'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
-      'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'Hold the title block, parts list and revision table in a fixed layout',
+      'Indicate the scale and projection convention applied across the whole sheet',
+      'Show the load-bearing edges of the component or assembly being drawn',
+      'Define the drawing area, provide zone references and accommodate the filing margin',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: "When a drawing states 'Do Not Scale', this means:",
     options: [
-      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
-      'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
+      'Use only the written dimension values, never measurements taken from the printed paper',
+      'The drawing has no scale and is purely diagrammatic with no real proportions at all',
+      'The drawing must not be enlarged or reduced when it is photocopied for issue',
+      'The drawing is confidential and must not be copied or distributed any further',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'A drawing register is:',
     options: [
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
-      'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
-      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
+      'A log of every person who has signed out a paper copy of a drawing',
+      'A controlled index of all project drawings with their current revision status',
+      'A record of the changes made to a single drawing across its revisions',
+      'A schedule of the dimensions that must be checked on each component',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The difference between a general arrangement (GA) drawing and a detail drawing is:',
     options: [
-      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
-      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
-      'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'A GA drawing is always at a larger scale than a detail drawing',
+      'A GA drawing is hand-drawn while a detail drawing is produced in CAD',
+      'A GA drawing shows the overall layout of equipment; a detail drawing shows a single component',
+      'A GA drawing is uncontrolled whereas a detail drawing is always controlled',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'A parts list (bill of materials) on a drawing contains:',
     options: [
-      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
-      'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
-      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
-      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
+      'The revision history of the drawing and who authorised each change',
+      'The scale, projection and approval signatures applying to the whole sheet',
+      'A chronological list of every drawing issued on the project up to date',
+      'Item numbers, component descriptions, quantities, part numbers and material specifications',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: "Zone references on a drawing border (e.g., 'B3') are used to:",
     options: [
       'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
-      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
+      'Indicate the revision level of each separate area of the drawing',
+      'Number the sheets in a multi-sheet drawing set in the correct order',
+      'Show the recommended folding lines for filing the drawing to A4 size',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The originator, checker and approver signatures in the title block demonstrate:',
     options: [
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
-      'The drawing number, revision status, scale and projection convention — to confirm you have the correct, current drawing and can interpret it accurately',
-      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
+      'That three separate copies of the drawing have been printed and filed',
+      'That the drawing has been created, technically checked, and approved for issue',
+      'That the drawing is uncontrolled and may be used for reference only',
+      'That the drawing has been superseded and replaced by a later revision',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'When a drawing references another drawing (cross-reference), this means:',
     options: [
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
-      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
-      'The drawing is half the actual size — every 1 mm on the drawing represents 2 mm in reality',
+      'The referenced drawing supersedes this one and must be used instead',
+      'The referenced drawing is an earlier revision kept only for the record',
+      'Related information sits on the referenced drawing and both should be read together',
+      'The referenced drawing is held by a different department and is not available',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     question:
       'For electrical maintenance, the most important drawing layout information to check first is:',
     options: [
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
-      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
-      'The drawing number, revision status, scale and projection convention — to confirm you have the correct, current drawing and can interpret it accurately',
+      'The parts list, so replacement components can be ordered in advance',
+      'The zone reference grid, so individual features can be located quickly on the sheet',
+      'The filing margin width, so the drawing can be bound into the document set correctly',
+      'The drawing number, revision status, scale and projection convention before anything else',
     ],
     correctAnswer: 3,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'Under BS EN ISO 7200, the title block must contain as a minimum:',
     options: [
       'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
-      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
-      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
-      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'Only the drawing number and the date of issue, with all other fields optional',
+      'A full bill of materials and a revision history for every drawing',
+      'The checker and approver signatures, but the drawing number is optional',
     ],
     correctAnswer: 0,
     explanation:

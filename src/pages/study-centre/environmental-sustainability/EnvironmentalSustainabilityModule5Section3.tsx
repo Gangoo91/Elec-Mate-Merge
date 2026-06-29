@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a key BREEAM requirement that directly affects construction workers on site?',
     options: [
-      'Considerate construction practices, including responsible site management, resource efficiency, and ecological protection during the build',
       'Workers must individually apply for BREEAM certification before starting on site',
+      'Considerate construction practices, including responsible site management, resource efficiency, and ecological protection during the build',
       'BREEAM only applies to the design stage and does not affect construction workers',
       'Workers must pass a BREEAM examination before being allowed to work on certified projects',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'BREEAM has specific credits related to construction site management that directly affect workers. These include responsible construction practices (often linked to Considerate Constructors Scheme registration), resource efficiency on site, waste minimisation, pollution prevention, and ecological protection. Workers need to understand these requirements to ensure the project achieves its target BREEAM credits.',
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     id: 'future-homes-standard',
     question: 'What is the primary aim of the Future Homes Standard 2025?',
     options: [
-      'To ensure new homes produce 75–80% less carbon emissions than those built under current regulations, primarily through improved fabric efficiency and low-carbon heating',
       'To ban all gas boilers in existing homes by 2025',
       'To require all homes to achieve BREEAM Outstanding rating',
+      'To ensure new homes produce 75–80% less carbon emissions than those built under current regulations, primarily through improved fabric efficiency and low-carbon heating',
       'To mandate solar panels on every new commercial building',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The Future Homes Standard 2025 aims to ensure that new homes built from 2025 onwards produce 75–80% less carbon emissions compared to those built under the 2013 Building Regulations. This is achieved through significantly improved fabric efficiency (better insulation, reduced thermal bridging, improved airtightness) and the use of low-carbon heating systems such as heat pumps. It represents the biggest change to Building Regulations in a generation.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'How many assessment categories does BREEAM use, and which category typically carries the highest weighting?',
     options: [
-      '10 categories — Energy typically carries the highest weighting at around 19%',
       '5 categories — Water carries the highest weighting at 30%',
       '8 categories — Management carries the highest weighting at 25%',
+      '10 categories — Energy typically carries the highest weighting at around 19%',
       '12 categories — Innovation carries the highest weighting at 20%',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'BREEAM uses 10 assessment categories: Management, Health & Wellbeing, Energy, Transport, Water, Materials, Waste, Land Use & Ecology, Pollution, and Innovation. Energy typically carries the highest weighting at around 19% of the overall score, reflecting the critical importance of energy efficiency in sustainable building performance.',
   },
@@ -118,11 +118,11 @@ const quizQuestions = [
     question: 'What is CEEQUAL primarily used to assess?',
     options: [
       'Residential housing developments',
-      'Civil engineering, infrastructure, and landscaping projects',
       'Retail and commercial fit-outs only',
       'Demolition and site clearance projects',
+      'Civil engineering, infrastructure, and landscaping projects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CEEQUAL is the sustainability assessment, rating, and awards scheme specifically designed for civil engineering, infrastructure, landscaping, and public realm projects. It fills the gap that BREEAM does not cover — projects such as roads, bridges, tunnels, railways, water treatment works, flood defences, and other infrastructure. Like BREEAM, it was developed by BRE and uses a similar credit-based scoring system.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'Which building standard focuses specifically on ultra-low energy performance, requiring buildings to use up to 90% less energy for heating and cooling?',
     options: [
-      'BREEAM Outstanding',
-      'LEED Platinum',
       'Passivhaus (Passive House)',
+      'LEED Platinum',
+      'BREEAM Outstanding',
       'WELL Building Standard',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Passivhaus (Passive House) is the standard that focuses specifically on ultra-low energy performance. Originating in Germany, it requires buildings to meet strict measured targets for space heating demand (15 kWh/m2/year or less), primary energy demand, and airtightness (0.6 ACH at 50 Pa). This is achieved through exceptional insulation, airtightness, triple glazing, thermal bridge-free construction, and mechanical ventilation with heat recovery (MVHR).',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
       'Which of the following is a documented benefit of achieving green building certification?',
     options: [
       'Green-certified buildings consistently show higher energy costs due to complex systems',
-      'Reduced energy costs, improved occupant health and productivity, and higher rental and sale values',
       'Green-certified buildings are exempt from all future Building Regulations changes',
       "Green certification guarantees zero carbon emissions throughout the building's lifecycle",
+      'Reduced energy costs, improved occupant health and productivity, and higher rental and sale values',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Green-certified buildings consistently demonstrate multiple benefits: reduced energy and water costs (typically 20–30% lower energy bills), improved occupant health and productivity (better air quality, daylight, and thermal comfort), and higher rental and sale values (studies show a 6–20% premium for certified buildings). They also benefit from reduced carbon emissions, future-proofing against tightening regulations, and enhanced reputation for owners and developers.',
   },

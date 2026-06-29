@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'fcu-pipe-config',
     question: 'What is the main advantage of a 4-pipe fan coil unit over a 2-pipe system?',
     options: [
-      'A reference cable at the far end for loss measurement',
+      'A lower installed cost due to fewer pipe runs',
       'Simultaneous heating and cooling capability in different zones',
-      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
-      'To ensure only the protective device nearest the fault operates',
+      'A reduced chilled water flow temperature requirement',
+      'The elimination of any condensate drainage provision',
     ],
     correctIndex: 1,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'chilled-beam-type',
     question: 'What distinguishes an active chilled beam from a passive chilled beam?',
     options: [
-      'Outdoor temperature below which supplementary heating is needed',
-      'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
-      'Refuse to commence work until safe isolation has been completed and verified',
+      'Active beams contain an integral fan to force air across the coil',
+      'Active beams use refrigerant rather than chilled water in the coil',
+      'Active beams require condensate drainage while passive beams do not',
       'Active beams incorporate a primary air supply that induces room air across the coil',
     ],
     correctIndex: 3,
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'A 2-pipe fan coil unit system requires changeover between heating and cooling modes. What does this mean?',
     options: [
-      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
+      'Each unit can independently select heating or cooling at any time',
       'The entire building system must switch between circulating chilled water and hot water',
-      'To identify faults caused by ageing or deterioration before they become dangerous',
-      'A basket (Stokes) stretcher or a confined space rescue stretcher (such as a SKED or roll-up stretcher)',
+      'The unit changes between fan speeds automatically as demand varies',
+      'The valve switches between a 2-way and a 3-way configuration',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     question:
       'Why must chilled water flow temperature to passive chilled beams typically be maintained above 14°C?',
     options: [
-      'The pressure drop across the coil at design water flow rate',
-      'To modulate airflow to a zone based on temperature demand',
-      'To direct airflow away from occupants and optimise air distribution',
+      'To prevent the chilled water pipework from freezing',
+      'To reduce the pump energy required to circulate the water',
+      'To increase the sensible cooling output of the beam',
       'To prevent condensation forming on the beam surfaces',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
       'An EC (electronically commutated) fan motor in an FCU offers advantages over an AC induction motor. Which statement is correct?',
     options: [
       'EC motors offer variable speed control with high efficiency across the speed range',
-      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
-      'The pressure drop across the coil at design water flow rate',
-      'MCB protection with RCD where accessible to non-skilled persons',
+      'EC motors run at a fixed single speed for greater reliability',
+      'EC motors require a three-phase supply rather than single-phase',
+      'EC motors remove the need for any condensate drainage',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary function of a VAV (Variable Air Volume) terminal box?',
     options: [
-      'To direct airflow away from occupants and optimise air distribution',
+      'To vary the supply air temperature delivered to a zone',
       'To modulate airflow to a zone based on temperature demand',
-      'MCB protection with RCD where accessible to non-skilled persons',
-      'To prevent condensation forming on the beam surfaces',
+      'To dehumidify the supply air before it enters the zone',
+      'To boost duct pressure to overcome system resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'What is the typical induction ratio for an active chilled beam?',
     options: [
       '1:3 to 1:5 - three to five times more room air than primary air',
-      'The pressure drop across the coil at design water flow rate',
-      'MCB protection with RCD where accessible to non-skilled persons',
-      'To direct airflow away from occupants and optimise air distribution',
+      '1:1 - equal volumes of primary and induced room air',
+      '1:10 to 1:15 - ten to fifteen times more room air than primary air',
+      '5:1 - five times more primary air than induced room air',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     question:
       'A 4-way ceiling cassette unit has adjustable louvres. What is the primary purpose of individual louvre control?',
     options: [
-      'To modulate airflow to a zone based on temperature demand',
+      'To increase the total cooling capacity of the cassette unit',
       'To direct airflow away from occupants and optimise air distribution',
-      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
-      'To prevent condensation forming on the beam surfaces',
+      'To reduce the refrigerant charge required by the indoor unit',
+      'To filter particulates from the air leaving the cassette',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a condensate pump on a fan coil unit?',
     options: [
-      'To prevent condensation forming on the beam surfaces',
-      'The pressure drop across the coil at design water flow rate',
+      'To circulate chilled water through the cooling coil',
+      'To boost the air pressure delivered by the unit fan',
       'To lift condensate to a drain point when gravity drainage is not possible',
-      'MCB protection with RCD where accessible to non-skilled persons',
+      'To increase the static pressure across the drip tray',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     question:
       'For a VRF cassette unit, what determines the refrigerant pipe sizes to the indoor unit?',
     options: [
-      '1:3 to 1:5 - three to five times more room air than primary air',
-      'MCB protection with RCD where accessible to non-skilled persons',
-      'To prevent condensation forming on the beam surfaces',
+      'The ceiling void depth available above the unit',
+      'The single-phase electrical supply current to the unit',
+      'The condensate flow rate produced by the cooling coil',
       'The unit cooling/heating capacity and equivalent refrigerant pipe length',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
       'What minimum electrical protection is typically required for a fan coil unit with EC motor and electric reheat?',
     options: [
       'MCB protection with RCD where accessible to non-skilled persons',
-      '1:3 to 1:5 - three to five times more room air than primary air',
-      'The pressure drop across the coil at design water flow rate',
-      'To modulate airflow to a zone based on temperature demand',
+      'A BS 3036 rewirable fuse on the fan motor circuit only',
+      'Overload protection from the EC motor’s internal thermistor alone',
+      'A dedicated three-phase supply for the EC motor',
     ],
     correctAnswer: 0,
     explanation:

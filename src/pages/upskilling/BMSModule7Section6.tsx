@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'operator-training-importance',
     question: 'Why is it important to train building operators during handover?',
     options: [
-      "To reduce the contractor's liability",
       'To ensure operators can use the system safely and effectively',
-      'To satisfy insurance requirements',
-      'To demonstrate technical expertise',
+      "To reduce the contractor's contractual liability",
+      'To satisfy the building insurer at completion',
+      'To demonstrate the installer technical expertise',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Proper training ensures operators can use the system safely and effectively, preventing misuse that could damage equipment, waste energy, or create uncomfortable conditions. It also reduces call-backs and builds client confidence.',
   },
@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'io-lists-update',
     question: 'Why must IO lists and addressing registers be updated before handover?',
     options: [
-      'To satisfy warranty requirements',
-      'To increase the project value',
+      'To satisfy the equipment warranty requirements',
+      'To increase the assessed project value',
+      'To demonstrate that the project is complete',
       'To enable future troubleshooting and safe modifications',
-      'To demonstrate project completion',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Accurate IO lists and addressing registers are essential for future troubleshooting, modifications, and maintenance. Without them, technicians cannot identify which physical device corresponds to a system alarm or modify the system safely.',
   },
@@ -36,10 +36,10 @@ const quickCheckQuestions = [
     id: 'as-built-drawings-consequences',
     question: 'What happens if as-built drawings are not updated before handover?',
     options: [
-      'The warranty becomes void immediately',
+      'The equipment warranty becomes void immediately',
       'Future maintenance becomes dangerous and expensive',
       'The system stops working after a few months',
-      'Insurance coverage is invalidated',
+      'Insurance coverage is invalidated for the building',
     ],
     correctIndex: 1,
     explanation:

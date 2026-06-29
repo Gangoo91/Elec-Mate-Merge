@@ -101,8 +101,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How many regulations are contained within the Confined Spaces Regulations 1997?',
-    options: ['3', '5', '7', '10'],
-    correctAnswer: 1,
+    options: ['3', '7', '10', '5'],
+    correctAnswer: 3,
     explanation:
       'The CSR 1997 is a deliberately concise piece of legislation containing just 5 regulations: Reg 1 (Citation and commencement), Reg 2 (Interpretation), Reg 3 (Avoidance of entry), Reg 4 (Safe system of work), and Reg 5 (Emergency arrangements). The brevity is intentional \u2014 the detailed practical guidance is provided in ACoP L101.',
   },
@@ -152,8 +152,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which regulation set governs the selection and maintenance of equipment used in confined space work?',
-    options: ['LOLER 1998', 'PUWER 1998', 'DSEAR 2002', 'COSHH 2002'],
-    correctAnswer: 1,
+    options: ['PUWER 1998', 'LOLER 1998', 'DSEAR 2002', 'COSHH 2002'],
+    correctAnswer: 0,
     explanation:
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) governs the selection, maintenance, and use of all work equipment, including gas detectors, ventilation fans, lighting, and powered tools used in confined spaces. Equipment must be suitable for the purpose, properly maintained, and used by trained persons.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
       'Under DSEAR 2002, what specific hazard must be assessed in confined spaces where flammable substances may be present?',
     options: [
       'Noise levels exceeding 80 dB(A)',
-      'Risk of explosive atmospheres',
       'Ionising radiation levels',
       'Biological hazards from vermin',
+      'Risk of explosive atmospheres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) require employers to assess the risk of fire and explosion from dangerous substances, including flammable gases and vapours that may accumulate in confined spaces. Where an explosive atmosphere could occur, the employer must classify the space into zones and ensure equipment is suitable (ATEX-rated).',
   },
@@ -175,8 +175,8 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the maximum custodial sentence for an individual convicted of a serious health and safety offence under the HASAWA 1974?',
-    options: ['6 months', '12 months', '2 years', '5 years'],
-    correctAnswer: 2,
+    options: ['6 months', '2 years', '12 months', '5 years'],
+    correctAnswer: 1,
     explanation:
       'Under Section 33 of the Health and Safety at Work etc. Act 1974, an individual convicted on indictment of a serious offence (such as a breach leading to a death in a confined space) can face imprisonment for up to 2 years and/or an unlimited fine. Organisations face unlimited fines. The Corporate Manslaughter and Corporate Homicide Act 2007 can also apply where a gross management failure causes death.',
   },

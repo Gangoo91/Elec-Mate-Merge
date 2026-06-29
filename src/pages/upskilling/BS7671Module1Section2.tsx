@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'A client asks you to certify the LV control wiring inside a CNC machine on a factory floor. What applies?',
     options: [
-      'BS 7671 throughout — it is a fixed installation',
+      'BS 7671 throughout — the whole machine is a fixed installation',
       "BS 7671 to the machine's isolator; BS EN 60204-1 for the wiring inside the machine",
-      "Only the manufacturer's instructions",
-      'BS 7671 plus PUWER 1998',
+      "Only the manufacturer's instructions and supplied wiring diagrams",
+      'BS 7671 plus PUWER 1998 for the complete machine assembly',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'Where Part 7 (Special installations or locations) gives a more stringent requirement than the general regulations, which applies?',
     options: [
-      'The general regulations — they are the baseline',
+      'The general regulations — they always form the governing baseline',
       'The Part 7 requirement — it supplements or modifies the general regulations',
-      'Both — you pick whichever is cheaper',
-      'Neither — Part 7 is informative only',
+      'Both apply equally — you pick whichever is cheaper to install',
+      'Neither — Part 7 is informative guidance only, not normative',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'A new commercial unit has a structural lightning protection system (LPS) on the roof. Where does BS 7671 stop and BS EN 62305 take over?',
     options: [
-      'BS 7671 covers the LPS in full — air terminations, down conductors, earth electrodes',
-      'BS EN 62305 covers the LPS in full; BS 7671 covers the protective bonding interface between the LPS earth termination and the installation MET',
+      'BS 7671 covers the LPS in full — air terminations, down conductors and earth electrodes',
+      'BS EN 62305 covers the LPS; BS 7671 covers the bonding interface to the installation MET',
       'BS 7671 covers only the air terminations; BS EN 62305 covers everything below roof level',
-      'Neither standard applies to LPS — it sits under Part L of the Building Regulations',
+      'Neither standard applies to the LPS — it sits under Part L of the Building Regulations',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       "A4:2026 introduced Section 716 to bring Power over Ethernet inside BS 7671's framework. What is the practical effect on certification?",
     options: [
-      'Nothing — PoE is still data cabling and outside scope',
-      'PoE distribution is now a BS 7671 install: design, erection, verification and certification flow through BS 7671, with BS EN 50173-1 referenced for cabling and BS EN IEC 62368-3 for the power-feeding source equipment',
-      'Only PoE++ (Type 4) installations are in scope — Type 1/2 remain exempt',
-      'Section 716 only applies to PoE lighting; cameras and access points are still out of scope',
+      'Nothing — PoE remains data cabling and outside the scope of certification',
+      'PoE distribution is now a BS 7671 install requiring design, erection, verification and a cert',
+      'Only PoE++ (Type 4) installations are in scope — Type 1 and Type 2 remain exempt',
+      'Section 716 applies to PoE lighting only; cameras and access points stay out of scope',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'On a domestic solar PV install, where does BS 7671 Section 712 end and the MCS scheme rules begin?',
     options: [
-      'BS 7671 covers everything; MCS is purely commercial paperwork',
-      'Section 712 covers the AC and DC fixed-side install up to the inverter AC isolator; MCS scheme rules and BS EN 62446 govern panel-string commissioning and the MCS handover certificate',
-      'MCS covers the entire install; BS 7671 is informative only',
-      'Section 712 only applies to the DC side; AC is governed by Section 826',
+      'BS 7671 covers everything; MCS is purely commercial handover paperwork',
+      'Section 712 covers the fixed install to the inverter AC isolator; MCS and BS EN 62446 do commissioning',
+      'MCS scheme rules cover the entire install; BS 7671 Section 712 is informative only',
+      'Section 712 applies to the DC side only; the AC side is governed by Section 826',
     ],
     correctIndex: 1,
     explanation:
@@ -109,9 +109,9 @@ const inlineChecks = [
       'A4:2026 promoted the energy-efficiency content from the deleted informative Appendix 17 to a new normative chapter. Which chapter is it, and what does it reference?',
     options: [
       'Chapter 14 — references the Building Regulations Part L only',
-      'Chapter 57 — references BS EN 50171',
-      'Chapter 81 (in Part 8) — references the Building Regulations and BS HD 60364-8-1:2019',
-      'Chapter 41 — references the IET On-Site Guide',
+      'Chapter 57 — references BS EN 50171 for central power supplies',
+      'Chapter 81 (Part 8) — references the Building Regulations and BS HD 60364-8-1:2019',
+      'Chapter 41 — references the IET On-Site Guide for energy efficiency',
     ],
     correctIndex: 2,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of these installations is OUTSIDE the scope of BS 7671:2018+A4:2026?',
     options: [
-      'A 400 V three-phase commercial bakery oven supply',
       'The 11 kV switchgear at a factory main intake',
+      'A 400 V three-phase commercial bakery oven supply',
       'A 230 V kitchen ring final circuit in a dwelling',
       'A marina shore supply pedestal under Section 709',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 110.1.1 caps the scope at 1000 V AC / 1500 V DC nominal. The 11 kV switchgear is HV — outside BS 7671. The bakery oven supply (LV), domestic ring (LV), and marina shore supply (covered explicitly by Section 709) are all in scope.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'You are designing power feeds to a passenger lift in a commercial building. Where does BS 7671 stop and the lift standard take over?',
     options: [
-      'BS 7671 covers the entire lift system end-to-end',
-      'BS 7671 covers the supply to the lift isolator; BS EN 81-20/-50 covers the lift itself',
-      'BS EN 81 covers everything from the LV switchboard onwards',
-      'PUWER 1998 supersedes both',
+      'BS 7671 covers the entire lift system end-to-end including the drive',
+      'BS EN 81 covers everything from the LV switchboard in the building onwards',
+      'PUWER 1998 supersedes both standards for the complete lift installation',
+      'BS 7671 covers the supply to the lift isolator; BS EN 81-20/-50 covers the lift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The fixed installation (sub-main, isolator, distribution to the machine room) is BS 7671. Inside the lift — drive, controller, traction motor, car wiring — the standard is BS EN 81-20 / -50. The handover point is the lift's dedicated isolator. Section 729 (operating and maintenance gangways) may also apply to access routes around the machinery.",
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
       'A4:2026 introduced a new Section 716 — Power over Ethernet. Where does this sit in the BS 7671 scope hierarchy?',
     options: [
       'It supersedes BS 7671 for any data installation',
-      'It is a Part 7 special location section that supplements the general regulations for ELV DC distribution over balanced data cabling',
       'It only applies to gigabit-rated cabling',
+      'It is a Part 7 special location section that supplements the general regulations for ELV DC distribution over balanced data cabling',
       'It defers entirely to BS EN 50173-1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 introduced Section 716 to bring PoE within the BS 7671 framework. It supplements the general regulations (Reg 110.1.3 mechanism) and references BS EN 50173-1 for cabling and BS EN IEC 62368-3 for the power-feeding sourcing equipment, but the BS 7671 design / erection / verification framework still wraps the install. PoE installations now have a normative home.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     question:
       'You are commissioning a 7 kW domestic EV charge point. The BS 7671 Section 722 install is complete; what does Section 722 NOT cover, and which standard fills the gap?',
     options: [
-      'Section 722 covers everything — no other standard applies',
-      "Section 722 does not cover the charger's internal electronics or the vehicle coupler; BS EN 61851 (and the manufacturer's installation manual) governs those",
-      'Section 722 does not cover the cable from the consumer unit; BS EN 50620 fills the gap',
-      'Section 722 does not cover bonding; Section 411 fills the gap',
+      'Section 722 covers everything on an EV install — no other standard applies',
+      "It excludes the charger's internal electronics and the vehicle coupler; BS EN 61851 covers those",
+      'It excludes the supply cable from the consumer unit; BS EN 50620 fills that gap',
+      'It excludes the protective bonding of the charger; Section 411 fills that gap',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'A factory has a small Zone 2 hazardous area around a solvent dispense bay. Inside the zone, what governs the electrical installation, and where does BS 7671 still apply?',
     options: [
-      'BS 7671 governs the Zone 2 install in full',
-      'BS EN 60079 series governs equipment selection and installation method inside the zone; BS 7671 still applies to the safe-area side of the boundary, with boundary equipment satisfying both standards',
-      'BS EN 60204-1 governs the Zone 2 install',
-      'Neither BS 7671 nor BS EN 60079 — only DSEAR 2002',
+      'BS EN 60079 governs the in-zone install; BS 7671 applies on the safe-area side of the boundary',
+      'BS 7671 governs the Zone 2 install in full, including in-zone equipment selection',
+      'BS EN 60204-1 governs the Zone 2 install as if it were machinery wiring',
+      'Neither BS 7671 nor BS EN 60079 applies — only the duties under DSEAR 2002',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 110.2 excludes hazardous-area installations from the general scope of BS 7671. Inside Zone 0/1/2 (gas) or Zone 20/21/22 (dust), the BS EN 60079 series governs equipment selection (Ex-rating, certification, marking) and installation method (60079-14). BS 7671 still applies on the safe-area side of any boundary panel; equipment that crosses the boundary must satisfy both standards.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'Reg 110.1.3 sets out how Part 7 (Special installations or locations) interacts with Parts 1–6. Which statement is correct?',
     options: [
-      'Part 7 replaces Parts 1–6 in special locations',
-      'Part 7 supplements or modifies Parts 1–6 — apply Part 7 first, with the more stringent requirement winning',
-      'Part 7 is informative only and never overrides Parts 1–6',
-      'Part 7 only applies if the designer chooses to use it',
+      'Part 7 entirely replaces Parts 1–6 within any special location',
+      'Part 7 is informative only and can never override Parts 1–6',
+      'Part 7 applies only if the designer chooses to invoke it on the job',
+      'Part 7 supplements or modifies Parts 1–6, with the more stringent requirement winning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 110.1.3 is explicit: Part 7 supplements or modifies the general regulations of Parts 1–6. On a special location (bathroom, EV charging point, marina, medical, PoE under A4), check Part 7 first. Where Part 7 is more stringent (e.g. zone-based bonding in 701, EV PEN prohibition in 722.312.2.1) it overrides. Where Part 7 is silent, the general regulations apply.',
   },
@@ -208,10 +208,10 @@ const quizQuestions = [
     question:
       'A4:2026 introduced new Chapter 57 — Stationary secondary batteries. Which type of battery installation is EXCLUDED from Chapter 57?',
     options: [
-      'A residential PV-plus-battery hybrid system',
-      'A grid-tied BESS at a commercial site',
-      'Batteries inside a UPS or central emergency-lighting power supply that is itself covered by a product safety standard',
-      'An off-grid hybrid system on a farm',
+      'A residential PV-plus-battery hybrid storage system',
+      'A grid-tied BESS installed at a commercial site',
+      'Batteries inside a UPS or central emergency supply covered by its own product standard',
+      'An off-grid hybrid storage system installed on a farm',
     ],
     correctAnswer: 2,
     explanation:
@@ -222,10 +222,10 @@ const quizQuestions = [
     question:
       'Your client wants a written summary on the EIC of "where BS 7671 applies and where it stops" for a packaged industrial drive. What is the cleanest way to phrase it?',
     options: [
-      '"Inspected under BS 7671 throughout — manufacturer warranty applies."',
-      '"Inspected and tested under BS 7671:2018+A4:2026 up to the machine\'s dedicated isolator. Equipment beyond the isolator was supplied as a packaged unit declared to BS EN 60204-1; manufacturer\'s declaration of conformity available on request."',
-      '"BS 7671 does not apply — see manufacturer\'s manual."',
-      '"All wiring tested. PASS."',
+      '"Inspected and tested under BS 7671 throughout, including the drive; manufacturer warranty applies to the unit."',
+      '"Inspected under BS 7671:2018+A4:2026 to the dedicated isolator; equipment beyond declared to BS EN 60204-1."',
+      '"BS 7671 does not apply to this packaged drive — refer entirely to the manufacturer\'s installation manual."',
+      '"All wiring inspected and tested to BS 7671 and found satisfactory; no boundary applies."',
     ],
     correctAnswer: 1,
     explanation:
@@ -277,7 +277,7 @@ const faqs = [
     question:
       'How do I cite the BS 7671 / equipment-standard boundary on the EIC schedule of inspection?',
     answer:
-      "Name the edition, the handover point and the equipment standard. A defensible cert entry reads: 'Inspected and tested under BS 7671:2018+A4:2026 up to the dedicated isolator at [location]. Equipment beyond the isolator was supplied as a packaged unit declared to [BS EN 60204-1 / BS EN 81-20 / BS EN 61851 / BS EN 60079-14], manufacturer\\'s declaration of conformity referenced.' Generic phrasing like 'inspected throughout' overstates scope and creates liability risk.",
+      "Name the edition, the handover point and the equipment standard. A defensible cert entry reads: 'Inspected and tested under BS 7671:2018+A4:2026 up to the dedicated isolator at [location]. Equipment beyond the isolator was supplied as a packaged unit declared to [BS EN 60204-1 / BS EN 81-20 / BS EN 61851 / BS EN 60079-14], manufacturer's declaration of conformity referenced.' Generic phrasing like 'inspected throughout' overstates scope and creates liability risk.",
   },
   {
     question:

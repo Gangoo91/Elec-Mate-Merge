@@ -15,10 +15,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 1,
     question: 'What is the primary purpose of electrical installation drawings?',
     options: [
-      'Defect registers, severity classifications, corrective actions, and completion verification',
-      'To provide visual representation of electrical systems and component locations',
-      'Supply characteristics, impedance of supply path, and transformer ratings',
-      'Multiple locations, regular schedules, recovery testing, and access security',
+      'To record test results and defects found during periodic inspection',
+      'To provide a visual representation of electrical systems and component locations',
+      'To specify the supply characteristics and earthing arrangement of the installation',
+      'To list the materials and quantities required for procurement and costing',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,14 +31,14 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 2,
     question: 'Which symbol represents a two-way switch on electrical drawings?',
     options: [
-      'A circle with a cross',
-      'A square with diagonal lines',
-      'Two parallel lines with S2',
-      'A triangle',
+      'A circle with a single dot inside',
+      'A switch symbol marked S1',
+      'A switch symbol marked S2',
+      'A rectangle with a diagonal arrow',
     ],
     correctAnswer: 2,
     explanation:
-      "A two-way switch is typically represented by two parallel lines with 'S2' marking to indicate its switching function between two positions.",
+      "A two-way switch is denoted by the switch symbol marked 'S2', indicating it can switch a circuit from two separate positions, whereas a one-way switch is marked 'S1'.",
     section: '5.1.2',
     difficulty: 'basic',
     topic: 'Electrical Symbols',
@@ -47,9 +47,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 3,
     question: 'What information should be included in a cable schedule?',
     options: [
-      'Show sizes, support spacing, and load capacity information',
-      'During the planning phase before work begins',
-      'Conduct site survey and risk assessment',
+      'Support spacing, fixing centres, and containment load capacity only',
+      'Ambient temperature, grouping factors, and thermal insulation derating only',
+      'Maintenance intervals, inspection dates, and certificate reference numbers',
       'Cable type, size, length, and circuit designation',
     ],
     correctAnswer: 3,
@@ -64,13 +64,13 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What is a schematic diagram used for in electrical installations?',
     options: [
       'Showing electrical connections and circuit operation',
-      'The reduction factor applied to total connected load',
-      'Clear, accurate, complete, and timely information',
-      'During the planning phase before work begins',
+      'Showing the physical positions of components within the building',
+      'Listing the materials and quantities needed for the installation',
+      'Recording the as-installed routes of cable containment systems',
     ],
     correctAnswer: 0,
     explanation:
-      'Schematic diagrams show the electrical connections and circuit operation, helping understand how components are electrically connected and how circuits function.',
+      'Schematic diagrams show the electrical connections and circuit operation, helping understand how components are electrically connected and how circuits function, rather than their physical positions.',
     section: '5.1.4',
     difficulty: 'intermediate',
     topic: 'Schematic Diagrams',
@@ -79,10 +79,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 5,
     question: "What does the term 'as-built drawings' refer to?",
     options: [
-      'Personnel, tools, materials, and time requirements',
+      'Drawings prepared by the designer before any work starts',
       'Drawings showing what was actually installed',
-      'To provide earth fault protection',
-      'Circuit designation, cable type, and destination',
+      'Drawings showing only the proposed routes of cable containment',
+      'Drawings used solely for tendering and cost estimation',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 7,
     question: 'What is the first consideration when designing an electrical circuit?',
     options: [
-      'Resistance, inductance, and capacitance',
-      'Conduct site survey and risk assessment',
-      'Drawings showing what was actually installed',
+      'The colour of the cable insulation to be used',
+      'The brand of accessories to be fitted',
+      'The aesthetic layout of switches and sockets',
       'Load requirements and current demand',
     ],
     correctAnswer: 3,
@@ -131,9 +131,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What is diversity factor in electrical design?',
     options: [
       'The reduction factor applied to total connected load',
-      'Show sizes, support spacing, and load capacity information',
-      'Personnel, tools, materials, and time requirements',
-      'Permit to work, hot work permits, and confined space permits',
+      'The factor by which fault current is multiplied to size protection',
+      'The factor used to increase cable size for voltage drop',
+      'The ratio of reactive power to true power in a circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 9,
     question: 'Why is voltage drop calculation important in circuit design?',
     options: [
-      'Consider load distribution, loop impedance, and cable routing for balanced loading',
+      'To ensure the cable can withstand the prospective fault current',
       'To ensure equipment receives adequate voltage for proper operation',
-      'Circuit identification, voltage levels, and emergency contact information',
-      'To prioritise risks based on likelihood and severity',
+      'To ensure the protective device disconnects within the required time',
+      'To ensure conductors do not exceed their maximum operating temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -163,14 +163,14 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What is the maximum permissible voltage drop for lighting circuits under normal conditions?',
     options: [
-      '2%',
+      '1%',
       '5%',
       '3%',
-      '10%',
+      '8%',
     ],
     correctAnswer: 2,
     explanation:
-      'The maximum permissible voltage drop for lighting circuits under normal conditions is 3% of the nominal voltage according to BS 7671.',
+      'BS 7671 Appendix 4 gives a maximum voltage drop of 3% for lighting circuits and 5% for other uses, measured from the origin of the installation to the point of use.',
     section: '5.2.4',
     difficulty: 'intermediate',
     topic: 'Voltage Drop Limits',
@@ -179,9 +179,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 11,
     question: 'What factors affect the current-carrying capacity of a cable?',
     options: [
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'To ensure equipment receives adequate voltage for proper operation',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
+      'Cable colour, manufacturer, and date of installation',
+      'Nominal voltage, frequency, and phase rotation of the supply',
+      'Length of cable run and number of accessories connected',
       'Installation method, ambient temperature, and grouping with other cables',
     ],
     correctAnswer: 3,
@@ -197,10 +197,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 12,
     question: 'What is the first step in planning electrical installation work?',
     options: [
-      'Conduct site survey and risk assessment',
-      'Drawings showing what was actually installed',
-      'During the planning phase before work begins',
-      'Personnel, tools, materials, and time requirements',
+      'Conduct a site survey and risk assessment',
+      'Order all materials and arrange delivery to site',
+      'Begin first-fix wiring as soon as access is available',
+      'Complete and issue the electrical installation certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -213,10 +213,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 13,
     question: 'Why is it important to coordinate with other trades on site?',
     options: [
-      'Regular progress reports, milestone notifications, and problem alerts',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'According to manufacturer instructions, protected from weather and damage',
-      'With revision numbers, change descriptions, and authorisation signatures',
+      'To reduce the amount of material that needs to be ordered',
+      'To prevent conflicts, ensure safety, and maintain the project schedule',
+      'To allow electrical work to be completed without any inspection',
+      'To transfer responsibility for safety onto the other trades',
     ],
     correctAnswer: 1,
     explanation:
@@ -229,10 +229,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 14,
     question: 'What information should be included in a method statement?',
     options: [
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'To determine cable sizes and protective device ratings',
+      'Only the names and contact details of site personnel',
+      'Only a list of the materials and their costs',
       'Step-by-step procedures, safety measures, and required resources',
-      'Stop work and discuss solutions with relevant parties',
+      'Only the test results recorded after completion',
     ],
     correctAnswer: 2,
     explanation:
@@ -245,9 +245,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 15,
     question: 'When should temporary electrical supplies be planned for construction sites?',
     options: [
-      'Resistance, inductance, and capacitance',
-      'Conduct site survey and risk assessment',
-      'To ensure all exposed metalwork is at the same potential',
+      'Only after the permanent supply has been energised',
+      'Only once first-fix wiring is complete',
+      'Only when an inspector requests temporary lighting',
       'During the planning phase before work begins',
     ],
     correctAnswer: 3,
@@ -262,9 +262,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What factors should be considered when planning cable installation routes?',
     options: [
       'Safe zones, accessibility, other services, and future maintenance',
-      'To show overall system architecture and major component relationships',
-      'Cable type, installation method, environmental conditions, and load considerations',
-      'Avoid water pipe damage, maintain separation distances, and coordinate penetrations',
+      'Only the shortest possible distance between two points',
+      'Only the preferences of the building occupants',
+      'Only the colour coding of the cables being installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -279,10 +279,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 17,
     question: 'What is the purpose of creating a bill of quantities?',
     options: [
-      'Installation method, ambient temperature, and grouping with other cables',
+      'To record the test results obtained during commissioning',
       'To list all required materials with quantities and specifications',
-      'Environment, accessibility, cable loading, and future expansion needs',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
+      'To show the physical layout of components on a floor plan',
+      'To define the step-by-step safe working procedures',
     ],
     correctAnswer: 1,
     explanation:
@@ -295,10 +295,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 18,
     question: 'When planning tool requirements, what should be considered?',
     options: [
-      'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
-      'Safe zones, accessibility, other services, and future maintenance',
+      'Only the purchase cost of each tool',
+      'Only the brand name preferred by the operative',
       'Tool availability, suitability for task, and safety requirements',
-      'To plan electrical work at appropriate times and avoid delays',
+      'Only the weight of the tools to be carried',
     ],
     correctAnswer: 2,
     explanation:
@@ -311,9 +311,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 19,
     question: 'Why is it important to plan material delivery schedules?',
     options: [
-      'To list all required materials with quantities and specifications',
-      'Advance notices, work schedules, disruption minimisation, and progress updates',
-      'Clear speech, appropriate technical level, and confirmation of understanding',
+      'To increase the total quantity of materials ordered',
+      'To allow materials to be stored for several years before use',
+      'To reduce the need for any site security measures',
       'To ensure materials arrive when needed and prevent storage problems',
     ],
     correctAnswer: 3,
@@ -328,9 +328,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What should be included in a resource allocation plan?',
     options: [
       'Personnel, tools, materials, and time requirements',
-      'To prioritise risks based on likelihood and severity',
-      'During testing as results are obtained',
-      'Step-by-step procedures, safety measures, and required resources',
+      'Only the names of the protective devices to be used',
+      'Only the test results expected at completion',
+      'Only the colour scheme of the finished installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -343,10 +343,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 21,
     question: 'How should materials be stored on construction sites?',
     options: [
-      'Assess reactive power requirements and select appropriate compensation equipment',
+      'Stacked outdoors regardless of weather to save space',
       'According to manufacturer instructions, protected from weather and damage',
-      'At regular agreed intervals and when significant milestones are reached',
-      'Complete specifications, quantities, delivery requirements, and quality standards',
+      'Mixed together to make stock-taking simpler',
+      'Left in delivery vehicles until the moment of installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -361,10 +361,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 22,
     question: 'Why is effective communication important when working with other trades?',
     options: [
-      'Simple language, visual aids, location-specific information, and emergency procedures',
-      'Specify accuracy requirements, calibration status, and training needs',
+      'To reduce the amount of documentation required on site',
+      'To allow each trade to work in complete isolation',
       'To ensure safety, coordinate work sequences, and prevent conflicts',
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
+      'To transfer all liability for the works to the main contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -377,9 +377,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 23,
     question: "What should be done when electrical work conflicts with other trades' work?",
     options: [
-      'Project name, drawing number, scale, date, and revision status',
-      'The reduction factor applied to total connected load',
-      'To ensure safety, coordinate work sequences, and prevent conflicts',
+      'Continue working and let the other trade resolve it later',
+      'Remove the other trade\'s work to make space',
+      'Ignore the conflict if the electrical work is on programme',
       'Stop work and discuss solutions with relevant parties',
     ],
     correctAnswer: 3,
@@ -394,9 +394,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'Who should be informed when electrical work may affect other trades?',
     options: [
       'Site supervisor, affected trades, and project coordinator',
-      'Material verification, tool checks, safety equipment, and drawing reviews',
-      'To ensure materials arrive when needed and prevent storage problems',
-      'To explain symbols and abbreviations used',
+      'Only the electrical wholesaler supplying the materials',
+      'Only the building occupants once work is complete',
+      'Only the manufacturer of the equipment being installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -409,10 +409,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 25,
     question: "What is the importance of understanding other trades' work sequences?",
     options: [
-      'To ensure materials arrive when needed and prevent storage problems',
+      'To allow electrical work to ignore the overall programme',
       'To plan electrical work at appropriate times and avoid delays',
-      'Match communication style to technical knowledge and role requirements',
-      'Specific installation methods, connections, and dimensional information',
+      'To reduce the number of operatives required on site',
+      'To remove the need for coordination meetings',
     ],
     correctAnswer: 1,
     explanation:
@@ -425,10 +425,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 26,
     question: 'How should shared workspace be managed between trades?',
     options: [
-      'Current carrying capacity, voltage drop, and fault protection',
-      'Circuit designation, cable type, and destination',
+      'By allowing whichever trade arrives first to take priority',
+      'By leaving each trade to resolve disputes informally',
       'Through coordination meetings and agreed schedules',
-      'Component layouts, clearance dimensions, and access requirements',
+      'By restricting access to a single trade at all times',
     ],
     correctAnswer: 2,
     explanation:
@@ -443,9 +443,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 27,
     question: 'What are the key elements of effective written communication in electrical work?',
     options: [
-      'Showing electrical connections and circuit operation',
-      'Drawings showing what was actually installed',
-      'Load requirements and current demand',
+      'Lengthy, highly technical, and formal in every case',
+      'Brief, informal, and reliant on verbal follow-up',
+      'Detailed only where problems have already occurred',
       'Clear, accurate, complete, and timely information',
     ],
     correctAnswer: 3,
@@ -460,9 +460,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'When should progress reports be provided to supervisors?',
     options: [
       'At regular agreed intervals and when significant milestones are reached',
-      'System readiness, testing sequences, witness requirements, and documentation completeness',
-      'BS 7671 requirements for test certificates and inspection schedules',
-      'PDF/A format, standardised file naming, and regular format migration',
+      'Only when the supervisor specifically requests one',
+      'Only at the very end of the project on handover',
+      'Only when a serious problem or accident occurs',
     ],
     correctAnswer: 0,
     explanation:
@@ -475,10 +475,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 29,
     question: 'What information should be communicated when reporting a safety concern?',
     options: [
-      'Site supervisor, affected trades, and project coordinator',
+      'Only the name of the person who first noticed it',
       'Location, nature of hazard, potential consequences, and immediate actions taken',
-      'According to manufacturer instructions, protected from weather and damage',
-      'To ensure equipment receives adequate voltage for proper operation',
+      'Only the estimated cost of putting it right',
+      'Only the time at which the concern was raised',
     ],
     correctAnswer: 1,
     explanation:
@@ -491,10 +491,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 30,
     question: 'How should technical information be communicated to non-technical personnel?',
     options: [
-      'Safe zones, accessibility, other services, and future maintenance',
-      'Component layouts, clearance dimensions, and access requirements',
+      'Using as much technical terminology as possible',
+      'By referring them only to the relevant BS 7671 clauses',
       'In simple, clear language avoiding unnecessary jargon',
-      'Tool availability, suitability for task, and safety requirements',
+      'By providing the full schematic diagrams without explanation',
     ],
     correctAnswer: 2,
     explanation:
@@ -507,9 +507,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 31,
     question: 'What is the purpose of toolbox talks in construction?',
     options: [
-      'Quality, suitability, compliance with standards, and environmental conditions',
-      'Power requirements, security needs, environmental protection, and access requirements',
-      'Advance notification, coordination meetings, and progress updates',
+      'To formally discipline operatives for unsafe behaviour',
+      'To record the test results obtained that day',
+      'To order additional materials for the next phase',
       'To communicate safety information, work updates, and coordinate activities',
     ],
     correctAnswer: 3,
@@ -526,9 +526,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'Why is accurate record keeping important in electrical installations?',
     options: [
       'Legal compliance, future maintenance, and quality assurance',
-      'Specific installation methods, connections, and dimensional information',
-      'Personnel, tools, materials, and time requirements',
-      'According to manufacturer instructions, protected from weather and damage',
+      'It removes the need to carry out any inspection and testing',
+      'It allows the installer to charge a higher price for the work',
+      'It is only required when the client specifically asks for it',
     ],
     correctAnswer: 0,
     explanation:
@@ -541,10 +541,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 33,
     question: 'What information should be included on cable labels?',
     options: [
-      'To determine cable sizes and protective device ratings',
+      'The name of the operative who installed the cable',
       'Circuit designation, cable type, and destination',
-      'Drawings showing what was actually installed',
-      'Site supervisor, affected trades, and project coordinator',
+      'The date the cable was purchased and its supplier',
+      'The ambient temperature at the time of installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -557,10 +557,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 34,
     question: 'When should test certificates be completed?',
     options: [
-      'To provide earth fault protection',
-      'To highlight changes and modifications',
+      'Several weeks after the installation is energised',
+      'Only if a fault is later reported by the client',
       'During testing as results are obtained',
-      'To explain symbols and abbreviations used',
+      'Before any testing has actually been carried out',
     ],
     correctAnswer: 2,
     explanation:
@@ -573,9 +573,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 35,
     question: 'What is the purpose of maintaining installation logs?',
     options: [
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'With revision numbers, change descriptions, and authorisation signatures',
-      'Complete earthing system layout with conductor sizes and connection details',
+      'To replace the need for a formal test certificate',
+      'To record only the materials ordered for the project',
+      'To list the contact details of the site personnel',
       'To track work progress, record decisions, and document changes',
     ],
     correctAnswer: 3,
@@ -589,10 +589,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 36,
     question: 'How long should electrical installation records be retained?',
     options: [
-      'Duration of the installation plus reasonable period',
-      'Cable type, size, length, and circuit designation',
-      'The reduction factor applied to total connected load',
-      'Permit to work, hot work permits, and confined space permits',
+      'For the life of the installation plus a reasonable period',
+      'For exactly twelve months after completion',
+      'Only until the next periodic inspection is carried out',
+      'They do not need to be retained once handed over',
     ],
     correctAnswer: 0,
     explanation:
@@ -608,10 +608,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 37,
     question: 'What scale is typically used for electrical installation layout drawings?',
     options: [
-      '1:1',
+      '1:5',
       '1:50 or 1:100',
       '1:1000',
-      'No specific scale needed',
+      '1:2500',
     ],
     correctAnswer: 1,
     explanation:
@@ -625,9 +625,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'Which type of drawing shows cable containment routes in detail?',
     options: [
       'Single-line diagram',
-      'Miniature Circuit Breaker',
+      'Block diagram',
       'Installation route drawing',
-      'To provide earth fault protection',
+      'Distribution board schedule',
     ],
     correctAnswer: 2,
     explanation:
@@ -640,9 +640,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 39,
     question: 'What does a distribution board schedule show?',
     options: [
-      'Regular PAT testing, visual inspections, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintenance schedules',
-      'Work completed, problems encountered, materials used, and time spent',
-      'Standardised symbols, multi-language documentation, and cultural awareness',
+      'The maintenance and PAT testing schedule for site tools',
+      'The work completed, problems encountered, and time spent each day',
+      'The physical positions of luminaires on a floor plan',
       'Circuit details, protective device ratings, and cable information',
     ],
     correctAnswer: 3,
@@ -657,9 +657,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'Why are revision clouds used on electrical drawings?',
     options: [
       'To highlight changes and modifications',
-      'Circuit designation, cable type, and destination',
-      'Resistance, inductance, and capacitance',
-      'Clear, accurate, complete, and timely information',
+      'To indicate areas where cables must not be installed',
+      'To show the scale and orientation of the drawing',
+      'To mark the location of fire-stopping requirements',
     ],
     correctAnswer: 0,
     explanation:
@@ -672,10 +672,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 41,
     question: 'What information should be included in drawing title blocks?',
     options: [
-      'Drawings showing what was actually installed',
+      'A full list of every material used on the project',
       'Project name, drawing number, scale, date, and revision status',
-      'To ensure all exposed metalwork is at the same potential',
-      'Duration of the installation plus reasonable period',
+      'The test results recorded during commissioning',
+      'The risk assessment and method statement references',
     ],
     correctAnswer: 1,
     explanation:
@@ -706,9 +706,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 43,
     question: 'What is the purpose of load calculations in electrical design?',
     options: [
-      'Clear, accurate, complete, and timely information',
-      'To plan electrical work at appropriate times and avoid delays',
-      'Conduct site survey and risk assessment',
+      'To decide the colour of the cables to be installed',
+      'To set the price the client will be charged',
+      'To choose which manufacturer of accessories to use',
       'To determine cable sizes and protective device ratings',
     ],
     correctAnswer: 3,
@@ -723,9 +723,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What factors influence the selection of cable size for a circuit?',
     options: [
       'Current carrying capacity, voltage drop, and fault protection',
-      'Working at height, electrical hazards, manual handling, and site access',
-      'Drawings showing what was actually installed',
-      'During the planning phase before work begins',
+      'The colour and brand of the cable insulation',
+      'The number of operatives available to pull the cable',
+      'The time of year the installation is carried out',
     ],
     correctAnswer: 0,
     explanation:
@@ -738,10 +738,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 45,
     question: 'What is the purpose of circuit protective conductors?',
     options: [
-      'Miniature Circuit Breaker',
+      'To carry the normal load current of the circuit',
       'To provide earth fault protection',
-      'During testing as results are obtained',
-      'To highlight changes and modifications',
+      'To limit the voltage drop along the circuit',
+      'To reduce the prospective fault current at the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -754,14 +754,14 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 46,
     question: 'How is the size of protective conductors determined?',
     options: [
-      'Supply characteristics, impedance of supply path, and transformer ratings',
-      'Working at height, electrical hazards, manual handling, and site access',
+      'Always made the same size as the neutral conductor',
+      'Selected purely on the length of the circuit',
       'According to tables in BS 7671 based on line conductor size',
-      'Updated as work progresses with actual circuit details and any changes',
+      'Fixed at 1.0 mm² regardless of the line conductor',
     ],
     correctAnswer: 2,
     explanation:
-      'Protective conductor sizes are determined according to tables in BS 7671, based on the size and type of line conductor and installation method.',
+      'Protective conductor sizes are determined according to BS 7671 (either by selection from Table 54.7 or by the adiabatic calculation), based on the size and type of line conductor.',
     section: '5.2.4',
     difficulty: 'advanced',
     topic: 'CPC Sizing',
@@ -769,16 +769,16 @@ export const module5QuestionBank: QuestionBank[] = [
   {
     id: 47,
     question:
-      'What is the minimum cross-sectional area for a protective conductor in fixed installations?',
+      'What is the minimum cross-sectional area for a separate protective conductor that is mechanically protected?',
     options: [
       '1.0mm²',
       '4.0mm²',
+      '6.0mm²',
       '2.5mm²',
-      '1.5mm²',
     ],
     correctAnswer: 3,
     explanation:
-      'The minimum cross-sectional area for protective conductors in fixed installations is 1.5mm² according to BS 7671 regulations.',
+      'Where a protective conductor is separate (not part of a cable) and mechanically protected, BS 7671 requires a minimum cross-sectional area of 2.5mm²; if not mechanically protected the minimum is 4mm².',
     section: '5.2.5',
     difficulty: 'intermediate',
     topic: 'Minimum CPC Size',
@@ -791,9 +791,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What should be considered when planning work sequences?',
     options: [
       'Logical progression, safety requirements, and coordination with other trades',
-      'To show overall system architecture and major component relationships',
-      'Revision logs, change notifications, and distribution records',
-      'Working at height, electrical hazards, manual handling, and site access',
+      'Only the personal preferences of the lead electrician',
+      'Only the delivery dates of the ordered materials',
+      'Only the colour coding of the cables involved',
     ],
     correctAnswer: 0,
     explanation:
@@ -806,10 +806,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 49,
     question: 'Why is access planning important for electrical installations?',
     options: [
-      'Specific installation methods, connections, and dimensional information',
+      'To reduce the quantity of materials required',
       'To ensure safe and efficient installation and future maintenance',
-      'Complete specifications, quantities, delivery requirements, and quality standards',
-      'Cable type, size, length, and circuit designation',
+      'To allow the installation to bypass inspection and testing',
+      'To remove the need for a method statement',
     ],
     correctAnswer: 1,
     explanation:
@@ -822,10 +822,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 50,
     question: 'What information should site surveys capture?',
     options: [
-      'System readiness, testing sequences, witness requirements, and documentation completeness',
-      'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
+      'Only the names and roles of the site personnel',
+      'Only the final test results once work is complete',
       'Existing services, structural constraints, environmental conditions, and access requirements',
-      'Hierarchical filing systems, cross-referencing, and document control procedures',
+      'Only the file naming convention for the project records',
     ],
     correctAnswer: 2,
     explanation:
@@ -841,9 +841,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 51,
     question: 'What is a risk assessment matrix used for in electrical work planning?',
     options: [
-      'Tool availability, suitability for task, and safety requirements',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'Step-by-step procedures, safety measures, and required resources',
+      'To list the tools and equipment needed for the task',
+      'To record the sequence in which trades will work',
+      'To set out the step-by-step installation procedures',
       'To prioritise risks based on likelihood and severity',
     ],
     correctAnswer: 3,
@@ -858,9 +858,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'When should emergency procedures be planned for electrical installation work?',
     options: [
       'During the planning phase before work begins',
-      'Conduct site survey and risk assessment',
-      'Personnel, tools, materials, and time requirements',
-      'Load requirements and current demand',
+      'Only after an accident has already occurred',
+      'Only when handing the installation over to the client',
+      'Only if the client specifically requests them',
     ],
     correctAnswer: 0,
     explanation:
@@ -875,10 +875,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 53,
     question: 'What factors should be considered when selecting electrical materials?',
     options: [
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
+      'The colour and packaging of the products only',
       'Quality, suitability, compliance with standards, and environmental conditions',
-      'Revision logs, change notifications, and distribution records',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
+      'The popularity of the brand among other electricians',
+      'The delivery distance from the wholesaler only',
     ],
     correctAnswer: 1,
     explanation:
@@ -891,10 +891,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 54,
     question: 'Why is it important to verify material specifications before ordering?',
     options: [
-      'BS 7671 requirements for test certificates and inspection schedules',
-      'Cable route coordination, power supply planning, and interface requirements',
+      'To obtain the lowest possible price from the supplier',
+      'To reduce the time spent on the design stage',
       'To ensure materials meet design requirements and installation conditions',
-      'The reduction factor applied to total connected load',
+      'To avoid the need for any inspection on delivery',
     ],
     correctAnswer: 2,
     explanation:
@@ -907,9 +907,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 55,
     question: 'What should be included in a material requisition?',
     options: [
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
-      'Separation distances, interference prevention, and shared containment systems',
-      'Existing services, structural constraints, environmental conditions, and access requirements',
+      'The drawing symbols and scales used on the project',
+      'The separation distances between electrical and data cables',
+      'The existing services and structural constraints on site',
       'Complete specifications, quantities, delivery requirements, and quality standards',
     ],
     correctAnswer: 3,
@@ -928,10 +928,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 56,
     question: 'What is the purpose of electrical legends on drawings?',
     options: [
-      'To explain symbols and abbreviations used',
-      'During testing as results are obtained',
-      'To highlight changes and modifications',
-      'To provide earth fault protection',
+      'To explain the symbols and abbreviations used',
+      'To list the materials required for the installation',
+      'To highlight changes and modifications to the drawing',
+      'To record the test results obtained on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -949,10 +949,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 57,
     question: 'How should disagreements between trades be resolved on site?',
     options: [
-      'By arguing until one gives up',
+      'By whichever trade is furthest behind taking priority',
       'Through site supervision and formal procedures',
-      'By ignoring the other trade',
-      'By working around the problem',
+      'By the trade that arrived on site first deciding',
+      'By each trade altering the other\'s installed work',
     ],
     correctAnswer: 1,
     explanation:
@@ -967,10 +967,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 58,
     question: 'What makes verbal communication effective in electrical work?',
     options: [
-      'To list all required materials with quantities and specifications',
-      'Match communication style to technical knowledge and role requirements',
+      'Speaking quickly to save time on site',
+      'Using as much technical jargon as possible',
       'Clear speech, appropriate technical level, and confirmation of understanding',
-      'Site supervisor, affected trades, and project coordinator',
+      'Keeping instructions deliberately brief and informal',
     ],
     correctAnswer: 2,
     explanation:
@@ -985,9 +985,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 59,
     question: 'What information should be recorded in daily work logs?',
     options: [
-      'The reduction factor applied to total connected load',
-      'To prioritise risks based on likelihood and severity',
-      'Material verification, tool checks, safety equipment, and drawing reviews',
+      'Only the weather conditions for the day',
+      'Only the names of personnel present on site',
+      'Only the deliveries expected the following day',
       'Work completed, problems encountered, materials used, and time spent',
     ],
     correctAnswer: 3,
@@ -1003,9 +1003,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'Why should electrical panels be properly labelled?',
     options: [
       'For identification during maintenance, emergency response, and future modifications',
-      'Tool availability, suitability for task, and safety requirements',
-      'Reference common grid systems, coordinate levels, and align with building features',
-      'To provide visual representation of electrical systems and component locations',
+      'To improve the visual appearance of the installation',
+      'To satisfy the wholesaler\'s supply conditions',
+      'To reduce the cost of the distribution equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -1024,7 +1024,7 @@ export const module5QuestionBank: QuestionBank[] = [
       'Layout drawing',
       'Single-line diagram',
       'Detail drawing',
-      'Assembly drawing',
+      'Cable schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -1037,10 +1037,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 62,
     question: 'What information is typically shown on electrical site plans?',
     options: [
-      'Regular progress reports, milestone notifications, and problem alerts',
-      'To ensure materials meet design requirements and installation conditions',
+      'Internal socket and switch positions in each room',
+      'The wiring connections inside each distribution board',
       'External electrical supplies, distribution routes, and outdoor equipment locations',
-      'Independent verification, calibration checks, witness signatures, and accuracy reviews',
+      'The schedule of test results for the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -1053,9 +1053,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 63,
     question: 'How should electrical drawings be stored and managed?',
     options: [
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
+      'Loose on site so any operative can amend them freely',
+      'As single uncontrolled copies kept by the lead electrician',
+      'Printed once and never updated after issue',
       'In controlled document systems with version control and access records',
     ],
     correctAnswer: 3,
@@ -1070,9 +1070,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of equipment schedules in electrical drawings?',
     options: [
       'To list all electrical equipment with specifications and locations',
-      'Clear description, safety implications, recommended actions, and timeframes',
-      'Component layouts, clearance dimensions, and access requirements',
-      'Specify accuracy requirements, calibration status, and training needs',
+      'To describe the corrective actions for reported faults',
+      'To show the physical clearance dimensions of panels',
+      'To specify the calibration status of test instruments',
     ],
     correctAnswer: 0,
     explanation:
@@ -1085,10 +1085,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 65,
     question: 'What details should be shown on electrical detail drawings?',
     options: [
-      'Regular PAT testing, visual inspections, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintenance schedules',
+      'The maintenance and PAT testing schedule for tools',
       'Specific installation methods, connections, and dimensional information',
-      'For identification during maintenance, emergency response, and future modifications',
-      'Supply characteristics, impedance of supply path, and transformer ratings',
+      'The labelling required for emergency identification',
+      'The supply characteristics and earthing arrangement',
     ],
     correctAnswer: 1,
     explanation:
@@ -1101,10 +1101,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 66,
     question: 'How should modifications to electrical drawings be documented?',
     options: [
-      'Wind speed monitoring, precipitation alerts, temperature limits, and lightning detection',
-      'Insulation monitoring, first fault indication, and maintenance procedures',
+      'By verbally informing the site team of the change',
+      'By marking up a single copy kept on site only',
       'With revision numbers, change descriptions, and authorisation signatures',
-      'Duration of the installation plus reasonable period',
+      'By issuing a brand new drawing number for every change',
     ],
     correctAnswer: 2,
     explanation:
@@ -1121,7 +1121,7 @@ export const module5QuestionBank: QuestionBank[] = [
     options: [
       'P = V - I',
       'P = V ÷ I',
-      'P = V + I',
+      'P = I ÷ V',
       'P = V × I',
     ],
     correctAnswer: 3,
@@ -1135,14 +1135,14 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 68,
     question: 'How do you calculate the total resistance of resistors connected in series?',
     options: [
-      'Add all resistance values together',
-      'During the planning phase before work begins',
-      'Two parallel lines with S2',
-      'To explain symbols and abbreviations used',
+      'Add all the resistance values together',
+      'Take the reciprocal of the sum of reciprocals',
+      'Multiply all the resistance values together',
+      'Take the average of all the resistance values',
     ],
     correctAnswer: 0,
     explanation:
-      'For resistors in series, total resistance equals the sum of all individual resistance values (R_total = R1 + R2 + R3...).',
+      'For resistors in series, total resistance equals the sum of all individual resistance values (R_total = R1 + R2 + R3...). The reciprocal method applies to parallel resistors.',
     section: '5.2.2',
     difficulty: 'basic',
     topic: 'Series Circuits',
@@ -1151,10 +1151,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 69,
     question: 'What factors affect the impedance of an AC circuit?',
     options: [
-      'To explain symbols and abbreviations used',
+      'Conductor colour, cable length, and ambient temperature',
       'Resistance, inductance, and capacitance',
-      'During testing as results are obtained',
-      'Circuit designation, cable type, and destination',
+      'Insulation resistance, polarity, and continuity',
+      'Diversity, demand, and connected load',
     ],
     correctAnswer: 1,
     explanation:
@@ -1167,14 +1167,14 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 70,
     question: 'What is the purpose of protective bonding in electrical installations?',
     options: [
-      'Step-by-step procedures, safety measures, and required resources',
-      'To track work progress, record decisions, and document changes',
-      'To ensure all exposed metalwork is at the same potential',
-      'Component layouts, clearance dimensions, and access requirements',
+      'To carry the normal load current away from equipment',
+      'To increase the voltage available at the point of use',
+      'To ensure all exposed and extraneous metalwork is at the same potential',
+      'To reduce the prospective fault current at the origin',
     ],
     correctAnswer: 2,
     explanation:
-      'Protective bonding ensures all exposed conductive parts are at the same potential, preventing dangerous potential differences during fault conditions.',
+      'Protective bonding ensures all exposed and extraneous conductive parts are at the same potential, preventing dangerous potential differences during fault conditions.',
     section: '5.2.4',
     difficulty: 'intermediate',
     topic: 'Protective Bonding',
@@ -1183,9 +1183,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 71,
     question: 'How do you determine the appropriate discrimination between protective devices?',
     options: [
-      'Drawings showing what was actually installed',
-      'Work completed, problems encountered, materials used, and time spent',
-      'In simple, clear language avoiding unnecessary jargon',
+      'By making all devices the same rating throughout',
+      'By installing the largest device closest to the load',
+      'By selecting devices purely on physical size',
       'Based on operating characteristics and time-current curves',
     ],
     correctAnswer: 3,
@@ -1202,9 +1202,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What safety considerations should be included in electrical installation planning?',
     options: [
       'Working at height, electrical hazards, manual handling, and site access',
-      'Chronological filing, cross-indexing, retention schedules, and audit trails',
-      'Current carrying capacity, voltage drop, and fault protection',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
+      'Cable current-carrying capacity, voltage drop, and fault protection',
+      'Drawing scales, symbols, and revision control procedures',
+      'Material quantities, delivery dates, and storage requirements',
     ],
     correctAnswer: 0,
     explanation:
@@ -1218,10 +1218,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Why is it important to identify existing services before starting installation work?',
     options: [
-      'Load calculations, equipment selection, exclusion zones, and certified operators',
+      'To decide which protective devices to install',
       'To prevent damage and ensure safety during excavation and drilling',
-      'To ensure all exposed metalwork is at the same potential',
-      'Permit to work, hot work permits, and confined space permits',
+      'To calculate the diversity factor for the installation',
+      'To select the correct scale for the drawings',
     ],
     correctAnswer: 1,
     explanation:
@@ -1234,10 +1234,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 74,
     question: 'What permits might be required for electrical installation work?',
     options: [
-      'To provide visual representation of electrical systems and component locations',
-      'During the planning phase before work begins',
+      'Driving licences, parking permits, and site passes',
+      'Planning permission, building control, and warranty documents',
       'Permit to work, hot work permits, and confined space permits',
-      'Clear speech, appropriate technical level, and confirmation of understanding',
+      'Test certificates, inspection schedules, and minor works forms',
     ],
     correctAnswer: 2,
     explanation:
@@ -1250,9 +1250,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 75,
     question: 'How should environmental conditions be considered in installation planning?',
     options: [
-      'Version control, backup procedures, access control, and format standards',
-      'Simple language, visual aids, location-specific information, and emergency procedures',
-      'Circuit details, protective device ratings, and cable information',
+      'Assume standard indoor conditions apply everywhere',
+      'Select equipment based only on its current rating',
+      'Use the same IP rating throughout regardless of location',
       'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
     ],
     correctAnswer: 3,
@@ -1267,9 +1267,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What should be included in pre-installation checks?',
     options: [
       'Material verification, tool checks, safety equipment, and drawing reviews',
-      'Separation distances, shared containment planning, and interference prevention',
-      'Location, nature of hazard, potential consequences, and immediate actions taken',
-      'Quality, suitability, compliance with standards, and environmental conditions',
+      'Only a visual check that materials have been delivered',
+      'Only confirming the operatives have arrived on site',
+      'Only checking that the previous trade has finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -1284,10 +1284,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 77,
     question: 'What factors influence the selection of cable containment systems?',
     options: [
-      'For identification during maintenance, emergency response, and future modifications',
+      'The colour and finish of the containment only',
       'Environment, accessibility, cable loading, and future expansion needs',
-      'Structured sessions covering operation, safety, and basic maintenance',
-      'Match communication style to technical knowledge and role requirements',
+      'The training needs of the installation operatives',
+      'The communication style used between trades',
     ],
     correctAnswer: 1,
     explanation:
@@ -1300,10 +1300,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 78,
     question: 'How should electrical tools be maintained for safe operation?',
     options: [
-      "Quality, suitability, compliance with standards, and environmental conditions",
-      "Communication protocols, monitoring points, control interfaces, and data requirements",
+      "Only by replacing tools when they visibly fail",
+      "Only by storing them in a dry container",
       "Regular PAT testing, visual inspections, and manufacturer's maintenance schedules",
-      "According to tables in BS 7671 based on line conductor size",
+      "Only by calibrating them once on purchase",
     ],
     correctAnswer: 2,
     explanation:
@@ -1316,9 +1316,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 79,
     question: 'What information should be included in material certificates?',
     options: [
-      'External electrical supplies, distribution routes, and outdoor equipment locations',
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'At regular agreed intervals and when significant milestones are reached',
+      'The site address and distribution routes only',
+      'The risk assessment and PPE requirements only',
+      'The delivery date and intervals only',
       'Material specifications, test results, compliance standards, and batch numbers',
     ],
     correctAnswer: 3,
@@ -1333,9 +1333,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should waste materials be managed on electrical installation projects?',
     options: [
       'Segregated collection, recycling where possible, and proper disposal of hazardous waste',
-      'Updated as work progresses with actual circuit details and any changes',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'Power requirements, security needs, environmental protection, and access requirements',
+      'Mixed together and sent to a single general skip',
+      'Burned on site to reduce the volume removed',
+      'Left on site for the client to dispose of later',
     ],
     correctAnswer: 0,
     explanation:
@@ -1348,10 +1348,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 81,
     question: 'What specialist tools might be required for cable pulling operations?',
     options: [
-      'To ensure all exposed metalwork is at the same potential',
+      'Insulation resistance testers and earth loop testers',
       'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
-      'Communication protocols, monitoring points, control interfaces, and data requirements',
-      'Match communication style to technical knowledge and role requirements',
+      'Hand tools such as screwdrivers and side cutters only',
+      'Drawing equipment such as scales and revision stamps',
     ],
     correctAnswer: 1,
     explanation:
@@ -1366,10 +1366,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 82,
     question: 'How should electrical work be coordinated with HVAC installations?',
     options: [
-      'Reference common grid systems, coordinate levels, and align with building features',
-      'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
+      'By leaving the HVAC installer to provide all power supplies',
+      'By installing electrical containment inside the ductwork',
       'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'According to manufacturer instructions, protected from weather and damage',
+      'By completing all electrical work before HVAC is designed',
     ],
     correctAnswer: 2,
     explanation:
@@ -1383,9 +1383,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What information should be shared with structural engineers during electrical planning?',
     options: [
-      'Cable route coordination, power supply planning, and interface requirements',
-      'It relates to conductor and insulation materials and their thermal properties',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
+      'Only the total number of circuits in the installation',
+      'Only the colour coding used for the cables',
+      'Only the protective device ratings at the board',
       'Loading requirements, penetration needs, and support requirements',
     ],
     correctAnswer: 3,
@@ -1400,9 +1400,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical installations be coordinated with fire protection systems?',
     options: [
       "Ensure cables don't compromise fire barriers and coordinate emergency supplies",
-      "Assess reactive power requirements and select appropriate compensation equipment",
-      "Reference common grid systems, coordinate levels, and align with building features",
-      "To plan electrical work at appropriate times and avoid delays",
+      "Run all fire alarm cabling within the same containment as power",
+      "Leave fire-stopping to be completed only at handover",
+      "Disconnect fire protection systems while electrical work proceeds",
     ],
     correctAnswer: 0,
     explanation:
@@ -1415,10 +1415,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 85,
     question: 'What considerations apply when working near plumbing installations?',
     options: [
-      'For identification during maintenance, emergency response, and future modifications',
+      'Run electrical cables inside water pipes for protection',
       'Avoid water pipe damage, maintain separation distances, and coordinate penetrations',
-      'To ensure safe and efficient installation and future maintenance',
-      'Material verification, tool checks, safety equipment, and drawing reviews',
+      'Bond all electrical cables directly to the water pipes',
+      'Complete all electrical work before any pipework is fitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -1431,10 +1431,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 86,
     question: 'How should electrical work progress be communicated to project managers?',
     options: [
-      'Structured sessions covering operation, safety, and basic maintenance',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
+      'Only verbally at the end of each working day',
+      'Only when the project is fully complete',
       'Regular progress reports, milestone notifications, and problem alerts',
-      'Delivery notes, compliance certificates, test certificates, and handling instructions',
+      'Only when the project manager requests an update',
     ],
     correctAnswer: 2,
     explanation:
@@ -1449,9 +1449,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 87,
     question: 'What makes technical drawings effective for communication?',
     options: [
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'With revision numbers, change descriptions, and authorisation signatures',
-      'Site supervisor, affected trades, and project coordinator',
+      'As much fine detail as possible crammed onto one sheet',
+      'Non-standard symbols unique to each drawing',
+      'A single scale used for every type of drawing',
       'Clear symbols, appropriate scales, complete dimensions, and accurate details',
     ],
     correctAnswer: 3,
@@ -1466,9 +1466,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical faults be reported to clients?',
     options: [
       'Clear description, safety implications, recommended actions, and timeframes',
-      'Stop work and discuss solutions with relevant parties',
-      'Communication protocols, monitoring points, control interfaces, and data requirements',
-      'Quality, suitability, compliance with standards, and environmental conditions',
+      'Only a verbal mention to the client on site',
+      'Only the cost of putting the fault right',
+      'Only the name of the operative who found it',
     ],
     correctAnswer: 0,
     explanation:
@@ -1481,10 +1481,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 89,
     question: 'What information should be included in handover documentation?',
     options: [
-      'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
+      'Only the test results recorded during commissioning',
       'System descriptions, operating instructions, maintenance requirements, and emergency procedures',
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
+      'Only the cable routes and power supply arrangements',
+      'Only the drawing symbols and scales used',
     ],
     correctAnswer: 1,
     explanation:
@@ -1497,10 +1497,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 90,
     question: 'How should training be provided to end users of electrical systems?',
     options: [
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'BS 7671 requirements for test certificates and inspection schedules',
+      'By handing over the full set of technical drawings only',
+      'By referring users to the relevant BS 7671 clauses',
       'Structured sessions covering operation, safety, and basic maintenance',
-      'Show sizes, support spacing, and load capacity information',
+      'By leaving a copy of the test certificate on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1513,9 +1513,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 91,
     question: 'What communication methods are appropriate for different site personnel?',
     options: [
-      'Power requirements, security needs, environmental protection, and access requirements',
-      'Communication protocols, monitoring points, control interfaces, and data requirements',
-      'To show overall system architecture and major component relationships',
+      'Use the same highly technical briefing for everyone',
+      'Communicate only in writing to all personnel',
+      'Communicate only verbally to all personnel',
       'Match communication style to technical knowledge and role requirements',
     ],
     correctAnswer: 3,
@@ -1532,9 +1532,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What standards apply to electrical installation certificates?',
     options: [
       'BS 7671 requirements for test certificates and inspection schedules',
-      'Regular calibration schedules, certified procedures, and maintenance records',
-      'To provide visual representation of electrical systems and component locations',
-      'Cable type, size, length, and circuit designation',
+      'The calibration schedule of the test instruments used',
+      'The drawing symbols and scales applied on the project',
+      'The cable type, size, and length for each circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1547,10 +1547,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 93,
     question: 'How should circuit charts be maintained throughout installation?',
     options: [
-      'In simple, clear language avoiding unnecessary jargon',
+      'Completed once at the design stage and never amended',
       'Updated as work progresses with actual circuit details and any changes',
-      'Segregated collection, recycling where possible, and proper disposal of hazardous waste',
-      'To show overall system architecture and major component relationships',
+      'Filled in only after the installation is energised',
+      'Left blank until the periodic inspection is due',
     ],
     correctAnswer: 1,
     explanation:
@@ -1563,10 +1563,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 94,
     question: 'What information should be recorded for each electrical test performed?',
     options: [
-      'Location, nature of hazard, potential consequences, and immediate actions taken',
-      'Reference common grid systems, coordinate levels, and align with building features',
+      'Only the name of the person carrying out the test',
+      'Only the time of day the test was performed',
       'Test type, results, instruments used, environmental conditions, and acceptance criteria',
-      'To list all electrical equipment with specifications and locations',
+      'Only the make and model of the equipment tested',
     ],
     correctAnswer: 2,
     explanation:
@@ -1579,9 +1579,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 95,
     question: 'How should digital documentation be managed for electrical installations?',
     options: [
-      'Clear description, safety implications, recommended actions, and timeframes',
-      'Emergency lighting, fire alarm components, and electrical isolation points',
-      'The reduction factor applied to total connected load',
+      'Stored as a single copy on one person\'s device',
+      'Printed out and the digital files deleted',
+      'Shared freely with no access restrictions',
       'Version control, backup procedures, access control, and format standards',
     ],
     correctAnswer: 3,
@@ -1596,9 +1596,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What labelling is required for electrical distribution boards?',
     options: [
       'Circuit identification, voltage levels, and emergency contact information',
-      'Clear speech, appropriate technical level, and confirmation of understanding',
-      'Safe zones, accessibility, other services, and future maintenance',
-      'To provide visual representation of electrical systems and component locations',
+      'Only the name of the installer and the date',
+      'Only the manufacturer of the distribution board',
+      'Only the total connected load of the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -1614,10 +1614,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 97,
     question: 'What information should be included in electrical load schedules?',
     options: [
-      'At regular agreed intervals and when significant milestones are reached',
+      'The colour coding and brand of each item of equipment',
       'Equipment ratings, demand factors, diversity factors, and total connected load',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
+      'Only the total connected load with no breakdown by equipment',
+      'Only the protective device ratings with no load information',
     ],
     correctAnswer: 1,
     explanation:
@@ -1630,10 +1630,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 98,
     question: 'How should electrical drawing revisions be tracked and communicated?',
     options: [
-      'Cable type, size, length, and circuit designation',
-      'Updated as work progresses with actual circuit details and any changes',
+      'Verbally informing whoever is on site at the time',
+      'Issuing a completely new drawing number for every change',
       'Revision logs, change notifications, and distribution records',
-      'Personnel, tools, materials, and time requirements',
+      'Marking up a single uncontrolled copy kept on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1646,9 +1646,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 99,
     question: 'What details should be shown on electrical panel elevations?',
     options: [
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
-      'Reference common grid systems, coordinate levels, and align with building features',
-      'Supply characteristics, impedance of supply path, and transformer ratings',
+      'The zone classifications and IP ratings of the location',
+      'The architectural grid systems and floor levels',
+      'The supply characteristics and transformer ratings',
       'Component layouts, clearance dimensions, and access requirements',
     ],
     correctAnswer: 3,
@@ -1663,9 +1663,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical drawings coordinate with architectural drawings?',
     options: [
       'Reference common grid systems, coordinate levels, and align with building features',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'Building structure, environmental conditions, access requirements, and future maintenance needs',
-      'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
+      'Be drawn at a completely different scale to suit the electrician',
+      'Be kept entirely separate with no reference to the building layout',
+      'Show only the electrical equipment with no building outline',
     ],
     correctAnswer: 0,
     explanation:
@@ -1680,10 +1680,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 101,
     question: 'What factors determine the selection of protective device characteristics?',
     options: [
-      'Working at height, electrical hazards, manual handling, and site access',
+      'The colour and manufacturer of the protective device only',
       'Load characteristics, fault levels, discrimination requirements, and environmental conditions',
-      'External electrical supplies, distribution routes, and outdoor equipment locations',
-      'Structured sessions covering operation, safety, and basic maintenance',
+      'The physical size of the device and its mounting position only',
+      'The nominal supply voltage and frequency only',
     ],
     correctAnswer: 1,
     explanation:
@@ -1696,10 +1696,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 102,
     question: 'How do harmonic currents affect electrical system design?',
     options: [
-      'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
-      'Step-by-step procedures, safety measures, and required resources',
+      'They reduce the load current and allow smaller cables',
+      'They have no effect on a correctly designed system',
       'Increase neutral currents, affect cable sizing, and influence transformer selection',
-      'Cable type, installation method, environmental conditions, and load considerations',
+      'They only affect the colour coding of the conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -1712,9 +1712,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 103,
     question: 'What considerations apply to emergency lighting circuit design?',
     options: [
-      'Increase neutral currents, affect cable sizing, and influence transformer selection',
-      'Clear speech, appropriate technical level, and confirmation of understanding',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
+      'Sharing the same final circuit as general lighting',
+      'Using the same protective device as the normal supply',
+      'Omitting any means of periodic testing',
       'Supply separation, battery autonomy, testing provisions, and maintenance access',
     ],
     correctAnswer: 3,
@@ -1729,9 +1729,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should power factor correction be considered in electrical design?',
     options: [
       'Assess reactive power requirements and select appropriate compensation equipment',
-      'To provide visual representation of electrical systems and component locations',
-      'Regular calibration schedules, certified procedures, and maintenance records',
-      'Updated as work progresses with actual circuit details and any changes',
+      'Increase the supply voltage to all final circuits',
+      'Reduce the size of every protective conductor used',
+      'Remove all inductive loads from the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1744,10 +1744,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 105,
     question: 'What design considerations apply to IT systems (isolated terra)?',
     options: [
-      'Date stamps, location identification, work stage documentation, and quality evidence',
+      'Direct connection of the neutral point to earth at the source',
       'Insulation monitoring, first fault indication, and maintenance procedures',
-      'Ensure cables don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t compromise fire barriers and coordinate emergency supplies',
-      'Project name, drawing number, scale, date, and revision status',
+      'Automatic disconnection on the first earth fault as in TN systems',
+      'Elimination of the need for protective conductors throughout',
     ],
     correctAnswer: 1,
     explanation:
@@ -1762,10 +1762,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 106,
     question: 'How should lifting operations be planned for electrical installations?',
     options: [
-      'Segregated collection, recycling where possible, and proper disposal of hazardous waste',
-      'Regular PAT testing, visual inspections, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintenance schedules',
+      'Lifting the load as quickly as possible to save time',
+      'Allowing any available operative to operate the lifting equipment',
       'Load calculations, equipment selection, exclusion zones, and certified operators',
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
+      'Using the maximum rated capacity of the equipment on every lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -1778,9 +1778,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 107,
     question: 'What planning considerations apply to work in contaminated environments?',
     options: [
-      'Inspection stages, hold points, acceptance criteria, and responsible parties',
-      'Environment, accessibility, cable loading, and future expansion needs',
-      'Complete specifications, quantities, delivery requirements, and quality standards',
+      'Working without any additional protective equipment to save time',
+      'Relying on natural ventilation alone to clear contaminants',
+      'Treating the area as a normal site once visibly clean',
       'Contamination assessment, protective equipment, decontamination procedures, and waste disposal',
     ],
     correctAnswer: 3,
@@ -1795,9 +1795,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should emergency evacuation procedures be planned for electrical work areas?',
     options: [
       'Identify escape routes, assembly points, communication methods, and emergency contacts',
-      'Version control, backup procedures, access control, and format standards',
-      'System lifecycle, technology changes, regulatory updates, and archival requirements',
-      'Segregation requirements, containment systems, ventilation needs, and emergency procedures',
+      'Rely on personnel finding their own way out in an emergency',
+      'Plan evacuation only for the final commissioning phase',
+      'Use a single exit route regardless of the work location',
     ],
     correctAnswer: 0,
     explanation:
@@ -1810,10 +1810,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 109,
     question: 'What factors should be considered when planning work in heritage buildings?',
     options: [
-      'Separation distances, interference prevention, and shared containment systems',
+      'Using modern surface containment throughout to speed installation',
       'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
-      'System overviews, operational procedures, maintenance requirements, and emergency responses',
-      'Power requirements, security needs, environmental protection, and access requirements',
+      'Chasing freely into walls as in a standard new-build',
+      'Ignoring listed-building consent where the work is electrical',
     ],
     correctAnswer: 1,
     explanation:
@@ -1826,10 +1826,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 110,
     question: 'How should weather conditions be monitored during outdoor electrical work?',
     options: [
-      'Specify accuracy requirements, calibration status, and training needs',
-      'Work sequence, safety measures, resource requirements, and quality controls',
+      'Checking the forecast once at the start of the project only',
+      'Relying on operatives to judge conditions by eye only',
       'Wind speed monitoring, precipitation alerts, temperature limits, and lightning detection',
-      'To show overall system architecture and major component relationships',
+      'Monitoring temperature only and ignoring wind and rain',
     ],
     correctAnswer: 2,
     explanation:
@@ -1844,9 +1844,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 111,
     question: 'How should specialist test equipment be procured for electrical projects?',
     options: [
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'Project name, drawing number, scale, date, and revision status',
-      'Regular schedules, clear agendas, action item tracking, and documented outcomes',
+      'By choosing the cheapest available instrument',
+      'By using any general-purpose meter on site',
+      'By borrowing instruments without checking calibration',
       'Specify accuracy requirements, calibration status, and training needs',
     ],
     correctAnswer: 3,
@@ -1861,9 +1861,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What considerations apply to cable drum handling and storage?',
     options: [
       'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'Component layouts, clearance dimensions, and access requirements',
-      'Power requirements, security needs, environmental protection, and access requirements',
-      'Building structure, environmental conditions, access requirements, and future maintenance needs',
+      'Storing drums on their side to save floor space',
+      'Lifting drums manually regardless of their weight',
+      'Leaving drums unprotected outdoors in any weather',
     ],
     correctAnswer: 0,
     explanation:
@@ -1876,10 +1876,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 113,
     question: 'How should consumable materials be managed during electrical installations?',
     options: [
-      'Standardised symbols, multi-language documentation, and cultural awareness',
+      'Ordering one large batch at the start and not tracking use',
       'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
-      'With revision numbers, change descriptions, and authorisation signatures',
+      'Buying consumables only when they have run out completely',
+      'Leaving each operative to source their own consumables',
     ],
     correctAnswer: 1,
     explanation:
@@ -1893,10 +1893,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What factors influence the selection of temporary site facilities for electrical work?',
     options: [
-      'Ensure cables don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t compromise fire barriers and coordinate emergency supplies',
-      'Material specifications, test results, compliance standards, and batch numbers',
+      'Only the lowest hire cost of the facilities',
+      'Only the colour and appearance of the units',
       'Power requirements, security needs, environmental protection, and access requirements',
-      'Specific installation methods, connections, and dimensional information',
+      'Only the delivery distance from the hire company',
     ],
     correctAnswer: 2,
     explanation:
@@ -1909,9 +1909,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 115,
     question: 'How should hazardous material storage be planned for electrical installations?',
     options: [
-      'System readiness, testing sequences, witness requirements, and documentation completeness',
-      'It relates to conductor and insulation materials and their thermal properties',
-      'Identify escape routes, assembly points, communication methods, and emergency contacts',
+      'Storing all materials together to simplify stock-taking',
+      'Keeping hazardous materials in the main work area',
+      'Relying on packaging alone with no containment provision',
       'Segregation requirements, containment systems, ventilation needs, and emergency procedures',
     ],
     correctAnswer: 3,
@@ -1928,9 +1928,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical work be coordinated with lift installations?',
     options: [
       'Power supply coordination, control wiring routes, and safety circuit integration',
-      'Regular calibration schedules, certified procedures, and maintenance records',
-      'Logical progression, safety requirements, and coordination with other trades',
-      'To ensure materials meet design requirements and installation conditions',
+      'Leaving the lift installer to provide all power and control wiring',
+      'Completing all electrical work before the lift shaft is built',
+      'Sharing the lift safety circuits with general lighting circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -1943,10 +1943,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 117,
     question: 'What communication protocols should be established with security system installers?',
     options: [
-      'To ensure safety, coordinate work sequences, and prevent conflicts',
+      'Leaving the security installer to arrange their own supplies',
       'Cable route coordination, power supply planning, and interface requirements',
-      'Circuit details, protective device ratings, and cable information',
-      'In controlled document systems with version control and access records',
+      'Running security cabling in the same containment as power cables',
+      'Energising the security system before any interface is agreed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1959,10 +1959,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 118,
     question: 'How should electrical installations coordinate with building management systems?',
     options: [
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
+      'Connecting all field devices directly to the distribution board',
+      'Leaving the BMS contractor to define all electrical interfaces',
       'Communication protocols, monitoring points, control interfaces, and data requirements',
-      'Test type, results, instruments used, environmental conditions, and acceptance criteria',
+      'Wiring monitoring points only after the system is handed over',
     ],
     correctAnswer: 2,
     explanation:
@@ -1975,9 +1975,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 119,
     question: 'What considerations apply when working alongside telecommunications installers?',
     options: [
-      'For identification during maintenance, emergency response, and future modifications',
-      'Independent verification, calibration checks, witness signatures, and accuracy reviews',
-      'Site supervisor, affected trades, and project coordinator',
+      'Running telecoms and power cables together for tidiness',
+      'Bonding telecoms cabling directly to the power earthing system',
+      'Installing telecoms cables only after power is energised',
       'Separation distances, interference prevention, and shared containment systems',
     ],
     correctAnswer: 3,
@@ -1992,9 +1992,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should progress meetings be structured for multi-trade electrical projects?',
     options: [
       'Regular schedules, clear agendas, action item tracking, and documented outcomes',
-      'To communicate safety information, work updates, and coordinate activities',
-      'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
-      'Material specifications, test results, compliance standards, and batch numbers',
+      'Held only when a serious problem arises on site',
+      'Conducted informally with no written record kept',
+      'Attended only by the electrical contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -2009,10 +2009,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 121,
     question: 'How should complex electrical systems be explained to facility managers?',
     options: [
-      'Increase neutral currents, affect cable sizing, and influence transformer selection',
+      'By handing over the full schematic diagrams only',
       'System overviews, operational procedures, maintenance requirements, and emergency responses',
-      'To provide visual representation of electrical systems and component locations',
-      'Match communication style to technical knowledge and role requirements',
+      'By referring them to the relevant BS 7671 clauses',
+      'By providing only the schedule of test results',
     ],
     correctAnswer: 1,
     explanation:
@@ -2025,10 +2025,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 122,
     question: 'What information should be included in electrical system commissioning reports?',
     options: [
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'To provide visual representation of electrical systems and component locations',
+      'Only a statement that the system has been switched on',
+      'Only the names of the personnel who carried out the work',
       'Test results, performance verification, defect lists, and acceptance criteria',
-      'Complete specifications, quantities, delivery requirements, and quality standards',
+      'Only the date on which commissioning took place',
     ],
     correctAnswer: 2,
     explanation:
@@ -2041,9 +2041,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 123,
     question: 'How should electrical safety information be communicated to building occupants?',
     options: [
-      'Revision logs, change notifications, and distribution records',
-      'Work sequence, safety measures, resource requirements, and quality controls',
-      'To communicate safety information, work updates, and coordinate activities',
+      'Using detailed drawing revision logs and records',
+      'Providing the full method statement and risk assessment',
+      'Referring occupants to the relevant safety regulations',
       'Simple language, visual aids, location-specific information, and emergency procedures',
     ],
     correctAnswer: 3,
@@ -2058,9 +2058,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What communication methods are effective for international electrical projects?',
     options: [
       'Standardised symbols, multi-language documentation, and cultural awareness',
-      'Identify escape routes, assembly points, communication methods, and emergency contacts',
-      'To ensure all exposed metalwork is at the same potential',
-      'Material specifications, test results, compliance standards, and batch numbers',
+      'Communicating only in English and assuming it is understood',
+      'Using UK-only drawing symbols on all overseas documentation',
+      'Relying entirely on verbal instruction with no written records',
     ],
     correctAnswer: 0,
     explanation:
@@ -2073,10 +2073,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 125,
     question: 'How should electrical modifications be communicated during occupied building work?',
     options: [
-      'Regular calibration schedules, certified procedures, and maintenance records',
+      'Carrying out the work with no notice to occupants',
       'Advance notices, work schedules, disruption minimisation, and progress updates',
-      'Independent verification, calibration checks, witness signatures, and accuracy reviews',
-      'System descriptions, operating procedures, maintenance schedules, and troubleshooting guides',
+      'Informing occupants only after the modifications are complete',
+      'Relying on occupants to notice the changes themselves',
     ],
     correctAnswer: 1,
     explanation:
@@ -2092,10 +2092,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What digital formats are appropriate for long-term electrical documentation storage?',
     options: [
-      'Communication protocols, monitoring points, control interfaces, and data requirements',
-      'Stop work and discuss solutions with relevant parties',
+      'Proprietary formats tied to a single software vendor',
+      'Low-resolution scanned images stored once',
       'PDF/A format, standardised file naming, and regular format migration',
-      'Logical progression, safety requirements, and coordination with other trades',
+      'Editable working files with no version control',
     ],
     correctAnswer: 2,
     explanation:
@@ -2108,9 +2108,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 127,
     question: 'How should electrical testing documentation be validated?',
     options: [
-      'Regular PAT testing, visual inspections, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintenance schedules',
-      'Chronological filing, cross-indexing, retention schedules, and audit trails',
-      'Advance notices, work schedules, disruption minimisation, and progress updates',
+      'Accepting all recorded results without any further checks',
+      'Validating only the results that appear to be out of range',
+      'Relying solely on the operative who carried out the test',
       'Independent verification, calibration checks, witness signatures, and accuracy reviews',
     ],
     correctAnswer: 3,
@@ -2125,9 +2125,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What backup procedures should be established for electrical project documentation?',
     options: [
       'Multiple locations, regular schedules, recovery testing, and access security',
-      'Regular calibration schedules, certified procedures, and maintenance records',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
-      'Location, nature of hazard, potential consequences, and immediate actions taken',
+      'A single backup taken once at project completion',
+      'Storing all copies on one device kept on site',
+      'Relying on the original paper records only',
     ],
     correctAnswer: 0,
     explanation:
@@ -2140,10 +2140,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 129,
     question: 'How should electrical documentation be organised for large commercial projects?',
     options: [
-      'To track work progress, record decisions, and document changes',
+      'Kept as a single combined file for all disciplines',
       'Hierarchical filing systems, cross-referencing, and document control procedures',
-      'At regular agreed intervals and when significant milestones are reached',
-      'Tool availability, suitability for task, and safety requirements',
+      'Filed only at agreed milestone intervals',
+      'Organised solely by the operative who created them',
     ],
     correctAnswer: 1,
     explanation:
@@ -2157,10 +2157,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What information should be included in electrical system operation and maintenance manuals?',
     options: [
-      'Advance notification, coordination meetings, and progress updates',
-      'Version control, backup procedures, access control, and format standards',
+      'Only the test certificates issued at completion',
+      'Only the names and contact details of the installers',
       'System descriptions, operating procedures, maintenance schedules, and troubleshooting guides',
-      'Item descriptions, quantities, specifications, and delivery requirements',
+      'Only the as-built drawings with no written guidance',
     ],
     correctAnswer: 2,
     explanation:
@@ -2175,9 +2175,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 131,
     question: 'What standards govern electrical installation drawing symbols in the UK?',
     options: [
-      'BS 7671 only',
-      'International standards only',
-      'Company standards only',
+      'BS 7671 wiring regulations',
+      'BS 5839 fire detection standards',
+      'BS 1363 plug and socket standards',
       'BS EN 60617 and BS 3939',
     ],
     correctAnswer: 3,
@@ -2192,9 +2192,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical installations be shown on fire evacuation plans?',
     options: [
       'Emergency lighting, fire alarm components, and electrical isolation points',
-      'Regular progress reports, milestone notifications, and problem alerts',
-      'With revision numbers, change descriptions, and authorisation signatures',
-      'Installation method, ambient temperature, and grouping with other cables',
+      'Every socket-outlet and lighting point in the building',
+      'The full distribution board schedule for each floor',
+      'The cable sizes and circuit references for all circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -2207,10 +2207,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 133,
     question: 'What is the purpose of electrical system block diagrams?',
     options: [
-      'Power requirements, security needs, environmental protection, and access requirements',
+      'To show the exact wiring connections within each panel',
       'To show overall system architecture and major component relationships',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
-      'Service location surveys, clearance requirements, and coordination procedures',
+      'To show the physical positions of accessories on a plan',
+      'To list the materials and quantities for procurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -2223,10 +2223,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 134,
     question: 'How should earthing and bonding arrangements be shown on electrical drawings?',
     options: [
-      'Updated as work progresses with actual circuit details and any changes',
-      'To prevent damage and ensure safety during excavation and drilling',
+      'Only the position of the main earth terminal',
+      'Only the circuits that require RCD protection',
       'Complete earthing system layout with conductor sizes and connection details',
-      'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
+      'Only the supply earthing arrangement letters (TN, TT)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2239,9 +2239,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 135,
     question: 'What information should be included in electrical material take-off lists?',
     options: [
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'To track work progress, record decisions, and document changes',
-      'To show overall system architecture and major component relationships',
+      'Only the total cost of the materials with no quantities',
+      'Only a list of item names with no specifications',
+      'Only the supplier names and their delivery distances',
       'Item descriptions, quantities, specifications, and delivery requirements',
     ],
     correctAnswer: 3,
@@ -2256,9 +2256,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical containment systems be dimensioned on drawings?',
     options: [
       'Show sizes, support spacing, and load capacity information',
-      'Through site supervision and formal procedures',
-      'To ensure all exposed metalwork is at the same potential',
-      'Stop work and discuss solutions with relevant parties',
+      'Show only the start and end points of each run',
+      'Show only the colour of the containment used',
+      'Show only the manufacturer of the containment',
     ],
     correctAnswer: 0,
     explanation:
@@ -2274,10 +2274,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What factors determine the prospective fault current at any point in an electrical installation?',
     options: [
-      'To provide visual representation of electrical systems and component locations',
+      'The colour and length of the final circuit cables',
       'Supply characteristics, impedance of supply path, and transformer ratings',
-      'For identification during maintenance, emergency response, and future modifications',
-      'Version control, backup procedures, access control, and format standards',
+      'The number of accessories connected to the circuit',
+      'The ambient temperature at the point of measurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -2290,10 +2290,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 138,
     question: 'How do derating factors affect cable current-carrying capacity calculations?',
     options: [
-      'Item descriptions, quantities, specifications, and delivery requirements',
-      'To ensure equipment receives adequate voltage for proper operation',
+      'They are added to the tabulated current rating',
+      'They are ignored for cables installed in free air',
       'Multiply tabulated values by applicable derating factors for actual conditions',
-      'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
+      'They only apply to the voltage drop calculation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2306,9 +2306,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 139,
     question: "What is the significance of the 'k' factor in protective conductor sizing?",
     options: [
-      'To track work progress, record decisions, and document changes',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
+      'It is the diversity factor applied to the total load',
+      'It is the rating factor for grouping cables together',
+      'It is the multiplier used to calculate voltage drop',
       'It relates to conductor and insulation materials and their thermal properties',
     ],
     correctAnswer: 3,
@@ -2323,9 +2323,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should ring final circuit design be approached?',
     options: [
       'Consider load distribution, loop impedance, and cable routing for balanced loading',
-      'Work sequence, safety measures, resource requirements, and quality controls',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
-      'Updated as work progresses with actual circuit details and any changes',
+      'Connect both ends of the ring to separate distribution boards',
+      'Use a different cable size for each leg of the ring',
+      'Protect the ring with the largest available device',
     ],
     correctAnswer: 0,
     explanation:
@@ -2339,10 +2339,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What design considerations apply to electrical installations in swimming pool areas?',
     options: [
-      'To prevent conflicts, ensure safety, and maintain project schedule',
+      'Standard IP20 accessories throughout the location',
       'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
-      'Equipment ratings, demand factors, diversity factors, and total connected load',
-      'Revision logs, change notifications, and distribution records',
+      'Equipment ratings, demand factors, and total connected load',
+      'Drawing revision logs and change notification records',
     ],
     correctAnswer: 1,
     explanation:
@@ -2359,10 +2359,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 142,
     question: 'What safety measures should be implemented when planning work on energised systems?',
     options: [
-      'Provides evidence of compliance, supports warranty claims, and enables defect tracking',
-      'Calculate pulling tensions, plan intermediate pull points, and select appropriate lubricants',
+      'Working alone so fewer people are exposed to the hazard',
+      'Relying on rubber-soled footwear as the only precaution',
       'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'Service location surveys, clearance requirements, and coordination procedures',
+      'Treating live working as routine with no special controls',
     ],
     correctAnswer: 2,
     explanation:
@@ -2375,9 +2375,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 143,
     question: 'How should cable pulling operations be planned for long cable runs?',
     options: [
-      'Regular calibration schedules, certified procedures, and maintenance records',
-      'To list all electrical equipment with specifications and locations',
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
+      'Pull the cable as quickly as possible to save time',
+      'Use the maximum possible tension to speed installation',
+      'Avoid any lubricant to keep the cable clean',
       'Calculate pulling tensions, plan intermediate pull points, and select appropriate lubricants',
     ],
     correctAnswer: 3,
@@ -2393,9 +2393,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'What documentation should accompany material deliveries to electrical installation sites?',
     options: [
       'Delivery notes, compliance certificates, test certificates, and handling instructions',
-      'Tool availability, suitability for task, and safety requirements',
-      'Weight limits, rotation direction, environmental protection, and handling equipment',
-      'Updated as work progresses with actual circuit details and any changes',
+      'Only a verbal confirmation from the driver',
+      'Only the installation drawings for the project',
+      'Only the risk assessment for the delivery vehicle',
     ],
     correctAnswer: 0,
     explanation:
@@ -2408,10 +2408,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 145,
     question: 'How should electrical installation quality be monitored during construction?',
     options: [
-      'Standardised symbols, multi-language documentation, and cultural awareness',
+      'By inspecting only the finished installation at handover',
       'Regular inspections, staged testing, compliance checks, and documented reviews',
-      'Load characteristics, fault levels, discrimination requirements, and environmental conditions',
-      'Work sequence, safety measures, resource requirements, and quality controls',
+      'By relying on the client to report any defects',
+      'By testing only the circuits that have failed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2425,10 +2425,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What factors should be considered when coordinating electrical work with building commissioning?',
     options: [
-      'Clear description, safety implications, recommended actions, and timeframes',
-      'Load characteristics, fault levels, discrimination requirements, and environmental conditions',
+      'Energising every circuit before any testing is carried out',
+      'Commissioning each system in isolation with no shared schedule',
       'System readiness, testing sequences, witness requirements, and documentation completeness',
-      'Identify escape routes, assembly points, communication methods, and emergency contacts',
+      'Leaving all commissioning until after the building is occupied',
     ],
     correctAnswer: 2,
     explanation:
@@ -2443,9 +2443,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 147,
     question: 'How should electrical design changes be communicated during construction?',
     options: [
-      'Version control, backup procedures, access control, and format standards',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'Clear symbols, appropriate scales, complete dimensions, and accurate details',
+      'Verbally on site with no written record',
+      'Only by the operative who notices the change',
+      'By marking up a single drawing kept on site',
       'Formal change notifications, updated drawings, impact assessments, and approval records',
     ],
     correctAnswer: 3,
@@ -2461,9 +2461,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'What information should be included in electrical installation inspection schedules?',
     options: [
       'Inspection stages, hold points, acceptance criteria, and responsible parties',
-      'Permit to work, hot work permits, and confined space permits',
-      'Quality, suitability, compliance with standards, and environmental conditions',
-      'To ensure safe and efficient installation and future maintenance',
+      'Only the date of the final inspection',
+      'Only the name of the person carrying out inspections',
+      'Only a single inspection carried out at handover',
     ],
     correctAnswer: 0,
     explanation:
@@ -2476,10 +2476,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 149,
     question: 'How should electrical installation records be organised for regulatory compliance?',
     options: [
-      'Specify accuracy requirements, calibration status, and training needs',
+      'Storing all records loosely with no filing system',
       'Chronological filing, cross-indexing, retention schedules, and audit trails',
-      'Service location surveys, clearance requirements, and coordination procedures',
-      'Location, nature of hazard, potential consequences, and immediate actions taken',
+      'Keeping only the most recent record and discarding older ones',
+      'Filing records by operative name with no cross-referencing',
     ],
     correctAnswer: 1,
     explanation:
@@ -2492,10 +2492,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 150,
     question: 'What role does electrical installation documentation play in building warranties?',
     options: [
-      'Installation method, ambient temperature, and grouping with other cables',
-      'For identification during maintenance, emergency response, and future modifications',
+      'It has no bearing on any warranty arrangements',
+      'It is only relevant to the original installer, not the client',
       'Provides evidence of compliance, supports warranty claims, and enables defect tracking',
-      'Hierarchical filing systems, cross-referencing, and document control procedures',
+      'It only matters if a dispute reaches a court',
     ],
     correctAnswer: 2,
     explanation:
@@ -2512,9 +2512,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 151,
     question: 'What are the key elements of an electrical installation method statement?',
     options: [
-      'To ensure safe and efficient installation and future maintenance',
-      'Material specifications, test results, compliance standards, and batch numbers',
-      'Based on operating characteristics and time-current curves',
+      'The future maintenance and access requirements',
+      'The material test results and batch numbers',
+      'The time-current curves of the protective devices',
       'Work sequence, safety measures, resource requirements, and quality controls',
     ],
     correctAnswer: 3,
@@ -2529,9 +2529,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'How should electrical circuits be identified during installation planning?',
     options: [
       'Unique circuit references, load descriptions, and protective device coordination',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
-      'Regular schedules, clear agendas, action item tracking, and documented outcomes',
-      'System lifecycle, technology changes, regulatory updates, and archival requirements',
+      'Numbering circuits only once the installation is complete',
+      'Using the same reference for every circuit on a board',
+      'Identifying circuits by cable colour alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -2544,10 +2544,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 153,
     question: 'What factors influence the selection of electrical installation methods?',
     options: [
-      'Regular PAT testing, visual inspections, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintenance schedules',
+      'Only the personal preference of the lead electrician',
       'Building structure, environmental conditions, access requirements, and future maintenance needs',
-      'Calculate pulling tensions, plan intermediate pull points, and select appropriate lubricants',
-      'Environment, accessibility, cable loading, and future expansion needs',
+      'Only the shortest cable route between two points',
+      'Only the colour and brand of the cable to be used',
     ],
     correctAnswer: 1,
     explanation:
@@ -2560,10 +2560,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 154,
     question: 'How should electrical testing equipment be calibrated and maintained?',
     options: [
-      'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
-      'Circuit details, protective device ratings, and cable information',
+      'By calibrating instruments only once when they are purchased',
+      'By assuming new instruments never need recalibration',
       'Regular calibration schedules, certified procedures, and maintenance records',
-      'It relates to conductor and insulation materials and their thermal properties',
+      'By relying on a visual check of the instrument alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -2576,9 +2576,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 155,
     question: 'What communication is required when electrical work affects other building systems?',
     options: [
-      'Regular progress reports, milestone notifications, and problem alerts',
-      'Inspection stages, hold points, acceptance criteria, and responsible parties',
-      'Specify accuracy requirements, calibration status, and training needs',
+      'No communication unless a problem actually occurs',
+      'A single notification given only at project handover',
+      'Informing only the electrical team and no other trades',
       'Advance notification, coordination meetings, and progress updates',
     ],
     correctAnswer: 3,
@@ -2597,9 +2597,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What should be included in electrical installation progress photographs?',
     options: [
       'Date stamps, location identification, work stage documentation, and quality evidence',
-      'To provide visual representation of electrical systems and component locations',
-      'Formal change notifications, updated drawings, impact assessments, and approval records',
-      'Regular progress reports, milestone notifications, and problem alerts',
+      'Only the finished decorative appearance of the rooms',
+      'Only images taken on the final day of the project',
+      'Only photographs of the delivery vehicles arriving',
     ],
     correctAnswer: 0,
     explanation:
@@ -2612,10 +2612,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 157,
     question: 'How should electrical installation defects be recorded and tracked?',
     options: [
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
+      'Recording defects verbally with no written register',
       'Defect registers, severity classifications, corrective actions, and completion verification',
-      'To prevent conflicts, ensure safety, and maintain project schedule',
-      'To provide visual representation of electrical systems and component locations',
+      'Logging only defects that the client happens to notice',
+      'Noting defects but not tracking their rectification',
     ],
     correctAnswer: 1,
     explanation:
@@ -2628,10 +2628,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 158,
     question: 'What factors determine the spacing of cable supports in electrical installations?',
     options: [
-      'To prevent damage and ensure safety during excavation and drilling',
-      'Existing services, structural constraints, environmental conditions, and access requirements',
+      'The colour and manufacturer of the cable only',
+      'The total length of the cable run only',
       'Cable type, installation method, environmental conditions, and load considerations',
-      'Component layouts, clearance dimensions, and access requirements',
+      'The nominal voltage of the circuit only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2644,9 +2644,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 159,
     question: 'How should electrical work be planned around existing services?',
     options: [
-      'Supply characteristics, impedance of supply path, and transformer ratings',
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'Work completed, problems encountered, materials used, and time spent',
+      'By assuming the position of all existing services',
+      'By isolating the entire building before starting',
+      'By recording the work completed in a daily log',
       'Service location surveys, clearance requirements, and coordination procedures',
     ],
     correctAnswer: 3,
@@ -2661,9 +2661,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What resource planning is required for electrical testing and commissioning?',
     options: [
       'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'Complete specifications, quantities, delivery requirements, and quality standards',
-      'Assess reactive power requirements and select appropriate compensation equipment',
+      'Risk assessments, permits, and personal protective equipment only',
+      'Material specifications, quantities, and delivery requirements only',
+      'Reactive power assessment and compensation equipment only',
     ],
     correctAnswer: 0,
     explanation:
@@ -2681,10 +2681,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 161,
     question: 'What coordination is required between electrical and data cabling installations?',
     options: [
-      'Standardised symbols, multi-language documentation, and cultural awareness',
+      'Running data and power cables together in one containment',
       'Separation distances, shared containment planning, and interference prevention',
-      'Advance notices, work schedules, disruption minimisation, and progress updates',
-      'Load calculations, equipment selection, exclusion zones, and certified operators',
+      'Bonding data cabling directly to the power earthing system',
+      'Installing data cabling only after power circuits are energised',
     ],
     correctAnswer: 1,
     explanation:
@@ -2703,10 +2703,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What long-term considerations should influence electrical installation documentation strategies?',
     options: [
-      'Load characteristics, fault levels, discrimination requirements, and environmental conditions',
-      'Logical progression, safety requirements, and coordination with other trades',
+      'Only the format preferred by the original installer',
+      'Only the cost of storing the documentation',
       'System lifecycle, technology changes, regulatory updates, and archival requirements',
-      'Power requirements, security needs, environmental protection, and access requirements',
+      'Only the documentation needed at the point of handover',
     ],
     correctAnswer: 2,
     explanation:

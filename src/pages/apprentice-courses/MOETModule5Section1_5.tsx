@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of signal conditioning in an instrumentation system?',
     options: [
       'To convert, amplify, filter or linearise raw sensor signals into a form suitable for the control system',
-      'Anyone — AEDs are designed to be used by members of the public with no training',
-      'The total current entering the node equals the total current leaving the node',
-      'Do a brief review of key topics, prepare materials for the morning, then get a full night\\\'s sleep',
+      'To supply mains power to the field sensors and control valves',
+      'To physically protect the sensor from process temperature and pressure',
+      'To store historical process data for later trend analysis',
     ],
     correctIndex: 0,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'Why does the 4-20 mA standard use 4 mA as the zero point rather than 0 mA?',
     options: [
       'So that a broken wire (0 mA) can be distinguished from a genuine zero reading (4 mA)',
-      'To provide independent verification that systems meet specification',
-      'To prevent faults from spreading between systems during fire',
-      'To identify the root causes of the injury so that corrective actions can prevent recurrence',
+      'Because analogue input cards cannot read currents below 4 mA accurately',
+      'To limit the loop current to a level that is safe to touch',
+      'Because 4 mA is the minimum current needed to deflect an analogue meter',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'noise-filtering',
     question: 'A low-pass filter in a signal conditioning circuit is used to:',
     options: [
-      'Lighting to enable normal activities during supply failure',
-      'At least 20 minutes continuously, ensuring water flows away from the unaffected eye',
+      'Amplify weak signals before they reach the control system',
+      'Block the slow process signal while passing fast transients',
       'Remove high-frequency electrical noise while preserving the slower process signal',
-      'To ensure safe and efficient installation and future maintenance',
+      'Convert a millivolt signal into a 4-20 mA current loop',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'galvanic-isolation',
     question: 'Galvanic isolation in signal conditioning is important because it:',
     options: [
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
+      'Boosts the signal level so it can travel over longer cable runs',
       'Prevents earth loops and protects sensitive equipment by electrically separating circuits',
-      'Assess temperature, humidity, corrosive atmospheres, and IP protection requirements',
-      'For high-risk work, especially on HV systems or in industrial environments',
+      'Linearises non-linear sensor outputs such as thermocouples',
+      'Filters out 50 Hz mains hum from the measurement signal',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Signal conditioning is best described as:',
     options: [
-      'Test results, faults, repairs, replacements, and inspections',
+      'The physical mounting and protection of sensors in the field',
       'The processing of raw sensor signals to make them suitable for the control system',
-      'Additional protection against electric shock without requiring earthing',
-      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
+      'The wiring of the mains power supply to instrument cabinets',
+      'The calibration of the control system display against a reference',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'A thermocouple produces a signal in the range of:',
     options: [
-      'Verifying cause and effect relationships with other systems',
-      'Section 2(2)(a) - safe plant and systems of work',
-      'Because natural light distribution varies across the space',
+      'Volts (typically 0-10 V depending on type)',
+      'Amps (typically 4-20 mA depending on type)',
+      'Ohms (resistance changing with temperature)',
       'Millivolts (typically 0-50 mV depending on type)',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What is the purpose of linearisation in signal conditioning?',
     options: [
       'To correct for non-linear sensor characteristics so the output is proportional to the measured variable',
-      'The power supply to the transmitter — the transmitter operates from the loop current',
-      'The sensor output is in millivolts and the PLC input requires a 4-20 mA signal',
-      'Digital communication to be superimposed on a standard 4-20 mA signal without affecting the analogue reading',
+      'To boost a weak millivolt signal up to a usable voltage level',
+      'To electrically separate the field wiring from the control system',
+      'To remove high-frequency electrical noise from the signal',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'An instrumentation amplifier is preferred over a standard op-amp in signal conditioning because:',
     options: [
-      'To correct for non-linear sensor characteristics so the output is proportional to the measured variable',
+      'It can supply the loop power directly to two-wire transmitters',
       'It provides high common-mode rejection, high input impedance and precise differential gain',
-      'The power supply to the transmitter — the transmitter operates from the loop current',
-      'The sensor output is in millivolts and the PLC input requires a 4-20 mA signal',
+      'It converts the analogue signal into a digital output automatically',
+      'It is cheaper and uses fewer components than a single op-amp',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'In a two-wire 4-20 mA transmitter, the signal wire also carries:',
     options: [
-      'Digital communication to be superimposed on a standard 4-20 mA signal without affecting the analogue reading',
-      'The sensor output is in millivolts and the PLC input requires a 4-20 mA signal',
+      'A separate earth-fault monitoring current for the loop',
+      'A second analogue signal representing a backup variable',
       'The power supply to the transmitter — the transmitter operates from the loop current',
-      'To correct for non-linear sensor characteristics so the output is proportional to the measured variable',
+      'The 50 Hz mains reference used to synchronise the reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'Electromagnetic interference (EMI) in signal cables can be reduced by:',
     options: [
-      'The power supply to the transmitter — the transmitter operates from the loop current',
-      'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
-      'Limit the energy that can enter the hazardous area to prevent ignition of flammable atmospheres',
+      'Running the signal cable alongside power cables in the same tray',
+      'Earthing the cable screen at both ends to drain interference',
+      'Increasing the loop current to override the induced noise',
       'Using screened/shielded twisted-pair cables with the screen earthed at one end',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'A signal isolator (barrier) is commonly used in hazardous area installations to:',
     options: [
       'Limit the energy that can enter the hazardous area to prevent ignition of flammable atmospheres',
-      'Digital communication to be superimposed on a standard 4-20 mA signal without affecting the analogue reading',
-      'It provides high common-mode rejection, high input impedance and precise differential gain',
-      'The power supply to the transmitter — the transmitter operates from the loop current',
+      'Increase the loop voltage so the signal can travel further',
+      'Convert the 4-20 mA signal into a 0-10 V output for display',
+      'Provide the cold junction compensation for thermocouples',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'Cold junction compensation in a thermocouple circuit is necessary because:',
     options: [
-      'To correct for non-linear sensor characteristics so the output is proportional to the measured variable',
+      'The thermocouple wire resistance changes with cable length',
       'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
-      'Digital communication to be superimposed on a standard 4-20 mA signal without affecting the analogue reading',
-      'The sensor output is in millivolts and the PLC input requires a 4-20 mA signal',
+      'The thermocouple output must be inverted before the control system can read it',
+      'The hot junction freezes at low process temperatures and stops producing an EMF',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'A voltage-to-current converter is used when:',
     options: [
-      'Using screened/shielded twisted-pair cables with the screen earthed at one end',
-      'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
+      'A digital signal needs to be superimposed on the 4-20 mA loop',
+      'The field wiring must be galvanically isolated from the control system',
       'The sensor output is in millivolts and the PLC input requires a 4-20 mA signal',
-      'It provides high common-mode rejection, high input impedance and precise differential gain',
+      'A non-linear sensor output needs to be corrected to a linear scale',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'The HART protocol allows:',
     options: [
-      'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
-      'It provides high common-mode rejection, high input impedance and precise differential gain',
-      'Correct supply voltage, proper earthing, screened cables separated from power, and calibration verified after installation',
+      'The 4-20 mA range to be extended up to 0-50 mA for greater resolution',
+      'Several transmitters to share a single analogue input by time-division',
+      'Mains power to be carried over the same pair as the signal',
       'Digital communication to be superimposed on a standard 4-20 mA signal without affecting the analogue reading',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
       'When installing signal conditioning equipment, the maintenance technician should ensure:',
     options: [
       'Correct supply voltage, proper earthing, screened cables separated from power, and calibration verified after installation',
-      'It provides high common-mode rejection, high input impedance and precise differential gain',
-      'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
-      'Limit the energy that can enter the hazardous area to prevent ignition of flammable atmospheres',
+      'Signal cables are bundled with power cables to save containment space',
+      'The cable screen is left unconnected at both ends to avoid loops',
+      'Calibration is carried out only at the next annual maintenance shutdown',
     ],
     correctAnswer: 0,
     explanation:

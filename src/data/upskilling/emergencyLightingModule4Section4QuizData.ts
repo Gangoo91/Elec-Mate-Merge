@@ -3,10 +3,10 @@ export const circuitSegregationQuizQuestions = [
     id: 1,
     question: 'Why must emergency lighting circuits be segregated from normal power circuits?',
     options: [
-      'Emergency lighting cables were run in plastic trunking shared with data and general power cables',
+      'To reduce voltage drop on the emergency lighting final circuits',
       'To prevent faults in normal circuits from disabling emergency lighting and ensure fire integrity',
-      'To ensure safe testing, maintenance, and prevent unauthorised connections',
-      'Plastic trunking will fail under fire conditions, compromising circuit integrity',
+      'To allow a smaller cable size to be used for the emergency circuits',
+      'To avoid electromagnetic interference between lighting and data cabling',
     ],
     correctAnswer: 1,
     explanation:
@@ -15,16 +15,16 @@ export const circuitSegregationQuizQuestions = [
   {
     id: 2,
     question:
-      'What is the minimum survival time requirement for enhanced fire-resistant cables (Category F1) under BS EN 50200?',
+      'Under the BS EN 50200 fire-resistance test, what survival time does the PH120 classification represent for small cables used in emergency circuits?',
     options: [
-      '30 minutes at 650°C',
-      '60 minutes at 750°C',
-      '120 minutes at 842°C',
-      '180 minutes at 950°C',
+      '15 minutes',
+      '30 minutes',
+      '90 minutes',
+      '120 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Enhanced fire-resistant cables (Category F1) must survive up to 120 minutes at 842°C under BS EN 50200 test conditions. They must also withstand mechanical shock and water spray during fire exposure to maintain circuit integrity throughout the emergency duration.',
+      'BS EN 50200 classifies small emergency-circuit cables by survival time under a defined flame (PH15, PH30, PH60, PH90 and PH120); the PH120 rating denotes circuit integrity maintained for 120 minutes. The test also subjects the cable to mechanical shock during fire exposure.',
   },
   {
     id: 3,

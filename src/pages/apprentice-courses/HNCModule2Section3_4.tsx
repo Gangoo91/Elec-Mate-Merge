@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     id: 'dehumidification',
     question: 'What must happen for dehumidification to occur at a cooling coil?',
     options: [
-      "That the switch operates and makes/breaks the circuit",
-      "Waste and Resources Action Programme",
-      "To minimise neutral current and prevent overloading",
+      "Coil surface must be above the air's dry bulb temperature",
+      "Coil surface must be exactly at the air's wet bulb temperature",
+      "Air must be heated before it reaches the coil",
       "Coil surface must be below the air's dew point",
     ],
     correctIndex: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary advantage of adiabatic (evaporative) humidification?',
     options: [
-      'Vertical line upward (nearly)',
+      'It can humidify air well beyond the saturation point',
       'No energy input required beyond fan power',
-      'It heats the air while removing moisture',
-      'On a straight line between the two states',
+      'It heats the air while adding moisture',
+      'It removes moisture and adds heat at the same time',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     question:
       'Chemical dehumidification (desiccant) differs from cooling coil dehumidification because:',
     options: [
-      'On a straight line between the two states',
-      'Vertical line upward (nearly)',
+      'It requires the air to be cooled below its dew point first',
+      'It produces condensate that must be drained from the unit',
       'It heats the air while removing moisture',
-      'Raise temperature without adding moisture',
+      'It only works on air that is already fully saturated',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'Reheat after cooling coil dehumidification is used to:',
     options: [
-      'No energy input required beyond fan power',
-      'Horizontal movement to the left',
-      'Vertical line upward (nearly)',
+      'Remove further moisture after the cooling coil',
+      'Increase the relative humidity of the supply air',
+      'Cool the air further before it enters the space',
       'Raise temperature without adding moisture',
     ],
     correctAnswer: 3,

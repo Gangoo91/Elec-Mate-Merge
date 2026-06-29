@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does PEEP stand for in the context of fire safety?',
     options: [
-      'Public Emergency Escape Procedure',
       'Personal Emergency Evacuation Plan',
+      'Public Emergency Escape Procedure',
       'Premises Evacuation and Exit Protocol',
       'Personnel Emergency Equipment Plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PEEP stands for Personal Emergency Evacuation Plan. It is an individual, tailored evacuation plan developed for any person who cannot self-evacuate without assistance. The plan details the person's specific needs, the assistance required, the designated evacuation route, assigned buddies, any equipment needed, and the location of refuges. The key word is 'Personal' — each PEEP is unique to the individual and must take into account their specific impairment, the building they work in, and the resources available.",
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'What is the minimum number of buddies that should be assigned to each person with a PEEP?',
     options: [
       '1 buddy',
-      '2 buddies',
       '3 buddies',
+      '2 buddies',
       "It depends entirely on the person's needs with no minimum",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A minimum of 2 buddies should be assigned to each person with a PEEP. This ensures continuity of cover: if one buddy is absent due to holiday, sickness, a different shift pattern, or working in a different area of the building, there is always at least one trained buddy available. Both buddies must be trained on the individual's specific needs, the agreed evacuation route, and any equipment they may need to use. In large organisations or where the individual requires significant physical assistance, 3 or more buddies may be appropriate.",
   },
@@ -142,11 +142,11 @@ const quizQuestions = [
     question: 'Which of the following is a requirement for a designated refuge area?',
     options: [
       'It must be located on the ground floor only',
-      'It must have minimum 30-minute fire resistance and a communication system',
       'It must contain firefighting equipment such as hose reels',
       'It must be large enough to accommodate at least 10 wheelchair users',
+      'It must have minimum 30-minute fire resistance and a communication system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A designated refuge must provide minimum 30-minute fire resistance and must include a communication system (voice intercom, emergency telephone, or similar) that allows the person waiting to communicate with the control room or fire and rescue service. Refuges are not restricted to the ground floor — they are typically located within protected stairways or protected lobbies on each floor. They do not need to contain firefighting equipment. The refuge must be large enough to accommodate a wheelchair without obstructing the escape route for other evacuees, and it must be clearly signed.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary purpose of an evacuation chair?',
     options: [
-      'To carry a person horizontally along a corridor',
       'To transport a person who cannot walk down staircases during an emergency',
+      'To carry a person horizontally along a corridor',
       'To provide a comfortable seat in a refuge while waiting for rescue',
       'To move heavy equipment during an evacuation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An evacuation chair is a device specifically designed to transport a person who cannot walk down staircases safely during an emergency evacuation. The chair typically features tracks or specialised wheels that allow controlled descent of staircases, operated by one or two trained persons. Evacuation chairs are usually positioned at the top of protected staircases and are a key piece of equipment documented in PEEPs for wheelchair users and persons with severe mobility impairments. Staff must be specifically trained in their use — using an evacuation chair without training is dangerous for both the operator and the person being evacuated.',
   },

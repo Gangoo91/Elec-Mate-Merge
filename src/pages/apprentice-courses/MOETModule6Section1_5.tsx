@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of CAD over traditional manual draughting for engineering drawings?',
     options: [
-      'CAD enables faster creation, easier modification, automatic revision control, precise dimensioning and seamless sharing of engineering drawings',
-      'Workplace conditions can change after the formal risk assessment was written, and new hazards can emerge during the work',
-      'A unitless number representing the cross-sectional area the cable takes up in the enclosure (including air space allowance)',
-      'The third-party component must meet or exceed all critical specifications of the original including voltage, current, temperature ratings, certifications and dimensional compatibility',
+      'Faster creation, easier modification, precise dimensioning and simple electronic sharing',
+      'It removes the need for any site verification of the drawings that are produced',
+      'CAD drawings can only ever be printed at A0 size in order to preserve their accuracy',
+      'It guarantees that drawings always match the actual as-built installation on site',
     ],
     correctIndex: 0,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: '2d-vs-3d',
     question: 'How does 3D CAD modelling differ from 2D CAD draughting?',
     options: [
-      'To monitor the emergency stop circuit for faults, provide redundant switching contacts, and ensure the machine cannot restart until the circuit is intentionally reset',
-      'Drawing cables through conduit, trunking and other enclosed cable routes where the cable cannot simply be pushed through',
-      '2D CAD creates flat drawings; 3D CAD creates a full digital model from which 2D orthographic views, sections and details can be automatically extracted',
-      'Flaming combustion is no longer supported, though smouldering may continue and hot, unburned pyrolysis gases accumulate',
+      '3D CAD can only produce static images, whereas 2D CAD allows editing',
+      '2D CAD embeds rich asset data in every object, whereas 3D CAD is unable to',
+      '2D CAD creates flat drawings; 3D CAD builds a full model from which 2D views are extracted',
+      '3D CAD is used only for architecture and never for building electrical services',
     ],
     correctIndex: 2,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'bim-definition',
     question: 'What does BIM (Building Information Modelling) add beyond standard 3D CAD?',
     options: [
-      "Cocaine increases the risk of heart attack, stroke, and seizures; psychologically it can cause paranoia, anxiety, aggression, and depression during withdrawal, with a high potential for psychological dependency",
-      "Waste segregation, responsible disposal of WEEE, energy reduction, low-NOx vehicle policy and supplier sustainability — supporting environmental compliance and contracts that require it",
-      "It depends — the measured value must be compared against the 80% rule-of-thumb value (1.10 ohms) because conductor resistance increases with temperature under fault conditions",
-      "BIM adds intelligent data to the 3D model — every object contains attributes such as manufacturer, model, rating, maintenance schedule and lifecycle cost, creating a 'digital twin' of the building",
+      "It automatically prints all the project drawings to PDF without any user input",
+      "It compresses the model file size so that large models open faster on a tablet",
+      "It converts every drawing into a single flat 2D layer for improved on-screen clarity",
+      "It adds data to every object — manufacturer, rating, maintenance schedule — a 'digital twin'",
     ],
     correctIndex: 3,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'A CAD viewer (as opposed to full CAD software) is useful for maintenance technicians because:',
     options: [
-      'It enables you to open, view, measure, search and print CAD drawings without needing expensive design software or specialist training',
-      'The "responsible person" — typically the employer, self-employed person, or person in control of the premises',
-      'A model showing how multiple layers of defence each have weaknesses, and failures occur when weaknesses in all layers align simultaneously',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'It lets you open, view, measure, search and print drawings without full design software',
+      'It allows you to create and edit complete 3D parametric models entirely from scratch',
+      'It automatically updates the as-built drawings whenever any site changes are made',
+      'It removes the need to verify drawings against the actual physical installation',
     ],
     correctIndex: 0,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'CAD stands for:',
     options: [
-      'Charging employees for anything provided in pursuance of health and safety requirements',
+      'Computer-Assisted Drafting — manual drawing aided by a digitiser tablet',
       'Computer-Aided Design — software used to create, modify and manage engineering drawings and models',
-      'In the stowed position with the platform fully lowered and boom centred',
-      'To avoid large variations between bright and dark areas that could impair visibility',
+      'Coordinated Asset Database — the central store of equipment records',
+      'Construction Approval Document — a stage gate in the design process',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a CAD drawing, layers are used to:',
     options: [
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'A structured digital platform where all project information is stored, shared and managed with controlled access, version management and approval workflows',
+      'Compress the drawing into a smaller file so it opens faster on a tablet in the field',
+      'Permanently lock the geometry so the drawing can be viewed but never altered',
       'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
-      'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
+      'Convert a 2D drawing into a full 3D model by stacking each view on top of the last',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'DWG and DXF are:',
     options: [
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
-      'The PDF is a static image — you lose the ability to query layers, measure dynamically, search by component, or access embedded data',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
+      'Two named layers that every electrical CAD drawing must contain by default',
+      'Free CAD viewer applications used to open drawings on a mobile device',
+      'BIM data standards used to hand over asset information to the maintenance team',
+      'Common CAD file formats — DWG is native to AutoCAD; DXF is a universal interchange format',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'A parametric 3D CAD model allows:',
     options: [
-      'Dimensions and features to be driven by parameters — changing one dimension automatically updates all related features, maintaining design intent',
-      'They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification',
-      'Providing browser-based access to current drawings from any device without specialist software installation',
-      'Modern maintenance increasingly relies on digital documentation and the ability to navigate CAD viewers, access digital drawings and use BIM data is becoming a core competence',
+      'Features driven by parameters — changing one dimension updates all related features',
+      'Each view to be drawn separately, with no link maintained between the views',
+      'Drawings to be exported only as flat, non-editable PDF files for distribution',
+      'The finished model to be viewed but never modified again once it is created',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'For a maintenance technician viewing a CAD drawing on a tablet, the most useful function is:',
     options: [
-      'An open file format for exchanging BIM data between different software platforms, enabling interoperability',
+      'Creating new parametric 3D models of replacement parts directly on the tablet',
       'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
-      'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
+      'Automatically updating the as-built drawing whenever a change is made on site',
+      'Running clash detection across the architectural, structural and electrical models',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'BIM Level 2 (as required by the UK government for public projects) means:',
     options: [
-      'An open file format for exchanging BIM data between different software platforms, enabling interoperability',
-      'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
+      'Each discipline works in isolated 2D CAD with no requirement to share any digital model',
+      'A single fully integrated model is held in one shared database that every party edits live',
       'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'Modern maintenance increasingly relies on digital documentation and the ability to navigate CAD viewers, access digital drawings and use BIM data is becoming a core competence',
+      'All drawings must be exported to PDF before being issued to the maintenance team',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'The Common Data Environment (CDE) in a BIM project is:',
     options: [
-      'They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification',
-      'Modern maintenance increasingly relies on digital documentation and the ability to navigate CAD viewers, access digital drawings and use BIM data is becoming a core competence',
-      'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
-      'A structured digital platform where all project information is stored, shared and managed with controlled access, version management and approval workflows',
+      'The native file format used by Revit to store a building model and its embedded data',
+      'The 3D modelling software each discipline uses to author its part of the project',
+      'A standard set of layer names that every drawing on the project must adopt',
+      'A structured platform where all project information is stored, shared and version-managed',
     ],
     correctAnswer: 3,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'When a CAD file is exported as a PDF, the main limitation is:',
     options: [
       'The PDF is a static image — you lose the ability to query layers, measure dynamically, search by component, or access embedded data',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
-      'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
-      'Dimensions and features to be driven by parameters — changing one dimension automatically updates all related features, maintaining design intent',
+      'The PDF cannot be opened on a tablet or phone, only on a desktop CAD workstation',
+      'The PDF always loses the visual accuracy of the drawing, distorting dimensions and scale',
+      'The PDF can only be produced from a 3D model, never from a flat 2D CAD drawing',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'IFC (Industry Foundation Classes) is:',
     options: [
-      'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
+      'The native proprietary file format used only by Autodesk Revit for BIM models',
       'An open file format for exchanging BIM data between different software platforms, enabling interoperability',
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
+      'A UK layer-naming standard that classifies electrical and structural elements on a drawing',
+      'A cloud platform that hosts BIM models for browser-based viewing on any device',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'As-built models in BIM are important for maintenance because:',
     options: [
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'Organise different types of information (e.g., electrical, structural, dimensions) that can be turned on or off independently for clarity',
+      'They show the original design intent, so any site changes can be reversed later if needed',
+      'They are smaller files than design models, making them faster to open on a tablet',
       'They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
+      'They remove the need to verify any information against the physical installation on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'Cloud-based CAD viewing platforms benefit maintenance teams by:',
     options: [
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
-      'The PDF is a static image — you lose the ability to query layers, measure dynamically, search by component, or access embedded data',
-      'Common CAD file formats — DWG is the native AutoCAD format; DXF is a universal interchange format that most CAD systems can read',
+      'Allowing technicians to author full parametric 3D models directly in the web browser',
+      'Removing the need for any internet connection once the drawing has been opened once',
+      'Guaranteeing that the drawing always matches the physical installation on site',
       'Providing browser-based access to current drawings from any device without specialist software installation',
     ],
     correctAnswer: 3,
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, awareness of digital drawing technologies is important because:',
     options: [
-      'Modern maintenance increasingly relies on digital documentation and the ability to navigate CAD viewers, access digital drawings and use BIM data is becoming a core competence',
-      'They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification',
-      'A structured digital platform where all project information is stored, shared and managed with controlled access, version management and approval workflows',
-      'All project disciplines create coordinated 3D models with embedded data, shared through a common data environment with agreed standards',
+      'Navigating CAD viewers and using digital drawings and BIM data is now a core competence',
+      'Technicians are now expected to author original CAD drawings and BIM models from scratch',
+      'Paper drawings are no longer permitted on any UK maintenance site under the standard',
+      'It removes the need to interpret traditional paper drawings once a site goes digital',
     ],
     correctAnswer: 0,
     explanation:

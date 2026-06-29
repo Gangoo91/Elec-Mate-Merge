@@ -42,8 +42,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'When was the UK Climate Change Act originally passed?',
-    options: ['2005', '2008', '2015', '2019'],
-    correctAnswer: 1,
+    options: ['2008', '2005', '2015', '2019'],
+    correctAnswer: 0,
     explanation:
       'The Climate Change Act was originally passed in 2008, making the UK the first country to set legally binding emissions targets.',
   },
@@ -51,15 +51,15 @@ const quizQuestions = [
     id: 2,
     question:
       'What was the original emissions reduction target in the Climate Change Act before amendment?',
-    options: ['60% by 2050', '80% by 2050', '100% by 2050', '50% by 2030'],
-    correctAnswer: 1,
+    options: ['60% by 2050', '50% by 2030', '80% by 2050', '100% by 2050'],
+    correctAnswer: 2,
     explanation:
       'The original target was 80% reduction by 2050, which was strengthened to net zero in 2019.',
   },
   {
     id: 3,
     question: 'Which body is responsible for advising the UK government on carbon budgets?',
-    options: ['Environment Agency', 'Climate Change Committee (CCC)', 'Ofgem', 'Carbon Trust'],
+    options: ['Ofgem', 'Climate Change Committee (CCC)', 'Environment Agency', 'Carbon Trust'],
     correctAnswer: 1,
     explanation:
       'The Climate Change Committee (CCC) is an independent statutory body that advises government on emissions targets and monitors progress.',
@@ -68,34 +68,34 @@ const quizQuestions = [
     id: 4,
     question: 'Scope 1 emissions refer to which type of emissions?',
     options: [
-      'Purchased electricity',
-      'Direct emissions from owned sources',
-      'Supply chain emissions',
-      'Employee commuting',
+      'Indirect emissions from purchased electricity',
+      'Indirect emissions from the supply chain',
+      'Direct emissions from owned or controlled sources',
+      'Emissions from employee commuting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Scope 1 covers direct emissions from sources the organisation owns or controls, such as gas boilers and company vehicles.',
   },
   {
     id: 5,
     question: 'What is the approximate grid carbon intensity target for UK electricity by 2035?',
-    options: ['100g CO2/kWh', '50g CO2/kWh', 'Near zero (fully decarbonised)', '200g CO2/kWh'],
-    correctAnswer: 2,
+    options: ['Around 200g CO2/kWh', 'Around 100g CO2/kWh', 'Around 50g CO2/kWh', 'Near zero (fully decarbonised)'],
+    correctAnswer: 3,
     explanation:
       'The UK government aims for a fully decarbonised electricity grid by 2035, meaning near-zero carbon intensity.',
   },
   {
     id: 6,
     question:
-      'Which regulation requires large UK companies to report their energy use and carbon emissions?',
+      'Which framework requires large UK companies to report their energy use and carbon emissions?',
     options: [
-      'Part L Building Regulations',
-      'ESOS',
       'SECR (Streamlined Energy and Carbon Reporting)',
+      'Part L Building Regulations',
+      'ESOS energy audits',
       'EPC regulations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'SECR requires quoted and large unquoted companies to disclose energy use and emissions in their annual reports.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
     id: 7,
     question:
       'What percentage of UK emissions come from buildings (heating, cooling, and electricity use)?',
-    options: ['About 10%', 'About 20%', 'About 30%', 'About 50%'],
-    correctAnswer: 2,
+    options: ['About 10%', 'About 20%', 'About 50%', 'About 30%'],
+    correctAnswer: 3,
     explanation:
       'Buildings account for approximately 30% of UK emissions, making building efficiency crucial for net zero.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'Which carbon budget period runs from 2033-2037?',
     options: [
       'Fourth Carbon Budget',
-      'Fifth Carbon Budget',
       'Sixth Carbon Budget',
+      'Fifth Carbon Budget',
       'Seventh Carbon Budget',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Sixth Carbon Budget covers 2033-2037 and requires a 78% reduction compared to 1990 levels.',
   },
@@ -125,24 +125,24 @@ const quizQuestions = [
     id: 9,
     question: 'Under ESOS, which organisations must conduct energy audits every 4 years?',
     options: [
-      'All businesses',
-      'Large undertakings (250+ employees or £44m+ turnover)',
+      'All businesses regardless of size',
       'Only public sector bodies',
+      'Large undertakings (250+ employees or £44m+ turnover)',
       'Only manufacturing companies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'ESOS applies to large undertakings meeting the employee or turnover thresholds.',
   },
   {
     id: 10,
     question: "What does 'net zero' mean in the context of UK climate targets?",
     options: [
-      'Zero energy consumption',
+      'Reducing energy consumption to zero',
+      'Eliminating all use of fossil fuels',
+      'Achieving zero-carbon electricity only',
       'Balancing emissions produced with emissions removed',
-      'No use of fossil fuels',
-      'Zero carbon electricity only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Net zero means balancing greenhouse gas emissions with equivalent removals, acknowledging some residual emissions will need offsetting.',
   },

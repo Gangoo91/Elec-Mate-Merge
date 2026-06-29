@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A 28 m radial in 2.5/1.5 mm² T&E. Calculated R1+R2 at 20 °C = 28 × 19.51 mΩ/m = 0.55 Ω. Method 1 reading is 0.51 Ω. Within the working ±10 % band?',
     options: [
-      'Outside — too low to be valid.',
-      '±10 % band = 0.495 Ω to 0.605 Ω. 0.51 Ω lands inside the band — pass. Record 0.51 Ω in the R1+R2 column on the Schedule of Test Results and proceed to Zs verification.',
-      'Outside — must be within ±5 %.',
-      'Cannot judge without Ze.',
+      'Outside the band — 0.51 Ω is too low to be valid for this run.',
+      'Inside the ±10 % band (0.495–0.605 Ω) — pass and record 0.51 Ω.',
+      'Outside the band — acceptance requires the reading to be within ±5 %.',
+      'Cannot judge the reading at all without first knowing Ze at the origin.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'Calculated R1+R2 = 0.42 Ω. Measured = 0.18 Ω (57 % low). The cable runs in steel conduit bonded to earth at multiple points. What is the correct response?',
     options: [
-      'Record 0.18 Ω as the R1+R2 — lower is better.',
-      'Record 0.18 Ω and use it in the Zs sum without further investigation.',
-      'Treat parallel earth paths as the working hypothesis. Disconnect the conduit clamp at the relevant accessory (with isolation in place) and re-measure. Either restore the bond and accept the parallel-path number with a clear comment, or use the calculated 0.42 Ω in the Zs sum and document the parallel path in the comments column.',
-      'Re-test using a multimeter.',
+      'Record 0.18 Ω as the R1+R2 — a lower reading is always better.',
+      'Record 0.18 Ω and use it in the Zs sum without any further investigation.',
+      'Suspect a parallel earth path: re-measure with the conduit clamp lifted, then document it.',
+      'Re-test using an ordinary multimeter on its lowest ohms range.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Calculated R1+R2 at 20 °C = 0.585 Ω. Ze = 0.62 Ω. Cable is thermoplastic insulated, operating temperature 70 °C. Max permitted Zs (A4 Schedule of Circuit Details) = 1.37 Ω at 70 °C. What is the predicted Zs you compare against the limit?',
     options: [
-      '0.62 + 0.585 = 1.205 Ω → comfortable headroom.',
-      '0.62 + (0.585 × 1.20) = 1.32 Ω → marginal but inside limit. The 20 °C value must be corrected up to operating temperature before comparison because the limit is at operating temperature.',
-      '0.62 + (0.585 × 0.80) = 1.09 Ω.',
-      'Cannot be calculated without a live test.',
+      '0.62 + 0.585 = 1.205 Ω, leaving comfortable headroom below the limit.',
+      '0.62 + (0.585 × 1.20) = 1.32 Ω — correct the R1+R2 up to operating temperature.',
+      '0.62 + (0.585 × 0.80) = 1.09 Ω, applying a downward temperature correction.',
+      'It cannot be calculated at all without first taking a live Zs test.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Measured R1+R2 = 0.41 Ω. Calculated R1+R2 = 0.43 Ω. The two values are close but not identical. What value goes in the R1+R2 column on the Schedule of Test Results?',
     options: [
-      '0.43 Ω — the calculated value, because it matches the design.',
-      '0.42 Ω — average of the two.',
-      '0.41 Ω — the measured value, to two decimal places. The schedule documents what the meter saw on the day; calculated values belong on the Schedule of Circuit Details, not the Schedule of Test Results.',
-      'Either is acceptable.',
+      '0.43 Ω — the calculated value, because it matches the original design.',
+      '0.42 Ω — the average of the measured and calculated values.',
+      '0.41 Ω — the measured value, to two decimal places, as the meter read it.',
+      'Either value is acceptable as long as both are noted in the comments.',
     ],
     correctIndex: 2,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 643.2.1 deliberately stops short of giving a numeric maximum for protective-conductor continuity. What is the standard tolerance most inspectors apply when comparing a measured R1+R2 against the calculated R1+R2?',
     options: [
-      '±5 % — anything outside is a fail',
       '±10 % — readings within this band are accepted, readings outside it are investigated',
-      '±25 % — anything inside this band is acceptable',
-      'No tolerance — the measurement must equal the calculation exactly',
+      '±5 % — any reading outside this tight band is an automatic fail',
+      '±25 % — any reading inside this wide band is acceptable without further checks',
+      'No tolerance is applied — the measured value must equal the calculated value exactly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GN3 Ch 2 frames acceptance as the calculated R1+R2 from cable data ± a tolerance, in practice ±10 %. Within ±10 % is a pass and gets recorded. Outside ±10 % triggers investigation — high readings point to joints / cable issues, low readings point to parallel paths.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A measured R1+R2 comes in significantly lower than calculated. Why is this not automatically a "good" result?',
     options: [
-      'Lower is always better — no investigation needed',
-      'Parallel earth paths via metallic containment, bonded services or supplementary bonding routes can short-circuit the CPC and mask a high-resistance joint in the conductor itself',
-      'It means the cable is over-sized — change the design',
-      'The meter is faulty — replace it',
+      'Lower is always better for R1+R2, so no further investigation is needed',
+      'It indicates the installed cable is over-sized and the circuit design should be revised down',
+      'It points to a faulty low-reading instrument that should be replaced before continuing',
+      'Parallel earth paths via containment or bonded services can short the CPC and mask a joint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A reading below calculated suggests a parallel path (steel conduit clamped at both ends, bonded gas/water pipes touching the CPC at an accessory, or another circuit's CPC bonded to the same metalwork). The measurement is the parallel combination, not the cable-only R1+R2. The day someone removes the parallel path, the CPC may be exposed as inadequate.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'You have measured R1+R2 = 0.30 Ω against a calculated 0.31 Ω. Ze at the origin = 0.32 Ω. The protective device is a 32 A B-curve MCB; the A4:2026 max permitted Zs from the Schedule of Circuit Details is 1.37 Ω at 70 °C. Is the circuit compliant for ADS?',
     options: [
-      'No — Zs already exceeds the limit',
       'Yes — Zs at 70 °C ≈ 0.32 + (0.31 × 1.20) = 0.69 Ω, well within 1.37 Ω',
-      'Cannot decide without an RCD test',
-      'Yes — but only if an RCD is fitted',
+      'No — the predicted Zs already exceeds the 1.37 Ω limit',
+      'Cannot decide without first carrying out an RCD trip-time test',
+      'Yes — but only if an RCD is also fitted to provide the disconnection time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Use calculated R1+R2 corrected to operating temperature for the Zs prediction: 0.31 × 1.20 = 0.372 Ω. Zs ≈ 0.32 + 0.372 = 0.69 Ω. That is well inside the 1.37 Ω limit, so the disconnection time per Reg 411.3.2 / Table 41.1 will be met by the MCB alone — no RCD required to make ADS work for this circuit.',
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'Reg 643.7.3.1 (A4:2026) explicitly orders two tests in sequence. Which sequence does it require?',
     options: [
-      'Insulation resistance, then continuity',
-      'Earth fault loop impedance, then continuity',
-      'Continuity per Reg 643.2, then earth fault loop impedance, with the measured Zs complying with Chapter 41',
-      'Polarity, then continuity',
+      'Insulation resistance first, then the continuity measurement',
+      'Earth fault loop impedance first, then the continuity measurement',
+      'Continuity per Reg 643.2 first, then the earth fault loop impedance measurement',
+      'Polarity verification first, then the continuity measurement',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'A Method 2 wandering-lead survey of an 8-socket radial gives readings of 0.12, 0.18, 0.74, 0.81, 0.86, 0.91, 0.97, 1.02 Ω. What does the data tell you?',
     options: [
-      'Smooth progression — pass',
-      'A single high-resistance joint between socket 2 and socket 3; investigate and resolve before recording acceptance',
-      'A failure of the wandering lead — re-test',
-      'Parallel earth paths — record as compliant',
+      'A smooth, expected progression of rising resistance along the radial — record as a pass',
+      'A failure of the wandering lead itself, since real readings would not step up like this — re-test',
+      'Parallel earth paths shorting the CPC at the early sockets — record the circuit as compliant',
+      'A single high-resistance joint between socket 2 and socket 3; resolve before accepting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 0.56 Ω jump between socket 2 (0.18 Ω) and socket 3 (0.74 Ω) is the diagnostic signature of a single bad joint between those two points. Subsequent sockets read consistently higher because that bad joint is now in series for everything downstream of it. Localise, remediate, re-test. This is Method 2's strength over Method 1.",
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'On the A4:2026 Schedule of Test Results, the R1+R2 column should contain:',
     options: [
-      'The calculated value from GN3 Table BI',
       'The measured value at the test point in ohms, to two decimal places',
-      'The Zs prediction',
-      'A pass/fail tick',
+      'The calculated value derived from GN3 Table BI cable data',
+      'The predicted Zs value for the circuit at operating temperature',
+      'A simple pass or fail tick against the acceptance band',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The schedule records measurements, not calculations. R1+R2 is the measured value to two decimal places in ohms. Calculated values belong on the design / circuit details schedule, where the maximum permitted Zs column also lives. Comments column flags any non-standard situation (parallel paths, calculated-in-lieu, etc.).',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'A measured R1+R2 reads "OL" (open line) on the meter. Before condemning the CPC, what is the first thing to check?',
     options: [
-      'The cable insulation',
+      'The insulation resistance of the cable, to rule out a short before an open circuit',
+      'The Ze value at the origin, since a high Ze can read as an open line at the far end',
+      'The RCD trip time on the circuit, as a failed RCD can block the continuity path',
       'That the L–CPC link at the board (Method 1) is actually still in place and the test leads are making good contact at both ends',
-      'The Ze value',
-      'The RCD trip time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An open-circuit reading on Method 1 most often reflects a slipped flying lead or a poor probe contact, not a broken CPC. The thirty-second sanity check — verify the link, verify probe contact, verify the meter polarity — saves an unnecessary cable replacement. Only after those are ruled out do you investigate the conductor itself.',
   },
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       'Reg 644.1.1 (initial verification) says any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. How does this apply to a borderline R1+R2 reading you cannot fully diagnose on the day?',
     options: [
-      'Issue the EIC anyway and add a comment',
-      'Issue an unsatisfactory EICR — wrong document for new work',
-      'You cannot issue the EIC until the borderline reading is resolved or an explanation (e.g. parallel earth path, recorded in comments) demonstrates compliance',
-      'Issue with a C2 code',
+      'Issue the EIC anyway and add a comment noting the borderline reading',
+      'Issue an unsatisfactory EICR instead — the wrong document for new work',
+      'Hold the EIC until the reading is resolved or shown compliant with comments',
+      'Issue the EIC with a C2 code recorded against the borderline reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'A continuity reading is unambiguously high (0.92 Ω measured against a calculated 0.31 Ω at 20 °C, no parallel paths). The MCB is a 32 A B-curve, max permitted Zs at 70 °C = 1.37 Ω. With Ze = 0.45 Ω, your predicted Zs at 70 °C ≈ 0.45 + (0.92 × 1.20) = 1.55 Ω. What is the correct response?',
     options: [
-      'Accept — the reading is "close enough" to the limit',
-      'Investigate the cause of the high R1+R2 (loose terminal, undersized CPC, longer-than-assumed route) and resolve before testing further. Predicted Zs already exceeds the permitted limit, so the circuit is non-compliant for ADS as it stands',
-      'Add an RCD and ignore the high R1+R2',
-      'Accept and write a comment',
+      'Investigate the high R1+R2 and resolve it — predicted Zs already exceeds the limit',
+      'Accept the reading, since at 1.55 Ω it is "close enough" to the 1.37 Ω limit to pass',
+      'Add a 30 mA RCD to the circuit and disregard the high R1+R2 reading altogether',
+      'Accept the reading and simply add a comment noting the value is slightly high',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '1.55 Ω > 1.37 Ω means the disconnection time on the MCB alone will not meet Reg 411.3.2 / Table 41.1. The R1+R2 itself is the symptom. Investigate the conductor / joints, fix the cause, then re-test. Adding an RCD does not "fix" a high R1+R2 — it changes the protective measure but does nothing about the conductor defect itself, which is still a Reg 543 / 644.1.1 issue.',
   },

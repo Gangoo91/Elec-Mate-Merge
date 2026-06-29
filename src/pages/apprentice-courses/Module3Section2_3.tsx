@@ -93,11 +93,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: Steel trunking must be earthed.',
-    options: ['True', 'False'],
+    question: 'What is the correct earthing requirement for steel trunking?',
+    options: [
+      'It must be earthed and continuity tested between sections',
+      'It never needs to be earthed',
+      'It only needs earthing outdoors',
+      'Earthing is only needed if it carries data cables',
+    ],
     correctAnswer: 0,
     explanation:
-      'True. Steel trunking must be properly earthed and electrical continuity tested between all sections to ensure it can serve as a safe protective conductor.',
+      'Steel trunking must be properly earthed and electrical continuity tested between all sections so it can serve as a safe protective conductor.',
   },
   {
     id: 4,
@@ -129,14 +134,14 @@ const quizQuestions = [
     id: 6,
     question: 'Why is it important to use barriers in trunking with mixed power and data cables?',
     options: [
-      'Sustainable Drainage Systems',
-      'Earth fault loop impedance (Zs) tester',
+      'To increase the trunking fill factor',
+      'To reduce the weight of the trunking',
       'To prevent electromagnetic interference',
-      'Competent persons with appropriate qualifications',
+      'To remove the need to earth the trunking',
     ],
     correctAnswer: 2,
     explanation:
-      'Barriers separate power and data cables to prevent electromagnetic interference (EMI) from power cables affecting sensitive data and communication circuits.',
+      'Barriers separate power and data cables to prevent electromagnetic interference from power cables affecting sensitive data and communication circuits.',
   },
   {
     id: 7,
@@ -153,16 +158,16 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Which regulation sets the requirements for trunking installation in the UK?',
+    question: 'Which standard sets the requirements for trunking installation in the UK?',
     options: [
       'BS 7671 (IET Wiring Regulations)',
-      '10-30 seconds gradual transition',
-      'Unlimited fine and imprisonment',
-      'Medium Dependent Interface Crossover',
+      'BS 5839 (Fire detection and alarm)',
+      'BS EN 12464 (Lighting of workplaces)',
+      'BS 6701 (Telecommunications cabling)',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including trunking systems, support spacing, and segregation requirements.',
+      'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including trunking systems, support spacing and segregation requirements.',
   },
 ];
 
@@ -629,9 +634,13 @@ const Module3Section2_3: React.FC = () => {
                     Segregation Requirement - Section 528.1
                   </p>
                   <p className="text-sm text-white">
-                    "Circuits of Band I and Band II shall be run in separate wiring systems or, if
-                    contained within the same wiring system, shall be segregated by a continuous
-                    partition of insulating material."
+                    Regulation 528.1 requires that neither a Band I nor a Band II circuit be
+                    contained in the same wiring system as a circuit exceeding low voltage, and a
+                    Band I circuit shall not share a wiring system with a Band II circuit, unless one
+                    of the permitted methods is adopted - for example every cable insulated for the
+                    highest voltage present, cables in separate compartments of trunking/ducting,
+                    separation by a partition on cable tray, a separate conduit/trunking/ducting
+                    system, or (in a multicore cable) separation by an earthed metal screen.
                   </p>
                 </div>
               </div>

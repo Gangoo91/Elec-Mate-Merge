@@ -36,12 +36,12 @@ const checks = [
     id: 'prefix-mA-to-A',
     question: 'Convert 30 mA into amperes.',
     options: [
-      '3 A',
-      '0.003 A',
       '0.03 A',
+      '0.003 A',
+      '3 A',
       '0.0003 A',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Milli means ÷ 1000. 30 ÷ 1000 = 0.03 A. That is the standard RCD trip current — same value, two ways of writing it.',
   },
@@ -51,11 +51,11 @@ const checks = [
       'A continuity test reads 0.05 Ω. A second cable measures 50 mΩ. Which has the lower resistance?',
     options: [
       '0.05 Ω is lower',
-      '50 mΩ is lower',
       'They are the same',
-      'You cannot compare different units',
+      '50 mΩ is lower',
+      '50 mΩ is ten times lower',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Same value: 50 mΩ = 50 ÷ 1000 = 0.05 Ω. The point of the prefix is just to keep the digits manageable. Always convert into the SAME units before comparing.',
   },
@@ -63,12 +63,12 @@ const checks = [
     id: 'prefix-kW-to-W',
     question: 'A 7.5 kW shower runs at 230 V. What is its power in watts (W)?',
     options: [
-      '7,500 W',
-      '75,000 W',
       '750 W',
+      '75,000 W',
+      '7,500 W',
       '75 W',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Kilo means × 1000. 7.5 kW × 1000 = 7,500 W. That gives you ~32.6 A draw at 230 V — exactly why showers need a dedicated MCB and a thicker cable.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 4,
     question: 'A capacitor is marked 470 µF. What is that in farads (F)?',
     options: [
-      '0.00047 F',
       '0.047 F',
       '0.000047 F',
+      '0.00047 F',
       '0.0000047 F',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Micro means ÷ 1,000,000. 470 ÷ 1,000,000 = 0.00047 F. Capacitors are always quoted in µF, nF or pF because the actual farad is huge.',
   },
@@ -139,25 +139,25 @@ const quizQuestions = [
     id: 6,
     question: "Which of these is the largest current?",
     options: [
-      '500 µA',
-      '50 mA',
       '5,000 mA',
+      '50 mA',
+      '500 µA',
       '0.5 A',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Convert all to amps: 500 µA = 0.0005 A; 50 mA = 0.05 A; 0.5 A = 0.5 A; 5,000 mA = 5 A. Five amps is the biggest by a clear mile.',
+      'Convert all to amps: 5,000 mA = 5 A; 50 mA = 0.05 A; 500 µA = 0.0005 A; 0.5 A = 0.5 A. Five amps is the biggest by a clear mile.',
   },
   {
     id: 7,
     question: 'On an insulation tester showing 250 MΩ, what is the reading in ohms?',
     options: [
       '250,000 Ω',
-      '2,500,000 Ω',
-      '25 Ω',
       '250,000,000 Ω',
+      '2,500,000 Ω',
+      '25,000,000 Ω',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       '250 × 1,000,000 = 250,000,000 Ω (250 megohms). That is excellent insulation — well above the 1 MΩ minimum acceptance from BS 7671 Table 64.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'A submeter records 3.6 kWh. The supply ran for exactly 2 hours. What was the average power draw in W?',
     options: [
-      '1,800 W',
       '7,200 W',
       '180 W',
       '720 W',
+      '1,800 W',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Energy = power × time. 3.6 kWh ÷ 2 h = 1.8 kW = 1,800 W. Always convert kWh and kW into matching units before doing the sum.',
   },

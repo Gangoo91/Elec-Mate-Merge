@@ -22,12 +22,12 @@ const inlineChecks = [
     id: 'mod7-s3-reg-trigger',
     question: 'Reg 643.9 only bites under one condition. What is it?',
     options: [
-      'Whenever the supply is three-phase, regardless of the loads on it',
-      'Where phase sequence is required — i.e. where rotating machinery, three-phase variable-speed drives, or any load whose correct operation depends on a specific phase order is connected to the installation',
-      'Only on industrial premises over 100 A per phase',
-      'On every TT installation, three-phase or single-phase',
+      'Where phase sequence matters — rotating machinery, three-phase drives, any load whose operation depends on phase order',
+      'Whenever the supply is three-phase, regardless of the loads actually connected to it',
+      'Only on industrial premises drawing more than 100 A per phase from the supply',
+      'On every TT installation, whether the supply is three-phase or single-phase',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 643.9 is conditional. The duty to verify phase sequence applies where a load actually depends on it — typically motors, three-phase drives, or rotating equipment. A three-phase supply that feeds only single-phase final circuits has no rotation-sensitive load and the verification is not required (though an inspector commonly does it anyway as good practice).',
   },
@@ -36,12 +36,12 @@ const inlineChecks = [
     question:
       'A three-wire phase-rotation indicator is the standard tool for the live phase-sequence test. What does it read, and what does the GS 38 requirement add?',
     options: [
-      'It reads voltage on each phase only — GS 38 is about the user manual',
-      'It reads the rotational direction of the three-phase supply (clockwise / anti-clockwise) by sensing the order in which the phase voltages reach their peaks. GS 38 requires that the test leads are insulated, finger-guarded, fused or current-limited, and that the exposed metal of the probe tip is no more than 4 mm — because the test is live three-phase 400 V',
-      'It reads only line-to-earth voltage — GS 38 covers the meter case',
-      'It is a continuity tester — GS 38 is irrelevant to live testing',
+      'It reads the voltage on each phase only, and GS 38 is simply about the supplied user manual',
+      'It reads only line-to-earth voltage, and GS 38 governs the construction of the meter case',
+      'It reads rotational direction by the order the phases peak; GS 38 governs the leads (insulated, guarded, max 4 mm tip)',
+      'It is only a continuity tester, so GS 38 is irrelevant because no live testing is involved',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A three-wire rotation indicator reads the temporal phase order. GS 38 governs the test leads themselves: insulated, finger-guarded, current-limited, and with no more than 4 mm of exposed metal at the probe tip. This matters because you are probing live 400 V three-phase terminals — the lead standard is what stops a slip becoming a fatality.',
   },
@@ -50,12 +50,12 @@ const inlineChecks = [
     question:
       'GN3 describes a dead-test route to confirm phase rotation without energising. What is the principle?',
     options: [
-      'Use an insulation tester switched to ohms across each phase pair',
-      'Identify each phase conductor end-to-end (origin to load terminal) using continuity, confirm the conductor identification matches the design phase identification (L1 to L1, L2 to L2, L3 to L3), and the rotation then follows from correct identification on a known-rotation supply',
-      'Measure the resistance of each phase and pick the lowest as L1',
-      'It is impossible — phase rotation can only be tested live',
+      'Use an insulation tester switched to ohms across each pair of phases in turn at the load',
+      'Measure the resistance of each phase conductor and designate the lowest reading as L1',
+      'It is impossible — phase rotation can only ever be tested with the supply energised live',
+      'Identify each phase end-to-end by continuity (L1 to L1 etc.); correct identity gives correct rotation on a known supply',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The dead route is identification-by-continuity: trace each phase conductor end-to-end and confirm the design colour / marking is preserved at every termination. If the supply rotation at the origin is known, correct conductor identification at every load terminal guarantees correct rotation at the load. The live rotation indicator is then the confirmation, not the discovery.',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'On the A4:2026 documentation, where does the phase-rotation result for a three-phase distribution circuit go, and what is the correct entry?',
     options: [
-      'In the Zs column — the rotation is implicit in the loop impedance',
-      'On the Schedule of Inspections (visual / verification entry) and / or in the comments column on the Schedule of Test Results — typically as "L1-L2-L3 confirmed" or "rotation correct" with the instrument and method noted. It is not a numeric reading',
-      'It does not need to be recorded — only single-phase polarity is recorded',
-      'In the polarity column as "L1" or "L2"',
+      'On the inspection schedule and/or test-results comments as "rotation correct", with instrument and method noted — not a number',
+      'In the Zs column, because the rotation is implicit in the earth-fault loop impedance reading',
+      'It does not need recording at all — only the single-phase polarity result is recorded',
+      'In the polarity column, recorded as "L1" or "L2" against the three-phase circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Phase rotation is a verification, not a measurement, so it is recorded as a confirmation against the inspection schedule plus a comment on the test schedule for the affected circuit. The entry should name the instrument used (three-wire rotation indicator) and the method (live test at the origin / sub-board). A numeric value in the polarity or Zs column would be the wrong column.',
   },
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Reg 643.9 — Check of phase sequence — uses one specific verb for the duty. What does the regulation actually require, and where?',
     options: [
-      'Phase sequence shall be measured at the supply intake only',
       'For polyphase circuits, it shall be verified that the phase sequence is maintained at all relevant points throughout the installation',
-      'Phase rotation testing is recommended but not required by BS 7671',
+      'Phase sequence shall be measured at the supply intake only',
+      'Phase rotation testing is recommended as good practice but not required by BS 7671',
       'Phase sequence shall be tested only on circuits feeding three-phase motors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.9 (A4:2026) states verbatim: "For polyphase circuits, it shall be verified that the phase sequence is maintained at all relevant points throughout the installation." Not just the origin — every relevant downstream point, every distribution board, every three-phase outlet.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'A three-phase induction motor is wired with L1 and L2 swapped at the isolator. The motor is energised. What happens?',
     options: [
-      'The motor will not start — it sees a single-phase fault',
-      'The motor runs at the correct speed but in the reverse direction; it draws normal running current and gives no obvious electrical alarm',
-      'The motor draws double the rated current and trips the overload',
-      'The motor runs at half speed',
+      'The motor will not start, because it sees the two-phase swap as a single-phase fault',
+      'The motor draws roughly double its rated current and trips the overload protection',
+      'It runs at correct speed but reversed, drawing normal current with no obvious electrical alarm',
+      'The motor runs but only at half its rated speed, with elevated stator current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A two-phase swap reverses the rotating-magnetic-field direction. The motor runs in reverse at correct speed and current. Nothing trips. The pump runs backwards, the conveyor runs backwards, the lift travels the wrong way — and the only electrical evidence is the rotation itself. That is precisely why Reg 643.9 exists as a standalone duty.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'You discover the motor on a new pump set is running anti-clockwise when it should be clockwise. What is the correct corrective action under standard practice?',
     options: [
-      'Swap any two phases at the upstream supply (e.g. at the DB outgoing)',
-      'Swap any two phases at the load (e.g. at the motor terminal box or local isolator) so the rest of the installation keeps its agreed phase sequence',
-      'Reverse the direction of the supply transformer',
-      'Swap line and neutral at the motor',
+      'Swap any two phases at the upstream supply, e.g. at the DB outgoing way feeding the pump',
+      'Reverse the direction of the supply transformer feeding the distribution board',
+      'Swap line and neutral at the motor terminal box to reverse the field direction',
+      'Swap any two phases at the load (motor terminal box / local isolator), leaving the rest of the install untouched',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Swap two phases at the load, never at the supply. Reg 643.9 obliges you to keep the phase sequence consistent at all relevant points throughout the installation. Swapping at the DB or upstream propagates the reversal to every other three-phase point downstream — which would fail Reg 643.9 for everything else on that board.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Phase rotation testing per Reg 643.9 is which kind of test in terms of installation state?',
     options: [
-      'A dead test — the circuit must be isolated and proved dead',
-      'A live test — the system must be energised at normal voltage and frequency for the indication to mean anything',
       'Either a dead test (using continuity) or a live test, depending on instrument and circumstance',
-      'Always a megger test at 500 V DC',
+      'Strictly a dead test — the circuit must be isolated and proved dead first',
+      'Strictly a live test — only an energised indication can mean anything at all',
+      'Always an insulation-resistance (megger) test at 500 V DC',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Two valid approaches exist. The primary live method uses a phase rotation tester on the energised three-phase supply (BS EN 61557-7 instrument). A secondary dead-test confirmation is permitted by GN3: each line conductor is tested one at a time linked to the protective conductor, mirroring polarity-style continuity. Most live testing uses two-probe phase rotation testers for safety.',
   },
@@ -138,11 +138,11 @@ const quizQuestions = [
       'BS EN 61557-7 sets the performance requirements for phase rotation instruments. Which of the following is the acceptance band for an unambiguous indication?',
     options: [
       '50 % to 110 % of nominal voltage at any frequency',
+      '100 % to 105 % of nominal voltage only, with no frequency band',
       '85 % to 110 % of nominal voltage and 95 % to 105 % of nominal frequency',
-      '100 % to 105 % of nominal voltage only',
-      '90 % to 130 % of nominal voltage only',
+      '90 % to 130 % of nominal voltage only, with no frequency band',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An instrument is accepted for phase rotation testing if it gives a clear, unambiguous indication of phase sequence between 85 % and 110 % of nominal voltage and between 95 % and 105 % of nominal frequency. Outside those bands the indication may not be reliable — and the regulation requires unambiguous determination.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A two-probe phase rotation tester is connected between L1 and L2 and shows clockwise rotation. The same instrument is then connected between L2 and L3 at the same accessory and shows anti-clockwise. What does this tell you?',
     options: [
-      'The instrument is faulty',
-      'Phase sequence is inconsistent between probe pairs at this accessory — there is a wiring fault somewhere on this distribution circuit (likely a phase swapped between two conductors). Investigate before energising any equipment downstream',
-      'This is normal — different probe pairs always give different results',
-      'L3 must be the neutral',
+      'The instrument itself is faulty and should be replaced before any further testing',
+      'This is normal behaviour, because different probe pairs always give different indications',
+      'L3 must actually be the neutral conductor at this accessory, not a line conductor',
+      'Inconsistent indication = a wiring fault here (a phase swapped); investigate before energising downstream',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On a properly wired three-phase supply the rotation indication is consistent regardless of which two phases the two-probe tester is connected across. An inconsistent indication means one of the line conductors is mislabelled or swapped at this point. Reg 643.9 fails — corrective wiring before energisation, then re-test.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       "When extending an existing three-phase installation (e.g. adding a sub-board to feed new machinery), what does Reg 643.9 require with respect to the existing installation's phase sequence?",
     options: [
-      'The new circuits adopt their own phase sequence convention; the old installation is unaffected',
       'The phase sequence on the extension shall match the phase sequence already present on the existing installation, so that sequence is continuous throughout',
-      'The new installation shall be re-labelled to match the extension',
+      'The new circuits adopt their own phase sequence convention; the existing installation is unaffected',
+      'The existing installation shall be re-labelled to match the new extension',
       'Phase sequence is only checked at the new sub-board, not at the connection to the existing supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.9 is explicit on extensions in the GN3 commentary: phase sequence shall be maintained throughout the original and extended installation. Adopting a different sequence on the extension creates a confusion hazard for any future three-phase equipment that travels between the two — the canonical example is a portable three-phase tool that is plugged into both areas.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'Why is a two-probe phase rotation tester generally preferred over a traditional three-wire (clip-on) phase rotation indicator at a live distribution board?',
     options: [
-      'It is more accurate',
-      'It is cheaper',
-      'It avoids the need to attach three crocodile clips to live three-phase busbars or terminals — only two hand-held probes contact the live parts, reducing exposure time and the risk of slipped clips bridging phases',
-      'It can also test single-phase circuits',
+      'It is inherently more accurate than a three-wire clip-on indicator',
+      'It is cheaper to buy than a three-wire rotation indicator',
+      'No clips on live busbars — only two hand-held probes touch live parts, cutting exposure and bridging risk',
+      'It can also test single-phase circuits, unlike a three-wire indicator',
     ],
     correctAnswer: 2,
     explanation:
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'A phase rotation tester displays the alphanumeric sequence "1-3-2". The instrument manual maps this string to anti-clockwise rotation. The motor under test must run clockwise. What does Reg 643.9 oblige you to do before energising the motor?',
     options: [
-      'Energise and observe the motor — if it runs anti-clockwise, swap two motor terminals at the motor box',
-      'Correct the wiring (typically swap any two of L1/L2/L3 at the load isolator or motor terminal box) so the rotation indication matches the required clockwise sequence, THEN energise',
-      'Change the motor for one with reverse rotation',
-      'Accept anti-clockwise rotation if the motor is rated for it',
+      'Energise and observe the motor first; if it runs anti-clockwise, then swap two motor terminals',
+      'Change the motor for a different unit that is built to run in the reverse direction',
+      'Accept the anti-clockwise rotation, provided the motor is rated to run in either direction',
+      'Swap any two of L1/L2/L3 at the load so the indication reads clockwise, THEN energise the motor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.9 requires verification before energisation when equipment may be affected by reverse phase rotation. The whole point of the pre-energisation check is to fix the wiring before the motor spins. Energising-and-observing is exposed-equipment testing — pumps run dry, lifts travel down instead of up, conveyors throw product. Correct first, then prove with a second rotation indication.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'You have completed a phase rotation check at the main intake of a three-phase installation. Reg 643.9 requires verification at "all relevant points". Which of the following counts as a relevant point that should also be checked?',
     options: [
-      'Only the main intake',
-      'Each downstream three-phase distribution board, each three-phase socket-outlet (e.g. BS EN 60309), and any sub-mains where the phase sequence could have been disturbed by the wiring on the way',
-      'Only points where a motor is connected',
-      'Single-phase circuits derived from the three-phase board',
+      'Each downstream three-phase board, each three-phase socket (BS EN 60309) and any sub-mains in between',
+      'Only the main intake position needs to be checked once at the origin',
+      'Only those points where a three-phase motor is directly and permanently connected',
+      'The single-phase final circuits derived from the three-phase distribution board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '"All relevant points throughout the installation" — every place where a three-phase consumer could be connected. Sub-mains, three-phase DBs, three-phase sockets, and any plant termination where phase order matters. Single-phase circuits are out of scope (one phase, no sequence to verify).',
   },

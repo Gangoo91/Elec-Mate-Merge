@@ -16,10 +16,10 @@ const Module7Section2_3 = () => {
       id: 1,
       question: 'What is an earth fault?',
       options: [
-        'They immediately disconnect the supply when operated',
+        'When a circuit draws more current than its rating allows',
         'When a live conductor makes contact with earth or exposed conductive parts',
-        'On-site in an accessible location near the fire panel or site office',
-        'Adjusting airflows to achieve design air quantities at all terminals',
+        'When the line and neutral conductors are accidentally swapped',
+        'When the supply voltage drops below the level equipment needs',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section2_3 = () => {
       id: 2,
       question: 'What happens if a line conductor touches exposed earthed metalwork?',
       options: [
-        'Ensure metalwork is at earth potential',
-        'Report it immediately to your supervisor',
+        'The circuit voltage rises above its normal value',
+        'The metalwork insulates itself and stays safe to touch',
         'The metalwork becomes live and dangerous',
-        'VAV (Variable Air Volume) box',
+        'Nothing happens because the earth absorbs the fault',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module7Section2_3 = () => {
       id: 3,
       question: 'How is leakage current different from a full earth fault?',
       options: [
-        'A power quality analyser or power factor meter',
-        'Areas of higher thermal conductivity creating heat flow paths',
-        'Legally required inspection of specific equipment or systems',
+        'Leakage current only flows when the circuit is switched off',
+        'Leakage current is larger and trips the RCD instantly',
+        'Leakage current flows only through the neutral conductor',
         'Leakage current is a small, unintended flow to earth',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section2_3 = () => {
       question: 'What risk do earth faults pose to people?',
       options: [
         'Electric shock from exposed metalwork becoming live',
-        'A 22 mm copper incoming water service pipe',
-        'Specific training and assessment by the employer',
-        'Cancel the permit and reapply for a new one',
+        'Higher electricity bills from wasted current',
+        'Slower operation of connected equipment',
+        'Interference with nearby radio and TV signals',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section2_3 = () => {
       id: 5,
       question: 'What risk do leakage currents pose to installations?',
       options: [
-        'Commissioning engineers and controls specialists',
+        'A sudden short circuit at the consumer unit',
         'Nuisance tripping of RCDs and potential overheating',
-        'To verify battery capacity and autonomy',
-        'Fibre with gradually changing refractive index across the core',
+        'An immediate rise in supply voltage across the board',
+        'Complete failure of the main earthing conductor',
       ],
       correctAnswer: 1,
       explanation:
@@ -102,10 +102,10 @@ const Module7Section2_3 = () => {
       id: 8,
       question: 'What can cause leakage currents in electrical installations?',
       options: [
-        'Leakage currents from damp conditions or equipment filters',
-        'When a conductor is broken or disconnected, stopping current flow',
-        'Remains outside to maintain communication and initiate rescue',
-        'Level 3 Diploma in Installing Electrotechnical Systems',
+        'Damp conditions, EMC filters in equipment, or deteriorating insulation',
+        'A protective device rated too low for the circuit load',
+        'A loose neutral connection at the consumer unit',
+        'Using cable that is oversized for the circuit',
       ],
       correctAnswer: 0,
       explanation:

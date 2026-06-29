@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A facilities manager challenges a contractor: "why do we need TIA-606-D labelling on every link, port and outlet — what does it actually buy us?". What is the strongest answer?',
     options: [
-      'It looks more professional and helps with manufacturer warranty registration only.',
-      'TIA-606-D administration is what LETS the cabling deliver its 15-20 year service-independent life. Without a defined identifier hierarchy, as-built drawings, test records and a maintained administration register, the next contractor cannot find a circuit, faults cannot be isolated to the right link, every move/add/change becomes a treasure hunt, and re-cabling becomes the cheapest fix — destroying the long-life value proposition. Documentation is the artefact that makes the system maintainable.',
-      'It is required only on government contracts.',
-      'It satisfies the manufacturer warranty but has no operational value.',
+      'It looks more professional and helps satisfy the manufacturer warranty registration, nothing more.',
+      'It is the discipline that keeps the cabling maintainable across its full 15-20 year service life.',
+      'It is required only on central government and defence contracts, never on commercial office work.',
+      'It satisfies the manufacturer warranty paperwork but delivers no real operational value on site.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A patch panel port label reads "B1-FL3-TR2-PP1-P14". What is this and what does it tell you?',
     options: [
-      'A serial number for warranty purposes only.',
-      'A TIA-606-D / BS EN 50174-1 §6 hierarchical identifier: Building 1, Floor 3, Telecommunications Room 2, Patch Panel 1, Port 14. The label uniquely locates this port in the entire building inventory and lets the corresponding outlet at the work-area end carry the same identifier so the link is traceable end-to-end.',
-      'A random reference set by the manufacturer.',
-      'A cable colour code.',
+      'A component serial number used solely for the manufacturer warranty registration record.',
+      'A hierarchical identifier: Building 1, Floor 3, Telecoms Room 2, Patch Panel 1, Port 14.',
+      'A random reference number set by the patch-panel manufacturer on the production line.',
+      'A cable colour code identifying the conductor pair-twist scheme used inside the cable.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'At project sign-off, what should the contractor hand over as the "as-built" pack for a structured cabling install?',
     options: [
-      'A copy of the original design drawings only.',
-      'As-built drawings (showing actual run routes / outlet positions, marked-up against design); 100 % link test results in PDF / native test-tool format with the test instrument identified and calibration date; the labelling and identifier register; manufacturer warranty registration evidence; a copy of the BS EN 50174-1 §6 / TIA-606-D administration record; and any change-control log from variations during install. All cross-referenced and indexed.',
-      'A USB stick with PDF drawings.',
-      'A verbal walk-through of the comms room.',
+      'A clean copy of the original design drawings only, handed over with no site mark-ups added.',
+      'As-builts, 100% link test results, identifier register, warranty evidence and a change-control log.',
+      'A USB stick holding PDF copies of the original design drawings and nothing else besides.',
+      'A verbal walk-through of the populated comms room with the client at the handover meeting.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 Part 6 governs certification (Electrical Installation Certificate, Minor Works, EICR). On a structured cabling install with a PoE deployment under §716, how does the BS 7671 certification interact with the cabling administration?',
     options: [
-      'BS 7671 certification covers everything — no separate cabling records needed.',
-      'They are parallel, complementary records. BS 7671 Part 6 certification covers the LV / ELV electrical safety dimensions of the install (the §716 PoE circuits, the §545 functional earthing, the §444 EMC measures, the §544.1.2 main bonding, and any §521.10.202 escape-route considerations). The cabling administration (TIA-606-D / BS EN 50174-1 §6) covers the physical infrastructure — Classes achieved, link inventory, as-built drawings, manufacturer warranty. The two packs reference each other but do not replace each other.',
-      'BS 7671 certification is irrelevant on a cabling job.',
-      'BS 7671 replaces TIA-606-D from A4:2026.',
+      'BS 7671 certification covers everything here, so no separate cabling administration records are needed.',
+      'They are parallel, complementary records — Part 6 covers electrical safety, cabling covers infrastructure.',
+      'BS 7671 certification is irrelevant on a structured-cabling job and can be safely omitted at handover.',
+      'BS 7671 Part 6 wholly replaces the TIA-606-D administration discipline from the A4:2026 edition onwards.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Which two standards specify the administration / labelling / records discipline for structured cabling — one TIA, one EN?',
     options: [
-      'TIA-568.0-E (TIA) and BS EN 50173-1 (EN).',
-      'ANSI/TIA-606-D (2021) (TIA — Administration Standard for Telecommunications Infrastructure) and BS EN 50174-1 §6 (EN — Specification & QA, administration section).',
-      'TIA-942-C (TIA) and BS EN 50310 (EN).',
-      'TIA-1152-A (TIA) and BS EN 50346 (EN).',
+      'ANSI/TIA-606-D (TIA — Administration Standard) and BS EN 50174-1 §6 (EN — administration section).',
+      'TIA-568.0-E (TIA — generic premises cabling) and BS EN 50173-1 (EN — generic cabling performance classes).',
+      'TIA-942-C (TIA — data-centre infrastructure) and BS EN 50310 (EN — telecommunications bonding networks).',
+      'TIA-1152-A (TIA — field test instrument levels) and BS EN 50346 (EN — testing of installed cabling).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-606-D (administration) and BS EN 50174-1 §6 (administration section) are the two standards. They are broadly aligned — both define a hierarchical identifier scheme (TR / link / outlet identifier formats), records to be maintained, and as-built documentation requirements. BS 7671 §444.410(a) makes BS EN 50174-1 mandatory in UK buildings, so on a UK install the EN is the regulatory pointer.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'You read a cable label "B1-FL3-TR2-PP1-P14". What identifier hierarchy does this reflect?',
     options: [
-      'A part number.',
-      'Hierarchical TIA-606-D / BS EN 50174-1 §6 identifier: Building → Floor → TR → Patch Panel → Port. Both ends of the link should carry the same identifier so the connection is end-to-end traceable.',
-      'A test result code.',
-      'A manufacturer batch number.',
+      'A manufacturer part number identifying the patch-panel model and its port count.',
+      'A test result code auto-generated by the certification tool when the link was tested.',
+      'A hierarchical TIA-606-D identifier: Building → Floor → TR → Patch Panel → Port, carried at both ends.',
+      'A manufacturer batch number tracing the cable reel the run was drawn from.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hierarchical Building / Floor / TR / Panel / Port. The hierarchy is what makes the identifier unique across the building inventory; both ends of the link carry the same identifier; the corresponding outlet has the matching label. Specific separators ("/", "_", "-", ".") vary by install but the hierarchy is constant.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does the as-built drawing in a cabling handover pack reflect?',
     options: [
-      'The original design intent only.',
-      'What was ACTUALLY installed — including any deviations from the original design (re-routed runs, relocated outlets, added consolidation points, modified TR layout). Marked up against the original design drawings, with variations noted, dated and authorised.',
-      'A future expansion plan.',
-      'A site safety plan.',
+      'The original design intent only, exactly as drawn before any works began on site.',
+      'A future expansion plan showing proposed additional outlets, runs and TR upgrades.',
+      'A site-safety plan covering access, working at height and PPE for the cabling works.',
+      'What was actually installed, marked up against the design with every deviation noted, dated and authorised.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'As-built means what was installed, not what was designed. Variations during install — and there are always some — must be captured: re-routed runs (perhaps to dodge a discovered service), relocated outlets, added consolidation points, modified TR layouts. Without as-builts, the next contractor is reading fiction; faults cannot be traced; future changes risk damaging unknown installed infrastructure.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'Which BS EN 50174-1 sub-clause is the EN equivalent to TIA-606-D administration discipline?',
     options: [
-      'BS EN 50174-1 §3 — terminology.',
       'BS EN 50174-1 §6 — Administration / records / labelling.',
-      'BS EN 50174-1 §10 — testing.',
-      'BS EN 50174-1 §1 — scope.',
+      'BS EN 50174-1 §3 — Terms and definitions.',
+      'BS EN 50174-1 §10 — Testing of the installed cabling.',
+      'BS EN 50174-1 §1 — Scope of the standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50174-1 §6 is the administration section — identifier hierarchy, records, change control, labelling discipline. It is the EN equivalent of TIA-606-D. Because §444.410(a) makes BS EN 50174-1 mandatory in UK buildings, a UK contractor must demonstrate compliance with the EN administration discipline; TIA-606-D remains valid international cross-reference.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Verbatim from BS 7671:2018+A4:2026 §544.1.2, where shall the main protective bonding connection to extraneous-conductive-parts be made?',
     options: [
-      'Anywhere convenient.',
-      '"as near as practicable to the point of entry of that part into the premises... within 600 mm of the meter outlet union or at the point of entry to the building if the meter is external".',
-      'At the consumer unit only.',
-      'On the building roof.',
+      'Anywhere convenient along the run of the extraneous-conductive-part inside the premises.',
+      '"as near as practicable to the point of entry... within 600 mm of the meter outlet union".',
+      'At the consumer unit only, regardless of where the incoming service actually enters the building.',
+      'At the furthest accessible point of the consumer pipework from the service point of entry.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,69 +153,69 @@ const quizQuestions = [
     question:
       'Which of the following IS a legitimate component of the handover pack for a structured cabling install?',
     options: [
-      'The original design drawings only.',
-      'As-built drawings + 100 % link test results (in PDF and native test-tool format, with instrument ID and calibration date) + identifier register + manufacturer warranty evidence + change-control log + indexed cross-reference.',
-      'A verbal walk-through.',
-      'A photo of the comms room.',
+      'The original design drawings only, handed over unmarked at sign-off with no site amendments.',
+      'A verbal walk-through of the comms room with the facilities manager on the day of handover.',
+      'A single dated photograph of the fully populated comms-room rack, with no supporting records.',
+      'As-built drawings, 100% link test results, identifier register, warranty evidence and change log.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The handover pack is the deliverable that turns "installed cable plant" into "maintainable system". Six items: as-builts, test results, identifier register, warranty evidence, change log, index. Anything less is not a complete handover — and operational consequences arrive within 12-24 months when changes start.',
+      'The handover pack is the deliverable that turns "installed cable plant" into "maintainable system". Six items: as-builts, test results (PDF plus native test-tool format, with instrument ID and calibration date), identifier register, warranty evidence, change log, index. Anything less is not a complete handover — and operational consequences arrive within 12-24 months when changes start.',
   },
   {
     id: 7,
     question: 'Why is manufacturer warranty registration part of the handover pack?',
     options: [
-      'It is decorative.',
-      'Most manufacturer warranties on structured cabling components require registration within a specified period (typically 30-90 days post-install) and require evidence of approved installer + Class certification. Without registration evidence in the handover pack, the warranty (often 20-25 years) may not be enforceable when the client needs it five years later.',
-      'It substitutes for testing.',
-      'It is required only on fibre installs.',
+      'The 20-25 year warranty needs registration plus proof of approved installer and Class certification to be enforceable later.',
+      'It is purely a marketing formality and adds no operational value to the handover pack.',
+      'It substitutes for the link testing, so the channel testing can be skipped once registration is filed.',
+      'It is required only on fibre installs to cover the splices, never on copper systems.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Manufacturer warranties — typically 20-25 years on the cabling system — require registration and evidence of approved-installer status. The handover pack carries the proof. Without it, the warranty is theoretical: when a fault appears in year 7, the client is asked for the registration evidence and cannot produce it, so the warranty claim fails. Warranty registration is part of the handover, not optional.',
+      'Manufacturer warranties — typically 20-25 years on the cabling system — require registration within a specified window (often 30-90 days post-install) plus evidence of approved-installer status and Class certification. The handover pack carries the proof. Without it, the warranty is theoretical: when a fault appears in year 7, the client is asked for the registration evidence and cannot produce it, so the claim fails. Warranty registration is part of the handover, not optional.',
   },
   {
     id: 8,
     question:
       'How does BS 7671:2018+A4:2026 Part 6 certification (Electrical Installation Certificate, Minor Works, EICR) interact with cabling administration on a §716 PoE install?',
     options: [
-      'They are the same document.',
-      'They are PARALLEL, COMPLEMENTARY records. BS 7671 Part 6 certification covers the electrical-safety dimensions (§716 PoE, §545 functional earthing, §444 EMC, §544.1.2 main bonding, §521.10.202 escape-route considerations). Cabling administration (TIA-606-D / BS EN 50174-1 §6) covers the physical infrastructure (Classes, link inventory, as-builts, warranty). The two packs reference each other but do not replace each other.',
-      'BS 7671 certification replaces cabling administration from A4:2026.',
-      'Cabling administration replaces BS 7671 certification.',
+      'They are the same single document, covering both electrical safety and cabling channel performance.',
+      'BS 7671 Part 6 certification replaces the cabling administration pack entirely from the A4:2026 edition.',
+      'They are parallel, complementary records — Part 6 covers electrical safety, cabling covers the infrastructure.',
+      'Cabling administration replaces the BS 7671 Part 6 certification on any PoE install from the A4:2026 edition.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Two parallel record streams. BS 7671 Part 6 covers electrical safety. Cabling administration covers performance and physical infrastructure. From 15 April 2026, with §716 and §545 in scope, both packs are produced on a typical structured-cabling install with PoE — the EIC documents the regulatory compliance; the cabling pack documents the Class certification and physical record.',
+      'Two parallel record streams. BS 7671 Part 6 certification covers the electrical-safety dimensions (§716 PoE, §545 functional earthing, §444 EMC, §544.1.2 main bonding, §521.10.202 escape-route considerations). Cabling administration (TIA-606-D / BS EN 50174-1 §6) covers the physical infrastructure (Classes, link inventory, as-builts, warranty). From 15 April 2026, with §716 and §545 in scope, both packs are produced and reference each other but do not replace each other.',
   },
   {
     id: 9,
     question:
       'A change is made to a cabling system in year 3 (a new outlet is added in an office). What records must be updated and where?',
     options: [
-      'No records need updating.',
-      'The identifier register (new outlet identifier, new patch panel port identifier, link traceability), the as-built drawings (new outlet location, new horizontal run route), the test results (the new link tested to its Class), the warranty register (if the change involves new components from the warranty programme), and the change-control log (date, description, authorised by, tested by). The same TIA-606-D / BS EN 50174-1 §6 discipline applies to a year-3 change as to the original install.',
-      'A verbal note to the facilities manager.',
-      'Only the test results.',
+      'No records need updating for a single added outlet in an existing office.',
+      'A verbal note to the facilities manager recording the new outlet is sufficient.',
+      'Only the link test results for the newly added outlet need to be filed.',
+      'The identifier register, as-built drawings, test results, warranty register and change-control log all need updating.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "Change control is part of the lifecycle administration. A new outlet means: identifier register updated, as-builts updated, link tested and added to test record, warranty maintained, change logged. Skip any one and the system{`'`}s administration drifts from the install — and within a few cycles the records are unreliable. The handover pack only stays useful if it is maintained.",
+      "Change control is part of the lifecycle administration. A new outlet means: identifier register updated (new outlet and port identifiers, link traceability), as-builts updated (location and run route), link tested to its Class and added to the test record, warranty maintained if new programme components are used, and the change logged (date, description, authorised by, tested by). The same TIA-606-D / BS EN 50174-1 §6 discipline applies to a year-3 change as to the original install — skip any one and the records drift from reality.",
   },
   {
     id: 10,
     question:
       'You inherit a 2015-vintage office cabling install with no records — no identifier register, no as-builts, no test results, no warranty registration. What is the right immediate action?',
     options: [
-      'Continue working — records are optional.',
-      'Treat the cabling as unverified. Commission a full re-survey: continuity / link mapping every link to recover the identifier hierarchy; produce as-built drawings from physical inspection; channel-test every link to its Class; document what is found; contact the manufacturer about retrospective warranty status (often unrecoverable). This is expensive but it converts an unmaintainable system into a maintainable one — and it is far cheaper than re-cabling.',
-      'Re-cable the entire building immediately.',
-      'Replace all components blindly.',
+      'Treat it as unverified and commission a full re-survey to rebuild the administration retrospectively.',
+      'Continue working as normal, since records are optional once the system is already in service.',
+      'Re-cable the entire building immediately, before carrying out any survey of the existing links.',
+      'Replace all the active and passive components blindly with current-generation equivalents.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'No records = unverified system. The recovery path is a re-survey + retrospective administration build: link mapping recovers the identifier hierarchy; physical inspection produces as-builts; channel testing documents the Class; manufacturer engagement attempts warranty recovery. Expensive (typically 5-15 % of original install cost) but converts a one-shot system into a maintainable one. Re-cabling is the alternative — and it is more expensive than recovery in almost every case.',
+      'No records = unverified system. The recovery path is a re-survey plus retrospective administration build: continuity / link mapping recovers the identifier hierarchy; physical inspection produces as-builts; channel testing documents the Class; manufacturer engagement attempts warranty recovery (often unrecoverable). Expensive (typically 5-15% of original install cost) but converts a one-shot system into a maintainable one. Re-cabling is the alternative — and it is more expensive than recovery in almost every case.',
   },
 ];
 

@@ -129,9 +129,9 @@ const quizQuestions = [
       'Why do forced convection systems typically have higher heat transfer rates than natural convection?',
     options: [
       'Higher fluid velocities increase the heat transfer coefficient',
-      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'They transfer heat primarily by convection (50-70%)',
-      'Water has higher thermal conductivity and specific heat capacity',
+      'The temperature difference is always greater in forced systems',
+      'The surface area is automatically larger in forced systems',
+      'Forced convection transfers heat by radiation instead of convection',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is surface film resistance in building heat transfer calculations?',
     options: [
-      'They transfer heat primarily by convection (50-70%)',
+      'The thermal resistance of the bulk insulation within the wall',
       'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'Temperature difference between inside and outside creating buoyancy-driven airflow',
-      'Higher fluid velocities increase the heat transfer coefficient',
+      'The resistance of the cavity air gap between two leaves of a wall',
+      'The total resistance of all the materials making up the wall',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "In a naturally ventilated building, what causes the 'stack effect'?",
     options: [
-      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
+      'Mechanical fans drawing air up through the building',
       'Temperature difference between inside and outside creating buoyancy-driven airflow',
-      'Higher fluid velocities increase the heat transfer coefficient',
-      'Water has higher thermal conductivity and specific heat capacity',
+      'Wind pressure acting equally on all faces of the building',
+      'The thermal mass of the building fabric storing heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is the heat transfer coefficient for water convection much higher than for air?',
     options: [
-      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'Higher fluid velocities increase the heat transfer coefficient',
+      'Water is denser, so it sinks rather than rises when heated',
+      'Water always flows faster than air in building services systems',
       'Water has higher thermal conductivity and specific heat capacity',
-      'Temperature difference between inside and outside creating buoyancy-driven airflow',
+      'Water transfers heat mainly by radiation rather than convection',
     ],
     correctAnswer: 2,
     explanation:

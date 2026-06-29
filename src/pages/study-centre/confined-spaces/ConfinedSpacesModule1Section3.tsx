@@ -76,8 +76,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Approximately how many people die each year in the UK in confined-space incidents?',
-    options: ['Around 5', 'Around 15', 'Around 50', 'Around 100'],
-    correctAnswer: 1,
+    options: ['Around 15', 'Around 5', 'Around 50', 'Around 100'],
+    correctAnswer: 0,
     explanation:
       'HSE statistics indicate that approximately 15 people die each year in the UK as a result of confined-space incidents. This may sound low, but it is disproportionately high given the relatively small number of confined-space entries that take place compared to other work activities. Crucially, around 60% of these fatalities are rescuers, not original entrants.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'Which of the following gases is both odourless and colourless, making it impossible to detect without instruments?',
     options: [
+      'Carbon monoxide (CO)',
       'Hydrogen sulphide (H\u2082S)',
       'Ammonia (NH\u2083)',
-      'Carbon monoxide (CO)',
       'Chlorine (Cl\u2082)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Carbon monoxide (CO) is completely odourless, colourless, and tasteless. It cannot be detected by human senses at any concentration. It binds to haemoglobin in the blood approximately 200 times more readily than oxygen, causing rapid oxygen starvation of tissues. Symptoms of CO poisoning (headache, dizziness, confusion) are easily mistaken for other conditions, and at high concentrations it causes unconsciousness and death without any warning.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'What is the primary reason workers underestimate confined-space risks?',
     options: [
       'They have received too much training',
-      'The hazards are often invisible — you cannot see, smell, or taste oxygen depletion or many toxic gases',
       'Confined spaces are always clearly labelled as dangerous',
       'Atmospheric conditions never change once tested',
+      'The hazards are often invisible — you cannot see, smell, or taste oxygen depletion or many toxic gases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The fundamental reason workers underestimate confined-space risk is that the hazards are invisible. Oxygen depletion has no colour, smell, or taste. Carbon monoxide is undetectable by human senses. Previous safe entries create a false sense of security. Time pressure and the 'it's only a quick look' mentality compound the problem. Unlike visible hazards (heights, moving machinery), atmospheric hazards give no visual warning until someone collapses.",
   },

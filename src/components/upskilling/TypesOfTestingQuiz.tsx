@@ -17,8 +17,8 @@ const typesOfTestingQuestions: QuizQuestion[] = [
   {
     id: 2,
     question: 'What is the minimum insulation resistance value for circuits rated up to 500V?',
-    options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
-    correctAnswer: 1,
+    options: ['0.5 MΩ', '2 MΩ', '1 MΩ', '5 MΩ'],
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits rated up to 500V to ensure adequate insulation between conductors and to earth.',
   },
@@ -26,20 +26,20 @@ const typesOfTestingQuestions: QuizQuestion[] = [
     id: 3,
     question: 'What does an insulation resistance test help detect?',
     options: [
-      'Overheating of conductors',
       'Damaged insulation or short paths',
+      'Overheating of conductors',
       'Loose terminals',
       'Incorrect RCD rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Insulation resistance testing detects damaged insulation or unintentional connection paths between conductors or to earth, which could cause dangerous conditions.',
   },
   {
     id: 4,
     question: 'Which test confirms that a fault would disconnect the supply fast enough?',
-    options: ['Continuity', 'RCD test', 'Earth fault loop impedance (Zs)', 'Visual inspection'],
-    correctAnswer: 2,
+    options: ['Continuity', 'Earth fault loop impedance (Zs)', 'RCD test', 'Visual inspection'],
+    correctAnswer: 1,
     explanation:
       'Earth fault loop impedance (Zs) testing confirms that fault current can flow quickly enough to operate protective devices within the required disconnection times.',
   },
@@ -48,11 +48,11 @@ const typesOfTestingQuestions: QuizQuestion[] = [
     question: 'What is the correct order to begin testing after visual inspection?',
     options: [
       'RCD > Functional > Continuity',
-      'Continuity > Insulation > Polarity',
       'Earth loop > PSC > Continuity',
       'Functional > PSC > Insulation',
+      'Continuity > Insulation > Polarity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct testing sequence after visual inspection is: Continuity, then Insulation Resistance, then Polarity. This follows the BS7671 prescribed order.',
   },
@@ -68,12 +68,12 @@ const typesOfTestingQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What does PSC stand for in electrical testing?',
     options: [
-      'Protective Safety Current',
       'Prospective Short Circuit (current)',
+      'Protective Safety Current',
       'Primary Supply Connection',
       'Power System Continuity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PSC stands for Prospective Short Circuit current - the maximum current that could flow during a short circuit fault between live conductors.',
   },
@@ -82,11 +82,11 @@ const typesOfTestingQuestions: QuizQuestion[] = [
     question: 'During continuity testing of a ring final circuit, what should you measure?',
     options: [
       'Only the CPC continuity',
-      'Line to neutral resistance',
       'Line, neutral, and CPC continuity separately',
+      'Line to neutral resistance',
       'Earth fault loop impedance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Ring final circuit continuity testing requires measuring the line, neutral, and CPC (circuit protective conductor) continuity separately to ensure the ring is complete.',
   },
@@ -95,11 +95,11 @@ const typesOfTestingQuestions: QuizQuestion[] = [
     question: 'Why must polarity testing be carried out?',
     options: [
       'To check cable colours are correct',
-      'To ensure protective devices are in the line conductor',
       'To measure voltage levels',
+      'To ensure protective devices are in the line conductor',
       'To test RCD sensitivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Polarity testing ensures that protective devices (fuses, MCBs) are connected in the line conductor and that single-pole switches control the line conductor, not the neutral.',
   },
@@ -109,11 +109,11 @@ const typesOfTestingQuestions: QuizQuestion[] = [
       'What should you do if insulation resistance readings are below the minimum required values?',
     options: [
       'Continue with testing and note it on the certificate',
-      'Stop testing and investigate the cause before proceeding',
       'Increase the test voltage and re-test',
       'Only test the functional operation',
+      'Stop testing and investigate the cause before proceeding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Low insulation resistance indicates a potentially dangerous condition. Testing must stop and the fault must be investigated and corrected before proceeding with further tests.',
   },

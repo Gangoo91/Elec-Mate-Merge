@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is the Outside Air Temperature (OAT) sensor + why is it electrically wired?',
     options: [
-      'Decorative',
-      'OAT sensor measures outdoor air temperature for the heat pump controller. Drives weather compensation (primary flow temperature set based on outdoor temperature — colder outside = higher primary flow); defrost cycle scheduling (frost build-up correlates with outdoor temperature + humidity); COP optimisation. Typically 2-core LV screened cable from outdoor sensor to indoor controller. Mounting position critical: shaded north / east wall, away from direct sun + heat sources',
-      'Not used',
-      'Random',
+      'It feeds outdoor temperature to the controller for weather compensation and defrost — 2-core LV screened cable',
+      'It is a frost-protection thermostat that only switches the outdoor unit trace heater on below 0 °C',
+      'It is a backup sensor for the cylinder, reading outdoor air only when the cylinder probe fails',
+      'It measures discharge-air temperature at the fan outlet, so it is mounted directly in the fan stream',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Outside Air Temperature (OAT) sensor is the heat pump controller’s outdoor temperature input. Drives multiple control functions: (1) Weather compensation — primary flow temperature setpoint based on outdoor temperature (colder outside → higher primary flow to compensate for greater building heat loss; warmer → lower primary flow to maintain efficiency); (2) Defrost cycle scheduling — frost build-up correlates with outdoor temperature + humidity; controller schedules defrost based on outdoor conditions + coil temperature; (3) COP optimisation — controller adjusts compressor speed (VSD) to maintain target COP at the current outdoor temperature. Electrical install: typically 2-core LV screened cable from outdoor sensor to indoor controller. Mounting position critical: shaded north or east wall (avoid direct sun heating the sensor), away from heat sources (extract vents, outdoor unit fan exhaust), at least 2-3 m from outdoor unit (to read true ambient not unit-affected). Cert evidence bundle records the sensor location + cable run + functional verification at commissioning.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'OpenTherm vs EBus vs manufacturer-proprietary controls — what are they?',
     options: [
-      'Same thing',
-      'OpenTherm: open-standard protocol for boiler / heat pump ↔ thermostat communication. EBus: Vaillant + bosch proprietary 2-wire protocol. Manufacturer-proprietary: vendor-specific bus (Daikin P1 P2, Mitsubishi MELCloud, NIBE myUplink). OpenTherm widely compatible with third-party smart thermostats (Tado, Hive, Nest, Honeywell evohome); proprietary buses lock customer into vendor ecosystem. Cable: typically 2-core LV screened',
-      'Random',
-      'Same as mains',
+      'OpenTherm and EBus are the same open standard under two brand names, both fully vendor-neutral',
+      'They are three competing 24 V doorbell-style wiring methods, differing only in conductor colour',
+      'OpenTherm is an open third-party-compatible standard; EBus is Vaillant/Bosch; Daikin/MELCloud/myUplink lock the vendor',
+      'They are 230 V mains zone-valve wiring standards, not low-voltage communication protocols',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Heat pump ↔ thermostat communication protocols: (1) OpenTherm — open-standard 2-wire bidirectional protocol (developed by Honeywell, now industry standard). Widely supported by third-party smart thermostats (Tado, Hive, Nest, Honeywell evohome, Drayton Wiser, Worcester Bosch Wave). Customer-facing benefit: choice of thermostat brand independent of heat pump brand. (2) EBus — Vaillant + Bosch proprietary 2-wire protocol. Higher-bandwidth than OpenTherm; supports advanced control features. Restricted to vendor-compatible thermostats. (3) Manufacturer-proprietary buses: Daikin P1 P2 (2-wire); Mitsubishi MELCloud (Wi-Fi-based for app integration); NIBE myUplink (similar); Vaillant multiMATIC. Vendor ecosystem lock-in. UK 2025-26 install reality: customer may prefer third-party thermostat → choose heat pump with OpenTherm support; customer may want full integrated app → use proprietary bus + manufacturer app. Cable: 2-core LV screened typical (0.5-0.75 mm² conductor). Cert evidence bundle records the protocol + cable type + commissioning verification.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Zone valves + multi-zone heating — what does the electrical installer wire?',
     options: [
-      'Nothing',
-      '230 V AC zone valves (typical 2-port spring-return motor) open/close to direct primary flow to specific zones (e.g. upstairs vs downstairs, or rooms by use). Electrical scope: wire each zone valve (live + neutral + earth + auxiliary switch terminals) back to wiring centre + heat pump controller. Zone thermostat senses zone demand → controller energises zone valve → valve opens + auxiliary switch confirms position → primary flow diverted',
-      'Customer DIY',
-      'No valves',
+      'Only a low-voltage signal wire to each valve, since the spring-return motor takes power from the thermostat',
+      'Nothing electrical — zone valves are entirely thermo-mechanical, operating from the primary water temperature',
+      'A direct mains feed from the consumer unit to each valve, with no wiring centre or auxiliary switch at all',
+      '230 V AC 2-port valves wired (L, N, E + aux switch) to the wiring centre, the aux switch confirming open before flow',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Multi-zone heating system electrical scope: (1) 230 V AC zone valves typical (2-port spring-return motor, e.g. Honeywell V4043, Drayton ZV2, Esbe SRZ). Each valve opens/closes to direct primary flow to a specific zone. (2) Zone thermostats sense zone demand (typically wired-thermostat to receiver/wiring centre + zone valve, or wireless thermostat via app). (3) Wiring centre — junction box / control board where zone thermostats + zone valves + heat pump controller all interconnect. UK 2025-26 typical: Honeywell wiring centre / Drayton equivalent. (4) Heat pump controller integration — when any zone calls for heat, controller starts compressor + opens relevant zone valve; auxiliary switch on zone valve confirms position before compressor flows primary water. Wiring: 5-core flex from each zone valve to wiring centre (L, N, E, control wire, auxiliary switch wire); thermostat 2-3 core to wiring centre; primary heat pump controller integration via OpenTherm / EBus / proprietary protocol. Cert evidence bundle: zone valve circuit EICs + wiring centre commissioning + functional test of each zone.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Smart meter integration with heat pump for time-of-use tariff optimisation?',
     options: [
-      'Not possible',
-      'Heat pump controller reads smart meter via ALCS (Auxiliary Load Control Switch) signal or via consumer-side smart appliance interface (Wi-Fi + tariff API e.g. Octopus Cosy / Heat Pump tariff). At cheap-tariff hours: compressor + immersion run priority + cylinder over-heat slightly to coast through expensive hours. UK 2025-26 emerging — depends on tariff + controller compatibility. Not BS 7671 normative but operationally significant',
-      'Random',
-      'Customer manual',
+      'The smart meter physically disconnects the heat pump outside cheap hours via its own main contactor',
+      'The controller reads an ALCS relay or Wi-Fi tariff API and runs priority in cheap hours — not BS 7671 normative',
+      'The DNO remotely switches the heat pump on and off to match the tariff windows over the supply itself',
+      'The customer must manually switch the heat pump on and off at the cheap hours every single day',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Standard UK 2025-26 heat pump controls install — what wiring scope?',
     options: [
-      'No wiring',
-      'Indoor controller (e.g. Vaillant multiMATIC, Mitsubishi MELCloud, Daikin Onecta, NIBE myUplink) wired to: heat pump indoor unit (manufacturer bus); OAT sensor outdoor (2-core LV screened); cylinder thermostats (2-core LV); zone thermostat(s) via OpenTherm / EBus / proprietary; zone valves (230 V AC via wiring centre); smart meter interface (ALCS / Wi-Fi); customer-facing display / app integration. Low-voltage signal wiring on dedicated controls way + mains 230 V wiring for zone valves',
-      'Just mains',
-      'Customer DIY',
+      'Indoor controller, OAT sensor, cylinder and zone thermostats, 230 V zone valves and smart-meter interface — LV signal plus mains',
+      'Just a single mains feed to the outdoor unit, with all sensing handled internally by the heat pump',
+      'Only the OAT sensor and the indoor controller; thermostats and zone valves are the plumber’s scope',
+      'A controller and zone valves only, since OAT sensing and smart-meter input are added by the supplier later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard UK 2025-26 heat pump controls electrical scope: (1) Indoor controller (manufacturer model — Vaillant multiMATIC VR70 / VR91, Mitsubishi MELCloud WiFi adapter + RC remote, Daikin Onecta interface, NIBE myUplink etc.). (2) OAT sensor outdoor — 2-core LV screened cable, north / east shaded wall location. (3) Cylinder thermostats (1 or 2 sensors) — 2-core LV at cylinder. (4) Zone thermostats — wired or wireless to wiring centre / receiver; OpenTherm / EBus / proprietary protocol to heat pump controller. (5) Zone valves — 230 V AC via wiring centre; 5-core flex from each. (6) Smart meter interface — ALCS relay or Wi-Fi (heat pump controller on customer’s Wi-Fi network). (7) Customer-facing display / app. Wiring practice: LV signal wiring (controller + sensors + protocol) on dedicated controls way at CU (low-current 6 A RCBO typical); 230 V mains wiring for zone valves on separate way. Wiring centre / junction box near cylinder location typical. Cert evidence bundle: per-circuit EIC + commissioning test of each zone + functional verification.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'OAT sensor mounting — what location is correct vs incorrect?',
     options: [
-      'Anywhere',
-      'CORRECT: shaded north or east wall, 2-3 m from outdoor unit, away from direct sun + heat sources + extract vents, at least 1 m above ground to avoid snow burial / soil-temperature effects. INCORRECT: south-facing wall in sun (reads false high); near outdoor unit fan exhaust (reads false low or high depending on cycle); inside porch / sheltered area (reads false warm). Mounting location drives controller accuracy = heat pump efficiency',
-      'Direct sun',
-      'In oven',
+      'On a south-facing wall in full sun, keeping it accessible and letting it average the daytime warmth',
+      'A shaded north/east wall, 2-3 m from the unit, clear of sun, extract vents and ground-level snow',
+      'Inside a warm porch, where it is sheltered from the weather and protected from impact damage',
+      'Directly above the outdoor unit fan, so it tracks the air the heat pump is actually drawing in',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Customer wants Tado / Nest / Hive smart thermostat — which heat pump protocols are compatible?',
     options: [
-      'None',
-      'OpenTherm-compatible heat pumps work with Tado / Nest / Hive / Honeywell evohome / Drayton Wiser smart thermostats via OpenTherm interface or bridge accessory. UK 2025-26 OpenTherm-compatible heat pumps (typically via gateway / bridge): Worcester Bosch (some models), Viessmann Vitocal (some models). Vaillant uses EBus natively (multiMATIC + sensoCOMFORT controllers); OpenTherm via bridge accessory if needed. EBus-only or proprietary-only heat pumps (Daikin, Mitsubishi, NIBE typically) do NOT directly interface with these smart thermostats — customer uses vendor’s app instead',
-      'Random',
-      'No compatibility',
+      'Any smart thermostat works with any heat pump, because they all share a common 230 V switching interface',
+      'Tado/Nest/Hive work only with proprietary buses; OpenTherm units must use the manufacturer app instead',
+      'OpenTherm heat pumps work with Tado/Nest/Hive via a bridge; EBus-only or proprietary units use the vendor app',
+      'Compatibility depends only on Wi-Fi band, so a 2.4 GHz thermostat pairs with any heat pump regardless of protocol',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'OpenTherm is the key protocol for third-party smart thermostat compatibility. OpenTherm-compatible heat pumps work with: Tado, Nest (3rd gen + Learning + Heat Link), Hive, Honeywell evohome, Drayton Wiser, Worcester Bosch Wave, Salus — typically via OpenTherm gateway / bridge accessory. UK 2025-26 OpenTherm-supportable heat pumps (verify per model + accessory): Worcester Bosch (some models, native OpenTherm), Viessmann Vitocal (some models). Vaillant aroTHERM Plus uses EBus natively (multiMATIC + sensoCOMFORT controllers); OpenTherm interface available via bridge accessory if needed. EBus-only or proprietary-only: Daikin (P1/P2 + Daikin Onecta app); Mitsubishi Ecodan (MELCloud app + remote controller); NIBE F2120 (myUplink app). For these heat pumps, customer uses vendor’s app for thermostat function — Tado / Nest / Hive direct integration not supported. Customer education at quote stage: confirm thermostat preference + match heat pump model. Cert evidence bundle: heat pump model + protocol + chosen thermostat + commissioning verification of communication.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Wiring centre + heat pump install — what is it + where?',
     options: [
-      'Not real',
-      'Wiring centre = junction box / control board where zone thermostats + zone valves + heat pump controller + cylinder thermostats all interconnect electrically. Typically mounted near the cylinder location (utility / plant room / airing cupboard). UK 2025-26 typical products: Honeywell ST9420C / ST9520C wiring centre; Drayton equivalent. Houses: terminal strip for all incoming + outgoing wiring + neutral + earth bus + dedicated relays for zone valve control + auxiliary switch returns',
-      'CU only',
-      'Outdoors',
+      'Another name for the consumer unit at the origin, where all the heat pump circuits are protected',
+      'The outdoor isolator enclosure, which doubles as the interconnection point for all the control wiring',
+      'A weatherproof box mounted outdoors beside the heat pump, housing the zone-valve relays and thermostats',
+      'A junction box near the cylinder where thermostats, zone valves and the controller interconnect via a terminal strip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Wiring centre is the central electrical interconnection point for the heat pump system controls. Typical location: near the cylinder (utility / plant room / airing cupboard) for short cable runs to cylinder thermostats + zone valves + nearby zones. UK 2025-26 typical products: Honeywell ST9420C (single-channel) or ST9520C (two-channel); Drayton wiring centre equivalents. Contents: (1) terminal strip / DIN rail for all incoming + outgoing wiring; (2) neutral + earth bus bars; (3) dedicated relays for zone valve control (typically 230 V AC coils controlled by 24 V signal from thermostat); (4) auxiliary switch return terminals (zone valve confirms open before flow); (5) cable entry glands. Wiring: thermostat connections in (2-3 core LV); zone valve connections out (5-core flex 230 V); heat pump controller protocol connection (OpenTherm / EBus / proprietary); cylinder thermostats in. Cert evidence bundle: wiring centre product + commissioning + per-circuit functional test.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'Customer-facing controller / app — what does the electrical installer commission?',
     options: [
-      'Nothing',
-      'Hardware: indoor controller (touchscreen / display) mounted at convenient location (typically hallway 1.4-1.5 m height). Network: Wi-Fi connection for app integration (heat pump controller on customer’s home network). App: customer downloads vendor app (Vaillant multiMATIC, MELCloud, Daikin Onecta, NIBE myUplink, Mixergy etc.); links account to the specific heat pump serial. Functional test: temperature setpoint change via app reflected at heat pump within seconds. Customer handover: app installed + account set up + operation explained',
-      'Customer alone',
-      'No app',
+      'Only mount the controller; Wi-Fi and app pairing are left for the customer to complete after handover',
+      'Mount the controller, connect home Wi-Fi, link the vendor app to the serial, verify a setpoint change reaches the unit',
+      'Only pair the app; the controller is pre-mounted and pre-wired by the cylinder manufacturer on delivery',
+      'Configure the app on the installer’s own phone and account, then transfer ownership to the customer remotely',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Heat pump controls failure mode — what happens if controls Wi-Fi / app goes offline?',
     options: [
-      'Heat pump stops',
-      'Heat pump continues operating per cached schedule + local controller (independent of cloud). Customer loses app remote control + remote monitoring. Smart meter ALCS signal continues (hardware relay independent of Wi-Fi). Manual override via indoor controller available. Heat pump-side wiring + protective devices unaffected. Cert evidence bundle records this fall-back behaviour for customer education',
-      'Heating stops forever',
-      'Random',
+      'The heat pump keeps running on its cached schedule and local controller; only remote app control and monitoring are lost',
+      'The heat pump stops the moment Wi-Fi is lost, because the controller needs the cloud to authorise the compressor',
+      'Heating stops until an engineer re-pairs the app, as the local controller holds no schedule of its own',
+      'The unit drops to immersion-only operation, since the compressor cannot run without the tariff API',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heat pump controls failure mode (Wi-Fi / app offline): heat pump continues operating per the cached schedule + local controller. The compressor + immersion + zone valves + thermostats all operate via the local wiring centre + heat pump controller — independent of cloud / app. Customer loses: remote setpoint change via app; remote monitoring; cloud-based tariff updates (some controllers); over-the-air firmware updates. Customer retains: local manual override via indoor controller; existing schedule continues; smart meter ALCS signal continues (hardware relay independent of Wi-Fi); compressor + zone valves + immersion all function. BS 7671 protective architecture unaffected by controls failure: RCD trip-time, ADS, fault current detection all hardware-level. Cert evidence bundle: fall-back behaviour documented for customer education + handover. This is the OPPOSITE pattern to some commercial OCPP-EV installs where loss of CPMS network can affect operation; heat pump fall-back is robust by design.',
   },

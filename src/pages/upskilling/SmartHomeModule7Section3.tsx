@@ -47,24 +47,24 @@ const quizQuestions = [
   {
     question: 'Why is channel selection important for 2.4 GHz Wi-Fi networks?',
     options: [
-      'It affects the colour of the LED on the router',
       'To avoid interference from overlapping channels used by neighbours',
-      'It determines the maximum number of devices',
-      'It has no significant impact on performance',
+      'It changes the colour of the LED on the router',
+      'It determines the maximum number of connected devices',
+      'It has no significant impact on real-world performance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'In the 2.4 GHz band, only channels 1, 6, and 11 are non-overlapping. Using these channels prevents interference from neighbouring networks on overlapping channels.',
   },
   {
     question: 'What is the primary purpose of a mesh Wi-Fi system in a smart home installation?',
     options: [
-      'To reduce internet costs',
+      'To reduce the monthly internet cost',
+      'To connect wired Ethernet devices only',
       'To provide consistent coverage throughout the property',
-      'To increase internet speed',
-      'To connect wired devices only',
+      'To increase the headline internet speed',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Mesh systems use multiple access points that work together to provide seamless, consistent Wi-Fi coverage throughout larger properties, eliminating dead zones.',
   },
@@ -72,12 +72,12 @@ const quizQuestions = [
     question:
       'When testing Z-Wave or Zigbee signal strength, what indicates a healthy mesh network?',
     options: [
-      'All devices connecting directly to the hub',
+      'Every device connecting directly to the hub',
+      'Only battery-powered devices being present',
+      'The maximum number of devices being connected',
       'Devices routing through multiple hops with acceptable latency',
-      'Only battery-powered devices present',
-      'Maximum number of devices connected',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A healthy mesh network has devices routing through intermediate nodes (hops) where direct hub connection is not possible, while maintaining acceptable response times.',
   },

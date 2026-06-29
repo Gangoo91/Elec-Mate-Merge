@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     question:
       "Bernoulli's equation states that the sum of which three energy terms remains constant along a streamline?",
     options: [
-      'Avoid manual handling altogether wherever possible',
+      'Temperature, density and viscosity',
       'Pressure, velocity (kinetic), elevation (potential)',
-      'Loose connections or magnetostriction',
-      'The 6-year limitation period restarts from that date',
+      'Mass, momentum and turbulence',
+      'Flow rate, friction and surface tension',
     ],
     correctIndex: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "In Bernoulli's equation P + ½ρv² + ρgh = constant, what does the term ½ρv² represent?",
     options: [
-      '1 lux along the centre line',
-      'Reason for incomplete testing',
+      'Static pressure at the wall',
+      'Potential energy due to elevation',
       'Dynamic (velocity) pressure',
-      'The method of loci (memory palace)',
+      'Total head loss to friction',
     ],
     correctAnswer: 2,
     explanation:
@@ -213,10 +213,10 @@ const quizQuestions = [
     id: 10,
     question: 'In building services, the Bernoulli principle explains why:',
     options: [
-      'They can give misleading results if incorrectly set',
-      'At least 15 minutes of continuous flow',
+      'Larger pipe diameters always reduce flow rate',
+      'Pump head is independent of flow velocity',
       'Partially closed valves cause large pressure drops',
-      'Battery voltage must not fall below 50% at end of rated duration',
+      'Friction losses fall as velocity increases',
     ],
     correctAnswer: 2,
     explanation:
@@ -227,9 +227,9 @@ const quizQuestions = [
     question:
       'A pump adds energy to a fluid system. In the extended Bernoulli equation, this appears as:',
     options: [
-      'L-L and N-N similar, CPC may be higher',
-      'Load requirements and current demand',
-      'The DB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s outgoing line terminal',
+      'A friction loss term on the upstream side',
+      'A reduction in the elevation head',
+      'A negative term subtracted from total head',
       'Added head (positive pump term)',
     ],
     correctAnswer: 3,
@@ -242,9 +242,9 @@ const quizQuestions = [
       'At a stagnation point in fluid flow, the velocity is zero. What happens to the pressure?',
     options: [
       'Pressure reaches its maximum (stagnation pressure)',
-      'Operating below maximum ratings to ensure reliability',
-      'Fail for non-compliance with specification',
-      'Because Ze is typically too high for overcurrent devices alone',
+      'Pressure drops to its minimum value',
+      'Pressure falls below atmospheric pressure',
+      'Pressure becomes equal to the dynamic pressure',
     ],
     correctAnswer: 0,
     explanation:

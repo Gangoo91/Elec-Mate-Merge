@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'alarm-priorities-purpose',
     question: 'Why must alarms be prioritised instead of treating all events the same?',
     options: [
-      'To reduce the total number of alarms generated',
-      'To ensure critical safety issues receive immediate attention while minor issues are handled appropriately',
-      'To make all alarms trigger faster',
+      'So critical safety issues get immediate attention over minor ones',
+      'To reduce the total number of alarms that are generated',
+      'To make every alarm trigger more quickly than before',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Without prioritisation, operators become overwhelmed with low-level alerts and false alarms, potentially causing them to miss critical safety issues that require immediate action.',
   },
@@ -22,9 +22,9 @@ const quickCheckQuestions = [
     id: 'escalation-purpose',
     question: 'What is the purpose of escalation in alarm management?',
     options: [
-      'To make alarms louder over time',
-      'To ensure unacknowledged alarms are pushed to higher responsibility levels until resolved',
-      'To automatically fix the problem',
+      'To make the alarms grow louder over time',
+      'To push unacknowledged alarms up the chain until resolved',
+      'To automatically fix the underlying problem',
     ],
     correctIndex: 1,
     explanation:
@@ -34,9 +34,9 @@ const quickCheckQuestions = [
     id: 'alarm-circuit-labelling',
     question: 'Why should alarm circuits always be clearly labelled?',
     options: [
-      'To meet colour coding requirements only',
-      'To make installation faster',
-      'To prevent confusion between different alarm types (fire, fault, status) during emergencies',
+      'To meet the cable colour coding requirements only',
+      'To make the installation work faster on site',
+      'To avoid confusing fire, fault and status types in an emergency',
     ],
     correctIndex: 2,
     explanation:
@@ -66,12 +66,12 @@ const quizQuestion = {
   question:
     "A hospital boiler fault alarm was configured as 'low priority' and operators ignored it during the night shift. What does this scenario demonstrate?",
   options: [
-    'The BMS was working correctly',
-    'Alarm priorities and escalation must be configured correctly to prevent dangerous oversights',
-    'Operators should acknowledge all alarms regardless of priority',
-    'Boiler alarms are always minor issues',
+    'The BMS was working exactly as it should',
+    'Operators must acknowledge every alarm regardless of priority',
+    'Boiler faults rarely affect the building heating',
+    'Alarm priorities and escalation must be configured correctly',
   ],
-  correctAnswer: 1,
+  correctAnswer: 3,
   explanation:
     "The scenario demonstrates why correct alarm prioritisation is critical. The boiler locked out by morning, causing heating loss across hospital wards. After reprogramming priorities and adding escalation logic, critical plant alarms were pushed to on-call engineers' phones.",
 };

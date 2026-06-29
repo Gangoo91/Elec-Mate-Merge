@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       "The New Economics Foundation's Five Ways to Wellbeing are Connect, Be Active, Take Notice, Keep Learning, and Give. A site manager starts a weekly 'skills swap' lunchtime session where electricians teach each other new techniques. Which of the Five Ways does this BEST represent?",
     options: [
+      'Keep Learning — because they are developing new skills and satisfying curiosity',
       'Connect — because the team is socialising together',
       'Be Active — because they are doing something during their break',
-      'Keep Learning — because they are developing new skills and satisfying curiosity',
       'Give — because they are volunteering their knowledge to help others',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "While a skills swap session involves elements of Connect (social interaction) and Give (sharing knowledge), it BEST represents Keep Learning. The core purpose is developing new skills and satisfying curiosity — both of which are central to the Keep Learning pillar. The New Economics Foundation's research shows that continued learning throughout life enhances self-esteem, encourages social interaction, and promotes a more active life. Workplace initiatives that foster learning also improve engagement and job satisfaction.",
   },
@@ -62,10 +62,10 @@ const quickCheckQuestions = [
     options: [
       'Because employees who are present but unwell are paid more than absent employees',
       'Because presenteeism is easier to measure and track than absenteeism',
-      'Because employees working while unwell have reduced productivity, make more errors, are at greater risk of accidents, and may worsen their condition leading to longer-term absence',
       'Because the Equality Act 2010 requires employers to pay double wages to employees with mental health conditions',
+      'Because employees working while unwell have reduced productivity, make more errors, are at greater risk of accidents, and may worsen their condition leading to longer-term absence',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Presenteeism is estimated to cost UK employers between 1.5 and 2 times more than absenteeism. When employees work while unwell — whether physically or mentally — their productivity is significantly reduced, they make more mistakes, they are at higher risk of workplace accidents (particularly dangerous on construction sites), and they may worsen their condition, ultimately leading to longer-term absence. Unlike absenteeism, presenteeism is harder to measure because the employee is physically present, making it an invisible but substantial cost to organisations.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       "Which of the following is NOT one of the New Economics Foundation's Five Ways to Wellbeing?",
     options: [
+      'Compete — strive to outperform colleagues',
       'Connect — maintain social relationships',
       'Be Active — engage in physical activity',
-      'Compete — strive to outperform colleagues',
       'Take Notice — practise mindfulness and awareness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The Five Ways to Wellbeing are Connect, Be Active, Take Notice, Keep Learning, and Give. 'Compete' is not one of the five ways. The framework is based on evidence of what promotes individual wellbeing and is designed to be accessible to everyone. Competition and comparison with others can actually be detrimental to mental health, whereas the five evidence-based actions focus on positive engagement with life and others.",
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'A commitment statement from senior leadership',
       'Details of support available including EAP and occupational health',
-      'A requirement for employees to disclose all mental health diagnoses to their line manager',
       'A confidentiality statement explaining how disclosures will be handled',
+      'A requirement for employees to disclose all mental health diagnoses to their line manager',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A mental health policy should NEVER require employees to disclose mental health diagnoses. Disclosure must always be voluntary and handled with strict confidentiality. Requiring disclosure would be a breach of data protection law and could discourage people from seeking help. A good policy creates an environment where people feel safe to disclose if they choose to, but it must never be mandatory. The policy should include a commitment statement, roles and responsibilities, available support, confidentiality procedures, return-to-work guidance, and reasonable adjustment processes.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
       'Under the Equality Act 2010, which of the following statements about reasonable adjustments for mental health conditions is correct?',
     options: [
       'Reasonable adjustments only apply to physical disabilities, not mental health conditions',
-      'Employers must make reasonable adjustments for employees whose mental health condition has a substantial and long-term adverse effect on their ability to carry out normal day-to-day activities',
       'Reasonable adjustments only apply to employers with more than 50 employees',
+      'Employers must make reasonable adjustments for employees whose mental health condition has a substantial and long-term adverse effect on their ability to carry out normal day-to-day activities',
       'Employees must have been formally diagnosed by a psychiatrist before reasonable adjustments apply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Under the Equality Act 2010, a disability is defined as a physical or mental impairment that has a substantial and long-term (12 months or more) adverse effect on a person's ability to carry out normal day-to-day activities. This includes many mental health conditions such as depression, anxiety, PTSD, and bipolar disorder. The duty to make reasonable adjustments applies to ALL employers regardless of size. A formal psychiatric diagnosis is not required — what matters is the effect of the condition on the person's daily activities.",
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'Presenteeism is estimated to cost UK employers approximately how much more than absenteeism?',
     options: [
       'About the same amount',
-      '1.5 to 2 times more',
       '5 to 10 times more',
       'Presenteeism has no measurable cost',
+      '1.5 to 2 times more',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Research consistently estimates that presenteeism costs UK employers between 1.5 and 2 times more than absenteeism. The Centre for Mental Health estimated that presenteeism costs UK employers approximately 21.2 billion pounds per year, compared to 10.6 billion pounds for absenteeism. Presenteeism is harder to identify because the employee is physically present, but their reduced productivity, increased error rate, and risk of worsening their condition make it a significant hidden cost to organisations.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'According to NICE guidelines, what level of exercise has been shown to be effective in treating mild to moderate depression?',
     options: [
-      '10 minutes of gentle stretching once a week',
       '30 to 45 minutes of moderate-intensity exercise, three to five times per week',
+      '10 minutes of gentle stretching once a week',
       'Two hours of intense exercise every day',
       'Exercise has no evidence base for treating depression',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NICE recommends structured exercise programmes as a treatment option for mild to moderate depression. The evidence suggests that 30 to 45 minutes of moderate-intensity exercise (such as brisk walking, cycling, or swimming), three to five times per week, can produce significant improvements in mood and wellbeing. Exercise triggers the release of endorphins, reduces cortisol levels, improves sleep quality, and provides a sense of achievement — all of which contribute to better mental health.',
   },

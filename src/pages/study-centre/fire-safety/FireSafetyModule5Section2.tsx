@@ -89,8 +89,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which British/European Standard specifies the requirements for fire blankets?',
-    options: ['BS EN 3', 'BS EN 1869', 'BS EN 671-1', 'BS 5306-8'],
-    correctAnswer: 1,
+    options: ['BS EN 1869', 'BS EN 3', 'BS EN 671-1', 'BS 5306-8'],
+    correctAnswer: 0,
     explanation:
       'BS EN 1869 is the standard that governs fire blankets, covering their construction, materials (woven glass fibre, sometimes with silicone coating), testing requirements, and performance criteria. BS EN 3 covers portable fire extinguishers, BS EN 671-1 covers fixed firefighting systems including hose reels and hose systems, and BS 5306-8 covers the selection and positioning of portable fire extinguishers. Knowing the correct standard is essential for specifying, purchasing, and maintaining fire safety equipment.',
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
       'What is the primary limitation of hose reels when compared to portable fire extinguishers?',
     options: [
       'Hose reels have a shorter reach than extinguishers',
-      'Hose reels can only be used on Class A fires involving solid combustibles',
       'Hose reels require annual maintenance whereas extinguishers do not',
+      'Hose reels can only be used on Class A fires involving solid combustibles',
       'Hose reels are more expensive to install than extinguishers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The primary limitation of hose reels is that they can only be used on Class A fires — those involving solid combustible materials such as wood, paper, and textiles. Unlike portable fire extinguishers, which come in various types suitable for different fire classes (CO2 for electrical, foam for Class B, wet chemical for Class F, etc.), hose reels deliver water only and are therefore restricted to Class A fires. Using a hose reel on flammable liquid fires could spread the burning liquid; on electrical fires, the water creates an electrocution hazard; and on cooking oil fires, water can cause a violent boilover. Hose reels actually have a much greater reach (typically 30 metres of hose) than extinguishers and an unlimited water supply.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'What are the three standard sizes of fire blankets?',
     options: [
       'Small (0.5 x 0.5 m), Medium (1.0 x 1.0 m), Large (1.5 x 1.5 m)',
-      'Light duty (0.9 x 0.9 m), Medium (1.2 x 1.2 m), Heavy duty (1.8 x 1.2 m)',
       'Type A (0.6 x 0.6 m), Type B (0.9 x 0.9 m), Type C (1.2 x 1.0 m)',
       'Personal (0.9 x 0.9 m), Standard (1.2 x 1.0 m), Industrial (2.0 x 2.0 m)',
+      'Light duty (0.9 x 0.9 m), Medium (1.2 x 1.2 m), Heavy duty (1.8 x 1.2 m)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The three standard sizes of fire blankets under BS EN 1869 are: light duty (0.9 x 0.9 m), suitable for small kitchen fires and general household or office use; medium (1.2 x 1.2 m), suitable for larger cooking appliances and small workshops; and heavy duty (1.8 x 1.2 m), used in industrial settings, laboratories, and commercial kitchens where larger fires are more likely. The size selection must be appropriate for the anticipated risk — the blanket must be large enough to cover the potential fire completely, as any gaps will allow oxygen to reach the fuel and the smothering action will fail.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'At what height should fire blankets be wall-mounted?',
     options: [
-      '1.0 m from the floor',
-      '1.2 m from the floor',
       '1.5 m from the floor',
+      '1.2 m from the floor',
+      '1.0 m from the floor',
       '1.8 m from the floor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Fire blankets should be wall-mounted at a height of approximately 1.5 metres from the floor to the top of the container. This height is specified to ensure the blanket is accessible to the majority of adults without requiring them to reach excessively high or bend down, enabling rapid deployment in an emergency. The mounting height also positions the pull-release tabs at a comfortable hand height. The container should be securely fixed to the wall, clearly visible and signed, and positioned near the identified risk (such as cooking areas) but not so close that a fire would prevent access to it — a minimum distance of 1 to 1.5 metres from the cooking appliance is typically recommended.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'Why is it important for electricians to maintain clearance around automatic sprinkler heads?',
     options: [
       'To allow access for annual repainting of the sprinkler heads',
-      'To ensure the sprinkler spray pattern is not obstructed, allowing effective fire suppression',
       'To prevent electrical interference between sprinkler wiring and power cables',
+      'To ensure the sprinkler spray pattern is not obstructed, allowing effective fire suppression',
       'To comply with sprinkler manufacturer warranty requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Maintaining adequate clearance around automatic sprinkler heads is critical because obstructions can interfere with the spray pattern, significantly reducing the effectiveness of the sprinkler system. Each sprinkler head is designed to produce a specific spray pattern that covers a defined area of the room. If cables, cable trays, conduit, light fittings, or other electrical installations are positioned too close to a sprinkler head, they can deflect or block the water spray, creating dry spots where the fire can continue to burn unchecked. BS EN 12845 specifies minimum clearances — typically 500 mm below the sprinkler deflector. Electricians must be aware of sprinkler head locations when routing cables, installing light fittings, or mounting equipment, and must never hang anything from sprinkler pipework.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'What is the correct procedure for using a fire blanket on a person whose clothing is on fire?',
     options: [
       'Throw the blanket over them from a distance and tell them to run outside',
-      'Tell the person to stop, drop, and roll, then wrap the blanket tightly around them to smother the flames',
       'Spray them with a water extinguisher first, then cover with the blanket',
       'Wrap the blanket around their legs only, as flames always start at the bottom',
+      'Tell the person to stop, drop, and roll, then wrap the blanket tightly around them to smother the flames',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct procedure for a clothing fire is: first, instruct the person to stop moving (running fans the flames and spreads the fire), drop to the ground (this helps prevent flames rising to the face and airways), and roll (to attempt to smother flames against the ground). Then wrap the fire blanket around them, covering as much of the burning clothing as possible, and press firmly to exclude air. Keep the blanket in place until the fire is fully extinguished. Do not remove the blanket quickly as the fire may re-ignite. Never tell the person to run, as this dramatically worsens a clothing fire. Never use a CO2 extinguisher on a person — the extreme cold (-78°C) can cause severe frostbite injuries. Water can be used as an alternative if a fire blanket is not immediately available.',
   },

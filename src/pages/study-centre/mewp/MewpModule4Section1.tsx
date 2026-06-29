@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'When the ground controls are activated on a MEWP, what typically happens to the platform controls?',
     options: [
-      'Both sets of controls operate simultaneously',
       'The platform controls are overridden by the ground controls',
+      'Both sets of controls operate simultaneously',
       'The platform controls lock the ground controls out',
       'An alarm sounds but both sets remain active',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Activating the ground controls typically overrides the platform controls. This is a critical safety feature that allows the ground rescue person to take full control of the machine in an emergency, even if the platform operator is incapacitated.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
     question: 'What happens to the platform when an emergency stop button is pressed?',
     options: [
       'The platform automatically lowers to ground level',
-      'All machine functions stop immediately — the platform does NOT lower',
       'The platform locks at its current height and an alarm sounds',
+      'All machine functions stop immediately — the platform does NOT lower',
       'The boom retracts to its stowed position',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Pressing the emergency stop halts ALL machine functions immediately. It does NOT lower the platform — it simply stops all movement. To lower the platform after an emergency stop, the button must be reset and the auxiliary/emergency lowering system used if normal controls are unavailable.',
   },
@@ -98,8 +98,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the recommended minimum exclusion zone radius around a MEWP operating area?',
-    options: ['3 metres', '5 metres', '10 metres', '15 metres'],
-    correctAnswer: 2,
+    options: ['10 metres', '5 metres', '3 metres', '15 metres'],
+    correctAnswer: 0,
     explanation:
       'The recommended exclusion zone is a minimum of 10 metres radius around the MEWP operating area. This zone prevents unauthorised persons from entering the danger area during operation.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'Any person on site',
       'Only the platform operator',
-      'The nominated ground rescue person, or during setup, positioning, and familiarisation',
       'Only the site manager',
+      'The nominated ground rescue person, or during setup, positioning, and familiarisation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Ground controls are used by the nominated ground rescue person in an emergency, during machine setup and positioning, and during familiarisation and testing. The ground rescue person must be specifically trained on those controls.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'After pressing an emergency stop button, what must you do before the machine can be operated again?',
     options: [
-      'Wait 60 seconds for the system to reset automatically',
       "Pull or twist the button to release it, then re-activate the machine per manufacturer's instructions",
+      'Wait 60 seconds for the system to reset automatically',
       'Turn the ignition off and on again',
       'Press the emergency stop button a second time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Emergency stop buttons are mechanically latched when pressed. To reset, you must pull or twist the button to release it, then re-activate the machine following the manufacturer's specific instructions.",
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
       'At what height should you test ALL platform controls before proceeding to working height?',
     options: [
       'At ground level only',
-      'At approximately 1 metre',
       'At half the maximum working height',
       'At the full working height',
+      'At approximately 1 metre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'You should raise the platform to approximately 1 metre and test all directional controls, boom functions, and both emergency stops (platform and ground). Testing at low height minimises risk if a fault is discovered during testing.',
   },

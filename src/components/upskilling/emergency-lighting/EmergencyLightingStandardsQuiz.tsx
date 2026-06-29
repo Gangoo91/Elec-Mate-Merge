@@ -13,99 +13,99 @@ const EmergencyLightingStandardsQuiz = () => {
       options: ['BS 7671', 'BS 5266-1', 'BS 9999', 'BS 5839-1'],
       correctAnswer: 1,
       explanation:
-        'BS 5266-1 is the Code of practice for the emergency lighting of premises, providing comprehensive guidance on design and installation.',
+        'BS 5266-1 is the code of practice for the emergency lighting of premises, providing comprehensive guidance on design, installation and maintenance.',
     },
     {
       id: 2,
       question:
-        'Which document provides guidance on fire safety engineering and emergency lighting integration?',
-      options: ['Approved Document B', 'BS 9999', 'Building Regulations', 'All of the above'],
-      correctAnswer: 3,
+        'Which document specifically provides guidance on fire safety engineering for buildings?',
+      options: ['Approved Document M', 'BS 9999', 'BS 7671', 'BS EN 1838'],
+      correctAnswer: 1,
       explanation:
-        'All these documents provide guidance on fire safety and emergency lighting integration, with BS 9999 focusing on fire safety engineering.',
+        'BS 9999 is the code of practice for fire safety engineering in the design, management and use of buildings, including emergency lighting integration.',
     },
     {
       id: 3,
-      question: 'What is the minimum duration for emergency lighting in escape routes?',
-      options: ['30 minutes', '1 hour', '3 hours', 'Variable depending on occupancy'],
-      correctAnswer: 1,
+      question: 'What is the usual minimum duration for emergency lighting on escape routes?',
+      options: ['15 minutes', '30 minutes', '1 hour', '4 hours'],
+      correctAnswer: 2,
       explanation:
-        'BS 5266-1 typically requires 1 hour minimum duration for escape lighting, though some applications may require 3 hours.',
+        'BS 5266-1 sets a typical minimum of 1 hour for escape lighting, increasing to 3 hours for premises such as those with sleeping accommodation.',
     },
     {
       id: 4,
       question:
-        'Which standard covers the electrical installation requirements for emergency lighting systems?',
-      options: ['BS 5266-1', 'BS 7671', 'BS 9999', 'BS EN 1838'],
-      correctAnswer: 1,
+        'Which standard covers the electrical installation requirements for emergency lighting?',
+      options: ['BS EN 1838', 'BS 9999', 'BS 7671', 'BS 5266-1'],
+      correctAnswer: 2,
       explanation:
-        'BS 7671 (IET Wiring Regulations) covers electrical installation requirements, including those for emergency lighting systems.',
+        'BS 7671 (the IET Wiring Regulations) covers the electrical installation requirements, including those that apply to emergency lighting circuits.',
     },
     {
       id: 5,
-      question: 'What is the recommended illuminance level for escape route lighting?',
+      question: 'What is the minimum illuminance for escape route lighting at floor level?',
       options: ['0.2 lux', '1 lux', '5 lux', '15 lux'],
       correctAnswer: 1,
       explanation:
-        'BS EN 1838 specifies 1 lux minimum along the centre line of escape routes at floor level.',
+        'BS EN 1838 specifies a minimum of 1 lux along the centre line of an escape route, measured at floor level.',
     },
     {
       id: 6,
       question:
-        'Which European standard specifically addresses photometric requirements for emergency lighting?',
-      options: ['BS EN 1838', 'BS EN 50172', 'BS EN 60598', 'BS EN 12464'],
-      correctAnswer: 0,
+        'Which European standard specifically sets the photometric requirements for emergency lighting?',
+      options: ['BS EN 12464', 'BS EN 50172', 'BS EN 60598', 'BS EN 1838'],
+      correctAnswer: 3,
       explanation:
-        'BS EN 1838 covers lighting applications and specifies photometric requirements and measurement methods for emergency lighting.',
+        'BS EN 1838 (lighting applications — emergency lighting) specifies the photometric requirements and minimum illuminance levels.',
     },
     {
       id: 7,
-      question: 'How often should emergency lighting systems be tested according to BS 5266-1?',
+      question: 'Which testing regime does BS 5266-1 require for emergency lighting?',
       options: [
-        'Weekly brief test, monthly longer test',
-        'Monthly brief test, annual full test',
-        'Daily brief test, weekly longer test',
-        'Quarterly brief test, annual full test',
+        'A monthly brief functional test and an annual full-duration test',
+        'A weekly brief test and a monthly longer test',
+        'A daily brief test and a weekly longer test',
+        'A quarterly brief test and an annual full test',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'BS 5266-1 requires monthly brief functional tests and annual full-duration tests of emergency lighting systems.',
+        'BS 5266-1 requires a monthly brief functional test and an annual full-duration discharge test of the emergency lighting system.',
     },
     {
       id: 8,
-      question: 'Which standard covers emergency lighting luminaires and control gear?',
-      options: ['BS EN 50172', 'BS EN 60598', 'BS 5266-1', 'Both A and B'],
-      correctAnswer: 3,
+      question: 'Which standard covers the safety requirements for emergency luminaires themselves?',
+      options: ['BS 9999', 'BS EN 50172', 'BS EN 60598-2-22', 'BS 5839-1'],
+      correctAnswer: 2,
       explanation:
-        'BS EN 50172 covers emergency escape lighting systems, while BS EN 60598 covers luminaire safety requirements.',
+        'BS EN 60598-2-22 covers the particular requirements for luminaires for emergency lighting, while BS EN 50172 covers the escape lighting system.',
     },
     {
       id: 9,
       question:
         'What does the Regulatory Reform (Fire Safety) Order 2005 require regarding emergency lighting?',
       options: [
-        'Monthly testing only',
-        'Risk assessment and appropriate provision',
-        'Annual certification',
-        'Specific luminaire types',
+        'Monthly testing of every luminaire',
+        'A fire risk assessment and appropriate provision',
+        'Annual third-party certification',
+        'Use of one specific luminaire type',
       ],
       correctAnswer: 1,
       explanation:
-        'The RR(FS)O requires responsible persons to conduct risk assessments and provide appropriate emergency lighting based on the premises use and occupancy.',
+        'The Order requires the responsible person to carry out a fire risk assessment and provide appropriate emergency lighting based on the use and occupancy of the premises.',
     },
     {
       id: 10,
       question:
-        'Which factor is NOT typically considered when determining emergency lighting requirements under BS 5266-1?',
+        'Which factor is NOT normally considered when determining emergency lighting requirements under BS 5266-1?',
       options: [
-        'Building occupancy type',
-        'Escape route complexity',
-        'External weather conditions',
-        'Occupant familiarity with premises',
+        'The building occupancy type',
+        'The complexity of the escape routes',
+        'The external weather conditions',
+        "The occupants' familiarity with the premises",
       ],
       correctAnswer: 2,
       explanation:
-        'External weather conditions are not a primary factor in BS 5266-1 requirements, which focus on internal building characteristics and occupancy factors.',
+        'BS 5266-1 focuses on internal characteristics such as occupancy and escape route layout; external weather conditions are not a primary factor.',
     },
   ];
 

@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'digital-advantage',
     question: 'What is the primary advantage of digital reporting over paper-based systems?',
     options: [
-      'Two quick inhales through the nose followed by a long exhale through the mouth',
-      'By eating, drinking, or smoking with contaminated hands, or through hand-to-mouth contact',
-      'The inability to stand upright forces stooped or kneeling postures, dramatically increasing spinal loading',
+      'It removes the need to record maintenance activities at all',
+      'It guarantees that equipment will never fail unexpectedly',
+      'It is always cheaper to set up than a paper filing system',
       'Real-time data access, searchability and automated trend analysis across the entire asset base',
     ],
     correctIndex: 3,
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'paper-advantage',
     question: 'In which situation might paper-based reporting be preferred?',
     options: [
-      'When an offence is committed with their consent, connivance, or through their neglect',
+      'When the maintenance team is large and geographically spread out',
       'In ATEX hazardous zones where electronic devices are prohibited, or where network connectivity is unreliable',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
-      'An emissions reduction target aligned with climate science to limit global warming',
+      'When managers need real-time dashboards of maintenance KPIs',
+      'When the organisation wants to trend drift data automatically',
     ],
     correctIndex: 1,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: "The concept of a 'single source of truth' in maintenance data means:",
     options: [
       'All maintenance data is consolidated into one authoritative system, eliminating conflicting records across spreadsheets, paper files and personal notebooks',
-      'Workplace conditions can change after the formal risk assessment was written, and new hazards can emerge during the work',
-      'CO2 (black label) or dry powder (blue label) — both safe on energised electrical equipment. NEVER water (red label) or foam (cream label) — both conduct and can shock the operator.',
-      'When a circuit that was confirmed dead is found to be live, or when an unexpected hazard is discovered that is not covered by the existing risk assessment',
+      'Only one technician is permitted to enter records into the system',
+      'Every report must be approved by a single senior manager',
+      'All historic paper records are destroyed once digitised',
     ],
     correctIndex: 0,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A disadvantage of paper-based maintenance reporting is:',
     options: [
-      'Accessibility from any device with internet, automatic updates and reduced IT infrastructure costs',
-      'Access controls, regular backups, audit trails and compliance with data protection regulations',
+      'It cannot be used in ATEX hazardous zones where ignition sources are prohibited',
+      'It requires a charged device and reliable network connectivity to complete a record',
       'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
-      'Providing real-time visibility of maintenance KPIs, outstanding work orders and asset condition',
+      'It always costs more to set up initially than an equivalent digital system',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'Mobile CMMS applications are particularly useful because:',
     options: [
-      'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'Access controls, regular backups, audit trails and compliance with data protection regulations',
-      'Use both digital and paper-based recording methods competently, selecting the appropriate method for context',
+      'They remove the need for any central server or database to store records',
+      'They guarantee that data is captured even when the device has no battery charge',
+      'They replace the need for technicians to physically attend the equipment',
       'They allow real-time data entry at the point of work with access to asset history and technical documents',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'When transitioning from paper to digital, the biggest challenge is typically:',
     options: [
       'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'All maintenance data is consolidated into one authoritative system, eliminating conflicting records',
-      'They provide visual evidence, support remote diagnosis and enhance the written record',
-      'Access controls, regular backups, audit trails and compliance with data protection regulations',
+      'The cost of the mobile devices needed for every technician on the team',
+      'Finding a CMMS that can store more records than the old paper filing system',
+      'Persuading the equipment manufacturers to supply data in digital format',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'Barcode and QR code scanning in maintenance is used to:',
     options: [
-      'All maintenance data is consolidated into one authoritative system, eliminating conflicting records',
+      'Encrypt the maintenance record so that only authorised users can open it',
       'Quickly and accurately identify assets, reducing transcription errors and linking to CMMS records',
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
-      'They provide visual evidence, support remote diagnosis and enhance the written record',
+      'Measure the operating parameters of the equipment automatically during inspection',
+      'Generate a printed certificate confirming the asset has passed its inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Digital photographs in fault reports are valuable because:',
     options: [
-      'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'Enter data accurately at the point of work, verify readings before submitting, and use offline mode if needed',
+      'They replace the need to write any description of the fault in the report',
+      'They automatically measure the temperature of the equipment in the image',
       'They provide visual evidence, support remote diagnosis and enhance the written record',
-      'All maintenance data is consolidated into one authoritative system, eliminating conflicting records',
+      'They guarantee the fault report cannot later be edited or tampered with',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'Data security for digital maintenance records includes:',
     options: [
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
-      'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'They allow real-time data entry at the point of work with access to asset history and technical documents',
+      'Printing every digital record onto paper as the primary security measure',
+      'Sharing a single login between the whole team so records are always accessible',
+      'Storing all records on one technician\'s personal device for safekeeping',
       'Access controls, regular backups, audit trails and compliance with data protection regulations',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'Cloud-based CMMS platforms offer which advantage over on-premise systems?',
     options: [
       'Accessibility from any device with internet, automatic updates and reduced IT infrastructure costs',
-      'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
-      'Quickly and accurately identify assets, reducing transcription errors and linking to CMMS records',
+      'They continue to function fully even when the site has no internet connection',
+      'They remove the need for any data backups because nothing is stored locally',
+      'They are always cheaper than on-premise systems over the entire system lifetime',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'When using a tablet to record maintenance data on site, you should:',
     options: [
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
+      'Wait until you return to the office to enter the readings from memory',
       'Enter data accurately at the point of work, verify readings before submitting, and use offline mode if needed',
-      'They allow real-time data entry at the point of work with access to asset history and technical documents',
-      'Access controls, regular backups, audit trails and compliance with data protection regulations',
+      'Round all measured values to make the records quicker to complete',
+      'Record data only when a network connection is available, skipping work otherwise',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: "The term 'single source of truth' in maintenance data means:",
     options: [
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
-      'Access controls, regular backups, audit trails and compliance with data protection regulations',
+      'Only one technician is permitted to enter records into the system',
+      'Every maintenance record must be approved by a single senior manager',
       'All maintenance data is consolidated into one authoritative system, eliminating conflicting records',
-      'Providing real-time visibility of maintenance KPIs, outstanding work orders and asset condition',
+      'All historic paper records are destroyed as soon as they are digitised',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'Digital maintenance dashboards are most useful for:',
     options: [
-      'Change management — ensuring all staff adopt the new system consistently and correctly',
-      'All maintenance data is consolidated into one authoritative system, eliminating conflicting records',
-      'Quickly and accurately identify assets, reducing transcription errors and linking to CMMS records',
+      'Capturing photographs of equipment faults at the point of work',
+      'Encrypting maintenance records to comply with data protection law',
+      'Identifying assets accurately by scanning their barcode or QR tag',
       'Providing real-time visibility of maintenance KPIs, outstanding work orders and asset condition',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'Under ST1426, a maintenance technician should be able to:',
     options: [
       'Use both digital and paper-based recording methods competently, selecting the appropriate method for context',
-      'They allow real-time data entry at the point of work with access to asset history and technical documents',
-      'Providing real-time visibility of maintenance KPIs, outstanding work orders and asset condition',
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
+      'Use only the digital CMMS, as paper records are no longer permitted under the standard',
+      'Develop and write the maintenance management software used on site',
+      'Use only paper records, since digital systems fall outside the technician\'s role',
     ],
     correctAnswer: 0,
     explanation:

@@ -59,10 +59,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'According to the World Health Organisation (WHO), mental health is defined as:',
     options: [
-      'Trauma experienced indirectly through witnessing or hearing about others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' traumatic experiences; first aiders, supervisors, and colleagues may be at risk',
+      'The complete absence of any mental illness, distress, or psychological symptoms throughout a person\'s life',
       'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
-      'The emotional residue of exposure to others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' traumatic stories, which can lead to changes in the MHFA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own worldview, beliefs, and psychological functioning',
-      'Take their concern seriously as a potential warning sign, ask directly if they are thinking of suicide, encourage them to tell a trusted person or professional, and consider means restriction by suggesting they give excess medication to someone for safekeeping',
+      'A permanent, fixed trait determined at birth that cannot change in response to life circumstances or support',
+      'The ability to remain happy and stress-free at all times regardless of what is happening in a person\'s life',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -128,10 +128,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: 'The mental health continuum suggests that mental health:',
     options: [
-      'Trauma-focused CBT and Eye Movement Desensitisation and Reprocessing (EMDR)',
+      'Is fixed once a person reaches adulthood and rarely changes afterwards',
       'Ranges from thriving through to struggling and crisis, and can fluctuate over time',
-      'Stay calm, reassure them, and help them focus on slow breathing',
-      'Emotional exhaustion, cynicism (depersonalisation), and reduced personal efficacy',
+      'Can only be classed as either completely healthy or clinically unwell, with nothing in between',
+      'Is determined solely by whether a person has received a formal psychiatric diagnosis',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -198,10 +198,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which piece of legislation places a duty on employers to protect the health, safety, and welfare of employees at work?',
     options: [
-      'Encourage appropriate professional help',
+      'The Mental Health Act 1983',
       'The Health & Safety at Work Act 1974',
-      'Cognitive Behavioural Therapy',
-      'Heart failure due to electrolyte imbalances',
+      'The Equality Act 2010',
+      'The Employment Rights Act 1996',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -267,10 +267,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'The Equality Act 2010 protects people with mental health conditions from discrimination if their condition:',
     options: [
-      'People who talk about suicide are just seeking attention and won\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t actually do it',
+      'Has been formally diagnosed by a consultant psychiatrist within the last six months',
       'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
-      'Ranges from thriving through to struggling and crisis, and can fluctuate over time',
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Requires the person to be currently signed off work and receiving medication',
+      'Has been disclosed to the employer in writing before the person started their employment',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -338,10 +338,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague confides in you that they have been feeling very low and anxious for several weeks but asks you not to tell anyone. You are concerned about their well-being. As a Mental Health First Aider, the most appropriate initial response is to:',
     options: [
-      'Complex PTSD includes all PTSD symptoms plus difficulties with emotional regulation, self-concept, and relationships',
+      'Immediately inform their line manager so that the workload causing the distress can be reduced without delay',
       'Listen non-judgementally, offer reassurance, and gently encourage them to seek professional help while respecting their confidentiality',
-      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
-      'He may be experiencing drug-induced psychosis triggered by heavy cannabis use; he should be supported calmly, kept safe, and guided towards urgent professional help',
+      'Reassure them that the feelings will pass on their own and that there is no need to involve anyone else',
+      'Offer to diagnose what is wrong and suggest specific over-the-counter remedies that might help their mood',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -374,9 +374,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following strategies is most effective for reducing stigma around mental health in the workplace?',
     options: [
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
-      'Regularly eating large quantities of food very quickly to the point of discomfort, with a feeling of loss of control, without compensatory purging',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'Only discussing mental health in formal settings such as occupational health referrals and HR meetings',
+      'Keeping mental health conversations strictly confidential by never mentioning the topic in the workplace',
+      'Requiring employees to disclose any mental health condition to the whole team so colleagues can help',
       'Creating an open culture where mental health is discussed regularly, leaders share their own experiences, and language is inclusive',
     ] as const,
     correctAnswer: 3,
@@ -427,10 +427,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A Mental Health First Aider has been supporting a colleague who seems to be in crisis and mentions thoughts of ending their life. The colleague begs you to keep this confidential. You should:',
     options: [
-      'Other Specified Feeding or Eating Disorder — an eating disorder that does not meet the full criteria for anorexia, bulimia, or binge eating disorder',
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Agree to keep it completely confidential, as breaking their trust would do more harm than involving others',
+      'Tell them to contact the Samaritans themselves and end the conversation there to respect their wishes',
       'Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
+      'Wait to see whether they raise the subject again over the coming days before taking any further action',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -445,14 +445,14 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is an example of structural stigma in relation to mental health?',
     options: [
-      'Thank them for telling you, listen without judgement, and gently suggest they speak to their GP or contact a support service',
-      'Cultural background can influence how people experience, express, and seek help for mental health problems',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'A person hiding their condition because they feel ashamed and believe they are weak for struggling',
+      'A colleague making a joke about someone being "crazy" after they take time off for their mental health',
+      'A manager refusing to sit next to a team member they know has experienced depression',
       'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
     ] as const,
     correctAnswer: 3,
     explanation:
-      'Structural stigma refers to institutional policies, practices, and systems that discriminate against people with mental health problems. An insurance policy providing less coverage for mental health compared to physical health is a clear example of structural stigma. Option A is self-stigma, option B is a form of public stigma or casual discrimination, and option D is social stigma/public stigma in action.',
+      'Structural stigma refers to institutional policies, practices, and systems that discriminate against people with mental health problems. An insurance policy providing less coverage for mental health than physical health is a clear example, because the disadvantage is built into the rules of the institution. By contrast, an individual feeling ashamed is self-stigma, and jokes or avoidance by colleagues are forms of public stigma.',
     section: 'Mental Health Fundamentals',
     difficulty: 'intermediate' as const,
     topic: 'Stigma (public, self, structural)',
@@ -497,10 +497,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'A non-judgemental approach in MHFA means:',
     options: [
-      'Emotional exhaustion, cynicism (depersonalisation), and reduced personal efficacy',
-      'A chronic form of depression lasting 2 years or more with milder but persistent symptoms',
+      'Agreeing with everything the person says so they do not feel challenged or upset',
+      'Avoiding any difficult or sensitive topics in case they cause the person more distress',
       'Setting aside your own opinions and values to provide a safe space where the person feels accepted and heard',
-      'Post-Traumatic Stress Disorder; triggered by experiencing or witnessing a traumatic event',
+      'Offering your honest opinion on the choices that led to their current situation so they can learn from them',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -514,9 +514,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: "The 'duty to refer' in the context of mental health at work means:",
     options: [
-      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
-      'Tolerance, physical dependence, overdose (especially when combined with alcohol or benzodiazepines), and respiratory depression',
-      'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
+      'The duty of every employee to report a colleague\'s mental health condition to human resources',
+      'The requirement for a Mental Health First Aider to provide ongoing counselling until the person recovers',
+      'The obligation to refer anyone who discloses a problem straight to their GP without any discussion',
       'The responsibility of a line manager or MHFA to signpost a person to appropriate professional support when a situation is beyond their competence',
     ] as const,
     correctAnswer: 3,
@@ -549,10 +549,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following best describes 'duty of care' in relation to mental health at work?",
     options: [
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Employers must guarantee that no employee will ever experience stress or distress at work',
       'Employers have a reasonable responsibility to take steps to protect the physical and mental health of their employees',
-      'Share relevant, accurate information and reassure the person that help is available and recovery is possible',
-      'Recurrent, unexpected panic attacks with persistent worry about having further attacks',
+      'Employees are solely responsible for managing their own wellbeing without any employer involvement',
+      'The duty applies only to large organisations with a dedicated occupational health department',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -566,10 +566,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: "The 'Relationships' area in the HSE Management Standards focuses on:",
     options: [
-      'Having both a mental health condition and a substance use disorder simultaneously',
-      'Offering rapid, specialist support during the first episode of psychosis to improve long-term outcomes',
+      'The personal relationships employees have outside of work and how these affect their attendance',
+      'How much say employees have over the way they organise and carry out their own work',
       'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
-      'Regular cannabis use, particularly high-strength varieties, is linked to increased risk of anxiety, depression, and psychosis',
+      'The clarity employees have about their job role and avoiding conflicting responsibilities',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -621,10 +621,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "A Mental Health First Aider in a construction company notices that a team of workers have become increasingly withdrawn after a colleague's suicide. Several team members are displaying signs of distress but none are seeking help. Considering cultural factors specific to the construction industry, the most effective approach would be to:",
     options: [
-      'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
+      'Send a company-wide email instructing all affected workers to book an appointment with the occupational health team',
       'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
-      'Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed',
-      'Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions',
+      'Wait for individual workers to come forward of their own accord before offering any support or information',
+      'Hold a single formal group meeting requiring each worker to describe how the bereavement has affected them',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -639,10 +639,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'An employer has identified through routine monitoring that work-related stress is increasing in a particular department. Using the HSE Management Standards framework, which approach would be most effective for addressing this?',
     options: [
-      'Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed',
-      'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
+      'Offering individual resilience and stress-management training to staff as the sole intervention',
+      'Reminding the affected employees to make greater use of the Employee Assistance Programme',
       'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
+      'Monitoring the department\'s sickness absence figures for a further year before deciding whether to act',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -657,9 +657,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A Mental Health First Aider is supporting a colleague who discloses they are self-harming. The colleague is over 18 and states clearly that they do not want anyone else to know. They say the self-harm helps them cope and they are not suicidal. Considering the legal and ethical framework, the most appropriate course of action is to:',
     options: [
-      'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'Break confidentiality immediately and inform their line manager, as all self-harm is a safeguarding emergency',
+      'Insist that they stop self-harming straight away and ask them to promise they will not do it again',
+      'Respect their wish for privacy completely and take no further action, since they have said they are not suicidal',
       'Respect their autonomy as an adult while expressing concern, exploring their reasons for not wanting others to know, strongly encouraging professional help, and documenting the conversation for your own safeguarding records',
     ] as const,
     correctAnswer: 3,
@@ -676,9 +676,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'An organisation is implementing the enhanced standards from the Thriving at Work report. They already meet the core standards. Which of the following would represent progress towards the enhanced standards?',
     options: [
       'Increasing transparency and accountability through internal and external reporting on mental health, including senior leaders publicly championing mental health and sharing their own experiences',
-      'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
-      'Regularly eating large quantities of food very quickly to the point of discomfort, with a feeling of loss of control, without compensatory purging',
-      'Physical health conditions can increase the risk of poor mental health, and poor mental health can lead to physical health problems — a holistic approach is needed',
+      'Producing and communicating a mental health at work plan for the first time across the organisation',
+      'Delivering basic mental health awareness training to all employees as a one-off introductory session',
+      'Encouraging line managers to have open conversations with their teams about mental wellbeing',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -693,10 +693,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A large electrical contracting firm has noticed high turnover and increasing sickness absence. Exit interviews suggest poor management practices and a culture of presenteeism. Analysing this through the lens of both the Health & Safety at Work Act 1974 and the HSE Management Standards, which statement is most accurate?',
     options: [
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'The Health & Safety at Work Act 1974 covers only physical hazards, so the employer has no legal duty in respect of these psychosocial issues',
       'The employer is potentially failing in their legal duty under the Health & Safety at Work Act 1974 to protect employee welfare, and a systematic assessment using the HSE Management Standards could help identify and address the organisational factors contributing to poor mental health, potentially reducing both turnover and absence',
-      'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
-      'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
+      'The employer has no obligation to act unless a formal grievance or tribunal claim has first been raised by an employee',
+      'High turnover and absence are normal in construction, so the employer is not required to investigate the underlying causes',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -711,14 +711,14 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "When considering the mental health continuum in a workplace setting, which of the following scenarios best illustrates why a continuum model is more useful than a binary 'well/unwell' model?",
     options: [
-      'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
-      'Take their concern seriously as a potential warning sign, ask directly if they are thinking of suicide, encourage them to tell a trusted person or professional, and consider means restriction by suggesting they give excess medication to someone for safekeeping',
+      'An employee receives a formal diagnosis of depression and is immediately signed off work by their GP for several weeks',
+      'An employee with a long-standing anxiety disorder remains stable and well-supported, performing their role effectively',
       'An employee with no diagnosed condition begins to struggle with sleep, concentration, and motivation after a period of organisational change, and their performance gradually declines even though they would not meet diagnostic criteria for a mental health condition',
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
+      'An employee returns to work fully recovered after treatment and reports no further symptoms of any kind',
     ] as const,
     correctAnswer: 2,
     explanation:
-      "The continuum model is more useful because it recognises that mental health is not simply a matter of being 'well' or 'unwell'. Option B illustrates how an employee can move along the continuum from thriving to struggling without necessarily meeting diagnostic criteria for a specific condition. This model enables earlier intervention, as support can be provided when someone is beginning to struggle, rather than waiting until they reach a crisis point or receive a formal diagnosis. It also reduces stigma by normalising the fluctuation of mental health.",
+      "The continuum model is more useful because it recognises that mental health is not simply a matter of being 'well' or 'unwell'. The scenario of someone with no diagnosis whose functioning gradually declines after organisational change shows how a person can move along the continuum from thriving to struggling without ever meeting diagnostic criteria. This enables earlier intervention, as support can be offered when someone is beginning to struggle rather than waiting for a crisis or a formal diagnosis, and it reduces stigma by normalising the fluctuation of mental health.",
     section: 'Mental Health Fundamentals',
     difficulty: 'advanced' as const,
     topic: 'Mental health spectrum/continuum',
@@ -729,9 +729,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A Mental Health First Aider is approached by a colleague from a cultural background where mental health problems are considered deeply shameful and a private family matter. The colleague is clearly distressed but is reluctant to discuss their feelings or accept help. Applying principles of cultural sensitivity, non-judgemental communication, and the ALGEE framework, the best approach is to:',
     options: [
-      'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
+      'Explain that their cultural beliefs about mental health are mistaken and encourage them to set those beliefs aside',
+      'Involve their family immediately, since family is central to their culture, even though the person has not consented',
+      'Step back entirely and avoid raising the subject again, as their culture regards mental health as a private matter',
       'Acknowledge and respect their cultural perspective without judgement, gently express your concern, offer to be available if they change their mind, and provide discreet information about culturally appropriate support services',
     ] as const,
     correctAnswer: 3,
@@ -748,9 +748,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'An organisation is defending an employment tribunal claim under the Equality Act 2010 brought by an employee who was dismissed while experiencing a severe depressive episode. The employer claims they were unaware of the condition. Considering the legal framework, which of the following is most accurate?',
     options: [
       "Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee's disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed",
-      "Acknowledge and respect their cultural perspective without judgement, gently express your concern, offer to be available if they change their mind, and provide discreet information about culturally appropriate support services",
-      "The employer is potentially failing in their legal duty under the Health & Safety at Work Act 1974 to protect employee welfare, and a systematic assessment using the HSE Management Standards could help identify and address the organisational factors contributing to poor mental health, potentially reducing both turnover and absence",
-      "Cocaine increases the risk of heart attack, stroke, and seizures; psychologically it can cause paranoia, anxiety, aggression, and depression during withdrawal, with a high potential for psychological dependency",
+      "An employer is only ever liable if the employee gave them written notice of a formally diagnosed condition before the dismissal",
+      "Depression can never amount to a disability under the Equality Act 2010 because it is not a permanent physical impairment",
+      "An employer has a complete defence simply by stating they were unaware of the condition, regardless of any visible signs",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -791,10 +791,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a key difference between low mood and clinical depression?',
     options: [
-      'So employees know who they can approach for support and how to reach them',
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Low mood always lasts longer than clinical depression and is more resistant to treatment',
+      'Clinical depression only ever affects mood, whereas low mood affects sleep, appetite and concentration',
       'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
-      'Share relevant, accurate information and reassure the person that help is available and recovery is possible',
+      'There is no real difference; the two terms describe exactly the same experience',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -827,13 +827,13 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is a common emotional symptom of depression?',
     options: [
       'Persistent feelings of hopelessness and sadness',
-      'A fixed, false belief held despite evidence to the contrary',
-      'CALM (Campaign Against Living Miserably)',
-      'Grandiose thinking and inflated self-esteem',
+      'A racing heartbeat and shortness of breath in response to a perceived threat',
+      'An exaggerated sense of self-importance and boundless energy',
+      'A fixed, false belief held with conviction despite clear evidence against it',
     ] as const,
     correctAnswer: 0,
     explanation:
-      'Persistent feelings of hopelessness and sadness are core emotional symptoms of depression. Increased appetite can be a physical symptom (though decreased appetite is more common), while rapid heartbeat and muscle tension are more commonly associated with anxiety.',
+      'Persistent feelings of hopelessness and sadness are core emotional symptoms of depression. Racing heartbeat and shortness of breath are more typical of anxiety, an inflated sense of self-importance is associated with mania, and a fixed false belief is a delusion seen in psychosis.',
     section: 'Depression, Anxiety & Stress',
     difficulty: 'basic' as const,
     topic: 'Depression symptoms',
@@ -843,10 +843,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: "What does the 'fight-flight-freeze' response describe?",
     options: [
-      "They are not addictive, but stopping suddenly can cause withdrawal symptoms",
+      "A learned habit of avoiding difficult conversations at work",
       "The body's automatic survival response to perceived danger",
-      "Allowing flexible working hours or phased return to work after absence",
-      "Withdrawing from social activities and isolating yourself",
+      "A gradual decline in mood over a period of several weeks",
+      "A deliberate decision to confront, escape from, or ignore a stressful situation",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -860,14 +860,14 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Which of the following is a common physical symptom of anxiety?',
     options: [
-      'Regular physical exercise and maintaining a routine',
-      'Severity of generalised anxiety disorder symptoms',
+      'Persistent low mood and loss of interest in activities',
+      'Sleeping far more than usual and feeling emotionally numb',
       'Heart palpitations and shortness of breath',
-      '"Just snap out of it and think positive"',
+      'A fixed, false belief that others intend to cause harm',
     ] as const,
     correctAnswer: 2,
     explanation:
-      'Heart palpitations and shortness of breath are common physical symptoms of anxiety caused by the activation of the sympathetic nervous system. Feeling emotionally numb and loss of interest are more associated with depression, while sleeping too much (hypersomnia) can occur in depression.',
+      'Heart palpitations and shortness of breath are common physical symptoms of anxiety, caused by activation of the sympathetic nervous system. Persistent low mood, loss of interest and sleeping too much (hypersomnia) are more associated with depression, while fixed false beliefs are a feature of psychosis.',
     section: 'Depression, Anxiety & Stress',
     difficulty: 'basic' as const,
     topic: 'Physical symptoms of anxiety',
@@ -895,9 +895,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What is the HSE definition of workplace stress?',
     options: [
       'The adverse reaction people have to excessive pressures or demands placed on them',
-      'Produce, implement, and communicate a mental health at work plan',
+      'Any feeling of pressure experienced at work, whether helpful or harmful',
       'A condition involving persistent, excessive worry about many different things',
-      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
+      'The normal level of challenge that motivates people to perform well at work',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -929,10 +929,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is something you should NOT say to someone experiencing depression?',
     options: [
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m here for you and I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m listening"',
-      '"Would you like to talk about how you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling?"',
-      '"Just snap out of it and think positive"',
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed you haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t seemed yourself lately"',
+      "\"I'm here for you and I'm listening\"",
+      "\"Would you like to talk about how you're feeling?\"",
+      "\"Just snap out of it and think positive\"",
+      "\"I've noticed you haven't seemed yourself lately\"",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -980,14 +980,14 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What is a common behavioural symptom of depression?',
     options: [
-      'Encourages a fuller, more detailed response from the person',
+      'Repetitive checking and hand-washing rituals to reduce anxiety',
       'Withdrawing from social activities and isolating yourself',
-      'Grandiose thinking and inflated self-esteem',
-      'Step 3 — High-intensity interventions for moderate to severe depression',
+      'Boundless energy and taking on far more tasks than usual',
+      'Hyperventilating and an overwhelming urge to escape a situation',
     ] as const,
     correctAnswer: 1,
     explanation:
-      'Social withdrawal and isolation are common behavioural symptoms of depression. People may stop seeing friends, avoid activities they once enjoyed, and pull away from family and colleagues. Excessive hand-washing and checking are more associated with OCD, while hyperventilating is linked to anxiety and panic.',
+      'Social withdrawal and isolation are common behavioural symptoms of depression. People may stop seeing friends, avoid activities they once enjoyed, and pull away from family and colleagues. Repetitive checking and hand-washing are more associated with OCD, increased energy with mania, and hyperventilating with anxiety and panic.',
     section: 'Depression, Anxiety & Stress',
     difficulty: 'basic' as const,
     topic: 'Depression symptoms',
@@ -997,10 +997,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What is Generalised Anxiety Disorder (GAD)?',
     options: [
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
-      'Stay calm, speak gently, and do not argue with their delusions',
+      'An intense fear of a specific object or situation, such as heights or spiders',
+      'A sudden, time-limited episode of overwhelming fear with physical symptoms',
       'A condition involving persistent, excessive worry about many different things',
-      'Encourages a fuller, more detailed response from the person',
+      'A fear of social situations driven by worry about being judged or embarrassed',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1014,9 +1014,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'What is the first thing you should do if someone is having a panic attack?',
     options: [
-      'Persistent feelings of hopelessness and sadness',
-      'Cycles of binge eating followed by compensatory behaviours such as purging',
-      'Allowing flexible working hours or phased return to work after absence',
+      'Leave them alone in a quiet room until the attack passes by itself',
+      'Tell them firmly to pull themselves together and stop overreacting',
+      'Call 999 immediately, as every panic attack is a medical emergency',
       'Stay calm, reassure them, and help them focus on slow breathing',
     ] as const,
     correctAnswer: 3,
@@ -1052,10 +1052,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What is persistent depressive disorder (formerly known as dysthymia)?',
     options: [
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'A brief episode of severe depression that resolves fully within a few weeks',
       'A chronic form of depression lasting 2 years or more with milder but persistent symptoms',
-      'Ranges from thriving through to struggling and crisis, and can fluctuate over time',
-      'The adverse reaction people have to excessive pressures or demands placed on them',
+      'A pattern of depression that occurs only during the winter months each year',
+      'A depressive episode that develops in the months following childbirth',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1069,10 +1069,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'Which of the following best describes the cognitive symptoms of depression?',
     options: [
-      'Diagnose mental health conditions or prescribe treatment',
-      'Step 3 — High-intensity interventions for moderate to severe depression',
+      'Heart palpitations, sweating, and trembling in stressful situations',
+      'Withdrawing from friends and giving up previously enjoyed activities',
       'Difficulty concentrating, indecisiveness, and negative thinking patterns',
-      'A free 24/7 crisis text service — text SHOUT to 85258',
+      'Disturbed sleep, low energy, and changes in appetite or weight',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1086,9 +1086,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'What are the three dimensions of the Maslach Burnout Model?',
     options: [
-      'Nausea, headaches, and increased anxiety in the first few weeks',
-      'Listen non-judgementally and let them know you care, without insisting they stop',
-      'People who talk about suicide are just seeking attention and won\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t actually do it',
+      'Alarm, resistance, and exhaustion in response to prolonged stress',
+      'Denial, anger, bargaining, and acceptance during periods of loss',
+      'Physical fatigue, sleep disturbance, and loss of appetite',
       'Emotional exhaustion, cynicism (depersonalisation), and reduced personal efficacy',
     ] as const,
     correctAnswer: 3,
@@ -1105,9 +1105,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       "In the ALGEE action plan for mental health first aid, what does the 'E' (first E) stand for?",
     options: [
       'Encourage appropriate professional help',
-      'CALM (Campaign Against Living Miserably)',
-      'NHS Talking Therapies (formerly IAPT)',
-      'Family history of depression',
+      'Evaluate the severity of the person\'s symptoms',
+      'Establish a formal diagnosis before offering support',
+      'Educate the person about their condition in detail',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1121,10 +1121,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What characterises social anxiety disorder?',
     options: [
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'Excessive, uncontrollable worry about many different areas of everyday life',
       'Intense fear and avoidance of social situations due to worry about being judged or embarrassed',
-      'You should keep what the person tells you private unless there is a risk of harm to themselves or others',
-      'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
+      'Recurrent, unexpected panic attacks with persistent fear of further attacks',
+      'Fear of open spaces or crowds where escape might be difficult',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1156,9 +1156,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What is agoraphobia?',
     options: [
-      'Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help',
-      'A short, informal safety or awareness talk delivered on site, often at the start of a shift',
-      'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
+      'An intense, specific fear of spiders or other small creatures',
+      'A fear of social situations driven by worry about being judged',
+      'An overwhelming fear of becoming seriously ill or contaminated',
       'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
     ] as const,
     correctAnswer: 3,
@@ -1191,10 +1191,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is the construction industry associated with higher levels of stress and mental health problems?',
     options: [
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
+      'Generous pay, secure long-term contracts, and predictable indoor working conditions',
       'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
-      'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
-      'GPs assess symptoms, diagnose depression, discuss treatment options, and can refer to specialist services',
+      'An older workforce with strong access to on-site counselling and mental health support',
+      'A workforce that openly discusses emotions and readily seeks help when struggling',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1208,10 +1208,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'What is the NICE stepped care model for treating depression?',
     options: [
-      'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
-      'No — research shows that asking directly about suicide does not increase risk and can actually help',
+      'A model where every patient receives the same intensive treatment regardless of severity',
+      'A system where patients choose any therapy they prefer without clinical assessment',
       'A framework where treatment is matched to severity, starting with least intensive and stepping up if needed',
-      'Difficulty managing or controlling emotional responses, leading to intense or rapidly shifting emotions',
+      'An approach that always begins with hospital admission and steps down to self-help',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1225,9 +1225,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'What is NHS Talking Therapies (formerly IAPT)?',
     options: [
-      'A chronic form of depression lasting 2 years or more with milder but persistent symptoms',
-      'When the general public holds negative attitudes, beliefs, and stereotypes about people with mental health problems',
-      'It should include the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s position, rules, support available, testing procedures (if applicable), and consequences of policy breaches',
+      'A private therapy service that can only be accessed through a GP referral and a fee',
+      'A crisis helpline staffed by volunteers for people experiencing suicidal thoughts',
+      'A workplace counselling scheme provided directly by employers to their staff',
       'An NHS service providing evidence-based psychological therapies for anxiety and depression, accessible via self-referral',
     ] as const,
     correctAnswer: 3,
@@ -1243,9 +1243,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is a common side effect when first starting SSRIs?',
     options: [
       'Nausea, headaches, and increased anxiety in the first few weeks',
-      'Men who are feeling low or suicidal — 0800 58 58 58',
-      'Emotional exhaustion, cynicism (depersonalisation), and reduced personal efficacy',
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
+      'Immediate, complete relief of low mood from the very first dose',
+      'A rapid physical addiction comparable to that caused by opioids',
+      'Severe withdrawal seizures within hours of taking the first tablet',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1276,10 +1276,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What is the role of a GP in the treatment pathway for depression?',
     options: [
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
+      'GPs deliver long-term weekly psychotherapy sessions themselves to every patient',
+      'GPs are only able to prescribe medication and cannot refer patients elsewhere',
       'GPs assess symptoms, diagnose depression, discuss treatment options, and can refer to specialist services',
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
+      'GPs play no role in mental health, which is handled solely by hospital psychiatrists',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1293,9 +1293,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'Which of the following describes panic disorder?',
     options: [
-      'Produce, implement, and communicate a mental health at work plan',
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'Persistent, excessive worry about a wide range of everyday issues',
+      'An intense, specific fear of a single object or situation',
+      'Fear of social situations due to worry about being judged or embarrassed',
       'Recurrent, unexpected panic attacks with persistent worry about having further attacks',
     ] as const,
     correctAnswer: 3,
@@ -1333,10 +1333,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'In the NICE stepped care model for depression, at which step would high-intensity psychological interventions such as individual CBT typically be offered?',
     options: [
-      'A short, informal safety or awareness talk delivered on site, often at the start of a shift',
+      'Step 1 — Recognition, assessment, and active monitoring of suspected depression',
       'Step 3 — High-intensity interventions for moderate to severe depression',
-      'No more than 14 units per week, spread over 3 or more days',
-      'Withdrawing from social activities and isolating yourself',
+      'Step 2 — Low-intensity interventions such as guided self-help for mild depression',
+      'Step 4 — Inpatient care and crisis services for those at significant risk',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1351,10 +1351,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "A construction worker discloses to you that he has been feeling hopeless for several weeks, has stopped eating properly, and says 'what's the point anymore'. Using the ALGEE framework, what should your first priority be?",
     options: [
-      'Intense fear and avoidance of social situations due to worry about being judged or embarrassed',
-      'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
+      'Give him detailed information about the causes and symptoms of depression',
+      'Encourage him to self-refer to NHS Talking Therapies as soon as possible',
       'Approach, assess, and assist with any crisis — including assessing for suicidal thoughts',
-      'You should keep what the person tells you private unless there is a risk of harm to themselves or others',
+      'Encourage him to take up self-help strategies such as regular exercise',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1369,9 +1369,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'How does Interpersonal Therapy (IPT) differ from CBT in its approach to treating depression?',
     options: [
-      'Regular cannabis use, particularly high-strength varieties, is linked to increased risk of anxiety, depression, and psychosis',
-      'To provide a confidential space for MHFAs to reflect on their experiences, process emotions, and receive guidance',
-      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
+      'IPT uses medication to correct chemical imbalances, while CBT relies only on talking',
+      'IPT explores childhood experiences in depth, while CBT focuses entirely on the present moment',
+      'IPT and CBT are identical approaches that differ only in the length of treatment offered',
       'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
     ] as const,
     correctAnswer: 3,
@@ -1388,9 +1388,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'Which of the following accurately describes the relationship between the Maslach burnout dimensions and workplace outcomes in construction?',
     options: [
       'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
-      'Tell him you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed changes and you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re worried, ask directly if he\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s having thoughts of suicide, offer to help him make a safety plan, and call professional support if needed',
-      'While self-harm is not always a suicide attempt, it is one of the strongest risk factors for future suicide; approximately 50% of people who die by suicide have a history of self-harm',
-      'The responsibility of a line manager or MHFA to signpost a person to appropriate professional support when a situation is beyond their competence',
+      'Only emotional exhaustion is relevant to safety; cynicism and reduced efficacy have no bearing on workplace risk',
+      'Burnout improves safety performance, as exhausted workers become more cautious and risk-averse',
+      'The three burnout dimensions affect morale but have no measurable impact on physical safety outcomes',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1405,10 +1405,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "A colleague tells you he's been prescribed sertraline (an SSRI) but wants to stop taking it after two weeks because 'it's not working'. What is the most appropriate response?",
     options: [
-      'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
+      'Agree that the medication clearly is not working and support his decision to stop taking it now',
       'Explain that SSRIs typically take 4-6 weeks to show full effect and encourage him to discuss concerns with his GP before making changes',
-      'Thank them for telling you, listen without judgement, and gently suggest they speak to their GP or contact a support service',
-      'Self-harm is when someone deliberately hurts themselves as a way of coping with emotional distress',
+      'Suggest he doubles his dose to speed up the effect and feel better more quickly',
+      'Tell him to switch to a different antidepressant that a friend found helpful',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1423,10 +1423,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following correctly distinguishes between a specific phobia and Generalised Anxiety Disorder?',
     options: [
-      'Listen non-judgementally, offer reassurance, and gently encourage them to seek professional help while respecting their confidentiality',
-      'He may be experiencing drug-induced psychosis triggered by heavy cannabis use; he should be supported calmly, kept safe, and guided towards urgent professional help',
+      'A specific phobia involves worry about everyday matters, while GAD involves fear of one particular object',
+      'Both conditions involve recurrent panic attacks, but only GAD includes avoidance behaviour',
       'A specific phobia involves intense fear triggered by a particular object or situation; GAD involves persistent, excessive worry across multiple areas of life',
-      'Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions',
+      'A specific phobia only affects children, whereas GAD only develops in adulthood',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1441,9 +1441,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'In supporting a construction worker experiencing chronic stress and early signs of depression, which combination of actions best reflects the ALGEE approach and appropriate referral pathways?',
     options: [
-      'He may be experiencing drug-induced psychosis triggered by heavy cannabis use; he should be supported calmly, kept safe, and guided towards urgent professional help',
-      'A coordinated plan including continued mental health support, substance misuse treatment, a safety plan, GP follow-up within 48 hours, social support networks, and regular monitoring of both conditions',
-      'The responsibility of a line manager or MHFA to signpost a person to appropriate professional support when a situation is beyond their competence',
+      'Diagnose them with depression, recommend a specific antidepressant, and arrange the prescription yourself',
+      'Tell them their stress is a normal part of construction work and that they should simply push through it',
+      'Keep the conversation entirely to yourself and avoid mentioning any professional services or self-help options',
       'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
     ] as const,
     correctAnswer: 3,
@@ -1460,9 +1460,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'According to NICE guidelines, when should antidepressant medication be considered as a first-line treatment for depression rather than psychological therapy alone?',
     options: [
       'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
-      'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
-      'Warning signs, internal coping strategies, people and social settings for distraction, people to ask for help, professionals and agencies to contact, making the environment safe',
-      'Physical health conditions can increase the risk of poor mental health, and poor mental health can lead to physical health problems — a holistic approach is needed',
+      'For all cases of low mood, regardless of severity, as the first step before any talking therapy',
+      'Only after every form of talking therapy has been tried and failed over several years',
+      'Only for people under the age of 18 who are experiencing their first episode of low mood',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1499,10 +1499,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is the difference between substance use and substance misuse?',
     options: [
-      'Men aged 45-54, with construction workers having the highest occupational rate',
-      'Self-harm is when someone deliberately hurts themselves as a way of coping with emotional distress',
+      'Substance use is always illegal, whereas misuse only applies to prescription medicines',
+      'Substance use means occasional consumption, while misuse means using a substance only once',
       'Substance use refers to any consumption, while misuse is use that causes harm or is hazardous',
-      'Offering rapid, specialist support during the first episode of psychosis to improve long-term outcomes',
+      'There is no difference between the two terms; they describe the same behaviour',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1517,9 +1517,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a common physical sign that someone may be misusing alcohol?',
     options: [
-      'Difficulty concentrating, indecisiveness, and negative thinking patterns',
-      'Men aged 45-54, with construction workers having the highest occupational rate',
-      'The adverse reaction people have to excessive pressures or demands placed on them',
+      'Improved sleep quality and a consistently steady, calm mood',
+      'Heightened startle response and recurring nightmares about a past event',
+      'Persistent fixed false beliefs and hearing voices that others cannot hear',
       'Unexplained weight loss or gain, trembling hands, and facial redness',
     ] as const,
     correctAnswer: 3,
@@ -1551,10 +1551,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'Which group is at the highest risk of suicide in the UK?',
     options: [
-      'The body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
+      'Women aged 18-24, with students having the highest occupational rate',
       'Men aged 45-54, with construction workers having the highest occupational rate',
-      'Recurrent, unexpected panic attacks with persistent worry about having further attacks',
-      'Encourages a fuller, more detailed response from the person',
+      'Adults over 65, with retired professionals having the highest rate',
+      'Teenagers aged 13-17, with school pupils having the highest rate',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1604,9 +1604,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following best describes self-harm?',
     options: [
       'Self-harm is when someone deliberately hurts themselves as a way of coping with emotional distress',
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
-      'Keeping interactions within agreed hours and signposting to crisis services outside those times',
+      'Self-harm is always a failed suicide attempt by someone who definitely intended to end their life',
+      'Self-harm is an accidental injury sustained during a moment of severe panic or distress',
+      'Self-harm is a deliberate attempt to gain attention and sympathy from other people',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1637,10 +1637,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'Which of the following is a common myth about suicide?',
     options: [
-      "The body's automatic survival response to perceived danger",
-      "A belief that others are plotting to harm, deceive, or persecute you",
+      "Asking someone directly about suicide can open up a vital conversation and offer relief",
+      "Most people who feel suicidal do not truly want to die; they want the pain to stop",
       "People who talk about suicide are just seeking attention and won't actually do it",
-      "Restricting food intake leading to significantly low body weight",
+      "Suicidal crises are often temporary, so timely support can save a person's life",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1654,9 +1654,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: "What is 'dependency' in the context of substance use?",
     options: [
-      'To provide a confidential space for MHFAs to reflect on their experiences, process emotions, and receive guidance',
-      'Substance use refers to any consumption, while misuse is use that causes harm or is hazardous',
-      'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
+      'Drinking or using drugs only occasionally in social settings without any harm',
+      'Using a substance once and immediately deciding never to use it again',
+      'Choosing to use a substance purely for enjoyment with full control over the amount',
       'A condition where a person feels they need a substance to function normally, with withdrawal symptoms if they stop',
     ] as const,
     correctAnswer: 3,
@@ -1705,10 +1705,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'Which of the following is a warning sign that someone may be considering suicide?',
     options: [
-      'GPs assess symptoms, diagnose depression, discuss treatment options, and can refer to specialist services',
-      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
+      'Taking up a new hobby and reconnecting with old friends and family',
+      'Making detailed long-term plans for the future and looking forward to events',
       'Talking about being a burden, giving away possessions, or withdrawing from others',
-      'Withdrawing from social activities and isolating yourself',
+      'Sleeping slightly less than usual during a busy and demanding period at work',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1722,9 +1722,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: 'When should you call 999 for a mental health crisis?',
     options: [
-      'Physical dependence can develop quickly, withdrawal can be dangerous, and combining them with alcohol or opioids can be fatal',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
-      'Keeping interactions within agreed hours and signposting to crisis services outside those times',
+      'Whenever a colleague mentions they have been feeling stressed at work recently',
+      'As soon as someone discloses any mental health condition, regardless of severity',
+      'Only during normal working hours when other support services are unavailable',
       'When there is an immediate risk to life, such as someone about to act on suicidal thoughts or who has seriously harmed themselves',
     ] as const,
     correctAnswer: 3,
@@ -1740,9 +1740,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'Does asking someone directly about suicide increase their risk of acting on it?',
     options: [
       'No — research shows that asking directly about suicide does not increase risk and can actually help',
-      'A short, informal safety or awareness talk delivered on site, often at the start of a shift',
-      'Physical dependence can develop quickly, withdrawal can be dangerous, and combining them with alcohol or opioids can be fatal',
-      'Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help',
+      'Yes — asking directly plants the idea and significantly raises the chance they will act',
+      'Yes — it is always safer to avoid the word "suicide" and use gentler, indirect language',
+      'It makes no difference either way, so it is best not to raise the subject at all',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1775,10 +1775,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: 'What are the six steps of a safety plan for someone experiencing suicidal thoughts?',
     options: [
-      'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
-      'They may use self-harm to cope with overwhelming emotions, to feel in control, to express distress they cannot put into words, or to feel something when emotionally numb',
+      'Diagnosis, medication, hospital admission, discharge, follow-up, and review',
+      'Tell, ask, listen, reassure, refer, and record the conversation',
       'Warning signs, coping strategies, people to contact for distraction, people to ask for help, professionals to contact, making the environment safe',
-      'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
+      'Approach, listen, give information, encourage help, and encourage other supports',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1792,9 +1792,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'Which of the following best describes how cannabis can affect mental health?',
     options: [
-      'Complex PTSD includes all PTSD symptoms plus difficulties with emotional regulation, self-concept, and relationships',
-      'Approach, assess, and assist with any crisis — including assessing for suicidal thoughts',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'Cannabis reliably improves mental health and is recommended as a treatment for anxiety',
+      'Cannabis has no effect on mental health whatsoever, regardless of strength or frequency of use',
+      'Cannabis only affects physical health and has never been linked to any psychological symptoms',
       'Regular cannabis use, particularly high-strength varieties, is linked to increased risk of anxiety, depression, and psychosis',
     ] as const,
     correctAnswer: 3,
@@ -1811,9 +1811,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'A colleague confides that they have been drinking heavily every evening to cope with stress at work. What is the most appropriate initial response?',
     options: [
       'Thank them for telling you, listen without judgement, and gently suggest they speak to their GP or contact a support service',
-      'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
-      'Remain calm, validate their feelings without judgement, and help them find a safe way to manage the situation',
-      'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
+      'Warn them that you will have to report their drinking to their line manager straight away',
+      'Tell them firmly that they need to stop drinking immediately and rely on willpower alone',
+      'Reassure them that drinking to cope with stress is harmless and nothing to worry about',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1827,10 +1827,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question: 'Why might someone self-harm even when they have no intention of ending their life?',
     options: [
-      'An NHS service providing evidence-based psychological therapies for anxiety and depression, accessible via self-referral',
+      'Because they are always actively trying to end their own life',
       'They may use self-harm to cope with overwhelming emotions, to feel in control, to express distress they cannot put into words, or to feel something when emotionally numb',
-      'The first time someone experiences psychotic symptoms; early intervention leads to significantly better long-term outcomes',
-      'Trauma experienced indirectly through witnessing or hearing about others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' traumatic experiences; first aiders, supervisors, and colleagues may be at risk',
+      'Because they are simply seeking attention from those around them',
+      'Because the physical pain is always greater than any emotional pain they feel',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1844,10 +1844,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'What risks are associated with benzodiazepine misuse?',
     options: [
-      'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
-      'Warning signs, coping strategies, people to contact for distraction, people to ask for help, professionals to contact, making the environment safe',
+      'They are completely safe to stop suddenly and cannot cause any withdrawal effects',
+      'They carry no risk of dependence even when taken regularly over many months',
       'Physical dependence can develop quickly, withdrawal can be dangerous, and combining them with alcohol or opioids can be fatal',
-      'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
+      'They are safe to combine with alcohol and opioids as the effects cancel each other out',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1861,9 +1861,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'Which of the following is a protective factor against suicide?',
     options: [
-      'Men aged 45-54, with construction workers having the highest occupational rate',
-      'A condition involving persistent, excessive worry about many different things',
-      'A helpline for anyone under 35 who is experiencing thoughts of suicide, on 0800 068 4141',
+      'Social isolation and a recent relationship breakdown',
+      'A previous suicide attempt and a history of depression',
+      'Easy access to lethal means and ongoing substance misuse',
       'Strong social connections, a sense of belonging, and reasons for living',
     ] as const,
     correctAnswer: 3,
@@ -1912,10 +1912,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'What are the key elements of a workplace drug and alcohol policy?',
     options: [
-      "Warning signs, coping strategies, people to contact for distraction, people to ask for help, professionals to contact, making the environment safe",
-      "Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities",
+      "It should focus solely on punishing employees who test positive, with no mention of support",
+      "It should list every illegal drug by name but leave out any reference to alcohol",
       "It should include the organisation's position, rules, support available, testing procedures (if applicable), and consequences of policy breaches",
-      "Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others",
+      "It should apply only to safety-critical staff and exclude office-based employees entirely",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1929,9 +1929,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'Which of the following is a risk factor for suicide?',
     options: [
-      'When a person with a mental health problem internalises negative stereotypes and feels shame about their condition',
-      'Current sickness absence rates, presenteeism costs, and staff turnover data alongside the £5 ROI for every £1 invested',
-      'By including mental health in risk assessments, H&S policies, induction processes, and incident reporting',
+      'Strong social connections and a clear sense of belonging',
+      'Good access to mental health support and effective coping skills',
+      'A stable home life and restricted access to lethal means',
       'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
     ] as const,
     correctAnswer: 3,
@@ -1947,9 +1947,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What should you do if you discover someone has self-harmed and has an open wound?',
     options: [
       'Apply basic first aid (clean the wound, apply pressure if bleeding, cover with a clean dressing) and encourage them to seek medical attention if needed',
-      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
-      'A framework where treatment is matched to severity, starting with least intensive and stepping up if needed',
-      'Creating an open culture where mental health is discussed regularly, leaders share their own experiences, and language is inclusive',
+      'Refuse to touch the wound and tell them they must deal with it entirely on their own',
+      'Lecture them about the dangers of self-harm before offering any practical help',
+      'Photograph the injury as evidence before doing anything else to treat it',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1963,10 +1963,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'What are the long-term health effects of heavy alcohol misuse?',
     options: [
-      'Setting aside your own opinions and values to provide a safe space where the person feels accepted and heard',
+      'Improved liver function and a strengthened immune system over time',
       'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
-      'A condition involving persistent, excessive worry about many different things',
-      'Substance use refers to any consumption, while misuse is use that causes harm or is hazardous',
+      'A reduced risk of cancer and better long-term cardiovascular health',
+      'Temporary fatigue that fully resolves once drinking stops, with no lasting harm',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1980,10 +1980,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: "What does the 'S' stand for in the TASC model?",
     options: [
-      'Stay calm, speak gently, and do not argue with their delusions',
-      'Diagnose mental health conditions or prescribe treatment',
+      'Signpost the person to their nearest pharmacy for advice',
+      'Stay silent and wait for the person to raise the subject themselves',
       'Safety plan — help them create a plan to keep safe',
-      'Tell the person you are concerned about them',
+      'Stop the conversation and refer the person on immediately',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2016,9 +2016,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What are the risks associated with prescription opioid misuse?',
     options: [
       'Tolerance, physical dependence, overdose (especially when combined with alcohol or benzodiazepines), and respiratory depression',
-      'Explain that SSRIs typically take 4-6 weeks to show full effect and encourage him to discuss concerns with his GP before making changes',
-      'Apply basic first aid (clean the wound, apply pressure if bleeding, cover with a clean dressing) and encourage them to seek medical attention if needed',
-      'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
+      'They are non-addictive and completely safe to take at any dose for as long as wished',
+      'They cause only mild side effects and carry no risk of overdose even in large amounts',
+      'They are safe to combine with alcohol, which actually reduces the risk of harm',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2035,10 +2035,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker who has recently separated from his partner begins turning up to site smelling of alcohol and withdrawing from colleagues. Using the TASC model, which of the following represents the most appropriate sequence of actions?',
     options: [
-      "IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours",
+      "Report him to his supervisor for the smell of alcohol, then wait to see whether he is disciplined",
       "Tell him you've noticed changes and you're worried, ask directly if he's having thoughts of suicide, offer to help him make a safety plan, and call professional support if needed",
-      "A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community",
-      "Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks",
+      "Avoid mentioning the changes you have noticed in case raising them makes him feel singled out",
+      "Tell him to take some annual leave and that things will look better once he has had a rest",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2053,10 +2053,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "A colleague with a known history of depression tells you they have been stockpiling their prescribed medication 'just in case'. What is the most appropriate response?",
     options: [
-      'A coordinated plan including continued mental health support, substance misuse treatment, a safety plan, GP follow-up within 48 hours, social support networks, and regular monitoring of both conditions',
-      'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
+      'Reassure them that keeping spare medication is sensible and nothing to be concerned about',
+      'Avoid raising the subject directly in case asking about suicide makes them more likely to act',
       'Take their concern seriously as a potential warning sign, ask directly if they are thinking of suicide, encourage them to tell a trusted person or professional, and consider means restriction by suggesting they give excess medication to someone for safekeeping',
-      'Acknowledge and respect their cultural perspective without judgement, gently express your concern, offer to be available if they change their mind, and provide discreet information about culturally appropriate support services',
+      'Confiscate the medication yourself and dispose of it without discussing it with them',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2071,9 +2071,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A person experiencing dual diagnosis (alcohol dependency and severe depression) is being discharged from an inpatient unit. Which of the following post-crisis support plans is most comprehensive?',
     options: [
-      'Respect their autonomy as an adult while expressing concern, exploring their reasons for not wanting others to know, strongly encouraging professional help, and documenting the conversation for your own safeguarding records',
-      'A specific phobia involves intense fear triggered by a particular object or situation; GAD involves persistent, excessive worry across multiple areas of life',
-      'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
+      'Treatment for the depression only, on the basis that the drinking will stop once mood improves',
+      'Treatment for the alcohol dependency only, with no further mental health follow-up',
+      'A single follow-up appointment after three months, with no support in the intervening period',
       'A coordinated plan including continued mental health support, substance misuse treatment, a safety plan, GP follow-up within 48 hours, social support networks, and regular monitoring of both conditions',
     ] as const,
     correctAnswer: 3,
@@ -2107,10 +2107,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Cocaine use can have serious effects on both physical and mental health. Which of the following accurately describes the combined physical and psychological risks?',
     options: [
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
+      'Cocaine has no effect on the heart and carries no risk of stroke or seizures at any dose',
       'Cocaine increases the risk of heart attack, stroke, and seizures; psychologically it can cause paranoia, anxiety, aggression, and depression during withdrawal, with a high potential for psychological dependency',
-      'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
-      'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
+      'Cocaine only affects mood briefly and has never been linked to any physical health harm',
+      'Cocaine is physically harmless and the only real risk comes from its high financial cost',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2143,9 +2143,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A young person has been self-harming through cutting for several months. They tell you it helps them cope with emotional pain from past trauma. They are not suicidal but are reluctant to seek help. What is the most therapeutically informed response?',
     options: [
-      'In Complex PTSD, the negative self-concept is typically linked to specific traumatic experiences, whereas in BPD/EUPD, identity disturbance is more pervasive and fluctuating; the distinction matters because treatment approaches differ',
-      'Creating a wellbeing programme that includes: team-building activities (Connect), active travel schemes and lunchtime walks (Be Active), mindfulness sessions and reflective practice groups (Take Notice), CPD opportunities and skills-sharing workshops (Keep Learning), and volunteering days and peer support schemes (Give)',
-      'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
+      'Insist they stop cutting immediately and ask them to promise never to do it again',
+      'Tell them that self-harm is dangerous attention-seeking and that they must grow out of it',
+      'Break their confidence and report the self-harm to their manager as a disciplinary matter',
       'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
     ] as const,
     correctAnswer: 3,
@@ -2162,9 +2162,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'In the context of suicide prevention, which of the following statements about the relationship between self-harm and suicide is most accurate?',
     options: [
       'While self-harm is not always a suicide attempt, it is one of the strongest risk factors for future suicide; approximately 50% of people who die by suicide have a history of self-harm',
-      'In Complex PTSD, the negative self-concept is typically linked to specific traumatic experiences, whereas in BPD/EUPD, identity disturbance is more pervasive and fluctuating; the distinction matters because treatment approaches differ',
-      'Other Specified Feeding or Eating Disorder — an eating disorder that does not meet the full criteria for anorexia, bulimia, or binge eating disorder',
-      'They may use self-harm to cope with overwhelming emotions, to feel in control, to express distress they cannot put into words, or to feel something when emotionally numb',
+      'Self-harm and suicide are completely unrelated, and a history of self-harm does not affect suicide risk',
+      'Everyone who self-harms is actively attempting suicide, so the two should be treated as identical',
+      'Self-harm always reduces future suicide risk by providing a safe outlet for distress',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2220,9 +2220,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'What is a delusion?',
     options: [
-      'Strong social connections, a sense of belonging, and reasons for living',
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
-      'Mental health problems are a sign of personal weakness',
+      'A sensory experience of something that is not actually present',
+      'A temporary lapse in memory following a stressful event',
+      'An intense, irrational fear of a specific object or situation',
       'A fixed, false belief held despite evidence to the contrary',
     ] as const,
     correctAnswer: 3,
@@ -2289,9 +2289,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'What is anorexia nervosa primarily characterised by?',
     options: [
-      'Routinely monitor employee mental health and well-being',
+      'Binge eating large amounts of food with a sense of loss of control, without purging',
       'Cycles of binge eating followed by compensatory behaviours such as purging',
-      'Men who are feeling low or suicidal — 0800 58 58 58',
+      'Eating only a very narrow range of foods due to sensory aversions',
       'Restricting food intake leading to significantly low body weight',
     ] as const,
     correctAnswer: 3,
@@ -2375,9 +2375,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: "What does 'person-first language' mean in the context of mental health?",
     options: [
       "Always referring to the person before their condition, e.g. 'a person with schizophrenia' rather than 'a schizophrenic'",
-      "An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds",
-      "Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help",
-      "A condition where a person feels they need a substance to function normally, with withdrawal symptoms if they stop",
+      "Using clinical diagnostic labels in place of a person's name to keep records accurate",
+      "Only discussing someone's mental health when they are present in the room",
+      "Referring to a person solely by their diagnosis so colleagues understand their needs",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2408,10 +2408,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What is bulimia nervosa primarily characterised by?',
     options: [
-      'Recurrent, unexpected panic attacks with persistent worry about having further attacks',
-      'Difficulty concentrating, indecisiveness, and negative thinking patterns',
+      'Restricting food intake leading to a significantly low body weight',
+      'Binge eating large amounts of food without any compensatory behaviours',
       'Cycles of binge eating followed by compensatory behaviours such as purging',
-      'To access urgent mental health crisis support when it is not a life-threatening emergency',
+      'Eating only a very limited range of foods due to fear of new textures',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2534,10 +2534,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Why are eating disorders in men, particularly in the construction industry, often underdiagnosed?',
     options: [
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Men are biologically incapable of developing eating disorders, so cases are extremely rare',
       'Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help',
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
-      'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
+      'Screening tools are highly accurate for men, so few cases are ever missed in practice',
+      'Men are routinely screened for eating disorders at work, so underdiagnosis is not an issue',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2552,10 +2552,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a serious physical health risk associated with eating disorders?',
     options: [
-      '"Just snap out of it and think positive"',
-      'Mental health problems are a sign of personal weakness',
+      'A temporary increase in muscle mass and improved bone density',
+      'Better cardiovascular fitness and a stronger immune system',
       'Heart failure due to electrolyte imbalances',
-      'Severity of generalised anxiety disorder symptoms',
+      'A reduced long-term risk of osteoporosis and dental problems',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2569,9 +2569,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What distinguishes Complex PTSD from standard PTSD according to ICD-11?',
     options: [
-      'To access urgent mental health crisis support when it is not a life-threatening emergency',
-      'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
-      'Employers have a reasonable responsibility to take steps to protect the physical and mental health of their employees',
+      'Complex PTSD involves milder symptoms than standard PTSD and resolves more quickly',
+      'Complex PTSD only ever follows a single traumatic event, unlike standard PTSD',
+      'Complex PTSD has no re-experiencing or avoidance symptoms, only relationship difficulties',
       'Complex PTSD includes all PTSD symptoms plus difficulties with emotional regulation, self-concept, and relationships',
     ] as const,
     correctAnswer: 3,
@@ -2604,10 +2604,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'What is emotional dysregulation?',
     options: [
-      'The first time someone experiences psychotic symptoms; early intervention leads to significantly better long-term outcomes',
+      'A complete absence of any emotional response to events or situations',
       'Difficulty managing or controlling emotional responses, leading to intense or rapidly shifting emotions',
-      'When there is an immediate risk to life, such as someone about to act on suicidal thoughts or who has seriously harmed themselves',
-      'Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help',
+      'A deliberate strategy of suppressing emotions to appear calm under pressure',
+      'A consistently flat, low mood that never changes regardless of circumstances',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2621,10 +2621,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What are the three main types of trauma?',
     options: [
-      'Post-Traumatic Stress Disorder (PTSD)',
-      'Heart failure due to electrolyte imbalances',
+      'Physical, emotional, and financial',
+      'Acute, chronic, and seasonal',
       'Single-incident, complex (repeated), and vicarious',
-      'Tell the person you are concerned about them',
+      'Mild, moderate, and severe',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2645,7 +2645,7 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     ] as const,
     correctAnswer: 3,
     explanation:
-      'A paranoid delusion is a fixed, false belief that others are plotting to harm, deceive, or persecute you. It is one of the most common types of delusion experienced during psychosis. A grandiose delusion (option A) involves beliefs about special powers, while a referential delusion (option B) involves believing unrelated events are personally significant.',
+      'A paranoid delusion is a fixed, false belief that others are plotting to harm, deceive, or persecute you. It is one of the most common types of delusion experienced during psychosis. By contrast, a grandiose delusion involves beliefs about having special powers, a referential delusion involves believing unrelated events are personally significant, and a somatic delusion concerns the body being diseased.',
     section: 'Psychosis, Eating Disorders & Complex Needs',
     difficulty: 'intermediate' as const,
     topic: 'Delusions',
@@ -2656,9 +2656,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What is binge eating disorder?',
     options: [
       'Regularly eating large quantities of food very quickly to the point of discomfort, with a feeling of loss of control, without compensatory purging',
-      'An anxiety disorder involving fear of situations where escape might be difficult, such as open spaces or crowds',
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
-      'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
+      'Binge eating followed by purging through vomiting, laxatives, or excessive exercise',
+      'Severely restricting food intake leading to a dangerously low body weight',
+      'Eating only a narrow range of foods due to strong sensory aversions',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2672,10 +2672,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What is vicarious trauma and who might be at risk of it on a construction site?',
     options: [
-      "They may use self-harm to cope with overwhelming emotions, to feel in control, to express distress they cannot put into words, or to feel something when emotionally numb",
+      "Trauma caused by directly experiencing a single life-threatening event yourself; only the injured worker is affected",
       "Trauma experienced indirectly through witnessing or hearing about others' traumatic experiences; first aiders, supervisors, and colleagues may be at risk",
-      "Increasing transparency and accountability through internal and external reporting on mental health, including senior leaders publicly championing mental health and sharing their own experiences",
-      "For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants",
+      "Trauma that results only from repeated physical injury on site; office staff are never at risk",
+      "Trauma that develops solely from long working hours; no one who witnesses an incident is affected",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2690,10 +2690,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the purpose of Early Intervention in Psychosis (EIP) services?',
     options: [
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
-      'To provide initial support, listen non-judgementally, and guide the person towards appropriate help',
+      'Providing long-term residential care for people with established, chronic schizophrenia',
+      'Delivering general mental health awareness training to the wider workforce',
       'Offering rapid, specialist support during the first episode of psychosis to improve long-term outcomes',
-      'Talking about being a burden, giving away possessions, or withdrawing from others',
+      'Managing medication reviews for people who have been stable for many years',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2708,9 +2708,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague with BPD/EUPD becomes very upset after a minor disagreement with a workmate and threatens to walk off site. What is the most helpful response?',
     options: [
-      'Listen non-judgementally and let them know you care, without insisting they stop',
-      'Setting aside your own opinions and values to provide a safe space where the person feels accepted and heard',
-      'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
+      'Tell them firmly to calm down and that they are overreacting to a small issue',
+      'Discipline them for threatening to leave site so the behaviour is not repeated',
+      'Ignore the situation entirely and let them walk off without any conversation',
       'Remain calm, validate their feelings without judgement, and help them find a safe way to manage the situation',
     ] as const,
     correctAnswer: 3,
@@ -2748,10 +2748,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'According to NICE guidelines, what are the two recommended first-line psychological treatments for PTSD in adults?',
     options: [
-      'Listen non-judgementally and let them know you care, without insisting they stop',
+      'Long-term antipsychotic medication and electroconvulsive therapy (ECT)',
       'Trauma-focused CBT and Eye Movement Desensitisation and Reprocessing (EMDR)',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
-      'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
+      'Group support sessions and general counselling without a trauma focus',
+      'Interpersonal therapy (IPT) and structured exercise programmes',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2766,10 +2766,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A site manager learns that a worker has been diagnosed with schizophrenia but is stable on medication and performing well. A colleague suggests the worker should be removed from duties involving heights due to their diagnosis alone. What is the correct response?',
     options: [
-      'Always referring to the person before their condition, e.g. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'a person with schizophrenia\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rather than \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'a schizophrenic\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
+      'Remove the worker from height duties immediately, as the diagnosis itself makes the work unsafe',
+      'Keep the diagnosis secret from the worker while quietly reassigning their duties',
       'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
-      'The higher the number of ACEs a person has experienced, the greater their statistical risk of physical and mental health problems in adulthood, including substance misuse, depression, and heart disease',
+      'Ask the rest of the team to vote on whether the worker should continue in their role',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2784,9 +2784,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'How does Complex PTSD (as defined by ICD-11) differ from BPD/EUPD in terms of self-concept, and why is this distinction clinically important?',
     options: [
-      'Warning signs, internal coping strategies, people and social settings for distraction, people to ask for help, professionals and agencies to contact, making the environment safe',
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
-      'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
+      'In both conditions the self-concept is identical, so the distinction has no bearing on treatment',
+      'In BPD/EUPD the negative self-concept is always tied to a single trauma, unlike in Complex PTSD',
+      'In Complex PTSD identity is stable and unchanging, whereas in BPD/EUPD it never varies either',
       'In Complex PTSD, the negative self-concept is typically linked to specific traumatic experiences, whereas in BPD/EUPD, identity disturbance is more pervasive and fluctuating; the distinction matters because treatment approaches differ',
     ] as const,
     correctAnswer: 3,
@@ -2803,9 +2803,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'A young apprentice on site has been using cannabis heavily for several months. He begins telling colleagues that the site cameras are recording him specifically and that his supervisor is part of a surveillance operation. What is the most likely explanation and what action should be taken?',
     options: [
       'He may be experiencing drug-induced psychosis triggered by heavy cannabis use; he should be supported calmly, kept safe, and guided towards urgent professional help',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
-      'Cocaine increases the risk of heart attack, stroke, and seizures; psychologically it can cause paranoia, anxiety, aggression, and depression during withdrawal, with a high potential for psychological dependency',
-      'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
+      'He is most likely joking and the beliefs should be dismissed and ignored by colleagues',
+      'He is probably just stressed about work and should be told to take the rest of the day off',
+      'His beliefs should be argued against firmly until he accepts that no one is watching him',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2820,10 +2820,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Research into Adverse Childhood Experiences (ACEs) has identified a dose-response relationship between ACE scores and health outcomes. What does this mean in practice?',
     options: [
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'A single adverse childhood experience guarantees that a person will develop a mental illness',
       'The higher the number of ACEs a person has experienced, the greater their statistical risk of physical and mental health problems in adulthood, including substance misuse, depression, and heart disease',
-      'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
-      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
+      'The number of ACEs has no measurable effect on health outcomes later in life',
+      'Only the most severe single ACE matters; the total number a person experiences is irrelevant',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2837,10 +2837,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: 'What is EMDR and how does it work as a treatment for PTSD?',
     options: [
-      'In Complex PTSD, the negative self-concept is typically linked to specific traumatic experiences, whereas in BPD/EUPD, identity disturbance is more pervasive and fluctuating; the distinction matters because treatment approaches differ',
-      'Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed',
+      'Electronic Mood and Depression Regulation — a device worn on the wrist that delivers mild electrical pulses to lift mood',
+      'A medication that blocks traumatic memories so the person can no longer recall the event at all',
       'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
-      'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
+      'A breathing technique used during panic attacks to slow the heart rate and restore calm',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2855,9 +2855,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker develops PTSD after a scaffolding collapse. His therapist recommends trauma-focused CBT. Which of the following best describes what this involves?',
     options: [
-      'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
-      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
-      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
+      'A single one-off session in which the worker is encouraged to forget the accident and move on',
+      'Long-term medication management with no talking or psychological component at all',
+      'Repeated retelling of the trauma to large groups without any structure or coping support',
       'Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions',
     ] as const,
     correctAnswer: 3,
@@ -2874,9 +2874,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'Why is it important to adopt a trauma-informed approach when working with someone who has BPD/EUPD, and what does this look like in practice on a construction site?',
     options: [
       "A trauma-informed approach avoids re-traumatisation; in practice this means creating predictable routines, providing clear communication, responding with empathy rather than punishment to emotional outbursts, and asking 'what happened to you?' rather than 'what's wrong with you?'",
-      "Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee's disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed",
-      "Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready",
-      "Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level",
+      "A trauma-informed approach means avoiding the person entirely so that nothing on site can trigger them",
+      "A trauma-informed approach focuses on disciplining emotional outbursts firmly so they do not recur",
+      "A trauma-informed approach involves asking the person to describe their past trauma in full detail to colleagues",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2967,10 +2967,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'What is the main difference between an MHFA and a Mental Health Champion?',
     options: [
-      'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
+      'Champions are qualified to diagnose conditions, whereas MHFAs can only raise awareness',
       'MHFAs are trained to provide initial support and signpost; Champions raise awareness and reduce stigma but are not trained to provide first aid',
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'There is no difference; the two terms describe exactly the same role and training',
+      'MHFAs only work in construction, whereas Champions work in every other industry',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3022,7 +3022,7 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     options: [
       'NHS Talking Therapies (formerly IAPT)',
       'Cognitive Behavioural Therapy',
-      'Encourage appropriate professional help',
+      'Community Mental Health Team (CMHT)',
       'Employee Assistance Programme',
     ] as const,
     correctAnswer: 0,
@@ -3107,10 +3107,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'Which of the following best describes compassion fatigue?',
     options: [
-      'Employers have a reasonable responsibility to take steps to protect the physical and mental health of their employees',
+      'A sudden burst of empathy that improves the quality of support a helper can offer',
       'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
-      'Listen non-judgementally, offer reassurance, and gently encourage them to seek professional help while respecting their confidentiality',
-      'A short, informal safety or awareness talk delivered on site, often at the start of a shift',
+      'A physical condition caused by long hours of manual work on site',
+      'A short-term feeling of satisfaction after successfully helping a colleague',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3197,10 +3197,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'When building a business case for an MHFA programme, which of the following would be the most compelling data to present to senior leadership?',
     options: [
-      'Keeping interactions within agreed hours and signposting to crisis services outside those times',
-      'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
+      'The names and diagnoses of individual employees who have recently sought support',
+      'A general statement that mental health matters, with no supporting figures or data',
       'Current sickness absence rates, presenteeism costs, and staff turnover data alongside the £5 ROI for every £1 invested',
-      'You should keep what the person tells you private unless there is a risk of harm to themselves or others',
+      'Anecdotes about one or two employees, presented without any wider organisational context',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3232,9 +3232,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What does the GAD-7 questionnaire measure?',
     options: [
       'Severity of generalised anxiety disorder symptoms',
-      'Single-incident, complex (repeated), and vicarious',
-      'Persistent feelings of hopelessness and sadness',
-      'How much say a person has over how they do their work',
+      'Severity of depression symptoms over the past two weeks',
+      'A person\'s level of alcohol dependency and drinking habits',
+      'The presence and severity of post-traumatic stress symptoms',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3267,10 +3267,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'How can an MHFA programme be integrated with existing health and safety arrangements in the workplace?',
     options: [
-      'Men aged 45-54, with construction workers having the highest occupational rate',
-      'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
+      'By keeping mental health entirely separate from health and safety to avoid confusion',
+      'By treating mental health solely as an HR matter with no link to safety arrangements',
       'By including mental health in risk assessments, H&S policies, induction processes, and incident reporting',
-      'When a person with a mental health problem internalises negative stereotypes and feels shame about their condition',
+      'By addressing mental health only after a serious physical safety incident has occurred',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3285,9 +3285,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following KPIs would be most useful for measuring the impact of an MHFA programme?',
     options: [
-      'Keeping interactions within agreed hours and signposting to crisis services outside those times',
-      'Substance use refers to any consumption, while misuse is use that causes harm or is hazardous',
-      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
+      'The personal diagnoses disclosed by each employee who approached an MHFA',
+      'The number of hours each MHFA spends away from their normal duties',
+      'A subjective judgement by managers about whether morale "feels" better',
       'Sickness absence rates, EAP utilisation, staff survey results, and number of MHFA interactions',
     ] as const,
     correctAnswer: 3,
@@ -3303,9 +3303,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What is vicarious trauma and how might it affect an MHFA?',
     options: [
       "The emotional residue of exposure to others' traumatic stories, which can lead to changes in the MHFA's own worldview, beliefs, and psychological functioning",
-      "It should include the organisation's position, rules, support available, testing procedures (if applicable), and consequences of policy breaches",
-      "Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others",
-      "When the general public holds negative attitudes, beliefs, and stereotypes about people with mental health problems",
+      "A physical injury sustained by an MHFA while providing first aid to an injured colleague",
+      "The boost in confidence an MHFA feels after successfully supporting someone through a crisis",
+      "A condition that only affects the person who directly experienced the original traumatic event",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3319,10 +3319,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'Why is supervision important for MHFAs in the workplace?',
     options: [
-      'A framework where treatment is matched to severity, starting with least intensive and stepping up if needed',
+      'To allow managers to monitor and assess the performance of individual MHFAs',
       'To provide a confidential space for MHFAs to reflect on their experiences, process emotions, and receive guidance',
-      'Difficulty managing or controlling emotional responses, leading to intense or rapidly shifting emotions',
-      'No — research shows that asking directly about suicide does not increase risk and can actually help',
+      'To formally record the names and details of everyone an MHFA has supported',
+      'To train MHFAs to diagnose mental health conditions and recommend medication',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3354,9 +3354,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the connection between physical and mental health that employers should consider?',
     options: [
-      'Creating an open culture where mental health is discussed regularly, leaders share their own experiences, and language is inclusive',
-      'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
+      'Physical and mental health are entirely separate and have no influence on one another',
+      'Only physical health affects mental health; poor mental health has no physical consequences',
+      'Mental health problems are always caused by physical illness and never the other way around',
       'Physical health conditions can increase the risk of poor mental health, and poor mental health can lead to physical health problems — a holistic approach is needed',
     ] as const,
     correctAnswer: 3,
@@ -3372,9 +3372,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question: 'What should be included in a workplace mental health policy?',
     options: [
       'A commitment to supporting mental health, roles and responsibilities, confidentiality procedures, support available, and how adjustments will be made',
-      'Remain calm, validate their feelings without judgement, and help them find a safe way to manage the situation',
-      'A gradual lessening of compassion over time, resulting from the emotional demands of helping others who are suffering',
-      'The emotional residue of exposure to others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' traumatic stories, which can lead to changes in the MHFA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own worldview, beliefs, and psychological functioning',
+      'A complete list of every employee\'s personal mental health history and diagnoses',
+      'A set of disciplinary penalties for employees who disclose a mental health condition',
+      'A requirement that all staff undergo compulsory psychiatric assessment each year',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3389,10 +3389,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "Which voluntary sector organisation specifically supports men's mental health and operates the helpline 0800 58 58 58?",
     options: [
-      'The Health & Safety at Work Act 1974',
+      'BEAT (the UK eating disorders charity)',
       'CALM (Campaign Against Living Miserably)',
-      'An intense fear of abandonment',
-      'The first 1-2 weeks after discharge',
+      'Papyrus (the young suicide prevention charity)',
+      'Mates in Mind (the construction mental health charity)',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3407,10 +3407,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'How can an MHFA promote openness and reduce stigma around mental health in the workplace?',
     options: [
-      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
-      'They may use self-harm to cope with overwhelming emotions, to feel in control, to express distress they cannot put into words, or to feel something when emotionally numb',
+      'By keeping all mental health discussions strictly private and never raising the topic openly',
+      'By publicly naming colleagues who have sought support so others feel encouraged to do the same',
       'By leading by example with open conversations, supporting campaigns like Time to Talk Day, and normalising mental health discussions through toolbox talks and awareness events',
-      'Cocaine increases the risk of heart attack, stroke, and seizures; psychologically it can cause paranoia, anxiety, aggression, and depression during withdrawal, with a high potential for psychological dependency',
+      'By discussing mental health only in formal disciplinary or HR meetings',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3424,9 +3424,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What is the purpose of NHS 111, option 2?',
     options: [
-      'Is classed as a disability, meaning it has a substantial and long-term adverse effect on day-to-day activities',
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
-      'Promoting positive working relationships and dealing with unacceptable behaviour such as bullying',
+      'To book a routine GP appointment for a non-urgent physical health concern',
+      'To report a crime in progress that requires an immediate police response',
+      'To order repeat prescriptions and arrange medication deliveries from a pharmacy',
       'To access urgent mental health crisis support when it is not a life-threatening emergency',
     ] as const,
     correctAnswer: 3,
@@ -3462,10 +3462,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'An MHFA notices they have become emotionally numb, are dreading interactions with colleagues seeking support, and have started avoiding people at work. Which of the following best describes what they may be experiencing, and what should they do?',
     options: [
-      'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
+      'They are simply being lazy and should be reminded of their responsibilities as an MHFA',
       'They may be experiencing compassion fatigue or vicarious trauma and should access supervision, review their boundaries, and consider temporarily stepping back from the role',
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
-      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
+      'They are developing schizophrenia and should be referred for an urgent psychiatric assessment',
+      'They are experiencing normal job satisfaction and no action is needed at all',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3480,10 +3480,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'A large construction company with 500 employees across multiple sites wants to implement an MHFA programme. Considering the recommended ratio, shift patterns, and site coverage, which approach would be most effective?',
     options: [
-      'Apply basic first aid (clean the wound, apply pressure if bleeding, cover with a clean dressing) and encourage them to seek medical attention if needed',
-      'Current sickness absence rates, presenteeism costs, and staff turnover data alongside the £5 ROI for every £1 invested',
+      'Training a single MHFA based at head office to cover all 500 employees across every site',
+      'Training MHFAs only from the management team, with none from the wider workforce',
       'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
-      'IPT focuses on how relationship difficulties and life changes contribute to depression, while CBT focuses on changing unhelpful thought patterns and behaviours',
+      'Training five MHFAs and relying on them to be available 24 hours a day, seven days a week',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3498,9 +3498,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "When implementing the Stevenson/Farmer 'Thriving at Work' enhanced standards, which of the following represents a comprehensive approach to measuring and reporting on mental health outcomes?",
     options: [
-      'The responsibility of a line manager or MHFA to signpost a person to appropriate professional support when a situation is beyond their competence',
-      'Respect their autonomy as an adult while expressing concern, exploring their reasons for not wanting others to know, strongly encouraging professional help, and documenting the conversation for your own safeguarding records',
-      'Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level',
+      'Tracking only the total number of MHFAs trained, with no other outcome measures',
+      'Relying solely on informal feedback from managers rather than any structured data',
+      'Measuring mental health outcomes once every five years to minimise the administrative burden',
       'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
     ] as const,
     correctAnswer: 3,
@@ -3517,9 +3517,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'An employee discloses to an MHFA that they are having suicidal thoughts but begs the MHFA not to tell anyone. They say they have already called Samaritans and have a GP appointment next week. What is the most appropriate course of action?',
     options: [
       "Acknowledge the person's wish for confidentiality, explore the immediacy of risk, explain the limits of confidentiality where there is risk to life, and collaboratively agree next steps including whether crisis services are needed before the GP appointment",
-      "Training managers to recognise signs of presenteeism, promoting flexible working, reviewing workload management, enhancing EAP promotion, and creating a culture where taking time off for mental health is supported",
-      "Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions",
-      "Conducting a systematic assessment across all six Management Standards areas (Demands, Control, Support, Relationships, Role, Change) to identify specific organisational risk factors and implementing targeted changes at the organisational level",
+      "Agree to keep it completely confidential, since they already have a GP appointment and have contacted the Samaritans",
+      "Immediately call 999 and inform their line manager without discussing it further with the person",
+      "Tell them there is nothing more you can do until their GP appointment and end the conversation",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3534,10 +3534,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       "A company's annual wellbeing survey shows that presenteeism accounts for significantly more lost productivity than absenteeism. Which combination of interventions would most effectively address this?",
     options: [
-      'The higher the number of ACEs a person has experienced, the greater their statistical risk of physical and mental health problems in adulthood, including substance misuse, depression, and heart disease',
+      'Introducing stricter attendance monitoring and penalising employees who take time off sick',
       'Training managers to recognise signs of presenteeism, promoting flexible working, reviewing workload management, enhancing EAP promotion, and creating a culture where taking time off for mental health is supported',
-      'Acknowledge and respect their cultural perspective without judgement, gently express your concern, offer to be available if they change their mind, and provide discreet information about culturally appropriate support services',
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
+      'Requiring all employees to attend work in person regardless of how unwell they feel',
+      'Removing the Employee Assistance Programme to encourage staff to rely on their own resilience',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3552,10 +3552,10 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     question:
       'An MHFA has been supporting a colleague through a difficult period for several weeks. The colleague has become increasingly reliant on the MHFA, contacting them daily and resisting referral to professional services. What reflective practice should the MHFA apply?',
     options: [
-      'Increasing transparency and accountability through internal and external reporting on mental health, including senior leaders publicly championing mental health and sharing their own experiences',
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
+      'Continue offering daily support indefinitely, since the colleague clearly finds it helpful',
+      'Abruptly stop all contact with the colleague to force them to seek professional help',
       'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'Take on a formal counselling role for the colleague to save them the cost of private therapy',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3569,9 +3569,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: 'Papyrus is a UK charity that specifically focuses on which area of mental health?',
     options: [
-      'The body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
-      'Withdrawing from social activities and isolating yourself',
+      'Support for people affected by eating disorders of all ages',
+      'Mental health in the construction and related industries',
+      'Counselling for couples experiencing relationship difficulties',
       'Prevention of young suicide (under 35) and provides the HOPELINEUK service',
     ] as const,
     correctAnswer: 3,
@@ -3588,9 +3588,9 @@ export const mentalHealthQuestionBank: StandardMockQuestion[] = [
       'An organisation wants to embed the Five Ways to Wellbeing into its MHFA programme and wider workplace culture. Which implementation strategy best demonstrates a comprehensive approach?',
     options: [
       'Creating a wellbeing programme that includes: team-building activities (Connect), active travel schemes and lunchtime walks (Be Active), mindfulness sessions and reflective practice groups (Take Notice), CPD opportunities and skills-sharing workshops (Keep Learning), and volunteering days and peer support schemes (Give)',
-      'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
-      'Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help',
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'Sending a single email listing the Five Ways to Wellbeing with no accompanying activities or initiatives',
+      'Putting up posters of the Five Ways to Wellbeing in communal areas as the sole intervention',
+      'Asking employees to follow the Five Ways to Wellbeing in their own time, with no workplace support',
     ] as const,
     correctAnswer: 0,
     explanation:

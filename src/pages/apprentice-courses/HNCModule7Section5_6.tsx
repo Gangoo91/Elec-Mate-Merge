@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'retrofit-assessment',
     question: 'What is the primary purpose of an energy audit in retrofit planning?',
     options: [
-      'With supervision, PPE, GS38 leads, and controlled area',
-      'To prevent accidents, legal non-compliance, and property damage',
-      'Licensed, notifiable non-licensed (NNLW), and non-licensed',
       'To identify energy saving opportunities and quantify potential savings',
+      'To confirm the installation complies with BS 7671 before energising',
+      'To calculate the prospective fault current at the origin of the installation',
+      'To produce the electrical installation certificate for the existing system',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'An energy audit systematically identifies energy saving opportunities, quantifies current consumption, and estimates potential savings. This data forms the foundation for business case development and retrofit prioritisation.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'When retrofitting fluorescent fittings with LED tubes, which safety consideration is paramount?',
     options: [
-      'Review all explanations and identify knowledge gaps',
-      'An area of higher heat transfer through the building envelope',
+      'Matching the colour temperature to the existing fittings',
+      'Choosing a tube with the same physical length as the original',
       'Compatibility with existing ballasts or bypass requirements',
-      'It provides the framework under which more specific regulations can be made',
+      'Selecting a tube with the highest possible lumen output',
     ],
     correctIndex: 2,
     explanation:
@@ -67,9 +67,9 @@ const quickCheckQuestions = [
     id: 'ipmvp-verification',
     question: 'What does IPMVP Option C require for measurement and verification?',
     options: [
-      'It demonstrates competence, commitment to standards, and ethical conduct',
-      'Both operational and embodied carbon emissions',
-      'Due to cable length, connections, or temperature differences',
+      'Isolating and metering each individual retrofit measure separately',
+      'A calibrated computer simulation of the whole building',
+      'Spot measurements of key parameters with engineering estimates for the rest',
       'Whole facility utility metering with regression analysis',
     ],
     correctIndex: 3,
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'For a lighting retrofit business case, which costs should be included beyond equipment?',
     options: [
-      'Ballast bypass - direct mains connection to lamp holders',
-      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
+      'Only the purchase price of the replacement luminaires',
+      'Equipment plus the projected energy savings as a negative cost',
       'Equipment, installation, disposal, and any control system upgrades',
-      'How one efficiency measure affects the savings of another',
+      'Equipment and the manufacturer warranty registration fee only',
     ],
     correctAnswer: 2,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'When conducting a pre-retrofit baseline, measurements should ideally cover:',
     options: [
       'A minimum of 12 months to capture seasonal variation',
-      'Light levels, control functionality, and energy consumption',
-      'Changes in independent variables like weather and occupancy',
-      'Individual retrofit measures can be isolated and metered',
+      'A single representative day during normal occupancy',
+      'Only the peak winter week when demand is highest',
+      'Three consecutive months immediately before installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Type B LED retrofit tubes require:',
     options: [
-      'Light levels, control functionality, and energy consumption',
+      'The existing ballast to be left in place and used unchanged',
       'Ballast bypass - direct mains connection to lamp holders',
-      'Both a 6 kW reduction and 50% improvement',
-      'Individual retrofit measures can be isolated and metered',
+      'An external LED driver to be wired into each fitting',
+      'A low-voltage transformer to be added upstream of the fitting',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'Post-retrofit commissioning of lighting systems should verify:',
     options: [
-      'Equipment, installation, disposal, and any control system upgrades',
-      'Cash flows over the project life discounted to present value',
-      'Individual retrofit measures can be isolated and metered',
+      'Only that the new luminaires switch on and off correctly',
+      'The supplier invoice matches the original quotation',
+      'The discount rate used in the financial appraisal',
       'Light levels, control functionality, and energy consumption',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'When calculating LED retrofit savings, the control factor accounts for:',
     options: [
       'Additional savings from occupancy sensors, daylight dimming, and scheduling',
-      'Changes in independent variables like weather and occupancy',
-      'Ballast bypass - direct mains connection to lamp holders',
-      'Individual retrofit measures can be isolated and metered',
+      'The reduction in lamp wattage alone, before any controls',
+      'The cost premium of adding intelligent control gear',
+      'The loss of output as LEDs depreciate over their life',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Net Present Value (NPV) for retrofit projects considers:',
     options: [
-      'Light levels, control functionality, and energy consumption',
+      'Only the first year of savings against the capital cost',
       'Cash flows over the project life discounted to present value',
-      'A minimum of 12 months to capture seasonal variation',
-      'Ballast bypass - direct mains connection to lamp holders',
+      'The undiscounted total of all future savings minus costs',
+      'The time taken for annual savings to repay the investment',
     ],
     correctAnswer: 1,
     explanation:
@@ -217,10 +217,10 @@ const quizQuestions = [
     question:
       'A lighting power density reduction from 12 W/m² to 6 W/m² in a 1,000 m² office represents:',
     options: [
-      '6 kW of connected load reduction',
-      '50% reduction in lighting energy consumption',
-      '12 kW of savings',
-      'Both a 6 kW reduction and 50% improvement',
+      '3 kW of connected load reduction, a 25% improvement',
+      '12 kW of connected load reduction, a 100% improvement',
+      '18 kW of connected load reduction, a 50% improvement',
+      '6 kW of connected load reduction, a 50% improvement',
     ],
     correctAnswer: 3,
     explanation:
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'The regression model baseline adjustment in IPMVP accounts for:',
     options: [
       'Changes in independent variables like weather and occupancy',
-      'Light levels, control functionality, and energy consumption',
-      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
-      'Cash flows over the project life discounted to present value',
+      'The depreciation of the retrofit equipment over time',
+      'The inflation rate applied to future energy prices',
+      'The metering error margin declared by the meter operator',
     ],
     correctAnswer: 0,
     explanation:

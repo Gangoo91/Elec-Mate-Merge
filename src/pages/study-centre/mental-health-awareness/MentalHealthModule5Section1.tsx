@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'According to Deloitte research, which costs UK employers MORE — absenteeism or presenteeism?',
     options: [
-      'Absenteeism — because people are completely absent from work',
       'Presenteeism — because people are at work but functioning at reduced capacity',
+      'Absenteeism — because people are completely absent from work',
       'They cost roughly the same amount each year',
       'Neither — the main cost is staff turnover and recruitment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Deloitte's 2024 research found that presenteeism costs UK employers approximately twice as much as absenteeism. When people come to work while struggling with their mental health, they are physically present but their concentration, decision-making, productivity, and safety awareness are all significantly reduced. On construction sites, this is particularly dangerous because reduced concentration directly increases the risk of accidents and errors.",
   },
@@ -50,10 +50,10 @@ const quickCheckQuestions = [
     options: [
       'The Construction (Design and Management) Regulations 2015 only',
       'The Equality Act 2010 only',
-      'The Health and Safety at Work Act 1974',
       'The Mental Health Act 1983',
+      'The Health and Safety at Work Act 1974',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The Health and Safety at Work Act 1974 places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety, and welfare of their employees. This duty of care explicitly includes mental health as well as physical health. The Equality Act 2010 also provides protection for people with mental health conditions that constitute disabilities, and the Management of Health and Safety at Work Regulations 1999 require risk assessments that include psychosocial hazards. Together, these create a robust legal framework for workplace mental health.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'Which of the following is the MOST costly consequence of poor mental health in the workplace?',
     options: [
-      'Absenteeism — people being off work entirely',
       'Presenteeism — people at work but functioning at reduced capacity',
+      'Absenteeism — people being off work entirely',
       'Staff turnover — people leaving the company',
       'Recruitment costs — replacing people who have left',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Presenteeism is the single most costly consequence of poor mental health in the workplace, costing approximately twice as much as absenteeism. When someone is at work but struggling with their mental health, their productivity drops significantly, they make more errors, their decision-making is impaired, and on construction sites, they are at increased risk of accidents. Because presenteeism is invisible in absence statistics, many employers massively underestimate its impact.',
   },
@@ -115,8 +115,8 @@ const quizQuestions = [
     id: 3,
     question:
       'The HSE reported that approximately how many working days were lost to work-related stress, depression, and anxiety in a recent year?',
-    options: ['5.2 million days', '10.8 million days', '17.1 million days', '25.3 million days'],
-    correctAnswer: 2,
+    options: ['5.2 million days', '10.8 million days', '25.3 million days', '17.1 million days'],
+    correctAnswer: 3,
     explanation:
       'The Health and Safety Executive (HSE) reported that approximately 17.1 million working days were lost to work-related stress, depression, and anxiety. This makes mental health the single largest cause of work-related absence in the UK, accounting for over half of all working days lost to ill health. In construction, the actual figure may be higher because of underreporting and the prevalence of self-employment.',
   },
@@ -124,8 +124,8 @@ const quizQuestions = [
     id: 4,
     question:
       'According to Deloitte, for every £1 spent on mental health support, employers get back:',
-    options: ['£2.10', '£3.80', '£5.30', '£8.50'],
-    correctAnswer: 2,
+    options: ['£5.30', '£2.10', '£3.80', '£8.50'],
+    correctAnswer: 0,
     explanation:
       "Deloitte's research found an average return of £5.30 for every £1 invested in mental health support. This is one of the strongest returns on investment available to any business. The return comes from multiple sources: reduced absenteeism, lower presenteeism, decreased staff turnover, fewer accidents, less rework, lower recruitment costs, and improved productivity. Preventive measures and early interventions deliver the highest returns.",
   },
@@ -135,11 +135,11 @@ const quizQuestions = [
       'Which UK legislation places a general duty of care on employers that includes mental health?',
     options: [
       'The Mental Health Act 1983',
-      'The Health and Safety at Work Act 1974',
       'The Construction (Design and Management) Regulations 2015',
       'The Working Time Regulations 1998',
+      'The Health and Safety at Work Act 1974',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Health and Safety at Work Act 1974 places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety, and welfare of all employees at work. 'Health' in this context includes mental health. This means that employers who fail to address known psychosocial hazards in the workplace are potentially in breach of this fundamental piece of health and safety legislation.",
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
     question: "What is 'leaveism' in the context of workplace mental health?",
     options: [
       'When an employer forces someone to take leave for mental health reasons',
-      'When people use annual leave or rest days to manage mental health difficulties instead of reporting sickness absence',
       'When someone takes extended unpaid leave to recover from burnout',
+      'When people use annual leave or rest days to manage mental health difficulties instead of reporting sickness absence',
       'When a company offers mental health leave as a formal benefit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Leaveism occurs when employees use annual leave, rest days, or TOIL to manage mental health difficulties rather than declaring sickness absence. This is particularly problematic because it is hidden — it does not appear in absence statistics, so employers may believe their workforce is healthy when in reality people are using their holiday entitlement to cope. Leaveism is a sign that people do not feel safe disclosing their mental health difficulties, often due to stigma or fear of consequences.',
   },

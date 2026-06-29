@@ -38,12 +38,12 @@ const checks = [
     id: 'm5-s2-sub5-bathroom-zones',
     question: 'Section 701 bathroom zones are defined as:',
     options: [
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
-      'That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access',
       'Zone 0 (interior of bath/shower basin), Zone 1 (above Zone 0 to 2.25 m, plus the volume above), Zone 2 (0.6 m horizontal extension from Zone 1 to 2.25 m height) — each with specific IP rating and equipment requirements.',
+      'That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access',
+      'The MCS Certificate, manufacturer commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
       'Source phase winding → line conductor → fault at appliance → exposed-conductive-part → CPC → MET → earthing conductor → service position → DNO PEN → source neutral terminal — protective device sees the high fault current and disconnects.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Section 701 zones — Zone 0 (within bath/shower), Zone 1 (above to 2.25 m), Zone 2 (0.6 m horizontal from Zone 1, to 2.25 m). Each has IP rating requirements (Zone 0: IPX7; Zone 1: IPX4; Zone 2: IPX4 — also affected by water-jet use). Equipment selection per Section 701.55. Visual inspection confirms zone-appropriate equipment is installed.',
   },
@@ -96,7 +96,7 @@ const quizQuestions = [
       'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
       'Arguing for the higher controls before defaulting to PPE. The L3 supervisor pushes back on "just give them masks" and asks "what engineering controls have we considered?". Documents the hierarchy reasoning. Inverts only when genuinely no higher control is reasonably practicable.',
       'Be supplied by a 30 mA RCD or with double / reinforced insulation, use 110 V CTE supplies for tools where applicable, and have IP rating appropriate to the site environment (typically IP44 minimum, IP65 for outdoor wet).',
-      'Body scanning first (immediate physical awareness) → ABC model (identifying triggering beliefs) → Gibbs\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' Reflective Cycle (structured reflection on the full incident) → Johari Window (seeking external feedback to identify blind spots)',
+      "Body scanning first (immediate physical awareness) → ABC model (identifying triggering beliefs) → Gibbs' Reflective Cycle (structured reflection on the full incident) → Johari Window (seeking external feedback to identify blind spots)",
     ],
     correctAnswer: 2,
     explanation:
@@ -106,7 +106,7 @@ const quizQuestions = [
     id: 3,
     question: 'Section 705 (agricultural / horticultural premises) supplementary bonding requirements:',
     options: [
-      'The Approved Electrician you\\\\\\\\\\\\\\\'re paired with for that task. They direct the work at the immediate face, show you how to do it and check your work before sign-off. The Foreman or Charge-hand allocates the pairing; the Approved Electrician runs the pairing day to day.',
+      "The Approved Electrician you're paired with for that task. They direct the work at the immediate face, show you how to do it and check your work before sign-off. The Foreman or Charge-hand allocates the pairing; the Approved Electrician runs the pairing day to day.",
       'Where a specific risk assessment demonstrates that the particular task, equipment, and location are suitable for the actual conditions — for example, an enclosed MEWP in a sheltered courtyard',
       'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
       'All exposed and extraneous-conductive-parts that could be touched by livestock connected to a supplementary equipotential bonding network — to prevent dangerous voltage differences across livestock body length (livestock is more sensitive than humans).',
@@ -148,7 +148,7 @@ const quizQuestions = [
       "At least six years for civil liability under the Limitation Act, with most professional indemnity insurers and Competent Person Schemes requiring 10 to 25 years. Cloud storage of PDFs is standard contractor practice now.",
       "30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time",
       "An open-PEN protective device (O-PEN device) that disconnects the supply if the PEN integrity is lost (typical V<159 V or V>253 V detection), OR by deriving the EVSE earth from a separate TT electrode rather than the PME terminal — preventing PEN-fault diverted-N current from appearing on the vehicle chassis.",
-      "Noticing the thought and reframing it: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — creating distance between the self and the thought",
+      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
     ],
     correctAnswer: 2,
     explanation:

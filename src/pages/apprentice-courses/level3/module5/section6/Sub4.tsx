@@ -45,10 +45,10 @@ const checks = [
     question:
       'The Electricity at Work Regulations 1989 sit alongside BS 7671 in what relationship?',
     options: [
-      'Uses an EFLI tester to measure the loop impedance from the supply, with the installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.',
-      'Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.',
-      'Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.',
-      'EAWR is statutory criminal law (Health and Safety at Work etc. Act 1974 framework) imposing duties on employers, employees and the self-employed for workplace electrical safety. BS 7671 is a non-statutory standard that, when followed, is generally accepted as discharging the technical aspects of those EAWR duties — but EAWR compliance is the legal test, not BS 7671 compliance per se.',
+      'BS 7671 is the statutory criminal law and EAWR is the non-statutory standard — a court tests compliance against BS 7671, with EAWR merely evidence of reasonable measures.',
+      'They are the same document — EAWR 1989 is the legal title and BS 7671 is the trade name, so complying with one automatically satisfies the other.',
+      'EAWR replaced BS 7671 when it came into force in 1989 — BS 7671 is now historic guidance and only EAWR has any legal standing for new electrical work.',
+      'EAWR is statutory criminal law imposing duties for workplace electrical safety; BS 7671 is a non-statutory standard accepted as evidence of discharging the technical aspects.',
     ],
     correctIndex: 3,
     explanation:
@@ -59,10 +59,10 @@ const checks = [
     question:
       'Under the post-2013 Approved Document P regime in England, which of the following is NOT Part P notifiable?',
     options: [
-      'Coded as FI with a recommended investigation route, recorded under Limitations on the EICR, and brought to the duty holder\\\\\\\\\\\\\\\'s attention in the handover so they can commission the investigation as a separate work item. The EICR cannot certify what cannot be inspected.',
-      'Replacing a damaged double socket-outlet like-for-like in a kitchen — this is repair / replacement work outside the special locations list, so it is NOT notifiable. (It still needs an MEIWC under BS 7671 to record the test of the altered portion, but the CPS upload / LABC route does not apply.)',
-      'Remains in a satisfactory condition for continued service, taking into account changes since the last inspection or initial verification — checking for damage, deterioration, defects and dangerous conditions.',
-      'NO — Schedule 1 explicitly excludes "fingers, thumbs and toes" from the fracture category. So a finger fracture from a tool drop is NOT a specified injury (though may be over-7-day if 8+ days off normal duties = F2508A).',
+      'Installing a new circuit from the consumer unit to feed an outdoor socket in the garden — a new circuit is notifiable wherever it is installed.',
+      'Replacing a damaged double socket-outlet like-for-like in a kitchen — repair work outside the special locations list, so it is NOT notifiable.',
+      'Replacing a consumer unit in a domestic property — a full board change re-presents every circuit and is notifiable in its own right.',
+      'Installing a new shower circuit and accessory in a bathroom — work in a special location creating a new circuit is notifiable.',
     ],
     correctIndex: 1,
     explanation:
@@ -73,10 +73,10 @@ const checks = [
     question:
       'A contractor without CPS membership wants to do a Part P notifiable job. The notification route is:',
     options: [
-      'Moving from passive network management (simply delivering power from source to consumer) to active network management — using real-time monitoring, flexible connections, and automated control to optimise power flows, manage constraints, and integrate distributed generation and storage',
-      'Employer. PPE Regs 1992 Reg 4 — employer ensures suitable PPE is PROVIDED. PUWER and PPE Regs both prohibit charges to employees for required PPE under HASAWA s.9 (no charges to employees in respect of statutory provisions). Personal preferences (fancier kit) can be at employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s expense by agreement.',
-      'Direct application to Local Authority Building Control (LABC) BEFORE the work starts via a Building Notice or Full Plans application; LABC inspects and issues their own completion certificate. Significantly more expensive (per-job fees often hundreds of pounds) and slower than the CPS route — most contractors register with NICEIC / NAPIT / ELECSA to use the post-completion 30-day upload instead.',
-      'They upload immediately. Within the 30-day window the upload is normal and routine. The Building Control Compliance Certificate is issued to the customer in due course. Letting it slide further is what creates risk — once the 30-day window expires the upload becomes a late notification with a fee and an audit flag.',
+      'No notification is needed — only CPS-registered contractors must notify, so a non-member can carry out the work and issue the EIC with no further step.',
+      'They borrow a CPS membership number from a registered colleague and upload the job under that account within 30 days of completion.',
+      'Direct application to Local Authority Building Control before work starts, via a Building Notice or Full Plans submission, with LABC inspecting and certifying.',
+      'They notify the DNO instead of Building Control, the DNO holding the supply records and authorising the work on the local authority\'s behalf.',
     ],
     correctIndex: 2,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'EAWR 1989 Reg 4(1) imposes what duty?',
     options: [
-      "The inverter must detect the loss of mains supply and disconnect itself within roughly 200 ms — it must not keep generating into a section of the network the DNO has switched off, otherwise the linesman repairing a fault on the street can be electrocuted.",
-      "A duty that all systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger. The duty applies to design, installation, modification, maintenance and use — and the scope of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"system\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" extends to all electrical equipment, conductors and apparatus in workplaces.",
-      "(a) Every fuse and single-pole control / protective device is in the line conductor only; (b) for circuits with an earthed neutral, ES and BC lampholders have the outer or screwed contacts connected to neutral (except E14/E27 to BS EN 60238); (c) wiring is correctly connected throughout.",
-      "Gather and preserve facts at the scene; provide a contemporaneous written account; notify the responsible person immediately; assist with form completion if asked; provide witness information; preserve evidence; cooperate with any HSE follow-up. The operative isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t normally the report-maker but is the source of the facts.",
+      "A duty to notify Building Control of every workplace electrical installation before it is energised, in the same way that Part P applies to dwellings.",
+      "A duty that all systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger.",
+      "A duty to inspect and test every workplace installation to BS 7671 Part 6 every five years, retaining the report as evidence of compliance.",
+      "A duty to provide every employee with the technical information needed to operate and maintain the installation, equivalent to BS 7671 Reg 132.13.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a workplace electrical installation, the duty-holders under EAWR are:',
     options: [
-      "EAWR Reg 13/14 breach; HASAWA s.2/3/7 breach; potential RIDDOR; insurance void; personal prosecution; firm prosecution; reputational damage on HSE Public Register; possible JIB / scheme-body deregistration; criminal record for individuals at director level under s.37.",
-      "Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.",
-      "Employers, employees and the self-employed — all three categories carry duties under EAWR. Employers have the heaviest set of duties (Reg 4 systems, Reg 13 isolation, Reg 16 competence, etc.). Employees have a duty to cooperate (Reg 3(2)(b)). Self-employed contractors have employer-equivalent duties when working on their own account.",
-      "Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.",
+      "The employer alone — EAWR places no duty on individual employees or self-employed workers, who are covered entirely by their employer's responsibilities.",
+      "The building owner alone — once the installation is energised the whole EAWR duty passes to whoever owns the premises, and contractors carry none.",
+      "Employers, employees and the self-employed — all three carry duties, with employees having a cooperation duty and the self-employed employer-equivalent duties.",
+      "The Health and Safety Executive alone — EAWR duties rest with the regulator, which inspects and issues notices, the parties on site simply complying.",
     ],
     correctAnswer: 2,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'Approved Document P was introduced under what primary legislation?',
     options: [
-      "Five years from issue. Renewal requires a current ECS Health & Safety Assessment pass (which itself is only valid for 3 years) plus current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
-      "On the Schedule of Test Results that accompanies the EIC (Electrical Installation Certificate) — typically there is a row for \\\\\\\"Continuity of protective conductors\\\\\\\" with a column for the measured value at each protective conductor of the installation, including each main bonding conductor.",
-      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
-      "The Building Regulations 2010 (England) — Part P specifically deals with electrical safety in dwellings. Part P sits alongside Part A (structural), Part B (fire safety), Part J (combustion appliances), Part L (energy efficiency), Part M (accessibility) and others. The Approved Documents (e.g. AD-P) provide guidance on how to comply with the corresponding Part of the Building Regulations.",
+      "The Electricity at Work Regulations 1989 — Part P is the dwellings chapter of the EAWR, extending the workplace electrical-safety duty into the home.",
+      "BS 7671 itself — Part P is one of the parts of the Wiring Regulations and is enforced through the IET rather than through legislation.",
+      "The Health and Safety at Work etc. Act 1974 — Part P is a code of practice issued directly under the Act for all premises, workplace or dwelling.",
+      "The Building Regulations 2010 (England) — Part P deals with electrical safety in dwellings, alongside Parts A, B, J, L, M and others.",
     ],
     correctAnswer: 3,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 4,
     question: 'A contractor finishes a notifiable job (CU swap) on a Friday and forgets to upload to NICEIC. They remember the following Friday — 7 days later. What happens?',
     options: [
-      'They upload immediately. Within the 30-day window the upload is normal and routine. The Building Control Compliance Certificate is issued to the customer in due course. Letting it slide further is what creates risk — once the 30-day window expires the upload becomes a late notification with a fee and an audit flag.',
-      'Prove the voltage indicator works on a known live source (often a proving unit), test the conductors at the work location to confirm dead, then re-prove the indicator on the known live source to confirm it didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fail during the test.',
-      'Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.',
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
+      'They upload immediately — seven days is well within the 30-day window and the notification is routine, with the BCCC issued in due course.',
+      'The notification is now too late — once a week has passed the work cannot be self-certified, and the contractor must make a retrospective LABC application.',
+      'The EIC is invalidated by the missed week, so the contractor must re-test the installation and issue a fresh certificate before uploading.',
+      'Nothing can be done — the 30-day window runs from when work begins, so a Friday-finished job must be uploaded that day or the right to notify is lost.',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'A customer wants you (a CPS-registered contractor) to do a kitchen rewire that includes new ring final, new lighting circuit and new shower circuit. The notification route is:',
     options: [
-      'Be supplied by a 30 mA RCD or with double / reinforced insulation, use 110 V CTE supplies for tools where applicable, and have IP rating appropriate to the site environment (typically IP44 minimum, IP65 for outdoor wet).',
-      'Notify via your CPS within 30 days of completion. The work includes new circuits (notifiable in any room), so it is Part P notifiable irrespective of the kitchen-vs-special-location distinction. Upload the EIC details to NICEIC / NAPIT / ELECSA online portal; the scheme issues the BCCC to the customer.',
-      'Planned maintenance compliance (percentage of scheduled PMs completed on time), reactive-to-planned work ratio, mean time between failures (MTBF), mean time to repair (MTTR), and maintenance cost as a percentage of asset replacement value',
-      'To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.',
+      'No notification is needed — a kitchen rewire is an alteration to existing circuits rather than new work, so an MEIWC alone covers it.',
+      'Notify via your CPS within 30 days of completion, because the new circuits make it Part P notifiable in any room; the scheme issues the BCCC.',
+      'Make a direct LABC application before starting, because new circuits cannot be self-certified and always require pre-work Building Control approval.',
+      'Notify only the shower circuit, since it is in a special location; the ring final and lighting circuit are outside the notifiable list.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: "Building Regulations Part L (energy efficiency) potentially affects electrical work how?",
     options: [
-      "Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems",
-      "≤ 25 V. Agricultural locations have higher shock risk because livestock and humans are often in conductive contact with wet ground, reducing body resistance and increasing the perceived voltage. The Ra × IΔn ≤ 25 V criterion halves the allowable electrode resistance for the same RCD rating.",
-      "Some electrical work in dwellings (e.g. installation of fixed lighting in new builds, installation of certain controls and metering) falls within Part L scope as well as Part P. The contractor needs to confirm both Part P (electrical safety notifiable) AND Part L (energy efficiency requirements — minimum lamp efficacy, controls, etc.) compliance where applicable.",
-      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
+      "It does not affect electrical work at all — Part L covers only the building fabric (insulation, glazing, air-tightness), not what the electrician installs.",
+      "It requires every new circuit to be RCD-protected for energy-saving reasons, because an RCD reduces standing leakage current and so wasted energy.",
+      "Some electrical work (fixed lighting in new builds, certain controls and metering) falls within Part L as well as Part P, so the contractor confirms both.",
+      "It sets the maximum cable size an electrician may use, capping conductor cross-section to limit the embodied carbon of copper in the installation.",
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 7,
     question: "Under EAWR, the consequence of a serious breach (e.g. a fatality from defective electrical work) can include:",
     options: [
-      "PV output is roughly proportional to the irradiance hitting the panel (W/m²). Cell efficiency does drop slightly as the cells heat up — typically 0.3-0.5% per °C above 25°C — but UK roofs rarely sit above 50°C and the irradiance variation between a sunny and cloudy day is far larger than the temperature derate. So total annual yield (kWh) is dominated by how much sunlight the array sees, not how warm it is.",
-      "AFDDs offered per Reg 421.1.7 advisory wording. Customer accepted on bedroom socket ring, lounge socket ring and kitchen socket ring (engineering benefit strongest on socket circuits with mixed appliance use and aged flex). Customer declined on dedicated single-load circuits (shower, EV, heat pump) and lighting (LED on fixed wiring, no flex). Documented in the design pack.",
-      "Per BS 8599-1 (small kit): guidance leaflet, medium dressings (4), large dressings (1), triangular bandages (2), safety pins (6), eye pads (2), adhesive plasters (40), assorted plasters (10), conforming bandages (3), microporous tape (1), disposable gloves (6 pairs), face shield (1), foil blanket (1), cleansing wipes (10), burn gel sachets (2), shears (1).",
-      "Unlimited fine on conviction in the Crown Court (no upper ceiling under HSWA framework); imprisonment in the most serious cases; disqualification from acting as a company director; significant civil claim from the bereaved family alongside the criminal proceedings; reputational impact ending the contractor's business.",
+      "A fixed penalty notice of up to £1,000 issued by Building Control, after which the matter is closed with no further action.",
+      "A requirement to re-sit the relevant qualification and re-register with a Competent Person Scheme, but no criminal liability since EAWR is civil.",
+      "Suspension of the contractor's scheme membership for a fixed period, with the work re-inspected by the scheme before membership is restored.",
+      "Unlimited Crown Court fine, possible imprisonment, director disqualification and parallel civil claims, with reputational impact ending the business.",
     ],
     correctAnswer: 3,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: 'On a small commercial electrical job (workplace, not a dwelling), the notification position is:',
     options: [
-      'Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).',
-      'The firm probably won\\\\\\\'t recover the cost of the additional work in dispute. Verbal variations are binding in principle but hard to prove in practice. Courts and ombudsmen weight written contractual evidence above verbal recollection. The labour, materials and time spent on the undocumented variation sit on the firm\\\\\\\'s profit margin. Multiplied across many small variations on many jobs it\\\\\\\'s a material drag on profitability and a leading cause of bad debt.',
-      'Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.',
-      'Operating temperature — typically 70 °C for thermoplastic-insulated cable. The values apply when the cable is fully loaded and warm. Measured Zs is at ambient (cool) conductor temperature; the standard correction is to require measured Zs ≤ 0.8 × table Zs to allow for the resistance increase as the cable warms in service.',
+      'Part P does NOT apply (it is dwellings-only); EAWR governs workplace safety, an EIC or MEIWC covers BS 7671, and no CPS upload is required.',
+      'Part P applies in full and the work must be uploaded to a Competent Person Scheme within 30 days, exactly as it would be for a dwelling.',
+      'No certification of any kind is required, because commercial installations fall outside both Part P and BS 7671 and rely on the client\'s safety policy.',
+      'The work must be notified to the HSE before it starts, because all commercial electrical work is notifiable under the Electricity at Work Regulations.',
     ],
     correctAnswer: 0,
     explanation:

@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'When working in a loft space with restricted headroom, what is the primary manual handling risk?',
     options: [
-      'The temperature is always comfortable in loft spaces',
-      'Inability to stand upright forces kneeling, crawling, and crouching postures that severely limit lifting capacity and increase spinal loading',
-      'Loft spaces have strong floors that make handling easier',
-      'Loft hatches are always large enough for any load',
+      'Kneeling and crawling postures slash lifting capacity and raise spinal loading',
+      'The temperature inside loft spaces is always comfortable to work in',
+      'Loft spaces have strong, level floors that make handling easier',
+      'Loft hatches are always large enough to pass any sized load',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Restricted headroom in loft spaces forces workers into kneeling, crouching, or crawling positions. In these postures, the spine cannot maintain its natural alignment, and the muscles are in a mechanically disadvantaged position. Lifting capacity is drastically reduced — a person who can safely lift 25 kg while standing may only be able to safely manage 5-10 kg while kneeling. The risk of back injury is significantly higher because the spinal discs are under greater pressure in flexed postures.',
   },
@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     id: 'mh-m4s3-ceiling-void',
     question: 'Why is handling materials above a suspended ceiling particularly hazardous?',
     options: [
-      'Because suspended ceiling tiles are always white and hard to see',
-      'Because the worker is reaching above their head with limited visibility, working on a platform or ladder, with no solid footing in the void itself',
-      'Because suspended ceilings are always at exactly 2.4 metres height',
-      'Because materials above ceilings are always lighter than materials below',
+      'Because suspended ceiling tiles are always white and hard to see against',
+      'Because suspended ceilings are always fixed at exactly 2.4 metres height',
+      'Because you reach above your head, with poor visibility and no footing in the void',
+      'Because materials above the ceiling are always lighter than those below it',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Working above a suspended ceiling combines multiple hazards: the worker is typically on a step ladder or scaffold with limited platform area; they are reaching above head height (the weakest lifting zone); visibility in the void is poor; there is no solid surface to rest materials on in the void (only the ceiling grid, which is not load-bearing); and there is a risk of stepping onto ceiling tiles which will not support body weight. Every item passed into the void must be lifted above head height and manoeuvred blind.',
   },
@@ -50,12 +50,12 @@ const quickCheckQuestions = [
     question:
       'What equipment should be used to move materials vertically through a riser or service shaft?',
     options: [
-      'Materials should be thrown up or dropped down the shaft',
-      'A rope and pulley system, small hoist, or dedicated shaft lift, with the shaft secured to prevent items from falling',
-      'Materials should be carried up internal ladders with one hand',
-      'No special equipment is needed — risers are always wide enough for normal carrying',
+      'Materials should simply be thrown up or dropped down the shaft',
+      'Materials should be carried up the internal ladders one-handed',
+      'No special equipment is needed, as risers are always wide enough to carry through',
+      'A rope and pulley, small hoist, or shaft lift, with the shaft secured against falls',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Riser and service shafts require vertical movement of materials through a confined space. A rope and pulley system (or small electric hoist) allows materials to be raised or lowered in a controlled manner. The shaft opening must be secured with a gate or barrier to prevent items (or people) from falling when the hoist is not in use. Materials must never be thrown or dropped through shafts — this is uncontrolled and risks striking anyone below or damaging the materials and existing services.',
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the typical headroom clearance in a domestic loft space?',
     options: [
-      '2.4 metres — standard room height',
-      '1.8-2.0 metres — standing height with clearance',
-      '0.6-1.5 metres at the eaves, rising to 1.8-2.2 metres at the ridge in a pitched roof',
-      '3.0 metres — building regulations minimum for lofts',
+      '2.4 metres throughout — the same as a standard room height',
+      '1.8-2.0 metres throughout — full standing height with clearance',
+      '0.6 metres at the eaves rising to about 2.2 metres at the ridge',
+      '3.0 metres throughout — the building regulations minimum for lofts',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why does crawling with materials in a loft space increase the risk of knee injury?',
     options: [
-      'Because loft joists are soft and cushion the knees',
-      'Because the body weight plus the load weight is concentrated on the knees against hard timber joists, and the crawling motion adds repetitive impact',
-      'Because loft insulation protects the knees from any harm',
-      'Because crawling is the recommended ergonomic posture for all work',
+      'Body and load weight focus on the knees against hard joists, with repetitive impact',
+      'Because the loft joists are soft enough to cushion the knees',
+      'Because loft insulation reliably protects the knees from any harm',
+      'Because crawling is the recommended ergonomic posture for all loft work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When crawling in a loft, the full body weight (plus any carried load) is distributed between the knees and hands on hard timber joists. The joists are narrow (typically 38-50 mm wide), concentrating the pressure on a small area of the kneecap. Repetitive crawling compounds this with repeated impact. Over time, this causes bruising, bursitis (inflammation of the fluid sacs around the knee), and cartilage damage. Knee pads are essential for any loft work involving kneeling or crawling.',
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'What is the maximum load-bearing capacity of a standard suspended ceiling grid?',
     options: [
-      'The grid can support the weight of a person standing on it',
-      'The grid can support heavy cable trays and equipment',
-      'The grid is designed only to support the weight of ceiling tiles (approximately 4-8 kg per tile) and light fixtures — it is NOT a working platform or material support',
-      'The grid can support up to 100 kg per square metre',
+      'It can safely support the full weight of a person standing on it',
+      'It can support heavy cable trays, containment, and fixed equipment',
+      'It supports only ceiling tiles and light fittings, not people or materials',
+      'It can support a uniform load of up to 100 kg per square metre',
     ],
     correctAnswer: 2,
     explanation:
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary risk of handling materials in an under-floor crawl space?',
     options: [
-      'The materials may get dusty',
-      'Extremely restricted movement forces lying, crawling, and reaching postures that eliminate normal lifting technique entirely',
-      'Under-floor spaces are always well-lit and spacious',
-      'The floor above provides protection from all hazards',
+      'The materials being handled may pick up dust and dirt',
+      'Under-floor spaces are reliably well-lit and spacious to work in',
+      'The floor above gives the worker protection from all hazards',
+      'Restricted movement forces lying and crawling, removing all normal lifting technique',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under-floor crawl spaces (typically 300-600 mm clearance) are among the most restrictive working environments. The worker may be lying on their front or back, with no ability to use normal lifting posture. Materials must be dragged, pushed, or slid rather than lifted. The spine is in a flexed or extended position with no support. This makes it essential to minimise the weight and size of any materials taken into the space and to limit the time spent in these postures.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why should materials never be thrown or dropped through a riser shaft?',
     options: [
-      'Because it creates too much noise for other workers',
-      'Because it is an uncontrolled action that risks striking anyone below, damaging the materials and existing services in the shaft, and creating debris that blocks the shaft',
-      'Because riser shafts are always sealed and cannot have anything dropped through them',
-      'Because gravity does not work inside riser shafts',
+      'It is uncontrolled, risking people below, existing services, and shaft blockages',
+      'Because it creates far too much noise for the other workers nearby',
+      'Because riser shafts are always sealed and nothing can be dropped through them',
+      'Because gravity does not behave normally inside an enclosed riser shaft',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Throwing or dropping items through a riser shaft is uncontrolled handling. A falling object gains kinetic energy and can cause serious injury if it strikes someone below. It can damage existing cables, pipework, and services in the shaft. Materials can break on impact, creating waste and sharp debris. The shaft may also have fire-stopping at floor levels that can be damaged. Controlled lowering using a rope and pulley, or a small hoist, is the safe method.',
   },
@@ -169,10 +169,10 @@ const quizQuestions = [
     question:
       'In a plant room with heavy equipment and limited space, what is the priority control measure?',
     options: [
-      'Remove all the equipment from the plant room first',
-      'Plan the handling operation in detail before starting, including the exact route, lifting method, and positioning point, because there is no room for improvisation',
-      'Only allow one person in the plant room at any time',
-      'Use only manual handling because mechanical aids do not fit in plant rooms',
+      'Remove all the existing equipment from the plant room first',
+      'Plan the route, lifting method, and positioning in detail, as there is no room to improvise',
+      'Only ever allow a single person inside the plant room at any time',
+      'Rely on manual handling alone, since mechanical aids will not fit in plant rooms',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'When is a one-person solution acceptable in a restricted space, and when should a team approach be used?',
     options: [
-      'One person is always sufficient in restricted spaces because team lifts take up too much room',
-      'One person is acceptable for very light loads (under 5-10 kg) in short-duration tasks; team approaches should be used for heavier loads, longer tasks, or where a buddy system is needed for safety',
-      'Teams should never enter restricted spaces',
-      'The number of people is irrelevant — the same rules apply everywhere',
+      'One person always suffices in restricted spaces, as team lifts take too much room',
+      'Teams should never enter any restricted space under any circumstances',
+      'The number of people is irrelevant, as the same rules apply everywhere',
+      'One person suits very light, brief tasks; use a team for heavier or longer work or buddy cover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In restricted spaces, a single worker may be appropriate for very light loads and brief tasks — for example, pulling a single cable through a ceiling void. However, for heavier items, longer duration work, or tasks where the restricted space itself poses a risk (such as entrapment or limited oxygen), a team approach is required. The second person may be in the space to assist with handling, or stationed at the access point to pass materials and maintain communication. The decision depends on the specific risk assessment for the space and the task.',
   },

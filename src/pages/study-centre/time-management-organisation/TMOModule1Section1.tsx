@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed sparky consistently quotes 1 day for a bathroom rewire but it always takes 1.5 days. According to Kahneman and Tversky, what cognitive bias is at work?',
     options: [
-      'Confirmation bias — they only remember the fast jobs',
       'The planning fallacy — systematic underestimation of time required for future tasks',
+      'Confirmation bias — they only remember the fast jobs',
       'The Dunning-Kruger effect — they overestimate their own competence',
       'Anchoring bias — they are anchored to an arbitrary price rather than time',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The planning fallacy, identified by Daniel Kahneman and Amos Tversky in 1979, describes our persistent tendency to underestimate the time, cost, and risk of future actions whilst overestimating their benefits. The electrician focuses on the best-case scenario (smooth run, no complications) rather than the realistic average that includes snagging, unforeseen issues, and interruptions. The fix is to use "reference class forecasting" — basing estimates on how long similar jobs have actually taken in the past, not how long you hope this one will take.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'After completing a 3-day time audit, an electrician discovers they spend 90 minutes per day on their phone (social media, WhatsApp, browsing). Over a 5-day working week, how many productive hours is this costing them?',
     options: [
       '5 hours per week',
-      '7.5 hours per week — almost a full working day',
       '3 hours per week',
+      '7.5 hours per week — almost a full working day',
       '10 hours per week',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '90 minutes per day multiplied by 5 working days equals 450 minutes, which is 7.5 hours — almost an entire working day lost every week to phone use. Over a month, that is approximately 30 hours. Over a year, it is roughly 375 hours — equivalent to more than 9 full working weeks. This is why time auditing is so powerful: most people have no idea how much time these "small" habits actually consume until they measure them objectively.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: "Parkinson's Law, first published in 1955, states that:",
     options: [
-      'Work contracts when deadlines are tight, leading to errors',
       'Work expands to fill the time available for its completion',
+      'Work contracts when deadlines are tight, leading to errors',
       'Productivity is highest in the first hour of any task',
       'Complex tasks always take twice as long as simple tasks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cyril Northcote Parkinson observed that work expands to fill the time available for its completion. Originally a satirical observation about bureaucracy, it has been consistently validated by research. For tradespeople, this means that a job with no firm end-point (no next appointment, no client deadline) will naturally stretch through procrastination, over-refinement, and reduced urgency.',
   },
@@ -113,14 +113,14 @@ const quizQuestions = [
     id: 3,
     question: 'A time audit involves:',
     options: [
+      'Systematically recording how you actually spend each block of your working day over several days',
       'Asking your colleagues how they think you spend your time',
       'Estimating at the end of the week how many hours you worked',
-      'Systematically recording how you actually spend each block of your working day over several days',
       'Timing individual tasks with a stopwatch to find the fastest method',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'A time audit is a deliberate, systematic record of how you actually spend your time — typically tracked in 30-minute blocks over 3 to 5 working days. The critical word is "actually" — the purpose is to capture reality, not aspiration. Most people discover significant discrepancies between how they think they spend their time and how they actually spend it. Estimation from memory (option B) is unreliable due to recall bias; a real-time log is essential.',
+      'A time audit is a deliberate, systematic record of how you actually spend your time — typically tracked in 30-minute blocks over 3 to 5 working days. The critical word is "actually" — the purpose is to capture reality, not aspiration. Most people discover significant discrepancies between how they think they spend their time and how they actually spend it. Estimation from memory is unreliable due to recall bias; a real-time log is essential.',
   },
   {
     id: 4,
@@ -128,11 +128,11 @@ const quizQuestions = [
       'Which of the following is an example of a "hidden time sink" specific to tradespeople?',
     options: [
       'Completing an EICR that the client has booked and paid for',
-      'Driving 45 minutes to a merchant for a single fitting that could have been ordered the day before',
       'Attending a mandatory safety briefing on a commercial site',
       'Testing a circuit after completing an installation',
+      'Driving 45 minutes to a merchant for a single fitting that could have been ordered the day before',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hidden time sinks are activities that consume time without adding proportional value. Driving to a merchant for a single fitting is a classic trade-specific time sink — the round trip might cost 90 minutes including parking and queuing, for a part worth a few pounds. Ordering the day before (or keeping common fittings stocked in the van) eliminates this waste. The other options — EICRs, safety briefings, testing — are productive, value-adding activities that are necessary parts of the work.',
   },
@@ -156,11 +156,11 @@ const quizQuestions = [
       'According to the concept of "activity vs accomplishment," which of the following is an example of being busy but not productive?',
     options: [
       'Completing and submitting 3 electrical installation certificates',
-      'Spending 2 hours reorganising your van when you have 2 quoted jobs waiting',
       'Carrying out a full EICR on a commercial property',
       'Installing a new consumer unit and testing all circuits',
+      'Spending 2 hours reorganising your van when you have 2 quoted jobs waiting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reorganising the van when revenue-generating work is waiting is a perfect example of being busy but not productive. The van reorganisation feels like work — it is physical, it takes effort, and it produces a visible result. But it is not moving the business forward: the quoted jobs generate income, build client relationships, and create referral opportunities. Activity is about being in motion; accomplishment is about making progress on what actually matters.',
   },

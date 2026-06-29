@@ -13,8 +13,8 @@ const quickCheckQuestions = [
   {
     id: 'fo-m3s1-qc1',
     question: 'What type of fibre buffer construction uses a gel-filled tube around loose fibres?',
-    options: ['Tight-buffered', 'Loose-tube', 'Ribbon', 'Direct-buried'],
-    correctIndex: 1,
+    options: ['Loose-tube', 'Tight-buffered', 'Ribbon', 'Direct-buried'],
+    correctIndex: 0,
     explanation:
       'Loose-tube construction houses fibres loosely in gel-filled tubes, providing protection against temperature changes and mechanical stress in outdoor applications.',
   },
@@ -23,11 +23,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of steel wire armour (SWA) in fibre cables?',
     options: [
       'Improved bandwidth',
-      'Rodent and mechanical protection',
       'Better bend radius',
       'Lower attenuation',
+      'Rodent and mechanical protection',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Steel wire armour provides mechanical protection against crushing, impact, and rodent damage, essential for direct burial and external applications.',
   },
@@ -51,12 +51,12 @@ const quizQuestions = [
     id: 1,
     question: 'Tight-buffered fibre cables are most suitable for:',
     options: [
-      'Direct burial',
       'Indoor and riser applications',
+      'Direct burial',
       'Submarine installations',
       'Overhead aerial',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tight-buffered cables are designed for indoor use where flexibility and direct termination are priorities.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 5,
     question: 'For a cable run between buildings through an underground duct:',
     options: [
-      'Indoor tight-buffer is adequate',
       'External-grade loose-tube is required',
+      'Indoor tight-buffer is adequate',
       'Any cable with LSZH',
       'Only armoured cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'External runs require loose-tube construction with water-blocking and appropriate temperature range.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'Water-blocking in fibre cables is achieved using:',
     options: [
       'Tight buffering only',
-      'Water-swellable tapes and gels',
       'Metal armouring',
       'PVC inner sheath',
+      'Water-swellable tapes and gels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Water-swellable tapes and gels expand when wet to block water ingress.',
   },
   {
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 9,
     question: 'When selecting cable for a riser between floors:',
     options: [
-      'External grade is required',
       'Riser-rated (CMR/Cca equivalent) with flame retardance',
+      'External grade is required',
       'Any indoor cable',
       'Only singlemode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Riser applications require enhanced fire-retardant ratings to prevent vertical fire spread.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'Direct burial without conduit requires cable with:',
     options: [
       'LSZH sheath only',
-      'Armoured construction and water-blocking',
       'Tight-buffered design',
       'Messenger wire',
+      'Armoured construction and water-blocking',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Direct burial requires SWA armour for mechanical protection and water-blocking for moisture resistance.',
   },

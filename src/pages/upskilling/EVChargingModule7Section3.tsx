@@ -9,16 +9,16 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m7s3-check1',
     question: 'What is the preferred file format for uploading documents to the OZEV portal?',
-    options: ['Word (.docx)', 'PDF', 'JPEG only', 'Any format'],
-    correctIndex: 1,
+    options: ['PDF', 'Word (.docx)', 'JPEG only', 'Any common format'],
+    correctIndex: 0,
     explanation:
       'PDF is the preferred format for document uploads as it maintains quality and formatting. High-resolution JPEGs are acceptable for photographs. Documents should be minimum 300 DPI resolution.',
   },
   {
     id: 'evcharging-m7s3-check2',
     question: 'Within how many days of installation completion must evidence be submitted?',
-    options: ['7 days', '14 days', '30 days', '60 days'],
-    correctIndex: 2,
+    options: ['7 days', '14 days', '60 days', '30 days'],
+    correctIndex: 3,
     explanation:
       'Evidence must be submitted within 30 days of installation completion. Document uploads should follow within 14 days of evidence submission. Missing deadlines can result in claim rejection.',
   },

@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is job breakdown?',
     options: [
-      'False - always use correct reference point',
+      'Recording faults found during testing',
       'Splitting large jobs into smaller, manageable tasks',
-      'Electrical supplies energised and tested',
-      'The minimum angle for total internal reflection to occur',
+      'Sharing a job equally between two electricians',
+      'Stopping work when equipment fails',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should work be sequenced logically?',
     options: [
-      'Death benefits, injury cover, and welfare support',
-      'Durable and legible marking identifying each circuit',
+      'To reduce the number of workers needed',
+      'To avoid having to read the drawings',
       'To prevent rework and avoid clashes with other trades',
-      'Only the last rung scanned determines the final output state',
+      'To remove the need for any site supervision',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Give one risk of poor sequencing.',
     options: [
-      'Assessment of Repetitive Tasks',
-      '100-150% of full-load current',
-      'Temperature and humidity sensors',
+      'Lower voltage drop on long circuits',
+      'Faster project completion',
+      'Reduced need for testing',
       'Wasted time and materials',
     ],
     correctIndex: 3,
@@ -62,10 +62,10 @@ const Module5Section3_1 = () => {
       id: 1,
       question: 'What is the purpose of job breakdown?',
       options: [
-        'Never miss a habit 2 days in a row to prevent breaking the pattern',
+        'To split the wages evenly between workers',
         'To divide large jobs into smaller, manageable tasks',
-        'Protecting sensitive electronic equipment from voltage surges',
-        'When base voltage rises above ~0.7 V (so base current flows).',
+        'To reduce the amount of cable used on a job',
+        'To decide which trade leads the project',
       ],
       correctAnswer: 1,
       explanation:
@@ -75,10 +75,10 @@ const Module5Section3_1 = () => {
       id: 2,
       question: 'What is meant by sequencing in electrical installation?',
       options: [
-        'Over-tightening terminals damaging insulation',
-        'Check for proper sealing and protection',
+        'Numbering each circuit at the distribution board',
+        'Testing circuits in order of their rating',
         'Arranging tasks in the correct, logical order',
-        'Gather information about the fault symptoms',
+        'Labelling cables before they are pulled in',
       ],
       correctAnswer: 2,
       explanation:
@@ -88,9 +88,9 @@ const Module5Section3_1 = () => {
       id: 3,
       question: 'Which comes first: installing accessories or containment?',
       options: [
-        'Both at the same time',
-        'Accessories',
-        "It doesn't matter",
+        'Both are fitted at the same time',
+        'Accessories, so positions can be set first',
+        'Whichever the supervisor prefers on the day',
         'Containment',
       ],
       correctAnswer: 3,
@@ -112,20 +112,25 @@ const Module5Section3_1 = () => {
     },
     {
       id: 5,
-      question: 'True or False: Poor sequencing can cause rework and wasted time.',
-      options: ['True', 'False'],
-      correctAnswer: 0,
+      question: 'What is the most likely outcome of poor sequencing?',
+      options: [
+        'Lower material costs',
+        'Rework and wasted time',
+        'Faster sign-off by the client',
+        'Fewer trades needed on site',
+      ],
+      correctAnswer: 1,
       explanation:
-        'True. Poor sequencing leads to wasted time, materials, increased accidents, and project delays.',
+        'Poor sequencing leads to wasted time, materials, increased accidents, and project delays.',
     },
     {
       id: 6,
       question: 'Who usually sets the task sequence on site?',
       options: [
-        'The person who signs the certificate',
-        'Portable Appliance Testing',
+        'The materials supplier',
+        'The client paying for the work',
         'Site supervisor or project manager',
-        'Short circuit (L-N or L-E)',
+        'The newest apprentice on site',
       ],
       correctAnswer: 2,
       explanation:
@@ -135,9 +140,9 @@ const Module5Section3_1 = () => {
       id: 7,
       question: 'Give one example of poor sequencing.',
       options: [
-        'About 3.5 hours for testing and documentation combined',
-        'Total number of bends and cumulative angle changes',
-        'Starting current and protection coordination',
+        'Installing containment before pulling cables',
+        'Testing the installation after termination',
+        'Marking out positions before fixing back boxes',
         'Installing sockets before plastering is complete',
       ],
       correctAnswer: 3,
@@ -149,9 +154,9 @@ const Module5Section3_1 = () => {
       question: 'Why is coordination with other trades important in sequencing?',
       options: [
         'To avoid clashes and rework',
-        'Upward Light Output Ratio',
-        'Precise speed control of AC motors',
-        'Easily scalable without rewiring',
+        'To reduce the number of circuits required',
+        'To let each trade work entirely independently',
+        'To remove the need for any testing',
       ],
       correctAnswer: 0,
       explanation:
@@ -161,10 +166,10 @@ const Module5Section3_1 = () => {
       id: 9,
       question: 'What should you do if unforeseen issues affect the sequence?',
       options: [
-        "The test current passes through earth causing imbalance",
+        'Carry on with the original plan regardless',
         "Adjust with supervisor's approval and communicate changes",
-        "Increased resistance causes overheating, arcing, and eventual failure",
-        "A position is what someone says they want; an interest is why they want it",
+        'Stop all work until the project is re-tendered',
+        'Change the sequence yourself without telling anyone',
       ],
       correctAnswer: 1,
       explanation:

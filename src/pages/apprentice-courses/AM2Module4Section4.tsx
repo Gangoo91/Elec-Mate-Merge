@@ -53,12 +53,12 @@ const AM2Module4Section4 = () => {
       id: 'functional-vs-insulation',
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
-        'Continuous data is recorded constantly, event-based only when something changes',
         'Insulation resistance checks safety of wiring; functional testing checks operation of equipment and circuits',
-        'Visual management — keeps the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s attention on today\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s priorities and tomorrow\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s readiness',
-        'Someone with sufficient training, knowledge, experience, and skills to carry out a manual handling risk assessment effectively',
+        'Insulation resistance checks operation of switches; functional testing checks cable insulation values',
+        'They are two names for exactly the same test carried out at different voltages',
+        'Insulation resistance is a live test; functional testing is always carried out dead',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Insulation resistance tests the safety and integrity of cable insulation, while functional testing confirms that circuits and equipment operate correctly as designed.',
     },
@@ -66,10 +66,10 @@ const AM2Module4Section4 = () => {
       id: 'rcd-failure',
       question: "What's the required action if an RCD fails to trip within the permitted time?",
       options: [
-        'Light switch disconnects neutral instead of line',
+        'Re-test until it eventually passes, then record the best result',
         'Record non-compliance and fail the RCD test',
-        'Tabular format with columns and rows',
-        'Effectively 100% (all energy → heat)',
+        'Ignore it provided the manual test button still operates',
+        'Halve the rated residual current and record the new trip time',
       ],
       correctIndex: 1,
       explanation:
@@ -80,9 +80,9 @@ const AM2Module4Section4 = () => {
       question: 'Why is it important to test every lighting switch combination?',
       options: [
         'To confirm your voltage tester is working correctly',
-        'Correct line and neutral to isolating transformer',
+        'To check the insulation resistance of each switch drop',
         'To ensure all switching functions operate correctly as designed',
-        'Lower, requiring recalculation of existing circuits',
+        'To measure the earth fault loop impedance at each switch',
       ],
       correctIndex: 2,
       explanation:
@@ -95,10 +95,10 @@ const AM2Module4Section4 = () => {
       id: 1,
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
-        'Mentally preparing your response while the speaker is still talking',
+        'Functional testing measures cable insulation; insulation resistance proves switch operation',
         'Insulation resistance checks safety of wiring; functional testing checks operation of equipment',
-        'A condition where a person feels they need a substance to function normally, with withdrawal symptoms if they stop',
-        'HSE Guidance Note GS38 — Electrical test equipment for use on low voltage electrical systems',
+        'Both confirm the same thing, so only one needs to be carried out on each circuit',
+        'Insulation resistance is recorded in milliseconds; functional testing is recorded in ohms',
       ],
       correctAnswer: 1,
       explanation:
@@ -108,10 +108,10 @@ const AM2Module4Section4 = () => {
       id: 2,
       question: 'What must be tested on every lighting circuit?',
       options: [
-        'Productivity, profitability, and customer satisfaction',
-        'Requiring health and safety planning and coordination',
+        'Only the first switch on each circuit, to save time',
+        'Only the lamps that are visible from the consumer unit',
         'Every switching combination and lamp operation',
-        'Duration test and battery condition',
+        'Only the two-way switches, as one-way switches cannot be miswired',
       ],
       correctAnswer: 2,
       explanation:
@@ -147,10 +147,10 @@ const AM2Module4Section4 = () => {
       id: 5,
       question: 'What happens if an RCD fails to trip within limits?',
       options: [
-        'When there is more than one contractor on site',
+        'It still passes provided the trip time is within twice the limit',
         'Record non-compliance and fail the test',
-        'Reduced current spike during star-delta transition',
-        'Safety and functionality at reasonable cost',
+        'It is acceptable as long as the manual test button works',
+        'Record it as satisfactory but note it for the next inspection',
       ],
       correctAnswer: 1,
       explanation:
@@ -158,19 +158,24 @@ const AM2Module4Section4 = () => {
     },
     {
       id: 6,
-      question: 'True or false: Functional testing can be skipped if electrical tests pass.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'Which statement about functional testing is correct?',
+      options: [
+        'It can be skipped if all the dead and live electrical tests have passed',
+        'It only needs to be carried out on socket circuits, not lighting circuits',
+        'It can be replaced by a second insulation resistance test',
+        'It is mandatory and proves correct operation that electrical tests cannot confirm',
+      ],
+      correctAnswer: 3,
       explanation:
-        'False. Functional testing is mandatory and cannot be skipped. It proves that circuits operate correctly, which electrical tests alone cannot confirm.',
+        'Functional testing is mandatory and cannot be skipped. It proves that circuits operate correctly, which electrical tests alone cannot confirm.',
     },
     {
       id: 7,
       question: 'Why must you test every lighting switch combination?',
       options: [
-        'Misidentification of conductors and careless wiring',
-        'Walk them through it in person, explaining scope, timeline and price',
-        'Maximum power is transferred when load resistance equals source resistance',
+        'To confirm the insulation resistance of each lighting point',
+        'To measure the prospective fault current at every switch',
+        'To check the polarity of the neutral conductor at the lamp',
         'To ensure all switching functions operate correctly as designed',
       ],
       correctAnswer: 3,
@@ -182,9 +187,9 @@ const AM2Module4Section4 = () => {
       question: 'What test tool can be used to check socket polarity?',
       options: [
         'Polarity tester or plug-in socket tester',
-        'Investigate and possibly retest',
-        'Degraded performance or partial failure',
-        'Every switching combination and lamp operation',
+        'Earth fault loop impedance tester only',
+        'Insulation resistance tester set to 500 V',
+        'Clamp meter set to measure load current',
       ],
       correctAnswer: 0,
       explanation:
@@ -194,12 +199,12 @@ const AM2Module4Section4 = () => {
       id: 9,
       question: 'What function must you confirm in motor circuits?',
       options: [
-        '£15,000 (6 months of essential outgoings)',
+        'Only that the motor draws its rated current at full load',
+        'Only that the supply voltage is present at the starter',
         'Start and stop controls, and overload reset operation',
-        'Control, Resilience, Security, Freedom',
-        'A relevant event entitling extension of time',
+        'Only the insulation resistance of the motor windings',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Motor circuits require testing of start/stop controls, overload protection operation, and correct reset functionality for safety.',
     },
@@ -207,10 +212,10 @@ const AM2Module4Section4 = () => {
       id: 10,
       question: "What's the final step after functional testing?",
       options: [
-        'Door contact sensor showing open/closed',
-        'Seminars, demonstrations, and networking',
+        'Remove all the protective devices for inspection',
+        'Disconnect the main earthing conductor for a final check',
         'Leave installation in a safe state',
-        'Clear the route and plan the path',
+        'Re-run the dead tests with the supply energised',
       ],
       correctAnswer: 2,
       explanation:
@@ -240,7 +245,7 @@ const AM2Module4Section4 = () => {
             points={[
               'Functional testing proves the install actually works — switches control the right loads, RCDs trip, motors start and stop, sockets are live with correct polarity.',
               'RCD verification under A4:2026: single AC test at 1×IΔn + manual button. The 5×IΔn test was deleted from Appendix 3 / Table 3A.',
-              'Trip times: ≤ 300 ms general-purpose, ≤ 200 ms Type S, ≤ 40 ms for additional protection (Reg 415.1.1) on AC final circuits ≤ 32 A.',
+              'Trip times at 1×IΔn (A4:2026): ≤ 300 ms general non-delay; delay "S" type 130–500 ms. There is no separate 40 ms additional-protection limit — A4:2026 deleted Table 3A and the 5×IΔn/40 ms test. Reg 415.1.1 simply recognises 30 mA RCDs as additional protection; it states no trip-time figure.',
               'Reg 411.3.3 (RCD on socket-outlets ≤ 32 A) and Reg 411.3.4 (RCD on luminaires in dwellings) — both mean every relevant circuit gets the trip test.',
               'Every switching combination — one-way, two-way, intermediate. Skipping a combination hides a wiring error.',
             ]}
@@ -615,9 +620,9 @@ const AM2Module4Section4 = () => {
                   "No. The button still exists on most MFTs because the meters are sold internationally and earlier amendments allowed it. Under BS 7671:2018+A4:2026 Reg 643.3 and Reg 643.8, RCD verification is the single AC test at 1×IΔn plus the manual button. That's all you record. Pushing 5× isn't dangerous, but the result has no place on the schedule and citing it on AM2 marks you down for using a deleted test.",
               },
               {
-                question: 'What about the 40 ms figure — when does that apply?',
+                question: 'What about the 40 ms figure — does it still apply under A4:2026?',
                 answer:
-                  '40 ms is the maximum trip time for additional protection per Reg 415.1.1, on AC final circuits ≤ 32 A. So on a domestic ring final or lighting circuit (Reg 411.3.3 / 411.3.4) the 30 mA RCD must trip ≤ 40 ms at IΔn for the additional-protection role. The 300 ms / 200 ms figures are for fault protection (Reg 411.4 — disconnection time). Same RCD, two roles, two limits — record the actual measured trip time and compare against both.',
+                  'No. 40 ms was the maximum trip time for the old 5×IΔn test in the deleted Appendix 3 Table 3A — it was never a 1×IΔn figure. A4:2026 deleted Table 3A and the 5×IΔn test entirely. Under BS 7671:2018+A4:2026 (Reg 643.8 NOTE) RCD effectiveness is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay RCD must disconnect within 300 ms maximum, and a delay "S" type between 130 ms and 500 ms. Reg 415.1.1 only recognises 30 mA RCDs as additional protection; it states no trip-time figure. You will commonly measure ~25–40 ms in the real world, but that is typical performance, not the regulatory limit — record the actual measured trip time and compare it to 300 ms.',
               },
               {
                 question: 'Reg 411.5.3 — Ra × IΔn ≤ 50 V. Where does that apply?',
@@ -648,7 +653,7 @@ const AM2Module4Section4 = () => {
             points={[
               'Functional testing is mandatory — electrical tests prove safety, functional tests prove the install works.',
               'A4:2026 RCD verification: single AC test at 1×IΔn + manual button. NO 5×IΔn (deleted from Appendix 3).',
-              'Trip time limits — 300 ms general-purpose / 200 ms Type S / 40 ms additional protection (Reg 415.1.1).',
+              'Trip time limits at 1×IΔn — 300 ms general non-delay / 130–500 ms delay "S" type. No separate 40 ms additional-protection limit (A4:2026 deleted Table 3A and the 5×IΔn/40 ms test); Reg 415.1.1 states no trip-time figure.',
               'Reg 411.3.3 — RCD on every socket-outlet ≤ 32 A. Reg 411.3.4 — RCD on every dwelling lighting circuit. Both get the 1×IΔn trip test.',
               'Test every switching combination — one-way, two-way, intermediate. Skipping any combination hides a wiring error.',
               'Per-socket polarity check on every outlet — ring continuity does not catch a reversed socket.',

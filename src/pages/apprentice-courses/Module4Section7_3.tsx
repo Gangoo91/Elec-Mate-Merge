@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name two types of PPE essential when using a grinder.',
     options: [
-      'Exceeding 50V but not exceeding 1000V',
-      'Ventricular fibrillation risk',
+      'A hi-vis vest and a hard hat',
+      'Knee pads and a bump cap',
       'Safety glasses and hearing protection',
-      'Project 1, Phase 3, System 2, Work Package 4',
+      'A dust mask and a back support belt',
     ],
     correctIndex: 2,
     explanation:
@@ -72,10 +72,10 @@ const Module4Section7_3 = () => {
       id: 1,
       question: 'Which regulation covers PPE requirements in the workplace?',
       options: [
-        'Circuit details and test conditions',
+        'COSHH Regulations 2002',
         'PPE at Work Regulations 1992',
-        'Motor power (W) ÷ airflow (l/s)',
-        'Any voltage that could cause injury',
+        'Work at Height Regulations 2005',
+        'Manual Handling Operations Regulations 1992',
       ],
       correctAnswer: 1,
       explanation:
@@ -98,9 +98,9 @@ const Module4Section7_3 = () => {
       id: 3,
       question: 'Name two hazards PPE protects against when cutting conduit.',
       options: [
-        'Proper tool maintenance',
-        'Good lighting and clean workspace',
-        'Adequate supervision',
+        'Low pay and long shifts',
+        'Cold weather and damp',
+        'Trip hazards and clutter',
         'Sharp edges and metal fragments',
       ],
       correctAnswer: 3,
@@ -124,10 +124,10 @@ const Module4Section7_3 = () => {
       id: 5,
       question: 'Why should PPE be inspected daily?',
       options: [
-        'Independent operation of each load',
+        'To keep a record of how many hours it is worn',
         'To meet legal obligations and prevent failure',
-        'To enforce fire safety regulations',
-        'A fracture, other than to fingers, thumbs, or toes',
+        'To make sure it matches the rest of the team kit',
+        'To confirm it was issued by an approved supplier',
       ],
       correctAnswer: 1,
       explanation:
@@ -137,10 +137,10 @@ const Module4Section7_3 = () => {
       id: 6,
       question: 'Name one PPE item required when working in noisy environments.',
       options: [
-        'A percentage from 0% to 100%',
-        'Reason for incomplete testing',
+        'A dust mask',
+        'A hi-vis vest',
         'Ear defenders or ear plugs',
-        'Yes, with appropriate protection',
+        'Cut-resistant gloves',
       ],
       correctAnswer: 2,
       explanation:
@@ -150,9 +150,9 @@ const Module4Section7_3 = () => {
       id: 7,
       question: 'What should you do if your PPE is damaged?',
       options: [
-        'Poor connections or damaged conductors',
-        'Presence, size, condition, and connections',
-        'UK GDPR and the Data Protection Act 2018',
+        'Continue using it until the end of the shift',
+        'Repair it yourself with tape and carry on',
+        'Pass it to a colleague who needs it less',
         'Report and replace it immediately',
       ],
       correctAnswer: 3,

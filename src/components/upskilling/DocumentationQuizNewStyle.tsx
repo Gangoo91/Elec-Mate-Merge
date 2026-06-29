@@ -31,14 +31,14 @@ const questions: Question[] = [
     question:
       'What should you do if critical design documentation is missing before visual inspection?',
     options: [
-      'Proceed anyway and note limitations',
+      'Proceed and create as-built drawings, clearly documenting the limitations',
       'Refuse to carry out the inspection',
-      'Create as-built drawings during inspection',
-      'Both A and C are correct approaches',
+      'Cancel the job until the original drawings are located',
+      'Carry on as normal without recording anything unusual',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      'You can proceed but must clearly document limitations and may need to create as-built drawings, significantly increasing inspection time.',
+      'You can proceed but must clearly document the limitations and may need to create as-built drawings, significantly increasing inspection time.',
   },
   {
     id: 3,
@@ -59,11 +59,11 @@ const questions: Question[] = [
     question: 'What information should building plans show for electrical inspection purposes?',
     options: [
       'Only room dimensions',
-      'Socket outlet and lighting positions plus routing',
       'Just structural elements',
+      'Socket outlet and lighting positions plus routing',
       'Colour schemes only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Building plans for electrical inspection should show socket outlets, lighting positions, and cable routing to enable proper verification of the installation.',
   },
@@ -85,11 +85,11 @@ const questions: Question[] = [
     question: 'What is the minimum information required on circuit charts according to BS 7671?',
     options: [
       'Circuit number only',
-      'Circuit designation, protective device type and rating',
       'Just the cable type',
       'Only the final circuit length',
+      'Circuit designation, protective device type and rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 requires circuit charts to show circuit designation, protective device type and rating, plus other essential information for proper identification and safety.',
   },
@@ -126,12 +126,12 @@ const questions: Question[] = [
     id: 10,
     question: 'What must be included on protective device schedules?',
     options: [
-      'Device rating only',
       'Device type, rating, and circuit protected',
+      'Device rating only',
       'Just the manufacturer name',
       'Only the installation date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Protective device schedules must include device type, rating, and the circuit protected to ensure proper identification and maintenance.',
   },

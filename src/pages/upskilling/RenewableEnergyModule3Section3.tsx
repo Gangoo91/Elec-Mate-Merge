@@ -26,10 +26,10 @@ const inlineChecks = [
     question:
       'The Work at Height Regulations 2005 set the hierarchy of control for roof work. What\'s the correct order?',
     options: [
-      'Just use ladders',
-      '(1) AVOID work at height where reasonably practicable; (2) where avoidance not practicable, PREVENT falls using collective protection (scaffolding, edge protection, MEWP); (3) where falls cannot be prevented, MINIMISE consequences using collective fall arrest (safety nets, soft landing) or personal fall arrest (harness + anchor). Hierarchy applies to PV roof work — scaffolding or edge protection is the typical standard',
-      'Use harness for everything',
-      'No regulations apply',
+      'Provide ladders, then personal fall-arrest, then collective edge protection',
+      'AVOID work at height, then PREVENT falls, then MINIMISE the consequences',
+      'Use a harness and anchor first, before considering any other control measure',
+      'Minimise consequences first, prevent falls second, avoid height work last',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const inlineChecks = [
     question:
       'Structural assessment for a 6 kWp PV install adds approximately what dead load to a typical UK domestic roof?',
     options: [
-      '0 kg',
-      'Approximately 250-350 kg total (15 modules × 18-22 kg each = ~280 kg, plus ~50 kg of mounting). Distributed across the array footprint (~25 m²) gives ~10-15 kg/m² added dead load. Typical UK pitched roofs are designed for 25-30 kg/m² imposed load + dead load; the additional 10-15 kg/m² is usually within capacity but the structural assessment confirms it for the specific roof',
-      '5,000 kg',
-      'Per module, 100 kg',
+      'Effectively zero, since modern modules are essentially weightless',
+      'Around 250-350 kg total, roughly 10-15 kg/m² across the array footprint',
+      'Around 5,000 kg total, roughly 200 kg/m² across the array footprint',
+      'Around 100 kg per module, roughly 60 kg/m² across the array footprint',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const inlineChecks = [
     question:
       'The 70-100 mm roof standoff above the tile / slate / metal surface — what does it do?',
     options: [
-      'Decoration only',
-      'Natural convection cooling — air can flow under the module, removing heat from the cell. The temperature derate (Module 2 Section 1) is the largest single performance ratio loss component (~5-10% annual); proper standoff keeps cell temperature 10-15°C above ambient (vs 25-35°C above ambient without standoff). Required by manufacturer mounting specs and by Reg 712.512.2.1',
-      'Prevents lightning',
-      'Adds wind load',
+      'Purely decorative, to lift the modules clear of the roof line',
+      'Natural convection cooling, letting air flow under the module to remove heat',
+      'Lightning protection, by isolating the module from the roof structure',
+      'Wind-uplift resistance, by adding mass to anchor the module down',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const inlineChecks = [
     question:
       'For a UK tiled roof install, the mounting fixings should go through the tile and into the:',
     options: [
-      'Tile only — never the rafter',
-      'Rafter (the structural timber member running from ridge to eaves). The tile is supported by the rafter, but the tile itself is not a structural element — fixings through tile only would pull out under wind loading. The flashing-tile (a specialised replacement tile with integrated fixing point) penetrates through the tile and into the rafter below',
-      'The slate batten',
-      'The chimney',
+      'Tile only, with the bracket bedded into the tile and never the rafter',
+      'Rafter, the structural timber member running from ridge to eaves',
+      'Tile batten only, spreading the load across several battens',
+      'Mortar bed at the ridge, anchoring the bracket into the ridge line',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const inlineChecks = [
     question:
       'Wind uplift on a PV array — where on the roof is the wind-uplift pressure highest?',
     options: [
-      'Centre of the roof',
-      'Edges and corners. The roof edge / corner zones experience the highest wind pressure during storms — typically 1.5-2× the centre-zone pressure. BS EN 1991-1-4 wind code prescribes the zoning. PV layout that crams modules to the roof edges experiences much higher wind-uplift load than centre-zone layout. The structural assessment must account for the edge zoning',
-      'Just above the chimney',
-      'Equal everywhere',
+      'The centre of the roof, where the array is most exposed to gusts',
+      'The edges and corners, typically 1.5-2× the centre-zone pressure',
+      'Immediately above the chimney, where airflow is channelled upward',
+      'Roughly equal everywhere, since wind loads the whole roof uniformly',
     ],
     correctIndex: 1,
     explanation:
@@ -96,10 +96,10 @@ const inlineChecks = [
     question:
       'Flashing-tile penetration through a UK tile roof — what\'s the waterproofing principle?',
     options: [
-      'No waterproofing needed',
-      'The flashing-tile has a raised lip that channels water DOWN the roof slope, around the penetration point, back onto the next tile down. The fixing through the rafter is sealed at the bracket interface (typically EPDM gasket). Water can\'t pool above the penetration — it flows down the slope. Same principle as flashing around chimneys and roof vents',
-      'Silicone sealant only',
-      'Cover with another tile',
+      'No waterproofing needed, since the modules above shield the penetration',
+      'A raised collar channels water down the slope around the penetration, with an EPDM seal',
+      'Silicone sealant alone around the bolt, topped up at each service visit',
+      'A second tile laid loosely over the penetration to shed rainwater',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.512.2.1 makes the installer responsible for adequate heat dissipation under site\'s maximum solar radiation. How does the mounting arrangement evidence compliance?',
     options: [
-      'No mounting arrangement applies',
-      'The 70-100 mm standoff above the roof surface for natural convection cooling, combined with the manufacturer\'s specified mounting spec (rail spacing, module-to-module gap, ventilation clearances), gives evidence that the install meets the manufacturer\'s thermal spec at the site\'s maximum solar radiation. Recorded in the cert evidence bundle',
-      'Customer\'s preference',
-      'Use forced cooling fans',
+      'No mounting arrangement is relevant; the requirement is the manufacturer\'s alone',
+      'The 70-100 mm standoff plus the manufacturer mounting spec, recorded in the bundle',
+      'Whatever standoff the customer prefers on aesthetic grounds, with no record',
+      'Forced cooling fans beneath every module, recorded in the bundle',
     ],
     correctIndex: 1,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'PV roof installer arrives at a job. Roof scaffolding is in place but no edge protection. What\'s the correct action under WAH Regulations 2005?',
     options: [
-      'Just be careful',
-      'STOP work. The Work at Height Regulations 2005 hierarchy of control requires PREVENTION of falls where reasonably practicable. Scaffolding without edge protection doesn\'t fully prevent falls. Either edge protection must be added to the scaffolding, or alternative arrangement (MEWP, fall-arrest system) used. The RAMS must be updated before work proceeds',
-      'Use a harness over the scaffolding',
-      'Work without protection because scaffolding is already there',
+      'STOP work — add edge protection or an alternative PREVENT-level arrangement before proceeding, and update the RAMS',
+      'Proceed carefully, keeping back from the unprotected roof edge while working',
+      'Clip a harness and lanyard to the scaffold and use that as the fall protection',
+      'Work as planned, since scaffolding is already a recognised access platform',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The WAH Regulations 2005 hierarchy is AVOID → PREVENT → MINIMISE. Scaffolding without edge protection doesn\'t fully PREVENT falls — falls between the scaffold and the roof edge are still possible. Either scaffolding must be amended (add edge protection), a different arrangement substituted (MEWP, fall-arrest with anchor points), or work AVOIDED. The installer\'s duty is to escalate, not to proceed unsafely.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Structural assessment of a UK pitched-tile roof for 6 kWp install. The roof was built in 1965; rafters are nominal 100 × 50 mm at 400 mm centres. What\'s the assessment finding?',
     options: [
-      'Always safe',
-      'Probably acceptable but DOCUMENT the assessment. Modern pitched roofs are designed for ~30 kg/m² imposed + dead load. The PV adds ~10-15 kg/m² distributed. 1965 construction is older but the timber sizes are standard; the assessment confirms structural adequacy for the specific roof condition. Where significant doubts exist (decayed rafters, undersized members, additional roof modifications), structural engineer review may be required',
-      'Always unsafe — older roofs can\'t take PV',
-      'Add 5 tonnes of modules',
+      'Automatically adequate — standard 1960s timber always takes PV without assessment',
+      'Automatically inadequate — any pre-1990 roof must be reinforced before any PV',
+      'Probably adequate, but document the assessment; escalate to a structural engineer only if decay or undersized members are found',
+      'Adequate only if the array is doubled in size to spread the load more widely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'UK pitched-tile roofs from the 1960s onwards use timber sizes that are typically adequate for PV. The structural assessment confirms: (1) rafter dimensions are nominal-or-better; (2) timber is sound (no decay, no insect damage); (3) the existing roof loading plus PV (10-15 kg/m²) is within capacity; (4) wind uplift in the chosen module positions is acceptable. Where any of these are doubtful, structural engineer review is needed.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Module manufacturer mounting spec says 100 mm minimum air gap below the module. The installer\'s proposed mounting brackets give 60 mm. What happens?',
     options: [
-      'Use the 60 mm brackets',
-      'STOP and substitute brackets. The manufacturer spec is part of the warranty contract — modules installed at less than 100 mm air gap operate at higher cell temperatures, accelerated degradation, void warranty. The manufacturer mounting spec is also the evidence path for Reg 712.512.2.1 site-radiation responsibility — non-compliant mounting can\'t evidence the regulation',
-      'Add fans for cooling',
-      'Ignore the manufacturer spec',
+      'Fit the 60 mm brackets, since a smaller gap improves the array\'s appearance',
+      'Keep the 60 mm brackets and add forced-air fans beneath the modules to cool them',
+      'Disregard the manufacturer air-gap figure as a non-binding recommendation',
+      'STOP and substitute brackets — below-spec air gap raises cell temperature, voids warranty and breaks the Reg 712.512.2.1 evidence path',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Module manufacturer mounting specs typically prescribe 70-100 mm standoff and an equivalent air gap below the module for natural convection cooling. Installing at less than the specified gap: (a) modules operate hotter, accelerated degradation, void warranty; (b) Reg 712.512.2.1 site-radiation evidence path broken — the cert evidence bundle can\'t evidence compliance.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A UK customer\'s roof is metal sheet (corrugated profile). Mounting approach?',
     options: [
-      'Same as tile',
-      'Different mounting system — corrugated metal sheets typically use either (a) "clamp on rib" brackets that clamp directly to the standing seam or rib without penetrating the sheet; (b) "rivet through" brackets that use rivets through the sheet flat into the underlying purlins. Penetrating brackets need bonded waterproofing (EPDM butyl pad) and electrical bonding (the metal sheet may need bonding to the supplementary bonding network)',
-      'Penetrate every sheet',
-      'No PV possible on metal',
+      'A dedicated system — clamp-on-rib (no penetration) or rivet-through into purlins with EPDM seal and bonding',
+      'The same flashing-tile method used on a standard concrete-tile pitched roof',
+      'A penetrating fixing through the centre of every individual sheet of the roof',
+      'No mounting at all — corrugated metal roofs cannot carry a PV array',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Metal-sheet roofs (corrugated, standing-seam, trapezoidal) use bespoke mounting systems. Clamp-on-rib brackets are preferred where the roof profile allows — no penetration, no waterproofing risk, just a mechanical clamp around the rib. Penetrating brackets need bonded waterproofing and may need bonding the metal sheet to the supplementary bonding network.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'PV installer is fixing brackets through tile into rafter. After fitting 4 brackets, the fixing fails the pull-out test on the 5th — the rafter at that location is decayed. Action?',
     options: [
-      'Use longer screws',
-      'STOP and investigate. Pull-out failure indicates structural inadequacy at that location — could be localised decay, beetle damage, undersized rafter, or hidden modification. The honest response: (a) inspect the rafter from below if access permits; (b) document the finding; (c) consult structural engineer if rafter integrity is in doubt; (d) reposition the bracket to a sound rafter location or use a different mounting approach. Don\'t shortcut with longer screws or chemical anchors',
-      'Force it in with longer screws',
-      'Ignore and move on',
+      'Swap to longer screws to bite deeper into the same decayed timber',
+      'Drive longer screws in by force until the fixing finally holds',
+      'STOP and investigate — pull-out failure is a structural finding; inspect, document, reposition to sound timber or escalate to an engineer',
+      'Leave that bracket out and carry on fixing the rest of the array',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pull-out failure is a structural finding, not a fixing problem. The honest response: stop, investigate, document, consult structural engineer if needed. Forcing longer screws masks the underlying problem and creates ongoing structural risk. The cert evidence bundle records the finding and the chosen mitigation. Customer must be informed.',
   },
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'The IET CoP for Grid-Connected Solar PV Installations cross-references the structural assessment requirements. What level of assessment is expected?',
     options: [
-      'No assessment',
-      'Competent visual assessment for typical UK pitched-tile / slate domestic roofs in good condition — the installer confirms rafter spacing, timber condition, existing loading, and the additional PV load. For roofs with concerns (decay, unusual construction, very old, additional roof modifications, large arrays, flat roofs, ground mount), structural engineer review required. The MCS MIS 3002 design pack records the assessment and its level',
-      'Just guess',
-      'Always need a chartered engineer',
+      'No structural assessment is expected for domestic PV installs at all',
+      'An informal estimate of the roof loading, made without any inspection',
+      'A chartered structural engineer\'s report is mandatory for every domestic roof',
+      'Competent visual assessment for typical roofs in good condition; engineer review only for decay, unusual construction or large arrays',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The IET CoP for Grid-Connected Solar PV Installations recognises that typical UK domestic pitched-tile / slate roofs in good condition can be assessed by a competent installer. The competent assessment includes rafter spacing, timber condition, existing loading, and the additional PV load. For roofs outside this typical category, structural engineer review is required.',
   },
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'Roof penetration for the bracket fixing — the flashing seal fails 2 years post-install and water enters the loft. Root cause?',
     options: [
-      'Tile failure',
-      'Most common: (a) bracket installed without the manufacturer-specified flashing-tile / flush-mount kit — installer used a generic L-bracket through the tile, relying on silicone sealant; (b) flashing-tile installed but the water-shedding direction reversed (flashing collar above the penetration instead of below); (c) EPDM gasket on the bracket damaged at install. The competent installer uses the manufacturer-specified flashing-tile, installed in the correct orientation, with the EPDM seal intact',
-      'Rafter decay',
-      'Tiles too small',
+      'Premature ageing and cracking of the existing roof tiles around the array',
+      'A sealant-only L-bracket, a reversed flashing collar or a damaged EPDM gasket at the penetration',
+      'Decay of the rafter the bracket is fixed into, opening up the penetration',
+      'Roof tiles too small to lap correctly over the mounting bracket',
     ],
     correctAnswer: 1,
     explanation:
@@ -225,10 +225,10 @@ const quizQuestions = [
     question:
       'The PWI common-mistakes list flags four high-frequency mounting errors on UK PV installs. What are they?',
     options: [
-      'None',
-      '(1) Modules crammed to roof edges (wind-uplift edge-zone risk; access risk); (2) No flashing-tile / flush-mount kit (water ingress risk); (3) Inadequate roof standoff below 70 mm (cooling and warranty issue, Reg 712.512.2.1 evidence gap); (4) Skipping or shortcutting structural assessment (undocumented load on potentially-undersized roof). Each is a high-frequency MCS audit finding',
-      'Customer satisfaction',
-      'Module colour',
+      'Module brand mismatch, cable colour, panel tilt angle and inverter location',
+      'Edge cramming, missing flashing-tile, standoff below 70 mm and skipped structural assessment',
+      'Customer satisfaction surveys, payment terms, scaffold hire cost and parking',
+      'Module colour, frame finish, roof tile shade and inverter display brightness',
     ],
     correctAnswer: 1,
     explanation:

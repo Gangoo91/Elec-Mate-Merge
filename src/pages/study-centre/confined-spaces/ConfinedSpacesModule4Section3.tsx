@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'What is the PRIMARY role of the top person (safety attendant) during a confined-space entry?',
     options: [
-      'To pass tools and materials to the entrant',
       'To remain at the entry point, maintain communication, and summon help if needed',
+      'To pass tools and materials to the entrant',
       'To monitor atmospheric conditions using a handheld detector from inside the space',
       'To supervise other workers on site while keeping an eye on the entry point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The top person's primary role is to remain at the entry point at all times, maintain continuous communication with the entrant, control access to the space, and be ready to summon help immediately if an emergency arises. They must not enter the space, perform other tasks, or leave the entry point for any reason while the entrant is inside.",
   },
@@ -101,8 +101,8 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the MINIMUM frequency for communication check-ins between the top person and the entrant?',
-    options: ['Every 2 minutes', 'Every 5 minutes', 'Every 10 minutes', 'Every 15 minutes'],
-    correctAnswer: 1,
+    options: ['Every 2 minutes', 'Every 10 minutes', 'Every 5 minutes', 'Every 15 minutes'],
+    correctAnswer: 2,
     explanation:
       'Communication check-ins between the top person and the entrant must occur at least every 5 minutes. More frequent check-ins may be required depending on the risk assessment, the nature of the work, and the conditions inside the space. The interval must be agreed before entry and recorded on the permit. If a check-in is missed, it must be treated as a loss of communication and the emergency procedure initiated.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
       'Which of the following is the correct response when a personal gas monitor alarms inside a confined space?',
     options: [
       'Increase ventilation and continue working',
-      'Evacuate the space immediately',
       'Reset the monitor and check the reading again',
       'Move to a different area within the space',
+      'Evacuate the space immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The only correct response to a gas monitor alarm inside a confined space is immediate evacuation. There is no safe option to investigate, reset, or relocate within the space. Atmospheric conditions can deteriorate within seconds, and the alarm exists specifically to give the entrant time to exit before the atmosphere becomes immediately dangerous to life. Once outside, the cause can be investigated safely.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why is work rotation used during confined-space operations?',
     options: [
-      'To give all team members experience of working inside the space',
       'To manage exposure, fatigue, and heat stress by swapping entrants at regular intervals',
+      'To give all team members experience of working inside the space',
       'To reduce the number of permits required',
       'To allow the top person to enter the space on a rotating basis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Work rotation is used to manage the physical demands of working in confined spaces. Entrants are swapped at regular intervals to prevent excessive fatigue, heat stress, and prolonged exposure to any residual hazards. A fresh, alert entrant is safer and more productive than one who has been working in a restricted, potentially hot environment for an extended period. The rotation schedule must be agreed before entry and recorded.',
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
       'During a shift handover on a confined-space operation, which of the following is ESSENTIAL?',
     options: [
       'The incoming shift can rely on the original atmospheric test from the start of the job',
-      'Fresh atmospheric testing must be carried out and a full briefing given to the incoming team',
       'Only the top person needs to be briefed; the entrants can continue as before',
+      'Fresh atmospheric testing must be carried out and a full briefing given to the incoming team',
       'The handover can be done verbally without updating any records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A shift handover on a confined-space operation requires fresh atmospheric testing (conditions may have changed), a full briefing for the incoming team covering all current conditions, hazards, and progress, and updated records including the personnel log. The incoming team must not rely on earlier atmospheric tests. The permit to work should be reviewed and revalidated. Every person on the incoming team must understand the emergency plan.',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'Which of the following is NOT a condition for immediate evacuation from a confined space?',
     options: [
       'The personal gas monitor triggers an alarm',
-      'The entrant has completed half of the planned task',
       'Communication with the top person is lost',
       'The top person instructs the entrant to evacuate',
+      'The entrant has completed half of the planned task',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Completing half of the planned task is not a reason for evacuation. Conditions for immediate evacuation include: gas monitor alarm, loss of communication, any change in conditions (noise, vibration, flooding, temperature change), illness or injury to the entrant, and instruction from the top person. The entrant must evacuate without question when any of these conditions occur.',
   },

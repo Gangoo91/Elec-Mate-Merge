@@ -29,8 +29,8 @@ const quickCheckQuestions = [
     id: 'fs-m1s3-flashover-temp',
     question:
       'At approximately what ceiling temperature does flashover occur in a compartment fire?',
-    options: ['100-200\u00B0C', '300-400\u00B0C', '500-600\u00B0C', '900-1000\u00B0C'],
-    correctIndex: 2,
+    options: ['500-600\u00B0C', '300-400\u00B0C', '100-200\u00B0C', '900-1000\u00B0C'],
+    correctIndex: 0,
     explanation:
       'Flashover typically occurs when the hot gas layer at ceiling level reaches approximately 500-600\u00B0C. At this temperature, the thermal radiation from the smoke layer is intense enough to ignite all exposed combustible surfaces in the compartment simultaneously. This is a critical transition point beyond which the room becomes unsurvivable.',
   },
@@ -104,8 +104,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'At approximately what temperature range does flashover occur at ceiling level?',
-    options: ['200-300\u00B0C', '350-450\u00B0C', '500-600\u00B0C', '800-1000\u00B0C'],
-    correctAnswer: 2,
+    options: ['200-300\u00B0C', '350-450\u00B0C', '800-1000\u00B0C', '500-600\u00B0C'],
+    correctAnswer: 3,
     explanation:
       'Flashover occurs when the hot gas (smoke) layer at ceiling level reaches approximately 500-600\u00B0C. At this temperature, the radiant heat flux at floor level exceeds approximately 20 kW/m\u00B2, which is sufficient to ignite all exposed combustible materials in the compartment simultaneously. This transition marks the boundary between a survivable and an unsurvivable fire condition.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is a recognised warning sign of potential backdraught?',
     options: [
+      'Pulsing or "breathing" smoke from gaps, with yellowish-grey colour and windows blackened by soot',
       'Bright orange flames visible through windows',
       'Loud crackling and popping sounds from inside the room',
-      'Pulsing or "breathing" smoke from gaps, with yellowish-grey colour and windows blackened by soot',
       'A strong smell of burning plastic with no visible smoke',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The classic warning signs of backdraught include: pulsing or "breathing" smoke emerging from gaps around doors and windows (the fire is starved of oxygen and fluctuating); yellowish-grey or brown-coloured smoke (indicating incomplete combustion due to oxygen starvation); windows that are blackened by heavy soot deposits and hot to the touch; and air being drawn inward at openings rather than smoke pushing outward. These signs indicate a ventilation-limited fire with accumulated unburnt gases — opening a door would trigger a deflagration.',
   },
@@ -134,8 +134,8 @@ const quizQuestions = [
   {
     id: 6,
     question: 'During which phase of fire development do the majority of fire casualties occur?',
-    options: ['Ignition phase', 'Growth phase', 'Fully developed phase', 'Decay phase'],
-    correctAnswer: 1,
+    options: ['Ignition phase', 'Fully developed phase', 'Decay phase', 'Growth phase'],
+    correctAnswer: 3,
     explanation:
       'The majority of fire casualties occur during the growth phase. During this phase, smoke production increases rapidly and the descending smoke layer reduces visibility and introduces toxic gases at head height. Occupants who have not yet evacuated become trapped or incapacitated by smoke inhalation. By the time flashover occurs, the compartment of origin is already unsurvivable — but the growth phase smoke has often spread well beyond that room through corridors and stairwells, affecting people in other parts of the building.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 7,
     question: 'In the fully developed phase of a fire, what primarily limits the rate of burning?',
     options: [
+      'The oxygen supply (ventilation)',
       'The type of fuel available',
       'The temperature of the fire',
-      'The oxygen supply (ventilation)',
       'The size of the compartment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'After flashover, a fire transitions from being fuel-controlled (limited by the amount and type of fuel) to being ventilation-controlled (limited by the available oxygen supply). In the fully developed phase, all combustible materials are burning and there is more fuel available than the oxygen supply can support. The rate of burning is therefore governed by the rate at which fresh air (oxygen) can enter the compartment through openings such as windows, doors and ventilation systems. This is why breaking a window during a fully developed fire can dramatically increase the fire intensity.',
   },

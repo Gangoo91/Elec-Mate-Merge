@@ -749,12 +749,12 @@ export default function PFModule3Section3() {
             id="pf-3-3-check3"
             question="Which phone number should a self-employed electrician call to set up a Time to Pay arrangement with HMRC?"
             options={[
-              '0800 138 1111 (StepChange)',
               '0300 200 3835 (HMRC Payment Support)',
+              '0800 138 1111 (StepChange)',
               '0808 808 4000 (National Debtline)',
               '116 123 (Samaritans)',
             ]}
-            correctIndex={1}
+            correctIndex={0}
             explanation="The HMRC Payment Support Service on 0300 200 3835 handles Time to Pay arrangements. Call before the payment deadline if possible — HMRC is more flexible when you are proactive about your situation."
           />
 
@@ -835,20 +835,20 @@ export default function PFModule3Section3() {
                 id: 2,
                 question: 'What is the key difference between the avalanche and snowball methods?',
                 options: [
-                  'Avalanche targets smallest balance first; snowball targets highest interest first',
                   'Avalanche targets highest interest first; snowball targets smallest balance first',
+                  'Avalanche targets smallest balance first; snowball targets highest interest first',
                   'Avalanche requires professional help; snowball is self-managed',
                   'There is no practical difference between them',
                 ],
-                correctAnswer: 1,
+                correctAnswer: 0,
                 explanation:
                   'The avalanche method targets the highest-interest debt first (mathematically optimal), while the snowball method targets the smallest balance first (psychologically motivating through quick wins).',
               },
               {
                 id: 3,
                 question: 'What is the phone number for StepChange Debt Charity?',
-                options: ['0808 808 4000', '0800 138 1111', '0300 200 3835', '116 123'],
-                correctAnswer: 1,
+                options: ['0808 808 4000', '0300 200 3835', '116 123', '0800 138 1111'],
+                correctAnswer: 3,
                 explanation:
                   "StepChange can be reached on 0800 138 1111. They are the UK's largest debt charity and provide free debt advice, budgeting help, and debt management plans.",
               },
@@ -863,8 +863,8 @@ export default function PFModule3Section3() {
               {
                 id: 5,
                 question: 'How long does bankruptcy typically last before discharge?',
-                options: ['6 months', '12 months', '3 years', '6 years'],
-                correctAnswer: 1,
+                options: ['6 months', '3 years', '6 years', '12 months'],
+                correctAnswer: 3,
                 explanation:
                   'Bankruptcy typically lasts 12 months, after which you are automatically discharged and most debts are written off. However, the record stays on your credit file for six years.',
               },
@@ -872,8 +872,8 @@ export default function PFModule3Section3() {
                 id: 6,
                 question:
                   'For Self Assessment debts up to what amount can you set up a Time to Pay plan online?',
-                options: ['£10,000', '£20,000', '£30,000', '£50,000'],
-                correctAnswer: 2,
+                options: ['£30,000', '£10,000', '£20,000', '£50,000'],
+                correctAnswer: 0,
                 explanation:
                   'For Self Assessment debts up to £30,000, you can set up a Time to Pay plan online through your HMRC account, spreading payments over up to 12 months.',
               },
@@ -891,11 +891,11 @@ export default function PFModule3Section3() {
                   'According to the Money and Mental Health Policy Institute, people in problem debt are how many times more likely to experience a mental health problem?',
                 options: [
                   'Twice as likely',
-                  'Three times as likely',
                   'Five times as likely',
                   'Ten times as likely',
+                  'Three times as likely',
                 ],
-                correctAnswer: 1,
+                correctAnswer: 3,
                 explanation:
                   'Research shows people in problem debt are three times more likely to experience a mental health problem, and the relationship is bidirectional — mental health problems also increase the risk of debt.',
               },

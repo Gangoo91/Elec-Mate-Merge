@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'psychological-safety',
     question: 'What does psychological safety mean in a mentoring context?',
     options: [
-      'Ensuring the mentee has access to mental health support',
       'The mentee feels safe to admit mistakes, ask questions, and say "I don\u2019t know" without fear of punishment or ridicule',
+      'Ensuring the mentee has access to mental health support',
       'The mentor is trained in first aid for mental health',
       'Keeping all conversations strictly about technical topics',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Psychological safety (Amy Edmondson, 1999) means that the mentee feels safe to take interpersonal risks \u2014 admitting errors, asking for help, and saying "I don\u2019t understand" \u2014 without fear of being judged, punished, or ridiculed. This is essential for learning and development.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of role modelling as a mentor?',
     options: [
       'Telling the apprentice that safe isolation is important',
-      'Always performing safe isolation yourself, even for quick jobs, so the apprentice sees it as standard practice',
       'Giving the apprentice a copy of GN3',
       'Asking the apprentice to write a procedure for safe isolation',
+      'Always performing safe isolation yourself, even for quick jobs, so the apprentice sees it as standard practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Role modelling means demonstrating the behaviour you want to see. "Do as I do" is more powerful than "do as I say." If a mentor always performs safe isolation \u2014 even for a quick job that would take five seconds without it \u2014 the apprentice learns that it is non-negotiable, not optional.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 6,
     question: 'In the "Forming" stage of the mentoring relationship, the priority is to:',
     options: [
+      'Get to know each other, agree expectations, and begin building rapport',
       'Start coaching immediately on technical skills',
       'Assess the mentee\u2019s weaknesses and create a remediation plan',
-      'Get to know each other, agree expectations, and begin building rapport',
       'Set formal SMART goals and agree a contract',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Forming stage is about building the foundation. Getting to know each other, understanding the mentee\u2019s aspirations, agreeing how you will work together, and beginning to build trust. Rushing into technical coaching before rapport is established often leads to a weaker relationship.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
       'Which of the following BEST demonstrates psychological safety in a mentoring relationship?',
     options: [
       'The mentor never gives negative feedback to avoid upsetting the mentee',
-      'The mentee feels comfortable saying "I made a mistake on that circuit and I need help"',
       'The mentor and mentee avoid discussing difficult topics',
       'The mentee always agrees with the mentor to avoid conflict',
+      'The mentee feels comfortable saying "I made a mistake on that circuit and I need help"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Psychological safety means the mentee can admit mistakes, ask for help, and say "I don\u2019t know" without fear of judgement. It does not mean avoiding difficult conversations or withholding constructive feedback \u2014 it means creating an environment where honesty is safe and valued.',
   },

@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'A colleague confides that they have been deliberately hurting themselves. They say it is the only way they can cope with overwhelming feelings. What is the MOST appropriate initial response?',
     options: [
+      'Listen without judgement, validate their feelings, and ask what they need from you right now',
       'Tell them they must stop immediately because it is dangerous',
       'React with visible shock and tell them you had no idea people did that',
-      'Listen without judgement, validate their feelings, and ask what they need from you right now',
       'Ignore what they said and change the subject to avoid making them uncomfortable',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A non-judgemental response is critical when someone discloses self-harm. Insisting they stop immediately can increase distress and remove their current coping mechanism without offering an alternative. Reacting with shock or disgust may cause shame and make them regret disclosing. Ignoring the disclosure dismisses their trust. The correct approach is to listen calmly, validate that their feelings are real and understandable, and ask what support they need.',
   },
@@ -55,11 +55,11 @@ const quickCheckQuestions = [
       'According to NICE guidelines, which talking therapy is considered particularly effective for people who self-harm?',
     options: [
       'Psychoanalysis',
-      'Dialectical Behaviour Therapy (DBT)',
       'Hypnotherapy',
       'Eye Movement Desensitisation and Reprocessing (EMDR)',
+      'Dialectical Behaviour Therapy (DBT)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Dialectical Behaviour Therapy (DBT) is specifically recommended by NICE for people who self-harm, particularly those with borderline personality disorder or emotional dysregulation. DBT teaches skills in four key areas: mindfulness, distress tolerance, emotional regulation, and interpersonal effectiveness. It provides alternative coping strategies to replace self-harm and has a strong evidence base for reducing self-harming behaviour.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following BEST describes self-harm?',
     options: [
-      'A failed suicide attempt',
       'Deliberate injury to oneself, often used as a coping mechanism for overwhelming emotions',
+      'A failed suicide attempt',
       'A behaviour found only in teenagers',
       'Attention-seeking behaviour that should be ignored',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Self-harm is the deliberate act of injuring oneself. It is most commonly used as a way of coping with overwhelming emotional pain, not as a suicide attempt (although the two can co-exist). Self-harm affects all ages, genders, and backgrounds, and should never be dismissed as attention-seeking.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     options: [
       'Only cutting',
       'Only cutting and burning',
-      'Cutting, burning, hitting, poisoning, hair pulling, skin picking, excessive exercise, and deliberate recklessness',
       'Only behaviours that leave visible scars',
+      'Cutting, burning, hitting, poisoning, hair pulling, skin picking, excessive exercise, and deliberate recklessness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Self-harm takes many forms beyond the most commonly recognised methods. The range includes cutting, burning, hitting or punching oneself, poisoning or overdose, hair pulling (trichotillomania), skin picking (dermatillomania), excessive exercise, deliberate recklessness, and substance misuse used as a form of self-injury. The range is far broader than many people realise.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 4,
     question: 'In the ALGEE framework, what does the second \u2018E\u2019 stand for?',
     options: [
-      'Evaluate the situation',
       'Encourage self-help and other support strategies',
+      'Evaluate the situation',
       'Establish a treatment plan',
       'Escalate to management immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ALGEE stands for: Approach, assess, and assist with any crisis; Listen non-judgementally; Give reassurance and information; Encourage appropriate professional help; Encourage self-help and other support strategies. The second E reminds the first aider to support the person in developing their own coping strategies and accessing peer support, self-help resources, and community services.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
       'Someone has taken a deliberate overdose of medication. They currently appear well and are fully conscious. What should you do?',
     options: [
       'Monitor them for a few hours and only call for help if symptoms appear',
-      'Call 999 immediately, do not induce vomiting, keep any packaging, and stay with them until help arrives',
       'Give them milk to dilute the medication in their stomach',
       'Drive them to the nearest pharmacy for advice',
+      'Call 999 immediately, do not induce vomiting, keep any packaging, and stay with them until help arrives',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A deliberate overdose is ALWAYS a medical emergency, even when the person appears well. Many substances (including paracetamol) cause delayed organ damage that may not produce symptoms for hours or days. Call 999 immediately. Do NOT induce vomiting. Keep any packaging, bottles, or remaining medication for the paramedics. Stay with the casualty and monitor their level of consciousness.',
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
     question: 'Why should you NOT insist that someone stops self-harming immediately?',
     options: [
       'Because it is not your responsibility',
-      'Because self-harm is their personal choice and none of your business',
       'Because removing their coping mechanism without an alternative in place can increase distress and risk',
+      'Because self-harm is their personal choice and none of your business',
       'Because stopping self-harm is easy and they will do it when they are ready',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Self-harm often serves as a coping mechanism for overwhelming emotional pain. If the person\u2019s only way of coping is removed without helping them develop safer alternatives first, their distress may increase, potentially leading to more dangerous behaviour or suicidal thoughts. The goal is to support the person towards professional help where they can develop healthier coping strategies over time.',
   },
@@ -204,11 +204,11 @@ const quizQuestions = [
       'According to NICE guidelines, which therapy is recommended as particularly effective for reducing self-harm?',
     options: [
       'Cognitive Behavioural Therapy (CBT) only',
-      'Counselling only',
       'Dialectical Behaviour Therapy (DBT)',
+      'Counselling only',
       'Art therapy only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dialectical Behaviour Therapy (DBT) is specifically recommended by NICE for people who self-harm, particularly those with emotional dysregulation or borderline personality disorder. DBT combines cognitive-behavioural techniques with mindfulness and teaches four core skill sets: mindfulness, distress tolerance, emotional regulation, and interpersonal effectiveness. While CBT and other therapies may also be helpful, DBT has the strongest evidence base for self-harm specifically.',
   },

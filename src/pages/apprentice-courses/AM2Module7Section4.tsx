@@ -68,9 +68,9 @@ const AM2Module7Section4 = () => {
       question: "What's wrong with writing 'fault fixed' in fault-finding?",
       options: [
         "Doesn't explain what rectification was done",
-        "Electronic equipment and surge protective devices",
-        "Temperature sensors and humidity sensors",
-        "15-30 minutes, once or twice daily",
+        "It is too long to fit on the answer sheet",
+        "It should be written in the past tense",
+        "It needs to be signed by the assessor first",
       ],
       correctIndex: 0,
       explanation:
@@ -109,9 +109,9 @@ const AM2Module7Section4 = () => {
       id: 3,
       question: "Why is writing '0 ohms' as Zs a mistake?",
       options: [
-        "Signs of overheating, damage, or poor workmanship",
-        "In escape routes and public buildings",
-        "Earthing and automatic disconnection",
+        "Zs is always recorded in milliamps, not ohms",
+        "Zs cannot be measured on a final circuit",
+        "0 ohms is above the maximum permitted Zs",
         "It's unrealistic - no circuit has zero impedance",
       ],
       correctAnswer: 3,
@@ -143,10 +143,10 @@ const AM2Module7Section4 = () => {
       id: 6,
       question: "What's the most common exam trap in knowledge test wording?",
       options: [
-        "Use rollers and apply lubricant",
-        "To reduce voltage drop and heating",
+        "Questions with no correct answer at all",
+        "Diagrams drawn out of scale",
         "Confusing 'maximum' vs 'minimum'",
-        "Colour temperature of light",
+        "Questions written in the wrong order",
       ],
       correctAnswer: 2,
       explanation:
@@ -156,9 +156,9 @@ const AM2Module7Section4 = () => {
       id: 7,
       question: 'Why is labelling circuits in the DB important?',
       options: [
-        "To indicate the route to final exits",
-        "Shading, dirty panels, or inverter faults",
-        "Fail for safety and specification breach",
+        "It removes the need to record test results",
+        "It allows higher rated devices to be fitted",
+        "It speeds up the installation work itself",
         "It's required for safety and identification",
       ],
       correctAnswer: 3,
@@ -170,9 +170,9 @@ const AM2Module7Section4 = () => {
       question: 'What type of tester should you use for safe isolation?',
       options: [
         'Two-pole voltage indicator (GS38)',
-        'High resistance - investigate',
-        'Very low temperatures (near absolute zero)',
-        'R_total = (R1 × R2)/(R1 + R2)',
+        'A standard multimeter on the AC range',
+        'A non-contact voltage detector pen',
+        'An insulation resistance tester',
       ],
       correctAnswer: 0,
       explanation:
@@ -182,10 +182,10 @@ const AM2Module7Section4 = () => {
       id: 9,
       question: "What's the golden rule for avoiding common mistakes in AM2?",
       options: [
-        'Insulated tools, gloves, mats, footwear',
+        'Work as fast as possible to finish early',
         'Preparation, calm discipline, and self-checking',
-        'Level 3 qualification without AM2s',
-        'Recognise excellence and raise professional profile',
+        'Leave the paperwork until the very end',
+        'Copy the approach of the candidate next to you',
       ],
       correctAnswer: 1,
       explanation:
@@ -195,10 +195,10 @@ const AM2Module7Section4 = () => {
       id: 10,
       question: 'What should you do if you make a mistake during the exam?',
       options: [
-        'Fraction of lumens that reach the task surface vs lost to walls/ceiling',
-        'Signs of overheating, damage, or poor workmanship',
+        'Carry on and hope the assessor does not notice',
+        'Wait until the end of the section to mention it',
         'Stop immediately, inform assessor, and correct it properly',
-        'Proper installation techniques and regular maintenance',
+        'Ask another candidate how they would fix it',
       ],
       correctAnswer: 2,
       explanation:

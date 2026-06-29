@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does voltage do in a circuit?',
     options: [
-      'Flexible connections and vibration-resistant supports',
+      'Opposes the flow of current through the conductor',
       'Provides the electrical pressure or force that pushes current',
-      'Showing electrical connections and circuit operation',
-      'They may give false readings and cannot verify absence of voltage',
+      'Measures the rate at which energy is used',
+      'Counts the number of electrons in the conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is resistance?',
     options: [
-      'Connecting full load instantly causing frequency/voltage disturbance',
-      'To provide strain relief, earth continuity, and environmental sealing',
-      'Metal part not part of installation but liable to introduce potential',
+      'The electrical pressure that pushes current through a circuit',
+      'The flow of electrons through a conductor',
+      'The rate at which a circuit uses energy',
       'How much a material resists or slows down the flow of current',
     ],
     correctAnswer: 3,
@@ -99,7 +99,7 @@ const quizQuestions = [
       'Current decreases',
       'Current increases',
       'Current stays the same',
-      'Voltage increases',
+      'Current reverses direction',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is understanding V, I, and R important for apprentice electricians?',
     options: [
-      'A trade association for electrical contractors',
-      'Continuity test along the conductor length',
+      'It is only needed to pass the written exam',
+      'It mainly helps with ordering the right materials',
       'It helps with fault finding, safety, and circuit design',
-      'To prevent premature failure due to environmental conditions',
+      'It is only relevant to three-phase installations',
     ],
     correctAnswer: 2,
     explanation:

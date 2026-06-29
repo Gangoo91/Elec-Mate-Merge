@@ -12,22 +12,22 @@ const quickCheckQuestions = [
   {
     question: 'What is a lighting scene in smart home terminology?',
     options: [
-      'A single light bulb',
-      'A pre-configured combination of multiple lights at specific settings',
-      'A light switch',
-      'A dimmer dial',
+      'A single light bulb controlled on its own',
+      'A wall switch that toggles one circuit',
+      'A dimmer dial that adjusts one fitting',
+      'A preset combination of multiple lights at set levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A lighting scene is a pre-configured combination of multiple lights set to specific brightness levels and colours, activated with a single command to create a desired ambiance.',
   },
   {
     question: 'How can security lighting deter intruders?',
     options: [
-      'By staying off at all times',
-      'By simulating occupancy when away and activating on motion detection',
-      'By using only low-brightness settings',
-      'By operating on a fixed schedule only',
+      'By staying switched off at all times to avoid detection',
+      'By simulating occupancy when away and reacting to motion',
+      'By using only low-brightness settings throughout the night',
+      'By operating on a single fixed schedule every day',
     ],
     correctAnswer: 1,
     explanation:
@@ -36,10 +36,10 @@ const quickCheckQuestions = [
   {
     question: 'What should happen to smart lighting when a fire alarm triggers?',
     options: [
-      'Lights should turn off to save energy',
-      'Lights should flash red',
-      'All lights should turn on fully to illuminate escape routes',
-      'Only bedroom lights should activate',
+      'Lights should switch off to save energy during the alarm',
+      'Lights should flash red to signal the alarm condition',
+      'All lights should come on fully to illuminate escape routes',
+      'Only the bedroom lights should activate during the alarm',
     ],
     correctAnswer: 2,
     explanation:
@@ -51,24 +51,24 @@ const quizQuestions = [
   {
     question: "What is the purpose of an 'Away' lighting scene?",
     options: [
-      'To turn all lights off permanently',
-      'To simulate occupancy by varying lights throughout the evening',
-      'To provide maximum brightness',
-      'To disable the smart home system',
+      'To simulate occupancy by varying lights through the evening',
+      'To turn all lights off permanently while you are away',
+      'To drive every fitting to maximum brightness at once',
+      'To disable the smart home system until you return',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An 'Away' scene simulates occupancy by turning lights on and off at realistic intervals throughout the evening, deterring burglars who target empty properties.",
   },
   {
     question: "What trigger could activate a 'Panic' lighting scene?",
     options: [
-      'Sunset',
-      'Alarm trigger or manual panic button activation',
-      'Low battery warning',
-      'Wi-Fi disconnection',
+      'The daily sunset time being reached',
+      'A low-battery warning on a device',
+      'The home Wi-Fi network disconnecting',
+      'An alarm trigger or a manual panic button press',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A 'Panic' scene activates when an alarm triggers or the homeowner presses a panic button, turning on all external lights at maximum brightness and potentially flashing to attract attention.",
   },
@@ -76,10 +76,10 @@ const quizQuestions = [
     question:
       'Why is it important that emergency lighting operates independently of smart home hubs?',
     options: [
-      'To reduce energy consumption',
-      'To ensure function even if the smart system fails',
-      'To save money',
-      'To improve aesthetics',
+      'To reduce the property’s overall energy consumption',
+      'To ensure it still works even if the smart system fails',
+      'To save money on the installation and running costs',
+      'To improve the appearance of the lighting scheme',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
   {
     question: 'What is the recommended action when linking lighting to a security alarm?',
     options: [
-      'Keep all lights off during an alarm',
-      'Turn on all lights to illuminate the property and deter intruders',
-      'Only use coloured lights',
-      'Disable automatic responses',
+      'Keep all lights off for the duration of the alarm',
+      'Switch to coloured lights only during the alarm',
+      'Turn on all lights to illuminate and deter intruders',
+      'Disable automatic responses while the alarm sounds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Linking lighting to security alarms should turn on all lights to illuminate the property, making it harder for intruders to hide and drawing attention to the incident.',
   },

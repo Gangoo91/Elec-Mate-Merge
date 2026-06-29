@@ -26,12 +26,12 @@ const quickCheckQuestions = [
   {
     question: 'According to Goleman, which three competencies make up emotional self-awareness?',
     options: [
-      'Empathy, social skills, motivation',
       'Emotional awareness, accurate self-assessment, self-confidence',
+      'Empathy, social skills, motivation',
       'Self-regulation, optimism, adaptability',
       'Influence, teamwork, conflict management',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Goleman identified emotional awareness (recognising your emotions as they occur), accurate self-assessment (knowing your strengths and limits), and self-confidence (a strong sense of self-worth) as the three self-awareness competencies.',
   },
@@ -116,8 +116,8 @@ const quizQuestions = [
   {
     id: 3,
     question: "How many primary emotions does Plutchik's Wheel of Emotions identify?",
-    options: ['4', '6', '8', '12'],
-    correctAnswer: 2,
+    options: ['4', '6', '12', '8'],
+    correctAnswer: 3,
     explanation:
       "Plutchik's model identifies eight primary emotions arranged in four opposing pairs: joy-sadness, trust-disgust, fear-anger, and surprise-anticipation. Each primary emotion varies in intensity from mild to extreme.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'Antonio Damasio\'s "somatic marker hypothesis" suggests that:',
     options: [
-      'Emotions are irrelevant to rational decision-making',
       'Bodily sensations associated with emotions guide our decisions and judgements',
+      'Emotions are irrelevant to rational decision-making',
       'The body and mind operate completely independently',
       'Physical symptoms always indicate illness, not emotion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Damasio demonstrated that bodily sensations ("somatic markers") linked to past emotional experiences help us make rapid, intuitive decisions. Without access to these markers, people struggle to make even simple everyday choices.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     options: [
       'Because it is grammatically incorrect',
       'Because it is too granular and overly specific',
-      'Because it is too vague to provide useful data about your actual emotional state',
       'Because emotions should never be described using words',
+      'Because it is too vague to provide useful data about your actual emotional state',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Saying "I\'m fine" collapses a wide range of possible emotional states into one meaningless label. High emotional granularity means distinguishing between, for example, "I\'m frustrated", "I\'m disappointed", or "I\'m apprehensive" — each of which points to a different cause and a different helpful response.',
   },

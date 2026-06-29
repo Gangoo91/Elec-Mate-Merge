@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is the purpose of the handover meeting at install completion?',
     options: [
-      'Sign paperwork only',
-      'The handover meeting is the customer-facing close of the install: (1) demonstrate the system working + key controls; (2) walk through portal access + monitoring + alerts; (3) explain emergency stop + fault response + contacts; (4) cover maintenance schedule + warranty terms + EICR-equivalent cycle; (5) hand over the MCS handover pack (paper + digital); (6) sign-off acknowledgement. The 60-90 min investment in handover meeting prevents most customer confusion + support calls over the install life',
-      'Random',
-      'Optional',
+      'To demonstrate the working system, walk through portal access and fault response, hand over the documentation pack and capture a sign-off acknowledgement',
+      'To collect the final payment and have the customer sign the invoice before the installer leaves site',
+      'To complete the installer’s own snagging list and photograph the equipment for the company records',
+      'To register the manufacturer warranties online while the customer confirms their contact details',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Handover meeting purpose: (1) System demonstration — show customer the LCT system working in their property; key controls + operating modes; expected behaviour. (2) Portal walkthrough — log customer into manufacturer monitoring portal on their device (web + mobile app); show today\'s yield / SoC / energy flow / alerts; demonstrate where to find specific information. (3) Emergency procedures — emergency stop location + procedure; categorical \"do not open the enclosure\" message; fault → call installer / manufacturer; emergency contacts. (4) Maintenance + warranty — annual customer self-check + 5-10 yr EICR-equivalent + manufacturer service intervals + warranty terms + warranty registration confirmation. (5) MCS handover pack — physical + digital handover; explain structure + key documents; signpost where to find which information. (6) Sign-off — customer acknowledges receipt + understanding; supports installer audit + warranty + dispute resolution. (7) UK 2025-26 typical handover meeting duration 60-90 min depending on system complexity; multi-source LCT may be 2 hours. (8) Investment pays back: well-handed-over customers have fewer support calls + better warranty + insurance + EICR-equivalent compliance over the install life. (9) Customer engagement quality predicts customer relationship quality.',
   },
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'What should the customer be taught about fault response?',
     options: [
-      'Open the unit + check',
-      'Categorical do-not-open + sequence: (1) note the alarm / fault message + time; (2) note any unusual sounds / smells / smoke; (3) for emergency (smoke, fire, smell of burning) — operate emergency stop + call 999 + leave property; (4) for non-emergency — call the installer first (24-hr emergency line if provided); manufacturer second; (5) never open the enclosure (lithium fire risk + high DC voltage); (6) never modify the install. The customer\'s role is observation + reporting; not diagnosis or repair. Cert evidence bundle records the customer education sign-off',
-      'Random',
-      'DIY repair',
+      'Open the enclosure first to read the inverter fault code, then call the installer with the code so they can advise a fix',
+      'Note the fault and time, evacuate and call 999 for any smoke or burning smell, otherwise call the installer first — and never open the enclosure',
+      'Reset the system at the consumer unit a few times; if it keeps tripping, isolate it and wait for the next annual service visit',
+      'Photograph the alarm, post it in the manufacturer’s user forum and follow the most-recommended community fix',
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What ongoing monitoring expectations should the customer be taught?',
     options: [
-      'No monitoring',
-      'Ongoing monitoring expectations: (1) BMS / inverter continuously self-monitors + alerts; customer notified via portal app + email. (2) Customer self-check monthly or weekly — quick portal review (yield today + SoC + any alerts) takes 2 minutes. (3) Annual installer touchpoint or manufacturer service visit — paid service typically £50-150/yr; tracks SoH + firmware + condition. (4) 5-10 yr professional EICR-equivalent per Reg 652.1. (5) Warranty review at half-life (5 yr) + approaching warranty floor. The continuous + self-check + annual + periodic = layered monitoring approach',
-      'Random',
-      'Only annual',
+      'A single manufacturer service visit each year is sufficient; the customer has no day-to-day role to play between visits',
+      'The customer should log readings into a spreadsheet daily so the installer can spot trends at the annual review',
+      'Continuous BMS/inverter alerts, plus a brief monthly customer portal self-check, plus an annual touchpoint and a 5–10 year periodic inspection — a layered approach',
+      'No ongoing monitoring is needed once the system is commissioned and signed off; faults will always raise an audible alarm',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Monitoring expectations + layered approach: (1) Continuous BMS / inverter self-monitoring — runs in background; alerts portal + email on fault state; customer doesn\'t need to do anything for this layer. (2) Customer self-check — monthly or weekly portal review (2-5 min): yield vs expected; SoC pattern normal; any alerts cleared; portal accessible. (3) Annual touchpoint — installer + manufacturer typically offer paid annual review (£50-150/yr); tracks SoH trend, firmware updates, condition baseline; relationship maintained. (4) 5-10 yr professional EICR-equivalent per Reg 652.1 — comprehensive periodic; cert evidence bundle updated. (5) Warranty events — at 5 yr (half-life) + approaching warranty floor (~70-80% SoH at 10 yr for BESS); manufacturer engagement. (6) Customer education emphasises: continuous + self-check + annual + periodic = layered approach. Each layer catches different issues. (7) Portal app on phone is the typical customer-facing interface; manufacturer + installer have richer access via professional portals. (8) Realistic expectations — system is mostly hands-off; ~2-5 min/month customer engagement is sufficient for typical install; deeper involvement only on alerts. (9) Failure modes prevented — the layered monitoring catches: silent failures (PV dead inverter), degradation (BESS SoH drift), environmental changes (heat exposure), warranty windows.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What is the value of an annual touchpoint between installer + customer?',
     options: [
-      'No value',
-      'Annual touchpoint value: (1) relationship maintenance — customer knows who to call; reduces churn at the EICR-equivalent + warranty events; (2) early issue detection — small issues (firmware lag, soiling, minor degradation) caught at 1 yr cycle vs 5-10 yr cycle; (3) firmware updates applied — security + capability + bug fixes; (4) customer education refresh — operating tips, new features, fault response refresh; (5) commercial — paid service relationship (£50-150/yr typical); installer revenue + customer service; (6) warranty support — installer present to advocate when needed',
-      'Random',
-      'Only for installer',
+      'It mainly benefits the installer commercially; for the customer it offers little beyond a routine reminder to register the warranty',
+      'It catches small issues early, applies firmware updates, refreshes customer education and keeps a relationship that supports warranty events',
+      'It is primarily a safety inspection that replaces the need for any periodic EICR-equivalent across the system’s life',
+      'It exists to upsell additional generation capacity rather than to maintain the existing installation',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Customer handover meeting — how long should it be + what activities?',
     options: [
-      '5 minutes paperwork',
-      '60-90 min typical (2 hr for multi-source). Activities: (1) Walk through the install — show outdoor equipment + isolators + safety labels; (2) demo system operating — start charging, show yield / SoC, show emergency stop; (3) portal walkthrough — log customer in, show key views, set up alerts; (4) maintenance schedule + warranty terms + EICR-equivalent cycle; (5) fault response procedure + emergency contacts; (6) MCS handover pack physical + digital handover + structure walkthrough; (7) Q&A; (8) sign-off acknowledgement. Investment in this 60-90 min prevents most support calls + reinforces customer confidence',
-      'Random',
-      '15 minutes',
+      'Around 15 minutes — a quick equipment walk-round and handing over the paperwork pack is enough for a domestic install',
+      'A 5-minute doorstep handover of the documents, with a follow-up phone call booked for any questions',
+      'A fixed half-day regardless of system size, most of which is spent completing the installer’s own test schedule',
+      '60–90 minutes typically (around 2 hours for multi-source): walk-round, system demo, portal walkthrough, maintenance/warranty, fault response, pack handover, Q&A and sign-off',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Handover meeting structure (60-90 min typical, 2 hr for multi-source): (1) Walk-through (15 min) — show customer the install in their property; outdoor equipment + isolators + safety labels + warning notices; cable routing; install location considerations (vent clearance, future access). (2) System demo (15-20 min) — start a charging cycle (BESS / EV); show PV yield in real-time; demonstrate emergency stop; show normal operating sounds + LEDs. (3) Portal walkthrough (15-20 min) — log customer into the manufacturer monitoring portal on their phone + computer; show today\'s view + weekly view + monthly view; demonstrate where to find specific information (alerts, history, settings). Set up notification alerts to customer\'s email + phone. (4) Maintenance + warranty (10 min) — annual customer self-check schedule; EICR-equivalent 5-10 yr cycle; manufacturer service intervals + scheduled monitoring options (paid service); warranty terms summary + warranty registration confirmation; what counts as warranty event. (5) Fault response (10 min) — observation procedure; emergency procedures + 999 call criteria; non-emergency installer-first call; categorical no-open / no-modify; emergency contacts visible. (6) MCS handover pack (5-10 min) — paper + digital handover; structure walkthrough (sizing, commissioning, EIC, warranty, customer guide); signpost where to find what. (7) Q&A (5-10 min) — invite customer questions; capture for follow-up. (8) Sign-off acknowledgement — customer signs to confirm receipt + understanding; cert evidence bundle records. (9) Follow-up email — sends summary, key contacts, portal login, support email; ensures customer has digital reference.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Customer reports PV yield is "lower than last summer". What is the structured installer response?',
     options: [
-      'Replace inverter',
-      'Structured response: (1) acknowledge + thank for early engagement; (2) check portal data — look at yield over the period; compare to weather data (was last summer particularly sunny?); compare to similar nearby installs if available; (3) consider soiling (annual cleaning may be due); shading changes (new structure, tree growth); module degradation (typical ~0.5%/yr LFP); inverter performance (firmware up-to-date?); (4) propose action — visual inspection visit; thermal imaging if accessible; portal data deep-dive; manufacturer engagement if pattern indicates issue; (5) report back to customer with findings + recommended actions',
-      'Random',
-      'Ignore',
+      'Acknowledge the report, review portal data against weather and similar installs, consider soiling/shading/degradation/firmware, then investigate and report back',
+      'Quote immediately for an inverter replacement, as a year-on-year yield drop almost always indicates an inverter at fault',
+      'Reassure the customer that lower yield is normal seasonal variation and no further action is needed',
+      'Advise the customer to clean the panels themselves and call back only if the figures have not recovered within a year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Structured response to customer yield concern: (1) Acknowledge + thank — customer engagement is valuable; reinforces relationship + catches issues early. (2) Portal data review (remote) — pull yield data over the period the customer references; compare to: (a) same period prior year; (b) modelled yield for the actual weather (cooler summers + cloudier produce lower yield naturally — weather data from Met Office or similar); (c) similar installs in the area if installer fleet data available. (3) Hypothesis generation — soiling (annual cleaning may be due for grime / bird droppings / pollen / leaf debris); shading changes (new shed, tree growth, new building); module degradation (typical 0.5-1%/yr; if yield dropped 8-10% in 1 yr that\'s outside normal); inverter performance (firmware bug or degradation; manufacturer alerts); cabling / connection degradation (DC connector ingress, junction box issues). (4) Visit + investigation — visual inspection of array (binoculars from ground or roof access where safe); thermal imaging where accessible; DC string IR re-test per Section 712 (mini-EICR-equivalent visit); module-level data extract where supported by inverter / optimisers. (5) Manufacturer engagement — if pattern indicates warranty event (premature degradation, module hot spots); engage manufacturer support. (6) Report back — customer-facing summary of findings + recommended actions + costs (if any); maintain customer confidence + relationship. (7) Cert evidence bundle update — record the customer touchpoint + investigation + outcome.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Avoiding silent failures — what should the installer establish at handover for the customer?',
     options: [
-      'Nothing',
-      'Silent failure prevention: (1) portal alert configuration — push notification to customer phone on any fault state; email to customer + installer on critical; (2) monthly customer self-check habit — 2 min portal review (yield + SoC + alerts); (3) annual touchpoint — paid service or installer-initiated check-in; (4) manufacturer scheduled monitoring where available; (5) make the abnormal visible — what does "system not generating" look like vs "system not running due to fault"; (6) emergency contact + non-emergency contact clearly distinguished. Silent failures (dead inverter, BESS at 0% for months, charger failed) caught early via these layers',
-      'Random',
-      'Annual only',
+      'Rely on the customer noticing a higher electricity bill, which will flag any failed component within a month or two',
+      'Tell the customer the system is fully automatic and that the annual visit alone will catch anything that has gone wrong',
+      'Configure portal alerts to the customer’s phone, establish a monthly self-check habit, schedule an annual touchpoint and make “abnormal” recognisable at handover',
+      'Set the manufacturer monitoring to email the installer only, so the customer is never bothered by alerts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Silent failure prevention strategy: (1) Portal alert configuration at handover — set up customer\'s phone for push notifications on any fault state; email to customer + copy to installer for critical alerts. Default manufacturer settings may not be optimal; customise for the customer. (2) Monthly customer self-check habit — establish at handover: 2 min portal review monthly (or weekly for keen customers) covers most silent failures. Quick visual scan: yield today (PV); SoC pattern (BESS); any active alerts. (3) Annual touchpoint — paid service or installer-initiated annual check-in; comprehensive review beyond what self-check catches. (4) Manufacturer scheduled monitoring — where manufacturer offers paid monitoring service, configure at install + customer can opt in. (5) Make abnormal visible — at handover educate customer on \"what does normal look like\" vs \"what does abnormal look like\": for example, normal PV yield curve mid-summer day vs zero generation due to dead inverter; normal BESS SoC pattern vs stuck at 0% or 100%. (6) Emergency contact + non-emergency contact — clearly distinguished + visible (sticker on equipment? handover pack page? customer\'s contacts list?); reduces friction at point of need. (7) Common silent failures avoided: dead inverter (PV stops generating; customer doesn\'t notice for months); BESS stuck at 0% (no self-consumption benefit; warranty implications); EV charger failure (next charge attempt unsuccessful — but if EV not used daily may be missed); heat pump in defrost loop (high power consumption but no useful heat).',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Multi-source customer education — how to avoid overwhelming the customer?',
     options: [
-      'Same as single source',
-      'Multi-source education approach: (1) integrated portal where possible — single app showing PV + BESS + EV + heat pump in one view; (2) layered detail — top-level dashboard for daily check; deeper drilldown when needed; (3) one-page summary card — key contacts, emergency stops, fault response sequence + portal login; (4) walk-through at handover focuses on integrated operation not technology-by-technology; (5) follow-up email with reference materials; (6) annual touchpoint covers comprehensive review without re-doing handover',
-      'Random',
-      'Skip education',
+      'Give a separate, in-depth technical briefing for each technology so the customer fully understands every subsystem in isolation',
+      'Hand the customer a single combined user manual and let them read it in their own time without a guided walkthrough',
+      'Restrict education to the highest-value source only (usually the battery) and leave the rest to the operating guide',
+      'Use an integrated portal where possible, present layered detail, a one-page summary card, and explain the system as one unit rather than technology-by-technology',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-source customer education: (1) Integrated portal — many manufacturer ecosystems offer integrated portals (e.g. Tesla app covers Powerwall + EV + solar; GivEnergy portal covers PV inverter + BESS; manufacturer-agnostic platforms like SolarEdge ONE emerging). Where integrated portal available, use it as the primary customer interface. (2) Layered detail — top-level dashboard shows the headline metrics for daily check (today\'s yield, SoC, heat pump running, EV charging); deeper drilldown for those who want it (per-module detail, per-cell voltage, hour-by-hour log). (3) One-page summary card — physical sticker / card / handover pack page with: key contacts (installer 24-hr emergency + non-emergency); emergency stops per source; fault response sequence; portal login. Reduces decision-making friction at point of need. (4) Handover walk-through focuses on integrated operation — \"this is your energy system\" not \"this is your PV, this is your BESS, this is your heat pump\". Customer doesn\'t need to think about technology boundaries; system thinks for them. (5) Follow-up email — within 24-48 hr of handover: summary, key contacts, portal logins, support FAQ link; provides written reference. (6) Annual touchpoint — comprehensive review without re-doing the entire handover; refresh on operating tips + new features + any updates. (7) Avoid technology jargon — use \"battery\" not \"BESS\"; use \"solar\" not \"PV\"; use \"heat pump\" not \"ASHP\"; use \"charger\" not \"EVSE\". Customer-friendly language maintains comprehension. (8) Reality 2025-26: customer engagement varies widely — some customers deeply engaged; others want minimal-interaction set-and-forget. Tailor the touchpoint depth.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Operating guide content — what topics must the customer-facing guide cover?',
     options: [
-      'No guide needed',
-      'Operating guide must cover: (1) system overview — what each source does + how they interact; (2) operating modes + controls — normal operation + holiday mode + boost / max + manufacturer-specific features; (3) portal access + login + key views; (4) maintenance schedule — customer self-check + annual + EICR-equivalent; (5) warranty terms summary + manufacturer warranty contacts; (6) fault response — observation, emergency vs non-emergency, contacts; (7) emergency stop location + procedure per source; (8) categorical do-not-open + do-not-modify; (9) future considerations — additions, replacements, end-of-life; (10) Q&A / FAQ for common questions',
-      'Random',
-      'Specs only',
+      'System overview, operating modes/controls, portal access, maintenance, warranty, fault response, emergency stops, a do-not-open warning, future considerations and an FAQ',
+      'Only the technical specifications and model numbers of each component, so a future engineer can identify the equipment',
+      'Just the manufacturer warranty cards and registration details, since everything else is covered by the certificate',
+      'A short list of emergency contacts; full operating detail is best left out to avoid confusing the customer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Operating guide essential content: (1) System overview — plain-English description of what each source does + how they interact (e.g. \"PV generates electricity during the day; BESS stores excess; heat pump uses electricity to heat the home; EV charger powers the car\"). (2) Operating modes + controls — normal day-to-day; holiday mode (reduce heating + manage cycling); boost / max settings; manufacturer-specific features (e.g. winter mode on heat pump; charge-from-grid override on BESS). (3) Portal access + login — written instructions for first-time portal login on phone + computer; what each view shows. (4) Maintenance schedule — customer self-check (monthly or weekly portal review); annual touchpoint (paid or installer-initiated); 5-10 yr EICR-equivalent. (5) Warranty terms — summary of manufacturer warranties per component (modules, inverter, BMS, heat pump); installer workmanship guarantee; what to do at warranty event. (6) Fault response — observation, emergency vs non-emergency, contacts (visible). (7) Emergency stop — location per source + procedure; demonstrated at handover; visible safety labels at the equipment. (8) Do-not-open + do-not-modify — categorical safety message; lithium battery fire risk; high DC voltage hazard; warranty void if modified. (9) Future considerations — additions (more PV, BESS, EV charger); replacements (inverter at 10-15 yr typical); end-of-life (BESS 15-20 yr, PV 25-30 yr); contacts to engage. (10) FAQ — common questions: how to handle holidays; how to optimise SEG export; what happens in a power cut; how to read the bill alongside the system. (11) Contacts page — clear visible list. (12) UK 2025-26 typical operating guide 12-20 pages; tablet + phone-friendly digital version.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Property sale + LCT install — what handover information transfers to new owner?',
     options: [
-      'Nothing',
-      'Transfer to new owner: (1) MCS handover pack travels with property in conveyancing documents alongside EPC + planning; (2) warranty transferable per manufacturer terms (most are; some require notification); (3) BUS grant continues per scheme rules (typically tied to property + system, not original owner); (4) SEG tariff may need re-registration with new owner / new supplier; (5) installer service relationship — new owner may continue or change; (6) portal accounts may need reassignment. Cert evidence bundle remains with installer for audit + service continuity',
-      'Random',
-      'Only with sale',
+      'Nothing transfers; the new owner must commission a fresh survey and certification before they can legally use the system',
+      'Only the warranty transfers automatically; grants and export tariffs are forfeited the moment the property changes hands',
+      'The documentation pack travels with the property, warranty transfers per manufacturer terms, the grant follows the property, and the export tariff and portal account are re-registered',
+      'All records stay with the original owner, who must continue to manage the system remotely after the sale',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Property sale + LCT handover: (1) MCS handover pack — physical + digital copy travels with property in the standard conveyancing pack alongside EPC + planning + warranties + property records. New owner takes possession at completion. (2) Manufacturer warranty — typically transferable to new owner subject to manufacturer terms; some require notification (sale to installer who notifies manufacturer); cert evidence bundle records the transfer. Warranty floor (e.g. 10 yr SoH ≥ 70-80% for BESS) typically applies regardless of ownership. (3) BUS grant — UK 2025-26 BUS grants tied to property + system installation, not original owner; new owner inherits the asset + the grant validity; ongoing obligations (operate system per intended design) continue. (4) SEG (Smart Export Guarantee) tariff — typically requires re-registration when ownership changes; new owner contacts their energy supplier (which may be different) to set up SEG with the existing install evidence. (5) Installer service relationship — new owner has the option to continue with the original installer or switch to a different MCS company; original installer is well-positioned (knowledge of the install) but the customer chooses. (6) Portal accounts — manufacturer portals typically need reassignment (original owner removed, new owner added); installer can facilitate. (7) Cert evidence bundle — remains with installer for audit + service continuity; transferable to new servicing company on customer request. (8) Future EICR-equivalent — new owner uses the property\'s MCS handover pack + future EICR-equivalent reports as the lifecycle record. (9) Reality 2025-26: smooth transfer is the norm for well-documented installs; gaps in documentation create complication at sale + reduce property value.',
   },

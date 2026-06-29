@@ -25,26 +25,26 @@ const quizQuestions = [
     question:
       'Reg 14 of the Electricity at Work Regulations 1989 sets the legal default for working on or near live conductors. What does it actually say?',
     options: [
-      'Live work is prohibited in all circumstances',
-      'Live work is only permitted if (a) it is unreasonable for the conductor to be dead, (b) it is reasonable for the work to be carried out, and (c) suitable precautions are taken',
-      'Live work is allowed on any installation under 230 V',
-      'Live work is allowed if the operative holds a current 18th Edition certificate',
+      'Live work is prohibited outright in every circumstance, with no exceptions of any kind',
+      'Live work is permitted only if it is unreasonable for the conductor to be dead, reasonable for the work, and suitable precautions are taken',
+      'Live work is allowed on any low-voltage installation operating at 230 V or below',
+      'Live work is allowed wherever the operative holds a current 18th Edition certificate',
     ],
     correctAnswer: 1,
     explanation:
-      'EaWR 1989 reg 14 is a three-limbed test, all three limbs must be satisfied. GN3 Reg 10.1 quotes it verbatim: live work is permissible only where it is unreasonable for the conductor to be dead, reasonable for the work to be done, and suitable precautions are taken. "I needed to test it" is not a defence on its own — proving dead is dead working, fault-finding may be live, but the subsequent repair is dead.',
+      'EaWR 1989 reg 14 is a three-limbed test, all three limbs must be satisfied: (a) it is unreasonable for the conductor to be dead, (b) it is reasonable for the work to be done, and (c) suitable precautions are taken. GN3 Reg 10.1 quotes it verbatim. "I needed to test it" is not a defence on its own — proving dead is dead working, fault-finding may be live, but the subsequent repair is dead.',
   },
   {
     id: 2,
     question:
       'Reg 462.1 in BS 7671:2018+A4:2026 sets the design-side duty for isolation. What does it require?',
     options: [
-      'Every socket-outlet shall be RCD protected',
       'Each electrical installation shall have provisions for isolation from each supply',
-      'Every circuit shall have an emergency stop',
-      'Every isolator shall be lockable in the open position by tool only',
+      'Every socket-outlet shall be provided with RCD additional protection',
+      'Every final circuit shall be provided with a means of emergency switching off',
+      'Every isolator shall be lockable in the open position by a tool only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 462.1 reads literally: "Each electrical installation shall have provisions for isolation from each supply." It is the gateway design duty. Reg 462.2 then requires isolation means for every circuit, and Reg 462.3 requires those devices to be designed or installed so as to prevent unintentional or inadvertent closure.',
   },
@@ -53,26 +53,26 @@ const quizQuestions = [
     question:
       'A skilled person walks up to a board, opens an MCB, and says "right, I have isolated it". Why is this not safe isolation?',
     options: [
-      'It is — opening the MCB removes the supply',
-      'Because you have not yet proven dead at the point of work, and an MCB handle position does not, on its own, prove the contacts opened. The duty under EaWR sits on the operative, not the device',
-      'Because RCDs latch closed under fault',
-      'Because the MCB might be a Type B',
+      'It is safe — opening the MCB removes the supply to the circuit entirely',
+      'Because the device must also be locked off and a danger notice fitted before it counts',
+      'Because dead has not been proven at the point of work, and an open handle does not prove the contacts parted',
+      'Because an MCB is a functional-switching device that may control current without opening its poles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Operating the device gets you to "isolated, possibly". The duty is "isolated, locked off, and proven dead at the point of work". The device handle does not prove pole separation, and an MCB can weld closed under fault and yet read open at the handle. GN3 Reg 1.1 and Reg 10.1 are clear: the safety of the test operative is the operative\'s duty.',
+      'Operating the device gets you to "isolated, possibly". The duty is "isolated, locked off, and proven dead at the point of work" — and that duty sits on the operative, not the device. The handle does not prove pole separation, and an MCB can weld closed under fault yet read open at the handle. GN3 Reg 1.1 and Reg 10.1 are clear: the safety of the test operative is the operative\'s duty.',
   },
   {
     id: 4,
     question:
       'Reg 537.2.2 places a hard restriction on what can be used as an isolating device. What is it?',
     options: [
-      'Plugs and sockets cannot be used as isolation',
+      'Plugs and socket-outlets shall not be relied on as a means of isolation',
+      'Single-pole switches shall not be used for isolation in TN-S systems',
+      'RCDs shall not be used as a means of isolation',
       'Semiconductor devices shall not be used as isolating devices',
-      'Single-pole switches cannot be used in TN-S systems',
-      'RCDs cannot be used as isolation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 537.2.2 is one sentence: "Semiconductor devices shall not be used as isolating devices." The reason is that a semiconductor switch may interrupt the current without opening the corresponding poles (Reg 537.3.1.3) — pole separation is what gives you the visible electrical break that isolation requires.',
   },
@@ -81,10 +81,10 @@ const quizQuestions = [
     question:
       'You are about to isolate a final circuit fed from a TN-C-S consumer unit. Why does Reg 411.4.3 mean you must not put any switch or isolation device in the PEN conductor itself?',
     options: [
-      'PEN conductors are too small to break load',
-      'Switching the PEN at the consumer unit can leave exposed metalwork connected to load current via the neutral path — a shock risk. Isolation must be effected on the separated N and protective conductors downstream of the PEN, or by approved means upstream',
-      'Because PEN conductors are colour-coded yellow',
-      'Because the distributor owns the PEN',
+      'PEN conductors are too small in cross-section to break load current safely',
+      'Switching it can leave metalwork connected to load current via the neutral path — a shock risk',
+      'PEN conductors are colour-coded yellow and so must never carry a switch',
+      'The distributor owns the PEN, so only the DNO may place a device in it',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'In the JIB nine-step safe isolation procedure, what is the very first step before any device is operated?',
     options: [
-      'Open the main switch',
-      'Identify the correct point of isolation and confirm the circuit, then check your voltage indicator and proving unit are functional and undamaged',
-      'Lock off the board',
-      'Notify the duty holder',
+      'Identify the correct point of isolation and confirm the indicator and proving unit are undamaged',
+      'Open the main switch to remove the supply before any other step is taken',
+      'Lock off the board so it cannot be re-energised while you prepare your tools',
+      'Notify the duty holder and obtain written authorisation to begin the isolation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GN3 Reg 10.1 (d) requires "checking before each use that all leads, probes, accessories ... and instruments including the proving unit are clean, undamaged and functioning". You verify the right point of isolation and confirm the kit works on a known live source before you trust it to tell you the conductor is dead. Skipping this is how operatives die — a faulty voltage indicator that reads low on a live conductor.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'You have isolated, locked off, and now need to prove dead at a three-phase distribution board. How many measurements does GS38 / good practice require?',
     options: [
-      'One — line to earth on the nearest phase',
-      'Three — L1-L2, L2-L3, L1-L3',
-      'Ten — every line to every other line, every line to neutral, every line to earth, neutral to earth (a full L-L, L-N, L-E, N-E set)',
-      'Two — one phase to neutral and one phase to earth',
+      'One — line to earth on the nearest phase is sufficient to confirm dead',
+      'Three — L1-L2, L2-L3 and L1-L3, covering each line-to-line pair',
+      'Ten — the full set of L-L, L-N, L-E and N-E combinations across the three phases',
+      'Two — one line to neutral and one line to earth on any single phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'Why is "prove the indicator on a known live source, test the conductor dead, then prove the indicator again on the known live source" the rule, not just "test the conductor"?',
     options: [
-      'It satisfies a recordkeeping requirement only',
-      'A faulty voltage indicator can read zero on a genuinely live conductor (battery flat, internal break, blown protection). The two proving steps either side bracket your dead reading and confirm the instrument was working immediately before and immediately after the test. Without them, "0 V" means nothing',
-      "It's required by the EICR schedule",
-      'Because GS38 mandates two-stage testing for record purposes',
+      'It satisfies a recordkeeping requirement on the certificate schedule only',
+      'A faulty indicator can read zero on a live conductor; the two proving steps bracket the dead reading',
+      'It is required to complete the relevant EICR schedule of test results',
+      'GS38 mandates two-stage proving purely for documentation and audit purposes',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'A maintenance electrician opens an MCB, padlocks it, hangs a tag, and walks off to fetch tools. Another operative arrives, removes the tag because it is "in the way", and begins work. Where does the duty under EaWR sit?',
     options: [
-      'Only on the original electrician — they should have stayed at the board',
-      'Only on the duty holder — they should have written a permit',
-      'On the person doing the work at that moment. EaWR places the duty for "suitable precautions" on the operative carrying out the work. The locked-off device is a control measure; it is the operative who must verify isolation is intact and prove dead at the point of work before touching anything',
-      'On the manufacturer of the lock',
+      'Only on the original electrician — they should have stayed at the board to guard it',
+      'Only on the duty holder — they should have issued a written permit-to-work first',
+      'On the person doing the work at that moment, who must verify isolation and prove dead before touching anything',
+      'On the manufacturer of the lock, for supplying a device that could be removed by another',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'On a TT installation, Reg 462.2 read with the system requirements for TT means the means of isolation must do what?',
     options: [
-      'Disconnect line conductor only',
-      'Disconnect line and earth',
-      'Disconnect all live conductors — line(s) and neutral — because in TT (and IT) the neutral may be at a hazardous voltage relative to the local earth electrode',
-      'Disconnect the earth electrode',
+      'Disconnect the line conductor only, leaving the neutral connected throughout',
+      'Disconnect the line conductor and the circuit protective conductor together',
+      'Disconnect all live conductors — line(s) and neutral — as the neutral may sit at a hazardous voltage',
+      'Disconnect the earth electrode conductor at the main earthing terminal',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,10 +168,10 @@ const inlineChecks = [
     question:
       'A site agent insists you fault-find live on a 230 V control circuit and then "just splice the broken wire while you are in there". You hold a current 18th Edition. Where does EaWR reg 14 land?',
     options: [
-      'The whole job is fine — live testing is permissible and the splice is trivial.',
-      'Live fault-finding can be justified under reg 14 because it is unreasonable for the conductor to be dead during diagnosis. The splice that follows is repair work and must be done dead — GN3 Reg 10.1 is explicit that there is no justification for subsequent live repair.',
-      'Refuse the entire activity — fault-finding under reg 14 is never permissible on 230 V circuits.',
-      'Proceed with both, provided you wear arc-rated gloves.',
+      'The whole job is fine — live testing is permissible and the splice itself is trivial.',
+      'Live fault-finding may be justified under reg 14, but the splice that follows is repair and must be done dead.',
+      'Refuse the entire activity — fault-finding under reg 14 is never permissible on any 230 V circuit.',
+      'Proceed with both the diagnosis and the splice, provided you wear arc-rated insulating gloves.',
     ],
     correctIndex: 1,
     explanation:
@@ -182,10 +182,10 @@ const inlineChecks = [
     question:
       'A panel uses a solid-state contactor to switch a 16 A heating circuit. The OEM label says "may be used as functional switching and emergency switching". Can you treat it as the means of isolation while you replace the heating element?',
     options: [
-      'Yes — the OEM label allows it.',
-      'Yes, provided you also pull the upstream MCB.',
-      'No. Reg 537.2.2 prohibits semiconductor devices as isolating devices, full stop. The OEM label says functional / emergency switching, not isolation. Isolate at an upstream switch-disconnector or an MCB lock-off, then prove dead.',
-      'Only if the contactor has a hand-operated override.',
+      'Yes — the OEM label permits it to be used in this way.',
+      'Yes, provided you also pull the upstream MCB as a second measure.',
+      'No — Reg 537.2.2 bars semiconductor devices as isolators; isolate upstream and prove dead.',
+      'Only if the solid-state contactor also has a hand-operated mechanical override fitted.',
     ],
     correctIndex: 2,
     explanation:
@@ -196,10 +196,10 @@ const inlineChecks = [
     question:
       'You have isolated a three-phase distribution board and tested L1-N, L2-N, L3-N — all read 0 V. You declare the board dead. What have you missed and why does it matter?',
     options: [
-      'Nothing — three line-to-neutral tests are the recognised three-phase prove-dead.',
-      'You are missing L-L (×3), L-E (×3) and N-E. A borrowed neutral can mask a live line on an L-N test, and a floating neutral can sit at hazardous voltage to earth without showing on any L-N reading.',
-      'You should have tested L-N four times for redundancy.',
-      'You should have tested at the origin of supply, not the board.',
+      'Nothing — three line-to-neutral tests are the recognised three-phase prove-dead set.',
+      'You are missing L-L (×3), L-E (×3) and N-E, which is where a borrowed or floating neutral hides.',
+      'You should have repeated the L-N tests a fourth time for redundancy and confidence.',
+      'You should have proved dead at the origin of supply rather than at the distribution board.',
     ],
     correctIndex: 1,
     explanation:
@@ -210,10 +210,10 @@ const inlineChecks = [
     question:
       'Your colleague has padlocked the main switch on a job you are about to add work to. They are on a fifteen-minute break. The single hasp is occupied by their lock. What do you do?',
     options: [
-      'Cut their lock off — they will understand.',
-      'Wait for them to come back, then ask them to unlock and re-lock with both your locks together.',
-      'Apply a multi-hasp (lockable bar with multiple holes) so both locks sit on the same hasp independently. You add yours, prove dead at your point of work, begin. They remove theirs when their work is done; the circuit stays isolated until the last lock is off.',
-      'Use their lock as the lock-off — one lock per circuit is the rule.',
+      'Cut their lock off and fit your own — they will understand when they return.',
+      'Wait for them to come back, then have them unlock and re-lock with both locks at once.',
+      'Apply a multi-hasp so both locks sit independently; add yours, prove dead, and begin.',
+      'Use their existing lock as your lock-off too, since one lock per circuit is the rule.',
     ],
     correctIndex: 2,
     explanation:

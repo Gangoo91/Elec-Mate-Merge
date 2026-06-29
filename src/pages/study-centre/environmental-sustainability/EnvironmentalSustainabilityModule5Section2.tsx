@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Which methodology is the standard approach for classifying habitat types during a Preliminary Ecological Appraisal (PEA)?',
     options: [
-      'CIEEM Impact Assessment Guidelines',
       'JNCC Phase 1 Habitat Survey methodology',
+      'CIEEM Impact Assessment Guidelines',
       'Natural England Bat Survey Guidelines',
       'British Standard BS 42020',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The JNCC (Joint Nature Conservation Committee) Phase 1 Habitat Survey methodology is the standard approach used during a PEA. It provides a standardised system for classifying and mapping habitat types across a site using colour-coded maps and target notes. This allows ecologists to identify areas of ecological value and determine whether further, more detailed species-specific surveys are needed.',
   },
@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'A planning application requires bat emergence surveys. The project team discovers this requirement in November. What is the earliest they can begin valid emergence surveys?',
     options: [
       'Immediately, as bat surveys can be conducted year-round',
-      'January, during the hibernation period',
       'May, at the start of the bat activity season',
+      'January, during the hibernation period',
       'March, when bats first begin to emerge',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Bat emergence and re-entry surveys can only be conducted during the bat activity season, which runs from May to September (with the optimal window being May to August). Bats hibernate during the winter months and are not active at roost sites, so surveys conducted outside the activity season would produce unreliable results. Missing the survey window in one year can delay a project by up to 12 months.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a standard component of a Preliminary Ecological Appraisal (PEA)?',
     options: [
-      'Desktop study of existing ecological records',
-      'Phase 1 habitat survey using JNCC methodology',
       'Detailed bat emergence and re-entry survey counts',
+      'Phase 1 habitat survey using JNCC methodology',
+      'Desktop study of existing ecological records',
       'Target notes identifying features of ecological interest',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A PEA consists of a desktop study and a Phase 1 habitat survey with target notes. Detailed bat emergence and re-entry surveys are species-specific surveys that may be recommended as a result of a PEA, but they are not part of the PEA itself. The PEA identifies the potential for protected species and recommends further surveys where appropriate.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
       'What are the three tests that must be satisfied for Natural England to grant a protected species licence?',
     options: [
       'Cost-effectiveness, minimal delay, and species abundance',
-      'Overriding public interest, no satisfactory alternative, and favourable conservation status maintained',
       'Planning permission, ecological survey, and mitigation plan',
+      'Overriding public interest, no satisfactory alternative, and favourable conservation status maintained',
       'Developer agreement, council approval, and public consultation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The three derogation tests are: (1) the activity must be for a purpose of overriding public interest (e.g., imperative reasons of public health or safety, or beneficial consequences of primary importance for the environment); (2) there must be no satisfactory alternative that would avoid or reduce the impact on the protected species; and (3) the action must not be detrimental to the maintenance of the species population at a favourable conservation status in their natural range.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       "In the CIEEM ecological impact assessment framework, what does 'receptor importance' refer to?",
     options: [
       'The financial value of the habitat to the landowner',
-      'The conservation significance of the ecological feature being affected',
       'The sensitivity of nearby human residents to construction noise',
       "The planning authority's priority ranking for the site",
+      'The conservation significance of the ecological feature being affected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Receptor importance refers to the conservation significance of the ecological feature (habitat, species, or ecosystem) that would be affected by the proposed development. Receptors are assessed on a geographic scale from international importance (e.g., Special Areas of Conservation) down through national, regional, county, and local importance. The significance of an impact is determined by combining the magnitude of the impact with the importance of the receptor.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'A development site contains a confirmed bat roost. Which step of the mitigation hierarchy should be considered FIRST?',
     options: [
-      'Create a new bat roost elsewhere on the site to offset the loss',
       'Redesign the scheme to avoid disturbing the roost entirely',
+      'Create a new bat roost elsewhere on the site to offset the loss',
       'Apply for a licence to destroy the roost during the winter',
       'Install bat boxes on nearby trees as compensation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Avoidance is always the first step in the mitigation hierarchy. If a bat roost is present, the first consideration must be whether the development can be redesigned to avoid disturbing the roost entirely. Only if avoidance is genuinely not possible should the developer move to minimisation, restoration, and finally offsetting. Natural England will expect to see evidence that avoidance was properly considered before granting a licence for roost disturbance or destruction.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'Demolishing a building that contains a bat roost',
       'Removing a hedgerow to widen a road',
-      'Increased light spill from a new development affecting foraging behaviour of bats on adjacent land',
       'Clearing a pond to construct building foundations',
+      'Increased light spill from a new development affecting foraging behaviour of bats on adjacent land',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "An indirect impact is one that is not a direct result of the development but occurs as a secondary consequence. Increased light spill from a new development affecting bat foraging behaviour on adjacent land is indirect because the development itself does not physically affect the bats' habitat, but its operation changes conditions in the surrounding area. The other options (demolishing a roost, removing a hedgerow, clearing a pond) are all direct impacts because they involve the physical destruction or removal of ecological features.",
   },

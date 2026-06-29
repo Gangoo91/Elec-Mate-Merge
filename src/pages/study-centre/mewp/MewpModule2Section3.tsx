@@ -23,8 +23,8 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does the 'A' stand for in the HSE ACTORS mnemonic for MEWP selection?",
-    options: ['Altitude', 'Application', 'Assessment', 'Access'],
-    correctAnswer: 1,
+    options: ['Application', 'Altitude', 'Assessment', 'Access'],
+    correctAnswer: 0,
     explanation:
       'A stands for Application — is the MEWP appropriate for the job? Consider height, outreach, duration, and frequency of the task before selecting a machine.',
   },
@@ -62,10 +62,10 @@ const quizQuestions = [
     options: [
       'Scissor lift (Group A, Type 3A)',
       'Telescopic boom lift (Group B, Type 3B)',
-      'Articulating boom lift (Group B, Type 3B)',
       'Trailer-mounted platform (Group B, Type 1B)',
+      'Articulating boom lift (Group B, Type 3B)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Articulating (knuckle) boom lifts are specifically designed for up-and-over access. Their jointed boom sections allow the platform to navigate around obstacles, parapets, and overhanging structures that a straight telescopic boom cannot reach.',
   },
@@ -74,12 +74,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a required component of a method statement for MEWP work?',
     options: [
-      'Step-by-step task description with hazards and controls',
-      'Emergency and rescue procedures',
       'The hire cost of the MEWP',
+      'Emergency and rescue procedures',
+      'Step-by-step task description with hazards and controls',
       'Competencies and training required',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A method statement must include the task steps, hazards, control measures, competency requirements, PPE, emergency procedures, and review dates. The hire cost is a commercial matter and is not part of the safe system of work documentation.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 6,
     question: 'Before a MEWP arrives on site, which of these tasks should already be completed?',
     options: [
-      'Risk assessment, method statement, ground preparation, and rescue plan',
       'Only the risk assessment — everything else can be done when the machine arrives',
       "The operator's PAL card check — nothing else is needed in advance",
+      'Risk assessment, method statement, ground preparation, and rescue plan',
       'A telephone call to the hire company',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Before the machine arrives, you must confirm the machine category matches the task, verify operator PAL cards, complete the risk assessment and method statement, prepare the ground, arrange exclusion zone materials, confirm the rescue plan, check for overhead services, and arrange a banksman if required.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'At what sustained wind speed should MEWP operations generally cease?',
     options: [
       '8.0 m/s (Beaufort 4)',
-      '10.0 m/s (Beaufort 5)',
       '12.5 m/s (Beaufort 6)',
+      '10.0 m/s (Beaufort 5)',
       '15.0 m/s (Beaufort 7)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "IPAF and most manufacturers set 12.5 m/s (28 mph, approximately Beaufort 6) as the maximum wind speed for MEWP operations. Above this, the machine must be lowered and stowed. Some machines have lower limits — always check the operator's manual.",
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
     question: 'When might a MEWP NOT be the most appropriate choice for working at height?',
     options: [
       'When the task involves sustained overhead work at 8 metres',
-      'When the task is very short duration at low height and a podium step meets the risk assessment',
       'When you need to reach over an obstacle at 12 metres',
       'When installing ceiling services across a large open area',
+      'When the task is very short duration at low height and a podium step meets the risk assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'For very short duration tasks at low height, simpler equipment such as podium steps or stepladders may be more proportionate if the risk assessment supports this. The hierarchy of control still applies — use the simplest adequate equipment. MEWPs are not always the most proportionate solution.',
   },
@@ -133,12 +133,12 @@ const quickCheckQuestions = [
     question:
       'A MEWP data plate shows SWL 230 kg. Two operators (80 kg each) are on the platform with 65 kg of materials. Is the platform overloaded?',
     options: [
-      'No — 225 kg is within the 230 kg SWL',
       'Yes — 225 kg is too close to the limit and should be reduced',
       'Cannot determine without knowing the machine type',
+      'No — 225 kg is within the 230 kg SWL',
       'No — operator weight does not count towards SWL',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Total platform load = 80 + 80 + 65 = 225 kg. This is within the 230 kg SWL, but only just. The platform is NOT overloaded, but with only 5 kg of spare capacity, no additional items should be brought onto the platform. Always include operator body weight in the calculation.',
   },
@@ -147,12 +147,12 @@ const quickCheckQuestions = [
     question:
       'A method statement for MEWP work does not include emergency rescue procedures. Is the document adequate?',
     options: [
-      'Yes — rescue procedures are only needed for rope access',
       'No — every method statement for MEWP work must include emergency and rescue procedures',
+      'Yes — rescue procedures are only needed for rope access',
       'Yes — rescue is covered by the general site emergency plan',
       'It depends on the height of the work',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Emergency and rescue procedures are a mandatory component of any method statement for MEWP work. If an operator becomes stranded, incapacitated, or the machine fails, a documented rescue plan and trained ground rescue person must be in place BEFORE work begins.',
   },
@@ -162,11 +162,11 @@ const quickCheckQuestions = [
       'An electrician needs to change a single light fitting at 2.5 metres for a 10-minute task in a dry, level indoor environment. What is the most proportionate access equipment?',
     options: [
       'A scissor lift — it is the safest option',
-      'A podium step or step platform, if supported by the risk assessment',
       'A stepladder is never acceptable for any work at height',
       'No access equipment is needed below 3 metres',
+      'A podium step or step platform, if supported by the risk assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'For a very short duration, low-height task in a controlled indoor environment, a podium step or step platform may be the most proportionate solution if the risk assessment supports it. The hierarchy of control means using the simplest adequate equipment — not always the most complex.',
   },

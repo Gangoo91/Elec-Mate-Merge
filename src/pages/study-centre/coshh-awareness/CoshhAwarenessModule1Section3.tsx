@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Why is inhalation the most significant route of exposure to hazardous substances in the workplace?',
     options: [
-      'Because workers breathe rapidly on construction sites',
-      'Because the lungs have a massive surface area (70 m\u00B2) with thin membranes, allowing rapid absorption of inhaled particles and vapours directly into the bloodstream',
-      'Because PPE is rarely provided for respiratory hazards',
-      'Because most hazardous substances are gases',
+      'The lungs have a vast surface area (70 m\u00B2) and thin membranes for rapid absorption',
+      'Workers breathe far more rapidly on construction sites than in other workplaces',
+      'Respiratory PPE is rarely provided, leaving the airways largely unprotected',
+      'Most hazardous substances encountered in the workplace exist as gases or vapours',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Inhalation accounts for approximately 70% of occupational exposures to hazardous substances. The lungs provide a surface area of roughly 70 m\u00B2 (about the size of a tennis court) lined with extremely thin alveolar membranes. This combination of vast area and thin barriers allows inhaled substances to pass rapidly into the bloodstream. Factors such as particle size, solubility, concentration, duration, and breathing rate all influence the degree of uptake.',
   },
@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     question:
       'What is the key danger of percutaneous (injection) exposure to hazardous substances?',
     options: [
-      'It is the most common route of workplace exposure',
-      'It only affects the skin surface',
-      "It bypasses the body's natural protective barriers (skin and mucous membranes), delivering substances directly into deeper tissues or the bloodstream",
-      'It is only relevant in medical settings',
+      'It is by far the most common route of exposure in the workplace',
+      'It only affects the skin surface and never reaches deeper tissues',
+      'It bypasses the skin and mucous barriers, reaching deeper tissues directly',
+      'It is only relevant in medical and healthcare settings, not on site',
     ],
     correctIndex: 2,
     explanation:
@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     id: 'coshh-wel-meaning',
     question: 'What does a Workplace Exposure Limit (WEL) represent?',
     options: [
-      'The concentration of a substance that is completely safe for all workers',
-      'The maximum airborne concentration of a hazardous substance, averaged over a reference period (8-hour TWA or 15-minute STEL), to which workers may be exposed by inhalation',
-      'The amount of a substance that can be stored on site',
-      'The threshold at which a substance becomes classified as hazardous',
+      'A concentration of the substance that is completely safe for every worker',
+      'The maximum airborne concentration, averaged over a reference period, for inhalation',
+      'The maximum quantity of a substance that may be stored on a single site',
+      'The threshold concentration at which a substance becomes classified as hazardous',
     ],
     correctIndex: 1,
     explanation:
@@ -88,8 +88,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Approximately what percentage of occupational exposures to hazardous substances occur through inhalation?',
-    options: ['30%', '50%', '70%', '90%'],
-    correctAnswer: 2,
+    options: ['70%', '50%', '30%', '90%'],
+    correctAnswer: 0,
     explanation:
       'Inhalation accounts for approximately 70% of occupational exposures. The lungs provide a massive surface area (~70 m\u00B2) with very thin alveolar membranes, allowing rapid absorption of airborne substances into the bloodstream. This makes respiratory hazards the primary concern in most workplace COSHH assessments.',
   },
@@ -99,11 +99,11 @@ const quizQuestions = [
       'Which particle size range is most dangerous for lung deposition because particles reach the gas exchange region (alveoli)?',
     options: [
       'Greater than 100 \u00B5m',
-      '10\u201350 \u00B5m',
       '1\u20135 \u00B5m (respirable fraction)',
+      '10\u201350 \u00B5m',
       'Less than 0.01 \u00B5m (nanoparticles) \u2014 they are always exhaled',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Particles in the 1\u20135 \u00B5m range (the respirable fraction) are the most dangerous because they are small enough to bypass the nose, throat, and upper airways but large enough to deposit in the alveoli \u2014 the gas exchange region of the lungs. Here, substances can cross the thin alveolar membrane and enter the bloodstream directly. Larger particles are trapped in the nose and upper airways; very small nanoparticles may be exhaled but some can also deposit deep in the lungs.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "What does the 'Sk' (skin notation) next to a substance's WEL in EH40 indicate?",
     options: [
-      'The substance causes skin irritation only',
-      'The substance can be absorbed through intact skin in toxicologically significant amounts',
-      'The substance requires skin-coloured PPE',
-      'The substance has been tested on skin samples in a laboratory',
+      'The substance causes only surface skin irritation and nothing more serious',
+      'The substance requires skin-coloured PPE to be worn during handling',
+      'The substance is absorbed through intact skin in significant amounts',
+      'The substance has been tested on skin samples in a laboratory setting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 'Sk' notation indicates that the substance can be absorbed through intact, undamaged skin in amounts that are toxicologically significant \u2014 meaning skin absorption alone can contribute meaningfully to the total body dose. For these substances, controlling airborne exposure is not enough; skin contact must also be prevented through impervious gloves, protective clothing, and rigorous hygiene practices.",
   },
@@ -133,8 +133,8 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the reference period for a standard Workplace Exposure Limit (WEL) time-weighted average?',
-    options: ['1 hour', '4 hours', '8 hours', '24 hours'],
-    correctAnswer: 2,
+    options: ['8 hours', '4 hours', '1 hour', '24 hours'],
+    correctAnswer: 0,
     explanation:
       'The standard WEL is expressed as an 8-hour time-weighted average (TWA). This means the average airborne concentration of a substance over an 8-hour working day must not exceed the published limit. Some substances also have a 15-minute short-term exposure limit (STEL) to protect against peak exposures that might cause acute effects even if the 8-hour average is within limits.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'Which of the following is an example of percutaneous (injection) exposure in a construction setting?',
     options: [
-      'Breathing in cement dust',
-      'Splashing solvent onto the forearm',
-      'A high-pressure water jet driving contaminated material through a cut in the skin',
-      'Eating lunch with dusty hands',
+      'Breathing in cement dust raised while mixing in an enclosed room',
+      'A high-pressure water jet driving contaminated material through the skin',
+      'Splashing a small amount of solvent onto the bare skin of the forearm',
+      'Eating lunch on site with dusty, unwashed hands during a break',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A high-pressure water jet (or grease gun, airless paint sprayer, etc.) can drive contaminants through the skin and into deeper tissues \u2014 this is percutaneous or injection exposure. It bypasses the skin barrier entirely. Other construction examples include stepping on contaminated sharps and abrasions contaminated with chemicals. This route is less common but can be very serious because the substance is delivered directly to tissues without any protective barrier.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the difference between an 8-hour TWA and a 15-minute STEL?',
     options: [
-      'There is no difference \u2014 they are the same measurement',
-      'The 8-hour TWA limits average exposure over a full shift; the 15-minute STEL limits short peak exposures to prevent acute effects',
-      'The STEL is always lower than the TWA',
-      'The TWA is measured in mg/m\u00B3 and the STEL is measured in ppm only',
+      'There is no real difference; they are simply two names for the same measurement',
+      'The STEL value is always set lower than the TWA value for every substance',
+      'The TWA limits average shift exposure; the STEL limits short peak exposures',
+      'The TWA is measured only in mg/m\u00B3 while the STEL is measured only in ppm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 8-hour TWA limits average exposure across a full working day, protecting against chronic (long-term) health effects. The 15-minute STEL limits short-duration peak concentrations, protecting against acute effects such as irritation, narcosis, or sensitisation that could occur even if the 8-hour average is acceptable. A substance may have a TWA only, a STEL only, or both. The STEL is not always higher than the TWA \u2014 though it commonly is, because brief peaks are often tolerated at higher concentrations than sustained exposure.',
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       "A worker's urine test shows elevated levels of mandelic acid. What does this biological monitoring result indicate?",
     options: [
-      'The worker has a kidney condition unrelated to work',
-      'The worker has been exposed to styrene \u2014 mandelic acid is a metabolite of styrene excreted in urine',
-      'The worker has ingested contaminated food',
-      'The worker has been exposed to lead',
+      'The worker has a kidney condition that is entirely unrelated to their work',
+      'The worker has ingested contaminated food from poor hygiene on site',
+      'The worker has been exposed to lead from old paint or solder fume',
+      'The worker has been exposed to styrene, of which mandelic acid is a metabolite',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mandelic acid in urine is a biological monitoring marker for styrene exposure. When styrene enters the body (by any route), it is metabolised by the liver, and mandelic acid is one of the metabolic by-products excreted in urine. Elevated levels indicate that the worker has absorbed styrene \u2014 the test captures total exposure from all routes (inhalation, skin absorption, ingestion) combined. Biological monitoring is valuable because it reflects actual body uptake rather than just airborne concentration.',
   },

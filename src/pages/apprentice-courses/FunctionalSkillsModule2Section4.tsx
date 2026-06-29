@@ -42,10 +42,10 @@ const FunctionalSkillsModule2Section4 = () => {
       question:
         "In the sentence 'The fault has affected the entire circuit', which word is correct?",
       options: [
-        "Safety advisor, CDM coordinator, or compliance roles",
-        "Check for hidden services and structural elements",
+        "'effected' is correct — it is the past tense of the verb 'to bring about'",
+        "Either 'affected' or 'effected' is acceptable here",
         "'affected' is correct — it is the verb meaning 'to have an impact on'",
-        "It operates continuously and remains lit during an emergency",
+        "'affect' is correct because it always follows the word 'has'",
       ],
       correctAnswer: 2,
       explanation:
@@ -55,25 +55,25 @@ const FunctionalSkillsModule2Section4 = () => {
       id: 3,
       question: 'Which EICR observation is written with correct spelling, grammar and punctuation?',
       options: [
-        'It may not be present when the technician arrives, making diagnosis difficult',
-        'Increased attenuation from radiation or hydrogen exposure over time',
-        'Because it lacks proper documentation and standards referencing',
         'Missing accessory faceplate on socket outlet in kitchen — replacement required (C3)',
+        'Acessory faceplate missing on socket, kitchen, needs replacing c3',
+        'missing accesory face plate socket outlet kitchen replacment required',
+        'Faceplate on the socket it was missing in the kitchen and so it needs replacing',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
-        "The second option is correctly written: 'accessory' is spelt correctly, the sentence is complete and clear, the location is specified, the action required is stated, and the observation code is included. Professional observations must be clear, specific and grammatically correct.",
+        "The first option is correctly written: 'accessory' is spelt correctly, the sentence is complete and clear, the location is specified, the action required is stated, and the observation code is shown in capitals as (C3). Professional observations must be clear, specific and grammatically correct.",
     },
     {
       id: 4,
       question: "Which sentence uses the correct form of 'their/there/they're'?",
       options: [
-        "They're installing the new lighting circuit on Tuesday",
         "The cables are over they're by the distribution board",
         'Their going to replace the consumer unit tomorrow',
         'There inspection is booked for next week',
+        "They're installing the new lighting circuit on Tuesday",
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         "'They're' is the contraction of 'they are' — 'They are installing the new lighting circuit on Tuesday.' The other options should be: 'They're going to replace...' (not 'Their'), 'The cables are over there...' (not 'they're'), and 'Their inspection is booked...' (not 'There').",
     },
@@ -120,12 +120,12 @@ const FunctionalSkillsModule2Section4 = () => {
       id: 8,
       question: 'What is the most effective proofreading technique for catching wrong homophones?',
       options: [
-        'Reading the document aloud slowly',
         'Asking someone else to reformat it',
         'Using spell check software only',
+        'Reading the document aloud slowly',
         'Reading the document backwards word by word',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Reading aloud is the most effective technique for catching wrong homophones because your ear will detect when a word sounds wrong in context, even though the spelling is correct. Spell checkers cannot catch homophones because both words are validly spelt — just used in the wrong place.',
     },

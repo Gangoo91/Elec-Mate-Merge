@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "The ideal gas law equation is PV = mRT. What does 'R' represent?",
     options: [
-      'As close as possible to the inductive load',
-      'Safety glasses and dust mask',
+      'The universal gas constant for all gases',
+      'The relative humidity of the air',
       'Specific gas constant for the gas',
-      'Rework, delays, or damaged installations',
+      'The ratio of specific heats of the gas',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
       'Why does moist air have a lower density than dry air at the same temperature and pressure?',
     options: [
       'Water vapour molecules displace heavier nitrogen and oxygen molecules',
-      '50-65 percent of the socket-circuit nameplate aggregate, depending on equipment mix.',
-      'Check status indicator shows device is functional',
-      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
+      'Water vapour cools the air, which reduces its overall mass',
+      'Moisture increases the air pressure, expanding the air',
+      'Water vapour molecules are heavier and sink out of the mixture',
     ],
     correctAnswer: 0,
     explanation:

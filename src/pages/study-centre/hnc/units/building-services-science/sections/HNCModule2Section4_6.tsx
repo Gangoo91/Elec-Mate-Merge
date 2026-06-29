@@ -13,16 +13,16 @@ const quickCheckQuestions = [
   {
     id: 'qc1',
     question: 'What does the Sabine formula calculate?',
-    options: ['Sound pressure level', 'Reverberation time', 'Noise rating', 'Transmission loss'],
-    correctIndex: 1,
+    options: ['Reverberation time', 'Sound pressure level', 'Noise rating', 'Transmission loss'],
+    correctIndex: 0,
     explanation:
       'The Sabine formula T₆₀ = 0.161V/A calculates reverberation time - how long sound takes to decay by 60 dB.',
   },
   {
     id: 'qc2',
     question: 'What is the typical NR limit for general offices under CIBSE guidance?',
-    options: ['NR 25', 'NR 35-40', 'NR 50', 'NR 60'],
-    correctIndex: 1,
+    options: ['NR 25', 'NR 50', 'NR 60', 'NR 35-40'],
+    correctIndex: 3,
     explanation:
       'CIBSE Guide A recommends NR 35-40 for general offices. Lower values apply to meeting rooms (NR 30-35).',
   },
@@ -42,8 +42,8 @@ const quickCheckQuestions = [
   {
     id: 'qc4',
     question: 'What absorption coefficient value indicates a perfect absorber?',
-    options: ['α = 0', 'α = 0.5', 'α = 1.0', 'α = 2.0'],
-    correctIndex: 2,
+    options: ['α = 1.0', 'α = 0.5', 'α = 0', 'α = 2.0'],
+    correctIndex: 0,
     explanation:
       'α = 1.0 means 100% of incident sound energy is absorbed. α = 0 would be a perfect reflector.',
   },
@@ -54,7 +54,7 @@ const quizQuestions = [
     id: 'q1',
     question:
       'The Sabine formula for reverberation time is T₆₀ = 0.161V/A. If a room has volume 500 m³ and total absorption 125 m² sabins, what is T₆₀?',
-    options: ['0.32 seconds', '0.64 seconds', '1.29 seconds', '2.58 seconds'],
+    options: ['0.64 seconds', '0.32 seconds', '1.29 seconds', '2.58 seconds'],
     correctAnswer: '0.64 seconds',
     explanation: 'T₆₀ = 0.161 × 500 / 125 = 80.5 / 125 = 0.644 seconds ≈ 0.64 s.',
   },
@@ -72,8 +72,8 @@ const quizQuestions = [
     question: 'What does the spectrum adaptation term Ctr in Part E account for?',
     options: [
       'High frequency sounds',
-      'Low frequency sounds (traffic, music)',
       'Impact sounds only',
+      'Low frequency sounds (traffic, music)',
       'Flanking transmission',
     ],
     correctAnswer: 'Low frequency sounds (traffic, music)',
@@ -86,9 +86,9 @@ const quizQuestions = [
       'The minimum airborne sound insulation requirement between new-build dwellings under Part E is:',
     options: [
       'DnT,w + Ctr ≥ 40 dB',
-      'DnT,w + Ctr ≥ 45 dB',
       'DnT,w + Ctr ≥ 50 dB',
       'DnT,w + Ctr ≥ 55 dB',
+      'DnT,w + Ctr ≥ 45 dB',
     ],
     correctAnswer: 'DnT,w + Ctr ≥ 45 dB',
     explanation:
@@ -97,7 +97,7 @@ const quizQuestions = [
   {
     id: 'q5',
     question: "For impact sound insulation between dwellings, Part E requires maximum L'nT,w of:",
-    options: ["L'nT,w ≤ 45 dB", "L'nT,w ≤ 52 dB", "L'nT,w ≤ 62 dB", "L'nT,w ≤ 70 dB"],
+    options: ["L'nT,w ≤ 62 dB", "L'nT,w ≤ 45 dB", "L'nT,w ≤ 52 dB", "L'nT,w ≤ 70 dB"],
     correctAnswer: "L'nT,w ≤ 62 dB",
     explanation:
       "Maximum impact sound level L'nT,w ≤ 62 dB for floors between dwellings. Lower values mean better insulation.",
@@ -123,8 +123,8 @@ const quizQuestions = [
     id: 'q8',
     question: 'Flanking transmission refers to sound that:',
     options: [
-      'Travels directly through the separating element',
       'Bypasses the separating element via connected structure',
+      'Travels directly through the separating element',
       'Only affects high frequencies',
       'Is created by HVAC systems',
     ],
@@ -135,7 +135,7 @@ const quizQuestions = [
   {
     id: 'q9',
     question: 'CIBSE Guide A recommends what NR level for bedrooms in dwellings at night?',
-    options: ['NR 15-20', 'NR 25-30', 'NR 35-40', 'NR 45-50'],
+    options: ['NR 15-20', 'NR 35-40', 'NR 25-30', 'NR 45-50'],
     correctAnswer: 'NR 25-30',
     explanation:
       'Bedrooms at night: NR 25-30 to ensure sleep is not disturbed. Living rooms can accept NR 30-35.',
@@ -145,20 +145,20 @@ const quizQuestions = [
     question:
       'What is the primary advantage of using noise rating (NR) curves over dB(A) for HVAC noise assessment?',
     options: [
-      'Simpler measurement',
-      'Accounts for tonal characteristics',
+      'Simpler measurement than a sound level meter',
       'Cheaper equipment needed',
-      'Shows frequency spectrum balance',
+      'Gives a single overall A-weighted figure',
+      'Shows frequency spectrum balance across octave bands',
     ],
-    correctAnswer: 'Shows frequency spectrum balance',
+    correctAnswer: 'Shows frequency spectrum balance across octave bands',
     explanation:
-      'NR curves assess the full frequency spectrum. A high-frequency hiss or low-frequency rumble can be identified even if dB(A) seems acceptable.',
+      'NR curves assess the full octave-band frequency spectrum, so a high-frequency hiss or low-frequency rumble can be identified even when the overall dB(A) figure seems acceptable.',
   },
   {
     id: 'q11',
     question:
       'For a concert hall, the recommended reverberation time at mid-frequencies is typically:',
-    options: ['0.4 - 0.6 seconds', '0.8 - 1.0 seconds', '1.8 - 2.2 seconds', '3.0 - 3.5 seconds'],
+    options: ['0.4 - 0.6 seconds', '1.8 - 2.2 seconds', '0.8 - 1.0 seconds', '3.0 - 3.5 seconds'],
     correctAnswer: '1.8 - 2.2 seconds',
     explanation:
       'Concert halls need longer reverberation (1.8-2.2 s) for musical richness. Opera houses prefer slightly less (1.4-1.8 s) for vocal clarity.',

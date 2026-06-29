@@ -30,22 +30,22 @@ const quizQuestions = [
     question:
       "Can you measure from any convenient point, even if it's not the specified reference point?",
     options: [
-      'Trip the circuit when voltage falls below set level',
-      'The physical key transfer sequence between locks',
-      'False - always use correct reference point',
-      '11.04 kW three-phase or 3.68 kW single-phase',
+      'Yes - any point gives the same result over short runs',
+      'Yes - provided you use the same tape measure each time',
+      'No - always measure from the correct reference point',
+      'Only if the supervisor has not specified a datum',
     ],
     correctAnswer: 2,
     explanation:
-      'False - you must always measure from the correct specified reference point to maintain accuracy and consistency.',
+      'You must always measure from the correct specified reference point to maintain accuracy and consistency.',
   },
   {
     id: 3,
     question: 'Which tools can help maintain accurate levels?',
     options: [
-      'Separated Extra Low Voltage',
-      'Electrical boxes and conduits',
-      'Phase conductor cross-sectional area',
+      'Tape measure and chalk line',
+      'Centre punch and scriber',
+      'Cable detector and probe',
       'Spirit level and laser level',
     ],
     correctAnswer: 3,
@@ -57,9 +57,9 @@ const quizQuestions = [
     question: 'Why should you recheck measurements on long runs?',
     options: [
       'To ensure accuracy and avoid cumulative errors',
-      'Powered air-purifying respirator with loose-fitting hood',
-      'A clear line of sight with no obstructions',
-      'The fibre core being off-centre from the cladding',
+      'To reduce the number of fixings required',
+      'To confirm a clear line of sight to the datum',
+      'To allow for thermal expansion of the containment',
     ],
     correctAnswer: 0,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is one consequence of exceeding project tolerances?',
     options: [
-      'Mechanical stress and vibration',
-      'Elimination of the hazard',
-      'Very low resistance between windings',
+      'Increased current-carrying capacity of the cables',
+      'Reduced thermal expansion of the containment',
+      'Lower resistance at the conductor terminations',
       'Misalignment requiring rework',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'In high-end projects, what might be different about tolerances?',
     options: [
       'They may be tighter than standard',
-      'Current‑carrying capacity',
-      'As close as possible to the inductive load',
-      'Thermal storage in building fabric',
+      'They no longer apply once a level is used',
+      'They are set entirely by BS 7671 minimums',
+      'They are relaxed to speed up installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quickCheckQuestions = [
     id: 1,
     question: "What is meant by 'tolerance' in installation work?",
     options: [
-      'Allow capacitive discharge before touching conductors',
-      'Allowable deviation from specified dimension',
-      'The time of tourniquet application',
-      'They can damage cable insulation',
+      'The exact dimension that must never be varied',
+      'Allowable deviation from a specified dimension',
+      'The total length of a containment run',
+      'The minimum bend radius of a cable',
     ],
     correctIndex: 1,
     explanation:
@@ -151,10 +151,10 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is it important to use consistent reference points when measuring?',
     options: [
-      'When hazardous manual handling cannot be avoided',
-      'Directing light downward and using appropriate timing',
-      'Finding the utilisation factor from tables',
-      'Prevents cumulative errors and maintains accuracy',
+      'It speeds up the drilling of fixing holes',
+      'It removes the need for a spirit level',
+      'It reduces the amount of cable required',
+      'It prevents cumulative errors and maintains accuracy',
     ],
     correctIndex: 3,
     explanation:

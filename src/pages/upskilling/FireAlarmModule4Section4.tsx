@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 / BS 8519 require fire alarm cable supports to be at intervals appropriate to the cable type and orientation. What is a typical maximum interval for a vertical run of FP200-type cable?',
     options: [
-      'Every 5 metres.',
-      'Approximately every 1 metre on vertical runs (and at closer intervals where the cable changes direction or passes through fire-resisting construction). The interval is controlled by two requirements: in normal use, supports must hold the cable in place against gravity, vibration and disturbance; in fire conditions, supports must hold the cable in place after the polymeric components have softened and the cable has lost mechanical integrity. Plastic clips melt early; the cable must be on FIRE-RATED supports at intervals close enough that, when one fixing fails, adjacent fixings hold the cable in path until the survival duration ends.',
-      'Every 0.1 metres.',
-      'No specific interval — installer discretion.',
+      'Around every 1 metre on vertical runs, closer at bends and fire-resisting penetrations.',
+      'Every 5 metres, matching the spacing used for general-purpose LV installation cabling.',
+      'Every 0.1 metres, with a fire-rated fixing at roughly every 100 mm along the run.',
+      'No specific interval is set; support spacing is left entirely to installer discretion.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Support interval is one of the engineering parameters that determines whether a PH30 or PH120 cable system delivers its specified fire-survival duration. Supports too far apart mean a single fixing failure can drop the cable; supports at appropriate intervals provide redundancy. BS 8519 and the cable manufacturer's technical data give specific values for each cable type.",
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'A contractor proposes to use ordinary plastic cable clips for the fire alarm wiring because "the cable itself is fire-resistant". Why is this wrong?',
     options: [
-      'Plastic clips are too small.',
-      "Because the cable is one part of a SYSTEM. The system's fire-survival duration is determined by the WEAKEST element. A PH30 cable on plastic clips that melt at, say, 10 minutes of fire is a 10-minute cable system, not a 30-minute one — once the clips fail, the cable falls, the route is broken, the circuit is gone. BS 5839-1:2025 / BS 8519 require fire-rated supports — metal clips, cleats or saddles rated to match the cable's PH category. Plastic clips are not acceptable for fire-rated systems.",
-      'Plastic clips cause noise.',
-      'Plastic clips are illegal.',
+      'Because plastic clips are physically too small to grip fire-resistant cable securely.',
+      'Because plastic clips transmit structure-borne noise that triggers detector vibration faults.',
+      'Because survival is set by the weakest element, and plastic clips melt early and drop the cable.',
+      'Because plastic clips are explicitly prohibited by the Building Regulations in every case.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The cable + supports + fixings + containment is the fire-resistant cable SYSTEM. All parts have to match the PH category. Plastic clips on a fire-resistant cable are a textbook system-mismatch failure — the cable does what it should, the supports do not, and the system delivers a fraction of its specified duration.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 clause 26 cross-references BS 7671 528 for SEGREGATION of fire alarm cables from non-fire-alarm wiring. What is the principle and what does it require in practice?',
     options: [
-      'No segregation — all cables can share trunking.',
-      'Fire alarm cables are SEGREGATED from non-fire-alarm wiring so that a fault on the non-fire-alarm wiring cannot compromise the fire alarm circuit. In practice this means: separate trunking compartments where shared trunking is used; separate cable trays with adequate spacing; OR fire alarm cables run on their own route with sufficient distance from general LV cabling. BS 7671 528.1 is the wiring-regulations envelope; BS 5839-1 clause 26 is the fire-alarm-specific tightening. Where shared containment is unavoidable, fire-rated barriers separate the categories within the containment.',
-      'Segregation is by colour only.',
-      'Only on detection circuits.',
+      'No segregation is needed; fire alarm and general wiring may freely share the same trunking.',
+      'Segregation applies to detection circuits only, not to sounder, interface or mains circuits.',
+      'Segregation is achieved by cable colour alone, with no requirement for any physical separation.',
+      'Fire alarm cables are kept separate by route, trunking compartment, tray, or fire-rated barrier.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Segregation is one of the structural protections of fire alarm wiring — it prevents an unrelated fault elsewhere in the building from corrupting fire alarm signals or damaging fire alarm cabling. The combination of BS 7671 528 and BS 5839-1 26 covers both the wiring-regulations and fire-alarm-specific requirements.',
   },
@@ -65,12 +65,12 @@ const inlineChecks = [
     question:
       'On Class A vs Class B fire alarm circuits, which statement correctly captures the BS EN 54-13 / BS 5839-1 distinction in practical operation?',
     options: [
-      'They are identical.',
-      'Class A is a fully-monitored loop topology where a single open or short fault on the wiring does NOT prevent the rest of the loop from operating. The CIE communicates with each device from BOTH directions around the loop, so a fault simply reduces the loop to two unidirectional spurs both still operating. Class B is a radial / spur topology where a single open fault DOES isolate everything beyond the fault from the CIE — those devices stop reporting and stop being supervised. Class A is the higher-resilience choice; most addressable systems are designed Class A by default.',
-      'Class A allows fewer devices.',
-      'Class B is more expensive.',
+      'Class A is a loop reached from both directions, so a fault leaves it working as two spurs.',
+      'Class A and Class B are functionally identical topologies given two different trade names.',
+      'Class A is restricted to materially fewer devices per circuit than a Class B radial circuit.',
+      'Class B is the higher-resilience, more expensive and more fault-tolerant of the two options.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Class A vs B distinction matters at design time and at fault-finding time. A Class A circuit gives the system fault tolerance — a single wiring fault is reported but does not lose protection. A Class B circuit reports the fault but loses the protection of devices beyond it. Most BS 5839-1 designs use Class A for the loop / sounder circuits; understanding which circuit type you are working on guides fault-finding.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'A fire alarm cable system delivers its specified PH category only if all the following are matched to that category EXCEPT...?',
     options: [
-      'The cable.',
-      "Cable colour. Colour is governed by BS 5839-1:2025 clause 16 (single common colour, red preferred) for IDENTIFICATION purposes — so that fire alarm cables are recognisable. The PH category is a property of the cable's construction, supports, fixings, containment and terminations — not of its outer colour. Colour discipline is important for identification; PH category is delivered by all the structural elements of the system except colour.",
-      'Cable supports.',
-      'Cable fixings.',
+      'The cable construction.',
+      'The cable outer colour.',
+      'The cable supports.',
+      'The cable fixings.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Why does BS 5839-1:2025 / BS 8519 require fire-RATED clips, cleats and saddles for fire alarm cable supports?',
     options: [
-      'Aesthetics.',
-      "Because the cable's fire survival is only delivered if the cable stays in path during the fire. Polymeric supports (plastic clips, ordinary plastic ties) lose mechanical strength early in a fire — typically well before the cable's PH duration. Once supports fail, the cable falls, and the cable's fire-survival capability is wasted because the path no longer exists. Fire-rated supports — metal clips, metal cleats, metal saddles, clips with steel inserts — survive long enough that adjacent supports continue to hold the cable through the cable's full PH duration.",
-      'Earthing.',
-      'Cost.',
+      'To give the containment a neater, more uniform appearance on the finished site.',
+      'To reduce the material cost of the cable-support system across the installation.',
+      'To provide a continuous metallic earth path running along the whole cable route.',
+      'Because polymeric supports fail early in a fire and drop the cable, defeating its PH rating.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Support failure is the dominant non-cable failure mode of fire-resistant cable systems. The fire kills the supports before it kills the cable; without fire-rated supports the cable's capability is unrealised. Specify and install fire-rated supports as a matched set with the cable.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 26 (Cabling) and BS 7671 528.1 (Segregation) together govern the relationship between fire alarm cables and other wiring. What is the principle?',
     options: [
-      'No relationship — they are unrelated.',
-      'Fire alarm cables are SEGREGATED from non-fire-alarm wiring such that a fault on the non-fire-alarm wiring cannot compromise the fire alarm circuit. Methods: separate routes with adequate distance; separate trunking or trunking compartments; separate cable trays; OR fire-rated barriers within shared containment. BS 7671 528.1 is the general wiring-regulations rule for circuits with different protective measures or different operating voltages; BS 5839-1 clause 26 is the fire-alarm-specific extension that recognises fire alarm circuits as life-safety circuits requiring particular protection.',
-      'Fire alarm cables can share with anything.',
-      'Only sounder circuits need segregation.',
+      'There is no relationship; the two standards address entirely unrelated categories of wiring.',
+      'Fire alarm cables may freely share routes and containment with any other building circuit.',
+      'Fire alarm cables are segregated from other wiring by route, compartment, tray or fire barrier.',
+      'Only sounder circuits require segregation; detection and interface circuits are exempt.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Segregation prevents the most plausible failure mode where unrelated work or unrelated faults produce damage to fire alarm wiring. Both BS 7671 and BS 5839-1 contribute to the rule; the practical implementation is segregation by route, by containment compartment, or by barrier.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Class A and Class B are circuit topologies for addressable fire alarm loops. Which statement is correct?',
     options: [
-      'Class A and Class B are the same.',
-      'Class A is a closed-loop topology with bidirectional CIE communication — a single wiring fault (open or short) is REPORTED but does not lose protection beyond the fault. Class B is a radial / spur topology with unidirectional communication — a single wiring fault is reported and ALSO LOSES the devices beyond it (they no longer report and are no longer supervised). Class A is more resilient; Class B is simpler. BS 5839-1:2025 and BS EN 54-13 cover the design of each.',
-      'Class B is preferred.',
-      'Class A only allows 32 devices.',
+      'Class A is a bidirectional closed loop, so a single fault is reported without losing protection.',
+      'Class A and Class B are the same physical topology operating under two different names.',
+      'Class B is the preferred, more resilient and fault-tolerant topology of the two options.',
+      'Class A is limited to a maximum of 32 addressable devices on any single circuit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fault tolerance distinction is the engineering reason for Class A. Most BS 5839-1 systems use Class A for the loop topology so that a single wiring fault does not compromise protection.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'BS 5839-1:2025 / BS 8519 advise that joint boxes in fire alarm wiring should be...?',
     options: [
-      'Used wherever convenient.',
-      'AVOIDED where reasonably practicable. Where unavoidable, joint boxes are: fire-rated to match the cable category (metal construction, fire-resistant gaskets / glands); ACCESSIBLE for inspection and maintenance (not buried in walls, floors or sealed voids); IDENTIFIED with the fire-alarm marking; LOGGED in the as-installed records so future works are aware of their location. Joints are a reliability risk and a fire-survival risk; the engineering preference is to terminate at devices, not to introduce intermediate joints.',
-      'Plastic boxes are acceptable.',
-      'Joints are forbidden.',
+      'Used freely wherever they happen to be convenient to the installer on site.',
+      'Forbidden entirely, with no joint permitted anywhere along the fire alarm wiring.',
+      'Made in ordinary plastic boxes, which are perfectly acceptable for fire alarm joints.',
+      'Avoided where practicable; where unavoidable, fire-rated, accessible, identified and logged.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Joints are reliability weak points and fire-survival weak points. The engineering hierarchy: avoid joints; if unavoidable, fire-rate them; document them. BS 8519 gives the practical guidance.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'Why must cable supports for fire-rated systems be at CLOSER intervals than would be required for general-purpose cabling?',
     options: [
-      'To make the cable look neat.',
-      "Because in fire conditions, individual fixings will fail at different times. Closer intervals give the system redundancy — when one fixing fails, the adjacent fixings still hold the cable in path. Spacing wide enough that a single failure produces a sag of unsupported cable means the cable's fire-survival capability is wasted because the cable has fallen out of its protected route. The interval is sized to ensure the cable remains supported throughout its PH duration even with progressive fixing failure.",
-      'Aesthetics.',
-      'Cost.',
+      'To give the installed cable run a neater, more uniform finished appearance.',
+      'Because fixings fail at different times in a fire, so adjacent ones hold the cable in path.',
+      'To improve the visual symmetry of the containment as it runs along the wall.',
+      'To reduce the unit cost of the support and fixing system per metre of cable run.',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'Fire alarm cables passing through fire-resisting construction (compartment walls, floor slabs, ceilings rated for fire-resistance) require what treatment at the penetration?',
     options: [
-      'No special treatment.',
-      "The penetration must be FIRE-STOPPED to reinstate the fire-resisting integrity of the construction it passes through. The fire-stop sealing is rated to match the construction's fire-resistance rating (e.g. 60-minute wall = 60-minute fire-stop seal). The fire-stop must accommodate the cable type — some sealants require specific cable categories — and must be installed per the manufacturer's tested-system instructions. Without fire-stopping, the penetration becomes a path for fire and smoke to spread between compartments, defeating the building's passive fire protection.",
-      'Cable is just pulled through.',
-      'Tape is wrapped around it.',
+      'No special treatment is needed at the penetration point for fire-resistant cable.',
+      'The cable is simply pulled through the opening and the surrounding gap left open.',
+      'The penetration is fire-stopped to a tested system, rated to match the construction.',
+      'Ordinary self-amalgamating tape is wrapped around the cable at the opening.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fire-stopping at penetrations is a separate engineering discipline from cable selection but lives in the same fire-engineering envelope. A fire alarm cable passing through compartmentation without fire-stopping turns the cable route into a fire / smoke path, regardless of how good the cable itself is.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'Plastic clips are NOT acceptable for supporting fire alarm cables in fire-rated installations. The correct fixings are typically...?',
     options: [
-      'Tape.',
-      "Metal clips, metal cleats, metal P-clips, or steel-insert clips designed for fire-resistant cable systems and rated to match the cable's PH category. The fixings retain mechanical strength at the temperatures the cable is designed to survive, with the result that the system as a whole — cable plus fixings — delivers the specified fire-survival duration. Where containment (trunking, basket, tray) carries the cable, the containment itself must be fire-rated and supported on fire-rated brackets / hangers.",
-      'Plastic ties.',
-      'Adhesive.',
+      "Metal clips, cleats, P-clips or steel-insert clips rated to match the cable's PH category.",
+      'Self-amalgamating or fabric tape wrapped around the cable at regular intervals.',
+      'Standard polymeric (plastic) cable ties fixed at the design support spacing.',
+      'Adhesive pads bonded to the surface and the cable laid into them along the run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Metal fixings, fire-rated containment, fire-rated brackets — all matched to the cable's PH category. The cable manufacturer and BS 8519 specify the matched-fixing requirements for each cable type.",
   },
@@ -193,10 +193,10 @@ const quizQuestions = [
     question:
       'The detection / sounder cabling enters a void (above a suspended ceiling, under a raised floor). What does BS 5839-1:2025 require for the wiring in the void?',
     options: [
-      'Wiring is not allowed in voids.',
-      'Wiring methods continue into the void with appropriate containment, supports, and fixings — same fire-rating as the rest of the cable system. The void wiring follows the same engineering rules as the visible wiring; the void is not an excuse for relaxed practice. Where detectors are mounted in the void (where required by the design — e.g. void detection per BS 5839-1 21.2.7), the void is part of the protected area and the void wiring is part of the fire-rated system. ACCESS PROVISIONS for inspection / maintenance of void devices and wiring must be designed in.',
-      'Wiring in voids needs no support.',
-      'Plastic supports are acceptable in voids.',
+      'Fire alarm wiring is not permitted within any ceiling or floor void at all.',
+      'The same fire-rated containment, supports and fixings continue into the void, with access provisions.',
+      'Wiring routed through a void requires no mechanical support of any kind.',
+      'Ordinary plastic supports are perfectly acceptable for wiring run inside voids.',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Why is the engineering hierarchy for joints (avoid → fire-rate → document) the right way around for fire alarm cabling, rather than treating joints as a routine option?',
     options: [
-      'Tradition.',
-      "Because every joint is a reliability risk (mechanical, corrosion, vibration over service life), a fire-survival risk (each joint is a discrete point that has to maintain integrity through fire), and a maintenance burden (joint must be accessible, identified, recorded). Designing the route to terminate at devices rather than to introduce intermediate joints removes all three risks. Where a joint is genuinely unavoidable, fire-rating it preserves the system's PH category and documenting it ensures the future maintainer knows it is there. The hierarchy reflects that joints are a tolerated necessity, not a preferred design choice.",
-      'Cost.',
-      'Aesthetics.',
+      'Because it follows long-standing trade tradition rather than any sound technical reason.',
+      'Because jointing is unsightly and spoils the finished appearance of the containment run.',
+      'Because avoiding joints is simply the cheapest and quickest way to wire the whole system.',
+      'Because every joint is a reliability, fire-survival and maintenance risk that terminating avoids.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Joint avoidance is the engineering principle. Terminating at devices and routing to avoid joints produces a more reliable, more fire-survivable, more maintainable installation. Joints exist where they have to; they are not introduced for installer convenience.',
   },

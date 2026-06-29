@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is the purpose of an MCS handover pack?',
     options: [
-      'Marketing only',
-      'MCS (Microgeneration Certification Scheme) handover pack is the integrated customer-facing deliverable for an MCS-certified LCT install: sizing report + product DoCs + commissioning record + BS 7671 EIC + grant submission paperwork + customer operating guide + warranty registration. The MCS-certified company is the customer\'s primary contractor + the handover pack is what they receive at completion. Unlocks UK Government grant funding (where applicable) + supports warranty + insurance + future EICR-equivalents',
-      'Optional',
-      'Random',
+      'A marketing brochure given to the customer to promote the installer’s other services and products',
+      'An optional internal checklist the installer keeps for its own records but does not share with the customer',
+      'A purely electrical certificate that satisfies BS 7671 alone and plays no part in unlocking grant funding',
+      'The integrated customer-facing deliverable for an MCS-certified install that also unlocks grant funding',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'MCS handover pack purpose: (1) Customer-facing deliverable — single integrated package covering everything the customer needs at completion + over the install lifecycle. (2) Grant funding gate — UK 2025-26 Boiler Upgrade Scheme (heat pumps + biomass) + previously RHI + future grants all require MCS-certified company + MCS handover pack as the entry point for the grant submission. (3) Warranty support — manufacturer warranty registration + the MCS company\'s installation guarantee (typically 6-12 yr workmanship). (4) Insurance support — many home insurance policies require MCS-compliant install for LCT coverage. (5) Audit trail — supports future EICR-equivalent + any warranty / insurance / dispute resolution. (6) Components: MCS sizing report (heat loss survey for heat pump; yield modelling for PV; capacity sizing for BESS); product details + DoCs; commissioning record (BMS + inverter + anti-islanding + grid sync); BS 7671 EIC + Schedule of Inspections + Schedule of Test Results; DNO EREC G98 / G99 reference where applicable; grant submission paperwork; customer operating guide; warranty registrations; ongoing monitoring setup. (7) MCS company role — primary contractor; subcontracts specialist trades where needed (electrician, plumber, refrigerant engineer); orchestrates the install + handover.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What does the BS 7671 electrician contribute to the MCS handover pack?',
     options: [
-      'Nothing',
-      'The electrician\'s contribution: (1) BS 7671 EIC (Electrical Installation Certificate) per Reg 644.5 — signed by skilled person; (2) Schedule of Inspections (Reg 642.3 items); (3) Schedule of Test Results (Reg 643 testing + LCT extensions); (4) addition / alteration verification per Reg 641.5 + any existing-install assessment; (5) protective architecture documentation (RCD types, OPDD, TT alternative, multi-source coordination); (6) Section 712 + Section 722 + Chapter 57 + Section 551 cross-references where applicable; (7) photographic / thermographic evidence per Reg 653.2 NOTE; (8) any DNO submission supporting documentation',
-      'Only EIC',
-      'Random',
+      'The BS 7671 EIC, its Schedules of Inspections and Test Results, and the supporting protective-architecture and DNO evidence',
+      'Nothing — the MCS company compiles the whole pack and the electrician only energises the supply afterwards',
+      'Only the signed EIC itself, with the schedules and protective-architecture detail supplied by the manufacturer',
+      'Only a verbal confirmation to the MCS company that the wiring was completed to a safe and tidy standard',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 electrician contribution to MCS handover pack: (1) Electrical Installation Certificate per Reg 644.5 — compiled + signed by skilled person competent to verify BS 7671 has been met; identifies the work + the designer + installer + verifier + customer + date + protective device data + Schedule references. (2) Schedule of Inspections per Reg 642.3 — items (a)-(r) checked + observation noted; supports the EIC. (3) Schedule of Test Results per Reg 643 — circuit-by-circuit test results: continuity, IR, polarity, loop impedance, RCD operation, prospective fault current; LCT extensions per Section 712 / Chapter 57 / Section 722 / Section 551 / Reg 712.421.101 IMD / Reg 722.411.4 OPDD / Reg 551.7.5 anti-islanding. (4) Addition / alteration per Reg 641.5 — existing-install assessment recorded + any remediation documented. (5) Protective architecture — RCD types, OPDD or TT alternative architecture choice + rationale; multi-source coordination per Reg 551.4.2 + Reg 415.1. (6) Cross-references — Section 712 PV / Chapter 57 BESS / Section 722 EV / Section 551 generating sets per applicable LCT. (7) Photographic / thermographic evidence per Reg 653.2 NOTE — supports findings. (8) DNO supporting documentation — EREC G98 / G99 reference; anti-islanding test record; ENA notification submission. The electrician\'s contribution is the BS 7671 anchor of the MCS handover pack.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What are MIS 3001-3008 + how do they relate to the handover pack structure?',
     options: [
-      'No MIS standards',
-      'MIS = MCS Installer Standards — technology-specific installer competency + product approval + customer documentation requirements. MIS 3001 solar thermal; 3002 solar PV; 3003 wind; 3004 biomass; 3005 heat pumps; 3007 micro-CHP; 3008 micro-hydro. Each MIS specifies the structure of the technology-specific handover pack components — sizing methodology, commissioning checklist, customer documentation. The integrated MCS handover pack shares a common structure (sizing + commissioning + DoC + EIC + customer guide) + per-MIS technology-specific detail',
-      'Random',
-      'Same for all',
+      'A single combined standard that applies identically to every renewable technology with no per-technology variation at all',
+      'British Standards for cable sizing that the electrician applies the same way regardless of the generating technology',
+      'Technology-specific MCS Installer Standards, each shaping the per-technology sections of a common handover pack structure',
+      'Optional industry guidance documents that have no real bearing on the structure or content of the handover pack',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'MIS (MCS Installer Standards) framework: (1) Purpose — define the installer competency + product approval + customer documentation + warranty requirements per LCT technology. (2) MIS 3001 — Solar Thermal: collectors + DHW integration; sizing methodology + commissioning + customer guide. M9 §9.3 covered. (3) MIS 3002 — Solar PV: sizing yield model + product approval list + commissioning record + customer guide. M2-M4 covered. (4) MIS 3003 — Small Wind (≤50 kW): turbine + mast + electrical + planning. M9 §9.2 covered. (5) MIS 3004 — Biomass (wood / pellet): heat-only + biomass-CHP variants. M9 §9.4 covered. (6) MIS 3005 — Heat Pumps: ASHP / GSHP / exhaust-air; BUS grant gateway. M8 covered. (7) MIS 3006 — older Ground Source Heat Pumps; now consolidated into MIS 3005. (8) MIS 3007 — micro-CHP (≤50 kW): combined heat + electrical; Stirling engine + fuel cell + IC variants. M9 §9.5 covered. (9) MIS 3008 — micro-hydro (≤50 kW): turbine + civils + grid connection. M9 §9.7 covered. (10) Common handover pack structure across all MIS: sizing report + product details + DoCs + commissioning record + BS 7671 EIC + customer guide + warranty + grant paperwork. (11) Per-MIS technology-specific detail: sizing methodology + commissioning checklist + customer operating instructions specific to the technology. (12) MCS-certified company is the primary contractor; competency assessed per MIS scope.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'What UK 2025-26 grants are relevant to MCS handover packs?',
     options: [
-      'No grants',
-      'UK 2025-26 grants: Boiler Upgrade Scheme (BUS) covers heat pumps + biomass up to £7,500 typical (ASHP + GSHP + biomass); requires MCS-certified company + MCS handover pack; submitted via Ofgem. Smart Export Guarantee (SEG) — DNO-licensed energy suppliers pay for exported electricity from PV / BESS / wind / hydro / CHP; per-supplier rates. Other historical: RHI (Renewable Heat Incentive — closed 2022); FIT (Feed-in Tariff — closed 2019). Verify current scheme rates + eligibility at quote stage with the customer',
-      'Random',
-      'BUS only',
+      'No grants exist for renewable installs in 2025-26; every government support scheme has now closed to new entrants',
+      'The Boiler Upgrade Scheme is the only relevant route, and it covers every renewable technology including solar PV',
+      'The Feed-in Tariff still pays for new PV exports, while the Renewable Heat Incentive still funds new heat pumps',
+      'The Boiler Upgrade Scheme (heat pumps and some biomass) and the Smart Export Guarantee for exported generation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'UK 2025-26 LCT grant landscape: (1) Boiler Upgrade Scheme (BUS) — government grant for low-carbon heating: ASHP £7,500 typical; GSHP £7,500 typical; biomass up to £5,000 (Wales) / not in England + Scotland for biomass 2025-26. Requires MCS-certified company + MCS handover pack + property eligibility + EPC certificate. Submitted to Ofgem. (2) Smart Export Guarantee (SEG) — replaced FIT in 2020; DNO-licensed energy suppliers must offer SEG tariff for exported electricity from PV / BESS / wind / hydro / CHP up to 5 MW; per-supplier rates (typically 1-15p/kWh in 2025-26 depending on supplier + contract); not a grant but ongoing income. Requires MCS-certified install + appropriate metering + EREC G98 / G99 + DNO submission. (3) Historical schemes: FIT (Feed-in Tariff) closed to new entrants 2019 — existing FIT contracts continue for 20-25 yr remaining lifetime per contract. RHI (Renewable Heat Incentive) closed to new entrants 2022 — existing RHI contracts continue for 7 yr lifetime per contract. (4) Regional variation: Wales has additional grants (HEEP); Scotland has Home Energy Scotland grants + loans; Northern Ireland has separate schemes. (5) Verification — installer + customer verify current scheme rates + eligibility at quote stage; cert evidence bundle integrates grant submission paperwork. (6) Future: A4:2026 + UK energy policy continuing evolution; grants likely to evolve through the 2025-30 horizon.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'PV install: 6 kWp domestic. What does the MCS handover pack typically contain?',
     options: [
-      'EIC only',
-      'PV MCS handover pack (MIS 3002): (1) MCS sizing report — yield modelling per MCS methodology, payback estimate, panel + inverter specification; (2) Product details + DoCs — modules (BS EN 61215-1-2 / -1-4 / -1-3:2017 compliance), inverter (BS EN 62109-1 + -2), mounting + ancillary; (3) Commissioning record — manufacturer inverter commissioning + Reg 712.421.101 IMD + anti-islanding per Reg 551.7.5; (4) BS 7671 EIC + Schedule of Inspections + Schedule of Test Results; (5) EREC G98 (small) or G99 (larger) DNO notification; (6) Warranty registration (modules 25 yr + inverter 10-25 yr); (7) Customer operating guide; (8) SEG eligibility paperwork',
-      'Random',
-      'Just sizing',
+      'Only the BS 7671 EIC, since that is the single document the grant bodies and energy suppliers actually require',
+      'Only the MCS sizing report and yield model, with all the remaining paperwork held by the inverter manufacturer',
+      'A sizing report, DoCs, commissioning record, EIC and schedules, EREC notification, warranty, customer guide and SEG paperwork',
+      'A set of installation photographs and the customer’s signed acceptance, which together satisfy the MIS 3002 requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PV MCS handover pack typical contents (MIS 3002): (1) MCS sizing report — yield modelling per MCS methodology (kWh/yr estimate for the specific roof + array + location + shading); payback estimate based on consumption + SEG tariff + self-consumption fraction; specification of modules + inverter + balance of system. (2) Product details + DoCs — PV modules with BS EN 61215-1-2, -1-4, -1-3:2017 compliance; inverter with BS EN 62109-1 + -2; mounting frame manufacturer; ancillary items. (3) Commissioning record — manufacturer engineer\'s commissioning of inverter (firmware version + commissioning checklist); Reg 712.421.101 IMD self-test result; Reg 551.7.5 anti-islanding test result; grid synchronisation + export verified. (4) BS 7671 EIC — Reg 644.5 signed by skilled person; Schedule of Inspections per Reg 642.3; Schedule of Test Results per Reg 643 + Section 712 extensions. (5) EREC notification — G98 (small ≤16 A per phase generation, fast-track post-install) or G99 (larger, formal pre-install application); DNO reference. (6) Warranty registration — modules typically 25 yr; inverter 10-25 yr; mounting + frame per manufacturer. (7) Customer operating guide — system overview, monitoring portal access, fault response, contacts. (8) SEG (Smart Export Guarantee) eligibility paperwork — submitted to energy supplier for export tariff. (9) Cert evidence bundle integrates the above for installer audit + customer + DNO + Ofgem.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Heat pump install (ASHP, BUS grant claim). What additional handover pack items relate to the grant?',
     options: [
-      'None',
-      'BUS grant-specific items: (1) MCS Heat Pump certified company (MIS 3005); (2) heat loss survey per MCS methodology (room-by-room kW heat loss); (3) MCS sizing report aligning heat pump capacity to heat loss; (4) EPC (Energy Performance Certificate) for the property — usually required at minimum band before grant approval; (5) BUS submission paperwork via Ofgem portal — property + grant + system details; (6) Customer consent + acknowledgement; (7) Grant payment route — typically paid to installer who deducts grant value from customer invoice. All on top of standard MCS handover pack (sizing + commissioning + EIC + customer guide + warranty)',
-      'Random',
-      'EPC only',
+      'MCS heat-pump certification, a heat-loss survey, a valid EPC, the Ofgem BUS submission, customer consent and the payment route',
+      'No grant-specific items at all; the BUS claim relies entirely on the standard MCS handover pack exactly as supplied',
+      'Only the property EPC needs adding, since the rest of the BUS claim is handled entirely outside of the handover pack',
+      'Only a separate insurance certificate for the heat pump, which Ofgem requires before it will release any grant money',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BUS grant-specific handover pack additions: (1) MCS Heat Pump certified company — MIS 3005 covering ASHP / GSHP / exhaust-air; the company\'s certification verified by Ofgem at submission. (2) Heat loss survey — MCS methodology room-by-room calculation; verifies heat pump capacity correctly sized for the property; not over- or under-sized. (3) MCS sizing report — aligns heat pump output capacity (kWth) to heat loss + DHW demand; defines flow temperature + emitter strategy. (4) EPC (Energy Performance Certificate) — UK 2025-26 BUS typically requires property to have a valid EPC of certain rating (band C or above for most BUS schemes, or with insulation improvements recommended) — verify current scheme requirements at quote stage. (5) BUS submission via Ofgem portal — property details + grant amount + system specs + MCS certification + customer consent. (6) Customer consent + acknowledgement — customer signs to confirm understanding of grant terms + their obligations (e.g. running system per intended design). (7) Grant payment route — typically Ofgem pays installer; installer deducts grant value from customer invoice; customer pays installer net + Ofgem pays grant; alternative: customer pays gross + Ofgem reimburses customer (less common). (8) Plus all standard MCS handover pack items (sizing + commissioning + BS 7671 EIC + customer guide + warranty registrations). (9) Cert evidence bundle integrates grant submission for audit.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'BESS install — MCS standard + handover pack components?',
     options: [
-      'No MCS for BESS',
-      'BESS has its own MCS standard developing (MCS Battery Storage) — but BESS frequently installed alongside MCS PV (MIS 3002) or as standalone. Handover pack: (1) BESS sizing report — capacity vs household consumption + PV pairing; (2) Product DoC — battery + inverter + BMS; (3) Manufacturer commissioning record — BMS cell balance + comms + fault tolerance + SoH baseline; (4) Chapter 57 install compliance; (5) Section 551 anti-islanding per Reg 551.7.5; (6) BS 7671 EIC + Section 712 / Chapter 57 / Section 551 cross-references; (7) EREC G98 / G99; (8) Warranty registration (typically 10 yr SoH ≥ threshold); (9) Customer operating guide',
-      'Random',
-      'Same as PV',
+      'There is no MCS framework for battery storage, so a BESS install needs no formal handover documentation at all',
+      'A BESS handover pack is identical to a PV pack and simply reuses the PV sizing report and the PV EIC unchanged',
+      'BESS is never installed on its own and so is only ever documented as a short appendix to a heat-pump pack',
+      'A sizing report, DoCs, BMS commissioning record, Chapter 57 compliance, anti-islanding evidence, EIC, warranty and guide',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BESS handover pack components (MCS Battery Storage develops; typical BESS handover): (1) Sizing report — BESS capacity (kWh) vs household average consumption + PV pairing + self-consumption modelling; payback estimate per SEG + electricity tariff. (2) Product details + DoCs — battery cells / modules per IEC 62619 + IEC 62133; inverter per BS EN 62109; BMS per manufacturer; ancillary equipment. (3) Manufacturer commissioning record — BMS commissioning (cell balance, communications, fault tolerance); initial SoC + SoH baseline; firmware version; alarm thresholds. (4) Chapter 57 install compliance — battery installation per BS 7671 Chapter 57; isolation, segregation, ventilation. (5) Reg 551.7.5 anti-islanding — BESS inverter disconnects on simulated grid-loss; DNO-witnessed or manufacturer self-test. (6) BS 7671 EIC — Reg 644.5; Schedule of Inspections + Schedule of Test Results; Chapter 57 + Section 551 + Section 712 (where co-located) cross-references. (7) EREC notification — G98 fast-track for small (≤16 A per phase) or G99 formal for larger. (8) Warranty registration — typically 10 yr with SoH ≥ 70-80% threshold + throughput limit. (9) Customer operating guide — portal access, expected lifecycle (SoH degradation curve), warranty terms, alert response, emergency shutdown, contacts. (10) Cert evidence bundle integrates for lifecycle audit + warranty + insurance.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'Multi-source LCT install (PV + BESS + heat pump + EV) — single handover pack OR per-source?',
     options: [
-      'Always per-source',
-      'Coordinated integrated handover pack OR per-source documents referenced by an integrated cover. UK 2025-26 best practice: integrated single handover pack covering all sources with per-MIS standard sections — single MCS company signs off + integrates per-source MIS standard contributions (3002 PV, 3005 heat pump). The BS 7671 EIC covers the integrated electrical install with per-source schedules. Single customer touchpoint at handover + single document for warranty + insurance + future EICR-equivalent. The per-source detail is preserved as appendices',
-      'Random',
-      'Always single',
+      'Always per-source — each technology must be documented in a completely separate pack with no integration at all',
+      'Either an integrated single pack for a simultaneous install, or per-source packs when sources are added at different times',
+      'Always a single combined certificate that omits the per-technology detail to keep the customer’s handover pack short',
+      'A pack is only needed for the single highest-value source; the remaining technologies are just recorded informally',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Cert evidence bundle vs MCS handover pack — same thing?',
     options: [
-      'Yes',
-      'Related but distinct. MCS handover pack = customer-facing deliverable; integrated documentation package given to the customer at completion. Cert evidence bundle = installer\'s comprehensive lifecycle record retained for audit, warranty, insurance, future EICR. Overlap: most contents (sizing + commissioning + EIC + DoCs + commissioning records). Differences: cert evidence bundle includes ongoing additions (periodic EICR-equivalent reports, firmware updates, alarm events, warranty correspondence); MCS handover pack is the snapshot at completion. The MCS handover pack is included in (and is the foundation of) the cert evidence bundle',
-      'Random',
-      'Identical',
+      'Yes — the two terms simply describe exactly the same document under two different interchangeable names',
+      'No — the evidence bundle is only the test results, while the handover pack is only the customer’s operating guide',
+      'Related but distinct: the handover pack is the snapshot at completion; the evidence bundle is the ongoing lifecycle record',
+      'No — the handover pack is retained by the installer and the evidence bundle is the part given to the customer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MCS handover pack vs cert evidence bundle: (1) MCS handover pack — customer-facing deliverable at completion; integrated package per MIS standard; given to customer in paper + digital format; supports warranty + insurance + grant + initial customer education. (2) Cert evidence bundle — installer\'s comprehensive lifecycle record; opens at install + grows over the install life; includes the MCS handover pack as the foundation + adds: periodic EICR-equivalent reports, firmware updates applied, alarm events + responses, manufacturer correspondence, warranty claims, customer touchpoint records, photographic + thermographic images over time, modification + addition records, end-of-life. (3) Overlap — most contents at completion are shared: sizing + commissioning + EIC + DoCs + manufacturer commissioning records + customer guide. (4) Differences — cert evidence bundle is ongoing + comprehensive lifecycle record (installer-side); MCS handover pack is the snapshot at completion (customer-facing). (5) Customer access — customer has the MCS handover pack at completion + can request relevant cert evidence bundle items at periodic reviews. (6) Installer obligation — retain cert evidence bundle for the install lifecycle + audit period (typically 6-10 yr post-install for tax + insurance + audit). (7) Throughout this course \"cert evidence bundle\" has been used as the installer\'s lifecycle record; MCS handover pack as the customer-facing deliverable. (8) UK 2025-26 reality: paper + digital coexist; cloud-based cert management platforms emerging.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'DNO submission within the MCS handover pack — what is typically included?',
     options: [
-      'No DNO submission',
-      'DNO submission for grid-paralleled generation: (1) EREC G98 (post-install notification for ≤16 A per phase) or G99 (pre-install application for larger / formal); (2) System single-line diagram; (3) Inverter type + manufacturer DoC + BS EN 62109 compliance + anti-islanding certification; (4) Connection point + supply capacity + estimated export; (5) Anti-islanding test record per Reg 551.7.5; (6) Contractor + skilled person details. The DNO returns a reference; this reference goes into the MCS handover pack + cert evidence bundle. The DNO submission unlocks SEG export tariff registration with the energy supplier',
-      'Random',
-      'Sizing only',
+      'An EREC notification, single-line diagram, inverter DoC, connection and export details, test record and contractor details',
+      'No DNO submission is needed at all, because the MCS certificate on its own already authorises the grid connection',
+      'Only the sizing report, which the DNO then uses entirely on its own to decide whether to allow the connection',
+      'Only the customer’s recent electricity bill, which proves the property has an adequate supply available for export',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DNO submission components within MCS handover pack: (1) EREC notification — G98 (post-install notification, fast-track) for generation ≤16 A per phase (typical small PV ≤ 3.68 kW single-phase or ≤ 11 kW three-phase); G99 (pre-install formal application) for larger or multi-source. ENA standard format. (2) Single-line diagram — system topology showing source(s), inverter(s), connection point, protective devices, isolators, anti-islanding device, meter location. (3) Inverter type + manufacturer DoC + BS EN 62109 compliance + anti-islanding certification — DNO needs to confirm the inverter meets G98 / G99 protection requirements (RoCoF + voltage / frequency deviation, active loss-of-mains detection — G99 disallows Vector Shift for type-tested generation, so RoCoF is the required loss-of-mains method on the type-tested inverters used in virtually all LCT installs; Vector Shift is legacy / non-type-tested only). (4) Connection point + supply capacity + estimated export — at which point the generation connects to the LV supply + the supply capacity (typically 100 A single-phase or 100 A per phase three-phase) + estimated peak + average export. (5) Anti-islanding test record per Reg 551.7.5 — at commissioning the inverter\'s anti-islanding function tested; DNO-witnessed or manufacturer self-test per their procedure. (6) Contractor + skilled person details — MCS-certified company + electrician\'s name + BS 7671 competency. (7) DNO reference returned — assigned by the DNO upon acceptance; included in MCS handover pack + cert evidence bundle. (8) SEG registration — once DNO reference assigned, customer registers with their chosen energy supplier for SEG tariff; supplier verifies MCS + DNO + handover pack.',
   },

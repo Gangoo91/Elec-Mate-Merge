@@ -50,12 +50,12 @@ const checks = [
     question:
       "You're an apprentice. Your supervisor isn't on site. The customer wants you to lift a 1980s ceiling tile to run a new fire-alarm cable. You don't know if the tile is asbestos. What's the right call right now?",
     options: [
-      "Stop, don't disturb the tile, ring the supervisor, ask the dutyholder for the asbestos register before any work happens above the ceiling.",
-      "Gently warm the affected area by placing it in warm (not hot) water at around 37–39°C, and do not rub or apply direct heat",
-      "A schematic shows the functional relationship between components using standard symbols, while a wiring diagram shows the physical routing and connections of cables and conductors",
-      "MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset",
+      "Lift the tile carefully by one corner to check the back for the fibrous look of AIB.",
+      "Stop, don't disturb the tile, and ask the dutyholder for the asbestos register first.",
+      "Damp the tile down with water first, then lift it to keep any dust from going airborne.",
+      "Crack on — the customer is paying and one ceiling tile won't release enough to matter.",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Stop, isolate the area, escalate. CAR 2012 Reg 5 says you don't disturb a material that may contain asbestos until an assessment has been done. The dutyholder for any non-domestic building is legally required to hold an asbestos register and produce it on request — that's where you find out whether the tile is AIB. 'Lifting carefully' is still 'disturbing' in the eyes of the regulator.",
   },
@@ -64,10 +64,10 @@ const checks = [
     question:
       "You spot an obvious safety breach by your supervisor — they've removed your lock-off because the customer's complaining. You raise it; they tell you to drop it. Under HASAWA s.7 and MHSWR Reg 14, what do you do next?",
     options: [
-      "Lead by example, set expectations, schedule clean-up periods (end-of-day, after disruptive work), provide skips and bins, intervene when issues seen. Housekeeping is one of the easiest hazard reductions and one of the most consistently overlooked.",
-      "Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re locked out of growing markets like heat pumps, EV, PV and battery",
-      "A break somewhere in the line conductor of the ring — a loose terminal in a back-box, a damaged cable inside a void, or a cable not actually returned to the CU. Investigate before going any further.",
-      "Escalate above the supervisor — your own employer's safety contact, the principal contractor on site, your scheme provider's helpline. Note the conversation (time, name, what was said). Your s.7 personal duty isn't discharged just because someone above you said 'drop it'.",
+      "Do as the supervisor says and drop it — they outrank you, so the responsibility is now theirs.",
+      "Carry on working but quietly refit your own lock-off without telling the supervisor.",
+      "Walk straight off site and report the supervisor directly to the HSE before telling anyone else.",
+      "Escalate above the supervisor — your employer, the principal contractor, the scheme helpline — and note the conversation.",
     ],
     correctIndex: 3,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       "Under the Control of Asbestos Regulations 2012, who holds the legal duty to manage asbestos in a non-domestic building?",
     options: [
-      "Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity",
-      "Without delay (telephone notification expected for fatalities and specified injuries) + F2508 within 10 days.",
+      "The electrician carrying out the work in the building.",
+      "The local authority building control department.",
       "The dutyholder — usually the building owner or whoever has responsibility for maintenance and repair (often via the lease).",
-      "Give them the written brief in advance, allow processing time, follow up one-to-one in a quiet area for questions",
+      "The HSE, which surveys every non-domestic building directly.",
     ],
     correctAnswer: 2,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       "You arrive on site and the dutyholder can't produce an asbestos register for the area you're about to drill into. Right call?",
     options: [
-      "The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required",
-      "Express your concerns clearly and specifically — identify the areas you feel underprepared in and request additional support or time to address them before the gateway is opened",
-      "Zone 0, Zone 1 and Zone 2 for gases/vapours; Zone 20, Zone 21 and Zone 22 for dusts — based on the frequency and duration of the explosive atmosphere",
-      "Stop. Don't disturb the fabric. Treat the material as 'presumed asbestos' until a sample has been analysed by an accredited lab, or until the dutyholder produces the register and confirms it's clean.",
+      "No register means there's no asbestos on record, so it's safe to drill straight in.",
+      "Take a small sample yourself and send it off to an accredited lab before continuing.",
+      "Carry on but wear a dust mask and keep the area damp down as you work.",
+      "Stop, don't disturb the fabric, and treat it as presumed asbestos until proven clean.",
     ],
     correctAnswer: 3,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       "What does the HSE Asbestos Essentials task sheet 'a0' cover?",
     options: [
-      "A tool lanyard or tether should be used to prevent the power tool from falling if dropped",
+      "How to take a safe sample of a suspected asbestos material for lab analysis.",
       "Work with asbestos that does NOT need a licence — the basic precautions and which task sheets (a1–a40) cover specific jobs.",
-      "Projects lasting longer than 30 working days with more than 20 workers at any one time, or exceeding 500 person-days",
-      "The person who has the duty to maintain or repair the premises, or who has control of the premises",
+      "The full list of licensed asbestos contractors approved by the HSE.",
+      "The medical surveillance requirements for workers exposed to asbestos fibres.",
     ],
     correctAnswer: 1,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       "You suspect a ceiling tile in a 1970s school is AIB. The supervisor says 'just lift one corner so I can see the back, then we'll decide.' Right call?",
     options: [
-      "They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification",
-      "Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks",
-      "Stop. Lifting the tile is disturbance — even a corner. Don't touch it. Refer to the dutyholder's asbestos register; if there isn't one, demand a survey is commissioned before any work above the ceiling continues.",
-      "Discarded smoking materials (cigarettes, matches, lighters) remain a fire cause, particularly in areas with poor housekeeping, near flammable materials, or where smoking policies are not enforced",
+      "Do as asked — lifting one corner gently isn't really disturbance and helps you both decide.",
+      "Lift the corner but hold your breath and wear a dust mask while you do it.",
+      "Stop, don't touch it — lifting even a corner is disturbance — and check the register.",
+      "Lift the corner only if you spray it with water first to bind any loose fibres.",
     ],
     correctAnswer: 2,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       "Under MHSWR 1999 Regulation 14, what is your duty as an employee when you spot a serious and imminent danger or a shortcoming in the employer's safety arrangements?",
     options: [
-      "Disconnecting the installation main earthing conductor at the MET, then loop-testing between supply L and the disconnected MET earth — with main switch OFF and circuits isolated for safety",
-      "Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation",
-      "BS 7671 (the source standard). The OSG is a trusted simplification bounded by stated assumptions. Where install conditions exceed the OSG assumptions, go back to BS 7671 Appendix 4 directly.",
-      "Inform your employer (or someone with responsibility for H&S) of the danger or shortcoming AND co-operate to enable the employer to comply with their statutory duties.",
+      "Put right the danger yourself before telling anyone, so the job isn't held up.",
+      "Note it privately but say nothing unless someone is actually injured first.",
+      "Report it straight to the HSE without involving your own employer at all.",
+      "Inform your employer of the danger or shortcoming and co-operate to put it right.",
     ],
     correctAnswer: 3,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       "After raising a concern with your supervisor and being told to 'drop it', what's the most defensible thing to do BESIDES re-raising it?",
     options: [
-      "Make a written, dated note (your phone is fine) of who you spoke to, what you said, and what they said. Then escalate to the next level above (your own employer, the principal contractor, your scheme provider).",
-      "It is made in accordance with Regulation 526.3 — for example, a compression joint to a manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions, a brazed/welded joint, or a connection forming part of equipment that complies with its product standard",
-      "A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management",
-      "Heat stress, falls through ceiling between joists, contact with hot pipes/cables, glass fibre/asbestos exposure, restricted access for emergency egress",
+      "Make a dated note of who you spoke to and what was said, then escalate to the level above.",
+      "Let it go — you raised it once, so your duty under HASAWA is fully discharged.",
+      "Take a photo of the hazard and post it on a trade group to get other opinions.",
+      "Carry on with the work but make sure you're not the one operating the unsafe kit.",
     ],
     correctAnswer: 0,
     explanation:

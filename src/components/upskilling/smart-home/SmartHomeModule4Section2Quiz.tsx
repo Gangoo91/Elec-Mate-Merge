@@ -18,87 +18,112 @@ export const SmartHomeModule4Section2Quiz = () => {
         'Temperature Responsive Valve',
       ],
       correct: 1,
+      explanation:
+        'TRV stands for Thermostatic Radiator Valve — a valve that controls the flow of hot water through a radiator based on room temperature.',
     },
     {
       question: 'How does a smart TRV differ from a manual TRV?',
       options: [
-        "It's larger in size",
-        'It uses different materials',
         'It has motorised control and wireless connectivity',
+        'It is simply larger in physical size',
+        'It is made from different metals',
         'It only works with electric heating',
       ],
+      correct: 0,
+      explanation:
+        'A smart TRV adds a motorised actuator and wireless link, letting it be controlled remotely and scheduled rather than turned by hand.',
+    },
+    {
+      question: 'Name two communication protocols commonly used by smart TRVs.',
+      options: ['Bluetooth and USB', 'Ethernet and HDMI', 'Zigbee and Z-Wave', 'GSM and GPS'],
       correct: 2,
+      explanation:
+        'Smart TRVs typically use low-power mesh protocols such as Zigbee and Z-Wave to communicate with the hub or thermostat.',
     },
     {
-      question: 'Name two communication protocols used by smart TRVs.',
-      options: ['Bluetooth and USB', 'Zigbee and Z-Wave', 'Ethernet and HDMI', 'GSM and GPS'],
-      correct: 1,
-    },
-    {
-      question: 'List the three main types of boilers.',
+      question: 'What are the three main types of domestic boiler?',
       options: [
-        'Gas, oil, electric',
-        'Combi, system, conventional',
-        'Small, medium, large',
-        'Indoor, outdoor, hybrid',
+        'Combi, system and conventional',
+        'Gas, oil and electric',
+        'Small, medium and large',
+        'Indoor, outdoor and hybrid',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Boilers are classified as combi, system or conventional (regular/heat-only) based on how they store and deliver hot water.',
     },
     {
       question: 'What is OpenTherm?',
       options: [
-        'A type of smart TRV',
-        'A heating fuel',
         'A digital communication protocol for boiler control',
-        'A temperature sensor',
+        'A particular type of smart TRV',
+        'A type of heating fuel',
+        'A standalone temperature sensor',
+      ],
+      correct: 0,
+      explanation:
+        'OpenTherm is a communication standard that lets a compatible thermostat modulate a boiler’s output rather than just switching it on and off.',
+    },
+    {
+      question: "What is the difference between on/off and modulating boiler control?",
+      options: [
+        'On/off is the newer technology',
+        'Modulating adjusts output while on/off switches fully on or off',
+        'On/off is the more efficient of the two',
+        "There is no real difference",
+      ],
+      correct: 1,
+      explanation:
+        'Modulating control varies the boiler’s flame to match demand, which is more efficient than simply cycling fully on and off.',
+    },
+    {
+      question: 'Why are heat pumps usually run at lower flow temperatures?',
+      options: [
+        'Simply to save electricity',
+        'To prevent the unit overheating',
+        'Because it is a legal requirement',
+        'For maximum efficiency, matching their operating characteristics',
+      ],
+      correct: 3,
+      explanation:
+        'Heat pumps achieve their best coefficient of performance at lower flow temperatures, so systems are designed around larger emitters and steady low-temperature heat.',
+    },
+    {
+      question: 'Are all smart thermostats compatible with all boilers?',
+      options: [
+        'Yes — any smart thermostat works with any boiler',
+        'No — compatibility depends on the boiler’s wiring and protocols',
+        'Yes, provided the boiler is gas-fired',
+        'No — only combi boilers can ever be controlled',
+      ],
+      correct: 1,
+      explanation:
+        'Compatibility varies: the boiler’s wiring, controls and whether it supports protocols like OpenTherm determine which thermostats will work.',
+    },
+    {
+      question: "What is one challenge of retrofitting smart controls to older systems?",
+      options: [
+        'They are always far too expensive to fit',
+        'They require excessive ongoing maintenance',
+        'Older systems may lack digital communication interfaces',
+        'They are too complicated for anyone to operate',
       ],
       correct: 2,
-    },
-    {
-      question: "What's the difference between on/off and modulating boiler control?",
-      options: [
-        'On/off is newer technology',
-        'Modulating adjusts output, on/off switches completely',
-        'On/off is more efficient',
-        "There's no difference",
-      ],
-      correct: 1,
-    },
-    {
-      question: 'Why are heat pumps usually run at lower temperatures?',
-      options: [
-        'To save electricity',
-        'For maximum efficiency and to match their operating characteristics',
-        'To prevent overheating',
-        "It's a legal requirement",
-      ],
-      correct: 1,
-    },
-    {
-      question: 'True or False: All smart thermostats are compatible with all boilers.',
-      options: ['True', 'False'],
-      correct: 1,
-    },
-    {
-      question: "What's one challenge of retrofitting smart controls to older systems?",
-      options: [
-        "They're too expensive",
-        'Older systems may lack digital communication interfaces',
-        'They require too much maintenance',
-        "They're too complicated to operate",
-      ],
-      correct: 1,
+      explanation:
+        'Older heating systems often have only simple on/off wiring, so they may lack the digital interfaces that smart modulating controls rely on.',
     },
     {
       question:
         "A client installs smart TRVs but doesn't link them to the boiler. What issue might this cause?",
       options: [
         "The TRVs won't work at all",
-        'Boiler may run unnecessarily when all TRVs are closed',
-        'The system will overheat',
-        'Nothing - they work independently',
+        'The system will dangerously overheat',
+        'Nothing — they always work fully independently',
+        'The boiler may keep running even when all TRVs are closed',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Without boiler interlock, the boiler can keep firing and circulating water even when every TRV has shut, wasting energy and short-cycling the boiler.',
     },
   ];
 

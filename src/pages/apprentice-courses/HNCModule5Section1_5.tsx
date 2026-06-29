@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'risk-register-def',
     question: 'What is the primary purpose of a risk register in project management?',
     options: [
-      'Authorised staff can view and control BMS functions off-site',
-      'Balancing safety with production and never compromising on safety',
+      'To record the names and qualifications of all site operatives',
+      'To list every material delivery expected during the project',
       'To document identified risks, their assessment, and planned responses',
-      'The site manager — single point of contact upward to the contracts manager',
+      'To track the daily progress of each activity against the programme',
     ],
     correctIndex: 2,
     explanation:
@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     question: 'What distinguishes qualitative from quantitative risk analysis?',
     options: [
       'Qualitative uses subjective ratings, quantitative uses numerical data',
-      'To provide visual benchmarks for acceptable installation quality',
-      'Power loss increases with the square of current, causing heating',
-      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
+      'Qualitative applies only to safety risks, quantitative only to cost risks',
+      'Qualitative is carried out by the client, quantitative by the contractor',
+      'Qualitative is used after construction, quantitative during design',
     ],
     correctIndex: 0,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'mitigation-transfer',
     question: 'Risk transfer as a mitigation strategy typically involves:',
     options: [
-      'A goal focused on the specific actions or behaviours you will carry out',
-      'Yes, either directly or through safety representatives',
+      'Redesigning the works to remove the risk source entirely',
+      'Accepting the risk and setting aside a contingency for it',
       'Shifting risk to another party through insurance or contracts',
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
+      'Reducing the probability of the risk through early procurement',
     ],
     correctIndex: 2,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       "In a probability/impact matrix, where would you place a risk with 'High' probability and 'High' impact?",
     options: [
-      'Hacksaw or metal cutting saw',
-      'Fire protection and equipment protection',
+      'Green zone - accept and monitor only',
+      'Amber zone - review at the next monthly meeting',
       'Red zone - requires immediate action',
-      'To prevent earthing through the body',
+      'Blue zone - record but take no further action',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: 'A SWOT analysis as part of risk management identifies:',
     options: [
-      'Early warning signs that indicate a risk is materialising',
-      'The risk impact is low and probability is low',
-      'Coordination clashes between MEP services',
+      'Safety, welfare, operations, and training requirements',
+      'Schedule, workforce, output, and tolerance measures',
+      'Scope, work, ownership, and timing for each activity',
       'Strengths, weaknesses, opportunities, and threats',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'In risk management, "trigger conditions" refer to:',
     options: [
       'Early warning signs that indicate a risk is materialising',
-      'Strengths, weaknesses, opportunities, and threats',
-      'Generate probability distributions for cost and schedule outcomes',
-      'Project execution plan, monthly reports, and project close-out report',
+      'The contractual events that release retention payments',
+      'The thresholds at which a risk is removed from the register',
+      'The point at which contingency funds are formally approved',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A Monte Carlo simulation in risk analysis is used to:',
     options: [
-      'Early warning signs that indicate a risk is materialising',
+      'Produce a single fixed estimate of the final project cost',
       'Generate probability distributions for cost and schedule outcomes',
-      'Strengths, weaknesses, opportunities, and threats',
-      'Project execution plan, monthly reports, and project close-out report',
+      'Identify which subcontractor is responsible for each risk',
+      'Rank risks using a simple High, Medium and Low scale',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'Which type of risk is unique to building services compared to general construction?',
+    question: 'Which type of risk is most characteristic of building services compared to general construction?',
     options: [
-      'Strengths, weaknesses, opportunities, and threats',
-      'The risk impact is low and probability is low',
+      'Adverse weather delaying external groundworks',
+      'Late payment of invoices by the main contractor',
       'Coordination clashes between MEP services',
-      'Red zone - requires immediate action',
+      'Theft of materials from an unsecured site compound',
     ],
     correctAnswer: 2,
     explanation:
@@ -222,9 +222,9 @@ const quizQuestions = [
     id: 11,
     question: 'Risk acceptance as a strategy is most appropriate when:',
     options: [
-      'Coordination clashes between MEP services',
-      'Red zone - requires immediate action',
-      'Strengths, weaknesses, opportunities, and threats',
+      'The risk has a high probability and a severe safety impact',
+      'The risk can be passed to an insurer at low premium cost',
+      'The risk can be removed entirely by redesigning the works',
       'The risk impact is low and probability is low',
     ],
     correctAnswer: 3,
@@ -233,12 +233,12 @@ const quizQuestions = [
   },
   {
     id: 12,
-    question: 'Which document should reference the risk register?',
+    question: 'Which documents should reference the risk register?',
     options: [
       'Project execution plan, monthly reports, and project close-out report',
-      'Generate probability distributions for cost and schedule outcomes',
-      'Early warning signs that indicate a risk is materialising',
-      'Strengths, weaknesses, opportunities, and threats',
+      'Only the original tender submission, once at the outset',
+      'Only the final account, after the works are complete',
+      'Only the building control completion certificate',
     ],
     correctAnswer: 0,
     explanation:

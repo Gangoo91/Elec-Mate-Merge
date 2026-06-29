@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'You are listing kit on a fit-out spec. Which of the following items is PASSIVE infrastructure (designed to last 15-20 years), and which is ACTIVE equipment (designed to be refreshed every 3-5 years)?',
     options: [
-      'Patch panel = active. Network switch = passive.',
-      'Cat6A balanced cable, RJ45 outlets, fibre splice trays, patch panels, faceplates and the cable-management hardware are all PASSIVE — no powered electronics, no MAC address, no firmware. Switches, routers, wireless access points, PoE injectors, media converters, IP phones and PoE-powered cameras are all ACTIVE — they have power supplies, firmware and a refresh cycle dictated by the vendor.',
-      'Everything in a comms cabinet is active.',
-      'Everything is active when PoE is in use.',
+      'The patch panel is active and the network switch is passive — the panel does the work of forwarding.',
+      'Cable, outlets, splice trays, panels and faceplates are passive; switches, routers, APs and PoE injectors are active.',
+      'Everything mounted in a comms cabinet is active equipment on a 3-5 year refresh cycle.',
+      'Every item becomes active equipment as soon as PoE is energised across the cabling.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A wireless-AP vendor data sheet says the AP is "Class 8" and "draws up to 90 W from the port". A junior engineer wants to spec the PSE switch port for "100 W to be safe". What does BS 7671:2018+A4:2026 §716 actually require?',
     options: [
-      'Spec the PSE port to deliver 100 W.',
-      "PSE port must conform to BS EN IEC 62368-1 / 62368-3 — IEEE 802.3bt Type 4 caps PSE output at 90 W (PD draws up to 71.3 W after cable losses), and §716.523.2.101 imposes a hard regulatory cap of 750 mA per conductor in the cabling. Specifying '100 W' is a category error: there is no 100 W class in the standards, and exceeding the 750 mA per-conductor cap breaches BS 7671 from 15 April 2026.",
-      'PoE has no current limits.',
-      'BS 7671 §716 caps PSE at 60 W.',
+      'Spec the PSE port to deliver a full 100 W to give the Class 8 AP comfortable headroom.',
+      'There is no 100 W class: Type 4 caps PSE at 90 W, and §716.523.2.101 caps the cabling at 750 mA per conductor.',
+      'PoE imposes no current limits in BS 7671, so the port may be set to any output the switch supports.',
+      'BS 7671 §716 caps every PSE port at 60 W, so the 90 W draw is non-compliant and the AP cannot be used.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A screened (S/FTP) Cat6A installation is fitted in a building with metallic cable basket. From 15 April 2026, what does BS 7671 §444.5.3.1 require for the screen, the basket and the conductive sheath of the data cables?',
     options: [
-      'Nothing — screened data cabling is exempt from §444.',
-      "The metallic containment, conductive screens and conductive sheaths of data transmission cables MUST be connected to the equipotential bonding network — alongside any functional earthing conductors of antenna systems, the earthed pole of any DC supply for ICT equipment, functional earthing conductors and protective conductors. The data cabling's passive metallic parts are part of the bonding network, not separate from it.",
-      'Only the patch panels need to be bonded.',
-      'Bonding is only required for fibre, not copper.',
+      'Nothing — screened data cabling is wholly exempt from the §444 bonding requirements.',
+      'The metallic containment, conductive screens and conductive sheaths must all be connected to the equipotential bonding network.',
+      'Only the patch panels need to be bonded; the basket and screens are left floating.',
+      'Bonding is required only for fibre containment, not for copper-screen data cabling.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A new contractor is taking over maintenance of a building. They ask "where is the demarcation between the cabling system and the network?". What is the cleanest answer?',
     options: [
-      'There is no demarcation — it is one system.',
-      'The demarcation is the patch-panel port at the FD and the outlet face at the work area. Everything from the outlet (TO) to the FD patch panel and any fibre splices is PASSIVE INFRASTRUCTURE owned by the cabling contractor and certified to BS EN 50174-1. Everything plugged into either end — switches, routers, APs, cameras, IP phones, the user device — is ACTIVE EQUIPMENT owned by the network operator. The patch cord is the umbilical that connects the two regimes.',
-      'The demarcation is the building front door.',
-      'There is no clean demarcation — every job is bespoke.',
+      'There is no demarcation — the cabling and the network are one inseparable system.',
+      'It is the patch-panel port at the FD and the outlet face: passive link between, active kit plugged into either end.',
+      'The demarcation is the building front door, where responsibility passes to the occupier.',
+      'There is no clean demarcation — the boundary is negotiated bespoke on every single job.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What is the SINGLE most important reason structured cabling distinguishes between PASSIVE infrastructure and ACTIVE equipment?',
     options: [
-      'It looks tidier on a quote.',
-      "They have completely different life-cycle economics: passive infrastructure (cable, patch panels, outlets, splices, basket) is designed to last 15-20 years; active equipment (switches, routers, APs, PoE PSE) is refreshed every 3-5 years on the vendor roadmap. Get the passive infrastructure right and the active layer can churn over it for the building's life — that is the whole financial argument for structured cabling.",
-      'Active equipment is more expensive.',
-      'Only active equipment is regulated.',
+      'Their life-cycle economics differ: passive infrastructure lasts 15-20 years while active equipment is refreshed every 3-5 years.',
+      'It produces a tidier, more itemised quotation that commercial clients find easier to read and approve.',
+      'Active equipment is always more expensive than passive infrastructure, so it must be costed in a separate line.',
+      'Only active equipment is subject to regulation, so the passive infrastructure can be ignored for compliance purposes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Life-cycle separation is the architectural reason for the passive/active split. Passive infrastructure is installed once during fit-out, when access to walls, ceilings and risers is easy and cheap. Active equipment is replaced multiple times across the same period, when access has become hard and expensive. Designing the building so that the slow-churning bit is the easy-access bit is structured cabling's commercial trick.",
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Which list correctly classifies items as PASSIVE infrastructure (no electronics, no firmware, no power)?',
     options: [
-      'Switches, routers, APs, IP phones.',
-      'Balanced twisted-pair cable, RJ45 outlets, faceplates, patch panels, fibre splice trays, fibre cassettes, jumpers / patch cords, cable basket / tray, cable ties, labels.',
-      'PoE injectors and media converters.',
-      'Cameras and access-control readers.',
+      'Switches, routers, wireless access points and IP phones — the kit at each end of a link.',
+      'PoE injectors, media converters and managed PDUs that sit inline on the cabling.',
+      'IP cameras, access-control readers and addressable sensors mounted at the work area.',
+      'Balanced twisted-pair cable, RJ45 outlets, faceplates, patch panels, fibre splice trays and cassettes, jumpers/patch cords, cable basket/tray and labels.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Passive items have no power input, no firmware and no MAC address. Cable, outlets, faceplates, patch panels, fibre cassettes, splice trays, jumpers and the containment system are all passive. Anything with electronics that needs power and firmware (switches, APs, PoE injectors, cameras, media converters, IP phones) is active. The boundary is clear — power input + firmware = active, neither = passive.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Where is the conventional DEMARCATION between the cabling system (passive) and the network (active)?',
     options: [
-      'At the building boundary fence.',
-      "At the patch-panel port at the floor distributor and the outlet face at the work area. Everything between those two points (the permanent link plus any consolidation point and the supporting containment) is the cabling contractor's passive infrastructure, certified under BS EN 50173-1 / 50174-1. Everything plugged into either end — switches, APs, end-user devices — is the network operator's active equipment.",
-      'At the cable joint inside the wall.',
-      'There is no fixed demarcation.',
+      "At the patch-panel port at the floor distributor and the outlet face at the work area — everything between (the permanent link, any consolidation point and the containment) is the cabling contractor's passive infrastructure, and everything plugged into either end is the operator's active equipment.",
+      'At the building boundary, where the incoming carrier service enters the comms room.',
+      'At the first cable joint or splice inside the wall, where the installed cable meets the patch lead.',
+      'There is no fixed demarcation; it is negotiated separately on every project.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The patch-panel port and the outlet face are the canonical demarcation points. The cabling contractor warrants the link between them — tested, labelled, documented under BS EN 50174-1 / TIA-606-D. The network operator then owns everything plugged in. This split is what enables two separate refresh cycles: cabling on a 15-20 year clock, active equipment on a 3-5 year clock.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'IEEE 802.3bt Type 4 PoE delivers what maximum power at the PSE port and what maximum at the PD?',
     options: [
-      '100 W PSE / 100 W PD.',
-      '90 W PSE / 71.3 W PD — the PSE supplies up to 90 W, channel losses across up to 100 m of cable account for the difference, and the PD draws no more than 71.3 W. There is no 100 W PoE class.',
-      '60 W PSE / 51 W PD.',
-      '15.4 W PSE / 12.95 W PD.',
+      '100 W PSE / 100 W PD — the lossless top class with no channel de-rating.',
+      '90 W PSE / 71.3 W PD — channel losses over 100 m account for the difference.',
+      '60 W PSE / 51 W PD — the Type 3 four-pair class, often mislabelled Type 4.',
+      '15.4 W PSE / 12.95 W PD — the original Type 1 two-pair power level.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A 24-port switch is replaced with a 48-port switch from the same vendor. Does the cabling need re-pulling?',
     options: [
-      'Yes — the switch refresh always requires a re-pull.',
-      'No — the switch is ACTIVE equipment, the cabling is PASSIVE infrastructure. The 48 outlets each home-run to a 48-port patch panel; the patch cords and the new switch slot in. The cabling does not see a 24/48 distinction — it sees 48 permanent links to 48 outlets. This is exactly the case structured cabling is designed to absorb.',
-      'Yes — only if the new switch is a different vendor.',
-      'Yes — but only if the patch panel is the wrong colour.',
+      'Yes — any switch refresh requires the affected outlets to be re-pulled to the new device.',
+      'Yes — re-pulling is needed only when the replacement switch is from a different vendor.',
+      'No — the switch is active and the cabling passive: the home runs are already in place, so the new switch simply slots in.',
+      'No — but only if the patch panel happens to have spare ports of the correct performance category.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The cabling is service-independent. The same physical permanent links serve a 24-port switch, a 48-port switch, a chassis-based stack or a fibre-to-the-edge upgrade — provided the cabling specification (Cat6A / Class EA, 90 m permanent link, 100 m channel) was done correctly at first fit. Changing the switch is an ACTIVE-LAYER refresh that the passive infrastructure absorbs without modification.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A site has 24 Cat6A cables in a single bundle, all carrying Type 4 PoE++ continuously. Which BS 7671 clause and which non-BS-7671 standard are most directly relevant to the bundle thermal design?',
     options: [
-      'BS 7671 §413; ISO/IEC 11801-5.',
-      'BS 7671 §716.523.1.101 (design current, with NOTE 2 referring to PD CLC/TR 50174-99-1 and BS ISO/IEC 14763-2 for bundle planning) AND BS 7671 §716.523.2.101 (the hard 750 mA per-conductor cap), supported by ANSI/TIA TSB-184-A for bundle-de-rating guidance and BS EN 50174-2 for installation planning. The cabling is PASSIVE infrastructure but it is now also a thermal system — every loaded conductor adds to bundle temperature, and BS 7671 caps the per-conductor current at 750 mA regardless of how cool the bundle stays.',
-      'There is no thermal limit.',
-      'BS 7671 §544; ANSI/TIA-942-C.',
+      'BS 7671 §413 (protection by SELV/PELV); ISO/IEC 11801-5 (data-centre generic cabling).',
+      'BS 7671 §716.523 (design current and the 750 mA per-conductor cap); ANSI/TIA TSB-184-A for bundle de-rating.',
+      'There is no thermal limit on a Cat6A bundle, so no specific clause or de-rating standard applies.',
+      'BS 7671 §544 (protective bonding conductors); ANSI/TIA-942-C (data-centre infrastructure).',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       "A specifier wants to claim that a Cat6A install is 'future-proofed for 25 GBASE-T'. What about the PASSIVE infrastructure must be true for that claim to hold?",
     options: [
-      'Nothing — the active layer determines the speed.',
-      'The CHANNEL must measure as Class EA (or better) under BS EN 50346 / TIA-1152-A — full insertion-loss, NEXT, return-loss, propagation-delay test pass; cables installed within bundle de-rating limits; bonding/screening compliant with BS 7671 §444.5.3.1; permanent link ≤ 90 m. 25GBASE-T at 100 m requires Class EA or higher, which is what Cat6A delivers IF installed and certified properly. A Cat6A install that fails Class EA testing cannot deliver 25GBASE-T at full reach — Class is what you have, Category is what you bought.',
-      'It must use orange cable.',
-      'It must be installed by a vendor-certified contractor.',
+      'Nothing about the passive layer matters — the active switch determines whether 25GBASE-T runs.',
+      'The cable jacket must be a specific colour and the install must be signed off by a vendor-certified contractor.',
+      'The as-built channel must certify as Class EA or better, within bundle de-rating and the 90 m permanent-link limit.',
+      'The permanent link merely needs to be under 100 m long; the certified Class is irrelevant to the speed claim.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The PASSIVE infrastructure delivers a CHANNEL of measured performance. 25GBASE-T (IEEE 802.3bq, 2016) requires Class EA at 100 m, which Cat6A is designed to deliver. The certification process — TIA-1152-A field testing or BS EN 50346 — verifies that the channel as built meets the Class. Bundle de-rating, bonding compliance and 90 m permanent-link discipline are all install-practice constraints that determine whether the certification passes. "Future-proofed" only means anything if it is the certified Class number, not the cable Category number on the box.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Why does the §716 / §545 framework in BS 7671:2018+A4:2026 specifically apply to the PASSIVE cabling infrastructure?',
     options: [
-      'Because the active equipment is unregulated.',
-      "Because §716 recognises that the balanced cabling — historically a Layer-1 passive medium — is now ALSO an ELV DC power-distribution circuit when PoE is energised, and §545 recognises that the metallic infrastructure (cable screens, sheaths, basket) is part of the building's functional earthing system. Both clauses regulate the cabling itself, separately from the active PSE/PD equipment which is regulated under BS EN IEC 62368-1 / 62368-3.",
-      'Because A4:2026 deletes all active-equipment regulation.',
-      'Because the active equipment is regulated by BS 7430.',
+      'Because §716 treats PoE-energised cabling as an ELV DC power circuit and §545 covers its functional earthing.',
+      'Because the active equipment is entirely unregulated, so BS 7671 must step in and cover the cabling instead.',
+      'Because A4:2026 deletes all active-equipment regulation and folds it wholesale into the cabling clauses.',
+      'Because the active PSE/PD equipment is regulated by BS 7430, leaving §716/§545 to cover only the cabling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Before A4:2026, BS 7671 governed only the LV / ELV power that energised the active equipment. From 15 April 2026, §716 brings the cabling itself inside the wiring regs — recognising that PoE makes the cabling a power-distribution circuit — and §545 distinguishes ICT functional earthing of the metallic infrastructure from protective earthing under §543/544. Both clauses regulate the PASSIVE cabling, complementing the BS EN IEC 62368-1 / 62368-3 regulation of the ACTIVE PSE/PD equipment.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which TWO economic outcomes follow directly from a clean passive/active split?',
     options: [
-      'Lower-cost cabling and faster install.',
-      'Refresh cycles are decoupled (cabling on 15-20 years, active equipment on 3-5 years), and the contractor scope is decoupled (cabling contractor delivers and warrants passive infrastructure under BS EN 50174-1; network operator delivers and operates active equipment). Both decouplings reduce total cost of ownership and reduce procurement complexity at refresh.',
-      'Cheaper switches.',
-      'Higher rents.',
+      'Lower headline cabling cost and a faster first-fix install programme.',
+      'Cheaper active switches, because they no longer need to drive long cable runs.',
+      'Higher achievable rents, because certified cabling is a marketable building feature for tenants.',
+      'Refresh cycles are decoupled (cabling 15-20 yr, active 3-5 yr) and contractor scope is decoupled — both cutting total cost of ownership.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Clean passive/active separation produces two valuable economic outcomes simultaneously: (1) decoupled refresh cycles — the slow-churning passive infrastructure is built once at fit-out when access is cheapest, and the fast-churning active equipment is replaced multiple times without disturbing it; (2) decoupled contractor scope — different specialist trades, different warranties, different test/handover regimes. The discipline that delivers both is the strict definition of demarcation (patch-panel port + outlet face) and the strict separation of certification regimes.',
   },

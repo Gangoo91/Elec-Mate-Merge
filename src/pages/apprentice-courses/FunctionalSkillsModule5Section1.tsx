@@ -67,9 +67,9 @@ const FunctionalSkillsModule5Section1 = () => {
       question: 'Which reading skill is assessed in the Level 1 English reading exam?',
       options: [
         'Identifying main points, details, and understanding purpose',
-        'Test certificates and maintenance records throughout operational life',
-        'Installation not matching approved drawings',
-        'During the design and planning stage, before construction begins',
+        'Memorising whole passages of text word for word',
+        'Writing a long essay in response to each text',
+        'Correcting the spelling and grammar within the text',
       ],
       correctAnswer: 0,
       explanation:
@@ -92,10 +92,10 @@ const FunctionalSkillsModule5Section1 = () => {
       id: 6,
       question: "In the Level 1 ICT assessment, what does 'fitness for purpose' mean?",
       options: [
-        'Either end of previous day or first thing in morning',
-        'Flexible cables used and connections suitable for vibration',
+        'The document uses every formatting feature the software offers',
+        'The document is saved in as many file formats as possible',
         'The document is suitable for its intended audience and use',
-        'HSE investigation, fines, or legal action',
+        'The document is as long and detailed as it can possibly be',
       ],
       correctAnswer: 2,
       explanation:

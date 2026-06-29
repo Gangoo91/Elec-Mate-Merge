@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the BS EN 1838:2024 minimum illuminance on an escape route up to 2 m wide?',
     options: [
-      '0.5 lx — same as anti-panic.',
-      '1 lx, measured horizontally at floor level across the FULL WIDTH of the route, with the outer ¼ width on each side excluded. The reading is taken with a calibrated lux meter held horizontally. The 1 lx target has been the BS EN 1838 floor minimum since 1999, but the 2024 edition replaced the centre-line + central-band wording with a full-width rule plus edge exclusions. At 1 lx an occupant can see floor texture, step edges, kerb-stones, and changes of level.',
-      '5 lx — same as fire-equipment lighting.',
-      '15 lx — same as high-risk task lighting.',
+      '0.5 lx across the open floor — the same as open-area anti-panic lighting.',
+      '1 lx, horizontal at floor level across the full width, outer ¼ each side excluded.',
+      '5 lx vertical at the equipment — the same as fire-fighting equipment lighting.',
+      '15 lx at the working plane — the same as high-risk task area lighting.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'What is the maximum permissible uniformity ratio (Emax/Emin) along an escape route under BS EN 1838:2024?',
     options: [
-      '10:1 — same as on a sign face.',
-      '40:1 — the ratio of the brightest point to the darkest point along the route (within the non-excluded width) must not exceed forty to one. The cap exists because the human eye adapts to brightness; if a route has a 100 lx hot-spot beneath one luminaire and a 0.5 lx dark patch midway between luminaires, the eye adapts to the 100 lx and the dark patch is effectively invisible. The 40:1 rule prevents this by capping the ratio. In practice 40:1 is generous and most well-designed installations achieve 10:1 or 20:1; the 40:1 figure is the absolute fail line.',
-      '100:1.',
-      'Unlimited — only the minimum matters.',
+      '10:1 — the same uniformity ratio required across a sign face.',
+      '40:1 — brightest to darkest along the route, within the non-excluded width.',
+      '100:1 — the brightest point may be up to 100 times the darkest point.',
+      'Unlimited — only the minimum illuminance matters, not the uniformity.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'What is the BS EN 1838:2024 escape route lighting response time profile?',
     options: [
-      'Instant — full output within 0.1 s.',
-      '50 % of rated illuminance within 5 s, full rated illuminance within 60 s. The two-stage profile recognises that batteries / lamps need a brief warm-up; 5 s to 50 % is enough for the eye to start adapting and for occupants to begin moving toward exits. Full output within 60 s gives time for any ballast warm-up while the evacuation is already under way. The 5 s figure is the safety-critical one — anything slower than 5 s fails commissioning.',
-      '0.5 s to full output (same as high-risk task).',
-      '15 s to 50 %, 120 s to full.',
+      'Instant — full rated output within 0.1 s of the mains failing.',
+      '50 % of rated illuminance within 5 s, full rated illuminance within 60 s.',
+      '0.5 s to full output — the same response as for high-risk task lighting.',
+      '15 s to reach 50 % of rated, then 120 s to reach full rated output.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A new four-storey office with sleeping accommodation on the top floor is being designed. Which BS 5266-1:2025 minimum duration applies to the escape lighting?',
     options: [
-      '30 minutes — small premises rule.',
-      '3 hours — sleeping accommodation, multi-storey, and large premises all attract a 3 h minimum under BS 5266-1:2025. The presence of sleeping risk alone is enough; the multi-storey factor and the building size both reinforce it. The 1 h minimum is reserved for premises that are evacuated quickly, fully unoccupied at night, and small enough that re-entry is not anticipated. Sleeping accommodation makes re-entry by fire and rescue services likely, and the duration must support that as well as the initial evacuation.',
-      '1 hour — initial evacuation only.',
-      '8 hours — back-up generator rule.',
+      '30 minutes — applying the small-premises rapid-evacuation rule.',
+      '3 hours — sleeping accommodation and multi-storey both attract a 3 h minimum.',
+      '1 hour — covering the initial evacuation of the building only.',
+      '8 hours — applying a notional back-up generator standby rule.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,40 +82,40 @@ const quizQuestions = [
     question:
       'What is the BS EN 1838:2024 minimum illuminance on a 1.8 m wide corridor escape route, measured horizontally at floor level?',
     options: [
-      '0.5 lx.',
-      '1 lx — the headline escape route floor figure. The corridor is under 2 m wide so the ¼-width edge exclusion applies — 0.45 m excluded each side, central 0.9 m must achieve 1 lx throughout. A calibrated lux meter held horizontally at the floor anywhere within the non-excluded width must read at least 1 lx. At decision points (turns, junctions, stairs, exits) the figure is supplemented by the requirement for a luminaire within 2 m.',
-      '5 lx.',
-      '15 lx.',
+      '0.5 lx across the open floor — the open-area anti-panic figure.',
+      '5 lx vertical at the equipment — the fire-fighting equipment figure.',
+      '15 lx at the working plane — the high-risk task area figure.',
+      '1 lx across the full width, with the outer ¼ width each side excluded.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 1838:2024 §4 — 1 lx across the full width at floor level, with the outer ¼ width each side excluded for routes ≤ 2 m. Routes wider than 2 m use the outer 0.5 m exclusion. The 2013 centre-line + central-band wording is superseded.',
+      'BS EN 1838:2024 §4 — 1 lx across the full width at floor level, with the outer ¼ width each side excluded for routes ≤ 2 m (routes wider than 2 m use the outer 0.5 m exclusion). On a 1.8 m corridor that leaves a central 0.9 m to achieve 1 lx throughout, read horizontally with a calibrated lux meter. At decision points (turns, junctions, stairs, exits) the figure is supplemented by a luminaire within 2 m. The 2013 centre-line + central-band wording is superseded.',
   },
   {
     id: 2,
     question:
       'What is the maximum uniformity ratio (Emax/Emin) along an escape route under BS EN 1838:2024?',
     options: [
-      '10:1.',
-      '40:1 — the ratio of brightest to darkest point along the route (within the non-excluded width) must not exceed forty to one. The cap is the tightest constraint on luminaire spacing; meet 40:1 and the spacing is correct, fail 40:1 and the route has dark patches between luminaires that effectively disappear once the eye adapts to the bright spots. Most photometric design tools report uniformity as part of the calculation; achieving 40:1 typically means spacing ≤ 1.5 to 2 × mounting height.',
-      '100:1.',
-      'Unlimited.',
+      '40:1 — brightest to darkest point along the route, within the non-excluded width.',
+      '10:1 — brightest to darkest, tighter than this standard actually requires.',
+      '100:1 — the brightest point may be up to 100 times the darkest point.',
+      'Unlimited — only the minimum illuminance matters, not the uniformity.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 1838:2024 §4.2 — uniformity along the route within the non-excluded width ≤ 40:1. Spacing between luminaires is the single biggest driver of uniformity. Wider spacing → bigger dark gaps mid-span → uniformity ratio rises. The 40:1 cap is the practical limit on spacing for any given mounting height and luminaire output.',
+      'BS EN 1838:2024 §4.2 — uniformity along the route within the non-excluded width ≤ 40:1. The cap is the tightest constraint on luminaire spacing: meet 40:1 and spacing is correct; fail it and the route has dark patches between luminaires that disappear once the eye adapts to bright spots. Wider spacing means bigger dark gaps mid-span and a higher ratio. Achieving 40:1 typically means spacing no greater than 1.5 to 2 times mounting height.',
   },
   {
     id: 3,
     question:
       'A corridor escape luminaire is mounted at 2.5 m. Using a representative spacing rule of 1.5 to 2 × mounting height, what is the typical maximum spacing along the corridor that will keep uniformity inside 40:1?',
     options: [
-      '1.0 m — very dense.',
-      '3.75 to 5.0 m. The rule of thumb relates the longitudinal spacing of luminaires to their mounting height. At 2.5 m mounting, spacing of about 4 m is the working number — 1.6 × mounting height. Manufacturers publish photometric data that allows precise verification, but the 1.5 to 2 × mounting height rule is the design starter. Closer spacing improves uniformity at extra cost; wider spacing risks failing the 40:1 cap.',
-      '8.0 m — fast and cheap.',
-      '12.0 m.',
+      '1.0 m — very dense, 0.4 × mounting height.',
+      '8.0 m — fast and cheap, 3.2 × mounting height.',
+      '3.75 to 5.0 m — roughly 1.5 to 2 × the mounting height.',
+      '12.0 m — 4.8 × mounting height.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A practical spacing rule for typical commercial LED escape luminaires is 1.5 to 2 × mounting height. At 2.5 m mounting that gives 3.75 to 5 m spacing along the route. Photometric calculation refines the exact figure for the specific luminaire chosen. Spacing wider than 2 × mounting height typically fails the 40:1 uniformity cap.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A corridor leads to a final exit door. What does BS 5266-1:2025 require regarding luminaire placement near the exit?',
     options: [
-      'No specific rule.',
-      'A luminaire within 2 m of the final exit, plus dedicated illumination of the exit door, exit sign, and any change of level / threshold immediately outside the door — the 2025 edition explicitly extends the escape route to include the EXTERNAL final exit and the route from the final exit to the assembly point, so luminaire placement at the exterior is now mandatory not optional. The 2 m horizontal radius around the exit and around any change of level is the new cleanly-stated requirement.',
-      'Only signage is required.',
-      'Only floor-level lighting.',
+      'No specific luminaire placement rule applies in the vicinity of the final exit.',
+      'Only an illuminated running-man exit sign is required above the door, nothing more.',
+      'Only floor-level guidance lighting near the door threshold is required at the exit.',
+      'A luminaire within 2 m of the final exit, plus the external threshold and any change of level.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5266-1:2025 §7.3 extends the escape route definition to cover the EXTERNAL final exit and the route to the assembly point. A luminaire is required within 2 m of each final exit, on both sides of the door. Changes of level (steps, kerbs) outside the door must also be illuminated. This is a notable expansion from the 2016 edition, which stopped at the inside of the door.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'BS 5266-1:2025 introduced a new requirement around design responsibility and documentation. What is it?',
     options: [
-      'No new requirement.',
-      'A formal "design and installation record" must be produced by a competent person and signed by the designer, listing illuminance calculations, photometric data, luminaire placement, circuit topology, and verification results. The competent-person requirement is new — the 2025 edition explicitly requires the designer to be competent in emergency lighting design, with documented evidence (training, qualifications, experience). Before 2025 the requirement was implicit; now it is explicit and the record itself must be retained as part of the building safety information.',
-      'Only manufacturer data sheets are required.',
-      'Only the lux meter calibration certificate is required.',
+      'A formal design and installation record, produced and signed by a competent designer.',
+      'No new documentation requirement at all beyond the existing 2016 edition provisions.',
+      'Only the manufacturer luminaire data sheets need to be retained at handover.',
+      'Only the lux meter calibration certificate is required to be kept on record.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5266-1:2025 §5.2 and §13 — design and installation record + competent designer requirement. The record is a substantial document covering risk assessment outputs, photometric calculations, luminaire schedule, circuit diagram, commissioning results, and the designer\'s declaration of competence. It forms part of the building golden thread of fire safety information under the Building Safety Act 2022.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'BS EN 1838:2024 specifies the response-time profile for escape route lighting. Which option matches the 2024 edition?',
     options: [
-      'Instant 100 % output.',
-      '50 % within 5 s, 100 % within 60 s — the two-stage profile balances the eye\'s adaptation rate and the practical warm-up of LED drivers / battery inverters. 5 s to 50 % is the load-bearing figure for occupant safety; once 50 % illuminance is reached, occupants can see the route well enough to start moving. Full output within 60 s allows ballast / driver warm-up to complete while the evacuation is already under way. Where the 2024 edition adds a "50 s to full" allowance for high task illuminance areas, the 5 s / 60 s headline still applies to the escape route itself.',
-      '0.5 s to full output.',
-      'Unspecified — the rule is qualitative only.',
+      'Instant 100 % rated output at the moment of switchover to battery.',
+      '0.5 s to full rated output, the same response as for high-risk task lighting.',
+      '50 % of rated within 5 s, and 100 % of rated within 60 s.',
+      'Unspecified — the response-time rule is qualitative guidance only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 1838:2024 §4.3 — escape route response: 50 % rated illuminance within 5 s, full rated illuminance within 60 s. The 5 s figure is the safety-critical one (occupant adaptation and onset of movement). The 60 s figure allows ballast / driver settling. High-risk task lighting at a tighter 0.5 s response is a separate category, not a replacement for the escape route rule.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'A multi-storey care home with sleeping accommodation on every floor is being designed. What is the minimum duration of escape lighting under BS 5266-1:2025?',
     options: [
-      '30 minutes.',
-      '3 hours — sleeping accommodation, multi-storey, and large premises all individually demand 3 h minimum under BS 5266-1:2025 §6.4. A care home triggers all three. The 3 h figure must support the initial evacuation, fire-and-rescue re-entry to retrieve occupants who could not self-evacuate, fire-fighting operations, and any subsequent damage limitation. 1 h is reserved for fully-evacuated, no-sleeping, small premises only.',
-      '1 hour.',
-      '24 hours.',
+      '30 minutes — applying the small-premises rapid-evacuation rule.',
+      '1 hour — covering the initial evacuation of the building only.',
+      '24 hours — continuous standby illumination for a full day.',
+      '3 hours — sleeping accommodation and multi-storey each demand 3 h.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A care home is the textbook 3 h case. Sleeping accommodation alone is decisive; the multi-storey nature reinforces it; the building size adds further weight. Designers who specify 1 h on an instinctive cost basis fail BS 5266 audit and create a serious liability under the Regulatory Reform (Fire Safety) Order 2005.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'BS 5266-1:2025 expanded the escape route definition. Which of the following are now explicitly inside the escape route?',
     options: [
-      'Only internal corridors.',
-      'Internal corridors, internal stairs, lobbies, the inside face of final exit doors, the OUTSIDE face of final exit doors, and the route from the final exit to the assembly point — including any external changes of level (steps, kerbs, ramps). The 2025 edition closes a loophole in the 2016 wording where the escape route effectively ended at the door. Designers must now provide emergency illumination on the external side of every final exit and on the path to the assembly point, at the same illuminance and uniformity as internal escape routes.',
-      'Only stairs.',
-      'Only the lobby.',
+      'Internal routes plus the external final exit and the path to the assembly point.',
+      'Only the internal corridors running up to each final exit door, stopping at the door.',
+      'Only the internal escape stairs and their associated intermediate landings.',
+      'Only the protected lobby immediately inside the final exit door of the building.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5266-1:2025 §7.3 — escape route includes external final exits and the route to the assembly point. Practical implication: external bulkheads / wall-mounted emergency luminaires at every final exit, with photometric verification that 1 lx is achieved at floor level on the external escape path up to the assembly point. Older installations may need retrofit at the next major upgrade cycle.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'A retail unit has a 4 m wide internal escape corridor. How does the BS EN 1838:2024 rule apply?',
     options: [
-      'Single centreline at 1 lx (the superseded 2013 wording).',
-      'The 4 m route requires 1 lx across the FULL width at floor level, with the outer 0.5 m on each side excluded. The non-excluded 3 m central strip must achieve 1 lx throughout, with 40:1 uniformity along the route. Typically achieved by two parallel rows of luminaires (one row on each side of the corridor) or a central row of high-output luminaires producing 1 lx everywhere across the 3 m.',
-      'Only the edges need illumination.',
-      'Floor strip lighting only.',
+      'A single centre-line strip at 1 lx, applying the superseded 2013 wording.',
+      'Only the two outer edges of the corridor need to be illuminated to 1 lx.',
+      '1 lx across the full width, with the outer 0.5 m each side excluded (central 3 m).',
+      'Floor-level strip lighting only, running along the base of the corridor wall.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 1838:2024 §4 — full width 1 lx at floor level with the outer 0.5 m each side excluded for routes wider than 2 m. The 2013 wording (1 lx centre-line + 0.5 lx central band, with wide-route decomposition into 2 m strips) is superseded. Designers can use side-mounted, central-row, or hybrid layouts so long as the non-excluded width achieves 1 lx everywhere.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'What competent-person requirement does BS 5266-1:2025 introduce for emergency lighting design?',
     options: [
-      'Anyone may design.',
-      'The designer must be a competent person — defined as a person with the training, qualifications and experience to undertake the work — and the design and installation record must be signed declaring competence. The 2025 edition makes this explicit; previously it was implied by general industry practice. Acceptable evidence includes IEng / CEng with relevant emergency lighting experience, ICEL (Industry Committee for Emergency Lighting) qualifications, manufacturer-specific design certifications, or documented experience under a chartered engineer. The record forms part of the building golden thread under the Building Safety Act 2022.',
-      'Only the installer needs competence.',
-      'No specific requirement.',
+      'Anyone may design the emergency lighting, with no stated competence requirement.',
+      'Only the installer, not the designer, needs documented competence at handover.',
+      'No specific designer competence requirement is set by the 2025 edition at all.',
+      'A competent designer must produce and sign the design and installation record.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5266-1:2025 §5.2 + §13 — competent designer + signed design and installation record. The record retains photometric data, luminaire schedule, circuit topology, risk assessment, commissioning results, and competence declaration. Forms part of the golden thread of fire safety information for Higher-Risk Buildings under the Building Safety Act 2022.',
   },

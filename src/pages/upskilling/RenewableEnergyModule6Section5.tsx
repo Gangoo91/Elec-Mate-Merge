@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Outdoor 7 kW Mode 3 wallbox on a UK driveway — what minimum IP rating is appropriate?',
     options: [
-      'IP20',
-      'IP54 minimum, IP65 typical. The IP first digit covers solid object ingress (5 = dust-protected); second digit covers water ingress (4 = splashing water from any direction; 5 = jet water). Most UK 2025-26 wallboxes are rated IP54 or IP65 as factory standard. Outdoor exposed locations: IP65 preferred',
-      'IP00',
-      'IP10',
+      'IP20 — a first digit of 2 keeps fingers out, the dominant risk for a wall-mounted outdoor unit',
+      'IP54 minimum, IP65 typical — dust-protected with splash or jet-water protection for the outdoor location',
+      'IP44 minimum — a second digit of 4 gives full immersion protection, which a driveway unit needs',
+      'IP2X is sufficient outdoors if the unit is above 1 m, since rain cannot reach a wallbox at that height',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'BS EN 62262:2002 +A1:2021 — what does the IK code measure?',
     options: [
-      'Internal kitchen rating',
-      'Degrees of protection provided by enclosures for electrical equipment against external mechanical impacts. The IK code (0-10) rates impact energy resistance — IK00 (no protection) to IK10 (20 J of impact energy). Outdoor EV wallboxes typically rated IK08 (5 J) or IK10 (20 J)',
-      'Investment classification',
-      'Insulation kV rating',
+      'Protection against ingress of water under pressure, complementing the second digit of the IP code',
+      'Protection of enclosures against external mechanical impact — IK00 (none) to IK10 (20 J)',
+      'The maximum insulation withstand voltage of the enclosure in kV, i.e. the fault voltage it can contain',
+      'The thermal class of the enclosure, rating the maximum continuous operating temperature of the housing',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What’s the typical mounting height for the Type 2 socket / connector on a UK domestic wallbox?',
     options: [
-      '0.5 m above ground',
-      'Manufacturer-specified; typical range 1.0-1.4 m above the standing surface. Considerations: ergonomic plug-in height for adults; cable strain relief (the EV cable hangs in a loop, not in tension); accessibility for users with reduced mobility; protection from splash / road spray',
-      '2.5 m above ground',
-      'Whatever fits',
+      'As low as practical, around 0.5 m, so the cable reaches the vehicle charge port without lifting',
+      'Manufacturer-specified, typically 1.0-1.4 m above the standing surface for ergonomics and strain relief',
+      'At least 2.5 m, matching the minimum height for outdoor accessories to keep the socket from children',
+      'There is no recommended height; the unit goes wherever the cable run from the consumer unit is shortest',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Cable entry into the outdoor wallbox enclosure — what is the typical glanding arrangement?',
     options: [
-      'Tape the cable in place',
-      'Manufacturer-supplied IP-rated cable gland matched to the cable diameter (T+E flat profile needs a different gland to round SWA). The gland maintains the wallbox’s IP rating at the cable entry point — improperly glanded cable defeats the entire enclosure rating. Drainage and sealing per the manufacturer instructions',
-      'Push cable through any hole',
-      'Use silicone sealant',
+      'Any compression gland fits any cable, so one standard round gland is used for flat T+E or round SWA alike',
+      'An IP-rated gland matched to the cable diameter, maintaining the wallbox IP rating at the entry point',
+      'A grommet alone is adequate, since the wallbox internal seal maintains the IP rating regardless of the entry',
+      'Seal the entry with expanding foam, filling the gap for both the IP seal and mechanical support',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer wants the wallbox mounted on a north-facing wall directly exposed to prevailing weather. What’s the IP / IK consideration?',
     options: [
-      'No consideration',
-      'Exposed north-facing wall = full driving-rain + wind-blown debris exposure. Specify IP65 (or higher) and IK10 (or higher) wallbox. Alternative: relocate to a more sheltered position (under eaves overhang, on a sheltered side wall) where IP54 / IK08 would be adequate. Reg 522 external influences drives the IP/IK selection',
-      'Use indoor wallbox',
-      'Wrap in plastic',
+      'Exposed wall means driving rain and debris — specify IP65 / IK10, or relocate to a sheltered IP54 / IK08 position',
+      'A standard IP44 / IK07 wallbox is sufficient anywhere outdoors, since all are factory weatherproofed for the UK',
+      'Build a small open-fronted timber canopy so a basic IP20 indoor-rated wallbox can sit in the sheltered pocket',
+      'Specify the highest IK rating available but disregard the IP digit, debris impact being the dominant risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 522 external influences requires the designer to assess the actual site conditions. Exposed north-facing wall = high water exposure (driving rain), high mechanical risk (wind-blown debris, hail), variable temperature. IP65 / IK10 is the conservative spec for fully-exposed sites. Cheaper alternative: relocate the wallbox to a more sheltered position (under eaves, side wall) where the standard IP54 / IK08 wallbox is adequate — saves the cost of the upgrade. Customer-side considerations: cable routing to the new position; charging convenience. Cert evidence bundle records the IP/IK selection + the site exposure assessment.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BS EN IEC 61439-7:2023 — which application does it specifically cover for the EV space?',
     options: [
-      'Hospital installations',
-      'Low-voltage switchgear and controlgear assemblies — Assemblies for specific applications such as marinas, camping sites, market squares, electric vehicle charging stations. Where multiple wallboxes are assembled into a charging-station enclosure (commercial / fleet / public sites), this standard applies to the assembly. UK 2025-26 domestic single wallbox usually NOT in BS EN IEC 61439-7 scope (each wallbox is a complete factory-built unit)',
-      'Solar PV inverters',
-      'Domestic socket-outlets',
+      'The product standard for the individual wallbox itself, replacing BS EN 61851 for a single 7 kW charger',
+      'The standard for the EV charging cable and Type 2 connector assembly — plug, lead and vehicle-side coupler',
+      'LV switchgear assemblies for specific applications, applying where multiple wallboxes share a charging-station enclosure',
+      'The earthing and PEN-fault protection requirements for EV charging, like the open-PEN provisions of Section 722',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN IEC 61439-7:2023 covers low-voltage switchgear and controlgear assemblies for specific applications including EV charging stations. Relevant when multiple charging points are assembled into a single enclosure (e.g. commercial / fleet / public charging hubs). UK 2025-26 single-wallbox domestic install — each wallbox is a factory-built complete unit; 61439-7 typically not invoked directly. Section 722 still applies; the wallbox’s factory conformity (BS EN 61851 + 62196-2 + 62955) is the primary product standard. M7 covers commercial / public charging where 61439-7 becomes directly relevant.',
   },
@@ -109,23 +109,23 @@ const quizQuestions = [
     question:
       'A wallbox is mounted on an external garage wall, with the cable routed through the wall from the integral CU. What’s the wall penetration consideration?',
     options: [
-      'Drill any hole',
-      'Wall penetration through external wall: weather-resistant sleeve / conduit; downward-sloping drip loop on outside of the wall to prevent water tracking along the cable into the wall; cable seal at both interior and exterior sides of the wall; mechanical protection (steel sleeve or conduit) if the wall is hollow / low-density. Reg 522 + BS 5839 considerations for fire separation if the wall is fire-rated (party wall, garage-to-dwelling)',
-      'Just push through brick',
-      'Silicone everywhere',
+      'Weather sleeve, exterior drip loop, seal both sides, mechanical protection, and fire-stopping if the wall is fire-rated',
+      'Drill the hole sloping upward outside-to-inside so rainwater runs back out, then seal only the internal face with mastic',
+      'Use an oversized hole so the cable is never under pressure from the brick, leaving the gap open for ventilation',
+      'Route the cable through the existing airbrick to avoid drilling, relying on it for weather and fire separation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Wall penetration through an external wall has multiple considerations: (1) weather sealing — water can track along cable sheath if the entry isn’t sealed both sides; (2) mechanical protection — sleeve / conduit through hollow walls or thermoplastic blocks; (3) fire separation — if the wall is a fire-rated party wall (typical garage-to-dwelling), the penetration must be made good per the fire strategy / Approved Document B; (4) drip loop — the cable should slope downward on the outside before entering the wall to drain water away; (5) gland / seal at the wallbox entry. Cert evidence bundle records the wall penetration method + photographs.',
+      'Wall penetration through an external wall has multiple considerations: (1) weather sealing — water can track along cable sheath if the entry isn’t sealed both sides; (2) mechanical protection — sleeve / conduit through hollow walls or thermoplastic blocks; (3) fire separation — if the wall is a fire-rated party wall (typical garage-to-dwelling), the penetration must be fire-stopped and made good per Approved Document B (England) / equivalent; (4) drip loop — the cable should slope downward on the outside before entering the wall to drain water away; (5) gland / seal at the wallbox entry. Cert evidence bundle records the wall penetration method + photographs.',
   },
   {
     question:
       'A customer’s wallbox is to be mounted on a wooden fence panel for ease of cabling. What’s the install consideration?',
     options: [
-      'Fine — just screw on',
-      'Wooden fence: typically not a stable enough mounting surface for a wallbox’s vibration and cable strain. Manufacturer instructions usually require a non-combustible solid backboard (cement board, masonry wall, fire-rated panel). Mount the wallbox on a proper backboard fixed to the fence post or wall, not directly to the fence panel. Reg 522 external influences considers structural stability',
-      'Use plastic anchors',
-      'No fixing needed',
+      'A fence panel is fine if long coach screws reach the horizontal rails, which carry the unit and cable weight',
+      'A wooden fence panel is too unstable and combustible — mount on a non-combustible backboard fixed to a post or wall',
+      'Mount on the fence but treat the timber with intumescent paint first to give the surface the required fire rating',
+      'A fence is acceptable up to 7 kW; only 22 kW units require a masonry or non-combustible backing surface',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'A wallbox is being installed on a brick wall using the manufacturer-supplied bracket. The fixings supplied are M6 wall plugs. What’s the install practice?',
     options: [
-      'Use any plug',
-      'Use the manufacturer-supplied fixings or equivalent rated for the wall material. M6 wall plugs into solid brick / blockwork: drill correct diameter pilot hole, clean dust, insert plug, drive screw. Plasterboard partition: cannot use brick plugs — use cavity / collapsible / through-fixings rated for the load. Hollow blocks: cavity fixings or longer screws into the next solid course. Reg 522 + manufacturer torque settings for the screws',
-      'No fixings needed',
-      'Glue with silicone',
+      'Substitute the longest fixings available regardless of wall type, a deeper screw always beating the supplied M6 plug',
+      'Drill oversized holes and pack them with filler before inserting the plugs, to grip the screw more firmly in soft brick',
+      'Use the supplied or equivalent fixings rated for the wall material — brick plugs in masonry, cavity fixings in plasterboard',
+      'Fix only the top two mounting points so the bracket can flex with thermal movement, leaving the lower fixings loose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fixings must match the wall material AND the manufacturer’s load specification. Solid brick / dense block: M6-M8 wall plugs as supplied. Plasterboard partition: cavity fixings (toggles, hollow-wall anchors) rated for the wallbox weight including cable load. Hollow concrete block: deeper fixings or through-bolts to a solid backing. Stone / mixed walls: drill carefully, may need resin / chemical fixings for reliable load. Wallbox manufacturer instructions usually specify the fixings or a minimum load rating. Cert evidence bundle records the fixing method + manufacturer reference.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Where does Section 522 (external influences) interact with the wallbox install?',
     options: [
-      'Not at all',
-      'Section 522 sets requirements for cables and other equipment in respect of external influences such as ambient temperature, presence of water, foreign solid bodies, corrosive substances, mechanical stresses, fauna, solar radiation. The outdoor wallbox install assesses each: water (IP rating), foreign solids (IP rating), mechanical impact (IK rating), corrosive atmospheres (coastal), solar radiation (UV-resistant SWA / specified plastics), animals (bird nests in cable trays, rodent damage). Cert evidence bundle records the external influences assessment',
-      'Only for indoor',
-      'Section 522 is about something else',
+      'Section 522 applies only to the origin of the installation, not to final circuits such as a wallbox supply',
+      'Section 522 governs only cable current-carrying derating, affecting sizing but not the IP or IK rating choice',
+      'Section 522 sets external-influence requirements — water, solids, mechanical impact, corrosion, fauna, solar radiation',
+      'Section 522 covers documentation and labelling, so its only wallbox interaction is the consumer-unit warning notice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 522 of BS 7671 sets requirements for cables and equipment under external influences: ambient temperature (AA), presence of water (AD), presence of foreign solid bodies (AE), presence of corrosive substances (AF), mechanical stresses (AG), fauna (AL), solar radiation (AN). Outdoor wallbox: each category needs assessment. UK coastal install: corrosive atmosphere (AF code) drives stainless / galvanised hardware; UK rural install: fauna (rodent damage to exposed cabling); UK exposed installs: solar radiation degrades unprotected cable sheath. Cert evidence bundle records the assessment with the relevant Section 522 codes and the mitigations.',
   },

@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'How does a CTU (Count Up) counter increment its value?',
     options: [
       'By one each time the count input transitions from FALSE to TRUE (rising edge)',
-      'Dismissing the significance of small day-to-day achievements',
-      'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
-      'Because natural light distribution varies across the space',
+      'By one for every PLC scan cycle while the count input is held TRUE',
+      'Continuously in proportion to the analogue value at the count input',
+      'By one each time the reset input is activated by the operator',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'sequencer-purpose',
     question: 'What is the main purpose of a sequencer in PLC programming?',
     options: [
-      'An electrically insulated safety helmet tested to withstand electrical contact',
+      'Convert an analogue sensor input into a scaled engineering value',
       'Control a process that must follow defined steps in a fixed order with transition conditions',
-      'Holding your breath can raise blood pressure dangerously and reduce stability',
-      'A competent person, at the start of each shift and after any event likely to have affected stability',
+      'Provide overcurrent protection for the PLC output modules',
+      'Generate a continuous fixed-frequency clock pulse for timing',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'retentive-timer',
     question: 'How does a retentive timer differ from a standard TON timer?',
     options: [
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
+      'A retentive timer counts down from its preset rather than up from zero',
       'A retentive timer remembers its accumulated time if the input goes FALSE, resuming when TRUE returns',
-      'An overload occurs in a sound circuit due to excess demand; a short-circuit results from a fault of negligible impedance',
-      'Toe boards, brick guards, debris netting, tool lanyards, and exclusion zones should be used as appropriate',
+      'A retentive timer can only be used with high-speed counter inputs',
+      'A retentive timer resets automatically every PLC scan cycle',
     ],
     correctIndex: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'The difference between the accumulated value and the preset value in a timer is:',
     options: [
-      'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
-      'A single pulse of fixed duration regardless of how long the input is held',
+      'The preset is the current elapsed time, while the accumulated value is the fixed target set by the programmer',
+      'The accumulated value is the time base resolution, while the preset is the number of scan cycles completed',
       'The preset is the target time; the accumulated is the current elapsed time counting towards that target',
-      'A graphical method for designing sequential control processes, standardised in IEC 60848',
+      'Both values are always identical, because the timer copies the preset into the accumulated register on every scan',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'A high-speed counter (HSC) differs from a standard counter because it:',
     options: [
-      'The enable input going FALSE before the preset is reached, causing the timer to reset',
-      'A graphical method for designing sequential control processes, standardised in IEC 60848',
-      'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
+      'Counts only on the falling edge of the input signal rather than the rising edge',
+      'Can count up but is unable to count down or be reset by the programme',
+      'Relies entirely on the normal scan cycle but uses a faster internal system clock',
       'Counts input pulses via dedicated hardware, independent of the PLC scan cycle',
     ],
     correctAnswer: 3,

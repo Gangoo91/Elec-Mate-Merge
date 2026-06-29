@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'lighting-profile',
     question: 'Office lighting load profile is primarily driven by:',
     options: [
-      'Within 15 days of the incident',
+      'Ambient external temperature only',
       'Occupancy and daylight availability',
-      'Snubber to suppress switch-off transients',
-      'In steel conduit with proper earthing',
+      'The supply tariff in force at the time',
+      'Lift and escalator movement patterns',
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a load profile?',
     options: [
-      'A current source in parallel with a resistance',
+      'The total connected load of every circuit added together',
       'A graph showing how electrical demand varies over time',
-      'Large commercial buildings, hospitals, high-rise buildings',
-      'A range around the setpoint where no adjustment occurs',
+      'A schedule listing every protective device in the installation',
+      'The fixed maximum demand agreed with the DNO',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Pre-conditioning HVAC starts before occupancy to:',
     options: [
-      'False - always check specifications for socket types',
-      'Temperature drop is the same across each path',
-      'To protect against moisture ingress and maintain IP rating',
+      'Reduce the connected load seen by the DNO supply',
+      'Shift all energy use into the cheapest tariff period',
+      'Avoid the need for any night-time setback control',
       'Achieve comfortable conditions at start of occupancy',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'Daylight-linked lighting control reduces electrical demand by:',
     options: [
       'Dimming artificial lights proportionally to daylight contribution',
-      'Investigation to identify root cause before taking action',
-      'Temperature, humidity, and material storage conditions',
-      'Consulting, training, inspection, or reduced-hours roles',
+      'Switching all luminaires off whenever any daylight is present',
+      'Running luminaires at full output to match daylight colour',
+      'Restricting lighting use to the hours of darkness only',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'Retail lighting demand peaks when?',
     options: [
       'During trading hours consistently',
-      'A site survey and risk assessment',
-      'Inductor/capacitor filter',
-      'High accuracy and minimal sensor movement',
+      'Only on dark winter afternoons',
+      'In a short burst at opening time',
+      'Mainly overnight for security lighting',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'Understanding load profiles helps with:',
     options: [
-      'To set out how health and safety will be managed during pre-construction',
-      'Variable Speed Drive/Variable Frequency Drive',
+      'Selecting the correct cable colour codes for a circuit',
+      'Determining the IP rating required for outdoor equipment',
       'Maximum demand assessment, tariff selection, and load management',
-      'Volume control damper (VCD) or balancing damper',
+      'Setting the disconnection time for a final circuit RCD',
     ],
     correctAnswer: 2,
     explanation:

@@ -12,83 +12,108 @@ export const SmartHomeModule4Section3Quiz = () => {
     {
       question: 'Why is indoor air quality important?',
       options: [
-        'It only affects temperature comfort',
         'It affects health, comfort, and productivity',
+        'It only affects how warm a room feels',
         'It only matters in industrial buildings',
-        'It has no measurable impact',
+        'It has no measurable impact on people',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Poor indoor air quality is linked to headaches, fatigue and reduced concentration, so it directly affects occupant health and productivity.',
     },
     {
-      question: 'What is the ideal indoor humidity range?',
-      options: ['20-30%', '40-60%', '70-80%', '80-90%'],
-      correct: 1,
+      question: 'What is the ideal indoor relative humidity range?',
+      options: ['40–60%', '20–30%', '70–80%', '80–90%'],
+      correct: 0,
+      explanation:
+        'Keeping relative humidity between roughly 40% and 60% limits both mould growth and the dryness that causes static and irritation.',
     },
     {
-      question: 'What problems occur if humidity is too high?',
+      question: 'What problem occurs if indoor humidity is too high?',
       options: [
-        'Static electricity increases',
+        'Static electricity builds up rapidly',
+        'The air becomes uncomfortably dry',
         'Mould growth and dust mites proliferate',
-        'Air becomes too dry',
-        'CO₂ levels rise',
+        'CO₂ levels rise as a direct result',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Excess moisture encourages mould and dust mites, which worsen allergies and can damage the building fabric.',
     },
     {
       question: 'What is the effect of high CO₂ levels on occupants?',
       options: [
-        'Improved concentration',
+        'Improved concentration and alertness',
         'Reduced concentration and drowsiness',
-        'Better sleep quality',
-        'No noticeable effects',
+        'Noticeably better sleep quality',
+        'No measurable effect at all',
       ],
       correct: 1,
+      explanation:
+        'Rising indoor CO₂ is associated with drowsiness and impaired decision-making, which is why fresh-air ventilation matters.',
     },
     {
-      question: 'At what CO₂ level is ventilation usually increased?',
-      options: ['500 ppm', '1000 ppm', '1500 ppm', '2000 ppm'],
-      correct: 1,
+      question: 'At roughly what CO₂ level is ventilation usually increased?',
+      options: ['500 ppm', '750 ppm', '3000 ppm', '1000 ppm'],
+      correct: 3,
+      explanation:
+        'Around 1000 ppm is a common indoor air-quality threshold above which additional fresh-air ventilation is recommended.',
     },
     {
-      question: 'Name two pollutants detected by air quality sensors.',
+      question: 'Which pair of pollutants are commonly detected by air quality sensors?',
       options: ['Oxygen and nitrogen', 'PM2.5 and VOCs', 'Water vapour and CO₂', 'Heat and light'],
       correct: 1,
+      explanation:
+        'Air-quality sensors typically measure particulate matter (PM2.5) and volatile organic compounds (VOCs), key indicators of pollution.',
     },
     {
-      question: 'How can HVAC respond to poor indoor air quality?',
+      question: 'How can an HVAC system respond to poor indoor air quality?',
       options: [
-        'Only by changing temperature',
-        'Increase ventilation and activate filtration',
-        'Turn off all systems',
-        'Reduce air circulation',
+        'By only changing the temperature setpoint',
+        'By turning off all systems immediately',
+        'By reducing air circulation to trap pollutants',
+        'By increasing ventilation and activating filtration',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'On detecting poor air quality, an HVAC system can bring in more fresh air and run filtration to dilute and remove pollutants.',
     },
     {
-      question: "True or False: Sensor placement doesn't affect accuracy.",
-      options: ['True', 'False'],
-      correct: 1,
-    },
-    {
-      question: 'Give one benefit of environmental sensors in energy management.',
+      question: 'How does sensor placement affect air-quality readings?',
       options: [
-        'They increase energy consumption',
-        'Demand-controlled ventilation reduces unnecessary HVAC operation',
-        'They have no energy impact',
-        'They only work during winter',
+        'Placement strongly affects accuracy and must be considered',
+        'Placement has no effect on the readings',
+        'Only the brand of sensor affects accuracy',
+        'Sensors are accurate only when mounted at floor level',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Poorly sited sensors — near vents, windows or heat sources — give misleading readings, so placement is critical to accuracy.',
+    },
+    {
+      question: 'What is one energy-management benefit of environmental sensors?',
+      options: [
+        'They increase overall energy consumption',
+        'They have no impact on energy use',
+        'Demand-controlled ventilation cuts unnecessary HVAC operation',
+        'They only function during the winter',
+      ],
+      correct: 2,
+      explanation:
+        'By ventilating only when sensors show it is needed, demand-controlled ventilation avoids running the HVAC system unnecessarily.',
     },
     {
       question:
-        'An office reports drowsy staff and poor focus. The CO₂ sensor shows 1500 ppm. What action should the HVAC system take?',
+        'An office reports drowsy staff and poor focus, and the CO₂ sensor reads 1500 ppm. What should the HVAC system do?',
       options: [
         'Reduce ventilation to save energy',
-        'Increase fresh air supply and boost ventilation',
-        'Turn off air conditioning',
-        'No action needed',
+        'Turn the air conditioning off',
+        'Increase fresh-air supply and boost ventilation',
+        'Take no action as 1500 ppm is acceptable',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'At 1500 ppm CO₂ the air is stale, so increasing fresh-air supply and ventilation restores alertness and comfort.',
     },
   ];
 

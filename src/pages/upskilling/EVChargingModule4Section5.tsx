@@ -9,16 +9,16 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m4s5-check1',
     question: 'Which SPD type provides protection against direct lightning strikes?',
-    options: ['Type 3', 'Type 2', 'Type 1', 'Type AC'],
-    correctIndex: 2,
+    options: ['Type 1', 'Type 2', 'Type 3', 'Type 2+3 combined'],
+    correctIndex: 0,
     explanation:
       'Type 1 SPDs are designed for direct lightning protection, tested with 10/350μs waveforms. They handle the high energy content of lightning currents and are installed at the service entrance.',
   },
   {
     id: 'evcharging-m4s5-check2',
     question: 'What is the maximum recommended total lead length for SPD connections?',
-    options: ['2m', '1m', '0.5m', '0.25m'],
-    correctIndex: 2,
+    options: ['2m', '1m', '0.75m', '0.5m'],
+    correctIndex: 3,
     explanation:
       'SPD connecting leads should be kept as short as possible, ideally less than 0.5m total length (0.25m each way). Longer leads increase inductance and reduce protection effectiveness.',
   },
@@ -26,8 +26,8 @@ const quickCheckQuestions = [
     id: 'evcharging-m4s5-check3',
     question:
       'What is the minimum distance between SPD protection stages without decoupling inductors?',
-    options: ['1m', '5m', '10m', '20m'],
-    correctIndex: 2,
+    options: ['5m', '10m', '15m', '20m'],
+    correctIndex: 1,
     explanation:
       'A minimum of 10m cable length is required between protection stages for proper energy coordination. If this distance cannot be achieved, decoupling inductors (typically 10-15μH) must be used.',
   },

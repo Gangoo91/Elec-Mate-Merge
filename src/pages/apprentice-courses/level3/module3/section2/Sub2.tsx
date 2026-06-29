@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'The formula R = ρL/A means resistance:',
     options: [
-      'To ensure exact positioning as per drawings',
+      'Decreases with length and increases with cross-sectional area',
       'Increases with length and decreases with cross-sectional area',
-      'Time-current characteristics and adjustable settings',
-      'Section 9 — identification and warning notices.',
+      'Depends only on the applied voltage, not the conductor itself',
+      'Increases with both length and cross-sectional area',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,9 +131,9 @@ const quizQuestions = [
       "Kirchhoff's voltage law states that around any closed loop:",
     options: [
       'The sum of EMFs equals the sum of voltage drops (algebraic sum = 0)',
-      'Providing professional counselling for mental health conditions',
-      'Suitable for the environment and adequately protected',
-      'Regular progress reports, milestone notifications, and problem alerts',
+      'The current is the same at every point in the loop',
+      'The voltage across each component is identical',
+      'The total resistance equals the sum of the branch conductances',
     ],
     correctAnswer: 0,
     explanation:

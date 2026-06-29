@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'sensor-function',
     question: 'What is the primary function of sensors in a smart home system?',
     options: [
-      'To physically control devices',
       'To detect environmental conditions and changes',
+      'To physically control devices',
       'To store data locally',
       'To provide user interfaces',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Sensors detect environmental conditions such as motion, temperature, light levels, and door/window status, providing the data that smart home systems use to make decisions.',
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What role do actuators play in smart home automation?',
     options: [
       'They only measure temperature',
-      'They provide the physical action based on control signals',
       'They store user preferences',
+      'They provide the physical action based on control signals',
       'They only communicate with smartphones',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Actuators are devices that perform physical actions in response to control signals, such as switching relays, motor-driven blinds, or valve controllers for heating systems.',
   },
@@ -41,11 +41,11 @@ const quickCheckQuestions = [
     question: 'What is the purpose of a smart home controller or hub?',
     options: [
       'To replace all sensors',
-      'To provide centralised processing and coordination of devices',
       'To increase power consumption',
       'To eliminate the need for internet',
+      'To provide centralised processing and coordination of devices',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Smart home controllers or hubs provide centralised processing, coordinate communication between devices using different protocols, and execute automation rules.',
   },
@@ -56,12 +56,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which sensor type detects movement using infrared radiation?',
     options: [
-      'Light sensor',
       'PIR (Passive Infrared) sensor',
+      'Light sensor',
       'Humidity sensor',
       'Pressure sensor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PIR (Passive Infrared) sensors detect movement by sensing changes in infrared radiation emitted by warm bodies like humans and animals.',
   },
@@ -70,11 +70,11 @@ const quizQuestions = [
     question: 'What is the difference between a sensor and an actuator?',
     options: [
       'They are the same thing',
-      'Sensors detect conditions; actuators perform physical actions',
       'Actuators detect conditions; sensors perform actions',
+      'Sensors detect conditions; actuators perform physical actions',
       'Neither involves physical devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sensors detect environmental conditions and convert them to signals, while actuators receive control signals and perform physical actions like switching, moving, or adjusting.',
   },
@@ -83,11 +83,11 @@ const quizQuestions = [
     question: 'Which component would control a motorised blind based on sunlight levels?',
     options: [
       'A humidity sensor',
-      'A light sensor combined with a motor actuator',
       'A smoke detector',
       'A water leak sensor',
+      'A light sensor combined with a motor actuator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A light sensor detects sunlight levels, and this information is used to control a motor actuator that opens or closes the motorised blind.',
   },
@@ -108,28 +108,28 @@ const quizQuestions = [
     id: 5,
     question: 'Which sensor would be most appropriate for detecting an open window?',
     options: [
-      'PIR motion sensor',
       'Magnetic reed switch contact sensor',
+      'PIR motion sensor',
       'Light sensor',
       'Humidity sensor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Magnetic reed switch contact sensors detect when doors or windows are opened by sensing when the magnetic contact is broken.',
   },
   {
     id: 6,
     question: 'What type of actuator would be used in a smart heating zone valve?',
-    options: ['Light dimmer', 'Motorised valve actuator', 'Audio speaker', 'Display screen'],
-    correctAnswer: 1,
+    options: ['Light dimmer', 'Audio speaker', 'Motorised valve actuator', 'Display screen'],
+    correctAnswer: 2,
     explanation:
       'A motorised valve actuator controls the opening and closing of heating zone valves to regulate water flow and room temperature.',
   },
   {
     id: 7,
     question: 'Which component provides the automation logic in a smart home?',
-    options: ['Sensors alone', 'Actuators alone', 'Controller or hub', 'Power supply'],
-    correctAnswer: 2,
+    options: ['Sensors alone', 'Actuators alone', 'Power supply', 'Controller or hub'],
+    correctAnswer: 3,
     explanation:
       'The controller or hub processes sensor data and executes automation logic to determine when and how actuators should respond.',
   },
@@ -149,8 +149,8 @@ const quizQuestions = [
   {
     id: 9,
     question: 'Which sensor type measures air quality parameters like CO2 levels?',
-    options: ['PIR sensor', 'Environmental air quality sensor', 'Contact sensor', 'Light sensor'],
-    correctAnswer: 1,
+    options: ['Environmental air quality sensor', 'PIR sensor', 'Contact sensor', 'Light sensor'],
+    correctAnswer: 0,
     explanation:
       'Environmental air quality sensors can measure CO2, VOCs (volatile organic compounds), and particulate matter to monitor indoor air quality.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
     question: 'What is edge processing in smart home systems?',
     options: [
       'Processing at the edge of a room',
-      'Local processing at the device or hub level',
       'Cloud-only processing',
+      'Local processing at the device or hub level',
       'Manual processing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Edge processing refers to local processing at the device or hub level, reducing latency and dependence on internet connectivity for automation responses.',
   },

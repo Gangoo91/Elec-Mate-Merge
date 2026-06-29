@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the typical documentation set for a BS 5839-1:2025-compliant fire alarm system at handover?',
     options: [
-      'A wiring diagram only.',
-      'Just a maintenance contract.',
-      'The full set: design package (zone plan, block diagram, schematic, riser, cable schedule, interface schedule), cause-and-effect matrix (NEW mandatory in 2025), commissioning certificate, acceptance certificate (Annex G), operating and maintenance manual (including detector configuration per Annex D Figure D.1), and the system logbook (Annex H — renumbered from Annex F in 2017). All produced and handed to the responsible person.',
-      'A receipt.',
+      'A wiring diagram and a copy of the maintenance contract only.',
+      'The commissioning certificate and the logbook, with no design drawings.',
+      'The full set: design package, cause-and-effect matrix, commissioning certificate, acceptance certificate (Annex G), O&M manual, and logbook (Annex H).',
+      'The zone plan and acceptance certificate only, handed to the installer.',
     ],
     correctIndex: 2,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'What does BS 5839-1:2025 clarify about the certificate produced after extending or modifying a system?',
     options: [
-      'No certificate needed.',
-      'Just an invoice.',
-      'The certificate has been UPDATED from "modification certificate" to "extension OR modification certificate". This clarifies that BOTH activities — adding new coverage (extension) AND changing existing coverage (modification) — produce a certificate. Updating the firmware of a CIE is now explicitly classed as a modification and requires a certificate. The 2017 standard had only "modification" terminology, which was ambiguous about extensions.',
-      'A photocopy.',
+      'No certificate is needed for an extension, only for a full re-design.',
+      'The certificate is issued only by the CIE manufacturer after a firmware change.',
+      'The certificate is now an "extension or modification certificate", covering both activities; firmware updates of a CIE are explicitly modifications.',
+      'A verbal sign-off replaces the old written modification certificate.',
     ],
     correctIndex: 2,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     id: 'fam3-s6-variations',
     question: 'How does BS 5839-1:2025 change the recording of variations from BS 5839-1:2017?',
     options: [
-      'No change.',
-      'Variations are now optional.',
-      'ALL agreed variations should now be recorded in the system logbook. The 2017 standard required only "major variations" to be recorded but never defined "major" — leading to inconsistent practice. The 2025 standard removes the ambiguity: every variation, regardless of size, is recorded in the logbook (Annex H). Plus the 2025 standard introduces specific UNACCEPTABLE variations (zone plan absence, ARC absence in supported housing / care homes) that cannot be agreed at all.',
-      'Verbal agreement only.',
+      'No change — only "major" variations are recorded, as in 2017.',
+      'Variations no longer need to be recorded if the responsible person agrees them.',
+      'ALL agreed variations are now recorded in the logbook (Annex H), and some departures are now unacceptable variations that cannot be agreed at all.',
+      'Variations may now be agreed verbally without any logbook entry.',
     ],
     correctIndex: 2,
     explanation:
@@ -63,10 +63,10 @@ const inlineChecks = [
     id: 'fam3-s6-logbook',
     question: 'In BS 5839-1:2025, the system logbook is in which annex?',
     options: [
-      'Annex F.',
-      'Annex G.',
-      'Annex H. The logbook annex was renumbered from Annex F in 2017 to Annex H in 2025. The annex content has also been updated to reflect the information now required to be recorded (per clause 48 maintenance and the new variations recording rule). Annex G in 2025 is the acceptance certificate.',
-      'Annex Z.',
+      'Annex F, unchanged from the 2017 numbering.',
+      'Annex G, alongside the acceptance certificate template.',
+      'Annex H, renumbered from Annex F (2017) and updated for the 2025 requirements.',
+      'Annex D, alongside the detector configuration recording.',
     ],
     correctIndex: 2,
     explanation:
@@ -87,32 +87,32 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "FRS response time data is not part of the fire alarm system\\'s design documentation set. The design documentation covers what the SYSTEM is and how it operates. External response data (FRS attendance times) may be considered in the fire risk assessment / fire engineering for the building, but is not a fire alarm system documentation item. Zone plan, block diagram, and cause-and-effect matrix are all required.",
+      "FRS response time data is not part of the fire alarm system's design documentation set. The design documentation covers what the SYSTEM is and how it operates. External response data (FRS attendance times) may be considered in the fire risk assessment / fire engineering for the building, but is not a fire alarm system documentation item. Zone plan, block diagram, and cause-and-effect matrix are all required.",
   },
   {
     id: 2,
     question: 'What is the role of a fire alarm system block diagram?',
     options: [
-      'Detailed cabling.',
-      "A high-level architectural diagram showing the system's structure: CIE(s), loops / circuits, repeater panels, network connections, interface boxes, sounders / VADs, and significant interfaces (lift, plant, voice alarm, EVC). Compared to the schematic (electrical detail), the block diagram is the system map. Used by service organisations, fire-fighters, and the responsible person to understand the system at a glance.",
-      'A list of devices.',
-      'A user manual.',
+      'A high-level architectural map of the system: CIE(s), loops, repeater panels, networks, and significant interfaces, read at a glance.',
+      'A detailed cabling drawing showing every terminal, cable route, and device address on the loop.',
+      'A tabular device schedule listing every detector, sounder, and call point by location and address.',
+      'A plain-language user manual describing how staff operate, silence, and reset the panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "The block diagram is the system overview. It does not show every cable terminal or every device address. It shows architectural elements and how they connect. Combined with the zone plan (location resolution) and the schematic (electrical detail), it forms the documentation 'understanding stack' — overview, location, detail. Each level serves a different audience and purpose.",
+      "The block diagram is the system overview. It does not show every cable terminal or every device address; it shows architectural elements and how they connect. Combined with the zone plan (location resolution) and the schematic (electrical detail), it forms the documentation 'understanding stack' — overview, location, detail. Each level serves a different audience and purpose.",
   },
   {
     id: 3,
     question:
       'What is the difference between an acceptance certificate and a commissioning certificate?',
     options: [
-      'They are the same.',
-      'The commissioning certificate (issued after commissioning by the commissioning organisation) confirms that the system as installed and configured meets the design and the BS 5839-1:2025 requirements — it is the certifier saying "I tested it and it works". The acceptance certificate (Annex G; issued by the responsible person on accepting the system) confirms that the responsible person accepts the system into their custody and responsibility. Two different roles, two different certificates, both essential.',
-      'Annex F vs Annex H.',
-      'Color difference.',
+      'They are two names for the same single document issued at the end of the project.',
+      'The commissioning certificate is issued by the installer and the acceptance certificate by the panel manufacturer.',
+      'The commissioning certificate certifies the system meets the design and standard; the acceptance certificate (Annex G) records the responsible person accepting custody.',
+      'They differ only in which annex they appear in — Annex F versus Annex H of the standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The commissioning certificate is technical: the system meets the standard. The acceptance certificate is contractual / responsible: the responsible person takes ownership of the system and the duties it brings. Both certificates are filed in the documentation set; both are dated; both refer to the system as built at the date of acceptance.',
   },
@@ -120,25 +120,25 @@ const quizQuestions = [
     id: 4,
     question: 'Where is the system logbook in BS 5839-1:2025?',
     options: [
-      'It is not in the standard.',
-      "Annex H. Renumbered from Annex F in 2017. Content updated to reflect the 2025 requirements: all variations recorded, all extensions and modifications certificated, firmware updates documented as modifications, full record of fire / fault events / disablements / tests / services over the system's life.",
-      'Annex F.',
-      'In the appendix.',
+      'Annex F, unchanged from the BS 5839-1:2017 numbering.',
+      'Annex G, the same annex that holds the acceptance certificate template.',
+      'It is not held in an annex; the logbook format is left to the responsible person.',
+      'Annex H, renumbered from Annex F (2017) and updated for the 2025 requirements.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "Annex H is the 2025 numbering. The logbook is the running record of the system\\'s operational life: every fire alarm event, every fault, every disablement (with reason and duration), every test, every service visit, every modification or extension, every variation. Maintained by the responsible person at the system; reviewed at every service visit by the service organisation.",
+      "Annex H is the 2025 numbering. The logbook is the running record of the system's operational life: every fire alarm event, every fault, every disablement (with reason and duration), every test, every service visit, every modification or extension, every variation. Maintained by the responsible person at the system; reviewed at every service visit by the service organisation.",
   },
   {
     id: 5,
     question: 'What does the operating and maintenance manual typically include?',
     options: [
-      'Just instructions for use.',
-      "A comprehensive reference for the system\\'s operation and maintenance: operating instructions for the responsible person; system description (block diagram, zone plan, cause-and-effect summary); detector / device configuration (per Annex D Figure D.1 for multi-sensor detectors); maintenance schedule and procedures; spare parts list; vendor contact / support details; copy of the design package; copy of certificates (commissioning, acceptance, modifications). The manual is the single source of truth for the responsible person to manage the system over its life.",
-      'A wiring diagram.',
-      'Cable lengths.',
+      'Operating instructions, system description, detector configuration, maintenance schedule, spares, contacts, and copies of all certificates.',
+      'Only the day-to-day operating instructions for silencing and resetting the panel.',
+      'Only the as-installed wiring diagram for the addressable detection loop.',
+      'Only a schedule of the cable lengths and types used on the installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The O&M manual is the responsible person's reference. It is the document they consult when there is an event, a planned change, a service visit. Comprehensive content makes it useful; partial content makes it a paperwork artefact rather than a working tool. The 2025 standard's expectation that detector configuration is recorded per Annex D Figure D.1 is one of many components.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Per BS 5839-1:2025 clause 47, what activities produce a certificate (extension or modification certificate)?',
     options: [
-      'Only major changes.',
-      'Any extension (adding new coverage to a system) AND any modification (changing existing coverage). This includes: adding zones / loops; adding panels to a network; reconfiguring cause-and-effect; replacing the CIE; updating the firmware of the CIE (NEW explicit in 2025); changing detector types or configurations; adding interfaces. The certificate documents the change and the new state. Filed in the documentation set.',
-      'Annual visits only.',
-      'Nothing routine.',
+      'Only major changes that alter the system category or evacuation strategy.',
+      'Only the routine six-monthly service visits, which each generate a certificate.',
+      'Any extension (adding new coverage) and any modification (changing existing coverage), including CIE firmware updates.',
+      'Only physical hardware changes; software and firmware updates are exempt from certification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 2025 standard widens and clarifies the certificate-producing activities. Extension is now explicit (the 2017 wording covered only modification). Firmware updates are now explicit modifications (closing a loophole). Each certificate produces a snapshot of the change. Over years, the certificate trail provides the system's evolution history.",
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'The BS 5839-1:2025 acceptance certificate is in which annex?',
     options: [
-      'Annex E.',
-      "Annex G. The acceptance certificate template is in Annex G. The 2025 standard uses it to formalise the responsible person's acceptance of the system into their custody. Issued at acceptance (typically after commissioning); referenced in the system logbook (Annex H); revisited if the system is significantly extended or modified.",
-      'Annex H.',
-      'Annex K.',
+      'Annex E, alongside the detector selection and configuration recording.',
+      'Annex H, the same annex that holds the system logbook.',
+      'Annex K, a new annex introduced for acceptance documentation in 2025.',
+      'Annex G, formalising the responsible person accepting the system into custody.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Annex G is the acceptance certificate. Annex H is the logbook. Annex D is the detector selection / configuration recording (formerly Annex E in 2017). The 2025 standard's annex layout is: design templates and the detector recording in earlier annexes; the operational records (acceptance, logbook) in the later annexes.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'A premises has fire alarm documentation that is incomplete: no cause-and-effect matrix and no commissioning certificate exists. The system was installed before BS 5839-1:2025 came into effect. What should happen?',
     options: [
-      'Nothing.',
-      'The fire risk assessment review should identify the gap; the responsible person should commission a documentation completion exercise (working with a service organisation): produce a current cause-and-effect matrix from the installed system, retrofit a commissioning record (or "as-found" certificate documenting the current state) where possible, and establish forward documentation for any future extensions / modifications. The 2025 standard\'s mandatory matrix at handover applies to NEW handovers; existing systems can be brought up over time but the gap should be closed.',
-      'Issue a fine.',
-      'Replace the system.',
+      'Commission a documentation completion exercise: produce a current cause-and-effect matrix and an as-found record, and document changes going forward.',
+      'Nothing — the system pre-dates BS 5839-1:2025, so the documentation gap can be left as it is.',
+      'The whole system must be replaced with a new installation to meet the 2025 documentation standard.',
+      'The premises must be issued an enforcement fine before any further service work can continue.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Existing systems are not retrospectively brought up to current standard automatically — that is a deliberate design feature of BS 5839-1:2025 (extensions vs full re-compliance). But the documentation gap is a different matter: it is operationally important regardless of when the system was installed. Closing the gap is good practice and supports the next service / modification cycle.',
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'How are fault, alarm, and disablement events recorded in the system logbook (Annex H)?',
     options: [
-      'They are not.',
-      "Each event is recorded with: date, time, location (zone / device), event type (fire alarm, fault, disablement, isolation, system-test), action taken (investigated, reset, disabled-and-repaired, etc.), and the person responsible for the entry. Disablements include the reason for the disablement and the date / time the disablement was lifted. The logbook captures the system's operational history over its life.",
-      'In a separate spreadsheet.',
-      'Verbally.',
+      'They are not logged in the logbook; the panel event memory is the only record kept.',
+      'Only confirmed genuine fire events are logged; faults and disablements are handled separately.',
+      'Each event is recorded with date, time, location, event type, action taken, and the responsible person; disablements add the reason and the date/time lifted.',
+      'They are recorded verbally to the service organisation at the next six-monthly visit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The logbook is a chronological record. Each event is one line (or one entry); fields are minimal but consistent; the resulting log is the system's history. Patterns in the logbook (recurring false alarms in a zone, frequent disablements of an interface, repeated faults on a particular cable) feed back into design review and maintenance planning. Per the 2025 standard, all variations also go in the logbook.",
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       "The cause-and-effect matrix in the documentation set serves what specific purpose during the system's operational life?",
     options: [
-      'Decoration.',
-      'It is the persistent specification of what the system does. The CIE programming implements it; the commissioning verifies the implementation; the service visits test it; the modifications change it (with certificates); the logbook records events against it. It is the bridge between design intent and operation. NEW BS 5839-1:2025 requirement: this document or text description must be in the handover documentation.',
-      'A user training aid.',
-      'A drawing.',
+      'It serves only as a training aid for new staff learning to operate the panel.',
+      'It is a one-off design drawing with no role once the system is commissioned.',
+      'It is a marketing document supplied to the client to summarise the installed system.',
+      'It is the persistent specification of what the system does, against which the CIE is verified, tested, and modified.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The cause-and-effect matrix is the specification document. The CIE is the implementation. Treating these as the same thing — the configuration in the CIE IS the spec — makes the system fragile to CIE replacements, firmware updates, and configuration drift. The 2025 standard’s mandate that the matrix exists as a document protects against this fragility.',
   },
@@ -972,7 +972,7 @@ const FireAlarmModule3Section6 = () => {
                 question:
                   'Does an existing pre-2025 system need to retrofit a cause-and-effect matrix to comply?',
                 answer:
-                  "Strictly, BS 5839-1:2025 requires the matrix at handover documentation — for new handovers from 2025 onward. Existing systems are not retrospectively required to retrofit a matrix to be compliant. However, retrofitting is good practice: the matrix is a living document that supports service, modification, and fire risk assessment. Many service organisations now produce a matrix on first service visit to a previously undocumented system, with the responsible person\\'s agreement.",
+                  "Strictly, BS 5839-1:2025 requires the matrix at handover documentation — for new handovers from 2025 onward. Existing systems are not retrospectively required to retrofit a matrix to be compliant. However, retrofitting is good practice: the matrix is a living document that supports service, modification, and fire risk assessment. Many service organisations now produce a matrix on first service visit to a previously undocumented system, with the responsible person's agreement.",
               },
               {
                 question: 'How is the logbook stored — paper or digital?',
@@ -992,7 +992,7 @@ const FireAlarmModule3Section6 = () => {
               {
                 question: 'What does an "acceptance certificate" look like?',
                 answer:
-                  "Annex G of BS 5839-1:2025 provides the template. It is a single-page document with sections for: system description (zone count, system category, CIE type), commissioning organisation reference, design package reference (drawings, cause-and-effect matrix), date of commissioning, date of acceptance, responsible person\\'s signature, commissioning engineer\\'s signature, any conditions / variations relevant to acceptance. The completed certificate is filed in the O&M manual and copied in the responsible person\\'s fire safety file.",
+                  "Annex G of BS 5839-1:2025 provides the template. It is a single-page document with sections for: system description (zone count, system category, CIE type), commissioning organisation reference, design package reference (drawings, cause-and-effect matrix), date of commissioning, date of acceptance, responsible person's signature, commissioning engineer's signature, any conditions / variations relevant to acceptance. The completed certificate is filed in the O&M manual and copied in the responsible person's fire safety file.",
               },
               {
                 question: 'Are firmware updates really modifications requiring a certificate?',

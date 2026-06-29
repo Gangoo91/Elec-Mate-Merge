@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'coordination-meeting-purpose',
     question: 'What is the primary purpose of trade coordination meetings?',
     options: [
-      'At standstill, slip = 1 and rotor impedance is at minimum',
+      'To agree the final account between the trades on site',
       'To sequence work and resolve clashes before they occur on site',
-      'Potentially dangerous - urgent remedial action required',
-      'Poor connections, oxidation, incorrect termination, or mechanical damage',
+      'To record daily progress for the site diary',
+      'To brief operatives on health and safety before work begins',
     ],
     correctIndex: 1,
     explanation:
@@ -44,9 +44,9 @@ const quickCheckQuestions = [
     id: 'occupied-premises-priority',
     question: 'When working in occupied premises, what should be the primary consideration?',
     options: [
-      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
-      'Hydrostatic pressure transmitter mounted at the bottom of the tank',
-      'Installing a local exhaust ventilation system to capture dust at source',
+      'Completing the work in the shortest possible time regardless of cost',
+      'Keeping the cost of the works to an absolute minimum',
+      'Maximising the number of operatives on site each day',
       'Minimising disruption to building users and maintaining safety',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'isolation-coordination',
     question: 'Who must authorise electrical isolations affecting client operations?',
     options: [
-      "PEN fault detection and automatic disconnection",
+      "The site labourer who first identified the circuit",
       "The client's authorised person and the electrical supervisor",
-      "Assist with evacuation, check areas are clear, liaise with fire brigade",
-      "Planned, appropriately supervised and carried out in a safe manner",
+      "The main contractor's quantity surveyor",
+      "Any operative holding a current ECS card",
     ],
     correctIndex: 1,
     explanation:
@@ -71,9 +71,9 @@ const quickCheckQuestions = [
     question: 'Before working near live services, what documentation is essential?',
     options: [
       'A permit to work system and risk assessment',
-      'To reduce overwhelm and focus on the next step',
-      'Total path length (out and back)',
-      'Core losses become proportionally larger',
+      'A signed copy of the contract programme',
+      'A delivery note for the materials being installed',
+      'The site induction record for each operative',
     ],
     correctIndex: 0,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'What is the typical frequency of trade coordination meetings on a major building services project?',
     options: [
-      'Three-phase mV/A/m values from tables',
+      'Daily, at the start of every shift',
       'Weekly during installation phases',
-      'Using waste to generate energy',
-      'To prevent electric shock',
+      'Monthly, aligned with the valuation cycle',
+      'Only when a clash has already occurred',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'A sequencing agreement should include which of the following?',
     options: [
-      'Plan work during quietest periods, often nights or weekends',
-      'The design team, documented through an RFI or technical query',
+      'The agreed valuation dates and interim payment milestones',
+      'The full list of operatives and their ECS card numbers',
       'Access dates, duration, completion dates, and dependencies',
-      'A 3-6 week rolling schedule showing upcoming work sequences',
+      'The final account figures for each work package',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     question:
       'When electrical work is required in an occupied hospital ward, what is the preferred approach?',
     options: [
-      'The interface matrix or responsibility matrix',
-      'Access dates, duration, completion dates, and dependencies',
-      'The design team, documented through an RFI or technical query',
+      'Carry out the work during normal daytime ward rounds for supervision',
+      'Complete the whole ward in one continuous shift to finish fastest',
+      'Isolate the ward supply without notifying clinical staff in advance',
       'Plan work during quietest periods, often nights or weekends',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: "What is a 'look-ahead programme' in interface coordination?",
     options: [
       'A 3-6 week rolling schedule showing upcoming work sequences',
-      'Access dates, duration, completion dates, and dependencies',
-      'The design team, documented through an RFI or technical query',
-      'Plan work during quietest periods, often nights or weekends',
+      'The full contract programme fixed at tender stage for the whole job',
+      'A record of work already completed in the previous fortnight',
+      'A long-term forecast of labour demand across the next 12 months',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Client liaison protocols should establish which of the following?',
     options: [
-      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
+      'Material order quantities, delivery dates, and supplier contact details',
       'Single point of contact, communication frequency, escalation routes, and approval authorities',
-      'To confirm work areas, access routes, isolations, and any changes from the plan',
-      'Welfare facilities, emergency procedures, lone working, and client site rules',
+      'Interim valuation amounts, retention percentages, and payment terms',
+      'Operative tool registers, plant hire records, and consumable stock levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: "What document defines the boundaries between different contractors' work scopes?",
     options: [
-      'Clearly identify amendments using project-specific text',
-      'Flexible connections and movement accommodation',
-      'Moisture resistance and mechanical protection',
+      'The look-ahead programme',
+      'The construction phase plan',
+      'The contract sum analysis',
       'The interface matrix or responsibility matrix',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Out-of-hours work permits should specifically address:',
     options: [
       'Welfare facilities, emergency procedures, lone working, and client site rules',
-      'The design team, documented through an RFI or technical query',
-      'To confirm work areas, access routes, isolations, and any changes from the plan',
-      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
+      'Interim payment dates, retention release, and final account agreement',
+      'Material delivery schedules, storage locations, and waste collection times',
+      'Operative qualifications, ECS card expiry dates, and CSCS renewal records',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'hot works' permit near live data services should include:",
     options: [
-      'Welfare facilities, emergency procedures, lone working, and client site rules',
+      'Material quantities, delivery dates, storage and waste removal arrangements',
       'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
-      'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
-      'Single point of contact, communication frequency, escalation routes, and approval authorities',
+      'Interim valuation amounts, retention percentages, and payment milestones',
+      'Operative tool registers, plant hire records, and consumable stock levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'When a clash is identified between electrical containment and ductwork, who should make the final decision on the resolution?',
     options: [
-      'Access dates, duration, completion dates, and dependencies',
-      'A 3-6 week rolling schedule showing upcoming work sequences',
+      'Whichever trade reaches the area first and installs its services',
+      'The site labourer who first noticed the clash on the drawings',
       'The design team, documented through an RFI or technical query',
-      'Plan work during quietest periods, often nights or weekends',
+      'The quantity surveyor, based on which solution costs least',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of a daily briefing in occupied premises?',
     options: [
-      'Access dates, duration, completion dates, and dependencies',
-      'Single point of contact, communication frequency, escalation routes, and approval authorities',
-      'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
+      'To record operatives’ hours worked for payroll and timesheets',
+      'To agree the day’s interim valuation with the quantity surveyor',
+      'To order materials and arrange deliveries for the following week',
       'To confirm work areas, access routes, isolations, and any changes from the plan',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
       'A mechanical contractor needs access to an area where you have not completed first fix. The coordination meeting should establish:',
     options: [
       'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
-      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
-      'Single point of contact, communication frequency, escalation routes, and approval authorities',
-      'Welfare facilities, emergency procedures, lone working, and client site rules',
+      'Which contractor will bear the cost of any resulting programme delay',
+      'How many additional operatives each trade can deploy to the area',
+      'The interim valuation date and retention release for the work package',
     ],
     correctAnswer: 0,
     explanation:

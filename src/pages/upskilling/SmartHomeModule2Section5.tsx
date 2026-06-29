@@ -42,33 +42,33 @@ const quizQuestions = [
     question: 'What happens to Zigbee devices if the hub loses power?',
     options: [
       'They continue working independently',
-      'They stop responding to commands',
       'They switch to Wi-Fi automatically',
       'They maintain local automation only',
+      'They stop responding to commands',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Zigbee devices require the hub (coordinator) to process commands. Without the hub, devices cannot receive instructions or report status.',
   },
   {
     question: 'Which type of system offers the best local processing capability?',
     options: [
-      'Cloud-only hubless systems',
       'Hub-based systems with local processing',
+      'Cloud-only hubless systems',
       'Wi-Fi direct devices',
       'Bluetooth-only devices',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Hub-based systems with local processing can run automations and respond to events without internet connectivity, providing the most reliable local operation.',
   },
   {
     question: 'What is a disadvantage of cloud-dependent hubless devices?',
     options: [
-      'Higher upfront cost',
-      'Complex installation',
+      'Higher upfront hardware cost',
+      'More complex physical installation',
       'Dependency on internet and vendor servers',
-      'Limited device compatibility',
+      'Limited choice of compatible devices',
     ],
     correctIndex: 2,
     explanation:
@@ -76,18 +76,18 @@ const quizQuestions = [
   },
   {
     question: 'Which hub supports both Zigbee and Z-Wave natively?',
-    options: ['Philips Hue Bridge', 'Amazon Echo Dot', 'SmartThings Hub', 'Google Nest Hub'],
-    correctIndex: 2,
+    options: ['Philips Hue Bridge', 'Amazon Echo Dot', 'Google Nest Hub', 'SmartThings Hub'],
+    correctIndex: 3,
     explanation:
       'SmartThings Hub includes both Zigbee and Z-Wave radios, allowing it to communicate with devices using either protocol without additional bridges.',
   },
   {
     question: 'What is the recommended approach for a customer with mixed protocol preferences?',
     options: [
-      'Choose one protocol only',
+      'Choose a single protocol only',
       'Use a multi-protocol hub',
-      'Install separate systems',
-      'Wait for Matter',
+      'Install separate parallel systems',
+      'Wait until Matter is more mature',
     ],
     correctIndex: 1,
     explanation:

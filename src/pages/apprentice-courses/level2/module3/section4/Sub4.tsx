@@ -38,9 +38,9 @@ const checks = [
     question:
       'BS 7671 Part 2 defines an extraneous-conductive-part as:',
     options: [
-      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
-      'Leaders with higher EI consistently achieve better team performance, safety records, and employee retention',
-      'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
+      'A conductive part of equipment that can become live under a single fault condition.',
+      'A conductor that carries load current in normal service, such as the supply neutral.',
+      'Any metal accessory inside the consumer’s installation that is connected to a CPC.',
       'A conductive part liable to introduce a potential, generally earth potential, and not forming part of the electrical installation.',
     ],
     correctIndex: 3,
@@ -52,10 +52,10 @@ const checks = [
     question:
       'Why does industry use a 1667 Ω resistance threshold to decide whether a metalwork part is extraneous and needs main bonding?',
     options: [
-      'Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.',
-      'Limited companies have separate legal personality — the company is liable for debts, not the individual director (subject to personal guarantees and director duties). Sole traders have unlimited personal liability — personal assets can be pursued for business debts.',
-      'Register building with BSR; prepare and revise safety case; engage residents on building safety; manage building safety risks; maintain golden thread; report to BSR; respond to BSR notices.',
-      'At 1667 Ω, the leakage current from 230 V to earth is 230 ÷ 1667 ≈ 0.14 mA — well below the safe limit and below the 30 mA RCD threshold. Below 1667 Ω the part can leak more than this and is treated as extraneous; above 1667 Ω it cannot introduce a dangerous potential.',
+      'Because 1667 Ω is the maximum permitted electrode resistance for any TT installation under Table 41.5.',
+      'Because below 1667 Ω the part can no longer introduce a potential, so bonding becomes unnecessary.',
+      'Because 1667 Ω is the standard insulation-resistance minimum the regs require for new circuits.',
+      'It is the resistance at which 230 V drives the 50 V touch-voltage limit through a 30 mA RCD: 50 ÷ 0.030 = 1667 Ω.',
     ],
     correctIndex: 3,
     explanation:
@@ -66,14 +66,14 @@ const checks = [
     question:
       'A new-build flat has plastic incoming water and gas services right up to the meter. The internal pipework beyond the meter is copper, but no other connection to earth or external metalwork exists. Does the internal copper pipework need main protective bonding?',
     options: [
-      'No — the plastic incomer means the copper pipework cannot introduce a dangerous potential from outside. The note to Reg 411.3.1.2 is explicit: where non-metallic pipes enter a building and are then connected to metallic pipes within the building, the metallic pipes within the building do not normally require protective bonding as they are unlikely to be extraneous-conductive-parts.',
-      'It brings DC isolation requirements, additional DC overcurrent protection, fire-segregation considerations and (for grid-tied operation) the same G98/G99 anti-islanding requirements that apply to the PV inverter — typically all wrapped up by a hybrid inverter that handles PV plus battery.',
-      'Redesign — options include increasing the cpc CSA (e.g. from 1.5 mm² to 2.5 mm² as a separate cpc on a single-cable run), shortening the route by relocating the device or the load, dropping to a lower-rated device (B25 max Zs = 1.75 Ω), or fitting a 30 mA RCD as the alternative path under Reg 411.4.204 if the circuit type allows it.',
-      'A generic RAMS is template wording that could apply to any job — \\\\\\\\\\\\\\\'electrical hazards\\\\\\\\\\\\\\\', \\\\\\\\\\\\\\\'working at height\\\\\\\\\\\\\\\', \\\\\\\\\\\\\\\'use of PPE\\\\\\\\\\\\\\\'. A site-specific RAMS names the actual site, the actual tasks, the hazards identified on the walk-round, the specific access kit, the specific controls and the specific steps. The HSE \\\\\\\\\\\\\\\'suitable and sufficient\\\\\\\\\\\\\\\' test under MHSWR Reg 3 effectively requires site-specific content.',
+      'No — the plastic incomer means the copper pipework can’t introduce a potential from outside, so it isn’t extraneous.',
+      'Yes — all internal copper pipework must always be main-bonded regardless of the incomer material.',
+      'Yes — the copper becomes extraneous as soon as it is connected to the metal taps and radiators.',
+      'Yes — but only with a 6 mm² conductor, since the plastic incomer halves the required bonding size.',
     ],
     correctIndex: 0,
     explanation:
-      'Plastic incomer = no external earth path = the internal metalwork can’t introduce a potential = it’s not extraneous. The 1667 Ω test would confirm this (resistance to earth would be very high). This is one of the most common over-bonding mistakes on modern builds — apprentices reflexively bond every copper pipe because their training was on installations with metal incomers.',
+      'The NOTE to Reg 411.3.1.2 is explicit: where non-metallic pipes enter a building and are then connected to metallic pipes within it, the internal metallic pipes do not normally require protective bonding as they are unlikely to be extraneous-conductive-parts. Plastic incomer = no external earth path = the internal metalwork can’t introduce a potential. The 1667 Ω test would confirm this (resistance to earth would be very high). This is one of the most common over-bonding mistakes on modern builds — apprentices reflexively bond every copper pipe because their training was on installations with metal incomers.',
   },
 ];
 
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'You measure 850 Ω between an incoming gas pipe and the MET on a TT installation. Is the gas pipe an extraneous-conductive-part requiring main bonding?',
     options: [
-      'Adequate fire safety training at the time of recruitment and on being exposed to new or increased risks, repeated periodically, and adapted to take account of new or changed risks',
-      'Yes — 850 Ω is below the 1667 Ω threshold, so the part can introduce a potential and must be bonded to the MET via a main protective bonding conductor sized per Reg 544.1 (typically 10 mm² Cu on a domestic).',
-      'A conventional system identifies which zone is in alarm; an addressable system identifies the exact individual device (detector or call point) that has activated, providing precise location information',
-      'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
+      'No — 850 Ω is above the safe limit, so the pipe cannot introduce a potential and is left unbonded.',
+      'Yes — 850 Ω is below 1667 Ω, so it’s extraneous and must be main-bonded to the MET (typically 10 mm² Cu).',
+      'No — gas pipes are bonded by the gas supplier and never by the electrician on the installation side.',
+      'Yes — but with a 30 mA RCD, not a bonding conductor, because the resistance reading is relatively high.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     question:
       'Which of these is most likely to be missed on a domestic main bonding survey?',
     options: [
-      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
-      'That the line and CPC of the ring are continuous and unbroken — high or open readings indicate a broken conductor at one of the accessory terminations',
-      'A metal central-heating expansion vessel concealed in an airing cupboard, connected to the heating system that bonds back to the boiler — not the kind of "incoming service" people instinctively look for.',
-      'Explain the legal requirement for licensed removal, present it as a variation with clear costs, and document the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s refusal if they still decline — then pause work on that element until resolved',
+      'The incoming metal gas service at the meter, which every electrician checks first on a survey.',
+      'The incoming metal water service at the stop tap, which is always obvious and rarely overlooked.',
+      'A concealed metal central-heating expansion vessel in an airing cupboard, not an obvious "incoming service".',
+      'The consumer unit enclosure, which is already bonded through its own CPC connections.',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question:
       'Per Reg 411.3.1.2, where in the installation must main protective bonding conductors connect the extraneous-conductive-part?',
     options: [
-      'Sensible heat changes temperature without phase change; latent heat changes phase without temperature change',
-      'A signed letter or report from a professional with relevant expertise',
-      'Prohibition Notices require immediate cessation of activity due to imminent risk of serious personal injury',
+      'To the nearest circuit protective conductor (CPC) at the closest accessory.',
+      'To another extraneous part, then chained back to the MET in a single run.',
+      'To the cut-out earth terminal, bypassing the MET entirely.',
       'To the Main Earthing Terminal (MET) — directly, with a continuous run of suitably sized conductor.',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
       'A gas service incomer is being bonded. Where on the gas pipework should the bonding clamp be fitted relative to the meter?',
     options: [
       'Within 600 mm of the consumer side of the gas meter outlet, before any branch or tee, on a clean section of pipe.',
-      'Setting aside a fixed percentage of each payment for tax, maintaining a simple budget, and building an emergency fund',
-      'By choosing which specialisms to pursue, which clients to work with, and how to structure their working week',
-      'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
+      'On the supplier side of the gas meter, as close as possible to where the service enters the ground.',
+      'At least 2 m downstream of the meter, after the first appliance isolation valve.',
+      'Anywhere convenient on the gas pipework, provided the clamp is within the same room as the MET.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Reg 544.1 sets the minimum cross-sectional area of a main protective bonding conductor. What is the rule of thumb for sizing on a TN-C-S (PME) domestic with a 25 mm² Cu supply neutral?',
     options: [
-      'Learning user patterns and predictive automation',
+      '6 mm² Cu (the absolute minimum for any main bonding conductor).',
       '10 mm² Cu (Table 54.8 row for supply neutral up to 35 mm²).',
-      'A persistent fault still exists on the circuit',
-      'Because electrical interlocking alone can fail if a contact welds',
+      '16 mm² Cu (half the 25 mm² supply neutral, rounded up).',
+      '25 mm² Cu (matching the supply neutral exactly).',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'A property has a copper gas incomer measured at 12 Ω to the MET, AND a copper water incomer measured at 8 Ω to the MET. Both are extraneous. Can a single main bonding conductor be daisy-chained from MET → gas → water?',
     options: [
-      'A digital, structured, accessible and current set of information about a higher-risk residential building (HRRB), maintained throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life by the dutyholders (Accountable Person, Principal Accountable Person), used by the Building Safety Regulator and by anyone working on the building.',
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
-      'No — each extraneous-conductive-part must have its own dedicated main protective bonding conductor running back to the MET (or via a properly designed bonding bar). Daisy-chaining means a disconnection at one part disables bonding to the next, and the conductor’s integrity becomes dependent on the previous clamp.',
-      'Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing',
+      'Yes — daisy-chaining is allowed because both readings are well below the 1667 Ω threshold.',
+      'Yes — provided the single conductor is uprated to 16 mm² to carry both services together.',
+      'No — each extraneous part needs its own dedicated bonding conductor back to the MET (or via a bonding bar).',
+      'Yes — as long as the gas is bonded first, since it carries the higher risk of the two services.',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'On a TT installation with the test: phase-to-earth at the gas service reads 60 Ω. Is the part extraneous, and what bonding action follows?',
     options: [
-      'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'Managed industrial switches with DIN-rail mounting, extended temperature range, redundancy support, and diagnostics',
-      'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      '60 Ω is well below 1667 Ω → extraneous → bond to the MET via a main protective bonding conductor sized per Reg 544.1 (typically 10 mm² Cu).',
+      '60 Ω is above the threshold → not extraneous → leave the gas pipe unbonded.',
+      '60 Ω matches the TT electrode resistance → no bonding needed, the rod does the job.',
+      '60 Ω is borderline → fit a 30 mA RCD instead of a main bonding conductor.',
+      '60 Ω is well below 1667 Ω → extraneous → main-bond to the MET (typically 10 mm² Cu).',
     ],
     correctAnswer: 3,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'A lightning protection system (BS EN 62305) is installed on a tall commercial building. Should its down-conductor earth termination be bonded to the electrical installation’s MET?',
     options: [
-      'Yes — Reg 411.3.1.2 requires that connection of a lightning protection system to the protective equipotential bonding shall be made in accordance with the BS EN 62305 series. The bond keeps both earthing systems at the same potential during a strike, preventing dangerous side-flashing inside the building.',
-      'Toolbox talks are short pre-shift safety briefings on a single topic — the RAMS for the day, a recent near-miss, a seasonal hazard. They keep the formal RAMS active in the day-to-day work. Recorded with attendance. Together with the RAMS sign-on they form the daily safety briefing chain.',
-      'Implement a formal coordination system with permit-to-work procedures for each high-risk activity, task-specific risk assessments, method statements, exclusion zones, appointed supervisors, and a communication protocol to manage interfaces between the activities',
-      'Hazardous waste — double-bagged, labelled, Hazardous Waste Consignment Note, transported by licensed asbestos waste carrier, disposed of at permitted asbestos waste facility. CAR 2012 + Hazardous Waste Regs 2005 + EPA 1990 all apply.',
+      'Yes — the LPS earth is bonded to the MET per Reg 411.3.1.2 / BS EN 62305 to prevent side-flashing during a strike.',
+      'No — the LPS earth must always be kept completely isolated from the electrical MET.',
+      'No — bonding the LPS to the MET would drag strike current into the consumer unit and is prohibited.',
+      'Only on TT supplies — on TN-C-S the LPS earth is already common with the supply earth anyway.',
     ],
     correctAnswer: 0,
     explanation:

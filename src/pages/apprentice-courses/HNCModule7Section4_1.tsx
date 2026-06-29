@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'dali-addresses',
     question: 'How many individual addresses can be assigned on a single DALI bus?',
     options: [
-      '64 addresses',
       '32 addresses',
+      '64 addresses',
       '48 addresses',
       '128 addresses',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'A single DALI bus supports up to 64 individually addressable devices (addresses 0-63). This allows independent control of up to 64 luminaires or control gear units on one bus segment.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'dali-groups',
     question: 'How many groups can luminaires be assigned to on a DALI system?',
     options: [
-      '16 groups',
       '64 groups',
       '8 groups',
       '32 groups',
+      '16 groups',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'DALI supports 16 groups (numbered 0-15). Each luminaire can belong to multiple groups simultaneously, allowing flexible control scenarios such as zone control, task lighting, and daylight-linked groups.',
   },
@@ -66,10 +66,10 @@ const quickCheckQuestions = [
     id: 'dali-voltage',
     question: 'What is the nominal voltage level on a DALI bus?',
     options: [
-      'Overheating and fire risk',
-      '1.35 metres (approximately)',
+      '24V DC (12V-30V range)',
+      '12V DC (5V-18V range)',
       '16V DC (9.5V-22.5V range)',
-      'Local exhaust ventilation',
+      '48V DC (36V-57V range)',
     ],
     correctIndex: 2,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'In DALI-2, what is the purpose of device type 8 (DT8)?',
     options: [
-      'Store in dry, secure conditions',
+      'Emergency lighting battery monitoring',
       'Colour temperature and RGB control',
-      'Building Management System',
-      'Gather information and symptoms',
+      'Single-channel switched (non-dimmable) output',
+      'Mains-frequency phase-cut dimming control',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the function of a DALI gateway?',
     options: [
-      'To set the time for luminaires to transition between light levels',
-      'Sending commands to all devices on the bus simultaneously',
+      'To supply the 16V DC bus power to all control gear',
+      'To assign short addresses to each driver during commissioning',
       'To interface DALI with other protocols like BACnet, KNX, or Modbus',
-      'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
+      'To boost the bus voltage so cable runs can exceed 300 metres',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: 'What cable type is typically used for DALI wiring?',
     options: [
-      'Sending commands to all devices on the bus simultaneously',
-      'Standardised control devices (sensors, switches) and push button input',
-      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
+      'Coaxial cable with a characteristic impedance of 75 ohms',
+      'Screened twisted-pair data cable terminated at both ends',
+      'Fibre-optic cable to provide complete electrical isolation',
       'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
     ],
     correctAnswer: 3,
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 9,
     question: 'What advantage does DALI-2 offer over DALI-1?',
     options: [
-      'Sending commands to all devices on the bus simultaneously',
+      'A higher bus voltage allowing longer cable runs',
       'Standardised control devices (sensors, switches) and push button input',
-      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
-      'To assign unique short addresses (0-63) to each control gear',
+      'Support for up to 128 addresses on a single bus',
+      'A faster data rate of 9,600 bits per second',
     ],
     correctAnswer: 1,
     explanation:
@@ -226,9 +226,9 @@ const quizQuestions = [
     question: 'What is the purpose of fade time in DALI?',
     options: [
       'To set the time for luminaires to transition between light levels',
-      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
-      'Sending commands to all devices on the bus simultaneously',
-      'To assign unique short addresses (0-63) to each control gear',
+      'To set how long a scene is held before reverting to default',
+      'To delay a luminaire switching on after a command is sent',
+      'To limit the maximum brightness a luminaire can reach',
     ],
     correctAnswer: 0,
     explanation:

@@ -421,7 +421,7 @@ export default function AIElectricianToolsPage() {
               installations. BS 7671 Section 341 requires that every installation is maintained to
               keep it in a safe condition, and the frequency of periodic inspection depends on the
               type of installation and its use. The Maintenance Agent knows the recommended
-              inspection intervals from Table 3A of the IET Guidance Note 3: five years for domestic
+              maximum periodic inspection intervals from IET Guidance Note 3: five years for domestic
               premises, three years for commercial, one year for construction sites and swimming
               pools, and specific intervals for other installation types.
             </p>

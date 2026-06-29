@@ -43,10 +43,10 @@ const checks = [
     id: 'm5-s4-sub2-no-trip-vs-trip',
     question: 'On a circuit protected by a 30 mA Type AC RCD, which Zs test mode is correct and why?',
     options: [
-      'No-trip / low-current Zs mode. The instrument limits the test current peak below the RCD trip threshold (typically under 15 mA peak for a 30 mA RCD), often combined with a brief DC bias to suppress the AC RCD\\\\\\\'s sensing during the test pulse. Reading is slightly less accurate than high-current mode (typically plus or minus 10 percent vs plus or minus 5 percent) but avoids tripping the RCD and interrupting the supply during the test.',
-      '(1) Identify the hazards. (2) Decide who might be harmed and how. (3) Evaluate the risks and decide on precautions. (4) Record the significant findings and implement them. (5) Review the assessment and update if necessary. (HSE INDG163, withdrawn but still the conceptual basis of MHSWR Reg 3 in practice.)',
-      'CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.',
-      'Dominated by Ra. The earth fault loop on TT is: line conductor + R1 + fault + R2 (CPC) + Ra (consumer\\\\\\\\\\\\\\\'s electrode) + soil + Ra (transformer\\\\\\\\\\\\\\\'s electrode) + transformer winding. The R1+R2 contribution is typically under 1 Omega; Ra dominates. Measured Zs will be approximately Ra + a small contribution from the cabling. With Ra = 150 Omega, Zs at any test point will be approximately 150-152 Omega. Overcurrent ADS is not feasible at that loop impedance — RCD ADS is mandatory on TT, verified by the Ra x I delta n less than or equal to 50 V calculation.',
+      'No-trip / low-current Zs mode, which limits test current below the RCD trip threshold so the device stays in and the supply is not interrupted.',
+      'Full high-current Zs mode, because the higher test current is more accurate and a Type AC RCD is slow enough not to trip on a brief pulse.',
+      'Disconnect the RCD load conductor first so the test current bypasses the device, then take a standard Zs reading and reconnect the load.',
+      'Any Zs mode is fine, because a Type AC RCD responds only to sinusoidal residual current and cannot detect the pulsed DC test current at all.',
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     id: 'm5-s4-sub2-touch-voltage',
     question: 'GN3 warns about voltages appearing on earthed metalwork during a Zs test. The mechanism is:',
     options: [
-      'The technical lead for a project on the sub-contractor\'s side. The Project Engineer coordinates design (where applicable), procurement, programme, technical queries (RFIs), QA and the eventual handover. They are the sub-contractor\'s technical face to the main contractor and the M&E Consultant. Typically a Technician-grade or HNC-qualified electrician with several years on site, or a graduate engineer who has crossed in from design.',
-      'During the EFLI test the instrument briefly draws fault current through the L-E loop. That current creates a voltage drop along the CPC equal to I_test x R_CPC. Any exposed-conductive-part connected to that CPC briefly rises above true earth by that voltage. For a 25 A test current and a 0.4 Omega CPC, that\\\'s 10 V — small but noticeable to a person touching the metalwork. The duration is brief (a few cycles) but the risk is real, especially in installations where the public can access the metalwork during testing.',
-      'Structured cabling is the standardised installation of data cabling (typically Cat 6/Cat 6A copper, plus single-mode and multi-mode fibre) supporting IT and telephony in commercial buildings. Key standards: BS EN 50173 series, TIA-568. Specific competence in cable termination (RJ45, fibre splicing), patch panels, cabinet installation and certification testing (Fluke DTX-CableAnalyzer or similar). BICSI training is the international standard route.',
-      'Respond promptly, professionally and publicly. Acknowledge the customer\'s experience without admitting liability. Offer to discuss offline (\'please call us on X to discuss in detail\'). Keep tone calm and factual. Never argue publicly. Take resolution to private channels. A good response to a bad review is often better marketing than the review itself was bad — it shows future customers how you handle problems.',
+      'The instrument applies the full 230 V supply directly to the earthed metalwork for a few cycles, raising every exposed-conductive-part to line potential.',
+      'Test current through the L-E loop drops a voltage along the CPC (I_test x R_CPC), briefly raising connected metalwork above true earth by that amount.',
+      'The test current induces a magnetic field in nearby steel conduit, coupling a voltage onto the metalwork by transformer action during the pulse.',
+      'The test charges the cable capacitance to several hundred volts, and that stored charge appears on the metalwork until the instrument discharges it.',
     ],
     correctIndex: 1,
     explanation:
@@ -69,12 +69,12 @@ const checks = [
     id: 'm5-s4-sub2-fused-leads',
     question: 'Why are loop-impedance test leads typically fitted with 7 A or 10 A fuses (not 1 A or 3 A)?',
     options: [
-      'The Zs test draws relatively high test currents in full mode (typically 10-25 A briefly). Lead fuses below the test current would rupture during normal testing, leaving the operator with leads that don\\\\\\\\\\\\\\\'t work and no immediate indication why. GN3 specifies 7 A or 10 A as typical adequate ratings — high enough not to rupture during legitimate testing, low enough to clear in genuine fault conditions if the leads are accidentally subjected to sustained high current. Always verify the lead fuse rating before testing.',
-      'Over-torque deforms the screw thread and can crack or strip it; deforms the conductor strands; can split the bus-bar pocket on the RCBO; voids the manufacturer\\\\\\\'s warranty; and breaches BS 7671 526.1 (manufacturer\\\\\\\'s instructions form part of the \\\\\\\'durable mechanical strength\\\\\\\' requirement). The terminal may pass test today but degrades faster than spec — fails on a future EICR.',
-      'Two possibilities. (1) Active arc fault on the circuit — there\\\\\\\'s a real arc happening that the AFDD is correctly detecting and refusing to ignore. Investigate as a real fault: visual inspection, IR test, thermal imaging. (2) AFDD itself has failed in the \\\\\\\'trip\\\\\\\' state — internal electronics fault. Test by removing the AFDD from the busbar (load disconnected) and trying to latch it; if it still won\\\\\\\'t latch, the AFDD is faulty and needs replacement. The L3 apprentice\\\\\\\'s protocol: investigate as real fault first; only if no fault is found, consider AFDD failure and substitute with known-good unit.',
-      'Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person\\\\\\\'s dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn\\\\\\\'t have to be \\\\\\\'severe\\\\\\\' to count — repeated \\\\\\\'banter\\\\\\\' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.',
+      'Because the higher-rated fuse is needed to carry the standing load current of the circuit under test while the live Zs reading is taken.',
+      'Because a lower-rated fuse adds resistance the meter must subtract, lengthening each test, whereas a 7 A or 10 A fuse adds negligible resistance.',
+      'The full-mode test current (10-25 A briefly) would rupture a lower fuse during normal testing, so 7 A or 10 A is high enough not to nuisance-blow.',
+      'Because GS38 requires test leads fused at no less than the prospective fault current, which on a domestic supply is always above 6 A.',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The GN3 guidance on fused leads is specific — high enough rating to not rupture during the test current pulse, low enough to clear on a genuine fault. 7 A or 10 A are the typical values. Lead fuses are a maintenance item — check periodically that they\'re intact and the right rating. A ruptured lead fuse looks like an instrument failure if you don\'t know what to look for.',
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS EN 61557-3 is the standard governing loop impedance testers. What does conformance to this standard guarantee in practice?',
     options: [
-      'Procurement Policy Note 06/21 (Taking account of Carbon Reduction Plans in the procurement of major government contracts) requires bidders for UK central government contracts above 5 million pounds per year to publish a Carbon Reduction Plan that confirms commitment to net-zero by 2050, sets out current emissions across scopes 1, 2 and a defined subset of scope 3, and identifies environmental management measures. The CRP must be published on the bidder website and updated annually. Contractors that cannot produce a compliant CRP are excluded from the tender. The threshold can flow down to subcontractors on smaller contracts where the prime requires it.',
-      'BS EN 61557-3 specifies the safety, performance and accuracy requirements for instruments measuring loop impedance. An instrument conforming to BS EN 61557-3 will generally meet the measurement range and resolution requirements for typical UK loop-impedance testing — domestic, commercial, light industrial. The standard also covers the test current characteristics, voltage withstand of the leads, and the accuracy bands the instrument has to meet across its declared measurement range. When you specify "BS EN 61557-3 compliant" on a procurement order or on a certificate, you\\\\\\\\\\\\\\\'re relying on the manufacturer\\\\\\\\\\\\\\\'s declaration of conformance.',
-      'Six standard items. (1) Bonding plaster (Knauf bonding or Thistle Bonding, 5 kg bag) — for filling small chases. (2) Filler (Polycell, Tetrion) — for very small holes and screw holes. (3) Plasterboard offcuts — for patching plasterboard holes. (4) Scrim tape — for plasterboard joins. (5) Fire-stop sealant (FireFly, Hilti CP series) — for cable penetrations through fire-rated walls. (6) Touch-up paint (white emulsion small tin, customer-supplied paint where possible) — for minor wall finishing where the customer is unlikely to repaint. Cost £40–60 for the kit; lasts months.',
-      'The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.',
+      'BS EN 61557-3 is the calibration standard setting how often a loop tester must be returned, guaranteeing accuracy for a stated interval, typically 12 months.',
+      'BS EN 61557-3 specifies the safety, performance and accuracy requirements for loop impedance instruments, including measurement range, test current and accuracy bands.',
+      'BS EN 61557-3 defines the colour-coding and labelling of test leads so line, neutral and earth probes cannot be confused for safe connection.',
+      'BS EN 61557-3 specifies the maximum test current a loop tester may inject, guaranteeing it never draws above 30 mA so it suits any RCD-protected circuit.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'Instrument resolution and instrument accuracy are different things. Define each.',
     options: [
-      'The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The \\\\\\\'designer\\\\\\\' / \\\\\\\'constructor\\\\\\\' / \\\\\\\'inspector and tester\\\\\\\' boxes on the EIC may all be the MCS-certified installer\\\\\\\'s lead engineer; signatures still have to be physically present.',
-      'Older fixed-speed heat pumps run the compressor at full output or off — short-cycling repeatedly to match a partial load. Each start consumes electricity and stresses the compressor. Modern inverter-driven units vary the compressor speed continuously to match the actual heat demand — running at 30 to 100 percent capacity smoothly. The result is better SCOP (less wasted starting energy), longer compressor life, quieter operation and more comfortable indoor temperatures. Almost every new domestic ASHP sold in the UK is inverter-driven. The L3 electrician sizes the supply to the rated nameplate current (the compressor at full speed); the variable-speed control is internal to the unit.',
-      'RESOLUTION — the smallest increment the instrument can detect and display, usually expressed as a count of the least-significant digit (e.g. 0.01 Omega resolution means the display can show changes of 0.01 Omega). ACCURACY — how close the displayed reading is to the true value, expressed as a percentage tolerance plus a digit count (e.g. plus or minus 5 percent plus or minus 3 digits at full mode, plus or minus 10 percent at no-trip mode). A high-resolution instrument with poor accuracy gives precise-looking but unreliable readings; a high-accuracy instrument with low resolution gives reliable but imprecise readings. You need both — modern MFTs typically achieve 0.01 Omega resolution and plus or minus 5-10 percent accuracy depending on mode.',
-      'No, for several reasons. The refrigerant work requires F-Gas certification (criminal offence to do without). The Building Regulations Part L compliance pathway requires installation by an MCS-certified installer for the customer to claim Smart Export Guarantee or similar incentives. The Boiler Upgrade Scheme grant requires MCS sign-off. Manufacturer warranties typically require certified installation. The MCS install pack includes heat-loss calc, emitter sizing, SCOP estimate, electrical schedule, commissioning records — all required for the system to perform as designed. DIY heat-pump install is unsafe and uneconomic.',
+      'RESOLUTION is how quickly the instrument settles to a final reading; ACCURACY is how repeatable that reading is across several identical tests.',
+      'RESOLUTION is the highest value the instrument can display; ACCURACY is the lowest value it can detect, such as down to 0.01 Omega.',
+      'RESOLUTION is the smallest increment the display can show (e.g. 0.01 Omega); ACCURACY is how close the reading is to the true value (e.g. plus or minus 5 percent).',
+      'RESOLUTION is the percentage tolerance on the reading; ACCURACY is the number of decimal places shown — the two terms are effectively interchangeable.',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 3,
     question: 'You\'re testing Zs at the furthest socket on a 32 A ring final (Type B 32 A RCBO, no-trip mode). Reading 1.05 Omega, but you suspect borderline. Worth retesting in full trip-current mode?',
     options: [
-      'BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.',
-      'Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.',
-      'Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\\\\\'s perspective before sending)',
-      'Yes, but only after preparing — switch off any sensitive loads on the same RCD, brief any occupants the supply may briefly trip, and be ready to reset the RCBO. Full trip-current mode is more accurate (typically plus or minus 5 percent vs plus or minus 10 percent for no-trip), and on a borderline result it can confirm whether the no-trip reading was accurate or whether you have a margin you can rely on. If the full mode confirms the reading you can document with higher confidence; if it differs significantly, investigate further.',
+      'No — full trip-current mode is never used on a ring final, because the higher test current can overheat the smaller ring conductors and damage insulation.',
+      'No — the no-trip reading is always the more accurate of the two, because limiting the test current removes the heating error of high-current mode.',
+      'No — once a no-trip reading is taken it must be recorded as-is; BS 7671 does not permit a second Zs measurement during one verification.',
+      'Yes, after preparing for the trip — full trip mode is more accurate and confirms whether a borderline no-trip reading can be relied on.',
     ],
     correctAnswer: 3,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 4,
     question: 'Why does GN3 say to verify instrument range BEFORE carrying out the loop-impedance test?',
     options: [
-      'Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.',
-      'Delivery of the 2365 (or equivalent) syllabus, marking of coursework and exams, AM2 preparation, and the formal academic record. The Tutor sees the apprentice typically one day a week (day-release model) or in block release. They calibrate progress with the Workplace Mentor at three-way reviews and own the academic side of the apprenticeship.',
-      'Ze (external earth fault loop impedance at the origin) — the impedance of the path from a fault at the consumer\\\\\\\'s MET back to the supply transformer star point, via the supplier\\\\\\\'s earth path. For TN-C-S typically 0.10-0.35 Ω; for TN-S typically 0.20-0.50 Ω; for TT essentially the consumer\\\\\\\'s electrode resistance Ra (since the supplier\\\\\\\'s metallic earth path is absent).',
-      'The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically ("I can see this is a stressful situation, and I understand why"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate',
+      'A meter set to a low range (0-2 Omega) saturates or misreads on a high-Zs TT install, so the range must match the expected reading before pressing TEST.',
+      'Because the instrument must be left on the chosen range for at least 30 seconds to warm up, and selecting the range early gives it time to stabilise.',
+      'Because the tester re-calibrates to the selected range, and changing range mid-test invalidates the calibration, so it must be fixed beforehand.',
+      'Because each range uses a different test current, and the wrong range injects too much current, tripping the protective device even in no-trip mode.',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'A4:2026 Table 41.3 max Zs for Type B 32 A is 1.37 Omega. Apply the 0.8 multiplier; what\'s the measured-Zs limit and why?',
     options: [
-      'Internal first — to the firm\\\\\\\\\\\\\\\'s responsible person who is the "Reg 3 responsible person" under RIDDOR. They make the F2508 / F2508A submission via riddor.hse.gov.uk or phone 0345 300 9923 for fatalities/specified injuries. Your job is to escalate to them, not to make the report yourself unless you ARE the responsible person.',
-      'Measured limit = 0.8 x 1.37 = 1.10 Omega. Table 41.3 values assume conductor at 70 deg C operating temperature; measured Zs is at ambient (typically 15-25 deg C). Cable resistance rises with temperature — about 20 percent from 20 deg C to 70 deg C for copper. The 0.8 multiplier corrects approximately for this. For full rigour use GN3 Appendix B per-degree coefficients, but the 0.8 rule of thumb is the standard site-practice correction.',
-      'WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.',
-      'Annual service is the standard, with weekly to monthly customer-side tasks. Annual: full strip-down clean, ash compartment service, auger inspection, igniter check, fan check, flue inspection, controls firmware update, performance check. Monthly customer task: empty ash pan. Weekly customer task: top up pellet hopper, check fuel feed, visual check for blockages. Pellet quality matters — high-ash or wet pellets shorten component life. Some boilers need flue cleaning more frequently than annual; chimney sweep is a specialist trade.',
+      'Measured limit = 1.37 ÷ 0.8 = 1.71 Omega — the 0.8 factor is divided into the table value to allow for the cable being warmer in service.',
+      'Measured limit = 0.8 x 1.37 = 1.10 Omega — the table assumes 70 deg C conductors, so the 0.8 multiplier corrects the ambient-temperature reading.',
+      'Measured limit = 1.37 Omega unchanged — the 0.8 multiplier is applied to the measured reading, not the table value, so comparison is against the full figure.',
+      'Measured limit = 0.8 + 1.37 = 2.17 Omega — the 0.8 allowance is added to the table value to give headroom for instrument tolerance.',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'You read Zs = 0.62 Omega at the furthest socket of a kitchen ring. Calculated Zs from dead-test (Ze + R1+R2) = 0.55 Omega. Why the 12 percent difference and is it a concern?',
     options: [
-      'The training-provider tutor first — they have responsibility for the quality of the apprentice\\\\\\\'s training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn\\\\\\\'t resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.',
-      'MCS certificate; Electrical Installation Certificate (BS 7671); G98 or G99 DNO notification copy; manufacturer commissioning record(s); MCS performance estimate (SCOP, kWh / kWp / yr, payback, etc.); warranty documentation for all major components; user instruction manuals; maintenance schedule and service intervals; F-Gas record (where refrigerant work was carried out); contact details for fault reporting; and the MCS Code complaints process. Pack is provided in physical or durable digital form on handover day.',
-      'Multiple legitimate causes. (1) Instrument tolerance — both the Zs tester and the continuity tester have plus or minus 5-10 percent each, which can compound. (2) Slight temperature difference — the cables may be slightly warmer at live test time than at dead test time. (3) Supply voltage variation between the two tests can affect calculation. (4) The dead-test R1+R2 may include a parallel earth path (e.g. via metal back-boxes) that doesn\\\\\\\\\\\\\\\'t carry full fault current under live conditions. Up to 20 percent discrepancy is generally within acceptable tolerance; investigate above 20 percent.',
-      'Mates in Mind (mental health awareness in construction), the Lighthouse Construction Industry Charity (financial, physical and mental wellbeing support for construction workers and their families), the Electrical Industries Charity (EIC — financial and welfare support for electrical industry workers and their families). Both Lighthouse Club and EIC run helplines and offer practical support including financial grants, mental health support and bereavement counselling.',
+      'It is a serious fault — the live Zs should always read lower than calculated, so a higher reading means a broken CPC and the circuit must be condemned.',
+      'It means the dead-test R1+R2 was measured at the wrong accessory; re-measure R1+R2 at the origin and the two figures will then match exactly.',
+      'Multiple legitimate causes — compounded instrument tolerance, temperature difference, supply voltage variation or a parallel earth path. Within tolerance up to 20 percent.',
+      'It is the temperature correction showing through — the 12 percent gap is exactly the 0.8 multiplier, so the reading already includes the operating-temperature allowance.',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 7,
     question: 'On a TT installation with high Ra (e.g. 150 Omega), the Zs reading at the consumer side will be:',
     options: [
-      'The current transformer (CT) clamp fits around one of the property\\\\\\\'s main supply tails (typically the live), measuring the total current the property is drawing. The charge point uses that measurement to throttle or pause its own current draw so the property total never exceeds a configured limit (commonly the main-fuse rating). This is dynamic load management — it lets a 7.4 kW charger live behind a constrained main fuse without the cut-out tripping when the shower comes on. The apprentice\\\\\\\'s job is to install the CT clamp around the correct tail in the correct orientation per the manufacturer\\\\\\\'s instructions; wrong orientation gives the unit the wrong measurement and load management does not work.',
-      'Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn\\\\\\\'t affected.',
-      'Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity (design, specification, recommendation). PL covers physical damage / injury from the contractor\\\\\\\'s activities; PI covers economic loss caused by bad advice or design. Increasingly relevant as installers move into design-and-build, EV charging design, solar PV design and prosumer\\\\\\\'s installations under BS 7671 Part 8.',
-      'Dominated by Ra. The earth fault loop on TT is: line conductor + R1 + fault + R2 (CPC) + Ra (consumer\\\\\\\\\\\\\\\'s electrode) + soil + Ra (transformer\\\\\\\\\\\\\\\'s electrode) + transformer winding. The R1+R2 contribution is typically under 1 Omega; Ra dominates. Measured Zs will be approximately Ra + a small contribution from the cabling. With Ra = 150 Omega, Zs at any test point will be approximately 150-152 Omega. Overcurrent ADS is not feasible at that loop impedance — RCD ADS is mandatory on TT, verified by the Ra x I delta n less than or equal to 50 V calculation.',
+      'Close to Ze on a TN-C-S supply — about 0.35 Omega — because on TT the consumer electrode is bypassed by the supplier earth and Ra has little effect.',
+      'About 0.62 Omega — the same as a typical TN ring final — because Zs depends on circuit cabling, not the earthing arrangement at the origin.',
+      'Roughly half of Ra — about 75 Omega — because the consumer and transformer electrodes act as two resistances in parallel in the loop.',
+      'Dominated by Ra — with R1+R2 under 1 Omega, a 150 Omega electrode gives Zs of about 150-152 Omega, far too high for overcurrent ADS.',
     ],
     correctAnswer: 3,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 8,
     question: 'Standard sequence for live Zs verification across a domestic consumer unit — what order do you test and why?',
     options: [
-      'Standard order: (1) Ze at the supply origin (incoming meter tails or the main switch). Establishes the supply impedance baseline. (2) Each circuit at its furthest point in turn — go in label order or by RCD group. Use no-trip mode on RCD-protected circuits. (3) For any borderline reading, retest in full trip mode after preparing for the trip. (4) For any failing reading, investigate (terminations, route length, CPC size). The order isn\\\\\\\\\\\\\\\'t arbitrary — Ze first gives you the baseline you need to sanity-check the per-circuit readings.',
-      'The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.',
-      'Public Liability (PL, typically £5-10m cover, £200-500/year), Employers\\\\\\\' Liability (EL, statutory minimum £5m under the Employers\\\\\\\' Liability (Compulsory Insurance) Act 1969 — required if you have any employees), Professional Indemnity (PI, £1-2m cover for design liability if you do any design work, £300-800/year), Tools-in-Transit insurance, Business Vehicle insurance for company vans. Plus director and officer cover for the directors personally.',
-      'The Code for Sustainable Homes was a non-mandatory sustainability rating system (1 to 6 stars) for new-build dwellings, used between 2007 and 2015 in England. It was withdrawn for new applications in March 2015 and replaced by enhanced Part L of the Building Regulations and (for higher-rated developments) by local-authority-specific sustainability requirements. You may still meet the Code referenced on older properties (a Code Level 4 or Level 5 home from 2010-2014 will have been built to Code spec) but it isn\\\\\\\'t the current standard for new applications.',
+      'Ze at the origin first for the baseline, then each circuit at its furthest point in label / RCD-group order, then deal with any borderline or failing readings.',
+      'Test each circuit\'s furthest point first to build up the per-circuit readings, then measure Ze last and subtract it to confirm each R1+R2 contribution.',
+      'Test the nearest accessory on every circuit first, since the nearest point gives the worst-case Zs, then work outwards only if the nearest reading fails.',
+      'Test in full trip mode throughout for accuracy, starting with the highest-rated circuit, and switch to no-trip only if a circuit trips on the first attempt.',
     ],
     correctAnswer: 0,
     explanation:

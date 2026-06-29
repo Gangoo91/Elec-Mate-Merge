@@ -59,7 +59,7 @@ const ZsTablesSection = () => (
       <div className="space-y-4 text-xs sm:text-sm text-white">
         <div className="bg-card rounded p-3 sm:p-4">
           <p className="font-medium text-foreground mb-3 text-sm sm:text-base">
-            Table 3A - Maximum Zs for Socket Outlets (0.4s disconnection)
+            Table 41.3 - Maximum Zs for Socket Outlets (0.4s disconnection)
           </p>
           <div className="overflow-x-auto touch-manipulation">
             <table className="w-full text-sm">
@@ -443,7 +443,7 @@ const ZsTablesSection = () => (
             <strong>Measured Zs:</strong> 1.38Ω (at ambient ~20°C)
           </p>
           <p className="mb-1">
-            <strong>From Table 3A:</strong>
+            <strong>From Table 41.3:</strong>
           </p>
           <p className="ml-4 text-blue-400">
             • BS 7671 Maximum: 1.80Ω (at fault temperature ~70°C)

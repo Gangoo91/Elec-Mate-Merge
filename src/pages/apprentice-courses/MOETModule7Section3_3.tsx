@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'log-purpose',
     question: 'What is the primary purpose of logging on-the-job activities for the EPA?',
     options: [
-      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
-      'Tick (acceptable), N/A (not applicable), LIM (limitation), or appropriate code — accompanied by an overall declaration',
-      'To create a detailed, dated record of workplace activities that demonstrates the range and depth of your practical experience against the ST1426 standard',
-      'A completed inspection by a competent person confirming it is fit for purpose and adequate for the intended load',
+      'To provide a timesheet that records the hours you worked each day for payroll',
+      'To list the tools and test instruments issued to you by your employer',
+      'To record workplace activities that evidence your practical experience against ST1426',
+      'To record only the qualifications and certificates you have already achieved',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'log-detail',
     question: 'What level of detail should a work activity log entry contain?',
     options: [
-      'A fire-resistant cable (FP200, FP400, MICC) classified to BS EN 50200 (PH30/PH60/PH120 depending on duration), with non-combustible supports.',
-      'The date, location, equipment involved, the task performed, methods used, outcomes achieved, safety measures taken, and which KSBs the activity demonstrates',
-      'Deaf and hard-of-hearing people, non-native English speakers, anyone in a noisy environment, and many neurodivergent people — universal benefit',
-      'Approach, Listen, Give reassurance and information, Encourage appropriate professional help, Encourage other supports',
+      'Only the date and a one-line note such as "carried out electrical work today"',
+      'Date, location, equipment, task, methods, outcomes, safety measures and KSBs',
+      'Only the name of the supervisor who signed off the work that day',
+      'Only the job number from the employer system, with no further description',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'log-frequency',
     question: 'How often should you update your activity log?',
     options: [
-      'Design clear visual cues and triggers in your environment',
-      'When there is reason to suspect it is no longer valid or there has been a significant change',
+      'Only once, at the very end of the apprenticeship before the assessment',
+      'Only when your tutor or assessor specifically asks to see new evidence',
       'At least weekly, ideally after each significant activity while details are fresh',
-      'An area where heat transfers more readily through the building envelope',
+      'Once a year, at the same time as your annual appraisal review',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'log-digital',
     question: 'What advantage do digital logging tools offer over paper-only activity logs?',
     options: [
-      'They enable automatic timestamps, photo attachments, GPS location data and structured templates that make logging faster, more consistent and easier to cross-reference to KSBs',
-      'Insulation of live parts (Reg 416.1), barriers/enclosures to at least IPXXB/IP2X (Reg 416.2), and obstacles/placing out of reach where applicable',
-      'Optimised resource allocation, more frequent calibration for critical instruments, and cost-effective use of calibration resources',
-      'Bin everything before leaving the room — cable offcuts in a separate bag for waste recovery, sharps in a sharps tube, food waste in a separate bag.',
+      'They offer timestamps, photo attachments, GPS data and structured templates',
+      'They automatically write your reflective accounts for you with no input required',
+      'They guarantee the assessor will accept the evidence without any further review',
+      'They remove the need to link any activity to the KSBs in the standard',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'An effective activity log entry for the EPA portfolio should include:',
     options: [
-      'A motor designed to run on single-phase supply using starting mechanisms',
+      'Just the date and the number of hours worked on that day',
       'Date, location, equipment, task description, methods used, outcomes, safety measures and KSB links',
-      'A chemical reaction caused by the passage of an electric current through a conducting liquid',
-      'A competent person with adequate training and experience in scaffold inspection',
+      'Only the name of the customer and the address of the site',
+      'A simple tick to confirm that some work was carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'The benefit of logging activities regularly rather than retrospectively is:',
     options: [
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
-      'Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development',
-      'Details are accurate and specific because they are recorded while fresh, including test readings, component details and decision-making reasoning that would be forgotten later',
-      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
+      'It reduces the total number of entries you need, because regular logs can be much shorter',
+      'It allows your supervisor to complete the entries on your behalf at the end of each month',
+      'Details such as readings and reasoning are captured accurately while still fresh',
+      'It means the entries no longer need to be linked to any of the KSBs in the standard',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'When logging a fault diagnosis activity, you should record:',
     options: [
-      'Specific measures: risk assessment completed, safe isolation procedure followed (with lock-off details), PPE worn, permits obtained, and any hazards identified and controlled',
-      'Describe the specific result: equipment returned to service, test results confirming correct operation, any follow-up actions required, and customer or supervisor feedback received',
-      'It demonstrates awareness of the standard\\\\\\\\\\\\\\\'s requirements and makes it easy for the assessor to verify that your experience covers all required areas',
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
+      'Only the make and model of the test instrument you used, as this proves your competence',
+      'Only the time taken to find the fault, since speed is the main measure of a good diagnosis',
+      'Only the final outcome, such as "fault found and repaired", with no detail of the process',
+      'The symptoms, your approach, each test and result, the root cause, repair and verification',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'Activity logs differ from reflective accounts in that:',
     options: [
-      'Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development',
-      'Specific measures: risk assessment completed, safe isolation procedure followed (with lock-off details), PPE worn, permits obtained, and any hazards identified and controlled',
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
-      'Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities',
+      'Logs record what happened, while reflective accounts add why and what was learned',
+      'Logs must be written by your supervisor, whereas reflective accounts must be written by you',
+      'Logs are only required for distinction candidates, while reflective accounts are required for a pass',
+      'Logs analyse what you learned, while reflective accounts simply list the facts of the activity',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'When logging safety measures taken during an activity, you should include:',
     options: [
-      'Details are accurate and specific because they are recorded while fresh, including test readings, component details and decision-making reasoning that would be forgotten later',
-      'Specific measures: risk assessment completed, safe isolation procedure followed (with lock-off details), PPE worn, permits obtained, and any hazards identified and controlled',
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
-      'It demonstrates awareness of the standard\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements and makes it easy for the assessor to verify that your experience covers all required areas',
+      'Only the PPE you wore, as personal protective equipment covers all the safety requirements',
+      'Specific measures: risk assessment, safe isolation, PPE, permits, and hazards controlled',
+      'Only the hazards you encountered, leaving out the control measures you actually applied',
+      'A general statement that you "worked safely" without describing any specific control measures',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Linking log entries to specific KSBs is important because:',
     options: [
-      "Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development",
-      "Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly",
-      "It demonstrates awareness of the standard's requirements and makes it easy for the assessor to verify that your experience covers all required areas",
-      "Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities",
+      "It increases the number of log entries required, which the assessor counts towards your grade",
+      "It allows you to skip the professional discussion, since the links already prove your competence",
+      "It shows awareness of the standard and lets the assessor verify your coverage",
+      "It is only needed for the knowledge test, where each question maps directly to a single KSB",
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'If you complete a routine task that you have done many times before, should you log it?',
     options: [
-      'Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities',
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
-      'Details are accurate and specific because they are recorded while fresh, including test readings, component details and decision-making reasoning that would be forgotten later',
-      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
+      'No — once a task has been logged once, repeating it adds nothing and should never be recorded again',
+      'No — routine tasks are too basic to count as portfolio evidence under any circumstances',
+      'Only if your supervisor specifically asks you to log that particular routine task on the day',
+      'Yes, if it covers a new KSB or shows improvement over your earlier attempts',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'Test readings and measurement values recorded in your log:',
     options: [
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
-      'It demonstrates awareness of the standard\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements and makes it easy for the assessor to verify that your experience covers all required areas',
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
-      'Describe the specific result: equipment returned to service, test results confirming correct operation, any follow-up actions required, and customer or supervisor feedback received',
+      'Provide verifiable evidence that you understand parameters and can interpret results',
+      'Are best left out of the log because they take up too much space in the entry',
+      'Should be recorded only if the readings fall outside the acceptable range',
+      'Are only useful to the assessor if they are converted into a graph or chart',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'A gap analysis of your activity log should be carried out:',
     options: [
-      'Enabling photographs, timestamps, GPS location data and structured templates that make logging faster and more consistent',
-      'Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities',
-      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
-      'Specific measures: risk assessment completed, safe isolation procedure followed (with lock-off details), PPE worn, permits obtained, and any hazards identified and controlled',
+      'Only once, in the final week before the EPA, so the picture is as complete as possible',
+      'Regularly throughout the apprenticeship, to spot under-evidenced KSBs in good time',
+      'Only by your assessor, who is the only person permitted to review KSB coverage',
+      'Never, because every workplace activity automatically covers all of the KSBs equally',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'Digital logging tools and apps can help with activity recording by:',
     options: [
-      'Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities',
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
+      'Writing your reflective accounts automatically so you do not need to add any of your own analysis',
+      'Guaranteeing that the assessor accepts your evidence without reviewing the content',
       'Enabling photographs, timestamps, GPS location data and structured templates that make logging faster and more consistent',
-      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
+      'Removing the need to link any activity to the KSBs, as the app maps everything for you',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'When describing the outcome of a maintenance activity in your log, you should:',
     options: [
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
-      'Specific measures: risk assessment completed, safe isolation procedure followed (with lock-off details), PPE worn, permits obtained, and any hazards identified and controlled',
-      'Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development',
-      'Describe the specific result: equipment returned to service, test results confirming correct operation, any follow-up actions required, and customer or supervisor feedback received',
+      'Record only whether the job was completed on time, as this is the outcome the assessor checks',
+      'Leave the outcome blank, since the activity description already implies a successful result',
+      'State simply that the work was "completed", with no test results or verification detail',
+      'Describe the result: equipment returned to service, test results, and any follow-up',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'When logging a collaborative activity where you worked as part of a team, you should:',
     options: [
-      'Describe your specific role and contributions within the team, the communication and coordination involved, and how the team activity demonstrates professional behaviours such as teamwork, communication and responsibility',
-      'Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development',
-      'Details are accurate and specific because they are recorded while fresh, including test readings, component details and decision-making reasoning that would be forgotten later',
-      'The initial symptoms, your systematic diagnostic approach, each test performed and its result, the root cause identified, the repair carried out, and the verification that the fault was resolved',
+      'Describe your role, the communication involved, and the behaviours it demonstrates',
+      'Record only the names of everyone in the team, as listing the team members is sufficient evidence',
+      'Claim the whole task as your own work, since the assessor only credits individual achievement',
+      'Avoid logging it at all, because team activities cannot demonstrate any individual KSBs',
     ],
     correctAnswer: 0,
     explanation:

@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     id: 'time-off-training',
     question: 'Are safety representatives entitled to paid time off for training?',
     options: [
-      'Appoint a principal designer and principal contractor in writing as soon as practicable',
+      'No, training must be completed in their own unpaid time',
       'Yes, with pay for training approved by the union or agreed with the employer',
-      'The effective surface temperature of an ideal cooling coil',
-      'The powder cloud severely reduces visibility, can cause breathing difficulties, and leaves residue',
+      'Only if they have served more than five years in the role',
+      'Only where the employer chooses to fund it voluntarily',
     ],
     correctIndex: 1,
     explanation:
@@ -77,10 +77,10 @@ const quickCheckQuestions = [
     question:
       'In workplaces without recognised trade unions, how must employers consult employees on health and safety?',
     options: [
-      'Through the Health and Safety Consultation with Employees Regulations 1996',
-      'Rods, tapes, plates, foundation electrodes, and structural steel',
-      'A closed loop that contains no other closed loops within it',
-      'A shared digital space for project information management',
+      'Through the Health and Safety (Consultation with Employees) Regulations 1996',
+      'They have no duty to consult where no union is recognised',
+      'Only by appointing a union safety representative anyway',
+      'Through the Working Time Regulations 1998',
     ],
     correctIndex: 0,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     question:
       'What is the primary function of a safety representative under the SRSC Regulations 1977?',
     options: [
-      'Stored carbon can be released back to atmosphere through fires, disease, or land-use change',
+      'To enforce health and safety law and issue notices',
       'To represent employees on health and safety matters and consult with the employer',
-      'Investigation → meeting → decision → right to be accompanied → right of appeal',
-      'The design current of the cooker after applying diversity',
+      'To manage the employer\'s health and safety duties on their behalf',
+      'To carry out statutory inspections required of the HSE',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,9 +121,9 @@ const quizQuestions = [
     id: 3,
     question: 'What information is an employer required to provide to safety representatives?',
     options: [
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
-      'They prevent overcommitment and ensure each job receives proper attention',
-      'That all diagrams, charts and information notices comply with the applicable standards specified',
+      'The employer\'s full commercial and financial accounts',
+      'The personal health records of every employee',
+      'Only information the employer chooses to share',
       'Information necessary for them to fulfil their functions, subject to certain restrictions',
     ],
     correctAnswer: 3,
@@ -135,9 +135,9 @@ const quizQuestions = [
     question: 'How often should a safety committee typically meet?',
     options: [
       'At least quarterly, though more frequently is often beneficial',
-      'To allow the reading to stabilise and detect leakage over time',
-      'To prevent defeat of the interlock using substitution',
-      'Subject line, greeting, body, closing, signature',
+      'Only once a year at the annual review',
+      'Only when a serious accident has occurred',
+      'Weekly, as required by the SRSC Regulations',
     ],
     correctAnswer: 0,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 5,
     question: 'What protection do safety representatives have against employer action?',
     options: [
-      'The tongue withdraws from the switch head, breaking the safety circuit',
+      'A guaranteed pay rise for taking on the role',
       'Protection from dismissal or detriment for performing their safety representative functions',
-      'Research shows the adult brain continues forming new neural connections well into old age',
-      'Apply a tourniquet to each leg 5–7 cm above the highest wound on each limb',
+      'Immunity from any form of disciplinary process at work',
+      'A guaranteed promotion after two years in the role',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     id: 7,
     question: "What should be included in a safety committee's terms of reference?",
     options: [
-      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
-      'An upstream device clears a fault if the closer device fails',
-      'To calculate whether the ground can support the weight and forces exerted by the MEWP',
+      'The annual pay budget for committee members',
+      'The disciplinary records of all employees',
+      'A list of approved subcontractors for the site',
       'Objectives, membership, meeting frequency, agenda setting, and reporting arrangements',
     ],
     correctAnswer: 3,
@@ -188,9 +188,9 @@ const quizQuestions = [
       'A representative of employee safety (ROES) differs from a union safety representative in that:',
     options: [
       'A ROES is elected by employees in non-unionised workplaces',
-      'Regular check-in procedures and emergency contacts',
-      'To prevent fingers from slipping forward onto live conductors',
-      'Network security, encryption, and access controls',
+      'A ROES is appointed directly by the HSE',
+      'A ROES has full enforcement and prosecution powers',
+      'A ROES can only represent managers, not operatives',
     ],
     correctAnswer: 0,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 9,
     question: 'When must employers consult safety representatives?',
     options: [
-      'Check the PLC diagnostic display for fault indicators and review the I/O status to identify unexpected states',
+      'Only after an accident has already happened',
       'Before introducing measures affecting health and safety, when planning training, and on other specified matters',
-      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
-      'A type of adjustable guardrail frame that provides collective fall protection during assembly',
+      'Only at the representative\'s written request',
+      'Only once every three years at review',
     ],
     correctAnswer: 1,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'What happens if an employer refuses to establish a safety committee after a valid request?',
     options: [
-      'The number of individual optical fibres in the cable',
-      'Because near misses indicate hazards that could lead to a serious incident if not addressed',
+      'Nothing, as establishing a committee is entirely voluntary',
+      'The representatives must take the matter to an employment tribunal',
       'The employer is in breach of the SRSC Regulations and can be prosecuted',
-      'Energy cable can withstand during fault without damage',
+      'The HSE automatically establishes the committee instead',
     ],
     correctAnswer: 2,
     explanation:

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'kinetic-lift-start',
     question: 'What is the very first step you should take before physically lifting any load?',
     options: [
-      'Bend your knees and grip the load',
       'Plan the lift &mdash; assess the load, route, and destination',
+      'Bend your knees and grip the load',
       'Ask a colleague to help you',
       'Put on gloves and safety boots',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The first step of the kinetic lifting technique is always to plan the lift. Before you touch the load, you should assess its weight, shape, and stability; check your route for obstacles; identify where you will set it down; and decide whether you need help or mechanical aids. Planning prevents the majority of manual handling injuries.',
   },
@@ -33,11 +33,11 @@ const quickCheckQuestions = [
     question: 'Why should you keep the load as close to your body as possible during a lift?',
     options: [
       'It makes the load lighter',
-      'It keeps the load&rsquo;s centre of gravity within your base of support, reducing spinal stress',
       'It prevents the load from slipping',
       'It is required by the Manual Handling Operations Regulations',
+      'It keeps the load&rsquo;s centre of gravity within your base of support, reducing spinal stress',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Keeping the load close to your body ensures that the combined centre of gravity (yours plus the load&rsquo;s) stays within your base of support. The further a load is held from your body, the greater the leverage force on your lower back. At arm&rsquo;s length, the effective strain on your lumbar spine can be up to 10 times the actual weight of the load.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the "power zone" in manual handling?',
     options: [
-      'The area directly behind you where you have the most strength',
       'The zone between your knees and shoulders, close to your body',
+      'The area directly behind you where you have the most strength',
       'The point at which a load becomes too heavy to lift safely',
       'The maximum distance you should carry a load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The power zone is the area between your knees and shoulders, close to your body. This is where your muscles are at their strongest and your spine is under the least stress. Lifting, lowering, and carrying within this zone significantly reduces the risk of injury. Loads handled above shoulder height or below knee level place much greater strain on the body.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does "base of support" mean in the context of lifting?',
     options: [
-      'The floor surface you are standing on',
       'The area enclosed by your feet and the ground between them',
+      'The floor surface you are standing on',
       'The bottom of the load you are lifting',
       'The mechanical aid supporting the load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Your base of support is the area enclosed by your feet and the space between them on the ground. For a stable lift, your centre of gravity (and the combined centre of gravity of you plus the load) must remain within this base. A wider stance or split stance increases your base of support, giving you more stability during the lift.',
   },

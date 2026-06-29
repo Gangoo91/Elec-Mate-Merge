@@ -61,7 +61,7 @@ const checks = [
       'A field perpendicular to the magnet’s motion',
       'A south pole at the entry end (pulls the magnet in faster)',
       'A north pole at the entry end (opposes the magnet)',
-      'No pole at all',
+      'A south pole only after the magnet stops moving',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "What does Faraday's law of electromagnetic induction state?",
     options: [
-      'BMS setpoint and schedule adjustment based on actual use',
+      'Induced EMF is proportional to the strength of the magnetic field',
       'Induced EMF is proportional to the rate of change of magnetic flux',
-      'Skipping the manual test button after the 1×IΔn trip test',
-      'The linear travel distance of the valve stem from fully closed to fully open',
+      'Induced EMF is proportional to the resistance of the coil',
+      'Induced EMF is proportional to the total flux through the coil',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why does an induction motor turn at all?',
     options: [
-      'Each phase to neutral, each phase to earth, AND between each pair of phases (L1-L2, L2-L3, L1-L3)',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
-      'Because the rotating stator field induces a current in the rotor, which then experiences a force F = BIL',
-      'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
+      'A battery feeds direct current into the rotor windings through brushes and slip rings',
+      'The rotor is a permanent magnet that locks onto and follows the rotating stator field',
+      'The rotating stator field induces a rotor current, which then experiences a force F = BIL',
+      'The supply frequency is rectified to DC and drives the rotor round mechanically',
     ],
     correctAnswer: 2,
     explanation:
@@ -182,9 +182,9 @@ const quizQuestions = [
       'You disconnect a contactor coil under load and see a flash at the contacts. What’s causing it?',
     options: [
       'A back-EMF induced by the rapidly collapsing field in the coil',
-      'Lower than PSCC due to earth electrode resistance',
-      'A vertical tube that transfers the load to the ground',
-      'To provide a safe temporary working platform for people and materials',
+      'The supply voltage momentarily doubling as the contacts open',
+      'Capacitance in the cable discharging across the open contacts',
+      'A short circuit between the coil terminals as they separate',
     ],
     correctAnswer: 0,
     explanation:

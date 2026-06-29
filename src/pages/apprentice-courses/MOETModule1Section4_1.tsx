@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Health and Safety at Work Act 1974 is best described as:',
     options: [
-      'Strong social connections, a sense of belonging, and reasons for living',
+      'A prescriptive act that lists the exact safety measures required for every type of workplace',
       'An enabling act that sets out broad duties and allows specific regulations to be made under it',
-      'Challenge the behaviour directly, support the apprentice privately, and report to management if it continues',
-      'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
+      'A civil law statute that only allows injured workers to claim compensation',
+      'An act that applies solely to factories and industrial premises',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     id: 3,
     question: 'Under Section 3 of the HSWA 1974, employers must ensure the health and safety of:',
     options: [
-      "Remedy the contravention within the time period specified in the notice",
-      "Statutory and regulatory compliance within health and safety",
-      "Free personal protective equipment for all visitors",
+      "Only employees who hold a permanent contract of employment",
+      "Only employees who have completed their induction training",
+      "Only agency workers and labour-only subcontractors",
       "Non-employees who may be affected by the employer's undertaking",
     ],
     correctAnswer: 3,
@@ -114,9 +114,9 @@ const quizQuestions = [
       "An electrical maintenance technician's duty under Section 7 of the HSWA 1974 includes:",
     options: [
       'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
-      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
-      'Inspect the workplace, investigate complaints and attend safety committee meetings',
-      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
+      'Drafting the written health and safety policy for the organisation',
+      'Inspecting the workplace and issuing improvement notices to colleagues',
+      'Ensuring all visitors and members of the public wear personal protective equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'Section 8 of the HSWA 1974 makes it an offence to:',
     options: [
-      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
+      'Fail to attend a mandatory safety committee meeting when invited',
       'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
-      'Inspect the workplace, investigate complaints and attend safety committee meetings',
-      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
+      'Refuse to carry out a task that has not been risk assessed',
+      'Report a near miss without first informing your immediate supervisor',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     id: 7,
     question: 'The SFARP (so far as is reasonably practicable) principle means that:',
     options: [
-      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
-      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
-      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
+      'All identified risks must be eliminated regardless of cost or difficulty',
+      'Only risks that have already caused an injury need to be controlled',
+      'The cheapest control measure is always the acceptable one to adopt',
       'The risk must be weighed against the sacrifice needed to reduce it — if grossly disproportionate, the duty is discharged',
     ],
     correctAnswer: 3,
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: 'An HSE inspector issues an improvement notice. The recipient must:',
     options: [
       'Remedy the contravention within the time period specified in the notice',
-      'An unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment',
-      'Free personal protective equipment for all visitors',
-      'Non-employees who may be affected by the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s undertaking',
+      'Cease the activity immediately until the matter is remedied',
+      'Pay an on-the-spot fixed penalty within 14 days',
+      'Close the premises pending a full HSE investigation',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'Under the HSWA 1974, the maximum penalty for certain offences tried on indictment (in the Crown Court) is:',
     options: [
-      "Non-employees who may be affected by the employer's undertaking",
+      "A capped fine of £20,000 with no possibility of imprisonment",
       "An unlimited fine and/or up to 2 years' imprisonment",
-      "Statutory and regulatory compliance within health and safety",
-      "Free personal protective equipment for all visitors",
+      "A formal written caution recorded against the company",
+      "Suspension of the company's trading licence for 12 months",
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 10,
     question: 'How does the HSWA 1974 apply specifically to electrical maintenance work?',
     options: [
-      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
-      'The risk must be weighed against the sacrifice needed to reduce it — if grossly disproportionate, the duty is discharged',
+      'It sets the maximum permitted touch voltage for electrical equipment',
+      'It specifies the test sequence for inspecting an electrical installation',
       'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
-      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
+      'It mandates the use of BS 7671 as legally binding for all installation work',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     id: 11,
     question: 'Safety representatives appointed by recognised trade unions have the right to:',
     options: [
-      'Remedy the contravention within the time period specified in the notice',
-      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
-      'Statutory and regulatory compliance within health and safety',
+      'Issue prohibition notices to stop dangerous work activities',
+      'Prosecute the employer directly in the Crown Court',
+      'Set the company health and safety budget each year',
       'Inspect the workplace, investigate complaints and attend safety committee meetings',
     ],
     correctAnswer: 3,
@@ -221,9 +221,9 @@ const quizQuestions = [
       'Under ST1426, knowledge of the HSWA 1974 maps to which area of the apprenticeship standard?',
     options: [
       'Statutory and regulatory compliance within health and safety',
-      'An unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment',
-      'Non-employees who may be affected by the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s undertaking',
-      'Free personal protective equipment for all visitors',
+      'Selection and use of hand and power tools',
+      'Interpretation of electrical schematic and wiring diagrams',
+      'Planned preventive maintenance scheduling techniques',
     ],
     correctAnswer: 0,
     explanation:

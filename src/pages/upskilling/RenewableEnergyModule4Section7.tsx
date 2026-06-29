@@ -25,127 +25,127 @@ const inlineChecks = [
     question:
       'EREC G98 / G99 registration for a hybrid PV+BESS install — what counts toward the AC output capacity?',
     options: [
-      'Only PV',
-      'Both PV inverter rated AC AND BESS inverter rated AC count toward the registered capacity. Reg 551.7.2.1 (UPDATED A4:2026): stationary batteries shall be considered a GENERATING SET, NOT a load — the BESS PCE\'s AC output adds to the install\'s registered generation capacity. For DC-coupled hybrid (single hybrid inverter): inverter AC output is the registration figure. For AC-coupled (separate PV + BESS inverters): COMBINED AC output figures into the registration',
-      'Customer chooses',
-      'Only BESS',
+      'Only the PV inverter\'s rated AC output, since the battery is treated as a load',
+      'Both the PV inverter AC and the BESS inverter AC, combined per Reg 551.7.2.1',
+      'Only the DC-side PV string capacity, before inverter conversion losses',
+      'Only the BESS inverter AC output, as the battery is the dispatchable source',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 551.7.2.1 is critical for hybrid PV+BESS registration: stationary batteries treated as generating set (NOT load) means the BESS PCE\'s AC output adds to the install\'s registered generation. For DC-coupled hybrid (single 5 kW hybrid inverter): registered as 5 kW AC. For AC-coupled (5 kW PV inverter + 5 kW BESS inverter): registered as 10 kW AC combined. The 16 A single-phase threshold (~3.68 kW) is exceeded by AC-coupled retrofits — typically triggers EREC G99 application or EREC G100 export limitation. Cert evidence bundle records the registration calculation.',
+      'Reg 551.7.2.1 (UPDATED A4:2026) treats stationary batteries as a GENERATING SET, not a load — so the BESS PCE\'s AC output adds to the install\'s registered generation. For DC-coupled hybrid (single inverter): inverter AC output is the registration figure. For AC-coupled (separate PV + BESS inverters): COMBINED AC output figures into the registration. Reg 551.7.2.1 is critical for hybrid PV+BESS registration: stationary batteries treated as generating set (NOT load) means the BESS PCE\'s AC output adds to the install\'s registered generation. For DC-coupled hybrid (single 5 kW hybrid inverter): registered as 5 kW AC. For AC-coupled (5 kW PV inverter + 5 kW BESS inverter): registered as 10 kW AC combined. The 16 A single-phase threshold (~3.68 kW) is exceeded by AC-coupled retrofits — typically triggers EREC G99 application or EREC G100 export limitation. Cert evidence bundle records the registration calculation.',
   },
   {
     id: 'm4s7-bidirectional-device',
     question:
       'Reg 551.7.1(c) (NEW in A4:2026) — what does it require for hybrid PV+BESS installs?',
     options: [
-      'No requirement',
-      'A suitable protective device shall be provided where energy flow is bidirectional. Hybrid PV+BESS installs have bidirectional flow at multiple points: PV export to grid; grid charging BESS; BESS discharging to load + grid. The protective device at the source-connection point (typically the AC interface between hybrid inverter and consumer unit) must operate bidirectionally — current can flow either direction during normal operation, and the device must trip on fault regardless of direction',
-      'Customer\'s choice',
-      'No effect',
+      'A standard unidirectional MCB is sufficient at the source connection',
+      'A protective device that operates bidirectionally at the source connection',
+      'An RCD alone, relying on the inverter\'s internal overcurrent protection',
+      'No protective device, as the hybrid inverter self-protects in either direction',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 551.7.1(c) is the NEW A4:2026 source-connection rule for bidirectional energy flow. Hybrid PV+BESS has bidirectional flow inherently — that\'s the whole point. The protective device (typically a DC-rated MCB per BS EN 60898-2/IEC 60898-3 or a bidirectional AC MCB) must operate in either direction. Parallels Reg 712.533.101 (PV DC bidirectional OCPDs) + Reg 570.6.1.1.1 (BESS bidirectional protective devices) + Reg 826.1.2.2 (PEI bidirectional throughout). The cert evidence bundle records the device\'s bidirectional capability with manufacturer datasheet evidence.',
+      'Reg 551.7.1(c) (NEW A4:2026) requires a protective device that operates in either direction at the source connection, because hybrid PV+BESS flow is bidirectional (PV export to grid; grid charging BESS; BESS discharging to load + grid). Reg 551.7.1(c) is the NEW A4:2026 source-connection rule for bidirectional energy flow. Hybrid PV+BESS has bidirectional flow inherently — that\'s the whole point. The protective device (typically a DC-rated MCB per BS EN 60898-2/IEC 60898-3 or a bidirectional AC MCB) must operate in either direction. Parallels Reg 712.533.101 (PV DC bidirectional OCPDs) + Reg 570.6.1.1.1 (BESS bidirectional protective devices) + Reg 826.1.2.2 (PEI bidirectional throughout). The cert evidence bundle records the device\'s bidirectional capability with manufacturer datasheet evidence.',
   },
   {
     id: 'm4s7-g100-hybrid',
     question:
       'EREC G100 export limitation for a hybrid PV+BESS install — how does it work?',
     options: [
-      'Doesn\'t apply',
-      'EREC G100 limits AC export to a DNO-approved threshold. For hybrid PV+BESS: the combined export (PV generation + BESS discharge to grid) is measured at the supply tail by a current transformer (CT); the hybrid inverter (or external export-control device) modulates output to limit total export. Common use cases: (a) keep combined install under EREC G98 threshold to avoid G99 delay; (b) comply with G99 conditional approval limiting export; (c) avoid DNO network constraint refusal. Cert evidence bundle records the G100 limit + verification testing',
-      'Customer\'s preference',
-      'No control',
+      'It caps DC generation at the PV modules before the inverter',
+      'A CT at the supply tail measures net export and the inverter modulates output to the limit',
+      'It disconnects the BESS entirely whenever the grid is exporting',
+      'It applies only to the PV inverter, leaving BESS discharge uncapped',
     ],
     correctIndex: 1,
     explanation:
-      'EREC G100 export limitation works at the install\'s grid-connection point: a CT on the supply tail measures NET grid power flow; when net export exceeds the configured limit, the hybrid inverter (or external device) reduces output. For hybrid PV+BESS: the inverter has to allocate between PV → BESS charging (no export contribution) + PV/BESS → loads (no export contribution) + PV/BESS → grid (export contribution). G100 logic prioritises self-consumption + BESS charging before grid export. Common UK use: keep combined export ≤ 16 A AC single-phase (G98 threshold ~3.68 kW) for fit-and-notify simplicity vs G99 delay. Verification testing per EREC G100 spec at commissioning.',
+      'EREC G100 limits AC export to a DNO-approved threshold: a current transformer (CT) at the supply tail measures combined net export (PV generation + BESS discharge), and the hybrid inverter (or external device) modulates output to stay within the limit. Common use cases: keep the install under the G98 threshold to avoid G99 delay; comply with G99 conditional approval; avoid DNO network-constraint refusal. EREC G100 export limitation works at the install\'s grid-connection point: a CT on the supply tail measures NET grid power flow; when net export exceeds the configured limit, the hybrid inverter (or external device) reduces output. For hybrid PV+BESS: the inverter has to allocate between PV → BESS charging (no export contribution) + PV/BESS → loads (no export contribution) + PV/BESS → grid (export contribution). G100 logic prioritises self-consumption + BESS charging before grid export. Common UK use: keep combined export ≤ 16 A AC single-phase (G98 threshold ~3.68 kW) for fit-and-notify simplicity vs G99 delay. Verification testing per EREC G100 spec at commissioning.',
   },
   {
     id: 'm4s7-g98-threshold',
     question:
       'UK customer wants 5 kWp PV + 10 kWh BESS via DC-coupled GivEnergy Gen3 5 kW hybrid inverter. EREC registration path?',
     options: [
-      'G98 fit-and-notify',
-      '5 kW hybrid inverter AC output = ~21.7 A at 230 V — exceeds the EREC G98 16 A single-phase threshold (~3.68 kW). Options: (a) EREC G99 application — submit before install, wait 4-8 weeks for DNO assessment; (b) EREC G100 export limitation — configure inverter to limit AC export to ≤16 A (3.68 kW), keep install under G98 fit-and-notify; (c) reduce inverter size to 3.68 kW (16 A AC) — smaller hybrid model. Customer-informed decision; cert evidence bundle records the chosen path',
-      'No registration',
-      'G99 always',
+      'Straight G98 fit-and-notify, as the 5 kW inverter is within the 16 A threshold',
+      'G99, G100 export limit, or a smaller inverter — the 5 kW (~21.7 A) exceeds G98',
+      'No EREC registration is needed for a DC-coupled hybrid under 10 kW',
+      'A formal G99 application is mandatory, with no G100 or downsizing alternative',
     ],
     correctAnswer: 1,
     correctIndex: 1,
     explanation:
-      '5 kW hybrid inverter exceeds G98 threshold (16 A = ~3.68 kW single-phase). Three paths: (a) G99 — formal application + DNO assessment, 4-8 week typical timeline. Best when no export limit acceptable. (b) G100 export limit — limit export to ≤16 A via inverter config or external device, keep G98 fit-and-notify, install faster. Best when self-consumption + BESS charging absorbs most surplus. (c) Downsize inverter — 3.68 kW hybrid (smaller GivEnergy / Solis model). Best for budget-conscious customers willing to give up peak export capacity. Cert evidence bundle records the choice + the EREC paperwork.',
+      '5 kW hybrid inverter AC output (~21.7 A at 230 V) exceeds the G98 16 A (~3.68 kW) single-phase threshold, so three paths exist: (a) G99 application before install; (b) G100 export limit to keep under G98 fit-and-notify; (c) downsize to a 3.68 kW inverter. 5 kW hybrid inverter exceeds G98 threshold (16 A = ~3.68 kW single-phase). Three paths: (a) G99 — formal application + DNO assessment, 4-8 week typical timeline. Best when no export limit acceptable. (b) G100 export limit — limit export to ≤16 A via inverter config or external device, keep G98 fit-and-notify, install faster. Best when self-consumption + BESS charging absorbs most surplus. (c) Downsize inverter — 3.68 kW hybrid (smaller GivEnergy / Solis model). Best for budget-conscious customers willing to give up peak export capacity. Cert evidence bundle records the choice + the EREC paperwork.',
   },
   {
     id: 'm4s7-ac-coupled-erec',
     question:
       'AC-coupled retrofit: existing 5 kWp PV (Solis 4 kW inverter, registered EREC G98) + adding 10 kWh BESS with separate 5 kW battery inverter. EREC implications?',
     options: [
-      'No change',
-      'New combined AC output = 4 + 5 = 9 kW (~39 A at 230 V) — well above G98 16 A threshold. The original PV inverter\'s G98 registration STAYS but is now joined by the BESS PCE. Options: (a) submit EREC G99 application for the COMBINED install (cover both PV + BESS); (b) EREC G100 export limit on the combined output to ≤16 A. The DNO may treat this as an alteration to the existing install or as a new application. Cert evidence bundle records the new registration paperwork',
-      'Original G98 unchanged',
-      'No paperwork',
+      'No EREC change, since adding storage does not alter generation capacity',
+      'Combined AC output is now ~9 kW (~39 A) — needs a G99 application or G100 limit',
+      'The original G98 still covers it, as the PV inverter rating is unchanged',
+      'No paperwork is required because the BESS only charges from the existing PV',
     ],
     correctIndex: 1,
     explanation:
-      'AC-coupled retrofit BESS adds AC generation capacity. The combined install\'s AC output (PV + BESS) typically exceeds the G98 threshold. The original PV G98 paperwork stays valid for the PV alone — but the BESS addition requires its own registration covering the combined operation. The DNO\'s approach varies: some require a NEW G99 application; some treat as alteration to existing. The competent installer engages the DNO at design stage to clarify. The cert evidence bundle includes: original PV G98 + new BESS G99 / G100 paperwork + combined DNO approval letter.',
+      'New combined AC output = 4 + 5 = 9 kW (~39 A at 230 V), well above the G98 16 A threshold. The original PV G98 registration stays but is now joined by the BESS PCE, so the combined install needs either a G99 application or a G100 export limit. AC-coupled retrofit BESS adds AC generation capacity. The combined install\'s AC output (PV + BESS) typically exceeds the G98 threshold. The original PV G98 paperwork stays valid for the PV alone — but the BESS addition requires its own registration covering the combined operation. The DNO\'s approach varies: some require a NEW G99 application; some treat as alteration to existing. The competent installer engages the DNO at design stage to clarify. The cert evidence bundle includes: original PV G98 + new BESS G99 / G100 paperwork + combined DNO approval letter.',
   },
   {
     id: 'm4s7-bs-en-50549',
     question:
       'BS EN 50549-1 — what is it and how does it relate to EREC G98 / G99?',
     options: [
-      'A type of cable',
-      'BS EN 50549-1: &ldquo;Requirements for generating plants to be connected in parallel with distribution networks — Part 1: Connection to a LV distribution network — Generating plants up to and including Type B&rdquo;. The technical standard underpinning UK EREC G98 / G99 anti-islanding, V/freq trip thresholds, and protection settings. UK PV inverters carry BS EN 50549-1 type approval as the basis for G98 / G99 compliance. The cert evidence bundle records the inverter\'s BS EN 50549-1 type-approval certificate',
-      'Customer\'s preference',
-      'BS 7671 chapter',
+      'A cable construction standard for DC string wiring',
+      'The technical standard underpinning UK EREC G98 / G99 inverter compliance',
+      'A DNO commercial tariff scheme for exported generation',
+      'A chapter within BS 7671 covering generating sets',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 50549-1 is the European harmonised standard for parallel-connected generating plants (up to Type B = ~1 MW). It defines: anti-islanding methodology + test procedures; V/freq trip thresholds and disconnection times; loss-of-mains detection methods; frequency-watt response (frequency-dependent active power reduction); voltage-VAR response (voltage-dependent reactive power); ride-through behaviour for grid disturbances. UK EREC G98 / G99 is the OPERATIONAL framework (registration process + DNO interface); BS EN 50549-1 is the TECHNICAL standard the inverter must comply with. Modern UK hybrid inverters (GivEnergy, Tesla, Sigenergy, SolarEdge) carry BS EN 50549-1 type approval. The cert evidence bundle records the type-approval certificate.',
+      'BS EN 50549-1 ("Requirements for generating plants to be connected in parallel with distribution networks — Part 1: LV connection, up to and including Type B") is the technical standard underpinning UK EREC G98 / G99 anti-islanding, V/freq trip thresholds and protection settings. UK inverters carry its type approval as the basis for G98 / G99 compliance. BS EN 50549-1 is the European harmonised standard for parallel-connected generating plants (up to Type B = ~1 MW). It defines: anti-islanding methodology + test procedures; V/freq trip thresholds and disconnection times; loss-of-mains detection methods; frequency-watt response (frequency-dependent active power reduction); voltage-VAR response (voltage-dependent reactive power); ride-through behaviour for grid disturbances. UK EREC G98 / G99 is the OPERATIONAL framework (registration process + DNO interface); BS EN 50549-1 is the TECHNICAL standard the inverter must comply with. Modern UK hybrid inverters (GivEnergy, Tesla, Sigenergy, SolarEdge) carry BS EN 50549-1 type approval. The cert evidence bundle records the type-approval certificate.',
   },
   {
     id: 'm4s7-g100-verification',
     question:
       'EREC G100 verification testing at commissioning — what does the installer test?',
     options: [
-      'Nothing',
-      'EREC G100 specifies the verification procedure: (1) simulate over-export by reducing the local load while PV / BESS is producing — measure that export does NOT exceed the configured limit; (2) test the response time of the export-control device (typical spec ≤5 s response to load drop); (3) test the failure mode — if export-control device fails (CT cable disconnected, signal lost), the system should default to a SAFE state (typically full export limitation OR full inverter shutdown). Cert evidence bundle records the test results + control device manufacturer compliance',
-      'Customer\'s job',
-      'Just visual',
+      'No verification is required once the limit is set in the inverter app',
+      'Over-export simulation, response-time check, and failure-mode test',
+      'A single full-export reading taken on a cloudy day for the records',
+      'A visual check of the CT clamp orientation, with no functional testing',
     ],
     correctIndex: 1,
     explanation:
-      'EREC G100 verification at commissioning is the audit trail proving the install respects the configured export limit. Critical tests: (1) OVER-EXPORT simulation — reduce local load (e.g. turn off all loads on a sunny day) while PV+BESS is producing; measure net export at the supply tail; verify the limit is enforced; (2) RESPONSE TIME — sudden load drop (e.g. fridge cycle ending); measure how quickly the inverter reduces output to maintain the limit; typical spec ≤5 s; (3) FAILURE MODE — disconnect the CT cable; system should default to safe state (full limit or inverter shutdown). Modern hybrid inverters (GivEnergy, Sigenergy, SolarEdge) have built-in G100 verification logging that records each event. The cert evidence bundle includes the commissioning test results.',
+      'EREC G100 verification at commissioning checks: (1) over-export simulation — reduce local load while PV/BESS produces and confirm export does NOT exceed the configured limit; (2) response time of the export-control device (typically ≤5 s to a load drop); (3) failure mode — if the CT cable or signal is lost, the system defaults to a SAFE state (full limitation or inverter shutdown). EREC G100 verification at commissioning is the audit trail proving the install respects the configured export limit. Critical tests: (1) OVER-EXPORT simulation — reduce local load (e.g. turn off all loads on a sunny day) while PV+BESS is producing; measure net export at the supply tail; verify the limit is enforced; (2) RESPONSE TIME — sudden load drop (e.g. fridge cycle ending); measure how quickly the inverter reduces output to maintain the limit; typical spec ≤5 s; (3) FAILURE MODE — disconnect the CT cable; system should default to safe state (full limit or inverter shutdown). Modern hybrid inverters (GivEnergy, Sigenergy, SolarEdge) have built-in G100 verification logging that records each event. The cert evidence bundle includes the commissioning test results.',
   },
   {
     id: 'm4s7-multi-source-coordination',
     question:
       'Hybrid PV+BESS+EV install — how do EREC G98 / G99 / G100 coordinate the multiple sources?',
     options: [
-      'Each separate',
-      'The EREC paperwork covers the INSTALL\'s grid-export capacity — what AC current the install can push to the grid. PV inverter, BESS inverter, V2G (vehicle-to-grid) EV charger all contribute. The DNO cares about TOTAL export. The install must coordinate: G98 fit-and-notify covers up to 16 A; above 16 A, G99 application + possibly G100 export limit. The competent install includes export-control logic that respects the combined limit regardless of which source is producing. Cert evidence bundle records each source + the combined coordination',
-      'Customer\'s preference',
-      'No coordination needed',
+      'Each source is registered and assessed entirely independently of the others',
+      'They coordinate so total export from all sources respects one combined limit',
+      'Only the largest single source is registered; the others are exempt',
+      'No coordination is needed as long as each source is individually compliant',
     ],
     correctIndex: 1,
     explanation:
-      'Multi-source hybrid installs (PV + BESS + V2G EV) need export coordination. The DNO\'s concern is total install-to-grid export. EREC paperwork covers the install as a unit, not per-source. Practical implementation: hybrid inverter with built-in G100 export control measures NET grid flow + modulates ALL sources to respect the configured limit. For V2G integration (still emerging in UK 2025-2026): the V2G EV charger reports its export contribution to the inverter\'s coordination logic. The combined system respects the EREC limit. Cert evidence bundle: original PV registration + BESS registration + V2G registration (where applicable) + combined-export verification.',
+      'The EREC paperwork covers the install\'s total grid-export capacity, to which PV inverter, BESS inverter and any V2G charger all contribute — the DNO cares about TOTAL export. G98 fit-and-notify covers up to 16 A; above that, G99 (plus possibly G100 export limit). The install must include export-control logic that respects the combined limit regardless of which source is producing. Multi-source hybrid installs (PV + BESS + V2G EV) need export coordination. The DNO\'s concern is total install-to-grid export. EREC paperwork covers the install as a unit, not per-source. Practical implementation: hybrid inverter with built-in G100 export control measures NET grid flow + modulates ALL sources to respect the configured limit. For V2G integration (still emerging in UK 2025-2026): the V2G EV charger reports its export contribution to the inverter\'s coordination logic. The combined system respects the EREC limit. Cert evidence bundle: original PV registration + BESS registration + V2G registration (where applicable) + combined-export verification.',
   },
   {
     id: 'm4s7-bs-en-61439',
     question:
       'Reg 551.7.2.2 (NEW A4:2026) — when does it apply, and which BS EN 61439 part is most relevant for a typical UK domestic hybrid PV+BESS install?',
     options: [
-      'Doesn\'t apply',
-      'Reg 551.7.2.2 applies whenever a generating set (including PV inverter, BESS PCE, hybrid inverter) is connected via a low-voltage switchgear / controlgear assembly. For UK domestic, the consumer unit IS the assembly — typically BS EN 61439-3 (Distribution Boards intended to be operated by Ordinary persons — DBO). Most UK CE-marked domestic consumer units comply. For commercial / industrial installs the relevant standard is BS EN 61439-1 (general rules) + BS EN 61439-2 (Power Switchgear and Controlgear assemblies). The PEI design pack records the assembly + manufacturer\'s type-test certificate',
-      'BS EN 61439-1 only',
-      'No standard required',
+      'It never applies, as consumer units are outside the BS EN 61439 series',
+      'It applies to the source assembly; for UK domestic that is BS EN 61439-3 (DBO)',
+      'It applies, but only BS EN 61439-1 general rules are relevant for domestic',
+      'It applies only to commercial panels; domestic consumer units are exempt',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 551.7.2.2 (NEW A4:2026) ties source-connection panels to the BS EN 61439 series. Three parts apply per scale: BS EN 61439-1 (general rules — always applies as parent standard); BS EN 61439-2 (PSC — Power Switchgear and Controlgear — for commercial / industrial distribution); BS EN 61439-3 (DBO — Distribution Boards for ordinary persons — the typical UK domestic consumer unit). Most UK CE-marked CUs are tested to BS EN 61439-3. For commercial source connections via custom panels, the panel manufacturer provides a BS EN 61439-1/-2 type-test certificate as the cert evidence. Cert evidence bundle records the assembly reference, the BS EN 61439 part, and the manufacturer\'s declaration.',
+      'Reg 551.7.2.2 applies whenever a generating set (PV inverter, BESS PCE, hybrid inverter) connects via a LV switchgear/controlgear assembly. For UK domestic the consumer unit IS the assembly — typically BS EN 61439-3 (Distribution Boards for Ordinary persons, DBO). Commercial/industrial uses BS EN 61439-1 (general rules) + BS EN 61439-2 (PSC). Reg 551.7.2.2 (NEW A4:2026) ties source-connection panels to the BS EN 61439 series. Three parts apply per scale: BS EN 61439-1 (general rules — always applies as parent standard); BS EN 61439-2 (PSC — Power Switchgear and Controlgear — for commercial / industrial distribution); BS EN 61439-3 (DBO — Distribution Boards for ordinary persons — the typical UK domestic consumer unit). Most UK CE-marked CUs are tested to BS EN 61439-3. For commercial source connections via custom panels, the panel manufacturer provides a BS EN 61439-1/-2 type-test certificate as the cert evidence. Cert evidence bundle records the assembly reference, the BS EN 61439 part, and the manufacturer\'s declaration.',
   },
 ];
 
@@ -153,12 +153,12 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Customer\'s install: 6 kWp PV + GivEnergy 9.5 kWh BESS via Gen3 5 kW hybrid inverter. Customer wants &ldquo;fastest possible&rdquo; install. Best EREC path?',
+      'Customer\'s install: 6 kWp PV + GivEnergy 9.5 kWh BESS via Gen3 5 kW hybrid inverter. Customer wants the fastest possible install. Best EREC path?',
     options: [
-      'G99 — full registration',
-      'EREC G100 export limit to ≤16 A AC (~3.68 kW) — keeps the install under G98 fit-and-notify (28-day notification, no DNO pre-approval wait). The 5 kW hybrid inverter is configured (via GivEnergy app) to limit export to 16 A. Local self-consumption + BESS charging absorbs surplus above the limit. Trade-off: peak export capacity capped at 3.68 kW; some PV surplus may go uncaptured if BESS full + loads minimal. For typical UK domestic with EV / heat pump self-consumption, the cap rarely binds',
-      'Customer doesn\'t need EREC',
-      'Wait for grid upgrade',
+      'Submit a full EREC G99 application and wait 4-8 weeks for DNO assessment before commissioning',
+      'Configure an EREC G100 export limit to ≤16 A AC (~3.68 kW) so the install stays under G98 fit-and-notify, with no DNO pre-approval wait',
+      'Downsize to a 3.68 kW hybrid inverter so the install falls under G98 without any export limitation',
+      'Notify the DNO under G98 anyway and rely on the BESS to keep export below 16 A without a configured limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,14 +167,14 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'AC-coupled retrofit: existing 4 kWp PV (Solis 3.68 kW inverter, G98) + adding 10 kWh BESS with GivEnergy AC battery (5 kW PCE). Customer doesn\'t want export limit. Path?',
+      'AC-coupled retrofit: existing 4 kWp PV (Solis 3.68 kW inverter, G98) + adding 10 kWh BESS with GivEnergy AC battery (5 kW PCE). Customer doesn\'t want an export limit. Path?',
     options: [
-      'G98 stays',
-      'EREC G99 application for the combined install (3.68 + 5 = ~37.7 A combined). Submit before BESS install; wait 4-8 weeks for DNO assessment. The DNO assesses the local network capacity for the combined export. Approval typically granted without conditions for typical UK suburban networks; some constrained networks may approve with G100 export limit conditions. The cert evidence bundle records: original PV G98 + new combined G99 application + DNO approval letter + any conditions',
-      'No paperwork',
-      'Same G98',
+      'The original G98 registration covers the addition, so no new EREC paperwork is needed for the BESS',
+      'Register only the BESS PCE separately under G98, leaving the existing PV registration untouched',
+      'Submit an EREC G99 application for the combined install (~8.68 kW), waiting 4-8 weeks for DNO assessment of the combined export',
+      'Apply EREC G100 to cap combined export at 16 A, which the customer has already ruled out',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Combined 8.68 kW (3.68 + 5) AC capacity exceeds G98 threshold significantly. Without export limit, EREC G99 application is the route. DNO assesses: voltage rise at supply tail under combined export; thermal capacity of feeder cables; harmonic injection; protection coordination. Typical UK suburban: 4-8 week timeline; approval granted. Constrained networks: approval may have conditions (G100 limit, peak-export curtailment, etc.). Cert evidence bundle: original PV G98 + new G99 paperwork. Customer informed of the timeline + any conditions imposed by DNO.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'Customer asks: &ldquo;Why does my hybrid install need a different EREC application than my neighbour\'s pure PV install?&rdquo;. Their AC capacities are both 5 kW. Explain.',
     options: [
-      'No difference',
-      'Reg 551.7.2.1 treats stationary batteries as GENERATING SETS not loads. The neighbour\'s pure PV: 5 kW PV inverter, G99 covers PV generation. Customer\'s hybrid: 5 kW hybrid inverter handling PV + BESS, but the BESS PCE adds generation capacity even when PV isn\'t producing (BESS can discharge to grid). The DNO\'s perspective: the install can export 5 kW from PV (sunny) OR from BESS (any time) OR combined — the &ldquo;always-on&rdquo; export capability triggers more careful assessment. Same paperwork (G99), different DNO consideration',
-      'Customer pays more tax',
-      'Same paperwork',
+      'Under Reg 551.7.2.1 the BESS counts as a generating set, so the install can export from the battery at any time, not just when the sun shines — the DNO assesses this always-on export more carefully',
+      'Hybrid installs are charged a higher DNO connection fee, so a different application form is used',
+      'The neighbour\'s PV exports more energy overall, so it falls into a higher EREC band',
+      'Battery installs are exempt from G99 entirely, so the customer is actually on a simpler path',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 551.7.2.1 (UPDATED A4:2026): stationary batteries shall be considered a generating set, NOT a load. This matters for EREC: a pure PV install can export only when PV is generating (daylight, weather-dependent). A hybrid PV+BESS install can export ANY TIME (BESS discharge) — including peak grid-demand evening periods. The DNO considers this in network assessment. Paperwork-wise: same G98 / G99 / G100 framework applies; but DNO\'s technical assessment differs (the BESS adds &ldquo;dispatchable&rdquo; capacity). For some networks, the assessment is more conservative for hybrid; for others, more favourable (BESS can support grid services). Cert evidence bundle records the DNO approval + any conditions.',
   },
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.1(c) bidirectional protective device — practical implementation for a hybrid PV+BESS install at the consumer unit?',
     options: [
-      'No device needed',
-      'A bidirectional MCB / RCBO at the source-connection point in the consumer unit. Types: BS EN 60898-2 / IEC 60898-3 DC-rated MCBs (suitable for AC + bidirectional); some AC MCBs are explicitly bidirectional per manufacturer datasheet. The device sits between the hybrid inverter AC output and the consumer unit busbar; trips on overcurrent regardless of which direction the current was flowing. Plus the Reg 551.7.1(d) source-connection rule: device on its own circuit, NOT on the load side of the main RCD',
-      'Always one-way',
-      'Customer chooses',
+      'A standard unidirectional MCB on the source circuit, since the inverter only ever exports current',
+      'An RCD-only connection with no overcurrent device, relying on the inverter\'s internal protection',
+      'A protective device with manufacturer-confirmed bidirectional capability on the source\'s dedicated circuit, tripping on overcurrent in either direction',
+      'A double-pole isolator at the source connection in place of any overcurrent protective device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 551.7.1(c) (NEW A4:2026) bidirectional protective device at the source connection. Practical: select an MCB / RCBO with manufacturer-confirmed bidirectional capability. Examples: BS EN 60898-2 (industrial DC-rated MCBs that are also AC-bidirectional); BS IEC 60898-3 (DC-rated). The device sits on the source\'s dedicated circuit from the CU busbar. Combined with Reg 551.7.1(d) (NEW A4:2026): device on its own circuit, NOT on the load side of the main RCD. The cert evidence bundle records the device manufacturer / model / bidirectional capability statement.',
   },
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'EREC G100 verification commissioning — installer simulates over-export by switching off all loads on a sunny day. Measured net export at supply tail = 4.2 kW. Configured G100 limit = 16 A AC (3.68 kW). Pass or fail?',
     options: [
-      'Pass',
-      'FAIL — exports above the configured limit. Investigation: (1) hybrid inverter\'s G100 setting verify; (2) CT clamp orientation + signal verification; (3) response time of the inverter to the measured net export; (4) any signal cable damage / EMI affecting the CT measurement; (5) firmware version vs latest. Likely fix: re-configure G100 settings in inverter app; verify CT orientation; re-test. Cert evidence bundle records the initial fail + the rectification + final pass result',
-      'Pass — close enough',
-      'Customer\'s problem',
+      'Pass — measured export is acceptably close to the configured limit within test tolerance',
+      'Fail — 4.2 kW exceeds the 3.68 kW limit by ~14%; investigate the G100 setting, CT orientation and response time, then re-test',
+      'Pass — the 16 A limit applies per phase, so 4.2 kW single-phase is within scope',
+      'Fail, but no action needed because the inverter will self-correct over the first 24 hours',
     ],
     correctAnswer: 1,
     explanation:
@@ -225,12 +225,12 @@ const quizQuestions = [
     question:
       'How does the EREC G98 / G99 process change for installs using V2G (vehicle-to-grid) EV chargers?',
     options: [
-      'No change',
-      'V2G adds a NEW generation source (the EV battery via bidirectional charger). The EREC paperwork must include the V2G capacity. UK 2025-2026: V2G is emerging — only a few approved V2G chargers (Quasar / Wallbox Quasar, Indra V2H, Octopus / Ohme V2G in trials). Each V2G charger has its own EREC type-approval; the install\'s EREC registration includes the V2G charger\'s AC output capacity. Coordination required between PV inverter + BESS PCE + V2G charger to respect combined EREC limit',
-      'No EVs allowed',
-      'V2G is just a load',
+      'The V2G charger adds a generation source, so its AC output capacity is included in the EREC registration and coordinated with the PV and BESS to respect the combined limit',
+      'V2G chargers are treated purely as loads, so they have no effect on the EREC application',
+      'EREC paperwork is no longer required once a V2G charger is added, as the EV regulations supersede it',
+      'The V2G charger must be on a separate supply, so no coordination with the PV or BESS is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'V2G (vehicle-to-grid) inverts the EV charger\'s usual role — the EV battery becomes a dispatchable energy source. UK 2025-2026 V2G market: Wallbox Quasar / Quasar 2; Indra V2H (vehicle-to-home, similar concept); Octopus / Ohme V2G trials with select customers. Each V2G charger carries its own EREC type-approval (BS EN 50549-1 compliance). Install with V2G + PV + BESS: combined EREC capacity = PV inverter + BESS PCE + V2G charger AC output. Coordination logic in the hybrid inverter (or V2G charger\'s management software) ensures combined export respects the EREC limit. Cert evidence bundle records each source + the combined coordination.',
   },
@@ -239,10 +239,10 @@ const quizQuestions = [
     question:
       'BS EN 50549-1 anti-islanding window — what V and freq thresholds and trip times apply for UK domestic hybrid inverters?',
     options: [
-      'No thresholds',
-      'BS EN 50549-1 specifies: V trip thresholds 0.85-1.10 pu (UK 196-253 V on 230 V nominal); freq trip thresholds 47.5-51.5 Hz (UK on 50 Hz nominal). Anti-islanding trip times: typical 0.2 s for major excursions; 2-5 s for minor excursions; ride-through requirements for short transient dips. UK EREC G99 specifies the operational settings. Modern hybrid inverters (GivEnergy, Tesla, Sigenergy) ship with UK-specific BS EN 50549-1 / EREC G99 profiles loaded',
-      'Customer chooses',
-      'No standard',
+      'Voltage roughly 207-253 V and frequency 49.5-50.5 Hz, with a fixed 5 s trip for any excursion',
+      'Voltage 0.85-1.10 pu (≈196-253 V on 230 V) and frequency 47.5-51.5 Hz, with trip times scaled by severity (≈0.2 s for major, longer for minor excursions)',
+      'Voltage 0.9-1.06 pu and frequency 47.0-52.0 Hz, with instantaneous tripping in all cases',
+      'Voltage 0.80-1.15 pu and frequency 48.0-51.0 Hz, with no defined trip times in the standard',
     ],
     correctAnswer: 1,
     explanation:
@@ -253,12 +253,12 @@ const quizQuestions = [
     question:
       'Cert evidence bundle for the EREC dimension of a hybrid PV+BESS install — what documents?',
     options: [
-      'None',
-      '(1) Original PV inverter EREC G98 / G99 paperwork (if pre-existing); (2) BESS EREC G98 / G99 paperwork for the BESS PCE; (3) Combined-install EREC G99 application + DNO approval letter; (4) EREC G100 verification testing results (if export-limited); (5) BS EN 50549-1 type approval certificates for each PCE (PV inverter, BESS inverter / hybrid inverter, V2G charger if applicable); (6) Reg 551.7.1(c) bidirectional protective device manufacturer datasheet; (7) DNO confirmation of receipt + final approval. Plus the cross-references to MCS / Chapter 57 / Chapter 82 design packs',
-      'Customer\'s problem',
-      'No documents',
+      'Only the DNO confirmation letter, since that is the single document the network operator requires',
+      'Just the MCS certificate, which covers all EREC obligations on its own',
+      'Only the inverter manufacturer\'s datasheet, as it carries the BS EN 50549-1 type approval',
+      'The G98/G99 paperwork, DNO approval, G100 verification (if export-limited), BS EN 50549-1 type approvals, the Reg 551.7.1(c) bidirectional device datasheet and DNO confirmation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hybrid install EREC cert evidence: (1) EREC G98 / G99 paperwork — original PV (if retrofit) + new BESS (if separate) OR combined for new-build; (2) DNO approval letter (G99 path); (3) G100 export-limit verification (if applicable); (4) BS EN 50549-1 type-approval certificates per PCE; (5) Reg 551.7.1(c) bidirectional device datasheet; (6) DNO confirmation. The MCS-certified contractor assembles this alongside MCS MIS 3002 PV pack + Chapter 57 BESS pack + Chapter 82 PEI pack into the cert evidence bundle. Module 4.8 covers commissioning + cert evidence bundle assembly in depth.',
   },

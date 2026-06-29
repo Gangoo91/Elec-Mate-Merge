@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A 2026 office fit-out is expected to be occupied for 15-20 years. Which Class / Category gives appropriate headroom for the foreseeable services without being over-specified?',
     options: [
-      'Cat 5e — cheap, "good enough for now".',
-      'Cat 6 — the historic mid-grade default.',
-      'Cat 6A / Class EA — the practical 2026 default. Delivers 10GBASE-T to 100 m, supports Type 4 PoE++ thermally with proper bundle management, headroom for emerging services across the building life. Cat 7 / 7A and Cat 8 are niche or short-reach data-centre only — not the right default for a general office.',
-      'Cat 8.2 — pick the highest available.',
+      'Cat 5e — cheap and "good enough for now", but below the §716 new-build default.',
+      'Cat 6 — the historic mid-grade default, now mainly a transitional retrofit grade.',
+      'Cat 6A / Class EA — 10GBASE-T to 100 m and Type 4 PoE++ with bundle management.',
+      'Cat 8.2 — the highest grade currently available, taken as the safest future choice.',
     ],
     correctIndex: 2,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A new office floor of 600 m² is being designed. The architect proposes 1 outlet per 4 m² (150 outlets total) for laptops and IP phones. The cabling designer recommends doubling that. Why?',
     options: [
-      'Marketing.',
-      'PoE-everything growth. Future services on the same cabling — PoE-LED lighting per §716, PoE access points (1 per 25-50 m² for high-density wireless), PoE access control, PoE cameras, PoE building-automation sensors — multiply the outlet count needed beyond just laptops + phones. Doubling the outlet density at first fit is far cheaper than re-cabling the floor in three years when the PoE rollout starts.',
-      'For aesthetic balance.',
-      'Compliance with BS 7671.',
+      'To let the contractor invoice for more outlets than the floor actually requires.',
+      'Future PoE services — APs, lighting, cameras, sensors — multiply the outlet count.',
+      'To keep the outlet pattern visually symmetrical across the whole floor plate.',
+      'Because BS 7671 sets a minimum mandatory outlet density per square metre of floor.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'The same office plan: containment is sized for the original 150 outlets at typical Cat 6A bundle density. The cabling designer wants to upsize the containment to support a doubled cable count plus future fibre-to-the-edge. What is the rationale?',
     options: [
-      'Vanity.',
-      'Pathway capacity. The biggest cost of re-cabling is not the cable itself; it is access — opening ceilings, breaking trunking, working around occupants. Sizing containment generously at first fit (a 2x-3x cable-count headroom over current need) is small money during construction and saves the entire labour cost of access for any future cable pull. BS EN 50174-2 / TIA-569-E give the formal pathway-capacity guidance.',
-      'Compliance with §444.6.2.',
-      'For thermal management of LV power.',
+      'To make the containment runs look more substantial on the design drawings.',
+      'Re-cabling cost is dominated by access, so sizing for 2x-3x headroom saves future pulls.',
+      'To satisfy the LV-to-data segregation distances required under §444.6.2.',
+      'To provide thermal-management headroom for LV power circuits sharing the route.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A high-density-wireless office with 50 ceiling APs is being designed. Each AP requires Type 4 PoE++ and 10GBASE-T uplink. The designer adds single-mode fibre to each AP location alongside Cat 6A. Why both?',
     options: [
-      'Marketing.',
-      'Fibre-to-the-edge as a forward-looking service insurance. Cat 6A delivers Type 4 PoE++ today and 10GBASE-T to 100 m — both APs need today. Single-mode fibre alongside is the upgrade path for 25/40/100GBASE services emerging through the 2030s. The marginal cost of pulling a single-mode pair alongside the Cat 6A at first fit is small; the cost of adding fibre later is large. Service-independence at the high end of the building life.',
-      'For redundancy only.',
-      'Because Cat 6A is being phased out.',
+      'To let the designer specify a higher-margin fibre product on the job package.',
+      'Cat 6A serves the AP today; dormant fibre alongside is the cheap-now upgrade path.',
+      'Purely to provide a redundant second physical link to each ceiling access point.',
+      'Because Cat 6A is being phased out and fibre will soon be the only viable option.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What is the central pitch of "service-independence" as a structured-cabling design principle?',
     options: [
-      'A single cable type for every service.',
-      'Specifying the cabling once — to a Class with appropriate headroom, an outlet density that absorbs foreseeable services, and a pathway capacity that absorbs growth — so the building carries voice, data, video, building automation, security, PoE lighting, PoE access points, and emerging services for 15-20 years without re-cabling. Service-independence is decided at SPEC time, not at install time.',
-      'Avoiding active equipment.',
-      'A marketing term.',
+      'Using one cable type and one outlet style for every conceivable service in the building.',
+      'Keeping the cabling passive by deliberately avoiding all active equipment in the design.',
+      'Specifying Class, outlet density and pathway headroom once so it lasts 15-20 years.',
+      'Choosing the cheapest cable and lowest outlet count that meets today’s data demand.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Service-independence is the central economic argument for structured cabling. The discipline that delivers it is specification: pick a Class (Cat 6A / Class EA is the 2026 default), pick an outlet density that absorbs PoE-everything growth, pick a pathway capacity that supports cable doubling and fibre-to-the-edge additions, document the design as service-independent. Done well, the cabling outlives 3-4 generations of switches, IP phones, cameras, lighting controllers, and PoE devices. Done badly, the building gets re-cabled at every refresh.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'For a 2026 commercial office fit-out with a 15-20 year occupation horizon, what is the practical default Class / Category?',
     options: [
-      'Cat 5e.',
-      'Cat 6A / Class EA — delivers 10GBASE-T to 100 m, supports Type 4 PoE++ under BS 7671 §716 with appropriate bundle management, headroom for emerging services. Cat 7 / 7A are niche; Cat 8.1 / 8.2 are 30 m short-reach data-centre top-of-rack only. Cat 6 is a retrofit grade. Cat 5e cannot deliver 10G at 100 m. Cat 6A is the right service-independence default for a general 2026 office.',
-      'Cat 8.2 in every outlet.',
-      'Coaxial throughout.',
+      'Cat 6A / Class EA — 10GBASE-T to 100 m, with Type 4 PoE++ bundle management.',
+      'Cat 5e, which is treated as adequate for a long 15-20 year occupation horizon.',
+      'Cat 8.2 run to every single outlet for the maximum possible future-proofing.',
+      'Coaxial cable throughout the building for a single unified service medium.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cat 6A is the right answer for a typical 2026 commercial office. It is the lowest grade in the §716.521.101 list that delivers 10GBASE-T to 100 m without compromise; it supports Type 4 PoE++ thermally with proper bundle management; it has headroom for the emerging services of the 2030s; it is cheap relative to the labour of installation. Cat 7 / 7A are ISO-only with no TIA equivalent for Cat 7 — niche. Cat 8.1 / 8.2 are 30 m short-reach data-centre top-of-rack only — wrong tool for a general office. Cat 6 is a transitional retrofit grade. Cat 5e is below the practical §716 default for new builds.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which two BS 7671 sections are entirely new in BS 7671:2018+A4:2026 and bring data cabling concerns formally inside the wiring regulations?',
     options: [
-      '§411 and §421.',
-      '§716 (PoE / ELV DC over balanced cabling) and §545 (ICT functional earthing). Both are entirely new in A4:2026, published 15 April 2026, and apply to installations designed from that date. They are the two sections that change the standards stack for any new commercial cabling work in the UK.',
-      '§528 and §444.',
-      '§543 and §544.',
+      '§411 (automatic disconnection) and §421 (protection against fire).',
+      '§528 (proximity of services to one another) and §444 (EMC requirements).',
+      '§543 (protective conductors) and §544 (protective bonding conductors).',
+      '§716 (PoE / ELV DC over balanced cabling) and §545 (ICT functional earthing).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§716 and §545 are the two entirely new sections in BS 7671:2018+A4:2026 that affect data cabling. §716 covers PoE and ELV DC distribution over balanced ICT cabling — the 750 mA per conductor cap, SELV/PELV mandate, special-location restrictions, cable category list, and bundle-thermal references. §545 covers ICT functional earthing — distinguishing functional earthing of ICT equipment (signal reference, EMC) from protective earthing under §543/544 (electrical safety), and introducing the MFET (main functional earthing terminal) concept. Existing §444 (EMC), §528 (proximity), §521.10.202 (cables in escape routes) are still relevant, but §716 and §545 are the brand-new additions.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Why is "outlet density" listed alongside "Class headroom" as a primary service-independence lever?',
     options: [
-      'Marketing.',
-      "Because future services on the same cabling — PoE access points, PoE-LED lighting, PoE access control, PoE cameras, PoE building-automation sensors — multiply the outlet count needed beyond just laptops + phones. A first-fit outlet density set against today's laptop-and-phone count strands the building when the PoE rollout starts. Doubling outlet density at first fit is small money compared with re-cabling.",
-      'For visual symmetry.',
-      'For BS 7671 compliance.',
+      'Because more outlets simply look tidier and more symmetrical on the floor plan.',
+      'Because PoE services — APs, lighting, cameras, sensors — multiply the outlet count.',
+      'Because BS 7671 sets a minimum mandatory outlet density per room in the building.',
+      'Because outlet density directly determines the cable Category that can be used.',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the role of "pathway capacity" in service-independence design?',
     options: [
-      'Marketing.',
-      'Containment, conduit, trunking, ceiling void allocation — sized at first fit for 2x-3x current cable count headroom, so future cable pulls (additional outlets, fibre-to-the-edge, denser PoE bundles per §716 thermal limits) can be made without breaking trunking or re-cutting the building. BS EN 50174-2 and TIA-569-E give the formal pathway-capacity guidance, typically recommending fill below 40-50 % at first fit.',
-      'Aesthetic only.',
-      'For LV power.',
+      'It governs only the visual appearance of the installed containment runs.',
+      'It exists purely to segregate the LV power cabling from the data cabling.',
+      'Containment sized for 2x-3x headroom lets future pulls happen without re-cutting.',
+      'It determines the maximum permitted channel length for each cabling run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pathway capacity is the second cheap service-independence lever, alongside outlet density. The cable cost is small; the labour to re-pull cable through inadequate containment in an occupied building is huge. Sizing pathways for 2x-3x current cable count adds a small fraction to the construction budget and unlocks every future service without re-cutting the building. BS EN 50174-2 and TIA-569-E both recommend specifying pathway fill below 40-50 % at first fit — leaving capacity for additions. The combination of outlet density + pathway capacity is decided once at construction and lasts for the cabling life.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'A specification adds single-mode fibre alongside Cat 6A to high-density AP outlet locations. What is the design rationale?',
     options: [
-      'Marketing.',
-      'Service insurance for emerging high-bandwidth services. Cat 6A delivers what the AP needs today (Type 4 PoE++, 10GBASE-T uplink). Single-mode fibre alongside is dormant today and ready for the 25/40/100 GBASE services of the 2030s. The marginal cost at first fit is small (pulling fibre alongside Cat 6A is cheaper than copper-only labour); the cost of adding fibre later is large. Service-independence at the high end of the cabling life.',
-      'For redundancy alone.',
-      'For BS 7671 compliance.',
+      'Service insurance — Cat 6A serves the AP today; dormant fibre is ready for later GBASE.',
+      'It is required solely to provide a redundant link to each ceiling access point.',
+      'It is mandated by BS 7671 for all access-point outlets in commercial builds.',
+      'It replaces the need for any copper cabling at all to those AP outlet locations.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fibre-to-the-edge alongside Cat 6A is a forward-looking pattern for high-bandwidth-emerging service density — high-density wireless, broadcast, lecture-theatre AV, data-centre-adjacent zones. The Cat 6A handles today; the fibre handles tomorrow. The marginal first-fit cost of adding fibre alongside copper is small; the future-fit cost of adding fibre to an occupied building is huge. Specify it where service density justifies it — not blanket across every outlet, but at the high-density and broadcast / high-bandwidth zones.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'How does BS 7671:2018+A4:2026 §716 change the design constraints for a new commercial PoE-everything build?',
     options: [
-      'It does not.',
-      'It adds the 750 mA per conductor cap (§716.523.2.101), the 750 mA per contact at the connector cap (§716.526.101), the SELV/PELV mandate (§716.410.3.3), the cable category list (§716.521.101), special-location restrictions (§716.414.3.201), and the formal regulatory link between PoE current and data-channel attenuation (§716.523.1.101 NOTE 1). Bundle thermal management — already best practice — is now regulatorily anchored via NOTE 2 references.',
-      'It mandates fibre throughout.',
-      'It bans Cat 6A.',
+      'It makes no difference to a PoE-everything design, governed only by IEEE 802.3.',
+      'It mandates a dedicated single-mode fibre run to every outlet across the building.',
+      'It bans Cat 6A for PoE applications, requiring Cat 8 for any powered cable run.',
+      'It adds the 750 mA cap, SELV/PELV rules, a category list and location restrictions.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§716 does not invent new design rules out of nothing — it formally regulates what was already best practice in PoE installations and adds hard regulatory caps that bound the design. The 750 mA per conductor cap was always implicit in the IEEE 802.3 PoE current limits and TIA TSB-184-A bundle-thermal guidance; A4:2026 makes it explicitly regulatory in the UK. The SELV/PELV mandate, the cable category list, and the special-location restrictions formalise what competent contractors already did. The change for the contractor is that compliance is now BS 7671 evidence, not just industry best practice.',
   },
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'What new BS 7671:2018+A4:2026 section governs ICT functional earthing — and how does it differ from protective earthing?',
     options: [
-      'There is no such section.',
-      '§545 (entirely new in A4:2026). Distinguishes functional earthing of ICT equipment — for signal reference, EMC mitigation, and the bonding network for ICT installations per BS EN 50310 — from protective earthing under §543/544 (electrical safety, fault-current path). Introduces the MFET (main functional earthing terminal) and minimum 2.5 / 4 mm² Cu CSAs for functional earthing conductors.',
-      '§444 only.',
-      '§528 only.',
+      'No BS 7671 section governs ICT functional earthing; it falls outside the regulations.',
+      '§545 (new in A4:2026) — ICT signal-reference earthing, distinct from §543/544 protective.',
+      '§444 (EMC) covers ICT functional earthing in full, with no separate dedicated section.',
+      '§528 (proximity of services) covers ICT functional earthing alongside segregation.',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'Why is a service-independent specification described as "decided at design stage" rather than "delivered at install stage"?',
     options: [
-      'Marketing.',
-      "Because the levers that determine 15-year service-independence — Class / Category, outlet density, pathway capacity, fibre-to-the-edge presence, PoE bundle thermal headroom — are all SPECIFIED before the first cable is pulled. The install stage delivers the spec; it cannot rescue a spec that was set against today's laptops and phones from absorbing tomorrow's PoE-everything load.",
-      'For visual emphasis.',
-      'For BS 7671 compliance.',
+      'Because installers always work faster on site than designers do at the desk.',
+      'Because BS 7671 requires the cabling design to be formally signed off first.',
+      'Because the levers are all fixed before the first cable is pulled; install cannot rescue it.',
+      'Because design-stage drawings are far easier to amend than installed cable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Service-independence is a SPECIFICATION discipline, not an install discipline. The Class, the outlet density, the pathway capacity, the fibre-to-the-edge pattern, the PoE thermal headroom — all are decided at design stage and committed at the first cable pull. The install stage executes the spec to certifiable Class. A service-independent spec executed badly delivers a six-month channel; a service-independent spec executed well delivers a 15-20 year channel. But a NON-service-independent spec executed perfectly still strands the building when the PoE rollout starts. The art is in the spec.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'A client argues "we cannot afford service-independent cabling — just put in what we need today and we will upgrade later". What is the right response?',
     options: [
-      'Agree; structured cabling is over-engineering.',
-      'Show them the lifecycle TCO. The cost difference between Cat 5e + minimal outlets + minimal containment vs Cat 6A + doubled outlets + generous pathways is small at first fit (the labour is similar; the cable / outlet / panel cost is a small fraction of the project budget). The cost of re-cabling in three to seven years is huge — access labour in an occupied building, business disruption, lost productivity. The lifecycle cost crosses break-even on most office fit-outs inside 4-5 years; beyond that, service-independent cabling is purely cheaper.',
-      'Refuse the job.',
-      'Tell them BS 7671 mandates service-independence.',
+      'Show them the lifecycle TCO — first-fit premium is small, re-cabling later costs 5-10x.',
+      'Agree with them, since structured cabling is genuinely over-engineering for most offices.',
+      'Decline the job outright rather than install non-service-independent cabling at all.',
+      'Tell them BS 7671 legally mandates fully service-independent cabling on new builds.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Service-independence is a TCO conversation, not a compliance conversation. The first-fit cost differential between minimal Cat 5e + minimal outlets and Cat 6A + doubled outlets + generous pathways is genuinely small (labour dominates the cost; the cable / outlet / panel premium is a fraction of the project budget). The break-even on lifecycle cost crosses inside 4-5 years on most office fit-outs because re-cabling an occupied building costs 5-10x what first-fit cabling does. Backed by the service-independence story (one infrastructure, many services, 15-20 years), the case is technical and commercial, not legal. BS 7671 does not "mandate" service-independence; it regulates the LV/ELV power dimensions of the cabling (§444 EMC, §528 proximity, §716 PoE in A4:2026, §545 ICT functional earthing). The pitch is on TCO and the long-life value proposition.',
   },

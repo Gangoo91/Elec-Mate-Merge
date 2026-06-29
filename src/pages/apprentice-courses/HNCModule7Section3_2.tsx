@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'room-index-definition',
     question: 'What does the room index (K) represent in lighting design?',
     options: [
-      'To induce voltage and current in the rotor conductors',
-      'Latest clash reports, updated drawings, and outstanding RFI responses',
-      'A single chain — one cable in, one cable out at each component, no branching',
+      'The total luminous flux emitted by all luminaires in the room',
+      'The ratio of the room area to its perimeter length',
+      'The average reflectance of the ceiling, walls and floor combined',
       'A ratio describing room proportions relative to mounting height',
     ],
     correctIndex: 3,
@@ -67,9 +67,9 @@ const quickCheckQuestions = [
     question: 'A maintenance factor of 0.8 means:',
     options: [
       'Light output will reduce to 80% over the maintenance period',
-      'Based on operating characteristics and time-current curves',
-      'To accommodate final positioning and thermal movement',
-      'Translating between different communication protocols',
+      'Only 80% of the luminaires need to be working at any one time',
+      'The room surfaces reflect 80% of the light that strikes them',
+      'The luminaires operate at 80% of their rated power consumption',
     ],
     correctIndex: 0,
     explanation:
@@ -179,9 +179,9 @@ const quizQuestions = [
       'Why does a narrow room (high length-to-width ratio) have a lower room index than a square room of equal area?',
     options: [
       'The perimeter increases, reducing the L×W / Hm(L+W) ratio',
-      'Person responsible for electrical safety',
-      'Performed with a low reading ohmmeter to verify integrity',
-      'Additional or modified requirements beyond standard rules',
+      'A narrow room always requires a greater mounting height',
+      'The floor area is smaller, which directly lowers the room index',
+      'Light escapes through the longer walls, reducing utilisation',
     ],
     correctAnswer: 0,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'When would you NOT use the lumen method for lighting design?',
     options: [
-      'Replacing suspect components with known good ones',
-      'Scorch marks, melted insulation, or visible damage',
-      'Apply appropriate safety margins',
+      'General lighting of a regular rectangular office',
+      'Uniform lighting of a large open-plan classroom',
+      'Average illuminance across a standard warehouse floor',
       'Task lighting for specific workstations',
     ],
     correctAnswer: 3,
@@ -231,16 +231,16 @@ const quizQuestions = [
   {
     id: 12,
     question:
-      'A design requires 24 luminaires but the preferred arrangement is 5 rows of 5. What should be done?',
+      'A design requires 24 luminaires but the preferred symmetrical arrangement is 5 rows of 5 (25 fittings). What is the best approach?',
     options: [
-      'Either B or C - recalculate to confirm compliance',
-      'Use higher output luminaires to achieve required lux with fewer fittings',
-      'Use 24 luminaires in irregular rows',
-      'Install 25 luminaires and accept higher illuminance',
+      'Install 25 luminaires and recalculate to confirm the resulting illuminance is within limits',
+      'Force 24 luminaires into an irregular layout to match the calculated number exactly',
+      'Reduce the required illuminance level so that exactly 24 luminaires will suffice',
+      'Increase the mounting height so that 24 luminaires cover the room uniformly',
     ],
     correctAnswer: 0,
     explanation:
-      'Both options are valid. Installing 25 luminaires gives slightly higher illuminance (acceptable if within limits). Alternatively, specifying higher output luminaires allows the preferred 25-fitting arrangement while meeting the design illuminance.',
+      'A regular, symmetrical layout gives the best uniformity, so installing 25 luminaires in a 5×5 grid is usually preferable. The slightly higher illuminance is acceptable provided it is recalculated and stays within the design limits.',
   },
 ];
 

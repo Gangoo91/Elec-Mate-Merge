@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Building Regulations Part P (England) governs what?',
     options: [
-      'Energy efficiency',
-      'Electrical safety in or attached to dwellings — making notifiable electrical work in dwellings a Building Control matter and setting the framework for either Competent Person Scheme self-certification or Building Control notification on every notifiable job',
-      'Fire detection only',
-      'Structural design',
+      'Energy efficiency of the building fabric and services',
+      'Electrical safety in or attached to dwellings, and the notification route',
+      'Fire detection and alarm provision only',
+      'Structural design of the building and its loads',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Building Regulations Part L (England) covers energy efficiency. For an LCT installer doing a heat pump retrofit, which framing of Part L is most useful?',
     options: [
-      'Part L is irrelevant to LCT work',
-      'Part L sets the energy-efficiency framework that drives the heat pump retrofit case — the Future Homes Standard (effective 2025) mandates low-carbon heating in new builds, and Part L1B / L2B set the retrofit energy-efficiency requirements that pair with the LCT install',
-      'Part L only applies to commercial buildings',
-      'Part L has been withdrawn',
+      'Part L is irrelevant to low-carbon technology work',
+      'Part L sets the energy-efficiency framework driving the heat pump retrofit case',
+      'Part L applies only to commercial and non-domestic buildings',
+      'Part L has been withdrawn and no longer applies',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Building Regulations Part S (England), effective 2022, requires what?',
     options: [
-      'Solar panels on all new dwellings',
-      'EV chargepoint provision in new dwellings with associated parking, and in new non-domestic buildings under certain conditions — setting the EV infrastructure framework for new-build developments',
-      'BESS in all new dwellings',
-      'Smart meters in all dwellings',
+      'Solar PV panels on all new dwellings as standard',
+      'EV chargepoint provision in new dwellings and certain non-domestic buildings',
+      'Battery storage (BESS) in all new dwellings as standard',
+      'Smart meters fitted in all dwellings, new and existing',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'On a notifiable LCT job in an English dwelling, what are the two lawful notification routes?',
     options: [
-      'CPS only',
-      'Either (a) self-certification by a Competent Person Scheme member (NICEIC, NAPIT, ELECSA, Stroma) within 30 days of completion, or (b) notification to Building Control before the work commences',
-      'Building Control only',
-      'No notification required',
+      'CPS self-certification only, with no other route available',
+      'CPS self-certification within 30 days, or Building Control notification before work starts',
+      'Building Control notification only, with no CPS route',
+      'No notification is required for this kind of work',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'For LCT work in Scotland and Northern Ireland, which framework applies?',
     options: [
-      'Approved Document P (same as England)',
-      'Scotland uses the Building (Scotland) Regulations 2004 with the Technical Handbooks (particularly Standard 4.5 Electrical Safety); Northern Ireland uses the Building Regulations (NI) 2012 with Technical Booklet E. The MCS scheme is UK-wide; the Building Regulations differ',
-      'No regulations apply',
-      'EU regulations apply',
+      'Approved Document P, the same framework as England',
+      'Building (Scotland) Regulations 2004 and Building Regulations (NI) 2012 respectively',
+      'No building regulations apply in either jurisdiction',
+      'EU electrical regulations apply in both jurisdictions',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'The Future Homes Standard takes effect in England from 2025. What is its practical impact on the LCT installer?',
     options: [
-      'No impact',
-      'New dwellings must produce 75–80% lower CO₂ emissions than 2013 standards, effectively mandating low-carbon heating (typically heat pumps) and tighter fabric efficiency. The standard is the regulatory driver behind much of the heat pump installer demand growth',
-      'Only commercial buildings are affected',
-      'Listed buildings are required to install heat pumps',
+      'No practical impact on the LCT installer',
+      'New dwellings must cut CO₂ by 75–80% vs 2013, effectively mandating heat pumps',
+      'Only commercial buildings are affected by the standard',
+      'Listed buildings are now required to install heat pumps',
     ],
     correctIndex: 1,
     explanation:
@@ -110,9 +110,9 @@ const inlineChecks = [
       'A customer in a Conservation Area wants a PV array on a south-facing roof visible from the street. What is the survey-stage planning consideration?',
     options: [
       'No planning consideration — PV is always permitted development',
-      'Conservation Area status may restrict permitted-development rights for visible-from-public-realm PV installs. Planning permission may be required even though PV on the rear of the same property would be permitted development. Check the local planning authority\'s policy and any Article 4 Direction in force',
-      'Listed-building consent is automatically granted',
-      'PV must be ground-mounted only',
+      'Conservation Area status may restrict PD rights for road-visible PV installs',
+      'Listed-building consent is automatically granted for PV',
+      'PV in a Conservation Area must be ground-mounted only',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A customer in England asks you to install a heat pump retrofit. Which Building Regulations Approved Documents are most directly engaged?',
     options: [
-      'Part P alone',
-      'Part L1B (energy efficiency in existing dwellings, sets the retrofit energy-efficiency framework), Part P (electrical safety in dwellings, sets the notifiable-work framework), Part F (ventilation, often affected by heat pump installation in cavity-wall properties), and Part B (fire safety, particularly relevant where BESS is paired)',
-      'Part S only',
-      'No Building Regulations apply to retrofit',
+      'Part L1B (efficiency), Part P (electrical safety), Part F (ventilation) and Part B (fire)',
+      'Part P alone, as the only notifiable-work framework',
+      'Part S alone, as the EV infrastructure framework',
+      'None — Building Regulations do not apply to retrofit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A heat pump retrofit in an existing English dwelling engages multiple Approved Documents. Part L1B for energy-efficiency requirements affecting the retrofit envelope. Part P for the notifiable electrical work. Part F for ventilation impact (heat pumps in well-insulated properties can shift the ventilation balance). Part B for fire safety where BESS is paired. The competent installer scopes the install across all relevant ADs at survey stage.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A CPS-registered installer (NICEIC) completes a notifiable LCT install in an English dwelling. What is the timing of the Part P notification?',
     options: [
-      'Notify Building Control before commencement',
-      'Self-certify via NICEIC within 30 days of completion — NICEIC notifies Building Control on the installer\'s behalf; the customer receives a compliance certificate; no pre-commencement notification needed',
-      'Notify HMRC',
-      'No notification required',
+      'Notify Building Control directly before commencement of work',
+      'Self-certify via NICEIC within 30 days of completion, with no pre-notification',
+      'Notify HMRC of the completed installation',
+      'No notification is required for this work',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'Approved Document S (effective 2022 in England) requires EV chargepoint provision in new dwellings with parking. How does this interact with the LCT installer market?',
     options: [
-      'It doesn\'t — Part S is a developer responsibility, not an installer responsibility',
-      'Part S creates a structural demand pipeline for EV chargepoint installation in new-build developments. The LCT installer working with housebuilders is operating in a Part S-driven market — the chargepoint is part of the building handover, not a customer-discretionary addition',
-      'Part S applies only to commercial buildings',
-      'Part S has been withdrawn',
+      'It doesn\'t — Part S is a developer matter, not an installer one',
+      'Part S applies only to commercial and non-domestic buildings',
+      'Part S creates a structural new-build chargepoint demand pipeline via housebuilders',
+      'Part S has been withdrawn and no longer applies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part S creates the new-build EV chargepoint market — every new dwelling with parking gets a chargepoint or cable provision for one. For the LCT installer this is structural demand from the housebuilder side, separate from the retrofit market. Section 722 + Reg 722.411.4.1 still apply; the chargepoint design conversation is the same; the customer-acquisition pattern is different (housebuilder relationships vs end-customer marketing).',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A customer in Scotland asks for a heat pump install. Which Building Standards framework applies?',
     options: [
-      'Approved Document L (English)',
-      'The Building (Scotland) Regulations 2004 plus the Technical Handbooks — particularly Section 6 (energy) for the heat pump energy-efficiency framework, Section 4 (safety) including Standard 4.5 for electrical safety, and Section 3 (environment) for ventilation impact',
-      'No regulations apply in Scotland',
-      'Northern Irish Building Regulations apply',
+      'English Approved Document L applies in Scotland',
+      'No building regulations apply to the work in Scotland',
+      'The Northern Irish Building Regulations apply in Scotland',
+      'Building (Scotland) Regulations 2004 with the Technical Handbooks (Sections 6, 4 and 3)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scotland operates under the Building (Scotland) Regulations 2004 with the Technical Handbooks providing the operational detail. Section 6 covers energy (the parallel to English Part L). Section 4 covers safety, including Standard 4.5 electrical safety (the parallel to Part P). Notification is via the local authority Building Standards office, not Building Control. The MCS scheme is UK-wide.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'The Future Homes Standard effectively mandates low-carbon heating in new-build dwellings in England from 2025. Strategic implication for the established gas-boiler installer:',
     options: [
-      'No change',
-      'The new-build heating market is shifting away from gas boilers. The MIS 3003 (heat pump) competence pathway becomes a market-access requirement, not an optional CPD topic. The installer who delays the MIS 3003 investment is the one who loses access to the new-build market over the next 5–10 years',
-      'Heat pump training is a temporary trend',
-      'Gas boilers will be reinstated',
+      'MIS 3003 competence becomes a market-access requirement, not optional CPD',
+      'No change for the established gas-boiler installer',
+      'Heat pump training is a temporary, passing trend',
+      'Gas boilers will be reinstated in new builds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Future Homes Standard makes the heat pump the typical default for new-build heating. The gas-boiler installer who doesn\'t add MIS 3003 capability over the next 5 years is exiting the new-build market by default. The strategic decision is whether to invest in heat pump competence proactively or accept the market contraction.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A customer\'s property is in a Conservation Area in England. PV install is proposed on a roof slope visible from the road. Survey-stage planning conversation:',
     options: [
-      'PV is always permitted development',
-      'Conservation Area status restricts permitted-development rights for visible-from-public-realm PV. Check the local planning authority\'s policy. Check whether an Article 4 Direction is in force (which further restricts permitted-development rights). Planning permission may be required even where the same install would be PD on a non-Conservation Area property',
+      'PV is always permitted development, regardless of the area',
+      'Conservation Area status restricts PD rights; check LPA policy and any Article 4 Direction',
       'Move the install to the rear roof slope only',
-      'Decline the job',
+      'Decline the job because of the Conservation Area',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'On a notifiable electrical install in a Welsh dwelling, the notification framework is:',
     options: [
-      'Identical to English Part P',
-      'Wales has its own Part P (similar but distinct from English Part P) and operates the same CPS / Building Control notification routes through Welsh competent person schemes and Welsh local authority Building Control',
-      'Scotland\'s Section 4',
-      'No notification required in Wales',
+      'Identical to English Part P in every respect',
+      'Scotland\'s Section 4 safety standard applies in Wales',
+      'Wales has its own Part P, with the same CPS and Building Control routes',
+      'No notification is required for the work in Wales',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wales has its own Approved Document P, similar in scope to English Part P. The notification routes are equivalent — CPS self-certification through Welsh-recognised schemes, or Building Control notification through Welsh local authorities. The MCS scheme is UK-wide, so the LCT funding gates work the same way.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A customer asks whether their listed-building status affects the LCT install. The right survey-stage answer:',
     options: [
-      'Listed-building status doesn\'t affect electrical work',
-      'Listed-building status materially affects what can be installed where and how. Listed-building consent is typically required for external alterations even where planning permission is not. Conservation officers can refuse PV / BESS / heat pump installs that compromise the building\'s historic character. The survey records the listed-building status, identifies the relevant consents, and flags the listed-building consent timeline as a project gating item',
-      'Listed buildings are exempt from BS 7671',
-      'Listed-building consent is automatic',
+      'Listed-building status does not affect electrical work',
+      'Listed buildings are exempt from BS 7671 requirements',
+      'Listed-building consent is granted automatically on request',
+      'It materially affects the install; consent is usually needed and is a gating item',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Listed-building status affects LCT installs at multiple points. External alterations (PV array, ASHP outdoor unit, EV chargepoint with visible cabling, BESS in a visible location) typically require listed-building consent. The local authority\'s conservation officer reviews the application. Refusal is possible where the install compromises historic character. The survey-stage conversation flags the listed-building consent as a project gating item with its own timeline — separate from planning permission and Building Control notification.',
   },

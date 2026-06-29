@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'A BS 1361 cartridge fuse is used in:',
     options: [
-      'Lighter weight, easier installation and better ventilation',
+      'The plug top of a 13 A BS 1363 appliance lead',
       'Domestic supply cut-out (service fuse) and old-style fused boards',
-      'End-to-end tests complete, cross-connected tests show uniform readings',
-      'Clearly state the danger and urgency of repair',
+      'High-voltage transmission switchgear at the substation',
+      'Low-voltage signalling and control panels only',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 2,
     question: 'BS 88 fuses are characterised as:',
     options: [
-      'Charge their employer for safety equipment or training',
-      'Maximum input power before receiver saturates or is damaged',
+      'Low breaking capacity re-wireable fuses for domestic use',
+      'Glass-bodied fuses for electronic equipment',
       'High-rupturing-capacity (HRC) cartridge fuses for industrial use',
-      'They display a fault via an LED indicator on the luminaire',
+      'Resettable thermal trips rather than fuses',
     ],
     correctAnswer: 2,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'Re-wireable fuses (BS 3036) compared with cartridge fuses (BS 88):',
     options: [
-      'Distributing electrical load across circuits',
-      'Fan motor heat added after coils does not affect supply temperature',
+      'Higher breaking capacity and more precise rating',
+      'Faster operation with a sealed, tamper-proof element',
       'Lower breaking capacity, slower operation, less precise',
-      'Primary controller sets setpoint for secondary controller',
+      'Identical performance but cheaper to manufacture',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,9 +158,9 @@ const quizQuestions = [
     id: 7,
     question: 'BS 7671 A4:2026 §411.3.3 RCD coverage:',
     options: [
-      'To verify protective conductor is present and connected at each point',
-      'Working on electrical systems that have been safely isolated from all sources of supply',
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
+      'Required only for socket-outlets above 32 A',
+      'Required only in bathrooms and other special locations',
+      'Required only where a TT earthing system is used',
       'Mandatory for socket-outlets ≤32 A, with limited risk-assessed exceptions outside dwellings',
     ],
     correctAnswer: 3,
@@ -172,9 +172,9 @@ const quizQuestions = [
     question: 'AFDD requirement under BS 7671 A4:2026 §421.1.7:',
     options: [
       'Recommended (the regulation uses "recommending" wording); mandatory in HRRBs via Building Safety Act 2022',
-      'Our beliefs formed at the top of the ladder influence which data we select at the bottom, reinforcing existing biases',
-      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
-      'A percentage of each payment withheld by the main contractor until defects are resolved after practical completion',
+      'Mandatory on every final circuit in all dwellings without exception',
+      'Required only on three-phase distribution circuits',
+      'Prohibited in domestic installations and permitted only in industry',
     ],
     correctAnswer: 0,
     explanation:

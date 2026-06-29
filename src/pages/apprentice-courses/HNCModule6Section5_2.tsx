@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is a metering hierarchy in building services?',
     options: [
       'A structured arrangement of meters from main intake to sub-circuits for energy apportionment',
-      'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
-      'To ensure exits are visible from a distance and confirm they lead outside',
-      'The maximum load the scaffold platform is designed to carry, classified by intended use',
+      'The order in which utility meters are read each billing period',
+      'A ranking of meters by their accuracy class from highest to lowest',
+      'The sequence of protective devices from the main switch to final circuits',
     ],
     correctIndex: 0,
     explanation:
@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of sub-metering in commercial buildings?',
     options: [
       'To apportion energy costs and identify consumption patterns by area or tenant',
-      'Certificates, test results, maintenance records, and as-built drawings',
-      'Show the installation as actually constructed, including all variations',
-      'Visual inspection, earth continuity, insulation resistance and functional test',
+      'To provide a backup reading in case the main utility meter fails',
+      'To satisfy the utility supplier’s requirement for fiscal billing',
+      'To protect individual circuits against overload and earth faults',
     ],
     correctIndex: 0,
     explanation:
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     id: 'amr-definition',
     question: 'What does AMR (Automatic Meter Reading) provide?',
     options: [
-      'To reduce short-cycling and ensure minimum run times',
-      'You are significantly more likely to achieve them',
-      'Special procedures and equipment certification',
+      'Automatic switching of supply between tariffs to cut costs',
+      'Automatic correction of meter errors against a reference standard',
+      'Automatic disconnection of circuits exceeding their demand limit',
       'Remote collection of meter data without manual reading',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'ct-metering',
     question: 'When is CT (Current Transformer) metering typically required?',
     options: [
-      'To assist with evacuation, check designated areas are clear, and report to the assembly point',
-      'The planned/unplanned ratio (or reactive/proactive split)',
+      'When the supply voltage exceeds 230 V single-phase',
+      'When the meter is located more than 30 m from the load',
       'When current exceeds direct-connect meter ratings (typically above 100A)',
-      'Regulations setting minimum EPC ratings for rental properties',
+      'When the circuit serves a tenant rather than a landlord area',
     ],
     correctIndex: 2,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What information does a multi-function energy meter typically provide beyond kWh?',
     options: [
-      'Exposed parts may become live under fault conditions',
+      'Earth fault loop impedance and insulation resistance values',
       'kWh, kVAh, kVArh, power factor, and demand',
-      'Multiple trips to suppliers for forgotten materials',
-      'To ensure exact positioning as per drawings',
+      'The prospective short-circuit current at the meter position',
+      'The carbon emission factor for the building’s electricity supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
       'When integrating meters with a BMS, what is the primary advantage of using a dedicated energy monitoring system versus direct BMS connection?',
     options: [
       'Specialised analysis, reporting, and data storage capabilities',
-      'Line-neutral faults where current is balanced',
-      'You may replace working components and miss the real fault',
-      'Overhead power lines, cables, beams and any other overhead obstructions',
+      'It removes the need for any CT metering on large circuits',
+      'It allows meters to be read without any communication network',
+      'It guarantees the meters meet MID approval for tenant billing',
     ],
     correctAnswer: 0,
     explanation:

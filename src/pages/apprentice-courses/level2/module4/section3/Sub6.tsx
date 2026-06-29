@@ -39,10 +39,10 @@ const checks = [
     question:
       'You finish first-fix on a kitchen ring. Cable offcuts, a discarded back-box knockout, used Stanley blades and a coffee cup are scattered across the kitchen floor. The plasterer arrives in 30 minutes. What is the right action?',
     options: [
-      'IET GN1 Section 7 — broader installation categories with worked examples for offices, retail, hospitality, education, healthcare and industrial.',
-      'Clearly explain your technical reasoning and suggest an alternative route, referencing relevant regulations',
-      'Employees must make full and proper use of systems of work provided, cooperate with their employer on health and safety, and report any hazards or concerns',
-      'Bin everything before leaving the room — cable offcuts in a separate bag for waste recovery, sharps in a sharps tube, food waste in a separate bag.',
+      'Leave it for the plasterer to sweep, on the basis that the last trade in the room clears up.',
+      'Push the offcuts into the corner so the floor is clear for the plasterer to work.',
+      'Sweep the loose debris into the chase before the plaster goes on so it is hidden.',
+      'Clear it all before leaving, with offcuts segregated, sharps in a tube and food waste separate.',
     ],
     correctIndex: 3,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       'You are working on a downstream FCU after isolating it at the upstream MCB. Before starting work you should:',
     options: [
-      'An improvement notice gives a specified time period to remedy a contravention, while a prohibition notice requires the immediate or near-immediate cessation of an activity that poses a risk of serious personal injury',
-      'The platform may be damaged, incorrectly seated, or an obstruction may be present — the tower should not be used until the cause is identified and resolved',
-      'Apply a lock-off device to the upstream MCB and a warning notice, then prove dead at the FCU before starting work — never trust someone else not to switch the MCB back on.',
-      'Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat',
+      'Put a piece of tape over the MCB so others can see it should stay switched off.',
+      'Tell the customer and any other trades verbally that the MCB must not be switched on.',
+      'Apply a lock-off device and warning notice to the upstream MCB, then prove dead at the FCU.',
+      'Switch off the whole-board main switch instead so no individual MCB needs locking.',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     question:
       'You have been on site since 7 am and it is now 17:30. You are halfway through terminating a 6-way three-phase MCCB enclosure with 25 mm² SWA cores. You are tired and the job is more involved than expected. The right call is:',
     options: [
-      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'A short, focused safety briefing on a specific topic delivered to the work team — interactive, recorded with attendees signed in',
-      'To set a cap on total greenhouse gas emissions from participating sectors, allowing those who emit less to sell allowances to higher emitters',
-      'Stop, secure the site (lockout-tagout in place, enclosure covered, warning notices), come back fresh in the morning. Never terminate live-supply equipment when fatigued.',
+      'Push through and finish, since stopping a part-terminated enclosure overnight is more dangerous.',
+      'Hand the remaining terminations to the apprentice so you can supervise rather than work.',
+      'Speed up and skip the torque-checking step to get the enclosure closed before energy fades.',
+      'Stop, secure the site with the lockout and notices in place, and return fresh tomorrow.',
     ],
     correctIndex: 3,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'HASAWA section 7 places duties on every employee including:',
     options: [
-      'External climbing creates outward forces that can overturn the tower and provides no fall protection if the climber slips',
-      'Taking reasonable care for their own health and safety, the safety of others affected by their acts or omissions, and co-operating with the employer on safety matters.',
-      'No — "pay when paid" clauses are banned by the Construction Act 1996; the main contractor must pay the subcontractor regardless of whether they have been paid by the client',
-      'Identifying a recurring fault pattern and reporting it to your supervisor with a suggestion for a permanent solution, or noticing a safety hazard and taking immediate appropriate action',
+      'Carrying out their own written risk assessment for every task before the employer provides one.',
+      'Taking reasonable care for themselves and others, and co-operating with the employer on safety.',
+      'Providing their own PPE and first-aid equipment at their own expense for every site.',
+      'Reporting any contravention they observe by their employer directly to the HSE.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,24 +98,24 @@ const quizQuestions = [
     question:
       'CDM 2015 (Construction Design and Management) Regulations apply to:',
     options: [
-      'Because damaged, corroded, or substandard components may fail under load, causing collapse or falls',
-      'Domestic (household) premises in certain situations — the standard 514.12 notice does not apply where conditions are met',
-      'All construction projects in Great Britain, including small domestic projects (with simplified requirements for purely domestic clients).',
-      'The maximum concentration of the gas or vapour in air above which the mixture is too rich to support combustion',
+      'Only commercial and industrial projects above a contract value of £100,000.',
+      'Only projects involving more than one contractor on site at the same time.',
+      'All construction projects in Great Britain, including small domestic work.',
+      'Only notifiable projects lasting longer than 30 working days or 500 person-days.',
     ],
     correctAnswer: 2,
     explanation:
-      'CDM 2015 applies to ALL construction projects, including small domestic work. The duties scale with the project — a single-day kitchen rewire has lighter duties than a £10m commercial fit-out, but every project has principal designer / principal contractor / contractor / worker duties under the regulations. RAMS, welfare, induction, PPE — all CDM-driven.',
+      'CDM 2015 applies to ALL construction projects, including small domestic work (with simplified requirements for purely domestic clients). The duties scale with the project — a single-day kitchen rewire has lighter duties than a £10m commercial fit-out, but every project has principal designer / principal contractor / contractor / worker duties under the regulations. RAMS, welfare, induction, PPE — all CDM-driven.',
   },
   {
     id: 3,
     question:
       'A "permit to work" system is typically required for:',
     options: [
-      'No code — a metal consumer unit installed after the 2016 amendment satisfies the current requirement on enclosure non-combustibility, and accessibility under the stairs is not in itself a coded defect provided escape is not impeded.',
-      'Function within HSE. Three statutory functions: oversee building safety; facilitate competence improvement; lead implementation of HRRB regulatory regime including gateway approvals.',
-      'Document setting out how building safety risks are identified, mitigated and managed for the HRRB. Includes fire and structural risks, mitigation strategies, residents engagement, golden-thread links.',
-      'Higher-risk activities (live working, hot works, work in confined spaces, work near other live services) on commercial and industrial sites — issued by the responsible person with named conditions and time limits.',
+      'All routine domestic installation work, as a record that the customer authorised the job.',
+      'Any task carried out by an apprentice, to confirm they are being supervised correctly throughout.',
+      'Any work where a test certificate will be issued at the end of the installation phase.',
+      'Higher-risk activities on commercial sites — live working, hot works, confined spaces — with named conditions.',
     ],
     correctAnswer: 3,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Hot works on a construction site (welding, soldering, brazing) require:',
     options: [
-      'A hot works permit, fire watch (typically 60 minutes after work ends), removal of combustibles within 10 m radius, and post-work inspection.',
-      'Regularly (typically monthly) — and after every use; sterile items have expiry dates and must be replaced',
-      'A completed work order, updated test records, permit to work cancellation, and confirmation that all safety interlocks have been tested and are operative',
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
+      'A hot works permit, fire watch after work, cleared combustibles and a post-work inspection.',
+      'A fire extinguisher within reach and a verbal note to the customer, but no permit.',
+      'A second operative to watch the work, with no formal permit or post-work checks.',
+      'Written customer consent and a single smoke detector, treating the work as low-risk.',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Welfare facilities on a CDM-regulated construction site must include:',
     options: [
-      'Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold',
-      'Toilets, washing facilities (hot and cold water), drinking water, somewhere to eat that is not the work area, and somewhere to dry / store clothing — proportionate to the size and duration of the project.',
-      'A design approach that uses the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s form, fabric, and orientation to reduce energy demand for heating, cooling, and lighting without relying on mechanical systems',
-      'For some lower-risk asbestos work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s above non-licensed threshold but below licensed - e.g. limited AIB removal, certain encapsulation work. Trained operatives + written plan + 14-day HSE notification + medical surveillance + records.',
+      'A dedicated site office, a canteen with hot food and on-site sleeping accommodation.',
+      'Toilets, washing facilities, drinking water, an eating area and clothing storage, proportionate to the project.',
+      'Only drinking water and a toilet, with washing and eating left to the worker&rsquo;s own arrangements.',
+      'Showers and lockers for every operative regardless of the size or length of the project.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'You arrive on a domestic rewire to find the customer has decided to remove their elderly relative&rsquo;s mobility scooter from the corridor "for the day". The corridor is now blocked by your tools and is the customer&rsquo;s only escape route. The right action is:',
     options: [
-      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
-      'The fire evacuation procedure, assembly point location, fire warden names, emergency contact numbers, and the location of firefighting equipment',
-      'Stop and clear an escape route immediately. Brief the customer that the escape route must remain clear at all times. If the customer refuses, you stop work and document it.',
-      'The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications',
+      'Carry on working, treating the corridor as the customer&rsquo;s responsibility while you are in occupation.',
+      'Move your tools to one side of the corridor so there is a narrow gap for people to pass.',
+      'Clear the escape route immediately, brief the customer, and stop work if they refuse to keep it clear.',
+      'Wait until the end of the day to clear the route, since you need the tools there meanwhile.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A communication breakdown between you and the plasterer means the plasterer skims a wall before you have second-fixed the lighting circuit. The right response is:',
     options: [
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'Plan to have all workers safely descended and equipment secured well before the storm arrives; cease work at height immediately if the 30/30 rule triggers; do not resume until 30 minutes after the last thunder or lightning',
-      'Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight',
-      'Stop. Call the supervisor / contractor coordinator. Agree a remedial sequence — usually: wait for plaster to dry, cut neat access channels, install, and bring the plasterer back for a small make-good. Document the additional work.',
+      'Cut straight into the wet plaster while it is still soft so the cable can be installed today.',
+      'Leave the lighting circuit unfinished and hand the job over as complete to protect the programme.',
+      'Raise it with the customer so the plasterer carries the full remedial cost of the clash.',
+      'Stop, escalate to the supervisor, and agree a remedial sequence with the plasterer brought back to make good.',
     ],
     correctAnswer: 3,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'End-of-shift sign-off on a multi-day commercial install typically includes:',
     options: [
-      'Securing all isolations (locks remain in place if any work is incomplete), making all enclosures safe (covers on, doors closed), tidying tools, sweeping the work area, signing the day&rsquo;s permit / RAMS as complete, briefing the next shift / next day.',
-      'Identify which technology controls the faulty function by reading the drawings, then apply the appropriate diagnostic technique for that part of the system — I/O status for PLC, multimeter tracing for relay circuits',
-      'Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
+      'Securing isolations, closing enclosures, stowing tools, sweeping the area and briefing the next shift.',
+      'Restoring every isolation to live so the building&rsquo;s services work overnight, whatever the work state.',
+      'Leaving tools and materials in place so the next shift can pick up exactly where you left off.',
+      'Signing off the whole installation as complete each evening so the paperwork is never outstanding.',
     ],
     correctAnswer: 0,
     explanation:

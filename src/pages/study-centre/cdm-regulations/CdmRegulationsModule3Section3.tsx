@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     options: [
       'The client must prepare it themselves',
       'No file is required for single-contractor projects',
-      'The contractor must ensure the file is prepared if applicable',
       'The CDM co-ordinator prepares it',
+      'The contractor must ensure the file is prepared if applicable',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'On single-contractor projects where there is no principal designer, the contractor must ensure the health and safety file is prepared if it is applicable to the project. The approach should be proportionate to the scale and nature of the work.',
   },
@@ -79,7 +79,7 @@ const quizQuestions = [
     question: 'What is the primary purpose of the health and safety file under CDM 2015?',
     options: [
       'To record all accidents and incidents during construction',
-      'To contain information needed for future construction work, maintenance, cleaning, refurbishment, and demolition',
+      'To hold information needed for future maintenance, refurbishment, and demolition',
       'To provide evidence of compliance with building regulations',
       'To serve as a contract document between client and contractor',
     ],
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: 'Who is responsible for preparing the health and safety file during the project?',
     options: [
+      'The principal designer',
       'The client',
       'The principal contractor',
-      'The principal designer',
       'The CDM co-ordinator',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under CDM 2015, the principal designer (PD) is responsible for preparing, reviewing, updating, and revising the health and safety file during the pre-construction and construction phases. The PD must ensure the file is passed to the client at the end of the project.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
       'Which of the following should be included in the H&S file for an electrical installation?',
     options: [
       'Names and addresses of all workers on site',
-      'Distribution board schedules and cable routes',
       'Daily site diary entries',
       'Tender prices from subcontractors',
+      'Distribution board schedules and cable routes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The H&S file should include distribution board schedules, cable routes (especially hidden or embedded cables), isolation procedures, test certificates, earthing arrangements, and lightning protection details. Personal worker information and commercial data are not appropriate for the H&S file.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'On a single-contractor project with no principal designer, what happens regarding the H&S file?',
     options: [
+      'The contractor must ensure the file is prepared if applicable',
       'No health and safety file is required under any circumstances',
       'The client must prepare the file themselves',
-      'The contractor must ensure the file is prepared if applicable',
       'The HSE will prepare the file as part of their inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'On single-contractor projects where there is no principal designer, the contractor takes on the duty to ensure the health and safety file is prepared if it is applicable to the project. The approach should be proportionate to the scale and complexity of the work.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     options: [
       'Files being too detailed and specific',
       'Files being delivered too early in the project',
-      'Generic content that is not project-specific',
       'Files being retained by the client for too long',
+      'Generic content that is not project-specific',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'One of the most common failings is generic content that is not project-specific. H&S files that contain only standard boilerplate text, manufacturer brochures, or generic risk assessments provide no real value to future users. The content must be specific to the actual structure and the actual work carried out.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'Why is it important to include cable route information (especially hidden or embedded cables) in the H&S file?',
     options: [
       'To allow the client to claim insurance on the cable installation',
-      'To enable future workers to avoid striking or damaging cables during maintenance or refurbishment',
       'To verify that the correct cable sizes were used during installation',
+      'To enable future workers to avoid striking cables during maintenance or refurbishment',
       'To calculate the value of the electrical installation for resale',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Recording cable routes — especially those that are hidden within walls, floors, or ceilings — is critical because future workers carrying out maintenance, refurbishment, or demolition need to know where cables are located to avoid striking them. Hitting a live cable can cause electric shock, burns, arc flash, or fire.',
   },

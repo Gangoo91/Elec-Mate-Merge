@@ -21,11 +21,11 @@ const quickCheckQuestions = [
     question: 'What is the recommended duration for a toolbox talk according to HSE guidance?',
     options: [
       '1&ndash;2 minutes',
-      '5&ndash;10 minutes',
       '20&ndash;30 minutes',
       '45&ndash;60 minutes',
+      '5&ndash;10 minutes',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The HSE recommends that toolbox talks last between 5 and 10 minutes. This is long enough to cover a single topic in meaningful detail, but short enough to hold attention and fit into the working day without disrupting productivity. Talks that run longer than 10 minutes tend to lose the audience and cover too many topics at once, reducing retention.',
   },
@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'toolbox-talk-structure',
     question: 'Which of the following best describes the recommended structure for a toolbox talk?',
     options: [
-      'Read the entire risk assessment aloud, then ask if there are questions',
       'Opening hook, single topic body, close with an action point or check question',
+      'Read the entire risk assessment aloud, then ask if there are questions',
       'Cover as many hazards as possible in the time available',
       'Show a safety video and hand out a sign-off sheet',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An effective toolbox talk follows a clear three-part structure: an opening hook to grab attention (a recent incident, a question, or a statistic), a single-topic body that covers the key points in practical detail, and a close that includes either an action point the team can take away or a check question to confirm understanding. Covering multiple topics dilutes the message and reduces retention.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
       'Which of the following is the most effective opening for a toolbox talk on electrical isolation?',
     options: [
       'Reading the first three paragraphs of BS 7671 Regulation 537.2',
-      'Describing a real incident where a worker was injured because isolation was not verified',
       'Asking attendees to read the risk assessment before you begin',
       'Stating "This talk is about electrical isolation" and moving straight to the content',
+      'Describing a real incident where a worker was injured because isolation was not verified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An effective opening hook grabs attention immediately and makes the topic feel relevant and urgent. Describing a real incident (anonymised where necessary) creates an emotional connection and demonstrates why the topic matters. It is far more engaging than reading regulations, distributing paperwork, or making a bland opening statement. The hook should take no more than 30 to 60 seconds before you move into the body of the talk.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
       'Which of the following is the best visual aid for a toolbox talk on manual handling?',
     options: [
       'A 20-slide PowerPoint presentation with detailed text',
-      'A live demonstration of the correct lifting technique using an actual load from the site',
       'A printed copy of the Manual Handling Operations Regulations 1992',
       'A poster from the HSE website displayed on a laptop screen',
+      'A live demonstration of the correct lifting technique using an actual load from the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A live demonstration using an actual load from the site is the most effective visual aid because it is directly relevant to the workers\u2019 daily tasks, it shows the technique in context, and it allows workers to practise the technique themselves under supervision. PowerPoint presentations are generally ineffective on site because they require equipment, are hard to see in daylight, and encourage passive listening rather than active engagement.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What documentation should be recorded after delivering a toolbox talk?',
     options: [
-      'Only the topic and the date',
       'Date, topic, presenter name, key points covered, and attendee signatures or initials',
+      'Only the topic and the date',
       'A full written transcript of everything that was said',
       'No documentation is required &mdash; toolbox talks are informal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A complete toolbox talk record should include the date, the topic, the presenter\u2019s name, the key points covered, any actions agreed, and the signatures or initials of all attendees. This provides evidence that workers received appropriate instruction (CDM 2015 Regulation 13), supports audit and inspection requirements, and creates a useful record for incident investigation if something goes wrong later.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'Which of the following scenarios would be the most appropriate trigger for an unplanned toolbox talk?',
     options: [
       'It is Monday morning and the team has not had a talk for a week',
-      'A near miss occurred yesterday when a cable was struck during excavation works',
       'A new apprentice asks what a toolbox talk is',
+      'A near miss occurred yesterday when a cable was struck during excavation works',
       'The site manager wants to discuss next month\u2019s programme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A near miss is one of the strongest triggers for an unplanned toolbox talk. The incident is fresh, relevant, and provides a real example that the team can learn from. Delivering a talk immediately after a near miss reinforces the message while the event is still in everyone\u2019s mind and can prevent a recurrence. Other appropriate triggers include new hazards on site, changes in work methods, new workers joining the team, or following a serious incident elsewhere in the industry.',
   },

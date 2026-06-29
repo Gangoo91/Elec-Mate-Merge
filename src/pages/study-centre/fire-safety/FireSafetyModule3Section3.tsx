@@ -40,7 +40,7 @@ const quickCheckQuestions = [
       'What is the minimum sound level for fire alarm sounders in areas where people sleep?',
     options: [
       '55 dB at bed head',
-      '65 dB at bed head (75 dB if a door is closed between the sounder and the bed)',
+      '65 dB at bed head',
       '75 dB at bed head',
       '85 dB at bed head',
     ],
@@ -51,8 +51,8 @@ const quickCheckQuestions = [
   {
     id: 'vad-colour',
     question: 'What colour beacon is used for fire alarm visual alarm devices?',
-    options: ['Blue', 'Amber', 'Red', 'White'],
-    correctIndex: 2,
+    options: ['Red', 'Amber', 'Blue', 'White'],
+    correctIndex: 0,
     explanation:
       'Red beacons are used for fire alarm visual alarm devices (VADs). The colour red is universally associated with fire and danger, making it immediately recognisable. This is specified in BS 5839 Part 1. Other colours of beacon are used for different purposes — for example, amber for fault indication and blue for emergency services — so it is important that red is reserved exclusively for fire alarms to avoid confusion.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'Which of the following is a function of the fire alarm control and indicating equipment (CIE)?',
     options: [
-      'Suppressing the fire automatically with water',
-      'Receiving signals from detectors and call points, processing them, and activating sounders',
-      'Providing emergency lighting in the event of a power failure',
-      'Ventilating the building to remove smoke',
+      'Receiving signals from detectors and call points and activating the system outputs',
+      'Suppressing the fire automatically by discharging water onto the seat of the fire',
+      'Providing illuminated escape route lighting during a mains power failure',
+      'Extracting smoke and heat from the building through powered ventilation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fire alarm control and indicating equipment (CIE) — commonly called the fire alarm control panel — is the central brain of the fire alarm system. It receives signals from detectors and manual call points, processes those signals according to its cause-and-effect programming, and activates the appropriate outputs: sounders, VADs, door release mechanisms, HVAC shutdown, lift recall, and remote monitoring. It also displays fault, fire, disable, and test indications.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is the MOST common cause of false fire alarms in buildings?',
     options: [
+      'Environmental factors such as cooking fumes, steam, dust, or insects',
       'Detector failure due to age',
       'Lightning strikes on the building',
-      'Environmental factors such as cooking fumes, steam, dust, or insects',
       'Faulty wiring in the alarm circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most common causes of false alarms are environmental factors: cooking fumes, steam from bathrooms or kitchens, dust from construction work, and insects entering detector chambers. False alarms desensitise occupants (who begin to ignore alarm activations), waste fire and rescue service time, and can result in charges from the fire authority. Appropriate detector selection, siting, and the use of analogue-addressable systems with adjustable sensitivity are key measures for reducing false alarms.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a key advantage of voice alarm systems over conventional alarm sounders?',
     options: [
-      'They are cheaper to install and maintain',
-      'They do not require any wiring',
-      'They provide clear spoken instructions that reduce confusion and panic, and support phased evacuation messaging',
-      'They are louder than conventional sounders',
+      'They are cheaper to install and require less ongoing maintenance',
+      'They operate wirelessly and need no cabling to the control panel',
+      'They produce a far louder output than any conventional sounder',
+      'They give clear spoken instructions that reduce panic and support phased evacuation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Voice alarm systems provide clear spoken instructions rather than just a tone or bell. This reduces panic, provides specific guidance (such as which exits to use), and is essential for phased evacuation where different zones receive different messages. Voice alarm systems are governed by BS 5839 Part 8 and must meet the intelligibility requirements of BS 7443.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'Visual alarm devices (VADs) in a fire alarm system are primarily provided for which group of building occupants?',
     options: [
-      'People with visual impairments',
       'People with hearing impairments',
+      'People with visual impairments',
       'People working in noisy environments only',
       'People in management or supervisory roles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Visual alarm devices (VADs), also known as beacons, are primarily provided for people with hearing impairments who may not be able to hear audible fire alarm sounders. VADs use red flashing or pulsating beacons to provide a visual warning of fire. BS 5839 Part 1 provides guidance on VAD provision, including wall-mounted and ceiling-mounted options. VADs are also useful in noisy environments where sounders alone may not be heard.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'When the fire alarm activates, which of the following should happen automatically via system integration?',
     options: [
-      'All windows should open to ventilate smoke',
-      'Electromagnetic hold-open devices release fire doors, HVAC shuts down, and lifts recall to ground floor',
-      'Emergency lighting switches off to conserve power',
-      'The sprinkler system deactivates to prevent water damage',
+      'All external windows open automatically to ventilate smoke from the building',
+      'Emergency lighting switches off across the building to conserve battery power',
+      'The sprinkler system deactivates throughout to prevent accidental water damage',
+      'Fire doors release, HVAC shuts down, and lifts recall to the ground floor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When the fire alarm activates, the cause-and-effect programming triggers integrated responses: electromagnetic hold-open devices release fire doors (allowing them to close and compartmentalise the building), HVAC systems shut down (to prevent the spread of smoke through ductwork), lifts recall to the ground floor and go out of service, smoke control systems activate, and security access control systems unlock doors on escape routes. These actions are defined in the cause-and-effect matrix and must be tested during commissioning.',
   },

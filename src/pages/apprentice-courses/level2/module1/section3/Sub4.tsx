@@ -44,9 +44,9 @@ const checks = [
     id: 'toolbox-talk-purpose-check',
     question: "What’s the actual purpose of a toolbox talk at the start of the shift?",
     options: [
-      'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
-      'A designer — because choosing the cable route is a design decision that could affect health and safety',
-      'Folders by client name, with subfolders for quotes, certificates, photos, and invoices',
+      'Record who turned up on time and who was late',
+      'Allocate the day’s tasks and set productivity targets',
+      'Satisfy the client that the paperwork has been signed',
       'Brief the team on the day’s hazards and controls so everyone’s working off the same plan',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const checks = [
     id: 'pow-check-when',
     question: "When should you do a point-of-work risk assessment?",
     options: [
-      'Call 999 (put phone on speaker) → begin CPR → send someone for the AED when possible',
-      'Providing the MS in larger sans-serif font on cream paper, supplemented by a verbal walk-through and a labelled site sketch',
-      'The schedule that prescribes what must be included in a scaffold inspection report',
-      'At the moment you reach a new task or hazard during the day — informal, quick, between you and the work',
+      'Only once, at the start of the day during the morning toolbox talk',
+      'Only when the supervisor formally asks you to carry one out',
+      'Only at the end of the shift, to record what actually happened',
+      'The moment you reach a new task or hazard — quick and informal',
     ],
     correctIndex: 3,
     explanation:
@@ -70,10 +70,10 @@ const checks = [
     id: 'rams-mismatch-check',
     question: "You spot something on site that doesn’t match the RAMS — different layout, extra hazard, missing kit. What’s your duty?",
     options: [
-      'Make the area safe, provide first aid, preserve evidence, and report to RIDDOR',
-      'It is not law itself, but failure to follow it can be used as evidence of non-compliance with the associated regulation',
+      'Carry on — the RAMS is just a guide, not a hard rule',
+      'Make a note of it and mention it at the end of the day',
       'Stop, raise it with the supervisor or RAMS author, get the document amended before continuing',
-      'To prevent the worker from reaching a position where a fall could occur',
+      'Update the RAMS yourself and keep working without telling anyone',
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "Toolbox talk this morning covered isolation procedure for the CU change. Two hours in, the architect adds a new circuit you weren’t expecting. What’s the right move?",
     options: [
-      "Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)",
-      "Stop, treat it as a Step 5 trigger — assess the new circuit (different OCPD, different load, possibly different RCD requirement), brief the team, then continue",
-      "A predetermined safe location where all personnel gather after evacuation so that a roll call can confirm everyone is accounted for",
-      "Critical (A) — essential, no redundancy, high failure consequence; Important (B) — significant impact but some mitigation available; General (C) — low consequence, run-to-failure acceptable",
+      "Carry on as briefed — the morning talk already covered this area of work",
+      "Stop, treat it as a Step 5 trigger — assess the new circuit, brief the team, continue",
+      "Refuse the new work outright until tomorrow’s scheduled toolbox talk",
+      "Add the circuit quietly and update the RAMS at the end of the week",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "You sign the toolbox-talk attendance sheet without listening. Three hours later something on the talk would have warned you about goes wrong. Where’s the legal exposure?",
     options: [
-      "The whole programme — successor trades cannot start, scaffold may be retained, plant hire is extended; the cumulative cost grows fast",
-      "Flush the affected area with copious amounts of clean water for at least 20 minutes",
+      "Nowhere — you can’t be liable for something you didn’t hear",
+      "Only on the supervisor, since they delivered the talk",
       "On you personally under HASAWA s.7 (you confirmed you’d been briefed and ignored it), as well as the firm",
-      "Conduct a thorough check of their zone to confirm all fire safety measures are in place before staff return",
+      "Only on the firm, because the duty sits with the employer",
     ],
     correctAnswer: 2,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 3,
     question: "What’s a 'point-of-work risk assessment' (also called dynamic risk assessment)?",
     options: [
-      "Batteries using solid electrolyte instead of liquid, offering higher energy density and safety",
-      "Act as a mechanical rectifier, reversing the current direction in each armature coil as it passes the brush position, ensuring continuous unidirectional torque",
-      "Energy Company Obligation - requiring energy suppliers to fund energy efficiency improvements",
-      "A live, in-the-moment check you do as you reach a new task or hazard — quick, informal, but it stops you walking into surprises",
+      "A formal written document signed off by a competent person each time",
+      "The full five-step assessment process repeated again at every workstation",
+      "A weekly review of the whole site RAMS held in the cabin by the team",
+      "A live, in-the-moment check as you reach a new task — quick and informal",
     ],
     correctAnswer: 3,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 4,
     question: "You arrive at a job and there’s no toolbox talk. The supervisor just hands out tasks. What’s the right response?",
     options: [
-      "Ask for the briefing — even five minutes covering the day’s hazards, controls and emergency arrangements is required for a safe system of work",
-      "The total vertical distance required below the worker to ensure they do not hit a lower level during a fall arrest",
-      "Because a chip pin can’t supply 80 mA — the transistor lets a few mA from the chip switch the much larger coil current.",
-      "Deliberately cultivating relationships across different areas of life — work, family, friends, community — so support is available from multiple sources",
+      "Ask for the briefing — even five minutes on the day’s hazards is needed",
+      "Crack on with the allocated tasks — no briefing simply means no delay",
+      "Refuse to do any work at all until a full written RAMS appears on site",
+      "Run your own toolbox talk for the rest of the team off your own back",
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "Mid-job, you notice the lock-off you applied this morning has been removed by someone else. What do you do?",
     options: [
-      "Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders",
-      "Stop ALL work that depends on that isolation, find out who removed it and why, re-prove dead before re-isolating, and treat it as a serious safety incident",
-      "They are the person who accepts the permit, understands the precautions, and is responsible for ensuring the work is carried out in accordance with the permit conditions",
-      "Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay",
+      "Carry on working — if your indicator showed dead earlier, it’s still dead now",
+      "Stop the affected work, find out who removed it, and re-prove dead before continuing",
+      "Re-apply your own lock-off and continue with the job without re-testing first",
+      "Report it at the end of the shift and finish the job you’re on first",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "You spot a near miss — your mate nearly drilled into a buried cable that wasn’t marked on the RAMS. Nobody got hurt. What should happen next?",
     options: [
-      "They create self-limiting behaviour that causes the person to avoid opportunities and underperform",
-      "Whether the corrosion has reduced the wall thickness of the tubes to the point where their load-bearing capacity is compromised",
-      "Stop work, log the near miss, trigger a Step 5 review of the RAMS, brief the team on the new hazard, and add the buried cable to the records",
-      "All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts",
+      "Nothing — nobody got hurt, so there’s nothing that needs reporting",
+      "Quietly tell your mate to be more careful with the drill next time",
+      "Log the near miss, trigger a Step 5 review, brief the team, record the cable",
+      "Mark the cable on the wall and carry on working without telling anyone",
     ],
     correctAnswer: 2,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     id: 7,
     question: "You’re asked to take part in delivering a toolbox talk to your apprentices below you. What’s the structure of a useful talk?",
     options: [
-      "It does nothing to reduce or remove the hazard — it only protects the individual wearing it, and its effectiveness depends entirely on correct selection, fitting, use and maintenance",
-      "De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue",
-      "FAIL the verification — Icn < Ipf is C2 (potentially dangerous): MCBs cannot safely interrupt available fault current — replace devices or fit upstream backup fuse for energy limitation",
-      "Cover today’s scope, the significant hazards relevant to today’s work, the controls in place, the emergency arrangements, and check understanding by asking questions back",
+      "Read out every single hazard in the full site RAMS from start to finish",
+      "Keep it under a minute and just tell them all to be careful out there",
+      "List the qualifications each apprentice holds before any work starts",
+      "Cover today’s scope, the relevant hazards, the controls and emergency plan, then check back",
     ],
     correctAnswer: 3,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 8,
     question: "You finish your part of the job 30 minutes early and the supervisor’s left site. There’s no other task in the RAMS for you. What do you do?",
     options: [
-      "Do something productive that’s within scope and competence (tidy up, document the work, prep for tomorrow), and wait for instruction before starting any unassessed task",
-      "A person with sufficient training, experience or knowledge to identify defects and assess the tower's fitness for continued use",
-      "Report the change in conditions, stop work on the tower, and have a competent person reassess the base stability before resuming",
-      "Document the programme change and its impact, notify the main contractor in writing of any additional costs or delays, and follow up with a formal variation or claim if applicable",
+      "Do something within scope (tidy, document, prep) and wait for instruction first",
+      "Find another job somewhere on site and crack on with it just to stay busy",
+      "Pack up and leave site early since the task you were given is finished",
+      "Ask another trade on site to give you an extra task to fill the time",
     ],
     correctAnswer: 0,
     explanation:

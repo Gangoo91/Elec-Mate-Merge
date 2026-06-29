@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'pmsm-advantage',
     question: 'What is a key advantage of permanent magnet synchronous motors (PMSMs)?',
     options: [
-      'Voltage source in series with resistance',
-      'Longer range and faster setup',
+      'Lower purchase cost than induction motors',
+      'No need for any drive electronics to run',
       'No rotor losses (higher efficiency)',
-      'Expressing numbers as powers of 10',
+      'Tolerance of very high rotor temperatures',
     ],
     correctIndex: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'How does a synchronous motor differ from an induction motor at steady state?',
     options: [
-      'To verify voltage at load is within acceptable limits',
-      'Different light modes (paths) arriving at different times',
-      'A reference cable at the far end for loss measurement',
+      'It runs faster as mechanical load increases',
+      'It always has between 3% and 5% slip',
+      'Its speed depends on the supply voltage magnitude',
       'It runs at exactly synchronous speed with zero slip',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "Why can't a synchronous motor self-start?",
     options: [
-      'Temperature, humidity, air movement, and radiant temperature',
+      'The DC field current is too small to produce starting torque',
       'The rotating field reverses too quickly for the heavy rotor to follow',
-      'By trained personnel to evacuate people who cannot use stairs independently',
-      'At least every 14 months, or every 6 months for certain specified processes',
+      'The stator winding cannot produce a rotating magnetic field at start',
+      'The slip rings prevent current reaching the rotor at standstill',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'In a synchronous generator (alternator), what determines the output frequency?',
     options: [
       'Rotational speed and number of poles',
-      'They provide high output from a compact size',
-      'Supply air temperature control',
-      'f = 1/(2 x pi x sqrt(L x C))',
+      'Field excitation current and load power factor',
+      'Output voltage magnitude and winding turns',
+      'Connected load and terminal impedance',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     question:
       'For a standby generator in a building, what must be controlled when paralleling with the grid?',
     options: [
-      'Immediately after the work is carried out',
-      'Visual, audible, electrical, and thermal symptoms',
+      'Insulation resistance, polarity, and earth continuity',
+      'Cable cross-section, route length, and containment fill',
       'Voltage, frequency, phase sequence, and phase angle',
-      'Designing infrastructure that can adapt to changing requirements',
+      'Ambient temperature, ventilation rate, and humidity',
     ],
     correctAnswer: 2,
     explanation:

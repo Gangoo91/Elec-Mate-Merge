@@ -8,9 +8,9 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'evcharging-m5s3-check1',
-    question: 'What accuracy class is recommended for Dynamic Load Management applications?',
-    options: ['Class 3 (±3%)', 'Class 1 (±1%)', 'Class 0.1 (±0.1%)', 'Class 5 (±5%)'],
-    correctIndex: 1,
+    question: 'What accuracy class is recommended as the minimum for Dynamic Load Management applications?',
+    options: ['Class 1 (±1%)', 'Class 2 (±2%)', 'Class 3 (±3%)', 'Class 5 (±5%)'],
+    correctIndex: 0,
     explanation:
       'Class 1 (±1%) accuracy is the minimum recommendation for DLM applications. Class 0.5 (±0.5%) is preferred for revenue-grade monitoring and billing applications.',
   },
@@ -29,14 +29,14 @@ const quickCheckQuestions = [
   },
   {
     id: 'evcharging-m5s3-check3',
-    question: 'Why should CT secondary connections never be open-circuited under load?',
+    question: 'Why should CT secondary connections never be open-circuited while primary current is flowing?',
     options: [
-      'It damages the CT permanently',
-      'It causes dangerous high voltages',
-      'It affects accuracy',
-      'It trips the circuit breaker',
+      'It degrades the long-term measurement accuracy',
+      'It permanently demagnetises the CT core',
+      'It interrupts data being sent to the controller',
+      'It develops dangerous high voltages across the open terminals',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Open-circuiting CT secondary connections under load creates dangerous high voltages due to the transformer action. The secondary must always have a burden connected when primary current is flowing.',
   },
@@ -72,11 +72,11 @@ const quizQuestions = [
       'A 500kVA industrial facility requires EV charging monitoring for 25 charge points. What CT installation approach is most appropriate?',
     options: [
       'Single CT on main incomer only',
+      'Hall effect sensors on the neutral conductor',
       'Split-core Class 1 CTs on main panels with Modbus communication',
       'Rogowski coils on each individual charger',
-      'Hall effect sensors on the neutral conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Split-core Class 1 CTs installed on main distribution panels with Modbus communication provides non-intrusive installation, appropriate accuracy for DLM, and standard industrial communication protocols for integration.',
   },

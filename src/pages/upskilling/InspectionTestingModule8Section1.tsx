@@ -23,14 +23,14 @@ const inlineChecks = [
     question:
       'You arrive at a tenanted EICR. The tenant is at home and has plugged in a freezer they do not want disconnected. What does Reg 642.1 require you to do first?',
     options: [
-      'Begin testing immediately — Reg 642.1 only applies to new work',
-      'Carry out the visual inspection first, with the part under inspection normally disconnected from the supply; where disconnection is genuinely not reasonably practicable, document a risk assessment and proceed with a safe system of work',
-      'Energise everything to confirm the installation is functional, then inspect',
-      'Test first, inspect afterwards if time allows',
+      'Begin testing immediately, as Reg 642.1 applies only to new initial verification work',
+      'Carry out the visual inspection first, with the part normally disconnected from the supply',
+      'Energise everything to confirm the installation is functional, then inspect what you can reach',
+      'Test the circuits first, then inspect afterwards if there is time before you leave',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 642.1 applies to initial verification AND periodic inspection. Inspection precedes testing; the part under inspection is normally disconnected. Where disconnection is not reasonably practicable (freezer contents, medical equipment), live inspection is permitted with a documented risk assessment — but the inspect-before-test order is non-negotiable.',
+      'Reg 642.1 applies to initial verification AND periodic inspection. Inspection precedes testing; the part under inspection is normally disconnected. Where disconnection is not reasonably practicable (freezer contents, medical equipment), live inspection is permitted with a documented risk assessment and safe system of work — but the inspect-before-test order is non-negotiable.',
   },
   {
     id: 'mod8-s1-642-2-limbs',
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'On a 2018 domestic consumer unit with no AFDDs anywhere, the EICR inspector is considering the right code. What does GN3 say?',
     options: [
-      'C1 — danger present',
-      'C2 — potentially dangerous',
-      'No defect code — record the absence as an observation/note. AFDDs were a designer decision under Reg 421.1.7, which is a recommendation in general installations, not a requirement',
-      'Refuse to issue the EICR until AFDDs are fitted',
+      'Code C1 — danger present, immediate remedial action required',
+      'Code C2 — potentially dangerous, urgent remedial action required',
+      'No defect code — record the absence as an observation, as AFDDs were a designer decision',
+      'Refuse to issue the EICR until AFDDs have been fitted to every final circuit',
     ],
     correctIndex: 2,
     explanation:
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'You are about to leave an existing RCBO in service while completing additions and alterations to a domestic consumer unit. What does the A4:2026 Section D recall duty actually require?',
     options: [
-      'A full audit of every device in the installation, every visit',
-      'Verify, when undertaking the additions and alterations, that switches and circuit-breakers (including RCBOs and RCCBs) are not the subject of any product recall before they are accepted for reuse or left in service — typically by checking the OPSS recall list or the manufacturer’s own published notices, and noting the check on the certificate or schedule comments',
-      'Trust the consumer unit label — recalls are the manufacturer’s responsibility',
-      'Only check for recalls if the householder asks',
+      'A full audit of the recall status of every device in the installation, on every visit',
+      'Verify the switches and circuit-breakers being reused are not subject to a product recall',
+      'Trust the consumer unit label, as recalls are entirely the manufacturer’s responsibility',
+      'Only check for product recalls in the event that the householder specifically asks you to',
     ],
     correctIndex: 1,
     explanation:
-      'The A4:2026 guidance is targeted, not blanket. The recall check is triggered by additions and alterations that involve protective and switching devices being reused or left in service. The Section D disclaimer captures the limit — the inspector is not warranting against future recalls or recalls of equipment outside the scope of the work.',
+      'The A4:2026 guidance is targeted, not blanket. The recall check is triggered by additions and alterations that involve protective and switching devices (including RCBOs and RCCBs) being reused or left in service — typically by checking the OPSS recall list or the manufacturer’s notices and noting the check on the certificate. The Section D disclaimer captures the limit — the inspector is not warranting against future recalls or equipment outside the scope of the work.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 642.1 places one duty before another in the verification sequence. Which way around, and why does it matter?',
     options: [
-      'Testing precedes inspection — testing reveals defects to inspect',
-      'Inspection precedes testing, and shall normally be done with the part disconnected from the supply',
-      'Inspection and testing are concurrent and the order is at the inspector’s discretion',
-      'Inspection only follows testing where the installation is energised',
+      'Testing precedes inspection, and shall normally be done with the part energised',
+      'Inspection follows testing wherever the installation under test is left energised',
+      'Inspection and testing are concurrent, with the order left to the inspector’s discretion',
+      'Inspection precedes testing, and shall normally be done with the part disconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 642.1 reads "Inspection shall precede testing and shall normally be done with that part of the installation under inspection disconnected from the supply." The order is fixed: an obvious mechanical defect found by eye must be addressed before voltage or test current is applied, otherwise the test is either invalid or unsafe.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A4:2026 introduces a new item 4.23 on the Schedule of Inspections checklist. What does it cover?',
     options: [
-      'SPD operational indication',
       'AFDD operational indication',
+      'SPD operational indication',
       'Generator parallel arrangements',
       'Earth electrode resistance value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GN3 cross-references the checklist tag 4.23 to AFDD operational indication, mirroring the new AFDD recommendation introduced by Reg 421.1.7 in A4:2026. Item 4.19 covers SPD indication; 4.22 covers generator parallel arrangements. AFDD presence and a healthy operational indication are now an inspection item in their own right.',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
       'A4:2026 changed item 5.12 of the Schedule of Inspections to reflect a new RCD requirement. Which circuit type now requires explicit confirmation of 30 mA RCD additional protection in domestic premises?',
     options: [
       'Socket-outlet circuits below 32 A only',
-      'AC final circuits supplying luminaires',
       'Cooker circuits in kitchens',
       'EV charging circuits only',
+      'AC final circuits supplying luminaires',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 411.3.4 (A4:2026) requires that, within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. Item 5.12 of the inspection schedule confirms this on every domestic property.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'You are starting an EICR on a tenanted flat. The tenant is at home. What does Reg 642.1 require you to do before opening test leads?',
     options: [
-      'Nothing — Reg 642.1 only applies to new work',
-      'Carry out the visual inspection first; the part being inspected shall normally be disconnected from the supply',
-      'Energise everything to confirm the installation is functional, then inspect',
-      'Test first, inspect afterwards if time allows',
+      'Carry out the visual inspection first, normally with the part disconnected from the supply',
+      'Nothing in particular, because Reg 642.1 applies only to new installation work',
+      'Energise everything to confirm the installation is functional, and only then inspect it',
+      'Test all the circuits first, then carry out the inspection afterwards if there is time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 642.1 applies to initial verification AND periodic inspection. The duty to inspect first, with the part disconnected, is the same. Where disconnection is not reasonably practicable on a tenanted EICR (e.g. fridge contents, medical equipment), live inspection with appropriate controls is permitted, but the inspection still precedes the testing.',
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
       'A4:2026 introduces a Section D disclaimer in the EICR around safety alerts and product recalls. What is the inspector’s duty in practice?',
     options: [
       'Carry out a manufacturer-by-manufacturer recall search at every visit',
-      'Verify, when undertaking additions and alterations, that switches and circuit-breakers (including RCBOs and RCCBs) are not the subject of any product recall',
       'Trust the consumer unit label — recalls are the manufacturer’s responsibility, not the installer’s',
       'Only check for recalls if the householder asks',
+      'Verify, when undertaking additions and alterations, that switches and circuit-breakers (including RCBOs and RCCBs) are not the subject of any product recall',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The A4:2026 guidance in this area is that when undertaking additions and alterations, the installer shall verify that switches and circuit-breakers (including RCBOs and RCCBs) are not subject to any product recall before they are accepted for reuse or left in service. The Section D disclaimer captures the limit of the inspector’s scope.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'You complete the visual inspection and find a partially burnt cable entry to a 32 A MCB at the consumer unit. What does Reg 642 require next?',
     options: [
-      'Continue to testing — record the burn mark in comments',
-      'Address the defect (remediate or recommend) before any test current is applied — testing shall not commence until any defects rendering testing unsafe or invalid have been addressed',
-      'Test only the affected circuit, then move on',
-      'Energise and observe the MCB under load',
+      'Address the defect before any test current is applied to that part of the installation',
+      'Continue straight to testing, simply recording the burn mark in the schedule comments',
+      'Test only the affected circuit to confirm the fault, then move on to the next circuit',
+      'Energise the board and observe the behaviour of the affected MCB under normal load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Testing shall not commence until the inspection required by Reg 642.1 has been completed and any defects that would render testing unsafe or invalid have been addressed. A partially burnt cable entry is an obvious safety defect: it is fixed, isolated, or recorded with controls in place before any test is applied.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'Which of the following items appears explicitly in the Reg 642.3 list of inspection items?',
     options: [
-      'Maximum demand calculation',
-      'Presence of fire barriers, suitable seals and protection against thermal effects',
-      'Schedule of works value',
-      'Building regulation Part P notification',
+      'Maximum demand calculation for the whole installation',
+      'Schedule of works value agreed with the client',
+      'Building Regulations Part P notification reference',
+      'Presence of fire barriers, seals and protection against thermal effects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 642.3(g) explicitly lists "presence of fire barriers, suitable seals and protection against thermal effects". The other items are commercial or notification matters that sit outside the Reg 642.3 visual inspection list.',
   },

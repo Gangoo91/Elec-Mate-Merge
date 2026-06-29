@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the notional building approach in Part L compliance?',
     options: [
-      'Measure end-to-end resistance of each conductor (L, N, E)',
+      'A simplified single-zone model that ignores the building shape',
       'A reference building with the same geometry but compliant specifications',
-      'Dust masks or respirators appropriate to the dust type',
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'An identical existing building used as a real-world benchmark',
+      'A theoretical building with no services, used to test the fabric alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'For existing buildings, Part L applies when:',
     options: [
       'Controlled fittings or services are replaced or work exceeds defined thresholds',
-      'An area of higher heat transfer through the building envelope',
-      'It sets targets for 2025 requiring homes to be zero-carbon ready',
-      'Prioritising building envelope performance before adding complex systems',
+      'The building changes ownership, regardless of any building work',
+      'Any redecoration or like-for-like repair is carried out',
+      'Only when the entire building is demolished and rebuilt',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'fabric first' approach in Part L means:",
     options: [
-      'It sets targets for 2025 requiring homes to be zero-carbon ready',
+      'Installing renewable technologies before improving the building fabric',
       'Prioritising building envelope performance before adding complex systems',
-      'An area of higher heat transfer through the building envelope',
-      'Controlled fittings or services are replaced or work exceeds defined thresholds',
+      'Using only natural fabric materials such as timber and wool insulation',
+      'Completing the internal finishes before the structure is weather-tight',
     ],
     correctAnswer: 1,
     explanation:
@@ -221,9 +221,9 @@ const quizQuestions = [
     question:
       'For a non-domestic building extension over 50m², Part L compliance is demonstrated by:',
     options: [
-      'It sets targets for 2025 requiring homes to be zero-carbon ready',
-      'An area of higher heat transfer through the building envelope',
-      'Prioritising building envelope performance before adding complex systems',
+      'Meeting only the elemental U-value limits with no calculation required',
+      'Matching the U-values of the existing building it is attached to',
+      'A simple visual inspection by the building owner at completion',
       'Following the guidance for new buildings or consequential improvements',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
     question: 'What is the significance of the Future Homes Standard in relation to Part L?',
     options: [
       'It sets targets for 2025 requiring homes to be zero-carbon ready',
-      'An area of higher heat transfer through the building envelope',
-      'Energy content of fuel before conversion losses',
-      'Controlled fittings or services are replaced or work exceeds defined thresholds',
+      'It relaxes the 2021 fabric standards to reduce construction costs',
+      'It replaces Part L entirely with a voluntary best-practice guide',
+      'It applies only to historic and listed buildings being renovated',
     ],
     correctAnswer: 0,
     explanation:

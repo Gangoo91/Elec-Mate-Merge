@@ -19,9 +19,9 @@ const quickCheckQuestions = [
     id: 'rescue-preference-order',
     question: 'What is the correct order of preference for rescue from a confined space?',
     options: [
-      'Self-rescue, then non-entry rescue, then entry rescue as an absolute last resort',
-      'Entry rescue first because it is the most thorough, then non-entry, then self-rescue',
-      'Non-entry rescue first, then self-rescue, then entry rescue',
+      'Self-rescue, then non-entry rescue, then entry rescue as a last resort',
+      'Entry rescue first as the most thorough, then non-entry, then self-rescue',
+      'Non-entry rescue first, then self-rescue, then entry rescue last',
       'Call 999 first, then attempt self-rescue, then non-entry rescue',
     ],
     correctIndex: 0,
@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'cascade-effect',
     question: "What is the 'cascade effect' in confined space rescue, and why is it so dangerous?",
     options: [
-      'A situation where untrained rescuers enter a confined space one after another and become casualties themselves — it kills more people than the original incident',
-      'A type of ventilation failure that causes gas levels to rise gradually',
-      'The effect of water flooding a confined space during a rescue attempt',
-      'A chemical reaction triggered by the use of breathing apparatus inside a confined space',
+      'A type of ventilation failure that makes gas levels rise gradually',
+      'Untrained rescuers entering one after another and becoming casualties',
+      'The effect of water flooding a space during an attempted rescue',
+      'A chemical reaction triggered by breathing apparatus inside the space',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The cascade effect occurs when an untrained or unplanned rescuer enters a confined space to help a casualty, becomes overcome by the same hazard (e.g. toxic atmosphere, oxygen depletion), and then a second person enters to rescue both, who also becomes a casualty — and so on. Statistics consistently show that the cascade effect kills more people than the original confined space incident. This is precisely why UNPLANNED entry rescue must NEVER be attempted.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     question:
       'After extracting a casualty who has been suspended in a harness for a prolonged period, what position should they be placed in?',
     options: [
-      'Semi-recumbent (partially upright) position — do NOT lay them flat immediately',
       'Flat on their back with legs elevated to restore blood pressure',
       'Standing upright with support to encourage circulation',
+      'Semi-recumbent (partially upright) position — do NOT lay them flat immediately',
       'Prone (face down) position to aid breathing',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'A casualty who has been suspended in a harness for a prolonged period may be suffering from suspension trauma (orthostatic intolerance). Blood pools in the legs during suspension, and if the casualty is laid flat immediately, this pooled blood can rush back to the heart and cause cardiac arrest. The correct initial position is semi-recumbent (partially upright at approximately 30-40 degrees) while awaiting medical assistance. This is a medical emergency requiring urgent hospital treatment.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     question:
       'Which method of rescue is the FIRST preference when a confined space entrant is in difficulty?',
     options: [
-      'Entry rescue by a trained team',
       'Self-rescue — the entrant exits under their own power',
+      'Entry rescue by a trained team',
       'Non-entry rescue using a winch and lifeline',
       'Waiting for the emergency services to arrive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Self-rescue is always the first preference. The entrant exits the space under their own power, triggered by an alarm, a change in conditions, or an instruction from the top person. It is the fastest method and exposes no additional people to danger. It requires a clear egress route and prior training on the exit procedure.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why must entry rescue NEVER be attempted as an unplanned response?',
     options: [
-      'Because entry rescue equipment is too expensive to use without authorisation',
-      "Because the 'cascade effect' means unplanned rescuers become casualties themselves, often killing more people than the original incident",
+      'Because the rescue equipment is too costly to use without authorisation',
       'Because entry rescue is illegal under the Confined Spaces Regulations 1997',
-      'Because entry rescue always takes longer than non-entry rescue',
+      "Because the 'cascade effect' turns unplanned rescuers into casualties too",
+      'Because entry rescue always takes longer than a non-entry rescue would',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Unplanned entry rescue leads to the 'cascade effect' — an untrained rescuer enters the space, is overcome by the same hazard, then another person enters to help, and they too become a casualty. This chain reaction has historically killed more people than the original confined space incident. Entry rescue must only be carried out by trained teams with BA, atmospheric monitoring, their own communication system, and their own lifeline — all planned and rehearsed in advance.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'What is the FIRST action if communication is lost with an entrant inside a confined space?',
     options: [
-      'Wait 10 minutes to see if communication is restored',
+      'Wait ten minutes to see whether communication is restored',
       'Send another person into the space to check on the entrant',
-      'Assume an emergency, initiate non-entry rescue attempt, and call emergency services',
-      'Shut down all equipment and ventilation to reduce noise',
+      'Shut down all equipment and ventilation to cut the noise',
+      'Assume an emergency, begin non-entry rescue and call 999',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If communication is lost with a confined space entrant, you must assume an emergency. The communication failure protocol is: assume emergency, initiate non-entry rescue attempt (use the winch/lifeline to raise the casualty), and call emergency services. You must NEVER enter the space to check — this is exactly the scenario that leads to the cascade effect. Communication loss is treated as a potential life-threatening event until proven otherwise.',
   },
@@ -145,12 +145,12 @@ const quizQuestions = [
     id: 5,
     question: 'During entry rescue, which of the following does the rescue team NOT require?',
     options: [
+      'Permission from the original entrant before entering',
       'Breathing apparatus (BA) or RPE',
       'Their own atmospheric monitoring equipment',
-      'Permission from the original entrant before entering',
       'Their own lifeline and communication system',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An entry rescue team requires: breathing apparatus (BA) or appropriate RPE, their own atmospheric monitoring equipment, their own communication system, and their own lifeline. They do NOT need permission from the original entrant — the entrant may be unconscious, incapacitated, or unable to communicate. The rescue is authorised by the rescue plan and the emergency situation, not by the casualty.',
   },
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the correct sequence for non-entry rescue?',
     options: [
-      'Call 999 → enter the space → attach the casualty to a stretcher → extract',
-      'Raise alarm → confirm emergency → attempt verbal contact → activate winch to raise casualty → extract to fresh air → commence first aid → call 999 if not already done',
-      'Activate winch → call 999 → commence first aid inside the space → extract casualty',
-      'Attempt verbal contact → wait 5 minutes → call 999 → attempt entry rescue',
+      'Call 999 → enter the space → attach casualty to a stretcher → extract',
+      'Raise alarm → activate winch to raise casualty → extract → first aid → 999',
+      'Activate winch → call 999 → give first aid inside the space → extract',
+      'Attempt verbal contact → wait five minutes → call 999 → entry rescue',
     ],
     correctAnswer: 1,
     explanation:
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'After extracting a casualty from a confined space, what are the first aid priorities?',
     options: [
-      'Immediately move the casualty to hospital by private vehicle',
-      'ABC (airway, breathing, circulation), CPR if needed, recovery position if breathing, supplemental oxygen if available',
-      'Remove all clothing and begin decontamination before any first aid',
+      'Immediately move the casualty to hospital in a private vehicle',
+      'Remove all clothing and decontaminate before giving any first aid',
+      'ABC (airway, breathing, circulation), CPR or recovery position, oxygen',
       'Wait for the paramedics to arrive before touching the casualty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'After extraction, the immediate first aid priorities follow the ABC approach: check and clear the Airway, assess Breathing, and check Circulation. If the casualty is not breathing, begin CPR immediately. If breathing, place in the recovery position. Provide supplemental oxygen if available. If the casualty has been suspended in a harness, place in a semi-recumbent position due to the risk of suspension trauma. Call 999 if not already done.',
   },
@@ -187,11 +187,11 @@ const quizQuestions = [
       'What post-rescue action is essential if the casualty was exposed to chemicals inside the confined space?',
     options: [
       'No special action is needed once the casualty is out of the space',
-      'Decontamination of the casualty, and notification to the hospital of the specific hazards involved',
-      'The casualty should shower with cold water only',
-      'Chemical exposure does not require hospital notification',
+      'The casualty should shower with cold water only and then rest',
+      'Chemical exposure does not require the hospital to be notified',
+      'Decontaminate the casualty and tell the hospital which chemicals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "If the casualty was exposed to chemicals inside the confined space, decontamination must be carried out as soon as safely possible after extraction. The receiving hospital must be notified of the specific chemicals or hazards involved so they can prepare appropriate treatment. The scene should also be preserved for investigation. Failure to notify the hospital of the specific hazard can delay or misdirect treatment, potentially worsening the casualty's outcome.",
   },

@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A qualified electrician sets a goal: &ldquo;I want to get better at inspection work this year.&rdquo; According to Locke &amp; Latham&rsquo;s principle of clarity, what is the main problem with this goal?',
     options: [
-      'It is too ambitious and will lead to burnout',
-      'It is too vague &mdash; &ldquo;get better&rdquo; is not specific or measurable, so the electrician will not know if they have achieved it',
+      'It is too vague &mdash; &ldquo;get better&rdquo; is not specific or measurable',
+      'It is too ambitious and will quickly lead to burnout',
       'It focuses on inspection work, which is too narrow a specialism',
-      'It has a one-year timeframe, which is too long for effective goal setting',
+      'It has a one-year timeframe, which is far too long to be effective',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The goal lacks clarity. &ldquo;Get better at inspection work&rdquo; is vague and subjective &mdash; what does &ldquo;better&rdquo; mean? How will you know when you have achieved it? Locke &amp; Latham&rsquo;s research shows that specific goals (e.g., &ldquo;Complete the City &amp; Guilds 2391 Inspection &amp; Testing qualification by December&rdquo; or &ldquo;Carry out 20 supervised EICRs and receive feedback on each one by the end of Q2&rdquo;) are far more effective than vague goals because they provide a clear target and measurable success criteria. Specific goals also make it easier to identify the actions required. The electrician can break down &ldquo;complete 2391 by December&rdquo; into concrete steps: enrol on course, study GN3, book exam, revise weak areas. &ldquo;Get better&rdquo; provides no such roadmap.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'CITB (Construction Industry Training Board) research into why construction workers do not undertake training found that the most commonly cited barrier was:',
     options: [
       'Lack of interest in career progression',
-      'Lack of time due to work and family commitments',
       'Courses being too expensive',
       'Lack of relevant courses available locally',
+      'Lack of time due to work and family commitments',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'CITB research consistently identifies time poverty as the number one barrier to training and development for construction workers, including electricians. Long working hours, commuting, family responsibilities, and the physical tiredness that comes with manual work leave little time or energy for formal learning. This is compounded by the culture of the industry, where taking time off work for training can be seen as lost earnings (especially for self-employed tradespeople) or as letting the team down. While cost, availability, and interest are also factors, time is the dominant constraint. This is why goal setting is particularly important for tradespeople &mdash; without a clear, committed goal and a realistic plan, training and development simply gets crowded out by the urgent demands of work and life. Effective goals include time-management strategies: blocking out study time, negotiating with employers for day release, using evenings or weekends strategically.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'According to Locke &amp; Latham, specific and challenging goals improve performance by doing which of the following?',
     options: [
-      'Reducing stress and anxiety by providing clarity',
       'Directing attention, mobilising effort, increasing persistence, and motivating strategy development',
+      'Reducing stress and anxiety by providing clarity',
       'Reducing the need for supervision and feedback',
       'Ensuring that all tasks are completed on time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Locke &amp; Latham identify four mechanisms through which goals affect performance. First, goals direct attention and effort towards goal-relevant activities and away from distractions. An electrician with a goal to pass the 2391 exam will focus study time on inspection and testing rather than unrelated topics. Second, goals have an energising function &mdash; higher goals lead to greater effort. Third, goals increase persistence &mdash; people with goals work longer and are less likely to give up when faced with difficulty. Fourth, goals motivate the development and use of task-relevant strategies &mdash; if a goal cannot be achieved with current methods, the individual will search for better approaches. These mechanisms explain why goals are so effective at driving performance improvement.',
   },
@@ -111,8 +111,8 @@ const quizQuestions = [
     question:
       'The principle of &ldquo;commitment&rdquo; in Locke &amp; Latham&rsquo;s theory means that:',
     options: [
-      'The goal must be written down and shared publicly',
-      'The individual must genuinely accept the goal and be determined to achieve it, rather than just going through the motions',
+      'The goal must be written down and then shared publicly with others',
+      'The individual must genuinely accept the goal and be determined to achieve it',
       'The goal must have a financial reward attached to motivate commitment',
       'The goal must be set by a manager or supervisor to ensure accountability',
     ],
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'Locke &amp; Latham found that &ldquo;do your best&rdquo; goals (e.g., &ldquo;I&rsquo;ll do my best to improve&rdquo;) are:',
     options: [
-      'Just as effective as specific goals because they reduce pressure',
-      'More effective than specific goals because they allow flexibility',
-      'Less effective than specific goals because they are too vague and do not provide a clear target or performance standard',
-      'Only effective for highly experienced individuals who do not need external structure',
+      'Just as effective as specific goals because they reduce the pressure to perform',
+      'More effective than specific goals because they allow greater flexibility',
+      'Less effective than specific goals because they give no clear performance standard',
+      'Only effective for highly experienced individuals who need no external structure',
     ],
     correctAnswer: 2,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'An apprentice electrician sets a goal: &ldquo;I will memorise all BS 7671 regulation numbers and be able to recite them on demand.&rdquo; According to Locke &amp; Latham&rsquo;s principle of task complexity, what is the problem with this goal?',
     options: [
-      'It is not challenging enough',
-      'It is too complex and unrealistic, and does not align with how the regulations are used in practice &mdash; the goal should focus on understanding and application, not rote memorisation',
-      'It is too specific and does not allow for flexibility',
-      'It requires too much feedback from others',
+      'It is not challenging enough to drive any real effort',
+      'It is too specific and does not allow for any flexibility',
+      'It requires too much feedback from others to be workable',
+      'It is too complex and unrealistic, and does not match how the regulations are used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Task complexity refers to the match between the goal and the individual&rsquo;s current capability. Goals that are excessively complex or require skills the individual does not yet possess can overwhelm and paralyse, leading to avoidance or ineffective effort. Memorising all BS 7671 regulation numbers is not how competent electricians use the regulations &mdash; they develop familiarity with the structure, understand the principles, and know where to look up specific requirements. A more appropriate goal would be: &ldquo;I will develop fluency in using BS 7671 by studying one Part per week, understanding the underlying principles, and being able to locate relevant regulations for common installation scenarios within 2 minutes.&rdquo; This goal is challenging but realistic, and aligns with actual workplace competence. Effective goal setting requires matching goal difficulty to current capability and ensuring the goal is meaningful, not arbitrary.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
       'Why do many construction workers, including electricians, not engage in formal training according to CITB research?',
     options: [
       'Most electricians believe they already know everything they need to know',
-      'Time poverty (work and family commitments leave little time for study) is the most commonly cited barrier',
       'Training courses are always held in inconvenient locations',
+      'Time poverty (work and family commitments leave little time for study) is the most commonly cited barrier',
       'The electrical trade does not require ongoing learning after initial qualification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CITB&rsquo;s Skills and Training in the Construction Industry reports consistently identify time constraints as the dominant barrier to training uptake. Electricians work long hours (often 50+ hours per week including travel), have family commitments, and are physically tired at the end of the working day. Evening or weekend courses require sacrificing personal or family time. Day-release courses may not be supported by employers, or may result in lost earnings for the self-employed. This is not an excuse &mdash; it is a real structural barrier that goal setting and planning can help address. Effective goals for tradespeople must include realistic time management: identifying when training will happen, negotiating time with employer or family, and building in buffer time for inevitable disruptions. Without this planning, training goals simply get crowded out by more immediate demands.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'An electrician sets the following goal: &ldquo;I will increase my earnings.&rdquo; According to the principles of effective goal setting, this goal could be improved by:',
     options: [
-      'Adding emotional language to increase motivation',
-      'Making it specific, measurable, and time-bound (e.g., &ldquo;I will increase my average weekly earnings from &pound;700 to &pound;900 by the end of Q3 by taking on two evening/weekend jobs per month and completing my inspection qualification to access higher-value work&rdquo;)',
-      'Reducing the challenge level to make it more achievable',
-      'Avoiding numerical targets to reduce pressure',
+      'Adding emotional language to the goal to increase motivation',
+      'Reducing the challenge level to make the goal more achievable',
+      'Avoiding numerical targets so as to reduce the pressure',
+      'Making it specific, measurable, and time-bound with a clear action plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The original goal (&ldquo;increase my earnings&rdquo;) is too vague. It lacks specificity (by how much?), measurability (how will you know you have succeeded?), a timeframe (by when?), and a clear action plan (how will you achieve it?). The improved version addresses all of these: it specifies the target increase (&pound;700 to &pound;900 per week), sets a timeframe (by end of Q3), and identifies concrete actions (two additional jobs per month, complete inspection qualification). This level of detail transforms the goal from a wish into a plan. It also allows for progress tracking (am I on track to hit &pound;900 by Q3? Have I completed the inspection course? Am I finding the additional work?) and strategy adjustment if the initial approach is not working. This is the difference between goal setting and goal achievement.',
   },

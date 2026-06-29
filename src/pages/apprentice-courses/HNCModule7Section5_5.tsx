@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'load-shedding-purpose',
     question: 'What is the primary purpose of load shedding?',
     options: [
-      'It provides additional support and stability to the lumbar spine during exertion',
+      'To increase total annual energy consumption across the site',
       'To reduce maximum demand by temporarily disconnecting non-essential loads',
-      'Galvanised steel conduit with appropriate certification',
-      'False - always check specifications for socket types',
+      'To improve the power factor by correcting reactive power',
+      'To permanently disconnect life-safety and emergency systems',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'peak-shaving-method',
     question: 'Peak shaving typically involves:',
     options: [
-      'Bend radius, conduit length, and cable pulling requirements',
-      'The actual power consumed and converted to useful work',
-      'Rearranging the formula to make a different quantity the subject',
+      'Disconnecting non-essential loads entirely during peak periods',
+      'Increasing the contracted capacity agreed with the DNO',
+      'Shifting all energy-intensive processes to the busiest part of the day',
       'Using on-site generation or storage to reduce grid demand during peaks',
     ],
     correctIndex: 3,
@@ -66,10 +66,10 @@ const quickCheckQuestions = [
     id: 'half-hourly-settlement',
     question: 'Half-hourly (HH) settlement requires electricity consumption to be:',
     options: [
-      'Push button stop with no lockoff',
-      '4 mm with finger guards or barriers',
+      'Estimated annually from a standard profile class',
+      'Read manually once each quarter by a meter operative',
       'Measured and recorded every 30 minutes',
-      'Verifying stable power supply to controllers',
+      'Recorded only during red band DUoS periods',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'DUoS (Distribution Use of System) charges are determined by:',
     options: [
-      'Battery Energy Storage Systems (BESS)',
+      'National Grid as the transmission system operator',
       'Maximum demand during Triad periods',
       'The Distribution Network Operator (DNO)',
-      'Peak demand periods (late afternoon/early evening)',
+      'A single flat rate set nationally by Ofgem',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'Red band DUoS periods typically occur during:',
     options: [
-      'Non-essential comfort loads (HVAC, lighting in unoccupied areas)',
-      'Real-time communication between grid, suppliers, and consumers',
-      'Maximum demand during Triad periods',
+      'Overnight hours when demand is lowest',
+      'Weekend mornings throughout the year',
+      'The early hours just before sunrise',
       'Peak demand periods (late afternoon/early evening)',
     ],
     correctAnswer: 3,
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'A Triad period is defined as:',
     options: [
-      'To provide a detailed plan of how work will be carried out safely',
+      'Any half-hour period during which red band DUoS charges apply',
       'One of the three half-hour periods of highest national demand, separated by at least 10 days',
-      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s name, date, time, nature of injury or illness, treatment given, and the outcome',
-      'Continuing to invest in a goal because of what you have already spent, rather than future value',
+      'The three summer months when national demand is at its lowest',
+      'A fixed 30-minute window set by the supplier on the first day of each month',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'Demand response programmes allow consumers to:',
     options: [
-      'One of the three half-hour periods of highest national demand, separated by at least 10 days',
-      'Real-time communication between grid, suppliers, and consumers',
+      'Avoid metering their consumption altogether',
+      'Fix their unit rate for the lifetime of the contract',
       'Reduce or shift consumption in response to grid signals or price incentives',
-      'Non-essential comfort loads (HVAC, lighting in unoccupied areas)',
+      'Generate electricity and export it without a grid connection agreement',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,8 +160,8 @@ const quizQuestions = [
     id: 7,
     question: 'Which technology is most commonly used for peak shaving in commercial buildings?',
     options: [
-      'The Distribution Network Operator (DNO)',
-      'Maximum demand during Triad periods',
+      'Upgrading the building’s lighting to LED luminaires',
+      'Installing additional half-hourly metering points',
       'Installing power factor correction equipment',
       'Battery Energy Storage Systems (BESS)',
     ],
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'Smart grid integration enables demand management through:',
     options: [
       'Real-time communication between grid, suppliers, and consumers',
-      'Reduce or shift consumption in response to grid signals or price incentives',
-      'Non-essential comfort loads (HVAC, lighting in unoccupied areas)',
-      'Peak demand periods (late afternoon/early evening)',
+      'Manual quarterly meter readings collected by site staff',
+      'Fixed annual tariffs that ignore the time of consumption',
+      'Permanent disconnection of all non-essential loads',
     ],
     correctAnswer: 0,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 10,
     question: 'Reactive power charges (kVArh) can be reduced by:',
     options: [
-      'The Distribution Network Operator (DNO)',
-      'Battery Energy Storage Systems (BESS)',
+      'Increasing the agreed supply capacity (kVA) with the DNO',
+      'Disconnecting non-essential loads during red band periods',
       'Installing power factor correction equipment',
-      'Peak demand periods (late afternoon/early evening)',
+      'Switching from a kVA to a kW-based capacity tariff',
     ],
     correctAnswer: 2,
     explanation:
@@ -212,9 +212,9 @@ const quizQuestions = [
     id: 11,
     question: 'Load shedding priority should typically disconnect which loads first?',
     options: [
-      'Peak demand periods (late afternoon/early evening)',
-      'Reduce or shift consumption in response to grid signals or price incentives',
-      'Real-time communication between grid, suppliers, and consumers',
+      'Life-safety systems such as emergency lighting and fire alarms',
+      'Critical IT and server room equipment',
+      'Essential production processes and security systems',
       'Non-essential comfort loads (HVAC, lighting in unoccupied areas)',
     ],
     correctAnswer: 3,

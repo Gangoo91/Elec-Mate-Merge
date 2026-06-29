@@ -44,10 +44,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 4,
     question: 'How does a BMS improve building efficiency?',
     options: [
-      'It reduces energy waste through automated control',
-      'Predictive analytics and AI capabilities',
-      'Ensures emergency systems work to required standards',
-      'BMS provides centralised control vs manual individual controls',
+      'It reduces energy waste through automated control based on occupancy and demand',
+      'It runs all plant continuously to keep conditions perfectly stable',
+      'It increases ventilation rates regardless of occupancy to improve air quality',
+      'It overrides local thermostats to a fixed setpoint at all times',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What role does a BMS play in compliance and safety?',
     options: [
-      'Makes buildings look more professional',
-      'Ensures emergency systems work to required standards',
-      'Reduces the number of safety inspections needed',
-      'Eliminates all safety risks',
+      'It removes the legal duty to test fire and emergency systems',
+      'It monitors and ensures emergency systems work to required standards',
+      'It transfers responsibility for safety away from the duty holder',
+      'It allows safety inspections to be carried out remotely instead',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 6,
     question: 'How does a BMS help reduce environmental impact?',
     options: [
-      'Eliminates the need for renewable energy',
-      "Changes the building's exterior colour",
-      'Helps buildings meet net-zero and sustainability targets',
-      "Reduces the building's physical footprint",
+      'It removes the need for any renewable energy generation on site',
+      'It guarantees a building will be rated EPC band A automatically',
+      'It optimises energy use to help buildings meet net-zero and sustainability targets',
+      'It offsets carbon emissions by purchasing renewable energy certificates',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'How do modern BMS differ from early building control systems?',
     options: [
-      'Modern systems cost less to install',
-      'Modern systems are smaller in size',
-      'Modern systems require no maintenance',
+      'Modern systems use pneumatic actuators instead of electronics',
+      'Modern systems control only a single service such as heating',
+      'Modern systems operate without any central controller or network',
       'Modern systems are fully integrated and IoT-connected',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     question: 'Which technological advancement has significantly improved modern BMS?',
     options: [
       'Predictive analytics and AI capabilities',
-      'Faster internet speeds only',
-      'Better building materials',
-      'More efficient light bulbs',
+      'Higher-voltage control wiring',
+      'Larger physical control panels',
+      'Mechanical time-clock switching',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is a key difference between BMS and traditional controls?',
     options: [
-      'To control efficiency, safety, compliance, and comfort',
-      'BMS provides centralised control vs manual individual controls',
-      'Helps buildings meet net-zero and sustainability targets',
-      'It reduces energy waste through automated control',
+      'Traditional controls always include remote monitoring and data logging',
+      'A BMS provides centralised control rather than separate manual controls',
+      'A BMS relies on independent thermostats and local time clocks',
+      'Traditional controls coordinate every building service from one panel',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     question:
       "Why should electricians understand BMS even if they aren't directly installing them?",
     options: [
-      'BMS provides centralised control vs manual individual controls',
-      'Modern systems are fully integrated and IoT-connected',
-      'Clients increasingly ask for systems that integrate with BMS',
-      'Helps buildings meet net-zero and sustainability targets',
+      'BMS work is reserved exclusively for specialist controls engineers',
+      'BS 7671 prohibits electricians from connecting to a BMS',
+      'Clients increasingly ask for systems that integrate with a BMS',
+      'A BMS replaces the need for any fixed electrical wiring',
     ],
     correctAnswer: 2,
     explanation:

@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the relationship between illuminance and distance from a point source?',
     options: [
-      'Passive LC filters tuned to harmonic frequencies',
-      'Isolated system with no intentional connection to earth',
+      'Directly proportional to the distance from the source',
+      'Inversely proportional to the distance from the source',
       'Inversely proportional to the square of distance',
-      'Upstream devices to wait for downstream to clear faults',
+      'Independent of the distance from the source',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'Luminance differs from illuminance in that luminance:',
     options: [
       'Describes how bright a surface appears to an observer',
-      'Colours of ideal black body radiators at different temperatures',
-      'A unit of solid angle in three-dimensional space',
-      'Inversely proportional to the square of distance',
+      'Measures the luminous flux falling on a surface per unit area',
+      'Is the total light output of a source in all directions',
+      'Is the light intensity emitted in a single direction',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'What is a steradian?',
     options: [
       'A unit of solid angle in three-dimensional space',
-      'Different wavelengths travelling at different speeds',
-      'Not wearing safety glasses while cutting or drilling',
-      'Behaviour = Motivation, Ability, Prompt',
+      'A unit of luminous flux equal to one lumen',
+      'A unit of illuminance equal to one lux',
+      'A unit of plane angle equal to one radian',
     ],
     correctAnswer: 0,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'In the CIE 1931 chromaticity diagram, the Planckian locus represents:',
     options: [
       'Colours of ideal black body radiators at different temperatures',
-      'A unit of solid angle in three-dimensional space',
-      'Describes how bright a surface appears to an observer',
-      'Inversely proportional to the square of distance',
+      'The boundary of colours visible to the human eye',
+      'The range of colours a display can reproduce',
+      'The line of equal luminous efficacy across wavelengths',
     ],
     correctAnswer: 0,
     explanation:

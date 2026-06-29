@@ -23,10 +23,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why must circuits be retested after repairs?',
     options: [
-      'False - retesting is essential to verify safety and compliance',
+      'To increase the rating of the protective device',
       'To prove the fault has been eliminated and the installation is safe',
-      'They can carry out physical retests under supervision and record values accurately',
-      'The corrected continuity test results for the CPC',
+      'To reduce the time spent on the original fault diagnosis',
+      'To avoid having to isolate the circuit again',
     ],
     correctAnswer: 1,
     explanation:
@@ -49,9 +49,9 @@ const quizQuestions = [
     id: 3,
     question: 'What does re-testing prove about the installation?',
     options: [
-      'Building control questioned whether the repair had been verified, requiring a return visit',
-      'They can carry out physical retests under supervision and record values accurately',
-      'False - retesting is essential to verify safety and compliance',
+      'That the original installer was at fault',
+      'That the cable size now meets BS 7671 minimums',
+      'That the supply voltage is within tolerance',
       'That the fault has been eliminated and no new defects have been introduced',
     ],
     correctAnswer: 3,
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 6,
     question: 'What role can apprentices play in re-testing?',
     options: [
-      'To prove the fault has been eliminated and the installation is safe',
-      'To provide legal proof of compliance and protect professional reputation',
+      'They must sign the certificate once testing is complete',
+      'They can decide whether the installation passes or fails',
       'They can carry out physical retests under supervision and record values accurately',
-      'False - retesting is essential to verify safety and compliance',
+      'They have no part to play in the re-testing process',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,9 +101,9 @@ const quizQuestions = [
     id: 7,
     question: 'True or False: Repairs can be considered complete without retesting.',
     options: [
-      'That the fault has been eliminated and no new defects have been introduced',
-      'EIC, MWC, or EICR, depending on the type of work',
-      'The corrected continuity test results for the CPC',
+      'True - a visual check of the repair is sufficient',
+      'True - only the supervisor needs to confirm the repair',
+      'False - retesting is only needed on new installations',
       'False - retesting is essential to verify safety and compliance',
     ],
     correctAnswer: 3,
@@ -115,9 +115,9 @@ const quizQuestions = [
     question: 'Why is accurate recording important during follow-up?',
     options: [
       'To provide legal proof of compliance and protect professional reputation',
-      'False - retesting is essential to verify safety and compliance',
-      'To prove the fault has been eliminated and the installation is safe',
-      'They can carry out physical retests under supervision and record values accurately',
+      'To allow the circuit to remain energised during testing',
+      'To remove the need for a competent person to sign off',
+      'To reduce the number of tests that must be carried out',
     ],
     correctAnswer: 0,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'In the real-world rewire example, what was updated on the certificate after retesting?',
     options: [
-      'Use backup notification channels and escalation procedures',
+      'The insulation resistance reading on the lighting circuit',
       'The corrected continuity test results for the CPC',
-      'Preparation, calm discipline, and self-checking',
-      'Gather information about the fault symptoms',
+      'The earth fault loop impedance at the origin',
+      'The RCD trip time at the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'What problem arose in the EICR example when the report was not updated with new results?',
     options: [
-      'To provide legal proof of compliance and protect professional reputation',
-      'They can carry out physical retests under supervision and record values accurately',
+      'The repair itself failed when the circuit was energised',
+      'The apprentice signed the certificate without authority',
       'Building control questioned whether the repair had been verified, requiring a return visit',
-      'That the fault has been eliminated and no new defects have been introduced',
+      'The wrong type of certificate was issued to the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,9 +159,9 @@ const quickCheckQuestions = [
     id: 'retest-purpose',
     question: 'Why must the same test be repeated after repairing a fault?',
     options: [
-      'EIC, MWC, or EICR, depending on the type of work',
-      'To provide legal proof of compliance and protect professional reputation',
-      'They can carry out physical retests under supervision and record values accurately',
+      'To increase the rating of the protective device',
+      'To reduce the time spent on the next fault',
+      'To avoid having to isolate the circuit again',
       'To prove the fault has been eliminated and no new defects introduced',
     ],
     correctIndex: 3,
@@ -172,12 +172,12 @@ const quickCheckQuestions = [
     id: 'certification-types',
     question: 'Which certificates may require updated test results after faults are corrected?',
     options: [
-      'Using compressed air to clean dust from surfaces',
       'EIC, MWC, or EICR depending on the type of work',
-      'Bolted faults have solid metal-to-metal contact',
-      'To condition and circulate air through ducts',
+      'Only the Minor Works Certificate in every case',
+      'Only the Electrical Installation Certificate in every case',
+      'No certificate ever needs updating after a repair',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Different electrical work requires different certification types, and all may need updating when faults are repaired.',
   },
@@ -186,10 +186,10 @@ const quickCheckQuestions = [
     question:
       'What part of the re-testing process can apprentices carry out, and what must they not do?',
     options: [
-      'Passes — installed device\\\\\\\\\\\\\\\'s 6 kA breaking capacity exceeds the prospective fault current',
+      'They can sign the certificate but must not carry out the tests',
       'Apprentices can carry out physical retests and record values under supervision, but cannot sign certification',
-      'Customers with learning disabilities — short sentences, plain words, supporting images',
-      'To serve as the central bonding point connecting all protective conductors and extraneous-conductive-parts',
+      'They can decide pass or fail but must not record the readings',
+      'They can issue the certificate to building control on completion',
     ],
     correctIndex: 1,
     explanation:
@@ -200,12 +200,12 @@ const quickCheckQuestions = [
     question:
       'Why is retesting and certification considered a professional as well as a technical duty?',
     options: [
-      'Adjusts flow temperature based on outdoor conditions to optimise efficiency',
+      'Because it speeds up the original fault diagnosis',
+      'Because it removes the need for a competent person to sign off',
       'Because it provides legal compliance, protects users, and demonstrates professional integrity',
-      'Self-rescue first, then assisted rescue from the ground, then professional emergency services',
-      'To provide digital addressable control of individual or grouped luminaires',
+      'Because it allows the circuit to stay live during the work',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Proper retesting and certification protect users, ensure legal compliance, and maintain professional reputation and accountability.',
   },

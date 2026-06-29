@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the minimum documentation set that BS 5839-1:2025 requires to be handed over with a new fire alarm system?',
     options: [
-      'Just the operating manual.',
-      "The handover documentation set comprises: (a) ACCEPTANCE CERTIFICATE per Annex G; (b) OPERATING MANUAL — the day-to-day operation guide for the user; (c) O&M MANUAL — operation and maintenance procedures, technical data, service intervals; (d) AS-INSTALLED DRAWINGS — including zone plan, device locations and addresses, cable routes, panel layout; (e) CAUSE-AND-EFFECT MATRIX or text description (NEW 2025 mandatory documentation); (f) LOGBOOK per Annex H 2025 (was Annex F 2017); (g) third-party scheme certification (FIA / BAFE / NSI / SSAIB if applicable); (h) all variations recorded (NEW 2025 — was 'major variations' only in 2017).",
-      'Drawings only.',
-      'Logbook only.',
+      'Just the operating manual for day-to-day use by the building occupier.',
+      'Acceptance certificate, operating and O&M manuals, drawings, cause-and-effect, logbook.',
+      'The as-installed drawings only, showing device locations, addresses and cable routes.',
+      'The logbook only, for the user to record alarms, faults and service visits in.',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     id: 'fam5-s6-logbook',
     question: 'BS 5839-1:2025 has updated which Annex covers the logbook? (Was Annex F in 2017.)',
     options: [
-      'Annex F still.',
-      "Annex H 2025 (the 2017 Annex F has been re-lettered to Annex H in the 2025 revision). Content updated to reflect what is in clause 48 of the 2025 standard. The logbook records: events at the system (alarms, faults, service visits, test events), service visits (date, engineer, findings), variations (NEW 2025 — ALL variations recorded, not just 'major'), and any other system-relevant events. Held by the user; updated by service organisation at every visit.",
-      'Annex G.',
-      'No annex — logbook deleted in 2025.',
+      'Annex F still — the logbook annex is unchanged in the 2025 revision.',
+      'Annex H, re-lettered from the 2017 Annex F, with content updated to clause 48.',
+      'Annex G — the logbook shares the acceptance-certificate annex in 2025.',
+      'No annex at all — the logbook requirement was deleted in the 2025 revision.',
     ],
     correctIndex: 1,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 §6 declares some variations UNACCEPTABLE — they cannot be agreed as variations regardless of project context. Which two are the most prominent?',
     options: [
-      'No variations are unacceptable — all are agreed.',
-      '(a) The ABSENCE OF A ZONE PLAN (or other suitable diagrammatic representation per 22.2.5) in premises with more than one zone on any storey, particularly premises in which people sleep; (b) the ABSENCE OF A FACILITY FOR TRANSMISSION OF FIRE ALARM SIGNALS TO AN ARC in supported housing where a Grade A system per BS 5839-6:2019 is necessary, OR in residential care homes. NEW DEPARTURE for 2025 — the 2017 revision permitted any variation if agreed; the 2025 revision draws a line that some variations are too dangerous to agree.',
-      'Cable colour deviation.',
-      'Battery autonomy below design.',
+      'No variations are unacceptable — all may be agreed where the rationale supports it.',
+      'Absence of a zone plan in multi-zone premises, and absence of an ARC in vulnerable premises.',
+      'A cable colour that deviates from the red preferred for the fire-alarm circuit.',
+      'A standby battery autonomy provided below the figure called up by the design.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'The user takes ownership of the system on handover. Under the Regulatory Reform (Fire Safety) Order 2005, what duties apply to the responsible person?',
     options: [
-      'No duties — the system is the contractor’s responsibility.',
-      'The responsible person (employer / occupier / building owner depending on context) has DUTIES under the RRO 2005 including: (a) carry out a fire risk assessment and review it regularly; (b) ensure the fire detection and fire alarm system is appropriate and maintained; (c) ensure persons on the premises receive adequate fire safety information and training; (d) maintain the system in efficient working order; (e) keep records as appropriate. The handover briefing introduces the responsible person to these duties so the user is not surprised by them post-handover. Failure of these duties is a criminal offence under the RRO.',
-      'Only insurance requirements.',
-      'Only fire drill rules.',
+      'No duties at all — the installed system remains the contractor’s responsibility.',
+      'Fire risk assessment, system maintenance, occupant training and record-keeping.',
+      'Only insurance requirements relating to the building and its installed equipment.',
+      'Only the rules governing the frequency and conduct of staff fire drills.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,138 +81,138 @@ const quizQuestions = [
     question:
       'Which Annex of BS 5839-1:2025 specifies the format of the acceptance certificate handed over with a new fire alarm system?',
     options: [
-      'Annex F.',
-      'Annex G — gives a model acceptance certificate format. The certificate records system parameters (category, zones, devices, autonomy), commissioning verifications, variations recorded, issuer signature, user signature. Project may use an organisation-specific form provided it captures all the Annex G elements.',
-      'Annex H.',
-      'No annex.',
+      'Annex F — the design-and-installation certificate annex used at design stage.',
+      'Annex H — the logbook annex held by the user and updated at each service visit.',
+      'Annex G — gives a model acceptance certificate format for the commissioned system.',
+      'No annex specifies the acceptance certificate format; the issuer chooses freely.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Annex G of BS 5839-1:2025 gives the model acceptance certificate format. Project may use an organisation-specific form, but it must capture the Annex G elements: parameters, verifications, variations, signatures.',
+      'Annex G of BS 5839-1:2025 gives the model acceptance certificate format. It records system parameters (category, zones, devices, autonomy), commissioning verifications, variations recorded, and issuer and user signatures. A project may use an organisation-specific form provided it captures all the Annex G elements.',
   },
   {
     id: 2,
     question:
       'Which Annex of BS 5839-1:2025 specifies the logbook? (And what was its letter in the 2017 revision?)',
     options: [
-      'Annex H 2025 (was Annex F 2017). Content updated to reflect clause 48 of the 2025 standard. Records system events, service visits, ALL variations (NEW 2025), and other system-relevant items.',
-      'Annex G 2025 (was Annex F 2017).',
-      'Annex H 2025 (was Annex G 2017).',
-      'No logbook required.',
+      'Annex H in 2025, re-lettered from Annex F in the 2017 revision of the standard.',
+      'Annex G in 2025, re-lettered from Annex F in the 2017 revision of the standard.',
+      'Annex H in 2025, re-lettered from Annex G in the 2017 revision of the standard.',
+      'No logbook annex is required at all under the 2025 revision of the standard.',
     ],
     correctAnswer: 0,
     explanation:
-      'Annex H is the 2025 logbook annex; was Annex F in the 2017 revision. The re-lettering reflects re-organisation of the standard; the substantive change is the all-variations-recorded requirement (NEW 2025 — was "major" only in 2017).',
+      'Annex H is the 2025 logbook annex; it was Annex F in the 2017 revision. The re-lettering reflects re-organisation of the standard, with content updated to clause 48; the substantive change is the all-variations-recorded requirement (NEW 2025 — was "major" only in 2017).',
   },
   {
     id: 3,
     question: 'BS 5839-1:2025 §6 declares some variations UNACCEPTABLE. Which is one of them?',
     options: [
-      'Cable colour deviation from red.',
-      'The absence of a zone plan (or other suitable diagrammatic representation per 22.2.5) in premises with more than one zone on any storey, particularly premises in which people sleep. New departure for 2025 — first edition of BS 5839-1 to declare any variation unacceptable. Reflects specific incident history where occupants in sleeping premises could not be located by the FRS in the absence of a zone plan.',
-      'Battery autonomy 28 h instead of 24 h.',
-      'Use of multi-sensors instead of point smoke.',
+      'A cable colour that deviates from the red preferred for the fire-alarm circuit.',
+      'A standby battery autonomy of 28 h provided instead of the design figure of 24 h.',
+      'The use of multi-sensor detectors in place of plain point smoke detectors.',
+      'The absence of a zone plan in premises with more than one zone on any storey.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Zone plan absence in multi-zone sleeping premises is one of the two unacceptable variations declared in BS 5839-1:2025 §6. The other is ARC absence in supported housing where Grade A is necessary, or in residential care homes. Both reflect specific incident history and FRS attendance pressures.',
+      'Zone plan absence (per 22.2.5) in multi-zone premises, particularly where people sleep, is one of the two unacceptable variations declared in BS 5839-1:2025 §6 — the first edition to declare any variation unacceptable. The other is ARC absence in supported housing where Grade A is necessary, or in residential care homes. Both reflect specific incident history where occupants could not be located by the FRS, and FRS attendance pressures.',
   },
   {
     id: 4,
     question:
       'BS 5839-1:2025 §6 declares the ABSENCE of an ARC connection unacceptable in which premises?',
     options: [
-      'Any premises.',
-      'Supported housing in which the facility is considered necessary to meet the recommendations of BS 5839-1 (where a Grade A system per BS 5839-6:2019 is necessary), OR in a residential care home. New for 2025. Both premises types have particularly vulnerable occupants who depend on ARC-summoned FRS attendance for life safety.',
-      'Office buildings.',
-      'Industrial premises.',
+      'Any premises of any type, without exception, regardless of occupancy or risk.',
+      'General office buildings occupied during normal daytime working hours only.',
+      'Supported housing needing Grade A per BS 5839-6:2019, or residential care homes.',
+      'Industrial premises with a permanently staffed control room monitoring the panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Supported housing (where Grade A per BS 5839-6:2019 is necessary) and residential care homes are the two premises types where ARC absence is now unacceptable. Both have vulnerable occupants who cannot self-evacuate or self-summon FRS reliably; ARC connection is the safety-of-life mechanism.',
+      'Supported housing (where a Grade A system per BS 5839-6:2019 is necessary) and residential care homes are the two premises types where ARC absence is now unacceptable (NEW for 2025). Both have particularly vulnerable occupants who cannot self-evacuate or reliably self-summon the FRS; the ARC connection is the safety-of-life mechanism.',
   },
   {
     id: 5,
     question: 'In the 2025 revision, which variations are recorded in the system documentation?',
     options: [
-      'Only major ones.',
-      'ALL variations from the recommendations of BS 5839-1:2025 (NEW 2025 — was "major variations only" in 2017). Each variation is justified — particularly variations proposed at installation or commissioning stage. The 2017 revision referenced "major variations" without defining what "major" meant; the 2025 revision removes the ambiguity by requiring all variations to be recorded. The variations record goes in the system documentation including the logbook.',
-      'Only commissioning-stage variations.',
-      'Only design-stage variations.',
+      'ALL variations from the recommendations of BS 5839-1:2025, each one justified.',
+      'Only variations judged to be major, as under the 2017 revision of the standard.',
+      'Only those variations first identified at the commissioning stage of the works.',
+      'Only those variations first identified at the design stage of the works.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'NEW 2025: ALL variations recorded — settled the 2017 ambiguity around what "major" meant. Each variation justified. Recorded in design documentation, on the acceptance certificate, and in the logbook. Some variations now declared unacceptable (zone plan absence, ARC absence in vulnerable premises) cannot be agreed at all.',
+      'NEW 2025: all variations recorded (the 2017 revision referenced "major variations" without defining "major"). Each variation is justified, particularly those proposed at installation or commissioning. The record goes in the design documentation, on the acceptance certificate and in the logbook. Some variations are now declared unacceptable (zone plan absence, ARC absence in vulnerable premises) and cannot be agreed at all.',
   },
   {
     id: 6,
     question:
       'Under the Regulatory Reform (Fire Safety) Order 2005, what is the responsible person?',
     options: [
-      'The contractor who installed the system.',
-      "The person who has control of the premises in connection with the carrying on of a trade, business or undertaking — typically the employer for an employer's premises, the occupier for non-employer premises, the owner where no occupier in undertaking control. The responsible person carries the duties under the RRO including fire risk assessment, system maintenance, occupant training, and record-keeping. Failure of these duties is a criminal offence under the RRO.",
-      'The fire and rescue service.',
-      'The local authority.',
+      'The contractor who installed and commissioned the fire alarm system.',
+      'The fire and rescue service for the area in which the premises sits.',
+      'The local authority building-control department that approved the building.',
+      'The person who has control of the premises in connection with an undertaking.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The responsible person under the RRO 2005 is identified by control of the premises. Employer for employer-controlled premises (offices, factories, schools); occupier for non-employer premises (shops, restaurants, leisure); owner where neither employer nor occupier is in control. The RRO duties run with the role.',
+      'The responsible person under the RRO 2005 is identified by control of the premises — typically the employer for an employer’s premises, the occupier for non-employer premises, and the owner where neither is in control. The role carries the RRO duties: fire risk assessment, system maintenance, occupant training and record-keeping, with failure a criminal offence. The duties run with the role.',
   },
   {
     id: 7,
     question:
       'Cause-and-effect matrix or text description — what does BS 5839-1:2025 require regarding handover?',
     options: [
-      'No requirement.',
-      'A cause-and-effect matrix or text description of how the cause and effect operates is INCLUDED with the documentation provided to the purchaser or user of the system. NEW 2025 mandatory documentation. Format flexible (matrix for complex; text for simple, e.g. "this system operates as a simultaneous evacuation"); requirement firm. Verified at commissioning; handed over with the O&M manual.',
-      'Only commissioning organisation keeps it.',
-      'Optional documentation.',
+      'There is no requirement to provide a cause-and-effect description at handover.',
+      'A cause-and-effect matrix or text description is included in the user’s documentation.',
+      'Only the commissioning organisation keeps it; it is not handed over to the user.',
+      'It is optional documentation, provided only on specific request from the user.',
     ],
     correctAnswer: 1,
     explanation:
-      'NEW 2025: cause-and-effect matrix or text description handed over with the system documentation. Format flexible to scale with system complexity; requirement firm. Verified at commissioning, handed over with O&M.',
+      'NEW 2025 mandatory documentation: a cause-and-effect matrix or text description of how the cause and effect operates is included with the documentation provided to the purchaser or user. The format is flexible (a matrix for complex systems; text for simple ones, e.g. "this system operates as a simultaneous evacuation") but the requirement is firm. Verified at commissioning and handed over with the O&M manual.',
   },
   {
     id: 8,
     question:
       'A fire alarm system is handed over to the user. Who has primary responsibility for ongoing maintenance under BS 5839-1:2025 and the RRO 2005?',
     options: [
-      'The commissioning engineer.',
-      'The USER (typically the responsible person under the RRO 2005), exercised through a service contract with a competent organisation (FIA / BAFE / NSI / SSAIB third-party scheme membership common). The user maintains the system in efficient working order under the RRO; the service organisation provides the technical maintenance under the contract. Successive inspection and servicing visits at intervals of approximately 6 months (BS 5839-1:2025 clause 43.2.1; tolerance ±1 month).',
-      'The local authority.',
-      'The fire and rescue service.',
+      'The user, as responsible person, exercised through a competent service contract.',
+      'The commissioning engineer who signed off the system at handover to the user.',
+      'The local authority building-control body that approved the completed building.',
+      'The fire and rescue service for the area in which the premises is situated.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The user (responsible person) carries the RRO duty to maintain. The maintenance is typically delivered by a competent service organisation under contract. BS 5839-1:2025 clause 43.2.1 sets the service interval at approximately 6 months with ±1 month tolerance — a clarification of the 2017 strict 6-month rule.',
+      'The user (responsible person under the RRO 2005) carries the duty to maintain the system in efficient working order, typically delivered through a service contract with a competent organisation (FIA / BAFE / NSI / SSAIB third-party scheme membership common). BS 5839-1:2025 clause 43.2.1 sets the inspection and servicing interval at approximately 6 months with a ±1 month tolerance — a clarification of the 2017 strict 6-month rule.',
   },
   {
     id: 9,
     question:
       'Third-party scheme certification (FIA, BAFE, NSI, SSAIB) on the handover certificate — what does it indicate?',
     options: [
-      'Just a marketing badge.',
-      "Independent third-party verification that the commissioning / service / maintenance organisation operates to a defined quality and competence standard (e.g. BAFE SP203 for fire detection and fire alarm system providers; NSI / SSAIB for security and life-safety services). The scheme audits the organisation's management system, technical competence, training records, equipment calibration, complaint handling, and ongoing performance. Inclusion on the handover certificate gives the user assurance that the work was done by a competent organisation, audited externally.",
-      'Optional — has no formal status.',
-      'Only relevant for ARC connections.',
+      'Just a marketing badge with no externally audited basis behind it.',
+      'It is optional and carries no formal recognised status in the industry.',
+      'It is only relevant where the installed system has an ARC connection.',
+      'Independent verification that the organisation works to an audited competence standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Third-party scheme certification is the recognised industry mechanism for verifying competence. BAFE SP203 (fire detection and fire alarm), FIA (Fire Industry Association membership), NSI / SSAIB (security and life-safety) — each scheme audits the organisation. Inclusion on certificates gives user-side assurance of competence; insurers and regulators frequently expect it.',
+      'Third-party scheme certification is the recognised industry mechanism for verifying competence — e.g. BAFE SP203 for fire detection and fire alarm providers, or NSI / SSAIB for security and life-safety services. The scheme audits the organisation’s management system, technical competence, training records, equipment calibration, complaint handling and ongoing performance. Inclusion on the handover certificate gives the user externally-audited assurance of competence, and insurers and regulators frequently expect it.',
   },
   {
     id: 10,
     question:
       'A user calls the service organisation: "I have just had three false alarms in two weeks." Under BS 5839-1:2025, what is the trigger point for a preliminary investigation?',
     options: [
-      'Any false alarm.',
-      'Preliminary investigation when the rate of false alarms over the previous 12 months EXCEEDS FOUR PER 100 DETECTORS PER ANNUM. In-depth investigation when the rate exceeds five per 100 detectors per annum on systems with more than 40 automatic fire detectors. Trigger points unchanged from 2017 to 2025. The commissioning organisation has, since 2025, an explicit duty to brief the user on the trigger points and the investigation process (clause 29.6).',
-      'Six per year regardless of system size.',
-      'Only when ARC notices.',
+      'Any single false alarm at all, regardless of the system size or the underlying rate.',
+      'A fixed six false alarms per year, regardless of the number of detectors fitted.',
+      'When the rate over the previous 12 months exceeds four per 100 detectors per annum.',
+      'Only when the ARC notices and reports an unusual pattern of incoming calls.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Preliminary investigation: rate >4 per 100 detectors p.a. In-depth investigation: rate >5 per 100 detectors p.a. on systems with >40 detectors. Trigger points unchanged 2017 → 2025. The 2025 addition is the commissioning organisation duty (clause 29.6) to brief the user on these trigger points and on the investigation process.',
+      'Preliminary investigation is triggered when the false-alarm rate over the previous 12 months exceeds four per 100 detectors per annum; in-depth investigation when it exceeds five per 100 detectors per annum on systems with more than 40 automatic fire detectors. The trigger points are unchanged from 2017 to 2025. The 2025 addition is the commissioning organisation duty (clause 29.6) to brief the user on these trigger points and the investigation process.',
   },
 ];
 

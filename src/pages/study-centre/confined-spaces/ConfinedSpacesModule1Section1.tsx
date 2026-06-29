@@ -102,10 +102,10 @@ const quizQuestions = [
     options: [
       'Loss of consciousness from raised body temperature',
       'Drowning from rising liquid levels',
-      'Noise levels exceeding the upper exposure action value',
       'Asphyxiation from lack of oxygen',
+      'Noise levels exceeding the upper exposure action value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Noise is not one of the specified risks under the Confined Spaces Regulations 1997. The specified risks are: fire or explosion, loss of consciousness from raised body temperature, loss of consciousness or asphyxiation from gas, fume, vapour, or lack of oxygen, drowning from rising liquid levels, and engulfment or suffocation by a free-flowing solid. Noise is addressed by the Control of Noise at Work Regulations 2005.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under the Confined Spaces Regulations hierarchy, what must you do FIRST?',
     options: [
+      'Avoid entry into the confined space if reasonably practicable',
       'Prepare emergency rescue arrangements',
       'Carry out atmospheric monitoring',
-      'Avoid entry into the confined space if reasonably practicable',
       'Develop a safe system of work for entry',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Regulation 4(1) of the Confined Spaces Regulations 1997 establishes that no person shall enter a confined space to carry out work unless it is not reasonably practicable to achieve the purpose without entry. Avoidance is always the first priority. Only if entry is unavoidable should a safe system of work and emergency arrangements be implemented.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     options: [
       'Management of Health and Safety at Work Regulations 1999',
       'The Factories Act 1961',
-      'Health and Safety at Work etc. Act 1974',
       'Construction (Design and Management) Regulations 2015',
+      'Health and Safety at Work etc. Act 1974',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Confined Spaces Regulations 1997 are secondary legislation made under the enabling powers of the Health and Safety at Work etc. Act 1974 (HASAWA). HASAWA is the primary enabling Act that gives the Secretary of State powers to make health and safety regulations, including those covering confined spaces.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'A large above-ground storage tank has been drained but may still contain flammable vapours. Is this a confined space?',
     options: [
       'No \u2014 it is above ground so it cannot be a confined space',
-      'No \u2014 it has been drained so there is no risk',
       'Yes \u2014 it is substantially enclosed and there is a foreseeable risk of fire/explosion from flammable vapours',
+      'No \u2014 it has been drained so there is no risk',
       'Only if the tank is sealed with no ventilation openings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The tank meets both criteria of the legal definition: it is substantially enclosed, and there is a reasonably foreseeable risk of serious injury from fire or explosion due to the flammable vapours that may remain. The fact that it is above ground and has been drained does not remove the confined space classification. Residual vapours in empty or drained tanks are a common cause of fatal confined space incidents.',
   },

@@ -5,10 +5,10 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What is the definition of a smart home according to modern standards?',
     options: [
-      'When the general public holds negative attitudes, beliefs, and stereotypes about people with mental health problems',
+      'Any home fitted with a broadband internet connection',
       'A residence that uses interconnected devices and systems to automate, monitor, and control functions',
-      'Pre-functional tests basic wiring and power; functional tests complete sequences',
-      'Deaths, specified injuries, over-7-day injuries, diseases, dangerous occurrences',
+      'A home where all appliances are controlled by physical switches',
+      'A property built to the latest energy efficiency building regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,10 +19,10 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     question:
       'Which communication protocol is most commonly used for smart home device interconnection?',
     options: [
-      'Only if operation button present',
-      'Safety level for electrical environments',
+      'RS-232 serial connections',
+      'Analogue telephone lines',
       'Zigbee and Z-Wave mesh networks',
-      'The speed of the rotating magnetic field',
+      'Power-line carrier signalling only',
     ],
     correctAnswer: 2,
     explanation:
@@ -72,10 +72,10 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'What is a significant challenge in smart home adoption?',
     options: [
-      'Optimised energy use through intelligent automation and scheduling',
-      'Gradual retrofit with compatible devices and systems',
+      'A complete absence of any wireless protocols',
+      'The legal requirement to rewire the whole property',
       'Interoperability issues between different manufacturer systems',
-      'Voice control and automated assistance features',
+      'Smart devices being unable to connect to any network',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,9 +99,9 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     question: 'Which smart home system provides the most immediate safety benefits?',
     options: [
       'Integrated security and monitoring systems',
-      'Zigbee and Z-Wave mesh networks',
-      'Learning user patterns and predictive automation',
-      'Gradual retrofit with compatible devices and systems',
+      'Automated curtain and blind controllers',
+      'Voice-controlled entertainment systems',
+      'Smart lighting mood and scene presets',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What role does artificial intelligence play in advanced smart home systems?',
     options: [
-      'Integrated security and monitoring systems',
-      'Network security and data privacy protection',
+      'Supplying mains power to all connected devices',
+      'Replacing the need for any physical sensors',
       'Learning user patterns and predictive automation',
-      'Gradual retrofit with compatible devices and systems',
+      'Generating the wireless signal for the home network',
     ],
     correctAnswer: 2,
     explanation:

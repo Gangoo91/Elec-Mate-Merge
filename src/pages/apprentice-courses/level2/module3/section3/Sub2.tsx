@@ -40,9 +40,9 @@ const checks = [
     question:
       'You’re running a new socket circuit chased into a plastered partition wall in a domestic kitchen extension. The default wiring system is:',
     options: [
-      'Evaluating what coping resources and options are available',
-      'To prevent the shield from acting as an antenna and picking up more interference',
-      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
+      'Singles in steel conduit, surface-clipped along the wall',
+      'SWA glanded into a metal back-box at each accessory',
+      'MICC (Pyro) terminated with a pot and seal at each end',
       'T&E (6242Y) in the chase, capped, with RCD protection per 522.6.202',
     ],
     correctIndex: 3,
@@ -54,10 +54,10 @@ const checks = [
     question:
       'Feeding a detached garage 18 m down the garden, buried at 600 mm. Best wiring system:',
     options: [
-      'Open circuit heating element',
-      'Measuring pressure drop across a flow restriction',
-      'SWA copper-armoured with external glands',
-      'Trace signal paths and understand circuit operation',
+      'T&E clipped to a fence and run across the lawn',
+      '3-core flex on a reel for the full length',
+      'SWA steel-wire-armoured with external glands',
+      'Singles in PVC conduit laid loose in the trench',
     ],
     correctIndex: 2,
     explanation:
@@ -66,12 +66,12 @@ const checks = [
   {
     id: 'data-separation-check',
     question:
-      'You’re running Cat 6a data cable in the same trunking compartment as 230 V mains. What does BS 7671 521.6 / BS EN 50174 require?',
+      'You’re running Cat 6a data cable in the same trunking compartment as 230 V mains. What does BS 7671 528.1 / BS EN 50174 require?',
     options: [
-      'To provide a chronological, auditable record of all maintenance activities on an asset',
+      'Twisting the data and mains cables together to cancel induced noise',
       'Separation by a continuous earthed metal divider, or use a separate compartment / segregated trunking',
-      'All motors fed from that control supply lose their control circuits — all contactors drop out simultaneously',
-      'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
+      'Insulating the data cable to 230 V and clipping it to the mains',
+      'Running the data cable at least 25 mm away inside the same compartment',
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'A "wiring system" in BS 7671 means:',
     options: [
-      'It applies a detectable signal to a specific service, making it easier for the CAT to locate',
+      'The cross-sectional area of the conductor on its own',
       'The cable plus its method of support, enclosure or containment, considered together',
-      'To ensure PPE is maintained in an efficient state, in efficient working order, and in good repair',
-      'Tool availability, suitability for task, and safety requirements',
+      'The protective device and its disconnection time for the circuit',
+      'The sequence in which circuits are energised at commissioning',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'A non-sheathed single-core cable for fixed wiring in a commercial install must be:',
     options: [
-      'Restart the computer and close unnecessary programs',
-      'Deadlines, complexity, and responsibility can create pressure',
+      'Clipped direct to the wall like sheathed T&E',
+      'Run loose in a cable basket above a suspended ceiling',
       'Enclosed in conduit, ducting or trunking per Reg 521.10.1',
-      'Clearly and concisely summarise the purpose or action required',
+      'Buried direct in plaster within a prescribed zone',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'MICC (Pyro) cable’s headline advantage over PVC alternatives is:',
     options: [
-      'That it meets the essential health and safety requirements set out in UK/EU regulations',
-      'The goal is showing up consistently; you can scale up once the habit is established',
-      'Lights energised continuously, operating from normal and emergency supplies',
+      'It is faster and cheaper to terminate than T&E',
+      'It needs no CPC because the cores are double-insulated',
+      'It flexes repeatedly without cracking, ideal for moving machinery',
       'Inherent fire resistance — the copper sheath and mineral insulation maintain circuit integrity in a fire',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
       'Twin-and-earth cable buried in plaster less than 50 mm deep, NOT in a prescribed zone, NOT on a metallic enclosure — what does Reg 522.6.202 require?',
     options: [
       'Additional protection by 30 mA RCD (415.1.1) OR comply with 522.6.204 (mechanical protection)',
-      'As long as necessary to communicate all safety-critical information clearly, with time for questions and clarification',
-      'The injury must be caused by work activity, conditions created by work, or the manner of conducting the work',
-      'External lighting uses weather-resistant luminaires and covers external escape routes',
+      'Nothing extra, provided the cable is clipped at 300 mm intervals',
+      'Re-route the cable so it sits at least 100 mm below the surface',
+      'Sleeve the cable in green-and-yellow PVC for identification',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'A 32 A SWA submain feeding a garden office is glanded into a metal enclosure. The steel-wire armour:',
     options: [
-      'Supply characteristics, impedance of supply path, and transformer ratings',
-      'Acts as the CPC when glanded with a CW gland and tested for continuity (Sub-clause 543.2)',
-      'A list of items to be completed or corrected before final acceptance',
-      'Stop work immediately, leave the area, and report the situation so the risk assessment can be reviewed',
+      'Must be left unconnected to avoid creating a parallel earth path',
+      'Acts as the CPC when glanded with a CW gland and tested for continuity (Reg 543.2)',
+      'Carries the neutral current back to the consumer unit',
+      'Provides the line conductor for the third phase on a TP&N submain',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     question:
       'On a hospital escape route, you would specify:',
     options: [
-      'The tongue withdraws from the switch head, breaking the safety circuit',
-      'To record defects or incomplete items requiring correction before handover',
-      'To control efficiency, safety, compliance, and comfort',
-      'Low Smoke and Fume (LSF / LSZH) cable to limit toxic smoke in a fire',
+      'Standard 6242Y PVC T&E to keep the install cost down',
+      'Bare singles clipped direct for fast heat dissipation',
+      '3-core flex throughout so circuits can be moved easily',
+      'Low Smoke Zero Halogen (LSZH) cable to limit toxic smoke in a fire',
     ],
     correctAnswer: 3,
     explanation:
@@ -184,9 +184,9 @@ const quizQuestions = [
       'Data cable (Cat 6a) and 230 V mains share the same trunking. The compliant arrangement is:',
     options: [
       'Separation by an earthed metal divider, OR multi-compartment trunking, OR wholly separate trunking',
-      'Walk both parties back down the ladder to the observable data and rebuild shared meaning from there',
-      'Adults need to understand why they are learning something before they engage with it',
-      'They provide guidance based on real experience, helping you avoid common mistakes',
+      'Cable-tie the data cable to the outside of the mains trunking',
+      'Run the data and mains cores twisted together to balance the load',
+      'Energise the data cable from the same 230 V supply for convenience',
     ],
     correctAnswer: 0,
     explanation:

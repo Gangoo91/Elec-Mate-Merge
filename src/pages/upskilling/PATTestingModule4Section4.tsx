@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'A switch-mode laptop PSU fails the 500 V IR test (0.4 MΩ) because of internal Y-capacitors in the EMC filter. What is the IET CoP-recognised next step?',
     options: [
-      'Discard the unit',
-      'Substitute leakage testing in lieu of IR. Apply a low test voltage (typically 30–40 V) across L+N to E, measure the leakage current that flows, and scale to the operating-equivalent voltage. Acceptance per IET CoP Ch 15: ≤ 0.5 mA Class I / ≤ 0.25 mA Class II',
-      'Re-test at 250 V',
-      'Functional test only',
+      'Substitute leakage testing in lieu of IR. Apply a low test voltage (typically 30–40 V) across L+N to E, measure the leakage current, and scale to the operating-voltage equivalent. Acceptance per IET CoP Ch 15: ≤ 0.5 mA Class I / ≤ 0.25 mA Class II',
+      'Re-test the unit at a reduced 250 V DC, which is gentle enough not to conduct through the EMC filter Y-capacitors and so gives a true insulation figure',
+      'Carry out a functional test only and record the appliance as passed, since the IR limitation is a known characteristic of switch-mode supplies',
+      'Discard the unit, because an IR failure of 0.4 MΩ is below the 1 MΩ acceptance and cannot be overridden by any alternative test',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'IET CoP Ch 15 explicitly permits substitute leakage as the alternative to IR for switch-mode and EMC-filtered equipment. The substitute test is electrically safer for the equipment (low test voltage), gives a meaningful operating-voltage equivalent leakage current, and judges against the 0.5 mA / 0.25 mA acceptance for Class I and Class II respectively.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'You are leakage-testing a Class I PC at 230 V mains. Differential leakage measures L−N current at operating voltage. The reading is 1.2 mA. Pass or fail per IET CoP?',
     options: [
-      'Pass — under 3 mA is fine',
-      'Fail. The IET CoP Class I acceptance for leakage current is ≤ 0.75 mA (per the touch-current / earth-leakage limits applicable at operating voltage for general Class I appliances; some categories like IT equipment may have a higher specific limit per the IEC product standard, but 0.75 mA is the general Class I value). Investigate before re-testing',
-      'Pass with comment',
-      'Re-test',
+      'Pass — any reading under 3 mA is acceptable for a Class I appliance regardless of its type',
+      'Pass with comment, recording the elevated reading on the certificate but returning the PC to service',
+      'Fail. The general Class I earth-leakage limit is ≤ 0.75 mA at operating voltage; 1.2 mA exceeds it. Some categories such as IT equipment carry a higher product-standard limit, but 0.75 mA is the general Class I value, so investigate before re-testing',
+      'Re-test using the substitute method, since differential leakage readings are not valid for acceptance decisions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'IET CoP Ch 15 sets earth-leakage / touch-current acceptance values that depend on appliance class and equipment-specific product standards. For general Class I appliances the limit is 0.75 mA. IT equipment under BS EN 62368-1 / BS EN 60950-1 may permit up to 3.5 mA for specific equipment categories. Always check the specific product-standard limit for the equipment under test.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'When is leakage testing the BETTER test choice than insulation resistance per IET CoP?',
     options: [
-      'Always — leakage is more accurate',
-      'When the equipment contains components (switch-mode PSUs, EMC filter networks, surge arresters) that produce a misleading IR reading because of internal Y-capacitors. Leakage testing measures real operating-voltage current and judges against safety-relevant limits',
-      'For Class II only',
-      'Only on appliances over 1 kW',
+      'Always — leakage testing is inherently more accurate and should replace IR on every appliance',
+      'Only on Class II appliances, whose lack of a protective conductor makes IR unreliable',
+      'Only on appliances rated above 1 kW, where the higher current makes leakage more sensitive',
+      'When internal Y-capacitors (switch-mode PSUs, EMC filters, surge arresters) make IR misleading',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Leakage testing is the IET CoP-recognised alternative to IR for equipment whose construction makes IR misleading. The 500 V DC IR test cannot distinguish between deliberate Y-capacitor leakage and genuine insulation breakdown; the leakage test at operating voltage measures the actual current flow that matters for user safety.',
   },
@@ -65,12 +65,12 @@ const inlineChecks = [
     question:
       'What is "touch current" and how does it differ from "earth leakage current" in PAT testing?',
     options: [
-      'They are the same thing',
-      'Touch current is measured between accessible parts of the appliance and earth (the current that would flow through a person touching the appliance) — relevant primarily for Class II equipment with no protective conductor. Earth-leakage current is measured between the earth pin and ground (the current already flowing through the protective conductor under normal operation) — relevant for Class I equipment',
-      'Touch current is for AC, leakage is for DC',
-      'Touch current includes the protective conductor, leakage does not',
+      'Touch current is measured between accessible parts and earth — the current that would flow through a person touching the appliance — and is relevant mainly to Class II equipment with no protective conductor. Earth-leakage current is the current already flowing in the protective conductor under normal operation, relevant to Class I equipment',
+      'They are the same measurement, simply named differently by the IET Code of Practice and BS EN 62353',
+      'Touch current applies to AC appliances and earth-leakage current applies to DC appliances, the two being mutually exclusive',
+      'Touch current is the value measured with the protective conductor included in the path, while earth-leakage current is measured with it deliberately disconnected',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'IET CoP and BS EN 62353 distinguish the two. Touch current is what a user would experience: current flowing between the appliance accessible part and earth via a notional human body. Earth-leakage current is the protective-conductor current under normal operating conditions. Both are leakage measurements but they target different safety failure modes.',
   },
@@ -81,8 +81,8 @@ const quizQuestions = [
     id: 1,
     question:
       'IET CoP Ch 15 acceptance for substitute leakage current on a Class I appliance is what?',
-    options: ['≤ 0.25 mA', '≤ 0.5 mA', '≤ 0.75 mA', '≤ 3.5 mA'],
-    correctAnswer: 1,
+    options: ['≤ 0.25 mA', '≤ 0.75 mA', '≤ 0.5 mA', '≤ 3.5 mA'],
+    correctAnswer: 2,
     explanation:
       'IET CoP Chapter 15 sets the substitute leakage limit at ≤ 0.5 mA for Class I appliances and ≤ 0.25 mA for Class II appliances. The Class II limit is tighter because there is no protective conductor — any leakage current can only flow via accessible parts to ground.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'The substitute leakage test applies what voltage to the appliance, and how does it derive the "operating-voltage equivalent" leakage current?',
     options: [
-      '500 V DC, with no scaling',
-      'A low test voltage (typically 30–40 V AC) is applied between L+N and the protective conductor / accessible metal. The measured leakage current at that voltage is then scaled by the ratio of nominal supply voltage to test voltage (e.g. ≈ 230/40 = 5.75×) to give the equivalent leakage at 230 V AC operating voltage. This avoids stressing the equipment with full mains while still producing a safety-relevant result',
-      '1000 V at line frequency',
-      '230 V DC for 30 seconds',
+      'A low test voltage (30–40 V AC) is applied and the leakage scaled to the 230 V equivalent',
+      '500 V DC is applied between L+N and earth and the leakage read directly, with no scaling',
+      '1000 V AC at line frequency is applied for one minute and the steady-state leakage recorded',
+      '230 V DC is applied for 30 seconds and the final settled current taken as the equivalent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The substitute test uses a low voltage (the exact value varies by tester, typically 30–40 V) and scales mathematically. This is electrically safer for sensitive equipment than the full-voltage differential leakage test, but produces a result directly comparable to the safety-relevant operating-voltage leakage.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 3,
     question: 'Differential leakage testing differs from substitute leakage how?',
     options: [
-      'It uses DC',
-      'Differential leakage is performed at full operating voltage (230 V mains). The tester measures the difference in current between L and N conductors at the supply side — any L−N difference must be flowing to earth, which is the leakage current. The result is the actual leakage at operating voltage, not a scaled value. It is electrically more demanding for the equipment than substitute testing',
-      'It only works on Class II',
-      'It tests insulation directly',
+      'It uses a DC test supply rather than AC, so it works only on resistive appliances',
+      'It works only on Class II appliances, measuring to accessible metal not the CPC',
+      'It tests the insulation barrier directly, like an IR test, not measuring current flow',
+      'It runs at full mains and measures the L−N current imbalance directly, with no scaling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Differential leakage applies real mains and measures the L−N current imbalance — by Kirchhoff, any imbalance equals current flowing somewhere outside the supply pair (i.e. to earth via the protective conductor or via leakage). It is more accurate than substitute leakage for the actual operating condition but exposes the appliance to full mains during the test.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'A Class I IT appliance under BS EN 62368-1 / BS EN 60950-1 has a higher leakage allowance than a general Class I appliance. What is the typical permitted limit for equipment in this category, and why?',
     options: [
-      '0.5 mA — same as everything else',
-      'Up to 3.5 mA — IT equipment with EMC filter networks and switch-mode supplies legitimately leaks more current to earth as a function of construction. The product standard recognises this and permits a higher limit, on the explicit condition that the protective conductor is intact and the leakage flows safely to earth via that path. PAT testing must verify the higher product-standard limit, not the general 0.75 mA value',
-      '10 mA',
-      '0.25 mA',
+      '0.5 mA — the same general Class I value, since the product standard changes nothing',
+      '0.25 mA — IT equipment is held to the tighter Class II limit for its electronics',
+      'Up to 3.5 mA — EMC filters leak more by construction, with the CPC handling it safely',
+      '10 mA — IT equipment is exempt from leakage limits provided it carries a CE mark',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 62368-1 (the modern audio/video and IT equipment safety standard, which replaces the older BS EN 60950-1) permits earth-leakage of up to 3.5 mA for certain Class I IT equipment categories, on the basis that the protective conductor handles the leakage safely. The EMC filter Y-capacitor rule explicitly: acceptable leakage is not a fault on intact-protective-conductor Class I IT.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 5,
     question: 'IET CoP Class II leakage acceptance is ≤ 0.25 mA — tighter than Class I. Why?',
     options: [
-      'Smaller appliances have less leakage',
-      'Class II appliances have no protective conductor, so any leakage must flow via accessible parts directly to a person or to ground. There is no "safe path" for leakage current — the only path is through the user. The tighter limit reflects that any leakage on Class II is a potential touch current',
-      'Class II is older equipment',
-      'Class II uses lower test voltage',
+      'With no protective conductor, any Class II leakage flows via accessible parts to the user',
+      'Class II appliances are physically smaller and so inherently produce less leakage current',
+      'Class II is generally older equipment, held to a more cautious leakage limit by age',
+      'Class II appliances are tested at a lower voltage, so the limit is scaled down to match',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Class I has a protective conductor that takes leakage current safely to earth without exposing the user. Class II has no such path; any leakage that does flow must flow via accessible conductive parts. The tighter 0.25 mA limit recognises this: leakage on Class II becomes touch current directly.',
   },
@@ -145,12 +145,12 @@ const quizQuestions = [
     question:
       'You substitute leakage-test a Class I switch-mode photocopier and read 0.32 mA. The general Class I substitute leakage limit per IET CoP is 0.5 mA. Pass or fail?',
     options: [
-      'Fail — too high',
-      'Pass — within the IET CoP acceptance for general Class I substitute leakage. Record the reading, note that the test was substituted for IR per IET CoP Ch 15 because of EMC capacitance, and proceed in the test sequence',
-      'Re-test',
-      'Pass only if the 500 V IR also passes',
+      'Fail — 0.32 mA is above the Class I acceptance and the unit must be withdrawn',
+      'Re-test — a single substitute-leakage reading is not enough to record a pass',
+      'Pass only if the 500 V IR test also passes, since both results are required',
+      'Pass — 0.32 mA is within the 0.5 mA general Class I limit; record the substitution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Class I substitute leakage of 0.32 mA is comfortably within the 0.5 mA limit. The pass is valid even though the conventional 500 V IR test would have failed because of the Y-capacitor effect. Record the substitute test result and the reason for substitution.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'BS EN 62353 governs which type of testing?',
     options: [
-      'PAT testing of general office appliances',
-      'Recurrent test and test after repair of medical electrical equipment — the medical-electrical-specific equivalent of the PAT regime, with leakage tests including patient leakage current, earth leakage and touch current, all with stricter limits than general PAT',
-      'Earth-loop impedance only',
-      'Insulation resistance for fixed installations',
+      'Recurrent test and test after repair of medical electrical equipment, to stricter limits',
+      'Routine PAT of general office and commercial appliances, replacing the IET CoP for them',
+      'Earth-loop impedance testing of final circuits within a fixed electrical installation',
+      'Insulation resistance testing of the fixed wiring installation, not portable appliances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 62353 sits alongside IEC 60601-1 to govern testing of medical electrical equipment in the field. It is more stringent than IET CoP for PAT and includes patient-applied-part leakage measurements not relevant to general PAT. Where you encounter medical equipment in the wild (community care, dental, veterinary), BS EN 62353 typically applies in addition to or in place of IET CoP.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'Leakage testing requires the appliance to be energised at full mains voltage (differential method). What safety equipment requirement applies to the operator and the test environment?',
     options: [
-      'None — the tester is enclosed',
-      'GS38-compliant test leads if any external probing is performed; an RCD-protected supply at the PAT bench (typically built into the PAT tester); awareness of the appliance under test as a live device — including isolation procedures if the appliance has to be interrupted during the test; appropriate PPE per the duty-holder assessment',
-      'Insulating gloves only',
-      'No specific requirements',
+      'No specific requirements, since the appliance connects through the PAT tester not the mains',
+      'Insulating gloves alone, since the operator never contacts live parts during the test',
+      'GS38 test leads, an RCD-protected supply, isolation procedures, and assessed PPE',
+      'Only a valid tester calibration certificate, with no additional operator controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Differential leakage testing energises the appliance at full mains voltage. GS38 governs any test leads used externally; RCD protection on the supply protects the operator from a fault inside the appliance under test; PPE and isolation procedures follow the duty-holder risk assessment under EAW Reg 4 / 14. The tester itself is BS EN 61010 compliant, but the operator and environment need the matching controls.',
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'A Class I appliance reads 0.45 mA on substitute leakage and 1.1 mA on differential leakage at full mains. Which result is the safety-relevant one for accepting / rejecting the appliance?',
     options: [
-      'Substitute — it is more accurate',
-      'Differential, applied at operating voltage — that is the actual leakage the user will be exposed to in service. Substitute leakage is a derived equivalent and is electrically safer to perform but the differential reading is closer to the real-world condition. If the differential exceeds the IET CoP / product-standard limit, the appliance fails regardless of the substitute reading',
-      'Whichever is lower',
-      'Average',
+      'The substitute reading — the low-voltage method is more accurate than full-mains',
+      'Whichever reading is lower, since that shows the appliance at its best condition',
+      'The arithmetic average of the two, which smooths out measurement error between them',
+      'The differential reading — it is the actual leakage the user is exposed to in service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The differential leakage at operating voltage is the most direct measurement of the actual current flow under real conditions. Substitute leakage is a useful tool when full-voltage testing would damage sensitive equipment; where both can be performed, the differential value is the more conservative safety basis.',
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'Why does IET CoP allow substitute leakage to REPLACE the IR test on certain equipment, rather than running both?',
     options: [
-      'To save time',
-      'Because the IR test cannot give a meaningful reading on equipment with Y-capacitors and EMC filter networks. The 500 V DC test reads the capacitor leakage as if it were insulation breakdown, and there is no way to separate the two with an ohmmeter alone. Substitute leakage at operating voltage tests what actually matters (current flow under operation) and is the engineering-correct alternative',
-      'To save instrument battery',
-      'Because IR is not required for IT equipment',
+      'Because IR reads Y-capacitor leakage as insulation breakdown, giving no meaningful number',
+      'To save time on the sequence, since running both tests would slow the PAT round throughput',
+      'To conserve the instrument battery, because the 500 V IR test draws more current than leakage',
+      'Because insulation resistance is not a requirement for IT equipment under any product standard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IR is replaced rather than supplemented because the IR reading on EMC-capacitive equipment is fundamentally not interpretable as insulation resistance. Substitute leakage produces a meaningful number for the same safety question (is current flow to earth within limits?). Running both adds no information beyond the substitute leakage reading.',
   },

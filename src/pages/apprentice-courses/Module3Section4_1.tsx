@@ -103,20 +103,25 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'True or False: Cables concealed in walls do not need to follow safe zones if they are in conduit.',
-    options: ['True', 'False'],
+      'Do cables concealed in walls still need to follow safe zones when run in conduit?',
+    options: [
+      'No - conduit removes the need for safe zones',
+      'Yes - safe zones or adequate mechanical protection still apply',
+      'No - safe zones only apply to surface wiring',
+      'Only if the conduit is metallic',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. Even when in conduit, concealed cables must still follow prescribed safe zones or have adequate mechanical protection per BS 7671.',
+      'Even when in conduit, concealed cables must follow prescribed safe zones or have adequate mechanical protection in line with BS 7671.',
   },
   {
     id: 4,
     question: 'Name one disadvantage of surface wiring.',
     options: [
       'Less visually appealing in finished spaces',
-      'Growing opportunities in building automation',
-      'All cables to be LSF (low smoke and fume)',
-      'RTD (Resistance Temperature Detector)',
+      'It is slower and more costly to install',
+      'It cannot be inspected once installed',
+      'It always requires concealed conduit',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,36 +144,36 @@ const quizQuestions = [
     id: 6,
     question: 'Why can concealed wiring be more expensive?',
     options: [
-      'I-messages versus You-messages',
-      'Increased risk of legal and safety issues',
-      'Requires chasing and making good finishes',
-      'To maintain required illumination levels',
+      'It uses higher-rated cable than surface wiring',
+      'It needs a separate earthing system',
+      'It requires chasing and making good finishes',
+      'It must be tested more frequently',
     ],
     correctAnswer: 2,
     explanation:
-      'Concealed wiring requires additional labour for chasing channels, installing conduit, and making good wall finishes, increasing overall costs.',
+      'Concealed wiring requires additional labour for chasing channels, installing conduit and making good wall finishes, increasing overall costs.',
   },
   {
     id: 7,
     question: 'What must be provided for concealed wiring to allow inspection?',
     options: [
-      'Lower initial cost and simpler installation',
-      'The heart twitching chaotically instead of pumping properly',
-      'Starting current which can be 6-8 times full load',
+      'A lower initial installation cost',
+      'A separate supply for each circuit',
+      'Additional surge protection devices',
       'Access points for junction boxes or pull points',
     ],
     correctAnswer: 3,
     explanation:
-      'Access points must be provided for junction boxes, connection points, or cable pulling locations to enable future inspection and maintenance.',
+      'Access points must be provided for junction boxes, connection points or cable pulling locations to enable future inspection and maintenance.',
   },
   {
     id: 8,
-    question: 'Which UK regulation covers requirements for safe zones in wiring?',
+    question: 'Which UK standard covers requirements for safe zones in wiring?',
     options: [
       'BS 7671 (IET Wiring Regulations)',
-      'Unlimited fine and/or imprisonment',
-      'Type 5 disposable coveralls',
-      'Digital contact signal (dry contact)',
+      'BS 5839 (Fire detection and alarm)',
+      'BS 6701 (Telecommunications cabling)',
+      'BS EN 50085 (Trunking and ducting)',
     ],
     correctAnswer: 0,
     explanation:

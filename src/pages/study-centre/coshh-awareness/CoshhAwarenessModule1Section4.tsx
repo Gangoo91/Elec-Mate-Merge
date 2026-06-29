@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'Why is individual susceptibility important when assessing the risk of hazardous substances?',
     options: [
       'Because the law only applies to workers who are already ill',
-      'Because some individuals may be more vulnerable due to pre-existing conditions, genetics, age, smoking, or medication interactions — meaning standard controls may not protect everyone equally',
       'Because individual susceptibility only affects workers over the age of 60',
+      'Because some individuals may be more vulnerable due to pre-existing conditions, genetics, age, smoking, or medication interactions — meaning standard controls may not protect everyone equally',
       'Because susceptibility is only relevant to substances classified as carcinogens',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Individual susceptibility means that the same exposure to a hazardous substance can produce very different effects in different people. Factors include pre-existing respiratory conditions (e.g. asthma), skin conditions (e.g. eczema), genetic factors, age, smoking status, and interactions with medication. A worker with pre-existing asthma may develop occupational asthma at exposure levels that do not affect colleagues. This is why COSHH assessments must consider vulnerable individuals, and why health surveillance is essential — it can detect early signs of harm before they become irreversible.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'A worker splashes concentrated hydrochloric acid on their arm and immediately develops a chemical burn. This is an example of:',
     options: [
-      'A chronic health effect',
       'An acute health effect',
+      'A chronic health effect',
       'Sensitisation',
       'An occupational disease',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A chemical burn from a single splash of acid is an acute health effect — it appears immediately after a single, short-term exposure. Acute effects are typically sudden in onset and may be severe, but are often reversible if treated promptly. Chronic effects, by contrast, develop gradually over repeated or prolonged exposure periods.',
   },
@@ -95,7 +95,7 @@ const quizQuestions = [
     options: ['Asbestosis', 'Silicosis', 'Occupational asthma', 'Metal fume fever'],
     correctAnswer: 1,
     explanation:
-      'Silicosis is a progressive, incurable fibrotic lung disease caused by inhaling respirable crystalline silica (RCS) dust. It is common in trades that involve cutting, grinding, or drilling concrete, stone, brick, or morite. The silica particles cause irreversible scarring of the lung tissue, reducing lung capacity over time. Electricians are at risk when chasing walls, drilling through concrete, or cutting block and brickwork.',
+      'Silicosis is a progressive, incurable fibrotic lung disease caused by inhaling respirable crystalline silica (RCS) dust. It is common in trades that involve cutting, grinding, or drilling concrete, stone, brick, or mortar. The silica particles cause irreversible scarring of the lung tissue, reducing lung capacity over time. Electricians are at risk when chasing walls, drilling through concrete, or cutting block and brickwork.',
   },
   {
     id: 3,
@@ -118,10 +118,10 @@ const quizQuestions = [
     options: [
       'Group 2A — Probably carcinogenic',
       'Group 2B — Possibly carcinogenic',
-      'Group 1 — Carcinogenic to humans',
       'Group 3 — Not classifiable',
+      'Group 1 — Carcinogenic to humans',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'IARC Group 1 means there is sufficient evidence that the substance is carcinogenic to humans. Examples relevant to the trades include asbestos (all forms), benzene, crystalline silica, wood dust (hardwood), diesel engine exhaust, and certain chromium VI compounds. These are not theoretical risks — they are proven human carcinogens with established links to specific cancers based on extensive epidemiological evidence.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'Which target organ system is most commonly affected by inhaled hazardous substances in the workplace?',
     options: [
-      'The reproductive system',
-      'The cardiovascular system',
       'The respiratory system (lungs)',
+      'The cardiovascular system',
+      'The reproductive system',
       'The musculoskeletal system',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The respiratory system (lungs) is the most commonly affected target organ for workplace hazardous substance exposure, because inhalation is the primary route of entry for most workplace substances. Dusts, fumes, vapours, gases, and mists all enter the body through the lungs. Occupational lung diseases including silicosis, COPD, occupational asthma, and lung cancer are among the most prevalent occupational diseases in the UK construction and trades sectors.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: 'Teratogenic effects of hazardous substances refer to:',
     options: [
       "Damage to the worker's genetic material that can be passed to future generations",
-      'Harm to the developing foetus during pregnancy, causing birth defects',
       "Damage to the worker's reproductive organs causing infertility",
+      'Harm to the developing foetus during pregnancy, causing birth defects',
       'Allergic reactions that develop during pregnancy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Teratogenic effects specifically refer to harm caused to a developing foetus when a pregnant worker (or a worker's partner) is exposed to certain hazardous substances. Teratogens can cause structural birth defects, growth restriction, or developmental problems. This is distinct from mutagenic effects, which cause changes to DNA that can be inherited by future generations, and from reproductive toxicity more broadly, which can include effects on fertility, sexual function, and the developing child. Examples of workplace teratogens include certain solvents, lead compounds, and some pesticides.",
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     options: [
       'Pre-existing asthma or eczema',
       'Current smoking habit',
-      'Being left-handed',
       'Medication that affects liver function',
+      'Being left-handed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Being left-handed has no effect on susceptibility to hazardous substances. However, pre-existing conditions such as asthma and eczema significantly increase vulnerability to respiratory sensitisers and skin irritants respectively. Smoking damages the lungs and reduces their ability to clear inhaled particles, increasing the risk of occupational lung disease. Certain medications — particularly those metabolised by the liver — can interact with workplace chemicals and increase toxicity. Other relevant factors include age, genetic predisposition, and previous sensitisation.',
   },

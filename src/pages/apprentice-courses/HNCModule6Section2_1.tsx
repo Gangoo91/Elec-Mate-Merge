@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'inverter-function',
     question: 'What is the primary function of a grid-tied inverter in a PV system?',
     options: [
-      'Persons not in their employment (e.g. members of the public)',
+      'Step up the panel DC voltage for long-distance transmission',
+      'Store surplus DC energy in an internal battery for night use',
       'Convert DC from panels to AC synchronised with grid frequency',
-      'A building that generates more energy than it consumes over a year',
-      'The required working height and load capacity',
+      'Regulate panel temperature to maintain rated efficiency',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A grid-tied inverter converts DC electricity from PV panels to AC electricity synchronised with the grid frequency (50 Hz in the UK). It must also incorporate anti-islanding protection for safety.',
   },
@@ -119,10 +119,10 @@ const quizQuestions = [
     options: [
       'Multi-string inverter',
       'Central string inverter',
-      'Transformer-coupled inverter',
       'Microinverter',
+      'Transformer-coupled inverter',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Microinverters are fitted to individual panels, providing panel-level maximum power point tracking (MPPT). This optimises energy harvest from each panel independently, beneficial where shading or panel mismatch occurs.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     id: 6,
     question: 'G99 application to the DNO is required for installations exceeding:',
     options: [
-      'Zigbee and Z-Wave mesh networks',
-      'FIA or equivalent qualifications plus BS 5839 competence',
       '11.04 kW three-phase or 3.68 kW single-phase',
-      'Test conditions, environment, and standards',
+      '50 kW three-phase or 16 kW single-phase',
+      '23 kW three-phase or 7.36 kW single-phase',
+      '5.52 kW three-phase or 1.84 kW single-phase',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'G99 application is required when total export capacity exceeds 3.68 kW per phase (single-phase) or 11.04 kW total (three-phase balanced across phases). The DNO must assess network impact before connection approval.',
   },
@@ -198,10 +198,10 @@ const quizQuestions = [
     id: 9,
     question: 'Anti-islanding protection in a grid-tied inverter ensures that:',
     options: [
-      'Diversity factors based on simultaneous use probability',
+      'The inverter limits export current to the DNO fuse rating',
       'The inverter disconnects within 0.5 seconds of grid failure',
-      'Confirm with the supervisor or project manager',
-      'Alarm activation sequences and communication backup systems',
+      'The inverter maintains output during a brief voltage dip',
+      'The inverter synchronises panel strings to a common phase',
     ],
     correctAnswer: 1,
     explanation:

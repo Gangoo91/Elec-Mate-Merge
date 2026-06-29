@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'split-components',
     question: 'What are the two main units in a split system air conditioning installation?',
     options: [
-      '1.37Ω (Ze + (R1+R2)×1.20 = 0.35 + 0.85×1.20 = 0.35 + 1.02 = 1.37Ω)',
-      'Layered security with multiple sensor types and monitoring',
+      'A primary chiller and a secondary cooling tower',
+      'An air handling unit and a fan coil unit',
       'Indoor unit (evaporator) and outdoor unit (condenser/compressor)',
-      'Operating time versus fault current magnitude',
+      'A boiler unit and a buffer vessel',
     ],
     correctIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'vrf-advantage',
     question: 'What is the primary advantage of VRF/VRV systems over conventional split systems?',
     options: [
-      'When testing the entire installation with all breakers closed',
+      'They remove the need for any refrigerant pipework on site',
       'Variable refrigerant flow to multiple indoor units with individual zone control',
-      'To confirm the tester is working correctly and hasn\\\\\\\\\\\\\\\'t failed during use',
-      'Move the casualty into fresh air, ensuring it is safe for you to approach',
+      'They run entirely on a single-phase 13A socket supply',
+      'They eliminate the need for an outdoor condenser unit',
     ],
     correctIndex: 1,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
       'In a multi-split system, how many indoor units can typically be connected to one outdoor unit?',
     options: [
       '2-9 units depending on system capacity',
-      'Dedicated 20A radial circuit',
-      'Variable Refrigerant Volume',
-      'Three-phase 400V, 32A typical',
+      'Exactly one indoor unit per outdoor unit',
+      'Up to 50 units on a single outdoor unit',
+      'Only an even number of indoor units',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of an oil separator in a VRF system?',
     options: [
-      'Protective equipment detects and isolates faults to prevent danger',
-      'To ensure visibility during mains power failure and emergency conditions',
+      'To remove moisture from the refrigerant circuit',
+      'To filter debris from the condensate drain',
       'To separate and return compressor oil to prevent accumulation in heat exchangers',
-      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
+      'To split the refrigerant flow between heating and cooling zones',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'What type of refrigerant pipe sizing determines the liquid line diameter?',
+    question: 'What is the primary consideration when sizing the liquid line in a refrigerant circuit?',
     options: [
-      'Based on ensuring liquid state and acceptable subcooling',
-      'Identify goals and actions for career advancement',
-      'Someone else can re-energise the circuit while you work on it',
-      'Continuity, insulation resistance, and polarity',
+      'Ensuring the refrigerant stays liquid with acceptable subcooling',
+      'Matching the liquid line to the suction line diameter',
+      'Keeping refrigerant velocity above the speed of sound',
+      'Maximising the volume of refrigerant held in the pipe',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'During VRF system commissioning, what must be verified before initial start-up?',
     options: [
-      'To set out how health and safety will be managed during the construction phase',
-      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'That the indoor units are wired to a 13A socket supply',
+      'That the condensate pipework is connected to a foul drain',
       'Refrigerant pipe pressure test, evacuation to below 500 Pa, and correct refrigerant charge',
-      'By the date specified in the contract or a reasonable time before the due date',
+      'That the system has been left running for 24 hours beforehand',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     question:
       'In a heat recovery VRF system, what component distributes refrigerant between heating and cooling indoor units?',
     options: [
-      '2-9 units depending on system capacity',
-      'Refrigerant velocity and pressure drop affecting system capacity',
-      'Based on ensuring liquid state and acceptable subcooling',
+      'The thermostatic expansion valve at each indoor unit',
+      'An additional outdoor condenser dedicated to heating',
+      'The oil separator on the compressor discharge',
       'BC (Branch Controller) or BS (Branch Selector) box',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
       'What is the primary consideration when selecting VRF pipe sizes for long horizontal runs?',
     options: [
       'Refrigerant velocity and pressure drop affecting system capacity',
-      'Based on ensuring liquid state and acceptable subcooling',
-      'To separate and return compressor oil to prevent accumulation in heat exchangers',
-      'BC (Branch Controller) or BS (Branch Selector) box',
+      'The colour coding required for the pipe insulation',
+      'The fire rating of the builderswork penetrations',
+      'The ambient noise level around the pipe route',
     ],
     correctAnswer: 0,
     explanation:

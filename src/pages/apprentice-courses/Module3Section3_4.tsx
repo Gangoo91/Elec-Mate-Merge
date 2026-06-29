@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Give one example of basic power tool maintenance.',
     options: [
       'Cleaning vents and checking cables',
-      'Arc Fault Detection Device (AFDD)',
-      'The employer (or self-employed person)',
-      'During the planning phase before work begins',
+      'Rewinding the motor armature each month',
+      'Replacing the carbon brushes after every use',
+      'Recalibrating the speed controller weekly',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should tools be stored in a dry environment?',
     options: [
-      'The HSE (and local authorities)',
+      'To make the tools easier to find on site',
       'To prevent corrosion and electrical damage',
-      'False - actual values must always be recorded',
-      '1 fire marshal per 50 occupants',
+      'To keep the manufacturer warranty valid',
+      'To reduce the weight of the toolbox',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is record-keeping important for tool maintenance?',
     options: [
-      'The Principal Designer during construction, then the client',
-      'Class 1M (eye-safe with magnification restrictions)',
-      'Opposition of an inductor to AC, increasing with frequency',
+      'It is required before a tool can be PAT tested',
+      'It sets the resale value of the equipment',
+      'It replaces the need for daily visual checks',
       'To track inspections and comply with safety policies',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'Give one method of protecting tools during transport.',
     options: [
       'Use a toolbox with protective inserts',
-      'Batteries, solar panels, DC power supplies',
-      'Connecting two tubes at 90 degrees to each other',
-      'GHS06 — Acute Toxicity (severe)',
+      'Wrap each tool loosely in newspaper',
+      'Carry all tools together in an open bucket',
+      'Leave tools loose in the back of the van',
     ],
     correctAnswer: 0,
     explanation:

@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What causes buzzing sounds in electrical equipment?',
     options: [
-      'Increased mobility and reduced trip hazards',
-      'By pressing the test button only',
+      'Correctly torqued connections carrying rated current',
+      'A circuit operating well within its design capacity',
       'Loose connections or magnetostriction',
-      'The condenser outlet (liquid line)',
+      'A fully charged battery in standby equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should you do immediately when detecting electrical arcing?',
     options: [
-      '3-phase star with neutral',
-      'HSG264 — Asbestos: The Survey Guide',
-      'To supply power during mains failure',
+      'Increase the load to clear the fault',
+      'Wait to see whether the arcing stops on its own',
+      'Spray the arcing point with contact cleaner',
       'Isolate the supply immediately',
     ],
     correctIndex: 3,
@@ -59,10 +59,10 @@ const Module7Section3_4 = () => {
       id: 1,
       question: 'What does persistent buzzing in electrical equipment typically indicate?',
       options: [
-        'To modulate airflow to a zone based on temperature demand',
+        'The equipment is operating at its most efficient point',
         'Loose connections or core lamination problems',
-        'Replacing suspect components with known good ones',
-        'Sum of voltages around a closed loop equals zero',
+        'The supply voltage is slightly above nominal',
+        'The circuit is correctly balanced across all phases',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,10 +72,10 @@ const Module7Section3_4 = () => {
       id: 2,
       question: 'Why is electrical arcing particularly dangerous?',
       options: [
-        'To prevent signal reflections and communication errors',
-        'Complete testing sequence and safety system verification',
+        'It causes a gradual, harmless drop in supply voltage',
+        'It only damages the equipment, never the surroundings',
         'Creates extreme temperatures and fire/explosion risk',
-        'Star wiring instead of daisy-chain topology',
+        'It is easily detected before any heat is generated',
       ],
       correctAnswer: 2,
       explanation:
@@ -85,9 +85,9 @@ const Module7Section3_4 = () => {
       id: 3,
       question: 'What causes sparking at switch contacts?',
       options: [
-        'Learning user patterns and predictive automation',
-        'Tabular format with columns and rows',
-        'Local storage with encrypted remote access',
+        'A correctly rated switch on a purely resistive load',
+        'A switch operating well below its rated current',
+        'A switch with newly cleaned, well-aligned contacts',
         'Worn contacts or high inductive loads',
       ],
       correctAnswer: 3,
@@ -99,9 +99,9 @@ const Module7Section3_4 = () => {
       question: 'What visual signs indicate dangerous arcing?',
       options: [
         'Carbon tracking, pitting, and scorch marks',
-        'A storage tank that previously held chemicals',
-        'A dedicated DALI controller or application controller',
-        'Can cause time-dependent reading changes',
+        'Clean, bright connections with no discolouration',
+        'A neatly dressed and labelled set of conductors',
+        'Evenly worn contacts with a smooth silver finish',
       ],
       correctAnswer: 0,
       explanation:
@@ -111,10 +111,10 @@ const Module7Section3_4 = () => {
       id: 5,
       question: 'What immediate action is required when electrical arcing is detected?',
       options: [
-        'Can mask or exaggerate fault symptoms',
+        'Increase the ventilation to the affected area',
         'Isolate supply and secure the area',
-        'Future reference and safety',
-        'Decreases as frequency increases',
+        'Note it down for the next scheduled inspection',
+        'Continue working but monitor the arcing closely',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,10 +124,10 @@ const Module7Section3_4 = () => {
       id: 6,
       question: 'What tools help detect arcing and buzzing faults?',
       options: [
-        'Overheating, interference, equipment malfunction',
-        'By risk level - highest risk first',
+        'A standard voltage indicator and proving unit',
+        'A tape measure and spirit level',
         'Acoustic detectors and thermal imaging',
-        'Dust tight and protected against water jets',
+        'An earth fault loop impedance tester',
       ],
       correctAnswer: 2,
       explanation:
@@ -137,9 +137,9 @@ const Module7Section3_4 = () => {
       id: 7,
       question: 'Why should buzzing sounds never be ignored in electrical installations?',
       options: [
-        'Initial verification including inspection and testing',
-        'Grease-laden air, odours and combustion products',
-        'Situation, Background, Assessment, Recommendation',
+        'Buzzing always clears itself once the load reduces',
+        'Buzzing is a normal sign of a healthy transformer',
+        'Buzzing only affects sound quality, not safety',
         'They indicate developing faults that can escalate',
       ],
       correctAnswer: 3,
@@ -151,9 +151,9 @@ const Module7Section3_4 = () => {
       question: 'What environmental factors increase arcing risks?',
       options: [
         'Moisture, contamination, and corrosive atmospheres',
-        'To limit fault current if the lead contacts a fault',
-        'Amtech, Trimble, DIALux, spreadsheet templates',
-        'Internal damage may be extensive despite limited external signs',
+        'Cool, dry, well-ventilated conditions',
+        'Clean air with stable, low humidity',
+        'Regularly inspected and maintained enclosures',
       ],
       correctAnswer: 0,
       explanation:
@@ -163,10 +163,10 @@ const Module7Section3_4 = () => {
       id: 9,
       question: 'What documentation is required after finding arcing faults?',
       options: [
-        'Battery Energy Storage Systems (BESS)',
+        'Only a verbal note to the next shift',
         'Detailed fault report with hazard assessment',
-        'Performance requirements and standards to be met',
-        'Schematic (single-line) diagram',
+        'Only an entry in the equipment purchase records',
+        'No documentation, provided the fault was fixed',
       ],
       correctAnswer: 1,
       explanation:
@@ -176,10 +176,10 @@ const Module7Section3_4 = () => {
       id: 10,
       question: 'In the factory example, what indicated the developing contactor fault?',
       options: [
-        'A deep trench with shoring, used for laying underground cables',
-        'A building that generates more energy than it consumes over a year',
+        'A gradual reduction in the motor running current',
+        'A drop in the supply voltage at the main switchboard',
         'Increasing buzzing and visible sparking at contacts',
-        'Identify hazards, check compliance, monitor safety standards',
+        'A steady improvement in the panel temperature',
       ],
       correctAnswer: 2,
       explanation:

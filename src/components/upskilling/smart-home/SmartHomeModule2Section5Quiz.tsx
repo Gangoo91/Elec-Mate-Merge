@@ -10,99 +10,119 @@ export const SmartHomeModule2Section5Quiz = () => {
 
   const questions = [
     {
-      question: 'Define what a hub is in smart homes.',
+      question: 'What is a hub in a smart home system?',
       options: [
-        'A router that provides internet connectivity',
         'A central device that coordinates device communication and local automation',
-        'A smart speaker with voice control',
-        'A security system controller',
+        'A router whose only job is providing internet connectivity',
+        'A smart speaker used purely for voice control',
+        'A dedicated controller for the security system alone',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
+      explanation:
+        'A hub is the central coordinator that bridges protocols, relays commands between devices, and can run automations locally.',
     },
     {
-      question: 'Name one example of a hub-based ecosystem.',
+      question: 'Which of these is an example of a hub-based ecosystem?',
       options: [
         'Individual Wi-Fi smart bulbs',
         'Samsung SmartThings',
-        'Standalone security cameras',
-        'Basic smart plugs',
+        'Standalone Wi-Fi security cameras',
+        'Basic plug-in smart plugs',
       ],
       correctAnswer: 1,
+      explanation:
+        'Samsung SmartThings centres on a hub that links Zigbee, Z-Wave and Wi-Fi devices together, unlike standalone Wi-Fi gadgets.',
     },
     {
-      question: 'List two advantages of hub-based systems.',
+      question: 'What are two advantages of hub-based systems?',
       options: [
         'Cheaper setup and simpler installation',
+        'No internet needed and unlimited device support',
+        'Single-brand lock-in with no configuration',
         'Reliable mesh networking and better scalability',
-        'No internet required and unlimited device support',
-        'Only works with one brand and no configuration needed',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
+      explanation:
+        'Hubs enable robust mesh networks and let the system scale to many devices while bridging different wireless protocols.',
     },
     {
       question: 'What is a disadvantage of hub-based systems?',
       options: [
-        'Cannot work with multiple protocols',
-        'Too reliable for most users',
+        'They cannot work with multiple protocols',
+        'They are too reliable for most users',
         'Higher upfront cost and technical complexity',
-        'Only works during internet outages',
+        'They only work during internet outages',
       ],
       correctAnswer: 2,
+      explanation:
+        'Adding a hub increases the initial cost and setup complexity compared with simply plugging in standalone Wi-Fi devices.',
     },
     {
-      question: 'Name one advantage of hubless systems.',
+      question: 'What is an advantage of hubless (Wi-Fi-only) systems?',
       options: [
+        'Simple setup with no extra hardware needed',
         'Superior scalability and reliability',
         'Better mesh networking capabilities',
-        'Simple setup with no extra hardware needed',
         'More protocol bridging options',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
+      explanation:
+        'Hubless systems connect each device straight to the home Wi-Fi, so there is no extra hub hardware to buy or configure.',
     },
     {
       question: 'What is the biggest weakness of Wi-Fi-only setups?',
       options: [
-        'Too expensive for most homes',
+        'They are too expensive for most homes',
+        'They cannot connect to the internet',
         'Network congestion and reliability issues at scale',
-        'Cannot connect to the internet',
-        'Only works with one device type',
+        'They only work with one device type',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
+      explanation:
+        'As device numbers grow, a single Wi-Fi network becomes congested and less reliable, which mesh hub systems handle better.',
     },
     {
-      question: 'True or False: Hubless systems are more scalable than hub-based ones.',
+      question: 'Are hubless systems more scalable than hub-based ones?',
       options: [
-        'True - Wi-Fi networks can handle unlimited devices',
-        'False - hub-based systems scale better with mesh networking',
-        'True - cloud services provide infinite scalability',
-        'False - neither system can scale beyond 10 devices',
+        'Yes — Wi-Fi networks can handle unlimited devices',
+        'No — hub-based systems scale better with mesh networking',
+        'Yes — cloud services provide infinite scalability',
+        'No — neither system can exceed ten devices',
       ],
       correctAnswer: 1,
+      explanation:
+        'Hub-based mesh networks distribute traffic and extend range, so they scale to large device counts more reliably than Wi-Fi-only setups.',
     },
     {
       question: 'What is a hybrid approach in smart homes?',
       options: [
-        'Using only wireless protocols',
-        'Combining hub-based devices with cloud/voice integration',
+        'Using only wireless protocols throughout',
+        'Combining hub-based devices with cloud and voice integration',
         'Installing both security and lighting systems',
-        'Using half Wi-Fi and half wired ethernet',
+        'Splitting the home half on Wi-Fi and half on wired Ethernet',
       ],
       correctAnswer: 1,
+      explanation:
+        'A hybrid setup keeps a local hub for reliability while adding cloud services and voice assistants for convenience and remote access.',
     },
     {
-      question: 'In what type of property would you recommend a hub-based system?',
+      question: 'For which type of property is a hub-based system most appropriate?',
       options: [
-        'Only in commercial buildings',
+        'Only commercial office buildings',
+        'Small flats with one or two devices',
+        'Properties with no internet access',
         'Medium to large homes with 10+ devices',
-        'Small apartments with 1-2 devices',
-        'Properties without internet access',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
+      explanation:
+        'The benefits of a hub — mesh range and protocol bridging — pay off in larger homes running many devices, not tiny single-device setups.',
     },
     {
-      question: 'What future standard may reduce the need for hubs?',
-      options: ['Wi-Fi 7', '5G networks', 'Matter', 'Bluetooth 6.0'],
-      correctAnswer: 2,
+      question: 'Which emerging standard may reduce the need for dedicated hubs?',
+      options: ['Wi-Fi 7', '5G networks', 'Bluetooth 6.0', 'Matter'],
+      correctAnswer: 3,
+      explanation:
+        'Matter standardises how devices interoperate across ecosystems, lessening reliance on a single proprietary hub.',
     },
   ];
 

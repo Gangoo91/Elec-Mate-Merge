@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'The phrase &ldquo;I can&rsquo;t do this yet&rdquo; is more growth-oriented than &ldquo;I can&rsquo;t do this&rdquo; because:',
     options: [
-      'It sounds more polite and professional',
       'The word &ldquo;yet&rdquo; implies that ability can be developed through time and effort, making the limitation temporary rather than permanent',
+      'It sounds more polite and professional',
       'It reduces immediate pressure by delaying the expectation of success',
       'It is a longer sentence and therefore more thoughtful',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The word &ldquo;yet&rdquo; is what Dweck calls &ldquo;the power of yet&rdquo; &mdash; it transforms a statement of failure into a statement of learning in progress. &ldquo;I can&rsquo;t do this&rdquo; is a fixed mindset statement that frames the inability as permanent. &ldquo;I can&rsquo;t do this yet&rdquo; is a growth mindset reframe that acknowledges current limitation while maintaining the belief that capability can be developed. This linguistic shift has been shown to change behaviour: students taught to use &ldquo;yet&rdquo; language show greater persistence on difficult tasks and higher eventual achievement. For electricians learning complex skills like three-phase motor wiring or advanced fault finding, the word &ldquo;yet&rdquo; keeps the door open to mastery and prevents premature self-labelling as &ldquo;not technical&rdquo; or &ldquo;not good at theory&rdquo;.',
   },
@@ -113,14 +113,14 @@ const quizQuestions = [
     question:
       'A qualified electrician is asked to inspect and test a large commercial installation &mdash; a task they have limited experience with. They feel anxious and think &ldquo;I&rsquo;m going to mess this up, I&rsquo;m not an inspection guy.&rdquo; What would be the MOST effective growth mindset reframe?',
     options: [
+      '&ldquo;This is outside my current skillset. I&rsquo;ll review GN3, ask a more experienced inspector for guidance, and approach this as a learning opportunity&rdquo;',
       '&ldquo;It doesn&rsquo;t matter if I mess it up, effort is all that counts&rdquo;',
       '&ldquo;I&rsquo;ll just fake confidence and hope for the best&rdquo;',
-      '&ldquo;This is outside my current skillset. I&rsquo;ll review GN3, ask a more experienced inspector for guidance, and approach this as a learning opportunity&rdquo;',
       '&ldquo;I should turn this job down because I&rsquo;m not naturally good at inspection work&rdquo;',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Option C is the only true growth mindset response. It acknowledges the current gap in skill (&ldquo;outside my current skillset&rdquo; &mdash; note the word &ldquo;current&rdquo;, not &ldquo;permanent&rdquo;), identifies a specific learning strategy (review GN3, seek guidance from an experienced inspector), and frames the challenge as an opportunity to develop rather than a threat to identity. Option A reflects a false growth mindset &mdash; effort alone without strategy is not sufficient. Option B ignores the real gap in competence and could lead to unsafe or non-compliant work. Option D is a fixed mindset statement that treats ability as innate. The trade environment often discourages this kind of honest acknowledgment of learning needs, but it is essential for both competence development and electrical safety.',
+      'Acknowledging the gap and planning to learn is the only true growth mindset response. It acknowledges the current gap in skill (&ldquo;outside my current skillset&rdquo; &mdash; note the word &ldquo;current&rdquo;, not &ldquo;permanent&rdquo;), identifies a specific learning strategy (review GN3, seek guidance from an experienced inspector), and frames the challenge as an opportunity to develop rather than a threat to identity. &ldquo;Effort is all that counts&rdquo; reflects a false growth mindset &mdash; effort alone without strategy is not sufficient. Faking confidence ignores the real gap in competence and could lead to unsafe or non-compliant work. Turning the job down because you are &ldquo;not naturally good&rdquo; is a fixed mindset statement that treats ability as innate. The trade environment often discourages this kind of honest acknowledgment of learning needs, but it is essential for both competence development and electrical safety.',
   },
   {
     id: 4,
@@ -129,12 +129,12 @@ const quizQuestions = [
     options: [
       '&ldquo;You&rsquo;re working hard on this, and I can see you&rsquo;re using the correct testing sequence &mdash; that&rsquo;s good discipline&rdquo;',
       '&ldquo;I know this fault is tricky, but you&rsquo;re using a logical method &mdash; testing voltage at each point and eliminating sections systematically. That&rsquo;s the right approach&rdquo;',
-      '&ldquo;You&rsquo;re trying really hard, keep going&rdquo; (said to an apprentice who is repeating the same incorrect crimping technique)',
       '&ldquo;You struggled with cable calculations at first, but you&rsquo;ve clearly put in the work to understand the formulas and now you&rsquo;re applying them correctly&rdquo;',
+      '&ldquo;You&rsquo;re trying really hard, keep going&rdquo; (said to an apprentice who is repeating the same incorrect crimping technique)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Option C is ineffective praise because it praises effort (&ldquo;trying really hard&rdquo;) without addressing the fact that the effort is misdirected &mdash; the apprentice is using an incorrect technique. This reinforces the false belief that effort alone leads to success, when in fact the apprentice needs corrective feedback and strategy adjustment. True growth mindset praise should acknowledge effort AND effective strategy, or provide feedback to improve strategy. Options A, B, and D all combine recognition of effort with specific acknowledgment of correct methods or strategic thinking. In apprentice training, this distinction is crucial: supervisors must praise hard work, but they must also ensure that the work is being done correctly and guide apprentices towards more effective approaches when needed.',
+      'Praising the apprentice who keeps repeating an incorrect crimping technique is ineffective because it praises effort (&ldquo;trying really hard&rdquo;) without addressing the fact that the effort is misdirected &mdash; the apprentice is using an incorrect technique. This reinforces the false belief that effort alone leads to success, when in fact the apprentice needs corrective feedback and strategy adjustment. True growth mindset praise should acknowledge effort AND effective strategy, or provide feedback to improve strategy. The other three examples all combine recognition of effort with specific acknowledgment of correct methods or strategic thinking. In apprentice training, this distinction is crucial: supervisors must praise hard work, but they must also ensure that the work is being done correctly and guide apprentices towards more effective approaches when needed.',
   },
   {
     id: 5,
@@ -170,11 +170,11 @@ const quizQuestions = [
       'A 45-year-old electrician who has worked in domestic installation for 20 years wants to move into industrial maintenance but thinks &ldquo;I&rsquo;ve been doing houses too long, I&rsquo;ll never understand PLCs and three-phase motors&rdquo;. Neuroplasticity research would suggest:',
     options: [
       'The electrician is correct &mdash; after age 40, the brain loses the ability to learn new technical skills',
-      'The electrician&rsquo;s brain retains significant plasticity, and they can develop new technical skills through study and practice, though it may take longer than it would have at age 20',
       'PLCs and three-phase systems require a &ldquo;mathematical brain&rdquo; that the electrician either has or does not have',
       'The electrician should focus only on skills they have already mastered, as branching into new areas after 40 is inefficient',
+      'The electrician&rsquo;s brain retains significant plasticity, and they can develop new technical skills through study and practice, though it may take longer than it would have at age 20',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Neuroplasticity research clearly demonstrates that the adult brain &mdash; even well into middle age and beyond &mdash; retains substantial capacity for learning and skill development. While it is true that certain types of plasticity decline with age (particularly the rapid synaptic growth seen in childhood), adult brains compensate with stronger strategic learning, deeper knowledge integration, and more effective use of existing neural networks. The electrician&rsquo;s 20 years of electrical experience provide a massive foundation to build on &mdash; they already understand voltage, current, resistance, safety, circuit protection, and systematic fault finding. Learning PLCs and three-phase systems is an extension of this existing knowledge, not a completely separate domain. The statement &ldquo;I&rsquo;ll never understand&rdquo; is a fixed mindset block. The reality is that thousands of electricians make exactly this transition (domestic to industrial) in their 40s and 50s through formal training (e.g., Level 3 qualifications, PLC courses) and on-the-job learning.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'Dweck&rsquo;s research found that students with a growth mindset tend to view challenging tasks as:',
     options: [
+      'Opportunities to learn and develop, even if they involve struggle and temporary failure',
       'Threats to their self-esteem that should be avoided when possible',
       'Evidence that they are in the wrong field or career',
-      'Opportunities to learn and develop, even if they involve struggle and temporary failure',
       'Unfair obstacles placed by assessors or instructors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'This is one of the central findings of Dweck&rsquo;s mindset research. Individuals with a growth mindset interpret challenge, difficulty, and even failure very differently from those with a fixed mindset. Where a fixed mindset sees challenge as a threat (&ldquo;If I struggle, it means I&rsquo;m not smart&rdquo;), a growth mindset sees challenge as information and opportunity (&ldquo;This is hard, which means I&rsquo;m learning something new&rdquo;). This difference in interpretation leads to completely different behaviours: growth mindset individuals seek out challenging tasks, persist longer, use deeper learning strategies, and ultimately achieve more. For apprentice electricians, this pattern is visible in how different individuals respond to difficult topics such as AC theory or three-phase systems. Those who see the difficulty as a sign of their inadequacy often give up or scrape through with surface-level understanding. Those who see it as a normal part of mastery engage more deeply and emerge with stronger competence.',
   },

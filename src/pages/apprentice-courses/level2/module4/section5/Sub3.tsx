@@ -38,9 +38,9 @@ const checks = [
       'You finish the inspection on a new domestic CU and start dead testing. Which test is first per Reg 643.1?',
     options: [
       'Continuity of protective conductors (R1 + R2).',
-      'Wrong installation, delays, and rework',
-      'R1+R2 from continuity + Ze calculation',
-      'Appropriate qualifications and competence',
+      'Insulation resistance at 500 V DC between live conductors and earth.',
+      'Polarity at every accessory before any other dead test.',
+      'Earth fault loop impedance (Zs) at the furthest point of each circuit.',
     ],
     correctIndex: 0,
     explanation:
@@ -65,9 +65,9 @@ const checks = [
     question:
       'Before any dead test, the absolute prerequisite is:',
     options: [
-      'That you have completed all required on-programme qualifications, achieved the learning outcomes, built a portfolio that meets the minimum requirements, and are educationally ready for the EPA',
-      'Because someone touching exposed metalwork on a distribution circuit (sub-main supplying a downstream board) is far less likely than someone touching the casing of a kettle on a final circuit — the touch-current risk profile is lower.',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'That the multifunction tester has been nulled on the continuity range, so lead resistance is subtracted before any dead test begins.',
+      'That the customer has been briefed and any sensitive equipment disconnected, so the 500 V DC insulation test cannot cause damage.',
+      'That the instrument calibration certificate is in date, so the readings will be accepted on the EIC.',
       'Verified safe isolation per the JIB safe isolation procedure (proving unit checked alive on a known live source, then proving each conductor dead at the point of work, then proving the proving unit alive again).',
     ],
     correctIndex: 3,
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'The R1 + R2 test verifies:',
     options: [
-      'Underfloor heating operates at lower temperatures, improving heat pump efficiency',
-      'To verify that all functions operate correctly and safely before the operator is at height',
+      'The insulation resistance between the line conductor and the CPC, expressed in megohms.',
+      'The continuity of the neutral conductor end-to-end on a ring final circuit only.',
       'Continuity of the line conductor and the circuit protective conductor combined, used to predict Zs.',
-      'Safety footwear, insulating gloves (if appropriate), eye protection, suitable clothing',
+      'The earth fault loop impedance measured live at the origin of the installation.',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question:
       'Why is continuity testing carried out before insulation resistance testing?',
     options: [
-      'Trained rescuers wearing appropriate PPE and RPE will physically enter the confined space to reach, stabilise, and extract the casualty',
-      'A feeling is an emotion (frustrated, anxious, relieved); a thought is an interpretation disguised as a feeling ("I feel that you are being unfair")',
-      'It must be reported as a dangerous occurrence under RIDDOR, and if the worker is taken to hospital for treatment, it is also reportable as a specified injury/over-7-day injury as applicable',
+      'Because continuity uses a higher test current than IR, so doing it first warms the conductors and gives a more stable insulation reading.',
+      'Because IR can only be carried out once the circuit is energised, and continuity is the last dead test before the supply is switched on.',
+      'Because the regulations allow the two tests in either order, but continuity is quicker, so it is done first to save time on site.',
       'Because IR pushes 500 V DC into the circuit; if the CPC is not continuous, the test current may take an unintended path and the IR result is meaningless.',
     ],
     correctAnswer: 3,
@@ -125,9 +125,9 @@ const quizQuestions = [
       'For a ring final circuit, the continuity test (Reg 643.2.2) verifies:',
     options: [
       'End-to-end continuity of L, N and CPC separately, plus the cross-connection r1+r2 test (R1+R2 at every socket should be roughly equal).',
-      'Clearly tagged/marked as defective, segregated from usable stock, and returned to the supplier or disposed of to prevent inadvertent re-use',
-      'Temperature decreases but moisture content remains constant (moving left horizontally on psychrometric chart)',
-      'Specified injuries, over-7-day absences, occupational diseases and dangerous occurrences to the HSE',
+      'Only the end-to-end continuity of the CPC, since the line and neutral are confirmed by the later polarity test.',
+      'The insulation resistance between the two legs of the ring, confirming the ring is electrically separated from earth.',
+      'The earth fault loop impedance at the midpoint socket, which must be half the value measured at the consumer unit.',
     ],
     correctAnswer: 0,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'The polarity test (Reg 643.6) at every accessory verifies:',
     options: [
-      'To protect the motor windings from damage caused by sustained overcurrent (overload) conditions',
-      '"This is a genuinely difficult situation, but I believe I can find a way through it with effort and support"',
+      'That the insulation resistance between line and neutral exceeds 1 MΩ at every accessory on the circuit.',
+      'That the earth fault loop impedance at each accessory is within the Table 41.3 limit for the protective device.',
       'The line conductor is in the line terminal at every accessory, the neutral in the neutral terminal, the CPC at the earth terminal.',
-      'To provide pre-construction information including details of any known asbestos in the building',
+      'That the CPC is continuous from the consumer unit to every accessory, giving the R2 value for the circuit.',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     question:
       'For a TT installation, an additional dead test is required:',
     options: [
-      'Smooth, stepless voltage ramp with no changeover transient',
-      'Ensure work meets required standards and specifications',
-      'No, they cannot sign any certificates',
+      'A second insulation resistance test at 1000 V DC, because TT installs are more exposed to earth leakage.',
+      'A prospective fault current measurement at every socket, because the TT earth path limits fault current.',
+      'A polarity test at the earth electrode, to confirm the electrode is connected to the correct terminal.',
       'Earth electrode resistance (RA), per Reg 643.7.',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
       'You complete the dead-test sequence on a new domestic install. Continuity passes, ring final passes, IR is &gt;200 MΩ on every circuit, polarity is correct at every point. The next step is:',
     options: [
       'Energise the install in a controlled manner — main switch on, RCBOs on one at a time — then proceed to live testing (Ze, Zs, RCD operation, prospective fault current).',
-      'They override the platform controls and are used for emergency recovery or when the platform operator is incapacitated',
-      'Part 4 duties (general requirements for all construction sites) apply to the contractor, plus the contractor assumes the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties under Regulation 7, but the domestic client is not themselves a duty holder',
-      'Records of all maintenance, inspection, and testing activities sufficient to demonstrate compliance, including test results, dates, and the competent person who carried out the work',
+      'Issue the EIC straight away — once the dead tests pass, live testing is optional and only needed on commercial installs.',
+      'Repeat the full dead-test sequence a second time to confirm the readings before energising the installation.',
+      'Energise every circuit at once by closing the main switch with all RCBOs already on, then leave the live tests for a later visit.',
     ],
     correctAnswer: 0,
     explanation:

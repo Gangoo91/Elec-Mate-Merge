@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     question:
       'Is an employer legally required to provide an AED (Automated External Defibrillator) in the workplace?',
     options: [
-      'Yes, all workplaces must have at least one AED under the Health and Safety at Work Act',
-      'Yes, but only on construction sites with more than 50 workers',
       'No, but the HSE strongly recommends AED provision, and it is considered best practice',
+      'Yes, but only on construction sites with more than 50 workers',
+      'Yes, all workplaces must have at least one AED under the Health and Safety at Work Act',
       'No, AEDs are only required in public buildings such as airports and train stations',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'There is no legal requirement for employers to provide an AED. However, the HSE strongly recommends their provision, particularly in workplaces with higher-risk activities or larger numbers of workers. Early defibrillation significantly increases survival rates from cardiac arrest. Many employers choose to provide AEDs as part of their first aid needs assessment.',
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What type of gloves must be included in a BS 8599-1:2019 first aid kit?',
-    options: ['Latex gloves', 'Vinyl gloves', 'Nitrile gloves', 'Cotton gloves'],
-    correctAnswer: 2,
+    options: ['Latex gloves', 'Vinyl gloves', 'Cotton gloves', 'Nitrile gloves'],
+    correctAnswer: 3,
     explanation:
       'BS 8599-1:2019 specifies nitrile gloves, not latex. This is because latex allergies are relatively common and can cause serious reactions. Nitrile gloves provide excellent protection against bloodborne pathogens and are suitable for people with latex sensitivity. A small kit contains 6 pairs, a medium kit contains 9 pairs, and a large kit contains 12 pairs.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'On a high-risk construction site, which additional items might be added to the standard first aid kit?',
     options: [
-      'Paracetamol and ibuprofen',
       'Tourniquets, haemostatic dressings, and additional eye wash',
+      'Paracetamol and ibuprofen',
       'Defibrillator pads and oxygen masks',
       'Splints and surgical instruments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High-risk construction sites often require tourniquets (for catastrophic limb bleeding), haemostatic dressings containing kaolin or chitosan (to promote rapid clotting), additional eye wash bottles (500ml), extra burn dressings, and larger wound dressings. These supplement the standard BS 8599-1:2019 kit. Medications are never included in workplace first aid kits, and surgical instruments are not appropriate for first aid.',
   },
@@ -134,11 +134,11 @@ const quizQuestions = [
     question: 'How often should an AED be checked, and what are the key maintenance items?',
     options: [
       'Annually by the manufacturer only',
-      'Monthly checks including pad expiry dates, battery life indicator, and visual condition',
       'Only when used on a casualty',
       'Every six months as part of a PAT test',
+      'Monthly checks including pad expiry dates, battery life indicator, and visual condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AEDs should be checked monthly. The key maintenance items are: checking pad expiry dates (pads typically last 2-5 years and must be replaced if expired or after use), checking the battery life indicator (batteries last 2-5 years depending on the model), and visually inspecting the unit for damage. Many AEDs perform daily self-checks and display a status indicator, but manual checks are still required.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is NOT a factor in a first aid needs assessment?',
     options: [
-      'The nature of the work and specific hazards',
-      'Shift patterns and lone workers',
       'The colour of the office walls',
+      'Shift patterns and lone workers',
+      'The nature of the work and specific hazards',
       'Remoteness from emergency medical services',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A first aid needs assessment must consider: the nature of the work and specific hazards, the size and spread of the organisation, shift patterns and coverage, lone workers, remoteness from emergency medical services, the history of accidents, special needs (disability, language barriers), non-employees on site (contractors, visitors, the public), and multi-occupied buildings. The colour of the office walls is not a relevant factor.',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
     question: 'What is the correct colour and symbol for first aid signage under ISO 7010?',
     options: [
       'Red square with white cross (reference E003)',
-      'Green rectangle or square with white cross (reference E003)',
       'Blue circle with white cross (reference M003)',
+      'Green rectangle or square with white cross (reference E003)',
       'Yellow triangle with green cross',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'First aid signage must conform to ISO 7010 reference E003: a green rectangle or square with a white cross. Green indicates a safe condition in safety signage. Signs must clearly indicate the location of first aid kits, first aid rooms, first aid personnel, and AEDs. They must be positioned so they are visible from all relevant approaches.',
   },

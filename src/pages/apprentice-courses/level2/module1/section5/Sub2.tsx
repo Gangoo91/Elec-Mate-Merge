@@ -45,9 +45,9 @@ const checks = [
     question: 'What is the very first step of the safe isolation procedure?',
     options: [
       'Identify the correct point of isolation and the conductors involved',
-      'To brief the team on safety hazards and work procedures',
-      'Reducing chilled water demand when outside air temperature is mild',
-      'Special state for adding new devices to the network',
+      'Lock off the consumer unit before doing anything else',
+      'Prove your voltage indicator on the proving unit',
+      'Post the warning notice on the board',
     ],
     correctIndex: 0,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     id: 's5-2-prove-test-prove-check',
     question: 'In ‘prove – test – prove’, what does the FINAL ‘prove’ confirm?',
     options: [
-      'Ask relevant follow-up questions to deepen understanding and show continued interest',
-      'Solar cells integrated into building materials like roof tiles, facades, or windows',
+      'That the circuit has been correctly re-energised',
+      'That the lock-off padlock is still in place',
       'That your voltage indicator was still working when you tested the circuit',
-      'For easy identification, troubleshooting, and future system modifications',
+      'That all conductor combinations have been tested',
     ],
     correctIndex: 2,
     explanation:
@@ -70,12 +70,12 @@ const checks = [
     id: 's5-2-conductor-combinations-check',
     question: 'On a 230 V single-phase circuit, which conductor combinations should you test?',
     options: [
+      'Line to neutral only',
       'Line to neutral, line to earth, AND neutral to earth',
       'Line to neutral and line to earth',
-      'Line to neutral only',
       'Just line to earth — neutral is bonded so it doesn’t matter',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "All three. Line-neutral catches the obvious live conductor. Line-earth catches a broken neutral or borrowed-earth situation. Neutral-earth catches a floating/borrowed neutral that’s been raised by another circuit. Miss any one and you can be working on a conductor that’s sitting at mains potential.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'How many steps does the standard JIB / NET safe isolation procedure have?',
     options: [
-      'RS-485 twisted-pair cable',
+      '3 steps (switch off, lock off, test)',
       '7 steps (some firms expand to 9)',
-      'Grid connection requirements',
-      'Communication conflicts occur',
+      '5 steps, the same as the HSE risk assessment',
+      '12 steps, one for each conductor combination',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'You isolate a circuit and lock it off. What MUST you do before any tool touches a conductor?',
     options: [
-      'At regular intervals as part of PPM, with frequency adjusted based on environmental conditions',
-      '32A or greater — the cable rating (Iz) must be at least equal to the protective device rating (In)',
+      'Check the breaker label matches the circuit you want',
+      'Touch the conductor with the back of your hand to feel for tingling',
       'Prove dead with a GS38-compliant voltage indicator that has itself been proved on a known source',
-      'Have a private, supportive conversation to ask if everything is okay, without making assumptions',
+      'Plug a socket tester in to confirm there’s no power',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why is a multi-meter set to AC volts NOT acceptable for proving dead?',
     options: [
-      'They capture the waste heat from generation and use it for hot water and heating, raising overall efficiency to ~80%',
-      'Whoever placed the unclear order — the contractor pays for return restock fees and the impact on the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work',
-      'The wearer must pass a qualitative or quantitative face-fit test for that specific make and model of RPE',
+      'It reads in millivolts, which is too imprecise for proving dead',
+      'It can only test one conductor combination at a time',
+      'It needs a calibration certificate before every single use',
       'It doesn’t meet GS38 (probe finger guards, ≤4 mm tip, fused leads) and there’s no ‘unknown’ failure mode confirmation',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'You’re isolating at the main switch of a TT installation for a CU change. What extra check matters because it’s TT?',
     options: [
-      "Allowing flexible working hours or phased return to work after absence",
+      "Nothing extra — TT installs are isolated exactly like TN-S",
       "You must verify there’s no incoming voltage on the supply side of the main switch (DNO fault)",
-      "Voltage drop on a shared circuit due to high inrush current of the fridge motor",
-      "Restricted space limits posture options, guardrails restrict movement, and platform bounce affects stability",
+      "You only need to test line-to-neutral on a TT system",
+      "The neutral can be left connected because it’s at earth potential",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'The customer asks if they can leave a temporary fan plugged into the next ring socket while you work. What do you do?',
     options: [
-      'Provide suitable PPE free of charge, ensure it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintained, provide storage, training, and enforce use',
-      'Acknowledge the request positively, explain it falls outside the original scope, and offer to price it as additional work',
+      'Yes — a fan on another circuit has nothing to do with your work',
+      'Yes — as long as the fan is on an RCD-protected socket',
       'No — confirm they understand nothing is to be plugged in or switched within the area until the work is signed off',
-      'They are small moulded components that may contain asbestos and are found in older fuse boxes',
+      'Only if the fan is unplugged whenever you’re testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'You finish the job and remove your lock-off. What is the LAST thing you should do before you leave?',
     options: [
-      'A protective conductor connecting exposed-conductive-parts to the main earthing terminal',
-      'A hazard is something that can cause harm; a risk is the likelihood that harm will occur and the severity of that harm',
-      'Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation',
+      'Leave the lock-off on overnight in case you return tomorrow',
+      'Post a fresh warning notice on the board and leave',
+      'Tell the customer the power is back on without checking',
       'Re-energise, confirm the circuit functions correctly, and confirm no other circuits have been disturbed',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'Mid-job, you need a five-minute toilet break. What happens to the isolation?',
     options: [
       'It’s your padlock and your key — they go with you, the lock stays on',
-      'Future project briefing, design, and specifications',
-      'Allowing measurement of high currents scaled to meter range',
-      'Reasonable care and skill, at a reasonable price',
+      'Leave the key in the lock so a colleague can re-energise if needed',
+      'Remove the lock-off so the customer isn’t inconvenienced',
+      'Hand the key to the supervisor while you’re away',
     ],
     correctAnswer: 0,
     explanation:

@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Section 722 of BS 7671 covers which circuits?',
     options: [
-      'All electrical installations in dwellings',
-      'Circuits intended to supply electric vehicles for charging purposes — and any associated protective arrangements',
-      'Only public-charging infrastructure',
-      'Only DC fast chargers',
+      'Circuits intended to supply electric vehicles for charging purposes',
+      'All fixed electrical installations in dwellings, with EV charging treated as one part',
+      'Only public-charging infrastructure, not domestic wallboxes',
+      'Only DC fast chargers, with AC wallboxes covered under Section 411',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Section 722 of BS 7671:2018+A4:2026 sets particular requirements for circuits intended to supply electric vehicles for charging purposes. Includes domestic Mode 3 wallboxes, workplace chargers, public AC points and (with cross-reference) DC fast. Explicit exclusions: charging points for mobility scooters and similar vehicles ≤ 10 A; inductive (wireless) charging — these fall outside Section 722 scope. The term "electric vehicle (EV)" is defined in Part 2 of BS 7671.',
   },
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Reg 722.511.101 — what does it require of EV charging equipment?',
     options: [
-      'Anything the manufacturer wants',
-      'EV charging equipment shall comply with the appropriate parts of the BS EN 61851 series — the international standard covering conductive charging, charging modes, communication, functional safety and protection',
-      'Only UKCA marking is needed',
-      'Compliance with BS 7671 alone is sufficient',
+      'Compliance with whatever internal specification the manufacturer chooses to apply',
+      'Compliance with the appropriate parts of the BS EN 61851 series',
+      'UKCA marking alone, with no reference to a charging-equipment standard',
+      'Compliance with BS 7671 alone, the equipment standard being optional',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What is the key difference between Mode 2 and Mode 3 EV charging?',
     options: [
-      'Mode 2 is DC, Mode 3 is AC',
-      'Mode 2 = in-cable control & protection device (ICCPD / "granny cable") plugged into a domestic socket-outlet, charging at typically 8–13 A. Mode 3 = dedicated charging station with the CP/PP signalling and protection built into the wallbox; the cable just connects vehicle to wallbox. Mode 3 is the UK 2025–26 domestic default',
-      'They are the same thing',
-      'Mode 3 is only for commercial sites',
+      'Mode 2 is DC charging from the supply, while Mode 3 is the AC method',
+      'Mode 2 uses an in-cable control & protection device into a domestic socket; Mode 3 builds the signalling and protection into a dedicated wallbox',
+      'They are different names for the same in-cable charging arrangement',
+      'Mode 2 is the domestic default; Mode 3 is restricted to commercial sites',
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'Reg 722.413.1.2 permits a separated-source protective measure for EV charging. What is the explicit limitation?',
     options: [
-      'No limitation',
-      'The protective measure shall be limited to the supply of one electric vehicle supplied from one unearthed source. The separated source cannot feed multiple EVs or any other loads — single EV per unearthed source',
-      'Up to 5 EVs per source',
-      'Only commercial sites',
+      'No limitation — one separated source may feed as many EVs as its rating allows',
+      'Up to five EVs may share one separated source, each with its own protective device',
+      'The measure is limited to the supply of one EV from one unearthed source',
+      'It is permitted only on commercial sites, never in a domestic installation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 722.413.1.2 — "the protective measure shall be limited to the supply of one electric vehicle supplied from one unearthed source". A separated (isolated transformer) source can serve exactly ONE EV charging point. Multiple EVs on one isolated source is explicitly prohibited; the source cannot also feed any other loads on the same circuit. Cert evidence bundle records the topology if this protective measure is used. In practice, separated-source is rare in UK domestic (PME + earthing alternatives per 722.411.4 are the dominant approach); it appears more often in commercial / fleet contexts with dedicated transformer per bay.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer asks for a "Mode 1" charging point at home. What is the correct response?',
     options: [
-      'Quote a Mode 1 install — it’s the cheapest',
-      'Educate the customer: Mode 1 has no CP signalling, no protection logic between vehicle and supply, and is essentially obsolete for UK domestic EV charging. Reg 722.x and BS EN 61851 expect Mode 3 for dedicated charge points; Mode 2 (granny lead) covers the occasional unplanned event. Recommend a Mode 3 dedicated wallbox install',
-      'Mode 1 is the same as Mode 3 — quote it',
-      'Refer them to public charging',
+      'Explain that Mode 1 lacks CP signalling and is obsolete for UK domestic, and recommend a Mode 3 wallbox',
+      'Quote the Mode 1 install as requested, since it is cheapest and the customer chooses the mode',
+      'Fit a Mode 1 point with a 30 mA RCD at the consumer unit to supply the missing protection',
+      'Decline home charging and refer the customer to public charging, since domestic now requires Mode 4',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Mode 1 (no signalling, direct socket connection) is essentially obsolete and not used in UK domestic EV charging — the safety case requires CP signalling between vehicle and charging station (Mode 2 ICCPD or Mode 3 wallbox). Customer education is the right move. Mode 3 dedicated wallbox is the UK 2025–26 default for daily home charging; Mode 2 (granny lead) is fine for occasional / emergency use only. Cert evidence bundle records the Mode 3 install rationale per Reg 722 and BS EN 61851.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Reg 722.511.101 requires BS EN 61851 conformity. How does the installer verify this on a quote-stage product check?',
     options: [
-      'Trust the brand name',
-      'Read the manufacturer’s Declaration of Conformity (DoC). Reputable UK wallbox brands (Ohme, Wallbox, Hypervolt, Andersen, PodPoint, Easee, EO Charging, MyEnergi Zappi) publish a DoC citing the BS EN 61851 parts applied (typically -1 + -22 for AC stations) + UKCA / CE marking + accredited test reports. Installer attaches DoC + datasheet to the cert evidence bundle',
-      'Buy whichever model is cheapest',
-      'No verification needed',
+      'Confirm a UKCA mark, treating it as certifying BS EN 61851 conformity with no further paperwork',
+      'Test the wallbox against BS EN 61851 on site at commissioning to demonstrate conformity by measurement',
+      'Read the manufacturer’s Declaration of Conformity citing the BS EN 61851 parts applied',
+      'Rely on the wholesaler’s assurance that the product is approved, recording it in the evidence bundle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 722.511.101 conformity is verified via the manufacturer’s Declaration of Conformity (DoC) + accredited test reports + UKCA / CE marking + datasheet. Reputable UK 2025-26 brands publish all of this on the product page or download portal. Installer responsibility: collect these documents and include in cert evidence bundle. Cell-level / mode-level testing is the manufacturer’s job; installer verifies via paperwork at quote stage and at handover.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'A customer wants a charge point for their disability-mobility-scooter that draws 8 A from a domestic socket. Does Section 722 apply?',
     options: [
-      'Yes — full Section 722 applies',
-      'No — Section 722 explicitly excludes "electric vehicle charging points that charge mobility scooters and similar vehicles of 10 A and less". The 8 A mobility scooter charger falls outside Section 722; install per the rest of BS 7671 as a standard domestic appliance circuit',
-      'Only Reg 722.411.4 applies',
-      'Customer’s choice',
+      'Yes — any electrically driven vehicle is an EV, so full Section 722 applies to the scooter charger',
+      'Only Reg 722.411.4 PME earthing applies; the rest of Section 722 is waived for low-current chargers',
+      'No — the 8 A scooter falls under the Section 722 exclusion for mobility scooters of 10 A and less',
+      'It depends on customer preference, since the 10 A exclusion is advisory rather than a scope boundary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 722 includes an explicit exception for mobility scooters and similar vehicles of 10 A and less — these are not "EV charging" within Section 722 scope. Install treats it as a standard domestic socket-outlet circuit (subject to the rest of BS 7671 — Section 411 ADS, Section 415 30 mA RCD on socket-outlets ≤ 32 A etc.). No Section 722 obligations for PME-on-EV, Type B + RDC-DD, dedicated final circuit (though these may still be sensible). Cert evidence bundle records the exclusion rationale.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Section 722 includes Annex A722 (Informative) showing example arrangements. What weight do these examples carry?',
     options: [
-      'Mandatory — must follow exactly',
-      'Annex A722 is labelled (Informative) — guidance only, not mandatory. The binding text of Section 722 imposes the requirements; Annex A722 illustrates compliant arrangements but isn’t exclusive. Other arrangements that satisfy the binding regs are equally valid',
-      'Mandatory only on Tuesdays',
-      'Annex A722 is the only acceptable layout',
+      'Mandatory — the arrangements shown in Annex A722 must be followed exactly, with no alternatives',
+      'The only acceptable layout for the common cases, with departures allowed solely on commercial sites',
+      'The same binding weight as the numbered regulations, so any arrangement outside it is a departure',
+      'Informative guidance only — illustrative examples, with any arrangement meeting the binding regs equally valid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Annex A722 is explicitly labelled (Informative) — illustrative examples of compliant arrangements, not the exclusive route. Mandatory obligations come from the binding text of Section 722 (the numbered regulations 722.x). The competent designer can satisfy 722.x via Annex A722 patterns OR via other arrangements that meet the binding regs. Useful for unusual sites (e.g. shared block charging, isolated commercial bays) where the standard Annex A722 patterns don’t fit cleanly.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'An installer is asked to provide a Mode 4 (DC fast) charge point at a UK domestic home. What is the typical position in 2025-26?',
     options: [
-      'Standard install — same as Mode 3',
-      'Mode 4 DC fast (typically 50–350 kW) is essentially never installed at UK domestic homes — DNO supply capacity, three-phase availability, kit cost (£20-50k+), space and customer charging-time-need all push toward Mode 3 (7 kW single-phase) instead. Mode 4 belongs in M7 (commercial / workplace / public / DC fast). Customer education: Mode 3 7 kW overnight covers all typical UK driving patterns',
-      'Always required for new builds',
-      'Cheaper than Mode 3',
+      'A standard install handled like a Mode 3 wallbox, just with a DC connector in place of the Type 2 socket',
+      'Essentially never installed at UK homes — supply capacity, kit cost and need all favour a Mode 3 wallbox',
+      'A requirement on all new-build dwellings under current Building Regulations, so quoted as standard',
+      'A cheaper alternative to Mode 3, since the DC kit removes the need for an on-board vehicle charger',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Why does Section 722 specifically EXCLUDE inductive (wireless) charging from its scope?',
     options: [
-      'Inductive isn’t covered by any standard',
-      'Inductive charging operates with different electrical principles (magnetic coupling between primary in ground/pad and secondary in vehicle) — different fault, separation and earthing implications than conductive (cable-connected) charging. Section 722 was written for conductive charging; inductive is addressed in other standards (IEC 61980 series) and falls outside Section 722 scope',
-      'Inductive doesn’t exist yet',
-      'It’s prohibited entirely',
+      'Because inductive charging is not yet covered by any published standard, so it cannot be scoped in',
+      'Because inductive charging is prohibited in the UK and Section 722 covers only permitted arrangements',
+      'Inductive charging uses magnetic coupling with different fault and earthing implications, addressed in the IEC 61980 series',
+      'Because inductive charging draws no current from the fixed wiring, so there is nothing to regulate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inductive (wireless) EV charging — primary coil in ground pad, secondary coil in vehicle, magnetic coupling for power transfer — has electrical fault and protection characteristics that differ materially from conductive (cable-connected) charging. IEC 61980 covers inductive specifically. Section 722 explicitly scopes itself to conductive arrangements and excludes inductive. The 2025-26 UK domestic install market is overwhelmingly conductive (Type 2 cable into wallbox); public inductive pads at taxi ranks etc. are emerging but rare.',
   },

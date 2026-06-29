@@ -18,7 +18,7 @@ export const smartHomeModule7Section4QuizQuestions = [
     options: ['Multimeter', 'Proving unit', 'Neon screwdriver', 'Smartphone app'],
     correct: 1,
     explanation:
-      'A proving unit should be used to verify isolation is effective and maintained throughout the work.',
+      'A proving unit (or known live supply) confirms the voltage indicator works before and after testing, following the prove-test-prove method; a neon screwdriver or app must never be relied upon.',
   },
   {
     id: 3,
@@ -34,6 +34,6 @@ export const smartHomeModule7Section4QuizQuestions = [
     options: ['MCB protection only', 'Fuse protection', 'RCD protection', 'RCBO protection'],
     correct: 2,
     explanation:
-      'RCD (Residual Current Device) protection is required for most new circuits to prevent electric shock and reduce fire risk.',
+      'BS 7671 Regulation 411.3.4 requires additional protection by a 30 mA RCD for most new circuits, including socket-outlets and lighting in dwellings, to guard against electric shock.',
   },
 ];

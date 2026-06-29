@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'How often should electrical installations be inspected?',
     answer:
-      'BS 7671 Table 3A of GN3 (Guidance Note 3: Inspection and Testing) recommends maximum intervals between periodic inspections depending on the installation type. Domestic properties: every 5 years (or on change of occupancy). Commercial properties: every 5 years (or as recommended by the previous inspector). Industrial installations: every 3 years. Places of public entertainment, theatres, and cinemas: annually. Construction site installations: every 3 months. Agricultural and horticultural premises: every 3 years. Caravan parks: annually. Swimming pools: annually. These are maximum recommended intervals — the inspector may recommend shorter intervals based on the condition of the installation, its age, and the environment.',
+      'Table 3A of GN3 (IET Guidance Note 3: Inspection and Testing) recommends maximum intervals between periodic inspections depending on the installation type. Domestic properties: every 5 years (or on change of occupancy). Commercial properties: every 5 years (or as recommended by the previous inspector). Industrial installations: every 3 years. Places of public entertainment, theatres, and cinemas: annually. Construction site installations: every 3 months. Agricultural and horticultural premises: every 3 years. Caravan parks: annually. Swimming pools: annually. These are maximum recommended intervals — the inspector may recommend shorter intervals based on the condition of the installation, its age, and the environment.',
   },
   {
     question: 'What does the Electricity at Work Regulations 1989 require?',

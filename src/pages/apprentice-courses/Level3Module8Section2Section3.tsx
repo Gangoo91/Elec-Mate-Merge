@@ -36,10 +36,10 @@ const checks = [
     question:
       "It is the night before your Unit 305 (Electrical Systems Design) paper. You have done six full mocks across the last fortnight, averaging 72-78%. What is the most useful single hour of revision you can do tonight?",
     options: [
-      "Control of Asbestos Regulations 2012 — the principal UK asbestos regulation. Covers duty to manage (Reg 4), exposure assessment (Reg 6), prevention or reduction (Reg 7), licensed work (Reg 8), training (Reg 10), respiratory PPE, hygiene, monitoring, surveillance.",
-      "An event that could have caused injury but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t. Slips without fall, tool drops without injury, almost-contact with energised conductors, RAMS-procedure shortcuts spotted before incident. Leading indicator of latent risk.",
-      "Lawfulness, fairness and transparency — personal data must be processed lawfully (one of the six bases), fairly (in a way the data subject would reasonably expect), and transparently (the data subject knows what's happening with their data via a privacy notice).",
-      "Walk through your mock-result error log — review the questions you got wrong, confirm you understand the right answer, and refresh the formula bank (Vd, Zs, CCC after derating, three-phase line/phase). One hour, no new material, no panic-cramming.",
+      "Sit one more full timed mock paper end to end, to squeeze out a final score improvement before the real thing.",
+      "Start a brand-new topic you have not yet covered, so no gaps are left in your knowledge going into the morning.",
+      "Re-read the entire BS 7671 design chapter cover to cover, since the paper is closed-book and you cannot take it in.",
+      "Work through your mock error log and refresh the formula bank — no new material, no panic-cramming.",
     ],
     correctIndex: 3,
     explanation:
@@ -50,10 +50,10 @@ const checks = [
     question:
       "You're walking out the door for your Unit 304 (Inspection, Testing and Commissioning) paper. The centre is on-screen, closed-book, invigilated. What do you pack?",
     options: [
-      "Largest motor at 100 percent + 50-75 percent of remaining motors running, plus check that the supply can handle the largest motor starting on top of the others running. Sequence starts to avoid concurrent transients.",
-      "The older learner may resist taking direction from someone younger, and the younger mentor may feel uncomfortable asserting authority over someone with more life experience",
-      "Photo ID, candidate confirmation letter or email, basic non-programmable scientific calculator (in case the on-screen one fails), bottle of water, snack for AFTER the exam, and a watch (analogue) — phones are not permitted in the exam room.",
-      "Move the bond connection to a clean section of the same pipe (still consumer side, still before any branch, within 600 mm of point of entry where practicable per Reg 544.1.2). Clean to bare metal, apply paste, fit clamp.",
+      "Your BS 7671 Wiring Regulations book and the On-Site Guide, so you can look up any values you cannot recall during the paper.",
+      "Your phone and a set of revision flashcards, so you can do a final review right up until the exam begins.",
+      "Photo ID, confirmation letter, a backup non-programmable calculator, water, a post-exam snack and an analogue watch.",
+      "A programmable graphing calculator pre-loaded with the key formulae, to save time on the multi-step calculations.",
     ],
     correctIndex: 2,
     explanation:
@@ -64,10 +64,10 @@ const checks = [
     question:
       "Your Unit 302 paper starts at 09:30. The centre is 20 minutes from home. What time do you aim to arrive?",
     options: [
-      "09:00 — half an hour early. Gives you time to use the toilet, settle nerves, sign in, get briefed, and not start the paper with adrenaline still spiking from a rushed arrival.",
-      "The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition",
-      "The consequences of the failure are low (no safety or environmental impact, minimal operational disruption) and the cost of preventive maintenance would exceed the cost of allowing the failure to occur and repairing it",
-      "Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation",
+      "09:00 — half an hour early, with time to sign in, use the toilet and settle before the start.",
+      "09:28 — just two minutes early, so you spend the least possible time waiting around and feeling nervous before the start.",
+      "08:00 — an hour and a half early, to fit in a final hour of cramming revision in the car park before going in.",
+      "09:30 — exactly on time, walking straight into the room as the paper begins so you waste none of your morning.",
     ],
     correctIndex: 0,
     explanation:

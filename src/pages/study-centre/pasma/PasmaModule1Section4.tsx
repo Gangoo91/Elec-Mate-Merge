@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'pasma-cdm-cpp',
     question: 'Who is responsible for preparing the construction phase plan?',
     options: [
+      'The principal contractor',
       'The client',
       'The principal designer',
-      'The principal contractor',
       'The tower operative',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Under CDM 2015, the principal contractor (or the contractor on a single-contractor project) is responsible for preparing the construction phase plan before the construction phase begins.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'Under CDM 2015, what must a contractor ensure about workers carrying out tower work?',
     options: [
       "That they have at least 10 years' experience",
-      'That they hold a university degree in construction',
       'That they have the skills, knowledge, training, and experience for the task',
-      'That they are members of PASMA',
+      'That they hold a university degree in construction',
+      'That they are paid-up members of PASMA',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'CDM 2015 requires that contractors ensure their workers have the appropriate skills, knowledge, training, and experience for the work they carry out. For tower work, this typically means holding a valid PASMA card, but the regulation focuses on actual competence.',
   },
@@ -87,8 +87,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which of the following is NOT one of the five CDM duty holder roles?',
-    options: ['Client', 'Principal contractor', 'Health and safety inspector', 'Designer'],
-    correctAnswer: 2,
+    options: ['Client', 'Principal contractor', 'Designer', 'Health and safety inspector'],
+    correctAnswer: 3,
     explanation:
       'The five CDM duty holders are: client, principal designer, principal contractor, designer, and contractor. An HSE inspector is not a CDM duty holder — they are the enforcement body.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 5,
     question: 'What must the construction phase plan include in relation to tower work?',
     options: [
-      "Only the tower manufacturer's contact details",
       'Arrangements for managing health and safety risks including tower assembly, use, and dismantling',
+      "Only the tower manufacturer's contact details",
       'Only a list of PASMA card numbers',
       "A copy of the building's planning permission",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The construction phase plan must set out the arrangements for managing health and safety risks during the construction phase. For tower work, this includes how the tower will be assembled, used, inspected, and dismantled safely.',
   },
@@ -145,11 +145,11 @@ const quizQuestions = [
     question: 'What is the purpose of pre-construction information under CDM 2015?',
     options: [
       'To allow the client to claim insurance',
-      'To inform designers and contractors of existing risks and constraints before work begins',
       'To satisfy planning permission requirements',
       'To enable the HSE to track all construction projects',
+      'To inform designers and contractors of existing risks and constraints before work begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pre-construction information helps designers and contractors understand the existing conditions, hazards, and constraints on a site so they can plan their work safely. For tower work, this might include floor loading limits, overhead services, or restricted access areas.',
   },
@@ -157,12 +157,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under CDM 2015, what level of supervision must a contractor provide for tower work?',
     options: [
-      'No supervision is required if operatives hold PASMA cards',
       'Supervision must be proportionate to the risk and the competence of workers',
+      'No supervision is required if operatives hold PASMA cards',
       'Only a principal contractor can supervise tower work',
       'Supervision is only needed for towers above 8 metres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CDM 2015 requires that the degree of supervision is proportionate to the risk involved and the competence of the workers. Even experienced PASMA-trained operatives require appropriate supervision, though less than trainees or workers new to the site.',
   },

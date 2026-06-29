@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'During a scaffold inspection, you notice that one sole board has sunk approximately 30mm into soft ground. What should you do?',
     options: [
-      'Continue the inspection — 30mm of settlement is within acceptable limits',
-      'Place an additional sole board on top of the sunk one and continue working',
-      'Stop using the scaffold, report the defect, and tag it as unsafe until a competent person has assessed and remedied the settlement',
-      'Ignore it unless the scaffold is visibly leaning',
+      'Stop use, report the defect, and tag the scaffold unsafe until a competent person remedies it',
+      'Continue the inspection, treating 30mm of settlement as within acceptable limits',
+      'Slide an additional sole board on top of the sunk one and carry on working',
+      'Leave it for now and only act if the scaffold becomes visibly out of plumb',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Any visible settlement of sole boards or base plates is a defect that must be reported and rectified before the scaffold is used. Settlement can cause uneven loading, loss of plumb in standards, and progressive structural failure. The scaffold must be taken out of use and tagged as unsafe until a competent scaffolder has assessed the situation, re-levelled the base, and confirmed the scaffold is safe.',
   },
@@ -25,10 +25,10 @@ const quickCheckQuestions = [
     question:
       'You measure a guardrail on a working platform and find it is 870mm above the platform surface. Is this acceptable?',
     options: [
-      'Yes — anything above 800mm is acceptable',
-      'No — guardrails must be at least 950mm above the platform surface, this scaffold must not be used until corrected',
-      'Yes — 870mm is close enough and within normal tolerance',
-      'It depends on the height of the scaffold',
+      'Yes — any guardrail height above 800mm meets the requirement',
+      'No — the minimum is 950mm, so the scaffold must not be used until corrected',
+      'Yes — 870mm is close enough to count as within normal tolerance',
+      'It depends on the overall height of the scaffold above the ground',
     ],
     correctIndex: 1,
     explanation:
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       'You notice a 35mm gap between two scaffold boards on a working platform. What action is required?',
     options: [
-      'No action needed — gaps up to 50mm are permitted',
-      'Place a piece of plywood over the gap as a temporary fix',
-      'The scaffold must not be used — gaps must not exceed 25mm, and this must be reported and corrected by a competent scaffolder',
-      'Push the boards closer together yourself and carry on',
+      'No action is needed, since board gaps of up to 50mm are permitted',
+      'Lay a piece of plywood over the gap as a temporary fix and continue',
+      'Push the two boards closer together yourself and carry on working',
+      'Do not use it — gaps must not exceed 25mm, so report it for a competent scaffolder to correct',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Gaps between scaffold boards must not exceed 25mm. A 35mm gap is a trip hazard and could allow tools, materials, or debris to fall through to people below. The platform must not be used until the boards have been repositioned by a competent scaffolder to close the gap. Never attempt to reposition boards yourself unless you are a competent scaffolder — moving boards can destabilise the platform.',
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'When inspecting scaffold foundations, which of the following is a defect that requires immediate action?',
     options: [
+      'A base plate sitting directly on soft ground with no sole board underneath',
       'Base plates sitting flat on sole boards with no visible gap',
       'Sole boards resting on firm, level ground with no visible settlement',
-      'A base plate sitting directly on soft ground with no sole board underneath',
       'Adjustable base plates set to equal heights on a level surface',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A base plate sitting directly on soft ground without a sole board is a serious defect. Sole boards are essential to spread the load of the scaffold over a wider area of ground, preventing the base plate from sinking into soft ground. Without a sole board, the point load from the base plate can cause settlement, leading to the scaffold going out of plumb and potentially collapsing. This must be corrected before the scaffold is used.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'During a systematic inspection, in what order should you inspect a scaffold?',
     options: [
       'Top to bottom — start at the highest platform and work down',
-      'Bottom to top — start at the foundations and work upward systematically',
       'Inside out — start at the boards and work outward to the standards',
+      'Bottom to top — start at the foundations and work upward systematically',
       'Random order — it does not matter as long as everything is checked',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A systematic scaffold inspection should always work from the bottom to the top — starting at the foundations (sole boards, base plates, ground conditions) and working upward through standards, ledgers, transoms, bracing, ties, platforms, guardrails, and access. This logical sequence ensures nothing is missed and reflects the structural hierarchy of the scaffold — if the foundations are defective, everything above them is compromised regardless of its condition.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'You are inspecting the ties on a scaffold and find that two ties have been removed from a section. What should you do?',
     options: [
-      'Continue the inspection — two missing ties will not make a significant difference',
-      'Replace the ties yourself using spare components from the ground',
-      'Immediately stop using that section of scaffold, tag it as unsafe, and report to the scaffold contractor for urgent re-tying',
-      'Add extra bracing to compensate for the missing ties',
+      'Continue the inspection, as two missing ties will not make a significant difference',
+      'Refit the two ties yourself using spare components found at ground level',
+      'Add extra ledger bracing to that bay to compensate for the missing ties',
+      'Stop using that section, tag it unsafe, and report it to the contractor for urgent re-tying',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Missing ties are one of the most dangerous defects on a scaffold. Ties prevent the scaffold from pulling away from the building or overturning under wind loading or eccentric loading. Every tie is calculated as part of the scaffold design — removing even one or two ties can compromise the stability of an entire section of scaffold. The affected area must be immediately taken out of use and tagged as unsafe. Only a competent scaffolder should re-install ties, as they must be fixed to suitable anchorage points and properly tightened.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is NOT part of a systematic scaffold inspection?',
     options: [
+      'Measuring the exact weight of materials stored on each platform',
       'Checking that sole boards are level and not sinking into the ground',
       'Verifying that all couplers are tight and not slipping',
-      'Measuring the exact weight of materials stored on each platform',
       'Checking that guardrails are at the correct height with mid-rails and toe boards',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Measuring the exact weight of materials on each platform is not a practical part of a visual inspection. However, the inspector should make a visual assessment of whether the loading appears to be within the scaffold's designed capacity — looking for signs of overloading such as excessive deflection of boards, large quantities of heavy materials, or materials stacked higher than guardrails. The other three options are all essential parts of a systematic inspection.",
   },
@@ -149,24 +149,24 @@ const quizQuestions = [
     id: 7,
     question: 'When inspecting standards (uprights), what are you primarily checking for?',
     options: [
-      'That they are painted in the correct colour for the scaffold type',
-      'That they are plumb (vertical), correctly spaced, properly spliced, and undamaged',
-      'That they are made from aluminium rather than steel',
-      'That they have been on site for less than 12 months',
+      'That every standard rests on its own independent concrete pad foundation',
+      'That the standards are a larger diameter than the ledgers and transoms',
+      'That each standard carries a manufacturer date stamp less than 12 months old',
+      'That they are plumb, correctly spaced, properly spliced, and free of damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'When inspecting standards, you are checking that they are plumb (vertical) — a leaning standard indicates potential foundation failure or structural issues. You also check that they are correctly spaced according to the scaffold design, that any splices are correctly positioned (staggered and not at the same lift), and that the tubes are not bent, corroded, or damaged. The material and colour are not inspection criteria, and there is no maximum time limit for scaffold tubes on site provided they remain in good condition.',
+      'When inspecting standards, you check that they are plumb (vertical) — a leaning standard indicates possible foundation failure — that they are correctly spaced to the design, that splices are staggered and not at the same lift, and that the tubes are not bent, corroded, or damaged. Standards do not each need a concrete pad, are the same nominal tube size as ledgers, and have no maximum time on site provided they stay serviceable.',
   },
   {
     id: 8,
     question:
       'A scaffold inspection reveals that the trap door on the access ladder is jammed open and cannot be closed. Why is this a defect?',
     options: [
-      'An open trap door is not a defect — it makes access easier for workers',
-      'The open trap door creates a fall hazard through the opening in the platform, and the platform edge protection is incomplete at that point',
-      'It is only a defect if the scaffold is more than 4 metres high',
-      'It is only a defect if the ladder is not secured at the top',
+      'An open trap door is not a defect, as it makes access quicker for workers',
+      'It leaves an unprotected opening in the platform — a fall hazard with no edge protection',
+      'It is only a defect once the scaffold rises more than 4 metres above the ground',
+      'It is only a defect if the access ladder is not also secured at its top',
     ],
     correctAnswer: 1,
     explanation:

@@ -16,12 +16,12 @@ const quickCheckQuestions = [
     question:
       'PUWER 1998 applies to which of the following used by an electrical maintenance technician?',
     options: [
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
-      'Any work equipment provided for use or used at work — including hand tools, power tools, test instruments and ladders',
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
-      'Fused probes with finger guards and a maximum of 2 mm exposed tip, plus a maximum current through the body limited by high-value resistors',
+      'Any equipment provided for or used at work — hand tools, power tools, test instruments and ladders',
+      'Only fixed machinery that is installed permanently in the workplace by the employer',
+      'Only equipment supplied directly by the employer, not the technician’s personal tools',
+      'Only powered equipment, excluding hand tools, test instruments and access equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "PUWER has a very broad scope. 'Work equipment' is defined as any machinery, appliance, apparatus, tool or installation for use at work. This includes a screwdriver, a multifunction tester, a cordless drill, a ladder, and a cable pulling winch. If you use it for work, PUWER applies to it.",
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     id: 'puwer-maintenance',
     question: 'Regulation 5 of PUWER requires that work equipment is:',
     options: [
-      'Building user surveys, energy analysis, and environmental monitoring',
-      'The Management of Health and Safety at Work Regulations 1999',
+      'Inspected by an external competent person every twelve months',
+      'Replaced with new equipment at fixed intervals set by the HSE',
       'Maintained in an efficient state, in efficient working order and in good repair',
-      'Risk that buildings become unmarketable or devalued due to poor energy performance',
+      'Marked with a UKCA or CE label before it can be used at work',
     ],
     correctIndex: 2,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'puwer-inspection',
     question: 'Under Regulation 6 of PUWER, when must work equipment be inspected?',
     options: [
-      'A possible fault such as a damaged shading ring, misaligned armature, contaminated pole faces or low coil voltage',
+      'Only once, at the point the equipment is first purchased',
       'After installation, before first use, and at suitable intervals thereafter — or after exceptional circumstances that could affect safety',
-      'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
-      'Review the grading descriptors, understand what each grade requires, practise to the distinction standard, and seek feedback from your training provider',
+      'Only when a defect has already caused an accident or injury',
+      'Every working day before the equipment may be switched on',
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'puwer-isolation',
     question: 'Regulation 19 of PUWER requires work equipment to have:',
     options: [
-      'Record of isolation point, lock used, and tests performed',
+      'A permanent connection that cannot be disconnected on site',
+      'Isolation only from the electrical supply, not other energy forms',
+      'A written record of every isolation made during its working life',
       'Clearly identifiable means of isolating it from all sources of energy',
-      'Different modes travelling at different speeds in multimode fibre',
-      'Joints maintain electrical continuity and have adequate cross-sectional area',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Regulation 19 requires that work equipment is provided with clearly identifiable and readily accessible means of isolating it from all sources of energy. The isolation must be confirmed — reconnection must not expose any person to risk. This directly supports safe isolation procedures for electrical maintenance.',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under Regulation 4 of PUWER, work equipment must be:',
     options: [
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
+      'Replaced with a brand new item at the start of every project',
+      'Owned outright by the employer rather than hired or leased',
       'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
-      'Guards, protection devices, information/instruction/training, and supervision — in a hierarchy of measures',
+      'Tested by the manufacturer on the day before each use',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: "A maintenance technician's multifunction tester is covered by PUWER because:",
     options: [
-      "Provide a path for fault currents and limit touch voltages",
-      "Bypass mode with monitoring for improved efficiency",
-      "Activating event, Beliefs (about the event), Consequences (emotional and behavioural)",
+      "It contains a battery and therefore counts as a portable appliance",
+      "It is only covered while it is connected to a live circuit",
+      "It is exempt unless it is used on three-phase installations",
       "It is 'work equipment' — any apparatus or tool provided for use at work",
     ],
     correctAnswer: 3,
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'Regulation 7 of PUWER addresses specific risks. This requires that:',
     options: [
       'Where use involves a specific risk, use is restricted to designated persons and maintenance is carried out by specifically designated persons',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
+      'All work equipment must be fitted with an emergency stop button',
+      'Equipment presenting a specific risk must be withdrawn from use entirely',
+      'Specific risks must always be eliminated rather than controlled',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Regulations 8 and 9 of PUWER require employers to provide:',
     options: [
-      '"The circuits were tested and found to be satisfactory."',
+      'Personal protective equipment for every task without exception',
       'Adequate information, instruction and training on the use of work equipment',
-      'Submit the over-7-day RIDDOR report now and document why notification was late',
-      'Discharge capacitors and release mechanical energy safely',
+      'A written permit to work before any equipment is used',
+      'Free replacement tools whenever an employee requests them',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Regulation 10 of PUWER requires that work equipment conforms to:',
     options: [
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
+      'The internal quality standards set by the employer alone',
+      'The British Standard for the trade in which it is used',
       'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
-      'Guards, protection devices, information/instruction/training, and supervision — in a hierarchy of measures',
+      'A minimum age and condition before it may be used at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'Regulations 11 to 13 of PUWER cover protection against dangerous parts of machinery. Which measures are required?',
     options: [
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
-      'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
-      'Guards, protection devices, information/instruction/training, and supervision — in a hierarchy of measures',
+      'A single fixed enclosing guard is sufficient on its own in every situation',
+      'Only signage warning of the dangerous parts of the machinery is required',
+      'Workers must simply be instructed to keep clear of the moving parts at all times',
+      'A hierarchy of measures: guards, protection devices, then information, training and supervision',
     ],
     correctAnswer: 3,
     explanation:
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'Regulation 14 of PUWER requires controls for starting and stopping work equipment. For electrical maintenance equipment, this means:',
     options: [
-      'Equipment must have suitable controls for starting, stopping and emergency stop where necessary — properly designed and clearly visible',
-      'Where use involves a specific risk, use is restricted to designated persons and maintenance is carried out by specifically designated persons',
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
+      'Suitable controls for starting, stopping and emergency stop where needed — clearly visible and identifiable',
+      'Equipment may only be started by a supervisor, and never directly by the operator using it',
+      'All controls must be locked off the whole time the equipment is in use on site',
+      'A single combined control should perform every function on the piece of equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'Under PUWER, which of the following is an example of a maintenance record that should be kept?',
     options: [
-      'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
+      'A copy of the UKCA or CE declaration of conformity for the equipment',
       'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
-      'It is \\\\\\\\\\\\\\\'work equipment\\\\\\\\\\\\\\\' — any apparatus or tool provided for use at work',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
+      'The original purchase receipt and warranty for the equipment',
+      'A signed risk assessment for every task the equipment is used on',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'How does PUWER 1998 interact with the EAWR 1989 for electrical maintenance?',
     options: [
-      'Equipment must have suitable controls for starting, stopping and emergency stop where necessary — properly designed and clearly visible',
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
+      'PUWER fully replaces the EAWR for any electrical maintenance task',
+      'The EAWR only applies once PUWER duties have been discharged',
       'They are complementary — PUWER covers the equipment itself, while the EAWR cover the electrical system being worked on and the safe system of work',
-      'PUWER governs the safe provision, use and maintenance of all the equipment a maintenance technician uses daily — from hand tools to test instruments to access equipment',
+      'Only one of the two regulations can apply to any given task at a time',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     question:
       'A power tool used for electrical maintenance has a damaged guard. Under PUWER, the maintenance technician should:',
     options: [
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
-      'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
-      'Guards, protection devices, information/instruction/training, and supervision — in a hierarchy of measures',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
+      'Continue using it carefully until the job in hand has been finished, then report it',
+      'Remove the damaged guard completely so it cannot cause confusion during use',
+      'Use it only for low-risk tasks until a replacement guard can be sourced and fitted',
+      'Stop using it immediately, report the defect, and not use it until repaired or replaced',
     ],
     correctAnswer: 3,
     explanation:
@@ -218,10 +218,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, knowledge of PUWER is relevant because:',
     options: [
-      'PUWER governs the safe provision, use and maintenance of all the equipment a maintenance technician uses daily — from hand tools to test instruments to access equipment',
-      'Equipment must have suitable controls for starting, stopping and emergency stop where necessary — properly designed and clearly visible',
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
-      'Where use involves a specific risk, use is restricted to designated persons and maintenance is carried out by specifically designated persons',
+      'PUWER governs the provision, use and maintenance of all a technician’s equipment, from hand tools to test instruments',
+      'PUWER removes the need to follow the manufacturer’s instructions for the tools in use',
+      'PUWER applies only to office and administrative staff, and not to maintenance technicians',
+      'PUWER sets out the detailed syllabus content for the apprenticeship qualification itself',
     ],
     correctAnswer: 0,
     explanation:

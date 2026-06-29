@@ -44,10 +44,10 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What could cause high resistance on a CPC reading?',
     options: [
-      'Loose terminal, damaged cable, or incorrect routing',
-      'False - actual values must always be recorded',
-      'To avoid applying test voltage to an unsafe or incomplete circuit',
-      'Different criteria - typically ≤0.05Ω for main bonding',
+      'A loose terminal, damaged conductor, or poor connection',
+      'Using a test current that is too high for the conductor',
+      'Nulling the leads before taking the measurement',
+      'Testing the circuit while it remains energised',
     ],
     correctAnswer: 0,
     explanation:
@@ -58,10 +58,10 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     question:
       'Why must continuity issues be resolved before moving to insulation resistance testing?',
     options: [
-      'Investigate connections and retest until consistent',
+      'Because the leads must be re-nulled after each test sequence',
       'To avoid applying test voltage to an unsafe or incomplete circuit',
-      'Loose terminal, damaged cable, or incorrect routing',
-      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
+      'Because insulation resistance testing uses a lower test current',
+      'To prevent the multifunction tester from overheating',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,38 +82,38 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 7,
-    question: 'What test current should be used for continuity testing according to BS 7671?',
+    question: 'What open-circuit test voltage and current does GN3 recommend for protective conductor continuity testing?',
     options: [
-      '5A maximum',
-      '10mA minimum',
-      'Any current is acceptable',
-      '200mA to 1A',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'BS 7671 requires a test current between 200mA and 1A for continuity testing to ensure adequate current flow to identify high-resistance joints.',
-  },
-  {
-    id: 8,
-    question: 'How should bonding conductor resistance values be assessed?',
-    options: [
-      'Different criteria - typically ≤0.05Ω for main bonding',
-      'False - actual values must always be recorded',
-      'To avoid applying test voltage to an unsafe or incomplete circuit',
-      'Conductor material, cross-sectional area, and length',
+      'A no-load voltage of 4 to 24V and a short-circuit current of at least 200mA',
+      'A no-load voltage of 500V and a current of at least 1mA',
+      'A no-load voltage of 250V and a current of at least 10mA',
+      'A no-load voltage of 50V and a current of at least 5A',
     ],
     correctAnswer: 0,
     explanation:
-      'Main bonding conductors have stricter resistance limits (≤0.05Ω) compared to CPCs due to their critical role in equipotential bonding.',
+      'Guidance Note 3 recommends a continuity test instrument with an open-circuit voltage of 4 to 24V (AC or DC) delivering a short-circuit current of not less than 200mA, ensuring adequate current to reveal high-resistance joints.',
+  },
+  {
+    id: 8,
+    question: 'What is the recommended guideline maximum resistance for a main bonding conductor connection?',
+    options: [
+      'Not more than 0.05 ohms',
+      'Not more than 0.5 ohms',
+      'Not more than 1.0 ohms',
+      'Not more than 0.35 ohms',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'GN3 and the On-Site Guide indicate main and supplementary bonding conductor connections should read not more than 0.05 ohms, reflecting their critical role in equipotential bonding.',
   },
   {
     id: 9,
     question: 'What action should be taken if continuity readings are inconsistent between tests?',
     options: [
-      'To avoid applying test voltage to an unsafe or incomplete circuit',
-      'Investigate connections and retest until consistent',
-      'False - actual values must always be recorded',
-      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
+      'Record the lowest reading obtained and continue',
+      'Investigate the connections and retest until consistent',
+      'Average the readings and accept the mean value',
+      'Increase the test current until readings stabilise',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'Which factor most affects the expected resistance value for continuity testing?',
     options: [
-      'False - actual values must always be recorded',
-      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
+      'The ambient lighting level in the work area',
+      'The make and model of the test instrument used',
       'Conductor material, cross-sectional area, and length',
-      'Investigate connections and retest until consistent',
+      'The time of day the measurement is taken',
     ],
     correctAnswer: 2,
     explanation:

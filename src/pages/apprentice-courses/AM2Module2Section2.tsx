@@ -107,10 +107,10 @@ const AM2Module2Section2 = () => {
       id: 1,
       question: "What's the difference between a risk assessment and a method statement?",
       options: [
-        'Identifying the root cause of a problem by asking "why" repeatedly',
+        'A method statement scores the risk; a risk assessment lists the tools needed',
         'Risk assessment identifies hazards/controls; method statement describes safe working procedure',
-        'To assist with evacuation, check designated areas are clear, and report to the assembly point',
-        'Habits that align with who you want to become, not just what you want to achieve',
+        'They are two names for the same single document',
+        'A risk assessment is only required for work at height',
       ],
       correctAnswer: 1,
       explanation:
@@ -120,10 +120,10 @@ const AM2Module2Section2 = () => {
       id: 2,
       question: 'Which regulations require safe planning of electrical work in the UK?',
       options: [
-        'P = sqrt(3) x V_L x I_L x cos(phi)',
-        'Self-declaration without evidence',
+        'Only the Building Regulations 2010',
+        'Only the CDM Regulations 2015',
         'Both MHSWR 1999 and EAWR 1989',
-        'Support and protection for cables',
+        'Only the company health and safety policy',
       ],
       correctAnswer: 2,
       explanation:
@@ -147,9 +147,9 @@ const AM2Module2Section2 = () => {
       question: 'Name three typical hazards in an AM2 installation task:',
       options: [
         'Electrical shock, manual handling, working at height',
-        'Polarity testing with appropriate test instruments',
-        'Correct type, rating, and indicator status',
-        'Disconnected clamp or broken conductor',
+        'Voltage drop, harmonics, power factor',
+        'Continuity, polarity, insulation resistance',
+        'Overload, short-circuit, earth fault',
       ],
       correctAnswer: 0,
       explanation:
@@ -159,10 +159,10 @@ const AM2Module2Section2 = () => {
       id: 5,
       question: 'Why must PPE be written specifically in RAMS?',
       options: [
-        "A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers",
+        "PPE is the first line of defence and replaces the need for isolation",
         "Generic 'use PPE' entries score no marks - type and purpose must be stated",
-        "With the handle approximately 1 metre to 1.1 metres from the floor",
-        "Carry out a suitable and sufficient fire risk assessment",
+        "PPE only needs to be listed if the assessor asks for it",
+        "Listing PPE by brand name earns the most marks",
       ],
       correctAnswer: 1,
       explanation:
@@ -172,10 +172,10 @@ const AM2Module2Section2 = () => {
       id: 6,
       question: "Who should be considered under 'who may be harmed'?",
       options: [
-        'Damaging the cable sheath, leading to premature failure',
-        'Control circuit with voltage monitoring',
+        'Only the apprentice carrying out the work',
+        'Only the assessor and the apprentice',
         'Self, colleagues, building occupants, public',
-        'Insulation, protection and placing of conductors',
+        'Only those holding a current ECS card',
       ],
       correctAnswer: 2,
       explanation:
@@ -211,10 +211,10 @@ const AM2Module2Section2 = () => {
       id: 9,
       question: 'Why do generic/copy-paste RAMS answers fail?',
       options: [
-        'Working at height, electrical hazards, manual handling, and site access',
+        'They take longer to write than task-specific answers',
         'Assessors want task-specific detail relevant to the actual work',
-        'They provide recognised standards that can be used as evidence of good practice',
-        'Absorption of current by the insulation (polarisation)',
+        'They use the wrong scoring matrix for the risk',
+        'They cannot be cross-referenced to the rig drawing',
       ],
       correctAnswer: 1,
       explanation:

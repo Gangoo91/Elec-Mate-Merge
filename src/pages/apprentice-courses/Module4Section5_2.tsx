@@ -14,18 +14,18 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main purpose of a cord grip on a pendant fitting?',
     options: [
-      'To improve appearance',
-      'To prevent cable strain on terminals',
-      'To reduce electrical resistance',
+      'To prevent cable strain being passed to the terminals',
+      'To improve the appearance of the fitting',
+      'To reduce the electrical resistance of the cord',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cord grips prevent mechanical strain being transferred to electrical terminals, maintaining safe connections and preventing conductor pull-out.',
   },
   {
     id: 2,
     question: 'Why should pendant heights be at least 2m above floor level in walkways?',
-    options: ['For better lighting', 'To prevent head contact and ensure safety', 'To save energy'],
+    options: ['To save energy on the circuit', 'To prevent head contact and ensure safe clearance', 'To provide brighter lighting'],
     correctIndex: 1,
     explanation:
       'Minimum 2m clearance prevents people from hitting their heads on pendants in circulation areas, ensuring safe passage.',
@@ -56,17 +56,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'True or False: The weight of a pendant fitting should be supported entirely by the electrical cable.',
+    question: 'How should the weight of a pendant fitting be supported?',
     options: [
-      'Only for lightweight fittings',
-      'True',
-      'False',
-      'Only if using SWA cable',
+      'Entirely by the electrical cable',
+      'By a separate mechanical support, not the cable',
+      'By the terminals inside the ceiling rose',
+      'By the switched live conductor only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'False – mechanical support must be provided separately from the electrical cable to prevent strain on connections and ensure safety.',
+      'Mechanical support must be provided separately from the electrical cable to prevent strain on connections and ensure safety.',
   },
   {
     id: 3,
@@ -111,12 +110,12 @@ const quizQuestions = [
     id: 6,
     question: 'What device prevents the cable from pulling out of a pendant fitting?',
     options: [
-      'To reduce harmonics fed back to the supply',
-      'A clear line of sight with no obstructions',
-      'Cord grip or strain relief device',
-      'Specific to the work being undertaken',
+      'A cord grip or strain relief device',
+      'An RCD at the consumer unit',
+      'A junction box above the ceiling',
+      'A heat-resistant terminal block',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Cord grips or strain relief devices prevent mechanical stress from being transferred to electrical connections.',
   },
@@ -124,12 +123,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should pendant lighting be installed at least 2m above floor level in walkways?',
     options: [
-      'To convert millivolts (mV) into volts (V).',
-      'Provides precise angular measurements for complex layouts',
-      'To monitor system status and faults remotely',
+      'To reduce the energy used by the lamp',
+      'To make wiring the fitting easier',
       'To prevent head contact and ensure safe clearance',
+      'To improve the spread of light across the room',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Minimum 2m clearance prevents people from hitting their heads on pendants, ensuring safe passage in circulation areas.',
   },
@@ -137,12 +136,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one method for ensuring a pendant hangs centrally over a dining table.',
     options: [
+      'Estimate the centre point by eye from the doorway',
+      'Measure only from the nearest wall',
+      'Align it with the nearest light switch',
       'Use a plumb line or laser pointer to check alignment',
-      'The internal test resistor has failed but the RCD mechanism works',
-      'Cross-connect L1-N2, N1-L2 and E1-E2, then measure at each socket',
-      'To prevent memory corruption and upload failures',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Using a plumb line or laser pointer ensures accurate central positioning over furniture for both function and aesthetics.',
   },

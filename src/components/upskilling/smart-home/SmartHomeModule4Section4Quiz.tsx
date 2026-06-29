@@ -14,92 +14,122 @@ export const SmartHomeModule4Section4Quiz = () => {
     {
       question: 'What is scheduled heating control?',
       options: [
-        'AI-controlled automatic heating',
-        'User-programmed heating times',
-        'Weather-based heating',
-        'Random heating activation',
+        'Heating that runs to user-programmed times',
+        'Heating controlled automatically by an AI system',
+        'Heating that responds only to outdoor weather',
+        'Heating that runs continuously to hold one setpoint',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Scheduled control follows fixed times set by the user, so the heating comes on and off according to a programmed timetable.',
     },
     {
       question: 'Give one benefit of scheduled control.',
       options: [
-        'Adapts to lifestyle changes',
-        'Predictable operation',
-        'Learns user preferences',
-        'Uses weather data',
+        'It adapts automatically to lifestyle changes',
+        'It learns the occupants preferences over time',
+        'Its operation is predictable and easy to understand',
+        'It adjusts using live weather data',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'A key benefit of scheduled control is predictability: occupants know exactly when the heating will run, which is easy to understand and verify.',
     },
     {
       question: 'What is the main disadvantage of fixed schedules?',
       options: [
-        'Too expensive',
-        'Rigid and wasteful if routine changes',
-        'Requires internet connection',
-        'Too complicated to set up',
+        'They are expensive to set up',
+        'They are rigid and wasteful when the routine changes',
+        'They require a constant internet connection',
+        'They are too complicated to programme',
       ],
       correct: 1,
+      explanation:
+        'Fixed schedules cannot adapt, so if the household routine changes the heating may run when no one is home, wasting energy.',
     },
     {
       question: 'What is AI learning control?',
       options: [
-        'Manual temperature adjustments',
-        'System that adapts automatically to behaviour',
-        'Fixed timer control',
-        'Weather-only control',
+        'Heating set only by manual adjustments',
+        'A simple fixed timer arrangement',
+        'A system controlled only by the weather',
+        'A system that adapts automatically to occupant behaviour',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'AI learning control observes occupant behaviour and adjusts heating automatically, rather than following only a fixed timetable.',
     },
     {
-      question: 'Name two methods AI systems use to detect behaviour.',
+      question: 'Which pair of methods do AI heating systems use to detect occupancy?',
       options: [
         'Motion sensors and geofencing',
-        'Timers and switches',
-        'Weather and cost',
-        'Manual input only',
+        'Timers and manual switches',
+        'Weather forecasts and energy cost',
+        'Manual data entry only',
       ],
       correct: 0,
+      explanation:
+        'AI systems commonly use motion sensors and smartphone geofencing to detect when occupants are present or approaching home.',
     },
     {
-      question: 'True or False: AI systems can adapt to weather conditions.',
-      options: ['True', 'False'],
-      correct: 0,
+      question: 'How do smart heating systems typically respond to outdoor weather?',
+      options: [
+        'They ignore weather and follow the timetable only',
+        'They can adapt heating output to weather conditions',
+        'They switch off entirely whenever it is cold',
+        'They require manual reprogramming for each season',
+      ],
+      correct: 1,
+      explanation:
+        'Many smart systems factor in outdoor temperature, pre-heating sooner on colder days to reach the target temperature on time.',
     },
     {
       question: 'Which method is best for a family with a very regular routine?',
-      options: ['AI learning control', 'Scheduled control', 'Hybrid control', 'No control'],
-      correct: 1,
-    },
-    {
-      question: 'Which method is best for shift workers with irregular hours?',
       options: [
-        'Scheduled control',
         'AI learning control',
-        'Manual control only',
-        'No heating control',
+        'Scheduled control',
+        'Hybrid control with frequent overrides',
+        'Weather-compensation control on its own',
       ],
       correct: 1,
+      explanation:
+        'A predictable schedule suits a regular routine well, because the times rarely change and simple programming is enough.',
+    },
+    {
+      question: 'Which method best suits shift workers with irregular hours?',
+      options: [
+        'A fixed weekday schedule',
+        'AI learning control that adapts to changing patterns',
+        'Manual control only',
+        'A weekend-only timer programme',
+      ],
+      correct: 1,
+      explanation:
+        'Irregular hours defeat a fixed schedule, so AI learning control that adapts to changing patterns is a better fit for shift workers.',
     },
     {
       question: 'What is a hybrid approach to heating control?',
       options: [
-        'Only AI control',
-        'Only schedules',
-        'Schedules with AI optimisations',
-        'Weather control only',
+        'AI control used on its own',
+        'A schedule baseline refined by AI optimisations',
+        'A fixed schedule used on its own',
+        'Weather-based control used on its own',
       ],
-      correct: 2,
+      correct: 1,
+      explanation:
+        'A hybrid approach keeps a predictable schedule as the baseline while AI optimises around it, combining reliability with efficiency.',
     },
     {
       question: 'A client travels frequently for work. Which control method would you recommend?',
       options: [
-        'Fixed schedules',
-        'AI learning with geofencing',
+        'Fixed daily schedules',
         'Manual control only',
-        'No control',
+        'AI learning with geofencing',
+        'Weather-compensation control on its own',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Geofencing detects when the client is away or returning, so AI learning with geofencing avoids heating an empty home during frequent travel.',
     },
   ];
 

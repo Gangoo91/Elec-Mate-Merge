@@ -92,85 +92,104 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
   const quizQuestions = [
     {
       question:
-        'A 100W incandescent lamp producing 1200 lumens is being replaced. What wattage LED lamp would typically provide equivalent light output?',
+        'A 100W incandescent lamp producing about 1200 lumens is being replaced. What wattage LED would typically give an equivalent light output?',
       options: ['40W', '25W', '12-15W', '8-10W'],
       correctAnswer: '12-15W',
+      explanation:
+        'At a modern LED efficacy of roughly 90-100 lm/W, about 1200 lumens needs only 12-15W — an 8-fold reduction from the 100W incandescent for the same brightness.',
     },
     {
       question: 'What does the term "L70" refer to in LED specifications?',
       options: [
-        'The lamp operates at 70% brightness',
-        'The point at which light output degrades to 70% of initial lumens',
-        'The maximum dimming level of 70%',
-        'The colour temperature in 70K increments',
+        'The lamp operates permanently at 70% brightness',
+        'The point at which output has degraded to 70% of initial lumens',
+        'A maximum dimming level of 70%',
+        'The colour temperature measured in 70K increments',
       ],
-      correctAnswer: 'The point at which light output degrades to 70% of initial lumens',
+      correctAnswer: 'The point at which output has degraded to 70% of initial lumens',
+      explanation:
+        'L70 is a lumen-maintenance rating: the number of hours until the LED’s output falls to 70% of its initial value. A 50,000-hour L70 LED still gives 70% output at 50,000 hours.',
     },
     {
       question: 'When should complete luminaire replacement be chosen over lamp-only retrofitting?',
       options: [
-        'Always, as it is more cost-effective',
-        'Only when existing luminaires are less than 5 years old',
-        'When control gear is incompatible, reflectors are degraded, or thermal management is inadequate',
-        'Never, as retrofit lamps are always sufficient',
+        'Always, because it is always more cost-effective',
+        'Only when the existing luminaires are under 5 years old',
+        'Never, because retrofit lamps are always sufficient',
+        'When the control gear is incompatible, reflectors are degraded or thermal management is poor',
       ],
       correctAnswer:
-        'When control gear is incompatible, reflectors are degraded, or thermal management is inadequate',
+        'When the control gear is incompatible, reflectors are degraded or thermal management is poor',
+      explanation:
+        'A full luminaire swap is justified when the old fitting cannot support LEDs reliably — magnetic ballasts, yellowed reflectors or poor heat dissipation — rather than as a blanket rule.',
     },
     {
       question:
-        'What is the recommended maintained illuminance level for a typical office workspace according to BS EN 12464-1?',
+        'What maintained illuminance does BS EN 12464-1 recommend for a typical office workspace?',
       options: ['200 lux', '300 lux', '500 lux', '750 lux'],
       correctAnswer: '500 lux',
+      explanation:
+        'BS EN 12464-1 sets 500 lux for general office and writing/reading tasks. Corridors need only ~100 lux, while detailed technical drawing requires around 750 lux.',
     },
     {
-      question: 'A PIR (Passive Infrared) sensor detects occupancy by sensing:',
+      question: 'How does a PIR (Passive Infrared) sensor detect occupancy?',
       options: [
-        'Sound levels in the space',
-        'Changes in infrared radiation from body heat',
-        'Air pressure changes from movement',
-        'Electromagnetic fields from people',
+        'By sensing sound levels in the space',
+        'By detecting changes in infrared radiation from body heat',
+        'By measuring air pressure changes from movement',
+        'By detecting electromagnetic fields from people',
       ],
-      correctAnswer: 'Changes in infrared radiation from body heat',
+      correctAnswer: 'By detecting changes in infrared radiation from body heat',
+      explanation:
+        'A PIR sensor passively detects the moving infrared (heat) signature of a person across its field of view. It needs line of sight and cannot see through partitions, unlike microwave sensors.',
     },
     {
       question:
         'What is the maximum number of devices that can be connected to a single DALI line?',
       options: ['32 devices', '64 devices', '128 devices', '256 devices'],
       correctAnswer: '64 devices',
+      explanation:
+        'A single DALI line supports up to 64 individually addressable devices (addresses 0-63), arranged into up to 16 groups and 16 scenes.',
     },
     {
       question:
-        'For a lighting upgrade with £5,000 installation cost saving £2,500 annually in energy costs, what is the simple payback period?',
+        'A lighting upgrade costs £5,000 to install and saves £2,500 a year in energy. What is the simple payback period?',
       options: ['6 months', '1 year', '2 years', '5 years'],
       correctAnswer: '2 years',
+      explanation:
+        '£5,000 / £2,500 per year = 2 years to recover the installation cost from the annual energy savings.',
     },
     {
-      question: 'Daylight harvesting controls work by:',
+      question: 'How do daylight harvesting controls save energy?',
       options: [
-        'Switching lights on when daylight fades',
-        'Automatically dimming artificial light in response to available daylight levels',
-        'Blocking daylight to reduce glare',
-        'Storing daylight energy for later use',
+        'By switching lights fully on as soon as daylight fades',
+        'By automatically dimming the artificial light as available daylight rises',
+        'By blocking daylight to reduce glare',
+        'By storing daylight energy for later use',
       ],
-      correctAnswer:
-        'Automatically dimming artificial light in response to available daylight levels',
+      correctAnswer: 'By automatically dimming the artificial light as available daylight rises',
+      explanation:
+        'A photocell measures the light level and trims the electric lighting so the combined daylight plus artificial light just meets the target lux, cutting consumption in daylit areas.',
     },
     {
-      question: 'What colour temperature range is typically classified as "warm white"?',
+      question: 'Which colour temperature range is typically classified as "warm white"?',
       options: ['2700-3000K', '4000-4500K', '5000-5500K', '6000-6500K'],
       correctAnswer: '2700-3000K',
+      explanation:
+        'Warm white sits around 2700-3000K, giving the cosy tone used in homes and hospitality. Around 4000K is neutral/cool white for offices and 5000K+ is daylight for retail and industrial.',
     },
     {
       question:
-        'When installing LED retrofit tubes in existing fluorescent fittings, what critical safety step must be taken?',
+        'When installing direct-wire (ballast-bypass) LED retrofit tubes in existing fluorescent fittings, what critical safety step is required?',
       options: [
-        'Increase the circuit breaker rating',
-        'Remove or bypass the existing ballast/control gear',
-        'Add a step-up transformer',
-        'Install additional earthing',
+        'Increasing the circuit breaker rating',
+        'Removing or bypassing the existing ballast/control gear',
+        'Adding a step-up transformer',
+        'Installing additional earthing',
       ],
-      correctAnswer: 'Remove or bypass the existing ballast/control gear',
+      correctAnswer: 'Removing or bypassing the existing ballast/control gear',
+      explanation:
+        'Ballast-bypass (Type B) tubes take mains directly to the lampholders, so the old ballast must be removed or bypassed and the fitting rewired; leaving it in circuit risks damage and shock.',
     },
   ];
 

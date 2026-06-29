@@ -28,22 +28,27 @@ const Module4Section1_1 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Specifications only cover materials, not installation methods.',
-      options: ['True', 'False'],
+      question: 'What do specifications typically cover?',
+      options: [
+        'Materials only, never installation methods',
+        'Materials, installation methods and workmanship standards',
+        'The physical position of every accessory',
+        'Only the contract price for the work',
+      ],
       correctAnswer: 1,
       explanation:
-        'False – specifications cover materials and installation methods, including workmanship standards.',
+        'Specifications cover materials and installation methods, including performance and workmanship standards.',
     },
     {
       id: 3,
-      question: 'What information is found in a title block?',
+      question: 'What information is found in a drawing title block?',
       options: [
-        'Automated control sequences and emergency override function',
-        'Installing flexible connections to ductwork',
-        'Provide authoritative guidance on standards and practice',
-        'Project name, drawing number, scale, date, and issue number',
+        'The earth fault loop impedance of each circuit',
+        'The manufacturer instructions for each accessory',
+        'Project name, drawing number, scale, date and issue number',
+        'A full schedule of test results',
       ],
-      correctAnswer: 3,
+      correctAnswer: 2,
       explanation:
         'The title block contains essential information such as project name, drawing number, scale, date and issue.',
     },
@@ -51,10 +56,10 @@ const Module4Section1_1 = () => {
       id: 4,
       question: 'Why is version control important when working from drawings?',
       options: [
-        'Prevents working from outdated or incorrect information',
-        'Equipment details, location, and test history',
-        'Two-pole voltage tester (GS38 compliant)',
-        'To provide multiple organized cable entries while maintaining IP rating',
+        'It prevents working from outdated or incorrect information',
+        'It records the test history of each circuit',
+        'It specifies the type of voltage tester to use',
+        'It maintains the IP rating of cable entries',
       ],
       correctAnswer: 0,
       explanation:
@@ -64,10 +69,10 @@ const Module4Section1_1 = () => {
       id: 5,
       question: 'What does a single-line diagram represent?',
       options: [
-        'High-rupturing-capacity (HRC) cartridge fuses for industrial use',
-        'A simplified representation of main electrical connections',
-        'Trip the circuit when voltage falls below set level',
-        'The conduit restricts heat dissipation from the cable',
+        'The exact physical position of every cable',
+        'A simplified representation of the main electrical connections',
+        'The test results for each final circuit',
+        'The heat dissipation characteristics of cables',
       ],
       correctAnswer: 1,
       explanation:
@@ -75,24 +80,24 @@ const Module4Section1_1 = () => {
     },
     {
       id: 6,
-      question: 'Which is an example of a symbol you might find on an electrical drawing?',
+      question: 'Which of these is an example of a symbol found on an electrical drawing?',
       options: [
         'Traffic light symbol',
         'Car parking symbol',
-        'Socket outlet symbol',
-        'Fire exit symbol',
+        'Socket-outlet symbol',
+        'Pedestrian crossing symbol',
       ],
       correctAnswer: 2,
       explanation:
-        'Socket outlet, lighting and earth symbols are common on electrical drawings and in their legends.',
+        'Socket-outlet, lighting and earth symbols are common on electrical drawings and in their legends.',
     },
     {
       id: 7,
       question: 'Which document describes performance requirements and workmanship standards?',
       options: [
-        'The drawing only',
-        'The contract',
-        'BS 7671 only',
+        'The layout drawing only',
+        'The site diary',
+        'The schematic diagram',
         'The specification',
       ],
       correctAnswer: 3,
@@ -103,9 +108,9 @@ const Module4Section1_1 = () => {
       question: "If there's a conflict between a drawing and a specification, what should you do?",
       options: [
         'Seek clarification from the designer or supervisor',
-        'Component tolerances, temperature, and parasitic effects',
-        'Mobile elevating work platforms (MEWPs)',
-        'False - CPC continuity must always be tested separately',
+        'Always follow the drawing and ignore the specification',
+        'Always follow the specification and ignore the drawing',
+        'Choose whichever is quicker to install',
       ],
       correctAnswer: 0,
       explanation:
@@ -120,9 +125,9 @@ const Module4Section1_1 = () => {
       question: 'What is the purpose of a schematic diagram?',
       options: [
         'To show electrical connections and functional relationships',
-        'Be connected through an RCD and comply with the relevant product standard',
-        'Lock-off procedures and verification testing',
-        'Following the guidance for new buildings or consequential improvements',
+        'To show the exact physical position of each accessory',
+        'To list the test results for each circuit',
+        'To record the manufacturer of each component',
       ],
       correctIndex: 0,
       explanation:
@@ -130,12 +135,12 @@ const Module4Section1_1 = () => {
     },
     {
       id: 'legend-check',
-      question: 'Why is the legend on a drawing important?',
+      question: 'Why is the legend (key) on a drawing important?',
       options: [
-        '43% higher current for same power',
-        'It helps interpret symbols correctly',
-        '32-amp breaker, Type B trip curve',
-        'Smaller size for given VA rating',
+        'It lists the price of each item of equipment',
+        'It helps interpret the drawing symbols correctly',
+        'It records the date the drawing was printed',
+        'It specifies the cable manufacturer to use',
       ],
       correctIndex: 1,
       explanation: 'The legend ensures symbols are interpreted consistently across the project.',
@@ -144,10 +149,10 @@ const Module4Section1_1 = () => {
       id: 'version-check',
       question: 'Name one risk of using an outdated drawing.',
       options: [
-        'As the Scottish equivalent with similar structures',
-        'Forming, establishing, developing, closing',
-        'Incorrect installation requiring rework',
-        'Certificate of Making Good Defects',
+        'The drawing becomes harder to read',
+        'The title block is no longer shown',
+        'Incorrect installation requiring costly rework',
+        'The scale of the drawing changes automatically',
       ],
       correctIndex: 2,
       explanation:

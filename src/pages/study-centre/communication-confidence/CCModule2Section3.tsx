@@ -22,12 +22,11 @@ const quizQuestions = [
     question:
       'A client says they want &ldquo;better lighting&rdquo; in their kitchen. Which type of question would best uncover what they actually need?',
     options: [
-      'A closed question: &ldquo;Do you want spotlights?&rdquo;',
       'An open question: &ldquo;Can you describe how you use the kitchen and what you find lacking with the current lighting?&rdquo;',
+      'A closed question: &ldquo;Do you want spotlights?&rdquo;',
       'A leading question: &ldquo;You probably want LED downlights, don\u2019t you?&rdquo;',
-      'A yes/no question: &ldquo;Is the current lighting too dim?&rdquo;',
-    ],
-    correctAnswer: 1,
+      'A yes/no question: &ldquo;Is the current lighting too dim?&rdquo;'],
+    correctAnswer: 0,
     explanation:
       'An open question invites the client to explain their needs in their own words, giving you much richer information than a closed or leading question. You can then follow up with probing and clarifying questions to refine the specification.',
   },
@@ -62,8 +61,8 @@ const quizQuestions = [
     id: 4,
     question:
       'During fault diagnosis, an apprentice asks: &ldquo;Is there power at the socket?&rdquo; What type of question is this?',
-    options: ['Open question', 'Probing question', 'Closed question', 'Socratic question'],
-    correctAnswer: 2,
+    options: ['Open question', 'Probing question', 'Socratic question', 'Closed question'],
+    correctAnswer: 3,
     explanation:
       'This is a closed question because it can be answered with a simple &ldquo;yes&rdquo; or &ldquo;no&rdquo;. Closed questions are useful during fault diagnosis for quickly confirming or eliminating possibilities in a logical sequence. However, they should be combined with open and probing questions to build a full understanding of the fault.',
   },
@@ -71,12 +70,11 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is the best example of a clarifying question?',
     options: [
-      '&ldquo;Why did you do it that way?&rdquo;',
       '&ldquo;When you say the lights flicker, do you mean all of them or just the ones on the dimmer circuit?&rdquo;',
+      '&ldquo;Why did you do it that way?&rdquo;',
       '&ldquo;Don\u2019t you think you should have checked first?&rdquo;',
-      '&ldquo;What happened next?&rdquo;',
-    ],
-    correctAnswer: 1,
+      '&ldquo;What happened next?&rdquo;'],
+    correctAnswer: 0,
     explanation:
       'A clarifying question seeks to remove ambiguity by asking the person to be more precise about what they have already said. &ldquo;When you say the lights flicker, do you mean all of them or just the ones on the dimmer circuit?&rdquo; directly targets the vague term &ldquo;flicker&rdquo; and asks for specificity without leading or judging.',
   },
@@ -99,11 +97,10 @@ const quizQuestions = [
       'You are investigating why an RCD tripped during a periodic inspection. Which opening question would give you the most useful information?',
     options: [
       '&ldquo;Did someone press the test button?&rdquo;',
-      '&ldquo;Talk me through exactly what was happening on site when the RCD tripped.&rdquo;',
       '&ldquo;Was it a 30 mA or 100 mA device?&rdquo;',
-      '&ldquo;It was probably a faulty appliance, wasn\u2019t it?&rdquo;',
-    ],
-    correctAnswer: 1,
+      '&ldquo;Talk me through exactly what was happening on site when the RCD tripped.&rdquo;',
+      '&ldquo;It was probably a faulty appliance, wasn\u2019t it?&rdquo;'],
+    correctAnswer: 2,
     explanation:
       'Starting with a broad, open question (&ldquo;Talk me through exactly what was happening\u2026&rdquo;) allows the person to describe the full context without being steered toward a particular answer. You can then follow up with specific closed and probing questions to narrow down the cause. Starting with a closed or leading question risks missing important contextual information.',
   },
@@ -113,10 +110,9 @@ const quizQuestions = [
     options: [
       'Can be answered with yes or no',
       'Suggests the correct answer within the question',
-      'Digs deeper into a topic already raised, seeking more detail or reasoning',
       'Changes the subject to a new area of enquiry',
-    ],
-    correctAnswer: 2,
+      'Digs deeper into a topic already raised, seeking more detail or reasoning'],
+    correctAnswer: 3,
     explanation:
       'Probing questions build on information already provided. They dig deeper into a specific area to uncover more detail, reasoning, or evidence. Examples include &ldquo;Can you tell me more about that?&rdquo;, &ldquo;What made you decide to do it that way?&rdquo;, and &ldquo;What happened immediately before that?&rdquo;',
   },
@@ -132,11 +128,10 @@ const quickCheckQuestions = [
       'A colleague tells you a circuit &ldquo;keeps tripping.&rdquo; You want to understand more. Which question type should you use first, and why?',
     options: [
       'A closed question to quickly confirm which circuit it is',
-      'An open question to let them describe the full situation in their own words before narrowing down',
-      'A leading question to suggest the most likely cause',
       'A clarifying question to check what &ldquo;tripping&rdquo; means',
-    ],
-    correctIndex: 1,
+      'A leading question to suggest the most likely cause',
+      'An open question to let them describe the full situation in their own words before narrowing down'],
+    correctIndex: 3,
     explanation:
       'Starting with an open question (e.g. &ldquo;Tell me exactly what happens when it trips &mdash; what were you doing, which appliances were on?&rdquo;) allows the colleague to share the full context. You can then use probing and closed questions to narrow down the cause. Starting too narrow risks missing important details.',
   },
@@ -145,12 +140,11 @@ const quickCheckQuestions = [
     question:
       'You are using the funnel technique to establish a client\u2019s requirements for a new consumer unit. You have asked a broad opening question and received a general answer. What should your next question do?',
     options: [
-      'Immediately ask for the exact number of ways required',
       'Probe deeper into one aspect of their answer to uncover more detail',
+      'Immediately ask for the exact number of ways required',
       'Ask a completely unrelated question about their budget',
-      'Repeat the same question in different words',
-    ],
-    correctIndex: 1,
+      'Repeat the same question in different words'],
+    correctIndex: 0,
     explanation:
       'The funnel technique moves from broad to specific in stages. After the initial open question, you should probe deeper into what they have already told you (e.g. &ldquo;You mentioned wanting separate circuits for the kitchen \u2014 can you tell me more about how the kitchen is used?&rdquo;). Jumping straight to a very specific question skips the middle of the funnel and may miss important requirements.',
   },

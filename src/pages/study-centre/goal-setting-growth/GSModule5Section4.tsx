@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician finds himself waiting until he &ldquo;feels motivated&rdquo; before starting his CPD study each evening. Three weeks pass without any progress. According to the behavioural research on motivation and action, what is the most likely explanation?',
     options: [
-      'He needs to find a more interesting CPD course that naturally motivates him',
-      'He is waiting for motivation to arrive before acting, when in reality action precedes motivation &mdash; starting the task (even for five minutes) generates the motivation to continue',
-      'He lacks the natural discipline required for self-directed study',
-      'He should only study when he genuinely feels motivated, as forced study is ineffective',
+      'He is waiting for motivation before acting, when in fact action comes first &mdash; starting the task generates the motivation',
+      'He simply needs to find a more interesting CPD course that will naturally motivate him to study',
+      'He fundamentally lacks the natural self-discipline that is required for any kind of self-directed study',
+      'He should only ever study when he genuinely feels motivated, because forced study is always ineffective',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This is a textbook example of the motivation myth in action. Many people believe that motivation is a prerequisite for action &mdash; that you need to feel motivated before you can begin. Behavioural research consistently shows the opposite: action precedes motivation. Starting a task, even reluctantly and for just a few minutes, activates the brain&rsquo;s reward circuitry and generates the motivation to continue. This phenomenon is sometimes called &ldquo;behavioural activation&rdquo; in psychology. The electrician does not need to wait until he feels like studying &mdash; he needs to commit to sitting down and opening his study materials for five minutes. In the vast majority of cases, once you start, momentum builds and the motivation follows. Waiting for motivation to arrive is like waiting for a bus that does not have a timetable &mdash; it might come, it might not. Taking action is how you create the conditions for motivation.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Daniel Pink&rsquo;s Drive framework identifies three core drivers of intrinsic motivation: autonomy, mastery, and purpose. An electrician who finds deep satisfaction in perfecting his conduit bending technique &mdash; spending extra time practising even when no one is watching &mdash; is primarily experiencing which driver?',
     options: [
-      'Autonomy &mdash; the freedom to choose what he works on',
-      'Purpose &mdash; connecting his work to a bigger mission',
+      'Autonomy &mdash; the freedom to choose for himself what tasks he works on',
+      'Purpose &mdash; connecting his everyday work to a bigger underlying mission',
       'Mastery &mdash; the satisfaction of becoming genuinely excellent at a craft skill',
-      'Extrinsic motivation &mdash; he is practising for a promotion',
+      'Extrinsic motivation &mdash; he is only practising in order to earn a promotion',
     ],
     correctIndex: 2,
     explanation:
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'James Clear argues that the most effective form of long-term motivation comes not from setting goals but from adopting an identity. According to his identity-based approach, which of the following statements would be most powerful for sustaining long-term motivation?',
     options: [
       '&ldquo;I want to pass my 2391 exam by March&rdquo;',
-      '&ldquo;I am the type of person who is always learning and improving my craft&rdquo;',
       '&ldquo;I need to study more this week&rdquo;',
       '&ldquo;My employer expects me to get qualified&rdquo;',
+      '&ldquo;I am the type of person who is always learning and improving my craft&rdquo;',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'James Clear&rsquo;s identity-based approach, outlined in Atomic Habits, argues that the deepest and most sustainable form of motivation comes from identity &mdash; who you believe yourself to be. There are three levels at which change can occur: outcomes (what you get), processes (what you do), and identity (what you believe). Most people start with outcomes (&ldquo;I want to pass my 2391&rdquo;) or processes (&ldquo;I need to study more&rdquo;). Clear argues that the most powerful and lasting change starts with identity: &ldquo;I am the type of person who is always learning and improving.&rdquo; When you adopt this identity, every decision flows naturally from it. You study not because you have to but because that is who you are. You seek feedback not because your employer requires it but because growth-oriented people seek feedback. You take on challenges not because someone assigned them but because you are someone who grows through challenge. Identity-based motivation does not rely on willpower or external pressure &mdash; it is powered by the desire to be consistent with your self-image.',
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       'According to behavioural research on motivation, which statement most accurately describes the relationship between motivation and action?',
     options: [
-      'Motivation must be present before action can begin',
-      'Action and motivation are completely unrelated',
-      'Action frequently precedes and generates motivation &mdash; you do not need to feel motivated to start',
-      'Motivation is entirely determined by genetics and personality',
+      'Motivation must reliably be present and felt before any action can possibly begin',
+      'Action and motivation are completely unrelated and have no real influence on one another',
+      'Action frequently precedes and generates motivation, so you need not feel motivated to start',
+      'Motivation is entirely fixed and determined in advance by a person&rsquo;s genetics and personality',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Daniel Pink&rsquo;s Drive framework identifies three core elements of intrinsic motivation. Which combination correctly names all three?',
     options: [
-      'Money, status, and recognition',
       'Autonomy, mastery, and purpose',
+      'Money, status, and recognition',
       'Challenge, feedback, and reward',
       'Goals, habits, and environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Daniel Pink&rsquo;s Drive (2009) identifies autonomy (the desire to direct your own life and work), mastery (the desire to get better and better at something that matters), and purpose (the desire to do what you do in service of something larger than yourself) as the three pillars of intrinsic motivation. Pink argues that once basic financial needs are met, these three factors are far more powerful drivers of sustained engagement than traditional extrinsic rewards such as bonuses or promotions. For electricians, autonomy might manifest as the freedom of self-employment or choosing your own specialisations; mastery as the deep satisfaction of becoming genuinely excellent at your craft; and purpose as connecting your work to client safety, quality infrastructure, or training the next generation.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'Scott Belsky&rsquo;s concept of the &ldquo;messy middle&rdquo; describes which phenomenon in goal pursuit?',
     options: [
-      'The initial excitement and enthusiasm when starting a new goal',
-      'The difficult, unglamorous, often demoralising middle phase of any significant pursuit, where most people give up',
-      'The final push of effort required to complete a goal',
-      'The process of setting goals that are neither too easy nor too hard',
+      'The initial burst of excitement and enthusiasm you feel when first starting out on a new goal',
+      'The final concentrated push of effort that is required right at the end to complete a goal',
+      'The process of carefully setting goals that are pitched as neither too easy nor too hard',
+      'The difficult, unglamorous middle phase of any significant pursuit, where most people give up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scott Belsky&rsquo;s The Messy Middle (2018) describes how every ambitious project or goal follows a predictable pattern: an exciting beginning filled with energy and optimism, a difficult middle phase characterised by doubt, frustration, setbacks, and tedium, and (for those who persist) a satisfying conclusion. The critical insight is that the middle is where most people quit &mdash; not because they lack talent or resources but because the initial excitement has faded and the end is not yet in sight. For an electrician pursuing a long-term qualification like the HNC, the messy middle might be month four of an eight-month course when assignments are piling up, the novelty has worn off, and the qualification still feels far away. Recognising that this dip is normal and expected &mdash; not a sign that you should quit &mdash; is essential for long-term success.',
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'James Clear&rsquo;s identity-based approach to motivation suggests that the most sustainable motivation comes from:',
     options: [
-      'Setting bigger and more ambitious outcome goals',
-      'Using external rewards and punishments to drive behaviour',
+      'Setting yourself ever bigger and more ambitious outcome goals to chase each year',
+      'Using a system of external rewards and punishments to drive the behaviour you want',
       'Adopting an identity consistent with your desired behaviours (&ldquo;I am the type of person who...&rdquo;)',
-      'Tracking every metric and data point related to your progress',
+      'Tracking every possible metric and data point that relates to your ongoing progress',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Angela Duckworth defines &ldquo;grit&rdquo; as a combination of which two qualities?',
     options: [
-      'Intelligence and effort',
-      'Talent and luck',
-      'Passion and perseverance for very long-term goals',
-      'Confidence and ambition',
+      'Passion and perseverance directed at very long-term goals',
+      'Raw intelligence combined with sustained day-to-day effort',
+      'Natural talent backed up by a good measure of luck',
+      'Personal confidence paired with strong career ambition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Angela Duckworth&rsquo;s research at the University of Pennsylvania defines grit as the combination of passion (sustained interest in a particular field or pursuit over years) and perseverance (the ability to persist through difficulty, setback, and tedium without giving up). Duckworth&rsquo;s studies across diverse populations &mdash; West Point cadets, spelling bee contestants, novice teachers, salespeople &mdash; consistently found that grit was a better predictor of success than IQ, talent, or socioeconomic background. For electricians, grit manifests as the sustained commitment to the trade over years and decades: persisting through the difficult apprenticeship years, continuing to learn and develop after qualifying, pushing through exam failures, and maintaining high standards even when cutting corners would be easier. Grit is not about short-term intensity but about long-term consistency.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'The &ldquo;five-minute rule&rdquo; is a practical technique for overcoming procrastination and low motivation. How does it work?',
     options: [
-      'You set a timer for five minutes and if you are not motivated after five minutes, you stop',
-      'You commit to working on the task for just five minutes, with permission to stop after that &mdash; but in most cases, starting creates enough momentum to continue',
-      'You spend five minutes visualising the completed task before beginning',
-      'You take a five-minute break every 25 minutes of work',
+      'You set a timer for five minutes, and if you are still not motivated when it ends, you stop',
+      'You spend five minutes vividly visualising the fully completed task before you actually begin',
+      'You take a deliberate five-minute break for every 25 minutes of focused work you do',
+      'You commit to just five minutes with permission to stop, but starting usually creates enough momentum to continue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The five-minute rule is based on the principle that action precedes motivation. You commit to working on a task for just five minutes, giving yourself full permission to stop after that if you genuinely want to. The psychological effect is powerful: by reducing the perceived commitment from &ldquo;I have to study for two hours&rdquo; to &ldquo;I just need to do five minutes&rdquo;, you dramatically lower the activation energy required to start. And research shows that in the vast majority of cases (around 80%), once people start, they continue well beyond five minutes because the act of beginning generates momentum, engagement, and the neural reward signals that we experience as motivation. The five-minute rule works because it addresses the real barrier &mdash; which is usually not the task itself but the resistance to starting it.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       'Which of the following best describes the difference between productive pushing and destructive overwork (burnout)?',
     options: [
-      'There is no real difference &mdash; hard work is always productive',
-      'Productive pushing involves challenging yourself within sustainable limits and incorporating recovery, while destructive overwork ignores recovery needs and leads to diminishing returns',
-      'Burnout only affects people who are not genuinely passionate about their work',
-      'Working more than 40 hours per week automatically constitutes burnout',
+      'There is no real difference between the two, since hard work of any kind is always productive',
+      'Productive pushing challenges you within sustainable limits and builds in recovery; overwork ignores recovery and stalls',
+      'Burnout only ever affects those people who are not genuinely passionate about the work they do',
+      'Working any more than 40 hours in a single week automatically and inevitably constitutes burnout',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     question:
       'Bill Gates is often quoted as saying: &ldquo;Most people overestimate what they can do in one year and underestimate what they can do in ten years.&rdquo; Applied to an electrician&rsquo;s career, this principle suggests:',
     options: [
-      'You should set only short-term goals because long-term planning is unreliable',
-      'The electrical trade does not change enough over ten years for long-term planning to matter',
-      'Consistent, patient investment in your development over a decade will produce results far beyond what seems possible from your current vantage point',
-      'You should only focus on goals that can be achieved within one year',
+      'You should set only short-term goals, on the basis that all long-term planning is unreliable',
+      'The electrical trade does not change enough across ten years for any long-term planning to matter',
+      'Patient, consistent investment over a decade produces results far beyond what seems possible today',
+      'You should focus only on the goals that can realistically be achieved within a single year',
     ],
     correctAnswer: 2,
     explanation:

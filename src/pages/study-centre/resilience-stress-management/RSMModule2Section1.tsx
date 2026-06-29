@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'resilience-definition',
     question: 'According to the APA, resilience is best described as which of the following?',
     options: [
-      'A personality trait that some people are born with and others are not',
       'The process of adapting well in the face of adversity, trauma, or significant sources of stress',
+      'A personality trait that some people are born with and others are not',
       'The ability to avoid stressful situations entirely through careful planning',
       'A measure of physical toughness and endurance under pressure',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The American Psychological Association defines resilience as "the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress." This definition is important because it frames resilience as a process — something you do — rather than a fixed quality you either have or lack.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
       'What is the key difference between "bouncing back" and "bouncing forward" in resilience?',
     options: [
       'Bouncing back is faster while bouncing forward takes longer',
-      'Bouncing back means returning to your previous state, while bouncing forward means growing beyond it',
       'Bouncing forward only applies to physical recovery from injury',
       'There is no meaningful difference — they are interchangeable terms',
+      'Bouncing back means returning to your previous state, while bouncing forward means growing beyond it',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Bouncing back means returning to your baseline — the state you were in before the adversity. Bouncing forward, linked to post-traumatic growth, means emerging from adversity stronger, wiser, or more capable than before. Both are valid forms of resilience, but bouncing forward recognises that difficult experiences can sometimes be catalysts for positive change.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the APA definition of resilience emphasise?',
     options: [
-      'That resilience is a rare genetic trait found in a small percentage of the population',
       'That resilience is the process of adapting well in the face of adversity and stress',
+      'That resilience is a rare genetic trait found in a small percentage of the population',
       'That resilience means avoiding all stressful situations through careful planning',
       'That resilience requires professional psychological training to develop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The APA defines resilience as "the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress." The key word is process — resilience is something you do, not something you are.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
     question: 'The rubber ball analogy for resilience describes which concept?',
     options: [
       'Resilience means becoming hard and inflexible so that nothing affects you',
-      'Resilience means absorbing pressure and then returning to your original shape — or an improved one',
       'Resilience means deflecting all stress away from you onto other people',
+      'Resilience means absorbing pressure and then returning to your original shape — or an improved one',
       'Resilience means staying in the same position regardless of what happens around you',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rubber ball analogy illustrates that resilient people absorb the impact of adversity (they do feel the pressure) but then return to their original form — or potentially an improved form (bouncing forward). Unlike a glass ball that shatters or a clay ball that deforms permanently, the rubber ball recovers.',
   },
@@ -118,10 +118,10 @@ const quizQuestions = [
     options: [
       'Resilience can be strengthened through deliberate practice',
       'Resilient people still experience distress and difficult emotions',
-      'Tough people do not get stressed — stress is a sign of weakness',
       'Social support is one of the strongest predictors of resilience',
+      'Tough people do not get stressed — stress is a sign of weakness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The idea that "tough people don\'t get stressed" is one of the most harmful myths about resilience, and it is especially prevalent in construction culture. Everyone experiences stress — it is a normal physiological response. What matters is how you manage and recover from stress, not whether you feel it in the first place.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: 'What is the key difference between resilience and simply "toughing it out"?',
     options: [
       'There is no difference — they describe the same behaviour',
-      'Resilience involves processing emotions and adapting, while toughing it out involves suppressing emotions and enduring',
       'Toughing it out is more effective than resilience for short-term stress',
       'Resilience only works for minor stressors while toughing it out is needed for major crises',
+      'Resilience involves processing emotions and adapting, while toughing it out involves suppressing emotions and enduring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Resilience is an active, adaptive process that involves acknowledging emotions, seeking support when needed, problem-solving, and adjusting your approach. "Toughing it out" typically involves emotional suppression, refusing to seek help, and simply enduring pain without processing it. While toughing it out might work briefly, it leads to burnout, mental health decline, and reduced performance over time. Resilience is sustainable; toughing it out is not.',
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which statement about resilience is most accurate?',
     options: [
-      'Resilience is a fixed personality trait — you either have it or you do not',
-      'Resilience only matters during major life crises, not everyday work stress',
       'Resilience is a dynamic process that can be developed and that applies to both major adversity and daily challenges',
+      'Resilience only matters during major life crises, not everyday work stress',
+      'Resilience is a fixed personality trait — you either have it or you do not',
       'Resilience means returning to exactly the same state you were in before the stressful event',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Resilience is a dynamic process — not a fixed trait — that can be developed through deliberate practice. It applies equally to major life crises and the cumulative effect of everyday work stressors. And resilience does not always mean returning to the same state; sometimes it means bouncing forward to a stronger position.',
   },

@@ -55,9 +55,9 @@ const AM2Module7Section2 = () => {
       question: 'Why is practising safe isolation every day before AM2 a good strategy?',
       options: [
         'To make the process automatic so nerves are less likely to cause mistakes',
-        'Within or immediately adjacent to the luminaire itself',
-        'When requested in writing by two or more Safety Representatives',
-        'Be consistently fair, follow through on commitments, and admit when you do not know something',
+        'To complete the procedure faster than other candidates',
+        'To avoid having to prove the tester on exam day',
+        'To memorise the exact wording of the regulations',
       ],
       correctIndex: 0,
       explanation:
@@ -68,9 +68,9 @@ const AM2Module7Section2 = () => {
       question: 'True or false: Assessors fail candidates just for looking nervous.',
       options: [
         'False - they only mark the work quality and safety',
-        'Prevention, reuse, recycling, recovery, disposal',
-        'To isolate the fault logically and avoid confusion',
-        'Conduct site survey and risk assessment',
+        'True - visible nerves are an automatic fail',
+        'True - nerves count against your overall mark',
+        'False - but only if you tell them you are nervous',
       ],
       correctIndex: 0,
       explanation:
@@ -83,10 +83,10 @@ const AM2Module7Section2 = () => {
       id: 1,
       question: 'Why do nerves cause mistakes in AM2?',
       options: [
-        'Access to the work, drawings, certs to date and the ability to ask questions of the installer',
+        'They make the assessor mark you more harshly',
         'They cause physical reactions like shaking and brain fog that affect performance',
-        'Deliberate practice targets specific weaknesses with focused effort and feedback',
-        'Provide a known voltage source to prove that a voltage indicator is functioning correctly',
+        'They reduce the time allowed for each section',
+        'They cause the test instruments to read inaccurately',
       ],
       correctAnswer: 1,
       explanation:
@@ -109,9 +109,9 @@ const AM2Module7Section2 = () => {
       id: 3,
       question: 'How can daily practice reduce nerves?',
       options: [
-        'Within 600mm of meter, consumer side',
-        'Through remote monitoring and predictive maintenance',
-        'Reduces capacity due to heat build-up',
+        'It guarantees you will finish well ahead of time',
+        'It removes the need to prove the tester',
+        'It means the assessor will overlook small errors',
         'It makes procedures feel automatic and natural',
       ],
       correctAnswer: 3,
@@ -123,9 +123,9 @@ const AM2Module7Section2 = () => {
       question: 'Why should you avoid high-sugar energy drinks before AM2?',
       options: [
         'They cause shakes and crashes mid-assessment',
-        'Decrease sensitivity and consider relocating the sensor',
-        'A fault in the thermal trip mechanism',
-        'A guard rail around an open edge',
+        'They are banned from NET assessment centres',
+        'They make test instruments harder to read',
+        'They slow down the section clock',
       ],
       correctAnswer: 0,
       explanation:
@@ -135,10 +135,10 @@ const AM2Module7Section2 = () => {
       id: 5,
       question: 'What technique can you use if you feel panic rising?',
       options: [
-        'The sum of voltages around any closed loop equals zero',
+        'Speed up to get the difficult part over with',
         'Step back for 10 seconds and use controlled breathing',
-        'Part 4 — General requirements for all construction sites',
-        'Both civil and criminal proceedings can run independently',
+        'Compare your progress with the candidate next to you',
+        'Skip the step you are unsure of and return later',
       ],
       correctAnswer: 1,
       explanation:
@@ -148,10 +148,10 @@ const AM2Module7Section2 = () => {
       id: 6,
       question: 'Why should you break the exam into smaller tasks?',
       options: [
-        'A list of all detected events with distance and loss values',
-        'Test button operation and emergency procedures',
+        'To finish each section faster than scheduled',
+        'To avoid having to record results as you go',
         'To reduce overwhelm and focus on the next step',
-        'Constant-load motors that run continuously',
+        'To make it easier to skip the harder sections',
       ],
       correctAnswer: 2,
       explanation:
@@ -182,10 +182,10 @@ const AM2Module7Section2 = () => {
       id: 9,
       question: 'Give an example of positive self-talk you could use:',
       options: [
-        "Resistance, inductance, and capacitance",
+        "Everyone here is faster than me",
         "I know the process, I've trained for this",
-        "Luminaires, distribution boards, and test points",
-        "A low, consistent resistance (typically below 1 ohm)",
+        "I always get this part wrong",
+        "There is not enough time to finish",
       ],
       correctAnswer: 1,
       explanation:

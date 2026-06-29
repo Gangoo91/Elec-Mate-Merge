@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What is Reg 551.7.5 verbatim, and why is it the categorical safety anchor for generating sets?',
     options: [
-      'Random',
-      '"Means shall be provided to prevent the connection of a generating set to the system for distribution of electricity to the public in the event of loss of that supply or deviation of the voltage or frequency at the supply terminals from values required by Regulation 551.7.4." Anti-islanding is non-negotiable: if a generator keeps exporting to a "dead" DNO supply, engineers servicing the network can be killed by an unexpectedly live cable. The NOTE confirms G98 compliance ≤16 A per phase deems Reg 551.7 met',
-      'Not safety critical',
-      'Optional',
+      'It requires the generating set to keep supplying the local loads if the DNO supply is lost, giving the customer continuity during an outage',
+      'Means shall prevent a generating set connecting to the public supply when that supply is lost or out of tolerance — anti-islanding',
+      'It requires an isolator at the generator so the customer can manually disconnect it before any DNO work, removing the need for automatic protection',
+      'It requires the generating set to limit its export to 16 A per phase, which is the value that prevents it back-feeding a dead network',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'What is "Loss of Mains" (LoM) protection, and what methods detect it?',
     options: [
-      'Random',
-      'LoM = the protection that detects the public supply has been lost and disconnects the generating set. Methods: (1) Vector shift — sudden phase angle jump in voltage waveform when DNO disconnects. Important: G99 disallows Vector Shift for type-tested generation, so RoCoF (with voltage / frequency protection) is the standard required LoM method for the type-tested inverters used in virtually all LCT installs (PV, BESS, micro-CHP); VS is legacy and only appears on older or non-type-tested sites. (2) ROCOF — Rate of Change of Frequency, frequency drift when generation no longer matches load. (3) Voltage / frequency deviation — measured against Reg 551.7.4 declared values. (4) Active anti-islanding — inverter injects small disturbances + watches for grid response; absence of response = no grid. ENA EREC G99 specifies test methodology',
-      'Same as RCD',
-      'No methods',
+      'LoM is the residual-current protection on the generator circuit; it trips on earth fault and so also covers loss of the public supply',
+      'Protection that detects loss of the public supply and disconnects the generating set, using RoCoF or voltage/frequency methods',
+      'LoM is detected by a timer that disconnects the generator a fixed five minutes after start-up, regardless of the state of the public supply',
+      'LoM relies solely on the customer noticing a power cut and switching off the inverter; there is no automatic detection method at all',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What is the EREC G99 anti-islanding test process at commissioning?',
     options: [
-      'Random',
-      'EREC G99 commissioning includes a DNO-witnessed (or manufacturer-verified, depending on agreement) simulated grid-loss test. Sequence: (1) DNO + installer agree test date. (2) Generation operating in parallel + exporting per design. (3) Test method: physical disconnection at point of supply (DNO operates), or simulated via switching adjacent to the generator. (4) Verify generator disconnects within G99-specified time (typically <1 second from grid loss). (5) Repeat for multiple conditions if required. (6) DNO commissioning certificate issued',
-      'No test',
-      'Customer tests',
+      'The installer measures the inverter output voltage with a multimeter and records it; if it reads 230 V the anti-islanding test is passed',
+      'A witnessed or verified simulated grid-loss test, confirming the generator disconnects within the G99-specified time',
+      'The DNO injects a fault on the supply and confirms the main fuse blows, which proves the generator cannot back-feed the network',
+      'No commissioning test is performed; the manufacturer factory test alone is always accepted as conclusive evidence by every DNO',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Vector shift vs ROCOF — what is the difference in detection mechanism?',
     options: [
-      'Same thing',
-      'Vector shift = detection based on sudden change in PHASE ANGLE of the voltage waveform. When DNO disconnects, the generator\'s voltage phase shifts relative to its loaded steady-state position (load is no longer balanced by grid). Typical trip threshold 6-12° shift. ROCOF = detection based on RATE OF CHANGE OF FREQUENCY. After DNO disconnect, the generator\'s frequency drifts (generation no longer matches load). Typical threshold 0.5-1.0 Hz/s. Vector shift = fast (~100 ms); ROCOF = slightly slower but more selective on grid frequency disturbances. Note: G99 disallows Vector Shift for type-tested generation, so RoCoF (with voltage / frequency protection) is the required LoM method for the type-tested inverters in virtually all LCT installs; VS is legacy / non-type-tested sites only',
-      'No difference',
-      'Random',
+      'Vector shift measures voltage magnitude and ROCOF measures voltage magnitude too; the only difference is the trip threshold each uses',
+      'Vector shift detects a jump in voltage phase angle; ROCOF detects the rate of change of frequency after the grid disconnects',
+      'Vector shift detects a slow drift in frequency over minutes while ROCOF detects an instantaneous phase-angle jump — simply each other reversed',
+      'Vector shift is a current-based method and ROCOF is a voltage-based method; both are equally accepted for type-tested generation under G99',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A 5 kW residential PV install. Does it trigger EREC G98 or G99? What does that mean for anti-islanding?',
     options: [
-      'Random',
-      'G98 fast-track. ≤16 A per phase generation = Type A small-scale. For a 5 kW single-phase PV inverter ~22 A AC rated — JUST EXCEEDS 16 A so technically G99 — most 5 kW inverters are around 22-25 A; verify exactly. If 16 A or below: G98 + Reg 551.7.5 NOTE deems compliant via G98 + manufacturer\'s factory test + DNO post-installation notification. If >16 A: G99 formal application + DNO-witnessed (or manufacturer-verified) test at commissioning. Cert evidence: G98 / G99 reference + manufacturer DoC + test record',
-      'Always G99',
-      'No EREC',
+      'G98 always — any single domestic PV system qualifies for the fast-track notification regardless of its rated output current per phase',
+      'It is set by the panel wattage, not the inverter current, so a 5 kWp array is G98 because 5 kWp is below the 16 kW G99 threshold',
+      'G99, since a 5 kW single-phase inverter draws roughly 22-25 A, exceeding the 16 A-per-phase G98 threshold',
+      'Neither applies to domestic PV; EREC G98 and G99 cover only commercial generation above 50 kW of installed capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EREC G98 vs G99 for 5 kW residential PV: (1) G98 Type A threshold — ≤16 A per phase generation. (2) 5 kW single-phase PV inverter — rated AC current ~22-25 A depending on manufacturer + system voltage. Most exceed 16 A by 5-10 A. (3) Threshold technically: 16 A per phase = ~3.7 kW continuous at 230 V single-phase. So 5 kW exceeds the G98 threshold. (4) G99 application — required for PV >16 A per phase. Formal pre-installation application; DNO reviews + issues connection offer; install per offer; commissioning includes anti-islanding test (DNO-witnessed or manufacturer-verified per DNO\'s requirement). (5) G98 path — only applicable for smaller PV (≤3.6 kW typical single-phase). Post-installation notification (after install); no pre-installation DNO approval needed; Reg 551.7.5 NOTE deems compliant via G98 + manufacturer factory test on the inverter. (6) Practical UK 2025-26 — most residential PV (3-7 kWp) requires G99. Larger systems + commercial firmly G99. Smaller (< 3.6 kWp single-phase) may qualify for G98. (7) Cert evidence bundle: G98 / G99 reference + manufacturer DoC declaring anti-islanding compliance + commissioning test record + DNO connection offer (G99) or post-installation notification (G98).',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'What does Reg 551.7.4 mean by "deviation of the voltage or frequency at the supply terminals from declared values"?',
     options: [
-      'Random',
-      'Reg 551.7.4 references the voltage + frequency tolerance windows. UK grid: 230 V ±10% at LV (207-253 V single-phase); 400 V ±10% three-phase; 50 Hz ±0.5 Hz typical operating range. Wider tolerances allowed briefly during grid events. Generator protection (inverter control) monitors against these limits. If voltage or frequency drifts beyond limits, generator trips on under/over-voltage + under/over-frequency protection. Reg 551.7.5 says this trip must prevent reconnection in event of loss of supply',
-      'No tolerances',
-      'Customer sets',
+      'It means the inverter must hold its output exactly at 230 V and 50 Hz, tripping the instant either value moves at all from nominal',
+      'It refers to the grid voltage and frequency tolerance windows; outside them the generator trips on under/over-voltage or frequency',
+      'It refers to the customer-selectable export limit, which the installer sets in the inverter app to suit the chosen import-export tariff',
+      'It means the DNO declares no fixed tolerances, so the generator may continue exporting through any voltage or frequency excursion',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'A commercial CHP install with synchronous generator — what additional anti-islanding considerations vs inverter-coupled sources?',
     options: [
-      'Random',
-      'Synchronous generators are harder to detect grid loss because they can maintain voltage + frequency briefly (inertia + field excitation) — making vector shift + ROCOF less reliable + harder to set. EREC G99 typically requires more sophisticated LoM protection: dedicated G99 protection relay (e.g. SEL, Schneider Sepam, ABB REJ) with multiple methods + DNO-mandated settings; physical disconnection test at commissioning more often required than inverter-coupled; longer test sequence. Manufacturer + DNO coordination',
-      'Same as inverter',
-      'No anti-islanding',
+      'A synchronous generator stops instantly on grid loss because the rotor loses its reference, so detection is simpler than for an inverter',
+      'There are no additional considerations — the inverter-coupled anti-islanding logic is reused unchanged for the synchronous machine',
+      'A synchronous CHP set needs no anti-islanding because its mechanical governor naturally prevents it from energising a dead network',
+      'Rotor inertia lets it hold voltage and frequency briefly, so it needs a dedicated G99 protection relay and usually a physical disconnection test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commercial CHP synchronous generator anti-islanding considerations: (1) Sync generator inertia — rotating mass + field excitation maintain voltage + frequency briefly after grid disconnect; vector shift + ROCOF detection harder + slower. (2) LoM detection challenge — small loaded island may settle into a stable voltage + frequency briefly; detection requires more sensitive thresholds or active probing. (3) Dedicated G99 protection relay — commercial CHP typically uses a dedicated protection relay (Schweitzer SEL-700G, Schneider Sepam, ABB REJ, Siemens SIPROTEC) with multiple LoM methods + DNO-mandated settings. Inverter-coupled small wind / PV / BESS often have built-in LoM in inverter; CHP needs external relay. (4) Settings per DNO — UK 2025-26 DNOs publish recommended G99 protection settings: undervoltage, overvoltage, underfrequency, overfrequency, vector shift, ROCOF + thresholds + times. Customer-specific connection offer may modify. (5) Physical disconnection test at commissioning — sync generators more often require physical DNO supply disconnect test (vs inverter-coupled where manufacturer factory test + simulated grid-loss may suffice). DNO witness typical for larger commercial. (6) Multiple test conditions — load levels, time of day, source configurations; sync generator may need testing across operating range. (7) Cert evidence bundle: G99 connection offer + protection relay manufacturer DoC + DNO-mandated settings + commissioning test record + DNO witness signature.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'What is "active" vs "passive" anti-islanding?',
     options: [
-      'Random',
-      'Passive anti-islanding = detection based on observing grid characteristics (voltage, frequency, phase angle, ROCOF) without inverter intervention. Vector shift + ROCOF + voltage/frequency monitoring are passive. Active anti-islanding = inverter actively injects small disturbances (small frequency or voltage perturbations) + watches for grid response. Grid present = perturbation absorbed; grid absent = perturbation amplifies → inverter detects + trips. Active methods more reliable in edge cases (matched load + generation) but more complex to test',
-      'Passive only',
-      'Same thing',
+      'Active anti-islanding runs while exporting and passive anti-islanding runs only at night; they are the day and night modes of the same relay',
+      'Passive methods only observe grid voltage, frequency and phase; active methods inject small disturbances and watch for the grid\'s response',
+      'Passive anti-islanding uses a fuse and active anti-islanding uses an RCD, so the terms describe the protective device fitted, not the method',
+      'Active means the customer manually disconnects the inverter and passive means the DNO does it remotely; both are forms of supervised shutdown',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'How does the Reg 551.6 changeover (switched-alternative) arrangement relate to anti-islanding + island-mode operation in a PEI?',
     options: [
-      'Random',
-      'The Reg 551.6 changeover (switched-alternative) arrangement switches the installation between grid-connected mode + island mode in a PEI per Chapter 82. Different role from anti-islanding: the changeover is a DELIBERATE mode-change; anti-islanding is an AUTOMATIC trip on undetected grid loss. Both work together: anti-islanding fires on grid loss (no changeover operation), then the changeover enables island mode by switching to local supply. Reg 826.1.1.5 switching device for island mode complies with Reg 512.1.2',
-      'Same as RCD',
-      'No relationship',
+      'The changeover and anti-islanding are the same function under two names, so a changeover switch removes the need for any anti-islanding protection',
+      'The changeover is a deliberate switch between grid and island mode; anti-islanding is an automatic trip on undetected grid loss — they work together',
+      'The changeover must be a make-before-break device so the generator never loses supply, which is why it can briefly parallel the local source with the grid',
+      'They are unrelated — the changeover is purely a metering arrangement and has no bearing on how the installation enters island mode',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'What happens at commissioning if the DNO is not available to witness the anti-islanding test?',
     options: [
-      'Skip the test',
-      'Options: (1) Reschedule for DNO availability — typical G99 commissioning has multi-week lead time + DNO witness coordinated. (2) DNO may accept manufacturer-verified test result — inverter factory test certificate + simulated grid-loss test by installer + reported result; DNO sign-off on documentation. (3) DNO-approved test contractor — some DNOs accept independent test engineer report. (4) Manufacturer self-test feature — modern inverters have built-in test mode; result auto-logged. Never proceed without an anti-islanding verification on record. Cert evidence bundle must contain the test result',
-      'Random',
-      'No test ever',
+      'Reschedule, or use a DNO-accepted equivalent (manufacturer-verified or self-test result) — never energise without anti-islanding evidence on record',
+      'Proceed with the test using the customer as the witness, since the DNO only needs the signed result and any competent adult can sign the form',
+      'Energise and leave the system exporting; the anti-islanding test can be carried out by the DNO at the next periodic inspection instead',
+      'Disable the inverter export until the DNO visits, then enable it without a test once the connection is approved on paper documentation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DNO not available for anti-islanding test at commissioning — options: (1) Reschedule for DNO availability — G99 commissioning has multi-week lead time; DNO witness coordinated. This is typical for sync generator / commercial sites. (2) DNO accepts manufacturer-verified result — for inverter-coupled sources (PV / BESS / modern wind / micro-CHP), DNO may accept: (a) inverter factory test certificate from manufacturer (G99-compliant inverter ships with type-test record); (b) installer\'s simulated grid-loss test result (e.g. open main switch + observe inverter disconnect); (c) reported via DNO\'s G99 commissioning portal. (3) DNO-approved test contractor — some DNOs accept independent test engineer\'s report (UK 2025-26 various test houses + competent persons). (4) Manufacturer self-test feature — modern inverters have built-in anti-islanding test mode; result auto-logged to inverter memory + portal. Acceptable evidence per DNO. (5) NEVER proceed without anti-islanding verification on record — Reg 551.7.5 is categorical safety; an install with active generation but no anti-islanding evidence is non-compliant + dangerous to DNO engineers. (6) Cert evidence bundle MUST contain: anti-islanding test result + DNO sign-off (or DNO-accepted evidence equivalent) + inverter manufacturer DoC + G98 / G99 reference. EICR scope verifies the evidence exists.',
   },

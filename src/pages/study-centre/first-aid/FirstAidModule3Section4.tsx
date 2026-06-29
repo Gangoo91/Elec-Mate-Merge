@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'A casualty is showing signs of shock after a fall. You want to raise their legs, but they are complaining of severe pain in their right thigh. What should you do?',
     options: [
+      'Do NOT raise the legs — keep the casualty flat and warm, as raising the legs could worsen a fracture',
       'Raise both legs anyway — treating shock takes priority',
       'Raise only the uninjured leg',
-      'Do NOT raise the legs — keep the casualty flat and warm, as raising the legs could worsen a fracture',
       'Sit the casualty upright to help them breathe more easily',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'You should NOT raise the legs if there is a suspected fracture, spinal injury, or if it causes pain. In this case, the severe pain in the thigh suggests a possible fracture. Keep the casualty lying flat on their back, keep them warm with blankets, and monitor continuously while waiting for emergency services.',
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       "You have administered an adrenaline auto-injector to a casualty experiencing anaphylaxis. After 5 minutes, the casualty's symptoms have not improved. What should you do?",
     options: [
       'Wait another 10 minutes before considering a second dose',
-      'Administer a second dose using a second auto-injector device',
       'Remove the first injector and re-inject with the same device',
+      'Administer a second dose using a second auto-injector device',
       'Do not give a second dose — only one dose can ever be given',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'If there is no improvement after 5 minutes, a second dose of adrenaline should be administered using a second auto-injector device. Auto-injectors are single-use — you cannot re-use the first device. Most people prescribed auto-injectors are advised to carry two devices for this reason. Always call 999 even if symptoms improve, as biphasic reactions can occur hours later.',
   },
@@ -87,8 +87,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which type of shock is most commonly encountered by first aiders in the workplace?',
-    options: ['Cardiogenic shock', 'Hypovolaemic shock', 'Neurogenic shock', 'Septic shock'],
-    correctAnswer: 1,
+    options: ['Hypovolaemic shock', 'Cardiogenic shock', 'Neurogenic shock', 'Septic shock'],
+    correctAnswer: 0,
     explanation:
       'Hypovolaemic shock — caused by severe blood or fluid loss — is the most common type encountered by first aiders. It can result from external or internal bleeding, severe burns, dehydration, and prolonged vomiting or diarrhoea. First aiders are most likely to encounter this type because workplace injuries involving bleeding and burns are relatively common.',
   },
@@ -112,10 +112,10 @@ const quizQuestions = [
     options: [
       'Pale, cold, clammy skin',
       'Rapid, weak pulse',
-      'High temperature and flushed red face',
       'Anxiety, restlessness and confusion',
+      'High temperature and flushed red face',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A high temperature and flushed red face are NOT typical signs of shock. Shock causes pale, cold, clammy skin (or grey/ashen in darker skin tones) because blood is being diverted away from the skin to protect vital organs. The other options — rapid weak pulse, and anxiety/restlessness/confusion — are all classic signs of shock.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'After using an adrenaline auto-injector on a casualty whose symptoms then improve, what should you do?',
     options: [
-      'Send the casualty home as the emergency is over',
       'Always call 999 — even if symptoms improve, biphasic reactions can occur hours later',
+      'Send the casualty home as the emergency is over',
       'Give the casualty antihistamine tablets and monitor for 30 minutes',
       'Only call 999 if the symptoms return within 10 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "You must ALWAYS call 999 after using an adrenaline auto-injector, even if the casualty's symptoms improve completely. Biphasic anaphylactic reactions can occur 4 to 12 hours (sometimes up to 72 hours) after the initial episode. The casualty needs hospital observation to ensure they receive prompt treatment if symptoms return.",
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     options: [
       'Sit them upright in a chair',
       'Stand them up and walk them to the first aid room',
-      'Lie them flat with their legs raised',
       'Place them in the recovery position immediately',
+      'Lie them flat with their legs raised',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When the predominant symptom of anaphylaxis is feeling faint or dizzy (indicating low blood pressure), the casualty should be laid flat with their legs raised. This improves venous return and blood pressure. If breathing difficulty were the main problem, sitting upright would be preferred. NEVER stand a casualty with anaphylaxis up — the sudden change to an upright position can cause fatal cardiac arrest due to the already low blood pressure.',
   },

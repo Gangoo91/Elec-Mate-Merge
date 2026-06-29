@@ -17,12 +17,12 @@ const quickCheckQuestions = [
     id: 'reg5-requirement',
     question: 'Under CSR 1997 Regulation 5, when must emergency arrangements be in place?',
     options: [
-      'Within 24 hours of starting work in a confined space',
       'Before anyone enters a confined space',
+      'Within 24 hours of starting work in a confined space',
       'Only when the risk assessment identifies a high-risk space',
       'After the first person has entered and assessed the space',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 5 of the Confined Spaces Regulations 1997 is absolute: suitable and sufficient emergency arrangements MUST be in place BEFORE anyone enters a confined space. There is no exception to this requirement. Entry without a rescue plan is a breach of the law, regardless of how low-risk the space may appear.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
     question: 'Why should you NOT rely solely on the fire service for confined space rescue?',
     options: [
       'The fire service does not carry confined space equipment',
-      'The fire service response may take 15+ minutes, but the casualty may only have minutes',
       'The fire service will refuse to enter a confined space',
       "Confined space rescue is not part of the fire service's responsibilities",
+      'The fire service response may take 15+ minutes, but the casualty may only have minutes',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'While you should always call 999 in an emergency, you must NOT rely on the fire service arriving in time for rescue. Their response time may be 15 minutes or more, but a casualty in a toxic or oxygen-deficient atmosphere may have only minutes before irreversible harm or death. This is why on-site rescue capability by a trained team is essential as the primary rescue method.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
       'Why is it critical that rescuers do NOT simply rush into a confined space when a colleague collapses?',
     options: [
       'It is against company policy to rush anywhere on site',
-      'The rescuer will be exposed to the same hazard that incapacitated the casualty and may also become a casualty',
       'The collapsed person is probably fine and does not need immediate help',
+      'The rescuer will be exposed to the same hazard that incapacitated the casualty and may also become a casualty',
       'Rushing into the space will damage the rescue equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Around 60% of confined space deaths are rescuers who entered without proper planning or equipment. If a person collapses in a confined space due to a toxic atmosphere or oxygen deficiency, anyone entering that same space without breathing apparatus will be exposed to the identical hazard. Unplanned rescue attempts result in multiple fatalities. The emergency plan ensures rescuers are protected before they enter.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Calling 999 and waiting for the fire service to arrive',
       'Asking any available workers to help pull the casualty out',
-      'On-site rescue by a trained, equipped rescue team already present',
       'Lowering food and water to the casualty until professional help arrives',
+      'On-site rescue by a trained, equipped rescue team already present',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The primary rescue method must be on-site rescue by a trained and equipped team. While 999 should always be called, the fire service response may take 15 minutes or more. In a toxic or oxygen-deficient atmosphere, the casualty may only have minutes. An on-site rescue team that is trained, practised, and familiar with the specific space and equipment provides the fastest and most effective rescue capability.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'Which of the following is a requirement for members of a confined space rescue team?',
     options: [
-      'They must hold a university degree in emergency management',
       'They must be trained in confined space rescue, physically fit, and practise regularly',
+      'They must hold a university degree in emergency management',
       'They must be employed by the fire service or ambulance service',
       'They must have at least 10 years of construction experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rescue team members must be trained specifically in confined space rescue techniques, physically fit enough to carry out rescue operations (which are physically demanding), and they must practise regularly -- at least annually, ideally quarterly. They must also be familiar with the specific spaces and equipment they may need to use. There is no requirement for a degree or for them to be emergency service employees.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
       'Why must the emergency plan include details of the nearest hospital with relevant capabilities?',
     options: [
       'It is a nice-to-have detail but not actually required',
-      'The nearest hospital may not have the specialist capabilities needed to treat confined space casualties (e.g. hyperbaric chamber, toxicology unit)',
       'All hospitals in the UK are identical in their capabilities',
+      'The nearest hospital may not have the specialist capabilities needed to treat confined space casualties (e.g. hyperbaric chamber, toxicology unit)',
       'The ambulance service does not know where hospitals are located',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Not all hospitals have the specialist capabilities needed for confined space casualties. For example, a casualty suffering from carbon monoxide poisoning may need a hyperbaric chamber, or a casualty exposed to hydrogen sulphide may need a specialist toxicology unit. Identifying the nearest appropriate hospital in advance saves critical time during an emergency and ensures the casualty receives the right treatment as quickly as possible.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     options: [
       'In the site office filing cabinet',
       'On the company intranet only',
-      'At the entry point of the confined space, accessible to all personnel',
       "Only in the rescue team leader's personal notebook",
+      'At the entry point of the confined space, accessible to all personnel',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The written emergency plan must be accessible and on display at the entry point of the confined space. Every person involved in the entry -- the entrant, the top person, the rescue team, and the supervisor -- must be able to see it and must have been briefed on its contents before entry begins. Keeping the plan locked in an office or only available online defeats its purpose.',
   },

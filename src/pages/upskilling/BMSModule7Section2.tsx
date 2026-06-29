@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'function-blocks-purpose',
     question: 'What is the purpose of using function blocks instead of traditional coding?',
     options: [
-      "They're faster to execute",
       "They provide a visual, graphical approach that's easier to understand and troubleshoot",
-      'They use less memory',
+      'They always execute faster than line-by-line code',
+      'They remove the need to test the control logic on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Function blocks provide a visual, graphical approach that's easier to understand, troubleshoot, and maintain. They use standardised symbols and clear signal flow that electricians can quickly interpret.",
   },
@@ -22,19 +22,19 @@ const quickCheckQuestions = [
     id: 'and-logic-requirement',
     question: 'What does AND logic require for a true output?',
     options: [
-      'Any one condition to be true',
+      'Any one of the conditions to be true',
+      'Exactly one condition to be true at a time',
       'All conditions must be true',
-      'No conditions to be true',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'AND logic requires ALL conditions to be true for the output to be true. If any condition is false, the output will be false. This is essential for safety interlocks.',
   },
   {
     id: 'pid-integral-function',
     question: 'Which part of PID control corrects long-term offset from setpoint?',
-    options: ['Proportional (P)', 'Integral (I)', 'Derivative (D)'],
-    correctIndex: 1,
+    options: ['Integral (I)', 'Proportional (P)', 'Derivative (D)'],
+    correctIndex: 0,
     explanation:
       'The Integral (I) component corrects long-term offset. It accumulates error over time and gradually increases the control output to eliminate steady-state drift from the setpoint.',
   },
@@ -68,11 +68,11 @@ const quizQuestion = {
     'A supply fan continued running during a fire alarm test. Investigation found the program used OR logic instead of AND/NOT logic. What does this demonstrate?',
   options: [
     'OR logic is unsuitable for any BMS application',
+    'Fire alarms should never be interfaced with the BMS',
+    'The fan relay had developed an intermittent fault',
     'Incorrect Boolean logic can create serious safety hazards',
-    'Fire alarms should not be connected to the BMS',
-    'The fan relay was faulty',
   ],
-  correctAnswer: 1,
+  correctAnswer: 3,
   explanation:
     "The case demonstrates that incorrect Boolean logic can create safety hazards. The OR logic meant the fan would run if ANY condition was true, including during fire alarm. Correct AND/NOT logic ensures the fan ONLY runs when enabled AND there's NO fire alarm.",
 };

@@ -7,10 +7,10 @@ export const emergencyHighRiskQuizData = {
       id: 1,
       question: 'What is the primary purpose of high-risk task area lighting?',
       options: [
-        'Delta primary, star secondary with neutral, 330 degrees (11 o\\\\\\\\\\\\\\\'clock) phase shift',
+        'To illuminate escape routes for general evacuation',
         'To allow safe shutdown of dangerous processes before evacuation',
-        'Connect it to earth and provide mechanical protection',
-        'To provide international guidance for BMS design and operation',
+        'To provide decorative lighting in industrial areas',
+        'To replace normal lighting during routine maintenance',
       ],
       correctAnswer: 1,
       explanation:
@@ -61,14 +61,14 @@ export const emergencyHighRiskQuizData = {
       id: 5,
       question: 'Why is glare reduction particularly important in high-risk task lighting?',
       options: [
-        'Electrical Installation Certificate (EIC) or Minor Works Certificate',
+        'To reduce the overall energy consumption of the luminaires',
         'To prevent accidents during critical shutdown procedures',
-        'Outdoor cables - moisture and UV resistant',
-        'Increases by the highest of earnings, inflation, or 2.5%',
+        'To extend the operating life of the emergency batteries',
+        'To comply with luminaire colour-rendering requirements',
       ],
       correctAnswer: 1,
       explanation:
-        'Glare can impair vision and cause accidents when workers need to safely shutdown dangerous equipment or processes during an emergency.',
+        'Glare can impair vision and cause accidents when workers need to safely shut down dangerous equipment or processes during an emergency.',
     },
     {
       id: 6,
@@ -88,10 +88,10 @@ export const emergencyHighRiskQuizData = {
       id: 7,
       question: 'What type of assessment determines the need for high-risk task lighting?',
       options: [
-        'Serpentine and amphibole groups',
-        'Issue corrected certificates',
-        'To save space for materials',
-        'Risk evaluation/assessment',
+        'A routine periodic inspection report',
+        'An energy efficiency audit of the lighting',
+        'A maintenance schedule review',
+        'A formal risk assessment of the task area',
       ],
       correctAnswer: 3,
       explanation:
@@ -101,27 +101,27 @@ export const emergencyHighRiskQuizData = {
       id: 8,
       question: 'Why cannot anti-panic lighting substitute for high-risk task area lighting?',
       options: [
-        'All of the above',
-        'They serve different purposes - movement vs task completion',
-        'Anti-panic lighting covers different areas',
-        'Anti-panic lighting is too dim for task completion',
+        'Anti-panic lighting provides far lower illuminance than tasks require',
+        'Anti-panic lighting must be mains-powered rather than battery-backed',
+        'Anti-panic lighting only operates outside normal working hours',
+        'Anti-panic lighting uses a different cable colour code',
       ],
       correctAnswer: 0,
       explanation:
-        'Anti-panic lighting (0.5 lux) is designed for safe movement through open areas, not for completing dangerous tasks which require much higher illuminance (15+ lux) and precise coverage.',
+        'Anti-panic lighting provides low illuminance for safe movement through open areas, not the much higher illuminance and precise coverage needed to complete dangerous tasks safely.',
     },
     {
       id: 9,
       question: 'How often should lux levels be measured in high-risk task areas?',
       options: [
-        'Do not energise until fault is found and rectified',
-        'Periodically as part of maintenance schedule',
-        'Consider instrument accuracy in borderline cases',
-        'Reduce contact resistance and prevent oxidation',
+        'Only once at initial commissioning',
+        'Periodically as part of the maintenance schedule',
+        'Only after a reported lighting failure',
+        'Continuously by an automatic logging system',
       ],
       correctAnswer: 1,
       explanation:
-        'Lux levels should be measured periodically (not just monthly/annually) as part of the maintenance schedule to ensure continued compliance with safety requirements.',
+        'Lux levels should be measured periodically as part of the planned maintenance schedule to ensure continued compliance with safety requirements, not just at initial commissioning.',
     },
     {
       id: 10,

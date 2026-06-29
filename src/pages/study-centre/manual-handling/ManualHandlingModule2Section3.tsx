@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'team-leader-role',
     question: 'What is the primary role of the team leader during a team lift?',
     options: [
-      'To lift the heaviest part of the load',
       'To coordinate the lift, give clear verbal commands, and ensure everyone lifts and lowers together',
+      'To lift the heaviest part of the load',
       'To stand back and supervise without participating in the lift',
       'To document the lift for the risk assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The team leader&rsquo;s primary role is coordination: they plan the lift, brief the team, give clear verbal commands (&ldquo;Ready, steady, lift&rdquo;), and ensure everyone lifts, moves, and lowers in unison. The team leader usually participates in the lift as well, but their coordination role is the most important &mdash; without it, team members may lift at different times, creating sudden uneven loading that can cause injury.',
   },
@@ -41,11 +41,11 @@ const quickCheckQuestions = [
     question: 'What is the standard verbal command sequence for a team lift in the UK?',
     options: [
       '&ldquo;One, two, three, go!&rdquo;',
-      '&ldquo;Ready, steady, lift&rdquo;',
       '&ldquo;On my count &mdash; now!&rdquo;',
       '&ldquo;Lift when you are ready&rdquo;',
+      '&ldquo;Ready, steady, lift&rdquo;',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The standard UK verbal command sequence is &ldquo;Ready, steady, lift&rdquo;. &ldquo;Ready&rdquo; tells the team to prepare and check their grip. &ldquo;Steady&rdquo; signals that the lift is about to happen. &ldquo;Lift&rdquo; is the command to apply force simultaneously. This three-part sequence gives the team time to prepare and ensures everyone acts at the same moment. Avoid ambiguous commands like &ldquo;go&rdquo; or &ldquo;now&rdquo; which can be misheard.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 1,
     question: 'When should a team lift be used instead of a solo lift?',
     options: [
-      'Only when the load weighs more than 50 kg',
       'When the load is too heavy, too bulky, or too awkward for one person to handle safely',
+      'Only when the load weighs more than 50 kg',
       'Only when a supervisor instructs you to',
       'Team lifts should always be avoided because they are more dangerous than solo lifts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A team lift should be used whenever the load is too heavy, too bulky, or too awkward for one person to handle safely. There is no single weight threshold &mdash; the decision depends on the load&rsquo;s weight, size, shape, grip options, and the route to be taken, as well as the individual capabilities of the handler. If you have any doubt about managing a load alone, get help.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'What verbal command should a team member use if they need the team to lower the load immediately?',
     options: [
       '&ldquo;Help!&rdquo;',
-      '&ldquo;Stop&rdquo; or &ldquo;Down&rdquo;',
       '&ldquo;Wait a moment&rdquo;',
       'No verbal command &mdash; just release the load',
+      '&ldquo;Stop&rdquo; or &ldquo;Down&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Any team member who needs the team to stop or lower the load immediately should shout &ldquo;Stop&rdquo; or &ldquo;Down&rdquo; clearly and loudly. This must be agreed in advance during the briefing so everyone recognises the command instantly. Never release a load without warning &mdash; this transfers the full weight to the other team members, who are not prepared for it, and can cause serious injury.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the main risk if team members lift at different times during a team lift?',
     options: [
-      'The load will move sideways',
       'One or more people will bear a disproportionate share of the weight, potentially causing injury',
+      'The load will move sideways',
       'The load will become lighter',
       'There is no additional risk &mdash; as long as the load gets lifted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If team members lift at different times (asynchronous lifting), the person who lifts first bears the full weight of the load momentarily, before the others catch up. This sudden overloading can cause acute back injury to the person who lifts early, or to the person who lifts late and must rapidly take on their share. This is precisely why coordinated verbal commands (&ldquo;Ready, steady, lift&rdquo;) are essential.',
   },

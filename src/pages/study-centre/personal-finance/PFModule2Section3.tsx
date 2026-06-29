@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'Under Making Tax Digital for Income Tax, how often will self-employed individuals need to submit financial updates to HMRC?',
     options: [
-      'Once a year with the Self Assessment return',
-      'Every 6 months',
       'Quarterly (every 3 months), plus an end-of-year declaration',
+      'Every 6 months',
+      'Once a year with the Self Assessment return',
       'Monthly',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Making Tax Digital for Income Tax Self Assessment (MTD for ITSA) requires self-employed individuals and landlords with qualifying income above &pound;50,000 (from April 2026) to submit quarterly updates of income and expenses to HMRC using compatible software, plus a final end-of-period statement and declaration. Those earning above &pound;30,000 will follow from April 2027.',
   },
@@ -92,8 +92,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which business bank account offers free integration with FreeAgent accounting software?',
-    options: ['Starling Business', 'Monzo Business', 'Mettle by NatWest', 'Tide'],
-    correctAnswer: 2,
+    options: ['Mettle by NatWest', 'Monzo Business', 'Starling Business', 'Tide'],
+    correctAnswer: 0,
     explanation:
       'Mettle by NatWest includes a free FreeAgent subscription with every business account. FreeAgent is one of the most popular accounting packages among UK sole traders, so this integration provides significant value &mdash; FreeAgent normally costs around &pound;35 per month.',
   },
@@ -103,10 +103,10 @@ const quizQuestions = [
     options: [
       '1 year after the end of the tax year',
       '3 years after the Self Assessment deadline',
-      'At least 5 years after the 31 January submission deadline of the relevant tax year',
       '10 years from the date of each transaction',
+      'At least 5 years after the 31 January submission deadline of the relevant tax year',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'HMRC requires records to be kept for at least 5 years after the 31 January submission deadline. For the 2024/25 tax year (deadline 31 January 2026), records must be kept until at least 31 January 2031 &mdash; approximately 5 years and 10 months from the end of the tax year itself.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: 'What is the VAT registration threshold from April 2024?',
     options: [
       '&pound;50,000 taxable turnover',
-      '&pound;85,000 taxable turnover',
       '&pound;90,000 taxable turnover',
+      '&pound;85,000 taxable turnover',
       '&pound;100,000 taxable turnover',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The VAT registration threshold increased to &pound;90,000 from April 2024 (previously &pound;85,000). This is based on taxable turnover, not profit. You must register if your turnover exceeds &pound;90,000 in any rolling 12-month period, or if you expect it to exceed &pound;90,000 in the next 30 days alone.',
   },
@@ -136,8 +136,8 @@ const quizQuestions = [
     id: 6,
     question:
       'When will Making Tax Digital for Income Tax apply to self-employed individuals earning above &pound;50,000?',
-    options: ['April 2024', 'April 2025', 'April 2026', 'April 2028'],
-    correctAnswer: 2,
+    options: ['April 2026', 'April 2025', 'April 2024', 'April 2028'],
+    correctAnswer: 0,
     explanation:
       'MTD for Income Tax Self Assessment will apply from April 2026 for self-employed individuals and landlords with qualifying income above &pound;50,000. Those with income above &pound;30,000 will join from April 2027. The threshold for smaller businesses has not yet been confirmed.',
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     options: [
       '7 days from invoice date',
       '14 days from invoice date',
-      '30 days from invoice date',
       '60 days from invoice date',
+      '30 days from invoice date',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The standard payment term in UK business is 30 days from the invoice date, unless a shorter or longer term has been agreed in writing before work begins. Under the Late Payment Act, if no payment terms are specified, the default is 30 days. Many tradespeople negotiate shorter terms (7 or 14 days) for domestic customers, and some require payment on completion for smaller jobs.',
   },

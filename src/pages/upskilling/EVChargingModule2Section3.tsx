@@ -72,11 +72,11 @@ const quizQuestions = [
       'A workplace with 20 charging bays on a 100A supply needs to manage charging. What system feature is most critical?',
     options: [
       'RFID card authentication',
-      'Dynamic load management with OCPP',
-      'Individual energy metering',
+      'Individual energy metering per bay',
       'Mobile app payment processing',
+      'Dynamic load management with OCPP',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'With 20 bays potentially demanding 640A (32A × 20), dynamic load management via OCPP is essential to distribute the 100A supply across active sessions without overloading. Authentication and payment are important but secondary to managing the electrical capacity.',
   },

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'earthing-purpose',
     question: 'What is the primary purpose of earthing in an electrical installation?',
     options: [
-      'The panel\\\\\\\\\\\\\\\'s IP rating is maintained after the work — all covers, gaskets and cable entries are properly refitted and sealed',
-      'It allows problems to fester and grow, often resulting in larger conflicts later',
+      'To reduce the supply voltage to a safer level at the consumer unit',
+      'To improve power factor and lower the current drawn by the load',
       'To provide a low-impedance path for fault current so that protective devices operate within the required time',
-      'Granular control, energy monitoring per fixture, and integration with building systems',
+      'To prevent electromagnetic interference between adjacent circuits',
     ],
     correctIndex: 2,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'In a TN-C-S (PME) system, the neutral and earth functions are:',
     options: [
       'Combined in the supply cable (PEN conductor) and separated at the origin of the installation',
-      'To distribute incoming supply to outgoing circuit protective devices',
-      'Validation means acknowledging someone\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
-      'Larger cross-sectional area has lower resistance and better heat dissipation',
+      'Kept separate throughout both the supply cable and the installation',
+      'Provided entirely by a local earth electrode at the installation',
+      'Combined throughout both the supply and the final circuits',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'tt-system-rcd',
     question: 'Why is RCD protection particularly important in a TT earthing system?',
     options: [
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
+      'Because the supply voltage in a TT system is higher than in a TN system',
       'Because the earth fault loop impedance is typically too high for overcurrent devices to achieve the required disconnection time',
-      'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
-      'Open posture, eye contact, nodding to acknowledge, calm tone — encourages trust and openness',
+      'Because TT systems have no circuit protective conductor to carry fault current',
+      'Because the earth electrode resistance is always lower than in a TN system',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'ze-measurement',
     question: 'External earth fault loop impedance (Ze) is measured:',
     options: [
-      'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
+      'At the furthest point of each final circuit with the supply energised',
       'Between the main earthing terminal and the supply neutral with the installation earthing disconnected',
-      'Only if trained, it\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
-      'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
+      'Between line and neutral with all final circuits connected and loaded',
+      'Across the earth electrode using the fall-of-potential method',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'The letter designations in earthing system classification (TN, TT, IT) are defined by:',
     options: [
-      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
+      'The supply voltage and the frequency of the distribution network',
       'IEC 60364 and BS 7671 — the first letter relates to the source earthing, the second to the exposed-conductive-parts',
-      'Sweep up the dust and bag it for disposal yourself — sweeping releases more fibres into the air, and a domestic vacuum disperses them further',
-      'Walk through the method statement step by step, explain the hazards and controls, answer questions, and confirm everyone understands before signing',
+      'The cross-sectional area of the line and neutral conductors',
+      'The number of phases and the type of protective device installed',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'In a TN-S system, the earth path from the installation back to the source is provided by:',
     options: [
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
-      'A written or electronic record covering all matters specified in Schedule 7 of the WAH Regulations',
+      'A combined neutral and earth (PEN) conductor within the supply cable',
+      'A local earth electrode driven into the ground at the installation',
       'A separate metallic conductor (the supply cable sheath or a dedicated earth conductor) from the supply',
-      'A simple file containing as-built drawings, details of hidden services, and any residual hazards',
+      'The general mass of earth between the installation and the source',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,14 +97,14 @@ const quizQuestions = [
     id: 3,
     question: 'A PEN conductor in a TN-C-S system must have a minimum cross-sectional area of:',
     options: [
-      'Architectural enhancement and identity',
-      'To check battery capacity and autonomy',
-      'Electromagnetic Compatibility',
+      '4 mm² copper or 6 mm² aluminium',
+      '6 mm² copper or 10 mm² aluminium',
+      '16 mm² copper or 25 mm² aluminium',
       '10 mm² copper or 16 mm² aluminium',
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 Regulation 543.4.1 requires that a PEN conductor must have a cross-sectional area of not less than 10 mm² copper or 16 mm² aluminium. This minimum size ensures the conductor has sufficient integrity to maintain the combined neutral and earth function reliably. Loss of the PEN conductor in a PME system can cause dangerous voltages on exposed metalwork.',
+      'BS 7671 Regulation 543.4.201 requires that a PEN conductor must have a cross-sectional area of not less than 10 mm² copper or 16 mm² aluminium. This minimum size ensures the conductor has sufficient integrity to maintain the combined neutral and earth function reliably. Loss of the PEN conductor in a PME system can cause dangerous voltages on exposed metalwork.',
   },
   {
     id: 4,
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a TT system, the earth fault loop impedance (Zs) consists of:',
     options: [
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+      'Only the line and neutral conductor resistances within the installation',
       'The supply source impedance, the line conductor, the CPC, the installation earth electrode, and the general mass of earth back to the source earth',
-      'A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated',
-      'Acknowledge they do not have the answer, commit to finding out, and follow up within an agreed timeframe',
+      'The combined PEN conductor resistance from the origin back to the transformer',
+      'Only the resistance of the circuit protective conductor at the point of fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The main reason PME (TN-C-S) earthing is restricted for some applications is:',
     options: [
-      'Because friction and the risk of cable jamming during pulling rise with length and bends, so a lower fill is needed to keep pulling tensions safe',
-      'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
+      'The PEN conductor cannot carry the high fault currents found in those locations',
+      'The combined PEN conductor produces excessive electromagnetic interference',
       'If the PEN conductor breaks, the installation earth rises to supply voltage, creating danger on exposed metalwork and extraneous-conductive-parts',
-      'A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years',
+      'The earth fault loop impedance is too high for an RCD to operate correctly',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'An IT earthing system is characterised by:',
     options: [
-      'To independently assess the apprentice against the standard, ensuring impartiality and consistency of assessment decisions',
-      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
-      'Anyone who cannot evacuate without assistance — e.g. mobility-impaired visitors, people with conditions affecting evacuation',
+      'The source being directly earthed and the installation using a local electrode',
+      'A combined PEN conductor running from the source to the installation origin',
+      'The exposed-conductive-parts being connected directly to the supply neutral',
       'The source being isolated from earth (or earthed through a high impedance) so that a single earth fault does not cause automatic disconnection',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
       'In an IT system, what happens when a second earth fault occurs on a different phase?',
     options: [
       'The two faults create a phase-to-phase fault through earth, requiring immediate disconnection',
-      'The tower could roll unexpectedly, causing loss of balance or overturning',
-      'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
-      'Regularly, after incidents, when changes occur to site or operations',
+      'The fault current remains too small to operate any protective device',
+      'The insulation monitoring device automatically clears both faults',
+      'The supply continues to operate safely as with the first fault',
     ],
     correctAnswer: 0,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'BS 7671 requires the main earthing terminal to be accessible for:',
     options: [
-      'Performance 20% worse than the TM46 benchmark',
-      'To ensure protective devices disconnect quickly enough under fault conditions',
-      'Building Research Establishment Environmental Assessment Method',
+      'Connecting additional final circuits as the installation expands',
+      'Adjusting the rated residual operating current of the main RCD',
+      'Switching the supply between TN and TT earthing arrangements',
       'Testing, inspection and disconnection of the earthing conductor',
     ],
     correctAnswer: 3,

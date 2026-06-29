@@ -66,12 +66,12 @@ const quizQuestions = [
     id: 1,
     question: "What is 'vampire power' or 'phantom load' in electrical systems?",
     options: [
-      'Power consumed during peak demand periods',
       'Electricity drawn by devices when switched off but still plugged in',
-      'Power lost due to cable resistance',
-      'Energy used by emergency lighting',
+      'Power consumed during the daily peak demand periods',
+      'Power lost as heat due to cable resistance',
+      'Energy used by emergency and escape lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Vampire power refers to electricity drawn by devices when they are switched off but still plugged in, such as standby mode consumption.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 4,
     question: 'What is the most common cause of motor inefficiency in industrial settings?',
     options: [
-      'Motor age',
+      'The age of the motor windings',
       'Oversizing (operating below rated capacity)',
-      'Incorrect supply voltage',
-      'Bearing wear',
+      'An incorrect supply voltage level',
+      'Gradual bearing wear over time',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'When considering distribution losses, which action has the greatest impact on reducing I squared R losses?',
     options: [
-      'Reducing cable temperature',
-      'Using copper instead of aluminium',
-      'Reducing the current by increasing voltage',
-      'Shortening cable runs',
+      'Lowering the operating temperature of the cable',
+      'Switching from aluminium to copper conductors',
+      'Reducing the current by increasing the voltage',
+      'Shortening the length of the cable runs',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is an example of behavioural waste in electrical systems?',
     options: [
-      'Poor power factor',
       'Lights left on in unoccupied areas',
-      'Undersized cables',
-      'Motor bearing friction',
+      'A poor installation power factor',
+      'Cables that have been undersized',
+      'Friction in worn motor bearings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lights left on in unoccupied areas is a behavioural waste issue that can be addressed through awareness training and automatic controls.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 9,
     question: 'Poor power factor primarily results in increased:',
     options: [
-      'Active power consumption',
+      'Real (active) power consumption',
+      'Audible noise from equipment',
       'Cable losses and capacity requirements',
-      'Equipment wear',
-      'Harmonic distortion',
+      'Harmonic distortion on the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Poor power factor increases the current drawn for the same real power, resulting in higher cable losses and requiring larger capacity infrastructure.',
   },

@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     id: 'coshh-stands-for',
     question: 'What does COSHH stand for?',
     options: [
-      'Control of Substances Harmful to Humans',
       'Control of Substances Hazardous to Health',
+      'Control of Substances Harmful to Humans',
       'Conditions of Safety and Health Hazards',
       'Code of Standards for Hazardous Health',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'COSHH stands for the Control of Substances Hazardous to Health. The COSHH Regulations 2002 (SI 2002/2677) place duties on employers to assess and control exposure to hazardous substances in the workplace.',
   },
@@ -36,11 +36,11 @@ const quickCheckQuestions = [
     question: 'Which of the following substances is NOT covered by COSHH?',
     options: [
       'PVC cement solvent',
-      'Silica dust from chasing walls',
       'Asbestos fibres',
+      'Silica dust from chasing walls',
       'Isocyanate-based expanding foam',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Asbestos is excluded from COSHH because it has its own dedicated legislation \u2014 the Control of Asbestos Regulations 2012 (CAR 2012). Lead and radioactive substances are also excluded from COSHH for the same reason.',
   },
@@ -101,8 +101,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which of the following is NOT excluded from the scope of COSHH?',
-    options: ['Asbestos', 'Lead', 'Solvents used for cable jointing', 'Radioactive substances'],
-    correctAnswer: 2,
+    options: ['Asbestos', 'Solvents used for cable jointing', 'Lead', 'Radioactive substances'],
+    correctAnswer: 1,
     explanation:
       'Solvents (including those used for cable jointing, PVC cement, and degreasing) are fully covered by COSHH. Asbestos, lead, and radioactive substances are excluded because they have their own specific regulations \u2014 CAR 2012, CLAW 2002, and the Ionising Radiations Regulations 2017 respectively.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'Factories Act 1961',
       'Environmental Protection Act 1990',
-      'Health and Safety at Work etc. Act 1974',
       'Management of Health and Safety at Work Regulations 1999',
+      'Health and Safety at Work etc. Act 1974',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The COSHH Regulations 2002 are secondary legislation (statutory instruments) made under the Health and Safety at Work etc. Act 1974 (HASAWA). HASAWA is the primary enabling Act that provides the Secretary of State with powers to make health and safety regulations.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the FIRST step in the COSHH 8 essentials approach?',
     options: [
-      'Provide personal protective equipment',
-      'Carry out health surveillance',
       'Assess the risks from hazardous substances',
+      'Carry out health surveillance',
+      'Provide personal protective equipment',
       'Prevent exposure or substitute with safer alternatives',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The first of the 8 COSHH essentials steps is to assess the risks. You must identify what hazardous substances are present, who might be exposed, and how, before you can decide on the appropriate control measures. Assessment always comes first.',
   },
@@ -171,11 +171,11 @@ const quizQuestions = [
       'Which regulation works alongside COSHH to control risks from dangerous substances that can cause fires and explosions?',
     options: [
       'The Regulatory Reform (Fire Safety) Order 2005',
-      'The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)',
       'The Building Regulations 2010 Part B',
       'The Control of Major Accident Hazards Regulations 2015 (COMAH)',
+      'The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'DSEAR 2002 works alongside COSHH to control risks from dangerous substances that can cause fires, explosions, or similar energetic events. Where a substance is both hazardous to health and a fire/explosion risk (e.g., solvents, flammable gases), both COSHH and DSEAR apply.',
   },

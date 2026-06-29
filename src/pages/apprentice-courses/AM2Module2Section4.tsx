@@ -35,10 +35,10 @@ const AM2Module2Section4 = () => {
       id: 'book-answers-fail',
       question: "Why are 'book answer' test results not acceptable in AM2?",
       options: [
-        "Assuming that negative events are specifically directed at you when they may not be",
+        "They take longer to write than measured values",
         "They don't reflect measured values - assessors check consistency with actual installation",
-        "Digital Addressable Lighting Interface - individual luminaire control",
-        "Making good of plaster, decoration and disposal of old materials",
+        "They must be written in pencil rather than pen",
+        "They use the wrong units for the test being recorded",
       ],
       correctIndex: 1,
       explanation:
@@ -48,9 +48,9 @@ const AM2Module2Section4 = () => {
       id: 'earth-fault-loop',
       question: "What's wrong with writing '0.00 Ω' for earth fault loop impedance?",
       options: [
-        'The client or their appointed representative (engineer/architect)',
-        'The metalwork becomes live and dangerous',
-        'Higher operating frequency eliminates flicker and improves efficacy',
+        'It should be recorded in megohms, not ohms',
+        'It indicates the RCD has failed to trip',
+        'It is only acceptable on TT systems, not TN systems',
         'Unrealistic value - indicates copying, not measuring',
       ],
       correctIndex: 3,
@@ -62,10 +62,10 @@ const AM2Module2Section4 = () => {
       question:
         "If you can't finish all test results, what's better: leaving blanks or writing book answers?",
       options: [
-        'Vertical cables between floors',
+        'Write book answers - a complete sheet always scores higher',
         'Leave blanks safe - false values = fail',
-        'Start with parallel sections first',
-        'Identification and organization',
+        'Estimate the values from the design calculations',
+        'Copy the readings from a neighbouring candidate',
       ],
       correctIndex: 1,
       explanation:
@@ -75,10 +75,10 @@ const AM2Module2Section4 = () => {
       id: 'time-allocation',
       question: 'How much time is allocated for testing and paperwork together in AM2?',
       options: [
-        'A single insulated conductor in conduit in a thermally insulated wall.',
+        'About 1 hour for testing and documentation combined',
         'About 3.5 hours for testing and documentation combined',
-        'Prevent unauthorised access and clearly indicate hazards',
-        'Physiological and safety needs (levels 1 and 2)',
+        'About 8 hours for testing and documentation combined',
+        'There is no time limit on the testing and paperwork phase',
       ],
       correctIndex: 1,
       explanation:
@@ -89,9 +89,9 @@ const AM2Module2Section4 = () => {
       question:
         "In real industry work, what's the consequence of incomplete electrical certificates?",
       options: [
-        'Enclosing small-scale asbestos removal tasks such as removing lagging from pipes',
-        'Prospective fault current, earth fault loop impedance, cable sizing, voltage drop',
-        'Close the door immediately, remove the wedge, and report the issue',
+        'A small administrative fee charged by Building Control',
+        'A delay in receiving payment but no other consequence',
+        'No consequence, as certificates are not legally required',
         'Liability issues, invalid certificates, and potential disciplinary action',
       ],
       correctIndex: 3,
@@ -105,10 +105,10 @@ const AM2Module2Section4 = () => {
       id: 1,
       question: "Name two types of paperwork you'll complete in AM2:",
       options: [
-        'Automatic lighting activation during security events for deterrence',
+        'A purchase order and a delivery note for the materials',
         'Risk Assessments and Method Statements (RAMS), Electrical Installation Certificate (EIC)',
-        'Correct type, properly tightened, and providing earth continuity where required',
-        'That the ground is firm, level and capable of supporting the tower',
+        'A timesheet and an expenses claim for the assessment day',
+        'A site diary and a weekly progress report',
       ],
       correctAnswer: 1,
       explanation:
@@ -118,10 +118,10 @@ const AM2Module2Section4 = () => {
       id: 2,
       question: "Why are 'book answers' a fail in AM2 paperwork?",
       options: [
-        "Single-point grounding, typically at the patch panel end",
-        "Emergency code that silently alerts authorities while appearing to disarm",
+        "They are written too neatly to be believable",
+        "They are recorded in the wrong section of the certificate",
         "They don't reflect actual measured values - assessors check consistency",
-        "Supply leading reactive current to offset lagging current",
+        "They take more time to complete than measured values",
       ],
       correctAnswer: 2,
       explanation:
@@ -131,9 +131,9 @@ const AM2Module2Section4 = () => {
       id: 3,
       question: 'How much time is allocated for testing and paperwork together?',
       options: [
-        'Air removes heat faster than mass can store it',
-        'To ensure accuracy and compliance with standards',
-        'Distinguishing between honest errors and reckless behaviour',
+        'About 1 hour for testing and documentation combined',
+        'About 2 hours for testing and documentation combined',
+        'About 6 hours for testing and documentation combined',
         'About 3.5 hours for testing and documentation combined',
       ],
       correctAnswer: 3,
@@ -145,9 +145,9 @@ const AM2Module2Section4 = () => {
       question: "What's wrong with writing '0.00 Ω' for Zs?",
       options: [
         'Unrealistic value - indicates copying, not measuring',
-        'Cross-connection method for confirming ring continuity',
-        'Internal components (plug, seat, cage) that control flow',
-        'Watching someone similar to you succeed at a task',
+        'It should always be recorded to three decimal places',
+        'Zs is measured in megohms, so the unit is wrong',
+        'It is the correct value for a healthy TN-S system',
       ],
       correctAnswer: 0,
       explanation:
@@ -170,10 +170,10 @@ const AM2Module2Section4 = () => {
       id: 6,
       question: "What's the consequence of illegible handwriting in AM2?",
       options: [
-        "A splice using alignment fixtures and index-matching gel",
-        "Cannot be functionally tested in the field",
+        "It is acceptable as long as the values are correct",
+        "It only matters on the RAMS, not the test sheets",
         "Lost marks - assessors can't mark what they can't read",
-        "When live conductors make contact with earth or earthed metalwork",
+        "The assessor will ask you to read the figures aloud",
       ],
       correctAnswer: 2,
       explanation:
@@ -183,9 +183,9 @@ const AM2Module2Section4 = () => {
       id: 7,
       question: 'When should you record test results - at the end or as you go?',
       options: [
-        'RCD and MCB in a single device',
-        'Burn gel sachets and trauma dressings',
-        'Individual panel optimization',
+        'At the end - so the certificate stays clean while you work',
+        'Only after the assessor has checked each reading',
+        'From memory once all the testing is complete',
         'As you go - prevents rushing and mistakes',
       ],
       correctAnswer: 3,
@@ -209,10 +209,10 @@ const AM2Module2Section4 = () => {
       id: 9,
       question: 'What happens if you omit polarity test results?',
       options: [
-        'Earthing and automatic disconnection',
+        'Nothing - polarity is an optional test in AM2',
         'Section can fail - polarity is a mandatory test',
-        '70-95% depending on size and type',
-        'Permit to work details and compliance with site procedures',
+        'You simply lose a single mark from the test sheet',
+        'The assessor records it but allows you to add it later',
       ],
       correctAnswer: 1,
       explanation:
@@ -222,10 +222,10 @@ const AM2Module2Section4 = () => {
       id: 10,
       question: 'Why is completing paperwork correctly critical in industry as well as AM2?',
       options: [
-        'The current intended to flow under normal conditions',
-        'May to September (the active season), with surveys typically starting at dusk',
+        'It is only needed to claim payment for the job',
+        'It is a courtesy to the client but not a requirement',
         'Legal liability, insurance validity, and regulatory compliance',
-        'Maximum 50% fill for cable management and future additions',
+        'It helps the wholesaler track which materials were used',
       ],
       correctAnswer: 2,
       explanation:
@@ -362,8 +362,9 @@ const AM2Module2Section4 = () => {
               <li>Never record 0.00Ω — always shows measurable value</li>
             </ul>
             <p>
-              <strong>6. RCD Operation Testing.</strong> Test trip times at x1, x5 rated current and
-              ramp testing.
+              <strong>6. RCD Operation Testing.</strong> Verify disconnection by a single test at the
+              rated residual operating current (1×IΔn), plus ramp testing and the integral test
+              button.
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Record trip time at 1×IΔn (A4:2026 — 5×IΔn test deleted)</li>

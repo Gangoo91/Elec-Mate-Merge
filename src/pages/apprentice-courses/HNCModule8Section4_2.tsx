@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main disadvantage of DOL (Direct On Line) starting for large motors?',
     options: [
-      'External systems or people that track and reinforce your commitment',
+      'It provides too little starting torque to move the load',
       'High starting current causing voltage dips and supply disturbance',
-      'The material is sealed, in good condition and unlikely to be disturbed',
-      'Popularising emotional intelligence and bringing it to mainstream awareness',
+      'It requires six accessible motor terminals that may not be available',
+      'It generates excessive heat in the thyristors during starting',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'In a star-delta starter, during the star connection phase, the voltage applied to each motor winding is:',
     options: [
-      'Reduced current spike during star-delta transition',
-      'A brief current spike occurs as the motor reconnects in delta',
+      'Full line voltage (approximately 400V)',
+      'Line voltage multiplied by √3 (approximately 690V)',
       'Line voltage divided by √3 (approximately 230V)',
-      'When the motor has only 3 terminals available',
+      'Half the line voltage (approximately 200V)',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'Which factor determines the maximum motor size that can be started DOL on a given supply?',
     options: [
-      'Starting torque is reduced to one-third',
-      'Prospective fault current and voltage drop limits',
-      'A brief current spike occurs as the motor reconnects in delta',
-      'Prevention of water hammer through gradual acceleration',
+      'The number of accessible terminals on the motor',
+      'The supply capacity and permissible voltage drop on starting',
+      'The colour of the cores in the motor supply cable',
+      'The ambient temperature of the plant room',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'What advantage does closed-transition star-delta starting offer over open-transition?',
     options: [
-      'Prevention of water hammer through gradual acceleration',
-      'Prospective fault current and voltage drop limits',
+      'It removes the need for a star-delta timer entirely',
+      'It allows the motor to start with full starting torque',
       'Reduced current spike during star-delta transition',
-      'Line voltage divided by √3 (approximately 230V)',
+      'It permits the use of a motor with only three terminals',
     ],
     correctAnswer: 2,
     explanation:
@@ -238,9 +238,9 @@ const quizQuestions = [
       'What is the primary consideration when selecting a starting method for centrifugal pumps?',
     options: [
       'Prevention of water hammer through gradual acceleration',
-      'Reduced current spike during star-delta transition',
-      'Starting torque is reduced to one-third',
-      'Prospective fault current and voltage drop limits',
+      'Achieving the maximum possible breakaway torque',
+      'Minimising the number of contactors in the starter panel',
+      'Ensuring the motor reaches full speed in under one second',
     ],
     correctAnswer: 0,
     explanation:

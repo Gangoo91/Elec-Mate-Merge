@@ -229,10 +229,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'What is a &ldquo;vanity metric&rdquo; in the context of tracking professional progress?',
     options: [
-      'Because everyone starts from a different point and has different circumstances',
+      'A measurement that is too difficult to record accurately on a day-to-day basis',
       'A measurement that looks impressive but does not indicate real improvement',
-      'Deliberate practice targets specific weaknesses with focused effort and feedback',
-      'Recording skills learned, challenges overcome, and CPD activities completed',
+      'A measurement that can only be tracked by a manager rather than the individual',
+      'A measurement that focuses on inputs you control rather than final outcomes',
     ],
     correctAnswer: 1,
     explanation:
@@ -264,9 +264,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     id: 135,
     question: 'What is the purpose of a daily debrief habit at the end of a working day?',
     options: [
-      'A measurement that looks impressive but does not indicate real improvement',
-      'Recording skills learned, challenges overcome, and CPD activities completed',
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
+      'To record the hours worked each day so they can be billed to clients accurately',
+      'To create a permanent legal record of every task carried out on site',
+      'To compare your daily output against that of your colleagues on the same job',
       'To reflect on what went well, what could improve, and what to do differently tomorrow',
     ],
     correctAnswer: 3,
@@ -282,9 +282,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question: 'What is a professional development journal used for?',
     options: [
       'Recording skills learned, challenges overcome, and CPD activities completed',
-      'Marking a calendar with an X for each day you complete a habit',
-      'Learning a new cable containment technique from a senior electrician during an installation',
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
+      'Logging the start and finish time of every job for invoicing purposes',
+      'Keeping a list of tools and materials that need to be reordered each week',
+      'Noting down the contact details of every client and supplier you deal with',
     ],
     correctAnswer: 0,
     explanation:
@@ -302,10 +302,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician tracks &ldquo;number of successful first-fix inspections per month&rdquo; as a performance metric. Is this a lead measure or a lag measure?',
     options: [
-      'Recording your progress makes you more likely to improve',
+      'A lead measure &mdash; it is an input the electrician can directly control each day',
       'A lag measure &mdash; it tracks an outcome that has already happened',
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
-      'A measurement that looks impressive but does not indicate real improvement',
+      'Neither &mdash; counting inspections is purely a vanity metric with no value',
+      'Both equally &mdash; the same metric always serves as a lead and a lag measure',
     ],
     correctAnswer: 1,
     explanation:
@@ -429,9 +429,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'NICEIC registered contractors are subject to which type of assessment to maintain their registration?',
     options: [
       'Annual assessment of work quality and compliance procedures',
-      'Recording skills learned, challenges overcome, and CPD activities completed',
-      'A measurement that looks impressive but does not indicate real improvement',
-      'A lag measure &mdash; it tracks an outcome that has already happened',
+      'A one-off entry examination taken only when first joining the scheme',
+      'A monthly written test on the latest BS 7671 amendments',
+      'A peer review carried out by other local registered contractors',
     ],
     correctAnswer: 0,
     explanation:
@@ -446,14 +446,14 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'BS 7671:2018 has been updated by several amendments. Which amendment, published in 2024, added requirements for bidirectional and unidirectional devices?',
     options: [
-      'Amendment 4 (A4:2024)',
+      'Amendment 4 (A4:2026)',
       'Amendment 3 (A3:2024)',
       'Amendment 1 (A1:2020)',
       'Amendment 2 (A2:2022)',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671:2018+A3:2024 was issued on 31 July 2024 and added Regulation 530.3.201 concerning bidirectional and unidirectional protective devices. Keeping up with amendments is a core CPD responsibility for electricians, as these changes directly affect how installations must be designed, installed, and tested.',
+      'BS 7671:2018+A3:2024 was issued on 31 July 2024 and added Regulation 530.3.201, which requires designers to take account of the appropriate use of unidirectional or bidirectional protective devices. Keeping up with amendments is a core CPD responsibility for electricians, as these changes directly affect how installations must be designed, installed, and tested.',
     section: 'Tracking Progress &amp; Continuous Improvement',
     difficulty: 'intermediate' as const,
     topic: 'BS 7671 Amendments',
@@ -464,10 +464,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'CITB (Construction Industry Training Board) offers training grants to employers. What is the primary purpose of these grants?',
     options: [
-      'Recording skills learned, challenges overcome, and CPD activities completed',
-      'Learning a new cable containment technique from a senior electrician during an installation',
+      'To pay the wages of apprentices while they attend college day-release',
+      'To cover the cost of an employer&rsquo;s public liability insurance premiums',
       'To subsidise the cost of training and encourage employers to invest in workforce development',
-      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
+      'To reimburse employers for tools and equipment bought for new starters',
     ],
     correctAnswer: 2,
     explanation:
@@ -481,9 +481,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     id: 147,
     question: 'Which of the following is an example of &ldquo;on-the-job&rdquo; CPD activity?',
     options: [
-      'The comparison trap &mdash; measuring yourself against someone with vastly different experience',
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
-      'Deliberate practice targets specific weaknesses with focused effort and feedback',
+      'Attending an accredited weekend course on the latest BS 7671 amendment',
+      'Reading a technical article about cable containment over a tea break',
+      'Watching an online webinar about three-phase fault finding at home',
       'Learning a new cable containment technique from a senior electrician during an installation',
     ],
     correctAnswer: 3,
@@ -517,10 +517,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician counts the number of social media followers on their business page as evidence of professional growth. According to best practice in progress tracking, why might this be misleading?',
     options: [
-      'To subsidise the cost of training and encourage employers to invest in workforce development',
+      'Follower counts are a lag measure and only lead measures matter for growth',
       'Social media followers are a vanity metric that does not necessarily reflect professional competence or real business growth',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
+      'Tracking followers breaches data protection rules for self-employed traders',
+      'Follower counts can only be measured accurately once a year, making them unreliable',
     ],
     correctAnswer: 1,
     explanation:
@@ -535,10 +535,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'When applying Kolb&rsquo;s cycle to learning a new skill such as three-phase motor control, what does the &ldquo;Active Experimentation&rdquo; stage involve?',
     options: [
-      'Recording skills learned, challenges overcome, and CPD activities completed',
-      'A lag measure &mdash; it tracks an outcome that has already happened',
+      'Carrying out the task for the very first time with no prior knowledge',
+      'Standing back to think about what happened during the previous attempt',
       'Trying out the new approach or theory in a practical setting to test what you have learned',
-      'To reflect on what went well, what could improve, and what to do differently tomorrow',
+      'Forming a general rule or theory based on your earlier reflections',
     ],
     correctAnswer: 2,
     explanation:
@@ -553,9 +553,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'NAPIT member contractors are required to undergo periodic assessment. What is the primary purpose of this assessment?',
     options: [
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'Reflection-in-action happens during the task; reflection-on-action happens afterwards',
+      'To set the prices a contractor is allowed to charge customers for work',
+      'To provide free continuing professional development courses to members',
+      'To resolve disputes between contractors and their domestic clients',
       'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
     ],
     correctAnswer: 3,
@@ -647,9 +647,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'The Engineering Council&rsquo;s UK-SPEC requires CPD to be &ldquo;planned, action-oriented, and regularly reviewed.&rdquo; An IET-registered EngTech electrician has completed 30 hours of CPD this year, all in the same narrow topic area. How would this likely be assessed during a professional review?',
     options: [
       'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'Social media followers are a vanity metric that does not necessarily reflect professional competence or real business growth',
-      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
-      'The self-directed study where they identified a specific weakness in inspection and testing and systematically practised to improve it',
+      'It would automatically pass because 30 hours comfortably exceeds the annual minimum',
+      'It would be rejected because all CPD must be formal, accredited classroom training',
+      'It cannot be assessed at all because UK-SPEC sets no expectations for CPD content',
     ],
     correctAnswer: 0,
     explanation:
@@ -664,14 +664,14 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'BS 7671 was amended by A1:2020, A2:2022, and A3:2024. An electrical contractor who last updated their knowledge at A1:2020 now encounters a solar PV installation requiring bidirectional overcurrent protection. What is the MOST significant gap in their knowledge?',
     options: [
-      'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
-      'They will be unaware of Regulation 530.3.201 introduced by A3:2024, which specifically addresses bidirectional and unidirectional protective devices',
-      'Social media followers are a vanity metric that does not necessarily reflect professional competence or real business growth',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
+      'They will be unaware that solar PV installations are no longer permitted under the current edition of BS 7671',
+      'They will be unaware of Regulation 530.3.201 introduced by A3:2024, which specifically addresses unidirectional and bidirectional protective devices',
+      'They will be unaware that overcurrent protection is no longer required on the DC side of a PV array',
+      'They will be unaware that battery storage systems are exempt from BS 7671 altogether',
     ],
     correctAnswer: 1,
     explanation:
-      'Amendment 3 (A3:2024), issued 31 July 2024, introduced Regulation 530.3.201 specifically addressing the selection of bidirectional and unidirectional protective devices &mdash; directly relevant to solar PV installations where current can flow in both directions. An electrician who stopped updating at A1:2020 would also have missed changes in A2:2022. This illustrates why tracking amendments is an essential part of continuous improvement.',
+      'Amendment 3 (A3:2024), issued 31 July 2024, introduced Regulation 530.3.201, which requires designers to take account of the appropriate use of unidirectional or bidirectional protective devices &mdash; directly relevant to solar PV installations where current can flow in both directions. An electrician who stopped updating at A1:2020 would also have missed changes in A2:2022. This illustrates why tracking amendments is an essential part of continuous improvement.',
     section: 'Tracking Progress &amp; Continuous Improvement',
     difficulty: 'advanced' as const,
     topic: 'BS 7671 Amendments',
@@ -719,9 +719,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'A self-employed electrician is preparing their CPD portfolio for ECS card renewal and IET EngTech professional review simultaneously. They have evidence of formal training (18th Edition update), informal learning (reading technical articles), on-the-job learning (complex commercial installation), and self-directed study (practising inspection and testing techniques). Which aspect of their portfolio MOST demonstrates alignment with both Ericsson&rsquo;s deliberate practice and the Engineering Council&rsquo;s UK-SPEC requirements?',
     options: [
       'The self-directed study where they identified a specific weakness in inspection and testing and systematically practised to improve it',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
-      'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
+      'The formal 18th Edition update course, because accredited training is the only CPD that carries any weight',
+      'The informal reading of technical articles, because breadth of reading matters more than focused practice',
+      'The on-the-job commercial installation, because hours worked are the strongest evidence of competence',
     ],
     correctAnswer: 0,
     explanation:

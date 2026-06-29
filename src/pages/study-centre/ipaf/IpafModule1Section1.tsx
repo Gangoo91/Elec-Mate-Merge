@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is the CORRECT hierarchy of control for work at height?',
     options: [
-      'Prevent falls, avoid height, mitigate consequences',
       'Avoid height, prevent falls, mitigate consequences',
+      'Prevent falls, avoid height, mitigate consequences',
       'Mitigate consequences, avoid height, prevent falls',
       'Use PPE, prevent falls, avoid height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct hierarchy is: (1) Avoid work at height, (2) Prevent falls using collective protection, (3) Mitigate the distance and consequences of a fall.',
   },
@@ -106,8 +106,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Under Schedule 5, how frequently must a mobile tower be inspected if it remains erected?',
-    options: ['Every 3 days', 'Every 7 days', 'Every 14 days', 'Every 28 days'],
-    correctAnswer: 1,
+    options: ['Every 3 days', 'Every 14 days', 'Every 7 days', 'Every 28 days'],
+    correctAnswer: 2,
     explanation:
       'Schedule 5 requires inspections at intervals not exceeding 7 days for scaffolding that remains erected, in addition to inspections before first use and after any event that may have affected stability.',
   },
@@ -117,10 +117,10 @@ const quizQuestions = [
     options: [
       'You must do everything technically possible regardless of cost',
       'You can ignore risks if they seem unlikely',
-      'You must balance the level of risk against the cost of reducing it',
       'You only need to act if the HSE issues an improvement notice',
+      'You must balance the level of risk against the cost of reducing it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reasonably practicable requires weighing the degree of risk against the sacrifice needed to avert it. If the risk is high, the cost must be grossly disproportionate before inaction is justified.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: "Which of the following is NOT part of the employer's duties under Regulation 4?",
     options: [
-      'Ensuring work at height is properly planned',
-      'Providing appropriate supervision',
       'Personally carrying out all work at height',
+      'Providing appropriate supervision',
+      'Ensuring work at height is properly planned',
       'Using competent persons for work at height',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Employers must plan, supervise, and ensure competent persons carry out the work. They are not required to personally perform the work themselves.',
   },
@@ -171,10 +171,10 @@ const quizQuestions = [
     options: [
       'Only work above 2 metres',
       'Only work on scaffolding or ladders',
-      'Any work where a person could fall and injure themselves',
       'Only work on construction sites',
+      'Any work where a person could fall and injure themselves',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Work at height means any work where a person could fall a distance liable to cause personal injury. There is no minimum height, and it applies in any workplace, not just construction.',
   },

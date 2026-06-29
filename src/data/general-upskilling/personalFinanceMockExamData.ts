@@ -364,9 +364,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What are payments on account in self-assessment?',
     options: [
       "Advance payments towards next year's tax bill based on the previous year",
-      "Employer pension match → emergency fund → ISA → additional pension contributions",
-      "An IVA restricts company directorships; a CCJ does not",
-      "Allocate £2,500 to April's essentials buffer, then assign remaining £2,000 to specific goals",
+      "A one-off charge HMRC adds for filing your return late",
+      "The balance of tax left to pay after CIS deductions are applied",
+      "Monthly instalments spread evenly across the whole tax year",
     ],
     correctAnswer: 0,
     explanation:
@@ -381,10 +381,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main tax advantage of operating as a limited company compared to a sole trader?',
     options: [
-      'Full Section 75 protection for the entire £5,000 purchase',
+      'Profits are exempt from tax until they are withdrawn as dividends',
       'Profits are taxed at Corporation Tax rates before being distributed',
-      'Free, impartial guidance from MoneyHelper for over-50s',
-      'An IVA restricts company directorships; a CCJ does not',
+      'Profits are taxed at a flat 20% regardless of how much you earn',
+      'Profits are free of National Insurance but pay double Income Tax',
     ],
     correctAnswer: 1,
     explanation:
@@ -538,10 +538,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'Which expense category would cover your Napit or NICEIC membership fees?',
     options: [
-      'Business use classification',
-      'The lowest of £2,500 for resilience',
+      'Capital allowances',
+      'Travel and subsistence',
       'Professional fees and subscriptions',
-      'Tool finance for diagnostic equipment',
+      'Tools and equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -555,9 +555,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: 'What does the "day rate illusion" refer to for self-employed electricians?',
     options: [
-      'Nothing - they returned to work before the 13-week deferred period ended',
-      'They provide free, independent dispute resolution with financial firms',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
+      'Charging the same daily rate every day regardless of the type of work',
+      'Assuming a high day rate guarantees a high annual income',
+      'Quoting day rates rather than fixed prices to win more jobs',
       'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
     ],
     correctAnswer: 3,
@@ -590,10 +590,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'How do IR35 off-payroll working rules affect electricians working through their own limited company?',
     options: [
-      "Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days",
+      "They set the maximum dividend you can take from the company each year",
       "They determine whether you're taxed as employed or self-employed based on working practices",
-      "Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time",
-      "You can reclaim VAT on business expenses and avoid rushing to implement systems at the threshold",
+      "They cap the Corporation Tax rate payable on company profits",
+      "They require all limited companies to register for VAT immediately",
     ],
     correctAnswer: 1,
     explanation:
@@ -626,9 +626,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the optimal salary/dividend split strategy for a limited company director in 2024/25?',
     options: [
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
-      'Automatically shifting from equities to bonds as you near retirement',
-      'Nothing - they returned to work before the 13-week deferred period ended',
+      'Take the entire profit as salary to maximise State Pension accrual',
+      'Take the entire profit as dividends and pay no salary at all',
+      'Split profit equally between salary and dividends each month',
       'Salary around £12,570 (Personal Allowance), remainder as dividends to minimise NI',
     ],
     correctAnswer: 3,
@@ -645,9 +645,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'When comparing employed versus self-employed income, which calculation gives the most accurate comparison?',
     options: [
       'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Employer pension match → emergency fund → ISA → additional pension contributions',
+      'Gross day rate multiplied by the number of working days in a year',
+      'Hourly rate compared directly against an employed hourly wage',
+      'Total invoiced turnover before deducting any business expenses',
     ],
     correctAnswer: 0,
     explanation:
@@ -697,9 +697,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'If a CIS subcontractor has £20,000 deducted under CIS during the year but only owes £15,000 in tax and NI, what happens?',
     options: [
-      'A guaranteed income for life bought with your pension pot',
-      'Tax relief on business equipment and vehicle purchases spread over time',
-      'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
+      'The £5,000 is lost as CIS deductions are non-refundable',
+      'HMRC carries the £5,000 forward to reduce next year\'s tax only',
+      'The contractor must repay the £5,000 directly to the subcontractor',
       'HMRC refunds the £5,000 overpayment after filing the tax return',
     ],
     correctAnswer: 3,
@@ -716,9 +716,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'What is the key difference between actual expenses and simplified expenses for business use of home?',
     options: [
       'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'It creates financial discipline through physical separation and purpose-specific allocation',
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
+      'Actual expenses are only available to limited companies; simplified expenses only to sole traders',
+      'Actual expenses can be backdated five years; simplified expenses apply to the current year only',
+      'Actual expenses cover only utility bills; simplified expenses cover rent and mortgage interest too',
     ],
     correctAnswer: 0,
     explanation:
@@ -806,10 +806,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: "In the Tradesperson's Five-Account System, what is the purpose of the Tax account?",
     options: [
-      '31 January following the end of the tax year',
+      'To hold all profits until the business is wound up',
       'To hold 30% of gross income for tax obligations',
-      'An IVA restricts company directorships; a CCJ does not',
-      'Assets add value; liabilities create obligations or debt',
+      'To receive client payments before they are invoiced',
+      'To pay yourself a fixed monthly salary regardless of income',
     ],
     correctAnswer: 1,
     explanation:
@@ -891,10 +891,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Why is December often called the "Christmas cash flow trap" for tradespeople?',
     options: [
-      'To hold 30% of gross income for tax obligations',
-      'Build a £1,000 emergency fund and open a business bank account',
+      'The self-assessment tax bill is always due on Christmas Day',
+      'Suppliers demand full payment before the Christmas shutdown',
       'High personal spending coincides with reduced business income',
-      'Contact Time to Pay (0300 200 3835) to arrange a payment plan',
+      'Clients are charged extra for any work carried out in December',
     ],
     correctAnswer: 2,
     explanation:
@@ -908,9 +908,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is the primary purpose of a 12-month cash flow forecast?',
     options: [
-      'At least three: emergency fund, tax provision, and general savings',
-      'HMRC refunds the £5,000 overpayment after filing the tax return',
-      'Approved contractors can receive payments with 0% CIS deduction',
+      'To calculate the exact tax you will owe to the penny',
+      'To replace the need to keep receipts and invoices',
+      'To set your day rate for the year ahead',
       'To predict and plan for income and expense patterns',
     ],
     correctAnswer: 3,
@@ -959,10 +959,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'How long must electricians keep business records for tax purposes?',
     options: [
-      '8% plus Bank of England base rate',
-      'It verifies your identity and address',
+      '1 year from the filing deadline',
+      '3 years from the filing deadline',
       '5 years plus the current tax year',
-      'Personal grocery shopping',
+      '10 years from the filing deadline',
     ],
     correctAnswer: 2,
     explanation:
@@ -1047,9 +1047,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'In zero-based budgeting for electricians, what should happen to surplus income after all categories are funded?',
     options: [
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
+      'It should be left in the current account as an unallocated buffer',
+      'It should be paid straight out as extra personal drawings',
+      'It should be ignored until the end of the tax year',
       'It should be allocated to specific goals (extra debt payment, savings, business investment)',
     ],
     correctAnswer: 3,
@@ -1066,9 +1066,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       "What is the main advantage of the Tradesperson's Five-Account System over a single account?",
     options: [
       'It creates financial discipline through physical separation and purpose-specific allocation',
-      '25% penalty on the total withdrawal (losing bonus plus some original capital)',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
-      'They determine whether you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re taxed as employed or self-employed based on working practices',
+      'It removes the need to provision for tax during the year',
+      'It guarantees a higher rate of interest on every account',
+      'It allows you to defer your self-assessment payments indefinitely',
     ],
     correctAnswer: 0,
     explanation:
@@ -1082,10 +1082,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'Which seasonal pattern is most common for domestic electricians in the UK?',
     options: [
-      'HMRC refunds the £5,000 overpayment after filing the tax return',
+      'Busiest in summer holidays, quiet in autumn and spring',
       'Quiet in summer holidays and December, busier in autumn/spring',
-      'Free, impartial guidance from MoneyHelper for over-50s',
-      'At least three: emergency fund, tax provision, and general savings',
+      'Steady throughout the year with no seasonal variation',
+      'Busiest in December, quiet for the rest of the year',
     ],
     correctAnswer: 1,
     explanation:
@@ -1118,9 +1118,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician earns £4,000 in January and £2,000 in February. Using income smoothing, what should they pay themselves each month?',
     options: [
-      'It verifies your identity and address',
-      'The 6-year limitation period restarts from that date',
-      'A guaranteed income for life bought with your pension pot',
+      '£4,000 in January and £2,000 in February, matching actual earnings',
+      '£3,000 in both months, drawing down savings in February',
+      '£6,000 in January, then nothing in February',
       '£2,000 in both months, saving the January surplus',
     ],
     correctAnswer: 3,
@@ -1170,10 +1170,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'What are the key elements a 12-month cash flow forecast should include?',
     options: [
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      'Profits are taxed at Corporation Tax rates before being distributed',
+      'Only your expected income, with expenses estimated at year end',
+      'Your credit score, outstanding debts, and pension contributions',
       'Expected income, regular expenses, one-off costs, tax payments, and opening/closing balances',
-      'They provide free, independent dispute resolution with financial firms',
+      'A list of clients ranked by how quickly they pay invoices',
     ],
     correctAnswer: 2,
     explanation:
@@ -1188,9 +1188,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Beyond practical bookkeeping, what psychological benefit does separating business and personal finances provide?',
     options: [
-      'Tax relief on business equipment and vehicle purchases spread over time',
-      'Contact Time to Pay (0300 200 3835) to arrange a payment plan',
-      'At least three: emergency fund, tax provision, and general savings',
+      'It automatically reduces the amount of tax you owe',
+      'It removes the need to keep any business records',
+      'It guarantees your business will always be profitable',
       'It provides clear visibility on true business profitability and personal drawings',
     ],
     correctAnswer: 3,
@@ -1223,10 +1223,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What is the main purpose of receipt management apps like Dext or Xero Capture?',
     options: [
-      'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
+      'To calculate your tax bill and submit it directly to HMRC',
       'To photograph and digitise receipts for automatic data extraction and accounting software integration',
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
+      'To track your van mileage automatically using GPS',
+      'To chase late-paying clients with automated reminders',
     ],
     correctAnswer: 1,
     explanation:
@@ -1259,9 +1259,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the benefit of accessing your Personal Tax Account via the HMRC app rather than the Government Gateway website?',
     options: [
-      'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'Hard searches appear on your credit file and can affect your score, soft searches do not',
-      'Tools-in-van cover often has low limits (£500-2,000) which may not cover the full value of specialist test equipment',
+      'It reduces your tax bill by a fixed percentage each year',
+      'It removes the need to file a self-assessment return',
+      'It allows you to claim expenses without keeping receipts',
       'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
     ],
     correctAnswer: 3,
@@ -1295,10 +1295,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician operates zero-based budgeting with irregular income. They earn £7,000 in March but only £2,800 in April. Their essential monthly allocation is £2,500. How should they allocate the March surplus?',
     options: [
-      "In an easy access savings account separate from your current account",
+      "Spend the full £7,000 surplus immediately on business equipment",
       "Allocate £2,500 to April's essentials buffer, then assign remaining £2,000 to specific goals",
-      "Nothing - they returned to work before the 13-week deferred period ended",
-      "It creates a clear audit trail of personal vs business expenses, reducing classification errors",
+      "Leave the surplus unallocated in the current account as a float",
+      "Pay the entire surplus into a pension to claim tax relief",
     ],
     correctAnswer: 1,
     explanation:
@@ -1313,10 +1313,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might the 30% tax provision rule be insufficient for a VAT-registered electrician with high profit margins?',
     options: [
-      "They need a starting buffer, as early months may earn less than £3,000 before later months compensate",
-      "Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate",
+      "Class 2 National Insurance is charged at 30% of gross profit",
+      "VAT-registered electricians cannot claim any business expenses",
       "30% may not cover higher-rate tax (40%), Class 4 NI, and VAT if pricing doesn't add VAT on top",
-      "Interest typically continues to accrue, extending the agreement and increasing total cost",
+      "The 30% rule only applies to limited companies, not sole traders",
     ],
     correctAnswer: 2,
     explanation:
@@ -1331,9 +1331,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician wants to smooth income to £3,000/month. In a 12-month forecast, they project total income of £42,000. What challenge does this create?',
     options: [
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Use £20,000 ISA allowance (£4,000 Lifetime ISA + £16,000 Stocks & Shares ISA) before investing in taxable accounts',
+      'Paying themselves £3,000 means they will owe no Income Tax that year',
+      'A £42,000 income makes them automatically liable for VAT registration',
+      'Smoothing income to £3,000 breaches HMRC self-assessment rules',
       'They need a starting buffer, as early months may earn less than £3,000 before later months compensate',
     ],
     correctAnswer: 3,
@@ -1367,10 +1367,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'A 12-month cash flow forecast shows negative cash in August (-£1,200) and December (-£800), but positive all other months. What is the best strategic response?',
     options: [
-      'Quiet in summer holidays and December, busier in autumn/spring',
+      'Take out a payday loan in August and December to cover the gaps',
       'Build a cash buffer of £1,500 by July and replenish it after August for December',
-      'They determine whether you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re taxed as employed or self-employed based on working practices',
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
+      'Stop trading entirely during August and December',
+      'Delay paying suppliers and HMRC until cash flow recovers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1385,10 +1385,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician approaching the £90,000 VAT threshold considers voluntary registration at £75,000. What is the primary strategic advantage of early registration?',
     options: [
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      'Automatically shifting from equities to bonds as you near retirement',
+      'You no longer have to charge VAT on your invoices to clients',
+      'Your Income Tax rate is reduced once you are VAT-registered',
       'You can reclaim VAT on business expenses and avoid rushing to implement systems at the threshold',
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
+      'You become exempt from Making Tax Digital requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -1403,9 +1403,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is the "Bills" account in the Five-Account System crucial for MTD compliance beyond just separation?',
     options: [
-      'Tools-in-van cover often has low limits (£500-2,000) which may not cover the full value of specialist test equipment',
-      'Expected income, regular expenses, one-off costs, tax payments, and opening/closing balances',
-      'Your van breaks down and needs £800 of repairs to get back on the road',
+      'It earns a higher rate of interest than a business account',
+      'It allows personal bills to be claimed as business expenses',
+      'It exempts personal spending from Making Tax Digital reporting',
       'It creates a clear audit trail of personal vs business expenses, reducing classification errors',
     ],
     correctAnswer: 3,
@@ -1422,9 +1422,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician uses FreeAgent and Dext together. How should their Friday admin workflow integrate these tools for maximum efficiency?',
     options: [
       'Photograph receipts in Dext during the week, then Friday review Dext-pushed transactions in FreeAgent for categorisation and approval',
-      'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
-      'Use £20,000 ISA allowance (£4,000 Lifetime ISA + £16,000 Stocks & Shares ISA) before investing in taxable accounts',
+      'Keep paper receipts in the van and type them all into FreeAgent at year end',
+      'Use Dext only for invoices and FreeAgent only for mileage records',
+      'Enter every transaction twice, once in Dext and once in FreeAgent, to cross-check',
     ],
     correctAnswer: 0,
     explanation:
@@ -1747,9 +1747,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'What is the key difference between a hard and soft credit search?',
     options: [
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
-      'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
-      'Sell the van privately, settle the finance, and pocket the £3,000 equity',
+      'Hard searches are carried out by banks; soft searches only by landlords',
+      'Hard searches check your income; soft searches check your address',
+      'Soft searches lower your score; hard searches have no effect at all',
       'Hard searches appear on your credit file and can affect your score, soft searches do not',
     ],
     correctAnswer: 3,
@@ -1766,9 +1766,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'When comparing van finance options, what is the main advantage of Hire Purchase (HP) over PCP?',
     options: [
       'You own the van at the end of the agreement',
-      'Professional fees and subscriptions',
-      'From April 2026 when they exceed £50,000',
-      'Tool finance for diagnostic equipment',
+      'Monthly payments are always lower than with PCP',
+      'There is no deposit required to start the agreement',
+      'You can hand the van back at any time with nothing to pay',
     ],
     correctAnswer: 0,
     explanation:
@@ -1834,9 +1834,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is an Individual Voluntary Arrangement (IVA)?',
     options: [
       'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
-      'They determine whether you\\\'re taxed as employed or self-employed based on working practices',
-      'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'It should be allocated to specific goals (extra debt payment, savings, business investment)',
+      'An informal arrangement that creditors can withdraw from at any time',
+      'A court order that writes off all your debts immediately',
+      'A short-term payment holiday agreed directly with each lender',
     ],
     correctAnswer: 0,
     explanation:
@@ -1850,10 +1850,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'If you cannot pay your tax bill, what should you do before the payment deadline?',
     options: [
-      'Sell the van privately, settle the finance, and pocket the £3,000 equity',
+      'Ignore the bill until HMRC sends a reminder letter',
       'Contact Time to Pay (0300 200 3835) to arrange a payment plan',
-      '31 January following the end of the tax year',
-      'A guaranteed income for life bought with your pension pot',
+      'Pay the bill on a credit card and worry about it later',
+      'Wait until the next tax year and combine the two bills',
     ],
     correctAnswer: 1,
     explanation:
@@ -1919,10 +1919,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'What is the main benefit of using the Financial Ombudsman Service?',
     options: [
-      'Free, impartial guidance from MoneyHelper for over-50s',
+      'They lend money at preferential rates to people in debt',
       'They provide free, independent dispute resolution with financial firms',
-      'Claims arising from design work and certification advice',
-      'Approved contractors can receive payments with 0% CIS deduction',
+      'They write off debts once they exceed six years old',
+      'They negotiate lower interest rates on your behalf with creditors',
     ],
     correctAnswer: 1,
     explanation:
@@ -2008,10 +2008,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the strategic disadvantage of a DMP compared to an IVA for electricians with significant non-priority debts?',
     options: [
-      'To predict and plan for income and expense patterns',
-      'Build a pension pot sufficient to retire comfortably at state pension age',
+      'DMPs always charge higher set-up fees than an IVA',
+      'DMPs appear on your credit file for longer than an IVA',
       'DMPs do not write off any debt and creditors can withdraw at any time',
-      'An IVA restricts company directorships; a CCJ does not',
+      'DMPs are only available to people who are already bankrupt',
     ],
     correctAnswer: 2,
     explanation:
@@ -2045,9 +2045,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'How does a County Court Judgement (CCJ) affect your ability to work as a self-employed electrician compared to an IVA?',
     options: [
       'An IVA restricts company directorships; a CCJ does not',
-      'Both have identical impacts on credit and work restrictions',
+      'A CCJ bans you from trading; an IVA allows you to continue',
       'A CCJ prevents you registering as self-employed; an IVA does not',
-      'A CCJ is removed from your credit file faster than an IVA',
+      'An IVA stays on your credit file for 12 years; a CCJ for only 1',
     ],
     correctAnswer: 0,
     explanation:
@@ -2062,10 +2062,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might using 0% balance transfer cards to manage existing debt be risky for self-employed electricians with variable income?',
     options: [
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
+      'Balance transfer cards are not regulated by the FCA',
       'Missing a payment typically cancels the 0% rate and damages credit during a critical period when income may fluctuate',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
+      'You cannot transfer a balance unless you are VAT-registered',
+      '0% cards always charge higher interest than standard credit cards',
     ],
     correctAnswer: 1,
     explanation:
@@ -2098,9 +2098,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the impact of taking a payment holiday on van finance during a quiet trading period?',
     options: [
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      'Equities are shares in companies; bonds are loans to governments or companies',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
+      'The lender writes off the missed payments at no extra cost',
+      'Your monthly payments are permanently reduced afterwards',
+      'The finance agreement is cancelled and the van returned',
       'Interest typically continues to accrue, extending the agreement and increasing total cost',
     ],
     correctAnswer: 3,
@@ -2687,10 +2687,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'What is the main difference between equities and bonds in pension investments?',
     options: [
-      'Employer pension match → emergency fund → ISA → additional pension contributions',
+      'Equities are guaranteed by the government; bonds are not',
       'Equities are shares in companies; bonds are loans to governments or companies',
-      'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
+      'Equities are tax-free in a pension; bonds are always taxed',
+      'Equities are short-term savings; bonds are instant-access cash',
     ],
     correctAnswer: 1,
     explanation:
@@ -2739,9 +2739,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is an annuity in pension terms?',
     options: [
       'A guaranteed income for life bought with your pension pot',
-      'Paying off highest interest rate debts first',
-      'Your van breaks down and needs £800 of repairs to get back on the road',
-      'HMRC bailiffs can force entry on a first visit',
+      'A lump sum withdrawn tax-free from your pension at age 55',
+      'A flexible income drawn from a pot that stays invested',
+      'A government top-up added to your State Pension each year',
     ],
     correctAnswer: 0,
     explanation:
@@ -2756,10 +2756,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might a self-employed electrician consider career transition planning as part of retirement strategy?',
     options: [
-      'A guaranteed income for life bought with your pension pot',
+      'To claim the State Pension earlier than the official age',
       'To move from physical work to less demanding roles like testing or training',
-      'Build a cash buffer of £1,500 by July and replenish it after August for December',
-      'Free, impartial guidance from MoneyHelper for over-50s',
+      'To avoid paying National Insurance in their final working years',
+      'To withdraw their entire pension pot tax-free before age 55',
     ],
     correctAnswer: 1,
     explanation:
@@ -2790,9 +2790,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'What is Pension Wise and who can use it?',
     options: [
-      'A pension advisory service for under-30s',
-      'An online pension calculator tool',
-      'A pension tracing service for lost pensions',
+      'A paid financial advice service for people under 30',
+      'A regulator that polices pension providers',
+      'A scheme that tops up your pension contributions',
       'Free, impartial guidance from MoneyHelper for over-50s',
     ],
     correctAnswer: 3,
@@ -2809,9 +2809,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'If you are self-employed and hire an apprentice or employee, what are your auto-enrolment duties?',
     options: [
       'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'Paying yourself a consistent salary from your business account',
-      'Tax relief on business equipment and vehicle purchases spread over time',
+      'You have no pension duties as a sole trader employing one person',
+      'You only need to enrol workers once they have completed two years',
+      'You must pay their full pension yourself with no employee contribution',
     ],
     correctAnswer: 0,
     explanation:
@@ -2848,10 +2848,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should a self-employed electrician maintain a larger emergency fund than an employed one?',
     options: [
-      'Sell the van privately, settle the finance, and pocket the £3,000 equity',
-      'In an easy access savings account separate from your current account',
+      'Because self-employed people pay a higher rate of Income Tax',
+      'Because they are legally required to hold six months of reserves',
       'Because self-employed income is more variable and they have no sick pay or redundancy protection',
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
+      'Because their pension contributions are deducted from the fund',
     ],
     correctAnswer: 2,
     explanation:
@@ -2865,9 +2865,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'Where should you keep your emergency fund for best practice?',
     options: [
-      'Profits are taxed at Corporation Tax rates before being distributed',
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      '£2,000 in both months, saving the January surplus',
+      'Locked away in a five-year fixed-rate bond for higher interest',
+      'Invested in a Stocks & Shares ISA for long-term growth',
+      'In your everyday current account alongside your spending money',
       'In an easy access savings account separate from your current account',
     ],
     correctAnswer: 3,
@@ -2899,10 +2899,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'Which scenario is a valid use of your emergency fund?',
     options: [
-      'It provides quick wins by clearing small debts first',
+      'A holiday abroad that you have been planning for months',
       'Your van breaks down and needs £800 of repairs to get back on the road',
-      'People receiving Universal Credit with minimum earnings, or Working Tax Credit',
-      'High personal spending coincides with reduced business income',
+      'Upgrading to the latest model of cordless drill on offer',
+      'Your monthly van finance payment that is due as normal',
     ],
     correctAnswer: 1,
     explanation:
@@ -2916,10 +2916,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'How many separate "pots" should a self-employed electrician maintain?',
     options: [
-      '£2,000 in both months, saving the January surplus',
-      'A tax calculation from HMRC showing your annual income',
+      'Just one, holding all savings together for simplicity',
+      'Two: one for tax and one for everything else combined',
       'At least three: emergency fund, tax provision, and general savings',
-      'DMPs do not write off any debt and creditors can withdraw at any time',
+      'At least six, one for every month of the working year',
     ],
     correctAnswer: 2,
     explanation:
@@ -2951,9 +2951,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What does professional indemnity insurance cover for electricians?',
     options: [
       'Claims arising from design work and certification advice',
-      'Profits are taxed at Corporation Tax rates before being distributed',
-      'To predict and plan for income and expense patterns',
-      'Paying off highest interest rate debts first',
+      'Injury to a member of the public on your work site',
+      'Theft of tools and test equipment from your van',
+      'Loss of income while you are unable to work through illness',
     ],
     correctAnswer: 0,
     explanation:
@@ -2967,10 +2967,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'Why should you keep an inventory with serial numbers for your tools and equipment?',
     options: [
-      'Hard searches appear on your credit file and can affect your score, soft searches do not',
+      'It is needed to claim capital allowances on your tax return',
       'It is required by insurance providers to validate claims for stolen or damaged tools',
-      'Advance payments towards next year\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tax bill based on the previous year',
-      'To photograph and digitise receipts for automatic data extraction and accounting software integration',
+      'It allows you to register your tools as business assets with HMRC',
+      'It is a legal requirement under health and safety regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -3020,9 +3020,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'When is life insurance most essential for an electrician?',
     options: [
       'When they have a mortgage or dependants who rely on their income',
-      'Paying yourself a consistent salary from your business account',
-      'Increases by the highest of earnings, inflation, or 2.5%',
-      'Withdraw 4% of your pension pot annually in retirement',
+      'When they buy a new van on finance for their business',
+      'When they register for VAT for the first time',
+      'When they take on their first apprentice or employee',
     ],
     correctAnswer: 0,
     explanation:
@@ -3141,9 +3141,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might van insurance with "tools-in-van" cover be insufficient for a fully equipped electrician?',
     options: [
-      'Allocate £2,500 to April\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s essentials buffer, then assign remaining £2,000 to specific goals',
-      'To photograph and digitise receipts for automatic data extraction and accounting software integration',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
+      'Tools-in-van cover only applies while the van is being driven',
+      'Tools-in-van cover excludes any tool bought on finance',
+      'Tools-in-van cover is automatically void for self-employed traders',
       'Tools-in-van cover often has low limits (£500-2,000) which may not cover the full value of specialist test equipment',
     ],
     correctAnswer: 3,
@@ -3160,9 +3160,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'What is a key difference between income protection insurance and critical illness cover?',
     options: [
       'Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions',
-      'Use £20,000 ISA allowance (£4,000 Lifetime ISA + £16,000 Stocks & Shares ISA) before investing in taxable accounts',
-      'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
-      'Photograph receipts in Dext during the week, then Friday review Dext-pushed transactions in FreeAgent for categorisation and approval',
+      'Income protection pays a one-off lump sum; critical illness pays a monthly income for life',
+      'Income protection covers death only; critical illness covers injury only',
+      'Income protection is for employees; critical illness is only for the self-employed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3194,10 +3194,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'Who is eligible for a Help to Save account?',
     options: [
-      '£4,730 gross contribution (brings adjusted income to £50,270)',
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
+      'Anyone earning above the higher-rate tax threshold',
+      'Only people who are registered as self-employed for CIS',
       'People receiving Universal Credit with minimum earnings, or Working Tax Credit',
-      'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
+      'Any UK taxpayer aged between 18 and 39',
     ],
     correctAnswer: 2,
     explanation:
@@ -3211,9 +3211,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Why are Stocks & Shares ISAs generally unsuitable for emergency funds?',
     options: [
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'They need a starting buffer, as early months may earn less than £3,000 before later months compensate',
-      'It provides clear visibility on true business profitability and personal drawings',
+      'They charge a penalty for any withdrawal before age 60',
+      'They can only be opened by higher-rate taxpayers',
+      'Gains within them are taxed at the Capital Gains Tax rate',
       'Investment values fluctuate and you may need to sell at a loss in an emergency; they are better for 5+ year goals',
     ],
     correctAnswer: 3,
@@ -3281,9 +3281,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is a realistic short-term financial goal (0-2 years) for a newly qualified electrician?',
     options: [
-      'Full Section 75 protection for the entire £5,000 purchase',
-      'Approved contractors can receive payments with 0% CIS deduction',
-      'Contribute half your age as a percentage when you start',
+      'Pay off the mortgage on their family home in full',
+      'Build a pension pot large enough to retire at 55',
+      'Buy a commercial unit and take on a team of employees',
       'Build a £1,000 emergency fund and open a business bank account',
     ],
     correctAnswer: 3,
@@ -3300,9 +3300,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'Which of these is a realistic medium-term financial goal (2-10 years) for an electrician?',
     options: [
       'Save a £20,000 house deposit using a Lifetime ISA',
-      '£4,730 gross contribution (brings adjusted income to £50,270)',
-      'Budgeting based on your lowest likely monthly income',
-      'The 6-year limitation period restarts from that date',
+      'Build a £1,000 starter emergency fund this month',
+      'Clear a £200 credit card balance before next payday',
+      'Fully fund a comfortable retirement within two years',
     ],
     correctAnswer: 0,
     explanation:
@@ -3316,10 +3316,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is a long-term financial goal (10+ years) for an electrician in their 30s?',
     options: [
-      'Tax relief on business equipment and vehicle purchases spread over time',
+      'Save up for a new set of test equipment this year',
       'Build a pension pot sufficient to retire comfortably at state pension age',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
-      'It provides clear visibility on true business profitability and personal drawings',
+      'Build a three-month emergency fund within the next 12 months',
+      'Pay off the outstanding balance on the van finance this quarter',
     ],
     correctAnswer: 1,
     explanation:
@@ -3333,10 +3333,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'Why should electricians conduct an annual "financial MOT"?',
     options: [
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
-      'You can reclaim VAT on business expenses and avoid rushing to implement systems at the threshold',
+      'Because HMRC legally requires an annual financial health check',
+      'To recalculate your day rate based on the previous year',
       'To review insurance cover, check progress towards goals, and adjust savings as income or circumstances change',
-      'Hard searches appear on your credit file and can affect your score, soft searches do not',
+      'To switch business bank accounts at least once every year',
     ],
     correctAnswer: 2,
     explanation:
@@ -3350,9 +3350,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What benefit do Premium Bonds offer to higher-rate taxpayers?',
     options: [
-      'They need a starting buffer, as early months may earn less than £3,000 before later months compensate',
-      'It creates financial discipline through physical separation and purpose-specific allocation',
-      'To photograph and digitise receipts for automatic data extraction and accounting software integration',
+      'They pay a guaranteed rate of interest above the base rate',
+      'They double your stake if held for more than five years',
+      'They are protected by Section 75 of the Consumer Credit Act',
       'Prize winnings are completely tax-free, unlike savings interest which is taxable above the Personal Savings Allowance',
     ],
     correctAnswer: 3,
@@ -3369,9 +3369,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician has £30,000 saved. They have maximised their employer pension match and have a 6-month emergency fund. What is the most tax-efficient next step?',
     options: [
       'Use £20,000 ISA allowance (£4,000 Lifetime ISA + £16,000 Stocks & Shares ISA) before investing in taxable accounts',
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
-      'Photograph receipts in Dext during the week, then Friday review Dext-pushed transactions in FreeAgent for categorisation and approval',
-      'Allocate £2,500 to April\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s essentials buffer, then assign remaining £2,000 to specific goals',
+      'Leave the full £30,000 in an everyday current account for access',
+      'Put the entire £30,000 into a single high-street savings account',
+      'Spend the surplus on upgrading tools and the work van',
     ],
     correctAnswer: 0,
     explanation:
@@ -3386,10 +3386,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'A self-employed electrician has a £12,000 emergency fund and £8,000 set aside for tax. They receive an unexpected £15,000 inheritance. What is the most financially optimal strategy?',
     options: [
-      'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
+      'Add the full £15,000 to the existing emergency fund for safety',
       'Maximise £4,000 Lifetime ISA (if under 40 and saving for first home), contribute £10,000 to pension (gaining higher-rate tax relief), keep £1,000 accessible',
-      'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'Tools-in-van cover often has low limits (£500-2,000) which may not cover the full value of specialist test equipment',
+      'Leave the £15,000 in a current account until a use arises',
+      'Spend the £15,000 on a newer van to reduce repair costs',
     ],
     correctAnswer: 1,
     explanation:
@@ -3404,10 +3404,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician earns £55,000 and wants to avoid the higher-rate tax threshold (£50,270). What pension contribution (gross) would bring them back into basic rate while maximising tax relief?',
     options: [
-      '25% penalty on the total withdrawal (losing bonus plus some original capital)',
-      'Allocating every pound of income to a specific purpose',
+      '£12,570 gross contribution (equal to the Personal Allowance)',
+      '£5,000 gross contribution (a round-figure estimate)',
       '£4,730 gross contribution (brings adjusted income to £50,270)',
-      'You own the van at the end of the agreement',
+      '£2,365 gross contribution (half the amount over the threshold)',
     ],
     correctAnswer: 2,
     explanation:
@@ -3422,9 +3422,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the withdrawal penalty for accessing Lifetime ISA funds before age 60 for non-qualifying purposes?',
     options: [
-      '30% may not cover higher-rate tax (40%), Class 4 NI, and VAT if pricing doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t add VAT on top',
-      'Contact Time to Pay (0300 200 3835) to arrange a payment plan',
-      'They determine whether you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re taxed as employed or self-employed based on working practices',
+      'No penalty, but you lose the 25% government bonus only',
+      'A flat £250 administration charge per withdrawal',
+      'A 20% Income Tax charge on the amount withdrawn',
       '25% penalty on the total withdrawal (losing bonus plus some original capital)',
     ],
     correctAnswer: 3,
@@ -3441,9 +3441,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician has £20,000 in a Stocks & Shares ISA and sells investments making a £5,000 gain. How much Capital Gains Tax do they owe?',
     options: [
       'None - gains within ISAs are completely tax-free regardless of amount',
-      'Hard searches appear on your credit file and can affect your score, soft searches do not',
-      'Contribute half your age as a percentage when you start',
-      'Full Section 75 protection for the entire £5,000 purchase',
+      '£400, charged at 20% on the £2,000 gain above the allowance',
+      '£200, charged at 10% on the £2,000 gain above the allowance',
+      '£900, charged at 18% on the full £5,000 gain',
     ],
     correctAnswer: 0,
     explanation:
@@ -3476,10 +3476,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'When might professional indemnity insurance be more critical than public liability for an electrician?',
     options: [
-      'Maximise £4,000 Lifetime ISA (if under 40 and saving for first home), contribute £10,000 to pension (gaining higher-rate tax relief), keep £1,000 accessible',
-      'Prize winnings are completely tax-free, unlike savings interest which is taxable above the Personal Savings Allowance',
+      'When a member of the public trips over a cable on site',
+      'When a customer\'s property is damaged by a tool you dropped',
       'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
-      'To review insurance cover, check progress towards goals, and adjust savings as income or circumstances change',
+      'When tools are stolen from the van overnight',
     ],
     correctAnswer: 2,
     explanation:
@@ -3494,9 +3494,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician earning £60,000 wants to avoid the £100,000 income threshold where personal allowance starts tapering. What combined strategy addresses both higher-rate tax and potential future allowance taper?',
     options: [
-      'Photograph receipts in Dext during the week, then Friday review Dext-pushed transactions in FreeAgent for categorisation and approval',
-      'Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions',
-      'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
+      'Take all income as dividends to avoid Income Tax entirely',
+      'Stop working once income reaches £100,000 to protect the allowance',
+      'Move savings into a current account to keep income flexible',
       'Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold',
     ],
     correctAnswer: 3,
@@ -3513,9 +3513,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'A self-employed electrician has income protection insurance with a 13-week deferred period. They break their arm and cannot work for 10 weeks. What will they receive?',
     options: [
       'Nothing - they returned to work before the 13-week deferred period ended',
-      'To predict and plan for income and expense patterns',
-      'In an easy access savings account separate from your current account',
-      'Allocating every pound of income to a specific purpose',
+      'A lump sum equal to 13 weeks of their average income',
+      'Three weeks of payments, covering the time beyond the deferred period',
+      'Full income replacement for all 10 weeks off work',
     ],
     correctAnswer: 0,
     explanation:

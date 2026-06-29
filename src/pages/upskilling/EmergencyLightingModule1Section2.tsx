@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'A new office fit-out has an internal corridor 36 m long, with no natural daylight, leading from the open-plan workspace to the fire-exit lobby. Approved Document B Volume 2 cl. 5 lists this as a trigger for emergency lighting. Why is the 30 m threshold significant?',
     options: [
-      'It is a planning-permission threshold.',
-      'It is the empirical length above which an occupant making the transition from a lit area into an unfamiliar corridor on mains failure cannot reliably navigate to the exit on the human eye\'s residual dark-adaptation alone. Below 30 m, residual dark adaptation plus the visual cue of the exit door usually suffices; above 30 m, additional emergency illumination is required as the design cannot rely on the occupant being able to find their way without it.',
-      'It is the maximum reach of a fire hose.',
-      'It is the length of a typical fluorescent batten.',
+      'It is the empirical length beyond which an occupant cannot reliably navigate an unfamiliar windowless corridor on residual dark-adaptation alone.',
+      'It is a planning-permission threshold above which a separate building-control application is required for the corridor.',
+      'It is the maximum travel distance permitted to a single fire exit before a second exit must be provided.',
+      'It is the maximum spacing allowed between two mains luminaires on a corridor lighting circuit.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The 30 m threshold in Approved Document B Vol 2 cl. 5 reflects empirical evidence on how far an occupant can navigate in an unfamiliar windowless corridor on residual dark adaptation alone. Beyond that distance, performance degrades; beyond that the corridor needs emergency lighting. The 30 m figure has been carried forward from earlier editions and is mirrored in BS 5266-1.',
   },
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'BS 5266-1:2025 specifies open-area (anti-panic) lighting where the room exceeds a defined floor area OR exceeds a defined occupancy. What are the trigger thresholds?',
     options: [
-      '> 100 m² OR > 100 occupants.',
-      '> 60 m² OR more than 60 occupants.',
-      '> 60 m² OR any room (regardless of size) with an occupancy that means an evacuation cannot be completed in a few seconds — typically more than 10 occupants. Either threshold triggers anti-panic provision; both can apply. The thresholds reflect the panic risk of a sufficiently large space being plunged into darkness, AND the evacuation-time risk of a space with enough occupants that movement bottlenecks occur on the way to the exit.',
-      'Only > 200 m².',
+      'Greater than 100 m² floor area, OR more than 100 occupants in the room.',
+      'Greater than 60 m² floor area, OR more than 60 occupants in the room.',
+      'Greater than 60 m², OR any room whose occupancy (typically more than 10) means evacuation cannot complete in seconds.',
+      'Greater than 200 m² floor area, with no separate occupancy-based trigger.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A 2026 design for a new building includes a stair half-landing whose only illumination on mains failure would come from a corridor luminaire on the upper landing, spilling into the half-landing through the open stair entry. Under BS 5266-1:2025 is this design acceptable?',
     options: [
-      'Yes — the half-landing receives spill from the corridor.',
-      'Yes — only fully enclosed rooms need direct illumination.',
-      'No. The 2025 edition explicitly excludes "borrowed light" from the design provision. Each space that requires emergency lighting must be illuminated DIRECTLY by its own dedicated luminaires. The reasoning: the borrowed source may have failed at the same time, the access door may be closed, the spill may have been blocked by a decoration change. The half-landing needs its own luminaire positioned to illuminate it directly.',
-      'Yes — provided the corridor luminaire is rated more than 8 W.',
+      'Yes — the half-landing receives adequate light spilling from the corridor luminaire.',
+      'Yes — only fully enclosed rooms with closed doors need direct illumination.',
+      'No — the 2025 edition excludes borrowed light, so the half-landing needs its own dedicated luminaire.',
+      'Yes — provided the corridor luminaire spilling into the stair is rated more than 8 W.',
     ],
     correctIndex: 2,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which of the following premises types is LEAST likely to need emergency lighting under Approved Document B Volume 2 cl. 5?',
     options: [
-      'A multi-storey office block with 30 m+ internal corridors and no natural daylight in those corridors.',
       'A large open-air car park with overhead lighting only — no enclosed escape route, ample sky light during operating hours, well-lit by overhead luminaires at night.',
-      'A nightclub with capacity 400 in a basement.',
-      'A hospital ward.',
+      'A multi-storey office block with 30 m+ internal corridors and no natural daylight in those corridors.',
+      'A nightclub with a capacity of 400 occupants located in a basement with no natural daylight.',
+      'A hospital ward providing overnight sleeping accommodation for patients who cannot self-evacuate.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An open-air car park with no enclosed escape route is at the boundary — it has no internal corridors, no windowless rooms, and the escape is "outdoors" with sky light during the day and overhead illumination at night. Some risk-assessed installations include emergency lighting for stair towers and connecting paths. The other three premises types are clearly in scope: corridors > 30 m, basement places of assembly, sleeping accommodation in a hospital.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A toilet block in a workplace has total floor area 11 m² and is on an escape route that involves two changes of direction. Under BS 5266-1:2025 / Approved Document B does it need emergency lighting?',
     options: [
-      'No — toilets never need emergency lighting.',
-      'Yes — the trigger threshold is > 8 m² OR an escape route involving multiple turns. The toilet block exceeds the floor-area threshold (11 m² > 8 m²) AND it is on a multi-turn escape route — either trigger applies independently. Provision is required: at least one luminaire serving the room and the escape route through it.',
-      'No — only toilets > 50 m² need emergency lighting.',
-      'Only if the basin has a hot water supply.',
+      'No — sanitary accommodation is categorically excluded from emergency lighting provision.',
+      'No — only toilets with a floor area greater than 50 m² fall within the emergency-lighting trigger.',
+      'Only if the block contains an accessible (disabled) WC fitted with an assistance alarm.',
+      'Yes — at 11 m² it exceeds the > 8 m² threshold AND sits on a multi-turn escape route, so at least one luminaire is required.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5266-1 / Approved Document B trigger thresholds for toilets / sanitary spaces are floor area > 8 m² OR escape route with multiple turns. Either triggers provision. Smaller toilets with a single straight access from the corridor often do not require dedicated emergency lighting because the corridor luminaire and the visible exit door are sufficient.',
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'A small basement plant room (3 m × 4 m) houses the building\'s switchgear and control panels. There are no windows; the room is accessed via a steel door from the lower ground floor corridor. Under what circumstances does it need emergency lighting?',
     options: [
-      'Never — plant rooms are exempt.',
-      'Only on Saturdays.',
-      'Whenever it is occupied. The room is a windowless workspace; staff working inside require illumination on mains failure to operate safely (Workplace Regulations 1992 Reg 8). The room is also part of an emergency-response chain — engineers may need to access switchgear to make safe — and emergency lighting allows the responder to enter safely. Both BS 5266-1:2025 and Approved Document B Vol 2 cl. 5 list windowless plant / switchgear rooms as triggers.',
-      'Only if it contains more than three switchboards.',
+      'Never — dedicated plant and switchgear rooms are exempt from emergency lighting requirements.',
+      'Only when it is left permanently staffed during normal building operating hours.',
+      'Whenever it is occupied — a windowless workspace where staff need light on mains failure (Workplace Reg 8) and responders need safe access to switchgear.',
+      'Only if it houses more than three separate switchboards or distribution boards.',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A high-risk task area is identified on a printing-press floor — operators must safely shut down the press on mains failure before evacuating. What category of emergency lighting is required AT the press, and what level of illumination must it provide?',
     options: [
-      '0.5 lx anti-panic.',
-      'High-risk task area lighting per BS EN 1838:2024 — minimum 15 lx OR 10% of the normal task illuminance, whichever is greater. Switch-on time ≤ 0.5 s (effectively instantaneous) so the operator can continue to read the control panel without the press completing an unsafe motion in the dark. Duration: as required to complete the safe-shutdown procedure plus a margin (typically several minutes; the design must justify the duration).',
-      '1 lx escape route lighting.',
-      'No emergency lighting at the workstation, only at the exit.',
+      'High-risk task lighting at 15 lx (or 10% of normal task illuminance, whichever is greater), switching on within 0.5 s.',
+      'Anti-panic lighting at 0.5 lx minimum, treating the press position the same as any open-area floor space.',
+      'Escape route lighting at 1 lx along the centre line, since the press sits on the route the operator will use to leave.',
+      'No emergency lighting at the workstation itself — provision is required only at the final exit door.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High-risk task lighting differs from escape lighting in level (15 lx vs 1 lx), in switch-on speed (≤ 0.5 s vs ≤ 5 s for escape), and in the function it serves (continued operation for safe shutdown vs egress only). After the shutdown is complete, the operator follows the escape lighting on the egress route to outside.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'Which document is the primary statutory source listing premises types that require emergency lighting in NEW BUILD or material alteration work in England?',
     options: [
-      'BS 5266-1.',
-      'BS EN 1838.',
-      'Approved Document B Volume 2 (Buildings other than dwellinghouses) — statutory guidance under the Building Regulations 2010 (England). Cl. 5 lists premises types requiring emergency escape lighting and points to BS 5266-1 for the technical performance criteria. Wales has parallel guidance; Scotland uses the Technical Handbooks under the Building (Scotland) Regulations; Northern Ireland uses the Building Regulations (NI) Technical Booklet E.',
-      'The Highway Code.',
+      'BS 5266-1, which sets the technical performance criteria for emergency lighting systems.',
+      'BS EN 1838, which defines the lighting levels and switch-on times for each emergency-lighting function.',
+      'The Regulatory Reform (Fire Safety) Order 2005, which places the duty to assess fire risk on the responsible person.',
+      'Approved Document B Volume 2 — statutory guidance under the Building Regulations 2010 (England), listing premises types and pointing to BS 5266-1 for the technical criteria.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Approved Document B is the statutory guidance route for new build / material alteration in England — it gives compliance with the Building Regulations. BS 5266-1 is the technical British Standard delivering the Approved Document\'s "comply with BS 5266-1" requirement. The two documents work together: Approved Document tells you WHERE; BS 5266-1 tells you HOW.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'Anti-panic lighting per BS EN 1838:2024 must achieve which of the following over the open-area floor (excluding a 0.5 m perimeter strip)?',
     options: [
-      'Minimum 5 lx with no maximum-to-minimum ratio.',
-      '0.5 lx minimum, with maximum-to-minimum illuminance ratio across the area not exceeding 40:1. The minimum prevents the area being effectively dark; the ratio prevents bright spots and dark corners that would defeat the anti-panic function. Together they ensure the floor of the room is uniformly visible enough that an occupant can read the geometry of the space and pick out an exit.',
-      '15 lx minimum.',
-      'No specific level — anti-panic is qualitative only.',
+      'A minimum of 5 lx across the area, with no limit placed on the maximum-to-minimum illuminance ratio.',
+      'A minimum of 0.5 lx, with the maximum-to-minimum illuminance ratio across the area not exceeding 40:1.',
+      'A minimum of 15 lx, the same level required for a high-risk task area on the same floor.',
+      'No specific illuminance level — anti-panic lighting is assessed qualitatively rather than by measurement.',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'A modern office fit-out has internal lobby spaces between the main corridor and the staircase entry. The lobby is windowless, approximately 3 m × 3 m, and serves only as a transition space. The 2016 BS 5266-1 design used "borrowed light" from the corridor luminaire. Under the 2025 edition, what changes?',
     options: [
-      'Nothing changes.',
-      'Each lobby now requires its own dedicated emergency luminaire — the borrowed-light exclusion in BS 5266-1:2025 means transition lobbies cannot rely on spill from the adjacent corridor. The lobby is part of the escape route and must achieve 1 lx along the line of egress. A single small lobby luminaire normally suffices, but it must be there.',
-      'Lobbies must now be doubled in size.',
-      'Borrowed light is now mandatory — corridor luminaires must spill MORE light into adjacent spaces.',
+      'Nothing changes — spill from the corridor luminaire remains an acceptable means of illuminating a transition lobby.',
+      'The lobby must be enlarged to a defined minimum floor area before it can be served by a single luminaire.',
+      'Each lobby now needs its own dedicated luminaire — the 2025 borrowed-light exclusion means it cannot rely on corridor spill and must achieve 1 lx on the egress line.',
+      'Borrowed light becomes mandatory — corridor luminaires must be uprated to spill more light into adjacent transition spaces.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The borrowed-light exclusion bites hardest on transition spaces: lobbies, stair half-landings, anterooms, plant areas behind glazed walls. Each needs its own luminaire under the 2025 edition. The cost impact on retrofits is real but small per space — typically one additional self-contained luminaire per affected lobby — and the safety improvement is material: the lobby is illuminated even if the adjacent corridor luminaire has itself failed.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Which of the following is a "point of emphasis" under BS 5266-1:2025 — a location where emergency lighting must be provided in addition to the general escape-route illumination?',
     options: [
-      'The centre of every individual workstation.',
-      'Outside each final exit, at every change of direction on the escape route, at intersections of corridors, at each staircase (every flight), near each fire alarm call point and item of firefighting equipment, near first-aid posts, and at every change of floor level (steps, ramps, mezzanines).',
-      'Only the building entrance.',
-      'Only the toilets.',
+      'The centre of every individual workstation across the open-plan office floor area.',
+      'Only the main building entrance, since that is the point most occupants will head towards on egress.',
+      'Only the sanitary accommodation, because windowless toilets are the hardest spaces to navigate in the dark.',
+      'Changes of direction, corridor intersections, staircases, exits, fire-fighting and alarm points, and changes of floor level.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Points of emphasis are navigational decision points (changes of direction, intersections, exits) and operational locations (fire alarm call points, firefighting equipment, first-aid posts) plus hazards (stairs, level changes). The standard emphasises these points because the escape route is most likely to fail at navigational ambiguity and at the points where a person must STOP to operate equipment.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'A multi-storey care home has 60 individual resident bedrooms on its upper floors. Most residents are mobile but a small number are bed-bound and would be unable to evacuate quickly. What emergency lighting category most likely applies in the bedrooms themselves?',
     options: [
-      'Escape route lighting along the bed.',
-      'Anti-panic lighting throughout the building.',
-      'Local-area lighting per BS EN 1838:2024 — for occupants permitted (or required) to remain during a mains-failure event. Levels per the 2024 EN; the lighting allows residents and night staff to see well enough to remain safely in place, find a call alarm, recognise the room, and (if mobile) prepare to move. The escape route in the corridor is separately served by escape route lighting.',
-      'No emergency lighting in bedrooms.',
+      'Local-area lighting per BS EN 1838:2024 — for occupants permitted or required to remain in place during a mains-failure event.',
+      'Escape route lighting running the length of the bed, treating the bedroom as part of the corridor egress path.',
+      'Anti-panic lighting applied uniformly throughout the building, including each resident bedroom.',
+      'No emergency lighting is needed in the bedrooms, as residents will be assisted out by staff.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Local-area lighting is a 2024 BS EN 1838 recognition. Care home bedrooms, hospital wards at night, hotel guest rooms in some cases — places where occupants do NOT immediately escape but remain safely in place during the outage. The corridor outside is served by escape route lighting; the room itself is served by local-area lighting; the two together deliver the safety case.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'You are walking a new premises before quoting an emergency lighting design. What is the methodically correct way to identify locations requiring emergency lighting?',
     options: [
-      'Buy enough fittings to cover every wall and corridor.',
-      'Copy the previous building\'s design.',
-      'Step (1) — start with Approved Document B Vol 2 cl. 5 list as the baseline checklist of premises types and locations that need EL by default. Step (2) — overlay the BS 5266-1:2025 trigger thresholds (corridors > 30 m, > 60 m² open areas, > 8 m² toilets, multi-turn escape routes, plant rooms, stairs, lift cars, etc.). Step (3) — overlay the RRO Article 9 risk assessment, which may identify additional locations driven by use (high-risk task areas, sleeping accommodation). Step (4) — produce a schedule mapping every space against the four EL functions (escape / anti-panic / high-risk task / standby) plus local-area where applicable.',
-      'Ask the cleaner.',
+      'Specify enough luminaires to cover every wall and corridor at a uniform spacing, regardless of which spaces are triggers.',
+      'Work through the layers — Approved Document B baseline, then BS 5266-1 trigger thresholds, then the RRO Art 9 risk assessment — and produce a schedule mapping every space to a category.',
+      'Copy the emergency-lighting layout from a previously completed building of a broadly similar type and occupancy.',
+      'Position one luminaire above each final exit door and treat the rest of the building as covered by the normal lighting.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The methodical approach starts with statutory guidance (Approved Document B), layers the technical standard (BS 5266-1:2025), and finishes with the risk assessment (RRO Art 9). Each adds locations the previous layer may have missed. The output is a schedule — every space mapped to a category — that becomes the design brief for the luminaire layout.',
   },

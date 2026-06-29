@@ -12,74 +12,109 @@ export const SmartHomeSection4Quiz = () => {
 
   const questions = [
     {
-      question: 'What is a local smart home architecture?',
+      question: 'What defines a local (on-premises) smart home architecture?',
       options: [
-        'Processing in the cloud',
-        'Processing within the home',
-        'Processing on mobile devices',
-        'Processing on manufacturer servers',
-      ],
-      correct: 1,
-    },
-    {
-      question: 'Give one example of a local smart home platform.',
-      options: ['Amazon Alexa', 'Google Home', 'Home Assistant', 'iCloud'],
-      correct: 2,
-    },
-    {
-      question: 'What is the biggest advantage of cloud-based systems?',
-      options: ['Fastest response', 'Works offline', 'Easy setup', 'Maximum privacy'],
-      correct: 2,
-    },
-    {
-      question: 'What happens to a cloud system when the internet is down?',
-      options: [
-        'Works normally',
-        'Limited functionality',
-        'Completely non-functional',
-        'Faster performance',
-      ],
-      correct: 2,
-    },
-    {
-      question: 'List two pros of hybrid systems.',
-      options: [
-        'Speed + offline capability',
-        'Easy setup + maximum privacy',
-        'Low cost + simple maintenance',
-        'Cloud-only + local-only',
+        'Processing happens within the home itself',
+        'Processing happens on the manufacturer’s cloud',
+        'Processing happens on the user’s mobile phone',
+        'Processing happens on a remote data centre',
       ],
       correct: 0,
+      explanation:
+        'In a local architecture, automation logic runs on a hub inside the home, so it keeps working independently of any internet connection.',
     },
     {
-      question: 'True or False: Local systems are more private than cloud systems.',
-      options: ['True', 'False'],
-      correct: 0,
+      question: 'Which of these is an example of a locally-hosted smart home platform?',
+      options: ['Amazon Alexa', 'Home Assistant', 'Google Home', 'Apple iCloud'],
+      correct: 1,
+      explanation:
+        'Home Assistant runs on hardware in the home and processes automations locally, unlike the cloud-dependent Alexa and Google Home services.',
     },
     {
-      question: 'Which architecture is usually the fastest in terms of response time?',
-      options: ['Cloud', 'Hybrid', 'Local', 'All are equal'],
-      correct: 2,
-    },
-    {
-      question: "What is 'edge computing' in smart home contexts?",
+      question: 'What is the biggest advantage of cloud-based smart home systems?',
       options: [
-        'Internet edge optimization',
-        'Local processing with cloud benefits',
-        'Wireless signal boosting',
-        'Device edge design',
+        'They give the fastest possible response',
+        'They continue working with no internet',
+        'They are simple to set up and access remotely',
+        'They offer the strongest data privacy',
+      ],
+      correct: 2,
+      explanation:
+        'Cloud systems are easy to set up and reach from anywhere, but they depend on internet connectivity and place more data off-site.',
+    },
+    {
+      question: 'What typically happens to a cloud-based system when the internet goes down?',
+      options: [
+        'It continues to work normally',
+        'It responds faster than usual',
+        'It switches automatically to local control',
+        'It loses most of its functionality',
+      ],
+      correct: 3,
+      explanation:
+        'Because the control logic lives on remote servers, a cloud system loses most functionality when the internet connection is lost.',
+    },
+    {
+      question: 'What are two genuine advantages of a hybrid architecture?',
+      options: [
+        'Lowest cost and simplest maintenance',
+        'Fast local response with remote access',
+        'It is purely cloud-only and local-only',
+        'Easy setup plus maximum privacy',
       ],
       correct: 1,
+      explanation:
+        'Hybrid systems process time-critical automations locally for speed while still using the cloud for remote access and updates.',
     },
     {
-      question: 'Name one factor to consider when choosing an architecture.',
-      options: ['Device colour', 'User technical expertise', 'Brand preference', 'Room size'],
-      correct: 1,
+      question: 'Why are local systems generally considered more private than cloud systems?',
+      options: [
+        'Data stays in the home rather than on external servers',
+        'They encrypt the home’s Wi-Fi password',
+        'They never connect to any network at all',
+        'They automatically delete all recordings hourly',
+      ],
+      correct: 0,
+      explanation:
+        'Local processing keeps sensor and usage data inside the home, reducing the amount of personal data sent to third-party servers.',
     },
     {
-      question: 'Which future standard aims to improve interoperability in smart homes?',
-      options: ['WiFi 7', 'Bluetooth 6', 'Matter protocol', '5G'],
+      question: 'Which architecture usually gives the fastest response time?',
+      options: ['Cloud', 'Hybrid', 'Local', 'All are equally fast'],
       correct: 2,
+      explanation:
+        'Local systems do not have to send commands to a remote server and back, so they respond with the lowest latency.',
+    },
+    {
+      question: "What does 'edge computing' mean in a smart home context?",
+      options: [
+        'Optimising the internet connection at the network edge',
+        'Boosting wireless signals around the property',
+        'Designing devices with rounded edges',
+        'Local processing that retains some cloud benefits',
+      ],
+      correct: 3,
+      explanation:
+        'Edge computing processes data on or near the device in the home, combining the low latency of local control with selective cloud features.',
+    },
+    {
+      question: 'Which of these is a key factor when choosing a smart home architecture?',
+      options: [
+        'The colour of the devices',
+        'The user’s technical expertise',
+        'The brand of the homeowner’s car',
+        'The size of the garden',
+      ],
+      correct: 1,
+      explanation:
+        'Local systems demand more technical skill to set up and maintain, so the user’s expertise strongly influences which architecture suits them.',
+    },
+    {
+      question: 'Which standard is designed to improve interoperability between smart home brands?',
+      options: ['Wi-Fi 7', 'Bluetooth 6', '5G', 'Matter'],
+      correct: 3,
+      explanation:
+        'Matter is a cross-vendor connectivity standard that lets devices from different manufacturers and ecosystems work together.',
     },
   ];
 

@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'fabric-first-definition',
     question: "What is the 'fabric first' approach to building design?",
     options: [
-      'Higher ambient temperature, grouping, and thermal insulation',
-      'No — the 7-day interval must not be exceeded regardless of use patterns',
-      'Stop work, make area safe with drying/rubber matting, then proceed',
+      'Specifying the largest possible heating system to guarantee comfort',
+      'Choosing renewable generation before considering any other measure',
+      'Selecting the cheapest building materials to reduce capital cost',
       'Prioritising building envelope performance before considering active systems',
     ],
     correctIndex: 3,
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'thermal-bridging',
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'To monitor and manage energy consumption by end use',
+      'A structural beam that carries the load across a window opening',
       'An area where heat transfers more readily through the building envelope',
-      'Processing at the network edge/locally rather than in the cloud',
-      'The maximum operating temperature the winding insulation can withstand',
+      'A duct that connects the supply and extract sides of an MVHR unit',
+      'A membrane that prevents moisture passing through the insulation layer',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'system-sizing-impact',
     question: 'How does a fabric first approach affect HVAC system sizing?',
     options: [
-      'Site-based project overheads and management costs',
-      'They have been advised of work completed and any recommendations',
+      'Systems must be much larger to overcome the increased insulation',
+      'System size is unaffected because loads stay the same',
       'Systems can be significantly smaller due to reduced loads',
-      'Reverse polarity can cause permanent damage or safety hazards',
+      'Heating systems are no longer required at all in any climate',
     ],
     correctIndex: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the psi value (ψ) used to measure in building design?',
     options: [
-      '1.0 W/m²K or better (triple glazing)',
-      '0.6 air changes per hour @ 50Pa',
-      'Window sill and jamb junctions',
+      'The whole-window U-value including the frame',
+      'The air permeability of the building envelope',
+      'The solar gain through a glazed opening',
       'Linear thermal transmittance at junctions',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'What air permeability does Passivhaus certification require?',
     options: [
       '0.6 air changes per hour @ 50Pa',
-      '1.0 W/m²K or better (triple glazing)',
-      'External wall insulation (EWI)',
-      '15 kWh/m²/year or less',
+      '3 air changes per hour @ 50Pa',
+      '5 air changes per hour @ 50Pa',
+      '10 air changes per hour @ 50Pa',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Why is MVHR (Mechanical Ventilation with Heat Recovery) essential in airtight buildings?',
     options: [
-      'The difference between design predictions and actual measured performance',
+      'It generates electricity from the warm exhaust air leaving the building',
       'Airtight buildings cannot rely on infiltration for ventilation',
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
-      'To prevent uncontrolled air leakage through the building envelope',
+      'It increases the air leakage so the building can breathe naturally',
+      'It removes the need for any insulation in the building envelope',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'How does thermal mass interact with the fabric first approach?',
     options: [
-      'Airtight buildings cannot rely on infiltration for ventilation',
-      'The difference between design predictions and actual measured performance',
-      'To prevent uncontrolled air leakage through the building envelope',
+      'Thermal mass increases air leakage and so must be avoided',
+      'Thermal mass replaces the need for insulation in the walls',
+      'Thermal mass only matters when placed outside the insulation layer',
       'Internal thermal mass moderates temperature swings and reduces peak loads',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What is the 'performance gap' in building energy use?",
     options: [
       'The difference between design predictions and actual measured performance',
-      'To prevent uncontrolled air leakage through the building envelope',
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
-      'Airtight buildings cannot rely on infiltration for ventilation',
+      'The difference in U-value between the walls and the roof',
+      'The gap left in the cavity to allow the insulation to breathe',
+      'The time delay between switching on the heating and reaching comfort',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary purpose of a continuous air barrier in construction?',
     options: [
-      'Airtight buildings cannot rely on infiltration for ventilation',
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
+      'To provide the main structural support for the building',
+      'To act as the principal layer of thermal insulation',
       'To prevent uncontrolled air leakage through the building envelope',
-      'The difference between design predictions and actual measured performance',
+      'To carry rainwater away from the external wall surface',
     ],
     correctAnswer: 2,
     explanation:

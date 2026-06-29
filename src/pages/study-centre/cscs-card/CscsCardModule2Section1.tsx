@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'hazard-vs-risk',
     question: 'What is the difference between a hazard and a risk?',
     options: [
-      'A hazard is the likelihood of harm; a risk is something that could cause harm',
       'A hazard is something with the potential to cause harm; a risk is the likelihood that harm will occur',
+      'A hazard is the likelihood of harm; a risk is something that could cause harm',
       'A hazard and a risk are the same thing',
       'A hazard only applies to chemicals; a risk applies to everything else',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A hazard is anything with the potential to cause harm (e.g. a trailing cable, working at height, electricity). A risk is the likelihood that the hazard will actually cause harm, combined with the severity of that harm. Risk assessments evaluate both the hazard and the associated risk to determine the correct controls.',
   },
@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     options: [
       'Only at the start of a new project before any work begins',
       'Once a year as part of the annual safety review',
-      'When conditions change or unexpected hazards appear on site',
       'Only by the site manager, never by individual operatives',
+      'When conditions change or unexpected hazards appear on site',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'A dynamic risk assessment is an ongoing, real-time process carried out when site conditions change or unexpected hazards arise that were not covered by the original written risk assessment. Every worker has a responsibility to carry out dynamic risk assessments throughout the working day using the STOP-THINK-ACT process.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 1,
     question: 'Under which regulation are employers required to carry out risk assessments?',
     options: [
-      'The Health and Safety at Work etc. Act 1974',
       'The Management of Health and Safety at Work Regulations 1999',
+      'The Health and Safety at Work etc. Act 1974',
       'The Construction (Design and Management) Regulations 2015',
       'The Personal Protective Equipment at Work Regulations 2022',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Management of Health and Safety at Work Regulations 1999, Regulation 3, places a specific legal duty on employers to carry out suitable and sufficient assessments of the risks to workers and others who may be affected by their work activities. HASAWA 1974 is the overarching Act but does not specifically mandate risk assessments.',
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
     question: 'What is the correct order of the 5-step risk assessment process?',
     options: [
       'Record findings, identify hazards, evaluate risks, decide who is harmed, review',
-      'Evaluate risks, identify hazards, decide who is harmed, record findings, review',
       'Identify hazards, decide who might be harmed, evaluate risks and decide precautions, record findings, review and update',
+      'Evaluate risks, identify hazards, decide who is harmed, record findings, review',
       'Decide who is harmed, identify hazards, review, record findings, evaluate risks',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The HSE 5-step risk assessment process follows a logical sequence: (1) Identify hazards, (2) Decide who might be harmed and how, (3) Evaluate the risks and decide on precautions, (4) Record your significant findings, and (5) Review your assessment and update if necessary. This sequence ensures a thorough and systematic approach.',
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
     question: 'In the Hierarchy of Controls, what should be tried before PPE?',
     options: [
       'Nothing &mdash; PPE is always the first control measure',
-      'Elimination, substitution, engineering controls, and administrative controls',
       'Only engineering controls',
+      'Elimination, substitution, engineering controls, and administrative controls',
       'Only elimination and substitution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The full Hierarchy of Controls, from most to least effective, is: Elimination, Substitution, Engineering controls, Administrative controls, and finally PPE. All higher-level controls should be considered and implemented where reasonably practicable before relying on PPE, which is always the last resort because it only protects the individual wearing it and depends on correct use.',
   },
@@ -124,11 +124,11 @@ const quizQuestions = [
     question: 'What does RAMS stand for?',
     options: [
       'Risk Analysis and Management System',
-      'Risk Assessment and Method Statement',
       'Regulatory Assessment of Management Standards',
       'Review and Monitoring of Safety',
+      'Risk Assessment and Method Statement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'RAMS stands for Risk Assessment and Method Statement. It is a combined document widely used in the construction industry that pairs the risk assessment (identifying hazards and controls) with the method statement (the step-by-step safe system of work). RAMS are typically required before any work begins on a construction site.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does the STOP-THINK-ACT process relate to?',
     options: [
-      'The formal written risk assessment procedure',
-      'The emergency evacuation procedure',
       'Dynamic risk assessment carried out in real time',
+      'The emergency evacuation procedure',
+      'The formal written risk assessment procedure',
       'The accident reporting process under RIDDOR',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'STOP-THINK-ACT is the process used during dynamic risk assessment. When conditions change or an unexpected hazard appears, workers should STOP what they are doing, THINK about the new hazard and how to control it, and then ACT by either implementing a safe solution or stopping work and reporting the issue if it cannot be controlled safely.',
   },
@@ -149,8 +149,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Employers with how many or more employees must record their risk assessment findings in writing?',
-    options: ['1 or more', '3 or more', '5 or more', '10 or more'],
-    correctAnswer: 2,
+    options: ['1 or more', '5 or more', '3 or more', '10 or more'],
+    correctAnswer: 1,
     explanation:
       'Under the Management of Health and Safety at Work Regulations 1999, employers with 5 or more employees must record the significant findings of their risk assessments in writing. However, even employers with fewer than 5 employees are still required to carry out risk assessments &mdash; they simply do not have to record them in writing (although it is strongly recommended as good practice).',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
     question: 'Under HASAWA 1974, which sections set out employer and employee duties?',
     options: [
       'Section 1 (general purpose) and Section 6 (manufacturers)',
-      'Section 2 (employer duties) and Section 7 (employee duties)',
       'Section 4 (premises) and Section 8 (interference)',
       'Section 3 (non-employees) and Section 9 (charges for safety)',
+      'Section 2 (employer duties) and Section 7 (employee duties)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 2 of the Health and Safety at Work etc. Act 1974 sets out the general duties of employers to their employees, including providing safe plant and systems of work, information, instruction, training, and supervision. Section 7 sets out the duties of employees, including taking reasonable care for their own health and safety and that of others, and cooperating with the employer on safety matters. Section 3 covers duties to non-employees.',
   },

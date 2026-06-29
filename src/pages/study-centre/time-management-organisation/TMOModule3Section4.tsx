@@ -10,12 +10,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the fundamental difference between time management and energy management?',
     options: [
-      'Time management is for office workers; energy management is for physical workers',
-      'Time is a finite, non-renewable resource; energy is renewable and can be strategically managed through recovery',
+      'Time is finite and non-renewable; energy is renewable through recovery',
+      'Time management suits office workers; energy management suits physical workers',
       'Energy management is more important than time management in every situation',
-      'There is no meaningful difference \u2014 they are the same concept',
+      'There is no meaningful difference \u2014 they are essentially the same concept',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Everyone has exactly 24 hours per day, and no technique can create more time. Energy, however, is renewable \u2014 it can be replenished through sleep, nutrition, breaks, and strategic task scheduling. Managing energy means ensuring you have the right amount of fuel for the right tasks at the right times.',
   },
@@ -37,10 +37,10 @@ const quizQuestions = [
     id: 3,
     question: 'What is the ultradian rhythm cycle and how long does it last?',
     options: [
-      'A yearly cycle of seasonal energy variation lasting 12 months',
-      'A daily cycle of waking and sleeping lasting 24 hours',
-      'A natural 90-minute cycle of peak focus followed by a trough, repeating throughout the day',
-      'A weekly cycle of productivity that peaks on Wednesdays',
+      'A yearly cycle of seasonal energy variation, lasting around 12 months',
+      'A daily cycle of waking and sleeping, lasting roughly a full 24 hours',
+      'A 90-minute cycle of peak focus then a trough, repeating through the day',
+      'A weekly cycle of productivity that tends to peak on a Wednesday',
     ],
     correctAnswer: 2,
     explanation:
@@ -51,12 +51,12 @@ const quizQuestions = [
     question:
       'An electrician has a complex consumer unit change and a series of simple socket additions to complete. Using energy management principles, how should they schedule these tasks?',
     options: [
-      'Complete the socket additions first as a warm-up, then tackle the CU change',
-      'Alternate between the two tasks to maintain variety and prevent boredom',
-      'Schedule the CU change for the morning peak-energy window and the socket additions for the afternoon when cognitive demands are lower',
-      'Complete whichever task the client wants first, regardless of energy levels',
+      'Do the socket additions first as a warm-up, then tackle the CU change later',
+      'Alternate between the two tasks throughout to keep variety and avoid boredom',
+      'Do whichever task the client wants first, regardless of your energy levels',
+      'Do the CU change in the morning peak and socket additions in the afternoon',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The CU change requires sustained concentration, careful calculation, and high cognitive focus \u2014 making it ideal for the morning peak-energy window. Socket additions are relatively routine and can be performed effectively even when energy levels are lower in the afternoon.',
   },
@@ -65,12 +65,12 @@ const quizQuestions = [
     question:
       'Which of the following has the greatest impact on physical energy for a tradesperson?',
     options: [
-      'Drinking energy drinks throughout the day for sustained alertness',
       'Consistent sleep quality, regular hydration, and proper nutrition',
+      'Drinking energy drinks throughout the day for sustained alertness',
       'Working longer hours to build physical endurance',
       'Taking cold showers every morning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sleep quality, hydration, and nutrition form the foundation of physical energy. Poor sleep, dehydration, and skipping meals create a cumulative energy deficit that no amount of caffeine or willpower can fully compensate for. These basics have a far greater impact than any trendy biohacking technique.',
   },
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why do difficult client interactions drain energy disproportionately?',
     options: [
-      'Because clients are inherently unreasonable',
-      'Because difficult interactions deplete emotional energy, which affects cognitive and physical energy as well',
-      'Because they always happen at the worst possible time',
-      'Because tradespeople are not trained in customer service',
+      'Because clients are by their nature unreasonable and hard to please',
+      'Because they drain emotional energy, which then saps cognitive and physical energy',
+      'Because such interactions always seem to happen at the worst possible time',
+      'Because most tradespeople receive no formal training in customer service',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the post-lunch dip and how should it be managed?',
     options: [
-      'It is a myth \u2014 there is no real energy drop after lunch',
-      'It is a natural circadian-driven period of reduced alertness, best managed by scheduling routine or physical tasks rather than complex cognitive work',
-      'It should be managed by drinking strong coffee and pushing through',
-      'It only affects people who eat large meals at lunch',
+      'It is a myth \u2014 there is no genuine energy drop in the period after lunch',
+      'It should be managed by drinking strong coffee and simply pushing through it',
+      'A natural dip in alertness \u2014 best used for routine tasks, not complex work',
+      'It only affects people who eat particularly large or heavy meals at lunch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The post-lunch dip (typically 13:00\u201315:00) is a genuine circadian phenomenon, not simply the result of eating. It occurs even when people skip lunch. Managing it means scheduling routine, physical, or less cognitively demanding tasks during this window rather than fighting it with caffeine.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'According to the 90-minute ultradian cycle, what should you do after approximately 90 minutes of focused work?',
     options: [
-      'Continue working to maintain momentum \u2014 breaks reduce productivity',
-      'Take a 15\u201320 minute recovery break to allow your natural cycle to reset before the next period of peak focus',
+      'Keep working to maintain momentum, since breaks just reduce productivity',
       'Switch to a completely different type of work for the rest of the day',
-      'Take the rest of the day off to fully recover',
+      'Take the whole rest of the day off in order to recover fully',
+      'Take a 15\u201320 minute break to let the cycle reset before the next peak',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'After approximately 90 minutes of focused work, the ultradian cycle enters a natural trough. Taking a 15\u201320 minute break during this trough allows your system to reset, preparing you for the next 90-minute period of peak focus. Working through the trough produces diminishing returns and accelerates fatigue.',
   },
@@ -410,10 +410,10 @@ export default function TMOModule3Section4() {
             id="tmo-3-4-ultradian"
             question="An electrician has been performing detailed IR and continuity testing for 90 minutes straight. Their test results are starting to show inconsistencies. According to the ultradian cycle, what is the most likely cause and solution?"
             options={[
-              'The test instruments need recalibrating \u2014 stop and calibrate',
-              'They have reached the natural trough of their 90-minute ultradian cycle and need a 15\u201320 minute break to reset',
+              'The test instruments need recalibrating \u2014 stop and recalibrate them now',
+              'They have hit the 90-minute ultradian trough and need a 15\u201320 minute reset',
               'They should switch to a completely different type of work for the rest of the day',
-              'The inconsistencies are normal and should be recorded as-is',
+              'The inconsistencies are perfectly normal and should just be recorded as found',
             ]}
             correctIndex={1}
             explanation="After approximately 90 minutes of focused work, the ultradian cycle enters a natural trough where concentration and accuracy decline. A 15\u201320 minute break allows the cycle to reset, restoring focus for the next 90-minute period. This is far more effective than pushing through with declining accuracy."
@@ -536,12 +536,12 @@ export default function TMOModule3Section4() {
             question="An electrician has a difficult client meeting about a disputed invoice AND a complex CU change to complete on the same day. Using energy management principles, how should they schedule these?"
             options={[
               'Handle the client meeting first thing to get it out of the way, then do the CU change',
-              'Schedule the CU change for the morning peak energy window and the client meeting for 10:00\u201310:30, allowing recovery time before the afternoon',
-              'Do the CU change and the client meeting at the same time to save travel',
-              'Schedule the client meeting for the end of the day so it does not affect site work',
+              'CU change in the morning peak, client meeting mid-morning, with recovery time after',
+              'Do the CU change and the client meeting at the same time, just to save on travel',
+              'Schedule the client meeting for the very end of the day so it does not affect site work',
             ]}
             correctIndex={1}
-            explanation="The CU change requires peak cognitive energy (morning window). The difficult client meeting will drain emotional energy, so scheduling it mid-morning with recovery time afterwards prevents it from affecting the rest of the day. Scheduling it at the end of the day (option D) would carry the stress into your evening."
+            explanation="The CU change requires peak cognitive energy (morning window). The difficult client meeting will drain emotional energy, so scheduling it mid-morning with recovery time afterwards prevents it from affecting the rest of the day. Leaving the meeting until the end of the day would carry the stress into your evening."
           />
 
           {/* Section 6: Designing Your Energy-Aligned Day */}

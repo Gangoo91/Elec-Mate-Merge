@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'What type of cable is recommended for VSD-to-motor connections in HVAC installations?',
     options: [
-      'Is transmitted equally in all directions',
+      'Standard unscreened PVC twin-and-earth cable',
       'Screened/shielded cable with symmetrical construction',
-      'Disconnect sensitive equipment before insulation testing',
-      'Soft, friable and of relatively low density',
+      'Single-core unscreened cables run in separate conduits',
+      'Mineral-insulated cable with the sheath left unearthed',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'What is the maximum recommended cable length between VSD and motor without additional measures?',
     options: [
-      'To prevent electromagnetic interference coupling',
-      'Category C2 - restricted distribution (second environment)',
+      '5-10 metres depending on drive and cable type',
+      '500-1000 metres depending on drive and cable type',
       '50-100 metres depending on drive and cable type',
-      'Earth the screen at both ends with 360-degree termination',
+      'There is no practical limit on cable length',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why should VSD motor cables be routed separately from control and signal cables?',
     options: [
-      'Insulation breakdown in motor or cable to earth',
-      '50-100 metres depending on drive and cable type',
-      'Regenerated energy is raising DC bus voltage',
+      'To reduce the voltage drop along the motor supply cable',
+      'To make future cable identification and labelling easier',
+      'To keep the motor cables cooler and improve current rating',
       'To prevent electromagnetic interference coupling',
     ],
     correctAnswer: 3,
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: 'What is the purpose of a dV/dt filter (motor choke) on VSD outputs?',
     options: [
       'To reduce voltage spikes and protect motor insulation',
-      'Category C2 - restricted distribution (second environment)',
-      'Insulation breakdown in motor or cable to earth',
-      'Earth the screen at both ends with 360-degree termination',
+      'To filter conducted EMC emissions back onto the mains supply',
+      'To correct the power factor seen by the supply network',
+      'To increase the maximum output frequency of the drive',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: "What does an 'Earth Fault' or 'Ground Fault' trip on a VSD typically indicate?",
     options: [
-      'To reduce voltage spikes and protect motor insulation',
-      '50-100 metres depending on drive and cable type',
+      'The supply voltage has dropped below the drive\'s minimum threshold',
+      'The motor is regenerating energy back to the DC bus',
       'Insulation breakdown in motor or cable to earth',
-      'To prevent electromagnetic interference coupling',
+      'The acceleration ramp time has been set too long',
     ],
     correctAnswer: 2,
     explanation:
@@ -188,26 +188,26 @@ const quizQuestions = [
   },
   {
     id: 9,
-    question: "Why might a VSD show an 'Undervoltage' fault during motor deceleration?",
+    question: "Why might a VSD show a 'DC Overvoltage' fault during rapid motor deceleration?",
     options: [
-      'To reduce voltage spikes and protect motor insulation',
-      'Regenerated energy is raising DC bus voltage',
-      '50-100 metres depending on drive and cable type',
-      'To prevent electromagnetic interference coupling',
+      'The motor cable is too long, causing voltage reflections',
+      'Regenerated energy is raising the DC bus voltage',
+      'The EMC filter is leaking current to earth',
+      'The supply voltage has momentarily dipped below specification',
     ],
     correctAnswer: 1,
     explanation:
-      'During rapid deceleration, the motor acts as a generator, pumping energy back to the drive DC bus. If the bus voltage exceeds limits, a DC overvoltage or undervoltage fault occurs. Solutions include longer deceleration ramps or braking resistors for high-inertia loads.',
+      'During rapid deceleration, the motor acts as a generator, pumping energy back to the drive DC bus. If the bus voltage exceeds the upper limit, a DC overvoltage fault occurs. Solutions include longer deceleration ramps or fitting a braking resistor for high-inertia loads.',
   },
   {
     id: 10,
     question:
       'What EMC standard classification typically applies to VSDs in industrial HVAC applications?',
     options: [
-      '50-100 metres depending on drive and cable type',
-      'Motor and cable insulation resistance, connections, and parameter settings',
+      'Category C1 - first environment (residential)',
+      'Category C4 - unrestricted distribution (any environment)',
       'Category C2 - restricted distribution (second environment)',
-      'Regenerated energy is raising DC bus voltage',
+      'No EMC classification is required for industrial drives',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'What should be checked before energising a newly installed VSD for the first time?',
     options: [
-      'To reduce voltage spikes and protect motor insulation',
-      'Category C2 - restricted distribution (second environment)',
-      'Earth the screen at both ends with 360-degree termination',
+      'The acceleration ramp by running the motor at full speed',
+      'The DC bus discharge time by repeatedly cycling the supply',
+      'The harmonic distortion on the output waveform under load',
       'Motor and cable insulation resistance, connections, and parameter settings',
     ],
     correctAnswer: 3,

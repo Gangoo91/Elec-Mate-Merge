@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'pf-2-2-check1',
     question: 'What is the baseline month approach to budgeting irregular income?',
     options: [
-      'Budgeting based on your highest-earning month of the past year',
-      'Budgeting based on the average of the last 12 months',
-      'Budgeting based on the lowest realistic monthly income you expect',
-      'Budgeting based on the amount HMRC expects you to earn',
+      'Budgeting around the lowest realistic income month you expect',
+      'Budgeting around your highest-earning month of the past year',
+      'Budgeting around the average income of the last 12 months',
+      'Budgeting around the income HMRC expects you to declare',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The baseline month approach means building your entire budget around the lowest realistic monthly income you expect over the coming year. This ensures you can always cover your essential costs, even in the quietest month. In months where you earn above the baseline, the surplus goes straight to savings or your emergency fund.',
   },
@@ -23,8 +23,8 @@ const quickCheckQuestions = [
     id: 'pf-2-2-check2',
     question:
       'What percentage of gross income should a self-employed tradesperson typically set aside for tax?',
-    options: ['10%', '20%', '30%', '50%'],
-    correctIndex: 2,
+    options: ['10%', '30%', '20%', '50%'],
+    correctIndex: 1,
     explanation:
       'The general rule of thumb is 30% of gross income. This covers income tax at the basic rate (20%) plus Class 4 National Insurance contributions (6% on profits between &pound;12,570 and &pound;50,270). Setting aside 30% provides a comfortable buffer &mdash; any surplus after paying your Self Assessment bill becomes a welcome bonus rather than a stressful shortfall.',
   },
@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a key benefit of income smoothing for self-employed tradespeople?',
     options: [
-      'It eliminates the need to pay tax',
-      'It guarantees higher earnings in quiet months',
-      'It provides a consistent personal &ldquo;salary&rdquo; so personal bills are always covered',
-      'It means you never need to save for emergencies',
+      'It removes the need to pay any income tax at all',
+      'It guarantees you will earn more during quiet months',
+      'It means you no longer need any emergency savings',
+      'It pays a steady personal &ldquo;salary&rdquo; that covers your bills',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Income smoothing means paying yourself a fixed personal &ldquo;salary&rdquo; from your business account each month, regardless of how much you actually earn that month. This ensures your personal bills (rent, utilities, food) are always covered at the same level. Surplus business income builds a buffer for quiet months, while the fixed personal payment removes the stress of feast-and-famine cash flow.',
   },
@@ -73,16 +73,16 @@ const quizQuestions = [
     id: 1,
     question:
       'According to IPSE research, what percentage of self-employed workers have experienced income anxiety?',
-    options: ['About 50%', 'About 65%', 'About 75%', 'About 89%'],
-    correctAnswer: 3,
+    options: ['About 89%', 'About 50%', 'About 65%', 'About 75%'],
+    correctAnswer: 0,
     explanation:
       'IPSE (the Association of Independent Professionals and the Self-Employed) found that 89% of self-employed workers have experienced income anxiety &mdash; worry caused specifically by not knowing what they will earn next month. This statistic underlines why specific budgeting strategies for irregular income are so important.',
   },
   {
     id: 2,
     question: 'Which months are typically the quietest for domestic electrical work in the UK?',
-    options: ['March and April', 'June and July', 'January and February', 'September and October'],
-    correctAnswer: 2,
+    options: ['March and April', 'January and February', 'June and July', 'September and October'],
+    correctAnswer: 1,
     explanation:
       'January and February are typically the quietest months for domestic electrical work. Customers have spent heavily over Christmas, new year budgets are tight, and the weather can delay outdoor work. Wise tradespeople plan for this dip by building a buffer during the busy autumn months (September to November).',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is income smoothing?',
     options: [
-      'Asking customers to pay the same amount every month',
-      'Paying yourself a fixed personal salary from your business account regardless of monthly turnover',
-      'Spreading your tax bill evenly across 12 monthly payments',
-      'Only taking on jobs that pay the same rate',
+      'Asking every customer to pay the same amount each month',
+      'Spreading your annual tax bill evenly across 12 payments',
+      'Paying yourself a fixed monthly salary regardless of turnover',
+      'Only accepting jobs that all pay the same day rate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Income smoothing means paying yourself a consistent personal &ldquo;salary&rdquo; from your business account each month, regardless of how much the business actually earns that month. In good months, the surplus stays in the business account as a buffer. In quiet months, the buffer covers the shortfall. Your personal finances remain stable throughout.',
   },
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       'When should you transfer money to your tax account after receiving a customer payment?',
     options: [
-      'At the end of the tax year',
+      'Once at the very end of the tax year',
       'When you file your Self Assessment return',
-      'At the end of each month',
-      'Immediately &mdash; the same day the payment arrives',
+      'In one transfer at the end of each month',
+      'Immediately, the same day the payment arrives',
     ],
     correctAnswer: 3,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the &ldquo;Christmas cash flow trap&rdquo; for self-employed tradespeople?',
     options: [
-      'Customers paying with Christmas gift vouchers instead of cash',
-      'Overspending on gifts followed by a January income dip, creating a double squeeze',
-      'HMRC charging extra tax in December',
-      'Banks closing over the Christmas period',
+      'High December spending colliding with the January income dip',
+      'Customers settling their bills with gift vouchers instead of cash',
+      'HMRC adding an extra tax charge during the month of December',
+      'Banks closing for an extended period over the Christmas holidays',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Christmas cash flow trap is the double squeeze of high personal spending in December (gifts, socialising, food) followed by the quietest earning period of the year in January and February. Many tradespeople also face their Self Assessment payment on 31 January. Without planning, this combination can cause serious financial stress.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 6,
     question: 'How much holiday provision should a self-employed electrician budget for annually?',
     options: [
-      'None &mdash; self-employed people do not get holidays',
-      'One week at minimum wage equivalent',
-      "The equivalent of 5.6 weeks of income, matching employed workers' statutory entitlement",
-      'Whatever is left over at the end of the year',
+      'Nothing, since self-employed people do not take paid holidays',
+      'The equivalent of 5.6 weeks, matching the statutory entitlement',
+      'About one week, valued at the minimum wage equivalent',
+      'Whatever income happens to be left over at year end',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Employed workers receive 5.6 weeks of paid holiday per year (28 days for a 5-day week). Self-employed tradespeople receive nothing unless they plan for it. Best practice is to set aside the equivalent of 5.6 weeks of your baseline weekly income across the year, building a holiday fund that allows you to take time off without financial stress.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the first step in creating a simple 12-month cash flow forecast?',
     options: [
-      'Estimating your tax bill',
-      'Listing all expected income month by month, using conservative estimates for uncertain months',
-      'Opening a new bank account',
-      'Calculating your net worth',
+      'Estimating your annual Self Assessment tax bill',
+      'Opening a dedicated new business bank account',
+      'Listing expected income month by month, estimating conservatively',
+      'Calculating your overall personal net worth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The first step in a 12-month cash flow forecast is listing your expected income for each month. Use actual figures where known (confirmed contracts, retainer payments) and conservative estimates for uncertain months. The forecast then adds expected outgoings month by month to show your projected cash position &mdash; highlighting months where you might run short so you can plan ahead.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 8,
     question: 'When building a business buffer for seasonal dips, what is a good initial target?',
     options: [
-      'One week of expenses',
+      'Roughly one week of essential expenses',
+      'A full six months of total household income',
+      'Enough to cover your whole annual tax bill',
       'One month of business costs plus one month of personal baseline',
-      'Six months of total household income',
-      'Enough to cover your annual tax bill',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A good starting target for a seasonal buffer is one month of business costs plus one month of personal baseline budget. For most sole-trader electricians, this comes to &pound;3,000 to &pound;6,000. This covers a quiet month without needing to draw on your emergency fund. The longer-term goal should be three months of total expenses.',
   },

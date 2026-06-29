@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'An intermittent fault that appears when ambient temperature rises but clears when the temperature drops is most likely caused by:',
     options: [
-      'The fault may not be present when you arrive to investigate, making it difficult to observe and measure',
-      'A board fixed at the edge of a scaffold platform to prevent materials and tools from falling off',
-      'For identification during maintenance, emergency response, and future modifications',
-      'Thermal expansion causing a marginal connection to open, or insulation resistance dropping with temperature',
+      'Thermal expansion causing a marginal connection to open, or insulation resistance dropping as temperature rises',
+      'A protective device that has been incorrectly rated for the connected load current',
+      'A loose neutral conductor that only affects the circuit during periods of low demand',
+      'Capacitive coupling between adjacent cables that increases when the cables are cold',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Temperature-dependent intermittent faults typically involve marginal connections where thermal expansion opens a barely-adequate joint, or insulation that is degraded to the point where its resistance drops below a critical threshold when warm. As the temperature drops, the connection remakes or the insulation resistance rises, and the fault disappears. These are classic symptoms of a dry joint or degraded insulation.',
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'An RCD trips repeatedly during damp weather but operates normally in dry conditions. The most likely cause is:',
     options: [
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
+      'The RCD has reached the end of its service life and needs replacement regardless of weather',
       'Moisture ingress into the wiring, accessories or equipment causing earth leakage current to exceed the RCD threshold',
-      'Equipment needed, inspection requirements, safe use procedures, and any specific limitations',
-      'To take such general fire precautions as will ensure, so far as is reasonably practicable, the safety of any relevant persons',
+      'Humidity reduces the supply voltage, causing the RCD to trip on undervoltage',
+      'Damp air increases the load current, overloading the protective device downstream',
     ],
     correctIndex: 1,
     explanation:
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'A machine fault that appears only when a nearby compressor is running suggests the cause may be:',
     options: [
+      'A voltage dip on the supply each time the compressor motor draws its starting current',
       'Vibration from the compressor causing a marginal connection or component to make intermittent contact',
-      'Members of the public could walk into the tower, attempt to climb it, or be struck by falling objects',
-      'It is substantially enclosed and residual vapours create a foreseeable risk of serious injury from flammable or toxic atmospheres',
-      'It significantly increases the wind loading and therefore more ties are required',
+      'Electromagnetic interference radiated by the compressor control panel into the supply',
+      'Harmonic distortion introduced by the compressor that overheats the neutral conductor',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Vibration-induced intermittent faults are common in industrial environments. Machinery vibration can cause loose terminations to intermittently open and close, relay contacts to bounce, connectors to make poor contact, and cracked solder joints to break and remake. The correlation with the compressor operation is the diagnostic clue — the fault timing matches the vibration source.',
   },
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     question:
       'A PLC input shows intermittent false signals that coincide with a nearby VSD starting a motor. The most likely cause is:',
     options: [
-      'Questions shift the other person from defensive mode to thinking mode, re-engaging their rational brain',
-      'A mobile elevating work platform (MEWP) used to access high-level cable tray',
-      'Photometric performance criteria (light levels and duration)',
+      'The VSD draws so much current at start that the PLC power supply browns out',
+      'Vibration from the motor loosening the PLC input terminals as it runs up to speed',
+      'A shared neutral conductor between the VSD and the PLC carrying excessive current',
       'Electromagnetic interference (EMI) from the VSD coupling into the PLC input wiring',
     ],
     correctIndex: 3,
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'The most challenging aspect of diagnosing intermittent faults is:',
     options: [
-      'To provide a low-impedance fault current path so protective devices operate quickly to disconnect the supply',
-      'The fault may not be present when you arrive to investigate, making it difficult to observe and measure',
-      'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
-      'Use professional discussion as an alternative evidence method, where the apprentice can demonstrate knowledge verbally',
+      'The fault always damages the protective device, so the cause is hidden once it operates',
+      'The fault may not be present when you arrive, making it hard to observe and measure',
+      'Intermittent faults give a clear, repeatable reading on every test instrument',
+      'Test instruments are not accurate enough to measure the small currents involved',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: 'A data logger is a useful tool for intermittent fault diagnosis because it can:',
     options: [
-      'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
-      'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'Apply a higher test voltage so any weak insulation fails immediately during the visit',
+      'Force the fault on demand by deliberately overloading the suspect circuit',
+      'Continuously record parameters over time, capturing events when no one is present',
+      'Identify the faulty component automatically and display its part number',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 3,
     question: 'Condensation inside an electrical enclosure is most likely to occur when:',
     options: [
-      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'The equipment inside is generating its maximum heat output at full load',
+      'The internal temperature rises rapidly above the surrounding ambient air',
+      'The supply voltage rises above nominal during periods of low demand',
+      'A surface inside cools below the dew point, typically overnight after a warm day',
     ],
     correctAnswer: 3,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 4,
     question: 'An IP65-rated enclosure should be protected against:',
     options: [
-      'Dust ingress (total protection) and water jets from any direction',
-      'Outriggers extending the effective base to at least 3m',
-      'Building services that must meet minimum efficiency standards when replaced',
-      'HVAC and lighting integration for occupancy simulation',
+      'Dust ingress (total protection) and low-pressure water jets from any direction',
+      'Limited dust ingress and temporary immersion in water up to 1 metre deep',
+      'Solid objects over 1 mm and vertically dripping water only',
+      'Total protection against dust and continuous immersion in water under pressure',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'Harmonic distortion from non-linear loads such as VSDs and LED lighting can cause:',
     options: [
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
+      'A steady increase in supply voltage that damages connected equipment over time',
       'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
-      'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'A reduction in the earth fault loop impedance throughout the installation',
+      'Improved power factor and reduced cable losses across the distribution system',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "When investigating an intermittent fault, the operator report states it happens 'about twice a week, usually on Monday mornings'. This timing pattern suggests:",
     options: [
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
-      'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
-      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
+      'A fault with no identifiable trigger, requiring full replacement of the equipment',
+      'A wiring error made during installation that only shows up under heavy load',
+      'A thermal or environmental trigger from the weekend shutdown and Monday cold start',
+      'A supply authority issue that occurs at the same time every week by coincidence',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'Cable route separation requirements in BS 7671 exist primarily to prevent:',
     options: [
-      'The person must be earning a high salary for the work',
-      'The electrical pressure or force that pushes current',
-      'To confirm work is complete, the area is safe, and controls can be removed',
+      'Excessive voltage drop along long parallel cable runs',
+      'Mutual heating that reduces the current-carrying capacity of grouped cables',
+      'Mechanical chafing where cables of different types cross one another',
       'Electromagnetic interference between power cables and data/signal cables',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question: "A 'dry joint' in an electrical connection is characterised by:",
     options: [
       'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
-      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
+      'A connection where the conductor insulation has been stripped back too far, exposing bare copper',
+      'A terminal that has been over-torqued, crushing and weakening the conductor strands',
+      'A joint made in a damp location where moisture has caused green copper corrosion',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'An anti-condensation heater in a motor control centre (MCC) should be:',
     options: [
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
+      'Switched on only during the annual maintenance shutdown to dry the enclosure out',
       'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
-      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
+      'Wired to operate only while the main equipment in the enclosure is running under load',
+      'Left permanently de-energised unless visible condensation has already formed inside',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Dust accumulation on electrical equipment can cause faults by:',
     options: [
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
-      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
+      'Increasing the supply voltage at the equipment terminals during dry periods',
+      'Improving heat dissipation by forming an insulating barrier over hot components',
       'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
-      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
+      'Reducing the earth fault loop impedance by providing extra conductive paths',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'To diagnose a fault that only occurs under heavy load, you would:',
     options: [
-      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
-      'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
-      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'Test the circuit only when it is fully de-energised and at rest, then return it to service',
+      'Replace the protective device with a higher-rated one so the fault no longer interrupts supply',
+      'Wait for the fault to clear on its own and record only the time it disappears',
       'Use data logging equipment to record electrical parameters during high-load periods, or arrange controlled load testing while monitoring the suspect circuit',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'Voltage sags (dips) on an industrial supply are commonly caused by:',
     options: [
       'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
-      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
-      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
-      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
+      'Loose neutral connections at lightly loaded socket outlets across the installation',
+      'Power factor correction capacitors switching out during periods of high demand',
+      'Gradual ageing of cable insulation that increases its resistance over many years',
     ],
     correctAnswer: 0,
     explanation:

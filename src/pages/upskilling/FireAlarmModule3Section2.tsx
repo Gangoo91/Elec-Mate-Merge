@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the fundamental architectural difference between a conventional and an addressable fire alarm system?',
     options: [
-      'Cable colour.',
-      'Number of zones.',
-      'Conventional: each circuit (radial pair) IS a zone — devices on the same circuit are reported by zone only, not individually. Addressable: devices share a single loop and each device has a unique digital address; the CIE reports the specific device that operated. The difference is one of resolution at the CIE.',
-      'Power supply voltage.',
+      'The colour of the system cabling used throughout.',
+      'The number of zones the CIE is able to display.',
+      'Conventional reports by zone (circuit = zone); addressable reports each device by address.',
+      'The supply voltage the control panel runs at.',
     ],
     correctIndex: 2,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A typical BS EN 54-13 addressable loop carries up to how many devices, and what does the protocol identify?',
     options: [
-      'Up to 50, by zone only.',
-      'Up to 126 devices on a single loop is typical (manufacturer / protocol specific; BS EN 54-13 governs system compatibility). Each device has a unique digital address — the CIE polls each device in turn and identifies it by address (e.g. detector 1.014, call point 1.032, sounder 1.064). The address is the device-level identification at the CIE.',
-      '256 devices.',
-      '1,000 devices.',
+      'Up to 50 devices, identified by zone only rather than individually.',
+      'Up to about 126 devices, each identified by its own unique digital address.',
+      'Up to 256 devices, identified by zone and circuit number together.',
+      'Up to 1,000 devices, identified by physical position on the loop.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Class A and Class B circuit configurations under BS EN 54-13: which continues to operate after a single open-circuit fault?',
     options: [
-      'Class B only.',
-      'Class A — wired as a loop (ring), fed from the CIE both ends. A single break leaves all devices still reachable (each from one end of the break). Class B is wired as a radial spur from one end only; a break disconnects every device beyond the break. Class A delivers fault tolerance; Class B does not.',
-      'Both equally.',
-      'Neither.',
+      'Class B only — the radial spur keeps devices reachable past a break.',
+      'Class A — the ring keeps every device reachable from one side of the break.',
+      'Both classes continue to operate equally after a single open-circuit fault.',
+      'Neither class continues to operate after a single open-circuit fault.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 maintenance clause clarifies the responsibility for verifying detector text descriptors at the 12-month service. What does it say?',
     options: [
-      'Servicing organisation always verifies.',
-      'Customer always verifies.',
-      'Verification of correct text descriptors on an addressable system is NOT specifically recommended as a routine service action. The premises management is responsible for informing the servicing organisation of any changes (room re-purposing, partition changes). It is prudent to confirm text descriptors periodically (e.g. every 5 years), but not at every 6-monthly service. This is a 2025 clarification.',
-      'Text descriptors are not used.',
+      'The servicing organisation must verify every descriptor at each routine service.',
+      'The customer must verify every descriptor at each routine service visit.',
+      'Routine verification is not recommended; premises management reports any changes.',
+      'Text descriptors are not used on addressable systems, so none is needed.',
     ],
     correctIndex: 2,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the CIE display when a fire is detected on a CONVENTIONAL system?',
     options: [
-      'The specific detector that operated.',
-      'The ZONE the operated device belongs to. Each circuit is one zone; all devices on the circuit are reported as a single zone indication. To identify which device operated, a person must walk the zone and look for the detector with its red operated-LED illuminated.',
-      'A loop number only.',
-      'A device address.',
+      'The specific detector that operated, named individually on the display.',
+      'The loop number the operated device sits on, shown on its own.',
+      'The zone of the operated device; a person walks it to find the lit LED.',
+      'The unique digital address programmed into the operated device.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Zone-level resolution is the conventional architecture. The 60 m search distance rule in BS 5839-1 directly relates to this — a person walks the zone to find the operated device, and 60 m bounds the time that takes. Addressable systems break this constraint by giving the CIE the specific device address.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does the CIE display when a fire is detected on an ADDRESSABLE system?',
     options: [
-      'A zone only.',
-      'The specific device that operated, by its address and (typically) a text descriptor — e.g. "Detector 1.014 — Kitchen, ground floor, fire". Plus the zone it belongs to. The CIE provides full identification: device address, text location, zone, time of operation. The 60 m search distance rule is relaxed because the device location is unambiguous.',
-      'Just the loop number.',
-      'A flashing LED.',
+      'The specific device by address and text descriptor, plus its zone and the time.',
+      'The affected zone only, with no individual device named on the display.',
+      'Just the loop number the operated device sits on, without its address.',
+      'A flashing LED at the panel, with no further detail of the device.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Device-level resolution is the addressable architecture. The CIE has a programmed text descriptor for each device address. When a device operates, the CIE displays the address and the text. The fire-fighter sees "Smoke detector 1.014 — Kitchen, ground floor" rather than "Zone 1 fire", and goes straight to the location.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'Why is Class A loop wiring preferred over Class B radial wiring for life-safety addressable systems?',
     options: [
-      'Cheaper.',
-      'Class A is fault-tolerant: a single open-circuit on the loop is reported as a fault but the system continues to detect fire because every device remains reachable from at least one end of the break. Class B (radial) loses every device beyond the break. For life-safety detection, the higher fault-tolerance of Class A justifies the additional cabling.',
-      'Faster response.',
-      'Lower current.',
+      'Class A cabling is cheaper to install than a Class B radial spur.',
+      'Class A gives a measurably faster detector response time than Class B.',
+      'Class A draws a lower standing current from the panel than Class B.',
+      'Class A is fault-tolerant: a single break still leaves every device reachable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fault tolerance is the architectural argument for Class A. The cable cost is higher (the cable runs as a ring, returning to the CIE) but the safety case is stronger. BS 5839-1 design for life safety leans Class A; some non-life-safety property protection schemes may be Class B.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'In a hybrid system, what is the typical architecture?',
     options: [
-      'All conventional.',
-      'All addressable.',
-      'A hybrid system has BOTH conventional zones (radial circuits, zone-level resolution) and addressable loops (device-level resolution) connected to the same CIE. Common in retrofit scenarios where parts of an existing conventional system are extended with addressable loops, or where mixed device populations exist (e.g. addressable smoke detectors with conventional sounder circuits). The CIE supports both.',
-      'Two CIEs.',
+      'Every circuit is conventional radial wiring, with no addressable loops.',
+      'Both conventional zones and addressable loops driven from the same CIE.',
+      'Every circuit is an addressable loop, with no conventional radials.',
+      'Two separate CIEs, one for each architecture, working side by side.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Hybrid is a practical compromise. New extensions tend to be addressable; existing infrastructure may remain conventional to avoid wholesale replacement. The CIE can drive both architectures and present a unified zone map. Designers should specify the architecture per area in the design package so service organisations know what to expect.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'A site has a conventional system installed in 2010. The owner wants to add coverage to a new extension. What design considerations apply?',
     options: [
-      'Always replace the whole system.',
-      'Options: (1) extend the existing conventional system if architecturally compatible (new zones added as new radial circuits to the CIE, subject to CIE spare-zone capacity); (2) add an addressable loop as a hybrid solution if the CIE supports it; (3) replace the CIE if neither of the above is feasible. Whichever route is chosen, a new design and a system extension certificate (clause 47) are required.',
-      'Always go addressable.',
-      'No design changes.',
+      'Always replace the whole system, regardless of spare capacity.',
+      'Always switch the entire site over to an addressable architecture.',
+      'Extend the existing system or add a hybrid loop, and issue an extension certificate.',
+      'Make no design changes at all; simply wire in the new devices.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 2025 standard recognises that extensions to existing systems are common and sometimes pragmatic. The new works must comply with the current standard, but the existing system does not need to be retrospectively brought up to current standard. A system extension certificate documents the change; the zone plan is updated.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'What does BS EN 54-13 (system compatibility) achieve, and why does it matter for addressable systems?',
     options: [
-      'It defines cable colours.',
-      'BS EN 54-13 governs system component compatibility — the standard against which manufacturers test that detectors, CIE, sounders, and other components from a particular range work correctly together as an integrated system. For addressable systems where each device communicates a digital protocol with the CIE, system-level certification matters: a detector certified to BS EN 54-7 alone does not guarantee it works on a particular CIE. The system EN 54-13 certification confirms the assembly works.',
-      'It sets battery life.',
-      'It defines fonts on the CIE.',
+      'It certifies that detectors, CIE and sounders from a range work together as a system.',
+      'It defines the colour coding to be used on fire-alarm cabling throughout.',
+      'It sets the minimum standby battery life required for the control panel.',
+      'It specifies the typefaces and fonts shown on the CIE display screen.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BS EN 54 is a multi-part product standard; each part covers a specific component (smoke detectors EN 54-7, heat detectors EN 54-5, CIE EN 54-2, etc.). EN 54-13 is the system-level part that certifies a particular vendor combination as a compatible system. Mixing EN 54-7 detectors from one vendor onto another vendor's CIE protocol typically breaks the certification — and may not work technically.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'How do short-circuit isolators (SCIs) differ between Class A loop and Class B spur?',
     options: [
-      'They are the same.',
-      'Class A loop: SCIs at each side of a loop section bound the section so a single short-circuit isolates only that section — the rest of the loop continues. SCIs are typically built into addressable detectors. On a Class B spur, there is no equivalent — a short on the spur takes the whole spur down. This is one reason BS 5839-1 designs for life safety prefer Class A: SCI containment of single faults is part of the architecture.',
-      'Class B has more SCIs.',
-      'Class A has none.',
+      'They function in exactly the same way on both topologies.',
+      'A Class B spur always carries more SCIs than a Class A loop.',
+      'Class A loops use no short-circuit isolators at all on the ring.',
+      'On a Class A loop SCIs isolate one section; a Class B spur has no equivalent.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Class A loop topology + SCIs delivers the BS 5839-1 architectural principle that a single fault loses no more than one zone of detection. Class B radial topology cannot achieve this without subdividing into separate radial circuits per zone (i.e. effectively reverting to conventional architecture).',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'Detector text descriptors on an addressable system: where are they programmed and who is responsible for keeping them accurate over time?',
     options: [
-      'Detector hardware; manufacturer.',
-      'Programmed in the CIE configuration (entered during commissioning, e.g. "Detector 1.014 — Kitchen, ground floor"). The commissioning engineer enters them; the responsible person / building management is then responsible for telling the servicing organisation about changes (room re-purposing, partition moves) so descriptors stay accurate. Periodic verification (e.g. every 5 years) is prudent — BS 5839-1:2025 maintenance clause clarifies this is NOT a routine 6-monthly task.',
-      'Cloud server; the user.',
-      'Each detector; the installer.',
+      'In the detector hardware; the manufacturer keeps them accurate over time.',
+      'In the CIE at commissioning; management reports changes to keep them accurate.',
+      'On a remote cloud server; the end user keeps them accurate over time.',
+      'In each detector’s onboard memory; the installer keeps them accurate.',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which of the following is a typical advantage of addressable over conventional?',
     options: [
-      'Cheaper cable.',
-      'Faster fire detection.',
-      'Device-level identification at the CIE (operating-detector address with text descriptor), reducing fire-finding time. Plus single loop replacing many radial circuits (less cable). Plus richer fault diagnostics (the CIE knows which device has a fault). Plus easier reconfiguration (text descriptor changes in software, not rewiring). Trade-off is higher device unit cost and more complex commissioning.',
-      'Simpler installation.',
+      'It uses noticeably cheaper cable than a conventional installation.',
+      'It detects fire physically faster than a conventional system does.',
+      'Device-level identification, richer diagnostics and software reconfiguration.',
+      'It is simpler and quicker to install than a conventional system.',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'In a sleeping premises hotel, the design team is choosing between conventional and addressable. What is the strong argument for addressable?',
     options: [
-      'Cost.',
-      'Identification of the specific operated device at the CIE — critical at 02:00 when staff respond to an alarm. Addressable: "Smoke detector 2.14 — Room 207" goes straight to the room. Conventional: "Zone 2 fire" requires a 60 m walk through corridors at night. In sleeping premises (where occupants are at higher risk and response time matters most), the addressable resolution materially improves response and is the standard expectation.',
-      'Battery life.',
-      'Easier to install.',
+      'Device-level identification sends staff straight to the room, with no corridor search.',
+      'Lower overall installation cost than an equivalent conventional system.',
+      'Longer standby battery life than an equivalent conventional system.',
+      'It is easier and quicker to install than a conventional system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sleeping premises are the premier addressable use case. The fire is most likely at night; occupants are asleep; staff may be limited in number; response time is everything. Device-level identification at the CIE removes the search step. Conventional systems are still permitted in BS 5839-1 but the design conversation in any sleeping premises strongly favours addressable.',
   },

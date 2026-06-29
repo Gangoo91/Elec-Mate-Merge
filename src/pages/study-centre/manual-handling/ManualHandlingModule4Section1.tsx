@@ -50,12 +50,12 @@ const quickCheckQuestions = [
     question:
       'Why is the cumulative weight of tool bags a significant manual handling concern for electricians?',
     options: [
-      'Because tool bags are always bright yellow and attract attention',
       'Because carrying heavy tool bags repeatedly throughout the day causes cumulative spinal loading and fatigue',
+      'Because tool bags are always bright yellow and attract attention',
       'Because tool bags are waterproof and therefore slippery',
       'Because regulations ban all tool bags over 5 kg',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "An electrician's tool bag typically weighs 10-20 kg. Carrying this repeatedly up stairs, across sites, and in and out of vehicles throughout the day creates cumulative loading on the spine and shoulders. Over time this leads to chronic musculoskeletal problems. The control measures include using wheeled tool cases, splitting loads into smaller bags, and only carrying tools needed for the immediate task.",
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     question:
       'When using drum jacks to elevate a cable drum for paying out cable, what must you check first?',
     options: [
-      'That the drum is the correct colour for the circuit',
       'That the drum jacks are rated for the weight of the drum and that the ground is firm and level',
+      'That the drum is the correct colour for the circuit',
       'That the cable has been tested for continuity',
       "That the drum has a label showing the manufacturer's logo",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Drum jacks must be rated for the weight of the loaded drum. If the jacks are underrated, they can collapse under load, causing the drum to fall. The ground must be firm and level so the jacks do not sink or tilt. Always check the safe working load (SWL) marked on the jack and compare it with the drum weight before use.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'Why should you never lift a cable drum by gripping the cable itself?',
     options: [
       'Because the cable is always too short to provide a good grip',
-      'Because the cable can unravel, slip, or snap under the load, and gripping cable creates a cutting/crush hazard to the hands',
       'Because cable is an electrical conductor and may be live',
       'Because regulations require all cables to be lifted by forklift',
+      'Because the cable can unravel, slip, or snap under the load, and gripping cable creates a cutting/crush hazard to the hands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Gripping cable to lift a drum is dangerous for multiple reasons: the cable can unravel or slip through the hands under load, the weight of the drum can cause the cable to cut into the skin or crush fingers, and the sudden release of a slipped grip causes the drum to fall unpredictably. Always use the drum's spindle hole with a bar, or use drum jacks and stands.",
   },
@@ -140,11 +140,11 @@ const quizQuestions = [
     question: 'When pulling cable through conduit, what is the purpose of cable lubricant?',
     options: [
       'To make the cable look shiny and professional',
-      'To reduce the pulling force required, thereby reducing manual handling risk',
       'To waterproof the cable after installation',
+      'To reduce the pulling force required, thereby reducing manual handling risk',
       'To colour-code different circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cable lubricant (pulling compound) reduces friction between the cable sheath and the conduit wall. This directly reduces the pulling force required, which in turn reduces the manual handling risk to the person pulling the cable. On long runs or runs with multiple bends, the difference can be substantial — from an unsafe manual pull to a manageable one.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main risk when carrying cable tray lengths through doorways?',
     options: [
-      'The tray may be the wrong size for the installation',
       'The long, rigid load can strike door frames, walls, or other workers during turning manoeuvres',
+      'The tray may be the wrong size for the installation',
       'Doorways are always locked on construction sites',
       'Cable tray is magnetic and attracts metal door handles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cable tray is typically supplied in 3-metre lengths. Manoeuvring a 3-metre rigid load through a standard 800 mm doorway requires careful planning and coordination. The leading end can strike the door frame or a person on the other side. The trailing end swings outward during the turn, creating a sweep hazard. Two-person carrying with clear communication and a planned stop before each doorway is essential.',
   },
@@ -175,11 +175,11 @@ const quizQuestions = [
       'What mechanical aid is specifically designed for paying cable off a drum in a controlled manner?',
     options: [
       'A spirit level',
-      'A cable drum jack and stand (or a cable drum rotator)',
       'A pipe bender',
       'An SDS drill',
+      'A cable drum jack and stand (or a cable drum rotator)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cable drum jacks and stands (also called drum rotators or drum dispensers) are specifically designed to lift the drum off the ground on a spindle bar, allowing it to rotate freely. This lets cable be paid out smoothly and in a controlled manner without the drum rolling away. The person pulling the cable can maintain a steady, low-force pull rather than fighting a drum that jams and lurches.',
   },

@@ -52,12 +52,12 @@ const quizQuestions = [
     id: 1,
     question: 'Who must sign off ESOS compliance reports?',
     options: [
-      "The company's CEO",
       'A registered ESOS Lead Assessor',
+      "The company's CEO",
       'Any qualified electrician',
-      'The Environment Agency',
+      'The Environment Agency directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ESOS requires sign-off by a registered Lead Assessor from an approved professional register such as CIBSE, IEMA, or the Energy Institute.',
   },
@@ -65,12 +65,12 @@ const quizQuestions = [
     id: 2,
     question: 'What must be included in SECR methodology disclosure?',
     options: [
-      'Only total kWh figures',
-      'Description of calculation methods and data sources',
-      'Names of all employees',
+      'Only the total kWh figures',
+      'The names of all employees',
       'Financial statements only',
+      'A description of calculation methods and data sources',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SECR requires disclosure of methodology used to calculate energy and emissions, including data sources, emission factors applied, and any estimation methods used for gaps in data.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What percentage of energy consumption must an ESOS audit cover?',
-    options: ['50%', '75%', '90%', '100%'],
-    correctAnswer: 2,
+    options: ['50%', '75%', '100%', '90%'],
+    correctAnswer: 3,
     explanation:
       "ESOS audits must cover at least 90% of the organisation's total energy consumption across buildings, transport, and industrial processes.",
   },
@@ -125,20 +125,20 @@ const quizQuestions = [
     id: 7,
     question: 'What document demonstrates ISO 50001 continuous improvement?',
     options: [
-      'Employee handbook',
       'Management review meeting minutes',
+      'The employee handbook',
       'Marketing brochures',
       'Reception sign-in sheets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ISO 50001 requires documented management reviews that demonstrate top management commitment and systematic approach to continuous improvement of energy performance.',
   },
   {
     id: 8,
     question: 'How long should electrical installation certificates be retained?',
-    options: ['1 year', '5 years', 'Life of the installation', 'Until the next inspection'],
-    correctAnswer: 2,
+    options: ['1 year', '5 years', 'Until the next inspection', 'Life of the installation'],
+    correctAnswer: 3,
     explanation:
       'Electrical installation certificates (EICs) should be retained for the life of the installation. They provide evidence of compliance and are needed for any future modifications or investigations.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     id: 10,
     question: 'What should be documented when implementing energy efficiency measures?',
     options: [
-      'Only the final energy bill',
       'Before/after readings, installation dates, equipment specs, and commissioning records',
+      'Only the final energy bill',
       'Just the product brochure',
-      'Only measures over £10,000',
+      'Only measures costing over £10,000',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Complete documentation includes baseline readings, installation records, equipment specifications, commissioning records, and post-installation verification to demonstrate actual savings achieved.',
   },

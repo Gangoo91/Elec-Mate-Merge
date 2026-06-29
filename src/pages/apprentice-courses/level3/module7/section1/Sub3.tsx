@@ -39,10 +39,10 @@ const checks = [
     id: 'mod7-s1-sub3-purpose',
     question: "What's the ECS card actually for?",
     options: [
-      "Carrying out any building, civil engineering or engineering construction work; including alteration, renovation, demolition, conversion, repair, maintenance, decoration, removal of structures, installation, removal, maintenance of mechanical / electrical / similar services.",
-      "(a) Every fuse and single-pole control / protective device is in the line conductor only; (b) for circuits with an earthed neutral, ES and BC lampholders have the outer or screwed contacts connected to neutral (except E14/E27 to BS EN 60238); (c) wiring is correctly connected throughout.",
+      "It is your formal qualification certificate — the document that proves you have passed the AM2 and the C&G 2365. The card itself is the awarding-body certificate, and without it you cannot prove to an employer that you hold the underlying electrical qualifications.",
+      "It is a tax document issued by HMRC that records your CIS status and confirms tax is deducted at source. Main contractors check the card to confirm your payment status before paying invoices, and without it you cannot be paid for sub-contract work on a commercial site.",
       "Three things: (1) proves your identity on site, (2) records your competence — JIB grade, qualifications, H&S assessment, specialist endorsements, (3) is required for entry on most CDM-regulated sites because main contractors use ECS as their proof-of-competence check. Without an ECS card you're typically refused entry to commercial and infrastructure sites.",
-      "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
+      "It is your trade union membership card, confirming you are a paid-up member of Unite and entitled to representation. Main contractors require it because JIB-graded sites are union-only, and without it you cannot be employed on a collectively-bargained contract.",
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const checks = [
       "What's the ECS Health and Safety Assessment and how often do you need to take it?",
     options: [
       "A 50-question multiple-choice computer-based test covering electrical-trade health and safety (HASAWA, CDM, working at height, PPE, electrical safety, manual handling). The pass mark is 80%. Valid for 3 years from pass date — must be re-taken before expiry to keep your ECS card current. Without a valid H&S assessment your ECS card lapses and you'll be refused site entry.",
-      "No. The right to join (or not join) a trade union is protected by the Trade Union and Labour Relations (Consolidation) Act 1992. Employers cannot dismiss, demote, refuse to hire, or treat less favourably any worker because they're a trade union member or because they take part in lawful trade union activities. Anti-union discrimination is unlawful.",
-      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\\\\\\\\\\\\\"no documentation available\\\\\\\\\\\\\\\" as a limitation against affected items on the schedule.",
-      "On-site assessment of the actual conditions found on arrival, by the operative(s) doing the work, in real time. Catches what the static RAMS couldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t have known. MHSWR Reg 3 expects current assessment; the dynamic version is the closing-the-gap mechanism.",
+      "A practical on-site assessment where an ECS assessor watches you carry out a live job and signs off your safe working. It is taken once at the start of your career and never repeated, because it permanently records your practical competence on the ECS register.",
+      "A written portfolio of risk assessments and method statements you submit to JIB, marked by an examiner against the HASAWA framework. It is valid for the five-year life of the ECS card and is renewed at the same time as the card itself, in a single combined process.",
+      "An annual classroom course run by your employer covering site safety, after which the employer issues an internal certificate. There is no central test or pass mark; the requirement is simply that the employer keeps a record of attendance for HSE inspection.",
     ],
     correctIndex: 0,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     question:
       "What are 'endorsements' on the ECS card and why do they matter?",
     options: [
-      "Standard route: existing Electrician JIB grade + AM2S (Solar PV variant of AM2) OR an MCS-recognised PV installer course (typically a 5-day course covering PV system design, installation, commissioning and the MCS install standard) + employer firm registers with MCS for PV. The individual electrician holds the PV competence; the firm holds the MCS registration. Some installers also pursue the BPEC Solar PV course.",
+      "Endorsements are temporary site passes issued by a main contractor that allow you onto one specific project, recorded on the back of your ECS card. They expire when the project ends and have to be re-issued for each new site you work on, separate from your underlying competence.",
       "Endorsements are formal recognitions of additional specialist competence printed on your ECS card — Solar PV (after AM2S), EV Charging (after the EV competency course), Hazardous Areas (after CompEx), Fire Detection (after BAFE training), and others. They prove to main contractors and clients that you hold the specialist competence required for that work — increasingly necessary as the trade specialises.",
-      "Same as PV — durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. Wind connections fall under the same ENA G98 (≤16 A per phase) or G99 (&gt;16 A per phase) framework as PV. The DNO needs to know the installation exists; the maintainer who turns up to a fault call needs to know there's a parallel generator.",
-      "3 V — pass. Calculation: Ra x I delta n = 100 x 0.030 = 3 V. The acceptance criterion (Reg 411.5.3(b)) is Ra x I delta n less than or equal to 50 V (the conventional touch-voltage limit). 3 V is well within 50 V — the RCD will operate well before the touch-voltage approaches dangerous level. For the same Ra with a 100 mA RCD: 100 x 0.100 = 10 V — still pass. With a 300 mA RCD: 100 x 0.300 = 30 V — still pass but tighter. The Ra x I delta n calculation is the TT-specific acceptance test.",
+      "Endorsements are written references from previous employers, added to the ECS register, that vouch for the quality of your work. Main contractors read them when deciding whether to engage you, and a card with more endorsements signals a more experienced and reliable electrician.",
+      "Endorsements are penalty markers placed on a card by JIB when an electrician has a safety incident or a disciplinary finding against them, similar to points on a driving licence. A card carrying endorsements may be refused at site entry until the marker is cleared.",
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "Who runs the ECS scheme?",
     options: [
-      "People, environment, services, fabric. People — pedestrians, customers, children, other trades. Environment — weather, dust, asbestos suspicion in pre-2000 homes, confined spaces, working at height. Services — concealed live cables, gas pipes, water pipes, structural steel that needs bonding. Fabric — brittle masonry, joist orientation, plaster condition.",
+      "The HSE (Health and Safety Executive) operates the Electrotechnical Certification Scheme as a Government safety body. ECS is a statutory licensing scheme run directly by the regulator, and the HSE processes card applications, holds the register and sets the H&S assessment standard.",
       "JIB (the Joint Industry Board for the Electrical Contracting Industry) operates the Electrotechnical Certification Scheme on behalf of the industry. ECS is the electrical trade's competence card scheme; CSCS is the broader construction industry's equivalent. JIB processes ECS card applications, holds the public register, sets the H&S assessment standard, and renews cards.",
-      "Main protective bonding equalises potential between extraneous-conductive-parts (gas, water, structure) and the MET. The earthing conductor connects the MET back to the source earth (PEN, sheath, or local electrode) so fault current can actually return to the source — without it, no current flows and no disconnection happens.",
-      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
+      "NICEIC operates the Electrotechnical Certification Scheme as part of its competent-person scheme. ECS cards are issued automatically to electricians whose firms are NICEIC-registered, and NICEIC holds the register, sets the H&S standard and renews the cards through its assessment process.",
+      "The IET (Institution of Engineering and Technology) operates the Electrotechnical Certification Scheme as the publisher of BS 7671. Because the IET writes the Wiring Regulations, it runs the competence card scheme, processes applications and holds the public register of card-holders.",
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: "What information appears on the front of an ECS card?",
     options: [
-      "Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences",
-      "Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.",
+      "Your photo, National Insurance number, home address, date of birth and bank sort code, so payroll can pay you directly from the card details. The card doubles as a payroll record, which is why it is scanned at the gate on commercial sites.",
+      "Your photo, your employer's company name and registration number, the project address and the contract value, so the main contractor can verify which firm you belong to. The card is tied to a specific employer and is re-issued whenever you change firms.",
       "Your photo, full name, formal JIB grade (Apprentice / Adult Trainee / Electrician / Approved / Technician), card expiry date, qualifications listed, specialist endorsements (if any), and a unique card number for register lookup. Card colour and design indicate the grade tier (Gold for qualified Electrician/Approved, etc.).",
-      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
+      "Your photo, a full list of every job you have worked on, the dates you attended each one, and a running tally of hours worked, so a main contractor can see your complete work history at the gate. The card builds up a permanent log over your career.",
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: "When does an ECS card expire?",
     options: [
-      "Calculated expected R1+R2 for 50 m of 2.5 mm² ring (cores + CPC): roughly 2 × 50 × 7.41 mΩ/m = 0.74 Ω end-to-end ÷ 2 (ring divides) = 0.37 Ω. Plus lead null. So 0.55 Ω is HIGHER than calculated expected — suggests added resistance somewhere on the ring (HRJ at a socket, partial connection at the CU). It's still well within Table 41.3 limits but the trend is worth investigating. The L3 apprentice records the value AND notes the deviation from expected.",
-      "The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — requiring an EICR at intervals not exceeding five years (or sooner if the report states), a copy to the tenant within 28 days, a copy to a new tenant before occupation, and a copy to the local housing authority on request within 7 days.",
-      "The dead test proves the wiring is correct between conductor identification at the CU and conductor identification at the accessory. The live test (using an approved voltage indicator at the accessory after first energising) confirms that the assumed L conductor at the CU actually carries the supply line — the dead test cannot detect a labelling error or a reversed connection at the meter tails.",
+      "It does not expire — once issued, an ECS card is valid for life and never needs renewing. Only the H&S assessment behind it has to be kept current; the physical card itself is a permanent record of your grade and qualifications.",
+      "Ten years from issue, matching the typical re-issue cycle of a UK passport. Renewal at the ten-year point requires a fresh photo and a current H&S assessment, but no qualification evidence because your grade is already on the register.",
+      "One year from issue. The card must be renewed annually, in line with the annual JIB pay round, because pay grades change each year. Renewal requires only proof of continued employment, processed automatically by your employer.",
       "Five years from issue. Renewal requires a current ECS Health & Safety Assessment pass (which itself is only valid for 3 years) plus current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
     ],
     correctAnswer: 3,
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: "What's a 'Solar PV' endorsement on an ECS card?",
     options: [
       "A formal recognition that you hold the specialist solar PV competence — typically gained by passing AM2S (the Solar PV variant of AM2) or by completing an MCS-approved PV installer course alongside time-served PV installation experience. The endorsement allows you to work on PV installations under MCS-registered firms.",
-      "The responsible person must provide employees with comprehensible and relevant information on the risks identified by the fire risk assessment, the fire preventive and protective measures, the identity of competent persons, and the emergency procedures",
-      "Default to 100 percent (no diversity) for a single domestic EV charger because charging sessions tend to coincide with peak domestic demand (evenings); use load-managed (OZEV-compliant) charger or DSR-compliant control to claw back diversity if needed.",
-      "Meet each person individually using the SBI model to understand their perspective, then facilitate a joint discussion where both parties share their concerns, identify underlying interests (skills development, recognition, fairness), and collaboratively agree a fair rotation or allocation that addresses both people's needs",
+      "A note on the card confirming you are insured to work at height on domestic roofs, gained by completing a PASMA or IPAF course. It is required for solar work because installs are on roofs, but it covers the access method rather than the electrical PV competence itself.",
+      "A marker showing you have completed the DNO's G98 / G99 application training and may submit grid-connection applications for PV systems. It is an administrative endorsement about paperwork, separate from the practical competence to design and install the array.",
+      "A confirmation that your employer is MCS-registered for solar PV, printed on every employee's card. The endorsement belongs to the firm rather than the individual, so it appears identically on the cards of everyone the firm employs, qualified or not.",
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "What's CompEx and what endorsement does it earn?",
     options: [
-      "An EICR if the existing certificate is more than 5 years old at the date of the new tenancy starting. If the existing certificate is less than 5 years old, it carries forward to the new tenancy. Some local authorities or scheme providers recommend a refreshed EICR at any change of tenancy regardless of certificate age, but the statutory trigger is the 5-year maximum interval (or change of tenancy, whichever is sooner).",
+      "CompEx (Competency in Complex Examinations) is the JIB practical re-assessment taken every five years to keep the AM2 current. Passing it confirms your core installation competence remains up to standard and earns a 're-validated' marker on your ECS card; it is unrelated to any one specialism.",
       "CompEx (Competency in Explosive Atmospheres) is the standard UK competence scheme for electrical work in hazardous areas — petrochemical, offshore, fuel storage, paint shops, anywhere with explosive atmospheres. The CompEx Ex01-04 modules cover gas-protected installations; Ex05-06 cover dust-protected. Holding CompEx earns you the Hazardous Areas endorsement on your ECS card and unlocks high-day-rate work in oil and gas.",
-      "The line conductor is not easily accessible at the CU end (e.g. busbar trunking systems), the circuit is part of a complex distribution network where you want to isolate the CPC verification, or the wander lead is more practical on a large commercial site (one person at the MET, radio contact with the tester at the accessory).",
-      "SELV / PELV barriers, basic protection (insulation, barriers, enclosures, obstacles, placing out of reach), fault protection (ADS via overcurrent device or RCD, double or reinforced insulation, electrical separation, earth-free local equipotential bonding), additional protection (RCD ≤ 30 mA, supplementary equipotential bonding).",
+      "CompEx (Competency in EV and PV Examinations) is the combined renewables scheme covering EV charging and solar PV in one qualification. Holding it earns you a combined Renewables endorsement on your ECS card and lets you work on both MCS EV and MCS PV installs under a single registration.",
+      "CompEx (Competency in Project Execution) is the management qualification for electricians moving into Project Engineer and Contracts Manager roles. It covers programme, procurement and QA, and earns a Supervisory endorsement on the ECS card needed before a firm will appoint you to run a project.",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: "Why do main contractors require ECS cards for site entry?",
     options: [
-      "Capability to handle the 8/20 microsecond impulse waveform — induced surges from nearby strikes, switching transients on the supply, transients propagated from the network. Standard at the installation origin / main distribution board on most installations without LPS, characterised by an In and Imax rating in the 5-40 kA range.",
-      "(1) Eliminate — can the chase be avoided entirely (surface mount, alternative route)? (2) Substitute — can a less dust-producing tool be used (resin-bonded chase saw with extraction vs hammer-and-bolster)? (3) Engineer — on-tool extraction connected to an M-class vacuum, water suppression. (4) Administrative — limit duration, rotate operatives, restrict access. (5) PPE — FFP3 mask as the LAST line, not the first. RPE alone is not COSHH-compliant for routine silica work.",
+      "To collect a commission from JIB for every card-holder they admit to site. Main contractors are paid a small fee by the scheme for checking cards at the gate, which is why ECS card checks have become near-universal on commercial projects.",
+      "Because their insurance policy is void unless every worker on site holds a current ECS card. Insurers mandate the card as a condition of the policy, so a main contractor who admitted a non-card-holder would lose all cover for the whole site.",
       "To discharge their CDM 2015 duty to ensure the workers on site are competent for the work. The ECS card is the industry-recognised proof of competence for electrical workers; main contractors use it to evidence that they checked competence before allowing entry. Failure to check competence (with no card or other evidence) leaves the main contractor exposed under CDM.",
-      "Account-for personnel from the firm; ensure customers / visitors in your care have evacuated; liaise with the building's responsible person and fire-marshal at the muster point; provide accurate information to fire service if asked; prevent re-entry; preserve the scene afterwards if relevant to your firm's work.",
+      "Because the JIB Working Rule Agreement makes ECS card checks a legal requirement on every construction site in the UK. The card is a statutory site-entry document, and a main contractor who failed to check it would be committing a criminal offence under the WRA.",
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: "How much does an ECS card cost (rough 2024 figures)?",
     options: [
-      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
-      "Higher than typical UK domestic. PSCC may be 5-15 kA depending on the supply transformer size and the cable run from substation to consumer. PEFC typically 50-80 percent of PSCC. Protective devices need higher Icn — typically 10 kA or 25 kA for the main switchgear and downstream MCBs / RCBOs at the distribution boards. Direct measurement at the origin is required (the BS EN 61439-3 16 kA exemption applies only to dwellings). Document on the EIC against the device Icn ratings.",
-      "(1) Supply cable — full length for cuts, abrasion, kinks, exposed conductor; (2) Plug — body intact, pins straight, cord-grip in place; (3) Tool casing — cracks, missing screws, contamination ingress; (4) Guard or shield — present, correctly fitted, not damaged; (5) Switch — operates positively, no stuck contacts, anti-restart works after release; (6) PAT label — current, in date, legible. Plus check the tool is the right one for the job.",
+      "First-issue ECS card typically £300-400, with three-yearly renewal at a similar level. The high cost reflects the assessor's on-site visit included in the application. The H&S assessment is bundled into this fee at no extra cost. Employers rarely pay because the cost is treated as a personal qualification.",
+      "The ECS card is free at first issue and on renewal — JIB funds it from main-contractor membership fees, so the only cost an electrician ever meets is the specialist course fees behind any endorsements. There is no charge for the card itself or the H&S assessment.",
+      "First-issue ECS card typically £150-200, with an annual renewal fee of the same amount because the card is renewed yearly. The H&S assessment is a separate £100 charge each time. Specialist endorsements are free once the underlying course is passed.",
       "First-issue ECS card typically £36-40 (varies by grade and route). Three-yearly renewal similar cost. ECS H&S Assessment fee around £20-30 at most testing centres. Specialist endorsements have separate course costs (CompEx 5-day course around £1,000-1,500; AM2S around £400-600 plus prep). Employers often pay the card and H&S fees for employed staff; self-employed cover their own.",
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: "What if your ECS card is lost or stolen on site?",
     options: [
       "Report to the JIB ECS team immediately and request a replacement (small admin fee, typically £15-20). Get a temporary letter of confirmation from JIB or your employer to maintain site access while the new card is in production (typically 5-10 working days). Most sites will accept an ECS register printout temporarily; some won't, in which case you can't work until the new card arrives.",
-      "A mask that doesn\\\\\\\\'t seal properly to the face provides much less protection than its rated assigned protection factor. Face-fit testing (qualitative or quantitative) confirms the fit. HSE INDG479 is the guide. Fit-test required at first issue and on changes (weight, dental work, beard growth).",
-      "The customer makes the COMMERCIAL decision (cost / convenience trade-off). The firm makes the SAFETY / COMPLIANCE decision (which options satisfy BS 7671 + current standards). Apprentice presents options with trade-offs in plain English; customer chooses; firm executes the chosen option within the safety constraint. Customer cannot choose 'below BS 7671' — that's the firm's professional duty floor. The boundary: customer chooses between compliant options; firm refuses non-compliant requests.",
-      "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
+      "Re-sit the full ECS H&S assessment and re-submit your qualification certificates, because a lost card voids your registration entirely and the scheme treats it as a fresh first-issue application. There is no replacement route; the card has to be earned again from scratch.",
+      "Nothing needs doing — your ECS record lives on the public register, so a lost physical card has no effect on your site access. Site security simply looks you up by name on the register, and the plastic card is only a convenience, never a requirement.",
+      "Report it to the HSE and the police, who issue an emergency interim permit valid for 28 days. The HSE administers card replacements because ECS is a statutory scheme, and you cannot work on any site until their interim permit is in hand.",
     ],
     correctAnswer: 0,
     explanation:

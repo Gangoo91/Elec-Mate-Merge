@@ -3,16 +3,16 @@ import { QuizQuestion } from '@/types/quiz';
 export const evModule1Section1Questions: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Which type of current is used in rapid charging?',
+    question: 'Which type of current is delivered to the battery during rapid charging?',
     options: [
-      'Variable',
-      'DC',
-      'AC',
-      'Mixed',
+      'Single-phase AC stepped down by the charge point',
+      'DC supplied directly to the battery',
+      'Three-phase AC converted by the onboard charger',
+      'Pulsed AC regulated by the vehicle',
     ],
     correctAnswer: 1,
     explanation:
-      "Rapid charging (Level 3) uses DC (direct current) which bypasses the vehicle's onboard charger and delivers power directly to the battery for much faster charging speeds.",
+      "Rapid charging uses DC (direct current), which bypasses the vehicle's onboard AC-to-DC charger and feeds the battery directly, allowing much higher power and faster charging.",
   },
   {
     id: 2,
@@ -50,12 +50,12 @@ export const evModule1Section1Questions: QuizQuestion[] = [
   },
   {
     id: 5,
-    question: 'Give one reason why charging slows near full capacity.',
+    question: 'Why does charging speed typically slow as a battery nears full capacity?',
     options: [
-      'Monitoring, measuring, analysing, and evaluating energy performance',
-      'Battery management prevents overcharging and overheating',
-      'VSDs can generate harmonic distortion and electrical noise',
-      'Export limitation and grid protection settings verification',
+      'The onboard charger switches from DC to AC to protect the cells',
+      'The battery management system tapers current to prevent overcharging and overheating',
+      'The supply voltage drops automatically as the battery fills',
+      'The charging cable resistance increases with temperature, limiting current',
     ],
     correctAnswer: 1,
     explanation:
@@ -76,7 +76,7 @@ export const evModule1Section1Questions: QuizQuestion[] = [
   },
   {
     id: 7,
-    question: 'What does PME stand in electrical earthing?',
+    question: 'What does PME stand for in electrical earthing?',
     options: [
       'Protected Multiple Earthing',
       'Primary Mains Earthing',
@@ -85,16 +85,16 @@ export const evModule1Section1Questions: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'PME stands for Protective Multiple Earthing, a method of earthing the neutral conductor at multiple points throughout the distribution network.',
+      'PME stands for Protective Multiple Earthing, a TN-C-S arrangement where the combined neutral and earth (PEN) conductor is earthed at multiple points along the distribution network. Section 722 places specific requirements on EV installations supplied from a PME earthing facility.',
   },
   {
     id: 8,
-    question: 'Name one environmental factor that can slow charging.',
+    question: 'Which environmental factor most commonly slows EV charging?',
     options: [
       'Low or high ambient temperature',
-      'BS 7671 Wiring Regulations',
-      'HCFCs (hydrochlorofluorocarbons)',
-      'Two parallel lines with S2',
+      'High relative humidity around the charge point',
+      'Strong wind exposure at the charging location',
+      'Atmospheric pressure changes at altitude',
     ],
     correctAnswer: 0,
     explanation:

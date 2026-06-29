@@ -43,10 +43,10 @@ const checks = [
     question:
       'A typical 4-bedroom UK home is being upgraded to 100 A TN-C-S supply. The existing plus planned loads include: 32 A radial sockets (×2), 6 A lighting (×2), 32 A oven, 50 A shower, 32 A EV charger, 16 A heat pump, 16 A battery charge/discharge. Connected total at full demand ≈ 196 A. With after-diversity demand applied, what is the maximum demand the DNO supply must support?',
     options: [
-      'Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs',
-      'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
-      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
-      'About 70–80 A after applying typical domestic diversity factors (sockets/lighting at ~30–40 percent, EV/heat pump as full load with load management) plus continuous heating loads — comfortably inside the 100 A supply.',
+      'The full 196 A connected total — diversity does not apply to a domestic supply, so the DNO must provide a 200 A service.',
+      'About 130 A — diversity only reduces the lighting and socket circuits, leaving the large fixed loads at full value, so a supply upgrade above 100 A is unavoidable.',
+      'Exactly 100 A — the maximum demand is always assumed to equal the intake fuse rating regardless of the connected load.',
+      'About 70–80 A after applying typical domestic diversity factors, comfortably inside the 100 A supply.',
     ],
     correctIndex: 3,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       'You need to size a 32 A EV charger circuit with a 25 m route from the consumer unit to a driveway charger. Reference Method C (clipped direct), no derate stack. CCC for 6 mm² T&E (Method C) ≈ 47 A. Vd on 6 mm² over 25 m at 32 A: (7.3 × 32 × 25) / 1000 = 5.84 V = 2.54 percent. The EV cable should be:',
     options: [
-      '6 mm² — passes CCC comfortably (47 A vs 32 A), Vd at 2.54 percent leaves 2.46 percent headroom inside the 5 percent limit. The standard sensible spec.',
-      'Category defines the architecture; PL is the achieved reliability calculated from category, MTTFd, DCavg and CCF',
-      'Toastmasters operationalises Bandura theory: mastery through progressive challenges, vicarious learning, social persuasion through evaluations, and managing anxiety through practice',
-      'Strips of material fitted around the door edge that expand rapidly when exposed to heat, sealing the gap between the door and frame to prevent the passage of fire and hot gases',
+      '6 mm² — CCC 47 A vs 32 A and Vd 2.54 percent, comfortably inside the 5 percent limit with headroom for a future charger upgrade.',
+      '1.5 mm² — CCC of about 18 A, below the 32 A device, but the device protects the cable so the smallest CSA that fits the terminals is acceptable.',
+      '2.5 mm² — CCC of 27 A is below the 32 A device, but the short charging cycles are assumed to keep the cable cool enough on the 25 m run.',
+      '16 mm² — EV circuits must always match the CSA of the 100 A meter tails to handle the charging inrush current.',
     ],
     correctIndex: 0,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       'For a 100 A TN-C-S supply with the meter on the outside wall and the consumer unit 4 m of meter tails away, the recommended meter tail size is:',
     options: [
-      'Recognise that a diagnosis alone does not determine fitness for work; decisions should be based on individual risk assessment and occupational health advice, not labels',
-      'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
-      'Experience as a resource (acknowledge their skills) and self-direction (involve them in planning their learning)',
-      '25 mm² — the standard DNO and OSG recommendation for 100 A supply with up to 3 m of meter tails; for 4 m the same applies if Vd is verified.',
+      '16 mm² — the legacy standard for an 80 A supply, taken as still acceptable for a 100 A supply over short runs.',
+      '10 mm² — the same CSA as a typical shower circuit, taken as adequate because the tails are only 4 m.',
+      '6 mm² — sized to match the largest final circuit on the board rather than the 100 A supply rating.',
+      '25 mm² — the standard DNO and OSG recommendation for a 100 A supply, with Vd verified on the 4 m run.',
     ],
     correctIndex: 3,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'In what order are the cable selection gates run when designing a circuit?',
     options: [
-      'Verifying that assemblies such as switchgear, controlgear, drives, controls and interlocks operate correctly to confirm they have been properly mounted, adjusted and installed',
-      'CCC first (does the cable carry Ib without overheating?), then Vd (does the load see enough voltage?), then EFLI (does ADS clear in time?), then adiabatic (does the CPC survive the fault?). Size up to satisfy whichever gate demands the largest CSA.',
-      'That it correctly transfers the load between sources, that the make-before-break or break-before-make sequence is correct for the application, and that mechanical and electrical interlocks prevent paralleling of sources',
-      'A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.',
+      'Adiabatic first (does the CPC survive?), then EFLI, then Vd, then CCC — fault survival always sets the cable size before steady-state current.',
+      'CCC, then Vd, then EFLI, then adiabatic — sizing up to satisfy whichever gate demands the largest CSA.',
+      'Vd first, then CCC, then adiabatic, then EFLI — voltage drop is the only gate that ever changes the cable size, so it is run first.',
+      'There is no fixed order — run whichever single gate is most likely to fail for the circuit type and accept that result.',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'A 7 kW (32 A at 230 V) EV charger circuit needs to satisfy which BS 7671 special-location requirement that does not apply to a regular socket?',
     options: [
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
-      'A notice shall be fixed in a prominent position at or near the origin of the installation indicating: the date of the next inspection, the name of the contractor or scheme, and contact details. The notice survives between EICs as a continuity record.',
-      'Section 722 requirements: Type B (or Type A + DC monitor) RCD protection, BS 8519 / OPDP "open-PEN" protection on TN-C-S supplies, IP-rated outdoor enclosures, dedicated final circuit (not shared with general sockets).',
-      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' before work begins',
+      'No special requirement — an EV charger is wired exactly like a standard 32 A radial socket with a 30 mA Type AC RCD.',
+      'Only that the circuit is RCD-protected at 100 mA, with no requirement for DC monitoring or open-PEN protection.',
+      'Section 722: dedicated circuit, Type B (or Type A + DC monitor) RCD, open-PEN protection on TN-C-S, and an IP-rated outdoor enclosure.',
+      'Only that the charger is fed from a Type D MCB to handle the charging inrush current at switch-on.',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       'A 4 kWp solar PV array on a south-facing roof generates a peak DC power of about 4 kW. The AC inverter output peaks at about 4 kW (~17 A at 230 V single-phase). What current rating should the inverter feed cable to the consumer unit be sized for?',
     options: [
-      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
-      'Operating manuals, maintenance instructions, inspection and testing schedule, schematic diagrams, manufacturer instructions for installed equipment, and the means to identify circuits — sufficient to enable safe operation, maintenance, and future inspection.',
-      'Compatibility of the LED driver with the dimmer (leading-edge vs trailing-edge, minimum load), neutral connection at the switch (for smart dimmers), driver minimum-load issue, and harmonic/DC supply asymmetry causing 100 Hz flicker',
-      '~17 A continuous, but sized to the inverter’s manufacturer spec (typically 16 A or 20 A, often a 16 A MCB feeding 2.5 mm² T&E for short runs). Allow for the inverter’s actual continuous AC output rating, not the panel DC rating.',
+      'The full DC string current of the panels (~40 A), because the AC cable must carry whatever the array generates.',
+      'A fixed 32 A, because all PV inverter circuits are protected at 32 A regardless of array size.',
+      'Half the inverter output (~8 A), because the grid absorbs the other half of the generated current.',
+      '~17 A continuous, sized to the inverter’s manufacturer AC output spec rather than the panel DC rating.',
     ],
     correctAnswer: 3,
     explanation:
@@ -130,14 +130,14 @@ const quizQuestions = [
     question:
       'A heat pump installation with a nameplate continuous current of 16 A on a 230 V supply needs which cable on a 12 m route, Reference Method C (clipped direct), no derate stack? CCC for 2.5 mm² T&E ≈ 27 A.',
     options: [
-      '2.5 mm² T&E — CCC of 27 A is comfortably above 16 A; Vd over 12 m at 16 A on 2.5 mm² = (18 × 16 × 12) / 1000 = 3.46 V = 1.5 percent, fine. 20 A MCB.',
-      'The union representative — confidential parallel route alongside the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own grievance procedure',
-      'It is likely AIB; it should be presumed to contain asbestos, recorded in the register, and sampled or managed accordingly',
-      'To be trained, equipped, and immediately available to effect rescue of any person who becomes incapacitated in the confined space',
+      '2.5 mm² T&E on a 20 A MCB — CCC of 27 A comfortably above the 16 A load and Vd well inside the 5 percent limit.',
+      '1.0 mm² T&E — the smallest cable that fits a 16 A load, fed from a 16 A MCB on the 12 m run.',
+      '10 mm² T&E — heat pumps must always be wired in the same CSA as an electric shower to handle the compressor inrush.',
+      '1.5 mm² T&E — the standard lighting cable, taken as adequate because the heat pump cycles rather than running continuously.',
     ],
     correctAnswer: 0,
     explanation:
-      '2.5 mm² T&E on 20 A MCB is the standard heat-pump radial spec for typical domestic 8 kW air-source units running at 16 A continuous. CCC comfortable, Vd well under the 5 percent limit, and the 20 A MCB sits comfortably above the 16 A continuous draw with margin for short start-up surges. Always read the manufacturer’s installation manual — some heat pumps specify 32 A protection for inrush, in which case the cable must support the protection rating not just the continuous current.',
+      'CCC for 2.5 mm² T&E (Method C) is about 27 A, comfortably above the 16 A continuous draw; Vd over 12 m at 16 A = (18 × 16 × 12) / 1000 = 3.46 V = 1.5 percent, well under the 5 percent limit. The 20 A MCB sits above the 16 A continuous current with margin for short start-up surges, and 2.5 mm² on a 20 A MCB is the standard radial spec for a typical 8 kW air-source unit. Always read the manufacturer’s installation manual — some heat pumps specify 32 A protection for inrush, in which case the cable must support the protection rating, not just the continuous current.',
   },
   {
     id: 5,
@@ -158,10 +158,10 @@ const quizQuestions = [
     question:
       'On the integrated design, the EV charger circuit is recommissioned from an existing 6 mm² T&E formerly feeding an oven. Which gate is most likely to fail and require the cable to be replaced?',
     options: [
-      'A comprehensive collection of evidence from across the apprenticeship, mapped to KSBs, organised systematically, and meeting the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum requirements for quantity and type of evidence',
-      'Terminating into spring-cage or screw-cage terminals to prevent strand separation, ensure all strands make contact, and provide a reliable, repeatable connection',
+      'CCC — an EV charger draws far more continuous current than an oven, so the 6 mm² cable overheats immediately.',
+      'Adiabatic — the EV fault current is much higher than an oven fault, so the existing CPC can no longer survive.',
       'EFLI — the EV charger run is on the perimeter of the house, often longer than the original oven run, so R1 + R2 is larger and Zs may exceed Table 41.3 for the new device.',
-      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
+      'Voltage drop — EV chargers are voltage-sensitive and held to the 3 percent lighting limit, which the longer run breaches.',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,10 +172,10 @@ const quizQuestions = [
     question:
       'A consumer unit upgrade replaces a 60 A board with a 14-way RCBO board. The customer wants 10 ways used immediately and 4 ways "spare for future". What is the right design call?',
     options: [
-      'The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.',
-      'Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.',
-      'Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation',
-      'Fit the 14-way board, label the 4 spare ways with their intended future use (e.g. "RESERVED FOR HEAT PUMP — 20 A", "RESERVED FOR BATTERY — 16 A"), document the future loads in the design pack so the next contractor knows the supply was sized to accommodate them, and verify the supply maximum demand still holds with the future loads added.',
+      'Fit a 60 A board with only 10 ways — the customer does not need the spare ways now, and a smaller board is cheaper.',
+      'Fit the 14-way board but leave the 4 spare ways completely unlabelled, so the next contractor can decide their use freely.',
+      'Fill all 14 ways now with spare RCBOs energised but not connected to any load, so the board looks complete at handover.',
+      'Fit the 14-way board, label the 4 spare ways with their intended future use, and document the reserved loads in the design pack with the maximum demand re-checked.',
     ],
     correctAnswer: 3,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'The integrated design has been signed off and installed. What does the L3 designer hand over per Reg 132.13?',
     options: [
-      'A design pack: single-line diagram, cable schedule with calculated CCC / Vd / Zs / adiabatic for each circuit, protective-device specs, RCD types and ratings, EV-specific RCD/OPDP specification, future-load notes for the spare ways, and operating notes for the homeowner.',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
-      'Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.',
-      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.',
+      'A full design pack — single-line diagram, cable schedule with the four gates per circuit, device and RCD/OPDP specs, future-load notes and homeowner operating notes.',
+      'Only the signed Electrical Installation Certificate — the schedules and design calculations are kept by the contractor and not handed over.',
+      'Only a verbal explanation of how to reset the consumer unit, since written documentation is not required for domestic work.',
+      'Only the manufacturer leaflets for the EV charger and heat pump, with no installation-specific documentation needed.',
     ],
     correctAnswer: 0,
     explanation:

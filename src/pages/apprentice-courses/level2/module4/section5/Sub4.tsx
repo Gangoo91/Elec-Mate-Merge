@@ -39,9 +39,9 @@ const checks = [
       'A supervisor inspects a new domestic CU and notices the kitchen socket ring is on a Type AC RCBO. The kitchen has an induction hob, modern LED lighting drivers, and a number of appliances with switch-mode power supplies. The supervisor flags this as a non-conformance because:',
     options: [
       'BS 7671 Reg 531.3.3 (A4:2026) requires Type A as the minimum where load currents may contain DC components — Type AC is no longer suitable for general fixed wiring with modern equipment.',
-      'Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed',
-      'A balanced, RCM-informed maintenance strategy that applies the most appropriate technique to each failure mode based on its characteristics and consequences',
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
+      'BS 7671 Reg 411.3.3 requires every kitchen socket ring to be protected by a Type B RCD specifically, because kitchens are classed as a special location under Part 7.',
+      'BS 7671 Reg 314.1 requires kitchen circuits to be divided so that no single RCD protects more than one appliance, and a single Type AC RCBO on the whole ring breaches that division rule.',
+      'BS 7671 Reg 643.8 requires the RCD on a kitchen ring to be tested at 5×I∆n rather than 1×I∆n, and a Type AC device cannot meet that faster trip time with modern loads present.',
     ],
     correctIndex: 0,
     explanation:
@@ -52,9 +52,9 @@ const checks = [
     question:
       'On a CU swap inspection you notice that the metal-bodied SP outdoor luminaire on the gable end has been wired with T&E but the green-yellow CPC has been cut off short and not connected at the back of the fitting. This is a non-conformance against:',
     options: [
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
-      'Limit the energy that can enter the hazardous area to prevent ignition of flammable atmospheres',
-      'The RMS value of the AC symmetrical component at the instant of fault',
+      'Reg 522.6 — protection of cables against mechanical damage in an outdoor location.',
+      'Reg 514.13 — identification of the protective bonding connection at the luminaire.',
+      'Reg 643.6 — verification of polarity at the luminaire during testing.',
       'Reg 411.3.1.1 — protective earthing of exposed-conductive-parts on Class I equipment.',
     ],
     correctIndex: 3,
@@ -66,10 +66,10 @@ const checks = [
     question:
       'The customer is pressuring you to energise the install today because their fridge contents are spoiling. You have noticed the polarity on one bedroom socket reads reversed. The right call is:',
     options: [
-      'Earth electrode (live, for TT) -> earth fault loop impedance Ze -> prospective fault current -> earth fault loop impedance Zs -> polarity (energised) -> RCD operation -> AFDD operation -> functional/operational',
+      'Energise the install now and note the reversed polarity as a LIM on the certificate, returning to re-terminate the socket on a follow-up visit so the customer keeps their power.',
       'Hold the energisation, fix the polarity at the socket (re-terminate the line and neutral correctly), retest, then energise. Offer the customer a temporary lead from a known-good circuit if needed.',
-      'All construction work including alteration and refurbishment. No monetary threshold. F10 notification only required for projects &gt;30 days/20 workers OR &gt;500 person-days. CDM duties apply regardless of notifiability.',
-      'Assess the situation calmly, contact HMRC about Time to Pay if needed, speak to StepChange or Citizens Advice, and adjust spending to essentials',
+      'Energise only the unaffected circuits and leave the bedroom socket circuit isolated, issuing the EIC for the remainder of the installation while the polarity fault is outstanding.',
+      'Energise the whole install — a single reversed socket is a C3 improvement item rather than a defect, so it does not need to be put right before the supply is switched on.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'A supervisor opens the CU on a finished install and notices visible copper conductor extending past the brass terminal of the line conductor on circuit 4. This is a:',
     options: [
-      'Calibrating the entire measurement loop from sensor through to the displayed/recorded value, including the transmitter, wiring, and receiving instrument',
+      'Acceptable — a small amount of exposed copper at a terminal is normal and helps confirm the conductor is fully home, so it can be marked ✓ on the Schedule of Inspections.',
       'Non-conformance — Reg 526.1 requires connections to provide durable electrical continuity AND adequate mechanical strength AND protection. Exposed copper past the terminal fails the protection element.',
-      'Systematically testing each function of the relay — pickup, dropout, timing, contact configuration — and verifying the complete control sequence operates correctly before applying power to the final load',
-      'C2 — incorrect identification is potentially dangerous because the next person to work on the circuit may be misled into believing a conductor is dead when it is live.',
+      'Non-conformance against Reg 514.13, because exposed copper at a terminal means the identification sleeving has not been applied correctly to the conductor.',
+      'A limitation (LIM) only — the exposed copper is inside the consumer unit and cannot be assessed without disturbing the busbar, so it is recorded as inaccessible.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     question:
       'A circuit&rsquo;s R1+R2 reading comes back significantly higher than the design predicted — by more than 50%. The most likely cause is:',
     options: [
-      'Work methodically and safely — never compromise safety for speed — but practise beforehand to build efficient habits',
-      'Every employer must ensure that adequate information, instruction, and training is given to employees who are or may be exposed to asbestos, and to their supervisors',
+      'The insulation resistance is too low somewhere on the circuit, dragging the continuity reading up because leakage current is finding an unintended path.',
+      'The test leads have not been nulled, so the reading simply includes the few hundred milliohms of lead resistance and the circuit itself is fine.',
       'A high-resistance joint somewhere on the circuit — typically a junction box that has been chocboxed up in the loft and never tightened properly.',
-      'Whether there are underlying causes such as personal problems, wrong career choice, bullying, financial stress, or health issues',
+      'The protective device is the wrong type for the load, so the R1+R2 reading does not match the value predicted for that breaker.',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question:
       'Reg 421.1.7 (A4:2026) treats AFDDs as:',
     options: [
-      'Fit a sine-wave or dV/dt filter at the VFD output, install shaft grounding rings, use VFD-rated motor cables (low-capacitance, screened) and bond the cable screen 360° at both ends',
-      'UKATA / IATP-certified providers offer asbestos awareness (1 day, refresher periodic). Higher levels (non-licensed work, licensed work) require more advanced certified training. CAR 2012 Reg 10 requires adequate training for anyone who may be exposed.',
-      'Theory on legislation and anatomy, practical demonstration of techniques, supervised practice with actual workplace loads, assessment of competence, and task-specific elements for the worker\\\\\\\\\\\\\\\'s actual role',
+      'Mandatory on every final circuit in every dwelling without exception, so the absence of an AFDD on any circuit is an automatic C2 on a domestic install.',
+      'Prohibited in dwellings, because AFDDs are prone to nuisance tripping on domestic loads and are only permitted on industrial installations.',
+      'A direct replacement for the 30 mA RCD, so a circuit fitted with an AFDD no longer needs RCD additional protection under Reg 411.3.3.',
       'Recommended for AC final circuits supplying socket-outlets up to 32 A in dwellings, with the recommendation strengthening to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework.',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
       'You finish an installation and discover the BS 951 "Safety Electrical Connection — Do Not Remove" label is missing from the gas service bonding clamp. This is a non-conformance against:',
     options: [
       'Reg 514.13 — labelling at protective bonding clamps.',
-      'Communication errors, RCD trips, or contactor failures',
-      'General purpose, full-range breaking capacity',
-      'A rectangle with a line through it (or a rectangular block symbol)',
+      'Reg 411.3.1.2 — the requirement to provide main protective bonding to the gas service.',
+      'Reg 643.2.1 — the continuity test of the main bonding conductor.',
+      'Reg 544.1.1 — the sizing of the main protective bonding conductor.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'A T&E cable runs through a wood-framed escape stairwell void without any additional fire-resistant supports — just standard plastic clips. Per BS 7671 A4:2026 update to Reg 522.8.5 / 522.8.X (cables in escape routes), this is a non-conformance because:',
     options: [
-      'Ice on platforms, rungs and frames creates severe slip hazards and can also affect locking mechanisms on castors and connections',
+      'Plastic clips do not provide enough mechanical protection against impact in a stairwell, so the cable must be run in steel conduit wherever it crosses a walkway.',
       'Cables on escape routes need supports that will not fail prematurely in a fire — plastic clips melt and the cable falls, becoming a trip hazard for evacuating occupants.',
-      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready, and any genuine concerns should result in an action plan to achieve readiness before proceeding',
-      'Ask the assessor to rephrase or clarify the question — this is completely acceptable and demonstrates professional communication rather than guessing and giving an irrelevant answer',
+      'T&E may not be used in any stairwell because the PVC sheath gives off toxic smoke in a fire, so LSZH cable is required throughout an escape route regardless of the supports.',
+      'Cables in a wood-framed void must be RCD-protected at 30 mA, and plastic clips indicate the circuit was run without the additional protection that timber construction requires.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'You inspect a finished install and notice an MCB has been fitted in the neutral conductor of one circuit (someone got the busbar wrong). This is a non-conformance against:',
     options: [
-      'Be equal to or greater than the grinder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no-load speed — a disc rated below the grinder speed may disintegrate at operating speed',
-      'Repair the cable AND mark safe zones (BS 7671 Reg 522.6) AND brief site team to prevent recurrence',
+      'Reg 411.3.3 — the requirement for 30 mA RCD additional protection on socket circuits.',
+      'Reg 314.1 — the requirement to divide an installation into separate circuits.',
       'Reg 537.2.2 / 514.16 — single-pole devices for protection or switching shall be in line conductors only.',
-      'A full-body harness with a short lanyard attached to a suitable anchor point',
+      'Reg 643.6 — the verification of polarity at every accessory during testing.',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     question:
       'On a periodic inspection of a 5-year-old install, you find that supplementary bonding has been installed in a bathroom but the bond from the bath mixer tap has only been clamped at one end and is hanging loose at the other. This is:',
     options: [
-      'Eliminate → Substitute → Engineering controls → Administrative controls → PPE. PPE is the LAST line. The hierarchy applies across H&S regs (COSHH Reg 7, MHSWR ACOP, HSG48).',
-      'Walk them through the key symbols, highlight what they care about (sockets, switches, locations) and offer to print a simplified version',
-      'Tick (acceptable), N/A (not applicable), LIM (limitation), or appropriate code — accompanied by an overall declaration',
+      'Acceptable — supplementary bonding only needs to be clamped at one end, because the metal pipework completes the rest of the path, so a single connection is compliant.',
+      'A limitation (LIM) — the loose end is behind the bath panel and cannot be assessed without removing it, so it is recorded as inaccessible rather than as a defect.',
+      'A C3 improvement item only — the bond is still partly connected, so it provides some protection and is recommended for improvement rather than coded as dangerous.',
       'A non-conformance — the bond is not continuous, fails the inspection of bonding (Schedule of Inspections section 12), and would also fail a continuity test.',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
       'A supervisor catches a non-conformance on your install and tells you to stop, fix it, and re-inspect. The right mindset is:',
     options: [
       'Take the feedback as the whole point of the supervised apprenticeship; understand what the defect was, why it&rsquo;s a non-conformance, fix it properly, learn so it does not happen on the next install.',
-      'To proactively identify hazards, check that risk controls are in place and effective, verify compliance with the construction phase plan and site rules, and identify areas for corrective action',
-      'Domestic loft spaces and cellars can be confined spaces if they are substantially enclosed with foreseeable risks such as poor ventilation and gas accumulation',
-      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
+      'Explain to the supervisor why the defect is not really a problem and ask them to sign the work off as it stands, since the install would probably function regardless.',
+      'Fix the item quickly without asking what was wrong, so the supervisor sees it corrected and does not record the non-conformance against your work.',
+      'Energise the install first to prove it works, then address the supervisor&rsquo;s point only if a fault actually develops once the circuit is live.',
     ],
     correctAnswer: 0,
     explanation:

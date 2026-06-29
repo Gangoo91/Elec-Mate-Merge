@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'spd-type',
     question: 'Where should a Type 1 SPD be installed?',
     options: [
-      'Eliminates current transient at changeover',
+      'At each individual socket outlet on a final circuit',
       'At the main distribution board near the origin',
-      'To allow for design changes and incomplete information',
-      'Prove the circuit would be safe after rectification',
+      'Inside sensitive IT equipment as a final stage',
+      'On the secondary side of the supply transformer only',
     ],
     correctIndex: 1,
     explanation:
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: 'What is the key characteristic of a TN-C-S (PME) earthing system?',
     options: [
       'Combined neutral and earth (PEN) from DNO',
-      'Change in process output per unit change in input',
-      '4mA baseline allows fault detection',
-      'Non-invasive current measurement',
+      'A separate earth conductor run from the supply transformer',
+      'Reliance on a local earth electrode at the installation',
+      'No connection to earth at the supply intake',
     ],
     correctIndex: 0,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What is 'voltage dip' (sag)?",
     options: [
-      'When the system uses constant flow primary pumping',
+      'A permanent rise in RMS voltage above nominal',
       'Temporary reduction in RMS voltage below 90%',
-      'The risk of surface condensation at a thermal bridge',
-      'Workers, visitors, contractors, public, special groups',
+      'A complete loss of supply lasting several minutes',
+      'A short spike in voltage caused by lightning',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does THD (Total Harmonic Distortion) measure?',
     options: [
-      'Prioritise by safety risk, then operational impact',
-      'DALI (Digital Addressable Lighting Interface)',
+      'The ratio of reactive power to apparent power',
+      'The peak voltage divided by the RMS voltage',
       'The ratio of harmonic content to fundamental frequency',
-      'Electronic equipment is disconnected and circuit is isolated',
+      'The phase angle between voltage and current',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'What causes flicker in electrical systems?',
     options: [
       'Rapid voltage fluctuations causing visible light variation',
-      'The site supervisor or appointed responsible person',
-      'Loss when fibre cores are not perfectly aligned side-to-side',
-      'Ensure safe isolation and prove dead testing',
+      'A steady under-voltage across the whole installation',
+      'Harmonic currents adding in the neutral conductor',
+      'A single transient spike from a lightning strike',
     ],
     correctAnswer: 0,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of EMC (Electromagnetic Compatibility) measures?',
     options: [
-      'They do not account for inter-reflected light from room surfaces',
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, review',
+      'To improve the power factor of electronic loads',
+      'To reduce the harmonic content in the neutral conductor',
       'To ensure equipment neither emits nor is affected by electromagnetic interference',
-      'The site manager — single point of contact upward to the contracts manager',
+      'To divert transient overvoltages safely to earth',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the third harmonic (3rd) particularly problematic for?',
     options: [
-      'Temporary manual control mode for system setup and testing',
-      'It creates a brief high current and measures voltage drop',
-      'Loose connections, failing lamps, incompatible dimmer, or supply issues',
+      'Line conductors - they cause excessive voltage drop',
+      'Earthing conductors - they raise the loop impedance',
+      'Protective devices - they trip on harmonic peaks',
       'Neutral conductors in three-phase systems - they add rather than cancel',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'What voltage regulation problem can occur with long cable runs?',
     options: [
       'Excessive voltage drop causing equipment malfunction',
-      'A fault specific to that individual device or its circuit',
-      'To provide protection against electric shock',
-      'Unlimited fine, remedial orders, publicity orders',
+      'A permanent over-voltage at the load end',
+      'Increased harmonic distortion on the supply',
+      'A rise in the prospective fault current',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a Type 2 SPD designed to protect against?',
     options: [
-      'It helps with material selection, safety, and fault finding',
+      'Direct lightning strikes via an external LPS',
       'Switching transients and indirect lightning effects',
-      'The conduit may kink or collapse, restricting cable installation',
-      '3-5 years minimum, 7 years recommended',
+      'Continuous over-voltage on the supply',
+      'Harmonic distortion from non-linear loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is power factor correction used for?',
     options: [
-      'Clean all contact surfaces, remake the joint properly',
-      'To reduce electromagnetic interference (EMI)',
+      'Reducing harmonic distortion in the neutral',
+      'Diverting transient overvoltages to earth',
       'Reducing reactive power demand and improving efficiency',
-      'Before construction begins, based on developed design',
+      'Increasing the supply voltage at the load',
     ],
     correctAnswer: 2,
     explanation:

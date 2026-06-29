@@ -23,14 +23,14 @@ const inlineChecks = [
     question:
       'HSG107 sets out a hierarchy of inspection activities for portable equipment. Which is the correct ordering, by frequency?',
     options: [
-      'Combined inspection-and-test, then formal visual, then user check.',
-      'User check (every use, by the user), then formal visual inspection (periodic, by competent person, no dismantling), then combined inspection-and-test (less frequent, with electrical instrument readings).',
-      'Formal visual is the most frequent.',
-      'They run at the same frequency.',
+      'Combined inspection-and-test most frequent, then formal visual, then user check least frequent.',
+      'User check, then formal visual inspection, then combined inspection-and-test.',
+      'Formal visual inspection, then user check, then combined inspection-and-test.',
+      'All three activities run at the same frequency on every item.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 §27-44 and IET CoP §10-14 are clear: user checks are the highest-frequency, lowest-cost activity. Formal visual is periodic. Combined inspection-and-test is the least frequent but most thorough. The hierarchy is the economic logic of the whole regime.',
+      'User checks are the highest-frequency, lowest-cost activity, carried out by the user every use. Formal visual inspection is periodic, by a competent person, with no dismantling. Combined inspection-and-test is the least frequent but most thorough, adding electrical instrument readings. HSG107 §27-44 and IET CoP §10-14 set this economic hierarchy as the logic of the whole regime.',
   },
   {
     id: 'patm1-s5-userscope',
@@ -50,28 +50,28 @@ const inlineChecks = [
     id: 'patm1-s5-recordable',
     question: 'How is the user-check pillar typically recorded for compliance purposes?',
     options: [
-      'Every user check is recorded against every item, every time.',
-      'The training and the route to report defects are recorded (toolbox talk attendance, fault-report system records, equipment-out-of-service tags). Individual user checks themselves are not typically recorded item-by-item — the system that supports the check is.',
-      'User checks are not recorded.',
-      'Only failed user checks are recorded.',
+      'Every user check is signed off against every item, every time it is used.',
+      'The supporting system is recorded — training, fault-reporting routes, out-of-service tags — not the checks themselves.',
+      'No records of any kind support the user-check pillar in an audit.',
+      'Only checks that result in a failure or defect are logged.',
     ],
     correctIndex: 1,
     explanation:
-      'HSG107 §27-30 and IET CoP §10 frame the user-check evidence as the system, not the daily transactional records. What is recorded: training delivery, fault-reporting routes, defective-item tags / withdrawals, defects reported and acted on. What is not recorded: the visual moment of every user with every item.',
+      'HSG107 §27-30 and IET CoP §10 frame user-check evidence as the system, not the daily transactional records. What is recorded: training delivery, fault-reporting routes, defective-item tags and withdrawals, defects reported and acted on. What is not recorded: the visual moment of every user with every item — logging that would convert continuous awareness into a checkbox.',
   },
   {
     id: 'patm1-s5-flow',
     question:
       'During a formal visual, the inspector finds a hairline crack in the plug body. The kettle still works and the user has been using it. Which next step is correct?',
     options: [
-      'Apply a pass-label and note the crack in comments for next cycle.',
-      'Withdraw the kettle from service immediately, tag it as out-of-service, log the defect, and either replace the plug top (and re-test) or replace the kettle. Cracked plug bodies are a Reg 4(2) defect — they expose live conductors and are not "monitor and review".',
-      'Apply tape over the crack and continue.',
-      'Test the kettle electrically and decide based on the readings.',
+      'Apply a pass-label and note the crack in comments for the next cycle.',
+      'Withdraw, tag out-of-service, log the defect, then replace the plug top and re-test (or replace the kettle).',
+      'Apply tape over the crack and return the kettle to service.',
+      'Test the kettle electrically and base the decision on the readings.',
     ],
     correctIndex: 1,
     explanation:
-      'IET CoP §14 and HSG107 §40 are explicit: visible plug damage is an immediate withdrawal-from-service criterion. The electrical test does not redeem a visible safety defect. The defect-and-action log is the documentary trail.',
+      'Cracked plug bodies are a Reg 4(2) defect — they expose live conductors and are not "monitor and review". IET CoP §14 and HSG107 §40 are explicit: visible plug damage is an immediate withdrawal-from-service criterion. The electrical test does not redeem a visible safety defect, and the defect-and-action log is the documentary trail.',
   },
 ];
 
@@ -80,12 +80,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of the user-check pillar of an HSG107 PAT regime?',
     options: [
-      'To replace formal inspection.',
-      'To catch high-prevalence visible defects (flex damage, plug damage, signs of overheating, signs of misuse) at the highest possible frequency, before equipment is energised. The user is the only person who sees the equipment every time it is plugged in.',
-      'To document combined inspection-and-test results.',
-      'To enable the user to perform electrical testing.',
+      'To replace formal inspection altogether.',
+      'To document the combined inspection-and-test results.',
+      'To catch visible defects at the highest frequency before equipment is energised.',
+      'To let the user perform electrical instrument testing.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The user-check pillar exists because no formal inspection regime, however frequent, can match the cadence of every-use observation by the user. HSG107 §27-30 and IET CoP §10 build on this: user checks catch the bulk of preventable defects between formal cycles.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     question:
       'What does a competent person, performing a formal visual inspection per IET CoP §14, look at that a user typically does not?',
     options: [
-      'Nothing different.',
-      'Systematic check of: flex full length (including hidden runs), plug fuse rating against equipment rating, secure cord grip with no exposed cores, in-line connectors / FCUs / transformers, equipment casing including back / underside, switches and indicators operating as intended, environmental signs of misuse or ingress, equipment markings (class symbol, voltage, current, IP rating). This is rigorous, structured, and not what a user does in passing.',
-      'Internal components after removing covers.',
-      'Only the equipment markings.',
+      'Nothing different from the user check.',
+      'A systematic check of flex, fuse rating, cord grip, casing and markings.',
+      'Internal components reached by removing the covers.',
+      'Only the equipment rating-plate markings.',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'A combined inspection-and-test adds what to the formal visual?',
     options: [
-      'A different visual checklist.',
-      'Electrical instrument testing — protective-conductor continuity, insulation resistance (or substitute leakage), polarity (where relevant), and a functional / load test — recorded as numerical readings against IET CoP Chapter 14 acceptance criteria.',
-      'Only a load test.',
-      'Removal of covers for internal inspection.',
+      'A different visual checklist only.',
+      'Only an additional functional load test.',
+      'Electrical instrument testing — continuity, insulation resistance, polarity and function.',
+      'Removal of the covers for internal inspection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The combined inspection-and-test is "formal visual + instrument tests + records of numerical readings". It catches defects the visual cannot — open or high-resistance CPCs, insulation degradation, leakage above acceptable limits — and produces the numerical evidence that backs the EAWR / PUWER record.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'A user receives no training on what to check before plugging in equipment, and there is no system for reporting defects. Which legal duties have failed?',
     options: [
-      'None — user checks are advisory.',
-      'HSWA s.2(2)(c) (information / instruction / training); HSWA s.2(2)(a) (safe systems of work); EAWR Reg 4(2) read with HSG107 (the maintenance regime requires the user-check pillar); and PUWER Reg 8 (information / instruction). Multiple failures.',
-      'Only HSG107.',
-      'Only EAWR.',
+      'None — user checks are purely advisory guidance with no statutory force.',
+      'Only the HSG107 guidance has been departed from; no statutory duty is engaged.',
+      'Only EAWR Reg 4(2) is breached, as the equipment was not maintained.',
+      'HSWA s.2(2)(c) and s.2(2)(a), EAWR Reg 4(2) and PUWER Reg 8 all fail together.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The user-check pillar is the cheapest, most frequent line of defence — and the one that depends entirely on the employer providing training and a defect-reporting route. Skipping it does not just fail the IET CoP framework; it fails several statutory duties simultaneously.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Why does HSG107 advise that the user is the "first line of defence" against electrical danger?',
     options: [
-      'To shift legal responsibility to the user.',
-      'Because the user has the highest-frequency contact with the equipment — daily, repeated, often the only direct interaction. A defect that develops between formal inspections will, if visible at all, first be visible to the user. The cadence economics make the user the only practical first line.',
-      'Because users are required by law to be electrical competent.',
-      'Because formal inspections are too expensive.',
+      'Because the user has the highest-frequency contact with the equipment.',
+      'To shift legal responsibility from the employer to the user.',
+      'Because users are required by law to be electrically competent.',
+      'Because formal inspections are simply too expensive to run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'It is a cadence argument, not a responsibility-shifting one. HSWA s.7 imposes a user duty to take reasonable care, but the employer retains the s.2 duty to set the system up. The "first line of defence" framing is about temporal proximity to defects — only the user sees the equipment every time.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'IET CoP §14 states the formal visual inspection should NOT require dismantling. Why is that constraint important?',
     options: [
-      'To save time.',
-      'To keep the formal visual at a competence threshold that is achievable by trained but not necessarily instrument-qualified staff, and to keep the inspection non-invasive (so it does not itself become a source of damage). Inspections requiring dismantling escalate to combined inspection-and-test or to maintenance.',
-      'Because dismantling is illegal.',
-      'To match the user check.',
+      'Purely to save inspection time.',
+      'Because dismantling equipment is illegal.',
+      'To keep the inspection non-invasive and achievable by trained, non-instrument staff.',
+      'To make it identical to the user check.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rule keeps the formal visual a discrete inspection step, not a maintenance activity. Items that need dismantling enter combined inspection-and-test or planned maintenance, with the appropriate competence threshold (EAWR Reg 16) and record requirement.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'A user reports a fault-tingling sensation when touching a metal-cased Class I appliance. What is the correct sequence?',
     options: [
-      'Continue to use it; report at next formal inspection.',
-      'Withdraw immediately, tag out-of-service, isolate at the source, perform a triggered combined inspection-and-test (PE-continuity test critical) AND investigate the supply-side circuit (RCD operation, Zs at the socket, polarity). A "tingle" is a strong indicator of CPC failure or polarity reversal — both safety-critical.',
-      'Test electrically only when convenient.',
-      'Tighten the plug and continue.',
+      'Continue to use it and report at the next formal inspection.',
+      'Test it electrically only when it is convenient to do so.',
+      'Tighten the plug terminals and keep the appliance in use.',
+      'Withdraw it immediately, tag out, and test both equipment and supply.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A user-reported tingle on a Class I item is a near-miss. Both equipment-side and supply-side investigation are warranted (PUWER Reg 6 trigger and EAWR Reg 4(2)). Asking the user to continue is itself an HSWA s.2 breach.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 8,
     question: 'What records support the user-check pillar in an HSG107 audit?',
     options: [
-      'A daily user-check log per item.',
-      'The supporting system records: training delivery (toolbox talks with attendance), the fault-reporting system (sticker / email / app, with retained records of reports made and actions taken), out-of-service tagging procedure, and equipment-withdrawal log. The user-check moment itself is not transactionally recorded.',
-      'There are no records.',
-      'A signed weekly register.',
+      'A daily user-check log completed against every item.',
+      'The supporting system: training records, the fault-reporting route and tagging procedure.',
+      'No records are needed for the user-check pillar.',
+      'A signed weekly register of every appliance.',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,26 +190,26 @@ const quizQuestions = [
     question:
       'A formal visual finds the equipment fully compliant; a combined inspection-and-test the same day shows IR of 0.4 MΩ on a Class I item with a 2 kW heating element. What is the correct interpretation?',
     options: [
-      'The visual passed, so the item is safe.',
-      'The IR reading fails the IET CoP §15 acceptance for Class I equipment with a heating element rated ≥ 3 kW (typically ≥ 1 MΩ or as set out in IET CoP). For < 3 kW heaters the IET CoP acceptance is also typically ≥ 1 MΩ. 0.4 MΩ is below acceptance — fail. The item is withdrawn from service, defect investigated, repair and re-test. The visual cannot redeem an IR fail because the visual cannot see insulation breakdown.',
-      'Average the two and decide.',
-      'The IR test is optional if the visual passes.',
+      'The visual passed, so the item is safe to keep in service.',
+      'Average the two results and make a judgement call.',
+      '0.4 MΩ is below the 1 MΩ Class I acceptance — a fail, so withdraw the item.',
+      'The IR test is optional once the visual inspection has passed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Each pillar catches different defects. The visual catches what is visible; the combined inspection-and-test catches the invisible (IR breakdown, CPC integrity, leakage). A "pass" requires all the relevant pillars to pass on their own terms.',
+      'For Class I equipment with a heating element below 3 kW the IET Code of Practice insulation-resistance acceptance is 1 MΩ (heaters of 3 kW and above relax to 0.3 MΩ). At 0.4 MΩ the 2 kW item fails; the visual cannot redeem an IR fault because insulation breakdown is not visible.',
   },
   {
     id: 10,
     question:
       'A duty-holder argues they do not need a formal user-check programme because their workforce is "experienced and sensible". What is the legal weakness?',
     options: [
-      'No weakness — experienced staff are sufficient.',
-      'HSWA s.2(2)(c) requires INFORMATION, INSTRUCTION, TRAINING and SUPERVISION — not assumption of competence. The defendable position is a documented programme: induction content, refresher training, defect-reporting procedure, supervised use of the procedure. "Experienced and sensible" is a description, not a system.',
-      'It is a defence.',
-      'Sensibility is presumed under EAWR.',
+      'No weakness — experienced, sensible staff are sufficient protection on their own.',
+      'It is a complete defence under the legislation, so no system is required.',
+      'Competence is automatically presumed for experienced staff under EAWR Reg 16.',
+      'HSWA s.2(2)(c) requires information, instruction, training and supervision regardless.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "they know what to do" framing fails s.2(2)(c) and is a common HSE finding in incident investigations. A workforce that is in fact experienced and sensible needs a system to record the fact and evidence it. The system is the artefact; the experience is the input.',
   },

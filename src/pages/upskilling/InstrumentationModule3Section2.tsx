@@ -57,11 +57,11 @@ const quizQuestions = [
     question: 'What does a 4mA signal typically represent?',
     options: [
       'A system fault condition',
-      'The zero or minimum scale value (0% of measurement range)',
-      'The maximum scale value',
+      'The maximum scale value (100% of measurement range)',
       '50% of the measurement range',
+      'The zero or minimum scale value (0% of measurement range)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "In the 4-20mA standard, 4mA represents 0% of the measurement range (zero scale). This provides 'live zero' capability for fault detection.",
   },
@@ -69,12 +69,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why use 4-20mA over 0-20mA?',
     options: [
-      '4-20mA signals are cheaper to implement',
       'The 4mA offset provides live-zero for fault detection',
-      '4-20mA signals have better accuracy',
-      'They consume less power',
+      '4-20mA signals are cheaper to implement',
+      '4-20mA signals have inherently better accuracy',
+      'They consume less power in the loop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 4mA offset provides 'live-zero' capability, allowing differentiation between a true zero reading (4mA) and a system fault (0mA from broken wire).",
   },
@@ -97,10 +97,10 @@ const quizQuestions = [
     options: [
       'For high-accuracy temperature measurement',
       'For pressure measurement in hydraulic systems',
-      'For flow totalisation and speed measurement applications',
       'For pH measurement in chemical processes',
+      'For flow totalisation and speed measurement applications',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Pulse signals are ideal for flow totalisation and speed measurement because pulses can be easily counted and totalled.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main limitation of 0-10V signals?',
     options: [
-      'Cannot be used with PLCs',
       'No fault detection capability and susceptible to noise',
-      'Too expensive to implement',
-      'Only works with temperature sensors',
+      'They cannot be used with PLCs',
+      'They are too expensive to implement',
+      'They only work with temperature sensors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '0-10V signals cannot distinguish between 0V and a fault condition, and they are susceptible to electrical noise and voltage drop over distance.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the K-factor in pulse flow measurement?',
     options: [
-      'The maximum flow rate',
       'The number of pulses per unit volume',
-      'The cable length limit',
-      'The signal frequency',
+      'The maximum flow rate of the meter',
+      'The cable length limit for the signal',
+      'The output signal frequency at full flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The K-factor is the number of pulses per unit volume (e.g., 1000 pulses/litre), used to calculate total flow from pulse count.',
   },

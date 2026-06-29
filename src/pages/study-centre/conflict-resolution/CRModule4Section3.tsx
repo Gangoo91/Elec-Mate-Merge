@@ -20,10 +20,10 @@ const quickCheckQuestions = [
     question:
       'Under the Construction Act, what is the maximum time allowed for an adjudicator to reach a decision after being appointed?',
     options: [
-      '7 days',
-      '14 days',
-      "28 days (extendable by 14 days with the referring party's consent)",
-      '56 days',
+      '7 days from the date of appointment',
+      '14 days from the date of referral',
+      '28 days from the date of referral',
+      '56 days from the date of referral',
     ],
     correctIndex: 2,
     explanation:
@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'What must happen before you can lawfully suspend performance for non-payment under the Construction Act?',
     options: [
-      'You can suspend immediately without any notice',
-      "You must give at least 7 days' written notice of your intention to suspend, specifying the ground for suspension",
-      'You must first obtain a court order authorising suspension',
-      'You must wait 90 days after the payment was due',
+      "Give at least 7 days' written notice specifying the ground for suspension",
+      'Suspend immediately, with no notice, once payment is overdue',
+      'Obtain a court order from the TCC authorising the suspension',
+      'Wait 90 days after the final date for payment has passed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Section 112 of the Construction Act requires you to give at least 7 days' written notice of your intention to suspend performance. The notice must state the ground or grounds for suspension — specifically, that the notified sum has not been paid by the final date for payment and no effective pay-less notice has been served. You cannot suspend without this notice period, even if the non-payment is clear-cut. The 7-day notice gives the paying party one final opportunity to make the payment before suspension takes effect. If they pay during the notice period, you cannot suspend.",
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'The Construction Act applies to "construction contracts." Which of the following is specifically excluded from its scope?',
     options: [
       'Electrical installation work on a commercial building',
-      'A domestic client having their house rewired',
       'Mechanical and electrical services on a new hospital',
       'Fit-out works in a retail unit',
+      'A domestic client having their house rewired',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Construction Act specifically excludes construction contracts with residential occupiers — meaning a homeowner who lives in (or intends to live in) the property. This is the "domestic client" exclusion. If you are working directly for a homeowner on their own home, the Construction Act does not apply to your contract. However, if you are working as a subcontractor on a domestic property (where the MC has the contract with the homeowner), the Construction Act does apply to your subcontract with the MC. The Act also applies to all commercial construction work regardless of scale.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the full title of the legislation commonly known as "the Construction Act"?',
     options: [
-      'The Construction Industry Payment Act 1996',
       'The Housing Grants, Construction and Regeneration Act 1996',
+      'The Construction Industry Payment Act 1996',
       'The Building and Construction Disputes Act 1996',
       'The Construction Contracts and Adjudication Act 1996',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The full title is the Housing Grants, Construction and Regeneration Act 1996 (HGCRA 1996). It is commonly referred to as "the Construction Act" within the industry. The Act was significantly amended by Part 8 of the Local Democracy, Economic Development and Construction Act 2009 (LDEDCA 2009), which came into force on 1 October 2011. The 2009 amendments strengthened payment provisions, extended coverage to oral contracts, and enhanced the right to suspend performance.',
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
       'Which of the following disputes can be referred to adjudication under the Construction Act?',
     options: [
       'Only payment disputes',
-      'Only disputes about workmanship quality',
       'Any dispute arising under a construction contract',
+      'Only disputes about workmanship quality',
       'Only disputes worth more than £10,000',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Section 108 of the Construction Act gives any party to a construction contract the right to refer "a dispute arising under the contract" to adjudication at any time. This is not limited to payment disputes — it includes disputes about quality, programme, variations, extensions of time, damages, termination, and any other matter arising from the contract. There is no minimum value threshold. However, in practice, payment disputes are the most common type of dispute referred to adjudication because the payment provisions of the Act create clear, enforceable rights.',
   },
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       'If the paying party fails to issue a payment notice within the required timeframe, what happens?',
     options: [
-      'The payment application is automatically rejected',
-      'The paying party has an additional 14 days to issue the notice',
-      "The amount stated in the payee's payment application becomes the notified sum and must be paid in full",
-      'The contract is automatically terminated',
+      'The payment application is automatically rejected and must be resubmitted',
+      'The paying party gains an additional 14 days to issue a valid payment notice',
+      "The payee's application becomes the notified sum and must be paid in full",
+      'The contract is automatically terminated for breach of payment terms',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,25 +129,25 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of a pay-less notice under the Construction Act?',
     options: [
-      'To confirm the full amount of the payment application will be paid',
-      'To notify the payee that the paying party intends to pay less than the notified sum, stating the amount and the basis for the reduction',
-      'To terminate the construction contract',
-      "To suspend the payee's right to adjudication",
+      'To confirm in writing that the full notified sum will be paid on time',
+      'To terminate the construction contract for unsatisfactory work',
+      "To temporarily suspend the payee's statutory right to adjudication",
+      'To notify the payee of an intention to pay less than the notified sum',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A pay-less notice is the mechanism by which the paying party notifies the payee that they intend to pay less than the notified sum. The pay-less notice must state the sum considered due by the payer and the basis on which that sum is calculated. It must be served no later than a prescribed period before the final date for payment (typically 7 days, though the contract may specify a different period, provided it is no less than the statutory minimum). Without a valid pay-less notice, the paying party must pay the full notified sum, even if they genuinely believe a lower amount is due.',
+      'A pay-less notice notifies the payee that the paying party intends to pay less than the notified sum, stating the amount considered due and the basis for the reduction. It must be served no later than a prescribed period before the final date for payment (typically 7 days, though the contract may specify a different period, provided it is no less than the statutory minimum). Without a valid pay-less notice, the paying party must pay the full notified sum, even if they genuinely believe a lower amount is due.',
   },
   {
     id: 5,
     question: 'Under the Construction Act, when can a "pay when paid" clause be relied upon?',
     options: [
+      'Only when the party from whom payment is due has become insolvent',
       'Whenever the MC has not been paid by the client',
       "When the MC has provided 30 days' notice",
-      'Only when the party from whom payment is due has become insolvent',
       'Never — they are always ineffective',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Section 113 of the Construction Act renders "pay when paid" clauses ineffective, with one exception: the clause can be relied upon if the party from whom payment is due under the upstream contract has become insolvent. "Insolvent" is defined in the Act and includes administration, liquidation, and certain other insolvency processes. The insolvency exception recognises that if the ultimate source of funding has collapsed, it may be impossible for the MC to pay. In all other circumstances, the MC\'s obligation to pay you is independent of whether they have been paid themselves.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'What costs can you claim if you exercise your right to suspend performance for non-payment?',
     options: [
       'No additional costs — suspension is at your own expense',
-      'Only the cost of materials left on site',
       'Reasonable costs of exercising the right of suspension, including an appropriate extension of time',
+      'Only the cost of materials left on site',
       'Unlimited damages including lost future profits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Section 112(3A) of the Construction Act (inserted by the 2009 amendments) provides that where the right to suspend performance is exercised, the party exercising it is entitled to an extension of time for the period of suspension and to recover any reasonable costs incurred as a consequence of the suspension. Reasonable costs include costs of standing down labour, securing the site, and demobilisation/remobilisation. This provision was added by the 2009 amendments to address the concern that subcontractors were reluctant to exercise the suspension right because they feared absorbing the costs.',
   },
@@ -171,11 +171,11 @@ const quizQuestions = [
       'A nominating body has 7 days to appoint an adjudicator after receiving a Notice of Adjudication. What happens next?',
     options: [
       'The adjudicator visits the site and inspects the work',
-      'The referring party submits their Referral Notice to the adjudicator within 7 days of appointment',
       'The responding party submits their defence within 7 days',
+      'The referring party submits their Referral Notice to the adjudicator within 7 days of appointment',
       "Both parties attend a hearing at the nominating body's offices",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "After the adjudicator is appointed, the referring party (the party who started the adjudication) has 7 days to prepare and submit their Referral Notice. The Referral Notice is the detailed statement of the referring party's case, including all relevant facts, arguments, and supporting evidence (documents, photographs, calculations, etc.). This is the referring party's opportunity to present their full case. The responding party then typically has 14 days to submit their Response. The adjudicator may request further information, hold a meeting, or visit the site if they consider it necessary — but they are not required to do any of these things.",
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'You are owed £8,000 for completed electrical work. The MC has not paid and did not issue a valid pay-less notice. Is adjudication a suitable option?',
     options: [
-      'No — adjudication is only for disputes over £50,000',
-      'Yes — this is a clear-cut payment dispute with strong grounds, and the amount justifies the cost of adjudication',
-      'No — you should wait at least 6 months before considering adjudication',
-      'Yes — but only if you hire a barrister to represent you',
+      'No — adjudication is reserved for disputes valued over £50,000',
+      'No — you must wait at least 6 months after the final date for payment',
+      'Yes — but only if you instruct a barrister to present your case',
+      'Yes — a clear-cut payment dispute where the amount justifies the cost',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is an ideal case for adjudication. The dispute is straightforward (non-payment of a notified sum without a valid pay-less notice), the evidence is clear (your payment application, the absence of a payment notice, the absence of a pay-less notice, the missed final date for payment), and the amount (£8,000) justifies the cost of adjudication (typically £2,000-£5,000 in adjudicator fees for a case of this nature). You do not need legal representation for a case this clear. The adjudicator will examine the payment notices (or lack thereof), apply the Construction Act provisions, and in most cases will order payment of the full notified sum plus interest.',
   },

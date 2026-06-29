@@ -15,23 +15,23 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Name one reason why neat cable dressing is important beyond appearance.',
     options: [
-      '31 January following the end of the tax year',
-      'Improves airflow and reduces heat build-up',
-      'To prevent cable damage and ensure proper fit',
-      'Operating below maximum ratings to ensure reliability',
+      'It increases the current rating of the cables',
+      'It improves airflow and reduces heat build-up',
+      'It removes the need to test the circuit',
+      'It allows a smaller protective device to be used',
     ],
     correctIndex: 1,
     explanation:
-      'Neat cable dressing improves airflow, reduces heat build-up, prevents strain on terminations, and makes maintenance easier - all critical safety and operational benefits.',
+      'Neat cable dressing improves airflow, reduces heat build-up, prevents strain on terminations, and makes maintenance easier — all critical safety and operational benefits.',
   },
   {
     id: 2,
     question: 'What must be avoided when using cable ties?',
     options: [
-      'Chemical resistant cable with appropriate sheath',
-      'File smooth or fit protective grommets',
-      'Over-tightening that crushes insulation',
-      'Ohmmeter or continuity tester',
+      'Routing cables to the sides of the box',
+      'Fitting protective grommets at entry points',
+      'Over-tightening that crushes the insulation',
+      'Leaving enough slack for re-termination',
     ],
     correctIndex: 2,
     explanation:
@@ -41,21 +41,21 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should ELV and mains cables be separated?',
     options: [
-      'Provides a parallel earth path that lowers Zs.',
-      '1-minute to 30-second reading ratio',
-      'Serial communication for industrial devices',
-      'To reduce electromagnetic interference and safety',
+      'It provides a parallel earth path that lowers Zs',
+      'It increases the supply voltage to the ELV system',
+      'It removes the need for any cable identification',
+      'To reduce electromagnetic interference and maintain safety',
     ],
     correctIndex: 3,
     explanation:
-      'ELV and mains cables must be separated to prevent electromagnetic interference and ensure safety by avoiding voltage transfer between systems.',
+      'ELV and mains cables must be separated to reduce electromagnetic interference and ensure safety by avoiding voltage transfer between systems.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'Which is NOT a benefit of neat cable dressing?',
+    question: 'Which of these is NOT a benefit of neat cable dressing?',
     options: [
       'Reduced heat build-up',
       'Increased voltage drop',
@@ -69,38 +69,38 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'True or False: Over-tightening cable ties is acceptable if it holds cables securely.',
+      'Is over-tightening cable ties acceptable provided it holds the cables securely?',
     options: [
-      'Only for small cables',
-      'True',
-      'False',
-      'Only in dry locations',
+      'Yes, for small cables only',
+      'Yes, in dry locations only',
+      'No, it can crush insulation and damage conductors',
+      'Yes, securing the cables is the priority',
     ],
     correctAnswer: 2,
     explanation:
-      'False - Over-tightening cable ties can crush insulation, damage conductors, and create safety hazards.',
+      'Over-tightening cable ties can crush insulation, damage conductors, and create safety hazards.',
   },
   {
     id: 3,
-    question: 'Name one tool or accessory used to secure cables inside enclosures.',
+    question: 'Which accessory is commonly used to secure cables inside an enclosure?',
     options: [
-      'Adhesive clips',
-      'Cable ties',
-      'Cable clamps',
-      'All of the above',
+      'A grommet strip',
+      'A back box blanking plate',
+      'A cable gland nut',
+      'A cable tie or cable clamp',
     ],
     correctAnswer: 3,
     explanation:
-      'Cable ties, clamps, and adhesive clips are all suitable for securing cables inside enclosures when properly rated.',
+      'Cable ties, clamps and adhesive clips are all suitable for securing cables inside enclosures when properly rated.',
   },
   {
     id: 4,
-    question: 'Why should cables be grouped by function?',
+    question: 'Why should cables be grouped by function inside an enclosure?',
     options: [
       'For logical routing and easier maintenance',
-      'To hold 30% of gross income for tax obligations',
-      'Ring broken or interconnection fault',
-      'Chrysotile, amosite, and crocidolite',
+      'To increase the current rating of the cables',
+      'To reduce the number of terminations needed',
+      'To remove the need for circuit labelling',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should be avoided to prevent blocking access to other terminals?',
     options: [
-      'Using cable ties',
-      'Crossing over terminals',
-      'Securing cables',
-      'Colour coding cables',
+      'Securing the cables with clips',
+      'Crossing cables over terminals',
+      'Colour-coding the cables',
+      'Grouping cables by function',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'Which regulation covers the requirement for avoiding undue stress on terminations?',
+    question: 'Which standard requires wiring in enclosures to avoid undue stress on terminations?',
     options: [
-      'BS 5839',
-      'BS EN 50172',
-      'BS 7671',
-      'BS 6701',
+      'BS 5839 (fire detection and alarm systems)',
+      'BS EN 50172 (emergency escape lighting)',
+      'BS 7671 (requirements for electrical installations)',
+      'BS 6701 (apparatus for IT systems)',
     ],
     correctAnswer: 2,
     explanation:
@@ -134,29 +134,29 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Why is a final visual inspection before closing the enclosure important?',
+    question: 'Why is a final visual inspection important before closing the enclosure?',
     options: [
-      'When dead testing is not practicable',
-      'Difference between synchronous and rotor speed',
-      'A hard-wired communication system or intrinsically safe radio',
-      'To ensure neatness, compliance, and accessibility',
+      'It replaces the need for dead testing',
+      'It increases the IP rating of the enclosure',
+      'It allows a smaller protective device to be used',
+      'To confirm neatness, compliance and accessibility',
     ],
     correctAnswer: 3,
     explanation:
-      'Final inspection ensures neatness, BS 7671 compliance, accessibility for future work, and professional standards.',
+      'Final inspection confirms neatness, BS 7671 compliance, accessibility for future work, and professional standards.',
   },
   {
     id: 8,
     question: 'Give one method for identifying cables inside an enclosure.',
     options: [
-      'All of the above',
-      'Cable labelling',
-      'Numbered cable markers',
-      'Colour-coded sleeving',
+      'Using numbered cable markers',
+      'Removing the cable sheath',
+      'Crossing cables over each other',
+      'Leaving extra slack in the loops',
     ],
     correctAnswer: 0,
     explanation:
-      'Numbered markers, colour coding, and labelling are all effective methods for cable identification in enclosures.',
+      'Numbered markers, colour coding and labelling are all effective methods for cable identification in enclosures.',
   },
 ];
 

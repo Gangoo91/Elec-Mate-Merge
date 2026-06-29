@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why are fuses connected in series with the load they protect?',
     options: [
-      'Reducing reheat energy and improving chiller efficiency',
+      'So the fuse only carries a fraction of the load current',
       'So current flows through both - if fuse blows, circuit opens',
-      'Responsible, Accountable, Consulted, Informed',
-      'Adequate support to prevent mechanical damage from cable weight',
+      'So the supply voltage is shared between fuse and load',
+      'So the fuse provides an alternative path around the load',
     ],
     correctAnswer: 1,
     explanation:

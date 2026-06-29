@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'In Self-Determination Theory, the three basic psychological needs are:',
     options: [
       'Safety, belonging, esteem',
-      'Autonomy, competence, relatedness',
       'Achievement, power, affiliation',
       'Survival, reproduction, status',
+      'Autonomy, competence, relatedness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Deci and Ryan\u2019s Self-Determination Theory identifies three basic psychological needs: autonomy (feeling in control of your own behaviour and goals), competence (feeling effective and capable), and relatedness (feeling connected to others). When all three are satisfied, intrinsic motivation flourishes.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is a characteristic of flow states?',
     options: [
+      'Complete focus with a sense of effortless action',
       'Heightened awareness of time passing',
       'Constant self-monitoring and self-criticism',
-      'Complete focus with a sense of effortless action',
       'Working under extreme stress and pressure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Flow is characterised by complete focus, a sense of effortless action (even in demanding tasks), time distortion (usually time seems to pass quickly), and intrinsic reward \u2014 the activity itself becomes deeply satisfying. Self-monitoring and self-criticism actually prevent flow from occurring.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'Intrinsic motivation is stronger than extrinsic motivation in all situations',
       'Extrinsic motivation comes from within; intrinsic from external rewards',
-      'Intrinsic motivation is doing something because it matters to you; extrinsic is doing it for external reward or to avoid punishment',
       'There is no meaningful difference \u2014 both produce the same results',
+      'Intrinsic motivation is doing something because it matters to you; extrinsic is doing it for external reward or to avoid punishment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Intrinsic motivation means engaging in an activity because you find it inherently interesting, enjoyable or meaningful. Extrinsic motivation means doing something for an external reward (money, praise) or to avoid punishment. Research consistently shows that intrinsic motivation leads to greater persistence, higher-quality performance and better wellbeing \u2014 though extrinsic motivators have their place, particularly for tasks that are inherently unenjoyable.',
   },

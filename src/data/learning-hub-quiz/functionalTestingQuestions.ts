@@ -5,10 +5,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-1',
     question: 'What is the purpose of functional testing?',
     options: [
-      'Operating and maintenance instructions',
+      'To measure the insulation resistance of each circuit',
       'To confirm equipment operates correctly as intended',
-      'Correct direction change and mechanical/electrical interlock',
-      'IET Code of Practice for EESS and manufacturer documentation',
+      'To verify earth fault loop impedance is within limits',
+      'To prove continuity of the protective conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -22,9 +22,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Which devices should be functionally tested?',
     options: [
       'Switchgear, controls, and interlocks',
-      'That settings match designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements',
-      'Correct cut-in and cut-out pressure settings',
-      'Operating and maintenance instructions',
+      'Only fixed wiring accessories such as sockets',
+      'Only the consumer unit main switch',
+      'Only devices rated above 32A',
     ],
     correctAnswer: 0,
     explanation:
@@ -37,9 +37,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-3',
     question: 'How is an RCD functionally tested?',
     options: [
-      'Last, after all other verification',
-      'Correct cut-in and cut-out pressure settings',
-      'Prevent access while equipment is energised',
+      'By measuring its insulation resistance to earth',
+      'By applying a 500V DC test across its terminals',
+      'By checking the rating marked on its casing',
       'By pressing the test button to see that it trips',
     ],
     correctAnswer: 3,
@@ -53,10 +53,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-4',
     question: 'Can circuit breakers be used as regular lighting switches?',
     options: [
-      'Equipment cannot operate without adequate ventilation',
-      'By pressing the test button to see that it trips',
+      'Yes, they are designed for frequent daily switching',
+      'Yes, provided the circuit is rated 6A or less',
       'Only if approved by manufacturer for switching duty',
-      'Correct operation between supply sources',
+      'Yes, but only on dedicated lighting circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -69,10 +69,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-5',
     question: 'What must be checked on adjustable protective devices?',
     options: [
-      "Be tested by appropriate specialists",
+      "That they are set to their maximum rating",
       "That settings match designer's requirements",
-      "It operates at the correct temperature setting",
-      "Correct operation between supply sources",
+      "That the adjustment dial is sealed shut",
+      "That they are set to the lowest available value",
     ],
     correctAnswer: 1,
     explanation:
@@ -83,16 +83,16 @@ export const functionalTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'ft-6',
-    question: 'How often does BS 7671 recommend pressing the RCD test button?',
+    question: 'What is the purpose of the notice required by Regulation 514.12.2?',
     options: [
-      'At least every 6 months',
-      'Monthly',
-      'Weekly',
-      'Annually',
+      'To remind the user to periodically test the RCD using its test button',
+      'To record the date the RCD was last replaced',
+      'To warn that the RCD must not be operated under load',
+      'To identify which circuits are not RCD protected',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 Regulation 514.12.2 recommends the RCD test button be pressed at least every 6 months.',
+      'Regulation 514.12.2 requires an RCD notice instructing the user to periodically operate the test button to confirm the device still functions correctly.',
     category: 'Functional Testing',
     difficulty: 'Beginner',
     regulation: 'BS 7671:514.12.2',
@@ -117,10 +117,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-8',
     question: 'AFDDs without test buttons:',
     options: [
-      'Correct start/stop function and latching',
-      'They prevent operation when conditions are unsafe',
+      'Are tested by creating a controlled arc fault',
+      'Are tested using a standard RCD test instrument',
       'Cannot be functionally tested in the field',
-      'By pressing the test button only',
+      'Are tested by measuring their trip current',
     ],
     correctAnswer: 2,
     explanation:
@@ -133,10 +133,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-9',
     question: 'What should be verified about equipment mounting during functional testing?',
     options: [
-      'Investigate, rectify, and retest before certification',
+      'That it is mounted only on combustible surfaces',
       'Properly installed, mounted, and adjusted',
-      'It operates at the correct temperature setting',
-      'Switchgear, controls, and interlocks',
+      'That it is secured using only adhesive fixings',
+      'That it can be moved freely after installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,9 +165,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'When testing interlocks, what must be verified?',
     options: [
       'They prevent operation when conditions are unsafe',
-      'By pressing the test button to see that it trips',
-      'Properly installed, mounted, and adjusted',
-      'Correct indication of equipment status',
+      'They allow operation regardless of safety conditions',
+      'They can be overridden without using a key',
+      'They only operate after a fixed time delay',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-12',
     question: 'Functional testing of energy storage systems (EESS) should refer to:',
     options: [
-      'Trip the circuit when voltage falls below set level',
+      'Only the standard Schedule of Test Results columns',
       'IET Code of Practice for EESS and manufacturer documentation',
-      'Investigate, rectify, and retest before certification',
-      'Confirmation that all devices operate correctly',
+      'Only BS 7671 Chapter 41 protection requirements',
+      'Only the on-site guide socket-outlet tables',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,10 +196,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-13',
     question: 'For dwellings with PV systems, what documentation should be provided?',
     options: [
-      'Verifying correct pull-in and drop-out operation',
-      'Trip the circuit when voltage falls below set level',
+      'Only a verbal handover to the occupier',
+      'Only the inverter packaging and warranty card',
       'Suitable commissioning records and maintenance information',
-      'That settings match designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements',
+      'Only the original electrical installation certificate',
     ],
     correctAnswer: 2,
     explanation:
@@ -212,9 +212,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-14',
     question: 'What is tested during switch functional testing?',
     options: [
-      'By pressing the test button to see that it trips',
-      'Correct operation between supply sources',
-      'Detection range, sensitivity, and time delay settings',
+      'The insulation resistance across the switch contacts',
+      'The earth fault loop impedance at the switch',
+      'The prospective fault current at the switch',
       'That the switch operates and makes/breaks the circuit',
     ],
     correctAnswer: 3,
@@ -229,9 +229,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Emergency stop buttons should be tested to verify:',
     options: [
       'They immediately disconnect the supply when operated',
-      'That the switch operates and makes/breaks the circuit',
-      'To confirm equipment operates correctly as intended',
-      'Trip the circuit when voltage falls below set level',
+      'They reset automatically after a short time delay',
+      'They only operate when the correct key is inserted',
+      'They disconnect the supply only at set liquid levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -244,10 +244,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-16',
     question: 'What is the purpose of testing time delay relays?',
     options: [
-      'Correct operation at set liquid levels',
+      'To verify they operate instantly with no delay',
       'To verify they operate at the correct time settings',
-      'They prevent motor operation in unsafe conditions',
-      'Confirmation that all devices operate correctly',
+      'To verify they trip at the correct residual current',
+      'To verify they operate at the correct temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -292,9 +292,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Dimmer switches should be tested for:',
     options: [
       'Smooth operation throughout range',
-      'At both remote and local positions',
-      'They only operate with the correct key',
-      'According to manufacturer instructions',
+      'Full brightness only, with no dimming check',
+      'Correct cut-in and cut-out pressure settings',
+      'Operation at one fixed light level only',
     ],
     correctAnswer: 0,
     explanation:
@@ -308,9 +308,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Contactor functional testing includes:',
     options: [
       'Verifying correct pull-in and drop-out operation',
-      'Correct cut-in and cut-out pressure settings',
-      'By pressing the test button to see that it trips',
-      'It provides complete isolation when operated',
+      'Verifying it remains closed when the coil de-energises',
+      'Verifying it trips at the correct residual current',
+      'Verifying it operates at the correct temperature',
     ],
     correctAnswer: 0,
     explanation:
@@ -323,9 +323,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-21',
     question: 'Timer switches should be verified for:',
     options: [
-      'At both remote and local positions',
-      'Properly installed, mounted, and adjusted',
-      'It provides complete isolation when operated',
+      'Correct response to ambient light levels',
+      'Correct cut-in and cut-out pressure settings',
+      'Correct detection range and sensitivity',
       'Correct on/off times as programmed',
     ],
     correctAnswer: 3,
@@ -339,10 +339,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-22',
     question: 'PIR (motion sensor) switches should be tested for:',
     options: [
-      'To confirm equipment operates correctly as intended',
-      'Design documentation and operating sequences',
+      'Correct on/off times as programmed by a clock',
+      'Correct cut-in and cut-out pressure settings',
       'Detection range, sensitivity, and time delay settings',
-      'By pressing the test button to see that it trips',
+      'Smooth dimming throughout the full output range',
     ],
     correctAnswer: 2,
     explanation:
@@ -355,10 +355,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-23',
     question: 'When testing an isolator, what must be confirmed?',
     options: [
-      'Detection range, sensitivity, and time delay settings',
+      'It isolates the line conductor but leaves neutral live',
       'It provides complete isolation when operated',
-      'Verify they correctly detect and indicate earth faults',
-      'By pressing the test button to see that it trips',
+      'It trips automatically under an earth fault',
+      'It dims the supply gradually when operated',
     ],
     correctAnswer: 1,
     explanation:
@@ -371,13 +371,14 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-24',
     question: 'Regulation 532.6 relates to:',
     options: [
-      'AFDD requirements',
-      'RCD testing',
-      'Earthing',
-      'Bonding',
+      'Arc fault detection device requirements',
+      'Residual current device testing intervals',
+      'Main protective bonding conductor sizing',
+      'Earth electrode resistance limits',
     ],
     correctAnswer: 0,
-    explanation: 'Regulation 532.6 covers Arc Fault Detection Device (AFDD) requirements.',
+    explanation:
+      'Regulation 532.6 sets out requirements for arc fault detection devices (AFDDs), which are also cross-referenced for AFDD inspection at 421.1.7 and 651.2(e).',
     category: 'Functional Testing',
     difficulty: 'Intermediate',
     regulation: 'BS 7671:532.6',
@@ -386,9 +387,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-25',
     question: 'A thermostatic control should be tested to verify:',
     options: [
-      'They only operate with the correct key',
-      'Cannot be functionally tested in the field',
-      'Last, after all other verification',
+      'It operates at the correct set liquid level',
+      'It operates at the correct programmed time',
+      'It operates at the correct residual current',
       'It operates at the correct temperature setting',
     ],
     correctAnswer: 3,
@@ -402,10 +403,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-26',
     question: 'Residual current monitors should be tested:',
     options: [
-      'Last, after all other verification',
-      'They prevent motor operation in unsafe conditions',
+      'By measuring their insulation resistance to earth',
+      'Only by checking their rating label is correct',
       'According to manufacturer instructions',
-      'Correct operation between supply sources',
+      'By energising them at twice their rated voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -418,10 +419,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-27',
     question: 'Key-operated switches must be tested to confirm:',
     options: [
-      'Properly installed, mounted, and adjusted',
+      'They operate freely without any key inserted',
       'They only operate with the correct key',
-      'Verified against designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specification',
-      'Switchgear, controls, and interlocks',
+      'They operate at the correct temperature setting',
+      'They trip automatically under an earth fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -435,9 +436,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'What should be checked on motor starter interlocks?',
     options: [
       'They prevent motor operation in unsafe conditions',
-      'Detection range, sensitivity, and time delay settings',
-      'IET Code of Practice for EESS and manufacturer documentation',
-      'Operating and maintenance instructions',
+      'They allow the motor to start in any condition',
+      'They permit two directions to be selected at once',
+      'They start the motor only at a set liquid level',
     ],
     correctAnswer: 0,
     explanation:
@@ -450,9 +451,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-29',
     question: 'Automatic changeover switches should be tested for:',
     options: [
-      'Smooth operation throughout range',
-      'Prevent access while equipment is energised',
-      'They only operate with the correct key',
+      'Their smooth dimming throughout the output range',
+      'Their correct detection range and sensitivity',
+      'Their correct cut-in and cut-out pressure',
       'Correct operation between supply sources',
     ],
     correctAnswer: 3,
@@ -466,10 +467,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-30',
     question: 'Ventilation interlock switches should verify:',
     options: [
-      'To confirm equipment operates correctly as intended',
+      'Equipment operates faster when ventilation fails',
       'Equipment cannot operate without adequate ventilation',
-      'Correct cut-in and cut-out pressure settings',
-      'Design documentation and operating sequences',
+      'Equipment continues to run if the fan is removed',
+      'Equipment shuts down only at a set liquid level',
     ],
     correctAnswer: 1,
     explanation:
@@ -498,9 +499,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-32',
     question: 'Fire alarm panel functional testing should:',
     options: [
-      'Prevent access while equipment is energised',
-      'Correct direction change and mechanical/electrical interlock',
-      'To confirm equipment operates correctly as intended',
+      'Be carried out by any electrician without restriction',
+      'Be limited to pressing the panel test button only',
+      'Be omitted if the panel is less than one year old',
       'Be performed by competent fire alarm specialist',
     ],
     correctAnswer: 3,
@@ -515,9 +516,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'What documentation should accompany complex control systems?',
     options: [
       'Operating and maintenance instructions',
-      'Be tested by appropriate specialists',
-      'Correct start/stop function and latching',
-      'Properly installed, mounted, and adjusted',
+      'Only the device packaging and a receipt',
+      'Only a single-line diagram of the supply',
+      'No documentation beyond the certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -530,10 +531,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-34',
     question: 'Push-button stations should be tested to confirm:',
     options: [
-      'It provides complete isolation when operated',
+      'They dim the load smoothly when pressed',
       'Correct start/stop function and latching',
-      'They stop movement at the correct position',
-      'Switchgear, controls, and interlocks',
+      'They operate at the correct temperature setting',
+      'They trip at the correct residual current',
     ],
     correctAnswer: 1,
     explanation:
@@ -546,10 +547,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-35',
     question: 'Overcurrent relay settings should be:',
     options: [
-      "Correct operation at set liquid levels",
-      "To confirm equipment operates correctly as intended",
-      "Verified against designer's specification",
-      "To verify they operate at the correct time settings",
+      "Set to the maximum available value as standard",
+      "Left at the factory default in every case",
+      "Verified against the designer's specification",
+      "Set to the lowest value to ensure fast tripping",
     ],
     correctAnswer: 2,
     explanation:
@@ -562,9 +563,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-36',
     question: 'Safety interlocks on access doors should:',
     options: [
-      'To verify they operate at the correct time settings',
-      'Be performed by competent fire alarm specialist',
-      'Operating and maintenance instructions',
+      'Allow the door to open while equipment runs',
+      'Energise the equipment when the door is opened',
+      'Operate only at a set temperature threshold',
       'Prevent access while equipment is energised',
     ],
     correctAnswer: 3,
@@ -579,9 +580,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Reversing starter contactors should be tested for:',
     options: [
       'Correct direction change and mechanical/electrical interlock',
-      'Only if approved by manufacturer for switching duty',
-      'It provides complete isolation when operated',
-      'Suitable commissioning records and maintenance information',
+      'Their ability to run in both directions simultaneously',
+      'Their correct cut-in and cut-out pressure settings',
+      'Their smooth dimming throughout the speed range',
     ],
     correctAnswer: 0,
     explanation:
@@ -594,10 +595,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-38',
     question: 'Undervoltage releases should be verified to:',
     options: [
-      'That settings match designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements',
+      'Trip the circuit when voltage rises above set level',
       'Trip the circuit when voltage falls below set level',
-      'Verified against designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specification',
-      'Prevent access while equipment is energised',
+      'Trip the circuit at the correct residual current',
+      'Trip the circuit at the correct operating temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -610,10 +611,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-39',
     question: 'Pilot lights and indicators should be tested for:',
     options: [
-      'Switchgear, controls, and interlocks',
-      'Smooth operation throughout range',
+      'Their correct cut-in and cut-out pressure',
+      'Their ability to switch the load they monitor',
       'Correct indication of equipment status',
-      'They stop movement at the correct position',
+      'Their correct trip time under fault conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -626,10 +627,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-40',
     question: 'Earth fault indicators should be tested to:',
     options: [
-      'Correct direction change and mechanical/electrical interlock',
-      'Equipment cannot operate without adequate ventilation',
+      'Verify they disconnect the supply on an earth fault',
+      'Verify they detect and indicate overvoltage conditions',
       'Verify they correctly detect and indicate earth faults',
-      'Detection range, sensitivity, and time delay settings',
+      'Verify they detect and indicate overcurrent conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -642,10 +643,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-41',
     question: 'Pressure switches (for pumps) should be tested for:',
     options: [
-      'Design documentation and operating sequences',
+      'Correct detection range and sensitivity to motion',
       'Correct cut-in and cut-out pressure settings',
-      'To verify they operate at the correct time settings',
-      'They stop movement at the correct position',
+      'Correct operation at set ambient temperatures',
+      'Correct response to changing light levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -659,9 +660,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Float switches should be tested to verify:',
     options: [
       'Correct operation at set liquid levels',
-      'Switchgear, controls, and interlocks',
-      'Be performed by competent fire alarm specialist',
-      'Confirmation that all devices operate correctly',
+      'Correct operation at set pressure thresholds',
+      'Correct operation at set ambient temperatures',
+      'Correct operation at set light levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -674,9 +675,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-43',
     question: 'Limit switches on machinery should be tested to confirm:',
     options: [
-      'Be performed by competent fire alarm specialist',
-      'At both remote and local positions',
-      'It operates at the correct temperature setting',
+      'They allow movement to continue past the end stop',
+      'They stop movement only at a set liquid level',
+      'They stop movement at the correct temperature',
       'They stop movement at the correct position',
     ],
     correctAnswer: 3,
@@ -690,10 +691,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-44',
     question: 'Photoelectric switches should be tested for:',
     options: [
-      'Be tested by appropriate specialists',
-      'Last, after all other verification',
+      'Correct response to pressure changes',
+      'Correct response to set liquid levels',
       'Correct response to light level changes',
-      'It operates at the correct temperature setting',
+      'Correct response to temperature changes',
     ],
     correctAnswer: 2,
     explanation:
@@ -706,10 +707,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-45',
     question: 'What must be available before functional testing?',
     options: [
-      'Only if approved by manufacturer for switching duty',
+      'Only the insulation resistance test results',
       'Design documentation and operating sequences',
-      'By pressing the test button only',
-      'Equipment cannot operate without adequate ventilation',
+      'Only the prospective fault current readings',
+      'Only the earth electrode resistance values',
     ],
     correctAnswer: 1,
     explanation:
@@ -723,9 +724,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     question: 'Sequence controls should be tested to verify:',
     options: [
       'Correct operation sequence is followed',
-      'Properly installed, mounted, and adjusted',
-      'Be tested by appropriate specialists',
-      'It operates at the correct temperature setting',
+      'All steps operate at the same time together',
+      'The sequence operates only in reverse order',
+      'Each step operates at the correct temperature',
     ],
     correctAnswer: 0,
     explanation:
@@ -738,9 +739,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-47',
     question: 'Alarm systems connected to the electrical installation should:',
     options: [
-      'Smooth operation throughout range',
-      'Prevent access while equipment is energised',
-      'Correct operation at set liquid levels',
+      'Be left untested if recently commissioned',
+      'Be tested only by pressing the panel reset button',
+      'Be tested by any electrician without restriction',
       'Be tested by appropriate specialists',
     ],
     correctAnswer: 3,
@@ -754,10 +755,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-48',
     question: 'Remote start/stop controls should be tested:',
     options: [
-      'Cannot be functionally tested in the field',
-      'Verified against designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specification',
+      'At the local position only',
+      'At the remote position only',
       'At both remote and local positions',
-      'Design documentation and operating sequences',
+      'Only after the supply has been isolated',
     ],
     correctAnswer: 2,
     explanation:
@@ -770,10 +771,10 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-49',
     question: 'What should be recorded after functional testing?',
     options: [
-      'That settings match designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements',
+      'Only the insulation resistance readings obtained',
       'Confirmation that all devices operate correctly',
-      'Correct operation sequence is followed',
-      'Only if approved by manufacturer for switching duty',
+      'Only the earth fault loop impedance values',
+      'Only the prospective fault current measured',
     ],
     correctAnswer: 1,
     explanation:
@@ -786,9 +787,9 @@ export const functionalTestingQuestions: QuizQuestion[] = [
     id: 'ft-50',
     question: 'If functional testing reveals a fault, what action is required?',
     options: [
-      'Verified against designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specification',
-      'Verifying correct pull-in and drop-out operation',
-      'They stop movement at the correct position',
+      'Certify the installation and note the fault for later',
+      'Ignore the fault if all other tests passed',
+      'Energise the installation and monitor the fault',
       'Investigate, rectify, and retest before certification',
     ],
     correctAnswer: 3,

@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'In a cascade boiler system, how are the boilers typically controlled to optimise efficiency?',
     options: [
-      'To confirm the defect has been properly corrected and safety restored',
+      'All boilers fire simultaneously regardless of the heat demand',
       'Lead boiler fires first with lag boilers sequenced as demand increases',
-      'To identify obvious faults safely before applying power',
-      'By ensuring materials are delivered as close as possible to their point of use',
+      'The largest boiler always runs alone until it reaches full output',
+      'Boilers fire in a random order to even out fuel consumption',
     ],
     correctIndex: 1,
     explanation:
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     question:
       'Which safety device must be wired into the boiler control circuit to meet Gas Safe requirements?',
     options: [
-      'To prevent materials and tools from falling off the edge',
-      'To meet maximum demand safely and effectively',
-      'Equipment not to cause or be susceptible to interference',
+      'A 30mA residual current device on the supply only',
+      'A surge protection device at the consumer unit',
+      'A simple manual on/off switch on the gas supply',
       'Overheat thermostat and gas solenoid valve interlock',
     ],
     correctIndex: 3,
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'What is the primary characteristic that distinguishes a condensing boiler from a conventional boiler?',
     options: [
-      'Identification of different circuits and functions',
+      'It burns gas at a much higher temperature than a conventional boiler',
       'Recovery of latent heat from flue gases by condensing water vapour',
-      'It represents the conductor material and insulation type constant',
-      'Two-way communication and individual addressing',
+      'It requires no flue because all combustion gases are reused',
+      'It heats water electrically rather than by burning gas',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'In a cascade boiler system, what is the purpose of lead-lag rotation?',
     options: [
-      'As specified by the manufacturer, typically 4-8 metres equivalent',
-      'Benchmark commissioning checklist and Building Regulations notification',
+      'To force all boilers to run continuously at full output',
+      'To increase the maximum flow temperature of the system',
       'To ensure even wear and extend service life across all boilers',
-      'Fused connection unit on a dedicated radial circuit',
+      'To remove the need for any hydraulic separation device',
     ],
     correctAnswer: 2,
     explanation:
@@ -198,10 +198,10 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of electrical supply is typically required for a domestic boiler?',
     options: [
-      'Vertical balanced flue through the roof',
+      'A three-phase 400V supply on its own dedicated circuit',
       'Fused connection unit on a dedicated radial circuit',
-      'As specified by the manufacturer, typically 4-8 metres equivalent',
-      'To ensure even wear and extend service life across all boilers',
+      'A 13A plug into the nearest available socket outlet',
+      'A 32A radial circuit shared with the cooker supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,10 +211,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of the condensate trap on a condensing boiler?',
     options: [
-      'Benchmark commissioning checklist and Building Regulations notification',
-      'Vertical balanced flue through the roof',
+      'To neutralise the acidity of the condensate before discharge',
+      'To increase the flow rate of condensate to the drain',
       'To prevent flue gases escaping via the condensate drain',
-      'To ensure even wear and extend service life across all boilers',
+      'To store condensate for later use in the heating system',
     ],
     correctAnswer: 2,
     explanation:
@@ -240,9 +240,9 @@ const quizQuestions = [
       'Under Gas Safe requirements, what documentation must be provided to the customer after boiler installation?',
     options: [
       'Benchmark commissioning checklist and Building Regulations notification',
-      'To ensure even wear and extend service life across all boilers',
-      'As specified by the manufacturer, typically 4-8 metres equivalent',
-      'To prevent flue gases escaping via the condensate drain',
+      'An Electrical Installation Certificate to BS 7671 only',
+      'A water hygiene certificate under L8 and HSG274',
+      'A manufacturer warranty card with no notification required',
     ],
     correctAnswer: 0,
     explanation:
@@ -253,10 +253,10 @@ const quizQuestions = [
     question:
       'What is the maximum horizontal length for a room-sealed balanced flue on a typical domestic boiler?',
     options: [
-      'Fused connection unit on a dedicated radial circuit',
+      'A fixed maximum of 1 metre regardless of the model',
       'As specified by the manufacturer, typically 4-8 metres equivalent',
-      'To ensure even wear and extend service life across all boilers',
-      'Benchmark commissioning checklist and Building Regulations notification',
+      'Unlimited length provided bends are kept to a minimum',
+      'A fixed maximum of 20 metres set by Building Regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -267,10 +267,10 @@ const quizQuestions = [
     question:
       'In a cascade boiler installation, what is the typical method of hydraulic separation between boilers and the heating system?',
     options: [
-      'Specific locations of air leakage paths',
-      'New installations and major alterations',
+      'A single shared expansion vessel for all boilers',
+      'A motorised three-port diverter valve per boiler',
       'Low-loss header or hydraulic separator',
-      'Boiler plant startup and staging sequence',
+      'A non-return valve fitted only on the system return',
     ],
     correctAnswer: 2,
     explanation:

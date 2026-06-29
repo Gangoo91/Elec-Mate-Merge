@@ -5,10 +5,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of override functions in a BMS?',
     options: [
-      'Increase chiller operation, lower cooling setpoints, and maximise fresh air intake',
+      'To permanently replace automatic control with manual operation',
       'To allow temporary manual control for maintenance, emergencies, and special events',
-      'To prevent energy waste and ensure safety functions aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t permanently disabled',
-      'Facility managers using BMS software to force equipment into specific states for testing',
+      'To disable safety interlocks so equipment can run continuously',
+      'To increase the number of sensors monitored by the controller',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Give one example of a local override.',
     options: [
-      'Increase chiller operation, lower cooling setpoints, and maximise fresh air intake',
-      'Facility managers using BMS software to force equipment into specific states for testing',
+      'A scheduled time clock starting the boilers each morning',
+      'A central head-end command changing the entire building setpoint',
       'A wall-mounted switch allowing occupants to extend HVAC operation in a meeting room',
-      'Chillers ran continuously even when demand was low, leading to high energy bills',
+      'An automatic frost-protection routine triggered by an outdoor sensor',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Give one example of an operator override.',
     options: [
-      'To allow temporary manual control for maintenance, emergencies, and special events',
+      'A fire alarm signal shutting down air handling units automatically',
       'A wall-mounted switch allowing occupants to extend HVAC operation in a meeting room',
-      'To balance heating and cooling systems and avoid simultaneous operation that wastes energy',
+      'An occupancy sensor switching off lighting in an empty room',
       'Facility managers using BMS software to force equipment into specific states for testing',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     question: 'Why should overrides be logged or time-limited?',
     options: [
       "To prevent energy waste and ensure safety functions aren't permanently disabled",
-      "To allow temporary manual control for maintenance, emergencies, and special events",
-      "Increase chiller operation, lower cooling setpoints, and maximise fresh air intake",
-      "A wall-mounted switch allowing occupants to extend HVAC operation in a meeting room",
+      "To remove the need for any automatic control schedules",
+      "To allow occupants rather than operators to set system limits",
+      "To reduce the number of sensors the controller must monitor",
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What changes might a BMS make during winter operation?',
     options: [
-      'A wall-mounted switch allowing occupants to extend HVAC operation in a meeting room',
+      'Increase chiller output, lower cooling setpoints and maximise fresh air intake',
       'Increase boiler firing, raise heating setpoints, and activate heat recovery systems',
-      'Facility managers using BMS software to force equipment into specific states for testing',
-      'To prevent energy waste and ensure safety functions aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t permanently disabled',
+      'Disable both heating and cooling to rely on natural ventilation',
+      'Run heating and cooling simultaneously to hold a fixed setpoint',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What changes might a BMS make during summer operation?',
     options: [
-      'To balance heating and cooling systems and avoid simultaneous operation that wastes energy',
-      'To allow temporary manual control for maintenance, emergencies, and special events',
+      'Increase boiler firing, raise heating setpoints and activate frost protection',
+      'Shut down all air handling to minimise fresh air intake',
       'Increase chiller operation, lower cooling setpoints, and maximise fresh air intake',
-      'Chillers ran continuously even when demand was low, leading to high energy bills',
+      'Hold heating and cooling at identical setpoints all day',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,8 +83,8 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why are seasonal settings important during spring/autumn?',
     options: [
-      'To allow temporary manual control for maintenance, emergencies, and special events',
-      'Increase chiller operation, lower cooling setpoints, and maximise fresh air intake',
+      'To force the chillers to run at full output regardless of demand',
+      'To keep the heating permanently enabled until mid-summer',
       'To prevent safety systems from being compromised by comfort control failures',
       'To balance heating and cooling systems and avoid simultaneous operation that wastes energy',
     ],
@@ -96,10 +96,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 8,
     question: 'What type of sensor allows a BMS to detect seasonal changes?',
     options: [
-      'Outdoor temperature sensors',
-      'Pressure sensors only',
-      'Indoor humidity sensors only',
-      'Flow sensors only',
+      'Outdoor air temperature sensors',
+      'Duct static pressure sensors',
+      'Indoor occupancy sensors',
+      'Chilled water flow sensors',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians separate safety overrides from comfort overrides?',
     options: [
-      'To allow temporary manual control for maintenance, emergencies, and special events',
+      'So comfort overrides can be adjusted by any building occupant',
       'To prevent safety systems from being compromised by comfort control failures',
-      'Facility managers using BMS software to force equipment into specific states for testing',
-      'Increase boiler firing, raise heating setpoints, and activate heat recovery systems',
+      'So both override types can share a single time-limit setting',
+      'To reduce the amount of control wiring needed in the panel',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const bmsModule3Section5QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the real-world example, what problem did continuous manual overrides cause?',
     options: [
-      'To prevent safety systems from being compromised by comfort control failures',
-      'To allow temporary manual control for maintenance, emergencies, and special events',
+      'Occupants lost the ability to adjust local room temperatures',
+      'The fire alarm interface stopped shutting down the air handling units',
       'Chillers ran continuously even when demand was low, leading to high energy bills',
-      'A wall-mounted switch allowing occupants to extend HVAC operation in a meeting room',
+      'Frost protection activated repeatedly and overheated the boilers',
     ],
     correctAnswer: 2,
     explanation:

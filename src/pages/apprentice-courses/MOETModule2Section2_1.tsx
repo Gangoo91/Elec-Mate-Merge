@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'dc-characteristic',
     question: 'What is the defining characteristic of direct current (DC)?',
     options: [
-      'Loss caused by a gap between fibre end-faces at a connection',
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
+      'Current reverses direction fifty times every second',
       'Current flows in one direction only with a constant or near-constant magnitude',
-      'To compensate for uneven ground and ensure the tower is level',
+      'Current flows only when a transformer steps the voltage down',
+      'Current varies sinusoidally between positive and negative peaks',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Direct current flows in one direction only. Unlike AC, the electrons move consistently from the negative terminal to the positive terminal of the source. The magnitude may be constant (as from a regulated supply) or may vary (as from an unsmoothed rectifier), but the direction remains the same.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Which type of rectifier uses four diodes to convert AC to DC using both half-cycles of the waveform?',
     options: [
-      'Full-wave bridge rectifier',
-      'Full-wave centre-tap rectifier',
       'Half-wave rectifier',
+      'Full-wave centre-tap rectifier',
+      'Full-wave bridge rectifier',
       'Three-phase rectifier',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'A full-wave bridge rectifier uses four diodes arranged in a bridge configuration. During each half-cycle, two diodes conduct and two are reverse-biased, meaning both positive and negative half-cycles of the AC input are converted to a pulsating DC output. This is the most common rectifier configuration in industrial power supplies.',
   },
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'dc-polarity',
     question: 'Why is correct polarity essential when connecting DC equipment?',
     options: [
-      'The value of work actually completed expressed in terms of the budget',
-      'Stop work, inform a colleague, and descend to ground level carefully using the proper access route',
-      'A specific action that reduces energy consumption while maintaining service levels',
+      'Reversed polarity increases the supply frequency and overspeeds motors',
+      'Reversed polarity raises the voltage above the rated value of the supply',
+      'Reversed polarity has no effect on DC equipment, only on AC equipment',
       'Reversed polarity can damage components, cause overheating, or create safety hazards',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is a primary source of direct current?',
     options: [
-      'A 22 mm copper incoming water service pipe',
+      'A three-phase alternator driven by a turbine',
       'A battery or electrochemical cell',
-      'Preventing falls in scaffolding operations',
-      'Transit time difference of sound waves',
+      'A step-down distribution transformer',
+      'The mains supply at a 13 A socket-outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What happens to the total capacity (Ah) when batteries are connected in parallel?',
     options: [
-      'To reduce ripple and produce a steadier DC output',
-      'Remove all metallic jewellery and use insulated tools to prevent short circuits',
+      'The total capacity stays the same as a single battery',
+      'The total capacity is halved compared to a single battery',
       'The total capacity equals the sum of all individual capacities',
-      'Fewer conversion stages reduce energy losses and improve efficiency',
+      'The total capacity depends on the total voltage of the string',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'What is the primary function of a smoothing capacitor in a DC power supply?',
     options: [
       'To reduce ripple and produce a steadier DC output',
-      'The total capacity equals the sum of all individual capacities',
-      'The battery is degrading and may need replacement',
-      'The supply polarity has been reversed',
+      'To convert the alternating current into direct current',
+      'To step the output voltage up to a higher level',
+      'To protect the rectifier diodes from reverse voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,7 +196,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Under BS 7671:2018+A3:2024, Band I for DC extends up to 120 V ripple-free DC (compared to 50 V for AC). This higher threshold reflects the fact that DC is less likely to cause ventricular fibrillation at equivalent voltages. Band II DC extends from 120 V to 1500 V.',
+      'Under BS 7671, Band I for DC extends up to 120 V ripple-free DC (compared to 50 V for AC). This higher threshold reflects the fact that DC is less likely to cause ventricular fibrillation at equivalent voltages. Band II DC extends from 120 V to 1500 V.',
   },
   {
     id: 11,
@@ -217,9 +217,9 @@ const quizQuestions = [
     question: 'What safety precaution is essential before working on a DC battery bank?',
     options: [
       'Remove all metallic jewellery and use insulated tools to prevent short circuits',
-      'The total capacity equals the sum of all individual capacities',
-      'Fewer conversion stages reduce energy losses and improve efficiency',
-      'The ratio of AC ripple component to the DC component of the output',
+      'Switch off the supply at the consumer unit to make the battery dead',
+      'Wait for the battery to fully discharge before touching the terminals',
+      'Connect an additional battery in parallel to share the load first',
     ],
     correctAnswer: 0,
     explanation:

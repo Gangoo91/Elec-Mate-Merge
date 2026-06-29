@@ -18,10 +18,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Who is defined as the Responsible Person under the Fire Safety Order?',
     options: [
-      'The fire risk assessment (FRA) conducted under the Fire Safety Order',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'The fire and rescue authority for the area in which the premises are located',
+      'Any competent person who carries out the fire risk assessment',
       'The person having control of the premises (employer, owner, landlord, or delegated manager)',
-      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
+      'The most senior employee physically present in the building each day',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Why must emergency lighting activate independently of the fire alarm system?',
     options: [
-      'Fire risk assessment, emergency lighting test records, and installation certificates',
-      'Unlimited fines, imprisonment up to 2 years, Prohibition Notices closing premises, and potential corporate manslaughter charges',
-      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
+      'Because the fire alarm panel draws too much current to also power luminaires',
+      'Because emergency luminaires are tested annually while alarms are tested weekly',
+      'Because building control only certifies the two systems when they are separated',
       'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     question: 'Which location must always be illuminated as part of the fire strategy?',
     options: [
       'Fire alarm control panels and fire-fighting equipment',
-      'At origin, distribution boards, and where device ratings change',
-      'Extensive experience and specialist knowledge',
-      'Interpreting data from tables and performing comparison calculations',
+      'Plant rooms and electrical intake cupboards used only by maintenance staff',
+      'Storage areas and stockrooms with no public access',
+      'External car parks and the building perimeter footpaths',
     ],
     correctAnswer: 0,
     explanation:
@@ -58,10 +58,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     question:
       'What document determines the specific emergency lighting requirements for a building?',
     options: [
-      'To protect cables from sharp edges and prevent insulation damage',
+      'The Electrical Installation Certificate issued under BS 7671',
       'The fire risk assessment (FRA) conducted under the Fire Safety Order',
-      'Record as failed, investigate cause, rectify, and re-test',
-      'Inductive and capacitive loads storing and releasing energy',
+      'The manufacturer data sheet for the chosen emergency luminaires',
+      'The building insurance policy schedule held by the owner',
     ],
     correctAnswer: 1,
     explanation:
@@ -72,10 +72,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     question:
       'What authority enforces compliance with fire safety regulations in England and Wales?',
     options: [
-      'Competence — having the technical knowledge OR being suitably supervised',
-      'Overload and fault current (short-circuit)',
+      'The Health and Safety Executive (HSE)',
+      'Local authority building control departments',
       'Fire and Rescue Authorities (local Fire and Rescue Services)',
-      'Commissioning certificates, as-built drawings, emergency lighting logbook',
+      'The Institution of Engineering and Technology (IET)',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,9 +99,9 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     question: 'Why is it essential to link emergency lighting drawings with the fire strategy?',
     options: [
       'Because fire authorities require it, and it proves integration with evacuation strategy',
-      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
-      'Fire risk assessment, emergency lighting test records, and installation certificates',
-      'The person having control of the premises (employer, owner, landlord, or delegated manager)',
+      'Because it allows the installer to reduce the number of luminaires required',
+      'Because the drawings replace the need for a separate fire risk assessment',
+      'Because manufacturers will not honour warranties without linked drawings',
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +111,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What penalty can occur for failing to maintain compliant emergency lighting?',
     options: [
-      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
+      'A written improvement notice only, with no financial or custodial penalty',
       'Unlimited fines, imprisonment up to 2 years, Prohibition Notices closing premises, and potential corporate manslaughter charges',
-      'The person having control of the premises (employer, owner, landlord, or delegated manager)',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'Suspension of the building insurance until remedial works are completed',
+      'A fixed civil penalty capped at £1,000 per affected luminaire',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 10,
     question: 'What was the compliance issue in the Manchester retail complex case study?',
     options: [
-      "The person having control of the premises (employer, owner, landlord, or delegated manager)",
-      "Because power failure may occur without fire, and fire may occur without triggering alarms immediately",
+      "The luminaires failed the annual three-hour discharge duration test",
+      "Escape route illuminance fell below the 1 lux minimum on the centre line",
       "The system achieved adequate lighting but documentation wasn't integrated with the fire safety strategy",
-      "Unlimited fines, imprisonment up to 2 years, Prohibition Notices closing premises, and potential corporate manslaughter charges",
+      "Emergency luminaires were wired to the same circuit as the fire alarm",
     ],
     correctAnswer: 2,
     explanation:

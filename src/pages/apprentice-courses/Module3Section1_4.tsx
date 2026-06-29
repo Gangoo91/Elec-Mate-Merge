@@ -51,9 +51,9 @@ const quickCheckQuestions = [
     question: 'Why must correct glands be used when terminating SWA?',
     options: [
       'To earth the armour and provide sealing',
-      'Results, test conditions, and equipment details',
-      'Construction Design Management',
-      'Protection against direct contact',
+      'To reduce the voltage drop along the cable',
+      'To increase the current rating of the cable',
+      'To allow the cable to be bent more tightly',
     ],
     correctIndex: 0,
     explanation:
@@ -139,9 +139,9 @@ const quizQuestions = [
     id: 7,
     question: 'When stripping SWA, what must be done to the armour wires?',
     options: [
-      'Steel wire mechanical protection',
-      'It produces less toxic smoke in a fire',
-      'To earth the armour and provide sealing',
+      'Cut them flush with the inner sheath and discard them',
+      'Twist them all together into a single earth tail',
+      'Strip them back further than the conductors',
       'Leave them long and fold back over the gland',
     ],
     correctAnswer: 3,
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why might LSZH sheathing be specified instead of PVC?',
     options: [
-      'Steel wire mechanical protection',
+      'It provides greater mechanical protection than PVC',
       'It produces less toxic smoke in a fire',
-      'To earth the armour and provide sealing',
-      'Leave them long and fold back over the gland',
+      'It increases the current-carrying capacity',
+      'It allows a tighter bending radius',
     ],
     correctAnswer: 1,
     explanation:

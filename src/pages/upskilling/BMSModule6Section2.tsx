@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'event-based-logging',
     question: 'Why is event-based data logging useful in fault diagnosis?',
     options: [
-      'It records data faster than continuous logging',
-      'It captures the exact timing of system changes (pump starts, alarms) to identify the sequence of events',
-      'It uses less storage space',
+      'It timestamps each change to reveal the sequence of events',
+      'It records data faster than continuous interval logging',
+      'It always uses less storage space than any other method',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Event-based logging captures the exact timing of system changes which helps engineers understand the sequence of events leading to a fault. This timeline is crucial for identifying root causes.',
   },
@@ -22,21 +22,21 @@ const quickCheckQuestions = [
     id: 'trend-energy-waste',
     question: 'How can trend logs help reduce energy waste?',
     options: [
-      'By automatically fixing energy problems',
-      'By revealing patterns like equipment running during unoccupied hours',
-      'By increasing system efficiency directly',
+      'By automatically correcting energy problems on their own',
+      'By directly increasing the efficiency of the plant',
+      'By revealing waste such as plant running when unoccupied',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Trend logs reveal patterns of energy waste such as equipment running during unoccupied hours, systems operating at inefficient settings, or simultaneous heating and cooling.',
   },
   {
     id: 'sensor-calibration-data',
-    question: 'Why is sensor calibration critical for reliable historical data?',
+    question: 'Why is poor sensor calibration a problem for reliable historical data?',
     options: [
-      'It makes sensors last longer',
-      'It creates systematic errors that make historical analysis unreliable',
-      'It reduces installation costs',
+      'It shortens the working life of the sensor element',
+      'It creates systematic errors that make the analysis unreliable',
+      'It increases the installation cost of the overall system',
     ],
     correctIndex: 1,
     explanation:
@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     id: 'logging-frequency',
     question: 'Why should logging frequencies be chosen carefully?',
     options: [
-      'To save money on sensors',
-      'Because too frequent creates data overload while too slow misses important events',
-      'To comply with colour coding standards',
+      'To reduce the number of field sensors required',
+      'Too frequent overloads storage while too slow misses events',
+      'To comply with the cable colour coding standards',
     ],
     correctIndex: 1,
     explanation:
@@ -83,9 +83,9 @@ const quizQuestion = {
   question:
     'An office building logged CO2 levels as constant 400 ppm for weeks, despite air quality complaints. Investigation found the sensor was wired but never powered. What does this demonstrate?',
   options: [
-    'The BMS software had a bug',
-    'CO2 sensors are unreliable',
-    'Commissioning verification of the entire signal path is essential for reliable data',
+    'The BMS logging software contained a bug',
+    'CO2 sensors are inherently unreliable devices',
+    'The whole signal path must be verified at commissioning',
     'Air quality complaints are usually exaggerated',
   ],
   correctAnswer: 2,

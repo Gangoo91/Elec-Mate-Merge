@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'Commercial EV charging includes which install patterns?',
     options: [
-      'Only motorway services',
-      'Workplace AC (Mode 3 single-phase / three-phase), public AC bays (kerbside, car parks), public DC fast (motorway services, urban hubs), fleet depot (overnight + sequential), commercial / industrial customer-curtilage. All within Section 722 scope; layered with site-specific regulatory frameworks (PCAR 2023 for public, OZEV / Workplace Charging Scheme for workplace)',
-      'Only domestic',
-      'Only public',
+      'Only motorway service-area rapid DC chargers serving long-distance public traffic',
+      'Only domestic single-dwelling wallboxes, scaled up for larger commercial premises',
+      'Only public-access kerbside and car-park bays with contactless payment integration',
+      'Workplace AC, public AC, public DC fast, fleet depot and commercial-curtilage installs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commercial EV charging is a broad family. Workplace = employer providing chargers for staff (typically Mode 3 7-22 kW). Public AC bays = kerbside, council car parks, supermarket bays (typically Mode 3 7-22 kW with payment). Public DC fast = motorway services, urban rapid hubs (50-350 kW DC). Fleet = depot overnight charging for taxi / LCV / delivery vehicles (typically Mode 3 with sequential scheduling). Commercial / industrial = on customer curtilage (workshop, agricultural, business premises). All within Section 722 scope; each has its own additional regulatory layer (PCAR 2023 for public; OZEV / WCS for workplace; PAS 1899 accessibility for public).',
   },
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'When does the EV charging install require DNO notification under EREC G98 / G99?',
     options: [
-      'Always',
-      'Below ~3.68 kW per phase: G98 fast-track notification typically not required (well below thresholds). Above: G98 (single-phase ≤ 16 A per phase) OR G99 (above 16 A per phase, three-phase, or above 50 kW total) — formal DNO application with technical info required. Commercial sites with multiple chargers + BESS + PV always trigger G99',
-      'Only above 1 MW',
-      'Never',
+      'Pure load usually stays below G98 thresholds, but co-located generation triggers a G99 application',
+      'DNO notification is always required for every EV charger, however small the connected load is',
+      'Notification is only ever required above a 1 MW connection, regardless of generation on the site',
+      'EV charging never requires any DNO notification at all because it is pure load and not generation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'EREC G98 and G99 are Engineering Recommendations from the Energy Networks Association for connecting generating equipment to the public distribution network. G98 covers Type A (single-phase ≤ 16 A or three-phase ≤ 16 A per phase) — fast-track or post-installation notification. G99 covers larger installs — formal pre-installation application + DNO approval. For EV charging: pure load (not generation) is generally below DNO notification thresholds; but bidirectional V2G + BESS + PV co-located create generation that triggers G99. Always consult the local DNO at design stage for commercial sites with multi-charger / BESS / V2G capability. Cert evidence bundle records the DNO correspondence + reference number.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'BS EN IEC 61439-7:2023 covers which assemblies?',
     options: [
-      'Only domestic CUs',
-      'Low-voltage switchgear and controlgear assemblies for SPECIFIC APPLICATIONS — marinas, camping sites, market squares, ELECTRIC VEHICLE CHARGING STATIONS. Where multiple chargers are housed in a single assembly (commercial / public / fleet hub), this standard applies to the assembly itself. Single domestic wallbox usually NOT in BS EN IEC 61439-7 scope',
-      'Only industrial',
-      'Only residential',
+      'Only domestic consumer units installed in single dwellings under Section 421 of BS 7671',
+      'Only heavy industrial motor control centres rated above the low-voltage assembly threshold',
+      'LV assemblies for specific applications — marinas, camping sites, market squares, EV charging',
+      'Only residential lighting distribution boards feeding final circuits within a dwelling',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS EN IEC 61439-7:2023 — "Low-voltage switchgear and controlgear assemblies — Assemblies for specific applications such as marinas, camping sites, market squares, electric vehicle charging stations". The standard sets type-test, routine-test, design and construction requirements for assemblies in these specific contexts. UK 2025-26 commercial EV reality: where multiple chargepoints share a common enclosure or distribution panel (public hub, workplace bank, fleet depot), the assembly must comply with BS EN IEC 61439-7. Single domestic wallbox is a factory-built complete unit (covered by BS EN 61851 + BS EN 62208) and 61439-7 is generally not directly invoked. Cert evidence bundle records the assembly’s 61439-7 conformity declaration.',
   },
@@ -66,12 +66,12 @@ const inlineChecks = [
     question:
       'How does Section 722 scale from domestic (M6) to commercial (M7)?',
     options: [
-      'Different regulations apply',
-      'Same Section 722 regulations apply; the install patterns change. Domestic: single-phase 7 kW Mode 3, PME-on-EV via OPDD, dedicated final circuit, smart-charging per SCP-Regs 2021. Commercial: three-phase 22 kW Mode 3 or Mode 4 DC fast, multiple chargers per site (BS EN IEC 61439-7 assemblies), OCPP for management, DLM across the cluster, PCAR 2023 for public charging — but Section 722.x regs (722.411.4 PME alternatives, 722.531.3.101 RCD architecture, IET CoP dedicated circuit per charger) still apply',
-      'Commercial is exempt',
-      'Domestic is exempt',
+      'A different, separate set of regulations replaces Section 722 for commercial EV charging',
+      'Commercial EV charging is exempt from Section 722 entirely and uses BS EN 61439-7 alone',
+      'Domestic EV charging is exempt from Section 722 entirely, which applies only commercially',
+      'The same Section 722 regs apply; only the install scale and layered frameworks change',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Section 722 applies uniformly across domestic and commercial EV charging. The regulatory layers (PME alternatives per 722.411.4, RCD architecture per 722.531.3.101, dedicated final circuit per IET Code of Practice for EV Charging Equipment Installation) apply equally. What changes with commercial is the install scale + the additional regulatory frameworks LAYERED ON TOP: PCAR 2023 for public-access chargers; OZEV / Workplace Charging Scheme for workplaces; PAS 1899 for accessibility; BS EN IEC 61439-7 for multi-charger assemblies; OCPP for networked management. Cert evidence bundle for commercial install integrates Section 722 (BS 7671) + the layered commercial frameworks.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'A commercial customer wants four 22 kW three-phase chargers at their workplace, fed from a single three-phase 100 A supply. What is the regulatory stack?',
     options: [
-      'Only BS 7671',
-      'Layered stack: (1) BS 7671 Section 722 — earthing-tree per 722.411.4 (per charger), RCD architecture per 722.531.3.101 (per charger), dedicated final circuit per IET Code of Practice for EV Charging Equipment Installation (per charger); (2) BS EN IEC 61439-7:2023 — the multi-charger distribution assembly; (3) Reg 311.1 + Reg 722.311.201 — max demand with DLM (4 × 32 A per phase = 128 A per phase nominal vs 100 A supply — DLM mandatory); (4) EREC G99 — DNO notification for the multi-charger site if BESS / V2G present; (5) BS EN IEC 61851 series — charging equipment; (6) BS EN IEC 62196-2 — Type 2 connector; (7) OZEV Workplace Charging Scheme — grant funding eligibility',
-      'Only domestic regs',
-      'No regulations',
+      'A layered stack: Section 722 per charger, 61439-7 assembly, max demand with DLM, G99 and OZEV WCS',
+      'Only BS 7671 with no other framework involved, since the wiring regs cover the whole install',
+      'Only the domestic-scale regulations, identical to a single 7 kW single-phase domestic wallbox',
+      'No regulations apply at all because it is a private workplace not accessible to the public',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Commercial multi-charger sites integrate every regulatory layer. BS 7671 Section 722 provides the core electrical safety regs (applied per charger). BS EN IEC 61439-7 governs the multi-charger assembly (test reports + manufacturer conformity declaration). Reg 311.1 + Reg 722.311.201 enable DLM — essential because 4 × 32 A = 128 A per phase exceeds the 100 A supply (DLM throttles to fit). EREC G99 covers DNO notification where the site includes generation (BESS / V2G); pure load chargers below G99 thresholds may use G98. BS EN IEC 61851 + 62196-2 cover the charging equipment. OZEV Workplace Charging Scheme provides up to £350 per chargepoint grant funding for eligible workplaces. Cert evidence bundle integrates all layers.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'A workplace install for fleet vehicles. The customer asks "do we need PCAR 2023 compliance?" What is the answer?',
     options: [
-      'Yes, always',
-      'No — PCAR 2023 (Public Charge Point Regulations 2023) applies to PUBLIC charge points (open to the general public). Workplace chargers used only by employees + visitors are NOT public charge points under PCAR scope. They’re still in Section 722 scope (BS 7671) + OZEV Workplace Charging Scheme if grant-funded + SCP Regulations 2021 if smart-charging — but PCAR 2023 doesn’t apply',
-      'PCAR 2023 doesn’t exist',
-      'Only domestic',
+      'Yes, PCAR 2023 applies to every EV charger regardless of who actually uses the charge point',
+      'PCAR 2023 is not a real set of regulations and has no bearing on a workplace fleet install',
+      'No — PCAR covers public charge points; staff-only workplace chargers fall under Section 722 and WCS',
+      'PCAR 2023 applies only to domestic wallboxes and never to a commercial workplace install',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PCAR 2023 = Public Charge Point Regulations 2023 (UK statutory regulations governing PUBLIC EV charging points). Applies to chargepoints "available for use by the public" — typically motorway services, supermarket car parks, urban kerbside hubs, public car parks. Workplace chargers used only by employees / visitors are NOT public chargepoints. They fall under: BS 7671 Section 722 (wiring regs), SCP Regulations 2021 (smart charging — if the workplace falls within the SCP-Regs scope), OZEV Workplace Charging Scheme (grant if applicable). Cert evidence bundle records the site classification (workplace not public) and the regulatory framework applied. PCAR 2023 is covered in §7.7.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'A site survey for a "public hub" of 6 × 150 kW DC fast chargers. Which DNO supply is needed?',
     options: [
-      'Domestic 100 A single-phase',
-      '6 × 150 kW = 900 kW nominal continuous (less with DLM). At 400 V three-phase: ~1,300 A per phase nominal. Requires a dedicated DNO HV connection (11 kV typically) with on-site transformer; G99 application + DNO approval; private substation + transformer + LV switchgear typically £100-£500k of grid infrastructure cost on top of the charger CapEx. Site selection often driven by DNO capacity availability',
-      '32 A three-phase domestic',
-      'No supply needed',
+      'A domestic 100 A single-phase supply with diversity applied across the six charging bays',
+      'A 32 A three-phase domestic-style supply shared across the hub between all six chargers',
+      '900 kW peak needs a dedicated HV (11 kV) connection, on-site transformer and a G99 application',
+      'No DNO supply is needed at all because the DC chargers store their own energy on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '6 × 150 kW DC fast chargers = 900 kW peak demand. Real demand with DLM + diversity typically 50-70% of peak (~500-650 kW). At LV (400 V three-phase) this is ~720-940 A per phase — well above any LV supply capacity. Solution: dedicated DNO HV (11 kV typically) connection + on-site transformer + LV switchgear. EREC G99 + formal DNO application. Site economics dominated by grid infrastructure CapEx (£100-£500k + 6-18 month DNO lead time) on top of the charger hardware (~£40-80k per 150 kW unit). UK 2025-26 public-hub developer practice: site selection driven by DNO capacity availability + planning + grid connection cost.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'Cert evidence bundle for commercial multi-charger install — what does it integrate over the domestic equivalent?',
     options: [
-      'Same as domestic',
-      'Commercial bundle adds: (1) BS EN IEC 61439-7 assembly conformity declaration; (2) DNO correspondence + G99 reference (if applicable); (3) PCAR 2023 compliance evidence (if public); (4) PAS 1899 accessibility evidence (if public + accessibility scope); (5) OZEV / Workplace Charging Scheme grant docs (if applicable); (6) Multi-charger DLM configuration + per-charger contribution to max demand; (7) OCPP / CPMS integration documentation; (8) commissioning test results PER charger + the assembly itself; (9) ongoing operator responsibilities (CPO if public)',
-      'Less than domestic',
-      'No bundle needed',
+      'It is identical to the domestic bundle with nothing added, just repeated for each charger',
+      'It contains less than the domestic bundle because the commercial site owner manages safety',
+      'It adds the 61439-7 declaration, DNO/G99 and PCAR/OZEV evidence, DLM/OCPP config and per-charger tests',
+      'No cert evidence bundle is needed on a commercial site, only a single covering certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Commercial cert evidence bundles are richer than domestic. The Section 722 layered compliance from M6 (earthing-tree, RCD, dedicated circuit) applies PER charger. Additional commercial-specific layers: assembly compliance (61439-7), DNO correspondence (G99), public regulations (PCAR + accessibility), grant scheme documentation (OZEV WCS), multi-charger management (DLM + OCPP), per-charger commissioning, ongoing operator obligations (CPO if public). UK 2025-26 commercial install cert evidence bundle is typically a structured digital folder hierarchy with each layer as its own subfolder + index document. Customer (commercial site owner) keeps a copy; installer keeps a copy; CPO if separate keeps a copy.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'Section 722 vs Section 708 (caravans / tents / market squares) — what is the relationship for EV install in those locations?',
     options: [
-      'They are the same',
-      'Both Sections apply at their interaction. Caravan-site EV charging = Section 708 governs the caravan / tent supply infrastructure (socket-outlets ≥ 16 A per 708.55.1.5, max 4 per enclosure per 708.55.1.3, individual OCPD per 708.533); Section 722 governs the EV charging circuit within that. Where the caravan pitch socket-outlet is being used for EV charging, both Sections layer on the install. BS EN IEC 61439-7 covers the pitch / charging assembly. Cert evidence bundle records compliance with both Sections',
-      'Section 708 replaces 722',
-      'Section 722 replaces 708',
+      'Both layer: Section 708 governs the pitch supply infrastructure, Section 722 the EV charging circuit',
+      'They are the same Section under a different number and need not both be applied at the site',
+      'Section 708 entirely replaces Section 722 at a caravan site, so the EV regs do not apply there',
+      'Section 722 entirely replaces Section 708 at a caravan site, so the pitch regs do not apply there',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 708 (caravans, motor caravans, camping sites + market squares + similar) and Section 722 (EV charging) both apply where EV charging happens at a caravan / camping / market-square location. Section 708 provides the special-location framework (708.55.1.x socket-outlet requirements; 708.533 individual OCPD; 708.537.2.1.1 isolation per distribution enclosure; 708.55.1.7 + BS EN IEC 61439-7 assembly compliance). Section 722 adds the EV-specific requirements (earthing-tree, RCD architecture, dedicated circuit, etc.). The layered compliance is the install’s evidence trail — cert evidence bundle records both Sections + the BS EN IEC 61439-7 assembly conformity.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'A commercial install includes a Type 2 socket-outlet rated 32 A. Reg 543.7.1.202 covers protective conductor current. What threshold triggers higher-integrity connection requirements?',
     options: [
-      '1 mA',
-      '10 mA — equipment having protective conductor current exceeding 10 mA shall be connected to the supply by one of the specified methods in Reg 543.7.1.202 (e.g. duplicate protective conductors, or dedicated PE with confirmed continuity). Modern EV charging stations typically have leakage currents well below 10 mA per charger, but multi-charger banks can accumulate; the assembly’s aggregate PE current is what triggers the threshold',
-      '100 mA',
-      '1 A',
+      '10 mA — above this, higher-integrity PE methods apply; banks can accumulate on a shared PE conductor',
+      '1 mA, the same threshold applied to a single sensitive electronic load on a final circuit',
+      '100 mA, matching the rated residual operating current of an upstream Type S time-delayed RCD',
+      '1 A, set by the main protective device feeding the commercial distribution board on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 543.7.1.202 sets the 10 mA protective-conductor-current threshold for higher-integrity connection requirements. Above 10 mA: specified higher-integrity methods (duplicate PE conductors with separate terminations, dedicated PE with confirmed continuity, etc.). Modern EV chargers individually have leakage well below 10 mA (typically 1-3 mA per unit); BS EN IEC 62196 connector with PP/CP signalling minimises leakage. BUT in multi-charger banks where many chargers share a common PE return, the aggregate can exceed 10 mA — designer assesses cumulative PE current and applies Reg 543.7.1.202 methods to the shared PE conductor if needed. Cert evidence bundle records the PE current assessment + the chosen connection method.',
   },

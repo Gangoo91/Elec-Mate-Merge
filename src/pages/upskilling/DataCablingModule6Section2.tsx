@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'A site engineer says "we tested every link as a Cat 6A pass". The performance auditor says "I need it tested as Class EA". Are they asking for the same thing or different things?',
     options: [
-      'Different things — Cat 6A and Class EA are unrelated.',
-      'The same target, expressed in two terminologies. Cat 6A is the COMPONENT category (the cable, the connectors, the patch panels) per ANSI/TIA-568.2-E. Class EA is the CHANNEL performance class per ISO/IEC 11801-1 / BS EN 50173-1. Cat 6A components installed correctly and tested as a channel produce a Class EA pass. The terminologies map: Cat 6A → Class EA, Cat 7 → Class F, Cat 7A → Class FA, Cat 8.1 → Class I, Cat 8.2 → Class II.',
-      'Class EA is a stricter test that Cat 6A cannot meet.',
-      'Class EA is for fibre, Cat 6A is for copper.',
+      'The same target in two terminologies: Cat 6A names the components, Class EA the channel performance, and they map directly.',
+      'Different things — Cat 6A and Class EA are unrelated specifications with no mapping or correspondence at all.',
+      'Class EA is a stricter test that genuine Cat 6A components can never actually meet in practice on site.',
+      'Class EA is the fibre-optic performance class, while Cat 6A is the equivalent copper component grade.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Category = parts you bought. Class = performance the channel measures to once installed. Cat 6A is the TIA component category; Class EA is the ISO/EN channel-performance class. They map directly. A "Cat 6A pass" tested as a permanent link / channel IS a Class EA pass. A Cat 6A install built badly (tight bundles, parallel to LV power, rough terminations) can fail Class EA testing — and that is the central diagnostic. Class is what the building has; Category is what the building bought.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'A horizontal run for a Cat 6A / Class EA channel: outlet to floor distributor is 87 m of installed cable, plus a 3 m work-area cord, plus a 4 m equipment cord. Is this a compliant channel under BS EN 50173-1?',
     options: [
-      'No — total exceeds 90 m.',
-      'Yes — the permanent link is 87 m (≤ 90 m max) and the channel is 94 m (≤ 100 m max), with cord allowance of 7 m used out of the 10 m budget. This satisfies both the 90 m permanent-link rule and the 100 m channel rule.',
-      'No — the patch cord at the FD is missing from the calculation.',
-      'Yes, but only because Cat 6A uniquely allows 100 m permanent link.',
+      'No — the 94 m total length exceeds the 90 m permanent-link limit for the channel.',
+      'No — the patch cord at the floor distributor end is missing from the length calculation.',
+      'Yes — 87 m permanent link (≤ 90 m) and 94 m channel (≤ 100 m), using 7 m of cord budget.',
+      'Yes, but only because Cat 6A uniquely allows a full 100 m permanent-link length.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '90 m permanent link is the hard limit on the installed cable; 100 m total channel is the hard limit including all cords. 87 + 3 + 4 = 94 m channel, with 87 m permanent link. Both within budget. The 10 m cord allowance is COMBINED across patch, equipment and work-area cords — using only 7 m leaves 3 m headroom. Cat 6A and Class EA share the same 90 m / 100 m model as Cat 5e / Class D and Cat 6 / Class E — it does not change with Class.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'A data-centre RFP specifies "Cat 8.1 / Class I top-of-rack cabling". What is the practical channel-length limit for Cat 8.1, and why?',
     options: [
-      '100 m, the same as Cat 6A.',
-      'Approximately 30 m — Cat 8 (both .1 and .2) is specified up to 2000 MHz and supports 25/40GBASE-T, but the channel model is shorter (typically 30 m, 2 connectors max) to keep insertion loss within budget at those frequencies. Used almost exclusively for top-of-rack server-to-switch cabling in data centres, where the short reach matches the rack environment.',
-      '90 m, the same as the permanent-link limit.',
-      '10 m only.',
+      '100 m, the same channel model as Cat 6A uses for general horizontal desk runs.',
+      '90 m, matching the permanent-link limit used by all of the lower categories.',
+      '10 m only, since the Cat 8 link is treated entirely as flexible cord cable.',
+      'Around 30 m (2 connectors max) — the 2000 MHz target keeps insertion loss in budget only over short runs.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cat 8 channels are short. The 2000 MHz frequency response and 25/40 Gbps target push insertion loss budgets that cannot be met at 100 m, so the standard channel is 30 m with 2 connectors. This is fine in a data centre rack environment (top-of-rack server links are typically 1-3 m) but useless for a generic horizontal run. Cat 8.1 uses RJ45 connectors; Cat 8.2 uses non-RJ45 (TERA, GG45) connectors. BS 7671 §716.521.101 lists both Cat 8.1 and Cat 8.2 as acceptable for ICT cables carrying DC power.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 §716.521.101 lists the cable Categories acceptable for ICT cables used to distribute DC power (PoE). Which of the following lists is verbatim from the regulation?',
     options: [
-      'Cat 5, Cat 5e, Cat 6, Cat 6A only.',
-      'Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 (or other cables defined in BS EN 50173-1).',
-      'Cat 6A only — earlier categories are no longer acceptable.',
-      'Class D through Class FA — Cat 8 is excluded.',
+      'Cat 5, Cat 5e, Cat 6 and Cat 6A only, with the Cat 7 and Cat 8 families both excluded.',
+      'Category 5, 6, 6A, 7, 7A, 8.1 or 8.2 (or other cables defined in BS EN 50173-1).',
+      'Cat 6A only — the earlier and later categories are no longer acceptable carriers for PoE.',
+      'Class D through Class FA — the Cat 8 / Class I and II categories are specifically excluded.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,24 +84,24 @@ const quizQuestions = [
     question:
       'What is the difference between "Category" (TIA terminology) and "Class" (ISO/IEC and BS EN terminology) in structured cabling?',
     options: [
-      'They are unrelated specifications.',
-      'Category describes the COMPONENTS — the cable, the connectors, the patch panels — purchased to a specified TIA grade (Cat 5e, 6, 6A, 7, 7A, 8.1, 8.2). Class describes the resulting CHANNEL performance — what the installed cabling actually measures to when tested (Class D, E, EA, F, FA, I, II per BS EN 50173-1 / ISO/IEC 11801-1). They map directly: Cat 6A → Class EA, Cat 7 → Class F, Cat 8.1 → Class I, Cat 8.2 → Class II. A Cat 6A install built badly will fail Class EA testing.',
-      'Category is for copper, Class is for fibre.',
-      'Class is the marketing name; Category is the engineering name.',
+      'Category names the TIA component grade; Class names the channel performance the install measures to, and the two map directly.',
+      'They are unrelated specifications with no defined correspondence or shared mapping between them at all.',
+      'Category applies only to copper cabling, while Class applies exclusively to fibre-optic channel performance.',
+      'Class is the marketing label and Category the engineering label for one single identical specification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Category = parts; Class = installed performance. The mapping is Cat 5e → Class D, Cat 6 → Class E, Cat 6A → Class EA, Cat 7 → Class F, Cat 7A → Class FA, Cat 8.1 → Class I, Cat 8.2 → Class II. The diagnostic is straightforward: if you bought Cat 6A and the channel test fails Class EA, the COMPONENTS were Cat 6A but the INSTALL was sub-EA. The Class is the truth of the building; the Category is the truth of the bill of materials.',
+      'Category = parts; Class = installed performance. The mapping is Cat 5e → Class D, Cat 6 → Class E, Cat 6A → Class EA, Cat 7 → Class F, Cat 7A → Class FA, Cat 8.1 → Class I, Cat 8.2 → Class II. A bad install can fail its Class even with the right components: if you bought Cat 6A and the channel test fails Class EA, the components were Cat 6A but the install was sub-EA. The Class is the truth of the building; the Category is the truth of the bill of materials.',
   },
   {
     id: 2,
     question:
       'Which Class is specified at 500 MHz frequency response and is the "current default" for new commercial UK installs supporting 10GBASE-T to 100 m?',
     options: [
-      'Class D (Cat 5e).',
-      'Class E (Cat 6).',
+      'Class D (Cat 5e) — 100 MHz, 1 Gbps to 100 m channel.',
+      'Class E (Cat 6) — 250 MHz, 10 Gbps only to 55 m.',
       'Class EA (Cat 6A) — 500 MHz, 10 Gbps to 100 m channel.',
-      'Class FA (Cat 7A).',
+      'Class FA (Cat 7A) — 1000 MHz, screened TP, niche.',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'A horizontal cabling channel is being designed under ISO/IEC 11801-1 / BS EN 50173-1. What is the maximum permanent-link length?',
     options: [
-      '100 m.',
-      '90 m — the contractor-installed solid-conductor cable from the work-area outlet (TO) to the floor-distributor patch panel cannot exceed 90 m. The remaining 10 m is the combined cord allowance (work-area + patch + equipment cord) that brings the channel total to 100 m maximum.',
-      '70 m.',
-      '50 m.',
+      '100 m — the full channel length, with all cords included.',
+      '70 m — leaving a fixed 30 m margin for the cord budget.',
+      '50 m — the half-channel rule applied to screened cable.',
+      '90 m — the installed solid-conductor link, leaving 10 m for cords.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Permanent link ≤ 90 m. Channel ≤ 100 m (= ≤ 90 m permanent link + ≤ 10 m combined cord allowance). The 90 m and 100 m budgets are fixed across Class D / E / EA / F / FA. Class I / II (Cat 8) is the exception — its channel is approximately 30 m due to the higher frequency target.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 §716.521.101 states which cable Categories are acceptable for ICT cables used to distribute DC power?',
     options: [
-      'Only Cat 6A and above.',
-      'Verbatim: "Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 or other cables as defined in BS EN 50173-1 by reference to the specifications given in BS EN 50288 series."',
-      'Only Cat 8.1 and Cat 8.2.',
-      'All copper cables — no Class restriction.',
+      'Category 5, 6, 6A, 7, 7A, 8.1 or 8.2 — or other cables defined in BS EN 50173-1.',
+      'Only Cat 6A and the higher categories are acceptable for PoE distribution under §716.',
+      'Only Cat 8.1 and Cat 8.2 data-centre categories are acceptable for PoE distribution.',
+      'Every copper cable is acceptable, with no category restriction stated in the regulation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§716.521.101 lists Cat 5, 6, 6A, 7, 7A, 8.1, 8.2 (or other BS EN 50173-1 cables). The Category list is permissive — what binds is §716.523.2.101 (750 mA per conductor max) and §716.526.101 (750 mA per contact at the connector). Note: the verbatim text says "Category 5", not "5e" — this is a quirk of the text reproduced from the database; in practice every modern install uses 5e at minimum.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'You are deciding between Cat 6A / Class EA and Cat 7A / Class FA for a new-build UK office. Which is the better default and why?',
     options: [
-      'Cat 7A — more headroom is always better.',
-      'Cat 6A / Class EA — it is the established default for new commercial UK installs (10GBASE-T at 100 m, 500 MHz) with mature components, predictable supply chain, and a clear PoE++ thermal profile. Cat 7 / 7A and Class F / FA exist (1000 MHz / 600 MHz, screened TP) but are niche and have no TIA equivalent in commercial premises — they suit specialised industrial / EMC-critical use cases. Cat 8 is data-centre-specific.',
-      'Class FA — it is the only ISO standard.',
-      'It does not matter — they are identical.',
+      'Cat 7A — more frequency headroom is always the better engineering choice for an office.',
+      'Class FA — it is the only ISO-recognised performance class for a new commercial fit-out.',
+      'Cat 6A / Class EA — the established UK office default, with mature components and a clear PoE++ thermal profile.',
+      'It does not matter — Cat 6A and Cat 7A are functionally identical for office desk runs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cat 6A / Class EA is the modern UK office default because the components, the install practice, and the test certification are all mature, the 10 Gbps reach is full 100 m, and the PoE++ thermal envelope is well understood. Cat 7 / 7A are niche — they exist in ISO/EN but TIA never adopted them for commercial premises because the marginal performance over Cat 6A did not justify the cost. Cat 8 is data-centre top-of-rack only.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'What is the practical CHANNEL length limit for Cat 8.1 / Class I or Cat 8.2 / Class II cabling, and where is it used?',
     options: [
-      '100 m, the same as Cat 6A — for general office use.',
-      'Approximately 30 m channel (with 2 connectors maximum), used almost exclusively for top-of-rack server-to-switch cabling in data centres. The 2000 MHz frequency response and 25/40 Gbps target preclude longer reaches.',
-      '500 m — for backbone use.',
-      'No length limit — Class I/II is fibre.',
+      '100 m, the same as Cat 6A, suiting general office horizontal desk runs.',
+      '500 m, suiting building backbone runs between the floor distributors.',
+      'No length limit at all, because Class I and II are optical-fibre classes.',
+      'Around 30 m (2 connectors max), used for data-centre top-of-rack links.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cat 8 is short-reach high-frequency. ~30 m channel, 2 connectors. Suits data-centre top-of-rack: 1-3 m server-to-switch jumpers in a rack environment. Useless for generic horizontal runs (you cannot reach the desk in 30 m). Cat 8.1 uses RJ45 (compatible with existing test instruments and connector ecosystems). Cat 8.2 uses non-RJ45 (TERA / GG45) — higher performance but specialist.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A "Class EA" certificate is issued for a Cat 6A install. Which test instrument level is required to defensibly back that certification?',
     options: [
-      'Any LAN tester is acceptable.',
-      'A field test instrument meeting ANSI/TIA-1152-A Level III at minimum, with Level IV or V preferred for Class EA accuracy. Without a TIA-1152-A Level III/IV/V instrument (or BS EN 50346 equivalent), the certificate has no defensible accuracy basis.',
-      'Only a Time Domain Reflectometer.',
-      'Only an OTDR.',
+      'A field test instrument meeting ANSI/TIA-1152-A Level III minimum, or its BS EN 50346 equivalent.',
+      'Any general-purpose LAN tester offering a basic wiremap and continuity check is acceptable.',
+      'Only a Time Domain Reflectometer, run end-to-end on each pair from the patch panel.',
+      'Only an OTDR, traced pair-by-pair from the patch panel through to the work-area outlet.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-1152-A defines field-test instrument accuracy levels — Level III, IIIe, IV, V (V is the current top accuracy). For a Class EA / Cat 6A certification to be defensible, the instrument must meet the accuracy level appropriate to the Class. Most modern test instruments certify to Level IV or V. BS EN 50346 is the European equivalent. An OTDR is for fibre. A general LAN tester (continuity-only) is NOT a Class-tester.',
   },
@@ -183,9 +183,9 @@ const quizQuestions = [
       'Which Class is the LEGACY MINIMUM (frequency response 100 MHz, max 1 Gbps to 100 m) — sometimes still seen on existing 2002-2010 era buildings but not specified for new UK installs?',
     options: [
       'Class D (Cat 5e) — 100 MHz, 1 Gbps to 100 m.',
-      'Class E (Cat 6).',
-      'Class EA (Cat 6A).',
-      'Class F (Cat 7).',
+      'Class E (Cat 6) — 250 MHz, 10 Gbps to 55 m.',
+      'Class EA (Cat 6A) — 500 MHz, 10 Gbps to 100 m.',
+      'Class F (Cat 7) — 600 MHz, screened-TP, ISO/EN only.',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,12 +195,12 @@ const quizQuestions = [
     id: 9,
     question: 'In which standard family does "Class F" exist as a defined performance class?',
     options: [
-      'ANSI/TIA-568 only.',
-      'ISO/IEC 11801-1 and BS EN 50173-1 — Class F (and FA) are EN/ISO concepts. They were never adopted in ANSI/TIA-568 because the Telecommunications Industry Association judged the marginal performance over Cat 6A did not justify the cost in commercial premises. Cat 7 (≈ Class F) and Cat 7A (≈ Class FA) cabling exists from EN/ISO-aligned manufacturers but is rare in TIA-568 specifications.',
-      'BS 7671 only.',
-      'Both TIA and EN/ISO.',
+      'ANSI/TIA-568 only — it is defined there as a TIA component category grade.',
+      'BS 7671 only — it appears solely in the §716 verbatim cable category list.',
+      'Both TIA and EN/ISO, which share the same Class lettering for this performance tier.',
+      'ISO/IEC 11801-1 and BS EN 50173-1 — Class F/FA are EN/ISO concepts TIA never adopted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Class F / FA is an EN/ISO concept; Cat 7 / 7A is the matching component naming. ANSI/TIA-568 never adopted Class F or Cat 7 — TIA jumped from Cat 6A directly to Cat 8 (Class I/II) for data-centre top-of-rack. EN/ISO-jurisdiction projects sometimes still see Cat 7 / Class F specified for specialised EMC-critical or industrial applications, but on standard commercial UK installs Class EA / Cat 6A is the modern default.',
   },
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'You inherit a 2010-era building cabled to "Class D" (Cat 5e). The new tenant needs 10GBASE-T to every desk. What is the engineering reality?',
     options: [
-      'Class D supports 10GBASE-T — proceed.',
-      'Class D / Cat 5e is specified to 100 MHz and 1 Gbps. 10GBASE-T requires a Class E (Cat 6) channel for 55 m reach or Class EA (Cat 6A) channel for full 100 m reach. The Cat 5e cabling cannot deliver 10GBASE-T at 100 m — the frequency response is fundamentally insufficient. The fix is selective re-cabling of affected runs to Cat 6A, not a software setting. This is one of the few legitimate triggers for re-cabling a building inside its design life.',
-      'Class D supports 10 Gbps if you turn on auto-negotiation.',
-      'Class D supports 10 Gbps but only for 30 m runs.',
+      'Class D already supports 10GBASE-T as installed — proceed with the tenant fit-out unchanged.',
+      'Class D / Cat 5e cannot deliver 10GBASE-T at 100 m; selectively re-cable affected runs to Cat 6A.',
+      'Class D supports 10 Gbps once auto-negotiation is enabled on the desk and switch ports.',
+      'Class D supports 10 Gbps reliably, but only over the desk runs that are shorter than 30 m.',
     ],
     correctAnswer: 1,
     explanation:

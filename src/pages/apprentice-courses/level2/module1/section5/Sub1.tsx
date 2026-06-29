@@ -43,10 +43,10 @@ const checks = [
     id: 's5-1-default-state-check',
     question: 'Under EAWR 1989, what is the default state for any conductor you work on?',
     options: [
-      'Adequate immersion depth and good thermal contact',
-      'Contact manufacturer or supplier for guidance',
+      'Live, as long as you wear insulating gloves',
+      'Live, provided the circuit is below 50 V',
       'Dead, unless live working is justified, planned and authorised',
-      'Material verification, tool checks, safety equipment, and drawing reviews',
+      'Either, at the discretion of the person doing the work',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     id: 's5-1-personal-liability-check',
     question: "Your supervisor told you to crack on without proving dead. Something goes wrong. Who can the HSE prosecute?",
     options: [
-      '11.04 kW three-phase or 3.68 kW single-phase',
+      'Only the company, never an individual',
       'You personally, the supervisor and the company — all three',
-      'Investigate further and consider remedial action',
-      'To act as a switch or amplifier controlled by a small signal',
+      'Only the supervisor who gave the instruction',
+      'Nobody, because you were following orders',
     ],
     correctIndex: 1,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which regulation makes "dead by default" the legal rule for electrical work in the UK?',
     options: [
-      'The Waste (England and Wales) Regulations 2011',
-      'To check insulation effectiveness',
-      'No, they cannot sign certificates',
+      'The Health and Safety at Work Act 1974, Section 2',
+      'BS 7671:2018+A4:2026, Regulation 537.2',
+      'The Management of Health and Safety at Work Regulations 1999',
       'Electricity at Work Regulations 1989, Reg 14',
     ],
     correctAnswer: 3,
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'You disturb a 230 V circuit you "knew was off" and it shocks you. You feel fine ten minutes later. What do you do?',
     options: [
-      'Both the client (or Responsible Person) and the installer',
-      'Have a private, non-judgemental conversation expressing genuine concern',
-      'False - applies to all circuits from simple to complex industrial systems',
+      'Carry on — if you feel fine, no harm was done',
+      'Wait until the end of the day, then mention it to the supervisor',
+      'Take a short break and resume once you’ve recovered',
       'Stop, report it, get checked at A&E, log it under RIDDOR if it qualifies',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'Why is "I just had a quick look" so often the moment people get killed?',
     options: [
       "Skipping isolation feels harmless once and gets normalised — and a single live touch is enough",
-      "It allows appropriate response to the unexpected while maintaining focus on priorities",
-      "To provide controlled pulling force for long or difficult cable runs",
-      "Keep it available for inspection by anyone who may need it for future construction work on the structure",
+      "Quick looks are usually done on dead circuits anyway",
+      "The risk only applies to big projects, not small jobs",
+      "A quick look means less time exposed, so it’s actually safer",
     ],
     correctAnswer: 0,
     explanation:

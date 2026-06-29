@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'scheduling-check4',
     question: 'During peak electricity rate periods, what is the most appropriate BMS action?',
     options: [
-      'Increase HVAC setpoints to maximum comfort',
       'Shed non-critical loads to reduce demand',
-      'Pre-charge thermal storage systems',
-      'Run all equipment at maximum efficiency',
+      'Tighten HVAC setpoints for maximum comfort',
+      'Begin charging thermal storage systems',
+      'Run all equipment simultaneously at full output',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'During peak rate periods, the BMS should shed non-critical loads to reduce electricity demand and costs. Critical systems maintain operation whilst non-essential loads are temporarily reduced.',
   },

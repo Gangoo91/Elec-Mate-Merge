@@ -56,12 +56,12 @@ const checks = [
     question:
       'A 4 kW domestic solar PV array generates electricity at the panel as:',
     options: [
-      'To verify operation of emergency lighting for a short period',
-      'Task requirements, duration, weather conditions, and user competence',
-      'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
       'Low-voltage DC, which an inverter then converts to 230 V AC at 50 Hz',
+      '230 V AC at 50 Hz directly, ready to feed the grid without an inverter',
+      'High-voltage DC that is stepped down by a transformer before use',
+      'Three-phase 400 V AC straight from the panel array',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'PV cells produce DC at panel voltage (typically a few hundred volts string voltage). The inverter does the heavy lifting — chopping that DC into a 50 Hz 230 V sine wave that synchronises with the grid. That inverter is also why PV installs need RCDs that can handle DC fault currents (Type B or Type F, not plain Type AC).',
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'Dinorwig in Snowdonia is a pumped-storage hydro plant. At 3am, when grid demand is low, it:',
     options: [
-      'Pre-calculated transfer functions for heat flow through construction',
-      'The delay between sending a message and receiving a response',
-      'Improvement Notices, Prohibition Notices, and fines or prosecution',
+      'Shuts down completely until peak demand returns the next evening',
       'Uses cheap off-peak electricity to pump water UP to its top reservoir',
+      'Generates at full output to take advantage of low night-time demand',
+      'Releases water through the turbines to charge a bank of batteries',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Pumped storage is the grid’s biggest battery. Off-peak (cheap, low demand) it runs the turbines backwards as pumps, lifting water up to the top reservoir. At peak demand (kettle-on after EastEnders) it lets the water back down through the turbines and generates within ~16 seconds of the call. Round-trip efficiency ~75%.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'Why does a solar PV system on a domestic roof need a Type B (or Type F) RCD on its dedicated supply, not a plain Type AC?',
     options: [
-      'It is required by insurance providers to validate claims for stolen or damaged tools',
-      'When there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s exposure to specific hazards like noise, vibration, asbestos',
+      'Because the panels produce 400 V three-phase that a Type AC RCD cannot handle',
+      'Because rooftop circuits run at a higher frequency than 50 Hz, which Type AC ignores',
       'Because the inverter can produce smooth DC fault current that a Type AC RCD would be blind to',
-      'Completion of all inspection and testing, satisfactory results recorded',
+      'Because Type AC RCDs are no longer manufactured and cannot be sourced',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'A 1 GW nuclear station like Hinkley Point B (now closed) was operated as baseload. What does that mean in practice?',
     options: [
-      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
-      'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
-      'A digital meter that records energy use and communicates with the supplier remotely',
+      'It ramped its output up and down minute by minute to follow demand peaks',
+      'It only ran during the morning and evening demand peaks, then shut down',
+      'It was kept on standby and fired up only when the wind dropped',
       'It ran flat-out at full output continuously, regardless of demand, until it was shut down for refuelling',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
       'Combined Heat and Power (CHP) units on hospitals and factories are different from normal gas turbines because:',
     options: [
       'They capture the waste heat from generation and use it for hot water and heating, raising overall efficiency to ~80%',
-      'Set out the H&S arrangements for the project, including site rules, RAMS for high-risk work and emergency procedures',
-      'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
-      'It’s the IEC 61010 measurement category — CAT III 600 V or higher for LV distribution work',
+      'They run on hydrogen rather than natural gas, eliminating carbon emissions entirely',
+      'They generate at 11 kV rather than 400 V, so they can feed straight into the grid',
+      'They use no fuel at all, drawing their energy from the building’s existing heating system',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'An electrician is asked why the UK grid still keeps several large gas turbines on standby even on a day with strong wind. Best answer?',
     options: [
-      'Individual sprinkler heads activate when heated to their threshold, releasing water directly over the fire',
+      'Wind turbines must be shut down for maintenance every few hours, so gas covers the gaps',
       'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
-      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
-      'Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow',
+      'Gas plants are needed to step the wind farm’s voltage up to transmission level',
+      'Wind cannot legally supply more than 10% of the grid, so gas makes up the balance',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a method of large-scale electricity generation currently used on the GB grid?',
     options: [
-      'Requirements for test probes and leads',
-      'Mechanical fixings with gaskets',
-      '1 metre above highest point within 10m',
+      'Offshore wind at gigawatt scale',
+      'Combined-cycle gas turbines',
+      'Biomass at Drax in North Yorkshire',
       'Tidal lagoon at gigawatt scale',
     ],
     correctAnswer: 3,
@@ -186,9 +186,9 @@ const quizQuestions = [
       'Why does the electrician need to care about the generation MIX — not just the wires after the cut-out?',
     options: [
       'Because the mix changes what protective devices have to handle (DC from PV inverters, harmonics from large inverters, voltage stability when wind drops)',
-      'Equipment producing smooth DC residual current (e.g. EV chargers without separation, three-phase VSDs/inverters) per Reg 531.3.3 / 722.531.3.101',
-      'The locations of points of demand, the loads expected on circuits, daily and yearly variation of demand, special conditions (such as harmonics), and special control or signalling requirements.',
-      'Proper preparation and stabilisation, systematic approach following procedures, comprehensive documentation, trend monitoring, and continuous process improvement',
+      'Because the electrician is responsible for choosing which generation method supplies each customer',
+      'Because the generation mix determines the colour coding used on the consumer’s final circuits',
+      'Because BS 7671 requires the generation source to be recorded on every EIC',
     ],
     correctAnswer: 0,
     explanation:

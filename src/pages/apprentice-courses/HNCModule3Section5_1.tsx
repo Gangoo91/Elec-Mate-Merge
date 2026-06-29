@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is flux linkage?',
     options: [
-      'Regulations, science, safety, and scenario-based questions',
+      'The rate of change of flux through a single turn',
       'The total flux through a coil multiplied by number of turns',
-      'The transformer star point and supply neutral/combined neutral-earth',
-      'Much higher speed (10–25 krpm vs 1500–3000)',
+      'The magnetic flux density at the core surface',
+      'The reluctance of the magnetic circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'Mutual inductance between two coils depends on:',
     options: [
-      'Pressure reaches its maximum (stagnation pressure)',
-      'How bandwidth decreases with increasing fibre length',
+      'The supply frequency and applied voltage alone',
+      'The resistance of the conductors in each coil',
       'The coupling between the coils and their turns',
-      'The type of hazard posed by the substance',
+      'The direction of current flow in the primary coil',
     ],
     correctAnswer: 2,
     explanation:

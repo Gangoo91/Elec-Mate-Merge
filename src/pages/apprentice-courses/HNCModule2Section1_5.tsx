@@ -74,9 +74,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of Accredited Construction Details (ACDs)?',
     options: [
       'To provide standardised solutions that minimise thermal bridging',
-      'Determines if protective devices can safely interrupt fault current',
-      'When the load has handles or cut-outs that accommodate the fingers',
-      'Close fully when the air supply is lost, driven by the spring return',
+      'To set the maximum U-value allowed for external walls',
+      'To specify the fire resistance period of a junction',
+      'To define the sound insulation between dwellings',
     ],
     correctIndex: 0,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a thermal bridge?',
     options: [
-      'CO₂ sensors near windows gave false low readings when windows opened',
+      'A section of cable carrying a higher current than the rest of the circuit',
       'An area of building fabric with higher thermal transmittance than surrounding elements',
-      'It must match system response requirements for proper control',
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
+      'A structural beam that spans an opening in a wall',
+      'A duct that carries warm air between two rooms',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'What does the temperature factor (fRsi) indicate?',
     options: [
       'The risk of surface condensation at a thermal bridge',
-      'To account for supply voltage tolerance',
-      'Give up to 5 back blows between the shoulder blades',
-      'Test date, next test date, and tester ID',
+      'The U-value of the wall away from any junction',
+      'The air permeability of the whole building',
+      'The total heat loss through the windows',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which building services element commonly creates point thermal bridges?',
     options: [
-      'How efficiently time is being used against the plan',
-      'At origin, distribution boards, and where device ratings change',
-      'Supplement basic and fault protection',
+      'Internal lighting circuits run within a ceiling void',
+      'Socket outlets mounted on an internal partition',
+      'Surface-mounted trunking on an internal wall',
       'Wall fixings for cable trays penetrating insulation',
     ],
     correctAnswer: 3,
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the primary cause of condensation at thermal bridges?',
     options: [
-      'Installation certificate and relevant schedules',
+      'Increased surface temperature above the dew point',
       'Reduced surface temperature below dew point',
-      'Leakage currents can flow, creating safety hazards',
-      'When there is more than one contractor on site',
+      'A rise in the external air temperature',
+      'A reduction in internal relative humidity',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'Which mitigation strategy is most effective for cable tray penetrations through external walls?',
     options: [
-      'Offer flexibility and variety for some electricians',
-      'Building Regulations Compliance Certificate (BS 7671 certificate)',
+      'Using a larger cable tray to spread the heat loss',
+      'Leaving the penetration open for ventilation',
       'Installing thermal break sleeves and sealing around penetrations',
-      'Verify all results are within limits and calculations are correct',
+      'Painting the cable tray a light colour',
     ],
     correctAnswer: 2,
     explanation:

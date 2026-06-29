@@ -5,10 +5,10 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of initial inspection in emergency lighting?',
     options: [
-      'Because airborne fibres may still be present on the worker\\\\\\\\\\\\\\\'s body and clothing during decontamination',
+      'To measure the colour temperature and lux output of each luminaire against the design',
       'To confirm installation matches design, identify faults, and form the basis of certification',
-      'A failure to implement condition-based monitoring that would have provided early warning of deterioration',
-      'To safely discharge stored energy when disconnected, preventing shock hazard',
+      'To verify that the building occupancy has not changed since the design was approved',
+      'To establish the battery autonomy duration required for the building category',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,9 +31,9 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What type of cable must be verified for emergency circuits?',
     options: [
-      'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'Resume CPR immediately for 2 minutes before the AED re-analyses',
-      'To maintain autonomy and reliability',
+      'Standard PVC twin-and-earth cable clipped direct',
+      'Flexible cord rated for the luminaire load only',
+      'SWA cable installed in all cases regardless of route',
       'Fire-resistant, LSZH, or MICC cable where required',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     question: 'Why must plastic fixings not be used for emergency lighting cables?',
     options: [
       'They do not meet non-combustible fixing requirements in BS 7671 Reg. 521.10.202',
-      'Non-maintained luminaires installed where maintained fittings were specified',
-      'Emergency circuits must be kept separate from normal supply',
-      'To confirm installation matches design, identify faults, and form the basis of certification',
+      'They are not rated for the higher voltage carried by emergency circuits',
+      'They cannot be colour-coded to distinguish emergency from normal circuits',
+      'They increase the earth fault loop impedance of the final circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why should defects be recorded during inspection?',
     options: [
-      'The contractor who employs the injured worker',
+      'So the cost of remedial work can be passed to the client',
       'So they can be corrected before commissioning',
-      'Immediately, by the quickest practicable means',
-      'It affects visual performance at mesopic light levels',
+      'So the inspection can be signed off without further checks',
+      'So the warranty period can be extended for the luminaires',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the Manchester office case study, what error was found during commissioning?',
     options: [
-      'To confirm installation matches design, identify faults, and form the basis of certification',
-      'They do not meet non-combustible fixing requirements in BS 7671 Reg. 521.10.202',
+      'Exit signs were fitted with the wrong ISO 7010 pictogram orientation',
+      'Emergency circuits had been wired into the normal lighting distribution board',
       'Non-maintained luminaires installed where maintained fittings were specified',
-      'Emergency circuits must be kept separate from normal supply',
+      'The battery autonomy was set to one hour instead of three hours',
     ],
     correctAnswer: 2,
     explanation:

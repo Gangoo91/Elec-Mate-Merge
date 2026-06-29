@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'prove-test-prove',
     question: "What is the correct sequence for the 'prove-test-prove' procedure?",
     options: [
-      'An unbroken chain of comparisons linking the instrument to national/international measurement standards',
-      'A General Station Description file that describes the device\\\\\\\\\\\\\\\'s communication parameters, enabling the PLC or DCS to configure communication with the device',
-      'Wireless signals can be intercepted or jammed; industrial wireless protocols must include encryption, authentication, and intrusion detection',
+      'Test the circuit for dead, prove the indicator on a live source, then re-test the circuit',
+      'Prove the indicator on the dead circuit, test a live source, then prove the dead circuit again',
+      'Lock off the circuit, test for dead, then apply a danger notice at the point of isolation',
       'Prove the voltage indicator works on a known live source, test the circuit for dead, prove the indicator still works on the known source',
     ],
     correctIndex: 3,
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'According to GS38, what is the maximum exposed probe tip length for a voltage indicator used on LV systems?',
     options: [
+      '12 mm with no finger guards required',
       '4 mm with finger guards or barriers',
-      'Annual energy savings exceeded £250,000',
-      'Two-pole voltage indicator',
-      'Capture light from both sides',
+      '25 mm with insulated sleeving',
+      '40 mm with a spring-loaded tip',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'GS38 specifies that probe tips should have a maximum of 4 mm exposed metal, with finger guards or barriers to prevent accidental contact with live parts. This is a key safety requirement that assessors will check during the practical observation.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'Why is it important to explain your actions aloud during the EPA practical observation?',
     options: [
+      'Because the assessor is not allowed to watch you work, only to listen to your account',
+      'Because talking is the only way to make up time if the practical task is running late',
       'To demonstrate to the assessor that you understand the reasoning behind each step, not just the actions',
-      'The leak must be sealed and the smoke test repeated — the enclosure must pass before any asbestos work can begin',
-      'Two dissimilar metals, an electrolyte, and an electrical contact between them',
-      'Withhold final payment, leave a poor review, and never use you again — even if the work itself was fine',
+      'Because silence during the task automatically results in an immediate fail',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Explaining your actions demonstrates competence beyond physical skill. It shows the assessor that you understand why each step is necessary — the safety reasoning, the regulatory requirements, and the technical principles. This is the difference between performing a procedure and truly understanding it.',
   },
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
       'When isolating a three-phase circuit, you must test between which conductor combinations?',
     options: [
       'All phase-to-phase combinations (L1-L2, L2-L3, L1-L3), all phase-to-neutral, and all phase-to-earth combinations',
-      'Preferably before, but in any case prior to, testing — and as far as reasonably practicable with the installation isolated',
-      'Break the problem into individual steps, show all working, and check each step before moving to the next',
-      'Establishing live real-time communication between the software and PLC for monitoring and diagnostics',
+      'Only L1 to neutral, since proving one phase dead confirms the whole supply is dead',
+      'Only the three phase-to-phase combinations, as neutral and earth cannot become live',
+      'Only each phase to earth, because phase-to-phase testing is unnecessary once earthed',
     ],
     correctIndex: 0,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'The first step in a safe isolation procedure is to:',
     options: [
-      'Output power divided by input power, multiplied by 100%',
+      'Switch off and lock off the supply before doing anything else',
       'Identify the circuit to be isolated and obtain authorisation',
-      'When working near watercourses or installing certain equipment',
-      'Option A: Retrofit Isolation - Key Parameter Measurement',
+      'Prove the voltage indicator on a known live source',
+      'Apply a danger notice to the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'After switching off and locking off a circuit, the next step is to:',
     options: [
-      'Your competence in performing the task safely, correctly and with understanding',
-      'Explain each step as you perform it, including the safety reason for the step and any relevant regulation',
+      'Begin removing accessories so the dead test can be carried out at the terminals',
+      'Remove the danger notice now that the circuit is locked off',
       'Prove the voltage indicator on a known live source, then test the circuit for dead',
-      'At the point of isolation where the lock-off device is applied',
+      'Reconnect the supply briefly to confirm the correct circuit was switched off',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     id: 3,
     question: 'A GS38-compliant voltage indicator should have:',
     options: [
-      'At the point of isolation where the lock-off device is applied',
-      'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
-      'Regulation 4(3) of the Electricity at Work Regulations 1989',
+      'Unfused leads and long bare probe tips for easier contact with terminals',
+      'A single probe and a flashing light to indicate the presence of voltage',
+      'A built-in proving function that removes the need to prove on a separate source',
       'Fused leads, finger guards, max 4 mm exposed probe tips, and CAT III/IV rating',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'During the EPA practical observation, the assessor is primarily assessing:',
     options: [
       'Your competence in performing the task safely, correctly and with understanding',
-      'Regulation 4(3) of the Electricity at Work Regulations 1989',
-      'At the point of isolation where the lock-off device is applied',
-      'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
+      'How quickly you can complete the task compared with other candidates',
+      'Whether you use the most expensive test equipment available',
+      'Your ability to recall every regulation number from memory without notes',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       "If your voltage indicator fails the 'prove' test (does not indicate on the known live source), you should:",
     options: [
-      'Prove the voltage indicator on a known live source, then test the circuit for dead',
+      'Carry on and test the circuit anyway, since the circuit is already isolated',
       'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
-      'Physically prevent the isolator from being switched back on, with only the person who applied it able to remove it',
-      'Your competence in performing the task safely, correctly and with understanding',
+      'Tap the indicator and try again until it gives a reading',
+      'Use a multimeter on a different setting to confirm the indicator is faulty',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 6,
     question: 'Lock-off devices are used to:',
     options: [
-      'Prove the voltage indicator on a known live source, then test the circuit for dead',
-      'Explain each step as you perform it, including the safety reason for the step and any relevant regulation',
+      'Indicate the rated current of the circuit being isolated',
+      'Discharge any stored energy in the circuit before work begins',
       'Physically prevent the isolator from being switched back on, with only the person who applied it able to remove it',
-      'Each person applies their own personal safety lock — the circuit cannot be re-energised until every individual lock has been removed by its owner',
+      'Confirm electronically that the circuit has been proved dead',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: 'When explaining your safe isolation actions to the assessor, you should:',
     options: [
-      'Prove the voltage indicator on a known live source, then test the circuit for dead',
-      'Work methodically and safely — never compromise safety for speed — but practise beforehand to build efficient habits',
-      'Fused leads, finger guards, max 4 mm exposed probe tips, and CAT III/IV rating',
+      'Keep silent and let your hands do the talking to avoid breaking concentration',
+      'Only speak if the assessor asks you a direct question',
+      'Summarise everything in one statement at the end of the task',
       'Explain each step as you perform it, including the safety reason for the step and any relevant regulation',
     ],
     correctAnswer: 3,
@@ -165,9 +165,9 @@ const quizQuestions = [
     question: "The danger zone notice ('Danger — Do Not Switch On') should be placed:",
     options: [
       'At the point of isolation where the lock-off device is applied',
-      'Regulation 4(3) of the Electricity at Work Regulations 1989',
-      'Fused leads, finger guards, max 4 mm exposed probe tips, and CAT III/IV rating',
-      'Your competence in performing the task safely, correctly and with understanding',
+      'On the item of equipment being worked on, away from the isolator',
+      'At the main intake position regardless of which circuit is isolated',
+      'In the site office records only, not on the installation itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'During time-limited practical tasks, the best approach to time management is to:',
     options: [
-      'Prove the voltage indicator on a known live source, then test the circuit for dead',
+      'Skip the second prove step to save time once the circuit reads dead',
       'Work methodically and safely — never compromise safety for speed — but practise beforehand to build efficient habits',
-      'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
-      'Physically prevent the isolator from being switched back on, with only the person who applied it able to remove it',
+      'Carry out several steps at once to finish well within the time limit',
+      'Ask the assessor to extend the time rather than rushing the procedure',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     question:
       'Which regulation requires that precautions are taken to prevent electrical danger during work activities?',
     options: [
-      'Cool hot spots, causing the survey to underestimate the severity of faults',
-      'To highlight residual risks and required precautions on drawings',
+      'Regulation 14 of the Construction (Design and Management) Regulations 2015',
+      'Regulation 3 of the Provision and Use of Work Equipment Regulations 1998',
       'Regulation 4(3) of the Electricity at Work Regulations 1989',
-      'The employer or person who controls the equipment',
+      'Regulation 7 of the Management of Health and Safety at Work Regulations 1999',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'A proving unit differs from a known live source in that:',
     options: [
-      'Ring-cut the insulation around the conductor at the strip length, scoring only partway through to avoid touching the strands, then snap and pull off.',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
+      'A proving unit measures earth loop impedance, whereas a known live source measures voltage',
+      'A proving unit can only be used on dead circuits, whereas a known live source must be energised',
+      'A proving unit is rated for high voltage only, whereas a known live source is for low voltage',
       'A proving unit generates a test voltage electronically and is self-contained, while a known live source is an actual energised supply that you use to verify your indicator reads correctly',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
       'When multiple people are working on the same isolated circuit, the LOTO procedure requires:',
     options: [
       'Each person applies their own personal safety lock — the circuit cannot be re-energised until every individual lock has been removed by its owner',
-      'Explain each step as you perform it, including the safety reason for the step and any relevant regulation',
-      'A proving unit generates a test voltage electronically and is self-contained, while a known live source is an actual energised supply that you use to verify your indicator reads correctly',
-      'Physically prevent the isolator from being switched back on, with only the person who applied it able to remove it',
+      'One supervisor holds a single master lock on behalf of the whole team',
+      'The first person to finish removes the lock so the next job can begin',
+      'A shared key is left at the isolator for anyone to re-energise when ready',
     ],
     correctAnswer: 0,
     explanation:

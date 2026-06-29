@@ -23,38 +23,38 @@ const inlineChecks = [
     question:
       'A colleague hands you a "general-purpose multimeter on the lowest ohm range" to take a Reg 643.2 continuity reading because the dedicated low-Ω ohmmeter is in the van. Defensible under Reg 643.1?',
     options: [
-      'Yes — any instrument that resolves below 0.1 Ω is acceptable.',
-      'No. Reg 643.1 requires instruments selected per BS EN 61557 or demonstrably equivalent. BS EN 61557-4 sets the test current (≥ 200 mA) and resolution required for continuity. A multimeter does not meet 643.1 — and "I used a multimeter on the lowest ohm range" is not equivalence in court.',
-      'Yes — provided the multimeter has a CE mark.',
-      'Yes — provided you note the instrument used in the comments column.',
+      'Yes — any instrument that resolves below 0.1 Ω is acceptable for a continuity reading.',
+      'No — Reg 643.1 requires a BS EN 61557-4 ohmmeter; a multimeter is not equivalent.',
+      'Yes — provided the multimeter carries a CE mark and a valid calibration sticker.',
+      'Yes — provided you note the instrument used in the schedule comments column.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 61557-4 specifies low-resistance ohmmeters with a minimum test current of 200 mA. That current is what reveals high-resistance joints — a multimeter pushes microamps and will read low on a partial connection that fails under load. Reg 643.1 selection is on the user; the escape clause is "no lesser degree of performance and safety", not "no instrument to hand".',
+      'Reg 643.1 requires instruments selected per BS EN 61557 or demonstrably equivalent. BS EN 61557-4 sets the test current (≥ 200 mA) and resolution required for continuity — that current is what reveals high-resistance joints, whereas a multimeter pushes microamps and reads low on a partial connection that fails under load. "I used a multimeter on the lowest ohm range" is not equivalence in court; the escape clause is "no lesser degree of performance and safety", not "no instrument to hand".',
   },
   {
     id: 'mod1-s3-cat-arrangement',
     question:
       'You have a CAT IV 600 V multifunction tester. You grab a pair of CAT III 1000 V leads from the case for an origin Ze test on a single-phase domestic supply. What is the equivalent overvoltage category of the test arrangement?',
     options: [
-      'CAT IV — the meter is the dominant rating.',
-      'CAT III — GN3 Ch 1 Reg 1.1 says the equivalent overvoltage category equals the lowest of any item in the arrangement (instrument, lead, probe or connector). The CAT III leads downgrade the whole arrangement.',
-      'CAT IV / 1000 V — combine the two ratings.',
-      'CAT II — voltage rating is what counts.',
+      'CAT IV — the meter is the dominant rating and sets the arrangement category.',
+      'CAT III — the lowest-rated item, the leads, downgrades the whole arrangement.',
+      'CAT IV / 1000 V — combine the meter category and the lead voltage rating.',
+      'CAT II — the working voltage rating is what counts, not the meter category.',
     ],
     correctIndex: 1,
     explanation:
-      'GN3 Ch 1 Reg 1.1 is unambiguous: weakest link sets the rating. Origin tests need CAT IV throughout. The 1000 V on the leads is the working voltage, not the transient withstand — that is set by the CAT category. CAT III leads on a CAT IV mains origin are the failure mode the categorisation system was built to prevent.',
+      'GN3 Ch 1 Reg 1.1 says the equivalent overvoltage category equals the lowest of any item in the arrangement (instrument, lead, probe or connector) — the weakest link sets the rating. Origin tests need CAT IV throughout. The 1000 V on the leads is the working voltage, not the transient withstand, which is set by the CAT category. CAT III leads on a CAT IV mains origin are the failure mode the categorisation system was built to prevent.',
   },
   {
     id: 'mod1-s3-thermocouple-emf',
     question:
       'You take a continuity reading at a brass-to-copper joint on a heated busbar. The reading is 0.18 Ω with red probe on the brass. You reverse the probes and read 0.10 Ω. Which value do you record, and why?',
     options: [
-      '0.18 Ω — the higher value is more conservative.',
-      '0.10 Ω — the lower value is the true resistance.',
-      '0.14 Ω — the average. GN3 Reg 4.8 names this as the countermeasure for thermocouple EMF in mixed-metal joints at differing temperatures: a small EMF appears in series with the test current, biases one direction up and the other down — averaging cancels it.',
-      'Re-test with a different instrument.',
+      '0.18 Ω — the higher of the two values is the more conservative one to record.',
+      '0.10 Ω — the lower of the two values is the true resistance of the joint.',
+      '0.14 Ω — the average of the two readings, cancelling the thermocouple EMF.',
+      'Neither — re-test the joint with a different low-resistance instrument instead.',
     ],
     correctIndex: 2,
     explanation:
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'Your loop tester drops from waist height onto concrete on a Tuesday morning. It powers up; gives a sensible reading on a known reference circuit. UKAS calibration is not due for another six months. What does GN3 Reg 4.8 require?',
     options: [
-      'Continue using it — the known-circuit check confirms it is in spec.',
-      'Quarantine the instrument, label it "do not use", and send it for recheck before the next test session. GN3 Reg 4.8 expressly requires the accuracy of any damaged or repaired instrument to be re-established before further use — mechanical impact is in the same category as repair.',
-      'Run the on-board self-test and accept the result if it passes.',
-      'Open the case and inspect the internal PCB.',
+      'Continue using it — the known-circuit check confirms it is still within spec.',
+      'Quarantine it, label it "do not use", and send it for recheck before the next session.',
+      'Run the on-board self-test and accept the result if the instrument passes it.',
+      'Open the case and inspect the internal PCB for any obvious impact damage.',
     ],
     correctIndex: 1,
     explanation:
-      'A meter that reads correctly at one impedance can still be 30 % out across the rest of its range — drop damage typically affects measurement linearity, not the headline reading. "Looks fine on a known circuit" is not a defensible test record after an incident. The asymmetric risk (cost of recheck vs. cost of an unreferenced fatal-incident certificate) is the reason GN3 phrases this as a hard duty.',
+      'GN3 Reg 4.8 expressly requires the accuracy of any damaged or repaired instrument to be re-established before further use — mechanical impact is in the same category as repair. A meter that reads correctly at one impedance can still be 30 % out across the rest of its range; drop damage typically affects measurement linearity, not the headline reading. "Looks fine on a known circuit" is not a defensible test record after an incident, which is why GN3 phrases this as a hard duty.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 643.1 places a single overarching duty on the choice of test instruments. What is it?',
     options: [
-      'Instruments shall be UKAS-calibrated annually',
-      'Instruments and monitoring equipment and methods shall be chosen in accordance with the relevant parts of BS EN 61557, or other equipment providing no lesser degree of performance and safety',
-      'Instruments shall be CAT IV rated',
-      'Instruments shall be of UK manufacture',
+      'Instruments and methods shall be chosen per BS EN 61557, or equipment of no lesser performance',
+      'Instruments shall be UKAS-calibrated at least once every twelve months without exception',
+      'Instruments shall be CAT IV rated for every measurement made on any installation',
+      'Instruments shall be of UK manufacture and certified to a British Standard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.1 ties instrument selection to BS EN 61557 — the multi-part standard covering low-resistance, insulation, loop, RCD and earth-electrode testers. The "no lesser degree of performance and safety" clause is the gate for any instrument that is not directly badged to BS EN 61557, not a free pass.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'GN3 Ch 1 defines the equivalent overvoltage category of a test arrangement. How is it determined?',
     options: [
-      'It equals the rating of the meter alone',
-      'It equals the highest overvoltage category of any equipment in the arrangement',
-      'It equals the lowest overvoltage category of any equipment, including instruments, leads, probes and connectors',
-      'It is set by BS 7671 Reg 443',
+      'It equals the rating of the meter alone, regardless of the leads and probes fitted',
+      'It equals the highest overvoltage category of any one item of equipment in the arrangement',
+      'It equals the lowest category of any item — instrument, lead, probe or connector',
+      'It is set by BS 7671 Reg 443 according to the supply overvoltage category',
     ],
     correctAnswer: 2,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'Why does GN3 require all instruments, leads, probes and accessories to follow GS38, regardless of the instrument built-in protection?',
     options: [
-      'GS38 is part of BS 7671',
-      'Because the safety boundary at the point of contact (probe tip and lead) is what limits the energy released into the operator if a slip causes a phase-to-earth fault — internal meter protection cannot help if the fault is at the probe',
-      'GS38 is mandatory under EAWR Reg 14',
-      'It applies only to insulation testing',
+      'GS38 forms part of BS 7671 itself and so carries the standard’s authority',
+      'Because the probe tip and lead are the safety boundary that limits the fault energy reaching the operator',
+      'Because GS38 is made mandatory directly under EAWR Reg 14 for all live work',
+      'Because GS38 applies only to insulation testing, where the test voltage is highest',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     question:
       'You take a low-resistance ohmmeter out of the case in the morning. What is the correct in-service check before the first reading of the day?',
     options: [
-      'Touch the probes together and confirm a near-zero reading; null / zero the leads; check battery condition; visually inspect leads, probes and finger barriers for damage',
-      'Re-calibrate the instrument against a 1 Ω resistor',
-      'Send it back to the manufacturer for verification',
-      'Measure the resistance of a known socket-outlet earth and compare to last month',
+      'Short the probes to confirm near-zero, null the leads, and check battery and lead condition',
+      'Re-calibrate the instrument against a traceable 1 Ω reference resistor each morning',
+      'Send the instrument back to the manufacturer for verification before each test session',
+      'Measure a known socket-outlet earth and compare the value against last month’s reading',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       'A modern multifunction tester gives an insulation reading of 999 MΩ on a circuit. The same instrument reads 0.8 MΩ a week later on the same circuit at the same test voltage. What does this most likely indicate, before suspecting the instrument?',
     options: [
-      'Calibration drift on the meter',
-      'Damp ingress, contamination or insulation deterioration on the circuit between the two tests — environmental and load-state factors must be ruled out before suspecting the instrument',
-      'The meter battery is low',
-      'The first reading was a software fault',
+      'Calibration drift on the meter shifting the reading over the week between the two tests',
+      'Damp ingress, contamination or insulation deterioration on the circuit between the two tests',
+      'A low meter battery dragging the second insulation reading down to 0.8 MΩ',
+      'A software fault in the instrument that produced an invalid first reading of 999 MΩ',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     question:
       'You drop your loop-impedance tester from the back of the van onto concrete. The case has a hairline crack but the meter powers up and gives a sensible reading on a known circuit. What does GN3 require, and what is the procedural fix?',
     options: [
-      'If the readings look right, continue using it and book a calibration at the next scheduled review',
-      'Treat the impact as a calibration-affecting event. GN3 Reg 4.8 requires the accuracy of any instrument that has been damaged or repaired to be re-established before further use. Quarantine the meter, label it out of service, and return it for a full check or re-calibration before the next test session',
-      'Open the case and inspect the internal PCB',
-      'Run the self-test and accept the result if it passes',
+      'If the readings look right, continue using it and book calibration at the next scheduled review',
+      'Treat it as a calibration-affecting event — quarantine the meter and re-check before further use',
+      'Open the case and inspect the internal PCB for visible impact damage before continuing',
+      'Run the on-board self-test and accept the result if the instrument passes it cleanly',
     ],
     correctAnswer: 1,
     explanation:

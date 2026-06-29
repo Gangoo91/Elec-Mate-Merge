@@ -53,12 +53,12 @@ const AM2Module3Section3 = () => {
       id: 'two-way-wiring',
       question: 'What cable is typically used for two-way strapper connections?',
       options: [
-        'Three-core and earth cable',
         'Twin & earth cable',
+        'Three-core and earth cable',
         'Single core cable',
         'Two separate single cables',
       ],
-      correctIndex: 0,
+      correctIndex: 1,
       explanation:
         'Three-core and earth cable is used between two-way switches to provide the two strapper connections (L1 and L2) plus the common.',
     },
@@ -160,14 +160,14 @@ const AM2Module3Section3 = () => {
       id: 7,
       question: 'What is the minimum insulation resistance required for lighting circuits?',
       options: [
-        '0.5MO',
-        '5MO',
-        '2MO',
-        '1MO',
+        '0.5 MΩ',
+        '5 MΩ',
+        '2 MΩ',
+        '1 MΩ',
       ],
       correctAnswer: 3,
       explanation:
-        'BS7671 requires a minimum insulation resistance of 1MO between live conductors when tested at 500V DC for low voltage circuits.',
+        'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits up to 500 V (including lighting), tested at 500 V DC.',
     },
     {
       id: 8,
@@ -186,10 +186,10 @@ const AM2Module3Section3 = () => {
       id: 9,
       question: 'What is the most common cause of two-way switching circuits not working properly?',
       options: [
-        'Refrigerant evaporates inside the coil tubes',
+        'The MCB rating is too low',
         'Strappers connected to wrong terminals',
-        'R_th = R_N and I_N = V_th/R_th',
-        'Monitoring exposure at the workplace',
+        'The cable run is too long',
+        'The neutral is undersized',
       ],
       correctAnswer: 1,
       explanation:

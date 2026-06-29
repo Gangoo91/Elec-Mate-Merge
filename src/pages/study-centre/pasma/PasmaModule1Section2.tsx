@@ -18,8 +18,8 @@ const quickCheckQuestions = [
   {
     id: 'pasma-en1004-year',
     question: 'When did EN 1004:2020 replace the previous EN 1004:2004 standard?',
-    options: ['January 2020', 'November 2021', 'April 2022', 'March 2023'],
-    correctIndex: 1,
+    options: ['November 2021', 'January 2020', 'April 2022', 'March 2023'],
+    correctIndex: 0,
     explanation:
       'EN 1004:2020 was published in 2020 but the transition period ended in November 2021, at which point it fully replaced EN 1004:2004 for all new tower designs and manufacture.',
   },
@@ -36,8 +36,8 @@ const quickCheckQuestions = [
     id: 'pasma-outdoor-max',
     question:
       'What is the maximum height for a standard mobile tower used outdoors under EN 1004:2020?',
-    options: ['4 metres', '6 metres', '8 metres', '12 metres'],
-    correctIndex: 2,
+    options: ['4 metres', '8 metres', '6 metres', '12 metres'],
+    correctIndex: 1,
     explanation:
       'Under EN 1004:2020, the maximum height for a mobile tower used outdoors without additional measures is 8 metres. Indoors, the maximum is 12 metres.',
   },
@@ -71,12 +71,12 @@ const quizQuestions = [
     id: 1,
     question: 'EN 1004:2020 is a standard that applies to which type of equipment?',
     options: [
-      'Fixed scaffolding',
       'Mobile access towers',
+      'Fixed scaffolding',
       'Ladders and stepladders',
       'Mobile elevating work platforms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EN 1004:2020 is the European standard specifically for mobile access towers made of prefabricated elements. It does not cover fixed scaffolding, ladders, or MEWPs.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'Which of the following is a KEY change introduced by EN 1004:2020?',
     options: [
       'Towers no longer need guardrails',
-      'Load classes were introduced (Class 2 and Class 3)',
       'Towers can now be used above 20 metres',
+      'Load classes were introduced (Class 2 and Class 3)',
       'Inspection requirements were removed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'One of the most significant changes in EN 1004:2020 was the introduction of two defined load classes: Class 2 (150 kg/m²) and Class 3 (200 kg/m²), replacing the previous single classification.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 5,
     question: "What information must appear on a tower's manufacturer data plate?",
     options: [
-      "Only the manufacturer's name",
       'The standard reference, load class, max height, and manufacturer details',
+      "Only the manufacturer's name",
       'Only the date of manufacture',
       'The name of the person who assembled it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The manufacturer's data plate must include the standard reference (EN 1004:2020), the load class (2 or 3), the maximum platform height, and manufacturer identification details.",
   },
@@ -156,10 +156,10 @@ const quizQuestions = [
     options: [
       'Continue using the tower if it looks stable',
       'Report it but carry on working',
-      'Stop using the tower immediately and report the issue',
       'Add extra bracing to compensate',
+      'Stop using the tower immediately and report the issue',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Mixing components from different manufacturers is dangerous because parts may not be fully compatible, even if they appear to fit. The tower must be taken out of service immediately, reported, and only reconstructed using components from a single manufacturer in accordance with their instructions.',
   },

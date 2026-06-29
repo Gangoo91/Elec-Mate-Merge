@@ -10,12 +10,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the "4% rule" suggest about retirement withdrawals?',
     options: [
-      'You should save 4% of your income for retirement',
       'You can withdraw 4% of your pension pot in the first year and adjust for inflation, with a high probability of not running out',
+      'You should save 4% of your income for retirement',
       'Pension funds grow by at least 4% per year',
       'You pay 4% tax on pension withdrawals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 4% rule is a guideline suggesting you can withdraw 4% of your pot in year one, then adjust for inflation each year, with a strong probability your money lasts 30+ years. It is a planning tool, not a guarantee.',
   },
@@ -31,8 +31,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'When is the minimum pension access age rising from 55 to 57?',
-    options: ['2025', '2026', '2028', '2030'],
-    correctAnswer: 2,
+    options: ['2028', '2025', '2026', '2030'],
+    correctAnswer: 0,
     explanation:
       'The minimum pension access age is rising from 55 to 57 on 6 April 2028. This is linked to the State Pension age rising to 67 and remains 10 years below the State Pension age.',
   },
@@ -41,11 +41,11 @@ const quizQuestions = [
     question: 'What is "flexi-access drawdown"?',
     options: [
       'Taking your entire pension pot in one go',
-      'Keeping your pension invested while taking regular or ad-hoc income from it',
       'Converting your pension into a guaranteed annuity',
       'Moving your pension to a different provider',
+      'Keeping your pension invested while taking regular or ad-hoc income from it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Flexi-access drawdown lets you keep your pension invested while withdrawing income as you need it. Your pot continues to grow (or shrink) based on investment performance, and you control how much you take and when.',
   },
@@ -67,11 +67,11 @@ const quizQuestions = [
     question: 'Why is career transition planning particularly important for electricians?',
     options: [
       'Because electricians earn more than other trades',
-      'Because electrical work is physically demanding and becomes harder in your late 50s and 60s',
       'Because electricians must retire at 60',
       'Because the electrical regulations change too frequently',
+      'Because electrical work is physically demanding and becomes harder in your late 50s and 60s',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electrical work involves physical demands &mdash; crawling through lofts, lifting cable drums, working in confined spaces. Many electricians find this increasingly difficult from their late 50s. Planning a transition to supervision, testing, training, or consultancy allows you to continue earning while reducing physical strain.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     options: [
       'Anyone aged 18 or over',
       'Anyone aged 40 or over',
-      'Anyone aged 50 or over with a defined contribution pension',
       'Only people who have already retired',
+      'Anyone aged 50 or over with a defined contribution pension',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Pension Wise is a free, impartial government service for anyone aged 50 or over with a defined contribution pension. It offers a one-hour appointment (phone, online, or face-to-face) covering your pension options at retirement.',
   },
@@ -313,8 +313,8 @@ export default function PFModule4Section4() {
           <InlineCheck
             id="pf-4-4-check1"
             question="Using the 4% rule, what size pension pot would you need to generate &pound;15,000 per year in retirement income?"
-            options={['&pound;150,000', '&pound;250,000', '&pound;375,000', '&pound;600,000']}
-            correctIndex={2}
+            options={['&pound;375,000', '&pound;250,000', '&pound;150,000', '&pound;600,000']}
+            correctIndex={0}
             explanation="&pound;15,000 divided by 4% = &pound;15,000 &times; 25 = &pound;375,000. This is the pot you would need to withdraw &pound;15,000 in year one and adjust for inflation, with a high probability of lasting 30+ years."
           />
 
@@ -523,8 +523,8 @@ export default function PFModule4Section4() {
           <InlineCheck
             id="pf-4-4-check2"
             question="An electrician takes their 25% tax-free lump sum from a &pound;200,000 pension pot. How much tax-free cash do they receive?"
-            options={['&pound;25,000', '&pound;40,000', '&pound;50,000', '&pound;75,000']}
-            correctIndex={2}
+            options={['&pound;25,000', '&pound;40,000', '&pound;75,000', '&pound;50,000']}
+            correctIndex={3}
             explanation="25% of &pound;200,000 = &pound;50,000 tax-free. The remaining &pound;150,000 stays in the pension and is taxed as income when withdrawn through drawdown or used to buy an annuity."
           />
 

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'Angela Duckworth&rsquo;s research at the University of Pennsylvania defines &ldquo;grit&rdquo; as a combination of which two qualities?',
     options: [
-      'Intelligence and talent &mdash; the raw abilities you are born with',
       'Passion and perseverance for long-term goals &mdash; sustained interest and effort over years',
+      'Intelligence and talent &mdash; the raw abilities you are born with',
       'Confidence and charisma &mdash; the ability to influence others and believe in yourself',
       'Speed and accuracy &mdash; completing tasks quickly and without error',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Duckworth defines grit as the combination of passion (a deep, enduring interest in what you do) and perseverance (the ability to sustain effort and keep going through setbacks, plateaus, and boredom). Crucially, grit is about long-term goals &mdash; not short bursts of enthusiasm. A &ldquo;gritty&rdquo; electrician is not someone who works hard for a week and then loses interest; it is someone who commits to mastering their trade over years and decades, continuing to develop even when progress feels slow. Duckworth&rsquo;s research found that grit predicts achievement better than IQ, talent, or socioeconomic background in contexts ranging from West Point military cadets to National Spelling Bee contestants to salespeople and teachers. For electricians, this means that the apprentice who shows up every day, asks questions, practises deliberately, and refuses to give up on difficult topics will almost certainly outperform the &ldquo;naturally talented&rdquo; apprentice who coasts.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'The comfort zone model describes four zones of experience. Which zone comes immediately after the fear zone, and what characterises it?',
     options: [
       'The growth zone &mdash; where you achieve mastery and set new, bigger goals',
-      'The panic zone &mdash; where stress becomes overwhelming and shuts down learning',
       'The learning zone &mdash; where you acquire new skills, deal with challenges, and extend your comfort zone',
+      'The panic zone &mdash; where stress becomes overwhelming and shuts down learning',
       'The comfort zone &mdash; where you return after the fear subsides',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The comfort zone model consists of four concentric zones: Comfort Zone (where everything feels safe, familiar, and easy), Fear Zone (where anxiety, self-doubt, and excuses emerge), Learning Zone (where new skills are acquired, challenges are handled, and problems are solved), and Growth Zone (where purpose is found, new goals are set, and dreams are achieved). The learning zone comes immediately after the fear zone. This sequence is important because it tells us that fear and discomfort are not signs that you should retreat &mdash; they are signs that you are approaching the boundary of your current abilities and about to enter the space where real learning happens. For electricians, the fear zone might manifest as anxiety about starting a new qualification, nervousness about taking on unfamiliar work, or self-doubt when entering a new sector (e.g., moving from domestic to commercial). Pushing through the fear zone into the learning zone is where competence and confidence are built.',
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
       'Angela Duckworth&rsquo;s research at the University of Pennsylvania found that grit &mdash; passion and perseverance for long-term goals &mdash; predicted success more accurately than which other factor?',
     options: [
       'Physical fitness and health',
-      'IQ and measured cognitive ability',
       'Socioeconomic background alone',
       'Years of formal education',
+      'IQ and measured cognitive ability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Duckworth&rsquo;s landmark research demonstrated that grit was a stronger predictor of success than IQ across multiple high-achievement contexts. At West Point Military Academy, grit predicted which cadets would complete the punishing &ldquo;Beast Barracks&rdquo; summer training programme better than SAT scores, class rank, or athletic ability. In the National Spelling Bee, grittier contestants outperformed those with higher verbal IQ. Among Ivy League undergraduates, grittier students achieved higher GPAs despite having lower SAT scores than their peers. This finding challenges the widespread belief that intelligence or natural talent is the primary driver of success. For the electrical trade, this research validates what many experienced electricians already know intuitively: the apprentice who sticks with it, keeps learning, and pushes through difficulty will almost always outperform the one who had early natural aptitude but lacked the persistence to develop it fully.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'According to the Duckworth Grit Scale, which behaviour pattern most strongly indicates high grit?',
     options: [
+      'Maintaining focus on a specific long-term goal for years, persisting through setbacks and periods of slow progress',
       'Frequently starting new projects and exploring new interests to find your passion',
       'Working intensely on a goal for several weeks before moving to the next challenge',
-      'Maintaining focus on a specific long-term goal for years, persisting through setbacks and periods of slow progress',
       'Choosing the most difficult available challenge at every opportunity, regardless of personal interest',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Grit Scale measures two components: consistency of interest (passion) and perseverance of effort. High grit is characterised by long-term commitment to a specific direction &mdash; not just working hard in short bursts, but maintaining sustained focus over years. This distinguishes grit from mere conscientiousness or work ethic. A gritty person does not frequently abandon goals or switch interests; they stay the course even when progress is slow, when the work becomes tedious, or when more exciting alternatives present themselves. For electricians, high grit looks like: committing to achieving a specific career goal (such as becoming an approved inspector or starting a business), working towards it consistently over several years, continuing to study and develop even when motivation dips, and not abandoning the goal when obstacles arise. It does not mean never changing direction &mdash; but it does mean not changing direction every time things get hard.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       'Albert Bandura&rsquo;s self-efficacy theory states that your belief in your ability to succeed at a task directly affects:',
     options: [
       'Only your emotional state &mdash; how anxious or confident you feel',
-      'Whether you attempt the task at all, how much effort you invest, how long you persist, and ultimately whether you succeed',
       'Only the quality of your work &mdash; higher confidence equals higher quality output',
+      'Whether you attempt the task at all, how much effort you invest, how long you persist, and ultimately whether you succeed',
       'Only your social interactions &mdash; confident people receive more help from others',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bandura&rsquo;s self-efficacy theory is one of the most influential frameworks in psychology. It states that self-efficacy &mdash; your belief in your ability to succeed at a specific task &mdash; affects four critical outcomes: (1) Choice &mdash; whether you attempt the task at all. Low self-efficacy leads to avoidance. (2) Effort &mdash; how much energy and resources you invest. Higher self-efficacy leads to greater effort. (3) Persistence &mdash; how long you continue in the face of difficulty. Higher self-efficacy leads to greater persistence. (4) Outcome &mdash; whether you ultimately succeed. Because self-efficacy affects the first three factors, it has a powerful indirect effect on actual achievement. For electricians, this means that an electrician who believes they can learn inspection work is more likely to attempt the 2391 course, invest more study time, persist through initial failures, and ultimately qualify. An electrician with low self-efficacy in this area may never even try &mdash; not because they lack the ability, but because they lack the belief.',
   },
@@ -148,25 +148,25 @@ const quizQuestions = [
       'Which of the following is an example of building self-efficacy through &ldquo;vicarious experience&rdquo; (one of Bandura&rsquo;s four sources)?',
     options: [
       'An apprentice successfully wires a consumer unit for the first time and gains confidence from the achievement',
-      'An apprentice watches a fellow apprentice of similar ability successfully complete the AM2 practical assessment and thinks &ldquo;if they can do it, I can too&rdquo;',
       'A supervisor tells an apprentice &ldquo;I believe you can pass this exam if you put in the work&rdquo;',
       'An electrician feels calm and well-rested before an important assessment',
+      'An apprentice watches a fellow apprentice of similar ability successfully complete the AM2 practical assessment and thinks &ldquo;if they can do it, I can too&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Vicarious experience is Bandura&rsquo;s second source of self-efficacy. It works through social comparison: when you see someone similar to you succeed at a task, your own belief that you can succeed increases. The key word is &ldquo;similar&rdquo; &mdash; the model must be someone you can identify with. An apprentice watching a fellow apprentice (similar age, similar ability, similar background) pass the AM2 gains more self-efficacy than watching a highly experienced electrician do it, because the experienced electrician&rsquo;s success can be attributed to their years of experience rather than to something the apprentice could replicate. This is why peer learning, mentoring by recent graduates, and sharing success stories within training groups are powerful strategies. Option A is a mastery experience (the most powerful source), Option C is social persuasion, and Option D relates to physiological states. All four sources contribute to self-efficacy, but understanding which is which helps you deliberately build confidence using multiple strategies.',
+      'Vicarious experience is Bandura&rsquo;s second source of self-efficacy. It works through social comparison: when you see someone similar to you succeed at a task, your own belief that you can succeed increases. The key word is &ldquo;similar&rdquo; &mdash; the model must be someone you can identify with. An apprentice watching a fellow apprentice (similar age, similar ability, similar background) pass the AM2 gains more self-efficacy than watching a highly experienced electrician do it, because the experienced electrician&rsquo;s success can be attributed to their years of experience rather than to something the apprentice could replicate. This is why peer learning, mentoring by recent graduates, and sharing success stories within training groups are powerful strategies. The example of wiring a consumer unit for the first time is a mastery experience (the most powerful source), the supervisor&rsquo;s encouragement is social persuasion, and feeling calm and well-rested relates to physiological states. All four sources contribute to self-efficacy, but understanding which is which helps you deliberately build confidence using multiple strategies.',
   },
   {
     id: 6,
     question:
       'Imposter syndrome &mdash; feeling like a fraud despite evidence of competence &mdash; is particularly common in electricians when they:',
     options: [
-      'Have been in the trade for less than one year and are still learning basics',
       'Are transitioning from employed installation work to self-employment, inspection, or design roles where their professional identity is being redefined',
+      'Have been in the trade for less than one year and are still learning basics',
       'Work alongside other electricians of similar skill level on familiar projects',
       'Receive positive feedback from supervisors and clients on work they know they did well',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Imposter syndrome is most commonly triggered by transitions and role changes &mdash; situations where your professional identity is being redefined and you have not yet built the track record to feel fully confident. For electricians, the most common triggers are: moving from employed to self-employed (suddenly you are responsible for everything &mdash; quoting, customer relations, compliance, business administration), moving from installation to inspection (a fundamentally different skill set requiring new knowledge and judgement), moving from site work to design or consultancy, or taking on a training or mentoring role for the first time. In all these cases, the electrician has genuine competence built over years, but the new context makes them feel like a beginner again. This is normal and temporary. The cure is accumulated experience in the new role, combined with honest self-assessment (recognising what you do know, as well as what you still need to learn) and support from peers or mentors who have made similar transitions.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'Anders Ericsson&rsquo;s research on deliberate practice distinguishes it from ordinary practice by which key characteristic?',
     options: [
       'Deliberate practice involves repeating tasks you are already good at to maintain fluency',
-      'Deliberate practice involves pushing beyond your current ability level with focused effort, specific goals, and immediate feedback',
       'Deliberate practice requires at least four hours per day to be effective',
+      'Deliberate practice involves pushing beyond your current ability level with focused effort, specific goals, and immediate feedback',
       'Deliberate practice must be done alone, without input from coaches or mentors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ericsson&rsquo;s research on expertise found that what separates elite performers from average performers is not just the quantity of practice, but the quality. Deliberate practice has several defining characteristics: (1) It targets specific weaknesses &mdash; you work on what you are worst at, not what you are best at. (2) It pushes beyond current ability &mdash; the task is just beyond your comfort zone, requiring concentrated effort. (3) It involves specific goals &mdash; each practice session has a clear objective. (4) It includes immediate feedback &mdash; you can tell whether your attempt was correct and adjust accordingly. (5) It requires full concentration &mdash; mindless repetition does not count. For electricians, deliberate practice might look like: practising cable terminations until you can achieve correct torque settings consistently, working through unfamiliar fault scenarios with a mentor providing real-time feedback, doing timed cable calculation exercises targeting your weakest areas, or practising inspection procedures on live installations with an experienced inspector reviewing your findings. Simply doing your job every day is not deliberate practice unless you are intentionally pushing beyond your current skill level.',
   },

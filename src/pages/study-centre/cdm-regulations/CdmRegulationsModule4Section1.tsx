@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     question:
       'Under the General Principles of Prevention (Schedule 1), which type of protective measure takes priority?',
     options: [
-      'Collective measures over individual measures',
       'Individual PPE over collective measures',
+      'Collective measures over individual measures',
       'Administrative controls over engineering controls',
       'Warning signs over physical barriers',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Schedule 1 of CDM 2015 (mirroring the Management of Health and Safety at Work Regulations) requires that collective protective measures are given priority over individual protective measures. For example, a permanent guardrail system (collective) is preferred over requiring individual workers to wear fall-arrest harnesses (individual). Collective measures protect everyone without relying on individual compliance.',
   },
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'How should a designer communicate significant residual risks that cannot be eliminated or reduced?',
     options: [
-      'Through design risk registers and information on drawings, highlighting unusual or non-obvious risks',
       'Verbally at the project handover meeting only',
       'By including a general disclaimer in the contract documents',
+      'Through design risk registers and information on drawings, highlighting unusual or non-obvious risks',
       'Residual risks do not need to be communicated if they are common in the industry',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Designers must communicate significant residual risks through design risk registers and by providing information on drawings. Unusual or non-obvious risks must be specifically highlighted so that contractors and others can plan appropriate control measures. Verbal communication alone is insufficient, and general disclaimers do not satisfy the legal duty. Even common industry risks should be recorded if they are significant.',
   },
@@ -107,11 +107,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of eliminating risk through design?',
     options: [
       'Specifying lighter materials to reduce manual handling injuries',
-      'Designing permanent edge protection into a flat roof so temporary barriers are not needed',
       'Providing information about buried services on the drawings',
+      'Designing permanent edge protection into a flat roof so temporary barriers are not needed',
       'Requiring workers to wear fall-arrest harnesses when working at height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Designing permanent edge protection into a flat roof eliminates the risk of falls during both construction and future maintenance because the hazard is permanently removed by the design. Specifying lighter materials reduces risk but does not eliminate it. Providing information is the third tier of the hierarchy (inform). Requiring harnesses is an individual protective measure, not a design elimination.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       "What does 'combating risks at source' mean under the General Principles of Prevention?",
     options: [
-      'Addressing the root cause of the hazard rather than mitigating its effects',
       'Providing PPE to protect workers from the hazard',
       'Writing a risk assessment for every task',
       'Ensuring the principal contractor manages all on-site risks',
+      'Addressing the root cause of the hazard rather than mitigating its effects',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Combating risks at source means addressing the root cause of the hazard rather than mitigating its effects after the fact. For example, designing out the need to work at height (the source) is preferable to providing fall protection equipment (mitigating the effect). This principle is fundamental to the prevention hierarchy and underpins the designer's duty to eliminate and reduce risks through design decisions.",
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
     question: 'Under CDM 2015, what determines whether a designer has adequate competence?',
     options: [
       'Holding a specific CDM qualification or licence',
-      'Having adequate skills, knowledge, experience, and organisational capability for the work',
       'Being registered with the HSE as an approved designer',
+      'Having adequate skills, knowledge, experience, and organisational capability for the work',
       'Having completed at least 10 years of professional practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CDM 2015 does not require a specific qualification or licence. Competence is assessed by whether the designer has adequate skills, knowledge, experience, and (where relevant) organisational capability for the type of work involved. This is a proportionate test — a designer working on a simple domestic extension needs different competence from one designing a major infrastructure project. Professional judgement and CDM awareness are expected of all designers.',
   },
@@ -175,11 +175,11 @@ const quizQuestions = [
     question: 'Why is cooperation between designers important under CDM 2015?',
     options: [
       'It is a contractual requirement but not a legal one',
-      'It ensures that risks identified by one designer do not create gaps in risk management across the project',
       'It is only required when the project has more than five designers',
       'It allows designers to share the cost of professional indemnity insurance',
+      'It ensures that risks identified by one designer do not create gaps in risk management across the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cooperation between designers is a legal duty under CDM 2015. It ensures that design risks are managed across all disciplines and that no gaps exist. For example, a structural designer's decisions may affect the safety of electrical installations, and vice versa. Without cooperation and coordination (facilitated by the principal designer), one designer's risk elimination could inadvertently create new risks for another trade.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'When designing the location of electrical distribution boards, which CDM principle should the designer primarily consider?',
     options: [
-      'Minimising the cost of the electrical installation',
       'Ensuring safe access for maintenance without the need for work at height or confined space entry',
+      'Minimising the cost of the electrical installation',
       'Positioning boards as close to the main intake as possible regardless of access',
       'Using the smallest distribution boards available to save space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The designer should consider the whole lifecycle of the installation, including future maintenance. Distribution boards must be accessible for safe maintenance without requiring work at height, confined space entry, or other high-risk activities. This is a direct application of the designer's duty to eliminate and reduce foreseeable risks. Positioning and access are design decisions that can significantly affect the safety of future maintenance work.",
   },

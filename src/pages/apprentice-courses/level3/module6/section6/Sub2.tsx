@@ -47,38 +47,38 @@ const checks = [
     question:
       "Why are schedules a separate document rather than annotations on the layout drawing?",
     options: [
-      "Because schedules give a sortable, filterable, totalisable list that drives procurement, install QC and as-installed verification — annotations on a layout cannot be totalised, sorted or counted at a glance. The SLD and the layouts show position and topology; the schedules give the bill.",
-      "As a systematic exercise covering all assets, and reviewed periodically or when operating conditions change, new equipment is added, or following significant failures that reveal previously underestimated consequences",
-      "Disconnect the electronic loads before the 500 V DC test, since they will be damaged or give a false low reading; reconnect them and apply the 250 V DC test per Reg 643.3.3, which must read at least 1.0 MΩ between live conductors and the protective conductor.",
-      "To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees — including safe systems of work, safe plant, training, supervision and a written safety policy where five or more employees are employed.",
+      "They give a sortable, totalisable list that a layout drawing cannot.",
+      "BS 7671 specifically forbids any annotation on a layout drawing, so all item data must live on a separate schedule by regulation.",
+      "A separate schedule is cheaper to print than a marked-up layout, so it is purely a cost-saving measure with no functional advantage.",
+      "The layout belongs to the architect and the schedule to the electrical designer, so they are kept apart for ownership rather than usability.",
     ],
     correctIndex: 0,
     explanation:
-      "Schedules and layouts answer different questions. The layout answers where; the schedule answers how many, what spec, what cost. A 200-luminaire fit-out with annotations only on the layout cannot be priced, ordered, installed-against or signed off without somebody first transcribing the annotations into a list. The schedule IS that list, produced once by the designer and reused by procurement, install and commissioning.",
+      "Schedules and layouts answer different questions. The layout answers where; the schedule answers how many, what spec, what cost. A sortable, totalisable list drives procurement, QC and verification — a layout cannot be totalised, sorted or counted. A 200-luminaire fit-out with annotations only on the layout cannot be priced, ordered, installed-against or signed off without somebody first transcribing the annotations into a list. The schedule IS that list, produced once by the designer and reused by procurement, install and commissioning.",
   },
   {
     id: "m6-s6-sub2-cable-schedule",
     question:
       "Your cable schedule lists Circuit 7 as 'XLPE/SWA 4c x 25 mm sq, 65 m, Ref Meth E'. The SLD shows the same circuit as 65 m. The installer measures the as-installed run at 78 m (cable route changed to avoid HVAC). What MUST happen before the EIC issues?",
     options: [
-      "Because someone touching exposed metalwork on a distribution circuit (sub-main supplying a downstream board) is far less likely than someone touching the casing of a kettle on a final circuit — the touch-current risk profile is lower.",
-      "Recognise the physical stress response (jaw clenching) and racing thoughts as signals that his amygdala has been triggered, then pause to allow the prefrontal cortex to re-engage before deciding on a course of action",
-      "Marked-up as-built drawings, materials register (what was actually fitted), test record sheet with the dead-test results recorded as installation progressed (continuity, IR), confirmation of safe-isolation status for live testing.",
-      "The designer re-runs the voltage drop and Zs calc using the as-installed length, updates the cable schedule and the SLD to read 78 m, marks the change in the revision history, and confirms the calc still passes. Only then can the EIC issue under Reg 644.1.1.",
+      "Nothing — the 13 m difference is installer discretion, so the EIC issues against the original 65 m figure with the design pack unchanged.",
+      "The installer pencils the new length onto their own copy only, with no calc re-run or formal revision because the change is minor.",
+      "The change is logged as an RFI for information, with the original 65 m design left in place to avoid delaying the programme.",
+      "The designer re-runs the Vd and Zs calc at 78 m, updates the documents, and the EIC issues under Reg 644.1.1.",
     ],
     correctIndex: 3,
     explanation:
-      "Reg 644.1.1 makes the EIC conditional on the documentation matching the install. A 13 m length difference can swing voltage drop and Zs by enough to fail Table 41.3 maxima or the 5 percent Vd ceiling. The designer re-runs the calc, updates the schedule and SLD to as-installed values, logs the revision, and only then does the EIC issue. This is the schedule discharging its role as the source of truth.",
+      "Reg 644.1.1 makes the EIC conditional on the documentation matching the install. A 13 m length difference can swing voltage drop and Zs by enough to fail Table 41.3 maxima or the 5 percent Vd ceiling. The designer re-runs the calc, updates the schedule and SLD to as-installed values, logs the revision, confirms the calc still passes, and only then does the EIC issue. This is the schedule discharging its role as the source of truth.",
   },
   {
     id: "m6-s6-sub2-circuit-chart",
     question:
       "Reg 514.9.1 of BS 7671:2018+A4:2026 requires the per-DB diagram, chart or table to indicate which of the following?",
     options: [
-      "The type and composition of each circuit (points of utilisation served, number and size of conductors, type of wiring) and the means necessary for the identification of devices performing the functions of protection, isolation and switching. A4:2026 introduced a domestic exception — read the amended text for scope.",
-      "The scheme flags a missed notification (audit risk + potential scheme penalty); the Building Control Compliance Certificate to the customer is delayed; in some cases late notification fees apply; persistent missed notifications can put scheme membership at risk.",
-      "Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system",
-      "BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present",
+      "The type and composition of each circuit (points served, conductors, wiring type) and the devices for protection, isolation and switching.",
+      "Only the total connected load of the board in kW, recorded as a single demand figure with no per-circuit breakdown required.",
+      "Only the name and signature of the designer, making the chart a sign-off record rather than a circuit-identification document.",
+      "Only the date of the last RCD test, so the chart records the maintenance history of the board rather than its circuit composition.",
     ],
     correctIndex: 0,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: "BS 7671 Reg 514.9.1 requires a per-DB diagram or chart that shows what?",
     options: [
-      "They evaluated at Level 1 (Reaction) but not at Levels 3 (Behaviour) or 4 (Results), so they never checked if training changed actual practice",
-      "Conduit fill depends on the run length and number of bends — OSG tabulates different factors for straight short runs vs longer runs with bends",
-      "The type and composition of each circuit, the points of utilisation served, the number and size of conductors, the type of wiring, and the protective, isolation and switching devices.",
-      "Repeat the test to verify, identify and rectify the fault, then re-test ALL preceding affected tests in sequence to confirm the rectification has not introduced new issues",
+      "Only the consumer-unit manufacturer and model number, treating the chart as an equipment label rather than a circuit-identification document.",
+      "Only the maximum demand of the whole board after diversity, with no per-circuit conductor or device detail required.",
+      "Each circuit's type and composition, points of utilisation, conductors, wiring type, and protective, isolation and switching devices.",
+      "Only the Zs measured at the origin, on the basis that one figure characterises every circuit on the board.",
     ],
     correctAnswer: 2,
     explanation:
@@ -117,23 +117,23 @@ const quizQuestions = [
     id: 3,
     question: "Why should the cable schedule include Reference Method per BS 7671 Appendix 4?",
     options: [
-      "Is a phenomenon where high voltage difference between the PV cells and the earthed frame causes leakage currents through the encapsulant, degrading cell performance over time — particularly in high-humidity environments",
-      "1000 V DC, minimum IR per Table 64 (typically 1 MΩ at 1000 V). Used for circuits rated above 500 V up to 1000 V — the higher test voltage stresses the insulation appropriately for its in-service voltage and reveals defects that would not show at 500 V.",
-      "A controlled sequence: life-safety loads first, then critical loads, then essential loads, with time delays between groups to prevent simultaneous inrush current from overloading the supply or generator",
-      "Because the Reference Method (A through G) sets the tabulated current-carrying capacity (CCC) that the cable size depends on. Without Ref Method on the schedule, a tester cannot verify the cable size matches the install conditions, and a future designer cannot extend the circuit safely.",
+      "The Reference Method tells the wholesaler which drum of cable to supply, making it a procurement code with no bearing on the design.",
+      "The Reference Method records who installed the cable, providing an accountability trail rather than any technical information.",
+      "The Reference Method sets the colour of the cable sheath required for that location, which the schedule must record for the installer.",
+      "The Reference Method (A to G) sets the tabulated current-carrying capacity the cable size depends on.",
     ],
     correctAnswer: 3,
     explanation:
-      "Cable size depends on installation conditions. The same 25 mm sq XLPE/SWA cable carries different currents in Ref Meth A (enclosed in conduit in insulated wall), Ref Meth E (free air, perforated tray, single layer) and Ref Meth F (touching, multiple layers). Without Ref Method on the schedule, the tabulated CCC cannot be verified. Cables that look right on paper may carry too much current in their actual installation condition.",
+      "Cable size depends on installation conditions. The same 25 mm sq XLPE/SWA cable carries different currents in Ref Meth A (enclosed in conduit in insulated wall), Ref Meth E (free air, perforated tray, single layer) and Ref Meth F (touching, multiple layers). Without the Reference Method on the schedule, the tabulated current-carrying capacity cannot be verified, so a tester cannot confirm the cable size against the actual install conditions. Cables that look right on paper may carry too much current in their actual installation condition.",
   },
   {
     id: 4,
     question: "The Schedule of Luminaires must include lumen output and lamp type because:",
     options: [
-      "Lumen output and lamp type drive lighting design compliance (BS EN 12464-1 illuminance levels), control gear matching, emergency lighting duration calc (BS 5266), thermal load on the wiring system and the maintenance regime — replacement lamps must match the original spec.",
-      "Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved",
-      "Model inclusive language; identify and accommodate reasonable adjustments where colleagues need them; ensure PEEPs are in place where required; intervene against discriminatory behaviour; document; escalate persistent issues.",
-      "The pattern reveals power-based conflict behaviour — they accommodate those with more power, compete with those with less, revealing that their style is driven by power dynamics rather than situational appropriateness, risking apprentice wellbeing and development",
+      "They drive illuminance compliance, control gear matching, emergency duration and the maintenance regime.",
+      "They are needed only to price the luminaires for the bill of materials, with no other use.",
+      "They are recorded purely to satisfy the manufacturer's warranty registration on the fittings.",
+      "They set the Reference Method for the lighting circuit cable feeding each fitting.",
     ],
     correctAnswer: 0,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       "Your circuit chart for DB-G2 shows Circuit 5 as RCBO 16 A Type B Curve, 6 kA Icn, Type A 30 mA. The SLD shows the same circuit as RCBO 20 A Type B Curve. Which document is right?",
     options: [
-      "The actual cable routes, fitting positions, junction-box locations, cable sizes used (where they differ from design), any deviations from the design and the reasons for them. As-installed drawings record what's actually in the wall, ceiling and floor void — so the next electrician (or the customer's plumber drilling for a new radiator) knows what they're dealing with.",
-      "Neither — they conflict. The conflict must be resolved before any document issues. Trace back to the calc sheet (cable CCC and design Ib) to see which rating the calc supports, fix the wrong document, log the change in the revision history, and re-issue. A pack with internal conflict cannot be issued for construction.",
-      "C&I is a specialised electrical-technician discipline covering process control systems, instrumentation, PLCs, SCADA and DCS. Typical route: Approved Electrician + HNC/HND in Electrical/Electronic or Process Control + employer-specific training (Siemens, Rockwell, Schneider PLC training). Common employers: process industries (food, pharma, water utilities), petrochemical, large manufacturing.",
-      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"no documentation available\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" as a limitation against affected items on the schedule.",
+      "The SLD is always right, so amend the circuit chart to a 20 A device to match it without any further checking of the calc.",
+      "Neither — trace to the calc sheet to see which rating it supports, fix the wrong document, log the revision and re-issue.",
+      "The circuit chart is always right, as the document the installer uses, so amend the SLD to 16 A to match it.",
+      "Whichever rating is lower (16 A) — the smaller device is the safer choice, so let the 16 A govern without checking the calc.",
     ],
     correctAnswer: 1,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 6,
     question: "On a domestic CU upgrade, the A4:2026 Reg 514.9.1 exception means:",
     options: [
-      "A tethered charger has the charging cable permanently attached to the EVSE unit (convenient for home use — just plug into the vehicle), while a socketed charger has a Type 2 socket on the unit and the user provides their own cable (more flexible for workplace/public use where different cable lengths and vehicle connectors may be needed)",
-      "~17 A continuous, but sized to the inverter’s manufacturer spec (typically 16 A or 20 A, often a 16 A MCB feeding 2.5 mm² T&E for short runs). Allow for the inverter’s actual continuous AC output rating, not the panel DC rating.",
-      "The full per-DB chart requirement is relaxed for domestic premises — but Reg 132.13 design documentation still applies, and a circuit list (numbered circuits with description and protective device) is still expected on or near the CU. Read the amended A4:2026 text for the precise wording and scope.",
-      "An event that could have caused injury but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t — a slip without a fall, a near-contact, a tool drop without injury, a small fire that self-extinguished. Near-misses are the leading indicator of where the next incident will happen. Internal reporting and review of near-misses is one of the highest-impact preventive activities.",
+      "No circuit chart of any kind is needed for a domestic board — the exception removes the documentation requirement entirely, including Reg 132.13.",
+      "The exception requires a fuller chart for domestic than commercial premises, because dwellings are used by ordinary persons needing more information.",
+      "The full per-DB chart is relaxed for domestic premises, but Reg 132.13 still applies and a circuit list (numbered ways, description, device) is still expected.",
+      "The exception applies only to consumer units fitted before A4:2026 — every new domestic board must still carry the full commercial-standard chart.",
     ],
     correctAnswer: 2,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     id: 7,
     question: "What is the practical difference between a Schedule of Accessories and a Bill of Materials (BOM)?",
     options: [
-      "A RAMS that uses the same generic wording for every job ('standard electrical install — usual precautions') without reflecting the specific hazards and conditions of THIS site. The inspector spots it instantly because the wording doesn't match what's actually present on the job. It's evidence that the assessment wasn't 'suitable and sufficient' under MHSWR 1999 Reg 3 even though the document exists.",
-      "If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.",
-      "CPS-registered firms can self-certify notifiable Part P work and issue compliance certificates direct to the Local Authority on the homeowner's behalf. The LABC route requires a Building Notice or Building Regulations application before work starts, plus an LABC inspection during/after work — typically £150-300 per job and several weeks of LABC scheduling delay. Self-certification removes the cost and the delay.",
-      "The Schedule of Accessories is a design document — every accessory by location, type, IP rating and circuit reference, used for install QC and as-installed verification. The BOM is a procurement document — totals by part number for ordering. The schedule drives the BOM, but the schedule survives long after the BOM is closed.",
+      "There is no difference — Schedule of Accessories and BOM are two names for the same totalled purchase list.",
+      "The Schedule of Accessories is the totalled order list and the BOM is the per-location design record — the roles the other way round.",
+      "The BOM survives in the O&M pack for the installation's life while the Schedule of Accessories is the disposable document, binned once the order is delivered to site.",
+      "The schedule is a per-location design record; the BOM is a procurement total by part number, and the schedule outlives the BOM.",
     ],
     correctAnswer: 3,
     explanation:
@@ -183,10 +183,10 @@ const quizQuestions = [
     id: 8,
     question: "When does the cable schedule get updated to as-installed values?",
     options: [
-      "At handover — the installer red-lines any deviations (route change, length change, cable type substitution), the designer reviews and re-runs affected calcs, the schedule is updated to as-installed values, and the as-installed schedule becomes the master operational document held by the building owner.",
-      "Independent verification. The dead-test calculation depends on Ze (one measurement) plus R1+R2 (one or many readings, depending on circuit). The live Zs measurement is one direct reading. Comparing the two catches errors in either method, gives confidence in the result, and provides a single value to compare against Table 41.3 with the 0.8 multiplier applied.",
-      "Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed",
-      "Key technical areas that underpin the assessment: safety legislation, relevant regulations, fundamental electrical principles, maintenance procedures, and the specific technical knowledge related to your workplace activities and portfolio evidence",
+      "At handover — installer red-lines deviations, designer re-runs affected calcs, schedule becomes the owner's master.",
+      "Never — the design-stage schedule is frozen at first issue and site changes stay in the installer's notebook.",
+      "Only at the next periodic inspection years later, when the EICR engineer measures and corrects it.",
+      "Continuously during the install by the wholesaler, each time a different cable drum is supplied to site.",
     ],
     correctAnswer: 0,
     explanation:

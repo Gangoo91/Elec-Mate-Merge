@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A typical framed crystalline silicon PV module is built up of which layers, from front (sun-facing) to back?',
     options: [
-      'Just glass and cells, sealed together',
-      'Front tempered glass, EVA encapsulant, cell matrix (cells interconnected with tinned-copper ribbons), EVA encapsulant, polymer backsheet (or rear glass for bifacial modules), aluminium frame around the perimeter, and a junction box on the rear with bypass diodes and MC4 connector tails',
-      'Plastic film over the cells',
-      'Bare cells with no protection',
+      'Front glass bonded directly to the bare cells, with no encapsulant or backsheet',
+      'Front glass, EVA encapsulant, cell matrix, EVA, polymer backsheet, aluminium frame, rear junction box',
+      'A clear plastic film laid over loose cells, framed without encapsulant',
+      'Bare interconnected cells on a metal tray, with no glass or weather protection',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A 60-cell crystalline silicon module typically has how many bypass diodes, and what do they protect against?',
     options: [
-      'One bypass diode, protecting against reverse polarity',
-      'Three bypass diodes (one per 20-cell sub-string), protecting against hotspot damage when one cell is shaded or faulted — the diode provides an alternative current path around the affected sub-string',
-      'Sixty bypass diodes, one per cell',
-      'No bypass diodes; PV modules don\'t need them',
+      'One bypass diode for the whole module, protecting against reverse polarity at the junction box',
+      'Three bypass diodes (one per 20-cell sub-string), protecting against hotspot damage when a cell is shaded',
+      'Sixty bypass diodes, one per cell, protecting each cell against reverse bias individually',
+      'No bypass diodes — crystalline silicon modules do not need shading protection',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Five points on a PV module I-V curve. Which one defines the module\'s nameplate power?',
     options: [
-      'V_oc (open-circuit voltage)',
-      'I_sc (short-circuit current)',
-      'The Maximum Power Point (MPP), at V_mp and I_mp — where V × I is at its maximum. P_max = V_mp × I_mp at STC is the nameplate power',
-      'The intersection of V_oc and I_sc',
+      'V_oc, the open-circuit voltage at the right-hand end of the curve',
+      'I_sc, the short-circuit current at the top of the curve',
+      'The maximum power point (MPP) at V_mp and I_mp, where V × I is greatest',
+      'The point where the V_oc and I_sc axes would intersect on the curve',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A modern 60-cell 400 W module has V_oc = 41.6 V, I_sc = 12.5 A. What is its approximate fill factor (FF)?',
     options: [
-      '0.50',
-      'FF = P_max / (V_oc × I_sc) = 400 / (41.6 × 12.5) = 400 / 520 ≈ 0.77 — a typical crystalline silicon module value',
-      '1.0',
-      '0.25',
+      'About 0.50 — implying a poor-quality cell with high series resistance',
+      'About 0.77 — from FF = P_max / (V_oc × I_sc) = 400 / 520',
+      'Exactly 1.0 — the ideal cell delivering V_oc and I_sc simultaneously',
+      'About 0.25 — a quarter of the V_oc × I_sc envelope',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'BS 7671 Section 712 requires PV modules to be installed in a particular thermal arrangement. What does it say?',
     options: [
-      'No thermal requirement',
-      'As specified by the manufacturer, the PV modules shall be installed in such a way that there is adequate heat dissipation under conditions of maximum solar radiation for the site — placing the responsibility on the installer to follow manufacturer guidance for the cooling arrangement (typically the 70–100 mm standoff above the roof surface)',
-      'Modules must be water-cooled',
-      'Modules must be installed indoors',
+      'There is no thermal installation requirement for PV modules',
+      'Modules shall be installed for adequate heat dissipation at the site\'s maximum solar radiation, per the manufacturer',
+      'Modules must be actively water-cooled behind the laminate to limit cell temperature',
+      'Modules must be installed indoors or under cover to control their operating temperature',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'MC4 connectors are the de facto standard for PV module DC interconnections. What is the right discipline on terminating them?',
     options: [
-      'Hand-tighten until firm',
-      'Use the manufacturer\'s specified crimp tool for the cable lugs (typically Stäubli MC4 or compatible), then torque the connector body to the manufacturer\'s spec — the dry-fit connection without proper crimping and torque is a long-term reliability failure mode causing thermal runaway and arc faults',
-      'Solder the connections',
-      'Use any pliers',
+      'Hand-tighten the connector body until it feels firm, with no crimp tool',
+      'Use the manufacturer\'s specified crimp tool for the lugs, then torque the body to spec',
+      'Solder the cable to the connector pins instead of crimping them',
+      'Crimp the lugs with any general-purpose plumbing or electrical pliers',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'BS 7671 Section 712 specifies the requirements for blocking diodes IF they are used in a PV string. What are the rules?',
     options: [
-      'No specific rules',
-      'IF blocking diodes are used: they shall be connected in series with the PV strings; their reverse voltage shall be rated for ≥ 2 × Upc max of the PV string; their rated current shall be not less than 1.1 × Isc max. The rules apply only where blocking diodes are actually used in the design',
-      'They must be solid-state relays only',
-      'They must be Schottky-type only',
+      'There are no specific BS 7671 rules for blocking diodes',
+      'If used: series-connected with the string, reverse voltage ≥ 2 × Upc max, rated current ≥ 1.1 × Isc max',
+      'They must be implemented as solid-state relays rather than as diodes',
+      'They must be Schottky-type devices fitted in the inverter, not the string',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A modern 60-cell crystalline silicon module datasheet quotes P_max = 400 W, V_oc = 41.6 V, I_sc = 12.5 A, V_mp = 34.0 V, I_mp = 11.8 A at STC. Quick sanity check: are these self-consistent?',
     options: [
-      'Cannot tell from these numbers',
-      'Yes — V_mp × I_mp = 34.0 × 11.8 = 401.2 ≈ P_max 400 W (the maximum power point checks). Fill factor = P_max / (V_oc × I_sc) = 400 / 520 ≈ 0.77 (within the typical crystalline silicon 0.75–0.85 range). I_mp / I_sc = 11.8 / 12.5 = 0.944 (typical). The datasheet is internally consistent',
-      'No — the numbers don\'t add up',
-      'Only if V_oc = V_mp',
+      'It cannot be determined from the figures given on the datasheet',
+      'No — the quoted V_mp, I_mp, V_oc and I_sc do not form a consistent module',
+      'Yes — V_mp × I_mp ≈ 400 W, FF ≈ 0.77, and I_mp < I_sc all check out',
+      'Only if V_oc equalled V_mp, which is not the case for these figures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Three cross-checks. V_mp × I_mp should equal P_max (they do — 401 ≈ 400). The fill factor should sit in the typical 0.75–0.85 range (it does — 0.77). And I_mp must be less than I_sc — physically impossible for I_mp to exceed I_sc on any I-V curve (it does — 11.8 A < 12.5 A). When evaluating an unfamiliar module, run all three checks against the datasheet. Datasheets that fail any check (or report I_mp ≥ I_sc) deserve closer scrutiny.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'On a 60-cell PV module with three bypass diodes, what happens if a single cell in one sub-string is heavily shaded (e.g. covered by leaves)?',
     options: [
-      'The whole module shuts down',
-      'The bypass diode for that sub-string forward-biases, providing a current path around the shaded sub-string. The two unaffected sub-strings continue producing power. Module output drops by ~33% (one of three sub-strings bypassed), but the module does not fail',
-      'The shaded cell catches fire',
-      'No change — bypass diodes do nothing',
+      'That sub-string\'s bypass diode conducts around it; the other two keep producing, so output drops ~33%',
+      'The whole module shuts down completely until the shading is cleared from the cell',
+      'The shaded cell overheats as a hotspot and ignites within the module laminate',
+      'Nothing changes — the bypass diodes have no effect under partial shading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The bypass diode rescues the module. The shaded cell would otherwise force the unshaded cells\' current through itself in reverse, dissipating their power as heat (a hotspot). The bypass diode\'s forward-bias voltage (~0.7 V) is much less than the reverse-voltage stress on the shaded cell, so the diode conducts first, providing an alternative current path. The bypassed sub-string contributes zero power; the other two continue. The module output drops proportionally (~33% loss in this example) but the module survives. Without bypass diodes, partial shading could destroy a module within hours.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A PV designer is specifying blocking diodes in a string. What are the BS 7671 Section 712 requirements?',
     options: [
-      'Reverse voltage ≥ Upc max, current ≥ Isc max',
-      'Connected in series with the PV string. Reverse voltage rated ≥ 2 × Upc max. Rated current ≥ 1.1 × Isc max. These rules apply ONLY if blocking diodes are used; modern PV designs often omit them entirely',
-      'No requirements — designer\'s choice',
-      'Must be the same model as the inverter\'s internal diode',
+      'Reverse voltage rated ≥ Upc max and rated current ≥ Isc max, with no series-connection rule',
+      'No requirements at all — blocking-diode selection is left to the designer\'s discretion',
+      'They must be the same model as the diode built into the chosen inverter',
+      'Series-connected with the string; reverse voltage ≥ 2 × Upc max; rated current ≥ 1.1 × Isc max — only where blocking diodes are used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 712 sets clear acceptance criteria for blocking diodes when used: series connection with the string, reverse voltage ≥ 2 × Upc max (twice the max continuous PV circuit voltage), rated current ≥ 1.1 × Isc max. The factor 1.1 may need adapting for special conditions (reflections, special PV technologies — per the Reg 712.433.102(b)(ii) note). Modern PV designs often omit blocking diodes entirely because the inverter and string configuration handles reverse-current scenarios; where blocking diodes ARE used, the BS 7671 rules apply.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A 400 W module on a UK roof in summer reaches a cell temperature of 60°C. The datasheet quotes Pmax temperature coefficient of -0.36%/°C. What is the approximate operating Pmax?',
     options: [
-      '400 W — unchanged',
-      'Approximately 350 W — (60 – 25) °C × -0.36%/°C × 400 W = -50.4 W reduction → operating Pmax ≈ 350 W',
-      '200 W',
-      '500 W (more output when hot)',
+      'About 400 W — unchanged from the STC nameplate value',
+      'About 350 W — (60 − 25)°C × -0.36%/°C × 400 W = -50.4 W, so ≈ 350 W',
+      'About 200 W — the heat roughly halves the module output',
+      'About 500 W — the module produces more power when it runs hot',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'MC4 connectors are the de facto industry standard for PV DC interconnections. What is the most common installer failure mode on MC4 connections?',
     options: [
-      'Wrong connector type',
-      'Inadequate crimp on the cable lug (hand-crimped rather than using the manufacturer\'s specified crimp tool), or insufficient torque on the connector body assembly — leading to elevated connection resistance, progressive heating, eventual thermal failure and DC arc fault risk',
-      'Connecting two MC4s together',
-      'Using MC4 on AC circuits',
+      'Selecting the wrong connector type for the cable cross-section',
+      'Mating two MC4 connectors together to extend a string run',
+      'Inadequate crimp (hand-crimped not tool-crimped) or under-torqued body — raising resistance, heating, and DC arc-fault risk',
+      'Using MC4 connectors on the AC side of the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MC4 connector failures cluster at the crimp and the torque. A hand-crimped lug typically delivers high contact resistance — the connection appears to work, but resistance heats the connector over years until it fails. An under-torqued assembly produces similar elevated resistance. Both failure modes drive DC arc fault incidents that have appeared in HSE and London Fire Brigade reporting through 2024–2026 (part of the incident data that drove A4\'s tighter PV protection requirements). The PWI flags "not torquing MC4 or isolator terminals to spec" as a high-frequency common mistake.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'BS 7671 Section 712 picks up the manufacturer\'s heat dissipation requirement and makes the installer responsible. What\'s the practical install discipline?',
     options: [
-      'Install modules in shaded conditions',
-      'Follow the manufacturer\'s mounting guidance — typically a 70–100 mm standoff above the roof surface, allowing natural convection cooling. Flush-mounting without manufacturer authorisation breaches the BS 7671 requirement AND voids the module warranty',
-      'Use water cooling',
-      'Reduce module count to compensate',
+      'Follow the manufacturer\'s mounting spec — typically a 70–100 mm standoff for convection cooling',
+      'Install the modules in permanently shaded positions to keep their cell temperature low',
+      'Fit an active water-cooling loop behind the module array to remove heat',
+      'Reduce the installed module count to compensate for the hot operating temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The manufacturer specifies how the module must be mounted for adequate heat dissipation; BS 7671 Section 712 makes that the installer\'s responsibility. The standard discipline (per the practical work intelligence) is the 70–100 mm standoff above the roof, enabling natural convection. Flush-mounting (10–20 mm standoff or less) starves the modules of cooling airflow and drives operating temperatures 10–20°C higher than properly ventilated installs. The result: ~5–8% yield loss over the array life, plus warranty void if the manufacturer\'s mounting spec was breached.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'The PV electrical installation per BS 7671 Section 712 starts at which physical point?',
     options: [
-      'The customer\'s consumer unit',
-      'A PV module or set of PV modules connected in series with the cables provided by the PV module manufacturer — and continues up to the user\'s installation or the utility supply point. The PV module is the start of the electrical installation, not just an upstream device',
-      'The inverter input',
-      'The grid connection',
+      'The customer\'s consumer unit, where the AC side meets the rest of the installation',
+      'The inverter DC input, treating the modules as a black-box source upstream',
+      'The grid connection point, working back towards the array',
+      'The PV module(s) with the manufacturer-supplied cables — the module itself is the start of the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Section 712.1 sets the scope: the electrical installation of a PV generator starts from a PV module or set of PV modules connected in series with the manufacturer-supplied cables, and continues to the user\'s installation or the utility supply point. The module is IN the scope, not a black-box component. This is why PV-specific protective measures (712.412 reinforced insulation, 712.431 string protection) apply from the module forward, and why the module datasheet and BS EN 61730 product safety conformity matter in the cert evidence bundle.',
   },
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'Half-cell modules are appearing on UK PV product listings. What\'s the advantage over standard full-cell modules?',
     options: [
-      'Cheaper',
-      'Lower current per series-string (each cell cut in half halves the cell current) means lower resistive losses in cell interconnections and better partial-shade tolerance. Plus more parallel sub-strings to bypass independently. Typically ~3% power gain for similar cell area',
-      'Smaller modules',
-      'Higher voltage',
+      'They are simply cheaper to manufacture than full-cell modules',
+      'Halving the per-string current cuts I²R interconnection loss and aids shade tolerance — typically ~3% gain for similar area',
+      'They are physically smaller modules for the same power rating',
+      'They produce a substantially higher module output voltage',
     ],
     correctAnswer: 1,
     explanation:

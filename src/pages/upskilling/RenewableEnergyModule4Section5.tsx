@@ -25,24 +25,24 @@ const inlineChecks = [
     question:
       'Chapter 82 (Prosumer\'s Electrical Installations, NEW in A4:2026) — what defines a PEI, and which installs are PEIs?',
     options: [
-      'Only commercial',
-      'A PEI is an electrical installation that BOTH consumes electricity (load) AND generates and/or stores electricity (source). The combination makes the installation a &ldquo;prosumer&rdquo; — both producer and consumer. UK examples: any hybrid PV+BESS install; any PV with diverter / EV-charging that\'s controlled by the install logic; any install with multiple sources (PV + wind + generator + battery). Chapter 82 applies to all these',
-      'Only off-grid',
-      'No installs',
+      'Only large commercial three-phase installations ever qualify as PEIs',
+      'A PEI both consumes electricity AND generates and/or stores it, e.g. any hybrid PV+BESS',
+      'Only off-grid installations with no DNO connection at all count as PEIs',
+      'No domestic installations ever fall within the scope of Chapter 82',
     ],
     correctIndex: 1,
     explanation:
-      'Chapter 82 defines PEI as an installation that both consumes and generates / stores. The regulatory term recognises the modern reality: many domestic installs are no longer pure consumers — PV produces, BESS stores, EV charging consumes / can return (V2G), load controllers orchestrate. Reg 826.1 sets the PEI framework: protective measures for persons + property under multiple operating modes (direct feeding, island, etc.). Chapter 82 was added in A4:2026 to fill the regulatory gap that existed when PV / BESS / EV regs were scattered across Section 712, Chapter 57, Section 722.',
+      'Chapter 82 defines PEI as an installation that both consumes and generates / stores — any hybrid PV+BESS, PV with controlled EV charging, or multi-source install. The regulatory term recognises the modern reality: many domestic installs are no longer pure consumers — PV produces, BESS stores, EV charging consumes / can return (V2G), load controllers orchestrate. Reg 826.1 sets the PEI framework: protective measures for persons + property under multiple operating modes (direct feeding, island, etc.). Chapter 82 was added in A4:2026 to fill the regulatory gap that existed when PV / BESS / EV regs were scattered across Section 712, Chapter 57, Section 722.',
   },
   {
     id: 'm4s5-operating-modes',
     question:
       'Reg 824.2 defines PEI operating modes. What are THE THREE modes, and what does Reg 826.1.1.1 require?',
     options: [
-      'No modes',
-      'THREE operating modes per Reg 824.2: (1) DIRECT FEEDING — PEI receiving energy from the public network (import only); (2) REVERSE FEEDING — PEI exporting energy to the public network; (3) ISLAND MODE — PEI disconnected from the public network, generating its own supply from local sources. Reg 826.1.1.1: the PEI shall be able to operate in any intended operating mode; can change modes at any time and return; protection of persons and property shall be provided in each mode',
-      'Customer chooses',
-      'No protection',
+      'A PEI has no defined operating modes whatsoever under Chapter 82',
+      'Direct feeding, reverse feeding and island mode; Reg 826.1.1.1 requires protection in every mode',
+      'The operating mode is simply whatever the customer selects within the app',
+      'No protection of persons or property is required while running in island mode',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Reg 826.1.1.2 — earthing arrangement for PEI island mode. What\'s required?',
     options: [
-      'No earthing',
-      'Earthing arrangement for island mode shall be connected to a suitable earth electrode complying with Reg 542.2.2. Any connection to the DNO earth means need not be disconnected (the DNO earth can remain in place; the PEI just adds a local electrode for island mode). Any change of system earthing type for island mode shall be reversible — supports return to direct feeding when DNO restored',
-      'Use grid earth',
-      'Customer choice',
+      'No earthing of any kind is required while the PEI is in island mode',
+      'A local earth electrode per Reg 542.2.2; the DNO earth may stay and the change must be reversible',
+      'The DNO earth alone is relied upon throughout the whole of island mode',
+      'The earthing arrangement is left entirely to the customer\'s own choice',
     ],
     correctIndex: 1,
     explanation:
@@ -67,24 +67,24 @@ const inlineChecks = [
     question:
       'Reg 826.1.1.2.2 — neutral switching for PEI island mode. Why is it needed, and what does the reg require?',
     options: [
-      'Not needed',
-      'When the PEI transitions to island mode, ALL live conductors (including neutral) shall be disconnected from the DNO supply. To prevent incorrect operation of RCDs during transitions, a neutral switch device is used to connect the neutral and earth of the PEI without overlapping with switching of the DNO neutral. Practical: the hybrid inverter\'s EPS / island-mode contactor handles this; manufacturer specifies the configuration',
-      'Customer\'s choice',
-      'Same as direct mode',
+      'Neutral switching is not required at all during PEI mode transitions',
+      'All live conductors disconnect from DNO, and a neutral switch bonds the PEI N-E without overlap',
+      'The neutral handling is left entirely to the customer\'s own preference',
+      'The neutral is treated exactly the same as it is in direct feeding mode',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 826.1.1.2.2 prevents RCD misoperation during PEI mode transitions. In direct feeding mode: DNO neutral is the reference (typically TN-C-S — neutral and earth combined at DNO transformer). In island mode: all live conductors (L1/L2/L3/N) disconnected from DNO; the PEI generates its own neutral via the inverter; this neutral must be earth-bonded for safety. Without proper switching, RCDs may misoperate during the transition (seeing apparent imbalances). The neutral switch device handles the make-before-break sequencing: connect local N-E first, then disconnect DNO N. Modern hybrid inverters with EPS (GivEnergy, Sigenergy, Tesla Powerwall, SolarEdge Energy Hub) handle this automatically.',
+      'Reg 826.1.1.2.2 prevents RCD misoperation during PEI mode transitions — preventing it by bonding the PEI neutral to earth without overlapping the DNO neutral. In direct feeding mode: DNO neutral is the reference (typically TN-C-S — neutral and earth combined at DNO transformer). In island mode: all live conductors (L1/L2/L3/N) disconnected from DNO; the PEI generates its own neutral via the inverter; this neutral must be earth-bonded for safety. Without proper switching, RCDs may misoperate during the transition (seeing apparent imbalances). The neutral switch device handles the make-before-break sequencing: connect local N-E first, then disconnect DNO N. Modern hybrid inverters with EPS (GivEnergy, Sigenergy, Tesla Powerwall, SolarEdge Energy Hub) handle this automatically.',
   },
   {
     id: 'm4s5-multi-source-isolation',
     question:
       'Reg 826.1.1.4 — isolation requirements when PEI has multiple sources. What does it mandate?',
     options: [
-      'One main switch',
-      'A main switch suitable for isolation (e.g. switch-disconnector) shall be provided for EACH source of supply. A durable warning notice shall be permanently fixed in the vicinity of these main switches in such a position that any person seeking to operate them is alerted to the multiple sources. Critical for safe maintenance: anyone working on the install must understand they need to isolate ALL sources (DNO, PV inverter AC output, BESS, generator, etc.)',
-      'No isolation',
-      'Customer\'s problem',
+      'A single main switch covering the whole installation is entirely sufficient',
+      'A main switch suitable for isolation for each source, plus a durable multi-source warning notice',
+      'No isolation is required anywhere the inverters self-disconnect on fault',
+      'Isolation is the customer\'s own responsibility, and not the installer\'s',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Reg 826.1.2.2 — protective device selection for PEI. What\'s the key requirement different from a normal install?',
     options: [
-      'No difference',
-      'Selection and erection of overcurrent protective devices shall take account of ALL POSSIBLE DIRECTIONS of current flow and polarity. Connection of a source via switchgear or controlgear assemblies shall comply with Reg 551.7.2 (parallel-operation requirements). Practical: every OCPD in a PEI must be BIDIRECTIONAL (current can flow either way during normal operation); parallel-source OCPDs must follow Reg 551.7 (including 551.7.1(c) bidirectional protective device — also NEW A4:2026)',
-      'Only one direction',
-      'No regs apply',
+      'There is no difference at all from a normal single-source installation',
+      'OCPD selection must account for all directions of current flow; parallel sources follow Reg 551.7',
+      'OCPDs need only protect against current flowing in one single direction',
+      'No protective device requirements apply at all to a prosumer installation',
     ],
     correctIndex: 1,
     explanation:
@@ -109,24 +109,24 @@ const inlineChecks = [
     question:
       'Reg 826.1.3 — what does the PEI do when the public network goes off?',
     options: [
-      'Nothing',
-      'When the public network is not energised, prosumers shall operate their private individual PEI in island mode OR automatically disconnect all local power supplies. Either: (a) PEI continues to supply local loads from its own generation + storage (island mode); OR (b) PEI shuts down all local sources (avoids any island operation). The PEI design specifies which option is supported. Reg also notes that PEI control + protective devices may operate more frequently than non-PEI — selection should account for increased duty',
-      'Customer manually intervenes',
-      'PEI explodes',
+      'The PEI takes no action at all and simply waits for the grid to return',
+      'It either operates in island mode OR automatically disconnects all local sources, as designed',
+      'The customer must manually intervene before any response can occur',
+      'The PEI continues to back-feed the de-energised public network supply',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 826.1.3 — public network outage handling. The PEI design must specify the response: (a) ISLAND MODE — local sources continue supplying local loads; anti-islanding to the DNO required to prevent backfeed; or (b) SHUTDOWN — all local sources disconnect when DNO supply lost; loads receive no power until DNO restored. Most modern UK hybrid PV+BESS systems support EPS island mode (option a) — Section 4.6 covers EPS in depth. The reg also notes that PEI components may switch / operate more frequently than non-PEI components; selection of devices (relays, contactors, OCPDs) should account for increased operational duty cycle.',
+      'Reg 826.1.3 — public network outage handling. The design specifies which response applies: island mode supplies local loads from its own generation/storage, or all local sources disconnect. The PEI design must specify the response: (a) ISLAND MODE — local sources continue supplying local loads; anti-islanding to the DNO required to prevent backfeed; or (b) SHUTDOWN — all local sources disconnect when DNO supply lost; loads receive no power until DNO restored. Most modern UK hybrid PV+BESS systems support EPS island mode (option a) — Section 4.6 covers EPS in depth. The reg also notes that PEI components may switch / operate more frequently than non-PEI components; selection of devices (relays, contactors, OCPDs) should account for increased operational duty cycle.',
   },
   {
     id: 'm4s5-transient-protection',
     question:
       'Reg 826.1.4 — transient overvoltage protection for PEIs. What\'s different from non-PEI?',
     options: [
-      'Same as non-PEI',
-      'Switching overvoltages in a PEI may be more frequent and perhaps greater than in a non-PEI installation (e.g. due to switching between sources, load shedding, load shifting). Consideration shall be given to the installation of surge protective devices (SPDs) for the protection of the PEI installation and equipment against switching and lightning transients. Practical: PEI installs typically have more SPDs (AC + DC sides, multiple zones) than equivalent non-PEI',
-      'No SPDs needed',
-      'Customer\'s choice',
+      'Transient protection is identical in every way to a non-PEI installation',
+      'Switching overvoltages may be more frequent and greater, so SPDs warrant extra consideration',
+      'No surge protective devices are ever needed at all within a PEI',
+      'SPD provision is entirely the customer\'s choice, with no design basis',
     ],
     correctIndex: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Customer\'s install: 5 kWp PV + 10 kWh BESS + Zappi EV charger. Is this a PEI under Chapter 82?',
     options: [
-      'Not a PEI',
-      'YES — this is a PEI. The install BOTH consumes electricity (load + EV charging) AND generates / stores electricity (PV generation + BESS storage). The combination triggers Chapter 82 applicability. PEI design pack required: operating modes (direct feeding + EPS island mode); multi-source isolation per Reg 826.1.1.4; bidirectional OCPDs per Reg 826.1.2.2; transient overvoltage protection per Reg 826.1.4. Plus integration with Section 712 (PV) and Chapter 57 (BESS)',
-      'Only PV',
-      'Customer\'s choice',
+      'No — it is a standard consumer installation because the loads outweigh the generation',
+      'Yes — it both consumes and generates/stores, so Chapter 82 applies with a PEI design pack',
+      'No — only the PV part is in scope of Chapter 82; the BESS and EV charger are excluded',
+      'Yes — but only the EV charger triggers Chapter 82, not the PV or the BESS storage',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'PEI in island mode — Reg 826.1.1.2.2 requires the neutral conductor to be handled specifically. Why?',
     options: [
-      'No reason',
-      'In direct feeding mode the DNO supplies the neutral reference (TN-C-S PME typical UK). When PEI goes to island mode, all live conductors including neutral are disconnected from DNO. The PEI must generate its own neutral via the inverter\'s output transformer or output stage; this neutral must be earth-bonded for safety + RCD operation. The neutral switch device makes the connection in the correct sequence — local N-E bonded before DNO N disconnected — to prevent RCD misoperation during transition',
-      'Customer\'s choice',
-      'No transition',
+      'The neutral carries no current in island mode, so it must be left unconnected for safety',
+      'Island mode runs on DC, so the AC neutral is irrelevant and is simply removed entirely',
+      'The neutral is connected last purely to reduce inrush current at the inverter output stage',
+      'The DNO neutral reference is lost, so the PEI must create and earth-bond its own in turn',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PEI mode transition handles the neutral specifically because: (1) the neutral is the reference for RCD operation — RCDs measure imbalance between L and N; (2) disconnecting DNO neutral without local N-E bonding leaves the install with no reference — RCDs may misoperate; (3) the PEI inverter\'s output stage provides the local neutral reference + earth bond. The transition sequence: (a) inverter starts up in island mode; (b) neutral switch device connects local N-E; (c) DNO main contactor disconnects all live conductors (including N); (d) PEI now in island mode. Modern hybrid inverters (GivEnergy, Tesla, Sigenergy, SolarEdge Energy Hub) handle this transparently. Cert evidence bundle records the transition sequence.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'PEI install has DNO supply, PV inverter, BESS, and backup generator. How many main isolators are required per Reg 826.1.1.4?',
     options: [
-      'One',
-      'Four — main switch suitable for isolation per source. DNO main isolator (existing); PV inverter AC isolator; BESS AC isolator; generator AC isolator. Plus a durable warning notice in the vicinity of the isolators alerting maintenance personnel to the multiple sources. The notice typically lists each source and its location, with the message that ALL sources must be isolated for safe work',
-      'No isolation',
-      'Customer\'s choice',
+      'Four — one isolator per source (DNO, PV, BESS, generator), with a durable warning notice',
+      'One combined isolator is enough, since it disconnects the whole installation at once',
+      'Two — one for the DNO supply and one shared across all of the generating sources',
+      'None — the inverters all isolate themselves automatically once any work begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 826.1.1.4 requires a main switch suitable for isolation per source. Four-source PEI (DNO + PV + BESS + generator) needs four isolators — though some may be at the same physical location (e.g. PV + BESS in the same combiner; generator separately at the gen-set). The durable warning notice alerts personnel to ALL the sources requiring isolation — typically positioned at the property\'s primary access point (origin / metering position) AND at the consumer unit. Cert evidence bundle records each isolator location, the warning notice content + location, and the as-installed labelling per Reg 712.514.x and the BESS / generator analogues.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Reg 826.1.2.2 OCPDs and current direction. Customer\'s install has a 40 A bidirectional MCB between the BESS and the AC bus. Compliant?',
     options: [
-      'No',
-      'YES — Reg 826.1.2.2 requires OCPDs to take account of all possible directions of current flow + polarity. A bidirectional MCB (BS EN 60898-2 / IEC 60898-3 DC-rated, or AC-rated MCB designed for bidirectional service per manufacturer spec) at the BESS AC interface satisfies the reg. The MCB must operate to trip on overcurrent regardless of which direction the current was flowing. Cert evidence bundle records the MCB manufacturer / model / bidirectional capability statement',
-      'Forbidden',
-      'Customer\'s issue',
+      'No — only fuses are permitted at a BESS AC interface, never MCBs of any rating',
+      'No — the device must be rated at 32 A, not 40 A, for a BESS AC connection',
+      'Yes — Reg 826.1.2.2 needs OCPDs that trip in either direction, met by a bidirectional MCB',
+      'No — bidirectional devices are prohibited; the BESS must be on a unidirectional circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bidirectional OCPDs at PEI source connections: required per Reg 826.1.2.2 + Reg 551.7.1(c) NEW A4:2026 + Reg 570.6.1.1.1 (BESS bidirectional protective devices). Examples of bidirectional devices: certain DC-rated MCBs (BS EN 60898-2 / IEC 60898-3); fuse-combinations rated bidirectional; specialised bidirectional contactors with overcurrent protection. The manufacturer\'s compatibility statement is the cert evidence. Reg 712.533.101 (PV DC OCPDs bidirectional) parallels this for the DC side; Reg 826.1.2.2 / 551.7.1(c) extends it to the AC side at PEI source connections.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'Customer\'s PEI has PV + BESS + EPS. Public network goes off in storm. Reg 826.1.3 — what happens?',
     options: [
-      'PEI shuts down',
-      'PEI transitions to island mode automatically. The hybrid inverter detects DNO loss (V or freq excursion); EPS contactor opens to disconnect DNO; inverter switches from grid-following to grid-forming (generates V and freq for the protected loads); BESS supplies the load. When DNO restored: inverter syncs to DNO; EPS contactor closes; transitions back to direct feeding mode. Reg 826.1.3 OPTION A — island mode operation. The PEI design pack specifies this is the supported mode',
-      'Manual intervention required',
-      'Nothing happens',
+      'The PEI shuts down completely and stays off until the grid supply fully returns',
+      'It transitions to island mode automatically, the BESS supplies protected loads, re-syncing on return',
+      'The customer must manually switch the inverter into backup mode before any loads are fed',
+      'The PV continues feeding the dead grid to help restore the network during the storm',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'Customer\'s PEI experiences more frequent SPD triggering than the previous non-PEI install at the same property. Cause?',
     options: [
-      'SPDs faulty',
-      'Reg 826.1.4 explicitly notes that switching overvoltages may be more frequent and possibly greater in a PEI vs non-PEI. Causes: PV inverter switching between modes; BESS charge / discharge transitions; load shedding; source switching (DNO ↔ island in EPS-equipped PEIs); EV charge start / stop transients. SPDs operate more frequently — they\'re sacrificial. Resolution: ensure SPDs are correctly specified for PEI duty (higher I_n / Imax ratings); maintain the 5-yearly inspection schedule; replace SPDs after major operation events',
-      'Customer\'s fault',
-      'Replace inverter',
+      'The SPDs are all faulty and the whole set should be replaced as a single batch',
+      'The inverter is generating excess voltage and must be swapped out for a new unit',
+      'Per Reg 826.1.4, more frequent PEI switching overvoltages make the sacrificial SPDs operate more often',
+      'The earthing is undersized, which is the only thing that increases SPD operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 826.1.4 acknowledges that PEI installs experience more switching events: PV anti-islanding tests; BESS state transitions; EV plug-in / unplug; source switching. SPDs operate more frequently than in non-PEI installs — they\'re the sacrificial protection. The competent PEI design uses higher-spec SPDs (BS EN 61643-11 Type-2 at minimum; sometimes Type-1 + Type-2 multi-zone). 5-yearly periodic inspection per BS EN 62446-1 includes SPD status verification. Cert evidence bundle records the SPD specs + zones + inspection schedule.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'Cert evidence bundle for a PEI hybrid PV+BESS install — what documents?',
     options: [
-      'Just MCS cert',
-      'Integrated prosumer cert evidence bundle: (1) MCS MIS 3002 PV design pack (Module 3); (2) Chapter 57 BESS design + BS EN IEC 62485 compliance (Module 5); (3) Chapter 82 PEI design pack (this section: operating modes, multi-source isolation, bidirectional OCPDs, transient protection); (4) BS EN 62446-1 commissioning records (Module 3 S7); (5) EREC G98 / G99 / G100 paperwork; (6) DNO confirmation; (7) customer handover pack. The PEI design pack is the integration document that ties the per-domain designs into the prosumer architecture',
-      'Customer chooses',
-      'No documents',
+      'The MCS certificate on its own, since it certifies the whole prosumer install end-to-end',
+      'Only the Chapter 82 PEI design pack, which supersedes all of the per-domain design packs',
+      'The integrated set — PV, BESS and PEI packs, commissioning records, EREC, DNO, handover',
+      'Just the EREC paperwork and DNO confirmation, the network-facing documents on their own',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PEI cert evidence bundle is the integrated prosumer documentation. Components: PV design pack (Section 712 / MCS MIS 3002); BESS design pack (Chapter 57 / BS EN IEC 62485); PEI design pack (Chapter 82 — covers operating modes, isolation, bidirectional protection, transient protection, multi-source coordination); commissioning records (BS EN 62446-1); EREC paperwork; DNO confirmation; customer handover. The PEI design pack is the GLUE document that ties everything together — without it, the install is a collection of compliant components without the integrated prosumer view. Module 4.8 covers the commissioning + cert evidence bundle in depth.',
   },
@@ -238,14 +238,14 @@ const quizQuestions = [
     question:
       'When did Chapter 82 (PEIs) become mandatory for new installs?',
     options: [
-      'Never',
-      '15 April 2026 (A4:2026 effective date). A3:2024 is withdrawn 15 October 2026 — until then both A3 and A4 are valid. New install certs issued after 15 April 2026 should comply with A4:2026 including Chapter 82 PEI requirements where applicable. PEI design pack is the new artefact in the cert evidence bundle for any install that meets the PEI definition (consumes + generates / stores)',
-      'Customer\'s choice',
-      '2030',
+      '1 January 2025, the date when Chapter 57 for BESS was first published',
+      '15 April 2026 — the A4:2026 effective date, applying where the PEI definition is met',
+      '15 October 2026, the date on which A3:2024 is formally withdrawn',
+      '1 January 2030, when the next full edition of BS 7671 is currently due',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 (Amendment 4 to BS 7671:2018) — effective 15 April 2026, with A3 withdrawn 15 October 2026. Chapter 82 is one of three new chapters in A4 (alongside Chapter 57 for BESS and Appendix 17 for energy efficiency). New installs certified after 15 April 2026 should comply with A4 including Chapter 82 PEI design where applicable. Existing installs commissioned under A3 don\'t need to retrospectively comply — but additions / alterations after the effective date should. Cert evidence bundle records the BS 7671 edition / amendment applied; the MCS / EREC paperwork records the same.',
+      'A4:2026 (Amendment 4 to BS 7671:2018) — effective 15 April 2026, with A3 withdrawn 15 October 2026; new install certs from then apply Chapter 82 where the PEI definition is met. Chapter 82 is one of three new chapters in A4 (alongside Chapter 57 for BESS and Appendix 17 for energy efficiency). New installs certified after 15 April 2026 should comply with A4 including Chapter 82 PEI design where applicable. Existing installs commissioned under A3 don\'t need to retrospectively comply — but additions / alterations after the effective date should. Cert evidence bundle records the BS 7671 edition / amendment applied; the MCS / EREC paperwork records the same.',
   },
 ];
 

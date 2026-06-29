@@ -34,9 +34,9 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of discrimination (selectivity) between protective devices?',
     options: [
-      'Ratio of 10-minute to 1-minute resistance readings',
-      'Safety and functionality at reasonable cost',
-      'Yes, but they are difficult to prove if a dispute arises',
+      'To increase the breaking capacity of every device',
+      'To reduce the total number of protective devices needed',
+      'To ensure all devices in the circuit operate together',
       'To ensure only the device nearest the fault operates',
     ],
     correctIndex: 3,
@@ -61,9 +61,9 @@ const quickCheckQuestions = [
     question: 'Current discrimination relies on the fact that:',
     options: [
       'Fault current is higher at the origin than downstream',
-      'To avoid confusion and keep communication clear',
-      'Loss when joining fibres with different light-gathering capabilities',
-      'Maintain standards and act professionally',
+      'Fault current is identical at every point in the circuit',
+      'Fault current increases along the length of the cable',
+      'Fault current is independent of cable impedance',
     ],
     correctIndex: 0,
     explanation:
@@ -73,10 +73,10 @@ const quickCheckQuestions = [
     id: 'cascade-backup',
     question: 'What is cascade (back-up) protection?',
     options: [
-      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
-      'Varying the supply frequency (and voltage proportionally to keep V/f constant)',
+      'Two identical devices sharing the same fault current equally',
+      'A downstream device protecting the upstream device from overload',
       'Upstream device assists downstream device in fault clearance',
-      'A processing unit that executes control strategies for a group of I/O points',
+      'A single device protecting two circuits at the same time',
     ],
     correctIndex: 2,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the typical time discrimination ratio required between MCBs in series?',
     options: [
-      'Clearly identified and accessible',
-      'No discrimination possible',
-      'Cable and terminal identification',
-      'Retest to verify the correction',
+      'A 2:1 current ratio is always sufficient',
+      'No reliable discrimination is possible in the magnetic region',
+      'A 1.5:1 rating ratio guarantees selectivity',
+      'A fixed 3:1 ratio applies to all MCB pairs',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'What does I²t represent in protective device coordination?',
     options: [
-      'Section 8 — Exposure controls/personal protection',
-      'Delta-T greater than 40°C above ambient',
-      'The number of individual optical fibres in the cable',
+      'The rated breaking capacity of the device',
+      'The instantaneous trip current setting',
+      'The continuous current rating of the cable',
       'Energy let-through during fault clearance',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: "What information do manufacturers' selectivity tables provide?",
     options: [
-      'The standard does not set a single limit; it depends on the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual',
-      'A missing or broken neutral conductor before the load (broken or floating neutral)',
-      'The equipment operates correctly under normal conditions',
+      'The maximum cable length permitted for each device',
+      'The recommended torque settings for device terminals',
+      'The energy efficiency rating of each protective device',
       'Combinations of devices that achieve discrimination and to what fault level',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'Zone selective interlocking (ZSI) improves discrimination by:',
     options: [
-      'An international treaty on climate change limiting global warming to 1.5-2°C',
+      'Increasing the breaking capacity of every device',
       'Using communication between devices to identify fault location',
-      'Eliminate foreseeable risks or reduce them so far as is reasonably practicable',
-      'An RCBO combines RCD protection with overcurrent protection',
+      'Adding a fixed 500ms delay to all upstream devices',
+      'Reducing the instantaneous trip setting of downstream devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'For cascade protection to be valid, what must be verified?',
     options: [
-      "Analyzing network topology and optimizing device placement",
-      "Earth the screen at both ends with 360-degree termination",
+      "The downstream device has the same rating as the upstream device",
+      "The two devices are from different manufacturers",
       "Combined let-through energy doesn't exceed downstream cable withstand",
-      "To convert the sender's message into a transmittable signal",
+      "The upstream device has a lower breaking capacity than downstream",
     ],
     correctAnswer: 2,
     explanation:

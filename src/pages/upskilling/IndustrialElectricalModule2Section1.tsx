@@ -80,82 +80,102 @@ const IndustrialElectricalModule2Section1: React.FC = () => {
   const quizQuestions = [
     {
       question:
-        'According to UK practice, DOL starting is typically limited to motors below what power rating to avoid supply disturbances?',
+        'According to typical UK practice, DOL starting is usually limited to motors below what power rating on standard supplies to avoid supply disturbances?',
       options: ['3.7kW', '7.5kW', '11kW', '15kW'],
       correctAnswer: '7.5kW',
+      explanation:
+        'Because DOL draws 6-8x FLC, the resulting voltage dip limits it to roughly 7.5kW on standard supplies; larger motors need reduced-voltage starting or DNO consultation.',
     },
     {
       question:
-        'What is the main disadvantage of Star-Delta starting during the changeover from star to delta?',
+        'What is the main disadvantage of open-transition Star-Delta starting during the changeover from star to delta?',
       options: [
-        'Motor stops completely',
-        'Current transient spike occurs',
-        'Motor reverses direction',
-        'Overheating of windings',
+        'The motor stops completely',
+        'A current transient spike occurs',
+        'The motor reverses direction',
+        'The windings immediately overheat',
       ],
-      correctAnswer: 'Current transient spike occurs',
+      correctAnswer: 'A current transient spike occurs',
+      explanation:
+        'During the brief open transition the motor is momentarily disconnected; reconnecting out of phase in delta produces a current transient of about 2-3x FLC, which closed-transition starters reduce.',
     },
     {
       question:
         'A soft starter controls motor voltage during starting using which electronic components?',
-      options: ['IGBTs', 'Thyristors (SCRs)', 'MOSFETs', 'Diodes'],
+      options: ['IGBTs', 'Thyristors (SCRs)', 'MOSFETs', 'Rectifier diodes'],
       correctAnswer: 'Thyristors (SCRs)',
+      explanation:
+        'Soft starters phase-control back-to-back thyristors (SCRs) to ramp the voltage up gradually; IGBTs are used in VSDs, not soft starters.',
     },
     {
       question: 'What does the IE classification system rate for electric motors?',
       options: [
-        'Ingress Protection level',
+        'Ingress protection level',
         'Energy efficiency class',
-        'Insulation class',
+        'Winding insulation class',
         'Installation environment',
       ],
       correctAnswer: 'Energy efficiency class',
+      explanation:
+        'IE (International Efficiency) classes from IEC 60034-30-1 rate energy efficiency (IE1 to IE5); ingress protection is the separate IP rating and insulation has its own class system.',
     },
     {
       question:
-        'Which IE efficiency class is the current minimum requirement under EU Ecodesign regulations for most industrial motors?',
+        'Which IE efficiency class is the current minimum requirement under retained EU Ecodesign rules for most line-fed industrial motors (0.75-1000kW)?',
       options: ['IE1 - Standard', 'IE2 - High', 'IE3 - Premium', 'IE4 - Super Premium'],
       correctAnswer: 'IE3 - Premium',
+      explanation:
+        'Ecodesign requires at least IE3 (Premium) for most motors in the 0.75-1000kW range; IE2 is only permitted if the motor is supplied with a VSD.',
     },
     {
       question:
-        'What potential issue must be considered when using VSDs on long cable runs to the motor?',
+        'What issue must be considered when using a VSD with long motor cable runs?',
       options: [
-        'Excessive cable heating',
-        'Reflected wave voltage spikes',
-        'Cable capacitance charging',
-        'Earth fault sensitivity',
+        'Excessive cable heating from the fundamental current',
+        'Reflected-wave voltage spikes at the motor terminals',
+        'Loss of the earth connection',
+        'Reduced cable insulation resistance over time',
       ],
-      correctAnswer: 'Reflected wave voltage spikes',
+      correctAnswer: 'Reflected-wave voltage spikes at the motor terminals',
+      explanation:
+        'Fast PWM edges travelling along a long cable reflect at the motor, potentially doubling the voltage at the terminals and stressing winding insulation; output reactors or dV/dt filters mitigate this.',
     },
     {
       question:
-        'In a Star-Delta starter, what is the voltage across each motor winding when connected in star configuration?',
+        'In a Star-Delta starter, what voltage appears across each motor winding while connected in star?',
       options: [
         'Full line voltage (400V)',
-        'Line voltage / sqrt3 (230V)',
-        'Line voltage x sqrt3 (690V)',
-        'Half line voltage (200V)',
+        'Line voltage divided by root 3 (about 230V)',
+        'Line voltage multiplied by root 3 (about 690V)',
+        'Exactly half line voltage (200V)',
       ],
-      correctAnswer: 'Line voltage / sqrt3 (230V)',
+      correctAnswer: 'Line voltage divided by root 3 (about 230V)',
+      explanation:
+        'In star each winding sees the phase voltage (line / root 3 ~ 230V), which is why starting current and torque fall to about one third of the delta (DOL) values.',
     },
     {
       question:
         'Which motor starting method is most suitable for applications requiring frequent starts and stops?',
-      options: ['DOL starter', 'Star-Delta starter', 'Soft starter with bypass', 'VSD'],
+      options: ['DOL starter', 'Star-Delta starter', 'Soft starter without bypass', 'VSD'],
       correctAnswer: 'VSD',
+      explanation:
+        'A VSD limits starting current to around 1-1.5x FLC and has no contactor/thyristor wear from inrush, making it best suited to frequent starting and stopping.',
     },
     {
       question:
-        'What harmonic order is most commonly associated with VSD installations causing supply pollution?',
-      options: ['3rd harmonic', '5th and 7th harmonics', '11th harmonic', '50th harmonic'],
+        'Which harmonic orders are most commonly associated with six-pulse VSD installations polluting the supply?',
+      options: ['2nd and 4th harmonics', '5th and 7th harmonics', '9th and 15th harmonics', '50th harmonic only'],
       correctAnswer: '5th and 7th harmonics',
+      explanation:
+        'A standard six-pulse VSD rectifier produces characteristic harmonics at 6n±1 - dominated by the 5th and 7th - which may require line reactors or filters to limit supply distortion.',
     },
     {
       question:
-        'For a pump application following the Affinity Laws, reducing motor speed to 80% of rated speed reduces power consumption to approximately what percentage?',
+        'Following the Affinity Laws for a centrifugal pump, reducing motor speed to 80% of rated speed reduces power consumption to approximately what percentage?',
       options: ['80%', '64%', '51%', '40%'],
       correctAnswer: '51%',
+      explanation:
+        'Power varies with the cube of speed, so 0.8 cubed = 0.512, i.e. about 51% of full-speed power - the basis of large energy savings from VSD speed control on pumps and fans.',
     },
   ];
 

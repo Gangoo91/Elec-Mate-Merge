@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'You are 28 and saving for your first home. You put &pound;4,000 into a Lifetime ISA. How much will the government add as a bonus?',
     options: [
-      '&pound;500 (12.5% bonus)',
       '&pound;1,000 (25% bonus)',
+      '&pound;500 (12.5% bonus)',
       '&pound;2,000 (50% bonus)',
       '&pound;4,000 (100% bonus)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Lifetime ISA provides a 25% government bonus on your contributions, up to a maximum bonus of &pound;1,000 per year. If you contribute the full &pound;4,000 annual maximum, the government adds &pound;1,000, giving you &pound;5,000. This is effectively free money &mdash; a guaranteed 25% return before any interest is earned. The bonus is paid monthly, usually within 4&ndash;6 weeks of each contribution.',
   },
@@ -80,8 +80,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What age must you be to open a Lifetime ISA?',
-    options: ['Any age', '16 or over', '18 to 39', '25 to 50'],
-    correctAnswer: 2,
+    options: ['18 to 39', '16 or over', 'Any age', '25 to 50'],
+    correctAnswer: 0,
     explanation:
       'You must be aged 18 to 39 to open a Lifetime ISA. Once opened, you can continue contributing until you turn 50. The LISA can be used for a first home purchase (property up to &pound;450,000) or withdrawn penalty-free from age 60. You receive a 25% government bonus on contributions up to &pound;4,000 per year.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     options: [
       'Nothing &mdash; you can withdraw freely at any time',
       'You lose the government bonus but keep all your own money',
-      'You pay a 25% withdrawal penalty, which means you lose the bonus AND some of your own money',
       'You must repay the bonus within 12 months',
+      'You pay a 25% withdrawal penalty, which means you lose the bonus AND some of your own money',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If you withdraw from a LISA for any reason other than a qualifying first home purchase or reaching age 60, you pay a 25% penalty on the total withdrawal amount (including the bonus). Because the bonus was 25% of what you put in, the 25% penalty on the total actually takes back more than just the bonus &mdash; you lose approximately 6.25% of your own contributions too. This is why you should only use a LISA if you are confident the money is for a first home or retirement.',
   },
@@ -124,16 +124,16 @@ const quizQuestions = [
     id: 6,
     question:
       'For money you will not need for 5 years or more, which ISA type generally provides the best long-term returns?',
-    options: ['Cash ISA', 'Stocks &amp; Shares ISA', 'Innovative Finance ISA', 'Help to Save'],
-    correctAnswer: 1,
+    options: ['Stocks &amp; Shares ISA', 'Cash ISA', 'Innovative Finance ISA', 'Help to Save'],
+    correctAnswer: 0,
     explanation:
       'Over periods of 5 years or more, a Stocks &amp; Shares ISA has historically provided better returns than a Cash ISA, because equity markets tend to outperform cash savings over the long term. However, the value of investments can go down as well as up, and you could get back less than you invest. For shorter time periods, a Cash ISA is safer because your capital is guaranteed. Many people use both for different goals.',
   },
   {
     id: 7,
     question: 'What is the Capital Gains Tax annual exempt amount for the 2024/25 tax year?',
-    options: ['&pound;1,000', '&pound;3,000', '&pound;6,000', '&pound;12,300'],
-    correctAnswer: 1,
+    options: ['&pound;1,000', '&pound;12,300', '&pound;6,000', '&pound;3,000'],
+    correctAnswer: 3,
     explanation:
       'The Capital Gains Tax (CGT) annual exempt amount is &pound;3,000 for the 2024/25 tax year. This means you can make up to &pound;3,000 in capital gains (profit from selling assets like shares or property other than your main home) without paying CGT. Gains above this threshold are taxed at 10% (basic rate) or 20% (higher rate) for most assets. Gains within an ISA are completely exempt from CGT regardless of amount.',
   },

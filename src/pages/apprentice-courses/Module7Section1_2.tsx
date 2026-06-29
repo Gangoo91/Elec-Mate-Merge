@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     id: 'workmanship-check',
     question: 'How can a loose connection during installation lead to a future electrical fault?',
     options: [
-      'Consider instrument accuracy in borderline cases',
-      'To certify that electricity was generated from renewable sources',
-      'To transfer load to mains if UPS fails or is overloaded',
+      'It lowers the circuit voltage and dims connected loads',
+      'It improves earth continuity but weakens the neutral',
+      'It causes nuisance tripping of the RCD only',
       'Loose connections cause overheating, arcing, and eventual failure',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is one of the most common causes of electrical faults in new installations?',
     options: [
-      'Evaporation and condensation of a working fluid',
+      'Gradual ageing of the cable insulation over decades',
       'Poor workmanship and installation practices',
-      'ILM Level 3 Certificate in Coaching and Mentoring',
-      'Properly installed, mounted, and adjusted',
+      'Lightning strikes on the supply network',
+      'Long-term corrosion of buried earth electrodes',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'How can a loose connection cause a fault over time?',
     options: [
-      'Fire hood or intumescent cover fitted where required',
-      'Analysing chemical composition of process streams',
+      'It lowers the resistance and causes the fuse to blow',
+      'It cools the terminal and cracks the insulation',
       'Increased resistance causes overheating, arcing, and eventual failure',
-      'Credit for relevant previous learning and experience',
+      'It increases the circuit voltage above the rated value',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why is periodic inspection important?',
     options: [
-      'They provide guidance based on real experience, helping you avoid common mistakes',
-      'Public commitment to develop science-based targets within 24 months',
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
+      'To upgrade the installation to the latest wiring colours',
+      'To increase the current rating of existing circuits',
+      'To remove the need for any future maintenance',
       'To identify faults caused by ageing or deterioration before they become dangerous',
     ],
     correctAnswer: 3,
@@ -134,19 +134,24 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'True or False: Once installed, electrical systems will not develop faults unless damaged.',
-    options: ['True', 'False'],
+      'Which statement about fault development in installed electrical systems is correct?',
+    options: [
+      'Systems only fail if they suffer physical damage',
+      'Systems develop faults over time from ageing, environment and wear',
+      'Correctly installed systems never need re-inspection',
+      'Faults only occur in the first year after installation',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. Even properly installed systems develop faults over time due to material ageing, environmental conditions, and normal wear.',
+      'Even properly installed systems develop faults over time due to material ageing, environmental conditions, and normal wear, which is why periodic inspection is required.',
   },
   {
     id: 7,
     question: 'What is the main risk of overloading sockets?',
     options: [
-      'To earth the armour and provide sealing',
-      'Safety – so circuits can be identified and isolated quickly',
-      '6× cable overall diameter (factory minimum).',
+      'The voltage at the socket drops below 230V',
+      'The earth fault loop impedance increases',
+      'The circuit RCD becomes oversensitive',
       'Overheating leading to insulation breakdown and fire',
     ],
     correctAnswer: 3,
@@ -170,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why must installers select materials suitable for the environment?',
     options: [
-      'Adequate illumination, duration, and reliability during emergencies',
+      'To reduce the cost of the installation materials',
       'To prevent premature failure due to environmental conditions',
-      'Heat dissipation varies with installation method',
-      'Presence, size, condition, and connections',
+      'To allow smaller cable sizes to be used throughout',
+      'To remove the need for any protective devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,10 +189,10 @@ const quizQuestions = [
     question:
       'In the real-world example, what mistake led to cable deterioration near the cooker point?',
     options: [
-      'AIB is softer and less dense; AC is harder and more dense',
-      'To verify battery capacity and autonomy',
+      'Undersizing the cable for the cooker load',
+      'Failing to provide an isolation switch nearby',
       'Using standard PVC cable too close to a heat source',
-      'Optical fibre combined with overhead ground wire on power lines',
+      'Connecting the cooker on a ring rather than a radial',
     ],
     correctAnswer: 2,
     explanation:

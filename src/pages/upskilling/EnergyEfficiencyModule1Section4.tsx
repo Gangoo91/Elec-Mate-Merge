@@ -71,12 +71,12 @@ const quizQuestions = [
     id: 1,
     question: 'What management principle does ISO 50001 follow for continuous improvement?',
     options: [
-      'Six Sigma methodology',
       'Plan-Do-Check-Act (PDCA) cycle',
+      'Six Sigma methodology',
       'Lean manufacturing principles',
       'Total Quality Management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ISO 50001 follows the Plan-Do-Check-Act (PDCA) cycle for continuous improvement of energy performance.',
   },
@@ -106,10 +106,10 @@ const quizQuestions = [
     id: 4,
     question: 'What does BS EN 15232 primarily assess?',
     options: [
-      'Thermal insulation performance',
-      'Impact of building automation and controls on energy efficiency',
-      'Renewable energy integration',
-      'Electrical safety compliance',
+      'Thermal insulation performance of the building fabric',
+      'The impact of building automation and controls on energy efficiency',
+      'Integration of on-site renewable energy generation',
+      'Electrical safety compliance of fixed wiring',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'Which BS EN 15232 class represents buildings with high energy performance through advanced automation?',
     options: [
-      'Class D - Non-energy efficient',
-      'Class C - Standard',
-      'Class B - Advanced',
       'Class A - High energy performance',
+      'Class B - Advanced',
+      'Class C - Standard',
+      'Class D - Non-energy efficient',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Class A represents the highest energy performance with advanced automation including demand-based control and integrated functions.',
   },
@@ -134,11 +134,11 @@ const quizQuestions = [
     question: 'Under ESOS (Energy Savings Opportunity Scheme), which organisations must comply?',
     options: [
       'All businesses regardless of size',
-      'Large undertakings with 250+ employees OR turnover over 44 million pounds',
       'Only public sector organisations',
+      'Large undertakings with 250+ employees OR turnover over 44 million pounds',
       'Manufacturing companies only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ESOS applies to large undertakings with 250 or more employees, or with annual turnover exceeding 44 million pounds.',
   },
@@ -159,8 +159,8 @@ const quizQuestions = [
   {
     id: 8,
     question: 'How often must ISO 50001 certified organisations undergo surveillance audits?',
-    options: ['Every 6 months', 'Annually', 'Every 2 years', 'Every 3 years'],
-    correctAnswer: 1,
+    options: ['Annually', 'Every 6 months', 'Every 2 years', 'Every 3 years'],
+    correctAnswer: 0,
     explanation:
       'ISO 50001 certified organisations must undergo annual surveillance audits to maintain their certification.',
   },

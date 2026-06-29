@@ -23,40 +23,40 @@ const quizQuestions = [
     question:
       'You have completed the dead-side tests on a final circuit including a Method 1 R1+R2. The reading is recorded. What is the single most important physical step that must happen before any breaker is closed?',
     options: [
-      'Photograph the schedule of test results',
-      'Remove the temporary L–CPC link at the distribution board. Closing a breaker with that link still in place is a direct line-to-earth short — best case, an instantaneous magnetic trip; worst case, weld-on contacts and an arc-flash incident',
-      'Reset the multifunction tester',
-      'Sign the certificate',
+      'Remove the temporary L–CPC link at the distribution board before any breaker is closed.',
+      'Photograph the completed schedule of test results before energising the circuit.',
+      'Reset the multifunction tester so it is ready to capture the live Zs reading.',
+      'Sign the certificate so the dead-test record is closed out before energising.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Leaving the L–CPC link in place is the most common pre-energisation failure. The procedural mitigation is to write link removal into the test sheet as a discrete tick-box step, and to use a brightly coloured / labelled flying lead. GN3 makes the same point: link removal is part of the test, not an afterthought.',
+      'Closing a breaker with the L–CPC link still in place creates a direct line-to-earth short with arc-flash risk. Leaving the link in place is the most common pre-energisation failure. The procedural mitigation is to write link removal into the test sheet as a discrete tick-box step, and to use a brightly coloured / labelled flying lead. GN3 makes the same point: link removal is part of the test, not an afterthought.',
   },
   {
     id: 2,
     question:
       'During an earth electrode test you disconnected the earthing conductor. The test is done and you are about to re-energise the installation. What does BS 7671 require here, and why?',
     options: [
-      'Re-energise first; reconnection can wait until the schedule is signed',
-      'Reconnect the earthing conductor BEFORE the supply is energised. Re-energising with the earthing conductor disconnected leaves exposed-conductive-parts unreferenced to earth — fault protection is gone and any earth fault during that window puts touch voltage onto every metalwork that should be at earth potential',
-      'Reconnect after the first RCD test',
-      'Reconnect only if the test failed',
+      'Re-energise first, since reconnection can safely wait until the schedule of test results is signed.',
+      'Reconnect the conductor only after the first post-energisation RCD test has confirmed protection.',
+      'Reconnect the earthing conductor BEFORE the supply is energised, so metalwork stays referenced to earth.',
+      'Reconnect the earthing conductor only if the electrode test reading failed the limit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The procedural sequence in BS 7671 / GN3 for an earth-electrode test using an EFLI tester explicitly requires that the earthing conductor is reconnected BEFORE the supply is energised or re-energised. This is a safety-critical, non-negotiable step.',
+      'The procedural sequence in BS 7671 / GN3 for an earth-electrode test using an EFLI tester explicitly requires that the earthing conductor is reconnected BEFORE the supply is energised or re-energised. With it disconnected, exposed-conductive-parts are unreferenced to earth and any earth fault puts touch voltage onto metalwork. This is a safety-critical, non-negotiable step.',
   },
   {
     id: 3,
     question:
       'You are about to close the main switch for first energisation of a new consumer unit. The dead tests (continuity, insulation resistance, polarity at origin) all pass. The MCBs / RCBOs are all in the OFF position. What is the right sequence?',
     options: [
-      'Close every breaker, then close the main switch',
-      'Close the main switch with all outgoing breakers OFF first. Verify supply polarity at the origin with a voltage indicator. Then energise outgoing ways one at a time, watching for any obvious anomaly (smell, noise, breaker not holding) before progressing to the next. This bounds the worst-case fault to one circuit',
-      'Close the main switch and the largest breaker first',
-      'Close all breakers before doing the polarity test',
+      'Main switch on with all breakers OFF, verify origin polarity, then energise ways one at a time.',
+      'Close every outgoing breaker first, then close the main switch in one movement.',
+      'Close the main switch together with the largest outgoing breaker to load it gradually.',
+      'Close all outgoing breakers, then carry out the origin polarity test under load.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Closing all outgoing breakers before the main switch means a fault on any circuit will be a fault at the main switch close — you cannot tell which circuit it was without re-isolating and starting again. The energise-and-monitor approach (main switch, then one breaker at a time) localises any fault to the circuit being closed and makes diagnosis straightforward.',
   },
@@ -65,10 +65,10 @@ const quizQuestions = [
     question:
       'You close an MCB and it trips immediately. The customer says "it does that sometimes, just press it again". What does Reg 643 expect of you, and what do you do?',
     options: [
-      'Reset it twice — if it trips a third time, replace it',
-      'Investigate before any further attempt to reset. Reg 643 makes verification of fault-protection effectiveness a positive duty, not a trial-and-error step. Repeated resets convert the MCB itself into the fault-protection trial: a magnetic trip can leave fused contacts that fail to open at the next overcurrent. The right move is to re-isolate, investigate the cause, fix it, and only then re-close',
-      'Replace the MCB with a higher-rated one',
-      'Hold it on by hand',
+      'Reset it twice, and only if it trips a third time replace the breaker.',
+      'Investigate before any further reset — Reg 643 makes fault-protection verification a positive duty; re-isolate, find the cause, fix it, then re-close.',
+      'Replace the MCB with the next size up so it holds against the inrush.',
+      'Hold the breaker on by hand long enough for the fault to clear itself.',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,52 +79,52 @@ const quizQuestions = [
     question:
       'After re-energisation, you measure Zs at the furthest point of a final circuit and compare to the calculated Zs from the dead test. The measured value is 0.18 Ω higher than calculated. What is the likely cause and is the circuit still compliant?',
     options: [
-      'It must be a faulty meter',
-      'A 0.18 Ω difference is well within typical instrument tolerance and operating-temperature variation. The cable is hotter when the circuit is live than when it was dead-tested, and conductor resistance rises with temperature (~0.4 %/°C). Compare the live-measured Zs against the maximum permitted Zs for the protective device from BS 7671 Table 41 / the A4 max-permitted-Zs column — if it is below the limit, the circuit is compliant',
-      'The CPC is broken',
-      'The circuit needs re-designing',
+      'It is within tolerance and temperature variation; compare against the Table 41 / A4 limit — compliant.',
+      'A difference this large can only mean the multifunction tester is faulty and must be replaced.',
+      'A rise of this size indicates a broken or high-resistance CPC on the circuit.',
+      'A difference of 0.18 Ω means the circuit is undersized and must be re-designed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Live Zs verification compares against the Table 41 / A4 limit at operating temperature, not against the dead R1+R2 calculation directly. A modest rise in measured Zs versus calculated is expected and normal, and the compliance check is against the Zs limit, not against the calculated Zs.',
+      'A 0.18 Ω rise is within instrument tolerance and temperature variation. Live Zs verification compares against the Table 41 / A4 limit at operating temperature, not against the dead R1+R2 calculation directly. A modest rise in measured Zs versus calculated is expected and normal, and the compliance check is against the Zs limit, not against the calculated Zs.',
   },
   {
     id: 6,
     question:
-      'During the post-energisation RCD test, the 30 mA RCD trips at 23 mA on the IΔn test (within tolerance) but does not trip at IΔn × 5. What does this tell you?',
+      'During the post-energisation RCD test, the 30 mA RCD trips in 410 ms on the AC test at rated residual operating current (1×IΔn). What does this tell you under BS 7671:2018+A4:2026?',
     options: [
-      'Both numbers look low; replace the RCD',
-      'The IΔn test is the regulatory effectiveness test (Reg 643.7.3 / 643.8) and tripping below IΔn is acceptable, but the RCD must trip within 40 ms at IΔn × 5 for additional protection per BS EN 61008 / 61009. Failing the IΔn × 5 test means the device is not providing the fast disconnection required for additional protection (Reg 415.1) and shall be replaced',
-      'The RCD is OK because it tripped on IΔn',
-      'Re-test from a different socket',
+      'The RCD is acceptable because it tripped at all on the 1×IΔn test as required.',
+      'The reading is fine — disconnection time is not assessed for a general type RCD.',
+      'A general non-delay type must trip within 300 ms at 1×IΔn; 410 ms fails — replace it.',
+      'Re-test the RCD at IΔn × 5 to confirm the 40 ms limit before drawing any conclusion.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Reg 643.7.3 (RCD effectiveness for fault protection) and Reg 643.8 (additional protection) both feed into the post-energisation RCD test. An RCD that trips at IΔn but fails the IΔn × 5 fast-trip test is no longer providing additional protection within the 40 ms requirement and must be replaced.',
+      'Under A4:2026, Appendix 3 Table 3A and the IΔn × 5 (40 ms) test have been deleted. Effectiveness — for both fault protection (Reg 643.7.3) and additional protection (Reg 643.8) — is now verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type RCD must disconnect within 300 ms. A trip time of 410 ms fails that limit, so the device must be replaced.',
   },
   {
     id: 7,
     question:
       'On a domestic re-energisation, you close the main switch and the building remains dark — but you can hear a relay buzzing in the consumer unit. What is the correct response?',
     options: [
-      'Close more breakers until something happens',
-      'Re-isolate immediately. A buzzing relay or contactor on first close is a classic symptom of a tripped device chattering against an attempted reset, of an under-voltage release operating because the supply polarity is wrong, or of the RCBO holding coil seeing a mis-wired neutral. Do not investigate live — open the main switch, lock-off, and diagnose dead',
-      'Open the consumer unit cover and look',
-      'Phone the manufacturer',
+      'Close more outgoing breakers until the lighting comes on and the buzzing stops.',
+      'Open the consumer unit cover and look inside while the supply is still on.',
+      'Re-isolate immediately — open the main switch, lock off and diagnose the cause dead.',
+      'Phone the manufacturer of the consumer unit before taking any further action.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Anything unexpected at first energisation — buzzing, smoke, smell, light not coming on when expected — is a stop signal. Investigation happens dead. Reg 644.1.1 makes this explicit: any defect or omission revealed during inspection and testing shall be corrected before the certificate is issued, and that correction is done with the installation isolated.',
+      'Anything unexpected at first energisation — buzzing, smoke, smell, light not coming on when expected — is a stop signal; buzzing on first close points to a chattering device, wrong polarity or a mis-wired neutral. Investigation happens dead. Reg 644.1.1 makes this explicit: any defect or omission revealed during inspection and testing shall be corrected before the certificate is issued, and that correction is done with the installation isolated.',
   },
   {
     id: 8,
     question:
       'You have re-energised an addition to an existing installation. During the live tests you discover a defect on the existing wiring (not part of your work). What does Reg 644.1.2 require?',
     options: [
-      'Ignore it — not in scope',
-      'You must record any defects found in the existing installation, so far as is reasonably practicable, on the Electrical Installation Certificate or Minor Works Certificate. Defects in the existing installation that affect the safety of YOUR addition or alteration must be corrected before the certificate is issued',
-      'Disconnect the entire installation',
-      'Refuse to issue the certificate',
+      'Ignore the defect entirely, as the existing wiring is outside the scope of your work.',
+      'Record the defect on the certificate; any existing defect affecting the safety of your addition must be corrected before it is issued.',
+      'Disconnect the entire installation until the customer arranges a full rewire.',
+      'Refuse to issue any certificate at all while an existing defect remains.',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'You complete re-energisation, all live tests pass, and you are handing over to the duty holder. What three live readings should you walk them through, and why?',
     options: [
-      'Only the Zs reading at the origin',
-      'Zs at the furthest point of each final circuit (proves the disconnection time will be met under fault), the RCD trip times at IΔn and IΔn × 5 (proves additional protection is effective), and confirmation of polarity under power. Together these are the live evidence that the dead-side calculations and design assumptions are correct in service',
-      'Only the polarity check',
-      'Only the IR resistance values',
+      'Only the Zs reading taken at the origin, since downstream points follow from it.',
+      'Only the confirmation of correct polarity at the consumer unit under power.',
+      'Only the insulation resistance values recorded earlier during the dead tests.',
+      'Zs at the furthest point of each circuit, RCD trip time at 1×IΔn, and polarity under power.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The handover is when the duty holder takes ownership of the installation. The live readings — Zs, RCD trip times and polarity under power — are the post-energisation evidence that the design is correct. They form the live half of the verification record (Schedule of Test Results) alongside the dead-side readings.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'On final certification of a new installation, your dead-side R1+R2 calculation gave Zs = 0.84 Ω at 70 °C, well within the 1.37 Ω limit. The live measured Zs at the furthest socket reads 1.42 Ω. What is the right action?',
     options: [
-      'Record 1.42 and pass the circuit because the dead test passed',
-      'The live reading is above the BS 7671 Table 41 / A4 maximum permitted Zs for this protective device. The disconnection time requirement is not met. Re-isolate, investigate the discrepancy (loose termination, parallel earth path that contributed to a low dead R1+R2, longer cable run than assumed, wrong protective device size), correct the underlying cause, and re-test. Recording a non-compliant Zs as a pass falsifies the certificate',
-      'Adjust the calculation to match',
-      'Use a different meter',
+      'Record 1.42 Ω and pass the circuit, because the dead-test calculation was within limit.',
+      'Adjust the dead-side calculation upward so the figures reconcile on the certificate.',
+      'Use a different meter and record whichever reading falls below the table limit.',
+      'Live Zs exceeds the Table 41 / A4 maximum — re-isolate, find the cause, correct and re-test.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The live Zs measurement is the regulatory acceptance criterion for fault protection by ADS (Reg 643.7). A Zs above the table limit means the disconnection time will not be met and the circuit fails verification. The certificate cannot be issued for that circuit until the cause is found and corrected.',
   },
@@ -166,14 +166,14 @@ const inlineChecks = [
     question:
       'Method 1 R1+R2 was used. The reading is logged. Your apprentice closes the main switch and starts to close MCB 1 — the dedicated 32 A B-curve circuit you tested. What is the single physical item that, if missed, converts this into an arc-flash event, and which check on the pre-energisation list catches it?',
     options: [
-      'Polarity verification — item 7.',
-      'The temporary L–CPC link at the board. With the link still in, closing the breaker is a direct line-to-earth short. Best case: instantaneous magnetic trip. Worst case: weld-on contacts, board-level event, arc-flash. The check is item 1 on the pre-energisation list — link removed, conductors restored. A high-visibility flying lead and a tick-box on the test sheet are the procedural defences.',
-      'Torque-check on the terminations.',
-      'Confirming the IR result.',
+      'Polarity verification — item 7 on the pre-energisation list.',
+      'The temporary L–CPC link at the board — caught by item 1, link removed.',
+      'Torque-check on the terminations — item 5 on the list.',
+      'Confirming the IR result before the close — item 4.',
     ],
     correctIndex: 1,
     explanation:
-      'Leaving the L–CPC link in is the most common pre-energisation failure on Method 1 jobs. Item 1 of the pre-energisation walk-around exists for exactly this reason. The combination of a high-visibility flying lead and a discrete tick-box on the test sheet is what makes the check actually happen at the moment when memory fails most often — end of the day, customer hovering.',
+      'With the L–CPC link still in, closing the breaker is a direct line-to-earth short — best case an instantaneous magnetic trip, worst case weld-on contacts, a board-level event and arc-flash. Item 1 of the pre-energisation walk-around (link removed, conductors restored) exists for exactly this reason. A high-visibility flying lead and a discrete tick-box on the test sheet are the procedural defences that make the check happen at the moment memory fails most often — end of the day, customer hovering.',
   },
   {
     id: 'mod2-s6-first-close-sequence',
@@ -181,9 +181,9 @@ const inlineChecks = [
       'You have a 12-way RCBO board, all dead tests pass. The customer is anxious to get the lights on. Which sequence bounds your worst-case fault, and why?',
     options: [
       'Close the main switch with all RCBOs already ON — quickest for the customer.',
-      'Close all RCBOs first, then the main switch.',
-      'Close the main switch with all outgoing RCBOs OFF; verify supply polarity at origin; pre-test each RCBO test button; close RCBOs one at a time with a two-second pause between each. A fault on any circuit is bounded to that circuit instead of becoming a board-level event.',
-      'Close the main switch and the largest RCBO first.',
+      'Close all RCBOs first, then the main switch in a single movement.',
+      'Main switch on with RCBOs OFF, verify origin polarity, then close RCBOs one at a time.',
+      'Close the main switch and the largest RCBO together first.',
     ],
     correctIndex: 2,
     explanation:
@@ -192,26 +192,26 @@ const inlineChecks = [
   {
     id: 'mod2-s6-rcd-fast-trip',
     question:
-      'A 30 mA RCD trips at 22 mA on the IΔn test (within tolerance) and at 145 ms at IΔn × 5. The duty-holder asks if the device is OK. Which Reg framings apply, and what is the call?',
+      'A 30 mA RCD providing additional protection trips in 360 ms on the AC test at rated residual operating current (1×IΔn). The duty-holder asks if the device is OK. Which Reg framing applies, and what is the call?',
     options: [
-      'Both readings are fine — the IΔn pass is what matters.',
-      'The IΔn test is the effectiveness verification (Reg 643.7.3) and tripping below IΔn is acceptable. But Reg 643.8 / Reg 415.1 require an RCD providing additional protection to trip within 40 ms at IΔn × 5. 145 ms fails that limit — the device is no longer providing additional protection within the 40 ms requirement and shall be replaced.',
-      'Both readings indicate a faulty RCD test instrument.',
-      'Replace the device only if it fails the IΔn test.',
+      'It is fine — disconnection time is not assessed, only the fact that it tripped.',
+      'A general non-delay type must trip within 300 ms at 1×IΔn; 360 ms fails — replace it.',
+      'The reading indicates a faulty RCD test instrument rather than a faulty device.',
+      'Replace the device only if it also fails a separate IΔn × 5 test at 40 ms.',
     ],
     correctIndex: 1,
     explanation:
-      'The two RCD tests have two different purposes and two different acceptance criteria. IΔn (Reg 643.7.3) verifies effectiveness for fault protection. IΔn × 5 (Reg 643.8 / 415.1) verifies additional protection within 40 ms. A device that passes one and fails the other is not fit for its installed purpose if it claims to provide additional protection — replace.',
+      'A4:2026 deleted Appendix 3 Table 3A and the IΔn × 5 (40 ms) test. There is now one acceptance criterion for the RCD test: an AC test at the rated residual operating current (1×IΔn), with a general non-delay type required to disconnect within 300 ms (Reg 643.8 NOTE; the same 1×IΔn test verifies effectiveness for fault protection under Reg 643.7.3). A trip time of 360 ms fails that single limit — replace the device.',
   },
   {
     id: 'mod2-s6-defect-on-existing',
     question:
       'You re-energise an addition to an existing installation. During the live tests you find a defect in the existing wiring that does NOT affect the safety of your new work. The customer asks for the certificate. What does Reg 644.1.2 require?',
     options: [
-      'Refuse to issue the certificate until the existing defect is corrected.',
+      'Refuse to issue the certificate until the existing defect is corrected first.',
       'Issue the certificate without mentioning the existing defect — it is out of scope.',
-      'Record the defect on the Electrical Installation Certificate (or Minor Works Certificate) so far as is reasonably practicable, then issue. Defects in the existing installation that affect the safety of the new work would have to be corrected before the certificate; defects that do not affect the new work are recorded but do not block the certificate. The recording is the duty of care to the next inspector and the duty holder.',
-      'Disconnect the existing installation entirely.',
+      'Record the defect on the certificate so far as is reasonably practicable, then issue.',
+      'Disconnect the existing installation entirely until the customer rectifies it.',
     ],
     correctIndex: 2,
     explanation:
@@ -252,7 +252,7 @@ const InspectionTestingModule2Section6 = () => {
               "Before any breaker is closed: confirm the L–CPC link removed (if Method 1 was used), every conductor landed in its correct terminal, no foreign objects in the enclosure, terminations torque-checked to the manufacturer's value, earthing/bonding reconnected (Reg 643.2.1, Reg 526.1).",
               'First close is energise-and-monitor: main switch on with all outgoing ways OFF, polarity verified at the origin, then one outgoing way at a time. If something is wrong, the worst case is bounded to one circuit.',
               'If a breaker trips on first close: investigate, do not keep resetting. Repeated resets stress the device and can mask a magnetic-trip-with-fused-contacts failure. Re-isolate, find the cause dead, correct it, then re-close.',
-              "After successful energisation: live Zs verification at each circuit's furthest point, RCD trip-time tests at IΔn and IΔn × 5, and polarity confirmation under power (Reg 643.7, Reg 643.8). These three are the live half of the verification record.",
+              "After successful energisation: live Zs verification at each circuit's furthest point, the RCD trip-time test at 1×IΔn (a single AC test under A4:2026, 300 ms maximum for a general non-delay type), and polarity confirmation under power (Reg 643.7, Reg 643.8). These three are the live half of the verification record.",
               'On the dead-side: any earthing/bonding conductor disconnected for testing MUST be reconnected before the supply is energised. This is non-negotiable per BS 7671 / GN3 procedural sequence for earth-electrode testing.',
               'Defects found during testing: in new work, corrected before the certificate is issued (Reg 644.1.1). In additions/alterations, defects affecting the safety of the new work corrected before certificate; other defects in existing installation recorded on the certificate (Reg 644.1.2).',
             ]}
@@ -264,7 +264,7 @@ const InspectionTestingModule2Section6 = () => {
               'Apply the energise-and-monitor first-close sequence — main switch OFF outgoing ways, then one circuit at a time — and explain why this bounds fault risk',
               'Respond correctly to a breaker tripping on first close: investigate, not reset; isolate, diagnose dead, correct, re-test',
               'Carry out the post-energisation live tests in the right order — polarity at origin, Zs at the furthest point of each final circuit, RCD trip times — and apply the BS 7671 / A4 acceptance criteria',
-              'Distinguish between the IΔn test (effectiveness for fault protection per Reg 643.7.3) and the IΔn × 5 test (additional protection per Reg 643.8 / 415.1) and act on a fail of either',
+              'Apply the single A4:2026 RCD test — an AC test at the rated residual operating current (1×IΔn) that verifies both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8), with a 300 ms maximum for a general non-delay type — and act on a fail',
               'Hand over the energised installation to the duty holder with the live readings explained, and record correctly on the A4:2026 certificate forms per Reg 644',
             ]}
           />
@@ -574,7 +574,7 @@ const InspectionTestingModule2Section6 = () => {
                 4. Live verification tests
               </text>
               <text x="640" y="348" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
-                Zs at furthest point · RCD IΔn and ×5
+                Zs at furthest point · RCD at 1×IΔn
               </text>
               <text x="640" y="361" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
                 polarity confirmed under power
@@ -614,7 +614,7 @@ const InspectionTestingModule2Section6 = () => {
                 Zs ≤ Table 41 / A4 max-permitted
               </text>
               <text x="640" y="451" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="9">
-                IΔn ≤ rated · ×5 trip ≤ 40 ms
+                1×IΔn trip ≤ 300 ms (general type)
               </text>
               <line
                 x1="520"
@@ -798,24 +798,22 @@ const InspectionTestingModule2Section6 = () => {
           </ConceptBlock>
 
           <ConceptBlock
-            title="RCD verification — IΔn for effectiveness, IΔn × 5 for additional protection"
-            plainEnglish="There are two separate RCD tests, with two separate purposes. The IΔn test verifies the device trips at its rated residual operating current (effectiveness for fault protection — Reg 643.7.3). The IΔn × 5 test verifies the device trips within 40 ms (additional protection per Reg 415.1, verified per Reg 643.8). A device must pass both."
-            onSite="Both tests are run from the load side using a multifunction tester. The IΔn test trips somewhere between 50 % and 100 % of IΔn for an RCD that complies with BS EN 61008/61009. The IΔn × 5 test trips in less than 40 ms. Record both."
+            title="RCD verification — a single AC test at 1×IΔn under A4:2026"
+            plainEnglish="Under A4:2026 there is one RCD test, not two. An AC test at the rated residual operating current (1×IΔn) verifies the device, regardless of RCD Type. For a general non-delay type the device must disconnect within 300 ms; the same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A have been deleted."
+            onSite="The test is run from the load side using a multifunction tester at 1×IΔn. A compliant general type RCD trips well within 300 ms (commonly 20–40 ms in practice, but 300 ms is the regulatory limit, not 40 ms). For a delay 'S' type, the device must trip between 130 ms and 500 ms. Record the trip time."
           >
             <p>
-              Reg 643.7.3 sets the effectiveness test for RCDs: an alternating-current test at the
-              rated residual operating current (IΔn). The acceptance is that the device disconnects
-              within the time required by Chapter 41. Reg 643.8 covers the additional protection
-              verification — the same device tested at IΔn × 5, with disconnection within 40 ms the
-              requirement for an RCD providing additional protection.
+              Reg 643.7.3 and Reg 643.8 are both satisfied by an alternating-current test at the
+              rated residual operating current (1×IΔn). The acceptance is that the device
+              disconnects within the time required by Chapter 41: for a general non-delay type, a
+              300 ms maximum; for a delay 'S' type, between 130 ms and 500 ms.
             </p>
             <p>
-              Note that the A4:2026 amendment changed Reg 643.3 (and through it the RCD testing
-              approach): regardless of RCD Type, an alternating-current test at IΔn is used to
-              verify effectiveness, and Table 3A (the historical time/current performance criteria
-              table in Appendix 3) has been deleted. The simpler test sequence — IΔn at AC for
-              fault-protection effectiveness, IΔn × 5 at AC for additional protection — is what the
-              A4 form expects on the Schedule of Test Results.
+              The A4:2026 amendment changed Reg 643.3 and simplified RCD testing: regardless of RCD
+              Type, a single alternating-current test at 1×IΔn is used to verify effectiveness, and
+              Appendix 3 Table 3A (the historical time/current performance criteria) together with
+              the IΔn × 5 (40 ms) test have been deleted. One trip-time reading at 1×IΔn against the
+              300 ms general-type limit is what the A4 form expects on the Schedule of Test Results.
             </p>
           </ConceptBlock>
 
@@ -828,7 +826,8 @@ const InspectionTestingModule2Section6 = () => {
                 confirm that the relevant requirements of Chapter 41 are met, taking into account
                 the operating characteristic of the device. NOTE: Regardless of RCD Type,
                 effectiveness is deemed to have been verified where an RCD disconnects within the
-                relevant time at IΔn.
+                stated time with an AC test at the rated residual operating current (IΔn) — for a
+                general non-delay type, 300 ms maximum.
               </>
             }
             meaning="One AC test at IΔn, regardless of RCD Type. The A4 amendment simplified this. The Type B / Type F nuance moved from a separate test to a selection-and-erection consideration. Inspectors run one effectiveness test, record the trip time, and compare to the Chapter 41 disconnection-time requirement."
@@ -875,7 +874,7 @@ const InspectionTestingModule2Section6 = () => {
                 <span className="block">
                   5. Walk the installation. At each accessible socket: confirm polarity under power.
                   At each lampholder where the cap has been replaced: confirm the outer contact is
-                  neutral. RCD trip-time tests at IΔn and IΔn × 5 at the furthest point of each RCBO
+                  neutral. RCD trip-time test at 1×IΔn at the furthest point of each RCBO
                   group.
                 </span>
                 <span className="block">
@@ -1044,8 +1043,8 @@ const InspectionTestingModule2Section6 = () => {
               <li>
                 <strong>Schedule of Test Results:</strong> the measured dead-side and live-side
                 readings — R1+R2, ring r1/r2/rn (where applicable), IR L–L / L–E, polarity, live
-                measured Zs, RCD IΔn trip time, RCD IΔn × 5 trip time. Two decimal places for
-                resistance, milliseconds for trip times.
+                measured Zs, RCD trip time at 1×IΔn. Two decimal places for
+                resistance, milliseconds for the trip time.
               </li>
               <li>
                 <strong>Schedule of Inspection:</strong> tick / N/A entries for each item. The A4
@@ -1067,7 +1066,7 @@ const InspectionTestingModule2Section6 = () => {
               'The pre-energisation walk-around is eight discrete checks — link removed, conductors landed, no foreign objects, terminations torqued, earthing/bonding reconnected, IR results reviewed, polarity at origin, all OCPDs OFF. Use a checklist.',
               'First close = main switch on with all outgoing ways OFF, then one outgoing way at a time. Stand to one side. Door open. PPE appropriate to the prospective fault current.',
               'Breaker trips on first close = re-isolate, diagnose dead, correct, re-test, re-close. Never &lsquo;reset and hope&rsquo;. Reg 643.7 makes verification a positive duty.',
-              'Live verification: Zs at the furthest point of each circuit (Reg 643.7.3), RCD trip times at IΔn for effectiveness (Reg 643.7.3) and IΔn × 5 for additional protection (Reg 643.8 / 415.1), polarity confirmed under power (Reg 643.6).',
+              'Live verification: Zs at the furthest point of each circuit (Reg 643.7.3), a single RCD trip-time test at 1×IΔn that verifies both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8) — 300 ms maximum for a general non-delay type — and polarity confirmed under power (Reg 643.6).',
               'Compare live Zs to the BS 7671 Table 41 / A4 maximum-permitted-Zs column. Above the limit = circuit fails verification, certificate cannot be issued for that circuit until the cause is found and corrected.',
               'Earthing/bonding conductors disconnected for testing must be reconnected BEFORE re-energisation. Procedural sequence in BS 7671 / GN3 is non-negotiable.',
               'Defects: new work — corrected before certificate (Reg 644.1.1). Additions/alterations — defects affecting the new work corrected before certificate; other defects recorded on the certificate (Reg 644.1.2).',
@@ -1099,7 +1098,7 @@ const InspectionTestingModule2Section6 = () => {
                 question:
                   'During RCD testing the device trips at IΔn but takes 60 ms — is that a fail?',
                 answer:
-                  'For Reg 643.7.3 effectiveness verification (RCD operating at rated residual operating current), 60 ms at IΔn is acceptable — Chapter 41 allows up to 300 ms for an S-type or Type-S RCD providing fault protection. For Reg 643.8 / 415.1 additional protection, the IΔn × 5 test must trip in less than 40 ms — that is the test that must be fast. Run both tests; the times have different acceptance criteria.',
+                  'No — 60 ms at 1×IΔn passes. Under A4:2026 the RCD is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type must disconnect within 300 ms (Reg 643.8 NOTE), so 60 ms is well inside the limit. The same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A were deleted in A4:2026, so there is no separate 40 ms criterion to apply. (A delay ‘S’ type must trip between 130 ms and 500 ms.)',
               },
               {
                 question:

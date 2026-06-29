@@ -11,11 +11,12 @@ const DESCRIPTION =
 
 const quickCheckQuestions = [
   {
-    question: 'What is the minimum cable rating typically required for smart device circuits?',
+    question:
+      'Per BS 7671 Table 52.3, what is the minimum copper conductor CSA for a lighting or power circuit?',
     options: ['0.5mm²', '1.0mm²', '1.5mm²', '2.5mm²'],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'Most smart device circuits require a minimum of 1.5mm² cable to handle the load safely and comply with BS 7671 requirements.',
+      'BS 7671 Table 52.3 sets the minimum cross-sectional area for copper conductors in lighting and power circuits at 1.0mm². In practice 1.5mm² is commonly used for lighting circuits, but 1.0mm² is the regulatory minimum.',
   },
   {
     question: 'Why do many smart switches require a neutral wire at the switch position?',
@@ -49,49 +50,49 @@ const quizQuestions = [
     question:
       'When installing a smart dimmer switch, what must you verify about the existing wiring?',
     options: [
-      'Only that live and switched live are present',
-      'That neutral is available at the switch position',
-      'That the circuit uses armoured cable',
+      'That only live and switched live are present',
+      'That the circuit is wired in armoured cable',
+      'That a neutral is available at the switch position',
       'That the cable is surface mounted',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Smart dimmers require a neutral connection to power their internal electronics. Many older installations only have live and switched live at the switch position, requiring rewiring.',
   },
   {
     question:
-      'What is the purpose of using a 12V DC power supply for smart devices instead of direct mains connection?',
+      'What is the main purpose of using a 12V DC power supply for smart devices instead of a direct mains connection?',
     options: [
-      'To save electricity',
+      'It directly reduces electricity consumption',
+      'It increases the data transmission distance',
+      'It is required only by the device warranty',
       'Extra-low voltage for safety and device compatibility',
-      'To increase transmission distance',
-      'Required by the device warranty only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       '12V DC provides extra-low voltage operation for safety and is the standard operating voltage for many smart sensors, LED controllers, and other devices.',
   },
   {
     question:
-      'According to BS 7671, what separation is required between mains cables and Category 5e/6 data cables?',
+      'Under BS 7671 (Regulation 528.1), how must Band I data cables and Band II mains cables sharing a route be treated?',
     options: [
-      'No separation required',
-      '50mm minimum or physical barrier',
-      '300mm minimum',
-      'They can share the same containment',
+      'They must be segregated, for example by a partition or earthed metal screen',
+      'No separation is required between them',
+      'They may always share the same containment compartment',
+      'Data cables must always be run in steel conduit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'BS 7671 requires either 50mm minimum separation or a physical barrier between mains and data cables to prevent electromagnetic interference.',
+      'BS 7671 Regulation 528.1 requires Band I (extra-low voltage) and Band II (low voltage) circuits sharing a route to be segregated, for example by a partition in trunking or an earthed metal screen between cores.',
   },
   {
     question:
       'What consideration is essential when selecting containment for smart home installations in bathrooms?',
     options: [
-      'Aesthetic colour matching',
-      'IP rating appropriate for the zone',
-      'Largest available size',
-      'Metal construction only',
+      'Matching the colour to the room decor',
+      'Choosing an IP rating appropriate for the zone',
+      'Selecting the largest available trunking size',
+      'Using metal construction in every case',
     ],
     correctIndex: 1,
     explanation:
@@ -101,12 +102,12 @@ const quizQuestions = [
     question:
       'When planning cable routes for a smart home installation, what factor most affects future expandability?',
     options: [
-      'Using the cheapest cable available',
+      'Always using the cheapest cable available',
+      'Minimising the total number of cables run',
+      'Specifying wireless devices only',
       'Installing spare capacity and accessible junction points',
-      'Minimising the number of cables',
-      'Using wireless devices only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Installing spare capacity (larger trunking, spare cables, accessible junction boxes) allows for easy system expansion without major disruption.',
   },

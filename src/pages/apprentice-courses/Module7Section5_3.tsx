@@ -29,10 +29,10 @@ const Module7Section5_3 = () => {
       id: 2,
       question: 'Why must test leads be fused?',
       options: [
-        'The type of electrical system the equipment is rated for',
-        'Reported the damaged probes and got compliant replacements',
+        'To indicate which system voltage the equipment is rated for',
+        'To improve the accuracy of resistance readings',
         'To protect the user from high fault currents if a short circuit occurs',
-        'False - homemade or modified test equipment must never be used',
+        'To allow the leads to be used on any category of circuit',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,9 +56,9 @@ const Module7Section5_3 = () => {
       question: 'What is the purpose of finger guards on probes?',
       options: [
         'To prevent fingers from slipping forward onto live conductors',
-        'To protect the user from high fault currents if a short circuit occurs',
-        'False - homemade or modified test equipment must never be used',
-        'The type of electrical system the equipment is rated for',
+        'To reduce the resistance of the test leads',
+        'To allow the probes to reach deeper terminals',
+        'To show the maximum voltage the probe can measure',
       ],
       correctAnswer: 0,
       explanation:
@@ -94,9 +94,9 @@ const Module7Section5_3 = () => {
       id: 7,
       question: 'True or False: Homemade or modified test leads are acceptable if they work.',
       options: [
-        'To provide protection against cuts, abrasion, and heat',
-        'To protect the user from high fault currents if a short circuit occurs',
-        'The type of electrical system the equipment is rated for',
+        'True - as long as they give accurate readings',
+        'True - provided fuses are fitted to them',
+        'True - if only used on low-voltage circuits',
         'False - homemade or modified test equipment must never be used',
       ],
       correctAnswer: 3,

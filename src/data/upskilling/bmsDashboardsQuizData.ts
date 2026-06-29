@@ -32,23 +32,23 @@ export const bmsDashboardsQuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is the primary principle for designing effective BMS dashboard layouts?',
     options: [
-      'Implement alarm prioritisation and grouping',
-      'Role-based access with appropriate permissions',
-      'Line charts with historical comparison',
+      'Fill every available pixel with as much data as possible',
+      'Use a single uniform colour to avoid distracting operators',
+      'Place equipment in alphabetical rather than logical order',
       'Prioritise most critical information prominently',
     ],
     correctAnswer: 3,
     explanation:
-      'Effective dashboard design follows visual hierarchy principles, placing the most critical information prominently and organizing related systems logically to support quick decision-making.',
+      'Effective dashboard design follows visual hierarchy principles, placing the most critical information prominently and organising related systems logically to support quick decision-making.',
   },
   {
     id: 4,
     question: 'How should dashboard access be configured for different user roles?',
     options: [
       'Role-based access with appropriate permissions',
-      'Prioritise most critical information prominently',
-      'Red for alarms, amber for warnings, green for normal',
-      'Implement alarm prioritisation and grouping',
+      'A single shared login used by everyone on site',
+      'Full administrator rights granted to all users by default',
+      'Access decided informally by whoever is on shift',
     ],
     correctAnswer: 0,
     explanation:
@@ -72,22 +72,22 @@ export const bmsDashboardsQuizData: QuizQuestion[] = [
     question:
       'Which data visualisation technique is most effective for showing energy consumption trends?',
     options: [
-      'Prioritise most critical information prominently',
-      'Implement alarm prioritisation and grouping',
+      'A single large numeric readout of the current value',
+      'A pie chart of the latest meter reading',
       'Line charts with historical comparison',
-      'Annually or when systems change significantly',
+      'A status indicator light showing on or off',
     ],
     correctAnswer: 2,
     explanation:
-      'Line charts effectively show trends over time and allow comparison with historical data. They provide context for current consumption patterns and help identify anomalies or opportunities for optimization.',
+      'Line charts effectively show trends over time and allow comparison with historical data. They provide context for current consumption patterns and help identify anomalies or opportunities for optimisation.',
   },
   {
     id: 7,
     question: 'What should be considered when designing dashboards for mobile device access?',
     options: [
-      'Annually or when systems change significantly',
-      'Prioritise most critical information prominently',
-      'Red for alarms, amber for warnings, green for normal',
+      'Display the full desktop layout unchanged on the smaller screen',
+      'Disable all alarms because the screen is too small to show them',
+      'Require the operator to zoom and scroll to reach key data',
       'Implement responsive design with prioritised information',
     ],
     correctAnswer: 3,
@@ -99,9 +99,9 @@ export const bmsDashboardsQuizData: QuizQuestion[] = [
     question: 'How often should BMS dashboard designs be formally reviewed?',
     options: [
       'Annually or when systems change significantly',
-      'Line charts with historical comparison',
-      'Implement responsive design with prioritised information',
-      'Role-based access with appropriate permissions',
+      'Only when an operator submits a complaint',
+      'Every week regardless of whether anything has changed',
+      'Never, once the dashboard has been commissioned',
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +111,10 @@ export const bmsDashboardsQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What backup strategy is most important for critical BMS dashboard functions?',
     options: [
-      'Role-based access with appropriate permissions',
+      'Rely entirely on the cloud dashboard with no local fallback',
       'Maintain local HMI panels for critical systems',
-      'Line charts with historical comparison',
-      'Red for alarms, amber for warnings, green for normal',
+      'Print a daily paper copy of the dashboard screen',
+      'Keep a spare monitor connected to the same server',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,10 +125,10 @@ export const bmsDashboardsQuizData: QuizQuestion[] = [
     question:
       'When integrating third-party systems into unified dashboards, what is the most important consideration?',
     options: [
-      'Maintain local HMI panels for critical systems',
-      'Prioritise most critical information prominently',
+      'Replacing every third-party controller with one vendor brand',
+      'Displaying each system on a completely separate dashboard',
       'Implement standard protocols and data normalisation',
-      'Line charts with historical comparison',
+      'Polling all systems at the slowest device fixed rate',
     ],
     correctAnswer: 2,
     explanation:

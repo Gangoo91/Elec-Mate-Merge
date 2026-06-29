@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'What do the WEEE Regulations 2013 specifically require producers and distributors to do?',
     options: [
-      'Five: Ladder Diagram, Function Block Diagram, Structured Text, Instruction List and Sequential Function Chart',
+      'Pay landfill tax on every item of electrical equipment they sell',
       'Finance the collection, treatment, recovery and environmentally sound disposal of WEEE',
-      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'Register every individual appliance with the Environment Agency before sale',
+      'Recycle all packaging within 30 days of the product being sold',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'hazardous-waste',
     question: 'Which of the following electrical waste items is classified as hazardous waste?',
     options: [
-      'To confirm the design meets BS EN 61439',
+      'Clean copper cable offcuts',
       'Fluorescent tubes containing mercury',
-      'Drop tube or rotary valve with fire protection',
-      'Authorised supervisors/managers only',
+      'PVC trunking and conduit',
+      'Cardboard equipment packaging',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     question:
       "Under the Environmental Protection Act 1990, the 'duty of care' for waste applies to:",
     options: [
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
+      'Only the final licensed disposal site that buries or incinerates the waste',
       'Anyone who produces, imports, carries, keeps, treats or disposes of controlled waste',
-      'Because many DC loads (LEDs, electronics) are polarity sensitive',
-      'Test results, faults, repairs, replacements, and inspections',
+      'Only registered waste carriers who transport waste on the public highway',
+      'Only the local authority responsible for the area where waste is created',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'Which level of the waste hierarchy should a maintenance technician consider first when dealing with old cable?',
     options: [
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
-      'Multiple categories depending on the specific item',
+      'Send it to landfill as the quickest disposal route',
+      'Recover energy by sending it to an incineration plant',
       'Consider whether the cable can be reused on another project',
-      'Registration as a waste carrier with the Environment Agency',
+      'Strip the copper and recycle it as scrap metal',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
       'PCB-containing equipment (such as old capacitors and transformers) requires special disposal because:',
     options: [
       'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
-      'Registration as a waste carrier with the Environment Agency',
-      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
-      'Fluorescent tubes and other mercury-containing lamps',
+      'PCBs are highly flammable and present a serious fire risk in skips',
+      'PCBs corrode steel containers and leak within a few days of storage',
+      'PCBs are radioactive and require shielded storage containers',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the minimum requirement for a person or company to legally transport waste?',
     options: [
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'A valid hazardous waste consignment note for every load',
       'Registration as a waste carrier with the Environment Agency',
-      'Multiple categories depending on the specific item',
-      'Consider whether the cable can be reused on another project',
+      'An environmental permit issued by the local authority',
+      'ISO 14001 environmental management certification',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Which of the following is the correct method for disposing of waste batteries from UPS systems?',
     options: [
-      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'Place them in the general waste skip once they are fully discharged',
+      'Crush them on site to reduce volume before recycling',
       'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
-      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
+      'Pour the acid down the foul drain and recycle the empty casing',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'Landfill tax is designed to:',
     options: [
-      'Registration as a waste carrier with the Environment Agency',
-      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
-      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
+      'Fund the registration of waste carriers with the Environment Agency',
+      'Pay for specialist collection of hazardous batteries and lamps',
+      'Cover the cost of cleaning up illegal fly-tipping sites',
       'Discourage the disposal of waste to landfill and encourage recycling and recovery',
     ],
     correctAnswer: 3,
@@ -167,9 +167,9 @@ const quizQuestions = [
       'When segregating waste on an electrical maintenance site, which of the following should be kept in a separate, sealed container?',
     options: [
       'Fluorescent tubes and other mercury-containing lamps',
-      'Multiple categories depending on the specific item',
-      'Consider whether the cable can be reused on another project',
-      'Registration as a waste carrier with the Environment Agency',
+      'Clean copper cable offcuts destined for scrap',
+      'Cardboard and plastic equipment packaging',
+      'Steel conduit and trunking offcuts',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'A site waste management plan (SWMP) is used to:',
     options: [
-      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
+      'Register the site as a hazardous waste producer with the Environment Agency',
       'Forecast, manage and record all waste produced on a construction or maintenance project',
-      'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'Calculate the landfill tax payable on each skip of mixed waste',
+      'Certify that a waste carrier is licensed to transport controlled waste',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,9 +207,9 @@ const quizQuestions = [
     question:
       'What is the main environmental concern with SF6 gas used in some high-voltage switchgear?',
     options: [
-      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
-      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
-      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'It depletes the ozone layer in the same way as old CFC refrigerants',
+      'It is highly toxic and causes immediate harm if inhaled in small amounts',
+      'It is extremely flammable and presents an explosion risk if released',
       'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
     ],
     correctAnswer: 3,
@@ -222,9 +222,9 @@ const quizQuestions = [
       'Which regulation requires that waste oil from transformers is disposed of correctly?',
     options: [
       'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
-      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
-      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
-      'Forecast, manage and record all waste produced on a construction or maintenance project',
+      'The WEEE Regulations 2013 and the Packaging Waste Regulations 2007',
+      'The Control of Pollution Act 1974 and the Clean Air Act 1993 only',
+      'The Waste Batteries and Accumulators Regulations 2009 alone',
     ],
     correctAnswer: 0,
     explanation:

@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one limitation of T&E cable in outdoor installations.',
     options: [
-      'Strip cable sheath 25-30mm',
-      'Where risk of mechanical damage exists',
+      'It carries too high a current for outdoor use',
+      'It requires a separate neutral conductor outdoors',
       'Not suitable for direct burial',
-      'Sleeve it green/yellow',
+      'It cannot be terminated at a socket outlet',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     question: 'Where must T&E cable be installed inside conduit or trunking?',
     options: [
       'Where risk of mechanical damage exists',
-      'To avoid damaging the insulation',
-      'Not suitable for direct burial',
-      'For identification and safety',
+      'Only on lighting circuits',
+      'Only where the cable run exceeds 10 metres',
+      'Only inside domestic dwellings',
     ],
     correctAnswer: 0,
     explanation:

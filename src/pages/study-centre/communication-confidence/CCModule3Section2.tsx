@@ -12,11 +12,11 @@ const quickCheckQuestions = [
       'A colleague thinks &ldquo;Everyone will laugh at me if I speak up in the progress meeting.&rdquo; Using cognitive restructuring, which is the best reframed thought?',
     options: [
       'I should never speak in meetings because people might judge me',
-      'Most people are focused on the agenda, not judging me &mdash; sharing useful information helps the team',
       'I will just avoid meetings altogether to stay safe',
       'If they laugh, I will never speak again',
+      'Most people are focused on the agenda, not judging me &mdash; sharing useful information helps the team',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cognitive restructuring involves identifying the unhelpful thought, examining the evidence for and against it, and replacing it with a more balanced, realistic alternative. Most colleagues at a progress meeting are focused on the work, not on judging someone who contributes. The reframed thought acknowledges reality without catastrophising.',
   },
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'cc-box-breathing',
     question: 'What is the correct sequence for box breathing?',
     options: [
-      'Breathe in for 2 seconds, hold for 6 seconds, breathe out for 2 seconds',
       'Breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds, hold for 4 seconds',
+      'Breathe in for 2 seconds, hold for 6 seconds, breathe out for 2 seconds',
       'Breathe in for 7 seconds, hold for 4 seconds, breathe out for 8 seconds',
       'Breathe rapidly for 10 seconds, then hold for 10 seconds',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Box breathing (also called square breathing or 4-4-4-4 breathing) uses equal intervals: inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds, hold for 4 seconds. This activates the parasympathetic nervous system and reduces the physiological symptoms of anxiety.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'In systematic desensitisation, why do you start with low-anxiety situations before progressing to higher-anxiety ones?',
     options: [
       'Because high-anxiety situations are always dangerous',
-      'Because starting small builds confidence and tolerance gradually, making each next step feel achievable',
       'Because you should only ever practise in low-anxiety situations',
+      'Because starting small builds confidence and tolerance gradually, making each next step feel achievable',
       'Because systematic desensitisation only works for mild anxiety',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Systematic desensitisation works on the principle of graduated exposure. Starting with situations that provoke mild anxiety allows you to build coping skills and confidence. Each successful experience reduces the anxiety response at that level, making the next step up feel more manageable. This creates a positive reinforcement cycle.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which breathing technique uses a 4-4-4-4 pattern of inhale, hold, exhale, hold?',
     options: [
+      'Box breathing',
       'Diaphragmatic breathing',
       'The physiological sigh',
-      'Box breathing',
       'Alternate nostril breathing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Box breathing (also called square breathing or tactical breathing) uses four equal phases of 4 seconds each: inhale for 4, hold for 4, exhale for 4, hold for 4. It is used by military personnel, first responders, and athletes to manage acute stress and anxiety.',
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
     question: 'What is the physiological sigh?',
     options: [
       'A single long exhale lasting 10 seconds',
-      'A double inhale through the nose followed by a long exhale through the mouth',
       'Breathing rapidly for 30 seconds to increase oxygen',
       'Holding your breath for as long as possible',
+      'A double inhale through the nose followed by a long exhale through the mouth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The physiological sigh consists of a double inhale through the nose (a normal inhale followed immediately by a shorter, sharper &ldquo;top-up&rdquo; inhale) and then a long, slow exhale through the mouth. Research by Andrew Huberman at Stanford has shown this to be one of the fastest ways to reduce physiological arousal in real time.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'An apprentice electrician needs to deliver their first toolbox talk on cable management. Which approach best applies the principles from this section?',
     options: [
-      'Avoid preparing and just wing it to seem natural',
       'Prepare bullet-point notes, practise with a trusted colleague first, use box breathing beforehand, and remind yourself that colleagues want useful information not a performance',
+      'Avoid preparing and just wing it to seem natural',
       'Memorise a script word-for-word and refuse to take questions',
       'Ask someone else to deliver it because anxiety means you cannot do it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This approach combines multiple evidence-based strategies: preparation (reduces uncertainty), graduated exposure (practising with one person first), physiological regulation (box breathing), and cognitive restructuring (reframing from &ldquo;performance&rdquo; to &ldquo;sharing useful information&rdquo;). Together, these make the task manageable and build confidence for future talks.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
       'A worker notices unsafe practice on site but feels too anxious to speak up. What is the most appropriate response?',
     options: [
       'Stay silent to avoid conflict &mdash; someone else will report it',
-      'Recognise the anxiety as normal, use a brief breathing technique to settle nerves, and report the concern using the site&rsquo;s reporting procedure or speak to their supervisor directly',
       'Shout across the site to draw attention to the problem',
       'Wait until the next formal meeting to raise it, even if there is immediate risk',
+      'Recognise the anxiety as normal, use a brief breathing technique to settle nerves, and report the concern using the site&rsquo;s reporting procedure or speak to their supervisor directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Safety communication is a legal and moral obligation under the Health and Safety at Work etc. Act 1974. The anxiety about speaking up is normal and understandable, but the techniques in this section &mdash; breathing regulation, cognitive reframing, and using established procedures &mdash; help you act despite the anxiety. Unsafe practice that poses immediate risk must be reported promptly, not left for a future meeting.',
   },

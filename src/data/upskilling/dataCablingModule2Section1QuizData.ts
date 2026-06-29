@@ -16,30 +16,30 @@ export const dataCablingModule2Section1QuizData: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'What is the maximum distance for 10 Gigabit Ethernet over Cat6 cable?',
+    question: 'What is the maximum guaranteed distance for 10 Gigabit Ethernet over Cat6 cable?',
     options: [
       '100 metres',
       '90 metres',
+      '37 metres',
       '55 metres',
-      '30 metres',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Cat6 cable supports 10 Gigabit Ethernet up to 55 metres. For the full 100-metre distance at 10 Gbps, Cat6A or higher is required.',
+      'Cat6 supports 10GBASE-T up to 55 metres in a low-noise environment (37 metres where alien crosstalk is high). For the full 100-metre permanent link at 10 Gbps, Cat6A or higher is required.',
   },
   {
     id: 3,
     question:
       'Which cable category has a bandwidth of 500 MHz and supports 10 Gbps over 100 metres?',
     options: [
-      'Cat6',
-      'Cat5e',
-      'Cat7',
       'Cat6A',
+      'Cat5e',
+      'Cat6',
+      'Cat7',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      'Cat6A (Augmented Category 6) has a bandwidth of 500 MHz and supports 10 Gigabit Ethernet over the full 100-metre distance.',
+      'Cat6A (Augmented Category 6) is specified to 500 MHz and supports 10GBASE-T over the full 100-metre channel. Cat6 only reaches 250 MHz, while Cat7 (600 MHz) is an ISO/IEC class not recognised by TIA structured-cabling standards.',
   },
   {
     id: 4,
@@ -56,15 +56,16 @@ export const dataCablingModule2Section1QuizData: QuizQuestion[] = [
   },
   {
     id: 5,
-    question: 'Which testing level provides full performance certification to category standards?',
+    question:
+      'Which level of copper cable testing fully certifies a permanent link against the parameters of its category standard?',
     options: [
-      'Level II (Basic qualification)',
-      'Level III (Certification)',
-      'Level IIE (Enhanced qualification)',
-      'Level I (Verification)',
+      'Verification testing (wiremap and length only)',
+      'Qualification testing (data-rate capability)',
+      'Certification testing (full parameter sweep)',
+      'Visual inspection of terminations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Level III (Certification) testing provides full performance testing to category standards, verifying that the installation meets all specified parameters for the cable category.',
+      'Certification testing performs a full frequency sweep, measuring insertion loss, NEXT, return loss and delay against the category standard. Verification and qualification testers only confirm connectivity or data-rate capability, not full compliance.',
   },
 ];

@@ -78,10 +78,10 @@ const checks = [
     question:
       'On a string of festoon lights, the first three lamps work, the rest are dead. What’s the most likely fault?',
     options: [
-      'To prevent the worker from reaching a position where a fall could occur',
+      'A blown fuse at the supply end of the string',
       'A series break (open circuit) somewhere between lamp 3 and lamp 4',
-      'A power quality analyser or power factor meter',
-      'The current intended to flow under normal conditions',
+      'A short circuit across the first three lamps',
+      'The supply voltage being slightly too low',
     ],
     correctIndex: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     question:
       'A 12 V battery feeds three resistors in series. The drops measure 2 V, 4 V and 6 V. What does Kirchhoff’s voltage law tell you?',
     options: [
-      'To verify the sensors respond to a known concentration of test gas',
+      'The current must be different through each resistor',
       'The drops add to 12 V — the supply is fully accounted for, the readings are consistent',
-      'Individual switches, connections, and lamp holders in the dead section',
-      'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
+      'Each resistor sees the full 12 V supply',
+      'The largest resistor takes the smallest voltage drop',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,9 +188,9 @@ const quizQuestions = [
     question: 'Where do you actually meet series wiring on a UK installation?',
     options: [
       'A switch wired in line with a single load',
-      'Degree or equivalent in electrical engineering',
-      'A goal focused on the end result you want to achieve',
-      'Before testing, with the installation isolated',
+      'A ring final circuit feeding socket outlets',
+      'Lighting points wired from a junction box',
+      'Two immersion heaters on the same circuit',
     ],
     correctAnswer: 0,
     explanation:

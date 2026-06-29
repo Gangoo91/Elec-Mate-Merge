@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       "A colleague tells you they drink a bottle of wine (750ml, 12% ABV) every evening after work but insists it is 'only one drink'. How many UK alcohol units does this bottle actually contain?",
     options: [
+      'About 9 units — more than half the recommended weekly limit in a single sitting',
       '1 unit — it is only one drink',
       'About 5 units — roughly three times the daily guideline',
-      'About 9 units — more than half the recommended weekly limit in a single sitting',
       '14 units — the entire recommended weekly limit',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "A standard 750ml bottle of 12% wine contains approximately 9 units of alcohol. The UK Chief Medical Officers' guideline is no more than 14 units per week, spread over 3 or more days. Drinking 9 units in a single evening is binge drinking and exceeds the informal daily guideline of around 3 units. One bottle every evening would amount to approximately 63 units per week — more than four times the recommended maximum.",
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'You are concerned that a colleague on your construction site may be misusing substances. Using the ALGEE framework, what should your first step be?',
     options: [
       'Give information — hand them a leaflet about drug and alcohol services',
-      'Encourage professional help — tell them to see their GP immediately',
-      'Approach, assess, and assist — find a private moment, express your concern without judgement, and listen non-judgementally',
-      'Report them to the site manager for a drug test',
+      'Encourage professional help — tell them to see their GP straight away',
+      'Report them to the site manager so they can arrange a drug test',
+      'Approach and assist — find a private moment and listen without judgement',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "The ALGEE framework begins with 'A' — Approach, assess, and assist with any crisis. This means finding a private, calm moment to talk to the person, expressing genuine concern without judgement or accusation, and listening to what they have to say. Starting with information-giving or demands to seek help can feel confrontational and is likely to make the person defensive. As an MHFA, your role is to open a supportive conversation first, not to diagnose, discipline, or force treatment.",
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       "According to UK Chief Medical Officers' guidelines, what is the recommended maximum weekly alcohol intake for adults?",
     options: [
-      '21 units per week for men, 14 units for women',
       '14 units per week for both men and women, spread over 3 or more days',
+      '21 units per week for men, 14 units for women',
       '28 units per week, with at least 2 alcohol-free days',
       'There is no recommended limit — it depends on body weight',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The UK Chief Medical Officers' low-risk drinking guidelines (updated in 2016) recommend that both men and women drink no more than 14 units of alcohol per week, spread evenly over 3 or more days, with several alcohol-free days each week. This replaced the previous guidelines that set different limits for men (21 units) and women (14 units). The guidelines also state that there is no 'safe' level of alcohol consumption — the 14-unit limit represents a low risk, not no risk.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which of the following is a sign that a colleague may be misusing substances at work?',
     options: [
-      'They consistently arrive early and volunteer for overtime',
-      'Increased absenteeism, erratic behaviour, unexplained accidents, mood swings, and declining work quality',
-      'They have recently changed their diet and started exercising',
-      'They prefer to work alone rather than in a team',
+      'They consistently arrive early and volunteer for extra overtime shifts',
+      'They have recently changed their diet and started exercising regularly',
+      'They prefer to work quietly alone rather than as part of a team',
+      'Increased absence, erratic behaviour, mood swings, and declining work quality',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Workplace signs of substance misuse include: increased or unexplained absenteeism (particularly on Mondays or after paydays), arriving late or leaving early, erratic or unpredictable behaviour, mood swings, unexplained accidents or near-misses, declining quality of work, poor concentration, changes in appearance or hygiene, social withdrawal from colleagues, and financial difficulties. No single sign confirms substance misuse, but a pattern of these behaviours should prompt concern and a supportive conversation.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: "What does the term 'dual diagnosis' mean in the context of mental health?",
     options: [
       'Having two different physical health conditions',
-      'Being diagnosed with a mental health condition by two different doctors',
       'Having a mental health condition and a substance misuse problem occurring together',
+      'Being diagnosed with a mental health condition by two different doctors',
       'Taking two different types of medication for the same condition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dual diagnosis refers to the co-occurrence of a mental health condition (such as depression, anxiety, PTSD, or psychosis) and a substance misuse problem. The relationship between the two is often bidirectional: mental health problems may lead to substance misuse through self-medication, and substance misuse can cause or worsen mental health conditions. Dual diagnosis is harder to treat because both conditions interact and reinforce each other, requiring an integrated treatment approach that addresses both simultaneously.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'Why is substance misuse considered a particularly serious safety issue on construction sites?',
     options: [
-      'Because it is illegal to drink alcohol in any workplace',
-      'Because construction sites are safety-critical environments where impaired judgement, coordination, and reaction time can lead to fatal accidents',
-      'Because substance misuse always leads to violence in the workplace',
+      'Because it is illegal to drink any alcohol in any workplace at all',
+      'Because substance misuse always leads to violence on the worksite',
       'Because insurance companies require all construction workers to be teetotal',
+      'Because impaired judgement and reaction time on a safety-critical site can be fatal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Construction sites are safety-critical environments where workers operate heavy machinery, work at height, handle hazardous materials, and carry out tasks requiring precise coordination and concentration. Alcohol and drugs impair judgement, slow reaction times, reduce coordination, cause drowsiness, and increase risk-taking behaviour. Even residual impairment from the night before (the 'morning after' effect) can be dangerous. A worker operating a crane, working on scaffolding, or carrying out electrical work while impaired poses a risk not only to themselves but to every person on site.",
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "In the ALGEE framework, what does the 'L' stand for and why is it important when discussing substance misuse?",
     options: [
-      'Learn — you should research the substance before speaking to them',
       'Listen non-judgementally — because people are more likely to open up about substance use if they feel heard rather than judged',
+      'Learn — you should research the substance before speaking to them',
       'Leave — give the person space and do not bring up the topic again',
       'Limit — set clear limits on how much they are allowed to drink',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'L' in ALGEE stands for Listen non-judgementally. This is particularly important when discussing substance misuse because people who misuse substances often experience significant shame, stigma, and fear of judgement. If they feel judged, lectured, or criticised, they are likely to become defensive, deny the problem, and disengage from the conversation. By listening without judgement — maintaining open body language, not interrupting, reflecting back what they say, and avoiding moral language — you create a safe space where the person is more likely to be honest about their situation and receptive to suggestions for help.",
   },
@@ -168,9 +168,9 @@ const quizQuestions = [
       "A colleague confides in you that they have been using cocaine regularly to 'get through the day' on site. What is the most appropriate response as an MHFA?",
     options: [
       'Report them immediately to the site manager for disciplinary action',
-      'Tell them cocaine is illegal and they could go to prison',
-      'Thank them for trusting you, express concern for their wellbeing and safety, listen without judgement, and encourage them to seek professional help such as their GP or the FRANK helpline',
-      'Offer to help them find a better dealer with safer products',
+      'Tell them cocaine is illegal and that they could end up in prison',
+      'Thank them, listen without judgement, and encourage GP or FRANK helpline support',
+      'Reassure them that occasional cocaine use on site is nothing to worry about',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: "Which of the following best describes the 'spectrum of substance use'?",
     options: [
-      'Everyone who tries a substance becomes addicted immediately',
-      'Substance use exists on a spectrum from abstinence through casual/social use, regular use, misuse, dependency, and addiction — with increasing risk at each stage',
+      'Everyone who tries a substance becomes addicted to it almost immediately',
+      'Use runs from abstinence through social use, misuse, dependency to addiction',
       'There are only two categories: you either use substances or you do not',
-      'The spectrum only applies to illegal drugs, not alcohol or prescription medication',
+      'The spectrum applies only to illegal drugs, not alcohol or prescriptions',
     ],
     correctAnswer: 1,
     explanation:

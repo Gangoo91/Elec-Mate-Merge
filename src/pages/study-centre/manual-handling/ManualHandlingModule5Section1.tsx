@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'early-reporting',
     question: 'Why is early reporting of MSD symptoms so important in the workplace?',
     options: [
-      'It allows the employer to dismiss the worker before the condition worsens',
       'Early intervention leads to significantly better treatment outcomes and faster recovery',
+      'It allows the employer to dismiss the worker before the condition worsens',
       'It is only important for insurance purposes and has no medical benefit',
       'Early reporting is optional and only required for serious injuries',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Early reporting is critical because early intervention leads to significantly better treatment outcomes. Many MSDs are progressive — they worsen over time if not addressed. Catching symptoms early allows for modified duties, ergonomic adjustments, physiotherapy referral, and other interventions that can prevent a minor issue from becoming a chronic, life-altering condition.',
   },
@@ -52,11 +52,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a phased return-to-work programme after an MSD?',
     options: [
       'To test whether the worker is faking their injury',
-      'To gradually increase workload and allow the body to readapt while monitoring recovery',
       'To ensure the worker returns to full duties on their first day back',
+      'To gradually increase workload and allow the body to readapt while monitoring recovery',
       "To reduce the employer's sick pay liability as quickly as possible",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A phased return-to-work programme gradually increases the worker's hours and task demands over a period of weeks, allowing the body to readapt to physical work while the condition is monitored. This approach reduces the risk of re-injury, builds confidence, and typically results in a more sustainable long-term return to full duties.",
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following body structures are affected by musculoskeletal disorders?',
     options: [
-      'Only bones and joints',
       'Muscles, tendons, ligaments, nerves, joints, cartilage, and spinal discs',
+      'Only bones and joints',
       'Only the spine and surrounding muscles',
       'Skin, blood vessels, and lymph nodes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'MSDs affect a wide range of structures in the musculoskeletal system: muscles, tendons, ligaments, nerves, joints, cartilage, and spinal discs. This is why they can present with such varied symptoms — from back pain and stiffness to tingling, numbness, and weakness in the extremities.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
       'Which MSD symptom should be treated as a warning sign that the condition may be worsening?',
     options: [
       'Feeling tired after a long shift',
-      'Tingling or numbness in the hands or fingers',
       'Mild hunger during a physical task',
+      'Tingling or numbness in the hands or fingers',
       'Sweating during heavy manual work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Tingling or numbness indicates nerve involvement — this is a significant warning sign that the condition is affecting nerve function and may be progressing. It can indicate carpal tunnel syndrome, nerve compression from disc herniation, or other serious conditions that require prompt medical attention.',
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the FIRST step in managing an MSD that has been reported by a worker?',
     options: [
-      'Send the worker for immediate surgery',
       'Assess the work activity and consider temporary modifications to reduce the risk',
+      'Send the worker for immediate surgery',
       'Tell the worker to take painkillers and continue working',
       'Dismiss the worker from the task permanently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first step is to assess the work activity that may be causing or aggravating the condition and consider temporary modifications. This might include lighter loads, task rotation, more rest breaks, or the use of mechanical aids. Surgery is a last resort, and simply masking pain with medication allows the condition to worsen.',
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
       'Shoulder impingement syndrome is commonly caused by which type of manual handling activity?',
     options: [
       'Carrying loads at waist height',
-      'Repeated overhead work — lifting, reaching, and working with arms above shoulder height',
       'Walking long distances while carrying light loads',
       'Sitting at a desk for extended periods',
+      'Repeated overhead work — lifting, reaching, and working with arms above shoulder height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Shoulder impingement is caused by repeated overhead movements that compress the tendons and bursa in the shoulder joint. Electricians are particularly at risk due to frequent overhead work — installing trunking, pulling cables through ceiling voids, and working on distribution boards mounted at height.',
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       'What is the long-term consequence of ignoring persistent MSD symptoms and continuing to work without modification?',
     options: [
-      'The condition will always heal on its own given enough time',
       'Progressive damage leading to chronic pain, reduced function, and potentially permanent disability',
+      'The condition will always heal on its own given enough time',
       'The body will adapt and the pain will disappear naturally',
       'There are no long-term consequences if the work is completed quickly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ignoring persistent MSD symptoms allows progressive damage to accumulate. Tendons become increasingly inflamed and can tear, discs continue to degenerate and can herniate further, and nerves become increasingly compressed. This can lead to chronic pain, permanent loss of function, and disability that could have been prevented with early intervention.',
   },

@@ -36,10 +36,10 @@ const AM2Module1Section1 = () => {
       id: 1,
       question: 'What is the primary purpose of the AM2 assessment?',
       options: [
-        'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
+        'To assess theoretical knowledge of BS 7671 through a written exam only',
         'To prove competence and readiness to work as a qualified electrician',
-        'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
-        'Recording your progress makes you more likely to improve',
+        'To replace the need for an NVQ Level 3 qualification entirely',
+        'To grade apprentices with a percentage mark for their CV',
       ],
       correctAnswer: 1,
       explanation:
@@ -49,10 +49,10 @@ const AM2Module1Section1 = () => {
       id: 2,
       question: 'Who is the AM2 assessment primarily aimed at?',
       options: [
-        'The scaffold must not be used until it has been inspected by a competent person',
-        'To verify protective devices have adequate breaking capacity',
+        'Newly started apprentices in their first year of training',
+        'Domestic installers who only fit sockets and light fittings',
         'Final-stage apprentices and experienced electricians seeking qualification',
-        'To allow safe shutdown of dangerous processes before evacuation',
+        'Site managers who supervise electrical work but do not carry it out',
       ],
       correctAnswer: 2,
       explanation:

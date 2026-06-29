@@ -44,10 +44,10 @@ const checks = [
     question:
       "You're an L3 apprentice running a small commercial fit-out alongside two L2 mates while the supervisor is on another site. A scaffolder asks you 'is it OK to drop a hammer down to the floor below?' Who carries the HASAWA duty if the hammer hits someone?",
     options: [
-      "Your employment contract and the JIB Working Rules. The JIB Handbook sets the industry-standard overtime, travel-time, lodging and grading rules for electricians in England and Wales. Your contract should reference it (most reputable firms apply the JIB rates as a baseline). The HR docs — contract, JIB rules, holiday and grievance procedures — are how you get paid correctly and how you keep your rights if a dispute arises.",
-      "Full incident details — date, time, location, casualty(ies) details, what happened, what they were doing, what equipment/substance involved, the kind of accident, the injury, who else was involved, any witness information, action taken since. Full and accurate completion is the responsible person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s job; gathering the facts is often the L3 operative\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s job.",
-      "Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification. E.g. omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning.",
-      "Multiple parties simultaneously. The scaffolder owes a personal s.7 duty. Their employer owes s.2 (employees) and s.3 (non-employees affected). The principal contractor owes a CDM coordination duty that cascades into s.3. And you, if you tacitly approve the unsafe act, owe s.7(b) — failing to co-operate and potentially actively encouraging a breach. HASAWA stacks duties; it doesn't pick one person.",
+      "Only the scaffolder, under their personal s.7 duty — once another trade is involved, your duties and your employer's fall away entirely.",
+      "Only the principal contractor, because all site-wide HASAWA duties are contractually transferred to them at the start of the project.",
+      "Nobody, provided a risk assessment was signed at induction — a documented RAMS discharges every party's duty for the rest of the job.",
+      "Multiple parties at once — the scaffolder, their employer, the principal contractor and you, if you tacitly approve the unsafe act.",
     ],
     correctIndex: 3,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       "Your boss tells you to use an unsafe ladder because the firm hasn't replaced the stage 1 fail one yet. You refuse. Two days later another apprentice uses it and falls. The firm is prosecuted under HASAWA s.2. Can the director be prosecuted personally?",
     options: [
-      "Site rules, welfare arrangements, fire muster point, first-aid arrangements, accident and near-miss reporting routes, the Construction Phase Plan headlines, the specific hazards on this site, the PPE policy, the no-go areas, your duties as a worker under Reg 15, and any project-specific risks (asbestos survey results, live services, traffic management). The induction is the formal mechanism for transferring CDM information from the Principal Contractor to operatives joining the site.",
-      "Yes — HASAWA s.37 makes a director, manager, secretary or similar officer personally liable where a corporate offence is committed with their consent, connivance or attributable to their neglect. Knowing the ladder failed inspection and authorising its continued use is textbook s.37 territory. The Sentencing Council Definitive Guideline for Health and Safety Offences (2016) sets the personal sentence range; for high-culpability cases it includes custody.",
-      "Several major changes: broader recommendation for Arc Fault Detection Devices (AFDDs) under Reg 421.1.7 (recommending wording, not mandating — HRRBs are made mandatory via the Building Safety Act 2022), updated TN-C-S (PNB) handling guidance, revised schedule columns on certificates (forms updated), updated requirements for renewables and energy storage, revised special-locations content. A4 represents the most significant single amendment to BS 7671 in recent memory.",
-      "The UK grid has decarbonised rapidly: from ~500 gCO₂/kWh in 2012 to under 200 gCO₂/kWh in recent years (varies by year and operating conditions). As the grid gets cleaner, electrified heat (heat pumps) and electrified transport (EVs) get cleaner too — even if the kit itself doesn't change. That's why government policy pushes electrification: every year of grid progress automatically improves the carbon footprint of every heat pump and EV already installed.",
+      "No — HASAWA prosecutes only the company as a legal entity; individual directors are shielded by the corporate veil in all circumstances.",
+      "Yes — HASAWA s.37 makes a director personally liable where a corporate offence flows from their consent, connivance or neglect.",
+      "No — director liability only arises under the Corporate Manslaughter Act, which needs a fatality, and here the apprentice survived the fall.",
+      "Only if the director was physically present on site at the moment of the fall; a remote instruction never attracts personal liability.",
     ],
     correctIndex: 1,
     explanation:
@@ -72,14 +72,14 @@ const checks = [
     question:
       "The phrase 'so far as is reasonably practicable' (SFAIRP) appears throughout HASAWA. What does it actually mean in court?",
     options: [
-      "It means 'do whatever is convenient'.",
-      "Edwards v National Coal Board [1949] established the test — the duty is discharged when the cost (in money, time and trouble) of further measures becomes 'grossly disproportionate' to the risk. The dutyholder bears the burden of proving they did everything SFAIRP — not the prosecution proving otherwise. So 'we couldn't afford it' is rarely a defence; 'the residual risk was so small that the next control would have cost ten times its safety benefit' is.",
-      "It means 'whatever the trade union accepts'.",
-      "It means 'whatever Building Regulations require'.",
+      "Whatever measures the dutyholder judges affordable on the day — cost to the business is the controlling factor when deciding how far to go.",
+      "Controls are required until their cost becomes grossly disproportionate to the risk, and the dutyholder must prove they went that far (Edwards v NCB).",
+      "Whatever the workforce or its trade-union representatives are prepared to accept as a reasonable level of control for the activity in question.",
+      "Whatever the Building Regulations require for the work — meeting the relevant Approved Document is treated as discharging the SFAIRP duty in full.",
     ],
     correctIndex: 1,
     explanation:
-      "Edwards v NCB is the cornerstone HASAWA case. The reverse burden of proof is the bit that surprises new supervisors — once the prosecution proves a risk existed, you have to prove you did everything reasonably practicable. That's why the paper trail (risk assessments, toolbox talks, training records, near-miss logs) matters so much at L3 — it's your evidence base in a defence.",
+      "Edwards v NCB [1949] is the cornerstone HASAWA case — the duty is discharged when the cost (money, time, trouble) of further measures becomes grossly disproportionate to the residual risk. The reverse burden of proof is the bit that surprises new supervisors: once the prosecution proves a risk existed, the dutyholder has to prove they did everything reasonably practicable. So 'we couldn't afford it' is rarely a defence, but 'the residual risk was so small the next control would have cost ten times its safety benefit' can be. That's why the paper trail (risk assessments, toolbox talks, training records, near-miss logs) matters so much at L3 — it's your evidence base in a defence.",
   },
 ];
 
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What does HASAWA s.2 require of the employer?",
     options: [
-      "Conduct a gap analysis against AM2 criteria, create a 6-month preparation plan with milestones, arrange practice assessments, and discuss potentially deferring if progress is insufficient",
-      "To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees — including safe systems of work, safe plant, training, supervision and a written safety policy where five or more employees are employed.",
-      "Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks",
-      "On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2. The plastic supply pipe is not an extraneous-conductive-part (it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t introduce a potential) so doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding — but the metal consumer pipework downstream of the meter does.",
+      "To ensure, absolutely and without qualification, that no employee is ever exposed to any risk while at work, whatever the cost involved.",
+      "To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees — safe systems, plant, training and supervision.",
+      "To provide employers' liability insurance and a written contract of employment to every worker before they first start work on site.",
+      "To report every workplace injury to the HSE within ten days, whatever its severity or whether it caused any absence from work at all.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "What's the difference between s.2 and s.3?",
     options: [
-      "At least 3 months before the planned EPA date — allowing time to complete any outstanding requirements, gather evidence for portfolio gaps, obtain certificates, and conduct a thorough readiness review",
-      "Non-conformance issued, given a deadline to evidence calibration, re-assessed. Persistent failure or refusal to remediate triggers escalation: warning, suspension, removal from scheme. Scheme rules are contractual — you signed up to them in writing on enrolment.",
-      "s.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades, visitors. On a domestic install it's s.3 that catches the customer's family. On a commercial fit-out it's s.3 that catches the trades next to you.",
-      "(1) Verify CPP exists and reflects the work. (2) Verify client awareness conversation. (3) Brief operatives on the CPP. (4) Identify hazards via dynamic risk assessment. (5) Manage and monitor work in practice. (6) Document the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety actions. (7) Escalate issues. (8) Close out at end of project — lessons, records, cleanup.",
+      "s.2 covers commercial premises only and s.3 covers domestic premises only — the two never overlap on a single job at the same time.",
+      "s.2 is the duty owed by the employee and s.3 the duty owed by the employer — simply the two halves of the same personal obligation.",
+      "s.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades and visitors.",
+      "s.2 applies during working hours and s.3 applies outside working hours — the distinction is purely about when the incident occurs.",
     ],
     correctAnswer: 2,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 3,
     question: "What does HASAWA s.7 place on the individual employee?",
     options: [
-      "Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation",
-      "Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation's own historical trends to identify improvement opportunities",
-      "Describe your specific role and contributions within the team, the communication and coordination involved, and how the team activity demonstrates professional behaviours such as teamwork, communication and responsibility",
-      "(a) To take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work; and (b) to co-operate with the employer or any other person to enable that person to comply with their statutory duty.",
+      "A duty to obey every instruction a supervisor gives without question, on the basis that the supervisor carries the legal responsibility.",
+      "A duty to provide their own PPE and tools, and to arrange and pay for their own training at their own expense before they start work.",
+      "A duty only to take care of their own safety — the safety of everyone else on site is solely the employer's concern under s.2.",
+      "To take reasonable care for themselves and others affected by their acts or omissions, and to co-operate with the employer's compliance.",
     ],
     correctAnswer: 3,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 4,
     question: "What does HASAWA s.37 do?",
     options: [
-      "Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.",
-      "Make safe before leaving — typically isolate the circuit, lock off, label, and brief the duty holder verbally and in writing. The continuing duty under EAWR Reg 4 attaches to you as the person who identified the danger; leaving a known C1 unmitigated is potentially a criminal breach.",
-      "Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within zones, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.",
-      "Output current at least 200 mA at a no-load voltage between 4 V and 24 V — sufficient to detect intermittent contacts and burn through light surface contamination at terminations, but low enough to avoid energising potential faults.",
+      "Makes directors, managers and similar officers personally liable where a corporate offence flows from their consent, connivance or neglect.",
+      "Sets the minimum compensation an injured employee may claim from their employer following a workplace accident on site.",
+      "Requires every employer with five or more employees to appoint a competent person to assist with their health and safety duties.",
+      "Defines the circumstances in which an employee may lawfully refuse a dangerous instruction without losing any pay.",
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       "Under the Sentencing Council's Definitive Guideline for Health and Safety Offences (2016), what factors set the corporate fine band?",
     options: [
-      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
-      "Culpability (very high / high / medium / low) × harm category (level A — life-threatening / fatal, level B — serious, level C — minor) — then mapped against the company's turnover band (large / medium / small / micro). The starting point and range are then adjusted for aggravating and mitigating factors.",
-      "Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).",
-      "The grievance and disciplinary policies, normally aligned to the ACAS Code of Practice on Discipline and Grievance. Grievance covers complaints raised BY the employee against the firm or another employee. Disciplinary covers action taken BY the firm against the employee for misconduct, capability or other concerns.",
+      "The number of previous convictions the company holds, multiplied by the headcount on the payroll at the time of the offence.",
+      "Culpability × harm category × the company's turnover band, with the starting point then adjusted for aggravating and mitigating factors.",
+      "A flat percentage of the company's annual profit, fixed by statute regardless of the seriousness or the harm of the breach.",
+      "Whether the incident was reported to the HSE within the RIDDOR timescale, with the fine doubling for any late report made.",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'so far as is reasonably practicable' (SFAIRP) actually require, post-Edwards v NCB [1949]?",
     options: [
-      "When divergences from the original RAMS are significant — different conditions, different hazards, different occupancy, different scope. Tweaking is for minor divergences; fresh RAMS for significant ones.",
-      "On the Schedule of Test Results that accompanies the EIC (Electrical Installation Certificate) — typically there is a row for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Continuity of protective conductors\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" with a column for the measured value at each protective conductor of the installation, including each main bonding conductor.",
-      "The dutyholder must implement controls until the cost in money, time and trouble of further measures becomes grossly disproportionate to the residual risk. The burden of proof shifts onto the dutyholder to demonstrate they did everything SFAIRP — not the prosecution to prove they didn't.",
-      "Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed",
+      "The dutyholder must eliminate every conceivable risk no matter the cost, since safety always takes absolute priority over any expense.",
+      "The dutyholder need only implement controls that are free or very cheap, since anything that costs money is deemed not reasonably practicable.",
+      "Controls are required until their cost in money, time and trouble becomes grossly disproportionate to the risk — and the dutyholder must prove it.",
+      "The dutyholder must follow whatever controls the workforce votes for, with the burden resting on the prosecution to show the vote was unreasonable.",
     ],
     correctAnswer: 2,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       "Your supervisor instructs you to do something unsafe. What does HASAWA s.7 (and the broader law) require of you?",
     options: [
-      "Circuit reference, conductor sizes (line, neutral, CPC), protective device type and rating, RCD operating current and operating time (where applicable), R1+R2 or R2 (depending on test method), insulation resistance values (line-line, line-earth, neutral-earth), polarity confirmation, Zs value, RCD operating time, and any test instrument identification needed for traceability.",
-      "Plan to have all workers safely descended and equipment secured well before the storm arrives; cease work at height immediately if the 30/30 rule triggers; do not resume until 30 minutes after the last thunder or lightning",
-      "The earthing conductor in TT runs to a buried earth electrode and must comply with Table 54.1 minimum sizes for buried conductors (e.g. 25 mm² Cu unprotected, 16 mm² Cu protected against corrosion only). 16 mm² unprotected Cu in soil corrodes and undersizes the run.",
-      "Refuse the unsafe act and escalate. s.7 is a personal duty; 'I was told to' is not a defence to a s.7 prosecution. ERA 1996 s.44 separately protects you from detriment (sacking, demotion, disciplinary action) for raising the safety concern. Document the refusal in writing — text, email, job-pack note — at the time.",
+      "Carry out the instruction, because the supervisor's instruction transfers the legal responsibility entirely to them under s.7.",
+      "Carry out the instruction but note your objection in your diary, since a private record is enough to discharge your personal duty.",
+      "Carry out the instruction once, then refuse if asked a second time, because a single act of compliance cannot amount to a breach.",
+      "Refuse the unsafe act, escalate, and document the refusal in writing at the time — 'I was told to' is no defence to a s.7 charge.",
     ],
     correctAnswer: 3,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       "In the duty cascade, what's the distinguishing feature of a 'dutyholder' under HASAWA compared with someone who simply has a contractual obligation?",
     options: [
-      "A dutyholder is a person on whom statute imposes a duty regardless of contract. Employer, self-employed person, employee, occupier, manufacturer, designer, importer — each has statute-imposed duties under HASAWA or its associated regulations. Contractual reallocation of the risk doesn't transfer the statutory duty. You can't 'contract out' of HASAWA.",
-      "The Local Authority — specifically the Environmental Health team of the local council. The Health and Safety (Enforcing Authority) Regulations 1998 allocate retail, office, leisure, residential care, places of worship and similar lower-risk premises to local-authority enforcement. EHOs have the same HASAWA powers as HSE inspectors — entry, inspection, notices, prosecution.",
-      "Electricity at Work Regulations 1989 (EAWR), Statutory Instrument 1989/635. EAWR applies to ALL work activities involving electricity, in nearly all workplaces. It covers design, construction, operation and maintenance of electrical systems, and the competence of those carrying out the work. Reg 14 (live working) and Reg 16 (competence) are the two an apprentice meets first.",
-      "Recruitment (engage interest), reduction in degrees of freedom (break into steps), direction maintenance (keep on track), marking critical features (highlight safety-critical points), frustration control (manage difficulty), demonstration (show correct technique)",
+      "A dutyholder has a duty imposed by statute regardless of contract — and contractual reallocation can't transfer it, so you can't 'contract out' of HASAWA.",
+      "A dutyholder is only ever the most senior director of a company, whereas a contractual obligation can rest on anyone named in the contract.",
+      "A dutyholder can freely transfer their statutory duty to a subcontractor by a contract clause, whereas contractual obligations cannot be transferred.",
+      "There is no real difference — 'dutyholder' is simply the term used for whoever signed the construction contract for a given project.",
     ],
     correctAnswer: 0,
     explanation:

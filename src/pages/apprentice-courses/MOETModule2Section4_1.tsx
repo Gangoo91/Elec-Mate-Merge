@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fuse-purpose',
     question: 'What is the primary function of a fuse in an electrical circuit?',
     options: [
-      'To provide a convenient switching point for maintenance',
+      'To disconnect the circuit automatically when current exceeds a safe level',
       'To improve the power factor of the installation',
       'To regulate voltage levels across the load',
-      'To disconnect the circuit automatically when current exceeds a safe level',
+      'To provide a convenient switching point for maintenance',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'A fuse is a sacrificial overcurrent protective device. Its primary function is to disconnect the circuit by melting its fuse element when the current flowing through it exceeds a predetermined safe level for a specified time, thereby protecting conductors and equipment from damage due to overload or short-circuit conditions.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'A Type B MCB is designed to trip instantaneously (magnetically) at what multiple of its rated current?',
     options: [
       '2 to 3 times rated current',
-      '10 to 20 times rated current',
-      '5 to 10 times rated current',
       '3 to 5 times rated current',
+      '5 to 10 times rated current',
+      '10 to 20 times rated current',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'A Type B MCB provides magnetic (instantaneous) tripping between 3 and 5 times its rated current (In). This makes it suitable for resistive loads such as lighting and socket circuits where high inrush currents are not expected. Type C (5-10 x In) and Type D (10-20 x In) are used where higher inrush currents occur.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'bs88-application',
     question: 'BS 88 HRC fuses are most commonly used in which application?',
     options: [
-      'To formally transfer the completed installation to the client with documentation',
+      'The 13 A plug top of a portable appliance flexible cord',
+      'Older domestic consumer units fitted with rewirable fuse carriers',
       'Industrial distribution boards, motor circuits and commercial switchgear',
-      'Skipping the manual test button after the 1×IΔn trip test',
-      'A contactor, an overload relay, and a control circuit (start/stop)',
+      'Extra-low-voltage signal circuits within control panels',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 88 High Rupturing Capacity (HRC) fuses are the standard industrial fuse type in the UK. They are used in distribution boards, motor control centres, and commercial switchgear where high prospective fault currents require a device with a substantial breaking capacity — typically up to 80 kA at 415 V.',
   },
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'discrimination-fuses',
     question: "What is meant by 'discrimination' between protective devices?",
     options: [
-      'Regularly (typically monthly) — and after every use; sterile items have expiry dates and must be replaced',
-      'Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence',
-      'The PLC input terminal, with the sensor sourcing current into the input',
+      'Fitting devices of identical rating throughout the installation for consistency',
+      'Ensuring all devices in series operate together to isolate the whole supply',
+      'Selecting devices so the upstream main device always trips before the local one',
       'Ensuring only the device nearest the fault operates, leaving upstream supplies intact',
     ],
     correctIndex: 3,
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'In BS 7671, Regulation 433.1 requires that every circuit shall be protected against:',
     options: [
-      'The maximum airborne concentration of a hazardous substance averaged over a reference period that a worker may be exposed to',
+      'Undervoltage by a device that disconnects when supply voltage falls too low',
       'Overload current by a device that disconnects before conductors reach their limiting temperature',
-      'To ensure the tester is working correctly and hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t failed during testing',
-      'Calmly repeating your key message or boundary without being drawn into side arguments',
+      'Earth fault current by a residual current device of the appropriate sensitivity',
+      'Transient overvoltage by a surge protective device at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'When selecting a protective device for a circuit, the rated current (In) of the device must satisfy:',
     options: [
-      'Overload current by a device that disconnects before conductors reach their limiting temperature',
+      'In <= Ib <= Iz, with the design current set above the device rating',
       'Ib <= In <= Iz, where Ib is design current and Iz is cable current-carrying capacity',
-      'A motor circuit with significant inrush current on starting',
-      'Filling the fuse body with quartz sand which absorbs the arc energy',
+      'Iz <= In <= Ib, with the device rating always below the cable capacity',
+      'In >= Iz, so the device rating exceeds the cable current-carrying capacity',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'The thermal element of an MCB provides protection against:',
     options: [
-      'A motor circuit with significant inrush current on starting',
-      'MCBs always have a higher breaking capacity than HRC fuses',
-      'The total energy let-through during fault clearance',
+      'High-magnitude short-circuit currents requiring instantaneous tripping',
+      'Earth leakage currents flowing to the protective conductor',
+      'Transient overvoltages caused by lightning or switching surges',
       'Overload currents (sustained moderate overcurrents)',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
       'Under BS 7671, if a BS 3036 semi-enclosed fuse is used, the cable current-carrying capacity (Iz) must be at least:',
     options: [
       'In divided by 0.725 (approximately 1.38 times In)',
-      'Overload currents (sustained moderate overcurrents)',
-      'A motor circuit with significant inrush current on starting',
-      'MCBs always have a higher breaking capacity than HRC fuses',
+      'In multiplied by 0.725 (approximately 0.73 times In)',
+      'Equal to In, the same as for an MCB to BS EN 60898',
+      'In multiplied by 1.45, matching the conventional tripping current',
     ],
     correctAnswer: 0,
     explanation:

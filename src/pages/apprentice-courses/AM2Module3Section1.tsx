@@ -73,9 +73,9 @@ const AM2Module3Section1 = () => {
         'If the spec calls for segregated trunking for ELV cabling but you run it with mains, what happens?',
       options: [
         'Fail for specification non-compliance and safety breach',
-        'Investigate the cause as it\\\\\\\\\\\\\\\'s below the minimum requirement',
-        'A plan showing ceiling-mounted items as if looking up',
-        'Calendar-based scheduling with smooth transitions',
+        'Pass, provided the cables are correctly terminated',
+        'Minor mark deduction for an installation method error',
+        'Pass, as long as the ELV cable is clearly labelled',
       ],
       correctIndex: 0,
       explanation:
@@ -85,10 +85,10 @@ const AM2Module3Section1 = () => {
       id: 'conduit-technique',
       question: 'Why must conduit edges be deburred after cutting?',
       options: [
-        'Raise the alarm, call fire brigade, evacuate if safe to do so',
-        'The likelihood that a hazard will cause harm and the severity of that harm',
+        'To make the conduit easier to bend into shape',
+        'To improve the appearance of the cut end only',
         'To prevent cable insulation damage and meet workmanship standards',
-        'Reduced pumping energy while maintaining heat delivery',
+        'To allow the coupler to thread on more easily',
       ],
       correctIndex: 2,
       explanation:
@@ -114,10 +114,10 @@ const AM2Module3Section1 = () => {
       id: 1,
       question: 'Why is it important to follow cable size/type in the spec exactly?',
       options: [
-        'PEN fault detection and automatic disconnection',
+        'So the cable looks neater in the containment',
         'For compliance and current-carrying capacity requirements',
-        'Ensuring stable power and communication infrastructure',
-        'Anyone who prepares or modifies designs affecting H&S',
+        'To make the cable easier to pull into conduit',
+        'To reduce the cost of the materials used',
       ],
       correctAnswer: 1,
       explanation:
@@ -154,9 +154,9 @@ const AM2Module3Section1 = () => {
       question: 'What happens if trunking is overfilled?',
       options: [
         'Marks lost for BS 7671 space factor breach',
-        'Straight runs, flush lids, secure fixings',
-        'Fail for safety and specification breach',
-        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
+        'No issue provided the lid still closes',
+        'A warning only, with no marks deducted',
+        'Acceptable if the cables are the same type',
       ],
       correctAnswer: 0,
       explanation:
@@ -218,10 +218,10 @@ const AM2Module3Section1 = () => {
       id: 9,
       question: "If segregation is missing between LV and ELV circuits, what's the consequence?",
       options: [
-        'To prevent cable insulation damage',
+        'A minor mark deduction for poor workmanship',
         'Fail for safety and specification breach',
-        'Straight runs, flush lids, secure fixings',
-        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
+        'No consequence if the cables are tied apart',
+        'A warning, provided the ELV cable is labelled',
       ],
       correctAnswer: 1,
       explanation:

@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       "A colleague has been unusually withdrawn for weeks, barely speaking at break times, and you've noticed they look exhausted every day. You want to approach them using the ALGEE action plan. What should your FIRST step be?",
     options: [
-      "Tell them you've noticed they seem depressed and suggest they see a GP",
       "Approach them in a quiet, private moment and ask how they're doing in an open, non-judgemental way",
+      "Tell them you've noticed they seem depressed and suggest they see a GP",
       'Send them a text message with a link to the NHS Talking Therapies website',
       'Speak to their supervisor and ask them to arrange an occupational health referral',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The first step in ALGEE is 'Approach, assess and assist with any crisis.' This means choosing a quiet, private moment to have a conversation. Start by simply asking how they are in an open, non-judgemental way. Do not jump straight to suggesting professional help or diagnose them — listen first. Speaking to a supervisor without their knowledge could breach trust and make the situation worse.",
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       "You've encouraged a colleague to see their GP about their anxiety. They're nervous about the appointment. What would be MOST helpful to tell them?",
     options: [
-      '"The GP will probably just give you medication — it\'s really straightforward."',
-      '"You can describe your symptoms, the GP will assess you, and they might suggest talking therapy, medication, or both. You can also self-refer to NHS Talking Therapies."',
-      '"Just tell the GP you need a sick note and some time off work."',
-      '"Don\'t worry about it — the GP has seen much worse than your anxiety."',
+      '"The GP will probably just hand you some medication — it\'s really that simple."',
+      '"Just tell the GP you need a sick note and a few days off work to recover."',
+      '"Don\'t worry about it at all — the GP has honestly seen far worse than you."',
+      '"You can describe your symptoms, the GP will assess you, and you can also self-refer."',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The most helpful response gives honest, practical information without minimising their experience. Explaining the GP process — that they can describe symptoms, the GP will assess them, and there are various treatment options — helps reduce the fear of the unknown. Mentioning self-referral to NHS Talking Therapies empowers them with an alternative route. Saying 'the GP has seen much worse' minimises their experience, and assuming medication will be prescribed is inaccurate.",
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does ALGEE stand for in the Mental Health First Aid action plan?',
     options: [
-      'Assess, Listen, Guide, Encourage, Educate',
-      'Approach, Listen, Give reassurance, Encourage professional help, Encourage other supports',
-      'Ask, Learn, Guide, Empathise, Evaluate',
-      'Approach, Locate, Get help, Escort, Evaluate',
+      'Approach, Listen, Give reassurance, Encourage help, Encourage supports',
+      'Assess, Listen, Guide, Encourage, Educate continuously',
+      'Ask, Learn, Guide, Empathise, Evaluate the outcome',
+      'Approach, Locate, Get help, Escort, Evaluate the risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ALGEE stands for: Approach, assess and assist with any crisis; Listen non-judgementally; Give reassurance and information; Encourage appropriate professional help; Encourage other supports. This is the core action plan taught in MHFA courses worldwide and provides a structured framework for supporting someone experiencing a mental health problem.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     options: [
       'EMDR (Eye Movement Desensitisation and Reprocessing)',
       'Psychoanalysis',
-      'CBT (Cognitive Behavioural Therapy)',
       'Hypnotherapy',
+      'CBT (Cognitive Behavioural Therapy)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'CBT (Cognitive Behavioural Therapy) is the most widely recommended and commonly offered first-line psychological treatment for depression and anxiety through NHS Talking Therapies. It is recommended by NICE guidelines and has a strong evidence base. CBT focuses on identifying and changing unhelpful patterns of thinking and behaviour. EMDR is primarily used for PTSD. Psychoanalysis and hypnotherapy are not standard NHS Talking Therapies treatments.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'SSRIs (Selective Serotonin Reuptake Inhibitors) are the most commonly prescribed antidepressants in the UK. How do they work?',
     options: [
       'They increase the production of dopamine in the brain',
-      'They block serotonin from being reabsorbed by nerve cells, making more serotonin available in the brain',
       'They sedate the central nervous system to reduce anxiety',
       'They stimulate the production of new brain cells',
+      'They block serotonin from being reabsorbed by nerve cells, making more serotonin available in the brain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "SSRIs work by blocking the reuptake (reabsorption) of serotonin by nerve cells in the brain. This means more serotonin remains available in the synaptic gap between nerve cells, which can improve mood, emotion, and sleep. Common SSRIs include sertraline, fluoxetine, and citalopram. They typically take 2 to 4 weeks to start working and are not sedatives — they do not numb emotions or make you 'high'.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'When supporting someone with depression or anxiety, what is the role of a Mental Health First Aider regarding medication?',
     options: [
-      'Advise the person on which medication might be best for their symptoms',
-      'Encourage them to try natural remedies before medication',
-      'Understand what the person may be going through but NEVER advise on medication — that is exclusively the role of medical professionals',
-      'Suggest they stop taking medication if they report side effects',
+      'Understand what they may be going through but NEVER advise on medication',
+      'Advise the person on which specific medication might suit their symptoms',
+      'Encourage them to try natural remedies before starting any medication',
+      'Suggest they stop their medication if they report any side effects',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "A Mental Health First Aider's role regarding medication is to understand what someone may be going through (e.g., side effects, waiting for medication to take effect, withdrawal symptoms) but NEVER to advise on medication. You must not recommend starting, stopping, changing, or adjusting medication — that is exclusively the role of doctors and pharmacists. If someone reports concerning side effects, encourage them to speak to their GP.",
   },

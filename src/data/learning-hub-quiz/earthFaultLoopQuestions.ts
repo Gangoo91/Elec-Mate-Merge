@@ -37,10 +37,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-3',
     question: 'When measuring Ze at the origin, what must be disconnected?',
     options: [
-      'R1+R2 from continuity + Ze calculation',
-      'After all dead tests and PFC measurement',
+      'The main protective bonding conductors',
+      'The supply neutral conductor at the cut-out',
       'The earthing conductor from the MET',
-      'Pass - within 1.37Ω limit',
+      'The line conductor at the main switch',
     ],
     correctAnswer: 2,
     explanation:
@@ -53,9 +53,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-4',
     question: 'What does Ze represent?',
     options: [
-      'Temperature correction factor (Cmin 0.95)',
-      'Line conductor resistance',
-      'At the furthest point from the board',
+      'The temperature correction factor for conductors',
+      'The resistance of the line conductor only',
+      'The internal impedance of the final circuit',
       'External earth fault loop impedance',
     ],
     correctAnswer: 3,
@@ -84,10 +84,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-6',
     question: 'What must happen AFTER measuring Ze?',
     options: [
-      'Poor connections or undersized conductors',
+      'The supply neutral must be left disconnected',
       'Reconnect the earthing conductor before re-energising',
-      'Circuit protective conductor (CPC) resistance',
-      'No-trip tester (below 15mA or DC biased)',
+      'The main protective bonding must be removed',
+      'The circuit must be left isolated permanently',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-7',
     question: 'Why might EFLI testers trip RCDs during testing?',
     options: [
-      'Earth fault loop impedance at a distribution board',
-      'Temperature correction factor (Cmin 0.95)',
+      'They apply a voltage higher than the RCD rating',
+      'They reverse the line and neutral connections',
       'They inject test current through the earth path',
-      'Parallel earth paths through bonding or water pipes',
+      'They draw excessive current from the line conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-8',
     question: 'What type of tester can measure Zs without tripping RCDs?',
     options: [
-      'Multiply maximum value by 0.8',
-      'Fail - exceeds 2.73Ω maximum',
-      'Minimum voltage factor, 0.95',
+      'A high-current loop tester (above 25A)',
+      'A standard two-wire loop tester',
+      'An insulation resistance tester at 500V',
       'No-trip tester (below 15mA or DC biased)',
     ],
     correctAnswer: 3,
@@ -133,9 +133,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     question: 'What components make up the earth fault loop?',
     options: [
       'CPC, MET, earthing conductor, return path, transformer winding, line conductor',
-      'To verify protective devices will operate within required time',
-      'Direct measurement (live) or calculation from R1+R2 + Ze',
-      'The transformer star point and supply neutral/combined neutral-earth',
+      'Line conductor, neutral conductor and the main switch only',
+      'Line and neutral conductors with the protective bonding network',
+      'Only the line conductor and the circuit protective conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,9 +164,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     question:
       'What factor must be applied to measured Zs values for comparison with maximum values?',
     options: [
-      'The earthing conductor from the MET',
-      'Deteriorating connections or added cable length',
-      'External earth fault loop impedance',
+      'A length correction for the circuit cable run',
+      'A factor for the number of parallel earth paths',
+      'A correction for the supply frequency variation',
       'Temperature correction factor (Cmin 0.95)',
     ],
     correctAnswer: 3,
@@ -180,10 +180,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-12',
     question: 'Which verification method is preferred for final circuits?',
     options: [
-      'External earth fault loop impedance',
-      'Temperature correction factor (Cmin 0.95)',
+      'Live loop testing at the origin only',
+      'Measuring Ze and doubling it for the circuit',
       'R1+R2 from continuity + Ze calculation',
-      'Conductor resistance increases with temperature',
+      'Insulation resistance testing of the CPC',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,10 +219,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Type C MCBs require higher fault current to trip. For 32A Type C, maximum Zs is 0.68Ω.',
+      'Type C MCBs require higher fault current to trip. For 32A Type C, maximum Zs is 0.68Ω. All circuit-breaker types (B, C and D) are tabulated in Table 41.3 — Type C is in section 41.3(b).',
     category: 'Earth Fault Loop Impedance',
     difficulty: 'Intermediate',
-    regulation: 'BS 7671 Table 41.4',
+    regulation: 'BS 7671 Table 41.3',
   },
   {
     id: 'efl-15',
@@ -275,9 +275,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     question: 'When is live EFLI testing performed in the test sequence?',
     options: [
       'After all dead tests and PFC measurement',
-      'The earthing conductor from the MET',
-      'External earth fault loop impedance',
-      'Multiply maximum value by 0.8',
+      'Before any dead testing has been carried out',
+      'Immediately after insulation resistance testing',
+      'Only once the certificate has been issued',
     ],
     correctAnswer: 0,
     explanation:
@@ -290,9 +290,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-19',
     question: 'What does it mean if measured Zs exceeds the maximum tabulated value?',
     options: [
-      'Reconnect the earthing conductor before re-energising',
-      'Both contribute to the fault loop impedance',
-      'The transformer star point and supply neutral/combined neutral-earth',
+      'The circuit is over-protected and nuisance trips',
+      'The supply voltage is higher than nominal',
+      'The RCD sensitivity must be increased',
       'Protective device may not disconnect in required time',
     ],
     correctAnswer: 3,
@@ -322,9 +322,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     question: 'Why does Zs increase with cable temperature?',
     options: [
       'Conductor resistance increases with temperature',
-      'The earthing conductor from the MET',
-      'At the furthest point from the board',
-      'R1+R2 from continuity + Ze calculation',
+      'The supply voltage falls as conductors heat up',
+      'The CPC cross-sectional area reduces with heat',
+      'Insulation resistance rises and adds to the loop',
     ],
     correctAnswer: 0,
     explanation:
@@ -400,10 +400,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-26',
     question: 'What is R2 in the R1+R2 measurement?',
     options: [
-      'External earth fault loop impedance',
+      'The external earth fault loop impedance',
       'Circuit protective conductor (CPC) resistance',
-      'Parallel earth paths through bonding or water pipes',
-      'R1+R2 from continuity + Ze calculation',
+      'The neutral conductor resistance',
+      'The earth electrode resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -432,9 +432,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-28',
     question: 'Where should Zs be measured on a radial circuit?',
     options: [
-      'Both contribute to the fault loop impedance',
-      'R1+R2 from continuity + Ze calculation',
-      'The earthing conductor from the MET',
+      'At the origin of the installation only',
+      'At the midpoint of the circuit run',
+      'At the first accessory after the board',
       'At the furthest point from the board',
     ],
     correctAnswer: 3,
@@ -449,9 +449,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     question: 'What could cause measured Ze to be lower than expected?',
     options: [
       'Parallel earth paths through bonding or water pipes',
-      'After all dead tests and PFC measurement',
-      'R1+R2 from continuity + Ze calculation',
-      'Conductor resistance increases with temperature',
+      'A loose connection at the main earthing terminal',
+      'An undersized earthing conductor',
+      'A high resistance earth electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -479,10 +479,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-31',
     question: 'What is the purpose of measuring earth fault loop impedance?',
     options: [
-      'Reconnect the earthing conductor before re-energising',
+      'To confirm the insulation resistance is adequate',
       'To verify protective devices will operate within required time',
-      'Conductor resistance increases with temperature',
-      'They inject test current through the earth path',
+      'To measure the load current drawn by the circuit',
+      'To check the polarity of the final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -511,9 +511,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-33',
     question: 'What two methods can verify earth fault loop impedance?',
     options: [
-      'Deteriorating connections or added cable length',
-      'Temperature correction factor (Cmin 0.95)',
-      'Circuit protective conductor (CPC) resistance',
+      'Insulation resistance and continuity testing',
+      'Polarity testing and RCD time testing',
+      'PFC measurement and functional testing',
       'Direct measurement (live) or calculation from R1+R2 + Ze',
     ],
     correctAnswer: 3,
@@ -527,10 +527,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-34',
     question: 'Typical maximum Ze for a TT system is:',
     options: [
-      'Tables 41.2, 41.3, 41.4',
-      'After all dead tests and PFC measurement',
+      '0.35Ω (transformer dependent)',
+      '0.8Ω (cable dependent)',
       '200Ω (earth electrode dependent)',
-      'Fail - exceeds 2.73Ω maximum',
+      '1667Ω (RCD dependent)',
     ],
     correctAnswer: 2,
     explanation:
@@ -566,7 +566,7 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 Tables 41.2 (fuses), 41.3 (Type B MCBs), and 41.4 (Type C and D MCBs) provide maximum Zs values.',
+      'BS 7671 Table 41.2 (fuses at 0.4 s), Table 41.3 (all circuit-breaker types — B, C and D, with RCBOs) and Table 41.4 (fuses at 5 s) all provide maximum Zs values.',
     category: 'Earth Fault Loop Impedance',
     difficulty: 'Intermediate',
     regulation: 'BS 7671 Chapter 41',
@@ -575,9 +575,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-37',
     question: 'What correction is applied using the rule-of-thumb temperature adjustment?',
     options: [
-      'At the furthest point from the board',
-      '200Ω (earth electrode dependent)',
-      'The earthing conductor from the MET',
+      'Multiply the maximum value by 0.95',
+      'Multiply the maximum value by 1.2',
+      'Add 0.05Ω to the maximum value',
       'Multiply maximum value by 0.8',
     ],
     correctAnswer: 3,
@@ -591,8 +591,8 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-38',
     question: 'High Zs on a circuit could be caused by:',
     options: [
-      'The earthing conductor from the MET',
-      'Circuit protective conductor (CPC) resistance',
+      'A supply voltage above the nominal 230V',
+      'An oversized circuit protective conductor',
       'Poor connections or undersized conductors',
       'Parallel earth paths through bonding or water pipes',
     ],
@@ -622,10 +622,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-40',
     question: 'The earth fault loop includes the return path through:',
     options: [
-      'Reconnect the earthing conductor before re-energising',
+      'The circuit neutral conductor back to the consumer unit',
       'The transformer star point and supply neutral/combined neutral-earth',
-      'Direct measurement (live) or calculation from R1+R2 + Ze',
-      'CPC, MET, earthing conductor, return path, transformer winding, line conductor',
+      'The main protective bonding to extraneous parts',
+      'The line conductor of the adjacent final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -660,19 +660,19 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'Type C MCBs require lower Zs values because they have a higher magnetic trip threshold (5-10 × In vs 3-5 × In for Type B).',
+      'Type C MCBs require lower Zs values because they have a higher magnetic trip threshold (5-10 × In vs 3-5 × In for Type B). Both types are tabulated together in Table 41.3 — sections (a) and (b).',
     category: 'Earth Fault Loop Impedance',
     difficulty: 'Intermediate',
-    regulation: 'BS 7671 Tables 41.3/41.4',
+    regulation: 'BS 7671 Table 41.3',
   },
   {
     id: 'efl-43',
     question: 'The symbol Zdb represents:',
     options: [
       'Earth fault loop impedance at a distribution board',
-      'Calculated Zs may be invalid if Ze varies seasonally',
-      'At the furthest point from the board',
-      'Temperature correction factor (Cmin 0.95)',
+      'The design value of impedance for a balanced load',
+      'The impedance between the line and neutral busbars',
+      'The maximum permitted impedance for a final circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -685,10 +685,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-44',
     question: 'What happens if only Ze + (R1+R2) method is used without verifying Ze is stable?',
     options: [
-      'To verify protective devices will operate within required time',
+      'The R1+R2 reading becomes invalid over time',
       'Calculated Zs may be invalid if Ze varies seasonally',
-      'They inject test current through the earth path',
-      'Reconnect the earthing conductor before re-energising',
+      'The disconnection time cannot be calculated at all',
+      'The temperature correction factor no longer applies',
     ],
     correctAnswer: 1,
     explanation:
@@ -701,10 +701,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-45',
     question: 'For EICR periodic inspection, Zs readings should be:',
     options: [
-      'Reconnect the earthing conductor before re-energising',
-      'Conductor resistance increases with temperature',
+      'Recorded but not compared to any limit',
+      'Measured only at the origin of the installation',
       'Verified against maximum values for the protective device',
-      'Calculated Zs may be invalid if Ze varies seasonally',
+      'Halved to allow for cable temperature rise',
     ],
     correctAnswer: 2,
     explanation:
@@ -717,9 +717,9 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-46',
     question: 'What could cause Zs to increase between inspections?',
     options: [
-      'External earth fault loop impedance',
-      'At the furthest point from the board',
-      'The earthing conductor from the MET',
+      'A reduction in the supply transformer impedance',
+      'New parallel bonding to metallic services',
+      'An increase in the circuit operating voltage',
       'Deteriorating connections or added cable length',
     ],
     correctAnswer: 3,
@@ -733,14 +733,14 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-47',
     question: 'What is the maximum Zs for a BS 3036 30A rewirable fuse (0.4s)?',
     options: [
-      '1.14Ω',
-      '1.09Ω',
+      '1.04Ω',
+      '1.44Ω',
       '0.96Ω',
-      '2.73Ω',
+      '2.51Ω',
     ],
     correctAnswer: 0,
     explanation:
-      'For a 30A BS 3036 rewirable fuse, maximum Zs is 1.14Ω for 0.4 second disconnection.',
+      'BS 7671 Table 41.2 gives 1.04Ω as the maximum Zs for a 30A BS 3036 rewirable fuse at a 0.4s disconnection time (2.51Ω applies at 5s).',
     category: 'Earth Fault Loop Impedance',
     difficulty: 'Advanced',
     regulation: 'BS 7671 Table 41.2',
@@ -749,10 +749,10 @@ export const earthFaultLoopQuestions: QuizQuestion[] = [
     id: 'efl-48',
     question: 'Why is R1+R2 measured rather than just R2?',
     options: [
-      'Temperature correction factor (Cmin 0.95)',
+      'R2 alone cannot be measured on a live circuit',
       'Both contribute to the fault loop impedance',
-      'The earthing conductor from the MET',
-      'Protective device may not disconnect in required time',
+      'R1 is needed to confirm correct polarity',
+      'The CPC resistance is too small to read on its own',
     ],
     correctAnswer: 1,
     explanation:

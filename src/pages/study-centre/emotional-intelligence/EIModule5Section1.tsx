@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between assertive communication and aggressive communication?',
     options: [
+      "Assertive communication respects both parties' needs; aggressive communication prioritises only your own",
       'Assertive communication avoids all conflict; aggressive communication creates it',
       'Assertive communication is louder; aggressive communication is quieter',
-      "Assertive communication respects both parties' needs; aggressive communication prioritises only your own",
       'There is no real difference — they are two words for the same thing',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The fundamental distinction is one of respect. Assertive communication respects both your own needs and the other person's rights and feelings. Aggressive communication prioritises your needs at the expense of the other person, often using intimidation, blame, or disrespect to get what you want.",
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which communication style is aligned with emotional intelligence?',
     options: [
+      "Assertive — respecting both your own needs and the other person's",
       'Passive — avoiding conflict at all costs',
       'Aggressive — ensuring your needs are always met first',
-      "Assertive — respecting both your own needs and the other person's",
       'Passive-aggressive — expressing displeasure indirectly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Assertive communication is the EI-aligned approach because it requires self-awareness (knowing what you need), self-regulation (expressing it calmly), empathy (considering the other person's perspective), and social skill (communicating effectively). It respects both parties.",
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'What is the "24-hour rule" for written messages?',
     options: [
       'You must reply to all messages within 24 hours',
-      'You should wait 24 hours before sending any emotional or reactive message',
       'All project communications must be documented within 24 hours',
       'Written messages expire after 24 hours if not read',
+      'You should wait 24 hours before sending any emotional or reactive message',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 24-hour rule states that if you feel a strong emotional reaction to a message, you should wait at least 24 hours before responding. This allows the amygdala hijack to subside, the prefrontal cortex to re-engage, and you to compose a measured response rather than a reactive one that you may regret.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'When should you phone instead of text or email on a construction project?',
     options: [
-      'Only when the internet is down',
       'When the topic is sensitive, emotional, or likely to be misunderstood',
+      'Only when the internet is down',
       'Only for emergencies',
       'Phone calls are outdated — text is always better',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Phone calls should be preferred whenever the topic is sensitive, emotional, involves criticism or feedback, could be easily misunderstood, or requires real-time negotiation. The richer communication channel (voice with tone, pace, and warmth) dramatically reduces the risk of misinterpretation.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     options: [
       'Influence is for managers; manipulation is for everyone else',
       'Influence is verbal; manipulation is written',
-      "Influence serves both parties' genuine interests; manipulation exploits others for your own gain",
       'There is no difference — they are synonyms',
+      "Influence serves both parties' genuine interests; manipulation exploits others for your own gain",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Influence and manipulation both involve changing someone's behaviour or thinking, but they differ fundamentally in intent and ethics. Influence is transparent and serves genuine interests — the other person benefits from the decision. Manipulation is deceptive and self-serving — it exploits vulnerabilities or creates false conditions to benefit only the manipulator.",
   },

@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       "A colleague tells you they have been struggling with anxiety for weeks but does not want to 'bother their GP.' They ask if there is any other way to get help through the NHS. What do you tell them?",
     options: [
-      'They must see their GP first before they can access any NHS mental health service',
       'They can self-refer directly to NHS Talking Therapies (formerly IAPT) without needing a GP referral',
+      'They must see their GP first before they can access any NHS mental health service',
       'They need to go to A&E to be assessed for anxiety',
       'NHS mental health services are only available for people with severe conditions like psychosis',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'NHS Talking Therapies (formerly known as IAPT \u2014 Improving Access to Psychological Therapies) accepts self-referrals. Anyone aged 18 or over can refer themselves directly, without needing a GP appointment first. The service offers evidence-based treatments including cognitive behavioural therapy (CBT) for conditions such as anxiety, depression, phobias, and PTSD. This is one of the most important signposting facts for a Mental Health First Aider to know, because many people are unaware they can bypass the GP gatekeeping step for talking therapies.',
   },
@@ -53,11 +53,11 @@ const quickCheckQuestions = [
       'A colleague confides that they are going through a difficult divorce and it is affecting their concentration on site. They do not think they need a therapist but mention money worries and feeling overwhelmed. What single resource covers the widest range of their needs?',
     options: [
       'Suggest they call Samaritans for a listening ear',
-      'Recommend they ask their employer about the Employee Assistance Programme (EAP), which typically covers counselling, legal advice, and financial guidance',
       'Tell them to speak to their GP about antidepressants',
       'Suggest they contact Mind for information about anxiety',
+      'Recommend they ask their employer about the Employee Assistance Programme (EAP), which typically covers counselling, legal advice, and financial guidance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Employee Assistance Programmes (EAPs) are one of the most underused workplace resources. Most EAPs offer free, confidential support covering counselling, legal advice, financial guidance, and family issues \u2014 all under one service, typically available 24/7. For someone dealing with relationship breakdown, money worries, and work stress simultaneously, the EAP is the single resource that addresses the widest range of needs. As an MHFA, knowing about and actively signposting to EAPs is one of your most practical tools.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'Which NHS service can be accessed by self-referral, without a GP appointment, for conditions such as anxiety and depression?',
     options: [
+      'NHS Talking Therapies (formerly IAPT)',
       'Community Mental Health Team (CMHT)',
       'Crisis Resolution and Home Treatment Team',
-      'NHS Talking Therapies (formerly IAPT)',
       'Inpatient psychiatric services',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'NHS Talking Therapies (formerly IAPT \u2014 Improving Access to Psychological Therapies) is the main NHS service that accepts self-referrals for common mental health conditions. Adults aged 18 and over can refer themselves directly via the NHS website or by contacting their local service. It provides evidence-based talking therapies including CBT, counselling, and guided self-help for anxiety, depression, OCD, phobias, and PTSD.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
       'A colleague is experiencing a mental health crisis but is not in immediate physical danger. Which is the most appropriate number to call?',
     options: [
       '999',
-      'NHS 111, then select the mental health option (option 2)',
       'Samaritans (116 123)',
       'Their GP surgery',
+      'NHS 111, then select the mental health option (option 2)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'NHS 111 with the mental health option (option 2) is the most appropriate service for an urgent mental health crisis that is not immediately life-threatening. It connects callers to trained mental health professionals who can provide immediate telephone support and arrange further care, including referral to a crisis team if needed. 999 is for immediate danger to life, Samaritans provides emotional listening support, and a GP surgery is not appropriate for an acute crisis.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
     question: 'What does the text service SHOUT offer, and how do you access it?',
     options: [
       'Legal advice for workers \u2014 email advice@shout.org',
-      "24/7 crisis text support \u2014 text 'SHOUT' to 85258",
       'Financial hardship grants \u2014 apply online at shout.org.uk',
       'Bereavement counselling \u2014 call 0800 123 4567',
+      "24/7 crisis text support \u2014 text 'SHOUT' to 85258",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "SHOUT is the UK's first 24/7 crisis text service. Anyone experiencing a mental health crisis or emotional distress can text the word 'SHOUT' to 85258 to be connected with a trained volunteer. It is free on all major mobile networks. This is particularly valuable for people who find it difficult to talk on the phone \u2014 including younger workers, people in shared spaces with no privacy, or those who feel more comfortable communicating by text.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT typically covered by an Employee Assistance Programme (EAP)?',
     options: [
+      'Long-term psychiatric medication management',
       'Short-term counselling',
       'Legal advice',
-      'Long-term psychiatric medication management',
       'Financial guidance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'EAPs typically cover short-term counselling (usually 6\u20138 sessions), legal advice, financial guidance, family and relationship support, and manager consultations. They do NOT provide long-term psychiatric medication management, which falls under GP and secondary mental health care. EAPs are designed as an early-intervention, short-term support service that can help people before problems escalate, or signpost them to longer-term services when needed.',
   },

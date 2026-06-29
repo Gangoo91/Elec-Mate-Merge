@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of CIBSE Code M?',
     options: [
       'To provide guidance on commissioning building services',
-      'Openings are on opposite or adjacent walls with clear internal paths',
-      'Need to convert 30 minutes to 0.5 hours first',
-      'Shock protection, overcurrent protection, fire prevention',
+      'To set out the minimum energy efficiency standards for buildings',
+      'To define the electrical installation requirements for circuits',
+      'To specify the fire compartmentation standards for plant rooms',
     ],
     correctIndex: 0,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'commissioning-prerequisite',
     question: 'Which of the following is a pre-requisite for commissioning HVAC systems?',
     options: [
-      'For circuits where 30mA would nuisance trip',
+      'The building must already be fully occupied',
       'Electrical supplies energised and tested',
-      'Overload — the circuit is carrying too much current',
-      'Using a voltage indicator or socket tester',
+      'The defects liability period must have started',
+      'All snagging items must already be closed out',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'witness-testing',
     question: 'What is the purpose of witness testing during commissioning?',
     options: [
-      'To hold 30% of gross income for tax obligations',
+      'To transfer liability for defects onto the subcontractor',
       'To allow the client to verify system performance',
-      'Square root of 2 times magnitude at 45 degrees',
-      'The Health & Safety at Work Act 1974',
+      'To satisfy the insurer before the building is occupied',
+      'To record the as-built dimensions of the installation',
     ],
     correctIndex: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'At what project stage should the Commissioning Management Plan first be produced?',
     options: [
-      'Prosecution and imprisonment',
-      'Isolate and de-energise the circuit',
+      'After practical completion, during the defects period',
+      'At handover, as part of the O&M documentation',
       'At design stage (RIBA Stage 3-4)',
-      'The total loss through a connection point',
+      'Once all systems have reached static completion',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the role of commissioning specialists in the commissioning process?',
     options: [
-      'Match the phasing of building occupation',
-      'Electrical installation certificates and test results',
-      'The main construction programme and all trade programmes',
+      'To manage the overall construction programme',
+      'To install the building services equipment',
+      'To prepare the planning application for the project',
       'To carry out independent testing and balancing',
     ],
     correctAnswer: 3,
@@ -206,10 +206,10 @@ const quizQuestions = [
     question:
       'What documentation must be available before commissioning an electrical distribution system?',
     options: [
-      'Match the phasing of building occupation',
-      'To carry out independent testing and balancing',
+      'The energy performance certificate for the building',
+      'The approved planning permission documents',
       'Electrical installation certificates and test results',
-      'The main construction programme and all trade programmes',
+      'The signed practical completion certificate',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'Seasonal commissioning refers to:',
     options: [
-      'Physical installation is complete but not powered',
-      'Electrical installation certificates and test results',
-      'The main construction programme and all trade programmes',
+      'Commissioning that is only carried out during the summer months',
+      'Recommissioning systems once every twelve months',
+      'Commissioning carried out before the building is weather-tight',
       'Commissioning heating and cooling systems in their respective seasons',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'A commissioning schedule should interface with:',
     options: [
       'The main construction programme and all trade programmes',
-      'Electrical installation certificates and test results',
-      'Match the phasing of building occupation',
-      'To carry out independent testing and balancing',
+      'Only the electrical installation programme on its own',
+      'Only the facilities management schedule after handover',
+      'The marketing and letting programme for the building',
     ],
     correctAnswer: 0,
     explanation:

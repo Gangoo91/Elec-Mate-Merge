@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A specifier asks you to describe the four common containment families used to carry data cabling through a commercial building. Which list correctly groups them by primary mechanical function?',
     options: [
-      'Wire basket tray, ladder rack, cable tray, conduit and trunking — each serving a different combination of mechanical support, separation, capacity and access.',
-      'PVC trunking only — everything else is power-only.',
-      'Steel conduit only — basket and tray are not permitted for data.',
-      'Whatever the architect specifies; containment choice is decorative.',
+      'Wire basket tray, ladder rack, cable tray, and conduit / trunking — each grouped by its primary mechanical function.',
+      'PVC trunking is the only family permitted for data; basket and tray are for power circuits only.',
+      'Steel conduit is the only family permitted for data; basket and tray are excluded by the standards.',
+      'There is no functional grouping — containment family is purely an architectural / decorative choice.',
     ],
     correctIndex: 0,
     explanation:
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'On a 2026 commercial fit-out, the inspector points at a row of nylon cable ties under a length of plastic basket and asks "which BS 7671 regulation does this fall foul of?" — what is the correct cite?',
     options: [
-      '§521.10.1 — non-sheathed cables in conduit / trunking.',
-      '§521.10.202 — wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire. Note 3 specifically precludes non-metallic cable ties as the sole means of support, and non-metallic trunking as the sole support of the cables therein.',
-      '§411.3.1 — protective earthing.',
-      '§543.2.10 — separate metal enclosure as PEN.',
+      'Regulation 521.10.1 — the requirement for non-sheathed cables to be enclosed in conduit or trunking.',
+      'Regulation 411.3.1 — the requirement for protective earthing of exposed-conductive-parts.',
+      'Regulation 521.10.202 — support against premature collapse in fire; Note 3 fails non-metallic ties used alone.',
+      'Regulation 543.2.10 — the conditions for using a separate metal enclosure as a PEN conductor.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '§521.10.202 is the fire-collapse cite. Note 3 to §521.10.202 spells out that non-metallic cable ties or clips as the SOLE means of support — and non-metallic trunking as the sole support of the cables it carries — fail the regulation. Note 2 confirms cables installed in or on steel cable containment systems are deemed to meet the requirement. §521.10.1 is a different rule (non-sheathed cables in conduit / trunking). The intent (Note 5) is to prevent general collapse of wiring across access / egress routes — not to maintain circuit integrity in fire (which is Chapter 56 and BS 5266 / 5839 / 8519 territory).',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'You install 60 m of welded-mesh steel basket tray carrying Cat6A horizontal cables. The basket sections are joined with manufacturer-supplied joint plates. What does BS 7671 require you to do with the basket itself?',
     options: [
-      'Nothing — basket is just mechanical support.',
-      'Connect the metallic containment, conductive screens, conductive sheaths and armouring of data cables to the equipotential bonding network in accordance with §444.5.3.1, with electrically continuous joints and an identified path back to the main earthing terminal (or the MFET if present per §545).',
-      'Insulate the basket from the building steel.',
-      'Earth one section only and leave the rest floating.',
+      'Nothing — the basket is purely mechanical support and needs no bonding or earthing.',
+      'Insulate the basket from the surrounding building steel so it stays electrically isolated.',
+      'Earth just one section of the basket and leave the remaining joined sections floating.',
+      'Connect it into the equipotential bonding network per Reg 444.5.3.1, with continuous joints back to the MET.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       '§444.5.3.1 places metallic containment, conductive screens, conductive sheaths and armouring of data transmission cables — alongside ICT equipment functional earthing conductors — into the equipotential bonding network. The basket is part of the EBN, not a free metalwork item. Joints must be electrically continuous (manufacturer joint plates with bonding straps where required), and there must be an identified bonding path back to the MET (or, if the building has a Main Functional Earthing Terminal under §545.2, to that). BS EN 50310 sets the meshed bonding architecture; §444.1.3 caps mesh size at 2 m × 2 m where critical ICT is installed.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'A specifier sizes a basket tray "to fit the cables I need to install today." What is the practical problem with this sizing approach?',
     options: [
-      'There is no problem — sizing to today is what the standards require.',
-      'Capacity / fill ratios in BS EN 50174-2 are written so the containment can absorb foreseeable additions, dressing, and PoE bundle thermal management. Sizing to today gives no spare capacity for moves / adds / changes, prevents loose dressing, and traps heat in continuous-PoE bundles. Standard practice is to size with at least 40-50 percent spare capacity at first fit, and to leave the basket walls clear so cables can be added laterally without re-pulling.',
-      'It saves money — that is the whole point.',
-      'It always violates BS 7671 §444.',
+      'It leaves no spare capacity for moves / adds / changes and traps heat in continuous-PoE bundles.',
+      'There is no problem — sizing to exactly today\u2019s cable count is precisely what the standards require.',
+      'It saves money on containment, which is the principal objective of the containment design.',
+      'It directly violates BS 7671 Section 444 in every case, regardless of the services involved.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Containment capacity is a design parameter, not a finishing detail. BS EN 50174-2 gives fill-ratio guidance (typically up to about 50 percent of basket cross-section in active use, leaving room for moves, adds and changes plus dressing-in). With Type 4 PoE++ at 90 W PSE / 71.3 W PD per IEEE 802.3bt and the BS 7671 §716.523.2.101 hard cap of 750 mA per conductor, bundle heat is not theoretical — TIA TSB-184-A and PD CLC/TR 50174-99-1:2015 set bundle de-rating guidance. A first-fit basket sized to "exactly today" is sized for failure inside year three.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 regulation places metallic containment, conductive screens and cable armouring into the equipotential bonding network?',
     options: [
-      '§411.3.1.1 — protective earthing.',
-      '§444.5.3.1 — parts to be connected to the equipotential bonding network: metallic containment, conductive screens, conductive sheaths or armouring of data transmission cables; functional earthing conductors of antenna systems; functional earthing conductors of ICT equipment; protective conductors.',
-      '§521.10.1 — non-sheathed cables in conduit / trunking.',
-      '§528.3.5 — lift / hoist well restriction.',
+      'Regulation 444.5.3.1 — metallic containment, screens, sheaths and armouring of data cables in the EBN.',
+      'Regulation 411.3.1.1 — protective earthing of exposed-conductive-parts via the circuit protective conductor.',
+      'Regulation 521.10.1 — non-sheathed cables required to be enclosed in conduit, ducting or trunking.',
+      'Regulation 528.3.5 — restriction on wiring systems within a lift or hoist well shaft.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 §444.5.3.1 lists the parts that must be connected to the equipotential bonding network. Metallic containment, conductive screens, sheaths and armouring of data transmission cables and ICT equipment all sit inside the EBN — they are not free-floating metalwork. The bonding path must be electrically continuous and connected to the MET (and, where present, the MFET under §545).',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'A 2026 inspection finds a horizontal cable run supported only by plastic cable ties to a steel beam, with no clips or saddles. Which BS 7671 regulation has been breached and why?',
     options: [
-      '§521.10.1 — only applies to non-sheathed cables.',
-      '§521.10.202 — wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire. Note 3 specifically calls out non-metallic cable ties as the sole means of support as failing the regulation; Note 4 confirms steel or copper clips, saddles or ties are examples that meet it.',
-      '§444.5.3 — bonding ring conductor sizing.',
-      '§544.1.2 — connection point of MPB.',
+      'Regulation 521.10.1 — this only governs non-sheathed cables enclosed in conduit or trunking.',
+      'Regulation 444.5.3 — this governs the sizing of the bonding ring conductor in the EBN.',
+      'Regulation 521.10.202 — fire-collapse support; Note 3 fails non-metallic ties used as the sole support.',
+      'Regulation 544.1.2 — this governs the connection point of the main protective bonding (MPB).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§521.10.202 is the fire-collapse rule. Plastic cable ties as the SOLE means of support fail it directly under Note 3. The fix is to use steel clips, saddles, suitably spaced steel ties, or to place the cables in or on a steel cable containment system (Note 2 confirms steel containment is deemed to meet the regulation). The intent (Note 5) is to keep wiring from collapsing across escape and access routes during a fire.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which standard sets the planning and installation practice for cable containment inside buildings, and is directly cited from BS 7671 §444.410?',
     options: [
-      'BS 7430 — earthing.',
-      'BS EN 50174-2 — Information technology cabling installation: planning and practices inside buildings (cited from §444.410(b), alongside BS EN 50174-1 specification / quality and BS EN 50310 telecommunications bonding).',
-      'BS 5266 — emergency lighting.',
-      'BS 7909 — temporary distribution.',
+      'BS 7430 — the code of practice for protective earthing of electrical installations.',
+      'BS 5266 — the code of practice for emergency lighting of premises.',
+      'BS 7909 — the code of practice for temporary electrical systems for entertainment.',
+      'BS EN 50174-2 — IT cabling installation: planning and practices inside buildings, cited from Reg 444.410.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 §444.410 explicitly cites BS EN 50174-1 (specification and QA), BS EN 50174-2 (planning and practice inside buildings) and BS EN 50310 (telecommunications bonding networks for buildings) as the standards to apply for control / signalling / communication circuits. §444.410 is the gateway clause that brings the EN 50174 / 50310 family directly into BS 7671 compliance.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'You are choosing between welded-mesh basket tray and solid sheet-steel cable tray for a 200-cable horizontal run feeding a high-density AP cluster on PoE++ Type 4. Which factor argues most strongly for basket?',
     options: [
-      'Basket is always cheaper.',
-      'Basket is open-mesh, so heat from continuous PoE bundles dissipates by natural convection rather than being trapped — important when conductor temperature rise drives both insertion-loss penalty (degraded transmission) and insulation stress. Basket also allows lateral cable additions without re-pulling, which suits the move / add / change reality of office buildings. Solid tray traps heat and forces top-loading.',
-      'Solid tray cannot be earthed.',
-      'Basket is required by BS 7671.',
+      'Open mesh lets continuous-PoE bundle heat dissipate by convection, and allows lateral additions without re-pulling.',
+      'Basket tray is always the cheaper option to buy and install in every situation.',
+      'Solid sheet-steel cable tray cannot be bonded into the equipotential bonding network.',
+      'BS 7671 specifically requires welded-mesh basket for any horizontal data run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heat management is the dominant argument for open-mesh basket on continuous-PoE bundles. The BS 7671 §716.523.2.101 cap (750 mA per conductor) plus §716.523.1.101 (design current must not exceed BS EN 50173-1 limits — see also PD CLC/TR 50174-99-1:2015 and TIA TSB-184-A) make bundle thermals an installation issue, not a theoretical one. Basket also wins on access for moves / adds / changes. Solid tray has its place — where mechanical protection or fire-resistive separation is needed — but the default horizontal carrier for general-purpose Cat6A is welded-mesh basket.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'In Annex A444 of BS 7671, what minimum separation between Band II power cables and information technology cables is given for "no containment" or "open metallic containment A" (the default cable-routing case)?',
     options: [
-      '50 mm.',
+      '50 mm in free air, reducible to zero with any form of metallic containment.',
+      '500 mm in free air, regardless of the type of containment used for the run.',
       '200 mm in free air; reducible to 150 mm with perforated open metallic containment B; or zero physical separation with solid metallic containment C (Note 4 — no physical separation other than the containment itself).',
-      '500 mm.',
-      'No separation is required if voltages are insulated for the highest band.',
+      'No separation is required at all if the conductors are insulated for the highest band present.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Annex A444 Table A444.1 gives the headline separation hierarchy: 200 mm in free air with no containment, 150 mm with perforated open metallic containment (e.g. steel tray with up to 20 percent perforation, 1.0 mm wall), and 0 mm physical separation with fully enclosed steel containment (1.5 mm minimum wall). The principle: more containment = less air-gap separation needed. Module 4 Section 2 walks the table in detail.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A trunking spec has been written with 80 percent fill at first fit. What is the practical problem this creates over the cabling life?',
     options: [
-      'No problem — 80 percent is industry standard.',
-      'No spare capacity for moves, adds and changes; cables get forced in and pinched, exceeding bend-radius requirements and damaging twisted-pair geometry; PoE bundle heat is trapped against the wall of the trunking. BS EN 50174-2 guidance is to size for foreseeable additions — typical first-fit fill is around 40-50 percent so the system can absorb growth, dressing, and PoE de-rating without re-cabling.',
-      'It violates BS 7671 §521.10.202 directly.',
-      'It violates BS EN 50173-1 directly.',
+      'No problem at all — 80 percent first-fit fill is the accepted industry-standard target.',
+      'It directly violates BS 7671 Regulation 521.10.202, the fire-collapse support regulation.',
+      'It directly violates BS EN 50173-1, the generic cabling performance standard.',
+      'It leaves no room for moves / adds / changes, pinches cables past their bend radius, and traps PoE heat.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 50174-2 sets the planning rules. Containment is sized so that moves / adds / changes can be accommodated without re-pulling, and so that PoE bundle thermals stay within the manufacturer de-rating curves. An 80 percent first-fit fill leaves nothing for growth, prevents proper dressing, and concentrates heat. The standards do not give a single hard fill number — they require the designer to consider growth, thermals and access.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'What is the BS 7671 §444.6.2 minimum separation between information and communications technology cables and discharge / neon / mercury vapour (or other high-intensity discharge) lamps, including CFL?',
     options: [
-      '50 mm.',
-      '130 mm — verbatim per §444.6.2: "The minimum distance between information and communications technology cables and discharge, neon and mercury vapour (or other high-intensity discharge) lamps shall be 130 mm. In this regard, low energy lamps (CFL) are to be considered as gas discharge sources. Data wiring racks and electrical equipment shall always be separated."',
-      '200 mm.',
-      '500 mm.',
+      '130 mm minimum, with CFLs treated as gas-discharge sources per Reg 444.6.2.',
+      '50 mm — the same minimum used for general LV power-versus-data segregation.',
+      '200 mm — matching the free-air power-versus-data separation in Annex A444.',
+      '500 mm — a conservative figure applied to all luminaire types near ICT cables.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§444.6.2 fixes a 130 mm minimum separation between ICT cables and HID / CFL lamps. The clause also requires data wiring racks and electrical equipment to be separated. This is independent of the §528 / Annex A444 power-vs-data segregation: HID lamps emit electromagnetic interference at frequencies that affect ICT cabling regardless of voltage band. Where containment crosses lamp positions, plan the route around the 130 mm envelope.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'You are designing the conduit / trunking system for a small commercial fit-out. Which BS 7671 cite places the metallic containment requirement formally inside the regulations?',
     options: [
-      '§411.3.1.1 — protective earthing of exposed-conductive-parts.',
-      '§444.5.3.1 — equipotential bonding network parts to be connected, including metallic containment of data cables; §521.10.202 — supports against premature collapse in fire (steel containment deemed to meet the requirement); §444.410 — apply BS EN 50174-1 / -2 and BS EN 50310 for control / signalling / communication circuits.',
-      '§528.3.5 — lift wells only.',
-      '§543.7 — high protective conductor currents.',
+      'Regulation 411.3.1.1 — protective earthing of exposed-conductive-parts via the CPC.',
+      'Regulation 528.3.5 — restriction on wiring systems within a lift or hoist well.',
+      'Regulations 444.5.3.1 (containment in the EBN), 521.10.202 (fire-collapse support) and 444.410 together.',
+      'Regulation 543.7 — measures for circuits with high protective conductor currents.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Containment for data cabling sits at the intersection of three BS 7671 cites: §444.5.3.1 (metallic containment in the EBN), §521.10.202 (fire-collapse support, with steel containment deemed compliant per Note 2), and §444.410 (apply BS EN 50174-1 / -2 and BS EN 50310 for the install-practice detail). All three are required. None alone is the whole answer.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A retrofit project adds 24 Cat6A cables to an existing basket tray that was sized "right" for the original 18 cables. The new bundle now sits in a tight clump. What practical risks emerge?',
     options: [
-      'No risks — basket is open mesh.',
-      'Heat in the centre of the bundle can rise above the cable manufacturer de-rating curve under continuous PoE++ load (TIA TSB-184-A; PD CLC/TR 50174-99-1:2015 referenced from §716.523.1.101 NOTE 2). Bend-radius can be compromised at supports. Insertion-loss penalty raises the channel attenuation. Mitigations: split the bundle, dress it across the basket width, upgrade to 23 AWG / LP-rated cable, or move runs to a parallel basket.',
-      'BS 7671 §444 prohibits adding to existing basket.',
-      'The original install becomes non-compliant retrospectively.',
+      'No risks arise — because the basket is open mesh, heat can never build up in a clumped bundle.',
+      'BS 7671 Section 444 prohibits adding any further cables to an existing basket tray.',
+      'The original 18-cable install automatically becomes non-compliant retrospectively.',
+      'Bundle-centre heat can exceed the PoE de-rating curve and bend-radius is squeezed at supports.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bundle thermals are the dominant retrofit risk on continuous-PoE work. The cable manufacturer de-rating curves (and the EN / TIA bundle guidance) are written for the bundle, not the cable in free air. Splitting the bundle, using larger conductor (23 AWG), choosing LP-rated cables, or running a parallel basket are all valid mitigations. The §716.523.2.101 hard cap (750 mA per conductor) does NOT change with bundle size — but the temperature inside the bundle does, and the §716.523.1.101 design-current limit referenced to BS EN 50173-1 is the hook that brings bundle thermals into BS 7671 compliance.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'An office tenant says "we don\'t want any visible containment — pull the cables direct on top of the suspended ceiling tiles." What is the correct response?',
     options: [
-      'Agree — the tiles will support the cables.',
-      'Refuse: cables laid directly on ceiling tiles are unsupported, fail BS 7671 §521.10.202 (premature collapse in fire), and prevent any future moves / adds / changes without lifting tiles. Specify basket tray or ladder rack above the tiles, with proper spacing for access. Aesthetics are addressed by the ceiling, not by skipping containment.',
-      'Agree only if the cables are PVC.',
-      'Agree only if they are bonded.',
+      'Refuse — loose cables on tiles are unsupported, fail Reg 521.10.202, and block future changes; specify basket above the tiles.',
+      'Agree — the suspended ceiling tiles will adequately support the weight of the cables.',
+      'Agree, but only where the cables laid on the tiles are PVC-sheathed types.',
+      'Agree, provided the cables are bonded into the equipotential bonding network.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cables laid loose on ceiling tiles are not supported — they fail §521.10.202 directly and they cause secondary problems (tile deflection, dust ingress, bend-radius violations at every change of direction, no future MAC capacity). The standard practice is basket tray or ladder rack above the tiles, sized for capacity plus growth, with proper spacing from luminaires (§444.6.2 — 130 mm from HID / CFL) and from LV power (§444.6.1 + Annex A444). The tenant gets the clean ceiling AND a compliant install.',
   },

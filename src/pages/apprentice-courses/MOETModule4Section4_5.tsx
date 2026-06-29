@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'doc-signoff-purpose',
     question: 'What is the primary purpose of completion documentation in electrical maintenance?',
     options: [
-      'To not employ or appoint a person unless satisfied they have the necessary skills, knowledge, and experience',
-      'To provide a verifiable record that work has been completed safely, tested, and meets the required standard',
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
-      'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
+      'To act as a marketing record of the contractor’s recently completed projects',
+      'To give a verifiable record that work is complete, tested and to standard',
+      'To replace the need to carry out inspection and testing of the work itself',
+      'To record the hours worked so the labour cost can be correctly invoiced',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Under BS 7671, which document must be issued upon completion of new electrical work or significant alterations?',
     options: [
-      'GN1 with Part 5; GN3 with Part 6; GN5 with Chapter 41; GN6 with Chapter 43; GN7 with Part 7; GN8 with Chapter 54.',
-      'Whether ties are intact, bracing is undamaged, sheeting is secure, and the scaffold is still plumb',
-      '2-10V allows detection of cable faults since 0V indicates a broken connection',
-      'An Electrical Installation Certificate (EIC) signed by the designer, installer, and inspector/tester',
+      'A Minor Electrical Installation Works Certificate, signed by the installer only',
+      'An Electrical Installation Condition Report (EICR) with coded observations',
+      'A risk assessment and method statement covering the completed electrical work',
+      'An Electrical Installation Certificate (EIC), signed by designer, installer and tester',
     ],
     correctIndex: 3,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'doc-signoff-handover',
     question: 'Which of the following is NOT typically included in a handover documentation pack?',
     options: [
-      'In parallel with the armature, across the full supply voltage',
-      'It keeps the header row visible while scrolling through data below',
+      'As-built drawings showing the installation as actually constructed',
+      'Operation and maintenance manuals for the installed equipment',
       'The personal mobile number of every technician who worked on the project',
-      'A proprietary scaffolding system with prefabricated components that slot or lock together',
+      'Electrical certificates with their accompanying schedules of test results',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'When is a Minor Works Certificate appropriate instead of a full Electrical Installation Certificate?',
     options: [
-      'The whole programme — successor trades cannot start, scaffold may be retained, plant hire is extended; the cumulative cost grows fast',
-      'For work that does not include the provision of a new circuit, such as adding a socket outlet to an existing circuit',
-      'Use smooth, progressive control inputs, avoiding sudden starts and stops that could cause the platform to jerk or whip',
-      'The line conductor resistance (R1) plus the CPC resistance (R2) for the circuit, end to end — the installation-side portion of the earth fault loop.',
+      'For any work carried out in a domestic property below a certain contract value',
+      'For work with no new circuit, such as adding a socket to an existing circuit',
+      'For any new installation where a single competent person carries out all the work',
+      'For periodic inspection and testing of an existing electrical installation',
     ],
     correctIndex: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     question: 'What is the purpose of as-built drawings in handover documentation?',
     options: [
       'To accurately reflect the installation as actually constructed, including any variations from the original design',
-      'Complete the appropriate certificate or report, update maintenance records, mark up any drawing changes, and inform the duty holder',
-      'Notifiable work as defined in the regulations, unless carried out by a registered competent person scheme member who can self-certify',
-      'Ensure that all required checks, tests, and verifications are completed in a systematic order before equipment is energised or handed over',
+      'To show the original design intent before any site changes were made',
+      'To record the test results for each circuit in a tabulated schedule',
+      'To list the manufacturer warranties for the installed equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'Which of the following test results must be recorded on the Schedule of Test Results that accompanies an EIC?',
     options: [
-      'To accurately reflect the installation as actually constructed, including any variations from the original design',
-      'Ensure that all required checks, tests, and verifications are completed in a systematic order before equipment is energised or handed over',
-      'Continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, and prospective fault current',
-      'Notifiable work as defined in the regulations, unless carried out by a registered competent person scheme member who can self-certify',
+      'Only the earth fault loop impedance value measured for the final circuit',
+      'A written description of the installation, recorded with no measured values',
+      'Continuity, insulation resistance, polarity, loop impedance, RCD and fault current',
+      'The cost of the materials and labour used on each circuit in the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'When documenting a repair to an existing installation, a maintenance technician should:',
     options: [
-      'They should be retained for the lifetime of the installation and made available to subsequent duty holders',
-      'Ensure that all required checks, tests, and verifications are completed in a systematic order before equipment is energised or handed over',
-      'Notifiable work as defined in the regulations, unless carried out by a registered competent person scheme member who can self-certify',
-      'Complete the appropriate certificate or report, update maintenance records, mark up any drawing changes, and inform the duty holder',
+      'Record the repair only if the duty holder specifically asks for it in writing',
+      'Leave the existing drawings unchanged, to avoid confusing future technicians',
+      'Issue a new full Electrical Installation Certificate for the whole installation',
+      'Complete the certificate, update records, mark up drawings and inform the duty holder',
     ],
     correctAnswer: 3,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     id: 8,
     question: 'The purpose of a commissioning checklist is to:',
     options: [
-      'Ensure that all required checks, tests, and verifications are completed in a systematic order before equipment is energised or handed over',
-      'They should be retained for the lifetime of the installation and made available to subsequent duty holders',
-      'To clearly document areas that could not be inspected or tested, so that the client and future inspectors understand the scope and boundaries of the report',
-      'To accurately reflect the installation as actually constructed, including any variations from the original design',
+      'Ensure all required checks and tests are done in order before energising or handover',
+      'Record the limitations that prevented part of an installation being inspected',
+      'Provide a permanent record of the installation exactly as it was actually built',
+      'List the document retention responsibilities held by the duty holder over time',
     ],
     correctAnswer: 0,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Under Building Regulations Part P (England), notification to building control is required for:',
     options: [
-      'Complete the appropriate certificate or report, update maintenance records, mark up any drawing changes, and inform the duty holder',
-      'Notifiable work as defined in the regulations, unless carried out by a registered competent person scheme member who can self-certify',
-      'To clearly document areas that could not be inspected or tested, so that the client and future inspectors understand the scope and boundaries of the report',
-      'Continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, and prospective fault current',
+      'All electrical work of any kind carried out in a domestic dwelling whatsoever',
+      'Notifiable work, unless done by a registered competent person who can self-certify',
+      'Only electrical work carried out in commercial and industrial premises, not homes',
+      'Like-for-like replacement of a single accessory, such as one socket outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is it important to include limitations in an EICR?',
     options: [
-      'Ensure that all required checks, tests, and verifications are completed in a systematic order before equipment is energised or handed over',
-      'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
-      'To clearly document areas that could not be inspected or tested, so that the client and future inspectors understand the scope and boundaries of the report',
-      'To accurately reflect the installation as actually constructed, including any variations from the original design',
+      'To confirm that every circuit in the installation was fully inspected without exception',
+      'To reduce the inspector’s personal liability by limiting the testing that was carried out',
+      'To document areas that could not be inspected, so scope and boundaries are clear',
+      'To record the cost of any remedial work that is recommended within the report',
     ],
     correctAnswer: 2,
     explanation:
@@ -209,9 +209,9 @@ const quizQuestions = [
     question:
       'What is the recommended retention period for electrical test certificates and maintenance records?',
     options: [
-      'Continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, and prospective fault current',
-      'Notifiable work as defined in the regulations, unless carried out by a registered competent person scheme member who can self-certify',
-      'To accurately reflect the installation as actually constructed, including any variations from the original design',
+      'They may be discarded as soon as the next inspection is carried out',
+      'They must be kept for exactly six years and then destroyed',
+      'They only need to be retained until the contractor is paid',
       'They should be retained for the lifetime of the installation and made available to subsequent duty holders',
     ],
     correctAnswer: 3,
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'A technician completes a repair but the sign-off is delayed because the responsible person is unavailable. The correct action is to:',
     options: [
-      'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
-      'Acknowledge their concern, explore interests, use objective criteria: "I understand price is important. What does that quote include? My price is based on NICEIC standards and full certification"',
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
+      'Sign their own scope, note the outstanding sign-off, and arrange review as soon as possible',
+      'Sign on behalf of the responsible person, to avoid delaying the project completion',
+      'Leave the certificate completely blank until everyone involved is available to sign',
+      'Return the installation to service and complete the paperwork later from memory',
     ],
     correctAnswer: 0,
     explanation:

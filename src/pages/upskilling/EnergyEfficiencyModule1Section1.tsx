@@ -44,12 +44,12 @@ const quizQuestions = [
     question:
       'Which UK regulation requires large enterprises to conduct energy audits every 4 years?',
     options: [
-      'Building Regulations Part L',
       'ESOS (Energy Savings Opportunity Scheme)',
+      'Building Regulations Part L',
       'MEES Regulations',
       'Climate Change Levy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ESOS requires large undertakings (250+ employees or £44m+ turnover) to conduct comprehensive energy audits every 4 years.',
   },
@@ -66,8 +66,8 @@ const quizQuestions = [
     id: 3,
     question:
       "Approximately what percentage of a typical commercial building's energy consumption is used for HVAC systems?",
-    options: ['10-20%', '25-35%', '40-60%', '70-80%'],
-    correctAnswer: 2,
+    options: ['10-20%', '25-35%', '70-80%', '40-60%'],
+    correctAnswer: 3,
     explanation:
       'HVAC systems typically account for 40-60% of commercial building energy consumption, making them a key target for efficiency improvements.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'What does SECR stand for in UK energy reporting requirements?',
     options: [
       'Sustainable Energy Carbon Reporting',
-      'Streamlined Energy and Carbon Reporting',
       'Standard Environmental Compliance Review',
+      'Streamlined Energy and Carbon Reporting',
       'Strategic Energy Cost Reduction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SECR stands for Streamlined Energy and Carbon Reporting, requiring annual disclosure of energy use and emissions.',
   },
@@ -101,8 +101,8 @@ const quizQuestions = [
     id: 6,
     question:
       'By what percentage did UK non-domestic electricity prices increase between 2021 and 2023?',
-    options: ['50-75%', '100-150%', '150-200%', '200-300%'],
-    correctAnswer: 2,
+    options: ['150-200%', '50-75%', '100-150%', '200-300%'],
+    correctAnswer: 0,
     explanation:
       'UK non-domestic electricity prices increased by 150-200% between 2021 and 2023, dramatically improving the business case for efficiency.',
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Which approach to energy management involves continuous monitoring and optimisation?',
-    options: ['One-off audit', 'ISO 50001', 'Visual inspection', 'Annual review'],
-    correctAnswer: 1,
+    options: ['A one-off energy audit', 'A periodic visual inspection', 'ISO 50001 certification', 'An annual management review'],
+    correctAnswer: 2,
     explanation:
       'ISO 50001 provides a framework for continuous energy management through the Plan-Do-Check-Act cycle.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
     question: "What is 'Scope 2' emissions in carbon accounting?",
     options: [
       'Direct emissions from owned sources',
-      'Indirect emissions from purchased electricity',
       'All supply chain emissions',
-      'Employee commuting emissions',
+      'Emissions from employee commuting',
+      'Indirect emissions from purchased electricity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scope 2 covers indirect emissions from purchased energy, primarily electricity. Electricians directly impact this through efficient installations.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'Which of these typically offers the fastest return on investment for energy efficiency?',
     options: [
+      'Behavioural change programmes',
       'Building fabric insulation',
       'Solar PV installation',
-      'Behavioural change programmes',
       'Building Management System upgrade',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Behavioural change programmes often have zero capital cost and deliver immediate savings, providing the fastest ROI.',
   },

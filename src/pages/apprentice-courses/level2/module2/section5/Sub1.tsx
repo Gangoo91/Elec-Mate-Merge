@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 6,
     question: 'You drop a magnet hard onto a concrete floor. What can happen?',
     options: [
-      'Calculate and record where significant',
-      'Isolation and lock-off procedures',
+      'It gains extra magnetism from the impact',
+      'Its north and south poles swap over',
       'It can lose some of its magnetism',
-      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
+      'Nothing — a magnet cannot be damaged by a knock',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,9 +155,9 @@ const quizQuestions = [
     id: 7,
     question: 'A compass needle is itself a small magnet. Why does it point north?',
     options: [
-      'A tube that spans between the inner and outer ledgers, supporting the platform boards',
-      'In an area of clean, uncontaminated air, away from exhaust fumes and other contaminant sources',
-      'Cherry-red colouration of the skin, along with headache and confusion',
+      'It is pulled towards the nearest large mass of iron ore',
+      'It always aligns with the direction of the prevailing wind',
+      'Gravity tilts the needle towards the heaviest end',
       'The Earth has its own magnetic field — its south magnetic pole is near geographic north',
     ],
     correctAnswer: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'Why does this matter to a UK electrician?',
     options: [
       'Every motor, transformer, RCD coil and contactor in the trade runs on this same poles-and-fields principle',
-      'Automatic assumptions or prejudices that influence decisions without the person being aware of them',
-      'Use 1.2 Nm — the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific figure overrides the generic guidance',
-      'When there is an immediate risk to life, such as someone about to act on suicidal thoughts or who has seriously harmed themselves',
+      'It explains why copper conductors carry current so well',
+      'It sets the maximum torque for tightening busbar terminals',
+      'It determines the insulation resistance value of a cable',
     ],
     correctAnswer: 0,
     explanation:

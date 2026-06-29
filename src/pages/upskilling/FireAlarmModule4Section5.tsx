@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 specifies a maximum reporting time for an earth fault on a fire alarm circuit. What is the value, and what does it mean?',
     options: [
-      'Within 24 hours.',
-      'Within 100 SECONDS. The CIE must report an earth fault as a fault indication within 100 s of the fault occurring. The 100 s window is calibrated to ensure that intermittent or brief earth-fault events are not missed (too-fast reporting could chase noise transients) but real faults are reported within a maintenance-actionable window. The 100 s figure derives from BS EN 54-2 (CIE requirements) and is referenced through to BS 5839-1.',
-      'Immediately on every transient.',
-      '5 minutes.',
+      'Within 24 hours of the earth fault first occurring on the circuit.',
+      'Within 100 seconds — the calibrated BS EN 54-2 figure referenced through to BS 5839-1.',
+      'Immediately, on every transient touch of a conductor to the earth reference.',
+      'Within 5 minutes of the fault threshold being crossed on the loop.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'On a Class A loop circuit and a Class B radial circuit, the consequence of a single earth fault is...?',
     options: [
-      'The same.',
-      'Different. Class A: the earth fault is reported as a fault on the CIE; the loop continues to operate (bidirectional CIE communication routes around the fault); detection / sounder protection is preserved across the whole loop. Class B: the earth fault is reported, BUT all devices BEYOND the fault are isolated from the CIE — they no longer report, they no longer respond, protection is LOST beyond the fault location until the fault is repaired. The fault tolerance difference is the engineering reason most BS 5839-1 designs use Class A for primary loops.',
-      'Class B is more resilient.',
-      'Class A loses more devices.',
+      'The same on both — the fault is reported and protection is preserved either way.',
+      'Different — Class A preserves protection across the loop; Class B loses devices beyond the fault.',
+      'Class B is the more resilient topology, preserving protection where Class A loses it.',
+      'Class A loses more devices than Class B for the same single earth fault on the wiring.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A maintainer wants to test a detection circuit for insulation resistance. The circuit has addressable detectors fitted. What is the correct test method?',
     options: [
-      'Apply 500 V DC across the line.',
-      "DO NOT apply 500 V DC with the devices in circuit. Most fire alarm devices include electronic components (loop driver electronics, EOL resistors, addressable communication chips) that will be damaged by the 500 V test voltage. Either DISCONNECT the devices (terminate the loop at the CIE end and at the far end, isolate any branches, then test the cable alone), or use an alternative method appropriate to live electronic systems — typically the CIE's own internal diagnostics (loop earth-fault monitoring, loop integrity test) or a low-voltage dedicated insulation tester for fire-alarm work. Document the test method used.",
-      'Apply 1000 V AC.',
-      'No test is needed.',
+      'Apply a 500 V DC insulation test across the line with the addressable devices left in circuit.',
+      'Do not use 500 V — disconnect the devices, or use the CIE diagnostics or a low-voltage method.',
+      'Apply a 1000 V AC test across the loop conductors to be sure of catching any weak insulation.',
+      'No insulation test is needed at all once the loop is reporting on the CIE without any faults.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 clause 23 has clarified the rule on suppression / concealment of fault indications. What does it require?',
     options: [
-      'Faults can be silenced indefinitely.',
-      'Fault indications must NOT be CONCEALED OR SUPPRESSED. The 2025 clarification (per FIA Guide section 23) is specifically about practices that some sites have adopted to "make the panel quieter" — covering fault LEDs with tape, programming silent fault states, ignoring fault buzzers. All such suppression of fault indication is non-compliant. The user is entitled to know the system has a fault; the maintainer is entitled to find the fault on arrival; suppression breaks both. Where a fault cannot be repaired immediately, the indication remains visible until repair is complete.',
-      'Faults can be hidden if a service is booked.',
-      'Faults are auto-cleared after 24 hours.',
+      'Faults can be silenced indefinitely once the buzzer has been acknowledged by a user.',
+      'Fault indications must NOT be concealed or suppressed — they stay visible until repair is complete.',
+      'Faults can be hidden from the user once a service visit has been booked with the contractor.',
+      'Faults are automatically cleared by the CIE after 24 hours whether repaired or not.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,7 @@ const quizQuestions = [
     id: 1,
     question:
       'BS 5839-1:2025 specifies that an earth fault on a fire alarm circuit must be reported as a fault on the CIE within what time?',
-    options: [
-      'Within 1 minute.',
-      'Within 100 seconds. The CIE must indicate an earth fault as a fault condition within 100 s of the fault occurring. The figure is calibrated to ensure real faults are reported within a maintenance-actionable window without chasing noise transients. Derives from BS EN 54-2 (CIE requirements) and referenced through BS 5839-1.',
-      'Within 1 hour.',
-      'Within 24 hours.',
-    ],
+    options: ['Within 1 minute.', 'Within 100 seconds.', 'Within 1 hour.', 'Within 24 hours.'],
     correctAnswer: 1,
     explanation:
       'The 100 s figure is one of the standard CIE performance requirements that BS 5839-1 inherits from BS EN 54-2. Reporting faster would risk chasing transients; reporting slower would risk missing real faults.',
@@ -96,126 +91,126 @@ const quizQuestions = [
     question:
       'On a Class A loop, a single earth fault on the loop wiring has what effect on protection?',
     options: [
+      'Protection is preserved across the whole loop.',
       'Protection is lost across the whole loop.',
-      'Protection is PRESERVED across the whole loop. The bidirectional CIE communication on a Class A loop means a single open or short fault simply reduces the loop to two unidirectional spurs both still operating; isolators on the loop clamp the affected segment in the case of a short. The fault is reported to the CIE as a fault indication, but detection and sounder protection continue to operate for all devices on the loop.',
-      'Half the loop is lost.',
-      'Only sounders are lost.',
+      'Protection is lost for half the loop only.',
+      'Only the sounder circuits lose protection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Class A fault tolerance is the architectural reason most BS 5839-1 systems use Class A for primary loops. The loop continues to function under single-fault conditions; protection is preserved; the maintainer responds to the fault as urgent maintenance rather than as urgent emergency repair.',
+      'Class A bidirectional communication means a single fault reduces the loop to two unidirectional spurs, both still operating, so detection and sounder protection continue for every device. This fault tolerance is why most BS 5839-1 systems use Class A for primary loops.',
   },
   {
     id: 3,
     question:
       'On a Class B radial circuit, a single earth fault on the wiring has what effect on protection?',
     options: [
-      'No effect.',
-      "Protection is LOST for all devices BEYOND the fault location. Class B radial topology has unidirectional communication from the CIE outward; a single open or short fault isolates everything beyond that point. Devices beyond the fault no longer report, no longer respond to commands, and no longer contribute to the system's detection / alarm function. Until the fault is repaired, the affected portion of the building has no fire alarm coverage.",
-      'Half the loop is preserved.',
-      'Sounders continue but detectors stop.',
+      'No effect on protection at all.',
+      'Sounders continue but detectors stop responding.',
+      'Protection is lost for all devices beyond the fault location.',
+      'Half the circuit is automatically preserved.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The Class B fault response is the engineering reason the topology is acceptable only where the design analysis supports it — typically sub-circuits with limited consequence of single-fault loss. Primary loops in BS 5839-1 systems are typically Class A specifically to avoid this fault response.',
+      'Class B radial topology has unidirectional communication from the CIE outward, so a single open or short isolates everything beyond it — those devices no longer report or respond until repair. Primary loops are typically Class A specifically to avoid this loss of coverage.',
   },
   {
     id: 4,
     question:
-      'A maintainer wants to perform an insulation resistance test on a fire alarm detection circuit. The circuit has addressable detectors connected. What is the correct procedure?',
+      'A maintainer wants to perform an insulation resistance test on a fire alarm detection circuit with addressable detectors connected. What is the correct procedure?',
     options: [
-      'Apply 500 V DC with devices in circuit.',
-      "Either: DISCONNECT the addressable devices (isolate the loop at the CIE and at branch points, then test the cable alone), OR use the CIE's built-in loop diagnostics (loop earth-fault monitoring, loop integrity test functions), OR use a low-voltage insulation test method designed for live electronic systems. The 500 V DC test will DAMAGE the addressable electronics if applied with devices in circuit. The damage produces a more expensive fault than the original diagnostic problem. Document the test method used in the maintenance record.",
-      'Apply 1000 V AC.',
-      'Test only at the CIE.',
+      'Apply the standard 500 V DC test with the addressable devices left in circuit.',
+      'Apply 1000 V AC across the loop conductors to stress the insulation harder.',
+      'Disconnect the devices, use the CIE built-in diagnostics, or use a low-voltage method.',
+      'Test the loop only at the CIE terminals with all devices still left in place.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The standard 500 V IR test was designed for general electrical installations without sensitive electronics. Modern addressable fire alarm systems do not tolerate it. The correct approach is to disconnect, use built-in diagnostics, or use a method appropriate to live electronics.',
+      'The 500 V DC test damages addressable electronics if applied with devices in circuit, creating a more expensive fault than the original problem. Disconnect the devices, use the CIE loop diagnostics, or use a method designed for live electronics — and record the method used.',
   },
   {
     id: 5,
     question:
       'BS 5839-1:2025 clause 23 (Arrangements for repair of faults or damage) clarifies a rule about fault indications. What is it?',
     options: [
-      'Faults can be hidden during business hours.',
-      'Fault indications must NOT be CONCEALED or SUPPRESSED. The 2025 clarification (per FIA Guide) addresses real-world practices like covering fault LEDs with tape, programming silent fault states, or ignoring buzzers. All such suppression is non-compliant. Where a fault cannot be repaired immediately, the fault indication remains active and visible until repair is complete. The user is entitled to know the system has a fault; the maintainer is entitled to find the fault on arrival.',
-      'Faults clear automatically after 7 days.',
-      'Suppression is allowed if logged.',
+      'Fault indications may be suppressed during business hours.',
+      'Fault indications clear automatically after 7 days.',
+      'Suppression of fault indications is permitted if it is logged.',
+      'Fault indications must not be concealed or suppressed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 2025 clarification reinforces the principle: fault indications stay visible until the fault is fixed. The user knows; the maintainer knows; the audit trail is complete. Suppression hides information from the people who need it most.',
+      'The 2025 clarification addresses practices like covering fault LEDs, programming silent fault states, or ignoring buzzers — all are non-compliant. The indication remains visible until the fault is repaired so the user and the maintainer both know the system has a fault.',
   },
   {
     id: 6,
     question:
       "On an addressable fire alarm system, the CIE's loop earth-fault monitoring works by...?",
     options: [
-      'Measuring the cable resistance.',
-      "Continuously measuring the impedance between the loop conductors and earth (the system's functional-earth reference). When the impedance falls below a threshold (indicating a partial or complete earth fault), the CIE reports an earth-fault indication. The monitoring is sensitive enough to detect partial faults (insulation degradation that has not yet failed completely) and reports them as actionable maintenance items before they develop into circuit-affecting faults.",
-      'Counting the devices.',
-      'Measuring loop voltage drop.',
+      'Counting the number of devices on the loop.',
+      'Continuously measuring loop-conductor-to-earth impedance against the FE reference.',
+      'Measuring the total cable resistance of the loop.',
+      'Measuring the voltage drop along the loop.',
     ],
     correctAnswer: 1,
     explanation:
-      'Loop earth-fault monitoring is one of the diagnostic capabilities of modern addressable CIEs. The continuous impedance measurement provides early warning of insulation degradation, before the degradation produces a circuit-affecting fault. The maintenance team responds to early-warning indications proactively rather than reactively.',
+      'When the conductor-to-earth impedance falls below a threshold the CIE reports an earth fault. The measurement is sensitive enough to flag partial faults (insulation degradation not yet fully failed) as actionable maintenance before they become circuit-affecting.',
   },
   {
     id: 7,
     question:
-      'An addressable system reports an intermittent earth fault — the fault appears and disappears over hours and days. The cable test (with devices isolated) shows the cable insulation is intact. What is the most likely cause?',
+      'An addressable system reports an intermittent earth fault over hours and days, but the cable test (with devices isolated) shows the insulation intact. What is the most likely cause?',
     options: [
-      'A faulty cable.',
-      'The earth fault is most likely on a DEVICE rather than on the cable, OR is a problem with the FUNCTIONAL EARTH connection rather than the cable insulation. Common causes: a detector base with corrosion or moisture ingress producing intermittent leakage; a sounder or interface unit with internal insulation degradation; the FE conductor at the CIE terminated incorrectly (on PE bar, or loose at termination). Diagnostic approach: verify FE termination first; then disconnect devices in groups and re-test to localise; finally identify the specific device when the fault disappears with one device removed.',
-      'Loose cable clip.',
-      'Wrong cable colour.',
+      'A loose cable clip somewhere on the run.',
+      'The wrong cable colour has been installed.',
+      'A faulty section of loop cable that the test missed.',
+      'A device fault, or a problem with the functional-earth connection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Intermittent earth faults are typically environment-driven (humidity, temperature) and are usually localised to a specific device or termination rather than the cable in general. Cable testing in isolation gives a clean result; the fault appears only with the device population in circuit.',
+      'Intermittent earth faults are usually environment-driven (humidity, temperature) and localised to a specific device or termination rather than the cable. Verify the FE termination first, then disconnect devices in groups and re-test to localise the offender.',
   },
   {
     id: 8,
     question:
-      'Why does BS 5839-1:2025 require fault indications to be visible / audible from the CIE rather than only logged in the system memory?',
+      'Why does BS 5839-1:2025 require fault indications to be visible / audible from the CIE rather than only logged in system memory?',
     options: [
-      'Convention.',
-      'Because the user (premises management, occupants) needs to know the system is in a fault condition without having to interrogate the system or rely on a specialist visit. Visible / audible indication makes the fault state OBVIOUS; the user knows protection is degraded and can take appropriate compensating measures (e.g. fire watch) until repair. A fault that is only logged in memory could persist undetected for weeks; visible / audible indication forces awareness and repair scheduling.',
-      'Cost.',
-      'Aesthetics.',
+      'So the user knows protection is degraded without interrogating the system.',
+      'Because visible indicators are cheaper than memory logging.',
+      'It is a convention carried over from older panels.',
+      'For the aesthetic appearance of the control panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Indication serves the user, not the engineer. The user is the person on site day-to-day; they need to know the system status without specialist tools. Visible / audible indication makes fault states obvious; logging alone makes them invisible to the user.',
+      'Indication serves the user, who is on site day-to-day and needs system status without specialist tools. A fault only logged in memory could persist undetected for weeks; visible / audible indication forces awareness and repair scheduling.',
   },
   {
     id: 9,
     question:
-      'A site has a recurring earth fault that the maintenance team has been "managing" by acknowledging the fault on the CIE every morning rather than repairing it. Is this acceptable?',
+      'A site has a recurring earth fault that the maintenance team "manages" by acknowledging it on the CIE every morning rather than repairing it. Is this acceptable?',
     options: [
-      'Yes, because the fault is acknowledged.',
-      'NO. Acknowledging a fault clears the audible indication but does NOT clear the underlying fault — the system is still in a fault state, the visual fault indication remains active, and the protective function may be compromised (depending on the fault and the circuit class). Repeatedly acknowledging without fixing is a form of fault suppression; BS 5839-1:2025 clause 23 requires faults to be REPAIRED, not managed indefinitely by acknowledgment. Where a repair cannot be completed promptly, the fire risk assessment / management plan should identify compensating measures (e.g. fire watch in the affected area) until the fault is repaired.',
-      'Acceptable for 1 week only.',
-      'Acceptable if logged.',
+      'Yes, because the fault is properly acknowledged on the CIE each day.',
+      'Acceptable for up to one week, provided a repair is then arranged.',
+      'No — acknowledgment silences the buzzer but does not clear the fault or restore protection.',
+      'Acceptable provided each daily acknowledgment is logged in the system records.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Acknowledgment is not repair. BS 5839-1:2025 expects faults to be repaired with reasonable promptness, with compensating measures in place where repair is delayed. "Managing" a fault by daily acknowledgment is non-compliant and erodes the system\'s reliability.',
+      'Repeatedly acknowledging without repair is a form of fault suppression; clause 23 requires faults to be repaired with reasonable promptness. Where repair is delayed, the management plan must identify compensating measures such as a fire watch.',
   },
   {
     id: 10,
     question:
-      'Why is the FUNCTIONAL EARTH (FE) termination at the CIE relevant to earth-fault monitoring?',
+      'Why is the functional-earth (FE) termination at the CIE relevant to earth-fault monitoring?',
     options: [
-      'It is not relevant.',
-      'Because the loop earth-fault monitoring uses the FE as the REFERENCE against which loop-to-earth impedance is measured. If the FE is incorrectly terminated (e.g. landed on the PE bar, or loose at termination), the reference is corrupted and the earth-fault monitoring produces false readings — typically intermittent earth-fault reports that come and go with mains transients on the PE. A clean diagnostic for a "fault that travels" includes verifying the FE termination first; if FE is wrong, the apparent loop fault is really an FE termination problem.',
-      'Only the PE matters.',
-      'FE is a red herring.',
+      'It is not relevant — only the PE matters.',
+      'The FE is the reference against which loop-to-earth impedance is measured.',
+      'FE is a red herring with no monitoring role.',
+      'FE only matters on TT-supplied installations.',
     ],
     correctAnswer: 1,
     explanation:
-      'The FE / loop monitoring relationship is one of the diagnostic insights that experienced fire-alarm engineers internalise. Apparent loop faults that do not correlate with cable / device problems often turn out to be FE termination issues. Verify FE first.',
+      'A mis-terminated FE (landed on the PE bar, or loose) corrupts the reference and produces false intermittent earth-fault reports that track mains transients. Verify the FE termination first when diagnosing a fault that comes and goes.',
   },
 ];
 

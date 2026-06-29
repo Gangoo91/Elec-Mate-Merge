@@ -10,12 +10,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What does continuity testing confirm?',
     options: [
-      'That insulation resistance is adequate',
       'That a conductor is complete and has a low-resistance fault path',
+      'That insulation resistance is adequate',
       'That the supply voltage is correct',
       'That RCDs are functioning properly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Continuity testing confirms that conductors are electrically continuous from end to end and provide a complete, low-resistance path for fault current to return to the supply.',
   },
@@ -51,11 +51,11 @@ const quizQuestions: QuizQuestion[] = [
     question: 'When should continuity testing be carried out?',
     options: [
       'Before visual inspection',
-      'After isolation and visual inspection, before other tests',
       'At the same time as insulation resistance testing',
+      'After isolation and visual inspection, before other tests',
       'Only after all other tests are complete',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Continuity testing should be carried out after safe isolation and visual inspection, but before insulation resistance and polarity testing. If continuity fails, further testing should not proceed.',
   },
@@ -64,37 +64,37 @@ const quizQuestions: QuizQuestion[] = [
     question: 'Why is a break in the CPC dangerous?',
     options: [
       'It reduces the supply voltage',
-      'It could prevent fault current from causing protective device operation',
       'It increases the insulation resistance',
       'It affects the power factor',
+      'It could prevent fault current from causing protective device operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A break in the CPC could prevent fault current from returning to the supply and causing protective device operation, leaving exposed metalwork dangerously live during fault conditions.',
   },
   {
     id: 6,
-    question: 'What test current should be used for continuity testing?',
+    question: 'What test source is recommended for continuity (low-resistance) testing?',
     options: [
-      'Between 200mA and 1A',
-      'Maximum available from the tester',
-      '1mA to avoid damaging circuits',
-      'Any current is acceptable',
+      'Maximum current available from the tester',
+      'A no-load voltage of 4 V to 24 V with a short-circuit current of at least 200 mA',
+      'Around 1 mA to avoid damaging circuits',
+      'Any current is acceptable provided a reading is obtained',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'BS 7671 requires a test current between 200mA and 1A for continuity testing to ensure accurate readings while avoiding damage to circuits.',
+      'Guidance Note 3 recommends a continuity test source with a no-load voltage of 4 V to 24 V (a.c. or d.c.) and a short-circuit current of not less than 200 mA, which gives reliable low-resistance readings.',
   },
   {
     id: 7,
     question: 'What is the purpose of testing ring final circuit continuity?',
     options: [
       'To check the circuit breaker rating',
-      'To verify both legs of the ring are complete and connected correctly',
       'To measure the insulation resistance',
       'To test RCD operation',
+      'To verify both legs of the ring are complete and connected correctly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ring final circuit continuity testing verifies that both legs of the ring are complete, properly connected, and that there are no interconnections or spurs incorrectly wired.',
   },
@@ -102,12 +102,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'Why must test leads be zeroed before continuity testing?',
     options: [
-      'To calibrate the battery voltage',
       'To remove the resistance of the test leads from measurements',
+      'To calibrate the battery voltage',
       'To check the tester is working',
       "It's not necessary with modern testers",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Zeroing removes the resistance of the test leads themselves from the measurement, ensuring accurate readings and preventing false high resistance readings.',
   },

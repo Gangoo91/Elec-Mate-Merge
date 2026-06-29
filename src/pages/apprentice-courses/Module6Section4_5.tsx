@@ -22,10 +22,10 @@ const Module6Section4_5 = () => {
       id: 1,
       question: 'Why are test results recorded?',
       options: [
-        'Measured resistance values (e.g., R1+R2)',
+        'To set out the labour charged to the client',
         'To provide evidence of compliance and ensure safety',
-        'The contractor had to retest circuits and lost reputation',
-        'Electrical Installation Condition Report (EICR)',
+        'To list the tools used during the job',
+        'To record the time spent on each circuit',
       ],
       correctAnswer: 1,
       explanation:
@@ -35,10 +35,10 @@ const Module6Section4_5 = () => {
       id: 2,
       question: 'Which certificate is used for new installations?',
       options: [
-        'Measured resistance values (e.g., R1+R2)',
-        'Rectify the fault before energising',
+        'Minor Works Certificate (MWC)',
+        'Electrical Installation Condition Report (EICR)',
         'Electrical Installation Certificate (EIC)',
-        'To provide evidence of compliance and ensure safety',
+        'Periodic Inspection Report',
       ],
       correctAnswer: 2,
       explanation:
@@ -59,12 +59,12 @@ const Module6Section4_5 = () => {
     },
     {
       id: 4,
-      question: 'Which report is used for periodic inspections?',
+      question: 'Which report is used for periodic inspections of existing installations?',
       options: [
         'Electrical Installation Condition Report (EICR)',
-        'The competent person carrying out/supervising the tests',
-        'Rectify the fault before energising',
-        'To provide evidence of compliance and ensure safety',
+        'Electrical Installation Certificate (EIC)',
+        'Minor Works Certificate (MWC)',
+        'Schedule of Circuit Details',
       ],
       correctAnswer: 0,
       explanation:
@@ -100,10 +100,10 @@ const Module6Section4_5 = () => {
       id: 7,
       question: 'What should be done if a polarity test fails?',
       options: [
-        'Live tap-off (plug-in) unit',
-        'Contact burns, arc burns, and flash burns',
-        'L143 — Managing and Working with Asbestos',
-        'Rectify the fault before energising',
+        'Energise the circuit and monitor it for faults',
+        'Record it as satisfactory and move on',
+        'Reduce the protective device rating instead',
+        'Rectify the fault before energising the circuit',
       ],
       correctAnswer: 3,
       explanation:
@@ -113,10 +113,10 @@ const Module6Section4_5 = () => {
       id: 8,
       question: 'What must be recorded for continuity tests?',
       options: [
-        'Measured resistance values (e.g., R1+R2)',
-        'To provide evidence of compliance and ensure safety',
-        'Electrical Installation Condition Report (EICR)',
-        'Rectify the fault before energising',
+        'The measured resistance values (e.g., R1+R2)',
+        'Only a pass or fail outcome for the circuit',
+        'The estimated cost of the cable used',
+        'The time taken to test each circuit',
       ],
       correctAnswer: 0,
       explanation:
@@ -126,10 +126,10 @@ const Module6Section4_5 = () => {
       id: 9,
       question: 'Who signs off test records?',
       options: [
-        'Measured resistance values (e.g., R1+R2)',
-        'The competent person carrying out/supervising the tests',
-        'Electrical Installation Certificate (EIC)',
-        'The contractor had to retest circuits and lost reputation',
+        'The client who commissioned the work',
+        'The competent person who carried out or supervised the tests',
+        'The wholesaler who supplied the materials',
+        'The building control officer for the area',
       ],
       correctAnswer: 1,
       explanation:
@@ -139,10 +139,10 @@ const Module6Section4_5 = () => {
       id: 10,
       question: 'In the real-world example, what happened due to missing records?',
       options: [
-        'Electrical Installation Certificate (EIC)',
-        'Measured resistance values (e.g., R1+R2)',
+        'The installation passed its inspection without issue',
+        'The client paid an early-completion bonus',
         'The contractor had to retest circuits and lost reputation',
-        'The competent person carrying out/supervising the tests',
+        'The warranty period was automatically extended',
       ],
       correctAnswer: 2,
       explanation:

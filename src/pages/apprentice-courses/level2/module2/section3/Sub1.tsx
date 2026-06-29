@@ -49,10 +49,10 @@ const checks = [
     question:
       'In a copper cable carrying DC, the actual electrons drift in which direction relative to conventional current?',
     options: [
-      'Metallic (ferrous and non-ferrous) materials only',
-      'Installing sockets before plastering is complete',
+      'The same direction as conventional current',
+      'Only when the supply is first switched on',
       'Opposite direction to conventional current',
-      'Replacing 25 kg bags of cement with 15 kg bags',
+      'Sideways across the conductor, not along it',
     ],
     correctIndex: 2,
     explanation:
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'What sits at the centre of an atom?',
     options: [
-      'Loud machinery on a building site',
+      'A cloud of free electrons',
       'A nucleus made of protons and neutrons',
-      'Insulation degradation beginning',
-      'All observations, defects, and compliance issues',
+      'A single proton with no neutrons',
+      'A mix of electrons and neutrons',
     ],
     correctAnswer: 1,
     explanation:
@@ -105,9 +105,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why is copper such a good conductor?',
     options: [
-      'Carry out full initial verification style testing',
-      'Dwellings including houses, flats, and communal areas',
-      'Protection from voltage transients',
+      'Its outer electrons are tightly locked into bonds',
+      'It contains no neutrons to get in the way',
+      'It has a very high resistance to current flow',
       'It has lots of free electrons in its outer shell',
     ],
     correctAnswer: 3,
@@ -158,9 +158,9 @@ const quizQuestions = [
     question:
       'When you flick a light switch and the lamp lights up almost instantly, what is travelling at near light speed?',
     options: [
-      'Electrical Installation Certificate',
-      'A skills card confirming competence level',
-      'They create significant flow restrictions (high K values)',
+      'The individual electrons, racing from switch to lamp',
+      'The heat generated in the cable by the current',
+      'The voltage, draining out of the consumer unit',
       'The electromagnetic field around the conductor',
     ],
     correctAnswer: 3,

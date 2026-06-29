@@ -4,16 +4,16 @@ const SmartHomeModule7Section6Quiz = () => {
   const questions = [
     {
       id: 1,
-      question: 'Why is documentation important in smart home installations?',
+      question: 'Why is thorough documentation important on a smart home installation?',
       options: [
-        'To increase project costs',
-        'For compliance, liability protection, and future reference',
-        'To impress clients with paperwork',
-        'To meet insurance requirements only',
+        'It is only needed to satisfy the client’s insurer',
+        'It mainly serves to justify a higher project price',
+        'It replaces the need for any future site visits',
+        'It supports compliance, liability protection and future maintenance',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
-        'Documentation is essential for compliance, protecting against liability, and providing reference for future maintenance.',
+        'Records such as as-built details, credentials and test results protect you if a dispute arises and give the next engineer the reference they need to maintain or extend the system safely.',
     },
   ];
 

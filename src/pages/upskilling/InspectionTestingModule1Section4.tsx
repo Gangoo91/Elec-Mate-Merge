@@ -23,40 +23,40 @@ const inlineChecks = [
     question:
       'A client asks you to take a Method 1 R1+R2 reading "live, just to save time on isolation". You suspect this would breach EAWR Reg 14. Which limb of the three-limb test fails first?',
     options: [
-      'Limb (a) — it is unreasonable in all the circumstances for it to be dead. Method 1 continuity is a dead test by its nature; it CAN be done dead, so working live cannot pass limb (a).',
-      'Limb (b) — reasonable to be at work on it.',
-      'Limb (c) — suitable precautions taken.',
-      'EAWR Reg 14 does not apply to dead tests.',
+      'Limb (a) — that it is unreasonable in all the circumstances for it to be dead',
+      'Limb (b) — that it is reasonable to be at work on or near it while live',
+      'Limb (c) — that suitable precautions are taken to prevent injury',
+      'None — EAWR Reg 14 does not apply to a continuity test of any kind',
     ],
     correctIndex: 0,
     explanation:
-      'EAWR Reg 14 needs all three limbs satisfied for live work to be permissible: (a) unreasonable for it to be dead, (b) reasonable to work near live, (c) suitable precautions. Method 1 continuity is dead by definition — limb (a) fails immediately. The legitimate live tests in BS 7671 are tightly defined (Ze, live polarity at origin, Zs, RCD) precisely because each one needs the supply present to drive the measurement.',
+      'EAWR Reg 14 needs all three limbs satisfied for live work to be permissible: (a) unreasonable for it to be dead, (b) reasonable to work near live, (c) suitable precautions. Method 1 continuity is a dead test by its nature; it CAN be done dead, so working live can never pass limb (a) — it fails first and immediately. The legitimate live tests in BS 7671 are tightly defined (Ze, live polarity at origin, Zs, RCD) precisely because each one needs the supply present to drive the measurement.',
   },
   {
     id: 'mod1-s4-prove-test-prove',
     question:
       'You isolate a circuit, place your voltage indicator on the conductors at the point of work, and read no voltage. You proceed to open the JB. Is this a defensible safe-isolation procedure?',
     options: [
-      'Yes — the indicator confirmed the conductors were dead.',
-      'No. The "prove – test – prove" pattern is missing both proving steps. Without proving the indicator on a known live source BEFORE testing the conductors, a faulty indicator that beeps on its own internal test but cannot detect 230 V would have given the same "dead" reading. Without the re-prove afterwards, you cannot tell if the indicator died between steps.',
-      'Yes — provided the MCB is in the off position.',
-      'No — you also need to test L-L, but on single-phase L-L is not relevant.',
+      'Yes — the voltage indicator confirmed the conductors were dead at the point of work',
+      'Yes — provided the circuit MCB was switched off before the JB was opened',
+      'No — the "prove – test – prove" pattern is missing both of its proving steps',
+      'No — you should also have tested line-to-line at this single-phase point of work',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'The six-step safe isolation requires: prove indicator on a known live source → test for absence of voltage at the point of work → re-prove indicator on the same known live source. Without those two prove steps the test step is unreferenced. Faulty / damaged indicators are the failure mode the proving steps catch — and the failure mode that has historically killed people who skipped them.',
+      'The six-step safe isolation requires: prove indicator on a known live source → test for absence of voltage at the point of work → re-prove indicator on the same known live source. Without proving BEFORE testing, a faulty indicator that beeps on its self-test but cannot detect 230 V gives the same "dead" reading; without re-proving afterwards you cannot tell if the indicator died mid-test. Faulty / damaged indicators are the failure mode the proving steps catch — and the failure mode that has historically killed people who skipped them. (Line-to-line is not relevant on a single-phase circuit.)',
   },
   {
     id: 'mod1-s4-all-sources',
     question:
       'You open the main switch on a domestic consumer unit. The property has a battery storage system with an inverter feeding back into the same CU. What does Reg 537 / 462 plus the BS 7671 definition of isolation require?',
     options: [
-      'Nothing — the main switch covers all sources.',
-      'Open the main switch AND isolate the battery / inverter at its dedicated DC and AC isolators, observe any capacitor-discharge time stated by the manufacturer, then prove dead at the point of work on every conductor including the inverter outgoing tail.',
-      'Disconnect the inverter only if it is over 3.68 kW.',
-      'Trip every MCB downstream — that is sufficient.',
+      'Nothing further — the consumer-unit main switch covers all sources in the installation',
+      'Disconnect the inverter only if its rating exceeds 3.68 kW, below which back-feed is negligible',
+      'Trip every downstream MCB at the consumer unit, which is enough to make the busbar dead',
+      'Open the main switch AND isolate the battery / inverter at its own DC and AC isolators, then prove dead',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The CU main switch isolates the supplier (DNO) side. Anything on the load side that can produce a voltage — battery storage, PV, V2H EV charger, generator, UPS — is a separate source that can back-feed the bus when the main switch is open. The BS 7671 isolation duty requires all sources to be disconnected, and dead-state proven at the actual conductor under work, not at the consumer unit.',
   },
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'You are supervising a second-year apprentice during an EICR. You step out of the room briefly to take a phone call. The apprentice is mid-way through a Zs test at a socket. What does EAWR Reg 16 require?',
     options: [
-      'Nothing — the apprentice has been told the procedure.',
-      'Supervision has lapsed. Reg 16 requires competence OR supervision; the apprentice is not yet competent for the live test, so supervision must be present (within sight and intervention range). The apprentice should put the tools down for the duration of the absence; you take the call outside or you do not take the call.',
-      'It is acceptable provided the apprentice is on a dead test only.',
-      'Reg 16 does not apply to apprentices.',
+      'Nothing further — the apprentice has already been told the live-test procedure',
+      'Supervision has lapsed — the apprentice must put the tools down until you return',
+      'It is acceptable, provided the apprentice has switched to a dead test before you leave',
+      'Nothing — EAWR Reg 16 places no supervision duty on you for a registered apprentice',
     ],
     correctIndex: 1,
     explanation:
-      'EAWR Reg 16 holds the supervisor accountable for the supervised person\'s work. "Supervision" means within sight and intervention range, hands able to take over before harm. Phone calls, tea breaks, room exits during live work by an instructed person are gaps in supervision and Reg 16 breaches. The procedural fix is muscle memory: tools down, step out together, resume together.',
+      'EAWR Reg 16 requires competence OR supervision, and holds the supervisor accountable for the supervised person\'s work. The apprentice is not yet competent for the live Zs test, so supervision must be present — within sight and intervention range, hands able to take over before harm. Phone calls, tea breaks and room exits during live work by an instructed person are gaps in supervision and Reg 16 breaches. The fix is muscle memory: tools down, step out together, resume together.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 641.4 places a single overarching safety duty on the person carrying out inspection and testing. What is it?',
     options: [
-      'PPE shall be worn at all times',
-      'Precautions shall be taken to avoid danger to persons and livestock, and to avoid damage to property and installed equipment, during inspection and testing',
-      'A second person shall always be present',
-      'The supply shall be isolated for the entire test session',
+      'Personal protective equipment shall be worn throughout the inspection and testing',
+      'A second competent person shall always be present during the inspection and testing',
+      'The supply shall be isolated for the entire duration of the inspection and testing',
+      'Precautions shall be taken to avoid danger to persons and livestock and damage to property',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 641.4 is the catch-all duty for safety during inspection and testing. The wording is deliberately broad: precautions to avoid danger to persons, livestock, property and equipment. Everything that follows in this section — safe isolation, supervision, PPE, RA — discharges that duty.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 641.6 specifies who may carry out the verification. What does it require?',
     options: [
-      'Verification shall be carried out by the designer of the installation',
       'Verification shall be made by one or more skilled persons competent in such work',
-      'Verification may be carried out by an instructed person',
-      'Verification shall be carried out by a registered electrician of the installer scheme',
+      'Verification shall be carried out by the designer of the installation',
+      'Verification may be carried out by an instructed person working alone',
+      'Verification shall be carried out by a registered electrician of a competent-person scheme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 641.6: "The verification shall be made by one or more skilled persons competent in such work." Skilled person under BS 7671 Part 2 means electrically skilled — adequate education, training and practical skill to perceive risks and avoid hazards. An instructed person works under supervision; the verification cannot rest on them alone.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'GN3 Ch 4 references EAWR Regulation 16. What duty does Reg 16 of the Electricity at Work Regulations 1989 impose on persons carrying out live diagnostic work in proximity to live conductors?',
     options: [
-      'Persons shall hold a current first-aid certificate',
+      'Persons carrying out the work shall hold a current first-aid certificate',
+      'Persons shall complete a formal permit-to-work before any live diagnostic work',
       'Persons shall be suitably competent with regard to the type and nature of the work being performed',
-      'Persons shall complete a permit-to-work',
-      'Persons shall hold an 18th Edition qualification',
+      'Persons shall hold a current 18th Edition wiring regulations qualification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EAWR Reg 16 is the legal hook for competence: "no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate." GN3 Ch 4 Reg 4.9 specifically anchors live diagnostic work in this duty.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'You are about to start a dead-test session at a domestic consumer unit. The tenant tells you they have an inverter-supplied UPS feeding a home office. What safe-isolation step changes?',
     options: [
-      'Nothing — the consumer unit isolation covers the whole installation',
-      'You must additionally isolate or disconnect the UPS / inverter so it cannot back-feed the circuit you are testing — and prove dead at every test point, not just at the consumer unit',
-      'You can ignore it — UPS systems automatically disconnect on isolation',
-      'You should test the circuit live to avoid the inconvenience of disconnecting the UPS',
+      'Nothing — isolating the consumer unit covers the whole installation including the UPS',
+      'You can ignore it, since UPS systems automatically disconnect when the mains is isolated',
+      'You should test the circuit live to avoid the inconvenience of disconnecting the UPS at all',
+      'You must also isolate the UPS / inverter so it cannot back-feed, then prove dead at each point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A UPS / inverter is an additional source. Opening the consumer unit main switch isolates the supplier side, not the load-side source. The UPS will continue to energise the very circuits you think are dead. Per Reg 537 / 462 (isolation of all sources) and the BS 7671 definition of isolation, you must disconnect every source feeding the section under test, then prove dead at the actual test point — not at the consumer unit.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'Which of the following tests on an installation is BS 7671 designed to allow you to perform live, rather than requiring isolation?',
     options: [
-      'Continuity (R1+R2)',
-      'Insulation resistance',
+      'Continuity of protective conductors (R1+R2)',
       'Earth-fault loop impedance (Ze and Zs) and RCD operating-time',
-      'Polarity at every accessory',
+      'Insulation resistance between live conductors and earth',
+      'Dead-state polarity verification at every accessory',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Continuity, IR and dead-state polarity are dead tests by definition — the circuit must be isolated. Ze, Zs and RCD trip-time tests require the supply to be present so that the meter can drive a fault current and time the disconnection. They are the small set of legitimate live tests in the Reg 643.2 sequence — not a licence for casual live work.',
   },
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: 'A safe-isolation procedure has six steps. Which is the correct order?',
     options: [
       'Lock-off → identify circuit → switch off → prove voltage indicator → test for absence of voltage → re-prove voltage indicator',
-      'Identify circuit → switch off → lock-off → prove voltage indicator on a known live source → test for absence of voltage at the point of work → re-prove voltage indicator on the same known live source',
       'Switch off → test for absence of voltage → lock-off → prove voltage indicator → identify circuit → re-prove indicator',
+      'Identify circuit → switch off → lock-off → prove indicator on a known live source → test for absence of voltage → re-prove indicator on the same source',
       'Identify circuit → lock-off → switch off → test for absence of voltage → prove indicator → leave warning notice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The standard six-step safe isolation: identify the correct circuit; switch off at the appropriate isolator; lock-off and post a warning notice; prove the voltage indicator on a known live source; test for absence of voltage at the point of work (line-line, line-neutral, line-earth, neutral-earth); re-prove the voltage indicator on the same known live source. The "prove – test – prove" pattern is what catches a faulty indicator that beeps on its own internal test but cannot detect 230 V.',
   },
@@ -164,54 +164,54 @@ const quizQuestions = [
     question:
       'Why is the "neutral-to-earth" voltage test part of safe isolation, and not just line-to-everything?',
     options: [
-      'It is not — only line tests are required',
-      'Because a damaged neutral or a borrowed neutral from a different circuit can leave the conductor live even after the line is isolated. Testing N-E catches that',
-      'It checks the RCD',
-      'It tests the voltage indicator battery',
+      'It is not part of safe isolation — only line-to-everything tests are actually required',
+      'It is included as a way of checking that the circuit RCD operates correctly under test',
+      'It is included to confirm the voltage indicator battery is healthy before the line tests',
+      'A damaged or borrowed neutral can leave the conductor live even after the line is isolated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Neutrals are not always at earth potential. A broken neutral upstream, a borrowed neutral from an adjacent circuit, or a wiring error can leave the conductor at line potential. Testing N-E is the step that catches this. Reg 643.1.x and the BS 7671 definition of isolation cover the duty: prove dead on every conductor, not just the line.',
+      'Neutrals are not always at earth potential. A broken neutral upstream, a borrowed neutral from an adjacent circuit, or a wiring error can leave the conductor at line potential after the line is isolated — and the N-E test is the step that catches it. Reg 643.1.x and the BS 7671 definition of isolation cover the duty: prove dead on every conductor, not just the line.',
   },
   {
     id: 8,
     question:
       'You are about to perform an Ze test at the origin of a TN-S supply. What is the minimum acceptable PPE / arrangement?',
     options: [
-      'Standard work boots and a high-vis',
-      'Insulated rubber mat or platform, arc-rated long-sleeve clothing, eye protection (preferably arc-rated face shield), insulated gloves rated to the working voltage, no jewellery or conductive watches, second person nominally aware of the work and able to summon help',
-      'Just the GS38 leads — they protect the operator',
-      'Arc flash suit at IEC level 4',
+      'Insulating mat, arc-rated layer, eye protection, insulated gloves, with a second person aware',
+      'Standard safety boots and a high-visibility vest, with no insulating mat or arc-rated layer',
+      'GS38-compliant test leads alone, with no further PPE since the leads protect the operator',
+      'A full arc-flash suit to IEC arc-protection level 4, regardless of the prospective fault current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Origin Ze is a CAT IV live test. The risk is a network-side transient or a probe-tip slip causing a phase-to-earth arc with kiloamps of fault current. Standing on an insulating platform, wearing arc-rated PPE and eye protection, with a competent second person aware and able to call for help, is the standard expected by HSE guidance and most insurers. The full-blown arc-flash suit is overkill for domestic; the bare minimum on a 25 kA PSCC supply is mat, gloves, arc-rated layer, eye protection.',
+      'Origin Ze is a CAT IV live test. The risk is a network-side transient or a probe-tip slip causing a phase-to-earth arc with kiloamps of fault current. Standing on an insulating platform, wearing arc-rated PPE and eye protection, insulated gloves rated to the working voltage, no conductive jewellery, with a competent second person aware and able to call for help, is the standard expected by HSE guidance and most insurers. A full arc-flash suit is overkill for domestic; the bare minimum on a 25 kA PSCC supply is mat, gloves, arc-rated layer and eye protection. Boots and a hi-vis vest alone, or test leads with no other PPE, are nowhere near adequate.',
   },
   {
     id: 9,
     question:
       'A lone worker is partway through an EICR in a tenanted flat when the tenant becomes verbally aggressive about the time being taken. The worker still has the live tests (Ze, Zs, RCD) outstanding. What is the correct call?',
     options: [
-      'Continue — the tests must be completed today',
-      'Stop the live tests, complete what dead testing remains safely, document the situation, leave and reschedule when supervision or a second person can be present. Reg 641.4 (precautions) and EAWR Reg 16 (competence including supervision) make safety the gating decision, not throughput',
-      'Ask the tenant to leave the flat',
-      'Continue but record the tests as inferred from calculation',
+      'Continue regardless, because the certificate needs the live tests completed on the same day',
+      'Stop the live tests, document the situation, leave and reschedule with a second person present',
+      'Ask the tenant to leave their own flat so the live tests can be finished in peace and quiet',
+      'Continue, but record the live test values inferred from calculation rather than measured',
     ],
     correctAnswer: 1,
     explanation:
-      'Live testing requires concentration. A hostile occupant compromises the safety boundary — distraction, blocked egress, the possibility of physical confrontation while the operator has live probes in hand. The defensible call is: stop, document, withdraw. The certificate can be marked outstanding and re-attended; a fatality cannot be undone. Lone-working policies usually require a check-in / check-out and an escalation route exactly for this reason.',
+      'Live testing requires concentration. A hostile occupant compromises the safety boundary — distraction, blocked egress, the possibility of physical confrontation while the operator has live probes in hand. Reg 641.4 (precautions) and EAWR Reg 16 make safety the gating decision, not throughput. The defensible call is: stop, finish any remaining dead testing safely, document, withdraw. The certificate can be marked outstanding and re-attended; a fatality cannot be undone. Lone-working policies usually require a check-in / check-out and an escalation route exactly for this reason.',
   },
   {
     id: 10,
     question:
       'You are testing a circuit at the consumer unit. You have isolated the circuit MCB but not the main switch. While testing, an apprentice you are training touches the live busbar in the consumer unit and is shocked. Forensically, where did the safe-isolation procedure fail?',
     options: [
-      'The apprentice should have known better — no procedural failure',
-      'Several points: the safe-isolation procedure should have isolated the supply to the consumer unit (or restricted access to the live parts) before any work commenced inside the enclosure; an instructed person (apprentice) should not have been left in proximity to live busbars without active supervision per EAWR Reg 16; the assessment of risk under Reg 641.4 was insufficient',
-      'The MCB should have been replaced',
-      'The voltage indicator was at fault',
+      'The apprentice should have known better — there was no procedural failure on the supervisor side',
+      'The circuit MCB had failed and should have been replaced before any work began inside the unit',
+      'The voltage indicator was at fault and gave a misleading dead reading on the live busbar',
+      'Several: the supply was not isolated, the apprentice was unsupervised near live parts, the RA was insufficient',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multiple failures stack: (1) testing inside an enclosure with live busbars exposed, when the testing did not require live busbars, is a Reg 641.4 RA failure — the supply could and should have been isolated; (2) an instructed person under EAWR Reg 16 must be supervised in proximity to danger, "supervised" meaning within sight and intervention range, not just "told to be careful"; (3) the supervisor competent person carries the duty of care for the trainee. This is the kind of case HSE and coroners look at routinely.',
   },

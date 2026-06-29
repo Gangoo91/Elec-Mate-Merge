@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'afdd-purpose',
     question: 'What is the primary purpose of an AFDD?',
     options: [
-      'Power stations and solar panels',
+      'Detection of earth leakage current for shock protection',
       'Detection of dangerous arcing faults',
-      'States how long the quoted price remains valid',
-      'A clear line of sight with no obstructions',
+      'Detection of overload current in the circuit',
+      'Detection of overvoltage transients on the supply',
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a series arc fault?',
     options: [
-      'Loss of earth potential equalisation, increasing shock risk',
+      'An arc between line and neutral due to insulation breakdown',
       'An arc within a single conductor due to damage or poor connection',
-      'Flexible access to training at convenient times',
-      'Zero electrical resistance at very low temperatures',
+      'An arc between line and earth caused by insulation failure',
+      'An arc across the contacts of a switch during normal operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'How do AFDDs distinguish dangerous arcs from normal arcing (e.g., motor brushes)?',
     options: [
-      'Detecting leaks and optimizing airflow distribution',
-      'They prevent overcommitment and ensure each job receives proper attention',
-      'A miswired relay connecting the fire alarm output to the wrong BMS input',
+      'By measuring the residual current flowing to earth',
+      'By comparing the line and neutral current magnitudes',
+      'By monitoring the temperature rise at the terminals',
       'By analysing high-frequency characteristics of the arc signature',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'According to BS 7671 Regulation 421.1.7, in which locations are AFDDs recommended?',
     options: [
-      'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
+      'Only outdoor circuits exposed to direct weather',
       'AC final circuits in buildings with sleeping accommodation, combustible construction, or irreplaceable goods',
-      'Working without the latest safety briefing — and the firm cannot evidence training under HASAWA s.2(2)(c) for that worker',
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
+      'Only three-phase industrial machinery circuits',
+      'Only circuits supplying medical equipment in hospitals',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'Can AFDDs provide protection for circuits already protected by MCBs and RCDs?',
     options: [
-      'Integrated security and monitoring systems',
-      'User authentication and encrypted communications',
-      'Review of actions from the previous meeting',
+      'No, an AFDD makes the MCB and RCD redundant',
+      'No, AFDDs and RCDs cannot share the same circuit',
+      'Yes, but only if the MCB is removed first',
       'Yes, they complement MCBs and RCDs as additional protection',
     ],
     correctAnswer: 3,
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Where should an AFDD be installed in a circuit?',
     options: [
-      'It reduces lifespan and increases failure risk',
+      'At the final socket outlet on the circuit',
       'At the origin of the circuit (distribution board)',
-      'To accommodate thermal expansion and contraction',
-      'Remove or control any element of the fire triangle',
+      'At the midpoint of the longest cable run',
+      'Immediately adjacent to the connected load',
     ],
     correctAnswer: 1,
     explanation:

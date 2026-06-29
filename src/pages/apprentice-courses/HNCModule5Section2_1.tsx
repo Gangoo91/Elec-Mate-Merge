@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'A hospital requiring complex medical gas systems and specialist equipment would typically suit which procurement route?',
     options: [
-      'Two-stage or construction management',
-      'Design and build with a guaranteed maximum price',
+      'Single-stage competitive tender at lowest price',
+      'Fixed-price design and build let from concept',
       'Traditional with specialist subcontracts',
-      'Buildability input and early coordination is needed',
+      'Management contracting with no design team input',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What is novation in the context of design and build procurement?',
     options: [
       "Transferring the client's consultants to the contractor",
-      "Traditional with specialist subcontracts",
-      "During the employer's requirements stage",
-      "The client is experienced and wants maximum control",
+      'Splitting the works into separate trade packages',
+      'Setting a guaranteed maximum price for the project',
+      'Appointing a second contractor to check the design',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'For a speculative office development requiring cost certainty, which route would typically be recommended?',
     options: [
-      'The client is experienced and wants maximum control',
+      'Construction management with direct trade contracts',
       'Design and build with a guaranteed maximum price',
-      'Transferring the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s consultants to the contractor',
-      'During the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements stage',
+      'Traditional procurement with a full bill of quantities',
+      'Management contracting on a cost-reimbursable basis',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: "The term 'contractor's designed portion' (CDP) refers to:",
     options: [
-      'Transferring the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s consultants to the contractor',
-      'Buildability input and early coordination is needed',
+      'The proportion of the works the contractor self-delivers',
+      'The share of the contract value paid as a management fee',
       'Elements of traditional contracts designed by the contractor',
-      'Design and build with a guaranteed maximum price',
+      'The retention held back until practical completion',
     ],
     correctAnswer: 2,
     explanation:

@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'star-delta',
     question: 'In a star (Y) connection, the neutral point is formed by connecting together:',
     options: [
-      'Current capacity vs. rated capacity',
-      'To calculate Zs when added to Ze',
+      'Both ends of a single phase winding',
+      'The three line conductors at the supply head',
       'One end of each of the three phase windings',
-      'The first 1-2 weeks after discharge',
+      'The outer ends of the three phase windings',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A UK domestic property is typically supplied with:',
     options: [
-      'Total energy let through by a protective device during fault clearance',
+      'Three-phase 400 V (three phases and neutral from the network)',
       'Single-phase 230 V (one phase and neutral from the three-phase network)',
-      'A motor circuit with significant inrush current on starting',
-      'To prevent the cable from overheating due to reduced heat dissipation',
+      'Two-phase 460 V (two phases without a neutral)',
+      'Single-phase 110 V (centre-tapped from a site transformer)',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "A three-phase motor has a nameplate rating of 'Δ 400 V'. This means:",
     options: [
-      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
+      'The motor must be supplied at 400 V between each line and neutral',
       'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
-      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
-      'A large number of single-phase computer loads unevenly distributed across phases',
+      'The motor draws 400 V across each winding only when connected in star',
+      'The motor is a 400 V single-phase machine wired between two lines',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'An unbalanced three-phase load causes which of the following problems?',
     options: [
-      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
-      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
+      'A complete loss of supply on the most heavily loaded phase',
+      'Reversal of the phase rotation seen by connected motors',
       'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
-      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
+      'An automatic increase in supply frequency to compensate for the imbalance',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
       'The main advantage of three-phase power over single-phase for industrial applications is:',
     options: [
       'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
-      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
-      'A large number of single-phase computer loads unevenly distributed across phases',
-      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
+      'Three-phase supplies eliminate the need for any earthing or protective conductors',
+      'Three-phase supplies operate at a lower frequency, reducing transformer losses',
+      'Three-phase supplies allow motors to run without any starting current at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Phase rotation (phase sequence) is important because:',
     options: [
-      'A large number of single-phase computer loads unevenly distributed across phases',
-      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
+      'Incorrect phase rotation increases the supply voltage above 400 V',
+      'Incorrect phase rotation causes the neutral current to rise sharply',
       'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
-      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
+      'Incorrect phase rotation stops the protective device from operating on fault',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
       'Which of the following loads is most likely to cause a significant neutral current in a three-phase four-wire system?',
     options: [
       'A large number of single-phase computer loads unevenly distributed across phases',
-      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
-      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
-      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
+      'A balanced three-phase induction motor running at full load',
+      'A three-phase resistive heater with equal elements on each phase',
+      'A delta-connected transformer with no neutral connection at all',
     ],
     correctAnswer: 0,
     explanation:

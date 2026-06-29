@@ -66,11 +66,16 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      "True or False: It is acceptable to exceed a cable's minimum bend radius during installation if it will be straightened later.",
-    options: ['True', 'False'],
+      "Is it acceptable to exceed a cable's minimum bend radius during pulling if it will be straightened afterwards?",
+    options: [
+      'Yes - any kinks can be removed by straightening',
+      'No - it can cause permanent internal conductor damage',
+      'Yes - provided the cable is warmed first',
+      'Yes - as long as the sheath is not split',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. Exceeding minimum bend radius can cause permanent internal conductor damage that cannot be repaired by straightening.',
+      'Exceeding minimum bend radius can cause permanent internal conductor damage that cannot be repaired by straightening.',
   },
   {
     id: 3,
@@ -90,9 +95,9 @@ const quizQuestions = [
     question: 'Why should single-core cables be pulled together?',
     options: [
       'To ensure even tension and avoid phase crossover',
-      'Different wavelengths travelling at different speeds',
-      'To avoid retesting and ensure correct identification',
-      'Charging standards, load management, and vehicle integration',
+      'To increase their combined current-carrying capacity',
+      'To reduce the minimum bend radius required',
+      'To make them easier to colour-code afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -115,10 +120,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the risk of not supporting cables in vertical pulls?',
     options: [
-      'Resolve workplace disagreements through structured processes',
-      'The energy let-through during operation',
+      'The cable colour identification may fade',
+      'The bend radius becomes too large at the top',
       'Excessive stretching, leading to conductor damage',
-      'The Boiler Upgrade Scheme (BUS) for upfront grants',
+      'The cable current rating is permanently increased',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,9 +133,9 @@ const quizQuestions = [
     id: 7,
     question: 'Name one common mistake when pulling multi-core cables.',
     options: [
-      'You might miss a dangerous fault condition',
-      'Age, environment, and original standards',
-      'To disconnect the system if the grid fails',
+      'Using cable rollers along the route',
+      'Applying pulling lubricant before the pull',
+      'Monitoring tension with a gauge',
       'Twisting or coiling during pulling',
     ],
     correctAnswer: 3,

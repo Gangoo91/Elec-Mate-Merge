@@ -38,9 +38,9 @@ const checks = [
     id: 'l3-m3-6-1-cat',
     question: 'AC-3 utilisation category contactor is rated for:',
     options: [
-      'Copper cables, steel containment, pipework, and ductwork',
-      'To establish the true extent of work executed',
-      'Measure and check against the drawing',
+      'Non-inductive or slightly inductive resistive loads such as heaters',
+      'Tungsten-filament lamp lighting loads with high inrush',
+      'Plugging and inching duty on wound-rotor slip-ring motors',
       'Squirrel-cage motor switching with normal start/stop',
     ],
     correctIndex: 3,
@@ -51,10 +51,10 @@ const checks = [
     id: 'l3-m3-6-1-relay',
     question: 'A standard relay differs from a contactor primarily by:',
     options: [
-      'Fire barriers must be installed to maintain compartmentation',
-      'A written document describing how work will be carried out safely, step by step',
+      'Using a permanent magnet instead of an energised coil',
+      'Switching only DC, never AC loads',
       'Smaller current rating, used in control circuits not for switching loads',
-      'To provide strain relief, earth continuity, and environmental sealing',
+      'Always being manually operated rather than electromagnetic',
     ],
     correctIndex: 2,
     explanation:
@@ -64,10 +64,10 @@ const checks = [
     id: 'l3-m3-6-1-solenoid',
     question: 'A solenoid valve in a heating system uses:',
     options: [
-      'Electrical Installation Certificate or Minor Works Certificate',
-      'They address professional topics and learning is documented',
+      'A bimetallic strip that bends with temperature to open the valve',
+      'A small motor that screws the valve open over several seconds',
       'Coil that pulls a plunger to open or close a valve when energised',
-      'Adding a single socket outlet to an existing circuit',
+      'A pressure diaphragm operated purely by the water flow',
     ],
     correctIndex: 2,
     explanation:
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'Contactor coil voltage typically:',
     options: [
-      'Hazards during construction, maintenance, use and demolition',
+      'Must always match the load voltage exactly',
       'Independent — could be 230 V AC, 24 V DC, etc., separate from load circuit',
-      'Flammable — the substance, vapour or gas can ignite easily',
-      'To accommodate thermal expansion in long conduit runs',
+      'Is always 12 V DC regardless of the load being switched',
+      'Has to be derived from the load circuit it switches',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 2,
     question: 'Auxiliary contacts on a contactor:',
     options: [
-      'Eliminate, substitute, engineering controls, administrative controls, PPE',
-      'To avoid electromagnetic interference affecting data transmission',
+      'Carry the main load current to the motor windings',
+      'Provide the magnetic field that closes the main contacts',
       'Give signal contacts (e.g. to feed a "running" lamp or interlock another circuit)',
-      'RIDDOR 2013 reporting by the responsible person if the injury is over-7-day, specified or fatal',
+      'Replace the need for a separate overload relay',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,9 +106,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why do contactors hum on AC?',
     options: [
-      'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
-      'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
-      'Continue CPR immediately and follow the AED prompts — it will re-analyse every 2 minutes',
+      'The coil resonates mechanically at the 50 Hz supply frequency',
+      'Eddy currents in the laminated core vibrate the whole frame',
+      'The arc across the main contacts produces an audible buzz',
       'Coil flux pulses at 100 Hz; shading ring on the pole face creates a small phase-shifted flux to keep the armature held',
     ],
     correctAnswer: 3,
@@ -120,9 +120,9 @@ const quizQuestions = [
     question: 'A latching relay:',
     options: [
       'Holds its state without continuous coil power; needs a pulse to change state',
-      'Because they happen far more frequently and complacency is common',
-      'The cable from distribution point to individual customer premises',
-      'It allows engineers to trace what happened before and after an alarm',
+      'Drops out the instant coil power is removed, like a standard relay',
+      'Can only ever be reset by removing the supply to the whole board',
+      'Switches automatically on a timer rather than on a control pulse',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'Overload relays in a motor circuit:',
     options: [
-      'To prevent the shield from acting as an antenna and picking up more interference',
+      'Trip instantly on any short-circuit fault current',
       'Sense motor current and trip if the running current exceeds set value for a sustained period',
-      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
-      'Always referring to the person before their condition, e.g. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'a person with schizophrenia\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rather than \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'a schizophrenic\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Detect earth-leakage imbalance and trip like an RCD',
+      'Provide the main switching of the motor in place of a contactor',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'Solenoid valves are commonly used to:',
     options: [
-      'Certification and unsupervised live testing',
-      'Fundamental principles of how light affects human vision and comfort',
+      'Step the supply voltage down for control circuits',
+      'Sense fluid temperature and feed it back to a thermostat',
       'Open/close fluid or gas flow paths under electrical control',
-      'Embodied carbon coefficients for construction materials',
+      'Smooth pressure surges in a pipework system',
     ],
     correctAnswer: 2,
     explanation:

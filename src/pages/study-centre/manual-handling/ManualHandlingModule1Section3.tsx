@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'What does the acronym TILE stand for in the context of manual handling risk assessment?',
     options: [
-      'Training, Instruction, Lifting, Equipment',
       'Task, Individual, Load, Environment',
+      'Training, Instruction, Lifting, Equipment',
       'Time, Intensity, Location, Effort',
       'Technique, Inspection, Limit, Evaluation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'TILE stands for Task, Individual, Load, and Environment. These are the four categories of risk factor that must be considered when carrying out a manual handling risk assessment under the MHOR 1992. The TILE framework is derived from Schedule 1 of the regulations.',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
     question: "What is the first step in the HSE's five-step risk assessment process?",
     options: [
       'Decide who might be harmed and how',
-      'Identify the hazards',
       'Record your findings',
+      'Identify the hazards',
       'Evaluate the risks and decide on precautions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The first step in the HSE's five-step risk assessment process is to identify the hazards. For manual handling, this means identifying all tasks that involve transporting or supporting a load by hand or bodily force. Only after hazards have been identified can you move on to evaluating who is at risk and what controls are needed.",
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     question: 'What is the HSE MAC tool used for?',
     options: [
       'Measuring the maximum allowable capacity of a hoist',
-      'Assessing the risk of manual handling tasks using a colour-coded scoring system',
       'Calculating the minimum number of workers needed for a team lift',
       'Testing whether a load exceeds the legal weight limit',
+      'Assessing the risk of manual handling tasks using a colour-coded scoring system',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The HSE Manual Handling Assessment Charts (MAC) tool is a risk assessment method that uses a colour-coded scoring system (green, amber, red, purple) to assess the risk level of lifting, carrying, and team handling operations. It helps identify high-risk tasks and prioritise improvements.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 1,
     question: 'The TILE framework for manual handling risk assessment stands for:',
     options: [
-      'Training, Instruction, Lifting, Equipment',
       'Task, Individual, Load, Environment',
+      'Training, Instruction, Lifting, Equipment',
       'Technique, Inspection, Limit, Evaluation',
       'Time, Impact, Load, Exposure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TILE stands for Task, Individual, Load, and Environment — the four categories of risk factor that must be assessed for every manual handling operation.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'When must a manual handling risk assessment be reviewed?',
     options: [
+      'When there is reason to believe it is no longer valid, or when conditions change',
       'Only when the HSE conducts an inspection',
       'Every 5 years as a legal requirement',
-      'When there is reason to believe it is no longer valid, or when conditions change',
       'Only after an accident has occurred',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Regulation 4(2) of the MHOR 1992 requires employers to review assessments whenever there is reason to suspect they are no longer valid — for example, when the task changes, a new type of load is introduced, the environment changes, or an injury or near miss occurs.',
   },
@@ -177,8 +177,8 @@ const quizQuestions = [
     id: 8,
     question:
       'The HSE guideline filter figure for a man lifting a load close to the body at waist height is:',
-    options: ['15 kg', '20 kg', '25 kg', '30 kg'],
-    correctAnswer: 2,
+    options: ['15 kg', '20 kg', '30 kg', '25 kg'],
+    correctAnswer: 3,
     explanation:
       'The HSE guideline filter figure for a man lifting a load close to the body, at waist height (between knuckle and elbow height), is 25 kg. This is NOT a legal limit — it is a filter to help identify tasks that need a detailed risk assessment. The actual safe weight depends on all the TILE factors.',
   },

@@ -17,8 +17,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m2s1-check2',
     question: 'What is the maximum power for a single-phase Mode 3 charger at 32A?',
-    options: ['3.7kW', '7.4kW', '11kW', '22kW'],
-    correctIndex: 1,
+    options: ['3.7kW', '11kW', '7.4kW', '22kW'],
+    correctIndex: 2,
     explanation:
       'At 230V single-phase and 32A, the maximum power is 7.4kW (230V × 32A = 7.36kW). This is the typical power level for domestic wallbox installations.',
   },
@@ -67,11 +67,11 @@ const quizQuestions = [
       'A customer wants the fastest home charging possible from a single-phase supply. What should you recommend?',
     options: [
       'Mode 2 portable charger at 13A',
-      'Mode 3 wallbox at 32A (7.4kW)',
       'Mode 4 DC charger at 50kW',
       'Mode 3 wallbox at 63A (14.5kW)',
+      'Mode 3 wallbox at 32A (7.4kW)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A Mode 3 wallbox at 32A provides 7.4kW - the maximum for single-phase domestic supply. Mode 2 is slower (2.3kW at 10A). Mode 4 DC requires commercial infrastructure. 63A single-phase isn't available domestically.",
   },

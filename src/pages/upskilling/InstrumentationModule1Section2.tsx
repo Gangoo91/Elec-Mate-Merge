@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What are two examples of instrumentation used in HVAC systems?',
     options: [
       'Temperature sensors and humidity sensors',
-      'Light switches and door handles',
-      'Paint and wallpaper',
-      'Chairs and tables',
+      'Isolator switches and distribution boards',
+      'Circuit breakers and busbars',
+      'Cable trays and trunking',
     ],
     correctIndex: 0,
     explanation:
@@ -25,12 +25,12 @@ const quickCheckQuestions = [
   },
   {
     id: 'bms-energy',
-    question: 'How does instrumentation in BMS help achieve energy savings?',
+    question: 'How does instrumentation in a BMS help achieve energy savings?',
     options: [
-      'By increasing power consumption',
+      'By keeping every system running continuously',
       'Through occupancy sensors and automated lighting/HVAC control',
-      'By running systems continuously',
-      'Only for decoration purposes',
+      'By deliberately increasing power consumption',
+      'By relying purely on manual operator intervention',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'pressure-monitoring',
     question: 'Why is pressure monitoring critical in process control?',
     options: [
-      'For aesthetic reasons only',
+      'Mainly for aesthetic and design reasons',
       'To ensure safety, prevent equipment damage, and maintain product quality',
-      "It's not important",
-      'Only for legal documentation',
+      'Only to provide legal documentation after an incident',
+      'Chiefly to reduce the size of the control panel',
     ],
     correctIndex: 1,
     explanation:
@@ -57,9 +57,9 @@ const quizQuestions = [
     question: 'What are two examples of instrumentation used in HVAC systems?',
     options: [
       'Temperature sensors and humidity sensors',
-      'Light switches and door handles',
-      'Paint and wallpaper',
-      'Chairs and tables',
+      'Isolator switches and distribution boards',
+      'Circuit breakers and busbars',
+      'Cable trays and trunking',
     ],
     correctAnswer: 0,
     explanation:
@@ -67,14 +67,14 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'How does instrumentation in BMS help achieve energy savings?',
+    question: 'How does instrumentation in a BMS help achieve energy savings?',
     options: [
-      'By increasing power consumption',
+      'By keeping every system running continuously',
+      'By deliberately increasing power consumption',
       'Through occupancy sensors and automated lighting/HVAC control',
-      'By running systems continuously',
-      'Only for decoration purposes',
+      'By relying purely on manual operator intervention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BMS uses occupancy sensors, light sensors, and time schedules to automatically control lighting and HVAC systems, reducing energy consumption when spaces are unoccupied.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why is pressure monitoring critical in process control?',
     options: [
-      'For aesthetic reasons only',
       'To ensure safety, prevent equipment damage, and maintain product quality',
-      "It's not important",
-      'Only for legal documentation',
+      'Mainly to satisfy aesthetic design requirements',
+      'Only to provide legal documentation after an incident',
+      'Chiefly to reduce the size of the control panel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pressure monitoring prevents dangerous over-pressurisation, protects equipment from damage, ensures process efficiency, and maintains consistent product quality.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 4,
     question: 'What role does instrumentation play in solar energy systems?',
     options: [
-      'No role at all',
-      'Only for cleaning panels',
+      'It is limited to scheduling panel cleaning',
+      'It is used mainly for marketing the installation',
       'Monitoring power output, irradiance levels, and system performance',
-      'Just for marketing purposes',
+      'It plays no meaningful role in operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,19 +108,19 @@ const quizQuestions = [
     id: 5,
     question: 'What is a universal benefit of instrumentation across all industries?',
     options: [
-      'Increased complexity',
-      'Higher costs only',
+      'It mainly adds system complexity',
+      'It increases ongoing running costs only',
+      'It requires more manual intervention',
       'Improved safety and operational efficiency',
-      'More manual work required',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'All industries benefit from instrumentation through improved safety, enhanced operational efficiency, better product quality, and regulatory compliance.',
   },
   {
     id: 6,
     question: 'What percentage energy savings can HVAC optimisation typically achieve?',
-    options: ['1-5%', '20-40%', '80-90%', 'No savings possible'],
+    options: ['1-5%', '20-40%', '80-90%', 'No meaningful savings are possible'],
     correctAnswer: 1,
     explanation:
       'Properly implemented HVAC instrumentation and control can achieve energy savings of 20-40% through optimised operation and demand-based control.',
@@ -129,19 +129,19 @@ const quizQuestions = [
     id: 7,
     question: 'What does a Building Management System (BMS) integrate?',
     options: [
-      'Only lighting systems',
+      'Lighting circuits only',
+      'Fire alarm systems only',
       'Multiple building services including HVAC, lighting, and security',
-      'Only fire alarms',
-      'Only access control',
+      'Access control systems only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BMS integrates multiple building services including HVAC, lighting, security, fire systems, and energy management for comprehensive building control.',
   },
   {
     id: 8,
     question: 'In wind energy systems, what do anemometers measure?',
-    options: ['Temperature', 'Wind speed', 'Voltage', 'Vibration'],
+    options: ['Generator temperature', 'Wind speed', 'Terminal voltage', 'Gearbox vibration'],
     correctAnswer: 1,
     explanation:
       'Anemometers measure wind speed, which is critical for turbine control, power output prediction, and safety shutdown decisions in wind energy systems.',
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main purpose of safety instrumentation in process industries?',
     options: [
-      'To increase production speed',
+      'To increase the speed of production',
+      'To reduce the capital cost of equipment',
+      'To simplify day-to-day operations',
       'To protect personnel, equipment, and the environment from hazards',
-      'To reduce equipment costs',
-      'To simplify operations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Safety instrumentation protects personnel, equipment, and the environment by detecting hazardous conditions and initiating appropriate protective actions.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 10,
     question: 'What does grid integration instrumentation monitor in renewable energy?',
     options: [
-      'Only panel cleanliness',
       'Grid frequency, voltage, and power quality',
-      'Only weather conditions',
-      'Only equipment age',
+      'Mainly the cleanliness of the panels',
+      'Only the prevailing weather conditions',
+      'Only the age of the installed equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Grid integration instrumentation monitors frequency, voltage, power quality, and reactive power to ensure renewable energy systems work safely with the electrical grid.',
   },

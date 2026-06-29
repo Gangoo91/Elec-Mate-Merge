@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Approved Document B (Fire Safety) is the route to compliance with which functional requirements of the Building Regulations 2010?',
     options: [
-      'Part L (energy) and Part M (accessibility).',
-      'Part B requirements B1 to B5: B1 Means of warning and escape, B2 Internal fire spread (linings), B3 Internal fire spread (structure), B4 External fire spread, B5 Access and facilities for the fire service. ADB Volume 1 covers dwellings; ADB Volume 2 covers buildings other than dwellings. Compliance with ADB is one route to satisfy the functional requirements; alternative fire-engineering routes per BS 7974 are also permitted but require demonstration of equivalence. The functional requirements are law (Schedule 1 Building Regulations 2010); ADB is guidance.',
-      'Schedule 4 of BS 5839-1.',
-      'Part P (electrical safety).',
+      'The Part B requirements B1 to B5, covering warning and escape, internal and external fire spread, and FRS access.',
+      'Part L (conservation of fuel and power) and Part M (access to and use of buildings) of the Building Regulations.',
+      'Schedule 4 of BS 5839-1, the code of practice for non-domestic fire detection and alarm systems.',
+      'Part P (electrical safety), which governs electrical installations carried out in dwellings.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'B1-B5 are the functional requirements. ADB is THE guidance document showing the prescriptive route to compliance. Alternative fire-engineering routes are permitted but the responsible person / designer must demonstrate equivalence — ADB is the path of least resistance.',
+      'B1-B5 are the functional requirements: B1 means of warning and escape, B2 internal fire spread (linings), B3 internal fire spread (structure), B4 external fire spread, B5 access and facilities for the fire service. The functional requirements are law (Schedule 1, Building Regulations 2010); ADB is the guidance document showing the prescriptive route to compliance (Volume 1 dwellings, Volume 2 other buildings). Alternative fire-engineering routes per BS 7974 are permitted but require demonstration of equivalence.',
   },
   {
     id: 'fam7-s2-b1-detection',
     question:
       'Where in Approved Document B does the requirement for an automatic fire detection and alarm system originate?',
     options: [
-      'In B5 (FRS access).',
-      'In B1 (Means of warning and escape). B1 is the functional requirement that "the building shall be designed and constructed so that there are appropriate provisions for the early warning of fire, and appropriate means of escape in case of fire from the building to a place of safety outside the building capable of being safely and effectively used at all material times". ADB then references BS 5839-1 (non-domestic) and BS 5839-6 (domestic) as the codes of practice that satisfy the early-warning element. The system category and design follows BS 5839-1 / -6; the legal hook is B1.',
-      'In Approved Document M.',
-      'In Approved Document Q.',
+      'In requirement B5 (access and facilities for the fire service) of Part B of the Building Regulations.',
+      'In Approved Document M (access to and use of buildings), under the accessibility provisions.',
+      'In requirement B1 (means of warning and escape), the source of the early-warning provision.',
+      'In Approved Document Q (security in dwellings), under the unauthorised-access provisions.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'B1 is the legal source. ADB references BS 5839-1 / -6 as the technical route. The contractor providing a BS 5839-1 Cat L2 design is providing the technical route to B1 compliance — the regulatory chain is: B1 (law) → ADB (guidance) → BS 5839-1 (code of practice) → contractor design.',
+      'B1 is the functional requirement that a building be designed so there are appropriate provisions for early warning of fire and appropriate means of escape that can be safely used at all material times. ADB then references BS 5839-1 (non-domestic) and BS 5839-6 (domestic) as the codes of practice satisfying the early-warning element. The regulatory chain runs B1 (law) → ADB (guidance) → BS 5839-1 / -6 (code of practice) → contractor design.',
   },
   {
     id: 'fam7-s2-vad',
     question:
       'A new-build commercial premises must include accessibility for hearing-impaired occupants. Which Approved Document drives visual alarm device (VAD) provision in fire alarm design?',
     options: [
-      'ADB alone.',
-      'Approved Document M (Access to and use of buildings) — for the underlying accessibility requirement that buildings be accessible to disabled persons including the hearing-impaired. The fire alarm consequence is that visual alarm devices (VADs) compliant with BS EN 54-23 are needed in areas where audible-only would not give a hearing-impaired user adequate warning. BS 5839-1 §16 deals with the technical specification of VADs (light intensity, mounting position, coverage volume). The interaction is: ADM drives the policy requirement (accessibility); BS 5839-1 drives the engineering specification (which devices, where, what coverage).',
-      'Approved Document Q only.',
-      'Building Safety Act regulations.',
+      'Approved Document B alone, through its early-warning and means-of-escape provisions.',
+      'Approved Document Q (security in dwellings), through its unauthorised-access provisions.',
+      'The Building Safety Act 2022 regulations, through the Higher Risk Building accountable-person duties.',
+      'Approved Document M (access to and use of buildings), through the underlying accessibility requirement.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'ADM is the accessibility hook. BS 5839-1 §16 + BS EN 54-23 are the engineering route to satisfying it within the fire alarm system. VAD coverage is volume-based (cubic metres covered by the C-3-15 / C-6-15 / W-2.4-15 etc category rating).',
+      'ADM carries the underlying accessibility requirement that buildings be usable by disabled persons including the hearing-impaired. The fire alarm consequence is that visual alarm devices (VADs) compliant with BS EN 54-23 are needed where audible-only would not give a hearing-impaired user adequate warning. ADM drives the policy (accessibility); BS 5839-1 §16 drives the engineering specification (light intensity, mounting position, volume-based coverage such as C-3-15).',
   },
   {
     id: 'fam7-s2-gateway',
     question:
       'A new HRB is in design stage. What is "Gateway 2" under the Building Safety Act regime?',
     options: [
-      'A planning permission step.',
-      'The pre-construction Building Safety Regulator design check. Before construction can start, the BSR must approve the building safety case for the HRB design. This is a substantial process — far more rigorous than pre-BSA building control — and includes review of the fire strategy, structural design, fire stopping strategy, evacuation strategy, and the management plan for the golden thread. Gateway 1 is at planning stage; Gateway 2 is pre-construction; Gateway 3 is at completion before occupation. All three apply to HRBs. Building Safety Regulator (a function of the HSE) is the Building Control authority for HRBs — replaces the LABC / approved inspector route for HRB work.',
-      'A final occupation sign-off only.',
-      'A fire risk assessment.',
+      'The pre-construction Building Safety Regulator design check, approved before construction can start.',
+      'A planning permission step carried out by the local planning authority before design begins.',
+      'A final occupation sign-off carried out only at the very end of the project before handover.',
+      'A standalone fire risk assessment of the completed high-rise building once it is occupied.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Gateway 2 = pre-construction BSR design approval. The BSR replaces normal building control for HRBs. Fire alarm designers working on an HRB feed into the Gateway 2 submission via the fire strategy and the cause-and-effect — the BSR will scrutinise these.',
+      'Gateway 2 is the pre-construction BSR design approval: before construction can start, the BSR must approve the building safety case, including the fire strategy, structural and fire-stopping design, evacuation strategy and golden-thread management plan. Gateway 1 is at planning, Gateway 2 pre-construction, Gateway 3 at completion before occupation. The BSR (a function of the HSE) replaces the LABC / approved-inspector route for HRB work, and fire alarm designers feed into Gateway 2 via the fire strategy and cause-and-effect.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'In the regulatory chain Building Regulations → Approved Document B → BS 5839-1, which is law and which is guidance?',
     options: [
-      'All three are law.',
-      'The Building Regulations 2010 (Schedule 1, functional requirements B1-B5) are law — they are statutory instruments. Approved Document B is statutory guidance: it is the route to compliance authorised by the Secretary of State, but it is not the only route. Alternative fire-engineering routes per BS 7974 are permitted if equivalence is demonstrated. BS 5839-1 is a code of practice published by BSI — also not law, but referenced by ADB and treated by AHJs / insurers / courts as the de facto specification for non-domestic fire detection / alarm systems. Departures from BS 5839-1 are "variations" that must be justified and recorded.',
-      'BS 5839-1 is law and ADB is guidance.',
-      'ADB is law and BS 5839-1 is guidance.',
+      'The Building Regulations are law; Approved Document B and BS 5839-1 are both guidance, not law.',
+      'All three are law and are enforced equally as statutory instruments by building control.',
+      'BS 5839-1 is the law, while Approved Document B is only non-binding guidance for designers.',
+      'Approved Document B is the law, while BS 5839-1 is only non-binding guidance for designers.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Building Regs = law. ADB = statutory guidance (route to compliance). BS 5839-1 = code of practice (referenced by ADB, treated as de facto specification). Departures from BS 5839-1 are not illegal in themselves but require justification — the FRA, AHJ and insurer expect BS 5839-1 compliance.',
   },
@@ -95,124 +95,124 @@ const quizQuestions = [
     id: 2,
     question: 'Approved Document B is published in two volumes. What is the split?',
     options: [
-      'Old build vs new build.',
-      'Volume 1 — Dwellinghouses. Volume 2 — Buildings other than dwellinghouses. The split mirrors the BS 5839 split (BS 5839-6 domestic / BS 5839-1 non-domestic). Volume 1 covers single-family dwellings, two-storey houses, three-storey houses, lofts, garages — the domestic stock. Volume 2 covers offices, retail, hospitality, healthcare, education, places of assembly, residential institutions other than family dwellings, blocks of flats (the common parts; the flats themselves are dwellings under Vol 1). The volumes are coordinated; some clauses appear in both.',
-      'England vs Wales.',
-      'Single storey vs multi-storey.',
+      'Volume 1 covers existing build and Volume 2 covers new build of all types.',
+      'Volume 1 covers premises in England and Volume 2 covers premises in Wales.',
+      'Volume 1 covers dwellinghouses; Volume 2 covers buildings other than dwellinghouses.',
+      'Volume 1 covers single-storey buildings and Volume 2 covers multi-storey buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Vol 1 dwellings, Vol 2 non-dwellings. Common parts of blocks of flats are Vol 2 (the common parts are not dwellings). Flat entrances and the flat interiors are Vol 1. The split is consistent with the BS 5839-1 / -6 boundary.',
+      'Volume 1 covers dwellinghouses (single-family dwellings, two- and three-storey houses, lofts, garages); Volume 2 covers buildings other than dwellinghouses (offices, retail, hospitality, healthcare, education, places of assembly, and the common parts of blocks of flats). The split mirrors the BS 5839 split (BS 5839-6 domestic / BS 5839-1 non-domestic); the flat interiors themselves are Vol 1, and some clauses appear in both.',
   },
   {
     id: 3,
     question:
       'A 4-storey block of flats is being built. The flat entrance doors are dwellings (Vol 1) and the common parts are non-dwellings (Vol 2). Which fire detection / alarm regime applies in the common parts?',
     options: [
-      'BS 5839-6 only.',
-      'BS 5839-1 (non-domestic premises). The common parts of multi-occupied residential buildings are non-domestic — they are not dwellings. The fire alarm provision in the common parts (typically a Cat L5 or no system depending on the FRA / fire strategy) follows BS 5839-1. Inside each flat, BS 5839-6 applies (Grade D1 / LD2 for new build typically). The two regimes meet at the flat entrance door — which is itself within RRO scope post-Fire Safety Act 2021.',
-      'No system is required.',
-      'Both BS 5839-1 and BS 5839-6 throughout.',
+      'BS 5839-6 only, applied throughout the common parts as well as inside the flats.',
+      'No fire detection or alarm system is required in the common parts at all under either code.',
+      'Both BS 5839-1 and BS 5839-6 applied together throughout the whole building including each flat.',
+      'BS 5839-1, since the common parts of multi-occupied residential buildings are non-domestic premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1 in the common parts (non-domestic). BS 5839-6 inside each flat (domestic). The boundary is the flat entrance door. The Fire Safety Act 2021 confirmed flat entrance doors are within RRO scope — relevant to maintenance and to the duty on responsible persons to ensure they perform their fire-resistance function.',
+      'BS 5839-1 applies in the common parts (non-domestic — they are not dwellings), with provision typically a Cat L5 or no system depending on the FRA / fire strategy. Inside each flat, BS 5839-6 applies (Grade D1 / LD2 for new build typically). The two regimes meet at the flat entrance door, which is itself within RRO scope post-Fire Safety Act 2021 — relevant to maintenance and to the duty to ensure the door performs its fire-resistance function.',
   },
   {
     id: 4,
     question: 'What is "competent person scheme" registration in the building control context?',
     options: [
-      'A trade association membership.',
-      "A scheme authorised by government under which registered installers can self-certify that their work complies with the Building Regulations, removing the need for separate building control approval for the work concerned. For fire alarm work, BAFE SP203-1 (fire detection and fire alarm systems) is the principal industry scheme. NICEIC, NAPIT and others run competent person schemes covering electrical / fire safety work. The contractor must be registered with a recognised scheme to use the self-certification route. The benefits: no separate building control charge; faster project delivery; certificates issued on completion. The obligations: the scheme audits the installer; defective work is the installer's liability.",
-      'A general qualification.',
-      'A planning permission.',
+      'A government-authorised scheme letting registered installers self-certify Building Regulations compliance without separate building control approval.',
+      'A trade-association membership an installer joins for networking, training discounts and a directory listing.',
+      'A general electrical or fire-safety qualification held by an individual operative, independent of any registration body.',
+      'A form of planning permission granted by the local planning authority before fire alarm work can begin.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Competent person schemes (BAFE SP203-1 for fire detection / alarm) authorise self-certification. Registration is itself evidence of competence — important post-Hackitt where competence is a recurring theme in fire safety reform. AHJs / insurers / FRS expect to see scheme registration on contractor invoices and certificates.',
+      'Competent person schemes (BAFE SP203-1 for fire detection / alarm; NICEIC, NAPIT and others for electrical / fire-safety work) authorise self-certification of Building Regulations compliance, removing the need for separate building control approval of the work concerned. The benefits: no separate building control charge, faster delivery, certificates on completion. The obligations: the scheme audits the installer and defective work is the installer\'s liability. Registration is itself evidence of competence — important post-Hackitt where competence is a recurring theme. AHJs / insurers / FRS expect to see scheme registration on contractor certificates.',
   },
   {
     id: 5,
     question: 'How does the Building Safety Act 2022 change the Building Control regime for HRBs?',
     options: [
-      'It does not change building control.',
-      'It replaces the normal Building Control authority (LABC or approved inspector) with the Building Safety Regulator (BSR) — a function of the HSE — for HRB work. The BSR is the Building Control authority for design (Gateway 2) and completion (Gateway 3) of HRBs. The process is materially more demanding than pre-BSA building control: a comprehensive design submission, a building safety case, evidence of competence of the principal designer and principal contractor, and BSR sign-off before construction can start (Gateway 2) and before occupation can start (Gateway 3). Mandatory occurrence reporting also bites during construction. For non-HRBs, normal building control continues — LABC or approved inspector.',
-      'It abolished building control.',
-      'It applied only to existing buildings.',
+      'It leaves the building control regime for HRBs unchanged, with LABC or an approved inspector retaining control.',
+      'It abolished building control for buildings of all types, replacing it with a self-certification regime.',
+      'It makes the Building Safety Regulator the building control authority for HRB design (Gateway 2) and completion (Gateway 3).',
+      'It applied only to existing occupied buildings, with new-build HRB work staying under the old regime.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BSR = Building Control authority for HRBs. Two-step gateway approval (Gateway 2 design, Gateway 3 completion). The principal designer and principal contractor must demonstrate competence. The fire strategy and fire alarm cause-and-effect feed into the Gateway 2 submission.',
+      'For HRB work the BSR (a function of the HSE) replaces the normal Building Control authority (LABC or approved inspector). The process is materially more demanding than pre-BSA building control: a comprehensive design submission, a building safety case, evidence of competence of the principal designer and principal contractor, and BSR sign-off before construction starts (Gateway 2) and before occupation starts (Gateway 3). Mandatory occurrence reporting also bites during construction. For non-HRBs, normal building control continues. The fire strategy and fire alarm cause-and-effect feed into the Gateway 2 submission.',
   },
   {
     id: 6,
     question:
       'Approved Document M imposes accessibility requirements. What is the primary fire alarm design consequence?',
     options: [
-      'No design consequence.',
-      'Visual alarm devices (VADs) per BS EN 54-23 in areas where hearing-impaired persons may be present and audible-only would not provide adequate warning. The technical specification of VADs (light intensity rating C-3-15 / C-6-15 etc, mounting position, coverage volume) is in BS 5839-1 §16. Vibrating-pad pillow alarms for sleeping risk where appropriate. Refuge points with two-way communication (BS 5588-8 / BS 9999) for evacuation of mobility-impaired persons. PEEPs (Personal Emergency Evacuation Plans) on the operational side. The fire alarm contribution is the VAD network and the refuge communication system.',
-      'Only audible alarms.',
-      'Only signage.',
+      'There is no fire alarm design consequence, since accessibility is handled entirely by escape-route geometry.',
+      'It requires only additional audible alarms at higher sound levels, with no visual or tactile provision.',
+      'It requires only additional escape signage and tactile maps, not any change to the alarm devices.',
+      'Visual alarm devices (VADs) per BS EN 54-23 where hearing-impaired persons may be present and audible-only would not warn them.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'ADM accessibility → BS EN 54-23 VADs → BS 5839-1 §16 specification. Refuge two-way comms link to a constantly-staffed point (typically the fire panel area). The combination satisfies ADM accessibility for fire scenarios.',
+      'ADM accessibility → BS EN 54-23 VADs → BS 5839-1 §16 specification (light intensity rating C-3-15 / C-6-15, mounting position, coverage volume). Add vibrating-pad pillow alarms for sleeping risk where appropriate, and refuge points with two-way communication (BS 5588-8 / BS 9999) linking to a constantly-staffed point for mobility-impaired evacuation, supported by PEEPs on the operational side. The fire alarm contribution is the VAD network and the refuge communication system.',
   },
   {
     id: 7,
     question:
       'Approved Document B references BS 9999 and BS 9991 as alternative compliance routes. What is the difference?',
     options: [
-      'They are identical.',
-      'BS 9991 — Fire safety in the design, management and use of residential buildings (code of practice; an alternative to ADB Volume 1 for residential). BS 9999 — Fire safety in the design, management and use of non-residential buildings (an alternative to ADB Volume 2 for non-residential). Both are more flexible and engineering-led than the prescriptive ADB approach. BS 9999 in particular allows risk-profiling of occupants (mobility, alertness, familiarity) to scale fire safety provisions. ADB references both as recognised alternatives. Use of BS 9991 / BS 9999 instead of ADB requires the designer to demonstrate that the equivalent level of safety is achieved.',
-      'BS 9999 is law and BS 9991 is guidance.',
-      'BS 9999 is for new build only.',
+      'BS 9991 covers residential buildings and BS 9999 covers non-residential buildings, as engineering-led alternatives to ADB.',
+      'They are identical documents published under two different reference numbers for cross-referencing.',
+      'BS 9999 is law and is mandatory, whereas BS 9991 is only optional guidance for designers.',
+      'BS 9999 applies to new-build work only, while BS 9991 applies only to existing buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 9991 residential, BS 9999 non-residential. Alternative compliance routes to ADB. Both engineering-led; ADB is more prescriptive. The choice between ADB and BS 9999 / 9991 is a fire strategy decision made at design stage — most schemes still use ADB as default.',
+      'BS 9991 (residential) is an alternative to ADB Volume 1; BS 9999 (non-residential) is an alternative to ADB Volume 2. Both are more flexible and engineering-led than the prescriptive ADB approach — BS 9999 in particular allows risk-profiling of occupants (mobility, alertness, familiarity) to scale provisions. ADB references both as recognised alternatives; using them instead of ADB requires the designer to demonstrate equivalent safety. The choice is a fire-strategy decision at design stage, though most schemes still use ADB as default.',
   },
   {
     id: 8,
     question:
       'A B5 (FRS access) provision common to many building types is the "fire mains". What is a fire main and where does the fire alarm system interact with it?',
     options: [
-      'A pipe carrying water for cooling.',
-      "A pipe installed in a building used to convey water to outlet valves for use by the FRS in firefighting. Two types: dry rising mains (charged by FRS pumping appliance on arrival) and wet rising mains (permanently charged by an electric pump). ADB sets the trigger heights — typically dry rising mains for buildings with a floor more than 18 m above ground; wet rising mains for buildings with a floor more than 50 m. The fire alarm interaction: in a Cat L1/L2 system serving a building with rising mains, the fire alarm cause-and-effect typically initiates the wet riser pump (where present) and provides indication of pump status to the firefighters' control point.",
-      'A telephone line.',
-      'A backup electrical supply.',
+      'A pipe carrying water around the building purely for plant cooling, with no firefighting function.',
+      'A dedicated telephone line connecting the building reception directly to the fire and rescue service.',
+      'A pipe conveying water to outlet valves for FRS firefighting — dry (charged on arrival) or wet (permanently pumped).',
+      'A back-up electrical supply reserved for the fire alarm and firefighting equipment during mains loss.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Fire mains = firefighter water supply. Dry < 18 m / 50 m thresholds vary; wet for higher buildings. The fire alarm cause-and-effect should integrate with the wet-riser pump start and provide status indication. B5 of ADB sets the requirement; BS 9990 details the engineering.',
+      "Fire mains = firefighter water supply. ADB B5 sets the trigger heights — typically dry rising mains for buildings with a floor more than 18 m above ground, wet rising mains above 50 m. The fire alarm interaction: in a Cat L1/L2 system the cause-and-effect typically initiates the wet-riser pump (where present) and provides pump-status indication to the firefighters' control point. B5 of ADB sets the requirement; BS 9990 details the engineering.",
   },
   {
     id: 9,
     question:
       'For fire alarm work in a non-HRB office refurbishment, who issues the building control completion certificate that captures the fire alarm installation?',
     options: [
-      'The fire alarm contractor only.',
-      'Either the Local Authority Building Control (LABC) or an Approved Inspector engaged by the project, depending on the route taken at project start. If the fire alarm contractor is registered with a competent person scheme (BAFE SP203-1 for fire detection / alarm), the contractor can self-certify their portion of the work and the certificate from the scheme is accepted by building control as evidence of compliance — no separate building control inspection of the fire alarm element required. The completion certificate from LABC / Approved Inspector covers the building project as a whole; the BAFE certificate (or equivalent) covers the fire alarm work specifically.',
-      'The fire and rescue service.',
-      'The HSE.',
+      'The fire alarm contractor alone issues the building control completion certificate for the whole project.',
+      'The fire and rescue service issues the building control completion certificate following an audit visit.',
+      'The HSE issues the building control completion certificate for any non-HRB office refurbishment.',
+      'Either Local Authority Building Control or an Approved Inspector, with the contractor self-certifying their portion if scheme-registered.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'LABC or AI for the building. Competent person scheme (BAFE SP203-1) for the fire alarm element where the contractor is scheme-registered. Two certificates, both retained by the responsible person — the building completion certificate and the fire alarm scheme certificate. Both are wanted by the FRS at audit.',
+      'LABC or an Approved Inspector issues the building completion certificate for the project as a whole, depending on the route taken at project start. Where the fire alarm contractor is registered with a competent person scheme (BAFE SP203-1 for fire detection / alarm), they self-certify their portion and the scheme certificate is accepted by building control — no separate building control inspection of the fire alarm element. Two certificates result, both retained by the responsible person and both wanted by the FRS at audit.',
   },
   {
     id: 10,
     question:
       "Why is Approved Document B regularly revised, and what is the contractor's obligation when ADB is updated mid-project?",
     options: [
-      'Cosmetic changes only.',
-      "Revisions reflect lessons learned from fires, technological advances, and post-disaster reviews — Lakanal House (2009), Grenfell (2017), and the Hackitt review have all driven major changes. The 2019 amendments banned combustible materials in external walls of high-rise residential. The 2022 amendments lowered the threshold to 11 m for some provisions and added staircase / sprinkler requirements. The contractor's obligation: design must comply with the version of ADB in force at the time of building control submission (or relevant equivalent for HRBs). Where a project straddles a revision, transitional provisions in the revising instrument set out the cut-off — usually based on date of building control application or contract date. New work after a revision must comply with the new version unless transitional provisions explicitly allow the old.",
-      'Always optional.',
-      'Apply only to new buildings.',
+      'Revisions absorb lessons from fires and reviews; the contractor must design to the ADB version in force at the relevant cut-off.',
+      'Revisions are cosmetic editorial tidying only and have no bearing on the contractor\'s design duties.',
+      'Compliance with the revised version is always optional, since the contractor may design to any past edition.',
+      'Revisions apply only to brand-new buildings and never affect refurbishment or alteration work.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'ADB is dynamic — revisions absorb lessons. Transitional provisions handle mid-project revisions. The contractor must know the version in force at the relevant cut-off and design to that. Applying an out-of-date version is a building control failure that can derail handover.',
+      'ADB is dynamic — revisions reflect lessons from Lakanal House (2009), Grenfell (2017) and the Hackitt review. The 2019 amendments banned combustible materials in high-rise residential external walls; the 2022 amendments lowered the threshold to 11 m for some provisions and added staircase / sprinkler requirements. The contractor must design to the version in force at the time of building control submission (or HRB equivalent). Where a project straddles a revision, transitional provisions set the cut-off — usually the building control application or contract date. New work after a revision complies with the new version unless transitional provisions allow the old. Applying an out-of-date version is a building control failure that can derail handover.',
   },
 ];
 

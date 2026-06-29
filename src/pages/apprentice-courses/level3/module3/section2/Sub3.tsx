@@ -126,9 +126,9 @@ const quizQuestions = [
     question: "What does Faraday's law state?",
     options: [
       'Induced EMF is proportional to the rate of change of flux linkage',
-      'Zone classification and equipment suitability for each zone',
-      'It transfers significantly increased wind loads into the building structure',
-      'Broken conductor, open circuit, or disconnection',
+      'Induced EMF is proportional to the total flux through the coil',
+      'Induced EMF is proportional to the resistance of the coil',
+      'Induced EMF is inversely proportional to the number of turns',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "Lenz's law states the direction of induced EMF is such that:",
     options: [
-      'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
+      'It reinforces the change in flux that produced it',
       'It opposes the change in flux that produced it',
-      'Electronic equipment and surge protective devices',
-      'Insulation resistance between conductors',
+      'It always flows from north pole to south pole',
+      'It is independent of the direction of the original flux change',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'A solenoid produces a magnetic field that:',
     options: [
-      'To reduce I²R transmission losses by reducing current for the same power',
-      'Use code FI and recommend specialist investigation',
+      'Is concentric circles only, with no defined poles',
+      'Cancels out completely along the central axis',
       'Resembles a bar magnet, with north and south poles at the ends',
-      'Directional signs indicating route to follow to reach final exits',
+      'Is strongest outside the coil and weakest inside it',
     ],
     correctAnswer: 2,
     explanation:

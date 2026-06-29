@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'tray-advantage',
     question: 'What is the main advantage of perforated cable tray for power cables?',
     options: [
-      'Key performance indicators relevant to the audience',
+      'It provides complete protection against mechanical damage',
       'Better air circulation for heat dissipation',
-      'Category III — serious, irreversible or fatal risks',
-      'Methods of use, risks involved, and precautions to take',
+      'It allows the highest fill ratio of any containment',
+      'It removes the need to earth the containment',
     ],
     correctIndex: 1,
     explanation:
@@ -61,9 +61,9 @@ const quickCheckQuestions = [
     question: 'Why must data/telecom cables be segregated from power cables?',
     options: [
       'Electromagnetic interference from power can corrupt data signals',
-      'Air temperature, radiant temperature, humidity, velocity, metabolic rate, clothing',
-      'Providing professional counselling for mental health conditions',
-      'An instrument for measuring insulation resistance in megohms',
+      'Data cables operate at a higher voltage than power cables',
+      'Power cables must be kept warmer than data cables',
+      'Data cables cannot share the same fire compartment',
     ],
     correctIndex: 0,
     explanation:
@@ -74,9 +74,9 @@ const quickCheckQuestions = [
     question: 'What determines the spacing of cable supports?',
     options: [
       'Cable type, size and weight to prevent sagging',
-      'Self-declaration without evidence',
-      'DNO transformers and cables are rated in kVA, not kW',
-      '1.5°C requires faster and deeper emissions cuts',
+      'The colour of the cable sheath only',
+      'The voltage rating of the circuit only',
+      'The ambient temperature of the location only',
     ],
     correctIndex: 0,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'Metal conduit can be used as the CPC provided:',
     options: [
-      'Monthly for at least 30 minutes at a minimum of 50% rated load',
-      'A receiver\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
-      'Higher reflectances increase utilisation factor and reduce luminaire quantity',
+      'It is painted to prevent corrosion at every joint',
+      'A separate green/yellow conductor also runs inside it',
+      'It is installed only on vertical sections of the route',
       'Joints maintain electrical continuity and have adequate cross-sectional area',
     ],
     correctAnswer: 3,
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why must SWA cable glands be correctly tightened?',
     options: [
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
-      'A device showing real-time energy usage and costs from the smart meter',
+      'To prevent the conductors overheating during normal load',
+      'To improve the voltage drop performance of the circuit',
       'To grip armour wires for electrical continuity and mechanical retention',
-      'Accuracy requirements, satellite availability, and local coordinate systems',
+      'To reduce the bending radius required at the termination',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the primary purpose of cable labelling?',
     options: [
-      'At every exit, and at points where direction must be indicated along escape routes',
-      'Location, nature of hazard, potential consequences, and immediate actions taken',
-      'To spread the worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight over a larger area of the roof',
+      'To indicate the cable manufacturer and batch number',
+      'To show the date the cable was installed',
+      'To confirm the cable meets its current-carrying capacity',
       'For identification during maintenance, fault finding and future modifications',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'For vertical cable runs, what is the maximum spacing for supports?',
     options: [
       'Depends on cable type and size',
-      'Each socket gets full voltage',
-      'False - damaged leads must not be used',
-      'It increases, then levels off',
+      'Always 450mm regardless of cable',
+      'The same as the horizontal spacing exactly',
+      'No supports are needed on vertical runs',
     ],
     correctAnswer: 0,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'When should draw wires be left in conduit installations?',
     options: [
-      'Running out of time for critical terminations',
-      'A blue circular sign (e.g., \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Hard hats must be worn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'Only where the conduit run exceeds 50 metres',
+      'Only on circuits protected by an RCD',
       'Always, for future cable additions or replacements',
-      'Specialisation in structured cabling and network infrastructure',
+      'Only when the conduit is buried underground',
     ],
     correctAnswer: 2,
     explanation:

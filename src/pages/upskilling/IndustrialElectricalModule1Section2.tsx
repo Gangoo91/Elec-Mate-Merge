@@ -63,12 +63,12 @@ const quizQuestions = [
     question:
       'Which type of transformer is most commonly used in indoor substations due to reduced fire risk?',
     options: [
-      'Oil-filled transformer',
       'Dry-type transformer',
+      'Oil-filled transformer',
       'Auto-transformer',
       'Instrument transformer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dry-type transformers are preferred for indoor substations because they eliminate the fire risk associated with transformer oil.',
   },
@@ -76,8 +76,8 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the minimum safe approach distance for unqualified persons to exposed 11kV conductors?',
-    options: ['1.0 metre', '2.0 metres', '3.0 metres', '5.0 metres'],
-    correctAnswer: 2,
+    options: ['1.0 metre', '1.5 metres', '2.0 metres', '3.0 metres'],
+    correctAnswer: 3,
     explanation:
       'Unqualified persons must maintain a minimum distance of 3.0 metres from exposed 11kV conductors.',
   },
@@ -114,8 +114,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What colour is typically used to identify 11kV cables in the UK?',
-    options: ['Red', 'Black', 'Blue', 'Orange'],
-    correctAnswer: 1,
+    options: ['Black', 'Red', 'Blue', 'Orange'],
+    correctAnswer: 0,
     explanation:
       '11kV cables in the UK are typically black, following standard cable identification practices.',
   },
@@ -123,8 +123,8 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the standard secondary voltage from an 11kV/LV distribution transformer in the UK?',
-    options: ['230V single phase', '400V three phase', '415V three phase', '440V three phase'],
-    correctAnswer: 1,
+    options: ['230V single phase', '415V three phase', '400V three phase', '440V three phase'],
+    correctAnswer: 2,
     explanation:
       'The standard secondary voltage from an 11kV/LV transformer is 400V three phase (harmonised European standard).',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'Which document must be completed before accessing a substation containing HV equipment?',
     options: [
-      'Risk assessment only',
       'Permit to work',
+      'Risk assessment only',
       'Method statement only',
       'Daily inspection checklist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A permit to work must be completed before accessing substations containing HV equipment to ensure proper safety procedures.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a Buchholz relay fitted to an oil-filled transformer?',
     options: [
-      'To regulate output voltage',
+      'To regulate the output voltage',
+      'To measure the oil temperature',
+      'To control the cooling fans',
       'To detect internal faults and gas accumulation',
-      'To measure oil temperature',
-      'To control cooling fans',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Buchholz relay detects internal faults by sensing gas accumulation caused by oil decomposition during fault conditions.',
   },

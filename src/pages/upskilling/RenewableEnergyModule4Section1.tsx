@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A PV diverter on a UK domestic install — what does it do, and where does it sit in the system?',
     options: [
-      'A second inverter',
-      'A device that diverts surplus PV generation (the excess above on-site consumption) to a local resistive or controllable load — typically immersion heater, EV charger, or underfloor heating — rather than exporting it to the grid. Sits in the AC infrastructure between the inverter and the consumer unit, with a current transformer (CT) on the grid tail measuring net export. When export &gt; 0, the diverter modulates power to the target load',
-      'A grid filter',
-      'A type of RCD',
+      'A second inverter that boosts total array output during peak generation periods',
+      'A device that sends surplus PV to a local load (immersion / EV / UFH) instead of exporting it',
+      'A grid filter that smooths inverter harmonics before they reach the consumer unit',
+      'A type of RCD that disconnects the array on detecting a DC earth fault',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A 5 kWp install generates ~5,000 kWh/year. Customer self-consumes ~30% without a diverter. SEG export rate 5 p/kWh; grid import rate 28 p/kWh. What\'s the economic case for a diverter?',
     options: [
-      'No case',
-      'Without diverter: 30% × 5,000 = 1,500 kWh self-consumed (saving 1,500 × 28p = £420); 3,500 kWh exported (earning 3,500 × 5p = £175). With diverter capturing ~40% more of surplus (say 50% total self-consumption): 2,500 kWh self-consumed (£700); 2,500 kWh exported (£125). Net annual gain ~£230. Typical diverter cost £400-£700 — payback ~2-3 years. Strong economic case where export rate &lt; 30-40% of import rate',
-      'Diverter loses money',
-      'Diverter only works for hot water',
+      'No case — the 5 p SEG export already pays full value for every surplus kWh',
+      'Strong case — each captured kWh saves the 23 p gap; ~£230/yr gain on a £400-700 unit, ~2-3 yr payback',
+      'Negative case — the diverter consumes more standby power than it ever recovers in savings',
+      'Marginal case — the gain is real but always under £20/yr, so payback exceeds the install life',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Difference between AC-coupled and DC-coupled PV diverters?',
     options: [
-      'Same thing',
-      'AC-coupled diverter: separate AC-side device that measures net grid export with a CT and modulates power to a target AC load (immersion, EV, UFH). Inverter operates normally; diverter intercepts surplus AC. Most common UK domestic. DC-coupled diverter: integrated into the inverter or a DC-side device that diverts surplus DC directly to a target load — less common in residential, more common in commercial solar-thermal hybrid',
-      'DC-coupled is cheaper',
-      'AC is for water only',
+      'They are the same thing — the labels just describe two brand names for one device',
+      'AC-coupled intercepts surplus AC after the inverter (UK domestic norm); DC-coupled diverts DC pre-inverter',
+      'DC-coupled is always cheaper, so it is the default choice for every UK retrofit',
+      'AC-coupled can only ever drive an immersion heater, never an EV or heat pump',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A customer wants a PV diverter to heat their hot water cylinder. Their existing immersion heater is a standard 3 kW (13 A AC). Compatibility?',
     options: [
-      'Always compatible',
-      'Diverter must support phase-angle or burst-fire modulation of the resistive load. Standard 3 kW immersion is highly compatible — it\'s purely resistive (no inductive / electronic load), tolerates rapid power-level changes, and works at any continuous power below its rating. Diverters from Eddi / Solar iBoost / iSensor support immersion loads up to 3-3.6 kW typical. The hot water cylinder needs sufficient capacity to absorb the diverted energy without overheating — typical 150-300 L UK cylinder absorbs 5-10 kWh / day comfortably',
-      'Customer needs a new cylinder',
-      'Diverters can\'t do immersion',
+      'Any load is always compatible because a diverter simply switches the circuit on and off',
+      'Highly compatible — a purely resistive 3 kW element suits phase-angle or burst-fire modulation directly',
+      'The customer needs a new cylinder, as standard immersion elements cannot be power-modulated',
+      'Diverters cannot drive immersion heaters at all; they only work with EV chargers',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'PV diverter to an EV charger — how does it work, and what\'s the limitation?',
     options: [
-      'Standard EV charger',
-      'Requires a PV-aware EV charger (e.g. myenergi Zappi, Ohme, Andersen with solar mode, Pod Point Solo with smart features). The charger receives the diverter signal (or has its own CT clamp) and modulates charging current to match available PV surplus. Limitation: most EVs accept charging at a minimum 6 A (1.4 kW single-phase) — below that the charger can\'t maintain the charging session. So surplus &lt; 1.4 kW can\'t be captured by an EV charger alone',
-      'Doesn\'t work',
-      'Only with Tesla',
+      'Any standard untethered charger tracks PV surplus once it is wired to the consumer unit',
+      'A PV-aware charger modulates current to surplus, but cannot hold a session below ~6 A (1.4 kW)',
+      'It does not work — EV chargers draw a fixed current and cannot follow a varying PV output',
+      'It works only with a Tesla vehicle, as no other EV exposes the required charge-rate API',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Why does a PV diverter need a current transformer (CT) clamp on the incoming grid supply tail?',
     options: [
-      'To turn on the inverter',
-      'To measure net grid power flow in real time. When net export is positive (PV generating more than property consuming), the CT signal tells the diverter how much surplus is available to divert. When net export is zero or negative (load exceeds PV), the diverter stops diverting. The CT is a non-invasive current measurement around the live conductor of the incoming supply tail — typically located in the meter cabinet or main consumer unit area',
-      'For grid synchronisation',
-      'No reason',
+      'To switch the inverter on each morning when generation begins',
+      'To measure net grid flow in real time, telling the diverter how much surplus is available',
+      'To synchronise the inverter phase and frequency with the incoming grid supply',
+      'It serves no real purpose; the diverter could work from the inverter output alone',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'How does adding a PV diverter affect the BS 7671 design pack for the install?',
     options: [
-      'No effect',
-      'The diverter is an additional AC-side device that adds: (a) its own dedicated circuit from the consumer unit (RCBO sized to diverter rating, typically 16-32 A); (b) a CT measurement loop on the incoming supply tail; (c) labelling per Reg 712.514.101 (PV system notice updated to reflect the diverter); (d) updated single-line schematic. The diverter does NOT change the PV inverter design (Module 3) — it\'s downstream of the inverter\'s AC output, modulating loads on the property side of the grid connection',
-      'Customer\'s problem only',
-      'Replaces the inverter',
+      'No effect — a diverter is plug-and-play and never appears in the BS 7671 design pack',
+      'It adds an AC-side circuit (RCBO), a CT loop, updated labelling and schematic, but not inverter design',
+      'It is purely the customer\'s problem and falls outside the installer\'s certification duties',
+      'It replaces the existing inverter, so the whole Module 3 DC design must be reworked',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'A customer has PV + heat pump (SG-Ready) + EV charger + immersion. Which order should the diverter cascade them, and why?',
     options: [
-      'Immersion first, EV last',
-      'Heat pump FIRST (COP 3-4 — each PV kWh delivers 3-4 kWh of heat), EV SECOND (each diverted kWh displaces a grid-charge kWh worth ~28 p), immersion THIRD (COP 1 — baseline self-consumption), UFH FOURTH (slow load, lowest value per kWh). The cascade order is driven by value-per-diverted-kWh: heat pump multiplies by COP; EV displaces grid import at full retail rate; immersion is the baseline 1:1 conversion. Cert evidence bundle records the configured cascade order',
-      'Whatever the customer prefers',
-      'EV always first',
+      'Immersion first and EV last, since hot water is the most reliable everyday load',
+      'Heat pump first (COP 3-4), then EV, then immersion, then UFH — ordered by value per diverted kWh',
+      'Whatever order the customer prefers; the cascade has no effect on financial value',
+      'EV always first, because grid charging is the single most expensive form of import',
     ],
     correctIndex: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Customer with a 5 kWp install and 30% baseline self-consumption asks if a £500 diverter is worth it. SEG export rate 7.5 p/kWh; grid import 28 p/kWh; expected uplift from diverter ~30% additional self-consumption.',
     options: [
-      'Not worth it',
-      'Run the numbers: PV generation ~5,000 kWh/year; baseline 30% × 5,000 = 1,500 kWh self-consumed. Diverter captures additional ~30% × 3,500 = 1,050 kWh of surplus. Each diverted kWh saves (28 − 7.5) = 20.5 p (the import-export gap). Annual saving = 1,050 × 20.5 = £215. Payback period = £500 / £215 = 2.3 years. STRONG case for typical 25-year install life; expected NPV £4,500+ excluding inflation',
-      'Customer cannot afford it',
-      'Only worth it if export rate is zero',
+      'Not worth it — the export rate already pays for the surplus, so diverting it adds nothing',
+      'Worth it — each diverted kWh saves the ~20.5 p gap, giving a ~2.3-year payback',
+      'Worth it only if the customer can claim a separate government grant for the diverter',
+      'Not worth it unless the SEG export rate first falls all the way down to zero',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'Existing 200 L hot water cylinder. Customer wants a diverter to heat it via the existing 3 kW immersion. Daily PV surplus ~12 kWh. Compatibility and limits?',
     options: [
-      'No limits',
-      'Compatibility good — 3 kW immersion is standard diverter load. But the cylinder thermal capacity caps absorption: 200 L from 10°C to 60°C absorbs ~12 kWh (200 × 4.18 × 50 / 3600). So daily PV surplus 12 kWh exactly fills the cylinder. Beyond that, the diverter cascades to next-priority load OR the surplus exports to grid at SEG rate. Practical sizing: typical UK 150-300 L cylinder absorbs 5-10 kWh/day comfortably; for larger surplus, add EV / heat-pump / UFH as cascade loads',
-      'Need a bigger immersion',
-      'Doesn\'t work',
+      'Incompatible — a 3 kW immersion is far too large for any diverter to control',
+      'It needs a larger immersion element to absorb the surplus much more quickly',
+      'It will not work unless the cylinder is replaced with a heat-pump tank first',
+      'Good compatibility — but the 200 L cylinder caps absorption at ~12 kWh, then cascades on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hot water cylinder thermal capacity: roughly (volume in L) × 4.18 × (target temp − inlet temp) / 3600 = kWh. For 200 L from 10°C inlet to 60°C target: 200 × 4.18 × 50 / 3600 = 11.6 kWh. So a 200 L cylinder absorbs ~12 kWh daily before reaching target. PV daily surplus often exceeds this in summer (5 kWp × 5 hours × 70% = ~17 kWh peak day) — so the cascade design captures the overflow on subsequent loads. The cert evidence bundle records the cylinder volume, target temperature, and the cascade configuration.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'Installer fits a diverter to heat the immersion. Days later, customer reports DAB radio interference whenever the diverter is active. Diagnosis?',
     options: [
-      'No issue',
-      'Phase-angle modulation generates RFI (radio frequency interference) — the diverter chops the AC waveform mid-cycle, creating harmonics. The interference couples into nearby radio reception. Resolution: (a) install diverter manufacturer\'s recommended RFI filter on the diverter input; (b) check earthing / bonding to the radio (some radios have inadequate filtering); (c) consider relocating the diverter or its connecting cables further from the radio; (d) switch diverter mode to burst-fire (full-cycle on/off) if supported — burst-fire has less RFI but slower modulation. Modern diverters often use burst-fire by default',
-      'Radio is faulty',
-      'No fix possible',
+      'Phase-angle modulation generates RFI; fit the RFI filter or switch to burst-fire mode',
+      'The radio itself is faulty and is entirely unrelated to the diverter being active',
+      'There is no real interference, as DAB radios cannot pick up any mains harmonics',
+      'Nothing can be done, since RFI from diverters is unavoidable and must be accepted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Phase-angle modulation creates harmonics in the audio frequency range — couples into DAB radio reception. Fix: RFI filter on diverter input (manufacturer supplies); reroute cables; switch to burst-fire mode where supported. Modern UK diverters (Eddi, Solar iBoost) typically use burst-fire as the default for clean electrical performance. The cert evidence bundle records the modulation mode chosen and any RFI mitigation fitted.',
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Customer has an existing PV install and wants to add a diverter. What changes are needed to the EREC G98 notification?',
     options: [
-      'New G98 needed',
-      'No new G98 — the inverter and PV generation capacity have not changed. The diverter is an additional AC-side load device; it modulates existing load consumption, doesn\'t change generation. The DNO notification (G98 / G99) is about generation, not load; therefore no update required. However, the cert evidence bundle and the customer information pack should reflect the diverter addition for future EICR and ownership transfer',
-      'Wait 6 weeks',
-      'Customer dies',
+      'A fresh G98 notification must be submitted because the install has been altered',
+      'No new G98 — the diverter is a load device, so no DNO update is needed',
+      'A full G99 application is now required, with a 4-8 week wait for DNO approval',
+      'The MCS certificate must be re-issued to reflect the install\'s new kWp rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'EV-aware diverter scenario: customer has 5 kWp PV + Zappi EV charger. PV surplus drops below the EV minimum (~1.4 kW single-phase). What does the system do?',
     options: [
-      'EV continues charging from grid',
-      'Charger drops out of solar / eco mode (continues from grid only if customer configured "grid + solar" mode). Cascade to next priority load (immersion, UFH) where configured. When surplus rises above 1.4 kW again, the charger resumes solar mode automatically. The behaviour is configurable in the charger app — customer can choose "eco" (pure solar; pause when below min) or "eco+" (boost from grid to reach minimum continuous charge)',
-      'EV is damaged',
-      'Charger explodes',
+      'The charger keeps drawing the full rate from the grid regardless of any surplus',
+      'The EV battery is damaged by the interrupted charge and the partial charging cycle',
+      'The charger faults and must be manually reset by the customer each time surplus drops',
+      'The charger pauses (eco) or tops up from the grid (eco+) per its configured mode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PV-aware EV chargers (Zappi, Ohme, Andersen, Pod Point Solo) modulate to track surplus. When surplus drops below the EV minimum (typically 6 A = 1.4 kW single-phase; some EVs accept 4 A = 1.0 kW), the charger handles it per its configured mode: (a) pure eco — pause until surplus rises; (b) eco+ — boost from grid to maintain min continuous; (c) timed — switch to scheduled grid charging. Customer-configured per app; cert evidence bundle records the chosen mode.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'Survey reveals customer has a heat pump (8 kW) and PV (6 kWp). Diverter recommendation?',
     options: [
-      'No diverter possible',
-      'Modern heat pumps with smart-grid (SG-Ready) input can accept a diverter signal that modulates compressor speed to match PV surplus. The heat pump typically uses 1-3 kW under normal operation — well within the typical PV surplus range. Compatibility: check heat-pump SG-Ready spec; some heat pumps require boost-mode triggering at specific surplus thresholds. Where compatible, heat pump priority comes BEFORE immersion (heat pump COP 3-4 means each PV kWh delivers 3-4 kWh of heat — vs immersion COP = 1). Diverter cascade: heat pump first, then EV, then immersion',
-      'Replace heat pump',
-      'Buy a smaller PV',
+      'A diverter cannot be used at all on a property that already has a heat pump',
+      'Replace the heat pump with a larger immersion to make the diverting simpler',
+      'An SG-Ready heat pump takes diverter priority first (COP 3-4), then EV, then immersion',
+      'Fit a smaller PV array so the surplus never exceeds the heat pump\'s demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat pumps with SG-Ready (Smart Grid Ready) input can be controlled by a diverter. Most modern UK domestic heat pumps (Vaillant Arotherm Plus, Mitsubishi Ecodan, Daikin Altherma, Samsung EHS, Bosch Compress) support SG-Ready. The COP advantage (3-4× output vs immersion 1×) means heat pump priority FIRST in the cascade. Typical cascade for a hybrid customer: heat pump (priority 1, COP 3-4) → EV charger (priority 2, displaced grid charge) → immersion (priority 3, baseline self-consumption). Cert evidence bundle records the cascade configuration.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A customer\'s diverter is consuming more grid power than expected on cloudy days. Investigation?',
     options: [
-      'Normal',
-      'Most likely a CT clamp issue: (a) CT installed backwards (reads load as generation); (b) CT loose on the cable (intermittent signal); (c) CT signal cable damaged or disconnected; (d) diverter configured incorrectly. Diagnose: check diverter app / display for net export reading vs measured grid power; physically inspect CT installation and cable; reset diverter to factory and reconfigure. The cert evidence bundle records the CT installation orientation and the commissioning test result',
-      'Customer\'s fault',
-      'PV diverter normal',
+      'Most likely a CT clamp issue — reversed, loose or mis-configured; inspect and reconfigure',
+      'This is entirely normal cloudy-day behaviour and needs no investigation at all',
+      'The immersion element has failed and is now drawing a short-circuit current',
+      'The PV array has been disconnected and the inverter itself has become faulty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Diverter mis-operating is almost always a CT clamp issue — the most common diagnostic finding. CT installed backwards reverses the polarity (the diverter sees grid import as PV export); CT loose on the cable produces erratic signal; damaged signal cable interrupts feedback. The competent commission verifies the CT installation: orientation matches the manufacturer arrow on the clamp body (toward grid OR toward property depending on brand); cable secure; diverter app shows correct net-export reading with PV active and minimal load. The cert evidence bundle records the CT orientation and the commissioning measurement.',
   },
@@ -238,10 +238,10 @@ const quizQuestions = [
     question:
       'Existing PV install: customer added a diverter without informing the original installer. Three years later, EICR-style inspection. What\'s the inspection finding?',
     options: [
-      'No finding',
-      'The diverter installation needs to be verified against BS 7671 — diverter circuit RCBO sized correctly (typically 32 A for 3 kW immersion + diverter overhead); cable I_z adequate; CT installation and signal routing safe; labelling per Reg 712.514.101 reflecting the additional load points. If installed by a competent person to the manufacturer spec, no findings. If installed by an unqualified person (DIY install) — likely findings include: oversized OCPD, undersized cable, non-compliant CT routing, missing labels. EICR records findings; customer informed of any rectifications',
-      'Pass automatically',
-      'Customer fined',
+      'No finding is possible at all because the diverter is the customer\'s own equipment',
+      'Verify it against BS 7671 (RCBO, cable Iz, CT routing, labelling); DIY installs often fail',
+      'The install passes automatically once the diverter manufacturer has been named',
+      'The customer is fined by the inspector for not notifying the original installer',
     ],
     correctAnswer: 1,
     explanation:

@@ -44,12 +44,12 @@ const checks = [
     question:
       "What does 'UKAS-traceable calibration' mean and why does it matter for the certificates you sign?",
     options: [
-      "Six questions in order. (1) WHAT exactly happens? (in customer's own words). (2) WHEN does it happen — time of day, day of week, season, weather, after specific activity? (3) WHERE in the property — single room, multiple rooms, only when specific accessories used? (4) HOW LONG has it been happening — first noticed when, getting worse / better / same? (5) WHAT have you tried — reset breakers, unplug appliances, anything else? (6) WHAT CHANGED recently — new appliance, building work, leak, anything? The answers narrow the fault hypothesis from infinity to a small set. Most apprentices skip the interview; the senior who built habits saves an hour per call-out by spending 5 minutes on it.",
-      "UKAS (United Kingdom Accreditation Service) traces every reference standard back through an unbroken chain to NPL (National Physical Laboratory) primary standards. A UKAS-traceable calibration certificate proves the lab measured your instrument against references whose accuracy is documented through the chain. For BS 7671 certification (EICR, EIC, MWC) and any EAWR Reg 14 evidence pack, the readings on the certificate must come from instruments with UKAS-traceable calibration in date. A calibration without UKAS traceability is technically inadmissible — and that means certificates signed off using it are challengeable.",
-      "The control pilot is a low-voltage PWM signal between the charge point and the vehicle that negotiates charging current, communicates protection status, signals connection / disconnection events and triggers safe shutdown on fault. The signal is part of the IEC 61851 Mode 3 protocol. The car uses the duty cycle of the PWM signal to determine the maximum current the charge point can supply; the charge point uses the signal level to know whether the cable is connected, whether the car is ready to charge, and whether a fault has occurred. The signalling is built into the unit and the cable; the apprentice does not configure it but should recognise its role.",
-      "The BMS is the safety-critical electronic controller embedded in the battery pack. It monitors per-cell voltage, per-cell temperature, pack current and state of charge; it balances cells during charge to keep them within their safe operating envelope; it disconnects the pack via internal contactors if any parameter exits the safe range; and it communicates state to the inverter and to remote monitoring. Without a working BMS the pack is unsafe to charge or discharge. The electrical interface includes the power conductors AND the BMS comms cable to the inverter — both must be installed correctly per the manufacturer's instructions or the system will not commission.",
+      "It traces the lab's reference standards through an unbroken, documented chain back to NPL primary standards, so a certificate signed off on a calibration without it is challengeable.",
+      "It means the instrument was checked against the manufacturer's own factory sample rather than a national standard, held to be the highest level of accuracy available anywhere.",
+      "It means the calibration certificate carries a CE mark, a legal requirement for selling the instrument in the UK but with no bearing on the accuracy of the readings themselves.",
+      "It means the instrument self-calibrates on power-up against its internal reference, so no external laboratory, certificate or calibration sticker is needed for the readings at all.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "UKAS traceability is what makes a measurement legally and technically defensible. The chain runs: your MFT → calibration lab's reference standards → UKAS-accredited primary lab → NPL. Each step is documented. Certificates without it can be challenged in court (where a third party disputes a reading) and rejected by NICEIC / NAPIT audits.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "What's the standard PRE-SHIFT instrument check routine for the seven-instrument kit?",
     options: [
-      "BS 7671 Part 6 643 verification — apply on every rectified circuit, every time. (1) CONTINUITY of CPC and ring conductors. (2) INSULATION RESISTANCE at 500 V (or 250 V if electronic loads can't be isolated). (3) POLARITY check (built-in to the other tests on most MFTs). (4) R1+R2 (if affecting a ring or radial). (5) Zs at the furthest accessible point on the affected circuit. (6) RCD TRIP-TIME at I&Delta;n where RCD-protected (300 ms typical, 40 ms at 5&times;I&Delta;n). (7) FUNCTIONAL test (load the circuit with a known appliance and verify it operates). (8) RECORD on the Minor Works Certificate test panel. The full Part 6 routine takes 20&ndash;30 minutes on a single circuit; non-negotiable.",
-      "(1) Visual — case undamaged, leads not nicked, probes have intact finger barriers, no melted plastic, screen clean. (2) Calibration — sticker date in date for every instrument; calibration register up to date. (3) Function — two-pole tester proves on Martindale GVD2; multimeter shows expected voltage on a known-live socket; MFT self-test passes; clamp meter reads expected current on a known load; socket tester shows correct lights on a known-good socket; VDE drivers show no crack in insulation. 5–8 minutes per shift; the routine catches every instrument fault that has caused an incident.",
-      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
-      "No, for several reasons. The refrigerant work requires F-Gas certification (criminal offence to do without). The Building Regulations Part L compliance pathway requires installation by an MCS-certified installer for the customer to claim Smart Export Guarantee or similar incentives. The Boiler Upgrade Scheme grant requires MCS sign-off. Manufacturer warranties typically require certified installation. The MCS install pack includes heat-loss calc, emitter sizing, SCOP estimate, electrical schedule, commissioning records — all required for the system to perform as designed. DIY heat-pump install is unsafe and uneconomic.",
+      "Just a visual glance is enough — if nothing looks obviously broken, the kit is taken to be fit to use for the whole shift with no further checks at all.",
+      "Visual (cases, leads, barriers, screens), calibration (stickers in date, register current) and function (two-pole proves on the GVD2, MFT self-test, others read known sources) — five to eight minutes.",
+      "Only check the MFT, because it is the only instrument whose readings appear on a certificate, so the two-pole tester, multimeter and clamp meter can all be assumed good.",
+      "Run a full BS 7671 Part 6 test sequence on a reference board every morning before leaving the depot, taking 20–30 minutes per instrument across the whole kit each day.",
     ],
     correctIndex: 1,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "An instrument fails the function check at the start of a shift. What's the right action?",
     options: [
-      "Use it carefully.",
-      "Stop. Tag the instrument 'DO NOT USE — FAILED FUNCTION CHECK [date]', segregate it from the working kit. Inform the supervisor. Don't substitute with another instrument that hasn't been function-checked — repeat the three-step on whatever you reach for next. Update the firm's instrument register with the failure. The failed instrument goes to the calibration lab or repair house with the specific failure noted (helps the lab focus their diagnosis). Backup instrument is used for that shift; the failed unit is not used until verified back in service.",
-      "Carry on.",
-      "Borrow someone else's.",
+      "Use it for the rest of the shift but note the fault on the job sheet so the workshop can look at it later in the week when the kit comes back.",
+      "Carry on using it provided you take a second reading with a different instrument and the two roughly agree on the value before you record it.",
+      "Stop, tag it 'DO NOT USE — FAILED FUNCTION CHECK', segregate it, inform the supervisor, and function-check the backup; send the failed unit to the lab and don't reuse it until verified.",
+      "Reset the instrument to factory defaults and re-run the check; if it passes the second time, the first failure can safely be ignored as a one-off glitch.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The failed-instrument workflow is what protects the next operative — the apprentice who picks up your bag tomorrow and assumes the instruments are good. The tag-and-segregate discipline is universal across PUWER-regulated equipment use; the alternative is the failed instrument getting reused by mistake.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the difference between calibration, verification, and function check?",
     options: [
-      "Three categories. (1) Smart meter / utility meter failures — internal electronic failure (the meter itself stops measuring); diagnosis: voltage on the consumer side normal, customer reports billing issues; DNO call to replace meter. (2) Sub-metering installations (kWh meters at apartment level) — internal CT failure, terminal corrosion, comms link failure to BMS. (3) Specific instrument circuits in commercial buildings — temperature sensors, level sensors, flow meters; usually low-voltage SELV but with sensitive signal levels easily disrupted by EMI from nearby high-current cables. Diagnostic approach: substitute the suspect sensor with a known-good unit; if symptom moves, the sensor was at fault.",
-      "CALIBRATION — formal laboratory measurement of an instrument's accuracy against UKAS-traceable reference standards, results documented in a certificate, performed at fixed intervals (annually for MFT, every 24 months for two-pole). VERIFICATION — comparison of two instruments under field conditions to confirm they agree (e.g. MFT EFLI reading agreed within 5% of a known reference loop). FUNCTION CHECK — pre-use confirmation that the instrument operates at all (powers on, indicates on a known source, returns to zero on a known dead source). Each is a different level of confidence; calibration is the formal baseline, verification confirms field agreement, function is the daily go/no-go.",
-      "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
-      "Purchased goods and services — dominated by copper cable, aluminium cable, switchgear and luminaires. The practical lever is procurement policy: specify EPD-backed products, set minimum recycled-content thresholds, prefer manufacturer-specific over industry-average EPDs, prefer products with longer expected service life, and reduce material use through more efficient design (smaller cable on shorter runs, lighting with higher lm/W avoiding over-specification). The fix sits at the order stage, before the material is on the van.",
+      "They are three names for the same process — a lab measures the instrument, confirms it agrees with itself and prints a sticker, all carried out in one visit to the calibration house.",
+      "Calibration is formal lab measurement against UKAS-traceable references; verification is a field comparison of two instruments; function check is pre-use confirmation the instrument works at all.",
+      "Calibration is the daily go/no-go done by the operative, verification is the annual lab measurement, and function check is the field comparison of two instruments — the three terms in reverse order.",
+      "Calibration adjusts the instrument back into spec, verification replaces any failed component, and function check issues the new certificate — all three performed only at the calibration lab.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "Why is the 'function check on a known live source' specifically important for proving-dead testers?",
     options: [
-      "You can't make someone seek help, but you can keep listening, keep checking in, and keep signposting gently. Suggest the Lighthouse Club 24/7 helpline (0345 605 1956) — confidential, no referral needed, no qualifying period. Mention Samaritans (116 123). Mention Mates in Mind resources. Don't break their confidence without asking, but if you genuinely believe they're at imminent risk of harm to themselves, the right thing is to call 999 or take them to A&E — that's a safeguarding step, not a betrayal. Look after yourself too — supporting a peer can be heavy. The same charities are available to you.",
-      "Required for any high-risk task that needs documented authorisation — typically: live working above 50 V AC, work in hazardous areas (zoned ATEX environments), work on supply-side equipment, work that affects safety-critical systems (fire alarm, emergency lighting under test), work in confined spaces, hot work in close proximity to electrical equipment. The permit documents — task scope, authorised persons, date/time window, isolation steps already taken, residual hazards, PPE required, emergency response. Issued by an authorised manager, signed back at the end. Common on commercial / industrial sites; rare on domestic.",
-      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
-      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
+      "Because the known live source recharges the tester's battery, so it is guaranteed to have enough power for the proving-dead test that immediately follows on site.",
+      "Because proving on a known live source is the only way to set the tester's voltage range correctly before it can read a dead circuit accurately on the job.",
+      "Because a faulty tester can show 'zero' on a live circuit and you'd take a fatal shock — the check confirms it responds to a known source, so a 'zero' on the work circuit means something.",
+      "Because a known live source clears any induced ghost voltage from the leads, so the subsequent dead reading can never be a false positive on that circuit afterwards.",
     ],
     correctAnswer: 2,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 3,
     question: "What records must be kept for the firm's test instruments under PUWER 1998?",
     options: [
-      "BS 7671 421.1.7 (per A4:2026 progression) requires AFDD on certain final circuits in specified locations: (a) bedrooms in Houses in Multiple Occupation (HMOs), care homes, dwellings used for short-term accommodation, (b) circuits feeding bedrooms in higher-occupancy student / hostel-type dwellings, (c) circuits feeding combustible-construction buildings (timber-frame in some interpretations). Single-family domestic dwellings are not currently mandated but A4 wording is moving toward broader uptake. Manufacturers (Hager AFB, Schneider Vigi+AF) sell combined RCBO+AFDD devices that fit in standard CU positions. The L3 apprentice's exam expectation: know AFDD is required where, why, and how it's specified.",
-      "Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.",
-      "(1) Eliminate — can the chase be avoided entirely (surface mount, alternative route)? (2) Substitute — can a less dust-producing tool be used (resin-bonded chase saw with extraction vs hammer-and-bolster)? (3) Engineer — on-tool extraction connected to an M-class vacuum, water suppression. (4) Administrative — limit duration, rotate operatives, restrict access. (5) PPE — FFP3 mask as the LAST line, not the first. RPE alone is not COSHH-compliant for routine silica work.",
-      "PUWER 1998 Reg 6 (inspection of work equipment) requires records of inspection results 'kept until the next inspection is recorded'. For test instruments this typically means: (1) calibration certificates from each calibration cycle (kept for the working life of the instrument plus a tail period for legal hold); (2) inspection / function-check log (some firms have a daily sheet, some app-based); (3) defect / repair records; (4) instrument register listing each instrument by ID, type, calibration date, next-due. The records support PUWER compliance AND BS 7671 certification AND legal defence.",
+      "No records are required under PUWER — the responsibility for instrument records sits entirely with the calibration laboratory rather than with the user firm at all.",
+      "Only a purchase receipt for each instrument is required, to prove ownership in the event of theft, with no calibration or inspection records needed beyond that.",
+      "Only the manufacturer's original instruction manual must be retained, and once read it is taken to satisfy the PUWER inspection-record duty for the life of the instrument.",
+      "Reg 6 requires inspection records kept until the next inspection — so calibration certificates, a function-check log, defect records and an instrument register (ID, type, dates) covering the whole kit.",
     ],
     correctAnswer: 3,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 4,
     question: "How do you function-check an MFT (Megger MFT1741+, Kewtech KT64+) at the start of a shift?",
     options: [
-      "Five-step. (1) Power on — confirm self-test passes (Megger and Kewtech both run automatic self-tests on power-up). (2) Continuity — short the leads together; reading should be the lead resistance (typically 0.10–0.30 Ω) with audible buzzer; null the leads if the unit supports it. (3) Insulation resistance — connect leads together, press test at 250 V — should read &gt;999 MΩ (open circuit). (4) Loop / EFLI — connect to a known live socket; reading should match known reference for that location (or be plausible — typically 0.4–1.5 Ω at a domestic socket). (5) RCD — check on a known-good RCD outlet; trip-time should match the RCD's rating. Five minutes; catches drift, battery issues, lead damage.",
-      "PUWER 1998 Reg 6 (inspection of work equipment) requires records of inspection results 'kept until the next inspection is recorded'. For test instruments this typically means: (1) calibration certificates from each calibration cycle (kept for the working life of the instrument plus a tail period for legal hold); (2) inspection / function-check log (some firms have a daily sheet, some app-based); (3) defect / repair records; (4) instrument register listing each instrument by ID, type, calibration date, next-due. The records support PUWER compliance AND BS 7671 certification AND legal defence.",
-      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
-      "An F-Gas log entry recording the refrigerant type, the charge weight added or removed, the date, and the F-Gas-certified engineer's name and certificate number. The engineer logs the entry in their own F-Gas register and provides a copy or extract to the customer / installer for the handover pack. Required at every refrigerant transaction (initial commissioning charge, top-up, recovery at decommissioning). Required by the F-Gas Regulations and central to demonstrating compliance during any future enforcement check.",
+      "Power on and self-test, short the leads on continuity (~0.10–0.30 Ω, null if supported), open on IR (>999 MΩ), loop-test a known live socket, and trip a known-good RCD against its rating.",
+      "Just confirm the calibration sticker is in date — no functional checks are needed on an MFT because the lab has already verified every one of its test ranges.",
+      "Short the leads on the continuity range and, if the buzzer sounds, the whole instrument is taken to be proven good across all of its other test functions too.",
+      "Power it on and, provided the screen lights up and the battery icon shows full, the MFT is ready for use to record readings directly on a certificate.",
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the legal status of measurements taken with an out-of-calibration instrument?",
     options: [
-      "All of them, plus the main switch. (1) Open main switch / DNO cut-out cap (DNO call only) for incoming supply. (2) Open the EV charger isolator AND verify EV is unplugged (the EVSE may have its own contactor that closes on demand). (3) Open the PV AC isolator at the inverter AND the PV DC isolator at the array. (4) Open the battery storage AC isolator AND the battery DC isolator. (5) Confirm standby generator changeover switch is in MAINS position and lock-off the generator manual start. Then prove dead at the work point with a GS38 two-pole, AND a DC-rated tester for the PV/battery DC sides if you'll be near them.",
-      "Inadmissible for any purpose where the accuracy of the measurement matters legally — BS 7671 certification, EAWR evidence, EICR coding, dispute resolution. The reasoning: without UKAS-traceable calibration in date, you can't prove the measurement is accurate to the stated tolerance, so the measurement itself is unreliable. A circuit signed off as 'satisfactory IR ≥ 1 MΩ' using an instrument with expired calibration may actually have been 0.1 MΩ (instrument drift) — and any subsequent fire / shock incident will trace back to that signature. The instrument's calibration sticker is the front-line evidence; the certificate is the back-up.",
-      "No. EAWR Reg 14(c) requires 'suitable precautions including where necessary the provision of suitable protective equipment'. The risk being 'low' doesn't dispense with the precaution — it informs which precaution. For 230 V live work, Class 0 insulated gloves (rated 1000 V AC) plus insulated tools are the standard precaution. The senior is exposing both themselves and the firm to liability under EAWR (failure to take suitable precautions) and HSWA Section 7 (employee duty to take reasonable care of own and others' safety). The apprentice's defence: 'I followed the firm's PPE matrix' — so make sure there IS one and it specifies gloves for live work.",
-      "Three steps. (1) Notify the IT manager / customer in advance — they need to do a controlled shutdown of any servers, NAS units, switches, telephone systems and CCTV recorders that depend on the supply. Pulling the plug on a NAS mid-write corrupts the file system; pulling on a server can corrupt the database. (2) Wait for the IT side to confirm 'safe to power off' before you isolate — typically 5–15 minutes for a small server / NAS, longer for a domain controller or VM host. (3) After the fault work, restore power and let the IT side bring the systems back up in dependency order (switches → routers → servers → user devices); don't expect everything to 'just come back'. The L3 apprentice respects the IT system as a managed asset, not just a load.",
+      "Fully admissible — calibration only affects the accuracy of the displayed digits, not the legal validity of the certificate the readings are recorded on at all.",
+      "Inadmissible where accuracy matters legally — without in-date traceable calibration you can't prove the measurement to tolerance, so a circuit signed off as IR ≥ 1 MΩ may have been 0.1 MΩ through drift.",
+      "Admissible provided a second reading taken with the same out-of-calibration instrument agrees, since two matching readings are taken to prove the instrument accurate enough.",
+      "Admissible only for continuity tests but not for insulation resistance, on the basis that continuity is unaffected by any calibration drift over the working life.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "What's the difference between 'calibration' and 'adjustment' at a calibration lab?",
     options: [
-      "Standard order: (1) Ze at the supply origin (incoming meter tails or the main switch). Establishes the supply impedance baseline. (2) Each circuit at its furthest point in turn — go in label order or by RCD group. Use no-trip mode on RCD-protected circuits. (3) For any borderline reading, retest in full trip mode after preparing for the trip. (4) For any failing reading, investigate (terminations, route length, CPC size). The order isn\\\\\\\\'t arbitrary — Ze first gives you the baseline you need to sanity-check the per-circuit readings.",
-      "Decline. The senior is asking you to be inside the danger zone of a live exposed conductor without the operational role of a witness/observer (you're holding a cover, not observing safety). EAWR Reg 14 — three conjoint tests — would not be satisfied: live work is happening, you're in the danger zone, but there's no live-working risk assessment that includes you as a participant. Your appropriate role is OUTSIDE the work area as a barrier-monitor / comms-runner / first-aider. If the senior needs the cover held to access the busbar, the right answer is to use a clip / stand / temporary cover-prop, NOT a human hand. Politely escalate to the supervisor if pressed.",
-      "CALIBRATION — measurement of the instrument's response against reference standards, with results documented in a certificate. The instrument is unchanged; you get a certificate that says 'at the time of test, this instrument read X when measuring Y'. ADJUSTMENT — physical or software adjustment of the instrument to bring it into specification. Some calibration labs do both (calibrate, then adjust if out of spec, then re-calibrate); some do calibration-only (and you make the decision whether to adjust based on the report). The calibration certificate normally states whether adjustment was performed and the as-found vs as-left readings.",
-      "Significant. Many faults recur because the customer's behaviour caused or contributed to them — overloaded extensions, plug-in heaters on lighting circuits, kettle + microwave + toaster simultaneously. Educating the customer on the actual cause AND how to avoid recurrence is part of preventing the comeback. Format: brief verbal explanation during the work + written summary in the job sheet that the customer signs at completion. 'Your circuit is rated for X amps; running these appliances together exceeds that; consider running them sequentially OR add a dedicated circuit'. The customer's informed cooperation prevents 60–80% of behaviour-related comebacks.",
+      "They are the same thing — 'adjustment' is just the American term for 'calibration', and both simply mean measuring the instrument against a national reference standard.",
+      "Calibration physically tweaks the instrument back into spec, while adjustment is the paperwork certificate recording the readings, so adjustment never changes the instrument itself.",
+      "Calibration is measurement against references, leaving the instrument unchanged; adjustment brings it back into spec. The certificate states whether adjustment was done, showing as-found and as-left readings.",
+      "Calibration is done annually, while adjustment is done every shift by the operative pressing the 'null' button on the leads — the two being unrelated processes entirely.",
     ],
     correctAnswer: 2,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     id: 7,
     question: "Where do calibration stickers go on the instrument and what should they show?",
     options: [
-      "Live working is permitted under EAWR Reg 14 only when (a) it's unreasonable for the conductor to be dead, (b) it's reasonable for work to be carried out live, and (c) suitable precautions are taken — ALL three. Choosing live work to avoid customer inconvenience does NOT pass test (a) — convenience isn't 'unreasonable for the conductor to be dead'. The L3 apprentice doesn't get to make that trade-off; the firm's risk assessment makes it, with documented justification, and the supervisor authorises it. The 'I'll just do it live, the customer doesn't want the power off' is the exact failure mode the HSE prosecutes after the inevitable shock.",
-      "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
-      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
-      "Standard placement: on the case, near the model / serial number, where it's visible during normal use. Should show: lab name, calibration date, next-due date (typically 1 year for MFT/multimeter, 2 years for two-pole), unique certificate reference. Some labs include a barcode that links to the digital certificate. The sticker is the operative's quick check that the instrument is in date — no need to dig out the certificate. Stickers must be replaced after each calibration cycle; old stickers should be removed (multiple stickers cause confusion about which is current).",
+      "Inside the battery compartment, hidden from view, so it cannot be tampered with or accidentally peeled off during normal day-to-day use on site.",
+      "On the test leads only, since the leads are the part that contacts the circuit, so the instrument body itself needs no calibration sticker at all.",
+      "Stickers are not used in the UK — the calibration status is held only in the firm's register and is never marked on the physical instrument itself anywhere.",
+      "On the case near the serial number, visible in use, showing lab name, calibration date, next-due date and certificate reference — replaced each cycle with old ones removed.",
     ],
     correctAnswer: 3,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 8,
     question: "If an instrument has been heavily used (e.g. 40 hours of testing in one week on a big job), should it be re-calibrated more frequently than the standard interval?",
     options: [
-      "Possibly yes. Heavy usage accelerates wear on the input components (relays in IR/loop test stages, current transformers in clamp meters, switches and connectors). The calibration interval is set assuming 'normal' use; heavy use justifies a shorter interval. Also — any incident (drop, exposure to wet, exposure to heat above operating temperature, fault current through the instrument, blown fuse) is grounds for an interim calibration regardless of date. The general principle: calibration is a confidence interval, not a guarantee — use intelligence about how the instrument has been treated to decide if early re-calibration is justified.",
-      "Isolate AC and DC sides, lock-off, prove dead. Disconnect strings panel by panel. Remove panels using safe roof-access procedures. Recover the panels for recycling — established PV recycling streams in the UK take aluminium frames, glass, copper wiring and silicon cells separately. Inverter and any battery component handled as WEEE (electronics) and hazardous waste (battery) respectively. Roof penetrations made good. Update the EIC to reflect the removal. The MCS-certified installer (or successor) typically arranges the decommissioning chain through authorised waste carriers.",
-      "Section 49 of the Consumer Rights Act 2015 implies a term in every contract for the supply of a service to a consumer that the trader must perform the service with reasonable care and skill. Failure to do so is a breach of contract and the consumer has remedies including the right to require repeat performance and the right to a price reduction. Poor communication that leads to defective work, missed scope items or a non-compliant installation can be a breach of s.49.",
-      "Two responsibilities. (1) Identify the option set — what are the realistic repair / replace / redesign options for the specific fault? (2) Quantify the trade-offs — cost, lead time, reliability for each option. The DECISION is typically made by the senior / supervisor for non-trivial cases, OR by the customer based on the apprentice's options brief. The apprentice doesn't normally commit the firm to a specific repair / replace path on their own initiative — escalation to senior is the L3 expectation for commercial-impact decisions.",
+      "Possibly yes — heavy use accelerates wear on input components, and any incident (drop, wet, overheating, blown fuse) is grounds for interim calibration regardless of date.",
+      "No — the calibration interval is fixed by law and cannot be shortened regardless of how heavily or roughly the instrument has been used on the job.",
+      "No — heavy use actually exercises the instrument and keeps it more accurate, so a busy instrument can have its calibration interval extended rather than shortened.",
+      "No — only physical damage matters, and the number of hours of testing has no effect on accuracy, so the standard interval always applies completely unchanged.",
     ],
     correctAnswer: 0,
     explanation:
@@ -346,7 +346,7 @@ export default function Sub2() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 643.3"
+            source="BS 7671:2018+A4:2026 — Reg 643.8"
             clause={
               <>
                 "Regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness of the RCD."
@@ -354,10 +354,10 @@ export default function Sub2() {
             }
             meaning={
               <>
-                A4:2026 deleted Table 3A and the 5&times;I&Delta;n test. There is now a single AC test at rated residual operating current &mdash; one button press on a Megger MFT1741+ or Kewtech KT64+. If your firm&apos;s test pro forma still asks for a 5&times;I&Delta;n result, it&apos;s out of date and needs revising before the next audit.
+                A4:2026 deleted Table 3A and the 5&times;I&Delta;n test. There is now a single AC test at rated residual operating current &mdash; one button press on a Megger MFT1741+ or Kewtech KT64+. A general non-delay RCD must disconnect within 300 ms; a delay &apos;S&apos; type within 130&ndash;500 ms. If your firm&apos;s test pro forma still asks for a 5&times;I&Delta;n result, it&apos;s out of date and needs revising before the next audit.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.3 (RCD testing, redrafted in A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.8 (RCD effectiveness verification, redrafted in A4:2026)."
           />
 
           <SectionRule />

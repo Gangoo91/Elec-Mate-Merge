@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'resource-histogram',
     question: 'What does a resource histogram display?',
     options: [
-      'Conduct suitable and sufficient risk assessments',
-      'The purchase price of the equipment',
+      'The total contract value broken down by trade',
+      'The critical path through the project network',
       'Resource requirements plotted against time periods',
-      'They are unresponsive and not breathing normally',
+      'The cumulative cash flow forecast for the project',
     ],
     correctIndex: 2,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'resource-levelling',
     question: 'The primary purpose of resource levelling is to:',
     options: [
-      'Employer liability for acts of employees in the course of employment',
-      'Document setting out health and safety arrangements for construction phase',
+      'Increase the total number of operatives on site to finish faster',
+      'Shorten the overall project duration regardless of resource demand',
       'Reduce resource demand peaks by adjusting activity timing',
-      'The associated input or coil is ON (energised)',
+      'Fix the labour rate so it cannot change during the project',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the relationship between resource loading and resource levelling?',
     options: [
-      'From MET to the connection point on the service (gas, water)',
+      'Loading and levelling are two names for the same process',
       'Loading identifies requirements; levelling optimises timing',
-      'Higher sound reduction at most frequencies',
-      'To ensure materials arrive when needed and prevent storage problems',
+      'Loading smooths peaks; levelling lists the materials needed',
+      'Levelling sets the resources; loading extends the programme',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which factor most significantly affects electrical installation productivity rates?',
     options: [
-      'The bill of quantities or material schedule',
-      'Productivity improves as workers gain familiarity',
-      'At tender stage with confirmed lead times',
+      'The brand of hand tools issued to the operatives',
+      'The colour coding used on the distribution boards',
+      'The day of the week on which work is carried out',
       'Working at height and access restrictions',
     ],
     correctAnswer: 3,
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 4,
     question: 'When should long lead time items be ordered on a building services project?',
     options: [
-      'At tender stage with confirmed lead times',
-      'Productivity improves as workers gain familiarity',
-      'The bill of quantities or material schedule',
-      'Working at height and access restrictions',
+      'Immediately after contract award, against confirmed lead times',
+      'Only once first-fix is complete and access is confirmed',
+      'At practical completion, ready for the next phase',
+      'When the client issues the final payment certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which document forms the basis for material procurement planning?',
     options: [
-      'Working at height and access restrictions',
-      'Productivity improves as workers gain familiarity',
-      'At tender stage with confirmed lead times',
+      'The site health and safety file',
+      'The operation and maintenance manual',
+      'The construction phase welfare plan',
       'The bill of quantities or material schedule',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Plant utilisation rate measures:',
     options: [
       'The percentage of available time equipment is productively used',
-      'To allow systematic fault identification and prevent cascading failures',
-      'Unlimited fine and/or up to 5 years imprisonment',
-      'Reduced pumping energy while maintaining heat delivery',
+      'The weekly hire cost of the equipment on site',
+      'The maximum load the equipment can safely carry',
+      'The age of the equipment since its last service',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'Why is resource levelling performed within float rather than extending the programme?',
     options: [
-      'Providing a known voltage to test that the voltage indicator works',
+      'Float can only ever be used to bring the programme forward',
       'Extending the programme increases costs and may breach contract dates',
-      'Hearing only the parts of a message that interest you or confirm your existing views',
-      'Reduced operational energy with residual emissions offset',
+      'Contracts prohibit any change to activity timing once agreed',
+      'Float is a contingency that must never be touched under any circumstances',
     ],
     correctAnswer: 1,
     explanation:

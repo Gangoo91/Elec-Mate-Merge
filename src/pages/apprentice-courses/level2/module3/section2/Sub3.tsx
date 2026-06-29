@@ -75,9 +75,9 @@ const checks = [
       "On a layout drawing, two pendant lights are wired to a single switch position drawn as a rectangle with a slash and the number '2' next to it. What does the '2' mean?",
     options: [
       'Two-way switch (one of a pair on a stairwell circuit)',
-      'To prevent short circuits and maintain safety',
-      'When circumstances change, after incidents, or periodically',
-      'No — nobody should ever be on the tower while it is being moved',
+      'Two-gang switch (two separate switches on one plate)',
+      'Two-pole switch (breaks line and neutral together)',
+      'A switch controlling two separate lighting circuits',
     ],
     correctIndex: 0,
     explanation:
@@ -88,9 +88,9 @@ const checks = [
     question:
       "A cable is drawn as a single line on a layout diagram with three small slashes through it. What does that mean?",
     options: [
-      'Clearly marked as \\\\\\\\\\\\\\\'Emergency Lighting Circuits Only\\\\\\\\\\\\\\\'',
-      'The processing of raw sensor signals to make them suitable for the control system',
-      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
+      'A cable carrying three separate circuits',
+      'A cable rated for three times the normal current',
+      'A cable with three layers of insulation',
       'A cable with three conductors total (e.g. line, neutral and CPC)',
     ],
     correctIndex: 3,
@@ -150,9 +150,9 @@ const quizQuestions = [
       'On a board diagram you see a symbol showing a circuit-breaker and below it the marking "30 mA" with a small Δ (delta) or testing button. What kind of device is this?',
     options: [
       'A residual current device (RCD) with 30 mA residual operating current',
-      'The tendency to underestimate the time needed to complete tasks',
-      'Benefits greatly from hands-on electrical experience',
-      'Approved requires AM2s assessment, Installation requires AM2e',
+      'A miniature circuit-breaker with a 30 A rated load current',
+      'A surge protective device rated for 30 mA leakage',
+      'An arc fault detection device set to 30 mA',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,9 +191,9 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 introduced regulation 514.9.2. What does it require regarding diagrams and symbols?',
     options: [
-      'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
-      'Build genuine rapport through professionalism, reliability, clear communication and authentic common ground',
-      'They are internationally standardised so workers from any background can recognise the meaning instantly',
+      'Every drawing must carry a unique reference number and a revision letter',
+      'Symbols must be drawn at a minimum size for legibility on site',
+      'A symbol legend must appear on the same sheet as every layout',
       'Diagrams, charts and information notices shall comply with the applicable standards specified',
     ],
     correctAnswer: 3,

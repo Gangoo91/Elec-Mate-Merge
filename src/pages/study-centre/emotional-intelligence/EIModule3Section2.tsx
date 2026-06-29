@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       "In the follow-up studies to Mischel's marshmallow experiment, children who demonstrated greater impulse control (waited for the second marshmallow) were found to have which outcomes decades later?",
     options: [
-      'Higher levels of creativity and artistic ability',
       'Better academic results, higher incomes, healthier relationships, and lower rates of substance misuse',
+      'Higher levels of creativity and artistic ability',
       'Higher IQ scores but no difference in emotional wellbeing',
       'Greater physical fitness and lower body mass index only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The longitudinal follow-up studies to Mischel's original 1972 experiment tracked participants over 30+ years. Those who waited for the second marshmallow had significantly better SAT scores, higher educational attainment, healthier BMIs, better stress management, stronger relationships, and higher incomes. Impulse control in childhood was a stronger predictor of adult success than IQ.",
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       "What was the key finding from Walter Mischel's marshmallow experiment and its follow-up studies?",
     options: [
-      'Children who ate the marshmallow immediately were more intelligent',
       'Impulse control in childhood predicted academic, financial, and relationship success decades later',
+      'Children who ate the marshmallow immediately were more intelligent',
       'There was no significant difference in outcomes between the two groups',
       'The children who waited were more likely to develop anxiety disorders',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Mischel's longitudinal follow-up studies demonstrated that children who were able to delay gratification (wait for the second marshmallow) had significantly better life outcomes across multiple domains — including higher SAT scores, better stress management, lower rates of substance misuse, and stronger relationships — up to 30 years later.",
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'What is cognitive reappraisal, and why is it effective for impulse control?',
     options: [
       'Ignoring the emotional response entirely and pretending it does not exist',
-      'Reframing the meaning of a situation to change the emotional response before it fully forms',
       'Repeating positive affirmations until the negative emotion goes away',
       'Analysing the situation logically without considering emotions at all',
+      'Reframing the meaning of a situation to change the emotional response before it fully forms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cognitive reappraisal involves reframing or reinterpreting the meaning of a situation in order to change its emotional impact. It is effective because it intervenes at the appraisal stage of emotion generation — before the full emotional response has formed. Research by Ochsner and Gross (2005) using fMRI scanning confirmed that reappraisal reduces activity in the amygdala (the emotional response centre) while increasing activity in the prefrontal cortex (rational evaluation).',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'Why is text-based communication (WhatsApp, email) particularly high-risk for impulsive responses?',
     options: [
-      'Text messages are legally binding in ways that verbal communication is not',
       'Text lacks tone, facial expression, and body language cues, increasing the likelihood of misinterpretation, and messages create a permanent record',
+      'Text messages are legally binding in ways that verbal communication is not',
       'People read text messages more carefully than they listen to verbal communication',
       'Text-based communication is slower, giving people more time to get angry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Text-based communication removes the vast majority of emotional context — tone of voice, facial expression, body language, and pacing — that helps us accurately interpret meaning. Research shows that people tend to interpret ambiguous text messages more negatively than intended. Combined with the permanent, shareable, screenshot-able nature of written messages, this makes impulsive text responses particularly risky for professional relationships.',
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
       "In Ochsner and Gross's 2005 fMRI study on cognitive reappraisal, what did brain scans show when participants successfully reappraised negative images?",
     options: [
       'Increased activity in both the amygdala and prefrontal cortex',
-      'Decreased activity in the prefrontal cortex and increased amygdala activity',
       'Decreased amygdala activity and increased prefrontal cortex activity',
+      'Decreased activity in the prefrontal cortex and increased amygdala activity',
       'No significant changes in brain activity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Ochsner and Gross's landmark fMRI study showed that when participants successfully used cognitive reappraisal, activity in the amygdala (the brain's emotional alarm system) decreased while activity in the prefrontal cortex (responsible for rational evaluation and executive function) increased. This provides direct neurological evidence that reappraisal physically changes the brain's emotional processing — it is not just a thinking exercise.",
   },
@@ -187,10 +187,10 @@ const quizQuestions = [
     options: [
       'Impulse control has no measurable impact on professional reputation',
       'Strong impulse control is only important for managers and leaders, not tradespeople',
-      'Every impulsive reaction either builds or erodes your professional reputation, and the effects are cumulative',
       'Impulse control matters initially but becomes less important as you gain experience',
+      'Every impulsive reaction either builds or erodes your professional reputation, and the effects are cumulative',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Professional reputation is built through consistent behaviour over time. Every interaction — every response to pressure, every reaction to a mistake, every reply to a difficult message — either reinforces or undermines how others perceive you. A single impulsive outburst can undo months of good work, while consistent, measured responses build a reputation for reliability and professionalism. This applies equally to apprentices and managing directors.',
   },

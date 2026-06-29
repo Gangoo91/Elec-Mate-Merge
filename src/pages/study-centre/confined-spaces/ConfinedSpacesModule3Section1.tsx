@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'cs-o2-first-alarm',
     question: 'At what oxygen level does the first alarm typically trigger on a gas monitor?',
-    options: ['20.9%', '19.5%', '18%', '16%'],
-    correctIndex: 1,
+    options: ['19.5%', '20.9%', '18%', '16%'],
+    correctIndex: 0,
     explanation:
       'The first low-oxygen alarm on a four-gas monitor is normally set at 19.5% O\u2082. This is the minimum safe working level defined by UK standards. Normal atmospheric oxygen is 20.9%, so a drop of just 1.4% should already trigger the alarm and prompt immediate evacuation.',
   },
@@ -19,11 +19,11 @@ const quickCheckQuestions = [
     question: 'Why is it dangerous to rely on smell to detect hydrogen sulphide (H\u2082S)?',
     options: [
       'H\u2082S has no smell at all',
-      'Olfactory fatigue occurs above roughly 100 ppm \u2014 you can no longer smell it',
       'H\u2082S smells pleasant at high concentrations',
+      'Olfactory fatigue occurs above roughly 100 ppm \u2014 you can no longer smell it',
       'The rotten-egg odour only develops after several hours of exposure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Hydrogen sulphide has a strong rotten-egg smell at low concentrations, but above approximately 100 ppm it causes olfactory fatigue \u2014 the nerve endings in the nose become overwhelmed and the victim can no longer detect the gas. This makes smell an unreliable and potentially fatal method of detection. Instrument monitoring is essential.',
   },
@@ -33,11 +33,11 @@ const quickCheckQuestions = [
       'A gas reading of 25% LEL means the atmosphere contains what fraction of the gas needed to reach the Lower Explosive Limit?',
     options: [
       '25% of the total atmosphere is the flammable gas',
-      'A quarter of the concentration needed to ignite',
       'The gas is at 25% of its Upper Explosive Limit',
       'The space is already above the explosive range',
+      'A quarter of the concentration needed to ignite',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A reading of 25% LEL means the flammable gas is at one quarter of the concentration required to form an explosive mixture. For methane (LEL 5%), 25% LEL equates to 1.25% methane in air. Action levels are typically set at 10% LEL (evacuate) and 20% LEL (immediate withdrawal), so 25% LEL is already a serious emergency.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is a cause of oxygen depletion in a confined space?',
     options: [
+      'Rusting of steel walls and fittings',
       'Oxygen-enriched supply lines',
       'Electrolysis of water',
-      'Rusting of steel walls and fittings',
       'Use of intrinsically safe equipment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Rusting (oxidation) consumes oxygen. In a sealed or poorly ventilated confined space, the oxidation of steel walls, fittings, bolts, and other metalwork can steadily deplete oxygen to dangerous levels. Other causes include biological activity (bacteria, decomposition), combustion, and displacement by other gases such as nitrogen or carbon dioxide.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'Which regulation specifically addresses the control of flammable and explosive atmospheres in UK workplaces?',
     options: [
+      'Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)',
       'Control of Substances Hazardous to Health Regulations 2002',
       'Confined Spaces Regulations 1997',
-      'Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)',
       'Electricity at Work Regulations 1989',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) implement the ATEX Workplace Directive in the UK. DSEAR requires employers to assess and control risks from flammable or explosive atmospheres, classify hazardous areas into zones, eliminate ignition sources, and use appropriately rated (Ex) equipment. DSEAR applies to all workplaces, but is especially relevant to confined-space work where flammable gases may accumulate.',
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
     question: 'Nitrogen (N\u2082) is dangerous in confined spaces primarily because it:',
     options: [
       'Is toxic to the lungs at any concentration',
-      'Displaces oxygen without any warning smell or symptoms before collapse',
       'Is heavier than air and forms a visible layer at floor level',
       'Reacts with carbon dioxide to form a toxic compound',
+      'Displaces oxygen without any warning smell or symptoms before collapse',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Nitrogen is a simple asphyxiant: it is not toxic itself, but it displaces oxygen. Because nitrogen is odourless, colourless, and tasteless, there are no warning signs before a person becomes unconscious due to oxygen displacement. A person entering a nitrogen-purged space can collapse within seconds without ever sensing danger. This is why atmospheric testing before entry is critical.',
   },

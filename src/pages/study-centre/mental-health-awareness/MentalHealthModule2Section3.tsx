@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       "Why is it important to understand that depression is a clinical condition, not just 'feeling sad'?",
     options: [
-      'Because it makes people feel special to have a diagnosis',
-      "Because understanding it as a medical condition reduces stigma, encourages treatment-seeking, and recognises it's not about 'just cheering up'",
-      'Because only clinical conditions deserve sympathy',
-      "Because it means you can't do anything about it — it's purely biological",
+      'Because it reduces stigma and encourages people to seek proper treatment',
+      'Because it makes people feel special to have a formal diagnosis',
+      'Because only recognised clinical conditions deserve genuine sympathy',
+      "Because it means nothing can be done about it — it's purely biological",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Understanding depression as a clinical condition (not just normal sadness) is crucial because: (1) It reduces stigma and blame — it's not about being weak or dramatic, (2) It recognises that clinical depression doesn't respond to 'just think positive' — it requires proper treatment, (3) It encourages people to seek help rather than trying to 'tough it out', (4) It helps others understand why someone can't just 'snap out of it'. However, recognising it as clinical doesn't mean it's untreatable — depression is highly treatable with talking therapies, medication, or both.",
   },
@@ -25,10 +25,10 @@ const quickCheckQuestions = [
     question:
       "How does depression often manifest differently in men compared to 'classic' symptoms?",
     options: [
-      'Men never get depressed — it only affects women',
-      'Men experience exactly the same symptoms as women in all cases',
-      'Men are more likely to express depression as anger, irritability, risk-taking, and substance use rather than sadness or tearfulness',
-      'Depression in men is always less severe than in women',
+      'Men rarely get depressed — it mainly affects women and is short-lived',
+      'Men experience precisely the same symptoms as women in every case',
+      'Men are more likely to express it as anger, irritability, and substance use than sadness',
+      'Depression in men is consistently milder and resolves without any treatment',
     ],
     correctIndex: 2,
     explanation:
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       "What's the difference between normal anxiety (which everyone experiences) and an anxiety disorder?",
     options: [
-      'There is no difference — any anxiety at all is a disorder',
-      "Anxiety disorders involve excessive, persistent worry that's disproportionate to the situation and significantly impairs daily functioning",
-      "Normal anxiety doesn't cause any physical symptoms, but anxiety disorders do",
-      'Only people with diagnosed anxiety disorders ever feel anxious',
+      'There is no real difference — any anxiety at all counts as a disorder',
+      'Normal anxiety produces no physical symptoms, but anxiety disorders always do',
+      'Only people with a diagnosed anxiety disorder ever feel anxious at all',
+      'A disorder involves excessive, persistent worry that impairs daily functioning',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Normal anxiety is a healthy response to genuine threats or challenges — it helps us stay alert and perform well. An anxiety disorder occurs when: (1) The anxiety is excessive or disproportionate to the actual threat, (2) It's persistent — lasting for weeks or months, (3) It significantly impairs functioning — affecting work, relationships, and quality of life, (4) It occurs even when there's no clear threat. Both normal and disorder-level anxiety involve physical symptoms (racing heart, sweating, etc.) — the difference is in the severity, duration, and impact on life.",
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     id: 1,
     question: 'Clinical depression is:',
     options: [
-      'Just feeling sad or having a bad day',
-      'A medical condition affecting brain chemistry, mood, thinking, and physical health — distinct from normal sadness',
-      'Something that only affects people with traumatic childhoods',
-      'A sign of personal weakness or failure',
+      'A medical condition affecting brain chemistry, mood, and physical health',
+      'Just feeling sad or having one bad day at work',
+      'Something that only affects people with a traumatic childhood',
+      'A sign of personal weakness or character failure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Clinical depression is a recognised medical condition that affects neurotransmitters in the brain (particularly serotonin, norepinephrine, and dopamine), mood regulation, thinking patterns, and physical health. It's distinct from normal sadness in its severity, duration, and impact. It's not a character flaw, weakness, or something people can just 'snap out of'. It's a treatable medical condition, just like diabetes or asthma.",
   },
@@ -107,10 +107,10 @@ const quizQuestions = [
     id: 3,
     question: 'Depression in men often manifests as:',
     options: [
-      'Only sadness and crying, exactly like in women',
-      'Men never experience depression',
-      "Anger, irritability, aggression, risk-taking, and increased substance use rather than 'classic' sadness",
-      'Physical symptoms only, with no emotional component',
+      'Only sadness and crying, presenting exactly as it does in women',
+      'Nothing at all, because men do not really experience depression',
+      "Anger, irritability, risk-taking, and increased substance use rather than sadness",
+      'Purely physical symptoms, with no emotional or behavioural component',
     ],
     correctAnswer: 2,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'On a construction site, signs that someone might be experiencing depression include:',
     options: [
-      'One day of feeling tired after working late',
-      'Persistent withdrawal from the team, loss of interest in work, increased absence, irritability, fatigue despite rest, and comments about hopelessness or worthlessness',
-      'Being serious and professional rather than joining in with banter',
-      'Working efficiently and keeping to themselves',
+      'One day of feeling tired after working a late shift the night before',
+      'Being serious and professional rather than joining in with the banter',
+      'Working efficiently, getting on with the job and keeping to themselves',
+      'Persistent withdrawal, loss of interest, increased absence, and comments about hopelessness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Depression on site might look like: persistent withdrawal from team social activities, loss of interest in work they used to care about, increased absence (especially vague illness), visible fatigue despite rest, irritability and short temper, slowed movement or speech, difficulty concentrating, decline in work quality, changes in appearance, and comments about feeling worthless, hopeless, or like a burden. The key is change from their normal behaviour, and persistence over time.',
   },
@@ -135,11 +135,11 @@ const quizQuestions = [
     question: 'The fight-flight-freeze response is:',
     options: [
       'A sign of mental illness that needs treatment',
-      "The body's normal, healthy response to perceived threat — preparing to fight, run, or freeze",
       'Something that only happens to people with anxiety disorders',
       "A weakness that strong people don't experience",
+      "The body's normal, healthy response to perceived threat — preparing to fight, run, or freeze",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The fight-flight-freeze response is the body's automatic, protective response to perceived danger. When you perceive a threat, your amygdala triggers the sympathetic nervous system, releasing adrenaline and cortisol. This causes: increased heart rate, rapid breathing, muscle tension, heightened senses, and blood flow redirected to major muscles. This is completely normal and adaptive — it's what kept our ancestors alive. The problem in anxiety disorders is that this response is triggered by situations that aren't genuinely dangerous, or stays activated long after the threat has passed.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'Generalised Anxiety Disorder (GAD) is characterised by:',
     options: [
-      'Occasional worry about genuine problems',
-      'Fear of one specific thing, like heights or spiders',
-      'Excessive, uncontrollable worry about many different things, lasting at least six months, causing significant distress and impairment',
-      'Anxiety that only occurs in social situations',
+      'Occasional, proportionate worry about genuine day-to-day problems',
+      'Intense fear of one specific thing, such as heights or spiders',
+      'Excessive, uncontrollable worry about many things lasting at least six months',
+      'Anxiety that only occurs in social or performance situations',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'Signs of anxiety on a construction site might include:',
     options: [
-      'Careful, methodical work and attention to safety procedures',
-      'Excessive worry about tasks, avoidance of certain work, constant reassurance-seeking, physical symptoms like shaking or sweating, difficulty relaxing, and inability to concentrate',
-      'Following method statements and risk assessments',
-      'One instance of nervousness before a difficult task',
+      'Excessive worry, avoidance of work, reassurance-seeking, shaking and difficulty concentrating',
+      'Careful, methodical work and close attention to safety procedures',
+      'Calmly following the method statements and risk assessments provided',
+      'A single instance of nervousness before one particularly difficult task',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Anxiety on site might manifest as: excessive worry about routine tasks ('What if I get this wrong?'), avoidance of work that triggers anxiety, constantly seeking reassurance from supervisors, visible physical symptoms (shaking, sweating, nausea, pale, rapid breathing), difficulty concentrating, irritability, being unable to relax during breaks, sleep difficulties affecting work, and in severe cases, panic attacks. This is distinct from healthy caution or normal pre-task nervousness — it's disproportionate, persistent, and impairing.",
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 8,
     question: 'The PHQ-9 and GAD-7 are:',
     options: [
-      'Medications used to treat depression and anxiety',
-      'Validated questionnaires that GPs use to assess the severity of depression (PHQ-9) and anxiety (GAD-7)',
-      'Blood tests that diagnose mental health conditions',
-      'Types of therapy for treating mental illness',
+      'Prescription medications used to treat depression and anxiety',
+      'Validated questionnaires GPs use to assess depression and anxiety severity',
+      'Blood tests used to diagnose common mental health conditions',
+      'Structured types of talking therapy for treating mental illness',
     ],
     correctAnswer: 1,
     explanation:

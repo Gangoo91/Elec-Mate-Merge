@@ -28,24 +28,24 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A homeowner is worried about the cost of a full rewire. What is the best approach to this conversation?',
       options: [
-        'Place the pads in the normal position but ensure the pad is at least 8 cm (approximately 3 inches) from the device',
-        'Explain the safety reasons, outline the work involved, and offer to break it into phases if possible',
-        'Sickness absence rates, EAP utilisation, staff survey results, and number of MHFA interactions',
-        'Access to the work, drawings, certs to date and the ability to ask questions of the installer',
+        'Pressure them to commit today by warning their safety cannot be guaranteed otherwise',
+        'Explain the safety reasons and offer to phase the work if possible',
+        'Suggest they shop around for the cheapest quote they can find elsewhere',
+        'Avoid the cost discussion and simply invoice them once the work is finished',
       ],
       correctAnswer: 1,
       explanation:
-        'The best approach is to be empathetic and informative. Explain why the rewire is necessary (safety), what the work involves, and if possible offer practical solutions like phased work. This builds trust and shows you understand their concerns while maintaining your professional recommendation.',
+        'The best approach is to be empathetic and informative. Explain why the rewire is necessary (safety), what the work involves, and if possible offer practical solutions like phased work to spread the cost. This builds trust and shows you understand their concerns while maintaining your professional recommendation.',
     },
     {
       id: 2,
       question:
         'During a site meeting, a project manager asks you to confirm that your first-fix work will be complete by Friday. You are not sure you can meet this deadline. What should you do?',
       options: [
-        'Certificates may be invalid and legal compliance cannot be demonstrated',
-        'The responsible person (usually the employer or building owner)',
+        'Confirm Friday to avoid conflict, then explain later if you miss it',
+        'Say nothing and hope the deadline is forgotten',
         'Be honest about the situation, explain what is achievable, and discuss any obstacles',
-        'Check for services, drill pilot hole, and drill from both sides to prevent breakout',
+        'Tell the project manager it is not your responsibility to track deadlines',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,68 +56,68 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A client telephones to report that their RCD keeps tripping. You cannot visit until tomorrow. What information should you gather during the call?',
       options: [
-        'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
-        'Document the incident in writing, including date, time, witnesses, and exact language used, and raise it through the appropriate channels',
-        'To systematically identify hazards in the design, evaluate the associated risks, and record the measures taken to eliminate, reduce, or communicate those risks',
-        'When it started, which RCD is tripping, whether they have noticed any patterns, and whether any new appliances have been connected',
+        'Only their full name and address, so that you can find the property',
+        'Advise them to tape over the RCD so it stays on until you arrive',
+        'Only the make and model of their consumer unit and its age',
+        'When it started, which RCD trips, any patterns, and any new appliances',
       ],
       correctAnswer: 3,
       explanation:
-        'Gathering information over the phone helps you prepare for the visit and may even help the client in the meantime. Asking about timing, patterns, and any changes to the installation gives you a starting point for your investigation. Never advise a client to override a safety device.',
+        'Gathering information over the phone helps you prepare for the visit and may even help the client in the meantime. Asking about timing, which RCD is affected, any patterns, and any changes to the installation gives you a starting point for your investigation. Never advise a client to override a safety device.',
     },
     {
       id: 4,
       question:
         'You need to explain to a homeowner why their consumer unit needs replacing. Which explanation is most appropriate?',
       options: [
-        'The current consumer unit does not provide the level of protection required by current regulations. A new unit with RCDs will protect you and your family from electric shock and reduce the risk of electrical fire.',
-        'PUWER governs the safe provision, use and maintenance of all the equipment a maintenance technician uses daily — from hand tools to test instruments to access equipment',
-        'Uses the words precisely. "There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a hazard here" means something has potential to cause harm — useful for hazard identification. "There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a high risk" means likelihood × severity is concerning — useful for control prioritisation. Mixing the terms loses clarity.',
-        'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
+        'The unit lacks the protection current regulations require; a new one with RCDs guards against shock and fire',
+        'Your old consumer unit is rubbish and could burn the house down at any moment now',
+        'Tell them firmly that the work is required and they really have no choice in the matter',
+        'Explain it using as much technical jargon as possible so that you sound expert',
       ],
       correctAnswer: 0,
       explanation:
-        'The best explanation is honest, factual, and focuses on the benefit to the client (safety). It avoids scare tactics, avoids making the client feel pressured, and uses language they can understand. Mentioning RCDs and their purpose helps the client understand the value of the upgrade.',
+        'The best explanation is honest, factual, and focuses on the benefit to the client (safety). Telling them the existing unit does not meet current regulations and that a new unit with RCDs protects them from electric shock and reduces the fire risk avoids scare tactics and pressure while using language they can understand.',
     },
     {
       id: 5,
       question:
         'A plumber on site has accidentally drilled through one of your cables. How should you handle this?',
       options: [
-        'Intrinsic motivation comes from internal satisfaction; extrinsic comes from external rewards',
-        'Report the damage to the site manager, assess the situation calmly, arrange a repair, and discuss how to prevent it happening again',
-        'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
-        'A completed work order, updated test records, permit to work cancellation, and confirmation that all safety interlocks have been tested and are operative',
+        'Ignore it, as the plumber is responsible for their own mistakes on site',
+        'Report it to the site manager, assess calmly, and arrange a repair',
+        'Confront the plumber angrily and refuse to ever work alongside them again',
+        'Quietly repair the cable yourself and say nothing to anyone about it',
       ],
       correctAnswer: 1,
       explanation:
-        'The professional approach is to stay calm, report the damage through the proper channels (site manager), assess and repair the damage safely, and work with the plumber and site manager to prevent future occurrences. Losing your temper solves nothing, and ignoring damage creates a safety risk.',
+        'The professional approach is to stay calm, report the damage through the proper channels (site manager), assess and repair it safely, and work with the plumber and site manager to prevent it happening again. Losing your temper solves nothing, and ignoring damage creates a safety risk.',
     },
     {
       id: 6,
       question:
         'When presenting at a toolbox talk about safe isolation, what is the most important thing to remember?',
       options: [
-        'Creating systems where learning from failure is valued, feedback is normalised, and development pathways are transparent',
-        'A separate metallic conductor (the supply cable sheath or a dedicated earth conductor) from the supply',
-        'Speak clearly, use practical demonstrations, and check that everyone understands before finishing',
-        'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
+        'Get through the talk as quickly as possible so that work can start',
+        'Read the procedure word-for-word from the sheet without ever looking up',
+        'Speak clearly, demonstrate practically, and check everyone has understood',
+        'Use as much technical detail as possible to show off your expertise',
       ],
       correctAnswer: 2,
       explanation:
-        'A toolbox talk must be effective, not just delivered. Speaking clearly, using demonstrations (e.g. showing the prove-test-prove procedure with actual equipment), and checking understanding ensures the safety message gets through. The goal is that everyone leaves the talk able to apply what they have learned.',
+        'A toolbox talk must be effective, not just delivered. Speaking clearly, using demonstrations (e.g. showing the prove-test-prove procedure with actual equipment), and checking understanding ensures the safety message gets through. The goal is that everyone leaves able to apply what they have learned.',
     },
     {
       id: 7,
       question:
         'A client complains that the light fittings you installed are not the ones they chose. You check and discover you installed the correct fittings as specified on the order. How should you respond?',
       options: [
-        'With an insulation resistance tester (megohmmeter) at a test voltage appropriate to the circuit voltage (typically 500 V DC for circuits up to 500 V)',
-        'The likelihood of transient overvoltages and the consequences of equipment damage (type of wiring, value of equipment, nature of occupancy)',
-        'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-        'Listen to their concern, show them the specification they approved, and work together to find a solution if they are unhappy',
+        'Insist you are right and refuse to discuss the matter any further',
+        'Listen, show them the specification they approved, and resolve it together',
+        'Offer to replace the fittings free of charge just to keep the peace',
+        'Blame the supplier for sending you the wrong fittings in the first place',
       ],
-      correctAnswer: 3,
+      correctAnswer: 1,
       explanation:
         "Even when you have done nothing wrong, the professional approach is to listen first, acknowledge the client's concern, and then calmly present the facts. Showing them the approved specification (which they signed) in a non-confrontational way usually resolves the issue. If they are still unhappy, working together on a solution maintains the relationship.",
     },
@@ -126,14 +126,14 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'What is the most effective way to communicate with trades who speak English as a second language on a multi-trade site?',
       options: [
-        'Use clear, simple language, avoid slang and idioms, supplement verbal instructions with diagrams or written notes, and confirm understanding',
-        'A bank of interconnected high-pressure air cylinders that provide an extended, continuous supply of breathing air to airline BA users',
-        '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
-        'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
+        'Use plain language, support it with diagrams or notes, and confirm understanding',
+        'Speak loudly and slowly, repeating the same words until they finally understand',
+        'Use as much trade slang as possible, since it is quicker for you to say',
+        'Avoid speaking to them directly and only communicate through their supervisor',
       ],
       correctAnswer: 0,
       explanation:
-        'Clear, simple language combined with visual aids (diagrams, written notes, colour-coded labels) is the most effective approach. Confirming understanding by asking the person to repeat the key points back to you ensures the message has been received correctly. Speaking loudly does not help if the language is unclear.',
+        'Clear, simple language combined with visual aids (diagrams, written notes, colour-coded labels), avoiding slang and idioms, is the most effective approach. Confirming understanding by asking the person to repeat the key points back to you ensures the message has been received correctly. Speaking loudly does not help if the language is unclear.',
     },
   ];
 
@@ -440,13 +440,13 @@ const FunctionalSkillsModule2Section3 = () => {
           id="m2s3-client-comms"
           question="A client asks you to explain what an RCD does. Which explanation is most appropriate for a non-technical person?"
           options={[
-            'It monitors the current flowing in the line and neutral conductors and trips when it detects an imbalance exceeding 30mA',
-            'It is a safety device that cuts the power very quickly if it detects a fault that could cause electric shock — like a safety net for your electrics',
-            'It is required by Regulation 411.3.3 of BS 7671',
-            'It is the thing that trips when something goes wrong',
+            'It monitors the line and neutral conductors and trips on an imbalance exceeding 30mA',
+            'It is a safety device that cuts the power quickly on a fault — like a safety net',
+            'It is the residual current device required by Regulation 411.3.3 of BS 7671',
+            'It is the thing in the box that trips whenever something goes wrong somewhere',
           ]}
           correctIndex={1}
-          explanation="For non-technical clients, the best explanation uses simple language and relatable concepts. Describing it as a 'safety device' that 'cuts the power quickly' and using the analogy of a 'safety net' makes the concept accessible without being inaccurate."
+          explanation="For non-technical clients, the best explanation uses simple language and relatable concepts. Describing it as a 'safety device' that 'cuts the power quickly' and using the analogy of a 'safety net' makes the concept accessible without being inaccurate, where a precise regulation reference or technical detail about imbalance thresholds would lose them."
         />
 
         {/* Section 03 — Site Meetings */}

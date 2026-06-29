@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'reactive-power',
     question: 'What is reactive power (kVAr)?',
     options: [
-      'Ask for simpler terms or request to see a drawing',
-      'Most-used tools accessible; everything with a designated place; regular cleaning',
+      'The power that performs useful work such as heating and mechanical output',
+      'The vector sum of real and reactive power drawn from the supply',
       'Power oscillating between source and inductive/capacitive loads',
-      'Rockwell Studio 5000 Logix Designer (formerly RSLogix 5000)',
+      'The power dissipated as heat in the cable resistance',
     ],
     correctIndex: 2,
     explanation:
@@ -69,11 +69,11 @@ const quickCheckQuestions = [
     question: 'Why are detuned reactors used with capacitor banks in harmonic-rich environments?',
     options: [
       'To reduce the physical size of capacitors',
-      'To increase the capacitor voltage rating',
-      'To eliminate the need for protection devices',
       'To prevent harmonic resonance and capacitor damage',
+      'To eliminate the need for protection devices',
+      'To increase the capacitor voltage rating',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Detuned reactors shift the resonant frequency of the capacitor bank below the lowest significant harmonic (typically 189 Hz for 7% detuning), preventing dangerous harmonic amplification and protecting capacitors from overload.',
   },
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'What is the main financial benefit of power factor correction for industrial consumers?',
     options: [
-      'Results, test conditions, and equipment details',
-      'Energy let-through during fault clearance',
-      'Separate neutral and earth conductors from source',
+      'A lower unit price per kWh of energy consumed',
+      'Exemption from the Climate Change Levy on electricity',
+      'Reduced standing charge for the metering equipment',
       'Lower reactive power charges and maximum demand penalties',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'Which BS standard specifically covers capacitor installations for power factor correction?',
     options: [
-      'Automatic PFC with 8 × 10 kVAr stages',
-      'Current and power factor',
-      '3 minutes (or 5 minutes per BS 7671)',
+      'BS EN 60898 (circuit breakers for household installations)',
+      'BS EN 61439 (low-voltage switchgear assemblies)',
+      'BS EN 60269 (low-voltage fuses)',
       'Both BS EN 61921 and BS EN 60831',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'What protection device is essential for capacitor bank installations?',
     options: [
       'HRC fuses or MCCBs rated for capacitor switching duty',
-      'Cleaning and maintaining heat exchanger surfaces on HVAC equipment',
-      'Organisational — the commissioning procedure was incomplete',
-      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
+      'A standard Type B MCB sized to the rated capacitor current',
+      'A 30 mA RCD on each capacitor stage',
+      'A semiconductor fuse rated for the supply frequency only',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,24 +206,24 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'What is the minimum safe discharge time for capacitors before maintenance work?',
+    question: 'What is the typical safe discharge time for PFC capacitors before maintenance work?',
     options: [
-      'Stop work and report immediately',
-      'Correct operation between supply sources',
-      '3 minutes (or 5 minutes per BS 7671)',
-      'To subtract lead resistance from readings',
+      'Capacitors discharge instantly the moment the supply is isolated',
+      '30 seconds is always sufficient regardless of capacitor size',
+      'Around 3 minutes, allowing discharge resistors to bring the voltage down to a safe level',
+      'No discharge time is needed if the bank is fitted with HRC fuses',
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires capacitors to discharge to 50V or less within 5 minutes (3 minutes per some manufacturer specifications). Discharge resistors are mandatory to ensure safe voltage decay.',
+      'PFC capacitors retain a dangerous charge after isolation and must be allowed to discharge to a safe voltage (typically taken as 75 V) through their discharge resistors before work begins — commonly around 3 minutes. BS 7671 (Reg 559.7) mandates that compensation capacitors with a total capacitance exceeding 0.5 µF are used only in conjunction with discharge resistors.',
   },
   {
     id: 11,
     question: 'What happens if capacitors are switched in when not required (over-correction)?',
     options: [
-      'Benefits greatly from hands-on electrical experience',
-      'Workers must be consulted on health and safety matters including risk assessment',
-      '50-65 percent of the socket-circuit nameplate aggregate, depending on equipment mix.',
+      'Lagging power factor causing increased reactive power charges',
+      'Unity power factor with no effect on system voltage',
+      'A reduction in the harmonic content of the supply current',
       'Leading power factor causing voltage rise and potential utility penalties',
     ],
     correctAnswer: 3,

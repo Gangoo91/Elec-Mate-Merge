@@ -36,10 +36,10 @@ const checks = [
     question:
       'You are filling the "Max Zs (Ω)" column on the STR for a circuit protected by a Type B 32 A RCBO. Where do you read the value from?',
     options: [
-      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
-      'Automatic lighting control based on detecting presence or absence of people',
+      'The measured Zs at the far end of the circuit — you copy the live loop reading straight into the Max Zs column.',
+      'A fixed 1.10 Ω for every Type B device — the cold-cable site limit is the same regardless of the device rating.',
       'BS 7671 A4:2026 Table 41.3 — Type B 32 A at U₀ = 230 V → 1.37 Ω. (NOT the older A2 value of 1.44 Ω.)',
-      'Information necessary for them to fulfil their functions, subject to certain restrictions',
+      'The DNO\'s declared Ze of 0.35 Ω for TN-C-S — the supply impedance is recorded as the maximum Zs for the circuit.',
     ],
     correctIndex: 2,
     explanation:
@@ -50,10 +50,10 @@ const checks = [
     question:
       'On the STR row for a circuit protected by a 32 A Type B RCBO with IΔn = 30 mA, the IΔn column is left blank. Acceptable?',
     options: [
-      'Stop immediately. Re-isolate at the correct point. Prove dead again. Investigate why the original isolation was incomplete (wrong device locked off, back-fed circuit, alternative supply source, parallel CPC path, induced voltage). Document the near-miss.',
-      'No — IΔn is a required field for any circuit protected by an RCD or RCBO. Leaving it blank could be misread as "no RCD function" or "RCD value not verified". Fill in 30 mA Type A (or whichever rating / type). Reg 642.4 requires complete recording.',
-      'ISOLATE the supply first. If immediate isolation isn\\\\\\\'t possible, use a non-conductive item (dry wood, plastic) to break contact. Do NOT touch the casualty until they\\\\\\\'re separated from the source. Then DR ABC casualty assessment and 999.',
-      'Insulation resistance test, continuity check, visual inspection, verification that all tools and temporary earths have been removed, and confirmation that all personnel are clear',
+      'Yes — IΔn is obvious from the "RCBO" label, so a future inspector can infer 30 mA and the column saves time blank.',
+      'No — IΔn is a required field on any RCD or RCBO row; leaving it blank reads as "no RCD function" (Reg 642.4).',
+      'Yes — IΔn only needs filling where the RCD is a standalone unit; for an integrated RCBO it is left blank by convention.',
+      'Yes — the measured trip-time result proves the RCD works, so the rated IΔn becomes redundant information.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const checks = [
     question:
       'You write R1+R2 as "0.45" and IR L+N to E as "200" on an STR row. Is that sufficient documentation?',
     options: [
-      'No — always write the units. R1+R2 should be "0.45 Ω" (or document column header units as Ω). IR should be "200 MΩ" (column header MΩ). Mixed units in the same form (mΩ for R1+R2 in some sections, Ω in others, MΩ vs GΩ for IR) is a common source of misreading. Be explicit.',
-      'Ze = the external loop from the origin out through the supply transformer star point and back to the means of earthing; R1 = the line conductor from origin to the fault point; R2 = the protective conductor from the fault point back to the MET.',
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'The continuity and resistance of protective conductors (R1+R2), bonding conductors, and ring final circuit conductors — confirming that the earth fault path is complete and has acceptably low resistance',
+      'No — be explicit with units: "0.45 Ω" and "200 MΩ". Mixed units (mΩ vs Ω, MΩ vs GΩ) cause misreading.',
+      'Yes — bare numbers are always fine because the STR column headers carry the units, so cell units just duplicate.',
+      'Yes, provided you round both values to whole numbers — "0" for R1+R2 and "200" for IR — to keep the form tidy.',
+      'Yes — the inspector\'s signature confirms the units are understood, so figures alone are the professional convention.',
     ],
     correctIndex: 0,
     explanation:
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'STR header section — which of these belongs in the header (top of the form, common to every per-circuit row)?',
     options: [
-      'Understanding others — sensing others\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
+      'R1+R2, insulation resistance and Zs for the first circuit only — the header row carries the readings for circuit one and the rest follow below.',
       'Address of installation, date of testing, name of person testing, instrument serial numbers, certificate reference number cross-referenced to the EIC.',
-      'Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest',
-      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
+      'The protective device type, rating and breaking capacity — these are common to the board so they sit in the header rather than in each circuit row.',
+      'The customer\'s payment terms and the agreed price for the work, so the test record doubles as the job invoice.',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,9 +106,9 @@ const quizQuestions = [
     id: 3,
     question: 'The "Polarity" column on the STR is typically:',
     options: [
-      'The fault found, diagnostic steps taken, root cause, corrective action performed, parts used, and verification of effectiveness',
-      'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
-      'An \\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'A resistance value in ohms — the polarity column records the L-to-CPC continuity reading taken during the polarity test.',
+      'A voltage reading — the polarity column holds the live L-to-earth voltage measured at the accessory after energisation.',
+      'A description of how polarity was verified, written out in full for each circuit so the method is documented on the form.',
       'A simple tick (or P/F) confirming polarity has been verified per Reg 643.6 — i.e. all the dead polarity test items pass.',
     ],
     correctAnswer: 3,
@@ -120,9 +120,9 @@ const quizQuestions = [
     question: 'A 30 mA Type A RCBO on a kitchen ring tested at 28 ms trip time at 1 × IΔn. What goes in the RCD trip-time column?',
     options: [
       '"28 ms" — the actual measured trip time. Pass / fail status is implicit (28 ms < 300 ms = pass). Documenting the actual reading lets future inspectors compare values for drift or degradation.',
-      'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
-      'In stages — during erection (first-fix verification of buried items before cover-up), at second-fix completion, and final at energisation. Reg 641.1 explicitly covers "during erection and on completion".',
-      'Negotiation first, then the contract\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s formal dispute resolution route (often adjudication under the Construction Act for construction contracts)',
+      'Just "Pass" — the trip-time column only records whether the device tripped within the limit, not the actual figure.',
+      'The maximum permitted time "300 ms" — you record the limit the device was tested against rather than the value it achieved.',
+      '"30 mA" — the trip-time column records the rated residual current the device tripped at, not the time.',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'The "Max Zs (Ω)" column on the STR for a Type B 16 A circuit per A4:2026:',
     options: [
-      'A device that converts chemical energy to electrical energy',
+      '1.37 Ω (reading the Type C 16 A row by mistake instead of Type B)',
       '2.73 Ω (the A4:2026 value — the older A2 value of 2.87 Ω is obsolete)',
-      'Automatic lighting activation during security events for deterrence',
-      'Lower power consumption, longer life, better reliability, and reduced maintenance',
+      '4.37 Ω (reading the Type B 10 A row instead of the 16 A row)',
+      '2.87 Ω (the superseded A2 value, no longer valid on a current certificate)',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'Modern MFTs export test data via Bluetooth or USB. On a digital STR, the auto-imported data should:',
     options: [
-      'The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions',
-      '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
-      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.',
-      'Type (BS EN 60898 Type B or C), rating (32 A), breaking capacity (e.g. 6 kA Icn), trip characteristic family, RCD class if combined (e.g. RCBO 30 mA Type A), and the maximum Zs figure used for verification (Type B32 = 1.37 ohms per Table 41.3 A4:2026). Plus the manufacturer / part number for traceability.',
+      'Be accepted without review, since data from the calibrated instrument is more trustworthy than any manual check.',
+      'Be deleted and re-entered by hand, because only a record the inspector types in personally is reliable.',
+      'Be reviewed by the inspector before signing, because mis-set ranges or import glitches can pass nonsense values silently.',
+      'Be locked from editing once imported, so the inspector can never alter an obviously wrong instrument figure.',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 7,
     question: 'AFDD column on the modern STR records:',
     options: [
-      'Provide a tagged accessible PDF (or large-print/braille if requested), an audio summary, and offer a verbal walk-through of any concerns',
-      'Representation of process control engineering in P&ID diagrams, including instrument identification and graphic symbols',
-      'Insulation method (Class II / equivalent), DC isolator at array, polarity, string fuses, earthing arrangement (functional vs protective), and labels at supply intake (Reg 514)',
-      'Tick or P/F confirming the AFDD\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s manufacturer-specified test facility was operated correctly per Reg 643.10. Plus a note for any abnormal indication.',
+      'The arc-fault current in amps that the device tripped at during the test, recorded so future inspectors can compare for drift.',
+      'The insulation resistance of the AFDD measured at 500 V DC, confirming the device\'s own internal insulation is sound.',
+      'The maximum Zs the AFDD permits on its circuit, taken from a dedicated AFDD column in Table 41.3.',
+      'Tick or P/F confirming the AFDD\'s manufacturer-specified test facility was operated correctly per Reg 643.10. Plus a note for any abnormal indication.',
     ],
     correctAnswer: 3,
     explanation:
@@ -171,10 +171,10 @@ const quizQuestions = [
     id: 8,
     question: 'Per Reg 642.4 and Section 644, the STR is part of:',
     options: [
-      'The certification of the installation. The signed STR + Schedule of Inspections + EIC together form the certification pack required for a new installation or major alteration. The STR is not optional or supplementary — it is one of the three components of the certificate.',
-      'It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.',
-      'Hazard exists; risk is the quantified threat from the hazard given exposure; control reduces the risk; residual risk is what remains after control. ALARP is achieved when residual risk is reduced to a point where further reduction would be grossly disproportionate to the cost.',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
+      'The certification pack — the signed STR, Schedule of Inspections and EIC together certify the installation.',
+      'The installer\'s internal working notes — a draft kept for reference, not part of the formal certificate.',
+      'The Construction Phase Plan — filed with the site safety paperwork rather than the electrical certificate.',
+      'The manufacturer\'s documentation pack — supplied to prove the kit was installed per the maker\'s instructions.',
     ],
     correctAnswer: 0,
     explanation:

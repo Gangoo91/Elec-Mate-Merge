@@ -51,12 +51,12 @@ const checks = [
     question:
       'A laptop charger is on fire on the bench — which extinguisher class do you grab?',
     options: [
+      'Water (red label) — cools the fire fastest',
       'CO₂ (black label) — designed for live electrical fires',
-      'The point moves horizontally to the right',
-      'After confirming supply and control circuits were correct',
-      'Dividing work into logical, sequential steps',
+      'Foam (cream label) — smothers and cools',
+      'Wet chemical (yellow label) — for hot equipment',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'CO₂ (black label) is the standard electrical extinguisher — non-conductive, leaves no residue, smothers the fire by displacing oxygen. Dry powder (blue label) also works but it goes everywhere and ruins the kit and any nearby electronics. Water and foam are conductive — never on live electrics.',
   },
@@ -64,10 +64,10 @@ const checks = [
     id: 'pass-technique-check',
     question: 'PASS is the four-step extinguisher technique. What does the first letter stand for?',
     options: [
-      'Push the lever',
-      'Pump the handle three times',
+      'Push the lever down to start the discharge',
+      'Point the nozzle at the flames',
       'Pull the safety pin',
-      'Position your feet',
+      'Position your feet two metres back',
     ],
     correctIndex: 2,
     explanation:
@@ -77,12 +77,12 @@ const checks = [
     id: 'evac-stop-work-check',
     question: 'The fire alarm goes off. What is the right immediate action for an apprentice?',
     options: [
-      'Stop work immediately, leave by the nearest safe exit, go to the assembly point',
       'Pack up tools, finish the bit you’re on, then leave',
+      'Stop work immediately, leave by the nearest safe exit, go to the assembly point',
       'Wait for the supervisor to confirm it’s real',
       'Investigate where the fire is so you can tell the supervisor',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Stop work, leave by the nearest safe exit, go to the assembly point. Don’t pack up. Don’t investigate. Don’t wait for confirmation. Roll call at the assembly point identifies who is missing — that’s how the fire service knows whether to enter the building.',
   },
@@ -122,9 +122,9 @@ const quizQuestions = [
     question:
       'You see a small waste-bin fire of paper and cardboard in the corridor. The alarm hasn’t gone yet. Which extinguisher?',
     options: [
-      'It visualises processes and relationships between properties',
-      'Emergency activation that triggers all alarms and notifications',
-      'Using distribution boards or sub-boards as natural division points',
+      'CO₂ (black) — non-conductive and leaves no residue',
+      'Dry powder (blue) — knocks the flames down fastest',
+      'Wet chemical (yellow) — designed for waste-paper fires',
       'Water (red) or foam (cream) — Class A solid combustibles',
     ],
     correctAnswer: 3,
@@ -136,9 +136,9 @@ const quizQuestions = [
     question: 'What does PASS stand for in fire-extinguisher use?',
     options: [
       'Pull (the pin), Aim (at the base), Squeeze (the handle), Sweep (side to side)',
-      'Combination of escape route and open area (anti-panic) lighting',
-      'Embodied carbon coefficients for construction materials',
-      'Record the exact measured value with appropriate units',
+      'Point, Activate, Spray, Shut-off',
+      'Prepare, Approach, Smother, Standby',
+      'Pull (the pin), Approach (the fire), Spray (the flames), Stand-back',
     ],
     correctAnswer: 0,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'A lithium-ion battery pack on a fit-out has gone into thermal runaway. What extinguisher is most appropriate?',
     options: [
-      'Chronotype-aligned work scheduling &mdash; matching task difficulty to your natural energy cycles',
+      'A standard CO₂ extinguisher — it smothers the fire by removing oxygen',
       'A specialist Li-ion extinguisher (e.g. AVD or copious water cooling); evacuate and call fire service if not contained',
-      'Places rigid, unrealistic demands on themselves or others — "I should never make mistakes"',
-      'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
+      'Dry powder — it interrupts the chemical chain reaction',
+      'A fire blanket draped over the battery pack to cut off the air',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 6,
     question: 'When the alarm sounds, what should you take with you?',
     options: [
-      'Diagnose mental health conditions or prescribe treatment',
-      'A planned series of deliveries from a framework agreement',
+      'Your full tool kit, so it isn’t lost to the fire',
+      'Whatever paperwork and certificates are on site',
       'Phone for calling 999, but nothing that delays you',
-      'Manual handling injuries from cable drums',
+      'The laptop and any expensive test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,9 +175,9 @@ const quizQuestions = [
     id: 7,
     question: 'After evacuating, where do you go?',
     options: [
-      'Podium steps provide an enclosed platform with guard rails, giving a larger and safer working area',
-      'At least every 7 days by a competent person, and after any event likely to have affected its stability',
-      'Start a new email with a new subject line reflecting the current topic',
+      'Back to the van, ready to leave site once it’s over',
+      'The nearest exit door, so you can re-enter quickly',
+      'The site canteen or welfare cabin to wait it out',
       'The designated fire assembly point — and stay there until the roll call is done',
     ],
     correctAnswer: 3,
@@ -190,9 +190,9 @@ const quizQuestions = [
       'Who is responsible for ensuring fire safety arrangements are in place at a workplace under the Regulatory Reform (Fire Safety) Order 2005?',
     options: [
       'The "responsible person" — usually the employer or person in control of the premises',
-      'Smaller wheels may not distribute the load adequately and could sink into soft ground or damage flooring',
-      'To prevent the ladder from slipping, sliding, or falling — the primary cause of ladder-related accidents',
-      'Rotor-to-stator contact caused by bearing wear, shaft deflection or mounting problems',
+      'The local fire and rescue service that covers the area',
+      'The most senior electrician working on the site that day',
+      'Whichever sub-contractor brought the extinguishers to site',
     ],
     correctAnswer: 0,
     explanation:

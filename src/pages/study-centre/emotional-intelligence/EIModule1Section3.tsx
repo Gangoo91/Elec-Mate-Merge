@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'How does higher collective emotional intelligence on a construction site contribute to improved safety outcomes?',
     options: [
-      'Workers with high EI complete tasks faster, reducing exposure time',
       'Emotionally aware workers notice when colleagues are distracted or stressed and intervene before incidents occur',
+      'Workers with high EI complete tasks faster, reducing exposure time',
       'High EI teams ignore safety rules because they trust each other more',
       'EI only affects office workers, not those on construction sites',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Higher collective EI improves safety because emotionally aware workers can read the emotional states of those around them. They notice when a colleague is distracted, stressed, or not functioning normally, and they intervene — whether by checking in, suggesting a break, or raising a concern — before the situation leads to an incident.',
   },
@@ -131,8 +131,8 @@ const quizQuestions = [
     id: 5,
     question:
       'According to estimates, approximately how much does poor mental health cost the UK construction industry per year?',
-    options: ['£200 million', '£600 million', '£1.2 billion', '£5 billion'],
-    correctAnswer: 2,
+    options: ['£200 million', '£600 million', '£5 billion', '£1.2 billion'],
+    correctAnswer: 3,
     explanation:
       'The Chartered Institute of Building estimates that poor mental health costs the UK construction industry approximately £1.2 billion per year through absenteeism, presenteeism, staff turnover, and reduced productivity.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary mission of Mates in Mind?',
     options: [
-      'Providing technical training for construction workers',
       'Improving and supporting mental health in the construction and related industries',
+      'Providing technical training for construction workers',
       'Negotiating pay rates for construction unions',
       'Certifying construction site safety standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Mates in Mind is a UK charity specifically focused on improving and supporting mental health in the construction and related industries. It works with organisations to provide training, raise awareness, and create frameworks for addressing mental health at work.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
       'Which of the following is an example of how low EI directly impacts construction projects?',
     options: [
       'Using higher-quality materials than specified',
-      'Conflict between trades causing delays and rework',
       'Completing projects ahead of schedule',
       'Having too many qualified workers on site',
+      'Conflict between trades causing delays and rework',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Conflict between trades is a direct result of low collective EI — poor communication, inability to manage frustration, lack of empathy for others' constraints, and ineffective conflict resolution. These conflicts cause delays, rework, and damaged working relationships that affect project timelines and costs.",
   },

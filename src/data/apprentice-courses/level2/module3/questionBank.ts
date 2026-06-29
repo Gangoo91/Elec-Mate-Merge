@@ -63,10 +63,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 4,
     question: 'What is the main advantage of using singles in conduit over twin and earth cable?',
     options: [
-      'Better protection and flexibility for changes',
-      'Chemical resistant cable with appropriate sheath',
-      'MCS (Microgeneration Certification Scheme)',
-      'Current flowing through the conductor',
+      'Better mechanical protection and easier rewiring or alterations',
+      'Lower material cost than twin and earth cable',
+      'No requirement for a separate circuit protective conductor',
+      'A higher current rating for the same conductor size',
     ],
     correctAnswer: 0,
     explanation:
@@ -95,10 +95,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 6,
     question: 'When would you typically use SWA cable?',
     options: [
-      'Remove from service until repaired and retested',
-      'Qualified and competent person responsible for the design and installation',
+      'Final lighting circuits inside a dry dwelling',
+      'Flexible connections to portable hand tools',
       'Underground installations and areas requiring mechanical protection',
-      'Grommets or bushes to protect against sharp edges',
+      'Data and telecommunications cabling in offices',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,10 +160,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which environmental factor would most influence cable selection for an outdoor installation?',
     options: [
-      'Galvanised steel tray with weather protection',
-      'Prevents vertical fire spread between floors',
+      'The colour of the cable outer sheath',
+      'The brand of the cable manufacturer',
       'UV resistance and temperature rating',
-      'XLPE (Cross-linked polyethylene)',
+      'The voltage drop along the cable length',
     ],
     correctAnswer: 2,
     explanation:
@@ -178,9 +178,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 11,
     question: 'What is the primary purpose of cable containment systems?',
     options: [
-      'Installation certificate with test results and schedules',
-      'Dust tight and protected against water jets',
-      'To bind strands together and ensure reliable connection',
+      'To increase the current-carrying capacity of the cables',
+      'To eliminate the need for circuit protective conductors',
+      'To remove the need for periodic inspection and testing',
       'To provide mechanical protection and support for cables',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 12,
     question: 'What is the main difference between surface and recessed conduit installation?',
     options: [
-      'Visibility and wall cavity requirements',
-      'Seek clarification and approval for any deviations',
-      'Galvanised steel tray with weather protection',
-      'PAT testing and electrical safety',
+      'Surface conduit is visible and mounted on the wall; recessed conduit is concealed within it',
+      'Surface conduit is metal only, whereas recessed conduit must be PVC',
+      'Surface conduit carries data cables; recessed conduit carries power cables',
+      'Surface conduit needs no fixings, whereas recessed conduit must be screwed',
     ],
     correctAnswer: 0,
     explanation:
@@ -226,10 +226,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 14,
     question: 'What is the main advantage of trunking over conduit?',
     options: [
-      'Low-level power and data distribution in offices',
-      'Battery charging safety and proper storage',
+      'It provides better electromagnetic shielding than conduit',
+      'It is always cheaper to install than conduit',
       'Larger cable capacity and easier access',
-      '2.5 times the conduit diameter',
+      'It removes the need to support the cables inside it',
     ],
     correctAnswer: 2,
     explanation:
@@ -242,9 +242,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 15,
     question: 'Where would cable tray typically be used?',
     options: [
-      'Provide mechanical protection against damage',
-      'To prevent fire spread through cable penetrations',
-      'Installation is new work, maintenance is on existing systems',
+      'Concealed within the plaster of domestic walls',
+      'As a substitute for a circuit protective conductor',
+      'For flexible final connections to portable appliances',
       'Industrial and commercial applications with multiple cables',
     ],
     correctAnswer: 3,
@@ -259,9 +259,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main difference between cable tray and cable ladder?',
     options: [
       'Support structure - tray has solid/perforated base, ladder has rungs',
-      'Suitable for hollow walls where back access is unavailable',
-      'Test results, circuit details, and any departures from standards',
-      'To provide mechanical protection and support for cables',
+      'Tray is only for data cables; ladder is only for power cables',
+      'Tray must be earthed; ladder must never be earthed',
+      'Tray is made of PVC; ladder is always made of steel',
     ],
     correctAnswer: 0,
     explanation:
@@ -274,10 +274,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 17,
     question: 'What is underfloor trunking primarily used for?',
     options: [
-      'PAT testing and electrical safety',
+      'Supporting overhead cables in industrial roof spaces',
       'Power and data cables in office environments',
-      'The layout (general arrangement) drawing',
-      'In steel conduit with proper earthing',
+      'Carrying SWA cables directly buried in the ground',
+      'Final connections to ceiling-mounted luminaires',
     ],
     correctAnswer: 1,
     explanation:
@@ -291,10 +291,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which fixing method would be most appropriate for securing cable tray to a concrete ceiling?',
     options: [
-      'Suitable sleeve or grommet',
-      'RCD protection not exceeding 30mA',
+      'Plastic plugs with woodscrews',
+      'Self-adhesive cable clips',
       'Expansion bolts or chemical anchors',
-      'Better protection and flexibility for changes',
+      'Spring toggle (cavity) fixings',
     ],
     correctAnswer: 2,
     explanation:
@@ -326,9 +326,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'When installing containment systems, what should be considered to allow for thermal expansion?',
     options: [
       'Expansion joints and flexible connections',
-      'Starting current and running current',
-      'During and immediately after installation',
-      'Better protection and flexibility for changes',
+      'Closer support spacing along the entire run',
+      'A larger cross-sectional area of conductor',
+      'Additional earthing connections at each end',
     ],
     correctAnswer: 0,
     explanation:
@@ -359,10 +359,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 22,
     question: 'What is the primary safety consideration when using power tools?',
     options: [
-      'After second fix completion',
-      '25mm minimum from surface',
+      'The brand and price of the tool',
+      'The colour of the tool casing',
       'PAT testing and electrical safety',
-      'Horizontally or vertically only',
+      'The weight of the carrying case',
     ],
     correctAnswer: 2,
     explanation:
@@ -441,9 +441,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 27,
     question: 'What type of PPE is essential when using power tools that create dust or debris?',
     options: [
-      '25mm minimum from surface',
-      'LSOH (Low Smoke Zero Halogen) cable',
-      'Cable size and installation surface',
+      'Hi-visibility vest only',
+      'Steel toe-cap boots only',
+      'Hearing protection only',
       'Safety glasses and dust mask',
     ],
     correctAnswer: 3,
@@ -473,10 +473,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 29,
     question: 'What should you do if a power tool starts to vibrate excessively during use?',
     options: [
-      'Above the insulation material\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal limit',
+      'Increase the speed to work through the vibration',
       'Stop immediately and inspect the tool',
-      'Causes degradation and brittleness',
-      'Battery charging safety and proper storage',
+      'Continue using it but wear thicker gloves',
+      'Ignore it as vibration is normal for power tools',
     ],
     correctAnswer: 1,
     explanation:
@@ -489,10 +489,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 30,
     question: 'When transporting tools to site, what is the most important consideration?',
     options: [
-      'Cross-sectional area of conductor',
-      'Stop immediately and inspect the tool',
+      'The total purchase value of the tools',
+      'The colour coding of the tool handles',
       'Secure storage to prevent damage and theft',
-      'To reduce friction during cable installation',
+      'The order in which the tools were bought',
     ],
     correctAnswer: 2,
     explanation:
@@ -507,9 +507,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 31,
     question: 'What is the main difference between surface and concealed wiring?',
     options: [
-      'MCS (Microgeneration Certification Scheme)',
-      'Correct height, level installation, and secure fixing',
-      'Grommets or bushes to protect against sharp edges',
+      'Surface wiring uses larger cables than concealed wiring',
+      'Surface wiring needs no protective conductor',
+      'Concealed wiring can only be installed in new buildings',
       'Visibility - surface wiring is visible, concealed is hidden',
     ],
     correctAnswer: 3,
@@ -524,9 +524,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: "When does 'first fix' electrical work typically take place?",
     options: [
       'Before plastering, during construction phase',
-      'Galvanised steel conduit with appropriate certification',
-      'Stainless steel with smooth surfaces',
-      'Enhanced corrosion protection and moisture barriers',
+      'After decoration is complete and the building is occupied',
+      'Only once final testing and certification is finished',
+      'At the same time as the accessories are fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -539,10 +539,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 33,
     question: "What does 'second fix' electrical work involve?",
     options: [
-      'Reduces capacity due to heat build-up',
+      'Installing back boxes and pulling in cables',
       'Fitting accessories, switches, and sockets',
-      'Based on cable manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
-      'Hot, humid tropical environments',
+      'Chasing walls and laying floor containment',
+      'Drawing up the design and circuit schedules',
     ],
     correctAnswer: 1,
     explanation:
@@ -555,14 +555,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 34,
     question: 'What is the purpose of cable sleeves?',
     options: [
-      'Reduced toxic gas emission in fire conditions',
-      'Check correct phase sequence in three-phase systems',
-      'To protect conductor ends and provide neat terminations',
-      'BS 7671:2018+A4:2026 (IET Wiring Regulations)',
+      'To increase the current rating of the conductor',
+      'To replace the need for a circuit protective conductor',
+      'To identify and protect conductor ends and provide neat terminations',
+      'To improve the flexibility of a solid conductor',
     ],
     correctAnswer: 2,
     explanation:
-      'Cable sleeves protect conductor ends from damage and provide neat, professional terminations whilst preventing stray strands from causing short circuits.',
+      'Sleeving (e.g. green/yellow over a bare CPC) identifies and protects conductor ends and provides neat, professional terminations whilst preventing stray strands from causing short circuits.',
     section: '3.4.3',
     difficulty: 'basic',
     topic: 'Cable Sleeves',
@@ -571,9 +571,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 35,
     question: 'When would you use ferrules on cable terminations?',
     options: [
-      'Visibility and wall cavity requirements',
-      'Only in safe zones - horizontally/vertically from accessories',
-      'Travelling cable with enhanced flexibility',
+      'On solid conductors to increase their diameter',
+      'On bare CPCs to identify them as earth',
+      'On the outer sheath to provide strain relief',
       'On stranded conductors to prevent strand separation',
     ],
     correctAnswer: 3,
@@ -588,9 +588,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the correct method for supporting vertical cable runs?',
     options: [
       'Support at regular intervals to prevent cable weight causing damage',
-      'Enhanced corrosion protection and moisture barriers',
-      'Industrial and commercial applications with multiple cables',
-      'Thermal expansion and proper termination techniques',
+      'Leave the cable unsupported so it can move freely',
+      'Support only at the top so the cable hangs straight',
+      'Coil any excess cable at the base of the run',
     ],
     correctAnswer: 0,
     explanation:
@@ -603,10 +603,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 37,
     question: 'What is the purpose of cable glands?',
     options: [
-      'Suitable for hollow walls where back access is unavailable',
+      'To increase the bending radius of the cable',
       'To provide a sealed entry point for cables into enclosures',
-      'Test results, circuit details, and any departures from standards',
-      'Before plastering, during construction phase',
+      'To join two cables together end to end',
+      'To act as the circuit protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -636,9 +636,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 39,
     question: 'What should be checked when installing socket outlets?',
     options: [
-      'Visibility and wall cavity requirements',
-      'The layout (general arrangement) drawing',
-      'Installation certificate with test results and schedules',
+      'The brand name printed on the faceplate',
+      'The colour of the mounting screws',
+      'The packaging the accessory was supplied in',
       'Correct height, level installation, and secure fixing',
     ],
     correctAnswer: 3,
@@ -654,9 +654,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'When installing accessories in dry lining walls, what fixing method is most appropriate?',
     options: [
       'Plasterboard fixings or back boxes with adjustable lugs',
-      'To reduce friction during cable installation',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
-      'Thermal expansion and proper termination techniques',
+      'Chemical anchors set into the plasterboard',
+      'Self-adhesive pads stuck to the wall surface',
+      'Expansion bolts driven through the plasterboard',
     ],
     correctAnswer: 0,
     explanation:
@@ -671,10 +671,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 41,
     question: 'What does IP65 rating indicate?',
     options: [
-      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
+      'Dust protected and protected against dripping water',
       'Dust tight and protected against water jets',
-      'Earth fault loop impedance tester',
-      'Domestic Class 2 double-insulated lighting',
+      'Dust tight and protected against temporary immersion',
+      'No dust protection but protected against splashing water',
     ],
     correctAnswer: 1,
     explanation:
@@ -703,9 +703,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 43,
     question: 'What effect does UV radiation have on PVC cables?',
     options: [
-      'Cable weight and tray loading',
-      'Expansion joints and flexible connections',
-      'Clipped direct to surface',
+      'Increases the current-carrying capacity',
+      'Improves the flexibility of the sheath',
+      'Has no measurable effect on PVC',
       'Causes degradation and brittleness',
     ],
     correctAnswer: 3,
@@ -736,14 +736,14 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which type of cable would be most suitable for installation in a chemical processing plant?',
     options: [
-      'During and immediately after installation',
+      'Standard PVC twin and earth cable',
       'LSOH (Low Smoke Zero Halogen) cable',
-      'The layout (general arrangement) drawing',
-      'Based on cable manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
+      'Flexible cord to BS 6500',
+      'Bare overhead conductors',
     ],
     correctAnswer: 1,
     explanation:
-      'LSOH cables are suitable for corrosive environments as they produce minimal toxic fumes when exposed to chemicals and provide better fire safety.',
+      'LSOH (low smoke zero halogen) cable is specified in process plants because, unlike PVC, it releases no corrosive halogen acids and little toxic smoke if involved in a fire — important where people and sensitive plant are present.',
     section: '3.5.4',
     difficulty: 'advanced',
     topic: 'Chemical Resistance',
@@ -752,10 +752,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 46,
     question: "What is considered a 'special location' under BS 7671?",
     options: [
-      'Underground installations and areas requiring mechanical protection',
-      'Separate different voltage levels and prevent interference',
+      'Any room that contains a consumer unit',
+      'A location where only single-phase supply is available',
       'Locations with specific risks requiring additional protection measures',
-      'Verify the voltage indicator is working correctly',
+      'Any installation completed by a registered electrician',
     ],
     correctAnswer: 2,
     explanation:
@@ -786,9 +786,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What additional considerations apply to cables installed in areas with high humidity?',
     options: [
       'Enhanced corrosion protection and moisture barriers',
-      'Circuit designation, cable type, and destination',
-      'Separate different voltage levels and prevent interference',
-      'To reduce friction during cable installation',
+      'A reduction in the circuit protective conductor size',
+      'Removal of any RCD protection on the circuit',
+      'Use of bare conductors to dissipate moisture',
     ],
     correctAnswer: 0,
     explanation:
@@ -801,10 +801,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 49,
     question: 'Why might standard cables be unsuitable for food processing environments?',
     options: [
-      'Battery charging safety and proper storage',
+      'They cannot carry three-phase supplies',
       'Hygiene requirements and chemical cleaning processes',
-      'Adequate support and fall protection during installation',
-      'The Electricity at Work Regulations 1989 (EAWR)',
+      'They are limited to a maximum length of 30 metres',
+      'They produce excessive electromagnetic interference',
     ],
     correctAnswer: 1,
     explanation:
@@ -852,13 +852,13 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'According to BS 7671, cables buried in walls should be installed in which zones?',
     options: [
       'Only in safe zones - horizontally/vertically from accessories',
-      'Reduced toxic gas emission in fire conditions',
-      'Suitable for hollow walls where back access is unavailable',
-      'Better protection and flexibility for changes',
+      'Diagonally between accessories to give the shortest route',
+      'Anywhere, provided the cable is twin and earth',
+      'Only along the centre line of each wall',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 requires cables in walls to be installed in safe zones - within 150mm horizontally or vertically from accessories, or protected by RCD.',
+      'BS 7671 requires cables in walls to be installed in prescribed (safe) zones - within 150mm horizontally or vertically from accessories - otherwise 30 mA RCD protection or mechanical protection is required (Reg 522.6.202).',
     section: '3.6.2',
     difficulty: 'intermediate',
     topic: 'Safe Zones',
@@ -874,7 +874,7 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Cables buried directly in walls must be at least 50mm deep to provide adequate protection from nails and screws during future work.',
+      'Under BS 7671 Reg 522.6.202, a cable concealed in a wall at a depth of less than 50mm (outside a prescribed zone) must have 30 mA RCD protection or equivalent mechanical protection; 50mm is the key threshold.',
     section: '3.6.2',
     difficulty: 'intermediate',
     topic: 'Burial Depth',
@@ -883,10 +883,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 54,
     question: 'What is the purpose of fire stopping in cable installations?',
     options: [
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
-      'Expansion bolts or chemical anchors',
+      'To support the weight of the cables passing through',
+      'To improve the current rating of grouped cables',
       'To prevent fire spread through cable penetrations',
-      'Enhanced mechanical protection due to potential vandalism',
+      'To provide a path to earth for the containment',
     ],
     correctAnswer: 2,
     explanation:
@@ -916,9 +916,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What should be used when cables enter metal enclosures?',
     options: [
       'Grommets or bushes to protect against sharp edges',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
-      'To protect conductor ends and provide neat terminations',
-      'The Electricity at Work Regulations 1989 (EAWR)',
+      'Insulating tape wrapped around the enclosure',
+      'A larger conductor to carry the extra current',
+      'A second earth electrode at the enclosure',
     ],
     correctAnswer: 0,
     explanation:
@@ -963,9 +963,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 59,
     question: "Why is it important to follow manufacturer's installation instructions?",
     options: [
-      'To reduce friction during cable installation',
-      'Enhanced mechanical protection due to potential vandalism',
-      'In protective conduit or trunking',
+      'It allows the product cost to be reduced',
+      'It removes the need for inspection and testing',
+      'It permits the installation to skip certification',
       'Ensures warranty validity and safe installation',
     ],
     correctAnswer: 3,
@@ -981,9 +981,9 @@ export const module3QuestionBank: QuestionBank[] = [
       "What should be done if site specifications conflict with manufacturer's instructions?",
     options: [
       'Seek clarification and approval for any deviations',
-      'To protect conductor ends and provide neat terminations',
-      'Grommets or bushes to protect against sharp edges',
-      'Travelling cable with enhanced flexibility',
+      'Always follow the site specification regardless of safety',
+      'Proceed using whichever option is quickest to install',
+      'Ignore both and use your own judgement',
     ],
     correctAnswer: 0,
     explanation:
@@ -1045,16 +1045,16 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 64,
     question:
-      'What is the typical current rating for 2.5mm² twin and earth cable when clipped direct?',
+      'What is the tabulated current-carrying capacity (Iz) of 2.5mm² flat twin and earth cable when clipped direct (Method C)?',
     options: [
-      '20A',
+      '27A',
       '16A',
-      '25A',
+      '20A',
       '32A',
     ],
     correctAnswer: 0,
     explanation:
-      '2.5mm² twin and earth cable typically has a current rating of 20A when installed using method C (clipped direct) under standard conditions.',
+      'For 2.5mm² flat twin and earth (70°C thermoplastic, two loaded conductors) the tabulated Iz for Method C (clipped direct) is 27A per BS 7671 Table 4D5, before any correction factors.',
     section: '3.1.2',
     difficulty: 'intermediate',
     topic: 'Cable Current Ratings',
@@ -1109,16 +1109,17 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 68,
-    question: 'What is the maximum recommended fill ratio for conduit?',
+    question:
+      'How does the IET On-Site Guide require the number of cables permitted in a conduit to be determined?',
     options: [
-      '45%',
-      '35%',
-      '25%',
-      '55%',
+      'By comparing the sum of the cable factors with the conduit factor from the OSG tables',
+      'By limiting the cables to exactly 50% of the bore',
+      'By weighing the cables against the conduit mass',
+      'By matching the conduit colour to the cable colour',
     ],
     correctAnswer: 0,
     explanation:
-      'The maximum recommended fill ratio for conduit is 45% of the internal cross-sectional area to allow for cable installation and heat dissipation.',
+      'OSG Appendix E uses a cable factor / conduit factor method: add the factor for each cable and compare with the conduit factor for the run length and number of bends, rather than a single fixed percentage.',
     section: '3.2.2',
     difficulty: 'intermediate',
     topic: 'Conduit Fill',
@@ -1127,14 +1128,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 69,
     question: 'Which joining method is most appropriate for PVC trunking?',
     options: [
-      'Suitable sleeve or grommet',
-      'Mechanical fixings with gaskets',
-      'Insulated screwdrivers',
-      'Voltage indicator/tester',
+      'Soldered seams along the length',
+      'Mechanical fixings with coupling pieces',
+      'Welded joints at every junction',
+      'Compression glands at each end',
     ],
     correctAnswer: 1,
     explanation:
-      'PVC trunking joints use mechanical fixings with gaskets to provide secure, weatherproof connections that can be dismantled if necessary.',
+      'PVC trunking joints use proprietary coupling pieces and mechanical fixings to provide secure connections that can be dismantled if necessary; PVC cannot be soldered or welded.',
     section: '3.2.3',
     difficulty: 'basic',
     topic: 'Trunking Joints',
@@ -1143,14 +1144,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 70,
     question: 'What is dado trunking primarily used for?',
     options: [
-      'Installation certificate with test results and schedules',
-      'Significantly increases temperature requiring derating',
+      'Supporting heavy SWA cables in plant rooms',
+      'Carrying cables buried directly in the ground',
       'Low-level power and data distribution in offices',
-      'Before plastering, during construction phase',
+      'Routing cables across a ceiling void',
     ],
     correctAnswer: 2,
     explanation:
-      'Dado trunking is installed at skirting board level for distributing power and data services in office environments, providing accessible outlets.',
+      'Dado trunking is installed at skirting/desk level for distributing power and data services in office environments, providing accessible outlets.',
     section: '3.2.5',
     difficulty: 'basic',
     topic: 'Dado Trunking',
@@ -1159,9 +1160,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 71,
     question: 'Which crimping tool feature is most important for reliable connections?',
     options: [
-      'Contact manufacturer or supplier for guidance',
-      'Installation in steel conduit',
-      'Dwellings (domestic premises)',
+      'A brightly coloured handle for visibility',
+      'A built-in voltage indicator',
+      'A magnetic tip to hold the terminal',
       'Ratchet mechanism ensuring complete crimp',
     ],
     correctAnswer: 3,
@@ -1207,10 +1208,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 74,
     question: 'What is the main advantage of cordless tools over corded tools?',
     options: [
-      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
-      'In accessible trunking with proper labelling',
+      'They never require maintenance or inspection',
+      'They are always more powerful than corded tools',
       'Increased mobility and reduced trip hazards',
-      'MCS (Microgeneration Certification Scheme)',
+      'They are exempt from PAT testing requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -1240,9 +1241,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main difference between installation and maintenance work phases?',
     options: [
       'Installation is new work, maintenance is on existing systems',
-      'Power and data cables in office environments',
-      'For all socket outlets up to 32A in most locations',
-      'Dust tight and protected against water jets',
+      'Installation needs no certification, maintenance always does',
+      'Installation is done by labourers, maintenance by electricians',
+      'Installation is indoors only, maintenance is outdoors only',
     ],
     correctAnswer: 0,
     explanation:
@@ -1255,10 +1256,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 77,
     question: 'Which installation method provides the best protection for cables?',
     options: [
-      'After second fix completion',
+      'Clipped directly to the wall surface',
       'In protective conduit or trunking',
-      'Installation in steel conduit',
-      'Dwellings (domestic premises)',
+      'Loosely laid across a ceiling void',
+      'Buried directly without any sleeve',
     ],
     correctAnswer: 1,
     explanation:
@@ -1271,10 +1272,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 78,
     question: 'What should be installed during first fix to allow for plasterboard mounting?',
     options: [
-      'Hard hat and safety glasses',
-      'Insulated screwdrivers',
+      'Switches and socket faceplates',
+      'The consumer unit and main switch',
       'Back boxes and mounting points',
-      'Voltage indicator/tester',
+      'Light fittings and ceiling roses',
     ],
     correctAnswer: 2,
     explanation:
@@ -1304,9 +1305,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of strain relief in cable connections?',
     options: [
       'To prevent stress on electrical connections from cable movement',
-      'Connect cores and earth the armour via appropriate gland',
-      'To distribute cable weight over a larger area',
-      'Enhanced mechanical protection due to potential vandalism',
+      'To increase the cable current-carrying capacity',
+      'To improve the appearance of the finished joint',
+      'To provide a second earth path for fault current',
     ],
     correctAnswer: 0,
     explanation:
@@ -1351,9 +1352,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 83,
     question: 'At what temperature might cable insulation become permanently damaged?',
     options: [
-      "High temperature and fire resistant applications",
-      "The layout (general arrangement) drawing",
-      "Hygiene requirements and chemical cleaning processes",
+      'At any temperature above 0°C',
+      'Only when the cable is de-energised',
+      'When the ambient humidity rises sharply',
       "Above the insulation material's thermal limit",
     ],
     correctAnswer: 3,
@@ -1368,9 +1369,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which cable characteristic is most important in underground installations?',
     options: [
       'Moisture resistance and mechanical protection',
-      'Connect cores and earth the armour via appropriate gland',
-      'A 22 mm copper incoming water service pipe',
-      'Before plastering, during construction phase',
+      'A bright colour for easy identification',
+      'The lowest possible purchase cost',
+      'Maximum flexibility for repeated bending',
     ],
     correctAnswer: 0,
     explanation:
@@ -1383,10 +1384,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 85,
     question: 'What additional protection is required in bathroom installations?',
     options: [
-      'Ensures warranty validity and safe installation',
+      'Larger cable sizes than other rooms',
       'Enhanced IP ratings and RCD protection',
-      'Larger cable capacity and easier access',
-      'Fitting accessories, switches, and sockets',
+      'A separate earth electrode for the room',
+      'Three-phase supply to all accessories',
     ],
     correctAnswer: 1,
     explanation:
@@ -1415,14 +1416,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 87,
     question: "Which zones are considered 'safe zones' for cable routing in walls?",
     options: [
-      'Test results, circuit details, and any departures from standards',
-      'To provide a sealed entry point for cables into enclosures',
-      'Installation certificate with test results and schedules',
+      'Within 50mm of any electrical accessory',
+      'Anywhere below the mid-height of the wall',
+      'Within 300mm of the consumer unit only',
       'Within 150mm of corners, ceilings, floors, and accessories',
     ],
     correctAnswer: 3,
     explanation:
-      'Safe zones are areas within 150mm horizontally or vertically from accessories, corners, ceilings, and floors where cables are expected to be located.',
+      'Prescribed (safe) zones are areas within 150mm of the top of the wall, of an internal corner, or horizontally/vertically from an accessory (Reg 522.6.202).',
     section: '3.6.2',
     difficulty: 'intermediate',
     topic: 'Safe Zone Definition',
@@ -1432,13 +1433,13 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What protection is required for cables in walls outside safe zones?',
     options: [
       'RCD protection not exceeding 30mA',
-      'Causes degradation and brittleness',
-      'XLPE (Cross-linked polyethylene)',
-      'Cable size and installation surface',
+      'A minimum conductor size of 4mm²',
+      'A green-and-yellow outer sheath',
+      'Double the normal support spacing',
     ],
     correctAnswer: 0,
     explanation:
-      'Cables installed outside safe zones in walls must be protected by an RCD with operating current not exceeding 30mA to prevent electric shock.',
+      'Cables installed outside prescribed zones (at depth <50mm) must be protected by a 30mA RCD, or have mechanical protection / earthed metallic covering (Reg 522.6.202/.203).',
     section: '3.6.2',
     difficulty: 'intermediate',
     topic: 'RCD Protection',
@@ -1447,10 +1448,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 89,
     question: 'Why is fire stopping particularly important in multi-storey buildings?',
     options: [
-      'Unnecessary cost and space usage',
+      'It reduces the cost of the cable installation',
       'Prevents vertical fire spread between floors',
-      'EMI shielding and separation from power cables',
-      'Cross-sectional area of conductor',
+      'It improves the current rating of the cables',
+      'It removes the need for smoke alarms',
     ],
     correctAnswer: 1,
     explanation:
@@ -1463,10 +1464,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 90,
     question: 'What information should be included on cable labels?',
     options: [
-      'Resistance increases with temperature',
-      'Within 150mm of corners, ceilings, floors, and accessories',
+      'The installer name and date of birth',
+      'The cable manufacturer advertising slogan',
       'Circuit designation, cable type, and destination',
-      'Larger cable capacity and easier access',
+      'The purchase price of the cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -1564,9 +1565,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main disadvantage of aluminium conductors compared to copper?',
     options: [
       'Lower conductivity and connection issues',
-      'Starting current and running current',
-      'Mechanical fixings with gaskets',
-      'Power and data cables in office environments',
+      'Much heavier weight for the same length',
+      'A higher purchase cost than copper',
+      'It cannot be used outdoors at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1579,10 +1580,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 97,
     question: 'Which factor most affects the spacing of cable tray supports?',
     options: [
-      'Hacksaw or metal cutting saw',
+      'The colour of the cable sheaths',
       'Cable weight and tray loading',
-      'Residual Current Device (RCD)',
-      'Up to 50V AC or 120V DC',
+      'The supply voltage of the circuits',
+      'The brand of the cable tray',
     ],
     correctAnswer: 1,
     explanation:
@@ -1595,10 +1596,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 98,
     question: 'What is the purpose of expansion loops in long cable runs?',
     options: [
-      'To protect conductor ends and provide neat terminations',
-      'EMI shielding and separation from power cables',
+      'To increase the current rating of the cable',
+      'To shorten the overall length of the run',
       'To accommodate thermal expansion and contraction',
-      'Correct height, level installation, and secure fixing',
+      'To provide an additional earth connection',
     ],
     correctAnswer: 2,
     explanation:
@@ -1611,9 +1612,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 99,
     question: 'Which conduit material is most suitable for explosive atmospheres?',
     options: [
-      'Larger cable capacity and easier access',
-      'Dust tight and protected against water jets',
-      'To protect conductor ends and provide neat terminations',
+      'Standard PVC conduit',
+      'Flexible plastic conduit',
+      'Unsheathed singles clipped direct',
       'Galvanised steel conduit with appropriate certification',
     ],
     correctAnswer: 3,
@@ -1646,10 +1647,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What type of drill bit is most appropriate for drilling holes in masonry for cable installation?',
     options: [
-      'A 22 mm copper incoming water service pipe',
+      'A high-speed steel (HSS) twist bit',
       'Masonry bit with tungsten carbide tip',
-      'Schematic (single-line) diagram',
-      'Based on cable manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
+      'A flat wood-boring (spade) bit',
+      'A countersink bit',
     ],
     correctAnswer: 1,
     explanation:
@@ -1695,9 +1696,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which type of saw is most appropriate for cutting cable tray?',
     options: [
       'Hacksaw or metal cutting saw',
-      'Single cable in free air',
-      'Screwed terminals only',
-      'Voltage indicator/tester',
+      'A tenon (wood) saw',
+      'A coping saw',
+      'A plasterboard pad saw',
     ],
     correctAnswer: 0,
     explanation:
@@ -1710,10 +1711,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 105,
     question: 'What should be done before using any borrowed or hired tools?',
     options: [
-      'Protection from falling objects and weather',
+      'Repaint them in the company colours',
       'Visual inspection and safety check',
-      'Crimped lugs with appropriate terminals',
-      'Dust tight and protected against water jets',
+      'Use them only at reduced speed',
+      'Return them without using them',
     ],
     correctAnswer: 1,
     explanation:
@@ -1726,10 +1727,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 106,
     question: 'What is the main advantage of using a fish tape for cable pulling?',
     options: [
-      'Lower conductivity and connection issues',
-      'The layout (general arrangement) drawing',
+      'It strips insulation from the conductor',
+      'It measures the length of the cable run',
       'Enables cable installation through existing conduit runs',
-      'Support structure - tray has solid/perforated base, ladder has rungs',
+      'It tests the continuity of the conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -1742,9 +1743,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 107,
     question: 'Which phase of electrical work typically includes testing and commissioning?',
     options: [
-      'Insulation resistance test',
-      'Twin and earth cable',
-      'Expansion bolts or chemical anchors',
+      'Before any cables are installed',
+      'During first fix, before plastering',
+      'Halfway through the first fix stage',
       'After second fix completion',
     ],
     correctAnswer: 3,
@@ -1759,9 +1760,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of using bootlace ferrules on stranded conductors?',
     options: [
       'To bind strands together and ensure reliable connection',
-      'Expansion joints and flexible connections',
-      'To protect conductor ends and provide neat terminations',
-      'Provide mechanical protection against damage',
+      'To increase the current rating of the conductor',
+      'To identify the conductor as the earth',
+      'To allow a solid conductor to be made flexible',
     ],
     correctAnswer: 0,
     explanation:
@@ -1790,10 +1791,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 110,
     question: 'What is the correct procedure for connecting SWA cable to equipment?',
     options: [
-      'Separate different voltage levels and prevent interference',
-      'To distribute cable weight over a larger area',
+      'Connect the cores and leave the armour unterminated',
+      'Cut back the armour and tape over the cut end',
       'Connect cores and earth the armour via appropriate gland',
-      'On stranded conductors to prevent strand separation',
+      'Connect the armour to the line conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -1825,9 +1826,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the effect of grouping cables together on their current carrying capacity?',
     options: [
       'Reduces capacity due to heat build-up',
-      'Verify RCD operation time and trip current',
-      'Safety glasses and dust mask',
-      'Enhanced IP ratings, RCD protection, and bonding',
+      'Increases capacity due to shared cooling',
+      'Has no effect on current-carrying capacity',
+      'Only affects the voltage drop, not the rating',
     ],
     correctAnswer: 0,
     explanation:
@@ -1856,10 +1857,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 114,
     question: 'What additional consideration applies to electrical installations in schools?',
     options: [
-      'To prevent stress on electrical connections from cable movement',
-      'To protect conductor ends and provide neat terminations',
+      'Larger cable sizes than in dwellings',
+      'A dedicated earth electrode per classroom',
       'Enhanced mechanical protection due to potential vandalism',
-      'Fitting accessories, switches, and sockets',
+      'Three-phase supply to every socket outlet',
     ],
     correctAnswer: 2,
     explanation:
@@ -1954,9 +1955,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'When should installation certificates be completed?',
     options: [
       'Immediately upon completion of installation',
-      'Significantly increases temperature requiring derating',
-      'Battery charging safety and proper storage',
-      'Resistance increases with temperature',
+      'Only if the client specifically requests one',
+      'Several months after the work is finished',
+      'Before any cables have been installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1971,14 +1972,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 121,
     question: 'What type of cable insulation is most suitable for high temperature applications?',
     options: [
-      'Voltage and current are in phase',
+      'Standard PVC (thermoplastic)',
       'XLPE (Cross-linked polyethylene)',
-      'Reduces capacity due to heat build-up',
-      'Clipped direct to surface',
+      'Natural rubber insulation',
+      'Paper-insulated lead-covered',
     ],
     correctAnswer: 1,
     explanation:
-      'XLPE insulation has superior thermal properties compared to PVC, maintaining its properties at higher temperatures making it suitable for high temperature applications.',
+      'XLPE (90°C thermosetting) insulation has superior thermal properties compared to 70°C PVC, maintaining its properties at higher temperatures.',
     section: '3.1.7',
     difficulty: 'advanced',
     topic: 'High Temperature Insulation',
@@ -1988,10 +1989,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which installation method provides the best protection against electromagnetic interference?',
     options: [
-      'Better protection and flexibility for changes',
-      'Galvanised steel tray with weather protection',
+      'Clipped direct to a timber surface',
+      'In open PVC trunking',
       'In steel conduit with proper earthing',
-      'Schematic (single-line) diagram',
+      'On an open wire-mesh basket',
     ],
     correctAnswer: 2,
     explanation:
@@ -2004,9 +2005,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 123,
     question: 'What is the primary safety concern when using battery-powered tools?',
     options: [
-      'Regular inspection for corrosion and weathering',
-      'Starting current and running current',
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
+      'The brand of the battery cells',
+      'The colour of the battery casing',
+      'The weight of the spare batteries',
       'Battery charging safety and proper storage',
     ],
     correctAnswer: 3,
@@ -2036,10 +2037,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 125,
     question: 'What should be done with tools that fail PAT testing?',
     options: [
-      'Cross-sectional area of conductor',
+      'Continue using them but test more often',
       'Remove from service until repaired and retested',
-      'RCD protection not exceeding 30mA',
-      'Contact manufacturer or supplier for guidance',
+      'Use them only for low-risk light work',
+      'Pass them on to a less experienced worker',
     ],
     correctAnswer: 1,
     explanation:
@@ -2052,10 +2053,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 126,
     question: 'Which factor determines the selection of appropriate cable clips?',
     options: [
-      'Connecting portable appliances',
-      'Secure storage to prevent damage and theft',
+      'The supply voltage of the circuit',
+      'The colour of the cable sheath',
       'Cable size and installation surface',
-      'Power and data cables in office environments',
+      'The length of the cable run',
     ],
     correctAnswer: 2,
     explanation:
@@ -2100,10 +2101,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 129,
     question: 'What is the purpose of using saddles for cable support?',
     options: [
-      'The metal casing of a Class I appliance',
+      'To strip insulation from the cable end',
       'To distribute cable weight over a larger area',
-      'Galvanised steel tray with weather protection',
-      'Moisture resistance and mechanical protection',
+      'To provide a sealed entry into an enclosure',
+      'To act as the circuit protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -2116,14 +2117,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 130,
     question: 'When is RCD protection mandatory for socket outlets?',
     options: [
-      'Installation certificate and relevant schedules',
-      'Remove from service until repaired and retested',
+      'Only for outdoor socket outlets',
+      'Only for sockets in bathrooms',
       'For all socket outlets up to 32A in most locations',
-      'Stop immediately and inspect the tool',
+      'Only for sockets used by ordinary persons in kitchens',
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires RCD protection for all socket outlets rated up to 32A in most locations to provide additional protection against electric shock.',
+      'BS 7671 (Reg 411.3.3) requires 30mA RCD additional protection for socket outlets rated up to 32A for use by ordinary persons in most locations.',
     section: '3.4.6',
     difficulty: 'intermediate',
     topic: 'RCD Requirements',
@@ -2151,9 +2152,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What effect does direct sunlight have on cable temperature?',
     options: [
       'Significantly increases temperature requiring derating',
-      '110V distribution system with robust connectors',
-      'In accessible trunking with proper labelling',
-      'The Risk Assessment & Method Statement (RAMS)',
+      'Lowers the cable temperature through evaporation',
+      'Has no measurable effect on cable temperature',
+      'Increases the cable current-carrying capacity',
     ],
     correctAnswer: 0,
     explanation:
@@ -2167,10 +2168,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which type of environment requires special consideration for fungal growth on cables?',
     options: [
-      'Current flowing through the conductor',
+      'Cold, dry desert environments',
       'Hot, humid tropical environments',
-      'Disconnect or short out',
-      'Insulation resistance test',
+      'Sealed, air-conditioned offices',
+      'Freezing cold-store environments',
     ],
     correctAnswer: 1,
     explanation:
@@ -2184,14 +2185,14 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What additional protection is required for electrical installations in swimming pool areas?',
     options: [
-      'Chemical resistant cable with appropriate sheath',
-      'Suitable for hollow walls where back access is unavailable',
+      'Larger cable sizes throughout the building',
+      'A dedicated three-phase supply',
       'Enhanced IP ratings, RCD protection, and bonding',
-      'Regular inspection for corrosion and weathering',
+      'Removal of all metallic parts from the area',
     ],
     correctAnswer: 2,
     explanation:
-      'Swimming pool areas require enhanced IP ratings, mandatory RCD protection, and extensive equipotential bonding due to high electric shock risk.',
+      'Swimming pool areas require enhanced IP ratings, mandatory RCD protection, and extensive supplementary equipotential bonding due to high electric shock risk.',
     section: '3.5.5',
     difficulty: 'intermediate',
     topic: 'Swimming Pool Safety',
@@ -2250,10 +2251,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 138,
     question: 'What information must be provided with electrical installation certificates?',
     options: [
-      'To prevent fire spread through cable penetrations',
-      'Significantly increases temperature requiring derating',
+      'The retail price of every accessory used',
+      'The names of all site visitors',
       'Test results, circuit details, and any departures from standards',
-      'Moisture resistance and mechanical protection',
+      'A photograph of the completed installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2300,10 +2301,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 141,
     question: 'Which cable type is specifically designed for use in lift shafts?',
     options: [
-      'To prevent fire spread through cable penetrations',
+      'Standard twin and earth cable',
       'Travelling cable with enhanced flexibility',
-      'Galvanised steel tray with weather protection',
-      'Visibility and wall cavity requirements',
+      'Steel wire armoured (SWA) cable',
+      'Mineral insulated (MICC) cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -2316,10 +2317,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 142,
     question: 'What is the primary advantage of using mineral insulated cables?',
     options: [
-      'Industrial and commercial applications with multiple cables',
-      'Protection from falling objects and weather',
+      'The lowest cost of any cable type',
+      'The greatest flexibility for moving machinery',
       'Fire resistance and ability to maintain circuit integrity',
-      'Significantly increases temperature requiring derating',
+      'No need for any mechanical protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -2332,9 +2333,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 143,
     question: 'Which containment system is most appropriate for clean room environments?',
     options: [
-      'Lower conductivity and connection issues',
-      'Increased mobility and reduced trip hazards',
-      'Fitting accessories, switches, and sockets',
+      'Galvanised steel ladder rack',
+      'Open wire-mesh basket',
+      'Standard PVC trunking',
       'Stainless steel with smooth surfaces',
     ],
     correctAnswer: 3,
@@ -2365,10 +2366,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which type of personal protective equipment is essential when working with power tools in overhead areas?',
     options: [
-      'Zone 0, 1, 2 system',
+      'Hi-visibility vest only',
       'Hard hat and safety glasses',
-      'AD (Presence of water)',
-      'In protective cases',
+      'Steel toe-cap boots only',
+      'Ear defenders only',
     ],
     correctAnswer: 1,
     explanation:
@@ -2381,10 +2382,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 146,
     question: 'What is the correct procedure for making off SWA cable glands?',
     options: [
-      "Ratchet mechanism ensuring complete crimp",
-      "EMI shielding and separation from power cables",
+      "Tighten until the thread strips to lock it",
+      "Hand-tighten only and leave the locknut off",
       "Tighten to manufacturer's torque specification",
-      "Better protection and flexibility for changes",
+      "Seal the gland with insulating tape",
     ],
     correctAnswer: 2,
     explanation:
@@ -2397,9 +2398,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 147,
     question: 'Which installation method provides the best cable identification and future access?',
     options: [
-      'Remove from service until repaired and retested',
-      'Before plastering, during construction phase',
-      'Safety - to prevent dangerous potentials',
+      'Cables buried directly in solid plaster',
+      'Cables chased into concrete and screeded over',
+      'Cables clipped behind permanent fixed panelling',
       'In accessible trunking with proper labelling',
     ],
     correctAnswer: 3,
@@ -2414,9 +2415,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main purpose of cable pulling compound?',
     options: [
       'To reduce friction during cable installation',
-      'Check correct phase sequence in three-phase systems',
-      'Better ventilation and lighter weight',
-      'During and immediately after installation',
+      'To improve the conductivity of the cores',
+      'To seal the conduit against moisture',
+      'To identify the cable for future maintenance',
     ],
     correctAnswer: 0,
     explanation:
@@ -2445,10 +2446,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 150,
     question: 'What documentation should accompany electrical installations?',
     options: [
-      'To provide mechanical protection and support for cables',
-      'Chemical resistant cable with appropriate sheath',
+      'Only a verbal confirmation to the client',
+      'A receipt for the materials purchased',
       'Installation certificate, test results, and circuit schedules',
-      'Power and data cables in office environments',
+      'A photograph of the consumer unit only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2463,9 +2464,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 151,
     question: 'Which cable parameter is most critical when calculating voltage drop?',
     options: [
-      'Mechanical fixings with gaskets',
-      'In protective conduit or trunking',
-      'PAT testing and electrical safety',
+      'The colour of the cable insulation',
+      'The IP rating of the enclosure',
+      'The ambient humidity of the room',
       'Conductor resistance and current',
     ],
     correctAnswer: 3,
@@ -2538,9 +2539,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the main difference between LSF (Low Smoke and Fume) and standard PVC cables?',
     options: [
-      'Better protection and flexibility for changes',
-      'UV resistance and temperature rating',
-      'In protective conduit or trunking',
+      'A higher current-carrying capacity for the same conductor size',
+      'A higher conductor operating temperature rating',
+      'Greater flexibility for repeated bending and movement',
       'Reduced toxic gas emission in fire conditions',
     ],
     correctAnswer: 3,
@@ -2556,8 +2557,8 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       'Fire resistant cable (FP200)',
       'Twin and earth cable',
-      'Hacksaw or metal cutting saw',
-      'AG (Mechanical stress)',
+      'Standard PVC singles in conduit',
+      'Steel wire armoured (SWA) cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -2586,10 +2587,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 158,
     question: 'In which situations would you use MICC (Mineral Insulated Copper Clad) cable?',
     options: [
-      'Adequate support and fall protection during installation',
-      'Travelling cable with enhanced flexibility',
+      'Flexible final connections to portable tools',
+      'Underfloor data distribution in offices',
       'High temperature and fire resistant applications',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
+      'Temporary supplies on construction sites',
     ],
     correctAnswer: 2,
     explanation:
@@ -2619,13 +2620,13 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What safety consideration is important when working with aluminium conductors?',
     options: [
       'Thermal expansion and proper termination techniques',
-      'Crimped lugs with appropriate terminals',
-      'Visibility - surface wiring is visible, concealed is hidden',
-      'Better protection and flexibility for changes',
+      'It must never be earthed at the supply',
+      'It can only be installed in dry locations',
+      'It requires double the support spacing of copper',
     ],
     correctAnswer: 0,
     explanation:
-      'Aluminium has different thermal expansion properties and requires proper termination techniques to prevent loose connections and potential fire hazards.',
+      'Aluminium has different thermal expansion properties and oxidises readily, so it requires proper termination techniques to prevent loose connections and potential fire hazards.',
     section: '3.1.2',
     difficulty: 'advanced',
     topic: 'Aluminium Conductor Safety',
@@ -2650,14 +2651,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 162,
     question: 'What is the purpose of cable armouring in SWA cables?',
     options: [
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
-      'Verify the voltage indicator is working correctly',
+      'To increase the current-carrying capacity',
+      'To improve the flexibility of the cable',
       'Provide mechanical protection against damage',
-      'Above the insulation material\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal limit',
+      'To reduce the voltage drop along the run',
     ],
     correctAnswer: 2,
     explanation:
-      'Cable armouring provides mechanical protection against impact, crushing, and rodent damage, essential for underground and industrial installations.',
+      'Cable armouring provides mechanical protection against impact, crushing, and rodent damage, and can also serve as the circuit protective conductor.',
     section: '3.1.4',
     difficulty: 'basic',
     topic: 'Cable Armouring',
@@ -2665,16 +2666,16 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 163,
     question:
-      'When installing overhead cables, what is the minimum height above a public footpath?',
+      'When installing insulated overhead cables across a position accessible to pedestrians only, what is the minimum height above ground?',
     options: [
       '6.0 metres',
       '2.5 metres',
       '3.5 metres',
       '5.2 metres',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'Overhead cables must be at least 5.2 metres above public footpaths to ensure safe clearance for pedestrians and vehicles.',
+      'IET On-Site Guide Table D2 gives a minimum height of 3.5 metres for insulated overhead lines in positions accessible to pedestrians; 5.2 metres applies where the span is accessible to vehicles.',
     section: '3.1.7',
     difficulty: 'intermediate',
     topic: 'Overhead Installation',
@@ -2684,9 +2685,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What determines the current-carrying capacity of a cable?',
     options: [
       'Cross-sectional area of conductor',
-      'Horizontally or vertically only',
-      'The Distribution Network Operator (DNO)',
-      'Crimped lugs with appropriate terminals',
+      'The colour of the cable insulation',
+      'The length of the cable run',
+      'The brand of the cable manufacturer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2731,9 +2732,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 167,
     question: 'Which cable type would be most suitable for installation in a chemical plant?',
     options: [
-      'Plasterboard fixings or back boxes with adjustable lugs',
-      'To accommodate thermal expansion and contraction',
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
+      'Standard PVC twin and earth cable',
+      'Lightweight flexible cord',
+      'Unsheathed single conductors',
       'Chemical resistant cable with appropriate sheath',
     ],
     correctAnswer: 3,
@@ -2748,9 +2749,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: "What does the term 'volt drop' refer to in cable selection?",
     options: [
       'Voltage reduction along cable length due to resistance',
-      'Remove from service and tag as defective',
-      'Enhanced corrosion protection and moisture barriers',
-      'To provide mechanical protection and support for cables',
+      'The sudden loss of supply when a fuse blows',
+      'The difference between line and neutral colours',
+      'The voltage induced by a nearby cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -2795,9 +2796,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 171,
     question: 'What protection is required when cables pass through walls or floors?',
     options: [
-      'AD (Presence of water)',
-      'RCD protection not exceeding 30mA',
-      'Insulated screwdrivers',
+      'A larger conductor cross-sectional area',
+      'A second circuit protective conductor',
+      'A green-and-yellow identification sleeve',
       'Suitable sleeve or grommet',
     ],
     correctAnswer: 3,
@@ -2876,9 +2877,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What factor should be considered when selecting cable size for motor circuits?',
     options: [
       'Starting current and running current',
-      'Insulation resistance test',
-      'Suitable sleeve or grommet',
-      'The Risk Assessment & Method Statement (RAMS)',
+      'The colour of the motor casing',
+      'The number of bends in the cable run',
+      'The brand of the motor manufacturer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2891,14 +2892,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 177,
     question: 'Which test should be performed before energising a new cable installation?',
     options: [
-      'Twisted and taped joints',
+      'A load test under full demand',
       'Insulation resistance test',
-      'Clipped direct to surface',
-      'Cross-sectional area of conductor',
+      'An earth fault loop impedance test',
+      'An RCD trip-time test',
     ],
     correctAnswer: 1,
     explanation:
-      'Insulation resistance testing must be performed before energising new installations to verify insulation integrity and safety.',
+      'Insulation resistance testing (a dead test) must be performed before energising new installations to verify insulation integrity and safety.',
     section: '3.1.13',
     difficulty: 'intermediate',
     topic: 'Cable Testing',
@@ -2923,9 +2924,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 179,
     question: 'When should cable installation records be completed?',
     options: [
-      'To distribute cable weight over a larger area',
-      'Guidance Note 3 — Inspection & Testing',
-      'Enhanced IP ratings and RCD protection',
+      'Only if a fault is later reported',
+      'Several years after the work is done',
+      'Before any design work has started',
       'During and immediately after installation',
     ],
     correctAnswer: 3,
@@ -2942,9 +2943,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main purpose of using cable basket instead of solid tray?',
     options: [
       'Better ventilation and lighter weight',
-      'Back boxes and mounting points',
-      '2.5 times the conduit diameter',
-      'During and immediately after installation',
+      'Greater protection from falling objects',
+      'A continuous solid surface for the cables',
+      'Higher resistance to electromagnetic interference',
     ],
     correctAnswer: 0,
     explanation:
@@ -2957,10 +2958,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 181,
     question: 'Which type of containment would be most suitable for outdoor installations?',
     options: [
-      'Regular inspection for corrosion and weathering',
+      'Standard PVC trunking',
       'Galvanised steel tray with weather protection',
-      'Connect cores and earth the armour via appropriate gland',
-      'In steel conduit with proper earthing',
+      'Untreated mild steel basket',
+      'Cardboard cable management ducting',
     ],
     correctAnswer: 1,
     explanation:
@@ -3007,9 +3008,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What safety consideration is important when installing overhead containment systems?',
     options: [
       'Adequate support and fall protection during installation',
-      'To provide mechanical protection and support for cables',
-      'BS 7671:2018+A4:2026 (IET Wiring Regulations)',
-      'Expansion joints and flexible connections',
+      'Using only PVC containment at height',
+      'Painting the containment a bright colour',
+      'Installing the cables before the supports',
     ],
     correctAnswer: 0,
     explanation:
@@ -3020,7 +3021,8 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 185,
-    question: 'What is the maximum recommended fill factor for conduit containing cables?',
+    question:
+      'What is the maximum recommended space factor for cables in a straight run of trunking, per the IET On-Site Guide?',
     options: [
       '30%',
       '45%',
@@ -3029,10 +3031,10 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'The maximum fill factor for conduit is typically 45% of the internal cross-sectional area to allow for heat dissipation and cable installation.',
-    section: '3.2.2',
+      'OSG Appendix E gives a maximum 45% space factor for cables in straight runs of trunking, allowing for heat dissipation, ease of installation and future additions.',
+    section: '3.2.3',
     difficulty: 'intermediate',
-    topic: 'Conduit Fill',
+    topic: 'Trunking Space Factor',
   },
   {
     id: 186,
@@ -3054,9 +3056,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 187,
     question: 'What is the purpose of cable tray covers?',
     options: [
-      'Battery charging safety and proper storage',
-      'To protect conductor ends and provide neat terminations',
-      'The Electricity at Work Regulations 1989 (EAWR)',
+      'To increase the current rating of the cables',
+      'To act as the circuit protective conductor',
+      'To reduce the weight of the installation',
       'Protection from falling objects and weather',
     ],
     correctAnswer: 3,
@@ -3087,10 +3089,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 189,
     question: 'What is the main advantage of using spring toggle fixings?',
     options: [
-      'Secure storage to prevent damage and theft',
+      'They are the cheapest fixing available',
       'Suitable for hollow walls where back access is unavailable',
-      'Enhanced mechanical protection due to potential vandalism',
-      'Visibility - surface wiring is visible, concealed is hidden',
+      'They are best for solid masonry walls',
+      'They require no drilling of the wall',
     ],
     correctAnswer: 1,
     explanation:
@@ -3103,10 +3105,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 190,
     question: 'Which factor determines the required strength of containment system supports?',
     options: [
-      'Non-conductive material (fibreglass)',
-      'Hot, humid tropical environments',
+      'The colour of the containment system',
+      'The supply voltage of the circuits',
       'Total weight of cables and containment',
-      'Power and data cables in office environments',
+      'The number of cores in each cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -3119,14 +3121,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 191,
     question: 'What is the purpose of earthing cable tray systems?',
     options: [
-      'Domestic Class 2 double-insulated lighting',
-      'Remove from service and tag as defective',
-      'Based on cable manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
+      'To increase the current rating of the cables',
+      'To reduce the weight of the installation',
+      'To improve the appearance of the tray',
       'Safety - to prevent dangerous potentials',
     ],
     correctAnswer: 3,
     explanation:
-      'Cable tray systems must be earthed to prevent dangerous potentials that could arise from cable faults or induced voltages.',
+      'Metallic cable tray systems must be earthed to prevent dangerous potentials that could arise from cable faults or induced voltages.',
     section: '3.2.11',
     difficulty: 'intermediate',
     topic: 'Tray Earthing',
@@ -3136,9 +3138,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which containment system would be most appropriate for a clean room environment?',
     options: [
       'Stainless steel containment',
-      'PAT testing and electrical safety',
-      'Screwed terminals only',
-      '3% of nominal voltage',
+      'Open wire-mesh basket',
+      'Untreated mild steel tray',
+      'Standard PVC trunking',
     ],
     correctAnswer: 0,
     explanation:
@@ -3151,10 +3153,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 193,
     question: 'What maintenance consideration is important for external containment systems?',
     options: [
-      'The Risk Assessment & Method Statement (RAMS)',
+      'Repainting it to match the building each year',
       'Regular inspection for corrosion and weathering',
-      'A 22 mm copper incoming water service pipe',
-      'The layout (general arrangement) drawing',
+      'Replacing it completely every twelve months',
+      'Removing all covers to improve ventilation',
     ],
     correctAnswer: 1,
     explanation:
@@ -3183,9 +3185,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 195,
     question: 'What is the purpose of fire barriers in containment systems?',
     options: [
-      'Total weight of cables and containment',
-      'Better ventilation and lighter weight',
-      'High temperature and fire resistant applications',
+      'To support the weight of the cables',
+      'To improve the current rating of the cables',
+      'To provide a path to earth for the containment',
       'Prevent fire spread through containment openings',
     ],
     correctAnswer: 3,
@@ -3200,13 +3202,13 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which document provides guidance on cable containment installation?',
     options: [
       "BS EN 61537 and manufacturer's instructions",
-      "Visibility and wall cavity requirements",
-      "Safety - to prevent dangerous potentials",
-      "The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor",
+      "BS 1363 (plugs and socket-outlets)",
+      "BS EN 60898 (circuit-breakers)",
+      "BS 5839 (fire detection systems)",
     ],
     correctAnswer: 0,
     explanation:
-      "BS EN 61537 provides specific guidance on cable management systems, along with manufacturer's instructions and BS 7671 requirements.",
+      "BS EN 61537 provides specific guidance on cable management (tray and ladder) systems, along with manufacturer's instructions and BS 7671 requirements.",
     section: '3.2.14',
     difficulty: 'intermediate',
     topic: 'Installation Standards',
@@ -3231,10 +3233,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 198,
     question: 'Which factor is most important when selecting containment for data cables?',
     options: [
-      'PAT testing and electrical safety',
-      'Remove from service and tag as defective',
+      'The colour of the containment system',
+      'The weight of the data cables',
       'EMI shielding and separation from power cables',
-      'Enables cable installation through existing conduit runs',
+      'The supply voltage of nearby circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -3266,9 +3268,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which test equipment would you use to measure earth fault loop impedance?',
     options: [
       'Earth fault loop impedance tester',
-      'Larger cable capacity and easier access',
-      'Divides proportionally to resistance',
-      'Visibility and wall cavity requirements',
+      'Insulation resistance tester',
+      'Phase rotation indicator',
+      'Approved voltage indicator',
     ],
     correctAnswer: 0,
     explanation:
@@ -3281,10 +3283,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 201,
     question: 'What is the purpose of a proving unit when using voltage indicators?',
     options: [
-      'Visibility and wall cavity requirements',
+      'To measure the earth fault loop impedance',
       'Verify the voltage indicator is working correctly',
-      'Enhanced IP ratings and RCD protection',
-      'Secure storage to prevent damage and theft',
+      'To test the operation of an RCD',
+      'To measure insulation resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -3313,14 +3315,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 203,
     question: 'What safety feature should be present on power tools used in wet conditions?',
     options: [
-      'Stop immediately and inspect the tool',
-      'Cable size and installation surface',
-      'Mechanical fixings with gaskets',
+      'A brightly coloured casing',
+      'A larger motor than usual',
+      'A built-in voltage indicator',
       '110V supply or battery operation',
     ],
     correctAnswer: 3,
     explanation:
-      'Power tools used in wet conditions should operate at 110V via transformer or be battery operated to reduce shock risk from lower voltage.',
+      'Power tools used in wet conditions should operate at reduced low voltage (110V centre-tapped to earth) via a transformer, or be battery operated, to reduce shock risk.',
     section: '3.3.2',
     difficulty: 'intermediate',
     topic: 'Wet Condition Safety',
@@ -3346,10 +3348,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 205,
     question: 'What is the main purpose of RCD testing equipment?',
     options: [
-      'Moving magnetic field induces voltage in conductor',
+      'Measure the earth fault loop impedance',
       'Verify RCD operation time and trip current',
-      'Horizontally or vertically only',
-      'MCS (Microgeneration Certification Scheme)',
+      'Measure the insulation resistance',
+      'Check the phase sequence of the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -3379,14 +3381,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 207,
     question: 'What is the maximum force that should typically be applied when pulling cables?',
     options: [
-      "Connect cores and earth the armour via appropriate gland",
-      "Before plastering, during construction phase",
-      "Remove from service and tag as defective",
+      "As much force as the puller can apply",
+      "A fixed limit of 1000 N for all cables",
+      "Whatever is needed to free a stuck cable",
       "Based on cable manufacturer's specifications",
     ],
     correctAnswer: 3,
     explanation:
-      "Cable pulling force should not exceed manufacturer's specifications to prevent conductor damage or insulation stress.",
+      "Cable pulling force should not exceed the manufacturer's specifications (related to conductor csa) to prevent conductor damage or insulation stress.",
     section: '3.3.7',
     difficulty: 'intermediate',
     topic: 'Cable Pulling Limits',
@@ -3396,9 +3398,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which tool would be most appropriate for cutting armoured cable?',
     options: [
       'Hacksaw or armoured cable cutter',
-      'LSOH (Low Smoke Zero Halogen) cable',
-      'Cross-Linked Polyethylene',
-      '110V supply or battery operation',
+      'Standard wire strippers',
+      'A pair of side cutters',
+      'A craft knife',
     ],
     correctAnswer: 0,
     explanation:
@@ -3427,10 +3429,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 210,
     question: 'Which factor is most important when selecting ladder for electrical work?',
     options: [
-      'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
-      'Causes degradation and brittleness',
+      'The lightest possible aluminium frame',
+      'The lowest purchase cost',
       'Non-conductive material (fibreglass)',
-      'Enhanced IP ratings and RCD protection',
+      'A bright colour for visibility',
     ],
     correctAnswer: 2,
     explanation:
@@ -3443,9 +3445,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 211,
     question: 'What is the purpose of a phase rotation indicator?',
     options: [
-      'During and immediately after installation',
-      'Travelling cable with enhanced flexibility',
-      'Criminal prosecution, including fines and imprisonment',
+      'Measure the insulation resistance of a circuit',
+      'Verify a circuit is dead before working on it',
+      'Measure the earth fault loop impedance',
       'Check correct phase sequence in three-phase systems',
     ],
     correctAnswer: 3,
@@ -3475,10 +3477,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 213,
     question: 'What information should be recorded when using test equipment?',
     options: [
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
+      'Only a pass or fail tick',
       'Results, test conditions, and equipment details',
-      'The layout (general arrangement) drawing',
-      'Galvanised steel tray with weather protection',
+      'The retail price of the test instrument',
+      'The name of the building architect',
     ],
     correctAnswer: 1,
     explanation:
@@ -3491,10 +3493,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 214,
     question: 'Which safety precaution is essential before using electrical test equipment?',
     options: [
-      'Fire resistance and ability to maintain circuit integrity',
-      'Enhanced mechanical protection due to potential vandalism',
+      'Paint the instrument the company colour',
+      'Remove the fused test leads to save the fuse',
       'Verify equipment is calibrated and functioning correctly',
-      'To bind strands together and ensure reliable connection',
+      'Set the instrument to its highest range only',
     ],
     correctAnswer: 2,
     explanation:
@@ -3509,9 +3511,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 215,
     question: "What is the main purpose of 'second fix' electrical work?",
     options: [
-      'Installation certificate and relevant schedules',
-      'Enhanced mechanical protection due to potential vandalism',
-      'To accommodate thermal expansion and contraction',
+      'Installing back boxes and pulling in cables',
+      'Chasing the walls and laying containment',
+      'Producing the circuit design and schedules',
       'Installing accessories and making final connections',
     ],
     correctAnswer: 3,
@@ -3542,14 +3544,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 217,
     question: 'What minimum depth should cables be installed when chasing into walls?',
     options: [
-      'Fire resistant cable',
+      '5mm minimum from surface',
       '25mm minimum from surface',
-      'Hard hat and safety glasses',
-      'Mechanical fixings with gaskets',
+      '75mm minimum from surface',
+      '150mm minimum from surface',
     ],
     correctAnswer: 1,
     explanation:
-      'Cables chased into walls should be at least 25mm from the surface to provide adequate protection and prevent damage from fixing screws.',
+      'A common guideline is for chased cables to sit at least 25mm from the finished surface; cables concealed at under 50mm depth (outside a prescribed zone) also require 30 mA RCD protection.',
     section: '3.4.3',
     difficulty: 'intermediate',
     topic: 'Chasing Depth',
@@ -3575,14 +3577,14 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What protection method is required for cables installed in timber frame construction?',
     options: [
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
-      'To accommodate thermal expansion and contraction',
-      'Visibility - surface wiring is visible, concealed is hidden',
+      'No protection is needed in timber',
+      'A green-and-yellow identification sleeve',
+      'A larger conductor cross-sectional area',
       'Oval conduit or suitable protection against nails',
     ],
     correctAnswer: 3,
     explanation:
-      'Cables in timber frames require protection against nails and screws, typically using oval conduit or protective plates.',
+      'Cables in timber frames require protection against nails and screws (where less than 50mm from the surface), typically using steel protective plates or by 30 mA RCD protection.',
     section: '3.4.4',
     difficulty: 'intermediate',
     topic: 'Timber Frame Protection',
@@ -3592,9 +3594,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which installation method provides the best protection against mechanical damage?',
     options: [
       'Installation in steel conduit',
-      '10 times cable diameter',
-      'RCD protection not exceeding 30mA',
-      'In steel conduit with proper earthing',
+      'Cables clipped direct to a surface',
+      'Cables laid loose in a ceiling void',
+      'Cables run on an open wire basket',
     ],
     correctAnswer: 0,
     explanation:
@@ -3625,10 +3627,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which termination method provides the most reliable connection for high current applications?',
     options: [
-      'Conductor resistance and current',
-      'Prevents vertical fire spread between floors',
+      'Twisted and taped joints',
+      'A simple screwed connector block',
       'Crimped lugs with appropriate terminals',
-      'Visibility and wall cavity requirements',
+      'Push-fit lever connectors',
     ],
     correctAnswer: 2,
     explanation:
@@ -3641,9 +3643,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 223,
     question: 'What is the purpose of segregation in electrical installations?',
     options: [
-      'To provide a sealed entry point for cables into enclosures',
-      'Power and data cables in office environments',
-      'Installation certificate and relevant schedules',
+      'To increase the current rating of grouped cables',
+      'To reduce the cost of the installation',
+      'To remove the need for a protective conductor',
       'Separate different voltage levels and prevent interference',
     ],
     correctAnswer: 3,
@@ -3658,9 +3660,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which factor determines the minimum bending radius for cables during installation?',
     options: [
       'Cable diameter and manufacturer specifications',
-      'Increased mobility and reduced trip hazards',
-      'Installing accessories and making final connections',
-      'Reduced toxic gas emission in fire conditions',
+      'The colour of the cable sheath',
+      'The supply voltage of the circuit',
+      'The ambient temperature of the room',
     ],
     correctAnswer: 0,
     explanation:
@@ -3690,14 +3692,14 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which installation method would be most appropriate for a temporary construction site distribution?',
     options: [
-      'Verify RCD operation time and trip current',
-      'Fire resistance and ability to maintain circuit integrity',
+      'A 230V system with domestic socket outlets',
+      'Bare overhead conductors on insulators',
       '110V distribution system with robust connectors',
-      'Resistance increases with temperature',
+      'A 400V three-phase supply to all tools',
     ],
     correctAnswer: 2,
     explanation:
-      'Temporary construction sites should use 110V distribution systems with robust weatherproof connectors for safety and durability.',
+      'Temporary construction sites should use 110V (centre-tapped to earth) distribution systems with robust weatherproof connectors for safety and durability.',
     section: '3.4.12',
     difficulty: 'intermediate',
     topic: 'Temporary Installations',
@@ -3706,9 +3708,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 227,
     question: 'What documentation must be provided upon completion of an electrical installation?',
     options: [
-      'Travelling cable with enhanced flexibility',
-      'Provide mechanical protection against damage',
-      'Criminal prosecution, including fines and imprisonment',
+      'Only a verbal handover to the client',
+      'A receipt for the materials used',
+      'A photograph of the consumer unit',
       'Installation certificate and relevant schedules',
     ],
     correctAnswer: 3,
@@ -3870,10 +3872,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 237,
     question: 'What effect does temperature have on the resistance of copper conductors?',
     options: [
-      'Larger cable capacity and easier access',
+      'Resistance decreases with temperature',
       'Resistance increases with temperature',
-      'Causes degradation and brittleness',
-      'Conductor resistance and current',
+      'Resistance is unaffected by temperature',
+      'Resistance falls to zero when heated',
     ],
     correctAnswer: 1,
     explanation:
@@ -3886,10 +3888,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 238,
     question: 'What is the principle behind electromagnetic induction?',
     options: [
-      'Contact manufacturer or supplier for guidance',
-      'Installation is new work, maintenance is on existing systems',
+      'Heating a conductor produces a current',
+      'A static charge attracts a nearby conductor',
       'Moving magnetic field induces voltage in conductor',
-      'Increased mobility and reduced trip hazards',
+      'Light striking a conductor produces a voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -3902,9 +3904,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 239,
     question: 'What determines the strength of an electromagnetic field around a conductor?',
     options: [
-      'RCD protection not exceeding 30mA',
-      'Larger cable capacity and easier access',
-      'Visibility and wall cavity requirements',
+      'The colour of the conductor insulation',
+      'The length of the conductor only',
+      'The ambient temperature of the room',
       'Current flowing through the conductor',
     ],
     correctAnswer: 3,
@@ -3919,9 +3921,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of a fuse in an electrical circuit?',
     options: [
       'Provide overcurrent protection',
-      'Enhanced IP ratings and RCD protection',
-      'Better ventilation and lighter weight',
-      '10 times cable diameter',
+      'Increase the supply voltage to the load',
+      'Provide additional protection against shock',
+      'Reduce the voltage drop along the cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -3934,10 +3936,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 241,
     question: 'What happens to voltage across components in a series circuit?',
     options: [
-      'Starting current and running current',
+      'It is the same across every component',
       'Divides proportionally to resistance',
-      'Safety glasses and dust mask',
-      'Tighten to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque specification',
+      'It is zero across every component',
+      'It doubles across each successive component',
     ],
     correctAnswer: 1,
     explanation:
@@ -3985,9 +3987,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What safety device operates by detecting imbalance between line and neutral currents?',
     options: [
       'Residual Current Device (RCD)',
-      'Suitable sleeve or grommet',
-      'Cable size and installation surface',
-      'Unnecessary cost and space usage',
+      'Miniature Circuit Breaker (MCB)',
+      'Rewireable fuse (BS 3036)',
+      'Surge Protection Device (SPD)',
     ],
     correctAnswer: 0,
     explanation:
@@ -4049,16 +4051,16 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 248,
-    question: 'What is the maximum operating time for a 30mA RCD protecting socket outlets?',
+    question: 'When used for additional protection, what is the maximum operating time for a 30mA RCD tested at 5 times its rated residual current (5 × IΔn)?',
     options: [
       '300ms',
       '40ms',
       '1 second',
       '5 seconds',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      '30mA RCDs protecting socket outlets must operate within 40ms at their rated current to provide adequate protection against electric shock.',
+      'For additional protection, a 30mA RCD must trip within 40ms when tested at 5 × IΔn (it must also trip within 300ms at 1 × IΔn) per BS 7671 / GN3.',
     section: '3.6.3',
     difficulty: 'intermediate',
     topic: 'RCD Testing',
@@ -4067,14 +4069,14 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 249,
     question: 'What documentation must be completed after testing an electrical installation?',
     options: [
-      'In accessible trunking with proper labelling',
+      'Only a verbal report to the client',
       'Installation certificate with test results and schedules',
-      'MCS (Microgeneration Certification Scheme)',
-      'Contact manufacturer or supplier for guidance',
+      'A receipt for the test instrument hire',
+      'A photograph of the consumer unit only',
     ],
     correctAnswer: 1,
     explanation:
-      'After testing, an installation certificate must be completed with comprehensive test results and circuit schedules.',
+      'After testing, an installation certificate (or condition report) must be completed with comprehensive test results and circuit schedules.',
     section: '3.6.4',
     difficulty: 'basic',
     topic: 'Test Documentation',
@@ -4083,10 +4085,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 250,
     question: 'Who is qualified to issue an Electrical Installation Certificate?',
     options: [
-      'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'Within 150mm of corners, ceilings, floors, and accessories',
+      'Any person who carried out part of the work',
+      'The client who paid for the installation',
       'Qualified and competent person responsible for the design and installation',
-      'Connect cores and earth the armour via appropriate gland',
+      'The wholesaler who supplied the materials',
     ],
     correctAnswer: 2,
     explanation:
@@ -4107,9 +4109,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a STATUTORY regulation that applies to electrical work in the UK?',
     options: [
-      'To protect conductor ends and provide neat terminations',
-      'Reduced toxic gas emission in fire conditions',
-      'Photons (light) striking a semiconductor junction',
+      'BS 7671 (the IET Wiring Regulations)',
+      'The IET On-Site Guide',
+      'IET Guidance Note 3',
       'The Electricity at Work Regulations 1989 (EAWR)',
     ],
     correctAnswer: 3,
@@ -4125,9 +4127,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Under the Health and Safety at Work etc. Act 1974, what duty does an employee owe whilst at work?',
     options: [
       'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
-      'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
-      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
+      'A duty to provide and pay for all personal protective equipment used on site',
+      'A duty to carry out and record every site risk assessment personally',
+      'A duty to prosecute the employer for any breach of safety law',
     ],
     correctAnswer: 0,
     explanation:
@@ -4141,10 +4143,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which non-statutory document is the recognised UK national standard for electrical installation design and erection?',
     options: [
-      'To bind strands together and ensure reliable connection',
+      'BS 1363 (plugs and socket-outlets)',
       'BS 7671:2018+A4:2026 (IET Wiring Regulations)',
-      'Unnecessary cost and space usage',
-      'Power and data cables in office environments',
+      'BS 5839 (fire detection and alarm systems)',
+      'BS EN 60898 (circuit-breakers)',
     ],
     correctAnswer: 1,
     explanation:
@@ -4158,10 +4160,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which IET publication gives practical guidance on inspection, testing and certification of installations?',
     options: [
-      'Photons (light) striking a semiconductor junction',
-      'Galvanised steel tray with weather protection',
+      'Guidance Note 1 — Selection & Erection',
+      'Guidance Note 8 — Earthing & Bonding',
       'Guidance Note 3 — Inspection & Testing',
-      'Starting current and running current',
+      'Guidance Note 5 — Protection Against Electric Shock',
     ],
     correctAnswer: 2,
     explanation:
@@ -4175,9 +4177,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A breach of the Electricity at Work Regulations 1989 can result in which of the following?',
     options: [
-      'Correct height, level installation, and secure fixing',
-      'To prevent fire spread through cable penetrations',
-      'Galvanised steel conduit with appropriate certification',
+      'A written warning only, with no legal force',
+      'Loss of warranty on the installation',
+      'A requirement to re-sit the qualification',
       'Criminal prosecution, including fines and imprisonment',
     ],
     correctAnswer: 3,
@@ -4193,9 +4195,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'The Building Regulations Approved Document P applies to fixed electrical work in which type of premises in England?',
     options: [
       'Dwellings (domestic premises)',
-      'LSOH (Low Smoke Zero Halogen) cable',
-      '3% of nominal voltage',
-      'PAT testing and electrical safety',
+      'Industrial factories and warehouses',
+      'Commercial offices and shops',
+      'Agricultural and horticultural premises',
     ],
     correctAnswer: 0,
     explanation:
@@ -4209,10 +4211,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the practical implication for an electrician who is NOT registered with a Competent Person Scheme (e.g. NICEIC, NAPIT, ELECSA) when undertaking notifiable Part P work?',
     options: [
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
+      'The work is exempt from any notification requirement',
       'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
-      'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
-      'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
+      'The work can be self-certified in the same way as a registered installer',
+      'The work may only be carried out under another firm’s registration',
     ],
     correctAnswer: 1,
     explanation:
@@ -4226,10 +4228,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Why is following the IET On-Site Guide considered good industry practice even though it is non-statutory?',
     options: [
-      'Locations with specific risks requiring additional protection measures',
-      'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
+      'It overrides BS 7671 where the two disagree',
+      'It is statutory law enforced by the HSE',
       'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
+      'It replaces the need for inspection and testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -4245,9 +4247,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which document on a construction site sets out the safe systems of work, hazards and control measures for a specific task?',
     options: [
-      'Stop immediately and inspect the tool',
-      'Visual inspection and safety check',
-      'To provide mechanical protection and support for cables',
+      'The Electrical Installation Certificate (EIC)',
+      'The general arrangement (layout) drawing',
+      'The schedule of test results',
       'The Risk Assessment & Method Statement (RAMS)',
     ],
     correctAnswer: 3,
@@ -4263,9 +4265,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'On a construction project, which document shows the architect-specified positions of accessories such as socket-outlets, switches and luminaires?',
     options: [
       'The layout (general arrangement) drawing',
-      'UV resistance and temperature rating',
-      'Photons (light) striking a semiconductor junction',
-      'Visibility and wall cavity requirements',
+      'The single-line schematic diagram',
+      'The block diagram',
+      'The schedule of test results',
     ],
     correctAnswer: 0,
     explanation:
@@ -4279,10 +4281,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A drawing that uses single lines and standard symbols to show how circuits and equipment are connected logically — without showing physical positions — is called a:',
     options: [
-      'Dwellings (domestic premises)',
+      'Layout (general arrangement) drawing',
       'Schematic (single-line) diagram',
-      'Horizontally or vertically only',
-      'Single cable in free air',
+      'As-built record drawing',
+      'Block diagram',
     ],
     correctAnswer: 1,
     explanation:
@@ -4296,10 +4298,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the primary purpose of a BLOCK diagram in an electrical drawing pack?',
     options: [
-      'To create a low-impedance fault path so that the protective device disconnects within the required time during an L–earth fault',
-      'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
+      'To show the exact physical position of every accessory',
+      'To show every individual conductor connection in detail',
       'To show the overall system at a high level — major items and their interconnections — without internal detail',
-      'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
+      'To record the measured test results for each circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -4313,9 +4315,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'BS EN 60617 is the standard that defines what for electrical drawings?',
     options: [
-      'Only in safe zones - horizontally/vertically from accessories',
-      'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'Underground installations and areas requiring mechanical protection',
+      'The maximum disconnection times for ADS',
+      'The colour coding of fixed-wiring conductors',
+      'The minimum cable sizes for final circuits',
       'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
     ],
     correctAnswer: 3,
@@ -4331,9 +4333,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Which BS EN 60617 symbol represents a switched socket-outlet on a layout drawing?',
     options: [
       'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'Underground installations and areas requiring mechanical protection',
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
+      'A circle with a cross inside it',
+      'A rectangle divided into three equal sections',
+      'A triangle pointing towards a horizontal line',
     ],
     correctAnswer: 0,
     explanation:
@@ -4401,9 +4403,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What is the principal advantage of a RADIAL final circuit over a ring final circuit for socket-outlets?',
     options: [
       'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
-      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
-      'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
-      'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
+      'It can serve a larger floor area than a ring of the same cable size',
+      'It needs no overcurrent protective device at the origin',
+      'It does not require RCD additional protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -4434,10 +4436,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Using the IET On-Site Guide cable factor / conduit factor method, what is the rule for a conduit run that contains BENDS or sets and is longer than ~3 m?',
     options: [
-      'To create a low-impedance fault path so that the protective device disconnects within the required time during an L–earth fault',
-      'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
+      'Use the straight-run table, ignoring the bends entirely',
+      'Apply a flat 45% fill regardless of the bends',
       'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
-      'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
+      'Double the number of cables permitted in a straight run',
     ],
     correctAnswer: 2,
     explanation:
@@ -4453,9 +4455,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'BS 7671:2018+A4:2026 Regulation 312.2.1 recognises five UK earthing arrangements. Which of the following lists is correct?',
     options: [
-      'In steel conduit with proper earthing',
-      'Before plastering, during construction phase',
-      'High temperature and fire resistant applications',
+      'TN-A, TN-B, TN-C, TT, IT',
+      'TT, IT, PME, PNB, SELV',
+      'TN-S, TN-R, TN-X, TT, IT',
       'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
     ],
     correctAnswer: 3,
@@ -4471,9 +4473,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'In a TN-S system, where does the protective conductor (earth) originate?',
     options: [
       'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
-      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
-      'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
+      'From an earth electrode installed by the consumer at the property',
+      'From the combined PEN conductor split at the cut-out',
+      'From the incoming metallic water service pipe',
     ],
     correctAnswer: 0,
     explanation:
@@ -4487,10 +4489,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Automatic Disconnection of Supply (ADS) under Reg 411 requires which three coordinated elements to function correctly?',
     options: [
-      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
+      'Double insulation, an isolating transformer, and a residual current device',
       'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
-      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'Surge protection, arc fault detection, and overload protection',
+      'A separate earth electrode, a main switch, and a meter',
     ],
     correctAnswer: 1,
     explanation:
@@ -4539,9 +4541,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Why are EXPOSED conductive parts of a Class I appliance required to be connected to the protective earthing system?',
     options: [
       'To create a low-impedance fault path so that the protective device disconnects within the required time during an L–earth fault',
-      'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
-      'It produces a constant total power transfer, allows smaller conductors per kW transmitted, and enables efficient rotating-field motors',
+      'To reduce the voltage drop along the final circuit',
+      'To increase the current-carrying capacity of the circuit',
+      'To prevent electromagnetic interference with nearby equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -4555,10 +4557,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is most likely to be an EXTRANEOUS conductive part in a domestic dwelling?',
     options: [
-      'Cross-sectional area of conductor',
+      'The metal casing of a Class I appliance',
       'A 22 mm copper incoming water service pipe',
-      'Correct height, level installation, and secure fixing',
-      'Connecting portable appliances',
+      'The earthing terminal of a socket-outlet',
+      'A length of plastic waste pipe',
     ],
     correctAnswer: 1,
     explanation:
@@ -4589,10 +4591,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'In a TN-S system, which of the following is NOT part of the earth fault loop impedance (Zs) path?',
     options: [
-      'To protect conductor ends and provide neat terminations',
-      'Verify equipment is calibrated and functioning correctly',
-      'Plasterboard fixings or back boxes with adjustable lugs',
-      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
+      'The external earth fault loop impedance (Ze)',
+      'The line conductor resistance (R1)',
+      'The circuit protective conductor resistance (R2)',
+      'The consumer’s incoming neutral conductor',
     ],
     correctAnswer: 3,
     explanation:
@@ -4625,10 +4627,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is NOT a method of large-scale electricity generation supplying the UK National Grid?',
     options: [
-      'In protective conduit or trunking',
+      'Combined-cycle gas turbine (CCGT)',
       'Domestic Class 2 double-insulated lighting',
-      'Ratchet mechanism ensuring complete crimp',
-      'XLPE (Cross-linked polyethylene)',
+      'Nuclear fission',
+      'Offshore wind',
     ],
     correctAnswer: 1,
     explanation:
@@ -4642,10 +4644,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Why is electricity transmitted across the National Grid at very high voltages (e.g. 400 kV / 275 kV) rather than at 230 V?',
     options: [
-      'Qualified and competent person responsible for the design and installation',
-      'Support at regular intervals to prevent cable weight causing damage',
+      'To make the conductors safer to touch',
+      'To allow thinner insulation on the conductors',
       'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
+      'To increase the frequency of the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -4659,9 +4661,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A small hydroelectric scheme uses which energy conversion sequence?',
     options: [
-      'For all socket outlets up to 32A in most locations',
-      'Installing accessories and making final connections',
-      'Within 150mm of corners, ceilings, floors, and accessories',
+      'Chemical → thermal → electrical',
+      'Light → electrical directly, with no moving parts',
+      'Thermal (combustion) → mechanical → electrical',
       'Kinetic (water) → mechanical (turbine/generator) → electrical',
     ],
     correctAnswer: 3,
@@ -4693,10 +4695,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the purpose of operating long-distance transmission as 3-phase AC rather than single-phase?',
     options: [
-      'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
+      'It removes the need for any earthing of the network',
       'It produces a constant total power transfer, allows smaller conductors per kW transmitted, and enables efficient rotating-field motors',
-      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'It allows the supply frequency to be doubled',
+      'It eliminates all resistive losses in the conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -4761,10 +4763,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Place these in the correct order from generation to consumer:',
     options: [
-      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
+      'Consumer → meter → secondary substation → primary substation → generator',
       'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
-      'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
-      'It produces a constant total power transfer, allows smaller conductors per kW transmitted, and enables efficient rotating-field motors',
+      'Generator → consumer → step-down transformer → transmission lines → substation',
+      'Transmission lines → generator → consumer → substation → step-up transformer',
     ],
     correctAnswer: 1,
     explanation:
@@ -4778,10 +4780,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'On the consumer side of a typical UK domestic LV supply, in what order does the supply pass from the street into the consumer unit?',
     options: [
-      'Locations with specific risks requiring additional protection measures',
-      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'Meter → service cable → main switch → cut-out',
+      'Consumer unit → meter → cut-out → service cable',
       'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
-      'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
+      'Cut-out → consumer unit → meter → service cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -4797,9 +4799,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A solar photovoltaic (PV) array converts which form of energy directly into DC electricity?',
     options: [
-      'High temperature and fire resistant applications',
-      'Better protection and flexibility for changes',
-      'For all socket outlets up to 32A in most locations',
+      'Wind kinetic energy via a rotor',
+      'Chemical energy stored in a battery',
+      'Heat from the ground via a collector loop',
       'Photons (light) striking a semiconductor junction',
     ],
     correctAnswer: 3,
@@ -4815,9 +4817,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'A small domestic micro-wind turbine converts which energy sequence?',
     options: [
       'Wind kinetic → mechanical (rotor/generator) → electrical (typically AC, then rectified/inverted as required)',
-      'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
-      'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
+      'Light → electrical directly, with no moving parts',
+      'Chemical → thermal → electrical via combustion',
+      'Heat from the ground → mechanical → electrical',
     ],
     correctAnswer: 0,
     explanation:
@@ -4831,10 +4833,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A ground source heat pump (GSHP) is best described as a:',
     options: [
-      'They store excess generation for use at times of low generation or high tariff, increasing self-consumption',
+      'Device that generates electricity from underground heat',
       'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
-      'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
-      'To show the overall system at a high level — major items and their interconnections — without internal detail',
+      'A boiler that burns gas to heat water for the building',
+      'A battery that stores excess solar generation underground',
     ],
     correctAnswer: 1,
     explanation:
@@ -4848,10 +4850,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Battery Energy Storage Systems (BESS) installed alongside domestic PV provide which primary benefit?',
     options: [
-      'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
-      'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
+      'They generate additional electricity from stored heat',
+      'They increase the output of the PV array directly',
       'They store excess generation for use at times of low generation or high tariff, increasing self-consumption',
-      'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
+      'They convert the DC array output to AC for the grid',
     ],
     correctAnswer: 2,
     explanation:
@@ -4865,9 +4867,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A grid-connected PV inverter rated up to 16 A per phase (single-phase) requires which type of connection agreement with the DNO?',
     options: [
-      'Chemical resistant cable with appropriate sheath',
-      'To prevent stress on electrical connections from cable movement',
-      'Expansion joints and flexible connections',
+      'No agreement is needed for any size of inverter',
+      'A full pre-application assessment under G99',
+      'Building Control notification under Part P only',
       'Connect-and-notify under Engineering Recommendation G98',
     ],
     correctAnswer: 3,
@@ -4899,10 +4901,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'For a PV installation to qualify for the Smart Export Guarantee (SEG) and other consumer protections, the installer and product must typically be certified under which UK scheme?',
     options: [
-      'Chemical resistant cable with appropriate sheath',
+      'PAT testing certification only',
       'MCS (Microgeneration Certification Scheme)',
-      'To reduce friction during cable installation',
-      '110V distribution system with robust connectors',
+      'CHAS health and safety accreditation',
+      'Gas Safe registration',
     ],
     correctAnswer: 1,
     explanation:
@@ -4916,10 +4918,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a well-recognised ADVANTAGE of solar PV for a domestic customer?',
     options: [
-      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
-      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
+      'It produces a constant 24-hour output regardless of weather',
+      'It requires no inverter or connection agreement',
       'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
-      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'It generates the most power on overcast winter nights',
     ],
     correctAnswer: 2,
     explanation:
@@ -4933,9 +4935,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a common DISADVANTAGE shared by both micro-wind and solar PV?',
     options: [
-      'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
+      'They both produce hazardous combustion gases',
+      'They both require a constant supply of fuel',
+      'They both generate only DC that cannot be used',
       'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
     ],
     correctAnswer: 3,
@@ -4951,9 +4953,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'A homeowner is considering air source heat pump (ASHP) versus a gas combi boiler for heating. Which statement best summarises the trade-off?',
     options: [
       'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
-      'ASHP always costs less to run regardless of building condition',
-      'Gas combi boilers are zero-carbon',
-      'ASHP cannot be installed in the UK',
+      'ASHP runs best at a high flow temperature (~70 °C) and so suits poorly insulated homes with small existing radiators',
+      'A gas combi boiler has a higher seasonal efficiency than any ASHP, so it is always the cheaper option to run',
+      'ASHP and a gas boiler have identical carbon emissions, so the choice depends only on the installation cost',
     ],
     correctAnswer: 0,
     explanation:

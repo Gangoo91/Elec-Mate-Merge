@@ -44,10 +44,10 @@ const checks = [
     question:
       'A customer asks how quickly a 4 kW PV install will “pay for itself”. What’s an honest answer in 2026 conditions?',
     options: [
-      'Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively',
-      'Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.',
-      'Realistically 9–12 years for a typical UK domestic install at current SEG rates and electricity prices, longer if the customer doesn’t self-consume much of the generation. The five-year payback figure that gets quoted in sales brochures is mostly outdated FIT-era marketing.',
-      'No — both the metal back-box AND the metal socket faceplate are exposed-conductive-parts. Each must be connected to the CPC, normally via a fly-lead or via the fixing screws securing a metal faceplate to a metal back-box (provided that connection is verified by continuity test).',
+      'Around 2–3 years for any UK install, because the Smart Export Guarantee pays more per unit than the import rate.',
+      'It never pays for itself in cash terms — PV is only ever worth fitting for the carbon saving, never the money.',
+      'Realistically 9–12 years at current SEG rates and prices, longer if the customer self-consumes little of the output.',
+      'Exactly the 25-year panel warranty period, because the system is designed so savings match cost over the panel life.',
     ],
     correctIndex: 2,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       'A customer is told their 4 kW PV system will produce “4 kW”. What should you actually expect across a UK year?',
     options: [
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
-      'To conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
-      'Providing adequate access space around all equipment for safe installation, maintenance, and replacement, with isolation points clearly accessible and sufficient headroom for working',
-      'Roughly 3,400–3,800 kWh per year for a south-facing 4 kW install — peaking around 4 kW on a clear summer noon and dropping to perhaps 200–400 W on a cloudy December morning. The 4 kW figure is the peak rating, not the average output.',
+      'A steady 4 kW around the clock — once daylight reaches the panels they hold full rated output until dusk every day.',
+      'Roughly 35,000 kWh per year — a 4 kW install delivers close to its peak rating for most daylight hours of the year.',
+      'About the same output in winter as in summer, because cooler winter temperatures improve panel efficiency to offset it.',
+      'Roughly 3,400–3,800 kWh per year — peaking near 4 kW at summer noon but a fraction of that on a winter morning.',
     ],
     correctIndex: 3,
     explanation:
@@ -72,10 +72,10 @@ const checks = [
     question:
       'PV DC arc faults are a known fire-risk source. What’s the BS 7671-related conversation around mitigating them?',
     options: [
-      'EIC + Schedule of Inspections + Schedule of Test Results + Building Control Compliance Certificate (issued by the Competent Person Scheme after upload) + operational instructions + as-built records + manufacturer manuals for the new equipment (RCBOs, EV charger, SPDs, AFDDs).',
-      'To take reasonable care for the health and safety of self and others, and to co-operate with the employer\\\\\\\\\\\\\\\'s safety arrangements. In RAMS terms that means reading the document, following the written method, raising defects in the document, and not working outside the documented controls. \\\\\\\\\\\\\\\'Following orders\\\\\\\\\\\\\\\' is no defence to an s.7 prosecution.',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
-      'DC arcs in PV systems behave differently from AC arcs (they don’t self-extinguish at zero-crossings) and have caused significant fires. The trade is actively discussing AFDD provision on DC sides; on the AC side, an AFDD compliant with BS EN 62606 (per Reg 421.1.7) covers the AC circuit. Good DC connector workmanship and correct DC overcurrent protection are the front line.',
+      'DC arcs are no different from AC arcs, so a standard BS EN 60898 MCB on the AC side is all the protection needed.',
+      'The only fire-risk control is the IMD, which extinguishes any arc instantly, so connector workmanship is irrelevant.',
+      'PV arc faults can only occur on the AC side, so once the AC circuit has an RCD there is no further arc-fault risk.',
+      'DC arcs don’t self-extinguish and have caused fires, so connector workmanship and DC overcurrent protection are key.',
     ],
     correctIndex: 3,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'Why does a competent electrician warn customers about “end-of-life” for PV panels and batteries?',
     options: [
-      'Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle',
-      'Local Authority Environmental Health Officers (EHOs) for retail, offices, leisure, residential. Office of Rail and Road for railways. Marine and Coastguard Agency for shipping. Civil Aviation Authority for aviation. Office for Nuclear Regulation for nuclear sites. The HSE itself for construction, manufacturing, mines, quarries, agriculture and most other industrial settings.',
-      'Because both have finite lives — panels are typically guaranteed for 25+ years (with declining output), inverters for 5–15 years (and need replacing within the system life), lithium-ion batteries for 10–15 years before significant capacity fade. The customer should understand the install isn’t fit-and-forget forever.',
-      'Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers',
+      'Because the whole system must be replaced every five years to keep MCS valid, so a full reinstall is needed twice a decade.',
+      'Because panels and inverters are maintenance-free for life, so the only end-of-life concern is the warranty paperwork.',
+      'Because the parts have finite, differing lives — panels 25+ years, inverters 5–15, batteries 10–15 — so it is not fit-and-forget.',
+      'Because the panels degrade fastest, failing completely at around eight years, while the inverter and battery outlast the building.',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,10 +117,10 @@ const quizQuestions = [
     question:
       'A customer in a conservation area wants PV on a south-facing slate roof. What’s the planning issue?',
     options: [
-      'Ensure the commissioning records are filed as baseline data for future maintenance, establish the preventive maintenance schedule based on manufacturer\\\\\\\\\\\\\\\'s recommendations and commissioning findings, and monitor early-life performance for any issues',
-      'PAT involves the regular inspection and testing of portable electrical appliances to identify faults (damaged cables, loose connections, insulation failure) that could cause electrical fires',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
-      'Conservation areas, listed buildings and Article 4 zones often remove the standard “permitted development” exemption that covers domestic PV — meaning the customer has to apply for full planning permission, which can be refused on aesthetic grounds.',
+      'The DNO will not allow a G98 connection in a conservation area, forcing the customer onto the slower G99 route.',
+      'Panels in a conservation area must be a heritage colour and MCS-listed for listed buildings, but no planning is needed.',
+      'There is no planning issue — permitted development rights cover every domestic roof in England, conservation areas too.',
+      'Conservation areas, listed buildings and Article 4 zones often strip permitted development, so full planning is needed.',
     ],
     correctAnswer: 3,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     question:
       'A DNO refuses a G99 application on the grounds of “local network capacity”. What does that mean for the install?',
     options: [
-      'It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.',
-      'All EV charger installations should be notified to the DNO via the appropriate notification scheme (e.g., Building Regulations Part P notification). Installations above 3.68 kW on a single-phase supply or adding significant load may require prior approval, particularly on constrained network areas',
-      'First, the customer cannot register the system for the Smart Export Guarantee (SEG), so they get no payment from the supplier for any electricity they export. Second, the install is still notifiable to the DNO under G98 / G99 and to building control under Part P — those obligations do not go away just because MCS is skipped.',
-      'PASMA (Prefabricated Access Suppliers\\\\\\\\\\\\\\\' and Manufacturers\\\\\\\\\\\\\\\' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It\\\\\\\\\\\\\\\'s not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor\\\\\\\\\\\\\\\'s site rules typically require PASMA card-holders for tower assembly.',
+      'The local network can’t accept the export without reinforcement — so pay for it, accept an export limit, or drop it.',
+      'The customer’s consumer unit is too small for the inverter, so the fix is just a CU upgrade and resubmit — not the network.',
+      'The install is permanently banned at the property and no PV of any size can ever connect, even reduced or with a battery.',
+      'The DNO objects to the inverter brand, so swapping to a different make of the same rating always clears it at no cost.',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'A customer asks: “Why install an MCS-listed system if I’m not interested in SEG payments?”',
     options: [
-      'For minor additions or alterations to an existing circuit (e.g. adding a single socket on an existing ring) that do NOT require a new circuit. New circuits, CU replacements and major alterations require an EIC + Schedule of Inspections + STR.',
-      'Selling a non-MCS install means the customer can never claim SEG even later, may struggle to evidence compliance during a house sale, and may face insurance issues. The MCS install is also covered by the MCS workmanship warranty scheme. The cost difference is small and the protection is significant.',
-      'Apps reduce the friction of recording — entries can be made on the phone in the moment, photos and locations can be attached automatically, the data is searchable later. They also make sharing with the supervisor and the training provider easier. Paper diaries still work fine if maintained; digital tools just lower the barrier to actually keeping them current.',
-      'Around 0.36 Ω. 1.5 mm² Cu = approximately 12.10 mΩ/m at 20 °C. 30 × 0.01210 = 0.363 Ω. The R1+R2 for a 2.5/1.5 T&E 30 m circuit would be approximately 0.21 (R1) + 0.36 (R2) = 0.57 Ω at 20 °C, before the 0.8 correction for service temperature.',
+      'There is genuinely no reason — if the customer waives SEG, MCS adds nothing, so a non-MCS install is sensible every time.',
+      'Non-MCS blocks SEG even later, complicates house sales and insurance, and forgoes the MCS workmanship warranty.',
+      'MCS is a legal requirement for any grid-connected PV, so the install cannot be energised or connected without it, SEG or not.',
+      'MCS only matters for the inverter warranty; accept a shorter inverter warranty and there is no benefit to certifying.',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       'A customer wants a heat pump but their house is poorly insulated, single-glazed and has microbore radiators. What do you tell them?',
     options: [
-      'Match symptoms to Schedule 1 categories: visible fracture (excl finger/thumb/toe), amputation, sight loss reported, crush with internal symptoms, burn &gt;10% / vital organ, scalping, LOC, enclosed-space asphyxia / heat. When in doubt, treat as specified and escalate.',
-      'The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness',
-      'A heat pump struggles in a poorly-insulated house with undersized radiators — it’s designed to deliver lots of low-temperature heat, not a little high-temperature heat. The realistic CoP will be poor (closer to 2 than 3), the running costs will surprise the customer, and the property may need insulation upgrades and rad-replacement first. Be honest before quoting.',
-      'Section 49 of the Consumer Rights Act 2015 implies a term in every contract for the supply of a service to a consumer that the trader must perform the service with reasonable care and skill. Failure to do so is a breach of contract and the consumer has remedies including the right to require repeat performance and the right to a price reduction. Poor communication that leads to defective work, missed scope items or a non-compliant installation can be a breach of s.49.',
+      'A heat pump performs best in a poorly-insulated house, because the higher heat loss keeps it running at its efficient point.',
+      'The single-glazing and microbore rads make no difference, since the pump delivers heat at the same flow temperature.',
+      'A heat pump struggles here — low-temperature heat needs big rads and a tight house, so the CoP and bills will disappoint.',
+      'Just fit a bigger heat pump — doubling the kW rating overcomes the insulation shortfall and keeps running costs the same.',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       'A customer says: “My neighbour told me PV pays for itself in five years.” How do you respond?',
     options: [
-      'Risk Assessment = identifies hazards, evaluates risks, specifies controls. Method Statement = sets out the safe sequence of work, the people, the equipment, the controls in operation. RAMS is the combined document. RA tells you WHAT the risks are; MS tells you HOW to do the work safely.',
-      'Whenever the situation exceeds your competence, when an unsafe instruction is given, when an inspector arrives, when a serious near-miss occurs, when documents you need don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t exist, when a customer requests work outside your scope.',
-      'L3 carries personal s.7 duty + EAWR Reg 16 competence duty + CDM Reg 15 worker duty + MHSWR Reg 14 employee duty. Multiple parallel personal duties; same conclusion — refuse unsafe instruction, escalate. Plus emerging contributory role to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Reg 9 contractor duties.',
-      'Politely correct them. The five-year payback figure is from the Feed-in Tariff (FIT) era which closed in 2019 — under the current Smart Export Guarantee (SEG) and current electricity prices, realistic payback is 9–12 years. Quote real numbers, not historic ones, so the customer makes an informed decision.',
+      'Agree with them — five years is still the standard payback today, so confirm the figure and quote on that basis.',
+      'Tell them the neighbour is wrong because PV never pays back at all under current rates, so the money is simply lost.',
+      'Explain payback depends entirely on inverter brand — a premium inverter hits five years, a budget one doubles it.',
+      'Politely correct them — five years is FIT-era, closed in 2019; under SEG, realistic payback is now 9–12 years.',
     ],
     correctAnswer: 3,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     question:
       'What is the electrician’s honest summary of the “advantages” of micro-renewables for a typical UK domestic customer?',
     options: [
-      'Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.',
-      'A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.',
-      'Individual grievance = one worker raises a workplace issue with the employer (typically follows the ACAS Code of Practice). Collective grievance = a group of workers (often via the union shop steward) raises an issue affecting multiple workers — pay rates, working conditions, restructuring proposals, health and safety concerns. Different procedures and different ACAS guidance apply to each.',
-      'Where the employer employs five or more persons, the significant findings of the fire risk assessment must be recorded, including the fire safety measures in place and any groups of persons identified as being especially at risk',
+      'Lower bills, reduced carbon, partial grid-independence with a battery, an inflation hedge and modest house-value uplift.',
+      'Completely free electricity for the panel life, total grid independence for every household, and a guaranteed five-year payback.',
+      'A legal exemption from standing charges and the climate change levy, plus a statutory 20% uplift on the sale price at once.',
+      'No real advantages for a typical customer — PV only makes sense for remote off-grid sites, never a grid-connected home.',
     ],
     correctAnswer: 0,
     explanation:

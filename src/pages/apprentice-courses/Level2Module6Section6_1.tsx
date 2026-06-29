@@ -20,23 +20,23 @@ const Level2Module6Section6_1 = () => {
       id: 1,
       question: 'Why is it important to record test results immediately after testing?',
       options: [
-        'Client, insurers, HSE, and relevant authorities',
-        'To avoid forgetting or mixing up readings',
-        'Suspension or permanent removal from approved schemes',
-        'Date, time, readings, tester details, and conditions',
+        'To reduce the number of instruments needed on site',
+        'To avoid forgetting or mixing up readings before they are written down',
+        'To make the certificate look more professional to the client',
+        'To allow the supply to be re-energised more quickly',
       ],
       correctAnswer: 1,
       explanation:
-        'Recording results immediately prevents confusion, ensures accuracy, and maintains proper documentation for compliance.',
+        'Recording results immediately prevents confusion or transposed values, ensures accuracy, and maintains proper documentation for compliance.',
     },
     {
       id: 2,
       question: 'What information must be included when recording test results?',
       options: [
-        'To avoid forgetting or mixing up readings',
-        'Professional liability and potential prosecution',
-        'Date, time, readings, tester details, and conditions',
-        'Suspension or permanent removal from approved schemes',
+        'Only the final pass or fail outcome for each circuit',
+        'The client name and the price charged for the work',
+        'Date, time, readings, tester details, and test conditions',
+        'A photograph of the consumer unit and the meter reading',
       ],
       correctAnswer: 2,
       explanation:
@@ -44,12 +44,12 @@ const Level2Module6Section6_1 = () => {
     },
     {
       id: 3,
-      question: 'What are the legal consequences of poor record keeping?',
+      question: 'What are the potential legal consequences of poor record keeping?',
       options: [
-        'Suspension or permanent removal from approved schemes',
-        'Client, insurers, HSE, and relevant authorities',
-        'To avoid forgetting or mixing up readings',
-        'Professional liability and potential prosecution',
+        'A short delay before the certificate can be issued',
+        'Having to repeat only the insulation resistance test',
+        'A reduction in the warranty period offered to the client',
+        'Professional liability claims and potential prosecution',
       ],
       correctAnswer: 3,
       explanation:
@@ -57,25 +57,25 @@ const Level2Module6Section6_1 = () => {
     },
     {
       id: 4,
-      question: 'How long should electrical test records be kept?',
+      question: 'As a general minimum, how long should electrical test records be kept?',
       options: [
-        '5 years',
-        '1 year',
-        '10 years',
-        'Forever',
+        'At least 5 years, longer for some situations',
+        'At least 1 year after completion',
+        'Exactly 10 years for all installations',
+        'Only until the next periodic inspection',
       ],
       correctAnswer: 0,
       explanation:
-        'Electrical test records should typically be kept for at least 5 years, though some situations may require longer retention periods.',
+        'Electrical test records should typically be kept for at least 5 years, though some situations such as public buildings may require longer retention periods.',
     },
     {
       id: 5,
-      question: 'Who can access electrical test records?',
+      question: 'Who may need to be given access to electrical test records?',
       options: [
-        'To avoid forgetting or mixing up readings',
-        'Client, insurers, HSE, and relevant authorities',
-        'Building Regulations Approved Document P',
-        'Suspension or permanent removal from approved schemes',
+        'Only the electrician who carried out the work',
+        'The client, insurers, HSE, and relevant authorities',
+        'Only the wholesaler who supplied the materials',
+        'No one, as the records are strictly private',
       ],
       correctAnswer: 1,
       explanation:
@@ -83,24 +83,24 @@ const Level2Module6Section6_1 = () => {
     },
     {
       id: 6,
-      question: "Under EAWR 1989, what is the electrician's duty regarding test records?",
+      question: "Under EAWR 1989, what is the electrician's duty regarding installations and records?",
       options: [
-        'Date, time, readings, tester details, and conditions',
-        'Suspension or permanent removal from approved schemes',
-        'Must ensure installations are safe and maintain records proving this',
-        'Numerical values allow future comparisons and trend analysis',
+        'To record only faults and ignore satisfactory results',
+        'To keep records solely for the manufacturer of the equipment',
+        'To ensure installations are safe and maintain records proving this',
+        'To submit all records directly to the local authority each month',
       ],
       correctAnswer: 2,
       explanation:
-        'EAWR 1989 places a legal duty on electricians to ensure installations are safe and maintain records that prove proper testing was carried out.',
+        'EAWR 1989 places a legal duty on electricians to ensure installations are safe and to maintain records that prove proper testing was carried out.',
     },
     {
       id: 7,
-      question: 'What happens to professional registration if record keeping is consistently poor?',
+      question: 'What can happen to professional registration if record keeping is consistently poor?',
       options: [
-        'Must ensure installations are safe and maintain records proving this',
-        'Building Regulations Approved Document P',
-        'Numerical values allow future comparisons and trend analysis',
+        'The records are simply archived by the scheme provider',
+        'A one-off retraining course resolves it permanently',
+        'Nothing, as schemes only assess on-site workmanship',
         'Suspension or permanent removal from approved schemes',
       ],
       correctAnswer: 3,
@@ -111,10 +111,10 @@ const Level2Module6Section6_1 = () => {
       id: 8,
       question: "Why should actual numerical readings be recorded rather than just 'pass/fail'?",
       options: [
-        'Numerical values allow future comparisons and trend analysis',
-        'Inability to prove proper procedures and documentation were followed',
-        'Must ensure installations are safe and maintain records proving this',
-        'Date, time, readings, tester details, and conditions',
+        'They allow future comparisons and trend analysis',
+        'They make the certificate quicker to complete',
+        'They remove the need to date and sign the record',
+        'They allow the test to be carried out at a lower voltage',
       ],
       correctAnswer: 0,
       explanation:
@@ -123,12 +123,12 @@ const Level2Module6Section6_1 = () => {
     {
       id: 9,
       question:
-        'Which document requires electrical work to be certified with supporting test records?',
+        'Which of the following requires electrical work to be certified with supporting test records?',
       options: [
-        'Date, time, readings, tester details, and conditions',
+        "The manufacturer's installation instructions",
         'Building Regulations Approved Document P',
-        'Client, insurers, HSE, and relevant authorities',
-        'Professional liability and potential prosecution',
+        "The contractor's own quality policy",
+        'The client purchase order',
       ],
       correctAnswer: 1,
       explanation:
@@ -136,12 +136,12 @@ const Level2Module6Section6_1 = () => {
     },
     {
       id: 10,
-      question: 'What can invalidate professional indemnity insurance claims?',
+      question: 'What can invalidate a professional indemnity insurance claim?',
       options: [
-        'Must ensure installations are safe and maintain records proving this',
-        'Professional liability and potential prosecution',
-        'Inability to prove proper procedures and documentation were followed',
-        'Date, time, readings, tester details, and conditions',
+        'Using digital records instead of paper records',
+        'Recording readings in blue rather than black ink',
+        'Being unable to prove proper procedures and documentation were followed',
+        'Keeping records for longer than the minimum period',
       ],
       correctAnswer: 2,
       explanation:

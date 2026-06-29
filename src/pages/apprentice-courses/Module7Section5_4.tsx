@@ -16,10 +16,10 @@ const Module7Section5_4 = () => {
       id: 1,
       question: 'Why is PPE considered essential in electrical testing?',
       options: [
-        'Insulated gloves, safety glasses, protective footwear',
+        'It guarantees the circuit will pass its tests',
         'It provides protection against shock, burns, and flying debris',
-        'Take the drill out of service, label it, report it. Get a replacement',
-        'To determine the number of luminaires needed to achieve target illuminance',
+        'It removes the need to isolate the circuit first',
+        'It makes the test instrument more accurate',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section5_4 = () => {
       id: 2,
       question: 'Name three common items of PPE for fault investigation.',
       options: [
-        'Comprehensive logging and diagnostic capabilities',
-        'Prevent access while equipment is energised',
+        'A multimeter, proving unit, and test leads',
+        'A hard hat, dust mask, and ear defenders',
         'Insulated gloves, safety glasses, protective footwear',
-        'It uses basic data registers and simple addressing',
+        'A circuit drawing, permit, and warning notice',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,8 +42,8 @@ const Module7Section5_4 = () => {
       id: 3,
       question: 'What is the purpose of flame-retardant clothing?',
       options: [
-        'Gradual change in instrument characteristics over time',
-        'Lines of constant pressure (isobars)',
+        'To keep the electrician warm in cold conditions',
+        'To make the electrician more visible on site',
         'To prevent electric shock during maintenance work',
         'To limit burn injuries in case of arc fault',
       ],
@@ -56,9 +56,9 @@ const Module7Section5_4 = () => {
       question: 'Why must footwear be protective and insulated?',
       options: [
         'To prevent earthing through the body',
-        'Residual Current Device (RCD)',
-        'To provide escape route lighting if occupied',
-        'For traceability and calibration verification',
+        'To improve grip on wet surfaces only',
+        'To meet the dress code on commercial sites',
+        'To reduce fatigue during long shifts',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section5_4 = () => {
       id: 5,
       question: 'What environmental risks must be checked before testing?',
       options: [
-        'Internal air movement is lower, reducing convective heat transfer',
+        'The age of the test instrument',
         'Wet areas, poor lighting, trip hazards, confined spaces',
-        'Systematic evaluation of hazards and control measures',
-        'Without delay (immediately) by quickest practicable means',
+        'The calibration date of the leads',
+        'The colour coding of the conductors',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module7Section5_4 = () => {
       id: 6,
       question: 'What should be done if water is present in the test area?',
       options: [
-        'Corrosion-resistant materials and protective coatings',
-        'Latent organisational failures such as inadequate procedures or training gaps',
+        'Carry on testing but work more quickly',
+        'Switch to a higher category-rated meter',
         'Stop work, make area safe with drying/rubber matting, then proceed',
-        'Non-combustible enclosure (metal or fire-resistant)',
+        'Wear an extra pair of insulated gloves',
       ],
       correctAnswer: 2,
       explanation:
@@ -103,9 +103,9 @@ const Module7Section5_4 = () => {
       question: 'Why should barriers be used in industrial or public environments?',
       options: [
         'To keep unauthorised people away from the work area',
-        'Power that oscillates between source and load without doing work',
-        'Raise their legs, ensure fresh air, and monitor them',
-        'The problem, circumstances, and actions taken',
+        'To improve the accuracy of the test instrument',
+        'To provide somewhere to rest test equipment',
+        'To replace the need for a warning notice',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +115,10 @@ const Module7Section5_4 = () => {
       id: 9,
       question: 'In the real-world example, what injury occurred due to lack of PPE?',
       options: [
-        'They consume the most energy in a building',
+        'A sprained wrist from a slip on a wet floor',
         'Face and eye burns from arc particles',
-        'The Distribution Network Operator (DNO)',
-        'Infinite resistance reading',
+        'An electric shock through unprotected footwear',
+        'A cut hand from a damaged test lead',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,10 +129,10 @@ const Module7Section5_4 = () => {
       question:
         'How did the apprentice in the basement example ensure testing was carried out safely?',
       options: [
-        'Condition monitoring, electrical testing and diagnostic fault-finding',
-        'Essential for coordination, safety information, emergency response',
+        'Carried on but wore extra PPE to compensate',
+        'Tested quickly to limit time in the basement',
         'Stopped, reported the risks, and waited for temporary lighting and rubber matting',
-        'Receptiveness and willingness to hear what they have to say without defensiveness',
+        'Used a torch and continued without matting',
       ],
       correctAnswer: 2,
       explanation:

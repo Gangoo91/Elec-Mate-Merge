@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'A contractor is planning a noisy demolition project in a residential area. What is the PRIMARY advantage of applying for a Section 61 prior consent under the Control of Pollution Act 1974?',
     options: [
-      'It removes all noise limits from the project',
       'It provides a defence against prosecution under Section 60, provided the agreed conditions are followed',
+      'It removes all noise limits from the project',
       'It guarantees that no complaints will be received from residents',
       'It allows 24-hour working without restrictions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A Section 61 prior consent provides the contractor with a defence against a Section 60 notice, provided they comply with the conditions agreed in the consent. The local authority and contractor agree in advance on working methods, hours, noise levels, and best practicable means (BPM). This gives the contractor certainty about what is expected and protection from enforcement action, while ensuring the community is protected through agreed controls. It does not remove noise limits, guarantee no complaints, or permit unrestricted hours.',
   },
@@ -91,8 +91,8 @@ const quizQuestions = [
     id: 1,
     question:
       'At what sound level does prolonged daily exposure typically begin to cause permanent hearing damage?',
-    options: ['65 dB(A)', '75 dB(A)', '85 dB(A)', '95 dB(A)'],
-    correctAnswer: 2,
+    options: ['85 dB(A)', '65 dB(A)', '75 dB(A)', '95 dB(A)'],
+    correctAnswer: 0,
     explanation:
       'The Control of Noise at Work Regulations 2005 set the lower exposure action value at 80 dB(A) and the upper exposure action value at 85 dB(A) for a daily personal noise exposure (LEPd). At and above 85 dB(A), employers must provide hearing protection, designate hearing protection zones, and implement a programme of noise control measures. Prolonged exposure at 85 dB(A) and above without protection is associated with permanent noise-induced hearing loss. Construction sites routinely exceed this level, making hearing protection and noise management essential.',
   },
@@ -128,8 +128,8 @@ const quizQuestions = [
     id: 4,
     question:
       'Which British Standard provides the primary methodology for predicting and assessing construction noise and vibration?',
-    options: ['BS 4142:2014', 'BS 5228:2009+A1:2014', 'BS 7445:2003', 'BS 8233:2014'],
-    correctAnswer: 1,
+    options: ['BS 4142:2014', 'BS 7445:2003', 'BS 8233:2014', 'BS 5228:2009+A1:2014'],
+    correctAnswer: 3,
     explanation:
       'BS 5228:2009+A1:2014 (Code of Practice for Noise and Vibration Control on Construction and Open Sites) is the primary standard for predicting, assessing, and controlling noise and vibration from construction activities. Part 1 covers noise and Part 2 covers vibration. It provides a comprehensive database of noise and vibration data for common construction plant and activities, prediction methodologies, significance criteria (the ABC method), and guidance on control measures. It is referenced by the Control of Pollution Act 1974 and is the standard against which construction noise management is judged.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A noise barrier is erected between a piling rig and the nearest residential property. This is an example of controlling noise at which point in the source-path-receiver hierarchy?',
     options: [
-      'At the source',
       'Along the transmission path',
+      'At the source',
       'At the receiver',
       'By administrative control only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A noise barrier between the source (piling rig) and the receiver (residential property) is a path control measure. It intercepts the sound as it travels from the source to the receiver, reducing the noise level through reflection, absorption, and diffraction effects. Source controls would involve using quieter equipment or different methods. Receiver controls would involve measures at the property itself, such as temporary secondary glazing or offering residents alternative accommodation during the noisiest works.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       "Under BS 5228-2, what is the purpose of setting 'trigger levels' and 'action levels' for construction vibration monitoring?",
     options: [
       'To determine when workers need hearing protection',
-      'To provide early warning and define when additional control measures or work stoppages are required',
       'To calculate the cost of vibration damage claims',
+      'To provide early warning and define when additional control measures or work stoppages are required',
       'To measure the efficiency of piling equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Trigger levels and action levels form a tiered response system for managing construction vibration. The trigger level is set below the action level and serves as an early warning: when vibration reaches the trigger level, additional monitoring is initiated and the situation is reviewed. If vibration continues to rise and reaches the action level, specific actions must be taken, which may include modifying the working method, reducing energy input, increasing monitoring frequency, or stopping work entirely. This system prevents vibration from reaching levels that could cause damage or excessive disturbance, by providing an opportunity to intervene before the critical threshold is reached.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'A description of the proposed working methods and plant to be used',
       'The proposed working hours and duration of the noisiest activities',
-      'A guarantee that no residents will be disturbed by the works',
       'Details of noise control measures (best practicable means) to be employed',
+      'A guarantee that no residents will be disturbed by the works',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A Section 61 application includes a description of the works, the methods and plant proposed, the proposed working hours, predicted noise levels, and the best practicable means (BPM) to be used to minimise noise. It does not and cannot include a guarantee that no residents will be disturbed. Construction noise, even when well managed, will be audible to nearby residents. The purpose of Section 61 is not to eliminate disturbance but to agree in advance what reasonable steps will be taken to minimise it. A guarantee of zero disturbance would be impossible to deliver and is not required by the legislation.',
   },

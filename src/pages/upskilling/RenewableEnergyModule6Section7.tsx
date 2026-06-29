@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'The UK Electric Vehicles (Smart Charge Points) Regulations 2021 apply to which installs?',
     options: [
-      'Only commercial',
-      'All charge points sold or installed in the UK from 30 June 2022 onward for use in domestic / workplace (charging private vehicles). Exemptions for some public / specific commercial uses. The regulations are statutory — not BS 7671 — but binding on UK installs',
-      'Only after 2025',
-      'Only EVs older than 5 years',
+      'Chargepoints sold or installed in Great Britain from 30 June 2022 for domestic or workplace use',
+      'Only rapid DC chargepoints, since the smart-functionality duties target high-power public charging hubs',
+      'Only chargepoints rated above 7 kW, leaving single-phase 7 kW domestic units outside the scope',
+      'Only chargepoints on a smart-meter supply, exempting traditional-meter properties until upgraded',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'UK Electric Vehicles (Smart Charge Points) Regulations 2021 (SI 2021/1467) came into force 30 June 2022 (smart functionality requirements) and 30 December 2022 (security requirements). Apply to: chargepoints sold or installed in Great Britain for use in domestic premises OR a workplace. Exemptions: rapid chargepoints (Mode 4 DC); chargepoints designed solely for personal use by employees on the employer’s premises (some narrow cases); chargepoints exclusively for fleet vehicles (some cases). Statutory regulations — separate from BS 7671 but binding on UK installs. Cert evidence bundle records the install date + the manufacturer DoC for SCP Regulations compliance.',
   },
@@ -38,10 +38,10 @@ const inlineChecks = [
     id: 'm6s7-default-off-peak',
     question: 'What is the "default off-peak charging" requirement?',
     options: [
-      'No charging during peak',
-      'The chargepoint must be PRE-CONFIGURED at install to default to charging only during off-peak hours (08:00-11:00 and 16:00-22:00 EXCLUDED in the default; charging permitted outside these hours). Customer can override on the device for an individual session, but the device returns to off-peak default. Aim: shift EV charging away from grid peak demand without customer-side intervention',
-      'Customer chooses',
-      'No requirement',
+      'The chargepoint ships with no schedule and the installer must program the off-peak windows manually at handover',
+      'The chargepoint is pre-configured to default to off-peak charging; the customer can override per session',
+      'The chargepoint must physically block all charging during peak hours, with no customer override permitted',
+      'The default is set over the air by the electricity supplier once the tariff is activated, not at install',
     ],
     correctIndex: 1,
     explanation:
@@ -51,12 +51,12 @@ const inlineChecks = [
     id: 'm6s7-randomised-delay',
     question: 'What is the "randomised delay" requirement?',
     options: [
-      'No delay',
-      'When a charging schedule begins (off-peak window opens), the chargepoint must wait a RANDOM duration of up to 600 seconds (10 minutes default) before actually starting to draw current. Prevents the entire UK’s EVs all simultaneously drawing at 23:30:00 sharp, which would create a synchronised grid demand spike. Customer can override delay for an individual session',
-      'Always 1 hour delay',
-      'Customer sets the delay',
+      'A random wait of up to 600 seconds between schedule start and current draw, preventing a synchronised spike',
+      'A fixed 60-minute delay after the window opens, applied identically to every chargepoint across the country',
+      'A delay equal to the gap between plug-in and schedule start, set by the wallbox app not the regulations',
+      'A delay of up to 600 seconds the customer must set at commissioning, defaulting to zero if left unset',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Randomised delay = up to 600 seconds (10 min) random wait between schedule start and actual current draw. The SCP Regulations 2021 require this on all UK domestic / workplace chargepoints. The aim is to prevent a synchronised demand spike — if every UK EV starts charging at exactly 02:00 on Octopus Intelligent Go, the grid would see a multi-GW jump in seconds. Spreading the start across a 10-minute random window smooths the ramp-up. Customer can override the delay for individual sessions (e.g. "charge immediately" override on the app), but the default randomised delay returns. Cert evidence bundle records the chargepoint’s SCP Regulations compliance via manufacturer DoC.',
   },
@@ -64,10 +64,10 @@ const inlineChecks = [
     id: 'm6s7-tariff-octopus-go',
     question: 'Octopus Intelligent Go EV tariff — what is the typical UK 2025-26 structure?',
     options: [
-      'Same rate all day',
-      'Cheap rate ~7p/kWh between 23:30 and 05:30 (6-hour window); standard rate ~27p/kWh outside that window (varies). The "Intelligent" element: Octopus integrates with the customer’s EV / wallbox to schedule charging within the cheap window. Customer can charge at any time but at very different rates',
-      'Free between 00:00 and 24:00',
-      'Cheap rate at 12:00-13:00 only',
+      'A cheap rate around the clock with a small standing-charge premium, roughly 7p/kWh at any time',
+      'A cheap rate ~7p/kWh between 23:30 and 05:30; standard rate ~27p/kWh outside, with smart scheduling',
+      'A cheap rate only in the middle of the day (~11:00-15:00) to soak up solar, dearer rate overnight',
+      'A cheap import rate for the EV circuit only and a dearer rate for the rest of the house, via a second meter',
     ],
     correctIndex: 1,
     explanation:
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'A wallbox installed in 2020 (before the SCP Regulations 2021 came into force) doesn’t have smart-charging functionality. Is it currently compliant?',
     options: [
-      'Yes — pre-2022 grandfather rights',
-      'The SCP Regulations 2021 apply to chargepoints SOLD OR INSTALLED from 30 June 2022 onward. A 2020-installed chargepoint is not retroactively non-compliant. However: best-practice EICR notes the SCP-Regs status and recommends upgrade if practical. Customer may benefit from upgrading to a smart chargepoint to access EV tariffs (savings typically pay back the upgrade in 1-2 years)',
-      'No — must be removed',
-      'No — must be retrofitted',
+      'Yes — the regulations apply only from 30 June 2022, so a 2020 unit is not retroactively non-compliant',
+      'No — the regulations apply to all chargepoints in use from 30 June 2022, so the unit must be removed',
+      'No — a 2020 unit must be retrofitted with a smart-charging module within 12 months of its next EICR',
+      'Yes — but only because a single-phase 7 kW domestic chargepoint is permanently exempt from the rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SCP Regulations 2021 apply prospectively to chargepoints sold / installed from 30 June 2022 (smart functionality) and 30 December 2022 (security). Pre-2022 installs are not retroactively non-compliant — they predate the regulations. However: customers may benefit from upgrading to a smart chargepoint to access EV tariffs (Octopus Intelligent Go etc.). EICR best-practice: note the pre-SCP status, recommend upgrade if customer wants tariff access. Cert evidence bundle records the install date + the regulatory framework at that time.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'An installer is asked to commission a 2025-26-new wallbox. What SCP Regulations compliance evidence should be in the cert evidence bundle?',
     options: [
-      'Just the install date',
-      'Manufacturer Declaration of Conformity citing SCP Regulations 2021 compliance: (1) default off-peak charging configured; (2) randomised delay enabled (up to 600 s); (3) security requirements per BS EN IEC 63110 / 63119 / NCSC IoT guidance referenced; (4) data privacy compliance per UK GDPR. Plus customer handover documentation explaining the default schedule + override mechanism',
-      'Customer’s signature only',
-      'No evidence needed',
+      'The DNO connection approval letter alone, since the network operator verifies smart-charging compliance',
+      'A copy of the customer chosen electricity tariff agreement, demonstrating the smart-functionality duties',
+      'Manufacturer DoC citing SCP-Regs compliance, plus customer handover documentation of the schedule',
+      'The BS 7671 EIC by itself, since Section 722 compliance is taken to cover the smart-charging duties',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cert evidence bundle for SCP Regulations 2021 compliance: (1) manufacturer DoC explicitly citing compliance; (2) default off-peak schedule pre-configured (charged in factory; verify at commissioning); (3) randomised delay enabled and configured per the regulations; (4) security / cybersecurity standards referenced (typically BS EN IEC 63110 series for EV charging communications; UK NCSC IoT security guidance); (5) data privacy per UK GDPR if the chargepoint uses cloud services. Customer handover: explain the default off-peak schedule + how to override for one-off sessions + tariff integration if applicable. Without this documentation, the install isn’t SCP-Regs compliant even if the wallbox is.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'A customer wants to charge their EV at 19:00 during the SCP-Regs default peak window. Can they?',
     options: [
-      'No — illegal',
-      'Yes — the customer can override the default off-peak schedule for an individual charging session. The override is per-session (one-off "charge now") and the default off-peak returns automatically for subsequent sessions. Some wallboxes / apps make this explicit; others use a button or app-toggle. UK SCP-Regs intent: encourage off-peak but not prohibit on-peak; customer choice on individual sessions',
-      'Only with DNO permission',
-      'Only by tariff change',
+      'No — the regulations prohibit charging during 16:00-22:00 and the chargepoint refuses the session',
+      'Only after the customer notifies the DNO, since on-peak charging needs a network capacity check',
+      'Yes — the customer can override the default off-peak schedule for that individual session',
+      'Only by switching to a flat-rate tariff first, since smart tariffs lock out all peak-window charging',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SCP Regulations 2021 require DEFAULT off-peak; customer override for individual sessions is explicitly permitted. The chargepoint returns to the default off-peak schedule after the override session completes. Customer benefit: occasional emergency / high-priority charging (e.g. "drive to hospital this evening") can override the schedule. Tariff side: charging at 19:00 on Intelligent Go costs ~27p/kWh vs 7p off-peak — customer pays the premium for the override. Cert evidence bundle for the install documents the default schedule + override mechanism; customer handover explains both.',
   },
@@ -119,10 +119,10 @@ const quizQuestions = [
     question:
       'Octopus Flux vs Intelligent Go — which is appropriate for a customer with PV + BESS + EV?',
     options: [
-      'Same thing',
-      'Flux is designed for PV + BESS + EV households: ~33p/kWh export during 16:00-19:00; ~12p/kWh import 02:00-05:00; encourages exporting excess PV during expensive grid hours + charging BESS / EV during cheap window. Intelligent Go is single-purpose EV-charging-focused: 7p import 23:30-05:30 only. PV + BESS customers usually pick Flux; EV-only customers usually pick Intelligent Go',
-      'Flux is just public',
-      'Intelligent Go is illegal',
+      'Intelligent Go is the better fit, since its 7p import rate beats Flux and the export rate is irrelevant',
+      'Flux is designed for PV + BESS + EV: high-rate export at peak plus cheap overnight import to charge',
+      'Neither is suitable — a PV + BESS + EV household must be on a flat-rate tariff to balance import and export',
+      'Flux is only available to commercial export sites, so a domestic prosumer must use Intelligent Go instead',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       'A customer wants the wallbox to charge the EV from their PV surplus during the day (when PV is generating excess). What’s the install consideration?',
     options: [
-      'Not possible',
-      'PV-tracking ("solar diverter") functionality — the wallbox monitors household PV generation + consumption; when there’s surplus PV being exported, the wallbox charges the EV at the surplus rate. Some wallboxes (MyEnergi Zappi was the original; Hypervolt Home 3 Pro; some Wallbox + Easee variants) include this functionality. Requires CT clamp installation to read household generation. Customer benefit: self-consume PV via EV instead of exporting at low SEG rate',
-      'Always on by default',
-      'Illegal under SCP',
+      'Any 7 kW wallbox does this by default — it draws from the PV inverter output first, no extra hardware',
+      'PV-tracking ("solar diverter") functionality with a CT clamp lets the wallbox charge from PV surplus',
+      'It requires a second consumer unit fed directly from the PV array, isolating the EV circuit from the grid',
+      'It cannot be done on a smart tariff, since PV-tracking and the randomised delay are mutually exclusive',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +145,12 @@ const quizQuestions = [
     question:
       'The SCP Regulations 2021 security requirements reference cybersecurity standards. Why does an EV chargepoint need cybersecurity?',
     options: [
-      'No reason',
-      'Modern smart chargepoints are connected devices: cloud services for scheduling, OEM vehicle API access, customer app, OTA firmware updates. Each is an attack surface. Compromise could (1) maliciously turn EVs on/off en masse to attack the grid; (2) steal customer data (driving patterns, tariff usage); (3) modify firmware to bypass safety features. SCP-Regs require security per recognised standards (BS EN IEC 63110 + NCSC IoT guidance)',
-      'Random',
-      'For warranty',
+      'To stop neighbours connecting to the wallbox and charging their own vehicles for free of charge',
+      'To protect manufacturer warranty terms, since an unsecured firmware port voids most UK guarantees',
+      'They are connected devices with multiple attack surfaces — grid, data and firmware risks must be mitigated',
+      'Purely to comply with UK GDPR over the customer name and address; the connectivity poses no real risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smart EV chargepoints are connected IoT devices — multiple attack surfaces (cloud APIs, mobile apps, firmware updates, vehicle communication). Threats: (1) grid attacks — coordinated mass-turning-on of EVs to overload local distribution; (2) data exfiltration — customer driving patterns, location, tariff data; (3) firmware tampering — bypass safety features. SCP Regulations 2021 require security measures aligned with recognised cybersecurity standards including BS EN IEC 63110 series (EV charging communications) and UK NCSC IoT security guidance. Manufacturer DoC declares compliance; installer verifies in cert evidence bundle. UK 2025-26 reality: reputable wallbox brands meet these requirements as standard; budget / no-name brands sometimes don’t.',
   },

@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What does a loop functional test verify?',
     options: [
       'The correct operation of the entire control loop from sensor to final element',
-      'When site conditions change, after an incident, or when the work method changes',
-      'Prohibition notice, prosecution, unlimited fines, and potential imprisonment',
-      'Calculated loss based on core alignment - verify with OTDR',
+      'Only that the transmitter has been calibrated correctly',
+      'Only the insulation resistance of the loop wiring',
+      'Only that the final element moves to its fail-safe position',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: 'When is loop testing typically performed?',
     options: [
-      'A metric quantifying the biological effectiveness of light on circadian rhythms',
-      'During commissioning, after maintenance, after instrument replacement, and as part of periodic verification',
-      'Aerosol generation increases the concentration of airborne particles and the risk of inhalation exposure',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'Only when a process fault has already been reported by operations',
+      'At commissioning, after maintenance, and as periodic verification',
+      'Only once, during the initial works factory acceptance test',
+      'Only when the controller application software is being upgraded',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'qc3',
     question: 'What is a loop check sheet?',
     options: [
-      'After every practice test, with a formal review every 2-3 weeks',
-      'To vary the physical demands on different muscle groups, reducing cumulative loading on any single body area',
+      'A drawing showing the physical routing of all loop cabling',
+      'A list of spare parts held for each instrument in the loop',
       'A documented form recording the test results for each step of the loop functional test',
-      'Electronic equipment, capacitors, indicating devices, and surge protectors',
+      'A schedule showing when each loop is due for recalibration',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: "What is a 'bump test' on a control loop?",
     options: [
-      'One controller output operating two final control elements sequentially',
-      'To set out how the company prevents discrimination and harassment based on the Equality Act 2010 protected characteristics',
-      'An addition or alteration that does NOT extend an existing circuit by adding a new one',
-      'Making a small step change to the controller output in manual mode and observing the process response',
+      'Tapping the transmitter housing to check for loose internal connections',
+      'Driving the loop fully to its high and low alarm setpoints in turn',
+      'Disconnecting the loop power to confirm the valve fail-safe position',
+      'Making a small step change to the controller output and observing the response',
     ],
     correctIndex: 3,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the first step in a loop functional test?',
     options: [
-      'No, the total load of 235 kg exceeds the machine\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
-      'Reviewing the loop drawing, instrument data sheets, and understanding the intended function of the loop',
-      'Pairing a person who needs assistance with a designated colleague who will help them evacuate',
-      'Faintness, nausea, breathlessness, paleness, sweating, and eventually loss of consciousness',
+      'Immediately injecting a 20 mA signal at the transmitter terminals',
+      'Reviewing the loop drawings and data sheets to understand its function',
+      'Driving the final control element to its fully open position',
+      'Placing the controller into automatic mode before testing begins',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why should the controller be placed in manual mode during loop testing?',
     options: [
-      'Safety interlocks may trip if test signals reach alarm levels, causing unintended plant shutdowns or equipment damage',
-      'A wet test uses actual process fluid; a dry test uses simulated signals without process fluid',
+      'To force the controller to log every test result automatically',
+      'To increase the speed at which the controller responds to changes',
       'To prevent the controller from responding to test signals and causing unintended process changes',
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
+      'To disable all alarms so they do not activate during testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: "What does verifying the 'loop direction' mean?",
     options: [
-      'To verify the process variable is being correctly recorded for trend analysis, regulatory compliance, and process optimisation',
-      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
-      'Safety interlocks may trip if test signals reach alarm levels, causing unintended plant shutdowns or equipment damage',
-      'Confirming that the controller output moves in the correct direction in response to a change in the process variable',
+      'Confirming the field cables run correctly to the control room',
+      'Confirming the process fluid flows in the designed direction',
+      'Confirming the transmitter terminals are wired with correct polarity',
+      'Confirming the controller output moves correctly as the process variable changes',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,23 +108,23 @@ const quizQuestions = [
     id: 4,
     question: 'During loop testing, what does simulating the transmitter signal verify?',
     options: [
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'To prevent the controller from responding to test signals and causing unintended process changes',
-      'To verify that alarms activate at the correct setpoints, display correctly on the operator station, and generate the correct response',
-      'The fraction of dangerous undetected failures that the proof test is capable of detecting',
+      'The wiring, input card, controller display, alarms and trending functions',
+      'Only the mechanical condition of the in-process sensing element',
+      'Only the integrity of the process connections and impulse lines',
+      'Only the calibration certificate held for the reference standard',
     ],
     correctAnswer: 0,
     explanation:
-      'Simulating the transmitter signal at the field end verifies everything downstream: wiring integrity, input card operation, controller scaling and display, alarm activation, and historian recording.',
+      'Simulating the transmitter signal at the field end verifies everything downstream of the transmitter: wiring integrity, input card operation, controller scaling and display, alarm activation, and historian recording.',
   },
   {
     id: 5,
     question: 'What should be verified at the final control element during loop testing?',
     options: [
-      'To verify that alarms activate at the correct setpoints, display correctly on the operator station, and generate the correct response',
-      'That it moves to the correct position in response to the controller output, with correct fail-safe action and full stroke capability',
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'A wet test uses actual process fluid; a dry test uses simulated signals without process fluid',
+      'That the element is correctly sized for the connected pipe diameter',
+      'That it moves to the correct position, with correct fail-safe action and full stroke',
+      'That the element has a current calibration certificate held on file',
+      'That the element matches the manufacturer named on the data sheet',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,23 +134,23 @@ const quizQuestions = [
     id: 6,
     question: 'Why must alarm testing be included in loop functional tests?',
     options: [
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'Safety interlocks may trip if test signals reach alarm levels, causing unintended plant shutdowns or equipment damage',
-      'To verify that alarms activate at the correct setpoints, display correctly on the operator station, and generate the correct response',
-      'To prevent the controller from responding to test signals and causing unintended process changes',
+      'Because alarms are the only part of the control loop that can fail',
+      'Because alarm testing replaces the need to test the final element',
+      'To verify alarms activate at the correct setpoints and display correctly',
+      'Because alarms must always be disabled before any other testing begins',
     ],
     correctAnswer: 2,
     explanation:
-      'Alarm testing verifies that high, low, high-high, and low-low alarms activate at the configured setpoints, display correctly, annunciate audibly, and are acknowledged/cleared properly.',
+      'Alarm testing verifies that high, low, high-high, and low-low alarms activate at the configured setpoints, display correctly on the operator station, annunciate audibly, and are acknowledged/cleared properly.',
   },
   {
     id: 7,
     question: "What is a 'wet test' versus a 'dry test' for a control loop?",
     options: [
-      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
-      'Safety interlocks may trip if test signals reach alarm levels, causing unintended plant shutdowns or equipment damage',
-      'Confirming that the controller output moves in the correct direction in response to a change in the process variable',
-      'A wet test uses actual process fluid; a dry test uses simulated signals without process fluid',
+      'A wet test is done outdoors; a dry test is done inside a workshop',
+      'A wet test uses mains AC power; a dry test uses battery power only',
+      'A wet test checks the field wiring; a dry test checks the sensor',
+      'A wet test uses actual process fluid; a dry test uses simulated signals',
     ],
     correctAnswer: 3,
     explanation:
@@ -160,24 +160,24 @@ const quizQuestions = [
     id: 8,
     question: 'What documentation should be completed after a successful loop functional test?',
     options: [
-      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
-      'To verify the process variable is being correctly recorded for trend analysis, regulatory compliance, and process optimisation',
-      'A wet test uses actual process fluid; a dry test uses simulated signals without process fluid',
-      'To prevent the controller from responding to test signals and causing unintended process changes',
+      'A signed and witnessed loop check sheet recording all the test results',
+      'A purchase order for any replacement loop instruments required',
+      'A risk assessment covering the next phase of plant construction',
+      'A calibration certificate for the process calibrator that was used',
     ],
     correctAnswer: 0,
     explanation:
-      'Completed loop check sheets provide documented evidence of correct loop operation. They are signed by the tester and witness, and form part of the commissioning or maintenance records.',
+      'Completed loop check sheets record all test results, deviations and corrective actions, providing documented evidence of correct loop operation. They are signed by the tester and witness, and form part of the commissioning or maintenance records.',
   },
   {
     id: 9,
     question:
       'When testing a safety instrumented function (SIF), what additional requirements apply?',
     options: [
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'Testing must follow the SIF test procedure, be performed by competent personnel, achieve the required proof test coverage, and be documented per IEC 61511',
-      'Confirming that the controller output moves in the correct direction in response to a change in the process variable',
-      'To verify the process variable is being correctly recorded for trend analysis, regulatory compliance, and process optimisation',
+      'No additional requirements apply beyond those for a standard loop test',
+      'It must follow the SIF procedure, achieve proof test coverage and meet IEC 61511',
+      'The SIF may only be tested once it has been permanently bypassed',
+      'Only the transmitter needs testing, not the logic solver or final element',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: "What is 'proof test coverage' for a safety instrumented function?",
     options: [
-      'To prevent the controller from responding to test signals and causing unintended process changes',
-      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
+      'The percentage of the plant protected by the safety function',
+      'The number of witnesses required to sign off the test',
       'The fraction of dangerous undetected failures that the proof test is capable of detecting',
-      'A wet test uses actual process fluid; a dry test uses simulated signals without process fluid',
+      'The proportion of the loop that can be tested while running',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'Why should interlocks be managed before starting loop testing?',
     options: [
-      'Confirming that the controller output moves in the correct direction in response to a change in the process variable',
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'The fraction of dangerous undetected failures that the proof test is capable of detecting',
-      'Safety interlocks may trip if test signals reach alarm levels, causing unintended plant shutdowns or equipment damage',
+      'Because interlocks must be permanently removed before any test begins',
+      'Because active interlocks prevent the controller from entering manual mode',
+      'Because active interlocks invalidate the loop check sheet that is produced',
+      'Test signals reaching alarm levels may trip interlocks and shut the plant down',
     ],
     correctAnswer: 3,
     explanation:
@@ -213,14 +213,14 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of checking the historian/trend recording during loop testing?',
     options: [
-      'To verify the process variable is being correctly recorded for trend analysis, regulatory compliance, and process optimisation',
-      'The wiring, input card, controller display, alarming, and any recording/trending functions downstream of the transmitter',
-      'The fraction of dangerous undetected failures that the proof test is capable of detecting',
-      'To prevent the controller from responding to test signals and causing unintended process changes',
+      'To verify the process variable is being correctly recorded for trend analysis',
+      'To confirm that the final element reaches its fail-safe position',
+      'To prove the voltage indicator works on a known live source',
+      'To check the recommended calibration interval of the transmitter',
     ],
     correctAnswer: 0,
     explanation:
-      'Historian recording verification ensures the process variable appears correctly with accurate scaling, units, and timestamp. This data is used for process optimisation, regulatory reporting, and fault investigation.',
+      'Historian recording verification ensures the process variable appears correctly with accurate scaling, units, and timestamp. This data is used for process optimisation, regulatory compliance reporting, and fault investigation.',
   },
 ];
 

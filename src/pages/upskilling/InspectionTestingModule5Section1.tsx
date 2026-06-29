@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'BS 7671 defines Zs as the impedance of a loop with three components in series. Which best describes those components for a fault at a kitchen socket on a TN-C-S supply?',
     options: [
-      'Line conductor only — earth return is negligible',
       'Source impedance + line conductor up to the fault + protective conductor between the fault and the source',
+      'Line conductor only — earth return is negligible',
       'Ze + the supplementary bonding to the kitchen sink',
       'The earth electrode + the soil + the substation only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 defines Zs as the impedance of the fault loop comprising (a) the source, (b) the line conductor up to the point of the fault and (c) the protective conductor between the point of the fault and the source. Practically, that decomposes into Ze (everything outside the installation) + R1 + R2 (the final-circuit conductors). Bonding does not appear in the Zs sum.',
   },
@@ -38,11 +38,11 @@ const inlineChecks = [
       'A TT installation has a 30 mA RCD providing fault protection. Measured loop impedance Zs at the test point is 95 Ω. Reg 411.5.3 / Table 41.5 — compliant?',
     options: [
       'No — Zs must be below 0.4 Ω',
-      'Yes — 95 Ω × 0.030 A = 2.85 V, well under the 50 V touch-voltage limit, and 95 Ω is far below the Table 41.5 maximum of 1667 Ω for a 30 mA RCD at Uo = 230 V',
       'No — TT requires an electrode below 1 Ω',
+      'Yes — 95 Ω × 0.030 A = 2.85 V, well under the 50 V touch-voltage limit, and 95 Ω is far below the Table 41.5 maximum of 1667 Ω for a 30 mA RCD at Uo = 230 V',
       'Only if Ze is also below 0.35 Ω',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'On TT with an RCD, Reg 411.5.3 sets the touch-voltage condition Ra × IΔn ≤ 50 V (or Zs in lieu of Ra). 95 × 0.030 = 2.85 V — well below 50 V. Table 41.5 publishes 1667 Ω as the maximum Zs for a 30 mA RCD at 230 V; 95 Ω is comfortably inside. Both compliance routes pass.',
   },
@@ -52,11 +52,11 @@ const inlineChecks = [
       'You measure Ze at the origin as 0.21 Ω. A 32 A B-curve MCB final circuit at the furthest socket has a calculated R1+R2 of 0.62 Ω at 70 °C. What is the predicted Zs and is it compliant against the 1.37 Ω Table 41.3 limit?',
     options: [
       '0.62 Ω — only R1+R2 matters at the far end',
-      '0.83 Ω = Ze + R1+R2 corrected; comfortably below 1.37 Ω → compliant',
       '0.21 Ω — Ze is the verification value',
       '1.37 Ω — exactly on the limit',
+      '0.83 Ω = Ze + R1+R2 corrected; comfortably below 1.37 Ω → compliant',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Zs = Ze + R1 + R2 (corrected to operating temperature). 0.21 + 0.62 = 0.83 Ω. The Table 41.3 maximum permitted Zs for a 32 A Type B device at 230 V is 1.37 Ω, so 0.83 Ω is compliant with comfortable headroom. Treating Ze alone as Zs misses the conductor contribution at the worst-case fault point.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 defines Zs as the impedance of the fault loop comprising three elements. Which three?',
     options: [
-      'Line conductor, neutral conductor, transformer secondary',
-      'The source, the line conductor up to the point of the fault, and the protective conductor between the point of the fault and the source',
-      'Ze, R1 and R2 only — the source is not part of Zs',
-      'The earth electrode, the bonding conductors, and the CPC',
+      'The source, the line conductor to the fault, and the protective conductor back to the source',
+      'The line conductor, the neutral conductor, and the transformer secondary winding',
+      'Ze, R1 and R2 only — the source impedance is excluded from Zs',
+      'The earth electrode, the main bonding conductors, and the circuit CPC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 defines Zs as the impedance in ohms of the fault loop comprising (a) the source, (b) the line conductor up to the point of the fault and (c) the protective conductor between the point of the fault and the source. This is the loop the fault current travels through — every part contributes resistance, every part is in the Zs sum.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'In a TN-C-S (PME) installation, what is the actual return path for an earth fault current from an exposed-conductive-part back to the transformer star point?',
     options: [
-      'Through the general mass of earth via an earth electrode',
-      'Up the CPC to the MET, into the meter tails N, along the supply PEN conductor back to the transformer where N and PE separate',
-      'Down the gas pipe to the gas main',
-      'Through the building structure',
+      'Through the general mass of earth via a consumer earth electrode',
+      'Down the main bonding to the gas pipe and along the gas main',
+      'Up the CPC to the MET, then along the supply PEN conductor back to the transformer',
+      'Through the building structural steel to a foundation electrode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TN-C-S (PME) defines the neutral and protective functions as combined in a single PEN conductor in part of the supply system. The fault current returns from the MET via the supply neutral / PEN conductor back to the source — a low-impedance metallic path. The general mass of earth is not the return path in TN; that is the TT system.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'Reg 411.3.2.2 sets a maximum disconnection time of 0.4 s for a final circuit ≤ 32 A on a 230 V TN system. What does that disconnection time depend on at the moment of the fault?',
     options: [
-      'The supply voltage alone',
-      'The Zs of the circuit at the point of the fault — Zs determines the prospective fault current (If ≈ Uo / Zs), which in turn determines how quickly the protective device operates on its time-current characteristic',
-      'The size of the line conductor only',
-      'The ambient temperature inside the consumer unit',
+      'The supply voltage Uo alone, regardless of the loop impedance at the fault',
+      'The cross-sectional area of the line conductor alone, regardless of length',
+      'The ambient temperature inside the consumer unit enclosure at the time of the fault',
+      'The Zs at the fault point, which sets the fault current and hence the trip time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Disconnection time is set by how much current the loop allows to flow during a fault. If ≈ Uo / Zs. A higher Zs means a lower fault current and a slower trip. This is why Reg 411.3.2.2 disconnection time is enforced through Reg 411.4.4 / Tables 41.2–41.4 maximum-Zs values: keep Zs below the table value and the device will operate within 0.4 s by design.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A TT installation has Ra (earth electrode + CPC) of 80 Ω. The protective device is a 30 mA RCD. Does Reg 411.5.3 condition Ra × IΔn ≤ 50 V hold?',
     options: [
-      'No — 80 × 0.03 = 2.4 V, fail',
       'Yes — 80 × 0.03 = 2.4 V, well below 50 V',
+      'No — 80 × 0.03 = 2.4 V, fail',
       'Reg 411.5.3 does not apply to RCD-protected TT circuits',
       'Only if Ze is also below 200 Ω',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '80 × 0.030 = 2.4 V, which is comfortably below 50 V. Reg 411.5.3 sets the touch-voltage limit for RCD-based fault protection in TT systems: Ra × IΔn ≤ 50 V. The note in the regulation also points out that where Ra is not known, Zs may be used in its place, and Table 41.5 gives maximum Zs values for RCD ratings (1667 Ω for a 30 mA RCD) which is the practical headroom on a TT circuit.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'Why does Zs matter more than Ze when verifying a circuit at the furthest point on a final circuit?',
     options: [
-      'Zs is easier to measure',
-      'Ze is the impedance only up to the MET. The fault could occur anywhere on the circuit, and the protective device sees the loop as Ze + R1 + R2 at the fault point. Only Zs reflects the actual disconnection condition at the fault location',
-      'Ze is no longer required by BS 7671',
-      'They are interchangeable',
+      'Zs is a simpler quantity to measure on site than Ze with a loop tester',
+      'Ze is no longer a quantity required by BS 7671 for verification',
+      'Ze stops at the MET; only Zs (Ze + R1 + R2) reflects the disconnection condition at the fault',
+      'Zs and Ze are interchangeable values for the purpose of verifying disconnection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ze is the external loop impedance up to the origin of the installation. The disconnection condition has to be verified at the fault location, which can be anywhere on the circuit — including the worst-case furthest point. Zs = Ze + R1 + R2 is the impedance the fault current actually sees, so it is Zs that has to satisfy the Reg 411.4.4 / Table 41 limits, not Ze.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'In a TN-S installation (separate N and PE throughout), what physically conducts the earth fault return current back to the transformer?',
     options: [
-      'The supply neutral, which doubles as PE',
-      'A separate metallic protective conductor (often the cable sheath / armour or a dedicated PE core) that runs all the way back to the transformer, where PE is bonded to the supply neutral at the source',
-      'The gas pipe via main bonding',
-      'The earth electrode at the consumer position',
+      'The supply neutral conductor, which doubles as the protective conductor in TN-S',
+      'The incoming gas service pipe, reached via the main protective bonding conductor',
+      'An earth electrode installed at the consumer position, into the mass of earth',
+      'A separate PE (cable sheath/armour or PE core) running back to the transformer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TN-S is defined as having separate neutral and protective conductors throughout the system. The protective conductor (PE) may be the metallic covering of the supply cable (sheath/armour) or a separate conductor. All exposed-conductive-parts are bonded to that PE via the MET. Fault current returns metallically all the way to the transformer where PE bonds to N at the source.',
   },
@@ -165,8 +165,8 @@ const quizQuestions = [
     id: 7,
     question:
       'A 6 mm² / 2.5 mm² T&E radial circuit is 28 m long. Ze at the origin is 0.27 Ω. From GN3 Table BI at 20°C, r1 + r2 = 10.49 mΩ/m. Estimate Zs at 70°C operating temperature.',
-    options: ['0.62 Ω', '0.27 Ω', '0.94 Ω', '0.62 Ω at 20°C; ~0.62 Ω corrected'],
-    correctAnswer: 0,
+    options: ['0.27 Ω', '0.62 Ω', '0.94 Ω', '0.29 Ω'],
+    correctAnswer: 1,
     explanation:
       'R1+R2 at 20°C = 28 × 10.49 = 293.7 mΩ ≈ 0.29 Ω. Multiply by ~1.20 for 70°C operating temperature → 0.35 Ω. Zs = Ze + (R1+R2 corrected) = 0.27 + 0.35 = 0.62 Ω. That is the value to compare against the relevant Table 41.3 or A4 max-permitted-Zs limit for the protective device.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'Reg 411.4.3 (with the A4 amendment) adds a specific prohibition about the PEN conductor in TN-C-S. What is it?',
     options: [
       'The PEN must be undersized',
-      'No switching or isolating device shall be inserted in a PEN conductor',
       'The PEN must be sleeved blue',
+      'No switching or isolating device shall be inserted in a PEN conductor',
       'The PEN must terminate at the earth electrode only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 411.4.3 expressly states that no switching or isolating device shall be inserted in a PEN conductor. Reg 461.2 echoes the same rule: in TN-C and TN-C-S systems the PEN shall not be isolated or switched. The PEN is the return path for both load and fault current — interrupting it can leave exposed-conductive-parts at full line voltage above earth.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'You measure Ze at the origin of a TN-C-S installation as 0.18 Ω. At a socket on a 32 A B-curve MCB final circuit you measure Zs as 0.91 Ω. Table 41.3 max-permitted Zs for that device is 1.09 Ω. The reading complies. What is the implied R1+R2 from that data?',
     options: [
-      '0.91 Ω — you measured it',
-      '0.73 Ω — Zs minus Ze (0.91 − 0.18) gives the R1+R2 contribution at the test temperature',
-      '1.09 Ω — the table value',
-      '0.18 Ω',
+      '0.91 Ω — the measured Zs is itself the R1+R2 contribution',
+      '1.09 Ω — the Table 41.3 maximum-permitted value for the device',
+      '0.18 Ω — R1+R2 is equal to the measured external Ze',
+      '0.73 Ω — Zs minus Ze (0.91 − 0.18) at the test temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Zs = Ze + R1 + R2, so R1+R2 = Zs − Ze = 0.91 − 0.18 = 0.73 Ω at the temperature the cable was at when the live test was run. This is one of the most useful sanity checks on site: a measured Zs that disagrees with Ze + (calculated/measured R1+R2) by more than the expected temperature correction is the flag to investigate before signing the schedule.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'NOTE 1 to Reg 643.7.3 warns that the validity of Zs readings can be adversely affected by what type of equipment in modern installations?',
     options: [
-      'Tungsten-filament lamps',
       'Power-converting equipment such as inverters (PV, battery storage, EV chargers)',
+      'Tungsten-filament lamps',
       'Linear transformers',
       'Resistive heating loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NOTE 1 to Reg 643.7.3 (carried into Reg 826.7 for prosumer installations) warns that the validity of test readings taken with a fault loop impedance test instrument may be adversely affected by power-converting equipment, such as inverters. The harmonic content / fast switching of inverters can confuse the loop tester. Where this applies, Reg 826.7 requires an alternative method for determining prospective fault current and earth fault loop impedance.',
   },

@@ -23,55 +23,55 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 introduces a new Section 7 covering extensions and modifications. The certificate previously called "modification certificate" has been renamed to.',
     options: [
-      'No certificate is needed.',
-      '"Extension or modification certificate" — recognising that extensions to existing systems and modifications to existing systems both require certification but are different in nature. The 2025 standard adds clarification that when undertaking an extension to a system, the new works should comply with the current version of the standard, but the overall system might not conform to the current standard. The cert documents what was done and confirms that the new works comply at the date of the work.',
-      '"Service certificate."',
-      '"Variation certificate."',
+      'The "service certificate", issued at each periodic six-monthly maintenance visit.',
+      'The "extension or modification certificate", reflecting Section 7\'s dual scope.',
+      'The "variation certificate", issued whenever a departure from the standard is agreed.',
+      'The "acceptance certificate", re-issued in full each time a change is made to the system.',
     ],
     correctIndex: 1,
     explanation:
-      'Section 7 is new in 2025 and it covers both extensions and modifications. The certificate has been renamed to reflect the dual purpose. The new wording also clarifies the awkward "extension to an old system" case — the new works comply with current standards but the overall system may have legacy aspects that do not.',
+      'Section 7 is new in 2025 and it covers both extensions and modifications, so the certificate is renamed to reflect the dual purpose. The new wording also clarifies the awkward "extension to an old system" case — the new works comply with the current standard at the date of the work, but the overall system may retain legacy aspects that do not conform.',
   },
   {
     id: 'fam6-s5-firmware',
     question: 'A firmware update is applied to a CIE. Per BS 5839-1:2025 clause 7, this is.',
     options: [
-      'Just servicing.',
-      'A modification — a certificate is required. This is a 2025 clarification that closes a long-standing gap where firmware updates were treated as informal updates without paperwork. Firmware changes the operational behaviour of a life-safety device and therefore qualifies as a modification under clause 7. The extension or modification certificate documents the pre-update version, the post-update version, the verification that the system performs the cause-and-effect as designed, and the post-action operational confirmation.',
-      'No paperwork at all.',
-      'Always invalidates the system.',
+      'Routine servicing, captured by the standard six-monthly service certificate alone.',
+      'A modification — an extension or modification certificate is required under clause 7.',
+      'A configuration change recorded only in the panel event log, with no certificate needed.',
+      'A change so significant that it always invalidates the system\'s original acceptance certificate.',
     ],
     correctIndex: 1,
     explanation:
-      'Firmware update = modification = cert required. The 2025 clarification removes the previous ambiguity. The cert sits alongside the cyber-security log entry (clause 43.4) and the logbook entry — three records that together evidence the firmware change.',
+      'Firmware update = modification = certificate required. The 2025 clarification closes a long-standing gap where firmware updates were treated informally. Firmware changes the operational behaviour of a life-safety device, so the extension or modification certificate documents the pre- and post-update versions, the cause-and-effect verification, and the post-action operational confirmation. It sits alongside the clause 43.4 cyber-security log entry and the logbook entry.',
   },
   {
     id: 'fam6-s5-unacceptable',
     question:
       'BS 5839-1:2025 clause 6 (Variations) introduces explicit examples of variations now declared UNACCEPTABLE. Which of the following is named?',
     options: [
-      'Slightly increased detector spacing.',
-      'The absence of a zone plan in premises with more than one zone on any storey, particularly premises in which people sleep; AND the absence of facility for transmission of fire alarm signals to an ARC in supported housing where a Grade A system per BS 5839-6:2019 is necessary, and in residential care homes. These two specific cases are now declared so detrimental to the safety of life that they should NOT be regarded as acceptable variations. ALL other variations need justification, especially if proposed at installation or commissioning stage; some agreed variations remain possible but the bar is higher than in 2017.',
-      'Battery age beyond five years.',
-      'Late service visits.',
+      'Slightly increased detector spacing in a stairwell, agreed at the commissioning stage.',
+      'Absence of a zone plan in multi-zone sleeping premises, and absence of ARC transmission in care homes.',
+      'Battery back-up giving four hours of standby rather than the recommended twenty-four.',
+      'Service visits running a month beyond the six-monthly interval over several cycles.',
     ],
     correctIndex: 1,
     explanation:
-      'Two specific exclusions in clause 6: zone-plan absence in multi-zone sleeping premises; ARC-transmission absence in supported housing / care homes. The 2025 standard names these as no-longer-acceptable. Other variations remain agreeable but with stronger justification expected.',
+      'Clause 6 names two specific exclusions: the absence of a zone plan in premises with more than one zone on any storey (particularly where people sleep); and the absence of ARC transmission in supported housing (where a Grade A system per BS 5839-6:2019 is necessary) and in residential care homes. These are now declared so detrimental to safety of life that they should not be regarded as acceptable variations. All other variations remain possible but need stronger justification than in 2017.',
   },
   {
     id: 'fam6-s5-schemes',
     question:
       'Third-party certification schemes for fire-detection-and-alarm work in the UK include.',
     options: [
-      'Only one scheme.',
-      'BAFE SP203 (the dominant scheme for design, installation, commissioning, and maintenance), BAFE SP207 (for fire-alarm engineers individually), FIA (Fire Industry Association — membership scheme covering training, units, and quality standards), NSI (National Security Inspectorate, NACOSS Gold for fire and security), SSAIB (Security Systems and Alarms Inspection Board, broader life-safety scope). Each scheme audits its members against documented quality systems and provides assurance to AHJs and insurers that the four-pillar competence definition (Section 6.2) is being met.',
-      'Just BAFE.',
-      'There are no schemes.',
+      'A single national scheme that all fire-alarm contractors must belong to by law.',
+      'BAFE SP203, BAFE SP207, FIA membership, NSI (NACOSS Gold) and SSAIB.',
+      'Only BAFE SP203, which is the sole route recognised by AHJs and insurers.',
+      'Only the equipment manufacturer\'s own product accreditation for each installed device.',
     ],
     correctIndex: 1,
     explanation:
-      'Multiple third-party schemes operate in the UK, with BAFE SP203 the most widely-recognised for company-level certification. Individual engineers may also hold FIA unit qualifications, BAFE SP207, or manufacturer-specific accreditations. AHJs and insurers increasingly require evidence of one of these schemes.',
+      'Multiple third-party schemes operate in the UK. BAFE SP203 is the dominant company-level scheme covering design, installation, commissioning and maintenance; BAFE SP207 certifies individual engineers; FIA offers unit qualifications and membership standards; NSI (NACOSS Gold) and SSAIB cover fire alongside security. Each audits members against documented quality systems, providing assurance to AHJs and insurers. AHJs and insurers increasingly require evidence of one of these schemes.',
   },
 ];
 
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Which certificate is issued at acceptance / handover of a new fire-alarm system per BS 5839-1:2025 Annex G?',
     options: [
-      'Annual service certificate.',
-      "Acceptance certificate (Annex G in BS 5839-1:2025). Issued by the commissioning organisation after the design / installation / commissioning has been completed and the system has been demonstrated to perform per the cause-and-effect matrix and the design specification. The acceptance certificate is the key document that fixes the system's baseline configuration and the datum date for the six-monthly servicing cycle.",
-      'Quote document.',
-      'Insurance form.',
+      'The annual service certificate from the maintenance contract.',
+      'The commissioning certificate issued by the installer before handover.',
+      'The acceptance certificate (Annex G), confirming the system performs to the cause-and-effect matrix and fixing the baseline and servicing datum.',
+      'The design certificate issued at the start of the project.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Acceptance certificate per Annex G is the handover document. Fixes baseline; sets the datum for clause 43.2.1 servicing intervals; lists any agreed variations from the standard.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 2,
     question: 'The previous "modification certificate" (BS 5839-1:2017) is renamed in 2025 to.',
     options: [
-      '"Acceptance certificate."',
-      '"Extension or modification certificate." The renaming reflects the new Section 7 covering both extensions and modifications. An extension adds new components / coverage to an existing system; a modification changes the configuration / firmware / cause-and-effect of an existing system. Both require certification. The 2025 standard also clarifies that extension works comply with the current standard at the date of the work, while the overall system may retain legacy aspects that do not all conform to the current standard.',
-      '"Service certificate."',
-      '"Audit certificate."',
+      'The "extension or modification certificate", reflecting Section 7 covering both extensions and modifications to existing systems.',
+      'The "acceptance certificate", replacing the old modification document.',
+      'The "service certificate", issued at each periodic visit.',
+      'The "audit certificate", issued by the third-party scheme.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New name: extension or modification certificate. Reflects the new Section 7 dual-purpose scope. Clarifies legacy-system coexistence with new works.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'A firmware update on a CIE in 2025 requires what documentation?',
     options: [
-      'Nothing.',
-      'An extension or modification certificate per clause 7 (firmware updates are now classed as modifications), a logbook entry per clause 48, and a remote-access log entry per clause 43.4 (if the update was applied remotely). Three trails converge: the certificate documenting what was done; the logbook diary; the cyber-security log. Pre-2025 firmware updates were often treated as informal — the 2025 standard formalises the paperwork.',
-      'Just a verbal handover.',
-      'A new acceptance certificate.',
+      'No formal documentation, since a firmware update counts as routine periodic maintenance.',
+      'A verbal handover to the responsible person, confirmed by a note in the service visit log.',
+      'A fresh acceptance certificate re-issued for the whole system at the new firmware baseline.',
+      'An extension or modification certificate, a logbook entry, and a remote-access log entry if remote.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Three trails: extension or modification certificate + logbook entry + cyber-security log entry. Firmware update is a modification; the standard treats it formally.',
   },
@@ -121,10 +121,10 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 6 declares two specific variations as UNACCEPTABLE. Which pair?',
     options: [
-      'Detector spacing slightly increased AND late service visits.',
-      'Absence of a zone plan in premises with more than one zone on any storey (particularly premises in which people sleep); AND absence of ARC alarm transmission in supported housing (where Grade A system per BS 5839-6:2019 is required) and in residential care homes. These two specific variations are now declared so detrimental to safety of life that they should not be regarded as acceptable. All OTHER variations remain possible by agreement but require justification, especially at installation / commissioning stage.',
-      'Wrong colour cable.',
-      'No variations are unacceptable.',
+      'Slightly increased detector spacing in a stairwell AND occasional late service visits.',
+      'Absence of a zone plan in multi-zone sleeping premises AND absence of ARC transmission in care homes.',
+      'Use of non-standard cable colours AND undersized cable containment on the final circuits.',
+      'A reduced battery standby duration AND a delay applied to manual call point signalling.',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Third-party certification schemes commonly required by AHJs and insurers in the UK include which of the following?',
     options: [
-      'Only manufacturer accreditation.',
-      'BAFE SP203 (the dominant scheme covering design / install / commission / maintain), BAFE SP207 (individual engineer certification), FIA membership and unit accreditation, NSI (NACOSS Gold), and SSAIB. AHJs and insurers increasingly require evidence of scheme membership as the practical assurance route for the BS 5839-1:2025 clause 3.13 competent-person definition. Self-declaration of competence is harder to defend; scheme membership provides external assurance.',
-      'Just one scheme.',
-      'No schemes are recognised.',
+      'Only the equipment manufacturer’s own product accreditation is recognised for this work.',
+      'A single national scheme is mandated to cover all fire-alarm work across the whole of the UK.',
+      'BAFE SP203, BAFE SP207, FIA membership, NSI (NACOSS Gold) and SSAIB — the practical assurance route.',
+      'No third-party certification schemes are recognised by AHJs or insurers for fire-alarm work.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Multiple schemes recognised in the UK. BAFE SP203 dominant for organisations; FIA / BAFE SP207 for individuals. Scheme membership is the practical assurance route.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'A 2026 extension adds five detectors and one MCP to an existing 2010-installed system. The certificate.',
     options: [
-      'Re-certifies the whole system to current standards.',
-      "Documents the new works only, with a statement that the new works comply with BS 5839-1:2025 at the date of the work, and that the overall system retains aspects from the original 2010 commissioning that may not all conform to the current standard. The extension certificate sits alongside the original acceptance certificate; together they describe the system's history. The asset register is updated to include the five new detectors and one new MCP. The cause-and-effect is updated.",
-      'Replaces the original acceptance.',
-      'No certificate needed.',
+      'Documents the new works as complying with BS 5839-1:2025 while the system retains legacy 2010 aspects.',
+      'Re-certifies the entire installed system, legacy parts included, to the current standard.',
+      'Replaces and supersedes the original 2010 acceptance certificate as the new baseline.',
+      'Is unnecessary, since an extension of only five detectors and one call point is too small to certify.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Extension cert documents the new works, not the legacy. The legacy retains its 2010 baseline. The 2025 standard explicitly accommodates this scenario — extensions comply at date of work; overall system may legacy-deviate.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'A 2026 service visit identifies that the original 2018 commissioning agreed a delay on FRS signal transmission to allow staff investigation — recorded in the logbook as a "minor variation". Per 2025, this should be.',
     options: [
-      'Removed automatically.',
-      'Re-evaluated against the 2025 clause 6 wording. If the variation is for premises in which people sleep (e.g. care home, supported housing) and the variation removes ARC transmission entirely, that is now unacceptable. If the variation is a delay only (not absence) and the premises type / system grade allows it under 2025 clause 6 wording, the variation may continue to be agreed but should be documented per the 2025 "all variations recorded" rule. The logbook entry is updated to capture the 2025 review and the conclusion.',
-      'Re-recorded as "major" only.',
-      'Removed without consultation.',
+      'Removed automatically from the records because it predates the 2025 edition of the standard.',
+      'Re-recorded simply as a "major" variation, with no further review against the new clause 6.',
+      'Removed from the system immediately, without first consulting the responsible person about it.',
+      'Re-evaluated against 2025 clause 6 — unacceptable if it removes ARC transmission, else recorded if justified.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Re-evaluation against 2025 clause 6 is the correct response. Variations that 2025 declares unacceptable cannot continue; other variations may continue with justification but must be properly recorded under the 2025 all-variations rule.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 8,
     question: 'A periodic inspection certificate (six-monthly) covers what?',
     options: [
-      'A statement that the system is brand new.',
-      'A statement of the inspection / service work performed, the test outcomes, the open defects, the recommendations, and the conformity status of the system as left at the visit. The certificate is per the relevant scheme template (BAFE SP203 schemes have their own template, FIA members may use the FIA template, manufacturer-specific schemes may apply for their installations). The certificate is signed by the competent engineer and entered in the logbook with reference.',
-      'A new acceptance certificate.',
-      'No conformity statement.',
+      'A statement that the system is brand new and fully compliant.',
+      'A record of the service work done, test outcomes, open defects, recommendations and the conformity status as left — signed by the competent engineer and logged.',
+      'A fresh acceptance certificate replacing the original.',
+      'A service record that deliberately omits any conformity statement.',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'An AHJ visits a care home and inspects the documentation. The most useful single document for them to inspect is.',
     options: [
-      'A photograph of the panel.',
-      'The logbook — front section gives the system identification, asset register lives with it, every event class is recorded chronologically, certificates (acceptance, extension or modification) are referenced or filed with it, conformity statements at every six-monthly visit are recorded. An experienced AHJ can read off the maintenance history, the variation status, the open defect status, and the cyber-security access record from the logbook in minutes.',
-      'A blank service contract.',
-      'A staff payroll.',
+      'A recent photograph of the control panel display showing no faults at the time of the visit.',
+      'The signed maintenance contract held between the premises and the servicing organisation.',
+      'The logbook — it ties together identification, asset register, events, certificates and conformity statements.',
+      'The original tender and quotation documents prepared when the system was first procured.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Logbook is the single document that ties everything together. AHJs and insurers read it first because it tells them most things they want to know. A well-maintained logbook is the single best evidence of a well-run system.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'A new system is commissioned on 14 January 2026. The acceptance certificate is signed and issued. What does the date of acceptance establish under BS 5839-1:2025?',
     options: [
-      'Just the contract date.',
-      "The DATUM for the six-monthly servicing schedule (clause 43.2.1 Note 2). Successive service visits are timed at approximately six months from this date with the five-to-seven-month tolerance. The datum is fixed at acceptance and does NOT move with subsequent visits — this prevents schedule drift across multiple cycles. The acceptance date also establishes the start of the system's warranty period (per the contract) and the start of the asset register chronology.",
-      'No special significance.',
-      'Just the install start date.',
+      'The fixed datum for the six-monthly servicing schedule, which does not move with later visits.',
+      'Only the date on which the installation contract between the parties was formally signed.',
+      'No particular significance beyond a routine record-keeping note on the certificate cover.',
+      'Only the date on which installation work first physically started on site at the premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Acceptance date = datum for clause 43.2.1 servicing intervals. Fixed; does not move. Stops cumulative drift.',
   },

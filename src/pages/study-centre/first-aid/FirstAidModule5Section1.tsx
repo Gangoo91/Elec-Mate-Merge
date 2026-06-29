@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A worker has fallen from a scaffold and has a bone protruding through the skin of their lower leg. What is the correct first aid response?',
     options: [
-      'Push the bone back into position, straighten the leg, and apply a splint',
-      'Do NOT push the bone back in, cover the wound with a sterile dressing, immobilise the leg in the position found, treat for shock, and call 999',
-      'Straighten the leg first, then apply direct pressure over the protruding bone to control bleeding',
+      'Do not push the bone back in; cover the wound, immobilise the leg, and call 999',
+      'Push the bone back into position, straighten the leg, and apply a rigid splint',
+      'Straighten the leg first, then press directly on the protruding bone to stop bleeding',
       'Ask the casualty to stand up and test whether they can put weight on the leg',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An open fracture is a serious emergency. You must NEVER push bone back through the skin — this introduces contamination and can cause catastrophic bleeding. Cover the wound with a sterile dressing, immobilise the limb in the position found (do NOT straighten it), treat for shock, and call 999 immediately.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'A worker has dislocated their shoulder after a fall. What should a first aider do?',
     options: [
       'Attempt to push the shoulder back into the socket as quickly as possible to reduce pain',
-      'Pull firmly on the arm to try to relocate the joint',
       'Support the arm in the position found, immobilise it, apply ice, and call 999',
+      'Pull firmly on the arm to try to relocate the joint',
       'Forcefully move the arm through its full range of motion to free the joint',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A first aider must NEVER attempt to relocate a dislocated joint. Relocation requires medical training, imaging (to check for associated fractures), and often pain relief or sedation. Incorrect attempts can cause nerve damage, blood vessel injury, or worsen associated fractures. Support the arm in the position found, immobilise with padding and slings, apply a wrapped ice pack, and call 999.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     question:
       'What is the key difference between an open (compound) fracture and a closed fracture?',
     options: [
-      'A closed fracture is more painful than an open fracture',
-      'In an open fracture, the bone has broken through the skin or there is a wound at the fracture site; in a closed fracture, the skin is intact',
+      'In an open fracture the bone breaks the skin; in a closed fracture the skin is intact',
+      'A closed fracture is always significantly more painful than an open fracture',
       'An open fracture only affects the arms, while a closed fracture only affects the legs',
-      'A closed fracture always requires surgery, while an open fracture does not',
+      'A closed fracture always needs surgery, whereas an open fracture never does',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In an open (compound) fracture, the bone has broken through the skin or there is a wound communicating with the fracture site. This carries a significant risk of infection and is generally more serious. In a closed fracture, the bone is broken but the skin remains intact. Both types require immobilisation and medical treatment, but an open fracture is a 999 emergency due to the risk of infection, further damage, and significant bleeding.',
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is a sign of a fracture?',
     options: [
-      'The casualty can move the limb freely and without pain',
-      'The limb appears a normal shape with no swelling',
+      'The casualty can move the limb freely and through its full range without pain',
+      'The limb appears a completely normal shape with no swelling or bruising at all',
       'Deformity, swelling, bruising, loss of function, and tenderness at the injury site',
-      'The casualty feels hungry and asks for food',
+      'The casualty feels hungry and asks for something to eat and drink',
     ],
     correctAnswer: 2,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 3,
     question: 'When should you call 999 for a fracture?',
     options: [
-      'Only for fractures of the fingers or toes',
-      'For open fractures, femur/pelvis/spine fractures, fractures with severe bleeding, or when the casualty cannot be safely transported',
-      'Only when the casualty specifically asks you to call an ambulance',
-      'Only after you have attempted to straighten the limb',
+      'Only for minor fractures of the small bones in the fingers or toes',
+      'For open fractures, femur/pelvis/spine, severe bleeding, or no safe transport',
+      'Only when the casualty specifically asks you to call an ambulance for them',
+      'Only after you have first attempted to straighten and realign the limb',
     ],
     correctAnswer: 1,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the correct use of an elevated sling?',
     options: [
-      'To immobilise a fractured femur',
-      'To support hand or finger injuries, or to reduce swelling by keeping the hand elevated to the opposite shoulder',
-      'To splint a fractured pelvis',
-      'To immobilise a fractured spine',
+      'To immobilise and support a fractured femur (thigh bone)',
+      'To splint and stabilise a fractured pelvis after a fall',
+      'To immobilise the casualty when a spinal fracture is suspected',
+      'To support a hand or finger injury, keeping the hand raised to reduce swelling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An elevated sling is used for hand or finger injuries, or when the hand needs to be elevated to reduce swelling. The casualty's hand is raised to the opposite shoulder, and a triangular bandage is draped over the forearm, tucked under the arm and around the back, and tied at the shoulder. This keeps the hand elevated above heart level.",
   },
@@ -131,10 +131,10 @@ const quizQuestions = [
     question:
       'A casualty has fallen and is complaining of severe hip pain. They cannot move their leg, and it appears shortened and rotated outwards. What should you suspect, and what is the correct action?',
     options: [
-      'Suspect a hip dislocation or femur fracture — do NOT move the casualty, call 999, support the leg in the position found, and treat for shock',
-      'Suspect a sprained ankle — apply an ice pack to the hip and ask them to walk it off',
-      'Suspect a bruise — help them stand up and test whether they can walk',
-      'Suspect a muscle strain — apply a crepe bandage to the hip and send them home',
+      'Suspect a hip fracture or dislocation: do not move them, call 999, and treat for shock',
+      'Suspect a sprained ankle: apply an ice pack to the hip and ask them to walk it off',
+      'Suspect simple bruising: help them stand up and test whether they can walk on it',
+      'Suspect a muscle strain: apply a crepe bandage to the hip and send them home to rest',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why must you NEVER attempt to relocate (push back in) a dislocated joint?',
     options: [
-      'Because the joint will relocate itself naturally within a few hours',
-      'Because relocation requires medical training, imaging to check for associated fractures, and often sedation — incorrect attempts can damage nerves and blood vessels',
-      'Because dislocations are not serious injuries and do not need treatment',
-      'Because you should always straighten the limb first before attempting relocation',
+      'Because the joint will always relocate itself naturally within a few hours',
+      'Because dislocations are minor injuries that do not really need any treatment',
+      'Because you must always straighten the limb fully before attempting relocation',
+      'Because relocation needs training and imaging; wrong attempts damage nerves and vessels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Attempting to relocate a dislocated joint without medical training is dangerous. There may be an associated fracture that imaging (X-ray) must identify first. Incorrect relocation attempts can damage nerves, blood vessels, and surrounding soft tissues. The procedure often requires pain relief or sedation. The correct first aid response is to support the joint in the position found, immobilise it, apply ice, and arrange urgent medical treatment.',
   },
@@ -171,10 +171,10 @@ const quizQuestions = [
     question:
       'A worker has fractured their ribs after being struck by a falling object. What is the correct first aid treatment?',
     options: [
-      'Bandage the chest tightly to immobilise the ribs',
-      'Ask the casualty to lie flat on their back and take deep breaths',
-      'Help the casualty into a comfortable position (usually sitting, leaning towards the injured side), do NOT bandage the chest, and call 999 if they have difficulty breathing',
-      'Apply a splint to the outside of the chest wall',
+      'Bandage the chest firmly and tightly to immobilise the broken ribs',
+      'Ask the casualty to lie flat on their back and take slow, deep breaths',
+      'Help them into a comfortable position leaning to the injured side; do not bandage',
+      'Apply a rigid splint to the outside of the chest wall over the ribs',
     ],
     correctAnswer: 2,
     explanation:

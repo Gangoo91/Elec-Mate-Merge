@@ -51,12 +51,12 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
       question:
         'During a Demand Flexibility Service (DFS) event, what is the primary goal for participating sites?',
       options: [
-        'Increase electricity consumption to support the grid',
         'Reduce electricity consumption below baseline levels',
+        'Increase electricity consumption to support the grid',
         'Switch to maximum power output',
         'Disconnect entirely from the grid',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'The DFS rewards consumers for reducing their electricity consumption below their normal baseline during peak demand periods, helping National Grid ESO balance supply and demand without resorting to emergency measures.',
     },
@@ -95,6 +95,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'What communication protocol is most commonly used for industrial remote monitoring and control in UK installations?',
       options: ['Bluetooth Low Energy', 'Modbus TCP/IP or BACnet', 'NFC', 'Infrared'],
       correctAnswer: 'Modbus TCP/IP or BACnet',
+      explanation:
+        'Modbus TCP/IP and BACnet are the established open protocols for industrial metering, drives and building automation; Bluetooth, NFC and infrared are short-range consumer technologies unsuited to site-wide control.',
     },
     {
       question:
@@ -106,17 +108,21 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Their maximum demand capacity',
       ],
       correctAnswer: 'Reduction below their calculated baseline consumption',
+      explanation:
+        'DFS pays for the kWh shed below a baseline derived from recent usage during a declared event, rewarding the measured reduction rather than total consumption.',
     },
     {
       question:
-        'Which UK grid service provides payments for maintaining frequency at 50Hz through rapid power adjustments?',
+        'Which UK grid service provides payments for maintaining the grid at 50Hz through rapid automatic power adjustments?',
       options: [
         'Demand Flexibility Service (DFS)',
         'Firm Frequency Response (FFR)',
         'Capacity Market',
-        'Triad Management Service',
+        'Triad management',
       ],
       correctAnswer: 'Firm Frequency Response (FFR)',
+      explanation:
+        'FFR pays providers to automatically adjust output or demand in response to grid frequency deviations from 50Hz; DFS, the Capacity Market and Triad management address peak demand, not fast frequency control.',
     },
     {
       question:
@@ -124,25 +130,29 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
       options: [
         'Verbal confirmation from site personnel',
         'Local manual override capability and clear status indication',
-        'Smartphone app notification',
-        'Email confirmation of switching',
+        'A smartphone app notification',
+        'An email confirmation of switching',
       ],
       correctAnswer: 'Local manual override capability and clear status indication',
+      explanation:
+        'BS 7671 isolation principles require a local means to override and verified position indication, so personnel can safely work on or restore a remotely-switched circuit.',
     },
     {
       question:
         'What is the typical response time requirement for Short Term Operating Reserve (STOR)?',
       options: [
         '30 seconds or less',
-        '4 hours advance notice',
+        'Within 4 hours of notice',
         '20 minutes or less from instruction',
         '24 hours advance notice',
       ],
       correctAnswer: '20 minutes or less from instruction',
+      explanation:
+        'STOR providers must deliver their contracted power or demand reduction within about 20 minutes of instruction and sustain it for the required period (commonly 2 hours).',
     },
     {
       question:
-        'In a load priority hierarchy, which category typically has the HIGHEST priority (shed last)?',
+        'In a load priority hierarchy, which category typically has the HIGHEST priority and is shed LAST?',
       options: [
         'Comfort cooling in offices',
         'Decorative lighting',
@@ -150,6 +160,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Electric vehicle charging',
       ],
       correctAnswer: 'Life safety systems and emergency equipment',
+      explanation:
+        'Life safety and emergency systems (fire alarms, emergency lighting) are never shed during load management; discretionary loads such as decorative lighting and comfort cooling are shed first.',
     },
     {
       question:
@@ -158,30 +170,35 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Total kWh consumed in the billing period',
         'The highest kW or kVA recorded in any half-hour period',
         'Average daily consumption',
-        'Standing charge plus unit rate',
+        'The standing charge plus unit rate',
       ],
       correctAnswer: 'The highest kW or kVA recorded in any half-hour period',
+      explanation:
+        'MD charges are set by the single highest half-hour kW/kVA peak in the period, so one brief spike can set the charge for the whole month - hence peak shaving saves money.',
     },
     {
       question: 'Before remotely switching off equipment, BS 7671 and good practice require:',
       options: [
         'Sending a text message to all staff',
-        'Verification that isolation is safe and appropriate warning to affected personnel',
+        'Verification that isolation is safe, with appropriate warning to affected personnel',
         'Waiting 24 hours after notification',
-        'Government approval',
+        'Obtaining government approval',
       ],
-      correctAnswer:
-        'Verification that isolation is safe and appropriate warning to affected personnel',
+      correctAnswer: 'Verification that isolation is safe, with appropriate warning to affected personnel',
+      explanation:
+        'Remote switching must confirm it is safe to de-energise and warn anyone affected, in line with BS 7671 isolation requirements and the Electricity at Work Regulations.',
     },
     {
       question: 'Which factor makes Triad prediction challenging for demand management?',
       options: [
         'Triads occur at exactly the same time every year',
-        'National Grid announces Triads one week in advance',
-        'Triads are only confirmed retrospectively after February',
+        'National Grid announces Triads a week in advance',
+        'Triads are only confirmed retrospectively after the season ends',
         'Triads always occur at midnight',
       ],
-      correctAnswer: 'Triads are only confirmed retrospectively after February',
+      correctAnswer: 'Triads are only confirmed retrospectively after the season ends',
+      explanation:
+        'The three Triad half-hours are only identified after the November-February season closes, so sites must predict likely peak periods in real time rather than knowing them in advance.',
     },
     {
       question:
@@ -193,6 +210,8 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
         'Priority grid connection',
       ],
       correctAnswer: 'Annual payments for committing to reduce demand during system stress events',
+      explanation:
+        'The Capacity Market pays an annual availability fee for committing capacity (or demand-side reduction) to be available during system stress events, with penalties for non-delivery.',
     },
   ];
 

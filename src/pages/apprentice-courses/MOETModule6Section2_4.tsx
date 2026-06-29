@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of a standardised labelling system in an electrical installation?',
     options: [
-      'Confirm in writing (email) before starting, capturing scope, price impact and time impact — and only proceed once acknowledged',
-      'No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs',
-      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
+      'To improve the visual appearance of the panel for the client',
+      'To reduce the amount of cable required during installation',
+      'To increase the current-carrying capacity of the conductors',
       'To enable any competent technician to identify components, circuits and connections unambiguously, reducing error risk during maintenance',
     ],
     correctIndex: 3,
@@ -29,9 +29,9 @@ const quickCheckQuestions = [
     question:
       'In a control panel, wire 24 is found at terminal strip TS3 terminal 7. Another end of the same wire connects to contactor KM1 terminal A1. What stays constant along the entire wire length?',
     options: [
-      'A description of the fault, the investigation process, findings, and recommended actions',
-      'False - many can operate locally but lose remote features without internet',
-      'People follow the behaviour of others, especially in uncertainty',
+      'The terminal number (7) — it is the same at every device the wire reaches',
+      'The component designation (KM1) — it is marked at both ends of the wire',
+      'The conductor colour — it must change at each terminal it passes through',
       'The wire number (24) — it is the same at both ends and everywhere along the wire',
     ],
     correctIndex: 3,
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     question: "Under BS EN 81346, the prefix letter 'Q' designates which type of component?",
     options: [
       'A switching device for power circuits, such as a circuit breaker or isolator',
-      'By job/client with subfolders for before, during, after, certificates',
-      'To verify the sensors respond to a known concentration of test gas',
-      'A minimum of three to four persons, depending on the rescue plan',
+      'A contactor or relay used in a control circuit',
+      'A measuring instrument such as an ammeter or voltmeter',
+      'A motor providing rotary mechanical drive',
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'Which standard governs cable identification and marking in UK electrical installations?',
     options: [
-      'Because you must give type, location, and rectification - assessor needs detail',
+      'BS EN 60617 (Graphical symbols for diagrams) only',
       'BS EN 62491 (Cable and core identification) together with BS 7671 requirements for conductor identification',
-      'Your attention remains partially on a previous task when switching to a new one',
-      'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
+      'BS EN 81346 (Reference designations) on its own',
+      'BS 5839 (Fire detection and alarm systems) for all cabling',
     ],
     correctIndex: 1,
     explanation:
@@ -100,9 +100,9 @@ const quizQuestions = [
     question:
       "A wire numbered '415' appears on a wiring diagram at four different terminal points. This means:",
     options: [
-      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
-      'Report it, arrange for a replacement label to be fitted, and update the records',
-      'They are durable, heat-resistant, and will not fall off or become illegible over the life of the installation',
+      'There are four separate wires that have been numbered incorrectly',
+      'The wire is 415 mm long between its first and last terminations',
+      'The wire carries 415 V and must be treated as a three-phase conductor',
       'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
     ],
     correctAnswer: 3,
@@ -127,10 +127,10 @@ const quizQuestions = [
     question:
       'According to BS 7671 Regulation 514.8, every circuit at the distribution board must be provided with:',
     options: [
-      'Pre-energisation inspection and testing',
+      'A dedicated residual current device for each individual circuit',
       'A durable label or marking identifying its purpose',
-      'Adaptive response to changing load conditions',
-      'Weekly or fortnightly to prevent backlog',
+      'A separate isolating switch mounted next to the consumer unit',
+      'A printed test certificate fixed inside the distribution board',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 6,
     question: 'Cable identification ferrules are typically fitted:',
     options: [
-      'Report it, arrange for a replacement label to be fitted, and update the records',
-      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
+      'Only at the supply end of a cable to save on materials',
+      'At the midpoint of each cable run, away from the terminations',
       'At each end of every wire or conductor, close to the termination point',
-      'A durable label or marking identifying its purpose',
+      'Only on power conductors, never on control or signal wires',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     id: 7,
     question: "In a motor control centre, the designation '-Q1' on a device indicates:",
     options: [
-      'Report it, arrange for a replacement label to be fitted, and update the records',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
-      'At each end of every wire or conductor, close to the termination point',
+      'The first motor connected to the control centre',
+      'The first terminal strip within the panel',
+      'The first indicator lamp on the panel door',
       'The main switching device (e.g., MCCB or isolator) for that motor feeder',
     ],
     correctAnswer: 3,
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: "What is the purpose of a 'cable schedule' in an electrical installation?",
     options: [
       'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
-      'Report it, arrange for a replacement label to be fitted, and update the records',
-      'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
+      'To set out the planned dates for installing each cable on site',
+      'To record the results of insulation resistance tests on each cable',
+      'To list the spare cable lengths held in the stores for future use',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'When a maintenance technician discovers that a label is missing or illegible, the correct action is to:',
     options: [
-      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
+      'Ignore it, as labelling is not part of the maintenance role',
       'Report it, arrange for a replacement label to be fitted, and update the records',
-      'At each end of every wire or conductor, close to the termination point',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
+      'Isolate the whole installation until the original installer can return',
+      'Mark the device with a temporary pen note and take no further action',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 10,
     question: 'The colour coding of three-phase conductors in the UK under BS 7671 is:',
     options: [
-      'Network analyzer with Zigbee capabilities',
-      'Record actual values with deviation noted',
+      'Red (L1), yellow (L2), blue (L3)',
+      'Brown (L1), blue (L2), grey (L3)',
       'Brown (L1), black (L2), grey (L3)',
-      'To calculate Zs when added to Ze',
+      'Black (L1), grey (L2), brown (L3)',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     id: 11,
     question: 'In a PLC-based control system, I/O addresses such as I0.3 and Q2.1 serve as:',
     options: [
-      'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
-      'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
+      'The physical terminal numbers on the panel terminal strips',
+      'The cable references used in the project cable schedule',
+      'The wire numbers identifying electrical nodes in the circuit',
       'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
     question: 'Engraved phenolic labels are preferred over adhesive labels in switchgear because:',
     options: [
       'They are durable, heat-resistant, and will not fall off or become illegible over the life of the installation',
-      'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
-      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
+      'They are cheaper and quicker to produce than printed adhesive labels',
+      'They can be re-positioned easily whenever the circuit changes',
+      'They glow in the dark, making them readable during a power failure',
     ],
     correctAnswer: 0,
     explanation:

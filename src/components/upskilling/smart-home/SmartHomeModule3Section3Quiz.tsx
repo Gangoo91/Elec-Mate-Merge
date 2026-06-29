@@ -16,93 +16,113 @@ export const SmartHomeModule3Section3Quiz = () => {
     {
       question: "What does 'dimming' mean in smart lighting?",
       options: [
-        'Turning lights on and off',
         'Adjusting the brightness level of lights',
-        'Changing the colour of lights',
-        'Setting schedules for lights',
+        'Turning lights fully on and off',
+        'Changing the colour of the lights',
+        'Setting on/off schedules for lights',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Dimming is the controlled adjustment of a light’s brightness, separate from switching it on/off or changing its colour.',
     },
     {
       question: 'Why do old-style dimmers cause problems with LEDs?',
       options: [
-        'LEDs are too bright',
-        'They reduce voltage instead of using digital control',
-        'They are too expensive',
-        "They don't work with smart phones",
+        'LEDs are simply too bright for them',
+        'They reduce voltage rather than using LED-friendly control',
+        'They are far too expensive to fit',
+        "They cannot be paired with smartphones",
       ],
       correct: 1,
+      explanation:
+        'Traditional dimmers chop the mains voltage, which low-power LED drivers handle poorly, causing flicker, buzzing or limited range.',
     },
     {
       question: 'What does RGBW stand for?',
       options: [
         'Really Good Bright White',
-        'Red, Green, Blue, White',
         'Remote Controlled Bright Wireless',
+        'Red, Green, Blue, White',
         'Regulated Great British Wiring',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'RGBW combines red, green and blue colour channels with a dedicated white channel for cleaner, more usable white light.',
     },
     {
       question: 'What is a drawback of RGB-only bulbs?',
       options: [
-        'They use too much power',
-        'They are too expensive',
+        'They use far too much power',
         'They struggle to replicate natural white effectively',
-        "They don't last long enough",
-      ],
-      correct: 2,
-    },
-    {
-      question: 'Give an example of a smart lighting application using RGBW:',
-      options: [
-        'Basic on/off switching',
-        'Mood lighting for parties with natural white for reading',
-        'Timer-based switching',
-        'Motion sensor activation',
+        'They are too expensive to buy',
+        "They simply don't last long enough",
       ],
       correct: 1,
+      explanation:
+        'Mixing red, green and blue produces a tinted, unnatural white, which is why a separate white channel (RGBW) is added for quality white light.',
     },
     {
-      question: "At what Kelvin is 'warm white'?",
+      question: 'Give an example of a smart lighting application that benefits from RGBW:',
+      options: [
+        'Mood lighting for parties plus natural white for reading',
+        'Basic on/off switching of a hallway light',
+        'A simple timer that turns a lamp on at dusk',
+        'Motion-sensor activation of a security light',
+      ],
+      correct: 0,
+      explanation:
+        'RGBW shines where both vivid colour (party mood lighting) and clean white (reading) are needed from the same bulb.',
+    },
+    {
+      question: "Roughly what colour temperature is 'warm white'?",
       options: ['6500K', '4000K', '2700K', '1000K'],
       correct: 2,
+      explanation:
+        'Warm white sits around 2700K, giving the cosy, slightly yellow glow associated with traditional incandescent lamps.',
     },
     {
-      question: "At what Kelvin is 'cool white'?",
-      options: ['2700K', '3500K', '5000-6500K', '8000K'],
-      correct: 2,
+      question: "Roughly what colour temperature is 'cool white'?",
+      options: ['2700K', '3500K', '8000K', '5000–6500K'],
+      correct: 3,
+      explanation:
+        'Cool, daylight-like white falls around 5000–6500K, a crisp bluish-white suited to task and work areas.',
     },
     {
       question: 'What is circadian rhythm lighting?',
       options: [
-        'Very bright lighting',
-        'Colour-changing party lights',
         'Lighting that adjusts colour temperature to match natural daylight patterns',
-        'Emergency lighting systems',
+        'Lighting that is kept very bright at all times',
+        'Colour-changing lights used purely for parties',
+        'Battery-backed emergency lighting systems',
       ],
-      correct: 2,
+      correct: 0,
+      explanation:
+        'Circadian lighting shifts colour temperature through the day — cooler in the morning, warmer in the evening — to support natural sleep-wake cycles.',
     },
     {
       question: 'Name one benefit of dimming for energy efficiency:',
       options: [
-        'Lights last longer',
+        'The lights physically last longer',
         'Reduced power consumption at lower brightness levels',
-        'Better colour accuracy',
-        'Faster switching speeds',
+        'It improves colour accuracy',
+        'It allows faster switching speeds',
       ],
       correct: 1,
+      explanation:
+        'Running lights below full brightness draws less power, so dimming directly cuts the energy a fitting uses.',
     },
     {
       question:
         'A client wants mood lighting for parties and natural daylight for reading. What type of bulb would you recommend?',
       options: [
-        'Standard white LED',
-        'RGB-only bulb',
-        'RGBW smart bulb',
-        'Halogen bulb with dimmer',
+        'A standard fixed white LED',
+        'An RGB-only colour bulb',
+        'A halogen bulb on a dimmer',
+        'An RGBW smart bulb',
       ],
-      correct: 2,
+      correct: 3,
+      explanation:
+        'An RGBW smart bulb delivers both saturated party colours and a quality natural white for reading from a single fitting.',
     },
   ];
 

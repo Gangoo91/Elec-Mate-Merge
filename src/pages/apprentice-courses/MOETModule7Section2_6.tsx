@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       "What is the key difference between a 'pass' and a 'distinction' grade in the EPA practical observation?",
     options: [
-      'It depends on the specific risk assessment; however, best practice target for initial casualty retrieval from a vertical space is typically within 5 minutes',
+      'A pass takes longer to complete than a distinction during the observation',
       'Pass demonstrates competence; distinction demonstrates competence with exceptional quality, initiative, depth of understanding and professional confidence',
-      'Stop them at the gate, offer loan PPE, give the standard visitor induction, then escort — politely but firmly',
-      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
+      'A distinction is awarded only to candidates who finish ahead of time',
+      'There is no practical difference; the grades are decided by the knowledge test alone',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'assessor-observation',
     question: 'During the practical observation, the assessor is primarily watching for:',
     options: [
-      'Resilience is not a permanent state — it fluctuates with life circumstances and requires ongoing maintenance, regardless of experience',
+      'How quickly the candidate completes the task, regardless of safety',
       'Safe working practices, systematic approach, correct use of tools/instruments, workmanship quality, communication, and professional behaviours',
-      'Details are accurate and specific because they are recorded while fresh, including test readings, component details and decision-making reasoning that would be forgotten later',
-      'Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions',
+      'Whether the candidate uses the most expensive tools available',
+      'How confidently the candidate answers questions about unrelated trades',
     ],
     correctIndex: 1,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'Which of the following is a common reason for failing the practical observation?',
     options: [
       'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
-      'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
-      'Observe, take notes for their own learning, and contribute when asked — not negotiate with the client',
-      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
+      'Explaining each action clearly and confidently as the work progresses',
+      'Taking a methodical, systematic approach to fault diagnosis',
+      'Producing a neat, professional finish on every connection',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'How are KSBs (Knowledge, Skills, Behaviours) assessed across the EPA components?',
     options: [
       'KSBs are assessed holistically across all components — the knowledge test, practical observation and professional discussion each contribute evidence of different KSBs',
-      'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
-      'It should include the organisation\\\\\\\\\\\\\\\'s position, rules, support available, testing procedures (if applicable), and consequences of policy breaches',
-      'Reinstated to at least the original condition using suitable mortar/plaster, with cable in safe zones or in earthed metal containment, and any made-good areas redecorated as agreed',
+      'Only the knowledge test assesses KSBs; the other components are not graded',
+      'KSBs are self-assessed by the apprentice and signed off by their employer',
+      'Behaviours are the only KSBs assessed, since knowledge and skills are assumed',
     ],
     correctIndex: 0,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'To achieve a distinction in the practical observation, you should:',
     options: [
-      'Assess your underpinning knowledge and understanding of the technical, safety and regulatory topics covered by the apprenticeship standard',
-      'Review the grading descriptors, understand what each grade requires, practise to the distinction standard, and seek feedback from your training provider',
+      'Complete the task as quickly as possible, as finishing first is the main distinction criterion',
+      'Use the most advanced test instruments available, even for tasks that do not require them',
       'Demonstrate exceptional safety awareness, superior workmanship, confident technical communication, initiative, and thorough verification',
-      'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
+      'Avoid speaking to the assessor so that you are not distracted while completing the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'The assessor uses grading descriptors to ensure:',
     options: [
-      'Provide detailed, evidenced answers that link your workplace experience to the apprenticeship standard, demonstrating depth of understanding',
-      'Recognise the error, correct it, and briefly explain what happened and why you corrected it',
-      'Review the grading descriptors, understand what each grade requires, practise to the distinction standard, and seek feedback from your training provider',
+      'The assessment can be completed faster, with fewer checks needed against the standard',
+      'Candidates from the same training provider all receive the same grade as one another',
+      'The most experienced candidates are always awarded a distinction regardless of performance',
       'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'If you make a minor error during the practical observation, you should:',
     options: [
       'Recognise the error, correct it, and briefly explain what happened and why you corrected it',
-      'After the motor has reached stable thermal equilibrium at normal operating load',
-      'The temperature reduction of liquid refrigerant below its condensing temperature in the condenser',
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling frustrated because the timeline has been pushed back again"',
+      'Carry on as though nothing happened and hope the assessor did not notice',
+      'Stop the assessment immediately and ask to start again from the beginning',
+      'Blame the tools or equipment so the error is not counted against you',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'The KSBs (Knowledge, Skills, Behaviours) assessed in the EPA are:',
     options: [
-      'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
+      'Only the practical skills, since knowledge and behaviours are checked during the apprenticeship instead',
       'The complete set of knowledge, practical skills, and professional behaviours defined in the ST1426 apprenticeship standard',
-      'Assess your underpinning knowledge and understanding of the technical, safety and regulatory topics covered by the apprenticeship standard',
-      'Recognise the error, correct it, and briefly explain what happened and why you corrected it',
+      'A list of personal qualities chosen by each EPAO and varying from one centre to another',
+      'The set of qualifications the apprentice must already hold before starting the EPA',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'During the professional discussion element of the EPA, you should:',
     options: [
-      'Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation',
-      'Demonstrate exceptional safety awareness, superior workmanship, confident technical communication, initiative, and thorough verification',
+      'Keep your answers as brief as possible so the discussion finishes quickly',
+      'Give general, textbook answers rather than referring to your own workplace experience',
       'Provide detailed, evidenced answers that link your workplace experience to the apprenticeship standard, demonstrating depth of understanding',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'Steer every question back to the single topic you feel most confident about',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'Professional behaviours assessed during the EPA include:',
     options: [
-      'Demonstrate exceptional safety awareness, superior workmanship, confident technical communication, initiative, and thorough verification',
-      'Provide detailed, evidenced answers that link your workplace experience to the apprenticeship standard, demonstrating depth of understanding',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'The speed of completion and the number of tasks attempted within the time limit',
+      "The candidate's physical strength and stamina when handling heavy equipment",
+      "The cost of the tools and instruments the candidate brings to the observation",
       'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'The purpose of the knowledge test element of the EPA is to:',
     options: [
       'Assess your underpinning knowledge and understanding of the technical, safety and regulatory topics covered by the apprenticeship standard',
-      'Provide detailed, evidenced answers that link your workplace experience to the apprenticeship standard, demonstrating depth of understanding',
-      'Testing your ability to think through scenarios, apply knowledge to new situations, and demonstrate depth of understanding',
-      'The complete set of knowledge, practical skills, and professional behaviours defined in the ST1426 apprenticeship standard',
+      'Observe your practical skill in carrying out maintenance tasks on live equipment',
+      'Record your workplace attendance and the number of hours logged during the apprenticeship',
+      'Replace the practical observation for candidates who score highly on the written paper',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'To prepare effectively for the EPA marking criteria, you should:',
     options: [
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'Memorise the exact wording of the descriptors without practising any of the tasks they describe',
       'Review the grading descriptors, understand what each grade requires, practise to the distinction standard, and seek feedback from your training provider',
-      'Provide detailed, evidenced answers that link your workplace experience to the apprenticeship standard, demonstrating depth of understanding',
-      'Assess your underpinning knowledge and understanding of the technical, safety and regulatory topics covered by the apprenticeship standard',
+      'Focus only on the pass-level requirements, as preparing for distinction wastes valuable time',
+      'Wait until the day of the assessment so the criteria are fresh in your mind on arrival',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: "An assessor who asks 'What would you do if...?' during the observation is:",
     options: [
-      'Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation',
-      'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
+      'Trying to distract you so that you make a mistake on the task you are completing',
+      'Checking that you can recite the exact wording of the relevant regulation from memory',
       'Testing your ability to think through scenarios, apply knowledge to new situations, and demonstrate depth of understanding',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'Signalling that you have already failed and the rest of the observation is a formality',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'If you are unsure about something during the EPA, the best approach is to:',
     options: [
-      'Assess your underpinning knowledge and understanding of the technical, safety and regulatory topics covered by the apprenticeship standard',
-      'Demonstrate exceptional safety awareness, superior workmanship, confident technical communication, initiative, and thorough verification',
-      'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
+      'Guess confidently and present the answer as fact, since admitting doubt always loses marks',
+      'Stay silent and move on, hoping the assessor will not return to the topic',
+      'Insist that the question is unfair and ask for it to be removed from the assessment',
       'Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     question: 'The overall EPA grade is determined by:',
     options: [
       'A combination of grades across all assessment components as defined in the EPA specification — you must achieve at least a pass in each component',
-      'Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation',
-      'The complete set of knowledge, practical skills, and professional behaviours defined in the ST1426 apprenticeship standard',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'The grade achieved in the practical observation alone, with the other components ungraded',
+      'An average of the component grades, so a fail in one can be offset by a distinction in another',
+      'The training provider recommendation submitted before the end-point assessment begins',
     ],
     correctAnswer: 0,
     explanation:

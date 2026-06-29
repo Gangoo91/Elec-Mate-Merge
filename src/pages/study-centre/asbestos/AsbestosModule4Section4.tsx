@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'shadow-vacuuming',
     question: 'What type of vacuum cleaner MUST be used for shadow vacuuming during asbestos work?',
     options: [
-      'A Type H (HEPA) vacuum cleaner that captures particles down to 0.3 microns',
       'Any industrial vacuum cleaner with a dust bag',
       'A standard domestic vacuum with a HEPA filter attachment',
+      'A Type H (HEPA) vacuum cleaner that captures particles down to 0.3 microns',
       'A wet-and-dry vacuum cleaner rated for construction use',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Only Type H (HEPA) vacuum cleaners classified to BS EN 60335-2-69 may be used for asbestos work. They capture 99.995% of particles down to 0.3 microns. Ordinary vacuum cleaners — including industrial models without HEPA filtration — exhaust fibres back into the air and MUST NOT be used for any asbestos-related cleaning.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following tools is specifically PROHIBITED for use on asbestos-containing materials?',
     options: [
-      'High-speed abrasive cutting tools such as angle grinders',
       'Hand spray bottles for wetting',
+      'High-speed abrasive cutting tools such as angle grinders',
       'Type H HEPA-filtered vacuum cleaners',
       'Airless spray units for water injection',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'High-speed abrasive cutting tools (angle grinders, circular saws) are specifically prohibited under CAR 2012 for use on asbestos-containing materials because they generate massive fibre clouds. Hand spray bottles, airless spray units, and Type H vacuums are all approved controlled-work tools used to minimise fibre release.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
     question: 'What is a glove bag used for in asbestos removal?',
     options: [
       'Storing contaminated PPE after use',
-      'Removing asbestos lagging from pipes in small sections',
       'Collecting air samples during monitoring',
       'Transporting asbestos waste to the skip',
+      'Removing asbestos lagging from pipes in small sections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A glove bag is a sealed, transparent plastic bag fitted around a pipe or small item to contain fibre release during removal of asbestos lagging. The worker reaches into the bag through integral gloves to carry out the work. After removal, the bag is sealed with the waste inside and disposed of as asbestos waste. Glove bags are suitable for licensed work on small sections — large areas require full enclosures.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why are high-speed abrasive cutting tools prohibited for use on ACMs?',
     options: [
-      'They are too noisy for indoor use',
       'They generate massive fibre clouds that cannot be controlled',
+      'They are too noisy for indoor use',
       'They damage the material being cut',
       'They are too expensive for asbestos work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High-speed abrasive cutting tools such as angle grinders and circular saws are specifically prohibited under CAR 2012 for use on asbestos-containing materials because they generate massive, uncontrollable fibre clouds. The high-speed rotating action breaks the material apart at a rate that overwhelms all control measures. Similarly prohibited are dry drilling without extraction, compressed air cleaning, standard vacuum cleaners, dry sweeping, and power sanding.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
     question: 'What is the role of the Negative Pressure Unit (NPU) in a full enclosure?',
     options: [
       'It heats the enclosure to prevent condensation',
-      'It maintains negative pressure so air flows INTO the enclosure, preventing fibre escape',
       'It provides fresh air for workers inside the enclosure',
+      'It maintains negative pressure so air flows INTO the enclosure, preventing fibre escape',
       'It dries the asbestos material before removal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Negative Pressure Unit (NPU) is fitted with a HEPA filter and maintains negative pressure inside the enclosure at all times. This means air always flows INTO the enclosure through any small gaps or openings, rather than contaminated air flowing out. The NPU exhausts filtered air to the outside. This is a critical engineering control that prevents asbestos fibres from escaping the work area into surrounding occupied spaces.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     options: [
       'Open all windows to increase ventilation',
       'Turn on the air conditioning to keep workers cool',
-      'Turn off air conditioning and seal all openings, vents, and service penetrations',
       'Remove only valuable items from the work area',
+      'Turn off air conditioning and seal all openings, vents, and service penetrations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Before asbestos work begins, air conditioning and mechanical ventilation serving the area must be turned OFF — not on. All openings, vents, and service penetrations must be sealed with tape and polythene to prevent fibre spread to other areas of the building. Opening windows or running air conditioning would spread fibres. Additionally, all items that cannot be decontaminated must be removed or protected, and polythene sheeting (minimum 500 gauge) must be laid on floors.',
   },

@@ -58,10 +58,10 @@ const quickCheckQuestions = [
     id: 'stack-ventilation',
     question: 'Stack effect ventilation relies primarily on:',
     options: [
-      'Because I²R losses cause heat that cannot dissipate',
+      'Mechanical fans drawing air through the building',
       'Temperature differences creating buoyancy',
-      'Check members maintain their development commitments',
-      'A device that converts DC to AC',
+      'Wind pressure differences across opposite facades',
+      'Solar radiation heating the external air',
     ],
     correctIndex: 1,
     explanation:
@@ -71,9 +71,9 @@ const quickCheckQuestions = [
     id: 'thermal-mass',
     question: 'High thermal mass materials in buildings help to:',
     options: [
-      'It provides quick wins by clearing small debts first',
-      'Form a neat hook and ensure full contact with terminal',
-      'To maintain all conductive parts at the same potential',
+      'Increase the rate at which a room heats up in the morning',
+      'Improve the airtightness of the building envelope',
+      'Reduce heat loss by acting as additional insulation',
       'Moderate temperature swings by absorbing and releasing heat',
     ],
     correctIndex: 3,
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Cross ventilation in buildings is most effective when:',
     options: [
-      'Cools the building structure overnight using cool night air',
-      'Ultra-low energy demand through exceptional fabric and airtightness',
-      'Low afternoon sun angles make horizontal shading ineffective',
+      'Openings are all concentrated on a single sheltered facade',
+      'The floor plate is very deep with an enclosed central core',
+      'Internal partitions block the air path between facades',
       'Openings are on opposite or adjacent walls with clear internal paths',
     ],
     correctAnswer: 3,
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'A building designed with a narrow floor plate (12-15m) primarily enables:',
     options: [
-      'Openings are on opposite or adjacent walls with clear internal paths',
+      'Greater usable floor area per storey',
       'Cross ventilation and daylight penetration from both sides',
-      'Ultra-low energy demand through exceptional fabric and airtightness',
-      'Storing latent heat during phase transitions',
+      'Reduced external wall area and lower heat loss',
+      'Easier installation of central mechanical plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'The Passivhaus standard primarily focuses on:',
     options: [
       'Ultra-low energy demand through exceptional fabric and airtightness',
-      'Cross ventilation and daylight penetration from both sides',
-      'Cools the building structure overnight using cool night air',
-      'Openings are on opposite or adjacent walls with clear internal paths',
+      'Maximising on-site renewable electricity generation',
+      'Eliminating the need for any ventilation system',
+      'Achieving the lowest possible construction cost',
     ],
     correctAnswer: 0,
     explanation:

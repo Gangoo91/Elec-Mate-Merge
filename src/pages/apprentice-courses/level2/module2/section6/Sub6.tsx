@@ -43,10 +43,10 @@ const checks = [
     id: 'relay-vs-contactor',
     question: 'What is the practical difference between a relay and a contactor?',
     options: [
-      'Prevents premature collapse of the cable in the event of fire — typically by using metallic fixings or supports rather than plastic cable clips alone',
-      'Seek to strengthen that area by gathering additional or better-quality evidence, such as a more detailed activity log entry, a reflective account, or a witness statement covering that KSB',
-      'Both are coil-operated switches, but contactors are built for higher currents (motor and load circuits) and usually have multiple ganged poles, often three.',
-      'Document the change, confirm cost and time implications, obtain written agreement before proceeding, and update the site diary',
+      'A relay switches AC only, whereas a contactor switches DC only on a load',
+      'A relay has no moving parts, whereas a contactor is operated by hand mechanically',
+      'Both are coil-operated, but a contactor is built for higher currents and more poles',
+      'A relay needs an external coil supply, whereas a contactor is self-powered from the load',
     ],
     correctIndex: 2,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     id: 'rcd-detection',
     question: 'How does an RCD actually detect a fault?',
     options: [
-      'A current transformer wraps around live and neutral; if more current goes out than comes back, the imbalance induces a tiny current in a sense coil that trips the unit.',
-      'The earthing conductor, main protective bonding conductors and circuit protective conductors all connect to form the installation\\\\\\\\\\\\\\\'s earth reference',
-      'BJTs are controlled by base current; MOSFETs are controlled by gate voltage. MOSFETs are far more common in modern power switching.',
-      'To maintain a comprehensive list of all hazardous substances used or generated in the workplace, linked to their assessments and SDSs',
+      'A core wraps around line and neutral; any imbalance induces a current that trips it',
+      'It measures the voltage between line and earth and trips if it rises above 50 V',
+      'It senses the temperature of the conductors and trips when they begin to overheat',
+      'It compares the supply frequency against 50 Hz and trips on any small deviation',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     id: 'spd-purpose',
     question: 'What does a Surge Protection Device (SPD) do?',
     options: [
-      'A significant change in work activity, equipment, personnel, legislation, or a near-miss/incident related to the assessed activity',
-      'Diverts brief, high-voltage surges (from lightning or switching) to earth, clamping the voltage seen by the installation to a safe level.',
-      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
-      'Ensure no persons are on the tower, remove all loose materials, check the route for obstructions and overhead hazards, and unlock all castors',
+      'Disconnects the supply within 0.4 s when an earth fault occurs on a final circuit',
+      'Diverts brief high-voltage surges to earth, clamping the voltage to a safe level',
+      'Limits the prospective fault current at the origin to a value the switchgear can handle',
+      'Smooths small fluctuations in the mains supply voltage to protect sensitive electronics',
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'A relay coil rated 24 V DC needs roughly what across it to operate reliably?',
     options: [
-      'A 10% increase in biodiversity value — required for most new developments through planning',
-      'Within about 80–110% of its rated voltage — too low and it chatters, too high and it overheats.',
-      'A small peer group that meets regularly to share challenges, ideas, and hold each other accountable',
-      'The fraction of dangerous undetected failures that the proof test is capable of detecting',
+      'Exactly 12 V — half its rated value — to pull the armature in gently',
+      'Within about 80–110% of its rated voltage, or it chatters or overheats',
+      'At least double its rated voltage, to guarantee the contacts close fully',
+      'Any voltage at all, since relays operate on current rather than voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'You’re replacing a 3-phase contactor on a compressor running off a 400 V supply. The new contactor’s coil is marked 110 V. Why is that not necessarily wrong?',
     options: [
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
-      'MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.',
-      'Because the coil voltage is the CONTROL voltage — fed from a control transformer or a different supply, NOT the same as the load voltage being switched. 110 V control is standard in industrial environments for safety.',
-      'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
+      'Because the coil only needs 110 V at start-up and 400 V once the motor is running',
+      'Because the 400 V load is shared across the three poles, so each pole sees only 110 V',
+      'Because the coil voltage is the control voltage, separate from the load being switched',
+      'Because a 110 V coil draws less current and so switches the 400 V load more quickly',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,23 +124,23 @@ const quizQuestions = [
     id: 4,
     question: 'What’s the headline difference between a Type AC, Type A and Type B RCD?',
     options: [
-      'They detect different fault current waveforms — Type AC: sinusoidal AC only. Type A: AC + pulsating DC. Type B: AC + pulsating DC + smooth DC. Modern installs with EVs/inverters need Type A or B.',
-      'An advanced system where each detector continuously reports its analogue sensor value to the control panel, allowing the panel to monitor trends, set dynamic thresholds, and make intelligent alarm decisions',
-      'That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set',
-      'To manage, schedule, and record all maintenance activities, including work orders, asset history, spare parts inventory, and maintenance KPIs',
+      'They detect different fault waveforms — AC only, AC + pulsating DC, or AC + smooth DC',
+      'They trip at different residual currents — Type AC 30 mA, Type A 100 mA, Type B 300 mA',
+      'They are rated for different supply voltages — Type AC 230 V, Type A 400 V, Type B 690 V',
+      'They disconnect at different speeds — Type AC instant, Type A 0.4 s, Type B 5 s',
     ],
     correctAnswer: 0,
     explanation:
-      'The "type" describes which fault waveforms the RCD can reliably detect. Old Type AC misses pulsating DC faults — common with electronic loads. Type A is now the minimum default in domestic; Type B is needed where DC fault current is possible (most EV chargers, some PV inverters).',
+      'The "type" describes which fault waveforms the RCD can reliably detect. Type AC handles sinusoidal AC only; Type A adds pulsating DC; Type B adds smooth DC. Old Type AC misses pulsating DC faults common with electronic loads. Type A is now the minimum default in domestic; Type B is needed where DC fault current is possible (most EV chargers, some PV inverters).',
   },
   {
     id: 5,
     question: 'What does an AFDD detect that an RCD doesn’t?',
     options: [
-      'No, towers must always be erected on firm, level ground — the base must be levelled using adjustable legs within the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified range',
-      'The high-frequency electrical noise (the "spectral signature") of an arc fault — a loose terminal or damaged cable arcing inside an enclosure.',
-      'A code of practice for fire safety in the design, management, and use of buildings, providing a risk-based framework as an alternative to Approved Document B',
-      'A tie arrangement using tubes and couplers to form a box shape around a structural element, connecting the scaffold to the building',
+      'A small leakage current flowing to earth through damaged conductor insulation',
+      'The high-frequency noise signature of an arc fault inside an enclosure',
+      'An overload where the circuit draws more than its rated current for a sustained period',
+      'A short circuit between line and neutral that draws a very high fault current',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'Which BS 7671 chapter covers Surge Protection Devices (SPDs)?',
+    question: 'Which BS 7671 section sets the requirement for Surge Protection Devices (SPDs)?',
     options: [
-      'National Access and Scaffolding Confederation',
-      'Disconnect all loads and test for earth faults',
+      'Section 411 (with installation rules in 543)',
+      'Section 522 (with installation rules in 526)',
       'Section 443 (with installation rules in 534)',
-      'Dust, moisture and corrosive substances',
+      'Section 701 (with installation rules in 314)',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 7,
     question: 'Why do SPD installation rules say connecting conductors must be kept "as short and as straight as possible"?',
     options: [
-      'Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
-      'Raise a Request for Information (RFI), record the conflict in the design log, propose a resolution that maintains BS 7671 and CDM safety, and only proceed once the resolution is recorded by the Principal Designer.',
-      'Because surge currents rise so quickly that even a few centimetres of conductor adds significant inductive impedance, raising the voltage the equipment downstream sees.',
+      'Because long conductors add resistance that wastes energy whenever the SPD operates',
+      'Because a coiled conductor acts as an aerial and attracts lightning strikes to the board',
+      'Because the regulations require all consumer-unit wiring to be as short as possible',
+      'Because a surge rises so fast that even a few centimetres adds inductive voltage downstream',
     ],
     correctAnswer: 3,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 8,
     question: 'Inside a contactor, what makes the contacts physically pull in when energised?',
     options: [
-      'An electromagnet — the energised coil pulls a moving iron armature, which carries the moving contacts onto the fixed contacts.',
-      'Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty',
-      'A scheduled time-controlled load (such as a frost stat or boiler) with cumulative leakage current pushing the circuit over the trip threshold',
-      'Fail (minimum 1 MΩ for LV) — investigate insulation degradation, moisture ingress, damaged cables or connected equipment that should have been disconnected',
+      'An electromagnet — the energised coil pulls an iron armature that closes the contacts',
+      'A small electric motor that drives the contacts together through a gear train',
+      'A bimetallic strip that bends with the heat of the coil and pushes the contacts shut',
+      'A solenoid valve that uses compressed air pressure to force the contacts together',
     ],
     correctAnswer: 0,
     explanation:

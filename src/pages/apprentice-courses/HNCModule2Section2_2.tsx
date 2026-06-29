@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'In turbulent flow, the velocity profile is:',
     options: [
       'Flat across most of the pipe with thin boundary layers',
-      'Better mixing improves heat transfer coefficient',
-      'The ratio of inertial forces to viscous forces',
-      'Velocity is higher in the smaller branch',
+      'Parabolic with maximum velocity at the centreline',
+      'Linear, increasing steadily from wall to centre',
+      'Zero everywhere except at the pipe centre',
     ],
     correctAnswer: 0,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     id: 7,
     question: 'Why is turbulent flow generally preferred for heat transfer in HVAC systems?',
     options: [
-      'The ratio of inertial forces to viscous forces',
-      'Velocity is higher in the smaller branch',
-      'Flat across most of the pipe with thin boundary layers',
-      'Better mixing improves heat transfer coefficient',
+      'It reduces the pumping power required to move the fluid',
+      'It produces a smoother, more predictable velocity profile',
+      'It eliminates the boundary layer at the pipe wall',
+      'Better mixing improves the heat transfer coefficient',
     ],
     correctAnswer: 3,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'How does increasing fluid temperature typically affect the Reynolds number for water flow?',
     options: [
-      'The ratio of inertial forces to viscous forces',
+      'Decreases Re (more laminar tendency)',
       'Increases Re (more turbulent tendency)',
-      'Better mixing improves heat transfer coefficient',
-      'Velocity is higher in the smaller branch',
+      'Has no effect on Re at constant velocity',
+      'Reverses the direction of flow',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the entry length for flow to become fully developed?',
     options: [
-      'Increases Re (more turbulent tendency)',
-      'Flat across most of the pipe with thin boundary layers',
+      'Always exactly 10 pipe diameters regardless of regime',
+      'Independent of Reynolds number',
       'Depends on Reynolds number - longer for laminar flow',
-      'The ratio of inertial forces to viscous forces',
+      'Zero, because flow is fully developed at the inlet',
     ],
     correctAnswer: 2,
     explanation:
@@ -224,7 +224,7 @@ const quizQuestions = [
       'In a Y-junction where flow splits, what happens to velocity if one branch has twice the cross-sectional area of the other?',
     options: [
       'Velocity is equal in both branches',
-      'Velocity depends only on pressure difference',
+      'Velocity depends only on the pressure difference',
       'Velocity is higher in the larger branch',
       'Velocity is higher in the smaller branch',
     ],

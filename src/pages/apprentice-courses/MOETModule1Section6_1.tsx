@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'fire-alarm-category-l',
     question: 'What does an L-category fire alarm system protect?',
     options: [
-      'Personal Protective Equipment.',
+      'Property and building contents from fire damage',
       'Life safety — protection of occupants',
-      'Respirable crystalline silica (RCS) dust',
-      'Supervisory Control And Data Acquisition',
+      'Sensitive electronic equipment from smoke contamination',
+      'The means of escape from smoke logging only',
     ],
     correctIndex: 1,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'Which of the following is the most common electrical cause of fire?',
     options: [
       'Overloaded circuits and loose connections',
-      'Better air circulation for heat dissipation',
-      'PVC twin-and-earth cable installed in 2018.',
-      'To minimise harm and enable rapid, effective response',
+      'Correctly rated protective devices operating as designed',
+      'Cables installed with the manufacturer\'s recommended bend radius',
+      'RCD protection fitted to socket-outlet final circuits',
     ],
     correctIndex: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under BS 5839, a P1 fire alarm category provides:',
     options: [
-      'Continuously drawing air samples through a pipe network to a central detector',
-      'Fire detection and fire alarm systems for buildings',
+      'Manual call points only, with no automatic detection',
+      'Automatic detection in escape routes only, for life protection',
       'Automatic detection throughout the building for property protection',
-      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
+      'Automatic detection in high-risk rooms only, for life protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "A fire marshal's responsibilities include:",
     options: [
-      'Continuously drawing air samples through a pipe network to a central detector',
+      'Carrying out the annual service of fire extinguishers on site',
       'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
-      'Automatic detection throughout the building for property protection',
-      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
+      'Designing the fire detection system for the building',
+      'Re-entering the building to retrieve valuable equipment during a fire',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Arcing at a loose terminal connection can cause a fire because:',
     options: [
-      'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
-      'Continuously drawing air samples through a pipe network to a central detector',
+      'The loose joint reduces the circuit current below the protective device rating',
+      'The increased contact area improves heat dissipation at the terminal',
       'The high-resistance joint generates localised heat that can ignite surrounding combustible materials',
-      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
+      'The arc immediately trips the upstream RCD, removing the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'BS 5839-1 covers the design, installation and maintenance of:',
     options: [
-      'Occupancy sensing with automatic shutoff',
-      'It optimises solar irradiance capture',
-      'The employer (with co-operation duties on the employee under s.7)',
+      'Emergency lighting systems for escape routes',
+      'Portable fire extinguishers and fire blankets',
+      'Sprinkler and water mist suppression systems',
       'Fire detection and fire alarm systems for buildings',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'When installing cables through a fire compartment wall, you must:',
     options: [
       'Ensure fire stopping is applied to maintain the fire resistance of the wall',
-      'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
-      'Continuously drawing air samples through a pipe network to a central detector',
-      'Automatic detection throughout the building for property protection',
+      'Leave the opening unsealed to allow smoke to vent during a fire',
+      'Use only the largest possible opening to ease future cable additions',
+      'Fill the opening with expanding foam regardless of its fire rating',
     ],
     correctAnswer: 0,
     explanation:

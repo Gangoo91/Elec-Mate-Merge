@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     options: [
       'UGR ≤ 16',
       'UGR ≤ 28',
-      'UGR ≤ 19',
       'UGR ≤ 22',
+      'UGR ≤ 19',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Offices and computer workstations require UGR ≤ 19 to ensure visual comfort during prolonged tasks. This limit is specified in BS EN 12464-1 for general office work.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'shielding-angle',
     question: 'What is the primary purpose of a luminaire shielding angle?',
     options: [
-      'Through regular inspections, observations, and documented checks',
-      'Outriggers or stabilisers must be fitted to extend the effective base',
+      'To increase the total light output ratio of the luminaire',
+      'To raise the colour temperature of the emitted light',
       'To prevent direct view of the lamp from normal viewing angles',
-      'To enable rapid rescue of workers in emergency situations',
+      'To spread light more evenly across the working plane',
     ],
     correctIndex: 2,
     explanation:
@@ -68,9 +68,9 @@ const quickCheckQuestions = [
       "Which type of glare occurs when light reflects off shiny surfaces into the observer's eyes?",
     options: [
       'Reflected glare (veiling reflections)',
-      'The intersection of fan and system curves',
-      'Flammable liquids such as petrol and solvents',
-      'To detect early signs of work-related ill health',
+      'Direct glare from the luminaire aperture',
+      'Disability glare from scattered light in the eye',
+      'Discomfort glare quantified by the UGR value',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: "In the UGR formula, what does the term 'Lb' represent?",
     options: [
-      'Reduced light output ratio (LOR) and efficiency',
-      'Decreases UGR (better glare control)',
+      'The luminance of the luminaire itself',
+      'The solid angle of the luminaire at the eye',
       'Background luminance of the room surfaces',
-      'Behind the screen relative to the user',
+      'The position index of the luminaire',
     ],
     correctAnswer: 2,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does a UGR table typically provide for a specific luminaire?',
     options: [
-      'Induction burn from proximity to high-frequency conductors',
+      'The rated power consumption at each dimming level',
       'UGR values for various room dimensions and reflectances',
-      'Add capacitors to offset inductive effects',
-      'The design meets BS 7671 and client requirements',
+      'The lumen output across the full range of operating temperatures',
+      'The colour rendering index for different lamp types',
     ],
     correctAnswer: 1,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'When using louvred luminaires for glare control, what is the primary trade-off?',
     options: [
       'Reduced light output ratio (LOR) and efficiency',
-      'UGR values for various room dimensions and reflectances',
-      'Behind the screen relative to the user',
-      'Background luminance of the room surfaces',
+      'A higher background luminance that worsens contrast',
+      'An increase in the position index of every luminaire',
+      'A higher colour temperature than recommended for offices',
     ],
     correctAnswer: 0,
     explanation:

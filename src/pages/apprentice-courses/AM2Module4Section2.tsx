@@ -69,9 +69,9 @@ const AM2Module4Section2 = () => {
       question: 'Why must leads be zeroed before a continuity test?',
       options: [
         'To remove resistance of the leads from the measurement',
-        'To increase penalties and make more offences triable either way',
-        'Refrigerant type, charge quantity, and GWP',
-        'The scaffold is incomplete or unsafe and must NOT be used',
+        'To set the meter to the correct test voltage',
+        'To confirm the leads are the correct length',
+        'To discharge any stored voltage in the circuit',
       ],
       correctIndex: 0,
       explanation:
@@ -81,12 +81,12 @@ const AM2Module4Section2 = () => {
       id: 'proving-sequence',
       question: 'What is the correct proving sequence for safe isolation?',
       options: [
+        'Test circuit -> Prove tester -> Test circuit again',
+        'Re-prove tester -> Test circuit -> Prove tester',
         'Prove tester -> Test circuit -> Re-prove tester',
-        'Power ratings, current capacity, and safety margins',
-        'Manual Handling Operations Regulations 1992',
-        '500W to 1kW per outlet for general assessment',
+        'Test circuit -> Re-prove tester only if a fault is found',
       ],
-      correctIndex: 0,
+      correctIndex: 2,
       explanation:
         'The safe sequence is: prove tester on known live source, test the circuit, then re-prove on known live source.',
     },
@@ -97,10 +97,10 @@ const AM2Module4Section2 = () => {
       id: 1,
       question: 'What is GS38 and why is it important?',
       options: [
-        'Observe symptoms and gather information',
+        'A British Standard for the manufacture of consumer units',
         'HSE guidance for electrical test equipment safety',
-        'Small-scale generation located close to consumers',
-        'To detect early signs of work-related ill health',
+        'A BS 7671 regulation covering RCD trip times',
+        'A type of multifunction tester used in initial verification',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,8 +124,8 @@ const AM2Module4Section2 = () => {
       question: 'Why must test leads be fused?',
       options: [
         'To prevent fingers from slipping forward onto live conductors',
-        'Shading, dirty panels, or inverter faults',
-        'The quality of insulation between conductors and earth',
+        'To improve the accuracy of low-resistance readings',
+        'To allow the leads to be used at higher voltages',
         'To protect against overcurrent and short circuit faults',
       ],
       correctAnswer: 3,
@@ -137,9 +137,9 @@ const AM2Module4Section2 = () => {
       question: 'What is the purpose of finger barriers on test probes?',
       options: [
         'To prevent fingers slipping onto live conductors',
-        'At least 3 years from the date of the entry',
-        'Specific locations of air leakage paths',
-        'Core losses become proportionally larger',
+        'To improve the grip of the probe on terminals',
+        'To shield the probe tip from dust and moisture',
+        'To indicate when the probe tip is worn out',
       ],
       correctAnswer: 0,
       explanation:
@@ -149,10 +149,10 @@ const AM2Module4Section2 = () => {
       id: 5,
       question: 'What is the correct sequence for proving a voltage tester?',
       options: [
-        'Before initial energisation and periodically thereafter',
+        'Test circuit -> Prove on known live -> Test circuit again',
         'Prove on known live -> Test circuit -> Re-prove on known live',
-        'All earthing and bonding conductors to the means of earthing',
-        'Special procedures and equipment certification',
+        'Re-prove on known live -> Test circuit -> Prove on known live',
+        'Prove on known live once, then test all circuits',
       ],
       correctAnswer: 1,
       explanation:
@@ -162,10 +162,10 @@ const AM2Module4Section2 = () => {
       id: 6,
       question: 'Why must tester leads be zeroed before continuity testing?',
       options: [
-        'Two capacitors: large for start, small for run',
-        'Circulating currents induced in the iron core',
+        'To set the meter to the correct insulation test voltage',
+        'To confirm the battery has enough charge for the test',
         'To remove the resistance of the test leads from readings',
-        'A dangerous occurrence that must be reported to the HSE',
+        'To prove the circuit has been safely isolated',
       ],
       correctAnswer: 2,
       explanation:
@@ -189,9 +189,9 @@ const AM2Module4Section2 = () => {
       question: 'What CAT rating category should test instruments meet?',
       options: [
         'CAT III or higher depending on application',
-        'EAWR (Electricity at Work Regulations)',
-        'No, it violates conservation of energy',
-        'Fault current path and touch protection',
+        'CAT I is sufficient for all AM2 testing',
+        'No CAT rating is required for low-voltage work',
+        'CAT II only, regardless of the installation',
       ],
       correctAnswer: 0,
       explanation:
@@ -201,10 +201,10 @@ const AM2Module4Section2 = () => {
       id: 9,
       question: 'What is the assessor looking for when you handle test equipment?',
       options: [
-        'AFDD presence/justification for each circuit',
+        'The fastest possible completion of each test',
         'GS38 compliance and safe handling procedures',
-        'Regenerated energy is raising DC bus voltage',
-        'Double or reinforced insulation',
+        'The most expensive instruments on the bench',
+        'The lowest possible measured test values',
       ],
       correctAnswer: 1,
       explanation:
@@ -214,10 +214,10 @@ const AM2Module4Section2 = () => {
       id: 10,
       question: 'What is the consequence of failing to re-prove a voltage tester?',
       options: [
-        'Certificate and schedules',
-        'Accurately price work for profitability',
+        'A minor mark deduction that can be recovered later',
+        'No consequence, provided the first prove passed',
         'Automatic failure of AM2 assessment',
-        'BS EN 361 — Full body harnesses',
+        'A warning, but the test may continue as normal',
       ],
       correctAnswer: 2,
       explanation:

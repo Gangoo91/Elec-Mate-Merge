@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: "Why should numerical values always be recorded instead of 'OK'?",
     options: [
-      'To help operators respond appropriately by categorising alarms by severity',
-      'According to legal and company requirements, typically several years',
+      'They make the certificate quicker to complete',
+      'They are only required on three-phase installations',
       'Numerical values provide specific evidence of compliance and allow future comparison',
-      '470mm above the platform (approximately halfway between platform and guardrail)',
+      'They remove the need to sign the certificate',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Name two documents used to record inspection and test results.',
     options: [
-      'A symptom indicating an underlying problem that requires further investigation',
-      'Swapping the start-winding terminals OR the main-winding terminals (not both)',
-      'To provide spoken evacuation instructions instead of or alongside tonal alarms',
+      'A site diary and a delivery note',
+      'A method statement and a risk assessment',
+      'A quotation and an invoice',
       'Electrical Installation Certificate (EIC) and Minor Electrical Installation Works Certificate (MEIWC)',
     ],
     correctIndex: 3,
@@ -87,9 +87,9 @@ const Module4Section6_6 = () => {
       id: 3,
       question: 'Name two items that must be recorded during electrical testing.',
       options: [
-        'Voltage drop due to overloading or poor connections',
-        'Accurate measurement of low resistances',
-        'Installation earth electrode separate from supply earth',
+        'Cable manufacturer and the date of purchase',
+        'Ambient air temperature and site humidity',
+        'The client’s name and the job reference only',
         'Insulation resistance and earth fault loop impedance',
       ],
       correctAnswer: 3,
@@ -113,10 +113,10 @@ const Module4Section6_6 = () => {
       id: 5,
       question: 'Which regulation requires employers to maintain safe systems of work?',
       options: [
-        'To ensure continued safety over time',
+        'The Building Regulations 2010 Part P',
         'Electricity at Work Regulations 1989',
-        'Insulation degradation beginning',
-        'Oxygen-free nitrogen (OFN)',
+        'The Manual Handling Operations Regulations 1992',
+        'The Work at Height Regulations 2005',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,10 +126,10 @@ const Module4Section6_6 = () => {
       id: 6,
       question: 'Why should each circuit be recorded separately?',
       options: [
-        'Using AI and data to predict and optimise future energy consumption patterns',
-        'The fuses cannot protect against high fault currents',
+        'To reduce the number of certificates that must be issued',
+        'To allow a single average reading to cover the board',
         'To provide detailed evidence of compliance and fault-tracing',
-        'Dust-tight and protected against continuous immersion',
+        'To avoid having to label the distribution board',
       ],
       correctAnswer: 2,
       explanation:
@@ -153,9 +153,9 @@ const Module4Section6_6 = () => {
       question: 'Give one reason why photographs of test meters should be taken.',
       options: [
         'For backup evidence in case results are disputed',
-        'Disconnect ballasts and test circuit wiring only',
-        'Construction Industry Training Board',
-        'Current, duration, path through body, frequency',
+        'To remove the need to write the values on the schedule',
+        'To prove the instrument was within its calibration date',
+        'To replace the requirement for a signature',
       ],
       correctAnswer: 0,
       explanation:
@@ -180,10 +180,10 @@ const Module4Section6_6 = () => {
       question:
         'True or False: Digital copies of test results are acceptable if they are secure and signed off.',
       options: [
-        'Investigate and rectify before energising',
-        'HMRC refunds the £5,000 overpayment after filing the tax return',
+        'False - only handwritten records are valid',
+        'False - digital copies must be printed to be valid',
         'True - digital copies are acceptable with proper security',
-        'Shoulder-width apart with one foot slightly forward',
+        'True - but only for minor works certificates',
       ],
       correctAnswer: 2,
       explanation:

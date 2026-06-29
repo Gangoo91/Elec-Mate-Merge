@@ -27,9 +27,9 @@ const quickCheckQuestions = [
     id: 'switchboard-definition',
     question: 'What is the primary function of an LV switchboard?',
     options: [
-      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'To express feelings and needs without blaming or accusing the other person',
-      'It must be less than the cable\\\\\\\'s withstand capability to prevent damage',
+      'To step the incoming supply voltage down to a safe working level',
+      'To store electrical energy for use during a mains supply failure',
+      'To correct the power factor of the incoming supply',
       'To distribute and control electrical power to downstream circuits',
     ],
     correctIndex: 3,
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'mccb-acb-difference',
     question: 'What is the key operational difference between an MCCB and an ACB?',
     options: [
-      'An electronic device that controls motor speed by varying the supply frequency',
+      'MCCBs can interrupt higher fault currents than any ACB',
       'ACBs are withdrawable for maintenance without de-energising the busbar',
-      'Conduct a risk assessment and ensure safe isolation where appropriate',
-      'A motor designed to run on single-phase supply using starting mechanisms',
+      'MCCBs are only available with fixed, non-adjustable trip settings',
+      'ACBs can only be used on single-phase supplies up to 250 A',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'icu-ics-meaning',
     question: 'What does Icu represent in switchgear ratings?',
     options: [
-      'Refractive index difference at glass-air interface',
-      'The competent person carrying out/supervising the tests',
+      'Rated continuous operating current of the device',
+      'Rated insulation voltage of the device',
       'Rated ultimate short-circuit breaking capacity',
-      'To provide electrical isolation and reduce shock risk',
+      'Rated short-time withstand current of the busbars',
     ],
     correctIndex: 2,
     explanation:
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'form-separation',
     question: 'What does Form 4 separation in a switchboard provide?',
     options: [
-      'Assess the environmental influences and duty (BS 7671 external influences)',
-      'Correct rating, secure fixing, circuit identification, and protection from damage',
       'Separation of busbars and functional units, plus separation of all terminals from each other',
-      'When the works are substantially complete and ready for the client to occupy',
+      'Separation of the busbars from the functional units only',
+      'No internal separation between any parts of the assembly',
+      'Separation of the functional units from each other, but not their terminals',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Form 4 provides the highest level of internal separation: busbars separated from functional units, functional units separated from each other, and terminals separated from each other. This allows work on one circuit while others remain live.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'When would you typically specify an ACB over an MCCB for main incomer protection?',
     options: [
-      'The maximum settable current rating and breaking capacity range',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'When the rated current is below 250 A and space is limited',
+      'When the lowest possible capital cost is the main priority',
       'When withdrawable functionality and high breaking capacity are required',
-      'Time-current characteristics and adjustable settings',
+      'When a fixed, non-adjustable trip characteristic is preferred',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'What is the significance of Ics/Icu = 100% on a circuit breaker?',
     options: [
       'The device can continue normal operation after interrupting at its ultimate breaking capacity',
-      'When withdrawable functionality and high breaking capacity are required',
-      'An assembly using type-tested components but requiring design verification for non-tested arrangements',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'The device must be replaced immediately after any fault interruption',
+      'The rated current equals the rated breaking capacity of the device',
+      'The device can only interrupt faults up to half its rated capacity',
     ],
     correctAnswer: 0,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does the short-circuit withstand rating (Icw) indicate for a switchboard?',
     options: [
-      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
-      'An assembly using type-tested components but requiring design verification for non-tested arrangements',
+      'The maximum continuous current the busbars can carry indefinitely',
+      'The peak fault current the main incomer can close onto safely',
       'Maximum fault current the busbars can carry for a specified time without damage',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'The rated operational voltage the assembly can insulate against',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'What is a Partially Type-Tested Assembly (PTTA)?',
     options: [
       'An assembly using type-tested components but requiring design verification for non-tested arrangements',
-      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
-      'Maximum fault current the busbars can carry for a specified time without damage',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'An assembly that has passed only routine tests on every individual unit produced',
+      'An assembly that is exempt from any verification under BS EN 61439',
+      'An assembly verified solely by on-site testing after installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 10,
     question: 'When selecting an MCCB, what does the frame size primarily determine?',
     options: [
-      'Time-current characteristics and adjustable settings',
-      'When withdrawable functionality and high breaking capacity are required',
+      'The IP rating of the enclosure the device is mounted within',
+      'Whether the device is withdrawable or fixed-mounted',
       'The maximum settable current rating and breaking capacity range',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'The number of poles available on the device',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     id: 11,
     question: 'What advantage does Form 3 separation provide over Form 2?',
     options: [
-      'The maximum settable current rating and breaking capacity range',
-      'When withdrawable functionality and high breaking capacity are required',
-      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
+      'A higher rated short-circuit withstand current for the busbars',
+      'The ability to withdraw outgoing devices without isolating the supply',
+      'A higher IP rating for the overall switchboard enclosure',
       'Separation of terminals from busbars in addition to functional unit separation',
     ],
     correctAnswer: 3,
@@ -229,9 +229,9 @@ const quizQuestions = [
     question: 'For discrimination studies, which MCCB characteristic is most critical?',
     options: [
       'Time-current characteristics and adjustable settings',
-      'Wet skin, medical conditions, fatigue, contact area',
-      'Low sampling rate relative to signal frequency',
-      'Adding a single socket outlet to an existing circuit',
+      'The physical frame size and mounting arrangement',
+      'The IP rating of the enclosure housing the device',
+      'The rated insulation voltage of the device',
     ],
     correctAnswer: 0,
     explanation:

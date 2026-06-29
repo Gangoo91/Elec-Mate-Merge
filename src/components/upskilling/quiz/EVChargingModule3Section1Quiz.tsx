@@ -3,24 +3,24 @@ import SingleQuestionQuiz from './SingleQuestionQuiz';
 const questions = [
   {
     id: 1,
-    question: 'What is the typical diversity factor for 3 domestic EV chargers?',
-    options: ['100% (no diversity)', '85-90%', '70-75%', '60-65%'],
-    correct: 1,
+    question: 'What is a typical diversity factor applied to 3 domestic EV chargers?',
+    options: ['100% (no diversity applied)', '60-65%', '70-75%', '85-90%'],
+    correct: 3,
     explanation:
-      'For 2-5 domestic EV chargers, typical diversity factors range from 80-90% (with 85-90% being most common for 3 chargers) because domestic charging patterns mean not all chargers operate simultaneously at full load.',
+      'For a small group of 2-5 domestic chargers a high diversity factor of around 85-90% is typical, because domestic charging patterns mean they rarely all run at full load at once.',
   },
   {
     id: 2,
-    question: 'When calculating maximum demand, what should be included in the safety factor?',
+    question: 'When calculating maximum demand, what should the safety factor account for?',
     options: [
-      'Only measurement uncertainties',
+      'Measurement uncertainties only',
+      'Cable voltage-drop compensation only',
       'Future load growth and operational variations',
       'Temperature derating only',
-      'Cable voltage drop compensation',
     ],
-    correct: 1,
+    correct: 2,
     explanation:
-      'Safety factors (typically 10-20%) should account for future load growth, measurement uncertainties, operational variations, and ensure safe operation under all conditions, not just single factors like temperature or voltage drop.',
+      'A safety factor (typically 10-20%) covers future load growth, measurement uncertainty and operational variation, rather than a single factor such as temperature or voltage drop.',
   },
   {
     id: 3,
@@ -34,16 +34,16 @@ const questions = [
   {
     id: 4,
     question:
-      'According to BS 7671, what is the primary consideration when determining diversity factors?',
+      'When determining diversity for an installation, what should the primary consideration be?',
     options: [
-      "Manufacturer's recommendations only",
-      'Fixed percentages from tables',
-      'Actual usage patterns and intended operation',
-      'Cable cross-sectional area',
+      'The actual usage patterns and intended operation',
+      "The manufacturer's recommendations only",
+      'Fixed percentages taken straight from tables',
+      'The cable cross-sectional area',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
-      'BS 7671 requires that diversity factors be based on actual usage patterns and intended operation of the installation, not just fixed percentages, though industry guidance provides typical ranges.',
+      'Diversity should reflect the actual usage patterns and intended operation of the installation, with published guidance providing typical ranges rather than rigid figures.',
   },
   {
     id: 5,
@@ -57,42 +57,42 @@ const questions = [
   {
     id: 6,
     question:
-      'What is the main difference between rapid chargers and domestic chargers in load calculations?',
+      'What is the main difference between rapid and domestic chargers in load calculations?',
     options: [
       'Rapid chargers always require 100% diversity',
-      'Rapid chargers have shorter connection times but higher power draws',
-      "Rapid chargers don't require safety factors",
-      'Rapid chargers use different voltage levels only',
-    ],
-    correct: 1,
-    explanation:
-      'Rapid chargers typically have shorter connection times but much higher power draws, leading to different usage patterns that often require lower diversity factors (50-70%) due to concentrated usage.',
-  },
-  {
-    id: 7,
-    question: 'When would you need to contact the Distribution Network Operator (DNO)?',
-    options: [
-      'For any EV charging installation',
-      'Only for three-phase installations',
-      'When maximum demand exceeds existing supply capacity',
-      'Only for commercial installations',
+      'Rapid chargers do not require any safety factor',
+      'Rapid chargers have shorter connection times but much higher power draws',
+      'Rapid chargers simply use a different voltage level',
     ],
     correct: 2,
     explanation:
-      'You need to contact the DNO when your calculated maximum demand exceeds the existing supply capacity, as this may require a supply upgrade regardless of installation type.',
+      'Rapid chargers have short connection times but very high power draws, giving concentrated usage that often justifies a lower diversity factor (around 50-70%).',
+  },
+  {
+    id: 7,
+    question: 'When must the Distribution Network Operator (DNO) be contacted?',
+    options: [
+      'When the calculated maximum demand exceeds the existing supply capacity',
+      'For any EV charging installation whatsoever',
+      'Only for three-phase installations',
+      'Only for commercial installations',
+    ],
+    correct: 0,
+    explanation:
+      'The DNO must be involved when the calculated maximum demand exceeds the existing supply capacity, as a supply upgrade or reinforcement may be needed.',
   },
   {
     id: 8,
     question: 'How do load management systems affect diversity calculations?',
     options: [
-      'They eliminate the need for diversity factors',
-      'They allow higher diversity factors by preventing simultaneous operation',
-      'They require lower diversity factors for safety',
-      "They don't affect diversity calculations",
+      'They remove the need for any diversity factor',
+      'They allow a lower assumed demand by preventing simultaneous full-load operation',
+      'They force a more conservative (lower) diversity factor for safety',
+      'They have no effect on diversity calculations',
     ],
     correct: 1,
     explanation:
-      'Load management systems actively control when chargers operate, preventing simultaneous full-load operation, which allows for higher diversity factors (potentially 50-60% even for larger installations).',
+      'Load management actively staggers charging so chargers do not all run at full load together, which justifies assuming a lower simultaneous demand even on larger schemes.',
   },
   {
     id: 9,

@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'Why do self-employed electricians need a larger emergency fund than employed electricians?',
     options: [
-      'Because self-employed electricians earn more money',
       'Because self-employed electricians have no employer-provided sick pay, holiday pay, or redundancy pay',
+      'Because self-employed electricians earn more money',
       'Because HMRC requires self-employed workers to hold a minimum cash reserve',
       'Because self-employed electricians pay less tax',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Self-employed tradespeople have no safety net from an employer. If you are ill, injured, or work dries up, your income stops immediately. Employed electricians typically receive statutory sick pay, holiday pay, and potentially redundancy pay, providing a buffer that self-employed workers do not have.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
     question: 'What are the three criteria for deciding whether to use your emergency fund?',
     options: [
       'Expensive, desirable, and convenient',
-      'Unexpected, urgent, and necessary',
       'Planned, budgeted, and approved',
       'Large, recurring, and unavoidable',
+      'Unexpected, urgent, and necessary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Before dipping into your emergency fund, the expense should meet all three criteria: unexpected (you could not have planned for it), urgent (it cannot wait), and necessary (it is not a luxury or discretionary purchase). A broken boiler in winter qualifies. A new television does not.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the recommended starter emergency fund target before focusing on paying off high-interest debt?',
-    options: ['&pound;100', '&pound;500', '&pound;1,000', '&pound;5,000'],
-    correctAnswer: 2,
+    options: ['&pound;1,000', '&pound;500', '&pound;100', '&pound;5,000'],
+    correctAnswer: 0,
     explanation:
       'Most financial advisers recommend building a starter emergency fund of &pound;1,000 before aggressively paying off high-interest debt. This prevents you from being forced back into debt when an unexpected expense arises. Once you have &pound;1,000, attack high-interest debt. After clearing it, build the full 3&ndash;6 month fund.',
   },
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: 'Why should your emergency fund be kept separate from your tax provision pot?',
     options: [
       'Because HMRC requires them to be in different banks',
-      'Because mixing them risks spending your tax money on emergencies, leaving you unable to pay your tax bill',
       'Because emergency funds earn higher interest than tax savings',
       'Because your accountant charges more if they are in the same account',
+      'Because mixing them risks spending your tax money on emergencies, leaving you unable to pay your tax bill',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If your emergency fund and tax provision are in the same pot, an emergency could drain the money you need for your Self Assessment tax bill. HMRC charges interest and penalties on late payments. Keeping them separate ensures you always have your tax money ring-fenced and your emergency fund available for genuine emergencies.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
     question: 'Which of the following is the best strategy for building your emergency fund?',
     options: [
       'Wait until you have a large lump sum and deposit it all at once',
-      'Set up an automatic standing order on payday and boost with found money like tax refunds',
       'Only save money left over at the end of the month',
+      'Set up an automatic standing order on payday and boost with found money like tax refunds',
       'Borrow money to create an instant emergency fund',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The most effective strategy is to automate your saving by setting up a standing order that moves money to your emergency fund on payday &mdash; before you can spend it. Boost the fund with &ldquo;found money&rdquo; like tax refunds, cashback rewards, overtime payments, and birthday money. Waiting until the end of the month usually means there is nothing left. Borrowing defeats the purpose.',
   },

@@ -75,102 +75,122 @@ const quizQuestions = [
       'The coil has excessive resistance',
     ],
     correctAnswer: 'The coil is within normal range',
+    explanation:
+      'A 120VAC coil typically reads in the tens to low hundreds of ohms, but larger contactor coils can be several hundred ohms; 850 ohms is a sound, intact winding. A shorted coil reads very low and an open coil reads infinity (OL).',
   },
   {
     question:
       'What visual symptom indicates contact pitting has become severe enough to require replacement?',
     options: [
-      'Slight discolouration of contacts',
-      'Minor surface roughness',
+      'Slight grey or black discolouration of the contact face',
+      'Minor surface roughness from normal arcing',
       'Deep erosion with visible craters or material loss exceeding 50%',
-      'Contacts appear shiny and smooth',
+      'A shiny, smooth, polished contact surface',
     ],
     correctAnswer: 'Deep erosion with visible craters or material loss exceeding 50%',
+    explanation:
+      'Light discolouration and minor roughness are normal for silver-alloy contacts and should not be filed. Replacement is needed only when deep craters or loss of more than half the contact material appear.',
   },
   {
-    question: 'When a relay coil buzzes audibly during operation, what is the most likely cause?',
+    question: 'When an AC relay coil buzzes audibly during operation, what is the most likely cause?',
     options: [
-      'Coil is overheating',
-      'Broken shading coil on AC relay',
-      'Contacts are welded',
-      'Power supply voltage is too high',
+      'A broken or cracked shading coil on the pole face',
+      'The coil is overheating from excess current',
+      'The output contacts have welded together',
+      'The supply voltage is slightly too high',
     ],
-    correctAnswer: 'Broken shading coil on AC relay',
+    correctAnswer: 'A broken or cracked shading coil on the pole face',
+    explanation:
+      'The shading coil creates a phase-shifted flux that holds the armature seated at AC zero-crossings. If it cracks, the armature chatters at twice supply frequency, producing the characteristic buzz.',
   },
   {
     question: 'What is the recommended method for testing a suspected intermittent connection?',
     options: [
-      'Visual inspection only',
-      'Single point measurement',
-      'Wiggle test while monitoring voltage or continuity',
-      'Replacing the component without testing',
+      'A single static measurement at one point',
+      'A visual inspection on its own',
+      'A wiggle test while monitoring voltage or continuity',
+      'Replacing the component without any testing',
     ],
-    correctAnswer: 'Wiggle test while monitoring voltage or continuity',
+    correctAnswer: 'A wiggle test while monitoring voltage or continuity',
+    explanation:
+      'Intermittent faults often only appear under movement. Gently flexing the wiring while watching a meter for momentary changes reveals the loose or cracked connection that a single static reading would miss.',
   },
   {
     question:
       'A control transformer secondary voltage drops from 24V to 18V under load. What is the most likely cause?',
     options: [
-      'Normal operation',
-      'Transformer overloaded or internal fault',
-      'Primary voltage too high',
-      'Secondary fuse is blown',
+      'This is normal operation under any load',
+      'The transformer is overloaded or has an internal fault',
+      'The primary voltage is too high',
+      'The secondary fuse has blown',
     ],
-    correctAnswer: 'Transformer overloaded or internal fault',
+    correctAnswer: 'The transformer is overloaded or has an internal fault',
+    explanation:
+      'A 25% sag under load (well beyond the ~5% acceptable for control circuits) points to an overloaded transformer or shorted turns. A blown fuse would give zero volts, and high primary voltage would raise, not drop, the secondary.',
   },
   {
     question:
-      'When inspecting timer contacts that have failed to operate, what should be checked first?',
+      'When inspecting an electronic timer that has failed to operate, what should be checked first?',
     options: [
-      'The timer motor',
-      'The timing dial setting',
-      'Power supply to the timer and proper voltage',
-      'The output load',
+      'The timing dial or setpoint',
+      'The internal timing components',
+      'The output load it is driving',
+      'The supply voltage present at the timer terminals',
     ],
-    correctAnswer: 'Power supply to the timer and proper voltage',
+    correctAnswer: 'The supply voltage present at the timer terminals',
+    explanation:
+      'Always confirm correct supply voltage at the device first — without it nothing downstream will work. Checking settings or internal parts before verifying power wastes time on a possibly powerless timer.',
   },
   {
     question:
       'What maintenance practice helps prevent contact welding in motor starter contactors?',
     options: [
-      'Applying contact grease',
-      'Filing contacts smooth regularly',
-      'Ensuring proper contactor sizing for inrush current',
-      'Reducing operating voltage',
+      'Applying contact grease to the faces',
+      'Filing the contacts smooth at each service',
+      'Ensuring the contactor is correctly sized for the inrush current',
+      'Permanently reducing the operating voltage',
     ],
-    correctAnswer: 'Ensuring proper contactor sizing for inrush current',
+    correctAnswer: 'Ensuring the contactor is correctly sized for the inrush current',
+    explanation:
+      'Welding stems from excessive heat at the contacts during the 6-10x motor inrush. Selecting a contactor rated for that duty (e.g. AC-3) prevents it; greasing or filing silver contacts shortens their life.',
   },
   {
     question:
-      'During coil resistance testing, a reading that is significantly lower than rated indicates:',
+      'During coil resistance testing, a reading that is significantly lower than the rated value indicates:',
     options: [
-      'An open coil',
-      'A shorted turn in the coil winding',
-      'Normal coil condition',
-      'High ambient temperature',
+      'An open coil winding',
+      'A normal, healthy coil',
+      'A shorted turn within the coil winding',
+      'A high ambient temperature',
     ],
-    correctAnswer: 'A shorted turn in the coil winding',
+    correctAnswer: 'A shorted turn within the coil winding',
+    explanation:
+      'Shorted turns reduce the effective number of windings, lowering resistance and causing the coil to overheat and draw excess current. An open coil reads infinity, not a low value.',
   },
   {
     question: 'What environmental factor most commonly causes intermittent control circuit faults?',
     options: [
-      'Constant temperature',
-      'Vibration loosening connections',
-      'Clean environment',
-      'Stable humidity',
+      'A consistently stable temperature',
+      'Vibration gradually loosening connections',
+      'A clean, dust-free environment',
+      'Steady, low humidity levels',
     ],
-    correctAnswer: 'Vibration loosening connections',
+    correctAnswer: 'Vibration gradually loosening connections',
+    explanation:
+      'Machinery vibration slowly backs off terminal screws and cracks solder joints, creating connections that make and break intermittently — one of the hardest faults to catch because it is movement-dependent.',
   },
   {
     question:
       'When using thermal imaging for predictive maintenance, what should similar components under similar loads show?',
     options: [
-      'Completely different temperatures',
-      'Similar temperatures within 5-10°C of each other',
-      'One component always hotter',
-      'Room temperature readings',
+      'Completely different temperatures from each other',
+      'One particular phase always running hotter',
+      'Temperatures close to ambient room temperature',
+      'Similar temperatures within about 5-10°C of each other',
     ],
-    correctAnswer: 'Similar temperatures within 5-10°C of each other',
+    correctAnswer: 'Similar temperatures within about 5-10°C of each other',
+    explanation:
+      'Identical components carrying similar current should run at similar temperatures. A significant difference (commonly 15-30°C or more) flags a loose connection, degraded contact or overload at the hotter point.',
   },
 ];
 

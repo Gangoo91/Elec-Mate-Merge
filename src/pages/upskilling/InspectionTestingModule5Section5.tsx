@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A multifunction tester displays "PFC = 4.8 kA" at the origin of a TN-C-S supply. What does that single number actually represent?',
     options: [
-      'Just the PSCC (line-to-neutral) reading',
-      "The greater of the meter's PSCC (L–N) and PEFC (L–E) measurements — the meter latches the higher value as PFC for breaking-capacity comparison",
-      'A peak instantaneous current that must be divided by √2',
-      'The Ze loop test result',
+      'Just the PSCC (line-to-neutral) short-circuit reading on its own',
+      'The greater of the PSCC (L–N) and PEFC (L–E) measurements, latched as PFC',
+      'A peak instantaneous current that must first be divided by √2',
+      'The Ze loop test result expressed in kA instead of ohms',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A dwelling has a BS EN 61439-3 consumer unit and the distributor declares 16 kA at the origin. Reg 643.7.3.201 — what does BS 7671 permit?',
     options: [
-      'You must always measure PFC at the origin regardless',
-      "PFC at the origin need not be measured or calculated — the consumer unit's 16 kA conditional rating (Annex ZB) covers the case for dwellings or similar premises",
-      'You can also skip the Zs and Ze measurements',
-      'The relief applies only to commercial premises',
+      'You must always measure the PFC at the origin regardless of the unit rating',
+      'PFC at the origin need not be measured or calculated, as the 16 kA conditional rating covers it',
+      'You can also skip the Zs and Ze measurements at the origin entirely',
+      'The relief applies only to commercial and industrial premises, not dwellings',
     ],
     correctIndex: 1,
     explanation:
@@ -66,9 +66,9 @@ const inlineChecks = [
       'A 6 kA breaking-capacity MCB is installed on a circuit where the measured PFC at the board is 9.2 kA. Reg 434.5.1 — what is the verdict?',
     options: [
       'Compliant — the MCB will simply trip faster on a 9.2 kA fault',
-      'Non-compliant and dangerous. The device must be capable of breaking any overcurrent up to the PFC at its installed point. A 6 kA MCB on a 9.2 kA fault risks contact welding, sustained arc, and enclosure rupture',
-      'Compliant if there is an upstream RCD',
-      'Compliant only on TT systems',
+      'Non-compliant and dangerous — the device must break the full PFC at its point',
+      'Compliant, provided there is a 30 mA RCD fitted somewhere upstream',
+      'Compliant, but only on TT systems where fault currents run lower',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'A 6 kA breaking-capacity MCB is installed on a circuit where the measured PFC at the board is 9.2 kA. Why is this dangerous and what does Reg 434.5.1 require?',
     options: [
-      'Not dangerous — the MCB will simply trip faster',
-      "The fault current exceeds the device's breaking capacity. Under Reg 434.5.1, the device must be capable of breaking any overcurrent up to and including the maximum prospective fault current at its installed point. A 6 kA MCB on a 9.2 kA fault risks contact welding, arc-flash and sustained fault current",
-      'The MCB will simply re-arc and clear',
-      'It is acceptable provided an RCD is upstream',
+      'Not dangerous — the MCB will simply trip faster on the larger fault current',
+      'The PFC exceeds the breaking capacity, so under Reg 434.5.1 it may weld or rupture',
+      'The MCB will simply re-arc once or twice and then clear the fault safely',
+      'It is acceptable provided there is a 30 mA RCD fitted somewhere upstream',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'In a dwelling with a BS EN 61439-3 consumer unit and a distributor declaration of 16 kA at the origin, what does BS 7671 permit?',
     options: [
-      'You must still measure PFC at the origin',
-      'It is not necessary to measure or calculate the prospective fault current at the origin of the supply',
-      'You can skip Zs measurement as well',
-      'The consumer unit is exempt from any breaking-capacity assessment',
+      'You must still measure the PFC at the origin in every case before energising',
+      'You may also skip the Ze and Zs measurements at the origin of the supply',
+      'The consumer unit is then exempt from any breaking-capacity assessment downstream',
+      'PFC at the origin need not be measured or calculated for that supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "BS 7671 grants relief in dwellings or similar premises where a BS EN 61439-3 consumer unit is used and the distributor has declared 16 kA: the PFC at the origin need not be measured or calculated. The consumer unit's 16 kA conditional rating (Annex ZB) covers the case. The relief is origin-only — downstream points still demand thought.",
   },
@@ -146,8 +146,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which formula best describes the prospective short-circuit current at any point in the installation, when the supply impedance Z is known?',
-    options: ['I = U₀ × Z', 'I = U₀ / Z', 'I = Z / U₀', 'I = U₀² / Z'],
-    correctAnswer: 1,
+    options: ['I = U₀ / Z', 'I = U₀ × Z', 'I = Z / U₀', 'I = U₀² / Z'],
+    correctAnswer: 0,
     explanation:
       "PSCC = U₀ / Z, where U₀ is the nominal line-to-earth voltage and Z is the loop impedance from the source to the point. The same Ohm's-law relationship gives PEFC when Z is the earth-fault loop. The meter does the same calculation internally — it injects a small current, measures voltage drop, and divides U₀ by the inferred Z.",
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'The BS 7671 Cmin minimum voltage factor for an LV ESQCR-compliant supply is 0.95. Where does this factor sit in the PFC story?',
     options: [
-      'It increases PFC to allow for over-voltage',
-      'It reduces effective U₀ in the Zs × Ia ≤ U₀ × Cmin verification — it does not enter the PFC value itself, but it does enter the disconnection-time check that PFC enables',
-      'It replaces √3 in three-phase calculations',
-      "It is the meter's internal correction factor",
+      'It increases the PFC value to allow for momentary supply over-voltage',
+      'It replaces the √3 factor used in the three-phase fault calculation',
+      "It is the meter's internal correction factor applied to every loop reading",
+      'It reduces effective U₀ in the Zs × Ia ≤ U₀ × Cmin disconnection check, not the PFC itself',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cmin = 0.95 (per ESQCR low-voltage supply) reduces U₀ in the Zs × Ia ≤ U₀ × Cmin requirement under Reg 411.4.4. PFC itself is U₀ / Z at nominal voltage. Cmin matters when you take the PFC reading forward into a worst-case disconnection check — the design verification, not the meter reading.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'A modern multifunction tester displays PFC as a peak (kA peak) value where some older meters reported RMS. What is the practical consequence?',
     options: [
-      'No consequence — peak and RMS are the same',
+      'No consequence at all — peak and RMS fault currents are the same value',
       'Always divide the peak by √2 before comparing to device breaking capacity',
-      'Manufacturer breaking-capacity ratings are typically RMS symmetrical (Icn / Icu / Ics). If your meter reports a peak, read the meter manual — most modern instruments report symmetrical RMS by default and pre-scale internally; do not blindly apply √2 unless the meter explicitly reports peak',
-      'Peak readings are always invalid for device selection',
+      'Device ratings are RMS symmetrical, so check the manual before applying any √2 conversion',
+      'Peak readings are always invalid and can never be used for device selection',
     ],
     correctAnswer: 2,
     explanation:
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       "You are commissioning a sub-board fed from a TP&N origin where measured PFC is 12 kA. The manufacturer's data sheet for the upstream device shows it can act as a back-up that limits let-through to 6 kA. The downstream MCBs are 6 kA breaking. What is the procedural rule?",
     options: [
-      'Always treat the downstream device as needing 12 kA breaking',
-      'Cascading (back-up protection) is permitted only where the manufacturer has type-tested the specific device combination and published the let-through data. You must verify the combination is in the published cascading table — never assume cascading on un-tested combinations',
-      'Cascading is never permitted in BS 7671',
-      'Halve the upstream rating and use that for the downstream device',
+      'Cascading is permitted only where the manufacturer type-tested and published that exact device combination',
+      'Always treat the downstream device as needing the full 12 kA breaking capacity here',
+      'Cascading (back-up protection) is never permitted under any circumstances in BS 7671',
+      'Halve the upstream rating and apply that figure to the downstream device directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BS 7671 (and Reg 434.5.1) permits back-up protection where the upstream device has been type-tested with the downstream device and the combination is published. Without that documented combination you cannot rely on cascading — each downstream device must independently meet the local PFC. The manufacturer's table is the gating evidence.",
   },
@@ -198,10 +198,10 @@ const quizQuestions = [
     question:
       'During testing the meter PFC reading at the origin disagrees with the DNO-declared value by a wide margin (declared 16 kA, measured 9 kA). Which is the correct interpretation and action?',
     options: [
-      'The meter is wrong — always use the DNO value',
-      'The DNO value is the worst-case declared at network conditions; the measured value reflects the supply on the day. Record both, design to the higher (declared) value for breaking-capacity selection, and investigate any unexpected discrepancy that suggests a poor service connection',
-      'Use the lower value — measurement always wins',
-      'Average the two and use that',
+      'The meter is wrong, so always use the DNO-declared value and discard the reading',
+      'The declared value is the worst case; record both and design to the higher value',
+      'Use the lower measured value, since an on-the-day measurement always wins',
+      'Average the declared and measured figures and design to that single number',
     ],
     correctAnswer: 1,
     explanation:

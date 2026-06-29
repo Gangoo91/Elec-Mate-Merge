@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ev-charging-modes',
     question: 'What are the four IEC 61851 charging modes for electric vehicles?',
     options: [
-      'Very High culpability x Cat 1 harm x Large/Very Large turnover. Starting points around £4m-£10m+; range up to £20m+. Examples: Whirlpool £15m (corporate manslaughter), Foodles Production £1.6m (Star Wars set injury — smaller turnover band).',
-      'Bonding required per Reg 411.3.1.2 — the metal oil supply pipe is an extraneous-conductive-part liable to introduce a potential. Bond per Reg 544.1.2 — consumer side, before any branch, within 600 mm of point of entry where practicable. Use a BS 951 clamp suitable for oil application (similar specification to gas — DSEAR considerations apply).',
-      'Lead by example, set expectations, schedule clean-up periods (end-of-day, after disruptive work), provide skips and bins, intervene when issues seen. Housekeeping is one of the easiest hazard reductions and one of the most consistently overlooked.',
-      'Mode 1 (domestic socket, no protection), Mode 2 (domestic socket with in-cable control device — ICCD), Mode 3 (dedicated EVSE with control pilot — the standard for home and workplace charging), and Mode 4 (DC rapid charging with the charger converting AC to DC externally)',
+      'Mode 1 single-phase AC, Mode 2 three-phase AC, Mode 3 single-phase DC, Mode 4 three-phase DC, by phases',
+      'Mode 1 trickle, Mode 2 fast, Mode 3 rapid and Mode 4 ultra-rapid, defined solely by kilowatt rating alone',
+      'Mode 1 tethered, Mode 2 socketed, Mode 3 wireless, Mode 4 battery-swap, by the physical delivery method',
+      'Mode 1 socket no protection, Mode 2 socket with ICCD, Mode 3 dedicated EVSE with pilot, Mode 4 DC rapid',
     ],
     correctIndex: 3,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'bs7671-section722',
     question: 'What does BS 7671 Section 722 specifically require for EV charging installations?',
     options: [
-      'Prevailing "tough it out" and "leave feelings at the gate" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration',
-      'Smooth DC fault current can occur — typically Mode 3 EVSE without integral DC protection, three-phase variable speed drives, and PV inverters where the device manufacturer specifies. Type AC and Type A can saturate and fail to trip on smooth DC residual current.',
-      'Dedicated circuit(s) for each charging point with appropriate cable sizing; 30 mA Type A RCD as a minimum (or Type B where the EVSE does not contain integral DC fault protection); PME earthing considerations; labelling; and sizing for continuous load at the maximum rated output of the charger',
-      'No — a socket tester is a verification tool only and CAN show "OK" with reversed polarity if there is a fault that masks it (e.g. a borrowed neutral that completes the circuit through another path). Confirm with a continuity test from the consumer unit before signing off.',
+      'A single shared final circuit may supply several charge points, with normal household diversity applied to the cable',
+      'A 100 mA time-delayed Type AC RCD on every charge point, since EV standby leakage would trip a more sensitive device',
+      'A dedicated circuit per point, sized for continuous full output, with a 30 mA Type A RCD (Type B if no integral DC protection)',
+      'A means of manual isolation only, with no residual current protection because the vehicle provides its own earth fault detection',
     ],
     correctIndex: 2,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'Why does BS 7671 impose restrictions on using the PME earth for EV charging outdoors?',
     options: [
-      'Under PME (TN-C-S) earthing, if the DNO neutral conductor is lost (open PEN fault), the exposed metalwork of the EVSE and the vehicle could rise to a dangerous voltage — since a person touching the vehicle while standing on the ground could receive a fatal electric shock, the risk is greater outdoors where there is better contact with true earth',
-      'Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. \\\\\\\\\\\\\\\'Following orders\\\\\\\\\\\\\\\' is not a defence — the personal duty stays with the employee regardless of what they were told to do.',
-      'Disconnect or isolate components that present a low resistance during the IR test — RCBOs, RCDs, AFDDs, SPDs, electronic dimmers, capacitors, pilot/indicator lamps. Test in two stages per Reg 643.3.3 if the circuit cannot be cleanly isolated from these components, then verify the components separately.',
-      'Firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contracts manager / director - that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s their decision. The L3 supervisor escalates to them with the facts; they decide commercial response. The L3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s personal duty is to refuse the unsafe instruction; the commercial decision is above that.',
+      'On PME (TN-C-S), an open-PEN fault can raise the EVSE and vehicle metalwork to a dangerous voltage, riskier outdoors',
+      'The PME earth carries too much harmonic current from the charger, which corrodes the buried neutral and weakens the supply',
+      'Outdoor chargers draw more current than indoor ones, so the PME earth conductor is undersized and overheats under load',
+      'The combined PEN conductor introduces a dangerous DC offset to the vehicle battery, avoided only by isolating the PME earth',
     ],
     correctIndex: 0,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'smart-charging',
     question: 'What is smart EV charging and why is it important?',
     options: [
-      'Per manufacturer service life; on damage or contamination; after exposure to extreme conditions; when the standard has changed; on relevant change to the user (significant weight change for fitted RPE / harnesses); when periodic inspection identifies issues.',
-      'An estimate is an approximate cost that may change as the scope clarifies; a quotation is a fixed price for clearly-defined work. A quotation, once accepted, forms the contractual price unless the scope changes (variations). Make sure clients understand which they\\\\\\\\\\\\\\\'re receiving — confusion here is a leading cause of payment disputes.',
-      'Smart charging enables the charge rate, timing and duration to be managed dynamically in response to grid conditions, electricity tariffs, local network constraints and user preferences — it is essential to prevent network overloading as millions of EVs connect to a grid that was not designed for their combined demand',
-      'G98 — single-phase PV up to and including 16 A per phase falls under ENA Engineering Recommendation G98 \\\\\\\\\\\\\\\'Connect and Notify\\\\\\\\\\\\\\\'. The MCS-certified installer notifies the DNO within 28 days of commissioning using the standard G98 form. No prior approval is required for G98 connections.',
+      'Smart charging simply means a charger that displays the cost of each charging session on a screen for the user to see',
+      'Smart charging refers to a charger that automatically selects the fastest possible charge rate regardless of grid state',
+      'Smart charging dynamically manages charge rate and timing to suit grid conditions, tariffs and constraints, avoiding overload',
+      'Smart charging is a feature that lets the driver start and stop a charge from a smartphone app, with no effect on grid demand',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A Type 2 connector (Mennekes) is:',
     options: [
-      'A systematic process of looking beyond the immediate cause to identify the underlying organisational, procedural, or design failures that allowed the injury to occur',
-      'The standard AC connector for EV charging in the UK and Europe — a 7-pin connector supporting single-phase (up to 7.4 kW at 32 A) and three-phase (up to 22 kW at 32 A) charging with integrated control pilot and proximity pilot pins',
-      '09:00 — half an hour early. Gives you time to use the toilet, settle nerves, sign in, get briefed, and not start the paper with adrenaline still spiking from a rushed arrival.',
-      'The reasons for the chosen frequency, including a note that licensing requirements were the basis. GN3 is explicit: even where set periods imposed by local authority licensing apply, the inspector shall still record on the EICR that those set periods were applied and the reason.',
+      'A two-pin DC-only connector used exclusively for rapid charging at motorway service stations',
+      'The UK and European standard 7-pin AC connector, supporting single-phase up to 7.4 kW and three-phase up to 22 kW',
+      'A round three-pin domestic plug rated at 13 A that any electric vehicle can be charged from safely',
+      'A wireless inductive charging pad that requires no physical connector at all between vehicle and supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'The Electric Vehicles (Smart Charge Points) Regulations 2021 require:',
     options: [
-      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
-      'Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4',
-      'All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability',
-      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
+      'That all charge points be hard-wired to the grid with no ability to communicate or update remotely',
+      'That every domestic charge point be limited to a maximum output of 3.6 kW to protect the network',
+      'All new domestic and workplace charge points to be smart by default, with delay, DSR response and remote updates',
+      'That charge points only operate during daylight hours so as to coincide with solar PV generation',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'The cable supplying a 7 kW single-phase EV charger must be rated for:',
     options: [
-      'Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is \\\\\\\\\\\\\\\'EV-ready\\\\\\\\\\\\\\\' from construction',
-      'All EV charger installations should be notified to the DNO via the appropriate notification scheme (e.g., Building Regulations Part P notification). Installations above 3.68 kW on a single-phase supply or adding significant load may require prior approval, particularly on constrained network areas',
-      'All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability',
-      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
+      '13 A, the same as a standard ring final circuit, because the charger limits its own current internally',
+      '32 A but with the usual household diversity applied, allowing a smaller cable size to be used',
+      '16 A continuous, which is sufficient because EV chargers rarely draw their full rated output',
+      '32 A continuous with no diversity, sized for 100% of rated current using BS 7671 correction factors',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'CCS (Combined Charging System) is:',
     options: [
-      'A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW',
-      'Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner',
-      'Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4',
-      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
+      'A Type 2 AC connector with two added DC pins below it, allowing both AC and DC rapid charging up to 350 kW',
+      'An AC-only connector that combines single-phase and three-phase pins but cannot deliver any DC charging',
+      'A wireless charging standard that combines inductive and resonant magnetic coupling in a single pad',
+      'A control protocol that combines the control pilot and proximity pilot signals onto one shared data pin',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Load management for multiple EV chargers involves:',
     options: [
-      'All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability',
-      'Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
-      'Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'EV-ready\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' from construction',
+      'Permanently fixing each charger to a low output so the total can never exceed the supply, even with one vehicle',
+      'Dynamically sharing the available supply capacity across the chargers, trimming rates as the site limit is approached',
+      'Switching off the building’s other electrical loads whenever an EV is charging in order to free up capacity',
+      'Allowing every charger to draw full power at all times and relying on the main fuse to disconnect if overloaded',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'When installing an EV charger on a PME (TN-C-S) supply, the recommended earthing solution is:',
     options: [
-      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
-      'Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4',
-      'All EV charger installations should be notified to the DNO via the appropriate notification scheme (e.g., Building Regulations Part P notification). Installations above 3.68 kW on a single-phase supply or adding significant load may require prior approval, particularly on constrained network areas',
+      'Bond the EVSE metalwork directly to the nearest water pipe to provide a low-resistance earth path',
+      'Convert the entire installation, including the dwelling, from PME to TT earthing before fitting the charger',
+      'Fit a separate earth electrode (TT) with RCD for the EV circuit, or use an EVSE with confirmed open-PEN protection',
+      'Leave the charger without any earth connection, relying on the vehicle’s own chassis as the earth reference',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'The control pilot (CP) signal in a Mode 3 EVSE:',
     options: [
-      'A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW',
-      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
-      'Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
+      'Carries the full charging current from the EVSE to the vehicle battery through a dedicated power pin',
+      'Is a fixed 230 V AC signal used only to confirm that mains power is present at the charging socket',
+      'Is a one-way radio link that allows the driver to start the charge remotely from a mobile phone',
+      'Is a ±12 V PWM signal that tells the vehicle EVSE availability, maximum current and charge enable',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'Vehicle-to-Grid (V2G) technology:',
     options: [
-      'Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner',
-      'A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW',
-      'Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
+      'Lets an EV discharge stored energy back to the grid or building at peak, acting as distributed storage',
+      'Allows two electric vehicles to charge each other directly without any connection to the mains supply',
+      'Increases the maximum charge rate of an EV by drawing extra power from neighbouring grid-connected properties',
+      'Lets the grid operator remotely disable a vehicle’s traction motor during periods of network stress',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The DNO must be notified of EV charger installations when:',
     options: [
-      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
-      'All EV charger installations should be notified to the DNO via the appropriate notification scheme (e.g., Building Regulations Part P notification). Installations above 3.68 kW on a single-phase supply or adding significant load may require prior approval, particularly on constrained network areas',
-      'Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles',
-      'All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability',
+      'Never, since EV chargers are exempt from any form of notification because they are plug-in appliances',
+      'All installations should be notified; those above 3.68 kW single-phase may need prior approval on constrained networks',
+      'Only when the charger is rated above 50 kW DC, since smaller AC chargers have no effect on the network',
+      'Only after the charger has actually caused a recorded fault or nuisance trip on the local network',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'When maintaining an EV charger, the technician should:',
     options: [
-      'Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner',
-      'Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4',
-      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
-      'A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW',
+      'Test only the smart communication features, since electrical safety is guaranteed by the manufacturer for life',
+      'Replace the entire charger unit at every service visit rather than inspecting and testing the existing one',
+      'Carry out visual inspection, electrical testing, smart-function checks and verify the control pilot signal',
+      'Carry out a visual check of the enclosure only, as opening the unit for electrical testing is never permitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'A tethered EV charger differs from a socketed charger in that:',
     options: [
-      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
-      'Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
-      'A tethered charger has the charging cable permanently attached to the EVSE unit (convenient for home use — just plug into the vehicle), while a socketed charger has a Type 2 socket on the unit and the user provides their own cable (more flexible for workplace/public use where different cable lengths and vehicle connectors may be needed)',
+      'A tethered charger can only deliver DC rapid charging, whereas a socketed charger is strictly AC only',
+      'A tethered charger has no need for an RCD at all, whereas a socketed charger always requires one fitted',
+      'A tethered charger must be installed indoors, whereas a socketed charger must always be installed outdoors',
+      'A tethered charger has a fixed attached cable, while a socketed charger has a Type 2 socket and the user supplies the cable',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Building Regulations 2022 (Part S), new buildings in England must:',
     options: [
-      "Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is 'EV-ready' from construction",
-      "Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging",
-      "Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification",
-      "All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability",
+      "Provide charge points or cable routes: one per new dwelling with parking, and one per five non-residential spaces",
+      "Install at least one DC rapid charger in every new dwelling regardless of whether it has associated parking",
+      "Fit solar panels sized to fully power any EV charge points that are provided within the new building",
+      "Provide a three-phase supply to every single new home so that 22 kW charging is always made available",
     ],
     correctAnswer: 0,
     explanation:

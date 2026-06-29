@@ -47,7 +47,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'micro = 10⁻⁶, so 47 μF = 47 × 10⁻⁶ F = 4.7 × 10⁻⁵ F (move the decimal one place to convert 47 × 10⁻⁶ into standard form).',
+      'Micro is 10⁻⁶, so 47 μF = 47 × 10⁻⁶ F. Normalising to one digit before the point gives 4.7 × 10⁻⁵ F.',
   },
   {
     id: 'l3-m3-1-2-derived',
@@ -72,7 +72,8 @@ const checks = [
       '160 000 VA',
     ],
     correctIndex: 0,
-    explanation: 'mega = 10⁶, so 1.6 MVA = 1.6 × 10⁶ VA = 1 600 000 VA.',
+    explanation:
+      'Mega is 10⁶, so 1.6 MVA = 1.6 × 10⁶ VA = 1 600 000 VA. Reading the M as kilo (giving 1600) undersizes the supply 1000-fold.',
   },
 ];
 
@@ -81,27 +82,27 @@ const quizQuestions = [
     id: 1,
     question: 'Which is the SI base unit of electric current?',
     options: [
-      'Volt',
-      'Ampere',
-      'Watt',
       'Coulomb',
+      'Ampere',
+      'Volt',
+      'Watt',
     ],
     correctAnswer: 1,
     explanation:
-      'The ampere (A) is the base SI unit of electric current. Volts, watts and coulombs are derived from it.',
+      'The ampere is the SI base unit of current. The coulomb (charge), volt (potential difference) and watt (power) are all derived units, not base units.',
   },
   {
     id: 2,
     question: 'The unit of capacitance is:',
     options: [
-      'Tesla',
       'Henry',
-      'Farad',
       'Weber',
+      'Farad',
+      'Tesla',
     ],
     correctAnswer: 2,
     explanation:
-      'Farad (F). 1 F = 1 coulomb per volt. Practical capacitors are usually μF, nF or pF — a 1 F capacitor is huge.',
+      'Capacitance is measured in farads (1 F = 1 coulomb per volt). Henry is inductance, weber is magnetic flux and tesla is flux density.',
   },
   {
     id: 3,
@@ -113,7 +114,8 @@ const quizQuestions = [
       '0.22 mH',
     ],
     correctAnswer: 3,
-    explanation: '0.000 22 H = 2.2 × 10⁻⁴ H. Multiply by 1000 to get mH: 0.22 mH.',
+    explanation:
+      '0.000 22 H = 2.2 × 10⁻⁴ H. Milli is 10⁻³, so multiply by 1000: 2.2 × 10⁻⁴ × 10³ = 0.22 mH.',
   },
   {
     id: 4,
@@ -125,7 +127,8 @@ const quizQuestions = [
       'Coulombs',
     ],
     correctAnswer: 0,
-    explanation: 'Watt (W) = joule per second. Energy is in joules; power is the rate of energy transfer.',
+    explanation:
+      'Power is in watts (1 W = 1 joule per second). Joules measure energy, not the rate at which it is transferred — power is that rate.',
   },
   {
     id: 5,
@@ -138,19 +141,20 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'pico = 10⁻¹² (picofarad pF). nano = 10⁻⁹, micro = 10⁻⁶, femto = 10⁻¹⁵.',
+      'Pico is 10⁻¹² (as in picofarad, pF). The adjacent rungs are nano at 10⁻⁹, micro at 10⁻⁶ and femto at 10⁻¹⁵.',
   },
   {
     id: 6,
     question: 'A 50 nF capacitor in pF is:',
     options: [
-      '5 pF',
       '50 pF',
+      '5 000 pF',
       '50 000 pF',
-      '500 pF',
+      '500 000 pF',
     ],
     correctAnswer: 2,
-    explanation: '1 nF = 1000 pF (nano = 10⁻⁹, pico = 10⁻¹²). 50 nF × 1000 = 50 000 pF.',
+    explanation:
+      'Nano is 10⁻⁹ and pico is 10⁻¹², so 1 nF = 1000 pF. 50 nF × 1000 = 50 000 pF.',
   },
   {
     id: 7,
@@ -163,7 +167,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Tesla (T) is flux density — the amount of flux per unit area (1 T = 1 Wb/m²). Weber is total flux.',
+      'Flux density is in teslas (1 T = 1 Wb/m²). Weber is total flux, ampere-turns is magnetomotive force and henry is inductance.',
   },
   {
     id: 8,
@@ -176,7 +180,8 @@ const quizQuestions = [
       '2.3 mΩ',
     ],
     correctAnswer: 0,
-    explanation: '1 Ω = 1000 mΩ. 23 × 1000 = 23 000 mΩ.',
+    explanation:
+      'Milli is 10⁻³, so 1 Ω = 1000 mΩ. 23 × 1000 = 23 000 mΩ. Dividing by 1000 (giving 0.023) is the common slip.',
   },
 ];
 

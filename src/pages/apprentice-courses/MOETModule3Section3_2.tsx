@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What are the three main components of a power cable?',
     options: [
       'Conductor, insulation and sheath (with possible armouring)',
-      'Continuity and isolation from protective conductors',
-      'BS EN 60947-6-1 for transfer switching equipment',
-      'Standardised launch conditions for repeatable measurements',
+      'Live conductor, neutral conductor and protective device',
+      'Phase, neutral and earth busbars',
+      'Copper core, steel core and aluminium core',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'xlpe-advantage',
     question: 'What is the primary advantage of XLPE insulation over PVC for power cables?',
     options: [
-      'A short, focused safety briefing on a specific topic delivered to the work team — interactive, recorded with attendees signed in',
-      'EIC + Schedule of Inspections + Schedule of Test Results — the work provides a new circuit, and BS 7671 reserves the MEIWC for minor works that do NOT include a new circuit.',
+      'XLPE is significantly cheaper to manufacture than PVC for the same conductor size',
+      'XLPE is more flexible than PVC, making it much easier to install in tight bends',
       'XLPE has a higher continuous operating temperature (90 degrees C vs 70 degrees C), allowing higher current ratings for the same conductor size',
-      'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
+      'XLPE does not require any mechanical protection when buried underground',
     ],
     correctIndex: 2,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'Which factors reduce the current-carrying capacity (CCC) of a cable below its tabulated value in BS 7671?',
     options: [
-      'A hazard that remains despite isolation measures, such as sludge containing toxic substances or residual energy in a system',
+      'Conductor material, cable colour, manufacturer and date of manufacture',
       'Ambient temperature, grouping with other cables, thermal insulation contact and installation method',
-      'Consider load distribution, loop impedance, and cable routing for balanced loading',
-      'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
+      'The nominal supply voltage, circuit length and number of accessories on the circuit',
+      'The type of protective device, the earthing system and the prospective fault current',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'swa-purpose',
     question: 'What is the primary function of steel wire armour (SWA) in a cable?',
     options: [
-      'Date, weather, work carried out, materials used, personnel on site, and any issues encountered',
+      'To increase the current-carrying capacity of the cable conductors',
       'To provide mechanical protection against impact, crushing and penetration during installation and service',
-      'To balance cost, reliability, and maintenance efficiency based on risk assessment',
-      'To ensure call points remain visible and can be operated during power failures',
+      'To improve the insulation resistance between the conductors and earth',
+      'To reduce the voltage drop along long cable runs',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: "The designation '6942X' on a cable indicates:",
     options: [
-      'Line and neutral should be similar, earth may be higher',
+      'A two-core PVC-insulated, non-armoured flexible cable to BS 6004',
       'A two-core XLPE-insulated, SWA, PVC-sheathed cable to BS 5467',
-      'Kinetic (water) → mechanical (turbine/generator) → electrical',
-      'Current cost performance trends will continue',
+      'A four-core mineral insulated cable to BS EN 60702',
+      'A single-core 6 mm² conductor rated at 942 amps',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'BS 7671 Table 4D1A provides current-carrying capacities for:',
     options: [
-      'The employer must weigh the risk against the cost, time and effort of removing it',
-      'MTBF divided by (MTBF + MTTR), expressed as a percentage',
+      'Multicore XLPE-insulated armoured cables clipped direct to a surface',
+      'Mineral insulated cables in fire-rated installation methods',
       'Single-core PVC-insulated cables (non-armoured) in specific installation methods',
-      'Multi-parameter sensors (CO2, VOCs, particulates, humidity)',
+      'Flexible trailing cables for portable equipment and machine connections',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'The voltage drop limit for lighting circuits in BS 7671 is:',
     options: [
-      'BS EN 361 — Full body harnesses',
-      'The supply polarity has been reversed',
-      'Ensure ring integrity and safety',
+      '5% of the nominal supply voltage',
+      '8% of the nominal supply voltage',
+      '1% of the nominal supply voltage',
       '3% of the nominal supply voltage',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Mineral insulated (MI) cable is used in maintenance applications primarily because:',
     options: [
       'It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible',
-      'The cable is installed in areas where toxic smoke and corrosive gases from burning cable sheaths would endanger life or damage sensitive equipment',
-      'A minimum of 6 times the overall cable diameter for cables up to 25 mm, and 8 times for larger cables',
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
+      'It is the cheapest cable type available and the simplest to terminate without specialist tools',
+      'It is highly flexible, making it ideal for trailing cables to portable and mobile equipment',
+      'It has the highest current-carrying capacity of any cable for a given conductor size',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'When selecting a cable for an industrial motor circuit, the minimum conductor size is determined by:',
     options: [
-      'It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible',
+      'The starting current of the motor alone, ignoring the continuous full-load current',
       'The greater of: full-load current (with applicable correction factors), voltage drop limit and earth fault loop impedance requirements',
-      'A minimum of 6 times the overall cable diameter for cables up to 25 mm, and 8 times for larger cables',
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
+      'The nominal supply voltage and the number of poles on the motor only',
+      'The physical size of the motor terminal box and the gland entry diameter',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The colour coding for a three-phase cable under BS 7671 harmonised colours is:',
     options: [
-      'Earth straps and earth clamps',
-      'It decreases due to increased resistance',
+      'Red (L1), yellow (L2), blue (L3)',
+      'Brown (L1), grey (L2), black (L3)',
       'Brown (L1), black (L2), grey (L3)',
-      'Record actual values with deviation noted',
+      'Black (L1), brown (L2), blue (L3)',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'FP200 Gold cable is commonly specified for:',
     options: [
-      'Design flow rates, achieved flow rates, test pressures and commissioning engineer details',
-      'Only as long as necessary for the purpose it was collected, with a documented retention policy',
-      'A possible compression of the brain, which is a life-threatening emergency',
+      'Underground power distribution circuits where steel wire armour is required',
+      'Flexible trailing supplies to portable hand tools and mobile machinery',
+      'High-voltage distribution where XLPE insulation gives the highest current rating',
       'Fire alarm and emergency lighting circuits requiring enhanced fire performance to BS 8434-2',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'The grouping correction factor (Cg) is applied because:',
     options: [
       "Cables grouped together share heat, reducing each cable's ability to dissipate its own heat, thereby reducing its safe current-carrying capacity",
-      "The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant",
-      "It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible",
-      "A minimum of 6 times the overall cable diameter for cables up to 25 mm, and 8 times for larger cables",
+      "Grouped cables induce circulating currents in each other, increasing the voltage drop along the run",
+      "Grouped cables are more likely to suffer mechanical damage, so a safety margin is added",
+      "Grouping increases the prospective fault current, requiring a larger protective device",
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'An LSZH (Low Smoke Zero Halogen) sheath is specified when:',
     options: [
-      'It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible',
+      'The cable must continue to carry full load current while directly engulfed in flames',
       'The cable is installed in areas where toxic smoke and corrosive gases from burning cable sheaths would endanger life or damage sensitive equipment',
-      'Verify the cable selection against current BS 7671 requirements, as regulations and loading may have changed since the original installation',
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
+      'The cable is buried directly in the ground and needs additional mechanical protection',
+      'The cable is exposed to direct sunlight and needs a UV-resistant outer sheath',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     question:
       "The thermal withstand capacity of a cable's protective conductor (CPC) is verified using:",
     options: [
-      'It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible',
-      'Cables grouped together share heat, reducing each cable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to dissipate its own heat, thereby reducing its safe current-carrying capacity',
+      'An insulation resistance test at 500 V DC between the CPC and the line conductors',
+      'A simple continuity test confirming the CPC is electrically connected end to end',
       'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
-      'The greater of: full-load current (with applicable correction factors), voltage drop limit and earth fault loop impedance requirements',
+      'The voltage drop formula VD = (mV/A/m x Ib x L) / 1,000 applied to the CPC',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     question:
       'When replacing a cable in an existing installation, the maintenance technician must:',
     options: [
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
-      'The greater of: full-load current (with applicable correction factors), voltage drop limit and earth fault loop impedance requirements',
-      'It provides inherent fire resistance (maintaining circuit integrity at temperatures exceeding 1,000 degrees C) and is non-combustible',
+      'Always fit a smaller cable than the original to save on material costs',
+      'Match the original cable specification exactly, even if the load has since increased',
+      'Use the same cable type only if the supply voltage has changed since installation',
       'Verify the cable selection against current BS 7671 requirements, as regulations and loading may have changed since the original installation',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
     question: 'The bending radius of an SWA cable is typically:',
     options: [
       'A minimum of 6 times the overall cable diameter for cables up to 25 mm, and 8 times for larger cables',
-      'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
-      'Discharge any stored capacitive charge by shorting the conductors together before reconnecting equipment or touching conductors',
-      '30 ppm (the 8-hour WEL), with an alarm at 20 ppm for confined space work',
+      'A minimum of 2 times the overall cable diameter, regardless of the cable size',
+      'A minimum of 20 times the conductor cross-sectional area in square millimetres',
+      'A minimum of 12 times the overall cable diameter for all sizes of armoured cable',
     ],
     correctAnswer: 0,
     explanation:

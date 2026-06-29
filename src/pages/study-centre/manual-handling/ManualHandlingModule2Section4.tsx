@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'What is the safest way to carry a 3-metre length of cable tray through a standard doorway?',
     options: [
-      'Run through the doorway quickly before the door closes',
-      'Tilt the cable tray vertically or at an angle to clear the door frame, and have someone hold the door open',
-      'Push the cable tray along the floor through the doorway',
-      'Carry it above your head to clear the door frame',
+      'Tilt it to a steep angle to clear the frame, with someone holding the door open',
+      'Run it through the doorway quickly before the self-closing door swings shut',
+      'Push the cable tray along the floor and slide it through the open doorway',
+      'Raise it above your head to clear the door frame as you walk through',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Long loads must be tilted or angled to pass through standard doorways. Have a colleague hold the door open (or wedge it) so both your hands are free to control the load. Tilting the load vertically or at a steep angle allows it to pass through without catching on the door frame. Never carry long loads above your head &mdash; this places them outside the power zone and creates a significant risk of the load falling or striking overhead services.',
   },
@@ -37,11 +37,11 @@ const quickCheckQuestions = [
       'What precaution must you take before handling a transformer that has recently been de-energised?',
     options: [
       'No precautions are needed once it is de-energised',
-      'Check the surface temperature and allow it to cool, or use heat-resistant gloves',
       'Pour water on it to cool it down quickly',
+      'Check the surface temperature and allow it to cool, or use heat-resistant gloves',
       'Wrap it in bubble wrap for insulation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Transformers, motor starters, and other electrical equipment can retain significant heat for a long time after being de-energised. The surface temperature should be checked before handling &mdash; either by using a non-contact thermometer or by cautiously hovering your hand near (not on) the surface to feel for radiated heat. If the item is too hot to handle barehanded, allow it to cool or use heat-resistant gloves rated for the temperature. Never pour water on hot electrical equipment.',
   },
@@ -50,12 +50,12 @@ const quickCheckQuestions = [
     question:
       'What is the main risk when performing manual handling in a ceiling void or under-floor space?',
     options: [
-      'The lighting is usually poor',
-      'You cannot use proper lifting technique because you cannot stand upright or position your feet correctly',
-      'The temperature is usually very hot',
-      'There are usually no other workers to help you',
+      'The lighting in these spaces is usually too poor to work by',
+      'The temperature in these spaces is usually uncomfortably hot',
+      'There are usually no other workers nearby to assist you',
+      'You cannot stand upright or set your feet, so proper lifting technique is impossible',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In restricted headroom environments (ceiling voids, under-floor voids, crawl spaces), you cannot stand upright, adopt a shoulder-width stance, or use your legs to lift. This forces you into awkward postures &mdash; crouching, kneeling, or lying down &mdash; where the spine is in a compromised position and the large leg muscles cannot contribute to the lift. The risk of back injury is significantly higher. Loads handled in these spaces should be as light as possible, and mechanical aids (ropes, pulleys, cable rollers) should be used wherever practical.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'Which of the following is a specific challenge when handling long loads such as 6-metre lengths of conduit?',
     options: [
-      'They are always heavier than short loads',
-      'They are difficult to balance, swing when turning, and can strike other workers or overhead services',
-      'They can only be carried by one person',
-      'They must always be carried horizontally',
+      'They swing when turning and can strike other workers or overhead services',
+      'They are always significantly heavier than equivalent short loads',
+      'They can only ever be carried safely by a single person',
+      'They must be kept perfectly horizontal at all times during the carry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Long loads present unique challenges: they are unwieldy and difficult to balance, they swing when the carrier turns (creating a large hazard radius), they can strike other workers or overhead services, and they are difficult to navigate through doorways, around corners, and in confined spaces. The weight is often less of a problem than the length and awkwardness.',
   },
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 3,
     question: 'How do gloves affect your manual handling capability?',
     options: [
-      'Gloves always improve handling because they protect your hands',
-      'Gloves have no effect on handling capability',
-      'Thick gloves reduce grip sensitivity and dexterity, requiring a firmer grip and increasing hand fatigue',
-      'Gloves make loads lighter because they reduce friction',
+      'Gloves always improve handling because they protect and cushion your hands',
+      'Gloves have no measurable effect on grip or handling capability',
+      'Thick gloves cut grip sensitivity and dexterity, so you grip harder and tire faster',
+      'Gloves effectively make loads feel lighter because they reduce friction',
     ],
     correctAnswer: 2,
     explanation:
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: 'What should you do before handling a piece of metal trunking with cut edges?',
     options: [
-      'Handle it quickly to minimise exposure to the sharp edges',
-      'Wear appropriate cut-resistant gloves and inspect the edges &mdash; deburr or cover sharp edges before lifting',
-      'Only handle it with one hand so the other is free to check for sharp edges',
-      'There is no additional risk from cut edges',
+      'Handle it quickly to minimise the time your hands are exposed to the sharp edges',
+      'Use only one hand so the other stays free to check the edges as you go',
+      'Treat it like any other load, as cut edges add no extra handling risk',
+      'Inspect and deburr or cover the sharp edges, then handle in cut-resistant gloves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cut or unfinished metal edges on cable tray, trunking, and conduit fittings are a significant handling hazard. Sharp edges can cause deep lacerations even through thin gloves. Before handling: inspect the load for sharp edges, deburr them with a file if practical, or cover them with tape or edge protectors. Always wear appropriate cut-resistant gloves. A sudden cut can cause you to release the load reflexively, creating a secondary injury risk.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is manual handling particularly risky in ceiling voids and under-floor spaces?',
     options: [
-      'The materials are always heavier in these locations',
-      'There is usually no lighting available',
-      'Restricted headroom prevents proper lifting posture &mdash; you cannot stand upright or use your legs effectively',
-      'You are not allowed to perform manual handling in these spaces',
+      'The materials handled in these locations are always heavier than elsewhere',
+      'There is never any lighting available in voids and under-floor spaces',
+      'Restricted headroom blocks proper posture, so you cannot stand or use your legs',
+      'Manual handling is prohibited in voids and under-floor spaces by regulation',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'A load containing loose items (e.g. a box of mixed fittings) shifts unexpectedly during a lift. What should you do?',
     options: [
-      'Continue the lift &mdash; the load is still the same weight',
-      'Stop, stabilise the load, and either secure the contents or repack them before continuing',
-      'Tilt the load to the opposite side to counterbalance',
-      'Speed up to reach the destination before the load shifts again',
+      'Stop, set it down, and secure or repack the contents before continuing',
+      'Continue the lift, since the load still weighs exactly the same',
+      'Tilt the load hard to the opposite side to counterbalance the shift',
+      'Speed up to reach the destination before the load shifts any further',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An unexpected shift in the load changes its centre of gravity and can cause loss of balance or loss of grip. Stop the lift safely (call &ldquo;Stop&rdquo; if in a team), set the load down, and assess why it shifted. Secure loose contents (pack tightly, use dividers, tape the box closed) before attempting the lift again. Never continue a lift with an unstable load &mdash; the shift may get worse.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'How does wearing a hard hat affect your ability to perform manual handling tasks safely?',
     options: [
-      'A hard hat has no effect on manual handling',
-      'A hard hat can limit upward vision, making it harder to see overhead obstacles and high placement points',
-      'A hard hat makes your head heavier, increasing neck strain',
-      'A hard hat improves handling because it protects you from falling objects',
+      'A hard hat has no real effect on how you handle and place loads',
+      'A hard hat adds enough weight to the head to cause noticeable neck strain',
+      'A hard hat improves handling because it shields you from any falling objects',
+      'A hard hat limits upward vision, hiding overhead obstacles and high placement points',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A hard hat limits your upward field of vision, which becomes a problem when you need to see above you &mdash; for example, when placing a load on a high shelf, feeding cable through a ceiling void, or navigating under low overhead obstacles. The brim restricts how far back you can tilt your head. Be extra cautious when lifting to heights while wearing a hard hat. Pause, look up before lifting, and use a spotter if needed. Despite this limitation, always wear your hard hat where required &mdash; falling-object protection is more important.',
   },
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'Which of the following is the safest approach to handling loads while working from a mobile scaffold tower?',
     options: [
-      'Lift loads directly from the ground to the platform by leaning over the edge',
-      'Have a colleague throw the items up to you',
-      'Use the internal ladder access with items passed up via a rope and bucket, or hoist materials using a gin wheel',
-      'Carry as many items as possible per trip to reduce the number of trips up the ladder',
+      'Lift loads from the ground to the platform by leaning out over the guard rail',
+      'Have a colleague throw the items up to you on the platform one at a time',
+      'Climb empty-handed and raise materials separately with a rope and bucket or gin wheel',
+      'Carry as many items as possible per trip to reduce the number of climbs',
     ],
     correctAnswer: 2,
     explanation:

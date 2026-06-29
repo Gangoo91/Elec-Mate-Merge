@@ -70,11 +70,11 @@ const checks = [
       '0.8',
       '0.6',
       '1.25',
-      '8',
+      '0.9',
     ],
     correctIndex: 0,
     explanation:
-      'cos φ = adjacent / hypotenuse = P / S = 8 / 10 = 0.8. The triangle is right-angled with P along the base and Q vertical; S is the hypotenuse.',
+      'cos φ = adjacent / hypotenuse = P / S = 8 / 10 = 0.8. 0.6 is sin φ (Q/S), 1.25 is S/P inverted — the triangle is right-angled with P along the base and S the hypotenuse.',
   },
 ];
 
@@ -173,14 +173,14 @@ const quizQuestions = [
     id: 8,
     question: 'On a calculator, sin 30° equals:',
     options: [
-      '0.5',
+      '0.866',
       '0.707',
-      '0',
+      '0.5',
       '1',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'sin 30° = 0.5 exactly. Make sure the calculator is in DEG mode, not RAD — getting that wrong is the most common L3 calculation error.',
+      'sin 30° = 0.5 exactly. 0.866 is sin 60°, 0.707 is sin 45° — make sure the calculator is in DEG mode, not RAD, or every angle comes out wrong.',
   },
 ];
 

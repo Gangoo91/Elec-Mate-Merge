@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'What is the key difference between an improvement notice and a prohibition notice?',
     options: [
       'An improvement notice stops work immediately; a prohibition notice gives time to comply',
-      'An improvement notice gives a specified time to comply; a prohibition notice stops work immediately',
       'Both notices give 21 days to comply',
       'Prohibition notices can only be issued by a court, not an HSE inspector',
+      'An improvement notice gives a specified time to comply; a prohibition notice stops work immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An improvement notice requires specific improvements within a set timeframe (typically 21 days), during which work may continue. A prohibition notice stops work immediately where the inspector believes there is a risk of serious personal injury. Prohibition notices take effect straight away and work must not resume until the risk has been eliminated or adequately controlled. Both notices can be issued by HSE inspectors without court involvement.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'What does Fee for Intervention (FFI) mean in the context of HSE enforcement?',
     options: [
-      'A fee charged to workers who request additional COSHH training',
       'A fee the employer must pay if the HSE finds a material breach during an inspection',
+      'A fee charged to workers who request additional COSHH training',
       'A fee charged by substance manufacturers for providing safety data sheets',
       "A voluntary contribution to the HSE's research budget",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fee for Intervention (FFI) means that if an HSE inspector identifies a material breach of health and safety law — including COSHH failures — the employer or dutyholder must pay for the time the HSE spends investigating and taking enforcement action. The charge is per hour and applies from the point the material breach is identified. This means poor COSHH management can have a direct financial cost even before any formal enforcement action, fine, or prosecution.',
   },

@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     id: 'fs-hot-work-fire-watch',
     question: 'How long should a fire watch continue after hot works are completed?',
     options: [
-      '10 minutes',
-      'Minimum 30 minutes (many organisations specify 60 minutes)',
-      '2 hours',
-      'Until the end of the working day',
+      'Around 10 minutes after the last activity',
+      'A minimum of 30 minutes after completion',
+      'A full 2 hours after the last activity',
+      'Until the end of the working day on site',
     ],
     correctIndex: 1,
     explanation:
@@ -51,8 +51,8 @@ const quickCheckQuestions = [
   {
     id: 'fs-electrical-fires-per-year',
     question: 'Approximately how many fires per year in the UK are caused by electrical faults?',
-    options: ['Around 5,000', 'Around 8,000', 'Around 14,000', 'Around 25,000'],
-    correctIndex: 2,
+    options: ['Around 14,000', 'Around 8,000', 'Around 5,000', 'Around 25,000'],
+    correctIndex: 0,
     explanation:
       'UK Home Office fire statistics indicate that electrical faults cause approximately 14,000 fires per year in the United Kingdom. This represents roughly 25% of all accidental dwelling fires. Common electrical causes include overloaded circuits, damaged cables, loose connections creating arcing, incorrect fuse ratings, and extension lead misuse. As an electrician, understanding these statistics reinforces why quality workmanship and proper testing are so critical.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     question:
       'Which of the following is the most common electrical cause of fire in domestic properties?',
     options: [
-      'Lightning strikes on overhead cables',
       'Overloaded circuits and extension leads',
+      'Lightning strikes on overhead cables',
       'Smart meter faults',
       'Solar panel inverter failures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Overloaded circuits and extension lead misuse are the most common electrical causes of domestic fire. Overloading occurs when the current drawn through a cable or extension lead exceeds its rated capacity, causing the conductor insulation to overheat, degrade, and eventually ignite surrounding combustible materials. Daisy-chaining extension leads, using adaptors to exceed socket capacity, and running high-power appliances on undersized cables are all common causes.',
   },
@@ -107,10 +107,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary purpose of a fire watch after hot works are completed?',
     options: [
-      'To ensure the work area is tidy before leaving',
-      'To detect and extinguish any smouldering materials or delayed ignition caused by sparks or hot particles',
-      'To wait for the hot work permit to be counter-signed',
-      'To allow welding gases to dissipate before the next shift',
+      'To ensure the work area is left clean and tidy before leaving',
+      'To detect and extinguish any smouldering or delayed ignition from sparks',
+      'To wait for the hot work permit to be counter-signed by a manager',
+      'To allow residual welding gases to dissipate before the next shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       'Which of the following is the most effective housekeeping measure to reduce fire risk in a workplace?',
     options: [
-      'Painting all walls in fire-retardant paint',
-      'Installing additional fire extinguishers',
-      'Preventing the accumulation of combustible waste, keeping fire exits clear, and ensuring fire doors are not propped open',
-      'Switching to LED lighting throughout the building',
+      'Painting all internal walls with fire-retardant paint',
+      'Installing additional fire extinguishers in every room',
+      'Switching to LED lighting throughout the whole building',
+      'Removing combustible waste, keeping exits clear, and not propping fire doors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Good housekeeping is one of the most effective and lowest-cost fire prevention measures. Preventing combustible waste accumulation removes fuel. Keeping fire exits clear ensures rapid evacuation. Ensuring fire doors are not propped open maintains compartmentation — the division of the building into fire-resistant compartments that contain the spread of fire and smoke. These measures are all required under the Regulatory Reform (Fire Safety) Order 2005 and are regularly checked during fire risk assessments.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'Under DSEAR 2002, what must an employer do if dangerous substances are present in the workplace?',
     options: [
-      'Notify the local fire and rescue service within 48 hours',
-      'Carry out a risk assessment of fire and explosion risks, eliminate or reduce those risks, and classify zones where explosive atmospheres may occur',
-      'Replace all dangerous substances with water-based alternatives',
-      'Ensure all employees hold a NEBOSH fire safety certificate',
+      'Assess the fire and explosion risks, reduce them, and classify explosive-atmosphere zones',
+      'Notify the local fire and rescue service in writing within 48 hours',
+      'Replace all dangerous substances on site with water-based alternatives',
+      'Ensure every employee on site holds a NEBOSH fire safety certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DSEAR 2002 requires employers to carry out a risk assessment of the fire and explosion risks from dangerous substances, eliminate or reduce those risks so far as is reasonably practicable, apply measures in a priority order (elimination, substitution, control), classify areas where explosive atmospheres may occur into ATEX zones, avoid sources of ignition in classified zones, and provide appropriate equipment (including ATEX-rated electrical equipment in classified zones). For electricians, this means understanding that in DSEAR-classified areas, only equipment certified for use in explosive atmospheres may be installed.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
     id: 6,
     question:
       'According to UK fire statistics, approximately how many fires per year are caused by electrical faults?',
-    options: ['Around 3,000', 'Around 7,000', 'Around 14,000', 'Around 30,000'],
-    correctAnswer: 2,
+    options: ['Around 3,000', 'Around 14,000', 'Around 7,000', 'Around 30,000'],
+    correctAnswer: 1,
     explanation:
       'UK Home Office fire statistics show that electrical faults cause approximately 14,000 fires per year, representing roughly 25% of all accidental dwelling fires. This makes electrical faults one of the leading causes of accidental fire in the UK. Common causes include overloaded circuits, damaged insulation, loose connections causing arcing, incorrect fuse ratings, extension lead misuse, and faulty appliances. Regular PAT testing, proper installation to BS 7671, and periodic inspection and testing (EICR) are all essential prevention measures.',
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
       'Why is it important for construction sites to enforce designated smoking areas away from combustible materials?',
     options: [
       'Because the Construction (Design and Management) Regulations 2015 ban all smoking on site',
-      'Because discarded cigarettes and smoking materials are a significant ignition source, particularly near timber, insulation, solvents, and other combustible construction materials',
-      'Because smoking near wet paint affects the finish quality',
-      'Because insurance companies require it for public liability purposes only',
+      'Because smoke drifting across freshly applied wet paint spoils the finish quality',
+      'Because discarded smoking materials are a major ignition source near combustibles',
+      'Because insurers require designated areas purely for public liability cover purposes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Discarded cigarettes and smoking materials are a well-documented ignition source. A cigarette tip can reach temperatures of approximately 700\u00B0C, which is more than sufficient to ignite many construction materials including timber offcuts, insulation, plastic packaging, solvents, and adhesives. On construction sites where large quantities of combustible materials are present, often in an unfinished building without operational fire detection or suppression systems, a carelessly discarded cigarette can rapidly develop into a serious fire. Designated smoking areas must be located away from all combustible storage, waste skips, and work areas.',
   },

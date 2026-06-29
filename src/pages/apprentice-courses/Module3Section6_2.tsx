@@ -27,11 +27,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: Horizontal safe zones apply only to internal walls.',
-    options: ['True', 'False'],
+    question: 'To which walls do BS 7671 safe zones apply?',
+    options: [
+      'Only internal partition walls',
+      'Both internal and external walls',
+      'Only external load-bearing walls',
+      'Only walls in bathrooms and kitchens',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. BS 7671 safe zones apply to both internal and external walls to ensure consistent cable protection throughout the building.',
+      'BS 7671 safe zones apply to both internal and external walls to ensure consistent cable protection throughout the building.',
   },
   {
     id: 3,
@@ -51,9 +56,9 @@ const quizQuestions = [
     question: 'Name one type of mechanical protection for cables.',
     options: [
       'Steel conduit or trunking',
-      'Type marking (AC, A, F, B)',
-      'Retest to verify the correction',
-      'BSRIA and Usable Buildings Trust',
+      'Plastic capping over the cable',
+      'A green/yellow warning sleeve',
+      'A self-adhesive cable label',
     ],
     correctAnswer: 0,
     explanation:
@@ -89,9 +94,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it dangerous to route cables diagonally in walls?',
     options: [
-      'Safety standard for electrical test equipment and probes',
-      'Higher efficiency and temperature coefficient',
-      'Conduct basic tests under supervision',
+      'They carry less current than vertical runs',
+      'They increase the cable bend radius too much',
+      'They cannot be detected by a cable locator',
       'They are unpredictable and likely to be drilled into',
     ],
     correctAnswer: 3,
@@ -103,12 +108,12 @@ const quizQuestions = [
     question:
       'What is one additional requirement for cables routed outside safe zones in a bathroom?',
     options: [
-      'Compliance with bathroom zoning requirements',
-      'Installing accessories and making final connections',
-      'The wrong circuit was isolated, causing costly downtime',
-      'To avoid electromagnetic interference',
+      'They must use the pre-2004 colour code',
+      'They must be installed at exactly 50 mm depth',
+      'They must avoid electromagnetic interference',
+      'They must comply with bathroom zoning requirements',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Bathroom cables must comply with both safe zone requirements AND bathroom zoning regulations (BS 7671 Section 701).',
   },

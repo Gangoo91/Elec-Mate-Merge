@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'firemans-switch',
     question: "Where must a fireman's switch be located?",
     options: [
-      'In the main switchroom',
-      'Inside the fire alarm control panel',
-      'On the roof next to the sign',
-      'At the main entrance to the building',
+      'At the main entrance to the building or as close as practicable',
+      'Adjacent to the fire alarm control panel inside the building',
+      'Within the main LV switchroom next to the incoming supply',
+      'At roof level beside the sign or luminaire it controls',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "A fireman's switch must be located at the main entrance to the building, or as close as practicable, so that firefighters can access it easily before entering the premises. It must be coloured red with the OFF position at the top.",
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'isolator-feature',
     question: 'What additional feature must an isolator have beyond simply opening the contacts?',
     options: [
-      'To track material origins for quality and safety purposes',
-      'Locking facility and visible gap or positive indication',
-      'Work substantially complete and fit for occupation',
-      'It affects visual performance at mesopic light levels',
+      'A current-limiting fuse fitted in series with the moving contacts',
+      'An auxiliary contact wired back to the fire alarm panel',
+      'A locking facility and a visible gap or positive contact-position indication',
+      'A residual current device built into the same enclosure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An isolating device must be capable of being locked in the open position and must provide either a visible gap or a positive indication that the contacts are fully open. This ensures the device cannot be accidentally closed during work.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Why must the voltage indicator be tested on a known live source BOTH before and after proving dead?',
     options: [
+      'To allow the instrument batteries to settle before the dead test is recorded',
+      'To discharge any stored energy in the indicator before applying it to the circuit',
+      'To satisfy the calibration interval required for the instrument each working day',
       'To confirm the instrument was working before and after, eliminating false dead readings',
-      'To ensure safety, coordinate work sequences, and prevent conflicts',
-      'Compression of the median nerve in the wrist causing pain, numbness, and tingling in the hand and fingers',
-      'Favouring people who are similar to you in background, interests, or personality',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Testing before and after eliminates the possibility that a faulty instrument gave a false dead reading. If the tester worked before proving dead but not after, it may have failed during the test, meaning the circuit could still be live.',
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the key difference between functional switching and isolation?',
     options: [
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'Splice connecting different cable types (e.g., loose-tube to tight-buffer)',
+      'Functional switching breaks only the neutral; isolation breaks only the line conductor',
+      'Functional switching is rated for fault current; isolation is rated for load current only',
       'Functional switching controls normal operation; isolation disconnects for safety during work',
-      'Storing energy as heat or cold for later use in heating or cooling systems',
+      'Functional switching needs a visible gap; isolation only needs a positive indication',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'In the safe isolation procedure, what must you do immediately AFTER proving dead?',
     options: [
-      'For stranded conductors or where vibration is present',
+      'Remove the lock-off device so the circuit can be re-energised for testing',
       'Re-test the voltage indicator on a known live source',
-      'Travelling cable with enhanced flexibility',
-      'All persons at work who may be affected by electrical danger',
+      'Record the insulation resistance value on the schedule of test results',
+      'Apply temporary earths to the conductors at the point of work',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'What must be attached to an isolator after locking off?',
     options: [
-      'A caution notice with name, date and contact details',
-      'Fire-rated enclosure or separation from occupied spaces',
-      'Consider environmental effects on acceptance criteria',
-      'High personal spending coincides with reduced business income',
+      'A caution notice showing the name, date and contact details of the person working',
+      'A copy of the relevant circuit schedule from the distribution board',
+      'A test certificate confirming the device is suitable for isolation duty',
+      'A warning label stating the prospective fault current at that point',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "Which installations require a fireman's switch?",
     options: [
-      'Functional switching controls normal operation; isolation disconnects for safety during work',
-      'Exterior signs above 2.8 m at over 230 V, HV discharge lighting, PV installations',
-      'Switching off supply for mechanical maintenance of non-electrical parts',
-      'A blown fuse or flat battery could give a false zero reading',
+      'All final circuits supplying socket outlets in a commercial premises',
+      'Exterior signs above 2.8 m at over 230 V, HV discharge lighting and PV installations',
+      'Any circuit protected by a 30 mA RCD in a domestic dwelling',
+      'Distribution boards supplied by more than one source of energy',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 11,
     question: 'Why is a multimeter not suitable for proving dead?',
     options: [
-      'A caution notice with name, date and contact details',
-      'Re-test the voltage indicator on a known live source',
-      'Switching off supply for mechanical maintenance of non-electrical parts',
-      'A blown fuse or flat battery could give a false zero reading',
+      'Its test leads are not long enough to reach the conductors safely',
+      'It can only measure AC voltage and not DC voltage on a circuit',
+      'It must be recalibrated before each individual measurement is taken',
+      'A blown fuse or flat battery could give a false zero (dead) reading',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'What is mechanical maintenance switching used for?',
     options: [
-      'Switching off supply for mechanical maintenance of non-electrical parts',
-      'Re-test the voltage indicator on a known live source',
-      'Exterior signs above 2.8 m at over 230 V, HV discharge lighting, PV installations',
-      'Functional switching controls normal operation; isolation disconnects for safety during work',
+      'Switching off the supply to allow mechanical work on non-electrical parts of equipment',
+      'Disconnecting a circuit from every source of energy before electrical work begins',
+      'Rapidly removing the supply in the event of danger from the driven equipment',
+      'Controlling the normal everyday on/off operation of a motor or machine',
     ],
     correctAnswer: 0,
     explanation:

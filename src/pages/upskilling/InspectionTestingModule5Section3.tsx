@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 313.1 lets you determine Ze by four routes. On a five-year periodic inspection of an existing TN-C-S installation, which route is the default?',
     options: [
-      'Enquiry to the DNO — they hold the canonical value',
-      'Measurement at the origin — the existing supply is in front of you, so the today reading is the evidence the certificate captures',
-      'Calculation from cable size and length',
-      'Inspection of the cut-out label only',
+      'Enquiry to the DNO — they hold the canonical declared value for the feeder',
+      'Measurement at the origin — the supply is live in front of you, so it is the evidence',
+      'Calculation from the supply cable size and length back to the substation',
+      'Inspection of the cut-out label and supplier earthing declaration only',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A measured Ze of 0.27 Ω with no further information about the supply most strongly suggests which earthing arrangement?',
     options: [
-      'TT — typical electrode resistance',
-      'TN-C-S (PME) — typical band 0.20–0.35 Ω, dominated by the parallel PEN return',
-      'TN-S — typical band 0.35–0.8 Ω',
-      'IT — high-impedance source',
+      'TT — typical single-electrode resistance for a domestic rod',
+      'TN-C-S (PME) — typical band 0.20–0.35 Ω from the parallel PEN return',
+      'TN-S — typical band 0.35–0.8 Ω via a separate earth conductor',
+      'IT — a deliberately high-impedance, earth-isolated source',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'You measure Ze without lifting the main earthing conductor and read 0.11 Ω on a TN-C-S supply where the declared maximum is 0.35 Ω. The Method A reading (earthing conductor lifted) is 0.21 Ω. Which is the true Ze?',
     options: [
-      '0.11 Ω — the lower reading is always more accurate',
-      '0.21 Ω — the Method A reading. The 0.11 Ω is the parallel combination of the true external loop and every bonded extraneous part (gas, water, structural steel) and is not Ze',
-      'Average of the two — 0.16 Ω',
-      'Either is acceptable for the certificate',
+      '0.11 Ω — the lower reading is always the more accurate of the two',
+      '0.21 Ω — the Method A reading; the 0.11 Ω is the bonded parallel combination, not Ze',
+      'The average of the two readings, 0.16 Ω, splits the difference fairly',
+      'Either reading is acceptable to record on the certificate as Ze',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A TT installation reads Ze = 95 Ω, with a 30 mA RCD providing fault protection. Apply Reg 411.5.3 (Ra × IΔn ≤ 50 V) and Table 41.5 (max Zs for 30 mA RCD = 1667 Ω). Verdict?',
     options: [
-      'Fail — Ze must be below 1 Ω on TT',
-      'Pass — 95 × 0.030 = 2.85 V (below 50 V) and 95 Ω is far below 1667 Ω. High Ze on TT is normal; both compliance routes pass',
-      'Pass only if a second electrode is added',
-      'Reg 411.5.3 does not apply to TT systems',
+      'Fail — Ze must always be below 1 Ω on a TT installation',
+      'Pass — 95 × 0.030 = 2.85 V (< 50 V) and 95 Ω is far below 1667 Ω',
+      'Pass only if a second earth electrode is driven in parallel',
+      'Reg 411.5.3 does not apply to TT systems at all',
     ],
     correctIndex: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Where between the meter and the consumer unit do you take the Ze probes for a measurement-method Ze test?',
     options: [
-      'Between L at the meter tails and N at the meter tails',
       'Between L at the consumer unit incomer and the means of earthing (intake earth terminal / earthing conductor at the MET) — with the installation main earthing conductor disconnected from the MET, or using the meter no-disconnect mode',
-      'Between L at the consumer unit incomer and any bonded extraneous part',
-      'Between L and the protective conductor of any final circuit',
+      'Between L at the meter tails and N at the meter tails',
+      'Between L at the consumer unit incomer and any bonded extraneous-conductive-part',
+      'Between L and the circuit protective conductor of any final circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ze is the external earth fault loop impedance only — that is the L conductor through the supply and back via the means of earthing. To measure it, the installation must be electrically removed from the loop, either physically by disconnecting the earthing conductor at the MET (with the supply isolated for the brief moment that requires) or, on modern testers, by using a no-disconnect / supply-side mode that achieves the same isolation electronically.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'You are about to physically disconnect the main earthing conductor at the MET to take a Ze reading. Reg 643 requires the rest of the installation to be in what state during that disconnection?',
     options: [
-      'Energised — Ze must always be measured live',
-      'Isolated and proved dead at the consumer unit before the earthing conductor leaves the MET',
-      'Energised but with all RCDs tripped',
+      'Energised throughout — Ze must always be measured on a live installation',
+      'Energised but with every RCD tripped before the earthing conductor is lifted',
       'There is no requirement — the earthing conductor can be lifted at any time',
+      'Isolated and proved dead at the consumer unit before the earthing conductor leaves the MET',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A live installation with the earthing conductor lifted is a touch-voltage trap. Isolate the consumer unit main switch, prove dead, and only then break the earthing conductor at the MET. Reconnect the earthing conductor before re-energising. Modern multifunction testers with a no-disconnect Ze mode bypass the physical break entirely — that is the safer default.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'On a TT supply, why does a measured Ze of 80 Ω not, on its own, indicate a fault?',
     options: [
-      'Because Ze on TT is irrelevant',
-      'Because the TT loop returns through an installation earth electrode whose resistance dominates the loop — the value is a function of the electrode and the soil, not the DNO; compliance is judged against RCD operation (Ra × IΔn ≤ 50 V) and the Table 41.5 RCD Zs limits, not against TN-style Ze bands',
-      'Because TT supplies do not have a loop at all',
-      'Because Ze is calculated, never measured, on TT',
+      'Because the loop returns through the installation electrode, so compliance is judged on RCD operation, not TN-style Ze bands',
+      'Because the value of Ze on a TT installation is irrelevant to disconnection compliance',
+      'Because TT supplies do not form a continuous earth fault loop back to source at all',
+      'Because Ze on a TT installation is always calculated from rod length, never measured',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On TT, the earth fault current loop includes the earth return path through the installation electrode and the general mass of earth. The 80 Ω is the electrode-plus-earth resistance — high by TN standards, normal for a domestic rod. Disconnection on TT relies on the RCD, and Reg 411.5.3 / Table 41.5 set the loop impedance limits the RCD must operate within.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'You measure Ze with the main earthing conductor disconnected and read 0.18 Ω. You reconnect the earthing conductor and re-measure between L and the MET — the reading is 0.11 Ω. What does the difference reveal?',
     options: [
-      'The meter is faulty',
-      'The 0.11 Ω is the parallel combination of the true Ze and parallel earth paths via bonded gas/water/structural metalwork. The 0.18 Ω is the true Ze. Use 0.18 Ω for design verification',
-      'Either reading is valid — pick the lower',
-      'The 0.18 Ω is the parallel path; the 0.11 Ω is the true Ze',
+      'The meter is faulty and both readings should be discarded and retaken with new leads',
+      'Either reading is valid — record the lower of the two as the more favourable Ze',
+      'The 0.18 Ω is the parallel path and the 0.11 Ω is the true external Ze to record',
+      'The 0.11 Ω is the parallel-path reading; the 0.18 Ω is the true Ze for verification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'With the earthing conductor reconnected, the bonded extraneous parts (gas, water, structural steel) sit in parallel with the supply earth. That parallel combination always reads lower than the true external impedance. A genuine Ze for design and verification is the value with parallel paths electrically removed — disconnected method or no-disconnect tester mode.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'You ring the DNO and they declare a maximum Ze of 0.35 Ω for the TN-C-S supply. You measure 0.42 Ω. What is the right next step?',
     options: [
-      'Use 0.35 Ω because the DNO is the source of truth',
-      'Use the lower of the two',
-      'Investigate. The declared value is a maximum the DNO commits to under typical conditions; an in-service measurement higher than that points to a degraded supply earth (high-resistance PEN joint, stolen earth at a substation, corroded service cable). Raise it with the DNO before signing off, and use the measured value for design verification in the meantime',
-      'Ignore the discrepancy — 0.07 Ω is within meter tolerance',
+      'Use 0.35 Ω because the DNO declared figure is the contractual source of truth',
+      'Use the lower of the two readings as the more favourable value for design',
+      'Investigate — a measurement above the declared maximum points to a degraded supply earth; raise with the DNO and record the measured value',
+      'Ignore the discrepancy — 0.07 Ω is well within normal EFLI meter tolerance',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'Reg 313.1 requires Ze to be recorded. Where on the A4:2026 model forms does that recorded Ze appear?',
     options: [
-      'Schedule of Test Results, R1+R2 column',
       'Electrical Installation Certificate (or EICR) — Supply Characteristics box, with PSCC and the type/rating of the origin protective device',
+      'Schedule of Test Results, in the R1+R2 column',
       'Schedule of Inspections only',
-      'Nowhere — Ze is informative',
+      'Nowhere — Ze is informative and is not recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 313.1 lists Ze alongside nominal voltage, nature of current/frequency, prospective short-circuit current, suitability for maximum demand, and the type and rating of the origin protective device. All of these are entered in the Supply Characteristics block at the top of the EIC / EICR. Circuit-level Zs goes on the Schedule of Test Results — Ze is the supply-level record.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'A no-disconnect Ze test on a multifunction tester gives a reading. What is the meter actually doing internally that lets it measure Ze without your having to lift the earthing conductor?',
     options: [
-      'Drawing a heavy fault current and measuring the voltage drop',
-      'Comparing two short-duration loop measurements taken at different points/states (typically L–N and L–PE) and subtracting to remove the installation contribution — backed by very accurate voltage sensing — so the user is not exposed to a live installation with the earth lifted',
-      'Disconnecting the earth electronically inside the meter',
-      'Measuring resistance only — there is no live test',
+      'Drawing a heavy fault current to earth and measuring the resulting voltage drop across the loop',
+      'Physically disconnecting the earthing conductor electronically via a relay inside the meter body',
+      'Measuring resistance only on a dead, isolated circuit — there is no live test involved at all',
+      'Comparing two precise loop measurements and subtracting the installation contribution, using accurate voltage sensing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "No-disconnect / hi-current / Confirm-style Ze modes work by combining two precisely sequenced loop measurements and using the meter's voltage reference to back-calculate Ze without the operator manually breaking the earthing conductor. The advantage is safety; the user never has the installation live with no installation earth. Always read the manufacturer guidance for the specific mode, because the disconnection assumption (parallel paths) still applies.",
   },
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'After taking a measurement-method Ze, you forget to reconnect the main earthing conductor before re-energising the consumer unit. What is the worst-case outcome and what is the procedural fix?',
     options: [
-      'Nothing — the bonding still provides a path',
-      'No protective earth is present at the MET. A line-to-exposed-conductive-part fault elsewhere in the installation no longer has a low-impedance return path; the protective device may not operate within Reg 411.3.2 disconnection times and exposed metalwork can sit at supply voltage. Fix: write earthing-conductor-reconnect into the test sheet as a discrete pre-energisation step, and use a brightly coloured tag on the disconnected end while the test is in progress',
-      'The RCD will compensate',
-      'Bonding alone disconnects the supply on a fault',
+      'Nothing — the main bonding still provides an adequate return path to source',
+      'The MET is left floating, so a fault may not disconnect in time; fix by making earth-reconnect a tick-box pre-energisation step',
+      'The RCD compensates for the missing earth and disconnects on the next fault anyway',
+      'Bonding alone disconnects the supply on a fault, so the lifted earth is harmless',
     ],
     correctAnswer: 1,
     explanation:

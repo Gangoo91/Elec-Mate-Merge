@@ -64,9 +64,9 @@ export const module1Questions: QuestionBank[] = [
     id: 3,
     question: 'Under Section 3 of HASAWA, employers have duties to whom?',
     options: [
-      'Assess the risks and decide on necessary precautions',
-      'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
+      'Only their own directly employed full-time staff',
+      'Only employees who have completed an induction',
+      'Only agency workers and labour-only subcontractors',
       'Non-employees who may be affected by the work activities',
     ],
     correctAnswer: 3,
@@ -96,10 +96,10 @@ export const module1Questions: QuestionBank[] = [
     id: 5,
     question: 'What is prohibited under Section 8 of HASAWA?',
     options: [
-      'Identify circuit, isolate, secure isolation, prove dead, apply lock-off, work safely',
+      'Working overtime without prior written authorisation from a manager',
       'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
-      'Clear warning signs indicating work in progress and prohibition against re-energising',
-      'Regularly, with fire drills at least annually and more frequent briefings',
+      'Refusing to attend a health and safety committee meeting',
+      'Bringing personal tools onto site without registering them first',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,10 +112,10 @@ export const module1Questions: QuestionBank[] = [
     id: 6,
     question: 'Under HASAWA, what document must employers with 5 or more employees have?',
     options: [
-      'Control of Substances Hazardous to Health',
-      'Working space, access, and lighting',
+      'A written disciplinary and grievance procedure',
+      'A signed contract of employment for each worker',
       'Written health and safety policy',
-      'The type of hazard posed by the substance',
+      'A public liability insurance certificate displayed on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,9 +128,9 @@ export const module1Questions: QuestionBank[] = [
     id: 7,
     question: 'What enforcement powers does an HSE inspector have under HASAWA?',
     options: [
-      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'Only as a last resort when risks cannot be adequately controlled by other means',
+      'To dismiss employees who breach safety rules on the spot',
+      'To impose on-the-spot fixed-penalty fines payable in cash',
+      'To revoke an electrician\'s competent-person scheme membership',
       'To issue improvement notices, prohibition notices, and prosecute',
     ],
     correctAnswer: 3,
@@ -145,9 +145,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is the difference between an improvement notice and a prohibition notice?',
     options: [
       'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
-      'Suitable precautions shall be taken to prevent danger from charge on exposed metalwork, preferably by earthing',
-      'All employers must make a suitable and sufficient assessment of risks to employees and others',
-      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Improvement notices stop activities immediately; prohibition notices give time to remedy a contravention',
+      'Improvement notices apply only to employers; prohibition notices apply only to employees',
+      'Improvement notices carry an automatic fine; prohibition notices are advisory only',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ export const module1Questions: QuestionBank[] = [
     id: 10,
     question: 'Under HASAWA, who can be held personally liable for health and safety offences?',
     options: [
-      'A committee where employers and employee representatives discuss and review health and safety measures',
-      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
+      'Only the company as a legal entity, never any individual',
+      'Only the appointed health and safety officer or adviser',
       'Directors, managers, and other officers if the offence was committed with their consent, connivance, or neglect',
-      'Equipment must be suitable for the purpose, properly maintained, and used by competent persons',
+      'Only shareholders holding more than 25% of the company',
     ],
     correctAnswer: 2,
     explanation:
@@ -192,9 +192,9 @@ export const module1Questions: QuestionBank[] = [
     id: 11,
     question: 'What information must employers provide to employees under Section 2 of HASAWA?',
     options: [
-      'The maximum concentration of an airborne substance averaged over a reference period',
-      'All employers, employees, and self-employed persons who work with or near electricity',
-      'To ensure control measures protect everyone affected including employees, contractors, and public',
+      'A copy of the company\'s annual financial accounts',
+      'Written confirmation of their pension contributions',
+      'The contact details of the local enforcing authority only',
       'Information, instruction, training and supervision necessary for health and safety',
     ],
     correctAnswer: 3,
@@ -209,9 +209,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does Section 4 of HASAWA cover?',
     options: [
       'Duties of persons concerned with premises to persons other than their employees',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
-      'Non-employees who may be affected by the work activities',
-      'Fire action notices, evacuation routes, assembly points, emergency contacts',
+      'The general duty of employees to take reasonable care',
+      'The prohibition on charging employees for safety provision',
+      'The duties of manufacturers and suppliers of work articles',
     ],
     correctAnswer: 0,
     explanation:
@@ -224,10 +224,10 @@ export const module1Questions: QuestionBank[] = [
     id: 13,
     question: 'Who enforces health and safety law in most electrical contracting workplaces?',
     options: [
-      'The type of hazard posed by the substance',
+      'The local authority environmental health department',
       'The Health and Safety Executive (HSE)',
-      'Any amputation including fingers, toes, or limbs',
-      'Hand being corroded and surface being attacked',
+      'The competent person scheme operator (e.g. NICEIC)',
+      'The Health and Safety Commission policy board',
     ],
     correctAnswer: 1,
     explanation:
@@ -240,10 +240,10 @@ export const module1Questions: QuestionBank[] = [
     id: 14,
     question: "What is a 'competent person' under health and safety legislation?",
     options: [
-      'When exposure cannot be adequately controlled and specific health conditions can be identified',
-      'Clear warning signs indicating work in progress and prohibition against re-energising',
+      'Any person over the age of 18 employed on the site',
+      'A person who holds a current first aid certificate',
       'A person with sufficient training, knowledge, experience and other qualities to properly assist',
-      'Follow strict live working procedures if justified, or postpone work until isolation is possible',
+      'A person formally appointed in writing by the HSE',
     ],
     correctAnswer: 2,
     explanation:
@@ -256,9 +256,9 @@ export const module1Questions: QuestionBank[] = [
     id: 15,
     question: 'What must employers consult with employees about under HASAWA?',
     options: [
-      'To confirm work is complete, the area is safe, and controls can be removed',
-      'A detailed assessment focused on a particular activity or operation',
-      'To physically prevent an isolator being switched back on while work is in progress',
+      'Rates of pay and overtime allowances for hazardous work',
+      'The choice of company providing site welfare facilities',
+      'The selection of subcontractors for the project',
       'Measures affecting health and safety, including arrangements for competent assistance',
     ],
     correctAnswer: 3,
@@ -274,9 +274,9 @@ export const module1Questions: QuestionBank[] = [
       'Under HASAWA, what are the duties of manufacturers and suppliers of articles for use at work?',
     options: [
       'To ensure articles are safe, tested, and accompanied by adequate information',
-      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'Use it properly, report defects, store it correctly, and not misuse it',
+      'To provide a lifetime free repair warranty on every article',
+      'To register every article sold with the enforcing authority',
+      'To indemnify the employer against any prosecution arising from use',
     ],
     correctAnswer: 0,
     explanation:
@@ -289,10 +289,10 @@ export const module1Questions: QuestionBank[] = [
     id: 17,
     question: 'What is the purpose of a health and safety policy statement?',
     options: [
-      "A short, focused safety briefing on a specific topic relevant to the work",
+      "To record every accident that has occurred at the workplace",
       "To set out the organisation's commitment and arrangements for managing health and safety",
-      "The remaining risk after control measures have been implemented",
-      "Weather, lighting, temperature, noise, ventilation, and access conditions",
+      "To list the names and home addresses of all employees",
+      "To detail the company's terms of business with its clients",
     ],
     correctAnswer: 1,
     explanation:
@@ -321,9 +321,9 @@ export const module1Questions: QuestionBank[] = [
     id: 19,
     question: 'How often should a health and safety policy be reviewed?',
     options: [
-      'Continuous assessment of changing risks while work is in progress',
-      'Inhalation, skin absorption, ingestion, and injection',
-      'Only HSE-licensed contractors holding a current asbestos licence',
+      'Only once, when the business is first established',
+      'Strictly every five years and at no other time',
+      'Only after the HSE has issued an improvement notice',
       'Regularly and whenever there are significant changes',
     ],
     correctAnswer: 3,
@@ -338,9 +338,9 @@ export const module1Questions: QuestionBank[] = [
     question: "What is 'vicarious liability' in health and safety?",
     options: [
       "An employer's liability for acts or omissions of their employees performed in the course of employment",
-      "Dust suppression, noise control, waste management, and prevention of pollution",
-      "Make the area safe, provide first aid, preserve evidence, and report to RIDDOR",
-      "Equipment must be suitable for the purpose, properly maintained, and used by competent persons",
+      "An employee's personal liability for the acts of their employer",
+      "The liability of a client for the acts of their main contractor",
+      "The shared liability of all directors regardless of fault",
     ],
     correctAnswer: 0,
     explanation:
@@ -353,10 +353,10 @@ export const module1Questions: QuestionBank[] = [
     id: 21,
     question: 'Under HASAWA, what must employees NOT do?',
     options: [
-      'To issue improvement notices, prohibition notices, and prosecute',
-      'Charge their employer for safety equipment or training',
-      'Continuous assessment of changing risks while work is in progress',
-      'A safe location where evacuated personnel gather to be accounted for',
+      'Report a hazard directly to the HSE without telling their employer',
+      'Interfere with or misuse anything provided for health and safety',
+      'Refuse to carry out a task they consider unsafe',
+      'Use their own personal protective equipment instead of the employer\'s',
     ],
     correctAnswer: 1,
     explanation:
@@ -369,10 +369,10 @@ export const module1Questions: QuestionBank[] = [
     id: 22,
     question: "What is the 'hierarchy of control' in health and safety?",
     options: [
-      'Identify where work interfaces with others and specify coordination measures',
-      'All systems shall be constructed to prevent danger so far as is reasonably practicable',
+      'A ranking of staff seniority used to decide who supervises whom',
+      'A prioritised approach: PPE, administrative controls, engineering controls, substitution, elimination',
       'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
-      'Details of injured person, accident circumstances, location, date/time, nature of injury',
+      'A list of legislation in order of when it was enacted',
     ],
     correctAnswer: 2,
     explanation:
@@ -385,9 +385,9 @@ export const module1Questions: QuestionBank[] = [
     id: 23,
     question: "What does 'due diligence' mean in health and safety?",
     options: [
-      'Every part of a system shall be protected from excess current',
-      'Electrical short circuit or overload causing fire or explosion',
-      'Regularly and whenever there are significant changes',
+      'Completing work as quickly as the client demands',
+      'Carrying out the legal minimum and nothing more',
+      'Delegating all safety responsibility to a subcontractor',
       'Taking all reasonable precautions to prevent harm and demonstrating this',
     ],
     correctAnswer: 3,
@@ -402,9 +402,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is a Safety Representative?',
     options: [
       'An employee appointed by a recognised trade union to represent employees on health and safety matters',
-      'That adequate precautions are taken to prevent reconnection during work',
-      'Weather, lighting, temperature, noise, ventilation, and access conditions',
-      'Finger barriers, insulated tips with maximum 4mm exposed, and HRC fused leads',
+      'A manager appointed by the employer to enforce safety rules on staff',
+      'An HSE inspector assigned to monitor a particular site',
+      'An external consultant hired to write the risk assessments',
     ],
     correctAnswer: 0,
     explanation:
@@ -417,10 +417,10 @@ export const module1Questions: QuestionBank[] = [
     id: 25,
     question: 'What functions can a Safety Representative perform?',
     options: [
-      'Action value 2.5 m/s² A(8); limit value 5 m/s² A(8) — over which exposure is prohibited',
+      'Issue prohibition notices and prosecute the employer for breaches',
       'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
-      'Chemical-resistant gloves, eye protection, and respiratory protection if ventilation is inadequate',
-      'All employers must make a suitable and sufficient assessment of risks to employees and others',
+      'Dismiss employees who repeatedly ignore safety instructions',
+      'Set the company health and safety budget for the year',
     ],
     correctAnswer: 1,
     explanation:
@@ -433,10 +433,10 @@ export const module1Questions: QuestionBank[] = [
     id: 26,
     question: 'What is a Health and Safety Committee?',
     options: [
-      'Taking all reasonable precautions to prevent harm and demonstrating this',
-      'A summary of key points from the method statement communicated to workers before starting',
+      'A panel of HSE inspectors who audit the workplace annually',
+      'A board of directors who sign off the company safety policy',
       'A committee where employers and employee representatives discuss and review health and safety measures',
-      'A person with sufficient training, knowledge, experience and other qualities to properly assist',
+      'A group of external consultants who write the risk assessments',
     ],
     correctAnswer: 2,
     explanation:
@@ -449,9 +449,9 @@ export const module1Questions: QuestionBank[] = [
     id: 27,
     question: 'When must an employer establish a Health and Safety Committee?',
     options: [
-      'Taking all reasonable precautions to prevent harm and demonstrating this',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
-      'Use it properly, report defects, store it correctly, and not misuse it',
+      'Whenever the workforce exceeds five employees',
+      'Only when directed to do so by an HSE inspector',
+      'Automatically on every construction site over £1m in value',
       'When requested in writing by two or more Safety Representatives',
     ],
     correctAnswer: 3,
@@ -466,9 +466,9 @@ export const module1Questions: QuestionBank[] = [
     question: "What does the term 'statutory duty' mean?",
     options: [
       'A legal requirement imposed by an Act of Parliament or Regulations',
-      'Precautionary statements advising on handling, storage, and emergency response',
-      'Weather, lighting, temperature, noise, ventilation, and access conditions',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'A voluntary commitment set out in a company\'s safety policy',
+      'A recommendation contained in industry guidance only',
+      'A duty that applies solely to self-employed persons',
     ],
     correctAnswer: 0,
     explanation:
@@ -481,10 +481,10 @@ export const module1Questions: QuestionBank[] = [
     id: 29,
     question: 'What is an Approved Code of Practice (ACoP)?',
     options: [
-      'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
+      'A legally binding regulation that must be followed exactly as written',
       'Guidance with special legal status - failure to follow can be used as evidence of non-compliance',
-      'Duties of persons concerned with premises to persons other than their employees',
-      'Stop, reassess the risks, implement additional controls if needed, and update the risk assessment',
+      'An internal company procedure with no legal standing',
+      'A British Standard that applies only to electrical installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -497,10 +497,10 @@ export const module1Questions: QuestionBank[] = [
     id: 30,
     question: 'What is the difference between absolute and qualified duties under HASAWA?',
     options: [
-      "Equipment must be suitable for the purpose, properly maintained, and used by competent persons",
-      "Stop, reassess, amend the method statement if needed, and brief workers on changes",
+      "Absolute duties apply to employers; qualified duties apply only to employees",
+      "Absolute duties are voluntary; qualified duties are legally enforceable",
       "Absolute duties must be complied with; qualified duties are subject to 'reasonably practicable'",
-      "To enable HSE and local authorities to identify workplace risks and investigate serious accidents",
+      "Absolute duties are subject to 'reasonably practicable'; qualified duties are not",
     ],
     correctAnswer: 2,
     explanation:
@@ -534,9 +534,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does Regulation 3 of EAWR specify?',
     options: [
       'Duties to comply with regulations to prevent danger and injury from electricity',
-      'Incapacity for normal work duties for more than 7 consecutive days (excluding day of accident)',
-      'Online via the HSE website, or by phone for fatal and specified injuries',
-      'To identify hazards, who might be harmed, evaluate risks, and determine control measures',
+      'The maximum voltage at which live working is permitted',
+      'The frequency of periodic inspection and testing of installations',
+      'The requirement to display warning notices at every isolator',
     ],
     correctAnswer: 0,
     explanation:
@@ -549,10 +549,10 @@ export const module1Questions: QuestionBank[] = [
     id: 33,
     question: "Under EAWR, what does 'danger' mean?",
     options: [
-      'Action value 2.5 m/s² A(8); limit value 5 m/s² A(8) — over which exposure is prohibited',
+      'Any voltage exceeding 230V regardless of the consequences',
       'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
-      'Chemical-resistant gloves, eye protection, and respiratory protection if ventilation is inadequate',
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
+      'The presence of exposed live conductors only, not other hazards',
+      'Financial loss to the employer arising from equipment failure',
     ],
     correctAnswer: 1,
     explanation:
@@ -565,10 +565,10 @@ export const module1Questions: QuestionBank[] = [
     id: 34,
     question: 'What does Regulation 4 of EAWR require?',
     options: [
-      'Unable to perform their normal work duties, even if they can do other work',
-      'That adequate precautions are taken to prevent reconnection during work',
+      'That all live working is prohibited under every circumstance',
+      'That only qualified electricians may enter an electrical workplace',
       'All systems shall be constructed to prevent danger so far as is reasonably practicable',
-      'Description of work, hazards, precautions, isolation details, time limits, authorisation signatures',
+      'That every circuit is tested at intervals not exceeding 12 months',
     ],
     correctAnswer: 2,
     explanation:
@@ -582,8 +582,8 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does Regulation 12 of EAWR cover?',
     options: [
       'Safe use of electrical test equipment',
-      'Inhalation, skin absorption, ingestion, and injection',
-      'The type of hazard posed by the substance',
+      'The strength and capability of electrical equipment',
+      'Earthing and integrity of referenced conductors',
       'Means for cutting off supply and isolation',
     ],
     correctAnswer: 3,
@@ -598,9 +598,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does Regulation 13 of EAWR require regarding isolation?',
     options: [
       'That adequate precautions are taken to prevent reconnection during work',
-      'When requested in writing by two or more Safety Representatives',
-      'A safe location where evacuated personnel gather to be accounted for',
-      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
+      'That isolation may only be carried out by an authorised manager',
+      'That every isolator is colour-coded according to its voltage',
+      'That circuits are re-energised within four hours of isolation',
     ],
     correctAnswer: 0,
     explanation:
@@ -613,10 +613,10 @@ export const module1Questions: QuestionBank[] = [
     id: 37,
     question: 'What does Regulation 14 of EAWR state about live working?',
     options: [
-      'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
+      'Live working is permitted provided two competent persons are present',
       'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
-      'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
-      'To ensure control measures protect everyone affected including employees, contractors, and public',
+      'Live working is allowed on any circuit below 230V without precautions',
+      'Live working is entirely prohibited in all workplaces without exception',
     ],
     correctAnswer: 1,
     explanation:
@@ -629,10 +629,10 @@ export const module1Questions: QuestionBank[] = [
     id: 38,
     question: 'Under EAWR Regulation 16, what standard of competence is required?',
     options: [
-      'Identify where work interfaces with others and specify coordination measures',
-      'Equipment shall be of sufficient strength and capability for its purpose',
+      'A recognised apprenticeship completed within the last five years',
+      'Membership of an approved competent person scheme',
       'Technical knowledge and experience to prevent danger and injury',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
+      'A minimum of ten years\' experience in electrical installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -646,9 +646,9 @@ export const module1Questions: QuestionBank[] = [
     question:
       'What does EAWR Regulation 5 require for electrical equipment strength and capability?',
     options: [
-      'A hazard that a competent person could reasonably predict might occur',
-      'A written document describing how work will be carried out safely, step by step',
-      'Without delay (immediately) by quickest practicable means',
+      'Equipment shall be tested for insulation resistance before every use',
+      'Equipment shall carry a manufacturer\'s lifetime guarantee',
+      'Equipment shall be replaced every five years regardless of condition',
       'Equipment shall be of sufficient strength and capability for its purpose',
     ],
     correctAnswer: 3,
@@ -663,9 +663,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does Regulation 6 of EAWR require regarding adverse conditions?',
     options: [
       'Equipment must be suitable for adverse or hazardous environments or adequately protected',
-      'A short, focused safety briefing on a specific topic relevant to the work',
-      'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
-      'Working on electrical systems that have been safely isolated from all sources of supply',
+      'Equipment must be switched off whenever the weather is wet',
+      'Equipment must be used only indoors and never outdoors',
+      'Equipment must be earthed only when used in damp locations',
     ],
     correctAnswer: 0,
     explanation:
@@ -678,10 +678,10 @@ export const module1Questions: QuestionBank[] = [
     id: 41,
     question: 'What does Regulation 7 of EAWR cover?',
     options: [
-      'Only if on a private road or part of construction work',
+      'Means for cutting off the supply and isolation',
       'Insulation, protection and placing of conductors',
-      'Unlimited fine and/or imprisonment for up to 2 years',
-      'At least every 14 months, or as specified in COSHH Schedule 4',
+      'The competence of persons carrying out electrical work',
+      'Adequate working space, access and lighting',
     ],
     correctAnswer: 1,
     explanation:
@@ -694,10 +694,10 @@ export const module1Questions: QuestionBank[] = [
     id: 42,
     question: 'What earthing requirements does Regulation 8 of EAWR specify?',
     options: [
-      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
-      'Workers must be consulted on health and safety matters including risk assessment',
+      'Earthing is required only on circuits operating above 1000V',
+      'Earth conductors must be replaced at every periodic inspection',
       'Suitable precautions shall be taken to prevent danger from charge on exposed metalwork, preferably by earthing',
-      'Collapse or overturning of lifting equipment, or electrical short circuit causing fire',
+      'Only the supply company may install or alter an earthing arrangement',
     ],
     correctAnswer: 2,
     explanation:
@@ -710,9 +710,9 @@ export const module1Questions: QuestionBank[] = [
     id: 43,
     question: 'What does Regulation 9 of EAWR require about circuit integrity?',
     options: [
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
-      'Directors, managers, and other officers if the offence was committed with their consent, connivance, or neglect',
-      'Specific consideration of communication, emergency procedures, and additional controls needed',
+      'All circuits must be protected by a 30mA residual current device',
+      'Every joint must be soldered rather than mechanically clamped',
+      'Connections may only be made by the original equipment manufacturer',
       'Joints and connections must be properly made to be mechanically and electrically sound',
     ],
     correctAnswer: 3,
@@ -727,9 +727,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What protection against excess current does Regulation 10 require?',
     options: [
       'Every part of a system shall be protected from excess current',
-      'Yes, if they result from work activity and require hospital treatment',
-      'Electric shock, burns, fire, explosion, falls from height, manual handling',
-      'Taking all reasonable precautions to prevent harm and demonstrating this',
+      'Only the main supply intake needs protection from excess current',
+      'Excess current protection is required only on lighting circuits',
+      'Protection is needed only where the supply exceeds 100A',
     ],
     correctAnswer: 0,
     explanation:
@@ -742,10 +742,10 @@ export const module1Questions: QuestionBank[] = [
     id: 45,
     question: 'What does Regulation 11 of EAWR require for means of protection?',
     options: [
-      'Working on or near live equipment without adequate isolation or precautions — a failure to apply EAWR Reg 14 and proven safe-isolation procedure',
+      'Protection against excess current is only required at the supply origin',
       'Suitable means shall be available for protecting from excess current and for cutting off supply in an emergency',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
-      'Duties of persons concerned with premises to persons other than their employees',
+      'Emergency switching must be lockable in the closed position only',
+      'A single main switch is sufficient for an entire multi-storey building',
     ],
     correctAnswer: 1,
     explanation:
@@ -758,10 +758,10 @@ export const module1Questions: QuestionBank[] = [
     id: 46,
     question: "What does 'dead working' mean under EAWR?",
     options: [
-      'Weather, lighting, temperature, noise, ventilation, and access conditions',
-      'To specify actions taken or needed to eliminate or reduce risks',
+      'Working on equipment switched off but not isolated from supply',
+      'Working only outside normal business hours when the site is empty',
       'Working on electrical systems that have been safely isolated from all sources of supply',
-      'A short, focused safety briefing on a specific topic relevant to the work',
+      'Working on equipment that has reached the end of its service life',
     ],
     correctAnswer: 2,
     explanation:
@@ -774,9 +774,9 @@ export const module1Questions: QuestionBank[] = [
     id: 47,
     question: 'What must be done before starting electrical work under EAWR?',
     options: [
-      'Evaluating and prioritising risks by plotting likelihood against severity',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
+      'Switch off at the main switch and begin work immediately',
+      'Obtain verbal permission from the client to start work',
+      'Confirm the circuit is live by touching it with the back of the hand',
       'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
     ],
     correctAnswer: 3,
@@ -791,9 +791,9 @@ export const module1Questions: QuestionBank[] = [
     question: "According to EAWR, what constitutes a 'system'?",
     options: [
       'An electrical system including source of energy, conductors, and load equipment',
-      'A committee where employers and employee representatives discuss and review health and safety measures',
-      'A safe location where evacuated personnel gather to be accounted for',
-      'The method statement describes how to implement the controls identified in the risk assessment',
+      'Only the fixed wiring of an installation, excluding any equipment',
+      'Only equipment operating above 1000V connected to a common supply',
+      'Any documented method of recording electrical test results',
     ],
     correctAnswer: 0,
     explanation:
@@ -806,10 +806,10 @@ export const module1Questions: QuestionBank[] = [
     id: 49,
     question: 'Who do the Electricity at Work Regulations apply to?',
     options: [
-      'Provide suitable PPE free of charge, ensure it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintained, provide storage, training, and enforce use',
+      'Only qualified electricians registered with a competent person scheme',
       'All employers, employees, and self-employed persons who work with or near electricity',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
+      'Only employers operating equipment above low-voltage levels',
+      'Only contractors carrying out new electrical installation work',
     ],
     correctAnswer: 1,
     explanation:
@@ -822,10 +822,10 @@ export const module1Questions: QuestionBank[] = [
     id: 50,
     question: 'What is the defence available under EAWR for qualified duties?',
     options: [
-      'The employer, or the person in control of the premises where the incident occurred',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
+      'That the work was carried out by a subcontractor, not directly',
+      'That the duty holder was unaware of the regulation in question',
       'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'In appropriate containers, in designated areas, with incompatible substances segregated',
+      'That no actual injury or damage resulted from the breach',
     ],
     correctAnswer: 2,
     explanation:
@@ -838,9 +838,9 @@ export const module1Questions: QuestionBank[] = [
     id: 51,
     question: "Under EAWR, what voltage is considered 'low voltage'?",
     options: [
-      'The employer must weigh the risk against the cost, time and effort of removing it',
-      'A risk assessment that covers common activities across multiple similar situations',
-      'Non-employees who may be affected by the work activities',
+      'Not exceeding 50V AC or 120V DC under any condition',
+      'Exceeding 1000V AC or 1500V DC between conductors',
+      'Any voltage between 230V and 400V only',
       'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
     ],
     correctAnswer: 3,
@@ -855,9 +855,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What test equipment requirements apply under EAWR?',
     options: [
       'Equipment must be suitable for the purpose, properly maintained, and used by competent persons',
-      'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
-      'A safe location where evacuated personnel gather to be accounted for',
-      'Precautionary statements advising on handling, storage, and emergency response',
+      'Equipment must be calibrated by the manufacturer every month',
+      'Equipment must be no more than two years old at time of use',
+      'Equipment must be PAT tested before each individual measurement',
     ],
     correctAnswer: 0,
     explanation:
@@ -870,10 +870,10 @@ export const module1Questions: QuestionBank[] = [
     id: 53,
     question: 'What does the HSE Guidance Note GS38 cover?',
     options: [
-      'Fracture (other than fingers, thumbs, or toes)',
+      'The maximum number of circuits permitted on one distribution board',
       'Safe use of electrical test equipment',
-      'Means for cutting off supply and isolation',
-      'CO2 (carbon dioxide) or dry powder',
+      'The procedure for safely isolating a high-voltage supply',
+      'The earthing requirements for portable generators',
     ],
     correctAnswer: 1,
     explanation:
@@ -886,10 +886,10 @@ export const module1Questions: QuestionBank[] = [
     id: 54,
     question: 'According to GS38, what features must test probes have?',
     options: [
-      'Level and type of supervision needed, who the supervisor is, and their responsibilities',
-      'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
+      'Bare metal tips at least 10mm long for reliable contact',
+      'Uninsulated leads colour-coded brown, blue and green',
       'Finger barriers, insulated tips with maximum 4mm exposed, and HRC fused leads',
-      'All employers, employees, and self-employed persons who work with or near electricity',
+      'Retractable spikes for piercing cable insulation during testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -902,9 +902,9 @@ export const module1Questions: QuestionBank[] = [
     id: 55,
     question: 'What does EAWR Regulation 15 cover?',
     options: [
-      'The Health and Safety Executive (HSE)',
-      'Risk Assessment and Method Statement',
-      'Safe use of electrical test equipment',
+      'Means for cutting off the supply and isolation',
+      'Insulation and protection of conductors',
+      'The competence of persons doing electrical work',
       'Working space, access, and lighting',
     ],
     correctAnswer: 3,
@@ -938,10 +938,10 @@ export const module1Questions: QuestionBank[] = [
     id: 57,
     question: 'Under RIDDOR, what is the timeframe for reporting a death or specified injury?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'Within 15 days of the incident in all cases',
       'Without delay (immediately) by quickest practicable means',
-      'Raise the alarm and isolate the power supply if safe to do so',
-      'Regularly and whenever there are significant changes',
+      'Within 28 days, in writing only',
+      'At the next routine HSE inspection visit',
     ],
     correctAnswer: 1,
     explanation:
@@ -954,10 +954,10 @@ export const module1Questions: QuestionBank[] = [
     id: 58,
     question: "Which of the following is a 'specified injury' under RIDDOR?",
     options: [
-      'Assess the risks and decide on necessary precautions',
-      'Insulation, protection and placing of conductors',
+      'A minor cut requiring a plaster from the first aid kit',
+      'A sprained ankle keeping the worker off for two days',
       'Fracture (other than fingers, thumbs, or toes)',
-      'CO2 (carbon dioxide) or dry powder',
+      'A bruise sustained from a dropped tool',
     ],
     correctAnswer: 2,
     explanation:
@@ -970,9 +970,9 @@ export const module1Questions: QuestionBank[] = [
     id: 59,
     question: "What constitutes an 'over-7-day incapacitation' under RIDDOR?",
     options: [
-      'Joints and connections must be properly made to be mechanically and electrically sound',
-      'Actions needed, responsible person, target date, and completion date',
-      'Only as a last resort when risks cannot be adequately controlled by other means',
+      'Any injury keeping a worker in hospital for more than 7 days',
+      'An injury causing more than 7 days of permanent disability',
+      'Incapacity for normal work duties for more than 7 working hours',
       'Incapacity for normal work duties for more than 7 consecutive days (excluding day of accident)',
     ],
     correctAnswer: 3,
@@ -987,9 +987,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Within what timeframe must an over-7-day incapacitation be reported to HSE?',
     options: [
       'Within 15 days of the accident',
-      'Working space, access, and lighting',
-      'Electricity at Work Regulations 1989',
-      'CO2 (carbon dioxide) or dry powder',
+      'Within 24 hours of the accident',
+      'Within 10 days of the accident',
+      'Within 30 days of the accident',
     ],
     correctAnswer: 0,
     explanation:
@@ -1002,10 +1002,10 @@ export const module1Questions: QuestionBank[] = [
     id: 61,
     question: 'Which is a reportable dangerous occurrence under RIDDOR?',
     options: [
-      'Directors, managers, and other officers if the offence was committed with their consent, connivance, or neglect',
+      'A worker taking an unauthorised break during a shift',
       'Collapse or overturning of lifting equipment, or electrical short circuit causing fire',
-      'You could become part of the circuit and also receive a shock',
-      'At regular intervals as specified by the manufacturer, typically every 6 months',
+      'A tool failing to start due to a flat battery',
+      'A minor spillage of water cleaned up immediately',
     ],
     correctAnswer: 1,
     explanation:
@@ -1018,10 +1018,10 @@ export const module1Questions: QuestionBank[] = [
     id: 62,
     question: 'What is the main purpose of RIDDOR?',
     options: [
-      'Use it properly, report defects, store it correctly, and not misuse it',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
+      'To compensate injured workers for time lost from work',
+      'To set the maximum penalties for health and safety offences',
       'To enable HSE and local authorities to identify workplace risks and investigate serious accidents',
-      'Collapse or overturning of lifting equipment, or electrical short circuit causing fire',
+      'To require employers to provide first aid facilities on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1034,9 +1034,9 @@ export const module1Questions: QuestionBank[] = [
     id: 63,
     question: "Who is the 'responsible person' for RIDDOR reporting?",
     options: [
-      'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
-      'Stop, reassess the risks, implement additional controls if needed, and update the risk assessment',
-      'Workers must understand the risks, control measures, and their responsibilities',
+      'The injured worker themselves once they have recovered',
+      'The first aider who treated the casualty at the scene',
+      'The HSE inspector assigned to the geographical area',
       'The employer, or the person in control of the premises where the incident occurred',
     ],
     correctAnswer: 3,
@@ -1051,9 +1051,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'How should RIDDOR reports be submitted?',
     options: [
       'Online via the HSE website, or by phone for fatal and specified injuries',
-      'Without delay (immediately) by quickest practicable means',
-      'Duties of persons concerned with premises to persons other than their employees',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'By recording the incident in the workplace accident book only',
+      'By posting a written F2508 form to the local council',
+      'By email directly to the assigned HSE inspector',
     ],
     correctAnswer: 0,
     explanation:
@@ -1066,10 +1066,10 @@ export const module1Questions: QuestionBank[] = [
     id: 65,
     question: 'Which occupational diseases are reportable under RIDDOR?',
     options: [
-      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
+      'Seasonal influenza, the common cold, and food poisoning',
       'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
-      'Make the area safe, provide first aid, preserve evidence, and report to RIDDOR',
-      'Duties to comply with regulations to prevent danger and injury from electricity',
+      'High blood pressure, diabetes, and heart disease',
+      'Stress, anxiety, and general fatigue from long shifts',
     ],
     correctAnswer: 1,
     explanation:
@@ -1082,10 +1082,10 @@ export const module1Questions: QuestionBank[] = [
     id: 66,
     question: 'For how long must RIDDOR records be kept?',
     options: [
-      'Statement of intent, organisation, and arrangements',
-      'Safe use of electrical test equipment',
+      'At least 6 months from the date of the incident',
+      'At least 1 year from the date of the incident',
       'At least 3 years from the date of the incident',
-      'Fracture (other than fingers, thumbs, or toes)',
+      'At least 10 years from the date of the incident',
     ],
     correctAnswer: 2,
     explanation:
@@ -1098,9 +1098,9 @@ export const module1Questions: QuestionBank[] = [
     id: 67,
     question: 'What should be recorded in an accident book?',
     options: [
-      'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
-      'To issue improvement notices, prohibition notices, and prosecute',
-      'Statement of intent, organisation, and arrangements',
+      'Only accidents that are reportable under RIDDOR',
+      'Only accidents resulting in more than 7 days off work',
+      'Only accidents that occur to members of the public',
       'All work-related accidents and injuries, however minor',
     ],
     correctAnswer: 3,
@@ -1115,13 +1115,13 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is the penalty for failing to report under RIDDOR?',
     options: [
       'Unlimited fine and/or imprisonment for up to 2 years',
-      'Specific PPE required for each stage of the work',
-      'Statement of intent, organisation, and arrangements',
-      'Safe use of electrical test equipment',
+      'A fixed penalty notice capped at £5,000 with no custodial option',
+      'A formal HSE caution only, with no fine or imprisonment',
+      'A maximum fine of £20,000 but no possibility of imprisonment',
     ],
     correctAnswer: 0,
     explanation:
-      'Failing to report under RIDDOR is a criminal offence that can result in an unlimited fine and imprisonment for up to 2 years.',
+      'Failing to report under RIDDOR is a criminal offence prosecuted under HSWA 1974. On indictment it can result in an unlimited fine and imprisonment for up to 2 years.',
     section: '1.3',
     topic: 'RIDDOR 2013',
     difficulty: 'intermediate',
@@ -1146,10 +1146,10 @@ export const module1Questions: QuestionBank[] = [
     id: 70,
     question: "What is a 'reportable gas incident' under RIDDOR?",
     options: [
-      'A summary of key points from the method statement communicated to workers before starting',
-      'Duties of persons concerned with premises to persons other than their employees',
+      'Any gas appliance that fails its annual service inspection',
+      'A gas meter reading higher than the previous quarter',
       'Accidental leakage of gas causing death/injury or posing an immediate risk',
-      'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
+      'The replacement of a gas appliance with an electric one',
     ],
     correctAnswer: 2,
     explanation:
@@ -1162,9 +1162,9 @@ export const module1Questions: QuestionBank[] = [
     id: 71,
     question: 'Which electrical incident is reportable as a dangerous occurrence?',
     options: [
-      'Continuous assessment of changing risks while work is in progress',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'All work-related accidents and injuries, however minor',
+      'A circuit breaker tripping under normal overload conditions',
+      'A lamp failing at the end of its rated life',
+      'A minor static shock from touching a metal handrail',
       'Electrical short circuit or overload causing fire or explosion',
     ],
     correctAnswer: 3,
@@ -1179,9 +1179,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What information must a RIDDOR report contain?',
     options: [
       'Details of injured person, accident circumstances, location, date/time, nature of injury',
-      'Continuous assessment of changing risks while work is in progress',
-      'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
-      'All systems shall be constructed to prevent danger so far as is reasonably practicable',
+      'The injured person\'s salary and employment history',
+      'A full risk assessment for every task on the site',
+      'The names and addresses of all witnesses to the incident',
     ],
     correctAnswer: 0,
     explanation:
@@ -1194,10 +1194,10 @@ export const module1Questions: QuestionBank[] = [
     id: 73,
     question: 'Under RIDDOR, amputation of which body parts is a specified injury?',
     options: [
-      'Fracture (other than fingers, thumbs, or toes)',
+      'Only amputation of an arm or a leg, not digits',
       'Any amputation including fingers, toes, or limbs',
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Danger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Warning\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' indicating the severity of hazard',
-      'Statement of intent, organisation, and arrangements',
+      'Only amputations requiring an overnight hospital stay',
+      'Only amputations caused by machinery, not hand tools',
     ],
     correctAnswer: 1,
     explanation:
@@ -1210,10 +1210,10 @@ export const module1Questions: QuestionBank[] = [
     id: 74,
     question: 'What happens if an over-7-day injury was not known to be reportable at first?',
     options: [
-      'A competent person with knowledge of the work, often involving those who will do the task',
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
+      'No report is needed once the initial 15 days have passed',
+      'The injury is recorded in the accident book but never reported to HSE',
       'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
-      'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
+      'The reporting duty transfers to the injured worker after 7 days',
     ],
     correctAnswer: 2,
     explanation:
@@ -1226,9 +1226,9 @@ export const module1Questions: QuestionBank[] = [
     id: 75,
     question: 'Are road traffic accidents reportable under RIDDOR?',
     options: [
-      'Acute toxicity - can cause death or serious harm with short exposure',
-      'Technical knowledge and experience to prevent danger and injury',
-      'Insulation, protection and placing of conductors',
+      'Yes, all road accidents involving a work vehicle are reportable',
+      'Yes, but only if the driver was exceeding the speed limit',
+      'No, road accidents are never reportable under any circumstances',
       'Only if on a private road or part of construction work',
     ],
     correctAnswer: 3,
@@ -1243,9 +1243,9 @@ export const module1Questions: QuestionBank[] = [
     question: "What does 'incapacitated for normal work' mean under RIDDOR?",
     options: [
       'Unable to perform their normal work duties, even if they can do other work',
-      'Identify circuit, isolate, secure isolation, prove dead, apply lock-off, work safely',
-      'A person with sufficient training, knowledge, experience and other qualities to properly assist',
-      'Non-employees who may be affected by the work activities',
+      'Permanently unable to return to any form of employment',
+      'Admitted to hospital for treatment regardless of work ability',
+      'Unable to attend work but still able to perform their normal duties',
     ],
     correctAnswer: 0,
     explanation:
@@ -1258,10 +1258,10 @@ export const module1Questions: QuestionBank[] = [
     id: 77,
     question: 'Which burn injury is reportable as a specified injury?',
     options: [
-      'Specific consideration of communication, emergency procedures, and additional controls needed',
+      'Any minor burn requiring a dressing from the first aid kit',
       'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
+      'A sunburn sustained while working outdoors in summer',
+      'A burn covering less than 1% of the body surface',
     ],
     correctAnswer: 1,
     explanation:
@@ -1274,10 +1274,10 @@ export const module1Questions: QuestionBank[] = [
     id: 78,
     question: "What is the 'arising out of or in connection with work' test for RIDDOR?",
     options: [
-      'Joints and connections must be properly made to be mechanically and electrically sound',
-      'Trained authorised persons, HV switching procedures, earthing equipment, additional testing',
+      'The injury must have occurred during contracted working hours only',
+      'The injury must have happened on the employer\'s own premises only',
       'The injury must be caused by work activity, conditions created by work, or the manner of conducting the work',
-      'Workers must be consulted on health and safety matters including risk assessment',
+      'The injury must have been witnessed by at least one other person',
     ],
     correctAnswer: 2,
     explanation:
@@ -1290,9 +1290,9 @@ export const module1Questions: QuestionBank[] = [
     id: 79,
     question: "What is the HSE's Incident Contact Centre?",
     options: [
-      'Information, instruction, training and supervision necessary for health and safety',
-      'A brief verbal review of the method statement at the work location before starting',
-      'To ensure control measures protect everyone affected including employees, contractors, and public',
+      'A 24-hour emergency line for summoning ambulances to a site',
+      'A helpline giving free legal advice to injured workers',
+      'A drop-in centre where inspectors take written witness statements',
       'The HSE service for receiving RIDDOR reports and providing reporting guidance',
     ],
     correctAnswer: 3,
@@ -1307,9 +1307,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What action should be taken immediately after a serious workplace accident?',
     options: [
       'Make the area safe, provide first aid, preserve evidence, and report to RIDDOR',
-      'A hazard that a competent person could reasonably predict might occur',
-      'Only if trained, it\\\'s safe to do so, you have the right extinguisher, and the fire is small',
-      'Ensure the power is off, check for response, call for help, and perform CPR if needed',
+      'Clear away all equipment and tidy the scene before help arrives',
+      'Wait for the HSE inspector to arrive before doing anything',
+      'Move the casualty immediately regardless of their injuries',
     ],
     correctAnswer: 0,
     explanation:
@@ -1342,10 +1342,10 @@ export const module1Questions: QuestionBank[] = [
     id: 82,
     question: 'Which of the following is a substance hazardous to health under COSHH?',
     options: [
-      'Details of the incident, actions taken, injuries, and lessons learned',
-      'Only if on a private road or part of construction work',
+      'Inert building rubble awaiting removal from site',
+      'Sealed lead-acid batteries in normal storage',
       'Solvents, chemicals, dusts, fumes, and biological agents',
-      'Specific PPE required for each stage of the work',
+      'Cold drinking water supplied to the welfare area',
     ],
     correctAnswer: 2,
     explanation:
@@ -1358,9 +1358,9 @@ export const module1Questions: QuestionBank[] = [
     id: 83,
     question: 'What must employers do under COSHH before using hazardous substances?',
     options: [
-      'The Health and Safety Executive (HSE)',
-      'Specific PPE required for each stage of the work',
-      'You could become part of the circuit and also receive a shock',
+      'Notify the local fire service of the substances held',
+      'Obtain written consent from each employee to use them',
+      'Register the substances with the Environment Agency',
       'Assess the risks and decide on necessary precautions',
     ],
     correctAnswer: 3,
@@ -1375,9 +1375,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is a Safety Data Sheet (SDS)?',
     options: [
       'A document providing information about a hazardous substance including hazards, handling, and emergency measures',
-      'Identify hazards, Decide who might be harmed, Evaluate risks, Record findings, Review',
-      'The maximum concentration of an airborne substance averaged over a reference period',
-      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'A certificate confirming a substance has passed a quality check',
+      'A purchase invoice listing the cost of the substances supplied',
+      'A record of who has been issued PPE on the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1390,10 +1390,10 @@ export const module1Questions: QuestionBank[] = [
     id: 85,
     question: 'What is a Workplace Exposure Limit (WEL)?',
     options: [
-      'The remaining risk after control measures have been implemented',
+      'The maximum number of workers allowed in a confined space',
       'The maximum concentration of an airborne substance averaged over a reference period',
-      'Clear warning signs indicating work in progress and prohibition against re-energising',
-      'You could become part of the circuit and also receive a shock',
+      'The longest time a worker may handle a substance in one shift',
+      'The minimum ventilation rate required in any workplace',
     ],
     correctAnswer: 1,
     explanation:
@@ -1406,10 +1406,10 @@ export const module1Questions: QuestionBank[] = [
     id: 86,
     question: 'Which hazard classification symbol indicates a substance is corrosive?',
     options: [
-      'When the employer has 5 or more employees',
-      'The Health and Safety Executive (HSE)',
+      'A skull and crossbones on a white diamond',
+      'A flame above a horizontal line',
       'Hand being corroded and surface being attacked',
-      'Control of Substances Hazardous to Health',
+      'An exclamation mark on a white diamond',
     ],
     correctAnswer: 2,
     explanation:
@@ -1439,9 +1439,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What control measures should be considered first under COSHH?',
     options: [
       'Elimination or substitution with a less hazardous substance',
-      'Equipment shall be of sufficient strength and capability for its purpose',
-      'Likelihood of harm occurring and the severity of consequences',
-      'To describe the order of operations ensuring safety at each stage',
+      'Issuing respiratory protective equipment to all workers',
+      'Providing health surveillance for exposed employees',
+      'Installing local exhaust ventilation at the work area',
     ],
     correctAnswer: 0,
     explanation:
@@ -1454,10 +1454,10 @@ export const module1Questions: QuestionBank[] = [
     id: 89,
     question: 'When must employers provide health surveillance under COSHH?',
     options: [
-      'A brief risk assessment carried out immediately before starting a task at the work location',
+      'For every employee on the payroll, regardless of exposure',
       'When exposure cannot be adequately controlled and specific health conditions can be identified',
-      'Yes, if they result from work activity and require hospital treatment',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'Only after a worker has already developed an illness',
+      'Only when requested in writing by the employee',
     ],
     correctAnswer: 1,
     explanation:
@@ -1470,10 +1470,10 @@ export const module1Questions: QuestionBank[] = [
     id: 90,
     question: 'What is Local Exhaust Ventilation (LEV)?',
     options: [
-      'To ensure it is working correctly and give confidence the circuit is dead',
-      'Follow strict live working procedures if justified, or postpone work until isolation is possible',
+      'A general-purpose fan that circulates fresh air around the room',
+      'A respirator worn by the worker to filter inhaled air',
       'An engineering control that captures airborne contaminants at source before they spread',
-      'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
+      'An alarm that sounds when airborne contaminant levels rise too high',
     ],
     correctAnswer: 2,
     explanation:
@@ -1486,9 +1486,9 @@ export const module1Questions: QuestionBank[] = [
     id: 91,
     question: 'How often must LEV systems be examined and tested?',
     options: [
-      'A written document describing how work will be carried out safely, step by step',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'Protection against falling objects, punctures, and electrical hazards',
+      'At least every 6 months without exception',
+      'At least every 3 years, or as specified in COSHH Schedule 4',
+      'Only when a fault is suspected or reported',
       'At least every 14 months, or as specified in COSHH Schedule 4',
     ],
     correctAnswer: 3,
@@ -1503,9 +1503,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What PPE might be needed when working with solvents?',
     options: [
       'Chemical-resistant gloves, eye protection, and respiratory protection if ventilation is inadequate',
-      'Regularly and when there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reason to believe it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid, or when work conditions change',
-      'A written document describing how work will be carried out safely, step by step',
-      'Appropriate to the complexity of the task and identifies significant risks without being overly complicated',
+      'A hard hat, hi-vis vest, and steel-toe-capped boots only',
+      'Hearing protection and a dust mask rated FFP1',
+      'An arc-rated face shield and insulating rubber gloves',
     ],
     correctAnswer: 0,
     explanation:
@@ -1518,10 +1518,10 @@ export const module1Questions: QuestionBank[] = [
     id: 93,
     question: 'What is the purpose of a COSHH assessment?',
     options: [
-      'Collapse or overturning of lifting equipment, or electrical short circuit causing fire',
+      'To calculate the cost of disposing of hazardous waste',
       'To identify hazards, who might be harmed, evaluate risks, and determine control measures',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
+      'To record which workers have been issued with PPE',
+      'To set the price of substances purchased from suppliers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1534,10 +1534,10 @@ export const module1Questions: QuestionBank[] = [
     id: 94,
     question: 'What routes can hazardous substances enter the body?',
     options: [
-      'When the employer has 5 or more employees',
-      'Elimination or substitution with a less hazardous substance',
+      'Hearing, sight, and touch only',
+      'Through the bloodstream from a previous injury only',
       'Inhalation, skin absorption, ingestion, and injection',
-      'To identify recurring patterns and previously unidentified hazards',
+      'Only by direct swallowing of the substance',
     ],
     correctAnswer: 2,
     explanation:
@@ -1550,9 +1550,9 @@ export const module1Questions: QuestionBank[] = [
     id: 95,
     question: 'What must be recorded for a COSHH assessment?',
     options: [
-      'Guidance with special legal status - failure to follow can be used as evidence of non-compliance',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
-      'To ensure it is working correctly and give confidence the circuit is dead',
+      'Only the names of the substances and their purchase price',
+      'Only the supplier\'s contact details and delivery dates',
+      'Only the quantity of each substance held in storage',
       'Significant findings including hazards identified, who is at risk, control measures, and review date',
     ],
     correctAnswer: 3,
@@ -1567,9 +1567,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'When should a COSHH assessment be reviewed?',
     options: [
       "Regularly and when there's reason to believe it's no longer valid, or when work conditions change",
-      "To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees",
-      "A written document describing how work will be carried out safely, step by step",
-      "Protection against falling objects, punctures, and electrical hazards",
+      "Only once when the substance is first introduced to the workplace",
+      "Strictly every five years and at no other interval",
+      "Only after an enforcement notice has been served by the HSE",
     ],
     correctAnswer: 0,
     explanation:
@@ -1582,10 +1582,10 @@ export const module1Questions: QuestionBank[] = [
     id: 97,
     question: 'What information does a hazard pictogram convey?',
     options: [
-      'Unlimited fine and/or imprisonment for up to 2 years',
+      'The price and supplier of the substance',
       'The type of hazard posed by the substance',
-      'Safe use of electrical test equipment',
-      'Control of Substances Hazardous to Health',
+      'The date the substance was manufactured',
+      'The correct disposal route for empty containers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1598,10 +1598,10 @@ export const module1Questions: QuestionBank[] = [
     id: 98,
     question: 'What does the skull and crossbones pictogram indicate?',
     options: [
-      'The incident energy level and appropriate PPE category required',
-      'A hazard that a competent person could reasonably predict might occur',
+      'A substance that is corrosive to metal and skin',
+      'A substance that is harmful to the aquatic environment',
       'Acute toxicity - can cause death or serious harm with short exposure',
-      'Continuous assessment of changing risks while work is in progress',
+      'A substance that is a mild skin or eye irritant only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1614,9 +1614,9 @@ export const module1Questions: QuestionBank[] = [
     id: 99,
     question: 'What does the exclamation mark pictogram indicate?',
     options: [
-      'At least every 14 months, or as specified in COSHH Schedule 4',
-      'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
-      'Only HSE-licensed contractors holding a current asbestos licence',
+      'A substance that is highly flammable',
+      'A substance that can cause death from a single exposure',
+      'A substance that is explosive under heat or pressure',
       'Lower level hazards including irritant, skin sensitiser, or harmful',
     ],
     correctAnswer: 3,
@@ -1631,9 +1631,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What are Signal Words on chemical labels?',
     options: [
       "'Danger' or 'Warning' indicating the severity of hazard",
-      "Non-employees who may be affected by the work activities",
-      "Charge their employer for safety equipment or training",
-      "Pull pin, Aim at base, Squeeze handle, Sweep side to side",
+      "'Caution' or 'Notice' indicating the disposal method",
+      "'Toxic' or 'Corrosive' naming the exact chemical hazard",
+      "'Stop' or 'Go' indicating whether the substance may be used",
     ],
     correctAnswer: 0,
     explanation:
@@ -1646,10 +1646,10 @@ export const module1Questions: QuestionBank[] = [
     id: 101,
     question: 'What are H-statements on chemical labels?',
     options: [
-      'Fracture (other than fingers, thumbs, or toes)',
+      'Handling statements giving the recommended storage temperature',
       'Hazard statements describing the nature of the hazard',
-      'When the employer has 5 or more employees',
-      'Actions needed, responsible person, target date, and completion date',
+      'History statements listing previous owners of the container',
+      'Health statements naming a doctor to contact in emergencies',
     ],
     correctAnswer: 1,
     explanation:
@@ -1662,10 +1662,10 @@ export const module1Questions: QuestionBank[] = [
     id: 102,
     question: 'What are P-statements on chemical labels?',
     options: [
-      'Chemical-resistant gloves, eye protection, and respiratory protection if ventilation is inadequate',
-      'Only as a last resort when risks cannot be adequately controlled by other means',
+      'Product statements giving the chemical\'s trade name and code',
+      'Pricing statements showing the cost per litre of the substance',
       'Precautionary statements advising on handling, storage, and emergency response',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'Performance statements describing how effective the product is',
     ],
     correctAnswer: 2,
     explanation:
@@ -1678,9 +1678,9 @@ export const module1Questions: QuestionBank[] = [
     id: 103,
     question: 'How should chemicals be stored under COSHH?',
     options: [
-      'Regularly and when there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reason to believe it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid, or when work conditions change',
-      'The method statement describes how to implement the controls identified in the risk assessment',
-      'Equipment shall be of sufficient strength and capability for its purpose',
+      'All together in one container to save storage space',
+      'In unlabelled containers to prevent theft from site',
+      'Next to ignition sources for ease of access during work',
       'In appropriate containers, in designated areas, with incompatible substances segregated',
     ],
     correctAnswer: 3,
@@ -1695,9 +1695,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What information must employers provide to employees about hazardous substances?',
     options: [
       'The risks, precautions, control measures, and results of any monitoring',
-      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
-      'Electrical short circuit or overload causing fire or explosion',
-      'The employer, or the person in control of the premises where the incident occurred',
+      'The purchase cost and supplier details of each substance',
+      'The disposal arrangements and waste contractor used',
+      'Only the name of the substance, with no further detail',
     ],
     correctAnswer: 0,
     explanation:
@@ -1710,10 +1710,10 @@ export const module1Questions: QuestionBank[] = [
     id: 105,
     question: 'What training must be provided under COSHH?',
     options: [
-      'Protection against falling objects, punctures, and electrical hazards',
+      'Training on manual handling and lifting techniques only',
       'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
+      'Training on how to dispose of the substances at end of life only',
+      'Training on the financial cost of the substances used',
     ],
     correctAnswer: 1,
     explanation:
@@ -1730,10 +1730,10 @@ export const module1Questions: QuestionBank[] = [
     id: 106,
     question: 'What is the legal requirement for risk assessment?',
     options: [
-      'Only as a last resort when risks cannot be adequately controlled by other means',
-      'Each person applies their own lock (multi-lock hasp) and keeps their own key',
+      'Only employers on construction sites are required to assess risks',
+      'Risk assessment is recommended good practice but not legally required',
       'All employers must make a suitable and sufficient assessment of risks to employees and others',
-      'A formal documented authorisation for work on or near isolated electrical equipment',
+      'Only employers with more than 50 employees must assess risks',
     ],
     correctAnswer: 2,
     explanation:
@@ -1746,9 +1746,9 @@ export const module1Questions: QuestionBank[] = [
     id: 107,
     question: 'What are the five steps of risk assessment?',
     options: [
-      'Equipment shall be of sufficient strength and capability for its purpose',
-      'Taking all reasonable precautions to prevent harm and demonstrating this',
-      'Weather, lighting, temperature, noise, ventilation, and access conditions',
+      'Plan, Do, Check, Act, Repeat',
+      'Eliminate, Substitute, Isolate, Control, Protect',
+      'Assess, Authorise, Approve, Audit, Archive',
       'Identify hazards, Decide who might be harmed, Evaluate risks, Record findings, Review',
     ],
     correctAnswer: 3,
@@ -1763,9 +1763,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is the difference between a hazard and a risk?',
     options: [
       'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
-      'Include specific emergency actions, evacuation routes, emergency contacts, and first aid arrangements',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
-      'Electric shock, burns, fire, explosion, falls from height, manual handling',
+      'A hazard is the likelihood of harm; a risk is anything that can cause harm',
+      'A hazard applies to people; a risk applies only to equipment',
+      'There is no difference; the two terms mean exactly the same thing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1778,10 +1778,10 @@ export const module1Questions: QuestionBank[] = [
     id: 109,
     question: 'When must a risk assessment be recorded in writing?',
     options: [
-      'Written health and safety policy',
+      'When the employer has 3 or more employees',
       'When the employer has 5 or more employees',
-      'Fracture (other than fingers, thumbs, or toes)',
-      'The Health and Safety Executive (HSE)',
+      'When the employer has 10 or more employees',
+      'Only when an HSE inspector requests a written copy',
     ],
     correctAnswer: 1,
     explanation:
@@ -1794,10 +1794,10 @@ export const module1Questions: QuestionBank[] = [
     id: 110,
     question: "What does 'suitable and sufficient' mean for a risk assessment?",
     options: [
-      'Dust suppression, noise control, waste management, and prevention of pollution',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
+      'It must list every conceivable hazard no matter how trivial',
+      'It must be at least ten pages long to be legally acceptable',
       'Appropriate to the complexity of the task and identifies significant risks without being overly complicated',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
+      'It must be approved and signed off by an HSE inspector',
     ],
     correctAnswer: 2,
     explanation:
@@ -1810,9 +1810,9 @@ export const module1Questions: QuestionBank[] = [
     id: 111,
     question: 'Who should be involved in carrying out a risk assessment?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
-      'To issue improvement notices, prohibition notices, and prosecute',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
+      'Only an external health and safety consultant',
+      'Only the most senior director in the company',
+      'Only an HSE inspector during a site visit',
       'Competent person(s) with knowledge of the work, often involving workers who do the task',
     ],
     correctAnswer: 3,
@@ -1827,9 +1827,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What factors should be considered when evaluating risk?',
     options: [
       'Likelihood of harm occurring and the severity of consequences',
-      'Protection against falling objects, punctures, and electrical hazards',
-      'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
-      'Electrical short circuit or overload causing fire or explosion',
+      'The cost of the equipment and the time taken to complete the task',
+      'The number of employees on the payroll and their pay rates',
+      'The age of the building and its insurance value',
     ],
     correctAnswer: 0,
     explanation:
@@ -1842,10 +1842,10 @@ export const module1Questions: QuestionBank[] = [
     id: 113,
     question: "What is a 'dynamic risk assessment'?",
     options: [
-      'Make the area safe, provide first aid, preserve evidence, and report to RIDDOR',
+      'A computer-generated assessment produced automatically from a template',
       'Continuous assessment of changing risks while work is in progress',
-      'For complex, high-risk activities or when required by clients/principal contractors',
-      'Use it properly, report defects, store it correctly, and not misuse it',
+      'An assessment that is updated only once at the end of each project',
+      'An assessment covering several similar tasks across different sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -1858,10 +1858,10 @@ export const module1Questions: QuestionBank[] = [
     id: 114,
     question: "What is a 'generic' risk assessment?",
     options: [
-      'Specialised PPE protecting against thermal hazards from electrical arc flash incidents',
-      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'An assessment that applies only to a single unique task on one site',
+      'An assessment carried out at the point of work just before starting',
       'A risk assessment that covers common activities across multiple similar situations',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
+      'An assessment that continuously updates as conditions change',
     ],
     correctAnswer: 2,
     explanation:
@@ -1874,9 +1874,9 @@ export const module1Questions: QuestionBank[] = [
     id: 115,
     question: 'What hazards should be considered in electrical work risk assessments?',
     options: [
-      'All employers, employees, and self-employed persons who work with or near electricity',
-      'Without delay (immediately) by quickest practicable means',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
+      'Only the risk of electric shock, as it is the sole electrical hazard',
+      'Only financial hazards such as the cost of materials',
+      'Only hazards to the public, not to the workers themselves',
       'Electric shock, burns, fire, explosion, falls from height, manual handling',
     ],
     correctAnswer: 3,
@@ -1891,9 +1891,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'How should vulnerable workers be considered in risk assessments?',
     options: [
       'Additional controls may be needed for young workers, pregnant women, or those with disabilities',
-      'Make the area safe, provide first aid, preserve evidence, and report to RIDDOR',
-      'When there are significant changes, after incidents, or if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'Vulnerable workers should simply be excluded from all site work',
+      'The same controls apply to everyone, so no special consideration is needed',
+      'Only physical disabilities need to be considered, not age or pregnancy',
     ],
     correctAnswer: 0,
     explanation:
@@ -1906,10 +1906,10 @@ export const module1Questions: QuestionBank[] = [
     id: 117,
     question: 'What is a risk matrix used for?',
     options: [
-      'To ensure it is working correctly and give confidence the circuit is dead',
+      'Recording which workers have been issued personal protective equipment',
       'Evaluating and prioritising risks by plotting likelihood against severity',
-      'A written document describing how work will be carried out safely, step by step',
-      'A brief risk assessment carried out immediately before starting a task at the work location',
+      'Calculating the financial cost of implementing control measures',
+      'Listing the legislation that applies to a particular activity',
     ],
     correctAnswer: 1,
     explanation:
@@ -1938,9 +1938,9 @@ export const module1Questions: QuestionBank[] = [
     id: 119,
     question: 'When should a risk assessment be reviewed?',
     options: [
-      "Chemical-resistant gloves, eye protection, and respiratory protection if ventilation is inadequate",
-      "The maximum concentration of an airborne substance averaged over a reference period",
-      "Identify circuit, isolate, secure isolation, prove dead, apply lock-off, work safely",
+      "Only when the company changes its name or ownership",
+      "Strictly every five years and at no other time",
+      "Only once, before the work first begins",
       "When there are significant changes, after incidents, or if it's no longer valid",
     ],
     correctAnswer: 3,
@@ -1955,9 +1955,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is residual risk?',
     options: [
       'The remaining risk after control measures have been implemented',
-      'Online via the HSE website, or by phone for fatal and specified injuries',
-      'Hazard statements describing the nature of the hazard',
-      'Electrical short circuit or overload causing fire or explosion',
+      'The total risk present before any controls are applied',
+      'The risk transferred to a subcontractor by agreement',
+      'The risk that only affects members of the public',
     ],
     correctAnswer: 0,
     explanation:
@@ -1970,10 +1970,10 @@ export const module1Questions: QuestionBank[] = [
     id: 121,
     question: 'What is the purpose of the control measures section in a risk assessment?',
     options: [
-      'Only as a last resort when risks cannot be adequately controlled by other means',
+      'To list the names of everyone who has signed the assessment',
       'To specify actions taken or needed to eliminate or reduce risks',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'Duties of persons concerned with premises to persons other than their employees',
+      'To record the cost of carrying out the assessment',
+      'To set out the company\'s overall health and safety policy',
     ],
     correctAnswer: 1,
     explanation:
@@ -1986,10 +1986,10 @@ export const module1Questions: QuestionBank[] = [
     id: 122,
     question: 'Why is it important to identify who might be harmed in a risk assessment?',
     options: [
-      'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
-      'A committee where employers and employee representatives discuss and review health and safety measures',
+      'So that the cost of any compensation claims can be estimated',
+      'So that only the most senior staff are given protection',
       'To ensure control measures protect everyone affected including employees, contractors, and public',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
+      'So that blame can be assigned in advance of any incident',
     ],
     correctAnswer: 2,
     explanation:
@@ -2002,9 +2002,9 @@ export const module1Questions: QuestionBank[] = [
     id: 123,
     question: "What is a 'point of work' risk assessment?",
     options: [
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'A detailed assessment focused on a particular activity or operation',
-      'Equipment shall be of sufficient strength and capability for its purpose',
+      'An assessment carried out at head office before workers leave',
+      'A generic assessment used across many similar sites',
+      'A formal written assessment reviewed annually by management',
       'A brief risk assessment carried out immediately before starting a task at the work location',
     ],
     correctAnswer: 3,
@@ -2019,9 +2019,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What information sources can help identify hazards?',
     options: [
       'Manufacturer instructions, safety data sheets, accident records, industry guidance, and worker input',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
-      'Evaluating and prioritising risks by plotting likelihood against severity',
-      'A risk assessment that covers common activities across multiple similar situations',
+      'Only the personal opinion of the most senior manager',
+      'Only the company\'s financial accounts and budget reports',
+      'Only the client\'s verbal description of the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -2034,10 +2034,10 @@ export const module1Questions: QuestionBank[] = [
     id: 125,
     question: "What is a 'reasonably foreseeable' hazard?",
     options: [
-      'A known voltage source to test voltage indicators work correctly before and after use',
+      'A hazard that has actually caused an accident in the past month',
       'A hazard that a competent person could reasonably predict might occur',
-      'The risks, precautions, control measures, and results of any monitoring',
-      'Duties to comply with regulations to prevent danger and injury from electricity',
+      'A hazard that could never realistically be anticipated by anyone',
+      'A hazard that only arises from extremely rare freak events',
     ],
     correctAnswer: 1,
     explanation:
@@ -2050,10 +2050,10 @@ export const module1Questions: QuestionBank[] = [
     id: 126,
     question: 'How should control measures be prioritised?',
     options: [
-      'A written document describing how work will be carried out safely, step by step',
-      'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
+      'By selecting whichever measure is cheapest to put in place',
+      'By starting with PPE first and eliminating the hazard only as a last resort',
       'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
-      'An employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s liability for acts or omissions of their employees performed in the course of employment',
+      'By applying every possible control measure at the same time',
     ],
     correctAnswer: 2,
     explanation:
@@ -2066,9 +2066,9 @@ export const module1Questions: QuestionBank[] = [
     id: 127,
     question: 'What should a risk assessment action plan include?',
     options: [
-      'The employer must weigh the risk against the cost, time and effort of removing it',
-      'Non-employees who may be affected by the work activities',
-      'All work-related accidents and injuries, however minor',
+      'The names and pay rates of every worker on the project',
+      'A full list of all legislation in force at the time',
+      'The contact details of the local enforcing authority',
       'Actions needed, responsible person, target date, and completion date',
     ],
     correctAnswer: 3,
@@ -2084,9 +2084,9 @@ export const module1Questions: QuestionBank[] = [
       'What is the significance of reviewing accident and near-miss data in risk assessment?',
     options: [
       'To identify recurring patterns and previously unidentified hazards',
-      'Raise the alarm and isolate the power supply if safe to do so',
-      'Duties to comply with regulations to prevent danger and injury from electricity',
-      'Charge their employer for safety equipment or training',
+      'To decide which workers should be disciplined for past incidents',
+      'To calculate the insurance premium for the following year',
+      'To prove the workplace has never had any accidents',
     ],
     correctAnswer: 0,
     explanation:
@@ -2099,10 +2099,10 @@ export const module1Questions: QuestionBank[] = [
     id: 129,
     question: 'What role does consultation play in risk assessment?',
     options: [
-      'Elimination or substitution with a less hazardous substance',
+      'Consultation is optional and only needed on construction sites',
       'Workers must be consulted on health and safety matters including risk assessment',
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
-      'Electric shock, burns, fire, explosion, falls from height, manual handling',
+      'Only managers need to be consulted, never the workforce',
+      'Consultation is only required after an accident has occurred',
     ],
     correctAnswer: 1,
     explanation:
@@ -2115,10 +2115,10 @@ export const module1Questions: QuestionBank[] = [
     id: 130,
     question: 'What is task-specific risk assessment?',
     options: [
-      'Through briefings, toolbox talks, and making them available at the work location',
-      'When requested in writing by two or more Safety Representatives',
+      'A broad assessment covering the whole site in general terms',
+      'An assessment that applies to every task a company ever does',
       'A detailed assessment focused on a particular activity or operation',
-      'Regularly and whenever there are significant changes',
+      'An assessment carried out only by an external consultant',
     ],
     correctAnswer: 2,
     explanation:
@@ -2131,9 +2131,9 @@ export const module1Questions: QuestionBank[] = [
     id: 131,
     question: 'What environmental factors should be considered in risk assessments?',
     options: [
-      'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
-      'Regularly, with fire drills at least annually and more frequent briefings',
-      'Evaluating and prioritising risks by plotting likelihood against severity',
+      'The age and experience of each individual worker',
+      'The brand of tools and equipment being used',
+      'The financial budget allocated to the project',
       'Weather, lighting, temperature, noise, ventilation, and access conditions',
     ],
     correctAnswer: 3,
@@ -2148,9 +2148,9 @@ export const module1Questions: QuestionBank[] = [
     question: "What is a 'safe system of work'?",
     options: [
       'A formal procedure resulting from systematic examination of work to identify hazards and methods to eliminate or minimise them',
-      'All employers must make a suitable and sufficient assessment of risks to employees and others',
-      'Equipment needed, inspection requirements, safe use procedures, and any specific limitations',
-      'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
+      'An informal agreement between workers to look out for each other',
+      'A list of all the equipment that must be inspected before use',
+      'The set of PPE issued to each worker at the start of a shift',
     ],
     correctAnswer: 0,
     explanation:
@@ -2163,10 +2163,10 @@ export const module1Questions: QuestionBank[] = [
     id: 133,
     question: 'How should lone working be addressed in risk assessments?',
     options: [
-      'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
+      'Lone working is always prohibited and need not be assessed',
       'Specific consideration of communication, emergency procedures, and additional controls needed',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'No special consideration is needed as the same controls apply',
+      'Only the lone worker\'s pay rate needs to be reviewed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2179,10 +2179,10 @@ export const module1Questions: QuestionBank[] = [
     id: 134,
     question: 'What training is required regarding risk assessments?',
     options: [
-      'Without delay (immediately) by quickest practicable means',
-      'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
+      'Only managers need training; workers do not need to be informed',
+      'Workers only need to sign the assessment, not understand it',
       'Workers must understand the risks, control measures, and their responsibilities',
-      'To issue improvement notices, prohibition notices, and prosecute',
+      'Training is only required for those who write the assessments',
     ],
     correctAnswer: 2,
     explanation:
@@ -2195,9 +2195,9 @@ export const module1Questions: QuestionBank[] = [
     id: 135,
     question: 'What should happen if new hazards are identified during work?',
     options: [
-      'Only if trained, it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
+      'Continue working and note the hazard at the end of the day',
+      'Ignore the hazard if the work is nearly finished',
+      'Wait until the next scheduled review before acting',
       'Stop, reassess the risks, implement additional controls if needed, and update the risk assessment',
     ],
     correctAnswer: 3,
@@ -2216,9 +2216,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is a method statement?',
     options: [
       'A written document describing how work will be carried out safely, step by step',
-      'Accidental leakage of gas causing death/injury or posing an immediate risk',
-      'To confirm work is complete, the area is safe, and controls can be removed',
-      'Regularly and when there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reason to believe it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid, or when work conditions change',
+      'A document listing only the hazards present on a site',
+      'A certificate confirming a worker is competent to do the task',
+      'A record of the materials and their cost for a project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2231,10 +2231,10 @@ export const module1Questions: QuestionBank[] = [
     id: 137,
     question: 'What is the relationship between risk assessment and method statement?',
     options: [
-      'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
+      'They are two different names for exactly the same document',
       'The method statement describes how to implement the controls identified in the risk assessment',
-      'Accidental leakage of gas causing death/injury or posing an immediate risk',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
+      'The risk assessment is written after the method statement is finished',
+      'The method statement replaces the need for a risk assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -2247,10 +2247,10 @@ export const module1Questions: QuestionBank[] = [
     id: 138,
     question: 'What information should a method statement contain?',
     options: [
-      'Extinguish any burning clothing, cool burns with water, cover loosely, treat for shock, get emergency help',
-      'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
+      'Only the start and finish dates of the project',
+      'Only a list of the legislation that applies to the work',
       'Description of work, sequence of operations, equipment, control measures, responsible persons',
-      'Duties of persons concerned with premises to persons other than their employees',
+      'Only the cost of the labour and materials required',
     ],
     correctAnswer: 2,
     explanation:
@@ -2263,9 +2263,9 @@ export const module1Questions: QuestionBank[] = [
     id: 139,
     question: 'When is a method statement typically required?',
     options: [
-      'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
-      'Each person applies their own lock (multi-lock hasp) and keeps their own key',
-      'Specific consideration of communication, emergency procedures, and additional controls needed',
+      'For every single task, however trivial or low-risk',
+      'Only after an accident has already happened on site',
+      'Never, as a risk assessment alone is always sufficient',
       'For complex, high-risk activities or when required by clients/principal contractors',
     ],
     correctAnswer: 3,
@@ -2295,10 +2295,10 @@ export const module1Questions: QuestionBank[] = [
     id: 141,
     question: 'Who should prepare method statements?',
     options: [
-      'Dust suppression, noise control, waste management, and prevention of pollution',
+      'Any administrative member of staff at head office',
       'A competent person with knowledge of the work, often involving those who will do the task',
-      'The employer, or the person in control of the premises where the incident occurred',
-      'A risk assessment that covers common activities across multiple similar situations',
+      'The client who commissioned the project',
+      'An HSE inspector before work is allowed to start',
     ],
     correctAnswer: 1,
     explanation:
@@ -2311,10 +2311,10 @@ export const module1Questions: QuestionBank[] = [
     id: 142,
     question: 'How should method statements be communicated to workers?',
     options: [
-      'A brief verbal review of the method statement at the work location before starting',
-      'Identify circuit, isolate, secure isolation, prove dead, apply lock-off, work safely',
+      'By keeping them locked in the site office, unavailable to workers',
+      'By emailing them to the client but not to the workforce',
       'Through briefings, toolbox talks, and making them available at the work location',
-      'Raise the alarm and isolate the power supply if safe to do so',
+      'By relying on workers to ask if they want to see them',
     ],
     correctAnswer: 2,
     explanation:
@@ -2327,9 +2327,9 @@ export const module1Questions: QuestionBank[] = [
     id: 143,
     question: 'What is a toolbox talk?',
     options: [
-      'Information, instruction, training and supervision necessary for health and safety',
-      'Acute toxicity - can cause death or serious harm with short exposure',
-      'Yes, if they result from work activity and require hospital treatment',
+      'A formal week-long training course leading to a qualification',
+      'A meeting to discuss the cost of tools and equipment',
+      'A written examination on health and safety legislation',
       'A short, focused safety briefing on a specific topic relevant to the work',
     ],
     correctAnswer: 3,
@@ -2344,9 +2344,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is a permit to work system?',
     options: [
       'A formal system ensuring high-risk work is properly planned, authorised, and controlled',
-      'Provide suitable PPE free of charge, ensure it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintained, provide storage, training, and enforce use',
-      'An engineering control that captures airborne contaminants at source before they spread',
-      'Every part of a system shall be protected from excess current',
+      'A document confirming a worker has the legal right to work in the UK',
+      'A licence issued by the local authority to trade as an electrician',
+      'A timesheet recording the hours a worker spends on each task',
     ],
     correctAnswer: 0,
     explanation:
@@ -2359,10 +2359,10 @@ export const module1Questions: QuestionBank[] = [
     id: 145,
     question: 'For which activities might a permit to work be required?',
     options: [
-      'A formal system ensuring high-risk work is properly planned, authorised, and controlled',
+      'Routine office filing and general administrative tasks',
       'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'Unable to perform their normal work duties, even if they can do other work',
-      'The maximum concentration of an airborne substance averaged over a reference period',
+      'Sweeping floors and basic site housekeeping',
+      'Ordering materials and arranging deliveries to site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2375,10 +2375,10 @@ export const module1Questions: QuestionBank[] = [
     id: 146,
     question: 'What are the key elements of a permit to work?',
     options: [
-      'Accidental leakage of gas causing death/injury or posing an immediate risk',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
+      'The worker\'s pay rate, hours worked, and overtime claimed',
+      'The cost of materials, labour, and the agreed profit margin',
       'Description of work, hazards, precautions, isolation details, time limits, authorisation signatures',
-      'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
+      'The client\'s contact details and the project completion date only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2391,9 +2391,9 @@ export const module1Questions: QuestionBank[] = [
     id: 147,
     question: "What is the purpose of a 'work sequence' in a method statement?",
     options: [
-      'Only HSE-licensed contractors holding a current asbestos licence',
-      'Precautionary statements advising on handling, storage, and emergency response',
-      'Inhalation, skin absorption, ingestion, and injection',
+      'To list the suppliers used for each part of the project',
+      'To record how long each worker spent on the task',
+      'To set out the price charged for each stage of the work',
       'To describe the order of operations ensuring safety at each stage',
     ],
     correctAnswer: 3,
@@ -2408,9 +2408,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What PPE requirements should be included in a method statement?',
     options: [
       'Specific PPE required for each stage of the work',
-      'Risk Assessment and Method Statement',
-      'Without delay (immediately) by quickest practicable means',
-      'Non-employees who may be affected by the work activities',
+      'Only the cost of the PPE supplied to workers',
+      'Only the brand names of the PPE manufacturers',
+      'A general note that "PPE must be worn at all times"',
     ],
     correctAnswer: 0,
     explanation:
@@ -2423,10 +2423,10 @@ export const module1Questions: QuestionBank[] = [
     id: 149,
     question: 'How should emergency procedures be addressed in method statements?',
     options: [
-      'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
+      'They should be left out, as emergencies cannot be predicted',
       'Include specific emergency actions, evacuation routes, emergency contacts, and first aid arrangements',
-      'To ensure control measures protect everyone affected including employees, contractors, and public',
-      'Additional controls may be needed for young workers, pregnant women, or those with disabilities',
+      'A simple note to "call 999 in an emergency" is sufficient',
+      'They should only be added after an incident has occurred',
     ],
     correctAnswer: 1,
     explanation:
@@ -2439,10 +2439,10 @@ export const module1Questions: QuestionBank[] = [
     id: 150,
     question: 'What supervision requirements should method statements address?',
     options: [
-      'Stop, reassess the risks, implement additional controls if needed, and update the risk assessment',
-      'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
+      'The number of breaks a supervisor is entitled to take',
+      'The salary and benefits package of the site supervisor',
       'Level and type of supervision needed, who the supervisor is, and their responsibilities',
-      'Every part of a system shall be protected from excess current',
+      'The disciplinary record of the supervisor in question',
     ],
     correctAnswer: 2,
     explanation:
@@ -2455,9 +2455,9 @@ export const module1Questions: QuestionBank[] = [
     id: 151,
     question: "What is a 'point of work briefing'?",
     options: [
-      'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
-      'Online via the HSE website, or by phone for fatal and specified injuries',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
+      'A weekly meeting held in the site office for all managers',
+      'A written report submitted to the client after work finishes',
+      'A formal training course completed before joining the site',
       'A brief verbal review of the method statement at the work location before starting',
     ],
     correctAnswer: 3,
@@ -2472,9 +2472,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'How should changes to planned work be handled?',
     options: [
       'Stop, reassess, amend the method statement if needed, and brief workers on changes',
-      'Measures affecting health and safety, including arrangements for competent assistance',
-      'Safety glasses or goggles rated for impact and potentially arc flash',
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
+      'Carry on with the original plan regardless of the change',
+      'Make the change but update the paperwork only at the end of the job',
+      'Allow each worker to decide individually how to adapt',
     ],
     correctAnswer: 0,
     explanation:
@@ -2487,10 +2487,10 @@ export const module1Questions: QuestionBank[] = [
     id: 153,
     question: "What is the role of the 'competent person' in method statements?",
     options: [
-      'A written document describing how work will be carried out safely, step by step',
+      'To sign the document without reading its contents',
       'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
-      'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
-      'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
+      'To approve the project budget and order materials',
+      'To negotiate the contract price with the client',
     ],
     correctAnswer: 1,
     explanation:
@@ -2503,10 +2503,10 @@ export const module1Questions: QuestionBank[] = [
     id: 154,
     question: 'What information about equipment should be in a method statement?',
     options: [
-      'Include specific emergency actions, evacuation routes, emergency contacts, and first aid arrangements',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
+      'Only the purchase price of each item of equipment',
+      'Only the name of the hire company supplying the equipment',
       'Equipment needed, inspection requirements, safe use procedures, and any specific limitations',
-      'All employers, employees, and self-employed persons who work with or near electricity',
+      'Only the serial numbers of the equipment for insurance',
     ],
     correctAnswer: 2,
     explanation:
@@ -2519,9 +2519,9 @@ export const module1Questions: QuestionBank[] = [
     id: 155,
     question: 'How should interface risks with other trades be addressed?',
     options: [
-      'A summary of key points from the method statement communicated to workers before starting',
-      'Without delay (immediately) by quickest practicable means',
-      'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
+      'Each trade should work independently and ignore the others',
+      'Interface risks are the sole responsibility of the client',
+      'They should only be considered after a conflict has occurred',
       'Identify where work interfaces with others and specify coordination measures',
     ],
     correctAnswer: 3,
@@ -2536,9 +2536,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What records should be kept related to method statements?',
     options: [
       'The method statement, briefing records, permits, completion records, and any amendments',
-      'Regularly, with fire drills at least annually and more frequent briefings',
-      'That adequate precautions are taken to prevent reconnection during work',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
+      'Only the final invoice issued to the client',
+      'Only the names of the workers who were on site',
+      'Only the delivery notes for materials used',
     ],
     correctAnswer: 0,
     explanation:
@@ -2551,10 +2551,10 @@ export const module1Questions: QuestionBank[] = [
     id: 157,
     question: "What is a 'task brief' in relation to method statements?",
     options: [
-      'A short, focused safety briefing on a specific topic relevant to the work',
+      'A full rewrite of the method statement after the work is done',
       'A summary of key points from the method statement communicated to workers before starting',
-      'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
-      'To issue improvement notices, prohibition notices, and prosecute',
+      'A written test on the method statement that workers must pass',
+      'A record of how long the task took to complete',
     ],
     correctAnswer: 1,
     explanation:
@@ -2567,10 +2567,10 @@ export const module1Questions: QuestionBank[] = [
     id: 158,
     question: 'How should housekeeping be addressed in method statements?',
     options: [
-      'A person with sufficient training, knowledge, experience and other qualities to properly assist',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
+      'Housekeeping is the client\'s responsibility, not the contractor\'s',
+      'Housekeeping need not be mentioned as it is not a safety matter',
       'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
-      'Dust suppression, noise control, waste management, and prevention of pollution',
+      'Only the cost of cleaning the site at the end should be recorded',
     ],
     correctAnswer: 2,
     explanation:
@@ -2583,9 +2583,9 @@ export const module1Questions: QuestionBank[] = [
     id: 159,
     question: 'What is the purpose of sign-off at completion in a permit system?',
     options: [
-      'Only as a last resort when risks cannot be adequately controlled by other means',
-      'All employers, employees, and self-employed persons who work with or near electricity',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment and arrangements for managing health and safety',
+      'To record the hours each worker spent on the task',
+      'To confirm the final invoice has been paid by the client',
+      'To transfer all liability for the work to the worker',
       'To confirm work is complete, the area is safe, and controls can be removed',
     ],
     correctAnswer: 3,
@@ -2600,9 +2600,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What environmental controls might be specified in a method statement?',
     options: [
       'Dust suppression, noise control, waste management, and prevention of pollution',
-      'Follow strict live working procedures if justified, or postpone work until isolation is possible',
-      'Joints and connections must be properly made to be mechanically and electrically sound',
-      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'The temperature and humidity preferred by the workers',
+      'The choice of paint colour for the finished installation',
+      'The brand of refreshments provided in the welfare area',
     ],
     correctAnswer: 0,
     explanation:
@@ -2635,10 +2635,10 @@ export const module1Questions: QuestionBank[] = [
     id: 162,
     question: 'According to PPE regulations, when should PPE be used?',
     options: [
-      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'Include specific emergency actions, evacuation routes, emergency contacts, and first aid arrangements',
+      'As the very first control measure before considering any other',
+      'Only when an HSE inspector is present on site',
       'Only as a last resort when risks cannot be adequately controlled by other means',
-      'To identify hazards, who might be harmed, evaluate risks, and determine control measures',
+      'Only on construction sites, never in other workplaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -2651,9 +2651,9 @@ export const module1Questions: QuestionBank[] = [
     id: 163,
     question: "What are employers' duties regarding PPE?",
     options: [
-      "Information, instruction, training and supervision necessary for health and safety",
-      "All systems shall be constructed to prevent danger so far as is reasonably practicable",
-      "A document providing information about a hazardous substance including hazards, handling, and emergency measures",
+      "Charge employees the cost of their PPE through payroll deductions",
+      "Provide PPE only to supervisors and managers, not general workers",
+      "Supply PPE but leave maintenance entirely to the individual worker",
       "Provide suitable PPE free of charge, ensure it's maintained, provide storage, training, and enforce use",
     ],
     correctAnswer: 3,
@@ -2668,9 +2668,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What does the CE/UKCA mark on PPE indicate?',
     options: [
       'Conformity with relevant health and safety standards',
-      'Specific PPE required for each stage of the work',
-      'Inhalation, skin absorption, ingestion, and injection',
-      'Only if on a private road or part of construction work',
+      'The country in which the PPE was manufactured',
+      'The maximum number of times the PPE may be reused',
+      'The recommended retail price of the PPE item',
     ],
     correctAnswer: 0,
     explanation:
@@ -2683,10 +2683,10 @@ export const module1Questions: QuestionBank[] = [
     id: 165,
     question: 'What PPE is typically required for electrical work?',
     options: [
-      'Guidance with special legal status - failure to follow can be used as evidence of non-compliance',
+      'Only a hi-vis vest and a hard hat in all situations',
       'Safety footwear, insulating gloves (if appropriate), eye protection, suitable clothing',
-      'Unable to perform their normal work duties, even if they can do other work',
-      'Continuous assessment of changing risks while work is in progress',
+      'Only ear defenders and a dust mask for every task',
+      'No PPE is needed provided the circuit has been isolated',
     ],
     correctAnswer: 1,
     explanation:
@@ -2699,10 +2699,10 @@ export const module1Questions: QuestionBank[] = [
     id: 166,
     question: "What is the employee's duty regarding PPE?",
     options: [
-      'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
-      'A risk assessment that covers common activities across multiple similar situations',
+      'To purchase their own PPE and claim the cost back later',
+      'To choose whether or not to wear the PPE provided',
       'Use it properly, report defects, store it correctly, and not misuse it',
-      'Identify where work interfaces with others and specify coordination measures',
+      'To repair any damaged PPE themselves before reporting it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2715,9 +2715,9 @@ export const module1Questions: QuestionBank[] = [
     id: 167,
     question: 'What factors should be considered when selecting PPE?',
     options: [
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'Ensure the power is off, check for response, call for help, and perform CPR if needed',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
+      'Only the cheapest option available from the supplier',
+      'Only the colour and appearance of the equipment',
+      'Only the brand name and reputation of the manufacturer',
       'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
     ],
     correctAnswer: 3,
@@ -2747,10 +2747,10 @@ export const module1Questions: QuestionBank[] = [
     id: 169,
     question: 'How often should insulating gloves be tested?',
     options: [
-      'An engineering control that captures airborne contaminants at source before they spread',
+      'Only once when they are first purchased, then never again',
       'At regular intervals as specified by the manufacturer, typically every 6 months',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
+      'Only after they have been used on a live circuit',
+      'Every five years, in line with fixed-wiring inspection cycles',
     ],
     correctAnswer: 1,
     explanation:
@@ -2763,10 +2763,10 @@ export const module1Questions: QuestionBank[] = [
     id: 170,
     question: 'What is arc flash protection?',
     options: [
-      'Regularly and when there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reason to believe it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid, or when work conditions change',
-      'A formal system ensuring high-risk work is properly planned, authorised, and controlled',
+      'A device that detects arcing faults and disconnects the supply',
+      'A coating applied to cables to prevent arc tracking',
       'Specialised PPE protecting against thermal hazards from electrical arc flash incidents',
-      'Collapse or overturning of lifting equipment, or electrical short circuit causing fire',
+      'A type of camera flash used when photographing electrical faults',
     ],
     correctAnswer: 2,
     explanation:
@@ -2779,9 +2779,9 @@ export const module1Questions: QuestionBank[] = [
     id: 171,
     question: 'What does an arc flash risk assessment determine?',
     options: [
-      'Yes, if they result from work activity and require hospital treatment',
-      'Specific PPE required for each stage of the work',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
+      'The cost of replacing equipment damaged by an arc flash',
+      'The number of workers permitted in the work area',
+      'The time taken for a circuit breaker to reset after a fault',
       'The incident energy level and appropriate PPE category required',
     ],
     correctAnswer: 3,
@@ -2796,9 +2796,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What type of eye protection is suitable for electrical work?',
     options: [
       'Safety glasses or goggles rated for impact and potentially arc flash',
-      'To physically prevent an isolator being switched back on while work is in progress',
-      'A short, focused safety briefing on a specific topic relevant to the work',
-      'Joints and connections must be properly made to be mechanically and electrically sound',
+      'Ordinary prescription spectacles with no impact rating',
+      'Tinted sunglasses to reduce glare from the work area',
+      'No eye protection is needed once the circuit is isolated',
     ],
     correctAnswer: 0,
     explanation:
@@ -2811,10 +2811,10 @@ export const module1Questions: QuestionBank[] = [
     id: 173,
     question: 'Why is synthetic clothing not recommended for electrical work?',
     options: [
-      'Fracture (other than fingers, thumbs, or toes)',
+      'It conducts electricity better than natural fibres do',
       'It can melt and adhere to skin in an arc flash, worsening burns',
-      'Technical knowledge and experience to prevent danger and injury',
-      'Precautionary statements advising on handling, storage, and emergency response',
+      'It generates static that can trip residual current devices',
+      'It is more expensive than equivalent natural-fibre clothing',
     ],
     correctAnswer: 1,
     explanation:
@@ -2827,10 +2827,10 @@ export const module1Questions: QuestionBank[] = [
     id: 174,
     question: 'What is the purpose of safety footwear in electrical work?',
     options: [
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'To physically prevent an isolator being switched back on while work is in progress',
+      'To improve grip when climbing ladders and scaffolds only',
+      'To keep the wearer\'s feet warm in cold conditions',
       'Protection against falling objects, punctures, and electrical hazards',
-      'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
+      'To make the wearer taller and more visible on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2843,9 +2843,9 @@ export const module1Questions: QuestionBank[] = [
     id: 175,
     question: 'What is a safe isolation procedure?',
     options: [
-      'Trained authorised persons, HV switching procedures, earthing equipment, additional testing',
-      'The employer, or the person in control of the premises where the incident occurred',
-      'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
+      'A method of working safely on equipment that remains live',
+      'A procedure for keeping different trades apart on a busy site',
+      'A way of isolating a worker who is behaving dangerously',
       'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
     ],
     correctAnswer: 3,
@@ -2860,9 +2860,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What are the key steps in safe isolation?',
     options: [
       'Identify circuit, isolate, secure isolation, prove dead, apply lock-off, work safely',
-      'Workers must be consulted on health and safety matters including risk assessment',
-      'The incident energy level and appropriate PPE category required',
-      'When there are significant changes, after incidents, or if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid',
+      'Switch off, start work immediately, then prove dead afterwards',
+      'Prove dead first, then isolate the circuit and begin work',
+      'Isolate the circuit and rely on a warning notice alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -2875,10 +2875,10 @@ export const module1Questions: QuestionBank[] = [
     id: 177,
     question: 'Why must a voltage indicator be tested before and after use?',
     options: [
-      'Identify where work interfaces with others and specify coordination measures',
+      'To calibrate the indicator to the exact supply voltage',
       'To ensure it is working correctly and give confidence the circuit is dead',
-      'The maximum concentration of an airborne substance averaged over a reference period',
-      'A hazard that a competent person could reasonably predict might occur',
+      'To discharge any stored charge in the indicator\'s battery',
+      'To record the test result for the certification paperwork',
     ],
     correctAnswer: 1,
     explanation:
@@ -2891,10 +2891,10 @@ export const module1Questions: QuestionBank[] = [
     id: 178,
     question: 'What is a proving unit used for?',
     options: [
-      'Description of work, sequence of operations, equipment, control measures, responsible persons',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
+      'Measuring the insulation resistance of a circuit',
+      'Discharging stored energy from a capacitor before work',
       'A known voltage source to test voltage indicators work correctly before and after use',
-      'An engineering control that captures airborne contaminants at source before they spread',
+      'Recording the voltage present at the supply intake',
     ],
     correctAnswer: 2,
     explanation:
@@ -2907,9 +2907,9 @@ export const module1Questions: QuestionBank[] = [
     id: 179,
     question: 'What is the purpose of lock-off devices?',
     options: [
-      'A brief risk assessment carried out immediately before starting a task at the work location',
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
+      'To secure tools and equipment against theft from site',
+      'To lock the consumer unit cover closed after testing',
+      'To indicate which circuits are spare on a distribution board',
       'To physically prevent an isolator being switched back on while work is in progress',
     ],
     correctAnswer: 3,
@@ -2925,9 +2925,9 @@ export const module1Questions: QuestionBank[] = [
       'When multiple people are working on an isolated circuit, what lock-off approach should be used?',
     options: [
       'Each person applies their own lock (multi-lock hasp) and keeps their own key',
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
-      'Additional controls may be needed for young workers, pregnant women, or those with disabilities',
-      'Details of injured person, accident circumstances, location, date/time, nature of injury',
+      'One supervisor applies a single lock and keeps the only key for everyone',
+      'The first person to finish removes the lock for the whole team',
+      'Each person signs a register instead of applying a physical lock',
     ],
     correctAnswer: 0,
     explanation:
@@ -2940,10 +2940,10 @@ export const module1Questions: QuestionBank[] = [
     id: 181,
     question: 'What warning notices should be displayed during isolation?',
     options: [
-      'Electrical short circuit or overload causing fire or explosion',
+      'Notices showing the rated current of each circuit breaker',
       'Clear warning signs indicating work in progress and prohibition against re-energising',
-      'Guidance with special legal status - failure to follow can be used as evidence of non-compliance',
-      'Significant findings including hazards identified, who is at risk, control measures, and review date',
+      'Notices stating the date of the last periodic inspection',
+      'Fire exit and assembly point direction signs',
     ],
     correctAnswer: 1,
     explanation:
@@ -2956,10 +2956,10 @@ export const module1Questions: QuestionBank[] = [
     id: 182,
     question: 'What is a permit to work for electrical isolation?',
     options: [
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'Specialised PPE protecting against thermal hazards from electrical arc flash incidents',
+      'A licence confirming the electrician is qualified to isolate circuits',
+      'A label attached to the isolator showing its rated current',
       'A formal documented authorisation for work on or near isolated electrical equipment',
-      'The employer, or the person in control of the premises where the incident occurred',
+      'A certificate issued after the installation has been tested',
     ],
     correctAnswer: 2,
     explanation:
@@ -2972,9 +2972,9 @@ export const module1Questions: QuestionBank[] = [
     id: 183,
     question: 'What should be done if a circuit cannot be isolated?',
     options: [
-      'The employer must weigh the risk against the cost, time and effort of removing it',
-      'A summary of key points from the method statement communicated to workers before starting',
-      'Description of work, hazards, precautions, isolation details, time limits, authorisation signatures',
+      'Proceed with the work live, as isolation is only advisory',
+      'Ask an apprentice to hold the conductors steady during the work',
+      'Switch off at the main switch and assume the circuit is dead',
       'Follow strict live working procedures if justified, or postpone work until isolation is possible',
     ],
     correctAnswer: 3,
@@ -2989,9 +2989,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is the three-point test procedure for voltage indicators?',
     options: [
       'Test on known live source, test the circuit, retest on known live source',
-      'To ensure it is working correctly and give confidence the circuit is dead',
-      'At regular intervals as specified by the manufacturer, typically every 6 months',
-      'Clear warning signs indicating work in progress and prohibition against re-energising',
+      'Test the circuit, then test on a known live source twice',
+      'Test the line, neutral and earth terminals once each only',
+      'Test on a known live source once, then test the circuit only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3004,10 +3004,10 @@ export const module1Questions: QuestionBank[] = [
     id: 185,
     question: 'What additional precautions are needed for HV (high voltage) safe isolation?',
     options: [
-      'Equipment shall be of sufficient strength and capability for its purpose',
+      'No additional precautions beyond those used for low voltage',
       'Trained authorised persons, HV switching procedures, earthing equipment, additional testing',
-      'Test on known live source, test the circuit, retest on known live source',
-      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
+      'A single padlock applied to the main HV isolator is sufficient',
+      'Only insulating gloves rated for low voltage are required',
     ],
     correctAnswer: 1,
     explanation:
@@ -3024,10 +3024,10 @@ export const module1Questions: QuestionBank[] = [
     id: 186,
     question: 'What is the first action on discovering an electrical fire?',
     options: [
-      'Each person applies their own lock (multi-lock hasp) and keeps their own key',
-      'Only as a last resort when risks cannot be adequately controlled by other means',
+      'Throw water over the fire to cool the burning equipment',
+      'Open all the windows to let the smoke escape',
       'Raise the alarm and isolate the power supply if safe to do so',
-      'To specify actions taken or needed to eliminate or reduce risks',
+      'Move the burning equipment outside the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -3040,14 +3040,14 @@ export const module1Questions: QuestionBank[] = [
     id: 187,
     question: 'Which type of fire extinguisher is safe to use on electrical fires?',
     options: [
-      'The Health and Safety Executive (HSE)',
-      'Working space, access, and lighting',
-      'Means for cutting off supply and isolation',
+      'Water (red label), as it cools the burning equipment quickly',
+      'Foam (cream label), as the blanket smothers the flames',
+      'Wet chemical (yellow label), as used on cooking-oil fires',
       'CO2 (carbon dioxide) or dry powder',
     ],
     correctAnswer: 3,
     explanation:
-      'CO2 and dry powder extinguishers are safe for electrical fires. Water and foam must not be used as they conduct electricity. CO2 is preferred as it leaves no residue.',
+      'CO2 and dry powder extinguishers are safe for electrical fires. Water, foam and wet chemical must not be used as they conduct electricity. CO2 is preferred as it leaves no residue.',
     section: '1.8',
     topic: 'Emergency Procedures',
     difficulty: 'basic',
@@ -3057,9 +3057,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is the immediate first aid response to electric shock?',
     options: [
       'Ensure the power is off, check for response, call for help, and perform CPR if needed',
-      'To enable HSE and local authorities to identify workplace risks and investigate serious accidents',
-      'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
+      'Grab the casualty immediately to pull them clear of the supply',
+      'Give the casualty water to drink and let them rest quietly',
+      'Wait for the casualty to recover on their own before acting',
     ],
     correctAnswer: 0,
     explanation:
@@ -3072,10 +3072,10 @@ export const module1Questions: QuestionBank[] = [
     id: 189,
     question: 'Why should you never touch someone receiving an electric shock?',
     options: [
-      'Statement of intent, organisation, and arrangements',
+      'You might disturb their clothing and worsen any burns',
       'You could become part of the circuit and also receive a shock',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'The risks, precautions, control measures, and results of any monitoring',
+      'You could be accused of assault if they later complain',
+      'You might wake them and cause them to panic and fall',
     ],
     correctAnswer: 1,
     explanation:
@@ -3088,10 +3088,10 @@ export const module1Questions: QuestionBank[] = [
     id: 190,
     question: 'What burns may result from electric shock?',
     options: [
-      'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
-      'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
+      'Only superficial reddening of the skin that heals quickly',
+      'Only burns to the hands, never to any other part of the body',
       'Entry and exit burns, as well as internal tissue damage along the current path',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
+      'Burns only occur if the voltage exceeds 1000V',
     ],
     correctAnswer: 2,
     explanation:
@@ -3104,9 +3104,9 @@ export const module1Questions: QuestionBank[] = [
     id: 191,
     question: 'What is the emergency procedure for an arc flash injury?',
     options: [
-      'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
-      'All systems shall be constructed to prevent danger so far as is reasonably practicable',
-      'When exposure cannot be adequately controlled and specific health conditions can be identified',
+      'Apply butter or grease to the burns to soothe them',
+      'Burst any blisters and remove clothing stuck to the burn',
+      'Leave the casualty until the swelling has gone down',
       'Extinguish any burning clothing, cool burns with water, cover loosely, treat for shock, get emergency help',
     ],
     correctAnswer: 3,
@@ -3121,9 +3121,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What should an emergency evacuation plan include?',
     options: [
       'Escape routes, assembly points, roll call procedures, emergency contacts, and procedures for assisting those needing help',
-      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
-      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
-      'To identify hazards, who might be harmed, evaluate risks, and determine control measures',
+      'Only the location of the nearest fire extinguisher',
+      'Only the name of the site\'s appointed first aider',
+      'Only the contact number for the local fire service',
     ],
     correctAnswer: 0,
     explanation:
@@ -3136,10 +3136,10 @@ export const module1Questions: QuestionBank[] = [
     id: 193,
     question: 'How often should emergency procedures be practised?',
     options: [
-      'Competent person(s) with knowledge of the work, often involving workers who do the task',
+      'Only once when the workplace first opens',
       'Regularly, with fire drills at least annually and more frequent briefings',
-      'Accidental leakage of gas causing death/injury or posing an immediate risk',
-      'All employers, employees, and self-employed persons who work with or near electricity',
+      'Only after a real fire or emergency has occurred',
+      'Only when a new fire risk assessment is carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -3152,10 +3152,10 @@ export const module1Questions: QuestionBank[] = [
     id: 194,
     question: 'What information must be displayed at the workplace regarding emergencies?',
     options: [
-      'Measures affecting health and safety, including arrangements for competent assistance',
-      'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
+      'The names and home addresses of all employees',
+      'The company\'s annual turnover and profit figures',
       'Fire action notices, evacuation routes, assembly points, emergency contacts',
-      'To issue improvement notices, prohibition notices, and prosecute',
+      'The cost of the building\'s insurance policy',
     ],
     correctAnswer: 2,
     explanation:
@@ -3168,9 +3168,9 @@ export const module1Questions: QuestionBank[] = [
     id: 195,
     question: 'What is the role of a fire warden?',
     options: [
-      'A known voltage source to test voltage indicators work correctly before and after use',
-      'Measures affecting health and safety, including arrangements for competent assistance',
-      'Workers must understand the risks, control measures, and their responsibilities',
+      'To re-enter the building to retrieve valuable equipment',
+      'To attempt to extinguish any size of fire single-handedly',
+      'To carry out the annual servicing of fire extinguishers',
       'To assist with evacuation, check designated areas are clear, and report to the assembly point',
     ],
     correctAnswer: 3,
@@ -3185,9 +3185,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'When should you attempt to fight a fire?',
     options: [
       "Only if trained, it's safe to do so, you have the right extinguisher, and the fire is small",
-      "All systems shall be constructed to prevent danger so far as is reasonably practicable",
-      "A summary of key points from the method statement communicated to workers before starting",
-      "Working on electrical systems that have been safely isolated from all sources of supply",
+      "Always, regardless of the size of the fire or your training",
+      "Only after the fire service has arrived on site",
+      "Only if the fire is blocking your only escape route",
     ],
     correctAnswer: 0,
     explanation:
@@ -3200,10 +3200,10 @@ export const module1Questions: QuestionBank[] = [
     id: 197,
     question: 'What is the primary purpose of the assembly point?',
     options: [
-      'The maximum concentration of an airborne substance averaged over a reference period',
+      'A place to store fire-fighting equipment for the building',
       'A safe location where evacuated personnel gather to be accounted for',
-      'To ensure articles are safe, tested, and accompanied by adequate information',
-      'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
+      'A meeting room used for daily site briefings',
+      'A designated area for parking site vehicles safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -3216,10 +3216,10 @@ export const module1Questions: QuestionBank[] = [
     id: 198,
     question: 'What is the PASS technique for using a fire extinguisher?',
     options: [
-      'Yes, if they result from work activity and require hospital treatment',
-      'Non-employees who may be affected by the work activities',
+      'Point nozzle, Activate trigger, Stand back, Smother flames',
+      'Prepare exit, Alert others, Shut doors, Stay low',
       'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
-      'Inhalation, skin absorption, ingestion, and injection',
+      'Press handle, Angle upward, Spray top, Step forward',
     ],
     correctAnswer: 2,
     explanation:
@@ -3232,9 +3232,9 @@ export const module1Questions: QuestionBank[] = [
     id: 199,
     question: 'What should be reported after any emergency incident?',
     options: [
-      'Electric shock, burns, fire, explosion, falls from height, manual handling',
-      'A known voltage source to test voltage indicators work correctly before and after use',
-      'To confirm work is complete, the area is safe, and controls can be removed',
+      'Only the cost of any equipment damaged in the incident',
+      'Only the names of staff who failed to evacuate quickly',
+      'Nothing, provided no one was seriously injured',
       'Details of the incident, actions taken, injuries, and lessons learned',
     ],
     correctAnswer: 3,
@@ -3249,9 +3249,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What are the symptoms of secondary shock (psychological shock) after an accident?',
     options: [
       'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
-      'A safe location where evacuated personnel gather to be accounted for',
-      'The hazard, level of protection needed, fit, compatibility with other PPE, comfort',
-      'A known voltage source to test voltage indicators work correctly before and after use',
+      'Flushed warm skin, a slow strong pulse, and increased appetite',
+      'Sudden bursts of energy, clear thinking, and steady breathing',
+      'Raised body temperature, dry skin, and a feeling of euphoria',
     ],
     correctAnswer: 0,
     explanation:
@@ -3268,10 +3268,10 @@ export const module1Questions: QuestionBank[] = [
     id: 201,
     question: 'Under CDM 2015 Regulation 9, what is the principal designer\'s duty when planning the pre-construction phase?',
     options: [
-      'Provide suitable PPE free of charge, ensure it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintained, provide storage, training, and enforce use',
+      'To supervise the day-to-day construction work physically on site',
       'To plan, manage, monitor and coordinate health and safety in the pre-construction phase, including identifying and eliminating foreseeable risks',
-      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
-      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
+      'To prepare the construction phase plan before work begins on site',
+      'To notify the HSE using an F10 form before any work starts',
     ],
     correctAnswer: 1,
     explanation:
@@ -3284,10 +3284,10 @@ export const module1Questions: QuestionBank[] = [
     id: 202,
     question: 'Under CDM 2015 Reg 13, when does a contractor become a principal contractor?',
     options: [
-      'Directors, managers, and other officers if the offence was committed with their consent, connivance, or neglect',
-      'Cover purpose, scope, step-by-step procedure, equipment required, hazards if not followed, individual responsibilities, allow questions, get signed acknowledgement, and check understanding',
+      'Whenever the contract value exceeds £100,000 in total',
+      'Whenever the contractor employs more than ten workers directly',
       'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
-      'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
+      'Automatically on any project lasting longer than 30 working days',
     ],
     correctAnswer: 2,
     explanation:
@@ -3300,9 +3300,9 @@ export const module1Questions: QuestionBank[] = [
     id: 203,
     question: 'Under CDM 2015 Reg 15, what must a contractor do before starting work on site?',
     options: [
-      'Reject it, require a site-specific RAMS, brief the team only after it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been revised, and document the rejection',
-      'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
-      'A formal procedure resulting from systematic examination of work to identify hazards and methods to eliminate or minimise them',
+      'Appoint a principal designer and notify the HSE on their behalf',
+      'Compile the health and safety file for handover to the client',
+      'Obtain written confirmation from the client that the site is asbestos-free',
       'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
     ],
     correctAnswer: 3,
@@ -3317,9 +3317,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under CAR 2012 (Control of Asbestos Regulations), what is a refurbishment and demolition (R&D) survey for?',
     options: [
       'To locate and describe all asbestos-containing materials before refurbishment or demolition, so they can be removed before work starts',
-      'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
-      'Directors, managers, and other officers if the offence was committed with their consent, connivance, or neglect',
-      'Include specific emergency actions, evacuation routes, emergency contacts, and first aid arrangements',
+      'To support the day-to-day management of asbestos left in place during normal occupation',
+      'To estimate the cost of removing asbestos from the building',
+      'To confirm that the building is entirely free of any asbestos',
     ],
     correctAnswer: 0,
     explanation:
@@ -3332,10 +3332,10 @@ export const module1Questions: QuestionBank[] = [
     id: 205,
     question: 'Under CAR 2012, who can carry out licensed asbestos work such as removing sprayed coatings or asbestos insulating board (AIB) in poor condition?',
     options: [
-      'A short, focused safety briefing on a specific topic relevant to the work',
+      'Any electrician who has completed asbestos awareness training',
       'Only HSE-licensed contractors holding a current asbestos licence',
-      'Evaluating and prioritising risks by plotting likelihood against severity',
-      'Each person applies their own lock (multi-lock hasp) and keeps their own key',
+      'Any contractor provided they wear suitable respiratory protection',
+      'The duty holder or building owner using in-house staff',
     ],
     correctAnswer: 1,
     explanation:
@@ -3348,10 +3348,10 @@ export const module1Questions: QuestionBank[] = [
     id: 206,
     question: 'You\'re a supervisor on a 1970s commercial refurb. An apprentice drills into a ceiling tile and a grey fibrous dust falls out. What do you do first?',
     options: [
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
-      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
+      'Carry on drilling but tell the apprentice to wear a dust mask',
+      'Sweep up the dust quickly to stop it spreading further',
       'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
-      'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
+      'Take a sample of the dust yourself and send it for testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -3364,9 +3364,9 @@ export const module1Questions: QuestionBank[] = [
     id: 207,
     question: 'Under CDM 2015, when does the client need to notify HSE using an F10?',
     options: [
-      'Suitable precautions shall be taken to prevent danger from charge on exposed metalwork, preferably by earthing',
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
-      'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
+      'For every project regardless of duration or workforce size',
+      'Only when asbestos-containing materials are present on site',
+      'When the contract value exceeds £250,000 in total',
       'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
     ],
     correctAnswer: 3,
@@ -3381,9 +3381,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under CDM 2015, what is the construction phase plan and who prepares it?',
     options: [
       'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
-      'Suitable means shall be available for protecting from excess current and for cutting off supply in an emergency',
+      'A document setting out how the design risks will be managed, prepared by the principal designer',
+      'A record of residual hazards handed to the client at the end of the project, prepared by the client',
+      'A notification of the project sent to the HSE, prepared by the principal designer',
     ],
     correctAnswer: 0,
     explanation:
@@ -3396,10 +3396,10 @@ export const module1Questions: QuestionBank[] = [
     id: 209,
     question: 'What is the health and safety file under CDM 2015 and who keeps it?',
     options: [
-      'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
+      'A file of method statements compiled by each contractor and kept on site only during the build',
       'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'It targets the organisation as a whole where a gross breach of duty causes death and substantially involves senior management — focuses on culture, not individuals',
+      'A file of risk assessments prepared by the client before the project starts and destroyed at handover',
+      'A file of design drawings kept by the principal designer and not shared with the client',
     ],
     correctAnswer: 1,
     explanation:
@@ -3412,10 +3412,10 @@ export const module1Questions: QuestionBank[] = [
     id: 210,
     question: 'Under the Building Safety Act 2022, what is a higher-risk residential building (HRRB)?',
     options: [
-      'At regular intervals as specified by the manufacturer, typically every 6 months',
-      'The maximum concentration of an airborne substance averaged over a reference period',
+      'Any building used for industrial or commercial purposes',
+      'A building at least 11 metres high containing any number of units',
       'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
-      'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
+      'Any building older than 30 years containing residential units',
     ],
     correctAnswer: 2,
     explanation:
@@ -3428,9 +3428,9 @@ export const module1Questions: QuestionBank[] = [
     id: 211,
     question: 'What is the "golden thread" required by the Building Safety Act 2022?',
     options: [
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare of all employees',
-      'Carpal tunnel syndrome, occupational dermatitis, occupational asthma, and hand-arm vibration syndrome',
+      'A continuous earth conductor running through the whole building',
+      'A fireproof cable that maintains circuit integrity during a fire',
+      'A single contractor responsible for the building from design to demolition',
       'A digital, accurate, accessible record of building information that supports safe design, construction and ongoing management of HRRBs',
     ],
     correctAnswer: 3,
@@ -3445,9 +3445,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'The asbestos duty holder under CAR 2012 Reg 4 is responsible for what?',
     options: [
       'Managing the risk from ACMs in non-domestic premises — finding them, recording them, assessing risk, planning management, and providing the information to anyone liable to disturb them',
-      'Stop the activity, formally re-brief the requirement and consequences (employee duty under HASAWA s.7 and PUWER), document refusal, and apply the company disciplinary procedure if continued',
-      'To locate and describe all asbestos-containing materials before refurbishment or demolition, so they can be removed before work starts',
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
+      'Physically removing all asbestos from the premises within 12 months',
+      'Notifying every visitor to the premises in writing about asbestos',
+      'Carrying out a refurbishment and demolition survey every year',
     ],
     correctAnswer: 0,
     explanation:
@@ -3460,10 +3460,10 @@ export const module1Questions: QuestionBank[] = [
     id: 213,
     question: 'You arrive on a domestic CU change in a 1960s flat. The client has no R&D survey. What\'s your supervisor-grade response?',
     options: [
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Make safe (isolate hazard), administer first aid / call emergency services, preserve the scene, notify employer and client, secure witnesses, report under RIDDOR if applicable, start investigation',
-      'Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers',
+      'Proceed with the work, as domestic dwellings are exempt from asbestos rules',
+      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\'ll disturb, or commissions an appropriate survey',
+      'Carry on but wear a disposable dust mask while drilling',
+      'Take a sample of any suspect material yourself before starting',
     ],
     correctAnswer: 1,
     explanation:
@@ -3476,10 +3476,10 @@ export const module1Questions: QuestionBank[] = [
     id: 214,
     question: 'What is the difference between licensable, notifiable non-licensed (NNLW) and non-licensed asbestos work?',
     options: [
-      'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
-      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
+      'Licensable = lowest risk; NNLW = medium risk; Non-licensed = highest risk requiring an HSE licence',
+      'They are three names for the same category of asbestos work, with no real difference',
       'Licensable = highest risk, requires HSE licence; NNLW = sporadic/low intensity but still requires notification, training, medicals, records; Non-licensed = lowest risk asbestos work with limited controls',
-      'Effective arrangements for the planning, organisation, control, monitoring and review of preventive and protective measures — recorded by employers with 5+ employees',
+      'Licensable applies to domestic premises; NNLW to commercial; Non-licensed to industrial only',
     ],
     correctAnswer: 2,
     explanation:
@@ -3492,9 +3492,9 @@ export const module1Questions: QuestionBank[] = [
     id: 215,
     question: 'Under CAR 2012, what training must any worker who may disturb asbestos receive?',
     options: [
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
+      'A full asbestos removal licence issued by the HSE',
+      'No specific training, provided they wear respiratory protection',
+      'Manual handling training to safely lift asbestos sheets',
       'Asbestos awareness training, refreshed regularly, before starting work — covering risks, types of ACMs, and what to do if they are encountered',
     ],
     correctAnswer: 3,
@@ -3509,9 +3509,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under CDM 2015 Reg 4, what is a domestic client and how do their duties pass to the contractor?',
     options: [
       'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
-      'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
-      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
-      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
+      'A client running a business from home, who retains all client duties personally',
+      'A landlord having work done on a rented property, who keeps all client duties',
+      'A commercial client whose duties pass to the principal designer alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -3524,10 +3524,10 @@ export const module1Questions: QuestionBank[] = [
     id: 217,
     question: 'A client tells you "we don\'t have an asbestos register, just get on with it" before a commercial rewire. What do you, as supervisor, do?',
     options: [
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
+      'Get on with the rewire as instructed, since the client accepts the risk',
       'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
-      'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
-      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
+      'Start work but wear respiratory protection in case asbestos is present',
+      'Commission and pay for the asbestos survey yourself to avoid delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -3540,10 +3540,10 @@ export const module1Questions: QuestionBank[] = [
     id: 218,
     question: 'Under CDM 2015 Reg 8, what general duty does every dutyholder have around competence?',
     options: [
-      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
+      'They must hold a minimum of ten years\' experience in their trade',
+      'They must be a member of an approved competent person scheme',
       'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
-      'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
+      'They must be formally approved in writing by the HSE before starting',
     ],
     correctAnswer: 2,
     explanation:
@@ -3556,10 +3556,10 @@ export const module1Questions: QuestionBank[] = [
     id: 219,
     question: 'You discover ACM dust spread through a corridor after an unrelated trade has drilled a wall. As supervisor, what is your sequence of actions?',
     options: [
-      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s register/survey, and verify it before allowing the subcontractor on site',
-      'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
+      'Carry on working but instruct everyone to wear dust masks',
+      'Sweep up the dust quickly and dispose of it in the general waste',
+      'Wait until the end of the shift before reporting the spread',
+      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\' clothing for assessment, log near miss and review',
     ],
     correctAnswer: 3,
     explanation:
@@ -3573,9 +3573,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'What is a management asbestos survey and how does it differ from an R&D survey?',
     options: [
       'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
-      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
-      'The "responsible person" (typically the employer) must report — online via HSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reporting portal, equivalent to F2508',
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
+      'Management survey is fully intrusive before demolition; R&D survey is a quick visual check during occupation',
+      'Both surveys are identical; the names are simply used interchangeably',
+      'Management survey is for domestic premises; R&D survey is for commercial premises only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3588,10 +3588,10 @@ export const module1Questions: QuestionBank[] = [
     id: 221,
     question: 'Under CDM 2015, what is the principal designer\'s duty regarding designers under their control?',
     options: [
-      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
+      'To physically supervise each designer working at their desk',
       'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'To conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
+      'To approve the fee charged by each designer on the project',
+      'To carry out all the design work personally rather than delegating it',
     ],
     correctAnswer: 1,
     explanation:
@@ -3604,10 +3604,10 @@ export const module1Questions: QuestionBank[] = [
     id: 222,
     question: 'A subcontractor\'s RAMS does not address asbestos at all on a 1980s commercial site. As principal contractor what do you do?',
     options: [
-      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s register/survey, and verify it before allowing the subcontractor on site',
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
+      'Approve the RAMS as it stands, since asbestos is the client\'s concern',
+      'Let the subcontractor start and add the asbestos section later',
+      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\'s register/survey, and verify it before allowing the subcontractor on site',
+      'Write the missing asbestos section yourself on the subcontractor\'s behalf',
     ],
     correctAnswer: 2,
     explanation:
@@ -3620,9 +3620,9 @@ export const module1Questions: QuestionBank[] = [
     id: 223,
     question: 'Under CDM 2015, what is "pre-construction information" (PCI) and who provides it?',
     options: [
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'A formal procedure resulting from systematic examination of work to identify hazards and methods to eliminate or minimise them',
-      'Suitable precautions shall be taken to prevent danger from charge on exposed metalwork, preferably by earthing',
+      'A plan prepared by the principal contractor before construction begins',
+      'A record of residual hazards handed to the client at the end of the project',
+      'The notification of the project sent to the HSE on an F10 form',
       'Information about the project, including known hazards, that the client must provide to designers and contractors as soon as practicable',
     ],
     correctAnswer: 3,
@@ -3637,9 +3637,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under CAR 2012, what records must be kept after non-licensed but notifiable asbestos work (NNLW)?',
     options: [
       'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
-      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
-      'Ensuring work is planned, supervised, and carried out safely by people with appropriate skills',
-      'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
+      'Personal exposure records for 3 years only, then they may be destroyed',
+      'No records at all, since NNLW is low-risk and does not require them',
+      'Only a verbal note to the worker that they were exposed to asbestos',
     ],
     correctAnswer: 0,
     explanation:
@@ -3652,10 +3652,10 @@ export const module1Questions: QuestionBank[] = [
     id: 225,
     question: 'You are the appointed supervisor on a small commercial refurb under CDM 2015. The client has not appointed a principal designer. What do you do?',
     options: [
-      'It targets the organisation as a whole where a gross breach of duty causes death and substantially involves senior management — focuses on culture, not individuals',
+      'Carry on without a principal designer, as the appointment is optional',
       'Inform the client in writing that they must appoint a principal designer (Reg 5) where more than one contractor is involved, and that without it the project cannot lawfully proceed',
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
+      'Appoint yourself as principal designer to keep the project moving',
+      'Notify the HSE on an F10 form instead of appointing anyone',
     ],
     correctAnswer: 1,
     explanation:
@@ -3672,10 +3672,10 @@ export const module1Questions: QuestionBank[] = [
     id: 226,
     question: 'Under HASAWA Section 7, what duty does an employee owe to themselves and others while at work?',
     options: [
-      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
+      'To carry out a risk assessment for every task before starting it',
+      'To provide their own personal protective equipment at their own cost',
       'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
-      'Investigate hazards, complaints, accidents; inspect workplace; represent employees; receive HSE information',
+      'To report all accidents directly to the HSE under RIDDOR',
     ],
     correctAnswer: 2,
     explanation:
@@ -3688,9 +3688,9 @@ export const module1Questions: QuestionBank[] = [
     id: 227,
     question: 'Under HASAWA Section 37, when can a director or senior manager be personally prosecuted alongside the company?',
     options: [
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
-      'Appropriate to the complexity of the task and identifies significant risks without being overly complicated',
+      'Only if the director was physically present when the offence occurred',
+      'Only if the director personally carried out the dangerous work',
+      'Never; directors can never be held personally liable under HASAWA',
       'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
     ],
     correctAnswer: 3,
@@ -3704,10 +3704,10 @@ export const module1Questions: QuestionBank[] = [
     id: 228,
     question: 'Under the Sentencing Council Definitive Guideline 2016 (Health and Safety Offences), what factors determine the level of fine?',
     options: [
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
-      'Reject it, require a site-specific RAMS, brief the team only after it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been revised, and document the rejection',
-      'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
-      'Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers',
+      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\'s turnover and aggravating/mitigating factors',
+      'Solely the number of previous convictions held by the company',
+      'Solely the number of employees the company has on its payroll',
+      'Solely whether the breach was reported to the HSE voluntarily',
     ],
     correctAnswer: 0,
     explanation:
@@ -3720,10 +3720,10 @@ export const module1Questions: QuestionBank[] = [
     id: 229,
     question: 'What is the Fee For Intervention (FFI) and when does HSE charge it?',
     options: [
-      'Avoid the work at height; if unavoidable, use work equipment that prevents falls; if not possible, use work equipment that minimises distance and consequences of falls — fall arrest is last',
+      'A fixed penalty fine of £5,000 issued for any breach of H&S law',
       'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
-      'Managing the risk from ACMs in non-domestic premises — finding them, recording them, assessing risk, planning management, and providing the information to anyone liable to disturb them',
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
+      'A fee paid by employers to register their workplace with the HSE',
+      'A charge made only after a successful prosecution in the courts',
     ],
     correctAnswer: 1,
     explanation:
@@ -3736,10 +3736,10 @@ export const module1Questions: QuestionBank[] = [
     id: 230,
     question: 'What is the difference between an improvement notice and a prohibition notice?',
     options: [
-      'Lower 80 dB(A) daily/weekly exposure with peak 135 dB(C); upper 85 dB(A) with peak 137 dB(C); exposure limit 87 dB(A) with peak 140 dB(C)',
-      'Provide suitable PPE free of charge, ensure it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maintained, provide storage, training, and enforce use',
+      'Improvement notice immediately stops dangerous work; prohibition notice gives time to remedy a breach',
+      'Both notices stop work immediately but for different lengths of time',
       'Improvement notice gives time to remedy a breach; prohibition notice immediately stops an activity that involves a risk of serious personal injury',
-      'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
+      'Improvement notice is issued by the courts; prohibition notice by an inspector',
     ],
     correctAnswer: 2,
     explanation:
@@ -3752,9 +3752,9 @@ export const module1Questions: QuestionBank[] = [
     id: 231,
     question: 'Under RIDDOR 2013, what is a "specified injury" listed in Schedule 1?',
     options: [
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
-      'Licensable = highest risk, requires HSE licence; NNLW = sporadic/low intensity but still requires notification, training, medicals, records; Non-licensed = lowest risk asbestos work with limited controls',
-      'Cover purpose, scope, step-by-step procedure, equipment required, hazards if not followed, individual responsibilities, allow questions, get signed acknowledgement, and check understanding',
+      'Any minor injury treated on site with the first aid kit',
+      'Any injury keeping a worker off for more than three days',
+      'Only injuries that result in the death of the worker',
       'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
     ],
     correctAnswer: 3,
@@ -3768,10 +3768,10 @@ export const module1Questions: QuestionBank[] = [
     id: 232,
     question: 'Under RIDDOR 2013, who has the duty to report and what form is used for an over-7-day injury to an employee?',
     options: [
-      'The "responsible person" (typically the employer) must report — online via HSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reporting portal, equivalent to F2508',
-      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
-      'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
+      'The "responsible person" (typically the employer) must report — online via HSE\'s reporting portal, equivalent to F2508',
+      'The injured worker must report it themselves using an F10 form',
+      'The site first aider must report it by telephone within 24 hours',
+      'The HSE inspector must report it on behalf of the employer',
     ],
     correctAnswer: 0,
     explanation:
@@ -3784,10 +3784,10 @@ export const module1Questions: QuestionBank[] = [
     id: 233,
     question: 'A near-miss happens on your site — a live conductor is touched but no shock occurs because of insulated tools. As supervisor, what do you do?',
     options: [
-      'Suitable means shall be available for protecting from excess current and for cutting off supply in an emergency',
+      'Ignore it, since no one was actually hurt by the contact',
       'Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event',
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
-      'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
+      'Report it immediately to the HSE under RIDDOR as a specified injury',
+      'Discipline the worker for touching the conductor without investigating',
     ],
     correctAnswer: 1,
     explanation:
@@ -3800,10 +3800,10 @@ export const module1Questions: QuestionBank[] = [
     id: 234,
     question: 'A new RAMS arrives from a designer that you, as supervisor, can see is generic and doesn\'t reflect site conditions. What\'s the correct action?',
     options: [
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
-      'Reject it, require a site-specific RAMS, brief the team only after it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been revised, and document the rejection',
-      'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
+      'Accept it as written, since a generic RAMS satisfies the legal duty',
+      'Brief the team on the generic RAMS and start work straight away',
+      'Reject it, require a site-specific RAMS, brief the team only after it\'s been revised, and document the rejection',
+      'Amend the generic RAMS yourself on site without telling the designer',
     ],
     correctAnswer: 2,
     explanation:
@@ -3816,9 +3816,9 @@ export const module1Questions: QuestionBank[] = [
     id: 235,
     question: 'How does the Corporate Manslaughter and Corporate Homicide Act 2007 differ from HASAWA prosecution?',
     options: [
-      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
-      'A digital, accurate, accessible record of building information that supports safe design, construction and ongoing management of HRRBs',
-      'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
+      'It targets individual directors only, never the organisation itself',
+      'It applies only where a worker is injured but not killed',
+      'It replaces HASAWA entirely for all health and safety offences',
       'It targets the organisation as a whole where a gross breach of duty causes death and substantially involves senior management — focuses on culture, not individuals',
     ],
     correctAnswer: 3,
@@ -3833,9 +3833,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under MHSWR 1999 Reg 3, what is the employer\'s risk assessment duty?',
     options: [
       'A suitable and sufficient assessment of risks to employees and others affected by their work, recorded if 5+ employees, reviewed when significant changes occur',
-      'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
-      'Effective arrangements for the planning, organisation, control, monitoring and review of preventive and protective measures — recorded by employers with 5+ employees',
-      'Avoid hazardous manual handling so far as is reasonably practicable; assess what cannot be avoided; reduce risk to lowest level reasonably practicable',
+      'An assessment of risks to employees only, never to the public or contractors',
+      'A single annual assessment that cannot be changed once it is written',
+      'An assessment that only needs recording if 50 or more are employed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3848,10 +3848,10 @@ export const module1Questions: QuestionBank[] = [
     id: 237,
     question: 'Under MHSWR Reg 5, what arrangements must employers have in place?',
     options: [
-      'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
+      'Arrangements to pay compensation to any worker who is injured',
       'Effective arrangements for the planning, organisation, control, monitoring and review of preventive and protective measures — recorded by employers with 5+ employees',
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
-      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s register/survey, and verify it before allowing the subcontractor on site',
+      'Arrangements to notify the HSE before any new work activity begins',
+      'Arrangements to insure the workplace against fire and flood damage',
     ],
     correctAnswer: 1,
     explanation:
@@ -3864,10 +3864,10 @@ export const module1Questions: QuestionBank[] = [
     id: 238,
     question: 'Under MHSWR Schedule 1, what are the general principles of prevention?',
     options: [
-      'Managing the risk from ACMs in non-domestic premises — finding them, recording them, assessing risk, planning management, and providing the information to anyone liable to disturb them',
-      'Stop the activity, formally re-brief the requirement and consequences (employee duty under HASAWA s.7 and PUWER), document refusal, and apply the company disciplinary procedure if continued',
+      'Provide PPE first; eliminate the hazard only if PPE proves inadequate',
+      'Identify hazards; decide who is harmed; evaluate; record; review',
       'Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers',
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
+      'Plan; do; check; act, repeated continuously throughout the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -3880,9 +3880,9 @@ export const module1Questions: QuestionBank[] = [
     id: 239,
     question: 'A worker refuses to wear safety glasses during drilling overhead. As supervisor what is your response?',
     options: [
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
-      'To locate and describe all asbestos-containing materials before refurbishment or demolition, so they can be removed before work starts',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
+      'Let the work continue, as wearing safety glasses is the worker\'s choice',
+      'Carry out the drilling yourself so the worker does not need glasses',
+      'Ignore it provided the worker signs a disclaimer accepting the risk',
       'Stop the activity, formally re-brief the requirement and consequences (employee duty under HASAWA s.7 and PUWER), document refusal, and apply the company disciplinary procedure if continued',
     ],
     correctAnswer: 3,
@@ -3897,9 +3897,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under PUWER 1998 Reg 4, what duty does an employer have for work equipment?',
     options: [
       'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'A document providing information about a hazardous substance including hazards, handling, and emergency measures',
-      'To locate and describe all asbestos-containing materials before refurbishment or demolition, so they can be removed before work starts',
-      'Licensable = highest risk, requires HSE licence; NNLW = sporadic/low intensity but still requires notification, training, medicals, records; Non-licensed = lowest risk asbestos work with limited controls',
+      'Replace all work equipment with new items every five years',
+      'Provide work equipment free of charge but charge for any training',
+      'Allow any worker to use any equipment without restriction',
     ],
     correctAnswer: 0,
     explanation:
@@ -3912,10 +3912,10 @@ export const module1Questions: QuestionBank[] = [
     id: 241,
     question: 'Under Working at Height Regulations 2005, what is the order of priority for managing falls?',
     options: [
-      'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
+      'Always use a harness and fall-arrest system as the first option',
       'Avoid the work at height; if unavoidable, use work equipment that prevents falls; if not possible, use work equipment that minimises distance and consequences of falls — fall arrest is last',
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'Culpability (very high to low), seriousness of harm risked, likelihood of harm, plus the offender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover and aggravating/mitigating factors',
+      'Provide collective measures only after personal fall arrest has failed',
+      'Minimise the consequences of a fall first, then try to prevent it',
     ],
     correctAnswer: 1,
     explanation:
@@ -3928,10 +3928,10 @@ export const module1Questions: QuestionBank[] = [
     id: 242,
     question: 'A scaffold tag is missing on a tower delivered to your site this morning. As supervisor what do you do?',
     options: [
-      'Appropriate to the complexity of the task and identifies significant risks without being overly complicated',
-      'The injury must be caused by work activity, conditions created by work, or the manner of conducting the work',
+      'Use the tower as normal, since a missing tag is only an administrative issue',
+      'Write your own tag and attach it to the tower before use',
       'Quarantine the tower and refuse use until a competent person inspects and tags it under WAHR 2005 / PASMA — log the incident',
-      'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
+      'Use the tower but only at low levels where a fall would not be serious',
     ],
     correctAnswer: 2,
     explanation:
@@ -3944,9 +3944,9 @@ export const module1Questions: QuestionBank[] = [
     id: 243,
     question: 'Under the Manual Handling Operations Regulations 1992, what is the order of duties on the employer?',
     options: [
-      'A suitable and sufficient assessment of risks to employees and others affected by their work, recorded if 5+ employees, reviewed when significant changes occur',
-      'Ensure equipment is suitable for purpose, used only by trained and competent persons, maintained, inspected, with controls, isolation, stability and lighting',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
+      'Set a fixed maximum weight of 25kg that no worker may ever exceed',
+      'Provide a back-support belt to every worker before any lifting',
+      'Train workers to lift heavier loads so manual handling can continue',
       'Avoid hazardous manual handling so far as is reasonably practicable; assess what cannot be avoided; reduce risk to lowest level reasonably practicable',
     ],
     correctAnswer: 3,
@@ -3961,9 +3961,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under the Control of Noise at Work Regulations 2005, what are the lower and upper exposure action values?',
     options: [
       'Lower 80 dB(A) daily/weekly exposure with peak 135 dB(C); upper 85 dB(A) with peak 137 dB(C); exposure limit 87 dB(A) with peak 140 dB(C)',
-      'A suitable and sufficient assessment of risks to employees and others affected by their work, recorded if 5+ employees, reviewed when significant changes occur',
-      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
-      'Regularly and when there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reason to believe it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid, or when work conditions change',
+      'Lower 85 dB(A); upper 90 dB(A); exposure limit 95 dB(A) at the ear',
+      'Lower 70 dB(A); upper 75 dB(A); exposure limit 80 dB(A) at the ear',
+      'A single action value of 85 dB(A) with no upper or limit value',
     ],
     correctAnswer: 0,
     explanation:
@@ -3976,10 +3976,10 @@ export const module1Questions: QuestionBank[] = [
     id: 245,
     question: 'Under the Control of Vibration at Work Regulations 2005, what are the daily exposure action and limit values for hand-arm vibration?',
     options: [
-      'Acute toxicity - can cause death or serious harm with short exposure',
+      'Action value 5 m/s² A(8); limit value 2.5 m/s² A(8)',
       'Action value 2.5 m/s² A(8); limit value 5 m/s² A(8) — over which exposure is prohibited',
-      'Specify requirements for maintaining a clean, tidy workspace and waste disposal',
-      'Every part of a system shall be protected from excess current',
+      'Action value 80 dB(A); limit value 87 dB(A) at the ear',
+      'Action value 1 m/s² A(8); limit value 10 m/s² A(8)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3992,10 +3992,10 @@ export const module1Questions: QuestionBank[] = [
     id: 246,
     question: 'What is the dynamic risk assessment that supervisors are expected to do continuously on site?',
     options: [
-      'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
-      'A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure',
+      'A single written assessment completed once at the start of the project',
+      'A formal review carried out only at the end of each working week',
       'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
-      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
+      'An assessment carried out only by the client before work begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -4008,9 +4008,9 @@ export const module1Questions: QuestionBank[] = [
     id: 247,
     question: 'You are tasked with toolbox-talking a brand new safe-isolation procedure. What makes the briefing effective?',
     options: [
-      'Refuse to start until the client confirms in writing whether ACMs are present in the area you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll disturb, or commissions an appropriate survey',
-      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
-      'Management survey identifies ACMs likely to be disturbed in normal use; R&D survey is fully intrusive and locates all ACMs prior to refurbishment or demolition',
+      'Read the procedure aloud quickly and move straight on to the work',
+      'Hand out the written procedure and let workers read it in their own time',
+      'Email the procedure to workers and assume they have understood it',
       'Cover purpose, scope, step-by-step procedure, equipment required, hazards if not followed, individual responsibilities, allow questions, get signed acknowledgement, and check understanding',
     ],
     correctAnswer: 3,
@@ -4025,9 +4025,9 @@ export const module1Questions: QuestionBank[] = [
     question: 'Under Section 3 of HASAWA, what duty does an employer owe to people who are NOT their employees?',
     options: [
       'To conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
-      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
-      'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
-      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
+      'No duty at all; non-employees are outside the scope of HASAWA',
+      'A duty owed only to other contractors, not to members of the public',
+      'A duty to provide non-employees with personal protective equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -4040,10 +4040,10 @@ export const module1Questions: QuestionBank[] = [
     id: 249,
     question: 'A serious incident has just happened on your site — an electrician suffers a flash burn during fault-finding on live equipment. As supervisor, what is your immediate sequence of actions?',
     options: [
-      'Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers',
+      'Tidy and clear the scene first so the area looks safe for inspectors',
       'Make safe (isolate hazard), administer first aid / call emergency services, preserve the scene, notify employer and client, secure witnesses, report under RIDDOR if applicable, start investigation',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
-      'Refuse to start. Inform the client in writing that under CAR 2012 Reg 4 they have a duty to manage asbestos and provide the information; without it the work cannot proceed safely or lawfully',
+      'Send everyone home immediately and deal with it the next morning',
+      'Move the casualty straight away regardless of their injuries',
     ],
     correctAnswer: 1,
     explanation:
@@ -4056,10 +4056,10 @@ export const module1Questions: QuestionBank[] = [
     id: 250,
     question: 'Looking at HSE prosecution data, what is consistently the most common cause of electrical fatalities in the workplace?',
     options: [
-      'A committee where employers and employee representatives discuss and review health and safety measures',
-      'Information about the project, including known hazards, that the client must provide to designers and contractors as soon as practicable',
+      'Faulty portable appliances that have failed their PAT test',
+      'Lightning strikes on overhead distribution lines',
       'Working on or near live equipment without adequate isolation or precautions — a failure to apply EAWR Reg 14 and proven safe-isolation procedure',
-      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
+      'Static electricity discharge from synthetic work clothing',
     ],
     correctAnswer: 2,
     explanation:

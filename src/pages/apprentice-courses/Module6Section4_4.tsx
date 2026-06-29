@@ -19,10 +19,10 @@ const Module6Section4_4 = () => {
       id: 1,
       question: 'What is an open circuit?',
       options: [
-        'Loose terminations or damaged cable',
+        'A direct connection between line and neutral',
         'A break in continuity of the conductor',
-        'Overheating and possible fire risk',
-        'To prevent equipment being live when \\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\'',
+        'A circuit carrying more than its rated current',
+        'A circuit with reversed line and neutral',
       ],
       correctAnswer: 1,
       explanation:
@@ -45,9 +45,9 @@ const Module6Section4_4 = () => {
       id: 3,
       question: 'What is the risk of a disconnected CPC?',
       options: [
-        'Appliances work but safety is compromised',
-        'Can cause reversed polarity or missing CPC connections',
-        'A break in continuity of the conductor',
+        'Appliances will fail to switch on at all',
+        'The circuit current will increase sharply',
+        'The line and neutral readings will swap over',
         'Exposed parts may become live under fault conditions',
       ],
       correctAnswer: 3,
@@ -59,9 +59,9 @@ const Module6Section4_4 = () => {
       question: 'What happens if line and neutral are reversed at a socket?',
       options: [
         'Appliances work but safety is compromised',
-        'Overheating and possible fire risk',
-        'Exposed parts may become live under fault conditions',
-        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+        'The appliance will not operate at all',
+        'The CPC connection becomes disconnected',
+        'The supply fuse rating is automatically reduced',
       ],
       correctAnswer: 0,
       explanation:
@@ -82,24 +82,24 @@ const Module6Section4_4 = () => {
     },
     {
       id: 6,
-      question: 'Why must a switch always interrupt the line conductor?',
+      question: 'Why must a single-pole switch always interrupt the line conductor?',
       options: [
-        "Overheating and possible fire risk",
-        "Appliances work but safety is compromised",
-        "To prevent equipment being live when 'off'",
-        "Loose terminations or damaged cable",
+        'To balance the load across the neutral',
+        'To reduce the resistance of the circuit',
+        "To ensure equipment is not live when switched off",
+        'To allow a smaller cable size to be used',
       ],
       correctAnswer: 2,
       explanation:
-        'Switches must interrupt the line conductor to ensure equipment is truly dead when switched off, preventing shock hazards.',
+        'Single-pole switches must interrupt the line conductor to ensure equipment is truly dead when switched off, preventing shock hazards.',
     },
     {
       id: 7,
       question: 'Which of the following is a common cause of open circuits?',
       options: [
-        'A break in continuity of the conductor',
-        'Appliances work but safety is compromised',
-        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+        'Excessive supply voltage',
+        'Too small a protective device rating',
+        'Reversed line and neutral connections',
         'Loose terminations or damaged cable',
       ],
       correctAnswer: 3,
@@ -110,10 +110,10 @@ const Module6Section4_4 = () => {
       id: 8,
       question: 'What effect can poor workmanship have on polarity?',
       options: [
-        'Can cause reversed polarity or missing CPC connections',
-        'Exposed parts may become live under fault conditions',
-        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-        'Appliances work but safety is compromised',
+        'It can cause reversed polarity or missing CPC connections',
+        'It increases the insulation resistance of the circuit',
+        'It reduces the current drawn by connected equipment',
+        'It improves the disconnection time of protective devices',
       ],
       correctAnswer: 0,
       explanation:
@@ -121,12 +121,12 @@ const Module6Section4_4 = () => {
     },
     {
       id: 9,
-      question: 'How should faults be recorded during testing?',
+      question: 'How should faults be recorded and handled during testing?',
       options: [
-        'Can cause reversed polarity or missing CPC connections',
-        'Clearly on the test sheet and rectified before energising',
-        'Appliances work but safety is compromised',
-        'To prevent equipment being live when \\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\'',
+        'Noted only verbally and left for the next visit',
+        'Recorded clearly on the test sheet and rectified before energising',
+        'Ignored if the circuit still appears to function',
+        'Recorded only if the client requests it',
       ],
       correctAnswer: 1,
       explanation:

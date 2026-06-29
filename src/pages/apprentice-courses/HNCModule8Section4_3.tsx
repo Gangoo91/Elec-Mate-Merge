@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'vf-ratio',
     question: 'Why must the V/f ratio be maintained constant in standard VSD operation?',
     options: [
-      'To accommodate the expansion of water as it heats up, maintaining safe system pressure',
-      'All of the above may apply depending on requirements',
-      'The site manager, recorded in the accident/incident book and used to update the RA',
+      'To keep the inverter switching frequency within its rated band',
+      'To limit the starting current drawn by the motor',
+      'To prevent harmonic distortion on the supply side',
       'To maintain constant magnetic flux and thus constant torque capability',
     ],
     correctIndex: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
       'What happens to motor torque capability if frequency is increased above base frequency whilst maintaining rated voltage?',
     options: [
       'Torque decreases as flux weakens',
-      'Delegate them if possible',
-      'Pushing a loaded trolley along a corridor',
-      'Voltage and current are in phase',
+      'Torque increases in proportion to frequency',
+      'Torque stays constant up to twice base frequency',
+      'Torque is unaffected by changes in frequency',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'What is the main advantage of vector control (flux vector/field-oriented control) over V/f control?',
     options: [
-      'An IGBT-based rectifier that can regenerate power and reduce harmonics',
+      'Lower harmonic distortion drawn from the supply',
       'Better speed and torque control, especially at low speeds and under varying loads',
-      'Use screened/shielded cables with 360-degree termination at both ends',
-      'To reduce harmonic currents and protect against supply transients',
+      'Higher switching frequency reducing audible motor noise',
+      'Reduced standing losses when the motor is at rest',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'What is the purpose of a line reactor (choke) fitted at the VSD input?',
     options: [
       'To reduce harmonic currents and protect against supply transients',
-      'Better speed and torque control, especially at low speeds and under varying loads',
-      'Speed = 120 x f / p (where p = number of poles)',
-      'An IGBT-based rectifier that can regenerate power and reduce harmonics',
+      'To smooth the PWM output waveform to the motor',
+      'To provide dynamic braking energy dissipation',
+      'To filter EMI radiated from the motor cables',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What EMC precaution is essential when installing VSD cables?',
     options: [
-      'Better speed and torque control, especially at low speeds and under varying loads',
+      'Run input and output cables in the same conduit',
       'Use screened/shielded cables with 360-degree termination at both ends',
-      'Motor cooling capability - fan-cooled motors lose cooling at low speeds',
-      'To reduce harmonic currents and protect against supply transients',
+      'Increase the cable cross-section by one size',
+      'Earth the cable screen at the motor end only',
     ],
     correctAnswer: 1,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     question:
       'What determines the minimum speed at which a motor can operate continuously when driven by a VSD?',
     options: [
-      'Better speed and torque control, especially at low speeds and under varying loads',
-      'Use screened/shielded cables with 360-degree termination at both ends',
-      'To reduce harmonic currents and protect against supply transients',
+      'The maximum switching frequency of the inverter',
+      'The harmonic distortion limit set by the supply',
+      'The rated voltage of the DC bus capacitors',
       'Motor cooling capability - fan-cooled motors lose cooling at low speeds',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
       'For an HVAC supply fan motor rated 15kW, what VSD rating would typically be selected?',
     options: [
       '15kW or the next size up (typically 18.5kW)',
-      'Concrete and sandstone (containing silica)',
-      'The CPC has a smaller CSA than the live conductors',
-      'Turn off all lights in the system',
+      'Exactly half the motor rating (7.5kW)',
+      'At least double the motor rating (30kW)',
+      'The nearest standard frame size regardless of kW',
     ],
     correctAnswer: 0,
     explanation:
@@ -245,10 +245,10 @@ const quizQuestions = [
     id: 13,
     question: 'What is an Active Front End (AFE) in VSD technology?',
     options: [
-      'To reduce harmonic currents and protect against supply transients',
+      'A passive LC filter fitted to the drive output',
       'An IGBT-based rectifier that can regenerate power and reduce harmonics',
-      'Use screened/shielded cables with 360-degree termination at both ends',
-      'Better speed and torque control, especially at low speeds and under varying loads',
+      'A bypass contactor that connects the motor direct on-line',
+      'A pre-charge circuit that limits DC bus inrush current',
     ],
     correctAnswer: 1,
     explanation:

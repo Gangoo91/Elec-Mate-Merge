@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is reactance?',
     options: [
-      'Working on live low voltage equipment with high fault current',
+      'The opposition to current flow caused by the resistance of a conductor, dissipating power as heat',
       'Opposition to AC current due to energy storage in electric or magnetic fields',
-      'Explaining repair made, any limitations, and operating instructions',
-      'Drawings show where to install, specifications show how to install',
+      'The total opposition to AC current, combining both resistance and reactance into one value',
+      'The opposition to current flow that arises only at the instant a circuit is switched on',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "In the complex impedance Z = R + jX, what does 'j' represent?",
     options: [
-      'To amplify signals or act as a switch',
-      'Rapid temperature changes causing material stress',
+      'The frequency of the supply in hertz, scaling the reactance term',
+      'A correction factor for the temperature of the conductor',
       'The imaginary unit (√-1), indicating 90° phase shift',
-      'To verify protective device operation under fault conditions',
+      'The power factor of the circuit expressed as a decimal',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'A power factor correction capacitor reduces motor circuit impedance magnitude. Why?',
     options: [
-      'Scope of work, exclusions, price, validity period and payment terms',
-      'To understand how the space is used and identify potential interference sources',
+      'The capacitor increases the resistance, which dominates the impedance triangle',
+      'The capacitor raises the supply frequency seen by the motor windings',
       'The capacitive reactance partially cancels the inductive reactance',
-      'PV generates electricity; thermal heats water or air',
+      'The capacitor stores charge that adds directly to the supply current',
     ],
     correctAnswer: 2,
     explanation:

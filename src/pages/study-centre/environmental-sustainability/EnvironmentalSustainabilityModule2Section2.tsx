@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'For how long must a waste transfer note be retained by both the transferor and the transferee?',
     options: [
       '1 year from the date of transfer',
-      '2 years from the date of transfer',
       '3 years from the date of transfer',
+      '2 years from the date of transfer',
       '5 years from the date of transfer',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Waste transfer notes must be retained for a minimum of 2 years from the date the waste is transferred. Both the person passing the waste on (transferor) and the person receiving it (transferee) must keep a copy. Consignment notes for hazardous waste must be retained for 3 years.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     question:
       "The duty of care under Section 34 of the Environmental Protection Act 1990 is often described as a 'cradle to grave' responsibility. What does this mean?",
     options: [
-      'Waste producers are only responsible until the waste leaves their site',
       'The responsibility follows the waste from the moment it is produced until it reaches its final disposal point',
+      'Waste producers are only responsible until the waste leaves their site',
       'The Environment Agency takes over responsibility once a waste transfer note is completed',
       'Responsibility ends once the waste is handed to a registered carrier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'cradle to grave' principle means that the original waste producer retains a legal responsibility for their waste from the moment it is created through every stage of its journey \u2014 collection, transport, treatment, and final disposal. If the waste is illegally dumped at any point in the chain, the original producer can be held liable if they failed to take reasonable steps to ensure it was handled properly.",
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT a mandatory requirement on a waste transfer note?',
     options: [
       'A description of the waste',
-      'The SIC code of the waste producer',
       'The name of the individual driver transporting the waste',
+      'The SIC code of the waste producer',
       'The quantity of waste being transferred',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A waste transfer note must include: a description of the waste, the SIC code of the waste producer, the quantity of waste, the type of container, the carrier\u2019s name and registration details, the producer\u2019s details, the place and date of transfer, and signatures of both parties. The name of the individual driver is not a mandatory field on the WTN, although it is good practice to record it.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'Before hazardous waste can be moved off site, the waste producer must:',
     options: [
       'Notify the local council at least 7 days in advance',
-      'Pre-notify the Environment Agency and obtain a unique consignment note code',
       'Obtain written permission from the HSE',
       'Submit a risk assessment to DEFRA',
+      'Pre-notify the Environment Agency and obtain a unique consignment note code',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Before hazardous waste is removed from site, the waste producer must pre-notify the Environment Agency and receive a unique consignment note code. This code must be recorded on the consignment note and used to track the waste through the system. The pre-notification allows the EA to monitor hazardous waste movements and ensure they reach authorised facilities.',
   },
@@ -126,20 +126,20 @@ const quizQuestions = [
     question:
       'A waste carrier must be registered with the Environment Agency. What are the consequences of using an unregistered carrier?',
     options: [
+      'The waste producer can be prosecuted and may be liable for any subsequent fly-tipping',
       'A verbal warning from the Environment Agency',
       'No consequences \u2014 it is the carrier\u2019s responsibility to register',
-      'The waste producer can be prosecuted and may be liable for any subsequent fly-tipping',
       'A small administrative fee is charged by the Environment Agency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Using an unregistered waste carrier is a criminal offence. The waste producer has a duty of care to check that anyone they hand waste to is properly authorised. If an unregistered carrier subsequently fly-tips the waste, the original producer can be prosecuted under Section 34 of the Environmental Protection Act 1990 for failing to fulfil their duty of care.',
   },
   {
     id: 6,
     question: 'How many incidents of fly-tipping are estimated to occur each year in England?',
-    options: ['Around 100,000', 'Around 250,000', 'Around 500,000', 'Over 1 million'],
-    correctAnswer: 3,
+    options: ['Around 100,000', 'Over 1 million', 'Around 250,000', 'Around 500,000'],
+    correctAnswer: 1,
     explanation:
       'There are over 1 million recorded incidents of fly-tipping each year in England. The true figure is likely higher, as many incidents go unreported. Fly-tipping costs local authorities hundreds of millions of pounds per year in clearance and enforcement. It is a persistent environmental crime that harms communities, wildlife, and the landscape.',
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
     question: 'What is the main purpose of the new DEFRA digital waste tracking system?',
     options: [
       'To replace the Environment Agency entirely',
-      'To create a single digital record of waste movements, replacing paper-based documentation',
       'To automatically calculate waste disposal costs',
+      'To create a single digital record of waste movements, replacing paper-based documentation',
       'To allow householders to track their council bin collections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The DEFRA digital waste tracking system is designed to create a single, digital record of waste movements across England. It replaces paper-based waste transfer notes and consignment notes with electronic records, making it easier to track waste from production to disposal, detect illegal activity, and reduce administrative burden on businesses. The system supports the 'cradle to grave' principle by providing end-to-end visibility of waste journeys.",
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
     question: 'A site waste management plan (SWMP) is used to:',
     options: [
       'Replace the duty of care obligation for construction sites',
-      'Plan, record, and manage the waste produced on a construction site',
       'Exempt construction waste from waste transfer note requirements',
       'Allow builders to dispose of waste without using a registered carrier',
+      'Plan, record, and manage the waste produced on a construction site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A site waste management plan is a practical tool for planning, recording, and managing waste produced on a construction site. Although SWMPs are no longer a legal requirement in England (the mandatory requirement was removed in 2013), they remain best practice and are often required by clients, principal contractors, and building certification schemes. A good SWMP helps minimise waste, maximise recycling, reduce costs, and demonstrate compliance with the duty of care.',
   },

@@ -37,12 +37,12 @@ const quickCheckQuestions = [
   {
     question: 'Why should bends be made slowly rather than quickly?',
     options: [
-      'To confirm each fault is resolved before moving on',
-      'Make the reading artificially lower',
       'To avoid kinks, flattening, or cracking',
-      'A north pole at the entry end (opposes the magnet)',
+      'To use less heat when bending PVC',
+      'To make the conduit easier to cut afterwards',
+      'To increase the bend angle automatically',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Slow, controlled bending prevents damage such as kinks, flattening, or cracking that can occur when force is applied too quickly.',
   },
@@ -52,8 +52,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the main purpose of a bending spring in PVC bending?',
-    options: ['To measure the angle', 'To prevent collapse during bending', 'To heat the conduit'],
-    correctAnswer: 1,
+    options: ['To prevent collapse during bending', 'To measure the bend angle', 'To heat the conduit'],
+    correctAnswer: 0,
     explanation:
       "A bending spring's primary function is to support the conduit walls and prevent collapse during the bending process.",
   },
@@ -67,16 +67,20 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: You can make sharp bends in PVC without heating.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'Can you make sharp bends in PVC conduit without heating it?',
+    options: [
+      'Yes, PVC bends sharply when cold',
+      'Only if a bending spring is fitted',
+      'No, sharp bends require the PVC to be heated first',
+    ],
+    correctAnswer: 2,
     explanation:
-      'False. Sharp bends in PVC require heating to soften the material and prevent cracking or collapse.',
+      'Sharp bends in PVC require heating to soften the material and prevent cracking or collapse.',
   },
   {
     id: 4,
     question: 'Why should you bend conduit slowly when using manual tools?',
-    options: ['To avoid kinks, flattening, or cracking', 'To save time', 'To reduce material cost'],
+    options: ['To avoid kinks, flattening, or cracking', 'To save time on site', 'To reduce material cost'],
     correctAnswer: 0,
     explanation:
       'Slow, controlled bending prevents damage that can occur from applying force too quickly.',
@@ -92,15 +96,15 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Name one hazard of bending PVC with a heat gun.',
-    options: ['Electric shock', 'Burns from contact with heated material', 'Tool breakage'],
-    correctAnswer: 1,
+    options: ['Electric shock from the conduit', 'Tool breakage', 'Burns from contact with the heated material'],
+    correctAnswer: 2,
     explanation:
       'Burns from contact with heated PVC material is a significant hazard when using heat guns for bending.',
   },
   {
     id: 7,
     question: 'How can you check the accuracy of a bend angle?',
-    options: ['Use a level or protractor', 'Visual inspection only', 'Use a ruler'],
+    options: ['Use a level or protractor', 'By visual inspection alone', 'By counting the bends'],
     correctAnswer: 0,
     explanation:
       'A level or protractor provides accurate measurement of bend angles to ensure they meet specifications.',
@@ -109,9 +113,9 @@ const quizQuestions = [
     id: 8,
     question: 'Why should repeated bending in the same spot be avoided?',
     options: [
-      "It's too time consuming",
-      'It can weaken the conduit and cause cracking or deformation',
       'It uses too much heat',
+      'It can weaken the conduit and cause cracking or deformation',
+      'It takes too long to complete',
     ],
     correctAnswer: 1,
     explanation:

@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'What certification scheme must scaffolders hold to erect, alter, or dismantle scaffolds on UK construction sites?',
     options: [
-      'CISRS (Construction Industry Scaffolders Record Scheme) card at the appropriate level',
       'Any general construction NVQ at Level 2 or above',
       'A CSCS Skilled Worker card in any trade discipline',
+      'CISRS (Construction Industry Scaffolders Record Scheme) card at the appropriate level',
       'An employer-issued competence certificate signed by the site manager',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Scaffolders must hold a valid CISRS card at the appropriate level (Trainee, Scaffolder, or Advanced Scaffolder). CISRS is the industry-recognised scheme that demonstrates competence in scaffold erection, alteration, and dismantling. General construction qualifications do not cover the specialist skills required for scaffolding work.',
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, how often must scaffolds be inspected by a competent person as a minimum?',
     options: [
-      'Every 7 days, and after any event that could affect stability',
       'Every 14 days during normal use',
+      'Every 7 days, and after any event that could affect stability',
       'Monthly, with additional checks only if damage is reported',
       'Daily by the scaffold user, with no formal competent person inspection required',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Work at Height Regulations 2005 require scaffolds to be inspected by a competent person at intervals not exceeding 7 days, and after any event likely to have affected strength or stability (such as severe weather, accidental damage, or significant alteration). Each inspection must be recorded in a written report.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     question:
       'What is the correct action for a tradesperson who needs to remove a guard rail to fit a large component onto a scaffold platform?',
     options: [
-      'Report the need to the scaffold supervisor and wait for a competent scaffolder to make the alteration safely',
-      'Remove the guard rail themselves, complete the task, and replace it immediately afterwards',
-      'Ask a colleague to hold the guard rail out of the way while the component is manoeuvred',
-      'Remove the guard rail and attach a warning sign to alert other workers',
+      'Report it and wait for a competent scaffolder to make the alteration safely',
+      'Remove the guard rail themselves, do the task, then replace it straight afterwards',
+      'Ask a colleague to hold the guard rail aside while the component is manoeuvred',
+      'Remove the guard rail and fix a warning sign nearby to alert other workers',
     ],
     correctIndex: 0,
     explanation:
@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does CISRS stand for, and what is its purpose in the scaffolding industry?',
     options: [
-      'Construction Industry Scaffolders Record Scheme — the recognised competence scheme for scaffolders in the UK',
       'Certified Independent Scaffold Review System — the national scaffold inspection framework',
       'Construction Industry Safety Rating Standard — a site safety benchmarking tool',
+      'Construction Industry Scaffolders Record Scheme — the recognised competence scheme for scaffolders in the UK',
       'Competent Inspector Scaffold Registration Scheme — the register of scaffold inspectors',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'CISRS stands for Construction Industry Scaffolders Record Scheme. It is the industry-recognised competence scheme for scaffolders in the UK, managed by CISRS Ltd with support from the NASC. It provides a structured training and assessment pathway from Trainee through to Advanced Scaffolder, ensuring scaffolders have the knowledge and skills to erect, alter, and dismantle scaffolds safely.',
   },
@@ -107,10 +107,10 @@ const quizQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when must a scaffold be inspected by a competent person? Select the MOST complete answer.',
     options: [
-      'Before first use, at intervals not exceeding 7 days, and after any event likely to have affected stability',
-      'Before first use and then monthly during continued use',
-      'Only after severe weather events or reported damage',
-      'Weekly during the first month, then fortnightly if no defects are found',
+      'Before first use, at least every 7 days, and after any destabilising event',
+      'Before first use and then once a month throughout continued use',
+      'Only after severe weather events or when damage has been reported',
+      'Weekly for the first month, then fortnightly if no defects are found',
     ],
     correctAnswer: 0,
     explanation:
@@ -120,12 +120,12 @@ const quizQuestions = [
     id: 3,
     question: 'When is a scaffold designer required instead of relying on TG20 compliance sheets?',
     options: [
-      'When the scaffold falls outside the scope of TG20 — for example, unusual geometry, heavy loading, or complex tie arrangements',
-      'Only when the scaffold exceeds 50 metres in height',
-      'Whenever the scaffold will be used for more than 6 months',
-      'A scaffold designer is always required regardless of scaffold type',
+      'Only when the scaffold exceeds 50 metres in overall height',
+      'Whenever the scaffold will remain in use for more than 6 months',
+      'Always, for every scaffold regardless of its type or configuration',
+      'When the scaffold falls outside TG20 — unusual geometry, heavy loading or complex ties',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A scaffold designer is required whenever the scaffold falls outside the scope of TG20 (the NASC guidance for tube and fitting scaffolds). This includes non-standard configurations, unusual geometries, heavy or concentrated loads, complex tie arrangements, cantilevers, loading bays, and any scaffold where a TG20 compliance sheet cannot be produced. The designer — typically a structural engineer or NASC-qualified designer — produces bespoke design drawings and calculations.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'What must a scaffold user check BEFORE stepping onto a scaffold each time they use it?',
     options: [
-      'Green tag displayed and valid, platform complete with no gaps, guard rails in place, no visible damage, and no obvious overloading',
-      "Only that the scaffold tag is present — all other checks are the inspector's responsibility",
-      'That the scaffold has been erected in the last 7 days',
-      'That the scaffolder is still on site in case modifications are needed',
+      "Only that a scaffold tag is present — all other checks are the inspector's job",
+      'Valid green tag, complete platform, guard rails in place, no damage or overloading',
+      'Only that the scaffold has been erected within the last 7 days',
+      'Only that the scaffolder is still on site in case modifications are needed',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Before each use, scaffold users must carry out a visual check: confirm a green (safe to use) tag is displayed and within date, check the platform is complete with no gaps or missing boards, verify guard rails and toe boards are in place, look for any visible damage or defects, and check there is no obvious overloading. If any of these checks fail, the scaffold must not be used and the defect must be reported immediately.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'What is the role of the Temporary Works Coordinator in relation to scaffolding under CDM 2015?',
     options: [
-      'Overseeing all temporary works including scaffolding, ensuring designs are checked, reviewing erection sequences, and managing handover',
-      'Physically erecting and dismantling all temporary works on site',
-      'Carrying out the 7-day scaffold inspections required by the Work at Height Regulations',
-      'Designing all scaffolds on site regardless of whether they fall within TG20 scope',
+      'Physically erecting and dismantling all of the temporary works on site',
+      'Carrying out the 7-day scaffold inspections required by the Regulations',
+      'Overseeing temporary works — checking designs, sequences and handover',
+      'Designing all scaffolds on site, whether or not they fall within TG20 scope',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "The Temporary Works Coordinator (TWC) has a management and oversight role under CDM 2015. They oversee all temporary works including scaffolding, ensure designs are properly checked and approved, review erection sequences, manage the handover process from the scaffolder to the user, and maintain the temporary works register. They do not physically erect scaffolds or carry out routine inspections — those are the scaffolder's and inspector's roles respectively.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       "Under CDM 2015, what are the principal contractor's key responsibilities regarding scaffold safety on site?",
     options: [
-      'Ensuring scaffolds are inspected, managing scaffold permits and tags, ensuring only competent scaffolders erect scaffolds, and coordinating between trades',
-      'Personally inspecting every scaffold on site at least once per week',
-      'Designing all scaffolds and producing TG20 compliance sheets',
-      'Providing all scaffold materials and equipment from their own stock',
+      'Personally inspecting every scaffold on the site at least once each week',
+      'Designing all scaffolds themselves and producing the TG20 compliance sheets',
+      'Providing all scaffold materials and equipment from their own company stock',
+      'Ensuring inspections, managing tags, using competent scaffolders, coordinating trades',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The principal contractor has overall responsibility for scaffold safety on site under CDM 2015. This includes ensuring scaffolds are inspected at the required intervals, managing scaffold permit and tag systems, ensuring only competent (CISRS-carded) scaffolders erect, alter, or dismantle scaffolds, coordinating between different trades using scaffolds, and ensuring all scaffold users have received appropriate information, instruction, and training.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does the scaffold handover process involve, and why is it important?',
     options: [
-      'A formal transfer from the scaffolder to the user including verbal and written confirmation that the scaffold is complete, safe, and fit for its intended purpose',
-      "Simply removing the scaffolder's tools from the platform so users can access it",
-      'The scaffolder leaving site after completing the build — no formal process is needed',
-      'The inspector issuing a green tag, which automatically constitutes handover to all trades',
+      "Simply removing the scaffolder's tools so other trades can access the platform",
+      'A formal transfer confirming, verbally and in writing, the scaffold is complete and safe',
+      'The scaffolder simply leaving site after the build — no formal process is needed',
+      'The inspector issuing a green tag, which automatically hands over to all trades',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Scaffold handover is a formal process where the scaffolder confirms to the user (or their representative) that the scaffold is complete, has been erected in accordance with the design or TG20, is safe, and is fit for its intended purpose and specified loading. It includes verbal briefing, written handover documentation, entry in the scaffold register, and — where applicable — a permit-to-load. Proper handover ensures the user understands any limitations or special conditions.',
   },
@@ -188,9 +188,9 @@ const quizQuestions = [
     id: 8,
     question: 'What duties does CDM 2015 place on the client in relation to scaffolding?',
     options: [
-      'Allowing adequate time and resources for scaffold design and erection, appointing competent contractors, and ensuring pre-construction information includes scaffold requirements',
-      'The client has no duties regarding scaffolding — all responsibility falls on the principal contractor',
-      'Personally approving every scaffold design before erection can begin',
+      'Allowing adequate time and resources, appointing competent contractors, providing pre-construction info',
+      'None at all — all scaffolding responsibility falls on the principal contractor instead',
+      'Personally approving every scaffold design before erection is allowed to begin',
       'Providing all scaffold materials and equipment directly to the scaffolding contractor',
     ],
     correctAnswer: 0,

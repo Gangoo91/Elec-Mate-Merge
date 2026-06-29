@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'discrimination-purpose',
     question: 'What is the purpose of discrimination between protective devices?',
     options: [
-      'That all castors are present, undamaged, and that the brakes lock and release properly',
-      'Only one cable run is needed — both emitter and receiver are in the same housing',
-      'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
+      'To ensure all protective devices operate together so the fault is cleared as fast as possible',
+      'To allow a smaller, cheaper device to be used downstream of a larger one',
+      'To reduce the prospective fault current at the point of installation',
       'To ensure only the device nearest the fault operates, minimising supply disruption',
     ],
     correctIndex: 3,
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
       'What happens during cascading when a fault exceeds the breaking capacity of the downstream device?',
     options: [
       'The upstream device assists in breaking the fault current',
-      'Multi-core cables clipped direct to a non-metallic surface in still air.',
-      'To test all insulation and wiring in the circuit',
-      'By maintaining optimal temperature, lighting, and air quality conditions',
+      'The downstream device interrupts the fault on its own without help',
+      'The fault current is automatically reduced to a safe level',
+      'Only the downstream device trips, isolating the smallest section',
     ],
     correctIndex: 0,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'Why should a protective device never be replaced with a different type or make without engineering approval?',
     options: [
-      'Working around existing services, access restrictions, and unknown conditions',
-      'Paper drawings were destroyed by water damage, with no backups available',
+      'A different make will always have a lower breaking capacity than the original',
+      'Replacement devices from other manufacturers are not permitted under BS 7671',
       'The replacement may invalidate the protection coordination scheme',
-      'Specificity eliminates ambiguity about what to do and when you\\\\\\\\\\\\\\\'ve succeeded',
+      'Mixing manufacturers automatically increases the prospective fault current',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is discrimination (selectivity) in protection coordination?',
     options: [
-      'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
+      'All devices in the supply chain trip together to clear the fault quickly',
       'Only the device nearest the fault operates while upstream devices remain closed',
-      'The contractor had to retest circuits and lost reputation',
-      'Protect people below from falling objects, tools, and materials',
+      'The upstream device always trips before the downstream device',
+      'Each device is rated identically so any one can clear the fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the difference between full and partial discrimination?',
     options: [
-      'Transformer upgrade, parallel operation or on-site generation',
-      'Both devices may operate simultaneously in the crossover region',
+      'Full uses time grading; partial uses current grading only',
+      'Full applies to MCBs; partial applies only to MCCBs and ACBs',
       'Full works for all fault levels; partial works up to a discrimination limit',
-      'Obtain engineering approval to verify coordination is maintained',
+      'Full requires a 2:1 ratio; partial requires no ratio at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'What does cascading (back-up protection) allow?',
     options: [
       'Use of downstream devices with lower breaking capacity, assisted by upstream device',
-      'Full works for all fault levels; partial works up to a discrimination limit',
-      'Both devices may operate simultaneously in the crossover region',
-      'Obtain engineering approval to verify coordination is maintained',
+      'Only the device nearest the fault to operate for all fault levels',
+      'Protective devices to be installed without checking the prospective fault current',
+      'A reduction in the number of distribution boards required on a site',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What happens if time-current curves of two series devices cross?',
     options: [
-      'Transformer upgrade, parallel operation or on-site generation',
+      'Full discrimination is guaranteed across the whole fault range',
       'Both devices may operate simultaneously in the crossover region',
-      'Full works for all fault levels; partial works up to a discrimination limit',
-      'Not less than the prospective fault current at the point of installation',
+      'The downstream device will always clear the fault first',
+      'The upstream device breaking capacity is automatically increased',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the minimum breaking capacity requirement under Regulation 434.5.1?',
     options: [
-      'Full works for all fault levels; partial works up to a discrimination limit',
-      'Use of downstream devices with lower breaking capacity, assisted by upstream device',
+      'Equal to the rated current of the device multiplied by a factor of ten',
+      'Not less than the design current of the circuit being protected',
       'Not less than the prospective fault current at the point of installation',
-      'Both devices may operate simultaneously in the crossover region',
+      'At least twice the breaking capacity of the next upstream device',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'What can cause fault levels to increase in an existing installation?',
     options: [
       'Transformer upgrade, parallel operation or on-site generation',
-      'Both devices may operate simultaneously in the crossover region',
-      'Not less than the prospective fault current at the point of installation',
-      'Obtain engineering approval to verify coordination is maintained',
+      'Increasing the length of the supply cables to the distribution boards',
+      'Reducing the number of circuits connected to the main switchboard',
+      'Replacing MCBs with devices of a higher breaking capacity',
     ],
     correctAnswer: 0,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     question:
       'What should a maintenance technician do before replacing a protective device with a different type?',
     options: [
-      'Both devices may operate simultaneously in the crossover region',
-      'Transformer upgrade, parallel operation or on-site generation',
+      'Fit the nearest available device and test the circuit afterwards',
+      'Select any device with the same rated current as the original',
       'Obtain engineering approval to verify coordination is maintained',
-      'Not less than the prospective fault current at the point of installation',
+      'Increase the breaking capacity to be safe and proceed without checks',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'What tool is primarily used to verify discrimination between protective devices?',
     options: [
-      'kWh, kVAh, kVArh, power factor, and demand',
-      'The site manager or coordinator',
-      'Multiple-choice with one correct answer',
+      'An insulation resistance tester set to 500 V',
+      'A clamp meter measuring load current',
+      'A loop impedance tester at each distribution board',
       'Time-current characteristic curves',
     ],
     correctAnswer: 3,

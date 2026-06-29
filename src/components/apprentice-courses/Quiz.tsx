@@ -18,7 +18,8 @@ interface QuizQuestion {
   id?: number;
   question: string;
   options: string[];
-  correctAnswer: number | string;
+  correctAnswer?: number | string;
+  correctIndex?: number;
   explanation?: string;
 }
 
@@ -44,6 +45,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
 
   const getCorrectAnswerIndex = (q: QuizQuestion): number => {
     if (typeof q.correctAnswer === 'number') return q.correctAnswer;
+    if (typeof q.correctIndex === 'number') return q.correctIndex;
     const i = q.options.findIndex((opt) => opt === q.correctAnswer);
     return i >= 0 ? i : 0;
   };

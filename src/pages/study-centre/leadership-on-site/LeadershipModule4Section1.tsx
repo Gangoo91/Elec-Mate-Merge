@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'ld-ooda-loop',
     question: "In the OODA Loop, what does the 'Orient' stage involve?",
     options: [
-      'Walking the job and checking progress',
       'Making sense of what you have observed through experience and context',
+      'Walking the job and checking progress',
       'Choosing a specific course of action',
       'Executing your decision and monitoring the result',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Orient stage involves making sense of the raw data you have gathered during the Observe stage. You filter it through your experience, training, and understanding of the situation to build a picture of what is actually happening. For example, a supervisor might observe that a cable delivery is late, the ceiling is going in tomorrow, and three electricians are idle — and orient by understanding this is a critical sequencing problem.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'What is the 70% Rule in decision-making?',
     options: [
       'You should delegate 70% of your decisions to the team',
-      'If you have 70% of the information you need, make the decision',
       '70% of site decisions are safety-critical',
+      'If you have 70% of the information you need, make the decision',
       'Supervisors should spend 70% of their time planning',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The 70% Rule states that if you have approximately 70% of the information you need, you should make the decision rather than waiting for perfect information. On a construction site, conditions change rapidly and a good decision now is almost always better than a perfect decision too late. However, this rule does NOT apply to safety-critical decisions, where you must get it right regardless of time pressure.',
   },
@@ -36,8 +36,13 @@ const quickCheckQuestions = [
     id: 'ld-decision-traps',
     question:
       'A supervisor continues with a failing programme approach because significant time and money have already been invested. Which decision trap is this?',
-    options: ['Analysis paralysis', 'Confirmation bias', 'Sunk cost fallacy', 'Groupthink'],
-    correctIndex: 2,
+    options: [
+      'Analysis paralysis',
+      'Confirmation bias',
+      'Groupthink',
+      'Sunk cost fallacy',
+    ],
+    correctIndex: 3,
     explanation:
       "The sunk cost fallacy occurs when someone continues with a course of action because of the resources already invested, rather than evaluating whether it is still the best option going forward. The time and money already spent are 'sunk' — they cannot be recovered regardless of the decision. Good decision-makers evaluate options based on future costs and benefits, not past investment.",
   },
@@ -72,11 +77,11 @@ const quizQuestions = [
     question: 'In the OODA Loop developed by Colonel John Boyd, the four stages in order are:',
     options: [
       'Observe, Organise, Decide, Act',
-      'Observe, Orient, Decide, Act',
       'Outline, Orient, Determine, Act',
       'Observe, Orient, Deploy, Assess',
+      'Observe, Orient, Decide, Act',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The OODA Loop consists of Observe (gather data), Orient (make sense of it), Decide (choose a course of action), and Act (execute). Originally developed for military combat by USAF Colonel John Boyd, it is now widely used in business and emergency response.',
   },
@@ -84,12 +89,12 @@ const quizQuestions = [
     id: 2,
     question: 'The 70% Rule in decision-making states that:',
     options: [
+      'If you have 70% of the information needed, make the decision',
       '70% of site decisions should be delegated to the team',
       'You should aim for 70% accuracy in your decisions',
-      'If you have 70% of the information needed, make the decision',
       '70% of decisions on site are routine and require no analysis',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The 70% Rule states that if you have approximately 70% of the information you need, you should make the decision. Waiting for 100% of the information means the opportunity has passed. On a construction site, conditions change rapidly and a good decision now is better than a perfect decision too late.',
   },
@@ -97,8 +102,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Which decision trap involves continuing with a course of action because of resources already invested?',
-    options: ['Anchoring bias', 'Groupthink', 'Confirmation bias', 'Sunk cost fallacy'],
-    correctAnswer: 3,
+    options: [
+      'Anchoring bias',
+      'Groupthink',
+      'Sunk cost fallacy',
+      'Confirmation bias',
+    ],
+    correctAnswer: 2,
     explanation:
       'The sunk cost fallacy occurs when someone continues with a failing approach because of the time, money, or effort already invested, rather than evaluating the best path forward. The resources already spent cannot be recovered regardless of the decision made.',
   },
@@ -106,7 +116,12 @@ const quizQuestions = [
     id: 4,
     question:
       'A supervisor who only seeks opinions from people who agree with them is demonstrating:',
-    options: ['Effective delegation', 'Confirmation bias', 'The OODA Loop', 'Analysis paralysis'],
+    options: [
+      'Effective delegation',
+      'Confirmation bias',
+      'The OODA Loop',
+      'Analysis paralysis',
+    ],
     correctAnswer: 1,
     explanation:
       'Confirmation bias is the tendency to seek out, interpret, and remember information that confirms what you already believe. A supervisor who only consults people they know will agree is filtering information to support their existing view, rather than genuinely testing their assumptions.',
@@ -117,10 +132,10 @@ const quizQuestions = [
     options: [
       'When making programme sequencing decisions',
       'When deciding resource allocation for the week',
-      'When making safety-critical decisions',
       'When choosing between two equally viable approaches',
+      'When making safety-critical decisions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Safety-critical decisions are the exception to the 70% Rule. For decisions that could affect the safety of workers or the public, there is no acceptable shortcut — you must get it right, even if it takes longer. Speed is valuable for operational decisions, but never at the expense of safety.',
   },
@@ -128,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'The key advantage in the OODA Loop goes to the person who:',
     options: [
+      'Cycles through the loop fastest',
       'Spends the most time in the Orient stage',
       'Gathers the most data in the Observe stage',
-      'Cycles through the loop fastest',
       'Makes the fewest mistakes in the Decide stage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Colonel Boyd's key insight was that the advantage goes to whoever can cycle through the OODA Loop fastest. By observing, orienting, deciding, and acting more quickly than the situation changes, a leader stays ahead of events rather than constantly reacting to them.",
   },
@@ -142,11 +157,11 @@ const quizQuestions = [
     question: 'When a leader makes a wrong decision, the most effective response is to:',
     options: [
       'Explain why external factors caused the failure',
-      'Admit it quickly, learn from it, and move on',
       'Consult the team before acknowledging the error',
+      'Admit it quickly, learn from it, and move on',
       'Wait to see if the situation resolves itself',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Admitting mistakes quickly and honestly builds trust faster than pretending to be perfect. The mark of a leader is how they handle being wrong: admit it, learn from it, move on. Never blame the team for a decision you made and never pretend you did not make the call. Accountability builds trust; deflection destroys it.',
   },
@@ -155,11 +170,11 @@ const quizQuestions = [
     question: 'Analysis paralysis is best described as:',
     options: [
       'Making decisions too quickly without proper analysis',
-      'Delegating all analysis to the team',
       'Overthinking a decision until the moment to act has passed',
+      'Delegating all analysis to the team',
       'Relying too heavily on the first piece of information received',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Analysis paralysis occurs when a leader overthinks a decision, considering every possible angle and outcome until the window of opportunity closes. On a construction site, conditions change rapidly and delay often makes the situation worse. Setting time limits for decisions and using structured frameworks like the OODA Loop helps prevent this trap.',
   },

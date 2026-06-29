@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     question:
       'Why are triplen harmonics (3rd, 9th, 15th) particularly problematic in three-phase systems?',
     options: [
-      'Mandatory energy and carbon reporting for qualifying large UK companies',
-      'It can be monitored without interfering with traffic wavelengths',
+      'They cancel completely in the neutral conductor',
+      'They create a reverse-rotating field in motors',
       'They add in the neutral conductor rather than cancelling',
-      'Gap between design predictions and actual operational energy use',
+      'They reduce the total current drawn from the supply',
     ],
     correctIndex: 2,
     explanation:
@@ -132,14 +132,14 @@ const quizQuestions = [
     question:
       'What neutral conductor sizing is typically required for circuits supplying significant non-linear loads?',
     options: [
-      'Double the phase conductor size',
-      'Same as phase conductors',
-      '1.5 times phase conductor size',
-      'Half the phase conductor size',
+      'At least equal to the phase conductors',
+      'Always half the phase conductor size',
+      'No neutral conductor is required at all',
+      'A quarter of the phase conductor size',
     ],
-    correctIndex: 0,
+    correctAnswer: 0,
     explanation:
-      'For circuits with significant triplen harmonic content (e.g., LED lighting, IT equipment), the neutral may need to be doubled in size as triplen harmonics add in the neutral rather than cancel.',
+      'For circuits where third harmonic distortion exceeds 15% (e.g., LED lighting, IT equipment), BS 7671 requires the neutral to be at least equal to the line conductors, as triplen harmonics add in the neutral rather than cancel.',
   },
   {
     id: 5,
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'What effect do harmonics have on transformer operation?',
     options: [
-      'It causes terminal voltage to drop under load',
-      'Inspect and clean connector end-faces',
+      'They reduce the no-load core losses',
+      'They improve the voltage regulation under load',
       'Increased heating due to eddy currents',
-      'A competent person within the organisation',
+      'They have no measurable effect on the transformer',
     ],
     correctAnswer: 2,
     explanation:
@@ -213,10 +213,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of using an active harmonic filter over a passive filter?',
     options: [
-      'To verify earth fault loop impedance will be within limits',
-      'Both voltage and frequency differences affect operation',
+      'It is significantly cheaper than a passive filter',
+      'It also provides reactive power compensation only',
       'Adaptive response to changing load conditions',
-      'Multiply by 1.2 (temperature correction)',
+      'It requires no power electronics to operate',
     ],
     correctAnswer: 2,
     explanation:

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'epa-components',
     question: 'What are the main EPA assessment components for the MOET ST1426 standard?',
     options: [
-      'Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer\\\'s identification, part number and batch information; and may include specific storage instructions',
-      'Understanding WHY workers were not following the system — was it impractical, poorly communicated, were there production pressures, was supervision inadequate, or had bad habits developed unchallenged?',
-      'A practical observation where you demonstrate maintenance skills under assessor observation, and a professional discussion where you discuss your portfolio evidence and demonstrate knowledge and understanding in depth',
-      'Largest motor at 100 percent + 50-75 percent of remaining motors running, plus check that the supply can handle the largest motor starting on top of the others running. Sequence starts to avoid concurrent transients.',
+      'A written multiple-choice examination followed by a short essay, both marked by your own training provider',
+      'An online portfolio upload reviewed remotely by an assessor with no face-to-face assessment of any kind',
+      'A practical observation of maintenance skills, plus a professional discussion of your portfolio evidence',
+      'A single unannounced workplace visit by your tutor, who awards the grade from your day-to-day work',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'epa-practical',
     question: 'During the practical observation, the assessor is primarily looking for:',
     options: [
-      'Suppliers with 150,000+ domestic customers must offer at least one tariff paying small generators (PV, wind, micro-CHP, hydro, AD) for exported electricity, with a positive (>0p) per-kWh rate',
-      'Safe working practices, systematic fault diagnosis, competent use of tools and test equipment, quality workmanship, effective communication, and professional conduct throughout the task',
-      'Elements of an organisation\\\\\\\\\\\\\\\'s activities, products, or services that interact with the environment and have a significant environmental impact',
-      'The apprenticeship journey involves constant challenges, setbacks, and skill development that require belief in the ability to improve',
+      'How quickly you finish the task, with bonus marks awarded for beating the time allowance',
+      'Safe working, systematic diagnosis, competent tool and test-equipment use, and professional conduct',
+      'Whether you use the same brand of tools and test equipment that the assessor personally prefers',
+      'How much technical jargon you can use while describing your work to the watching assessor',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'epa-discussion',
     question: 'During the professional discussion, you should:',
     options: [
-      'The client or their representative observing the commissioning tests and verifying the results, providing independent confirmation that the system meets the specified requirements',
-      'Sleep deprivation impairs prefrontal cortex function, reducing the brain\\\\\\\\\\\\\\\'s ability to regulate emotional responses from the amygdala, leading to increased emotional reactivity and poorer self-control',
-      'Provide detailed, specific answers drawing on real workplace examples from your portfolio, explain the reasoning behind your decisions, demonstrate your understanding of underpinning knowledge, and be honest about areas you are still developing',
-      'Flammable liquids must be stored in suitable fire-resistant cabinets or stores with adequate ventilation, bunding to contain spills, separation from ignition sources, and appropriate signage and labelling',
+      'Give short yes or no answers, finishing the discussion as quickly as you possibly can',
+      'Memorise textbook definitions and recite them word-for-word with no reference to your own work',
+      'Give specific answers from real portfolio examples, explain your reasoning, and be honest about gaps',
+      'Avoid mentioning any mistakes or development areas so the assessor sees only your strengths',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'epa-grading',
     question: 'EPA grading is determined by:',
     options: [
-      'Nine — explosive, flammable, oxidising, gas under pressure, corrosive, toxic, harmful / irritant, health hazard (long-term / chronic), environmental hazard. Each is red-bordered diamond. The label is supplemented by hazard statements (H-codes) and precautionary statements (P-codes).',
-      'Continuity of the bonding conductor from the metallic PV structures to the chosen suitable earthing terminal shall be demonstrable. The acceptance criterion is a continuity test showing low resistance and a secure, permanent connection to the earthing terminal. Where continuity cannot be demonstrated, the installation is non-compliant.',
-      'Specific, predetermined grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades based on the KSBs demonstrated, and component grades combine according to defined rules for the overall result',
-      'Combined overcurrent (overload + short-circuit, like an MCB) and residual current protection (like an RCD) in a single device. Available in trip thresholds 10 mA, 30 mA, 100 mA, 300 mA on Type AC, A, F or B.',
+      'The personal opinion of the assessor on the day, with no published criteria to refer back to',
+      'A single percentage mark averaged across the two components, with exactly 50% required to pass',
+      'Predetermined criteria in the assessment plan, with components judged against pass and distinction descriptors',
+      'The total number of years of workplace experience the apprentice has completed to date',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'On EPA day, you should arrive:',
     options: [
-      'RA = hazards and controls; MS = the sequence of work; PTW = formal authorisation for higher-risk tasks for a specific shift',
-      'Early — with enough time to settle in, check your equipment and materials, review your portfolio briefly, and compose yourself before the assessment begins',
-      'Category I (minimal risks), Category II (intermediate risks), Category III (serious or irreversible risks including death)',
-      'Fear of appearing incompetent \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 normalise questions by modelling curiosity and admitting your own past mistakes',
+      'Exactly on time, so you do not have to wait around at all before the assessment begins',
+      'Early, with time to settle in, check your equipment, review your portfolio and compose yourself',
+      'A few minutes late, to show the assessor you are confident and relaxed about the assessment',
+      'The night before, expecting to stay on site continuously until the assessment is finished',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'For the practical observation, you should bring:',
     options: [
-      'Specific grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades, based on the KSBs demonstrated during the assessment',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'Your personal tools and test equipment (if required), appropriate PPE, any reference materials permitted by the EPAO, identification, and your portfolio for reference during the day',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
+      'Only a pen and notepad, since the EPAO provides absolutely everything else that is needed',
+      'A pre-written copy of the answers you expect the assessor to ask you about on the day',
+      'Your tools and test equipment if required, PPE, permitted reference materials, ID and your portfolio',
+      'A signed character reference from your employer confirming your workplace attendance record',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'If you make a mistake during the practical observation, you should:',
     options: [
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'Observe your work professionally, ask clarifying questions about your approach and reasoning, note your methods and safety practices, and maintain a supportive but neutral assessment environment',
-      'The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours',
-      'Acknowledge the error, take appropriate corrective action, and continue professionally — the assessor values how you handle mistakes more than whether you make them',
+      'Try to hide the mistake quickly so that the assessor does not notice it happened',
+      'Stop the assessment immediately and ask to start the whole task again from scratch',
+      'Blame the unfamiliar equipment or the strange environment for causing the error',
+      'Acknowledge the error, take appropriate corrective action, and continue professionally',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'The assessor during the practical observation will:',
     options: [
-      'Observe your work professionally, ask clarifying questions about your approach and reasoning, note your methods and safety practices, and maintain a supportive but neutral assessment environment',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
-      'Acknowledge the error, take appropriate corrective action, and continue professionally — the assessor values how you handle mistakes more than whether you make them',
-      'Your personal tools and test equipment (if required), appropriate PPE, any reference materials permitted by the EPAO, identification, and your portfolio for reference during the day',
+      'Observe your work, ask clarifying questions about your reasoning, and note your safety practices',
+      'Carry out the most difficult parts of the task for you to keep the assessment on schedule',
+      'Deliberately distract and interrupt you to test how you cope under extreme working pressure',
+      'Leave the room entirely and review only your finished work without ever watching you',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'Safe isolation during the practical observation should be:',
     options: [
-      'Acknowledge the error, take appropriate corrective action, and continue professionally — the assessor values how you handle mistakes more than whether you make them',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'Your personal tools and test equipment (if required), appropriate PPE, any reference materials permitted by the EPAO, identification, and your portfolio for reference during the day',
-      'Ask the assessor to rephrase or clarify the question — this is completely acceptable and demonstrates professional communication rather than guessing and giving an irrelevant answer',
+      'Skipped where the circuit appears obviously dead, so as to save valuable assessment time',
+      'Performed fully and correctly every time, following your standard safe isolation procedure',
+      'Carried out only if and when the assessor specifically asks you to demonstrate it for them',
+      'Shortened by proving the voltage detector once rather than both before and after testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'During the professional discussion, if you do not understand a question:',
     options: [
-      'The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours',
-      'Specific grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades, based on the KSBs demonstrated during the assessment',
-      'Ask the assessor to rephrase or clarify the question — this is completely acceptable and demonstrates professional communication rather than guessing and giving an irrelevant answer',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
+      'Guess an answer quickly, so that the assessor does not think for a moment that you are unsure',
+      'Change the subject to something you do know well, steering away from the difficult question',
+      'Ask the assessor to rephrase or clarify the question before you attempt to answer it',
+      'Stay completely silent and simply wait for the assessor to move on to the next question',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 7,
     question: 'The professional discussion typically lasts:',
     options: [
-      'Consistent professional competence — safe working practices, systematic approaches, clear communication, sound technical knowledge, and the ability to explain your reasoning and reflect on your work',
-      'Observe your work professionally, ask clarifying questions about your approach and reasoning, note your methods and safety practices, and maintain a supportive but neutral assessment environment',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours',
+      'A full working day, working through every single entry in your portfolio in turn',
+      'Around 10 minutes, just long enough to confirm your identity and check your portfolio',
+      'Exactly 2 hours, a fixed duration for every apprentice regardless of which standard they sit',
+      'The duration in the assessment plan, typically 45-60 minutes for the MOET standard',
     ],
     correctAnswer: 3,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 8,
     question: 'Grading in the EPA is based on:',
     options: [
-      'Specific grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades, based on the KSBs demonstrated during the assessment',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
-      'Observe your work professionally, ask clarifying questions about your approach and reasoning, note your methods and safety practices, and maintain a supportive but neutral assessment environment',
+      'Specific criteria in the assessment plan, with each component judged against grade descriptors',
+      'How well the apprentice gets on personally with the assessor over the course of the day',
+      'The wider reputation of the apprentice’s training provider and their employing company',
+      'A direct comparison against the other apprentices being assessed on the same day',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'If the practical observation involves equipment you have not used before:',
     options: [
-      'The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours',
-      'Take time to familiarise yourself with the equipment, ask the assessor for clarification about its operation if needed, and apply your transferable skills and knowledge systematically — the assessor assesses your approach and reasoning, not just equipment-specific knowledge',
-      'Consistent professional competence — safe working practices, systematic approaches, clear communication, sound technical knowledge, and the ability to explain your reasoning and reflect on your work',
-      'Thank the assessor for their time, reflect on how the assessment went (what went well, what could be improved), and wait for the formal result through the proper channels — results typically take a few weeks to be confirmed',
+      'Refuse to attempt the task at all, because you were not trained on that exact equipment',
+      'Familiarise yourself with it, ask for clarification if needed, and apply your skills systematically',
+      'Guess how it works and proceed as quickly as possible without reading any labels or documentation',
+      'Ask the assessor to operate the unfamiliar equipment for you while you simply watch on',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'After the EPA is completed, you should:',
     options: [
-      'Specific grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades, based on the KSBs demonstrated during the assessment',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
-      'Thank the assessor for their time, reflect on how the assessment went (what went well, what could be improved), and wait for the formal result through the proper channels — results typically take a few weeks to be confirmed',
-      'Your personal tools and test equipment (if required), appropriate PPE, any reference materials permitted by the EPAO, identification, and your portfolio for reference during the day',
+      'Demand your result directly from the assessor before you leave the assessment venue',
+      'Contact the EPAO repeatedly afterwards to push them to speed up the grading process',
+      'Thank the assessor, reflect on how it went, and wait for the formal result through proper channels',
+      'Assume you have failed and immediately book a retake before any result has been issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 11,
     question: 'If you do not pass the EPA on the first attempt:',
     options: [
-      'The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours',
-      'Specific grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades, based on the KSBs demonstrated during the assessment',
-      'Ask the assessor to rephrase or clarify the question — this is completely acceptable and demonstrates professional communication rather than guessing and giving an irrelevant answer',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
+      'Your apprenticeship is automatically terminated, with no further opportunity to qualify',
+      'You must restart the entire apprenticeship again from the very beginning of the programme',
+      'You are permanently barred from the MOET standard and must choose a completely different trade',
+      'You are entitled to a retake of the failed component within the timeframe the plan specifies',
     ],
     correctAnswer: 3,
     explanation:
@@ -212,10 +212,10 @@ const quizQuestions = [
     id: 12,
     question: 'Throughout the EPA day, the most important thing to demonstrate is:',
     options: [
-      'Consistent professional competence — safe working practices, systematic approaches, clear communication, sound technical knowledge, and the ability to explain your reasoning and reflect on your work',
-      'Observe your work professionally, ask clarifying questions about your approach and reasoning, note your methods and safety practices, and maintain a supportive but neutral assessment environment',
-      'Your personal tools and test equipment (if required), appropriate PPE, any reference materials permitted by the EPAO, identification, and your portfolio for reference during the day',
-      'Acknowledge the error, take appropriate corrective action, and continue professionally — the assessor values how you handle mistakes more than whether you make them',
+      'Consistent professional competence: safe working, sound knowledge and clear reasoning throughout',
+      'How quickly you can complete each individual task compared with the other apprentices',
+      'An ability to memorise and recite the whole assessment plan back word for word',
+      'A confident, assured manner, even where your working methods are unsafe or inconsistent',
     ],
     correctAnswer: 0,
     explanation:

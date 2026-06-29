@@ -15,11 +15,12 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'How often should power supply backup systems be tested according to BS 5839-1?',
+    question:
+      'Under BS 5839-1, how often should any standby generator providing the secondary power supply be tested?',
     options: ['Daily', 'Weekly', 'Monthly', 'Annually'],
     correctAnswer: 2,
     explanation:
-      'BS 5839-1 requires power supply backup systems to be tested monthly to ensure they can provide sufficient power during mains failure.',
+      'BS 5839-1 recommends that, where the secondary (standby) power supply is provided by an automatically started generator, it is tested monthly. (The system as a whole is also user-tested weekly, and the standby battery condition is checked at the six-monthly service visit.)',
   },
   {
     id: 2,
@@ -32,32 +33,37 @@ const quizData: QuizQuestion[] = [
   {
     id: 3,
     question:
-      'What is the maximum interval between comprehensive inspections according to BS 5839-1?',
+      'What is the maximum interval between periodic inspection and servicing visits according to BS 5839-1?',
     options: ['6 months', '12 months', '18 months', '24 months'],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1 requires comprehensive inspections to be carried out at least annually (every 12 months) by a competent person.',
+      'BS 5839-1 recommends that the period between successive periodic inspection and servicing visits by a competent person should not exceed 6 months (i.e. at least two service visits per year). If this is not met, the system is no longer regarded as compliant with BS 5839-1.',
   },
   {
     id: 4,
-    question: 'Who must approve maintenance schedules and any limitations?',
+    question: 'Who must approve maintenance schedules and any agreed limitations?',
     options: [
-      'The maintenance contractor',
-      'The fire service',
-      'The responsible person',
-      'The insurance company',
+      'The responsible person for the premises',
+      'The maintenance contractor alone',
+      'The local fire and rescue service',
+      'The building’s insurance provider',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The responsible person (building owner/occupier) must approve all maintenance schedules and any limitations, ensuring they understand the implications.',
   },
   {
     id: 5,
-    question: 'How long must maintenance records be retained according to BS 5839-1?',
-    options: ['2 years', '5 years', '7 years', '10 years'],
-    correctAnswer: 1,
+    question: 'Why is it important to retain fire alarm maintenance records over time?',
+    options: [
+      'So the system can be remotely disabled if needed',
+      'To allow the contractor to bill for past visits',
+      'They provide evidence of compliance and system history',
+      'Records are only kept to satisfy the manufacturer',
+    ],
+    correctAnswer: 2,
     explanation:
-      'BS 5839-1 requires maintenance records to be retained for at least 5 years to provide evidence of compliance and system history.',
+      'Retained maintenance records provide a documented history of servicing and faults, evidencing ongoing compliance with BS 5839-1.',
   },
   {
     id: 6,

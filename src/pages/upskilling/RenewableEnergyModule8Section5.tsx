@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What RCD types are recognised by BS 7671 + applicable to heat pump installs?',
     options: [
-      'Only Type AC',
-      'Type AC (BS EN 61008 — AC fault only, NOT permitted as ADS protection where pulsating DC may occur — heat pumps with VSD electronics produce pulsating DC); Type A (BS EN 62423 — AC + pulsating DC, UK 2025-26 default for heat pumps with simple inverters); Type F (BS EN 62423 — adds high-frequency fault detection, suits some VSD heat pumps); Type B (BS EN 62423 — adds smooth-DC fault detection, required where manufacturer DoC declares smooth-DC > Type A capability)',
-      'Type B only',
-      'No RCDs',
+      'Only Type AC, which is sufficient for any VSD heat pump compressor',
+      'Only Type B, fitted to every heat pump install regardless of the DoC',
+      'No RCD is required at all because the heat pump has its own internal protection',
+      'Type AC (unsuitable here), Type A (the usual default), Type F (adds HF) and Type B (adds smooth DC)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The RCD types defined in BS EN 61008/61009/62423 are: Type AC (BS EN 61008 / BS EN 61009 — AC fault only); Type A (BS EN 62423 — AC + pulsating DC); Type F (BS EN 62423 — adds high-frequency / multi-frequency); Type B (BS EN 62423 — adds smooth DC fault current detection). For heat pump installs: Type AC is NOT permitted as ADS protection because VSD inverter electronics produce pulsating DC fault currents that Type AC fails to detect (Reg 531.3.3 — Type AC permitted only where load contains no DC components). Type A is the UK 2025-26 default for heat pumps with simple inverters. Type F or Type B required where manufacturer DoC declares smooth-DC leakage exceeds Type A capability (typical for advanced VSD compressors). Cert evidence bundle records the chosen RCD type + manufacturer DoC justification.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What is "smooth DC fault current" in the context of VSD inverter compressors?',
     options: [
-      'Imaginary',
-      'Variable-Speed-Drive (VSD) compressors use power electronics (typically IGBT or MOSFET) to rectify AC supply → DC bus → invert DC to variable-frequency AC at the compressor motor. Internal capacitors smooth the DC bus voltage. Insulation fault inside the VSD electronics can leak DC current to earth — Type A / Type AC RCDs cannot detect smooth-DC leakage (they need AC or pulsating DC waveform to operate). Manufacturer DoC declares the expected smooth-DC leakage characteristic',
-      'Random',
-      'No fault possible',
+      'A fault in the VSD DC bus electronics leaks smooth DC to earth that Type A / AC RCDs cannot detect',
+      'It is an imaginary fault type that cannot occur in any real-world installation',
+      'It is a form of random electrical noise that carries no safety significance',
+      'No earth fault is ever possible inside sealed inverter compressor electronics',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'VSD (Variable-Speed-Drive) inverter compressors: heart of the modern heat pump efficiency story. Power electronics (typically IGBT or MOSFET transistors) rectify the incoming AC supply → smooth DC bus voltage → invert that DC into variable-frequency AC at the compressor motor. The variable frequency lets the compressor run at the actual heat demand (not on/off cycling). Internal DC bus capacitors smooth the rectified voltage. Insulation fault scenarios inside the VSD electronics: line-to-earth through the DC bus capacitor can produce SMOOTH DC leakage current to earth (not pulsating, not AC) — and Type A / Type AC RCDs require AC or pulsating DC waveform to trip. Smooth DC saturates the Type A core + prevents tripping → fault not cleared → safety compromised. Manufacturer DoC declares the expected smooth-DC leakage characteristic per the BS EN 61851 / heat pump product standard (in EV context BS EN IEC 62955 specifies the 6 mA smooth-DC detection limit; heat pump manufacturers declare similar). Where smooth-DC exceeds Type A capability, escalate to Type F or Type B RCD.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'When does a heat pump install need Type B RCD protection?',
     options: [
-      'Always',
-      'When manufacturer DoC declares smooth-DC leakage current that exceeds Type A capability. Common in: large commercial heat pumps with sophisticated VSD electronics; ground source heat pumps with more complex power electronics; older heat pump models with less integrated DC-leakage handling. UK 2025-26 typical small-medium domestic ASHP (Vaillant aroTHERM Plus, Mitsubishi Ecodan, Daikin Altherma 3 H, NIBE F2120): manufacturer DoC typically declares Type A acceptable. Always verify per the specific model',
-      'Never',
-      'Only domestic',
+      'Always — every heat pump install legally requires a Type B RCD device',
+      'Never — Type B is simply not recognised by BS 7671 for heat pumps',
+      'When the manufacturer DoC declares smooth-DC leakage exceeding Type A capability — verify per model',
+      'Only on domestic installs, never on any commercial heat pump installation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Type B RCD requirement depends on the manufacturer DoC + model. UK 2025-26 typical small-medium domestic ASHP (5-12 kW thermal): manufacturer DoC typically declares Type A is acceptable; the VSD electronics include integrated DC-fault management that keeps smooth-DC leakage below Type A threshold. Type B becomes required where: (1) larger commercial / GSHP units with sophisticated VSD; (2) older heat pump models without integrated DC-leakage handling; (3) some specialist applications. Verify per the specific model via manufacturer DoC — read the install manual + electrical specification section. Cost differential: 32 A Type B RCBO ~£150-300 vs Type A ~£40-80; 4-pole equivalents amplify the differential. Cert evidence bundle records: manufacturer DoC declaration + chosen RCD type + rationale. UK 2025-26 mature install practice: check manufacturer DoC every install — don’t assume Type A is universal.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'What is Type F RCD + when does it suit a heat pump install?',
     options: [
-      'Same as Type A',
-      'Type F (BS EN 62423) is intermediate between Type A and Type B: detects AC + pulsating DC + high-frequency fault currents (up to 1 kHz typical) BUT NOT smooth DC. Suits VSD inverter loads where high-frequency switching creates fault current harmonics that Type A might miss. Some heat pump manufacturers specifically declare Type F or "Type A with high-frequency capability". Less common than Type A or Type B; verify per manufacturer DoC',
-      'Not real',
-      'Same as Type B',
+      'It is identical to Type A with no added detection capability at all',
+      'It is identical to Type B and fully detects smooth DC fault current',
+      'It is not a real RCD type recognised anywhere in BS 7671',
+      'Type F adds high-frequency detection (to ~1 kHz) but not smooth DC — suits VSD switching harmonics',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Type F RCD (BS EN 62423) is intermediate between Type A and Type B. Detects: AC fault currents + pulsating DC + high-frequency fault currents (typically up to 1 kHz). Does NOT detect smooth DC fault currents (that needs Type B). Origin: developed for VSD inverter loads where the high-frequency switching of the IGBTs creates fault current harmonics that pure Type A might miss. Some heat pump manufacturers specifically declare "Type F suitable" or "Type A with high-frequency capability" — verify per model. UK 2025-26 install reality: Type F is less common than Type A or Type B in the product market — most installers find a Type A or Type B from the leading manufacturers (Hager, Schneider, Wylex, MK / Honeywell) but Type F products available from specialist suppliers. Cost: typically between Type A and Type B. Cert evidence bundle records: manufacturer DoC declaration + chosen RCD type.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A 9 kW thermal Vaillant aroTHERM Plus R290 ASHP. Manufacturer DoC: "RCD Type A acceptable". What do you fit?',
     options: [
-      'Type AC',
-      '32 A Type A RCBO C-curve per manufacturer DoC. BS EN 61009 + BS EN 62423 Type A covers AC + pulsating DC fault currents. 30 mA additional protection integrated. C-curve handles compressor inrush. Verify Zs ≤ Table 41.3 value + RCD trip-time at 1× IΔn ≤300 ms + at 5× IΔn ≤40 ms. Cert evidence bundle records the Type A + manufacturer DoC reference',
-      'Type AC permitted',
-      'No RCD',
+      '32 A Type A RCBO C-curve per the DoC, then verify Zs ≤ Table 41.3 and RCD trip-times at 1× and 5× IΔn',
+      'A Type AC RCBO, since the manufacturer only specified a 30 mA device rating',
+      'A Type AC RCD is permitted here because the DoC did not happen to mention smooth DC',
+      'No RCD at all, relying solely on the unit DoC stating that Type A is acceptable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Manufacturer DoC is authoritative: Vaillant aroTHERM Plus R290 internal VSD electronics include integrated DC-leakage handling that keeps smooth-DC below Type A threshold. Manufacturer declares Type A acceptable. Designer fits 32 A Type A RCBO C-curve (BS EN 61009 + BS EN 62423) — straightforward standard protective device. Verification at commissioning: Zs ≤ Table 41.3 (0.68 Ω at 0.4 s for 32 A C-curve on 230 V TN-C-S); RCD trip-time at IΔn (30 mA): ≤300 ms typical actual ~25 ms; trip-time at 5 × IΔn (150 mA): ≤40 ms typical actual ~15 ms. Cert evidence bundle: Hager AD132 (or equivalent) + manufacturer DoC reference + commissioning test results.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Older heat pump model — manufacturer DoC declares smooth-DC leakage 12 mA. Which RCD?',
     options: [
-      'Type A',
-      'Type B required. Type A capability for smooth DC is typically rated at ≤6 mA; 12 mA declared smooth-DC leakage exceeds this. Type B (BS EN 62423) detects AC + pulsating DC + smooth DC + high-frequency. Fit 32 A Type B RCBO C-curve. Cost ~£150-300 vs ~£40-80 for Type A. Cert evidence bundle records the manufacturer DoC declaration of 12 mA + Type B selection rationale',
-      'Type AC',
-      'No protection',
+      'Type A, because 12 mA is well within its declared smooth-DC tolerance',
+      'Type AC, since the declared leakage current is below 30 mA overall',
+      'Type B — Type A tolerates only ~≤6 mA smooth DC, so the declared 12 mA exceeds it; fit a 32 A Type B RCBO',
+      'No additional protection is needed beyond the unit internal electronics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Type A RCD has a typical smooth-DC tolerance of ≤6 mA before saturation prevents reliable AC-fault detection. Manufacturer DoC declares 12 mA smooth-DC leakage → exceeds Type A tolerance → Type B mandatory. Type B (BS EN 62423) detects all fault waveforms: AC + pulsating DC + smooth DC + high-frequency. Fit 32 A Type B RCBO C-curve. UK 2025-26 typical Type B RCBO products: Hager ADC132 (or equivalent), Schneider Vigi Type B (or equivalent), Wylex BSB1B32-2 — all ~£150-300 list. The cost differential is real but the protective integrity is non-negotiable. Cert evidence bundle: manufacturer DoC declaration + Type B selection rationale + commissioning test results.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Three-phase 16 kW ASHP, manufacturer Type A acceptable per DoC. RCD architecture?',
     options: [
-      'Single-pole Type A',
-      '4-pole 32 A Type A RCBO C-curve switching all 3 phases + N together. BS EN 61009 + BS EN 62423 4-pole variant. 30 mA additional protection integrated. Verifies per-phase Zs at outdoor unit + 4-pole switch operation at commissioning. Three-phase RCD trip-time per phase tested individually. Cost: 4-pole Type A ~£200-400; 4-pole Type B ~£600-1,200 (significant amplification of single-phase differential)',
-      'Type AC',
-      'No 4-pole',
+      'A single-pole Type A RCBO switching one line only, with the other phases unprotected',
+      'A Type AC device, which is acceptable here because the DoC allows Type A protection',
+      '4-pole 32 A Type A RCBO C-curve switching all 3 phases + N, with per-phase Zs and trip-time tested',
+      'No 4-pole device; just three separate single-pole RCBOs with no common trip linkage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Three-phase heat pump dedicated circuit: 4-pole RCBO switching L1 + L2 + L3 + N together. BS EN 61009 + BS EN 62423 4-pole variant. UK 2025-26 typical: Hager AD432 (or equivalent) 4-pole 32 A Type A RCBO C-curve (~£200-400 list). If manufacturer DoC requires Type B: 4-pole Type B RCBO from Hager / Schneider / similar (~£600-1,200) — significant cost differential vs single-phase Type A vs Type B. Three-phase RCD architecture commissioning: trip-time per phase tested individually (L1 fault, L2 fault, L3 fault each tripping the 4-pole device); per-phase Zs verified at outdoor unit terminals; functional test of compressor across all 3 phases. Cert evidence bundle: 4-pole RCBO product + Type + curve + rating + manufacturer DoC + per-phase test results.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Type AC RCD on a heat pump install — why never appropriate?',
     options: [
-      'Allowed',
-      'Reg 531.3.3: Type AC permitted only where load contains no DC components. Heat pump VSD inverter compressor inherently produces pulsating DC (from the rectifier + DC bus) + potentially smooth DC. Type AC RCD fails to detect pulsating or smooth DC fault current → no automatic disconnection on insulation fault → safety not assured. Type A minimum; Type F or B if VSD smooth-DC declared by manufacturer',
-      'Best choice',
-      'No restriction',
+      'Reg 531.3.3 permits Type AC only with no DC components, but a VSD compressor produces DC it cannot detect',
+      'Type AC is allowed because heat pumps are classed as fixed equipment',
+      'Type AC is the best choice here as it is the most sensitive RCD type',
+      'There is no restriction at all on the RCD type for a heat pump circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type AC RCD (BS EN 61008 / BS EN 61009 without Type A enhancement) detects only AC fault currents. Reg 531.3.3: "Only to be used for fixed equipment, where it is known that the load current contains no DC components." Heat pumps fail this test by design: VSD inverter compressor takes AC supply → rectifies to DC bus → inverts to variable-frequency AC at the compressor motor. Insulation fault inside the VSD electronics can produce pulsating DC or smooth DC fault current to earth. Type AC RCD core saturates with DC component → cannot detect AC fault component reliably → ADS not assured. Reg 411.4 ADS not met → install non-compliant. UK 2025-26 mature install practice: Type AC NEVER appropriate for any heat pump install. Type A minimum (UK 2025-26 default per manufacturer DoC); Type F or Type B per manufacturer-declared smooth-DC characteristic.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'RCD coordination — heat pump 30 mA RCBO + upstream main RCD or RCDs on other circuits. Issue?',
     options: [
-      'No coordination',
-      'Reg 536.4.1.4 RCD discrimination: upstream RCD must NOT trip on a fault that the downstream RCD should clear. Time-delay RCD upstream (typically Type S 100 mA or 300 mA with 40 ms time delay) discriminates from downstream 30 mA instantaneous. Common UK 2025-26 domestic CU: upstream Type S 100 mA RCD on main switch + individual 30 mA RCBOs per circuit. Heat pump 30 mA RCBO discriminates downstream of upstream Type S RCD',
-      'Upstream irrelevant',
-      'Always trip',
+      'No coordination is needed at all; RCDs at different levels never interact with each other',
+      'The upstream RCD is irrelevant here and can be of any rating or type whatsoever',
+      'Both RCDs should always trip together simultaneously on any earth fault that occurs',
+      'Reg 536.4.1.4 discrimination — a time-delayed Type S upstream RCD lets the 30 mA heat pump RCBO clear first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'RCD discrimination per Reg 536.4.1.4: upstream RCD must NOT trip on a fault that should be cleared by the downstream RCD. Without discrimination, an insulation fault on the heat pump trips both the heat pump RCBO AND the upstream main RCD — taking out the whole installation (loss of fridge, lighting, alarms, etc.). UK 2025-26 typical domestic CU architecture: (1) main RCD Type S (time-delayed, 40 ms intentional delay) at 100 mA or 300 mA — provides bulk RCD protection + discriminates from downstream instantaneous RCDs; (2) individual 30 mA RCBOs per circuit — instantaneous trip on downstream fault. The Type S delay lets the downstream 30 mA RCBO clear first; main RCD stays in. Heat pump 30 mA RCBO sits at the downstream level. Cert evidence bundle: RCD architecture + discrimination verified by sequential trip-time test (downstream first, upstream after delay).',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'How to find the manufacturer DoC smooth-DC declaration for a specific heat pump model?',
     options: [
-      'Guess',
-      'Manufacturer install manual + electrical specification section + DoC document. Search for: "RCD type", "RCD compatibility", "earth leakage current", "smooth DC", "DC fault current" — terminology varies by manufacturer. Examples: Vaillant aroTHERM Plus R290 install manual electrical-specification section RCD; Mitsubishi Ecodan electrical specification + DoC; Daikin install handbook "electrical connection requirements"; NIBE design manual. If unclear, contact manufacturer technical support. Cert evidence bundle records the declaration + reference',
-      'No way to find',
-      'Not declared',
+      'Guess at a Type A device, on the basis that most domestic heat pumps accept it',
+      'The install manual electrical-spec section and DoC — search "RCD type" or "earth leakage current"',
+      'There is no way to find it; the RCD type is left entirely to the installer to decide',
+      'It is never declared anywhere, so any RCD type may be fitted by default on the circuit',
     ],
     correctAnswer: 1,
     explanation:

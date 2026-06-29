@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Reg 642.3 hands you off to Section 643 for the test sequence on initial verification. Which order is correct for tests applied BEFORE the supply is connected?',
     options: [
-      'Insulation resistance, polarity, Zs, RCD time',
-      'Continuity of protective conductors, ring final-circuit continuity, insulation resistance, polarity (dead test), then earth-electrode resistance where applicable',
-      'Zs, Ze, R1+R2, RCD time, polarity',
-      'Phase rotation, then RCD time, then continuity',
+      'Insulation resistance, then polarity, then Zs, then RCD operating time',
+      'Protective-conductor continuity, ring continuity, insulation resistance, then polarity',
+      'Zs, then Ze, then R1+R2, then RCD operating time, then polarity',
+      'Phase rotation, then RCD operating time, then continuity of conductors',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'On the Schedule of Test Results, the inspector records Ze, R1+R2 and Zs for each circuit. What is the relationship the form is asking the inspector to verify?',
     options: [
-      'Ze = Zs + R1+R2',
-      'Zs ≈ Ze + (R1+R2), with measured Zs cross-checked against the maximum permitted Zs for the protective device',
-      'Zs = R1 × R2',
-      'Zs is independent of Ze and R1+R2',
+      'Ze equals Zs plus R1+R2 for the circuit under test',
+      'Zs is approximately Ze plus (R1+R2), checked against the maximum permitted Zs',
+      'Zs equals R1 multiplied by R2 at the furthest point of the circuit',
+      'Zs is independent of Ze and of R1+R2 for the circuit under test',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'The A4:2026 Schedule of Test Results adds a new column at the right-hand side. What does it record?',
     options: [
-      'The cost of the protective device',
-      'The presence and rated current of an Arc Fault Detection Device (AFDD) per Reg 421.1.7, where fitted',
-      'The colour of the cable',
-      "The customer's signature",
+      'The diversity factor applied to each final circuit on the board',
+      'The presence and rated current of an AFDD per Reg 421.1.7, where fitted',
+      'The maximum demand in amps measured at the origin of the installation',
+      'The ambient temperature correction factor used for each cable run',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Where would a working electrician most quickly find the maximum permitted Zs values for a Type B 32 A MCB?',
     options: [
-      'BS 7671 Appendix 1 — British Standards',
-      'IET On-Site Guide (OSG), Appendix I — Maximum permitted Zs for protective devices',
-      'BS EN 61009',
-      'GN5 — Protection against electric shock',
+      'BS 7671 Appendix 1 — the list of British Standards referenced',
+      'The IET On-Site Guide, Appendix I — maximum permitted Zs values',
+      'BS EN 61009 — the RCBO product standard for combined devices',
+      'GN5 — the IET guidance note on protection against electric shock',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'An inspector arrives at a commercial fit-out to issue an EIC. They have the EIC itself, but the contractor has only handed over a Schedule of Test Results. What is the cert pack still missing?',
     options: [
-      'Nothing — the EIC and Schedule of Test Results are sufficient',
-      'The Schedule of Inspection (visual checks) and the Schedule of Circuit Details — both are required to accompany an EIC under Appendix 6',
-      'Just the customer signature',
-      'A separate building-control notification',
+      'The Schedule of Inspection and the Schedule of Circuit Details, both required under Appendix 6',
+      'Nothing further — the EIC and Schedule of Test Results together form a complete pack',
+      'Only the customer\'s counter-signature accepting the completed installation as handed over',
+      'A separate building-control notification lodged with the local authority alongside the cert',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Per Appendix 6 of BS 7671:2018+A4:2026, the Electrical Installation Certificate (EIC) must be accompanied by the Schedule of Inspection and the Schedule of Test Results. The Schedule of Circuit Details (which lists every circuit, conductor sizes, OPDs, RCDs, reference method) is the third document in the pack — it is the engineering record that lets the next inspector make sense of the test results. Issuing an EIC without the schedules is incomplete and the cert is not defensible.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'On the Schedule of Inspection, item 1.0 reads "Methods of protection against electric shock". The inspector is checking item 1.1 — basic protection. Which on-site checks are part of that item?',
     options: [
-      'Insulation-resistance test at 500 V DC',
-      'Visual inspection: insulation of live parts intact, barriers / enclosures (IP rating) appropriate, obstacles where used, placing out of reach where used',
-      'Zs measurement at every accessory',
-      'RCD operating-time test at 5 IΔn',
+      'An insulation-resistance test applied at 500 V DC between live conductors and earth',
+      'A Zs measurement taken at every accessory on the circuit under inspection',
+      'Visual checks: insulation of live parts intact, barriers/enclosures (IP rating) appropriate, obstacles, out of reach',
+      'An RCD operating-time test carried out at five times the rated residual current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Schedule of Inspection is the VISUAL / non-instrument check. Item 1.1 (basic protection) verifies the Section 416 methods are in place — insulation, barriers/enclosures, obstacles, placing out of reach. The corresponding instrument tests (insulation resistance, Zs, RCD) live on the Schedule of Test Results. Both schedules are required and they cross-reference each other.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A Schedule of Test Results column requires the inspector to record "Maximum permitted Zs". Where does that figure come from for a Type C 16 A MCB on a TN-C-S supply at 230 V?',
     options: [
-      'It is left blank — only measured Zs is recorded',
-      'BS 7671 Appendix 3 Table 41.3 (Type C MCBs), corrected for conductor temperature; OSG Appendix I gives the same values pre-corrected for site use',
-      'The MCB packaging only',
-      'It is calculated by dividing 230 V by the MCB rating',
+      'It is left blank, since only the measured Zs at the furthest point is recorded',
+      'It is read from the markings on the MCB packaging supplied by the manufacturer',
+      'It is calculated by dividing the nominal voltage of 230 V by the MCB rated current',
+      'BS 7671 Appendix 3 Table 41.3 (Type C MCBs), corrected for temperature; OSG Appendix I gives field values',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Maximum permitted Zs values are tabulated in BS 7671 Appendix 3 (Tables 41.2 Type B, 41.3 Type C, 41.4 Type D, plus the equivalent BS 88-3 fuse and BS 3036 rewireable fuse tables). The OSG Appendix I reprints these in field-friendly form. The number entered is the maximum at the operating temperature assumed — measured Zs (which is taken at ambient) must be below approximately 0.8 of the tabulated value to leave thermal margin (GN3 advises this 80% rule of thumb).',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A4:2026 changes the Schedule of Circuit Details. Which combination of NEW columns / fields is correctly listed?',
     options: [
-      'Cable colour, cable manufacturer, postcode',
-      'TN-C-S (PNB) option in supply system, AFDD column with rated current, maximum permitted Zs column, reference method column, SPD type column, "supplied from" cross-reference',
-      "A column for the customer's phone number",
-      'A column for VAT number only',
+      'A cable-colour column, a cable-manufacturer column and an installation-postcode field',
+      'A TN-C-S (PNB) option, an AFDD column, a max-permitted-Zs column and a reference-method column',
+      'A bonding-conductor-size column, an IP-rating column and a circuit-length-in-metres field',
+      'A diversity-factor column, a load-in-amps column and a contractor scheme-number field',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,28 +180,28 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      "Reg 642.3 states that testing shall be carried out as specified in Section 643. What is the inspector's primary obligation when filling the Schedule of Test Results?",
+      "Section 643 sets out the testing requirements and sequence for an installation. What is the inspector's primary obligation when filling in the Schedule of Test Results?",
     options: [
-      'Record only the values that pass; omit any failing test',
-      'Apply the Reg 643 test sequence in order, record every required measured value, and code any deviation as an observation on the certificate',
-      'Skip the dead tests and rely on live tests only',
-      'Test only the circuits the customer asks about',
+      'Record only the values that pass and omit any test that fails or reads out of tolerance',
+      'Skip the dead tests entirely and rely on the live tests carried out under load',
+      'Apply the Section 643 test sequence in order, record every required value, and code any deviation as an observation',
+      'Test only the specific circuits the customer has asked to be checked on the day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Reg 642.3 makes the link explicit: testing is carried out in accordance with Section 643, in the prescribed sequence (643.1 onwards), and every required measurement is entered on the Schedule of Test Results. Omitting a value (e.g. leaving the Zs column blank) is itself a failure — the cert is incomplete. Deviations from BS 7671 are recorded under Reg 120.3 with justification; failures generate observations on the certificate (C1 / C2 / C3 / FI on an EICR).',
+      'Section 643 requires testing in the prescribed sequence (643.1 onwards), with every required measurement entered on the Schedule of Test Results. Leaving a value blank (e.g. the Zs column) makes the cert incomplete. Deviations from BS 7671 are recorded under Reg 120.3 with justification; failures generate observations (C1 / C2 / C3 / FI on an EICR).',
   },
   {
     id: 6,
     question:
       'An EICR is being produced for a 1990s domestic property. The inspector finds that one circuit has no measurable Zs at the furthest point because the lampholder enclosure provides no test point. What goes on the Schedule of Test Results?',
     options: [
-      'Leave the Zs column blank without comment',
-      'Estimate Zs by adding R1+R2 (measured at the consumer unit) to Ze and record that figure with a note in the observations explaining the calculation, plus an FI ("Further Investigation") observation if access cannot be safely obtained',
-      'Mark the circuit as failing without further work',
-      'Record an arbitrary value within tolerance',
+      'Leave the Zs column blank with no accompanying comment on the schedule',
+      'Mark the circuit as failing immediately without attempting any further calculation',
+      'Record a calculated Zs (Ze + R1+R2) with a note explaining the calculation, and an FI if access cannot be obtained',
+      'Record an arbitrary value that falls within the permitted tolerance for the device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 permits a calculated Zs (Ze + R1+R2) where direct measurement at the furthest point is impractical. The calculation is recorded with a clear note. If access to the relevant accessory cannot be safely obtained on the day, an FI observation flags the limitation so the next inspection picks it up. Leaving fields blank or fabricating values is neither.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'The IET Code of Practice for Electrical Energy Storage Systems is referenced for installations under Section 826 of A4:2026. What is its status relative to BS 7671?',
     options: [
-      'It supersedes BS 7671',
-      'It is a non-statutory but defensible code that supplements BS 7671 — designers cite it on the cert as the basis for design decisions on battery energy storage',
-      'It is a legal requirement under HSWA',
-      'It applies only to large industrial installations',
+      'It supersedes BS 7671 wherever the two documents address battery energy storage',
+      'It is a legal requirement enforceable directly under the Health and Safety at Work Act',
+      'It applies only to large industrial installations and not to domestic battery storage',
+      'It is non-statutory but defensible guidance supplementing BS 7671, cited on the cert as the design basis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The IET Code of Practice for Electrical Energy Storage Systems (3rd edition) is non-statutory guidance that complements Section 826 of BS 7671. It addresses ventilation, fire separation, location, signage and isolation requirements that BS 7671 does not fully cover for battery energy storage systems (BESS). Citing it on a cert (under "design standards used") is the standard route for demonstrating that the installation has been designed to current best practice.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'Which combination of UK working tools should the field electrician carry, in priority order, for cert work and EICRs?',
     options: [
-      'Just BS 7671 itself',
-      'BS 7671:2018+A4:2026 + IET On-Site Guide (Appendix I — Zs maxima, Appendix F — correction factors, Appendix G — voltage drop) + GN3 (Inspection & Testing) — plus manufacturer literature for protective devices and AFDDs',
-      'Building Regulations Part P only',
-      'A pocket calculator and Wikipedia',
+      'BS 7671, the IET On-Site Guide, GN3 Inspection & Testing, and manufacturer literature',
+      'BS 7671 on its own, since the standard already contains every value the inspector needs',
+      'Building Regulations Part P only, since the notification route governs the certification',
+      'A pocket calculator and a general internet search for any reference value needed on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BS 7671 is the standard. The OSG is the field-friendly companion (cable selection, Zs lookups, voltage-drop tables). GN3 is the IET's Inspection & Testing Guidance Note — it explains the Reg 643 sequence in operational terms and sets out the EICR coding methodology in Section K. Manufacturer literature is needed because RCD type, AFDD compatibility, surge co-ordination and Zs maxima for non-MCB devices live in the data sheet, not the standard.",
   },

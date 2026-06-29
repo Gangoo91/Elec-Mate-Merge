@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'rs485-cable-length',
     question: 'What is the maximum recommended cable length for an RS-485 Modbus RTU segment?',
-    options: ['500m', '1200m', '2000m'],
-    correctIndex: 1,
+    options: ['1200m', '500m', '2000m'],
+    correctIndex: 0,
     explanation:
       'RS-485 has a maximum recommended cable length of approximately 1200m per segment before signal loss occurs. Beyond this distance, signal quality degrades and communication becomes unreliable.',
   },
@@ -64,10 +64,10 @@ const quizQuestions = [
     question:
       'A BACnet MSTP network with 100 devices has slow response times. What is the BEST solution?',
     options: [
-      'Increase the baud rate to 115200',
-      'Segment the network into multiple smaller networks',
-      'Replace all devices with newer models',
-      'Add more termination resistors',
+      'Increase the baud rate to 115200 across the whole bus',
+      'Segment the network into several smaller networks',
+      'Replace every field device with a newer model',
+      'Fit additional termination resistors along the bus',
     ],
     correctAnswer: 1,
     explanation:

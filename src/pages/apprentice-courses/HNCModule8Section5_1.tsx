@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: 'What is the primary function of a BMS outstation?',
     options: [
       'Provide local control and data acquisition',
-      'At tender stage with confirmed lead times',
-      'Solar radiation tables based on clear sky models',
-      'Age, wear, and environmental factors',
+      'Host the operator graphics and alarm displays',
+      'Convert protocols between the BMS and fire alarm panel',
+      'Distribute mains power to the field sensors',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is NOT typically a function of a BMS?',
     options: [
-      'Full fall protection system',
-      'The reciprocal of resistance',
+      'HVAC temperature control',
+      'Lighting scheduling',
       'Structural load monitoring',
-      '0.5-1% of initial cost per year',
+      'Energy consumption monitoring',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What is a points schedule in BMS terminology?',
     options: [
       'A list of all monitored and controlled points',
-      'Remote access and integration capabilities',
-      'To record historical data for analysis',
-      'The outstation continues operating using its local program',
+      'A timetable of when each plant item is scheduled to run',
+      'A map of the network cabling between outstations',
+      'A log of operator alarm acknowledgements',
     ],
     correctAnswer: 0,
     explanation:
@@ -228,9 +228,9 @@ const quizQuestions = [
     question: 'What advantage does IP-based BMS communication offer over traditional protocols?',
     options: [
       'Remote access and integration capabilities',
-      'To record historical data for analysis',
-      'Electrical metering and distribution',
-      'A list of all monitored and controlled points',
+      'Lower cable installation cost than twisted pair',
+      'Guaranteed operation without any network security risk',
+      'No need for outstations or local controllers',
     ],
     correctAnswer: 0,
     explanation:

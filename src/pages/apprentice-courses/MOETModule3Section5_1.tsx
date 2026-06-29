@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'ups-sizing',
     question: 'When sizing a UPS, what two parameters must be determined?',
     options: [
-      'Mechanical Ventilation with Heat Recovery',
-      'Reduced current flow or open circuit',
+      'Cable colour and circuit reference only',
+      'Ambient humidity and floor loading',
       'kVA/kW rating and autonomy (runtime) required',
-      'Verify instrument CAT rating and prove on a known source',
+      'Earth loop impedance and prospective fault current',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of the UPS bypass system?',
     options: [
       'To allow the load to be transferred to raw mains supply for UPS maintenance or in case of UPS failure',
-      'To ensure immediate activation when normal lighting fails, without requiring human intervention',
-      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
-      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
+      'To increase the autonomy time by adding extra battery banks in parallel',
+      'To convert the UPS output from single-phase to three-phase for larger loads',
+      'To regulate the charging current to the batteries during normal operation',
     ],
     correctIndex: 0,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'How often should UPS batteries typically be tested under a preventive maintenance programme?',
     options: [
+      'Only once, when the UPS is first commissioned',
+      'Every five years, to coincide with battery replacement',
+      'Only after a mains failure has occurred',
       'Annually, with more frequent checks for critical installations',
-      'The process of measuring quantities from drawings for pricing',
-      'BS EN 60903 (live working — insulating gloves)',
-      'Continuity and insulation resistance testing',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'UPS batteries should be tested at least annually as part of a preventive maintenance programme. Critical installations (data centres, hospitals) may require more frequent testing — quarterly or even monthly. Testing includes impedance testing of individual cells/blocks, visual inspection, temperature measurement, float voltage checks and periodic discharge testing.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'In an offline (standby) UPS, during normal mains operation, the load is powered by:',
     options: [
-      'Key design calculations, assumptions, and any as-built revisions',
+      'The inverter, which is continuously fed from the rectifier',
       'The raw mains supply, filtered by a basic surge suppressor',
-      'Sending consumption data to BMS or external counters',
-      'Regulation 4(1) — construction of systems to prevent danger',
+      'The battery, which is trickle-charged from the mains',
+      'An autotransformer that regulates the output voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'A line-interactive UPS improves on the offline topology by adding:',
     options: [
-      'SNMP (Simple Network Management Protocol) over Ethernet',
-      'To detect internal degradation that indicates a block approaching end of life',
+      'A second independent battery bank for redundancy',
+      'A continuous double-conversion rectifier and inverter chain',
       'An autotransformer (AVR) that regulates voltage without switching to battery',
-      'Longer life, higher energy density and better high-temperature performance',
+      'A static bypass that removes the need for batteries entirely',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: 'The power factor of a UPS load is important because:',
     options: [
-      'An autotransformer (AVR) that regulates voltage without switching to battery',
-      'Overheating of power electronics, leading to thermal shutdown or component failure',
-      'To detect internal degradation that indicates a block approaching end of life',
+      'It determines how long the batteries will last on a single charge',
+      'It sets the transfer time between mains and battery operation',
+      'It fixes the maximum ambient temperature the UPS can tolerate',
       'It affects the real power (kW) the UPS can deliver for a given kVA rating',
     ],
     correctAnswer: 3,
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the typical design life of VRLA batteries in a UPS system?',
     options: [
-      'Equal load on each phase with equal phase angles',
+      '6-12 months (standard) or 2-3 years (long-life)',
       '3-5 years (standard) or 10-12 years (long-life)',
-      'Good conductivity, ductility, and corrosion resistance',
-      'Socket outlets rated up to 20A in domestic installations',
+      '15-20 years (standard) or 25-30 years (long-life)',
+      '1-2 years (standard) or 4-5 years (long-life)',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'During UPS maintenance, what is the purpose of impedance testing individual battery blocks?',
     options: [
-      'It affects the real power (kW) the UPS can deliver for a given kVA rating',
-      'An autotransformer (AVR) that regulates voltage without switching to battery',
+      'To measure the total kVA capacity of the UPS output',
+      'To confirm the charging voltage is set to the correct float level',
       'To detect internal degradation that indicates a block approaching end of life',
-      'Longer life, higher energy density and better high-temperature performance',
+      'To verify the cooling fans are maintaining the correct temperature',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'A UPS maintenance bypass switch (external wrap-around bypass) allows:',
     options: [
-      'SNMP (Simple Network Management Protocol) over Ethernet',
-      'Longer life, higher energy density and better high-temperature performance',
-      'To detect internal degradation that indicates a block approaching end of life',
+      'The batteries to be charged faster during recovery from an outage',
+      'The output voltage to be stepped up for higher-power loads',
+      'The internal static bypass to be disabled during normal running',
       'The entire UPS to be isolated while maintaining power to the critical load',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'Which environmental factor most significantly reduces UPS battery life?',
     options: [
       'Elevated ambient temperature',
-      'VAV (Variable Air Volume) box',
-      'Sagging cables creating trip hazards',
-      'They are inversely proportional',
+      'Low relative humidity',
+      'High altitude above sea level',
+      'Background electromagnetic interference',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'UPS monitoring systems typically communicate using which protocol?',
     options: [
-      'Severity of generalised anxiety disorder symptoms',
+      'HDMI (High-Definition Multimedia Interface)',
       'SNMP (Simple Network Management Protocol) over Ethernet',
-      'Wild birds, certain wild animals and plants, and their habitats',
-      'Conductors are connected incorrectly, creating safety risks',
+      'DALI (Digital Addressable Lighting Interface)',
+      'PWM (Pulse Width Modulation) over a control pilot',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'Capacitors in UPS systems require periodic replacement because:',
     options: [
-      'An autotransformer (AVR) that regulates voltage without switching to battery',
-      'To detect internal degradation that indicates a block approaching end of life',
+      'They lose their colour coding and become hard to identify',
+      'They increase in capacitance and overload the inverter',
       'Electrolytic capacitors dry out over time, leading to increased ripple and potential failure',
-      'The entire UPS to be isolated while maintaining power to the critical load',
+      'They absorb moisture and short the DC bus to earth',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     question:
       'Lithium-ion batteries are increasingly being used in UPS systems because they offer:',
     options: [
-      'Electrolytic capacitors dry out over time, leading to increased ripple and potential failure',
-      'SNMP (Simple Network Management Protocol) over Ethernet',
-      'It affects the real power (kW) the UPS can deliver for a given kVA rating',
+      'Lower purchase cost than equivalent VRLA batteries',
+      'The ability to operate without any battery management system',
+      'Greater tolerance of deep discharge without any cell monitoring',
       'Longer life, higher energy density and better high-temperature performance',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
       'A common failure mode in UPS systems is the fan failure. What is the consequence of a failed cooling fan?',
     options: [
       'Overheating of power electronics, leading to thermal shutdown or component failure',
-      'Longer life, higher energy density and better high-temperature performance',
-      'An autotransformer (AVR) that regulates voltage without switching to battery',
-      'The entire UPS to be isolated while maintaining power to the critical load',
+      'An immediate increase in the available autonomy time',
+      'A change in the output voltage from 230 V to 110 V',
+      'Automatic transfer of the load to the battery for protection',
     ],
     correctAnswer: 0,
     explanation:

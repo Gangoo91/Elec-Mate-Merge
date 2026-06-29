@@ -73,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'For three-phase circuits, why is the voltage drop formula different from single-phase?',
     options: [
-      '1.5 kN applied over a 100 mm x 100 mm area',
-      'Visual inspection and safety check',
+      'Three-phase circuits always carry twice the current',
+      'The neutral conductor is sized at half the line',
       'No neutral current in balanced loads',
-      'Unit conversions and formula rearrangement',
+      'The supply voltage is lower for three-phase loads',
     ],
     correctIndex: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'Why might motor starting cause excessive voltage drop?',
     options: [
       'Motors draw 6-8 times full load current during starting',
-      'The designer, installer, and verifier/commissioning engineer',
-      'Isolate the circuit and report immediately',
-      'Move to a clean area away from the contamination',
+      'Motors run at a lower power factor when warm',
+      'Motors require a higher supply voltage to start',
+      'Motors increase the cable resistance during starting',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'What is the purpose of the voltage drop limit being split between mains and final circuits?',
     options: [
-      'The highest risk of work-related stress and associated illness',
+      'To double the total voltage drop allowed overall',
       'To allow design flexibility while maintaining total compliance',
-      'Component tolerances, temperature, and parasitic effects',
-      'Presence of livestock, dust, moisture, and corrosive atmospheres',
+      'To remove the need to calculate sub-main drop',
+      'To allow lighting circuits to use the 5% power limit',
     ],
     correctAnswer: 1,
     explanation:

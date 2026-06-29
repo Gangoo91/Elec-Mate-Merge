@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A colleague has a large shard of glass embedded in their forearm. What is the correct first aid response?',
     options: [
-      'Carefully remove the glass, then apply direct pressure to the wound',
-      'Leave the object in place, build dressings around it, apply indirect pressure either side, and call 999',
-      'Pull the glass out quickly to minimise pain, then bandage tightly',
-      'Ignore the object and apply a tourniquet above the wound',
+      'Leave the glass in place, build dressings around it, and apply pressure either side',
+      'Carefully ease the glass out, then apply firm direct pressure over the wound',
+      'Pull the glass out quickly to minimise pain, then bandage the forearm tightly',
+      'Leave the glass in place and apply a tourniquet to the upper arm above it',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'You must NEVER remove an embedded object. Removing it can cause further damage to blood vessels, nerves, and tissues, and may dramatically increase bleeding. Instead, leave the object in place, build dressings around it to stabilise it, apply indirect pressure either side of the object, and call 999 for large or deep objects.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'Which of the following is a sign that a wound may be becoming infected?',
     options: [
       'The wound is dry and painless after 24 hours',
-      'A thin scab has formed over the wound',
       'Increasing redness spreading from the wound edges, swelling, warmth, and pus',
+      'A thin scab has formed over the wound',
       'The surrounding skin is the same colour as the rest of the arm',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Signs of wound infection include increasing pain, redness spreading from the wound edges, swelling, warmth, pus or discharge, red streaks tracking from the wound (lymphangitis), fever, and feeling generally unwell. A dry, scabbed wound with no spreading redness is healing normally.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the first step in treating a minor wound?',
     options: [
-      'Apply an antiseptic cream immediately',
       'Clean the wound under running tap water',
+      'Apply an antiseptic cream immediately',
       'Cover it with a dry bandage without cleaning',
       'Apply a tourniquet above the wound',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first step for a minor wound is to clean it under running tap water to remove dirt and debris. This reduces the risk of infection. Antiseptic is not routinely recommended for wound cleaning, and tourniquets are only for life-threatening limb bleeding.',
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 2,
     question: 'A worker has a nail embedded in their hand. What should you do?',
     options: [
-      'Pull the nail out and apply direct pressure',
-      'Leave the nail in place, build dressings around it, apply indirect pressure, and seek medical help',
-      'Push the nail further in to prevent it moving',
-      'Bend the nail flat against the skin and bandage over it',
+      'Pull the nail straight out and apply firm direct pressure over the puncture',
+      'Leave the nail in place, build dressings around it, and seek medical help',
+      'Push the nail further into the hand to stop it moving and bleeding',
+      'Bend the nail flat against the skin and bandage firmly over the top of it',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'A casualty has an open abdominal wound with organs visible. What is the correct treatment?',
     options: [
-      'Push the organs back into the abdomen and cover with a dressing',
-      'Cover with cling film or a large sterile dressing moistened with clean water, do NOT push organs back, lie casualty on back with knees raised, and call 999',
-      'Leave the wound uncovered and wait for the ambulance',
-      'Give the casualty water to drink and sit them upright',
+      'Gently push the exposed organs back into the abdomen and cover with a dressing',
+      'Leave the wound completely uncovered and wait for the ambulance to arrive',
+      'Give the casualty sips of water to drink and sit them fully upright',
+      'Cover loosely with cling film, do not push organs back, and call 999',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Never push exposed organs back into the abdomen. Cover the wound with cling film or a moistened sterile dressing to prevent the organs from drying out. Lie the casualty on their back with knees raised and supported to reduce tension on the abdominal muscles. Give nothing by mouth. Call 999 immediately.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'A casualty has a scalp wound that is bleeding profusely. You suspect a possible skull fracture. What should you do?',
     options: [
-      'Apply firm direct pressure to the wound to stop the bleeding',
-      'Apply gentle pressure with a sterile pad — do not press hard if you suspect a fracture underneath — and call 999',
-      'Tilt the head back to slow the bleeding',
-      'Pack the wound tightly with cotton wool',
+      'Apply gentle pressure with a sterile pad, avoiding firm pressure, and call 999',
+      'Apply firm, hard direct pressure to the wound to quickly stop the bleeding',
+      'Tilt the casualty’s head right back to slow the flow of blood from the scalp',
+      'Pack the wound tightly with cotton wool to absorb the bleeding and pad it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scalp wounds bleed profusely due to the rich blood supply to the scalp. Apply gentle direct pressure with a sterile pad, but be cautious — if you suspect a skull fracture underneath, do not press hard as this could push broken bone into the brain. If clear fluid (CSF) is draining from the wound or ears, do NOT attempt to stop it. Call 999.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
       'Red streaks tracking away from a wound along the skin are a sign of which condition?',
     options: [
       'Normal healing',
-      'An allergic reaction to the dressing',
       'Lymphangitis — a sign of spreading infection',
+      'An allergic reaction to the dressing',
       'A bruise forming under the skin',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Red streaks tracking from a wound (lymphangitis) indicate that infection is spreading along the lymphatic vessels. This is a serious sign that requires prompt medical attention — the casualty should see a GP or attend a minor injuries unit urgently, as untreated lymphangitis can progress to sepsis.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'Which of the following is correct cross-contamination prevention when treating a bleeding wound?',
     options: [
-      'Rinse used dressings under the tap and reuse them',
-      'Wear nitrile gloves, wash hands before and after treatment, and dispose of dressings in a sealed bag or clinical waste',
-      'Only wear gloves if the casualty has a known blood-borne disease',
-      'Use your bare hands for better dexterity and wash them afterwards',
+      'Rinse used dressings under running tap water and reuse them on the wound',
+      'Only put on gloves if the casualty has a known blood-borne disease',
+      'Work with bare hands for better dexterity and wash them thoroughly afterwards',
+      'Wear nitrile gloves, wash hands before and after, and bag dressings as clinical waste',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cross-contamination prevention requires wearing nitrile gloves for ALL wound treatment (you cannot know a casualty's blood-borne infection status), washing hands before and after, disposing of used dressings in clinical waste (yellow bag) or a sealed plastic bag, covering your own cuts, and using a face shield for rescue breathing.",
   },

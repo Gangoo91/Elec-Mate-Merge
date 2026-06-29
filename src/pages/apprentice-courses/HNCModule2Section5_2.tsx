@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'A gym with 50 people exercising (200W/person) needs what sensible cooling capacity just for occupants?',
     options: [
-      'Cannot determine - need split data',
-      'Reactive components (inductors, capacitors)',
-      'CPC not connected properly at a socket',
-      'Reduced latency and improved privacy',
+      'Cannot determine from the total alone — need the sensible/latent split',
+      '10 kW, taking the full 200 W per person as sensible heat',
+      '5 kW, by halving the total figure to allow for diversity',
+      'Zero, because exercising occupants emit only latent heat',
     ],
     correctAnswer: 0,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: "What is meant by 'peak coincident gains' in cooling load calculations?",
     options: [
-      'Current-carrying conductor in a magnetic field experiences a force',
+      'The arithmetic sum of every individual peak gain in the space',
       'The total gains occurring simultaneously at a specific time',
-      'Between 450 mm and 1200 mm above FFL — the "reach range".',
-      'Outputting fixed test signals for system testing',
+      'The average gain across the whole occupied day',
+      'The single largest gain from any one source in the space',
     ],
     correctAnswer: 1,
     explanation:

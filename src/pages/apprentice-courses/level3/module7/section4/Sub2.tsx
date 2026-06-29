@@ -42,10 +42,10 @@ const checks = [
     id: 'mod7-s4-sub2-iet',
     question: "What is the IET and what does it offer electrical practitioners?",
     options: [
-      "Institution of Engineering and Technology — UK-based professional body for engineering and technology, with around 156,000 members worldwide. For electrical practitioners IET offers: technical resources (BS 7671 publication, Wiring Matters magazine, IET Standards), professional registration via Engineering Council (EngTech, IEng, CEng), member events and CPD via IET Academy, and the credibility signal of MIET / FIET membership.",
-      "Short (10-15 min), informal, on-site briefing covering a specific safety topic relevant to current work. Required by MHSWR Reg 13 (information). Demonstrates the firm\\\\\\\\'s ongoing engagement with safety; the operative attendance log is the evidence after an incident that the topic was communicated. L3 supervisors increasingly deliver them.",
-      "The label records the refrigerant type, GWP value, charge weight in kilograms and the equivalent tonnes of CO2 the charge represents. The label is a statutory requirement under the F-Gas Regulation. It triggers leak-check frequency rules (typically once a year for charges over 5 tonnes CO2 equivalent without an automatic leak detection system, less often with one), drives the recovery requirements at end of life, and helps the F-Gas engineer choose the right recovery cylinder if the unit is decommissioned.",
-      "Politely tell the Site Manager you've been tasked by your own supervisor on a different priority, and offer to ask your supervisor to come over so the two managers can re-prioritise. You take instructions on the work face from your own contractor's chain (Site Supervisor → Project Engineer → Contracts Manager). The main contractor's Site Manager co-ordinates between contractors but does not give direct instructions to a sub-contractor's apprentice.",
+      "Institution of Engineering and Technology — the UK professional body for engineering and technology; publishes BS 7671, runs CPD, and offers Engineering Council registration (EngTech, IEng, CEng).",
+      "Institute of Electrical Trades — a UK trade union negotiating pay and conditions for electricians through collective bargaining; it publishes no standards and offers no professional registration.",
+      "International Electrical Testing body — a scheme that licenses electricians to inspect and test via the 2391 qualification; it has no role in publishing BS 7671 or in professional membership.",
+      "Independent Electrotechnical Tribunal — a government regulator that investigates electrical accidents and maintains a register of barred individuals; it provides no member resources or CPD.",
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     question:
       "What are the current IET membership tiers in order?",
     options: [
-      "A statutory notice under HASAWA s.21. The dutyholder must comply within the time specified (usually 21+ days). Right of appeal to an Employment Tribunal within 21 days. Failure to comply is a separate offence carrying unlimited fines and (on indictment) up to 2 years imprisonment for the responsible person. The notice is published on the HSE Public Register of Convictions and Notices — visible to clients, insurers and competitors.",
-      "Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs",
-      "Outdoor PV electrical equipment shall have a degree of protection not less than IP44 to BS EN 60529 and an impact rating not less than IK07 to BS EN 62262. On a Section 712 acceptance the enclosure shall be labelled accordingly or be accompanied by manufacturer documentation evidencing compliance — absence of evidence is non-compliance.",
-      "Student / Apprentice (entry tier for those in formal study), Affiliate (anyone with an interest, no qualifications required), Technician Member (TMIET — typically Level 3 vocational + experience, often paired with EngTech registration), Member (MIET — incorporated/chartered-level competence), Fellow (FIET — senior career achievement). Each tier has its own application criteria and annual subscription. (The older 'Associate' tier was removed in the IET's 2008 restructure.)",
+      "Bronze, Silver, Gold and Platinum — the IET grades members by the number of CPD hours logged each year, with Platinum reserved for those completing 100+ hours. Tier is recalculated annually and can go down as well as up.",
+      "Apprentice, Journeyman, Master and Grand Master — a craft-guild ladder where members advance by years of service and a practical test at each stage. The Grand Master tier is held by only a handful of members nationally.",
+      "Trainee, Qualified, Registered and Chartered — a four-step ladder tied directly to JIB grading, so an IET tier automatically matches the JIB grade.",
+      "Student/Apprentice, Affiliate, Technician Member (TMIET), Member (MIET), Fellow (FIET) — entry through to senior achievement.",
     ],
     correctIndex: 3,
     explanation:
@@ -70,10 +70,10 @@ const checks = [
     question:
       "Can a vocational-route electrician become EngTech-registered through the IET?",
     options: [
-      "Engineering Council registration typically correlates with meaningful salary uplift. EngTech-registered roles often pay £35-45k; IEng roles £45-65k; CEng roles £65k+. Registration alone doesn't generate the salary — the underlying competence and the roles you take on do — but the registration is widely used as a salary-band anchor in engineering job markets. For senior technical and design roles registration is often a job pre-requisite.",
-      "Battery platforms are not interchangeable — Milwaukee M18 batteries don't fit Makita LXT tools and vice versa. If the firm runs Milwaukee, that's the platform whose chargers and spare packs are on every van and in every site box. A loose Makita drill is an outlier — one tool with no spare batteries when you need them, and no compatible charger nearby. Either ask for the matching Milwaukee tool, or accept you're working with one battery on the clock.",
-      "Yes — IET specifically promotes EngTech as accessible to vocational-route practitioners. JIB Approved Electrician + 2391-52 + portfolio of evidence + professional review = typical EngTech qualification. The IET provides regional ambassadors who advise on the application route. Many JIB Approved Electricians could qualify for EngTech but never apply because they don't realise they're eligible.",
-      "It’s the single common connection point inside the installation where the earthing conductor (back to the source/electrode), the main protective bonding conductors (out to extraneous parts) and the installation CPCs all meet — bringing every earthed and bonded conductor to the same potential.",
+      "No — EngTech registration requires a BEng or equivalent degree, so it is closed to anyone who came through an apprenticeship. Vocational electricians must instead progress straight to IEng once they hold an HNC.",
+      "No — EngTech is awarded automatically to every JIB Approved Electrician at the point they pass AM2, so there is no application to make through the IET; the grade is simply granted by the JIB.",
+      "Yes — IET actively promotes EngTech for vocational practitioners: JIB Approved Electrician + 2391-52 + evidence portfolio + professional review is the typical route.",
+      "No — EngTech can only be obtained through the Engineering Council directly, not through any professional body. The IET can offer membership but has no power to confer Engineering Council registration of any kind.",
     ],
     correctIndex: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "How much does IET MIET membership typically cost per year?",
     options: [
-      "No — there's a London weighting (typically £2-3/hr extra for work inside the M25), a separate set of SJIB rates for Scotland, and travel allowances vary. The headline JIB hourly rate is the national minimum for the grade; London-weighted rates apply on top for inner-London work. Always check your contract for which rate applies.",
-      "Around £150-200/year for full MIET membership. Discounted rates for new graduates, apprentices, retirees and overseas members. Fee is tax-deductible against income tax (HMRC List 3 of approved professional bodies). Cost includes access to BS 7671 (with online subscription option), Wiring Matters, IET Library, IET Online (large technical archive), regional events.",
-      "The earthing conductor in TT runs to a buried earth electrode and must comply with Table 54.1 minimum sizes for buried conductors (e.g. 25 mm² Cu unprotected, 16 mm² Cu protected against corrosion only). 16 mm² unprotected Cu in soil corrodes and undersizes the run.",
-      "Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.",
+      "Around £10-20/year — IET membership is heavily subsidised for all working electricians and costs little more than a magazine subscription. The low fee is why almost every UK electrician is a member.",
+      "Around £150-200/year for full MIET membership, with discounts for graduates, apprentices, retirees and overseas members, and tax-deductible under HMRC List 3.",
+      "Around £900-1,200/year — comparable to a Chartered Accountant's institute fee, reflecting the high status of MIET. The fee is a one-off lifetime payment rather than annual.",
+      "There is no annual fee — MIET membership is paid for in a single examination fee at the point of application, after which it is held for life with no further cost.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: "What's the IET Academy?",
     options: [
-      "Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.",
-      "Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω. Hot at 70 degrees C: 1.51 × 1.20 = 1.812 Ω. Design Zs = 0.80 + 1.812 = 2.61 Ω. Table 41.3 max for B16 in A4:2026 = 2.73 Ω. Just passes (margin only 0.12 Ω) — design is borderline and any route-length error during install will push it over. Reconsider cable size or route.",
+      "IET Academy is the IET's apprentice training college — a chain of physical campuses where electrical apprentices complete the classroom portion of their NVQ. It is the IET's alternative to FE colleges and JTL.",
+      "IET Academy is the body that runs the AM2 practical assessment on behalf of the IET. Apprentices attend an Academy centre to sit the end-point assessment for their installation qualification.",
       "IET Academy is the IET's online learning platform — bite-sized technical courses, BS 7671 update training, design and engineering CPD content. Member access typically included with MIET subscription; some content open to non-members. Strong CPD resource alongside scheme-specific (NICEIC, NAPIT) and provider-specific (Elec-Mate) CPD platforms.",
-      "Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.",
+      "IET Academy is the IET's awarding body that issues the 2382 and 2391 qualifications. It sets and marks the regs exams and is the IET's competitor to City & Guilds.",
     ],
     correctAnswer: 2,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 3,
     question: "What does FIET (Fellow) require beyond MIET?",
     options: [
-      "Hazardous touch potentials on conductive parts during the test. The test current creates a voltage drop across the loop impedance — exposed-conductive-parts in the circuit may briefly rise toward line voltage during the test. Testers must control access to exposed conductive parts during these tests, follow safe working practices, and not allow others to touch the installation while testing.",
-      "An F-Gas log entry recording the refrigerant type, the charge weight added or removed, the date, and the F-Gas-certified engineer's name and certificate number. The engineer logs the entry in their own F-Gas register and provides a copy or extract to the customer / installer for the handover pack. Required at every refrigerant transaction (initial commissioning charge, top-up, recovery at decommissioning). Required by the F-Gas Regulations and central to demonstrating compliance during any future enforcement check.",
-      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
-      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
+      "Simply a higher annual subscription — any MIET member can become a Fellow by paying the increased FIET fee. There is no additional competence or experience requirement; it is purely a matter of choosing to pay more for the higher post-nominal.",
+      "An additional written examination set by the IET, covering advanced power systems and engineering management. MIET members upgrade to FIET by passing this single exam, regardless of their career history.",
+      "A fixed length of unbroken IET membership — 20 years as a continuous MIET automatically converts to FIET. The upgrade is based on time served as a member rather than on any assessment of achievement.",
+      "Significant career achievement and contribution — typically 10+ years senior experience, leadership and contribution to the profession (publications, mentoring, committee work), usually alongside CEng.",
     ],
     correctAnswer: 3,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 4,
     question: "Are IET fees tax-deductible?",
     options: [
-      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
-      "(a) To take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work; and (b) to co-operate with the employer or any other person to enable that person to comply with their statutory duty.",
-      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
-      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
+      "Yes — IET subscriptions are deductible against income tax under HMRC's List 3, cutting the cost by your marginal rate (a £200 sub costs a 40% taxpayer £120 net).",
+      "No — HMRC treats professional body subscriptions as a personal expense; only mandatory qualifications such as the 18th Edition are allowable.",
+      "Only for limited companies — a sole trader cannot claim it, but a Ltd company can put it through as a business cost.",
+      "Only the first year's joining fee is deductible — HMRC treats subsequent annual renewals as a non-allowable personal choice.",
     ],
     correctAnswer: 0,
     explanation:
@@ -138,55 +138,55 @@ const quizQuestions = [
     id: 5,
     question: "What's an IET regional ambassador?",
     options: [
-      "Around year 10 or a defined number of full-equivalent cycles (often 6,000-10,000 cycles), whichever comes first. The threshold is usually 70-80% of nameplate usable capacity. A 10 kWh battery delivering around 7 kWh after a decade is at typical end-of-warranty capacity; whether the customer replaces depends on the economics of remaining capacity vs replacement cost.",
-      "An IET volunteer (typically MIET or above) in your local region who supports new and prospective members, advises on professional registration applications, and runs regional member activities. Free service. Particularly useful for vocational-route practitioners considering EngTech application — the ambassador can review your CV and tell you whether you're eligible plus suggest what to strengthen.",
-      "The right of access under UK GDPR Article 15 (a 'subject access request' or SAR). The firm has one calendar month to respond, free of charge in most cases. The response must include the personal data being processed, the purposes, the categories, the recipients, the retention period, and the source of the data if not from the data subject.",
-      "SELECT is the campaigning trade association for electrical contracting in Scotland. It's the equivalent of the ECA but for Scotland, and it works alongside the SJIB (Scottish Joint Industry Board) which sets the Scottish equivalent of the JIB rules. Scottish apprentices are usually contracted under SJIB rules with SELECT-member firms.",
+      "A paid IET employee who travels between FE colleges selling membership to apprentices on commission, in a sales rather than support role.",
+      "A local IET volunteer (typically MIET or above) who supports members, advises on professional registration applications, and runs regional activities.",
+      "A senior IET officer who represents the institution at government and overseas events in a diplomatic, ceremonial role rather than dealing with members.",
+      "An assessor appointed by the IET to conduct EngTech and CEng review interviews, deciding pass or fail rather than advising applicants beforehand.",
     ],
     correctAnswer: 1,
     explanation:
-      "Regional ambassadors are a great underused IET resource. Free 30-60 minute conversation can clarify whether you're EngTech-ready and what additional evidence you'd need. Particularly valuable for vocational practitioners who often underestimate their eligibility for professional registration. Find your local ambassador via theiet.org.",
+      "Regional ambassadors are a great underused IET resource — a free 30-60 minute conversation can clarify whether you're EngTech-ready and what additional evidence you'd need. The ambassador can review your CV, tell you whether you're eligible and suggest what to strengthen. Particularly valuable for vocational practitioners who often underestimate their eligibility for professional registration. Find your local ambassador via theiet.org.",
   },
   {
     id: 6,
     question: "How does professional registration relate to JIB grading?",
     options: [
-      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
-      "MIS 3002 is the MCS installer-competence and product-certification standard required for the customer to claim Smart Export Guarantee payments and demonstrate quality assurance. The IET Code of Practice is the practical implementation guide that walks through how to apply BS 7671 Section 712 on a real install — system architecture, cable selection, protective devices, labelling, commissioning. Both reference each other; both should be on the bench when the MCS designer is producing the install drawings. Neither replaces BS 7671 — Section 712 is the legal floor; MIS 3002 and the IET CoP build on top.",
-      "Different but parallel. The formal JIB grading ladder (Apprentice / Adult Trainee / Electrician / Approved / Technician) is the trade-collective competence framework recognised in JIB-graded employment contracts — note 'Improver' is colloquial industry shorthand and NOT a formal JIB grade. Engineering Council registration (EngTech / IEng / CEng) is the wider engineering profession's competence framework recognised across the engineering sector. Many electrical practitioners hold both — JIB Approved AND EngTech is common.",
-      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
+      "Same thing, two names — a JIB Approved Electrician is automatically EngTech-registered, and the terms are interchangeable.",
+      "JIB grading sits above Engineering Council registration — a JIB Technician outranks a CEng, with registration only relevant overseas.",
+      "Different but parallel — the JIB grading ladder is the trade-collective competence framework, while Engineering Council registration (EngTech / IEng / CEng) is the wider profession's; many hold both.",
+      "You must hold one before the other — Engineering Council registration is a legal prerequisite for JIB grading via the IET.",
     ],
     correctAnswer: 2,
     explanation:
-      "JIB and Engineering Council are complementary credentials in different domains — JIB for trade industrial relations, Engineering Council for cross-sector professional engineering. Many career-focused electricians hold both: JIB Approved Electrician for the trade contract and pay framework, EngTech for wider professional credibility and salary signal. Holding both is a strong combination for career mobility.",
+      "JIB and Engineering Council are complementary credentials in different domains — JIB for trade industrial relations, Engineering Council for cross-sector professional engineering. The formal JIB ladder runs Apprentice / Adult Trainee / Electrician / Approved / Technician ('Improver' is colloquial shorthand, NOT a formal grade). Many career-focused electricians hold both: JIB Approved Electrician for the trade contract and pay framework, EngTech for wider professional credibility and salary signal. Holding both is a strong combination for career mobility.",
   },
   {
     id: 7,
     question:
       "What's the IET Code of Conduct?",
     options: [
-      "Several. (1) Approved Electrician JIB grading. (2) QS (Qualified Supervisor) role in a CPS-registered firm — required for Part P self-certification. (3) Periodic inspection contract work (EICR work pays well, particularly in commercial estate and rental property maintenance). (4) Standalone testing-led roles in M&E, FM and consultancy. (5) Bridge to 2396 design qualification.",
-      "Because it covers the whole work activity (not just the install), it covers operation, use AND maintenance, AND it covers work NEAR a system as well as on it. So it's the legal hook for safe-isolation procedures, lock-off, voltage-proving, and the way you organise the work around live equipment that you're not directly working on. Reg 4(3) is what the HSE charges most often after an electrical incident.",
-      "Make suitable arrangements for managing the project (resources, time, competent appointments), provide pre-construction information to designers and contractors, ensure the principal designer and principal contractor (where required) are appointed, and co-operate with all duty-holders. The client duties are real and enforceable — the HSE has prosecuted clients (including domestic clients in some cases) for failing to make those arrangements.",
-      "Professional ethics code binding on IET members and Engineering Council registrants. Covers integrity and honesty, public safety and interest, working within professional competence limits, maintaining and developing competence through CPD, treating colleagues, clients and the public with respect, reporting concerns about safety or unethical conduct. Failure to comply can lead to disciplinary action and ultimately removal from membership/register.",
+      "A pricing schedule the IET publishes setting the minimum rates its members must charge for design and consultancy work, to stop members undercutting each other. Members can be fined for charging below the published rate.",
+      "A dress and behaviour standard the IET enforces at its events and conferences, covering attire, punctuality and networking etiquette. It applies only at IET functions and has no bearing on members' day-to-day work.",
+      "A technical specification, separate from BS 7671, that IET members must follow when designing installations, setting stricter requirements than the Wiring Regs.",
+      "A professional ethics code binding on IET members and registrants — integrity, public safety, competence limits, CPD and reporting concerns, enforced by disciplinary action.",
     ],
     correctAnswer: 3,
     explanation:
-      "The IET Code of Conduct is the ethical framework that binds members. Treat membership as ongoing commitment to professional standards, not just a one-off credential. The Code provides protection (you have professional standing to refuse unethical instructions citing the Code) and obligation (you must maintain standards including CPD). Read it as part of joining; revisit periodically.",
+      "The IET Code of Conduct is the ethical framework that binds members. It covers integrity and honesty, public safety and interest, working within competence limits, maintaining competence through CPD, treating colleagues and clients with respect, and reporting concerns about safety or unethical conduct; failure to comply can lead to disciplinary action and removal from membership. Treat membership as ongoing commitment to professional standards. The Code provides protection (standing to refuse unethical instructions) and obligation (maintaining standards including CPD). Read it as part of joining; revisit periodically.",
   },
   {
     id: 8,
     question:
       "What's the practical case for joining the IET as a domestic-focused electrician?",
     options: [
-      "Several practical benefits: BS 7671 included with subscription; Wiring Matters magazine and IET Online for ongoing technical learning; IET Academy CPD content; networking with other electrical practitioners through regional events; access to professional registration (EngTech) for salary signal and credibility; eligibility for IET-affiliated insurance products. Tax-deductible. Most career-focused electrical practitioners find membership pays for itself.",
-      "Internal first — to the firm\\\\\\\\'s responsible person who is the \\\\\\\"Reg 3 responsible person\\\\\\\" under RIDDOR. They make the F2508 / F2508A submission via riddor.hse.gov.uk or phone 0345 300 9923 for fatalities/specified injuries. Your job is to escalate to them, not to make the report yourself unless you ARE the responsible person.",
-      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
-      "To plan, manage, monitor and co-ordinate matters relating to H&S during the pre-construction phase. The PD identifies, eliminates or controls foreseeable risks via the design, ensures designers comply with their Reg 9 duties, prepares the pre-construction information and liaises with the Principal Contractor for the duration of the appointment.",
+      "Several real benefits — BS 7671 access, Wiring Matters and IET Online, IET Academy CPD, regional networking, the EngTech pathway and affiliated insurance, all tax-deductible.",
+      "None worth the money — membership is aimed purely at chartered design engineers, so a domestic-focused electrician gets nothing their CPS scheme doesn't give free.",
+      "It is a legal requirement — every domestic electrician must hold IET membership to issue an EIC under Part P, so you cannot certify work without it.",
+      "It replaces a CPS scheme — membership lets a domestic electrician self-certify notifiable work to Building Control, so you can drop NICEIC or NAPIT.",
     ],
     correctAnswer: 0,
     explanation:
-      "IET membership isn't only for design engineers — it's a meaningful resource for practising electricians at all levels. The technical resources alone (BS 7671 access, IET Online, Wiring Matters) typically justify the subscription. Add the credibility of MIET letters after your name on quotes/website, the EngTech registration pathway, and the networking/CPD events — strong combined value. Tax-deductible status reduces effective cost.",
+      "IET membership isn't only for design engineers — it's a meaningful resource for practising electricians at all levels. The technical resources alone (BS 7671 access, IET Online, Wiring Matters) typically justify the subscription. Add the credibility of MIET letters after your name on quotes and website, the EngTech registration pathway, and the networking and CPD events for strong combined value. Tax-deductible status reduces effective cost.",
   },
 ];
 

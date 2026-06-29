@@ -18,79 +18,79 @@ const Module6Section4_2 = () => {
     {
       id: 1,
       question: 'What is the maximum rating for ring final circuits in domestic installations?',
-      options: ['20A', '32A', '40A'],
-      correctAnswer: 1,
+      options: ['32A', '20A', '40A'],
+      correctAnswer: 0,
       explanation:
         'Ring final circuits are typically protected by 32A MCBs or RCBOs in domestic installations.',
     },
     {
       id: 2,
       question: 'What cable size is standard for ring final circuits?',
-      options: ['1.5mm²', '2.5mm²', '4mm²'],
-      correctAnswer: 1,
+      options: ['1.5mm²', '4mm²', '2.5mm²'],
+      correctAnswer: 2,
       explanation: '2.5mm² twin and earth cable is standard for 32A ring final circuits.',
     },
     {
       id: 3,
       question: 'How many paths does current have in a properly functioning ring circuit?',
-      options: ['One', 'Two', 'Three'],
-      correctAnswer: 1,
+      options: ['Two', 'One', 'Three'],
+      correctAnswer: 0,
       explanation:
         'In a ring circuit, current has two paths to reach any point, sharing the load between both legs.',
     },
     {
       id: 4,
       question: 'What test confirms both legs of a ring are complete?',
-      options: ['Voltage test', 'End-to-end resistance test', 'Insulation test'],
-      correctAnswer: 1,
+      options: ['Voltage test', 'Insulation test', 'End-to-end resistance test'],
+      correctAnswer: 2,
       explanation:
         'End-to-end resistance testing confirms both legs of the ring are complete and properly connected.',
     },
     {
       id: 5,
       question: 'What happens if one leg of a ring circuit is broken?',
-      options: ['Circuit stops working', 'Becomes overloaded radial', 'Works more efficiently'],
-      correctAnswer: 1,
+      options: ['Becomes overloaded radial', 'Circuit stops working', 'Works more efficiently'],
+      correctAnswer: 0,
       explanation:
         'A broken ring becomes an overloaded radial circuit, potentially causing overheating and safety hazards.',
     },
     {
       id: 6,
       question: 'What should you do before testing ring continuity?',
-      options: ['Test with power on', 'Isolate and prove dead', 'Check with customers'],
-      correctAnswer: 1,
+      options: ['Test with power on', 'Check with customers', 'Isolate and prove dead'],
+      correctAnswer: 2,
       explanation:
         'Always isolate the circuit and prove dead before conducting any continuity tests.',
     },
     {
       id: 7,
       question: 'What document requires ring continuity verification?',
-      options: ['EAWR 1989', 'BS 7671', 'Company policy'],
-      correctAnswer: 1,
+      options: ['BS 7671', 'EAWR 1989', 'Company policy'],
+      correctAnswer: 0,
       explanation:
         'BS 7671 Wiring Regulations require verification of ring continuity as part of testing procedures.',
     },
     {
       id: 8,
       question: 'How should ring circuit readings compare between legs?',
-      options: ['Identical', 'Approximately equal', 'Significantly different'],
-      correctAnswer: 1,
+      options: ['Identical', 'Significantly different', 'Approximately equal'],
+      correctAnswer: 2,
       explanation:
         'Ring circuit legs should show approximately equal resistance values, indicating balanced construction.',
     },
     {
       id: 9,
       question: 'What could cause unusually high resistance in one leg?',
-      options: ['Normal variation', 'Loose connections or damage', 'Good installation'],
-      correctAnswer: 1,
+      options: ['Loose connections or damage', 'Normal variation', 'Good installation'],
+      correctAnswer: 0,
       explanation:
         'High resistance indicates loose connections, cable damage, or poor terminations requiring investigation.',
     },
     {
       id: 10,
       question: 'Why is ring continuity testing critical for safety?',
-      options: ['Reduces energy bills', 'Prevents circuit overloading', 'Improves lighting'],
-      correctAnswer: 1,
+      options: ['Reduces energy bills', 'Improves lighting', 'Prevents circuit overloading'],
+      correctAnswer: 2,
       explanation:
         'Ring continuity testing prevents dangerous overloading that could cause fires and electrical hazards.',
     },

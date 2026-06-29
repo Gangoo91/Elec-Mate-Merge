@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'In an activity-on-node (AON) diagram, what do the boxes represent?',
     options: [
-      'Transmitter powered by the current loop itself',
+      'The dependency links between connected activities',
       'Individual activities with their attributes',
-      'Risk of shock is increased, such as bathrooms',
-      'A break in continuity of the conductor',
+      'Milestones marking zero-duration achievement points',
+      'The float available on each path through the network',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the relationship between free float and total float?',
     options: [
-      'To focus coordination efforts and resources on schedule-critical work',
-      'Critical path activities with lowest crash cost per day',
-      'Overlapping activities that would normally be sequential',
+      'Free float is always greater than total float',
+      'Free float and total float are always equal',
+      'Free float applies only to critical activities',
       'Free float is always less than or equal to total float',
     ],
     correctAnswer: 3,
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Programme compression (crashing) should prioritise:',
     options: [
-      'Free float is always less than or equal to total float',
-      'It becomes critical - there are now two critical paths',
+      'Non-critical activities with the most available float',
+      'The activities with the longest individual durations',
       'Critical path activities with lowest crash cost per day',
-      'Cannot be determined without more information',
+      'Activities that have already started on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'What happens if an activity on a parallel path gains zero float?',
+    question: 'What happens if an activity on a parallel path reaches zero float?',
     options: [
       'It becomes critical - there are now two critical paths',
-      'The successor can start before the predecessor finishes',
-      'Free float is always less than or equal to total float',
-      'Overlapping activities that would normally be sequential',
+      'It is automatically removed from the network diagram',
+      'Its duration is reduced to match the critical path',
+      'It gains additional float from the critical path',
     ],
     correctAnswer: 0,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'Fast-tracking a project involves:',
     options: [
-      'Critical path activities with lowest crash cost per day',
-      'To focus coordination efforts and resources on schedule-critical work',
+      'Adding labour and resources to shorten critical activities',
+      'Extending working hours through overtime and shift working',
       'Overlapping activities that would normally be sequential',
-      'It becomes critical - there are now two critical paths',
+      'Removing non-essential scope with the client’s approval',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'In MEP coordination, why is early identification of the critical path essential?',
     options: [
-      'It becomes critical - there are now two critical paths',
-      'Critical path activities with lowest crash cost per day',
-      'Overlapping activities that would normally be sequential',
+      'It removes the need to update the programme during the works',
+      'It guarantees the project will finish ahead of the contract date',
+      'It allows all float to be allocated to non-critical trades',
       'To focus coordination efforts and resources on schedule-critical work',
     ],
     correctAnswer: 3,
@@ -232,9 +232,9 @@ const quizQuestions = [
       "Activity B follows Activity A (FS). A has EF=10, B has duration=5, LF=18. What is B's free float?",
     options: [
       'Cannot be determined without more information',
-      'Overlapping activities that would normally be sequential',
-      'Free float is always less than or equal to total float',
-      'The successor can start before the predecessor finishes',
+      '3 days, calculated from LF minus EF minus duration',
+      '8 days, calculated from LF minus the EF of activity A',
+      '0 days, because B follows directly on from A',
     ],
     correctAnswer: 0,
     explanation:

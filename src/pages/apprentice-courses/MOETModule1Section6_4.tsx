@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'riddor-reporting',
     question: 'Under RIDDOR 2013, which of the following must be reported to the HSE?',
     options: [
-      'Gather information and narrow down the possible causes before testing',
-      'Explaining repair made, any limitations, and operating instructions',
       'A worker receiving an electric shock that results in them being taken to hospital for treatment',
-      'A basement room where solvent-based coatings are being applied, causing a build-up of vapours',
+      'A minor cut to a finger that is treated on site with a plaster',
+      'A worker feeling unwell after a long shift and going home early',
+      'A small spillage of cleaning fluid that is wiped up immediately',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Under RIDDOR 2013, injuries that result in a worker being taken to hospital for treatment (not just examination) are reportable as 'over-7-day incapacitation' or 'specified injuries' depending on the nature. Electric shock causing hospital attendance is a reportable injury. Minor first-aid-only injuries do not need to be reported to the HSE but must be recorded in the accident book.",
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'near-miss-importance',
     question: 'Why is it important to report near misses, even though no injury occurred?',
     options: [
-      'Uniform illumination with 40:1 maximum ratio prevents dark areas appearing as barriers',
-      'Every employer and any person who controls the work of others must plan, organise, and supervise work at height',
-      'The delay between a change in controller output and the first measurable effect on the process variable',
       'Because near misses indicate hazards that could cause serious injury next time — they are warnings',
+      'Because the law requires every near miss to be reported to the HSE within 10 days',
+      'Because reporting near misses entitles the worker to a safety bonus payment',
+      'Because near misses must be logged before the worker can claim overtime',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Near misses are valuable warning signs — they identify hazards and unsafe conditions before anyone is hurt. For every serious accident, there are typically many near misses. Reporting and investigating near misses allows organisations to identify root causes and implement corrective actions before a serious incident occurs. This is the foundation of proactive safety management.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'accident-investigation',
     question: 'The primary purpose of an accident investigation is to:',
     options: [
-      'Prepare a legal defence in case of prosecution',
+      'Identify the root causes and implement corrective actions to prevent recurrence',
       'Complete the paperwork required by the insurance company',
       'Identify which individual was to blame and take disciplinary action',
-      'Identify the root causes and implement corrective actions to prevent recurrence',
+      'Prepare a legal defence in case of prosecution',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'The primary purpose of accident investigation is to identify root causes (the underlying failures in systems, procedures or management that allowed the accident to happen) and implement corrective actions to prevent recurrence. It is NOT about blame — a blame culture discourages reporting and prevents organisations from learning. The focus must be on why, not who.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'reporting-timeframe',
     question: 'Under RIDDOR 2013, a death or specified injury must be reported to the HSE:',
     options: [
-      'A short, informal safety or awareness talk delivered on site, often at the start of a shift',
-      'Made by the competent person and contain specified information including any defects found and the next examination date',
+      'Within 15 days of the accident using the online form only',
+      'Within 7 days of the accident, in writing by post',
       'Without delay, by the quickest practicable means (telephone for fatal/specified, followed by online form within 10 days)',
-      'Electric shock, arc flash burns, potential fatality — and personal liability under EAWR 1989 Reg 14',
+      'At the next routine HSE inspection of the premises',
     ],
     correctIndex: 2,
     explanation:
@@ -120,12 +120,12 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'The accident book (BI 510) must include which of the following?',
+    question: 'The accident book (BI 510) must record which of the following?',
     options: [
-      'Be individually removable so other employees cannot access personal data',
+      'Only accidents that result in more than 7 days off work',
       'All work-related accidents, injuries, diseases and dangerous occurrences, however minor',
-      'Carpal tunnel syndrome caused by repetitive use of vibrating tools',
-      'Reported through the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s near-miss reporting system and investigated to identify the failure',
+      'Only accidents that are reportable to the HSE under RIDDOR',
+      'Only accidents involving members of the public, not employees',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under GDPR and the Data Protection Act 2018, accident book entries must:',
     options: [
-      'Carpal tunnel syndrome caused by repetitive use of vibrating tools',
-      'The employer (or self-employed person, or person in control of the premises)',
+      'Be displayed on the staff noticeboard so everyone is aware of recent incidents',
+      'Be kept indefinitely as a permanent record of the workplace',
       'Be individually removable so other employees cannot access personal data',
-      'Make the area safe and preserve the scene as evidence',
+      'Be shared with all colleagues to encourage a culture of openness',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Root cause analysis in accident investigation aims to identify:',
     options: [
-      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
+      'The single immediate action that directly triggered the accident',
       'The underlying systemic failures (management, procedures, training, design) that allowed the accident chain to develop',
-      'Noise nuisance and dust — both can lead to abatement notices from the local authority under the Environmental Protection Act 1990',
-      'Trip between 15 mA (½IΔn) within 1 s and trip below 30 mA (1×IΔn) within 300 ms; full performance is 5×IΔn within 40 ms (Type AC)',
+      'The individual whose mistake led to the accident so they can be retrained',
+      'The total financial cost of the accident for the insurance claim',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     question:
       'A near miss during electrical maintenance work (e.g., touching a conductor that turned out to be dead, but could have been live) should be:',
     options: [
-      "The employer (or self-employed person, or person in control of the premises)",
-      "Be individually removable so other employees cannot access personal data",
+      "Ignored, because no injury occurred and there is nothing to report",
+      "Recorded only in your own notebook in case it is needed later",
       "Reported through the company's near-miss reporting system and investigated to identify the failure",
-      "The underlying systemic failures (management, procedures, training, design) that allowed the accident chain to develop",
+      "Reported directly to the HSE by telephone as a dangerous occurrence",
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'Which of the following is an occupational disease reportable under RIDDOR?',
     options: [
-      'Be individually removable so other employees cannot access personal data',
-      'A fracture other than to fingers, thumbs and toes',
-      'The employer (or self-employed person, or person in control of the premises)',
+      'Seasonal influenza caught from a colleague at work',
+      'A back strain from a single incident of lifting a heavy load',
+      'Mild eye fatigue from a day of detailed terminating work',
       'Carpal tunnel syndrome caused by repetitive use of vibrating tools',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'Who is responsible for reporting a RIDDOR-reportable incident to the HSE?',
     options: [
       'The employer (or self-employed person, or person in control of the premises)',
-      'Reported through the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s near-miss reporting system and investigated to identify the failure',
-      'Be individually removable so other employees cannot access personal data',
-      'All work-related accidents, injuries, diseases and dangerous occurrences, however minor',
+      'The injured worker themselves, once they have recovered',
+      'The first aider who treated the injured person at the scene',
+      'The trade union safety representative for the workplace',
     ],
     correctAnswer: 0,
     explanation:

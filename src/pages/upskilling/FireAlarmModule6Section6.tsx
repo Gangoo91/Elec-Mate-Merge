@@ -23,54 +23,54 @@ const inlineChecks = [
     question:
       'Who is the "responsible person" under the Regulatory Reform (Fire Safety) Order 2005, and what is their relationship to the BS 5839-1:2025 weekly user test duty?',
     options: [
-      'The fire and rescue service.',
-      'In most non-domestic premises the responsible person is (in workplace areas) the employer, (otherwise) the person with control of the premises in connection with carrying on a trade / business / undertaking, or the owner. RRO 2005 Article 17 places on this person the duty to maintain fire safety provisions in efficient working order. BS 5839-1:2025 implements this through the weekly user test, monthly auxiliary supply test, and contracted six-monthly servicing. The responsible person owns the duty even where they delegate execution to a designated person on site.',
-      'Anyone in the building.',
-      'The servicing organisation only.',
+      'The fire and rescue service, who assume the maintenance duty once the system is commissioned.',
+      'The employer (or person in control of the premises, or owner) — and the duty stays with them even when execution is delegated.',
+      'Any occupant present in the building at the time a fault or alarm condition arises.',
+      'The contracted servicing organisation alone, since they carry out the technical work.',
     ],
     correctIndex: 1,
     explanation:
-      'RRO 2005 Article 3 defines the responsible person; Article 17 imposes the maintenance duty. BS 5839-1:2025 implementation hangs on this duty. Delegation of execution does not transfer the duty.',
+      'RRO 2005 Article 3 defines the responsible person — in workplace areas the employer, otherwise the person with control of the premises in connection with a trade / business / undertaking, or the owner. Article 17 imposes the maintenance duty. BS 5839-1:2025 implements it through the weekly user test, monthly auxiliary supply test and contracted six-monthly servicing. Delegation of execution to a designated person on site does not transfer the duty.',
   },
   {
     id: 'fam6-s6-content',
     question:
       'At handover, what training does BS 5839-1:2025 expect the commissioning / handover organisation to provide to the user / responsible person?',
     options: [
-      'Just a phone number for the engineer.',
-      'A structured training session covering: how to perform the weekly user test (operate one MCP rotated through the building, observe alarm, confirm sounders / VADs, reset, log); what to do on a real alarm activation (occupant evacuation, FRS interaction, system reset by competent person only); how to respond to a fault indication (do not silence, log, contact servicing organisation, institute interim measure if applicable); the false-alarm categories and how to assign them; the location of all documentation; basic cyber-security expectations (do not connect untrusted devices, change default passwords, restrict physical access). The training is recorded in the logbook with date and signed acknowledgement.',
-      'No training is required.',
-      'Just a leaflet.',
+      'A contact phone number for the engineer plus the manufacturer manuals for self-study.',
+      'A structured session covering weekly test, alarm and fault response, false-alarm categories, documentation and cyber-security basics, recorded and signed.',
+      'A demonstration of the weekly test only, on the basis that the rest can be learned on the job.',
+      'A printed leaflet summarising the system and the servicing organisation\'s contact details.',
     ],
     correctIndex: 1,
     explanation:
-      'Structured handover training covering test, alarm response, fault response, false-alarm categorisation, documentation, cyber security. Recorded with date and signed acknowledgement. The 2025 standard makes the false-alarm-category training explicit (was implicit pre-2025).',
+      'Handover training is a structured session covering how to perform the weekly user test, what to do on a real alarm (evacuation, FRS interaction, reset by a competent person only), how to respond to a fault (do not silence, log, contact the servicer, interim measure if applicable), the false-alarm categories and how to assign them, where the documentation lives, and basic cyber-security expectations. It is recorded in the logbook with date and signed acknowledgement. The 2025 standard makes the false-alarm-category training explicit.',
   },
   {
     id: 'fam6-s6-doc',
     question: 'What documentation pack should be left with the responsible person at handover?',
     options: [
-      'Just a wiring diagram.',
-      'A complete pack including: acceptance certificate (Annex G), as-installed drawings, zone plan (per clause 22.2.5 — note multi-zone sleeping premises now require a zone plan unconditionally per clause 6), cause-and-effect matrix or text description (NEW 2025 — clause 47 explicitly requires this), O&M manuals for the CIE and each device type, asset register with every device row populated, log book template (per Annex H), training records of designated weekly-test users, ARC connection details and credentials, manufacturer cyber-security guidance, and contact details for the servicing organisation.',
-      'No documentation.',
-      'Just an invoice.',
+      'The as-installed wiring diagram and the manufacturer O&M manual for the control panel.',
+      'A complete pack: acceptance certificate, drawings, zone plan, cause-and-effect, O&M manuals, asset register, logbook, training records, ARC details, cyber guidance, contacts.',
+      'The acceptance certificate and the commercial invoice for the installation work carried out.',
+      'The zone plan and the servicing contract, with other documents available from the installer on request.',
     ],
     correctIndex: 1,
     explanation:
-      'Comprehensive doc pack: certificate, drawings, zone plan, cause-and-effect (NEW 2025 explicit), O&M manuals, asset register, logbook, training records, ARC details, cyber-security guidance, contacts. The 2025 standard adds the cause-and-effect requirement explicitly.',
+      'The pack is comprehensive: acceptance certificate (Annex G), as-installed drawings, zone plan (per clause 22.2.5 — now unconditional in multi-zone sleeping premises per clause 6), cause-and-effect matrix or text (NEW 2025 explicit per clause 47), O&M manuals, a fully populated asset register, logbook template (Annex H), training records, ARC details, manufacturer cyber-security guidance, and servicing-organisation contacts.',
   },
   {
     id: 'fam6-s6-cyber',
     question: 'Cyber-security training for the user / responsible person should cover.',
     options: [
-      'Nothing — only engineers need cyber training.',
-      'Basic cyber-hygiene appropriate to a non-technical user: do not connect untrusted devices to the CIE / gateway (USB sticks, laptops); do not share authentication credentials; physical access control to the CIE / comms cabinet; recognising unusual remote-access requests (a contractor calling to "do an emergency firmware update" without a planned service visit is a red flag); reporting any suspected unauthorised access to the servicing organisation immediately. The 2025 standard supports this by adding the cyber-security clause 43.4 — the user is part of the defence, not just the engineer.',
-      'Only how to read manuals.',
-      'Just a password.',
+      'Nothing at this level, since cyber-security is solely the servicing engineer\'s responsibility.',
+      'Basic cyber-hygiene: no untrusted devices on the CIE, no shared credentials, physical access control, recognising and refusing suspicious remote-access requests, and reporting promptly.',
+      'How to read the manufacturer\'s cyber-security manual and configure the panel\'s own firewall.',
+      'How to set and periodically change the single administrator password used to access the panel.',
     ],
     correctIndex: 1,
     explanation:
-      'User-level cyber hygiene. Basic, non-technical, focused on what the user can do (or refuse to do) to support the wider cyber-security regime under clause 43.4. The user is part of the defence.',
+      'User-level cyber hygiene is basic and non-technical: do not connect untrusted devices (USB sticks, laptops) to the CIE / gateway; do not share authentication credentials; control physical access to the CIE / comms cabinet; recognise unusual remote-access requests (an unscheduled "emergency firmware update" call is a red flag); and report any suspected unauthorised access immediately. The 2025 clause 43.4 makes the user part of the defence, not just the engineer.',
   },
 ];
 
@@ -80,138 +80,138 @@ const quizQuestions = [
     question:
       'Who is the "responsible person" under RRO 2005 in a typical workplace, and what is their relationship to BS 5839-1:2025?',
     options: [
-      'The fire brigade.',
-      'In most workplaces, the employer is the responsible person for workplace areas; for non-workplace non-domestic premises, the person with control of the premises in connection with carrying on a trade / business / undertaking, or the owner. RRO 2005 Article 17 imposes the duty to maintain fire safety provisions in efficient working order. BS 5839-1:2025 is the practical implementation — weekly tests, monthly auxiliary tests, six-monthly servicing — that delivers that duty for the fire alarm system.',
-      'The local council.',
-      'Any visitor.',
+      'The employer for workplace areas (or the person in control of the premises, or the owner); BS 5839-1:2025 is how the duty is delivered.',
+      'The local fire and rescue service, who inspect the premises and own the maintenance duty once a system is installed and commissioned.',
+      'Whichever competent servicing organisation holds the current six-monthly maintenance contract, with the duty transferring on renewal.',
+      'The designated weekly-test user on site, since they operate the call points and keep the logbook records up to date.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'RRO 2005 Article 3 + Article 17 — responsible person + maintenance duty. BS 5839-1:2025 implements the duty practically. Delegation of execution does not transfer the duty.',
+      'RRO 2005 Article 3 defines the responsible person — the employer for workplace areas, otherwise the person with control of the premises in connection with a trade / business / undertaking, or the owner. Article 17 imposes the maintenance duty. BS 5839-1:2025 is the practical implementation (weekly tests, monthly auxiliary tests, six-monthly servicing). Delegation of execution does not transfer the duty.',
   },
   {
     id: 2,
     question:
       'Per BS 5839-1:2025 clause 47, what is now explicitly required to be included in the documentation pack at handover?',
     options: [
-      'No specific addition.',
-      'A cause-and-effect matrix or text description of how the cause and effect operates. The 2025 standard explicitly recommends this — could be as simple as "this system operates as simultaneous evacuation" for a basic system, or a comprehensive cause-and-effect matrix document for complex strategies. The standard does not dictate the format, but it does require the document to be produced and included.',
-      'A photograph of the building.',
-      'Bank details.',
+      'A signed copy of the responsible person\'s fire risk assessment, cross-referenced to each detection zone.',
+      'A photographic survey of every device location, time-stamped and indexed to the zone plan layout.',
+      'A cause-and-effect matrix or text description of how the cause and effect operates.',
+      'A manufacturer warranty certificate for the control and indicating equipment and its detectors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Cause-and-effect document = NEW 2025 explicit handover requirement (clause 47). Simple system = simple statement; complex strategy = matrix document. Format flexible; production mandatory.',
+      'Clause 47 makes the cause-and-effect document an explicit handover requirement (NEW 2025). It can be as simple as "this system operates as simultaneous evacuation" for a basic system, or a comprehensive matrix for complex strategies. The standard does not dictate the format, only that the document is produced and included.',
   },
   {
     id: 3,
     question: 'The handover training session should cover which of the following at minimum?',
     options: [
-      'Just the panel reset procedure.',
-      'Weekly user test procedure (operate one MCP rotated, observe alarm, sounders / VADs, ARC, reset, log); response to a real alarm (evacuation, FRS interaction, reset only by competent person); response to a fault indication (no silencing, log, notify servicer, interim measure if applicable); false-alarm categorisation (NEW 2025 explicit user training); documentation locations; cyber-security basics (no untrusted devices, physical access, credentials). The training is recorded in the logbook with date and signed acknowledgement.',
-      'Only the cleaning schedule.',
-      'A handout only.',
+      'The weekly test procedure and the panel reset sequence only, since these are the routine tasks the user performs.',
+      'Weekly test, real-alarm response, fault response, false-alarm categorisation, documentation locations and cyber-security basics — recorded and signed.',
+      'The full commissioning and verification procedure, so the user can repeat acceptance testing after any modification.',
+      'The detector head-cleaning and contamination-checking routine, so the user can defer the six-monthly servicing.',
     ],
     correctAnswer: 1,
     explanation:
-      'Structured training: test, alarm, fault, false-alarm categorisation, documentation, cyber security. Recorded and signed. The 2025 standard makes false-alarm-category training explicit.',
+      'Structured training covers the weekly user test (operate one MCP rotated, observe alarm, sounders / VADs, ARC, reset, log), real-alarm response (evacuation, FRS interaction, reset only by a competent person), fault response (no silencing, log, notify servicer, interim measure if applicable), false-alarm categorisation (NEW 2025 explicit), documentation locations, and cyber-security basics. It is recorded in the logbook with date and signed acknowledgement.',
   },
   {
     id: 4,
     question: 'Periodic re-training of the designated weekly-test user is recommended.',
     options: [
-      'Never.',
-      "When the designated user changes (new staff member taking on the duty), when the system is significantly modified (new zones, new CIE, new firmware behaviour), at the responsible person's discretion in response to changes in premises use or staff turnover, and as a matter of good practice on an annual or biennial cycle. The training records are updated and the new user signs the logbook to acknowledge their training.",
-      'Only after a real fire.',
-      'Only every ten years.',
+      'Only after a real fire or a confirmed false-alarm incident has actually occurred on the premises.',
+      'Only when the control and indicating equipment is replaced; staff turnover alone does not warrant fresh training.',
+      'When the designated user changes, when the system is significantly modified, and as a matter of good practice on a regular cycle.',
+      'Only at the ten-yearly point when the system reaches the end of its design life and is due for full replacement.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Re-training triggered by user change, system modification, or planned cycle. Records updated; logbook signed.',
+      'Re-training is triggered when the designated user changes (a new staff member taking on the duty), when the system is significantly modified (new zones, CIE, firmware behaviour), at the responsible person\'s discretion in response to changes in premises use or staff turnover, and as good practice on an annual or biennial cycle. The training records are updated and the new user signs the logbook to acknowledge their training.',
   },
   {
     id: 5,
     question:
       'A real fire alarm has activated. Per the handover training, the user / staff response should be.',
     options: [
-      'Reset the panel and continue.',
-      "Initiate evacuation per the building's fire plan; do NOT reset the panel until the source has been investigated and confirmed safe (the panel reset by a competent person only, after FRS clearance if FRS attended); cooperate with FRS arrival; record the event in detail in the logbook (date, time, originating device, evacuation outcome, FRS attendance, cause, damage, reset time and person); notify the servicing organisation if any damage to the system has occurred or any equipment requires post-event service.",
-      'Cover it up to avoid alarm.',
-      'Press silence and wait.',
+      'Silence the sounders first to investigate the cause calmly, then evacuate only if a genuine fire is confirmed at the device.',
+      'Initiate evacuation per the fire plan; do not reset until investigated by a competent person; record the event in the logbook.',
+      'Reset the panel immediately to clear the alarm, then walk the building to check each zone before deciding whether to evacuate.',
+      'Wait for the alarm-receiving centre to confirm a genuine activation before starting any evacuation of the occupants.',
     ],
     correctAnswer: 1,
     explanation:
-      'Evacuation first; reset after investigation by competent person; comprehensive logbook entry; servicing organisation notified for post-event service. The training must make this sequence routine for staff.',
+      'Initiate evacuation per the building\'s fire plan; do not reset the panel until the source has been investigated and confirmed safe (reset by a competent person only, after FRS clearance where FRS attended); cooperate with FRS arrival; record the event in detail in the logbook (time, originating device, evacuation outcome, FRS attendance, cause, damage, reset time and person); and notify the servicer if any equipment needs post-event service. The training must make this sequence routine for staff.',
   },
   {
     id: 6,
     question:
       'A user receives a phone call from someone claiming to be a "manufacturer field engineer" needing remote access to the CIE for an "emergency firmware update". The trained response should be.',
     options: [
-      'Grant access immediately.',
-      'Decline the request as it stands, and verify with the contracted servicing organisation. The cyber-security training should make this red flag obvious — unscheduled "emergency" remote access requests from unknown parties are a classic social-engineering attack vector. Per clause 43.4, remote access must be authenticated and risk-assessed; an unscheduled call from an unverified party does not meet that bar. Refer the caller to the servicing organisation; log the call.',
-      'Read out the password.',
-      'Connect a USB stick.',
+      'Grant temporary read-only access so the engineer can diagnose the issue, but withhold the password for write operations.',
+      'Ask the caller to email the request from the manufacturer\'s domain, then grant access once the email arrives as confirmation.',
+      'Decline the request as it stands, verify with the contracted servicing organisation, and log the call.',
+      'Connect the manufacturer\'s supplied USB diagnostic tool to the panel so the firmware update can run locally instead.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'User-level cyber hygiene. Decline + verify. Unscheduled "emergency" requests are red flags. The user is part of the defence under clause 43.4.',
+      'Unscheduled "emergency" remote-access requests from unknown parties are a classic social-engineering attack vector. Per clause 43.4, remote access must be authenticated and risk-assessed; an unverified call does not meet that bar. The user-level cyber-security training should make this red flag obvious: decline, refer the caller to the contracted servicing organisation, and log the call. The user is part of the defence.',
   },
   {
     id: 7,
     question:
       'A well-prepared documentation pack at handover supports the responsible person in which of the following ways?',
     options: [
-      'Only insurance audits.',
-      'Audit-readiness for AHJ and insurer inspections; engineer continuity if the servicing organisation changes (new servicer can read the as-installed drawings and cause-and-effect rather than starting from zero); fault investigation (the cause-and-effect document tells the responsible person and engineer what the system was designed to do, against which the actual behaviour can be compared); training of new designated users (the documentation pack is the training material); modification planning (any change must reference the existing pack to ensure consistency).',
-      'No practical use.',
-      'Only legal compliance.',
+      'Across the whole life of the system — audit-readiness, engineer continuity, fault investigation, user training and modification planning.',
+      'Primarily insurance and warranty claims, by evidencing that the installation met specification at the point of handover.',
+      'Mainly the next periodic inspection, giving the inspecting engineer a checklist of devices to test on the six-monthly visit.',
+      'Chiefly the legal compliance record, demonstrating to the fire and rescue service that the RRO duty has been discharged.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "The documentation pack is the responsible person's tool kit for the system's entire life — audit readiness, engineer continuity, fault investigation, user training, modification planning.",
+      'The documentation pack is the responsible person\'s tool kit for the whole life of the system: audit-readiness for AHJ and insurer inspections; engineer continuity if the servicer changes (the new engineer reads the drawings and cause-and-effect rather than starting from zero); fault investigation (the cause-and-effect shows what the system was designed to do); training of new designated users; and modification planning, where any change references the existing pack for consistency.',
   },
   {
     id: 8,
     question:
       'Per BS 5839-1:2025, the user investigation of false alarms is recommended. What is the user expected to do, and what should the commissioning / handover organisation provide?',
     options: [
-      'Nothing on either side.',
-      'The user / responsible person is recommended to arrange suitable investigation and, if appropriate, action on every occasion that a false alarm occurs (clause 29.6). The commissioning / handover organisation is recommended to advise the user on how this is to be carried out — in practice this is part of the handover training pack. The note to clause 29.6 gives examples: managerial changes within the building, modifications to the system, or further separate investigation by the maintenance organisation.',
-      'Just disable the system.',
-      'Wait for the next service.',
+      'The user records the false alarm in the logbook; investigation is solely the maintenance organisation\'s job at the next service.',
+      'The user reports each false alarm to the fire and rescue service, who then determine the cause and advise on remedial action.',
+      'The user investigates every false alarm (clause 29.6) and the commissioning organisation advises, at handover, on how.',
+      'No user action is needed unless the false-alarm rate exceeds the benchmark, at which point the system is re-categorised.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Clause 29.6 — user investigation of every false alarm; commissioning organisation advises user on how. The handover training pack is where the "how" is delivered. Examples include managerial changes, system modifications, or formal investigation.',
+      'Clause 29.6 recommends the user / responsible person arrange suitable investigation and, where appropriate, action on every occasion a false alarm occurs. The commissioning / handover organisation is recommended to advise the user on how — in practice through the handover training pack. The note to clause 29.6 gives examples: managerial changes within the building, modifications to the system, or further investigation by the maintenance organisation.',
   },
   {
     id: 9,
     question:
       'The acceptance certificate carries the agreement of multiple parties. Who typically signs?',
     options: [
-      'Just the installer.',
-      'The commissioning engineer (competent person under clause 3.13) signs as the originator of the certification statement. The responsible person (or their authorised representative) signs to acknowledge receipt and acceptance of the system. The signatures together establish the system as accepted and operational. Some scheme templates also require the designer to countersign where the designer and commissioner are different organisations.',
-      'Just the receptionist.',
-      'No signatures needed.',
+      'The commissioning engineer and the responsible person — and the designer too where they are a different organisation from the commissioner.',
+      'The installing electrician and the building\'s fire risk assessor, who jointly certify that detection coverage matches the assessment.',
+      'The manufacturer\'s technical representative and the alarm-receiving centre, confirming the panel and signalling path are interoperable.',
+      'The responsible person alone, since acceptance is fundamentally the client\'s decision to take ownership of the installed system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Acceptance signatures: commissioning engineer + responsible person (and designer if different from commissioner). The certificate is a binding agreement that the system has been delivered to specification.',
+      'The commissioning engineer (competent person under clause 3.13) signs as originator of the certification statement; the responsible person (or their authorised representative) signs to acknowledge receipt and acceptance. The signatures together establish the system as accepted and operational, and some scheme templates also require the designer to countersign where the designer and commissioner are different organisations.',
   },
   {
     id: 10,
     question:
       'A care home changes its designated weekly-test user (the original user has retired). What handover-training-related action should be taken?',
     options: [
-      'No action — anyone can do the test.',
-      'Provide structured training to the new user covering the same content as the original handover training (weekly test procedure, alarm response, fault response, false-alarm categorisation, documentation, cyber-security basics). Update the logbook with the training record (date, trainer, trainee). The new user signs to acknowledge training. The responsible person updates the asset / responsibility register to record the new designated user. This continuity ensures the test discipline is maintained across staff changes.',
-      'Just hand them a key.',
-      'Replace the panel.',
+      'Have the new user shadow a trained colleague for a few weekly tests; no formal record is needed once they are confident.',
+      'Provide structured training to the new user matching the original handover content, then record and sign it in the logbook.',
+      'Pause the weekly user test until the next six-monthly service visit, when the servicing engineer can train the replacement.',
+      'Hand the new user the test key and the logbook; the printed weekly-test instructions inside the logbook are sufficient briefing.',
     ],
     correctAnswer: 1,
     explanation:
-      'User changes trigger fresh training (same content as original handover training). Records updated; logbook signed. Continuity of test discipline across staff turnover is the responsibility of the responsible person.',
+      'A change of designated user triggers fresh training covering the same content as the original handover (weekly test, alarm response, fault response, false-alarm categorisation, documentation, cyber-security basics). The logbook is updated with the training record (date, trainer, trainee), the new user signs to acknowledge, and the responsible person updates the responsibility register. This continuity maintains test discipline across staff changes.',
   },
 ];
 

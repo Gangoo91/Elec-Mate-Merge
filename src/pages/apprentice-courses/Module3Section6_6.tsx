@@ -22,12 +22,12 @@ const DESCRIPTION =
 const quizQuestions = [
   {
     id: 1,
-    question: "What regulation requires following manufacturer's installation instructions?",
+    question: "Which standard requires following manufacturer's installation instructions?",
     options: [
-      'BS 5839',
-      'BS 7671',
-      'BS 5266',
-      'ISO 9001',
+      'BS 5839 (fire detection and alarm systems)',
+      'BS 7671 (IET Wiring Regulations)',
+      'BS 5266 (emergency lighting)',
+      'BS EN 60529 (IP ratings)',
     ],
     correctAnswer: 1,
     explanation:
@@ -35,8 +35,13 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: Site specifications can require higher standards than BS 7671.',
-    options: ['True', 'False'],
+    question: 'How do site specifications relate to BS 7671 minimum requirements?',
+    options: [
+      'They can require higher standards than BS 7671',
+      'They can relax BS 7671 to suit the budget',
+      'They always exactly match BS 7671 minimums',
+      'They replace BS 7671 entirely on that project',
+    ],
     correctAnswer: 0,
     explanation:
       'Site specifications can exceed BS 7671 minimum requirements but cannot permit anything that would be unsafe or non-compliant.',
@@ -45,9 +50,9 @@ const quizQuestions = [
     id: 3,
     question: 'Name one reason warranties may be voided.',
     options: [
-      "Improper sensor placement or sensitivity settings",
-      "Guaranteeing you will pass the actual EPA",
-      "The householder who commissioned the work",
+      'Using the manufacturer-specified torque setting',
+      'Following the installation manual exactly',
+      'Registering the product after installation',
       "Installing outside manufacturer's stated parameters",
     ],
     correctAnswer: 3,
@@ -71,10 +76,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should you record any deviation from installation instructions?',
     options: [
-      'Check for hidden services and structural elements',
+      'It removes the need for a final inspection',
       'For accountability, inspection approval, and warranty protection',
-      'Not all loads operate simultaneously at full load',
-      'It creates a brief high current and measures voltage drop',
+      'It increases the equipment current rating',
+      'It allows the warranty period to be extended',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +89,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the safest approach if site specs and manufacturer instructions differ?',
     options: [
-      'It provides feedback to improve future designs and identify performance issues',
-      'Prove dead with approved voltage indicator',
+      'Always follow the cheaper of the two options',
+      'Follow whichever was issued most recently',
       'Follow the most stringent requirement and seek clarification',
-      'To monitor system status and faults remotely',
+      'Ignore both and use your own judgement',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +102,9 @@ const quizQuestions = [
     id: 7,
     question: 'Give one example of a site-specific requirement.',
     options: [
-      'To set out how health and safety will be managed during pre-construction',
-      'Sensitivity to dielectric constant changes in the medium',
-      'To condition and circulate air through ducts',
+      'The maximum disconnection time for a final circuit',
+      'The minimum insulation resistance under BS 7671',
+      'The earth fault loop impedance limit for the circuit',
       'Specified cable brand, containment type, or colour coding',
     ],
     correctAnswer: 3,
@@ -111,9 +116,9 @@ const quizQuestions = [
     question: 'What is one consequence of failing to follow site specs on a commercial job?',
     options: [
       'Project delay, failed inspection, or contract breach',
-      'The waveform has significant harmonic distortion',
-      'To provide an energy rating and recommendations for the building',
-      'Equipment cannot operate without adequate ventilation',
+      'A permanent increase in the cable current rating',
+      'A reduction in the required insulation resistance',
+      'A shorter disconnection time on every circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,10 +132,10 @@ const quickCheckQuestions = [
     id: 'torque-settings',
     question: 'Why do manufacturers provide specific torque settings for terminations?',
     options: [
-      'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
-      'A load with unequal current draw on each phase',
-      'Refuse to commence work until safe isolation has been completed and verified',
-      'To ensure optimal connection integrity and prevent overheating',
+      'To increase the current rating of the terminal',
+      'To allow thinner conductors to be used',
+      'To remove the need for cable identification',
+      'To ensure connection integrity and prevent overheating',
     ],
     correctIndex: 3,
     explanation:
@@ -140,10 +145,10 @@ const quickCheckQuestions = [
     id: 'site-specs-vs-bs7671',
     question: 'What is the main difference between site specifications and BS 7671?',
     options: [
-      'Word of mouth, online presence, and professional reputation',
-      'Rods, tapes, plates, foundation electrodes, and structural steel',
+      'Site specs apply only to domestic installations',
+      'BS 7671 is advisory while site specs are mandatory',
       'Site specs are project-specific requirements that may exceed BS 7671 minimums',
-      'A ruggedised industrial computer designed to control machines and processes using a stored program',
+      'Site specs replace the need for BS 7671 compliance',
     ],
     correctIndex: 2,
     explanation:
@@ -153,10 +158,10 @@ const quickCheckQuestions = [
     id: 'ignoring-instructions',
     question: 'Give one potential consequence of ignoring manufacturer instructions.',
     options: [
-      'The certificate is invalid and fraud may have occurred',
-      'Being regularly reviewed, communicated, and implemented',
+      'A longer warranty period on the equipment',
+      'A higher current rating for the circuit',
       'Voided warranty, unsafe operation, or compliance failure',
-      'To record what was visually inspected and the outcome',
+      'A reduced disconnection time for the circuit',
     ],
     correctIndex: 2,
     explanation:

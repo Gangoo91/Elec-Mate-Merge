@@ -38,12 +38,12 @@ const checks = [
     id: 'mod7-s5-sub1-cv-focus',
     question: "What should be the primary focus of an electrician's CV?",
     options: [
-      "Add specific details about what was learned, how it felt to overcome challenging concepts, analyse why RCD selection was previously a weakness, and create a concrete action plan with measurable steps",
-      "The Institution of Engineering and Technology (IET) — Rules of Conduct setting standards for integrity, competence, public safety, professional judgement and supporting others. Members are expected to behave in line with the Rules and can be subject to disciplinary action for breach.",
       "Relevant qualifications, ECS card grade, types of work done, equipment competencies and specific projects — the evidence employers need to decide whether you can do the role. Trade hiring is qualifications-first; the rest is context.",
-      "Perform a jaw thrust without head tilt to open the airway; if the airway cannot be cleared, log roll the casualty into the recovery position with manual inline stabilisation, protecting the cervical spine",
+      "A detailed personal statement at the top describing your character, values and life story, so the employer gets to know you as a person before they look at the technical detail.",
+      "A polished visual design — colour, graphics, an unusual layout and a photograph — that makes the CV stand out visually from the pile, since first impressions are mostly about presentation.",
+      "A comprehensive list of every job you have ever held since school, in full detail and equal weight, so the employer can see the complete picture of your working life.",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Electrical CVs are read in 30-60 seconds by busy QSs. Lead with qualifications (Level 3, AM2 / AM2S, ECS card grade, 2382 edition, any specialist tickets like 2391 or 2919). Follow with employment history showing types of work. Skills section comes next. Hobbies, personal statements and design flourishes get in the way of the qualifications scan.",
   },
@@ -51,10 +51,10 @@ const checks = [
     id: 'mod7-s5-sub1-describe-experience',
     question: 'When describing a previous role on your CV, you should:',
     options: [
-      "Bond gas (950 ohm is below 1667 ohm — it is extraneous). Do NOT bond the internal copper water stub if the incomer is plastic and the stub is not connected to anything that could introduce a potential — it is unlikely to be extraneous (NOTE to Reg 411.3.1.2)",
-      "The EPAO receives and verifies the gateway submission, confirms all mandatory pre-requisites have been met, and then assigns an assessor and schedules the EPA components within the specified timeframe",
+      "Keep it short and general — 'general electrical work' covers everything and avoids tying yourself to one type of job, leaving the employer free to imagine you in any role.",
+      "Focus on soft skills and personality — describe yourself as hard-working, reliable and a good team player, since these matter more to employers than the technical detail of past jobs.",
       "Include specific types of work, project examples, scale (sites, team size, project values where appropriate), equipment used, certifications issued and any supervisory responsibility. Generic phrasing like 'general electrical work' doesn't help the reader.",
-      "Pass — the reading is above the meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as \\\\\\\\\\\\\\\">999 MΩ\\\\\\\\\\\\\\\" or the equivalent symbol the form specifies.",
+      "List your duties as a long bullet list of day-to-day tasks (turned up on time, tidied the van, made tea) so the employer sees you are diligent about the basics.",
     ],
     correctIndex: 2,
     explanation:
@@ -64,12 +64,12 @@ const checks = [
     id: 'mod7-s5-sub1-star',
     question: "When answering a competency question in an interview, the STAR technique stands for:",
     options: [
-      "Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives",
-      "An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field",
+      "Stop, Think, Answer, Recap. Structure: pause before answering, think through the question, give your answer, then recap the key point. A four-step memory aid for staying calm under interview pressure.",
       "Situation, Task, Action, Result. Structure: describe the Situation (context, where, when); the Task (what needed doing); the Action you specifically took; the Result. Keeps answers focused and complete without rambling.",
-      "MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate",
+      "Skills, Training, Achievements, References. The four headings a competency answer should cover — list your relevant skills, your training, what you have achieved and who can vouch for you.",
+      "Specific, Timed, Accurate, Relevant. The four qualities a good interview answer should have — be specific, keep to time, be accurate and stay relevant to the question.",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "STAR is the standard framework for competency-based questions ('tell me about a time when...'). Without structure, candidates either say too little (one-sentence answers) or ramble for 5 minutes. STAR keeps the answer to 60-90 seconds with all the relevant detail. Rehearse 5-6 STAR stories from your experience — they cover most competency questions an interviewer will ask.",
   },
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: "The ideal length for an electrician's CV is typically:",
     options: [
-      'Make a clear, dated correction preserving the original entry and audit trail',
+      'One side of A4 only, no matter how much experience you have, so the reader never has to turn the page.',
       'Two pages maximum, with the qualifications and key experience on page one.',
-      'It is a criminal offence that can result in prosecution, an unlimited fine, and/or imprisonment',
-      'Lower them to the ground, call 999, and begin CPR starting with compressions',
+      'As many pages as it takes to list every job, course and project in full — a longer CV shows a fuller career.',
+      'Exactly five pages, the standard length expected for a skilled-trade application.',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 2,
     question: "Your ECS card grade should appear on your CV because:",
     options: [
-      'It prevents the inadvertent re-energisation of isolated systems, which could introduce hazardous substances, energy, or mechanical movement into the space',
-      'A serious risk of injury arising from conditions in or associated with a confined space, such as flammable atmospheres, toxic gases, or engulfment',
+      'It is a legal requirement to print your ECS card number on every CV; an application without it is automatically rejected by the JIB.',
+      'It guarantees you the job — holding a Gold card means an employer must hire you ahead of any candidate without one.',
       'It is industry-standard independent verification of your qualifications and competence level — a recruiter or QS recognises Gold / Blue / White / Green at a glance and immediately knows what you can do.',
-      'Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.',
+      'It replaces the need to list any qualifications — the card grade alone tells the employer everything, so the rest of the qualifications section can be left off.',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     id: 3,
     question: "A 'skills-based' or functional CV format is useful when:",
     options: [
-      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
-      'Being able to identify the component\\\\\\\\\\\\\\\'s manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation',
-      'Because they generate extreme heat, sparks, and molten metal that can travel significant distances and ignite combustible materials',
-      'You want to highlight transferable skills, have gaps in employment, are changing speciality, or have varied experience that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fit a straightforward chronology.',
+      'Always — a functional CV is the correct format for every electrician because grouping by skill is clearer than listing jobs in date order.',
+      'When you have a long, unbroken record at a single employer and want to show loyalty by listing the years in strict order.',
+      'When applying for your first apprenticeship, because you have no work history and a skills layout hides that fact from the employer.',
+      'You want to highlight transferable skills, have gaps in employment, are changing speciality, or have varied experience that doesn\'t fit a straightforward chronology.',
     ],
     correctAnswer: 3,
     explanation:
@@ -119,10 +119,10 @@ const quizQuestions = [
     id: 4,
     question: "When asked 'tell me about yourself' in an interview, you should:",
     options: [
-      'Give a 1-2 minute summary covering relevant experience, key skills, and what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re looking for next. Cover the parts of your CV most relevant to this role and stop.',
-      'A non-statutory British Standard that is widely cited and referenced by Approved Document P of the Building Regulations',
-      'Document all previous conversations, escalate to management as a formal safety concern, and make clear that continued refusal could have disciplinary and legal consequences under HSWA 1974',
-      'On the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s side of any insulating section, and within 600 mm of the meter outlet union or, where this is impracticable, as near as practicable to the point of entry of the pipe into the building',
+      'Give a 1-2 minute summary covering relevant experience, key skills, and what you\'re looking for next. Cover the parts of your CV most relevant to this role and stop.',
+      'Start from your childhood and walk through your whole life story in order, so the interviewer understands how you got to where you are.',
+      'Read your CV out loud word for word from top to bottom, to make sure the interviewer has not missed anything on the page.',
+      'Keep it to a single sentence — say your name and that you are a qualified electrician, then wait for the next question.',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: "Questions to ask at the end of an interview should:",
     options: [
-      "Decline — provide a proper VAT invoice (or zero-VAT invoice if not registered) for tax compliance and to protect the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s warranty rights",
+      "Lead with pay and holiday — ask about salary, overtime rates, holiday entitlement and pension before anything else, since these are what really matter.",
       "Show genuine interest in the role, the work, the team, the firm's direction and development opportunities. Prepare 4-5 questions; ask 2-3 in the interview based on what's already been covered.",
-      "Maximum demand, supply characteristics (Ze, Ipf, U0), earthing arrangement, type and composition of circuits, designer details, and Schedule of design data",
-      "Being able to identify the component's manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation",
+      "Say you have no questions — it shows the interviewer covered everything clearly and that you are easy-going and ready to start.",
+      "Ask challenging questions that test the interviewer, such as quizzing them on a tricky regs point, to demonstrate that you know your stuff.",
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: "Gaps in employment history on a CV should be:",
     options: [
-      'Because the refrigeration system may leak gases that displace oxygen, the insulated room is substantially enclosed, and there may be risk of entrapment if the door locks',
-      'Part 4 duties (general requirements for all construction sites) apply to the contractor, plus the contractor assumes the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties under Regulation 7, but the domestic client is not themselves a duty holder',
+      'Hidden by adjusting the dates of your jobs so the years run on continuously with no visible gap — a small white lie that nobody checks.',
+      'Filled with an invented job at a firm that has since closed down, so there is nothing for the employer to verify and the gap disappears.',
       'Acknowledged briefly and explained positively where relevant — illness, family responsibilities, retraining, travel, redundancy. Dishonesty about dates is discovered easily and ends the application.',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
+      'Left completely unexplained and never mentioned — if the interviewer does not ask about a gap, you should not draw attention to it.',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 7,
     question: "What should you NOT do in an interview?",
     options: [
-      'Harmonic distortion limits at the point of common coupling — limits on individual harmonic orders and total harmonic distortion (THD) for connections to the public network.',
-      'It is industry-standard independent verification of your qualifications and competence level — a recruiter or QS recognises Gold / Blue / White / Green at a glance and immediately knows what you can do.',
-      'Identify circuit, switch off, secure isolation (lock and tag), prove voltage indicator on known live source, test for absence of voltage, re-prove on known live source',
-      'Criticise previous employers, colleagues or competitors — even when the criticism is fair. It raises concerns about your discretion and attitude. Stick to neutral, positive framings of why you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re moving on.',
+      'Ask questions about the role, the team and development opportunities when invited to at the end.',
+      'Give specific, structured examples from your own experience when answering competency questions.',
+      'Arrive ten to fifteen minutes early, bring your certificates and ECS card, and dress smart-casual.',
+      'Criticise previous employers, colleagues or competitors — even when the criticism is fair. It raises concerns about your discretion and attitude. Stick to neutral, positive framings of why you\'re moving on.',
     ],
     correctAnswer: 3,
     explanation:
@@ -172,9 +172,9 @@ const quizQuestions = [
     question: "Practical or trade tests as part of the interview process are:",
     options: [
       "Common for electrical positions — verifying competence through wiring exercises, fault-finding scenarios, regs questions, or supervised on-site work for a half-day. Treat them seriously; they're often the decisive part of the hiring decision.",
-      "Electrical-specific design suites that combine BS 7671 calculation engines with schedule generation and CAD drafting in one environment. They produce SLDs, schedules, calc sheets and Revit-exportable models from one shared dataset, removing the duplication between calc tool and CAD tool.",
-      "Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection",
-      "Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work",
+      "Banned in the UK — employers are not allowed to set a practical test as part of recruitment because it counts as unpaid work, so any firm doing so is breaking the law.",
+      "Only ever used for apprenticeships — once you are qualified, employers rely purely on your certificates and never ask you to demonstrate practical skill again.",
+      "A formality that carries no weight — the conversation decides the hire, and the practical test is just a tradition that has no real bearing on the outcome.",
     ],
     correctAnswer: 0,
     explanation:

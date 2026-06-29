@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'digital-output',
     question: 'What type of BMS output would switch a fan on or off?',
     options: [
-      'Analog output providing variable speed',
       'Digital output providing on/off control',
-      'Pulse width modulated signal',
+      'Analog output providing variable speed',
+      'Pulse-width modulated dimming signal',
       'Variable frequency drive output',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A digital output provides on/off control for switching a fan. For variable speed control, you would need an analog output to a variable frequency drive.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'What signal range might a temperature sensor send to a BMS?',
     options: [
       '230V AC mains voltage',
-      '0-10V DC or 4-20mA signal',
-      'High frequency digital pulses',
+      'High-frequency digital pulses',
       '24V AC on/off switching',
+      '0-10V DC or 4-20mA signal',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Temperature sensors typically send analog signals in the range of 0-10V DC or 4-20mA to represent variable temperature readings. These are standard analog signal ranges for BMS applications.',
   },
@@ -51,10 +51,10 @@ const quickCheckQuestions = [
     question:
       'What kind of device would an analog output control that requires variable positioning?',
     options: [
-      'A simple on/off relay for lighting',
+      'A simple on/off relay for switching lighting',
       'A motorised valve actuator that can be positioned anywhere from 0-100% open',
       'An alarm beacon with fixed brightness',
-      'A door contact sensor for monitoring',
+      'A door contact sensor for status monitoring',
     ],
     correctIndex: 1,
     explanation:

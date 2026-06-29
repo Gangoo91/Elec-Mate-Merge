@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'Why is a work RESTRAINT system preferred over a fall ARREST system when working from a boom-type MEWP?',
     options: [
-      'Restraint harnesses are cheaper to purchase',
       'Restraint prevents the operator reaching a fall position, avoiding arrest forces on the MEWP structure and stability issues',
+      'Restraint harnesses are cheaper to purchase',
       'Fall arrest systems are illegal in the UK',
       'Restraint lanyards are longer and give more freedom of movement',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Work restraint keeps the operator inside the platform by preventing them from reaching a position where they could fall. Fall arrest catches the fall after it starts, generating significant forces that MEWP anchor points may not be rated for, and potentially affecting machine stability. The pendulum effect is also a serious risk with fall arrest on MEWPs.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
       'When working at height from a MEWP, why must a hard hat be fitted with a chin strap?',
     options: [
       "To comply with the manufacturer's warranty requirements",
-      'To prevent the hard hat falling from height and injuring persons below, and to keep it in place if the operator is jolted',
       'Chin straps are only required above 10 metres',
       'To match the colour coding system used on site',
+      'To prevent the hard hat falling from height and injuring persons below, and to keep it in place if the operator is jolted',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "A chin strap prevents the hard hat from falling off the operator's head when working at height. A hard hat falling from a MEWP platform could seriously injure anyone below. The strap also keeps the hat in place if the operator is jolted by sudden platform movement, wind gusts, or contact with objects.",
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'For which MEWP types is wearing a work restraint harness STRONGLY RECOMMENDED at all times?',
     options: [
-      'All scissor lifts (Group A)',
       'Boom-type MEWPs only (Groups 3B and 1B)',
+      'All scissor lifts (Group A)',
       'Only truck-mounted platforms',
       'Harnesses are never recommended for MEWPs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Boom-type MEWPs (IPAF categories 3B and 1B) present a significant risk of operator ejection due to the catapult effect caused by boom movement. A work restraint harness and short lanyard are strongly recommended at all times when operating boom-type machines.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     options: [
       'To the guardrail of the basket',
       'To a nearby structural steel beam or scaffold',
-      'To the manufacturer-provided anchor point within the basket only',
       'To any strong point that looks secure',
+      'To the manufacturer-provided anchor point within the basket only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "You must ONLY attach to the manufacturer-provided anchor point within the MEWP basket. Guardrails are not rated as anchor points. Structures outside the platform create a risk of being pulled from the basket or the pendulum effect. The manufacturer's anchor point is specifically designed and tested for the intended loading.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is fall arrest generally NOT recommended for use on MEWPs?',
     options: [
-      'Fall arrest harnesses are too heavy for MEWP use',
       'Lack of suitable anchor points rated for arrest forces, effects on MEWP stability, and risk of pendulum effect',
+      'Fall arrest harnesses are too heavy for MEWP use',
       'Fall arrest is only for use on scaffolding',
       'The HSE has banned all fall arrest equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fall arrest is not generally recommended on MEWPs for three key reasons: (1) MEWP anchor points may not be rated for the significant forces generated during a fall arrest, (2) the dynamic forces could affect MEWP stability and potentially cause overturning, and (3) the pendulum effect could swing the operator into the MEWP structure or other hazards.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'Frayed webbing found during pre-use inspection',
       'The harness was involved in a fall arrest event with no visible damage',
-      'The harness label shows the last formal inspection was 4 months ago',
       "The manufacturer's recommended maximum service life has been exceeded",
+      'The harness label shows the last formal inspection was 4 months ago',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "A harness with a formal inspection only 4 months ago is within the typical 6-12 month inspection interval and does not need to be withdrawn for that reason alone. All the other options — frayed webbing, involvement in a fall arrest event (even without visible damage), and exceeding the manufacturer's service life — all require immediate withdrawal from service.",
   },

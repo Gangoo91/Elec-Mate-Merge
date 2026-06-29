@@ -31,16 +31,17 @@ const quizQuestions = [
     id: 3,
     question:
       'A basic rate taxpayer contributes &pound;80 into their pension. How much ends up in their pension pot?',
-    options: ['&pound;80', '&pound;96', '&pound;100', '&pound;120'],
-    correctAnswer: 2,
+    options: ['&pound;100', '&pound;96', '&pound;88', '&pound;120'],
+    correctAnswer: 0,
     explanation:
       'When you contribute &pound;80, the pension provider claims 20% basic rate tax relief from HMRC, adding &pound;20 to your pot. So &pound;80 from you becomes &pound;100 in your pension. This is the key benefit of pension tax relief.',
   },
   {
     id: 4,
-    question: 'What is the maximum annual pension contribution that receives tax relief?',
-    options: ['&pound;20,000', '&pound;40,000', '&pound;60,000', 'There is no limit'],
-    correctAnswer: 2,
+    question:
+      'What is the standard annual allowance for tax-relieved pension contributions (2024/25)?',
+    options: ['&pound;20,000', '&pound;40,000', '&pound;50,000', '&pound;60,000'],
+    correctAnswer: 3,
     explanation:
       'The annual allowance for tax-relieved pension contributions is &pound;60,000 per year (from 2023/24). For most self-employed electricians this is more than enough headroom.',
   },
@@ -62,11 +63,11 @@ const quizQuestions = [
     question: 'What is the "halve your age" rule of thumb for pension saving?',
     options: [
       'Save half your salary into your pension',
-      'Take the age you start saving, halve it, and save that percentage of income',
       'Retire at half the State Pension age',
       'Invest half in equities and half in bonds',
+      'Take the age you start saving, halve it, and save that percentage of income',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "halve your age" rule says take the age you start saving, halve it, and save that percentage of your income. Start at 30? Save 15%. Start at 40? Save 20%. The later you start, the more you need to save.',
   },
@@ -88,12 +89,12 @@ const quizQuestions = [
     question:
       'Why is treating pension contributions as a "non-negotiable business cost" recommended for self-employed electricians?',
     options: [
-      'Because HMRC requires it',
-      'Because it ensures you pay yourself last',
       'Because it prevents the temptation to skip contributions when cash flow is tight',
+      'Because it ensures you pay yourself last',
+      'Because HMRC requires it',
       'Because it reduces your Corporation Tax',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Treating pension saving as a fixed business cost &mdash; like van insurance or tool purchases &mdash; ensures it happens consistently. Self-employed workers often skip pension contributions when things are tight, which leads to dangerously low retirement savings.',
   },
@@ -388,8 +389,8 @@ export default function PFModule4Section3() {
           <InlineCheck
             id="pf-4-3-check1"
             question="A basic rate taxpayer wants &pound;500 to go into their SIPP. How much do they need to pay out of pocket?"
-            options={['&pound;500', '&pound;450', '&pound;400', '&pound;375']}
-            correctIndex={2}
+            options={['&pound;400', '&pound;450', '&pound;500', '&pound;375']}
+            correctIndex={0}
             explanation="At basic rate (20%), you pay &pound;400 and HMRC adds &pound;100 in tax relief, giving &pound;500 in your pension pot. The 20% tax relief is claimed automatically by your SIPP provider."
           />
 
@@ -599,8 +600,8 @@ export default function PFModule4Section3() {
           <InlineCheck
             id="pf-4-3-check2"
             question="Using the &ldquo;halve your age&rdquo; rule, how much should a 36-year-old who is just starting to save put towards their pension?"
-            options={['10% of income', '15% of income', '18% of income', '25% of income']}
-            correctIndex={2}
+            options={['10% of income', '15% of income', '25% of income', '18% of income']}
+            correctIndex={3}
             explanation="Halve your age: 36 divided by 2 = 18%. A 36-year-old starting from scratch should aim to save 18% of their pre-tax income towards retirement. The later you start, the higher the percentage needs to be."
           />
 

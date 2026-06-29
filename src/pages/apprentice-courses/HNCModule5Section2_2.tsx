@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'jct-sbc-purpose',
     question: 'What is the primary purpose of the JCT Standard Building Contract (SBC)?',
     options: [
-      'Leakage currents from damp conditions or equipment filters',
-      'Resident on-site support and fine-tuning of building systems',
-      'For traditionally procured projects with full design by the employer',
-      'True — CDM 2015 applies to every construction project',
+      'For projects where the contractor carries out and is liable for the design',
+      'For small, low-value works where minimal contract administration is needed',
+      'For traditionally procured projects with full design provided by the employer',
+      'For management contracting where works packages are let by a construction manager',
     ],
     correctIndex: 2,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'eot-requirement',
     question: 'What must a contractor do to claim an extension of time under JCT contracts?',
     options: [
-      'Compliance with design, construction, inspection, and testing standards',
-      'Give written notice to the contract administrator as soon as delay becomes apparent',
-      'At least three: emergency fund, tax provision, and general savings',
-      'Yes — agonal gasps are not effective breathing and CPR must continue',
+      'Give written notice to the contract administrator as soon as the delay becomes apparent',
+      'Wait until practical completion and then submit a single retrospective claim',
+      'Obtain the employer\'s verbal agreement before the delay event occurs',
+      'Deduct the lost time from the liquidated damages account automatically',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under JCT contracts, the contractor must give written notice to the contract administrator as soon as delay becomes apparent, specifying the relevant event causing the delay.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'practical-completion',
     question: 'What does practical completion mean under JCT contracts?',
     options: [
-      'Investigate the connection and clean/retighten as necessary',
-      'Work substantially complete and fit for occupation',
-      'Because they happen far more frequently and complacency is common',
-      'Isolated system with no intentional connection to earth',
+      'Every single item, including all snagging, is fully finished and signed off',
+      'The contractor has been paid the full contract sum including all retention',
+      'The works are substantially complete and fit for the employer\'s intended occupation',
+      'The defects liability period has ended and the final certificate is issued',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Practical completion means the works are substantially complete and fit for the employer's intended use, even if minor defects remain. It triggers release of half the retention and starts the defects liability period.",
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under JCT contracts, who is responsible for issuing the extension of time decision?',
     options: [
-      'A relevant event entitling extension of time',
-      'Direct loss and expense caused by relevant matters',
-      'The contract administrator or architect',
-      'The contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own poor planning',
+      'The employer, acting in their own commercial interest',
+      'The quantity surveyor, as part of the valuation process',
+      'The contract administrator or architect, acting fairly between the parties',
+      'The contractor, who self-certifies their own entitlement',
     ],
     correctAnswer: 2,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Loss and expense claims under JCT contracts are intended to compensate for:',
     options: [
-      'The contract administrator or architect',
-      'Direct loss and expense caused by relevant matters',
-      'A relevant event entitling extension of time',
-      'Medium complexity projects with nominated subcontractors',
+      'Loss of anticipated profit on future projects affected by the delay',
+      'Direct loss and/or expense caused by specified relevant matters',
+      'Liquidated damages already deducted by the employer',
+      'Any cost overrun, whatever its cause, incurred by the contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     id: 7,
     question: 'Under JCT subcontracts, when must a domestic subcontractor be paid?',
     options: [
-      "To allow current flow in the rotor by relative motion between field and rotor",
-      "Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified",
-      "Use collective protection measures (e.g., guard rails) before personal protection (e.g., harnesses)",
-      "Within the period stated in the subcontract following the main contractor's receipt of payment",
+      "Only once the employer has issued the final certificate for the whole project",
+      "Strictly on a pay-when-paid basis, with no fixed final date for payment",
+      "Whenever the main contractor chooses, as subcontract payment dates are not regulated",
+      "Within the period stated in the subcontract, with a defined final date for payment under the Construction Act",
     ],
     correctAnswer: 3,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'The final certificate under JCT contracts is issued:',
     options: [
-      'Liquidated damages become payable by the contractor',
-      'The contract administrator or architect',
-      'When all defects are remedied and final account agreed',
-      'Direct loss and expense caused by relevant matters',
+      'At practical completion, when the works are handed over to the employer',
+      'As soon as the contract is signed, to confirm the agreed contract sum',
+      'When all defects are remedied and the final account is agreed',
+      'Halfway through the defects liability period, with the making good certificate',
     ],
     correctAnswer: 2,
     explanation:
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'What is the purpose of liquidated damages in JCT contracts?',
     options: [
       "To provide a pre-agreed genuine estimate of the employer's loss from late completion",
-      "Rate of heat transfer through a building element (thermal transmittance)",
-      "The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range",
-      "High currents require more effective heat dissipation and connections",
+      "To penalise the contractor at a punitive rate that exceeds any actual loss",
+      "To compensate the contractor for accelerating the works to finish early",
+      "To replace the need for the contractor to hold professional indemnity insurance",
     ],
     correctAnswer: 0,
     explanation:

@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'bonding-purpose',
     question: 'What is the primary purpose of equipotential bonding?',
     options: [
-      'The collective understanding created when all parties freely contribute their ideas, opinions, and feelings to the dialogue',
-      'The right for any party to a construction contract to refer a dispute to an independent adjudicator for a binding decision within 28 days',
-      'Delivering bad news about a significant project problem requiring immediate discussion',
+      'To provide the main path for fault current back to the supply transformer',
+      'To increase the earth fault loop impedance so protective devices trip faster',
+      'To replace the need for circuit protective conductors in an installation',
       'To ensure all simultaneously accessible metalwork is at the same potential, reducing touch voltage during a fault',
     ],
     correctIndex: 3,
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'supplementary-bonding',
     question: 'Supplementary bonding is required:',
     options: [
-      'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
-      'Because it is substantially enclosed with limited access, and could contain hazardous atmospheres, flooding, or cable faults',
+      'In every circuit of a domestic installation regardless of location',
+      'Only on the supply side of the electricity meter at the origin',
       'In locations where the conditions increase the risk of shock, such as bathrooms, or where the automatic disconnection time may not be met',
-      'When a colleague on site repeatedly borrows your tools without asking and you need to address it directly without damaging the working relationship',
+      'Only where the installation is supplied from a TT earthing system',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Main equipotential bonding connects the main earthing terminal to:',
     options: [
-      'EAP (Employee Assistance Programme), Lighthouse Construction Industry Charity helpline, Mind, Mates in Mind, and the GP route',
+      'The line and neutral conductors at the origin of the installation',
       'Extraneous-conductive-parts such as metallic gas, water and structural steel entering the building',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
-      'Point where service provider responsibility ends and customer\\\\\\\'s begins',
+      'The exposed-conductive-parts of every item of Class I equipment',
+      'The earth electrode only, with no other connections made',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'The main bonding connection to gas pipework must be made:',
     options: [
-      'The smaller of the two CPCs connected to those exposed-conductive-parts',
-      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'On the supply side of the gas meter, before it enters the building',
+      'At the furthest point of the gas pipework from the meter',
       'Within 600 mm of the meter outlet (consumer side), before any branch pipework',
-      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
+      'Anywhere convenient along the gas pipe within the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       'Supplementary bonding conductors between two exposed-conductive-parts must have a minimum cross-sectional area of:',
     options: [
-      'The smaller of the two CPCs connected to those exposed-conductive-parts',
-      'Adding resources to critical tasks to reduce duration at increased cost',
-      'K-rated transformer, oversized neutrals, and centralised active filtering',
-      'To adjust colour temperature and intensity to support natural body rhythms',
+      'Not less than the smaller of the two CPCs connected to those parts',
+      'Not less than the larger of the two CPCs connected to those parts',
+      'Always at least 10 mm² copper regardless of the CPC sizes',
+      'Equal to the incoming line conductor of the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'A bonding conductor must be identified by:',
     options: [
-      'It eliminates gainer effects and gives true splice loss',
+      'Blue insulation or sleeving along its full length',
       'Green-and-yellow striped insulation or sleeving',
-      'Maintain safe clearance distances and use goal post barriers',
-      'During trading hours consistently',
+      'Plain green insulation or sleeving along its full length',
+      'Black insulation with a brown identifying sleeve',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'In a bathroom (special location — Section 701), supplementary bonding is required when:',
     options: [
-      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'The smaller of the two CPCs connected to those exposed-conductive-parts',
+      'The bathroom contains any Class II (double-insulated) equipment',
+      'A shower is installed rather than a bath, in every case',
       'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
-      'Within 600 mm of the meter outlet (consumer side), before any branch pipework',
+      'The bathroom is on the first floor or above, in every case',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: 'The bonding clamp used on a gas or water pipe must be:',
     options: [
-      "Within 600 mm of the meter outlet (consumer side), before any branch pipework",
-      "The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment",
-      "The smaller of the two CPCs connected to those exposed-conductive-parts",
+      "Any general-purpose jubilee clip tightened firmly onto the pipe",
+      "A soldered joint made directly onto the surface of the pipe",
+      "A plastic compression fitting with the conductor pushed inside",
       "A purpose-made clamp to BS 951, permanently labelled 'Safety Electrical Connection — Do Not Remove'",
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
       'If a plastic section is inserted into an otherwise metallic water pipe system (e.g., during repairs), what is the bonding implication?',
     options: [
       'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
-      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
-      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
+      'The plastic section improves the bonding by insulating the pipe run',
+      'The whole pipe no longer requires any bonding at all',
+      'The plastic section has no effect on bonding and can be ignored',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Main bonding conductors must be connected to:',
     options: [
-      'Regularly and whenever there are significant changes',
+      'The neutral bar of the consumer unit',
       'The main earthing terminal of the installation',
-      'The maximum fault current the device can safely interrupt',
-      'A level horizontal or vertical reference line',
+      'The line terminal of the main switch',
+      'The protective conductor of the nearest final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'When inspecting main bonding during periodic inspection, you should verify:',
     options: [
-      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'A broken PEN conductor could cause dangerous voltages on earthed metalwork, so robust bonding is essential to maintain equipotentiality',
-      'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
+      'Only that a bonding conductor is present, with no further checks needed',
+      'That the bonding conductor is the same colour as the line conductor',
+      'That the bonding clamp is fitted on the supply side of the meter',
       'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'For PME (TN-C-S) supplies, main bonding requirements are more onerous because:',
     options: [
       'A broken PEN conductor could cause dangerous voltages on earthed metalwork, so robust bonding is essential to maintain equipotentiality',
-      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
-      'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
+      'PME supplies operate at a higher voltage than other earthing systems',
+      'PME supplies have no earth electrode and rely on bonding for all earthing',
+      'PME supplies are only ever used in industrial installations with high loads',
     ],
     correctAnswer: 0,
     explanation:

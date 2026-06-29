@@ -5,10 +5,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of alarm priorities in a BMS?',
     options: [
-      'Checking that escalation (SMS/email) occurs after the programmed delay',
+      'To reduce the total number of alarms the system can generate',
       'To help operators respond appropriately by categorising alarms by severity',
-      'Supervisor, maintenance team, or security via SMS/email',
-      'Faults like broken wires will generate an alarm, ensuring safety',
+      'To automatically silence every alarm after a fixed time',
+      'To assign each alarm to a specific maintenance contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -45,9 +45,9 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     question: 'Why is it dangerous to treat all alarms the same?',
     options: [
       'Operators become overwhelmed and may miss critical safety issues',
-      'To help operators respond appropriately by categorising alarms by severity',
-      'To avoid confusion between different alarm types (fire, fault, status)',
-      'Checking that escalation (SMS/email) occurs after the programmed delay',
+      'The system consumes too much memory storing alarm records',
+      'Low-priority alarms would always be actioned before urgent ones',
+      'Escalation notifications would be sent far too frequently',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What is escalation logic?',
     options: [
-      'To avoid confusion between different alarm types (fire, fault, status)',
+      'A process that raises an alarm to a higher priority over time',
       'A process that pushes unacknowledged alarms to higher responsibility levels until resolved',
-      'Faults like broken wires will generate an alarm, ensuring safety',
-      'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
+      'A process that automatically clears alarms once logged',
+      'A process that groups related alarms into a single notification',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Who might receive an alarm if the first operator does not respond?',
     options: [
-      'Operators become overwhelmed and may miss critical safety issues',
-      'Checking that escalation (SMS/email) occurs after the programmed delay',
+      'Only the original operator, repeatedly, until acknowledged',
+      'The equipment manufacturer for warranty logging',
       'Supervisor, maintenance team, or security via SMS/email',
-      'Faults like broken wires will generate an alarm, ensuring safety',
+      'No-one, the alarm is automatically cleared from the log',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is fail-safe wiring (NC contacts) used for critical alarms?',
     options: [
-      'Operators become overwhelmed and may miss critical safety issues',
-      'To help operators respond appropriately by categorising alarms by severity',
-      'Supervisor, maintenance team, or security via SMS/email',
+      'It reduces the wiring cost compared with normally-open contacts',
+      'It prevents nuisance alarms from minor wiring disturbances',
+      'It allows the alarm to be reset remotely without a site visit',
       'Faults like broken wires will generate an alarm, ensuring safety',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     question: 'Why must alarm circuits be labelled clearly?',
     options: [
       'To avoid confusion between different alarm types (fire, fault, status)',
-      'Operators become overwhelmed and may miss critical safety issues',
-      'Supervisor, maintenance team, or security via SMS/email',
-      'Checking that escalation (SMS/email) occurs after the programmed delay',
+      'To satisfy the manufacturer warranty conditions',
+      'To allow the circuits to carry a higher current safely',
+      'To reduce the number of alarms displayed to operators',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step confirms escalation works correctly?',
     options: [
-      'To avoid confusion between different alarm types (fire, fault, status)',
+      'Confirming the alarm appears on the local operator screen',
       'Checking that escalation (SMS/email) occurs after the programmed delay',
-      'Faults like broken wires will generate an alarm, ensuring safety',
-      'Supervisor, maintenance team, or security via SMS/email',
+      'Verifying the alarm priority label matches the design schedule',
+      'Testing that the alarm clears once the fault is rectified',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, what was the result of misclassifying a boiler fault alarm?',
     options: [
-      'Faults like broken wires will generate an alarm, ensuring safety',
-      'To avoid confusion between different alarm types (fire, fault, status)',
+      'The fault auto-escalated and was resolved before any impact',
+      'Operators raised it immediately, preventing any loss of service',
       'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
-      'A process that pushes unacknowledged alarms to higher responsibility levels until resolved',
+      'The fault was logged correctly but no action was needed',
     ],
     correctAnswer: 2,
     explanation:

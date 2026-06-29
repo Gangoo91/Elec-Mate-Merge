@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the minimum acceptable insulation resistance value for a low-voltage motor at operating temperature?',
     options: [
-      'Structured housing for fibre termination and patching',
+      'A fixed 10 megohm regardless of the motor voltage rating',
       '1 megohm per kV of rated voltage, with a minimum of 1 megohm',
-      'Start a new email with a new subject line reflecting the current topic',
-      'Determined by the manufacturer based on the tower configuration',
+      '0.5 megohm per kV of rated voltage, with no minimum value',
+      '1 megohm per amp of full-load current',
     ],
     correctIndex: 1,
     explanation:
@@ -30,9 +30,9 @@ const quickCheckQuestions = [
       'Which of the following is the most common cause of excessive vibration in an electric motor?',
     options: [
       'Misalignment between motor and driven equipment',
-      'L1, L2, L3 (with N for neutral and PE for protective earth)',
-      'Provides steady work and referrals',
-      'The building owner or responsible person',
+      'Slightly elevated supply voltage within the permitted tolerance',
+      'Use of a soft starter rather than direct-on-line starting',
+      'A correctly balanced and aligned coupling',
     ],
     correctIndex: 0,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 'bearing-grease',
     question: 'What is the consequence of over-greasing a motor bearing?',
     options: [
-      'To identify the root causes of the injury so that corrective actions can prevent recurrence',
-      'Solar heat gain coefficient - proportion of solar radiation transmitted through glazing',
-      'Combine "eat the frog" with "just-5-minutes" rule to reduce starting resistance',
+      'It improves cooling and significantly extends the bearing life',
+      'It has no measurable effect provided the correct grease type is used',
+      'It reduces the bearing operating temperature and lowers friction',
       'Excess grease generates heat, increases friction and can damage the bearing seal, leading to premature failure',
     ],
     correctIndex: 3,
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     id: 'thermography',
     question: 'What can an infrared thermographic survey reveal about motor condition?',
     options: [
-      'Most-used tools accessible; everything with a designated place; regular cleaning',
+      'The exact insulation resistance value of each phase winding',
       'Hot spots indicating bearing wear, winding faults, loose connections or cooling problems',
-      'Read the causal chain in reverse — if each \\\\\\\\\\\\\\\'therefore\\\\\\\\\\\\\\\' statement logically leads to the next, the chain is valid',
-      'Electronic controls, dimmers, PIR sensors, and semiconductor devices',
+      'The polarisation index and dielectric absorption ratio of the windings',
+      'The number of broken rotor bars and their precise location',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The purpose of a preventive maintenance programme for motors is:',
     options: [
-      'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
+      'To run every motor to failure and then replace it with a new unit',
       'To detect and correct developing faults before they cause unplanned failure, extending motor life and reducing downtime',
-      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
-      'Prove the voltage indicator works on a known live source, test the circuit for dead, prove the indicator still works on the known source',
+      'To increase the load on each motor so faults appear sooner',
+      'To replace all motor components at fixed intervals regardless of condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     id: 3,
     question: 'A polarisation index (PI) test involves:',
     options: [
-      'Rotor bar defects, bearing faults, air gap eccentricity and mechanical load problems — all while the motor is running',
-      'Vibration analysis, temperature monitoring, ultrasonic testing and oil/grease analysis',
-      'According to the manufacturer\\\\\\\\\\\\\\\'s schedule, typically every 2,000-8,000 operating hours depending on size and speed',
+      'Measuring the winding resistance of each phase with a micro-ohmmeter',
+      'Comparing the current drawn on each of the three supply phases',
+      'Applying a high-frequency surge pulse to two windings at once',
       'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'Winding resistance measurement on a three-phase motor is used to detect:',
     options: [
       'Imbalance between phases indicating shorted turns, poor connections or winding damage',
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Vibration analysis, temperature monitoring, ultrasonic testing and oil/grease analysis',
-      'The ratio of the 60-second insulation resistance reading to the 30-second reading',
+      'Moisture and contamination on the surface of the winding insulation',
+      'Bearing defects through their characteristic vibration frequencies',
+      'Broken rotor bars while the motor is running under load',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Motor bearing condition can be assessed using:',
     options: [
-      'The ratio of the 60-second insulation resistance reading to the 30-second reading',
+      'Insulation resistance testing of the stator windings to earth',
       'Vibration analysis, temperature monitoring, ultrasonic testing and oil/grease analysis',
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
+      'A polarisation index test on the rotor windings',
+      'A polarity check of the supply at the motor terminals',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'The correct procedure before performing any maintenance on a motor is:',
     options: [
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Turn-to-turn insulation faults that are not detected by standard IR testing',
+      'Simply switch the motor off at the local control button and begin work',
+      'Take a vibration reading and then start the mechanical work',
       'Carry out safe isolation: isolate, lock off, prove dead, and display warning notices',
-      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
+      'Disconnect the earth conductor first to make the motor safe',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'Surge comparison testing on motor windings is used to detect:',
     options: [
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Carry out safe isolation: isolate, lock off, prove dead, and display warning notices',
-      'The ratio of the 60-second insulation resistance reading to the 30-second reading',
+      'Bearing wear through high-frequency vibration signatures',
+      'Moisture contamination on the winding surface to earth',
+      'Supply voltage imbalance between the three phases',
       'Turn-to-turn insulation faults that are not detected by standard IR testing',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'Motor current signature analysis (MCSA) can detect:',
     options: [
       'Rotor bar defects, bearing faults, air gap eccentricity and mechanical load problems — all while the motor is running',
-      'The rate and direction of change — a steadily declining trend indicates deteriorating insulation requiring investigation',
-      'Carry out safe isolation: isolate, lock off, prove dead, and display warning notices',
-      'All of the options listed could cause this symptom, but a stator winding fault (shorted turns) on that phase is the most likely motor-related cause',
+      'The dielectric absorption ratio of the winding insulation',
+      'Only faults that occur while the motor is isolated and stationary',
+      'The exact remaining service life of the bearing grease',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should motor bearings typically be re-greased?',
     options: [
-      "Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio",
+      "Only once during the entire service life of the motor",
       "According to the manufacturer's schedule, typically every 2,000-8,000 operating hours depending on size and speed",
-      "Carry out safe isolation: isolate, lock off, prove dead, and display warning notices",
-      "The rate and direction of change — a steadily declining trend indicates deteriorating insulation requiring investigation",
+      "Every time the motor is started from cold",
+      "Whenever the insulation resistance reading falls below 1 megohm",
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'A motor draws significantly higher current on one phase than the other two. The most likely cause is:',
     options: [
-      'According to the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s schedule, typically every 2,000-8,000 operating hours depending on size and speed',
-      'Rotor bar defects, bearing faults, air gap eccentricity and mechanical load problems — all while the motor is running',
-      'All of the options listed could cause this symptom, but a stator winding fault (shorted turns) on that phase is the most likely motor-related cause',
-      'The rate and direction of change — a steadily declining trend indicates deteriorating insulation requiring investigation',
+      'Over-greasing of the non-drive-end bearing',
+      'A blocked cooling fan reducing the airflow over the frame',
+      'A stator winding fault (shorted turns) on that phase, after confirming the supply voltage is balanced',
+      'A loose mounting bolt causing mechanical looseness',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'The dielectric absorption ratio (DAR) is:',
     options: [
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
-      'Vibration analysis, temperature monitoring, ultrasonic testing and oil/grease analysis',
+      'The ratio of the 10-minute insulation resistance reading to the 1-minute reading',
+      'The difference in winding resistance between any two phases',
+      'The ratio of the running current to the full-load current',
       'The ratio of the 60-second insulation resistance reading to the 30-second reading',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
       'When trending motor insulation resistance values over time, the most important indicator is:',
     options: [
       'The rate and direction of change — a steadily declining trend indicates deteriorating insulation requiring investigation',
-      'Rotor bar defects, bearing faults, air gap eccentricity and mechanical load problems — all while the motor is running',
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
-      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
+      'The single highest reading ever recorded for the motor',
+      'Whether the readings were taken using a 500 V or 1,000 V test',
+      'The colour of the warning notice displayed during isolation',
     ],
     correctAnswer: 0,
     explanation:

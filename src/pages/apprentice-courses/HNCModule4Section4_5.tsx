@@ -74,9 +74,9 @@ const quickCheckQuestions = [
     id: 'part-l-external',
     question: 'What does Part L require for external lighting installations?',
     options: [
-      'Socket outlets ≤32A and mobile equipment outdoors',
-      'Slight differences in fibre backscatter characteristics',
-      'At least 3-7 days covering different work scenarios',
+      'A minimum mounting height of 6 metres for all columns',
+      'IP66 enclosures on every external luminaire',
+      'Warm white (2700K) sources to reduce light pollution',
       'Efficacy limits, controls and upward light restrictions',
     ],
     correctIndex: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is facade lighting primarily designed to achieve?',
     options: [
-      'Joseph Luft and Harrington Ingham',
-      'Temperature sensors and humidity sensors',
-      'Scalability and flexibility',
+      'Uniform task illuminance for outdoor working',
+      'Security detection of intruders at the perimeter',
+      'Safe illuminance for vehicle manoeuvring',
       'Architectural enhancement and identity',
     ],
     correctAnswer: 3,
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'How can external lighting be controlled to reduce energy consumption and light pollution?',
     options: [
-      'Only the epidermis (outer layer of skin)',
+      'Running all luminaires at full output continuously',
       'Photocell, time scheduling, and dimming after hours',
-      'At commissioning and after any system modifications',
-      'Linking a new habit to an existing habit as a trigger',
+      'Increasing the mounting height of every column',
+      'Using a higher colour temperature throughout',
     ],
     correctAnswer: 1,
     explanation:

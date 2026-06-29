@@ -24,10 +24,10 @@ const quizQuestions = [
     question:
       "A lighting circuit at the end of a long corridor is noticeably dimmer than at the consumer unit. What's the most likely cause?",
     options: [
-      'Larger cable CSA or shorter route',
+      'The lamps are simply reaching the end of their life',
       'Excessive voltage drop due to cable resistance',
-      'Isolate immediately and investigate',
-      'Contact resistance increases, causing I²R losses',
+      'The protective device is the wrong type',
+      'The insulation resistance is too high',
     ],
     correctAnswer: 1,
     explanation:
@@ -38,10 +38,10 @@ const quizQuestions = [
     question:
       "You find a socket outlet that's warm to touch and has slight discolouration. What should you do first?",
     options: [
-      'Larger cable CSA or shorter route',
-      'Slower fault disconnection',
+      'Tighten the terminals while the circuit is live',
+      'Note it for the next periodic inspection',
       'Isolate immediately and investigate',
-      'Both resistance and current rating',
+      'Increase the rating of the protective device',
     ],
     correctAnswer: 2,
     explanation:
@@ -52,9 +52,9 @@ const quizQuestions = [
     question:
       'An EV charger keeps derating from 32A to 16A during charging. The most likely cause is:',
     options: [
-      'Soft or brittle insulation',
-      'Isolate immediately and investigate',
-      'Larger cable CSA or shorter route',
+      'The charger firmware needs updating',
+      'The RCD is too sensitive',
+      'The earth electrode is corroded',
       'Voltage drop on the supply cable',
     ],
     correctAnswer: 3,
@@ -66,9 +66,9 @@ const quizQuestions = [
     question: 'A motor circuit has high Zs readings. This could cause:',
     options: [
       'Slower fault disconnection',
-      'Soft or brittle insulation',
-      'Voltage drop on the supply cable',
-      'Resistance increases',
+      'Improved insulation resistance',
+      'Lower running temperatures',
+      'Reduced voltage drop',
     ],
     correctAnswer: 0,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 5,
     question: 'When checking for overheating, the best method is:',
     options: [
-      'Soft or brittle insulation',
+      'A visual inspection from a distance',
       'Thermal imaging under load',
-      'Resistance increases',
-      'Voltage drop on the supply cable',
+      'An insulation resistance test',
+      'A continuity test with the power off',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       'A 50m cable run to a workshop keeps tripping the MCB when high-current tools are used. Best solution:',
     options: [
-      'Voltage drop on the supply cable',
-      'Thermal imaging under load',
+      'Fit a higher-rated MCB to stop the tripping',
+      'Add more sockets along the run',
       'Larger cable CSA or shorter route',
-      'Soft or brittle insulation',
+      'Reduce the insulation resistance',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,9 +105,9 @@ const quizQuestions = [
     id: 7,
     question: 'Loose terminations cause heating because:',
     options: [
-      'Isolate immediately and investigate',
-      'Both resistance and current rating',
-      'Excessive voltage drop due to cable resistance',
+      'They reduce the circuit current',
+      'They lower the supply voltage',
+      'They improve conductor conductivity',
       'Contact resistance increases, causing I²R losses',
     ],
     correctAnswer: 3,

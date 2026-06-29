@@ -23,12 +23,12 @@ const inlineChecks = [
     id: 'm6s8-part-6-applies',
     question: 'Part 6 of BS 7671 (Inspection and Testing) — does it apply to EV charging circuits?',
     options: [
-      'No, Section 722 replaces Part 6',
-      'Yes — Part 6 (Chapters 64 and 65) sets the inspection and testing framework for all installations. Section 722 adds EV-specific requirements; the Part 6 procedures (visual inspection, IR test at 500 V DC with 1 MΩ minimum, RCD test, ADS verification) all apply to EV circuits',
-      'Only for commercial',
-      'No verification needed',
+      'Yes — Part 6 sets the framework for every installation; Section 722 adds EV-specific items on top',
+      'No — Section 722 wholly replaces Part 6 for EV circuits, which need no general verification',
+      'Part 6 applies only to commercial EV installs, not to domestic single-dwelling wallboxes',
+      'No verification of any kind is needed on an EV circuit once the wallbox has been energised',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Part 6 applies to every installation. Chapter 64 covers initial verification (Reg 641-Reg 644); Chapter 65 covers periodic inspection. EV circuit testing layers: Reg 643.3 IR test at 500 V DC, 1 MΩ minimum (Table 64) on the AC final circuit; Reg 643.3.3 post-connection 250 V follow-up at 1 MΩ minimum; RCD trip-time test using Type B-capable instrument (Reg 643.1); ADS verification against Zs ≤ Table 41.3. Section 722-specific tests on top: OPDD function (Reg 722.411.4 d); RDC-DD self-test if integrated; CP/PP signalling verification; tethered cable mechanical check.',
   },
@@ -36,12 +36,12 @@ const inlineChecks = [
     id: 'm6s8-rdc-dd-test',
     question: 'How is the RDC-DD (6 mA DC residual detector) tested at commissioning?',
     options: [
-      'No test available',
-      'Manufacturer-specific built-in self-test. Most wallboxes have a "PEN test" or "DC fault test" mode in the app that injects a simulated 6 mA DC fault and verifies the wallbox’s internal contactor opens within milliseconds. Verify the test result + record in the cert evidence bundle. Standard third-party RCD testers cannot test RDC-DD (they test the upstream Type A RCD only)',
-      'Replace it monthly',
-      'Wait for a fault',
+      'There is no test available for an RDC-DD device; it is verified only by manufacturer factory test',
+      'It must simply be replaced every month as routine maintenance, with no functional test possible',
+      'Via the manufacturer built-in self-test, which injects a 6 mA DC fault and confirms the contactor opens',
+      'You wait for a real smooth-DC fault to occur in service to confirm the device actually works',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'RDC-DD per BS EN IEC 62955 is integrated into the wallbox electronics; standard third-party RCD testers cannot test it (they test the upstream Type A RCD which doesn’t respond to smooth DC). Test via the wallbox’s built-in self-test mode — typically accessed via the manufacturer app or wallbox display. The self-test injects a simulated 6 mA DC fault and verifies the wallbox opens its internal contactor + displays a fault state + recovers. Record the test result in the cert evidence bundle as part of commissioning. Future EICR uses the same self-test mode for periodic verification.',
   },
@@ -50,12 +50,12 @@ const inlineChecks = [
     question:
       'EICR finds an OZEV / EVCS scheme-funded install where the OZEV documentation is missing from the customer’s handover pack. EICR coding?',
     options: [
-      'C1 — danger',
-      'C3 — improvement recommended. OZEV / EVCS documentation is a customer-facing administrative record, not a safety issue. EICR records the gap; recommends the customer ask the original installer for the documentation or contact OZEV / DfT for replacement. Doesn’t affect the electrical safety of the install',
-      'No code',
-      'C1 always',
+      'C1 — danger present, because safety-critical evidence is missing from the handover pack',
+      'C1 always, because grant documentation is mandatory for the install to remain compliant',
+      'No code at all, since grant documentation is entirely irrelevant to an electrical EICR',
+      'C3 — improvement recommended, since the paperwork is administrative and not a safety issue',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'OZEV (Office for Zero Emission Vehicles) / EVCS (EV Chargepoint Grant) documentation is customer-facing administrative evidence — covers grant claim, installer accreditation under the scheme, etc. Missing documentation doesn’t affect electrical safety. EICR coding: C3 (improvement recommended) — note the gap, recommend the customer contact the original installer or OZEV for replacement. Some original-installer companies have closed; OZEV / DfT records typically provide replacement documentation on request. Customer-side issue, not an electrical safety finding. Reg 411 ADS, Reg 722.411.4 earthing-tree etc. are separate; those are electrical and may attract C1 / C2 codings on their own merits.',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'A UK 2025-26 EV install customer handover pack should record specific items. Which is essential?',
     options: [
-      'Just the date',
-      'Identity (wallbox manufacturer, model, serial), Section 722 layered compliance (earthing-tree route, RCD architecture, AFDD decision, BS EN 61851 + 62196-2 + 62955 DoC), SCP Regulations 2021 compliance, commissioning test results, customer-facing operating instructions (default schedule, override, tariff integration), warranty registration, manufacturer support contact, EICR interval recommendation',
-      'Customer’s signature only',
-      'No handover needed',
+      'Wallbox identity, Section 722 + SCP-Regs compliance, test results, operating instructions and warranty',
+      'Just the install date and nothing more, since the rest sits in the installer cert evidence bundle',
+      'Only the customer signature on a single acceptance page confirming the install was completed',
+      'No handover pack is needed for an EV install once the certificate has been issued to the customer',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A comprehensive customer handover pack ties together every Section 722 layer (Sections 6.1-6.7) plus the SCP Regulations 2021 compliance plus the operational guidance for the customer. Cert evidence bundle = installer-side record; customer handover pack = customer-side record. Both reference the same documents but the customer pack adds: how to use the device, expected annual costs / savings, override procedures, manufacturer support, warranty registration, EICR interval recommendation. Without a comprehensive pack, the customer doesn’t know how to use the install + the next EICR has to reconstruct what was done.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
   {
     question: 'Commissioning a new UK 2025-26 EV wallbox install. Which test sequence is correct?',
     options: [
-      'Just energise and check it works',
-      'Sequence: (1) Part 6 visual inspection per Chapter 64 schedule; (2) IR test at 500 V DC live-to-PE — 1 MΩ minimum per Table 64; (3) Post-connection 250 V DC test per Reg 643.3.3 — 1 MΩ minimum; (4) RCD trip-time test using Type B-capable instrument (Reg 643.1) — RCBO operates per Reg 411; (5) ADS verification — Zs ≤ Table 41.3 value for the RCBO type and rating; (6) Manufacturer-specific tests: OPDD self-test, RDC-DD self-test, CP/PP signalling check, BS EN 61851 functional test (manufacturer-defined); (7) SCP Regulations 2021 verification: default off-peak schedule active, randomised delay enabled. Each step recorded in cert evidence bundle',
-      'Test only with Type AC RCD tester',
-      'Skip protective device tests',
+      'Part 6 visual + IR + RCD trip-time (Type B-capable) + ADS, then OPDD/RDC-DD/CP-PP and SCP-Regs checks',
+      'Just energise the wallbox and check the vehicle charges, with no formal test sequence recorded',
+      'Test only with a Type AC RCD tester, since that covers the protective device on an EV circuit',
+      'Skip the protective-device tests and carry out only a visual inspection of the completed install',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EV commissioning is the convergence point of every Section 722 layer + Part 6 + SCP Regulations. Test sequence: Part 6 inspections + IR tests (live and post-connection); RCD trip-time using Type B-capable instrument; ADS verification; manufacturer-specific OPDD + RDC-DD + CP/PP tests; SCP-Regs verification. Each step records in cert evidence bundle. The handover takes typically 30-45 minutes after the physical install is complete; rushed commissioning sets up future EICR problems.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     question:
       'A 5-year EICR on an EV charging install. The Section 6 handover pack is missing — customer doesn’t have it. How does this affect the inspection?',
     options: [
-      'Refuse the EICR',
-      'EICR proceeds but is more extensive. The inspector reconstructs: wallbox identity (kit nameplate); earthing-tree decision (visual at service head + DNO confirmation + supply test); RCD architecture (read upstream RCD type from CU); SCP Regulations status (verify default off-peak via wallbox app); commissioning test re-runs where possible. Items that cannot be reconstructed: C3 (improvement recommended — handover pack to be obtained); FI for missing baseline data. Recommend the customer obtain pack from original installer',
-      'Mark all C1',
-      'Pass anyway',
+      'Refuse to carry out the EICR until the original handover pack is found by the customer',
+      'Mark every observation C1, because the install-day baseline evidence is entirely missing',
+      'The EICR proceeds but is more extensive, reconstructing details from on-site evidence and coding FI',
+      'Pass the install anyway with no further investigation, since the pack is administrative only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Missing handover pack doesn’t stop the EICR but stretches it significantly. The inspector reconstructs as much as possible from on-site visual / test evidence + DNO records + manufacturer DoC sources online. Items that cannot be reconstructed (e.g. install-day OPDD test result, original RDC-DD self-test result, the customer-specific tariff configuration) get FI codes. Customer may need to contact the original installer for the pack copy. Cert evidence bundle for the EICR records what was reconstructible + what wasn’t.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'A 5-year EICR finds: (1) the Reg 570.6.8.202-equivalent warning label has been removed by the customer; (2) the Type A RCBO trip-time is now 280 ms (was 25 ms at install); (3) the wallbox’s integrated RDC-DD self-test fails. What’s the combined coding?',
     options: [
-      'All C3',
-      '(1) C3 — missing label is improvement (replace it); (2) C2 — RCBO trip-time within Reg 643.7 limit at 280 ms (close to limit; degradation evident; recommend RCBO replacement); (3) C2 — failed RDC-DD self-test removes smooth-DC fault protection; the upstream Type A is blind to that fault profile; the customer is no longer protected to the architectural standard. Combined outcome: EICR unsatisfactory due to C2 findings',
-      'All C1',
-      'Pass',
+      'All three findings are C3 improvement-recommended, so the report remains satisfactory overall',
+      'All three findings are C1 danger-present, making the report unsatisfactory on every observation',
+      'The whole report passes as satisfactory, since each finding is within the relevant reg limit',
+      'Missing label C3, degraded trip-time C2, failed RDC-DD self-test C2 — unsatisfactory on the C2s',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EICR findings coded individually. (1) Missing warning label = C3 (improvement recommended — replace label). (2) RCBO trip-time of 280 ms is within the Reg 643.7 limit but shows significant degradation from 25 ms baseline; C2 (potential degradation, urgent monitoring + recommend replacement). (3) Failed RDC-DD self-test = C2 (smooth-DC fault protection no longer working; the architectural integrity of Type A + RDC-DD is broken; customer is at risk if a smooth-DC fault occurs). Combined: EICR unsatisfactory (any C1 or C2 makes the report unsatisfactory). Customer pays for the remediation: replace label + replace RCBO + replace or repair wallbox’s RDC-DD component.',
   },
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       'The OZEV / EVCS Grant Scheme — what is it and how does it interact with the install?',
     options: [
-      'Tax credit only',
-      'OZEV = Office for Zero Emission Vehicles (UK Government). EVCS = EV Chargepoint Grant. Provides funding (typically £350-£500 per chargepoint) toward UK domestic / workplace install. Eligibility: customer is a UK leaseholder, tenant or qualifying property; installer is OZEV-accredited under the scheme. Customer applies; installer claims the grant against the customer’s invoice. Cert evidence bundle records OZEV claim + installer accreditation',
-      'Foreign program',
-      'Not available',
+      'A tax credit claimed by the customer at year end only, separate from the install invoice itself',
+      'A UK Government grant toward installs for eligible customers, claimed by an accredited installer',
+      'A foreign funding programme not available in the UK and not applicable to domestic installs',
+      'A scheme that no longer exists and offers no funding toward UK EV chargepoint installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,24 +131,24 @@ const quizQuestions = [
     question:
       'A customer at year 5 EICR has had a thermal incident with their wallbox cable (visible discolouration at the connector end). What’s the inspection response?',
     options: [
-      'Pass — not visible enough',
-      'C2 — potential danger. Thermal damage at the connector end indicates: (1) sustained over-current (possibly customer using a wrong-rated cable + PP signalling not protecting; or PP-signalling fault); (2) poor connection at the connector head (high resistance + heating); (3) imminent connector failure. Recommend immediate replacement of cable; investigation of root cause (cable mis-rating, intermittent connection, customer plug behaviour); record in EICR',
-      'C3 — improvement',
-      'No issue',
+      'Pass — the discolouration is minor and not significant enough to affect the report outcome',
+      'C3 — improvement recommended, to be addressed at the next routine service of the wallbox',
+      'C2 — potential danger: thermal damage means high-resistance heating, so replace the cable',
+      'No issue, since connector discolouration is purely cosmetic and carries no safety implication',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Visible thermal damage at the Type 2 connector end = C2 (potential danger, urgent remediation). Causes: (1) customer using a wrong-rated cable (e.g. 13 A cable being driven at 32 A — PP signalling should prevent this but if PP resistor damaged, doesn’t); (2) poor connection at the connector head (intermittent contact during plug-in/out cycles develops high resistance + heating); (3) imminent connector failure. Remediation: replace the cable; verify wallbox’s PP signal interpretation is correct; check the wallbox’s contactor and CP signalling for correct sequencing. Customer education: keep cable in good condition, don’t use damaged cables, don’t leave the connector in muddy / debris-prone environments.',
   },
   {
     question: 'How often should an EV wallbox be EICR-inspected after install?',
     options: [
-      'Never',
-      'The wider electrical installation’s EICR interval applies (typically 10 years for domestic, 5 years for landlord rental properties under the Electrical Safety Standards in the Private Rented Sector Regulations 2020). The EV wallbox itself = part of the installation. Manufacturer may recommend annual service for the smart functionality (BMS-style log review, firmware updates, RDC-DD self-test) — separate from the statutory EICR. Cert evidence bundle records the recommended intervals',
-      'Daily',
-      'Every 30 years',
+      'The wider installation interval applies — typically 10 years domestic, 5 years for rental properties',
+      'It never needs an EICR once commissioned, since the wallbox self-tests cover periodic verification',
+      'It must be EICR-inspected daily before each use to confirm the protective devices still function',
+      'It only needs inspection every 30 years, matching the design service life of the cabling system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EV wallbox EICR interval = the wider installation’s EICR interval. UK domestic: typically 10 years per BS 7671 advisory (some properties shorter); UK rental properties: 5 years per Electrical Safety Standards in the Private Rented Sector Regulations 2020 (separate UK Government regulation). Some installers offer annual service contracts for the smart functionality — firmware updates, RDC-DD / OPDD self-test verification, BMS log review. These are MANUFACTURER service intervals, not statutory EICR. Cert evidence bundle records the recommended intervals + customer responsibility for each.',
   },

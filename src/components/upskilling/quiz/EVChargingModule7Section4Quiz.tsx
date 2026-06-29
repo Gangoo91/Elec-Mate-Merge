@@ -14,60 +14,60 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What is the minimum retention period for OZEV installation records?',
-    options: ['5 years', '7 years', '10 years', '15 years'],
-    correctAnswer: 2,
+    question: 'What is the recommended minimum retention period for EV charge point installation records?',
+    options: ['5 years', '10 years', '7 years', '15 years'],
+    correctAnswer: 1,
     explanation:
-      'Installation records must be retained for a minimum of 10 years to comply with OZEV requirements.',
+      'Installation and commissioning records for grant-funded charge points should be kept for at least 10 years so they remain available for audit and warranty purposes.',
   },
   {
     id: 2,
-    question: 'Which backup strategy is recommended for document management systems?',
+    question: 'Which backup strategy is widely recommended for document management systems?',
     options: [
-      'Daily backups only',
-      'Weekly backups with cloud storage',
-      '3-2-1 backup rule implementation',
-      'Monthly physical backups',
+      'The 3-2-1 rule: three copies, two media types, one offsite',
+      'Daily backups held on a single local drive',
+      'Weekly backups to one cloud account only',
+      'Monthly physical backups kept on site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'The 3-2-1 backup rule (3 copies, 2 different media, 1 offsite) provides comprehensive data protection.',
+      'The 3-2-1 rule keeps three copies of the data on two different media with one copy offsite, protecting against device failure, theft and site disasters.',
   },
   {
     id: 3,
-    question: 'What is the target customer satisfaction score for quality performance monitoring?',
+    question: 'What is a commonly used target for a customer satisfaction score in quality monitoring?',
     options: [
-      'Greater than 3.5/5',
-      'Greater than 4.0/5',
-      'Greater than 4.5/5',
-      'Greater than 4.8/5',
+      'Greater than 3.5 out of 5',
+      'Greater than 4.0 out of 5',
+      'Greater than 4.8 out of 5',
+      'Greater than 4.5 out of 5',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'A customer satisfaction score greater than 4.5/5 is the target KPI for quality performance monitoring.',
+      'A satisfaction score above 4.5 out of 5 is a typical quality target, indicating consistently high customer experience across completed installations.',
   },
   {
     id: 4,
     question:
-      'Under GDPR, what is required when a data subject requests access to their personal data?',
+      'Under UK GDPR, how quickly must a controller normally respond to a subject access request?',
     options: [
-      'Response within 72 hours',
-      'Response within 1 month',
-      'Response within 2 months',
-      'No specific timeframe',
+      'Within 72 hours of the request',
+      'Within one month of receipt',
+      'Within two months of receipt',
+      'There is no defined time limit',
     ],
     correctAnswer: 1,
     explanation:
-      'Under GDPR, data controllers must respond to subject access requests within one month of receipt.',
+      'A subject access request must normally be answered within one month, though this can be extended by up to two further months for complex requests.',
   },
   {
     id: 5,
     question:
-      'What is the Recovery Time Objective (RTO) for critical systems in business continuity planning?',
-    options: ['2 hours', '4 hours', '8 hours', '24 hours'],
-    correctAnswer: 1,
+      'What is a typical Recovery Time Objective (RTO) for critical systems in business continuity planning?',
+    options: ['2 hours', '8 hours', '4 hours', '24 hours'],
+    correctAnswer: 2,
     explanation:
-      'The recommended RTO for critical systems is 4 hours to minimise business disruption during incidents.',
+      'Critical systems are often given an RTO of around 4 hours, balancing the cost of resilience against the disruption caused by extended downtime.',
   },
 ];
 

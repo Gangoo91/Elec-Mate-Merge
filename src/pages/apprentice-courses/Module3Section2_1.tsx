@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary reason for using cable containment?',
     options: [
-      'The contract administrator or architect',
+      'To increase the current-carrying capacity of cables',
       'To protect cables from damage and maintain safety',
-      'With specific, accurate technical descriptions',
-      'At both the control unit and outlet',
+      'To reduce the cost of the cables themselves',
+      'To remove the need to test the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,24 +97,29 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'True or False: Containment can help reduce electromagnetic interference between power and data cables.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
-    explanation:
-      'True. Proper containment allows for separation of different cable types, reducing electromagnetic interference between power and data cables.',
-  },
-  {
-    id: 4,
-    question: 'Name one situation where containment is legally required.',
+      'How does containment affect electromagnetic interference between power and data cables?',
     options: [
-      'Public spaces and industrial environments',
-      'A current source in parallel with a resistance',
-      'Buildings requiring an EPC under Part L',
-      'Anticipate future error and reduce overshoot',
+      'It can help reduce interference by separating cable types',
+      'It increases interference between all circuits',
+      'It has no effect on interference at all',
+      'It only matters for outdoor installations',
     ],
     correctAnswer: 0,
     explanation:
-      'Containment is legally required in public spaces and industrial environments where cables need protection from tampering, damage, or environmental hazards.',
+      'Proper containment allows separation of different cable types with barriers or compartments, reducing electromagnetic interference between power and data cables.',
+  },
+  {
+    id: 4,
+    question: 'Name one situation where containment is typically required for cable protection.',
+    options: [
+      'Public spaces and industrial environments',
+      'Only in domestic loft spaces',
+      'Only where cables are buried underground',
+      'Only on circuits above 1000 V',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Containment is needed in public spaces and industrial environments where cables require protection from tampering, mechanical damage or environmental hazards.',
   },
   {
     id: 5,
@@ -133,36 +138,36 @@ const quizQuestions = [
     id: 6,
     question: 'Why does containment improve future maintenance?',
     options: [
-      'Review it to understand the installation history',
-      'To show the spatial relationship of all services and identify potential clashes',
+      'It records the full installation history automatically',
+      'It removes the need to isolate circuits before work',
       'It makes cables easier to locate and replace without damaging walls',
-      'To ensure safe working by identifying which circuits need to be isolated',
+      'It increases the current-carrying capacity over time',
     ],
     correctAnswer: 2,
     explanation:
-      'Containment systems allow easier access to cables for maintenance, replacement, and additions without damage to building structures.',
+      'Containment systems allow easier access to cables for maintenance, replacement and additions without damage to building structures.',
   },
   {
     id: 7,
     question: 'Give one example of an environmental hazard that containment can protect against.',
     options: [
-      'Overfilling and creating sharp bends',
-      'The ratio of true power to apparent power',
-      'The branch with lower resistance',
+      'Excessive earth fault loop impedance',
+      'Voltage drop on long circuits',
+      'Nuisance tripping of RCDs',
       'Moisture, dust, heat, or UV light',
     ],
     correctAnswer: 3,
     explanation:
-      'Containment protects against various environmental hazards including moisture, dust, heat, UV light, and other external influences.',
+      'Containment protects against environmental hazards including moisture, dust, heat, UV light and other external influences.',
   },
   {
     id: 8,
-    question: 'Which regulation sets requirements for cable containment in the UK?',
+    question: 'Which standard sets requirements for cable containment in the UK?',
     options: [
       'BS 7671 (IET Wiring Regulations)',
-      'Chewing through cable insulation',
-      'Causes degradation and brittleness',
-      'Buildings requiring an EPC under Part L',
+      'BS 5839 (Fire detection and alarm)',
+      'BS EN 12464 (Lighting of workplaces)',
+      'The Building Regulations Part L',
     ],
     correctAnswer: 0,
     explanation:

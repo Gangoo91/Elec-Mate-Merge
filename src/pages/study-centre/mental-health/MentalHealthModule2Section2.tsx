@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'anxiety-normal-vs-disorder',
     question: 'What is the key difference between normal anxiety and an anxiety disorder?',
     options: [
-      'Normal anxiety only lasts a few seconds',
       'An anxiety disorder is persistent, excessive, and interferes with daily life',
+      'Normal anxiety only lasts a few seconds',
       'Only people with anxiety disorders experience physical symptoms',
       'Normal anxiety never includes worry about the future',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Everyone experiences anxiety from time to time — it is a normal human response to perceived threat. Anxiety becomes a disorder when it is persistent, disproportionate to the situation, and significantly interferes with everyday life, work, and relationships. Physical symptoms can occur in both normal anxiety and anxiety disorders.',
   },
@@ -96,8 +96,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Approximately how many people in the UK are living with an anxiety disorder at any given time?',
-    options: ['2 million', '5 million', '8 million', '12 million'],
-    correctAnswer: 2,
+    options: ['8 million', '2 million', '5 million', '12 million'],
+    correctAnswer: 0,
     explanation:
       'Approximately 8 million people in the UK have a diagnosable anxiety disorder at any given time, making it one of the most prevalent mental health conditions in the country. Anxiety disorders are more common than depression, though the two frequently co-occur.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
     question: 'Which of the following best describes Generalised Anxiety Disorder (GAD)?',
     options: [
       'Sudden, intense episodes of fear lasting less than a minute',
-      'Persistent, excessive worry about a wide range of everyday situations on most days for at least six months',
       'Intense fear of a specific object or situation, such as spiders or heights',
       'Recurring, unwanted thoughts that the person tries to neutralise with repetitive behaviours',
+      'Persistent, excessive worry about a wide range of everyday situations on most days for at least six months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GAD is characterised by persistent, excessive, and uncontrollable worry about a broad range of everyday topics — health, work, finances, family — on most days for at least six months. It differs from panic disorder (sudden episodes), specific phobias (one trigger), and OCD (obsessions and compulsions).',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
     question: 'What is the primary evolutionary purpose of the fight-flight-freeze response?',
     options: [
       'To help us sleep more deeply',
-      'To prepare the body to confront, escape, or hide from a perceived threat',
       'To improve long-term memory storage',
+      'To prepare the body to confront, escape, or hide from a perceived threat',
       'To regulate body temperature in extreme weather',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The fight-flight-freeze response is an automatic survival mechanism that evolved to protect humans from physical danger. The body rapidly prepares to fight the threat, flee from it, or freeze (become motionless to avoid detection). In modern life, the same response can be triggered by psychological threats such as work stress or social situations.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which physical symptom of anxiety is most commonly mistaken for a heart attack?',
     options: [
+      'Chest tightness and heart palpitations',
       'Headache',
       'Muscle tension in the shoulders',
-      'Chest tightness and heart palpitations',
       'Nausea',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Chest tightness, heart palpitations, and breathlessness during a panic attack are the symptoms most commonly mistaken for a heart attack. Many people present to A&E believing they are having a heart attack when they are experiencing a panic attack. The key difference is that panic attack symptoms typically peak within 10 minutes and then subside.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: "Which TWO hormones are most associated with the body's stress and anxiety response?",
     options: [
       'Insulin and glucagon',
-      'Adrenaline (epinephrine) and cortisol',
       'Serotonin and dopamine',
       'Melatonin and oxytocin',
+      'Adrenaline (epinephrine) and cortisol',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Adrenaline (epinephrine) is released for the immediate fight-or-flight response — increased heart rate, rapid breathing, dilated pupils. Cortisol is the secondary stress hormone that sustains the response over a longer period, raising blood sugar, suppressing the immune system, and keeping the body on high alert. Chronic cortisol elevation is linked to long-term health problems.',
   },

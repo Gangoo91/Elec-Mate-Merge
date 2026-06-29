@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'qc1',
     question: 'If you are unsure whether a roof surface is fragile, what should you assume?',
     options: [
-      'It is safe to walk on if it looks solid',
       'It is fragile until confirmed otherwise by a competent person',
+      'It is safe to walk on if it looks solid',
       'It is only fragile if it is more than 20 years old',
       'You should test it by standing on the edge first',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The safe assumption is always that an unknown roof surface is fragile until a competent person has confirmed otherwise. Many fragile materials (such as fibre cement sheets or deteriorated roof lights) may appear solid but will not support the weight of a person.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'What is the primary purpose of a crawling board (also called a roof ladder or cat ladder)?',
     options: [
       'To provide a walkway across fragile surfaces',
-      "To spread the user's weight across multiple purlins and prevent falling through fragile sheeting",
       'To provide edge protection at the eaves',
+      "To spread the user's weight across multiple purlins and prevent falling through fragile sheeting",
       'To anchor personal fall arrest equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Crawling boards span across the structural supports (purlins) and distribute the user's weight over a larger area, preventing them from putting their full weight on a single fragile sheet or panel.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following is the legal definition of a fragile surface under the Work at Height Regulations?',
     options: [
-      'Any surface that is wet or icy',
-      'Any surface more than 10 years old',
       'Any surface that would not support the weight of a person and any load they carry',
+      'Any surface more than 10 years old',
+      'Any surface that is wet or icy',
       'Any surface made of glass',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The Regulations define a fragile surface as one that would be liable to fail if a person's weight (plus any load they are carrying) were applied to it.",
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'Which of the following materials is NOT normally considered fragile?',
     options: [
       'Fibre cement sheeting',
-      'Reinforced concrete slab (300 mm thick)',
       'Polycarbonate roof light',
+      'Reinforced concrete slab (300 mm thick)',
       'Asbestos cement sheeting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 300 mm reinforced concrete slab is a structural element designed to carry significant loads and is not considered fragile. Fibre cement, polycarbonate roof lights, and asbestos cement are all classified as fragile.',
   },
@@ -127,8 +127,8 @@ const quizQuestions = [
     id: 4,
     question:
       'According to HSG33, what minimum height must guard rails reach when working on a roof?',
-    options: ['750 mm', '900 mm', '950 mm', '2 metres'],
-    correctAnswer: 2,
+    options: ['750 mm', '900 mm', '2 metres', '950 mm'],
+    correctAnswer: 3,
     explanation:
       'Guard rails on roofs must comply with the same standard as other edge protection — a minimum top rail height of 950 mm under BS EN 13374, with a mid rail and toe board.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'A significant number of fatal roof falls occur through which of the following?',
     options: [
-      'Metal profile sheeting',
       'Roof lights and skylights',
+      'Metal profile sheeting',
       'Concrete slabs',
       'Tiled roofs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Roof lights and skylights are the single most common fragile element through which workers fall. They are often poorly marked, covered with dirt or moss, and may be indistinguishable from the surrounding roof surface.',
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
     question: 'Where should safety netting be positioned in relation to a fragile roof surface?',
     options: [
       'Above the fragile surface',
-      'Below the fragile surface to catch anyone who falls through',
       'At the same level as the fragile surface',
+      'Below the fragile surface to catch anyone who falls through',
       'Only at the eaves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety netting is installed below the fragile surface (typically beneath the purlins) so that if a person falls through the fragile material, the net catches them before they reach the floor or ground below.',
   },

@@ -22,24 +22,24 @@ const inlineChecks = [
     id: 'patm1-s2-eawr-scope',
     question: 'Which of the following is OUTSIDE the scope of EAWR 1989?',
     options: [
-      'A 230 V kettle in a staff kitchenette.',
-      'A 110 V site transformer powering hand tools.',
-      'A purely battery-operated cordless drill at 18 V dc, used at work (battery only, charger not connected).',
-      'A 400 V three-phase mobile welder.',
+      'A 230 V mains kettle connected at a staff kitchenette socket.',
+      'A 110 V CTE site transformer powering hand tools.',
+      'An 18 V cordless drill running on its own battery, charger not connected.',
+      'A 400 V three-phase mobile welder fed from site distribution.',
     ],
     correctIndex: 2,
     explanation:
-      'EAWR Reg 2(1) defines "electrical equipment" broadly, but the courts and HSE guidance generally treat pure battery-only equipment without an integrated mains connection as outside the EAWR scope while in battery use. The moment the charger is plugged in (the charger is mains-powered electrical equipment), EAWR engages. The IET CoP §3.2 covers chargers and battery equipment together; the EAWR boundary turns on whether mains energy is involved.',
+      'EAWR Reg 2(1) defines "electrical equipment" broadly, but courts and HSE guidance generally treat pure battery-only equipment without an integrated mains connection as outside EAWR scope while in battery use. The moment the charger is plugged in (a mains-powered item) EAWR engages. The IET CoP §3.2 covers chargers and battery equipment together; the EAWR boundary turns on whether mains energy is involved.',
   },
   {
     id: 'patm1-s2-puwer-link',
     question:
       'A site grinder with a frayed flex causes injury. Which TWO statutory regimes are likely to be cited together by the HSE inspector?',
     options: [
-      'BS 7671 Reg 643 and CDM 2015 Reg 13.',
-      'EAWR 1989 Reg 4(2) (system maintenance) AND PUWER 1998 Reg 5/6 (work-equipment maintenance and inspection).',
-      'EAWR Reg 14 and HSWA s.6.',
-      'PUWER Reg 4 only.',
+      'BS 7671 Reg 643 (initial verification) and CDM 2015 Reg 13.',
+      'EAWR 1989 Reg 4(2) (system maintenance) and PUWER 1998 Reg 5/6 (work-equipment inspection).',
+      'EAWR Reg 14 (live working) and HSWA s.6 (articles for use at work).',
+      'PUWER 1998 Reg 4 (suitability of work equipment) on its own.',
     ],
     correctIndex: 1,
     explanation:
@@ -50,28 +50,28 @@ const inlineChecks = [
     question:
       'What does "so far as is reasonably practicable" mean as a legal test, in the context of EAWR Reg 4(2)?',
     options: [
-      'Whatever the duty-holder considers reasonable.',
-      'A balancing test (Edwards v National Coal Board, 1949): the cost / time / trouble of the precaution is weighed against the risk it prevents. The duty-holder must show the balance was struck — and the burden of proof reverses onto the duty-holder where the matter is in their knowledge (HSWA s.40).',
-      'The same as "absolutely safe".',
-      'A subjective test based on the duty-holder industry.',
+      'A subjective test — whatever the individual duty-holder genuinely considers reasonable at the time.',
+      'A balancing test (Edwards v NCB 1949): cost / time / trouble of the precaution weighed against the risk it prevents.',
+      'An absolute test — equivalent to making the equipment completely and demonstrably safe in all conditions.',
+      'A sector test — the test is set by whatever is customary practice across the duty-holder industry.',
     ],
     correctIndex: 1,
     explanation:
-      'Edwards v NCB sets the test. HSWA s.40 reverses the burden — once the prosecution proves a duty existed, it is for the defendant to prove they did what was reasonably practicable. That is why records matter: without records, the s.40 burden is effectively impossible to discharge.',
+      'Edwards v NCB sets the test as a balance of precaution cost against risk averted. HSWA s.40 then reverses the burden — once the prosecution proves a duty existed, it is for the defendant to prove they did what was reasonably practicable, with the matter being in their knowledge. That is why records matter: without them the s.40 burden is effectively impossible to discharge.',
   },
   {
     id: 'patm1-s2-section7',
     question:
       'A user employee notices visible flex damage on their work kettle and continues to use it without reporting it. After a shock incident, the HSE considers prosecution. What duty might the user themselves have breached?',
     options: [
-      'EAWR Reg 4(2) — they are not the duty-holder.',
-      'HSWA 1974 s.7 — the duty of every employee to take reasonable care for their own and others safety, and to co-operate with the employer arrangements (including reporting defective equipment).',
-      'PUWER Reg 6 — only the employer has duties.',
-      'No duty — only the employer can be prosecuted.',
+      'EAWR 1989 Reg 4(2) — the electrical-systems maintenance duty falling on the user as duty-holder.',
+      'HSWA 1974 s.7 — the employee duty of reasonable care and co-operation with employer arrangements.',
+      'PUWER 1998 Reg 6 — the inspection duty, which falls on the user as well as the employer.',
+      'No statutory duty — only the employer, as duty-holder, can be prosecuted for the incident.',
     ],
     correctIndex: 1,
     explanation:
-      'HSWA s.7 places duties on employees too. Continuing to use visibly damaged equipment in defiance of the employer arrangements is a s.7 breach. The user-check pillar of HSG107 is the practical bridge between the employer s.2 duty and the employee s.7 duty.',
+      'HSWA s.7 places duties on employees: to take reasonable care for their own and others’ safety and to co-operate with employer arrangements, which includes reporting defective equipment. Continuing to use visibly damaged equipment in defiance of those arrangements is a s.7 breach. The user-check pillar of HSG107 is the practical bridge between the employer s.2 duty and the employee s.7 duty.',
   },
 ];
 
@@ -81,39 +81,39 @@ const quizQuestions = [
     question:
       'EAWR 1989 Reg 4(2) reads "all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger". What does "system" include in this regulation?',
     options: [
-      'Only the fixed installation.',
-      'Only the appliance itself.',
-      'Per Reg 2(1), "system" means an electrical system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy — covering generation, distribution, fixed installation, AND the connected appliance, its flex, plug and connectors.',
-      'Only equipment over 50 V.',
+      'Only the fixed installation — the building wiring up to the socket-outlet.',
+      'Only the appliance itself — its internal components, excluding the supply lead.',
+      'Generation, distribution, fixed installation AND the connected appliance, its flex, plug and connectors.',
+      'Only equipment operating above 50 V AC — extra-low-voltage items are excluded.',
     ],
     correctAnswer: 2,
     explanation:
-      'Reg 2(1) is the definitional gateway. The breadth of "system" is what makes Reg 4(2) the workhorse of PAT — it pulls in the appliance and its supply lead alongside the fixed wiring. Treating the appliance as outside the system is a misreading.',
+      'Per Reg 2(1), "system" means an electrical system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy, including that source and equipment. Reg 2(1) is the definitional gateway; its breadth is what makes Reg 4(2) the workhorse of PAT, pulling in the appliance and its supply lead alongside the fixed wiring. Treating the appliance as outside the system is a misreading.',
   },
   {
     id: 2,
     question: 'HSWA 1974 s.40 is critical to PAT-related prosecutions. What does it do?',
     options: [
-      'It defines "employee".',
-      'It reverses the burden of proof: once the prosecution has proved a duty, it is for the defendant to prove that it was not reasonably practicable to do more than was in fact done. This makes records the practical demonstration of compliance.',
-      'It sets a fixed annual testing interval.',
-      'It exempts low-risk environments.',
+      'It reverses the burden of proof onto the defendant to prove they did what was reasonably practicable.',
+      'It defines "employee" for the purposes of the relevant statutory provisions.',
+      'It sets a fixed annual testing interval for portable electrical equipment in workplaces.',
+      'It exempts demonstrably low-risk environments from the maintenance and inspection duties.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      's.40 is the reason HSG107 §22-25 emphasises records. Without contemporaneous records of risk-assessed frequencies, formal visual inspections, instrument readings and defect handling, the s.40 reverse burden is effectively impossible to discharge — leaving a duty-holder with a de facto strict-liability outcome.',
+      'Once the prosecution has proved a duty, s.40 makes it for the defendant to prove that it was not reasonably practicable to do more than was in fact done — making records the practical demonstration of compliance. It is the reason HSG107 §22-25 emphasises records: without contemporaneous records of risk-assessed frequencies, formal visual inspections, instrument readings and defect handling, the s.40 reverse burden is effectively impossible to discharge, leaving a de facto strict-liability outcome.',
   },
   {
     id: 3,
     question:
       'PUWER 1998 Reg 5(1) requires every employer to ensure work equipment is maintained in efficient working order and good repair. How does Reg 5 differ from EAWR Reg 4(2)?',
     options: [
-      'They are identical.',
-      'EAWR Reg 4(2) is electrical-specific (the danger to be prevented is electrical danger); PUWER Reg 5 is work-equipment-specific (the duty is "efficient working order and good repair", regardless of the cause of failure). They overlap on portable electrical equipment but apply different tests.',
-      'PUWER applies only to mechanical equipment.',
-      'EAWR is for fixed wiring only; PUWER is for everything else.',
+      'They are identical duties expressed in two different sets of regulations.',
+      'PUWER Reg 5 applies only to mechanical equipment, never to electrical items.',
+      'EAWR Reg 4(2) covers fixed wiring only; PUWER Reg 5 covers everything else.',
+      'EAWR Reg 4(2) targets electrical danger; PUWER Reg 5 targets efficient working order and good repair.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Each regulation imposes a different lens. The EAWR lens is the electrical danger; the PUWER lens is the equipment function as a work tool. A defect that causes the kettle to scald an employee is a PUWER Reg 5 issue; a defect that causes it to shock an employee is both Reg 5 and EAWR Reg 4(2).',
   },
@@ -122,40 +122,40 @@ const quizQuestions = [
     question:
       'PUWER 1998 Reg 6 requires inspection of work equipment. Which work equipment falls within Reg 6, in the context of portable electrical equipment?',
     options: [
-      'All work equipment, regardless of risk.',
-      'Equipment whose safety depends on installation conditions, OR equipment exposed to conditions causing deterioration liable to result in dangerous situations. In practice, this captures most portable electrical equipment in workplace use.',
-      'Only equipment over 1 kW.',
-      'Only equipment leased from a third party.',
+      'All work equipment without exception, regardless of its risk profile or environment.',
+      'Only equipment with a power rating above 1 kW, such as heaters and large motors.',
+      'Equipment whose safety depends on installation conditions, or exposed to deteriorating conditions.',
+      'Only equipment leased or hired from a third party rather than directly owned.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Reg 6(1)(a) and 6(1)(b) set the trigger. Portable electrical equipment in workplace service almost always satisfies (b) — it is moved, plugged, unplugged, exposed to dust, moisture or mechanical handling. Reg 6(2) requires the inspection to be at "suitable intervals" and recorded.',
+      'Reg 6(1)(a) and 6(1)(b) set the trigger; in practice this captures most portable electrical equipment in workplace use. Portable equipment in service almost always satisfies (b) — it is moved, plugged, unplugged, exposed to dust, moisture or mechanical handling. Reg 6(2) requires the inspection to be at "suitable intervals" and recorded.',
   },
   {
     id: 5,
     question:
       'A duty-holder argues that PUWER Reg 6 inspection records are unnecessary because they have a comprehensive PAT regime. Why is that argument legally weak?',
     options: [
-      'It is not — PAT records satisfy PUWER Reg 6 by themselves.',
-      'PAT records made under HSG107 / IET CoP guidance generally DO satisfy PUWER Reg 6 — but only if they include the matters Reg 6(2) requires (date, identity of inspector, results, defects, action taken). Records that are only pass labels do not satisfy Reg 6(2).',
-      'PUWER does not apply to electrical equipment.',
-      'PUWER inspection records must be on paper.',
+      'PAT records satisfy Reg 6 only if they carry the prescribed detail, not as bare pass labels.',
+      'The argument is sound — a comprehensive PAT regime satisfies PUWER Reg 6 in its own right.',
+      'PUWER Reg 6 does not apply to electrical equipment, so no inspection record is required at all.',
+      'PUWER inspection records must be kept on paper; electronic PAT software output is not accepted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'PUWER Reg 6(2) and (3) prescribe what an inspection record must contain. A well-constructed PAT programme produces records that satisfy both EAWR (electrical danger discharged) and PUWER (work-equipment inspected). A label-only programme satisfies neither.',
+      'PAT records made under HSG107 / IET CoP guidance generally do satisfy Reg 6, but only if they include the matters Reg 6(2) and (3) require — date, identity of inspector, matters inspected, result, defects and action taken. Records that are only pass labels do not. A well-constructed programme produces records that satisfy both EAWR (electrical danger discharged) and PUWER (work-equipment inspected); a label-only programme satisfies neither.',
   },
   {
     id: 6,
     question:
       'HSWA 1974 s.3(1) imposes a duty on every employer to conduct their undertaking so that "persons not in his employment who may be affected" are not exposed to risks to their health or safety. How does s.3 connect to PAT in a contractor / sub-contractor context?',
     options: [
-      's.3 only applies to large companies.',
-      'A contractor bringing portable equipment onto a third-party site engages s.3 — the contractor must protect the site own employees and any other contractors from defects in the equipment they bring. The site occupier likewise owes s.3 duties to contractor employees.',
-      's.3 is irrelevant to electrical equipment.',
-      's.3 has been superseded by CDM 2015.',
+      's.3 only applies to large companies above a defined employee threshold.',
+      's.3 is irrelevant to electrical equipment, which is governed solely by EAWR.',
+      's.3 has been superseded by CDM 2015 on construction sites and no longer bites.',
+      'A contractor bringing portable equipment onto a third-party site engages s.3 both ways.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       's.3 is the bridge between an employer s.2 duty (to its own employees) and the practical reality of multi-employer workplaces. CDM 2015 reinforces it for construction; PUWER and EAWR remain active. For PAT, s.3 is the reason a site "we hire competent contractors" defence is incomplete — the duty travels with both parties.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       'EAWR 1989 Reg 16 defines competence: "no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger… unless he possesses such knowledge or experience". How does Reg 16 affect who can perform PAT?',
     options: [
-      'Anyone can perform PAT — Reg 16 does not apply.',
-      'PAT involves work on electrical systems where technical knowledge or experience is necessary to prevent danger. Reg 16 means the person performing the test must be competent for the scope of equipment and environment they are testing — knowledge, training and experience as set out in IET CoP §13.',
-      'Only registered electricians can perform PAT.',
-      'Reg 16 applies only to high-voltage work.',
+      'The tester must be competent for the scope of equipment and environment they are testing.',
+      'Anyone may perform PAT — Reg 16 is concerned only with construction and design work.',
+      'Only registered electricians on a competent-person scheme may lawfully perform PAT.',
+      'Reg 16 applies only to high-voltage work, so it places no constraint on PAT testers.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 16 is the legal basis for the IET CoP §13 competence framing. There is no specific qualification mandated, but the duty-holder must be able to demonstrate the inspector competence is matched to the scope of the work — a 2377-22 holder with no exposure to industrial environments is not competent to test those environments.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'A workplace electrical fatality is investigated by the HSE. The duty-holder produces excellent risk assessments, frequencies, and label records — but cannot produce instrument readings or defect logs. Which legal test fails?',
     options: [
-      'No test fails — labels are sufficient.',
-      'The HSWA s.40 test fails. The defendant cannot prove they did what was reasonably practicable, because absent numerical readings and defect records there is no contemporaneous evidence the regime actually operated. Pass labels alone are not records of what was inspected, by whom, with what instrument, against what acceptance values.',
-      'The PUWER Reg 6 test passes regardless.',
-      'EAWR Reg 4(2) does not apply to fatalities.',
+      'No test fails — pass labels are sufficient evidence that the regime operated.',
+      'The PUWER Reg 6 test passes regardless, since intervals and labelling were maintained.',
+      'EAWR Reg 4(2) does not apply where the incident was a fatality rather than an injury.',
+      'The HSWA s.40 test fails — no contemporaneous evidence the regime actually operated.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is the classic gap. The duty-holder appears to have a programme on paper but cannot evidence its operation. HSWA s.40 reverses the burden onto them, and the missing evidence converts the prosecution case into a near-certainty.',
   },
@@ -192,26 +192,26 @@ const quizQuestions = [
     question:
       'EAWR 1989 Reg 29 ("Defence") permits a defendant to escape liability for some EAWR contraventions if they prove they took "all reasonable steps and exercised all due diligence" to avoid the contravention. How does this interact with HSWA s.40?',
     options: [
-      'They are mutually exclusive.',
-      'They run in parallel for the regulations Reg 29 covers. HSWA s.40 reverses the burden of proving "reasonably practicable"; EAWR Reg 29 provides a separate "all reasonable steps + all due diligence" defence. Both require contemporaneous evidence of a working programme — HSG107 records and IET CoP test data are how either defence is built.',
-      'Reg 29 has been repealed.',
-      'Reg 29 is automatic.',
+      'They run in parallel for the regulations Reg 29 covers, and both rest on the same programme records.',
+      'They are mutually exclusive — relying on s.40 forfeits any Reg 29 defence and vice versa.',
+      'Reg 29 has been repealed, so only the HSWA s.40 reverse burden remains in play.',
+      'Reg 29 is automatic — the defence applies without the defendant needing to evidence anything.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 29 is a parallel route to defence for the regulations it covers. In practice, the evidence that supports a Reg 29 defence is the same evidence that satisfies the s.40 reverse-burden test: the programme records.',
+      'HSWA s.40 reverses the burden of proving "reasonably practicable"; EAWR Reg 29 provides a separate "all reasonable steps + all due diligence" defence for the regulations it covers. Both require contemporaneous evidence of a working programme — HSG107 records and IET CoP test data are how either defence is built. The evidence that supports a Reg 29 defence is the same evidence that satisfies the s.40 reverse-burden test.',
   },
   {
     id: 10,
     question:
       'The Provision and Use of Work Equipment Regulations 1998 Reg 5(2) requires that "where any machinery has a maintenance log, the log is kept up to date". Why is this provision particularly relevant to PAT?',
     options: [
-      'It is not relevant — PAT is governed by EAWR only.',
-      'A PAT programme in essence creates the maintenance log for portable electrical work equipment. Reg 5(2) makes keeping that log up to date a stand-alone PUWER duty — failure to maintain the log is itself a contravention, even before any defect arises.',
-      'Reg 5(2) applies only to manufacturer-issued logs.',
-      'Reg 5(2) is advisory, not statutory.',
+      'It is not relevant — portable equipment is governed by EAWR Reg 4(2) only, not PUWER.',
+      'Reg 5(2) applies only to manufacturer-issued logbooks supplied with the machinery.',
+      'Reg 5(2) is advisory guidance in the ACOP, not a statutory requirement in itself.',
+      'A PAT programme is in essence the maintenance log, and Reg 5(2) makes keeping it up to date a duty.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 5(2) creates an independent obligation to maintain the log. For portable equipment, the PAT register / records IS the log. Letting it lapse — even if no defect has been identified — is a contravention in its own right.',
   },

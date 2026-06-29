@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 clause 7 introduces a new requirement on the placement of fire alarm interfaces. What is it?',
     options: [
-      'Interfaces must be red.',
-      'Interfaces must be inside the CIE.',
-      'Interfaces must be located so they are ACCESSIBLE for maintenance — aligned with CDM 2015 to reduce risks to maintenance personnel. Common consequence: interfaces should not be sited inside an enclosure provided for other equipment where access requires removing power to that other equipment or attendance by other parties (e.g. inside a switchgear cabinet that has to be isolated and locked off by the electrical contractor).',
-      'Interfaces must be remote.',
+      'Interfaces must be located so they are accessible for safe maintenance, per CDM 2015.',
+      'Interfaces must be finished in red so they are identifiable as fire-system equipment.',
+      'Interfaces must be housed inside the CIE enclosure so all wiring terminates in one place.',
+      'Interfaces must always be mounted remotely from the CIE, away from the panel enclosure.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The 2025 standard explicitly aligns with the Construction (Design and Management) Regulations 2015. The reasoning: interfaces require maintenance throughout the system's life. Designers must consider where the interface goes so future maintenance is safe and practicable. Sticking the interface in a switchgear cabinet because it was convenient at install creates a maintenance hazard later.",
   },
@@ -36,12 +36,12 @@ const inlineChecks = [
     id: 'fam3-s4-lift',
     question: 'What is "lift recall" and what European standard governs the interface?',
     options: [
-      'Manual lift call.',
-      'Phone-based.',
-      "Lift recall is the automatic return of lifts to the designated recall floor (typically the ground / final exit floor) on a fire alarm signal, with the lifts then taken out of service. The fire alarm system provides a signal to the lift control via a defined interface. BS EN 81-73 specifies the safety requirements for the lift's behaviour in fire conditions; the fire alarm interface is the trigger. Lifts must not be used by occupants for evacuation (firefighting lifts excepted).",
-      'Stair only.',
+      'The manual operation of a lift-lobby call button by a fire warden to bring the lifts down.',
+      'A telephone-based system letting occupants in a stalled lift speak to the control point.',
+      'A requirement that lifts be taken out of use and occupants directed to the stairs.',
+      'The automatic return of lifts to the recall floor on alarm, governed by BS EN 81-73.',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'BS EN 81-73 is the lift safety standard for behaviour in the event of fire. The fire alarm system feeds a recall signal via a monitored output (typically volt-free contact); the lift control reads it and executes the recall sequence. The cause-and-effect matrix records the recall trigger; the lift commissioning verifies the recall behaviour. Both standards work together.',
   },
@@ -49,12 +49,12 @@ const inlineChecks = [
     id: 'fam3-s4-monitored',
     question: 'What is the difference between a MONITORED and an UNMONITORED interface output?',
     options: [
-      'Colour.',
-      'Voltage.',
-      'Monitored: the fire alarm system continuously checks the integrity of the wiring between the interface and the controlled equipment (typically by passing a small standby current and monitoring for open / short circuits). A fault is reported as a system fault. Unmonitored: the wiring is not checked; a fault on the cable would not be detected. BS 5839-1 generally requires monitored outputs where the controlled function is part of life-safety response (sounders, voice alarm, evacuation outputs); unmonitored may be acceptable for non-critical functions.',
-      'Symbol.',
+      'A monitored output uses a different cable colour so installers can tell them apart.',
+      'A monitored output has its cable integrity continuously checked, reporting any fault.',
+      'A monitored output runs at a higher voltage to drive the controlled equipment.',
+      'A monitored output is marked on the panel, but both behave identically in service.',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Monitoring is essential where the controlled function is part of life-safety. A failed sounder cable is a critical fault that must be detected. A failed cable to a non-life-safety output (e.g. a process plant alert) may be tolerable as unmonitored. The design specifies which outputs are monitored and which are not; the CIE configuration matches.',
   },
@@ -63,12 +63,12 @@ const inlineChecks = [
     question:
       'What is the relevance of BS 8893 (newly normative reference in BS 5839-1:2025) to interface design?',
     options: [
-      'It is for cabling.',
-      'It is for batteries.',
-      'BS 8893 covers emergency voice communication (EVC) systems — the two-way communication systems used at disabled refuges to allow an occupant in a refuge to communicate with the fire warden / control point. The 2025 standard adds BS 8893 as a normative reference, signalling that EVC systems are now a standard part of life-safety design where Equality Act 2010 / inclusive design principles apply. The fire alarm interface to the EVC may signal alarm status; the EVC is its own life-safety system that must be designed and maintained alongside.',
-      'It is for power supplies.',
+      'BS 8893 covers emergency voice communication (EVC) systems used at disabled refuges.',
+      'BS 8893 specifies the fire-resisting cabling for interface circuits to controlled plant.',
+      'BS 8893 sets the requirements for the standby batteries on loss of mains supply.',
+      'BS 8893 covers the power-supply equipment (PSU) that feeds the fire alarm CIE.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Disabled refuges and EVC systems support inclusive evacuation. BS 8893 sets the EVC component standard. The 2025 normative reference means BS 5839-1:2025 expects interfaces and integration with EVC where refuges are present. BS EN 50518 covers monitoring and alarm receiving centre standards; together they form the framework for EVC and ARC integration around disabled persons in fire scenarios.',
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'Which BS 5839-1:2025 clause introduces the new accessibility requirement for fire alarm interfaces?',
     options: [
-      'Clause 13.',
-      'Clause 7. The clause requires interfaces to be located such that they are accessible for maintenance, in line with the Construction (Design and Management) Regulations 2015. The example given: interfaces should not be inside an enclosure provided for other equipment if access requires removing power to that other equipment or attendance by other parties.',
-      'Clause 22.',
-      'Clause 47.',
+      'Clause 7, requiring interfaces to be accessible for maintenance, per CDM 2015.',
+      'Clause 13, which sets out the spacing and siting of automatic fire detectors.',
+      'Clause 22, which covers planned disablement of parts of the system during servicing.',
+      'Clause 47, which deals with the documentation handed over on completion.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Clause 7 is a 2025 addition specifically for interface placement. It is a CDM-aligned requirement: design with maintenance in mind. The example in the clause (placement inside other equipment's enclosure) is one common scenario; the principle applies more broadly — any siting that creates a maintenance hazard or impracticality must be avoided.",
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     question:
       'A fire alarm system needs to recall lifts on a fire signal. What is the typical interface architecture?',
     options: [
-      'Hard-wired direct.',
-      'A monitored volt-free contact output from the fire alarm CIE / interface module to the lift controller. The lift controller reads the contact and executes the BS EN 81-73 recall sequence: lifts return to the recall floor, doors open, lifts are taken out of service. The fire alarm CIE display indicates recall is active. The cause-and-effect matrix records the recall trigger.',
-      'Manual cable.',
-      'Pneumatic.',
+      'A mains-voltage feed wired from the CIE into the lift motor circuit to cut its supply.',
+      'A manually operated key-switch at the lift lobby that a fire warden turns to recall lifts.',
+      'A pneumatic line from the panel to the lift controller that triggers recall on pressure loss.',
+      'A monitored volt-free contact to the lift controller, which runs the EN 81-73 recall.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Volt-free (or "dry") contact is the universal interface idiom — it works regardless of the lift controller\'s voltage / circuitry. Monitored means the cable run is checked. The cause-and-effect matrix says when recall fires; the BS EN 81-73 lift behaviour says what the lift does; the interface monitor says the cable is intact.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'What does "magnetic door holder" / "door release" mean in fire alarm interface design?',
     options: [
-      'A locking system.',
-      'A door holder is an electromagnet that holds open a fire-resisting door under normal conditions (allowing free passage for occupants and goods); the magnet de-energises on a fire alarm signal, releasing the door which closes (typically by a self-closer) to restore compartmentation. The fire alarm interface controls the magnet supply — typically a monitored output, fail-safe (loss of power = door closes). Used widely in commercial buildings, hospitals, schools.',
-      'A door alarm.',
-      'A door bell.',
+      'An electric lock that secures a fire door against use and releases it only on a fire signal.',
+      'A door-mounted contact that raises a fault at the panel whenever a fire door is propped open.',
+      'An electromagnet that holds a fire door open and releases it to close on a fire signal.',
+      'A local sounder built into a fire door that warns when the door is opened during an alarm.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Door holders integrate the active fire alarm system with passive compartmentation. Free passage during normal operation; self-closing under fire alarm to restore the compartment. Fail-safe: any loss of power (fault, deliberate isolation, fire damage to the magnet circuit) closes the door. The cause-and-effect matrix records the release trigger.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'What are typical "plant shutdown" interfaces and why are they used?',
     options: [
-      'Office lighting.',
-      'Outputs to HVAC systems (closing fire dampers, shutting fans), gas isolation valves, fuel shut-offs, and process plant emergency stops. Used to prevent fire / smoke spread (HVAC), to remove fuel from the area (gas), and to render plant safe. The fire alarm CIE provides monitored interface outputs; the controlled equipment has an emergency-stop input that triggers on the contact change. Documented in the cause-and-effect matrix.',
-      'Refrigerators.',
-      'Domestic appliances.',
+      'Outputs to HVAC, gas isolation and process plant, to stop smoke spread and make plant safe.',
+      'Outputs that switch off the general office lighting on alarm so exit signs stand out.',
+      'Outputs that isolate refrigeration plant so food storage areas are made safe before evacuation.',
+      'Outputs that disconnect domestic-style appliances such as kettles and microwaves in kitchens.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Plant shutdown is a major life-safety integration: HVAC continuing to run during a fire spreads smoke through the ductwork; live gas during a fire feeds the fire. The interfaces shut these systems down at the right moment per the matrix. The interface outputs are typically monitored (life-safety) and the controlled equipment is tested at commissioning and at every service.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does the Equality Act 2010 obligation produce in fire alarm interface design?',
     options: [
-      'Coloured cables.',
-      'Accessibility considerations: provision of disabled refuges with two-way communication (BS 8893 EVC systems), visual alarm devices (VADs / strobes) for hearing-impaired occupants in addition to audible sounders, evacuation chairs near refuges, and in some cases tactile / vibrating signals. The fire alarm interface design must accommodate these — the matrix records VAD operation per zone and the EVC signalling, and the lift recall logic accommodates evacuation lift use where provided.',
-      'Larger CIE.',
-      'Network only.',
+      'A requirement to colour-code interface cabling so accessibility circuits are identifiable.',
+      'A requirement to fit a larger CIE so additional accessibility zones display on one panel.',
+      'A requirement to network all panels so accessibility status is shared across the building.',
+      'Provision for inclusive evacuation: refuges with EVC, VADs, and evacuation chairs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inclusive evacuation is now mainstream. BS 5839-1:2025 adds BS 8893 as a normative reference for EVC; visual alarm devices are governed by BS EN 54-23. The fire alarm system is one part of an inclusive evacuation strategy that also includes physical refuges, evacuation chairs, training, and sometimes evacuation lifts.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A fire alarm system is to interface with a security access control system that locks specific doors. What is the typical fail-safe design?',
     options: [
-      'Doors stay locked.',
-      'Doors should fail-safe to UNLOCKED on fire alarm: loss of access-control power (deliberate or by fault) causes the lock to release, allowing escape. Achieved typically by an electromagnetic lock that the access control system holds energised; the fire alarm interface drops the supply (or signals the access control to drop the supply) on fire alarm. Mechanical override may also exist for individual doors. The fire alarm cause-and-effect records the release trigger.',
-      'Doors stay open always.',
-      'No interface.',
+      'Doors should fail-secure and stay locked on alarm, with escape only via final-exit doors.',
+      'Doors should be physically wedged open each morning so they cannot lock during evacuation.',
+      'Doors should fail-safe to unlocked on alarm, so loss of lock power releases them for escape.',
+      'No interface is needed; the access-control system detects the fire itself and releases the doors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Life-safety priority over security: doors on escape routes must release on fire alarm to allow escape. Magnetic locks are common (fail-safe by design — loss of power releases the lock); some other lock technologies need explicit signalling. The fire alarm interface drives the release. Building occupants must be able to leave; that is non-negotiable.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'The fire alarm system must signal a Building Management System (BMS). What is the typical interface and what data is conveyed?',
     options: [
-      'Direct mains.',
-      'Either a set of volt-free contact outputs (one per status: fire, fault, isolation) read by the BMS as digital inputs, OR a serial / network protocol (BACnet, Modbus, proprietary) carrying richer data including zone-level fire and fault status. The BMS uses the data to log events, alert facilities staff, and integrate with other building systems. The fire alarm system must continue to function regardless of BMS state — BMS is informed by the fire alarm, not vice versa for life-safety.',
-      'Audio.',
-      'Light beam.',
+      'Volt-free status contacts or a serial protocol carrying zone-level fire and fault status.',
+      'A direct mains-voltage connection from the CIE that powers the BMS during a fire condition.',
+      'An audio tone passed from the sounder circuit into the BMS, which decodes the fire status.',
+      'An optical light-beam link between the panel and the BMS conveying status across the room.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BMS integration is informational: the BMS receives status; the BMS does not control the fire alarm. The interface respects the principle that life-safety functions remain entirely within the fire alarm system. A BMS failure must not affect fire detection, alarm, or evacuation. The interface is monitored where the BMS uses the signal for life-safety annotation; otherwise unmonitored may be acceptable.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 7 example states interfaces should NOT be sited inside an enclosure for other equipment if access requires what?',
     options: [
-      'A short walk.',
-      'A ladder.',
-      'Removing power to the other equipment OR attendance by other parties — i.e. if accessing the fire alarm interface for routine maintenance would require isolating a switchgear cabinet (creating a power outage) or coordinating with the electrical contractor responsible for that cabinet. The example is illustrative; the principle is broader — interface placement must allow safe and practicable maintenance.',
-      'Specialist tools.',
+      'Walking more than a set distance from the CIE to reach the interface during a service.',
+      'Using a ladder or other access equipment to reach an interface mounted at high level.',
+      'Using a manufacturer-specific tool or key to open the enclosure housing the interface.',
+      'Removing power to the other equipment, or attendance by other parties, to gain access.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The 2025 clause aligns with CDM 2015. Designers think about maintenance, not just install. An interface that requires the building to be partially shut down for routine maintenance is a poor design — the maintenance will be deferred or skipped, and the interface will degrade out of compliance. The clause directs designers to plan for the system's maintenance lifecycle.",
   },
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a disabled refuge and how does the fire alarm system interface with it?',
     options: [
-      'A storage room.',
-      'A protected space within an escape route where a person who cannot self-evacuate (e.g. wheelchair user) waits for assistance. Equipped with a two-way EVC system (per BS 8893) connecting to a control point manned during the evacuation. The fire alarm system signals "fire" status to the EVC system so the refuge occupant knows the alarm has activated; the EVC provides voice communication so they can request help. Refuges are provided per Equality Act 2010 / Approved Document M / building fire engineering.',
-      'A locked room.',
-      'A bedroom.',
+      'A dedicated storage room near the stair core where evacuation chairs are kept.',
+      'A protected space where a person who cannot self-evacuate waits for assistance, with EVC.',
+      'A room kept locked during evacuation so occupants are directed past it to the final exit.',
+      'A ground-floor bedroom set aside for occupants who would struggle on the stairs in a fire.',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'For a fire alarm interface to a critical life-safety output (sounders / VADs / lift recall), should the wiring be monitored?',
     options: [
-      'Optional.',
-      'YES — the wiring must be monitored. The fire alarm system continuously checks the integrity of the cable run. Open-circuit (cable break) and short-circuit (damage) are reported as faults. The CIE indicates the fault; the responsible person and servicing organisation respond. Unmonitored wiring on life-safety outputs is non-compliant with BS 5839-1 because a failed cable would only be discovered at the next test, by which time a real fire could occur with the output non-functional.',
-      'Only at install.',
-      'Never.',
+      'Yes — the wiring must be monitored so a cable fault is reported, not missed until a test.',
+      'Monitoring is optional where the cable run to the output is short and mechanically protected.',
+      'The wiring need only be checked at installation and commissioning, not monitored thereafter.',
+      'Monitoring of output wiring is never required, as the output is exercised in routine tests.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Monitoring is the BS 5839-1 baseline for life-safety outputs. The reasoning: a critical output that does not work in a fire is a worse failure mode than a CIE that does not work, because the CIE failure is signalled by the fault while the output failure can be silent. Continuous monitoring of cable integrity catches the silent failure mode.',
   },

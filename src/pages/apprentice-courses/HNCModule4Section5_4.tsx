@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'ups-online',
     question: 'What is the main advantage of an online (double-conversion) UPS?',
     options: [
-      'Forming, establishing, developing, closing',
-      'Depends on system type and capacity',
-      'Correct connection of line, neutral, and earth conductors',
+      'Lowest purchase cost of all UPS topologies',
+      'Highest efficiency because mains passes straight to the load',
+      'No batteries are required for short outages',
       'Zero transfer time - continuous power conditioning',
     ],
     correctIndex: 3,
@@ -60,10 +60,10 @@ const quickCheckQuestions = [
     id: 'ats',
     question: 'What does an Automatic Transfer Switch (ATS) do?',
     options: [
-      'To continuously reassess risks as conditions change during the work',
+      'Converts the generator DC output into clean AC for the load',
       'Switches load between mains and generator automatically',
-      'Installation method, ambient temperature, grouping, thermal insulation',
-      'A graph showing how electrical demand varies over time',
+      'Charges the UPS batteries during normal mains operation',
+      'Limits the inrush current when the generator first starts',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the purpose of a UPS system?',
     options: [
-      'Single fibre cable for one-way or BiDi links',
+      'To correct the power factor of inductive loads',
       'To provide uninterrupted power during mains failures',
-      'Record the exact measured value with appropriate units',
-      'Non-combustible enclosure (metal or fire-resistant)',
+      'To step the supply voltage down for low-voltage equipment',
+      'To limit the prospective fault current at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'How does an offline (standby) UPS differ from an online UPS?',
     options: [
-      'Heat gains cannot escape, temperatures rise',
-      'In each individual DALI driver/ballast',
+      'Offline UPS always conditions the supply continuously',
+      'Online UPS has a longer transfer time than offline',
       'Offline UPS only switches to battery when mains fails',
-      'Moves to lower flow, higher head (towards shutoff)',
+      'Online UPS cannot recharge its batteries from mains',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the function of the rectifier in an online UPS?',
     options: [
-      'A self-propelled boom lift that can be driven with the platform raised',
-      'Overloading, loose connections, or high resistance contacts',
-      'Calmly repeating your position without getting drawn into arguments',
+      'To convert the inverter DC output back to mains AC',
+      'To switch the load to the bypass during maintenance',
+      'To synchronise the generator with the mains supply',
       'To convert AC mains to DC for charging batteries and supplying inverter',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'What battery technology is most commonly used in modern UPS systems?',
     options: [
       'Lithium-ion or VRLA (Valve Regulated Lead Acid)',
-      'Enhanced fire stopping and emergency lighting requirements',
-      'Class EN 131 Professional — suitable for trade use',
-      'CO2 (carbon dioxide) or dry powder',
+      'Nickel-cadmium cells in all modern data centre UPS',
+      'Flooded lead-acid as the only maintenance-free option',
+      'Supercapacitors providing several hours of autonomy',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is generator synchronisation important before transferring load?',
     options: [
-      'On-site in an accessible location near the fire panel or site office',
+      'To reduce the fuel consumption of the generator',
       'To ensure voltage, frequency and phase match before closing transfer switch',
-      'Provide physical separation between workers and live parts, preventing accidental contact',
-      'That base plates are on sole boards, the ground is firm, and standards are plumb',
+      'To allow the UPS batteries to recharge more quickly',
+      'To limit the starting current drawn by the generator',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: "What is 'N+1' redundancy in UPS systems?",
     options: [
-      'To determine cable sizes and protective device ratings',
-      'Achieving net zero greenhouse gas emissions by 2050',
+      'One UPS module shared between two separate loads',
+      'A single UPS sized to exactly match the load',
       'One extra UPS module beyond minimum needed for the load',
-      'To prevent fire spread through cable penetrations',
+      'Two fully duplicated UPS systems with no shared parts',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: "What causes 'battery float' operation?",
     options: [
       'Continuous trickle charging to maintain full charge',
-      'RF interference and spectrum management',
-      'AC residual currents (and some types handle DC components)',
-      'Work in special locations or involving new circuits',
+      'Rapid discharge of the battery during an outage',
+      'A deliberate full discharge test of the battery bank',
+      'Switching the load directly onto the bypass supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the function of a bypass in a UPS system?',
     options: [
-      'The period of employment plus a reasonable period after (typically 3-6 years)',
+      'To increase the autonomy time of the battery bank',
       'To allow maintenance and provide alternative power path if UPS fails',
-      'Any person who controls the work activity to any extent',
-      'Regularly reviewing progress towards your goal and adjusting your approach',
+      'To synchronise the UPS output with the standby generator',
+      'To convert the incoming AC supply into DC for the batteries',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: "What is 'generator block loading' and why should it be avoided?",
     options: [
-      'Explain the underlying theory and regulation references before the practical task',
-      'Just fits — but with virtually no headroom for additional cables or future modification',
+      'Applying the load gradually in small steps to the generator',
+      'Running the generator with no load connected for warm-up',
       'Connecting full load instantly causing frequency/voltage disturbance',
-      'Critical path activities with lowest crash cost per day',
+      'Sharing the load equally between two parallel generators',
     ],
     correctAnswer: 2,
     explanation:

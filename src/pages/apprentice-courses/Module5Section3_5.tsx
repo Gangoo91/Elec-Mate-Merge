@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a variation in electrical work?',
     options: [
-      'Permanent magnet synchronous motor (PMSM)',
+      'Any fault found during inspection and testing',
       'A change to the agreed design, scope, or programme',
-      'Functional testing of detection and alarm systems',
-      'To reduce starting current and starting torque',
+      'A difference between two test instrument readings',
+      'A delay caused by waiting for materials',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Give one example of an unforeseen issue.',
     options: [
-      'Suitable sleeve or grommet',
-      'Three-phase motor circuits',
+      'A planned coordination meeting',
+      'A scheduled material delivery',
       'Hidden beams blocking cable routes',
-      'Larger cable CSA or shorter route',
+      'A routine site inspection',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must all changes be recorded formally?',
     options: [
-      'The efficiency of cost utilisation on the project',
-      'Undersized - design current exceeds cable capacity',
-      'Close to the PV array and accessible',
+      'To reduce the amount of cable used',
+      'To shorten the project programme',
+      'To remove the need for client sign-off',
       'To avoid disputes and ensure compliance',
     ],
     correctIndex: 3,
@@ -60,10 +60,10 @@ const Module5Section3_5 = () => {
       id: 1,
       question: 'What is a variation in project work?',
       options: [
-        'Additional strain relief and environmental sealing',
+        'A defect identified during final inspection',
         'A change to the agreed design, scope, or programme',
-        'That there is no breakdown between conductors or to earth',
-        'In the reverse order to assembly (top down)',
+        'A difference between estimated and actual labour hours',
+        'The order in which trades complete their work',
       ],
       correctAnswer: 1,
       explanation:
@@ -97,20 +97,25 @@ const Module5Section3_5 = () => {
     },
     {
       id: 4,
-      question: 'True or False: Small changes that save time can be made without approval.',
-      options: ['False', 'True'],
+      question: 'Can small changes that save time be made without approval?',
+      options: [
+        'No - all changes must be authorised first',
+        'Yes - if they save the client money',
+        'Yes - if they take less than an hour',
+        'Yes - if the supervisor is off site',
+      ],
       correctAnswer: 0,
       explanation:
-        'False. All changes, regardless of size, must be authorised to ensure compliance and avoid disputes.',
+        'All changes, regardless of size, must be authorised to ensure compliance and avoid disputes.',
     },
     {
       id: 5,
       question: 'Why must all variations be recorded in writing?',
       options: [
-        'Eliminate the need for manual handling entirely',
+        'To remove the need for site instructions',
         'To avoid disputes and ensure compliance',
-        'To verify operation under failure',
-        'Intelligent power management with sleep modes',
+        'To reduce the amount of materials ordered',
+        'To shorten the overall project programme',
       ],
       correctAnswer: 1,
       explanation:
@@ -120,10 +125,10 @@ const Module5Section3_5 = () => {
       id: 6,
       question: 'Who should approve variations before work proceeds?',
       options: [
-        'The site manager or coordinator',
-        'Principal Accountable Person',
+        'The client without consulting anyone',
+        'Any electrician on site',
         'Supervisor or project manager',
-        'A missing guardrail or toeboard',
+        'The trade affected by the change',
       ],
       correctAnswer: 2,
       explanation:
@@ -159,10 +164,10 @@ const Module5Section3_5 = () => {
       id: 9,
       question: 'What document is used to formally record changes?',
       options: [
-        'Electricity at Work Regulations',
+        'A risk assessment form',
         'Variation order or site instruction',
-        'Industry-wide retirement savings scheme',
-        'Condition assessment for continued safe use',
+        'An electrical installation certificate',
+        'A method statement',
       ],
       correctAnswer: 1,
       explanation:
@@ -172,10 +177,10 @@ const Module5Section3_5 = () => {
       id: 10,
       question: 'What is one way to reduce disruption while waiting for an issue to be resolved?',
       options: [
-        '350-400 kVA (20-30% spare)',
-        'Cognitive Behavioural Therapy (CBT)',
+        'Send the whole team home for the day',
+        'Carry on with the affected work anyway',
         'Switch to another planned task',
-        'All brakes must be released',
+        'Wait idle until the issue is fixed',
       ],
       correctAnswer: 2,
       explanation:

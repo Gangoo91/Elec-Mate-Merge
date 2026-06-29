@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.542.102 covers DC-side functional bonding. What does "functional bonding" mean in this context, and when is it applied?',
     options: [
-      'No bonding allowed',
-      'Functional bonding = electrical bonding of one polarity (typically negative) of the PV DC system to earth for system functional reasons (manufacturer-specified for performance, leakage detection, or galvanic isolation). Applied only when (a) the inverter has galvanic isolation between DC and AC (transformer-isolated, NOT transformerless), AND (b) the module manufacturer specifies functional bonding for performance reasons (some thin-film and some high-efficiency crystalline modules). Single-point only',
-      'Bond everything everywhere',
-      'No DC earthing exists',
+      'Bonding of the DC side is never permitted under any circumstances',
+      'Single-point bonding of one DC polarity to earth, only with an isolated inverter',
+      'Bonding of both DC polarities at every module across the whole array',
+      'A rule that abolishes DC earthing entirely on PV installations',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Transformerless inverters (most modern UK domestic inverters) vs transformer-isolated inverters. What\'s the difference and how does it affect bonding?',
     options: [
-      'No difference',
-      'Transformerless inverters have NO galvanic isolation between the DC array and the AC output — the DC negative is effectively at AC neutral potential. Transformer-isolated inverters have a transformer providing galvanic isolation between DC and AC. Functional bonding of one DC polarity is only safe with transformer-isolated inverters; on transformerless inverters, functional bonding would create a fault path through the inverter and is NOT permitted',
-      'Transformerless can never have PV',
-      'Same bonding applies to both',
+      'No practical difference; both isolate the DC array from the AC output',
+      'Transformerless has no DC-AC isolation, so DC functional bonding is not permitted',
+      'Transformerless inverters can never be used on a PV array at all',
+      'Identical bonding requirements apply to both inverter types',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Where functional bonding is applied per Reg 712.542.102, what\'s the "single-point" requirement?',
     options: [
-      'Multiple bonds everywhere',
-      'Single bonding point only — one connection between the DC polarity and earth at one location. Multiple bonding points create earth loops, which are an electromagnetic interference and lightning-loop hazard. Typically the single bond is at the combiner / inverter location, not at module level. The cert evidence bundle records the single bonding point location',
-      'No bonding',
-      'Bond at every module',
+      'Several bonds spread across the array to share the bonding current',
+      'One connection only, between the DC polarity and earth at a single location',
+      'No bonding point at all, leaving the DC polarity floating',
+      'A separate bonding point fitted at each individual module',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.521.102 covers lightning-loop minimisation. What\'s a "lightning loop" on a PV install, and how is it minimised?',
     options: [
-      'Lightning loops are required',
-      'A lightning loop = the area enclosed by the DC conductor path (live conductor) and the equipotential bonding conductor (earth path) running in parallel. A large lightning loop captures lightning EMP energy by induction, inducing damaging voltages across the loop. Mitigation per Reg 712.521.102: route DC conductors and equipotential bonding conductors close together (side by side) along the same path, minimising the enclosed area. Standard practice: same conduit / containment for DC + bonding',
-      'Loops have no effect',
-      'Lightning loops only matter at sea',
+      'A loop deliberately formed to attract and dissipate lightning safely',
+      'The area enclosed by the DC and bonding conductors; minimise it by routing them together',
+      'A wiring arrangement that has no measurable effect on induced voltages',
+      'A hazard that only arises on marine or offshore PV installations',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'Module frame bonding — what\'s the standard approach for a UK PV install, and what does it achieve?',
     options: [
-      'No bonding needed',
-      'Module frames are bonded together via the mounting rail (the rail is electrically continuous when correctly assembled). The mounting rail is bonded at a single point to the building bonding system / earthing terminal at the array — typically via a dedicated bonding conductor from the rail to the consumer-unit / inverter earth. Achieves: (a) equipotential bonding of all module frames; (b) protective earthing for any fault current to frame; (c) lightning equipotentialisation. NOT functional bonding (which is separate, optional, polarity bonding)',
-      'Bond each module individually with a separate conductor',
-      'Bond only the inverter',
+      'No frame bonding is needed where modules are double-insulated',
+      'Frames bond via the mounting rail, then the rail bonds to earth at a single point',
+      'Each module is bonded individually with its own separate conductor to earth',
+      'Only the inverter is bonded; the module frames are left unbonded',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A residential property has an existing external Lightning Protection System (LPS) per BS EN 62305. New PV install on the roof. What\'s the integration approach?',
     options: [
-      'Ignore the LPS',
-      'Coordinate with the existing LPS. PV array must be (a) within the LPS protected zone (PV array tip not exposed to direct strike), OR (b) integrated into the LPS as a protected element with appropriate separation distance per BS EN 62305-3. PV equipotential bonding conductor connects to the LPS bonding network. Surge protection devices (SPDs — Section 6) on both DC and AC sides per BS EN 62305-4. Structural engineer / LPS specialist review recommended',
-      'Remove the LPS',
-      'Disconnect everything',
+      'Ignore the existing LPS and treat the PV install as fully independent',
+      'Coordinate with the LPS per BS EN 62305 — protected zone, single-point bonding, SPDs',
+      'Remove the existing LPS, since the PV array supersedes its function',
+      'Disconnect the LPS during PV operation to avoid earth loops',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'On a metal-sheet roof PV install, the metal roof sheet may become an "extraneous-conductive-part" requiring supplementary bonding. When is this triggered?',
     options: [
-      'Never',
-      'Triggered when the metal sheet is electrically connected to the building structure in a way that could carry fault current, AND the resistance from the sheet to true earth is below the BS 7671 trigger threshold (effectively making it a fault-current path). The structural / electrical context dictates: a fully-isolated metal sheet on an insulating roof structure is typically NOT extraneous; a metal sheet bonded to internal structural steel typically IS. Bonding conductor (minimum 4 mm² copper equivalent per Reg 712.542.3.101, green/yellow) ties the sheet to the supplementary bonding network. Decision recorded in the cert evidence bundle',
-      'Always bond every sheet',
-      'Never bond metal',
+      'It can never become an extraneous-conductive-part, so bonding never applies',
+      'When its resistance to true earth is below the BS 7671 trigger threshold',
+      'In every case, so every metal sheet must always be bonded as standard',
+      'In no case, since metal roof sheets must never be bonded to earth',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A modern UK domestic transformerless inverter is installed. The customer\'s PV module datasheet specifies "negative pole functional bonding required for performance". What\'s the design issue?',
     options: [
-      'No issue',
-      'INCOMPATIBLE combination. The module requires functional bonding (Reg 712.542.102), but the transformerless inverter has no galvanic isolation between DC and AC — bonding one DC polarity creates a fault path. Resolution: (a) substitute a transformer-isolated inverter that supports the module\'s functional bonding spec; (b) substitute a different module that doesn\'t require functional bonding; (c) some modern transformerless inverters are certified for use without bonding on bonded-required modules — verify manufacturer compatibility statement. The design pack must record the resolution',
-      'Just bond the AC side',
-      'Skip the bonding',
+      'Incompatible — bonding a DC polarity on a transformerless inverter makes a fault path; change inverter, change module, or verify a manufacturer compatibility statement',
+      'No issue — the transformerless inverter handles the bonding requirement automatically',
+      'Resolve it by applying the functional bonding to the AC output side instead',
+      'Leave the functional bonding off, since the module spec is only advisory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Transformerless inverter + module that requires functional bonding = incompatible without specific manufacturer certification. The transformerless inverter has no galvanic isolation; bonding one DC polarity creates a fault path through the inverter. Options: (1) transformer-isolated inverter (supports functional bonding); (2) different module (no bonding requirement); (3) verify manufacturer compatibility statement (some modern transformerless inverters have explicit certification for use with bonded-required modules via specialised internal circuitry). The MCS MIS 3002 design pack records the chosen resolution and the manufacturer compatibility evidence.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'PV install on a tiled roof. DC cable runs from array along one side of the roof. Equipotential bonding conductor runs from the array on the OTHER side, both going to the inverter location. What\'s the issue?',
     options: [
-      'No issue — they reach the inverter',
-      'Large lightning loop — the DC cable and the bonding conductor enclose a substantial area (the roof and its diagonal route from array to inverter). Per Reg 712.521.102, the loop captures lightning EMP and induces damaging voltages. Rectification: route the DC cable and bonding conductor SIDE BY SIDE along the same path — same conduit or strapped together — minimising the loop area to negligible. Design discipline: plan the DC + bonding route together at the design stage',
-      'Cables explode',
-      'Cables must be apart',
+      'No issue — both conductors reach the inverter, so the routing is acceptable',
+      'The diverging routes will overload the bonding conductor during normal operation',
+      'Large lightning loop — the enclosed area captures EMP per Reg 712.521.102; reroute DC and bonding side-by-side to minimise it',
+      'Required separation — DC and bonding conductors must run apart on opposite sides',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The DC and bonding routes diverging across the roof create a large lightning loop — possibly several square metres of enclosed area. Per Reg 712.521.102, this loop captures lightning EMP energy by induction, leading to damaging induced voltages on the DC side during nearby lightning strikes. Rectification: route DC and bonding side-by-side, minimising the loop area to a few square millimetres (cables strapped together or in the same conduit). The design pack records the DC + bonding route plan; install photos evidence the side-by-side routing.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A residential PV install has the property\'s consumer unit on the ground floor, the inverter in the loft (10 m wire run), the array on the roof (15 m DC run). Where is the single bonding point for the array frame?',
     options: [
-      'At every module',
-      'At the inverter location (or a single accessible point near the inverter). The bonding conductor from the array (mounting rail) terminates at this single point, alongside any DC functional bonding (if applicable). From here, a single bonding conductor extends to the building main earthing terminal (MET) at the consumer unit. Avoid: bonding at each module, at the consumer unit AND at the inverter (creates loops), or skipping bonding entirely',
-      'At every connector',
-      'In the garden',
+      'A separate bonding point at each individual module frame on the roof',
+      'A bonding point at every DC plug-and-socket connector in the array',
+      'At a separate earth electrode driven into the ground outside the property',
+      'At one accessible point near the inverter, with a single conductor on to the building main earthing terminal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Single-point bonding discipline: array frame bonding terminates at one accessible point (typically at the inverter), where the bonding conductor extends to the building main earthing terminal (MET). This ensures: (a) all array metalwork is equipotentially bonded; (b) one path to the building earthing system; (c) no earth loops; (d) maintenance access is simple. The cert evidence bundle records the bonding-point location, the conductor size (typically 4-6 mm²), and the route.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A nearby lightning strike couples energy into a PV install\'s DC cable. Without SPDs, what would typically happen?',
     options: [
-      'Nothing',
-      'The induced voltage spike (typically kV-range) overstresses the inverter input components — likely permanent damage (input MOSFETs, MPPT controller, DC bus capacitors). Potentially also damages module bypass diodes. Mitigation: DC-side SPDs at the combiner / inverter location per BS EN 61643-31 (LPL II or higher Type-2 SPD); AC-side SPDs at the consumer unit or inverter AC output per BS EN 61643-11. SPDs are sacrificial — they take the spike, fail short, and need replacing after a strike event',
-      'PV operates better',
-      'Inverter celebrates',
+      'A kV-range spike overstresses the inverter input and bypass diodes; DC and AC SPDs per BS EN 61643 take the surge sacrificially',
+      'No effect — the induced voltage dissipates harmlessly before reaching the inverter',
+      'A small efficiency gain, as the surge briefly boosts the DC bus voltage',
+      'The inverter rides through the spike and continues exporting without any stress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lightning-induced voltage spikes on PV DC and AC sides are a real risk in the UK — nearby strikes (not direct, but within hundreds of metres) couple kV-range energy through induction. Without SPDs: inverter components fail (input stage, MPPT, DC bus); module bypass diodes can fail; warranty void if SPDs not fitted (some manufacturers specify SPDs as warranty condition). Mitigation: DC-side SPDs at combiner / inverter (BS EN 61643-31 LPL II or Type-2); AC-side SPDs at consumer unit or inverter AC output (BS EN 61643-11). SPDs are sacrificial — replace after a strike event.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'An installer fits a galvanically-isolated (transformer) inverter and a module that does NOT require functional bonding. Does functional bonding need to be applied?',
     options: [
-      'Always required',
-      'No — functional bonding is applied ONLY when the module manufacturer specifies it. The galvanically-isolated inverter makes functional bonding SAFE if needed (the transformer prevents the bonding from creating a fault path), but it doesn\'t make functional bonding REQUIRED. The default is no functional bonding unless the module datasheet specifies it. The cert evidence bundle records the design decision and the supporting manufacturer datasheets',
-      'Bond everywhere',
-      'No earthing at all',
+      'Yes — a galvanically-isolated inverter always requires DC functional bonding',
+      'Yes — bond both DC polarities to earth wherever an isolating transformer is fitted',
+      'No — functional bonding applies only when the module datasheet specifies it; isolation makes it safe, not mandatory',
+      'No — and no protective earthing or equipotential bonding is needed either',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Functional bonding is module-driven, not inverter-driven. The galvanically-isolated inverter creates the SAFE CONDITION for functional bonding (if needed); the module manufacturer datasheet specifies whether bonding is REQUIRED. Most standard crystalline modules don\'t require functional bonding. Some high-efficiency modules (certain SunPower, certain n-type / TOPCon, thin-film) require positive or negative bonding for performance. The cert evidence bundle records the design decision, citing the module datasheet and the inverter manufacturer compatibility.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Residential property has an existing BS EN 62305 LPS with air-termination grid covering the roof. PV array placement?',
     options: [
-      'Above the LPS air terminations',
-      'Within the LPS protected zone, with adequate separation distance per BS EN 62305-3. The PV array tips must not protrude above the LPS air termination level (would expose them to direct strike). The PV bonding conductor connects to the LPS bonding network at a single point. SPDs on both DC and AC sides per BS EN 62305-4. LPS specialist review for commercial / industrial; informed competent installer for typical domestic',
-      'Anywhere',
-      'On the chimney',
+      'Mounted above the air-termination grid so the array forms the highest point',
+      'Anywhere on the roof, since the existing LPS already protects the whole building',
+      'Concentrated around the chimney stack to keep clear of the air terminations',
+      'Within the LPS protected zone with BS EN 62305-3 separation; bonded to the LPS at one point, SPDs both sides',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PV on a property with existing LPS per BS EN 62305: PV array must be within the LPS protected zone (cone of protection cast by the air termination grid) — array tips do NOT protrude above the air termination level. PV bonding connects to the LPS bonding network at a single point. SPDs on DC and AC per BS EN 62305-4. The standard ensures the LPS continues to protect the property AND protects the PV install from direct strike and induced EMP.',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'A metal-sheet roof install. After install, the cert evidence bundle records "metal sheet bonded to supplementary bonding network". Why might this be necessary?',
     options: [
-      'It\'s never necessary',
-      'The metal sheet may become an extraneous-conductive-part — electrically connected to the building structure (e.g. via the bonded mounting rails) and at a potential that could carry fault current. Per BS 7671 Section 411 supplementary bonding requirements, where its resistance to true earth is below the trigger threshold AND it could carry fault current, bonding to the supplementary bonding network is required. The cert evidence bundle records the resistance measurement and the bonding decision',
-      'Metal sheets always need bonding regardless',
-      'Customer\'s preference',
+      'It is never necessary to bond a metal roof sheet under any circumstances',
+      'The sheet can become an extraneous-conductive-part — a low-resistance fault path requiring supplementary bonding per Section 411',
+      'Metal sheets always require bonding regardless of their electrical context',
+      'The sheet is bonded purely at the customer\'s request, with no technical basis',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'The PWI common-mistakes list flags four high-frequency bonding / lightning faults on UK PV installs. What are they?',
     options: [
-      'None',
-      '(1) Functional bonding applied on transformerless inverter (creating fault path); (2) Multiple bonding points creating earth loops; (3) Large lightning loop from DC + bonding routed separately; (4) Missing SPDs on DC and AC sides. Each is a Reg 712.421 / 712.542.102 / 712.521.102 concern and a high-frequency MCS audit finding',
-      'Customer satisfaction',
-      'Module colour',
+      'Loose DC connectors, dirty modules, undersized cable and reversed string polarity',
+      'Functional bonding on a transformerless inverter, multiple bond points, large lightning loop and missing SPDs',
+      'Customer satisfaction, handover paperwork, scaffold hire and inverter location choice',
+      'Module colour mismatch, frame finish, roof tile shade and cable routing aesthetics',
     ],
     correctAnswer: 1,
     explanation:

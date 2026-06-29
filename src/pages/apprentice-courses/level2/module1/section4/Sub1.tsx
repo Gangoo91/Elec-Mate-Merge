@@ -41,10 +41,10 @@ const checks = [
     id: 'ppe-purpose-check',
     question: 'What is PPE actually for?',
     options: [
-      'The scaffold is incomplete or unsafe and must NOT be used',
-      'HMRC bailiffs can force entry on a first visit',
+      'To remove the hazard at its source so it can’t harm anyone',
+      'To satisfy the client that the site looks professional',
       'To protect you when other controls can’t fully remove the risk',
-      'Gather information, analyse, hypothesise, test, rectify',
+      'To replace the need for isolation and other higher controls',
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const checks = [
     id: 'ppe-hierarchy-check',
     question: 'Where does PPE sit in the hierarchy of control?',
     options: [
-      'Illuminance at specific grid points showing uniformity',
-      '7-22kW (typically 7kW for single-phase)',
-      'Happiness, sadness, anger, fear, surprise, and disgust',
+      'First — it’s the most important control to apply',
+      'Second — just after elimination of the hazard',
+      'Equal with engineering controls — they’re interchangeable',
       'Last — when nothing higher up can fully remove the risk',
     ],
     correctIndex: 3,
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'In the hierarchy of control, what comes BEFORE PPE?',
     options: [
-      'Ingress Protection - protection against solid objects and liquids',
-      'To show the original approved programme for comparison',
+      'Nothing — PPE is always the first thing to put in place',
+      'Only a risk assessment, then straight to PPE',
       'Eliminate, substitute, engineering controls, administrative controls',
-      'A diamond with a black image of a hand and a surface being eaten away by liquid drops',
+      'Just engineering controls like RCDs and guards',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     id: 3,
     question: 'An electrician says "We don’t need to isolate, just stick the gloves on". What’s wrong with that?',
     options: [
-      "It confirms understanding, engages workers and surfaces practical concerns",
-      "The total greenhouse gas emissions from extraction, manufacture, and transport of materials",
-      "Remove them from the scene, listen without judgement, and ensure they are referred for appropriate support",
+      "Nothing — gloves are perfectly adequate for working live",
+      "The gloves should be a higher class than Class 0 for this",
+      "It’s fine as long as the supervisor authorises it verbally",
       "PPE shouldn’t replace a higher control like isolation — gloves are the BACKSTOP, not the plan",
     ],
     correctAnswer: 3,
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "Your supervisor hands you a 'one-size-fits-all' high-vis that drowns you and gloves two sizes too big. Is this OK?",
     options: [
-      "72 hours of awareness, where the breach is likely to result in a risk to individuals",
+      "Yes — any PPE is better than none, just make it work",
       "No — PPE that doesn’t fit doesn’t protect; ask for the right size",
-      "Zone classifications, IP ratings, equipotential bonding, and RCD protection",
-      "Do not energise until fault is found and rectified",
+      "Yes — one-size-fits-all kit meets the regulations by default",
+      "Only the gloves matter; the hi-vis size is unimportant",
     ],
     correctAnswer: 1,
     explanation:

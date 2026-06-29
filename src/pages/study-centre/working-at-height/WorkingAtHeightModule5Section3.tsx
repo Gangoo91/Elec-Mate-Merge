@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician is working at height on a domestic property. They argue that health and safety regulations only apply to employers with employees. Are they correct?',
     options: [
-      'Yes — self-employed people do not have duties under health and safety law',
-      'No — the self-employed have the same duty to work safely as employers, for their own safety and that of others affected by their work',
-      'Yes — but only if they are working alone on site',
-      'No — but they only need to comply with regulations if the job is worth more than £10,000',
+      'No — the self-employed have the same duty to work safely as employers',
+      'Yes — health and safety law places no duties on the self-employed',
+      'Yes — duties only apply when they are working alone on site',
+      'No — but only on jobs worth more than £10,000 in value',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under the Health and Safety at Work etc. Act 1974, self-employed persons have a duty to conduct their work in such a way that they and other persons who may be affected are not exposed to risks to health and safety. The Work at Height Regulations 2005 apply equally to self-employed persons.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
   {
     question: "What makes a person 'competent' for the purposes of working at height regulations?",
     options: [
-      'They have at least 10 years of construction experience',
-      'They have a university degree in engineering',
-      'They have sufficient training, experience, knowledge, and personal qualities to perform the task safely',
-      'They hold a CSCS card of any colour',
+      'They have at least 10 years of general construction experience',
+      'They have the training, experience, and knowledge to do the task safely',
+      'They hold a university degree in electrical or structural engineering',
+      'They hold a valid CSCS card of any colour or grade',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Competence is defined as a combination of sufficient training, experience, knowledge, and other qualities that enable a person to perform the task safely. It is task-specific — a person may be competent to use a ladder but not competent to erect a scaffold. There is no single card or certificate that proves competence for all tasks.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       "Under the Health and Safety at Work etc. Act 1974, which of the following is an employer's duty?",
     options: [
-      'To provide all workers with safety boots at no cost',
       'To ensure, so far as is reasonably practicable, the health, safety, and welfare of all employees',
+      'To provide all workers with safety boots at no cost',
       'To guarantee that no accidents will ever occur',
       'To provide free car parking within 50 metres of the work area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 2 of the HASAWA 1974 states that employers must ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees. This includes providing safe systems of work, suitable equipment, training, supervision, and a safe working environment.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       "An employee deliberately removes a guardrail to make their job easier, despite knowing it is a safety requirement. What is the employee's legal position?",
     options: [
-      'They have no legal liability — only the employer is responsible',
-      'They could be prosecuted under Section 7 and Section 8 of the HASAWA 1974 for not cooperating and for interfering with safety provisions',
-      'They can only be disciplined internally, not prosecuted',
+      'They have no legal liability — only the employer can be held responsible',
+      'They can be disciplined internally by the employer but never prosecuted',
+      'They could be prosecuted under Sections 7 and 8 of the HASAWA 1974',
       'They are only liable if someone is actually injured as a result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 7 requires employees to take reasonable care for their own safety and that of others, and to cooperate with their employer. Section 8 makes it an offence to intentionally or recklessly interfere with or misuse anything provided in the interests of safety. Deliberately removing a guardrail violates both sections.',
   },
@@ -124,11 +124,11 @@ const quizQuestions = [
       'Under CDM 2015, who is responsible for appointing a principal designer and principal contractor?',
     options: [
       'The Health and Safety Executive',
-      'The local authority building control department',
       'The client',
+      'The local authority building control department',
       'The main contractor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Construction (Design and Management) Regulations 2015 place the duty to appoint a principal designer and a principal contractor on the client, for projects involving more than one contractor. The client must ensure these appointments are made as early as practicable and that the appointees are competent for their roles.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     options: [
       'CSCS Gold Card',
       'IPAF Operator Licence',
-      'PASMA Towers for Users',
       'NEBOSH General Certificate',
+      'PASMA Towers for Users',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) Towers for Users course is the industry-standard qualification for the safe assembly, use, and dismantling of mobile access towers. IPAF covers MEWPs, CSCS is a site competence card scheme, and NEBOSH is a health and safety management qualification.",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A contractor on a multi-contractor construction site discovers a hazard that affects other workers. What must they do?',
     options: [
-      "Nothing — it is only the principal contractor's problem",
-      'Fix it themselves regardless of whether it is their work area',
       'Report it to the principal contractor and cooperate to resolve it',
+      'Fix it themselves regardless of whether it is their work area',
+      "Nothing — it is only the principal contractor's problem",
       'Only deal with it if it directly affects their own workers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under CDM 2015, all contractors must cooperate with the principal contractor and other contractors on site. If a hazard is identified that affects others, it must be reported so that coordinated action can be taken. The principal contractor is responsible for coordinating safety across all contractors.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 6,
     question: 'How often must harness training typically be refreshed?',
     options: [
-      'Every year',
+      'Every year, regardless of use or equipment changes',
+      'Every 10 years, or only after a recorded incident',
       'Every 3-5 years, or when equipment or regulations change',
-      'Every 10 years',
-      'Never — once trained, always competent',
+      'Never — once trained, a person stays competent for life',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most harness manufacturers and training providers recommend refresher training every 3-5 years. However, training should also be refreshed whenever new equipment is introduced, regulations change, or an incident indicates a knowledge gap. Competence degrades over time without practice.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of a toolbox talk?',
     options: [
-      'To replace formal training requirements',
-      'To provide short, focused safety briefings on specific topics relevant to current work',
-      'To allow workers to complain about management',
-      'To satisfy insurance requirements only',
+      'To replace the formal training requirements for workers entirely',
+      'To give short, focused safety briefings relevant to the current work',
+      'To satisfy the site insurance requirements and nothing more',
+      'To give workers a forum to raise grievances about management',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'A competent person for scaffold inspection must have which combination of attributes?',
     options: [
-      'A CSCS card and at least 5 years on site',
-      'A degree in structural engineering',
-      'Sufficient training, experience, and knowledge specifically in scaffold inspection',
-      'Any health and safety qualification',
+      'A CSCS card plus at least 5 years of general site experience',
+      'A university degree in structural or civil engineering',
+      'Any general health and safety qualification, such as NEBOSH',
+      'Training, experience, and knowledge specific to scaffold inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Competence for scaffold inspection requires specific training (such as CISRS Scaffold Inspection Training Scheme), relevant experience in scaffold work, and sufficient knowledge of the regulations, standards, and structural principles that apply. A general health and safety qualification alone does not make someone competent to inspect scaffolds.',
   },

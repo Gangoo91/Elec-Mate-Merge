@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'fault-definition-check',
     question: 'What is the general definition of an electrical fault?',
     options: [
-      'Improvement Notices, Prohibition Notices, and fines or prosecution',
-      '£2 million to £5 million (with £10m+ for larger commercial work).',
+      'Any planned isolation of a circuit for maintenance work',
+      'A circuit operating at its maximum rated design current',
       'Any defect that prevents a circuit from functioning safely or correctly',
-      'Excessive heat at connections, warm cable insulation, or hot components',
+      'A protective device operating correctly under normal load',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'normal-vs-fault-check',
     question: 'How does a fault condition differ from normal operation in a circuit?',
     options: [
-      'Fibre To The x (various deployment architectures)',
-      'As-built drawings, points schedule, O&M manuals, and training records',
+      'Current flows only along its intended paths',
+      'Voltage stays within its normal tolerance band',
       'Fault conditions create abnormal current flow and safety risks',
-      'Installed lighting power per unit floor area (W/m²)',
+      'Protective devices remain inactive throughout',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'importance-check',
     question: 'Why is it essential for electricians to clearly understand what a fault is?',
     options: [
-      'Different criteria - typically ≤0.05Ω for main bonding',
-      'kWh consumption correlated with occupancy patterns',
+      'To reduce the cost of test instruments needed on site',
+      'To shorten the time taken to complete an installation',
       'To identify hazards early and prevent accidents',
-      'The trade association for Scottish electrical contractors',
+      'To avoid the need for periodic inspection and testing',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the general definition of an electrical fault?',
     options: [
-      'To prevent the tower from overturning by increasing the effective base size',
+      'A circuit that has been correctly isolated and proved dead',
       'Any defect that prevents a circuit from functioning safely or correctly',
-      '2391-50 covers initial verification only, 2391-52 includes periodic inspection',
-      'Social isolation, lack of support networks, and poor coping habits',
+      'A protective device that has been deliberately bypassed for testing',
+      'Any circuit drawing its full rated current under normal load',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'What makes a fault different from normal circuit operation?',
     options: [
-      'Mercury vapour from broken fluorescent tubes',
-      'A refurbishment and demolition asbestos survey (R&D survey)',
+      'Current returns cleanly to the supply via the neutral',
+      'All protective conductors remain at earth potential',
       'Faults introduce abnormal conditions and safety risks',
-      'The difference between predicted and actual energy consumption',
+      'The circuit operates within its designed voltage limits',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'What does a short circuit involve?',
     options: [
-      'Intelligent setback with optimal recovery scheduling',
-      'Small to medium-sized buildings like offices and schools',
-      'Particulate matter with a diameter of 10 micrometres or less',
+      'A broken conductor that stops current flowing entirely',
+      'A live conductor making contact with earthed metalwork',
+      'A loose connection generating localised heat',
       'Unintended contact between line and neutral or line-to-line conductors',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What is an earth fault?',
     options: [
       'When live conductors make contact with earth or earthed metalwork',
-      'The garment has been washed more than 10 times',
-      'An electron loosely bound in the outer shell that can drift through the lattice',
-      'Step-by-step procedures, safety measures, and required resources',
+      'When line and neutral conductors touch each other directly',
+      'When a conductor breaks, interrupting the flow of current',
+      'When line and neutral connections are accidentally swapped',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is an open circuit?',
     options: [
-      'To avoid damaging walls, paintwork, or finishes',
+      'When line and neutral make unintended contact',
       'When a conductor is broken or disconnected, stopping current flow',
-      'It is lighter than air with a vapour density of approximately 0.55',
-      'The light-gathering ability and acceptance angle',
+      'When insulation breaks down, allowing leakage to earth',
+      'When a circuit carries more than its rated current',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What happens when insulation breaks down in a cable?',
     options: [
-      'Battery backup failure losing settings, or mechanism wear',
-      'Moves to lower flow, higher head (towards shutoff)',
+      'The conductor cross-section increases, lowering resistance',
+      'Current flow stops completely until the cable is replaced',
       'Leakage currents can flow, creating safety hazards',
-      'Materials with zero electrical resistance at low temperatures',
+      'The circuit voltage rises above its nominal value',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is reversed polarity considered a fault?',
     options: [
-      'The sideways distortion of the scaffold frame caused by horizontal forces',
-      'Until the end of construction work at the site',
-      'Water vapour molecules displace heavier nitrogen and oxygen molecules',
+      'It always prevents the equipment from working at all',
+      'It increases the current drawn by the connected load',
+      'It causes the protective device to trip immediately',
       'Conductors are connected incorrectly, creating safety risks',
     ],
     correctAnswer: 3,
@@ -168,10 +168,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is it important to correctly identify faults during testing?',
     options: [
-      'Habits reduce reliance on willpower by making behaviour automatic',
+      'To reduce the number of test instruments required',
       'To prevent accidents, legal non-compliance, and property damage',
-      'Even profitable businesses can fail without cash',
-      'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
+      'To allow the installation to be energised more quickly',
+      'To avoid the need to record any test results',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'In the real-world example, what mistake did the apprentice make when investigating the tripping circuit?',
     options: [
-      'Adults need to understand why they are learning something before they engage with it',
-      'Each device rated for full prospective fault current at its location',
+      'He isolated the circuit before carrying out any testing',
+      'He carried out an insulation resistance test too early',
       'He assumed the breaker was faulty instead of recognising a possible short circuit',
-      'Automated responses to security events (lighting, cameras, alerts)',
+      'He reported the fault before confirming the cause',
     ],
     correctAnswer: 2,
     explanation:

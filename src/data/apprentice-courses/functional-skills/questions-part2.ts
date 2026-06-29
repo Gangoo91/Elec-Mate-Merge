@@ -34,10 +34,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When using certification software such as Certsure or iCertifi, what must be completed before an EICR can be finalised?',
     options: [
-      'Vishing (voice phishing) — a social engineering attack conducted over the phone',
-      'Only as long as necessary for the purpose it was collected, with a documented retention policy',
+      'A single overview photograph of the consumer unit',
+      'The client must pay the invoice before the report is released',
       'All mandatory fields including observations, test results, and the overall condition',
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'The next inspection date must be set at least five years ahead',
     ],
     correctAnswer: 2,
     explanation:
@@ -52,9 +52,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An electrician needs to photograph a consumer unit for an EICR report. Which approach produces the best evidence?',
     options: [
-      'The drawing/markup tool to trace the new route in a contrasting colour',
-      'Contact the supplier directly using a known phone number to verify the request before taking any action',
-      'A description of the task, what was done well, what could be improved, and what was learned from the experience',
+      'A single wide shot taken from across the room',
+      'One photo of the closed unit with its cover in place',
+      'A photo taken with the camera flash bouncing off the busbar',
       'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
     ],
     correctAnswer: 3,
@@ -71,9 +71,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'What is the primary advantage of using a dedicated electrical certification app over paper-based certificates?',
     options: [
       'Apps automatically calculate test result pass/fail criteria and reduce human error',
-      'The drawing/markup tool to trace the new route in a contrasting colour',
-      'Fabricated or falsified documents claiming work that was not performed',
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'Apps remove the legal requirement to carry out any testing on site',
+      'Apps allow certificates to be issued without a competent person signing them',
+      'Apps store the data only on the device so it can never be backed up',
     ],
     correctAnswer: 0,
     explanation:
@@ -88,10 +88,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When saving a completed electrical certificate as a PDF, which feature ensures the document cannot be altered after issue?',
     options: [
-      'Interpreting data from tables and performing comparison calculations',
+      'Saving the file with a longer, more descriptive file name',
       'Saving as read-only with a digital signature or password protection',
-      'All mandatory fields including observations, test results, and the overall condition',
-      'Vishing (voice phishing) — a social engineering attack conducted over the phone',
+      'Reducing the file size by compressing the embedded images',
+      'Converting the colours to greyscale before saving',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,9 +143,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'Which feature of certification apps allows multiple electricians to work on the same large commercial EICR simultaneously?',
     options: [
       'Cloud-based collaboration with real-time syncing',
-      'A double set (kickback or offset bend)',
-      'General Data Protection Regulation',
-      'Date, time, and GPS location data (if enabled)',
+      'A locked single-user licence shared by passing the device around',
+      'Exporting each board to a separate spreadsheet and merging at the end',
+      'Printing blank forms for each engineer to fill in by hand',
     ],
     correctAnswer: 0,
     explanation:
@@ -160,10 +160,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An electrician is using PDF annotation tools to mark up an as-built drawing. Which tool would be most appropriate for highlighting a cable route change?',
     options: [
-      'Saving as read-only with a digital signature or password protection',
+      'The redaction tool to permanently hide the original cable route',
       'The drawing/markup tool to trace the new route in a contrasting colour',
-      'The approved electrical layout drawings and specification',
-      'Send password-protected PDFs with the password communicated separately',
+      'The form-field tool to add a fillable text box over the route',
+      'The page-rotation tool to reorient the drawing on screen',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,14 +178,14 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       "A certification app flags that the measured Zs value for a ring final circuit exceeds the maximum permitted value in the app's database. The electrician believes the reading is correct. What should be done?",
     options: [
-      'A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account',
-      'Level 2 includes more complex topics such as ratio, proportion, percentages of amounts, area and volume of compound shapes, and basic statistics',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
-      'Review the assessor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feedback, identify exactly which criteria need further evidence, gather additional evidence for those specific gaps, and resubmit',
+      'Override the app warning and finalise the certificate as satisfactory',
+      'Increase the protective device rating until the app accepts the reading',
+      'Verify the reading manually against BS 7671 Table 41.3 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
+      'Delete the circuit from the report so the warning no longer appears',
     ],
     correctAnswer: 2,
     explanation:
-      'The electrician should verify the reading against the current BS 7671 tables, applying the appropriate correction factor for conductor temperature. If the Zs value genuinely exceeds the maximum, a C2 observation must be recorded. Apps may use conservative thresholds, so manual verification against the regulation tables is essential.',
+      'The electrician should verify the reading against the current BS 7671 tables (41.2/41.3/41.4), applying the appropriate correction for conductor temperature. If the Zs value genuinely exceeds the maximum, a C2 observation must be recorded. Apps may use conservative thresholds, so manual verification against the regulation tables is essential.',
     section: 'Digital Documentation',
     difficulty: 'advanced',
     topic: 'Certification Software',
@@ -217,9 +217,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'An electrician receives an email claiming to be from their supplier asking them to update their payment details by clicking a link. What should they do?',
     options: [
       'Contact the supplier directly using a known phone number to verify the request before taking any action',
-      'To ensure the cable can safely carry the required current under the actual installation conditions',
-      'Refuse and advise them to contact the platform provider to reset their own credentials',
-      'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
+      'Click the link and update the details quickly before the account is suspended',
+      'Forward the email to all colleagues so they can update their details too',
+      'Reply to the email asking the sender to confirm they are genuine',
     ],
     correctAnswer: 0,
     explanation:
@@ -252,10 +252,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'Under UK GDPR, how long should an electrician retain client personal data such as names, addresses, and contact details?',
     options: [
-      'Do a brief review of key topics, prepare materials for the morning, then get a full night\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s sleep',
-      'Interpreting data from tables and performing comparison calculations',
+      'Indefinitely, so the records are always available if needed in future',
+      'For exactly seven years in every case, matching tax record requirements',
       'Only as long as necessary for the purpose it was collected, with a documented retention policy',
-      'To demonstrate competence by providing documented evidence that assessment criteria have been met',
+      'Until the client moves house, after which it must be deleted immediately',
     ],
     correctAnswer: 2,
     explanation:
@@ -269,9 +269,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 115,
     question: 'Which indicator is a common sign that an email is a phishing attempt?',
     options: [
-      "To ensure the cable can safely carry the required current under the actual installation conditions",
-      "A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account",
-      "A clear subject line, formal greeting, explanation of the delay with reason, revised timeline, apology, and professional sign-off",
+      "The email is signed off with the sender's full name and job title",
+      "The email arrives during normal business working hours",
+      "The email is addressed to you personally using your correct name",
       "The sender's email address has a slightly misspelt domain name (e.g. @edff-energy.co.uk instead of @edfenergy.com)",
     ],
     correctAnswer: 3,
@@ -288,9 +288,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'What is two-factor authentication (2FA) and why is it recommended for trade accounts?',
     options: [
       'A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account',
-      'An introduction stating the comparison, a paragraph for each method with costs and advantages, and a conclusion with a recommendation supported by the data',
-      'Combined functional maths (measurement, calculation, costing) and English (writing for purpose and audience) skills',
-      'A witness testimony from a qualified assessor who directly observed the apprentice performing the task',
+      'A method of using the same strong password across two different accounts',
+      'A system that automatically logs you out after two minutes of inactivity',
+      'A rule requiring passwords to be changed twice a year for added security',
     ],
     correctAnswer: 0,
     explanation:
@@ -305,10 +305,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An electrician stores client addresses and phone numbers in a spreadsheet on their laptop. Under UK GDPR, which of the following is required?',
     options: [
-      'Stop work, notify the client in writing, obtain a separate quotation for asbestos removal, and agree a variation order before resuming electrical work',
+      'A printed paper backup of the spreadsheet must be kept in the van at all times',
       'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
-      'A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account',
-      'Dated photographs (before, during, after), a completed minor works certificate, a witness testimony from the supervising electrician, and a reflective account',
+      'The spreadsheet must be shared with every client so they can see their own entry',
+      'The data must be registered with HMRC before it can be stored on a laptop',
     ],
     correctAnswer: 1,
     explanation:
@@ -323,10 +323,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A colleague asks to use your login credentials for a certification platform because theirs have expired. What is the correct response?',
     options: [
-      'Mark it, move on to complete easier questions first, then return to it with remaining time',
-      'Read all options carefully, eliminate obviously wrong answers first, then choose the best remaining option',
+      'Share the login this once, as it is only a temporary arrangement',
+      'Give them your password but change it again afterwards for safety',
       'Refuse and advise them to contact the platform provider to reset their own credentials',
-      'No — the voltage drop is 10.8V which exceeds the 3% (6.9V) limit for lighting',
+      'Log in yourself and let them work under your supervision on your account',
     ],
     correctAnswer: 2,
     explanation:
@@ -341,9 +341,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       "An electrician receives a phone call from someone claiming to be from their certification body, requesting their login details to 'verify their account'. The caller knows the electrician's name and registration number. What type of attack is this?",
     options: [
-      'To ensure the cable can safely carry the required current under the actual installation conditions',
-      'Fabricated or falsified documents claiming work that was not performed',
-      'All mandatory fields including observations, test results, and the overall condition',
+      'Smishing — a phishing attack delivered by SMS text message',
+      'A brute-force attack that guesses passwords by trial and error',
+      'A denial-of-service attack that floods the account with login attempts',
       'Vishing (voice phishing) — a social engineering attack conducted over the phone',
     ],
     correctAnswer: 3,
@@ -360,9 +360,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       "A client exercises their 'right to erasure' under UK GDPR and asks an electrician to delete all their personal data. The electrician completed an EICR for them 18 months ago. Can the electrician delete all records?",
     options: [
       'No — the electrician must delete marketing and non-essential data, but can retain test certificates and safety records where there is a legal obligation or legitimate interest to do so',
-      'It depends — the measured value must be compared against the 80% rule-of-thumb value (1.10 ohms) because conductor resistance increases with temperature under fault conditions',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
-      'A structured model such as: What happened? → What did I think/feel? → What was good/bad about the experience? → What have I learned? → What will I do differently next time?',
+      'Yes — the right to erasure is absolute, so all records including the EICR must be deleted on request',
+      'No — the electrician can refuse the entire request because they once carried out work for the client',
+      'Yes — but only the test certificate must be kept and all other records can remain on file',
     ],
     correctAnswer: 0,
     explanation:
@@ -426,7 +426,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'For a ring final circuit, the effective length is half the total length: 45/2 = 22.5m. Voltage drop = (mV/A/m x I x L) / 1000 = (18 x 13 x 22.5) / 1000 = 5265 / 1000 = 5.27V. Wait — using the ring circuit formula: VD = (mV/A/m x I x L) / (4 x 1000) is sometimes used, giving 2.63V. The correct answer uses the simplified ring formula where VD is quartered.',
+      'A ring final circuit is fed from both ends, so the standard method divides the single-run voltage drop by four: VD = (mV/A/m x Ib x L) / (4 x 1000) = (18 x 13 x 45) / 4000 = 10,530 / 4000 = 2.63V. Dividing by four accounts for the two parallel legs and the load being distributed around the ring.',
     section: 'Electrical Calculations',
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
@@ -522,10 +522,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'The measured Zs for a circuit protected by a 32A BS EN 61009 Type B RCBO is 1.15 ohms. The maximum permitted Zs from BS 7671 Table 41.3 is 1.37 ohms at the reference temperature. At an ambient of 30°C, should this circuit pass?',
     options: [
-      'A clear subject line, formal greeting, explanation of the delay with reason, revised timeline, apology, and professional sign-off',
+      'Yes — 1.15 ohms is below the tabulated 1.37 ohms, so the circuit passes outright',
       'It depends — the measured value must be compared against the 80% rule-of-thumb value (1.10 ohms) because conductor resistance increases with temperature under fault conditions',
-      'Allocate roughly 15 minutes for reading/planning, 60 minutes for calculations and working, 30 minutes for writing the report, and 15 minutes for checking',
-      'Level 2 includes more complex topics such as ratio, proportion, percentages of amounts, area and volume of compound shapes, and basic statistics',
+      'No — the measured value must be multiplied by 1.2 before any comparison is made',
+      'Yes — Zs limits do not apply to circuits protected by an RCBO',
     ],
     correctAnswer: 1,
     explanation:
@@ -541,13 +541,13 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A commercial installation has the following loads: lighting 8kW, small power 15kW, cooking 12kW, and a 30kW three-phase motor (power factor 0.85). Using standard diversity factors, the estimated maximum demand for the lighting (66%) and small power (100% of first 10kW + 50% remainder) is closest to:',
     options: [
       '15.78kW',
-      '23kW',
-      '18.28kW',
-      '10.78kW',
+      '23.00kW',
+      '17.78kW',
+      '12.50kW',
     ],
     correctAnswer: 2,
     explanation:
-      'Lighting: 8kW x 0.66 = 5.28kW. Small power: first 10kW at 100% = 10kW, remaining 5kW at 50% = 2.5kW, total = 12.5kW. Combined lighting and small power after diversity: 5.28 + 12.5 = 17.78kW, closest to 18.28kW when rounding and considering minor differences in diversity tables used.',
+      'Lighting: 8kW x 0.66 = 5.28kW. Small power: first 10kW at 100% = 10kW, remaining 5kW at 50% = 2.5kW, total = 12.5kW. Combined lighting and small power after diversity = 5.28 + 12.5 = 17.78kW.',
     section: 'Electrical Calculations',
     difficulty: 'advanced',
     topic: 'Maximum Demand',
@@ -560,9 +560,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 131,
     question: 'What is the purpose of applying correction factors when sizing cables?',
     options: [
-      'No — the voltage drop is 10.8V which exceeds the 3% (6.9V) limit for lighting',
-      '32A or greater — the cable rating (Iz) must be at least equal to the protective device rating (In)',
-      'The drawing/markup tool to trace the new route in a contrasting colour',
+      'To reduce the cost of the installation by allowing smaller cables to be used',
+      'To increase the current-carrying capacity above the tabulated value',
+      'To compensate for voltage drop over very long cable runs',
       'To ensure the cable can safely carry the required current under the actual installation conditions',
     ],
     correctAnswer: 3,
@@ -579,9 +579,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A circuit is protected by a 32A MCB. The design current (Ib) is 28A. Which of the following cable ratings would be suitable assuming no correction factors apply?',
     options: [
       '32A or greater — the cable rating (Iz) must be at least equal to the protective device rating (In)',
-      'Apps automatically calculate test result pass/fail criteria and reduce human error',
-      'Mark it, move on to complete easier questions first, then return to it with remaining time',
-      'Refuse and advise them to contact the platform provider to reset their own credentials',
+      '28A or greater — the cable need only match the design current (Ib)',
+      '30A or greater — the cable rating may sit between Ib and In',
+      'Any rating below 32A is acceptable provided the load is only 28A',
     ],
     correctAnswer: 0,
     explanation:
@@ -632,9 +632,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When selecting a cable for a new cooker circuit, which of the following must be considered first?',
     options: [
-      'Interpreting data from tables and performing comparison calculations',
-      'Specific, Measurable, Achievable, Relevant, Time-bound',
-      'Two sections — one non-calculator and one calculator',
+      'The colour of the cable sheath to match the kitchen decor',
+      'The brand of the protective device fitted in the consumer unit',
+      'The total connected load of the whole installation, ignoring the cooker',
       'The design current of the cooker after applying diversity',
     ],
     correctAnswer: 3,
@@ -653,7 +653,7 @@ export const questionsPart2: StandardMockQuestion[] = [
       '6.34V',
       '6.05V',
       '5.28V',
-      '6.34V',
+      '7.04V',
     ],
     correctAnswer: 0,
     explanation:
@@ -704,9 +704,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A circuit requires a minimum current-carrying capacity of 42A after all correction factors are applied. The available cable sizes and their Method C ratings are: 6mm² (47A), 10mm² (65A). The 6mm² cable has a mV/A/m of 7.3 and the run is 35m at 42A. Which cable should be selected?',
     options: [
-      'A structured model such as: What happened? → What did I think/feel? → What was good/bad about the experience? → What have I learned? → What will I do differently next time?',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
-      'Allocate roughly 15 minutes for reading/planning, 60 minutes for calculations and working, 30 minutes for writing the report, and 15 minutes for checking',
+      '6mm² — it meets the current requirement, so voltage drop need not be checked at all',
+      'Neither — a 42A load always requires a minimum of 16mm² regardless of method',
+      '6mm² — the smallest cable that meets the current rating must always be chosen to save cost',
       '10mm² — the voltage drop on 6mm² must also be checked, and while 10.73V is within 11.5V, the 6mm² cable has minimal margin so 10mm² provides a safer choice in practice',
     ],
     correctAnswer: 3,
@@ -723,9 +723,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A cable run passes through three different installation conditions: 5m clipped direct (Method C), 8m in conduit on wall (Method B), and 2m through thermal insulation. How should the cable be sized?',
     options: [
       'Size the cable based on the most onerous (worst-case) section of the run, which is the thermal insulation section',
-      'To demonstrate competence by providing documented evidence that assessment criteria have been met',
-      'Break the problem into individual steps, show all working, and check each step before moving to the next',
-      'A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account',
+      'Size the cable based on the least onerous section, since the cable can cool along the rest of the run',
+      'Use a different cable size for each section to match its installation method exactly',
+      'Average the three reference methods and size the cable on the mean rating',
     ],
     correctAnswer: 0,
     explanation:
@@ -781,11 +781,11 @@ export const questionsPart2: StandardMockQuestion[] = [
       '£150.75',
       '£138.95',
       '£128.45',
-      '£142.70',
+      '£137.95',
     ],
     correctAnswer: 3,
     explanation:
-      'Cable: (30 x £0.85) + (15 x £0.55) = £25.50 + £8.25 = £33.75. Accessories: 6 x £3.20 = £19.20. Consumer unit: £85.00. Total: £33.75 + £19.20 + £85.00 = £137.95. The closest answer accounting for sundries (clips, fixings, etc.) would be £142.70.',
+      'Cable: (30 x £0.85) + (15 x £0.55) = £25.50 + £8.25 = £33.75. Accessories: 6 x £3.20 = £19.20. Consumer unit: £85.00. Total: £33.75 + £19.20 + £85.00 = £137.95.',
     section: 'Costing & Quoting',
     difficulty: 'intermediate',
     topic: 'Material Takeoff',
@@ -813,10 +813,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 145,
     question: 'What is the difference between a quotation and an estimate in the electrical trade?',
     options: [
-      'The drawing/markup tool to trace the new route in a contrasting colour',
+      'A quotation is an approximate cost that may vary; an estimate is a fixed binding price',
       'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'Mark it, move on to complete easier questions first, then return to it with remaining time',
-      'Only as long as necessary for the purpose it was collected, with a documented retention policy',
+      'A quotation includes VAT while an estimate always excludes it',
+      'A quotation is given verbally while an estimate must always be in writing',
     ],
     correctAnswer: 1,
     explanation:
@@ -885,10 +885,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A contractor discovers unforeseen asbestos during an electrical rewire. The original quotation did not include asbestos removal. What is the correct commercial approach?',
     options: [
-      'The recency effect combined with sleep consolidation — the brain processes and consolidates newly learned material during sleep',
+      'Carefully remove the asbestos yourself and add the time to the final invoice',
       'Stop work, notify the client in writing, obtain a separate quotation for asbestos removal, and agree a variation order before resuming electrical work',
-      'An introduction stating the comparison, a paragraph for each method with costs and advantages, and a conclusion with a recommendation supported by the data',
-      'Read the questions first, then read the passage carefully, highlighting or noting key information relevant to each question',
+      'Continue working around the asbestos to avoid delaying the job',
+      'Absorb the extra cost yourself to keep within the original quoted price',
     ],
     correctAnswer: 1,
     explanation:
@@ -942,9 +942,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'When bending conduit to go around an obstacle, what type of bend is used to offset the conduit by a set distance?',
     options: [
       'A double set (kickback or offset bend)',
-      'The method of loci (memory palace)',
-      'Cloud-based collaboration with real-time syncing',
-      'General Data Protection Regulation',
+      'A single 90-degree right-angle bend',
+      'A saddle bend formed with three separate bends',
+      'A reverse bend that doubles the conduit back on itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -1031,10 +1031,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When creating a 90° bend in 20mm conduit using a bending spring, what must be done to prevent the conduit from collapsing?',
     options: [
-      'Refuse and advise them to contact the platform provider to reset their own credentials',
+      'Heat the conduit with a blowtorch until it is soft, then bend it by hand',
       'Insert the correct size bending spring into the conduit and apply steady, gradual pressure to form the bend',
-      'To ensure the cable can safely carry the required current under the actual installation conditions',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
+      'Fill the conduit with sand and cap both ends before bending it over a knee',
+      'Make several small cuts on the inside of the bend so the conduit folds neatly',
     ],
     correctAnswer: 1,
     explanation:
@@ -1085,14 +1085,14 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'Calculate the trunking fill percentage: 8 cables of 4mm² T&E (cable factor 21.2mm² each), 6 cables of 2.5mm² T&E (cable factor 11.4mm² each), and 4 cables of 1.5mm² T&E (cable factor 8.6mm² each) in a 75mm x 75mm trunking (space factor 3,459mm²). Does it comply?',
     options: [
-      'Fill = 9.6%, complies',
+      'Fill = 7.9%, complies',
       'Fill = 8.2%, complies',
       'Fill = 47.3%, does not comply',
       'Fill = 15.7%, complies',
     ],
     correctAnswer: 0,
     explanation:
-      'Total cable factor = (8 x 21.2) + (6 x 11.4) + (4 x 8.6) = 169.6 + 68.4 + 34.4 = 272.4mm². Fill percentage = (272.4 / 3,459) x 100 = 7.87%. The closest answer accounting for minor rounding in cable factors is 9.6%, which comfortably complies with the 45% maximum fill requirement.',
+      'Total cable factor = (8 x 21.2) + (6 x 11.4) + (4 x 8.6) = 169.6 + 68.4 + 34.4 = 272.4mm². Fill percentage = (272.4 / 3,459) x 100 = 7.9%. This comfortably complies with the 45% maximum fill requirement.',
     section: 'Geometry',
     difficulty: 'advanced',
     topic: 'Trunking Fill',
@@ -1165,9 +1165,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'What is the best strategy if you encounter a question you cannot answer in a multiple-choice exam?',
     options: [
       'Mark it, move on to complete easier questions first, then return to it with remaining time',
-      'Use the 10 minutes saved wisely — allocate it to complex Section B questions and final checking',
-      'A description of the task, what was done well, what could be improved, and what was learned from the experience',
-      'Read all options carefully, eliminate obviously wrong answers first, then choose the best remaining option',
+      'Spend as long as it takes on it before moving on, so no marks are lost',
+      'Leave it blank, as a wrong guess loses marks in this exam',
+      'Always select the longest answer option when you are unsure',
     ],
     correctAnswer: 0,
     explanation:
@@ -1182,10 +1182,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'In a Functional Skills Level 1 English exam, which of the following is assessed in the writing component?',
     options: [
-      'Test anxiety, unfamiliar exam environment, and inadequate exam technique under timed pressure conditions',
+      'The ability to read a passage aloud with clear pronunciation and pace',
       'Spelling, punctuation, grammar, and the ability to write clearly for a specific purpose and audience',
-      'Combined functional maths (measurement, calculation, costing) and English (writing for purpose and audience) skills',
-      'Fabricated or falsified documents claiming work that was not performed',
+      'Speaking and listening skills assessed through a group discussion task',
+      'The ability to summarise a long text in a single short sentence',
     ],
     correctAnswer: 1,
     explanation:
@@ -1218,9 +1218,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'During a timed exam, you realise you have spent 20 minutes on Section A (non-calculator) which was allocated 30 minutes, and Section B has 20 questions in 60 minutes. How should you adjust your strategy?',
     options: [
-      'Refuse and advise them to contact the platform provider to reset their own credentials',
-      'Cross out the wrong answer, write the correct one briefly, then allocate remaining time across the unanswered questions',
-      'Size the cable based on the most onerous (worst-case) section of the run, which is the thermal insulation section',
+      'Slow right down on Section B to use up all the spare time you have gained',
+      'Go back and rewrite all your Section A answers in case any were rushed',
+      'Stop and wait, as finishing early means you cannot start Section B yet',
       'Use the 10 minutes saved wisely — allocate it to complex Section B questions and final checking',
     ],
     correctAnswer: 3,
@@ -1237,9 +1237,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'In a Level 1 maths exam, a question provides a table of cable prices. Which skill is being assessed when you are asked to find the cheapest supplier for a given quantity?',
     options: [
       'Interpreting data from tables and performing comparison calculations',
-      'Reference Method B (enclosed in conduit on a wall)',
-      'Apps automatically calculate test result pass/fail criteria and reduce human error',
-      'Box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4, and repeat',
+      'Estimating quantities by rounding to the nearest ten without calculating',
+      'Converting measurements between metric and imperial units',
+      'Identifying the purpose and audience of a written text',
     ],
     correctAnswer: 0,
     explanation:
@@ -1293,9 +1293,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'How does a Functional Skills Level 2 exam differ from Level 1 in terms of mathematical content?',
     options: [
-      'Break the problem into individual steps, show all working, and check each step before moving to the next',
-      'A witness testimony from a qualified assessor who directly observed the apprentice performing the task',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
+      'Level 2 covers exactly the same content as Level 1 but with a longer time limit',
+      'Level 2 removes the calculator section and tests mental arithmetic only',
+      'Level 2 focuses solely on geometry and trigonometry, dropping number work',
       'Level 2 includes more complex topics such as ratio, proportion, percentages of amounts, area and volume of compound shapes, and basic statistics',
     ],
     correctAnswer: 3,
@@ -1312,9 +1312,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A Level 2 extended task involves planning the electrical installation for a new kitchen extension. The task provides floor plans, a materials list with prices, and asks you to calculate costs and write a letter to the client. Which skills are being assessed?',
     options: [
       'Combined functional maths (measurement, calculation, costing) and English (writing for purpose and audience) skills',
-      'To demonstrate competence by providing documented evidence that assessment criteria have been met',
-      'Box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4, and repeat',
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'Practical wiring competence assessed by direct observation on site',
+      'Speaking and listening skills assessed through a recorded presentation',
+      'Knowledge of BS 7671 regulations and cable selection only',
     ],
     correctAnswer: 0,
     explanation:
@@ -1329,10 +1329,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the most effective strategy for tackling multi-step maths problems at Level 2?',
     options: [
-      'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+      'Work out the final answer in your head and only write it down at the end',
       'Break the problem into individual steps, show all working, and check each step before moving to the next',
-      'All mandatory fields including observations, test results, and the overall condition',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
+      'Start with the last part of the question and work backwards to the start',
+      'Skip any step you are unsure of and estimate its value to save time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1365,9 +1365,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'In a Level 2 English exam, you are asked to write a formal email to a commercial client explaining that the project will be delayed by one week. Which features should your email include?',
     options: [
-      'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
-      'Read all options carefully, eliminate obviously wrong answers first, then choose the best remaining option',
-      'A witness testimony from a qualified assessor who directly observed the apprentice performing the task',
+      'Casual slang, emojis, and abbreviations to keep the tone friendly',
+      'A long apology with no mention of the revised timeline or next steps',
+      'Only the new completion date, with no greeting or explanation',
       'A clear subject line, formal greeting, explanation of the delay with reason, revised timeline, apology, and professional sign-off',
     ],
     correctAnswer: 3,
@@ -1401,10 +1401,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When faced with a Level 2 reading comprehension passage about new electrical regulations, which strategy helps you answer questions accurately?',
     options: [
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'Answer the questions from memory without reading the passage at all',
       'Read the questions first, then read the passage carefully, highlighting or noting key information relevant to each question',
-      'Test anxiety, unfamiliar exam environment, and inadequate exam technique under timed pressure conditions',
-      'Cross out the wrong answer, write the correct one briefly, then allocate remaining time across the unanswered questions',
+      'Read only the first and last paragraphs to save time under pressure',
+      'Skim the passage once quickly and rely on your general impression',
     ],
     correctAnswer: 1,
     explanation:
@@ -1419,10 +1419,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A Level 2 extended response question asks you to compare the costs of two different wiring methods for a given installation. What structure should your written response follow?',
     options: [
-      'A structured model such as: What happened? → What did I think/feel? → What was good/bad about the experience? → What have I learned? → What will I do differently next time?',
-      'Cross out the wrong answer, write the correct one briefly, then allocate remaining time across the unanswered questions',
+      'A single continuous paragraph listing every figure with no headings or conclusion',
+      'A bullet-point list of costs only, leaving the reader to draw their own conclusion',
       'An introduction stating the comparison, a paragraph for each method with costs and advantages, and a conclusion with a recommendation supported by the data',
-      'No — the electrician must delete marketing and non-essential data, but can retain test certificates and safety records where there is a legal obligation or legitimate interest to do so',
+      'A recommendation stated first, with no supporting figures or analysis given',
     ],
     correctAnswer: 2,
     explanation:
@@ -1456,9 +1456,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A Level 2 extended task requires you to read a specification, extract data, perform calculations, and present findings in a report. You have 2 hours. How should you allocate your time?',
     options: [
       'Allocate roughly 15 minutes for reading/planning, 60 minutes for calculations and working, 30 minutes for writing the report, and 15 minutes for checking',
-      'A description of the task, what was done well, what could be improved, and what was learned from the experience',
-      'Read the questions first, then read the passage carefully, highlighting or noting key information relevant to each question',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
+      'Spend the full 2 hours on the calculations and write the report only if time remains',
+      'Write the report first from memory, then go back and do the calculations to fit it',
+      'Split the time evenly into four 30-minute blocks regardless of each task’s demands',
     ],
     correctAnswer: 0,
     explanation:
@@ -1511,9 +1511,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'Which of the following is an effective exam technique for multiple-choice questions?',
     options: [
-      'The recency effect combined with sleep consolidation — the brain processes and consolidates newly learned material during sleep',
-      'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
-      'Test anxiety, unfamiliar exam environment, and inadequate exam technique under timed pressure conditions',
+      'Always choose the first answer that looks roughly correct to save time',
+      'Pick option C whenever you are unsure, as it is statistically most common',
+      'Answer only the questions you are completely certain about and skip the rest',
       'Read all options carefully, eliminate obviously wrong answers first, then choose the best remaining option',
     ],
     correctAnswer: 3,
@@ -1530,9 +1530,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'An apprentice feels anxious the night before an important exam. Which approach is most likely to help?',
     options: [
       "Do a brief review of key topics, prepare materials for the morning, then get a full night's sleep",
-      "Contact the supplier directly using a known phone number to verify the request before taking any action",
-      "All mandatory fields including observations, test results, and the overall condition",
-      "Size the cable based on the most onerous (worst-case) section of the run, which is the thermal insulation section",
+      "Stay up late cramming every topic to make sure nothing is missed",
+      "Drink several energy drinks to stay alert and study right through the night",
+      "Avoid all revision and stay out late to take your mind off the exam",
     ],
     correctAnswer: 0,
     explanation:
@@ -1547,10 +1547,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'The Pomodoro Technique is a time management method useful for revision. How does it work?',
     options: [
-      'Only as long as necessary for the purpose it was collected, with a documented retention policy',
+      'Study for three hours straight, then take the rest of the day off',
       'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
-      'Use the 10 minutes saved wisely — allocate it to complex Section B questions and final checking',
-      'A clear subject line, formal greeting, explanation of the delay with reason, revised timeline, apology, and professional sign-off',
+      'Study only when you feel motivated, stopping as soon as you lose focus',
+      'Alternate one minute of study with one minute of rest throughout the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -1565,10 +1565,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'Which memory technique uses vivid mental images placed along a familiar route to remember a sequence of items?',
     options: [
-      'Selling price £1,190, client pays £1,071',
-      'General Data Protection Regulation',
+      'Chunking — grouping items into smaller meaningful sets',
+      'Mnemonics — using a memorable phrase or acronym',
       'The method of loci (memory palace)',
-      'A double set (kickback or offset bend)',
+      'Rote repetition — repeating items aloud until memorised',
     ],
     correctAnswer: 2,
     explanation:
@@ -1583,9 +1583,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'During an exam, you realise you have misread a question and your answer is wrong. You have 10 minutes left and 3 questions still to answer. What should you do?',
     options: [
-      'Mark it, move on to complete easier questions first, then return to it with remaining time',
-      'A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account',
-      'Do a brief review of key topics, prepare materials for the morning, then get a full night\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s sleep',
+      'Leave the wrong answer as it is and spend the time on the three remaining questions',
+      'Rub out the whole answer and start it again in full, however long it takes',
+      'Skip the three remaining questions and rewrite the wrong answer perfectly',
       'Cross out the wrong answer, write the correct one briefly, then allocate remaining time across the unanswered questions',
     ],
     correctAnswer: 3,
@@ -1602,9 +1602,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'Which breathing technique can help reduce exam anxiety in the minutes before an assessment begins?',
     options: [
       'Box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4, and repeat',
-      'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'Insert the correct size bending spring into the conduit and apply steady, gradual pressure to form the bend',
-      'No — the voltage drop is 10.8V which exceeds the 3% (6.9V) limit for lighting',
+      'Rapid shallow breathing to raise your heart rate and energy level',
+      'Holding your breath for as long as possible to force yourself to relax',
+      'Breathing in through the mouth and out through the nose as fast as you can',
     ],
     correctAnswer: 0,
     explanation:
@@ -1619,10 +1619,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An apprentice finds they can remember information they read just before sleep better than information studied at midday. Which psychological phenomenon explains this?',
     options: [
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'The primacy effect — the first information studied each day is always best recalled',
       'The recency effect combined with sleep consolidation — the brain processes and consolidates newly learned material during sleep',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
-      'To demonstrate competence by providing documented evidence that assessment criteria have been met',
+      'Cognitive overload — the brain can only ever absorb information late at night',
+      'The spacing effect — material is only retained if reviewed at fixed hourly intervals',
     ],
     correctAnswer: 1,
     explanation:
@@ -1637,10 +1637,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An apprentice consistently scores well in practice tests but performs poorly in the actual exam. Which combination of factors most likely explains this pattern?',
     options: [
-      'Box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4, and repeat',
-      'To clearly show which specific assessment criteria each piece of evidence supports, ensuring full coverage of all requirements',
+      'The practice tests were simply far easier than the real exam paper',
+      'The apprentice had memorised the practice answers without understanding them',
       'Test anxiety, unfamiliar exam environment, and inadequate exam technique under timed pressure conditions',
-      'Contact the supplier directly using a known phone number to verify the request before taking any action',
+      'The marking of the real exam is consistently harsher than practice marking',
     ],
     correctAnswer: 2,
     explanation:
@@ -1658,9 +1658,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of a portfolio of evidence in an electrical apprenticeship?',
     options: [
-      'Fabricated or falsified documents claiming work that was not performed',
-      'To clearly show which specific assessment criteria each piece of evidence supports, ensuring full coverage of all requirements',
-      'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+      'To provide a photo album of jobs the apprentice has enjoyed working on',
+      'To record the hours worked so the employer can calculate wages',
+      'To list the tools and equipment the apprentice owns and uses',
       'To demonstrate competence by providing documented evidence that assessment criteria have been met',
     ],
     correctAnswer: 3,
@@ -1676,9 +1676,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question: 'Which type of evidence is strongest in an apprentice portfolio?',
     options: [
       'A witness testimony from a qualified assessor who directly observed the apprentice performing the task',
-      'Insert the correct size bending spring into the conduit and apply steady, gradual pressure to form the bend',
-      'Combined functional maths (measurement, calculation, costing) and English (writing for purpose and audience) skills',
-      'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+      'A verbal account from a colleague who heard about the work afterwards',
+      'A generic photograph downloaded from a manufacturer’s website',
+      'A handwritten note by the apprentice with no date or signature',
     ],
     correctAnswer: 0,
     explanation:
@@ -1692,10 +1692,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 193,
     question: 'What should a reflective account in a portfolio include?',
     options: [
-      'Apps automatically calculate test result pass/fail criteria and reduce human error',
+      'Only a list of the tools and materials used to complete the task',
       'A description of the task, what was done well, what could be improved, and what was learned from the experience',
-      'Cross out the wrong answer, write the correct one briefly, then allocate remaining time across the unanswered questions',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
+      'A copy of the manufacturer’s instructions for the equipment installed',
+      'A simple statement confirming the task was completed, with no detail',
     ],
     correctAnswer: 1,
     explanation:
@@ -1710,10 +1710,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An apprentice has completed a consumer unit changeover. Which combination of evidence would best demonstrate competence for this task in their portfolio?',
     options: [
-      'Use a structured template with prompts (What did I do? Why? What went well? What would I change? What did I learn?) and practise writing short accounts after each significant task',
-      'Size the cable based on the most onerous (worst-case) section of the run, which is the thermal insulation section',
+      'A single photograph of the finished consumer unit with no other records',
+      'A verbal description given to the assessor with no written or visual evidence',
       'Dated photographs (before, during, after), a completed minor works certificate, a witness testimony from the supervising electrician, and a reflective account',
-      'Stop work, notify the client in writing, obtain a separate quotation for asbestos removal, and agree a variation order before resuming electrical work',
+      'The manufacturer’s datasheet for the consumer unit and nothing further',
     ],
     correctAnswer: 2,
     explanation:
@@ -1728,9 +1728,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the purpose of cross-referencing evidence in a portfolio to assessment criteria?',
     options: [
-      'The sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s email address has a slightly misspelt domain name (e.g. @edff-energy.co.uk instead of @edfenergy.com)',
-      'The recency effect combined with sleep consolidation — the brain processes and consolidates newly learned material during sleep',
-      'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+      'To make the portfolio longer so it appears more thorough to the assessor',
+      'To allow the apprentice to reuse one piece of evidence for every unit',
+      'To put the evidence into chronological order by completion date',
       'To clearly show which specific assessment criteria each piece of evidence supports, ensuring full coverage of all requirements',
     ],
     correctAnswer: 3,
@@ -1747,9 +1747,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'When writing a reflective account about a challenging situation (e.g. a fault that was difficult to diagnose), which reflective model structure is most appropriate?',
     options: [
       'A structured model such as: What happened? → What did I think/feel? → What was good/bad about the experience? → What have I learned? → What will I do differently next time?',
-      'Level 2 includes more complex topics such as ratio, proportion, percentages of amounts, area and volume of compound shapes, and basic statistics',
-      'Dated photographs (before, during, after), a completed minor works certificate, a witness testimony from the supervising electrician, and a reflective account',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
+      'A simple chronological list of every action taken, with no analysis or learning points',
+      'A single sentence stating whether the task was a success or a failure',
+      'A copy of the fault-finding flowchart from the equipment manual',
     ],
     correctAnswer: 0,
     explanation:
@@ -1764,10 +1764,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       "An assessor returns an apprentice's portfolio stating that the evidence for a particular unit is 'insufficient'. What should the apprentice do?",
     options: [
-      "It depends — the measured value must be compared against the 80% rule-of-thumb value (1.10 ohms) because conductor resistance increases with temperature under fault conditions",
+      "Resubmit the same portfolio unchanged and ask for a different assessor",
       "Review the assessor's feedback, identify exactly which criteria need further evidence, gather additional evidence for those specific gaps, and resubmit",
-      "Use a structured template with prompts (What did I do? Why? What went well? What would I change? What did I learn?) and practise writing short accounts after each significant task",
-      "A description of the task, what was done well, what could be improved, and what was learned from the experience",
+      "Add as much extra evidence as possible to every unit, whether relevant or not",
+      "Accept the result and move on to the next unit without addressing the gap",
     ],
     correctAnswer: 1,
     explanation:
@@ -1800,9 +1800,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'An apprentice has strong practical skills but struggles to write reflective accounts. Which strategy would best help them improve?',
     options: [
-      'It depends — the measured value must be compared against the 80% rule-of-thumb value (1.10 ohms) because conductor resistance increases with temperature under fault conditions',
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
-      '10mm² — the voltage drop on 6mm² must also be checked, and while 10.73V is within 11.5V, the 6mm² cable has minimal margin so 10mm² provides a safer choice in practice',
+      'Ask a colleague to write the reflective accounts on their behalf',
+      'Avoid reflective accounts and rely only on photographs and certificates',
+      'Write one very long account at the end of the year covering every task',
       'Use a structured template with prompts (What did I do? Why? What went well? What would I change? What did I learn?) and practise writing short accounts after each significant task',
     ],
     correctAnswer: 3,
@@ -1819,9 +1819,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       "An apprentice's portfolio is being prepared for End-Point Assessment (EPA). The assessor notes that while individual pieces of evidence are good, the portfolio lacks a clear structure linking evidence to the Knowledge, Skills, and Behaviours (KSBs) of the apprenticeship standard. What is the best way to address this?",
     options: [
       'Create a mapping document or matrix that lists each KSB from the apprenticeship standard and clearly references the specific portfolio evidence that demonstrates achievement of each one',
-      'No — the electrician must delete marketing and non-essential data, but can retain test certificates and safety records where there is a legal obligation or legitimate interest to do so',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
-      '10mm² — the voltage drop on 6mm² must also be checked, and while 10.73V is within 11.5V, the 6mm² cable has minimal margin so 10mm² provides a safer choice in practice',
+      'Submit the evidence as it is and let the assessor work out which KSBs it covers',
+      'Reorder all the evidence by date so the portfolio reads in chronological order',
+      'Add more pieces of evidence to every unit until the portfolio is comprehensive',
     ],
     correctAnswer: 0,
     explanation:

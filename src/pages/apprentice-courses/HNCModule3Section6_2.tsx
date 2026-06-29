@@ -59,9 +59,9 @@ const quickCheckQuestions = [
     id: 'all-day-efficiency',
     question: 'All-day efficiency for transformers is calculated using:',
     options: [
-      'Privacy modes with scheduled/triggered recording',
-      'Document all results and reasons for retesting',
-      'A licensed asbestos removal contractor',
+      'Output power ÷ input power at full load only',
+      'The ratio of iron losses to copper losses',
+      'Rated kVA ÷ actual peak demand over 24 hours',
       'Energy output ÷ Energy input over 24 hours',
     ],
     correctIndex: 3,
@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'Why does motor efficiency typically decrease at part-load operation?',
     options: [
       'Fixed losses become a larger proportion of reduced output',
-      'To record all workplace accidents, injuries, and incidents, however minor',
-      'Correct rating and suitable for the intended purpose',
-      'Electrical equipment being charged accidentally',
+      'Copper losses increase sharply as load is reduced',
+      'The power factor improves and draws more current',
+      'The supply voltage rises when the motor is unloaded',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     id: 7,
     question: 'When conducting an energy audit, what is the typical first step?',
     options: [
-      'Install sub-metering on all circuits',
-      'Conduct thermal imaging surveys',
-      'Recommend equipment replacements',
+      'Install sub-metering on every final circuit',
+      'Carry out thermal imaging surveys of switchgear',
+      'Specify replacement motors and drives',
       'Collect utility bills and establish baseline consumption',
     ],
     correctAnswer: 3,

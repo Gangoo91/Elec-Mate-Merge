@@ -54,23 +54,23 @@ const rcdRatingOptions = [
 ];
 
 const testCurrentOptions = [
-  { value: '1x', label: '1× Rated Current — Sensitivity Test' },
-  { value: '5x', label: '5× Rated Current — Fast Trip Test' },
+  { value: '1x', label: '1× Rated Current — A4:2026 Verification Test' },
+  { value: '5x', label: '5× Rated Current — Legacy (pre-A4) Reference' },
 ];
 
 const getTestDescription = (rating: string, current: string) => {
   const descriptions: Record<string, Record<string, string>> = {
     '30mA': {
-      '1x': 'Testing at 30mA — Verifies RCD operates at rated sensitivity',
-      '5x': 'Testing at 150mA — Verifies rapid disconnection for faults',
+      '1x': 'Testing at 30mA (1×IΔn) — A4:2026 single verification test',
+      '5x': 'Testing at 150mA (5×IΔn) — legacy figure, no longer required under A4:2026',
     },
     '100mA': {
-      '1x': 'Testing at 100mA — Verifies RCD operates at rated sensitivity',
-      '5x': 'Testing at 500mA — Verifies rapid disconnection for faults',
+      '1x': 'Testing at 100mA (1×IΔn) — A4:2026 single verification test',
+      '5x': 'Testing at 500mA (5×IΔn) — legacy figure, no longer required under A4:2026',
     },
     '300mA': {
-      '1x': 'Testing at 300mA — Verifies RCD operates at rated sensitivity',
-      '5x': 'Testing at 1500mA — Verifies rapid disconnection for faults',
+      '1x': 'Testing at 300mA (1×IΔn) — A4:2026 single verification test',
+      '5x': 'Testing at 1500mA (5×IΔn) — legacy figure, no longer required under A4:2026',
     },
   };
   return descriptions[rating]?.[current] || '';
@@ -354,19 +354,22 @@ const RCDTripTimeCalculator = () => {
                 formula: `${result.rating} RCD | ${result.testCurrent} test current`,
                 description:
                   result.testCurrent === '1x'
-                    ? `Testing at 1× rated current (${result.rating}) verifies the RCD operates at its rated sensitivity — this is the basic functionality test.`
-                    : `Testing at 5× rated current verifies rapid disconnection — the RCD must trip much faster at higher fault currents to protect against serious faults.`,
+                    ? `Under BS 7671:2018+A4:2026, RCD effectiveness is verified by a single test at the rated residual operating current (1×IΔn = ${result.rating}). This is the current verification test.`
+                    : `The 5× rated current test was deleted in A4:2026 (along with Appendix 3 Table 3A). The figures below are retained only as a legacy reference for pre-A4 records.`,
               },
               {
-                label: 'Look up maximum trip time',
-                formula: `BS 7671 Table 3A → ${result.testCurrent} at ${result.rating}`,
+                label: 'Maximum disconnection time',
+                formula:
+                  result.testCurrent === '1x'
+                    ? `A4:2026 Reg 643.8 NOTE → 1×IΔn at ${result.rating}`
+                    : `Legacy (pre-A4) Table 3A → 5×IΔn at ${result.rating}`,
                 value: `${result.maxTripTime}ms maximum`,
                 description:
                   result.testCurrent === '1x'
-                    ? 'At 1× rated current, all RCDs must trip within 300ms regardless of rating. This confirms the device is functional.'
+                    ? 'Under A4:2026 a general (non-delay) RCD must disconnect within 300ms at 1×IΔn (Reg 643.8 NOTE), regardless of rating. In practice devices often operate far faster.'
                     : result.rating === '300mA'
-                      ? 'At 5× rated current, 300mA RCDs are allowed 150ms — longer than 30/100mA because higher-rated devices have more mechanical inertia.'
-                      : 'At 5× rated current, 30mA and 100mA RCDs must trip within 40ms — fast enough to prevent ventricular fibrillation from earth leakage.',
+                      ? 'Legacy reference only: the old 5×IΔn test allowed 150ms for 300mA RCDs. This test is no longer required under A4:2026.'
+                      : 'Legacy reference only: the old 5×IΔn test required 40ms for 30/100mA RCDs. This test and Table 3A were deleted in A4:2026.',
               },
               ...(result.actualTripTime !== undefined
                 ? [
@@ -424,9 +427,9 @@ const RCDTripTimeCalculator = () => {
                 <div className="space-y-2">
                   <p className="text-sm text-white font-medium">What the Tests Mean</p>
                   <p className="text-sm text-white">
-                    RCD testing confirms the device will disconnect fast enough to prevent a fatal
-                    electric shock. The three standard tests each check a different aspect of the
-                    RCD's operation:
+                    Under BS 7671:2018+A4:2026, RCD effectiveness is confirmed by a single test at the
+                    rated residual operating current (1×IΔn). Appendix 3 Table 3A and the ×5 IΔn test
+                    were deleted in A4:2026:
                   </p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2 text-sm text-white">
@@ -434,32 +437,32 @@ const RCDTripTimeCalculator = () => {
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      0.5× IΔn test: RCD must NOT trip — confirms it will not nuisance-trip under
-                      normal leakage currents
+                      1× IΔn test (A4:2026 requirement): a general (non-delay) RCD must disconnect
+                      within 300ms (Reg 643.8 NOTE) — in practice often much faster
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      1× IΔn test: RCD must trip within 300ms — basic functionality check at rated
-                      sensitivity
+                      0.5× IΔn check: RCD should NOT trip — a useful confidence check that it will not
+                      nuisance-trip under normal leakage currents
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      5× IΔn test: RCD must trip within 40ms (30/100mA) or 150ms (300mA) — verifies
-                      rapid disconnection for serious faults
+                      5× IΔn test (legacy, pre-A4): formerly 40ms (30/100mA) or 150ms (300mA) — no
+                      longer required under A4:2026, retained here only as a reference
                     </li>
                   </ul>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Correct Testing Sequence</p>
+                  <p className="text-sm text-white font-medium">Recommended Testing Sequence</p>
                   <p className="text-sm text-white">
-                    Always test in this order to avoid false results and ensure the RCD resets
-                    properly between tests:
+                    The 1×IΔn test is the A4:2026 requirement; the others are optional checks. Work
+                    in this order to avoid false results and let the RCD reset between tests:
                   </p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2 text-sm text-white">
@@ -474,21 +477,21 @@ const RCDTripTimeCalculator = () => {
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      Test at 0.5× IΔn — must NOT trip (if it does, investigate leakage)
+                      Optional 0.5× IΔn check — should NOT trip (if it does, investigate leakage)
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      Test at 1× IΔn — record trip time (must be ≤ 300ms)
+                      Test at 1× IΔn (A4:2026 requirement) — record trip time (must be ≤ 300ms)
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      Test at 5× IΔn — record trip time (must be ≤ 40ms or 150ms)
+                      Legacy 5× IΔn test (not required under A4:2026) — only if recording for pre-A4 reference
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
@@ -551,9 +554,9 @@ const RCDTripTimeCalculator = () => {
         name="RCD Trip Time Requirements"
         formula="Actual trip ≤ Maximum trip"
         variables={[
-          { symbol: '1×IΔn', description: 'Max 300ms for all ratings' },
-          { symbol: '5×IΔn', description: 'Max 40ms (30/100mA) or 150ms (300mA)' },
-          { symbol: '0.5×IΔn', description: 'Must NOT trip' },
+          { symbol: '1×IΔn', description: 'A4:2026 test — max 300ms for general RCDs (Reg 643.8)' },
+          { symbol: '5×IΔn', description: 'Legacy (pre-A4): 40ms (30/100mA) / 150ms (300mA) — deleted in A4:2026' },
+          { symbol: '0.5×IΔn', description: 'Optional check — should NOT trip' },
         ]}
       />
     </CalculatorCard>

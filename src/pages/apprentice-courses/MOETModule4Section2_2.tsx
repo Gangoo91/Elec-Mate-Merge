@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'emissivity',
     question: 'What is emissivity in infrared thermography?',
     options: [
-      'To demonstrate instruments are accurate and traceable to national standards',
-      'A measure of how effectively a surface emits thermal radiation compared to a perfect emitter (blackbody)',
-      'Determine the maximum demand of the installation, having due regard to diversity, before selecting cables and protective devices.',
-      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
+      'The smallest object the camera can resolve at a given working distance',
+      'How effectively a surface emits thermal radiation versus a perfect emitter',
+      'The temperature at which a surface begins to glow visibly red to the eye',
+      'The rate at which a surface loses heat by conduction to the air around it',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'A thermogram shows one phase of a three-phase busbar connection significantly hotter than the other two phases carrying similar load. This indicates:',
     options: [
-      'Working on or near live equipment without adequate isolation or precautions — a failure to apply EAWR Reg 14 and proven safe-isolation procedure',
-      'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
-      'Apply a physical lockout device (padlock + clip + warning notice) so the device cannot be re-energised, OR remove the fuse and retain it in your possession.',
-      'A high-resistance connection on the hot phase, likely due to a loose bolt, corroded contact surface or insufficient contact area',
+      'A faulty thermal camera reading caused by a low camera battery voltage',
+      'Normal behaviour, since one phase will always run hotter than the others',
+      'A reflection from a nearby heat source rather than a genuine real hot spot',
+      'A high-resistance joint on that phase — a loose bolt or corroded contact',
     ],
     correctIndex: 3,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'When carrying out a thermographic survey of live switchgear with covers removed, the primary safety concern is:',
     options: [
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
-      'To ensure the base is firm, level, and capable of supporting the equipment and imposed loads without sinking or shifting',
-      'Exposure to arc flash — the surveyor must wear appropriate arc-rated PPE and maintain safe working distances',
-      'Use professional discussion as an alternative evidence method, where the apprentice can demonstrate knowledge verbally',
+      'The risk of the thermal camera being damaged by stray infrared radiation',
+      'The possibility of reflected radiation distorting the temperature readings',
+      'Exposure to arc flash — needing arc-rated PPE and safe working distances',
+      'The need to recalibrate the camera every time a panel cover is removed',
     ],
     correctIndex: 2,
     explanation:
@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'Infrared thermography detects:',
     options: [
-      'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
-      'Infrared radiation emitted by objects, which correlates to their surface temperature',
-      'Emergency lighting is a critical fire safety measure that must be assessed for adequacy',
-      'A belief that others are plotting to harm, deceive, or persecute you',
+      'Visible light reflected from hot surfaces, which is brighter when hotter',
+      'Infrared radiation emitted by objects, which relates to surface temperature',
+      'The electrical resistance of a connection, measured at a safe distance',
+      'Ultraviolet emission from arcing contacts inside the enclosure being scanned',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,9 +84,9 @@ const quizQuestions = [
     id: 3,
     question: 'For a meaningful thermographic survey, the equipment should be:',
     options: [
-      'Always, for future cable additions or replacements',
-      'Power consumed by controls, sensors and standby',
-      'Curved lines following the saturation curve shape',
+      'De-energised and fully isolated so it is safe to approach closely',
+      'Energised but running with no load connected to the circuit',
+      'Cooled to ambient temperature before the survey is carried out',
       'Energised and carrying at least 40% of its normal load current',
     ],
     correctAnswer: 3,
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 4,
     question: 'IR viewing windows fitted to panel doors are made from materials that:',
     options: [
-      "Transmit infrared radiation while providing a physical barrier against arc flash and maintaining the panel's IP rating",
-      "Normal loading — the busbars are carrying current and generating expected heat, or the system may be overloaded",
-      "The smallest object the camera can resolve at a given distance — essentially the camera's spatial resolution",
-      "Comparing thermal data over time reveals gradual deterioration that may not be apparent from a single survey, allowing intervention before failure",
+      "Transmit infrared while keeping an arc-flash barrier and the IP rating",
+      "Block all radiation so the camera reads only the window surface temperature",
+      "Magnify the infrared image to improve the spatial resolution of the camera",
+      "Filter out visible light so the survey can be carried out fully in darkness",
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS EN 16714 relates to:',
     options: [
-      'Normal loading — the busbars are carrying current and generating expected heat, or the system may be overloaded',
-      'Non-destructive testing — thermographic testing, including qualification of thermographers and equipment requirements',
-      'Transmit infrared radiation while providing a physical barrier against arc flash and maintaining the panel\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s IP rating',
-      'The smallest object the camera can resolve at a given distance — essentially the camera\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s spatial resolution',
+      'Arc flash risk assessment and the selection of suitable arc-rated PPE',
+      'Thermographic testing as NDT, with thermographer and equipment requirements',
+      'The construction and IP rating of low voltage switchgear enclosures',
+      'The minimum acceptable insulation resistance values for low voltage circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'A thermal image showing a uniform temperature increase across all three phases of a busbar system indicates:',
     options: [
-      'Non-destructive testing — thermographic testing, including qualification of thermographers and equipment requirements',
-      'The smallest object the camera can resolve at a given distance — essentially the camera\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s spatial resolution',
+      'A high-resistance connection on one phase that has spread to the others',
+      'A camera calibration error affecting all three measurement points',
       'Normal loading — the busbars are carrying current and generating expected heat, or the system may be overloaded',
-      'Transmit infrared radiation while providing a physical barrier against arc flash and maintaining the panel\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s IP rating',
+      'Reflected radiation from a nearby heat source on all three phases',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 7,
     question: 'When reporting thermographic survey findings, the report should include:',
     options: [
-      'Implementing a no-blame reporting system with visible management commitment, feedback on actions taken, recognition for reporting, and integration of near-miss data into risk assessment reviews',
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'C2 (potentially dangerous) — IR below 1 MΩ minimum means insulation has failed; aged rubber compounds especially prone to deterioration; replacement recommended',
-      'Thermal images with corresponding visual photographs, ambient temperature, load conditions, emissivity settings, ΔT values, severity classification and recommended actions',
+      'Only a single thermal image of the single hottest component that was found',
+      'The thermal images alone, without any supporting written detail or context',
+      'A list of only the components that were found to be operating normally',
+      'Thermal and visual images plus ambient, load, ΔT, severity and actions',
     ],
     correctAnswer: 3,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 8,
     question: 'The main advantage of regular thermographic trending is:',
     options: [
-      'Comparing thermal data over time reveals gradual deterioration that may not be apparent from a single survey, allowing intervention before failure',
-      'Complete an arc flash risk assessment, determine the incident energy level, select appropriate arc-rated PPE, establish arc flash boundaries, and have a safe system of work in place',
-      'Non-destructive testing — thermographic testing, including qualification of thermographers and equipment requirements',
-      'Scanning low-emissivity surfaces where reflected radiation from nearby heat sources could affect the reading',
+      'Comparing data over time reveals gradual deterioration before failure occurs',
+      'It removes the need to record the load conditions at each individual survey',
+      'It allows the survey to be carried out with the equipment fully de-energised',
+      'It eliminates the need for any emissivity correction on bare metal surfaces',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'Wind and air movement during a thermographic survey can:',
     options: [
-      'A unit where the busbars are divided into RCD-protected and non-RCD sections',
+      'Increase surface temperatures, causing faults to appear more severe',
       'Cool hot spots, causing the survey to underestimate the severity of faults',
-      'Communication errors, RCD trips, or contactor failures',
-      'If you feel emotional about an email, wait 24 hours before sending your reply',
+      'Have no effect at all on the measured surface temperatures',
+      'Improve the accuracy of readings on low-emissivity surfaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 10,
     question: "The thermal image quality term 'IFOV' (Instantaneous Field of View) determines:",
     options: [
-      "Scanning low-emissivity surfaces where reflected radiation from nearby heat sources could affect the reading",
-      "Transmit infrared radiation while providing a physical barrier against arc flash and maintaining the panel's IP rating",
-      "The smallest object the camera can resolve at a given distance — essentially the camera's spatial resolution",
-      "Non-destructive testing — thermographic testing, including qualification of thermographers and equipment requirements",
+      "The maximum surface temperature the camera is able to measure accurately",
+      "The rate at which the camera refreshes the thermal image on its display",
+      "The smallest object the camera can resolve — its spatial resolution",
+      "The emissivity correction the camera applies to readings automatically",
     ],
     correctAnswer: 2,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'Before carrying out a thermographic survey of live equipment with covers removed, you must:',
     options: [
-      'Because the build-up of flammable vapours or toxic fumes in a substantially enclosed space creates a foreseeable risk of serious injury',
-      'The Qualified Supervisor and the contracting business — non-conformities go on a written report with corrective action timescales',
-      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'Complete an arc flash risk assessment, determine the incident energy level, select appropriate arc-rated PPE, establish arc flash boundaries, and have a safe system of work in place',
+      'Switch the camera to its highest emissivity setting before opening the panel covers',
+      'Confirm only that the panel door interlock has been defeated for the survey',
+      'Wait for the equipment to cool below 40°C so the covers can be handled safely',
+      'Assess arc flash, set the incident energy, PPE and boundary, and a safe system',
     ],
     correctAnswer: 3,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     question: 'Reflected temperature compensation is necessary when:',
     options: [
       'Scanning low-emissivity surfaces where reflected radiation from nearby heat sources could affect the reading',
-      'Normal loading — the busbars are carrying current and generating expected heat, or the system may be overloaded',
-      'The smallest object the camera can resolve at a given distance — essentially the camera\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s spatial resolution',
-      'Transmit infrared radiation while providing a physical barrier against arc flash and maintaining the panel\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s IP rating',
+      'Scanning high-emissivity painted surfaces in a temperature-stable room',
+      'The equipment is de-energised and at the same temperature as ambient',
+      'The camera is fitted with a wide-angle lens for distant targets',
     ],
     correctAnswer: 0,
     explanation:

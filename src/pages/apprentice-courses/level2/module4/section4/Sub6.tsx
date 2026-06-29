@@ -40,10 +40,10 @@ const checks = [
     question:
       'A modern domestic install has a plastic (PE) gas service pipe up to the meter. Inside the building, the consumer-side gas pipework is steel. Where does main bonding go?',
     options: [
-      'Coded as FI with a recommended investigation route, recorded under Limitations on the EICR, and brought to the duty holder\\\\\\\\\\\\\\\'s attention in the handover so they can commission the investigation as a separate work item. The EICR cannot certify what cannot be inspected.',
-      'The voltage factor minimum — accounts for the fact that the supply voltage at the fault point during a heavy fault may be lower than the declared U0 of 230 V due to supply tolerance and source impedance, so the design uses U0 × Cmin = 230 × 0.95 = 218.5 V as the available driving voltage for the fault current.',
-      'On the metal consumer-side pipework, within 600 mm of the meter outlet union per Reg 544.1.2. Plastic pipe is not an extraneous-conductive-part by definition (Part 2 — must be made of conductive material), so it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding. The metal consumer pipework downstream of the meter still does.',
-      'Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.',
+      'No bonding is needed anywhere, because the plastic supply pipe breaks the path to true earth.',
+      'On the plastic supply pipe at the boundary, using a clamp rated to grip plastic pipework.',
+      'On the metal consumer-side pipework, within 600 mm of the meter outlet union per Reg 544.1.2.',
+      'On the gas meter body itself, which is the most accessible metal point in the installation.',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     question:
       'A commercial unit has a structural steel frame, steel roof trusses, and steel cladding. The frame is bolted into a concrete slab with a separate earth electrode. How is the structural steel bonded?',
     options: [
-      'At least one person in the firm must hold a QS qualification (typically C&G 2391-52 Inspection and Testing, or equivalent) and that person is named on the scheme registration as the firm\\\\\\\'s QS. The QS doesn\\\\\\\'t have to do every job personally but is responsible for the standard of work and for signing off certification. For a sole trader the QS is normally the sole trader themselves.',
-      'Per Reg 643.7.2 (paraphrased): "If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified." So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.',
-      'Continuity of the bonding conductor from the metallic PV structures to the chosen suitable earthing terminal shall be demonstrable. The acceptance criterion is a continuity test showing low resistance and a secure, permanent connection to the earthing terminal. Where continuity cannot be demonstrated, the installation is non-compliant.',
-      'Per Reg 411.3.1.2, structural steel that introduces a potential is an extraneous-conductive-part and must be bonded to the MET. Typically multiple bond connection points to the steel frame at accessible locations, all routed back to the MET. BS EN 50522 also applies for high-voltage installations and bigger commercial earthing systems.',
+      'Structural steel never needs bonding because it is buried in concrete, which earths it directly.',
+      'A single bond from the nearest column is sufficient regardless of overall building size.',
+      'The steel frame is bonded only to the earth electrode in the slab, never back to the MET.',
+      'Per Reg 411.3.1.2 it is an extraneous-conductive-part, bonded to the MET at multiple points.',
     ],
     correctIndex: 3,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     question:
       'A domestic rooftop PV array has aluminium-framed panels mounted on metal mounting rails. The DC isolator is roof-side; the inverter is in the loft. What bonding is required?',
     options: [
-      'Part 1 = scope, object, fundamental principles. Part 2 = definitions. Part 3 = assessment of general characteristics. Part 4 = protection for safety. Part 5 = selection and erection. Part 6 = inspection and testing. Part 7 = special installations or locations. Part 8 = functional requirements (energy efficiency, prosumer\\\\\\\'s installations).',
-      'No. Socket testers are first-pass verification only. They confirm basic polarity and earth presence (L-N-E in the correct positions) but they do NOT detect borrowed neutrals, reversed polarity at the supply, undersized or shared earths, high-impedance earths, or RCD failure. A socket tester showing \\\\\\\'wiring correct\\\\\\\' is a starting point — the full verification needs an MFT for R1+R2, IR, Zs, RCD operating time, and polarity at every accessory.',
-      'Per Section 712 of BS 7671 + manufacturer instructions, the metal frame of the array (rails + panel frames) typically requires equipotential bonding back to the inverter or to a dedicated earthing terminal — sized per the PV system designer\\\\\\\\\\\\\\\'s requirements (often 6 mm² or 10 mm² Cu). The bond addresses fault-current paths in the DC system AND lightning-induced surges. Cross-reference Section 712 (PV systems) and BS EN 62305 (lightning protection).',
-      'Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news',
+      'No bonding of the array frame is needed, since the DC side is isolated from the AC system.',
+      'Only the inverter casing needs bonding; the rails and panel frames are left fully unbonded.',
+      'Per Section 712, the array frame and rails are bonded back to the inverter or PV earthing terminal.',
+      'The array frame must be bonded directly to a separate dedicated earth rod, never to the building MET.',
     ],
     correctIndex: 2,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'For a steel gas service pipe entering a domestic property, the BS 951 clamp must:',
     options: [
-      'Apply SLAM: stop the current activity, look for the source of the smell, assess whether it indicates a new hazard (overheating, insulation failure), and manage by withdrawing if necessary, de-energising the panel if safe to do so, and reporting the finding',
-      'Comply with BS 951 AND be specifically rated for gas — typically incorporating an insulating insert at the contact face per DSEAR (Dangerous Substances and Explosive Atmospheres Regulations) and gas industry guidance (e.g. IGEM/G/5).',
-      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
-      'Make safe before leaving — typically isolate the circuit, lock off, label, and brief the duty holder verbally and in writing. The continuing duty under EAWR Reg 4 attaches to you as the person who identified the danger; leaving a known C1 unmitigated is potentially a criminal breach.',
+      'Be any standard brass BS 951 clamp — the same clamp used on water is perfectly fine for gas.',
+      'Comply with BS 951 and be gas-rated — an insulating insert at the contact face for DSEAR.',
+      'Be a plastic-bodied clamp, since metal clamps are not permitted anywhere on gas pipework.',
+      'Be fitted on the supply side of the meter, where the steel service pipe is at its thickest.',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'A lightning protection system (LPS) on a commercial building has down-conductors running from the roof-mounted air terminals to ground rods. How does the LPS interact with the building\'s electrical bonding?',
     options: [
-      'The electrical contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Foreman or Charge-hand at the morning brief — they translate the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s programme into specific tasks for each pair of hands. The Approved Electrician you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.',
-      'Because in a broken-PEN fault on PME, the entire installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t melt before it is reset.',
-      'Per BS EN 62305 and BS 7671 Reg 411.3.1.2, the LPS earth electrode network is typically bonded to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s MET — either directly or via a spark gap (isolating SPD) depending on the LPS class and system designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s arrangement. This prevents large potential differences between the LPS earth and the electrical earth during a strike.',
-      'The line conductor is not easily accessible at the CU end (e.g. busbar trunking systems), the circuit is part of a complex distribution network where you want to isolate the CPC verification, or the wander lead is more practical on a large commercial site (one person at the MET, radio contact with the tester at the accessory).',
+      'The LPS must be kept completely separate from the electrical earth so lightning cannot enter at all.',
+      'The LPS down-conductors are connected to the supplier neutral, never to the building earth.',
+      'Per BS EN 62305, the LPS earth network is bonded to the MET — directly or via a spark gap.',
+      'The LPS earth replaces the electrical earth entirely, so no separate earthing conductor is needed.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     question:
       'In a swimming pool installation, what additional supplementary bonding requirements apply over and above the BS 7671 Section 415.2 / Reg 411.3.1.2 framework?',
     options: [
-      'A coordination check run in tools like Navisworks or Revit\\\\\\\'s built-in clash detection that finds geometric collisions between disciplines — e.g. a cable tray running through a structural beam, an HVAC duct passing through a fire compartment without a fire-stop, electrical conduit crossing a sprinkler pipe at the same height.',
-      'You don\\\\\\\'t have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.',
-      'To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person\\\\\\\'s health or safety, AND to comply with the requirements of CDM.',
-      'Section 702 of BS 7671 — extensive supplementary bonding inside Zone 0, 1 and 2 around the pool (between the pool liner reinforcement, surrounding metalwork, ladders, lighting frames etc.) and tighter restrictions on equipment in each zone. Supplementary bonding generally cannot be omitted in pool zones — the wet skin / immersed body risk is far higher than a domestic bathroom.',
+      'No additional requirements — a swimming pool is treated exactly like a domestic bathroom for bonding.',
+      'Supplementary bonding may be omitted entirely in pool zones because every circuit has RCD protection.',
+      'Only the pool pump motor needs bonding; the surrounding pool-zone metalwork is outside scope.',
+      'Section 702 — extensive supplementary bonding in Zones 0/1/2, and the omission permission does not apply.',
     ],
     correctAnswer: 3,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     question:
       'An oil-fuelled domestic central heating boiler has a 22 mm steel oil supply pipe entering the building from an external storage tank. What\'s the bonding requirement?',
     options: [
-      'Bonding required per Reg 411.3.1.2 — the metal oil supply pipe is an extraneous-conductive-part liable to introduce a potential. Bond per Reg 544.1.2 — consumer side, before any branch, within 600 mm of point of entry where practicable. Use a BS 951 clamp suitable for oil application (similar specification to gas — DSEAR considerations apply).',
-      'Take time to familiarise yourself with the equipment, ask the assessor for clarification about its operation if needed, and apply your transferable skills and knowledge systematically — the assessor assesses your approach and reasoning, not just equipment-specific knowledge',
-      '(1) Stop work; ensure no-one disturbs further. (2) Photograph and document. (3) Phone the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contracts manager / H&S manager immediately. (4) Inform the dutyholder (building owner / managing agent). (5) Do NOT proceed without confirmation that the material is non-asbestos OR that licensed contractor has taken over disturbance work. Document everything in writing.',
-      'Standard MCB ratings (6, 10, 16, 20, 25, 32, 40 A) with Type B or C overcurrent characteristic, combined with 30 mA Type A or Type AC residual current protection (Type B / F variants becoming available). Same form factor as a standard RCBO; same cascade and breaking-capacity specifications.',
+      'Bonding required per Reg 411.3.1.2 — bond the metal oil pipe per Reg 544.1.2 with an oil-rated clamp.',
+      'No bonding required — oil pipework is exempt from bonding because oil does not conduct electricity.',
+      'Bond only the external storage tank, not the metal supply pipe entering the building at all.',
+      'Bonding required, but the oil pipe must be bonded directly to the gas service bond, not to the MET.',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'A property has battery energy storage (e.g. Tesla Powerwall, GivEnergy) installed alongside a PV array. What additional bonding considerations apply?',
     options: [
-      'Yes — EIC provides hardship grants to anyone working in the UK electrical / energy industry including apprentices. Application process via electricalcharity.org. Grants typically cover specific need (rent arrears, urgent medical equipment, transport during illness, childcare during family crisis). Grant amount varies by need; typically £200-2,500 range. Confidential.',
-      'Per BS 7671 Section 712 (PV) and Section 426 (electrical equipment for safety services) plus the manufacturer\\\\\\\\\\\\\\\'s installation instructions — typically the battery enclosure needs equipotential bonding back to the system earth, the DC busbars require fault-current path provisions, and the AC-coupled inverter must comply with the standard ADS framework. Battery installs add complexity over straight PV.',
-      'Multiple sources accepted by CPS schemes: scheme-organised events (NICEIC Connect, NAPIT events, ELECSA training), accredited training providers (JTL, NET, IET Academy, Elec-Mate), trade events (ECA Live, Electric Vehicles Show), online platforms (IET Academy, scheme portals), manufacturer training (sometimes counts), reading and self-study (some schemes accept evidence). Keep a CPD log with date, topic, time, source.',
-      'Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\\\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.',
+      'No additional bonding is required — the battery is fully self-contained and earthed internally.',
+      'Per Section 712 + Section 426 + manufacturer instructions, bond the enclosure back to system earth.',
+      'The battery enclosure must be bonded to a separate dedicated earth rod, isolated from the building earth.',
+      'Only the AC output of the inverter needs consideration; the DC battery side is outside BS 7671 scope.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,24 +155,24 @@ const quizQuestions = [
     question:
       'A commercial building has structural steel framework and a TT supply (no PME). The earth electrode is a single 2.4 m driven copper rod giving Ze = 35 ohm. The structural steel frame is bonded to the MET. In a fault scenario, what is the role of the structural steel bonding?',
     options: [
-      'Provides a parallel earth path that lowers Zs.',
-      'Equalises the steel frame potential with the MET during a fault. Without this bonding, a fault on a circuit would raise the CPC to fault potential while the steel frame stayed at ground potential via its concrete-encased base — touch voltage between the two could be lethal. With bonding, both rise together — touch voltage between any two points on the bonded system is minimised.',
-      'Decorative only.',
-      'Both b) and c) — equalises potential AND can act as a parallel earth path for fault current return.',
+      'It provides the sole earth return path, so the driven rod electrode can be omitted entirely.',
+      'It carries the installation neutral current during normal operation to balance the phases.',
+      'It equalises the frame potential with the MET during a fault, minimising touch voltage.',
+      'It isolates the steel frame from the electrical system so a fault cannot energise the structure.',
     ],
     correctAnswer: 2,
     explanation:
-      'Both. Primary purpose: equipotential bonding (b). Secondary effect: structural steel buried in concrete with extensive ground contact often acts as a substantial parallel earth path, effectively lowering Ze for the installation as a whole (c). On TT installations particularly, the structural steel can be the dominant earth path — much lower resistance than a single rod.',
+      'The primary purpose is equipotential bonding — equalising the steel frame potential with the MET during a fault so touch voltage is minimised. As a secondary effect, structural steel buried in concrete with extensive ground contact often acts as a substantial parallel earth path, lowering Ze for the installation as a whole. On TT installations particularly, the structural steel can be the dominant earth path — much lower resistance than a single rod.',
   },
   {
     id: 7,
     question:
       'A Galvanised steel (GS) gas service has been replaced by a polyethylene (PE) plastic supply at the property boundary. The internal consumer-side pipework remains steel. The original main bond clamp is on the GS pipe just inside the meter cabinet. What change is needed?',
     options: [
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'Because maintenance technicians are uniquely positioned to identify and implement energy efficiency improvements during routine work, contributing to organisational sustainability and cost reduction',
-      'Where a specific risk assessment demonstrates that the particular task, equipment, and location are suitable for the actual conditions — for example, an enclosed MEWP in a sheltered courtyard',
-      'Verify the bond clamp is still on consumer-side metal pipework (post-meter, before any branch). If yes, no change needed. The PE supply doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding (not extraneous-conductive); the consumer steel pipework still does and gets bonded as before.',
+      'Remove the bond entirely, because the new plastic supply means no bonding is required anywhere.',
+      'Move the bond onto the new PE supply pipe at the property boundary using a plastic-pipe clamp.',
+      'Add a second bond directly to the gas meter body to compensate for the new plastic supply pipe.',
+      'Verify the bond is still on consumer-side metal pipework before any branch — if so, no change needed.',
     ],
     correctAnswer: 3,
     explanation:
@@ -183,10 +183,10 @@ const quizQuestions = [
     question:
       'A commercial unit with structural steel frame + steel roof + gas + water + lightning protection — design the bonding scheme. What\'s the principle?',
     options: [
-      'Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.',
-      'The Schedule of Accessories is a design document — every accessory by location, type, IP rating and circuit reference, used for install QC and as-installed verification. The BOM is a procurement document — totals by part number for ordering. The schedule drives the BOM, but the schedule survives long after the BOM is closed.',
-      'Report to the JIB ECS team immediately and request a replacement (small admin fee, typically £15-20). Get a temporary letter of confirmation from JIB or your employer to maintain site access while the new card is in production (typically 5-10 working days). Most sites will accept an ECS register printout temporarily; some won\\\\\\\'t, in which case you can\\\\\\\'t work until the new card arrives.',
-      'Clamping around BOTH conductors (L AND N together) when measuring LOAD current. The clamp reads imbalance — for load current you want one conductor only (L OR N, not both). Reading shows zero or near-zero, apprentice assumes \\\\\\\'no load\\\\\\\', misses the actual current. Conversely, when measuring earth leakage, you DO clamp L AND N together (the imbalance IS the leakage). The two use cases are mutually exclusive — load = one conductor, leakage = both conductors. Apprentices learn this in week one and re-learn it every time they pick up a clamp.',
+      'Bond every service independently back to the MET — gas, water, steel and LPS each on its own cable.',
+      'Daisy-chain every service together with one continuous cable, then run a single bond to the MET to save cable.',
+      'Bond the gas and water to each other, and bond the structural steel and LPS to a separate dedicated earth rod.',
+      'Bond only the structural steel frame, since it connects to every other metallic service in the building anyway.',
     ],
     correctAnswer: 0,
     explanation:

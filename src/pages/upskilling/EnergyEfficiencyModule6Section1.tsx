@@ -52,16 +52,16 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How often must ESOS compliance assessments be conducted?',
-    options: ['Annually', 'Every 2 years', 'Every 4 years', 'Every 5 years'],
-    correctAnswer: 2,
+    options: ['Every 4 years', 'Annually', 'Every 2 years', 'Every 5 years'],
+    correctAnswer: 0,
     explanation:
       'ESOS compliance assessments must be conducted every 4 years, with each phase having a specific deadline.',
   },
   {
     id: 2,
     question: 'What is the maximum penalty for ESOS non-compliance?',
-    options: ['£5,000', '£50,000', '£90,000 plus daily fines', '£250,000'],
-    correctAnswer: 2,
+    options: ['£5,000', '£90,000 plus daily fines', '£50,000', '£250,000'],
+    correctAnswer: 1,
     explanation:
       'ESOS non-compliance can result in penalties up to £90,000 plus daily fines of £500 for continuing breaches.',
   },
@@ -70,19 +70,19 @@ const quizQuestions = [
     question: 'Which companies must report under SECR?',
     options: [
       'All UK registered companies',
-      'Quoted companies, large unquoted companies, and large LLPs',
       'Only FTSE 100 companies',
+      'Quoted companies, large unquoted companies, and large LLPs',
       'Only manufacturing companies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SECR applies to quoted companies, large unquoted companies, and large LLPs meeting specific size thresholds.',
   },
   {
     id: 4,
     question: 'What percentage of energy must be covered in an ESOS audit?',
-    options: ['50%', '75%', '90%', '100%'],
-    correctAnswer: 2,
+    options: ['50%', '75%', '100%', '90%'],
+    correctAnswer: 3,
     explanation:
       "An ESOS audit must cover at least 90% of the organisation's total energy consumption.",
   },
@@ -90,16 +90,16 @@ const quizQuestions = [
     id: 5,
     question:
       'Building Regulations Part L 2021 requires what improvement in CO2 emissions compared to 2013 standards for new dwellings?',
-    options: ['15% reduction', '21% reduction', '31% reduction', '50% reduction'],
-    correctAnswer: 2,
+    options: ['15% reduction', '31% reduction', '21% reduction', '50% reduction'],
+    correctAnswer: 1,
     explanation:
       'Part L 2021 requires a 31% reduction in CO2 emissions compared to 2013 standards for new dwellings.',
   },
   {
     id: 6,
     question: 'What is the penalty cap for MEES breaches on commercial properties?',
-    options: ['£5,000', '£50,000', '£150,000', '£500,000'],
-    correctAnswer: 2,
+    options: ['£150,000', '£5,000', '£50,000', '£500,000'],
+    correctAnswer: 0,
     explanation:
       'Commercial MEES breaches can result in penalties up to £150,000 per property based on rateable value.',
   },
@@ -108,11 +108,11 @@ const quizQuestions = [
     question: 'Who is the lead assessor required for ESOS compliance?',
     options: [
       'Any qualified electrician',
-      'A registered ESOS Lead Assessor from an approved register',
       "The company's financial director",
-      'Any building surveyor',
+      'A registered ESOS Lead Assessor from an approved register',
+      'Any chartered building surveyor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ESOS requires sign-off by a registered Lead Assessor from an approved register such as CIBSE or IEMA.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under SECR, what intensity ratio must be reported?',
     options: [
-      'Energy use per employee',
-      'CO2 emissions per unit of revenue or other appropriate metric',
+      'Energy use per employee headcount',
       'Energy cost per square metre',
-      'Carbon offset percentage',
+      'Carbon offset percentage purchased',
+      'CO2 emissions per unit of revenue or other appropriate metric',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SECR requires at least one intensity ratio, commonly tCO2e per £million revenue or per employee.',
   },
@@ -133,16 +133,16 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the minimum fabric U-value requirement for new external walls under Part L 2021?',
-    options: ['0.18 W/m²K', '0.26 W/m²K', '0.35 W/m²K', '0.45 W/m²K'],
-    correctAnswer: 1,
+    options: ['0.18 W/m²K', '0.35 W/m²K', '0.26 W/m²K', '0.45 W/m²K'],
+    correctAnswer: 2,
     explanation:
       'Part L 2021 requires external walls to achieve a U-value of 0.26 W/m²K or better.',
   },
   {
     id: 10,
     question: 'How long is a DEC valid for buildings over 1,000m²?',
-    options: ['6 months', '1 year', '5 years', '10 years'],
-    correctAnswer: 1,
+    options: ['6 months', '5 years', '1 year', '10 years'],
+    correctAnswer: 2,
     explanation:
       'DECs for buildings over 1,000m² must be renewed annually to reflect actual operational energy performance.',
   },

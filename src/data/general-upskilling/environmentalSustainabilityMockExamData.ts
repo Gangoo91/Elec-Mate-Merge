@@ -65,10 +65,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the most widely accepted definition of 'sustainable development', as set out in the 1987 Brundtland Report?",
     options: [
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
+      'Economic growth that prioritises present needs and leaves environmental problems for future generations to solve with better technology',
       'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
-      'The storage container must be within a secondary containment system (bund) capable of holding 110% of the container\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s capacity',
+      'Development that halts all new construction in order to protect natural resources and reduce carbon emissions to zero',
+      'Maximising short-term resource extraction to fund the renewable energy and conservation projects of future generations',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'Which UK Act of Parliament originally established the framework for environmental protection, including pollution control and waste management?',
     options: [
-      'Waste Electrical and Electronic Equipment',
-      'March to August (inclusive)',
+      'Health and Safety at Work etc Act 1974',
+      'Town and Country Planning Act 1990',
       'Environmental Protection Act 1990',
-      'Contaminated Land Exposure Assessment',
+      'Clean Air Act 1956',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,10 +135,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: "What does 'net zero' mean in the context of UK climate policy?",
     options: [
-      'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
+      'Stopping all greenhouse gas emissions completely, so that no carbon dioxide or other gases are released into the atmosphere at all',
       'Balancing the amount of greenhouse gases emitted with the amount removed from the atmosphere, so the net contribution is zero',
-      'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
-      'To set a cap on total greenhouse gas emissions from participating sectors, allowing those who emit less to sell allowances to higher emitters',
+      'Generating all of the nation\'s electricity from renewable sources such as wind and solar, eliminating the need for fossil fuel power stations',
+      'Reducing greenhouse gas emissions to zero in the energy sector only, while allowing other sectors to continue emitting at current levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -170,9 +170,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: "What is a 'carbon footprint'?",
     options: [
-      'The entire waste load becomes classified as hazardous, increasing disposal costs and regulatory requirements, and potentially causing environmental contamination or chemical reactions',
-      'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
-      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
+      'The total amount of carbon dioxide emitted directly by an activity or product, excluding methane, nitrous oxide, and other greenhouse gases',
+      'The physical land area required to absorb the carbon dioxide emissions produced by an individual or organisation over one year',
+      'The proportion of an organisation\'s emissions that arise from electricity use, expressed as a percentage of its total energy consumption',
       'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
     ],
     correctAnswer: 3,
@@ -222,10 +222,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: "What is a 'circular economy'?",
     options: [
-      'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
+      'An economic model based on continuous growth in which resources are extracted, used once, and then disposed of as efficiently as possible',
+      'A trading system in which businesses buy and sell recycled materials on a circular commodities market to balance supply and demand',
       'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
-      'To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users',
+      'A national framework requiring all manufactured goods to be returned to the original producer within a fixed period after sale',
     ],
     correctAnswer: 2,
     explanation:
@@ -258,9 +258,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "Under the Environmental Protection Act 1990, what is a 'statutory nuisance'?",
     options: [
       'A condition or activity that is prejudicial to health or a nuisance, as defined in Part III of the Act, including noise, dust, smoke, and fumes',
-      'Land where substances are present at concentrations that could cause harm to human health or the environment',
-      'SuDS reduce surface water runoff rates, improve water quality through natural filtration, and create habitat',
-      'Elements of an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s activities, products, or services that interact with the environment and have a significant environmental impact',
+      'Any breach of an environmental permit condition that the Environment Agency has formally recorded but not yet prosecuted',
+      'A minor environmental incident that causes inconvenience but does not require the local authority to take any formal enforcement action',
+      'A planning condition imposed by the local authority to restrict the hours during which noisy activities may be carried out',
     ],
     correctAnswer: 0,
     explanation:
@@ -274,10 +274,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: 'What is the primary purpose of an Environmental Policy within an organisation?',
     options: [
-      "The person or company who caused or knowingly permitted the contamination is primarily liable for remediation costs",
+      "To record the detailed technical procedures that site operatives must follow when handling each individual waste stream",
       "To set out the organisation's commitment to environmental protection, compliance with legislation, and continual improvement",
-      "Development that meets the needs of the present without compromising the ability of future generations to meet their own needs",
-      "Elements of an organisation's activities, products, or services that interact with the environment and have a significant environmental impact",
+      "To provide a legally binding guarantee to clients that the organisation will never cause any environmental pollution",
+      "To list the specific environmental fines and penalties the organisation has incurred over the previous reporting year",
     ],
     correctAnswer: 1,
     explanation:
@@ -326,9 +326,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What does the term 'greenhouse effect' describe?",
     options: [
       "The trapping of heat in the Earth's atmosphere by greenhouse gases, which raises the planet's average temperature",
-      "An awareness of the carbon dioxide costs and impacts of everyday activities and the ability and motivation to reduce emissions",
-      "Excavating contaminated soil and treating it off-site or in a separate treatment area on site",
-      "Development that meets the needs of the present without compromising the ability of future generations to meet their own needs",
+      "The thinning of the ozone layer caused by chlorofluorocarbons, which allows more ultraviolet radiation to reach the Earth's surface",
+      "The reflection of sunlight back into space by greenhouse gases, which has a net cooling effect on the planet's surface",
+      "The cooling of the upper atmosphere as greenhouse gases absorb and radiate heat away from the Earth into space",
     ],
     correctAnswer: 0,
     explanation:
@@ -361,10 +361,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Climate Change Act 2008, which independent body advises the UK Government on emissions targets and reports on progress?',
     options: [
-      'Environmental Protection Act 1990',
-      'Waste Electrical and Electronic Equipment',
+      'The Environment Agency (EA)',
+      'The Department for Environment, Food and Rural Affairs (Defra)',
       'The Committee on Climate Change (CCC)',
-      'Reduce, Reuse, Recycle, Recover, Dispose',
+      'The Office of Gas and Electricity Markets (Ofgem)',
     ],
     correctAnswer: 2,
     explanation:
@@ -397,9 +397,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'greenwashing'?",
     options: [
       'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
-      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'The use of green-coloured packaging and labelling to make products appear more natural and environmentally friendly to consumers',
+      'The process of cleaning and treating contaminated water on site so that it can be safely discharged to a watercourse',
+      'A voluntary scheme in which companies pay an independent body to verify and publicly certify their environmental claims',
     ],
     correctAnswer: 0,
     explanation:
@@ -413,10 +413,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'What is the purpose of a Construction Environmental Management Plan (CEMP)?',
     options: [
-      'They must offer to take back the old equipment free of charge on a like-for-like basis',
+      'To record the final account of all materials purchased and waste disposal costs incurred during the construction phase',
       'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
-      'All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts',
-      'SuDS reduce surface water runoff rates, improve water quality through natural filtration, and create habitat',
+      'To calculate the embodied and operational carbon of the completed building for the purposes of Building Regulations compliance',
+      'To set out the commercial programme and sequencing of construction activities to keep the project on schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -430,10 +430,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: "Under UK law, what is the 'polluter pays' principle?",
     options: [
-      'The Building Research Establishment Environmental Assessment Method — a sustainability rating scheme for buildings',
-      'A strategy and action plan that identifies priorities and actions for conserving and enhancing biodiversity',
+      'The principle that the cost of cleaning up pollution should be shared equally between the polluter, the landowner, and the taxpayer',
+      'The principle that the government must compensate businesses for the cost of complying with new environmental regulations',
       'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
+      'The principle that any organisation discharging to a watercourse must pay an annual licence fee to the Environment Agency',
     ],
     correctAnswer: 2,
     explanation:
@@ -447,9 +447,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: "What does 'embodied carbon' refer to in the construction industry?",
     options: [
-      'The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact',
-      'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
-      'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
+      'The greenhouse gas emissions resulting from the energy used to heat, cool, and light a building throughout its operational lifetime',
+      'The amount of carbon dioxide that timber and other natural building materials absorb and store within the structure of a building',
+      'The total greenhouse gas emissions produced by the workers and machinery present on a construction site during the build phase',
       'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
     ],
     correctAnswer: 3,
@@ -465,9 +465,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'lifecycle assessment' (LCA)?",
     options: [
       'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
-      'The deliberate, planned movement of living organisms from one location to another, typically as a conservation or mitigation measure',
-      'A cap on the total amount of greenhouse gases the UK can emit over a five-year period, set under the Climate Change Act 2008',
-      'To provide standardised, verified information about the environmental impact of a product throughout its lifecycle',
+      'An estimate of how many years a building material or component will last before it needs to be repaired or replaced',
+      'A financial appraisal of the total purchase, operating, and maintenance costs of a product over its expected service life',
+      'An assessment of the health and safety risks posed to workers handling a material across the stages of construction',
     ],
     correctAnswer: 0,
     explanation:
@@ -498,10 +498,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'What does the Environment Act 2021 require regarding single-use plastics?',
     options: [
-      'Up to 12 months imprisonment and/or an unlimited fine in the magistrates\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' court, or up to 5 years and/or an unlimited fine in the Crown Court',
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
+      'It imposes an immediate, blanket ban on the manufacture and sale of all plastic products throughout the United Kingdom',
+      'It requires retailers to charge a minimum 25p deposit on every single-use plastic item, refundable on return',
       'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'It transfers responsibility for all plastic waste collection from local authorities directly to plastic manufacturers',
     ],
     correctAnswer: 2,
     explanation:
@@ -515,9 +515,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: "What is 'carbon offsetting'?",
     options: [
-      'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
-      'Balancing the amount of greenhouse gases emitted with the amount removed from the atmosphere, so the net contribution is zero',
+      'Reducing an organisation\'s own emissions to zero by switching entirely to renewable energy and electric vehicles',
+      'Capturing carbon dioxide directly from an organisation\'s own chimneys and flues and storing it underground on site',
+      'Trading surplus emission allowances with other organisations under the UK Emissions Trading Scheme to recover costs',
       'Compensating for greenhouse gas emissions by funding an equivalent carbon dioxide saving elsewhere, such as tree planting or renewable energy projects',
     ],
     correctAnswer: 3,
@@ -550,10 +550,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'What is the purpose of Environmental Product Declarations (EPDs)?',
     options: [
-      'Elements of an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s activities, products, or services that interact with the environment and have a significant environmental impact',
+      'To certify that a product has been independently tested and guaranteed to be completely carbon neutral over its lifecycle',
       'To provide standardised, verified information about the environmental impact of a product throughout its lifecycle',
-      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
-      'A water sampling technique that detects great crested newt DNA in pond water without the need to capture animals',
+      'To confirm that a product complies with the relevant British Standard and is fit for its intended construction use',
+      'To declare the recycled content of a product as a percentage so that buyers can claim recycling credits at end of life',
     ],
     correctAnswer: 1,
     explanation:
@@ -567,10 +567,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: "What is a 'Scope 1' greenhouse gas emission?",
     options: [
-      'Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
+      'Indirect emissions from the generation of purchased electricity, heat, and steam consumed by the organisation',
+      'Emissions arising in the organisation\'s wider value chain, such as purchased materials, business travel, and employee commuting',
       'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
-      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
+      'Emissions from the manufacture and transport of the building materials and products the organisation purchases',
     ],
     correctAnswer: 2,
     explanation:
@@ -584,9 +584,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: "What is the difference between 'Scope 2' and 'Scope 3' greenhouse gas emissions?",
     options: [
-      'To provide standardised, verified information about the environmental impact of a product throughout its lifecycle',
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'Land where substances are present at concentrations that could cause harm to human health or the environment',
+      'Scope 2 covers direct emissions from company vehicles and on-site combustion; Scope 3 covers purchased electricity and heat',
+      'Scope 2 covers emissions from waste disposal; Scope 3 covers emissions from the organisation\'s own buildings and plant',
+      'Scope 2 covers emissions in the upstream supply chain; Scope 3 covers emissions from the organisation\'s direct fuel use',
       'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
     ],
     correctAnswer: 3,
@@ -602,9 +602,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What role does the 'precautionary principle' play in environmental decision-making?",
     options: [
       'It states that where there are threats of serious or irreversible environmental damage, lack of full scientific certainty shall not be used as a reason for postponing cost-effective measures to prevent degradation',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
-      'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
+      'It states that no environmental protection measure should be taken unless there is full and conclusive scientific proof that harm will occur',
+      'It states that developers must demonstrate a positive environmental benefit before any project can be granted planning permission',
+      'It states that the costs of environmental protection must always be weighed against, and never exceed, the economic value of a development',
     ],
     correctAnswer: 0,
     explanation:
@@ -618,10 +618,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question: "What is the primary purpose of the UK's Climate Change Levy (CCL)?",
     options: [
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'To tax domestic households on their gas and electricity use in order to fund national energy efficiency improvement schemes',
       'To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'A device that transfers heat from a low-temperature source (air, ground, or water) to a higher-temperature output for space heating and hot water, achieving efficiencies of 250-400%',
+      'To charge businesses a levy on every tonne of carbon dioxide they emit above their allocated annual emissions cap',
+      'To provide grants to businesses that install renewable energy generation, funded by a levy on fossil fuel suppliers',
     ],
     correctAnswer: 1,
     explanation:
@@ -635,10 +635,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: "What does 'carbon literacy' mean?",
     options: [
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
-      'All rental properties must achieve a minimum EPC rating of E; landlords cannot grant new tenancies for properties rated F or G',
+      'The ability to read and interpret an organisation\'s annual carbon accounts and emissions reporting statements',
+      'A formal qualification required by law before an individual can carry out a building\'s carbon footprint assessment',
       'An awareness of the carbon dioxide costs and impacts of everyday activities and the ability and motivation to reduce emissions',
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
+      'The measurement of the total carbon dioxide emissions produced by an individual over the course of a single year',
     ],
     correctAnswer: 2,
     explanation:
@@ -652,9 +652,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of the UK Emissions Trading Scheme (UK ETS)?',
     options: [
-      'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
-      'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
+      'To impose a fixed carbon tax on every tonne of greenhouse gas emitted by all businesses across the United Kingdom',
+      'To require energy suppliers to source a minimum percentage of their electricity from renewable generation each year',
+      'To provide tradable grants to households that install low-carbon heating and energy efficiency measures',
       'To set a cap on total greenhouse gas emissions from participating sectors, allowing those who emit less to sell allowances to higher emitters',
     ],
     correctAnswer: 3,
@@ -670,9 +670,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'environmental due diligence'?",
     options: [
       'The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding',
-      'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
-      'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      'The greenhouse gas emissions resulting from the energy used to operate a building during its lifetime, including heating, cooling, lighting, and equipment',
+      'The legal duty to obtain an environmental permit from the Environment Agency before commencing any construction works',
+      'The ongoing monitoring of an organisation\'s environmental performance against the targets set in its environmental policy',
+      'The process of cleaning up contaminated land to a standard suitable for its intended future use before development begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -720,9 +720,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: "What is a 'carbon budget' in the context of UK climate legislation?",
     options: [
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
+      'The annual amount of money the UK Government allocates to spend on climate change mitigation and adaptation projects',
+      'The maximum amount of carbon dioxide a single organisation is permitted to emit before it must purchase emission allowances',
+      'A voluntary target that individual companies set themselves for reducing their carbon footprint over a five-year period',
       'A cap on the total amount of greenhouse gases the UK can emit over a five-year period, set under the Climate Change Act 2008',
     ],
     correctAnswer: 3,
@@ -738,9 +738,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'operational carbon' in the context of buildings?",
     options: [
       'The greenhouse gas emissions resulting from the energy used to operate a building during its lifetime, including heating, cooling, lighting, and equipment',
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'The greenhouse gas emissions associated with manufacturing, transporting, and installing a building\'s materials and components',
+      'The greenhouse gas emissions generated by the construction plant and machinery during the building of a structure',
+      'The greenhouse gas emissions released when a building is demolished and its materials are processed and disposed of',
     ],
     correctAnswer: 0,
     explanation:
@@ -776,10 +776,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: "What is the 'duty of care' for waste under the Environmental Protection Act 1990?",
     options: [
-      'To set a cap on total greenhouse gas emissions from participating sectors, allowing those who emit less to sell allowances to higher emitters',
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
+      'A legal obligation on employers to protect the health and safety of their employees while they are handling waste at work',
+      'A requirement that all waste must be disposed of at the nearest licensed landfill site to minimise transport emissions',
       'A legal obligation on anyone who produces, imports, carries, keeps, treats, or disposes of controlled waste to ensure it is managed properly and transferred only to authorised persons',
-      'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
+      'A duty on local authorities to provide free waste collection and recycling facilities to all households and businesses',
     ],
     correctAnswer: 2,
     explanation:
@@ -880,9 +880,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'fly-tipping'?",
     options: [
       'The illegal dumping of waste on land that has no licence to accept it',
-      'Temporary heating, lighting, and power for tools and equipment',
-      'Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives',
-      'May to September (the active season), with surveys typically starting at dusk',
+      'The legal disposal of household waste at a registered household waste recycling centre',
+      'The transfer of waste to a registered carrier without completing a waste transfer note',
+      'The burning of waste in the open air on a construction site without an exemption',
     ],
     correctAnswer: 0,
     explanation:
@@ -896,10 +896,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'What is a Site Waste Management Plan (SWMP)?',
     options: [
-      'A system where habitat is created or enhanced in advance, generating biodiversity units that can be sold to developers who need to meet their BNG obligations',
+      'A risk assessment that identifies the health and safety hazards associated with handling waste on a construction site',
       'A document that sets out how waste will be managed on a construction site, including waste types, quantities, and disposal routes',
-      'It is an alternative international forest certification scheme that endorses national certification programmes',
-      'A condition or activity that is prejudicial to health or a nuisance, as defined in Part III of the Act, including noise, dust, smoke, and fumes',
+      'A legal agreement between a contractor and a licensed waste carrier setting out the price for waste collection',
+      'A register recording the consignment notes for all hazardous waste produced and transferred from a construction site',
     ],
     correctAnswer: 1,
     explanation:
@@ -913,10 +913,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: "What is 'landfill tax' designed to achieve?",
     options: [
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
-      'Land where substances are present at concentrations that could cause harm to human health or the environment',
+      'Raise revenue to fund the construction of new landfill sites and waste incineration facilities across the UK',
+      'Charge waste producers a fee for every consignment note issued when transferring waste to a landfill operator',
       'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
-      'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
+      'Compensate local communities living near landfill sites for the loss of amenity and increased traffic',
     ],
     correctAnswer: 2,
     explanation:
@@ -949,9 +949,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'Which waste carrier registration is required to transport controlled waste in England?',
     options: [
       "A waste carrier's licence (registration) issued by the Environment Agency",
-      "The Hazardous Waste (England and Wales) Regulations 2005",
-      "They must offer to take back the old equipment free of charge on a like-for-like basis",
-      "Biodiversity net gain of at least 10% must be delivered by most new developments",
+      "A hazardous waste consignment note issued for each individual load that is transported",
+      "An environmental permit issued by the local authority for the vehicle used to transport waste",
+      "A waste transfer note signed by the producer authorising the carrier to remove the waste",
     ],
     correctAnswer: 0,
     explanation:
@@ -965,10 +965,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: "What is a 'waste exemption'?",
     options: [
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
+      'A release from the duty of care for waste producers who transfer waste only to a registered carrier',
       'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
-      'The high alkalinity (pH 11-13) is toxic to aquatic organisms and can devastate freshwater ecosystems',
-      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'A waiver of landfill tax granted for inert waste that cannot be recycled or recovered by any other means',
+      'An exclusion that allows household waste to be classified as non-controlled and disposed of without documentation',
     ],
     correctAnswer: 1,
     explanation:
@@ -983,10 +983,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the penalty for fly-tipping under Section 33 of the Environmental Protection Act 1990?',
     options: [
-      "Chartered Institute of Ecology and Environmental Management",
-      "The Committee on Climate Change (CCC)",
+      "A fixed penalty notice of £80, with no possibility of imprisonment",
+      "A formal written warning for a first offence, with prosecution only for repeat offenders",
       "Up to 5 years' imprisonment and/or an unlimited fine",
-      "Department for Environment, Food and Rural Affairs",
+      "A maximum fine of £5,000 with no power for the courts to impose a custodial sentence",
     ],
     correctAnswer: 2,
     explanation:
@@ -1000,9 +1000,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: "What does the term 'controlled waste' mean?",
     options: [
-      'A shallow, vegetated channel designed to convey and filter surface water runoff',
-      'Using the Defra statutory biodiversity metric, which assesses habitat type, condition, distinctiveness, and area',
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
+      'Only hazardous waste that must be transferred under a consignment note rather than a waste transfer note',
+      'Waste that may only be transported by a carrier holding an upper-tier waste carrier registration',
+      'Agricultural, mining, and radioactive waste regulated separately from household and commercial waste',
       'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
     ],
     correctAnswer: 3,
@@ -1018,9 +1018,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What types of waste are commonly classified as hazardous on a construction site?',
     options: [
       'Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives',
-      'Raw material supply, transport to factory, and manufacturing',
-      'The power to impose requirements on how construction works are carried out to control noise',
-      'A 10% increase in biodiversity value — required for most new developments through planning',
+      'Clean brick, concrete, timber off-cuts, and uncontaminated soil and stones',
+      'Cardboard packaging, plastic sheeting, metal off-cuts, and plasterboard',
+      'Surplus cable, copper pipe, steel reinforcement, and aluminium trunking',
     ],
     correctAnswer: 0,
     explanation:
@@ -1035,10 +1035,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the WEEE Regulations, what obligation do distributors of electrical equipment have when a customer buys a new like-for-like product?',
     options: [
-      'CLT sequesters carbon during tree growth and has lower embodied carbon than concrete or steel',
+      'They must charge the customer a recycling levy on the new product to fund the disposal of the old one',
       'They must offer to take back the old equipment free of charge on a like-for-like basis',
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
-      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
+      'They must arrange for the old equipment to be collected directly from the customer\'s home within 14 days',
+      'They must replace the old equipment with a refurbished unit rather than recycling it as waste',
     ],
     correctAnswer: 1,
     explanation:
@@ -1052,10 +1052,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'What is the purpose of waste segregation on a construction site?',
     options: [
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
+      'To keep waste contained within designated areas so that it does not create a trip hazard or obstruct access routes',
+      'To reduce the total volume of waste produced on site by compacting different materials together before removal',
       'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
-      'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
+      'To ensure each waste skip is filled to capacity before it is collected, reducing the number of collections required',
     ],
     correctAnswer: 2,
     explanation:
@@ -1069,9 +1069,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: "What is 'extended producer responsibility' (EPR)?",
     options: [
-      'A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated',
-      'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
-      'The entire waste load becomes classified as hazardous, increasing disposal costs and regulatory requirements, and potentially causing environmental contamination or chemical reactions',
+      'A policy principle that requires consumers to pay an additional deposit on products that is refunded when they are recycled',
+      'A scheme that extends the manufacturer\'s warranty obligations so that products can be repaired rather than discarded',
+      'A duty on retailers to take back any product a customer no longer wants, regardless of where it was purchased',
       'A policy principle that makes producers responsible for the environmental impact of their products throughout the product lifecycle, including end-of-life management',
     ],
     correctAnswer: 3,
@@ -1088,9 +1088,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       "What does the term 'duty of care' require of a construction company producing waste?",
     options: [
       'That they take all reasonable steps to prevent the unauthorised deposit, treatment, or disposal of waste; store waste safely and securely; transfer waste only to authorised persons; and provide an accurate written description of the waste',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
-      'The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place',
-      'A comprehensive assessment that accounts for all greenhouse gas emissions over the entire life of a building, including embodied carbon (materials and construction), operational carbon (energy in use), and end-of-life carbon (demolition and disposal)',
+      'That they dispose of all of their own waste at a licensed landfill site rather than transferring it to a third party',
+      'That they obtain an environmental permit from the Environment Agency before producing any controlled waste on site',
+      'That they reduce the total quantity of waste they produce by a fixed percentage each year and report the figures to Defra',
     ],
     correctAnswer: 0,
     explanation:
@@ -1140,9 +1140,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is 'plasterboard' waste and why does it require special handling on construction sites?",
     options: [
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
+      'It is classified as hazardous waste because the gypsum it contains is toxic and carcinogenic to those who handle it',
+      'It contains asbestos fibres that are released when the board is cut, so it must be removed by a licensed contractor',
+      'It is too heavy and bulky to be accepted at standard landfill sites, so it must always be broken up before disposal',
       'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
     ],
     correctAnswer: 3,
@@ -1174,10 +1174,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'What information must be included on a waste transfer note?',
     options: [
-      "A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements",
+      "Only the description and quantity of the waste, with no requirement to record the parties or the carrier's details",
       "A description of the waste, the quantity, the type of container, the date of transfer, the SIC code of the waste producer, details of both parties, and the waste carrier's registration number",
-      "The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment",
-      "A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal",
+      "The estimated landfill tax payable on the waste and the name of the landfill site that will receive it",
+      "The specific hazardous properties of the waste and its premises notification number issued by the Environment Agency",
     ],
     correctAnswer: 1,
     explanation:
@@ -1210,9 +1210,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What responsibility does the principal contractor have for waste management under CDM 2015?',
     options: [
-      'That they take all reasonable steps to prevent the unauthorised deposit, treatment, or disposal of waste; store waste safely and securely; transfer waste only to authorised persons; and provide an accurate written description of the waste',
-      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
-      'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
+      'The principal contractor must personally hold the waste carrier registration for every load of waste leaving the site',
+      'The principal contractor has no waste responsibilities under CDM, as these fall solely on the individual subcontractors',
+      'The principal contractor must dispose of all site waste at landfill and is not permitted to recycle or recover any materials',
       'The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place',
     ],
     correctAnswer: 3,
@@ -1228,9 +1228,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'recovery' in the context of the waste hierarchy?",
     options: [
       'Any waste operation whose principal result is that waste serves a useful purpose by replacing other materials, including energy recovery through incineration',
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'A design approach that uses the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s form, fabric, and orientation to reduce energy demand for heating, cooling, and lighting without relying on mechanical systems',
-      'The trapping of heat in the Earth\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s atmosphere by greenhouse gases, which raises the planet\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s average temperature',
+      'The reprocessing of waste materials into new products of the same type, such as turning waste glass back into glass',
+      'The retrieval of waste that has been illegally dumped so that it can be returned to a licensed disposal facility',
+      'The collection and separation of different waste materials at source so that each can be managed appropriately',
     ],
     correctAnswer: 0,
     explanation:
@@ -1280,9 +1280,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What is the primary risk associated with mixing hazardous and non-hazardous waste?',
     options: [
-      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
-      'A system where habitat is created or enhanced in advance, generating biodiversity units that can be sold to developers who need to meet their BNG obligations',
-      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
+      'The non-hazardous waste becomes exempt from the duty of care, so it can be transferred without a waste transfer note',
+      'The hazardous component is automatically neutralised by the larger volume of non-hazardous waste it is mixed with',
+      'The combined load qualifies for the lower rate of landfill tax because it is no longer classed as active waste',
       'The entire waste load becomes classified as hazardous, increasing disposal costs and regulatory requirements, and potentially causing environmental contamination or chemical reactions',
     ],
     correctAnswer: 3,
@@ -1298,9 +1298,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What happens to fluorescent tubes at the end of their life?',
     options: [
       'They are classified as hazardous waste because they contain mercury, and must be collected, stored, and recycled through specialist WEEE recycling channels',
-      'The traditional \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'take, make, dispose\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' model in which resources are extracted, manufactured into products, used, and then discarded as waste',
-      'All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
+      'They are classified as inert waste and can be disposed of with general construction and demolition rubble',
+      'They can be crushed on site and the broken glass recycled with other clean glass waste streams',
+      'They may be placed in the general waste skip provided they are wrapped to prevent breakage in transit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1314,10 +1314,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: "What is 'waste minimisation' and why is it the top priority in the waste hierarchy?",
     options: [
-      'A system where habitat is created or enhanced in advance, generating biodiversity units that can be sold to developers who need to meet their BNG obligations',
+      'It means recycling as much waste as possible; it is the top priority because recycling recovers valuable materials for reuse',
       'It means preventing waste from being produced in the first place; it is the top priority because it avoids the environmental impacts of resource extraction, manufacturing, transport, and disposal entirely',
-      'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
-      'A policy principle that makes producers responsible for the environmental impact of their products throughout the product lifecycle, including end-of-life management',
+      'It means compacting waste to reduce its volume; it is the top priority because it lowers the number of skip collections needed',
+      'It means sending waste to energy-from-waste plants; it is the top priority because it recovers energy instead of using landfill',
     ],
     correctAnswer: 1,
     explanation:
@@ -1331,10 +1331,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: "What is 'designing out waste' in construction?",
     options: [
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
-      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
+      'Removing the requirement to record waste on a Site Waste Management Plan once a project reaches the design stage',
+      'Designing a dedicated waste compound on the site layout drawings so that skips and containers are kept tidy',
       'Using design decisions to reduce or eliminate waste generation during construction, including standardising dimensions, specifying reclaimed materials, and designing for disassembly',
-      'A document that sets out how waste will be managed on a construction site, including waste types, quantities, and disposal routes',
+      'Specifying that all surplus materials be returned to the supplier rather than being treated as construction waste',
     ],
     correctAnswer: 2,
     explanation:
@@ -1348,9 +1348,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: "What is a 'hazardous property' code (HP code)?",
     options: [
-      'It means preventing waste from being produced in the first place; it is the top priority because it avoids the environmental impacts of resource extraction, manufacturing, transport, and disposal entirely',
-      'They are classified as hazardous waste because they contain mercury, and must be collected, stored, and recycled through specialist WEEE recycling channels',
-      'The greenhouse gas emissions resulting from the energy used to operate a building during its lifetime, including heating, cooling, lighting, and equipment',
+      'A six-digit European Waste Catalogue code used to identify the type and origin of a waste stream',
+      'A premises notification number issued by the Environment Agency to producers of hazardous waste',
+      'A rating that indicates how many years a hazardous waste consignment note must be retained for audit',
       'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
     ],
     correctAnswer: 3,
@@ -1382,10 +1382,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: "What is 'inert waste' on a construction site?",
     options: [
-      'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
+      'Waste that decomposes naturally over time without producing any harmful gases or leachate — such as timber, paper, and cardboard',
       'Waste that does not undergo any significant physical, chemical, or biological transformations, will not dissolve or burn, and does not adversely affect other materials it comes into contact with — such as clean bricks, concrete, and tiles',
-      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
+      'Waste that has been treated and rendered harmless so that it no longer needs to be transferred under a consignment note',
+      'Waste that exhibits no hazardous properties but must still be incinerated rather than sent to landfill — such as plastics and rubber',
     ],
     correctAnswer: 1,
     explanation:
@@ -1417,9 +1417,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: "What is 'waste pre-treatment' and when is it required before landfill disposal?",
     options: [
-      'Any waste operation whose principal result is that waste serves a useful purpose by replacing other materials, including energy recovery through incineration',
-      'Materials that have been sourced, manufactured, and can be used and disposed of in a way that minimises environmental impact, including materials that are renewable, recycled, locally sourced, or have low embodied carbon',
-      'A description of the waste, the quantity, the type of container, the date of transfer, the SIC code of the waste producer, details of both parties, and the waste carrier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s registration number',
+      'Compacting and baling unsorted waste to reduce its volume before it is transported to the landfill site',
+      'Applying a chemical sealant to the surface of a landfill cell before any waste is deposited into it',
+      'Obtaining written confirmation from the landfill operator that they hold a permit to accept the waste',
       'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
     ],
     correctAnswer: 3,
@@ -1436,9 +1436,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What legal obligation does a waste producer have if they suspect their waste carrier may be operating illegally?',
     options: [
       "They must take all reasonable steps to check the carrier's registration, and if they knowingly or carelessly transfer waste to an unauthorised person, they commit an offence under the duty of care",
-      "To verify that ecological mitigation and compensation measures are effective, that habitats are establishing as planned, and that species populations are being maintained",
-      "An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life",
-      "A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation",
+      "They have no further obligation once the waste has physically left their premises, as responsibility passes entirely to the carrier",
+      "They must report the carrier to the police but may continue to use them until the police complete their investigation",
+      "They are only liable if the waste is later found to have been fly-tipped; otherwise no offence is committed",
     ],
     correctAnswer: 0,
     explanation:
@@ -1458,10 +1458,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the most significant source of energy consumption on a typical construction site?',
     options: [
-      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
+      'Water used for dust suppression and wheel washing at the site entrance',
       'Temporary heating, lighting, and power for tools and equipment',
-      'The Hazardous Waste (England and Wales) Regulations 2005',
-      'Particulate matter with a diameter of 10 micrometres or less',
+      'The manufacture of the materials delivered to site for installation',
+      'The disposal of construction and demolition waste to landfill',
     ],
     correctAnswer: 1,
     explanation:
@@ -1475,10 +1475,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: "What is a 'carbon footprint' of a construction project?",
     options: [
-      'They provide real-time information on energy consumption, helping users understand and reduce their energy use, and enabling accurate billing without estimated readings',
-      'To have a qualified person observe excavation works and identify unexpected contamination for appropriate action',
+      'The total energy in kilowatt-hours consumed by site plant and equipment during the construction phase only',
+      'The physical area of land disturbed by the project, used to calculate the biodiversity net gain required',
       'The total greenhouse gas emissions associated with all activities and materials used throughout the project lifecycle, measured in CO2 equivalent',
-      'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
+      'The proportion of the project budget allocated to carbon offsetting and renewable energy measures',
     ],
     correctAnswer: 2,
     explanation:
@@ -1493,9 +1493,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the key difference between 'embodied carbon' and 'operational carbon' in a building?",
     options: [
-      'Compensating for greenhouse gas emissions by funding an equivalent carbon dioxide saving elsewhere, such as tree planting or renewable energy projects',
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
+      'Embodied carbon relates to the energy used to run the building; operational carbon relates to the emissions from manufacturing its materials',
+      'Embodied carbon is measured in kilowatt-hours, whereas operational carbon is measured in tonnes of carbon dioxide equivalent',
+      'Embodied carbon applies only to domestic buildings, whereas operational carbon applies only to non-domestic buildings',
       'Embodied carbon relates to the emissions from manufacturing, transporting, and constructing materials; operational carbon relates to emissions from the energy used to run the building during its lifetime',
     ],
     correctAnswer: 3,
@@ -1527,10 +1527,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What does an Energy Performance Certificate (EPC) show?',
     options: [
-      'All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts',
+      'A certificate confirming that a building\'s electrical installation has been tested and is safe to use',
       'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
-      'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
+      'The total amount of energy a building is permitted to use each year before it must pay the Climate Change Levy',
+      'A measure of the embodied carbon in a building\'s materials, expressed as tonnes of carbon dioxide equivalent',
     ],
     correctAnswer: 1,
     explanation:
@@ -1545,10 +1545,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the benefit of using LED lighting instead of traditional incandescent or halogen lamps?',
     options: [
-      'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'It is an alternative international forest certification scheme that endorses national certification programmes',
+      'LEDs produce a warmer, more natural light than incandescent lamps but use roughly the same amount of energy',
+      'LEDs contain mercury vapour, which allows them to start instantly and run at a lower operating temperature',
       'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
+      'LEDs are cheaper to buy than incandescent lamps but need replacing far more frequently because of their short life',
     ],
     correctAnswer: 2,
     explanation:
@@ -1562,9 +1562,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: "What is a 'heat pump' and how does it contribute to energy efficiency?",
     options: [
-      'To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats',
-      'To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users',
-      'The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding',
+      'A device that burns natural gas more efficiently than a conventional boiler, achieving efficiencies of around 90%',
+      'An electric immersion heater that stores hot water in an insulated cylinder for use during peak demand periods',
+      'A device that pumps warm air around a building from a central electric heater to provide even space heating',
       'A device that transfers heat from a low-temperature source (air, ground, or water) to a higher-temperature output for space heating and hot water, achieving efficiencies of 250-400%',
     ],
     correctAnswer: 3,
@@ -1580,9 +1580,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'water conservation' on a construction site?",
     options: [
       'The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact',
-      'They provide real-time information on energy consumption, helping users understand and reduce their energy use, and enabling accurate billing without estimated readings',
-      'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
-      'To have a qualified person observe excavation works and identify unexpected contamination for appropriate action',
+      'The practice of treating all wastewater on site to drinking-water standard before discharging it to a watercourse',
+      'The practice of collecting surface water runoff in attenuation tanks to prevent flooding of neighbouring land',
+      'The practice of pumping groundwater out of excavations and discharging it directly to the public sewer',
     ],
     correctAnswer: 0,
     explanation:
@@ -1596,10 +1596,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: "What are 'sustainable materials' in the context of construction?",
     options: [
-      'A device that transfers heat from a low-temperature source (air, ground, or water) to a higher-temperature output for space heating and hot water, achieving efficiencies of 250-400%',
+      'Materials that are the cheapest available option, as lower cost always indicates a lower environmental impact',
       'Materials that have been sourced, manufactured, and can be used and disposed of in a way that minimises environmental impact, including materials that are renewable, recycled, locally sourced, or have low embodied carbon',
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
+      'Materials that are imported from overseas because they meet stricter environmental standards than UK-made products',
+      'Materials that are guaranteed to last the entire life of the building and therefore never need to be recycled',
     ],
     correctAnswer: 1,
     explanation:
@@ -1613,10 +1613,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'What is the purpose of Part L of the Building Regulations?',
     options: [
-      'To provide standardised, verified information about the environmental impact of a product throughout its lifecycle',
-      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
+      'It sets requirements for fire safety, including means of escape, fire detection, and fire resistance of structural elements',
+      'It sets requirements for ventilation, including the provision of fresh air and the extraction of moisture from buildings',
       'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
+      'It sets requirements for drainage and waste disposal, including foul water, surface water, and rainwater systems',
     ],
     correctAnswer: 2,
     explanation:
@@ -1649,9 +1649,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'passive design' in building construction?",
     options: [
       "A design approach that uses the building's form, fabric, and orientation to reduce energy demand for heating, cooling, and lighting without relying on mechanical systems",
-      "It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes",
-      "Development that meets the needs of the present without compromising the ability of future generations to meet their own needs",
-      "The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact",
+      "A design approach that relies on highly efficient mechanical heating, cooling, and ventilation systems to control the internal environment",
+      "A design approach that generates all of a building's energy on site using solar panels, wind turbines, and heat pumps",
+      "A design approach that prioritises low-cost materials and rapid construction over long-term energy performance",
     ],
     correctAnswer: 0,
     explanation:
@@ -1665,10 +1665,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: "What is 'embodied energy'?",
     options: [
-      'Any waste operation whose principal result is that waste serves a useful purpose by replacing other materials, including energy recovery through incineration',
+      'The amount of energy a material can store and release as heat, helping to regulate the temperature inside a building',
       'The total amount of energy required to extract, process, manufacture, transport, and install a building material or product',
-      'All rental properties must achieve a minimum EPC rating of E; landlords cannot grant new tenancies for properties rated F or G',
-      'Land where substances are present at concentrations that could cause harm to human health or the environment',
+      'The energy consumed to heat, cool, and light a building over the course of its operational lifetime',
+      'The energy that can be recovered by incinerating a material at the end of its useful life in the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -1682,10 +1682,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: "What is 'ISO 50001' and how does it relate to energy management?",
     options: [
-      'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
-      'The traditional \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'take, make, dispose\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' model in which resources are extracted, manufactured into products, used, and then discarded as waste',
+      'An international standard that specifies requirements for an environmental management system, helping organisations manage their environmental impacts',
+      'An international standard that specifies requirements for a quality management system, helping organisations meet customer expectations',
       'An international standard that specifies requirements for establishing, implementing, and improving an energy management system, helping organisations systematically reduce energy consumption',
-      'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
+      'An international standard that specifies requirements for an occupational health and safety management system in the workplace',
     ],
     correctAnswer: 2,
     explanation:
@@ -1699,9 +1699,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What role do 'smart meters' play in energy efficiency?",
     options: [
-      'Up to 12 months imprisonment and/or an unlimited fine in the magistrates\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' court, or up to 5 years and/or an unlimited fine in the Crown Court',
-      'A policy principle that makes producers responsible for the environmental impact of their products throughout the product lifecycle, including end-of-life management',
-      'The traditional \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'take, make, dispose\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' model in which resources are extracted, manufactured into products, used, and then discarded as waste',
+      'They automatically switch off appliances when a household exceeds its allocated daily energy allowance',
+      'They generate a small amount of electricity from the building\'s mains supply to offset standby power use',
+      'They rate the energy efficiency of a building on a scale from A to G in the same way as an EPC',
       'They provide real-time information on energy consumption, helping users understand and reduce their energy use, and enabling accurate billing without estimated readings',
     ],
     correctAnswer: 3,
@@ -1717,9 +1717,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'fabric first' approach to building energy efficiency?",
     options: [
       "Prioritising improvements to the building's thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems",
-      "To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users",
-      "The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement",
-      "The traditional 'take, make, dispose' model in which resources are extracted, manufactured into products, used, and then discarded as waste",
+      "Installing renewable energy technologies such as solar panels and heat pumps before improving the building's insulation",
+      "Specifying natural fabric materials such as wool and hemp insulation in preference to synthetic alternatives",
+      "Designing the building's structural frame and cladding before considering its energy performance or services",
     ],
     correctAnswer: 0,
     explanation:
@@ -1733,10 +1733,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: "What is 'whole-life carbon' assessment in construction?",
     options: [
-      'A legal obligation on anyone who produces, imports, carries, keeps, treats, or disposes of controlled waste to ensure it is managed properly and transferred only to authorised persons',
+      'An assessment that accounts only for the operational carbon emissions of a building during its in-use phase',
       'A comprehensive assessment that accounts for all greenhouse gas emissions over the entire life of a building, including embodied carbon (materials and construction), operational carbon (energy in use), and end-of-life carbon (demolition and disposal)',
-      'An international standard that specifies requirements for establishing, implementing, and improving an energy management system, helping organisations systematically reduce energy consumption',
-      'It states that where there are threats of serious or irreversible environmental damage, lack of full scientific certainty shall not be used as a reason for postponing cost-effective measures to prevent degradation',
+      'An assessment that measures only the embodied carbon in a building\'s materials at the point of construction',
+      'An assessment that calculates the carbon savings achieved by a building compared with a notional reference building',
     ],
     correctAnswer: 1,
     explanation:
@@ -1750,10 +1750,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: "What is 'greywater recycling'?",
     options: [
-      'Embodied carbon relates to the emissions from manufacturing, transporting, and constructing materials; operational carbon relates to emissions from the energy used to run the building during its lifetime',
-      'They are classified as hazardous waste because they contain mercury, and must be collected, stored, and recycled through specialist WEEE recycling channels',
+      'Collecting rainwater from roofs and gutters and storing it for reuse in toilet flushing and garden irrigation',
+      'Collecting and treating foul wastewater from toilets so that it can be reused for drinking and washing',
       'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'The deliberate, planned movement of living organisms from one location to another, typically as a conservation or mitigation measure',
+      'Treating contaminated surface water runoff from a construction site before it is discharged to a watercourse',
     ],
     correctAnswer: 2,
     explanation:
@@ -1768,9 +1768,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the Minimum Energy Efficiency Standard (MEES) for rental properties in England and Wales?',
     options: [
-      'To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
-      'A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated',
+      'All new-build homes must achieve a minimum EPC rating of A; developers cannot sell properties rated B or lower',
+      'All rental properties must achieve a minimum EPC rating of C; landlords cannot grant tenancies for properties rated D to G',
+      'All commercial properties must achieve a minimum EPC rating of B; owners cannot occupy properties rated C or lower',
       'All rental properties must achieve a minimum EPC rating of E; landlords cannot grant new tenancies for properties rated F or G',
     ],
     correctAnswer: 3,
@@ -1786,9 +1786,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'demand-side response' (DSR) in energy management?",
     options: [
       'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
-      'They provide real-time information on energy consumption, helping users understand and reduce their energy use, and enabling accurate billing without estimated readings',
-      'Compensating for greenhouse gas emissions by funding an equivalent carbon dioxide saving elsewhere, such as tree planting or renewable energy projects',
-      'The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding',
+      'Increasing electricity generation at power stations to match a sudden rise in consumer demand during peak periods',
+      'Supplying surplus renewable electricity back to the grid from domestic solar panels and battery storage systems',
+      'Charging consumers a higher unit rate for electricity used during periods of peak national demand on the grid',
     ],
     correctAnswer: 0,
     explanation:
@@ -1856,9 +1856,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What does 'whole life carbon' refer to in the context of a building?",
     options: [
       'The total carbon emissions from material extraction through to demolition and disposal',
-      'Wild birds, certain wild animals and plants, and their habitats',
-      'Identifying whether a contamination linkage exists that could cause harm',
-      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
+      'The carbon emissions from the energy used to operate the building, excluding its materials',
+      'The carbon emissions associated only with the construction phase of the building',
+      'The carbon emissions saved by recycling the building\'s materials at the end of its life',
     ],
     correctAnswer: 0,
     explanation:
@@ -1873,10 +1873,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the lifecycle stages A1 to A3 commonly referred to in whole life carbon assessments?',
     options: [
-      'The Waste (England and Wales) Regulations 2011',
+      'Construction site transport, installation, and commissioning of the product',
       'Raw material supply, transport to factory, and manufacturing',
-      'The international standard for Environmental Management Systems (EMS)',
-      'Up to 5 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment and/or an unlimited fine',
+      'Operational energy use, water use, and maintenance of the product',
+      'Demolition, transport to waste processing, and final disposal',
     ],
     correctAnswer: 1,
     explanation:
@@ -1925,9 +1925,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What does FSC certification guarantee about a timber product?',
     options: [
       'That it comes from responsibly managed forests meeting strict environmental and social standards',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
-      'A structured framework of policies, processes, and procedures for managing an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s environmental impacts',
+      'That it has been treated to resist rot and insect attack for the lifetime of the building',
+      'That it has the lowest embodied carbon of any structural material available on the market',
+      'That it has been grown within the UK to minimise the carbon emissions from transport',
     ],
     correctAnswer: 0,
     explanation:
@@ -1941,10 +1941,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'What is the PEFC and how does it relate to FSC?',
     options: [
-      'Filters sediment from surface water runoff to prevent silt entering watercourses',
+      'It is the UK Government body that issues felling licences and regulates forestry operations',
       'It is an alternative international forest certification scheme that endorses national certification programmes',
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
-      'An awareness of the carbon dioxide costs and impacts of everyday activities and the ability and motivation to reduce emissions',
+      'It is a stricter version of FSC certification that applies only to tropical hardwood timber',
+      'It is a UK certification scheme that has replaced FSC for all timber sold within Great Britain',
     ],
     correctAnswer: 1,
     explanation:
@@ -2010,10 +2010,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'What is the difference between embodied carbon and operational carbon?',
     options: [
-      "The deliberate, planned movement of living organisms from one location to another, typically as a conservation or mitigation measure",
+      "Embodied carbon relates to the energy used during the building's life; operational carbon relates to the materials and construction",
       "Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building's life",
-      "The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement",
-      "The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding",
+      "Embodied carbon applies only to the structural frame; operational carbon applies only to the building services",
+      "Embodied carbon is offset by tree planting; operational carbon is offset by purchasing renewable electricity",
     ],
     correctAnswer: 1,
     explanation:
@@ -2097,10 +2097,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: "What is 'Module D' in a whole life carbon assessment?",
     options: [
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
-      'A waste carrier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s licence (registration) issued by the Environment Agency',
+      'The product stage, covering raw material supply, transport, and manufacturing',
+      'The construction stage, covering transport to site and the installation process',
       'Benefits and loads beyond the system boundary, such as recycling credits',
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
+      'The use stage, covering operational energy and water consumption',
     ],
     correctAnswer: 2,
     explanation:
@@ -2173,10 +2173,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'What is the difference between PM10 and PM2.5?',
     options: [
-      'A water sampling technique that detects great crested newt DNA in pond water without the need to capture animals',
-      'Prior consent for construction works that may generate noise, agreeing methods and hours of work',
+      'PM2.5 particles are larger than PM10 and are filtered out by the nose before reaching the lungs',
+      'PM10 measures gaseous pollutants while PM2.5 measures only solid particulate matter in the air',
       'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
-      'All rental properties must achieve a minimum EPC rating of E; landlords cannot grant new tenancies for properties rated F or G',
+      'PM2.5 refers to indoor air pollution while PM10 refers to outdoor air pollution on construction sites',
     ],
     correctAnswer: 2,
     explanation:
@@ -2209,9 +2209,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'Under the Control of Pollution Act 1974, what does a Section 61 consent allow?',
     options: [
       'Prior consent for construction works that may generate noise, agreeing methods and hours of work',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
-      'Filters sediment from surface water runoff to prevent silt entering watercourses',
+      'Consent to discharge contaminated surface water from a construction site to a public watercourse',
+      'Consent to store more than 200 litres of oil on a construction site without secondary containment',
+      'Consent to deposit inert construction waste on land without a full environmental permit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2225,10 +2225,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'What power does a Section 60 notice give to a local authority?',
     options: [
-      'Ground granulated blast-furnace slag — it reduces the embodied carbon of concrete',
+      'The power to require a contractor to remove dust and debris deposited on the public highway',
       'The power to impose requirements on how construction works are carried out to control noise',
-      'The illegal dumping of waste on land that has no licence to accept it',
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
+      'The power to stop construction works immediately where there is a risk of water pollution',
+      'The power to require a contractor to install secondary containment for stored oil and fuel',
     ],
     correctAnswer: 1,
     explanation:
@@ -2242,10 +2242,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is the primary purpose of dust suppression measures on a construction site?',
     options: [
-      'The power to impose requirements on how construction works are carried out to control noise',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
+      'To reduce the noise generated by cutting, grinding, and demolition activities on the site',
+      'To speed up the drying of newly poured concrete and screed during the construction phase',
       'To protect the health of workers and nearby residents and prevent nuisance and ecological harm',
-      'To provide verified environmental data about a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s lifecycle impacts',
+      'To prevent the spread of fire by keeping combustible dust away from sources of ignition',
     ],
     correctAnswer: 2,
     explanation:
@@ -2278,9 +2278,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What document sets out how pollution risks will be managed during construction?',
     options: [
       'A Construction Environmental Management Plan (CEMP)',
-      'The Waste (England and Wales) Regulations 2011',
-      'Contaminated Land Exposure Assessment',
-      'Raw material supply, transport to factory, and manufacturing',
+      'A Site Waste Management Plan (SWMP)',
+      'A Construction Phase Health and Safety Plan',
+      'An Environmental Product Declaration (EPD)',
     ],
     correctAnswer: 0,
     explanation:
@@ -2294,10 +2294,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is GPP5 and who publishes it?',
     options: [
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
+      'A guide on the safe storage of oil and fuel on construction sites, published by the Health and Safety Executive',
       'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
-      'A strategy and action plan that identifies priorities and actions for conserving and enhancing biodiversity',
+      'A guide on the control of dust and air quality on construction sites, published by Defra',
+      'A guide on the safe handling and disposal of hazardous waste, published by the local authority',
     ],
     correctAnswer: 1,
     explanation:
@@ -2312,10 +2312,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'Under UK law, what is the main piece of legislation controlling pollution of controlled waters?',
     options: [
-      'Filters sediment from surface water runoff to prevent silt entering watercourses',
-      'The illegal dumping of waste on land that has no licence to accept it',
+      'The Control of Pollution Act 1974',
+      'The Hazardous Waste (England and Wales) Regulations 2005',
       'The Environmental Permitting (England and Wales) Regulations 2016',
-      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
+      'The Land Drainage Act 1991',
     ],
     correctAnswer: 2,
     explanation:
@@ -2330,9 +2330,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the minimum requirements for oil storage under the Oil Storage Regulations 2001?',
     options: [
-      "Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants",
-      "A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects",
-      "A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions",
+      "The storage container must be fitted with a drainage valve at the base of the bund to release rainwater",
+      "The storage container must be located at least 50 metres from any watercourse, drain, or surface water gully",
+      "The storage container must be emptied and removed from site whenever it is not in active daily use",
       "The storage container must be within a secondary containment system (bund) capable of holding 110% of the container's capacity",
     ],
     correctAnswer: 3,
@@ -2364,10 +2364,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What is the primary environmental benefit of SuDS over conventional piped drainage?',
     options: [
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
+      'SuDS convey surface water away from a site faster than piped drainage, reducing the risk of on-site flooding',
       'SuDS reduce surface water runoff rates, improve water quality through natural filtration, and create habitat',
-      'An assessment required for any plan or project likely to have a significant effect on a European designated site (SAC or SPA)',
-      'A methodology for evaluating the environmental impacts of a product or system across its entire life',
+      'SuDS eliminate the need for any connection to the public sewer by storing all runoff permanently on site',
+      'SuDS treat foul wastewater to drinking-water standard before it is discharged to a watercourse',
     ],
     correctAnswer: 1,
     explanation:
@@ -2381,10 +2381,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What is land contamination in the context of environmental protection?',
     options: [
-      'Classifying and identifying waste types using a standardised six-digit coding system',
-      'The process of cleaning concrete from tools and equipment — the alkaline wash water can pollute watercourses',
+      'Land that has been built on previously and is therefore classified as brownfield for planning purposes',
+      'Land that lies within a flood zone and is at risk of inundation from rivers or surface water',
       'Land where substances are present at concentrations that could cause harm to human health or the environment',
-      'The person or company who caused or knowingly permitted the contamination is primarily liable for remediation costs',
+      'Land that has poor drainage and becomes waterlogged, making it unsuitable for construction without remediation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2451,10 +2451,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: "What is 'bioremediation' in the context of contaminated land?",
     options: [
-      'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
-      'To protect the health of workers and nearby residents and prevent nuisance and ecological harm',
+      'Excavating contaminated soil and transporting it to a licensed landfill site for disposal',
+      'Sealing contaminated soil beneath an impermeable membrane to prevent contact with receptors',
       'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
+      'Heating contaminated soil to high temperatures to destroy or volatilise the contaminants',
     ],
     correctAnswer: 2,
     explanation:
@@ -2486,9 +2486,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'polluter pays' principle in contaminated land legislation?",
     options: [
       'The person or company who caused or knowingly permitted the contamination is primarily liable for remediation costs',
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
+      'The current owner of the land is always solely liable for remediation, regardless of who caused the contamination',
+      'The local authority bears the cost of remediating all contaminated land within its administrative area',
+      'The cost of remediation is shared equally between the original polluter, the current owner, and central government',
     ],
     correctAnswer: 0,
     explanation:
@@ -2520,10 +2520,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: "What type of SuDS feature is a 'swale'?",
     options: [
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
-      'Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives',
+      'An underground crate system that stores surface water runoff and releases it at a controlled rate',
+      'A permeable paved surface that allows rainwater to drain through into a granular sub-base',
       'A shallow, vegetated channel designed to convey and filter surface water runoff',
-      'Goal and scope definition, inventory analysis, impact assessment, and interpretation',
+      'A deep retention pond that permanently holds water to provide amenity and habitat',
     ],
     correctAnswer: 2,
     explanation:
@@ -2537,9 +2537,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "What is an 'attenuation tank' in the context of SuDS?",
     options: [
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'Balancing the amount of greenhouse gases emitted with the amount removed from the atmosphere, so the net contribution is zero',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'A device installed in a drainage system to separate and retain oil and fuel from surface water runoff',
+      'A sealed underground tank that collects and stores foul wastewater for periodic removal by tanker',
+      'A vegetated channel that conveys surface water across a site while filtering out sediment and pollutants',
       'An underground or surface-level storage system that temporarily holds surface water runoff and releases it at a controlled rate',
     ],
     correctAnswer: 3,
@@ -2555,9 +2555,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What does a 'silt fence' do on a construction site?",
     options: [
       'Filters sediment from surface water runoff to prevent silt entering watercourses',
-      'Wild birds, certain wild animals and plants, and their habitats',
-      'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
-      'They must offer to take back the old equipment free of charge on a like-for-like basis',
+      'Acts as an acoustic barrier to reduce noise from construction activities reaching nearby properties',
+      'Provides a physical barrier to prevent unauthorised access to a construction site after hours',
+      'Suppresses dust by trapping airborne particles before they are carried off the site by the wind',
     ],
     correctAnswer: 0,
     explanation:
@@ -2572,10 +2572,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum penalty for causing a water pollution offence under the Environmental Permitting Regulations 2016?',
     options: [
-      "Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater",
+      "A fixed penalty notice of up to £1,000, with no possibility of a custodial sentence",
       "Up to 12 months imprisonment and/or an unlimited fine in the magistrates' court, or up to 5 years and/or an unlimited fine in the Crown Court",
-      "To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats",
-      "A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners",
+      "A formal caution for a first offence, with prosecution reserved only for repeat offenders",
+      "A maximum fine of £20,000 in the magistrates' court, with no power to imprison the offender",
     ],
     correctAnswer: 1,
     explanation:
@@ -2589,10 +2589,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: "What is a 'spill kit' and when should one be available on a construction site?",
     options: [
-      'A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'A set of personal protective equipment issued to workers handling hazardous substances on site',
+      'A drainage system that collects and treats contaminated runoff before it reaches a watercourse',
       'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
-      'The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place',
+      'A bunded storage container designed to hold 110% of the capacity of an oil or fuel tank',
     ],
     correctAnswer: 2,
     explanation:
@@ -2606,9 +2606,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'What is the purpose of an oil interceptor?',
     options: [
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'All rental properties must achieve a minimum EPC rating of E; landlords cannot grant new tenancies for properties rated F or G',
-      'The high alkalinity (pH 11-13) is toxic to aquatic organisms and can devastate freshwater ecosystems',
+      'To filter suspended sediment out of surface water runoff before it is discharged to a watercourse',
+      'To neutralise the alkalinity of concrete washout water before it enters the drainage system',
+      'To temporarily store surface water runoff and release it at a controlled rate to prevent flooding',
       'To separate oil and other hydrocarbons from surface water runoff before it enters the drainage system or watercourse',
     ],
     correctAnswer: 3,
@@ -2641,10 +2641,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: "What is 'concrete washout' and why is it a pollution risk?",
     options: [
-      'Filters sediment from surface water runoff to prevent silt entering watercourses',
+      'The settling of fine particles out of concrete before it cures — the residue is harmless and can be discharged',
       'The process of cleaning concrete from tools and equipment — the alkaline wash water can pollute watercourses',
-      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
-      'A cap on the total amount of greenhouse gases the UK can emit over a five-year period, set under the Climate Change Act 2008',
+      'The removal of surplus wet concrete from a pour — it is inert waste and poses no pollution risk',
+      'The bleeding of water to the surface of freshly poured concrete — the run-off is neutral and safe to drain',
     ],
     correctAnswer: 1,
     explanation:
@@ -2675,9 +2675,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'What is the main risk of allowing cement or concrete to enter a watercourse?',
     options: [
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
-      'Goal and scope definition, inventory analysis, impact assessment, and interpretation',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
+      'The high acidity (pH 2-4) burns the gills of fish and dissolves the shells of aquatic invertebrates',
+      'The cement starves the water of oxygen by encouraging the rapid growth of algae and bacteria',
+      'The fine cement particles release toxic heavy metals such as lead and mercury into the water',
       'The high alkalinity (pH 11-13) is toxic to aquatic organisms and can devastate freshwater ecosystems',
     ],
     correctAnswer: 3,
@@ -2693,9 +2693,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What does 'controlled waters' mean in UK environmental law?",
     options: [
       'Inland freshwaters, groundwaters, and coastal waters as defined in the Water Resources Act 1991',
-      'Goal and scope definition, inventory analysis, impact assessment, and interpretation',
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
+      'Drinking water supplies that are abstracted, treated, and distributed by licensed water companies',
+      'Surface water and foul water within the public sewer network managed by water and sewerage undertakers',
+      'Privately owned ponds, lakes, and reservoirs that lie entirely within the boundary of a single property',
     ],
     correctAnswer: 0,
     explanation:
@@ -2709,10 +2709,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: "What is a 'Desk Study' in the context of contaminated land investigation?",
     options: [
-      'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
+      'An intrusive investigation involving trial pits and boreholes to sample and analyse soil and groundwater',
       'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
-      'The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact',
+      'A long-term monitoring programme to confirm that remediation works have been successful over time',
+      'A detailed remediation strategy setting out the methods and objectives for cleaning up contaminated land',
     ],
     correctAnswer: 1,
     explanation:
@@ -2726,10 +2726,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: "What does 'ex situ remediation' of contaminated soil involve?",
     options: [
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'Treating contaminated soil in place, in the ground, without any excavation',
+      'Sealing contaminated soil beneath an impermeable cap to break the pollution pathway',
       'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
-      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'Diluting contaminated soil with clean imported material to reduce contaminant concentrations',
     ],
     correctAnswer: 2,
     explanation:
@@ -2744,9 +2744,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of a 'watching brief' during earthworks on a potentially contaminated site?",
     options: [
-      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
-      'A cap on the total amount of greenhouse gases the UK can emit over a five-year period, set under the Climate Change Act 2008',
-      'To encourage businesses to reduce energy consumption and greenhouse gas emissions by taxing energy supplies to business and public sector users',
+      'To have a security guard monitor the excavation overnight to prevent fly-tipping of waste into the open ground',
+      'To have a structural engineer check the stability of excavation sides to prevent collapse during the works',
+      'To have a surveyor record the exact position and depth of all excavations for the as-built drawings',
       'To have a qualified person observe excavation works and identify unexpected contamination for appropriate action',
     ],
     correctAnswer: 3,
@@ -2763,9 +2763,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What is the role of the Environment Agency in pollution prevention on construction sites?',
     options: [
       'It is the regulator responsible for protecting the environment, including preventing pollution of water, land, and air, and can take enforcement action',
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'Prioritising improvements to the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems',
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+      'It is the government adviser on the natural environment, responsible for issuing protected-species licences and designating SSSIs',
+      'It is the body responsible for enforcing occupational health and safety law and investigating workplace accidents on sites',
+      'It is the local authority department responsible for granting planning permission and approving construction phase plans',
     ],
     correctAnswer: 0,
     explanation:
@@ -2780,10 +2780,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is 'dewatering' on a construction site and what environmental risk does it pose?",
     options: [
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
+      'Spraying water on a site to suppress dust — risk of run-off carrying silt and contaminants to drains',
       'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
+      'Recycling wash water from wheel-washing facilities — risk of recirculating oil and fuel residues around the site',
+      'Mixing water into excavated soil to improve its handling — risk of leaching contaminants into the ground',
     ],
     correctAnswer: 1,
     explanation:
@@ -2797,10 +2797,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: "What is 'permeable paving' and how does it function as a SuDS feature?",
     options: [
-      'A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions',
-      'A plan that sets out how contamination will be addressed to make the land suitable for its intended use',
+      'A sealed paved surface that channels all rainwater to a central gully connected to the public sewer',
+      'A vegetated channel laid alongside a paved surface to convey and filter surface water runoff',
       'A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated',
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
+      'An underground tank beneath a paved surface that permanently stores all of the rainwater that falls on it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2815,9 +2815,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What minimum bund capacity is required when multiple oil containers share a single bund under the Oil Storage Regulations?',
     options: [
-      'Temporary heating, lighting, and power for tools and equipment',
-      'Goal and scope definition, inventory analysis, impact assessment, and interpretation',
-      'The total carbon emissions from material extraction through to demolition and disposal',
+      '110% of the smallest container or 10% of the total capacity, whichever is greater',
+      '100% of the largest container or 50% of the total capacity, whichever is smaller',
+      '25% of the largest container or 110% of the total capacity, whichever is greater',
       '110% of the largest container or 25% of the total capacity, whichever is greater',
     ],
     correctAnswer: 3,
@@ -2833,9 +2833,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'settlement lagoon' used for on a construction site?",
     options: [
       'A temporary pond where sediment-laden water is held to allow suspended solids to settle out before discharge',
-      'To have a qualified person observe excavation works and identify unexpected contamination for appropriate action',
-      'The person or company who caused or knowingly permitted the contamination is primarily liable for remediation costs',
-      'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
+      'A lined area where concrete is washed out from mixer trucks and tools to contain the alkaline wash water',
+      'A permanent ornamental pond created on a development site to deliver biodiversity net gain and amenity value',
+      'A bunded compound where oil and fuel containers are stored to contain any spillage or leakage',
     ],
     correctAnswer: 0,
     explanation:
@@ -2856,10 +2856,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'What does the Wildlife and Countryside Act 1981 protect?',
     options: [
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
+      'Only domesticated animals, farmed livestock, and commercially managed game species',
       'Wild birds, certain wild animals and plants, and their habitats',
-      'The Waste (England and Wales) Regulations 2011',
-      'Department for Environment, Food and Rural Affairs',
+      'Only European Protected Species such as bats, otters, and great crested newts',
+      'Only ancient woodland, hedgerows, and trees protected by preservation orders',
     ],
     correctAnswer: 1,
     explanation:
@@ -2874,10 +2874,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Wildlife and Countryside Act 1981, what is the legal status of bats in the UK?',
     options: [
-      'A methodology for evaluating the environmental impacts of a product or system across its entire life',
-      'No satisfactory alternative, imperative reasons of overriding public interest, and no detriment to the species\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' favourable conservation status',
+      'Only rare bat species are protected; common species such as the pipistrelle may be disturbed without a licence',
+      'Bats are protected only while roosting; their roosts may be destroyed once the bats have left for the winter',
       'All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts',
-      'A cap on the total amount of greenhouse gases the UK can emit over a five-year period, set under the Climate Change Act 2008',
+      'Bats are protected only on designated sites such as SSSIs; elsewhere they have no legal protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -2928,10 +2928,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'How is biodiversity value measured under the statutory biodiversity net gain framework?',
     options: [
-      'The continual improvement cycle at the core of an Environmental Management System',
+      'By counting the total number of individual animals and plants present on the site before development begins',
       'Using the Defra statutory biodiversity metric, which assesses habitat type, condition, distinctiveness, and area',
-      'To protect the health of workers and nearby residents and prevent nuisance and ecological harm',
-      'A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years',
+      'By measuring only the total area of green space provided, regardless of habitat type or condition',
+      'By the number of protected species recorded on the site during a preliminary ecological appraisal',
     ],
     correctAnswer: 1,
     explanation:
@@ -2963,9 +2963,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'What is BREEAM?',
     options: [
-      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
-      'Elements of an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s activities, products, or services that interact with the environment and have a significant environmental impact',
+      'A building regulation that sets minimum energy efficiency standards for new and existing buildings',
+      'An energy efficiency rating scheme that grades buildings from A to G when they are built, sold, or rented',
+      'A certification scheme that verifies the sustainability of timber and other forest products',
       'The Building Research Establishment Environmental Assessment Method — a sustainability rating scheme for buildings',
     ],
     correctAnswer: 3,
@@ -2997,10 +2997,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What is CEEQUAL?',
     options: [
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
+      'A sustainability rating scheme for new and existing buildings such as homes, offices, and schools',
       'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
-      'Land where substances are present at concentrations that could cause harm to human health or the environment',
-      'The storage container must be within a secondary containment system (bund) capable of holding 110% of the container\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s capacity',
+      'A standard for managing whole life carbon in buildings and infrastructure published by the BSI',
+      'An energy efficiency rating scheme that grades civil engineering projects from A to G',
     ],
     correctAnswer: 1,
     explanation:
@@ -3014,10 +3014,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is ISO 14001?',
     options: [
-      'Department for Environment, Food and Rural Affairs',
-      'Raw material supply, transport to factory, and manufacturing',
+      'The international standard for Quality Management Systems',
+      'The international standard for Energy Management Systems',
       'The international standard for Environmental Management Systems (EMS)',
-      'A waste carrier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s licence (registration) issued by the Environment Agency',
+      'The international standard for Occupational Health and Safety Management Systems',
     ],
     correctAnswer: 2,
     explanation:
@@ -3031,9 +3031,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'What is an Environmental Management System (EMS)?',
     options: [
-      "To have a qualified person observe excavation works and identify unexpected contamination for appropriate action",
-      "A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years",
-      "The person or company who caused or knowingly permitted the contamination is primarily liable for remediation costs",
+      "A piece of software that automatically monitors and controls a building's heating, lighting, and ventilation",
+      "A legal permit issued by the Environment Agency authorising an organisation to carry out polluting activities",
+      "A one-off audit carried out to check whether an organisation complies with environmental legislation",
       "A structured framework of policies, processes, and procedures for managing an organisation's environmental impacts",
     ],
     correctAnswer: 3,
@@ -3049,9 +3049,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What is a Preliminary Ecological Appraisal (PEA)?',
     options: [
       'An initial ecological survey that identifies habitats, potential for protected species, and ecological constraints on a site',
-      'A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated',
-      'A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years',
-      'The Building Research Establishment Environmental Assessment Method — a sustainability rating scheme for buildings',
+      'A detailed species survey carried out at night to confirm the presence or absence of bats and great crested newts',
+      'A final monitoring report confirming that ecological mitigation and habitat creation measures have been successful',
+      'A desk study reviewing historical maps and records to assess the potential for land contamination on a site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3065,10 +3065,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'During which months are bat activity surveys typically carried out in the UK?',
     options: [
-      'Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives',
+      'November to February (the hibernation season), with surveys typically carried out at midday',
       'May to September (the active season), with surveys typically starting at dusk',
-      'The total carbon emissions from material extraction through to demolition and disposal',
-      'Inland freshwaters, groundwaters, and coastal waters as defined in the Water Resources Act 1991',
+      'All year round, with surveys typically carried out during daylight hours in the early morning',
+      'March to April (the breeding season), with surveys typically carried out around midnight',
     ],
     correctAnswer: 1,
     explanation:
@@ -3082,10 +3082,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is a European Protected Species (EPS) licence?',
     options: [
-      'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
+      'A licence issued by the Environment Agency permitting the discharge of treated wastewater to a protected watercourse',
+      'A planning consent that allows development to proceed on a Site of Special Scientific Interest without further survey',
       'A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions',
-      'To verify that ecological mitigation and compensation measures are effective, that habitats are establishing as planned, and that species populations are being maintained',
+      'A registration that permits low-risk ecological survey activities to be carried out without a full ecological appraisal',
     ],
     correctAnswer: 2,
     explanation:
@@ -3099,9 +3099,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What are the three legal tests that must be satisfied to obtain an EPS licence?',
     options: [
-      "A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects",
-      "A registration that allows certain low-risk waste activities to be carried out without a full environmental permit",
-      "A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated",
+      "Full ecological survey, an approved mitigation plan, and payment of the appropriate licence fee to Natural England",
+      "Planning permission granted, a biodiversity net gain of at least 10%, and a 30-year management plan in place",
+      "No risk to human health, no breach of the duty of care, and no detriment to controlled waters or air quality",
       "No satisfactory alternative, imperative reasons of overriding public interest, and no detriment to the species' favourable conservation status",
     ],
     correctAnswer: 3,
@@ -3152,10 +3152,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is the District Level Licensing (DLL) scheme for great crested newts?',
     options: [
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+      'A requirement for developers to obtain a separate great crested newt licence from each local authority district they work in',
+      'A scheme requiring every pond within 500 metres of a development to be surveyed individually before works begin',
       'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
+      'A blanket exemption that allows great crested newts to be relocated without any licence in participating districts',
     ],
     correctAnswer: 2,
     explanation:
@@ -3169,9 +3169,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What legal protection do badgers have in the UK?',
     options: [
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
-      'Avoid, mitigate, compensate — applied in that order of preference',
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
+      'Badgers are a European Protected Species and an EPS licence is required to disturb them',
+      'Badgers are protected only on designated sites such as SSSIs and nature reserves',
+      'Badgers are protected only during the breeding season between February and May each year',
       'Badgers and their setts are protected under the Protection of Badgers Act 1992',
     ],
     correctAnswer: 3,
@@ -3187,9 +3187,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'biodiversity action plan' (BAP)?",
     options: [
       'A strategy and action plan that identifies priorities and actions for conserving and enhancing biodiversity',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'A plan that sets out how contamination will be addressed to make the land suitable for its intended use',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
+      'A legal agreement securing the management of land for conservation purposes for at least 30 years',
+      'A survey report recording the habitats and protected species present on a development site',
+      'A calculation of the biodiversity units gained or lost as a result of a proposed development',
     ],
     correctAnswer: 0,
     explanation:
@@ -3203,10 +3203,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What is the purpose of an Ecological Impact Assessment (EcIA)?',
     options: [
-      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
+      'To calculate the biodiversity net gain required to satisfy the planning conditions for a development',
       'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
-      'Balancing the amount of greenhouse gases emitted with the amount removed from the atmosphere, so the net contribution is zero',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
+      'To monitor habitats and species populations for at least 30 years after a development is completed',
+      'To assess the risk of land contamination to ecological receptors before any intrusive site investigation',
     ],
     correctAnswer: 1,
     explanation:
@@ -3237,9 +3237,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What is the mitigation hierarchy in ecological assessment?',
     options: [
-      'Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives',
-      'The international standard for Environmental Management Systems (EMS)',
-      'Particulate matter with a diameter of 10 micrometres or less',
+      'Compensate, mitigate, avoid — applied in that order of preference',
+      'Survey, licence, monitor — applied in that order of preference',
+      'Mitigate, compensate, avoid — applied in that order of preference',
       'Avoid, mitigate, compensate — applied in that order of preference',
     ],
     correctAnswer: 3,
@@ -3255,9 +3255,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What type of ecological survey is an eDNA survey for great crested newts?',
     options: [
       'A water sampling technique that detects great crested newt DNA in pond water without the need to capture animals',
-      'A structured framework of policies, processes, and procedures for managing an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s environmental impacts',
-      'The continual improvement cycle at the core of an Environmental Management System',
-      'A 10% increase in biodiversity value — required for most new developments through planning',
+      'A night-time torchlight survey in which newts are counted along the margins of a pond during the breeding season',
+      'A trapping survey using bottle traps set overnight in a pond to capture and count individual newts',
+      'A habitat suitability index survey that scores a pond on factors such as water quality, shade, and fish presence',
     ],
     correctAnswer: 0,
     explanation:
@@ -3271,10 +3271,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: "What is a 'Site of Special Scientific Interest' (SSSI)?",
     options: [
-      'Balancing the amount of greenhouse gases emitted with the amount removed from the atmosphere, so the net contribution is zero',
+      'A European designated site protected under the Habitats Regulations for its rare habitats and species',
       'A site designated under the Wildlife and Countryside Act 1981 for its outstanding wildlife, geological, or physiographical features',
-      'Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life',
-      'They are classified as hazardous waste because they contain mercury, and must be collected, stored, and recycled through specialist WEEE recycling channels',
+      'A site where habitat is created in advance to generate biodiversity units that developers can purchase',
+      'A privately owned nature reserve managed under a voluntary conservation covenant for at least 30 years',
     ],
     correctAnswer: 1,
     explanation:
@@ -3288,10 +3288,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: "What is a 'Habitats Regulations Assessment' (HRA)?",
     options: [
-      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
-      'To protect the health of workers and nearby residents and prevent nuisance and ecological harm',
+      'An assessment of the habitats present on any site before a Preliminary Ecological Appraisal is carried out',
+      'An assessment required for any development that could affect a Site of Special Scientific Interest (SSSI)',
       'An assessment required for any plan or project likely to have a significant effect on a European designated site (SAC or SPA)',
-      'A condition or activity that is prejudicial to health or a nuisance, as defined in Part III of the Act, including noise, dust, smoke, and fumes',
+      'An assessment of the biodiversity net gain delivered by a development against its pre-development baseline',
     ],
     correctAnswer: 2,
     explanation:
@@ -3305,9 +3305,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question: "What is the 'Plan-Do-Check-Act' cycle in the context of ISO 14001?",
     options: [
-      'The total carbon emissions from material extraction through to demolition and disposal',
-      'Excavating contaminated soil and treating it off-site or in a separate treatment area on site',
-      'Biodiversity net gain of at least 10% must be delivered by most new developments',
+      'A one-off audit cycle carried out only when an organisation first seeks ISO 14001 certification',
+      'A risk assessment process used to identify environmental hazards before construction work begins',
+      'A reporting framework that classifies an organisation\'s emissions into Scope 1, 2, and 3',
       'The continual improvement cycle at the core of an Environmental Management System',
     ],
     correctAnswer: 3,
@@ -3340,10 +3340,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: "What is a 'translocation' in ecological terms?",
     options: [
-      'Development that meets the needs of the present without compromising the ability of future generations to meet their own needs',
+      'The natural migration of animals between habitats in response to changing seasons or food availability',
       'The deliberate, planned movement of living organisms from one location to another, typically as a conservation or mitigation measure',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
-      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
+      'The fragmentation of a habitat by development, which isolates populations of animals and plants',
+      'The introduction of a non-native invasive species into the wild, which is an offence under the Wildlife and Countryside Act 1981',
     ],
     correctAnswer: 1,
     explanation:
@@ -3357,10 +3357,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'What is the role of Natural England in relation to protected species?',
     options: [
-      "The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding",
-      "The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)",
+      "Natural England is the principal regulator responsible for preventing pollution of water, land, and air, and issuing environmental permits",
+      "Natural England is the professional body that sets standards for ecologists and publishes the EcIA guidelines",
       "Natural England is the government's statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters",
-      "A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys",
+      "Natural England is the government department that sets environmental policy on agriculture, fisheries, and rural affairs",
     ],
     correctAnswer: 2,
     explanation:
@@ -3375,9 +3375,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of ecological survey would be required before demolishing an old building that may contain bat roosts?',
     options: [
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
-      'The person or organisation responsible for causing pollution bears the cost of managing it to prevent damage to human health or the environment',
-      'Using the Defra statutory biodiversity metric, which assesses habitat type, condition, distinctiveness, and area',
+      'An eDNA water sample taken from any ponds within 500 metres of the building',
+      'A daytime walkover survey to map the habitats surrounding the building only',
+      'A desk study of historical records with no requirement for any site inspection',
       'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
     ],
     correctAnswer: 3,
@@ -3393,9 +3393,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is an 'Ecological Clerk of Works' (ECoW)?",
     options: [
       'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
-      'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
-      'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
+      'A local authority officer who inspects completed developments to confirm that biodiversity net gain has been delivered',
+      'A Natural England official who decides whether to grant European Protected Species licences for a development',
+      'An ecologist who carries out the preliminary ecological appraisal of a site before any planning application is made',
     ],
     correctAnswer: 0,
     explanation:
@@ -3409,10 +3409,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the purpose of wildlife-friendly fencing on a development site?',
     options: [
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
+      'To exclude all wildlife from a development site during construction to prevent disturbance to protected species',
       'To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats',
-      'An initial ecological survey that identifies habitats, potential for protected species, and ecological constraints on a site',
-      'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
+      'To provide a visual screen of native planting that improves the amenity value of a development for residents',
+      'To prevent invasive species such as Japanese knotweed from spreading between neighbouring properties',
     ],
     correctAnswer: 1,
     explanation:
@@ -3444,9 +3444,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: "What is a 'conservation covenant' in the context of biodiversity net gain?",
     options: [
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'To separate oil and other hydrocarbons from surface water runoff before it enters the drainage system or watercourse',
+      'A payment a developer makes to the government as a last resort when on-site and off-site biodiversity gain cannot be delivered',
+      'A planning condition requiring a developer to deliver at least a 10% net gain in biodiversity value',
+      'A licence granted by Natural England allowing a developer to relocate protected species from a site',
       'A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years',
     ],
     correctAnswer: 3,
@@ -3462,9 +3462,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'habitat banking' in relation to biodiversity net gain?",
     options: [
       'A system where habitat is created or enhanced in advance, generating biodiversity units that can be sold to developers who need to meet their BNG obligations',
-      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
-      'The deliberate, planned movement of living organisms from one location to another, typically as a conservation or mitigation measure',
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
+      'A scheme where developers deposit a financial bond with the local authority that is returned once habitat is created on site',
+      'A register held by Natural England recording the locations of all protected habitats and species in England',
+      'A process where habitats from a development site are translocated and stored at a receptor site for future reinstatement',
     ],
     correctAnswer: 0,
     explanation:
@@ -3478,10 +3478,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: "What does the 'significant environmental aspects' concept mean in ISO 14001?",
     options: [
-      "A short briefing to site workers about specific ecological risks, protected species, and the mitigation measures they must follow",
+      "The legal and regulatory requirements that an organisation must comply with under environmental legislation",
       "Elements of an organisation's activities, products, or services that interact with the environment and have a significant environmental impact",
-      "A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions",
-      "The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact",
+      "The objectives and targets an organisation sets for improving its environmental performance over time",
+      "The external factors, such as climate and location, that affect an organisation's environmental performance",
     ],
     correctAnswer: 1,
     explanation:
@@ -3495,10 +3495,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: "What are 'statutory biodiversity credits' under the Environment Act 2021?",
     options: [
-      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
+      'Biodiversity units that a developer earns for delivering more than the required 10% net gain on their own site',
+      'Tradable allowances that permit a developer to emit a fixed amount of greenhouse gases during construction',
       'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
-      'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
+      'Units that a landowner generates by creating habitat in advance and sells directly to developers on the open market',
     ],
     correctAnswer: 2,
     explanation:
@@ -3513,9 +3513,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is a 'toolbox talk' in the context of ecological protection on a construction site?",
     options: [
-      'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'Prior consent for construction works that may generate noise, agreeing methods and hours of work',
-      'To set out the environmental risks of a project and the measures to manage them throughout the construction phase',
+      'A written method statement setting out the ecological survey work to be carried out before development begins',
+      'A formal training course that qualifies site workers to handle and relocate protected species themselves',
+      'A signed agreement in which workers accept personal liability for any harm caused to protected species on site',
       'A short briefing to site workers about specific ecological risks, protected species, and the mitigation measures they must follow',
     ],
     correctAnswer: 3,
@@ -3532,9 +3532,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What is the purpose of ecological monitoring after a development has been completed?',
     options: [
       'To verify that ecological mitigation and compensation measures are effective, that habitats are establishing as planned, and that species populations are being maintained',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
+      'To carry out a final preliminary ecological appraisal of the site once the development has been completed',
+      'To calculate the biodiversity net gain that the development will be required to deliver under the Environment Act 2021',
+      'To identify any protected species present so that an EPS licence can be obtained before demolition begins',
     ],
     correctAnswer: 0,
     explanation:

@@ -36,26 +36,26 @@ const checks = [
     question:
       "On Pass 3 review of your Unit 304 paper you re-read question 17, on which you originally selected option C (a C2 EICR code). On the second reading option D (a C3 code) starts to look more plausible — but you can't be certain. What should you do?",
     options: [
-      "Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.",
-      "Change ONLY if you can articulate a specific reason (a clause you'd missed, a condition in the stem you'd misread, a calculation step you'd skipped). Otherwise keep your first answer — research shows trained first instinct beats second-guessing absent new information.",
-      "Decrease with the number of dwellings — typically 1.0 for single dwelling, 0.7 for 4-6 dwellings, 0.5-0.6 for 10-15, 0.4-0.5 for 50+. Reflects statistical smoothing of peaks across many users.",
-      "Part 2 — Definitions. A circuit-breaker (BS EN 60898) provides overcurrent protection only; an RCBO (BS EN 61009) combines overcurrent with residual-current protection. The two terms are not interchangeable and the wrong device gives the wrong protection.",
+      "Always change to option D — a second reading is more considered than a first, so the later answer is statistically more reliable on a review pass.",
+      "Change to option D because doubt itself is a signal: if an answer no longer feels right on review, that instinct should override your original choice.",
+      "Change ONLY if you can articulate a specific reason — a clause you'd missed, a condition in the stem you'd misread, a calculation step you'd skipped. Otherwise keep your first answer; trained first instinct beats second-guessing absent new information.",
+      "Keep option C no matter what — once an answer is marked it should never be revisited, because any change in the review pass loses more marks than it gains.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      "Second-guessing is a major L3 mark-loss source. Statistically, on questions where the candidate has TRAINING in the topic, first-instinct answers are right more often than changed answers. The rule: only change if you can name the specific reason — 'I missed the word post-2018 in the stem' or 'I forgot the cable was in 200mm of insulation'. If the change is just 'D feels better than C now', stick with C.",
+      "Second-guessing is a major L3 mark-loss source. Statistically, on questions where the candidate has TRAINING in the topic, first-instinct answers are right more often than changed answers. The rule: only change if you can name the specific reason — 'I missed the word post-2018 in the stem' or 'I forgot the cable was in 200mm of insulation'. If the only reason to switch is that the new code now feels better, keep your original answer.",
   },
   {
     id: 'l3-m8-s2-sub4-timewall',
     question:
       "You hit the 60-minute mark on a 90-minute paper with 25 questions still unanswered. Your mock average is 73% so you know the material. What do you do?",
     options: [
-      "They require employers to carry out risk assessments (including fire risks), implement preventive and protective measures, appoint competent persons, provide information and training, and establish emergency procedures",
       "Activate the last-30-minutes triage protocol: count the remaining items, sort into 'quick win' (90s each), 'medium' (2-3 min each), 'pure guess' (10s each). Clear the quick wins first to bank marks, then medium, then guess-sweep the pure-guess items in the final 2-3 minutes. Confirm no blanks at the bell.",
-      "The pattern reveals power-based conflict behaviour — they accommodate those with more power, compete with those with less, revealing that their style is driven by power dynamics rather than situational appropriateness, risking apprentice wellbeing and development",
-      "Disconnect or isolate components that present a low resistance during the IR test — RCBOs, RCDs, AFDDs, SPDs, electronic dimmers, capacitors, pilot/indicator lamps. Test in two stages per Reg 643.3.3 if the circuit cannot be cleanly isolated from these components, then verify the components separately.",
+      "Work the remaining 25 questions strictly in order at the same careful pace, accepting you may not finish — quality on each answer matters more than reaching the end of the paper.",
+      "Skip straight to the hardest unanswered questions first while your concentration is freshest, leaving the easy recall items for the final few minutes when you are tired.",
+      "Slow down deliberately to avoid careless errors under time pressure, and spend whatever is left re-checking the answers you have already given rather than attempting new ones.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Hitting the time wall is recoverable IF you have a triage protocol drilled into reflex. Panic = slow = fewer marks. Triage = ordered = recovery. The 25 remaining questions are not all equal — 8-10 will be quick wins (the easier recall items), 8-10 will be medium-effort calculations or coding calls, and 5-7 will be pure guess. Sort first, then execute in priority order. Pure-guess sweep at the end ensures every question has an answer (no negative marking — guess always beats blank).",
   },
@@ -64,10 +64,10 @@ const checks = [
     question:
       "You sit Unit 305 and fail by 4 marks (56% against a 60% pass). What's the right approach to the re-sit?",
     options: [
-      "No — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s shifted. At L2 the limits were tighter (most things needed supervisor sign-off). At L3 you can do more without immediate supervision, but the limits still exist (EIC sign-off, complex three-phase, hazardous areas, F-Gas, gas, asbestos licensed work). Honestly knowing where YOUR current limit sits is the L3 judgement skill.",
-      "A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management",
-      "Because the CPC in 2.5/1.5 T&E is 1.5 mm² while the line is 2.5 mm². Smaller cross-section means higher resistance per metre. Typical: 2.5 mm² ≈ 7.41 mΩ/m, 1.5 mm² ≈ 12.10 mΩ/m. So r2 is roughly r1 × 1.63.",
-      "Sit-down with your tutor, get the per-topic mark breakdown, focus revision on the weakest areas, sit 2-3 more full mocks under exam conditions until you average 70%+, then book the re-sit. Failing one paper by 4 marks is a fixable gap, not a verdict on the qualification.",
+      "Re-book the paper for the earliest available date and re-sit on the same material without further revision — you were only 4 marks short, so a second attempt should clear it on familiarity alone.",
+      "Switch your effort to a different unit and come back to 305 much later, on the basis that a near-miss fail means the topic isn't suited to you and a break will help.",
+      "Re-read the full unit textbook cover to cover before re-sitting, giving every topic equal time so nothing is missed second time around.",
+      "Sit down with your tutor, get the per-topic mark breakdown, focus revision on the weakest areas, sit 2-3 more full mocks under exam conditions until you average 70%+, then book the re-sit. Failing one paper by 4 marks is a fixable gap, not a verdict on the qualification.",
     ],
     correctIndex: 3,
     explanation:

@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'Who developed the foundational theory of the two fundamental coping strategies (problem-focused and emotion-focused)?',
     options: [
+      'Richard Lazarus and Susan Folkman (1984)',
       'Aaron Beck (1976)',
       'Daniel Goleman (1995)',
-      'Richard Lazarus and Susan Folkman (1984)',
       'Jon Kabat-Zinn (1990)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Richard Lazarus and Susan Folkman published their foundational theory of stress and coping in 1984 in their book Stress, Appraisal, and Coping. They proposed that people respond to stress through two fundamental categories of coping: problem-focused coping (taking direct action to address the source of stress) and emotion-focused coping (managing the emotional response to stress). Their model remains one of the most influential frameworks in stress psychology.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     question:
       'According to Lazarus and Folkman (1984), what are the two fundamental categories of coping?',
     options: [
-      'Active coping and passive coping',
       'Problem-focused coping and emotion-focused coping',
+      'Active coping and passive coping',
       'Cognitive coping and behavioural coping',
       'Individual coping and social coping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lazarus and Folkman identified two fundamental categories: problem-focused coping (taking direct action to address the source of stress) and emotion-focused coping (managing the emotional response to stress). While subsequent researchers have identified additional categories and sub-types, these two remain the foundational framework for understanding how people respond to stress.',
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     options: [
       'When you are feeling happy and relaxed',
       'When the situation is controllable and you can take direct action',
-      'When the situation is uncontrollable — you cannot change it, only manage your response',
       'When other people are responsible for the problem',
+      'When the situation is uncontrollable — you cannot change it, only manage your response',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Emotion-focused coping is most appropriate when the source of stress is uncontrollable — when there is nothing you can do to change the situation itself. A cancelled contract, a regulatory change, weather delays, or the loss of a colleague are all situations where direct action to change the outcome is not possible. In these cases, the intelligent strategy is to manage your emotional response: accept the reality, reframe the situation, seek support, and practise relaxation techniques.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is NOT a form of avoidant coping?',
     options: [
+      'Seeking social support by talking to a trusted colleague about the problem',
       'Drinking heavily after work to forget about stress',
       'Denial — pretending the problem does not exist',
-      'Seeking social support by talking to a trusted colleague about the problem',
       'Withdrawal — isolating yourself from friends and family',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Seeking social support is a form of emotion-focused coping, not avoidant coping. When you talk to a trusted colleague about a problem, you are actively processing the emotional response (expressing it, gaining perspective, receiving validation) rather than avoiding it. Avoidant coping involves escaping from the stress without processing it: drinking to numb, denying the problem exists, or withdrawing from the people who could help.',
   },

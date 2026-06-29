@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'A luminaire over a fire-exit door operates from the mains under normal conditions to display the running-man pictogram clearly, and continues to operate from its internal battery for 3 hours when the mains fails. What category of luminaire is it, and why is this category required for an exit sign?',
     options: [
-      'Non-maintained luminaire — operates only on mains failure.',
-      'Maintained luminaire — the lamp is illuminated under normal supply AND on emergency. The exit sign needs to be visible to occupants under both normal-supply and emergency-supply conditions; an occupant must always be able to see where the exit is, not just on mains failure. Most exit-sign luminaires for places of assembly, sleeping accommodation, and high-occupancy areas are maintained.',
-      'Sustained luminaire — has a separate decorative lamp and a separate emergency lamp.',
-      'Static luminaire — does not work at all.',
+      'Maintained luminaire — lit under both normal supply and emergency, so the exit sign is always visible to occupants.',
+      'Non-maintained luminaire — the lamp stays dark under normal supply and illuminates only on mains failure.',
+      'Sustained luminaire — a fitting with a separate normal lamp and a separate emergency lamp in one housing.',
+      'Standby luminaire — a fitting provided to let normal activities continue rather than to mark an exit.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Maintained luminaires illuminate continuously — under both normal mains supply and emergency battery supply. They are typical for exit-sign duty in places of assembly and sleeping accommodation where the sign needs to be visible all the time. Non-maintained luminaires only illuminate on mains failure; appropriate for areas without continuous occupancy where the sign would be a distraction or wasteful when there is normal lighting (e.g. a back-of-house corridor whose normal lighting is itself only on when occupied).',
   },
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A 5-storey office block has 200 emergency lighting points distributed across all floors and stair towers. The fire risk assessment is straightforward and there are no critical-life-safety services needing prolonged duration. The owner asks whether to install a self-contained system or a central battery system. From a maintenance and total-cost-of-ownership perspective, what is the typical answer?',
     options: [
-      'Always central battery — it is always cheaper.',
-      'Always self-contained — central battery is illegal.',
-      'Most modern UK installations of this size and complexity use a SELF-CONTAINED system. Each luminaire has its own internal battery and electronics; failure of one luminaire does not affect any other. Lower install cost, no central wiring run for emergency supply, scalable, simple to extend. Central battery suits very large or specialist installations (hospitals, datacentres, places of mass assembly) where centralised testing, longer durations, or specialist battery technology justify the higher install cost and centralised maintenance complexity. The choice is risk-and-context driven — there is no universal answer.',
-      'Self-contained for offices, central battery for shops.',
+      'Always a central battery system, since centralising the batteries is always cheaper over the system life.',
+      'Always a self-contained system, because central battery systems are not permitted in office premises.',
+      'A self-contained system — fault-tolerant and low install cost for this size, with central battery reserved for large or specialist sites.',
+      'The choice is fixed by building use — self-contained for offices and central battery for shops.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'BS EN 1838:2024 specifies different switch-on times for emergency lighting categories. Which category has the strictest switch-on time, and what is it?',
     options: [
-      'Escape route — 5 s.',
-      'Anti-panic — 5 s.',
-      'High-risk task area — ≤ 0.5 s. The reason: the operator is mid-task with hazardous equipment in motion. A 5-second outage of light is intolerable because the equipment may complete an unsafe motion in the dark. The 0.5 s switch-on (effectively instantaneous) ensures the operator never loses sight of the controls. By contrast escape route lighting can tolerate up to 5 s switch-on (50% of full output within 5 s, full output within 60 s typical).',
-      'All categories share 1 s.',
+      'Escape route lighting, which must reach full output within 5 s of the mains failing.',
+      'Anti-panic lighting, which must reach full output within 5 s across the open area.',
+      'All categories share a common 1 s switch-on requirement under the 2024 standard.',
+      'High-risk task lighting — full output within 0.5 s, so the operator never loses sight of moving hazardous equipment.',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Switch-on times by category: escape route — 50% within 5 s, full output within 60 s; anti-panic — 50% within 5 s, full output within 60 s; high-risk task — full output within 0.5 s. The high-risk task category is the only one demanding effectively instantaneous response, because the consequence of a delay is the operator losing sight of moving hazardous equipment.',
   },
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'BS 5266-1:2025 specifies durations for emergency lighting. What is the standard minimum duration for the majority of premises, and when is a longer duration required?',
     options: [
-      '30 minutes always.',
-      'The standard minimum duration is 3 hours full operation, applicable to most premises (including places of assembly, sleeping accommodation, healthcare, education, retail, hospitality, and most workplaces). 1 hour is permitted only in specific circumstances such as small premises with simple evacuation routes and immediate evacuation. Longer durations (sometimes 4 or more hours) may be required for hospitals, care homes, premises with phased evacuation, or where local authorities or insurers impose them. The duration is set by the risk assessment and the use case.',
-      '12 hours minimum.',
-      'No fixed duration.',
+      'A fixed 30-minute duration applies to all premises regardless of use or evacuation strategy.',
+      '3 hours for most premises; 1 hour only for small simple immediate-evacuation premises; longer for hospitals, care homes and phased evacuation.',
+      'A minimum of 12 hours full operation is required for every emergency lighting installation.',
+      'There is no fixed minimum duration; it is left entirely to the designer’s discretion in every case.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the difference between MAINTAINED and NON-MAINTAINED emergency luminaires?',
     options: [
-      'Maintained = bigger, non-maintained = smaller.',
-      'Maintained = always lit (under both normal mains and on emergency battery), suitable for exit signs and areas where the sign or luminaire must be visible all the time. Non-maintained = lit ONLY on mains failure, suitable for areas where normal mains lighting provides illumination during occupancy and the emergency luminaire stays dark unless the mains fails. The choice is driven by whether the luminaire needs to be visible when the mains is on.',
-      'Maintained = LED, non-maintained = halogen.',
-      'They are interchangeable.',
+      'Maintained is always lit (normal mains and emergency); non-maintained is lit only on mains failure.',
+      'Maintained luminaires are physically larger than non-maintained ones to house a bigger battery.',
+      'Maintained luminaires use LED lamps while non-maintained luminaires use halogen lamps.',
+      'The two are interchangeable; the terms describe the fitting colour, not how it operates.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Maintained luminaires draw power continuously to illuminate. Non-maintained draw power only on mains failure (the battery is held in float-charge state until the mains fails). Sustained / combined luminaires have separate normal and emergency lamps in the same housing — a third architecture used where a maintained sign coexists with non-maintained area illumination.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 2,
     question: 'A SUSTAINED (or COMBINED) emergency luminaire is best described as:',
     options: [
-      'A luminaire with two batteries.',
-      'A luminaire that lasts for 12 hours.',
-      'A luminaire with TWO separate light sources in the same housing — a normal lamp (from mains) for general illumination, AND a separate emergency lamp (from battery on mains failure) that operates only when needed. The two are independent: the normal lamp can be at full output, dimmed, or off according to the building lighting strategy, while the emergency lamp is held on standby. Common in premises where the same physical fitting must serve both general lighting and emergency lighting roles.',
-      'A luminaire with no battery.',
+      'A luminaire fitted with two internal batteries in parallel for an extended emergency duration.',
+      'A luminaire whose single battery sustains the lamp for an extended period of around 12 hours.',
+      'A luminaire with two separate light sources in one housing — a mains normal lamp and a battery emergency lamp.',
+      'A luminaire with no battery of its own that is fed entirely from a central battery system.',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'The principal difference between SELF-CONTAINED and CENTRAL BATTERY emergency lighting systems is:',
     options: [
-      'Self-contained uses LEDs, central battery uses fluorescent.',
-      'In a self-contained system, EACH luminaire has its own internal battery, charging electronics and changeover circuitry. The luminaire is electrically self-sufficient on a fault. In a central battery system, one large battery (or a small number of batteries in a central plant room) supplies all luminaires via a dedicated emergency-supply distribution. Each architecture has trade-offs: self-contained is fault-tolerant and easy to extend; central battery centralises maintenance and supports longer durations and specialist battery chemistries.',
-      'Central battery is illegal.',
-      'They are identical.',
+      'Self-contained luminaires use LED lamps, whereas central battery systems use fluorescent lamps.',
+      'Central battery systems are no longer permitted in new UK installations of any size.',
+      'The two are functionally identical and the terms describe only how the system is marketed.',
+      'Self-contained gives each luminaire its own battery and changeover; central battery feeds all luminaires from one battery in a plant room.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Self-contained: distributed batteries (one per luminaire), modest individual capacity (typical 3 hr LED), simple parallel install with the normal final circuit, low cost per point, individual tested and replaced. Central battery: centralised battery (often VRLA or NiCd in a plant room), large total capacity, dedicated emergency-supply cabling (often fire-rated MICC or similar), centralised testing and easier battery replacement at one location, higher install cost, specialist maintenance.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'BS EN 50171 covers central power supply systems for emergency lighting. What is its scope and significance?',
     options: [
-      'It covers consumer-grade UPS only.',
-      "BS EN 50171 specifies the requirements for central power supply systems intended to feed emergency safety services — including emergency lighting central battery systems. Covers performance, monitoring, testing, charging, environmental conditions and labelling. Required where a central battery system is installed; the system must comply with the standard's electrical, mechanical and operational requirements. Differs from BS EN 50172 (which covers the lighting system as a whole) and from BS EN 60598-2-22 (which covers the luminaire product).",
-      'It is for solar PV systems.',
-      'It is withdrawn.',
+      'It specifies central power supply systems feeding emergency safety services, including emergency lighting central battery systems.',
+      'It covers consumer-grade uninterruptible power supplies (UPS) for office IT equipment only.',
+      'It is the product standard for solar PV inverters feeding building electrical systems.',
+      'It has been withdrawn and replaced entirely by BS EN 50172 for new installations.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50171 is the central-battery-equipment product standard. The lighting system designer specifies that any central battery used must comply with BS EN 50171; the manufacturer ensures the kit meets the standard. The two together — BS EN 50171 (central battery equipment) plus BS EN 50172 (system) plus BS EN 1838 (illuminance) — form the modern central-battery design package.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'A datacentre operator wants emergency lighting that supports CONTINUED operation during the controlled fail-over to back-up power generation (a process taking up to 90 seconds before the generator stabilises). What category of emergency lighting is this, and is it within the scope of BS 5266-1:2025?',
     options: [
-      'Escape route lighting.',
-      "STANDBY LIGHTING — illumination provided to enable normal activities to continue substantially unchanged during failure of the normal supply. This category was explicitly added to the scope of BS 5266-1:2025 (it was not in the 2016 edition's scope as a fully-recognised category). Allows the operator to continue monitoring screens, reading status displays, and managing the fail-over without the disruption of darkness. Levels and duration set by the operational requirement, not the safety case.",
-      'Anti-panic only.',
-      'Not within BS 5266-1 scope at all.',
+      'Escape route lighting, since the staff will ultimately leave the building along that route.',
+      'Anti-panic lighting only, treating the data hall as a large open public space.',
+      'It is not within the scope of BS 5266-1 at all and is governed solely by the operator’s own policy.',
+      'Standby lighting — letting normal activity continue during supply failure; a category added to the scope of BS 5266-1:2025.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standby lighting is the 2025 BS 5266-1 scope expansion. Datacentres, broadcast studios, operating theatres, control rooms — all use cases where the activity must continue rather than evacuate. Levels are set against the task requirement (often the same as normal task levels, or a reduced-but-functional level). Duration matched to the operational fail-over time plus margin.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'Switch-on time for ESCAPE ROUTE lighting per BS EN 1838:2024 is:',
     options: [
-      '50% of full output within 5 s, full output within 60 s. The reason: human dark adaptation gives some residual visibility after a sudden mains failure, so the lamp does not need to be at full output instantaneously. 5 s for 50% (enough to begin escape) and 60 s for full output (escape sustained at full level) is calibrated to human visual response. The high-risk task category has a stricter ≤ 0.5 s requirement because operators with hazardous equipment cannot tolerate even short outages.',
-      'Instantaneous (within 100 ms).',
-      'Within 30 minutes.',
-      'No specific time.',
+      '50% of full output within 5 s and full output within 60 s, calibrated to human dark-adaptation.',
+      'Effectively instantaneous — full output within 100 ms of the mains failing.',
+      'Full output within 30 minutes, allowing time for the battery changeover to settle.',
+      'No specific switch-on time is set for escape route lighting; only the duration is specified.',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'In a HYBRID emergency lighting system, the architecture is:',
     options: [
-      'Half LED, half fluorescent.',
-      'Some luminaires self-contained (each with its own battery) and other luminaires fed from a central battery — a mix-and-match approach where the design uses the most cost-effective architecture for each location. Common where a central battery serves a large open-plan area or critical zone (datacentre racks, theatre auditorium) while the rest of the building is on self-contained for distributed escape and anti-panic. The two architectures coexist in the same building, served by the same maintenance regime.',
-      'Solar plus battery.',
-      'AC plus DC.',
+      'A mix of LED and fluorescent luminaires sharing the same emergency supply.',
+      'A combination of solar generation and a battery store feeding the emergency luminaires.',
+      'Some luminaires self-contained and others fed from a central battery — the most cost-effective architecture chosen per location.',
+      'A system that mixes AC-supplied and DC-supplied luminaires on the same final circuit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hybrid is increasingly common in larger buildings. The central battery covers the high-density / critical zones; self-contained covers everywhere else. The maintenance regime must accommodate both; the testing facilities must reach both; the documentation must clearly identify which luminaires belong to which architecture.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'A LOCAL-AREA luminaire (recognised by BS EN 1838:2024) is most likely to be specified in which of the following situations?',
     options: [
-      'A long internal corridor.',
-      'A care home bedroom where residents are permitted to remain in place during a mains-failure event — the room needs enough illumination for the resident or night staff to see the layout, find a call alarm, recognise the room and (if mobile) prepare to move, but not the full anti-panic level of an open public area. The illuminance level set by the local-area provisions in the 2024 EN sits between the escape-route 1 lx and the anti-panic 0.5 lx in concept and is application-specific.',
-      'An open hangar.',
-      'Outdoors in a car park.',
+      'A long internal corridor forming part of the building’s main escape route.',
+      'A large open hangar where occupants must cross an open floor to reach an exit.',
+      'An outdoor staff car park lit by overhead column luminaires at night.',
+      'A care home bedroom where residents are permitted to remain in place during a mains-failure event.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Local-area lighting is the BS EN 1838:2024 recognition for "non-evacuating occupant" scenarios. Care home bedrooms, hospital wards at night, hotel guest rooms in some configurations. The category sits alongside escape, anti-panic, high-risk, and standby; it is a fifth functional class designed for spaces where occupants stay rather than escape.',
   },
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 9,
     question: 'BS EN 60598-2-22 is the product standard that applies specifically to:',
     options: [
-      'Wiring accessories.',
-      'Cable insulation.',
-      'Luminaires for emergency lighting — the product-level European standard for emergency lighting fittings, covering construction, marking, electrical safety, photometric performance, charging electronics and battery integration. Manufacturers declare compliance with BS EN 60598-2-22 alongside BS EN 60598-1 (general luminaires). The certificate / data sheet of any compliant emergency luminaire will reference BS EN 60598-2-22; absence of that reference is a red flag.',
-      'Smoke alarms.',
+      'Wiring accessories such as socket-outlets and switches used on emergency circuits.',
+      'The fire-resistant cable and insulation used to wire central battery emergency systems.',
+      'Luminaires for emergency lighting — the product standard for the emergency fitting itself, declared alongside BS EN 60598-1.',
+      'Domestic smoke and heat alarms installed alongside the emergency lighting.',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'A small office (single floor, ground level, 4 employees, internal corridor 18 m, one fire exit at the end) has emergency lighting installed using self-contained LED maintained luminaires above the exit sign and self-contained LED non-maintained luminaires along the corridor. Why is this architecture appropriate?',
     options: [
-      'It is cheap.',
-      'Self-contained is fault-tolerant and well-suited to small distributed installations: each battery failure isolates to one luminaire; install and extend without rewiring a central battery system. Maintained over the exit sign provides continuous visibility of the exit pictogram during normal occupancy. Non-maintained along the corridor means the corridor luminaires are dark when normal mains lighting is on (no wasted energy, no distraction), and only illuminate on mains failure. The architecture matches the risk profile and scale of the premises — a small office does not need the centralised plant of a hospital.',
-      'It is the only legal architecture.',
-      'It is mandatory by BS 5266-1.',
+      'Self-contained suits small distributed sites (fault isolates to one luminaire); maintained gives the exit sign continuous visibility; non-maintained keeps corridors dark until mains failure.',
+      'It is simply the cheapest possible arrangement, which is the overriding reason to choose it.',
+      'It is the only legally permitted architecture for a single-floor office of this size.',
+      'It is mandated by BS 5266-1 for all premises with fewer than five employees.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The example illustrates appropriate architecture-to-context matching. Self-contained suits small / medium / distributed; maintained for continuous-visibility duty (exit signs); non-maintained for failure-only duty (corridors with their own normal lighting). The same building does not need to be uniformly self-contained or uniformly maintained — the design selects per location.',
   },

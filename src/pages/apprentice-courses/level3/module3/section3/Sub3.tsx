@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'A unity power factor (pf = 1.0) load has:',
     options: [
-      'Ahead in the direction of travel',
+      'Equal real and reactive power',
       'No reactive power — purely resistive',
-      '±0.01°C change over 2 minutes',
-      'High ambient temperature or self-heating',
+      'Apparent power greater than real power',
+      'Current leading voltage by 90°',
     ],
     correctAnswer: 1,
     explanation:

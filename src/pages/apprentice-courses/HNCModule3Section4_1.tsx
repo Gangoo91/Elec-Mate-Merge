@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'star-neutral',
     question: 'In a star-connected system, where is the neutral point located?',
     options: [
-      'Roger Fisher, William Ury and Bruce Patton',
-      'Upgrading transceivers on existing fibres',
-      'To control motor speed and reduce energy consumption',
+      'At the midpoint of each individual phase winding',
+      'At the supply intake before the windings',
+      'At the corner where two line conductors meet',
       'At the junction of all three phase windings',
     ],
     correctIndex: 3,
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main advantage of star connection in distribution systems?',
     options: [
-      'The height from the ground to the top of the working platform',
+      'It carries more current per winding than delta',
       'Provides both line and phase voltages for different loads',
-      'Cannot be inadvertently re-energised by others',
-      'At the furthest point from the distribution board',
+      'It blocks third-harmonic currents from circulating',
+      'It allows operation with one phase conductor lost',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'What is the minimum star-delta changeover time for a typical motor starter?',
+    question: 'When should a typical star-delta starter change over from star to delta?',
     options: [
-      'A fracture other than to fingers, thumbs and toes',
-      'Compact size with good heat dissipation',
-      '5-10 seconds (after motor reaches speed)',
-      'On a straight line between the two states',
+      'Immediately on pressing the start button',
+      'After exactly 30 seconds regardless of speed',
+      '5-10 seconds, after the motor reaches speed',
+      'Only once the motor has reached full load torque',
     ],
     correctAnswer: 2,
     explanation:

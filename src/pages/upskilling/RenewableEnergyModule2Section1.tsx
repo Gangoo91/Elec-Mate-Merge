@@ -32,10 +32,10 @@ const inlineChecks = [
     question:
       'What actually happens in a PV cell when sunlight hits it?',
     options: [
-      'Sunlight heats the silicon and the heat is converted to electricity',
-      'A photon of sufficient energy strikes a silicon atom, knocking an electron free; the electron-hole pair drifts across the p-n junction due to the built-in electric field, producing a voltage across the cell terminals',
-      'Sunlight magnetises the silicon, generating an induced current',
-      'Sunlight ionises the air gap above the cell',
+      'Sunlight heats the silicon and the heat is converted to electricity by a thermoelectric effect',
+      'A photon frees an electron at the p-n junction, and the built-in field separates the electron-hole pair to produce a voltage',
+      'Sunlight magnetises the silicon lattice, inducing a circulating current in the cell',
+      'Sunlight ionises the thin air gap above the cell surface, producing a static charge',
     ],
     correctIndex: 1,
     explanation:
@@ -46,10 +46,10 @@ const inlineChecks = [
     question:
       'A single crystalline silicon PV cell at standard test conditions (STC) produces approximately what open-circuit voltage?',
     options: [
-      '12 V — like a car battery cell',
-      'Approximately 0.55 to 0.70 V — set by the silicon band gap and the junction physics. Older P-type cells ~0.6 V; modern N-type / TOPCon / HJT cells ~0.65–0.70 V. Modules stack many cells in series to reach useful voltages',
-      '230 V — direct mains voltage',
-      'It varies between 1 V and 100 V depending on the module',
+      'About 12 V, matching a single lead-acid car battery cell',
+      'About 0.55 to 0.70 V, set by the silicon band gap and junction physics',
+      'About 230 V, matching the single-phase mains supply voltage',
+      'It varies between 1 V and 100 V depending on the physical size of the cell',
     ],
     correctIndex: 1,
     explanation:
@@ -60,10 +60,10 @@ const inlineChecks = [
     question:
       'What sets the short-circuit current (I_sc) of a PV cell?',
     options: [
-      'The voltage of the inverter',
-      'The cell area and the incident irradiance (W/m²) — a larger cell or a brighter day produces more current. I_sc is roughly proportional to irradiance, so I_sc at 500 W/m² is roughly half the I_sc at 1000 W/m² STC irradiance',
-      'The cable size',
-      'The number of cells in the module',
+      'The DC input voltage demanded by the inverter MPPT stage',
+      'The cell area and the incident irradiance (W/m²) — roughly proportional to irradiance',
+      'The cross-sectional area of the DC string cable feeding the inverter',
+      'The number of cells the manufacturer connects in series in the module',
     ],
     correctIndex: 1,
     explanation:
@@ -74,10 +74,10 @@ const inlineChecks = [
     question:
       'Three commercial cell technologies dominate the UK PV market. Match the cell type to its characteristic:',
     options: [
-      'Monocrystalline = lowest efficiency, polycrystalline = highest',
-      'Monocrystalline (~20–22% efficiency, premium price), polycrystalline (~17–19% efficiency, mid-price, identifiable by the "blue speckled" appearance), amorphous thin-film (~8–10% efficiency, lowest temperature coefficient, often used in BIPV and shaded applications)',
-      'All cell types perform identically in field conditions',
-      'Amorphous is the most efficient',
+      'Monocrystalline ~8–10% (lowest), polycrystalline mid, amorphous ~20–22% (highest)',
+      'Monocrystalline ~20–22% (premium), polycrystalline ~17–19% (blue speckled), amorphous ~8–10% (low temperature coefficient)',
+      'All three sit at ~15% efficiency and perform identically in field conditions',
+      'Amorphous ~22% (most efficient), monocrystalline ~17%, polycrystalline ~10%',
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const inlineChecks = [
     question:
       'A PV module is rated at STC (1000 W/m², 25°C cell temperature). On a hot UK roof at 50°C cell temperature, with the module\'s temperature coefficient at -0.4%/°C for P_max, what is the approximate power reduction?',
     options: [
-      'No reduction — temperature does not affect power',
-      'Approximately -10% — 25°C above the STC reference × -0.4%/°C = -10% power reduction. Real-world performance is materially below STC nameplate at typical roof temperatures',
-      'The module produces more power when hot',
-      '-50% — heat halves the output',
+      'No reduction — temperature does not affect output power',
+      'About -10% — 25°C above STC reference × -0.4%/°C',
+      'A gain of about +10% — the module produces more power when hot',
+      'About -50% — the heat roughly halves the output power',
     ],
     correctIndex: 1,
     explanation:
@@ -102,10 +102,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 551.1.1(d) addresses generating sets incorporating photovoltaic cells. What does it say about them?',
     options: [
-      'PV cells are excluded from Section 551',
-      'Generating sets incorporating photovoltaic cells ARE considered generating sets — including PV arrays or photovoltaic modules used as the electrical energy source. Section 551 applies (and the A4 changes in 551.7.1(c) bidirectional protective device, 551.7.2.1 supply-side installation apply)',
-      'PV cells are governed only by Section 712',
-      'PV cells are governed only by Section 826',
+      'Generating sets with PV cells are excluded from the scope of Section 551',
+      'Generating sets incorporating PV cells are considered generating sets, so Section 551 applies',
+      'PV cells fall outside Section 551 and are governed only by Section 712',
+      'PV cells fall outside Section 551 and are governed only by Section 826',
     ],
     correctIndex: 1,
     explanation:
@@ -116,10 +116,10 @@ const inlineChecks = [
     question:
       'PV module datasheets quote performance at STC (Standard Test Conditions). What does STC specify?',
     options: [
-      '1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum — the laboratory reference condition. Real-world operation is almost always below STC. Datasheets also quote NOCT (Nominal Operating Cell Temperature, typically ~45–48°C) as a more realistic operating point',
-      '500 W/m² irradiance, 50°C cell temperature',
-      'The UK midwinter morning conditions',
-      'The conditions during the manufacturer\'s factory test only',
+      '1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum — the laboratory reference',
+      '500 W/m² irradiance, 50°C cell temperature, AM 1.0 overhead-sun spectrum',
+      'The typical UK midwinter morning irradiance and ambient temperature',
+      'The site conditions recorded during the installer\'s commissioning test only',
     ],
     correctIndex: 0,
     explanation:
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'A 60-cell crystalline silicon PV module is connected at STC. Approximately what V_oc would you expect at the module terminals?',
     options: [
-      '0.6 V — the cell voltage',
-      'Approximately 36–42 V depending on cell technology — 60 cells in series × ~0.6 V/cell (older P-type) or ~0.69 V/cell (modern N-type) at STC. Modern 60-cell modules typically quote V_oc around 41.5 V. (72-cell modules reach ~44–50 V; the cell count is the V_oc multiplier)',
-      '230 V — mains voltage',
-      '600 V — DC string voltage',
+      'About 0.6 V — the same as a single crystalline silicon cell at STC',
+      'About 230 V — the module is built to match the mains supply voltage',
+      'About 36–42 V — 60 cells in series at ~0.6–0.69 V per cell',
+      'About 600 V — the typical residential DC string voltage at the inverter input',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Module V_oc is the cell V_oc multiplied by the number of cells in series. 60 cells × ~0.6 V/cell ≈ 36 V (older P-type technology); 60 cells × ~0.69 V/cell ≈ 41 V (modern N-type / TOPCon / HJT technology). The cell voltage is set by silicon physics and the cell technology; the module voltage is set by how many cells the manufacturer connects in series inside the module laminate. The DC string voltage of an installed PV system (~600 V typical for residential) is set by how many modules are connected in series at the string level — Module 2 Section 3 covers that.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Why does PV efficiency NOT improve when the cell heats up — and in fact reduces?',
     options: [
-      'Heat damages the silicon permanently',
-      'PV is direct photon-to-electron conversion; the silicon band gap narrows slightly with temperature, slightly reducing V_oc, but more importantly the increased thermal motion in the silicon lattice increases recombination rates, reducing the cell voltage and the fill factor. Hot cells produce less voltage, not more',
-      'Cell current decreases with temperature',
-      'The encapsulation expands and breaks',
+      'The band gap narrows and lattice vibration raises recombination as it heats — both cut V_oc and fill factor, so hot cells produce less voltage',
+      'The heat permanently damages the silicon crystal structure of the cell',
+      'The cell short-circuit current falls steeply as the temperature rises',
+      'The encapsulant expands with heat and breaks the electrical connection to the cells',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PV efficiency reduces with temperature because the silicon band gap narrows slightly (~-0.3 mV/°C) and the increased lattice vibration drives higher recombination of electron-hole pairs before they reach the external circuit. Both effects reduce V_oc (typically -0.3 to -0.4%/°C) and the fill factor. Cell I_sc actually rises very slightly with temperature, but the V_oc loss dominates, giving the typical P_max temperature coefficient of -0.3 to -0.5%/°C for crystalline silicon. This is why the install discipline of 70–100 mm standoff above the roof matters — cooler cells produce more power.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'Monocrystalline, polycrystalline, and amorphous silicon cells differ in efficiency, appearance and temperature behaviour. Which is the right characterisation for amorphous silicon for a partial-shade BIPV application?',
     options: [
-      'Highest efficiency, worst partial-shade performance',
-      'Lower nameplate efficiency (~8–10%), but lower temperature coefficient and better partial-shade performance — making amorphous thin-film attractive for BIPV applications where shade and integration into the building structure matter more than peak efficiency',
-      'Identical to monocrystalline',
-      'Cannot be used in BIPV',
+      'Highest nameplate efficiency of the three, but the worst partial-shade performance',
+      'Electrically identical to monocrystalline once laminated into a module',
+      'Unsuitable for BIPV because thin-film cannot be integrated into building surfaces',
+      'Lower efficiency (~8–10%) but a lower temperature coefficient and better shade tolerance — attractive for BIPV',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Amorphous silicon and other thin-film cells (CdTe, CIGS) sit at ~8–10% efficiency vs ~20–22% for monocrystalline. The trade-off they offer: a lower temperature coefficient (less power loss at hot operating temperatures), better partial-shade performance (less catastrophic drop-off than crystalline cells under shade), and form-factor flexibility (can be deposited on flexible substrates, integrated into walkable surfaces, curved into architectural shapes). For BIPV where the install location is structural / aesthetic rather than peak-yield optimised, amorphous thin-film is often the right choice despite the lower nameplate.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       'PV cell I_sc scales roughly proportionally with what?',
     options: [
-      'The number of cells in series',
-      'The incident irradiance (W/m²) and the active cell area — halve the irradiance and I_sc roughly halves; double the cell area and I_sc roughly doubles. V_oc is much less sensitive',
-      'The cell temperature only',
-      'The DC string voltage',
+      'The number of cells connected in series within the module',
+      'The incident irradiance (W/m²) and active cell area — halve the irradiance and I_sc roughly halves; V_oc is far less sensitive',
+      'The cell operating temperature, which is the dominant driver of current',
+      'The DC string voltage set by the number of modules in series',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'STC (Standard Test Conditions) for a PV module specifies 1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum. What does AM 1.5 actually mean?',
     options: [
-      'The module weighs 1.5 kg per m²',
-      'Air Mass 1.5 — the standard solar spectrum after passing through 1.5 atmosphere-equivalents of atmospheric attenuation. Roughly equivalent to the sun at 48° from zenith. The standard reference spectrum for PV module performance testing',
-      '1.5 hours of testing',
-      '1.5 W per cell',
+      'Air Mass 1.5 — the reference spectrum after 1.5 atmosphere-equivalents of attenuation, roughly the sun at 48° from zenith',
+      'The module mass — 1.5 kg per square metre of laminate area',
+      'A test duration — 1.5 hours of exposure under the test lamp',
+      'A power figure — 1.5 W of output per individual cell',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AM (Air Mass) describes the path length of sunlight through the atmosphere relative to a vertical zenith path. AM 1.0 is the sun directly overhead (atmospheric path = 1 atmosphere). AM 1.5 is the sun at ~48° from zenith (atmospheric path = 1.5 atmospheres). AM 1.5 is the standard reference because it represents typical mid-latitude conditions and an averaged daylight spectrum. The IEC 60904 standard defines AM 1.5G (global, including diffuse) as the reference spectrum for terrestrial PV testing.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'Reg 551.1.1(d) in BS 7671:2018+A4:2026 classifies generating sets incorporating photovoltaic cells as:',
     options: [
-      'Exempt from Section 551',
-      'Generating sets within scope of Section 551 — meaning the full Section 551 toolkit applies to PV (bidirectional protective device, supply-side installation, anti-islanding, prevention of reconnection, isolation accessibility). Section 712 applies the PV-specific particular requirements on top',
-      'Loads',
-      'Test equipment only',
+      'Installations exempt from Section 551 and governed by Section 712 alone',
+      'Current-using loads, drawing from the supply like any other final-circuit equipment',
+      'Test equipment only, outside the scope of the generating-set rules',
+      'Generating sets within Section 551 — the full toolkit applies, with Section 712 adding the PV-specific requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 551.1.1(d) explicitly brings PV into the scope of Section 551 — i.e. every grid-tied PV install engages the Section 551 generator-side rules including 551.7.1(c) bidirectional protective device, 551.7.2.1 supply-side installation (with stationary batteries treated as generating sets), and the 551.7.4–551.7.6 anti-islanding / prevention-of-reconnection / isolation triad. Section 712 then applies the PV-specific particular requirements (the modifications to general protective measures, PV string protection per 712.431, etc.).',
   },
@@ -217,10 +217,10 @@ const quizQuestions = [
     question:
       'On a domestic PV install, the module datasheet quotes "Pmax 400 W at STC, temperature coefficient -0.36%/°C for Pmax". On a UK roof in mid-summer with cell temperature reaching 55°C, what is the approximate actual peak power?',
     options: [
-      '400 W — STC is the operating condition',
-      'Approximately 357 W — 55°C is 30°C above the STC 25°C reference; 30°C × -0.36%/°C = -10.8% reduction; 400 W × (1 – 0.108) ≈ 357 W',
-      '200 W — temperature halves output',
-      '600 W — heat increases output',
+      'About 400 W — the STC nameplate is the real operating power',
+      'About 357 W — 30°C above STC × -0.36%/°C = -10.8%, so 400 W × 0.892 ≈ 357 W',
+      'About 200 W — the rise in temperature halves the module output',
+      'About 600 W — the extra heat increases the power above nameplate',
     ],
     correctAnswer: 1,
     explanation:
@@ -231,12 +231,12 @@ const quizQuestions = [
     question:
       'A customer asks "why does my PV array produce more in April than in July, even though July has longer days and (theoretically) more sun?". The most accurate technical answer:',
     options: [
-      'The customer is mistaken — July always produces more',
-      'The temperature effect dominates. April daytime ambient is ~10–15°C, July is ~20–25°C; module cell temperatures track 20–30°C above ambient on a still day. The result: July modules typically operate at ~50–60°C vs April\'s ~30–40°C — and the temperature coefficient of -0.4%/°C means a meaningful power reduction in July. Combined with frequent UK summer cloud cover, April often outperforms July on a per-module basis',
-      'Less daylight in July',
-      'The sun is closer to the earth in April',
+      'The customer is mistaken — July always produces more than April on any UK array',
+      'July simply has fewer usable daylight hours than April at UK latitudes',
+      'The temperature effect dominates — hotter July cells lose power at the module\'s temperature coefficient',
+      'The earth is physically closer to the sun in April than it is in July',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The April-vs-July paradox is a real phenomenon on UK PV installs and surfaces in customer conversations regularly. April daytime ambient is ~10–15°C; module cell temperatures sit around 30–40°C on a still sunny day. July ambient is ~20–25°C; module cell temperatures climb to 50–60°C. The 20°C of additional cell temperature drives ~8% power reduction at the typical -0.4%/°C coefficient. Add longer UK July cloud cover and lower-elevation solar angles, and April production often exceeds July despite the longer days. The customer is right to notice — this is the temperature effect made visible.',
   },

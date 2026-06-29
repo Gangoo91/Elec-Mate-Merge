@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: 'What is a Standard Operating Procedure (SOP) for calibration?',
     options: [
-      '32 A ring final circuit in 2.5 mm² T&E with 1.5 mm² CPC, served by an RCBO.',
+      'A summary of all calibrations due across the site in the next quarter',
       'A detailed, step-by-step documented procedure specific to a particular instrument type and calibration task',
-      'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
-      'Give a rough indicator only, then follow up with a written, scoped quote — so both sides have the same understanding',
+      'A manufacturer guarantee that the instrument will never drift out of tolerance',
+      'A record of the as-found and as-left readings taken during a single calibration',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'qc3',
     question: 'What is measurement uncertainty?',
     options: [
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
-      'Identify patterns, triggers, and the effectiveness of their coping strategies over time',
+      'The fixed error of the reference standard stated on its calibration certificate',
+      'The smallest change in input the instrument is able to detect and display',
       'A quantitative expression of the range of values within which the true value is expected to lie',
-      'It is a criminal offence that can result in prosecution, an unlimited fine, and/or imprisonment',
+      'The difference between the as-found and as-left readings during calibration',
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: "What is the 'guard band' approach to pass/fail decisions?",
     options: [
-      'When preserving the relationship is more important than the specific issue',
-      'To enable safe and effective identification of escape routes leading to final exits',
-      'The average operating time between consecutive failures of a repairable system',
+      'Widening the tolerance limits so that fewer instruments are declared out of tolerance',
+      'Repeating the measurement several times and reporting only the most favourable result',
+      'Calibrating against two reference standards and accepting if either one passes',
       'Applying a decision rule that accounts for measurement uncertainty when making conformity statements',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does a calibration management system (CMS) provide?',
     options: [
-      'Remove all metallic jewellery and use insulated tools to prevent short circuits',
+      'A single physical reference standard against which all site instruments are checked',
       'Scheduling, tracking, documentation, and trending of all calibration activities',
-      'Having sufficient training, knowledge, experience, and ability to perform tasks safely',
-      'Charging for the most power used in a billing period, not just total consumption',
+      'A device that automatically adjusts instruments back into tolerance when they drift',
+      'The legal authority to issue UKAS-accredited calibration certificates',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of a calibration procedure?',
     options: [
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
-      'To ensure only current, approved versions are used, maintaining consistency and preventing use of superseded methods',
+      'To guarantee that an instrument will remain in tolerance for the whole calibration interval',
+      'To record the as-found and as-left readings obtained during a single calibration',
       'To define the method, equipment, acceptance criteria, and documentation requirements for a specific calibration task',
-      'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
+      'To list every instrument on site that is due for calibration in the coming period',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'How is measurement uncertainty typically expressed?',
     options: [
-      'To define the method, equipment, acceptance criteria, and documentation requirements for a specific calibration task',
-      'Perform a reverse traceability investigation on all instruments calibrated using that standard since its last successful calibration',
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
+      'As a single worst-case error figure with no confidence level or coverage factor stated',
+      'As the resolution of the instrument display divided by the number of test points used',
+      'As the simple difference between the as-found and as-left readings recorded',
       'As an expanded uncertainty U with a coverage factor k and confidence level (e.g. U = 0.05 bar, k=2, 95% confidence)',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'What is GUM?',
     options: [
       'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
-      'To ensure only current, approved versions are used, maintaining consistency and preventing use of superseded methods',
-      'Perform a reverse traceability investigation on all instruments calibrated using that standard since its last successful calibration',
-      'Instrument ID, procedure reference, standards used (with traceability), environmental conditions, as-found/as-left data, uncertainty, technician, and date',
+      'The UK accreditation body that assesses calibration laboratories against ISO/IEC 17025',
+      'A national physical reference standard held by the laboratory at the top of the traceability chain',
+      'A software package used to schedule calibrations and generate work orders when they fall due',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is an out-of-tolerance (OOT) investigation?',
     options: [
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
+      'A routine check that the instrument display reads zero before the calibration begins',
       'An investigation triggered when an instrument is found outside its acceptable tolerance during calibration, to assess the impact on previous measurements',
-      'As an expanded uncertainty U with a coverage factor k and confidence level (e.g. U = 0.05 bar, k=2, 95% confidence)',
-      'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
+      'A review of the calibration interval carried out whenever an instrument passes within tolerance',
+      'The process of widening the tolerance limits so that a borderline instrument can be declared a pass',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'What records must be maintained for each calibration?',
     options: [
-      'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
-      'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
+      'Only the final pass or fail result, as the underlying readings are not needed once a decision is made',
+      'Just the instrument serial number and the date the next calibration falls due',
       'Instrument ID, procedure reference, standards used (with traceability), environmental conditions, as-found/as-left data, uncertainty, technician, and date',
-      'To ensure only current, approved versions are used, maintaining consistency and preventing use of superseded methods',
+      'The purchase price and warranty details of the instrument under test',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the role of ISO 9001 in calibration?',
     options: [
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
-      'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
-      'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
+      'It sets the technical accuracy specifications that each type of measuring instrument must meet',
+      'It accredits calibration laboratories and authorises them to issue UKAS-marked certificates',
+      'It defines the coverage factor k and confidence level to be used in uncertainty statements',
       'It requires that measuring equipment used in the quality management system is calibrated and traceable to ensure measurement validity',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'Why is environmental control important during calibration?',
     options: [
       'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
-      'To define the method, equipment, acceptance criteria, and documentation requirements for a specific calibration task',
-      'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
-      'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
+      'It removes the need to evaluate measurement uncertainty, since controlled conditions are error-free',
+      'It allows the calibration interval to be doubled because drift no longer occurs indoors',
+      'It is only required for electrical instruments and has no effect on pressure or temperature devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a calibration interval review?',
     options: [
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
+      'A fixed manufacturer-set period that may never be altered once the instrument is in service',
       'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
-      'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
-      'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
+      'A review of the test points and acceptance criteria written into the calibration procedure',
+      'An inspection of the instrument carried out halfway between its scheduled calibrations',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the difference between Type A and Type B uncertainty evaluation?',
     options: [
-      'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
-      'Perform a reverse traceability investigation on all instruments calibrated using that standard since its last successful calibration',
+      'Type A applies to electrical instruments while Type B applies to pressure and temperature instruments',
+      'Type A is evaluated before calibration and Type B is evaluated only after an out-of-tolerance finding',
       'Type A uses statistical analysis of repeated measurements; Type B uses other information such as specifications, certificates, and experience',
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
+      'Type A is reported on accredited certificates and Type B is reported on non-accredited certificates',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'What action is required when a reference standard is found out of tolerance?',
     options: [
-      'An investigation triggered when an instrument is found outside its acceptable tolerance during calibration, to assess the impact on previous measurements',
-      'The Guide to the Expression of Uncertainty in Measurement -- the internationally accepted framework for evaluating measurement uncertainty',
-      'It requires that measuring equipment used in the quality management system is calibrated and traceable to ensure measurement validity',
+      'Continue using the standard until its next scheduled calibration, then replace it if it fails again',
+      'Apply the as-found error as a correction to all future readings and take no further action',
+      'Adjust the standard back into tolerance on site and resume work without recalibration',
       'Perform a reverse traceability investigation on all instruments calibrated using that standard since its last successful calibration',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     question: 'Why must calibration procedures be controlled documents?',
     options: [
       'To ensure only current, approved versions are used, maintaining consistency and preventing use of superseded methods',
-      'Perform a reverse traceability investigation on all instruments calibrated using that standard since its last successful calibration',
-      'It requires that measuring equipment used in the quality management system is calibrated and traceable to ensure measurement validity',
-      'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
+      'To allow each technician to amend the procedure freely to suit the instrument in front of them',
+      'To keep the procedure confidential so that competitors cannot copy the calibration method',
+      'To remove the need for training records, since the document explains every step in full',
     ],
     correctAnswer: 0,
     explanation:

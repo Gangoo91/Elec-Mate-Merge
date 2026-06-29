@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'What are the two signal words used on GHS-compliant labels and SDS documents, and which indicates the more severe hazard?',
     options: [
-      'Danger (more severe) and Warning (less severe)',
       'Caution (more severe) and Notice (less severe)',
+      'Danger (more severe) and Warning (less severe)',
       'Toxic (more severe) and Harmful (less severe)',
       'Critical (more severe) and Advisory (less severe)',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "The two GHS signal words are 'Danger' and 'Warning'. 'Danger' is used for the more severe hazard categories (e.g. acute toxicity categories 1-3, flammable gases category 1), whilst 'Warning' is used for less severe categories. Only one signal word appears on a label — if multiple hazards apply, the most severe signal word takes precedence.",
   },
@@ -77,8 +77,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How many mandatory sections does a Safety Data Sheet contain?',
-    options: ['8 sections', '12 sections', '16 sections', '20 sections'],
-    correctAnswer: 2,
+    options: ['16 sections', '12 sections', '8 sections', '20 sections'],
+    correctAnswer: 0,
     explanation:
       'A Safety Data Sheet must contain exactly 16 sections, in a fixed order prescribed by Annex II of the REACH Regulation. This standardised format ensures that safety information is always presented consistently, regardless of the supplier or the substance, making it easier for users to find the information they need.',
   },
@@ -86,20 +86,20 @@ const quizQuestions = [
     id: 2,
     question: 'Which GHS pictogram shows a skull and crossbones, and what does it indicate?',
     options: [
-      'GHS06 — Acute toxicity (severe): fatal or toxic if swallowed, inhaled, or in contact with skin',
       'GHS05 — Corrosion: causes severe skin burns and serious eye damage',
+      'GHS06 — Acute toxicity (severe): fatal or toxic if swallowed, inhaled, or in contact with skin',
       'GHS02 — Flammable: catches fire easily',
       'GHS09 — Environment: hazardous to the aquatic environment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "The skull and crossbones pictogram is GHS06, indicating acute toxicity in the more severe categories (categories 1-3). It means the substance can be fatal or toxic if swallowed, inhaled, or absorbed through the skin. Products carrying this pictogram require the signal word 'Danger' and demand rigorous control measures including appropriate PPE.",
   },
   {
     id: 3,
     question: 'What type of hazard do H-statements beginning with H3xx indicate?',
-    options: ['Physical hazards', 'Health hazards', 'Environmental hazards', 'Transport hazards'],
-    correctAnswer: 1,
+    options: ['Physical hazards', 'Transport hazards', 'Health hazards', 'Environmental hazards'],
+    correctAnswer: 2,
     explanation:
       "H-statements are grouped by hazard type: H2xx codes relate to physical hazards (e.g. H220 'Extremely flammable gas'), H3xx codes relate to health hazards (e.g. H301 'Toxic if swallowed', H350 'May cause cancer'), and H4xx codes relate to environmental hazards (e.g. H400 'Very toxic to aquatic life'). This numbering system helps you quickly identify the category of risk.",
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
       'PVC solvent cement is commonly used by electricians. Which of the following hazards would you typically find on its SDS?',
     options: [
       'Radioactive material — handle with lead shielding',
-      'Highly flammable, harmful by inhalation, causes serious eye irritation',
       'Oxidising solid — keep away from combustible materials',
       'Explosive — risk of mass explosion',
+      'Highly flammable, harmful by inhalation, causes serious eye irritation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PVC solvent cement typically contains tetrahydrofuran (THF) and/or cyclohexanone, making it highly flammable (H225), harmful if inhaled (H332), and capable of causing serious eye irritation (H319). The SDS for PVC solvent cement will specify the need for adequate ventilation, no ignition sources, and appropriate eye protection. Always check the specific product's SDS as formulations vary between manufacturers.",
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 5,
     question: "What does the signal word 'Danger' on a product label indicate?",
     options: [
-      'The product is banned and should not be used',
       'The product belongs to the more severe hazard categories',
+      'The product is banned and should not be used',
       'The product requires a COSHH assessment but is safe with basic precautions',
       'The product is only dangerous if swallowed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "'Danger' is the signal word assigned to the more severe hazard categories under the GHS/CLP system. It indicates a higher level of risk compared to products labelled with 'Warning'. For example, a substance classified as acute toxicity category 1 (fatal) carries the signal word 'Danger', whilst a substance in category 4 (harmful) carries 'Warning'. The signal word provides an immediate indication of the severity of the hazard.",
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
     question: 'What does the GHS pictogram showing an exclamation mark (GHS07) typically indicate?',
     options: [
       'Immediate danger to life',
-      'Lower-level health hazards such as skin irritation, eye irritation, or harmful if swallowed',
       'The substance is flammable',
+      'Lower-level health hazards such as skin irritation, eye irritation, or harmful if swallowed',
       'The substance is corrosive to metals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "GHS07 (exclamation mark) indicates lower-level health hazards — it is used for substances that are irritant (skin or eye), harmful (rather than toxic), cause skin sensitisation, or cause drowsiness or dizziness. It carries the signal word 'Warning' rather than 'Danger'. Many common products used by electricians, such as contact cleaners and sealants, carry this pictogram.",
   },
@@ -163,10 +163,10 @@ const quizQuestions = [
     options: [
       'Section 6 — Accidental release measures',
       'Section 7 — Handling and storage',
-      'Section 13 — Disposal considerations',
       'Section 14 — Transport information',
+      'Section 13 — Disposal considerations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 13 — Disposal considerations — provides guidance on safe disposal methods for the substance, contaminated packaging, and any waste generated. It will reference relevant waste legislation and may specify whether the substance is classified as hazardous waste. Incorrect disposal of hazardous substances is an offence under the Environmental Protection Act 1990 and the Hazardous Waste Regulations.',
   },

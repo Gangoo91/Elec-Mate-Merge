@@ -56,10 +56,10 @@ const AM2Module3Section2 = () => {
       id: 'cooker-workmanship',
       question: 'Why do many candidates lose marks on cooker circuits?',
       options: [
-        'Add EV charger load with appropriate diversity',
-        'Use a plumb line or laser pointer to check alignment',
+        'Using the wrong protective device rating',
+        'Installing the outlet plate slightly off level',
         'Over-stripping cable sheath leaving bare conductors visible',
-        'The highest average power drawn over a defined period',
+        'Routing the cable through the wrong containment',
       ],
       correctIndex: 2,
       explanation:
@@ -69,10 +69,10 @@ const AM2Module3Section2 = () => {
       id: 'swa-gland-check',
       question: 'What does the assessor specifically check at an SWA gland?',
       options: [
-        'Perfecting one detail while neglecting others',
-        'Reduce step-by-step, maintaining circuit behaviour',
+        'Cable colour identification at the gland',
+        'The bend radius of the cable at the gland',
         'Mechanical strength and earth continuity',
-        'Added head (positive pump term)',
+        'Voltage drop across the gland connection',
       ],
       correctIndex: 2,
       explanation:
@@ -82,9 +82,9 @@ const AM2Module3Section2 = () => {
       id: 'safety-vs-neatness',
       question: 'In AM2 assessment, which is worse - messy work or unsafe work?',
       options: [
-        'Date, time, and GPS location data (if enabled)',
-        'To ensure only the device nearest the fault operates',
-        'Prevents mistakes and improves safety',
+        'Messy work - it always results in an automatic fail',
+        'Both lose equal marks under the marking scheme',
+        'Neither affects the outcome of the assessment',
         'Unsafe work - messy loses marks, unsafe means fail',
       ],
       correctIndex: 3,
@@ -198,9 +198,9 @@ const AM2Module3Section2 = () => {
       question: "What's the difference between a radial and a broken ring?",
       options: [
         'Radial is designed as one-way feed, broken ring is faulty two-way feed',
-        'Maintaining skilled workforce current with developments',
-        'Distribute loads so each phase carries approximately equal current',
-        'Immediately advise the person ordering the report',
+        'A radial uses larger cable than a broken ring',
+        'A broken ring is protected by a 20A device, a radial by 32A',
+        'There is no practical difference between the two',
       ],
       correctAnswer: 0,
       explanation:
@@ -210,10 +210,10 @@ const AM2Module3Section2 = () => {
       id: 9,
       question: 'Give an example of poor workmanship in power circuits.',
       options: [
-        'It becomes an unprotected radial circuit',
+        'Leaving a small loop of slack cable at each accessory',
         'Over-tightening terminals damaging insulation',
-        'Immediate failure for unsafe practice',
-        'To protect bare conductors from damage',
+        'Sleeving the CPC with green/yellow at terminations',
+        'Routing cables along the shortest available path',
       ],
       correctAnswer: 1,
       explanation:
@@ -223,10 +223,10 @@ const AM2Module3Section2 = () => {
       id: 10,
       question: 'What happens if you energise before completing all required tests?',
       options: [
-        'To protect bare conductors from damage',
-        'End-to-end continuity of all conductors',
+        'A minor mark deduction for poor sequencing',
+        'No issue provided the circuit functions correctly',
         'Immediate failure for unsafe practice',
-        'Sleeved and properly connected',
+        'A warning, as long as the tests are done afterwards',
       ],
       correctAnswer: 2,
       explanation:
@@ -236,9 +236,9 @@ const AM2Module3Section2 = () => {
       id: 11,
       question: 'Which test confirms ring circuit integrity?',
       options: [
-        'Sleeved and properly connected',
-        'Immediate failure for unsafe practice',
-        'Over-tightening terminals damaging insulation',
+        'Insulation resistance between all conductors',
+        'Polarity verification at every socket outlet',
+        'Earth fault loop impedance at the consumer unit',
         'End-to-end continuity of all conductors',
       ],
       correctAnswer: 3,
@@ -249,10 +249,10 @@ const AM2Module3Section2 = () => {
       id: 12,
       question: 'What must be done to CPCs in all power circuits?',
       options: [
-        'Sleeved and properly connected',
-        'End-to-end continuity of all conductors',
-        'Earth continuity connection',
-        'To protect bare conductors from damage',
+        'Sleeved with green/yellow and properly connected',
+        'Left bare but connected at every terminal',
+        'Connected only at the consumer unit end',
+        'Insulated with red sleeving at terminations',
       ],
       correctAnswer: 0,
       explanation:

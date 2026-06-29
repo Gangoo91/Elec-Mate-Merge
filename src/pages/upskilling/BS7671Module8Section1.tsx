@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You are checking the maximum permitted Zs for a 32 A Type C MCB and need to confirm the 0.4 s disconnection requirement is met. Which appendix figure shows the time-current characteristic (the 5-10 In tripping band) you reference?',
     options: [
-      'Appendix 4, Table 4D1A',
+      'Appendix 4, Table 4D1A (current-carrying capacity)',
       'Appendix 3, Figure 3A.4 (Type C MCB time-current curve)',
-      'Appendix 6, Form 1',
-      'Appendix 14, Figure 14.1',
+      'Appendix 6, Form 1 (Electrical Installation Certificate)',
+      'Appendix 14, Figure 14.1 (prospective fault current)',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Under BS 7671:2018+A4:2026, the model EIC (Electrical Installation Certificate) form in Appendix 6 has new schedule columns. Which of the following is now an explicit column on the schedule of test results?',
     options: [
-      'A column for the customer satisfaction rating',
-      'AFDD test record (where AFDDs are required by Reg 421.1.7) and an explicit TN-C-S (PNB) system option',
-      'A column for the engineer GoCardless reference',
-      'A column noting whether an apprentice signed the form',
+      'A column recording the maximum measured insulation resistance for the whole installation',
+      'An AFDD test record (Reg 421.1.7) and an explicit TN-C-S (PNB) supply-system option',
+      'A column recording the prospective energy let-through (I²t) of each device',
+      'A column recording the ambient temperature at the time of testing',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'On a domestic single-phase TN-C-S supply, you measure prospective fault current at the cut-out as 6.2 kA on L-N and 4.8 kA on L-PE. Reg 643.7 requires you to record prospective fault current. Which appendix gives the method for determining and recording PSCC and PEFC?',
     options: [
-      'Appendix 3',
-      'Appendix 8',
+      'Appendix 3 — time-current characteristics for protective devices',
+      'Appendix 8 — high protective-conductor current installations',
       'Appendix 14 — determination of prospective fault current',
-      'Appendix 16',
+      'Appendix 16 — model EICR inspection items',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'You are extending a single-phase circuit installed before 31 March 2004 (red phase, black neutral). The new conductors use the harmonised colours (brown line, blue neutral). What does Appendix 7 require?',
     options: [
-      'Replace the entire installation — old colours are not permitted',
-      'No marking required — the colours speak for themselves',
-      'Permanent warning notice at the consumer unit and at any junction where new and old colours meet, plus sleeving where conductors of different colours are connected',
-      'Only mark the line conductor; neutral marking is optional',
+      'Replace the entire installation, as mixing old and new colours is not permitted',
+      'No marking is required, since the colours are self-explanatory at each terminal',
+      'A permanent warning notice plus sleeving at every termination where the colours meet',
+      'Mark only the line conductor; neutral and CPC marking are optional',
     ],
     correctIndex: 2,
     explanation:
@@ -125,8 +125,13 @@ const quizQuestions = [
     id: 2,
     question:
       'BS 7671 itself is non-statutory. Which appendix lists the statutory regulations that DO carry force of law and against which BS 7671 compliance is the evidence of duty discharged?',
-    options: ['Appendix 1', 'Appendix 2 — statutory regulations', 'Appendix 5', 'Appendix 16'],
-    correctAnswer: 1,
+    options: [
+      'Appendix 1 — British Standards referenced in BS 7671',
+      'Appendix 5 — classification of external influences',
+      'Appendix 16 — model EICR inspection items',
+      'Appendix 2 — statutory regulations and associated memoranda',
+    ],
+    correctAnswer: 3,
     explanation:
       'Appendix 2 lists the relevant statutory regulations: the Electricity at Work Regulations 1989 (EAWR), the Health and Safety at Work etc. Act 1974 (HSWA), the Building Regulations Part P (England and Wales), Building (Scotland) Regulations and the Building Regulations Northern Ireland. BS 7671 compliance is the recognised method by which a designer / installer demonstrates that the duty under EAWR Reg 4 has been discharged.',
   },
@@ -135,10 +140,10 @@ const quizQuestions = [
     question:
       'A4:2026 introduces several deletions and renumberings across the appendices. Which of the following correctly states an A4 deletion?',
     options: [
-      'Appendix 3 has been deleted — all device data is now in manufacturer data only',
-      'Appendix 17 (energy efficiency) has been deleted, and Annex B443 (overvoltage risk assessment) has been deleted with the risk-assessment route now built into Section 443',
-      'Appendix 5 has been deleted',
-      'Appendix 14 has been deleted — PSCC is no longer recorded',
+      'Appendix 3 (device curves) has been deleted, leaving only manufacturer data',
+      'Appendix 17 (energy efficiency) and Annex B443 (overvoltage risk assessment) have both been deleted',
+      'Appendix 5 (external influences) has been deleted, with the codes moved into Part 7',
+      'Appendix 14 (prospective fault current) has been deleted and PSCC is no longer recorded',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +182,10 @@ const quizQuestions = [
     question:
       'A first-fix designer cites "App 4 Method 100" for a domestic ring final on 2.5 mm² T&E. The QS rejects the design. What is the most likely reason?',
     options: [
-      'There is no Reference Method 100 in App 4 — the designer has invented or misremembered the code',
-      'Method 100 is for SWA only',
-      'Method 100 is for high-temperature mineral cables only',
-      'The QS is wrong; Method 100 is the standard ring-final method',
+      'There is no current Reference Method 100 in App 4 — the code was retired and replaced by Methods A to G',
+      'Method 100 is reserved for armoured (SWA) cables and cannot be used for T&E',
+      'Method 100 applies only to high-temperature mineral-insulated (MICC) cables',
+      'The QS is mistaken — Method 100 remains the standard reference for ring finals',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,12 +196,12 @@ const quizQuestions = [
     question:
       'A cable is to be sized for a 7 kW EV charger. The designer must apply correction factors. Where do the correction factors (Ca for ambient temperature, Cg for grouping, Ci for thermal insulation, Cs for soil thermal resistivity, Cf for fusing factor) live?',
     options: [
-      'Appendix 1',
+      'Appendix 1 — British Standards referenced in BS 7671',
+      'Appendix 6 — model forms for certification and reporting',
+      'Appendix 16 — model EICR inspection items',
       'Appendix 4 — alongside the current-carrying capacity tables',
-      'Appendix 6',
-      'Appendix 16',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Appendix 4 carries both the tabulated It (rated current in reference conditions) and the correction factors used to derive Iz (cable current-carrying capacity in actual installation conditions): Iz = It × Ca × Cg × Ci × Cs × Cf. The factors are needed every time the install conditions differ from reference (most installs do) — grouping in particular bites hard on consumer-unit busbars where 6+ circuits share a route.',
   },
@@ -205,12 +210,12 @@ const quizQuestions = [
     question:
       'A new starter is overwhelmed by the size of BS 7671 and asks you the fastest way to find which appendix has what. What is the right answer?',
     options: [
-      'Memorise the page numbers for every appendix',
-      'Use the Index at the back and the Contents at the front: BS 7671 has both an alphabetical Index (term → page) and a structured Contents (chapter → page). Cross-references in regulation text (e.g. Reg 525 → "see Appendix 4") are the route from a numbered reg to the right appendix',
-      'Just google it',
-      'Buy a separate index booklet',
+      'Use the Contents at the front, the Index at the back, and the regulation cross-references that point to each appendix',
+      'Memorise the page numbers for every appendix before starting any design work',
+      'Rely on an internet search each time rather than the book itself',
+      'Buy a separate third-party index booklet and look every term up in that',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 is designed to be navigated. The Contents (front) gives the structural layout; the Index (back) gives the alphabetical term-to-page mapping; and every numbered Regulation that refers to an appendix uses an explicit cross-reference. Reg 525 ("voltage drop in consumers\' installations") points to App 4. Reg 643.7 ("verification of prospective fault current") points to App 14. Reg 411.3.1.1 cross-references back through Section 411 to Reg 411.4 onwards. Learn the cross-reference style and the book becomes a graph, not a haystack.',
   },

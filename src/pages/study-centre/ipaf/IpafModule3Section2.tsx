@@ -14,8 +14,8 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does '3T' stand for in the 3T assembly method?",
-    options: ['Three Tower method', 'Through The Trap', 'Triple Tie method', 'Tower To Top'],
-    correctAnswer: 1,
+    options: ['Through The Trap', 'Three Tower method', 'Triple Tie method', 'Tower To Top'],
+    correctAnswer: 0,
     explanation:
       "3T stands for 'Through The Trap'. The operative climbs through the trapdoor in the platform to reach each new level, installing guardrails from a protected position before stepping onto the platform.",
   },
@@ -37,11 +37,11 @@ const quizQuestions = [
     question: 'At what point during 3T assembly does the operative install guardrails?',
     options: [
       'After stepping onto the new platform',
-      'While standing on the platform below, reaching through the trapdoor',
       'From a ladder leaning against the tower',
+      'While standing on the platform below, reaching through the trapdoor',
       'From the ground using a pole',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The operative installs guardrails from the platform below by reaching through the trapdoor. This means the operative is always protected by the guardrails of the level they are standing on while fitting rails to the next level.',
   },
@@ -51,10 +51,10 @@ const quizQuestions = [
     options: [
       'It voids the tower warranty',
       'The platform is not strong enough without guardrails',
-      'There is a direct risk of falling from height with no edge protection',
       'It makes the tower unstable',
+      'There is a direct risk of falling from height with no edge protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Standing on an unguarded platform exposes the operative to a direct fall from height — the single greatest cause of fatalities in the construction industry. The 3T method eliminates this risk by ensuring guardrails are always installed before the operative steps onto the platform.',
   },
@@ -62,12 +62,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the correct sequence for adding a new level in 3T assembly?',
     options: [
+      'Frames → Guardrails (from below through trap) → Platform → Climb up',
       'Platform → Guardrails → Frames → Braces',
       'Frames → Braces → Guardrails → Platform',
       'Frames → Braces → Platform (through trap) → Guardrails from below',
-      'Frames → Guardrails (from below through trap) → Platform → Climb up',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'The correct 3T sequence is: add frames, add braces, then from the platform below reach through the trapdoor to install guardrails on the new level. Only then install the platform and climb through the trap to the new guarded level.',
   },
@@ -76,11 +76,11 @@ const quizQuestions = [
     question: 'How should adjustable legs be set during the initial base assembly?',
     options: [
       'Fully extended for maximum height',
-      'Fully retracted to keep the tower low',
       'Adjusted so the base frame is perfectly level, verified with a spirit level',
+      'Fully retracted to keep the tower low',
       'Set to the same length regardless of ground conditions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Adjustable legs must be set so the base frame is perfectly level. Use a spirit level to verify. This is the foundation for the entire tower — any error at the base compounds as height increases.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'During 3T assembly, diagonal braces serve which primary purpose?',
     options: [
       'They are decorative and optional',
-      'They provide lateral rigidity and prevent the frame from racking',
       'They are used as a climbing aid',
+      'They provide lateral rigidity and prevent the frame from racking',
       'They hold the platforms in place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Diagonal braces provide lateral rigidity, preventing the tower from racking (deforming into a parallelogram shape). Without diagonal braces, the tower would be structurally unstable and could collapse under lateral load.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'The trapdoor in a 3T platform must:',
     options: [
       'Be left open at all times for quick escape',
-      'Be closed after the operative has climbed through',
       'Be removed once the tower is complete',
       'Only be used by the lead assembler',
+      'Be closed after the operative has climbed through',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The trapdoor must be closed after the operative has climbed through. An open trapdoor is a trip hazard and reduces the effective platform area. It also means there is an unprotected opening that someone could fall through.',
   },
@@ -117,12 +117,12 @@ const quickCheckQuestions = [
     id: '3t-castor-lock',
     question: 'When during 3T assembly must you lock the castors?',
     options: [
-      'After the first platform is installed',
       'Before erecting the first frame on the base',
+      'After the first platform is installed',
       'Once the tower reaches working height',
       'Only when someone climbs the tower',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'All four castors must be locked before the first frame is erected on the base. The tower must never move during assembly — castor brakes stay engaged throughout the entire build.',
   },
@@ -144,11 +144,11 @@ const quickCheckQuestions = [
     question: 'When can you step onto a new platform during 3T assembly?',
     options: [
       'As soon as the platform is placed',
-      'Only after the guardrails for that level are fully installed',
       'Once you have clipped your harness on',
+      'Only after the guardrails for that level are fully installed',
       'After the diagonal braces are fitted',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'You may only step onto a new platform after the guardrails for that level have been fully installed from below. The platform must be guarded before anyone stands on it — this is the fundamental principle of the 3T method.',
   },

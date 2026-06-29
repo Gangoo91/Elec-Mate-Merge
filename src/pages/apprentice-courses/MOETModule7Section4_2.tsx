@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Why is clear verbal communication particularly important during electrical maintenance?',
     options: [
-      'Metal scaffold structures can conduct lightning strikes, creating an extreme electrocution risk',
+      'It removes the need to issue any written records once the work has been completed',
       'It ensures safety-critical information is accurately shared, preventing errors that could cause injury or equipment damage',
-      'MHFAs are trained to provide initial support and signpost; Champions raise awareness and reduce stigma but are not trained to provide first aid',
-      'Batteries using solid electrolyte instead of liquid, offering higher energy density and safety',
+      'It allows the technician to work faster by skipping the isolation procedure',
+      'It guarantees that the supervisor will agree with every decision made on site',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'report-writing-key',
     question: 'What is the most important characteristic of a maintenance report?',
     options: [
+      'It should be written in as much technical jargon as possible to demonstrate expertise',
       'It should be clear, accurate, factual and structured so that any competent reader can understand it',
-      'Using back-up protection from an upstream HRC fuse with a verified coordination combination',
-      'Back-boxes, faceplates, FCUs, sockets, switches, smoke alarms — everything that lands on a wall or ceiling.',
-      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
+      'It should record only the work that went well and omit any problems encountered',
+      'It should be kept as brief as possible, leaving out readings and equipment references',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'A maintenance report must be clear, accurate, factual and well-structured. It may be read by people with varying technical knowledge — from engineers to managers to auditors. The report should present facts objectively, in a logical structure, so that any competent reader can understand what was found, what was done and what further action is needed.',
   },
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 'active-listening',
     question: "Which of the following best describes 'active listening'?",
     options: [
-      'Significant findings including hazards identified, who is at risk, control measures, and review date',
-      'The tower loses structural rigidity and could collapse or rack (parallelogram) under load or wind',
-      'The enable input going FALSE before the preset is reached, causing the timer to reset',
+      'Listening only for the parts of the message that confirm what you already believe',
+      'Recording the conversation so that you do not have to concentrate at the time',
+      'Waiting silently for the speaker to finish so you can give your own opinion',
       'Fully concentrating on the speaker, understanding their message, responding thoughtfully and remembering the information',
     ],
     correctIndex: 3,
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'When writing a professional email to report a maintenance issue, which approach is correct?',
     options: [
-      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
+      'Leave the subject line blank so the recipient reads the whole message',
       'Write a clear subject line, state the issue, provide relevant details and specify any action required',
-      'Licensed work, notifiable non-licensed work (NNLW), and non-licensed work',
-      'Electronic equipment, capacitors, indicating devices, and surge protectors',
+      'Copy every member of staff in the building to make sure someone responds',
+      'Use informal abbreviations and emojis to keep the message friendly and quick',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'During a shift handover, the outgoing technician should:',
     options: [
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
-      'The sender giving a message, the receiver repeating it back, and the sender confirming the repeat is correct',
+      'Leave a short note on the desk and head home without speaking to the incoming team',
+      'Tell the incoming technician only about the tasks that are fully finished',
       'Provide a thorough verbal briefing backed up by written documentation covering work completed, outstanding issues and safety status',
-      'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
+      'Assume the incoming team already knows the isolation status from the previous shift',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: 'When reporting a fault to a supervisor, which information should you include?',
     options: [
-      'Provide a thorough verbal briefing backed up by written documentation covering work completed, outstanding issues and safety status',
-      'Adapt your language to the audience\\\\\\\\\\\\\\\'s level of understanding while maintaining accuracy',
-      'Record actual readings accurately, include units, date, time, instrument used and your name',
+      'Only your personal opinion of who is likely to blame for the fault',
+      'A rough description such as "something is wrong with the board" with no detail',
+      'Just the time you noticed the fault, leaving out the location and readings',
       'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
     ],
     correctAnswer: 3,
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'Non-verbal communication in a maintenance team includes:',
     options: [
       'Body language, facial expressions, tone of voice, eye contact and physical gestures',
-      'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
-      'Record actual readings accurately, include units, date, time, instrument used and your name',
-      'Adapt your language to the audience\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s level of understanding while maintaining accuracy',
+      'The wording and structure of a written fault report',
+      'The technical readings recorded on a test certificate',
+      'The subject line and greeting used in a professional email',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'A well-structured maintenance report should follow which order?',
     options: [
-      'The professional discussion, portfolio evidence and how you communicate throughout the EPA process',
+      'Recommendations/actions, then findings, with the background left to the end',
       'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
-      'The sender giving a message, the receiver repeating it back, and the sender confirming the repeat is correct',
+      'A single paragraph mixing facts, opinions and actions in no particular order',
+      'Findings first, then a list of unrelated tasks planned for the following week',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of the phonetic alphabet in maintenance communications?',
     options: [
-      'To describe in detail how the work will be carried out step-by-step, identifying hazards and controls at each stage, and defining the competencies and resources required',
-      'The notice must be in writing, specify the ground(s) for suspension (non-payment of a sum due), allow at least 7 days before suspension takes effect, and identify the date payment was due',
-      'The employer must carry out a return-to-work assessment, consider workplace adjustments, and update the risk assessment to reflect the worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s changed capability',
+      'To translate technical terms into plain language for non-technical readers',
+      'To replace written records with a standardised spoken shorthand',
+      'To speed up communication by shortening every word to a single letter',
       'To prevent misidentification of letters and numbers in noisy or radio environments, ensuring critical information like circuit references is communicated accurately',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'COSHH data sheets, job cards and technical reports are examples of:',
     options: [
       'Written communication that provides essential safety, technical and operational information',
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
-      'The sender giving a message, the receiver repeating it back, and the sender confirming the repeat is correct',
-      'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
+      'Non-verbal communication conveyed through body language and gestures',
+      'Informal verbal communication used only during toolbox talks',
+      'Closed-loop communication used exclusively for HV switching operations',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'When recording test results in a maintenance log, which practice is correct?',
     options: [
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
+      'Round every reading to the nearest whole number to save space in the log',
       'Record actual readings accurately, include units, date, time, instrument used and your name',
-      'The professional discussion, portfolio evidence and how you communicate throughout the EPA process',
-      'The sender giving a message, the receiver repeating it back, and the sender confirming the repeat is correct',
+      'Record only the readings that fall outside the acceptable range',
+      'Write the readings from memory at the end of the shift to avoid interruptions',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,12 +187,12 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'Which communication barrier is most common in maintenance environments?',
+    question: 'Which set of factors are recognised communication barriers in maintenance environments?',
     options: [
-      'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
-      'The professional discussion, portfolio evidence and how you communicate throughout the EPA process',
+      'Clear subject lines, structured reports, accurate readings and signed records',
+      'Closed-loop checks, phonetic alphabet use and confirmed handovers',
       'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
-      'Written communication that provides essential safety, technical and operational information',
+      'Active listening, plain language and audience-appropriate explanations',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: "The 'closed-loop' communication technique involves:",
     options: [
-      'Provide a thorough verbal briefing backed up by written documentation covering work completed, outstanding issues and safety status',
-      'Written communication that provides essential safety, technical and operational information',
-      'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
+      'The sender writing the message down and filing it without reading it aloud',
+      'The receiver acting on the instruction without acknowledging that it was heard',
+      'The sender repeating the same instruction several times until it is obeyed',
       'The sender giving a message, the receiver repeating it back, and the sender confirming the repeat is correct',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'Under ST1426, communication skills are assessed through:',
     options: [
       'The professional discussion, portfolio evidence and how you communicate throughout the EPA process',
-      'Record actual readings accurately, include units, date, time, instrument used and your name',
-      'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
+      'A separate written English examination held before the apprenticeship begins',
+      'A multiple-choice test on the phonetic alphabet alone',
+      'The employer’s annual appraisal, which replaces the end-point assessment',
     ],
     correctAnswer: 0,
     explanation:

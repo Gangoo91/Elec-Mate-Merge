@@ -239,7 +239,7 @@ const sections = [
           most circuits, RCD trip times of 300 ms maximum at rated residual operating current (IΔn)
           for general non-delay type — note that Appendix 3 Table 3A has been deleted in BS
           7671:2018+A4:2026 and the single AC test at IΔn within 300 ms is now the sole acceptance
-          criterion per Reg 643.7.3), interpretation of EICR observation codes (C1, C2, C3, FI), and{' '}
+          criterion per the Reg 643.8 NOTE), interpretation of EICR observation codes (C1, C2, C3, FI), and{' '}
           <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR completion</SEOInternalLink>.
         </p>
         <p>

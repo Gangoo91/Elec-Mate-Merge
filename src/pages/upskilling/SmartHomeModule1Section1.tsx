@@ -56,14 +56,14 @@ const quizQuestions = [
     id: 1,
     question: 'What is the definition of a smart home according to modern standards?',
     options: [
-      'A home with expensive appliances',
-      'A residence that uses interconnected devices and systems to automate, monitor, and control functions',
-      'A home with internet access only',
-      'A home with voice assistants only',
+      'A residence using interconnected devices to automate and control functions',
+      'A home fitted with high-end branded appliances throughout',
+      'A home with a broadband internet connection only',
+      'A home with one or more standalone voice assistants',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A smart home integrates interconnected devices and systems to provide automation, monitoring, and control capabilities for lighting, heating, security, and other functions through various communication protocols.',
+      'A smart home integrates interconnected devices and systems to provide automation, monitoring, and control of lighting, heating, security, and other functions through various communication protocols.',
   },
   {
     id: 2,
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary energy management benefit of smart home systems?',
     options: [
-      'Increased energy consumption monitoring',
+      'More detailed monitoring of higher consumption',
+      'Manual control of every electrical device',
       'Optimised energy use through intelligent automation and scheduling',
-      'Manual control of all electrical devices',
-      'Higher electricity consumption tracking',
+      'Simply tracking higher electricity consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smart homes enable optimised energy use through intelligent controls like smart thermostats, automated lighting schedules, and load management, which can significantly reduce overall energy consumption.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Which accessibility feature makes smart homes particularly beneficial for elderly or disabled users?',
     options: [
-      'Complex control panel systems',
-      'Voice control and automated assistance features',
-      'Manual switches and traditional controls',
+      'Complex multi-function control panels',
+      'Traditional manual switches',
       'Reduced device functionality',
+      'Voice control and automated assistance features',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Voice control and automated assistance features make smart homes particularly beneficial for elderly or disabled users who may have difficulty with traditional manual controls.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
     question: 'What is a significant challenge in smart home adoption?',
     options: [
       'Devices are too simple to use',
+      'Initial costs are too low',
       'Interoperability issues between different manufacturer systems',
-      'Low initial costs',
-      'Unlimited internet connectivity',
+      'Internet connectivity is unlimited',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Interoperability issues between different manufacturer systems remain a significant challenge, though new standards like Matter are working to address this problem.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     options: [
       'Physical lock mechanisms only',
       'Network security and data privacy protection',
-      'Traditional alarm systems',
+      'Traditional standalone alarm systems',
       'Manual security monitoring',
     ],
     correctAnswer: 1,
     explanation:
-      'Network security and data privacy protection are crucial in smart homes as connected devices can be vulnerable to cyber attacks and data breaches if not properly secured.',
+      'Network security and data privacy protection are crucial in smart homes, as connected devices can be vulnerable to cyber attacks and data breaches if not properly secured.',
   },
   {
     id: 8,
@@ -157,12 +157,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the typical approach for existing homes to become smart homes?',
     options: [
-      'Complete electrical system replacement',
+      'Complete replacement of the electrical system',
+      'Demolition and reconstruction of the building',
+      'Installation of a single-brand ecosystem only',
       'Gradual retrofit with compatible devices and systems',
-      'Building demolition and reconstruction',
-      'Installation of single-brand ecosystems only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most existing homes become smart through gradual retrofit approaches, adding compatible devices and systems over time rather than complete system replacement.',
   },

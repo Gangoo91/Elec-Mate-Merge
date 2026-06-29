@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'A junior wants to "just have a quick look" into a fibre patch lead to check if it is the live one before unplugging. The transceiver at the far end is rated Class 1M per BS EN 60825-2. What is the safety-critical answer?',
     options: [
-      'Quick visual inspection is fine — Class 1M is eye-safe.',
-      'NEVER look into an active fibre with the naked eye, regardless of laser class. Class 1 may be safe to unintentional exposure but the precautionary discipline applies to ALL OFCS work; Class 1M is generally safe to the naked eye but DANGEROUS under magnification (a fibre microscope or video probe IS magnification); Class 3R is dangerous direct. Use a fibre microscope or video probe with built-in light protection, or transceive the link down before any inspection. The infrared wavelengths used in telecoms (850 / 1310 / 1550 nm) are entirely invisible — there is no blink reflex.',
-      'It is fine if it is multimode.',
-      'It is fine for less than 5 seconds.',
+      'Never look into a possibly-active fibre with the naked eye — Class 1M is dangerous under magnification.',
+      'A quick naked-eye look is fine because Class 1M is eye-safe to the unaided eye.',
+      'A naked-eye look is fine provided the fibre is multimode rather than single-mode.',
+      'A naked-eye look is fine provided the exposure is kept under about five seconds.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS EN 60825-2 (safety of optical fibre communication systems) is the governing standard. Class 1 is generally safe to unintentional exposure. Class 1M is generally safe to the naked eye but DANGEROUS under magnification — exactly the scenario of looking into a connector with a microscope or video probe. Class 3R can be dangerous to the naked eye. The infrared wavelengths used (850, 1310, 1550 nm) are invisible — there is no blink reflex, no heat warning at low power. The rule is simple: never visually inspect a fibre that may be active. Transceive the link down, OR use a fibre microscope / video probe (which is opto-electronically protected) — never the naked eye.',
   },
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'A 200 m fibre link is reporting "no link" at the far end. You have a Visible Fault Locator (VFL) — a 650 nm red laser pen that injects visible light into the fibre. What can a VFL diagnose, and what can it NOT?',
     options: [
-      'A VFL can diagnose all fibre faults including high-loss connectors.',
-      'A VFL CAN diagnose continuity, breaks, sharp bends within the first ~5-10 km of multimode or single-mode fibre, and locate macrobends (the red light leaks visibly out of the cable jacket). It CANNOT diagnose loss budget issues, splice loss, return loss, polish-grade mismatches, or any wavelength-dependent issue at infrared wavelengths. VFL is a pass / fail continuity tool plus visual macrobend locator; OTDR + OLTS are the loss / characterisation tools.',
-      'A VFL is only for single-mode.',
-      'A VFL replaces the OTDR.',
+      'A VFL can diagnose every fibre fault, including high-loss and contaminated connectors.',
+      'A VFL is usable only on single-mode fibre, never on multimode.',
+      'A VFL finds continuity, breaks and macrobends but cannot measure loss or characterise splices.',
+      'A VFL fully replaces the OTDR for link characterisation.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A VFL is a 650 nm red laser pen (typically Class 2 or Class 3R per BS EN 60825-1) that injects visible light into a fibre. Visible light is much shorter wavelength than telecoms IR, so any macrobend or fibre damage that lets visible light leak out of the jacket is also leaking IR. VFL strengths: continuity (does the light come out of the far end?), break location (where does the visible light stop?), macrobend location (where does the red glow appear on the jacket?). VFL limitations: cannot measure loss, cannot characterise splices, cannot see anything beyond the visible-light reach. Different tool for a different job.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'A connector fails IEC 61300-3-35 inspection due to oil-residue contamination. Which cleaning method is appropriate, and what should NEVER be done?',
     options: [
-      'Wipe with a shirt-tail and re-inspect.',
-      'Use an IBC click cleaner (one-shot mechanical wipe via internal cleaning tape) — the modern default — or a lint-free wipe with 99 % isopropyl alcohol (IPA). NEVER blow on the connector (adds moisture and saliva droplets), NEVER wipe with clothing or paper towel (introduces lint and may scratch the polished face), NEVER use water or non-IPA solvents. Re-inspect after cleaning. If the connector still fails after two cleaning attempts, it must be re-terminated.',
-      'Wipe with a regular paper towel.',
-      'Blow it clean with compressed air.',
+      'Wipe the ferrule on a shirt-tail and re-inspect the endface.',
+      'Wipe the ferrule with a regular paper towel and re-seat it.',
+      'Blow the ferrule clean with compressed air from a can.',
+      'Use an IBC click cleaner or a lint-free wipe with 99 % IPA, then re-inspect.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cleaning protocol is fixed: IBC click cleaners or lint-free wipe with 99 % IPA, both inspected after. Blowing on a connector adds moisture and droplets. Compressed air can drive contaminants further into the ferrule and is generally not the right tool for ferrule cleaning (it has applications elsewhere in fibre work). Cloth, paper towel and tissue all leave lint. Water and most solvents are NOT used — IPA evaporates cleanly. After two failed cleaning attempts the connector should be re-terminated rather than further attempts at cleaning.',
   },
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'Building handover: what minimum package should be presented to the client / facilities manager so the fibre infrastructure is properly handed over and maintainable?',
     options: [
-      'A simple pass / fail summary.',
-      'Tier 1 OLTS test reports per channel (bidirectional, dual-wavelength), Tier 2 OTDR baseline traces per channel, IEC 61300-3-35 endface inspection records per connector, complete BS EN 50174-1 / TIA-606-D as-built records (labels, drawings, identifiers, splice tray layouts), a maintenance schedule (inspection cadence, cleaning protocol, spares list), instrument calibration certificates, and the manufacturer warranty registration. Plus contact details for fault escalation.',
-      'Just the OTDR traces.',
-      'Only a verbal walkthrough.',
+      'A simple one-page pass / fail summary for the project file.',
+      'Tier 1 + Tier 2 results, endface inspection, as-built records, a maintenance schedule and warranty registration.',
+      'Just the Tier 2 OTDR baseline traces for each channel.',
+      'A verbal walkthrough of the comms room with the FM team.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Which standard governs laser safety for optical fibre communication systems, and what is the most important rule for the installer?',
     options: [
-      'BS 7671 §716 — laser safety.',
-      'BS EN 60825-2 — Safety of optical fibre communication systems. Defines hazard Classes 1, 1M, 3R for OFCS sources. The most important rule for the installer: NEVER look into an active fibre, an active connector, or an active patch lead with the naked eye. The infrared wavelengths used (850, 1310, 1550 nm) are entirely invisible — no blink reflex, no warning. Use a fibre microscope or video probe (opto-electronically protected) for inspection, or transceive the link down before exposing any connector face.',
-      'Local fire regulations.',
-      'There is no specific standard.',
+      'BS EN 60825-2 — and the rule is never to view a possibly-active fibre with the naked eye.',
+      'BS 7671 Section 716, the wiring-regulations clause covering laser safety.',
+      'Local fire regulations applied by the building control body for the site.',
+      'There is no specific standard governing fibre laser safety in the UK.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 60825-2 is the governing standard for OFCS laser safety in the UK / EU. Class 1 (generally safe to unintentional exposure), Class 1M (safe to naked eye, NOT safe under magnification), Class 3R (potentially harmful direct viewing). The combination of invisible wavelength (no blink reflex), focusing optics in fibre microscopes (concentrates beam), and the fact that "off" links are routinely active during commissioning makes the never-look discipline the single most important on-site safety rule for fibre work.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is a VFL (Visible Fault Locator) and what does it do that an OTDR does not?',
     options: [
-      'A VFL is the same thing as an OTDR.',
-      'A 650 nm red laser pen that injects visible light into a fibre. It is used for quick continuity testing (does the light come out the far end?), break location (where does the visible light stop along the cable?), and macrobend localisation (where does the red glow appear on the jacket?). It cannot measure loss, characterise splices, or see beyond ~5-10 km. It is a fast pass / fail / find-the-bend tool, complementary to the OTDR / OLTS for full characterisation.',
-      'A VFL replaces all other test instruments.',
-      'A VFL is for copper testing only.',
+      'A VFL is simply another name for the same instrument as an OTDR.',
+      'A VFL replaces all other fibre test instruments on the kit list.',
+      'A red-light pen for continuity, break location and macrobend spotting — but it cannot measure loss.',
+      'A VFL is a tool for copper twisted-pair testing only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A VFL is a fast diagnostic tool for the simplest fibre questions: is there continuity, where does the cable break, where is the macrobend? Visible 650 nm light leaks out of macrobends and breaks visibly on the cable jacket — you see the red glow, you find the fault. For loss budget, splice characterisation, return loss, etc., the OTDR and OLTS are the right tools. Most fibre installer kits carry a VFL as a quick-check tool alongside the OTDR / OLTS / fibre microscope.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'What are the three most common fibre faults found in service, in rough order of frequency?',
     options: [
-      'Broken cores, broken cores, broken cores.',
-      '(1) Endface contamination — by far the most common; a single fingerprint, dust particle or oil residue dominates loss at one connector. (2) Bad splice — modal / mechanical alignment drifted, gel dried out, or splice protector damaged. (3) Macrobend — cable kinked, over-tightened cable tie, sharp containment edge violating bend radius. All three are install / handling issues, all three are addressable, and all three are why endface inspection and bend-radius respect are mandatory.',
-      'Lightning damage and rodent attack.',
-      'Manufacturer defects.',
+      'Broken cores, broken cores and more broken cores in roughly equal measure.',
+      'Lightning strike damage followed by rodent attack on the cable jacket.',
+      'Manufacturing defects in the fibre, splices and connectors.',
+      'Endface contamination, then bad splices, then macrobends — all install / handling issues.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Manufacturing defects are extraordinarily rare in modern fibre. The three dominant in-service fault classes are install / handling issues: contamination (~70 % of all fibre faults reported), bad splices (~15-20 %), macrobends (~10-15 %). The discipline that prevents all three: inspect-clean-inspect every connector before mating, fusion-splice with proper cleaver maintenance, route to manufacturer bend-radius limits with steel containment per BS 7671 §521.10.202.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'How do you clean a fibre connector that has failed IEC 61300-3-35 inspection?',
     options: [
-      'Wipe with a tissue and re-inspect.',
-      'Use an IBC click cleaner (one-shot mechanical wipe via internal cleaning tape — modern default), or a lint-free wipe with 99 % isopropyl alcohol (IPA — alternative). Re-inspect with a fibre microscope or video probe after cleaning. If the connector still fails after two cleaning attempts, re-terminate it (cleave + fusion-splice onto a new pigtail, or replace the field connector).',
-      'Soak it in water.',
-      'Use compressed air only.',
+      'Use an IBC click cleaner or lint-free wipe with 99 % IPA, re-inspect, and re-terminate if it still fails.',
+      'Wipe the ferrule with a tissue and re-inspect the endface.',
+      'Soak the connector in water to lift the contamination.',
+      'Use compressed air only to blow the ferrule clean.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IBC click cleaner or lint-free wipe + IPA — those are the two correct methods. Click cleaners are clean, fast and consistent — a single click advances a fresh section of cleaning tape across the ferrule end. IPA evaporates cleanly. After cleaning, re-inspect; if still fails, repeat once more; if still fails, the connector is damaged and needs re-termination. Wipes with cloth, paper or non-IPA solvents are wrong because they leave lint, residue or solvent traces.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why is a maintenance schedule provided at handover for a fibre infrastructure?',
     options: [
-      'It is a sales upsell.',
-      'Permanent fibre infrastructure is stable but not maintenance-free. Periodic inspection of high-traffic patch panels, connector cleaning when patches change, environmental checks (temperature, humidity, water ingress), bend-radius checks where cable routes are accessible, and re-test on a baseline cadence (typically every 5 years or before any major service upgrade). Without a documented schedule, problems develop slowly and are missed until service fails. With one, the FM team has a known cadence and the cabling lives its design life.',
-      'It is required for tax purposes.',
-      'It is automated by the cabling.',
+      'It is a sales upsell tacked onto the handover package.',
+      'It is required for the building owner\u2019s tax records.',
+      'Fibre is stable but not maintenance-free; a schedule gives the FM team a known inspection cadence.',
+      'Maintenance is automated by the cabling itself, so the schedule is informational only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A fibre infrastructure is a 15-25 year asset. A maintenance schedule keeps it healthy — typically: monthly visual inspection of accessible cable routes and high-traffic panels; per-patch connector cleaning at any port disturbance; annual environmental check of comms rooms and splice closures; baseline OTDR re-test before any major upgrade; and full re-certification at 10-15 years or service-class change. The handover schedule lets the FM team plan work and ensures continuity when contractors change.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'A live channel reports intermittent errors after a tradesman drilled a wall route nearby. First diagnostic action?',
     options: [
-      'Replace all transceivers.',
-      'Run an OTDR baseline-comparison trace at both wavelengths from each end. Compare against the day-one as-built OTDR baseline. Any new event (loss step, reflection peak) at a position consistent with the recent works is a candidate fault. Walk the cable route to that position and visually inspect for damage; remediate by re-routing, splicing out a damaged section, or replacing the affected length. The OTDR baseline-comparison is the standard fault-localisation method for a known cabling change.',
-      'Re-test all the patches.',
-      'Re-cable the entire link.',
+      'Replace all transceivers at both ends of the channel.',
+      'Re-test every patch lead in the affected rack.',
+      'Re-cable the entire link from end to end.',
+      'Run an OTDR and compare against the day-one baseline to locate any new event near the works.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OTDR baseline-comparison is the most powerful fault-localisation technique available for in-service fibre. The day-one trace is the reference; any new event in a current trace is a candidate fault. The wavelength axis (test at both 1310 and 1550) tells you whether the new event is bend-induced (long-wavelength dependent) or mechanical (wavelength-independent loss). The location axis tells you where on the cable to look. Replacing transceivers without an OTDR comparison would be guesswork.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 clause governs cable support on a fibre cable run, and why is it relevant even though fibre carries no current?',
     options: [
-      'It does not — fibre is exempt.',
-      '§521.10.202 — verbatim from A4:2026: "Wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire." NOTE 3 precludes non-metallic clips / ties as the SOLE means of support; NOTE 4 lists steel or copper clips, saddles, ties as compliant; NOTE 2 deems steel containment systems as compliant. Fibre is a wiring system in scope. Plastic-tied fibre on an escape route is non-compliant in the same way as plastic-tied copper.',
-      '§444.4.9 — separate buildings.',
-      '§411.3.1 — protective earthing.',
+      'Regulation 521.10.202 — fire-collapse support applies to fibre as a wiring system, so plastic-only support fails.',
+      'No clause applies — fibre is exempt from cable support rules because it carries no current.',
+      'Regulation 444.4.9, which covers signal cabling between separate buildings.',
+      'Regulation 411.3.1, which covers protective earthing and automatic disconnection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§521.10.202 (verbatim from the A4:2026 RAG) is medium-agnostic — it applies to all wiring systems, fibre included. The compliance routes: steel cable containment (basket, tray, trunking) is deemed-to-comply (NOTE 2); steel or copper clips / saddles / ties are compliant (NOTE 4). Non-metallic clips / ties as the SOLE means of support are non-compliant (NOTE 3). On an escape route, this matters specifically — premature collapse hinders evacuation. For fibre, which is bend-radius sensitive, the chosen support method must also respect manufacturer bend-radius limits per BS EN 50174-2.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'A planned service upgrade will move the link from 10GBASE-LR to 25GBASE-LR (single-mode). What pre-upgrade verification should be performed?',
     options: [
-      'Just swap the transceivers.',
-      'Re-verify the link insertion-loss budget against the new transceiver budget. 25GBASE-LR has a tighter optical budget than 10GBASE-LR (less headroom), so a link that was comfortably inside the 10G budget may be marginal at 25G. Re-run Tier 1 OLTS bidirectional dual-wavelength against the calculated link budget; if the link is now marginal, identify excess loss with Tier 2 OTDR, inspect / clean / re-terminate as required. Document the re-verification in the as-built record.',
-      'No verification is required.',
-      'Re-cable everything.',
+      'Just swap the transceivers and bring the link into service.',
+      'No verification is required because the cabling has not changed.',
+      'Re-verify Tier 1 insertion loss against the tighter 25G budget; locate any excess with OTDR.',
+      'Re-cable everything to be sure the new service is supported.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Service upgrades change the optical budget. 25 G transceivers typically have ~1 dB less budget than 10 G transceivers at the same wavelength — so a link that comfortably passed 10 G may not pass 25 G. The pre-upgrade discipline: re-verify Tier 1 against the new budget, locate any excess loss with Tier 2, remediate. The day-one OTDR baseline is invaluable here as the reference. Document the re-verification — the upgraded link is now warrantied (or self-certified) for the new service.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'What BS EN 60825-2 laser-class is typical for a 10GBASE-LR (1310 nm SM Ethernet) transceiver, and what does that mean in practice?',
     options: [
-      'Class 4 — extremely dangerous.',
-      'Typically Class 1 or Class 1M — eye-safe to unintentional exposure (Class 1) or eye-safe to the naked eye but dangerous under magnification (Class 1M). In practice this means: no warning labels at the port for Class 1; treat all OFCS work as if it could be Class 1M (the more dangerous of the common classes); never use a fibre microscope or video probe on a connector you have not first verified is de-energised (transceiver off, link down). The cleanliness inspection workflow always assumes magnification.',
-      'Class 3B — dangerous direct.',
-      'Class 5 — special hazard.',
+      'Class 4 — the highest hazard class, harmful even from diffuse reflection.',
+      'Class 3B — hazardous on direct beam viewing.',
+      'Class 5 — a special-hazard designation for telecoms sources.',
+      'Typically Class 1 or 1M — eye-safe unaided, but treat as dangerous under microscope magnification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most in-building telecoms transceivers (1G / 10G / 25G short / long reach) are Class 1 or Class 1M per BS EN 60825-2. Long-haul DWDM, EDFA / Raman amplifier outputs, and some specialty test sources are Class 3R or higher. The default safe-discipline assumption is Class 1M — safe to the naked eye but DANGEROUS under magnification — because routine inspection uses fibre microscopes / video probes. The rule: confirm de-energisation before any optical inspection.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'At handover of a fibre infrastructure, what minimum maintenance information should the contractor leave with the FM team?',
     options: [
-      'Just contact details.',
-      'Maintenance schedule with cadence (monthly visual / annual environmental / 5-year baseline OTDR re-test / pre-upgrade Tier 1 re-verification), cleaning protocol (IBC click cleaner / lint-free wipe + IPA, never blow / never wipe with cloth), spares list (patch leads of each polish grade / connector type, cleaning consumables), endface inspection guidance (IEC 61300-3-35 acceptance), bend-radius limits per cable type, fault-escalation contact details, manufacturer warranty registration number and conditions, and the day-one Tier 1 + Tier 2 baselines for comparison.',
-      'A copy of the OTDR trace only.',
-      'Verbal handover only.',
+      'A maintenance schedule, cleaning protocol, spares list, bend-radius limits, escalation contacts, warranty details and the day-one baselines.',
+      'Just the contractor\u2019s contact details for any future queries.',
+      'A copy of the Tier 2 OTDR baseline trace and nothing else.',
+      'A verbal handover walkthrough with the FM team only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A fibre infrastructure is a long-life asset that the FM team will manage for 15-25 years. Maintenance schedule + cleaning protocol + spares list + inspection guidance + bend-radius limits + escalation + warranty + day-one baselines is the minimum set. Without it, the team manages by re-engaging the original contractor for every query — expensive and slow. With it, the team is self-sufficient and the cabling lives its design life. This is the professional handover — the asset transitions cleanly from build to operate.',
   },

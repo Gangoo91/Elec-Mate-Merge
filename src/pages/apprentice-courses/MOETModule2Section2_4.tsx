@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'thd-meaning',
     question: 'Total Harmonic Distortion (THD) is a measure of:',
     options: [
-      'To provide additional connection points for sensors and actuators',
+      'The total power consumed by all the non-linear loads on a circuit',
       'How much the waveform deviates from a pure sine wave due to harmonic content',
-      'Ensuring metallic parts are at same potential to prevent dangerous voltages',
-      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
+      'The phase difference between the supply voltage and current',
+      'The peak value of the supply voltage relative to its RMS value',
     ],
     correctIndex: 1,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
       'Triplen harmonics (3rd, 9th, 15th, etc.) are particularly problematic in three-phase systems because:',
     options: [
       'They add arithmetically in the neutral conductor, potentially overloading it',
-      'Suitable means for cutting off electrical energy supply',
-      'Introducing clean fluid to protect instruments from process contamination',
-      'Elimination → substitution → engineering controls → administrative controls → PPE',
+      'They cancel out completely in the neutral conductor of a balanced load',
+      'They increase the supply frequency above the nominal 50 Hz',
+      'They only affect single-phase circuits and never three-phase systems',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'Which of the following loads is most likely to produce significant harmonic distortion?',
     options: [
-      'Increased eddy current and hysteresis losses, causing additional heating',
-      'Voltage distortion from harmonic-producing loads (flat-topping)',
+      'A tungsten filament heater element',
+      'A standard incandescent lighting circuit',
       'A variable speed drive (VSD) with a six-pulse rectifier input',
-      'Injecting equal and opposite harmonic currents to cancel the harmonics',
+      'A purely resistive immersion heater',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'What effect do harmonics have on transformers?',
     options: [
       'Increased eddy current and hysteresis losses, causing additional heating',
-      'Use an appropriately rated high-voltage differential probe or voltage attenuator',
-      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
-      'Injecting equal and opposite harmonic currents to cancel the harmonics',
+      'A reduction in the core temperature due to lower magnetising current',
+      'No effect, because transformers only respond to the fundamental frequency',
+      'An automatic improvement in efficiency at higher harmonic orders',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'The BS EN 61000-3-2 standard limits harmonic currents for:',
     options: [
-      'Voltage distortion from harmonic-producing loads (flat-topping)',
+      'Only three-phase equipment rated above 75 A per phase',
       'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
-      'Increased eddy current and hysteresis losses, causing additional heating',
-      'A variable speed drive (VSD) with a six-pulse rectifier input',
+      'High-voltage transmission equipment operating above 11 kV',
+      'Only domestic appliances connected by a 13 A plug',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'An oscilloscope displays a waveform with a flattened top. This is most likely caused by:',
     options: [
-      'Increased eddy current and hysteresis losses, causing additional heating',
-      'Injecting equal and opposite harmonic currents to cancel the harmonics',
+      'A purely resistive load drawing a sinusoidal current',
+      'The supply frequency drifting below 50 Hz',
       'Voltage distortion from harmonic-producing loads (flat-topping)',
-      'A variable speed drive (VSD) with a six-pulse rectifier input',
+      'An open-circuit fault on the neutral conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: "The 'skin effect' at harmonic frequencies causes:",
     options: [
       'Increased effective AC resistance of conductors',
-      'Electronically via the HSE website or by post',
-      'The person responsible for the design of the installation',
-      'Only the person who applied them or authorised transfer',
+      'A reduction in conductor temperature under load',
+      'The current to flow only in the centre of the conductor',
+      'An increase in the conductor cross-sectional area',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'An active harmonic filter works by:',
     options: [
-      'Use an appropriately rated high-voltage differential probe or voltage attenuator',
+      'Disconnecting the load whenever harmonics exceed a set threshold',
       'Injecting equal and opposite harmonic currents to cancel the harmonics',
-      'Increased eddy current and hysteresis losses, causing additional heating',
-      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
+      'Increasing the supply voltage to dilute the harmonic content',
+      'Providing a tuned LC path that diverts a single fixed harmonic',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,9 +207,9 @@ const quizQuestions = [
     question:
       'When connecting an oscilloscope probe to measure a 400 V three-phase supply, you should:',
     options: [
-      'Increased eddy current and hysteresis losses, causing additional heating',
-      'Voltage distortion from harmonic-producing loads (flat-topping)',
-      'Injecting equal and opposite harmonic currents to cancel the harmonics',
+      'Connect the probe earth lead directly to one of the live phases',
+      'Use any standard x1 probe rated for low-voltage signals',
+      'Disconnect the oscilloscope mains earth before connecting',
       'Use an appropriately rated high-voltage differential probe or voltage attenuator',
     ],
     correctAnswer: 3,

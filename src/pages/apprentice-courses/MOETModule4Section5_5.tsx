@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'doc-purpose',
     question: 'Why is accurate test documentation essential in electrical maintenance?',
     options: [
-      "Covering at least equivalent to the insulation of a single-core non-sheathed cable, voltage rating at least 450/750 V — except where it forms part of a multicore cable or is run inside a metal enclosure used as the protective conductor.",
-      "Explain the hazard in terms they understand, describe what you are doing to keep them safe, provide an alternative route, and estimate when access will be restored",
-      "It provides a permanent record of the installation's condition, enables comparison between inspections, demonstrates compliance with regulations, and provides evidence of due diligence",
-      "The photovoltaic effect — semiconductor materials (typically crystalline silicon) generate a direct current (DC) when exposed to sunlight, as photons transfer energy to electrons in the material",
+      "It removes the need to carry out testing on any future periodic inspection.",
+      "It allows the technician to round and adjust results to convenient values.",
+      "It provides a permanent compliance record and baseline for comparison between inspections.",
+      "It guarantees the installation will never develop a fault in service.",
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'doc-actual-values',
     question: 'When recording test results, what is the correct approach?',
     options: [
-      'The temperature above the boiling point of the refrigerant in its gaseous state leaving the evaporator',
-      'Entry is prohibited — the space must be ventilated and retested before entry is considered',
-      'Use plain English, short sentences, visual aids and check understanding by asking them to summarise back',
-      'Always record the actual measured value, not a rounded or adjusted figure — if the reading is 127 MΩ, record 127 MΩ',
+      'Record only "pass" or "fail" against each test on the schedule.',
+      'Record the minimum acceptable value from BS 7671 rather than the reading.',
+      'Round every reading up to the nearest convenient whole number for clarity.',
+      'Always record the actual measured value, not a rounded or adjusted figure.',
     ],
     correctIndex: 3,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'doc-eicr',
     question: 'What is the purpose of an Electrical Installation Condition Report (EICR)?',
     options: [
-      'Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable',
-      'IET GN1 Section 7 — broader installation categories with worked examples for offices, retail, hospitality, education, healthcare and industrial.',
-      'A document provided by the manufacturer or supplier giving detailed information about a substance\\\\\\\\\\\\\\\'s hazards, safe handling, storage, and emergency measures',
-      'To record the condition of an existing installation, identify deficiencies, and classify them by severity using coding (C1, C2, C3, FI) to indicate the urgency of remedial action required',
+      'To certify a brand-new installation before it is first energised and handed over.',
+      'To record only the test results obtained for a single final circuit.',
+      'To set out the manufacturer\'s technical data and ratings for the consumer unit.',
+      'To record the condition of an existing installation and classify deficiencies by severity.',
     ],
     correctIndex: 3,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 4,
     question: 'A calibrated test instrument means:',
     options: [
-      'The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits',
-      'Calibration procedures, records, reference standard certificates, OOT investigations, interval reviews, training records, and equipment lists',
-      'Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions',
-      'The pulley is securely anchored, the rope is rated for the load weight, the area below is barriered off, and a banksman directs the operation',
+      'It has been verified against traceable reference standards, with a calibration certificate confirming its accuracy',
+      'It is brand new from the manufacturer and has never been used in the field before',
+      'It has passed a visual inspection and its test leads and probes are undamaged',
+      'It has a fully charged battery, a working display and an in-date PAT label',
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       'When a test result is at or near the minimum acceptable value specified in BS 7671, the technician should:',
     options: [
-      'Use the no-trip / 15mA / lower-current loop test mode (modern MFTs have this), accepting slightly reduced accuracy in exchange for non-tripping',
-      'Record the actual value, flag it as marginal, investigate the possible cause, and consider recommending remedial action — a value near the limit today may deteriorate to a fail before the next inspection',
-      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
+      'Adjust the reading slightly so that it clearly passes, then record the adjusted value',
+      'Record the actual value, flag it as marginal, investigate the cause and consider remedial action',
+      'Record only that the circuit passed the test, without noting the actual measured value',
+      'Ignore the marginal result, since a pass is a pass regardless of how close to the limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 6,
     question: 'Test records should be retained for:',
     options: [
-      "Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment",
-      "Consistently arriving when promised, completing work on time, and following through on every commitment — large and small",
-      "The lifetime of the installation — previous test records enable trend analysis and provide a complete history of the installation's condition over time",
-      "Until the next inspection or until the tower is dismantled, whichever is later; on construction sites at least 3 months",
+      "One year from the date the installation was first energised and certified",
+      "Only until the signed certificate has been handed over to the client",
+      "The lifetime of the installation, to enable trend analysis between inspections",
+      "Six months, after which the historic records may be safely destroyed",
     ],
     correctAnswer: 2,
     explanation:

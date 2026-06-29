@@ -15,63 +15,63 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What IP rating is required in Zone 1?',
-    options: ['IPX4 minimum', 'IPX5 minimum', 'IPX6 minimum', 'No specific requirement'],
+    question: 'What minimum degree of protection (IP rating) is required for equipment in bathroom Zone 1?',
+    options: ['IPX4', 'IPX5', 'IPX6', 'IPX7'],
     correctAnswer: 0,
     explanation:
-      'Zone 1 requires a minimum IP rating of IPX4 to protect against water splashing from any direction.',
+      'Equipment installed in bathroom Zones 1 and 2 must be at least IPX4, protecting against water splashing from any direction.',
   },
   {
     id: 2,
-    question: 'Is RCD protection needed in all zones?',
+    question: 'What level of RCD protection applies to circuits serving a bathroom?',
     options: [
-      'Only in Zones 0 and 1',
-      'Yes, RCD protection is required in all zones',
-      'Only in Zone 2',
-      'RCD protection is optional',
+      'Only circuits in Zones 0 and 1 need it',
+      'Only circuits in Zone 2 need it',
+      'All such circuits require 30 mA RCD protection',
+      'RCD protection is optional in bathrooms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'RCD protection with a rated residual operating current not exceeding 30mA is required for all circuits in bathroom locations.',
+      'Circuits serving a room containing a bath or shower require additional protection by a 30 mA RCD, regardless of the zone the equipment sits in.',
   },
   {
     id: 3,
-    question: 'Define SELV.',
+    question: 'What does the abbreviation SELV stand for?',
     options: [
       'Safety Enhanced Low Voltage',
-      'Separated Extra Low Voltage',
       'Standard Electrical Low Voltage',
       'Secure Emergency Low Voltage',
+      'Separated Extra-Low Voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'SELV stands for Separated Extra Low Voltage - an electrical system where the voltage cannot exceed 50V AC and is separated from other systems by protective separation.',
+      'SELV is Separated Extra-Low Voltage: a system at no more than 50 V AC that is electrically separated from earth and from other systems by protective separation.',
   },
   {
     id: 4,
     question: 'Where is Zone 0 located in a bathroom?',
     options: [
-      'Around the washbasin',
-      'The interior of the bath or shower tray',
-      '60cm around the bath',
-      'The entire bathroom floor',
+      'The area immediately around the washbasin',
+      'The interior of the bath tub or shower basin',
+      'A 60 cm band measured around the bath',
+      'The whole of the bathroom floor area',
     ],
     correctAnswer: 1,
     explanation:
-      'Zone 0 is the interior of the bath tub or shower tray where water is normally present and represents the highest risk area.',
+      'Zone 0 is the interior of the bath tub or shower basin, where water is normally present, making it the highest-risk zone.',
   },
   {
     id: 5,
-    question: 'Is bonding always required in domestic bathrooms?',
+    question: 'When is supplementary bonding required in a domestic bathroom?',
     options: [
-      'Only in large bathrooms',
-      'No, not if there are no extraneous conductive parts',
-      'Yes, always required',
-      'Only when metal pipes are present',
+      'Only in larger bathrooms',
+      'Whenever any metal pipework is present',
+      'It is required in every bathroom',
+      'Only where extraneous-conductive-parts are present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Supplementary equipotential bonding is only required if extraneous conductive parts are present in the bathroom location.',
+      'Supplementary equipotential bonding can be omitted where main bonding and 30 mA RCD protection are in place and no extraneous-conductive-parts enter the room.',
   },
 ];
 

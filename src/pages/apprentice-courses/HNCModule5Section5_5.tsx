@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of witness testing?',
     options: [
       'To provide independent verification that systems meet specification',
-      'Reducing reactive power demand and improving efficiency',
-      'Polarity testing with appropriate test instruments',
-      'Cable route coordination, power supply planning, and interface requirements',
+      'To reduce the contractor’s liability for defects after handover',
+      'To replace the need for formal commissioning documentation',
+      'To allow the client to negotiate a lower final account figure',
     ],
     correctIndex: 0,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What documentation should be prepared before a witness testing session?',
     options: [
-      'Very low resistance path between conductors that should be separate',
+      'A list of outstanding snagging items left for the next contractor',
       'Test procedure, acceptance criteria, equipment list, and blank results sheets',
-      'To verify protective conductor continuity from origin to each point',
-      'To allow for design changes and incomplete information',
+      'Only the manufacturer’s data sheets for the installed equipment',
+      'A summary of the project programme and the remaining payment schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of a witness test schedule?',
     options: [
-      'The site diary kept by whoever was supervising — that record carries weight in commercial disputes',
-      'Searchable, offsite backup, no physical storage, easy client copies',
+      'To record the actual measured results of each completed witness test',
+      'To list the calibration dates of all test instruments on site',
       'To programme testing dates and notify all parties of attendance requirements',
-      'Appropriate mechanical protection such as conduit or trunking',
+      'To allocate which contractor is responsible for each item of plant',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'During an emergency lighting witness test, the client representative arrives 30 minutes late. What should you do?',
     options: [
-      'Not apply Ci at all — it is already built into the Method 100–103 tabulated It values.',
-      'The competent person who carried out the inspection and testing',
-      'The point where escape routes terminate at a place of ultimate safety',
+      'Abandon the test and reschedule it for a later date with fresh notice',
+      'Restart the three-hour duration test from the beginning so they see it all',
+      'Continue without comment and have them sign as though they saw the full test',
       'Brief them on progress, allow them to witness the remaining duration test',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
       'What should be recorded if the client fails to attend a properly notified witness test?',
     options: [
       "Record non-attendance and proceed with the test as 'deemed witnessed'",
-      "EPC is based on calculated/design performance; DEC shows actual measured energy use",
-      "Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"The earth fault loop impedence was within acceptable limits.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      "Postpone the test indefinitely until the client confirms a new date",
+      "Carry out the test but leave the results unsigned and unrecorded",
+      "Treat the client's absence as automatic rejection of the installation",
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the role of hold points in commissioning and witness testing?',
     options: [
-      'Site supervisor, affected trades, and project coordinator',
-      'Motor overheating due to reduced cooling flow through pump',
+      'To mark the points where test instruments must be recalibrated',
+      'To identify where temporary supplies may be safely isolated',
       'To define stages where work must not proceed without client approval',
-      'For flexible applications and harsh environments',
+      'To record where additional access equipment will be needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What information must a witness test sign-off sheet contain?',
     options: [
-      'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
-      'Verify the generator is isolated and cannot start automatically',
-      'Networked systems provide real-time centralised monitoring with instant alerts',
+      'Only the date of the test and the name of the attending client',
+      'The contractor’s payment application reference and retention figure',
+      'A photograph of the installation and the manufacturer’s warranty details',
       'Test description, acceptance criteria, actual results, pass/fail status, and signatures',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
       'During witness testing, the specified acceptance criterion is 85% of rated output. The system achieves 83%. What should happen?',
     options: [
       'Record as failed, investigate cause, rectify, and re-test',
-      'Current flows briefly while the capacitor charges, then drops to zero.',
-      'Automatically reducing energy usage during peak demand periods',
-      'Continuous monitoring of system components and communication',
+      'Record as a pass because the result is within normal measurement tolerance',
+      'Adjust the acceptance criterion down to 83% to reflect site conditions',
+      'Pass the test but list the shortfall as a snagging item for later',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the significance of the Inspection Test Plan (ITP) in witness testing?',
     options: [
-      'Common applications like ring finals, radials, and lighting circuits',
+      'It is a daily record of which operatives attended site during commissioning',
       'It lists all tests required, inspection levels, hold points, and acceptance criteria',
-      'Immediately withdraw the harness from service, tag it as defective, and report it to their supervisor',
-      'Running at full speed, so the grease is distributed immediately',
+      'It is the manufacturer’s recommended maintenance schedule for the plant',
+      'It is the contractor’s method statement for working safely at height',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'After successful witness testing, what must be handed over to the client?',
     options: [
-      'Moisture — from condensation, water ingress, or high humidity',
-      '3-5 metres or as specified for the application',
+      'A verbal confirmation from the site manager that all tests passed',
+      'The contractor’s internal cost records for the commissioning works',
       'Signed test records, commissioning data, and certificates',
-      'Better for heavy cables and heat dissipation',
+      'Only the certificates, with the test results retained by the contractor',
     ],
     correctAnswer: 2,
     explanation:

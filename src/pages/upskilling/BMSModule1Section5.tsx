@@ -13,14 +13,14 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'iso-interop',
-    question: "What does ISO 16484 ensure between different manufacturers' BMS systems?",
+    question: "What does ISO 16484 primarily ensure between different manufacturers' BMS systems?",
     options: [
-      'Cost reduction and faster installation',
       'Interoperability and compatibility',
-      'Energy efficiency improvements',
-      'Reduced maintenance requirements',
+      'Lower equipment purchase costs',
+      'Improved energy efficiency ratings',
+      'Reduced ongoing maintenance requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "ISO 16484 ensures interoperability and compatibility between different manufacturers' systems, allowing them to work together seamlessly.",
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
     question: 'What does EN 15232 measure in relation to BMS?',
     options: [
       'Installation time and labour costs',
+      'System reliability and uptime percentages',
       'Energy performance and efficiency classification',
-      'System reliability and uptime',
       'User satisfaction and comfort levels',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'EN 15232 measures and classifies building energy performance through automation systems, using classes A through D.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'compliance-importance',
     question: 'Why is compliance with BMS standards important for electricians?',
     options: [
-      'To increase project costs and complexity',
-      'To ensure legal protection, professional credibility, and client confidence',
-      'To limit competition from other electricians',
-      'To reduce the need for ongoing training',
+      'It increases project cost and complexity for clients',
+      'It limits competition from other electricians',
+      'It reduces the need for ongoing professional training',
+      'It provides legal protection, credibility, and client confidence',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Standards compliance provides legal protection, builds professional credibility, and ensures client confidence in your work.',
   },

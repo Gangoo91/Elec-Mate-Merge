@@ -75,10 +75,10 @@ export const riskAssessmentQuizQuestions: RiskAssessmentQuizQuestion[] = [
     id: 7,
     question: 'Why should electricians liaise with the fire risk assessor during design?',
     options: [
-      'To share coffee breaks',
+      'To transfer legal responsibility onto the assessor',
       'To ensure the lighting design matches the assessed risks and findings',
-      'To reduce installation costs',
-      'To avoid doing a site survey',
+      'To shorten the commissioning and testing schedule',
+      'To let the assessor select the light fittings to be used',
     ],
     correct: 1,
     explanation:
@@ -109,10 +109,10 @@ export const riskAssessmentQuizQuestions: RiskAssessmentQuizQuestion[] = [
     id: 10,
     question: 'What was the compliance issue in the Derby warehouse case study?',
     options: [
-      'The lights were the wrong colour',
+      'Self-test luminaires were fitted instead of central-battery units',
       'A 1-hour system was installed in a high-risk building requiring 3-hour duration',
-      'There were too many emergency lights',
-      'The logbook was printed in the wrong font',
+      'Exit signs were mounted slightly too high above the doors',
+      'Maintained luminaires were used instead of non-maintained ones',
     ],
     correct: 1,
     explanation:

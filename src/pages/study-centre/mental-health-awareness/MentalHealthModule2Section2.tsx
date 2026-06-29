@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'According to the Yerkes-Dodson Law (performance curve), what happens when pressure increases beyond the optimal point?',
     options: [
+      'Performance begins to decline as pressure turns into distress',
       'Performance continues to improve indefinitely',
       'Performance plateaus and stays steady at maximum efficiency',
-      'Performance begins to decline as pressure turns into distress',
       "Pressure has no relationship with performance — they're unrelated",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The Yerkes-Dodson Law shows that performance improves with pressure up to an optimal point (where you're challenged but not overwhelmed), then begins to decline as pressure becomes excessive stress (distress). Too little pressure leads to boredom and underperformance. Too much pressure leads to anxiety, mistakes, and declining performance. The sweet spot is in the middle.",
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'hse-standards-1',
     question: "The HSE's Management Standard for 'Control' is about:",
     options: [
-      'How much your manager controls and monitors your every move',
-      'Controlling your emotions and not showing stress at work',
-      'How much say and influence you have over your work and how you do it',
-      'Keeping control of costs and budgets on projects',
+      'How tightly your manager controls and monitors your every move',
+      'Controlling your own emotions and not showing stress at work',
+      'Keeping control of project costs and budgets on the job',
+      'How much say and influence you have over your own work',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "The HSE's 'Control' standard is about employee autonomy — how much say people have over their work, how it's done, work patterns, and decision-making. Low control (being micromanaged, having no input, rigid rules) increases stress. High control (autonomy, flexibility, being trusted to make decisions) reduces stress and improves wellbeing. Research consistently shows that lack of control at work is one of the strongest predictors of stress and mental ill health.",
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'The Yerkes-Dodson Law (performance curve) demonstrates that:',
     options: [
-      'More pressure always leads to better performance',
-      'There is an optimal level of pressure for peak performance — too little or too much reduces effectiveness',
+      'There is an optimal level of pressure — too little or too much reduces it',
+      'More pressure always leads to steadily better performance',
       'Pressure has no relationship with performance in construction work',
-      "Only people who can't handle pressure experience stress",
+      "Only people who can't handle pressure ever experience real stress",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Yerkes-Dodson Law shows an inverted U-shaped relationship between pressure and performance. At low pressure, we're bored and underperforming. At moderate pressure (the optimal zone), we're challenged and performing at our best. At high pressure (distress zone), performance declines due to anxiety, overwhelm, and impaired functioning. The key insight is that some pressure is good — but there's a tipping point.",
   },
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'Eustress refers to:',
     options: [
-      'The negative, harmful type of stress that makes you ill',
-      'Positive, motivating pressure that enhances performance and feels challenging but manageable',
-      'A medical condition requiring treatment',
-      'Stress that only affects Europeans',
+      'The negative, harmful type of stress that eventually makes you ill',
+      'Positive, motivating pressure that feels challenging but manageable',
+      'A diagnosable medical condition that always requires treatment',
+      'A form of stress that only affects people living in Europe',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     question:
       "In the Stress Container Model (Brabban & Turkington), what are 'unhelpful coping strategies'?",
     options: [
-      'Strategies that make you feel better immediately but worsen the problem long-term, such as alcohol, avoidance, and isolation',
-      'Strategies recommended by mental health professionals',
-      'Any coping strategy that involves asking for help',
-      'Strategies that take too much time or effort',
+      'Quick-relief strategies that worsen things long-term, like alcohol or avoidance',
+      'Coping strategies that are recommended by mental health professionals',
+      'Any coping strategy that involves asking another person for help',
+      'Coping strategies that take up too much of your time or effort',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: "The HSE's Management Standard for 'Demands' covers:",
     options: [
-      'How demanding your manager is as a person',
-      "Workload, work patterns, and the work environment — ensuring they're reasonable and manageable",
-      'Only physical demands like lifting and manual handling',
-      'Demanding that employees work harder to meet deadlines',
+      'How demanding and difficult your manager is as a person',
+      'Only the physical demands, such as lifting and manual handling',
+      'Demanding that employees work harder in order to hit deadlines',
+      'Workload, work patterns and environment — kept reasonable and manageable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The HSE's 'Demands' standard addresses issues like workload (is it achievable?), work patterns (hours, shifts, breaks), and the work environment (noise, temperature, hazards). The goal is to ensure demands are reasonable and that employees can cope. Indicators of good practice include realistic deadlines, adequate resources, manageable workload, and workers' concerns about demands being listened to and addressed.",
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: "According to the HSE standards, 'Support' at work should include:",
     options: [
-      'Only support from your immediate manager',
-      'Support from the organisation, line management, and colleagues — including emotional support, resources, and clear expectations',
-      'Financial support in the form of bonuses',
-      "Support is not the employer's responsibility — it should come from family",
+      'Only support coming from your own immediate line manager',
+      'Financial support provided in the form of bonuses and pay rises',
+      "Support that is not the employer's job — it should come from family",
+      'Support from the organisation, managers and colleagues — emotional and practical',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The HSE's 'Support' standard covers three areas: organisational support (policies, procedures, resources), line management support (approachable managers who listen and support), and colleague support (a supportive team culture). Good support includes having systems in place to respond to concerns, managers who are accessible and supportive, and colleagues who help each other. Lack of support — particularly from management — is a major source of work-related stress.",
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 7,
     question: 'Common stressors specific to construction work include:',
     options: [
-      'Working in comfortable office environments with regular hours',
-      'Job security, stable income, and working close to home',
-      'Job insecurity (especially for CIS/self-employed), time away from home, deadline pressure, physical demands, and a culture where asking for help is seen as weakness',
-      'Low physical demands and minimal safety concerns',
+      'Working in a comfortable office environment with regular nine-to-five hours',
+      'Strong job security, a stable income, and always working close to home',
+      'Job insecurity, time away from home, deadline pressure and help-seeking stigma',
+      'Consistently low physical demands and very few safety concerns on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 8,
     question: 'When does stress become genuinely dangerous and require immediate action?',
     options: [
-      'As soon as someone mentions feeling stressed about anything',
-      'When stress is affecting concentration, judgement, and safety on site, or when someone expresses thoughts of self-harm or suicide',
-      "Stress is never dangerous — it's just a normal part of life",
-      'Only when someone has a diagnosed mental health condition',
+      'As soon as someone so much as mentions feeling stressed about anything',
+      'When it impairs concentration and safety, or someone voices self-harm thoughts',
+      "Stress is never genuinely dangerous — it is just a normal part of life",
+      'Only when the person already has a formally diagnosed mental health condition',
     ],
     correctAnswer: 1,
     explanation:

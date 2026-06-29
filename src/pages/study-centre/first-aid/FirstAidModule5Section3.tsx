@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'A colleague has swallowed a corrosive cleaning chemical on site. They are conscious and asking you to help them vomit. What is the correct action?',
     options: [
-      'Help them vomit immediately to remove the chemical from their stomach',
-      'Give them a large glass of milk to dilute the chemical, then induce vomiting',
-      'Do NOT induce vomiting — call 999, try to identify the substance, and take the container or SDS to hospital',
-      'Give them activated charcoal to absorb the chemical',
+      'Do NOT induce vomiting — call 999 and identify the substance',
+      'Help them vomit immediately to clear the chemical from their stomach',
+      'Give a large glass of milk to dilute the chemical, then induce vomiting',
+      'Give activated charcoal to absorb the chemical before it is absorbed',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'You must NEVER induce vomiting after ingestion of a corrosive substance. The chemical has already burned the oesophagus on the way down — vomiting will cause it to burn the oesophagus a second time on the way back up. There is also a serious risk of aspiration (inhaling vomit into the lungs). Call 999 immediately, try to identify what was swallowed, how much, and when, and take the container or Safety Data Sheet to hospital with the casualty.',
   },
@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     question:
       'You find a colleague collapsed in a plant room that smells strongly of gas. What is your FIRST action?',
     options: [
-      'Rush in and drag them out immediately',
-      'Call 999 from outside the room, do NOT enter without appropriate RPE, and prevent others from entering',
-      'Open a window and then enter to help',
-      'Start CPR where they are lying',
+      'Rush in and drag them out to fresh air immediately',
+      'Call 999 from outside — do NOT enter without RPE',
+      'Open a window from the doorway, then enter to help',
+      'Start CPR where they are lying inside the room',
     ],
     correctIndex: 1,
     explanation:
@@ -94,12 +94,12 @@ const quizQuestions = [
     question:
       "Under COSHH Regulations 2002, which of the following is an employer's duty regarding hazardous substances?",
     options: [
-      'Provide hazardous substances free of charge to all employees',
       'Assess the risks from hazardous substances and prevent or control exposure',
+      'Provide hazardous substances free of charge to all employees',
       'Allow employees to choose their own level of protection',
       'Report all hazardous substance use to the HSE monthly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'COSHH requires employers to assess the risks from hazardous substances in the workplace and either prevent exposure entirely or, where this is not reasonably practicable, adequately control it. This includes identifying hazardous substances, conducting risk assessments, implementing control measures (following the hierarchy of control), providing information and training to employees, and carrying out health surveillance where required.',
   },
@@ -108,9 +108,9 @@ const quizQuestions = [
     question:
       'A casualty has swallowed an unknown chemical. Their lips and mouth show signs of chemical burns. What first aid should you provide?',
     options: [
-      'Induce vomiting immediately to remove the chemical',
-      'Give them a large glass of water to drink quickly',
-      'Do NOT induce vomiting — if lips and mouth are burnt (suggesting a corrosive), give small sips of water or milk to dilute, call 999, and take the container to hospital',
+      'Induce vomiting immediately to remove the corrosive chemical',
+      'Give them a large glass of water to drink down quickly',
+      'Do NOT induce vomiting — give small sips of water or milk and call 999',
       'Give them bread to absorb the chemical in their stomach',
     ],
     correctAnswer: 2,
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does Section 4 of a Safety Data Sheet provide?',
     options: [
-      'Physical and chemical properties of the substance',
-      'Transport and storage requirements',
-      'First aid measures for inhalation, skin contact, eye contact, and ingestion',
-      'Environmental disposal procedures',
+      'Physical and chemical properties such as boiling point and pH',
+      'Transport classification and safe storage requirements',
+      'Environmental disposal and waste handling procedures',
+      'First aid measures for inhalation, skin, eye contact, and ingestion',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 4 of the Safety Data Sheet is dedicated to First Aid Measures. It provides specific first aid information for each route of exposure: inhalation, skin contact, eye contact, and ingestion. It also describes the most important symptoms and effects (both acute and delayed) and indicates when immediate medical attention is needed. First aiders should be familiar with Section 4 for all hazardous substances used on their site.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'You suspect a colleague is suffering from carbon monoxide poisoning in an enclosed plant room. What is the correct sequence of actions?',
     options: [
-      'Enter the room, drag them out, then call 999',
-      'Ensure your own safety first — do NOT enter without RPE, call 999, remove the casualty to fresh air only if safe to do so, monitor and be prepared for CPR',
+      'Enter the room, drag them out to fresh air, then call 999',
+      'Your safety first — do NOT enter without RPE, call 999, remove only if safe',
       'Open all windows and doors, then enter to perform CPR in the room',
-      'Call the gas company and wait for them to arrive before taking any action',
+      'Call the gas company and wait for them to arrive before acting',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'A worker has got a solvent-based cleaning chemical on their forearm. The skin is red and irritated. What is the correct first aid?',
     options: [
-      'Apply a neutralising chemical to counteract the solvent',
-      'Wipe the area with a dry cloth and apply burn cream',
-      'Remove contaminated clothing, flush the affected skin with copious running water for at least 20 minutes, and note the substance for medical staff',
-      'Cover the area with cling film immediately without washing',
+      'Apply a neutralising chemical to counteract the solvent on the skin',
+      'Wipe the area with a dry cloth and apply burn cream straight away',
+      'Cover the area with cling film immediately without washing first',
+      'Remove contaminated clothing and flush the skin with water for 20 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For chemical contact with the skin, the correct first aid is to remove contaminated clothing (wearing gloves to protect yourself) and flush the affected area with copious running water for at least 20 minutes. Do NOT attempt to neutralise the substance — neutralisation reactions generate heat and can worsen the injury. Note the name of the substance so that medical staff can provide specific treatment. Check the SDS for any additional guidance.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'A person on site is found unconscious with pinpoint pupils and very slow breathing. A colleague mentions they saw the person acting strangely earlier. What should a first aider do?',
     options: [
+      'Call 999, open the airway, give rescue breaths and be ready for CPR',
       'Assume drug use and wait for them to recover on their own',
-      'Call 999, open the airway, provide rescue breaths if breathing is inadequate, be prepared for CPR, and place in the recovery position if breathing improves',
-      'Give them strong coffee to wake them up',
-      'Search their pockets for medication before calling 999',
+      'Give them strong black coffee to try to wake them up',
+      'Search their pockets for medication or drugs before calling 999',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Pinpoint pupils and slow or stopped breathing are classic signs of opioid overdose. Regardless of the cause, the first aider must treat the symptoms: call 999 immediately, open the airway, and if breathing is inadequate or absent, provide rescue breaths and be prepared for full CPR. If the person is breathing, place them in the recovery position and monitor continuously. Do not judge — the first aider's role is to preserve life, not to determine the cause of the emergency. Paramedics will provide specific treatment on arrival.",
   },

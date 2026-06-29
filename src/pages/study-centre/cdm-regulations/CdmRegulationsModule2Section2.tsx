@@ -13,12 +13,12 @@ const quickCheckQuestions = [
     id: 'pd-appointment',
     question: 'When must a client appoint a Principal Designer under CDM 2015?',
     options: [
-      'On every construction project regardless of size',
       'When the project involves more than one contractor',
+      'On every construction project regardless of size',
       'Only when the project exceeds £500,000 in value',
       'Only when the HSE issues a formal instruction',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under Regulation 5 of CDM 2015, the client must appoint a Principal Designer when the project involves, or is likely to involve, more than one contractor. The PD takes control of the pre-construction phase and coordinates health and safety in design.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'What must the Principal Designer do with the Health & Safety File at project completion?',
     options: [
       'Archive it with the HSE for future reference',
-      'Pass it to the client for retention and future use',
       'Destroy it once all works are signed off',
       'Keep it in their own records for seven years',
+      'Pass it to the client for retention and future use',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Principal Designer must ensure the Health & Safety File is reviewed, updated, and passed to the client at project completion. The client must then retain it and make it available to anyone who needs it for future construction work, maintenance, or alterations on the structure.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'Under CDM 2015, who must the Principal Designer be?',
     options: [
-      'Any competent person appointed by the client',
       'A designer (individual or organisation) with the ability to control the pre-construction phase',
+      'Any competent person appointed by the client',
       'A certified CDM Coordinator registered with the HSE',
       'The most senior architect on the project team',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Principal Designer must be a designer — either an individual or an organisation that carries out design work — and must have the skills, knowledge, experience, and organisational capability to fulfil the role. They must be able to exercise control over the pre-construction phase of the project.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: "What is the Principal Designer's primary duty during the pre-construction phase?",
     options: [
       'To carry out all the design work personally',
-      'To plan, manage, monitor, and coordinate health and safety in the pre-construction phase',
       'To prepare the construction phase plan',
       'To supervise workers on site during excavation works',
+      'To plan, manage, monitor, and coordinate health and safety in the pre-construction phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The PD's primary duty is to plan, manage, monitor, and coordinate health and safety matters during the pre-construction phase. This includes ensuring that designers cooperate, that risks are identified and eliminated or reduced through design, and that pre-construction information is prepared and distributed.",
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       'According to the General Principles of Prevention (Schedule 1), which step comes first in the risk control hierarchy?',
     options: [
       'Provide collective protective measures',
-      'Give appropriate instructions and information to workers',
       'Avoid risks (eliminate the hazard entirely)',
+      'Give appropriate instructions and information to workers',
       'Adapt the work to the individual',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The first principle in Schedule 1 is to avoid risks entirely — that is, to eliminate the hazard through design. If a hazard can be designed out completely, no further control measures are needed. Only when elimination is not reasonably practicable should the PD move to the next steps in the hierarchy.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following must be included in the Health & Safety File?',
     options: [
-      "The project's financial accounts and cost records",
       'As-built drawings, material specifications, and maintenance procedures',
+      "The project's financial accounts and cost records",
       'Personal performance reviews of the design team',
       'Marketing brochures for the completed building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Health & Safety File must contain information needed for future construction work, maintenance, refurbishment, or demolition. This includes as-built drawings, specifications of materials used (including hazardous substances), maintenance schedules and procedures, and details of any structural arrangements or design features that affect safety.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
       'How does the CDM 2015 Principal Designer role differ from the CDM 2007 CDM Coordinator?',
     options: [
       'The PD has a purely advisory role, while the CDM-C had legal duties',
-      'The PD must be a designer with control over pre-construction design, while the CDM-C could be a non-designer advisor',
       'The PD only works during the construction phase, while the CDM-C worked pre-construction',
       'There is no difference — the roles are identical with a new name',
+      'The PD must be a designer with control over pre-construction design, while the CDM-C could be a non-designer advisor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The key difference is that the Principal Designer must be a designer (someone who carries out design work) and must have direct control over the pre-construction phase. The CDM 2007 Coordinator could be a non-designer advisor with a more administrative and advisory function. CDM 2015 deliberately shifted responsibility to someone who could influence design decisions directly.',
   },

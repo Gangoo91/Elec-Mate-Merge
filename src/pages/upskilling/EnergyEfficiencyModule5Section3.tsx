@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     question:
       'What information should be included in a well-structured event log entry for an electrical fault?',
     options: [
-      'Only the time and date of the event',
-      'Just the equipment name and fault type',
-      'Timestamp, equipment ID, measured values, threshold exceeded, and recommended action',
-      'The name of the operator on duty',
+      'The time and date the operator first noticed the event',
+      'The equipment name and the broad category of fault',
+      'Timestamp, equipment ID, measured values, threshold and recommended action',
+      'The name and shift pattern of the operator on duty',
     ],
     correctIndex: 2,
     explanation:
@@ -77,8 +77,8 @@ const quizQuestions = [
     id: 1,
     question:
       'For a 100 kW motor with baseline current of 120A and standard deviation of 5A, what would be an appropriate warning threshold using the 2-sigma rule?',
-    options: ['125A', '130A', '135A', '140A'],
-    correctAnswer: 1,
+    options: ['130A', '125A', '135A', '140A'],
+    correctAnswer: 0,
     explanation:
       'Warning threshold = Mean + 2σ = 120A + (2 × 5A) = 130A. This captures 95.4% of normal variation.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary purpose of alert escalation in electrical monitoring systems?',
     options: [
-      'To increase the volume of all alerts',
+      'To increase the notification volume of all alerts',
       'To ensure critical issues reach appropriate personnel when initial responses fail',
-      'To reduce the number of alerts generated',
-      'To automatically fix all detected faults',
+      'To reduce the total number of alerts generated',
+      'To automatically resolve all detected faults',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,11 +101,11 @@ const quizQuestions = [
       'Which type of event logging approach provides the most useful data for trend analysis?',
     options: [
       'Logging only when thresholds are exceeded',
+      'Manual logging recorded by operators',
       'Continuous logging at regular intervals with event-triggered detailed capture',
-      'Manual logging by operators',
-      'Logging only during business hours',
+      'Logging only during normal business hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Combining continuous baseline logging with detailed event-triggered capture provides both the trend data needed for long-term analysis and the high-resolution data needed to investigate specific incidents.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
       'What is the recommended approach to avoid alert fatigue in energy monitoring systems?',
     options: [
       'Disable all non-critical alerts',
-      'Send all alerts to a single person',
-      'Implement tiered severity levels with appropriate routing and suppression rules',
+      'Send every alert to a single person',
       'Only check alerts once per week',
+      'Implement tiered severity levels with appropriate routing and suppression rules',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Tiered severity levels ensure the right people receive the right alerts, while suppression rules prevent cascading alerts and reduce unnecessary notifications.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'Predictive analytics in electrical monitoring primarily uses which technique to forecast failures?',
     options: [
-      'Random sampling of equipment',
+      'Random sampling of equipment condition',
       'Machine learning algorithms analysing historical patterns and trends',
-      'Manual inspection schedules',
-      'Fixed time-based replacement',
+      'Fixed manual inspection schedules',
+      'Fixed time-based component replacement',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,11 +142,11 @@ const quizQuestions = [
     question: 'When integrating alerts with a CMMS, what automatic action is most valuable?',
     options: [
       'Sending email notifications only',
+      'Immediately shutting down all equipment',
       'Automatic work order generation with priority assignment',
-      'Shutting down all equipment immediately',
-      'Deleting old maintenance records',
+      'Deleting older maintenance records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Automatic work order generation ensures that alerts result in tracked, prioritised maintenance actions rather than being lost or forgotten.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 7,
     question: "What does 'dead-band' or hysteresis in alert configuration prevent?",
     options: [
-      'All alerts from being generated',
+      'All alerts from being generated at all',
+      'Equipment from being continuously monitored',
       'Rapid on-off cycling of alerts when values hover near threshold',
-      'Equipment from being monitored',
       'Maintenance personnel from receiving notifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dead-band creates a gap between alert activation and clearing thresholds, preventing rapid cycling when values fluctuate around a single threshold point.',
   },
@@ -167,8 +167,8 @@ const quizQuestions = [
     id: 8,
     question:
       'For voltage monitoring on a 400V system, what percentage deviation typically warrants a critical alert?',
-    options: ['±1%', '±3%', '±5%', '±10% or greater'],
-    correctAnswer: 3,
+    options: ['±10% or greater', '±1%', '±3%', '±5%'],
+    correctAnswer: 0,
     explanation:
       'Voltage deviations of ±10% or greater indicate serious supply problems that could damage equipment or cause operational issues, warranting critical priority.',
   },
@@ -177,11 +177,11 @@ const quizQuestions = [
     question: 'What is the benefit of correlating multiple parameter alerts on the same equipment?',
     options: [
       'It reduces the total number of sensors needed',
+      'It eliminates the need for routine maintenance',
       'It helps identify root causes and distinguish real faults from sensor errors',
-      'It eliminates the need for maintenance',
-      'It makes the system less complex',
+      'It makes the monitoring system less complex',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When multiple related parameters (current, temperature, vibration) all indicate a problem simultaneously, it confirms a genuine issue. Single-parameter anomalies may indicate sensor faults rather than equipment problems.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'What retention period is typically recommended for detailed electrical event logs in industrial facilities?',
     options: [
-      '24 hours',
-      '1 week',
+      '24 hours only',
       '1-3 years minimum, with summary data retained longer',
+      '1 week only',
       'Logs should never be retained',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Retaining 1-3 years of detailed logs enables trend analysis across seasons and operating cycles, while summary data retained longer supports long-term equipment lifecycle analysis.',
   },

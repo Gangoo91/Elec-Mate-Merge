@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the sequence of operation in electrical circuits?',
     options: [
-      'Record the failure, rectify the issue, and reschedule the specific test',
+      'The order in which test results are recorded on a schedule',
       'The order in which current flows and components function',
-      'High circuit impedance that may affect device operation',
-      'Advance payments towards next year\\\\\\\'s tax bill based on the previous year',
+      'The maximum current a circuit can carry before tripping',
+      'The total resistance measured around a complete circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'In a simple lighting circuit, what happens if the neutral conductor becomes loose?',
     options: [
-      'Verified against designer\\\\\\\'s specification',
-      'Roger Fisher, William Ury and Bruce Patton',
-      'Circuit will not function as intended',
-      '230V (equal sources in parallel)',
+      'The lamp glows brighter than normal',
+      'The protective device trips immediately',
+      'The circuit will not function as intended',
+      'The supply voltage rises at the lamp',
     ],
     correctIndex: 2,
     explanation:
@@ -59,10 +59,10 @@ const Module7Section3_2 = () => {
       id: 1,
       question: 'What does sequence of operation mean in electrical circuits?',
       options: [
-        'Manual handling risks, storage requirements, and access routes',
+        'The order in which test instruments are connected',
         'The order in which current flows and devices interact',
-        'To reduce reflections by eliminating air gaps',
-        '50 percent reduction (3-4 x FLC instead of 6-8 x).',
+        'The order in which cables are installed on site',
+        'The order in which faults are reported and logged',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,10 +72,10 @@ const Module7Section3_2 = () => {
       id: 2,
       question: 'Why is sequence of operation important for fault finding?',
       options: [
-        'Minimise and batch shallow work; protect time for deep work',
-        'Test location, values, device ratings, and compliance status',
+        'It allows several circuits to be tested at the same time',
+        'It removes the need to safely isolate the circuit',
         'It helps electricians logically identify where faults occur',
-        'Clear speech, appropriate technical level, and confirmation of understanding',
+        'It guarantees the fault will be a faulty component',
       ],
       correctAnswer: 2,
       explanation:
@@ -85,9 +85,9 @@ const Module7Section3_2 = () => {
       id: 3,
       question: 'In a simple lighting circuit, what is the basic sequence of operation?',
       options: [
-        'Operating the system step by step through its normal sequence and observing where it fails',
-        'When work is performed by registered competent person scheme members',
-        'DC provides stable readings without capacitive effects',
+        'Lamp → Switch → Protective Device → Distribution Board → Supply',
+        'Switch → Lamp → Neutral Return → Protective Device → Supply',
+        'Distribution Board → Lamp → Switch → Protective Device → Neutral Return',
         'Distribution Board → Protective Device → Switch → Lamp → Neutral Return',
       ],
       correctAnswer: 3,
@@ -99,9 +99,9 @@ const Module7Section3_2 = () => {
       question: 'What happens if the neutral conductor is loose in this sequence?',
       options: [
         'The circuit will not function as current cannot return properly',
-        'Productivity, profitability, and customer satisfaction',
-        'Fire performance classification and CE marking',
-        'An event that had the potential to cause injury or damage but did not',
+        'The lamp will glow more brightly than normal',
+        'The protective device will trip on overload',
+        'The supply voltage at the board will increase',
       ],
       correctAnswer: 0,
       explanation:
@@ -111,10 +111,10 @@ const Module7Section3_2 = () => {
       id: 5,
       question: 'How can an electrician use sequence of operation to locate a fault?',
       options: [
-        'Daylight, thermal comfort, and energy credits',
+        'By replacing each component in turn until it works',
         'By mentally tracing the current path and testing each stage',
-        'The likelihood that a hazard will cause harm and the severity of that harm',
-        'Quantity, quality, and compliance with specifications',
+        'By measuring the supply voltage at the origin only',
+        'By comparing the circuit with the wiring diagram alone',
       ],
       correctAnswer: 1,
       explanation:
@@ -122,13 +122,12 @@ const Module7Section3_2 = () => {
     },
     {
       id: 6,
-      question:
-        'True or False: Sequence of operation is only relevant in simple domestic circuits.',
+      question: 'Is sequence of operation only relevant in simple domestic circuits?',
       options: [
-        'Want to support colleagues and negotiate on industry issues',
-        'Online monitoring in the PLC programming software to view programme execution in real time',
-        'False - applies to all circuits from simple to complex industrial systems',
-        'Full conversion to electrical, retiming, and retransmission as optical',
+        'Yes, complex circuits are tested as a single block',
+        'Yes, industrial circuits rely only on the wiring diagram',
+        'No, it applies to all circuits from simple to complex industrial systems',
+        'No, but it is only useful on three-phase circuits',
       ],
       correctAnswer: 2,
       explanation:
@@ -138,9 +137,9 @@ const Module7Section3_2 = () => {
       id: 7,
       question: 'Give one example of sequence of operation in an industrial circuit.',
       options: [
-        'Removed safely from the platform and lowered to the ground',
-        'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
-        'A brief verbal review of the method statement at the work location before starting',
+        'Recording test results on a schedule of test results',
+        'Measuring insulation resistance between all conductors',
+        'Carrying out a visual inspection before energising',
         'Motor control with safety interlocks, overload protection, and start/stop circuits',
       ],
       correctAnswer: 3,
@@ -152,9 +151,9 @@ const Module7Section3_2 = () => {
       question: 'What common mistake can occur if sequence of operation is not considered?',
       options: [
         'Replacing working components instead of finding the real fault',
-        'Specific reference conditions including 30°C ambient',
-        'Coefficient of Performance - ratio of heat output to electrical input',
-        'Whether the aid matches the specific task requirements and load characteristics',
+        'Recording too many readings on the test schedule',
+        'Isolating the circuit before starting any testing',
+        'Using a low-resistance ohmmeter for continuity',
       ],
       correctAnswer: 0,
       explanation:
@@ -164,10 +163,10 @@ const Module7Section3_2 = () => {
       id: 9,
       question: 'In the real-world example, what fault caused the light not to work?',
       options: [
-        'Connecting parts to same potential',
+        'A blown lamp in the fitting',
         'Loose line conductor at the switch',
-        'Health and Safety Executive (HSE)',
-        'Phase and neutral connections are reversed',
+        'A tripped protective device at the board',
+        'A short circuit at the lamp holder',
       ],
       correctAnswer: 1,
       explanation:
@@ -178,10 +177,10 @@ const Module7Section3_2 = () => {
       question:
         'Why did understanding the sequence of operation save replacing the motor in the factory example?',
       options: [
-        'Adequate illumination reduces fear, maintains orientation, and enables rational evacuation',
-        'Power that oscillates between source and load without doing useful work',
+        'Testing showed the supply voltage was simply too low',
+        'Testing confirmed the motor windings had failed open',
         'Testing the sequence revealed the overload relay had tripped, not motor failure',
-        'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
+        'Testing proved the start button contacts had welded shut',
       ],
       correctAnswer: 2,
       explanation:

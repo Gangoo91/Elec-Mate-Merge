@@ -41,10 +41,10 @@ const checks = [
     question:
       'A customer wants you to change their consumer unit. The cut-out has a wire-and-lead seal across the fuse holder. What does that seal mean legally and operationally?',
     options: [
-      'Live polarity confirmation at the CU (using an approved voltage indicator) plus Ze measurement at the MET. Live polarity confirms the supply is correctly connected (meter tails not swapped); Ze gives you the supply-side impedance for Zs verification.',
-      'Restore the system to its normal operational state, confirm all zones are active and monitoring, and notify the alarm receiving centre (ARC) that testing is complete',
-      'It is a legal device. Breaking it without DNO authority is a criminal offence (potentially abstraction under the Theft Act 1968 if supply is unmetered) and a breach of every electrical scheme membership condition.',
-      'The client must now notify the HSE by submitting an F10 as the project has become notifiable, and appoint a principal designer and principal contractor if not already done',
+      'It shows the meter has been calibrated, so you may cut it once the customer signs a waiver authorising the work.',
+      'It is a manufacturer’s tamper indicator only, carrying no legal weight provided you replace it like-for-like afterwards.',
+      'It is a legal device — breaking it without DNO authority is an offence and a breach of every scheme membership condition.',
+      'It marks the fuse as the customer’s property, so you are free to pull it for safe isolation before downstream work.',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const checks = [
     question:
       'Who owns the meter at a typical UK domestic property?',
     options: [
-      'Factual: "The learner did not verify isolation with a voltage indicator." Judgemental: "The learner was careless and lazy."',
-      'To provide a secondary means of lowering the platform if the primary controls fail',
+      'The Distribution Network Operator (DNO) — they own everything up to and including the meter.',
+      'The customer — the meter sits on their side of the cut-out, so it is their asset.',
       'The Meter Operator (MOP) — a company contracted by the energy supplier to install and maintain the meter.',
-      'It demonstrates leadership capability, which is required for ECS Technician grade and management roles',
+      'The electrician who installed the consumer unit, as part of the original certification.',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     question:
       'A customer wants their existing 60 A cut-out fuse upgraded to 100 A so they can install a 7 kW EV charger. Who do you call and why?',
     options: [
-      'Proving before use confirms the indicator is working correctly (it will detect voltage); proving after use confirms it was still working when the \\\\\\\'dead\\\\\\\' reading was taken — this eliminates the risk of relying on a faulty indicator that falsely shows \\\\\\\'dead\\\\\\\'',
-      'The DNO. The cut-out fuse rating is determined by the declared maximum demand, the service cable capacity and the supply infrastructure — all DNO assets. The DNO will assess and either uprate or refuse.',
-      'Harmonic distortion limits at the point of common coupling — limits on individual harmonic orders and total harmonic distortion (THD) for connections to the public network.',
-      'Yes — workers must cooperate with their employer and others, report anything that endangers health and safety, and use any protective equipment provided',
+      'The energy supplier — they set the cut-out fuse rating as part of the tariff agreement on the account.',
+      'The DNO — the cut-out fuse rating is a DNO asset they assess against the supply, and they uprate or refuse.',
+      'The Meter Operator (MOP) — the cut-out fuse is part of the metering installation the MOP maintains.',
+      'No one — you can simply fit a 100 A fuse yourself, since the cut-out is the customer’s own asset.',
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'In the meter cabinet of a typical UK domestic property, the boundary between DNO-owned kit and MOP-owned kit is at:',
     options: [
-      'To provide electrical isolation between primary and secondary with no voltage change',
+      'The load-side terminals of the meter — everything beyond the meter is the customer’s.',
       'The load-side terminals of the cut-out — the meter-side tails (cut-out to meter) and the meter itself are MOP-owned.',
-      'Contain the spill, apply appropriate absorbent material from the spill kit, and dispose of waste correctly',
-      'It is a non-exhaustive list. Inspectors must check additional items appropriate to the installation in addition to those listed.',
+      'The supplier earth terminal — the DNO owns everything up to and including the meter.',
+      'The main isolator in the consumer unit — the DNO owns everything up to that point.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     question:
       'You break the seal on a cut-out fuse without authority and pull the fuse to safely isolate for a CU swap. What is the realistic worst-case professional consequence?',
     options: [
-      'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
-      'Removal from your electrical scheme membership (NICEIC / NAPIT / ELECSA / SELECT), potential criminal prosecution if abstraction is alleged, and personal civil liability for any damage. Career-altering.',
-      'Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers',
+      'Nothing — provided you fit a replacement seal and note the work on the installation certificate.',
+      'A small fixed-penalty fine from the DNO, payable within 28 days of the seal being broken.',
+      'Removal from your scheme membership, possible criminal prosecution, and personal liability for any damage.',
+      'A formal warning from the HSE only, with no effect on your scheme membership or right to certify.',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     question:
       'A SMETS2 smart meter is fitted at a property. Who can remotely disconnect the supply from that meter?',
     options: [
-      'To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats',
-      'Scope of work, what is and is not included, price (ex/inc VAT), payment terms, validity and any assumptions',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
-      'The energy supplier, via the Data Communications Company (DCC) WAN. Remote disconnection is a contractual capability of the smart-meter system.',
+      'The DNO, using its control over the cut-out fuse at the supply origin to break the supply.',
+      'The Meter Operator (MOP), as part of routine remote meter maintenance and firmware updates.',
+      'The electrician who commissioned the installation, via the customer’s in-home display unit.',
+      'The energy supplier, via the Data Communications Company (DCC) WAN to the meter contactor.',
     ],
     correctAnswer: 3,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'A customer wants you to install meter tails of 25 mm² for a new EV charger. The existing tails are 16 mm² and clearly inadequate. The cut-out has a sealed connection. What is your scope?',
     options: [
-      'You can replace the LOAD-SIDE tails (meter to consumer unit) without DNO / MOP attendance — that is customer-side. The METER-SIDE tails (cut-out to meter) are MOP territory and must be replaced by them. Coordinate with the MOP via the energy supplier.',
-      'Use a structured template with prompts (What did I do? Why? What went well? What would I change? What did I learn?) and practise writing short accounts after each significant task',
-      'Internal first — to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person who is the "Reg 3 responsible person" under RIDDOR. They make the F2508 / F2508A submission via riddor.hse.gov.uk or phone 0345 300 9923 for fatalities/specified injuries. Your job is to escalate to them, not to make the report yourself unless you ARE the responsible person.',
-      'Adequate lighting of the tower and surrounding area, increased fatigue risk in night workers, reduced visibility for inspections, and the availability of rescue personnel throughout the night',
+      'Replace the LOAD-SIDE tails (meter to CU) yourself; the METER-SIDE tails (cut-out to meter) are MOP work.',
+      'Replace all the tails yourself, both sides, once the DNO has pulled the cut-out fuse to isolate the supply.',
+      'Leave both sets of tails alone entirely — all meter tails are MOP property regardless of which side they sit on.',
+      'Replace the meter-side tails but not the load-side tails, which belong to the DNO up to the consumer unit.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'On a three-phase domestic / small commercial supply, how is the supply typically arranged?',
     options: [
-      'Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.',
-      'All three line conductors plus neutral enter the meter cabinet as 400 V three-phase. A three-phase meter measures each phase. Single-phase loads inside the property are spread across the three phases to balance the supply.',
-      'Acknowledging the anxiety as a normal response to change, using cognitive reappraisal to view the situation as an opportunity to learn from a new team, and gradually building trust through consistent, reliable behaviour',
-      'The sealing of gaps and openings in fire-resisting walls, floors, and ceilings (where services such as cables, pipes, and ducts pass through) to maintain the integrity of the fire compartment',
+      'A single line conductor and neutral enter the cabinet, and a transformer creates the other two phases inside.',
+      'All three lines plus neutral enter as 400 V three-phase, metered per phase, with loads balanced across the phases.',
+      'Three separate single-phase supplies are run in from three different substations and metered individually per phase.',
+      'Two line conductors enter at 400 V, and the third phase is derived from the neutral at the consumer unit on load.',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'What is the purpose of the supplier earth terminal on a cut-out?',
     options: [
-      'It is a legal device. Breaking it without DNO authority is a criminal offence (potentially abstraction under the Theft Act 1968 if supply is unmetered) and a breach of every electrical scheme membership condition.',
-      'Document the programme change and its impact, notify the main contractor in writing of any additional costs or delays, and follow up with a formal variation or claim if applicable',
-      'To provide a low-impedance earth reference for the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation on TN-C-S or TN-S supplies — connected back through the service cable PEN (or PE) to the secondary substation earth.',
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
+      'To act as the customer’s main earthing terminal, where all the CPCs and main bonding conductors land.',
+      'To provide a test point for the electrician to measure prospective fault current at the supply origin.',
+      'To provide a low-impedance earth reference for the installation on TN-C-S or TN-S supplies, via the service cable.',
+      'To house the supply fuse that limits the prospective fault current entering the property on a fault.',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'A customer with an old TT supply (rural overhead, no supplier earth) wants a CU swap. You spot the earth electrode at the front of the property is corroded and the earth conductor barely connects. What do you do?',
     options: [
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'Acknowledge the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s concern, explain clearly what was agreed and delivered, maintain professional boundaries, and document the conversation — reviews based on genuine experience are fair, but threats to extort free work should not be rewarded',
-      'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
-      'You must replace or repair the earth electrode and earthing conductor as part of the installation works — TT earth electrodes are CUSTOMER-side assets. Test Ze, RA and confirm RCD discrimination after replacement.',
+      'Phone the DNO on 105 to attend and replace the corroded earth electrode, as it is their asset on TT.',
+      'Leave the electrode as found — the new RCBOs will compensate for the poor earth connection anyway.',
+      'Convert the supply to TN-C-S so the corroded electrode is no longer needed at the property at all.',
+      'Replace the electrode and earthing conductor yourself — TT electrodes are customer-side; then retest Ze and RA.',
     ],
     correctAnswer: 3,
     explanation:

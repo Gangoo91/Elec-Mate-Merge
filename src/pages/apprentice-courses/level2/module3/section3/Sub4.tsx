@@ -54,9 +54,9 @@ const checks = [
       'A modern EV charger or solar PV inverter draws a residual current with DC components. Which RCD type is appropriate at the AC side?',
     options: [
       'Type B (full DC sensitivity)',
-      'ISA-75.01 / IEC 60534-2-1',
-      'Colour temperature and RGB control',
-      '(Full flush + Reduced flush) / 3',
+      'Type AC (sinusoidal AC residual currents only)',
+      'Type A (AC plus pulsing DC residual currents)',
+      'Type F (AC, pulsing DC and frequencies up to 1 kHz)',
     ],
     correctIndex: 0,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     question:
       'BS 7671 421.1.7 (the AFDD regulation) recommends AFDDs in dwellings on:',
     options: [
-      'So they can be corrected before commissioning',
+      'All circuits without exception, including lighting and cooker circuits',
       'AC final circuits supplying socket-outlets ≤ 32 A',
-      'Information being developed, not ready for sharing',
-      'Creating gaps in illumination with excessive spacing',
+      'Only circuits feeding fixed equipment such as immersions and boilers',
+      'Three-phase distribution circuits rated above 100 A',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'A BS 88 series HRC fuse has its main advantage over a BS EN 60898 MCB in:',
     options: [
-      'To record identified risks, their likelihood, impact, and mitigation measures',
+      'Lower cost per device than an equivalent MCB',
       'Higher breaking capacity (typically 80 kA+ vs 6–10 kA for domestic MCBs)',
-      'At the lowest recommended level as specified by the manufacturer',
-      'When there is reason to suspect it is no longer valid',
+      'The ability to reset after a fault without replacement',
+      'A faster trip on small overloads than any MCB',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'An RCBO (BS EN 61009-1) provides:',
     options: [
-      'To verify low resistance connection between MET and extraneous-conductive-parts',
-      'Batching similar tasks reduces attention residue by minimising context switches',
-      'When work is performed by registered competent person scheme members',
+      'Residual current (earth-fault) protection only, with no overcurrent function',
       'Combined overload, fault current and residual current (earth-fault) protection in a single module',
+      'Overload and fault current protection only, the same as a standard MCB',
+      'Surge protection against transient overvoltages from lightning',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'RCBO = Residual Current Breaker with Overload. Combines an MCB (overload + short-circuit) with an RCD (residual / earth-fault) into one DIN module. Standard domestic kit now — gives every circuit its own 30 mA RCD without the all-circuits-trip-together problem of a shared RCD.',
   },
@@ -124,9 +124,9 @@ const quizQuestions = [
       'A standard domestic socket circuit on a TN-S system would typically use which RCD type for additional protection?',
     options: [
       'Type A (sensitive to AC + pulsing DC up to 6 mA)',
-      'To convert millivolts (mV) into volts (V).',
-      'Independent assessment of competence',
-      'Both the client (or Responsible Person) and the installer',
+      'Type B (full smooth-DC sensitivity)',
+      'Type AC (sinusoidal AC residual currents only)',
+      'Type F (single-phase variable speed drives)',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A Type 1 SPD installed at the origin of an installation primarily protects against:',
     options: [
-      'To provide controlled pulling force for long or difficult cable runs',
+      'Induced and switching surges only (8/20 µs waveform)',
       'Direct lightning strike currents (10/350 µs waveform) and equipotential bonding',
-      'Smaller, lighter, cheaper, and more efficient for small voltage changes',
-      'Responding appropriately to whatever comes your way, then returning to calm',
+      'Point-of-use fine clamping for sensitive electronic equipment',
+      'Earth-fault residual currents on the final circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     question:
       'BS 7671 411.3.3 requires additional protection by 30 mA RCD on socket-outlets up to 32 A in:',
     options: [
-      'In appropriate containers, in designated areas, with incompatible substances segregated',
-      'Ensure a construction phase plan has been drawn up by the contractor or principal contractor',
-      'A fire door is a door assembly designed to resist fire for a specified period — FD30 resists fire for 30 minutes and FD60 for 60 minutes',
+      'Dwellings only — non-dwellings are completely exempt',
+      'Outdoor socket-outlets only, regardless of building type',
+      'Only socket-outlets intended to supply portable equipment used outdoors',
       'All installations, with an exception for non-dwellings where a documented risk assessment determines it is not necessary',
     ],
     correctAnswer: 3,
@@ -178,13 +178,13 @@ const quizQuestions = [
     question: 'BS 7671 443.4.1 requires SPD protection where:',
     options: [
       'The consequence of an overvoltage could result in serious injury to, or loss of, human life, or significant financial / data loss',
-      'Each person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s share should be reduced by at least one-third compared to their equal mathematical share',
-      'Repetitive manual labour often creates physical strain without the cardiovascular and mental health benefits of varied, voluntary exercise',
-      'The notice must be in writing, specify the ground(s) for suspension (non-payment of a sum due), allow at least 7 days before suspension takes effect, and identify the date payment was due',
+      'The installation is supplied by an overhead line only, never an underground cable',
+      'The prospective fault current at the origin exceeds the breaking capacity of the main switch',
+      'The earth-fault loop impedance is too high for automatic disconnection in 0.4 s',
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 443.4.1 mandates SPDs where the consequence of an overvoltage could result in (a) serious injury to, or loss of, human life or (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases SPDs are still required unless the owner declares the risk acceptable in writing.',
+      'Reg 443.4 requires SPDs where the consequence of a transient overvoltage could result in serious injury to, or loss of, human life, or in significant financial / commercial / data loss. For all other cases SPDs are still required unless the owner declares the risk acceptable in writing.',
   },
 ];
 

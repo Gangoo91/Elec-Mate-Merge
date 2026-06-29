@@ -23,10 +23,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the primary purpose of work logs?',
     options: [
-      'Manufacturing plants, factories, and heavy industry',
+      'To order materials for the next shift',
       'To record tasks, progress, and responsibility',
-      'Safely disconnect and store equipment',
-      'Minor Electrical Installation Works Certificate (MEIWC)',
+      'To calculate the labour cost of the job',
+      'To replace the need for test certificates',
     ],
     correctIndex: 1,
     explanation:
@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What key information must a handover sheet contain?',
     options: [
-      'New installation certificate',
-      'Efficiency = Output/Input',
-      '1 metre above highest point within 10m',
+      'The total cost of materials used',
+      'The day shift’s lunch arrangements',
+      'A copy of the site drawings',
       'Outstanding tasks and safety notes',
     ],
     correctIndex: 3,
@@ -68,12 +68,14 @@ export default function Module5Section7_3() {
       id: 1,
       question: 'What is the primary purpose of work logs?',
       options: [
-        'The Waste (England and Wales) Regulations 2011',
+        'To order materials for the next shift',
         'To record tasks, progress, and responsibility',
-        '£35 to £455, depending on the claim value',
-        'Installation, inspection and testing, and fault diagnosis',
+        'To replace the need for test certificates',
+        'To calculate the labour cost of the job',
       ],
       correctAnswer: 1,
+      explanation:
+        'Work logs record tasks, progress, and responsibility, providing accountability and traceability on the project.',
     },
     {
       id: 2,
@@ -85,39 +87,47 @@ export default function Module5Section7_3() {
         'Completed tasks',
       ],
       correctAnswer: 2,
+      explanation:
+        'Work logs focus on work-related activities, safety observations, and progress, not personal break details.',
     },
     {
       id: 3,
       question: 'What key information must a handover sheet contain?',
       options: [
-        'Earth leakage and electric shock',
-        'Video doorbell and camera verification',
-        'Expansion bolts or chemical anchors',
+        'The total cost of materials used',
+        'A copy of the site drawings',
+        'The day shift’s break arrangements',
         'Outstanding tasks and safety notes',
       ],
       correctAnswer: 3,
+      explanation:
+        'Handover sheets must list outstanding tasks and safety notes so the incoming team can continue work safely.',
     },
     {
       id: 4,
       question: 'Why are handover sheets important for safety?',
       options: [
         'They identify isolations and hazards for the next team',
-        'Approximately zero (or the earth leakage current if present)',
-        'The payment clock starts when you invoice, not when you complete work',
-        'It keeps the header row visible while scrolling through data below',
+        'They remove the need for risk assessments',
+        'They allow the next team to skip toolbox talks',
+        'They confirm the invoice has been paid',
       ],
       correctAnswer: 0,
+      explanation:
+        'Handover sheets tell the next team which circuits are isolated and where hazards or incomplete work are, preventing accidents.',
     },
     {
       id: 5,
       question: 'In the real-world scenario, what caused the electrical fault?',
       options: [
-        '10-30 seconds gradual transition',
+        'A faulty test instrument',
         'No handover notes left for the night shift',
-        'Telecommunications infrastructure located outdoors',
-        'Prove dead with approved voltage indicator',
+        'An overloaded distribution board',
+        'A damaged cable from a previous job',
       ],
       correctAnswer: 1,
+      explanation:
+        'The night shift energised an incomplete circuit because the day shift left no handover notes showing which circuits were live or isolated.',
     },
     {
       id: 6,
@@ -129,6 +139,8 @@ export default function Module5Section7_3() {
         'Better team coordination',
       ],
       correctAnswer: 2,
+      explanation:
+        'Poor record keeping can hide safety hazards and lead to work being duplicated or left incomplete.',
     },
     {
       id: 7,
@@ -140,39 +152,47 @@ export default function Module5Section7_3() {
         'At the end of every shift',
       ],
       correctAnswer: 3,
+      explanation:
+        'Logs and handovers should be completed at the end of every shift to ensure continuity and safety for the incoming team.',
     },
     {
       id: 8,
       question: 'Why should standardised forms be used for logs and handovers?',
       options: [
         'To ensure consistency and clarity',
-        'To reduce supervisors needed',
+        'To reduce the number of supervisors needed',
         'To save money on printing',
         'To make filing easier',
       ],
       correctAnswer: 0,
+      explanation:
+        'Standardised forms ensure information is recorded consistently and clearly, so nothing critical is missed between teams.',
     },
     {
       id: 9,
       question: 'Where should work logs and handover sheets be stored?',
       options: [
-        'To verify that controls, interlocks, and devices operate correctly',
+        'In the back of any available vehicle',
         'In a safe, accessible location (physical or digital)',
-        'Yes — it is an over-7-day incapacitation injury',
-        'Self-certify notifiable electrical work',
+        'With the client only',
+        'Discarded once the shift ends',
       ],
       correctAnswer: 1,
+      explanation:
+        'Logs and handovers must be kept in a safe, accessible location - physical or digital - so authorised personnel can refer to them.',
     },
     {
       id: 10,
       question: 'Who should be made aware of handover details?',
       options: [
-        'Inspection comes first, then testing',
-        'Whether conductors are continuous and properly connected',
+        'Only the site manager',
+        'Only the client',
         'The next team, via toolbox talks or briefings',
-        'The colour of the asbestos-containing material',
+        'Nobody until the project ends',
       ],
       correctAnswer: 2,
+      explanation:
+        'Handover details must be passed to the incoming team, both in writing and verbally through toolbox talks or briefings.',
     },
   ];
 

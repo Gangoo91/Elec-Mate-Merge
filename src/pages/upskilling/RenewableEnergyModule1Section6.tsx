@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'What is the most accurate framing of the LCT site survey?',
     options: [
-      'A technical sketch to inform the install drawing',
-      'The discovery of every binding constraint that could invalidate the proposed install timeline, scope or cost — captured in writing before the quote is finalised',
-      'A formality to satisfy the customer',
-      'A health-and-safety walk-through',
+      'A technical sketch produced to inform the install drawing',
+      'A written discovery of every binding constraint, completed before the quote',
+      'A formality carried out to reassure the customer',
+      'A health-and-safety walk-through of the working area',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'Which earthing arrangement on a domestic LCT survey most often forces additional design work?',
     options: [
-      'TN-S (no specific LCT complication)',
-      'TN-C-S (PME) — particularly for EV chargepoints under Reg 722.411.4.1, where A4:2026 deleted the "reasonably practicable" exception for PEN-fault protective measures',
-      'IT systems (rare in UK domestic)',
-      'Any earthing arrangement is equivalent for LCT',
+      'TN-S, with separate neutral and earth from the supply',
+      'TN-C-S (PME), particularly for EV chargepoints under Reg 722.411.4.1',
+      'IT systems, which are rare in UK domestic premises',
+      'None — any earthing arrangement is equivalent for LCT',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'What three CU items must the LCT survey check?',
     options: [
-      'Brand, colour, age',
-      'Spare ways available for dedicated circuits, RCBO compatibility (Type A / B / F as required by the LCT load type), and the existing CU\'s suitability to host additional circuits without reaching its rated capacity',
-      'Whether the CU door closes properly',
-      'The customer\'s preference',
+      'Brand, colour and approximate age of the board',
+      'Spare ways, RCBO type compatibility, and rated capacity against projected load',
+      'Whether the CU door closes and latches properly',
+      'The customer\'s preference on board appearance',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'Under A4:2026\'s Chapter 82 (Prosumer\'s Electrical Installations), how does the survey for a hybrid PV+BESS+heat pump+EV install differ from four separate technology surveys?',
     options: [
-      'There is no difference',
-      'The PEI is a system. The survey captures the interactions — combined load, multi-source fault contribution, export coordination, load management strategy — not just the per-technology constraints. Chapter 82 makes the system-level survey a design discipline',
-      'The survey is shorter',
-      'The DNO conversation is skipped',
+      'There is no meaningful difference between the two approaches',
+      'The PEI survey captures the system-level interactions, not just per-technology constraints',
+      'The survey is shorter because the items overlap',
+      'The DNO conversation is skipped on a hybrid install',
     ],
     correctIndex: 1,
     explanation:
@@ -81,9 +81,9 @@ const inlineChecks = [
       'On a roof-mount PV install, the survey identifies a moss-covered, ageing roof. What is the right structural conversation?',
     options: [
       'Proceed with the install — moss removal is the customer\'s responsibility',
-      'Structural and roofing condition is a gating constraint on PV installs. The survey records the roof state, recommends a roofing assessment / refurbishment before install, and reflects the structural timeline in the project plan. PV on a roof scheduled for refurbishment within 5 years is a near-term remove-and-refit risk',
-      'Proceed but use longer fixings',
-      'Install ground-mounted instead',
+      'Record the roof condition and recommend a roofing assessment before the PV install',
+      'Proceed with the install but use longer mounting fixings',
+      'Switch to a ground-mounted array on the same property',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'On a BESS install in a domestic property, what access items must the survey capture?',
     options: [
-      'Whether the customer has a key',
-      'BESS siting (ventilation, fire-detection / suppression arrangement, isolation, proximity to escape routes), cable routing from the BESS to the CU / inverter, customer-side emergency access, and the future maintenance / replacement access path',
-      'Garden gate width only',
-      'Driveway parking only',
+      'Whether the customer holds a key to the property',
+      'Siting, ventilation, fire detection, isolation, cable routing and replacement access',
+      'The width of the garden gate alone',
+      'The availability of driveway parking alone',
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const inlineChecks = [
     question:
       'The survey identifies three binding constraints: DNO queue 14 months, roof refurbishment required first, customer\'s preferred installation date 8 weeks. What is the right customer conversation?',
     options: [
-      'Promise the 8-week timeline and proceed',
-      'Put the three constraints in writing as project gating items, before the quote is finalised. The customer\'s preferred timeline is reset to reflect the binding constraints. The customer who values the install adjusts; the customer who walks at this stage would have disputed a non-compliant install',
-      'Submit a G98 to avoid the DNO queue',
-      'Ignore the roof and install PV anyway',
+      'Promise the 8-week timeline and proceed to quote',
+      'Put the three constraints in writing as gating items before the quote is finalised',
+      'Submit a G98 application to bypass the DNO queue',
+      'Ignore the roof condition and install the PV anyway',
     ],
     correctIndex: 1,
     explanation:
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'An LCT site survey identifies the existing supply as 80 A single-phase TN-C-S (PME) on a 1970s housing-stock property. The customer wants a 7.4 kW EV chargepoint, a 14 kW ASHP, and a 4 kWp PV array. What is the most important next step?',
     options: [
-      'Order the equipment',
-      'Project the diversified post-install load against the 80 A main fuse, run the DNO precheck for a likely supply upgrade to 100 A, check CU readiness for three new dedicated circuits, and put the gating items to the customer in writing',
-      'Quote the install immediately',
-      'Apply for BUS funding first',
+      'Project the diversified load, run the DNO precheck, check CU readiness, then put gating items in writing',
+      'Order the equipment ahead of the survey sign-off',
+      'Quote the full install immediately to secure the deposit',
+      'Apply for BUS funding before resolving the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The diversified load on 7.4 kW EV + 14 kW ASHP + base load + occasional cooking and shower typically exceeds 80 A. The supply upgrade is the gating constraint. The CU readiness check confirms whether the additions can fit a CU upgrade or require a sub-board. The DNO precheck establishes the timeline. Quoting before the gating items are resolved is the most common LCT failure mode.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Reg 722.411.4.1 (A4:2026) deleted the "reasonably practicable" exception on PME-supplied EV chargepoints. What survey item now becomes non-negotiable on a PME install?',
     options: [
-      'Roof condition',
-      'Identification of a recognised PEN-fault protective measure — integral chargepoint voltage-monitoring, TT island arrangement, or equivalent — and recording the chosen route in the survey',
-      'Customer\'s preferred chargepoint brand',
-      'Garden gate width',
+      'The condition of the roof covering',
+      'Identifying and recording the recognised PEN-fault protective measure for the install',
+      'The customer\'s preferred chargepoint brand',
+      'The width of the garden gate for access',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'A homeowner has a south-facing roof, ageing tiles, moss visible. The survey notes the roof condition. The customer pushes to install PV anyway. The right professional move:',
     options: [
-      'Install and warranty the install for 25 years',
-      'Document the roof condition in the survey and the quote, present the structural risk (PV life 25 years, roof life 5–10 years, remove-and-refit liability), and offer the install with the structural limitation explicitly recorded. The customer can proceed informed; the contractor is not liable for the structural risk',
-      'Refuse the job',
-      'Install ground-mounted instead',
+      'Install and warranty the array for the full 25 years',
+      'Refuse the job outright on structural grounds',
+      'Document the condition and risk, then offer the install with the limitation recorded',
+      'Switch the customer to a ground-mounted array instead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The right move is informed-customer documentation. The roof condition is recorded in the survey, the structural risk is presented (PV array life exceeds roof life on the moss-covered tiles), and the customer\'s decision is captured in the quote. The customer can proceed; the contractor is not liable for the foreseeable structural failure. The structural conversation is the contractor\'s due diligence.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'Chapter 82 (Prosumer\'s Electrical Installations, new in A4:2026) frames the hybrid install as a system. Which survey items become "PEI survey items" rather than per-technology items?',
     options: [
-      'Module brand',
-      'Combined diversified load, multi-source fault current contribution to the same fault, export coordination (which source exports when), load management strategy, multi-source protection coordination — items that exist only as system-level questions, not per-technology',
-      'Customer phone number',
-      'Roof colour',
+      'The brand of PV module specified for the array',
+      'The customer\'s contact telephone number',
+      'The colour of the roof covering on the property',
+      'Combined load, multi-source fault contribution, export coordination and load management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PEI survey items are the system-level questions that the per-technology surveys do not address by definition. Combined load. Multi-source fault contribution. Export coordination between PV and BESS. Load management between EV charging, heat pump running and battery charging. Protection coordination across multiple sources to a common fault. The PEI survey is the discipline Chapter 82 introduces.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'On a BESS install in a domestic utility room, the survey must address chemistry-aware ventilation and fire-detection. Which document is the operational complement to Chapter 57?',
     options: [
-      'IET On-Site Guide alone',
-      'IET Code of Practice for Electrical Energy Storage Systems — the technology-specific operational manual cross-referenced from GN3 as the detailed reference for BESS commissioning, siting, fire detection, ventilation and emergency response',
-      'Manufacturer instructions alone',
-      'Building Regulations Part B alone',
+      'The IET Code of Practice for Electrical Energy Storage Systems',
+      'The IET On-Site Guide, used on its own',
+      'The manufacturer\'s instructions, used on their own',
+      'Building Regulations Part B (fire safety), on its own',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Chapter 57 introduces the regulatory framework for stationary battery installations but stays general on the operational detail. The IET Code of Practice for Electrical Energy Storage Systems is the technology-specific operational manual — covering chemistry-aware siting, fire detection, ventilation, isolation, emergency response. GN3 explicitly cross-references it. Building Regulations Part B (fire safety) is also relevant but addresses the building-side requirements, not the BESS-specific design.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'The DNO precheck on a workplace install returns a 14-month queue for a supply upgrade. The customer\'s preferred install date is 8 weeks away. What does the survey capture?',
     options: [
-      'The customer\'s preferred date as the install date',
-      'The DNO queue position and indicative timeline in writing, the supply upgrade as a project gating item, alternative options (load management to fit existing supply, fewer chargepoints, smaller chargepoints), and the customer-acknowledged sign-off on the resulting timeline',
-      'Nothing — that\'s a DNO problem',
-      'A revised quote with a higher price',
+      'The customer\'s preferred date, recorded as the install date',
+      'The queue, the upgrade as a gating item, the alternatives, and the customer sign-off',
+      'Nothing — the queue is solely a DNO problem',
+      'A revised quote at a higher price to cover delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'On a domestic BESS install, the survey identifies the only available siting as a small cupboard under the stairs. The customer prefers this location. What\'s the right survey-stage decision?',
     options: [
-      'Proceed — the customer has chosen the location',
-      'Decline the proposed siting. Under-stairs storage in dwellings is typically a fire-egress route; BESS siting in such a location compromises the fire-detection / suppression strategy and the emergency egress path. Propose alternative locations or refuse the install',
-      'Install with extra ventilation only',
-      'Move the stairs',
+      'Proceed, since the customer has chosen the location',
+      'Install in the cupboard but add extra ventilation',
+      'Decline the under-stairs siting and propose alternative locations',
+      'Reconfigure the staircase to free up other space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BESS siting under Chapter 57 and the IET CoP for EESS is a chemistry-aware safety conversation. Under-stairs cupboards in dwellings are commonly fire-egress routes. A thermal event in the BESS would block the egress route. The competent installer declines the siting and proposes alternatives (utility room, garage, external enclosure). The customer-preferred location is not a defence if the install fails in a fire incident.',
   },
@@ -223,12 +223,12 @@ const quizQuestions = [
     question:
       'A site survey delivers the project plan. Which framing is most useful?',
     options: [
-      'The survey is the technical sketch for the install',
-      'The survey is the artefact that resolves the binding constraints into the project plan — what will be installed, in what sequence, to what timeline, with what dependencies, and what risk the customer has acknowledged. The quote is the commercial reflection of the survey',
-      'The survey is a formality',
+      'The survey is the technical sketch for the install drawing',
+      'The survey is a formality completed before the job',
       'The survey is a customer-facing document only',
+      'The survey resolves the binding constraints into the project plan the quote then prices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The survey is the project plan. Every binding constraint identified in the survey becomes a project item; every dependency becomes a sequence item; every customer-acknowledged risk becomes a scope item. The quote prices the survey, not an imagined project. The contractor who survives projects is the contractor whose survey is honest enough to drive the project plan.',
   },

@@ -9,10 +9,10 @@ const quizData: QuizQuestion[] = [
     id: 1,
     question:
       'Within how many days must an Electrical Installation Certificate be provided to the customer?',
-    options: ['7 days', '14 days', '28 days', '30 days'],
-    correctAnswer: 2,
+    options: ['7 days', '14 days', '30 days', '28 days'],
+    correctAnswer: 3,
     explanation:
-      'BS 7671 requires that a copy of the Electrical Installation Certificate must be provided to the customer within 28 days of completion of the work.',
+      'Good practice is to provide a copy of the Electrical Installation Certificate to the customer within 28 days of completion of the work.',
   },
   {
     id: 2,
@@ -28,12 +28,12 @@ const quizData: QuizQuestion[] = [
     question:
       'Which document provides legal evidence that an installation has been designed and constructed in accordance with BS 7671?',
     options: [
-      'Minor Works Certificate',
       'Electrical Installation Certificate',
+      'Minor Works Certificate',
       'Condition Report',
       'Test Result Schedule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Electrical Installation Certificate (EIC) is the legal document that certifies compliance with BS 7671 for new installations or additions.',
   },
@@ -55,8 +55,8 @@ const quizData: QuizQuestion[] = [
     id: 5,
     question:
       'How long should installation certificates and test results be retained by the installer?',
-    options: ['2 years', '5 years', '6 years minimum', 'Life of the installation'],
-    correctAnswer: 2,
+    options: ['6 years minimum', '2 years', '5 years', 'Life of the installation'],
+    correctAnswer: 0,
     explanation:
       'Installers should retain copies for at least 6 years for insurance and legal purposes, though customers should keep them for the life of the installation.',
   },
@@ -104,11 +104,11 @@ const quizData: QuizQuestion[] = [
     question: 'What information must be included on charging point warning labels?',
     options: [
       'Only the maximum current rating',
-      'Maximum current, voltage, emergency stop procedure, and warnings',
       'Just the manufacturer details',
       'Only the installation date',
+      'Maximum current, voltage, emergency stop procedure, and warnings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Charging point labels must include maximum charging current, voltage and phase information, emergency stop procedures, warning notices, and manufacturer details.',
   },

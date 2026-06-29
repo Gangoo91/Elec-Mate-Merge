@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s2-check1',
     question: 'What is the main advantage of a socketed EVSE system?',
     options: [
-      'Faster charging speeds',
-      'Universal compatibility with all vehicles',
-      'Cheaper electricity rates',
-      'Built-in payment system',
+      'Universal compatibility with any user-supplied cable',
+      'Faster charging speeds than a tethered unit',
+      'Cheaper electricity tariffs for the user',
+      'A payment terminal built into the unit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Socketed EVSE provides a charging outlet that accepts any compatible cable, offering universal compatibility with all EV connector types (Type 1, Type 2, etc.) since the user supplies their own cable.',
   },
@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s2-check2',
     question: 'What is a key disadvantage of tethered EVSE systems?',
     options: [
-      'Cannot charge vehicles',
+      'They can only deliver DC rapid charging',
+      'They require a three-phase supply to operate',
       'Higher maintenance requirements due to cable exposure',
-      'Only works with DC charging',
-      'Requires three-phase supply',
+      'They are incompatible with smart-charging features',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Tethered systems have permanently attached cables exposed to weather, UV radiation, and potential vandalism, resulting in higher maintenance requirements and cable replacement costs compared to socketed systems.',
   },
@@ -36,14 +36,14 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s2-check3',
     question: 'For a public charging installation, which EVSE type is typically preferred?',
     options: [
-      'Socketed - lower cost',
-      'Tethered - maximum user convenience',
-      'Either type equally',
-      'Mode 2 portable chargers',
+      'Socketed, for its lower hardware cost',
+      'Socketed, because visitors are expected to bring their own cable',
+      'Mode 2 portable chargers left on site for shared use',
+      'Tethered, for maximum user convenience',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Public charging installations almost universally use tethered systems (95% market share) because users expect immediate plug-and-charge capability without carrying their own cables.',
+      'Public charging installations almost universally use tethered systems (around 95% market share) because users expect immediate plug-and-charge capability without carrying their own cables.',
   },
 ];
 
@@ -76,12 +76,12 @@ const quizQuestions = [
     question:
       'A customer has a shared driveway where multiple households park, each with different EV models. What EVSE type would you recommend?',
     options: [
-      'Tethered with Type 2 connector for convenience',
+      'Tethered with a Type 2 connector for convenience',
+      'Tethered with dual Type 1 and Type 2 connectors',
       'Socketed Type 2 for universal compatibility',
-      'Tethered with dual connectors',
-      'Mode 2 portable chargers only',
+      'Mode 2 portable chargers shared between households',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A socketed Type 2 outlet provides universal compatibility, allowing each household to use their own cable matching their vehicle's connector type (Type 1 or Type 2). This future-proofs the installation and avoids connector compatibility issues.",
   },

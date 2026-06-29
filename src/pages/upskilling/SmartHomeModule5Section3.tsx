@@ -12,12 +12,12 @@ const quickCheckQuestions = [
   {
     question: 'What causes a magnetic contact sensor to trigger an alarm?',
     options: [
+      'Separation of the magnet from the reed switch',
       'Motion detected nearby',
       'Temperature change',
-      'Separation of the magnet from the reed switch',
       'Sound vibration',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Magnetic contact sensors trigger when the magnet (on the moving part) separates from the reed switch (on the fixed frame), breaking the magnetic field and changing the circuit state.',
   },
@@ -74,8 +74,8 @@ const quizQuestions = [
   },
   {
     question: 'What is the typical detection range of a domestic PIR sensor?',
-    options: ['2-3 metres', '5-7 metres', '10-12 metres', '15-20 metres'],
-    correctAnswer: 2,
+    options: ['2-3 metres', '10-12 metres', '5-7 metres', '15-20 metres'],
+    correctAnswer: 1,
     explanation:
       'Most domestic PIR sensors have a detection range of 10-12 metres with a field of view around 90-110 degrees, covering typical room dimensions effectively.',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     options: [
       'Weight detection',
       'Sound filtering',
-      'Dual-element detection and lens masking',
       'Colour recognition',
+      'Dual-element detection and lens masking',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Pet-immune PIR sensors use dual-element detection and specially designed lens patterns that distinguish between small animals (low/ground level heat signatures) and humans.',
   },

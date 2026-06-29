@@ -27,12 +27,12 @@ const quizQuestions = [
     question:
       "Under RIDDOR 2013, which of the following confined space events is classified as a 'dangerous occurrence' that must be reported to the HSE?",
     options: [
+      'Loss of consciousness due to lack of oxygen in a confined space',
       'A worker feeling slightly dizzy after entering a confined space',
       'A near miss where no one was affected',
-      'Loss of consciousness due to lack of oxygen in a confined space',
       'A minor cut sustained while climbing through an access point',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under RIDDOR 2013, loss of consciousness caused by lack of oxygen in a confined space is classified as a dangerous occurrence and must be reported to the HSE. This applies even if the person recovers quickly. Other dangerous occurrences include exposure to a hazardous substance requiring medical treatment. Minor injuries and general feelings of discomfort are not RIDDOR-reportable unless they meet specific thresholds.',
   },
@@ -66,24 +66,24 @@ const quizQuestions = [
     question:
       'Which of the following is the MOST common root cause of confined space fatalities in the UK?',
     options: [
-      'Equipment failure',
+      'Sudden mechanical failure of plant or access equipment',
+      'Structural collapse of the walls or roof of the confined space',
+      'Electrical faults and contact with live parts inside the space',
       'Inadequate risk assessment and failure to follow safe systems of work',
-      'Structural collapse of the confined space',
-      'Electrical faults within the confined space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'HSE data consistently shows that the most common root causes of confined space fatalities are inadequate risk assessment and failure to follow safe systems of work. This includes failing to identify the hazards (particularly atmospheric hazards), not testing the atmosphere before entry, not using the correct RPE, and not having adequate rescue arrangements in place. Many confined space deaths are entirely preventable through proper planning and adherence to procedures.',
   },
   {
     question: 'In the near-miss iceberg model, what does the base of the iceberg represent?',
     options: [
-      'Fatal incidents',
-      'Major injuries requiring hospitalisation',
       'Near misses and unsafe behaviours that vastly outnumber actual injuries',
-      'RIDDOR-reportable dangerous occurrences',
+      'The single fatal incident at the very tip of the visible structure',
+      'Major injuries serious enough to require admission to hospital',
+      'RIDDOR-reportable dangerous occurrences notified to the HSE',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The iceberg model illustrates that for every serious incident, there are many more near misses and unsafe behaviours below the surface. Heinrich's ratio suggests approximately 300 near misses for every serious injury. The base of the iceberg represents these unreported near misses and unsafe conditions. Reporting and investigating near misses provides the greatest opportunity to prevent serious incidents because there are far more data points to learn from.",
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'After a confined space incident, which type of corrective action addresses systemic failures to prevent recurrence across the entire organisation?',
     options: [
-      'Immediate actions (stopping the job)',
-      'Short-term actions (modifying the specific procedure)',
-      'Long-term actions (systemic changes such as revised training programmes, updated management systems, and cultural change initiatives)',
-      'Administrative actions (completing paperwork)',
+      'Immediate actions (stopping the job at the scene)',
+      'Long-term actions (systemic changes to training, management systems and culture)',
+      'Short-term actions (modifying the one specific procedure)',
+      'Administrative actions (completing the incident paperwork)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Long-term corrective actions address the systemic root causes that allowed the incident to occur. While immediate actions (stopping the job) and short-term actions (modifying the specific procedure) are essential, they only address the symptoms. Long-term actions target the underlying failures in the management system, training programmes, supervision arrangements, and organisational culture. These systemic changes prevent similar incidents occurring in different locations or under different circumstances.',
   },
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "Who is the 'responsible person' required to report a RIDDOR-reportable confined space incident to the HSE?",
     options: [
-      'The person who was injured',
-      'Any witness to the incident',
-      'The employer, self-employed person, or person in control of the premises where the work was being carried out',
-      'The local authority environmental health officer',
+      'The injured person themselves, once they have recovered',
+      'Any colleague who happened to witness the incident',
+      'The employer, self-employed person, or person in control of the premises',
+      'The local authority environmental health officer for the area',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'Following a serious confined space incident, what is the potential legal consequence under the Corporate Manslaughter and Corporate Homicide Act 2007?',
     options: [
-      'A maximum fine of 10,000 pounds',
-      'A community service order for the company director',
+      'A fixed maximum fine of 10,000 pounds against the organisation',
+      'A community service order imposed on the named company director',
+      'The matter is dealt with only under civil law, with no criminal sanction',
       'An unlimited fine, a publicity order, and a remedial order against the organisation',
-      'The incident is only dealt with under civil law',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Under the Corporate Manslaughter and Corporate Homicide Act 2007, an organisation can be convicted of corporate manslaughter if a gross breach of a duty of care by senior management causes a person's death. Penalties include an unlimited fine (typically millions of pounds), a publicity order requiring the organisation to publicise its conviction, and a remedial order requiring it to address the management failure. Individual directors and managers can also face prosecution under the Health and Safety at Work etc. Act 1974, with penalties including imprisonment for up to 2 years.",
   },
@@ -133,12 +133,12 @@ const quickCheckQuestions = [
     question:
       "A worker loses consciousness due to oxygen depletion inside a sewage chamber but is rescued and recovers. The site manager says 'He's fine now, no need to report it.' Is the site manager correct?",
     options: [
-      'Yes -- the worker recovered, so no report is needed',
-      'No -- loss of consciousness due to lack of oxygen in a confined space is a RIDDOR-reportable dangerous occurrence regardless of whether the person recovers',
-      'Only if the worker was off work for more than 7 days',
-      'It only needs to be recorded in the site accident book',
+      'No -- it is a RIDDOR-reportable dangerous occurrence regardless of recovery',
+      'Yes -- the worker recovered, so no report to the HSE is needed',
+      'Only if the worker is then off work for more than 7 consecutive days',
+      'No formal report -- it only needs an entry in the site accident book',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Loss of consciousness caused by lack of oxygen in a confined space is a dangerous occurrence under RIDDOR 2013 Schedule 2. It MUST be reported to the HSE regardless of whether the person recovers, how quickly they recover, or whether they return to work. The site manager is wrong. Failure to report is a criminal offence. The report must be made without delay using the HSE online form or by telephone.',
   },
@@ -146,10 +146,10 @@ const quickCheckQuestions = [
     question:
       "During an incident investigation, you identify the immediate cause as 'the worker did not test the atmosphere before entry.' Using root cause analysis, what types of underlying causes should you look for?",
     options: [
-      "Only the worker's personal failings and lack of care",
-      'Systemic failures: Was there a procedure requiring testing? Was the worker trained? Was the equipment available? Was there adequate supervision? Was there time pressure?',
-      'Whether the worker had a criminal record',
-      'Only equipment defects',
+      "Only the individual worker's personal failings, carelessness and lack of attention",
+      'Systemic failures: the procedure, training, equipment, supervision and time pressure behind the action',
+      'The worker\'s disciplinary history and whether they hold a criminal record',
+      'Only defects in the gas-detection or ventilation equipment supplied',
     ],
     correctIndex: 1,
     explanation:
@@ -159,12 +159,12 @@ const quickCheckQuestions = [
     question:
       "A colleague tells you about a near miss where they entered a tank and felt dizzy but left before losing consciousness. They say 'No harm done -- no point reporting it.' Why is this attitude dangerous?",
     options: [
-      'It is not dangerous -- near misses do not matter',
-      'Because near misses are free lessons: they reveal the same hazards and failures that cause fatalities, and reporting them allows corrective action before someone is killed',
-      'Only because the HSE requires all near misses to be reported under RIDDOR',
-      'It is only dangerous if the colleague is a supervisor',
+      'It is not dangerous -- near misses with no injury do not matter',
+      'Only because the HSE requires every near miss to be reported under RIDDOR',
+      'Because near misses are free lessons: they reveal the same failures that cause fatalities',
+      'It is only dangerous when the person involved is a supervisor or manager',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Near misses are critical learning opportunities because they reveal the same hazards, failures, and unsafe conditions that cause serious injuries and fatalities -- the only difference is luck. For every fatality, there are hundreds of near misses. Each unreported near miss is a missed opportunity to fix a problem before it kills someone. A blame-free reporting culture encourages workers to report near misses without fear of punishment, giving the organisation the data it needs to prevent serious incidents.',
   },

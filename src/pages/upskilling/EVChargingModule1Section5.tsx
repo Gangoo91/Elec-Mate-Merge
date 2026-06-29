@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m1s5-check1',
     question: 'Which manufacturer specialises in solar PV integration with their EV charger?',
-    options: ['Pod Point', 'myenergi (Zappi)', 'Wallbox', 'Andersen'],
-    correctIndex: 1,
+    options: ['Pod Point', 'Wallbox', 'Andersen', 'myenergi (Zappi)'],
+    correctIndex: 3,
     explanation:
       "myenergi's Zappi charger specialises in solar PV integration, offering Eco, Eco+, and Fast charging modes that can use excess solar energy for vehicle charging.",
   },

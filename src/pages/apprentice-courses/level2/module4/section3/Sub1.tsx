@@ -40,12 +40,12 @@ const checks = [
     question:
       'The cable schedule on a drawing pack lists "32 A radial — 4 mm² T&E — 22 m". The 1:50 layout shows the route is closer to 28 m once you measure it round the obstructions. Which figure do you order against?',
     options: [
-      'Emotional regulation — the ability to manage strong feelings under pressure',
       'The measured layout figure (28 m) plus a routing allowance — the cable has to physically reach.',
-      'Capacitors with series reactors to avoid resonance with system harmonics',
-      'The branch of health care concerned with preventing and managing work-related ill health, disease, and injury',
+      'The schedule figure (22 m) — the designer calculated it, so order exactly that.',
+      'The shorter of the two figures (22 m) — to keep the material cost down on the job.',
+      'The average of the two figures (25 m) — to split the difference between estimate and measurement.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Schedules are a starting estimate, not the final length. The cable has to physically traverse the actual route, which always grows once you account for drops, rises, going around obstructions and reaching the back-box. Order against the measured layout figure plus 10-20 % for routing slack. If that puts you significantly over the schedule, flag it as a query before you cut, not after.',
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       'The accessory schedule lists 6 × twin sockets in the kitchen. The 1:50 layout drawing shows 5 socket symbols in the kitchen. The schematic shows the kitchen ring with 6 utilisation outlets. Which is the design intent?',
     options: [
-      'Prospective fault current at the origin and the need for fault withstand capability',
+      'Follow the accessory schedule (6 sockets) — schedules are the contractual document and override the drawings.',
+      'Follow the layout (5 sockets) — what is drawn on the plan is what physically gets installed.',
       'Stop and raise an RFI (request for information) — the three documents disagree, only the designer can resolve it.',
-      'To provide a continuous water supply for first-aid firefighting by trained building occupants',
-      'Description of work performed, parts used, time taken, fault found, actions taken, any follow-up work required, and asset condition assessment',
+      'Follow the schematic (6 outlets) — it shows the electrical logic, so it is the master document.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'When schedule, layout and schematic disagree, you do not pick a winner — you flag the conflict to the designer. Raising an RFI takes ten minutes and protects you. Guessing wrong costs a remedial visit and a chase to get paid for the variation.',
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'On a domestic rewire drawing pack, the cable schedule lists CSA, type, length and route. What does the accessory schedule list?',
     options: [
-      '"All circuits were tested in accordance with BS 7671 and the results are recorded in the attached schedule"',
+      'The protective device rating and disconnection time for every final circuit on the board.',
       'Back-boxes, faceplates, FCUs, sockets, switches, smoke alarms — everything that lands on a wall or ceiling.',
-      'Is responsible for calling the emergency services and maintaining the first aid kit when a trained first aider is absent',
-      'Provide the price but clearly define what "fully inclusive" means by listing all inclusions and exclusions',
+      'The cable cross-sectional area, install method and route length for every circuit.',
+      'The way numbers, RCD groupings and main switch rating of the consumer unit.',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'The CU schedule (consumer-unit schedule) tells you everything except:',
     options: [
-      'When circumstances change, after incidents, or periodically',
-      'Percentage of time within comfort temperature band',
+      'The device type and rating allocated to each way of the board.',
+      'The RCD/RCBO grouping and neutral arrangement of the panel.',
       'The 1:50 dimension from the kitchen window to the nearest socket.',
-      'Both stay relatively constant as heat is absorbed',
+      'The way numbers and circuit names matching the cable schedule.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,38 +113,38 @@ const quizQuestions = [
     question:
       'Why do you typically add 10–20 % to the cable schedule length when you order?',
     options: [
-      'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
-      'The collapse, overturning or failure of any scaffold (including a mobile access tower) from which a person could fall more than 2 metres',
-      'Electrical hazards, working at height, manual handling, slips/trips, lone working, occupant disruption, and emergency arrangements',
       'Schedules are taken from the schematic without accounting for actual routing — drops, rises, obstructions and termination tails always add length.',
+      'BS 7671 requires a minimum 20 % spare cable to be left coiled at the consumer unit for future alterations.',
+      'Cable always shrinks slightly once it is pulled into containment, so extra length compensates for the stretch.',
+      'The wholesaler only sells cable in fixed drum sizes, so the extra is simply the unavoidable rounding up.',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Schedules are calculated point-to-point or off the schematic line length. Real routing snakes around joists, drops down chases, climbs over noggins, and you need 200 mm of tail at every termination. 10-20 % is the rule of thumb that survives contact with the building. Tighter on a clean new build, looser on a chasing rewire.',
   },
   {
     id: 4,
     question:
-      'BS 7671 Reg 514.9.2 (introduced in A4:2026) requires diagrams, charts and information notices to:',
+      'BS 7671 Section 514.9 requires the diagrams, charts and information notices provided with an installation to:',
     options: [
-      'Comply with the applicable standards specified for them.',
-      'To prevent total system failure from a single fault',
-      'Adjusting the turns ratio to regulate output voltage',
-      'Incorrectly identifying existing conductors',
+      'Be laminated and fixed inside the consumer unit lid regardless of premises type.',
+      'Comply with the applicable standards specified for them and reflect the actual installation.',
+      'Be replaced in full every time a single circuit is altered or added.',
+      'Be signed only by the designer, never by the installing electrician.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      '514.9.2 (new in A4:2026) ties drawings, charts, schedules, instruction labels and warning notices to the relevant product or standards documents that govern them. In practice — your CU schedule must follow the conventions of BS EN 61439-3, your circuit chart must match the actual installation, and your safety/instruction notices must follow the BS standard for that label type.',
+      'Section 514.9 ties drawings, charts, schedules, instruction labels and warning notices to the relevant standards that govern them, and they must represent the installation as built. In practice your CU schedule follows BS EN 61439-3 conventions, your circuit chart matches the actual installation, and your safety notices follow the BS standard for that label type.',
   },
   {
     id: 5,
     question:
       'The containment schedule shows 25 mm PVC conduit for the upstairs lighting drops. You discover the joist depth is only 100 mm and the conduit will not fit perpendicular through the joists. Correct first action?',
     options: [
-      'At least every 14 months, or every 6 months for certain specified processes',
+      'Drill the joists out to a larger diameter so the 25 mm conduit passes through perpendicular.',
       'Stop and raise an RFI — joist depth is a structural constraint, the designer needs to resolve the route.',
-      'Environmental conditions, usage frequency, instrument stability, regulatory requirements, and criticality of measurements',
-      'It softens ligaments and increases joint laxity, making the spine and pelvis more vulnerable to injury from manual handling',
+      'Substitute 20 mm conduit yourself, since a smaller size will clear the joist depth.',
+      'Notch the top of the joists deep enough to drop the conduit in from above.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'You are taking off the kitchen ring final. Schedule says 4 sockets + 2 FCUs (washing machine + dishwasher). You measure the route at 35 m. What is the minimum back-box and accessory take-off for the kitchen ring?',
     options: [
-      'A web-based tool that helps small businesses carry out COSHH assessments and identify control measures',
-      'A spur, broken ring, or high-resistance joint at a socket — investigation required',
+      '4 socket plates + 2 FCU plates only — the boxes and fixings come as standard with the plates.',
+      '6 boxes + 6 plates + exactly 35 m of 2.5 mm² T&E — order precisely what you measured.',
       '6 boxes + 4 socket plates + 2 FCU plates + ~42 m of 2.5 mm² T&E (35 m × 1.20 routing) + grommets, fixings, sleeving.',
-      'The maximum concentration of an airborne substance averaged over a reference period',
+      '4 boxes + 4 socket plates + ~42 m of 2.5 mm² T&E — the two FCUs spur off existing boxes.',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,16 +167,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'BS 7671 Reg 421.1.7 (A4:2026 wording) covers AFDDs (Arc Fault Detection Devices) on AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The actual regulation language is:',
+      'Under BS 7671:2018+A4:2026, AFDDs (Arc Fault Detection Devices to BS EN 62606) on single-phase AC final circuits supplying socket-outlets ≤ 32 A are a MANDATORY requirement in which premises?',
     options: [
-      'Verify the reading manually against BS 7671 Table 41.6 at the actual conductor temperature, and record a C2 observation if it genuinely fails',
-      'First 10 A at full demand + 30 percent of remaining nameplate + 5 A for the cooker socket if integrated. Result for a 7 kW (30 A) cooker = around 16 A typical demand.',
-      'Alarm responses notify and may trigger corrective actions; safety shutdowns override normal operation to protect life and property',
-      'Recommended (the regulation uses recommending language; it strengthens to a requirement only in Higher-Risk Residential Buildings under the Building Safety Act 2022 framework).',
+      'Every dwelling without exception, regardless of building type or occupancy.',
+      'Only commercial and industrial premises, never any form of residential building.',
+      'Only where the local DNO specifically requests them as a condition of connection.',
+      'Higher-Risk Residential Buildings, HMOs, purpose-built student accommodation and care homes.',
     ],
     correctAnswer: 3,
     explanation:
-      'Reg 421.1.7 (A4:2026) recommends AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs / Houses in Multiple Occupation, sleeping accommodation and care homes, supporting fire-safety guidance treats AFDDs as effectively required practice. The CU schedule must reflect the device choice — AFDD/RCBO combo devices are roughly twice the cost of plain RCBOs, so the take-off has to allow for them where they are specified.',
+      'A4:2026 makes AFDDs a mandatory requirement for single-phase AC final circuits supplying socket-outlets ≤ 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. In ordinary dwellings they are recommended rather than required. AFDD/RCBO combo devices are roughly twice the cost of plain RCBOs, so the take-off must allow for them where these premises types apply.',
   },
   {
     id: 8,
@@ -184,9 +184,9 @@ const quizQuestions = [
       'The drawing pack includes a single-line schematic, a 1:50 floor-plan layout and four schedules. What is the right reading order for a take-off?',
     options: [
       'Schematic to understand circuit logic → layout to confirm physical route → schedules to confirm material specifics → cross-check all three for consistency before ordering.',
-      '"At the secondary substation transformer at the end of your street, where 11 kV is converted to 400 V three-phase / 230 V single-phase, then a service cable feeds your cut-out"',
-      'Corrosion — white deposits suggest zinc corrosion (galvanic), green deposits indicate copper oxidation in the presence of moisture',
-      'Regularly throughout the apprenticeship to identify KSBs that lack sufficient evidence, allowing time to seek out appropriate activities',
+      'Schedules first to place the order, then the layout and schematic only if a problem arises on site.',
+      'Layout first to count accessories, then order straight away — the schedules just repeat the same information.',
+      'Whichever document is on top of the pack — the reading order makes no difference to the take-off.',
     ],
     correctAnswer: 0,
     explanation:

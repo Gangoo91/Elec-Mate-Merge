@@ -9,16 +9,16 @@ export interface QuizQuestion {
 export const rcdMaintenanceQuizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'How often should RCD test buttons be operated by building users?',
+    question: 'How often does the BS 7671 RCD instruction notice tell building users to press the test button?',
     options: [
       'Annually',
-      'Monthly',
+      'Six-monthly',
       'Weekly',
       'Quarterly',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 recommends monthly test button operation by users to verify basic RCD functionality and maintain user familiarity with the device.',
+      'The RCD instruction notice required by BS 7671 Regulation 514.12.2 tells users to test the device six-monthly by pressing the test button, then manually switch it back on.',
   },
   {
     id: 2,
@@ -104,7 +104,7 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     options: [
       'Complete failure to trip at any test current',
       'Trip time of 250ms at rated current',
-      'Slight discoloration of housing',
+      'Slight discolouration of housing',
       'Occasional nuisance tripping',
     ],
     correctAnswer: 0,
@@ -113,12 +113,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
   },
   {
     id: 9,
-    question: 'How should environmental conditions be recorded during RCD maintenance?',
+    question: 'How should ambient temperature and humidity be recorded during RCD maintenance?',
     options: [
-      'Annual electrical testing with instruments',
+      'Only when a fault is suspected',
       'As part of routine maintenance records',
-      'Contact a qualified electrician immediately',
-      'Test button operation and emergency procedures',
+      'Verbally reported but never written down',
+      'Only by the manufacturer at point of sale',
     ],
     correctAnswer: 1,
     explanation:

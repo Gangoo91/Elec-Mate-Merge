@@ -43,12 +43,12 @@ const checks = [
     question:
       "You're terminating 2.5 mm² stranded core into a Hager RCBO. The senior electrician hands you a ferrule kit and says 'pick the right colour'. Which one?",
     options: [
-      "A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported",
-      "Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network",
-      "Blue — the standard DIN 46228-4 colour code for bootlace ferrules: red 1.0 mm², grey 0.75 mm², black 1.5 mm², blue 2.5 mm², grey 4.0 mm² (some makers use orange or grey here), yellow 6.0 mm², red 10.0 mm². For 2.5 mm² stranded, blue is the universal answer.",
-      "Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner",
+      "Red — under DIN 46228-4 red is the 2.5 mm² ferrule, the barrel sized to take a 2.5 mm² stranded core and crimp down onto it cleanly.",
+      "Blue — under DIN 46228-4, blue is the 2.5 mm² ferrule, sized to take the stranded core and crimp cleanly onto it.",
+      "Grey — grey is the 2.5 mm² ferrule in the DIN code, sitting between the black 1.5 mm² and the yellow 6.0 mm² in the sequence.",
+      "Black — black is the 2.5 mm² ferrule; it is the most common size on a domestic board so it gets the neutral black colour to match.",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "DIN 46228-4 is the German standard the whole European ferrule industry follows. The colour-by-CSA chart that matters most to a UK apprentice: black 1.5 mm², blue 2.5 mm², (grey/orange) 4.0 mm², yellow 6.0 mm², red 10.0 mm², blue 16.0 mm², yellow 25.0 mm², red 35.0 mm². Memorise the 2.5 / 4 / 6 / 10 line — they cover 90% of domestic and small commercial work.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "Hager's installation literature for a 6 kA RCBO specifies a torque of 2.5 Nm on the conductor terminal screws. You over-torque to 4 Nm. What's the consequence?",
     options: [
-      "Internal = report within your firm to the responsible person (H&S manager, contracts manager, director). External = report to a regulator (HSE for H&S, Environment Agency for pollution, local authority for some EHO matters, scheme body like NICEIC for installation defects). Most issues need both — internal first, then the firm\\\\\\\\\\\\\\\\'s responsible person decides on external.",
-      "Micro-expressions reveal genuine emotions that a person may be trying to conceal, providing empathic individuals with additional emotional data. Recognising a flash of fear or contempt that someone is hiding can help you respond to their actual emotional state rather than just their words",
-      "Over-torque deforms the screw thread and can crack or strip it; deforms the conductor strands; can split the bus-bar pocket on the RCBO; voids the manufacturer's warranty; and breaches BS 7671 526.1 (manufacturer's instructions form part of the 'durable mechanical strength' requirement). The terminal may pass test today but degrades faster than spec — fails on a future EICR.",
-      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
+      "It deforms the screw, strands and bus-bar pocket beyond their design envelope, voids the warranty and breaches BS 7671 526.1 — passing test today but degrading to fail a future EICR.",
+      "None — more torque always means a tighter, more reliable joint. The published value is a minimum, so exceeding it gives a better connection and there is no downside to going to 4 Nm.",
+      "The conductor is held more firmly, which improves continuity, but the extra force shortens the life of the torque driver itself — the consequence is on the tool, not the termination.",
+      "It trips the RCBO's internal mechanism — the terminal screws link to the trip linkage, so over-torquing them leaves the device permanently tripped and it must be reset before use.",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Over-torque is just as bad as under-torque. The terminal is engineered for a specific clamping force; exceeding it deforms the parts beyond their design envelope. UK consumer-unit terminals typically run 1.2 Nm (small accessory screws) to 3.5 Nm (larger CU bus-bar terminals). Always use a calibrated torque driver (preset Wera Click-Torque or similar) set to the manufacturer's value. BS 7671 134.1.1 (workmanship) and 526.1 both bite when over-torque damages the termination.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       "You're crimping a blue 2.5 mm² bootlace ferrule onto a stranded core. Why is a ratchet crimper the right tool and not a generic plier crimper?",
     options: [
-      "IQA Level 4 (Internal Quality Assurance) is the qualification for verifying assessment quality — you sample and second-mark other assessors' work to ensure consistency. Senior progression beyond TAQA L3. Typical course 5-10 days plus portfolio. Required for IQA roles at colleges and training providers, and for senior assessor positions. Can lead to EQA (External Quality Assurance) at L4 — the awarding body's own QA function.",
-      "Wind shear from neighbouring buildings. Domestic-scale turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles. In a typical suburban garden the turbine sits in turbulent air, the yield is well below the manufacturer's wind-tunnel claims, and the noise / vibration interface is poor. Even where the planning application succeeds, the energy yield often disappoints. Wind makes sense in open rural settings with tall masts; it does not make sense in suburban back gardens.",
-      "A ratchet crimper applies a controlled, repeatable force and won't release until the full crimp is completed — the ratchet only opens at the bottom of stroke. That guarantees full compression of the ferrule barrel onto the strands every time. A generic plier crimper depends entirely on the operative's hand strength and grip technique — under-crimps are common, the ferrule can pull off in service. BS 7671 526.1 'durable mechanical strength' is what's at stake.",
-      "A voltage indicator that complies with HSE Guidance Note GS38 — purpose-built for proving dead, not a multimeter. Features: physically robust, non-current-limiting fuse, finger barriers, suitable probes, low loop impedance through the indicator. A multimeter on the wrong setting can give a false dead reading; GS38 indicators are designed to fail safe.",
+      "A plier crimper is actually preferred because it lets you feel the resistance and judge compression by hand — the ratchet removes that feedback, so an experienced electrician gets a better crimp.",
+      "There is no real difference — both squeeze the ferrule onto the strands, so the choice comes down to whichever is in the pouch; the ratchet is just heavier and slower.",
+      "A ratchet crimper applies a controlled, repeatable force and won't release until full compression — unlike a plier crimper, which depends on hand strength and can under-crimp.",
+      "A ratchet crimper grips the ferrule but leaves it loose enough to slide off again for re-use, whereas a plier crimper permanently deforms it — so the ratchet is chosen mainly to save on ferrules.",
     ],
     correctIndex: 2,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "BS 7671 Reg 526.1 covers connections between conductors and equipment. How does the choice of crimping tool affect compliance?",
     options: [
-      "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
-      "Directly. 526.1 requires 'durable electrical continuity and adequate mechanical strength'. A ratchet crimper applied to a correctly-sized ferrule produces a controlled, repeatable, fully-compressed connection that holds the strands firmly under thermal cycling. A pliers-style crimp varies with operator strength, gives inconsistent compression, and the connection can loosen — failing both legs of 526.1 (continuity drifts up, mechanical strength inadequate).",
-      "No. The right to join (or not join) a trade union is protected by the Trade Union and Labour Relations (Consolidation) Act 1992. Employers cannot dismiss, demote, refuse to hire, or treat less favourably any worker because they're a trade union member or because they take part in lawful trade union activities. Anti-union discrimination is unlawful.",
-      "By providing an installation earth electrode connected to the main earthing terminal of the installation by a protective conductor complying with Regulation 544.1.1, used as the means of earthing for the charging point protective conductor contact. The earth electrode resistance is determined per Annex A722.3 to ensure the MET-to-earth voltage does not exceed 70 V RMS under a PEN open-circuit fault.",
+      "It doesn't — 526.1 only governs the screw torque at the terminal, so the crimp at the conductor end is outside its scope and the choice of crimper is a workmanship preference, not compliance.",
+      "Directly — 526.1 needs durable continuity and adequate mechanical strength, which a ratchet crimp delivers consistently but a pliers crimp can't, varying with operator strength.",
+      "Only on stranded conductors above 25 mm² — below that size the crimp tool makes no difference to 526.1 because small ferrules carry too little current to loosen, so a plier crimp is fully compliant.",
+      "It affects appearance but not compliance — a hand crimp looks untidy but still meets 526.1 because the terminal screw provides all the required mechanical strength once tightened.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "Which combination of crimper types covers an apprentice's typical termination range from 0.5 mm² to 50 mm²?",
     options: [
-      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
-      "Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development",
-      "Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.",
-      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
+      "A single self-adjusting ratchet crimper — modern self-adjusting tools cover the whole 0.5 to 50 mm² range from one handle, so an apprentice needs only the one crimper for every termination.",
+      "Two plier crimpers — a small one for ferrules and a large one for lugs. Plier crimpers flex to suit any size, so two of them span the full range without needing a hydraulic tool.",
+      "Three crimpers — a ratchet H-die for ferrules and small lugs (0.5–6 mm²), a hex-die ratchet for compression lugs (10–25 mm²), and a hydraulic for the large stuff (25–240 mm²).",
+      "A hydraulic crimper on its own — because it can be set to any pressure, one hydraulic tool with a full die set handles everything from a 0.5 mm² ferrule up to a 50 mm² lug, making smaller crimpers redundant.",
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       "When stripping the outer sheath of an SWA (steel wire armoured) cable, what's the right tool?",
     options: [
-      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
-      "Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle",
-      "Set the meter to INRUSH mode. Clamp around one phase (or the L of a single-phase motor). Press start to arm the capture. Operate the load (start the motor). The meter captures the peak current in the first 100 ms after the rising edge of current — typically 6–10× the running current for an induction motor, higher for HVAC compressors. Useful for diagnosing nuisance trips on an undersized breaker (the inrush exceeds the magnetic trip threshold on a Type B breaker; replace with Type C or D for high-inrush loads).",
-      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
+      "An auto-adjusting wire stripper — the same tool used for individual cores. Set it to the SWA diameter and it removes the outer sheath in one squeeze without touching the armour beneath.",
+      "A pair of side cutters — nibble round the sheath in short cuts, then peel it back. The flush blade gives a clean edge and there is no risk of reaching the inner cores.",
+      "A junior hacksaw — score right round the sheath with the blade, then snap it off. The fine teeth cut the PVC cleanly and stop short of the steel armour.",
+      "A rotary cable stripper — sized to the SWA outer diameter, it runs cleanly around the sheath and exposes the armour without scoring the inner cores, where a knife risks cutting through.",
     ],
     correctAnswer: 3,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       "Why does the standard DIN 46228-4 ferrule colour code matter on a panel build?",
     options: [
-      "Three reasons. (1) Speed of selection — colour-coded ferrules let you grab the right size at a glance from a sorted ferrule kit. (2) Inspection — supervisor or QA can check at a glance that the ferrule colour matches the conductor CSA on every termination. (3) Standardisation — DIN 46228-4 is recognised across Europe, so any supplier's ferrules match any other's. The colour code IS the inspection mechanism.",
-      "Yes — apprentices are workers and Reg 15 applies in full. The competence duty in Reg 15(1)(a) is satisfied because apprentices are 'in the process of obtaining' the competence (which is why they're always supervised). The report-hazards duty (Reg 15(1)(b)) and the co-operation duty (Reg 15(1)(c)) apply identically to apprentices and to fully-qualified electricians.",
-      "Main protective bonding equalises potential between extraneous-conductive-parts (gas, water, structure) and the MET. The earthing conductor connects the MET back to the source earth (PEN, sheath, or local electrode) so fault current can actually return to the source — without it, no current flows and no disconnection happens.",
-      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "Speed and inspection — colour-coded ferrules let you grab the right size at a glance, and a supervisor can verify the colour matches the conductor CSA across a whole panel instantly.",
+      "The colour identifies which phase the conductor belongs to — brown, black and grey ferrules mark L1, L2 and L3, so the colour code is really a phase-identification system rather than a sizing one.",
+      "The colour shows the current rating the ferrule can carry — a higher-rated circuit needs a 'hotter' colour, so the code tells the inspector the maximum load each termination is good for.",
+      "The colour denotes the insulation voltage rating of the ferrule collar — blue for 230 V, red for 400 V — so the code confirms the ferrule is rated for the circuit it sits on.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "A preset Wera Click-Torque screwdriver set to 2.5 Nm — what does the 'click' mean physically?",
     options: [
-      "Stop immediately. Re-isolate at the correct point. Prove dead again. Investigate why the original isolation was incomplete (wrong device locked off, back-fed circuit, alternative supply source, parallel CPC path, induced voltage). Document the near-miss.",
-      "The set torque has been reached. Inside the handle is a calibrated spring-loaded cam mechanism. As torque rises the cam loads the spring; at the preset value the cam slips and you feel/hear an audible click and a tactile drop in resistance. That signals 'stop turning' — keep going past the click and you over-torque the connection.",
-      "Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations",
-      "Batteries can respond to frequency deviations within milliseconds (compared to seconds or minutes for conventional generators), injecting or absorbing power almost instantaneously to stabilise the grid frequency at 50 Hz — this fast response is increasingly critical as intermittent renewables replace conventional synchronous generators that provided inherent inertia",
+      "The screw has reached the bottom of its thread — the click is the screw head seating against the terminal, confirming the screw is fully home rather than any particular torque figure.",
+      "The set torque has been reached — a spring-loaded cam slips at the preset value, giving an audible click that signals 'stop turning'; pushing past it over-torques the connection.",
+      "The driver has slipped (cammed out) of the screw head — the click warns you the tip has lost engagement and you should reposition before the screw is damaged.",
+      "The tool has reached its maximum capacity and locked out to protect itself — the click means you have exceeded the driver's range and must switch to a larger tool to finish the joint.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       "Why do consumer-unit manufacturers (Hager, Schneider, Wylex) publish specific torque values in their install literature, and why does it matter to an apprentice?",
     options: [
-      "HASAWA s.2 requires every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. Section 2(2)(a) explicitly requires the provision of safe systems of work, and a clear management structure with defined supervisory responsibilities is part of that. An employer who can't say who supervises whom is in breach of s.2.",
-      "Starting each week by asking your team: \\\\\\\"What obstacles are you facing that I can help remove?\\\\\\\" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves",
-      "Because the terminal is engineered to clamp at a specific force range — too little, the conductor isn't held firmly and the joint runs hot; too much, the parts deform and crack. The published value is the engineering specification. BS 7671 134.1.1 says installations must comply with manufacturers' instructions; ignoring the published torque value breaches 134.1.1 directly. NICEIC / NAPIT scheme assessments check this at audit.",
-      "WEEE removed during install or repair must be segregated from general waste and routed to an Approved Authorised Treatment Facility (AATF) for recovery and recycling. The waste producer (you or your employer) holds the Duty of Care under the Environmental Protection Act 1990 to ensure the waste is properly described, transferred to an authorised waste carrier, and accompanied by a waste transfer note that is retained for at least two years. Many electrical wholesalers operate as WEEE collection points under the Distributor Take-Back Scheme.",
+      "It is a sales aid — manufacturers publish a torque value so installers feel the product is precision-engineered; the figure is advisory only, so an experienced electrician can tighten by feel.",
+      "The value tells you how much current the terminal can carry — a higher torque rating means a higher-rated terminal, so the published figure is really a current spec dressed up as a torque number.",
+      "The terminal is engineered to clamp at a specific force range — too little runs hot, too much cracks the parts — so the published value is the spec, and ignoring it breaches BS 7671 134.1.1.",
+      "It sets the warranty period — the torque figure is the manufacturer stating how long the terminal is guaranteed for, so following it extends the warranty rather than affecting joint integrity.",
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       "An apprentice is prepping the end of a 4 mm² stranded conductor for terminating into a Schneider isolator. Which tool sequence gives a tidy, code-compliant termination?",
     options: [
-      "A material breach is one which an inspector reasonably opines is sufficiently serious that it warrants written notification — letter, notice or report. The HSE's Enforcement Management Model is the published decision tool. Once a material breach is identified, FFI invoicing starts from the inspector's first time spent on the matter.",
-      "Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.",
-      "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
-      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "(1) Twist the stranded core tight by hand. (2) Fold it back on itself to double the thickness. (3) Insert into the terminal. (4) Tighten hard with a manual screwdriver until it won't turn. Folding the strands gives a bigger contact area than any ferrule.",
+      "(1) Strip the insulation with a Stanley knife. (2) Tin the strands with solder so they hold together. (3) Insert into the terminal. (4) Tighten by feel. Soldering the end is the tidiest way to stop a stranded core splaying in the screw clamp.",
+      "(1) Crop the cable with side cutters. (2) Strip with the same side cutters. (3) Insert the bare strands. (4) Nip the screw up with whatever driver is to hand. A single tool for the whole job keeps things fast on a busy board.",
+      "(1) Crop square to length. (2) Auto-strip the insulation without nicking strands. (3) Slip on a grey 4 mm² ferrule and ratchet-crimp. (4) Insert and torque with a preset driver to the maker's value.",
     ],
     correctAnswer: 3,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "BS 7671 Reg 134.1.1 — 'good workmanship by competent persons and proper materials shall be used in the erection of the electrical installation'. How does this connect to the cable-prep toolkit?",
     options: [
-      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
-      "Three reasons. (1) Density — many terminations in a small space; many opportunities for one to be wrong. (2) Heat — control electronics generate heat; cooling is often inadequate; thermal cycling stresses components. (3) Vibration — panels in plant rooms and on walls near equipment vibrate; vibration loosens terminations over time. Approach: always work on de-energised, isolated panels under permit-to-work where applicable; identify each component's function from the panel schedule; check terminations with thermal imaging while running; replace components by part number from the schedule; retest each output to verify correct operation.",
-      "It marks the entry as absolute hazardous waste — always hazardous regardless of concentration or test result. Non-asterisked entries are non-hazardous; entries with mirror codes (one starred, one not) require a hazardous-property assessment on the specific waste before deciding which code applies. The List of Waste regulations and the Environment Agency technical guidance set out the assessment methodology.",
-      "Roughly 60-100 GBP per AFDD-RCBO device times 10 circuits = 600-1000 GBP additional cost over standard RCBO-only protection. Labour is similar (each AFDD-RCBO replaces an RCBO, same install effort). Total upgrade premium for AFDD-protected CU vs RCBO-only typically 600-1200 GBP. Worth quoting on every domestic CU change as a \\\\\\\"premium fire-protection option\\\\\\\" — many customers will pay the premium when the value is explained.",
+      "Directly — the right cable-prep tools deliver the consistent, manufacturer-spec terminations that 'good workmanship' demands; the wrong tools produce work that fails 134.1.1 even if it tests OK.",
+      "It doesn't connect at all — 134.1.1 is about the competence of the person, so it is satisfied by the operative holding the right qualification; the tools they use are irrelevant.",
+      "Only loosely — 134.1.1 is an aspirational statement with no enforcement behind it, so the toolkit is good practice rather than compliance, and an EICR never checks workmanship against it.",
+      "Through materials only — 134.1.1 covers 'proper materials', so it governs the cable and accessories you choose, not the tools you prepare them with; tool selection sits outside it entirely.",
     ],
     correctAnswer: 0,
     explanation:

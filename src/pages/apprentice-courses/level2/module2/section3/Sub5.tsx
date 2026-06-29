@@ -172,9 +172,9 @@ const quizQuestions = [
     question: 'Best initial response to a strong burning smell from a consumer unit:',
     options: [
       'Isolate the supply, lock-off, evacuate if heavy smoke, then investigate',
-      'Only if trained, it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
-      'Eliminate where possible, guard remaining hazards, train staff, provide PPE',
-      'To provide fixed reference points for accurate positioning',
+      'Open the unit straight away to see which circuit is at fault before isolating',
+      'Reset the main switch a few times to see if the smell clears on its own',
+      'Leave it running and advise the customer to monitor it overnight',
     ],
     correctAnswer: 0,
     explanation:

@@ -25,112 +25,112 @@ const inlineChecks = [
     question:
       "Emergency Power Supply (EPS) — what does it do in a hybrid PV+BESS install?",
     options: [
-      "Nothing",
-      "EPS is the functional implementation of Chapter 82 island mode. When the DNO supply is lost, the EPS contactor disconnects the install from DNO and the hybrid inverter switches to grid-forming mode — generating V and frequency for the protected loads from PV (during day) + BESS. When DNO restored, the inverter syncs back to DNO and the EPS contactor recloses. Switchover time: 20-200 ms typical",
-      "Customer manually starts it",
-      "Replaces the grid permanently",
+      "The EPS port has no real function in a grid-connected hybrid install",
+      "On DNO loss it disconnects, goes grid-forming, powers protected loads, then re-syncs on return",
+      "It must be started manually by the customer before any backup power flows",
+      "It permanently replaces the grid connection once it has been configured",
     ],
     correctIndex: 1,
     explanation:
-      "EPS = Emergency Power Supply. The hybrid inverter has an EPS-output port (separate from the AC-OUT port) that powers a partition of protected loads during grid outage. Modern UK hybrid inverters with EPS: GivEnergy Gen3 (EPS output on dedicated terminals); Tesla Powerwall 2/3 (Backup Gateway 2/3); Sigenergy SigenStor (EPS-capable); SolarEdge Energy Hub (Backup Interface). Switchover: typical 20-100 ms (fast enough for most appliances; some sensitive electronics may need UPS for true uninterruptible). Cert evidence bundle records the EPS configuration + protected-load partition.",
+      "EPS = Emergency Power Supply. On loss of the DNO supply the inverter goes grid-forming, powering protected loads from PV and BESS. The hybrid inverter has an EPS-output port (separate from the AC-OUT port) that powers a partition of protected loads during grid outage. Modern UK hybrid inverters with EPS: GivEnergy Gen3 (EPS output on dedicated terminals); Tesla Powerwall 2/3 (Backup Gateway 2/3); Sigenergy SigenStor (EPS-capable); SolarEdge Energy Hub (Backup Interface). Switchover: typical 20-100 ms (fast enough for most appliances; some sensitive electronics may need UPS for true uninterruptible). Cert evidence bundle records the EPS configuration + protected-load partition.",
   },
   {
     id: 'm4s6-anti-islanding',
     question:
       "Anti-islanding vs grid-forming — what's the difference in hybrid inverter operation?",
     options: [
-      "Same thing",
-      "Anti-islanding (grid-following / grid-tied mode): inverter monitors DNO V and freq; tracks the grid; trips off-grid if DNO disappears (EREC G98 / G99 / BS EN 50549-1 requirement). Used for direct feeding mode in Chapter 82 terms. Grid-forming (island / off-grid mode): inverter GENERATES V and freq itself; supplies loads from local sources; not following any external reference. Used for island mode. The EPS function switches the inverter between these two modes during DNO loss / restoration",
-      "Customer chooses",
-      "No difference",
+      "They are simply two names for the same single inverter mode",
+      "Anti-islanding tracks the DNO and trips on grid loss; grid-forming generates its own V and frequency",
+      "The mode in use is selected by the customer within the app",
+      "There is no real functional difference between the two modes",
     ],
     correctIndex: 1,
     explanation:
-      "Anti-islanding vs grid-forming are the two inverter modes: ANTI-ISLANDING (grid-following / grid-tied) — inverter MEASURES DNO V/freq and tracks/synchronises; trips off-grid on DNO loss (EREC G98 / G99 anti-islanding test per BS EN 50549-1 / EN 62116). GRID-FORMING (island) — inverter GENERATES V/freq itself; sets the reference for the local loads; not following anything external. The EPS contactor + inverter logic handles the mode transition. Modern hybrid inverters with EPS: bidirectional capability — switch from grid-following to grid-forming on DNO loss (20-100 ms typical); switch back on DNO restoration (re-sync to DNO V/freq, then reclose EPS contactor).",
+      "Anti-islanding vs grid-forming are the two inverter modes, and EPS switches between them: ANTI-ISLANDING (grid-following / grid-tied) — inverter MEASURES DNO V/freq and tracks/synchronises; trips off-grid on DNO loss (EREC G98 / G99 anti-islanding test per BS EN 50549-1 / EN 62116). GRID-FORMING (island) — inverter GENERATES V/freq itself; sets the reference for the local loads; not following anything external. The EPS contactor + inverter logic handles the mode transition. Modern hybrid inverters with EPS: bidirectional capability — switch from grid-following to grid-forming on DNO loss (20-100 ms typical); switch back on DNO restoration (re-sync to DNO V/freq, then reclose EPS contactor).",
   },
   {
     id: 'm4s6-protected-load',
     question:
       "Hybrid PV+BESS with EPS — protected vs non-protected loads. Why partition?",
     options: [
-      "All loads protected",
-      "EPS-protected loads: a subset of the property's circuits wired through the hybrid inverter's EPS output. These continue to function during DNO outages. Typical UK partition: lighting circuit, fridge/freezer, essential sockets, heating controls, internet router. NON-protected loads: high-power circuits (electric shower, oven, kettle, EV charger, heat pump) that exceed the inverter's EPS output capacity. Partition reflects the inverter EPS rating + the BESS energy capacity for desired backup duration",
-      "Customer's choice only",
-      "Random",
+      "Every single circuit in the property is protected by the EPS output",
+      "Only a subset of circuits is wired through the EPS output; high-power loads stay non-protected",
+      "The partition is chosen by the customer with no technical limit at all",
+      "Circuits are assigned to the EPS at random during the installation",
     ],
     correctIndex: 1,
     explanation:
-      "Protected-load partition is critical because the EPS output is power-limited (typically 5-11 kW continuous, depending on inverter brand) and the BESS energy is finite (10-30 kWh typical). All-loads-protected would: (a) overload the EPS on high-power loads (e.g. electric shower 8 kW + oven 3 kW + kettle 3 kW = 14 kW peak exceeds typical 5-7 kW EPS); (b) deplete the BESS quickly (high-power loads). The partition selects loads worth backing up vs loads accepted to lose during outage. Typical UK partition: lighting + fridge/freezer + essential sockets + comms + heating controls = 0.5-2 kW total; backup duration 5-20 hours from BESS depending on load + capacity. Cert evidence bundle records the partition + the duration estimate.",
+      "The partition (typically lighting, fridge/freezer, comms, heating controls) is set by the EPS rating and BESS capacity. Protected-load partition is critical because the EPS output is power-limited (typically 5-11 kW continuous, depending on inverter brand) and the BESS energy is finite (10-30 kWh typical). All-loads-protected would: (a) overload the EPS on high-power loads (e.g. electric shower 8 kW + oven 3 kW + kettle 3 kW = 14 kW peak exceeds typical 5-7 kW EPS); (b) deplete the BESS quickly (high-power loads). The partition selects loads worth backing up vs loads accepted to lose during outage. Typical UK partition: lighting + fridge/freezer + essential sockets + comms + heating controls = 0.5-2 kW total; backup duration 5-20 hours from BESS depending on load + capacity. Cert evidence bundle records the partition + the duration estimate.",
   },
   {
     id: 'm4s6-eps-output-spec',
     question:
       "UK hybrid inverter EPS output specs — what's the typical capacity range and limitations?",
     options: [
-      "Same as grid output",
-      "Typical UK hybrid inverter EPS output: 3-11 kW continuous AC, depending on brand and model. GivEnergy Gen3: ~5 kW EPS continuous for the 5 kW model; ~7.6 kW for the 7.6 kW model. Tesla Powerwall 2: ~5 kW continuous + 7 kW peak via Backup Gateway. Tesla Powerwall 3: ~11.5 kW continuous. Sigenergy SigenStor: up to ~10 kW continuous per module. Limitations: short-circuit clearing capacity often lower than grid (1.5-2× rated typical); inrush current handling (motors, compressors) may need soft-start consideration",
-      "Always 100 kW",
-      "Customer's preference",
+      "EPS output always exactly matches the full grid-tied output rating of the inverter",
+      "Typically 3-11 kW continuous depending on brand, with lower fault-clearing and inrush limits than grid",
+      "EPS output is always rated at 100 kW regardless of the inverter size fitted",
+      "The EPS capacity is simply set by customer preference at the handover stage",
     ],
     correctIndex: 1,
     explanation:
-      "UK hybrid inverter EPS output 2025-2026: GivEnergy Gen3 5 kW / 7.6 kW / 10 kW models with matching EPS output. Tesla Powerwall 2 paired with Backup Gateway 2: ~5 kW continuous / 7 kW peak. Powerwall 3 (2024+): 11.5 kW continuous (industry-leading); supports DC-coupled mode. Sigenergy SigenStor: modular up to 10 kW per unit. Limitations to design around: (a) short-circuit clearing — EPS may not have the fault-current capacity for full grid behaviour; downstream OCPDs may operate slower than expected — needs Reg 411 disconnection-time analysis under EPS mode; (b) motor inrush — heat pump compressor / fridge motor inrush can exceed EPS continuous rating; soft-start or grouped-load management. Cert evidence bundle records the EPS spec.",
+      "UK hybrid inverter EPS output 2025-2026 (GivEnergy ~5-10 kW, Powerwall 3 ~11.5 kW): GivEnergy Gen3 5 kW / 7.6 kW / 10 kW models with matching EPS output. Tesla Powerwall 2 paired with Backup Gateway 2: ~5 kW continuous / 7 kW peak. Powerwall 3 (2024+): 11.5 kW continuous (industry-leading); supports DC-coupled mode. Sigenergy SigenStor: modular up to 10 kW per unit. Limitations to design around: (a) short-circuit clearing — EPS may not have the fault-current capacity for full grid behaviour; downstream OCPDs may operate slower than expected — needs Reg 411 disconnection-time analysis under EPS mode; (b) motor inrush — heat pump compressor / fridge motor inrush can exceed EPS continuous rating; soft-start or grouped-load management. Cert evidence bundle records the EPS spec.",
   },
   {
     id: 'm4s6-neutral-switching',
     question:
       "EPS implementation — how does Reg 826.1.1.2.2 neutral switching work in practice?",
     options: [
-      "Neutral doesn't switch",
-      "The EPS contactor (or backup gateway) is a 4-pole switch — all 4 conductors (L1/L2/L3/N for three-phase, or L/N for single-phase) disconnect from DNO during the transition. The inverter's EPS-output stage creates a NEW local neutral that is earth-bonded for the local install. Sequence: (1) inverter detects DNO loss; (2) EPS contactor opens (all 4 conductors); (3) inverter EPS-output stage activates with local N-E bonded; (4) protected loads now on EPS supply. Modern inverters handle this transparently",
-      "Customer's job",
-      "Only one conductor switches",
+      "The neutral conductor is never switched at all during the transition",
+      "The EPS contactor disconnects all conductors from DNO, and the inverter creates a new earth-bonded neutral",
+      "Neutral switching is left entirely for the customer to arrange",
+      "Only one conductor switches while the neutral stays bonded to the DNO",
     ],
     correctIndex: 1,
     explanation:
-      "EPS contactor is typically a 4-pole (single-phase install: 2-pole L+N; three-phase: 4-pole L1+L2+L3+N) switch-disconnector with synchronised contacts. Sequence on DNO loss: (1) inverter detects DNO V/freq excursion (BS EN 50549-1 anti-islanding window); (2) EPS contactor opens all conductors from DNO (typically 20-100 ms); (3) inverter switches from grid-following to grid-forming; (4) EPS-output stage activates with internal N-E bonding; (5) protected loads now supplied from BESS via inverter. Sequence on DNO restoration: (1) inverter detects DNO V/freq; (2) inverter syncs to DNO; (3) EPS contactor closes (with N-E bonding sequence per Reg 826.1.1.2.2); (4) install back to direct feeding mode. Modern hybrid inverters do this transparently — installer\'s job: verify the protected-load partition + EPS spec match the customer's needs.",
+      "As the loads transfer to EPS supply, the inverter creates a new local neutral. EPS contactor is typically a 4-pole (single-phase install: 2-pole L+N; three-phase: 4-pole L1+L2+L3+N) switch-disconnector with synchronised contacts. Sequence on DNO loss: (1) inverter detects DNO V/freq excursion (BS EN 50549-1 anti-islanding window); (2) EPS contactor opens all conductors from DNO (typically 20-100 ms); (3) inverter switches from grid-following to grid-forming; (4) EPS-output stage activates with internal N-E bonding; (5) protected loads now supplied from BESS via inverter. Sequence on DNO restoration: (1) inverter detects DNO V/freq; (2) inverter syncs to DNO; (3) EPS contactor closes (with N-E bonding sequence per Reg 826.1.1.2.2); (4) install back to direct feeding mode. Modern hybrid inverters do this transparently — installer\'s job: verify the protected-load partition + EPS spec match the customer's needs.",
   },
   {
     id: 'm4s6-rcd-island',
     question:
       "RCD operation in EPS island mode — does it work the same as direct feeding mode?",
     options: [
-      "Same",
-      "Yes, but with caveats. The local N-E bonding (per Reg 826.1.1.2.2) provides the reference for RCD operation in island mode — RCDs detect L-E or N-E imbalance. Caveats: (a) prospective fault current is lower in island mode (limited by inverter EPS capacity) — RCDs operate but disconnection times may be different vs grid mode; needs Reg 411 / 712.531.3.5.1 analysis under island conditions; (b) Type B RCD requirement (Reg 712.531.3.5.1) for PV inverter circuits still applies in island mode — DC residual current can still occur during EPS operation",
-      "Doesn't work",
-      "Customer's problem",
+      "It works identically, with no design considerations needed at all",
+      "Yes via the local N-E bond, but lower fault current means disconnection times need re-checking",
+      "RCDs cannot operate at all once the install is in island mode",
+      "RCD operation in island mode is solely the customer's responsibility",
     ],
     correctIndex: 1,
     explanation:
-      "RCDs work in EPS island mode because the local N-E bonding (Reg 826.1.1.2.2) provides the reference. But the design must account for: (a) prospective fault current is lower in island mode — inverter's EPS-output stage has limited fault-current capacity (typically 1.5-2× rated current); RCDs still detect residual current but DOWNSTREAM OCPDs may operate slower under lower available fault current — disconnection times per Reg 411 may need re-analysis; (b) Type B RCD requirement per Reg 712.531.3.5.1 applies in both modes — DC residual current is possible during EPS mode just as in grid mode. Cert evidence bundle records the RCD type + Reg 411 disconnection-time analysis under both modes.",
+      "The local N-E bond gives the reference, but the Type B RCD requirement also needs checking under island conditions. RCDs work in EPS island mode because the local N-E bonding (Reg 826.1.1.2.2) provides the reference. But the design must account for: (a) prospective fault current is lower in island mode — inverter's EPS-output stage has limited fault-current capacity (typically 1.5-2× rated current); RCDs still detect residual current but DOWNSTREAM OCPDs may operate slower under lower available fault current — disconnection times per Reg 411 may need re-analysis; (b) Type B RCD requirement per Reg 712.531.3.5.1 applies in both modes — DC residual current is possible during EPS mode just as in grid mode. Cert evidence bundle records the RCD type + Reg 411 disconnection-time analysis under both modes.",
   },
   {
     id: 'm4s6-commissioning',
     question:
       "EPS commissioning — what tests does the installer run before customer handover?",
     options: [
-      "None",
-      "Standard tests + EPS-specific tests: (1) BS EN 62446-1 PV commissioning (per Module 3.7); (2) manufacturer-specified EPS test — typically a controlled grid-loss simulation (open DNO main isolator while inverter active); verify EPS contactor opens within manufacturer spec time; verify inverter transitions to grid-forming mode; verify protected loads continue operating; verify backup duration estimate matches design; (3) DNO-restoration test — reclose DNO; verify inverter re-syncs; verify EPS contactor recloses; verify install returns to direct feeding; (4) Reg 411 / 712.531.3.5.1 RCD operation under both modes; (5) firmware version recorded",
-      "Customer commissions",
-      "Skip tests",
+      "No commissioning tests at all are needed for an EPS-equipped install",
+      "BS EN 62446-1 PV tests plus EPS-specific ones: grid-loss/restoration, switchover, RCD checks, firmware",
+      "The customer carries out the EPS commissioning entirely themselves",
+      "Standard tests are skipped, because the inverter simply self-certifies",
     ],
     correctIndex: 1,
     explanation:
-      "EPS commissioning extends BS EN 62446-1 with manufacturer-specific tests. Critical tests: (1) DNO loss simulation — open DNO main isolator with inverter active; measure switchover time (manufacturer spec 20-100 ms typical for fast EPS); verify protected loads continue; (2) DNO restoration — reclose DNO; verify inverter sync + EPS contactor close; (3) RCD operation under island mode — protected-load RCBOs should still trip on simulated L-E or N-E fault per Reg 411 disconnection time analysis; (4) firmware versions — hybrid inverters receive frequent firmware updates that can change EPS behaviour; record version at commissioning; (5) protected-load partition verification — open EPS, check ONLY protected circuits remain supplied. Cert evidence bundle records each test + manufacturer-spec compliance.",
+      "EPS commissioning covers simulated grid-loss and restoration, switchover timing, and protected-load and RCD checks in both modes. EPS commissioning extends BS EN 62446-1 with manufacturer-specific tests. Critical tests: (1) DNO loss simulation — open DNO main isolator with inverter active; measure switchover time (manufacturer spec 20-100 ms typical for fast EPS); verify protected loads continue; (2) DNO restoration — reclose DNO; verify inverter sync + EPS contactor close; (3) RCD operation under island mode — protected-load RCBOs should still trip on simulated L-E or N-E fault per Reg 411 disconnection time analysis; (4) firmware versions — hybrid inverters receive frequent firmware updates that can change EPS behaviour; record version at commissioning; (5) protected-load partition verification — open EPS, check ONLY protected circuits remain supplied. Cert evidence bundle records each test + manufacturer-spec compliance.",
   },
   {
     id: 'm4s6-firmware',
     question:
       "Hybrid inverter firmware updates — what's the installer / customer discipline?",
     options: [
-      "Never update",
-      "Modern hybrid inverters (GivEnergy, Tesla, Sigenergy, SolarEdge) receive periodic firmware updates over-the-air or via app. Updates can change EPS behaviour, anti-islanding parameters, BMS interaction, monitoring data. Discipline: (a) installer records firmware version at commissioning in the cert evidence bundle; (b) customer notified to allow automatic updates per manufacturer policy; (c) major firmware updates may trigger a re-commissioning verification — particularly for safety-critical changes (anti-islanding, EPS transitions); (d) the EICR-style periodic inspection (5-yearly) verifies the current firmware version + any firmware-related design changes",
-      "Customer's problem",
-      "Updates break installs",
+      "Firmware should never be updated once the install has been commissioned",
+      "Record the version at commissioning, allow updates per policy, re-verify after major updates",
+      "Firmware updates are entirely the customer's own problem to manage",
+      "Updates should be blocked, because they always break the installation",
     ],
     correctIndex: 1,
     explanation:
-      "Hybrid inverter firmware is the modern UK install\'s evolving software dimension. Updates: GivEnergy GivPortal pushes updates; Tesla updates via Wi-Fi; Sigenergy SigenCloud manages; SolarEdge monitoring portal. Updates can change: anti-islanding behaviour (BS EN 50549-1 compliance refinements); EPS switchover timing; BMS protocols (battery compatibility); monitoring data formats; protective trip thresholds. Discipline: record firmware version at commissioning; record at each EICR-style inspection; verify behaviour after major updates (e.g. spot-check EPS transition still works as designed). Cert evidence bundle has a firmware-version log column. Customer informed of the update lifecycle as part of the handover pack.",
+      "Re-verify safety-critical behaviour after major updates, and check the version at each periodic inspection. Hybrid inverter firmware is the modern UK install\'s evolving software dimension. Updates: GivEnergy GivPortal pushes updates; Tesla updates via Wi-Fi; Sigenergy SigenCloud manages; SolarEdge monitoring portal. Updates can change: anti-islanding behaviour (BS EN 50549-1 compliance refinements); EPS switchover timing; BMS protocols (battery compatibility); monitoring data formats; protective trip thresholds. Discipline: record firmware version at commissioning; record at each EICR-style inspection; verify behaviour after major updates (e.g. spot-check EPS transition still works as designed). Cert evidence bundle has a firmware-version log column. Customer informed of the update lifecycle as part of the handover pack.",
   },
 ];
 
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       "Customer asks: 'When the grid goes off, what happens to my install?' Their system: 6 kWp PV + GivEnergy 9.5 kWh BESS + Gen3 hybrid inverter with EPS configured.",
     options: [
-      "Everything shuts down",
-      "EPS activates automatically. The hybrid inverter detects DNO loss (anti-islanding within 100 ms per EREC G98 / BS EN 50549-1); EPS contactor opens to disconnect DNO; inverter switches from grid-following to grid-forming; protected loads (typically lighting, fridge, sockets, comms) continue operating from BESS. PV continues generating during day, charging BESS and supplying loads. Backup duration: 9.5 kWh BESS / 1 kW protected-load average = ~9 hours of total backup (longer if PV is producing). When grid restored: inverter re-syncs; EPS contactor recloses; install back to direct feeding mode",
-      "Customer's problem",
-      "Inverter explodes",
+      "The whole install shuts down until the grid returns, as anti-islanding disconnects everything",
+      "EPS activates automatically — the DNO drops out and protected loads run from BESS and PV",
+      "The PV continues exporting to the grid to support the wider network during the outage",
+      "Only the BESS runs the whole house, with the PV array isolated entirely for safety",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       "Customer wants ALL their loads on EPS protection: 5 kW heat pump + 7 kW EV charger + electric shower + cooker + lighting + sockets. 5 kW EPS rating. Feasible?",
     options: [
-      "Yes always",
-      "Not as a single protected partition — 5 kW EPS can't supply 15+ kW of simultaneous high-power load. Options: (a) PARTITION the protected loads — lighting + fridge + sockets + comms (~1 kW typical) protected; heat pump / EV / shower / cooker non-protected (accept they're off during outage); (b) LOAD SHED / scheduled — protect everything but allow only one high-power load at a time via energy-management logic; (c) UPGRADE INVERTER — Tesla Powerwall 3 (11.5 kW EPS) or multiple GivEnergy units in parallel. Cert evidence bundle records the chosen approach",
-      "Inverter handles it magic",
-      "No options",
+      "Yes — the inverter will draw extra from the grid to cover the shortfall during an outage",
+      "Yes — the BESS can momentarily supply well above the EPS rating to cover all loads",
+      "Yes — provided the protected loads are spread across both phases of the supply",
+      "No, not as one partition — protect only small loads, add load-shedding, or upgrade the inverter",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "5 kW EPS rating doesn't cover 15+ kW combined high-power load. Options ranked by cost / complexity: (a) PARTITION — simplest. Protect only the small-load circuits (lighting, fridge, comms, ~1 kW). Heat pump + EV + shower + cooker stay non-protected (off during outage). Backup duration good. Cost: just the installation labour to wire the partition. (b) LOAD SHED — energy-management logic restricts to one high-power load at a time during EPS mode. Some hybrid inverters support this (Sigenergy, advanced GivEnergy with home automation). Cost: ~£500-£1,500 add. (c) UPGRADE INVERTER — Tesla Powerwall 3 11.5 kW EPS; or 2× GivEnergy Gen3 in parallel for 10 kW; or larger BESS to extend duration. Cost: ~£3,000-£8,000 add. Cert evidence bundle records the partition / shed / upgrade decision.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       "EPS commissioning — installer simulates DNO loss by opening the main isolator. Hybrid inverter takes 800 ms to transition. Pass or fail?",
     options: [
-      "Pass",
-      "FAIL — exceeds typical fast-EPS manufacturer spec (20-100 ms). 800 ms is slow enough to cause: lighting flicker / momentary off (visible to customer); IT equipment reboot (PC, router, modem dropping out); some appliances (microwaves, satellite boxes) needing manual reset after outage. Investigate: firmware version (may need update); EPS configuration in app; specific manufacturer specification (some inverters are slower EPS by design — Tesla Powerwall 2 transitions ~ 200 ms; Powerwall 3 < 100 ms). May be acceptable for the customer's needs but document the actual time in cert evidence bundle",
-      "Always pass",
-      "Customer's problem",
+      "Fail — 800 ms is far slower than the 20-100 ms fast-EPS spec; investigate firmware and config",
+      "Pass — any transition under one full second is within the standard EPS limit",
+      "Pass — switchover time is not a commissioning test item for an EPS system",
+      "Fail — the inverter must be replaced outright, as 800 ms cannot be corrected",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EPS switchover time varies by manufacturer: fast EPS (GivEnergy Gen3, Sigenergy, Tesla Powerwall 3) < 100 ms; slower EPS (older systems, Tesla Powerwall 2 ~200 ms). 800 ms is materially slower than modern fast-EPS spec — would cause visible / audible disruptions to most appliances. Investigate: (1) firmware version — update if available; (2) EPS configuration parameters; (3) protected-load complexity (some inrush events delay the inverter's transition); (4) manufacturer-specific spec — what's the inverter's documented spec? If 800 ms is the documented spec for this inverter brand / model, customer's expectations need management. Cert evidence bundle records the actual measured switchover time + customer agreement.",
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       "EPS island mode: customer's protected loads have RCBOs. Simulated L-E fault on a protected circuit. RCBO trips. Pass or fail?",
     options: [
-      "Always pass",
-      "PASS if the disconnection time meets Reg 411 / 712.531.3.5.1 limits. RCBOs operate on residual current (L-E or N-E imbalance) — the local N-E bonding per Reg 826.1.1.2.2 provides the reference. Test: open the DNO main isolator (force EPS mode); simulate L-E fault on a protected circuit via RCD tester; verify RCBO trips within the specified disconnection time. If trip time exceeds Reg 411 limits (typically ≤0.4 s for final circuits ≤32 A, ≤5 s for distribution), investigate downstream OCPD coordination under reduced inverter fault current",
-      "Fail — RCDs don't work in island",
-      "Customer's choice",
+      "Fail — residual-current devices cannot operate in island mode because there is no earth reference",
+      "Pass automatically — once an RCBO is fitted, no island-mode verification is needed",
+      "Pass if the disconnection time meets Reg 411 limits under the inverter's limited fault current",
+      "Fail — RCBOs must be swapped for Type B RCDs before island operation is allowed",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EPS island mode RCD test: open DNO main isolator + simulate L-E fault on protected circuit. RCBO should trip per Reg 411 disconnection-time limits. The local N-E bonding (Reg 826.1.1.2.2) provides the reference. Caveats: (a) inverter fault current is LIMITED — typically 1.5-2× rated continuous (e.g. 5 kW EPS → ~10-15 kW fault current capacity); downstream OCPDs may operate slower under lower available fault current; (b) Type B RCD per Reg 712.531.3.5.1 still required where applicable; (c) the test must be done at commissioning AND at the 5-yearly EICR-style inspection. Cert evidence bundle records the test result for both modes (direct feeding + island).",
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       "Customer's GivEnergy hybrid inverter receives an OTA firmware update overnight. Customer reports the EPS switchover feels different (longer, audible relay click). What to do?",
     options: [
-      "Ignore",
-      "Document the change. Check GivEnergy release notes for the firmware update — what changed? If EPS behaviour deliberately modified (e.g. anti-islanding tightening per BS EN 50549-1 refinement), update the customer information pack to reflect; the cert evidence bundle records the firmware version + behaviour log. If unexpected change, contact GivEnergy support — may be a regression bug being fixed in a later update. Re-test EPS behaviour to verify it still meets Reg 826.1.1.x requirements. The 5-yearly EICR-style inspection captures the firmware version at that point",
-      "Reverse the update",
-      "Customer's fault",
+      "Tell the customer to ignore it, as firmware updates never change EPS behaviour",
+      "Immediately roll the firmware back without first checking what actually changed",
+      "Document it, check the release notes, re-test EPS, and escalate if it now non-conforms",
+      "Disable automatic updates permanently so the inverter behaviour can never change",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Hybrid inverter firmware can change EPS behaviour materially. The competent install workflow: (1) record firmware version at commissioning in cert evidence bundle; (2) customer notified to allow automatic updates per manufacturer policy; (3) when customer reports behaviour change, check release notes / changelog; (4) if behaviour is now non-conforming (e.g. trip times no longer meet Reg 411), escalate to manufacturer support; (5) periodic EICR captures the current firmware. Tesla, GivEnergy, Sigenergy, SolarEdge all push firmware updates regularly (monthly to quarterly typical). The customer information pack mentions the update lifecycle.",
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       "How does the EPS protected-load partition affect the EREC G98 / G99 application?",
     options: [
-      "No effect",
-      "EREC G98 / G99 governs GRID-CONNECTED operation (direct feeding mode in Chapter 82 terms). EPS / island mode is by definition disconnected from grid — no DNO involvement. So the EPS partition doesn't change the EREC application. However: the inverter\'s rated AC output (used in EREC capacity calculation) is the GRID-TIED rating, not the EPS rating. For a 5 kW hybrid inverter: G98 if ≤ 16 A (3.68 kW typical single-phase); G99 if > 16 A. EREC paperwork is independent of EPS configuration",
-      "Need new EREC",
-      "Customer's choice",
+      "No effect — EREC governs grid-connected operation, using the inverter's grid-tied AC rating",
+      "Adding an EPS partition always pushes the install from G98 straight into G99 territory",
+      "A separate EREC application is required specifically for the protected-load partition",
+      "The EREC capacity is calculated from the EPS rating rather than the grid-tied rating",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EREC G98 / G99 / G100 governs grid-connected generation. The PEI's direct feeding mode is grid-connected; EPS / island mode is by definition NOT grid-connected (anti-islanding ensures no backfeed). So the EREC application is based on the grid-tied AC output rating of the inverter (typically the higher of grid-tied and EPS ratings — usually they\'re the same). The protected-load partition is an internal PEI design decision; the DNO doesn\'t care about it. Cert evidence bundle includes both: EREC paperwork (grid-tied capacity) + PEI design pack (EPS partition).",
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       "Customer experiences a grid outage during the day. PV is producing 4 kW; protected loads need 0.8 kW; BESS at 60% SoC. What happens?",
     options: [
-      "BESS depletes immediately",
-      "Inverter (in grid-forming island mode) routes PV generation: protected loads receive 0.8 kW; remaining 3.2 kW charges BESS (battery charge rate limited by BMS, typically up to ~1C rate); BESS SoC rises during the outage. If outage extends into evening (no PV): protected loads run from BESS. Net: during day, BESS gains charge; at night, BESS discharges. Backup duration extended significantly. The hybrid inverter\'s logic handles this automatically — customer just sees the install operating as normal",
-      "PV exports to grid",
-      "Customer dies",
+      "The BESS depletes immediately because it must supply the loads even while PV is producing",
+      "The surplus PV is exported to the grid as normal, despite the outage being in progress",
+      "The PV array shuts down because it cannot operate at all without a grid reference present",
+      "PV runs the 0.8 kW loads and charges the BESS with the surplus, extending backup by day",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EPS island mode with PV producing + loads + BESS available is the ideal scenario: PV generation goes to (a) protected loads (priority); (b) BESS charging (any surplus). During the outage, BESS SoC tracks the PV-vs-load delta: rises during day when PV > loads; falls at night when BESS supplies loads. Extended outage resilience: 6 kWp PV in UK May-October can generate 20-40 kWh/day; 1 kW protected load consumes 24 kWh/day. Net: PV often covers daily load with surplus charging BESS. For mid-winter outages: PV maybe 5-10 kWh/day vs 1 kW × 24 hr = 24 kWh load — BESS depletes over 2-4 days. Cert evidence bundle records the design assumption.",
   },
@@ -238,10 +238,10 @@ const quizQuestions = [
     question:
       "How does EPS interact with EV charging in a PEI?",
     options: [
-      "Doesn't",
-      "Two architectures: (a) NON-PROTECTED — EV charger on non-EPS side of partition. EV doesn\'t charge during outage. Most common UK approach (EV charging draws too much for EPS partition). (b) PROTECTED-WITH-SHED — EV charger on EPS side with energy-management logic that throttles charging to within EPS capacity (typically 6 A = 1.4 kW single-phase minimum). The smart EV charger (Zappi, Ohme) coordinates with the hybrid inverter via OCPP / API. Cert evidence bundle records the partition + the EV charging behaviour during EPS mode",
-      "EV charges off the inverter",
-      "Customer's problem",
+      "The EV charger is unaffected and always charges at full rate during an outage",
+      "Either keep the charger non-protected, or protect it with load-throttling smart-charger logic",
+      "The EV must be physically disconnected before EPS island mode can engage at all",
+      "EPS and EV charging cannot coexist together on the same prosumer installation",
     ],
     correctAnswer: 1,
     explanation:

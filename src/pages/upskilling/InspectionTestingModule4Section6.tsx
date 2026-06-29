@@ -22,10 +22,10 @@ const inlineChecks = [
     id: 'mod4-s6-four-shapes',
     question: 'A failed IR can come in four diagnostic shapes. Which set best matches?',
     options: [
-      'Open, short, intermittent, noisy',
-      'L–E only low (single-phase fault to earth on one core), N–E only low (neutral fault to earth or borrowed neutral), L–N low with L–E and N–E healthy (inter-core fault), and all-pairs low (severe water ingress / global contamination)',
-      'High, low, infinite, zero',
-      'Pass, fail, marginal, error',
+      'Open, short, intermittent, and noisy',
+      'L–E only low, N–E only low, L–N low with L–E/N–E healthy, and all-pairs low',
+      'High, low, infinite, and zero',
+      'Pass, fail, marginal, and error',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     question:
       'A circuit reads N–E at 0.4 MΩ but L–E and L–N both read above 200 MΩ. What is the most likely cause and what is the procedural fix?',
     options: [
-      'Damaged cable insulation — replace the cable',
-      "A borrowed neutral elsewhere on the board — another circuit's load current is returning via a shared N path that the IR test sees as a low-resistance path. Disconnect each suspect circuit's neutral at the bar and re-test until the offender is found, then correct the wiring",
-      'A faulty meter',
-      'Normal — neutrals always read low',
+      'Damaged cable insulation — replace the affected cable',
+      'A borrowed neutral elsewhere — lift suspect neutrals to find it, then correct',
+      'A faulty meter giving a misleading low reading',
+      'Normal behaviour — neutrals always read low to earth',
     ],
     correctIndex: 1,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'A circuit fails the 250 V DC post-connection test at 0.7 MΩ. Connected loads are LED drivers and a USB charging point. What is the diagnostic step-up sequence?',
     options: [
-      'Condemn the cable immediately',
-      'Disconnect the connected equipment (drivers, charger) and re-test the cable alone at the Table 64 voltage. If the cable-alone reading is healthy, the connected equipment is responsible — progressively reconnect to find the offender. If the cable-alone reading is also low, the cable insulation is the issue',
-      'Increase test voltage to 1000 V DC',
-      'Skip the test and rely on RCD protection',
+      'Condemn the cable and replace it immediately',
+      'Disconnect the equipment and re-test the cable alone at the Table 64 voltage',
+      'Increase the test voltage to 1000 V DC and retry',
+      'Skip the test and rely on the RCD protection',
     ],
     correctIndex: 1,
     explanation:
@@ -65,9 +65,9 @@ const inlineChecks = [
       'On an EICR, a circuit measures 0.7 MΩ at 500 V DC with current-using equipment disconnected. What is the appropriate code?',
     options: [
       'C3 — improvement recommended only',
-      'C2 — potentially dangerous. Insulation has degraded below the Table 64 floor, the fault-protection-by-insulation principle is no longer satisfied, and continued service exposes occupants to risk in the event of further deterioration',
-      'C1 — danger present',
-      'No code — record reading as informational only',
+      'C2 — potentially dangerous; insulation below the Table 64 floor',
+      'C1 — danger present requiring immediate isolation',
+      'No code — record the reading as informational only',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 (A4:2026 redraft) sets the acceptance value for the post-connection 250 V DC test between live conductors and the protective conductor. What is that minimum value, and when does it apply?',
     options: [
-      '0.5 MΩ — applies to SELV/PELV only',
-      '1 MΩ — applies after equipment that was disconnected for the 500 V test is reconnected',
+      '1 MΩ — applies after reconnecting equipment that was disconnected',
+      '0.5 MΩ — applies to SELV and PELV circuits only',
       '2 MΩ — applies to every domestic final circuit',
-      '0.25 MΩ — applies only to circuits over 500 V',
+      '0.25 MΩ — applies only to circuits operating above 500 V',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.3 second sentence: following connection of equipment that was disconnected for the prior insulation test, a test at 250 V DC shall be applied between live conductors and the protective conductor connected to the earthing arrangement, and the result shall be at least 1 MΩ. The 250 V step is the safety net — the equipment is back in circuit and the wiring still has to read above 1 MΩ.',
   },
@@ -96,11 +96,11 @@ const quizQuestions = [
       'You measure 0.6 MΩ L–E on a 32 A ring final circuit at 500 V DC. The circuit serves a kitchen with a recently flooded skirting cavity. What does Reg 643.3.2 say about that reading, and what is the next step?',
     options: [
       'Pass — anything above 0.5 MΩ is acceptable',
-      'Fail against the 1.0 MΩ minimum in Table 64. Investigate the cause before energising — do not record as compliant',
-      'Pass if the RCD trips correctly',
-      'Pass — the value applies only at the consumer unit',
+      'Pass, provided the RCD trips correctly on test',
+      'Fail against the 1.0 MΩ Table 64 minimum — investigate before energising',
+      'Pass — the limit only applies at the consumer unit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Table 64 sets 1.0 MΩ minimum at 500 V DC for circuits up to and including 500 V. 0.6 MΩ is below the limit. Reg 643.3.2 considers the value satisfactory only if it is not less than the appropriate Table 64 figure. Recording 0.6 MΩ as a pass is non-compliant and contradicts the regulation directly.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
       'A consumer unit shows 0.4 MΩ L–E across the whole installation at 500 V DC. You isolate every circuit and test each in turn. Six final circuits all read 1.5–2.0 MΩ; one circuit reads 0.45 MΩ. What is the diagnostic shape of this fault?',
     options: [
       'Parallel leakage — every circuit has degraded equally',
-      'A single-fault problem — one outlier circuit is dragging the parallel-combined reading down. Isolate that circuit and continue diagnosis on it',
-      'The meter is faulty',
-      'A borrowed neutral somewhere on the installation',
+      'A borrowed neutral somewhere across the installation',
+      'A faulty insulation-resistance meter',
+      'A single-fault problem — one outlier is dragging the combined reading down',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Parallel resistance maths: when you measure the whole CU, you read all circuit IRs in parallel. If one circuit is at 0.45 MΩ and the rest are healthy, the combined reading skews toward the worst one. A single low outlier among healthy circuits is a single-fault problem — divide-and-conquer at the CU localises it to one outgoing way.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'You disconnect every load and test L–E on a circuit that previously read 0.3 MΩ. The reading is now 1.8 MΩ — passes Table 64. What does this tell you?',
     options: [
-      'The cable is damaged',
-      'A connected appliance was loading the test — apply the Reg 643.3.3 procedure: 250 V DC after reconnection, looking for ≥ 1 MΩ',
-      'The earth electrode is disconnected',
-      'The MCB is faulty',
+      'A connected appliance was loading the test — apply the 250 V step',
+      'The cable insulation itself is physically damaged',
+      'The earth electrode connection has come adrift',
+      'The protective device (the MCB) is faulty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.3 first sentence covers exactly this: where connected equipment is likely to influence the measurement, the test shall be applied prior to connection of such equipment in accordance with Table 64. After reconnection, a 250 V DC test shall be applied with a 1 MΩ minimum acceptance. The shift from 0.3 MΩ to 1.8 MΩ tells you the cable is fine and the load was the leakage path.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'Two circuits — kitchen lighting and dining room lighting — both fail at 0.5 MΩ N–E. Each tested alone reads the same value. With the dining-room neutral disconnected at the CU, the kitchen circuit reads 1.8 MΩ. What is the fault?',
     options: [
-      'Water ingress affecting both circuits',
-      'A borrowed neutral — the dining-room neutral is shared with the kitchen circuit at some accessory, so the two circuits are coupled at the neutral',
-      'Wrong test voltage',
+      'Water ingress affecting both circuits equally',
+      'The wrong test voltage was selected',
+      'A borrowed neutral — the two circuits share a neutral at an accessory',
       'Both circuits are at end of life and need rewiring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "When two circuits fail identically and disconnecting one neutral 'cures' the other, the neutrals are physically joined somewhere downstream — a classic borrowed neutral. The IR test reveals the shared path: each circuit's IR is being pulled down by the parallel leakage of the other through the shared neutral. The fix is to find the shared accessory (often a JB or backbox) and separate the neutrals.",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A circuit reads 0.2 MΩ L–E at 500 V DC. After 30 minutes with a heat gun on the most-likely affected JB and the meter held on test, the reading climbs to 1.4 MΩ. What does Guidance Note 3 framing of this drying behaviour tell you?',
     options: [
-      'The fault has resolved itself',
-      'Moisture was the leakage path. The reading proves the cause but the moisture source must still be identified and stopped before recording a pass',
-      'The meter has degraded',
+      'The fault has permanently resolved itself',
+      'The meter has degraded during the test',
       'The cable insulation has chemically self-repaired',
+      'Moisture was the leakage path — the source must still be found and stopped',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Improvement on drying confirms moisture as the leakage path. It does not fix the installation: the source (failed grommet, embedded damp, condensation in an enclosure) still has to be remediated. Recording a transient post-drying reading without addressing the cause leaves the next inspector with a circuit that will fail again at the next damp spell.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'A circuit reads ∞ MΩ L–N at the CU but 0.3 MΩ L–E. The cable is buried in a screed that was wet during a recent leak. What is the most likely fault mechanism?',
     options: [
-      'Both line and neutral are damaged equally',
-      'Line conductor damaged — water has entered through a nick in the line insulation only, creating a leakage path L–E but leaving N–E unaffected',
-      'The meter is reading wrong',
-      'The CPC is open',
+      'Line conductor damaged — a nick in the line insulation only, leaking L–E',
+      'Both line and neutral insulation are damaged equally',
+      'The insulation-resistance meter is reading wrong',
+      'The circuit protective conductor is open',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'L–N infinite means line and neutral insulation between each other is intact. L–E low means the line conductor specifically has a leakage path to earth. A localised insulation breach on the line core only — typical of a buried-screed cable that took a fixing penetration on one face — produces exactly this signature. The remediation is to expose, identify the breach, and replace the affected length.',
   },
@@ -180,11 +180,11 @@ const quizQuestions = [
       'On a periodic inspection a 30-year-old TT installation reads 0.3 MΩ L–E across the whole CU. With current-using equipment disconnected, every circuit reads between 0.8–1.1 MΩ — all close to the limit, none catastrophic. Which EICR classification fits, and why?',
     options: [
       'C1 — immediately dangerous, isolate now',
-      'C2 — potentially dangerous, urgent remedial; readings are below the Reg 643.3.2 / Table 64 1.0 MΩ minimum on multiple circuits and the parallel-leakage pattern indicates widespread insulation degradation',
       'C3 — improvement recommended only',
-      'No coding required — readings are passing',
+      'C2 — potentially dangerous; multiple circuits below the Table 64 1.0 MΩ minimum',
+      'No coding required — the readings are passing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Multiple circuits sitting on the limit with a parallel-leakage signature (every circuit roughly the same low value) is a degraded-insulation distribution-wide problem, not a localised fault. This is potentially dangerous (C2): the installation will progressively fall further with age and use, and the regulation 643.3.2 acceptance value is being missed. Reg 651.4 requires details to be recorded in the report. C1 is reserved for immediate danger to life or property.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       "After a divide-and-conquer at the CU you have isolated the fault to one final circuit. You then split that circuit at its halfway accessory: the half nearest the board reads 1.9 MΩ; the half toward the load end reads 0.4 MΩ. What's your next move?",
     options: [
-      'Replace the whole circuit',
-      'The fault is in the load-end half. Split that half again at its halfway point and repeat — each split halves the search area',
+      'Replace the whole circuit immediately',
       'Record the higher reading and pass the circuit',
-      'Bond the circuit to earth',
+      'The fault is in the load-end half — split that half again and repeat',
+      'Bond the circuit conductors to earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This is the divide-and-conquer (half-split) method applied to a single circuit. Each split halves the unknown segment. Seven splits on a 100 m circuit narrow the fault to under 1 m. Recording the higher half as a pass would falsify the schedule of test results.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'You find a domestic circuit reading 0.0 MΩ L–E (dead short to earth). The MCB has tripped on attempted re-energisation. The customer wants to keep using the rest of the property overnight. What does Reg 651.3 / 651.4 framing require you to do?',
     options: [
-      'Reset the MCB and ask them to be careful',
-      'Leave the affected circuit isolated and locked off, label the device, document the defect on a Reg 651.4 report (or Electrical Danger Notification if part of a periodic), and arrange remediation before re-energising. Do not transfer load to other circuits as a workaround',
-      'Replace the MCB with a higher-rated one',
-      'Disconnect the CPC and re-energise',
+      'Isolate and lock off the circuit, label and document it, then remediate',
+      'Reset the MCB and ask the customer to be careful',
+      'Replace the MCB with a higher-rated device',
+      'Disconnect the protective conductor and re-energise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A dead short to earth is a danger condition. Reg 651.3 requires periodic inspection and testing not to cause danger to persons or livestock. Reg 651.4 requires details of any damage, deterioration, defects or dangerous conditions to be recorded in a report. The professionally correct action is isolate, label, document, and remediate — never resetting a tripping device or transferring load to circumvent the protection.',
   },

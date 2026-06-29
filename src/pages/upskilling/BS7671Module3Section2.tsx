@@ -23,10 +23,10 @@ const inlineChecks = [
     id: 'm3s2-design-vs-connected',
     question: "What's the difference between connected load and maximum demand?",
     options: [
-      'They are the same thing',
-      "Connected load = sum of every load's rated current (everything switched on simultaneously, all at rated power). Maximum demand = the actual peak load the installation will draw, after applying diversity factors that account for not-everything-running-flat-out simultaneously",
-      'Connected load is for AC, maximum demand is for DC',
-      'Maximum demand is a manufacturer specification',
+      'They are the same figure expressed in different units',
+      "Connected load sums every load's rated current; maximum demand is the peak after diversity",
+      'Connected load applies to AC circuits and maximum demand to DC circuits',
+      'Maximum demand is a fixed value taken from the appliance nameplate',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     id: 'm3s2-no-curtailment',
     question: "BS 7671 explicitly says you can't use diversity for one specific purpose. Which?",
     options: [
-      'Cable sizing',
-      'Load curtailment / load control / overload protection — diversity is a DESIGN ASSESSMENT tool, not an operational means of limiting load. Where actual load limiting is required, it must be achieved by positive measures (load-shedding contactors, demand-response signals, etc.), not by assuming diversity',
-      'Voltage drop calculation',
-      'Maximum demand calculation',
+      'Sizing the line conductors of the final circuits',
+      'Load curtailment, load control or overload protection',
+      'Calculating the voltage drop from origin to the furthest point',
+      'Determining the maximum demand of the installation',
     ],
     correctIndex: 1,
     explanation:
@@ -49,10 +49,10 @@ const inlineChecks = [
     id: 'm3s2-record-on-cert',
     question: 'BS 7671 / GN3 require what to be recorded on the cert relative to maximum demand?',
     options: [
-      'Nothing — maximum demand is internal design',
-      'Maximum demand expressed in amps, kW or kVA AFTER diversity is taken into account, available to the person carrying out inspection and testing',
-      "Each circuit's individual peak load",
-      'Maximum demand only for industrial work',
+      'Nothing — maximum demand stays in the internal design file',
+      'Maximum demand after diversity, in amps / kW / kVA, available to the inspector',
+      'The individual peak load of each separate final circuit',
+      'Maximum demand for industrial installations only, not domestic',
     ],
     correctIndex: 1,
     explanation:
@@ -62,10 +62,10 @@ const inlineChecks = [
     id: 'm3s2-osg-table',
     question: 'Where does the typical UK domestic / small commercial diversity guidance live?',
     options: [
-      "It doesn't exist",
-      'OSG Appendix A — gives diversity factors for the most common UK domestic / small commercial circuit types (cooker, sockets, immersion, EV, heat pump, lighting, etc.)',
-      'Only in BS 7671 itself',
-      'Only in manufacturer manuals',
+      'No published diversity guidance exists for UK domestic work',
+      'On-Site Guide Appendix A — diversity factors for common circuits',
+      'Only within the numbered regulations of BS 7671 itself',
+      'Only in the individual appliance manufacturer manuals',
     ],
     correctIndex: 1,
     explanation:
@@ -76,10 +76,10 @@ const inlineChecks = [
     question:
       "A typical UK kitchen has a 7 kW electric cooker on a dedicated circuit. OSG App A's diversity guidance for a single-phase domestic cooker is approximately what?",
     options: [
-      '100% — assume the cooker is always at full load',
-      '10 A + 30% of the remainder above 10 A. So a 7 kW (≈30 A at 230 V) cooker contributes 10 + (30-10) × 0.30 = 16 A to the maximum demand calculation',
-      '0% — cookers are negligible',
-      '50% always',
+      '100% of rated current — the cooker is assumed always at full load',
+      '10 A + 30% of the rated current above 10 A, giving 16 A for a 30 A cooker',
+      '0% — cooker load is treated as negligible in the calculation',
+      'A flat 50% of rated current regardless of the cooker rating',
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const inlineChecks = [
     question:
       'On a three-phase installation, what does Reg 311.1 require regarding the design current?',
     options: [
-      'Total load divided by three',
-      'Calculate the maximum line current including any imbalance — the design current (Im) is based on the WORST-CASE individual line current after diversity, not the average across phases. Three-phase loads should be balanced where practical, but unbalanced single-phase loading dictates conductor sizing',
-      'Use the highest phase current always',
-      'Apply diversity to the total only',
+      'Take the total load and divide it equally by three',
+      'Base the design current on the worst-case individual line current after diversity',
+      'Always assume the single highest phase current applies to all three phases',
+      'Apply diversity to the combined three-phase total only',
     ],
     correctIndex: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'A new domestic install has the following loads: lighting 6 A, sockets ring 32 A, second sockets ring 32 A, cooker 30 A, immersion 16 A, electric shower 32 A, EV charger 32 A. If you ignored diversity entirely, what would the connected load be?',
     options: [
-      '32 A (largest single load)',
-      "180 A (sum of all rated currents — the 'worst-case never-happens' figure)",
-      '92 A (an arbitrary partial sum)',
-      '63 A',
+      '32 A — taking only the largest single load on the list',
+      '92 A — summing the fixed appliance loads but omitting the socket rings',
+      '63 A — applying typical domestic diversity to the load list',
+      '180 A — the sum of every rated current with no diversity applied',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Connected load = sum of every load's rated current = 6 + 32 + 32 + 30 + 16 + 32 + 32 = 180 A. This is the theoretical worst case — every load operating at rated simultaneously, which never actually happens. Diversity-applied maximum demand for the same load list would be roughly 60-80 A — well below the 100 A typical UK domestic supply. This is why a 100 A supply can serve a property with 180 A connected: real-world demand is always significantly less than connected.",
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'You are designing an installation and the connected load (after diversity) approaches the supply rating. What does BS 7671 require?',
     options: [
-      "Don't worry about it — the DNO will handle overloads",
-      'If maximum demand approaches or exceeds the supply rating, contact the DNO for a supply upgrade. BS 7671 mandates supply suitability per Reg 313.1 / 311.1; using a supply incapable of meeting the design demand is non-compliant',
-      'Apply more diversity to fit',
-      'Reduce circuit sizes',
+      'Arrange a DNO supply upgrade — Reg 313.1 / 311.1 require the supply to be suitable for the demand',
+      'Leave it — the DNO upstream protection will absorb any overloads',
+      'Apply more aggressive diversity so the figure fits the existing supply',
+      'Reduce the conductor sizes to lower the calculated demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 313.1 / 311.1: the supply must be suitable for the installation, including the maximum demand. If the design exceeds the supply rating, the supply must be upgraded — typically by DNO. UK domestic standard supply is 100 A single-phase; properties with EV + heat pump + electric cooker + electric shower may legitimately require 100 A and the supply rating becomes the binding constraint. Some designs will need 200 A single-phase or three-phase upgrade. Don't apply more diversity to make the design fit — the diversity assumptions must reflect realistic load behaviour, not be tuned to satisfy supply rating.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Two identical 5 kW heat pumps are installed on a property. Should diversity be applied between them?',
     options: [
-      'Yes always',
-      'Probably no diversity — on a typical winter design day, both heat pumps would be running simultaneously to meet building heat demand. The realistic peak coincident demand is 100% of both. Spec the supply / cable for full simultaneous operation',
-      '50% diversity',
-      'It depends on the heat pump manufacturer',
+      'Yes — apply a standard diversity factor between the two units',
+      'Apply 50% diversity, assuming only one runs at a time',
+      'No meaningful diversity — both run together on the winter design day, so size for 100%',
+      'It depends entirely on the heat pump manufacturer&apos;s rating plate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Diversity reflects the statistics of LIKELY simultaneous operation. Two heat pumps serving the same building will both operate during heating demand — they're not statistically independent. Realistic diversity is close to 100%. Compare to two cookers in a 2-flat HMO: each flat's cooker operates independently; diversity between flats is meaningful. The general principle: diversity applies between INDEPENDENT loads, not between loads that share a common driver (heating demand, cooling demand, lighting demand etc.).",
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'A 7 kW EV charger has been added to a property. The OSG diversity guidance for EV chargers is most commonly cited as what?',
     options: [
-      '0%',
-      '100% — full rated current at maximum demand. EV chargers operate at rated load for sustained periods (typical 6-8 hour charge cycle); the realistic peak coincident demand is the rated current, not a diversified value',
-      '50%',
-      '30%',
+      '0% — the EV load is treated as negligible in the calculation',
+      '50% — assuming the charger runs at half its rated current on average',
+      '30% — the same factor applied to general socket circuits',
+      '100% — full rated current, as the charger runs at rating for sustained periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EV chargers should generally be sized at 100% rated current in the diversity calculation. Unlike cookers (which cycle) or showers (which run briefly), EV chargers operate at rated power for hours at a time. The peak coincident demand is the rated current. Some designers argue for diversity if the EV charger has demand-response capability (curtailing load during system peaks), but this requires positive load-control measures — and BS 7671 says diversity isn't a substitute for load control. Default 100%; reduce only with documented load-control evidence.",
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'On a TPN three-phase distribution board, what does balance between phases mean for cable sizing?',
     options: [
-      'Use total kVA divided by 3',
-      "Calculate each phase's current separately, including any imbalance — the largest single-phase current (after diversity) determines the conductor sizing for that phase. Aim to balance loads at design time, but size for the worst-case individual phase",
-      'Always use 100 A',
-      "Phases don't matter for cable sizing",
+      'Size for the worst-case individual phase current after diversity, balancing loads at design time',
+      'Use the total kVA divided by three and size every phase equally',
+      'Default every phase conductor to a 100 A rating',
+      'Treat the phases as irrelevant — total load alone sets the cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Three-phase cable sizing addresses the worst-case individual phase. If three phases are perfectly balanced, the conductor sizes are equal and the calculation is straightforward. In practice, single-phase loads (UK domestic kitchens, single-phase EV chargers, etc.) are spread across the three phases but rarely perfectly. Reg 311.1 references the RMS line currents L1, L2, L3 individually. Designers attempt balance at design time; cable sizing accommodates residual imbalance. Three-phase loads (motors, three-phase heat pumps) inherently balance themselves and contribute equally to all three phases.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why does BS 7671 prohibit using diversity as overload protection?',
     options: [
-      'Arbitrary regulatory choice',
-      "Because diversity is a STATISTICAL design assumption — it predicts likely peak demand on average across many installations, but doesn't bind in any individual installation. If actual load exceeds the diversity-assumed value, the cable / OPD must still handle it. Diversity informs design choices but doesn't replace overcurrent protection",
-      'Diversity is not accurate enough',
-      'Diversity only applies to single-phase',
+      'It is an arbitrary regulatory choice with no engineering basis',
+      'The published diversity figures are not measured precisely enough',
+      'Diversity predicts average peak demand but does not bind any one install, so the OPD must still cope',
+      'Diversity is only ever applied to single-phase installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Diversity is a statistical tool. The OSG diversity figures are reasonable for AVERAGE installations but any individual install may behave differently. A property where the occupants happen to use the cooker, dishwasher, washing machine and EV charger simultaneously can exceed the diversified design — and the cable/OPD must cope. That's why Reg 433 (overcurrent protection) is independent of diversity: the OPD protects against sustained overload regardless of how 'unlikely' the diversity calculation said overload would be. Diversity informs cable / supply sizing; OPD protects against the failure of the diversity assumption.",
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'A small office has 30 desks, each with a 13 A general-purpose socket. The OSG-equivalent diversity for this is approximately what?',
     options: [
-      '100% — every desk drawing 13 A simultaneously',
-      'Significantly less than 100% — typical office computer + monitor + phone charger draws 1-2 A; diversity factors of 25-40% for office socket banks are common. Assess realistic peak per desk and apply to the count',
-      '200%',
-      '0%',
+      '100% — every desk socket drawing its full 13 A at once',
+      '200% — allowing for a safety margin above the rated current',
+      '0% — desk sockets are treated as negligible spare capacity',
+      'Well below 100% — desk equipment draws 1-2 A, so 25-40% factors are typical',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Office sockets are classic diversity territory. Each desk has a 13 A socket but the actual load is rarely close to 13 A — typical office equipment per desk is 100-300 W, well under 2 A. Even at peak (everyone switching on simultaneously after lunch), realistic per-desk demand is 1-3 A. Aggregating across 30 desks with diversity gives a realistic peak of perhaps 30-60 A — far less than the 390 A connected load if every socket drew 13 A simultaneously. Office socket diversity is typically 25-40% on UK commercial design.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       "A 7 kW EV charger is to be added to a property with an existing 60 A single-phase supply (not yet upgraded). The current diversified maximum demand is calculated at 55 A. Adding the EV: 55 + 32 (EV at 100% rated) = 87 A — exceeds the 60 A supply. What's the correct response?",
     options: [
-      'Apply diversity to the EV to get the total under 60 A',
-      "Don't install the EV until the supply is upgraded — Reg 313.1 / 311.1 require supply suitability. Where maximum demand exceeds supply rating, the supply must be upgraded (typically a DNO 100 A or three-phase upgrade)",
-      "Reduce the property's other loads",
-      'Install the EV anyway and trust the customer not to overload',
+      'Defer the EV until the supply is upgraded — Reg 313.1 / 311.1 require a suitable supply',
+      'Apply diversity to the EV charger to bring the total back under 60 A',
+      'Permanently disconnect some of the property&apos;s other fixed loads',
+      'Install the EV regardless and rely on the customer to avoid overloading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Don't compromise on supply suitability. The customer needs a supply upgrade before the EV is installed. Routes: contact the DNO for a 100 A or three-phase upgrade (typical lead time weeks-months, cost varies); alternatively use a load-managing EV charger (e.g. with CT clamp on the incoming supply) that physically curtails EV charging to keep total demand under the supply limit. The latter requires positive load-control hardware — NOT a design assumption. Both routes documented on the EIC. Don't fudge the diversity to fit a supply that's actually inadequate.",
   },

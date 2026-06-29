@@ -40,10 +40,10 @@ const checks = [
     id: 'mod7-s5-sub6-el',
     question: "Which insurance is a legal requirement if you employ staff?",
     options: [
-      "Employers' Liability insurance — Compulsory Insurance Act 1969. Minimum statutory cover £5 million. The certificate must be displayed where employees can see it. Penalty for trading without: up to £2,500 per day. HSE enforces.",
-      "Below-minimum or above-maximum values indicate a fault that prevents the protective measure from operating as designed — risking shock, fire, or equipment damage",
-      "Because the coil voltage is the CONTROL voltage — fed from a control transformer or a different supply, NOT the same as the load voltage being switched. 110 V control is standard in industrial environments for safety.",
-      "The entire waste load becomes classified as hazardous, increasing disposal costs and regulatory requirements, and potentially causing environmental contamination or chemical reactions",
+      "Employers' Liability insurance, under the Compulsory Insurance Act 1969, with a £5 million statutory minimum.",
+      "Public Liability insurance, made compulsory by the larger workforce, with a £2 million statutory minimum.",
+      "Professional Indemnity insurance, because employees may give advice, with a £1 million statutory minimum.",
+      "Tools-in-Transit insurance, because the firm's tools are now used by others, with a £10,000 statutory minimum.",
     ],
     correctIndex: 0,
     explanation:
@@ -53,23 +53,23 @@ const checks = [
     id: 'mod7-s5-sub6-pl-cover',
     question: 'What does Public Liability insurance typically cover?',
     options: [
-      "Self-rescue first (if the person can descend unaided), assisted rescue from the tower (colleagues help), mechanical rescue (MEWP, descent device) and emergency services as the final option",
-      "They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon",
-      "National Insurance number, personal details, business start date, business activity description, expected annual turnover, and business contact details. Register at gov.uk; UTR issued by post within 1-3 weeks.",
-      "Claims from third parties (clients, members of the public, other trades on site) for bodily injury or property damage caused by your work or business activities. Pays the claimant's compensation plus your legal defence costs up to the policy limit.",
+      "Injury to yourself while working on site — it pays your lost earnings and medical costs if you are hurt by your own tools or a fall, regardless of who was at fault.",
+      "Theft of and damage to your own tools and test equipment from the van or site — it replaces the kit you need to trade if it is stolen or broken.",
+      "Claims by your own employees who are injured in the course of their work — it pays their compensation and is the cover the law requires you to hold once you take on staff.",
+      "Claims from third parties — clients, the public, other trades — for bodily injury or property damage caused by your work.",
     ],
     correctIndex: 3,
     explanation:
-      "Public Liability is the practical-essential cover for any contractor — claims by third parties for bodily injury or property damage caused by your work. Includes the claimant's compensation and your legal defence costs. Not legally compulsory in itself (unlike Employers' Liability), but required by virtually every commercial client, CPS scheme and main contractor. Typical cover £2-5m for working sole traders; £10m+ for those on larger commercial sites.",
+      "Public Liability is the practical-essential cover for any contractor — claims by third parties for bodily injury or property damage caused by your work. It pays the claimant's compensation plus your legal defence costs up to the policy limit. Not legally compulsory in itself (unlike Employers' Liability), but required by virtually every commercial client, CPS scheme and main contractor. Typical cover £2-5m for working sole traders; £10m+ for those on larger commercial sites.",
   },
   {
     id: 'mod7-s5-sub6-pi',
     question: "What is 'professional indemnity' insurance for?",
     options: [
-      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
-      "HB pencil leaves a graphite line that washes away with water-based marking and barely shows on rough textured surfaces; chinagraph is wax-bound and stays visible on dust, oil and rough mineral surfaces.",
-      "Claims arising from professional advice, designs, specifications or instructions you provide that cause financial loss to a client. Distinct from Public Liability — PI covers economic loss from advice / design; PL covers injury / property damage from physical work.",
-      "Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest",
+      "Injury or property damage caused to a member of the public by your physical installation work on site — it is the cover commercial clients insist on before letting you start.",
+      "Damage to or theft of the materials and equipment you have on site before the job is handed over — it protects work-in-progress against fire, flood and theft.",
+      "Claims arising from professional advice, designs, specifications or instructions you provide that cause financial loss to a client.",
+      "Injury or illness suffered by your own employees in the course of their work — it is the statutory cover required by the Compulsory Insurance Act 1969 once you employ anyone.",
     ],
     correctIndex: 2,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: "What is the typical minimum Public Liability cover recommended for electrical contractors?",
     options: [
-      'Proper installation techniques and regular maintenance',
+      '£10,000 to £50,000 (with £100,000 for larger commercial work).',
       '£2 million to £5 million (with £10m+ for larger commercial work).',
-      'To break down tasks into steps and identify hazards at each stage',
-      'Information about efficient operation of heating, ventilation, and hot water systems',
+      '£100,000 to £250,000 (with £500,000 for larger commercial work).',
+      '£25 million to £50 million (with £100m+ for larger commercial work).',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: "What must you do with your Employers' Liability certificate?",
     options: [
-      "Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.",
-      "Pre-commissioning checklists, test results and certificates, equipment settings and configurations, thermal survey results, snag lists, soak test records, and a clear statement of the system's operational status at handover",
-      "Display the certificate where employees can readily see it, or make an electronic copy accessible to employees. The Employers' Liability (Compulsory Insurance) Regulations 1998 require display and reasonable access. Records of all certificates from the previous 40 years must be retained.",
-      "Theft, accidental damage, fire and loss of tools across various circumstances — on site, in transit, from vehicles. Check policy exclusions carefully: many exclude 'theft from unattended vehicle overnight' unless specifically extended; many limit cover per item.",
+      "Send a copy to the HSE within 30 days of taking out the policy for their register.",
+      "Lodge the original with your CPS scheme as a condition of registration each year.",
+      "Display it where employees can readily see it, or make an electronic copy accessible to them.",
+      "Attach a copy to every quotation and invoice you issue so customers can see it.",
     ],
     correctAnswer: 2,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 3,
     question: "What does 'all risks' tool insurance typically cover?",
     options: [
-      "SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck",
-      "No fixed minimum in regulations — driven by needs assessment. HSE ACOP L74 gives indicative numbers (low-hazard: 1 appointed person for &lt;25 employees; 1 EFAW for 25-50; 1 FAW for &gt;50; high-hazard: more demanding). Construction and electrical work generally falls in higher-hazard band.",
-      "Atmospheric conditions can change rapidly during work — continuous monitoring provides real-time warning of deteriorating conditions so workers can evacuate before reaching dangerous levels",
-      "Theft, accidental damage, fire and loss of tools across various circumstances — on site, in transit, from vehicles. Check policy exclusions carefully: many exclude 'theft from unattended vehicle overnight' unless specifically extended; many limit cover per item.",
+      "Only wear and tear and gradual deterioration of tools that have worn out through normal use.",
+      "Only injury caused to a third party by a faulty tool, as a form of public liability cover.",
+      "Only the cost of recalibrating your test instruments each year as a maintenance policy.",
+      "Theft, accidental damage, fire and loss of tools on site, in transit and from vehicles.",
     ],
     correctAnswer: 3,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 4,
     question: 'When might you need contract works insurance?',
     options: [
-      "When working on contracts where you're responsible for the value of work-in-progress (typically commercial fit-out, design-and-build projects, or any larger project where you've installed significant value of materials that haven't been signed-off to the client yet). Contract Works covers fire, flood, theft and accidental damage to work-in-progress.",
-      "Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as \\\"this is a solvable technical challenge, not a personal attack\\\"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability (\\\"I understand this is frustrating — let me walk you through our resolution plan\\\")",
-      "The Scottish Joint Industry Board (SJIB) is the equivalent of the JIB for the electrical contracting industry in Scotland. It sets working rules, pay rates and grades for Scottish electricians, working alongside SELECT (the Scottish trade association). SJIB grading uses similar terminology (Apprentice, Approved Electrician, Technician) but the rates and the ECS card variants are Scottish-specific.",
-      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
+      "When you're responsible for the value of installed work not yet signed off to the client.",
+      "Only when you employ staff, as the cover that replaces Employers' Liability on a contract.",
+      "Only when giving design advice, as it is another name for Professional Indemnity cover.",
+      "On every job without exception, as a legal requirement under CDM 2015 before work begins.",
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: "What is an 'excess' on an insurance policy?",
     options: [
-      "Under 10 percent of the average phase load — e.g. if average is 50 A, no phase should be below 45 A or above 55 A. Heavy imbalance wastes service rating and overloads the heaviest phase.",
-      "The amount you pay towards each claim before the insurer pays. Higher excess = lower premium and vice versa. Some policies have separate excesses for different claim types (e.g. theft excess higher than damage excess).",
-      "Oxygen (deficiency below 19.5%; enrichment above 23.5%); flammable gases (LEL); toxic gases - typically H2S, CO, sometimes others depending on space history.",
-      "EAWR Reg 13/14 breach; HASAWA s.2/3/7 breach; potential RIDDOR; insurance void; personal prosecution; firm prosecution; reputational damage on HSE Public Register; possible JIB / scheme-body deregistration; criminal record for individuals at director level under s.37.",
+      "The maximum total amount the insurer will pay out over the whole life of the policy.",
+      "The amount you pay towards each claim before the insurer pays the rest of it.",
+      "An extra charge added to your premium each time you make a claim against the policy.",
+      "The amount of cover you hold above the statutory £5 million legal minimum requirement.",
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'What should you do if an incident occurs that might lead to a claim?',
     options: [
-      "Only when (a) you're trained in extinguisher use; (b) the fire is small (waste-bin sized); (c) you can identify the correct extinguisher class for the fire; (d) the route to a safe exit is behind you (you don't have to pass the fire to escape); (e) you can do so without risking yourself; (f) someone else has called 999 or is doing so. Otherwise EVACUATE.",
-      "All protective devices operate (RCD test, RCBO test, AFDD self-test), correct switching/control sequences, interlocks, emergency stops, automatic devices and that the system performs as intended without re-introducing the original fault",
-      "Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don't admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.",
-      "Combine an IET mentor (expert guidance), a 4DX accountability partner (weekly commitments and scoreboard reviews), and a mastermind group (peer support) into a layered support structure with different review cadences",
+      "Settle directly with the injured party as quickly as possible to keep things amicable.",
+      "Wait to see whether a formal claim is actually made before telling your insurer at all.",
+      "Report it to your insurer promptly within the policy timeframe, preserving evidence and not admitting liability.",
+      "Admit responsibility to the customer straight away and apologise to them in writing.",
     ],
     correctAnswer: 2,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 7,
     question: 'What is subrogation in insurance?',
     options: [
-      "Direct application to the Local Authority Building Control (LABC) office before the work starts, with a Building Notice or Full Plans application; LABC inspects and issues a completion certificate. Significantly more expensive and slower than CPS routes — most contractors register with a scheme for this reason.",
-      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
-      "Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14",
-      "The insurer's right, after paying your claim, to step into your legal position and pursue recovery from any third party who caused or contributed to the loss. This is why you shouldn't settle directly with a third party or admit liability — it can prejudice the insurer's recovery and void your cover.",
+      "The amount the insurer deducts from a payout to reflect the age and wear of the item.",
+      "The period after a policy ends during which late claims on past work can still be made.",
+      "The process of an insurer cancelling a policy mid-year and refunding the unused premium.",
+      "The insurer's right, after paying your claim, to pursue recovery from a third party who caused the loss.",
     ],
     correctAnswer: 3,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 8,
     question: "What does 'claims-made' basis mean for professional indemnity insurance?",
     options: [
-      "The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from 'occurrence' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.",
-      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
-      "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
-      "Investigate the I/O signals using PLC monitoring software, check sensor outputs and wiring, review the PLC programme logic for timing issues, check for electrical noise from nearby VSDs, and examine the safety circuit for marginal switch contacts",
+      "The policy covers claims notified during the policy period, whenever the work was done.",
+      "The insurer pays out only once a court has formally made a finding against you in a judgment.",
+      "You may make only a fixed number of claims in any policy year before cover is suspended.",
+      "The premium is recalculated each time a claim is made and back-charged to you that year.",
     ],
     correctAnswer: 0,
     explanation:

@@ -22,10 +22,10 @@ const inlineChecks = [
     id: 'fam3-s3-matrix',
     question: 'What does a cause-and-effect matrix specify?',
     options: [
-      'The cable routes.',
-      'The detector types.',
-      "For each input event (cause) — e.g. detector in zone 3 operates, call point pressed, sprinkler flow switch activates — what the system does in response (effect): which sounders sound, which strobes flash, which interfaces operate (door release, lift recall, plant shutdown), at what stage. The matrix is the logical specification of the system's behaviour, independent of the hardware.",
-      'The number of zones.',
+      'The cable routes and terminations for each circuit on the system.',
+      'The detector types selected for each area of the protected premises.',
+      'For each input event (cause), the outputs the system produces in response (effect).',
+      'The total number of detection zones the CIE is configured for.',
     ],
     correctIndex: 2,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 documentation/handover clause introduces a new requirement about cause-and-effect. What is it?',
     options: [
-      'It must be in colour.',
-      'A cause-and-effect matrix or text description of how the cause and effect operates is now MANDATORY at handover — included in the documentation provided to the purchaser or user. It can be as simple as "this system operates as a simultaneous evacuation" or a complex matrix for staged evacuation. The standard does not dictate format, only that it must be produced.',
-      'It must be encrypted.',
-      'It is optional.',
+      'The matrix must be produced in colour for the handover documentation.',
+      'A cause-and-effect matrix or text description is now mandatory at handover.',
+      'The matrix must be encrypted before it is handed to the purchaser.',
+      'The matrix remains optional and may be omitted from the handover pack.',
     ],
     correctIndex: 1,
     explanation:
@@ -49,10 +49,10 @@ const inlineChecks = [
     id: 'fam3-s3-coincidence',
     question: 'What is two-detector coincidence (or two-stage coincidence) used for?',
     options: [
-      'To save power.',
-      'To reduce false alarms by requiring TWO detectors in the same area to operate before triggering an evacuation alarm. The first operating detector raises a "warning" or "investigate" condition; only when a second detector also operates does the system go to full alarm. Used in environments with persistent false-alarm risk (kitchens, plant rooms, warehouses with dust). Configured at the CIE.',
-      'To detect fires faster.',
-      'To replace heat detectors.',
+      'To save power by limiting how often the panel polls the loop devices.',
+      'To cut false alarms by requiring two detectors to operate before full alarm.',
+      'To detect fires faster by lowering the sensitivity threshold of each detector.',
+      'To replace heat detectors with smoke detectors in false-alarm-prone areas.',
     ],
     correctIndex: 1,
     explanation:
@@ -62,10 +62,10 @@ const inlineChecks = [
     id: 'fam3-s3-daynight',
     question: 'What is the purpose of day / night sensitivity settings?',
     options: [
-      'Power saving.',
-      'Different sensitivity / coincidence thresholds at different times of day, reflecting different occupancy and activity patterns. Example: a kitchen detector may operate in coincidence (two-detector) mode during the day when cooking activity produces many false-positives, and switch to single-detector immediate response at night when the kitchen is unoccupied. Configured in the CIE per detector or per zone with a real-time clock schedule.',
-      'Cosmetic.',
-      'For testing only.',
+      'To save power by reducing detector activity outside occupied hours.',
+      'Different sensitivity thresholds by time of day to match occupancy patterns.',
+      'A cosmetic dimming of the panel display during night-time hours.',
+      'A mode used only during periodic testing of the installation.',
     ],
     correctIndex: 1,
     explanation:
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the purpose of a cause-and-effect matrix in fire alarm design?',
     options: [
-      'A wiring diagram.',
-      "It specifies, for every input event (cause), what outputs the system produces (effects). It is the logical specification of the system's behaviour: which sounders sound on a fire in zone 3; which interfaces operate; at what stage. It is the design document the commissioning engineer programs into the CIE and the operator reads to understand what will happen.",
-      'A bill of materials.',
-      'A test schedule.',
+      'A wiring diagram showing the cable routes and terminations on the system.',
+      'A bill of materials listing every detector and device on the system.',
+      'For every input (cause), the outputs the system produces (the effect).',
+      'A test schedule listing each of the commissioning checks to be carried out.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The cause-and-effect matrix is hardware-independent. It expresses the design intent in functional terms. The CIE is then programmed to implement the matrix; tests verify the implementation matches. Without a written matrix, the system's behaviour exists only in the CIE configuration — a fragile and undocumented state.",
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     question:
       'In a one-stage (simultaneous) evacuation, what happens when any detector or call point operates?',
     options: [
-      'A warning is given to the manager.',
-      'ALL evacuation sounders / VADs throughout the building operate simultaneously. Every occupant evacuates at the same time. Used in buildings where simultaneous evacuation is the design intent: small offices, retail, single-compartment buildings, and many smaller premises. Simplest staging philosophy.',
-      'Only the sounders in the operated zone activate.',
-      'No sounders activate.',
+      'All evacuation sounders and VADs across the building operate together at once.',
+      'A silent warning is sent only to the building manager for investigation.',
+      'Only the sounders in the operated zone activate, leaving other zones silent.',
+      'No sounders activate at all until a second device confirms the alarm.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'One-stage simultaneous is the simplest cause-and-effect: any cause = full evacuation. The matrix is essentially "all causes → all effects". Larger buildings often use phased or two-stage strategies because simultaneous evacuation of (say) a high-rise is impractical and creates congestion in stairways. The choice of staging is driven by the building\'s fire safety strategy.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is two-stage (alert / evacuate) alarm philosophy?',
     options: [
-      'Two-detector coincidence.',
-      'A staged response: stage 1 is an ALERT signal (a different audible / visual signal, e.g. intermittent or staff-only) sent to staff or trained occupants, prompting investigation. Stage 2 is full EVACUATION — the standard fire alarm sound across all areas. Stage 2 may be triggered automatically (after a time-out, or by a second detector operating) or manually (by a staff member confirming a fire). Used in hospitals, hotels with dispersed staff, large premises with managed response.',
-      'Two CIE displays.',
-      'Two power supplies.',
+      'It requires two detectors to operate in coincidence before any signal.',
+      'It uses two separate CIE displays running in parallel for redundancy.',
+      'It requires two independent power supplies to be present at the panel.',
+      'A staged response: stage 1 alerts staff to investigate, stage 2 evacuates.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Two-stage alarm separates the "something is happening" signal from the "everyone evacuate" signal. It buys time for staff investigation in environments where mass evacuation is operationally costly (hospitals, hotels). The matrix specifies the alert / evacuate progression, the time-outs, the manual escalation paths.',
   },
@@ -119,10 +119,10 @@ const quizQuestions = [
     question:
       'In a phased evacuation strategy in a multi-storey building, what typically happens first when fire is detected?',
     options: [
-      'The whole building evacuates.',
-      'The fire floor and the floor immediately above evacuate first; subsequent floors evacuate in a programmed sequence (typically the floors above the fire next, then floors below, on a time interval). This manages stairway congestion. Used in tall buildings where simultaneous full evacuation would create dangerous bottlenecks at stair exits. The cause-and-effect matrix specifies the staging sequence and timings.',
-      'The basement only.',
-      'No floors evacuate.',
+      'The whole building evacuates simultaneously the moment fire is detected.',
+      'The fire floor and the one above evacuate first, then others in timed sequence.',
+      'Only the basement is evacuated first, before any of the upper floors.',
+      'No floors evacuate at all until the fire and rescue service arrives.',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is "investigation delay" in a cause-and-effect strategy?',
     options: [
-      'A fault.',
-      'A programmed delay between detector operation and full evacuation, intended to allow staff to investigate and confirm the fire (or cancel a false alarm) before the building is evacuated. Typical 30 seconds to 3 minutes. Acceptable only in environments with trained staff present 24/7 (or during defined occupied hours). Day / night settings often disable investigation delay at night when staff are not present. Documented in the matrix.',
-      'A network delay.',
-      'A power-up sequence.',
+      'A fault condition that delays the system from starting up correctly.',
+      'A network communication delay between devices on the addressable loop.',
+      'A programmed delay between detection and evacuation, letting staff investigate.',
+      'A power-up sequence delay applied after a mains supply failure.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Investigation delay is a false-alarm management tool. It must not be used in environments where staff cannot promptly investigate (e.g. an unoccupied building at night). Misapplied investigation delay materially delays evacuation in a real fire and is a design error. Day / night settings are how this is typically managed: investigation delay during occupied hours; immediate alarm during unoccupied hours.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'A multi-sensor detector with selectable response characteristics (smoke, heat, CO, combination) is installed. Where is the selection recorded per BS 5839-1:2025 clause 20.11?',
     options: [
-      'On the detector body.',
-      "The designer should record the selection of the detector type and configuration, AND make this information available to the commissioning technician AND record it in the operating and maintenance manual for the system. Annex D Figure D.1 provides a suitable means of recording the information. The detector's programmed mode is part of the system documentation.",
-      'On the CIE display only.',
-      'In the cable schedule.',
+      'In the design and the O&M manual (Annex D format), as system documentation.',
+      'Only on a printed label physically fixed to the body of the detector.',
+      'Only within the CIE display configuration held on the control panel.',
+      'Only in the cable schedule drawn up for the addressable loop.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2025 standard emphasises this strongly because multi-sensor detectors with selectable modes are increasingly common. The mode the detector operates in is design intent, not detector hardware. It must be recorded in the design (so the commissioning engineer programs it correctly) and in the O&M manual (so the maintenance organisation knows what to verify). Annex D — formerly Annex E — provides the recording format.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does a coincidence-of-two-detectors logic require?',
     options: [
-      'One detector operating.',
-      'TWO separate detectors in defined areas (commonly the same room or zone) must operate before the system goes to full alarm. The first operating detector raises an internal "warning" or "first-stage" condition that may signal staff or the CIE; the alarm escalates only when a second detector confirms. Reduces single-point false alarms. Used in environments with persistent false-alarm risk (kitchens, dust-heavy areas, vehicle exhaust zones).',
-      'Two CIEs operating.',
-      'Two power supplies.',
+      'A single detector operating triggers the full alarm immediately.',
+      'Two separate CIEs must both register the event before any alarm.',
+      'Two independent power supplies must both be present to alarm.',
+      'Two separate detectors must operate; the first warns, the second escalates.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Coincidence schemes require careful design: the two coincidence detectors must be physically positioned so a real fire would activate both within a reasonable time window, and the time window must be set appropriately. Too tight = real fires miss the coincidence; too loose = the false-alarm filtering benefit erodes. The cause-and-effect matrix records the coincidence logic and timings.',
   },
@@ -172,10 +172,10 @@ const quizQuestions = [
     id: 8,
     question: 'How are day / night settings typically used in cause-and-effect design?',
     options: [
-      'For lighting.',
-      "Different cause-and-effect logic at different times: e.g. during day (occupied) hours, an investigation delay or coincidence scheme reduces false alarms while staff are present to respond; at night (unoccupied) the system reverts to immediate single-detector full evacuation because no staff are present to investigate. The CIE's real-time clock controls the switch-over. Per the 2025 maintenance clause, the clock is checked and adjusted at every service visit.",
-      'For energy saving.',
-      'For colour temperature.',
+      'To switch the building lighting on and off automatically by time of day.',
+      'Different logic by time: investigation delay by day, immediate alarm by night.',
+      'To save energy by powering detectors down completely overnight.',
+      'To adjust the colour temperature of the panel indicator LEDs by time.',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'Why is the cause-and-effect matrix maintained as documentation, not just programmed into the CIE?',
     options: [
-      'Convention.',
-      'Because the CIE configuration alone is not human-readable and may be lost on CIE replacement. The matrix as a document survives CIE upgrades and firmware changes; it is the design intent against which the CIE programming is verified. Per BS 5839-1:2025 documentation/handover clause, the matrix or text description must be included in the handover documentation. The premises management uses it to understand what the system will do.',
-      'Convenience.',
-      'For training only.',
+      'It is kept purely by long-standing convention and tradition in the trade.',
+      'It is retained only as a convenience for the original installer of the system.',
+      'The CIE config can be lost on replacement; the document survives and is required at handover.',
+      'It is kept solely for staff training and familiarisation purposes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Documentation is the persistent record. CIE configurations are vendor-specific binary data that may not transfer across firmware upgrades or CIE replacements. The cause-and-effect matrix, written as a table or text, is the architecture-independent specification. It guides the next CIE's programming when the original is replaced, which is a 10-15 year horizon many systems will face.",
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'A cause-and-effect matrix shows: "Smoke detector zone 3 operates → Sounder circuit S1 (zone 3 sounders) operate immediately; Sounder circuit S2 (whole building) operates after 60 seconds delay". What evacuation philosophy is this?',
     options: [
-      'Simultaneous.',
-      'A staged / two-stage philosophy: zone 3 evacuates immediately on local detection (the alert + immediate evacuation phase); whole-building evacuation follows after a 60-second investigation / confirmation delay. This pattern is common where local fast-response is essential but mass-evacuation is to be deferred briefly to allow staff confirmation or a more controlled progression. The matrix expresses the design intent precisely.',
-      'No alarm.',
-      'Network handshake.',
+      'A staged philosophy: zone 3 evacuates at once, the building after a 60 s delay.',
+      'A one-stage simultaneous evacuation of the whole building on detection.',
+      'A configuration that produces no alarm output to the sounders at all.',
+      'A network handshake between loop devices, unrelated to evacuation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This is one of many possible staging strategies. The matrix encodes the precise timing and sequencing. Different fire safety strategies generate different matrices; there is no one-size-fits-all. The matrix is the bridge between the fire engineering and the system programming.',
   },

@@ -16,10 +16,10 @@ const Module6Section7_1 = () => {
       id: 1,
       question: 'What is the main purpose of electrical certification?',
       options: [
-        'The module\\\\\\\\\\\\\\\'s communication address and point configuration',
+        'To record the time spent on each circuit',
         'To prove safety and compliance with regulations',
-        'To check consistency of quality across all work',
-        'To ensure all items are systematically checked',
+        'To list the materials supplied for the job',
+        'To set out the price charged to the client',
       ],
       correctAnswer: 1,
       explanation:
@@ -27,12 +27,12 @@ const Module6Section7_1 = () => {
     },
     {
       id: 2,
-      question: 'Which UK regulation requires all electrical systems to be safe?',
+      question: 'Which UK regulation makes it a legal duty to keep electrical systems safe?',
       options: [
-        'Sustainable Drainage Systems',
-        'Celebrate with a small positive emotion',
+        'The Building Act 1984',
+        'The Construction (Design and Management) Regulations',
         'Electricity at Work Regulations 1989',
-        'Traditional light switches',
+        'The Provision and Use of Work Equipment Regulations',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,9 +56,9 @@ const Module6Section7_1 = () => {
       question: 'Why is certification important for insurers and building control?',
       options: [
         'It provides evidence of compliance and due diligence',
-        'The minimum base dimension (the shorter side)',
-        'Commissioning records, O&M manuals, and as-built drawings',
-        'Claims arising from design work and certification advice',
+        'It sets out the warranty period for the equipment',
+        'It records the manufacturer of every accessory used',
+        'It confirms the client has paid the final invoice',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module6Section7_1 = () => {
       id: 5,
       question: 'What key details are included on a certificate?',
       options: [
-        'A device that allows current in one direction only (when forward biased)',
+        'The client address and the weather on the day',
         'Installation details, test results, and competent person signatures',
-        'The design team, documented through an RFI or technical query',
-        'Overloading, loose connections, or high resistance contacts',
+        'A photograph of each completed accessory',
+        'The hours worked and the labour rate charged',
       ],
       correctAnswer: 1,
       explanation:
@@ -79,19 +79,24 @@ const Module6Section7_1 = () => {
     },
     {
       id: 6,
-      question: 'True or False: Certification is optional for small alterations.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'Which statement about certification of small alterations is correct?',
+      options: [
+        'Alterations under £500 in value do not need certifying',
+        'Only the addition of new circuits requires certification',
+        'All alterations and additions must be certified',
+        'Certification is only needed for full rewires',
+      ],
+      correctAnswer: 2,
       explanation:
-        'False. All electrical work including alterations and additions must be certified, though minor works may use different certificate types.',
+        'All electrical work including alterations and additions must be certified, though minor works may use a Minor Works Certificate rather than an EIC.',
     },
     {
       id: 7,
       question: 'Why must a certificate include the signature of a competent person?',
       options: [
-        'Testing and configuring the complete system',
-        'Recommendations for improving energy efficiency',
-        'Building thermal performance (weather sensitivity)',
+        'To confirm the client is satisfied with the price',
+        'To record who supplied the materials used',
+        'To show which warranty applies to the equipment',
         'To provide accountability and traceability',
       ],
       correctAnswer: 3,
@@ -103,9 +108,9 @@ const Module6Section7_1 = () => {
       question: 'What are the legal consequences of failing to issue a certificate?',
       options: [
         'Prosecution, fines, insurance denial, and personal liability',
-        'To reduce high currents to measurable levels for meters',
-        'Leveraging each protocol\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s strengths for specific applications',
-        'At the cooker control unit and cooker outlet',
+        'A short delay before the next inspection is due',
+        'A reduction in the equipment warranty period',
+        'A requirement to repeat only the continuity test',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +120,10 @@ const Module6Section7_1 = () => {
       id: 9,
       question: 'What must be completed before a new installation can be energised?',
       options: [
-        'Payment from client',
-        'Certification',
-        'Building control approval',
-        'Material delivery',
+        'Receipt of payment from the client',
+        'Certification of the installation',
+        'Delivery of all remaining materials',
+        'Approval of the final invoice',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,10 +134,10 @@ const Module6Section7_1 = () => {
       question:
         'In the real-world example, what mistake left the contractor personally liable for damages?',
       options: [
-        'IP44 minimum (IP54/IP55 in dustier or wetter areas) per Reg 705.512.2',
-        'Complete failure to trip at any test current',
+        'Using the wrong type of protective device',
+        'Carrying out the work without building control approval',
         'Failing to issue an Electrical Installation Certificate',
-        'That all testing is complete and results are satisfactory',
+        'Underestimating the cable size required',
       ],
       correctAnswer: 2,
       explanation:

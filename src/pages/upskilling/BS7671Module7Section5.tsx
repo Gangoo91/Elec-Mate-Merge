@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       "A4:2026 introduces a new term — Prosumer's Electrical Installation (PEI). Which definition matches what BS 7671 Section 826 actually means by it?",
     options: [
-      'Any installation that includes more than one final circuit',
-      'An installation arranged so energy can flow in either direction between the installation and the distributor — the installation can both consume from and export to the supply (or operate islanded)',
+      'Any installation that includes more than one final circuit at the origin',
+      'One arranged so energy can flow in either direction between the installation and the distributor',
       'A commercial installation only — domestic installations are excluded from PEI scope',
-      'An installation that is connected to the grid via a smart meter',
+      'Any installation connected to the public grid through a smart import/export meter',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       "A homeowner installs a 5 kW PV array with a 10 kWh battery. The battery firmware is configured to charge from PV during the day and discharge to cover the evening household load before any export to the grid. What is BS 7671's term for this operating mode?",
     options: [
-      'Anti-islanding mode',
-      'Self-consumption mode — energy generated locally is used within the installation in preference to export',
-      'G99 export mode',
-      'Demand-side response',
+      'Anti-islanding mode — the inverter disconnects on loss of the grid supply',
+      'Self-consumption mode — local generation is used in the installation before export',
+      'G99 export mode — surplus generation is prioritised onto the public network',
+      'Demand-side response — load is curtailed in response to a grid or tariff signal',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A V2G EV charger is being added to a domestic property fed from a TN-C-S (PME) supply. BS 7671 specifically prohibits one of the following in the EV charging circuit. Which?',
     options: [
-      'Use of a Type B RCD',
+      'Use of a Type B RCD as additional protection on the charging circuit',
       'Inclusion of a PEN conductor in the EV charging circuit (Reg 722.312.2.1)',
-      'Use of a 30 mA RCD as additional protection',
-      'Bonding the EV charging chassis to the consumer unit MET',
+      'Use of a 30 mA RCD as additional protection on the charging circuit',
+      'Bonding the EV charging unit chassis to the consumer unit main earth terminal',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A4:2026 introduces Reg 570.6.8.203 covering the PCE (Power Conversion Equipment) warning notice. What does the regulation actually require?',
     options: [
-      'A label saying "DANGER 230 V" on the inverter enclosure',
-      'A durable warning notice at the PCE indicating that BOTH AC and DC sides must be isolated before working on the equipment',
-      'A label specifying the export power rating',
-      'A label warning of arc-flash energy at the inverter',
+      'A label reading "DANGER 230 V" fixed on the inverter enclosure',
+      'A durable notice at the PCE that both AC and DC sides must be isolated before work',
+      'A label specifying the maximum export power rating of the inverter',
+      'A label warning of the arc-flash energy present at the inverter terminals',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You are wiring the AC side of a 4 kW string PV inverter into a domestic consumer unit. The inverter datasheet says it provides "transformerless topology, no internal residual-current monitoring". Which RCD type is required upstream at the consumer unit?',
     options: [
-      'Type AC',
-      'Type A — sufficient because PV is a low-voltage source',
-      'Type B — required where the inverter is transformerless and cannot prevent smooth DC residual on the AC side',
-      'No RCD needed — anti-islanding handles all detection internally',
+      'Type AC — adequate because the AC final circuit is sinusoidal',
+      'Type A — sufficient because PV is a low-voltage DC source',
+      'Type B — required where a transformerless inverter may place smooth DC residual on the AC side',
+      'No RCD needed — the inverter anti-islanding function handles all detection',
     ],
     correctIndex: 2,
     explanation:
@@ -109,9 +109,9 @@ const inlineChecks = [
     question:
       'A new build dwelling has rooftop PV, a battery, and the lighting circuits include a mix of mains-powered downlights and PV-fed emergency luminaires that revert to grid in fault. Does Reg 411.3.4 (the A4 luminaire RCD rule) still apply?',
     options: [
-      'No — PEI lighting is exempt because it has dual sources',
-      'Yes — Reg 411.3.4 applies to AC final circuits supplying luminaires in domestic premises regardless of whether the supply is from grid, PV, battery or a mix; 30 mA RCD additional protection is mandatory',
-      'Only if the lighting points are inside a bathroom zone',
+      'No — PEI lighting is exempt from Reg 411.3.4 because it has dual sources',
+      'Yes — it applies to domestic luminaire circuits whatever the source mix; 30 mA RCD is mandatory',
+      'Only where the lighting points fall inside a bathroom or shower zone',
       'Only on the PV-fed emergency luminaires, not the mains-powered downlights',
     ],
     correctIndex: 1,
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 Part 8 (Section 826) introduces formal requirements for which class of installation?',
     options: [
-      'Highway power supplies and street furniture',
       "Prosumer's Electrical Installations (PEI) — installations capable of bidirectional energy flow with the distributor",
-      'Special locations only (bathrooms, pools, saunas)',
-      'Commercial installations above 100 kW only',
+      'Highway and street-furniture installations — circuits capable of supplying public-lighting columns and signs',
+      'Special-location installations only — bath/shower, swimming pool, sauna and similar high-risk areas',
+      'Large commercial installations — three-phase supplies with a maximum demand above 100 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part 8 / Section 826 (introduced in A4) defines the PEI: an installation capable of bidirectional energy exchange with the public network and / or capable of islanded operation. This covers PV, battery storage, V2H / V2G EV, small wind and micro-hydro. GN3 (A4 update) uses "PEI" as the standard abbreviation. Cross-references run to Section 712 (PV), Section 551 (parallel sources / generators), Section 419 (where ADS cannot be applied) and Section 514 (identification and warning notices).',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Which Reg sets the conditions under which a generating set may be connected in parallel with the public supply?',
     options: [
-      'Reg 411.3.2 (disconnection times)',
-      'Reg 551.7.1 — paralleling requirements (synchronism, earthing, isolation, protection coordination), with new sub-clauses (c) and (d) under A4',
-      'Reg 514.1 (identification of conductors)',
-      'Reg 722.312.2.1 (EV charging PEN prohibition)',
+      'Reg 411.3.2 — maximum disconnection times for ADS on final and distribution circuits',
+      'Reg 551.7.1 — paralleling requirements (synchronism, earthing, isolation and protection coordination across sources)',
+      'Reg 514.1 — identification and arrangement of conductors at the distribution board',
+      'Reg 722.312.2.1 — prohibition of a PEN conductor in an EV charging circuit on TN',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A PV inverter is installed in a garage. From 15 April 2026, what must be present at the PCE per Reg 570.6.8.203?',
     options: [
-      'A label stating the export power rating only',
-      'A durable warning notice indicating that the equipment has more than one source of supply and that BOTH AC and DC must be isolated before work',
-      "A QR code linking to the manufacturer's manual",
-      'No notice is required if the installation is G98-compliant',
+      'A durable label stating the export power rating and the inverter make and model',
+      "A durable plate carrying a QR code linking to the manufacturer's installation manual",
+      'A durable warning notice that both AC and DC sources must be isolated before work',
+      'No notice, where the installation is G98-compliant and below 16 A per phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 570.6.8.203 (new in A4) is the PCE warning-notice rule. The notice must be durable, located at the PCE, and warn that the equipment is fed from MORE THAN ONE source — both AC and DC sides must be isolated before working. The reg sits within Section 570 (Power Conversion Equipment) and complements the dual-supply labelling already required at the meter and origin. Missing the PCE notice on a new install is a documented A4 departure on the EIC.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'In a PEI with a PV array fed by a transformerless string inverter, the AC side is wired to a 30 mA RCD upstream. Which RCD type is required?',
     options: [
-      'Type AC — adequate for sinusoidal residual',
-      'Type A — adequate because PV is rectified to AC at the inverter',
-      "Type B — required where the inverter is transformerless and cannot guarantee absence of smooth DC residual on the AC side, unless the inverter manufacturer's manual confirms internal Type B-equivalent RCM",
-      'No RCD — anti-islanding covers detection',
+      'Type AC — adequate because the AC final circuit carries only sinusoidal residual current',
+      'Type A — adequate because the inverter rectifies the PV output to clean AC before export',
+      'Type B — required for a transformerless inverter, unless its manual confirms internal Type B-equivalent RCM',
+      'No RCD is required — the inverter anti-islanding function covers residual-current detection',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 5,
     question: 'Section 419 covers which scenario in a PEI context?',
     options: [
-      'The standard ADS arrangement on TN supplies',
-      'Alternative protective measures where ADS by Reg 411 cannot be applied — relevant to PEI islanded operation where conventional fault-loop impedance assumptions break down',
-      'Notification to the DNO under G98',
-      'The location of the PCE warning notice',
+      'Alternative protective measures where ADS by Reg 411 cannot be applied — e.g. PEI islanded operation',
+      'The standard ADS arrangement on TN supplies, where Ze and Zs are set by the distributor network',
+      'Notification to and acceptance by the DNO under EREC G98 for generation up to 16 A per phase',
+      'The position, durability and wording of the PCE warning notice at the inverter location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 419.1 covers the alternative protective measures where ADS in accordance with Reg 411 cannot be applied. In a PEI operating islanded (off-grid) the upstream source is the inverter itself, and conventional Ze / Zs values assumed for the grid-connected case do not hold. The designer must verify that fault current is sufficient to operate the protective device under island operation, or apply an alternative measure (e.g. RCD-only ADS, supplementary bonding, double / reinforced insulation). Section 419 was extensively updated in A4 to support PEI design.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'Section 514 covers identification of conductors and components. What A4 change is most relevant to PEI?',
     options: [
-      'Conductor colours have changed to dark blue for neutral',
-      'Identification and warning-notice requirements have been extended to cover sources, generators and batteries — Section 514 now treats the PEI as having multiple identifiable sources, each requiring its own warning notice',
-      'Cable insulation classes have changed',
-      'Section 514 has been removed and replaced with Section 826',
+      'The conductor colour code has changed, with neutral re-identified as dark blue throughout',
+      'The cable insulation voltage classes have changed for circuits carrying export current',
+      'Section 514 has been withdrawn and its requirements relocated wholesale into Section 826',
+      'Identification and warning-notice rules now extend to sources, generators and batteries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4 extends Section 514 to give explicit treatment to multi-source identification: the PV inverter, battery PCE and EV charger each require their own warning notice, and the labelling at the origin must indicate the PEI nature of the installation. The conductor colour code itself is unchanged. Section 514 + Reg 570.6.8.203 together cover the labelling regime; Section 826 sits above as the design framework.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'A PV string is wired with the array on the load side of a 30 mA RCD on the AC main. The installer plans to fit a generator on the same RCD bus to provide back-up power. What does BS 7671 say?',
     options: [
-      'Acceptable — the RCD provides additional protection across both sources',
-      'NOT acceptable — sources shall not be connected on the load side of an RCD providing additional protection in a way that defeats the disconnection requirement; the design must ensure RCD operation is reliable under all source-mode combinations (Reg 551.7.1, Reg 314)',
-      'Acceptable provided the generator is rated below 16 A',
-      'Acceptable provided the RCD is Type A',
+      'Acceptable — the single RCD provides additional protection across array and generator alike',
+      'Acceptable provided the back-up generator is rated below 16 A per phase under EREC G98',
+      'NOT acceptable — a source must not sit on the load side of an additional-protection RCD',
+      'Acceptable provided the additional-protection RCD on the AC main is a Type A device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Putting a source on the load side of an RCD that is providing additional protection breaks the assumption that the upstream conductor is unenergised when the RCD trips — the generator can keep the downstream side live regardless. Reg 551.7.1 requires the design to maintain effective RCD operation across all source-mode combinations, and Reg 314 requires circuits to be arranged to avoid danger. The fix is to feed the generator into a dedicated way, or to use a transfer switch that breaks the source connection before the RCD-protected bus is energised by it.',
   },
@@ -223,12 +223,12 @@ const quizQuestions = [
     question:
       'A homeowner asks for a 5 kW PV system with a hybrid inverter and a 10 kWh battery. Which combination of standards must the installer comply with?',
     options: [
-      'BS 7671 Part 8 only',
-      'BS 7671:2018+A4:2026 (Section 826 PEI, Section 712 PV, Section 551 parallel sources, Section 514 identification, Reg 570.6.8.203 PCE notice) PLUS the relevant ENA Engineering Recommendation (G98 for ≤16 A / phase, otherwise G99) and MCS for the consumer-funding route',
-      'G98 only — BS 7671 does not apply to PV',
-      'MCS only — BS 7671 is optional for renewable installations',
+      'BS 7671 Part 8 alone — Section 826 is self-contained and covers the whole PEI design',
+      'EREC G98 alone — the DNO connection standard, since BS 7671 does not apply to PV wiring',
+      'MCS alone — the funding-scheme standard, since BS 7671 is optional for renewable installs',
+      'BS 7671 A4:2026 (826/712/551/514/570.6.8.203) PLUS the relevant EREC (G98 or G99) PLUS MCS for the funding route',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 is the technical-design standard. ENA EREC G98 (≤16 A per phase) and G99 (above) are the DNO connection standards — statutory under ESQCR. MCS (Microgeneration Certification Scheme) is the route required for consumer-funded SEG / export tariffs. All three apply concurrently; missing any one creates a defect — BS 7671 non-compliance for the wiring, G98 / G99 breach for unauthorised parallel connection, and loss of MCS-funded benefits for the customer.',
   },

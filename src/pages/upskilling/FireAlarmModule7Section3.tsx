@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Under BS 5839-1:2025, which system category is intended for protection of LIFE and provides automatic detection in all areas of the building (excluding only specified low-risk locations such as toilets and shower rooms)?',
     options: [
-      'Cat M (manual only).',
-      'Category L1. The L category is the life-protection family. L1 is the broadest — automatic detection throughout the protected premises with the explicit aim of giving the earliest possible warning of fire to maximise time available for escape. L2 adds detection to areas of high risk and on escape routes. L3 detects on escape routes only. L4 detects in circulation spaces forming part of the escape routes only. L5 is custom — coverage scoped to a specific risk identified by the FRA. The 2025 revision tightened L2 to include detection in rooms where people sleep, banning heat detectors there.',
-      'Category P1.',
-      'Category L4.',
+      'Category L1 — life protection, automatic detection throughout the protected premises.',
+      'Category M — life protection by manual call points only, no automatic detection.',
+      'Category P1 — full automatic detection aimed at protecting property, not life.',
+      'Category L4 — life protection confined to escape-route circulation spaces only.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'L1 = full coverage life protection. L2/L3/L4/L5 progressively reduce coverage. P1/P2 are property protection categories (full / restricted). M is manual only. The 2025 revision added significant changes in L2 (sleeping rooms, no heat detectors) and L4 (flue-like structures) — covered in detail below.',
+      'L1 is the broadest life-protection category — automatic detection throughout (excluding only specified low-risk rooms such as toilets/shower rooms), giving the earliest possible warning. L2/L3/L4/L5 progressively reduce coverage; P1/P2 protect property; M is manual only. The 2025 revision tightened L2 to include rooms where people sleep, banning heat detectors there, and added a flue-top detector recommendation in L4.',
   },
   {
     id: 'fam7-s3-mcp',
     question:
       'BS 5839-1:2025 §13 (manual call points). What is the maximum distance from any point in the building to the nearest MCP, post-2025 revision?',
     options: [
-      '50 m straight line / 75 m travel.',
-      '30 m straight line and 45 m actual travel distance — these are MAXIMUM distances; the designer can specify shorter where the FRA / risk indicates. The 2025 revision simplified the previous distinction between escape route categories. MCP mounting height: 1.4 m above finished floor level, with tolerance 200 mm above (1.6 m max) and 300 mm below (1.1 m min) — i.e. acceptable range 1.1 m to 1.6 m. Protective covers, where used, are recommended to be transparent. The 2017 reference to "enclosed stairway" in the location clause has been removed in 2025, simplifying location guidance.',
-      '20 m straight line / 30 m travel.',
-      '60 m straight line / 90 m travel.',
+      '50 m straight line and 75 m actual travel distance to the nearest manual call point.',
+      '20 m straight line and 30 m actual travel distance to the nearest manual call point.',
+      '30 m straight line and 45 m actual travel distance to the nearest manual call point.',
+      '60 m straight line and 90 m actual travel distance to the nearest manual call point.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      '30 m straight, 45 m travel, max. Mounting 1.4 m ± 200 mm up / 300 mm down → 1.1-1.6 m range. Transparent covers preferred. The 2025 simplification removes the prior "enclosed stairway" exception language.',
+      '30 m straight, 45 m travel — these are maximums; shorter may be specified where the FRA/risk indicates. The 2025 revision simplified the previous escape-route distinctions. MCP mounting 1.4 m ± 200 mm up / 300 mm down → 1.1-1.6 m range; transparent covers preferred. The 2017 "enclosed stairway" location reference has been removed.',
   },
   {
     id: 'fam7-s3-cable',
     question:
       'BS 5839-1:2025 §16 (cabling). What is the recommended cable colour for fire alarm cables, including the low-voltage mains supply, post-2025 revision?',
     options: [
-      'Any colour.',
-      'A single, common colour — with red preferred. The 2025 revision tightened the colour guidance to clarify that ALL fire alarm cables, AND the low-voltage mains supply to the system, should be of a single common colour. Red is preferred. Why: it makes the fire alarm circuit instantly identifiable for maintenance, modification and emergency work; it reduces the risk of misidentification with non-fire-safety cabling. The functional earth (FE) conductor colour also changed: pink (was cream pre-2025), aligning with BS 7671 / IEC 60445 amendment 2 (2022). FE conductors should be marked or coloured pink with the alphanumeric designation "FE".',
-      'Black for power, red for signal.',
-      'Yellow.',
+      'Any colour the installer chooses, since cable colour is not specified for fire alarm systems.',
+      'Black for the power conductors and red for the signal conductors throughout.',
+      'Yellow throughout, to distinguish fire alarm cabling from all other building services.',
+      'A single, common colour for all fire alarm cables, with red preferred.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Red preferred for FA cables, applied to the LV mains as well. FE conductor pink (post-IEC 60445 A2:2022 / BS 7671 update). The 2025 colour guidance is a clarification, not a new rule, but the explicit inclusion of the LV mains supply is new.',
+      'A single common colour (red preferred) applied to ALL fire alarm cables AND the LV mains supply to the system — making the circuit instantly identifiable and reducing misidentification. The functional earth (FE) conductor is now pink (was cream), aligning with IEC 60445 A2:2022 / BS 7671, marked "FE". The 2025 guidance is a clarification, but explicitly including the LV mains is new.',
   },
   {
     id: 'fam7-s3-arc',
     question:
       'BS 5839-1:2025 §14 (alarm transmission). What is the maximum time for an alarm signal from a Cat L system to reach the ARC?',
     options: [
-      'No specified time.',
-      '90 seconds for Category L systems; 120 seconds for Category P systems. A catastrophic failure of the transmission system (no signals can be transmitted) must be indicated at the ARC and CIE within 3 minutes for Category L and 31 minutes for Category P. These are MAXIMUM times — actual times for IP-based systems are typically much lower. The 2025 revision added these specific timings for the first time, recognising that the 2017 revision permitted I&HAS (Intruder & Hold-Up Alarm Systems) transmission equipment but did not specify the Grade of signalling required. With the PSTN switch-off in 2027 the alarm transmission must use IP (or other digital path); a separate power supply unit, where used, should conform to BS EN 54-4 or BS EN 50131-6 Grade 4.',
-      '5 minutes for both.',
-      '30 seconds for both.',
+      '90 seconds for Category L systems (120 seconds for Category P systems).',
+      'No time is specified — the signal simply has to reach the ARC eventually.',
+      '5 minutes for both Category L and Category P systems alike.',
+      '30 seconds for both Category L and Category P systems alike.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Cat L = 90 s alarm, 3 min catastrophic-fail. Cat P = 120 s alarm, 31 min catastrophic-fail. The longer P times reflect the property-protection (not life) priority. PSTN switch-off in 2027 means IP transmission is the future-proof path.',
+      'Cat L = 90 s alarm, Cat P = 120 s; the longer P time reflects property (not life) priority. A catastrophic transmission failure must be indicated at ARC and CIE within 3 min (L) / 31 min (P). These are maximums; IP systems are typically much faster. New in 2025, prompted by the 2027 PSTN switch-off, which mandates IP/digital transmission; any separate PSU should conform to BS EN 54-4 or BS EN 50131-6 Grade 4.',
   },
 ];
 
@@ -81,137 +81,137 @@ const quizQuestions = [
     id: 1,
     question: 'BS 5839-1:2025 took effect on what date, and what is its legal status?',
     options: [
-      '1 January 2025; it is law.',
-      '30 April 2025; it is a CODE OF PRACTICE — published by BSI, not a statutory instrument. BS 5839-1 is referenced by Approved Document B (Building Regulations) as the route to compliance for fire detection and alarm in non-domestic premises, and is treated by AHJs / insurers / courts as the de facto specification. Departures from BS 5839-1 (called "variations") are not unlawful in themselves but must be justified and recorded; some variations are now explicitly identified as unacceptable in the 2025 revision. The 2025 revision was the first full rewrite since 2017 and incorporates significant technical updates.',
-      'It is not yet published.',
-      '1 January 2026; it is statutory.',
+      '30 April 2025; it is a code of practice published by BSI, not a statutory instrument.',
+      '1 January 2025; it is statute law, enforced directly as a statutory instrument.',
+      'It has not yet been published; the 2017 edition remains the current standard.',
+      '1 January 2026; it becomes statutory law from that date onwards.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Published 30 April 2025. Code of practice — referenced by ADB but not law. Departures permitted with justification; some now explicitly unacceptable. First full rewrite since 2017.',
+      'Published 30 April 2025 — a code of practice, referenced by Approved Document B as the route to compliance but not law, and treated by AHJs/insurers/courts as the de facto specification. Departures ("variations") must be justified and recorded; some are now explicitly unacceptable. First full rewrite since 2017.',
   },
   {
     id: 2,
     question:
       'A KEY 2025 change: heat detectors in rooms where people sleep. What does the standard now say?',
     options: [
-      'Heat detectors permitted.',
-      'Heat detectors are no longer permitted in rooms where people sleep in Category L2 systems (which now include sleeping rooms as high-risk areas requiring AFD), and heat detectors should not be used in sleeping rooms in L3 systems either, even though the L3 objective is not to protect persons in those rooms. The change is NOT retrospective — existing systems do not need to be changed unless they are undergoing new works (e.g. a system upgrade). The reasoning: heat detectors respond too late for sleeping persons (smoke causes death long before heat reaches a heat detector threshold). Smoke detection or multi-sensor (smoke + heat) is the appropriate technology.',
-      'Heat detectors only in commercial sleeping rooms.',
-      'No change from 2017.',
+      'Heat detectors remain fully permitted in sleeping rooms with no new restriction.',
+      'Heat detectors are now permitted only in commercial (non-residential) sleeping rooms.',
+      'Heat detectors are no longer permitted in rooms where people sleep (L2 and L3 new works).',
+      'There is no change from the 2017 edition on detector type in sleeping rooms.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Heat detectors banned in sleeping rooms for L2 / L3 new work. Smoke or multi-sensor required. Not retrospective — existing systems remain compliant until a system upgrade triggers refurbishment.',
+      'L2 now treats sleeping rooms as high-risk requiring AFD, and heat detectors are banned there in both L2 and L3 new works — smoke or multi-sensor required, because heat detectors respond too late for sleeping persons. Not retrospective: existing systems remain compliant until a system upgrade triggers refurbishment.',
   },
   {
     id: 3,
     question: 'Another 2025 change: stairway lobbies. What does the standard now require?',
     options: [
-      'No change.',
-      'Stairway lobbies are now designated as areas requiring automatic detection (AFD), whereas previously they could be excluded from AFD requirements as "areas of low fire risk". The reasoning: smoke can accumulate in lobbies and impede stairway use during evacuation; lobby smoke detection gives earlier warning of incipient stairway compromise. Combined with the simultaneous tightening of L2 to include sleeping rooms, the 2025 revision materially expands AFD coverage in residential and mixed-use buildings.',
-      'Stairway lobbies need MCPs only.',
-      'Stairway lobbies are now exempt.',
+      'There is no change — stairway lobbies are treated exactly as in the 2017 edition.',
+      'Stairway lobbies now require manual call points (MCPs) only, with no automatic detection.',
+      'Stairway lobbies are now explicitly exempt from any detection requirement.',
+      'Stairway lobbies are now designated as areas requiring automatic detection (AFD).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Stairway lobbies now require AFD (was permitted exclusion in 2017). Tighter coverage in residential / mixed-use. Combined with the L2 sleeping-room change, materially extends detection scope.',
+      'Lobbies were previously excludable as "areas of low fire risk"; 2025 requires AFD because smoke accumulating in lobbies can impede stairway use and lobby detection gives earlier warning of stairway compromise. Combined with the L2 sleeping-room change, this materially extends detection scope in residential and mixed-use buildings.',
   },
   {
     id: 4,
     question:
       'BS 5839-1:2025 introduces a new requirement on cause-and-effect at handover. What is it?',
     options: [
-      'Optional documentation.',
-      'A cause-and-effect matrix or text description of how cause-and-effect operates MUST be included in the documentation provided to the purchaser or user of the system. The standard does not dictate the FORM — could be as simple as "this system operates as a simultaneous evacuation" for a small Cat M, or a full matrix for a complex multi-zone phased-evacuation system. But it MUST be produced. The reasoning: at handover, the user has the right to know what triggers what, what to expect on alarm, and what to test at periodic service. Without the cause-and-effect document, the user (and the responsible person under the RRO) cannot discharge their Article 38 (firefighter information) duty.',
-      'Required only for Category L1.',
-      'Required only in HRBs.',
+      'A cause-and-effect matrix or text description must be included in the handover documentation.',
+      'Cause-and-effect documentation remains optional and is produced only on request.',
+      'A cause-and-effect document is required only for Category L1 systems.',
+      'A cause-and-effect document is required only in higher-risk buildings (HRBs).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Mandatory at handover. Form unspecified — text description for simple systems, matrix for complex. The legal hook is RRO Art 38 (firefighter information) and Art 19 (employee information). The contractor produces; the responsible person retains and uses.',
+      'Mandatory at handover. The form is unspecified and scaled to complexity — as simple as "operates as a simultaneous evacuation" for a small Cat M, or a full matrix for a phased-evacuation system — but it must be produced. The legal hook is RRO Art 38 (firefighter information): without it the responsible person cannot discharge that duty. The contractor produces; the responsible person retains and uses it.',
   },
   {
     id: 5,
     question: 'BS 5839-1:2025 §43.4 introduces a new clause on what subject?',
     options: [
-      'Battery disposal.',
-      'Cyber security and remote services. With the rise of all-IP networks and connected CIE (Control and Indicating Equipment), the 2025 revision introduces specific requirements for preventing unauthorised access to the system, access points and network pathways. Physical means (locking the comms cabinet, anti-tamper plugs to patch leads) plus authentication of remote-connection requests in the CIE or gateway software before remote access is allowed. Prior to performing any remote service — particularly when executing read, control or write functions — a thorough risk assessment should be conducted to evaluate the potential impact on CIE operation. The responsible individual must ensure the system is fully operational on completion of the remote service.',
-      'Detector cleaning.',
-      'Battery testing only.',
+      'The safe disposal of spent standby batteries from the control equipment.',
+      'A new procedure for the routine cleaning of point smoke detectors.',
+      'Cyber security and remote services for connected, all-IP control and indicating equipment.',
+      'A revised method statement for battery testing of the standby supply only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Cyber security: physical access control + authenticated remote connections + risk assessment before remote service + post-service operational verification. Reflects the reality that modern panels are network-connected and exposed to cyber risk just as much as physical risk.',
+      'Clause 43.4 covers cyber security and remote services. With all-IP networks and connected CIE (Control and Indicating Equipment), it requires preventing unauthorised access to the system and network pathways: physical means (locking the comms cabinet, anti-tamper plugs to patch leads) plus authentication of remote-connection requests before access is allowed. A risk assessment must precede any remote service — particularly read, control or write functions — and the responsible individual must verify the system is fully operational on completion.',
   },
   {
     id: 6,
     question: 'BS 5839-1:2025 changed which annex letter for the logbook?',
     options: [
-      'Annex C.',
-      'The logbook annex is now Annex H (was Annex F in 2017). Annex G is the acceptance certificate. Annex D is the detector selection (was Annex E in 2017). The renaming and renumbering reflects the substantial structural reorganisation of the 2025 standard and reflects the new section on extensions and modifications (Section 7) that was added. The logbook clause itself (Cl 48) has been updated to require ALL agreed variations to be recorded — a change from the 2017 wording that only required "major" variations to be recorded (with "major" undefined).',
-      'Annex A.',
-      'Annex Z.',
+      'The logbook is now in Annex C, having moved up from Annex F in 2017.',
+      'The logbook is now in Annex A, placed at the front of the annexes for prominence.',
+      'The logbook is now in Annex Z, the last annex in the reorganised standard.',
+      'The logbook is now in Annex H, having moved from Annex F in 2017.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Logbook = Annex H (was F). Acceptance cert = Annex G. Detector selection = Annex D (was E). All variations now recorded in logbook (was "major" only — now defined to include all agreed departures from the standard).',
+      'Logbook = Annex H (was F). Acceptance cert = Annex G. Detector selection = Annex D (was E). The renumbering reflects the structural reorganisation and the new Section 7 (extensions and modifications). The logbook clause now requires ALL agreed variations to be recorded — a change from the 2017 "major" variations (with "major" undefined).',
   },
   {
     id: 7,
     question:
       'BS 5839-1:2025 lists certain variations as "unacceptable" — likely so detrimental to safety that they should not be regarded as acceptable variations. Identify two of these.',
     options: [
-      'Different colour cables.',
-      '(a) The absence of a zone plan (or other suitable diagrammatic representation as recommended in §22.2.5) in premises with more than one zone on any storey — particularly where people sleep. (b) The absence of a facility for transmission of fire alarm signals to an Alarm Receiving Centre (ARC) in supported housing where Grade A is necessary, or in residential care homes. These are NEW unacceptable variations introduced in the 2025 revision. The 2017 standard treated these as acceptable agreed variations; 2025 says no. The change recognises that, for premises with sleeping risk in supported housing or residential care, ARC connection is now considered a life-safety baseline, not an option.',
-      'Detector mounting height.',
-      'Cable type only.',
+      'No zone plan in multi-zone sleeping premises, and no ARC transmission in Grade A supported housing or residential care homes.',
+      'Using a different cable colour from the recommended single common colour, and mounting detectors slightly off the recommended height.',
+      'Mounting detectors below the recommended height, and siting an MCP just beyond the recommended travel distance.',
+      'Substituting one approved cable type for another, and omitting a single sounder in a low-risk store room.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Unacceptable variations 2025: (i) zone plan missing in multi-zone premises with sleeping; (ii) ARC absent in supported housing (Grade A) / residential care. Big change from 2017 where these were just "agreed variations". The legal effect: contractors and FRAs cannot rationalise away these omissions.',
+      'Unacceptable variations 2025: (i) zone plan missing in multi-zone premises where people sleep (§22.2.5); (ii) ARC transmission absent in supported housing requiring Grade A, or residential care homes. Big change from 2017 where these were just "agreed variations" — contractors and FRAs can no longer rationalise them away. ARC connection is now treated as a life-safety baseline for these sleeping-risk premises.',
   },
   {
     id: 8,
     question:
       'BS 5839-1:2025 maintenance — successive service visits should be at intervals of approximately 6 months. What tolerance is now explicitly permitted in the 2025 revision?',
     options: [
-      'No tolerance.',
-      '5 to 7 months — i.e. a service visit any time between 5 and 7 months after the previous inspection, test and service is acceptable. This was clarified in 2025 to reflect customary practice; the 2017 wording said "should not exceed six months" which was harsher. The date of acceptance is the datum for these periods. So a system commissioned on 12 March must have its first service between 12 August (5 months) and 12 October (7 months). At every service visit, the time clock of the CIE should be checked and adjusted as necessary — particularly important on systems with day/night settings. Functional testing of smoke detectors in ventilation ducts has been added to the 12-monthly service activity list.',
-      '3 to 4 months.',
-      '12 months only.',
+      'No tolerance is permitted — each service must fall exactly six months after the last.',
+      'A 3 to 4 month window is permitted between successive service visits.',
+      'A 5 to 7 month window between successive service visits, measured from the date of acceptance.',
+      'A single 12-month interval between service visits is now permitted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      '5-7 month tolerance window, datum = acceptance date. Tolerance, not relaxation — outside the window is non-compliant. CIE clock check at every visit. Ducted detector function test added at 12-month visit.',
+      '5-7 month tolerance window, datum = acceptance date (e.g. a 12 March system gets its first service between 12 August and 12 October). It is a tolerance, not a relaxation — outside the window is non-compliant. The 2017 wording said "should not exceed six months", which was harsher. The CIE clock is checked and adjusted at every visit, and ducted-detector function testing is added to the 12-monthly activity list.',
   },
   {
     id: 9,
     question:
       'BS 5839-1:2025 applies to the non-domestic side of the BS 5839 family. What scope does it cover?',
     options: [
-      'All buildings.',
-      'Non-domestic premises: commercial (offices, retail), industrial (factories, warehouses), places of assembly (theatres, conference, places of worship, leisure), hospitality (hotels, hostels, restaurants, bars), healthcare (hospitals, care homes excluding regulated residential care), education (schools, FE colleges, universities), transport (stations, terminals), and the COMMON PARTS of multi-occupied residential buildings (the flats themselves are domestic and fall under BS 5839-6). The boundary between BS 5839-1 and BS 5839-6 is the flat entrance door — common parts use BS 5839-1; inside the flat use BS 5839-6 (covered in §7.4).',
-      'Single-family dwellings only.',
-      'Open-air premises only.',
+      'All buildings of every type, both domestic and non-domestic, under one common code.',
+      'Single-family dwellings only, with all non-domestic premises covered by other standards.',
+      'Open-air premises only, such as multi-storey car parks and external storage yards.',
+      'Non-domestic premises plus the common parts of multi-occupied residential buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1 = non-domestic + common parts of residential. BS 5839-6 = inside dwellings. Boundary = flat entrance door. The two parts of the BS 5839 family meet here and the responsible person / accountable person typically engages both standards on a residential-block project.',
+      'BS 5839-1 = non-domestic (offices, retail, factories, theatres, hotels, hospitals, schools, stations) plus the common parts of residential blocks. The flats themselves are domestic and fall under BS 5839-6. Boundary = flat entrance door (§7.4). The two parts meet here, and a residential-block project typically engages both standards.',
   },
   {
     id: 10,
     question:
       "A contractor commissions a Cat L2 system on 5 May 2026 in a hotel with sleeping rooms. The detection in the sleeping rooms is heat detection. The maintenance has been on a 9-month interval at the customer's request. What are the BS 5839-1:2025 compliance issues?",
     options: [
-      'No issues.',
-      'TWO issues. (1) Heat detection in sleeping rooms is NOT permitted in L2 systems in 2025 new works — smoke or multi-sensor required. The detection design is non-compliant; remediation needed. (2) Service interval of 9 months is OUTSIDE the 5-7 month tolerance window in BS 5839-1:2025. The maintenance regime is non-compliant; intervals must be brought back inside the window (the next service brought forward, then sustained at approximately 6 months thereafter). The contractor may also be in breach of professional duty in commissioning a 2026 new-work system with the heat detection. The responsible person, by accepting the 9-month interval, is potentially in breach of RRO Art 17.',
-      'Only the heat detection.',
-      'Only the service interval.',
+      'Two issues: heat detection in the sleeping rooms is non-compliant, and the 9-month service interval is outside the tolerance window.',
+      'No issues — both the detection design and the maintenance interval are compliant.',
+      'Only the heat detection in the sleeping rooms is a compliance issue, the service interval being acceptable.',
+      'Only the 9-month service interval is a compliance issue, the heat detection being acceptable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Both issues. New works in 2026 must follow 2025 revision: smoke / multi-sensor in sleeping rooms (not heat). Service intervals 5-7 months (not 9). Both are RRO Art 13 / 17 breaches by the responsible person; both are professional failures by the contractor in delivery and ongoing maintenance.',
+      'Both. Heat detection in sleeping rooms is not permitted in L2 new works from 2025 — smoke or multi-sensor required; the design needs remediation. A 9-month interval is outside the 5-7 month tolerance window; the next service must be brought forward and then sustained at approximately 6 months. Both are RRO Art 13 / 17 breaches by the responsible person and professional failures by the contractor.',
   },
 ];
 

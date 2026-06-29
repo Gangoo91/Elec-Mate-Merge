@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is maximum demand (MD) in building electrical systems?',
     options: [
-      'The difference between predicted and actual energy performance',
+      'The total connected load of every circuit added together',
       'The highest average power drawn over a defined period',
-      'PPE must be correctly rated for the hazard level',
-      'To provide grip, stability, and protection from dropped loads',
+      'The instantaneous peak current at the moment of motor start-up',
+      'The supply capacity reserved by the DNO for future expansion',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,16 +185,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'A factory has a maximum demand charge of 12/kVA/month. Reducing MD from 800 kVA to 650 kVA saves how much annually?',
+      'A factory has a maximum demand charge of £12/kVA/month. Reducing MD from 800 kVA to 650 kVA saves how much annually?',
     options: [
-      '10,800',
-      '21,600',
-      '900',
-      '1,800',
+      '£10,800',
+      '£21,600',
+      '£9,000',
+      '£1,800',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'Monthly saving = (800 - 650) × 12 = 150 × 12 = 1,800. Annual saving = 1,800 × 12 months = 21,600... Wait, let me recalculate: Monthly = 150 × 12 = 1,800. Annual = 1,800 × 12 = 21,600. Actually the question says per month so: Annual = (800-650) × 12 × 12 = 21,600. But typically the charge is per kVA per month, so annual = 150 × 12 × 12 = 21,600.',
+      'MD reduction = 800 − 650 = 150 kVA. Monthly saving = 150 × £12 = £1,800. Annual saving = £1,800 × 12 months = £21,600.',
   },
   {
     id: 9,
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'Which renewable energy technology is most effective for peak shaving in UK commercial buildings?',
     options: [
-      'Overload and short circuit',
-      'Check condition and correct fuse wire',
+      'Roof-mounted micro wind turbines',
+      'Ground-source heat pumps',
       'Solar PV with battery storage',
-      'All conditions must be true',
+      'Standalone diesel standby generators',
     ],
     correctAnswer: 2,
     explanation:

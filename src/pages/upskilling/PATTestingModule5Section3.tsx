@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       "Should a hired pressure washer in use on site for 6 weeks be recorded on the duty holder's asset register?",
     options: [
-      'No — only owned equipment goes on the register.',
-      "Yes — any electrical equipment in use under the duty holder's control belongs on the register, regardless of ownership. Hired equipment is recorded as a hire-status row with the hire reference and the dates. The \"if it's not on the register, it didn't get tested\" rule applies to hired kit too.",
-      'Only if the hire exceeds 3 months.',
-      'Only if the hirer specifies it.',
+      'No — only equipment owned by the duty holder goes on the register.',
+      'Yes — equipment in use under the duty holder\'s control belongs on the register.',
+      'Only if the hire period on site exceeds three months.',
+      'Only if the hire firm specifically asks for it to be added.',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     id: 'patm5-s3-no-register',
     question: 'A staff member brings their own kettle from home. Does it go on the asset register?',
     options: [
-      'No — personal items are exempt.',
-      "It depends on policy. If personally owned electrical equipment is permitted at work, it should either be tested and added to the register (preferred — extends the duty holder's safety regime) OR the duty holder must have a documented policy prohibiting personal electrical equipment. Either way, the question must be answered, not ignored.",
-      'Yes — automatically.',
-      'Only if used for company work.',
+      'No — personally owned items are always exempt from the regime.',
+      'It depends on policy — either test and register it, or prohibit it in writing.',
+      'Yes — every personal item is automatically added to the register.',
+      'Only where the kettle is used directly for company work.',
     ],
     correctIndex: 1,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'Two identical kettles in the staff room are recorded with the same asset ID. What is the audit risk?',
     options: [
-      'None — they are identical.',
-      'High — the audit trail collapses. A failure on one kettle cannot be distinguished from the other in the records. The "test before next use" rule in high-risk environments cannot be applied. The asset ID has stopped uniquely identifying anything.',
-      'Low — combine the records to save space.',
-      'Only a problem in industrial settings.',
+      'None — the two kettles are identical, so one record covers both.',
+      'High — the audit trail collapses; a failure on one cannot be told from the other.',
+      'Low — combining the records to save register space is acceptable.',
+      'It is only a problem in heavy industrial settings, not an office.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'How should an asset be retired from the register when it is permanently disposed of?',
     options: [
-      'Delete the row.',
-      'Mark the row "DISPOSED" with the disposal date, retain the full test history, and retain the row for at least 6 years post-disposal in line with Limitation Act 1980 considerations. The register grows over time — that is correct.',
-      'Move the row to a different spreadsheet.',
-      'Print and shred.',
+      'Delete the row entirely to keep the register tidy.',
+      'Mark the row "DISPOSED" with the date and retain it for the limitation period.',
+      'Move the row out to a separate archive spreadsheet.',
+      'Print the row for the file and then shred the digital record.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,25 +81,25 @@ const quizQuestions = [
     question:
       'What columns should an asset register carry as a minimum, in line with IET CoP 5th Ed. Chapter 16?',
     options: [
-      'Description and location only',
-      'Unique asset ID, description, equipment class (I / II / III), location, owner / responsible department, status (active / disposed / under repair / quarantined), last test date, last test result, next test due, and a link to the test record',
-      'Manufacturer and serial number only',
-      'Cost and depreciation columns',
+      'Unique asset ID, description, class, location, owner, status, test dates/result and a history link',
+      'The description and physical location of each item only',
+      'The manufacturer and serial number of each item only',
+      'The purchase cost and depreciation columns for each item only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'IET CoP 5th Ed. Chapter 16 expects the register to be the master list. The columns above let any item be located, identified, statused, and tied to its test history — which is what the register is for.',
+      'IET CoP 5th Ed. Chapter 16 expects the register to be the master list. A full row carries the unique asset ID, description, equipment class (I / II / III), location, owner / responsible department, status (active / disposed / under repair / quarantined), last test date, last test result, next test due, and a link to the test record. These columns let any item be located, identified, statused and tied to its test history — which is what the register is for.',
   },
   {
     id: 2,
     question: 'The "if it\'s not on the register, it didn\'t get tested" rule means:',
     options: [
-      'Only registered items get tested',
-      'The asset register is the master list against which test rounds are reconciled. An item missing from the register is invisible to the test process — meaning it can sit untested for years. The register is the management tool that prevents drift.',
-      'Items get crossed off as tested',
-      'It is an old rule that no longer applies',
+      'Only items already on the register are ever selected for testing',
+      'Items are physically crossed off the register once they are tested',
+      'The register is the list test rounds reconcile against; missing items go untested',
+      'It is an old rule from earlier CoP editions that no longer applies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The register is the planning and reconciliation list. Test rounds work through the register; missing items never appear on a tester's round, so they never get tested. Audit your physical equipment against the register periodically — the gap is the management failure.",
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'How should hired or loaned equipment be handled in the asset register?',
     options: [
-      'Excluded — only owned equipment goes on the register',
-      "Included — recorded as a hire-status row with the hire reference, dates, and either the hire firm's test certificate accepted on receipt or a fresh test logged. The duty holder's control of the equipment is what matters for EAWR, not who owns it.",
-      'Tracked separately on a hire log only',
-      'Only required for long-term hires',
+      'Excluded — only equipment owned by the duty holder goes on the register',
+      'Tracked separately on a hire log only, never on the asset register',
+      'Included on the register only where the hire period exceeds three months',
+      'Included as a hire-status row with the reference, dates and an accepted-or-fresh test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAWR Reg 4(2) duty falls on whoever has control of the equipment in use. Hired equipment in use is under the duty holder's control. Practice is to record it on the register with hire-status flags, accept-or-re-test on receipt, and remove the row when the equipment is returned.",
   },
@@ -120,23 +120,23 @@ const quizQuestions = [
     id: 4,
     question: 'A unique asset ID has what specific function in the recordkeeping system?',
     options: [
-      'Inventory tracking',
-      'Two-way linkage between the physical item (via the label) and the records (via the register and per-item history). Without a unique ID, an item cannot be tracked through repairs, retests, or audits — and a record cannot be matched back to the physical asset.',
-      'Cost allocation',
-      'Insurance reference',
+      'Two-way linkage between the physical item and its records, both ways',
+      'General inventory and stock-count tracking of the estate only',
+      'Cost allocation to the responsible department only',
+      'A reference for the building insurance schedule only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The unique asset ID is what makes the entire system traceable. The label carries it, the register carries it, every test record carries it, every repair record carries it. Lose the unique ID and the audit trail collapses.',
+      'The unique asset ID gives two-way linkage between the physical item (via the label) and the records (via the register and per-item history). Without a unique ID, an item cannot be tracked through repairs, retests or audits, and a record cannot be matched back to the physical asset. The label carries it, the register carries it, every test and repair record carries it — lose it and the audit trail collapses.',
   },
   {
     id: 5,
     question: 'When should an asset register row be deleted?',
     options: [
-      'On disposal of the equipment',
-      'Never deleted while the retention period is active (typically at least 6 years post-disposal under the Limitation Act 1980). On disposal the row is marked "DISPOSED" with the date; the test history is retained.',
-      'After 12 months',
-      'Whenever the register is tidied',
+      'Immediately on disposal of the equipment from the workplace',
+      'Never while the retention period is active — mark "DISPOSED" and keep the row',
+      'After 12 months from the last test, to keep the register current',
+      'Whenever the register is being tidied or condensed down',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       "A staff member brings their own electrical equipment to work. The duty holder's position should be:",
     options: [
-      'Personal property is automatically exempt',
-      "Either the personal item is included in the duty holder's test regime and added to the register (preferred), or there is a documented policy prohibiting personal electrical equipment in the workplace. EAWR makes no distinction by ownership.",
-      'It depends on the value',
-      'Only laptops need policy',
+      'Personal property is automatically exempt from the test regime',
+      'It depends on the monetary value of the personal item brought in',
+      'Only personal laptops and chargers need a documented policy',
+      'Either include it in the regime and register, or prohibit it in a documented policy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAWR Reg 4(2) is about equipment in use, not equipment ownership. A duty holder permitting personal equipment without test brings that equipment within the regime's gap. Either include it (test, label, register) or exclude it formally.",
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'Two identical printers in the same office have the same asset ID. The risk is:',
     options: [
-      'Negligible — they are identical',
-      'Significant — the audit trail collapses. A failure on one cannot be distinguished from the other; a test record matches both; "test before next use" cannot be applied to one specifically. Each physical item must have its own unique asset ID.',
-      'Reduced register size',
-      'Only a problem if they fail',
+      'Significant — the audit trail collapses; a failure on one cannot be told apart',
+      'Negligible — the two printers are identical so one record covers both',
+      'Beneficial — sharing the ID keeps the register smaller and tidier',
+      'Only a problem if one of the two printers actually fails a test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Identical equipment still has individual histories: different usage hours, different damage, different failure modes. Sharing an asset ID erases the individual history. One physical item, one asset ID.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'How should the asset register integrate with a CAFM (computer-aided facilities management) or maintenance management system?',
     options: [
-      'It should not — keep them separate',
-      'The register should feed maintenance scheduling — next-test-due dates create work orders automatically; test results close work orders; failures generate fault tickets. Integration removes manual transcription and ensures the test programme is part of the wider maintenance regime.',
-      'Only if the systems share a vendor',
-      'It is forbidden by GDPR',
+      'It should not integrate — the two systems must be kept entirely separate',
+      'It may integrate only where both systems are supplied by the same vendor',
+      'The register feeds scheduling — due dates raise work orders, results close them, fails escalate',
+      'Integration is forbidden by GDPR because all asset data is personal data',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A standalone asset register requires manual scheduling. Integration with CAFM / CMMS makes the register the spine of the maintenance regime: due dates drive scheduling, results close tickets, failures escalate. Manual systems drift; integrated systems do not.',
   },
@@ -187,26 +187,26 @@ const quizQuestions = [
     id: 9,
     question: 'A piece of equipment fails its test. What asset register actions are required?',
     options: [
-      'Delete the row',
-      'Update the row: status to "QUARANTINED" or "UNDER REPAIR", record the failure mode, link to the test record, and if repaired-and-retested, record the post-repair test and re-set status to "ACTIVE". If disposed, mark "DISPOSED" with date and retain.',
-      'Mark with a coloured cell',
-      'No action — the test record is enough',
+      'Delete the row so the failed item is removed from circulation',
+      'Mark the cell a different colour and leave the status unchanged',
+      'No action on the register — the separate test record is enough',
+      'Update the status, record the failure mode, link the test record, and re-status on outcome',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The register is the master status board. Status transitions track every life-cycle event of the asset. A reader of the register at any moment should see the current status of every item without having to chase test records.',
+      'The register is the master status board. On a fail, set the status to "QUARANTINED" or "UNDER REPAIR", record the failure mode and link the test record; if repaired and retested, record the post-repair test and re-set status to "ACTIVE"; if disposed, mark "DISPOSED" with the date and retain. Status transitions track every life-cycle event so a reader sees the current state of every item without chasing test records.',
   },
   {
     id: 10,
     question:
       'A site has 600 portable items but only 350 appear on the register. The most likely cause of the gap is:',
     options: [
-      'Test instrument failure',
-      'Drift: items added to the workplace over time without being entered on the register. Periodic physical audit of equipment against the register — typically annually — identifies the gap. The unregistered items are sitting untested.',
-      'Records have been deleted',
-      'Sub-contractor activity',
+      'Drift — items added over time without ever being entered on the register',
+      'A fault in the test instrument under-counting the items tested',
+      'Register rows that have been deleted in error during routine tidying',
+      'Sub-contractor activity removing equipment from the register',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Drift is the most common cause of register-physical mismatch. Items move into the workplace via casual purchases, employee bring-ins, project deliveries, hire returns. Without a periodic walk-around audit, the register diverges from reality and the unregistered items go untested.',
   },

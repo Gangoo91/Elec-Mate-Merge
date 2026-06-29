@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of BREEAM Mat 01 (Environmental Impacts from Construction Products)?',
     options: [
-      'A scaffold with a single row of standards, with putlogs built into the brickwork',
+      'To set minimum fire-resistance ratings for construction materials',
       'To assess life cycle environmental impacts of building materials using LCA methodology',
-      'Daily summaries for facility managers, weekly for energy managers',
-      'Place them in the recovery position, monitor their breathing, and stay with them',
+      'To verify that materials meet structural load-bearing requirements',
+      'To record the purchase cost and lead time of each specified product',
     ],
     correctIndex: 1,
     explanation:
@@ -59,9 +59,9 @@ const quickCheckQuestions = [
     id: 'construction-waste',
     question: 'What does BREEAM Wst 01 require for construction waste management?',
     options: [
-      'Test results, faults, repairs, replacements, and inspections',
-      'Investigate the cause as it\\\\\\\\\\\\\\\'s below the minimum requirement',
-      'They set standards for integration and safety requirements',
+      'A fire risk assessment covering all temporary site storage areas',
+      'A schedule of the embodied carbon for every material delivered',
+      'A method statement for the safe handling of hazardous substances',
       'A Resource Management Plan setting diversion targets from landfill',
     ],
     correctIndex: 3,
@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'circular-economy',
     question: 'How does circular economy thinking apply to MEP material selection?',
     options: [
-      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
+      'Specify the cheapest available materials to minimise initial cost',
       'Design for disassembly, specify recyclable materials, and consider end-of-life recovery',
-      'The current creates a magnetic field that attracts the iron armature',
-      'Employees\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019 capabilities and training needs when allocating tasks',
+      'Use permanent adhesive fixings to maximise installation durability',
+      'Select materials solely on the basis of their fire performance',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'What documentation is required to demonstrate compliance with BREEAM Mat 01 credits?',
     options: [
-      'Connecting two tubes at 90 degrees to each other',
+      'Manufacturer warranty certificates for each installed product',
       'Environmental Product Declarations (EPDs) or equivalent LCA data',
-      'The arc current may be less than the MCB rating',
-      'To prevent premature failure due to environmental conditions',
+      'Waste transfer notes for all materials removed from site',
+      'CE or UKCA conformity marking labels for each component',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'In BREEAM Mat 03, what level of responsible sourcing certification is required for the highest credits?',
     options: [
-      'It enables material recovery and reuse at end of building life',
-      'Verified environmental impact data across defined life cycle stages',
+      'A signed supplier environmental policy statement only',
+      'An ISO 14001 certificate for the manufacturing site only',
       'Third-party certified schemes such as BES 6001 or FSC',
-      'Copper cables, steel containment, pipework, and ductwork',
+      'A self-declared statement of recycled content from the supplier',
     ],
     correctAnswer: 2,
     explanation:
@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'Which MEP materials are most relevant for Mat 03 responsible sourcing credits?',
     options: [
       'Copper cables, steel containment, pipework, and ductwork',
-      'Verified environmental impact data across defined life cycle stages',
-      'Third-party certified schemes such as BES 6001 or FSC',
-      'Recycled copper conductors can contribute to recycled content targets',
+      'Cable lubricant, fixings, and adhesive tapes',
+      'Test instruments, hand tools, and access equipment',
+      'Temporary site lighting and welfare facilities',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does an Environmental Product Declaration (EPD) provide?',
     options: [
-      'Third-party certified schemes such as BES 6001 or FSC',
+      'A guarantee of the product’s service life and warranty terms',
       'Verified environmental impact data across defined life cycle stages',
-      'Recycled copper conductors can contribute to recycled content targets',
-      'Copper cables, steel containment, pipework, and ductwork',
+      'Confirmation that the product meets fire and electrical safety standards',
+      'A statement of the product’s purchase price and delivery lead time',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'What recycled content consideration applies to copper cables in BREEAM assessments?',
     options: [
       'Recycled copper conductors can contribute to recycled content targets',
-      'Verified environmental impact data across defined life cycle stages',
-      'Third-party certified schemes such as BES 6001 or FSC',
-      'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
+      'Recycled copper has lower conductivity and is not permitted in cables',
+      'Copper cannot be recycled and counts only towards waste diversion',
+      'Recycled content applies only to the cable insulation, not the conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of a Site Waste Management Plan (SWMP) in construction?',
     options: [
-      'Recycled copper conductors can contribute to recycled content targets',
+      'To schedule the delivery sequence of materials to the site',
       'To forecast, record, and manage construction waste arisings and disposal routes',
-      'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
-      'Copper cables, steel containment, pipework, and ductwork',
+      'To calculate the embodied carbon of the completed building',
+      'To set the recycled content targets for the supply chain',
     ],
     correctAnswer: 1,
     explanation:
@@ -222,9 +222,9 @@ const quizQuestions = [
     id: 11,
     question: 'How can MEP contractors contribute to Wst 01 construction waste credits?',
     options: [
-      'Verified environmental impact data across defined life cycle stages',
-      'Recycled copper conductors can contribute to recycled content targets',
-      'It enables material recovery and reuse at end of building life',
+      'By specifying materials with the lowest embodied carbon',
+      'By obtaining BES 6001 certificates for all copper cables',
+      'By providing Environmental Product Declarations for each product',
       'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
     ],
     correctAnswer: 3,
@@ -236,9 +236,9 @@ const quizQuestions = [
     question: 'What is embodied carbon in the context of building materials?',
     options: [
       'The total greenhouse gas emissions from extraction, manufacture, and transport of materials',
-      'Verified environmental impact data across defined life cycle stages',
-      'To forecast, record, and manage construction waste arisings and disposal routes',
-      'Recycled copper conductors can contribute to recycled content targets',
+      'The carbon dioxide emitted while the building is heated and powered in use',
+      'The proportion of recycled material contained within a finished product',
+      'The carbon stored permanently within timber and other natural materials',
     ],
     correctAnswer: 0,
     explanation:

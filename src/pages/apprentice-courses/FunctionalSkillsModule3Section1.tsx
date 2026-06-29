@@ -29,10 +29,10 @@ const FunctionalSkillsModule3Section1 = () => {
       question:
         'Which file type is most commonly used for sharing electrical certificates and test reports?',
       options: [
-        'A sack trolley or platform trolley',
+        '.txt (plain text file)',
         '.pdf (Portable Document Format)',
-        'All of the above plus tester details',
-        'Greater than or equal to 25A',
+        '.zip (compressed archive)',
+        '.exe (executable program)',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,10 +42,10 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 2,
       question: 'What does the 3-2-1 backup rule recommend?',
       options: [
-        'Testing notifications with trial alerts to all recipients',
-        'After isolation, verify terminations are torqued to manufacturer values',
+        '3 passwords, changed every 2 weeks, with 1 written down',
+        '3 cloud accounts, syncing every 2 hours, with 1 administrator',
         '3 copies of your data, on 2 different media types, with 1 stored off-site',
-        'To ensure materials meet design requirements and installation conditions',
+        '3 devices, 2 of them encrypted, with 1 kept switched off',
       ],
       correctAnswer: 2,
       explanation:
@@ -83,10 +83,10 @@ const FunctionalSkillsModule3Section1 = () => {
       question:
         'Which cloud storage feature is most valuable for electricians working across multiple sites?',
       options: [
-        'The ability to change font colours',
+        'A larger range of document templates',
         'Automatic synchronisation across all devices',
-        'Built-in calculator functions',
-        'The ability to play music files',
+        'Faster typing through predictive text',
+        'A built-in photo editing suite',
       ],
       correctAnswer: 1,
       explanation:
@@ -96,10 +96,10 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 6,
       question: 'What is the purpose of the .dwg file extension?',
       options: [
-        'To handle variable loads that change power factor',
-        'An agreement to buy electricity from a third-party owned system',
+        'A compressed folder used to email large files',
+        'A spreadsheet format used for material takeoffs',
         'An AutoCAD drawing file used for electrical plans and layouts',
-        'Adequate capacity, diversity factors, and future expansion',
+        'A database file used to store customer records',
       ],
       correctAnswer: 2,
       explanation:
@@ -110,9 +110,9 @@ const FunctionalSkillsModule3Section1 = () => {
       question:
         'When your computer runs slowly, which of the following is the best first troubleshooting step?',
       options: [
-        'Maximising profit margins on construction projects',
-        'Using a safety net below the working area',
-        'Switches, contacts, and alarm devices',
+        'Immediately reinstall the operating system',
+        'Buy a new computer with a faster processor',
+        'Delete all your saved documents to free up space',
         'Restart the computer and close unnecessary programs',
       ],
       correctAnswer: 3,

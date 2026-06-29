@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You have completed an EICR on a small commercial unit. The schedule of observations contains one C2 (no main protective bonding to the incoming gas pipe) and several C3 items. What goes in the "Overall assessment of the installation" box?',
     options: [
-      'Satisfactory — the C2 can be remedied later',
-      'Satisfactory with recommendations — the bonding is a minor matter',
-      'Unsatisfactory — any C1 or C2 makes the overall assessment Unsatisfactory',
-      "Conditional — depends on the duty-holder's risk appetite",
+      'Satisfactory — the single C2 can safely be remedied at a later date',
+      'Satisfactory with recommendations — missing bonding is a minor matter',
+      'Unsatisfactory — any C1, C2 or FI makes the overall result Unsatisfactory',
+      "Conditional — the outcome depends on the duty-holder's risk appetite",
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A customer insists on an unusual cable route that requires a single-core armoured cable to be run without an external CPC, relying solely on the armour as the CPC. What does Reg 120.3 require you to do?',
     options: [
-      'Refuse the work — there is no route under BS 7671 to depart from any regulation',
-      'Document the departure on the EIC, justify why the design still achieves at least the same level of safety, sign the design declaration, and ensure your PI insurance covers the design choice',
-      'Note the departure verbally to the customer; a paper record is not required',
-      'Issue a Minor Works Certificate instead — departures need not be recorded on Minor Works',
+      'Refuse the work — BS 7671 offers no route to depart from any regulation',
+      'Document the departure on the EIC and justify that safety is not reduced',
+      'Note the departure verbally to the customer; a paper record is not needed',
+      'Issue a Minor Works Certificate, on which departures need not be recorded',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A risk assessment to omit RCD additional protection on a non-domestic socket-outlet circuit (Reg 411.3.3 (b) exception) has been carried out. Where does the documented risk assessment live?',
     options: [
-      "In the designer's office filing system only",
-      'On the EIC, attached as an addendum, signed by a skilled person (electrically) and forming part of the certified document set',
-      'On a separate one-line note pinned to the consumer-unit cover',
-      'It does not need to be retained once the install is signed off',
+      "Retained in the designer's office filing system only, away from site",
+      'Attached to the EIC, signed by a skilled person, as part of the cert set',
+      'On a separate one-line note pinned inside the consumer-unit cover',
+      'Discarded — it need not be retained once the install is signed off',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You are issuing an EIC on a property that has had its DNO supply re-cabled from TN-S to TN-C-S (PME) in the last six months. The original EIC three years ago recorded TN-S. What is the right approach?',
     options: [
-      'Copy the previous EIC system arrangement — TN-S — for consistency',
-      'Tick TN-C-S on the new EIC, update the bonding sizes per Table 54.8, verify the new Ze, re-check disconnection times against the new earth fault loop impedance, and record the change in the description of work',
-      'Tick both TN-S and TN-C-S to be safe',
-      'Ignore the change — system arrangement is not material to the EIC',
+      'Copy the previous EIC arrangement — TN-S — to keep the records consistent',
+      'Tick TN-C-S, update bonding per Table 54.8, re-verify Ze and Zs targets',
+      'Tick both TN-S and TN-C-S so the cert is covered either way',
+      'Ignore the change, as system arrangement is not material to the EIC',
     ],
     correctIndex: 1,
     explanation:
@@ -95,9 +95,9 @@ const inlineChecks = [
     question:
       'An installer issues an EIC for a new installation. The customer later asks for "the cert that confirms the installation is safe to use". Which document is that?',
     options: [
-      'The site notes are sufficient',
-      'The EIC IS the cert — Reg 644.1 makes the EIC the legal record of initial verification, signed by the designer, constructor and inspector, with schedules of inspection and test results attached',
-      'A separate EICR must be raised the day after the EIC',
+      'The site notes and handover photos are sufficient confirmation',
+      'The EIC itself — Reg 644.1 makes it the legal record of verification',
+      'A separate EICR must be raised the day after the EIC is issued',
       'A Minor Works Certificate replaces the EIC for safety confirmation',
     ],
     correctIndex: 1,
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'A designer signs the design section of an EIC for an installation they never visited, relying on the constructor and inspector to verify the design on site. A fault later causes a fire. From a professional-indemnity perspective, what is the correct view?',
     options: [
-      "The designer is not exposed because they didn't do the install",
-      'The designer is fully exposed — signing the design declaration is a personal undertaking that the design complies with BS 7671 (Reg 134.1.1, 644.1). PI insurers routinely repudiate cover where a signature was given without proper design oversight',
-      'Only the constructor is exposed',
-      'The duty-holder accepts all liability when they accept the cert',
+      "The designer is not exposed because they did not carry out the install",
+      'The designer is fully exposed — the design signature is a personal undertaking',
+      'Only the constructor is exposed, since they built the faulty section',
+      'The duty-holder accepts all liability the moment they accept the cert',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Under Reg 651.1, what is the purpose of an Electrical Installation Condition Report (EICR)?',
     options: [
-      'To certify a new installation as compliant with BS 7671',
-      'To assess the in-service condition of an existing installation against the current edition of BS 7671 and identify departures, deterioration, damage and dangerous conditions',
-      'To replace the original EIC',
-      'To act as a Minor Works Certificate for repairs',
+      'To assess the in-service condition of an existing installation against the current edition',
+      'To certify a new installation as compliant with BS 7671 before service',
+      'To replace the original EIC once the installation has been in use',
+      'To act as a Minor Works Certificate for small repairs and additions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 651.1 (and its supporting text in Chapter 65) sets the EICR scope: a periodic in-service assessment of an existing installation against the current edition. It is NOT a verification certificate (that is the EIC, Reg 644). It does not certify compliance — it reports condition. Its outputs are the schedule of observations (each coded C1 / C2 / C3 / FI) and the overall assessment (Satisfactory only when there are zero C1/C2/FI items).',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'GN3 names four observation codes for an EICR. Which option correctly pairs each code with its definition?',
     options: [
-      'C1 immediate, C2 historic, C3 future, FI optional',
-      'C1 danger present (immediate action), C2 potentially dangerous (urgent action), C3 improvement recommended (no immediate risk), FI further investigation needed (uncertainty about safety)',
-      'C1 minor, C2 moderate, C3 severe, FI fault investigation',
-      'C1 cosmetic, C2 functional, C3 statutory, FI fire indicator',
+      'C1 immediate, C2 historic, C3 future improvement, FI optional follow-up',
+      'C1 minor, C2 moderate, C3 severe, FI a separate fault-investigation grade',
+      'C1 danger present, C2 potentially dangerous, C3 improvement, FI investigate',
+      'C1 cosmetic, C2 functional, C3 statutory, FI a fire-risk indicator only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 Section K defines the four codes precisely: C1 = "Danger present. Risk of injury. Immediate remedial action required." C2 = "Potentially dangerous. Urgent remedial action required." C3 = "Improvement recommended." FI = "Further investigation required without delay." The discipline matters: assigning a C3 where C2 belongs (or vice versa) is the most common single error in EICR practice and the most common cause of regulatory and insurance disputes.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       "On a domestic EICR you find: (a) one C1 — exposed live conductor at a damaged socket; (b) two C3 items — no RCD on a 1995 lighting circuit, no labelling at the CU. The duty-holder asks you to mark the cert 'Satisfactory' because the C1 will be made safe before they sell the property. What do you do?",
     options: [
-      "Agree — the duty-holder's plan addresses the C1",
-      'Mark the cert Unsatisfactory regardless. Reg 651 / GN3 require Unsatisfactory whenever a C1, C2 or FI is recorded. Make the C1 safe on the day (isolate at CU, label, advise verbally and in writing). Issue a fresh EICR only after the C1 is properly remediated',
-      'Mark Satisfactory with the C1 noted as a recommendation',
-      'Cancel the EICR and walk away',
+      "Agree — the duty-holder's plan to fix the C1 before sale addresses it",
+      'Mark Satisfactory but note the C1 on the schedule as a recommendation',
+      'Cancel the EICR, walk away and leave the duty-holder to arrange repairs',
+      'Mark Unsatisfactory regardless, make the C1 safe, then re-issue once fixed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Unsatisfactory outcome is mandatory — there is no inspector discretion. GN3 also requires the inspector to make C1 conditions safe at the time of inspection (typically by isolation and labelling) and to advise both verbally and in writing. The cert records what was found on the day; later remediation does not change the historic assessment. A duty-holder commercial pressure to mark 'Satisfactory' is the single most common professional-indemnity trap in the EICR world.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'Reg 120.3 permits departures from BS 7671. Which set of conditions must ALL be satisfied for a departure to be valid?',
     options: [
-      'The customer agrees verbally and the cost is justified',
-      'The departure is recorded on the EIC, the designer can demonstrate the safety achieved is no less than full compliance, the designer signs the design declaration, and PI insurance covers the design',
-      'The departure is verbally noted to the inspector at the next EICR',
-      'A copy is filed with the local authority',
+      'Recorded on the EIC, demonstrably no less safe, signed by the designer, and PI-covered',
+      'The customer agrees verbally and the additional cost is reasonably justified',
+      'The departure is verbally noted to the inspector at the next periodic EICR',
+      'A copy of the design departure is filed with the local building authority',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 120.3 is permissive but tightly conditioned. The four requirements above are cumulative: (1) recorded on the EIC in the "Departures" box, (2) demonstrably no less safe (the designer carries the burden of proof), (3) signed personal declaration by the designer, (4) PI cover for the design choice. Undocumented departures are not departures — they are non-compliances, and they are uninsurable.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'An EIC must contain certain content per Reg 644.1. Which option lists items that MUST appear on the EIC document set?',
     options: [
-      'Only the test results — schedules and inspection notes are optional',
-      'Description of installation, design data, system earthing arrangement, schedule of inspection, schedule of test results, declarations and signatures from designer, constructor and inspector, and any departures from BS 7671 (Reg 120.3)',
-      'Just the meter reading and the postcode',
-      'Photos of the consumer unit only',
+      'Only the test results — the inspection schedule and notes are optional',
+      'Just the meter reading and the postcode of the installation address',
+      'Description, design data, earthing, both schedules, three signed declarations and departures',
+      'Photos of the consumer unit and the main switch position only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 644.1 requires the EIC to record sufficient detail to demonstrate compliance — including the items above. The schedule of inspection (tick-box of items examined) and the schedule of test results (the measured values) are integral parts of the certified document set, not optional attachments. An EIC issued without one of the schedules is incomplete and would normally be rejected by an insurer or a third-party inspector.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       "An installer takes over a part-completed install from another contractor. The earlier work has visible non-compliances. The installer's own work is fully compliant. How should the EIC be issued?",
     options: [
-      'Sign for the entire installation as compliant — once you sign, you are responsible for the whole thing',
-      'Refuse to issue any cert',
-      'Define the scope of work clearly on the EIC (the section the new installer designed and built), record any inherited departures or non-compliances explicitly, and either (a) raise an EICR for the inherited section, or (b) decline to certify the inherited work and document this decision in writing',
-      'Mark the inherited work as "out of scope" and sign for everything',
+      'Sign for the entire installation as compliant, accepting the whole thing on signature',
+      'Refuse to issue any certificate at all until the earlier work is corrected',
+      'Mark the inherited work as "out of scope" yet still sign for everything',
+      'Define the scope to the new work, record inherited issues, and EICR or decline the rest',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The EIC scope is defined by the description of work box. An installer can lawfully limit their certification to the work they designed, constructed and inspected. Inherited non-compliances must NOT be silently absorbed: either raise a separate EICR documenting the inherited issues, or make clear in writing that the cert excludes the inherited work and the customer remains responsible for the rest. The 'inherited departure' problem destroys careers when an installer signs a single all-encompassing cert for a job they only partially controlled.",
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'Why is a wrong system arrangement entry on an EIC (TN-S marked when the supply is actually TN-C-S / PME) a serious issue?',
     options: [
-      'It causes confusion at the next inspection',
-      'It cascades into wrong bonding sizes (Table 54.8), wrong Ze and Zs assumptions, wrong RCD selection logic, missed open-PEN risk on EV / generator interfaces, and a cert that misrepresents the installation. It is a falsification of the legal document',
-      'It only matters if the cert is challenged',
-      'There is no consequence — system arrangement is informational',
+      'It merely causes confusion for the inspector at the next periodic inspection',
+      'It cascades into wrong bonding, Ze/Zs and RCD logic, and misrepresents the install',
+      'It only matters in the event that the certificate is later challenged',
+      'There is no real consequence — the system arrangement is informational',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'How long should issued certificates (EIC, EICR, Minor Works) typically be retained, and why?',
     options: [
-      'Six months — long enough for the customer to accept the work',
-      'Typically a minimum of 7 years (often longer in practice — many installers retain indefinitely) for tax / commercial / professional indemnity reasons; certs may also be required as evidence in any post-event investigation under EAWR 1989, HSWA 1974 or civil claims years after issue',
-      'Until the next EICR is issued, then destroy the old one',
-      'Retention is not a regulated matter and any period is acceptable',
+      'Six months — long enough for the customer to accept and pay for the work',
+      'Typically at least 7 years, for tax, PI and post-incident evidence reasons',
+      'Until the next EICR is issued, at which point the old cert can be destroyed',
+      'Retention is not a regulated matter, so any period at all is acceptable',
     ],
     correctAnswer: 1,
     explanation:

@@ -92,12 +92,12 @@ const quizQuestions = [
     id: 2,
     question: 'On the left side of the stress-performance curve, performance is poor because:',
     options: [
-      'The person is too anxious and making mistakes due to pressure',
       'The person is under-stimulated, leading to boredom, poor focus, and complacency',
+      'The person is too anxious and making mistakes due to pressure',
       "The person has reached the Exhaustion stage of Selye's GAS model",
       'The person is experiencing a freeze response and cannot take action',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The left side of the inverted-U represents under-arousal. With too little stimulation, the person lacks motivation, focus, and engagement. They may feel bored, lethargic, or "going through the motions." In this state, complacency errors are common \u2014 the kind of careless mistakes that happen when attention drifts. This is a significant safety risk in construction, particularly during repetitive tasks.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     options: [
       'The left side \u2014 under-stimulation',
       'The peak \u2014 optimal zone',
-      'The right side \u2014 over-arousal, with performance declining due to excessive stress',
       'Off the curve entirely \u2014 this scenario is not covered by the Yerkes-Dodson model',
+      'The right side \u2014 over-arousal, with performance declining due to excessive stress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This electrician is clearly on the right side of the curve. The demands (three simultaneous jobs, angry clients, material shortages) have pushed their arousal level beyond the optimal zone. When over-aroused, cognitive function narrows \u2014 the person struggles to prioritise, makes hasty decisions, becomes reactive rather than proactive, and the quality of their work suffers. The more stressors pile up, the further right they move on the curve.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'According to the Yerkes-Dodson Law, the optimal arousal level for a complex task (such as fault-finding on a three-phase system) compared to a simple task (such as a routine socket installation) is:',
     options: [
       'Higher \u2014 complex tasks need more stress to drive performance',
-      'The same \u2014 optimal arousal does not change based on task complexity',
       'Lower \u2014 complex tasks require a calmer, more focused state with less arousal',
+      'The same \u2014 optimal arousal does not change based on task complexity',
       'Irrelevant \u2014 task complexity has no relationship with the stress-performance curve',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'One of the most important refinements of the Yerkes-Dodson Law is that optimal arousal level varies with task complexity. For simple, well-practised tasks, a higher level of arousal can be tolerated or even beneficial. For complex tasks requiring precision, judgement, and cognitive flexibility, the optimal arousal level is lower. Too much stress during complex work narrows attention, impairs working memory, and increases errors \u2014 which in electrical work can be dangerous.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'An apprentice doing repetitive cable runs for the third day in a row is making careless mistakes. The BEST explanation from the stress-performance curve model is:',
     options: [
-      'The apprentice is not competent enough for the task and needs retraining',
       'The apprentice is on the left side of the curve \u2014 under-stimulated and losing focus due to monotony',
+      'The apprentice is not competent enough for the task and needs retraining',
       'The apprentice is on the right side of the curve \u2014 overwhelmed by the difficulty of the work',
       'The Yerkes-Dodson Law does not apply to apprentices, only to experienced electricians',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Repetitive, monotonous work with no variation or challenge creates under-arousal \u2014 the left side of the curve. The apprentice's attention drifts because there is not enough stimulation to maintain focus. This is not a competency issue but a stimulation issue. Practical solutions include introducing variety (rotating tasks), setting quality challenges, increasing responsibility, or simply being aware that prolonged repetitive work increases complacency risk and scheduling more frequent checks.",
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
     question: 'Individual differences in the stress-performance curve mean that:',
     options: [
       'The Yerkes-Dodson Law is not scientifically valid because results vary between people',
-      'Different people reach their optimal performance at different stress levels, influenced by factors such as experience, personality, and current wellbeing',
       'Only certain personality types experience the inverted-U relationship',
       'Individual differences are irrelevant \u2014 everyone has the same stress threshold',
+      'Different people reach their optimal performance at different stress levels, influenced by factors such as experience, personality, and current wellbeing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Individual differences are a fundamental aspect of the stress-performance relationship. Factors including experience level, training, personality traits, physical fitness, social support, resilience, and current life circumstances all shift the position and shape of each person's curve. A 20-year veteran will typically handle more pressure before performance drops than a first-year apprentice. Understanding these differences is critical for supervisors and team leaders: assigning the right level of challenge to each person is key to getting the best from the team.",
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'A site supervisor notices that one electrician performs best under tight deadlines while another does their best work when given ample time. This illustrates:',
     options: [
       'That one electrician is lazy and needs pressure to work hard',
-      'That the Yerkes-Dodson Law is wrong because it should predict the same response for everyone',
       'Individual differences in optimal arousal levels \u2014 both are performing well, just at different points on their personal curves',
+      'That the Yerkes-Dodson Law is wrong because it should predict the same response for everyone',
       'That neither electrician is professional \u2014 both should perform consistently regardless of conditions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'This is a perfect illustration of individual differences in optimal arousal. The first electrician has a higher optimal arousal point \u2014 they need more stimulation (pressure, urgency) to reach peak performance. The second has a lower optimal point \u2014 they perform best in calmer, less pressured conditions. Neither approach is superior. An effective supervisor recognises these differences and, where possible, assigns work and deadlines accordingly. Forcing everyone into the same working conditions ignores the reality of human variation.',
   },

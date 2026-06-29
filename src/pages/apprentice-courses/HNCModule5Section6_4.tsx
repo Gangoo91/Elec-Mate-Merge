@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'toolbox-talk',
     question: 'What is the primary purpose of a toolbox talk?',
     options: [
-      'Repetitive lifting combined with twisting',
+      'To formally assess and record each worker’s competence',
       'To address specific hazards and reinforce safe practices',
-      'Credit for relevant previous learning and experience',
-      'Vibration-resistant fasteners with thread-locking compounds',
+      'To replace the need for a full site induction',
+      'To record attendance for payroll and timesheet purposes',
     ],
     correctIndex: 1,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the minimum content required in a construction phase plan?',
     options: [
-      'Emergency procedures, site rules, hazards and welfare facilities',
-      'In a prominent position on site accessible to all workers',
-      'Risk assessment, method statement, and emergency procedures',
+      'A priced bill of quantities and the construction programme',
+      'The names and qualifications of every operative on site',
+      'A copy of each subcontractor’s public liability insurance',
       'Management arrangements, site rules, specific measures for high-risk work',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'Site inductions must cover which of the following?',
     options: [
       'Emergency procedures, site rules, hazards and welfare facilities',
-      'In a prominent position on site accessible to all workers',
-      'Risk assessment, method statement, and emergency procedures',
-      'Comply with the construction phase plan and site rules',
+      'The commercial terms agreed between client and contractor',
+      'The detailed design calculations for the building services',
+      'The principal designer’s pre-construction information only',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'How often should toolbox talks typically be delivered on an active construction site?',
     options: [
-      'The principal contractor',
+      'Once at the start of the project during induction',
       'Weekly or as new hazards arise',
-      'The construction phase begins',
-      'Health, safety and welfare',
+      'Only after a reportable incident has occurred',
+      'Monthly, aligned with site progress meetings',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'A RAMS document should include:',
     options: [
-      'Standard first fix electrical installation',
-      'Management arrangements, site rules, specific measures for high-risk work',
+      'A priced schedule of the materials required for the task',
+      'The F10 notification and project dutyholder details',
       'Risk assessment, method statement, and emergency procedures',
-      'In a prominent position on site accessible to all workers',
+      'The site welfare and security arrangements for all trades',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'The F10 notification must be displayed:',
     options: [
       'In a prominent position on site accessible to all workers',
-      'Site-specific and proportionate to the risks',
-      'Standard first fix electrical installation',
-      'Comply with the construction phase plan and site rules',
+      'Only in the principal contractor’s site office filing system',
+      'On the HSE website and nowhere on the physical site',
+      'In each worker’s personal induction pack only',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which of the following is NOT a Schedule 3 high-risk activity under CDM 2015?',
     options: [
-      'Weekly or as new hazards arise',
+      'Work where there is a risk of drowning',
       'Standard first fix electrical installation',
-      'Comply with the construction phase plan and site rules',
-      'Site-specific and proportionate to the risks',
+      'Work in a confined space',
+      'Work near high-voltage power lines',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'Building services contractors attending site must:',
     options: [
-      'Standard first fix electrical installation',
-      'Risk assessment, method statement, and emergency procedures',
+      'Prepare the overall construction phase plan for the project',
+      'Appoint the principal designer for the construction phase',
       'Comply with the construction phase plan and site rules',
-      'In a prominent position on site accessible to all workers',
+      'Submit the F10 notification to the HSE on the client’s behalf',
     ],
     correctAnswer: 2,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'A construction phase plan should be:',
     options: [
       'Site-specific and proportionate to the risks',
-      'Prepared by the client',
+      'Prepared by the principal designer',
       'A generic template used on all projects',
-      'As detailed as possible regardless of project size',
+      'Finalised only after the construction phase ends',
     ],
     correctAnswer: 0,
     explanation:

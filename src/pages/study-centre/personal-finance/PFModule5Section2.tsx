@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'You design and certify a commercial lighting installation. Six months later, the client claims your design was faulty and caused a fire. Which insurance policy would respond to this claim?',
     options: [
-      'Public liability insurance',
       'Professional indemnity insurance',
+      'Public liability insurance',
       'Tools and equipment insurance',
       'Critical illness cover',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Professional indemnity insurance covers claims arising from your professional advice, design work, and certification. If a client claims that your design was negligent or your certification was incorrect, professional indemnity responds. Public liability covers physical damage during the work itself; professional indemnity covers alleged errors in your professional judgment and documentation.',
   },
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does public liability insurance cover?',
     options: [
-      'Your own injuries while working',
-      'Claims from third parties for injury or property damage caused by your work',
-      'Damage to your own tools and equipment',
-      'Your tax bill if you cannot pay',
+      'Injuries you suffer to yourself while working',
+      'Third-party claims for injury or property damage you cause',
+      'Damage to your own tools and test equipment',
+      'Your Self Assessment tax bill if you cannot pay it',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'What is a typical annual cost for public liability insurance for a sole-trader electrician?',
     options: [
-      '&pound;500&ndash;&pound;1,000 per year',
       '&pound;50&ndash;&pound;150 per year',
+      '&pound;500&ndash;&pound;1,000 per year',
       '&pound;1,000&ndash;&pound;2,000 per year',
       '&pound;10&ndash;&pound;20 per year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Public liability insurance for a sole-trader electrician typically costs between &pound;50 and &pound;150 per year, depending on the level of cover, your turnover, and the insurer. This makes it one of the most affordable and essential business expenses. The potential cost of a single uninsured claim would dwarf decades of premium payments.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
     question: 'Why is income protection particularly important for self-employed electricians?',
     options: [
       'Because it covers the cost of replacing stolen tools',
-      'Because self-employed electricians have no employer sick pay, so their income drops to zero if they cannot work',
-      'Because it pays your mortgage directly',
-      'Because HMRC requires all self-employed workers to hold it',
+      'Because it pays your mortgage lender directly each month',
+      'Because HMRC requires every self-employed worker to hold it',
+      'Because they have no employer sick pay, so income stops entirely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Self-employed electricians have no employer-provided sick pay. If you are ill or injured and cannot work, your income stops immediately. Income protection insurance replaces 50&ndash;70% of your normal income during a period of incapacity, keeping you afloat while you recover. It is not a legal requirement, but it is one of the most important financial protections a self-employed tradesperson can have.',
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'What is the purpose of a deferred period (waiting period) on an income protection policy?',
     options: [
-      'It is the period after the policy ends when you can still claim',
-      'It is the number of days you must be unable to work before the policy starts paying out',
-      'It is the maximum number of months the policy will pay for',
-      'It is the notice period you must give before cancelling',
+      'The period after the policy ends when you can still claim',
+      'The days you must be unable to work before payouts begin',
+      'The maximum number of months the policy will keep paying',
+      'The notice period you must give before cancelling the policy',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Why should you keep a detailed inventory of your tools with serial numbers and photographs?',
     options: [
-      'Because HMRC requires it for tax purposes',
-      'Because it makes insurance claims faster and reduces disputes with the insurer',
-      'Because it increases the resale value of your tools',
-      'Because your employer needs it for auditing',
+      'Because it speeds up claims and reduces insurer disputes',
+      'Because HMRC requires the inventory for tax purposes',
+      'Because it raises the resale value of your second-hand tools',
+      'Because your employer needs it for their annual audit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A detailed tool inventory with serial numbers, photographs, and purchase receipts makes the insurance claims process much faster and smoother. Without proof of ownership and value, the insurer may dispute the claim or reduce the payout. Update the inventory whenever you buy or replace tools. Store a copy digitally (cloud storage or email to yourself) so it is not lost if your tools are stolen.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does van insurance with &ldquo;tools-in-van&rdquo; cover protect?',
     options: [
-      'It covers damage to the van only',
-      'It covers your tools and equipment if they are stolen from or damaged in your van',
-      'It covers the cost of hiring a replacement van',
-      'It covers speeding fines and parking tickets',
+      'It covers accidental damage to the van bodywork only',
+      'It covers the cost of hiring a temporary replacement van',
+      'It covers any speeding fines and parking tickets you receive',
+      'It covers tools stolen from or damaged inside your van',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Tools-in-van cover is an add-on to your van insurance that protects your tools and equipment if they are stolen from or damaged in your van. Standard van insurance only covers the vehicle itself. Given that an electrician&rsquo;s toolkit can be worth &pound;5,000&ndash;&pound;15,000 or more, tools-in-van cover is essential. Note that insurers often require the van to be locked and may require additional security measures (lockbox, deadlocks, alarm) for higher-value claims.',
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following is true about life insurance for tradespeople?',
     options: [
-      'Life insurance is only for people over 60',
+      'Life insurance is only worth taking out once you are over 60',
       'Life insurance is a legal requirement for all self-employed workers',
-      'Life insurance is most important if you have a mortgage, dependants, or financial obligations that would fall on your family if you died',
-      'Life insurance pays out if you break your arm',
+      'Life insurance matters most when you have dependants or a mortgage',
+      'Life insurance pays out if you break your arm and cannot work',
     ],
     correctAnswer: 2,
     explanation:

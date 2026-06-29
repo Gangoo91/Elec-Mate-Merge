@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 3,
     question: "What was the title of Daniel Goleman's 1995 bestselling book?",
     options: [
-      'Working with Emotional Intelligence',
       'Emotional Intelligence: Why It Can Matter More Than IQ',
+      'Working with Emotional Intelligence',
       'The EQ Edge',
       'Social Intelligence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Goleman\'s 1995 book was titled "Emotional Intelligence: Why It Can Matter More Than IQ". It spent over a year on the New York Times bestseller list and brought the concept of EI to a global audience. "Working with Emotional Intelligence" was his 1998 follow-up.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 5,
     question: "Bar-On's EQ-i model is significant because it demonstrated that EI:",
     options: [
+      'Can be measured through validated psychometric tools',
       'Cannot be changed after childhood',
       'Is identical to IQ',
-      'Can be measured through validated psychometric tools',
       'Only applies to leadership roles',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Reuven Bar-On's 1997 Emotional Quotient Inventory (EQ-i) was groundbreaking because it demonstrated that emotional intelligence can be measured through validated psychometric assessment. This proved that EI is not just a vague concept but a quantifiable set of competencies that can be assessed and developed.",
   },
@@ -166,8 +166,8 @@ const quizQuestions = [
   {
     id: 8,
     question: "How many composite scales does Bar-On's EQ-i model contain?",
-    options: ['Three', 'Four', 'Five', 'Six'],
-    correctAnswer: 2,
+    options: ['Three', 'Four', 'Six', 'Five'],
+    correctAnswer: 3,
     explanation:
       "Bar-On's EQ-i model contains five composite scales: intrapersonal (self-awareness and self-expression), interpersonal (social awareness and relationships), stress management (emotional regulation and impulse control), adaptability (change management and problem-solving), and general mood (optimism and happiness).",
   },

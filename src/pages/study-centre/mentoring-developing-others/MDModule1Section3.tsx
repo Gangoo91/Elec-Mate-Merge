@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A Stage 1 apprentice can wire a lighting circuit with constant supervision but cannot do it independently. According to Vygotsky, this task sits in which zone?',
     options: [
-      'The zone of what the learner can do alone',
       'The Zone of Proximal Development',
+      'The zone of what the learner can do alone',
       'The zone of what the learner cannot yet do',
       'The zone of mastery',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'If the apprentice can complete the task with help but not alone, it sits squarely in the Zone of Proximal Development (ZPD). This is exactly where mentoring adds the most value \u2014 the gap between independent capability and potential capability with support.',
   },
@@ -86,8 +86,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Who developed the concept of the Zone of Proximal Development?',
-    options: ['Wood, Bruner and Ross', 'Hersey and Blanchard', 'Lev Vygotsky', 'Malcolm Knowles'],
-    correctAnswer: 2,
+    options: ['Lev Vygotsky', 'Wood, Bruner and Ross', 'Hersey and Blanchard', 'Malcolm Knowles'],
+    correctAnswer: 0,
     explanation:
       'The Zone of Proximal Development was developed by Lev Vygotsky, a Russian psychologist, as part of his social constructivist theory of learning. He described it as the distance between what a learner can do independently and what they can do with guidance.',
   },
@@ -118,11 +118,11 @@ const quizQuestions = [
       'A mentor breaks a consumer unit installation into smaller sub-tasks so the apprentice only focuses on one part at a time. Which scaffolding function is this?',
     options: [
       'Recruitment',
-      'Reduction in degrees of freedom',
       'Direction maintenance',
       'Marking critical features',
+      'Reduction in degrees of freedom',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reduction in degrees of freedom involves simplifying a task by reducing the number of actions or decisions the learner must manage simultaneously. Breaking a complex installation into sub-tasks is a classic example.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does "fading" mean in the context of scaffolding?',
     options: [
-      'Reducing the difficulty of the task over time',
       'Gradually removing support as the learner gains competence',
+      'Reducing the difficulty of the task over time',
       'Moving the learner to a different mentor',
       'Decreasing the learner\u2019s workload during training',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fading is the systematic, gradual withdrawal of scaffolding support as the learner demonstrates growing competence. The goal is to move the learner from supported performance to independent mastery without removing support too quickly or too slowly.',
   },

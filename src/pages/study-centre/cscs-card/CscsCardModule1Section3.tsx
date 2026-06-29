@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Which HS&E test version must a general construction labourer pass to obtain a CSCS card?',
     options: [
-      'The Managers & Professionals test',
-      'The Specialists test',
       'The Operatives test',
+      'The Specialists test',
+      'The Managers & Professionals test',
       'The Environmental Awareness test',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'General construction labourers, tradespeople, and most site workers must pass the Operatives HS&E test. This is the most common test version and is required for Green (labourer), Red (trainee/apprentice), Blue (skilled worker), and Gold (advanced craft) CSCS cards. The Managers & Professionals test is for supervisors, managers, and professionally qualified individuals.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'How many questions are in the Operatives HS&E test and how long do candidates have to complete it?',
     options: [
-      '30 questions in 30 minutes',
-      '40 questions in 40 minutes',
       '50 questions in 45 minutes',
+      '40 questions in 40 minutes',
+      '30 questions in 30 minutes',
       '60 questions in 60 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Operatives HS&E test consists of 50 questions to be answered within 45 minutes. This is the same format for the Specialists and Managers & Professionals tests — all versions have 50 questions in 45 minutes, though the content and difficulty vary.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'Which of the following CSCS card types does NOT require the Operatives HS&E test?',
     options: [
       'Green labourer card',
-      'Blue skilled worker card',
       'Black manager card',
+      'Blue skilled worker card',
       'Gold advanced craft card',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Black manager card requires the Managers & Professionals HS&E test, not the Operatives test. Green (labourer), Blue (skilled worker), and Gold (advanced craft) cards all require the Operatives test. The Managers & Professionals test covers additional topics such as CDM 2015, health and safety management systems, and legal responsibilities.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
       'What type of question presents a workplace scenario and asks you to choose the most appropriate action?',
     options: [
       'A knowledge question',
-      'A behavioural case study question',
       'A practical assessment question',
+      'A behavioural case study question',
       'A regulatory citation question',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Behavioural case study questions present a realistic workplace scenario — sometimes with an accompanying image — and ask the candidate to choose the most appropriate course of action. These questions test judgement and decision-making rather than simple factual recall. They are a key component of the HS&E test and may carry more marks than standard knowledge questions.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'Where is the HS&E test taken and on what type of equipment?',
     options: [
       'At a college on a desktop computer with keyboard and mouse',
-      'At a Pearson VUE test centre on a touch-screen computer',
       'Online from home on any internet-connected device',
       'At the CITB head office on paper with a pencil',
+      'At a Pearson VUE test centre on a touch-screen computer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The HS&E test is taken at a Pearson VUE test centre on a touch-screen computer. Candidates tap their answer from four on-screen options for each question. Test centres are located across the UK. Online or home-based testing is not available for the HS&E test — it must be taken in person at a registered centre.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the minimum waiting period before a candidate can re-sit the HS&E test after failing?',
-    options: ['24 hours', '2 clear working days', '7 calendar days', '14 calendar days'],
-    correctAnswer: 1,
+    options: ['2 clear working days', '24 hours', '7 calendar days', '14 calendar days'],
+    correctAnswer: 0,
     explanation:
       'Candidates who fail the HS&E test must wait at least 2 clear working days before they can book and sit the test again. There is no limit on the number of re-sits, but each attempt requires a new booking and payment. The waiting period gives candidates time to revise and address gaps in their knowledge before trying again.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
       'Which of the following topics is covered in the Managers & Professionals test but NOT typically in the Operatives test?',
     options: [
       'Manual handling techniques',
-      'CDM 2015 regulations and health and safety management systems',
       'Personal protective equipment (PPE)',
+      'CDM 2015 regulations and health and safety management systems',
       'Fire safety on construction sites',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Managers & Professionals HS&E test includes additional management-level topics such as CDM 2015 (Construction Design and Management Regulations), health and safety management systems, accident investigation, and legal responsibilities of duty holders. Topics like manual handling, PPE, and fire safety appear in all test versions including the Operatives test.',
   },
@@ -164,8 +164,8 @@ const quizQuestions = [
     id: 7,
     question:
       'What approximate percentage of candidates fail the HS&E test on their first attempt?',
-    options: ['5% (1 in 20)', '10% (1 in 10)', '20% (1 in 5)', '40% (2 in 5)'],
-    correctAnswer: 2,
+    options: ['5% (1 in 20)', '10% (1 in 10)', '40% (2 in 5)', '20% (1 in 5)'],
+    correctAnswer: 3,
     explanation:
       'The pass rate for the HS&E test is around 80%, meaning approximately 20% — or 1 in 5 — candidates fail on their first attempt. Many people underestimate the test, assuming it will be straightforward. Adequate preparation using current revision materials is essential. Common reasons for failure include not reading questions carefully, rushing, and not preparing for behavioural case study questions.',
   },

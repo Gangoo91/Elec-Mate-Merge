@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'A solenoid is best described as:',
     options: [
       'A coil of wire that produces a magnetic field when current flows',
-      'Detection range, sensitivity, and time delay settings',
-      'To prevent dark spots that could impair vision and cause disorientation',
-      'OTDR trace showing individual events along the link',
+      'A single straight conductor carrying a heavy current',
+      'A permanent magnet used to detect current in a cable',
+      'A resistor designed to limit the current in a coil',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why does a contactor coil pull its armature in when you energise it?',
     options: [
-      'Intentionally or recklessly interfere with safety provisions',
-      'Preventing lights switching off while someone walks through',
-      'Uses a single winding with a tapping point, providing no galvanic isolation',
+      'The current heats the armature until it expands into contact',
+      'The voltage across the coil pushes the armature mechanically',
+      'A permanent magnet inside the coil grips the armature directly',
       'The current creates a magnetic field that attracts the iron armature',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'Why is the iron core inside an electromagnet so important?',
     options: [
       'It concentrates the flux thousands of times more than air would',
-      'Lunch service, dinner service, cleaning, and closed',
-      'After completing full GS38 procedure and posting warning notices',
-      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
+      'It carries the current so the coil does not have to',
+      'It insulates the coil from the moving armature',
+      'It stores charge to keep the coil energised after switch-off',
     ],
     correctAnswer: 0,
     explanation:

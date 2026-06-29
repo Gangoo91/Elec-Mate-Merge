@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pf-2-1-check2',
     question: 'What is the key principle behind zero-based budgeting?',
     options: [
-      'You start each month with zero savings',
       'Every pound of income is assigned a specific job before the month begins',
+      'You start each month with zero savings',
       'You spend nothing until all debts are cleared',
       'You budget only for essential items and ignore wants entirely',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Zero-based budgeting means every single pound of income is allocated a purpose before the month starts &mdash; whether that is bills, savings, tax provision, or spending money. Income minus outgoings should equal zero. This does not mean you spend everything; it means every pound has a plan, including the pounds earmarked for savings.',
   },
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     options: [
       'The Spending account',
       'The Bills account',
-      'The Tax account',
       'The Savings account',
+      'The Tax account',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'When a customer payment lands, the very first transfer should be to the Tax account &mdash; typically 30% of the gross amount. This ensures HMRC money is never accidentally spent. Only after the tax provision is made should the remaining funds be distributed across the other accounts.',
   },
@@ -72,8 +72,8 @@ const quizQuestions = [
     id: 1,
     question:
       'According to MoneyHelper research, what percentage of UK adults do not have a household budget?',
-    options: ['About 20%', 'About 33%', 'About 50%', 'About 75%'],
-    correctAnswer: 2,
+    options: ['About 50%', 'About 20%', 'About 33%', 'About 75%'],
+    correctAnswer: 0,
     explanation:
       'MoneyHelper research consistently shows that around half of UK adults do not maintain any form of household budget. Among the self-employed, the figure is even higher because irregular income makes traditional budgeting feel impossible &mdash; which is exactly why trade-specific budgeting methods are so important.',
   },
@@ -82,11 +82,11 @@ const quizQuestions = [
     question: 'In the 50/30/20 rule, what does the 20% allocation cover?',
     options: [
       'Housing and essential bills',
-      'Wants such as dining out and hobbies',
       'Savings, investments, and additional debt repayment',
+      'Wants such as dining out and hobbies',
       'Business expenses and materials',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The 20% allocation in the 50/30/20 rule covers savings (emergency fund, pension contributions, investments) and additional debt repayment above minimum payments. Needs take 50% and wants take 30%.',
   },
@@ -96,11 +96,11 @@ const quizQuestions = [
       'What is the main advantage of zero-based budgeting for someone with irregular income?',
     options: [
       'It eliminates the need for a bank account',
-      'It forces you to plan every pound, preventing untracked spending',
       'It guarantees a fixed income each month',
+      'It forces you to plan every pound, preventing untracked spending',
       'It removes the need to save for tax',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Zero-based budgeting forces you to allocate every pound of income to a specific category before the month begins. This is particularly powerful for irregular earners because it prevents the common trap of &ldquo;money came in so I spent it&rdquo; &mdash; every pound has a job, whether that is tax, bills, or savings.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'What is the traditional envelope system?',
     options: [
       'A system where you post cash to yourself each month',
-      'A method where you divide cash into labelled envelopes for different spending categories',
       'A business invoicing system using pre-printed envelopes',
       'A way to organise receipts for tax returns',
+      'A method where you divide cash into labelled envelopes for different spending categories',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The traditional envelope system involves withdrawing your budgeted spending money in cash and dividing it into labelled envelopes &mdash; one for each category (groceries, fuel, entertainment, etc.). When an envelope is empty, spending in that category stops until the next pay period. It provides a powerful physical constraint on overspending.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 5,
     question: 'In the Tradesperson&rsquo;s Five-Account System, what are the five accounts?',
     options: [
-      'Current, Savings, Credit Card, Loan, Investment',
       'Tax, Business, Bills, Spending, Savings',
+      'Current, Savings, Credit Card, Loan, Investment',
       'Income, Outgoings, Profit, Loss, Reserve',
       'HMRC, VAT, PAYE, NI, Pension',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Five-Account System uses: Tax (30% of gross income held for HMRC), Business (materials, tools, vehicle, insurance), Bills (rent/mortgage, utilities, council tax), Spending (everyday personal spending), and Savings (emergency fund, pension, goals). This structure ensures tax money is never accidentally spent and business costs do not erode personal finances.',
   },
@@ -135,11 +135,11 @@ const quizQuestions = [
     question: 'Which digital banking feature replicates the envelope system?',
     options: [
       'Direct debits',
-      'Standing orders',
       'Named pots or spaces within a banking app',
+      'Standing orders',
       'Contactless payment limits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Starling Spaces, Monzo Pots, and similar features in digital banking apps allow you to create named, ring-fenced sub-accounts within your main account. Each pot acts like a digital envelope &mdash; money is separated and visible but not mixed with your main spending balance.',
   },
@@ -149,11 +149,11 @@ const quizQuestions = [
       'Why is 30% typically recommended as the tax provision percentage for self-employed tradespeople?',
     options: [
       'Because the basic rate of income tax is 30%',
-      'Because it covers income tax at the basic rate plus Class 2 and Class 4 National Insurance contributions',
       'Because HMRC requires exactly 30% to be held in a separate account',
+      'Because it covers income tax at the basic rate plus Class 2 and Class 4 National Insurance contributions',
       'Because 30% is the VAT rate for construction services',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 30% rule of thumb covers the combination of income tax (20% basic rate) and Class 4 National Insurance contributions (6% on profits between &pound;12,570 and &pound;50,270 from April 2024). While not exact for every individual, 30% provides a safe buffer that means most sole traders will have enough set aside when their Self Assessment bill arrives &mdash; and any surplus becomes a bonus.',
   },
@@ -163,10 +163,10 @@ const quizQuestions = [
     options: [
       'Rich Dad Poor Dad',
       'The Total Money Makeover',
-      'All Your Worth: The Ultimate Lifetime Money Plan',
       'Think and Grow Rich',
+      'All Your Worth: The Ultimate Lifetime Money Plan',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Senator Elizabeth Warren and her daughter Amelia Warren Tyagi introduced the 50/30/20 rule in their 2005 book &ldquo;All Your Worth: The Ultimate Lifetime Money Plan&rdquo;. The rule was designed as a simple, memorable framework that anyone could apply without needing a spreadsheet or accounting knowledge.',
   },

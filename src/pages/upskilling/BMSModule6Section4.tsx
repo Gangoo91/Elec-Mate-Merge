@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bms6-4-qc1',
     question: 'What are the main types of event triggers in building automation?',
     options: [
-      'Manual, automatic, semi-automatic, and hybrid triggers',
       'Time-based, sensor-based, alarm-based, and occupancy-based triggers',
+      'Manual, automatic, semi-automatic, and hybrid triggers',
       'Primary, secondary, tertiary, and backup triggers',
       'Hardware, software, firmware, and network triggers',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The main types are time-based triggers (scheduled actions), sensor-based triggers (environmental responses), alarm-based triggers (safety/security responses), and occupancy-based triggers (usage pattern responses). Each type serves different automation needs and building requirements.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'bms6-4-qc2',
     question: 'How do auto-reporting systems benefit building management?',
     options: [
-      'They replace the need for maintenance staff entirely',
-      'They only work during normal business hours',
-      'They provide consistent data collection, reduce manual workload, and enable proactive management',
-      'They are only useful for large commercial buildings',
+      'They replace the need for on-site maintenance staff entirely',
+      'They run only during business hours when staff are present to review them',
+      'They are cost-effective only on the largest commercial buildings',
+      'They give consistent data, cut manual workload and enable proactive management',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Auto-reporting provides consistent data collection, reduces manual workload, ensures timely alerts, enables proactive management, eliminates human error in report generation, and delivers tailored information to different stakeholders without overwhelming them with irrelevant data.',
   },
@@ -56,12 +56,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of event triggers in building automation?',
     options: [
-      'To replace manual building controls entirely',
       'To enable buildings to respond automatically to changing conditions',
+      'To replace manual building controls entirely',
       'To reduce the number of sensors required',
       'To simplify BMS programming',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Event triggers are intelligent decision-making rules that allow buildings to respond automatically to changing conditions, monitoring specific parameters and executing predefined actions when trigger conditions are met.',
   },
@@ -81,8 +81,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What type of reports highlight equipment performance and maintenance needs?',
-    options: ['Energy reports', 'Maintenance reports', 'Compliance reports', 'Alarm summaries'],
-    correctAnswer: 1,
+    options: ['Energy reports', 'Compliance reports', 'Alarm summaries', 'Maintenance reports'],
+    correctAnswer: 3,
     explanation:
       'Maintenance reports highlight equipment performance, filter replacement needs, and scheduled service requirements. Predictive reporting identifies developing issues before they cause failures.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 5,
     question: 'What should safety systems do in relation to automation?',
     options: [
-      'Operate independently without any connection',
       'Override automation when safety takes priority',
+      'Operate independently without any connection',
       'Be controlled entirely by automation logic',
       'Only activate during scheduled maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fire alarm inputs, emergency stops, and security systems must be wired to override automation when safety takes priority, ensuring rapid response to critical conditions.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of alarm summaries in auto-reporting?',
     options: [
-      'To replace the fire alarm system',
-      'To consolidate all building alarms showing frequency and resolution times',
-      'To automatically silence nuisance alarms',
-      'To reduce the number of sensors needed',
+      'To replace the fire alarm system with a software equivalent',
+      'To automatically silence and clear recurring nuisance alarms',
+      'To consolidate building alarms showing frequency and resolution times',
+      'To reduce the number of field sensors needed across the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Alarm summaries consolidate all building alarms into digestible formats showing frequency, resolution times, and recurring issues, helping identify systemic problems and maintenance priorities.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'What role does documentation play in supporting automation systems?',
     options: [
       'It is only needed for regulatory compliance',
-      'It enables efficient diagnosis when automation does not behave as expected',
       'It is optional for small installations',
       'It only needs to be updated annually',
+      'It enables efficient diagnosis when automation does not behave as expected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Documentation accuracy supports troubleshooting and modifications. As-built drawings, cable schedules, and I/O lists enable efficient diagnosis when automation does not behave as expected.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the benefit of custom dashboards for different stakeholders?',
     options: [
-      'They reduce the overall data collected',
       'They provide relevant information without data overload',
+      'They reduce the overall data collected',
       'They eliminate the need for technical training',
       'They only work with specific BMS brands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Custom dashboards can be configured for different stakeholders, providing technical detail for maintenance teams, cost focus for financial managers, or comfort metrics for facility management, giving each audience relevant information without data overload.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 10,
     question: 'What ensures automation systems remain operational during critical events?',
     options: [
-      'Faster processors',
-      'UPS systems, proper load balancing, and backup power connections',
-      'Wireless communication only',
-      'Reduced sensor count',
+      'Faster controller processors and more memory',
+      'Switching entirely to wireless communication links',
+      'UPS systems, load balancing and backup power connections',
+      'Reducing the overall sensor count to ease the load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Power supply reliability ensures automation systems remain operational during critical events. UPS systems, proper load balancing, and backup power connections maintain automation functionality when it is most needed.',
   },

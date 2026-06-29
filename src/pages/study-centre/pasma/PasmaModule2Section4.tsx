@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'indoor-vs-outdoor-height',
     question: 'Why can a tower typically be built to a greater height indoors than outdoors?',
     options: [
-      'Indoor floors are always stronger than outdoor ground',
       'Indoor environments have no wind loading on the tower',
+      'Indoor floors are always stronger than outdoor ground',
       'Indoor towers do not need guardrails',
       'Indoor towers use different components',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Indoor environments eliminate wind loading — the primary lateral force acting on a tower. Without wind, the tower has greater resistance to overturning, allowing a higher freestanding height. Outdoor towers must account for wind forces, which significantly reduce the permissible height.',
   },
@@ -32,8 +32,8 @@ const quickCheckQuestions = [
     id: 'working-height-calculation',
     question:
       'A task requires reaching a ceiling at 7 metres. Assuming a 2m operative reach, what platform height is needed?',
-    options: ['3 metres', '5 metres', '7 metres', '9 metres'],
-    correctIndex: 1,
+    options: ['3 metres', '7 metres', '9 metres', '5 metres'],
+    correctIndex: 3,
     explanation:
       'Working height = platform height + 2m reach. Therefore platform height = working height - 2m reach = 7m - 2m = 5m. Always calculate the required platform height by subtracting the 2m reach allowance from the target working height.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'When calculating the required platform height, you subtract 2 metres from the working height. This 2m allowance represents:',
     options: [
+      "The operative's reach above the platform",
       'The height of the guardrails',
       'The height of the castors and base frame',
-      "The operative's reach above the platform",
       'A safety margin required by regulations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The 2m allowance represents the operative's reach above the platform when standing. A person standing on a platform can typically work at a height of about 2m above the platform surface. Therefore, working height = platform height + 2m.",
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: 'At what wind speed should you cease working on an outdoor mobile access tower?',
     options: [
       'Beaufort 2 (4-7 mph)',
-      'Beaufort 4 (13-18 mph)',
       'Beaufort 6 (25-31 mph)',
       'Beaufort 8 (39-46 mph)',
+      'Beaufort 4 (13-18 mph)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Work should cease at Beaufort 4 (moderate breeze, approximately 13-18 mph / 17 kph). At this wind speed, tools and materials can be blown from the platform and the tower experiences significant lateral loading. The tower structure is rated to withstand higher winds, but working conditions become unsafe.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of these is the correct approach to dealing with soft ground conditions?',
     options: [
-      'Increase the number of castors on each leg',
       'Use sole boards under the castors or base plates to spread the load',
+      'Increase the number of castors on each leg',
       'Reduce the tower height to compensate',
       'Add extra diagonal braces at the base',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Sole boards (also called spreader plates) are placed under the castors or base plates to distribute the tower's load over a larger ground area, preventing the supports from sinking into soft ground. Sole boards must be large enough to provide adequate bearing area and must be level.",
   },
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: 'A method statement for tower use should include all of the following EXCEPT:',
     options: [
       'The tower configuration and maximum height',
-      'The names of all trained and competent persons who will erect the tower',
       'The personal financial details of the operative',
+      'The names of all trained and competent persons who will erect the tower',
       'Emergency procedures and rescue plan',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A method statement should include tower specification, assembly sequence, competent persons, risk controls, emergency procedures, and inspection arrangements. Personal financial details have no relevance to safe working and should never be included in a method statement.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'When selecting between a single-width and double-width tower, the deciding factor is:',
     options: [
       'Always choose double-width as it is safer',
-      'A practical assessment of space, task, height, and number of operatives',
       'Always choose single-width as it is lighter',
       'The personal preference of the operative',
+      'A practical assessment of space, task, height, and number of operatives',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The choice should be based on a practical assessment of: available space (can the tower physically fit?), the nature of the task (workspace needed?), the required height (single-width has lower max heights), and the number of operatives. Double-width is preferred where space allows, but single-width is necessary in confined areas.',
   },

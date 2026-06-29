@@ -78,98 +78,119 @@ const quizQuestions = [
   {
     question: 'What is the primary purpose of the diagnostic buffer in a Siemens S7-1500 PLC?',
     options: [
-      'To store programme backups',
-      'To record system events, errors, and status changes chronologically',
-      'To buffer communication data',
-      'To store recipe data',
+      'To store complete programme backups',
+      'To record system events, errors and status changes chronologically',
+      'To buffer communication packet data',
+      'To store production recipe data',
     ],
-    correctAnswer: 'To record system events, errors, and status changes chronologically',
+    correctAnswer: 'To record system events, errors and status changes chronologically',
+    explanation:
+      'The diagnostic buffer is a timestamped, chronological log of faults and status changes — the first place to look when troubleshooting. It does not hold backups, recipes or comms buffers.',
   },
   {
     question:
-      'In Allen-Bradley Studio 5000, what does the term "inhibited" mean when applied to an I/O module?',
+      'In Allen-Bradley Studio 5000, what does it mean when an I/O module is "inhibited"?',
     options: [
-      'The module is running in safe mode',
+      'The module is running in a safe mode',
       'The module is disabled and will not communicate',
       'The module has a firmware update pending',
-      'The module is in redundancy mode',
+      'The module is operating in redundancy mode',
     ],
     correctAnswer: 'The module is disabled and will not communicate',
+    explanation:
+      'Inhibiting a module deliberately suspends its connection so the controller stops communicating with it (useful for maintenance) without removing it from the I/O tree.',
   },
   {
-    question: 'What major fault type 4 indicates in Allen-Bradley ControlLogix processors?',
+    question: 'In Allen-Bradley ControlLogix processors, what does a major fault of Type 4 indicate?',
     options: [
-      'Power loss',
-      'I/O fault',
-      'Programme fault (instruction execution error)',
-      'Communication fault',
+      'A loss of power to the controller',
+      'An I/O module communication fault',
+      'A programme fault from an instruction execution error',
+      'A network communication fault',
     ],
-    correctAnswer: 'Programme fault (instruction execution error)',
+    correctAnswer: 'A programme fault from an instruction execution error',
+    explanation:
+      'In ControlLogix major fault classification, Type 4 covers programme/instruction execution errors such as an array index out of range or a maths overflow, distinct from power (1) or I/O (3) faults.',
   },
   {
     question:
-      'When performing online changes in TIA Portal, what does the "Download to device" with "Start modules" option do?',
+      'In TIA Portal, what does choosing "Download to device" with the "Start modules" option do?',
     options: [
-      'Only downloads changes without affecting operation',
-      'Downloads changes and automatically restarts the CPU',
-      'Creates a backup before downloading',
-      'Compares online and offline programmes only',
+      'Downloads the changes without affecting operation at all',
+      'Creates a backup automatically before downloading',
+      'Compares the online and offline programmes only',
+      'Downloads the changes and then starts the CPU into Run',
     ],
-    correctAnswer: 'Downloads changes and automatically restarts the CPU',
+    correctAnswer: 'Downloads the changes and then starts the CPU into Run',
+    explanation:
+      'Selecting "Start modules" after the download returns the CPU to Run automatically. This can briefly stop the CPU during the load, so operators should be aware before it is used on a running process.',
   },
   {
     question:
-      'What is the recommended maximum number of forces that should be active in a production PLC at any time?',
+      'How many forces should ideally remain active in a production PLC under normal operation?',
     options: [
-      'As many as needed for debugging',
-      'Maximum of 10 forces',
-      'Zero - forces should be temporary for troubleshooting only',
-      'One per I/O rack',
+      'As many as are useful for debugging',
+      'Zero — forces are only a temporary troubleshooting aid',
+      'A maximum of around ten forces',
+      'One force per I/O rack',
     ],
-    correctAnswer: 'Zero - forces should be temporary for troubleshooting only',
+    correctAnswer: 'Zero — forces are only a temporary troubleshooting aid',
+    explanation:
+      'Forces override logic and bypass interlocks, so none should be left active in production. They are applied briefly for diagnostics and removed (and documented) before leaving the equipment.',
   },
   {
-    question: 'In RSLogix 5000, what does a flashing green "I/O" LED on the processor indicate?',
+    question: 'In RSLogix/Studio 5000, what does a flashing green "I/O" LED on the processor indicate?',
     options: [
-      'Normal I/O communication',
-      'I/O tree contains faulted modules',
-      'I/O is being forced',
-      'I/O firmware update in progress',
+      'Completely normal I/O communication',
+      'The I/O tree contains one or more faulted modules',
+      'An I/O point is currently being forced',
+      'An I/O firmware update is in progress',
     ],
-    correctAnswer: 'I/O tree contains faulted modules',
+    correctAnswer: 'The I/O tree contains one or more faulted modules',
+    explanation:
+      'A steady green I/O LED is healthy; a flashing green I/O LED warns that at least one module in the configured I/O tree is faulted or not communicating and needs investigation.',
   },
   {
     question:
-      'What Siemens TIA Portal feature allows monitoring variable values without a trigger condition?',
-    options: ['Force table', 'Watch table', 'Trace function', 'Cross reference'],
-    correctAnswer: 'Watch table',
+      'Which Siemens TIA Portal feature lets you monitor variable values continuously without a trigger condition?',
+    options: ['The force table', 'The watch table', 'The trace function', 'The cross reference'],
+    correctAnswer: 'The watch table',
+    explanation:
+      'A watch table shows live values of selected tags continuously. The trace function captures values on a trigger, the force table overrides values, and cross reference lists where tags are used.',
   },
   {
     question:
-      'What communication protocol uses RPI (Requested Packet Interval) for I/O updates in Allen-Bradley systems?',
-    options: ['Modbus TCP', 'PROFINET', 'EtherNet/IP', 'OPC UA'],
+      'Which communication protocol uses RPI (Requested Packet Interval) to set the I/O update rate in Allen-Bradley systems?',
+    options: ['Modbus TCP', 'EtherNet/IP', 'PROFINET', 'OPC UA'],
     correctAnswer: 'EtherNet/IP',
+    explanation:
+      'EtherNet/IP uses CIP implicit messaging where the RPI defines how often I/O data is exchanged. PROFINET is the Siemens equivalent, while Modbus TCP and OPC UA use different mechanisms.',
   },
   {
-    question: 'When should you use "consistent download" vs "download changes only" in TIA Portal?',
+    question: 'When should you use "download changes only" rather than a "consistent download" in TIA Portal?',
     options: [
-      'Consistent download for minor changes, changes only for major updates',
-      'Always use consistent download',
-      'Download changes only for tested modifications, consistent download for complete project updates',
-      'They are the same function',
+      'For tested, incremental modifications, keeping consistent download for complete project updates',
+      'You should always use consistent download regardless',
+      'Consistent download for minor edits, changes only for major updates',
+      'There is no difference between the two',
     ],
     correctAnswer:
-      'Download changes only for tested modifications, consistent download for complete project updates',
+      'For tested, incremental modifications, keeping consistent download for complete project updates',
+    explanation:
+      'Download changes only sends just the validated incremental edits with minimal disruption, while a consistent (complete) download is reserved for loading the whole project, e.g. after major changes.',
   },
   {
     question: 'What is the purpose of the "Compare" function in PLC programming software?',
     options: [
-      'To compare processor speeds',
-      'To compare online programme with offline backup and identify differences',
+      'To compare processor scan speeds',
       'To compare I/O response times',
-      'To compare alarm priorities',
+      'To compare the online programme with an offline backup and highlight differences',
+      'To compare alarm priority levels',
     ],
-    correctAnswer: 'To compare online programme with offline backup and identify differences',
+    correctAnswer:
+      'To compare the online programme with an offline backup and highlight differences',
+    explanation:
+      'Compare highlights every difference between the running (online) programme and an offline/backup copy, so you can confirm what has changed before downloading or restoring.',
   },
 ];
 

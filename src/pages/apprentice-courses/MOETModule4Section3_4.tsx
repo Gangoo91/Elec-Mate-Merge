@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What happens to a three-phase motor when one phase is lost (single-phasing)?',
     options: [
       'The motor continues running but draws increased current on the remaining phases, causing overheating and potential winding damage',
-      'Offensive, intimidating, malicious, or insulting behaviour, or an abuse of power, that undermines, humiliates, or causes physical or emotional harm to someone',
-      'Long-range, low-power wide-area networking for monitoring applications covering large areas such as remote sites, pipelines, and utilities',
-      'Sight, hearing (e.g. arcing/buzzing), smell (e.g. burning insulation), touch (carefully — for excessive temperature) — never taste',
+      'The motor immediately stops and cannot be restarted until all three phases are restored',
+      'The motor speeds up because it now has less load on the remaining windings',
+      'The motor runs normally with no adverse effect, as two phases are sufficient',
     ],
     correctIndex: 0,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "A variable speed drive (VSD) trips on 'overcurrent' during motor acceleration. The FIRST diagnostic step should be:",
     options: [
+      'Immediately increase the drive overcurrent trip setting to stop the nuisance trips',
+      'Fit a larger drive rated for double the motor current to provide more headroom',
+      'Bypass the drive and start the motor direct-on-line to confirm it still runs',
       'Check the motor for mechanical binding, verify the acceleration ramp time is adequate, and check for cable or motor insulation faults',
-      'To provide protection against contact with live parts of adjacent functional units and to minimise the effects of arcing faults',
-      'Suitable and sufficient information, instruction, and training about the hazardous substances they work with',
-      'Rusting of steel surfaces, biological decomposition, displacement by other gases, combustion processes, and chemical reactions that consume oxygen',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'An overcurrent trip during acceleration has several possible causes: the motor is mechanically bound or overloaded (requiring high torque), the acceleration ramp time is too short (causing excessive current), or there is a cable or motor winding fault (earth fault or short circuit). Diagnose the cause before taking action — increasing the trip setting or using a larger drive may mask a serious underlying fault.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'insulation-class',
     question: "A motor's insulation class determines:",
     options: [
-      'The email server was offline and no backup alerts existed',
-      'That batteries can sustain illumination for the full 3-hour rated period',
+      'The maximum supply voltage the motor windings are designed to operate at',
       'The maximum operating temperature the winding insulation can withstand',
-      'Make a clear, dated correction preserving the original entry and audit trail',
+      'The minimum insulation resistance the windings must show when tested cold',
+      'The number of starts per hour the motor can tolerate without overheating',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The insulation class (B, F, or H being the most common) defines the maximum temperature the winding insulation can tolerate continuously. Class B allows 130 degrees C, Class F allows 155 degrees C, and Class H allows 180 degrees C. Exceeding the insulation class temperature accelerates insulation degradation — for every 10 degrees C above the rated temperature, insulation life is approximately halved.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The most common cause of electric motor failure is:',
     options: [
-      '"The circuits were tested and found to be satisfactory."',
+      'Incorrect direction of rotation due to reversed phase connections',
       'Bearing failure (mechanical) or insulation breakdown (electrical)',
-      'Extraneous-conductive-parts to main earthing terminal',
-      'Recognising, understanding, and managing your own emotions and those of others',
+      'Excessive supply frequency causing the motor to over-speed',
+      'Loss of the protective conductor connection to the motor frame',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'An insulation resistance test on a motor winding reads 0.3 MΩ at 500 V DC. This indicates:',
     options: [
-      'Misalignment between the motor shaft and the driven equipment during reassembly',
-      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
+      'A healthy winding well above the minimum, since 0.3 MΩ comfortably exceeds the acceptable limit',
+      'A normal reading for a warm motor that will rise above 1 MΩ once the windings cool down',
       'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
+      'A faulty test instrument, as a 500 V tester cannot produce a reading as low as 0.3 MΩ',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     id: 3,
     question: 'Phase current imbalance of more than 10% on a three-phase motor can indicate:',
     options: [
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
-      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
+      'Normal operation, as a 10% current imbalance is expected on any healthy three-phase motor',
+      'A worn motor bearing increasing the mechanical friction on one side of the rotor',
+      'The motor running in the wrong direction due to two phases being transposed',
       'A developing winding fault such as shorted turns, or a supply voltage imbalance',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: "A VSD displays fault code 'earth fault' (EF). This means:",
     options: [
       'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
-      'The motor acting as a generator during deceleration, pumping energy back into the drive DC bus',
+      'The protective earth conductor between the drive and the motor frame has been disconnected',
+      'The drive heatsink has overheated because the earthing bonding is restricting airflow',
+      'The supply earth reference has been lost, leaving the drive DC bus floating above earth potential',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Shaft current damage (fluting) in motor bearings is commonly caused by:',
     options: [
-      'Misalignment between the motor shaft and the driven equipment during reassembly',
+      'Over-greasing of the bearing forcing excess lubricant into the rolling element races',
       'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
+      'Mechanical overload of the driven equipment placing excessive radial force on the bearing',
+      'Contamination of the bearing by dust and moisture entering through a failed seal',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'A motor overload relay is set to 1.05 times the motor full load current (FLC). If the motor FLC is 20 A, the overload should trip if current exceeds:',
     options: [
-      "Standard first fix electrical installation",
-      "Temporarily reducing non-essential loads during peak demand",
+      "19 A instantaneously, on any momentary current peak",
+      "20 A sustained, matching the motor full load current exactly",
       "21 A sustained over the relay's thermal time curve",
-      "Exactly where continuity is lost, indicating fault location",
+      "25 A instantaneously, allowing for the motor starting current",
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     question:
       'A direct-on-line (DOL) started motor draws approximately 6-8 times its full load current during starting. This is:',
     options: [
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
-      'Failure of one or more output transistors (IGBTs) within the drive, or a very low impedance fault on the output',
+      'A clear sign of a winding fault, as a healthy motor should never exceed twice its full load current',
+      'Caused by the overload relay being set too low and restricting the current during the start',
+      'An indication that the supply voltage is too high and is forcing excessive current into the windings',
       'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question: "A VSD 'overvoltage' fault during motor deceleration is typically caused by:",
     options: [
       'The motor acting as a generator during deceleration, pumping energy back into the drive DC bus',
-      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'The motor stalling because the deceleration ramp removes too much torque too quickly',
+      'A loss of one supply phase causing the remaining phases to over-voltage the DC bus',
+      'The drive cooling fan failing and allowing the DC bus capacitors to overheat during the ramp',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'Megger testing a motor winding immediately after shutdown shows 50 MΩ. The same motor tested cold shows 200 MΩ. This difference is because:',
     options: [
-      'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
+      'The insulation was physically damaged during the shutdown and has partly recovered after cooling',
       'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
-      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'Moisture was driven out of the windings by the running heat, raising the cold reading',
+      'The test was carried out at a higher voltage when hot, artificially lowering the reading',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: 'A motor vibrates excessively after a bearing replacement. The most likely cause is:',
     options: [
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
-      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
+      'A supply voltage imbalance that developed while the motor was out of service',
+      'Single-phasing caused by a connection disturbed during the bearing change',
       'Misalignment between the motor shaft and the driven equipment during reassembly',
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'Degraded winding insulation that was overlooked before the bearing was replaced',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     id: 11,
     question: "A VSD 'short circuit' or 'IGBT fault' typically indicates:",
     options: [
-      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'A supply undervoltage that has collapsed the DC bus and starved the output stage',
+      'Excessive regenerated energy from the motor during a rapid deceleration ramp',
+      'A blocked drive heatsink causing the output stage to exceed its temperature limit',
       'Failure of one or more output transistors (IGBTs) within the drive, or a very low impedance fault on the output',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
     question: 'To check for broken rotor bars in a squirrel-cage motor, you would use:',
     options: [
       'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
-      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
-      'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'An insulation resistance test of the stator windings at 500 V DC',
+      'A winding resistance comparison between the three stator phases',
+      'A vibration survey of the drive-end and non-drive-end bearings',
     ],
     correctAnswer: 0,
     explanation:

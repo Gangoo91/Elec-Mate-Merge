@@ -29,9 +29,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of a proving unit in electrical testing?',
     options: [
       'To provide a known voltage source to verify the voltage indicator is working correctly before and after testing',
-      'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
-      'A written plan (management plan) that sets out how the risk from asbestos is to be managed',
-      'Raise the concern immediately, verify the facts jointly, and resolve the discrepancy before completing the handover',
+      'To discharge any stored energy in capacitors before testing',
+      'To inject a test current for measuring earth fault loop impedance',
+      'To reduce the test voltage to a safe level for the operator',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     id: 'pat-testing',
     question: 'What does a PAT test typically include for a Class I portable power tool?',
     options: [
-      'It contains leaks and spills to prevent environmental contamination and spread',
-      'Client, principal designer, principal contractor, designers, and contractors',
-      'LED lighting systems powered and controlled through Ethernet cables',
+      'Earth fault loop impedance and prospective fault current only',
+      'A polarity check and verification of the supply voltage',
+      'Calibration of the tool against a reference standard',
       'Visual inspection, earth continuity, insulation resistance and functional test',
     ],
     correctIndex: 3,
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: "The GS38 'prove-test-prove' procedure for safe isolation requires:",
     options: [
-      'That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set',
+      'Test the circuit for dead, then prove the voltage indicator once on a known live source',
       'Prove the voltage indicator on a known live source, test the circuit for dead, prove the voltage indicator again on the known live source',
-      'The life of the asset, or as specified by the organisation\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
+      'Prove the voltage indicator twice on a known live source, then leave the circuit isolated',
+      'Test the circuit for dead, isolate the supply, then prove the voltage indicator',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'GS38 requires that test leads should incorporate:',
     options: [
-      '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
-      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
+      'Coiled leads at least 2 metres long with crocodile clip ends',
+      'Unfused leads with a minimum conductor size of 2.5 mm²',
       'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
-      'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
+      'Spring-loaded probes with a 20 mm exposed metal tip',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     question:
       'A two-pole voltage indicator (such as a Fluke T150) is preferred over a single-pole indicator (neon screwdriver) because:',
     options: [
-      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
-      'At intervals specified by the manufacturer or company policy, typically annually, by a UKAS-accredited laboratory',
-      'The total impedance of the earth fault current loop from the point of test back to the source',
+      'It draws less current from the circuit, giving a safer reading',
+      'It can be used on circuits that are still energised at 230 V',
+      'It does not require proving before and after the test',
       'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'Insulation resistance testers (meggers) typically test at voltages of:',
     options: [
       '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
-      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
-      'Measuring the magnetic field around a conductor using a current transformer jaw',
-      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
+      '12 V AC, 24 V AC or 50 V AC depending on the circuit being tested',
+      '110 V DC, 230 V DC or 400 V DC depending on the circuit being tested',
+      '50 V DC, 100 V DC or 150 V DC depending on the circuit being tested',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'An earth fault loop impedance tester measures:',
     options: [
-      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
-      'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
+      'The insulation resistance between live conductors and earth',
+      'The residual current flowing to earth under fault conditions',
       'The total impedance of the earth fault current loop from the point of test back to the source',
-      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
+      'The continuity of the protective conductor in milliohms',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'Before using a power tool on site, a pre-use inspection should check:',
     options: [
-      'The total impedance of the earth fault current loop from the point of test back to the source',
-      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
-      'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
+      'Only the calibration certificate and serial number',
+      'The insulation resistance value recorded at the last PAT test',
+      'Nothing — a valid PAT label is sufficient on its own',
       'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
     ],
     correctAnswer: 3,
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'Calibration of electrical test instruments should be carried out:',
     options: [
-      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
+      'Only once, when the instrument is first purchased',
       'At intervals specified by the manufacturer or company policy, typically annually, by a UKAS-accredited laboratory',
-      'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
-      'The total impedance of the earth fault current loop from the point of test back to the source',
+      'By the user before every test using a proving unit',
+      'Every five years, regardless of usage or manufacturer guidance',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     question:
       'When using a multimeter to check for voltage on a circuit believed to be dead, the meter should be set to:',
     options: [
-      '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
-      'Measuring the magnetic field around a conductor using a current transformer jaw',
+      'The lowest AC voltage range to maximise reading sensitivity',
+      'The resistance (ohms) range to confirm the circuit is open',
       'The highest AC voltage range first, then reduced — or use auto-ranging mode',
-      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
+      'The DC current range to detect any leakage current',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     question: 'Test instruments used for electrical installation work must comply with:',
     options: [
       'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
-      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
-      'Measuring the magnetic field around a conductor using a current transformer jaw',
-      'The total impedance of the earth fault current loop from the point of test back to the source',
+      'BS EN 60900 (insulated tools) and BS 7375 alone',
+      'BS EN 60529 (IP ratings) and the Building Regulations',
+      'GS38 alone, with no requirement for any product standard',
     ],
     correctAnswer: 0,
     explanation:

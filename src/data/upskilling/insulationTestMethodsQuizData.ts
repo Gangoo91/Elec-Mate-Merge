@@ -31,9 +31,9 @@ export const insulationTestMethodsQuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'Why must probes stay in contact during testing?',
     options: [
-      'It identifies which specific conductor has insulation problems',
-      'Investigate the cause and do not proceed until resolved',
-      'Disconnect ballasts and test circuit wiring only',
+      'To keep the test voltage below the safe touch limit',
+      'To prevent the tester battery from discharging too quickly',
+      'To avoid tripping any upstream protective devices',
       'To allow the reading to stabilise and detect leakage over time',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const insulationTestMethodsQuizQuestions: QuizQuestion[] = [
     question: 'What should you do if IR reading is below 1 MΩ?',
     options: [
       'Investigate the cause and do not proceed until resolved',
-      'It identifies which specific conductor has insulation problems',
-      'Disconnect ballasts and test circuit wiring only',
-      'True (but must be recorded as a limitation)',
+      'Record the value and energise the circuit anyway',
+      'Repeat the test at a reduced voltage to pass it',
+      'Average it with the other circuits to obtain a pass',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ export const insulationTestMethodsQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What is the main advantage of testing conductors individually rather than L+N to E?',
     options: [
-      'Investigate the cause and do not proceed until resolved',
-      'To allow the reading to stabilise and detect leakage over time',
+      'It completes the testing in a single combined measurement',
+      'It allows a lower test voltage to be used safely',
       'It identifies which specific conductor has insulation problems',
-      'All results with explanation of methods used',
+      'It avoids the need to disconnect any connected equipment',
     ],
     correctAnswer: 2,
     explanation:

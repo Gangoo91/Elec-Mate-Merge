@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'adiabatic-purpose',
     question: 'What does the adiabatic equation determine for cable protection?',
     options: [
-      'Changes in legislation, organisation, or after incidents',
-      'Widens the temperature deadband to reduce plant operation',
-      'Minimum cable size to withstand fault current for disconnection time',
-      'Create immediate positive feedback or rewards after completing the habit',
+      'The continuous current-carrying capacity of the cable',
+      'The maximum permitted voltage drop along the cable',
+      'Minimum cable size to withstand fault current for the disconnection time',
+      'The earth fault loop impedance at the cable origin',
     ],
     correctIndex: 2,
     explanation:
@@ -47,9 +47,9 @@ const quickCheckQuestions = [
     question: "What does the 'k' value in the adiabatic equation represent?",
     options: [
       'Cable thermal constant based on conductor and insulation materials',
-      'Delta primary, star secondary with neutral, 330 degrees (11 o\\\\\\\\\\\\\\\'clock) phase shift',
-      'Functional testing of detection and alarm systems',
-      'Reduced voltage, RCD protection, and robust equipment',
+      'The prospective short-circuit current at the cable origin',
+      'The rated breaking capacity of the protective device',
+      'The disconnection time required by BS 7671',
     ],
     correctIndex: 0,
     explanation:
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: 'What is I²t (let-through energy)?',
     options: [
       'Total energy let through by a protective device during fault clearance',
-      'The engine speed (and therefore the output frequency)',
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'By opening and closing to regulate air passage through ducts',
+      'The continuous power dissipated by the cable under normal load',
+      'The reactive energy stored in the cable during switching',
+      'The total energy consumed by the connected load over time',
     ],
     correctIndex: 0,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'Why is fault current highest at the origin of an installation?',
     options: [
       'Lower cable impedance between supply and fault point',
-      'Circuits are grouped by function with clear labelling',
-      'Adjacent to delivery access with good ground conditions',
-      'They inject test current through the earth path',
+      'Higher cable temperature increases conductor resistance',
+      'The protective device operates more slowly near the supply',
+      'Voltage is higher at the origin than further along the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 7,
     question: "What is 'current limitation' by an MCB?",
     options: [
-      'The degree of protection against solid objects (5) and water (5)',
-      'Store intermediate logic states without driving physical outputs',
-      'Record clearly and investigate thoroughly',
-      'Tripping before prospective fault current reaches peak',
+      'Restricting the continuous load current to the device rating',
+      'Limiting the voltage applied to the downstream cable',
+      'Reducing the earth fault loop impedance of the circuit',
+      'Tripping before the prospective fault current reaches its peak',
     ],
     correctAnswer: 3,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Why do XLPE cables have higher k values than PVC?',
     options: [
       'XLPE can withstand higher temperatures (90°C vs 70°C) before damage',
-      'The process of measuring quantities from drawings for pricing',
-      'Local networking, events, and professional support',
-      'Pressure measured relative to atmospheric pressure',
+      'XLPE has a larger conductor cross-sectional area than PVC',
+      'XLPE conductors are made from a more conductive metal than PVC',
+      'XLPE cables are always installed with a separate metallic CPC',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'At what point in a circuit is fault current verification most critical?',
     options: [
-      'The electrician assigned to install it',
+      'At the midpoint of the cable run',
       'At the origin (closest to supply)',
-      '1.67 times the live conductor resistance',
-      'They consume the most energy in a building',
+      'At the furthest load from the supply',
+      'At the first joint or accessory in the circuit',
     ],
     correctAnswer: 1,
     explanation:

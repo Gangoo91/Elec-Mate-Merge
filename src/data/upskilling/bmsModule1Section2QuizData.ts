@@ -5,10 +5,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the largest system typically controlled by a BMS?',
     options: [
-      'Annual energy savings exceeded £250,000',
+      'Door entry intercom systems',
       'HVAC (Heating, Ventilation, and Air Conditioning)',
-      'To ensure accurate system feedback and proper BMS performance',
-      'Increase ventilation automatically to bring in fresh air',
+      'Small power and socket-outlet circuits',
+      'Audio-visual and signage displays',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'How can a BMS respond if CO₂ levels rise in a room?',
     options: [
-      'To ensure accurate system feedback and proper BMS performance',
-      'HVAC (Heating, Ventilation, and Air Conditioning)',
-      'Temperature sensors and humidity sensors',
+      'Reduce the fresh-air supply to save heating energy',
+      'Lower the room temperature setpoint to compensate',
+      'Switch off the lighting to reduce occupancy',
       'Increase ventilation automatically to bring in fresh air',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     question: 'Give one way lighting can be controlled via BMS.',
     options: [
       'Automatic scheduling based on time of day and occupancy',
-      'To ensure accurate system feedback and proper BMS performance',
-      'Annual energy savings exceeded £250,000',
-      'Temperature sensors and humidity sensors',
+      'Replacing every luminaire with a higher-wattage lamp',
+      'Wiring all lighting to a single uncontrolled manual switch',
+      'Running lights continuously to avoid switching surges',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why is daylight integration useful for energy savings in BMS lighting control?',
     options: [
-      'They allow real-time data entry at the point of work with access to asset history and technical documents',
+      'It increases artificial light output to match the brightness outside',
       'It automatically dims or switches off artificial lights when natural daylight is sufficient',
-      'Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity',
-      'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
+      'It blocks daylight with blinds so the lighting level stays constant',
+      'It runs the lights at full output on a fixed timer regardless of daylight',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 6,
     question: 'How can access control and BMS integration improve security?',
     options: [
-      'To prevent spread of smoke between fire compartments during fire conditions',
-      'Communicate hazards, restrictions, mandatory requirements, emergency information',
+      'By unlocking all doors automatically outside working hours',
+      'By disabling CCTV recording whenever a valid card is used',
       'By logging entry events and automatically activating lights and CCTV when access cards are used',
-      'Individual sprinkler heads activate when heated to their threshold, releasing water directly over the fire',
+      'By replacing the need for any access cards or door controls',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What action might a BMS take when a fire alarm is triggered?',
     options: [
-      'Automatic scheduling based on time of day and occupancy',
-      'Increase ventilation automatically to bring in fresh air',
-      'It automatically dims or switches off artificial lights when natural daylight is sufficient',
+      'Lock all exit doors to contain occupants in their rooms',
+      'Boost the heating to keep occupants warm during evacuation',
+      'Continue normal HVAC operation to avoid disrupting comfort',
       'Shut down HVAC systems and unlock doors automatically for safe evacuation',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     question: 'Name one renewable energy system that can be linked with a BMS.',
     options: [
       'Solar PV (photovoltaic) systems',
-      'Traditional diesel generators',
-      'Standard mains electricity supply',
-      'Manual backup systems',
+      'Traditional diesel standby generators',
+      'A grid-supplied uninterruptible power supply',
+      'A coal-fired district heating plant',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians install sensors correctly in BMS applications?',
     options: [
-      'Increase ventilation automatically to bring in fresh air',
+      'To reduce the total number of cables needed in the building',
       'To ensure accurate system feedback and proper BMS performance',
-      'Shut down HVAC systems and unlock doors automatically for safe evacuation',
-      'HVAC (Heating, Ventilation, and Air Conditioning)',
+      'To make the sensors visible for decorative purposes',
+      'To allow the sensors to run without any power supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     question:
       'In the real-world hospital example, what was one financial outcome of the BMS integration?',
     options: [
-      'HVAC (Heating, Ventilation, and Air Conditioning)',
-      'Solar PV (photovoltaic) systems',
+      'Annual maintenance costs doubled after installation',
+      'The energy bill stayed exactly the same as before',
       'Annual energy savings exceeded £250,000',
-      'Temperature sensors and humidity sensors',
+      'The building was disconnected from the mains supply',
     ],
     correctAnswer: 2,
     explanation:

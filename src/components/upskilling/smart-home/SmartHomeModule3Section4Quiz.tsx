@@ -13,100 +13,120 @@ export const SmartHomeModule3Section4Quiz = () => {
 
   const questions = [
     {
-      question: 'Name the three main types of loads in lighting circuits.',
+      question: 'What are the three main types of electrical load in lighting circuits?',
       options: [
-        'Resistive, Inductive, Capacitive',
-        'LED, Halogen, Fluorescent',
-        'High, Medium, Low',
-        'AC, DC, Mixed',
+        'Resistive, inductive and capacitive',
+        'LED, halogen and fluorescent',
+        'High, medium and low power',
+        'AC, DC and mixed supply',
       ],
       correct: 0,
+      explanation:
+        'Loads are classified by their electrical behaviour as resistive, inductive or capacitive, which determines how they interact with dimmers and controls.',
     },
     {
-      question: 'What type of load are LED drivers usually classified as?',
-      options: ['Resistive', 'Inductive', 'Capacitive', 'Mixed'],
+      question: 'What type of load are most electronic LED drivers usually classified as?',
+      options: ['Resistive', 'Inductive', 'Capacitive', 'Purely DC'],
       correct: 2,
+      explanation:
+        'Electronic LED drivers behave largely as capacitive loads, which is why trailing-edge dimmers designed for capacitive loads usually suit them best.',
     },
     {
-      question: 'Which dimmer type is best for incandescent lamps?',
+      question: 'Which dimmer type is suitable for traditional incandescent lamps?',
       options: [
-        'Only trailing-edge',
-        'Only leading-edge',
-        'Either leading-edge or trailing-edge',
-        'PWM controllers only',
+        'Only trailing-edge dimmers',
+        'Only PWM controllers',
+        'Either leading-edge or trailing-edge dimmers',
+        'Only DALI controllers',
       ],
       correct: 2,
+      explanation:
+        'Incandescent lamps are resistive, so they tolerate either leading-edge or trailing-edge dimming without performance issues.',
     },
     {
-      question: 'Which dimmer type is best for LEDs?',
+      question: 'Which dimmer type is generally best for LED lamps?',
       options: [
-        'Leading-edge (TRIAC)',
         'Trailing-edge (MOSFET)',
-        'Resistive dimmer',
-        'Any type works equally',
+        'Leading-edge (TRIAC)',
+        'A simple resistive dimmer',
+        'Any dimmer type performs equally',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Trailing-edge (MOSFET) dimmers give smoother, quieter control of the capacitive electronic drivers used in LED lamps.',
     },
     {
-      question: 'What happens if a non-dimmable LED is placed on a dimmer?',
+      question: 'What can happen if a non-dimmable LED is placed on a dimmer?',
       options: [
-        'It works perfectly',
-        'It becomes more efficient',
-        'It may be damaged or cause safety issues',
-        'Nothing happens',
+        'It operates perfectly with no issues',
+        'It becomes noticeably more efficient',
+        'It may flicker, be damaged or cause safety issues',
+        'Nothing changes about its behaviour',
       ],
       correct: 2,
+      explanation:
+        'A non-dimmable LED is not designed for a chopped waveform, so on a dimmer it may flicker, buzz, fail early or pose a safety risk.',
     },
     {
-      question: 'What control method is used for LED strips?',
+      question: 'Which control method is typically used for LED strip lighting?',
       options: [
         'Standard wall dimmers',
         'PWM drivers or DMX controllers',
-        'Light switches only',
-        'Circuit breakers',
+        'Ordinary light switches only',
+        'The circuit breaker at the board',
       ],
       correct: 1,
+      explanation:
+        'LED strips are usually controlled with PWM drivers, or DMX controllers for colour and effects, rather than mains phase-cut dimmers.',
     },
     {
-      question: 'True or False: You can mix halogen and LED lamps on the same dimmer.',
+      question: 'Can halogen and LED lamps be mixed on the same dimmer?',
       options: [
-        'True - they work perfectly together',
-        "False - it's not recommended due to different characteristics",
-        'True - but only with smart dimmers',
-        "False - it's illegal under BS7671",
+        'Yes, they always work perfectly together',
+        'Yes, but only when smart dimmers are used',
+        'No, it is not recommended due to their different load characteristics',
+        'No, because it is specifically prohibited by BS 7671',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Mixing halogen and LED lamps on one dimmer is not recommended because their differing load characteristics cause flicker and unstable dimming.',
     },
     {
       question: 'What is PWM dimming?',
       options: [
         'Power Management Wiring',
-        'Pulse Width Modulation - rapid on/off switching',
         'Permanent Wave Modulation',
         'Passive Wire Management',
+        'Pulse Width Modulation, rapid on/off switching',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'PWM (Pulse Width Modulation) switches the supply on and off very rapidly; varying the on-time changes the average power and so the brightness.',
     },
     {
       question: 'Why should installers check manufacturer compatibility charts?',
       options: [
-        "It's a legal requirement",
-        'To ensure proper performance and avoid damage',
-        'To get warranty coverage',
-        'To comply with building regulations',
+        'It is a specific legal requirement',
+        'To ensure correct performance and avoid damaging equipment',
+        'It is needed to register the warranty',
+        'To satisfy the Building Regulations',
       ],
       correct: 1,
+      explanation:
+        'Compatibility charts confirm a dimmer and lamp combination will perform correctly and avoid flicker, buzzing or damage.',
     },
     {
       question:
-        'Scenario: A client complains of buzzing LEDs after an install. What is the most likely cause?',
+        'A client reports buzzing LEDs after an installation. What is the most likely cause?',
       options: [
-        'LEDs are too bright',
-        'Wrong voltage supply',
-        'Incompatible dimmer type causing interference',
-        'LEDs are overheating',
+        'The LEDs are simply too bright',
+        'The supply voltage is incorrect',
+        'An incompatible dimmer type is causing interference',
+        'The LEDs are overheating in their fittings',
       ],
       correct: 2,
+      explanation:
+        'Buzzing LEDs are most often caused by an incompatible dimmer, typically a leading-edge dimmer driving capacitive LED loads.',
     },
   ];
 

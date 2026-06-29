@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'Standard fire-resistant cables for fire detection and fire alarm systems are tested to PH30 per BS EN 50200 Annex E. What does PH30 actually mean?',
     options: [
-      'A 30 V test voltage.',
-      'PH30 is the BS EN 50200 / Annex E classification for cables that maintain CIRCUIT INTEGRITY for 30 minutes when subjected simultaneously to fire (the standard 842 °C flame), water spray (representing fire-fighting water), AND mechanical shock (representing falling debris and impact in a fire). All three stresses are applied at once, not sequentially. The 30 minutes is the minimum time the cable must continue to carry signal / power before failure. PH30 cables are the default for most BS 5839-1 fire alarm circuits.',
-      'A 30 mm cable diameter.',
-      'A 30 °C temperature rating.',
+      'A 30 V maximum test voltage applied to the cable during its type-test.',
+      'Circuit integrity maintained for 30 minutes under simultaneous fire (842 °C), water spray and shock.',
+      'A 30 mm minimum bending-radius limit for the installed fire-resistant cable.',
+      'A 30 °C continuous-temperature rating for the cable sheath in service.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 distinguishes between standard cables and ENHANCED cables. What is enhanced cable, and where is it used?',
     options: [
-      'Cable with a copper screen.',
-      'ENHANCED cable means PH120 — 120 minutes of circuit integrity under the BS EN 50200 + BS 8434-2 combined fire / water / shock test. Used where life safety depends on extended cable survival: voice alarm systems in phased evacuation, extended-evacuation buildings (high-rise, complex routes), critical interfaces to AOV / fire-suppression / lift-control systems, and any installation where the building height or fire-engineering strategy requires longer cable survival than standard PH30 provides.',
-      'Cable with double insulation.',
-      'Cable with a fire-resistant outer sheath only.',
+      'Any cable fitted with a copper screen for EMC and interference purposes.',
+      'PH120 — 120 minutes of integrity, for voice alarm in phased evacuation and life-critical interfaces.',
+      'Any double-insulated cable rated for use with Class II equipment.',
+      'Any cable with a fire-resistant outer sheath applied over standard cores.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'BS 8519 is referenced alongside BS 5839-1 for life-safety cable systems. What does BS 8519 do?',
     options: [
-      'Lists approved cable manufacturers.',
-      'BS 8519 is the CODE OF PRACTICE for the selection and installation of fire-resistant power and control cable systems for life safety applications. Where BS 5839-1 specifies the system-level requirements (which circuits need fire resistance, what category of cable, what survival duration), BS 8519 provides the cable-system-level guidance: selection by application, installation methods, support systems, joints, terminations, segregation. The two standards interlock — BS 5839-1 sets the requirement, BS 8519 sets the engineering practice.',
-      'Specifies a single cable type for all applications.',
-      'Replaces BS 5839-1.',
+      'It publishes the BSI list of approved cable manufacturers and product codes.',
+      'It is the code of practice for selecting and installing fire-resistant cable systems.',
+      'It specifies a single mandatory cable type for all UK life-safety applications.',
+      'It replaces BS 5839-1 as the governing standard for fire alarm systems.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Common fire-resistant cable types found on UK fire alarm installations include FP200 Gold, FP PLUS, and MICC (mineral-insulated copper-clad, "Pyro"). Which statement about their selection is correct?',
     options: [
-      'All three are interchangeable.',
-      "FP200 Gold is the standard PH30-classified cable for routine fire alarm circuits and is the most common choice for L-category systems in typical buildings. FP PLUS is the same manufacturer's enhanced PH120-classified version for life-critical and voice-alarm circuits. MICC (Pyro) is the highest-performance option — inorganic mineral insulation, copper sheath, exceptional fire / mechanical resistance, used in extreme environments (refineries, tunnels, marine) or where life-safety duration requirements exceed PH120. Each has its place; selection is driven by the design specification and the building's fire-engineering requirements.",
-      'MICC is obsolete.',
-      'FP200 Gold is enhanced; FP PLUS is standard.',
+      'All three are fully interchangeable on any fire alarm circuit without restriction.',
+      'FP200 Gold is the standard PH30 choice, FP PLUS the enhanced PH120, and MICC the extreme option.',
+      'MICC is obsolete and no longer permitted on new fire alarm installations.',
+      'FP200 Gold is the enhanced cable and FP PLUS the standard everyday one.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'PH30 fire-resistant cable to BS EN 50200 Annex E maintains circuit integrity under what test conditions?',
     options: [
-      'Fire only, for 30 minutes.',
-      'Fire + water spray + mechanical shock simultaneously, for 30 minutes. The standard exposes the cable to a 842 °C flame, with periodic water-spray application (simulating fire-fighting water hitting the cable), and periodic mechanical impact (simulating falling debris). The cable must continue to carry signal or power for the full 30 minutes under all three stresses applied at once. PH30 is the default classification for most BS 5839-1 fire alarm circuits.',
-      'Fire only, for 120 minutes.',
-      'Mechanical shock only.',
+      'Fire only, at 842 °C, for 30 minutes — the flame applied without water spray or impact.',
+      'Mechanical shock only, with repeated impacts for 30 minutes to simulate falling debris.',
+      'Fire (842 °C) + water spray + mechanical shock together for 30 minutes, carrying signal throughout.',
+      'Fire only, for 120 minutes, representing the longer enhanced-cable survival duration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The combined-stress test is what makes PH-classified cables genuinely "fire-resistant" rather than merely "fire-retardant" (which means slow to ignite, not capable of continued operation in fire).',
   },
@@ -96,25 +96,25 @@ const quizQuestions = [
     question:
       'When does BS 5839-1:2025 require ENHANCED (PH120) cable rather than standard (PH30)?',
     options: [
-      'Always.',
-      'Where the evacuation strategy or fire-engineering design requires extended cable survival beyond 30 minutes. Typical applications: voice alarm systems in phased evacuation, extended-evacuation buildings (high-rise, complex routes, large premises with long evacuation times), life-critical interfaces to fire-suppression systems / AOVs / lift control, and any installation where the design analysis identifies a fire-survival duration requirement that PH30 cannot meet. Selection is design-driven; over-specifying enhanced cable in a small simple building is unjustified.',
-      'Only on detection circuits.',
-      'Never.',
+      'Where the evacuation strategy or fire-engineering design needs cable survival beyond 30 minutes.',
+      'On detection circuits only, since detectors report longest; sounder circuits can stay on standard PH30.',
+      'Always, on every fire alarm circuit, because enhanced cable is inherently safer than standard cable.',
+      'Never in practice — PH120 is a theoretical category and UK installations always use standard PH30.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Enhanced cable selection is a design decision driven by evacuation strategy and fire engineering. The decision is recorded in the design records, justifying why standard PH30 is insufficient and PH120 is required.',
+      'Enhanced cable selection is a design decision driven by evacuation strategy and fire engineering — typically voice alarm in phased evacuation, extended-evacuation buildings, and life-critical interfaces to suppression / AOV / lift control. The decision is recorded in the design records, justifying why standard PH30 is insufficient and PH120 is required.',
   },
   {
     id: 3,
     question: 'BS 8519 sits alongside BS 5839-1 for life-safety cable systems. What is its scope?',
     options: [
-      'A list of approved cables.',
-      'BS 8519 is the code of practice for the SELECTION and INSTALLATION of fire-resistant power and control cable systems for life-safety applications. It covers cable selection by application, installation methods, support systems (clips, cleats, containment), joints, terminations, and segregation. Where BS 5839-1 specifies the system-level requirements (which circuits need fire resistance, what survival duration), BS 8519 provides the cable-system engineering practice.',
-      'Replacement for BS 5839-1.',
-      'Manufacturer datasheet collection.',
+      'A published list of cable products approved by BSI for use on UK fire alarm systems.',
+      'A direct replacement for BS 5839-1, superseding its cabling and segregation clauses entirely.',
+      'A collection of manufacturer cable datasheets gathered into a single BSI reference document.',
+      'The code of practice for selecting and installing fire-resistant cable SYSTEMS for life safety.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 8519 is the engineering-practice standard for the cable system. Treat BS 5839-1 as "what" and BS 8519 as "how to install it correctly".',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'BS EN 50200 Annex E is referenced for fire-resistant cable testing in fire alarm applications. What is the test method?',
     options: [
-      'A static heat soak.',
-      'Cable is mounted in a fixed configuration, exposed to a defined gas flame at 842 °C, simultaneously subjected to water spray (representing fire-fighting water) at intervals, and subjected to mechanical impact (representing falling debris) at intervals. The cable carries low-voltage signal / power throughout the test. The duration the cable maintains circuit integrity (no short, no open) determines its PH classification — PH30, PH60, PH90, PH120 etc.',
-      'A pure mechanical pull test.',
-      'A megger test.',
+      'A 842 °C gas flame with periodic water spray and mechanical impact together, while the cable carries signal.',
+      'A static heat-soak in an oven at a fixed temperature, with the cable energised but not impacted or sprayed.',
+      'A pure mechanical pull test measuring the tensile force the cable withstands before the conductors part.',
+      'An insulation-resistance (megger) test at elevated temperature to confirm the dielectric survives heat.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Annex E test combines fire, water and mechanical shock — a realistic representation of conditions a fire alarm cable would face during a real building fire with active fire-fighting. The PH classification is the survival time under these combined stresses.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A designer is specifying cable for a 10-storey residential building with phased evacuation strategy. Which cable category applies to the voice alarm sounder circuits?',
     options: [
-      'PH30 standard.',
-      'PH120 enhanced. Phased evacuation means people on different floors evacuate at different times — typically the floor of fire and the one above first, then progressive floors as the fire develops. Voice alarm sounders must continue to operate after fire has been present in the building for considerably longer than 30 minutes — a 30-minute sounder loss in the middle of a phased evacuation could leave occupants on un-alerted floors during a developing event. Enhanced (PH120) cable provides the extended survival the strategy requires.',
-      'Non-fire-rated cable.',
-      'PH15.',
+      'PH15 — a reduced category, acceptable because the sounders only operate for the first evacuation phase.',
+      'PH30 standard — 30 minutes of survival is adequate for any residential voice alarm sounder circuit.',
+      'PH120 enhanced — phased evacuation in a high-rise can run well beyond 30 minutes, so sounders need it.',
+      'Non-fire-rated cable, since the sounders are fully tested and proven before practical handover.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Phased evacuation is one of the textbook drivers for enhanced cable selection. The evacuation duration drives the cable survival requirement; phased evacuation in a high-rise demands longer cable survival than simultaneous evacuation in a small building.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'Mineral-insulated copper-clad (MICC, "Pyro") cable retains its place in modern fire alarm installations because of which combination of properties?',
     options: [
-      'Low cost.',
-      'Inorganic mineral insulation (magnesium oxide) that does not burn or produce smoke; copper sheath that provides mechanical protection AND acts as the EMI screen / earth return; very high fire-survival capability — typically exceeding PH120 by significant margin; long service life, with documented installations over 50 years old still operating. The trade-offs are higher material cost, more skilled labour for terminations (specialised tooling and seals required), and physical inflexibility. MICC is the right choice in extreme environments and critical-life-safety duty where its properties justify the cost.',
-      'Easy to install.',
-      'Low fire resistance.',
+      'Its low material cost and ready availability, making it the economy choice for routine fire alarm wiring.',
+      'Its flexibility and tool-less termination, making it the fastest fire-resistant cable to install on site.',
+      'Its modest fire resistance combined with light weight, suiting temporary and short-life installations.',
+      'Inorganic MgO insulation that cannot burn, a copper sheath earth, and fire survival well beyond PH120.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MICC is the legacy high-performance choice that has not been displaced by polymeric fire-resistant cables for the most demanding applications. The fire / mechanical performance and longevity justify the higher cost and skilled-labour requirement in those niches.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'A simple Category L3 system in a single-storey small office building, simultaneous evacuation, no extended-evacuation considerations, no life-critical interfaces. What cable category is the design-correct selection for the detection and sounder circuits?',
     options: [
-      'PH120 enhanced.',
-      'PH30 standard — typically FP200 Gold or equivalent. The building does not have any of the design drivers that would require enhanced cable (no phased evacuation, no high-rise, no extended-evacuation routes, no life-critical interfaces). Standard PH30 cable provides 30 minutes of fire survival, which exceeds the simultaneous-evacuation duration for a single-storey small office building. Specifying enhanced cable in this building would be over-engineering with no design justification — costly and unjustifiable.',
-      'Non-fire-rated cable.',
-      'Pyro / MICC.',
+      'PH30 standard (typically FP200 Gold) — no enhanced-cable driver applies for this building.',
+      'PH120 enhanced, to give the building the maximum available fire-survival margin throughout.',
+      'Non-fire-rated cable, because a single-storey building evacuates before cable survival matters.',
+      'Pyro / MICC, on the basis that the most robust cable is always the safest possible specification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cable selection is calibrated to the building\'s evacuation strategy and fire-engineering requirements. PH30 is the default for routine applications; enhanced is for specific drivers; MICC is for extreme cases. Over-specifying is not "safer" — it is unjustified cost.',
   },
@@ -179,26 +179,26 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 16 (cabling, labelling and identification) directs that fire alarm cables should be of a single common colour. What is the operative colour and why?',
     options: [
-      'White, for visibility.',
-      'Red is the preferred colour, applied end-to-end across all fire alarm cabling AND the dedicated LV mains supply. The 2025 clarification extends the rule to the mains feed (previously ambiguous). End-to-end red allows an electrician opening a void or a riser to identify fire alarm cabling at a glance, reducing the chance of mis-identification during unrelated work — the most common cause of accidental disconnection or damage to fire alarm wiring during building maintenance.',
-      'Brown.',
-      'Black.',
+      'Brown, matching the line-conductor colour so the cabling reads as a normal power circuit.',
+      'Red, applied end-to-end across all fire alarm cabling and the dedicated LV mains feed.',
+      'White, chosen purely for maximum visibility in dark voids, risers and ceiling spaces.',
+      'Black, to keep the fire alarm cabling visually discreet within shared containment runs.',
     ],
     correctAnswer: 1,
     explanation:
-      'The single-common-colour rule (red preferred) is one of the lowest-cost, highest-impact engineering controls available. Visual identification is faster and more reliable than tracing cables by termination at fault-finding time.',
+      'Red is applied end-to-end across all fire alarm cabling, and the 2025 clarification extends it to the dedicated LV mains feed. The single-common-colour rule is one of the lowest-cost, highest-impact engineering controls available: the cabling is identifiable at a glance, less likely to be disturbed during unrelated work, and faster to trace than identifying cables by termination at fault-finding time.',
   },
   {
     id: 9,
     question:
       'A circuit serves a fire-suppression release interface — a 24 V DC release signal from the CIE to a gas-suppression panel that operates a critical life-safety function in a server room. Which cable category is correct?',
     options: [
-      'Standard PH30.',
-      'Enhanced PH120 (or higher). The release of fire-suppression in a critical area is a life-critical interface where cable failure in fire could result in suppression not operating when needed. The 30-minute survival of standard cable is insufficient for the consequence of failure — the design must use enhanced cable, and in some cases (e.g. a server room with very high consequence) MICC or higher-performance cable. The selection is driven by the consequence-of-failure analysis in the design records.',
-      'Non-fire-rated.',
-      'CAT5e.',
+      'Non-fire-rated cable, since the release signal is a brief pulse rather than a sustained supply.',
+      'Standard PH30 — 30 minutes of survival is adequate for any 24 V DC interface release circuit.',
+      'CAT5e structured-cabling cable, as the release signal is only low-voltage DC at modest current.',
+      'Enhanced PH120 or higher — a life-critical release where cable failure could leave suppression inoperative.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Life-critical interfaces are textbook enhanced-cable applications. The consequence of cable failure during a fire — suppression not operating — is exactly the failure mode enhanced cable is designed to prevent.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Why does BS 5839-1:2025 require fire-resistant cables to retain INTEGRITY (continuous operation) rather than merely RESIST IGNITION during a fire event?',
     options: [
-      'Cosmetic.',
-      'Because the fire alarm must continue to operate THROUGH the fire event, not merely survive it physically. A cable that resists ignition but loses electrical integrity in the first minute of fire is useless to the fire alarm system — the detection / sounder / interface signal stops, and from that moment the building has no fire alarm. The PH classification is the time the cable maintains ELECTRICAL FUNCTION under fire, water and shock simultaneously. Integrity is the property the system needs; ignition resistance alone is not enough.',
-      'Cost.',
-      'Manufacturing convenience.',
+      'Because the fire alarm must keep operating THROUGH the fire — losing function early leaves no detection or sounders.',
+      'For cosmetic reasons — integrity-rated cable carries clearer markings and a tidier appearance in containment.',
+      'For cost reasons — integrity-rated cable is cheaper to manufacture than ordinary ignition-resistant cable.',
+      'For manufacturing convenience — the integrity test is simpler for cable makers to certify their products against.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The distinction between "fire-retardant" (slow to ignite) and "fire-resistant" (continues to function in fire) is the engineering distinction that matters. The PH classification quantifies fire-resistance; fire-retardant cables alone do not meet BS 5839-1 requirements for fire alarm circuits.',
   },

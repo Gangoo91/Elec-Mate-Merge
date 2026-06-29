@@ -62,10 +62,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'How is emotional intelligence (EI) most accurately defined?',
     options: [
-      'The skill of always remaining calm regardless of circumstances',
+      'A natural personality trait that some people are simply born with and others lack entirely',
       'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
-      'The capacity to suppress negative emotions in professional settings',
-      'A measure of how emotionally sensitive a person is compared to others',
+      'The ability to suppress negative emotions and project a consistently positive outward image',
+      'A measure of how emotionally sensitive a person is compared to those around them',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -98,9 +98,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Daniel Goleman\'s 1995 book "Emotional Intelligence" is primarily credited with which achievement?',
     options: [
-      'Inventing the concept of emotional intelligence',
-      'Developing the first psychometric test for measuring EI',
-      'Proving that EI is more important than IQ in every situation',
+      'Inventing the original academic concept of emotional intelligence',
+      'Developing the first validated psychometric test for measuring EI',
+      'Proving that EI matters more than IQ in every situation',
       'Popularising emotional intelligence and bringing it to mainstream awareness',
     ] as const,
     correctAnswer: 3,
@@ -115,10 +115,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 4,
     question: 'What is the relationship between emotional intelligence (EI) and IQ?',
     options: [
-      'EI and IQ are separate constructs that both contribute to overall effectiveness and success',
-      'It acts as the brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotional alarm system, processing threats and triggering rapid emotional responses',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
-      'An underlying belief such as "They think I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m incompetent" or "They are always looking for someone to blame"',
+      'EI and IQ are separate constructs, each contributing to overall effectiveness',
+      'EI is simply another name for IQ measured on a different scale',
+      'EI is a fixed trait determined entirely by IQ in early childhood',
+      'High IQ reliably guarantees a correspondingly high level of EI',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -168,10 +168,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What does the Bar-On EQ-i model measure?',
     options: [
-      'Reciprocity — people naturally feel compelled to return favours, so helping first creates a genuine willingness to cooperate',
-      'It helps workers recognise emotional states like stress, fatigue, and frustration that impair judgement and increase accident risk',
-      'Implement a structured programme combining specific feedback, coaching, deliberate practice of targeted competencies, regular reflection, and ongoing support over a sustained period',
-      'Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands',
+      'The speed at which a person can identify emotions in photographs of faces',
+      "A person's general cognitive ability and capacity for abstract reasoning",
+      'How frequently a person experiences positive versus negative moods each day',
+      'Emotional and social competencies for understanding ourselves and relating to others',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -186,9 +186,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'What role does the amygdala play in emotional processing?',
     options: [
       "It acts as the brain's emotional alarm system, processing threats and triggering rapid emotional responses",
-      "Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously",
-      "Aspects of your behaviour and personality that are visible to others but that you are unaware of",
-      "A recurring negative thought pattern, such as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not good enough\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"They don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t respect me\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      'The brain region chiefly responsible for long-term planning and rational decision-making',
+      'The structure that converts short-term memories into long-term storage',
+      'The area that coordinates fine motor control and physical balance',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -220,10 +220,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'The limbic system is best described as:',
     options: [
-      'A strong sense of your self-worth and capabilities, enabling you to express views and make decisions even under pressure',
-      'EI and IQ are separate constructs that both contribute to overall effectiveness and success',
+      'A single structure dedicated solely to converting short-term memories into long-term ones',
+      'The outermost layer of the brain responsible for conscious, rational thought',
       'A collection of brain structures involved in emotional responses, memory formation, and motivation',
-      'Having an honest understanding of your own strengths and limitations, and being open to learning',
+      'The network of nerves that carries motor signals to the muscles of the body',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -255,10 +255,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 12,
     question: 'What is an "amygdala hijack"?',
     options: [
-      'An overwhelming emotional reaction disproportionate to the trigger, where the amygdala overrides the rational brain',
-      'Leading and motivating others, including managing relationships and understanding team dynamics',
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
+      'An overwhelming emotional reaction where the amygdala overrides the rational brain',
+      'A deliberate technique for calming yourself during a stressful conversation',
+      'A gradual build-up of mild irritation over the course of a working day',
+      'The conscious decision to walk away from a confrontation before it escalates',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -272,10 +272,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: 'The fight-flight-freeze response is best described as:',
     options: [
-      "A recurring negative thought pattern, such as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not good enough\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"They don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t respect me\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "The body's automatic physiological reaction to perceived danger, preparing for immediate action or immobility",
-      "The belief that abilities and intelligence can be developed through dedication, hard work, and learning from mistakes",
-      "To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others",
+      'A learned habit of avoiding difficult conversations whenever possible',
+      "The body's automatic physiological reaction to perceived danger",
+      'A slow, gradual rise in stress hormones over several hours of work',
+      'The conscious choice to confront a problem head-on rather than withdraw',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -289,10 +289,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What is emotional contagion?',
     options: [
-      "Perceiving emotions → Using emotions to facilitate thought → Understanding emotions → Managing emotions",
-      "Situation modification — actively changing aspects of the situation to alter its emotional impact before the full emotional response develops",
-      "The phenomenon where one person's emotions and related behaviours trigger similar emotions and behaviours in others",
-      "A state where emotions become so intense that rational thinking is temporarily overwhelmed, often leading to reactive behaviour or complete shutdown",
+      'The deliberate effort to hide your true emotions from those around you',
+      'A technique for accurately naming the specific emotion you are feeling',
+      "The phenomenon where one person's emotions trigger similar emotions in others",
+      "The tendency to misread other people's emotions based on your own mood",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -325,9 +325,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'Which statement about emotional intelligence is supported by research?',
     options: [
       'Emotional intelligence can be learned and developed throughout life with deliberate practice',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
-      'How you will feel about this decision in 10 minutes, 10 months, and 10 years',
-      'Leaders with higher EI consistently achieve better team performance, safety records, and employee retention',
+      'Emotional intelligence is a fixed trait that cannot be changed after childhood',
+      'High emotional intelligence is found almost exclusively in senior managers',
+      'Emotional intelligence has no measurable effect on workplace performance',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -362,10 +362,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman\'s model includes 25 competencies distributed across the five domains. Which of the following is a competency within the "self-regulation" domain?',
     options: [
-      'How you will feel about this decision in 10 minutes, 10 months, and 10 years',
-      'Emotional self-awareness, accurate self-assessment, and self-confidence',
+      'Achievement drive — striving to improve or meet a standard of excellence',
+      'Emotional self-awareness — recognising your emotions and their effects',
       'Trustworthiness — maintaining standards of honesty and integrity',
-      'Commitment — aligning with the goals of the group or organisation',
+      'Influence — wielding effective tactics for persuasion',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -380,10 +380,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why does Goleman argue that the five EI domains build sequentially upon one another?',
     options: [
-      'Immediately posting a frustrated rant about a client on social media after a disagreement on site, without considering the professional consequences',
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      'A strong sense of your self-worth and capabilities, enabling you to express views and make decisions even under pressure',
-      'Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others',
+      'Because the domains are entirely independent and can be developed in any order',
+      'Because social skills are the easiest domain and should always be learned first',
+      'Because empathy must be fully mastered before any self-awareness can develop',
+      'Because you must understand and manage yourself before you can manage relationships',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -398,10 +398,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The HSE Management Standards identify six key areas of work design that can affect stress levels. Which of the following is one of these six areas?',
     options: [
-      'Demands — including workload, work patterns, and the work environment',
-      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'Denial → Anger → Bargaining → Depression → Acceptance',
-      'Increased heart rate, shallow breathing, muscle tension, or stomach tightness',
+      'Demands — workload, work patterns, and the work environment',
+      'Demand, Effort, Reward, and Imbalance from the workload',
+      'Plan, Do, Check, and Act in a continuous cycle',
+      'Hazard, Risk, Control, and Review on each task',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -416,10 +416,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'CITB behavioural competencies for site managers include emotional intelligence-related skills. Which of the following is a CITB behavioural competency?',
     options: [
-      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'Leading and motivating others, including managing relationships and understanding team dynamics',
-      'Self-control, trustworthiness, conscientiousness, adaptability, and innovation',
-      'A collection of brain structures involved in emotional responses, memory formation, and motivation',
+      'Maintaining accurate records of plant and material deliveries to site',
+      'Leading and motivating others, including managing relationships and team dynamics',
+      'Calculating the correct cable sizes for a given circuit load',
+      'Interpreting structural drawings to set out a building accurately',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -433,10 +433,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'How does emotional intelligence contribute to safety on construction sites?',
     options: [
-      'The belief that abilities and intelligence can be developed through dedication, hard work, and learning from mistakes',
-      'Boredom or apathy — because the challenge is too low relative to their skill level, offering no opportunity for engagement or growth',
-      'It helps workers recognise emotional states like stress, fatigue, and frustration that impair judgement and increase accident risk',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
+      'It guarantees that no accidents will occur as long as procedures are followed',
+      'It replaces the need for formal risk assessments and method statements',
+      'It helps workers recognise stress and fatigue that impair judgement on site',
+      'It mainly improves the speed at which routine tasks are completed',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -451,10 +451,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In a construction team context, which scenario best demonstrates the practical application of emotional intelligence?',
     options: [
-      "Trait EI models measure self-perceived emotional competencies through questionnaires, while ability EI models measure actual performance on emotion-related tasks",
-      "Leaders with higher EI consistently achieve better team performance, safety records, and employee retention",
-      "Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands",
-      "A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day's tasks to support them",
+      'Insisting that every worker on site adopt an identical communication style',
+      "Recording each team member's mood in a daily log for management review",
+      'Setting deliberately high targets to push the team beyond their comfort zone',
+      'A supervisor noticing a quiet apprentice, checking in, and adjusting their tasks',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -469,10 +469,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of the Mates in Mind programme in the UK construction industry?',
     options: [
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'The range and precision of words a person uses to describe their emotional experiences',
-      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
+      'To address the stigma of poor mental health in the construction industry',
+      'To provide a national accreditation scheme for electrical qualifications',
+      'To negotiate pay and conditions on behalf of construction trade unions',
+      'To certify that construction sites meet minimum welfare facility standards',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -486,10 +486,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'What are the potential costs of low emotional intelligence in a construction team?',
     options: [
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'The phenomenon where one person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotions and related behaviours trigger similar emotions and behaviours in others',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
+      'Slightly slower decision-making but no measurable effect on safety or morale',
+      'Higher conflict, poor communication, more safety incidents, and lower productivity',
+      'Improved short-term output at the expense of long-term staff development',
+      'A reduction in administrative paperwork but an increase in technical errors',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -503,10 +503,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'How does emotional contagion typically spread within a construction team?',
     options: [
-      'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
-      'Reciprocity — people naturally feel compelled to return favours, so helping first creates a genuine willingness to cooperate',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
-      'Leaders with higher EI consistently achieve better team performance, safety records, and employee retention',
+      'Primarily through formal written instructions and documented site procedures',
+      "Mainly through deliberate, conscious decisions to copy a colleague's mood",
+      'Through facial expressions, tone, body language, and behaviour — often unconsciously',
+      'Only when team members already share a close personal friendship',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -520,10 +520,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'In the context of EI, what does "emotional literacy" specifically refer to?',
     options: [
-      'Self-control, trustworthiness, conscientiousness, adaptability, and innovation',
-      'Stop, Take a breath, Observe what you are feeling, Proceed with awareness',
-      'Perceiving emotions → Using emotions to facilitate thought → Understanding emotions → Managing emotions',
-      'The ability to accurately identify, name, and describe emotions in oneself and others',
+      'The ability to read and write technical documentation accurately',
+      'The capacity to memorise large amounts of emotional theory',
+      'The skill of persuading others to adopt your emotional viewpoint',
+      'The ability to identify, name, and describe emotions in oneself and others',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -538,10 +538,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the concept of "emotional agility" as developed by Susan David?',
     options: [
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
-      'An overwhelming emotional reaction disproportionate to the trigger, where the amygdala overrides the rational brain',
+      'Being flexible with your thoughts and feelings to respond optimally to situations',
+      'A rigid set of rules dictating exactly how to feel in each situation',
+      'The practice of suppressing all emotions to maintain professionalism',
+      'A technique for permanently eliminating unwanted negative emotions',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -556,10 +556,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'According to research, how does emotional intelligence relate to leadership effectiveness in the construction industry?',
     options: [
-      'EI is useful only for senior executives and has no relevance to site-level leadership',
-      'Leaders with higher EI consistently achieve better team performance, safety records, and employee retention',
-      'Technical knowledge is the only factor that determines leadership effectiveness on site',
-      'EI and leadership effectiveness are negatively correlated in high-pressure environments',
+      'EI is useful only for senior executives and has no relevance at site level',
+      'Leaders with higher EI achieve better team performance, safety, and retention',
+      'Technical knowledge is the sole factor determining leadership effectiveness',
+      'EI and leadership effectiveness are negatively correlated under pressure',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -573,10 +573,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What is the primary difference between "trait EI" and "ability EI" models?',
     options: [
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'Trait EI models measure self-perceived emotional competencies through questionnaires, while ability EI models measure actual performance on emotion-related tasks',
-      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
+      'Trait EI is measured in children while ability EI is measured in adults',
+      'Trait EI applies to individuals while ability EI applies only to teams',
+      'Trait EI measures self-perceived competencies; ability EI measures task performance',
+      'Trait EI is innate and fixed while ability EI is learned and changeable',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -591,10 +591,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the context of the UK construction industry, why is emotional intelligence particularly important for managing subcontractor relationships?',
     options: [
-      'A strong sense of your self-worth and capabilities, enabling you to express views and make decisions even under pressure',
-      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
-      'The ability to understand and share the feelings of another person — to see the world from their perspective and to sense their emotional state',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
+      'Because subcontractors are legally barred from raising concerns directly',
+      'Because technical competence alone fully determines project success',
+      'Because empathy is irrelevant once a contract has been formally signed',
+      'Because coordinating diverse teams requires empathy, communication, and conflict skills',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -609,10 +609,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the concept of "neuroplasticity" relate to developing emotional intelligence?',
     options: [
-      "The brain's ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice",
-      "Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states",
-      "A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day's tasks to support them",
-      "Reaching out — the ability to seek new opportunities and connect with others after setbacks, maintaining initiative and optimism despite adversity",
+      'The brain can form new neural pathways for life, so EI can be developed at any age',
+      'The fixed structure of the adult brain that prevents EI from changing after 25',
+      'A genetic limit that caps how much emotional intelligence a person can develop',
+      'The idea that emotional skills can only be learned during early childhood',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -629,10 +629,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "When comparing Goleman's, Bar-On's, and Salovey-Mayer's models of emotional intelligence, which statement is most accurate?",
     options: [
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'Implement a structured programme combining specific feedback, coaching, deliberate practice of targeted competencies, regular reflection, and ongoing support over a sustained period',
+      'All three models are essentially identical and use interchangeable measures',
+      'Each model offers a different but complementary lens on emotional intelligence',
+      "Goleman's model is the only one supported by any scientific evidence",
+      "Bar-On's model has entirely replaced the earlier Salovey-Mayer approach",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -647,10 +647,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "A construction project manager notices that two teams on site are in open conflict, productivity has dropped significantly, and several workers have requested transfers. Using Goleman's framework, which sequence of EI application would be most effective?",
     options: [
-      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
-      "The brain's ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice",
-      "First manage their own emotional reaction (self-regulation), then seek to understand each team's perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)",
-      "It enables a worker to notice frustration when plans change (e.g., a cable route is blocked), accept the emotion without being controlled by it, and redirect effort toward the project goal — which is the essence of adaptive self-regulation",
+      'Immediately discipline the most vocal worker to restore order quickly',
+      'Reassign both teams to separate sites to avoid any further contact',
+      'Self-regulate first, then use empathy, social awareness, and social skills to resolve it',
+      'Wait for the conflict to resolve itself without any intervention',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -665,10 +665,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Critical analysis of emotional intelligence research has raised several valid concerns. Which of the following is a legitimate critique?',
     options: [
-      '"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)" — treating the setback as permanent, pervasive, and entirely personal',
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
-      'Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
+      'Emotional intelligence has been conclusively proven to be entirely innate',
+      'No EI measure has ever shown any correlation with workplace performance',
+      'Ability-based EI tests are universally rejected by the research community',
+      'Some EI measures overlap with personality traits, questioning its distinctness',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -683,10 +683,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrical contractor is tendering for a major hospital project. How might the organisation's collective emotional intelligence provide a competitive advantage during the bid process?",
     options: [
-      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
-      'Meta-cognition — thinking about your own thinking — enables you to observe your emotional responses as they happen, creating a reflective distance that allows conscious choice rather than automatic reaction',
-      'Actively imagining the situation from the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s viewpoint: they may have taken time off work, arranged for the kitchen to be cleared, and planned meals around the completion date — understanding that the delay has a ripple effect on their daily life that extends beyond the electrical work itself',
+      'High collective EI lets teams understand clients and build trust during the bid',
+      'Lowering the bid price below cost is the only reliable way to win the work',
+      'Technical specifications alone determine the outcome of every bid evaluation',
+      'Collective EI is irrelevant because procurement is decided solely on price',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -701,10 +701,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Mayer-Salovey-Caruso Emotional Intelligence Test (MSCEIT) differ fundamentally from self-report EI measures?',
     options: [
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
-      'First manage their own emotional reaction (self-regulation), then seek to understand each team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)',
+      "The MSCEIT relies entirely on the test-taker's own rating of their abilities",
+      'The MSCEIT measures actual ability through tasks, not self-perceived competence',
+      'Self-report measures use performance tasks while the MSCEIT uses questionnaires',
+      'Both approaches measure identical things and produce interchangeable scores',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -719,10 +719,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research on the "dark side" of emotional intelligence suggests that EI can sometimes be used manipulatively. Which scenario best illustrates this concern?',
     options: [
-      "Reaching out — the ability to seek new opportunities and connect with others after setbacks, maintaining initiative and optimism despite adversity",
-      "Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues",
-      "A project manager who understands others' emotions well and deliberately exploits team members' insecurities to maintain control and compliance",
-      "The phenomenon where one person's emotions and related behaviours trigger similar emotions and behaviours in others",
+      'A manager who openly shares credit with their team for shared successes',
+      'A supervisor who uses empathy to support a struggling apprentice',
+      "A manager who exploits team members' insecurities to maintain control and compliance",
+      'A leader who honestly admits their own mistakes to build team trust',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -737,10 +737,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site engineer with excellent technical skills consistently receives poor 360-degree feedback on interpersonal competencies. Using the concept of EI development, what would be the most evidence-based approach to improvement?',
     options: [
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'Recognise the physical stress response (jaw clenching) and racing thoughts as signals that his amygdala has been triggered, then pause to allow the prefrontal cortex to re-engage before deciding on a course of action',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'Implement a structured programme combining specific feedback, coaching, deliberate practice of targeted competencies, regular reflection, and ongoing support over a sustained period',
+      'Send the engineer on a single one-day awareness workshop and consider it resolved',
+      'Reassign the engineer to purely technical tasks with no team contact',
+      'Simply inform the engineer of the poor feedback and expect them to self-correct',
+      'A structured programme of feedback, coaching, deliberate practice, and reflection',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -755,10 +755,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "In integrating multiple EI frameworks for a construction organisation's leadership development programme, which approach would be most theoretically sound and practically effective?",
     options: [
-      "Use Salovey-Mayer's ability model for baseline assessment, Goleman's competency framework for identifying development areas, and Bar-On's model for tracking self-perceived progress — leveraging the strengths of each approach",
-      "Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles",
-      "Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust",
-      "Saying privately: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — clearly stating the behaviour, its impact, and the desired change without aggression",
+      'Combine the ability, competency, and trait models to leverage the strengths of each',
+      'Adopt a single model exclusively and disregard the other two frameworks entirely',
+      "Avoid all formal models and rely purely on managers' personal intuition",
+      'Use only self-report questionnaires because they are quicker to administer',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -795,10 +795,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: 'Lisa Feldman Barrett\'s research on "emotional granularity" refers to:',
     options: [
-      'Bargaining — they are attempting to negotiate a partial adoption, trying to retain some of the old approach while partially accepting the new one',
-      'Understanding others — sensing others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
+      'The tendency to experience the same few emotions repeatedly over time',
+      'The ability to mask emotions so completely that others cannot detect them',
+      'The ability to make fine distinctions between similar emotions, like irritation and anger',
+      'The speed at which an emotion fades once the trigger has passed',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -812,10 +812,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: "Plutchik's Wheel of Emotions organises emotions according to which principle?",
     options: [
-      'Affiliative — creating harmony and building emotional bonds, with the motto "people come first"',
-      'Situation modification — actively changing aspects of the situation to alter its emotional impact before the full emotional response develops',
-      'Leading and motivating others, including managing relationships and understanding team dynamics',
-      'Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions',
+      'Four primary emotions arranged in a straight line from positive to negative',
+      'A simple list of emotions ranked from least to most socially acceptable',
+      'Eight primary emotions grouped solely by how pleasant each one feels',
+      'Eight primary emotions in opposing pairs and intensities that combine into complex ones',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -831,9 +831,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Which of the following is a common physical signal that someone is experiencing anxiety or stress?',
     options: [
       'Increased heart rate, shallow breathing, muscle tension, or stomach tightness',
-      'EI and IQ are separate constructs that both contribute to overall effectiveness and success',
-      'Having an honest understanding of your own strengths and limitations, and being open to learning',
-      'Achievement drive — a striving to improve or meet a standard of excellence',
+      'A sudden feeling of calm and a noticeable slowing of the heart rate',
+      'Improved concentration and a heightened sense of physical relaxation',
+      'Lowered blood pressure accompanied by deep, slow breathing',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -847,10 +847,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'The stimulus-thought-emotion-behaviour chain suggests that:',
     options: [
-      'A recurring negative thought pattern, such as "I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not good enough" or "They don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t respect me"',
-      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
-      'It acts as the brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotional alarm system, processing threats and triggering rapid emotional responses',
-      'The ability to understand and share the feelings of another person — to see the world from their perspective and to sense their emotional state',
+      'Emotions are caused directly by external events, regardless of interpretation',
+      'An event triggers a thought, which generates an emotion, which drives a behaviour',
+      'Behaviour always comes before the thought that triggers an emotion',
+      'Events trigger behaviours directly, bypassing any thought or feeling',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -865,10 +865,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'On a construction site, which of the following is most likely to be a common emotional trigger for electricians?',
     options: [
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'The body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s automatic physiological reaction to perceived danger, preparing for immediate action or immobility',
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others',
+      'Receiving clear, well-co-ordinated drawings ahead of starting a task',
+      'Being given generous timescales and ample materials for a job',
+      'An unrealistic deadline, having to redo previous work, or being publicly criticised',
+      'Working alongside a supportive team who routinely check their work',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -899,10 +899,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 48,
     question: 'Carol Dweck\'s concept of a "growth mindset" is most accurately described as:',
     options: [
-      'The belief that abilities and intelligence can be developed through dedication, hard work, and learning from mistakes',
-      'Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands',
-      'Flexibility in handling change, being able to adjust your emotional responses and approach when circumstances shift unexpectedly',
-      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
+      'The belief that abilities can be developed through effort and learning from mistakes',
+      'The belief that intelligence and ability are fixed and cannot be changed',
+      'A naturally optimistic temperament that some people are simply born with',
+      'The conviction that talent matters far more than effort or practice',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -916,10 +916,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'Which daily practice is most effective for developing emotional self-awareness?',
     options: [
-      'Perceiving emotions → Using emotions to facilitate thought → Understanding emotions → Managing emotions',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
-      'Collaborating — high assertiveness AND high cooperativeness, seeking a solution that fully satisfies both parties',
-      'Activating event, Beliefs (about the event), Consequences (emotional and behavioural)',
+      'Avoiding any reflection on emotions to prevent dwelling on the negative',
+      'Keeping a brief daily log of emotional states, triggers, and responses to spot patterns',
+      'Asking colleagues each day to rate your mood on your behalf',
+      'Reading widely about emotional theory without applying it personally',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -933,10 +933,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'What is the primary purpose of emotional self-awareness in the workplace?',
     options: [
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
+      'To eliminate all negative emotions before they can affect your work',
+      'To ensure you always appear calm and positive to colleagues',
+      'To recognise your emotions as they occur and understand their impact on your actions',
+      'To learn to hide your emotions so they never influence your decisions',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -950,9 +950,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'Which of the following best describes "emotional vocabulary"?',
     options: [
-      'Increased heart rate, shallow breathing, muscle tension, or stomach tightness',
-      'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
-      'Stop, Take a breath, Observe what you are feeling, Proceed with awareness',
+      'The total number of languages in which a person can express emotions',
+      'The volume or loudness at which a person typically expresses feelings',
+      'The speed at which a person can recall an emotional memory',
       'The range and precision of words a person uses to describe their emotional experiences',
     ] as const,
     correctAnswer: 3,
@@ -968,10 +968,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the construction industry, why is recognising personal stress responses particularly important?',
     options: [
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
-      'The belief that abilities and intelligence can be developed through dedication, hard work, and learning from mistakes',
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'Suppression involves pushing emotions down and pretending they do not exist, while regulation involves acknowledging emotions and choosing constructive ways to express or manage them',
+      'Because unrecognised stress impairs judgement and reaction time on a high-hazard site',
+      'Because stress always improves focus and sharpens reaction time',
+      'Because recognising stress is mainly useful for office-based roles',
+      'Because stress has no measurable effect on physical safety on site',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -985,10 +985,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What does "accurate self-assessment" mean as a Goleman EI competency?',
     options: [
-      'Self-awareness, self-regulation, motivation, empathy, and social skills',
+      'Always presenting yourself as highly confident regardless of your actual ability',
       'Having an honest understanding of your own strengths and limitations, and being open to learning',
-      'Personalisation (it is all my fault), pervasiveness (it will affect everything), and permanence (it will last forever)',
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
+      'Comparing your performance favourably against that of your colleagues',
+      'Focusing only on your strengths and avoiding any thought of weaknesses',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1002,10 +1002,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'Which of the following is an example of an internal emotional trigger?',
     options: [
-      'Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
-      'A recurring negative thought pattern, such as "I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not good enough" or "They don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t respect me"',
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
+      'A specific external event, such as a deadline being moved or a tool going missing',
+      'A physical sensation in the body, such as a racing heart or tight chest',
+      "A recurring negative thought pattern, such as \"I'm not good enough\" or \"They don't respect me\"",
+      "A colleague's facial expression or tone of voice during a conversation",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1019,10 +1019,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'Self-confidence, as an EI competency, is best described as:',
     options: [
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
-      'A strong sense of your self-worth and capabilities, enabling you to express views and make decisions even under pressure',
+      'Always being the loudest and most dominant voice in any discussion',
+      'The absence of any self-doubt or uncertainty in any situation',
+      'A tendency to take on far more work than you can realistically manage',
+      'A strong sense of your self-worth and capabilities, even when under pressure',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1036,10 +1036,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 56,
     question: 'Why is it important to distinguish between primary and secondary emotions?',
     options: [
-      'Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'External "if-then" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the "overjustification effect"',
+      'Primary emotions are the automatic response; secondary emotions react to those',
+      'Primary emotions are positive while secondary emotions are always negative',
+      'Primary emotions are felt by everyone while secondary emotions are rare',
+      'Primary emotions are conscious while secondary emotions are entirely unconscious',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1056,10 +1056,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Albert Ellis's ABC model identifies three components of emotional experience. What do A, B, and C stand for?",
     options: [
-      'Leaders with higher EI consistently achieve better team performance, safety records, and employee retention',
-      'Activating event, Beliefs (about the event), Consequences (emotional and behavioural)',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
-      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
+      'Awareness, Behaviour, and Consequence of the action',
+      'Activating event, Beliefs about it, and the Consequences that follow',
+      'Action, Belief, and the resulting Choice made',
+      'Adversity, Bargaining, and a return to Calm',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1090,10 +1090,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'The Dunning-Kruger effect describes:',
     options: [
-      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
-      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tasks to support them',
-      'A cognitive bias where people with limited knowledge or competence in a domain significantly overestimate their ability, while experts tend to underestimate theirs',
+      'A bias where people consistently and accurately judge their own competence',
+      'A tendency for experts to greatly overestimate their own abilities',
+      'The effect where confidence rises steadily in proportion to skill',
+      'A bias where the less competent overestimate their ability and experts underestimate theirs',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1108,9 +1108,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: "Gibbs' Reflective Cycle contains which six stages?",
     options: [
       'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'Denial → Anger → Bargaining → Depression → Acceptance',
-      'How you will feel about this decision in 10 minutes, 10 months, and 10 years',
-      'The ability to accurately identify, name, and describe emotions in oneself and others',
+      'Define, Measure, Analyse, Improve, Control, and Sustain',
+      'Denial, Anger, Bargaining, Depression, Acceptance, and Hope',
+      'Plan, Do, Study, Act, Review, and Repeat the cycle',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1124,10 +1124,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'Body scanning as a self-awareness technique involves:',
     options: [
-      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'Adversity (the event), Belief (your interpretation), Consequence (resulting feelings/actions), Disputation (challenging unhelpful beliefs), and Energisation (the new, more optimistic outcome)',
+      'Rapidly tensing and releasing each muscle group to release physical stress',
+      'Directing attention through the body to notice tension that may signal emotional states',
+      'Visualising a calm scene to distract yourself from physical discomfort',
+      'Counting your breaths until your heart rate returns to its resting level',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1142,10 +1142,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Viktor Frankl famously stated: "Between stimulus and response there is a space." How does this relate to emotional intelligence?',
     options: [
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
-      'Explore why events occurred as they did, examining what knowledge, assumptions, and emotional triggers influenced the situation, and connecting the experience to broader patterns or theories',
+      'It proves that we have no control over how we react to any trigger',
+      'It shows that emotional reactions are always instantaneous and automatic',
+      'It highlights the moment of choice between a trigger and our reaction — a core EI skill',
+      'It suggests that the gap between stimulus and response should be eliminated',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1160,10 +1160,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of conducting regular emotional check-ins with yourself throughout the working day?',
     options: [
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'Boredom or apathy — because the challenge is too low relative to their skill level, offering no opportunity for engagement or growth',
-      'To build the habit of noticing and naming your current emotional state, catching unhelpful patterns early, and making conscious choices about how to proceed',
+      'To build the habit of noticing your emotional state and choosing how to proceed',
+      'To ensure you suppress any unhelpful emotions as soon as they arise',
+      'To compare your emotional state with that of your colleagues',
+      'To build the habit of noticing and naming your emotional state and choosing how to proceed',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1178,9 +1178,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'In the Johari Window, a "blind spot" refers to:',
     options: [
       'Aspects of your behaviour and personality that are visible to others but that you are unaware of',
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
-      'Achievement drive — a striving to improve or meet a standard of excellence',
-      'Activating event, Beliefs (about the event), Consequences (emotional and behavioural)',
+      'Aspects of yourself that you are aware of but deliberately hide from others',
+      'Aspects of yourself that neither you nor anyone else is yet aware of',
+      'Aspects of yourself that are openly known to both you and others',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1194,10 +1194,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'How does the concept of "meta-cognition" relate to emotional self-awareness?',
     options: [
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
-      'Meta-cognition — thinking about your own thinking — enables you to observe your emotional responses as they happen, creating a reflective distance that allows conscious choice rather than automatic reaction',
-      'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
+      'It refers to the speed at which the brain processes emotional information',
+      'Thinking about your own thinking lets you observe responses and choose rather than react',
+      'It is the ability to memorise and recall emotional vocabulary accurately',
+      'It describes the tendency to think about other people more than yourself',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1212,10 +1212,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician notices that they consistently feel defensive when receiving feedback from the main contractor\'s project manager. Using the ABC model, which "B" (belief) might be driving this reaction?',
     options: [
-      'Meta-cognition — thinking about your own thinking — enables you to observe your emotional responses as they happen, creating a reflective distance that allows conscious choice rather than automatic reaction',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'An underlying belief such as "They think I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m incompetent" or "They are always looking for someone to blame"',
-      'External "if-then" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the "overjustification effect"',
+      'A specific external event, such as receiving the feedback itself',
+      'A physical reaction, such as a tightening of the chest or clenched jaw',
+      "A belief such as \"They think I'm incompetent\" or \"They are looking to blame me\"",
+      'A learned habit of avoiding feedback conversations altogether',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1230,10 +1230,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the difference between "emotional suppression" and "emotional awareness" as approaches to managing emotions?',
     options: [
-      'Maintaining eye contact, nodding, waiting until they finish, paraphrasing what you heard ("So you are saying the RCD keeps tripping after the load test?"), and asking clarifying questions — while resisting the urge to jump in with solutions',
-      'Trait EI models measure self-perceived emotional competencies through questionnaires, while ability EI models measure actual performance on emotion-related tasks',
-      'Acknowledging the anxiety as a normal response to change, using cognitive reappraisal to view the situation as an opportunity to learn from a new team, and gradually building trust through consistent, reliable behaviour',
-      'Emotional suppression involves pushing down or denying emotions (which research shows increases physiological stress), while emotional awareness involves acknowledging and understanding emotions without being controlled by them',
+      'Emotional suppression and emotional awareness are simply two names for the same process',
+      'Suppression acknowledges emotions openly while awareness hides them from others',
+      'Awareness eliminates emotions entirely while suppression merely delays them',
+      'Suppression denies emotions and raises stress; awareness acknowledges them without control',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1248,10 +1248,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How can an electrician use the "feelings wheel" (an expansion of Plutchik\'s model) to improve their emotional self-awareness?',
     options: [
-      'By using it as a reference tool to identify and name their emotions with greater precision, moving from vague descriptions like "bad" to specific terms like "overwhelmed," "frustrated," or "disappointed"',
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
+      "By using it to name emotions precisely, from \"bad\" to \"overwhelmed\" or \"frustrated\"",
+      'By using it to rank emotions from least to most professionally acceptable',
+      'By memorising the entire wheel so emotions can be recited on demand',
+      'By using it to decide which emotions colleagues are permitted to express',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1266,10 +1266,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research on self-awareness suggests that there are two distinct types: internal self-awareness and external self-awareness. What is the difference?',
     options: [
-      'Reaching out — the ability to seek new opportunities and connect with others after setbacks, maintaining initiative and optimism despite adversity',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
-      'Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation',
+      'Internal self-awareness concerns the past while external concerns the future',
+      "Internal is understanding your own feelings; external is how accurately you read others' views of you",
+      'Internal self-awareness applies to leaders while external applies to followers',
+      'Internal self-awareness is innate while external self-awareness is impossible to develop',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1283,10 +1283,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What is a "values-behaviour gap" and why is it relevant to self-awareness?',
     options: [
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'You must maintain unwavering faith that you will prevail in the end, AND at the same time, confront the most brutal facts of your current reality — holding both truths simultaneously',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands',
+      'The gap between what a person knows and what they are able to do technically',
+      "The difference between a person's stated goals and their actual achievements",
+      'The discrepancy between the values a person claims and how they actually behave',
+      'The mismatch between how confident a person feels and how skilled they are',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1300,10 +1300,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'How does "confirmation bias" affect emotional self-awareness?',
     options: [
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'A state where emotions become so intense that rational thinking is temporarily overwhelmed, often leading to reactive behaviour or complete shutdown',
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
+      'It causes people to forget emotional information almost as soon as they receive it',
+      'It makes people equally open to all evidence regardless of their existing beliefs',
+      'It improves emotional accuracy by forcing constant re-evaluation of beliefs',
+      'It makes people notice evidence confirming existing beliefs, creating a distorted self-picture',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1318,10 +1318,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A foreman uses Gibbs\' Reflective Cycle after losing their temper with a subcontractor. At the "Analysis" stage, they should:',
     options: [
-      'Explore why events occurred as they did, examining what knowledge, assumptions, and emotional triggers influenced the situation, and connecting the experience to broader patterns or theories',
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'Immediately posting a frustrated rant about a client on social media after a disagreement on site, without considering the professional consequences',
-      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
+      'Explore why events occurred, examining the assumptions and triggers that influenced them',
+      'Simply describe in plain terms exactly what happened during the incident',
+      'State only how the experience made you feel at the time',
+      'Decide immediately what you will do differently next time',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1338,10 +1338,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A senior electrician consistently receives feedback that they are perceived as unapproachable, despite believing themselves to be friendly and open. Using the Johari Window framework, which quadrant does this discrepancy sit in, and what is the most effective strategy to address it?',
     options: [
-      'The internal dialogue we maintain with ourselves directly influences our emotional state — negative self-talk can escalate emotions while constructive self-talk can help regulate them',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
-      'Autonomy (the desire to direct our own lives), mastery (the urge to get better at something that matters), and purpose (the yearning to do what we do in the service of something larger than ourselves)',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
+      'The Open quadrant — they should simply continue behaving exactly as they do now',
+      'The Blind Spot quadrant — seek specific feedback, then work on modifying the behaviours',
+      'The Hidden quadrant — they should disclose more personal information to colleagues',
+      'The Unknown quadrant — no action is possible because no one is aware of the issue',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1374,10 +1374,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrical project manager prides themselves on making purely rational, emotion-free decisions. From an EI perspective, what is problematic about this approach?',
     options: [
-      'ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving',
-      'External "if-then" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the "overjustification effect"',
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
+      'Purely rational decision-making is the gold standard that all managers should aim for',
+      'Emotions are a distraction that consistently lead to worse decisions',
+      'People who exclude emotion from decisions make demonstrably better choices',
+      "Damasio's research shows emotions are essential to good decisions; the 'rational' just don't notice them",
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1392,10 +1392,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How might the concept of "alexithymia" — difficulty identifying and describing one\'s own emotions — present challenges in a construction workplace?',
     options: [
-      'Workers with alexithymic traits may struggle to recognise their own stress, fatigue, or frustration until these states become severe, potentially leading to safety risks, interpersonal conflicts, and burnout without early warning signs',
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
-      'Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses',
-      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
+      'Workers may not recognise stress or fatigue until it becomes severe, creating safety risks',
+      'Workers with alexithymic traits typically have unusually high emotional awareness',
+      "Alexithymia mainly affects a person's technical skills rather than their emotions",
+      'Alexithymia makes workers overly sensitive and prone to overreacting emotionally',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1410,10 +1410,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "A construction team leader uses multiple self-awareness frameworks (Johari Window, ABC model, Gibbs' Cycle, and body scanning) in their practice. In what sequence would these tools be most effectively applied after a difficult incident?",
     options: [
-      "Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I feel with you,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" sympathy says \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I feel for you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "Body scanning first (immediate physical awareness) → ABC model (identifying triggering beliefs) → Gibbs' Reflective Cycle (structured reflection on the full incident) → Johari Window (seeking external feedback to identify blind spots)",
-      "It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour",
-      "Suppression involves pushing emotions down and pretending they do not exist, while regulation involves acknowledging emotions and choosing constructive ways to express or manage them",
+      "Johari Window first (seeking feedback) → Gibbs' Cycle → ABC model → body scanning last",
+      "Body scanning first, then the ABC model, then Gibbs' Cycle, then the Johari Window",
+      "ABC model first → body scanning → Johari Window → Gibbs' Cycle last",
+      "Gibbs' Cycle first → Johari Window → body scanning → ABC model last",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1428,10 +1428,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research suggests that the practice of "self-distancing" — referring to yourself in the third person when reflecting on emotional experiences — can enhance self-awareness. Why might this be effective?',
     options: [
-      "The Ideal Self — developing a clear, compelling vision of who you want to become, which creates positive emotional energy (the Positive Emotional Attractor) that sustains the motivation for change",
-      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
-      "Third-person self-talk creates psychological distance from the emotion, activating more of the prefrontal cortex's analytical capacity and reducing the amygdala's emotional intensity, allowing for more objective self-reflection",
-      "Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity",
+      'Because referring to yourself in the third person eliminates the emotion entirely',
+      'Because it distracts you from the situation so the emotion is simply ignored',
+      'Third-person self-talk creates distance, engaging the prefrontal cortex and easing intensity',
+      'Because speaking aloud about yourself increases amygdala activity and clarity',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1446,10 +1446,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice electrician has strong internal self-awareness (they understand their own values and emotional patterns well) but weak external self-awareness (they do not understand how others perceive them). What specific risks does this imbalance create?',
     options: [
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
-      'Recognise the physical stress response (jaw clenching) and racing thoughts as signals that his amygdala has been triggered, then pause to allow the prefrontal cortex to re-engage before deciding on a course of action',
-      'By using it as a reference tool to identify and name their emotions with greater precision, moving from vague descriptions like "bad" to specific terms like "overwhelmed," "frustrated," or "disappointed"',
-      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
+      'They will understand others perfectly but be unable to understand their own feelings',
+      'They will become overconfident about their technical abilities on site',
+      'They will struggle to identify their own values while reading others flawlessly',
+      'They may alienate colleagues, miss social cues, and not understand the feedback they receive',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1464,10 +1464,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How might cultural norms within the UK construction industry specifically hinder the development of emotional self-awareness among workers?',
     options: [
-      'Prevailing "tough it out" and "leave feelings at the gate" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
+      "\"Tough it out\" cultures discourage emotional expression, driving suppression and poor help-seeking",
+      'Construction culture strongly encourages open emotional expression and reflection',
+      'Workplace culture has no measurable influence on emotional self-awareness',
+      "The fast pace of site work naturally improves workers' emotional awareness",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1504,10 +1504,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is the key difference between emotional suppression and emotional regulation?',
     options: [
-      'Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
-      'Suppression involves pushing emotions down and pretending they do not exist, while regulation involves acknowledging emotions and choosing constructive ways to express or manage them',
-      'Maintaining standards of honesty and integrity, being consistent between what you say and what you do, and acknowledging your own mistakes',
+      'Suppression and regulation are simply two terms for the same underlying process',
+      'Suppression acknowledges the emotion openly while regulation hides it from view',
+      'Suppression pushes emotions down; regulation acknowledges them and manages them constructively',
+      'Regulation removes the emotion completely while suppression merely postpones it',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1522,10 +1522,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the "box breathing" technique and when might it be used on a construction site?',
     options: [
-      'The internal dialogue we maintain with ourselves directly influences our emotional state — negative self-talk can escalate emotions while constructive self-talk can help regulate them',
-      'Maintaining eye contact, nodding, waiting until they finish, paraphrasing what you heard ("So you are saying the RCD keeps tripping after the load test?"), and asking clarifying questions — while resisting the urge to jump in with solutions',
-      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase — because the fundamental psychological nutrients for self-motivated behaviour are present',
-      'A four-step breathing pattern (inhale for 4 counts, hold for 4 counts, exhale for 4 counts, hold for 4 counts) that activates the parasympathetic nervous system to reduce stress and restore calm',
+      'A technique of holding your breath as long as possible to reset the nervous system',
+      'A method of breathing rapidly to energise yourself before a demanding task',
+      'A practice of breathing only through the mouth to slow the heart rate',
+      'Inhale for 4, hold for 4, exhale for 4, hold for 4 — calming the nervous system',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1539,10 +1539,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 84,
     question: 'Jill Bolte Taylor\'s "90-second rule" states that:',
     options: [
-      'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
-      'The brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
+      "An emotion's neurochemical surge passes in about 90 seconds; longer is sustained by our thoughts",
+      'Any strong emotion physically lasts for a minimum of 90 minutes before fading',
+      'It takes about 90 seconds to consciously decide how to respond to any emotion',
+      'The first 90 seconds of an emotion are the only part we can consciously control',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1556,10 +1556,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'The STOP technique for emotional regulation stands for:',
     options: [
-      'How you will feel about this decision in 10 minutes, 10 months, and 10 years',
+      'Stay calm, Tolerate it, Override the feeling, and Push through',
       'Stop, Take a breath, Observe what you are feeling, Proceed with awareness',
-      'Self-awareness, self-regulation, motivation, empathy, and social skills',
-      'The ability to accurately identify, name, and describe emotions in oneself and others',
+      'Stop, Think it over, Organise yourself, and Plan ahead',
+      'Sense it, Tense up, Observe closely, and Process slowly',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1590,9 +1590,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: 'What is "cognitive reappraisal" in the context of emotional regulation?',
     options: [
-      'Aspects of your behaviour and personality that are visible to others but that you are unaware of',
-      'A collection of brain structures involved in emotional responses, memory formation, and motivation',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
+      'Physically removing yourself from any situation that triggers a strong emotion',
+      'Distracting yourself with another task until the emotion naturally passes',
+      'Expressing the emotion outwardly as forcefully as possible to release it',
       'Changing the way you think about or interpret a situation in order to alter its emotional impact',
     ] as const,
     correctAnswer: 3,
@@ -1608,10 +1608,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is an example of healthy emotional regulation on a construction site?',
     options: [
-      'Noticing your frustration about a programme delay, taking a moment to breathe, then calmly discussing the issue and possible solutions with the team',
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'Maintaining standards of honesty and integrity, being consistent between what you say and what you do, and acknowledging your own mistakes',
+      'Noticing your frustration about a delay, breathing, then calmly discussing solutions',
+      'Shouting at the team to vent the frustration so it does not build up further',
+      'Bottling up the frustration completely and saying nothing to anyone',
+      'Leaving the site without explanation until the frustration has subsided',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1625,10 +1625,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'Why is sleep particularly important for emotional regulation?',
     options: [
-      "Emotional suppression involves pushing down or denying emotions (which research shows increases physiological stress), while emotional awareness involves acknowledging and understanding emotions without being controlled by them",
-      "Sleep deprivation impairs prefrontal cortex function, reducing the brain's ability to regulate emotional responses from the amygdala, leading to increased emotional reactivity and poorer self-control",
-      "By using it as a reference tool to identify and name their emotions with greater precision, moving from vague descriptions like \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"bad\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" to specific terms like \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you",
+      'Sleep mainly affects physical stamina and has little impact on emotions',
+      'Sleep loss impairs the prefrontal cortex, reducing its ability to regulate the amygdala',
+      'Lack of sleep strengthens the prefrontal cortex and improves self-control',
+      'Sleep deprivation calms the amygdala, reducing emotional reactivity',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1642,10 +1642,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'The concept of "emotional flooding" describes:',
     options: [
-      'Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
-      'A state where emotions become so intense that rational thinking is temporarily overwhelmed, often leading to reactive behaviour or complete shutdown',
-      'The phenomenon where one person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotions and related behaviours trigger similar emotions and behaviours in others',
+      'A deliberate technique for releasing emotions in a controlled, healthy way',
+      'A state of complete emotional numbness where no feelings are experienced',
+      'A state where emotions are so intense that rational thinking is temporarily overwhelmed',
+      'The gradual build-up of minor stresses over several working days',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1660,10 +1660,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What does "adaptability" mean as a self-regulation competency in Goleman\'s framework?',
     options: [
-      'Immediately posting a frustrated rant about a client on social media after a disagreement on site, without considering the professional consequences',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
-      'A collection of brain structures involved in emotional responses, memory formation, and motivation',
-      'Flexibility in handling change, being able to adjust your emotional responses and approach when circumstances shift unexpectedly',
+      'Rigidly sticking to the original plan no matter how circumstances change',
+      'The ability to suppress any emotional reaction to unexpected events',
+      'Always agreeing with whatever change is proposed to avoid conflict',
+      'Flexibility in handling change, adjusting your responses when circumstances shift',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1677,10 +1677,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 92,
     question: 'Which of the following best describes "impulse control" as a self-regulation skill?',
     options: [
-      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
+      'Resisting an immediate urge to weigh consequences and respond constructively',
+      'Permanently eliminating any urge to act on an emotion',
+      'Always acting immediately and decisively on every emotional urge',
+      'The inability to feel strong emotions in high-pressure situations',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1694,10 +1694,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'How does physical exercise support emotional regulation?',
     options: [
-      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
+      'Exercise mainly improves physical fitness and has little effect on mood',
+      'It lowers cortisol, releases endorphins, and provides a healthy outlet for tension',
+      'Vigorous exercise raises cortisol levels, which sharpens emotional focus',
+      'Exercise works only as a distraction and has no biological effect on stress',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1711,10 +1711,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'What is "trustworthiness" as a self-regulation competency?',
     options: [
-      'Innovation requires regulating the fear of failure, discomfort with uncertainty, and resistance to change — all self-regulation processes — before creative thinking can occur',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'Maintaining standards of honesty and integrity, being consistent between what you say and what you do, and acknowledging your own mistakes',
-      'An underlying belief such as "They think I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m incompetent" or "They are always looking for someone to blame"',
+      'Always agreeing with colleagues to avoid any kind of disagreement',
+      'The ability to complete tasks quickly under tight time pressure',
+      'Maintaining honesty and integrity, acting consistently, and owning your mistakes',
+      'Maintaining a consistently cheerful demeanour regardless of circumstances',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1729,10 +1729,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site electrician feels intense frustration when they discover that plasterboard has been installed over cable routes before first fix was completed. Which self-regulation technique would be most appropriate as an immediate response?',
     options: [
-      'Adversity (the event), Belief (your interpretation), Consequence (resulting feelings/actions), Disputation (challenging unhelpful beliefs), and Energisation (the new, more optimistic outcome)',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
-      'Workers with alexithymic traits may struggle to recognise their own stress, fatigue, or frustration until these states become severe, potentially leading to safety risks, interpersonal conflicts, and burnout without early warning signs',
-      'Use the STOP technique: Stop, Take a breath, Observe the frustration without acting on it, then Proceed by calmly raising the issue through the appropriate site coordination process',
+      'Immediately confront the person responsible loudly so others learn from it',
+      'Say nothing and quietly redo the work yourself to avoid any conflict',
+      'Leave the issue entirely and hope it is not noticed at inspection',
+      'Use STOP: Stop, breathe, observe the frustration, then raise it through site coordination',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1746,10 +1746,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 96,
     question: 'What role does "self-talk" play in emotional regulation?',
     options: [
-      'The internal dialogue we maintain with ourselves directly influences our emotional state — negative self-talk can escalate emotions while constructive self-talk can help regulate them',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
+      'Internal dialogue shapes emotion — negative self-talk escalates it, constructive self-talk eases it',
+      "Self-talk has no measurable influence on a person's emotional state",
+      'Negative self-talk reliably calms emotions while positive self-talk inflames them',
+      'Self-talk only matters when spoken aloud, not when it is internal',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1766,10 +1766,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "James Gross's process model of emotion regulation identifies five families of regulation strategies. Which strategy involves changing the situation itself before the emotion fully develops?",
     options: [
-      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase — because the fundamental psychological nutrients for self-motivated behaviour are present',
-      'Situation modification — actively changing aspects of the situation to alter its emotional impact before the full emotional response develops',
-      'The phenomenon where one person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotions and related behaviours trigger similar emotions and behaviours in others',
-      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
+      'Situation selection — choosing whether to enter a situation in the first place',
+      'Situation modification — changing the situation to alter its emotional impact early',
+      'Attentional deployment — redirecting your focus once an emotion has begun',
+      'Response modulation — changing your reaction after the emotion has fully arisen',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1802,10 +1802,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Walter Mischel\'s "marshmallow experiment" demonstrated the long-term importance of which self-regulation skill?',
     options: [
-      'Personalisation (it is all my fault), pervasiveness (it will affect everything), and permanence (it will last forever)',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
-      'The phenomenon where one person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotions and related behaviours trigger similar emotions and behaviours in others',
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
+      'Cognitive reappraisal — reinterpreting a situation to change its emotional impact',
+      'Active listening — fully attending to another person before responding',
+      'Emotional contagion — catching the emotions of those around you',
+      'Delayed gratification — resisting an immediate reward for a larger future benefit',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1820,10 +1820,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Trust Equation (developed by David Maister) states that Trust = (Credibility + Reliability + Intimacy) / Self-Orientation. How does this relate to the self-regulation competency of trustworthiness?',
     options: [
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' needs, which requires ongoing emotional regulation of ego and need for recognition',
+      'Self-regulation builds credibility, reliability, and intimacy while lowering self-orientation',
+      'Trust is increased because high self-orientation signals confidence and ambition',
+      'The equation shows that self-orientation has no real effect on trust',
+      'Self-orientation is the numerator, so raising it directly increases trust',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1842,10 +1842,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Acceptance and Commitment Therapy (ACT) promotes psychological flexibility — the ability to stay in contact with the present moment and change or persist in behaviour that serves valued ends. How does psychological flexibility relate to self-regulation on a construction site?',
     options: [
-      'As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared',
-      'It enables a worker to notice frustration when plans change (e.g., a cable route is blocked), accept the emotion without being controlled by it, and redirect effort toward the project goal — which is the essence of adaptive self-regulation',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'Use the STOP technique: Stop, Take a breath, Observe the frustration without acting on it, then Proceed by calmly raising the issue through the appropriate site coordination process',
+      'It mainly involves rigidly following the original plan despite any change',
+      'It lets a worker accept frustration when plans change and redirect effort to the goal',
+      'It is the ability to suppress all emotion so work can continue uninterrupted',
+      'It means avoiding any situation that might provoke an emotional response',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1860,10 +1860,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Carol Dweck's growth mindset research distinguishes between fixed and growth mindsets. When BS 7671 is amended (e.g., Amendment 3:2024 adding Regulation 530.3.201), how would a growth mindset support self-regulation?",
     options: [
-      'Use the STOP technique: Stop, Take a breath, Observe the frustration without acting on it, then Proceed by calmly raising the issue through the appropriate site coordination process',
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
-      'To build the habit of noticing and naming your current emotional state, catching unhelpful patterns early, and making conscious choices about how to proceed',
+      'A growth mindset person would resist the amendment as an unnecessary burden',
+      'A growth mindset person would ignore the change until forced to comply',
+      'They view the amendment as a chance to learn and regulate any frustration about updating',
+      'A growth mindset person would feel the change proves their knowledge is now worthless',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1878,10 +1878,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Digital impulse control is an increasingly important aspect of self-regulation. Which scenario best demonstrates poor digital impulse control in a construction context?',
     options: [
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'Immediately posting a frustrated rant about a client on social media after a disagreement on site, without considering the professional consequences',
+      'Pausing before replying to a heated email until you have calmed down',
+      'Discussing a difficult client issue privately with your supervisor first',
+      'Reviewing your tone in a message before sending it to a colleague',
+      'Posting a frustrated rant about a client on social media after an on-site disagreement',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1896,10 +1896,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research shows that cortisol (the stress hormone) takes approximately 20-60 minutes to return to baseline after an acute stress response. How should this "cortisol cooldown period" inform self-regulation strategy on site?',
     options: [
-      'After a stressful incident (e.g., a near-miss or heated confrontation), you should delay important decisions and conversations for at least 20 minutes where possible, allowing the physiological stress response to subside before engaging',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
-      'Use Salovey-Mayer\\\'s ability model for baseline assessment, Goleman\\\'s competency framework for identifying development areas, and Bar-On\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
+      'Delay important decisions for at least 20 minutes to let the stress response subside',
+      'You should make all important decisions immediately while emotions are vivid',
+      'The cooldown period only applies to physical exertion, not emotional stress',
+      'You should suppress the stress response so decisions can be made at once',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1914,10 +1914,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Cognitive reappraisal is the process of reinterpreting a situation to change its emotional impact. A site supervisor tells you your installation work needs to be partially redone. Which response demonstrates cognitive reappraisal?',
     options: [
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
-      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
+      'Immediately telling the supervisor their assessment is completely wrong',
+      'Reframing the feedback as a chance to improve quality before inspection, easing the negativity',
+      'Suppressing your disappointment entirely and saying nothing at all',
+      'Walking away from the conversation until the supervisor changes their mind',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1932,10 +1932,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Kubler-Ross Change Curve describes five stages: denial, anger, bargaining, depression, and acceptance. When a construction company transitions to a completely new digital reporting system, which stage might manifest as an electrician saying "I\'ll use the new system for small jobs but keep doing the big ones on paper"?',
     options: [
-      'Understanding others — sensing others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
-      'Perceiving emotions → Using emotions to facilitate thought → Understanding emotions → Managing emotions',
-      'Bargaining — they are attempting to negotiate a partial adoption, trying to retain some of the old approach while partially accepting the new one',
-      'A project manager who understands others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' emotions well and deliberately exploits team members\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' insecurities to maintain control and compliance',
+      'Denial — they are refusing to accept that any change is taking place',
+      'Acceptance — they have fully embraced the new system without reservation',
+      'Bargaining — negotiating a partial adoption while retaining some of the old approach',
+      'Anger — they are openly hostile and refusing to engage with the change',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1950,10 +1950,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Emotional flooding occurs when the intensity of emotions overwhelms the capacity for rational thought. What is a reliable physiological indicator that emotional flooding may be occurring?',
     options: [
-      'By using it as a reference tool to identify and name their emotions with greater precision, moving from vague descriptions like "bad" to specific terms like "overwhelmed," "frustrated," or "disappointed"',
-      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
-      'Acknowledging the anxiety as a normal response to change, using cognitive reappraisal to view the situation as an opportunity to learn from a new team, and gradually building trust through consistent, reliable behaviour',
-      'Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight',
+      'Heart rate above about 100 bpm with unclear thinking and an urge to flee',
+      'Improved clarity of thought and a heightened sense of control',
+      'Slow, deep breathing accompanied by relaxed shoulders and jaw',
+      'Heart rate above about 100 bpm with difficulty thinking clearly and an urge to fight or flee',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -1968,10 +1968,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "In Goleman's EI framework, conscientiousness is a self-regulation competency defined as taking responsibility for personal performance. Which behaviour best demonstrates conscientiousness in an electrical context?",
     options: [
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
+      'Testing installations to standard even when unsupervised, driven by internal standards',
+      'Producing high-quality work only when a supervisor is watching closely',
+      'Completing tasks as quickly as possible regardless of testing standards',
+      'Always deferring to others rather than taking responsibility for outcomes',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1986,10 +1986,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Innovation, in Goleman's framework, is a self-regulation competency involving comfort with novel ideas and approaches. Why is innovation classified under self-regulation rather than, say, motivation?",
     options: [
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
-      'Innovation requires regulating the fear of failure, discomfort with uncertainty, and resistance to change — all self-regulation processes — before creative thinking can occur',
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\'s tasks to support them',
-      'Autonomy (feeling in control of your own behaviour and goals), competence (feeling effective and capable), and relatedness (feeling connected to others)',
+      'Because innovation is purely a cognitive skill unrelated to any emotion',
+      'It requires regulating fear of failure and resistance to change before creativity can occur',
+      'Because innovation depends only on external rewards and incentives',
+      'Because innovation is mainly about copying ideas from other people',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2004,10 +2004,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When joining a new site team, a qualified electrician feels anxious about establishing credibility. Applying the Kubler-Ross model to this personal transition, what self-regulation strategy would be most effective?',
     options: [
-      'Saying privately: "When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it" — clearly stating the behaviour, its impact, and the desired change without aggression',
-      'External "if-then" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the "overjustification effect"',
-      'Acknowledging the anxiety as a normal response to change, using cognitive reappraisal to view the situation as an opportunity to learn from a new team, and gradually building trust through consistent, reliable behaviour',
-      'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
+      'Demanding immediate respect by emphasising your qualifications to the team',
+      'Avoiding the team entirely until you feel completely confident',
+      'Acknowledge the anxiety, reappraise it as a chance to learn, and build trust through reliability',
+      'Suppressing the anxiety and pretending you have no concerns at all',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2022,10 +2022,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The concept of "emotional granularity" (Lisa Feldman Barrett) refers to the ability to make fine-grained distinctions between similar emotions. How does emotional granularity support self-regulation?',
     options: [
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
-      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
+      'Because identifying emotions precisely makes them more intense and harder to manage',
+      'Because naming an emotion removes it entirely, so no regulation is needed',
+      'Because vague emotional labels give you more flexibility in how you respond',
+      'Naming the emotion precisely lets you choose the right regulation strategy for it',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2040,10 +2040,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A foreman receives news that the project deadline has been moved forward by two weeks. He notices his jaw clenching and his thoughts racing with worst-case scenarios. According to the cognitive reappraisal model, what should he do FIRST?',
     options: [
-      'Recognise the physical stress response (jaw clenching) and racing thoughts as signals that his amygdala has been triggered, then pause to allow the prefrontal cortex to re-engage before deciding on a course of action',
-      'The brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice',
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
-      'Clear goals, immediate feedback, and a balance between the perceived challenge of the task and one\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s perceived skills — with both challenge and skill at a relatively high level',
+      'Recognise the stress signals as an amygdala trigger, then pause to re-engage the prefrontal cortex',
+      'Immediately announce the new deadline to the team while still feeling stressed',
+      'Suppress the physical signs of stress and carry on as though nothing happened',
+      'Make a quick decision about resourcing before the stress response subsides',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2058,10 +2058,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An experienced electrician discovers a serious wiring error made by a colleague on a commercial installation. The error poses no immediate safety risk but will fail inspection. Integrating multiple self-regulation strategies, what is the most emotionally intelligent approach?',
     options: [
-      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
+      "Publicly point out the colleague's error so the whole team can learn from it",
+      'Regulate frustration, raise it privately as a quality issue, and offer to help correct it',
+      'Quietly correct the work yourself without mentioning it to anyone',
+      'Report the colleague to management before speaking to them at all',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2076,10 +2076,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Trust Equation states Trust = (Credibility + Reliability + Intimacy) / Self-Orientation. An electrician is highly credible and reliable but has very high self-orientation (always talking about their own achievements). According to the equation, what happens to trust — and what self-regulation skill is needed?',
     options: [
-      "Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring",
-      "As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared",
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
-      "PEA is activated by hope, compassion, and vision of the ideal self — it opens neural pathways for learning and change. NEA is activated by fear, anxiety, and focus on problems — it triggers defensiveness and closes learning pathways. EI development is more sustainable when driven by PEA (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I want to become a better leader\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") than NEA (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I must fix my weaknesses or I will fail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")",
+      'Trust is increased because high self-orientation signals drive and ambition',
+      'Trust is unaffected because credibility and reliability outweigh everything else',
+      'Trust falls because self-orientation is the denominator; managing self-interest is the skill needed',
+      'Trust improves slightly because talking about achievements builds credibility',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2094,10 +2094,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "In construction culture, there is often an unspoken expectation to project toughness and hide vulnerability. Brene Brown's research suggests that vulnerability is actually essential for trust and connection. How does this create a self-regulation challenge for electricians?",
     options: [
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'The supervisor might notice: decreasing patience with apprentices\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources',
-      'Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions ("Just think positive!"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.',
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
+      'The challenge is that vulnerability always damages professional credibility on site',
+      'The challenge is that construction culture fully supports emotional openness already',
+      'The challenge is that vulnerability and self-regulation are the same skill',
+      'Self-regulation can require vulnerability, which conflicts with the cultural norm of toughness',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2112,10 +2112,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Gross and John's (2003) research compared people who habitually use expressive suppression versus cognitive reappraisal. Which finding accurately reflects their research on long-term effects?",
     options: [
-      'Habitual suppressors showed worse social outcomes (fewer close relationships, less social support, lower life satisfaction) and paradoxically experienced MORE negative emotion over time — while habitual reappraisers showed better outcomes on all these measures',
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
-      'Saying privately: "When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it" — clearly stating the behaviour, its impact, and the desired change without aggression',
-      'Adversity (the event), Belief (your interpretation), Consequence (resulting feelings/actions), Disputation (challenging unhelpful beliefs), and Energisation (the new, more optimistic outcome)',
+      'Suppressors had worse social outcomes and more negative emotion; reappraisers fared better',
+      'Habitual suppressors showed better social outcomes and more positive emotion over time',
+      'There was no measurable difference in outcomes between suppressors and reappraisers',
+      'Reappraisers showed worse wellbeing because they over-analysed every situation',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2130,10 +2130,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'ACT (Acceptance and Commitment Therapy) identifies six core processes of psychological flexibility. One is "cognitive defusion" — the ability to see thoughts as thoughts rather than facts. A site manager thinks "I am a terrible leader because we missed the deadline." What would cognitive defusion look like?',
     options: [
-      'A four-step breathing pattern (inhale for 4 counts, hold for 4 counts, exhale for 4 counts, hold for 4 counts) that activates the parasympathetic nervous system to reduce stress and restore calm',
-      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
-      'Explore why events occurred as they did, examining what knowledge, assumptions, and emotional triggers influenced the situation, and connecting the experience to broader patterns or theories',
-      'Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight',
+      'Repeating the thought firmly until you fully believe it is an accurate fact',
+      "Seeing the thought as a thought, not a fact: \"I'm having the thought that I'm a poor leader\"",
+      'Pushing the thought out of your mind and refusing to acknowledge it at all',
+      'Acting immediately on the thought before it has a chance to fade',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2148,10 +2148,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician takes ownership when a circuit they designed causes nuisance tripping, rather than blaming the manufacturer or the design brief. According to self-regulation theory, what distinguishes ownership from blame culture?',
     options: [
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
-      'EI enables informal leadership through: influence without authority (social skills), building trust through consistent, regulated behaviour (self-regulation), motivating others through enthusiasm and competence (motivation), understanding and responding to team needs (empathy), and modelling emotionally intelligent behaviour that others naturally follow (self-awareness)',
-      'Ownership requires self-regulation of defensive impulses (ego protection, fear of consequences), involves taking responsibility without self-condemnation, and focuses on learning and solution — whereas blame culture is driven by unregulated fear and redirects negative emotion outward to protect the self',
-      'A genuine shift to: "This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager" — with the motivation to act matching the new belief',
+      'Ownership and blame are essentially the same response to a workplace error',
+      'Blame culture requires more emotional regulation than taking genuine ownership',
+      'Ownership regulates defensive impulses and focuses on learning; blame redirects fear outward',
+      'Ownership means accepting fault while also condemning yourself harshly for it',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2166,10 +2166,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'During a high-pressure commissioning where multiple systems are failing, an electrical project manager needs to maintain composure while the client is escalating complaints. Which advanced self-regulation approach integrates the most strategies effectively?',
     options: [
-      'Challenging the belief with evidence: "I have completed 47 EICRs successfully. This one had specific issues with the schedule of test results section. One returned report does not make me incompetent — it means I need to review my process for that specific section." This replaces a permanent, pervasive, personal belief with a specific, temporary, actionable one',
-      'Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\\\\\'s perspective before sending)',
-      'Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a "good enough" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
+      "Immediately matching the client's rising emotional intensity to show you care",
+      "Suppressing all outward signs of stress while ignoring the client's feelings",
+      'Deflecting responsibility onto the supplier until the client calms down',
+      'Combine breathing, cognitive reappraisal, psychological flexibility, and measured vulnerability',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2184,10 +2184,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Adaptability is a self-regulation competency in Goleman\'s framework. The construction industry is experiencing rapid change: new regulations, digital tools, sustainability requirements, and evolving safety standards. What distinguishes adaptability as a self-regulation competency from simply "going along with changes"?',
     options: [
-      'True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance',
-      'Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'Prevailing "tough it out" and "leave feelings at the gate" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration',
+      'Actively regulating resistance to change and flexing strategies without losing core values',
+      'Simply accepting every change without question to avoid any conflict',
+      'Resisting all change firmly to protect established and proven methods',
+      'Waiting for management to enforce changes rather than engaging with them',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2206,10 +2206,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "In Goleman's EI framework, motivation is not about external rewards but about internal drive. Which of the following is one of Goleman's four motivation competencies?",
     options: [
-      'Emotional intelligence can be learned and developed throughout life with deliberate practice',
+      'Emotional self-awareness — recognising your emotions and their effects',
       'Achievement drive — a striving to improve or meet a standard of excellence',
-      'How you will feel about this decision in 10 minutes, 10 months, and 10 years',
       'Trustworthiness — maintaining standards of honesty and integrity',
+      'Service orientation — anticipating and meeting the needs of clients',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2224,10 +2224,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of Goleman's motivation competencies involves aligning personal goals with the goals of the team or organisation?",
     options: [
-      'Happiness, sadness, fear, anger, surprise, disgust, and contempt',
-      'The person must be earning a high salary for the work',
+      'Achievement drive — striving to improve or meet a standard of excellence',
+      'Initiative — readiness to act on opportunities without waiting for direction',
       'Commitment — aligning with the goals of the group or organisation',
-      'Open (Arena), Blind Spot, Hidden (Facade), and Unknown',
+      'Optimism — persistence in pursuing goals despite obstacles and setbacks',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2242,10 +2242,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Daniel Pink\'s book "Drive" identifies three elements of intrinsic motivation. What are they?',
     options: [
-      'Explore why events occurred as they did, examining what knowledge, assumptions, and emotional triggers influenced the situation, and connecting the experience to broader patterns or theories',
-      'Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others',
-      'Emotional suppression involves pushing down or denying emotions (which research shows increases physiological stress), while emotional awareness involves acknowledging and understanding emotions without being controlled by them',
-      'Autonomy (the desire to direct our own lives), mastery (the urge to get better at something that matters), and purpose (the yearning to do what we do in the service of something larger than ourselves)',
+      'Reward, recognition, and reinforcement',
+      'Salary, security, and status',
+      'Direction, deadlines, and discipline',
+      'Autonomy, mastery, and purpose',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2260,10 +2260,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Self-Determination Theory (SDT), developed by Deci and Ryan, identifies three basic psychological needs. What are they?',
     options: [
-      'Autonomy (feeling in control of your own behaviour and goals), competence (feeling effective and capable), and relatedness (feeling connected to others)',
-      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tasks to support them',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
+      'Autonomy, competence, and relatedness',
+      'Achievement, affiliation, and power',
+      'Safety, esteem, and self-actualisation',
+      'Direction, structure, and supervision',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2296,10 +2296,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Martin Seligman identified the "3 Ps" that can trap people in pessimistic thinking after setbacks. What are they?',
     options: [
-      'A collection of brain structures involved in emotional responses, memory formation, and motivation',
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'Personalisation (it is all my fault), pervasiveness (it will affect everything), and permanence (it will last forever)',
-      'Having an honest understanding of your own strengths and limitations, and being open to learning',
+      'Planning, preparation, and persistence',
+      'Pressure, panic, and paralysis',
+      'Personalisation, pervasiveness, and permanence',
+      'Positivity, patience, and perspective',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2314,10 +2314,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the standard definition of empathy in the context of emotional intelligence?',
     options: [
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
-      'Collaborating — high assertiveness AND high cooperativeness, seeking a solution that fully satisfies both parties',
-      'An overwhelming emotional reaction disproportionate to the trigger, where the amygdala overrides the rational brain',
-      'The ability to understand and share the feelings of another person — to see the world from their perspective and to sense their emotional state',
+      'The ability to persuade others to adopt your own emotional viewpoint',
+      "The capacity to remain completely detached from other people's feelings",
+      'The skill of accurately predicting how a situation will turn out',
+      "Understanding and sharing another person's feelings, seeing the world from their perspective",
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2332,10 +2332,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research identifies three distinct types of empathy. Which option correctly names all three?',
     options: [
-      'Cognitive empathy (understanding what someone thinks/feels), emotional/affective empathy (feeling what someone feels), and compassionate empathy (understanding and feeling, then being moved to help)',
-      'Workers with alexithymic traits may struggle to recognise their own stress, fatigue, or frustration until these states become severe, potentially leading to safety risks, interpersonal conflicts, and burnout without early warning signs',
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      'You must maintain unwavering faith that you will prevail in the end, AND at the same time, confront the most brutal facts of your current reality — holding both truths simultaneously',
+      'Cognitive empathy (understanding), emotional empathy (feeling), and compassionate empathy (acting)',
+      'Strong empathy, weak empathy, and neutral empathy based on intensity',
+      'Verbal empathy, written empathy, and visual empathy based on channel',
+      'Conscious empathy, unconscious empathy, and learned empathy based on awareness',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2349,10 +2349,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is the key difference between empathy and sympathy?',
     options: [
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says "I feel with you," sympathy says "I feel for you"',
-      'Sleep deprivation impairs prefrontal cortex function, reducing the brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to regulate emotional responses from the amygdala, leading to increased emotional reactivity and poorer self-control',
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
+      'Empathy and sympathy are simply two words for the same emotional response',
+      "Empathy shares another's feelings from their view; sympathy feels for them from your own",
+      'Empathy is felt only towards friends, while sympathy is felt towards strangers',
+      'Sympathy requires understanding the other person while empathy does not',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2367,10 +2367,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Mirror neurons are brain cells that fire both when we perform an action and when we observe someone else performing the same action. How do mirror neurons relate to empathy?',
     options: [
-      "It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture",
-      "Noticing the thought and reframing it: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — creating distance between the self and the thought",
-      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
-      "Maintaining eye contact, nodding, waiting until they finish, paraphrasing what you heard (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"So you are saying the RCD keeps tripping after the load test?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), and asking clarifying questions — while resisting the urge to jump in with solutions",
+      'Mirror neurons are responsible for storing long-term emotional memories',
+      'Mirror neurons fire only when we are performing an action, never when observing',
+      "They let us automatically simulate others' experiences, providing a neural basis for empathy",
+      "Mirror neurons prevent us from being affected by other people's emotions",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2384,10 +2384,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: "In Goleman's framework, which of the following is one of his empathy competencies?",
     options: [
-      "Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions",
-      "To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry",
-      "Leaders with higher EI consistently achieve better team performance, safety records, and employee retention",
-      "Understanding others — sensing others' feelings and perspectives, and taking an active interest in their concerns",
+      'Self-control — managing disruptive emotions and impulses',
+      'Achievement drive — striving to meet a standard of excellence',
+      'Adaptability — flexibility in handling change and shifting demands',
+      'Understanding others — sensing their feelings and taking interest in their concerns',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2402,10 +2402,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Daniel Pink argues that "if-then" rewards (e.g., "If you finish early, you get a bonus") can actually decrease motivation for complex tasks. Why?',
     options: [
-      'External "if-then" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the "overjustification effect"',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
-      'Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses',
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
+      'They shift focus from the work to the reward, narrowing thinking (the overjustification effect)',
+      'Because external rewards always increase the quality of complex creative work',
+      'Because workers ignore any reward that is not paid in cash',
+      'Because complex tasks are unaffected by either rewards or motivation',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2420,10 +2420,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes Goleman\'s motivation competency of "initiative"?',
     options: [
-      'A strong sense of your self-worth and capabilities, enabling you to express views and make decisions even under pressure',
-      'Readiness to act on opportunities and to go beyond what is required — taking proactive steps without waiting for direction',
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
-      'Bargaining — they are attempting to negotiate a partial adoption, trying to retain some of the old approach while partially accepting the new one',
+      'Readiness to act on opportunities and go beyond what is required, unprompted',
+      'Readiness to act on opportunities and go beyond what is required, without waiting for direction',
+      'Flexibility in adjusting your approach when circumstances change',
+      'Aligning your personal goals with those of the wider organisation',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2438,10 +2438,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Goleman's optimism competency within motivation means persistence in pursuing goals despite obstacles and setbacks. How does this differ from naive positivity?",
     options: [
-      "First manage their own emotional reaction (self-regulation), then seek to understand each team's perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)",
-      "Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens",
-      "Goleman's optimism involves realistic assessment of obstacles combined with genuine belief that effort and strategy can lead to success — it acknowledges difficulties but maintains persistent, evidence-based hope, unlike naive positivity which ignores or denies problems",
-      "Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I feel with you,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" sympathy says \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I feel for you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      'Naive positivity and realistic optimism are essentially the same outlook',
+      'Optimism means ignoring all obstacles so they cannot affect your mood',
+      'It pairs realistic assessment of obstacles with belief that effort can still succeed',
+      'Realistic optimism guarantees success while naive positivity guarantees failure',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2456,10 +2456,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Csikszentmihalyi found that flow states occur in a specific zone between anxiety and boredom. If an electrician is performing a task far below their skill level, which emotional state is most likely according to flow theory?',
     options: [
-      'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tasks to support them',
-      'It helps workers recognise emotional states like stress, fatigue, and frustration that impair judgement and increase accident risk',
-      'Boredom or apathy — because the challenge is too low relative to their skill level, offering no opportunity for engagement or growth',
+      'Flow — because the task perfectly matches their high level of skill',
+      'Anxiety — because the task far exceeds their current ability',
+      'Deep concentration — because routine tasks require the most focus',
+      'Boredom or apathy — the challenge is too low for their skill level to engage them',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2474,10 +2474,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In Self-Determination Theory, what happens to motivation when a work environment meets all three basic psychological needs (autonomy, competence, relatedness)?',
     options: [
-      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase — because the fundamental psychological nutrients for self-motivated behaviour are present',
-      'By using it as a reference tool to identify and name their emotions with greater precision, moving from vague descriptions like "bad" to specific terms like "overwhelmed," "frustrated," or "disappointed"',
-      'A project manager who understands others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' emotions well and deliberately exploits team members\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' insecurities to maintain control and compliance',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
+      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase',
+      'Motivation falls sharply because meeting all three needs removes any challenge',
+      'Only short-term motivation rises, while long-term performance declines',
+      'Motivation is unaffected because these needs apply only outside of work',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2496,10 +2496,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Seligman's ABCDE model is a technique for building optimism. What do the five letters stand for?",
     options: [
-      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
-      'Adversity (the event), Belief (your interpretation), Consequence (resulting feelings/actions), Disputation (challenging unhelpful beliefs), and Energisation (the new, more optimistic outcome)',
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'The brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice',
+      'Awareness, Behaviour, Choice, Decision, Evaluation',
+      'Adversity, Belief, Consequence, Disputation, and Energisation',
+      'Acknowledge, Breathe, Calm, Decide, Engage',
+      'Activating event, Bias, Calculation, Decision, Energy',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2514,10 +2514,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrician fails an inspection on a domestic installation. Using Seligman's framework, which response demonstrates a pessimistic explanatory style?",
     options: [
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
-      'First manage their own emotional reaction (self-regulation), then seek to understand each team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)',
-      '"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)" — treating the setback as permanent, pervasive, and entirely personal',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
+      '"This particular installation had a specific fault that I can now identify and correct"',
+      '"The inspector found one issue; I will review my process for that detail"',
+      "Treating the setback as permanent, pervasive, and entirely personal (\"I always mess up\")",
+      '"This is a useful reminder to double-check that section more carefully next time"',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2531,10 +2531,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'What is the difference between realistic optimism and toxic positivity?',
     options: [
-      'ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
-      'Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s optimism involves realistic assessment of obstacles combined with genuine belief that effort and strategy can lead to success — it acknowledges difficulties but maintains persistent, evidence-based hope, unlike naive positivity which ignores or denies problems',
-      'Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions ("Just think positive!"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.',
+      'Realistic optimism and toxic positivity are simply two terms for the same outlook',
+      'Realistic optimism denies all difficulties while toxic positivity acknowledges them',
+      'Toxic positivity validates negative feelings while realistic optimism dismisses them',
+      'Realistic optimism acknowledges difficulties; toxic positivity dismisses negative emotions',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2549,10 +2549,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'According to Csikszentmihalyi, what are the key conditions that must be present for a flow state to occur?',
     options: [
-      "Clear goals, immediate feedback, and a balance between the perceived challenge of the task and one's perceived skills — with both challenge and skill at a relatively high level",
-      "Autonomy (feeling in control of your own behaviour and goals), competence (feeling effective and capable), and relatedness (feeling connected to others)",
-      "A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance",
-      "Emotional suppression involves pushing down or denying emotions (which research shows increases physiological stress), while emotional awareness involves acknowledging and understanding emotions without being controlled by them",
+      'Clear goals, immediate feedback, and a balance of high challenge and high skill',
+      'Complete isolation from others and the absence of any external distractions',
+      'A guaranteed reward at the end of the task and recognition from a manager',
+      'High pressure and a tight deadline that forces total concentration',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2568,10 +2568,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Paul Ekman's research identified micro-expressions — brief, involuntary facial expressions lasting 1/25 to 1/5 of a second. Why are micro-expressions relevant to empathy in a workplace context?",
     options: [
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
-      'Micro-expressions reveal genuine emotions that a person may be trying to conceal, providing empathic individuals with additional emotional data. Recognising a flash of fear or contempt that someone is hiding can help you respond to their actual emotional state rather than just their words',
-      'First manage their own emotional reaction (self-regulation), then seek to understand each team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)',
-      '"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)" — treating the setback as permanent, pervasive, and entirely personal',
+      'Micro-expressions are deliberate signals people use to communicate clearly',
+      'They reveal genuine emotions a person conceals, giving you data about their true state',
+      'Micro-expressions last several seconds and are easy for anyone to read',
+      "Micro-expressions reveal a person's long-term personality rather than their emotions",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2586,10 +2586,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Research suggests that approximately 55% of emotional communication is through body language, 38% through tone of voice, and only 7% through words (Mehrabian's rule). In a construction context, which scenario demonstrates using body language awareness empathically?",
     options: [
-      'Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' needs, which requires ongoing emotional regulation of ego and need for recognition',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
+      'Telling the apprentice firmly to stand up straight and make more eye contact',
+      "Ignoring the apprentice's posture since body language is unreliable",
+      "Noticing an apprentice's hunched shoulders and quiet voice, then gently checking in with them",
+      'Assuming the hunched posture simply means the apprentice is physically tired',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2604,10 +2604,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Active listening is a core empathy skill. Which set of behaviours best demonstrates active listening during a colleague's description of a problem on site?",
     options: [
-      'Explore why events occurred as they did, examining what knowledge, assumptions, and emotional triggers influenced the situation, and connecting the experience to broader patterns or theories',
-      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'Maintaining eye contact, nodding, waiting until they finish, paraphrasing what you heard ("So you are saying the RCD keeps tripping after the load test?"), and asking clarifying questions — while resisting the urge to jump in with solutions',
+      'Interrupting frequently to offer solutions before the speaker has finished',
+      'Nodding politely while planning your own response to what they are saying',
+      "Listening only for the technical facts and ignoring the speaker's feelings",
+      'Eye contact, nodding, paraphrasing what you heard, and asking clarifying questions',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2622,10 +2622,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Perspective-taking is the cognitive component of empathy. A client is angry about a delay to their kitchen rewire. What does effective perspective-taking involve?',
     options: [
-      "Actively imagining the situation from the client's viewpoint: they may have taken time off work, arranged for the kitchen to be cleared, and planned meals around the completion date — understanding that the delay has a ripple effect on their daily life that extends beyond the electrical work itself",
-      "Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring",
-      "EI enables informal leadership through: influence without authority (social skills), building trust through consistent, regulated behaviour (self-regulation), motivating others through enthusiasm and competence (motivation), understanding and responding to team needs (empathy), and modelling emotionally intelligent behaviour that others naturally follow (self-awareness)",
-      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
+      "Imagining the client's viewpoint — the time off, planning, and disruption the delay causes",
+      'Explaining to the client exactly why the delay was unavoidable on your part',
+      'Reminding the client that delays are a normal part of any building project',
+      'Focusing only on the technical reasons for the delay and not its wider impact',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2640,10 +2640,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Cultural sensitivity is an aspect of empathy. On a multi-cultural construction site, an electrician notices that a colleague from a different cultural background never makes direct eye contact during conversations. What is the empathically intelligent response?',
     options: [
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
-      'Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them',
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
+      'Telling the colleague directly that avoiding eye contact appears evasive',
+      'Recognising that eye-contact norms vary by culture and adjusting your communication style',
+      'Assuming the colleague is being deliberately rude and responding in kind',
+      'Insisting that everyone on site adopt the same communication norms',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2658,10 +2658,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What distinguishes compassionate empathy from cognitive and emotional empathy, and why is it the most useful form in professional settings?',
     options: [
-      'Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses',
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
-      'Absence of trust — without trust, team members will not be vulnerable with each other, leading to fear of conflict, lack of commitment, avoidance of accountability, and ultimately inattention to collective results',
+      'Compassionate empathy involves understanding a situation without any feeling',
+      "Compassionate empathy means feeling another's emotion without understanding it",
+      'It combines understanding and feeling with being moved to take helpful action',
+      'Compassionate empathy is purely intellectual and never leads to any action',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2676,10 +2676,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The famous MetLife study on optimism found that salespeople in the top 10% for optimism outsold the bottom 10% by 88%. What does this research suggest about the relationship between optimism and workplace performance?',
     options: [
-      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"good enough\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
-      "Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"this is a solvable technical challenge, not a personal attack\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I understand this is frustrating — let me walk you through our resolution plan\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")",
-      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
-      "Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman's ASQ) was a better predictor of success than traditional hiring criteria",
+      'Optimism has no measurable link to performance in real workplace settings',
+      'Optimistic and pessimistic salespeople performed almost identically in the study',
+      'Pessimism predicted higher performance because it encouraged careful planning',
+      'Optimists persist longer after setbacks, so optimism predicted performance better than other criteria',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2694,10 +2694,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Stockdale Paradox, named after Admiral James Stockdale, describes a crucial balance for maintaining motivation through extreme adversity. What is this paradox?',
     options: [
-      'You must maintain unwavering faith that you will prevail in the end, AND at the same time, confront the most brutal facts of your current reality — holding both truths simultaneously',
-      'Acknowledging the anxiety as a normal response to change, using cognitive reappraisal to view the situation as an opportunity to learn from a new team, and gradually building trust through consistent, reliable behaviour',
-      'To build the habit of noticing and naming your current emotional state, catching unhelpful patterns early, and making conscious choices about how to proceed',
-      'Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others',
+      'Keep unwavering faith you will prevail while confronting the brutal facts of your reality',
+      'You must remain purely optimistic at all times and never dwell on difficulties',
+      'You should focus only on the harsh facts and abandon any hope of success',
+      'You must set firm deadlines for when the adversity will end and stick to them',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2712,10 +2712,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Karen Reivich and Andrew Shatte identified seven key abilities of resilience. Which of these is most directly connected to the motivation domain of EI?',
     options: [
-      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
-      'Reaching out — the ability to seek new opportunities and connect with others after setbacks, maintaining initiative and optimism despite adversity',
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tasks to support them',
+      'Emotion regulation — managing your emotional responses under stress',
+      'Reaching out — seeking new opportunities and connecting with others after setbacks',
+      'Impulse control — resisting the urge to act on immediate feelings',
+      "Empathy — accurately reading and responding to others' emotions",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2730,10 +2730,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician applies the ABCDE model after receiving critical feedback on an EICR report. Adversity: the report was returned for corrections. Belief: "I am not good enough to do inspection work." What would effective Disputation look like?',
     options: [
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
-      'Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\\\\\'s perspective before sending)',
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'Challenging the belief with evidence: "I have completed 47 EICRs successfully. This one had specific issues with the schedule of test results section. One returned report does not make me incompetent — it means I need to review my process for that specific section." This replaces a permanent, pervasive, personal belief with a specific, temporary, actionable one',
+      'Accepting the criticism silently and concluding you are simply not capable',
+      "Dismissing the feedback as unfair and blaming the inspector's standards",
+      'Challenging the belief with evidence: one returned report is temporary and fixable, not proof',
+      'Avoiding all future inspection work to prevent the feeling happening again',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2766,10 +2766,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An apprentice's work quality has dropped significantly over two weeks. Using empathic inquiry rather than immediate criticism, which approach is most emotionally intelligent?",
     options: [
-      'Find a private moment and use open, non-judgemental inquiry: "I have noticed your work has not been at its usual standard recently. I am asking because I am concerned about you, not criticising. Is everything all right?" — using empathy to understand the root cause before deciding on a response',
-      'The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns',
-      'Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
+      'Use private, non-judgemental inquiry to understand the cause before deciding how to respond',
+      'Immediately issuing a formal warning to address the drop in work quality',
+      'Publicly pointing out the declining standard so the apprentice improves',
+      "Reducing the apprentice's responsibilities without discussing it with them",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2784,10 +2784,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "How can Daniel Pink's three elements of intrinsic motivation (autonomy, mastery, purpose) be integrated with Self-Determination Theory's three needs (autonomy, competence, relatedness) to create a comprehensive motivation framework?",
     options: [
-      'Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system',
-      'Both theories share autonomy as a core element. SDT\\\\\\\\\\\\\\\'s "competence" maps closely to Pink\\\\\\\\\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\\\\'s "purpose" and SDT\\\\\\\\\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
-      'PEA is activated by hope, compassion, and vision of the ideal self — it opens neural pathways for learning and change. NEA is activated by fear, anxiety, and focus on problems — it triggers defensiveness and closes learning pathways. EI development is more sustainable when driven by PEA ("I want to become a better leader") than NEA ("I must fix my weaknesses or I will fail")',
-      'The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns',
+      'Both share autonomy; mastery maps to competence, and purpose and relatedness add connection',
+      'Both share autonomy; mastery maps to competence, and purpose and relatedness both add connection',
+      'Both theories reject autonomy as a meaningful element of motivation',
+      "SDT's relatedness directly contradicts Pink's concept of purpose",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2802,10 +2802,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Flow states in a team context present unique challenges. What conditions must be present for a construction team to experience "group flow," and how does this relate to individual flow?',
     options: [
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
-      'Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone',
-      'The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns',
+      'Group flow requires only that each individual reach personal flow separately',
+      'Group flow needs identical skill levels and removes any element of risk',
+      'Group flow needs all individual conditions plus shared goals and close listening',
+      'Group flow depends solely on a single dominant leader directing the team',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2820,10 +2820,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A project manager applies the ABCDE model to a major project failure (a complete rewire requiring significant rework). The initial belief is "This project is a disaster and my career is over." After successful disputation, which response demonstrates genuine Energisation?',
     options: [
-      'The four stages are: (1) Unconscious incompetence (not aware of EI gaps), (2) Conscious incompetence (aware of gaps but not yet skilled), (3) Conscious competence (able to use EI skills with deliberate effort), (4) Unconscious competence (EI skills are automatic and natural). The final stage looks like effortlessly reading emotional situations, naturally regulating responses, and instinctively supporting others — EI becomes who you are, not what you do',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
-      'EI enhances teamwork by: enabling trust (through self-regulation and reliability), improving communication (through empathy and active listening), facilitating constructive conflict (through assertiveness and perspective-taking), and creating psychological safety (through social awareness) — transforming a group of individuals into a genuinely high-performing team',
-      'A genuine shift to: "This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager" — with the motivation to act matching the new belief',
+      '"At least this proves I should never have taken on a project of this size"',
+      '"The damage is done; I will just have to accept that my reputation is ruined"',
+      '"I will avoid complex projects from now on so this can never happen again"',
+      'A genuine shift to a clear action plan with motivation to apply the lessons learned',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2838,10 +2838,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Empathy fatigue (also called compassion fatigue) can occur in helping professions when the emotional cost of empathy becomes overwhelming. How might empathy fatigue manifest in a site supervisor responsible for apprentice welfare?',
     options: [
-      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
-      "A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)",
-      "Speaking in a calm, measured tone, acknowledging their feeling (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I can see you are really frustrated about this\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), asking them to help you understand the specific issue, and allowing them to express their concern fully before responding — lowering the emotional temperature through validation and genuine listening",
+      'Less patience, emotional numbness, cynicism, and withdrawal — signs their empathy is depleted',
+      'Increasing patience and a renewed sense of enthusiasm for mentoring',
+      "A sudden improvement in the supervisor's ability to read others' emotions",
+      'Heightened emotional sensitivity that makes every conversation feel rewarding',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2856,10 +2856,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'On a construction site with workers from six different countries, an electrician needs to communicate a safety concern to a colleague whose cultural background includes very different norms around hierarchy, directness, and emotional expression. What level of cultural empathy is required?',
     options: [
-      'Both theories share autonomy as a core element. SDT\\\\\\\'s "competence" maps closely to Pink\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\'s "purpose" and SDT\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
-      'Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation',
-      'Explaining the situation in person, leading with the safety reason ("I have found a section of wiring that does not meet current safety standards"), showing the specific issue where possible, expressing empathy for the inconvenience ("I understand this is not what you were expecting"), presenting options rather than a single demand, and giving the client time to process before requiring a decision',
-      'Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system',
+      'Communicating the safety concern in exactly the same blunt way to everyone',
+      'Advanced cultural empathy — adapting safety communication to convey urgency without causing shame',
+      'Avoiding the conversation entirely to prevent any cultural misunderstanding',
+      'Assuming that safety language needs no adjustment as long as it is accurate',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2874,10 +2874,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "During a tense client meeting about project delays and budget overruns, the project manager notices the client's jaw tightening, arms crossing, and breathing becoming shallow — while the client's words remain calm and professional. What does this incongruence suggest, and how should the project manager respond?",
     options: [
-      'D: "Over the last two weeks, you have arrived 20-30 minutes late on four occasions." E: "This means I start the prep work alone, which is frustrating and puts us behind schedule." S: "I need you to arrive by the agreed start time, or let me know in advance if you will be delayed." C: "If we start together, we will finish the prep in half the time and both have a smoother day."',
-      'Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties\\\\\\\' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions',
-      'The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically ("I can see this is a stressful situation, and I understand why"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate',
-      'Both theories share autonomy as a core element. SDT\\\\\\\\\\\\\\\'s "competence" maps closely to Pink\\\\\\\\\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\\\\'s "purpose" and SDT\\\\\\\\\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
+      'Calm words with stressed body language suggest suppressed frustration; acknowledge it',
+      "The body language is irrelevant because the client's words are professional",
+      'Calm words with stressed body language suggest suppressed frustration; acknowledge it empathically',
+      'The incongruence shows the client is deliberately trying to deceive you',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2892,10 +2892,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Showing empathy toward someone you find difficult is one of the most challenging EI skills. A subcontractor who has repeatedly caused problems on site is now visibly distressed about a personal issue. What does advanced empathy require in this situation?',
     options: [
-      'Explaining the situation in person, leading with the safety reason ("I have found a section of wiring that does not meet current safety standards"), showing the specific issue where possible, expressing empathy for the inconvenience ("I understand this is not what you were expecting"), presenting options rather than a single demand, and giving the client time to process before requiring a decision',
-      'Prevailing "tough it out" and "leave feelings at the gate" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration',
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
-      'Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries',
+      'Reminding the subcontractor of their past failures before offering any support',
+      'Withholding empathy entirely until the subcontractor improves their work',
+      'Treating the distress as an opportunity to gain the upper hand in the dispute',
+      'Separating the person from past behaviour and responding to their present distress with compassion',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2910,10 +2910,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrical contractor is managing a team where morale is low after two failed inspections in one week. Integrating Seligman's learned optimism, Pink's Drive, and Csikszentmihalyi's flow theory, what is the most comprehensive motivational approach?",
     options: [
-      'Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system',
-      'Both theories share autonomy as a core element. SDT\\\\\\\'s "competence" maps closely to Pink\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\'s "purpose" and SDT\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
-      'A genuine shift to: "This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager" — with the motivation to act matching the new belief',
+      'Address the 3 Ps, then restore autonomy, clear goals and feedback, and purpose',
+      'Tell the team firmly that morale is their own responsibility to fix',
+      'Focus only on the technical causes of the failures and ignore morale',
+      'Offer a one-off cash bonus and assume motivation will recover by itself',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2932,10 +2932,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Assertive communication is a social skill that sits between passive and aggressive communication. Which response demonstrates assertive communication when a colleague keeps borrowing your tools without asking?',
     options: [
-      'Some EI measures have limited discriminant validity, meaning they overlap significantly with existing personality constructs like the Big Five, raising questions about whether EI is truly a distinct construct',
-      'Saying privately: "When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it" — clearly stating the behaviour, its impact, and the desired change without aggression',
-      'First manage their own emotional reaction (self-regulation), then seek to understand each team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s perspective (empathy), identify the root cause (social awareness), and facilitate a collaborative resolution (social skills)',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
+      'Saying nothing and quietly accepting that your tools will keep disappearing',
+      'Stating the behaviour, its impact on you, and the change you want, without aggression',
+      'Loudly confronting the colleague in front of the whole team about it',
+      'Hiding your tools so the colleague is unable to borrow them again',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2950,10 +2950,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The DESC model is a structured assertiveness framework. What do the four letters stand for?',
     options: [
-      'To raise awareness, address the stigma of poor mental health, and improve mental wellbeing in the construction industry',
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
-      'Describe (the situation objectively), Express (how it affects you), Specify (what you want to happen), and Consequences (the positive outcomes of change)',
-      'The brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice',
+      'Decide, Engage, Sustain, Conclude',
+      'Describe, Explain, Suggest, Close',
+      'Describe, Express, Specify, and Consequences',
+      'Discuss, Evaluate, Schedule, Confirm',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2968,10 +2968,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Thomas-Kilmann Conflict Mode Instrument (TKI) identifies five approaches to conflict. Which of these five modes involves high assertiveness AND high cooperativeness?',
     options: [
-      'Being given an unrealistic deadline, discovering previous work needs to be redone, or being publicly criticised in front of colleagues',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
-      'Leading and motivating others, including managing relationships and understanding team dynamics',
-      'Collaborating — high assertiveness AND high cooperativeness, seeking a solution that fully satisfies both parties',
+      'Competing — high assertiveness AND low cooperativeness, pursuing your own way',
+      'Accommodating — low assertiveness AND high cooperativeness, yielding to others',
+      'Avoiding — low assertiveness AND low cooperativeness, sidestepping the issue',
+      'Collaborating — high assertiveness and high cooperativeness, satisfying both parties',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -2986,10 +2986,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Amy Edmondson's research on psychological safety found that the highest-performing teams shared one key characteristic. What was it?",
     options: [
-      'Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation',
-      'Cognitive empathy (understanding what someone thinks/feels), emotional/affective empathy (feeling what someone feels), and compassionate empathy (understanding and feeling, then being moved to help)',
-      'Exercise reduces cortisol (stress hormone) levels, releases endorphins, improves prefrontal cortex function, and provides a healthy outlet for physical tension associated with strong emotions',
-      'Maintaining standards of honesty and integrity, being consistent between what you say and what you do, and acknowledging your own mistakes',
+      'Members felt safe to speak up, ask questions, and admit mistakes without fear',
+      'Team members had the highest average level of technical qualification',
+      'Team members worked the longest hours and rarely took breaks',
+      'Team members were closely supervised and monitored at all times',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3004,10 +3004,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman identified six leadership styles based on emotional intelligence. Which style involves creating harmony and building emotional bonds?',
     options: [
-      'Keeping a brief daily log of emotional states, triggers, and responses to identify patterns over time',
+      'Visionary — mobilising people towards a shared, compelling vision',
       'Affiliative — creating harmony and building emotional bonds, with the motto "people come first"',
-      'Demands — including workload, work patterns, and the work environment',
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
+      'Pacesetting — setting extremely high performance standards for all',
+      'Commanding — demanding immediate compliance, with the motto "do what I say"',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3022,10 +3022,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Influence without authority means persuading others when you do not have formal power over them. Which approach is most effective for an electrician trying to influence a plumber to adjust their pipe routing?',
     options: [
-      "Because you must understand your own emotions before you can regulate them, and you must manage yourself before you can effectively manage relationships with others",
-      "The brain's ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice",
-      "Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber's work easier while solving the cable routing problem, and offering to help with the adjustment",
-      "The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap",
+      'Reminding the plumber that electrical work must always take priority on site',
+      'Reporting the plumber to the site manager to force the routing change',
+      'Showing how the adjusted routing benefits both trades and offering to help with it',
+      'Simply re-routing the cables yourself without involving the plumber',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3040,10 +3040,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of active listening as a social skill (as distinct from its role in empathy)?',
     options: [
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      'Use Salovey-Mayer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability model for baseline assessment, Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competency framework for identifying development areas, and Bar-On\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s model for tracking self-perceived progress — leveraging the strengths of each approach',
-      'The more precisely you can identify your emotion (e.g., distinguishing "frustrated" from "disappointed" from "overwhelmed"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses',
-      'As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared',
+      'Its main purpose is to give the listener time to plan their own reply',
+      "Its primary value is allowing you to identify weaknesses in the speaker's argument",
+      'It is mainly a technique for appearing attentive without truly engaging',
+      'It builds trust and psychological safety, so the speaker feels genuinely heard',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3058,10 +3058,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the first step in basic conflict resolution according to most EI frameworks?',
     options: [
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'Use the STOP technique: Stop, Take a breath, Observe the frustration without acting on it, then Proceed by calmly raising the issue through the appropriate site coordination process',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
-      'A cognitive bias where people with limited knowledge or competence in a domain significantly overestimate their ability, while experts tend to underestimate theirs',
+      'Separate the people from the problem and focus on the issue, not personal attacks',
+      'Immediately decide who is right and who is wrong before discussing anything',
+      'Escalate the matter to management before either party has spoken',
+      'Insist that both parties drop the issue and simply move on',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3076,10 +3076,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does emotional intelligence enhance teamwork beyond basic coordination of tasks?',
     options: [
-      'Starting each week by asking your team: "What obstacles are you facing that I can help remove?" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves',
-      'EI enhances teamwork by: enabling trust (through self-regulation and reliability), improving communication (through empathy and active listening), facilitating constructive conflict (through assertiveness and perspective-taking), and creating psychological safety (through social awareness) — transforming a group of individuals into a genuinely high-performing team',
-      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
+      'It builds trust, communication, constructive conflict, and psychological safety',
+      'It builds trust, communication, constructive conflict, and psychological safety in the team',
+      'EI primarily reduces the amount of paperwork a team must complete',
+      'EI chiefly helps a team work in silence without needing to communicate',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3094,10 +3094,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'De-escalation is a critical social skill in construction environments where tensions can run high. Which technique is most effective for de-escalating an angry colleague?',
     options: [
-      'Speaking in a calm, measured tone, acknowledging their feeling ("I can see you are really frustrated about this"), asking them to help you understand the specific issue, and allowing them to express their concern fully before responding — lowering the emotional temperature through validation and genuine listening',
-      'ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving',
-      'When teams avoid conflict, important issues go unaddressed, decisions are made without genuine input (leading to lack of commitment), underlying tensions fester and eventually explode destructively, and the quality of decisions suffers because ideas are not challenged and refined through debate. Healthy teams have MORE open conflict, not less — but it is constructive, issue-focused conflict',
-      'EI enhances teamwork by: enabling trust (through self-regulation and reliability), improving communication (through empathy and active listening), facilitating constructive conflict (through assertiveness and perspective-taking), and creating psychological safety (through social awareness) — transforming a group of individuals into a genuinely high-performing team',
+      'Telling the colleague firmly to calm down before you will listen to them',
+      'Matching their raised voice to show that you take the issue seriously',
+      'Lowering your voice, acknowledging their feelings, and listening fully before responding',
+      'Walking away immediately and refusing to engage until they are calm',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3113,10 +3113,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Robert Cialdini identified six principles of ethical persuasion. Which principle is demonstrated when an electrician helps a plumber with a difficult task, and the plumber later willingly adjusts their pipe routing in return?',
     options: [
-      'Emotional and social competencies that influence how effectively we understand and express ourselves, relate to others, and cope with daily demands',
-      'Reciprocity — people naturally feel compelled to return favours, so helping first creates a genuine willingness to cooperate',
-      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
-      'Affiliative — creating harmony and building emotional bonds, with the motto "people come first"',
+      'Authority — people comply because the request comes from an expert',
+      'Scarcity — people value things more when they appear to be in short supply',
+      'Social proof — people follow the actions of those around them',
+      'Reciprocity — people feel a natural obligation to return a favour they have received',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3131,10 +3131,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Servant leadership, as described by Robert Greenleaf, prioritises serving the needs of team members. How does this relate to EI-based social skills?',
     options: [
-      "Servant leadership embodies advanced EI: it requires empathy (understanding team needs), self-regulation (managing ego and the desire to command), motivation (finding purpose in developing others), and social skills (creating environments where people thrive) — the leader's primary role is to remove obstacles and enable their team's success",
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
-      "Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them",
-      "External \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"if-then\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overjustification effect\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      "It requires empathy, self-regulation, and social skills to enable the team's success",
+      'Servant leadership means letting the team make every decision without guidance',
+      "Servant leadership prioritises the leader's authority over the team's needs",
+      'Servant leadership avoids EI by focusing purely on task delegation',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3148,10 +3148,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'What are the key components of an effective EI development plan?',
     options: [
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture',
-      'Explaining the situation in person, leading with the safety reason ("I have found a section of wiring that does not meet current safety standards"), showing the specific issue where possible, expressing empathy for the inconvenience ("I understand this is not what you were expecting"), presenting options rather than a single demand, and giving the client time to process before requiring a decision',
+      'Memorising the academic theory of EI and reciting it accurately',
+      'Self-assessment, specific goals, practice, feedback, reflection, and accountability',
+      'Attending a single EI workshop and considering your development complete',
+      'Waiting for emotional skills to improve naturally with age and experience',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3166,10 +3166,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When setting goals for EI development, why is the SMART framework (Specific, Measurable, Achievable, Relevant, Time-bound) important?',
     options: [
-      'Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing',
-      'Emotional suppression involves pushing down or denying emotions (which research shows increases physiological stress), while emotional awareness involves acknowledging and understanding emotions without being controlled by them',
-      'SMART goals transform vague EI intentions ("I want to be more empathetic") into actionable commitments ("I will practise active listening in every team meeting for the next 4 weeks, paraphrasing at least once per conversation, and ask my colleague for feedback on my listening quality each Friday")',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
+      'SMART goals are useful for technical skills but cannot be applied to EI',
+      'Vague EI intentions are more effective because they allow greater flexibility',
+      'It turns vague intentions into specific, measurable, time-bound development commitments',
+      'SMART goals remove the need for any feedback or reflection on progress',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3184,10 +3184,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why are accountability structures important for EI development, and what might an effective accountability structure look like?',
     options: [
-      'Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\'s "somatic marker hypothesis") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness',
-      'Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development',
-      'Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions ("Just think positive!"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.',
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
+      'Accountability structures are unnecessary because EI develops automatically over time',
+      'Accountability mainly creates pressure that undermines genuine EI development',
+      'EI changes are so easy that no external support or structure is required',
+      'A development partner, a reflective journal, self-assessments, and scheduled review points',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3202,10 +3202,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does emotional intelligence apply to written communication in construction (e.g., emails, site reports, messages)?',
     options: [
-      'Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
-      'Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone',
-      'Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development',
+      'Writing carries emotional tone, so consider how the reader will feel and re-read before sending',
+      'Written communication carries no emotional tone, so EI is irrelevant to it',
+      'EI matters less in writing because the reader cannot see your reaction',
+      'Tone in writing is fixed by the words alone and cannot be misread',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3224,10 +3224,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Apply the DESC model to this situation: a fellow electrician regularly arrives late to site, meaning you have to start preparatory work alone. Write out what a DESC response would look like.',
     options: [
-      'PEA is activated by hope, compassion, and vision of the ideal self — it opens neural pathways for learning and change. NEA is activated by fear, anxiety, and focus on problems — it triggers defensiveness and closes learning pathways. EI development is more sustainable when driven by PEA ("I want to become a better leader") than NEA ("I must fix my weaknesses or I will fail")',
-      'D: "Over the last two weeks, you have arrived 20-30 minutes late on four occasions." E: "This means I start the prep work alone, which is frustrating and puts us behind schedule." S: "I need you to arrive by the agreed start time, or let me know in advance if you will be delayed." C: "If we start together, we will finish the prep in half the time and both have a smoother day."',
-      'Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions ("Just think positive!"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.',
-      'Challenging the belief with evidence: "I have completed 47 EICRs successfully. This one had specific issues with the schedule of test results section. One returned report does not make me incompetent — it means I need to review my process for that specific section." This replaces a permanent, pervasive, personal belief with a specific, temporary, actionable one',
+      "\"You're always late and it's really starting to wind everyone up on site.\"",
+      'Describe the lateness, express its impact, specify the change wanted, and state the benefit',
+      "\"Whatever — I'll just keep doing the prep on my own from now on.\"",
+      "\"It's fine, don't worry about it, I can manage the early start by myself.\"",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3242,10 +3242,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Thomas-Kilmann model distinguishes between collaborating (high assertive, high cooperative) and compromising (moderate assertive, moderate cooperative). When should you collaborate versus compromise on a construction site?',
     options: [
-      'Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements',
-      'EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture',
-      'Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a "good enough" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it',
-      'Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\'s perspective before sending)',
+      'Always collaborate, since compromise produces inferior outcomes in every case',
+      'Always compromise, because collaboration wastes time the team cannot spare',
+      'Collaborate when both needs matter and there is time; compromise when time is short',
+      'Use whichever approach the more senior person on site happens to prefer',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3260,10 +3260,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Patrick Lencioni identified five dysfunctions of a team, forming a pyramid where each dysfunction builds on the one below. What is the foundational dysfunction — the one that all others rest upon?',
     options: [
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      'Implement a structured programme combining specific feedback, coaching, deliberate practice of targeted competencies, regular reflection, and ongoing support over a sustained period',
-      'The brain\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ability to form new neural pathways throughout life means that EI skills can be developed and strengthened at any age through repeated practice',
-      'Absence of trust — without trust, team members will not be vulnerable with each other, leading to fear of conflict, lack of commitment, avoidance of accountability, and ultimately inattention to collective results',
+      'Fear of conflict — team members avoid honest, productive disagreement',
+      'Lack of commitment — members do not genuinely buy into decisions',
+      "Inattention to results — members prioritise personal goals over the team's",
+      'Absence of trust — without it, members avoid vulnerability, conflict, and accountability',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3278,10 +3278,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman distinguishes between resonant leadership (which creates positive emotional climates) and dissonant leadership (which creates negative ones). Which of his six styles are considered dissonant?',
     options: [
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
-      'Internal self-awareness is how clearly you understand your own values, feelings, and impact, while external self-awareness is how accurately you understand how others perceive you',
+      'Pacesetting and commanding — both create anxiety or fear when used as default styles',
+      'Visionary and coaching — both can create dependency if overused',
+      'Affiliative and democratic — both slow decision-making in a crisis',
+      'Coaching and democratic — both ignore the emotional needs of the team',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3296,10 +3296,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Boyatzis' Intentional Change Theory (ICT) outlines five discoveries for sustained personal change. What is the first discovery?",
     options: [
-      'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
-      'The Ideal Self — developing a clear, compelling vision of who you want to become, which creates positive emotional energy (the Positive Emotional Attractor) that sustains the motivation for change',
-      'Noticing your frustration about a programme delay, taking a moment to breathe, then calmly discussing the issue and possible solutions with the team',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
+      'The Real Self — an honest assessment of who you are right now',
+      'The Ideal Self — a compelling vision of who you want to become that energises change',
+      'The Learning Agenda — specific development goals to close the gap',
+      'Trusting Relationships — the support network that sustains the change',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3314,10 +3314,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Kolb's experiential learning cycle has four stages. How does this cycle support EI development?",
     options: [
-      'Micro-expressions reveal genuine emotions that a person may be trying to conceal, providing empathic individuals with additional emotional data. Recognising a flash of fear or contempt that someone is hiding can help you respond to their actual emotional state rather than just their words',
-      'Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s optimism involves realistic assessment of obstacles combined with genuine belief that effort and strategy can lead to success — it acknowledges difficulties but maintains persistent, evidence-based hope, unlike naive positivity which ignores or denies problems',
-      'The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns',
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
+      'The cycle eliminates the need to reflect on emotional experiences at all',
+      'The cycle works only for technical learning and not for emotional skills',
+      'Its four stages turn emotional experiences into systematic learning rather than repetition',
+      'The cycle skips straight from experience to action without any reflection',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3332,10 +3332,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A 90-day EI development plan is a practical structure for building specific competencies. What should the three phases typically cover?',
     options: [
-      'EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture',
-      'Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements',
-      'Ownership requires self-regulation of defensive impulses (ego protection, fear of consequences), involves taking responsibility without self-condemnation, and focuses on learning and solution — whereas blame culture is driven by unregulated fear and redirects negative emotion outward to protect the self',
-      'Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development',
+      'Days 1-30 integration, Days 31-60 assessment, Days 61-90 foundation',
+      'Days 1-30 mastery, Days 31-60 review, Days 61-90 reassessment',
+      'Days 1-30 theory only, Days 31-60 theory only, Days 61-90 a final exam',
+      'Phase 1 foundation and assessment, Phase 2 practice and feedback, Phase 3 integration',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3350,10 +3350,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The concept of "leading without a title" (Robin Sharma) suggests that leadership is a behaviour, not a position. How does EI enable leading without a title on a construction site?',
     options: [
-      'EI enables informal leadership through: influence without authority (social skills), building trust through consistent, regulated behaviour (self-regulation), motivating others through enthusiasm and competence (motivation), understanding and responding to team needs (empathy), and modelling emotionally intelligent behaviour that others naturally follow (self-awareness)',
-      'Saying privately: "When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it" — clearly stating the behaviour, its impact, and the desired change without aggression',
-      'The supervisor might notice: decreasing patience with apprentices\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources',
-      'PEA is activated by hope, compassion, and vision of the ideal self — it opens neural pathways for learning and change. NEA is activated by fear, anxiety, and focus on problems — it triggers defensiveness and closes learning pathways. EI development is more sustainable when driven by PEA ("I want to become a better leader") than NEA ("I must fix my weaknesses or I will fail")',
+      'It enables informal leadership through influence, trust, motivation, and empathy',
+      'Leadership requires a formal title before any influence is possible',
+      'EI is useful only for those who already hold a management position',
+      'Informal leadership relies purely on technical skill, not emotional skill',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3368,10 +3368,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'ACAS (Advisory, Conciliation and Arbitration Service) provides UK workplace guidance on handling conflict. Their principles align with which EI-based approach to conflict resolution?',
     options: [
-      'Challenging the belief with evidence: "I have completed 47 EICRs successfully. This one had specific issues with the schedule of test results section. One returned report does not make me incompetent — it means I need to review my process for that specific section." This replaces a permanent, pervasive, personal belief with a specific, temporary, actionable one',
-      'ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving',
-      'Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs',
-      'Regulate initial frustration (emotional awareness), approach the colleague privately using cognitive reappraisal to frame it as a quality issue rather than personal failure, discuss the error factually, offer to help correct it, and document it appropriately — balancing accountability with empathy',
+      'ACAS recommends escalating straight to formal disciplinary processes first',
+      'It promotes early, informal resolution through open conversation and listening',
+      'ACAS advises avoiding workplace conflict entirely wherever possible',
+      'ACAS focuses solely on legal penalties rather than open conversation',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3386,10 +3386,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Digital communication (emails, WhatsApp, Teams) removes most non-verbal cues. What EI skills are most critical for effective digital communication in construction?',
     options: [
-      "Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations",
-      "EI enhances teamwork by: enabling trust (through self-regulation and reliability), improving communication (through empathy and active listening), facilitating constructive conflict (through assertiveness and perspective-taking), and creating psychological safety (through social awareness) — transforming a group of individuals into a genuinely high-performing team",
-      "Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient's perspective before sending)",
-      "The four stages are: (1) Unconscious incompetence (not aware of EI gaps), (2) Conscious incompetence (aware of gaps but not yet skilled), (3) Conscious competence (able to use EI skills with deliberate effort), (4) Unconscious competence (EI skills are automatic and natural). The final stage looks like effortlessly reading emotional situations, naturally regulating responses, and instinctively supporting others — EI becomes who you are, not what you do",
+      'Empathic anticipation, deliberate tone, impulse control, and reviewing before sending',
+      'Brevity is always best because shorter messages cannot be misread',
+      'Empathic anticipation, deliberate tone management, impulse control, and reviewing before sending',
+      'Speed of reply matters far more than how a message might be received',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3404,10 +3404,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'EI in client conversations is particularly important when delivering unwelcome news (e.g., discovering additional work needed during a rewire). Which approach demonstrates high EI?',
     options: [
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
-      'Find a private moment and use open, non-judgemental inquiry: "I have noticed your work has not been at its usual standard recently. I am asking because I am concerned about you, not criticising. Is everything all right?" — using empathy to understand the root cause before deciding on a response',
-      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
-      'Explaining the situation in person, leading with the safety reason ("I have found a section of wiring that does not meet current safety standards"), showing the specific issue where possible, expressing empathy for the inconvenience ("I understand this is not what you were expecting"), presenting options rather than a single demand, and giving the client time to process before requiring a decision',
+      'Sending the bad news by text to avoid an awkward face-to-face conversation',
+      'Delivering the news bluntly and immediately demanding a decision',
+      'Downplaying the issue to avoid worrying the client unnecessarily',
+      'Explaining in person, leading with safety, showing empathy, and offering options',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3422,10 +3422,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In Lencioni\'s model, "fear of conflict" is the second dysfunction. Why is the ABSENCE of conflict actually more dangerous than the presence of constructive conflict in a team?',
     options: [
-      'When teams avoid conflict, important issues go unaddressed, decisions are made without genuine input (leading to lack of commitment), underlying tensions fester and eventually explode destructively, and the quality of decisions suffers because ideas are not challenged and refined through debate. Healthy teams have MORE open conflict, not less — but it is constructive, issue-focused conflict',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
-      'Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news',
-      'Ownership requires self-regulation of defensive impulses (ego protection, fear of consequences), involves taking responsibility without self-condemnation, and focuses on learning and solution — whereas blame culture is driven by unregulated fear and redirects negative emotion outward to protect the self',
+      'Avoided conflict leaves issues unaddressed and tensions festering, harming decision quality',
+      'The absence of conflict is always healthier than open disagreement',
+      'Conflict avoidance has no real effect on the quality of team decisions',
+      'Teams perform best when all disagreement is suppressed to keep the peace',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3440,10 +3440,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Goleman's coaching leadership style involves developing people for the future. How does this style differ from the affiliative style, and when is each most appropriate?",
     options: [
-      'Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman\\\'s ASQ) was a better predictor of success than traditional hiring criteria',
-      'Coaching focuses on individual development (asking "what do you want to become?" and helping bridge the gap through challenging assignments and feedback), while affiliative focuses on team harmony and emotional bonds (asking "how is everyone feeling?" and strengthening connections). Coaching is most appropriate for developing potential; affiliative is most appropriate for healing rifts or building morale',
-      'The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically ("I can see this is a stressful situation, and I understand why"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate',
-      'Prevailing "tough it out" and "leave feelings at the gate" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration',
+      'Coaching and affiliative are essentially identical people-focused styles',
+      'Coaching develops the individual; affiliative builds harmony and emotional bonds',
+      'Coaching focuses on team harmony while affiliative develops individuals',
+      'Coaching is only appropriate in a crisis, while affiliative suits routine work',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3458,10 +3458,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman warns about the risks of overusing the pacesetting style (leading by setting high standards and expecting others to follow). What typically happens when a construction manager relies exclusively on pacesetting?',
     options: [
-      'Habitual suppressors showed worse social outcomes (fewer close relationships, less social support, lower life satisfaction) and paradoxically experienced MORE negative emotion over time — while habitual reappraisers showed better outcomes on all these measures',
-      'Actively imagining the situation from the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s viewpoint: they may have taken time off work, arranged for the kitchen to be cleared, and planned meals around the completion date — understanding that the delay has a ripple effect on their daily life that extends beyond the electrical work itself',
-      'Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing',
-      'The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap',
+      'Over time the team feels overwhelmed, initiative drops, and the leader bottlenecks',
+      'The team becomes more self-reliant as members rise to meet the standards',
+      'Over time the team feels overwhelmed, initiative drops, morale falls, and the leader bottlenecks',
+      'Initiative increases because workers feel trusted to match the high bar',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3476,10 +3476,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Boyatzis\' Intentional Change Theory identifies the importance of the "Positive Emotional Attractor" (PEA) versus the "Negative Emotional Attractor" (NEA) in sustaining change. What is the difference and why does it matter for EI development?',
     options: [
-      'D: "Over the last two weeks, you have arrived 20-30 minutes late on four occasions." E: "This means I start the prep work alone, which is frustrating and puts us behind schedule." S: "I need you to arrive by the agreed start time, or let me know in advance if you will be delayed." C: "If we start together, we will finish the prep in half the time and both have a smoother day."',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
-      'The challenge is that effective self-regulation sometimes requires acknowledging difficulty or uncertainty (vulnerability), which conflicts with cultural norms of toughness — requiring the person to regulate the fear of judgement while still being authentic, a sophisticated form of emotional courage',
-      'PEA is activated by hope, compassion, and vision of the ideal self — it opens neural pathways for learning and change. NEA is activated by fear, anxiety, and focus on problems — it triggers defensiveness and closes learning pathways. EI development is more sustainable when driven by PEA ("I want to become a better leader") than NEA ("I must fix my weaknesses or I will fail")',
+      'PEA and NEA produce identical effects on the brain and on learning',
+      'NEA driven by fear is the more reliable route to lasting EI development',
+      'PEA closes neural pathways while NEA opens them to new learning',
+      'PEA (hope, vision) opens learning pathways; NEA (fear) closes them, so PEA sustains change',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3495,7 +3495,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "Written communication on construction sites often involves reporting issues or raising concerns. Applying EI, which email approach is more effective when reporting a subcontractor's quality issue to a project manager?",
     options: [
       '"The sparks on Block B are doing a terrible job again. Their work is shoddy and they clearly do not care about quality."',
-      '"I have identified three specific quality issues on the Block B first-fix installation: [list with photos]. I have discussed these with the subcontractor\'s supervisor, who has agreed to address items 1 and 2 by Friday. Item 3 may need your input as it relates to the specification. Happy to discuss further." — factual, solution-oriented, and respectful of all parties',
+      'A factual, solution-oriented note listing the specific issues and the agreed next steps',
       '"FYI — problems on Block B. Someone needs to sort it out."',
       '"Everything on Block B is fine, no issues to report" (avoiding the difficult conversation)',
     ] as const,
@@ -3516,10 +3516,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site manager faces three simultaneous challenges: a client escalating a complaint, an apprentice struggling with mental health, and two subcontractors in open conflict. Each situation requires a different Goleman leadership style. Which combination is most appropriate?',
     options: [
-      'Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties\\\' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions',
-      'Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs',
-      'Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries',
-      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
+      'Visionary for the client, coaching for the apprentice, democratic for the conflict',
+      'Visionary for the client, coaching and affiliative for the apprentice, democratic for the conflict',
+      'Apply pacesetting throughout to drive rapid resolution of every issue',
+      'Use only the affiliative style everywhere to keep everyone happy',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3534,10 +3534,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Integrating all five EI domains, describe the complete EI process when an electrician discovers that a regulation they have been following has been updated (e.g., BS 7671 amendment). How do all five domains work together?',
     options: [
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'Starting each week by asking your team: "What obstacles are you facing that I can help remove?" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves',
-      'Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements',
-      'The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically ("I can see this is a stressful situation, and I understand why"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate',
+      'Rely on a single domain — self-regulation — and ignore the other four',
+      'Apply the domains one at a time over several weeks rather than together',
+      'Each domain contributes: notice the feeling, regulate, find purpose, empathise, communicate',
+      'Use only social skills, since communicating the change is all that matters',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3552,10 +3552,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Long-term EI development follows a pattern similar to the "conscious competence" learning model. What are the four stages, and what does the final stage look like for EI?',
     options: [
-      'EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture',
-      'Consistently demonstrating: (1) framing work as a learning problem ("what can we learn from this?"), (2) acknowledging your own fallibility ("I may have missed something — what do you see?"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome',
-      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
-      'The four stages are: (1) Unconscious incompetence (not aware of EI gaps), (2) Conscious incompetence (aware of gaps but not yet skilled), (3) Conscious competence (able to use EI skills with deliberate effort), (4) Unconscious competence (EI skills are automatic and natural). The final stage looks like effortlessly reading emotional situations, naturally regulating responses, and instinctively supporting others — EI becomes who you are, not what you do',
+      'The final stage is permanent unconscious incompetence — EI is never truly learned',
+      'The four stages run in reverse, ending at unconscious incompetence',
+      'The final stage requires constant conscious effort that never becomes natural',
+      'Unconscious incompetence, conscious incompetence, conscious competence, unconscious competence',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3570,10 +3570,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Creating psychological safety (Edmondson) requires consistent leader behaviour over time. Which set of actions would most effectively build psychological safety in a construction team?',
     options: [
-      'Consistently demonstrating: (1) framing work as a learning problem ("what can we learn from this?"), (2) acknowledging your own fallibility ("I may have missed something — what do you see?"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome',
-      'Challenging the belief with evidence: "I have completed 47 EICRs successfully. This one had specific issues with the schedule of test results section. One returned report does not make me incompetent — it means I need to review my process for that specific section." This replaces a permanent, pervasive, personal belief with a specific, temporary, actionable one',
-      'Both theories share autonomy as a core element. SDT\\\\\\\\\\\\\\\'s "competence" maps closely to Pink\\\\\\\\\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\\\\'s "purpose" and SDT\\\\\\\\\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
-      'Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone',
+      'Framing work as learning, admitting your own fallibility, and welcoming people who speak up',
+      'Issuing a written policy declaring that the team is now psychologically safe',
+      'Punishing the first person who admits a mistake to set a clear example',
+      'Telling the team once that they should feel free to speak up, then moving on',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3588,10 +3588,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A workplace conflict between two electricians has been simmering for weeks and now threatens project delivery. The conflict involves both a legitimate technical disagreement AND a personal relationship breakdown. Which TKI modes might need to be used in sequence?',
     options: [
-      "Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions (\\\\\\\"Just think positive!\\\\\\\"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.",
-      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
-      "Coaching focuses on individual development (asking \\\\\\\"what do you want to become?\\\\\\\" and helping bridge the gap through challenging assignments and feedback), while affiliative focuses on team harmony and emotional bonds (asking \\\\\\\"how is everyone feeling?\\\\\\\" and strengthening connections). Coaching is most appropriate for developing potential; affiliative is most appropriate for healing rifts or building morale",
-      "Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs",
+      'Brief avoiding, then accommodating emotions, then collaborating, then compromising',
+      'Brief avoiding, then accommodating the emotions, then collaborating, then compromising if needed',
+      'Rely on avoiding alone and hope the conflict resolves on its own',
+      'Apply only accommodating so both electricians feel completely satisfied',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3606,10 +3606,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does emotional intelligence directly contribute to safety culture on construction sites, beyond just following HSE regulations?',
     options: [
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman\\\'s ASQ) was a better predictor of success than traditional hiring criteria',
-      'EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture',
-      'Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements',
+      'Self-awareness, regulation, motivation, empathy, and social skills build safety culture',
+      'EI is a soft skill with no measurable link to safety outcomes on site',
+      'Self-awareness, regulation, motivation, empathy, and social skills together build safety culture',
+      'Safety culture depends only on enforcement and penalties, not on EI',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3624,10 +3624,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Applying servant leadership (Greenleaf) through an EI lens to construction management, which behaviour best demonstrates the integration of both frameworks?',
     options: [
-      'Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs',
-      'The supervisor might notice: decreasing patience with apprentices\\\\\\\' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources',
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
-      'Starting each week by asking your team: "What obstacles are you facing that I can help remove?" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves',
+      'Directing every task personally so the team never has to make a decision',
+      'Keeping the most interesting work for yourself to demonstrate your expertise',
+      "Avoiding involvement in the team's problems so they learn independence",
+      'Asking what obstacles you can remove, then using empathy and follow-through to enable the team',
     ] as const,
     correctAnswer: 3,
     explanation:
@@ -3642,10 +3642,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'At the end of a comprehensive EI programme, an electrician is asked to demonstrate that they can integrate ALL five EI domains in a single workplace scenario. A client calls, very upset, saying their new consumer unit is making a buzzing noise and they are afraid it might be dangerous. Trace through all five EI domains in the ideal response.',
     options: [
-      'Self-Awareness: notice your own stress response to the urgent call and any defensive thoughts ("my installation was fine"). Self-Regulation: manage the stress, resist defensiveness, and stay calm and professional. Motivation: connect to your core purpose — client safety and quality of service. Empathy: genuinely understand the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fear (they do not have technical knowledge; to them, buzzing = danger) and validate it. Social Skills: communicate reassuringly ("I understand this is worrying — you are right to call"), ask clear diagnostic questions, arrange a prompt visit, and follow up after resolution to rebuild confidence. Every domain contributes to the response',
-      'Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties\\\\\\\' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions',
-      'Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation',
-      'Both theories share autonomy as a core element. SDT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "competence" maps closely to Pink\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "mastery" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "purpose" and SDT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "relatedness" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement',
+      "Notice your stress, regulate it, find purpose, empathise with the client's fear, reassure",
+      "Focus solely on the technical fault and dismiss the client's fear as irrational",
+      'Reassure the client everything is fine without arranging to inspect the unit',
+      'Become defensive about your installation and insist the client is mistaken',
     ] as const,
     correctAnswer: 0,
     explanation:

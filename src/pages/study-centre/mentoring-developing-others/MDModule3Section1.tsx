@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'am2-components',
     question: 'Which three areas does the AM2 assessment test?',
     options: [
-      'Health and safety theory, first aid, and site induction',
       'Practical installation, inspection and testing, and fault diagnosis',
+      'Health and safety theory, first aid, and site induction',
       'Cable calculation, circuit design, and documentation',
       'Customer service, time management, and cost estimation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The AM2 assessment tests three core areas: practical installation (wiring a consumer unit, circuits, and containment), inspection and testing (using instruments to verify the installation meets BS 7671), and fault diagnosis (finding and rectifying faults in a pre-wired installation). All three must be passed to achieve the AM2.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     options: [
       'Practical installation of circuits and containment',
       'Inspection and testing using appropriate instruments',
-      'Customer communication and quotation skills',
       'Fault diagnosis in a pre-wired installation',
+      'Customer communication and quotation skills',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The AM2 assessment tests three specific areas: practical installation (wiring circuits, containment, consumer units), inspection and testing (using instruments to verify BS 7671 compliance), and fault diagnosis (finding and rectifying faults). Customer communication and quotation skills, while important in practice, are not assessed in the AM2.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'In the three-way apprenticeship relationship, who typically acts as the bridge between college theory and site practice?',
     options: [
+      'The site mentor, who coordinates between employer and training provider',
       'The college tutor, who visits site regularly',
       'The apprentice themselves, who must make the connections independently',
-      'The site mentor, who coordinates between employer and training provider',
       'The JIB regional officer, who oversees all apprenticeships in the area',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The site mentor acts as the bridge between the employer (work-based learning) and the training provider (college-based theory). The mentor understands what the apprentice is learning at college and finds opportunities to apply that theory on site. This coordination role is essential for connecting theoretical knowledge with practical application.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
     question: 'What is the most common reason apprentices fail the AM2 assessment?',
     options: [
       'They are too nervous to perform on the day',
-      'Incorrect terminations, poor I&T technique, and time management issues',
       'They have never seen the assessment format before',
       'The assessment is designed to have a high failure rate',
+      'Incorrect terminations, poor I&T technique, and time management issues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most common AM2 failure areas are incorrect terminations (loose connections, wrong conductor identification), inadequate inspection and testing technique (incorrect instrument use, failure to follow the correct sequence), and poor time management (running out of time on the practical installation). Mentors should focus preparation on these specific areas.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A mentor notices their Stage 2 apprentice is struggling with three-phase theory at college. What is the best course of action?',
     options: [
+      'Arrange practical three-phase experience on site and coordinate with the college tutor to reinforce the theory',
       'Tell the apprentice to pay more attention in class and study harder',
       'Contact the college to complain about the quality of teaching',
-      'Arrange practical three-phase experience on site and coordinate with the college tutor to reinforce the theory',
       'Wait until Stage 3 when the apprentice will cover it again',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The best approach is to use the three-way relationship effectively — arrange practical three-phase experience on site (such as working on a commercial distribution board) and coordinate with the college tutor to reinforce the theory from a practical perspective. This bridges the gap between theory and practice, which is the mentor's primary coordination role.",
   },

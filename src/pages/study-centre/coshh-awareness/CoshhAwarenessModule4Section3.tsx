@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Under the hierarchy of control, when should RPE be provided to workers handling hazardous substances?',
     options: [
-      'As a first response whenever a hazardous substance is identified on site',
       'Only after elimination, substitution, engineering controls, and administrative controls have been applied and residual risk remains',
+      'As a first response whenever a hazardous substance is identified on site',
       'Whenever workers feel uncomfortable about chemical exposure',
       'Only when the substance has a workplace exposure limit (WEL)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'COSHH Regulation 7 requires employers to follow the hierarchy of control. RPE and PPE sit at the bottom of the hierarchy and should only be used as a last resort, after elimination, substitution, engineering controls (e.g. LEV), and administrative controls have been applied. PPE supplements those higher-level controls to manage the residual risk that remains. It is never acceptable to skip the hierarchy and rely solely on RPE.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 1,
     question: "According to COSHH Regulation 7(3), what does 'adequate control' of exposure mean?",
     options: [
-      'Providing PPE to every worker on site regardless of their task',
       'Ensuring exposure is below the WEL and reduced as low as reasonably practicable (ALARP)',
+      'Providing PPE to every worker on site regardless of their task',
       'Keeping exposure at exactly the WEL value with no requirement to go lower',
       'Eliminating the hazardous substance entirely from the workplace',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "COSHH Regulation 7(3) requires that exposure to hazardous substances is 'adequately controlled'. This means exposure must be kept below the relevant workplace exposure limit (WEL) AND reduced to as low as reasonably practicable (ALARP). Simply meeting the WEL is not enough; employers must continue to reduce exposure using the hierarchy of control measures wherever it is reasonably practicable to do so. RPE and PPE are the final measures used to manage residual risk after all higher-level controls have been applied.",
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     options: [
       'The mask removes 10% of airborne particles',
       'The mask can be used for 10 hours before the filters must be replaced',
-      'The concentration inside the mask should be no more than one-tenth of the concentration outside',
       'The mask protects against 10 different types of chemical hazard',
+      'The concentration inside the mask should be no more than one-tenth of the concentration outside',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "An APF of 10 means the respirator reduces the wearer's exposure by a factor of 10. The concentration of the contaminant inside the mask should be no more than one-tenth of the ambient concentration outside. To use APFs for RPE selection, divide the workplace concentration by the WEL. If the result is 8, you need RPE with an APF of at least 10. If the result is 15, you need an APF of at least 20, and so on. Always select RPE with an APF that exceeds the required protection factor.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 5,
     question: 'Under EN 374, which THREE properties of chemical-resistant gloves are assessed?',
     options: [
-      'Colour, thickness, and elasticity',
       'Permeation, degradation, and penetration',
+      'Colour, thickness, and elasticity',
       'Tensile strength, abrasion resistance, and puncture resistance',
       'Grip, dexterity, and comfort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EN 374 assesses three properties of chemical-resistant gloves. Permeation measures the rate at which a chemical passes through the glove material at a molecular level (used to determine breakthrough time). Degradation measures changes to the physical properties of the glove material after chemical contact (swelling, softening, cracking). Penetration tests whether the chemical can pass through seams, pinholes, or other imperfections in the glove. All three properties must be considered when selecting gloves for chemical handling.',
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
       'When selecting eye protection for chemical splash hazards, which EN 166 designation provides the most appropriate protection?',
     options: [
       'Safety spectacles with side shields',
-      'Safety spectacles with clear lenses',
       'Chemical splash goggles with indirect ventilation',
+      'Safety spectacles with clear lenses',
       'A basic face shield with no goggles underneath',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Chemical splash goggles with indirect ventilation provide the most appropriate eye protection against liquid chemical splashes. They form a seal around the eyes, preventing liquid from reaching the eyes from any angle. Safety spectacles (even with side shields) leave gaps where splashed liquid can enter. Face shields protect the face but not the eyes from splashes coming from below or around the sides. For chemical splash hazards, goggles should be the baseline, with a face shield worn over goggles if there is a risk of large-volume splashes reaching the face.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'Which of the following is a common mistake when selecting and using PPE for COSHH work?',
     options: [
       'Checking the safety data sheet before selecting gloves',
-      'Using RPE as the sole control measure without applying higher-level controls first',
       "Replacing chemical-resistant gloves before the manufacturer's stated breakthrough time",
       'Conducting a face-fit test each time a new RPE model is issued',
+      'Using RPE as the sole control measure without applying higher-level controls first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Using RPE as the sole control measure, without first applying higher-level controls from the hierarchy of control, is one of the most common and serious mistakes in COSHH compliance. The hierarchy requires employers to eliminate or substitute the substance, then apply engineering controls (such as LEV), then administrative controls, before relying on PPE. Using RPE alone suggests the hierarchy has been ignored, which is a breach of COSHH Regulation 7. All of the other options describe correct practices: checking the SDS, replacing gloves proactively, and retesting face-fit when the RPE model changes.',
   },

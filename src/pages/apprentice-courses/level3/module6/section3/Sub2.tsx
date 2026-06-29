@@ -43,24 +43,24 @@ const checks = [
     question:
       "A 6 A lighting circuit serving LED downlights with electronic drivers. The driver in-rush is high (200 A peak for 100 microseconds at switch-on across the full circuit). The right protective device characteristic is:",
     options: [
-      "\\\\\\\\\\\\\\\"Describe: You have arrived after 09:00 on four occasions. Express: This causes concern as it delays the programme. Specify: I need you on site by 08:00. Consequences: This keeps the project on track\\\\\\\\\\\\\\\"",
-      "It must achieve the required Performance Level (PL) through appropriate architecture, component reliability, diagnostic coverage, and common cause failure avoidance",
-      "Type C 6 A — the in-rush of LED drivers exceeds the Type B 5 x In magnetic trip threshold (30 A on a 6 A device) by a factor of 7. Type C trips at 5-10 x In, comfortably above the in-rush, and avoids nuisance trip on first switch-on.",
-      "Revising the scaffold handover procedure, retraining all competent persons on the inspection protocol, implementing a verification system, and auditing compliance at defined intervals",
+      "Type B 10 A — bump the rating so the higher thermal threshold rides through the in-rush.",
+      "Type D 6 A — the 10-20 x In magnetic threshold is the only one high enough for LED in-rush.",
+      "Type C 6 A — the 5-10 x In magnetic threshold stays clear of the LED driver in-rush.",
+      "Type B 6 A with a 100 mA time-delayed RCD — the RCD delay absorbs the in-rush.",
     ],
     correctIndex: 2,
     explanation:
-      "LED driver in-rush is the classic Type B nuisance-trip case. The Type B characteristic trips magnetically at 3-5 x In; on a 6 A device that is 18-30 A, easily exceeded by the 200 A in-rush even though the in-rush lasts microseconds. Type C trips at 5-10 x In (30-60 A on a 6 A device), so the magnetic trip stays clear of the in-rush. The thermal protection (overload) is unchanged between Type B and Type C — both protect the cable from continuous overcurrent.",
+      "LED driver in-rush is the classic Type B nuisance-trip case. Type B trips magnetically at 3-5 x In; on a 6 A device that is 18-30 A, easily exceeded by the 200 A in-rush even though it lasts only microseconds. Type C trips at 5-10 x In (30-60 A on a 6 A device), so the magnetic trip stays clear of the in-rush. Increasing the rating (Type B 10 A) breaks cable protection; Type D is unnecessarily harsh and needs a very low Zs; the RCD does not influence magnetic tripping. The thermal overload protection is unchanged between Type B and Type C.",
   },
   {
     id: 'device-bcap',
     question:
       "A small commercial unit with 100 A intake, declared PSCC at the intake of 16 kA. The consumer unit is fed by 25 mm² T&E (impedance about 0.0072 ohms / m, run 8 m). The PSCC at the consumer unit busbar is approximately 13.8 kA. What breaking capacity must the MCBs in the consumer unit be?",
     options: [
-      "10 kA Icn at minimum — the PSCC at the busbar (13.8 kA) exceeds the standard BS EN 60898 6 kA Icn limit. Most BS EN 60898 MCBs offer Icn of 6 kA or 10 kA; for higher PSCC choose 10 kA Icn devices or back-up the consumer unit with a BS 88 fuse to provide cascade-coordinated protection.",
-      "Risk assessment + permit + atmosphere monitoring (oxygen, flammable, toxic) before AND during entry + standby person outside in communication + rescue plan + appropriate PPE + training + emergency procedures.",
-      "Anyone who can\\\\\\\\\\\\\\\\'t use the standard evacuation route unaided - wheelchair users, sensory impaired, cognitive impairment, temporary impairment (broken leg, late pregnancy). Required where reasonable adjustment is needed.",
-      "HMRC is His Majesty's Revenue and Customs — the UK tax authority. For a sole trader: register for Self Assessment within 3 months of starting trading; file a Self Assessment tax return each January; pay income tax and Class 2/4 National Insurance on profits; potentially register for VAT if turnover exceeds £85,000/year. HMRC also handles PAYE if you have employees.",
+      "10 kA Icn minimum — the 13.8 kA busbar PSCC exceeds 6 kA, so use 10 kA or BS 88 cascade.",
+      "6 kA Icn — the 8 m of 25 mm² T&E limits busbar fault current to within the 6 kA rating.",
+      "3 kA Icn — domestic-spec devices are 3 kA and the cut-out fuse handles the rest.",
+      "Breaking capacity is irrelevant — the RCD disconnects before the MCB sees the fault current.",
     ],
     correctIndex: 0,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "A B40 RCBO in the consumer unit is fed via a 100 A BS 88-3 main switch and main fuse. A short-circuit fault on a final circuit downstream of the RCBO. The discrimination outcome you want is:",
     options: [
-      "It tells you the appliance has been double-insulated by the manufacturer to provide protection without relying on a CPC — so you don’t add an earth wire to the casing thinking you’re improving safety.",
-      "Only the RCBO trips. The 100 A BS 88-3 main fuse stays intact, leaving the rest of the building's circuits running. Discrimination is the design intent: clear the smallest practical area on a fault and leave the rest alive.",
-      "G98 — the fit-and-inform regime for generation up to and including 16 A per phase per inverter. The installer notifies the DNO within 28 days of energisation. The inverter must be type-tested to G98 / EREC G99 compliance and the model / type-test number recorded on the notification.",
-      "Last resort. PPE Regs 1992 (as amended 2022 to cover limb workers) require employer to provide PPE only WHERE risks cannot be controlled by other means. Hierarchy: eliminate → substitute → engineer → administer → PPE.",
+      "Both the RCBO and the 100 A main fuse operate together, isolating the whole building so the fault cannot spread.",
+      "Only the RCBO trips; the 100 A BS 88-3 main fuse stays intact, leaving the rest of the building's circuits running.",
+      "Only the 100 A main fuse blows, because the larger device always operates first on a heavy short-circuit fault.",
+      "Neither device operates — the fault current is shared so each sees less than its own rating and rides through.",
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "BS EN 60898 MCB Type B trips magnetically (instantaneous) at:",
     options: [
-      "Because friction and the risk of cable jamming during pulling rise with length and bends, so a lower fill is needed to keep pulling tensions safe",
-      "3 to 5 times the rated current (In). Suitable for resistive and standard domestic loads where in-rush currents are modest.",
-      "The Qualified Supervisor and the contracting business — non-conformities go on a written report with corrective action timescales",
-      "A circuit with a single cable going from the consumer unit to the last accessory, with branches off as needed",
+      "1.45 times the rated current (In) — the same multiple as the thermal overload trip point.",
+      "3 to 5 times the rated current (In), suited to resistive and standard domestic loads.",
+      "5 to 10 times the rated current (In), the lowest of the three trip-curve thresholds.",
+      "2 to 3 times the rated current (In), reserved for the most sensitive lighting circuits.",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: "BS EN 60898 Type C MCB trips magnetically at:",
     options: [
-      "A concise overview of the problem, root cause, key findings and recommended actions — typically no more than one page",
-      "Two pressure connections — one at the bottom (high side) and one at the top (low side) — to compensate for the vessel pressure above the liquid",
-      "5 to 10 times the rated current. Used on circuits with moderate in-rush (LED arrays with high in-rush drivers, fluorescent banks, transformers, smaller motors).",
-      "Move the box ±50 mm sideways to clear the stud, or use a dry-line box with a side-fixing flange that catches the stud.",
+      "3 to 5 times the rated current, used on general domestic lighting and socket circuits.",
+      "10 to 20 times the rated current, reserved for transformers and welding plant with severe in-rush.",
+      "5 to 10 times the rated current, used on circuits with moderate in-rush such as LED arrays and small motors.",
+      "4 to 7 times the rated current, the mid-range curve used only on motor circuits below 5 kW.",
     ],
     correctAnswer: 2,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 3,
     question: "BS EN 60898 Type D MCB trips magnetically at:",
     options: [
-      "9 metres clearance from the line, plus goal posts or physical barriers to define the exclusion zone, a banksman, and consultation with the power company",
-      "Platform height is the height of the working platform; working height is typically platform height plus approximately 2 metres (average reach)",
-      "Install physical barriers (e.g. concrete blocks, road cones) around the tower base to protect it from vehicle impact",
-      "10 to 20 times In. Used for circuits with very high in-rush — large transformers, welding plant, motor circuits with DOL starting on heavy loads.",
+      "5 to 10 times In, used for moderate in-rush such as fluorescent banks and small motors.",
+      "20 to 40 times In, the highest available curve, reserved for X-ray equipment only.",
+      "3 to 5 times In, the standard domestic curve, suitable for any fixed appliance.",
+      "10 to 20 times In, used for very high in-rush such as large transformers and heavy DOL motor starts.",
     ],
     correctAnswer: 3,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: "What does Reg 434.5.1 require regarding protective device breaking capacity?",
     options: [
-      "The rated breaking capacity (Icn for MCBs, Icu for MCCBs) shall be at least equal to the prospective fault current at the device, unless backup protection by an upstream device limits the let-through energy to within the device's rating (cascade protection).",
-      "Physiological response to electric current passing through the body. Effects scale with current (mA): perception (1mA), pain (5-10mA), can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t-let-go (10-20mA), respiratory paralysis (20-50mA), ventricular fibrillation (50-100mA+). Duration matters — long exposure at lower current can be lethal.",
-      "XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure",
-      "RASA provides the structural process (receive, appreciate, summarise, ask) while Covey's empathetic listening adds the depth of emotional understanding and perspective-taking within each step",
+      "The rated breaking capacity shall be at least the prospective fault current at the device, unless cascade backup limits the let-through energy.",
+      "The breaking capacity shall be at least the design current Ib, so the device can interrupt its own normal load.",
+      "The breaking capacity shall be at least 1.45 times the cable's current-carrying capacity Iz, matching overload coordination.",
+      "The breaking capacity shall be at least twice the rated current In, giving a margin against nuisance overload operation.",
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "BS 7671 A4:2026 Table 41.3 maximum Zs for a Type B 32 A MCB on a 230 V system (Cmin 0.95) is approximately:",
     options: [
-      "It constitutes a breach of both the Management Regulations 1999 and the Confined Spaces Regulations 1997, potentially leading to prosecution",
-      "1.37 ohms — this is the A4:2026 figure with Cmin = 0.95 applied. Older editions of BS 7671 had higher values (around 1.44 ohms) before Cmin was reduced.",
-      "To assess the hazards, define the precautions, issue the permit, and ensure the safe system of work is followed",
-      "After energising, that the supply polarity (line vs neutral) is as expected and consistent with dead-test polarity verification at all accessories",
+      "2.30 ohms — the full nominal 230 V supply divided by the 100 A overload threshold.",
+      "1.37 ohms — the A4:2026 figure with Cmin = 0.95 applied (older editions were higher).",
+      "0.68 ohms — the figure for a Type C 32 A device, which shares the Type B max Zs.",
+      "4.37 ohms — the disconnection-time value before the magnetic trip threshold is considered.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "An RCBO (BS EN 61009-1) provides:",
     options: [
-      "A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used",
-      "The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham",
-      "Combined overcurrent (overload + short-circuit, like an MCB) and residual current protection (like an RCD) in a single device. Available in trip thresholds 10 mA, 30 mA, 100 mA, 300 mA on Type AC, A, F or B.",
-      "If the PEN conductor breaks, the installation earth rises to supply voltage, creating danger on exposed metalwork and extraneous-conductive-parts",
+      "Residual current protection only, with no overcurrent function — it needs a separate MCB on the same circuit.",
+      "Overcurrent protection only — effectively an MCB with higher breaking capacity and no residual current sensing.",
+      "Combined overcurrent (like an MCB) and residual current protection (like an RCD) in a single device.",
+      "Arc fault detection combined with overcurrent protection, replacing the need for a separate AFDD.",
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: "A BS 88 HRC fuse has the advantage over an MCB of:",
     options: [
-      "The responsible person must ensure employees receive adequate fire safety training when first employed, when exposed to new or increased risks, and periodically thereafter — provided during working hours and at no cost to the employee",
-      "Submit a G99 application to the DNO BEFORE installation, providing system details and protection settings — DNO assesses network impact, may require modifications, and approval must be received before energisation",
-      "A trauma-informed approach avoids re-traumatisation; in practice this means creating predictable routines, providing clear communication, responding with empathy rather than punishment to emotional outbursts, and asking 'what happened to you?' rather than 'what's wrong with you?'",
-      "Substantially higher breaking capacity (typically 50-80 kA for BS 88-3 / BS 88-2 in commercial sizes), faster I²t let-through under heavy fault, and well-defined cascade behaviour. Plus zero risk of nuisance trip from in-rush — fuses do not 'see' microsecond peaks, only sustained current.",
+      "Re-settability after a fault — the fuse can be reset by hand like an MCB, avoiding the need for spares.",
+      "A built-in switching function, isolating the circuit for maintenance without a separate switch.",
+      "Integrated residual current protection, removing the need for a separate RCD on the protected circuit.",
+      "Substantially higher breaking capacity (typically 50-80 kA) with fast I²t let-through and clean cascade.",
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: "On the design schedule, the protective device row for a 32 A radial socket circuit on a 230 V TN-C-S supply should record:",
     options: [
-      "Type (BS EN 60898 Type B or C), rating (32 A), breaking capacity (e.g. 6 kA Icn), trip characteristic family, RCD class if combined (e.g. RCBO 30 mA Type A), and the maximum Zs figure used for verification (Type B32 = 1.37 ohms per Table 41.3 A4:2026). Plus the manufacturer / part number for traceability.",
-      "The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time",
-      "A specific aspect of the design that does not comply with BS 7671 but achieves equivalent safety via an alternative standard or technical justification — must be documented on the EIC with the alternative referenced.",
-      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
+      "Type, rating, breaking capacity, characteristic, RCD class if combined, design max Zs, and manufacturer / part number.",
+      "The rating only (32 A) — type, breaking capacity and RCD class are chosen by the installer from whatever is in the van.",
+      "The measured Zs and RCD trip time from testing — the design row is filled in only after installation and testing.",
+      "The cable CSA and length only — the protective device is implied by the cable size and needs no separate spec.",
     ],
     correctAnswer: 0,
     explanation:
@@ -248,7 +248,7 @@ export default function Sub2() {
             points={[
               "Three protective device families dominate UK LV: BS 88 HRC fuses (high breaking capacity, cascade backup), BS EN 60898 MCBs (per-circuit overcurrent protection), and BS EN 61009-1 RCBOs (combined overcurrent + RCD).",
               "MCB / RCBO trip characteristics: Type B (3-5 x In magnetic) for general domestic; Type C (5-10 x In) for moderate in-rush; Type D (10-20 x In) for severe in-rush. Higher characteristic = higher fault current required = lower max Zs.",
-              "BS 7671 A4:2026 Table 41.3 max Zs for a Type B 32 A on 230 V is 1.37 ohms (with Cmin 0.95). Older editions quoted around 1.37 ohms — design to the current edition's figure.",
+              "BS 7671 A4:2026 Table 41.3 max Zs for a Type B 32 A on 230 V is 1.37 ohms (with Cmin 0.95). Older editions quoted around 1.44 ohms — design to the current edition's figure.",
             ]}
           />
 
@@ -503,7 +503,7 @@ export default function Sub2() {
               <li>BS EN 60898 Type B 6 A — max Zs approx 7.28 ohms.</li>
               <li>BS EN 60898 Type B 16 A — max Zs approx 2.73 ohms.</li>
               <li>BS EN 60898 Type B 20 A — max Zs approx 2.18 ohms.</li>
-              <li>BS EN 60898 Type B 32 A — max Zs approx 1.37 ohms (this is the A4:2026 value with Cmin 0.95; older editions quoted approx 1.37 ohms).</li>
+              <li>BS EN 60898 Type B 32 A — max Zs approx 1.37 ohms (this is the A4:2026 value with Cmin 0.95; older editions quoted approx 1.44 ohms).</li>
               <li>BS EN 60898 Type B 40 A — max Zs approx 1.09 ohms.</li>
               <li>BS EN 60898 Type C 16 A — max Zs approx 1.37 ohms (Type C 16 A roughly equivalent to Type B 32 A in max Zs because of higher 5-10 x In magnetic threshold).</li>
               <li>BS EN 60898 Type C 32 A — max Zs approx 0.68 ohms.</li>
@@ -710,7 +710,7 @@ export default function Sub2() {
               "Three protective device families dominate UK LV: BS 88 HRC fuses (high breaking capacity, cascade backup), BS EN 60898 MCBs (per-circuit overcurrent), and BS EN 61009-1 RCBOs (combined overcurrent + RCD).",
               "Type B (3-5 x In magnetic): default for residential and small commercial. Type C (5-10 x In): moderate in-rush — LED arrays, fluorescent banks, small motors. Type D (10-20 x In): industrial only — large transformers, welders, heavy DOL.",
               "Higher trip characteristic = higher fault current required = lower max Zs. A Type C 32 A has roughly half the max Zs of a Type B 32 A; a Type D requires very low Zs and is impractical at the end of long radials.",
-              "BS 7671 A4:2026 Table 41.3 max Zs for Type B 32 A on 230 V is 1.37 ohms with Cmin 0.95. Older editions quoted approximately 1.37 ohms. Design to the current edition's figures.",
+              "BS 7671 A4:2026 Table 41.3 max Zs for Type B 32 A on 230 V is 1.37 ohms with Cmin 0.95. Older editions quoted approximately 1.44 ohms. Design to the current edition's figures.",
               "Reg 434.5.1: device breaking capacity must equal or exceed PSCC at its installed point, OR be backed up by a cascade-coordinated upstream device with proven let-through energy within the downstream device's withstand.",
               "RCD class for combined RCBOs: Type A is the modern minimum; Type F for circuits with single-phase inverters / VSDs; Type B mandatory for EV charging on TN-C-S without internal Type B equivalent monitoring (Reg 722.531.3.101).",
               "Discrimination — clearing the smallest area on a fault — requires coordinated time-current characteristics. Fuse upstream of MCB: typically discriminates if fuse is at least 1.6 x MCB rating; verify with manufacturer cascade tables.",

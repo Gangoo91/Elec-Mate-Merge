@@ -82,34 +82,34 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
     {
       question:
         'What percentage of circuits should typically be tested during point-to-point wiring verification?',
-      options: ['25% sample', '50% sample', '75% sample', '100% of all circuits'],
+      options: ['100% of all circuits', '75% of circuits', '50% sample', '25% sample'],
       correctAnswer: '100% of all circuits',
     },
     {
       question:
-        'Which BS EN 61439 routine verification test checks for correct polarity and phase sequence?',
+        'Which BS EN 61439 routine verification activity confirms correct polarity and phase sequence?',
       options: [
-        'Insulation resistance test',
+        'Insulation resistance measurement',
         'Wiring verification including phase rotation',
-        'Dielectric withstand test',
-        'Temperature rise test',
+        'Power-frequency dielectric withstand test',
+        'Temperature-rise verification',
       ],
       correctAnswer: 'Wiring verification including phase rotation',
     },
     {
       question:
-        'What is the minimum insulation resistance value required between live conductors and exposed conductive parts under BS EN 61439?',
-      options: ['0.5 megohms', '1 megohm', '2 megohms', '5 megohms'],
+        'What is the minimum insulation resistance value required between live conductors and exposed conductive parts under BS EN 61439 routine verification?',
+      options: ['0.5 megohm', '5 megohms', '1 megohm', '2 megohms'],
       correctAnswer: '1 megohm',
     },
     {
       question:
         'During functional sequence testing of a motor starter, what should be verified first?',
       options: [
-        'Motor full-load current',
+        'Power factor correction operation',
+        'Harmonic distortion levels at the terminals',
         'Correct operation of control circuit interlocks',
-        'Power factor correction',
-        'Harmonic distortion levels',
+        'Measured motor full-load current',
       ],
       correctAnswer: 'Correct operation of control circuit interlocks',
     },
@@ -117,10 +117,10 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
       question:
         'What document must accompany the assembly as part of the technical file under BS EN 61439?',
       options: [
-        'Marketing materials',
         'Single-line diagram and circuit diagrams',
+        'Product marketing brochure',
         'Company annual report',
-        'Staff training records',
+        'Staff training attendance records',
       ],
       correctAnswer: 'Single-line diagram and circuit diagrams',
     },
@@ -128,19 +128,19 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
       question: 'When should Site Acceptance Testing (SAT) be performed?',
       options: [
         'Before the assembly leaves the factory',
-        'During manufacture only',
+        'During the manufacturing stage only',
+        'Only when requested by the insurer',
         'After installation at the final location',
-        'Only when requested by insurance',
       ],
       correctAnswer: 'After installation at the final location',
     },
     {
       question: 'What is the purpose of customer witness testing during FAT?',
       options: [
-        'To reduce manufacturer liability',
+        'To reduce the manufacturer’s liability for defects',
         'To allow the customer to verify compliance before accepting delivery',
-        'To train customer maintenance staff',
-        'To satisfy warranty requirements only',
+        'To deliver maintenance training to customer staff',
+        'To activate the equipment warranty period',
       ],
       correctAnswer: 'To allow the customer to verify compliance before accepting delivery',
     },
@@ -149,9 +149,9 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         'Which routine verification test confirms the protective circuit integrity in a switchgear assembly?',
       options: [
         'Insulation resistance test',
+        'Power-frequency dielectric strength test',
         'Protective circuit continuity test',
-        'Dielectric strength test',
-        'Functional operation test',
+        'Mechanical functional operation test',
       ],
       correctAnswer: 'Protective circuit continuity test',
     },
@@ -159,22 +159,22 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
       question:
         'What must be included in the Operation and Maintenance (O&M) manual for a switchgear assembly?',
       options: [
-        'Only the warranty terms',
+        'The product warranty terms only',
+        'Manufacturer staff contact details only',
+        'The project delivery timeline only',
         'Maintenance schedules, operating instructions, and safety information',
-        'Staff contact details only',
-        'Project timeline',
       ],
       correctAnswer: 'Maintenance schedules, operating instructions, and safety information',
     },
     {
-      question: 'Under BS EN 61439, what is the purpose of the technical file?',
+      question: 'Under BS EN 61439, what is the primary purpose of the technical file?',
       options: [
-        'Marketing documentation for sales',
-        'To demonstrate conformity with design verification requirements',
-        'Employee training records',
-        'Financial project records',
+        'To provide sales and marketing documentation',
+        'To demonstrate conformity with the verification requirements',
+        'To store employee training records',
+        'To hold financial project records',
       ],
-      correctAnswer: 'To demonstrate conformity with design verification requirements',
+      correctAnswer: 'To demonstrate conformity with the verification requirements',
     },
   ];
 

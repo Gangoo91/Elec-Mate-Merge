@@ -25,8 +25,8 @@ const quickCheckQuestions = [
     options: [
       'Re-experiencing — the nightmares are intrusive re-experiencing of the event',
       'Avoidance — he is avoiding the location associated with the trauma',
-      'Hyperarousal — he is on edge and jumpy (hypervigilant, exaggerated startle response)',
-      'Negative Cognitions and Mood — while he has withdrawn, the scenario does not describe persistent guilt, shame, or distorted blame',
+      'Hyperarousal — he is on edge and jumpy, with an exaggerated startle response',
+      'Negative Cognitions and Mood — no persistent guilt, shame, or distorted blame is described',
     ],
     correctIndex: 3,
     explanation:
@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     question:
       'A colleague discloses that they experienced years of domestic violence at home. They describe extreme difficulty controlling their emotions, a deep sense of worthlessness, and an inability to trust anyone at work. They have been diagnosed with Complex PTSD. What distinguishes Complex PTSD from standard PTSD?',
     options: [
-      'Complex PTSD only involves flashbacks, whereas standard PTSD does not',
-      'Complex PTSD includes additional features beyond standard PTSD: emotional dysregulation, negative self-concept, and relationship difficulties — typically resulting from prolonged or repeated trauma',
-      'Complex PTSD is less severe than standard PTSD and does not require specialist treatment',
-      'Complex PTSD and standard PTSD are identical — the terms are interchangeable',
+      'Complex PTSD only involves flashbacks, whereas standard PTSD never does',
+      'It adds emotional dysregulation, negative self-concept, and relationship difficulties',
+      'Complex PTSD is milder than standard PTSD and needs no specialist treatment at all',
+      'Complex PTSD and standard PTSD are identical, so the terms are interchangeable',
     ],
     correctIndex: 1,
     explanation:
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'You are a Mental Health First Aider on a construction site. A colleague has recently disclosed a traumatic experience and is visibly distressed. Which of the following best reflects the five principles of a trauma-informed approach?',
     options: [
-      'Diagnose the trauma, prescribe a treatment plan, refer immediately to A&E, document everything, and inform the site manager',
-      'Safety, Trustworthiness, Choice, Collaboration, and Empowerment — creating a safe space, being transparent, offering options rather than directing, working with the person, and supporting their sense of control',
-      'Listen briefly, advise them to toughen up, suggest they take the rest of the day off, and avoid discussing it further',
-      'Immediately contact their GP, inform HR, arrange counselling without their consent, and remove them from the work rota',
+      'Safety, Trustworthiness, Choice, Collaboration, and Empowerment, supporting their control',
+      'Diagnose the trauma, prescribe a treatment plan, refer to A&E, and inform the site manager',
+      'Listen briefly, tell them to toughen up, send them home, and avoid discussing it again',
+      'Contact their GP, inform HR, arrange counselling without consent, and pull them off the rota',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The five principles of a trauma-informed approach are: Safety (ensuring physical and emotional safety), Trustworthiness (being transparent, consistent, and reliable), Choice (giving the person options and control over what happens next), Collaboration (working alongside the person rather than doing things to them), and Empowerment (supporting their strengths, resilience, and ability to recover). As an MHFA, you are not diagnosing or prescribing treatment — you are providing initial support and signposting to appropriate professional help.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 1,
     question: "Which of the following best describes 'complex trauma'?",
     options: [
-      'A single traumatic incident such as a car accident or natural disaster',
-      'Prolonged, repeated, or inescapable traumatic experiences such as ongoing domestic violence, childhood abuse, or captivity',
+      'Prolonged, repeated, or inescapable trauma such as ongoing abuse or captivity',
+      'A single traumatic incident such as a car accident or a natural disaster',
       "Witnessing another person's traumatic experience through media reports",
-      'A traumatic event that occurred in a workplace setting specifically',
+      'A traumatic event that occurred specifically within a workplace setting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Complex trauma refers to prolonged, repeated, or inescapable traumatic experiences — typically occurring in situations where the person cannot escape, such as domestic violence, childhood abuse, human trafficking, or war. This is distinct from single-incident trauma (a one-off event like an accident or assault) and vicarious trauma (exposure to others' trauma). Complex trauma often leads to Complex PTSD, which includes additional features beyond standard PTSD.",
   },
@@ -131,9 +131,9 @@ const quizQuestions = [
     question:
       "A construction worker who witnessed a colleague's fatal electrocution three months ago is now experiencing vivid flashbacks where he feels as though the event is happening again. He can smell the burning and hear the sounds. What symptom cluster does this belong to?",
     options: [
-      'Avoidance — he is re-living the event to try to process it',
-      'Hyperarousal — the flashbacks are a form of heightened alertness',
-      'Re-experiencing — flashbacks are involuntary, vivid reliving of the traumatic event with sensory components (sight, sound, smell) that feel as though the event is happening in the present moment',
+      'Avoidance — he is deliberately re-living the event in order to process it',
+      'Hyperarousal — the flashbacks are simply a form of heightened alertness',
+      'Re-experiencing — vivid, involuntary reliving with sensory components, as if happening now',
       'Negative Cognitions and Mood — the flashbacks reflect a negative thought pattern',
     ],
     correctAnswer: 2,
@@ -146,11 +146,11 @@ const quizQuestions = [
       'What additional features distinguish Complex PTSD from standard PTSD in the ICD-11 classification?',
     options: [
       'More frequent flashbacks and more severe nightmares',
-      'Emotional dysregulation, negative self-concept, and disturbances in relationships',
       'Physical symptoms such as chronic pain and fatigue',
       'Inability to recall the traumatic event (complete amnesia)',
+      'Emotional dysregulation, negative self-concept, and disturbances in relationships',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "ICD-11 recognises Complex PTSD as a distinct diagnosis that includes all the core features of PTSD plus three additional 'disturbances in self-organisation': (1) Emotional dysregulation — difficulty controlling emotions, explosive anger, or emotional shutdown; (2) Negative self-concept — persistent feelings of worthlessness, being permanently damaged, shame, guilt, or defeat; (3) Disturbances in relationships — difficulty trusting others, feeling detached from people, inability to maintain close relationships. These additional features typically result from prolonged, repeated trauma where escape was difficult or impossible.",
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'Why are construction workers particularly vulnerable to trauma-related mental health conditions?',
     options: [
-      'Construction workers are genetically more susceptible to PTSD than workers in other industries',
-      "Construction has higher exposure to potentially traumatic incidents (falls, electrocution, structural collapse, deaths on site), a culture of 'toughness' that discourages help-seeking, and cumulative exposure to dangerous situations over a career",
-      'Construction workers receive no first aid training, so they are unprepared for accidents',
-      'Construction workers work longer hours than any other profession, causing chronic fatigue that leads to PTSD',
+      'Construction workers are genetically more susceptible to PTSD than other workers',
+      'Construction workers receive no first aid training, leaving them unprepared for accidents',
+      'Construction workers work far longer hours than any other profession, causing PTSD',
+      "Higher exposure to traumatic incidents, a 'toughness' culture, and cumulative exposure",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Construction workers face multiple risk factors for trauma: high exposure to potentially traumatic incidents (the industry has one of the highest rates of serious injury and fatality), cumulative exposure over a career (witnessing multiple incidents compounds the psychological impact), a culture that often stigmatises mental health discussions ('man up', 'get on with it'), practical barriers to accessing help (remote site locations, self-employment, lack of occupational health support), and the physical nature of the work which means taking time off for mental health feels unacceptable. These factors combine to make construction workers especially vulnerable.",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     id: 6,
     question: "Which of the following best describes the trauma-informed principle of 'Choice'?",
     options: [
+      'Giving the person options and a sense of control over what happens next',
       "Choosing the most appropriate clinical diagnosis for the person's condition",
-      'Allowing the person to choose which therapist they want to see',
-      'Giving the person options and a sense of control over what happens next, rather than making decisions for them or directing them',
-      'Choosing not to discuss the traumatic event to avoid causing further distress',
+      'Allowing the person to choose exactly which therapist they would like to see',
+      'Choosing not to discuss the traumatic event so as to avoid further distress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The principle of 'Choice' in a trauma-informed approach means giving the person options and restoring their sense of control. Trauma often involves a loss of control — the person was unable to prevent what happened to them. In your response, you should offer options rather than directing: 'Would you like me to sit with you for a bit, or would you prefer some space?', 'There are a few services that might help — would you like me to tell you about them?', 'You don't have to talk about what happened — but I'm here if you want to.' This restores agency and avoids replicating the powerlessness experienced during the trauma.",
   },
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'According to NICE guidelines, what are the two recommended first-line treatments for PTSD in adults?',
     options: [
-      'Medication (antidepressants) and group counselling',
-      'Trauma-focused Cognitive Behavioural Therapy (TF-CBT) and Eye Movement Desensitisation and Reprocessing (EMDR)',
-      'Hypnotherapy and mindfulness meditation',
-      'Debriefing sessions immediately after the traumatic event and ongoing counselling',
+      'Antidepressant medication combined with regular group counselling sessions',
+      'Trauma-focused CBT (TF-CBT) and Eye Movement Desensitisation and Reprocessing (EMDR)',
+      'Clinical hypnotherapy combined with daily mindfulness meditation practice',
+      'Single-session debriefing right after the trauma, followed by ongoing counselling',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     question:
       'As a Mental Health First Aider, which of the following actions is most appropriate when supporting a colleague who may be experiencing PTSD symptoms after a site incident?',
     options: [
-      'Diagnose them with PTSD based on the symptoms they describe and recommend EMDR therapy',
-      'Encourage them to relive the traumatic event in detail so they can process it — this is what therapists do in trauma-focused CBT',
-      'Listen without judgement, validate their experience, offer practical support, and signpost to professional help such as their GP, EAP, or specialist services — without attempting to diagnose or provide therapy',
-      "Inform the site manager and HR department about the person's mental health condition so they can arrange mandatory counselling",
+      'Diagnose them with PTSD from the symptoms they describe and recommend EMDR therapy',
+      'Encourage them to relive the traumatic event in detail, as therapists do in TF-CBT',
+      'Listen without judgement, offer support, and signpost to their GP or specialist services',
+      "Tell the site manager and HR about their condition so mandatory counselling is arranged",
     ],
     correctAnswer: 2,
     explanation:

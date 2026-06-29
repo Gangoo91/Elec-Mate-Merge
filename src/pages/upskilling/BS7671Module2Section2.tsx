@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A pendant lampholder with no exposed metal parts is fitted to a plastic ceiling rose. Reg 411.3.1.1 — does a CPC have to be terminated at this point?',
     options: [
-      'Yes — every accessory must have a CPC at the point, no exceptions',
-      'No — Reg 411.3.1.1 contains a narrow exception for a lampholder having no exposed-conductive-parts and suspended from such a point',
-      'Only if the circuit is on a TT system',
-      'Only if the room is a special location',
+      'Yes — every accessory must have a CPC terminated, with no exceptions',
+      'No — Reg 411.3.1.1 exempts a lampholder with no exposed metal, suspended',
+      'Only if the circuit is supplied from a TT earthing system',
+      'Only if the room is a Part 7 special location (bath, shower)',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A 12 V LED downlight system is fed from a transformer marked "BS EN 61558-2-6 — safety isolating transformer". The secondary has no earth reference. Which protective measure is in place?',
     options: [
-      'FELV — the source is shared',
-      'PELV — the secondary is earthed',
-      'SELV — band I voltage, safety isolating source, no intentional earth on secondary',
-      'ADS — the LED driver disconnects on fault',
+      'FELV — the source windings are shared with the primary',
+      'PELV — the transformer secondary is intentionally earthed',
+      'SELV — band I voltage, safety isolating source, no earth on secondary',
+      'ADS — the LED driver disconnects the supply on an earth fault',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A 24 V control circuit is derived from an autotransformer (single tapped winding) inside a process panel. The customer asks you to record it as "SELV" on the cert. What is the right call?',
     options: [
-      'Mark it SELV — voltage is below 50 V AC',
-      'Mark it PELV — earthing is permitted',
-      'Refuse — there is no safety isolation between primary and secondary, so the circuit is FELV (Reg 411.7), and FELV is not a protective measure',
-      'Mark it FELV and treat as a protective measure',
+      'Mark it SELV — the voltage is below 50 V AC',
+      'Mark it PELV — earthing of the secondary is permitted',
+      'Refuse — no safety isolation, so it is FELV, which is not a protective measure',
+      'Mark it FELV and treat FELV as a recognised protective measure',
     ],
     correctIndex: 2,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A circuit feeds a domestic socket-outlet. The designer proposes to rely on Class II (double or reinforced insulation per Section 412) as the sole protective measure. Why is this wrong?',
     options: [
-      "It's fine — Class II is BS 7671's preferred measure",
-      'Reg 412.1.2 forbids Class II as the sole measure on circuits with socket-outlets — the user could plug in Class I equipment, defeating the measure',
-      'Class II only applies to lighting circuits',
-      'Class II requires an earth electrode',
+      "It's fine — Class II is BS 7671's preferred protective measure",
+      'Reg 412.1.2 forbids Class II as the sole measure on socket-outlet circuits',
+      'Class II applies only to lighting circuits, never to socket circuits',
+      'Class II as a sole measure requires a dedicated earth electrode',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A copper water pipe enters a kitchen from underground. It is NOT energised, but in fault conditions it could introduce a potential from outside the equipotential zone. What is the BS 7671 term, and which protective conductor connects it to the MET?',
     options: [
-      'Exposed-conductive-part — connected by a CPC',
-      'Extraneous-conductive-part — connected by a main protective bonding conductor sized per Reg 544.1.1',
-      'Live part — connected by the neutral',
-      'Class III equipment — no bonding required',
+      'Exposed-conductive-part — connected by a CPC under Reg 543.1.1',
+      'Extraneous-conductive-part — connected by main protective bonding (Reg 544.1.1)',
+      'Live part — connected by the supply neutral conductor',
+      'Class III equipment — no bonding or earthing required at all',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'In a BS 7671 bathroom, when does Reg 415.2 require supplementary equipotential bonding to be installed?',
     options: [
-      'Always — supplementary bonding is mandatory in every bathroom',
-      'Never — supplementary bonding has been removed from BS 7671',
-      'Only where any of the three location-omission conditions of Reg 701.415.2 fail — disconnection time not met, no 30 mA RCD additional protection, or extraneous-conductive-parts not reliably bonded back to the MET',
-      'Only if the customer requests it',
+      'Always — supplementary bonding is mandatory in every bathroom, no exceptions',
+      'Never — supplementary bonding has been removed from BS 7671 entirely',
+      'Only where any of the three Reg 701.415.2 omission conditions fail',
+      'Only where the customer specifically requests it in writing',
     ],
     correctIndex: 2,
     explanation:
@@ -125,26 +125,26 @@ const quizQuestions = [
     id: 1,
     question: 'Which BS 7671 Part 2 definition matches a circuit protective conductor (CPC)?',
     options: [
+      'A conductor connecting an exposed-conductive-part to the main earthing terminal',
       'A conductor that connects the MET to the means of earthing',
-      'A conductor for protection against electric shock that connects an exposed-conductive-part to the main earthing terminal of the installation',
-      'A conductor providing functional earthing for EMC',
-      'A conductor that bonds two extraneous-conductive-parts inside a special location',
+      'A conductor providing functional earthing for EMC purposes',
+      'A conductor that bonds two extraneous-conductive-parts in a special location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Part 2: a CPC is a protective conductor used for protection against electric shock that connects an exposed-conductive-part of equipment to the MET. Option (a) describes the earthing conductor, (c) is a functional earth, (d) is a supplementary bonding conductor. Reg 411.3.1.1 then mandates the CPC at every point and accessory.',
+      'Part 2: a CPC is a protective conductor used for protection against electric shock that connects an exposed-conductive-part of equipment to the MET. The MET-to-means-of-earthing conductor is the earthing conductor; the EMC option is a functional earth; the two-extraneous-parts option is a supplementary bonding conductor. Reg 411.3.1.1 then mandates the CPC at every point and accessory.',
   },
   {
     id: 2,
     question:
       'A new domestic ring final circuit on 2.5 mm² T&E uses a 1.5 mm² CPC inside the cable. The line is protected by a 32 A Type B MCB. Which Reg sets the rule that the CPC cross-sectional area must satisfy?',
     options: [
-      'Reg 411.1 — ADS general',
-      'Reg 543.1.1 — CPC sizing by adiabatic equation OR by Table 54.7',
-      'Reg 544.1.1 — main bonding sizing',
+      'Reg 411.1 — ADS general protective measure',
+      'Reg 544.1.1 — main protective bonding sizing',
       'Reg 415.2.1 — supplementary bonding sizing',
+      'Reg 543.1.1 — CPC sizing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 543.1.1 gives the two routes for sizing a CPC: (i) the adiabatic equation S = √(I² × t) / k against the let-through energy of the protective device, or (ii) selection from Table 54.7 (which is more conservative). 1.5 mm² CPC inside 2.5 mm² T&E is the standard outcome of Table 54.7 for that line size and is universally accepted on a Type B 32 A. Reg 544.1.1 sizes main protective bonding (different conductor, different rule).',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'A property has a 25 mm² tails arrangement on a TN-C-S supply. The DNO supply earth (PEN) terminal is to be bonded to the gas service pipe. What is the minimum cross-sectional area of the main protective bonding conductor under Reg 544.1.1?',
     options: [
-      '4 mm²',
-      '6 mm²',
-      '10 mm² (minimum for a TN-C-S installation, regardless of tails CSA, where tails are 25 mm²)',
-      '16 mm²',
+      '4 mm² copper',
+      '6 mm² copper',
+      '10 mm² copper',
+      '16 mm² copper',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Which combination correctly describes SELV under Section 414?',
     options: [
       'Up to 50 V AC / 120 V DC, earthed midpoint, basic protection by enclosure only',
-      'Up to 50 V AC / 120 V DC ripple-free (Reg 414.1.1), no intentional connection to earth, fed by a safety isolating source per Section 414.3',
-      'Up to 230 V AC, fed by an isolating transformer, earthed at the secondary',
-      'Functional earthing only; no isolation requirement',
+      'Up to 50 V AC / 120 V DC ripple-free, no earth connection, safety isolating source',
+      'Up to 230 V AC, fed by an isolating transformer, earthed at the secondary winding',
+      'Functional earthing only, with no source isolation requirement at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,12 +206,12 @@ const quizQuestions = [
     id: 7,
     question: 'Class I, Class II and Class III equipment — which row is correct?',
     options: [
-      'Class I = no earth, relies on insulation; Class II = earthed; Class III = SELV/PELV-fed',
-      'Class I = earthed metal casing relying on a CPC for fault protection; Class II = double or reinforced insulation, no CPC; Class III = designed for SELV / PELV supply',
-      'Class I = battery operated; Class II = mains; Class III = three-phase only',
-      'All three classes are interchangeable; it is a marketing distinction',
+      'Class I = no earth, relies on insulation; Class II = earthed casing; Class III = SELV-fed',
+      'Class I = battery operated; Class II = mains powered; Class III = three-phase only',
+      'Class I = earthed casing relying on a CPC; Class II = double/reinforced insulation; Class III = SELV / PELV supply',
+      'Class I = portable; Class II = fixed; Class III = a manufacturer marketing distinction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IEC 61140 / BS 7671 equipment classes. Class I has accessible metal that becomes live under fault unless connected to a CPC — fault protection is provided by ADS via that CPC. Class II has double or reinforced insulation (Section 412) and never has a protective earth conductor — recognised by the double-square symbol. Class III is designed to be supplied by SELV or PELV only — voltage limit is the protective measure. Class 0 (no protection beyond basic) and Class 0I are not recognised in BS 7671 installations.',
   },
@@ -220,10 +220,10 @@ const quizQuestions = [
     question:
       'A consumer unit MET on a TN-C-S supply has 16 mm² tails. The earthing conductor between MET and the DNO supply earth is sized per which regulation, and what minimum CSA is typically required?',
     options: [
-      'Reg 411.1; 4 mm²',
-      'Reg 543.1.1 (earthing conductor sized as a CPC under the adiabatic / Table 54.7 route); typical minimum 16 mm² where the conductor is buried, or 6 mm² where it is mechanically protected and protected against corrosion (Reg 542.3.1)',
-      'Reg 415.2.1; 2.5 mm²',
-      'Reg 411.3.4; 10 mm²',
+      'Reg 411.1 (ADS general); typical minimum 4 mm²',
+      'Reg 543.1.1 (sized as a CPC) with Reg 542.3.1 minimums; typically 16 mm²',
+      'Reg 415.2.1 (supplementary bonding); typical minimum 2.5 mm²',
+      'Reg 411.3.4 (luminaire RCD); typical minimum 10 mm²',
     ],
     correctAnswer: 1,
     explanation:

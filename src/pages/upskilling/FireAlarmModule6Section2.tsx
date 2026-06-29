@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 clause 3.13 defines a "competent person" for fire-alarm servicing. Which combination is required?',
     options: [
-      'Anyone with a Part P card.',
-      'A person who is suitably trained AND qualified by knowledge AND has practical experience AND has been provided with the necessary instructions to enable the required tasks to be carried out correctly. The standard adds (in a Note) that maintenance of competence is likely to require continuing professional development (CPD). The four-pillar definition (training, knowledge, experience, instructions) plus the CPD expectation is the load-bearing test for who is allowed to perform the six-monthly inspection and service.',
-      'Just an electrician.',
-      'Anyone the responsible person trusts.',
+      'Anyone holding a current Part P registration for domestic electrical work.',
+      'A person who is suitably trained, qualified by knowledge, experienced and given the necessary instructions, maintaining competence through CPD.',
+      'Any qualified electrician with a current 18th Edition certificate.',
+      'Anyone the responsible person trusts and authorises in writing to attend.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A 2017-edition contract was due to be re-tendered in 2025. The incumbent servicing organisation has been consistently visiting at the seven-month mark — exactly five weeks late on the strict 2017 reading. The new BS 5839-1:2025 wording.',
     options: [
-      'Makes no difference.',
-      'Brings the seven-month visits inside the 2025 standard text — the five-to-seven-month tolerance window is now in clause 43.2.1 Note 1, recognising long-standing custom and practice. The visits are now compliant with the 2025 wording. The system itself does not change; the wording does. New service contracts should target six months and use the tolerance only when needed; the tolerance is not a permission to systematically slip.',
-      'Means the new edition is no longer mandatory.',
-      'Means tolerance is removed.',
+      'Makes no difference — seven-month visits remain non-compliant as they were under the 2017 reading.',
+      'Brings the seven-month visits inside the standard text via the new five-to-seven-month tolerance window (clause 43.2.1 Note 1).',
+      'Means the new edition is advisory only and no longer mandatory for existing contracts.',
+      'Removes the tolerance entirely and tightens the interval to a strict six months to the day.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'During servicing, an engineer disables a zone to prevent false alarms while testing. BS 5839-1:2025 clause 22 expectations.',
     options: [
-      'No requirement.',
-      'Disablement should be kept to a practicable minimum. The premises management or their appointed representative should be informed of the areas affected. The same applies to disablement of sounders or visual alarms. The disablement should be logged with start time and end time. Pending the work being completed, premises management should put proportionate interim measures (e.g. a fire watch or roving alarm) in place where the disablement removes detection from a significant area or for an extended period.',
-      'Disable the whole panel for convenience.',
-      'No need to inform anyone.',
+      'No specific requirement applies to disablement carried out during routine servicing.',
+      'Keep it to a practicable minimum, inform premises management of the areas affected, and log the start and end times.',
+      'Disable the whole panel for the duration of testing, as a single disablement is simpler to manage.',
+      'Proceed without informing anyone, as the engineer is on site and controlling the system throughout.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 introduces clause 43.4 on remote services and cyber security. The minimum recommendations include.',
     options: [
-      'No specific recommendations.',
-      'Physical-access controls (locking the comms cabinet, anti-tamper plugs on patch leads), authentication of any remote-access request before it is accepted by the CIE / gateway, a documented risk assessment before performing any remote read / control / write function, and confirmation that the system is fully operational at the end of any remote service. Remote access events are logged. The 2025 clause acknowledges the rise of IP-connected CIEs and the corresponding cyber-attack surface.',
-      'Just a strong password.',
-      'No remote access ever.',
+      'No specific recommendations apply, as cyber security sits outside the fire-alarm standard.',
+      'Physical-access controls, authentication of remote-access requests, a risk assessment before any remote action, and post-service operational confirmation.',
+      'A strong password on the gateway is sufficient to satisfy the clause for any connected CIE.',
+      'A blanket ban on all remote access to fire-alarm CIEs in any circumstances.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,135 +82,135 @@ const quizQuestions = [
     question:
       'Who can perform the six-monthly inspection and service per BS 5839-1:2025 clause 43.2.1?',
     options: [
-      'Anyone authorised by the building owner.',
-      'A competent person as defined in clause 3.13: trained, qualified by knowledge, with practical experience, given the necessary instructions, and (per the Note) maintaining their competence through CPD. In practice this is best evidenced by employment by a third-party-certificated organisation (BAFE SP203, FIA, NSI, SSAIB) operating a documented quality system.',
-      'A general electrician with no fire-alarm training.',
-      'An apprentice without supervision.',
+      'A competent person as defined in clause 3.13: trained, qualified by knowledge, experienced, given the necessary instructions, and maintaining competence through CPD.',
+      'Any qualified electrician holding a current 18th Edition certificate, since fire-alarm servicing is part of general electrical competence.',
+      'Anyone authorised in writing by the responsible person, who carries the legal duty and may delegate servicing to a person of their choosing.',
+      'The original installing engineer only, as they alone hold the as-commissioned knowledge needed to service the system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Clause 3.13 four-pillar definition + CPD. Third-party-scheme accreditation is the recognised assurance route for evidencing all four pillars and for demonstrating ongoing competence to AHJs and insurers.',
+      'Clause 3.13 four-pillar definition (training, knowledge, experience, instructions) + CPD. In practice this is best evidenced by employment by a third-party-certificated organisation (BAFE SP203, FIA, NSI, SSAIB) operating a documented quality system — the recognised assurance route for evidencing all four pillars and demonstrating ongoing competence to AHJs and insurers.',
   },
   {
     id: 2,
     question:
       'BS 5839-1:2025 clause 43.2.1 changed the strict 2017 six-month rule. Which is the correct 2025 statement?',
     options: [
-      'Visits are six months exactly.',
-      'Successive inspection and servicing visits should be undertaken at intervals of approximately six months. Note 1 makes it acceptable for a visit to be carried out any time between five and seven months after the previous visit. Note 2 makes the date of acceptance the datum for these periods. The change formalises long-standing custom and practice.',
-      'Visits are once a year.',
-      'Visits are at the discretion of the responsible person.',
+      'Visits must still fall on the exact six-month anniversary, with no tolerance permitted either side.',
+      'Visits may now be carried out at any interval up to twelve months, in line with the annual emergency-lighting test.',
+      'Visits should be approximately six months apart, with five-to-seven months acceptable and the acceptance date as datum.',
+      'Visit frequency is now left entirely to the responsible person, set by their fire risk assessment rather than the standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      "Approximate six months + 5-7-month tolerance + acceptance date as datum. The clause text is the 2025 revision's explicit recognition of operational reality.",
+      "Successive visits should be undertaken at intervals of approximately six months (clause 43.2.1). Note 1 makes a visit acceptable any time between five and seven months after the previous one; Note 2 makes the date of acceptance the datum. The change formalises long-standing custom and practice — the 2025 revision's explicit recognition of operational reality.",
   },
   {
     id: 3,
     question:
       'During servicing, which of the following actions specifically requires informing premises management per clause 22 of BS 5839-1:2025?',
     options: [
-      'Reading the panel event log.',
-      'Disablement of any part of the system that removes detection or alarm from a significant area, or for an extended period — including disablement of sounders or visual alarms during testing. The disablement should be the practicable minimum, premises management should be informed of the areas affected, and the times of disablement should be logged. Where the affected area is significant or the period extended, premises management should put proportionate interim measures (fire watch / roving alarm) in place.',
-      'Operating an MCP for testing.',
-      'Reviewing the logbook.',
+      'Disabling any part of the system that removes detection or alarm from a significant area, including sounders or visual alarms.',
+      'Operating a single manual call point to confirm it raises a general alarm, since the alarm itself alerts management to the test.',
+      'Reading and printing the panel event log, because exporting stored data temporarily places the panel in an engineering mode.',
+      'Replacing a single smoke detector head like-for-like, as a one-for-one swap does not alter the system configuration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Clause 22 — disablement is a deliberate, time-bounded erosion of life safety and must be communicated and managed. Reading logs / panel state are not disablement events.',
+      'Clause 22 — disablement is a deliberate, time-bounded erosion of life safety and must be communicated and managed. It should be kept to a practicable minimum, premises management informed of the areas affected, and the times logged. Where the affected area is significant or the period extended, premises management institutes proportionate interim measures (fire watch / roving alarm). Reading logs and operating a call point during a planned test are not disablement events.',
   },
   {
     id: 4,
     question:
       'What is the customary in-service life of a sealed lead-acid standby battery, and how is it labelled in 2025?',
     options: [
-      'Two years, no labelling required.',
-      'Typically four years, with the date of installation marked on the battery. BS 5839-1:2025 has formally recognised the long-standing custom of labelling batteries with a permanent marker — the date of installation is now expected to be visible on the battery itself, supporting the end-of-design-life replacement decision.',
-      'Ten years, no labelling.',
-      'Six months, no labelling.',
+      'Typically two years, with the replacement date marked on the panel door rather than the battery itself.',
+      'Typically ten years, matching the design life of the detectors, with no labelling expected on the battery.',
+      'Typically eight years, with the battery type and Ah rating recorded only in the logbook, not on the cell.',
+      'Typically four years, with the date of installation marked on the battery itself.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Four-year customary life + permanent-marker date label now formally acknowledged in BS 5839-1:2025. The label is the single most useful piece of information for the engineer planning replacement.',
+      'Four-year customary life. BS 5839-1:2025 formally recognises the long-standing custom of labelling batteries with a permanent marker, so the date of installation is now expected to be visible on the battery itself — the single most useful piece of information for the engineer planning the end-of-design-life replacement.',
   },
   {
     id: 5,
     question:
       'A service visit detects a sensitivity drift on five out of forty smoke detectors. Correct action.',
     options: [
-      'Replace all forty.',
-      "Service the five drifted detectors per the manufacturer's procedure (chamber re-test, recalibration if available, cleaning, replacement if necessary), record the action against each device in the asset register, note the drift pattern in the service report (location, age, environment) for trend analysis, and recommend a closer monitoring of the remaining 35 at the next visit. Replacement of the whole population is not justified by a sample failure of one-eighth — but the trend is a watch-list item.",
-      'Ignore the drift.',
-      'Disable the five and continue.',
+      'Replace all forty detectors, since sensitivity drift on any device shows the whole batch is reaching the end of its reliable life.',
+      'Record the drift in the logbook and leave the five in service until the next visit, as drift only matters once it triggers a false alarm.',
+      "Service the five drifted detectors per the manufacturer's procedure, record each action, and note the drift pattern for trend analysis.",
+      'Disable the five drifted detectors to stop spurious activations and leave them isolated until a follow-up remedial visit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Targeted action + recording + trend analysis. Sensitivity drift on a fraction of devices is a normal servicing finding; mass replacement is excessive, no action is unsafe. The trend is the load-bearing data — feed it into the asset register and the next service plan.',
+      'Targeted action + recording + trend analysis. Service the drifted detectors per the manufacturer procedure (chamber re-test, recalibration if available, cleaning, replacement if necessary), record the action against each device in the asset register, note the drift pattern (location, age, environment), and recommend closer monitoring of the remaining detectors at the next visit. Replacement of the whole population is not justified by a sample failure of one-eighth, but the trend is the load-bearing data — feed it into the asset register and next service plan.',
   },
   {
     id: 6,
     question:
       'A service visit involves a remote firmware upload to a CIE while the engineer is in the comms cabinet. Per BS 5839-1:2025 clause 43.4, what must precede this action?',
     options: [
-      'Just the upload.',
-      'A documented risk assessment evaluating the potential impact on the operation of the CIE, authentication of the request to the CIE / gateway, physical-access confirmation (the comms cabinet is locked, only the engineer has access during the work), and an end-of-work confirmation that the CIE is fully operational. The firmware upload is also classed as a modification under clause 7 (NEW 2025) and requires an extension or modification certificate to be issued.',
-      'A casual decision.',
-      'No requirement at all.',
+      'A documented risk assessment, authentication to the CIE / gateway, physical-access confirmation, and an end-of-work operational confirmation.',
+      'Verbal agreement from the responsible person and a note in the logbook are sufficient, since the engineer is on site in the comms cabinet.',
+      'A full backup of the panel configuration is the only prerequisite; once a rollback point exists the upload can proceed without further controls.',
+      'Notifying the alarm-receiving centre that the panel will briefly go offline; no risk assessment or certificate is needed for a firmware update.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Clause 43.4 cyber-security path + clause 7 modification certificate path. Both are 2025 additions. The firmware update must be planned, authenticated, risk-assessed, and certificated. Casual remote firmware uploads — common pre-2025 — are no longer compliant.',
+      'Clause 43.4 cyber-security path + clause 7 modification certificate path, both 2025 additions. The risk assessment evaluates the potential impact on the CIE, the request is authenticated, physical access is confirmed, and the CIE is confirmed fully operational at the end. The firmware upload is also classed as a modification under clause 7, requiring an extension or modification certificate. Casual remote firmware uploads — common pre-2025 — are no longer compliant.',
   },
   {
     id: 7,
     question:
       'A six-monthly service visit at a 200-detector system has the engineer planning the functional-test sample. What is the correct sample size and selection logic?',
     options: [
-      'Test 10% of detectors only.',
-      "Plan a sample (typically 50% of devices) such that, combined with the next six-monthly visit's 50%, all 200 detectors are functionally tested over the rolling twelve-month period. Selection should be planned in the asset register so that adjacent visits do not test the same devices. Add full coverage of MCPs, sounders / VADs, and interfaces per the 12-month requirements (some categories every visit, some split). The asset register tracks dates so the gap is visible.",
-      'Just one detector per zone.',
-      'Test the same devices at every visit.',
+      'Test a fixed 10% sample at every visit, giving roughly twenty detectors per visit on a 200-detector system.',
+      'Test one representative detector per zone, on the basis that a healthy zone confirms the detectors wired to it.',
+      'Test the same easily-accessible detectors at every visit, so results can be compared visit-to-visit on a consistent set.',
+      'Plan a sample (typically 50%) so that, with the next visit, all devices are tested over the rolling twelve-month period, with no overlap.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Roughly half + planned non-overlap + asset-register tracking. Sample sizes vary in practice — sometimes 50/50, sometimes split by area or device type — but the principle is full coverage every twelve months with no device tested twice while another is not tested at all.',
+      "Roughly half + planned non-overlap + asset-register tracking. Selection is planned in the asset register so adjacent visits do not test the same devices, with full coverage of MCPs, sounders / VADs and interfaces per the twelve-month requirements (some categories every visit, some split). Sample sizes vary in practice — sometimes 50/50, sometimes split by area or device type — but the principle is full coverage every twelve months with no device tested twice while another is left untested.",
   },
   {
     id: 8,
     question:
       'During the visual inspection at the panel, the engineer notices the date / time on the CIE has drifted by 23 minutes against actual time. Correct action.',
     options: [
-      'Ignore as cosmetic.',
-      "Adjust the CIE clock to correct time, log the adjustment in the service report. The clock is load-bearing for systems that have day / night sensitivity settings (where the CIE switches detection profile based on time of day) and for the panel's event log timestamps (which underpin fault investigation). BS 5839-1:2025 explicitly mentions this as a service-visit action — checking and adjusting the time clock at every visit is part of the standard servicing routine.",
-      'Replace the CIE.',
-      'Disable the system until investigated.',
+      'Leave the clock as found and note it as cosmetic, since the time display has no bearing on the system raising an alarm.',
+      'Raise it as a fault and recommend replacement of the CIE clock module, as a 23-minute drift indicates the real-time clock has failed.',
+      'Adjust the CIE clock to the correct time and log the adjustment in the service report.',
+      'Disable the affected zones until the cause of the drift is investigated, to prevent the event log recording further inaccurate timestamps.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Adjust + log. Time drift on the CIE is more than cosmetic — it can break day / night sensitivity logic and corrupt the event log timestamps used to investigate false alarms / faults. The 2025 standard explicitly lists clock check at every visit.',
+      "Adjust + log. Time drift on the CIE is more than cosmetic — the clock is load-bearing for systems with day / night sensitivity settings (where the CIE switches detection profile based on time of day) and for the panel's event-log timestamps, which underpin fault investigation. BS 5839-1:2025 explicitly lists checking and adjusting the time clock as a service-visit action at every visit.",
   },
   {
     id: 9,
     question:
       "A service report has identified two open defects. Pending the responsible person's decision on remedial works, the engineer is finishing the visit. What is the conformity statement on the report?",
     options: [
-      'System is compliant.',
-      'System is left in a state of partial compliance / compliance with logged defects. The exact wording depends on the severity of the defects and whether a workaround is in place. The engineer states explicitly: which clauses or recommendations are not currently met, what interim measure (if any) is in place, what remedial work is recommended and quoted, and the timeframe for that work. The responsible person reads the report and accepts (or contests) the conformity statement before signing.',
-      'No conformity statement is needed.',
-      'Always state compliant regardless.',
+      'Partial compliance / compliance with logged defects, listing the unmet clauses, interim measures and recommended remedial works.',
+      'System is compliant, because the system raised an alarm correctly on test; the open defects are recorded separately as recommendations only.',
+      'No conformity statement is given until the remedial works are complete, since a statement cannot be issued while defects remain open.',
+      'System is non-compliant and must be taken out of service, as any open defect means the installation no longer meets the standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Honest conformity statement + clear list of non-met clauses + interim measures + recommendations. The conformity statement is the audit trail to the AHJ / insurer. A "compliant" stamp on a report with open defects is a documentation failure.',
+      'Honest conformity statement + clear list of non-met clauses + interim measures + recommendations. The exact wording depends on the severity of the defects and whether a workaround is in place; the engineer states which clauses are not met, what interim measure is in place, what remedial work is recommended and quoted, and the timeframe. The responsible person accepts or contests the statement before signing. The conformity statement is the audit trail to the AHJ / insurer; a "compliant" stamp on a report with open defects is a documentation failure.',
   },
   {
     id: 10,
     question:
       'A new BS 5839-1:2025 clause is 43.4 (remote services and cyber security). Which is NOT one of the recommended controls?',
     options: [
-      'Physical access control to the comms cabinet.',
-      'Authentication of any remote-access request before the CIE / gateway accepts it.',
-      'Risk assessment before any remote read / control / write action.',
+      'Physical access control to the comms cabinet, with anti-tamper plugs on unused patch leads.',
+      'Authentication of any remote-access request before the CIE or gateway accepts the connection.',
+      'A documented risk assessment before any remote read, control or write action on the CIE.',
       "Allowing any third-party connection without authentication, on the basis of the engineer's reputation.",
     ],
     correctAnswer: 3,

@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary advantage of copper busbars over aluminium?',
     options: [
-      'Allow starting current while protecting against faults',
+      'Lower weight for the same current-carrying capacity',
       'Higher electrical conductivity and easier jointing',
-      'Is the final assessment confirming overall competence',
-      'The patch may block energy delivery and cause a skin burn',
+      'Lower material cost per metre of busbar',
+      'A higher coefficient of thermal expansion at joints',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why do aluminium busbar joints require contact compound such as Penetrox?',
     options: [
-      'Cable ladder is a heavy-duty version designed for large, heavy cables',
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'To increase the conductivity of the aluminium above that of copper',
+      'To lubricate the bolts so a higher tightening torque can be achieved',
       'To prevent oxide reformation and reduce contact resistance',
-      'To improve contact resistance at joints and protect against oxidation',
+      'To electrically insulate the joint from the surrounding enclosure',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'What is a rising main?',
     options: [
       'A vertical busbar trunking system distributing power through a multi-storey building',
-      'Cable ladder is a heavy-duty version designed for large, heavy cables',
-      'Where cables pass through fire-rated walls, floors and partitions',
-      'To improve contact resistance at joints and protect against oxidation',
+      'The incoming service cable that rises from the supply network into a building',
+      'A horizontal feeder cable running between two adjacent switchboards',
+      'The main earthing conductor connecting the installation to the earth electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the key difference between cable tray and cable ladder?',
     options: [
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'Cable ladder is only permitted for data cabling, not power cables',
       'Cable ladder is a heavy-duty version designed for large, heavy cables',
-      'Lighter weight, easier installation and better ventilation',
-      'To prevent oxide reformation and reduce contact resistance',
+      'Cable ladder must be fully enclosed whereas tray is always perforated',
+      'Cable ladder is non-metallic whereas cable tray is always steel',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Where are fire barriers required in cable installations?',
     options: [
-      'To prevent oxide reformation and reduce contact resistance',
-      'The barrier must be re-sealed to its original fire rating',
+      'Only at the origin of the installation next to the main switch',
+      'At every cable joint and termination throughout the installation',
       'Where cables pass through fire-rated walls, floors and partitions',
-      'A vertical busbar trunking system distributing power through a multi-storey building',
+      'Only on cables installed outdoors or in exposed locations',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'Which legislation governs fire barrier maintenance in buildings?',
     options: [
-      'Back-to-back thyristors (SCRs)',
-      'In each individual DALI driver/ballast',
-      'Because symbols may vary between drawings or projects',
-      'Regulatory Reform (Fire Safety) Order 2005',
+      'The Electricity at Work Regulations 1989',
+      'The Construction (Design and Management) Regulations 2015',
+      'The Provision and Use of Work Equipment Regulations 1998',
+      'The Regulatory Reform (Fire Safety) Order 2005',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'What does a Delta T of 25-40 degrees C on a thermal image indicate?',
     options: [
       'Serious fault -- arrange maintenance as soon as possible',
-      'To prevent oxide reformation and reduce contact resistance',
-      'To improve contact resistance at joints and protect against oxidation',
-      'The barrier must be re-sealed to its original fire rating',
+      'A healthy connection within normal operating temperature',
+      'Minor anomaly -- monitor at the next scheduled survey',
+      'Critical fault -- isolate the equipment immediately',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main advantage of wire mesh cable basket over traditional cable tray?',
     options: [
-      'To prevent oxide reformation and reduce contact resistance',
+      'A higher load-carrying capacity for very heavy HV cables',
       'Lighter weight, easier installation and better ventilation',
-      'To improve contact resistance at joints and protect against oxidation',
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'A built-in fire rating that removes the need for penetration seals',
+      'A fully enclosed design giving better protection against impact',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why are copper busbars sometimes tin-plated or silver-plated?',
     options: [
-      'Serious fault -- arrange maintenance as soon as possible',
-      'Cable ladder is a heavy-duty version designed for large, heavy cables',
+      'To increase the conductivity of the copper above 100% IACS',
+      'To reduce the weight of the busbar for easier installation',
       'To improve contact resistance at joints and protect against oxidation',
-      'The barrier must be re-sealed to its original fire rating',
+      'To allow the busbar to be directly bolted to aluminium without corrosion',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'What must happen if cables are added through an existing fire barrier?',
     options: [
-      'To prevent oxide reformation and reduce contact resistance',
-      'Serious fault -- arrange maintenance as soon as possible',
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'The new cables must be derated by 45% to allow for the barrier',
+      'The fire rating of the entire building must be downgraded by 30 minutes',
+      'No action is needed provided the original seal is still in place',
       'The barrier must be re-sealed to its original fire rating',
     ],
     correctAnswer: 3,

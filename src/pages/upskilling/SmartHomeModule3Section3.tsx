@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: 'Which dimmer type is recommended for LED lighting?',
     options: [
       'Leading-edge (TRIAC)',
-      'Trailing-edge',
       'Either works equally well',
       'LEDs cannot be dimmed',
+      'Trailing-edge',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Trailing-edge dimmers are recommended for LED lighting as they provide smoother dimming without flicker or buzzing that leading-edge dimmers can cause with LEDs.',
   },
@@ -46,12 +46,12 @@ const quizQuestions = [
   {
     question: 'Why is the dedicated white LED in RGBW bulbs important?',
     options: [
-      'It produces more heat',
       'It provides pure white light without colour cast',
+      'It produces more heat',
       'It uses more energy',
       'It enables wireless control',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Mixing RGB to create white results in an impure, slightly tinted white. The dedicated white LED produces clean, accurate white light for everyday use.',
   },
@@ -59,11 +59,11 @@ const quizQuestions = [
     question: 'What is tunable white lighting?',
     options: [
       'Lights that can be repaired',
-      'Lights that adjust colour temperature from warm to cool',
       'Lights with adjustable brightness only',
       'Lights that work with any dimmer',
+      'Lights that adjust colour temperature from warm to cool',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Tunable white (CCT adjustable) lighting can change colour temperature from warm (2700K) to cool (6500K) while maintaining white light, not coloured light.',
   },
@@ -78,11 +78,11 @@ const quizQuestions = [
     question: 'What is circadian lighting designed to support?',
     options: [
       'Energy savings',
-      'Natural sleep-wake cycles',
       'Security monitoring',
+      'Natural sleep-wake cycles',
       'Faster switching',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Circadian lighting adjusts colour temperature throughout the day (cool in morning, warm in evening) to support natural circadian rhythms and sleep patterns.',
   },

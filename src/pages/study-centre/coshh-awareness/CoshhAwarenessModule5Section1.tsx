@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'Under which COSHH Regulation is workplace monitoring required?',
     options: [
+      'Regulation 10 — Monitoring Exposure at the Workplace',
       'Regulation 6 — Risk Assessment',
       'Regulation 7 — Prevention or Control of Exposure',
-      'Regulation 10 — Monitoring Exposure at the Workplace',
       'Regulation 11 — Health Surveillance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'COSHH Regulation 10 specifically covers monitoring exposure at the workplace. It requires employers to ensure that the exposure of employees to hazardous substances is monitored where necessary, using appropriate procedures. Regulation 6 covers assessment, Regulation 7 covers control measures, and Regulation 11 covers health surveillance.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'A colorimetric detector tube (e.g. Drager tube) is most useful for which purpose?',
     options: [
       'Providing a long-term 8-hour TWA measurement for comparison with WELs',
-      'Providing a quick spot-check of gas or vapour concentration at a specific moment',
       'Measuring the respirable dust fraction in a construction environment',
       'Replacing the need for laboratory analysis of sorbent tube samples',
+      'Providing a quick spot-check of gas or vapour concentration at a specific moment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Colorimetric detector tubes (such as Drager tubes) are grab-sampling devices that give a rapid, on-the-spot indication of gas or vapour concentration. Air is drawn through a glass tube containing a chemical reagent that changes colour in proportion to the concentration. They are excellent for quick checks and screening but are not suitable for determining 8-hour TWA values, as they only measure a snapshot in time.',
   },
@@ -147,8 +147,8 @@ const quizQuestions = [
     id: 6,
     question:
       "Mandelic acid measured in a worker's urine sample is a biological monitoring indicator for exposure to which substance?",
-    options: ['Toluene', 'Isocyanates', 'Styrene', 'Lead'],
-    correctAnswer: 2,
+    options: ['Styrene', 'Toluene', 'Isocyanates', 'Lead'],
+    correctAnswer: 0,
     explanation:
       'Mandelic acid is a metabolite of styrene. When styrene is absorbed into the body (through inhalation or skin contact), the liver metabolises it to mandelic acid, which is then excreted in the urine. Measuring urinary mandelic acid levels provides a reliable indication of total styrene uptake. For toluene, the corresponding metabolite is hippuric acid. Biological Guidance Values for these metabolites are published in EH40.',
   },

@@ -52,8 +52,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the nominal phase-to-phase voltage in a UK three-phase industrial supply?',
-    options: ['230V', '400V', '415V', '440V'],
-    correctAnswer: 1,
+    options: ['230V', '415V', '440V', '400V'],
+    correctAnswer: 3,
     explanation:
       'The harmonised European standard specifies 400V phase-to-phase for three-phase supplies, with 230V phase-to-neutral.',
   },
@@ -70,12 +70,12 @@ const quizQuestions = [
     id: 3,
     question: 'In a TN-S earthing system, how is the earth provided?',
     options: [
-      'Via a local earth electrode only',
       'Via a separate conductor from the supply transformer',
+      'Via a local earth electrode only',
       'Via a combined PEN conductor that splits at the origin',
       'Via the building steelwork only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TN-S provides a separate earth conductor all the way back to the supply transformer, offering the most reliable earth path with no risk of neutral-earth faults.',
   },
@@ -99,11 +99,11 @@ const quizQuestions = [
       'Which containment system is typically specified for industrial environments requiring fire performance?',
     options: [
       'Plastic conduit',
-      'Steel trunking and cable tray with LSF/LSZH cables',
       'PVC trunking',
-      'Surface-mounted clips',
+      'Surface-mounted plastic clips',
+      'Steel trunking and cable tray with LSF/LSZH cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Industrial installations typically specify steel containment (trunking, tray, basket) with LSF/LSZH (Low Smoke Zero Halogen) cables to minimise toxic fume emission during fire.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 6,
     question: 'BS EN 61439 covers which type of equipment?',
     options: [
-      'Domestic consumer units',
       'Low-voltage switchgear and controlgear assemblies',
+      'Domestic consumer units only',
       'High-voltage transformers',
       'Emergency lighting systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 61439 is the harmonised European standard for low-voltage switchgear and controlgear assemblies, including distribution boards, motor control centres, and switchboards used in industrial installations.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'Which document would specify discrimination study requirements for a new industrial installation?',
     options: [
       "The client's purchase order",
-      'The electrical design specification and single-line diagram',
       "The building's fire risk assessment only",
       "The manufacturer's product catalogue",
+      'The electrical design specification and single-line diagram',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The electrical design specification and single-line diagram define protection coordination requirements, device ratings, and discrimination margins that must be achieved during installation.',
   },

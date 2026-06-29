@@ -39,11 +39,10 @@ const quickCheckQuestions = [
       'Julian Treasure\u2019s RASA model includes four stages of conscious listening. What is the correct order?',
     options: [
       'Respond, Analyse, Summarise, Ask',
-      'Receive, Appreciate, Summarise, Ask',
       'Record, Acknowledge, State, Agree',
-      'React, Assess, Sort, Arrange',
-    ],
-    correctIndex: 1,
+      'Receive, Appreciate, Summarise, Ask',
+      'React, Assess, Sort, Arrange'],
+    correctIndex: 2,
     explanation:
       'RASA stands for Receive (pay full attention to the incoming sound and words), Appreciate (show small signals that you are listening \u2014 nods, "mm-hmm", brief affirmations), Summarise (reflect back the key points in your own words), and Ask (pose follow-up questions to deepen understanding). This sequence ensures the speaker feels fully heard before you move into problem-solving.',
   },
@@ -52,11 +51,10 @@ const quickCheckQuestions = [
       'What is the key difference between reflective listening and simply repeating what someone said?',
     options: [
       'There is no difference \u2014 both involve saying the same words back',
-      'Reflective listening captures the underlying meaning or emotion, not just the surface words',
-      'Reflective listening requires you to disagree with the speaker to test their position',
       'Repeating is more effective because it proves you heard every word exactly',
-    ],
-    correctIndex: 1,
+      'Reflective listening requires you to disagree with the speaker to test their position',
+      'Reflective listening captures the underlying meaning or emotion, not just the surface words'],
+    correctIndex: 3,
     explanation:
       'Reflective listening goes beyond parroting the speaker\u2019s words. It involves identifying the underlying meaning, feeling, or concern behind what was said and reflecting that back. For example, if a client says "I just don\u2019t want any mess everywhere," a reflective response would be: "It sounds like keeping disruption to a minimum is really important to you." This shows you understood the concern, not just the words.',
   },
@@ -96,12 +94,11 @@ const quizQuestions = [
     id: 1,
     question: 'What does SOLER stand for in Gerard Egan\u2019s active listening model?',
     options: [
-      'Sit squarely, Open posture, Lean forward, Eye contact, Relax',
       'Stand still, Observe, Listen, Evaluate, Respond',
+      'Sit squarely, Open posture, Lean forward, Eye contact, Relax',
       'Smile, Open up, Look around, Explain, Repeat',
-      'Sit down, Offer advice, Lead the discussion, End clearly, Review',
-    ],
-    correctAnswer: 0,
+      'Sit down, Offer advice, Lead the discussion, End clearly, Review'],
+    correctAnswer: 1,
     explanation:
       'SOLER stands for Sit squarely (face the person), Open posture (uncrossed arms and legs), Lean forward (show engagement), Eye contact (maintain appropriate gaze), and Relax (appear calm and natural). Egan developed this framework to describe the physical behaviours that communicate attentive listening.',
   },
@@ -124,11 +121,10 @@ const quizQuestions = [
       'A homeowner tells you: "I just want it done properly this time \u2014 the last electrician left a real mess." Which reflective listening response is most effective?',
     options: [
       '"Don\u2019t worry, I\u2019m much better than whoever did it before."',
-      '"It sounds like you had a bad experience and quality workmanship is really important to you."',
-      '"What exactly did the last electrician do wrong?"',
       '"All electricians work differently \u2014 you can\u2019t compare."',
-    ],
-    correctAnswer: 1,
+      '"What exactly did the last electrician do wrong?"',
+      '"It sounds like you had a bad experience and quality workmanship is really important to you."'],
+    correctAnswer: 3,
     explanation:
       'The second option reflects back both the emotion (frustration from a bad experience) and the underlying need (quality workmanship). This validates the client\u2019s concern without criticising the previous electrician, and signals that you have understood what matters to them. The other responses either dismiss the concern, compete with the previous electrician, or deflect.',
   },
@@ -136,12 +132,11 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary difference between paraphrasing and summarising?',
     options: [
-      'There is no difference \u2014 they are the same technique',
       'Paraphrasing restates a specific point in your own words; summarising pulls together multiple points into a concise overview',
+      'There is no difference \u2014 they are the same technique',
       'Summarising is longer and more detailed than paraphrasing',
-      'Paraphrasing is used at the start of a conversation; summarising is used in the middle',
-    ],
-    correctAnswer: 1,
+      'Paraphrasing is used at the start of a conversation; summarising is used in the middle'],
+    correctAnswer: 0,
     explanation:
       'Paraphrasing focuses on restating a single idea or statement in your own words to confirm understanding. Summarising covers a broader scope \u2014 it pulls together several points from a longer conversation into a concise overview. In a site survey, you might paraphrase individual client requests as they arise, then summarise the full scope at the end to confirm alignment.',
   },
@@ -150,11 +145,10 @@ const quizQuestions = [
     question: 'Which of the following is an open question?',
     options: [
       '"Is the existing wiring in good condition?"',
-      '"Do you want a consumer unit upgrade?"',
       '"How do you use this space on a typical day?"',
-      '"Is the supply single-phase?"',
-    ],
-    correctAnswer: 2,
+      '"Do you want a consumer unit upgrade?"',
+      '"Is the supply single-phase?"'],
+    correctAnswer: 1,
     explanation:
       'Open questions begin with words like "how", "what", "why", "describe", or "tell me about" and cannot be answered with a simple yes or no. "How do you use this space on a typical day?" invites the client to share detailed information about their needs, habits, and priorities \u2014 all of which inform your electrical design. The other options are closed questions that yield only yes/no answers.',
   },
@@ -177,11 +171,10 @@ const quizQuestions = [
     question: 'Why is summarising particularly important at the end of a client consultation?',
     options: [
       'It proves that you were paying attention and makes you look professional',
-      'It creates a shared record of what was agreed, reduces misunderstandings, and gives the client a chance to correct anything you missed',
-      'It allows you to add extra work to the scope without the client noticing',
       'It is only a formality and does not affect the outcome',
-    ],
-    correctAnswer: 1,
+      'It allows you to add extra work to the scope without the client noticing',
+      'It creates a shared record of what was agreed, reduces misunderstandings, and gives the client a chance to correct anything you missed'],
+    correctAnswer: 3,
     explanation:
       'Summarising at the end of a consultation creates a verbal contract \u2014 a shared understanding of what was discussed, what was agreed, and what happens next. It gives the client the opportunity to correct misunderstandings or add details they forgot. This single habit prevents a significant proportion of the disputes and callbacks that electricians experience.',
   },
@@ -190,12 +183,11 @@ const quizQuestions = [
     question:
       'In the SOLER model, why does Egan recommend an "open posture" during active listening?',
     options: [
-      'Because crossed arms are uncomfortable for long periods',
       'Because an open posture signals receptiveness, approachability, and a willingness to hear what the speaker has to say',
+      'Because crossed arms are uncomfortable for long periods',
       'Because it is a legal requirement during professional consultations',
-      'Because open posture makes you appear physically larger and more authoritative',
-    ],
-    correctAnswer: 1,
+      'Because open posture makes you appear physically larger and more authoritative'],
+    correctAnswer: 0,
     explanation:
       'An open posture \u2014 uncrossed arms and legs, body oriented towards the speaker \u2014 signals that you are receptive and approachable. Crossed arms or turned-away body language can communicate defensiveness, impatience, or disinterest, even if you are listening intently. Egan\u2019s research showed that body language communicates as much as (or more than) the words you use.',
   },

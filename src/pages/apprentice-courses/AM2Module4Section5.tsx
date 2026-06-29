@@ -53,9 +53,9 @@ const AM2Module4Section5 = () => {
       question: 'If an RCD fails to trip within limits at 1×IΔn, is that a non-compliance?',
       options: [
         'Yes — it must be recorded as failing BS 7671 requirements',
-        'Have it professionally repaired and recalibrated',
-        'Tax, insurance, and business legal requirements',
-        'Vapour bubble formation causing measurement errors and equipment damage',
+        'No, provided the manual test button still operates correctly',
+        'No, as long as the trip time is within twice the permitted limit',
+        'Only if the circuit also fails its insulation resistance test',
       ],
       correctIndex: 0,
       explanation:
@@ -76,11 +76,16 @@ const AM2Module4Section5 = () => {
     },
     {
       id: 'assessment-failure',
-      question: 'True or false: You fail AM2 if you find a non-compliance.',
-      options: ['True', 'False'],
-      correctIndex: 1,
+      question: 'Which statement about finding a non-compliance in AM2 is correct?',
+      options: [
+        'Finding any non-compliance is an automatic fail of the assessment',
+        'You should fix the fault silently and not record it on the certificate',
+        'You are expected to find and report non-compliances; you fail by missing or mis-recording defects',
+        'Non-compliances only need recording if they are safety-critical',
+      ],
+      correctIndex: 2,
       explanation:
-        "False. You're expected to find and report non-compliances. You fail if you miss obvious defects or fail to record them correctly.",
+        "You're expected to find and report non-compliances. You fail if you miss obvious defects or fail to record them correctly.",
     },
   ];
 
@@ -89,10 +94,10 @@ const AM2Module4Section5 = () => {
       id: 1,
       question: 'Define a non-compliance in electrical installation terms.',
       options: [
-        "Minimise and batch shallow work; protect time for deep work",
+        "Any circuit that takes longer than expected to test on the day",
         "Any part that doesn't meet BS 7671, manufacturer's instructions, or specification",
-        "System operation, maintenance requirements, emergency procedures, and documentation location",
-        "Work from supply to load, isolating sections systematically",
+        "Any reading that differs from the value given in a textbook example",
+        "Any accessory that was supplied by a different manufacturer to the rest",
       ],
       correctAnswer: 1,
       explanation:
@@ -102,10 +107,10 @@ const AM2Module4Section5 = () => {
       id: 2,
       question: 'Give one example of a visual non-compliance.',
       options: [
-        '1.2m x 1.8m or 1.8m x 1.8m',
-        'Record it as non-compliant',
+        'A Zs reading slightly below the permitted maximum',
+        'An RCD that trips in 28 ms at 1×IΔn',
         'Exposed copper or unsleeved CPC',
-        'Low‑use corridors and stores',
+        'A continuity reading of a fraction of an ohm',
       ],
       correctAnswer: 2,
       explanation:
@@ -129,9 +134,9 @@ const AM2Module4Section5 = () => {
       question: 'What does it mean if socket polarity is reversed?',
       options: [
         'Live and neutral conductors are connected incorrectly',
-        'Piezoresistive silicon strain gauge on a diaphragm',
-        'Investigate the cause before resetting',
-        'To prevent recurrence of the same fault',
+        'The CPC has been connected to the neutral terminal',
+        'The socket has been wired with an undersized line conductor',
+        'The earth fault loop impedance is higher than permitted',
       ],
       correctAnswer: 0,
       explanation:
@@ -178,20 +183,25 @@ const AM2Module4Section5 = () => {
     },
     {
       id: 8,
-      question: 'True or false: You fail AM2 if you find a non-compliance.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'How does finding a non-compliance affect your AM2 result?',
+      options: [
+        'It is an automatic fail, regardless of how you handle it',
+        'It costs marks unless you repair it before the assessor notices',
+        'Finding and correctly reporting it demonstrates competence; you fail by missing obvious defects',
+        'It has no effect either way, as long as the final EIC is complete',
+      ],
+      correctAnswer: 2,
       explanation:
-        'False. Finding and correctly reporting non-compliances demonstrates professional competence. You fail if you miss obvious defects.',
+        'Finding and correctly reporting non-compliances demonstrates professional competence. You fail if you miss obvious defects.',
     },
     {
       id: 9,
       question: "What's the correct way to report a missing CPC?",
       options: [
-        "Battery Energy Storage Systems (BESS)",
+        "Write 'earth fault somewhere on the installation'",
         "Write 'CPC not connected at socket outlet'",
-        "Motor continuity testing stage",
-        "The starter motor and battery bank",
+        "Write 'circuit not working as intended'",
+        "Write 'wiring needs checking before handover'",
       ],
       correctAnswer: 1,
       explanation:

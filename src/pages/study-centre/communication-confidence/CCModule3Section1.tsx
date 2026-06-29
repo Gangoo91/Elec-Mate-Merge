@@ -36,10 +36,9 @@ const quickCheckQuestions = [
     options: [
       'Albert Bandura',
       'Carol Dweck',
-      'Pauline Rose Clance and Suzanne Imes',
       'Daniel Goleman',
-    ],
-    correctIndex: 2,
+      'Pauline Rose Clance and Suzanne Imes'],
+    correctIndex: 3,
     explanation:
       'Pauline Rose Clance and Suzanne Imes first described the imposter phenomenon in their 1978 paper published in Psychotherapy: Theory, Research & Practice. Their original research focused on high-achieving women who, despite objective evidence of accomplishment, persisted in believing they were not genuinely capable and feared being exposed as frauds. Subsequent research has confirmed that imposter feelings affect people across all demographics and professions.',
   },
@@ -48,12 +47,11 @@ const quickCheckQuestions = [
     question:
       "In Carol Dweck's research, what is the key difference between a fixed mindset and a growth mindset?",
     options: [
-      'Fixed mindset people work harder; growth mindset people are naturally talented',
       'Fixed mindset believes ability is innate and unchangeable; growth mindset believes ability can be developed through effort',
+      'Fixed mindset people work harder; growth mindset people are naturally talented',
       'Growth mindset means being positive; fixed mindset means being negative',
-      'Fixed mindset applies to academic subjects only; growth mindset applies to physical skills',
-    ],
-    correctIndex: 1,
+      'Fixed mindset applies to academic subjects only; growth mindset applies to physical skills'],
+    correctIndex: 0,
     explanation:
       "Dweck's research showed that people with a fixed mindset believe their abilities, intelligence, and talents are static traits that cannot be meaningfully changed. People with a growth mindset believe these qualities can be developed through dedication, effort, and learning from mistakes. The mindset you hold fundamentally shapes how you respond to challenges, setbacks, and feedback &mdash; which directly affects your confidence over time.",
   },
@@ -88,12 +86,11 @@ const quizQuestions = [
     id: 1,
     question: "Which of the following is NOT one of Bandura's four sources of self-efficacy?",
     options: [
-      'Mastery experiences',
       'Financial reward',
+      'Mastery experiences',
       'Vicarious experiences',
-      'Social persuasion',
-    ],
-    correctAnswer: 1,
+      'Social persuasion'],
+    correctAnswer: 0,
     explanation:
       'Bandura identified four sources of self-efficacy: mastery experiences (your own successes), vicarious experiences (watching others succeed), social persuasion (encouragement and feedback from others), and emotional/physiological states (how you feel physically and emotionally). Financial reward is not one of the four sources, although external rewards may contribute indirectly to motivation.',
   },
@@ -103,11 +100,10 @@ const quizQuestions = [
       'In the context of construction, which of the following is the best example of a mastery experience building confidence?',
     options: [
       'Your supervisor tells you that you are doing well',
-      'You watch a YouTube video of someone completing a consumer unit change',
       'You successfully complete your first solo consumer unit change and it passes inspection',
-      'You feel calm and relaxed before starting a new job',
-    ],
-    correctAnswer: 2,
+      'You watch a YouTube video of someone completing a consumer unit change',
+      'You feel calm and relaxed before starting a new job'],
+    correctAnswer: 1,
     explanation:
       'A mastery experience is your own direct, personal success at a task. Completing a consumer unit change yourself and having it pass inspection provides the strongest possible evidence that you are capable &mdash; far stronger than being told you are good (social persuasion), watching someone else do it (vicarious experience), or feeling calm (physiological state).',
   },
@@ -116,11 +112,10 @@ const quizQuestions = [
     question: 'Clance and Imes (1978) originally described the imposter phenomenon in which group?',
     options: [
       'Construction apprentices in their first year',
-      'High-achieving women in professional and academic settings',
       'People with clinical anxiety disorders',
-      'Students who had failed exams multiple times',
-    ],
-    correctAnswer: 1,
+      'High-achieving women in professional and academic settings',
+      'Students who had failed exams multiple times'],
+    correctAnswer: 2,
     explanation:
       "Clance and Imes' original 1978 research focused on high-achieving women who, despite significant objective evidence of success (degrees, publications, professional recognition), continued to believe they were not genuinely intelligent and feared being exposed as frauds. Later research extended these findings to show that imposter feelings affect people of all genders, backgrounds, and professions.",
   },
@@ -130,11 +125,10 @@ const quizQuestions = [
       "According to Dweck's growth mindset research, how does someone with a fixed mindset typically respond to failure?",
     options: [
       'They analyse the failure and develop a new strategy',
-      'They see it as evidence that they lack ability and are likely to avoid similar challenges in the future',
-      'They ask for help and try again immediately',
       'They become more motivated to prove themselves next time',
-    ],
-    correctAnswer: 1,
+      'They ask for help and try again immediately',
+      'They see it as evidence that they lack ability and are likely to avoid similar challenges in the future'],
+    correctAnswer: 3,
     explanation:
       "Dweck's research found that people with a fixed mindset interpret failure as confirmation that they lack the necessary ability &mdash; and since they believe ability is fixed and cannot be changed, they tend to avoid similar challenges in the future to protect themselves from further 'proof' of inadequacy. This avoidance behaviour limits growth and, over time, erodes confidence further.",
   },
@@ -142,12 +136,11 @@ const quizQuestions = [
     id: 5,
     question: 'What is the confidence-competence loop?',
     options: [
-      'A negative cycle where low confidence causes mistakes which reduce confidence further',
       'A positive feedback cycle where competence builds confidence, which encourages more practice, which builds more competence',
+      'A negative cycle where low confidence causes mistakes which reduce confidence further',
       'A theory that confidence and competence are the same thing',
-      'A training method where you alternate between learning theory and practical work',
-    ],
-    correctAnswer: 1,
+      'A training method where you alternate between learning theory and practical work'],
+    correctAnswer: 0,
     explanation:
       'The confidence-competence loop is a positive feedback cycle: as you develop competence through practice and learning, your confidence increases. That increased confidence makes you more willing to take on new challenges and practise more, which builds further competence, which increases confidence further. Understanding this loop helps you recognise that confidence is not a prerequisite for action &mdash; it is a result of it.',
   },
@@ -157,11 +150,10 @@ const quizQuestions = [
       'A newly qualified electrician is about to run their first job solo. According to the principles in this section, what is the most effective approach to building confidence for this challenge?',
     options: [
       'Avoid taking on the job until they feel completely confident',
-      'Tell themselves they are the best electrician on site to boost their self-belief',
       'Draw on previous mastery experiences, prepare thoroughly, and accept that some anxiety is normal and does not mean they are not ready',
-      'Watch experienced electricians run jobs and wait until they feel they could do it equally well',
-    ],
-    correctAnswer: 2,
+      'Tell themselves they are the best electrician on site to boost their self-belief',
+      'Watch experienced electricians run jobs and wait until they feel they could do it equally well'],
+    correctAnswer: 1,
     explanation:
       "The most effective approach combines multiple evidence-based strategies: drawing on previous mastery experiences (Bandura), recognising that discomfort is part of growth not evidence of inadequacy (Dweck), and accepting that physiological anxiety does not mean you are not competent (Bandura's fourth source). Avoiding the challenge (fixed mindset) or relying on empty affirmations (not evidence-based) would be less effective.",
   },
@@ -171,11 +163,10 @@ const quizQuestions = [
       "Which of Bandura's four sources of self-efficacy is most likely at work when an apprentice gains confidence after watching their mentor successfully complete a complex installation?",
     options: [
       'Mastery experiences',
-      'Vicarious experiences',
       'Social persuasion',
-      'Emotional and physiological states',
-    ],
-    correctAnswer: 1,
+      'Vicarious experiences',
+      'Emotional and physiological states'],
+    correctAnswer: 2,
     explanation:
       "Vicarious experiences involve building self-efficacy by observing someone you identify with succeed at a task. When an apprentice watches their mentor &mdash; someone they can relate to as a fellow electrician &mdash; complete a complex installation, it creates the belief 'if they can do it, I can learn to do it too.' The closer the model is to the observer in terms of perceived ability, the stronger the vicarious effect.",
   },
@@ -185,11 +176,10 @@ const quizQuestions = [
       'An experienced electrician has been working domestically for years and is about to start their first commercial project. They feel anxious and doubt whether they are capable. According to the imposter phenomenon research, what should they recognise?',
     options: [
       'Their anxiety proves they are not ready for commercial work and should stick to domestic',
-      'Imposter feelings are common during transitions to new environments and do not reflect actual competence &mdash; their domestic skills provide a strong foundation',
-      'They should suppress their anxiety and pretend to be confident',
       'They need to get a commercial qualification before they can feel confident',
-    ],
-    correctAnswer: 1,
+      'They should suppress their anxiety and pretend to be confident',
+      'Imposter feelings are common during transitions to new environments and do not reflect actual competence &mdash; their domestic skills provide a strong foundation'],
+    correctAnswer: 3,
     explanation:
       "Clance and Imes' research, along with subsequent studies, confirms that imposter feelings are particularly common during transitions &mdash; moving to a new environment, taking on a new role, or working in an unfamiliar context. The electrician's years of domestic experience provide genuine competence that transfers significantly to commercial work. Recognising imposter feelings for what they are (a normal psychological response to new challenges, not evidence of inadequacy) is the first step to managing them effectively.",
   },

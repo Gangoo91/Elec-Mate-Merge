@@ -25,8 +25,8 @@ import useSEO from '@/hooks/useSEO';
 const quizQuestions = [
   {
     question: "How many steps are in the HSE's recommended risk assessment process?",
-    options: ['3 steps', '4 steps', '5 steps', '7 steps'],
-    correctAnswer: 2,
+    options: ['5 steps', '3 steps', '4 steps', '7 steps'],
+    correctAnswer: 0,
     explanation:
       'The HSE recommends a 5-step risk assessment process: (1) Identify the hazards, (2) Decide who might be harmed and how, (3) Evaluate the risks and decide on controls, (4) Record your findings, and (5) Review and update the assessment.',
   },
@@ -60,23 +60,23 @@ const quizQuestions = [
     question: 'Who might be harmed by tower scaffold work?',
     options: [
       'Only the person working on the platform',
-      'Tower users, ground-level workers, and members of the public',
       'Only trained PASMA card holders',
       'Only employees of the main contractor',
+      'Tower users, ground-level workers, and members of the public',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk assessments must consider everyone who could be affected: operatives on the tower, ground-level workers in the vicinity, delivery drivers, visitors, and members of the public passing nearby. Falling objects, tower collapse, and exclusion zone breaches can affect all of these groups.',
   },
   {
     question: 'When must a risk assessment for tower work be reviewed?',
     options: [
+      'When conditions change — weather, ground, scope, or personnel',
       'Only at the start of the project',
       'Every Monday morning',
-      'When conditions change — weather, ground, scope, or personnel',
       'Only when an accident occurs',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Risk assessments must be reviewed whenever conditions change — this includes weather changes, ground conditions deteriorating after rain, new overhead hazards being discovered, changes to the work scope, or new personnel arriving on site. A 'review regularly' mindset is Step 5 of the HSE process.",
   },
@@ -96,11 +96,11 @@ const quizQuestions = [
     question: 'What is a dynamic risk assessment?',
     options: [
       'A risk assessment written in advance by the office team',
-      'An ongoing, real-time assessment of changing conditions on site',
       'A risk assessment that only applies to moving towers',
+      'An ongoing, real-time assessment of changing conditions on site',
       'A formal document signed by the client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A dynamic risk assessment is an ongoing, real-time evaluation performed by competent workers as conditions change during the work. It complements the formal written risk assessment by allowing operatives to identify and respond to new hazards as they arise — for example, unexpected weather changes or ground disturbance from nearby excavation.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
       'A tower is being used in a shared workspace where other trades are working nearby. What additional control is required?',
     options: [
       'No additional controls — other trades should look after themselves',
-      'Exclusion zones, communication with other trades, and coordination through the site supervisor',
       'A larger tower',
       'Double the number of guardrails',
+      'Exclusion zones, communication with other trades, and coordination through the site supervisor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Shared workspaces require coordination: exclusion zones to protect ground-level workers from falling objects, communication between trades about tower movements and overhead work, and coordination through the principal contractor or site supervisor to manage conflicting activities.',
   },
@@ -124,12 +124,12 @@ const quickCheckQuestions = [
     question:
       'You are writing a risk assessment for tower work on a retail car park. It rained heavily overnight and there is standing water near the planned tower location. What should your assessment address?',
     options: [
-      'Only the rain — if it stops, the risk is gone',
       'Ground bearing capacity may be compromised by waterlogged soil; drainage, alternative locations, and ground protection must be assessed',
+      'Only the rain — if it stops, the risk is gone',
       'Ignore it — car parks have good drainage',
       'Just put more stabilisers on the tower',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Standing water indicates potentially waterlogged ground that may not support the tower's point loads. The risk assessment must evaluate ground bearing capacity, consider ground protection (spreader plates, boards), identify alternative locations on harder standing, and plan for ongoing monitoring if conditions could worsen.",
   },
@@ -138,11 +138,11 @@ const quickCheckQuestions = [
       "Step 4 of the HSE process says 'record your findings.' Who needs to see the risk assessment?",
     options: [
       'Only the person who wrote it',
-      "The site manager's filing cabinet — it just needs to exist",
       'Everyone involved in the work, including operatives, supervisors, and the client if requested',
+      "The site manager's filing cabinet — it just needs to exist",
       'Only the HSE inspector if they visit',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A risk assessment is only effective if it is communicated to everyone involved. Operatives need to understand the hazards and controls, supervisors need to enforce them, and the client may need sight of it under CDM 2015. A risk assessment locked in a filing cabinet protects no one.',
   },

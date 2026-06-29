@@ -39,11 +39,11 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'What is the core diameter of all OM-grade multimode fibres?',
-    options: ['9/125 um', '50/125 um', '62.5/125 um', 'Varies by grade'],
-    correctAnswer: 1,
+    question: 'What is the core diameter of the modern OM2-OM5 multimode fibre grades?',
+    options: ['50/125 um', '62.5/125 um', '9/125 um', '100/140 um'],
+    correctAnswer: 0,
     explanation:
-      'OM2-OM5 all have 50um cores. Only OM1 has 62.5um. The question refers to the modern OM grades which standardised on 50um.',
+      'OM2, OM3, OM4 and OM5 all standardised on a 50um core. Only the legacy OM1 grade uses a 62.5um core.',
   },
   {
     id: 2,
@@ -55,40 +55,40 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'What is the minimum modal bandwidth of OM3 fibre at 850nm?',
+    question: 'What is the minimum effective modal bandwidth of OM3 fibre at 850nm?',
     options: ['200 MHz.km', '500 MHz.km', '2000 MHz.km', '4700 MHz.km'],
     correctAnswer: 2,
     explanation: 'OM3 has a minimum effective modal bandwidth of 2000 MHz.km at 850nm.',
   },
   {
     id: 4,
-    question: 'Which cable jacket colour indicates OM3/OM4 aqua multimode fibre?',
-    options: ['Orange', 'Aqua (turquoise)', 'Yellow', 'Grey'],
-    correctAnswer: 1,
+    question: 'Which cable jacket colour conventionally indicates OM3/OM4 multimode fibre?',
+    options: ['Aqua (turquoise)', 'Orange', 'Yellow', 'Grey'],
+    correctAnswer: 0,
     explanation:
-      'Aqua is the standard jacket colour for OM3 and OM4 laser-optimised multimode fibre.',
+      'Aqua is the standard jacket colour for OM3 and OM4 laser-optimised multimode fibre; orange denotes legacy OM1/OM2.',
   },
   {
     id: 5,
-    question: 'OS2 fibre is specifically designed for:',
+    question: 'OS2 singlemode fibre is specifically designed for:',
     options: [
-      'Short indoor runs',
-      'High-power laser transmission',
       'Long-haul and outdoor applications',
-      'Audio signal transmission',
+      'Short indoor runs only',
+      'High-power laser transmission only',
+      'Analogue audio signal transmission',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'OS2 has lower attenuation and is designed for all applications including long-haul and outdoor use.',
+      'OS2 has lower attenuation and a low water peak, making it suitable for all applications including long-haul and outdoor use.',
   },
   {
     id: 6,
     question: 'What does the water peak refer to in singlemode fibre?',
     options: [
-      'Maximum water depth for installation',
-      'Attenuation spike at 1383nm from hydroxyl ions',
-      'Cooling water requirements',
-      'Moisture in the cable jacket',
+      'Maximum water depth permitted for installation',
+      'An attenuation spike near 1383nm from hydroxyl (OH) ions',
+      'The cooling water requirement of the transceiver',
+      'Moisture absorbed by the cable jacket',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,8 +97,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'The maximum attenuation specification for OS1 fibre at 1310nm is:',
-    options: ['0.35 dB/km', '0.40 dB/km', '1.0 dB/km', '3.5 dB/km'],
-    correctAnswer: 2,
+    options: ['0.35 dB/km', '0.40 dB/km', '0.50 dB/km', '1.0 dB/km'],
+    correctAnswer: 3,
     explanation:
       'OS1 has maximum attenuation of 1.0 dB/km, while OS2 has the tighter specification of 0.4 dB/km.',
   },
@@ -106,27 +106,27 @@ const quizQuestions = [
     id: 8,
     question: 'OM5 fibre is specifically optimised for:',
     options: [
-      'Legacy LED sources',
-      'Single wavelength 850nm transmission',
+      'Legacy LED light sources',
       'Shortwave wavelength division multiplexing (SWDM)',
-      'Long-haul telecommunications',
+      'Single-wavelength 850nm transmission only',
+      'Long-haul telecommunications backbones',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'OM5 is optimised for SWDM, supporting multiple wavelengths from 850-953nm on a single fibre.',
   },
   {
     id: 9,
-    question: 'What data rate can OM4 fibre support over 150 metres?',
-    options: ['1 Gbps', '10 Gbps', '40/100 Gbps', '400 Gbps'],
-    correctAnswer: 2,
+    question: 'What data rate can OM4 fibre support over a 150 metre link?',
+    options: ['1 Gbps', '10 Gbps', '400 Gbps SWDM', '40/100 Gbps'],
+    correctAnswer: 3,
     explanation: 'OM4 can support 40G and 100G Ethernet over 150 metres using parallel optics.',
   },
   {
     id: 10,
     question: 'Which standard defines the OM and OS fibre classifications?',
-    options: ['BS 7671', 'ISO/IEC 11801', 'TIA-568', 'IEEE 802.3'],
-    correctAnswer: 1,
+    options: ['TIA-568', 'IEEE 802.3', 'ISO/IEC 11801', 'BS 7671'],
+    correctAnswer: 2,
     explanation:
       'ISO/IEC 11801 (and the related EN 50173) defines the OM and OS classification system.',
   },

@@ -97,9 +97,9 @@ export const bmsModule2Section2QuizData: QuizQuestion[] = [
     question: 'What type of sensor is typically used to detect occupancy in offices?',
     options: [
       'PIR (Passive Infrared) sensor',
-      '3 minutes (or 5 minutes per BS 7671)',
-      'Insulated gloves and safety glasses',
-      'When indicator shows fault',
+      'NTC thermistor temperature sensor',
+      'Pt100 resistance temperature detector',
+      'Capacitive relative humidity sensor',
     ],
     correctAnswer: 0,
     explanation:

@@ -50,12 +50,12 @@ const checks = [
     id: 'm5-s2-sub4-colours',
     question: 'Post-harmonisation, single-phase line conductor identification per Reg 514.3 is:',
     options: [
-      'Brown.',
       'Red.',
       'Black.',
-      'Yellow.',
+      'Brown.',
+      'Grey.',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "Post-harmonisation (UK adoption from 2004 onwards in BS 7671): single-phase line = brown. Three-phase L1/L2/L3 = brown/black/grey. Neutral = blue. CPC = green/yellow. On older red/yellow/blue installations, a mixed-colours warning notice is industry good practice (formerly required by Reg 514.14, deleted by BS 7671:2018+A2:2022).",
   },
@@ -65,10 +65,10 @@ const checks = [
     options: [
       'Compliance is almost always cheaper than breach. Compliance = time, kit, training. Breach = fine + FFI + legal + civil + insurance + reputation + lost contracts. Sentencing Council guideline puts serious-case fines into six figures alone.',
       'Within prescribed safe zones (horizontal / vertical from accessory, or 150 mm from wall edges and ceilings) OR have RCD additional protection ≤ 30 mA, OR have earthed mechanical protection (e.g. metal capping). All three together for higher-risk masonry walls.',
-      'Sealing arrangements that maintain the fire resistance rating of the element penetrated — using tested intumescent products (pillows, mortar, putty, sleeves) appropriate to the fire rating, cable type, and bundle size.',
       'Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity',
+      'Sealing arrangements that maintain the fire resistance rating of the element penetrated — using tested intumescent products (pillows, mortar, putty, sleeves) appropriate to the fire rating, cable type, and bundle size.',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Section 527 — cable penetrations through fire-resisting elements must be sealed to maintain the fire rating. Tested intumescent products are used per the manufacturer's installation drawings and matched to the fire rating (e.g. 60-min rated wall = 60-min rated seal). Visual inspection confirms presence and correct application of seals at every penetration.",
   },
@@ -147,7 +147,7 @@ const quizQuestions = [
       'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
       'Stop, escalate to the designer/contractor, get the missing data, then proceed. Where data cannot be provided, document the limitation on the EIC and assess whether verification can proceed at all.',
       'Drilled within the centre third of the joist depth, in the middle 25-40% of the span, and not weaken the structural integrity. Notches allowed in top of joist within prescribed limits per Building Regulations Part A and BS 5268.',
-      'It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'do the assessment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'; Reg 5 is \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'run the management system that turns the assessment into actual on-site protection\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'. The 5+ employees recording threshold also applies.',
+      "It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies.",
     ],
     correctAnswer: 2,
     explanation:
@@ -172,7 +172,7 @@ const quizQuestions = [
     options: [
       'Application of the rating factor (Ca) for thermal insulation per BS 7671 Appendix 4 — Method 100 (cable surrounded by insulation) typically applies a 0.5 derating, requiring larger CSA. Visual inspection checks the design accounts for installation method.',
       'The operative must stop work immediately, be assisted to descend safely while still conscious, moved to a cool shaded area, given fluids and monitored — if symptoms worsen, call emergency services',
-      'Employers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' Liability insurance — required by the Employers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' Liability (Compulsory Insurance) Act 1969 for any employee (full-time, part-time, casual, apprentice). Minimum statutory cover is £5m; most policies provide £10m. Certificate must be displayed where employees can see it.',
+      "Employers' Liability insurance — required by the Employers' Liability (Compulsory Insurance) Act 1969 for any employee (full-time, part-time, casual, apprentice). Minimum statutory cover is £5m; most policies provide £10m. Certificate must be displayed where employees can see it.",
       'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
     ],
     correctAnswer: 0,

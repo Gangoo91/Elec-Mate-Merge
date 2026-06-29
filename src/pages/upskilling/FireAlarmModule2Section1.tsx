@@ -23,55 +23,55 @@ const inlineChecks = [
     question:
       'Why is ionisation smoke detection now uncommon in new BS 5839-1:2025 designs, and what is the modern alternative for the same application?',
     options: [
-      'It is too expensive.',
-      'Ionisation chambers contain a sealed source of Americium-241 (an alpha-emitter). The radioactive source triggers waste-disposal, transport and end-of-life duties under the Environmental Permitting Regulations and the Radioactive Substances Act, plus user reluctance about radioactivity in occupied premises. The modern alternative is the optical (photoelectric) point detector or, where fast-flaming detection is also wanted, the optical + heat multi-sensor configured to mode O+H. The detection performance for slow smouldering fires is broadly comparable; the regulatory burden is removed.',
-      'Optical detectors detect heat better.',
-      'Ionisation is banned outright.',
+      'Its sealed Americium-241 source carries radioactive-substance duties; the alternative is the optical (or optical + heat multi-sensor) detector.',
+      'Its sensing chamber drifts too rapidly to hold calibration; laser point detectors are now preferred instead.',
+      'It cannot detect smouldering fires at all; modern heat-only detectors cover the same applications.',
+      'It is prohibited outright by the 2025 edition, which permits only beam detection in its place.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Ionisation detectors remain technically permitted and standards-compliant, but the radioactive-source duty has driven the market to optical and multi-sensor alternatives. BS 5839-1:2025 does not prohibit ionisation; it just no longer treats it as the default. Designers should record the detector type and operating mode under clause 20.11 regardless of which chamber technology is chosen.',
+      'Ionisation chambers contain a sealed Am-241 alpha source, which triggers transport, waste-disposal and end-of-life duties under the Environmental Permitting Regulations and the Radioactive Substances Act, plus user reluctance about radioactivity in occupied premises. The modern alternative is the optical (photoelectric) point detector or, where fast-flaming detection is also wanted, an optical + heat multi-sensor in mode O+H — comparable smouldering-fire performance without the regulatory burden. Ionisation remains technically permitted; the standard just no longer treats it as the default. Record detector type and operating mode under clause 20.11 whichever chamber is chosen.',
   },
   {
     id: 'fam2-s1-multi',
     question:
       'A multi-sensor detector is configured to operate ONLY when both heat and smoke are sensed simultaneously. What is the maximum mounting height permitted?',
     options: [
-      'The smoke-detector limit (10.5 m for an A1R configuration).',
-      'The HEAT-detector limit. Per BS 5839-1:2025 clause 17 (ceiling heights — table 3), if a multi-sensor is configured to require both heat AND smoke for an alarm, the controlling sensor for ceiling-height purposes is the one that responds latest — the heat element. The mounting height is limited to the heat-detector value (typically 7.5 m or 9 m depending on class), NOT the smoke-detector value. Configuring a multi-sensor in this conservative mode is sometimes done to suppress nuisance smoke alarms, but the ceiling-height implication is real.',
-      'There is no height limit on multi-sensors.',
-      '15 m, the beam-detector limit.',
+      'The smoke-detector limit (10.5 m for an A1R configuration), since smoke is one of the two sensed signatures.',
+      'No height limit applies, because two confirming elements compensate for stratification at any height.',
+      'The heat-detector limit (typically 7.5 m or 9 m), because the slowest element controls.',
+      'The beam-detector limit of 15 m, since multi-sensors are treated as line-type for height purposes.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'BS 5839-1:2025 clause 17 clarifies that the controlling height limit follows the slowest-responding element configured to trigger the alarm. The lowest sensitivity drives the limit. Designers must record the operating mode (clause 20.11) so the commissioning engineer can verify the ceiling-height assumption used in the design.',
+      'Per BS 5839-1:2025 clause 17 (ceiling heights — Table 3), when a multi-sensor is configured to require both heat AND smoke, the controlling sensor for ceiling-height is the one that responds latest — the heat element — so the height is limited to the heat-detector value, NOT the smoke value. This conservative AND mode is sometimes chosen to suppress nuisance alarms, but the ceiling-height penalty is real. Record the operating mode under clause 20.11 so the commissioning engineer can verify the height assumption.',
   },
   {
     id: 'fam2-s1-beam',
     question: 'A beam smoke detector is the right answer in which scenario?',
     options: [
-      'A small office (<60 m²).',
-      'A large open volume where point detectors cannot be reasonably mounted within 10.5 m of the ceiling — typical examples include warehouses, atria, sports halls, theatres and cathedral roofs. A reflective beam detector projects an infrared beam from a transmitter/receiver unit at one end of the volume to a passive reflector at the other. Smoke crossing the beam attenuates the signal; an alarm is generated when the obscuration exceeds the configured threshold. One beam can cover a long, narrow volume (typically up to 100 m beam length with appropriate spacing rules).',
-      'A residential bedroom.',
-      'A bathroom.',
+      'A small single-occupancy office under 60 m² with a standard 2.4 m ceiling.',
+      'A domestic bathroom, where steam rules out point smoke detection.',
+      'A residential bedroom forming part of an L2 sleeping-risk system.',
+      'A large open volume — warehouse, atrium, sports hall — where point detectors cannot be mounted within 10.5 m of the ceiling.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Beam detectors fill a specific gap: large open volumes where ceiling height makes point detection impractical. They are NOT the default — point detection is the default — but they are the right tool when the geometry demands it. BS 5839-1:2025 retains the beam detector recommendations from earlier editions; spacing rules require careful calculation of beam path and lateral coverage.',
+      'Beam detectors fill a specific gap: large open volumes where ceiling height makes point detection impractical (warehouses, atria, sports halls, theatres, cathedral roofs). A reflective beam unit projects an infrared beam to a passive reflector; smoke crossing the path attenuates the signal and an alarm is raised when obscuration exceeds the threshold. One beam can cover a long, narrow volume up to about 100 m. They are NOT the default — point detection is — but they are the right tool when the geometry demands it.',
   },
   {
     id: 'fam2-s1-co',
     question:
       'A CO (carbon monoxide) fire detector to BS EN 54-26 is being proposed for a hotel bedroom. Is this a fire detector or a domestic CO alarm?',
     options: [
-      'They are the same.',
-      'They are DIFFERENT products with different roles. A CO FIRE detector to BS EN 54-26 senses the elevated CO levels produced by smouldering combustion of common materials (wood, soft furnishings) and reports a FIRE signal to the CIE. A domestic CO ALARM to BS EN 50291 senses CO from incomplete combustion in flueless or faulty fuel-burning appliances and reports a TOXIC GAS signal locally. Fitting a BS EN 50291 alarm in place of a BS EN 54-26 fire detector is a category-of-product error: it would warn of boiler CO, not of smouldering soft furnishings, and it would not signal the fire alarm panel.',
-      'CO is never used in fire alarm systems.',
-      'BS EN 54-26 is for domestic use only.',
+      'They are different products — a BS EN 54-26 CO fire detector signals the panel; a BS EN 50291 domestic CO alarm signals locally.',
+      'They are the same product sold under two interchangeable standard numbers.',
+      'CO sensing is never used within a BS 5839-1 fire alarm system at all.',
+      'BS EN 54-26 is a domestic-only standard; fire systems use BS EN 50291.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Two products, two standards, two failure modes. BS EN 54-26 CO fire detectors are integrated into a BS 5839-1 system. BS EN 50291 CO alarms are stand-alone fuel-burning-appliance safety devices. Conflating them is one of the more common procurement errors on residential/HMO contracts.',
+      'Two products, two standards, two failure modes. A CO FIRE detector to BS EN 54-26 senses elevated CO from smouldering combustion (wood, soft furnishings) and reports a FIRE signal to the CIE. A domestic CO ALARM to BS EN 50291 senses CO from flueless or faulty fuel-burning appliances and reports a TOXIC GAS signal locally — it does not connect to the fire panel. Fitting a 50291 alarm in place of a 54-26 detector is a category-of-product error: it would warn of boiler CO, not smouldering furnishings. Conflating them is a common procurement error on residential/HMO contracts.',
   },
 ];
 
@@ -81,139 +81,139 @@ const quizQuestions = [
     question:
       'What does BS 5839-1:2025 clause 20.11 require the designer to record about each detector?',
     options: [
-      'Only the manufacturer.',
-      "The selection of detector type AND configuration. Where detection can be set to a number of different operating modes (e.g. a multi-sensor with several response characteristics), the designer must record the chosen type and mode. The information must be made available to the commissioning technician and recorded in the system's operating and maintenance manual. Annex D, Figure D.1 gives a suitable means of recording.",
-      'Just the mounting height.',
-      'Only smoke-detector settings.',
+      'Only the manufacturer name and catalogue part number of each device.',
+      'The selection of detector type AND its configuration (operating mode).',
+      'Just the mounting height above finished floor level for each device.',
+      'Only the sensitivity setting of the smoke-sensing element.',
     ],
     correctAnswer: 1,
     explanation:
-      'Clause 20.11 is one of the most operationally significant changes in BS 5839-1:2025. The designer cannot simply specify "multi-sensor"; the operating mode (O, H, O+H, OR/AND logic, sensitivity) must be documented and handed over. The commissioning technician programs to that record; the maintainer verifies against it.',
+      'Clause 20.11 is one of the most operationally significant changes in BS 5839-1:2025. Where detection can be set to several operating modes (e.g. a multi-sensor with different response characteristics), the designer must record the chosen type and mode (O, H, O+H, OR/AND logic, sensitivity), make it available to the commissioning technician and record it in the operating and maintenance manual; Annex D, Figure D.1 gives a suitable template. The commissioner programs to that record; the maintainer verifies against it.',
   },
   {
     id: 2,
     question: 'What is the principle of operation of an OPTICAL (photoelectric) smoke detector?',
     options: [
-      'It measures temperature.',
-      'A pulsed infrared LED inside a labyrinth chamber emits light into a sensing volume. A photodiode sits at an ANGLE to the LED — out of the direct path — so under clean-air conditions almost no light reaches it. When smoke particles enter the chamber, light is SCATTERED off the particles and a portion reaches the photodiode. The photodiode current rises in proportion to particle concentration; an alarm is generated when the threshold is exceeded. The chamber labyrinth is engineered to admit smoke but exclude ambient light and large insects.',
-      'It detects ionisation current changes.',
-      'It uses a radioactive source.',
+      'It measures the absolute air temperature inside a sealed sensing chamber.',
+      'It uses a sealed radioactive source to ionise the air in a sensing chamber.',
+      'It detects a fall in ionisation current as smoke enters a dual chamber.',
+      'Light from a pulsed LED is scattered off smoke particles onto an offset photodiode.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Light-scatter is the principle. Optical detectors are sensitive to large smoke particles characteristic of smouldering fires (cotton, polyurethane foam) and less sensitive to small particles characteristic of clean-flaming fires (paper, alcohol). Multi-sensor and ionisation alternatives address that selectivity gap.',
+      'Light-scatter is the principle. A pulsed infrared LED emits into a labyrinth chamber; a photodiode sits at an angle, out of the direct path, so under clean air almost no light reaches it. Smoke particles scatter light onto the photodiode and the current rises with particle concentration, raising an alarm above threshold. The labyrinth admits smoke but excludes ambient light and insects. Optical detectors respond well to large smouldering-fire particles and less well to small clean-flaming particles; multi-sensor and ionisation alternatives address that gap.',
   },
   {
     id: 3,
     question:
       'Per BS EN 54-5, what does the heat-detector class designation (A1, A2, B, C, D, E, F, G) define?',
     options: [
-      'The colour.',
-      "The static (fixed-temperature) response point and the maximum application temperature. A1 has the lowest static response (54-65 °C) for normal occupied spaces; class G has the highest (110-129 °C) for boiler rooms and similar high-ambient locations. Letters with an 'R' suffix (e.g. A1R) indicate the detector ALSO has a rate-of-rise element. The class is selected against the worst-case ambient temperature of the protected area, leaving sufficient margin to avoid spurious operation while preserving fast response to fire.",
-      'The IP rating.',
-      'The colour code only.',
+      'The housing colour, which is keyed to the detector class for quick identification.',
+      'The ingress-protection (IP) rating of the detector enclosure.',
+      'The static response temperature and the maximum application temperature.',
+      'The terminal colour-coding scheme used for loop wiring only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Heat-detector class is one of the few fire-detection parameters where the wrong choice produces immediate, observable failure: an A1 in a boiler room cycles into alarm every time the boiler runs; a class G in a bedroom never catches a slow smouldering fire. Match the class to the ambient.',
+      'The class defines the static (fixed-temperature) response point and the maximum application temperature. A1 has the lowest static response (54-65 °C) for normal occupied spaces; class G the highest (110-129 °C) for boiler rooms and similar. An "R" suffix (e.g. A1R) means a rate-of-rise element is also fitted. Select the class against the worst-case ambient with margin: an A1 in a boiler room cycles into alarm every time the boiler runs; a class G in a bedroom never catches a slow smouldering fire.',
   },
   {
     id: 4,
     question:
       'Which BS EN 54 product standard applies to NON-RESETTABLE linear (line-type) heat detectors?',
     options: [
-      'BS EN 54-5.',
-      'BS EN 54-28. NEW recognition in BS 5839-1:2025 (clause 8 system components). Non-resettable line-type heat cable is a continuous sensing cable along which the insulation breaks down at a defined temperature; once triggered, the cable section must be replaced. Used in cable trays, transformer rooms and tunnels where point detection cannot follow the linear hazard. Resettable line-type cable (which uses electronic interrogation along the cable to detect localised heat) is covered by the partner standard BS EN 54-22.',
-      'BS EN 54-22.',
-      'BS EN 54-7.',
+      'BS EN 54-28, a new normative reference in the 2025 edition.',
+      'BS EN 54-5, the product standard for point-type heat detectors.',
+      'BS EN 54-22, the product standard for resettable line-type heat.',
+      'BS EN 54-7, the product standard for point-type smoke detectors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 added BS EN 54-22 (resettable) and BS EN 54-28 (non-resettable) to the normative references. Recognising both gives designers a sanctioned product standard for two distinct linear-heat technologies that the 2017 edition referenced informally.',
+      'Non-resettable line-type heat cable is covered by BS EN 54-28: a continuous sensing cable whose insulation breaks down at a defined temperature, after which the triggered section must be replaced. It is used in cable trays, transformer rooms and tunnels where point detection cannot follow the linear hazard. Resettable line-type cable (electronic interrogation along the cable) is the partner standard BS EN 54-22. BS 5839-1:2025 added both as normative references — formalising two technologies the 2017 edition referenced only informally.',
   },
   {
     id: 5,
     question:
       'What is an aspirating smoke detection (ASD) system, and where is it the right answer?',
     options: [
-      'A regular point detector.',
-      'A high-sensitivity smoke detection technology (sometimes branded VESDA after a leading manufacturer). A network of small-bore sampling pipes draws air from the protected volume back to a centralised, very-high-sensitivity laser/optical detection chamber. Sensitivity is typically 10x to 100x that of a point detector. Used in (a) IT rooms, data centres and clean rooms where very early warning of overheating insulation is needed, (b) high-airflow environments where smoke would be rapidly diluted before reaching ceiling-mounted point detectors, (c) high-ceiling/aesthetic-sensitive areas where pipe sampling is preferable to surface-mounted point detectors.',
-      'A type of beam detector.',
-      'A heat-only detector.',
+      'A standard ceiling-mounted point smoke detector with an extended sampling range.',
+      'A heat-only detector tuned for very-early-warning applications.',
+      'A reflective beam detector used across large open volumes.',
+      'A sampling technology drawing air through small-bore pipes to a very-high-sensitivity chamber.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'ASD is not a beam detector and is not a point detector — it is a sampling technology. Its sensitivity advantage matters where (a) the airflow would dilute smoke at the ceiling, (b) the consequence of late detection is loss of unique data, or (c) point detectors cannot be located. Spacing and pipe-network design are governed by manufacturer guidance and BS 5839-1 detection-zoning rules.',
+      'Aspirating smoke detection (ASD) draws air through a network of small-bore sampling pipes back to a centralised laser/optical chamber typically 10x to 100x more sensitive than a point detector. It is the right answer in (a) IT rooms, data centres and clean rooms needing early warning of overheating insulation; (b) high-airflow environments where smoke is diluted before reaching the ceiling; and (c) high or aesthetically sensitive ceilings where pipe sampling beats surface-mounted detectors. It is neither a point nor a beam detector. Pipe-network design follows manufacturer software and BS 5839-1 zoning rules.',
   },
   {
     id: 6,
     question:
       'Why does BS 5839-1:2025 (in its commentary on clause 20 and clause 33) prefer multi-sensor detectors where there is a known risk of false alarms from point smoke?',
     options: [
-      'Multi-sensors are cheaper.',
-      'A multi-sensor (typically optical + heat, sometimes optical + heat + CO) requires evidence from MORE THAN ONE sensing element before declaring alarm. A short-lived smoke event from cooking aerosol or steam will trigger the optical element but not the heat element; the AND logic suppresses the false alarm. A real fire produces both smoke AND elevated heat; the multi-sensor responds. The result is materially fewer false alarms than a comparable point smoke detector while preserving (or improving) real-fire response. Clause 33 explicitly recommends multi-sensor as a measure to limit unwanted alarms.',
-      'They consume less power.',
-      'They are easier to service.',
+      'Multi-sensor detectors are consistently cheaper to supply than point smoke detectors.',
+      'In AND logic, a multi-sensor requires both smoke and heat to confirm, suppressing single-stimulus false alarms.',
+      'Multi-sensor detectors draw materially less standby current than point smoke detectors.',
+      'Multi-sensor detectors are quicker and cheaper to service than point smoke detectors.',
     ],
     correctAnswer: 1,
     explanation:
-      'False-alarm management drove the market shift to multi-sensor as the modern default. Clause 20.11 then requires the designer to record the operating mode — because a multi-sensor configured to OR-logic behaves as smoke-only and offers none of the false-alarm benefit. Mode is everything.',
+      'A multi-sensor (typically optical + heat, sometimes + CO) requires evidence from more than one element before alarming. A short-lived cooking aerosol or steam event triggers only the optical element; AND logic suppresses the false alarm. A real fire produces both smoke AND heat, so the detector still responds — materially fewer false alarms while preserving real-fire response. Clause 33 recommends multi-sensor to limit unwanted alarms, and clause 20.11 requires the mode to be recorded: in OR logic the same device behaves as smoke-only and offers none of the benefit. Mode is everything.',
   },
   {
     id: 7,
     question:
       'A multi-sensor is configured to "smoke OR heat" logic (alarm on whichever element triggers first). What does this configuration buy you?',
     options: [
-      'Nothing.',
-      'FAST response. The detector declares alarm on the FIRST element to trigger, whichever it is. Used where speed-of-response matters more than false-alarm suppression — for example, in escape routes where an early alarm is essential. Drawback: each element operates independently of the other, so the false-alarm benefit of AND logic is forfeited. Optical false alarms still translate to system false alarms. Mode selection is a design trade-off; clause 20.11 requires it to be recorded.',
-      'Lower power consumption.',
-      'Smaller detector size.',
+      'Nothing useful — OR logic behaves identically to AND logic in practice.',
+      'Lower standby power consumption than the same device in AND logic.',
+      'Faster response — the detector alarms on the first element to trigger.',
+      'A physically smaller detector head than an equivalent AND-logic device.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'OR vs AND vs MAJORITY-VOTE is the multi-sensor design lever. OR favours speed; AND favours false-alarm suppression. Most modern panels can run different modes by area (e.g. AND in kitchens-adjacent corridors, OR in escape stairwells). Clause 20.11 documentation captures this per device.',
+      'OR logic gives fast response: the detector declares alarm on the first element to trigger, whichever it is. It suits escape routes where an early alarm is essential. The drawback is that each element operates independently, so the false-alarm benefit of AND logic is forfeited — an optical false alarm still becomes a system false alarm. OR vs AND vs majority-vote is the multi-sensor design lever (most panels run different modes by area), and clause 20.11 requires the mode to be recorded per device.',
   },
   {
     id: 8,
     question:
       'In a hotel bedroom (Category L1 or L2 with sleeping risk), is a HEAT detector permitted under BS 5839-1:2025?',
     options: [
-      'Yes, always.',
-      'NO — for new works. Clause 14 (selection and application) makes clear that heat detectors are no longer permitted in rooms in which people sleep, in either L1, L2 or L3 categories. The reasoning is that a slow smouldering fire (e.g. soft-furnishing fire from a discarded cigarette, charging-cable fault) can produce lethal smoke long before the heat threshold is reached. Smoke or multi-sensor detection is required. The change is NOT retrospective — existing systems do not have to be ripped out — but ANY new works (new build, refurbishment, extension, modification) must comply.',
-      'Yes, if it is rate-of-rise.',
-      'Yes, if combined with a smoke alarm in the corridor.',
+      'No — clause 14 prohibits heat detection in sleeping rooms for new L1/L2/L3 work.',
+      'Yes, in all cases — heat detection remains a free choice in any sleeping room.',
+      'Yes, provided the heat detector is a rate-of-rise (R-suffix) type.',
+      'Yes, provided it is paired with a smoke detector in the adjacent corridor.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'This is one of the most consequential category-5 changes in 2025: heat detection is now off the table for new sleeping-risk areas. The change recognises that bedroom fires are characteristically smouldering, low-temperature events whose victims succumb to smoke before the heat element ever responds. Always specify smoke or smoke-multi for new bedroom installs.',
+      'Clause 14 makes clear that heat detectors are no longer permitted in rooms where people sleep in L1, L2 or L3 systems. Slow smouldering fires — a discarded cigarette in soft furnishings, a charging-cable fault — produce lethal smoke long before the heat threshold is reached, so smoke or multi-sensor detection is required. The change is not retrospective, but any new works (new build, refurbishment, extension, modification) must comply. This is one of the most consequential 2025 changes.',
   },
   {
     id: 9,
     question:
       'What is the difference between a "fixed-temperature" heat detector and a "rate-of-rise" heat detector?',
     options: [
-      'Identical.',
-      'DIFFERENT response triggers. A FIXED-TEMPERATURE heat detector triggers at a specific static temperature (e.g. 58 °C for class A1). A RATE-OF-RISE detector triggers when the rate of temperature rise exceeds a threshold (typically around 8 °C/min) — it can therefore respond at a LOWER absolute temperature than the fixed point, provided the rate is high. Most modern heat detectors are COMBINED (e.g. A1R, A2S/R) — they trigger on either the static threshold OR the rate-of-rise. Combined detectors give faster response to rapidly developing fires while still catching slow temperature rises that approach the static point.',
-      'Heat detectors only do one of these.',
-      'Rate-of-rise is a smoke detector function.',
+      'They are identical — the two terms describe the same trigger mechanism.',
+      'Fixed-temperature triggers at a set static point; rate-of-rise triggers on fast temperature rise.',
+      'Heat detectors can only ever provide one of these two responses, never both.',
+      'Rate-of-rise is a smoke-detector function, not a heat-detector function.',
     ],
     correctAnswer: 1,
     explanation:
-      'The class designation tells you which: A1, A2, B... = fixed only; A1R, A2R... = combined fixed + rate-of-rise. The "R" matters operationally — rate-of-rise gives faster response to flaming fires but can produce nuisance trips in environments with rapid legitimate temperature swings (cookers, vehicle exhaust).',
+      'A fixed-temperature detector triggers at a static point (e.g. 58 °C for class A1). A rate-of-rise detector triggers when the temperature climbs faster than a threshold (typically about 8 °C/min), so it can respond at a lower absolute temperature provided the rate is high. Most modern heat detectors are combined (A1R, A2S/R), triggering on the static point OR the rate-of-rise. The class designation tells you which: A1, A2... = fixed only; A1R, A2R... = combined. Rate-of-rise speeds response to flaming fires but can nuisance-trip where legitimate temperature swings are rapid.',
   },
   {
     id: 10,
     question:
       'A multi-sensor detector with optical + heat + CO sensing offers the FASTEST and most RELIABLE detection across the broadest fire signature. Why is it not the default for every application?',
     options: [
-      'It is illegal.',
-      'Cost and operating-mode complexity. A three-element multi-sensor is materially more expensive per device than a basic optical or O+H multi-sensor. The CO element also adds servicing burden — the CO cell has a finite life (typically 5-10 years) and must be replaced, recorded and tested as part of maintenance. The DESIGN benefit (very high false-alarm immunity, very fast response across smouldering and flaming signatures) is worth the cost in critical applications: hotel corridors, healthcare wards, stand-alone kitchens. In low-risk offices the cost-benefit goes the other way. Clause 14/20.11 record the choice and rationale.',
-      'They cannot be wired to any panel.',
-      'They are only for industrial use.',
+      'Three-element multi-sensors are illegal under BS 5839-1:2025.',
+      'Three-element multi-sensors are approved for industrial premises only.',
+      'Three-element multi-sensors cannot be wired to a standard addressable panel.',
+      'Cost and operating-mode complexity — including the finite-life CO cell that adds servicing burden.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The "most-sensors-wins" view is wrong. Each sensing element adds cost, mode-complexity, and a service-life consideration. Multi-sensor selection is a risk-and-cost trade-off, recorded under clause 20.11 so that the design rationale is auditable.',
+      'The "most sensors wins" view is wrong. A three-element multi-sensor costs materially more per device than a basic optical or O+H detector, and its CO cell has a finite life (typically 5-10 years) that must be replaced, recorded and tested. The design benefit — very high false-alarm immunity and fast response across smouldering and flaming signatures — justifies the cost in critical applications (hotel corridors, healthcare wards, stand-alone kitchens) but not in low-risk offices. The choice and rationale are recorded under clause 14/20.11.',
   },
 ];
 

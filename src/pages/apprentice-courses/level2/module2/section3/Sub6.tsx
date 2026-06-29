@@ -62,10 +62,10 @@ const checks = [
     question:
       'Why does bolting a copper bonding conductor straight onto an aluminium pipe cause problems over time?',
     options: [
-      'Only if the casualty\\\\\\\\\\\\\\\'s airway is compromised or they are in immediate life-threatening danger',
-      'To make sure the conductors you’re working on can’t shock or burn you',
+      'Copper is much harder than aluminium and crushes the pipe over time',
+      'The two metals expand at the same rate, loosening the bolt',
       'Copper and aluminium form a galvanic cell in the presence of moisture, corroding the joint',
-      'Patch panel arrangement allowing flexible connections between systems',
+      'Aluminium is a poor conductor, so the joint overheats under load',
     ],
     correctIndex: 2,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'A simple cell consists of:',
     options: [
-      'Affects economics of electricity supply',
+      'Two identical metal electrodes in pure water',
       'Two electrodes of different metals in an electrolyte',
-      'Ensure equipment is functioning correctly',
-      'Sending consumption data to BMS or external counters',
+      'A single metal rod sealed inside an insulator',
+      'Two electrolytes separated by a copper plate',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     id: 5,
     question: 'Electrolysis is used industrially for:',
     options: [
-      'Biological agents including fungi and bacteria',
+      'Generating mains-frequency AC for the grid',
       'Refining metals (e.g. copper) and electroplating',
-      'Over-tightening terminals damaging insulation',
-      'Happiness, sadness, anger, fear, surprise, and disgust',
+      'Stepping voltage up and down between circuits',
+      'Smoothing the ripple on a rectified DC supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: 'Galvanic (bimetallic) corrosion needs three things:',
     options: [
-      'Automated scheduling, searchable databases, error checking, and audit trails',
-      'Form a hypothesis based on evidence, test the hypothesis, and revise if necessary',
+      'Two identical metals, dry air, and a high voltage between them',
+      'A single metal, an insulator, and a steady DC current',
       'Two dissimilar metals, an electrolyte, and an electrical contact between them',
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
+      'Two electrolytes, a magnetic field, and an earth connection',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,9 +157,9 @@ const quizQuestions = [
     question:
       'A copper bonding conductor needs to be terminated to a galvanised steel pipe. Best practice is to:',
     options: [
-      "Clearly identified, accessible, and capable of being secured in the OFF position",
-      "Prevention, reuse, recycling, recovery, then disposal as last resort",
-      "Accumulated snow adds significant weight to platforms, can block access, and creates slip hazards",
+      "Bolt the bare copper straight to the pipe and paint over the joint",
+      "Wrap the copper in PVC tape before clamping it to the steel",
+      "Solder the copper conductor directly onto the galvanised surface",
       "Use a bimetallic clamp/lug rated for the dissimilar metals, with a corrosion-inhibiting compound",
     ],
     correctAnswer: 3,
@@ -171,9 +171,9 @@ const quizQuestions = [
     question: 'A lead-acid battery being charged gives off:',
     options: [
       'Hydrogen and oxygen gas — explosive',
-      'Adjusts the output pressure at minimum input',
-      'No handover notes left for the night shift',
-      'Both contribute to the fault loop impedance',
+      'Carbon dioxide — an asphyxiation risk',
+      'Chlorine gas from the electrolyte',
+      'No gas at all if it is sealed correctly',
     ],
     correctAnswer: 0,
     explanation:

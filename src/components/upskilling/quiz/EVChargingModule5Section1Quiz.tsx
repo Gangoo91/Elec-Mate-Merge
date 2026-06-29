@@ -10,11 +10,11 @@ const quizData = [
       'What is the primary purpose of Dynamic Load Management (DLM) in EV charging systems?',
     answers: [
       'To increase charging speed for individual vehicles',
-      'To automatically adjust charging power based on available electrical capacity',
-      'To reduce the cost of electricity for EV charging',
+      'To reduce the unit cost of electricity for EV charging',
       'To monitor the condition of charging equipment',
+      'To automatically adjust charging power based on available electrical capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'DLM automatically adjusts EV charging power based on real-time electrical demand and available capacity to prevent infrastructure overload whilst maximising charging efficiency.',
   },
@@ -45,12 +45,12 @@ const quizData = [
   {
     question: 'In an equal distribution DLM algorithm, how is available power allocated?',
     answers: [
-      'Based on user priority levels',
       'Equally divided among all active charging sessions',
-      'Allocated to the first vehicle to connect',
-      'Based on vehicle battery capacity',
+      'Based on individual user priority levels',
+      'Allocated entirely to the first vehicle to connect',
+      'Based on each vehicle’s battery capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Equal distribution algorithm divides available power equally among all active charging sessions, providing fair allocation with simple implementation and predictable behaviour.',
   },
@@ -58,12 +58,12 @@ const quizData = [
     question:
       'What protocol is commonly used for communication between DLM controllers and modern charge points?',
     answers: [
+      'OCPP (Open Charge Point Protocol)',
       'Modbus RTU only',
       'RS485 serial communication',
-      'OCPP (Open Charge Point Protocol)',
       'CAN bus protocol',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'OCPP (Open Charge Point Protocol) is the industry standard that enables external control of charging power and communication between DLM systems and modern charge points.',
   },
@@ -81,8 +81,8 @@ const quizData = [
   },
   {
     question: 'What percentage safety margin is typically configured in DLM systems?',
-    answers: ['1-2%', '5-10%', '15-20%', '25-30%'],
-    correctAnswer: 1,
+    answers: ['1-2%', '15-20%', '25-30%', '5-10%'],
+    correctAnswer: 3,
     explanation:
       'A safety margin of 5-10% is typically configured to provide headroom and prevent overload conditions whilst maximising utilisation of available electrical capacity.',
   },
@@ -90,12 +90,12 @@ const quizData = [
     question:
       'In priority-weighted DLM distribution, which factor is commonly used for allocation?',
     answers: [
-      'Vehicle colour',
-      'Charging cable length',
+      'The length of the charging cable',
       'User type, departure time, or vehicle state of charge',
-      'Ambient temperature',
+      'The ambient temperature at the charge point',
+      'The age of the connected vehicle',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Priority-weighted systems consider factors like user type, departure time, vehicle SoC, and subscription levels to intelligently allocate power based on real needs and priorities.',
   },

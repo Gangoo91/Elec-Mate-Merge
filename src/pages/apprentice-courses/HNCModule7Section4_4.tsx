@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'tunable-white-purpose',
     question: 'What does tunable white lighting allow users to adjust?',
     options: [
-      'To provide independent verification that systems meet specification',
-      'Staff can respond instantly from any location',
-      'Incorrect connection of line and neutral conductors',
+      'The saturated colour of the light from red through to blue',
+      'The beam angle of the luminaire from narrow spot to wide flood',
+      'The brightness of the light only, with no change to its colour',
       'The correlated colour temperature (CCT) from warm to cool white',
     ],
     correctIndex: 3,
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'circadian-lighting-aim',
     question: 'What is the primary aim of circadian lighting design?',
     options: [
+      'To minimise the energy consumption of the lighting installation',
       'To align artificial lighting with natural daylight patterns to support human biological rhythms',
-      'Providing path for fault current to enable protective device operation',
-      'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
-      'Person with sufficient training, experience and knowledge to prevent danger',
+      'To produce the widest possible range of saturated decorative colours',
+      'To provide a uniform light level throughout the day with no variation',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Circadian (human-centric) lighting aims to support the body's natural circadian rhythm by varying colour temperature and intensity throughout the day, mimicking natural daylight patterns to improve wellbeing, alertness, and sleep quality.",
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'well-standard-lighting',
     question: 'What aspect of lighting does the WELL Building Standard primarily address?',
     options: [
+      'The minimum energy efficiency rating of the luminaires installed',
+      'The structural load that lighting equipment places on the ceiling',
       'Human health and wellbeing through lighting design',
-      'The ratio of inertial forces to viscous forces',
-      'The success rate rises to approximately 95%',
-      'Suitable for hollow walls where back access is unavailable',
+      'The fire resistance rating of the lighting cable insulation',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The WELL Building Standard focuses on human health and wellbeing, with lighting requirements addressing circadian lighting design, visual comfort, glare control, and melanopic equivalent daylight illuminance (EML) to support occupant health.',
   },
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What advantage does RGBW have over standard RGB?',
     options: [
       'Better quality white light and improved colour rendering',
-      'Cool white (5000K-6500K) to promote alertness',
-      'Lunch service, dinner service, cleaning, and closed',
-      'To control the transition speed between current and new lighting states',
+      'A wider range of saturated colours but poorer white output',
+      'Fewer control channels are needed to drive the luminaire',
+      'A lower overall cost than an equivalent RGB luminaire',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is melanopic equivalent daylight illuminance (EML)?',
     options: [
-      'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
+      'A measure of the energy efficiency of a luminaire in lumens per watt',
       'A metric quantifying the biological effectiveness of light on circadian rhythms',
-      'To confirm safety interlocks prevent dangerous situations',
-      'Make it invisible, unattractive, difficult, and unsatisfying',
+      'The maximum colour temperature a tunable white luminaire can produce',
+      'The total number of dimming levels available on a scene controller',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,9 +177,9 @@ const quizQuestions = [
     question: 'In a DALI-2 system, how are scene presets typically stored?',
     options: [
       'In each individual DALI driver/ballast',
-      'Insulated gloves and safety glasses',
-      'Determines testing approach and safety measures',
-      'Regulations 411.3.1.1 and 411.3.1.2',
+      'On a removable memory card at the wall switch plate',
+      'Only in the cloud, requiring an internet connection to recall',
+      'In the consumer unit alongside the protective devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'A restaurant scene controller might include which specific scenes?',
     options: [
-      'Better quality white light and improved colour rendering',
-      'In each individual DALI driver/ballast',
-      'Cool white (5000K-6500K) to promote alertness',
+      'Emergency, standby, fault, and isolation',
+      'Red, green, blue, and white channels',
+      'Morning, midday, afternoon, and evening CCT presets',
       'Lunch service, dinner service, cleaning, and closed',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
     question: "What is the purpose of the 'fade time' parameter in scene recall?",
     options: [
       'To control the transition speed between current and new lighting states',
-      'Lunch service, dinner service, cleaning, and closed',
-      'Better quality white light and improved colour rendering',
-      'A metric quantifying the biological effectiveness of light on circadian rhythms',
+      'To set how long a scene remains active before automatically switching off',
+      'To limit the maximum brightness a luminaire can reach in any scene',
+      'To define the colour temperature used when a scene is first recalled',
     ],
     correctAnswer: 0,
     explanation:

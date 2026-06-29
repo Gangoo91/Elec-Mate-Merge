@@ -27,10 +27,10 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 1,
       question: 'What is a key difference between Level 1 and Level 2 Maths questions?',
       options: [
-        'Adding delay events to the original baseline programme to show their impact',
+        'Level 2 questions are always multiple choice rather than written answers',
         'Level 2 questions require multi-step reasoning and real-world application',
-        'A conductive part of equipment that can be touched and may become live under fault',
-        'Item descriptions, quantities, specifications, and delivery requirements',
+        'Level 2 questions never allow the use of a calculator at any stage',
+        'Level 2 questions only cover money and ignore measurement and data',
       ],
       correctAnswer: 1,
       explanation:
@@ -110,10 +110,10 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 7,
       question: "What does 'inference' mean in the context of a Level 2 reading exam?",
       options: [
-        'That the earth conductor is complete from origin to final point',
-        'Circuit routes, cable sizes, protection settings, and final equipment positions',
-        'Online monitoring in the PLC programming software to view programme execution in real time',
-        'Working out meaning from clues in the text that are not directly stated',
+        'Copying the most important sentence directly out of the text',
+        'Counting how many times a key word appears in the passage',
+        'Summarising the whole text in a single short sentence',
+        'Working out implied meaning from clues, not directly stated',
       ],
       correctAnswer: 3,
       explanation:
@@ -123,10 +123,10 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 8,
       question: 'When practising under exam conditions, what is the most important rule?',
       options: [
-        'Set a strict timer and do not pause it or look things up',
-        'Take a 10-minute break halfway through',
-        'Play background music to stay relaxed',
-        'Have your phone nearby for emergencies',
+        'Keep to a strict timer without pausing or looking things up',
+        'Pause the timer whenever you need to check a formula',
+        'Allow yourself extra time to finish every question fully',
+        'Mark your own answers as you go to confirm each one',
       ],
       correctAnswer: 0,
       explanation:

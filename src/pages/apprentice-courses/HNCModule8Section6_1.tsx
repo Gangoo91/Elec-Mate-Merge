@@ -43,9 +43,9 @@ const quickCheckQuestions = [
       'What is the typical voltage classification for BMS control wiring connecting to HVAC equipment?',
     options: [
       'Extra-Low Voltage (typically 24V AC/DC)',
-      'Approximately mid-height of the ventilated space',
-      'Swimming pools with zone requirements',
-      'Harsh industrial environment',
+      'Low Voltage (230V single-phase only)',
+      'High Voltage (above 1000V AC)',
+      'Reduced Low Voltage (110V centre-tapped)',
     ],
     correctIndex: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'In an MCC (Motor Control Centre) design, what is the purpose of the interposing relay between BMS output and motor starter?',
     options: [
-      'To vary motor speed for energy efficiency and demand matching',
+      'To step the BMS signal voltage up to the supply level',
       'To provide isolation between BMS and power circuits',
-      'Steel wire armoured (SWA) or equivalent mechanical protection',
-      'Rated voltage, current, frequency, and IP rating',
+      'To filter electrical noise from the analogue speed signal',
+      'To delay the start command for sequenced plant operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of cable should be used for mains-rated HVAC control circuits in industrial environments?',
     options: [
-      'Rated voltage, current, frequency, and IP rating',
-      'To provide isolation between BMS and power circuits',
+      'Unsheathed single-core conductors clipped direct',
+      'Flat twin-and-earth cable surface-mounted',
       'Steel wire armoured (SWA) or equivalent mechanical protection',
-      'To vary motor speed for energy efficiency and demand matching',
+      'Lightweight bell-wire suitable for signal circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -198,10 +198,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of a Variable Speed Drive (VSD) in HVAC motor control?',
     options: [
-      'To provide isolation between BMS and power circuits',
+      'To protect the motor from sustained overload conditions',
       'To vary motor speed for energy efficiency and demand matching',
-      'Steel wire armoured (SWA) or equivalent mechanical protection',
-      'Rated voltage, current, frequency, and IP rating',
+      'To provide galvanic isolation for the control circuit',
+      'To correct the power factor of the motor circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -212,10 +212,10 @@ const quizQuestions = [
     question:
       'Which document defines the interface points between HVAC mechanical contractor and electrical contractor?',
     options: [
-      'V_line = sqrt(3) x V_phase',
-      'Refrigerant evaporates inside the coil tubes',
+      'Electrical load schedule',
+      'Single-line distribution diagram',
       'Points of Connection Schedule (PoC)',
-      'Vd = (mV/A/m × I × L) ÷ 1000',
+      'Cable containment layout drawing',
     ],
     correctAnswer: 2,
     explanation:
@@ -268,10 +268,10 @@ const quizQuestions = [
     question:
       'What information must be included on HVAC equipment nameplates according to BS EN 60204-1?',
     options: [
-      'To provide isolation between BMS and power circuits',
-      'Steel wire armoured (SWA) or equivalent mechanical protection',
+      'Date of manufacture and warranty period only',
+      'Installer details and circuit reference number',
       'Rated voltage, current, frequency, and IP rating',
-      'To vary motor speed for energy efficiency and demand matching',
+      'Refrigerant type and maximum operating pressure',
     ],
     correctAnswer: 2,
     explanation:

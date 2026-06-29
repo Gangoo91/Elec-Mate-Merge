@@ -10,16 +10,16 @@ const quickCheckQuestions = [
     id: 'base-plate-minimum-size',
     question:
       'What is the minimum base plate size required for a standard tube-and-fitting scaffold?',
-    options: ['100mm square', '150mm square', '200mm square', '250mm square'],
-    correctIndex: 1,
+    options: ['150mm square', '100mm square', '200mm square', '250mm square'],
+    correctIndex: 0,
     explanation:
       'The minimum base plate size for a standard tube-and-fitting scaffold is 150mm square. This dimension ensures that the load from the standard is adequately distributed across a sufficient area of the sole board or bearing surface. Smaller base plates would concentrate loads too heavily and increase the risk of punching through timber sole boards or causing localised ground failure.',
   },
   {
     id: 'sole-board-length-single',
     question: 'What is the minimum sole board length for a single standard (one base plate)?',
-    options: ['600mm', '800mm', '1000mm', '1500mm'],
-    correctIndex: 2,
+    options: ['600mm', '1000mm', '800mm', '1500mm'],
+    correctIndex: 1,
     explanation:
       'The minimum sole board length for a single standard is 1000mm. This length is necessary to distribute the load over a sufficient area of ground beneath and around the base plate. Using shorter sole boards concentrates the load too much and increases the risk of the board sinking into soft ground, tipping, or failing to spread loads adequately.',
   },
@@ -66,20 +66,20 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of a sole board beneath a scaffold base plate?',
     options: [
-      'To prevent the base plate from rusting',
       'To spread the load from the standard over a larger area of ground',
+      'To prevent the base plate from rusting',
       'To provide a level surface for the scaffold user to stand on',
       'To anchor the scaffold to the ground and prevent movement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of a sole board is to spread the load from the scaffold standard and base plate over a larger area of ground. This reduces the bearing pressure on the ground surface and prevents the scaffold from sinking, settling, or punching through soft ground. Sole boards are a critical foundation component and must always be of adequate size and thickness for the ground conditions and scaffold loads.',
   },
   {
     id: 2,
     question: 'Which of the following ground types typically has the LOWEST bearing capacity?',
-    options: ['Sound rock', 'Dense gravel', 'Stiff clay', 'Soft alluvial clay or peat'],
-    correctAnswer: 3,
+    options: ['Sound rock', 'Soft alluvial clay or peat', 'Dense gravel', 'Stiff clay'],
+    correctAnswer: 1,
     explanation:
       'Soft alluvial clay, peat, recently filled ground, and waterlogged soils have the lowest bearing capacities. Peat and very soft clays may have bearing capacities as low as 25 kN/m2, which is often insufficient for scaffold loads without significant load-spreading measures. Sound rock can support 1000 kN/m2 or more, dense gravel typically 200-600 kN/m2, and stiff clay around 150-300 kN/m2.',
   },
@@ -94,8 +94,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'A sole board for a single standard must be at least how long?',
-    options: ['600mm', '800mm', '1000mm', '1200mm'],
-    correctAnswer: 2,
+    options: ['600mm', '800mm', '1200mm', '1000mm'],
+    correctAnswer: 3,
     explanation:
       'The minimum sole board length for a single standard is 1000mm. This length ensures that the load is distributed over a sufficient area of ground beneath and around the base plate. Sole boards should be a minimum of 35mm thick scaffold board or equivalent timber. For two standards sharing a sole board, a longer board is required to support both base plates with adequate bearing area.',
   },
@@ -104,20 +104,20 @@ const quizQuestions = [
     question:
       'What is the zone of influence near an excavation, and why does it matter for scaffold foundations?',
     options: [
-      'A 1-metre exclusion zone where no materials may be stored',
       'The area extending at roughly 45 degrees from the base of the excavation, where ground bearing capacity is reduced',
+      'A 1-metre exclusion zone where no materials may be stored',
       'A 3-metre radius around the excavation that must be fenced off',
       'The area directly above the excavation that is at risk of collapse',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The zone of influence extends at approximately 45 degrees from the bottom edge of the excavation outward. Within this zone, the ground has reduced bearing capacity because the excavation has removed the lateral support that the soil normally provides. Placing scaffold foundations within the zone of influence can overload the weakened ground, causing it to collapse into the excavation and undermining the scaffold. Scaffold foundations should ideally be located outside this zone unless the excavation is properly supported.',
   },
   {
     id: 6,
     question: 'What is the maximum typical extension for an adjustable base plate (screw jack)?',
-    options: ['100mm', '200mm', '300mm', '500mm'],
-    correctAnswer: 2,
+    options: ['100mm', '300mm', '200mm', '500mm'],
+    correctAnswer: 1,
     explanation:
       'Adjustable base plates (screw jacks) should typically not be extended more than 300mm, or as specified by the manufacturer. Excessive extension creates a long lever arm on the exposed thread, increases the risk of bending or buckling, and can introduce eccentric loads. On steep slopes where more adjustment is needed, purpose-built raking foundations, stepped sole boards, or custom foundation arrangements designed by a scaffold designer should be used instead.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     options: [
       'Using the smallest possible base plates to concentrate the load and push through to firmer ground',
       'Erecting the scaffold as quickly as possible before the ground can deform',
-      'Using adequately sized sole boards to spread the load, combined with larger base plates and checking ground bearing capacity',
       'Watering the ground before erection to compact it naturally',
+      'Using adequately sized sole boards to spread the load, combined with larger base plates and checking ground bearing capacity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "On soft ground, the most effective approach is to spread the load over as large an area as possible using adequately sized sole boards (longer and wider than the minimum), combined with larger base plates. The ground bearing capacity must be assessed before erection and the sole board dimensions chosen so that the bearing pressure from the scaffold does not exceed the ground's bearing capacity. On very soft ground, concrete pads, grillage foundations, or ground improvement may be necessary. The scaffold design should always account for the actual ground conditions.",
   },

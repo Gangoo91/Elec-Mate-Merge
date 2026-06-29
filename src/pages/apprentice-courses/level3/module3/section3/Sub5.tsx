@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'For a 3-phase 4-wire supply, the neutral conductor must be sized for:',
     options: [
-      'It must be face-fit tested to the individual wearer and properly maintained',
-      'Consider whether the cable can be reused on another project',
+      'Half the line current under all load conditions',
+      'Zero current because balanced loads cancel it',
       'Full line current at minimum (and oversized for harmonic-rich loads)',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'Three times the line current on every circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'Triplen harmonics (3rd, 9th, 15th, …) in a 3-phase neutral:',
     options: [
-      'Legal liability for the work',
-      'Ceiling height and wall material',
-      'Investigate and retest if necessary',
+      'Cancel out completely like the fundamental',
+      'Remain 120° apart and partially cancel',
+      'Appear only in the line conductors, never the neutral',
       'Sum to three times the per-phase value',
     ],
     correctAnswer: 3,
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'A 3-phase RCD operates by detecting:',
     options: [
-      'Systems automatically adjust start/stop times based on external temperature',
+      'A rise in the total current drawn by the load',
       'Imbalance between line currents and neutral (sum ≠ 0 = leakage to earth)',
-      'An initial medical examination before first exposure, and then at least every 2 years',
-      'Pilot signal integrity and protective conductor current measurement',
+      'Overheating of the neutral conductor under harmonics',
+      'A drop in supply voltage below a fixed threshold',
     ],
     correctAnswer: 1,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question:
       'Why is balancing 3-phase loads important?',
     options: [
-      'Working near an open window and assuming natural ventilation is adequate',
-      'Related to line conductor resistance by cross-sectional area ratio',
-      'Prospective Fault Current - confirms equipment rating',
+      'It removes the need for a neutral conductor entirely',
+      'It eliminates all harmonic content from the supply',
+      'It allows the line voltage to be raised above 400 V',
       'Reduces neutral current; minimises losses; allows full transformer use',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
       'On a heavily LED-loaded retail install, BS 7671 §523 may require:',
     options: [
       'Upsizing the neutral conductor relative to the lines',
-      'Substantially enclosed and a foreseeable risk of serious injury',
-      'For the working life of the installation',
-      'Lights that operate only when the normal supply fails',
+      'Downsizing the neutral conductor to save copper',
+      'Removing the neutral conductor on balanced loads',
+      'Doubling the line conductors but not the neutral',
     ],
     correctAnswer: 0,
     explanation:

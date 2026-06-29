@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'm7s5-qc1',
     question: 'What is the primary function of a Zener barrier in an IS system?',
     options: [
-      'Amplify signals',
       'Limit voltage and current to prevent ignition',
+      'Amplify signals',
       'Convert signal types',
       'Provide power to instruments',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Zener barriers limit voltage using Zener diodes and current using series resistors, ensuring energy levels remain below ignition thresholds in hazardous areas.',
   },
@@ -36,11 +36,11 @@ const quickCheckQuestions = [
     question: 'Why must Zener barriers have a dedicated earth connection?',
     options: [
       'To improve signal quality',
-      'For proper voltage clamping operation and safety',
       'To reduce cable costs',
       'For colour code compliance',
+      'For proper voltage clamping operation and safety',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Zener barriers require a dedicated earth connection (maximum 1 ohm resistance) for proper voltage clamping operation. Without proper earthing, the barrier cannot safely shunt fault energy.',
   },
@@ -51,12 +51,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does a Zener barrier do in an intrinsically safe system?',
     options: [
-      'Amplifies the signal strength',
       'Limits voltage and current entering hazardous zones to prevent ignition of explosive atmospheres',
+      'Amplifies the signal strength',
       'Converts analog to digital signals',
       'Provides power to field devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Zener barrier limits both voltage and current entering hazardous zones using Zener diodes for voltage clamping and series resistors for current limiting, ensuring energy remains below ignition thresholds.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the key benefit of a galvanic isolator?",
     options: [
-      'Increases signal strength',
-      'Electrically separates control systems from field wiring, eliminating ground loops and providing protection',
-      'Reduces cable costs',
-      'Improves signal accuracy only',
+      'It boosts signal strength so longer cable runs can be used in the hazardous area',
+      'It removes the need for any earth connection on the field-wiring side of the loop',
+      'It guarantees a higher measurement accuracy than a Zener barrier of the same rating',
+      'It electrically separates the control system from the field wiring, eliminating ground loops and adding protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Galvanic isolators electrically separate control systems from field wiring, eliminating ground loops, reducing noise, and protecting equipment from voltage spikes and transients.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why must IS circuits be properly earthed?',
     options: [
-      'To improve signal quality only',
-      'For proper barrier operation and safety - barriers require a dedicated earth connection to function correctly',
-      'To reduce cable resistance',
-      'To comply with colour coding standards',
+      'Only to improve signal quality and reduce electrical noise on the loop',
+      'To lower the overall cable resistance of the intrinsically safe circuit',
+      'For safe operation - a Zener barrier needs a dedicated low-resistance earth to clamp voltage correctly under fault',
+      'To meet the cable colour-coding requirements for hazardous-area wiring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IS circuits must be properly earthed because Zener barriers require a dedicated earth connection to operate correctly and safely clamp voltages. Poor earthing can compromise barrier protection.',
   },
@@ -140,20 +140,20 @@ const quizQuestions = [
     id: 9,
     question: 'What type of isolation uses light-based coupling?',
     options: [
+      'Optical isolation',
       'Transformer isolation',
       'Capacitive isolation',
-      'Optical isolation',
       'Resistive isolation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Optical isolation uses light-emitting diodes and phototransistors for signal transfer, providing excellent electrical isolation and immunity to electromagnetic interference.',
   },
   {
     id: 10,
     question: 'What maximum earth resistance is typically specified for IS barrier installations?',
-    options: ['10 ohms', '5 ohms', '1 ohm', '0.1 ohm'],
-    correctAnswer: 2,
+    options: ['10 ohms', '5 ohms', '0.1 ohm', '1 ohm'],
+    correctAnswer: 3,
     explanation:
       'A maximum earth resistance of 1 ohm is typically required for IS barrier installations to ensure proper voltage clamping operation during fault conditions.',
   },
@@ -558,8 +558,8 @@ const InstrumentationModule7Section5 = () => {
               </p>
               <p>
                 <strong>Verification:</strong> Total stored energy calculated at 60 microjoules
-                capacitive and 40 microjoules inductive, well below 280 microjoules ignition
-                threshold for propane.
+                capacitive and 40 microjoules inductive, well below the 250 microjoules minimum
+                ignition energy for propane (Group IIA).
               </p>
               <p>
                 <strong>Result:</strong> Zero incidents since commissioning in 2018. Annual

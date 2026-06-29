@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A colleague falls to the ground and begins jerking rhythmically. What is the FIRST thing you should do?',
     options: [
-      'Hold them down firmly to stop the jerking',
-      'Place something between their teeth to prevent them biting their tongue',
       'Clear the space around them and protect them from injury',
+      'Place something between their teeth to prevent them biting their tongue',
+      'Hold them down firmly to stop the jerking',
       'Immediately call 999 and begin CPR',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The first action when someone has a seizure is to clear the space around them and protect them from injury — move furniture, sharp objects, and anything they could hit. Never restrain the casualty or put anything in their mouth. They will NOT swallow their tongue. Only call 999 if the seizure lasts more than 5 minutes, it is their first seizure, or other specific criteria are met.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the blood sugar threshold below which hypoglycaemia is diagnosed?',
-    options: ['Below 6 mmol/L', 'Below 5 mmol/L', 'Below 4 mmol/L', 'Below 3 mmol/L'],
-    correctAnswer: 2,
+    options: ['Below 4 mmol/L', 'Below 5 mmol/L', 'Below 6 mmol/L', 'Below 3 mmol/L'],
+    correctAnswer: 0,
     explanation:
       "Hypoglycaemia is defined as a blood glucose level below 4 mmol/L. This is sometimes remembered as the '4 is the floor' rule. Normal blood glucose ranges between 4 and 7 mmol/L when fasting, and up to 11 mmol/L after meals. Below 4 mmol/L, the brain begins to be deprived of glucose, leading to the characteristic symptoms of shaking, sweating, confusion, and irritability.",
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     options: [
       'Nothing further — they are fine now',
       'Give them more glucose tablets immediately',
-      'Give them a slow-release carbohydrate such as a sandwich or cereal bar',
       'Call 999 as they still need hospital treatment',
+      'Give them a slow-release carbohydrate such as a sandwich or cereal bar',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'After treating hypoglycaemia with fast-acting sugar (glucose tablets, sugary drink), it is essential to follow up with a slow-release carbohydrate — a sandwich, cereal bar, toast, or biscuits. The fast-acting sugar raises blood glucose quickly but the effect is temporary. The slow-release carbohydrate provides sustained glucose release to prevent the blood sugar dropping again. Without this follow-up, the casualty may become hypoglycaemic again within 30 to 60 minutes.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is a sign of hyperglycaemia rather than hypoglycaemia?',
     options: [
-      'Shaking and sweating',
       'Fruity or acetone-smelling breath',
+      'Shaking and sweating',
       'Sudden onset of confusion within minutes',
       'Pale, cold, clammy skin',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fruity or acetone-smelling breath is a classic sign of hyperglycaemia and indicates the presence of ketones in the blood — a hallmark of diabetic ketoacidosis (DKA). When cells cannot access glucose (due to lack of insulin), the body breaks down fat for energy, producing ketones as a by-product. Shaking, sweating, sudden confusion, and pale clammy skin are all signs of hypoglycaemia, which develops rapidly over minutes.',
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
     question: 'What type of breathing pattern is associated with diabetic ketoacidosis (DKA)?',
     options: [
       'Agonal breathing — irregular gasps with long pauses',
-      'Kussmaul breathing — deep, rapid, laboured breathing',
       'Cheyne-Stokes breathing — alternating deep and shallow breaths',
       'Apnoeic episodes — periods of no breathing',
+      'Kussmaul breathing — deep, rapid, laboured breathing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Kussmaul breathing is a deep, rapid, laboured breathing pattern characteristic of diabetic ketoacidosis (DKA). It is the body's compensatory mechanism to 'blow off' excess carbon dioxide and correct the metabolic acidosis caused by high levels of ketones in the blood. The deep breaths also give the casualty's breath a distinctive fruity or acetone smell. Kussmaul breathing is a late and serious sign — call 999 immediately.",
   },

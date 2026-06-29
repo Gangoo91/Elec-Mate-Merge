@@ -37,9 +37,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What are the three core safety principles in electrical design?',
     options: [
-      'Before each use and regularly during use',
-      'The landlord or appointed agent/responsible person',
-      'Excellent corrosion resistance and high temperature capability',
+      'Cost control, speed of install, ease of maintenance',
+      'Accessibility, aesthetics, energy efficiency',
+      'Voltage drop, diversity, future expansion',
       'Shock protection, overcurrent protection, fire prevention',
     ],
     correctIndex: 3,
@@ -92,9 +92,9 @@ const Module5Section2_1 = () => {
       question: 'What is one risk of undersized cables?',
       options: [
         'Overheating and fire hazard',
-        '5 MΩ or below on new installations',
-        '70% of the load is sensible',
-        'Total resistance increases',
+        'Reduced voltage drop on the circuit',
+        'Higher insulation resistance readings',
+        'Lower earth fault loop impedance',
       ],
       correctAnswer: 0,
       explanation:
@@ -104,10 +104,10 @@ const Module5Section2_1 = () => {
       id: 5,
       question: 'Why should socket outlet numbers be carefully planned?',
       options: [
-        'Hydrogen produced using renewable electricity through electrolysis of water',
+        'To reduce the cost of the consumer unit',
         'To avoid overloading circuits and reliance on extension leads',
-        'Ensure control measures are followed and remain effective',
-        'An "if-then" plan linking a situation to a specific action',
+        'To lower the insulation resistance of the wiring',
+        'To remove the need for RCD protection',
       ],
       correctAnswer: 1,
       explanation:
@@ -130,9 +130,9 @@ const Module5Section2_1 = () => {
       id: 7,
       question: 'Give one consequence of ignoring manufacturer installation instructions.',
       options: [
-        '50mm minimum insulation with perimeter strip',
-        'Check condition and correct fuse wire',
-        'Hard hat and safety glasses',
+        'Improved current-carrying capacity of cables',
+        'Lower earth fault loop impedance values',
+        'Reduced voltage drop on the final circuit',
         'Non-compliance or unsafe installation',
       ],
       correctAnswer: 3,
@@ -144,9 +144,9 @@ const Module5Section2_1 = () => {
       question: 'What is the main role of RCDs?',
       options: [
         'Protect against electric shock',
-        'RCD protection not exceeding 30mA',
-        'Certsure / NICEIC Certification Portal',
-        'Straight Tip bayonet-style connector',
+        'Protect cables against overload current',
+        'Limit voltage drop on long circuits',
+        'Improve the power factor of the load',
       ],
       correctAnswer: 0,
       explanation: 'RCDs protect against electric shock by detecting earth leakage currents.',
@@ -155,10 +155,10 @@ const Module5Section2_1 = () => {
       id: 9,
       question: 'Why should future expansion be considered in design?',
       options: [
-        'Initial verification including inspection and testing',
+        'To reduce the rating of the main protective device',
         'To avoid costly alterations and meet future needs',
-        'They identify isolations and hazards for the next team',
-        'Above the bath/shower to 2.25m from floor level',
+        'To lower the insulation resistance of the installation',
+        'To remove the need for periodic inspection',
       ],
       correctAnswer: 1,
       explanation:
@@ -168,10 +168,10 @@ const Module5Section2_1 = () => {
       id: 10,
       question: "In terms of design, what does 'functional' mean?",
       options: [
-        'Checking batteries and fuses',
-        'Provide evidence of electrical compliance',
+        'Built at the lowest possible material cost',
+        'Installed in the shortest possible time',
         'Meets user needs and is practical',
-        'Emergency relays and contactors',
+        'Uses the smallest possible cable sizes',
       ],
       correctAnswer: 2,
       explanation:

@@ -53,24 +53,24 @@ const quizQuestions = [
     question:
       'When retrofitting smart TRVs to an existing radiator system, what must be checked first?',
     options: [
-      'Radiator colour',
+      'The radiator finish and colour',
+      'The carpet type in the room',
       'Valve body thread size (M30 vs M28)',
-      'Pipe material',
-      'Room carpet type',
+      'The pipe material feeding the valve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smart TRV heads must match the valve body thread. Most UK radiators use M30 threads, but some older installations use M28. Adaptors are available for most common sizes.',
   },
   {
     question: 'What is a call-for-heat relay in smart heating systems?',
     options: [
-      'A device that measures heat output',
       'A signal that tells the boiler to fire',
-      'A safety cut-out',
-      'A noise reduction feature',
+      'A device that measures the heat output of a radiator',
+      'A thermal safety cut-out for the boiler',
+      'A feature that reduces pump noise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The call-for-heat relay is triggered when any zone requires heating, signalling the boiler to fire. Smart systems aggregate multiple zone calls to prevent excessive boiler cycling.',
   },
@@ -78,11 +78,11 @@ const quizQuestions = [
     question: 'Which control strategy is most appropriate for air source heat pumps?',
     options: [
       'Rapid on/off cycling',
-      'Weather compensation with low flow temperatures',
-      'High temperature boost mode',
       'Manual switching only',
+      'High temperature boost mode',
+      'Weather compensation with low flow temperatures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heat pumps work most efficiently with weather compensation, adjusting flow temperature based on outdoor conditions and running for longer periods at lower temperatures.',
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       'What issue might occur if smart TRVs close simultaneously without proper system design?',
     options: [
-      'Increased energy savings',
-      'Boiler damage from lack of flow',
-      'Radiators getting too hot',
-      'Wi-Fi interference',
+      'A useful increase in energy savings',
+      'Boiler damage from lack of water flow',
+      'Radiators becoming too hot to touch',
+      'Wi-Fi interference across the home',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
   {
     question: 'What is the typical commissioning requirement after installing smart TRVs?',
     options: [
-      'Paint them to match radiators',
+      'Repaint them to match the radiators',
+      'Drain the entire heating system',
       'Calibrate each TRV to its radiator',
-      'Replace all radiators',
-      'Drain the entire system',
+      'Replace all the existing radiators',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smart TRVs should be calibrated to learn the valve stroke and response characteristics of their specific radiator, ensuring accurate temperature control.',
   },

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       "In Covey's Big Rocks metaphor, what happens if you fill the jar with sand and gravel first?",
     options: [
-      'The big rocks still fit because the jar is large enough for everything',
       'The big rocks do not fit — the jar is already full of small stuff',
+      'The big rocks still fit because the jar is large enough for everything',
       'The sand and gravel compact under the weight of the big rocks',
       'The metaphor only works for office work, not trades',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This is the central lesson of Covey\'s Big Rocks metaphor (from "First Things First," 1994). If you fill your schedule with small, low-priority tasks first (the sand and gravel), there is no room left for the big, important things (the rocks). But if you schedule the big rocks first — your most important tasks, commitments, and goals — the sand and gravel naturally fill in around them. Applied to an electrician\'s week: if you schedule your highest-value jobs, CPD, and planning time first, the small admin tasks and phone calls will fill the gaps. If you start with the small stuff, the important things get squeezed out.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       "The 80/20 Rule (Pareto Principle) applied to a self-employed electrician's income suggests that:",
     options: [
       '80% of their work is done correctly and 20% has defects',
-      '80% of their income comes from roughly 20% of their activities or clients',
       '80% of their time should be spent on admin and 20% on installation',
+      '80% of their income comes from roughly 20% of their activities or clients',
       'They should work 80% of the week and rest for 20%',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The Pareto Principle, originally observed by Italian economist Vilfredo Pareto in 1896 and later applied to productivity by Joseph Juran, states that roughly 80% of results come from 20% of efforts. For a self-employed electrician, this often means that a small proportion of their activities — perhaps EV charger installations, EICR inspections, or a few key commercial clients — generate the majority of their income. Identifying and prioritising that high-value 20% is one of the most powerful productivity strategies available.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a "stop doing" list?',
     options: [
       'To identify tasks you should delegate to an apprentice',
-      'To create a list of clients you no longer want to work with',
       'To deliberately identify and eliminate low-value activities that consume time without proportionate return',
+      'To create a list of clients you no longer want to work with',
       'To record all the tasks you have completed each week',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A "stop doing" list is the complement to a to-do list. Instead of adding more tasks, it forces you to identify activities that consume time without generating proportionate value — and consciously decide to stop doing them. Jim Collins popularised this concept, arguing that what you choose NOT to do is as important as what you choose to do. For an electrician, this might include: stop taking on small jobs under a certain value, stop making unplanned merchant trips, stop checking social media during installation work, or stop over-perfecting low-value tasks.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: "Covey's Big Rocks metaphor teaches that you should:",
     options: [
-      'Start with the smallest tasks to build momentum',
       'Schedule your most important commitments first, then let smaller tasks fill the remaining gaps',
+      'Start with the smallest tasks to build momentum',
       'Eliminate all small tasks so you only have big ones',
       'Work on tasks in the order they arrive, regardless of importance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Big Rocks metaphor, from Stephen Covey\'s "First Things First" (1994), demonstrates that if you put the big rocks (most important tasks) into the jar first, the sand and gravel (smaller tasks) will naturally fill the gaps around them. But if you fill the jar with sand first, the big rocks will not fit. Applied to time management: schedule your highest-priority work first, and let less important tasks fill the remaining time.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'The MIT (Most Important Tasks) method involves:',
     options: [
       'Completing as many tasks as possible each day to maximise output',
-      'Selecting 3 tasks each day that, if completed, would make the day a success',
       'Working only on tasks that take less than 5 minutes',
+      'Selecting 3 tasks each day that, if completed, would make the day a success',
       'Delegating all tasks except the most complex one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The MIT method is a daily prioritisation technique. Each morning (or the evening before), you identify 3 tasks that are the Most Important for that day. These are the tasks that, if you accomplished nothing else, would make the day a success. You tackle these first, before checking email, messages, or lower-priority work. The power of MITs is their simplicity: instead of a 20-item to-do list that creates decision fatigue, you have a clear, achievable focus for the day.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: 'Applied to a self-employed electrician, the 80/20 Rule suggests:',
     options: [
       'They should work only 20% of the week and take 80% off',
-      'They should identify the 20% of activities that generate 80% of their income and prioritise those',
       'They should spend 80% of their time on marketing and 20% on installation',
       'They should subcontract 80% of their work to others',
+      'They should identify the 20% of activities that generate 80% of their income and prioritise those',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'For a self-employed electrician, the 80/20 Rule means identifying the activities, job types, and client relationships that generate the majority of income and prioritising them. This might mean: EV charger installations are 20% of jobs but 40% of income — prioritise them. Three commercial clients provide 60% of work — nurture those relationships. EICR inspections have the highest hourly rate — schedule more of them. The remaining activities still need to be done, but they should not crowd out the high-value 20%.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'A "stop doing" list is:',
     options: [
-      'A list of tasks you will stop doing immediately to reduce workload',
       'A deliberate identification of low-value activities that should be eliminated or reduced to free up time for higher-value work',
+      'A list of tasks you will stop doing immediately to reduce workload',
       'A record of all the mistakes you have made this month',
       'A list of clients you refuse to work for',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A "stop doing" list is the strategic counterpart to a to-do list. Instead of adding tasks, it identifies activities that consume time without proportionate return and marks them for elimination or reduction. Jim Collins emphasised that great organisations (and individuals) are defined as much by what they choose NOT to do as by what they choose to do. For a tradesperson, this might include: stop making unplanned merchant trips, stop accepting jobs below a minimum value, stop checking social media during working hours.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
     question: 'The key difference between a weekly priority review and a daily to-do list is:',
     options: [
       'A weekly review is longer and therefore better',
-      'A to-do list captures everything; a weekly review identifies the few things that matter most and ensures they are scheduled',
       'A to-do list is for employed workers; a weekly review is for the self-employed',
+      'A to-do list captures everything; a weekly review identifies the few things that matter most and ensures they are scheduled',
       'There is no meaningful difference — they serve the same purpose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A daily to-do list captures tasks but does not prioritise them — it treats a phone call and a high-value installation as equally important items to be checked off. A weekly priority review takes a higher-level view: it identifies the Big Rocks for the week, schedules them into the calendar, and ensures that important-but-not-urgent work gets protected time. The to-do list manages tasks; the weekly review manages priorities. Both are useful, but without the weekly review, the to-do list becomes a random collection of activities without strategic direction.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'An electrician earns most of their income from EV charger installations and EICR inspections, but spends most of their time on small domestic repairs. Applying the 80/20 Rule, they should:',
     options: [
       'Stop doing domestic repairs entirely',
-      'Increase their focus on EV installations and EICRs, potentially reducing or delegating lower-value domestic repairs',
       'Charge more for domestic repairs to make them equally profitable',
       'Work longer hours to fit in more of every type of job',
+      'Increase their focus on EV installations and EICRs, potentially reducing or delegating lower-value domestic repairs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 80/20 Rule does not necessarily mean eliminating the lower-value 80% entirely, but it does mean recognising where the highest value lies and prioritising accordingly. The electrician should actively seek more EV and EICR work (marketing, client relationships, availability), and consider whether lower-value domestic repairs could be reduced, delegated to a subcontractor or apprentice, or scheduled only when higher-value work is not available. This shifts the business towards its most profitable activities.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'The weekly priority review is best scheduled:',
     options: [
-      'On Monday morning at 9am, when the work week starts',
       'On Sunday evening or Friday afternoon — before the work week begins, not during it',
+      'On Monday morning at 9am, when the work week starts',
       'On Wednesday, when you are halfway through the week',
       'It does not matter when — just do it whenever you have a spare moment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The weekly priority review should happen before the work week begins — either Sunday evening or Friday afternoon. This allows you to enter Monday morning with a clear plan, materials checked, routes optimised, and priorities set. If you wait until Monday morning to plan, you have already lost the first hour of the week to planning that should have been done in advance. Friday afternoon is equally effective: you review the week just ended, capture lessons, and plan the week ahead while everything is fresh.',
   },

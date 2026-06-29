@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is "work" in mechanics?',
     options: [
-      'The horizontal distance between the load and the spine',
+      'The total force applied to an object, whether it moves or not',
       'Force × distance moved in the direction of the force',
-      'When inductive reactance equals capacitive reactance',
-      'A persistent earth fault exists on the protected circuit',
+      'The energy an object stores by being lifted up high',
+      'How long a force is applied for, measured in seconds',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does the "law of conservation of energy" say?',
     options: [
-      'The force multiplied by the distance that tends to tip the tower about its base edge',
-      'Cease assembly work, secure the partially built tower if possible, and do not resume until conditions improve',
+      'Energy always flows from a hot object to a cold one until they match',
+      'Energy is gradually used up and lost whenever work is done',
       'Energy cannot be created or destroyed — only transferred or converted from one form to another',
-      'Use the 10 minutes saved wisely — allocate it to complex Section B questions and final checking',
+      'Energy can be created by a machine but never destroyed once made',
     ],
     correctAnswer: 2,
     explanation:

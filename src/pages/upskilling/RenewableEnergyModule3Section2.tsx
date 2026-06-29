@@ -26,10 +26,10 @@ const inlineChecks = [
     question:
       'A 16-module install using 415 W modules. What is the array nameplate (kWp) and what does it represent?',
     options: [
-      '16 W',
-      '6.64 kWp — the STC nameplate sum of the modules (16 × 415 W = 6,640 W = 6.64 kWp). Represents the array peak power at Standard Test Conditions. Used for sizing all downstream components: inverter matching, DC cable, AC cable, DNO application',
-      '64 kWp',
-      '0.66 kWp',
+      '16 W — one watt per module across the array',
+      '6.64 kWp — the STC nameplate sum (16 × 415 W), the peak-power reference for sizing downstream',
+      '64 kWp — ten times the true nameplate of the array',
+      '0.66 kWp — a tenth of the true nameplate of the array',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const inlineChecks = [
     question:
       'A customer wants the largest install possible on a 35 m² south-facing roof. Modern 60-cell modules are approximately 1.7 m × 1.1 m (1.87 m² each). Realistic module count after access / safety clearances?',
     options: [
-      '35 modules',
-      'Approximately 14–16 modules. Theoretical maximum is 18 modules (35 / 1.87), but real roofs need access clearances: 300–500 mm from ridge / eaves / valleys / verges. Realistic packing factor ~80–90% — gives 14–16 modules at 415 W = 5.8–6.6 kWp',
-      '50 modules',
-      '1 module',
+      '35 modules — one per square metre of roof area',
+      'About 14–16 modules — an ~80–90% packing factor after edge and access clearances',
+      '50 modules — packed beyond the physical roof area',
+      '1 module — far below what the 35 m² roof allows',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const inlineChecks = [
     question:
       'Inverter MPPT string sizing requires three voltage checks against the inverter datasheet. What are they?',
     options: [
-      'Just check V_oc',
-      'Three checks: (1) max V_oc_max of the string at coldest expected cell temperature must not exceed the inverter\'s absolute maximum DC input voltage; (2) min V_mp of the string at hottest expected cell temperature must remain above the inverter\'s MPPT range minimum; (3) max V_oc_max must not exceed the inverter\'s MPPT range maximum. Per Reg 712.433.101.1',
-      'Customer\'s preference',
-      'AC voltage only',
+      'Just check string V_oc against the inverter at one temperature',
+      'String V_oc cold vs inverter absolute max; V_mp hot vs MPPT minimum; V_oc cold vs MPPT maximum',
+      'Set the string size to the customer\'s preferred module count',
+      'Check only the inverter AC output voltage, not the DC string',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.433.101.1 prescribes default conservative multipliers when temperature data is not available. What are they?',
     options: [
-      'No multipliers needed',
-      'V_oc_max = 1.2 × V_oc_stc and I_sc_max = 1.25 × I_sc_stc are the default multipliers per Reg 712.433.101.1 when manufacturer temperature data and site temperature extremes are not used. Where the module temperature coefficient and site temperature data ARE used, the calculated values take precedence',
-      'Multiply by 10',
-      'Use STC nameplate exactly',
+      'No multipliers are needed when temperature data is absent',
+      'V_oc_max = 1.2 × V_oc_stc and I_sc_max = 1.25 × I_sc_stc, unless temperature data gives calculated values',
+      'Multiply both V_oc and I_sc by a factor of 10',
+      'Use the STC nameplate values exactly with no margin',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const inlineChecks = [
     question:
       'Reg 712.431.101 sets the string-fuse protection condition. What is it, and when is the string fuse required?',
     options: [
-      'Always required',
-      'Condition: protective devices shall be provided where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max (Ns above 2). When the condition IS MET (LHS less than RHS), string protection IS required. Reg also explicitly states: in a PV array with one or two PV strings in parallel, no overcurrent protective device is required regardless. Typically fuses needed at 3+ parallel strings',
-      'Only for >100 kW installs',
-      'Never required',
+      'Required on every PV string regardless of the array configuration',
+      'Required where 1.35 × I_mod_max_ocer < (Ns−1) × I_sc_max; 1 or 2 parallel strings never need it',
+      'Required only on installs above 100 kW total capacity',
+      'Never required, because PV strings cannot draw reverse current',
     ],
     correctIndex: 1,
     explanation:
@@ -96,10 +96,10 @@ const inlineChecks = [
     question:
       'A 6.6 kWp array is connected to a 5 kW inverter. DC:AC ratio, and is this overload acceptable?',
     options: [
-      'Never acceptable',
-      'DC:AC ratio = 6.6/5.0 = 1.32. Inverter overloading (1.1–1.4) is common UK practice — saves inverter cost, captures more low-irradiance yield, and the inverter clips only briefly during peak summer noon. Manufacturer datasheets specify the permitted overload ratio (typically 1.3-1.5). Clipping loss typically <2% of annual yield',
-      'Ratio 1.32 is too low — need bigger inverter',
-      'Need exactly 1:1',
+      'Never acceptable — the array must never exceed the inverter rating',
+      'DC:AC = 1.32, acceptable — overloading 1.2–1.4 is normal UK practice, clipping <2% per year',
+      'A 1.32 ratio is too low, so a larger inverter is needed here',
+      'A 1:1 DC:AC ratio is required, so the inverter must be upsized',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const inlineChecks = [
     question:
       'MCS MIS 3002 specifies the design pack content for solar PV. What are the core deliverables?',
     options: [
-      'Just a quote',
-      'Site survey (orientation, tilt, shading factor, structural assessment), yield modelling (PVGIS or equivalent), system schematic (single-line diagram), component schedule (modules, inverter, isolators, fuses, cables, mounting), inverter MPPT string sizing calculation, cable sizing calculation, customer information pack, MCS certificate',
-      'Customer signature only',
-      'No design pack required',
+      'Just a priced quote for the customer to sign',
+      'Site survey, yield modelling, single-line schematic, component schedule, MPPT and cable sizing, customer pack and MCS cert',
+      'Only the customer\'s signature on a handover form',
+      'No design pack is required for an MCS-funded install',
     ],
     correctIndex: 1,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'A customer wants 6 kWp on a south-facing roof. Modern 400 W modules are available. How many modules and what\'s a typical inverter MPPT string configuration?',
     options: [
-      '6 modules — single string',
-      '15 modules (15 × 400 W = 6,000 W = 6.0 kWp). Typical inverter MPPT: 1 string of 15 modules on a single-MPPT 5 kW inverter (DC:AC ratio = 1.2), or 2 parallel strings on a dual-MPPT inverter for shading flexibility. String sizing must satisfy the three voltage rules per Reg 712.433.101.1',
-      '100 modules',
-      '1 module',
+      '15 modules (6.0 kWp) — one string on a 5 kW single-MPPT inverter, or two on dual-MPPT',
+      '6 modules in a single string, giving only 2.4 kWp on the roof',
+      '100 modules, far beyond a 6 kWp domestic array',
+      '1 module, which cannot deliver the requested 6 kWp',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Module count: 6,000 / 400 = 15 modules. Single-string on single-MPPT inverter is simplest, lowest-cost. Dual-MPPT inverters allow two independent strings (often east-west splits or different shading patterns). The three voltage checks must pass for the chosen string size against the inverter datasheet.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Inverter datasheet states max DC input voltage = 600 V, MPPT range = 200–550 V. Module V_oc_stc = 41.6 V. Maximum string size at coldest expected cell temperature (-15°C), V_oc temperature coefficient -0.27 %/°C?',
     options: [
-      '100 modules',
-      'V_oc_max at -15°C = 41.6 × (1 + (0.0027 × 40)) = 41.6 × 1.108 = 46.1 V per module. Max modules = 600 / 46.1 = 13.0 → 13 modules. The conservative default per Reg 712.433.101.1 (1.2 × V_oc_stc = 49.9 V) gives 600/49.9 = 12 modules. Use the lower for the safest install',
-      '50 modules',
-      '600 modules',
+      '100 modules, ignoring the cold-temperature V_oc rise',
+      '50 modules, well above the inverter absolute max DC voltage',
+      '13 modules at 46.1 V cold (12 on the 1.2× default) — take the lower for safety',
+      '600 modules, treating the 600 V limit as a module count',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'V_oc rises at cold temperature; cold-temperature V_oc is the critical constraint against the inverter max DC. Two calculation paths per Reg 712.433.101.1: (a) manufacturer temperature coefficient and site extreme = 46.1 V at -15°C → 13 modules max; (b) conservative default 1.2 × V_oc_stc = 49.9 V → 12 modules max. Safer answer is the lower of the two.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Inverter MPPT range 200-550 V. Module V_mp_stc = 34.0 V. V_mp temperature coefficient -0.40 %/°C. Hottest expected cell temperature 70°C. Minimum string size to stay within MPPT range?',
     options: [
-      '1 module',
-      'V_mp at 70°C = 34.0 × (1 − (0.004 × 45)) = 34.0 × 0.82 = 27.9 V per module. Minimum modules = 200 / 27.9 = 7.2 → 8 modules. Below 8 modules, the string V_mp at hot conditions drops below the inverter MPPT minimum — inverter operates off-MPP, losing yield',
-      '100 modules',
-      'No minimum',
+      '1 module, which sits far below the MPPT minimum when hot',
+      '100 modules, which would exceed the inverter voltage limits',
+      'No minimum applies, since the MPPT floor never constrains string size',
+      '8 modules — V_mp at 70°C is 27.9 V, so 200 / 27.9 = 7.2 rounds up to 8',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'V_mp falls at hot temperature; hot-temperature V_mp is the critical constraint against the inverter MPPT minimum. V_mp at 70°C = 34.0 × (1 − 0.004 × 45) = 27.9 V per module. Min modules = 200 / 27.9 = 7.2 → 8 modules minimum. Below 8, the inverter can\'t track the MPP, yield drops.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A 7 kWp array on a single 5 kW inverter — DC:AC ratio = 1.4. Customer asks "will I lose yield?".',
     options: [
-      'Yes — 40% loss',
-      'No material loss — typically <2% annual yield clipped. Inverter overloading 1.2-1.4 is common UK practice. The array rarely produces full STC nameplate (only at 1,000 W/m² at 25°C cell temp). The inverter clips briefly at peak summer noon but operates closer to its rated capacity for more of the year — improving its average efficiency. Manufacturer datasheet specifies the maximum permitted overload ratio',
-      'No, but inverter will explode',
-      '100% loss',
+      'No material loss — typically <2% clipped per year; 1.2–1.4 overloading is standard UK practice',
+      'Yes — about a 40% annual loss from the 1.4 ratio',
+      'No loss, but the inverter will be damaged by the overload',
+      'A total 100% loss, since the array exceeds the inverter rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inverter overloading 1.2-1.4 is standard UK practice. Saves inverter cost, captures more low-irradiance yield. The inverter clips during peak summer noon but annual clipping loss typically below 2% — offset by cost saving and improved low-irradiance operating point. Manufacturer datasheets specify the maximum permitted overload ratio (1.3-1.5 typical for modern string inverters). Exceeding voids the warranty.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'An installer proposes 3 parallel strings on a single MPPT input. Module I_mod_max_ocer = 20 A, I_sc_stc = 12.5 A. Does the install need string fuses per Reg 712.431.101?',
     options: [
-      'No fuses ever needed',
-      'Apply the condition: 1.35 × 20 = 27 A vs (3 − 1) × (1.25 × 12.5) = 31.25 A. Since 27 < 31.25, the condition IS MET — string protection IS required per Reg 712.431.101. Devices per Reg 712.432.103 (gPV fuses per BS EN 60269-6, fuse-combinations per BS EN 60947-3, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3). Both polarities protected per Reg 712.432.101. Devices go in the combiner box',
-      'No — only 1 string per inverter',
-      'Always required',
+      'No — PV strings never require overcurrent protection in any configuration',
+      'No — only one string per inverter is permitted, so the question does not arise',
+      'Yes — 1.35 × 20 = 27 A < 2 × 15.625 = 31.25 A, so the 712.431.101 condition is met',
+      'Yes — string fuses are always required on every parallel-string array',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 712.431.101 condition: protective devices shall be provided where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max. With 3 parallel strings (Ns = 3) and I_sc_max = 1.25 × 12.5 = 15.625 A, right side = 2 × 15.625 = 31.25 A. Left side = 1.35 × 20 = 27 A. 27 < 31.25 — condition MET — protection required. Devices per Reg 712.432.103 (gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3). Both polarities protected per Reg 712.432.101.',
   },
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'A dual-MPPT inverter has two independent MPPT inputs. An installer puts 8 modules on MPPT-A (south roof) and 6 modules on MPPT-B (west roof). Design consideration?',
     options: [
-      'Not possible',
-      'Each MPPT string is sized independently against the inverter\'s per-MPPT max V_oc, MPPT range, and per-MPPT max I_sc. Different orientations / shading patterns on each MPPT is exactly the use case — each MPPT tracks its own optimal operating point, eliminating mismatch losses between the two orientations. Particularly useful for east-west splits. The design pack records the per-MPPT sizing calculations',
-      'All modules must be identical orientation',
-      'Wired in series across both MPPTs',
+      'Not possible — a dual-MPPT inverter cannot take two different string sizes',
+      'All modules must share an identical orientation across both MPPT inputs',
+      'The two strings must be wired in series across both MPPT inputs together',
+      'Each MPPT is sized independently and tracks its own MPP — ideal for the two orientations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dual-MPPT inverters enable two electrically-independent strings, each tracked to its own optimal operating point. Primary use case: multi-orientation arrays (east-west splits, hipped roofs). Each MPPT input has its own voltage range and current rating — sized independently per Reg 712.433.101.1. Multi-MPPT inverters typically have lower per-input current rating (e.g. 12 A / 12 A) than single-MPPT inverters (e.g. 25 A) — module selection must reflect this.',
   },
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'The MCS MIS 3002 design pack lists inverter MPPT sizing calculations as a required deliverable. What three calculations must be shown?',
     options: [
-      'None',
-      '(1) Max string V_oc_max at coldest expected cell temperature, evidenced against the inverter\'s absolute max DC voltage; (2) Min string V_mp at hottest expected cell temperature, evidenced against the inverter\'s MPPT range minimum; (3) Max string V_oc_max at coldest cell temperature, evidenced against the inverter\'s MPPT range maximum. Plus current: max I_sc at hottest cell temperature against the inverter\'s per-MPPT max DC current',
-      'Just module names',
-      'Profit margin',
+      'None — the MPPT sizing is left to the inverter manufacturer',
+      'V_oc cold vs absolute max; V_mp hot vs MPPT minimum; V_oc cold vs MPPT maximum, plus the current check',
+      'Just the module names and quantities used on the array',
+      'The installer\'s profit margin on the job',
     ],
     correctAnswer: 1,
     explanation:
@@ -225,10 +225,10 @@ const quizQuestions = [
     question:
       'An installer specifies a 5 kW single-MPPT inverter with rated DC input 25 A. Array uses 400 W modules with I_sc_stc = 12.5 A. How many parallel strings can the MPPT accept?',
     options: [
-      '10 strings',
-      'Max parallel strings = inverter per-MPPT I_max / (1.25 × I_sc_stc) = 25 / (1.25 × 12.5) = 25 / 15.625 = 1.6 → 1 string maximum (rounded down). 2 parallel strings would push input current at hot conditions above the inverter rating, risking inverter damage. The 1.25 multiplier per Reg 712.433.101.1 is the conservative default for I_sc_max',
-      '0 strings',
-      'Unlimited',
+      '10 strings, ignoring the per-MPPT current rating',
+      '1 string — 25 A / (1.25 × 12.5 A) = 1.6, rounded down, as two would exceed the rating',
+      '0 strings, since a single string cannot meet the inverter input',
+      'Unlimited strings, because the MPPT input has no current ceiling',
     ],
     correctAnswer: 1,
     explanation:

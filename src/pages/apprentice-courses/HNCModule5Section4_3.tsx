@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a submittal register?',
     options: [
       'To log and track approval status of all submitted items',
-      'Reduced surface temperature below dew point',
-      '800-1000ppm, with outdoor levels around 400ppm',
-      'Short safety discussion on specific topics relevant to current work',
+      'To record the final account value for each subcontractor',
+      'To list the site personnel who have completed induction',
+      'To schedule the delivery dates for plant and equipment',
     ],
     correctIndex: 0,
     explanation:
@@ -44,9 +44,9 @@ const quickCheckQuestions = [
     id: 'data-sheet-content',
     question: 'Technical data sheets must include which essential information?',
     options: [
-      'At all safety signs, changes of level, and intersection points',
-      'Electrical Installation Certificate and user documentation',
-      'To distribute the outrigger load over a wider area of ground',
+      'The unit price and trade discount offered by the supplier',
+      'The name of the operative who will install the equipment',
+      'The delivery vehicle registration and driver details',
       'Performance specifications, compliance standards, and installation requirements',
     ],
     correctIndex: 3,
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: 'When is a mock-up typically required on a building services project?',
     options: [
       'When quality standards need visual verification before bulk installation',
-      'Yes, if they result from work activity and require hospital treatment',
-      'Online via the HSE website, or by phone for fatal and specified injuries',
-      'HOT protocol: don’t touch, evacuate the area, raise the alarm, call 999, brief security',
+      'Whenever any electrical equipment is delivered to site',
+      'Only after the installation has been fully commissioned',
+      'When the contract value exceeds a fixed monetary threshold',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'alternative-product',
     question: 'What must be demonstrated when proposing an alternative product?',
     options: [
-      'Only a competent person responsible for the work',
-      'The maximum voltage reached in either direction',
+      'That the alternative is cheaper than the specified item',
+      'That the original manufacturer has gone out of business',
       'Equal or better performance to the specified item',
-      'Isolate immediately and investigate',
+      'That the alternative has a shorter delivery lead time',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'Who typically has final authority to approve submittals on a building services project?',
     options: [
-      'The designer, installer, and verifier/commissioning engineer',
+      'The installing operative on site',
       'The client or their appointed representative (engineer/architect)',
-      'The processing of raw sensor signals to make them suitable for the control system',
-      'Minimum distance after a reflective event where loss can be measured',
+      'The equipment manufacturer or supplier',
+      'The wholesaler supplying the materials',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'What information should be included on a submittal register?',
     options: [
-      'Approved with comments that must be incorporated',
-      'Comparative data sheet, photometric data, and evidence of equivalent performance',
+      'Operative names and their CSCS card numbers',
+      'The site induction date for each subcontractor',
       'Submittal number, description, date submitted, and approval status',
-      'To verify quality, colour, and finish match specification requirements',
+      'The final account value agreed with the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: "What does 'approved as noted' mean on a returned submittal?",
     options: [
-      'No, the cable capacity is insufficient',
-      'Replacing suspect components with known good ones',
-      'Temperature, installation method, and grouping',
+      'Rejected and requiring a completely new product',
+      'Approved with no conditions and ready to procure as submitted',
+      'Held pending receipt of further documentation only',
       'Approved with comments that must be incorporated',
     ],
     correctAnswer: 3,
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why are material samples required before bulk ordering?',
     options: [
-      'Notify the client/engineer and submit an alternative for approval',
+      'To allow the supplier to invoice for the order in advance',
       'To verify quality, colour, and finish match specification requirements',
-      'Submittal number, description, date submitted, and approval status',
-      'Comparative data sheet, photometric data, and evidence of equivalent performance',
+      'To satisfy the site induction record-keeping requirements',
+      'To confirm the delivery date can be met by the supplier',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'A contractor wishes to substitute a specified luminaire. What documentation is typically required?',
     options: [
-      'Until project completion and through the defects liability period',
-      'Submittal number, description, date submitted, and approval status',
+      'A signed delivery note from the alternative supplier only',
+      'A verbal agreement from the site manager confirming the change',
       'Comparative data sheet, photometric data, and evidence of equivalent performance',
-      'Notify the client/engineer and submit an alternative for approval',
+      'A revised programme showing the new installation dates only',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of maintaining a record of approved submittals?',
     options: [
-      'Notify the client/engineer and submit an alternative for approval',
-      'To verify quality, colour, and finish match specification requirements',
-      'Comparative data sheet, photometric data, and evidence of equivalent performance',
+      'To calculate the final account value owed to the contractor',
+      'To track which operatives have installed each item',
+      'To record the site induction status of the supply chain',
       'To provide an audit trail and reference for installation verification',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: "What is the contractor's responsibility if approved materials become unavailable?",
     options: [
-      'Submittal number, description, date submitted, and approval status',
-      'To verify quality, colour, and finish match specification requirements',
-      'Approved with comments that must be incorporated',
+      'Install the nearest available product without informing anyone',
+      'Stop all work until the original product becomes available again',
+      'Claim an extension of time without proposing any alternative',
       'Notify the client/engineer and submit an alternative for approval',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'How long should approved submittal records typically be retained?',
     options: [
       'Until project completion and through the defects liability period',
-      'Approved with comments that must be incorporated',
-      'Notify the client/engineer and submit an alternative for approval',
-      'To verify quality, colour, and finish match specification requirements',
+      'Only until the relevant item has been installed on site',
+      'For seven days after each submittal is approved',
+      'Until the next progress meeting with the client',
     ],
     correctAnswer: 0,
     explanation:

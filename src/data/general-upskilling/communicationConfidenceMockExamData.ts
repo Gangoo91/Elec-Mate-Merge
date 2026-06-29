@@ -97,9 +97,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'What does the term "channel" refer to in the Shannon-Weaver model?',
     options: [
-      'Calmly repeating your position without getting drawn into arguments',
-      '"Did you isolate the supply before starting work?"',
-      'A receiver\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
+      'The mental process the receiver uses to interpret the message',
+      'The original idea the sender intends to communicate',
+      'Any interference that distorts the message in transit',
       'The medium through which a message travels from sender to receiver',
     ] as const,
     correctAnswer: 3,
@@ -187,9 +187,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'Which of these is an example of "noise" in the Shannon-Weaver model on a construction site?',
     options: [
       'A power drill running while a colleague explains a task',
-      'The first number mentioned tends to influence the final outcome',
-      'A range from very formal to semi-formal to informal, matched to context',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
+      'A colleague repeating an instruction back to confirm understanding',
+      'A clearly written method statement handed over before the task',
+      'A supervisor choosing a quiet location for a safety briefing',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -203,10 +203,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 9,
     question: 'What is the primary purpose of an "I-message" in workplace communication?',
     options: [
-      'Walk them through it in person, explaining scope, timeline and price',
+      'To assign clear responsibility for a mistake to the person who made it',
       'To express feelings and needs without blaming or accusing the other person',
-      'Mentally noting points to return to later rather than jumping in immediately',
-      'Providing a contemporaneous record of events, progress, weather, labour and issues on site',
+      'To soften a request so the other person feels no obligation to act',
+      'To restate the other person\'s point in your own words to confirm it',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -238,9 +238,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'What is the main limitation of one-way communication?',
     options: [
-      'Creates room for different interpretations, leading to disputes',
-      'Agreeing with the truth in criticism without becoming defensive, which defuses aggression',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
+      'It takes significantly longer to deliver than two-way communication',
+      'It can only be used for written messages, never for spoken ones',
+      'It requires specialist equipment that is rarely available on site',
       'There is no opportunity for the receiver to ask questions or provide feedback',
     ] as const,
     correctAnswer: 3,
@@ -308,9 +308,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 15,
     question: 'In workplace communication, what does "feedback" primarily help to achieve?',
     options: [
-      'A record of the topic, date, presenter, attendee signatures and actions agreed',
-      'Allowing pauses gives the speaker time to think and often encourages them to share more detail',
-      'Receptiveness and willingness to hear what they have to say without defensiveness',
+      'A permanent written record of every instruction given on site',
+      'A faster delivery of the message to a larger number of people',
+      'A reduction in the amount of technical detail the sender must include',
       'Confirmation that the message has been received and understood as intended',
     ] as const,
     correctAnswer: 3,
@@ -361,10 +361,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: "Albert Mehrabian's 7-38-55 rule applies specifically to communication about:",
     options: [
-      'Scope describes what IS included; exclusions describe what is NOT included',
-      'Two quick inhales through the nose followed by a long exhale through the mouth',
+      'Technical instructions where precise wording carries the meaning',
+      'Written communication such as emails and method statements',
       'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
+      'Any face-to-face conversation, regardless of its subject matter',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -398,9 +398,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       "Why is it incorrect to apply Mehrabian's 7-38-55 rule to a toolbox talk about electrical safety procedures?",
     options: [
       'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
-      'Address the safety issue directly using facts and I-messages, document it, and escalate formally if behaviour continues regardless of relationships',
-      'Declining clearly and respectfully, with a brief explanation and where possible an alternative',
-      '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
+      'Because the rule only applies when the speaker and listener are from different trades',
+      'Because the rule was developed for written communication, not spoken briefings',
+      'Because the rule states that words carry 55% of the meaning in any message',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -450,9 +450,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'Which of the following is a psychological barrier to communication?',
     options: [
-      "Mastery experiences — succeeding at a task yourself",
-      "Mirroring back the speaker's feelings and content to show understanding",
-      "A position is what someone says they want; an interest is why they want it",
+      "Generators and power tools running during a verbal briefing",
+      "An instruction given using unfamiliar technical jargon",
+      "A poor mobile signal cutting out during a phone call",
       "A receiver's preconceived negative opinion about the sender",
     ] as const,
     correctAnswer: 3,
@@ -486,10 +486,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what is the communication responsibility of the Designer in relation to health and safety risks?',
     options: [
-      'The original model was linear and one-directional, with no mechanism for the receiver to confirm understanding',
+      'To supervise all site workers directly and issue daily instructions',
       'To communicate foreseeable risks that cannot be designed out to those who need the information',
-      'Mentally preparing your response while the speaker is still talking',
-      'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
+      'To prepare and maintain the construction phase health and safety plan',
+      'To ensure welfare facilities are provided throughout the construction phase',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -503,10 +503,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'What distinguishes assertive communication from aggressive communication?',
     options: [
-      "Acknowledging the emotional impact before attempting to gather factual details about the incident",
-      "Because the speaker believes they have been heard and understood when they have not, leading to false confidence in the communication",
+      "Assertive communication is always delivered in writing; aggressive is spoken",
+      "Assertive communication avoids stating your needs; aggressive states them clearly",
       "Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others' rights",
-      "The response comes from a different ego state than the one addressed, causing communication breakdown",
+      "Assertive communication is used only with superiors; aggressive with subordinates",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -539,9 +539,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'Which of the following scenarios best illustrates a "semantic barrier" to communication?',
     options: [
       'An electrician uses the term "earth continuity conductor" while the plumber thinks they mean a physical earth wire to the ground',
-      'Documented with variation description, reason, cost implication and written agreement before work is carried out',
-      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
-      'Acknowledging the emotional impact before attempting to gather factual details about the incident',
+      'A fire alarm sounds repeatedly during a verbal handover of instructions',
+      'A worker is too anxious about a deadline to take in a safety briefing',
+      'A printed notice uses a font too small for some workers to read easily',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -574,10 +574,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the Shannon-Weaver model, adding a "feedback loop" from receiver to sender primarily addresses which limitation of the original model?',
     options: [
-      'Provide contact details, role, company information and relevant accreditations',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
+      'The original model could not represent physical noise in the channel',
+      'The original model assumed sender and receiver spoke different languages',
       'The original model was linear and one-directional, with no mechanism for the receiver to confirm understanding',
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
+      'The original model required a written rather than a spoken message',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -630,10 +630,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A researcher claims that "93% of all communication is non-verbal" based on Mehrabian\'s work. What is the most accurate critique of this claim?',
     options: [
-      "Documented with variation description, reason, cost implication and written agreement before work is carried out",
+      "The figure should be 87%, because tone of voice and body language add up to that amount",
       "It overgeneralises Mehrabian's findings, which only apply to the communication of feelings and attitudes when verbal and non-verbal cues are incongruent",
-      "Identify and address the most impactful barrier first, then systematically reduce others using channel selection, language adaptation, and emotional awareness",
-      "Communication of residual risks is required when hazards cannot be eliminated or reduced through design, forming part of the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"inform\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" step after designing out risk",
+      "The claim is correct but only applies to communication over the telephone",
+      "The claim understates the figure, as research shows non-verbal cues carry 99% of meaning",
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -648,10 +648,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In Transactional Analysis, an "ulterior transaction" is most dangerous in workplace communication because:',
     options: [
-      'Relevant to the client situation, concise, has a clear point, and demonstrates experience without boasting',
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
+      'The message is sent through the wrong channel and never reaches the receiver',
+      'Both parties speak from the Child ego state, leading to an emotional argument',
       'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
-      'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
+      'The receiver responds from a different ego state than the one that was addressed',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -666,9 +666,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How do the CDM 2015 Regulations position communication in relation to the hierarchy of risk control?',
     options: [
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
-      'Potential defamation, damage to professional relationships, GDPR breach if individuals identifiable, and breach of site confidentiality',
-      'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
+      'Communication replaces physical controls once a risk has been identified',
+      'Communication is the first control to apply, before any attempt to design out risk',
+      'Communication is optional once a risk assessment has been documented',
       'Communication of residual risks is required when hazards cannot be eliminated or reduced through design, forming part of the "inform" step after designing out risk',
     ] as const,
     correctAnswer: 3,
@@ -685,9 +685,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A project manager consistently addresses the team from a Critical Parent ego state. According to Transactional Analysis theory, what is the most likely long-term effect on team communication?',
     options: [
       'Team members will increasingly respond from the Adapted Child ego state, becoming compliant but disengaged, or from the Rebellious Child state, creating conflict',
-      'Document the change, confirm cost and time implications, obtain written agreement before proceeding, and update the site diary',
-      'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
-      'Separate person from problem, describe instances factually (DESC), express impact using I-messages, specify a solution like written instruction confirmation, and frame consequence as mutual interest',
+      'Team members will gradually shift into a stable Adult-to-Adult dynamic with the manager',
+      'Team members will mirror the Critical Parent state and confront the manager as equals',
+      'Team members will become more open and willing to raise safety concerns over time',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -702,10 +702,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following correctly explains the relationship between the Shannon-Weaver model and modern workplace communication theory?',
     options: [
-      'Start with "What do you observe?" then "What could cause that?" then "How could you test each possibility?" then "What would you expect to find if your theory is correct?"',
+      'The Shannon-Weaver model has been disproved and is no longer used in any context',
       'The Shannon-Weaver model provides a useful structural framework but must be supplemented with interpersonal elements like feedback, context, and shared meaning to fully represent human communication',
-      'Empathetic listening to acknowledge feelings, SOLER body language to show presence, reflective statements to validate, and clear signposting to appropriate support services',
-      'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
+      'The Shannon-Weaver model fully captures human communication and needs no additions',
+      'The Shannon-Weaver model applies only to written communication, not spoken interaction',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -720,10 +720,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician uses an I-message during a site meeting: "I feel concerned when isolation procedures aren\'t followed because it puts people at risk of electric shock." A colleague responds, "Stop being so dramatic." How should the electrician respond to maintain assertive communication?',
     options: [
-      'The transition from supervised apprentice to autonomous professional creates a gap between objective competence and subjective confidence',
-      'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
+      'Drop the subject to avoid conflict, since the colleague clearly disagrees',
+      'Raise their voice and insist the colleague is putting lives at risk',
       'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
-      'An electrician uses the term "earth continuity conductor" while the plumber thinks they mean a physical earth wire to the ground',
+      'Report the colleague to the site manager without speaking to them first',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -738,9 +738,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When multiple communication barriers exist simultaneously (e.g., physical noise, semantic confusion, and psychological stress), what approach does ILM Level 2 guidance recommend?',
     options: [
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
-      'De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue',
-      'Team members will increasingly respond from the Adapted Child ego state, becoming compliant but disengaged, or from the Rebellious Child state, creating conflict',
+      'Abandon the message and try again on another day when conditions improve',
+      'Increase your volume and repeat the message until the receiver responds',
+      'Deliver the message in full and rely on the receiver to filter out the interference',
       'Identify and address the most impactful barrier first, then systematically reduce others using channel selection, language adaptation, and emotional awareness',
     ] as const,
     correctAnswer: 3,
@@ -779,10 +779,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'What is the primary difference between "hearing" and "listening"?',
     options: [
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
+      'Hearing requires eye contact, whereas listening can be done with your back turned',
       'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
-      'Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified',
+      'Hearing involves understanding meaning, whereas listening is simply detecting sound',
+      'Hearing applies only to face-to-face conversation; listening applies only to phone calls',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -831,9 +831,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: "What is Covey's Habit 5?",
     options: [
       'Seek first to understand, then to be understood',
-      'A power drill running while a colleague explains a task',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
-      'They need consent, a legitimate purpose, and secure storage',
+      'Begin with the end in mind',
+      'Put first things first',
+      'Sharpen the saw',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -864,10 +864,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'In the RASA listening model, what does "Appreciate" involve?',
     options: [
-      'Presenting information in a way that emphasises different aspects to influence perception',
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
+      'Openly agreeing with every point the speaker makes to keep them comfortable',
+      'Praising the speaker for the quality of their argument once they finish',
       'Making small verbal acknowledgements like "mm-hmm," "I see," or nodding to show you are engaged',
-      'Relevant to the client situation, concise, has a clear point, and demonstrates experience without boasting',
+      'Thanking the speaker formally at the end and noting their contribution in writing',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -898,10 +898,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 48,
     question: 'Which of the following is an example of "paraphrasing" during a conversation?',
     options: [
-      '"So what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
-      'Broad questions first allow the witness to recall events in their own way without being influenced by specific prompts, preserving the accuracy and completeness of their account',
-      'Adult ego state (TA) for rational exchanges, SOLER for attentive body language, I-messages for raising concerns, and systematic barrier identification for troubleshooting breakdowns',
+      '"So what you\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
+      '"Why didn\'t you spot the water pipe before you started routing the circuit?"',
+      '"You\'ll need to re-route that circuit around the water pipe straight away."',
+      '"Did the water pipe affect the route you took for the circuit?"',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -967,9 +967,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following behaviours is a barrier to effective listening?',
     options: [
       'Mentally preparing your response while the speaker is still talking',
-      'Clear, purposeful, respectful of working hours, and separate from social chat',
-      'Delivering bad news about a significant project problem requiring immediate discussion',
-      'Unambiguous format such as "14 March 2025" with 24-hour clock',
+      'Asking a clarifying question when a point is unclear',
+      'Summarising the key points back to the speaker',
+      'Allowing a brief silence after the speaker finishes a point',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1017,9 +1017,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'Why is asking "clarifying questions" considered a key active listening skill?',
     options: [
-      'Declining clearly and respectfully, with a brief explanation and where possible an alternative',
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
-      'Look for creative solutions where both parties get something they value',
+      'It allows the listener to steer the speaker towards a preferred conclusion',
+      'It signals to the speaker that they should bring the conversation to a close',
+      'It gives the listener time to prepare a rebuttal to the speaker\'s argument',
       'It demonstrates engagement and helps ensure the listener has correctly understood the message',
     ] as const,
     correctAnswer: 3,
@@ -1053,10 +1053,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'How does the "funnel technique" work in questioning?',
     options: [
-      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
+      'It alternates open and closed questions in no particular order to keep the speaker alert',
       'It starts with broad, open questions and progressively narrows to specific, closed questions to focus the conversation',
-      'Capture attention with a real example, statistic or question that makes the topic personally relevant',
-      'Ranking fears from least to most anxiety-provoking and working through them progressively',
+      'It uses only closed questions throughout to keep answers short and factual',
+      'It starts with specific questions and gradually broadens out to general ones',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1071,10 +1071,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What distinguishes "empathetic listening" from "attentive listening" in Covey\'s framework?',
     options: [
-      "The response comes from a different ego state than the one addressed, causing communication breakdown",
-      "Send via a dedicated project channel with permission, including context about what the photo shows",
+      "Empathetic listening focuses only on the words, while attentive listening adds the emotion",
+      "Empathetic listening is reserved for written messages, attentive listening for spoken ones",
       "Empathetic listening seeks to understand the speaker's feelings and perspective from their frame of reference, not just the factual content",
-      "Relevant to the client situation, concise, has a clear point, and demonstrates experience without boasting",
+      "Empathetic listening means agreeing with the speaker, attentive listening means staying neutral",
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1089,9 +1089,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When using the SOLER model during a listening interaction, what does maintaining an "open posture" communicate to the speaker?',
     options: [
-      'It confirms understanding, engages workers and surfaces practical concerns',
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
-      '"So what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
+      'That you are in a position of authority over the speaker',
+      'That you would prefer the conversation to be kept brief',
+      'That you are relaxed because the topic is not important to you',
       'Receptiveness and willingness to hear what they have to say without defensiveness',
     ] as const,
     correctAnswer: 3,
@@ -1107,10 +1107,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An apprentice says, \"I'm not sure I've connected this correctly — it doesn't look right to me.\" Which response demonstrates the best active listening?",
     options: [
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
-      'Address privately, describe the specific behaviour factually, explain the risk, and agree the correct procedure',
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
+      '"What specifically doesn\'t look right to you? Talk me through what you\'ve done so far."',
+      '"It\'s probably fine — just leave it and we\'ll check it at the end of the day."',
+      '"If you\'d paid attention earlier you\'d know whether it\'s right or not."',
+      '"Don\'t worry about it, these things rarely matter as much as you think."',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1143,10 +1143,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is the best example of "reflecting feelings" in a listening interaction?',
     options: [
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'To communicate foreseeable risks that cannot be designed out to those who need the information',
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
-      'Confirmation that the message has been received and understood as intended',
+      '"You should just prioritise the urgent jobs and the rest will sort itself out."',
+      '"I had exactly the same problem last month — let me tell you what I did."',
+      '"It sounds like you\'re feeling overwhelmed by the amount of work that\'s been added to your schedule."',
+      '"There\'s no point getting worked up about it, everyone is busy right now."',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1161,9 +1161,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is "pretend listening" (Covey\'s second level) potentially more harmful than openly ignoring someone?',
     options: [
-      'The original hormonal claims were not consistently replicated, though subjective confidence findings have more support',
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
-      'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
+      'Because pretend listening takes far more effort than genuinely listening',
+      'Because the speaker can always tell when someone is only pretending to listen',
+      'Because pretend listening is a criminal offence under health and safety law',
       'Because the speaker believes they have been heard and understood when they have not, leading to false confidence in the communication',
     ] as const,
     correctAnswer: 3,
@@ -1179,9 +1179,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'When paraphrasing, which of the following should you AVOID?',
     options: [
       "Repeating the speaker's exact words back to them word-for-word, as this can feel mechanical and does not demonstrate true understanding",
-      "Start with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What do you observe?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What could cause that?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"How could you test each possibility?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What would you expect to find if your theory is correct?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "Build genuine rapport through professionalism, reliability, clear communication and authentic common ground",
-      "Team members will increasingly respond from the Adapted Child ego state, becoming compliant but disengaged, or from the Rebellious Child state, creating conflict",
+      "Restating the speaker's meaning in your own words to confirm understanding",
+      "Capturing the essence of the message rather than every minor detail",
+      "Inviting the speaker to correct your summary if you have misunderstood",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1196,10 +1196,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which Socratic question type encourages someone to consider the implications of their proposed action?',
     options: [
-      'You may lose the right to claim additional time or money for the resulting event',
+      '"Who told you to wire it that way in the first place?"',
       '"If we do it that way, what do you think the consequences might be?"',
-      'Mentally preparing your response while the speaker is still talking',
-      'Whether the receiver understood the message and can act on it correctly',
+      '"Are you absolutely certain you have done this correctly?"',
+      '"What time do you expect to have this finished by?"',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1214,10 +1214,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is a "leading question" and why should it generally be avoided in active listening?',
     options: [
-      'Challenge the thought by examining evidence: "I am qualified, I was asked because of my knowledge, and the audience wants to learn"',
-      'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
+      'A question that can only be answered with a simple yes or no',
+      'A question that asks the speaker to summarise everything they have said',
       'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
-      'Verbal encouragement from a respected person can strengthen belief in your abilities, though weaker than mastery experience',
+      'A question that invites the speaker to explore their feelings in depth',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1231,9 +1231,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'In the RASA model, what does the "A" at the end (Ask) encourage the listener to do?',
     options: [
-      'Ranking fears from least to most anxiety-provoking and working through them progressively',
-      'Gradual, step-by-step exposure to increasingly challenging speaking situations',
-      'The medium through which a message travels from sender to receiver',
+      'Ask the speaker to lower their voice so you can concentrate',
+      'Ask another colleague to confirm what the speaker has said',
+      'Ask the speaker to put their request in writing for the record',
       'Ask relevant follow-up questions to deepen understanding and show continued interest',
     ] as const,
     correctAnswer: 3,
@@ -1301,9 +1301,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What is the "inverted funnel" (or "reverse funnel") questioning technique?',
     options: [
-      'Fixed mindset avoids challenges to protect self-image; growth mindset embraces them as opportunities to develop',
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
-      'Empathetic listening seeks to understand the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings and perspective from their frame of reference, not just the factual content',
+      'Asking the same broad question repeatedly until a clear answer emerges',
+      'Alternating between two unrelated topics to test the speaker\'s focus',
+      'Beginning with broad, open questions and narrowing to specific, closed ones',
       'Starting with specific, closed questions and gradually broadening to open questions to build confidence before exploring wider topics',
     ] as const,
     correctAnswer: 3,
@@ -1338,10 +1338,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       "A colleague describes a situation where they feel a client is being unreasonable about a project timeline. According to Covey's empathetic listening, which response is most appropriate?",
     options: [
-      "Empathetic listening seeks to understand the speaker's feelings and perspective from their frame of reference, not just the factual content",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"It sounds like you're caught between wanting to meet the client's expectations and knowing the timeline isn't realistic — that must be really frustrating.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "Toastmasters operationalises Bandura theory: mastery through progressive challenges, vicarious learning, social persuasion through evaluations, and managing anxiety through practice",
-      "Potential defamation, damage to professional relationships, GDPR breach if individuals identifiable, and breach of site confidentiality",
+      '"You just need to push back and tell the client the timeline is impossible."',
+      '"It sounds like you\'re caught between wanting to meet the client\'s expectations and knowing the timeline isn\'t realistic — that must be really frustrating."',
+      '"Clients are always like that — you learn to ignore the unrealistic ones."',
+      '"When I had a difficult client last year, here is exactly what I did."',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1356,10 +1356,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When conducting a Socratic questioning dialogue with an apprentice about why an RCD has tripped, what sequence of questions best develops their diagnostic thinking?',
     options: [
-      '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
-      'The original hormonal claims have been debated in replication studies, but the finding that expansive postures can increase subjective feelings of confidence has more support',
+      'Tell the apprentice the likely cause immediately so the job is not delayed',
+      'Ask only closed yes/no questions so the apprentice cannot get it wrong',
       'Start with "What do you observe?" then "What could cause that?" then "How could you test each possibility?" then "What would you expect to find if your theory is correct?"',
-      'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
+      'Begin with "What would you expect to find?" before they have made any observation',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1374,9 +1374,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site worker becomes visibly upset while describing a near-miss incident. According to best practice in empathetic listening, what should the listener prioritise FIRST?',
     options: [
-      'Acknowledge they do not have the answer, commit to finding out, and follow up within an agreed timeframe',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
-      'To express feelings and needs without blaming or accusing the other person',
+      'Recording the exact sequence of events for the accident report straight away',
+      'Identifying who was at fault before the worker forgets the details',
+      'Establishing the precise time and location of the near-miss first',
       'Acknowledging the emotional impact before attempting to gather factual details about the incident',
     ] as const,
     correctAnswer: 3,
@@ -1393,9 +1393,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       "How does combining the RASA model with Covey's empathetic listening create a more complete listening framework?",
     options: [
       "RASA provides the structural process (receive, appreciate, summarise, ask) while Covey's empathetic listening adds the depth of emotional understanding and perspective-taking within each step",
-      "Adult ego state (TA) for rational exchanges, SOLER for attentive body language, I-messages for raising concerns, and systematic barrier identification for troubleshooting breakdowns",
-      "Empathetic listening seeks to understand the speaker's feelings and perspective from their frame of reference, not just the factual content",
-      "Start with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What do you observe?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What could cause that?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"How could you test each possibility?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" then \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"What would you expect to find if your theory is correct?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      "RASA replaces empathetic listening entirely, removing the need to consider feelings",
+      "Covey's empathetic listening provides the four steps and RASA adds the body language",
+      "The two frameworks contradict each other and should never be combined in practice",
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1428,10 +1428,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A supervisor uses the funnel technique during an accident investigation. They start with "Tell me everything that happened from when you arrived on site this morning" and gradually narrow to "At what exact time did you notice the fault?" Why is this sequencing particularly important in investigation contexts?',
     options: [
-      'Separate person from problem, describe instances factually (DESC), express impact using I-messages, specify a solution like written instruction confirmation, and frame consequence as mutual interest',
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re caught between wanting to meet the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s expectations and knowing the timeline isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t realistic — that must be really frustrating.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
+      'Specific questions first ensure the supervisor controls exactly what the witness reveals',
+      'Starting broad allows the supervisor to suggest what the witness should have seen',
       'Broad questions first allow the witness to recall events in their own way without being influenced by specific prompts, preserving the accuracy and completeness of their account',
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
+      'Specific questions first save time by skipping straight to the relevant facts',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1446,9 +1446,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrician consistently finds that team members come to them with problems but rarely follow through on solutions. Applying Covey's Habit 5 and Socratic questioning, what is the MOST likely cause and the MOST effective response?",
     options: [
-      'Acknowledge their concern, explore interests, use objective criteria: "I understand price is important. What does that quote include? My price is based on NICEIC standards and full certification"',
-      'Honestly communicate genuine constraints: "My next available start is 6 weeks out, but I could fit you in sooner if we confirm by Friday"',
-      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
+      'The team members lack the technical ability, so the electrician should take the tasks over entirely',
+      'The team members are deliberately avoiding work, so the electrician should escalate to the manager',
+      'The electrician is not giving clear enough instructions, so they should write everything down',
       'The electrician is probably solving problems FOR team members rather than helping them think through solutions; they should use Socratic questions to guide self-discovery and ownership',
     ] as const,
     correctAnswer: 3,
@@ -1465,9 +1465,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'During a sensitive one-to-one conversation, a team member discloses that they are struggling with a personal issue affecting their work. Which combination of listening skills represents the most professionally appropriate and effective response?',
     options: [
       'Empathetic listening to acknowledge feelings, SOLER body language to show presence, reflective statements to validate, and clear signposting to appropriate support services',
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
-      'Document the change, confirm cost and time implications, obtain written agreement before proceeding, and update the site diary',
-      'Your BATNA sets your walkaway point, the other party BATNA sets theirs, and the ZOPA is the range between where agreement is possible',
+      'Offer detailed personal advice, share your own similar experiences, and tell them what decision to make',
+      'Quickly redirect the conversation back to work tasks to avoid prying into personal matters',
+      'Reassure them the problem is minor, change the subject, and avoid raising it again',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1515,9 +1515,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'Who first described the concept of imposter syndrome in their 1978 research paper?',
     options: [
-      'I-messages versus You-messages',
-      'Summarising and checking understanding',
-      'General Data Protection Regulation',
+      'Carol Dweck and Albert Bandura',
+      'Pauline Rose Clance and Carl Rogers',
+      'Sigmund Freud and Abraham Maslow',
       'Pauline Rose Clance and Suzanne Ames Imes',
     ] as const,
     correctAnswer: 3,
@@ -1601,14 +1601,14 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, which regulation places a duty on contractors to provide instruction and information to workers?',
     options: [
-      'Regulation 13',
+      'Regulation 15',
       'Regulation 8',
       'Regulation 4',
       'Regulation 22',
     ] as const,
     correctAnswer: 0,
     explanation:
-      'CDM 2015 Regulation 13 requires that every contractor must provide each worker under their control with appropriate supervision, instructions and information so that construction work can be carried out safely. Toolbox talks are one of the key methods for fulfilling this duty.',
+      'CDM 2015 Regulation 15 sets out the duties of contractors: every contractor must ensure each worker under their control is given appropriate supervision, instructions and information (Reg 15(8)-(9)) so construction work can be carried out safely. Toolbox talks are one of the key methods for fulfilling this duty. (Regulation 13 covers the principal contractor\'s duties.)',
     section: 'Speaking with Confidence',
     difficulty: 'basic' as const,
     topic: 'CDM 2015',
@@ -1618,10 +1618,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'What is the classic three-part speech structure?',
     options: [
-      'Parent, Adult, and Child',
+      'Question, discussion, vote',
       'Introduction, body, conclusion',
-      'A semantic or language barrier',
-      'Fear of public speaking',
+      'Greeting, agenda, close',
+      'Hook, story, sales pitch',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1636,10 +1636,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the Toastmasters Pathways programme, what is the primary method for building speaking confidence?',
     options: [
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
-      'Subject line, greeting, body, closing, signature',
+      'Memorising scripts and delivering them word-for-word',
+      'Avoiding the audience until anxiety naturally fades on its own',
       'Gradual exposure through progressively challenging speeches',
-      'The medium through which a message travels from sender to receiver',
+      'A single intensive day of high-pressure public speaking',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1740,9 +1740,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'What is the key difference between a fixed mindset and a growth mindset when facing a challenge?',
     options: [
       'Fixed mindset avoids challenges to protect self-image; growth mindset embraces them as opportunities to develop',
-      'Only use reply-all when your response is genuinely relevant to everyone on the thread',
-      '"So what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
-      'Documented with variation description, reason, cost implication and written agreement before work is carried out',
+      'Fixed mindset welcomes feedback, while growth mindset takes criticism personally',
+      'Fixed mindset believes effort matters most, while growth mindset relies on natural talent',
+      'Fixed mindset persists after setbacks, while growth mindset gives up quickly',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1791,9 +1791,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'Why is two-way communication important in a toolbox talk?',
     options: [
-      'Ensuring the intended message is received, understood, and acted upon correctly',
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
-      'The medium through which a message travels from sender to receiver',
+      'It allows the talk to be delivered far more quickly than a one-way briefing',
+      'It removes the need to keep a written record of the talk afterwards',
+      'It lets the presenter cover several unrelated topics in one session',
       'It confirms understanding, engages workers and surfaces practical concerns',
     ] as const,
     correctAnswer: 3,
@@ -1810,9 +1810,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A newly qualified electrician feels like a fraud despite passing their AM2 assessment. This is best described as:',
     options: [
       'Imposter syndrome as described by Clance and Imes (1978)',
-      'Unambiguous format such as "14 March 2025" with 24-hour clock',
-      'States how long the quoted price remains valid',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
+      'A fixed mindset as described by Carol Dweck',
+      'Glossophobia, the fear of public speaking',
+      'Low self-efficacy caused by a lack of mastery experience',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1843,14 +1843,14 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'What documentation should be completed after delivering a toolbox talk?',
     options: [
-      'Assertive states rights and facts calmly; aggressive attacks the person',
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
+      'A full written risk assessment for every hazard on the entire site',
+      'A method statement signed by the principal designer and client',
       'A record of the topic, date, presenter, attendee signatures and actions agreed',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
+      'A formal training certificate issued to each attendee by an awarding body',
     ] as const,
     correctAnswer: 2,
     explanation:
-      'A proper record should include the topic, date and time, presenter, attendee signatures, questions raised, and actions agreed. This demonstrates compliance with CDM 2015 Regulation 13.',
+      'A proper record should include the topic, date and time, presenter, attendee signatures, questions raised, and actions agreed. This demonstrates compliance with the contractor\'s duty to provide instruction and information under CDM 2015 Regulation 15.',
     section: 'Speaking with Confidence',
     difficulty: 'intermediate' as const,
     topic: 'toolbox talks',
@@ -1861,9 +1861,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Regarding Amy Cuddy research on body language and confidence, which statement is most accurate?',
     options: [
-      'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
-      'Broad questions first allow the witness to recall events in their own way without being influenced by specific prompts, preserving the accuracy and completeness of their account',
-      'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
+      'The hormonal effects of power posing have been fully confirmed by repeated studies',
+      'Power posing has been shown to reliably improve audience perception of the speaker',
+      'The research proved that posture has no effect on confidence whatsoever',
       'The original hormonal claims have been debated in replication studies, but the finding that expansive postures can increase subjective feelings of confidence has more support',
     ] as const,
     correctAnswer: 3,
@@ -1879,9 +1879,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'How does social persuasion work as a source of self-efficacy according to Bandura?',
     options: [
       'Verbal encouragement from a respected person can strengthen belief in your abilities, though weaker than mastery experience',
-      'Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified',
-      'Observing audience body language, energy levels and engagement to adjust delivery in real time',
-      'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
+      'Repeatedly succeeding at a difficult task builds the strongest belief in your ability',
+      'Watching a similar person succeed convinces you that you can do it too',
+      'Feeling physically calm before a task signals to you that you can cope',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1896,10 +1896,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which emotional/physiological state is most likely to undermine self-efficacy according to Bandura?',
     options: [
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
+      'A calm, settled feeling shortly before stepping up to speak',
       'High anxiety with physical symptoms such as trembling and nausea',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
-      'Base agreements on fair, independent standards rather than pressure or willpower',
+      'Mild excitement and a slightly raised heart rate before a presentation',
+      'A feeling of focused alertness during the first few minutes of speaking',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1914,10 +1914,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When delivering a toolbox talk on electrical isolation, what should the opening hook achieve?',
     options: [
-      'Ensuring the intended message is received, understood, and acted upon correctly',
-      'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
+      'Summarise every point that will be covered in fine technical detail',
+      'List the regulations that apply before introducing the topic itself',
       'Capture attention with a real example, statistic or question that makes the topic personally relevant',
-      'When the matter is urgent, complex, sensitive, or requires back-and-forth discussion',
+      'Take the register and collect signatures before anything else is said',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1931,9 +1931,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What does "reading the room" mean in the context of presentations?',
     options: [
-      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
-      'Potential GDPR breach, security risk (advertising unoccupied property), and privacy violation without consent',
-      'Ensuring the intended message is received, understood, and acted upon correctly',
+      'Reading your notes aloud word-for-word so nothing is missed',
+      'Checking the room layout and equipment before the audience arrives',
+      'Reciting the agenda at the start so everyone knows what is coming',
       'Observing audience body language, energy levels and engagement to adjust delivery in real time',
     ] as const,
     correctAnswer: 3,
@@ -1949,9 +1949,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is the "exposure ladder" approach to overcoming speaking anxiety?',
     options: [
       'Ranking fears from least to most anxiety-provoking and working through them progressively',
-      'To express feelings and needs without blaming or accusing the other person',
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
+      'Avoiding speaking situations until the fear disappears on its own',
+      'Starting with the most terrifying situation to get it over with quickly',
+      'Climbing a literal platform to practise speaking from a height',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1965,10 +1965,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'When presenting a quote to a client, what is the recommended approach?',
     options: [
-      'When the matter is urgent, complex, sensitive, or requires back-and-forth discussion',
+      'Email the figure with no breakdown and let the client raise any queries',
       'Walk them through it in person, explaining scope, timeline and price',
-      'Mastery experiences — succeeding at a task yourself',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
+      'Quote a round number verbally and follow up with paperwork later',
+      'Leave a printed quote in the letterbox without any explanation',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2000,9 +2000,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site supervisor wants to build confidence in running progress meetings. Using Bandura theory, what is the most effective first step?',
     options: [
-      'Gradual exposure through progressively challenging speeches',
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
-      'Calmly repeating your position without getting drawn into arguments',
+      'Reading a detailed guide on how to chair effective meetings',
+      'Watching recordings of senior managers running large meetings',
+      'Telling themselves repeatedly that they are a confident chairperson',
       'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
     ] as const,
     correctAnswer: 3,
@@ -2019,9 +2019,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'An electrician has the automatic thought: "Everyone will think I do not know what I am talking about" before their first toolbox talk. Using CBT, what is the most effective response?',
     options: [
       'Challenge the thought by examining evidence: "I am qualified, I was asked because of my knowledge, and the audience wants to learn"',
-      'To communicate foreseeable risks that cannot be designed out to those who need the information',
-      'An electrician uses the term "earth continuity conductor" while the plumber thinks they mean a physical earth wire to the ground',
-      'Starting with specific, closed questions and gradually broadening to open questions to build confidence before exploring wider topics',
+      'Accept the thought as accurate and ask a colleague to deliver the talk instead',
+      'Suppress the thought entirely and refuse to think about the talk beforehand',
+      'Repeat the affirmation "I am brilliant at this" until the thought disappears',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2036,10 +2036,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How should a construction professional handle being asked a question they cannot answer during a presentation?',
     options: [
-      'Confirmation that the message has been received and understood as intended',
+      'Give a confident-sounding guess so as not to appear unprepared',
       'Acknowledge they do not have the answer, commit to finding out, and follow up within an agreed timeframe',
-      'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
-      'Ranking fears from least to most anxiety-provoking and working through them progressively',
+      'Change the subject quickly and hope no one asks the question again',
+      'Tell the questioner the answer is too complex to explain in the time available',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2054,10 +2054,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is imposter syndrome particularly relevant to tradespeople who have recently qualified?',
     options: [
-      'Because the speaker believes they have been heard and understood when they have not, leading to false confidence in the communication',
-      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
+      'Because newly qualified tradespeople have usually not yet passed their final assessment',
+      'Because employers rarely give newly qualified tradespeople any responsibility',
       'The transition from supervised apprentice to autonomous professional creates a gap between objective competence and subjective confidence',
-      'The original hormonal claims were not consistently replicated, though subjective confidence findings have more support',
+      'Because imposter syndrome only ever affects people early in their working lives',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2071,9 +2071,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: 'How can the physiological sigh technique be used to manage anxiety before speaking?',
     options: [
-      'It signals genuine interest and attentiveness to the speaker',
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
+      'One slow inhale through the mouth followed by holding the breath for ten seconds',
+      'Rapid shallow breaths through the mouth to raise your energy level',
+      'Holding your breath as long as possible to slow your heart rate',
       'Two quick inhales through the nose followed by a long exhale through the mouth',
     ] as const,
     correctAnswer: 3,
@@ -2090,9 +2090,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A project manager needs a reluctant electrician to deliver a toolbox talk. Applying all four Bandura self-efficacy sources, which approach is most effective?',
     options: [
       'Let them observe a colleague (vicarious), encourage them (social persuasion), help them prepare to reduce anxiety (emotional state), then start with a small group (mastery)',
-      'Adult ego state (TA) for rational exchanges, SOLER for attentive body language, I-messages for raising concerns, and systematic barrier identification for troubleshooting breakdowns',
-      'Starting with specific, closed questions and gradually broadening to open questions to build confidence before exploring wider topics',
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re caught between wanting to meet the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s expectations and knowing the timeline isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t realistic — that must be really frustrating.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
+      'Order them to deliver the talk to the whole site immediately with no preparation',
+      'Provide written notes and leave them to deliver the talk without any support',
+      'Wait until they volunteer, since confidence cannot be developed deliberately',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2106,10 +2106,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: 'What is the critical limitation of Amy Cuddy power posing research?',
     options: [
-      'Acknowledge receipt briefly, then draft a measured response after you have calmed down',
+      'The research only tested people who were already confident speakers',
       'The original hormonal claims were not consistently replicated, though subjective confidence findings have more support',
-      'Acknowledging the emotional impact before attempting to gather factual details about the incident',
-      'Keep groups focused with clear purposes, separate social chat from work coordination',
+      'The research has been fully replicated and has no remaining limitations',
+      'The research applied only to written communication, not face-to-face situations',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2124,10 +2124,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When using storytelling in a client presentation, what makes a construction story effective?',
     options: [
-      'Ensuring the intended message is received, understood, and acted upon correctly',
-      'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
+      'As long and detailed as possible to show the full extent of your experience',
+      'Focused entirely on your past achievements to impress the client',
       'Relevant to the client situation, concise, has a clear point, and demonstrates experience without boasting',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
+      'Designed to highlight problems caused by other contractors you have followed',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2142,9 +2142,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the relationship between Bandura self-efficacy theory and Toastmasters Pathways?',
     options: [
-      'The Shannon-Weaver model provides a useful structural framework but must be supplemented with interpersonal elements like feedback, context, and shared meaning to fully represent human communication',
-      'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
-      'The original hormonal claims have been debated in replication studies, but the finding that expansive postures can increase subjective feelings of confidence has more support',
+      'Toastmasters contradicts Bandura theory by relying solely on social persuasion',
+      'Toastmasters and Bandura theory address completely unrelated skills',
+      'Toastmasters predates Bandura and inspired his self-efficacy research',
       'Toastmasters operationalises Bandura theory: mastery through progressive challenges, vicarious learning, social persuasion through evaluations, and managing anxiety through practice',
     ] as const,
     correctAnswer: 3,
@@ -2161,9 +2161,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A contractor avoids speaking in meetings, claiming "I am not a natural speaker." Using Dweck growth mindset, how should this be addressed?',
     options: [
       'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
-      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
-      'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
+      'Accept that some people are simply not built for speaking and excuse them from meetings',
+      'Insist they speak at every meeting until the fear is forced out of them',
+      'Reassure them that speaking skills are irrelevant to their trade anyway',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2198,10 +2198,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'What is the "24-hour rule" for emails?',
     options: [
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
-      '"So what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
+      'Every email must receive a reply within 24 hours of being received',
+      'Emails should never be sent more than 24 hours after an event occurs',
       'If you feel emotional about an email, wait 24 hours before sending your reply',
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
+      'Emails should be deleted from the server 24 hours after being read',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2215,9 +2215,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'What type of writing should be used in a site diary?',
     options: [
-      'Seek first to understand, then to be understood',
-      'Describe, Express, Specify, Consequences',
-      'Repeatedly checking their phone or watch',
+      'Persuasive writing that argues your side of any dispute',
+      'Informal notes using abbreviations and personal shorthand',
+      'Opinion-led writing that records how you felt about events',
       'Factual, objective writing in the active voice',
     ] as const,
     correctAnswer: 3,
@@ -2233,9 +2233,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What must a written quote include as a minimum?',
     options: [
       'Scope of work, exclusions, price, validity period and payment terms',
-      'A position is what someone says they want; an interest is why they want it',
-      'Mastery experiences — succeeding at a task yourself',
-      'Confirmation that the message has been received and understood as intended',
+      'The client\'s full credit history and details of any previous tradespeople used',
+      'A photograph of every product to be installed and its manufacturer warranty',
+      'A day-by-day breakdown of which worker will be on site at each hour',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2266,10 +2266,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is "negativity bias" in text-based communication?',
     options: [
-      'A record of the topic, date, presenter, attendee signatures and actions agreed',
-      'If you feel emotional about an email, wait 24 hours before sending your reply',
+      'Recipients tend to remember only the positive parts of a written message',
+      'Senders unconsciously write messages in a more negative tone than they intend',
       'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
-      'Focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
+      'Negative messages are statistically more likely to be opened and read than positive ones',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2283,9 +2283,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'Under JCT contracts, what is a site diary primarily used for?',
     options: [
-      'The cause, affected trades, duration, instructions received, and mitigation actions taken',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
+      'Calculating the final account and issuing the contractor\'s invoice',
+      'Recording the personal contact details of every visitor to the site',
+      'Setting out the design specification for the works to be carried out',
       'Providing a contemporaneous record of events, progress, weather, labour and issues on site',
     ] as const,
     correctAnswer: 3,
@@ -2301,9 +2301,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'When should you choose a phone call over an email?',
     options: [
       'When the matter is urgent, complex, sensitive, or requires back-and-forth discussion',
-      'A range from very formal to semi-formal to informal, matched to context',
-      'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
-      'Unambiguous format such as "14 March 2025" with 24-hour clock',
+      'When you need a permanent written record of exactly what was agreed',
+      'When the same routine information must be sent to many recipients at once',
+      'When the message is purely factual and requires no immediate response',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2317,10 +2317,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is "reply-all" etiquette?',
     options: [
-      'Agreeing with the truth in criticism without becoming defensive, which defuses aggression',
+      'Always use reply-all so that everyone stays fully informed at all times',
       'Only use reply-all when your response is genuinely relevant to everyone on the thread',
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
-      'To express feelings and needs without blaming or accusing the other person',
+      'Never use reply-all under any circumstances in a professional setting',
+      'Use reply-all only when replying to someone more senior than yourself',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2334,10 +2334,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'What is the difference between "scope" and "exclusions" in a quote?',
     options: [
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
-      'Avoiding expressing your own opinions or needs to prevent conflict',
+      'Scope is the total price; exclusions are the optional extras a client can add',
+      'Scope is the payment schedule; exclusions are the late-payment penalties',
       'Scope describes what IS included; exclusions describe what is NOT included',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
+      'Scope is the validity period; exclusions are the warranty conditions',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2351,9 +2351,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What is the purpose of a validity period on a quote?',
     options: [
-      'Separate the people from the problem',
-      'General Data Protection Regulation',
-      'Factual, objective writing in the active voice',
+      'States how long the completed work is guaranteed against defects',
+      'States the date by which the client must pay the final invoice',
+      'States how long the job is expected to take from start to finish',
       'States how long the quoted price remains valid',
     ] as const,
     correctAnswer: 3,
@@ -2369,9 +2369,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What should an email subject line achieve?',
     options: [
       'Clearly and concisely summarise the purpose or action required',
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
-      'Look for creative solutions where both parties get something they value',
-      '"Did you isolate the supply before starting work?"',
+      'Contain the full message so the recipient need not open the email',
+      'Be left blank so the recipient reads the message with no preconception',
+      'Repeat the recipient\'s name to make the email feel personal',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2385,10 +2385,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What is the primary purpose of a signature block on professional emails?',
     options: [
-      'Parent-to-Child, with the manager adopting a Nurturing (or Controlling) Parent role',
+      'Summarise the key points of the email so they need not be read in full',
       'Provide contact details, role, company information and relevant accreditations',
-      'Look for creative solutions where both parties get something they value',
-      'Only use reply-all when your response is genuinely relevant to everyone on the thread',
+      'Display a legal disclaimer that overrides anything written in the email body',
+      'Confirm that the recipient has read and agreed to the email content',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2402,10 +2402,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'NEC contracts require which approach to record-keeping?',
     options: [
-      'Repeating the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s exact words back to them word-for-word, as this can feel mechanical and does not demonstrate true understanding',
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
+      'Records compiled only at the end of the project for the final account',
+      'Verbal records confirmed by the project manager at weekly meetings',
       'Proactive, contemporaneous record-keeping with early warning notices and compensation event documentation',
-      'Allowing pauses gives the speaker time to think and often encourages them to share more detail',
+      'Minimal record-keeping, relying on the site diary kept by the client',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2419,9 +2419,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'When writing an EICR observation, what is the correct approach?',
     options: [
-      'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
-      'Phone for urgent/complex/sensitive; email for formal records; text for brief time-sensitive coordination',
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
+      'Record a general impression of the installation without specifying locations',
+      'Describe the likely cause and recommend a specific remedial contractor',
+      'State your personal opinion of the original installer\'s competence',
       'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
     ] as const,
     correctAnswer: 3,
@@ -2437,9 +2437,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is the recommended approach to managing professional WhatsApp groups?',
     options: [
       'Keep groups focused with clear purposes, separate social chat from work coordination',
-      'Build genuine rapport through professionalism, reliability, clear communication and authentic common ground',
-      'Avoiding expressing your own opinions or needs to prevent conflict',
-      'Confirmation that the message has been received and understood as intended',
+      'Add every site contact to a single group so no one is ever left out',
+      'Allow social and work messages to mix freely to build team rapport',
+      'Send messages at any hour, since site work runs to unpredictable schedules',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2453,10 +2453,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'What is the key principle behind using active voice in professional writing?',
     options: [
-      'Confirmation that the message has been received and understood as intended',
+      'It makes writing sound more formal by hiding who performed the action',
       'Clearly identifies who did what, making writing more direct and accountable',
-      'To encourage the person to examine the basis for their belief and think more critically',
-      'Provide contact details, role, company information and relevant accreditations',
+      'It allows longer sentences that include more technical detail',
+      'It removes the need to name the person responsible for an action',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2470,10 +2470,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'How should a variation be recorded in writing?',
     options: [
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
-      'Base agreements on fair, independent standards rather than pressure or willpower',
+      'Noted verbally on site and confirmed only if a dispute later arises',
+      'Recorded after the work is finished so the final cost can be confirmed',
       'Documented with variation description, reason, cost implication and written agreement before work is carried out',
-      'Verbal encouragement from a respected person can strengthen belief in your abilities, though weaker than mastery experience',
+      'Added to the original quote without informing the client of the change',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2488,9 +2488,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Under GDPR, what must a tradesperson consider before sharing site photographs showing identifiable individuals?',
     options: [
-      'Seek first to understand, then to be understood',
-      'Calmly repeating your position without getting drawn into arguments',
-      'To convert the sender\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s message into a transmittable signal',
+      'GDPR does not apply to photographs, only to written records',
+      'They only need consent if the photograph is sold for commercial gain',
+      'Consent is unnecessary as long as faces are slightly out of focus',
       'They need consent, a legitimate purpose, and secure storage',
     ] as const,
     correctAnswer: 3,
@@ -2506,9 +2506,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is the tone spectrum in professional email communication?',
     options: [
       'A range from very formal to semi-formal to informal, matched to context',
-      'Clear, purposeful, respectful of working hours, and separate from social chat',
-      'A receiver\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
-      'Avoiding expressing your own opinions or needs to prevent conflict',
+      'A fixed formal tone that should be used for every email regardless of recipient',
+      'The order in which recipients are listed in the To and Cc fields',
+      'The volume and emphasis applied when an email is read aloud',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2522,10 +2522,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'When writing a domestic rewire quote, which exclusion is most important to state?',
     options: [
-      'The medium through which a message travels from sender to receiver',
+      'The cost of the electrical certificate issued on completion',
       'Making good of plaster, decoration and disposal of old materials',
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
+      'The labour rate charged for the qualified electrician',
+      'The manufacturer of the cable and accessories to be used',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2539,10 +2539,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'Why is ambiguity dangerous in written agreements?',
     options: [
-      'They need consent, a legitimate purpose, and secure storage',
-      'To express feelings and needs without blaming or accusing the other person',
-      'Creates room for different interpretations, leading to disputes',
-      'Clearly and concisely summarise the purpose or action required',
+      'It makes the agreement appear less professional to the client',
+      'It increases the length of the document unnecessarily',
+      'It creates room for different interpretations, leading to disputes',
+      'It requires the agreement to be witnessed by a solicitor',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2556,9 +2556,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What is the decision framework for choosing between phone, text and email?',
     options: [
-      'The cause, affected trades, duration, instructions received, and mitigation actions taken',
-      'Build genuine rapport through professionalism, reliability, clear communication and authentic common ground',
-      'If you feel emotional about an email, wait 24 hours before sending your reply',
+      'Text for everything urgent; phone only for social calls; email never for clients',
+      'Email for everything, as it always provides the clearest written record',
+      'Phone for routine updates; text for formal records; email for quick coordination',
       'Phone for urgent/complex/sensitive; email for formal records; text for brief time-sensitive coordination',
     ] as const,
     correctAnswer: 3,
@@ -2574,9 +2574,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What language should be avoided in professional quotes?',
     options: [
       'Vague terms like "approximately", "if required", "as necessary" without further definition',
-      'Allowing pauses gives the speaker time to think and often encourages them to share more detail',
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
-      'The medium through which a message travels from sender to receiver',
+      'Specific quantities such as "12 double socket outlets" or "per drawing E-01"',
+      'Clear payment terms stating the deposit and final balance amounts',
+      'Named British Standards and regulation numbers for the work to be done',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2590,10 +2590,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'What information should a site diary include when recording a delay?',
     options: [
-      'Only use reply-all when your response is genuinely relevant to everyone on the thread',
+      'A note that a delay occurred, with no further detail required',
       'The cause, affected trades, duration, instructions received, and mitigation actions taken',
-      'Acknowledge receipt briefly, then draft a measured response after you have calmed down',
-      'Making good of plaster, decoration and disposal of old materials',
+      'An estimate of who was at fault and how much compensation is owed',
+      'The names of all workers who were sent home because of the delay',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2607,10 +2607,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'When is it NOT appropriate to communicate by email?',
     options: [
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
-      'Mentally noting points to return to later rather than jumping in immediately',
+      'Confirming the agreed start date for a scheduled job',
+      'Sending a copy of a completed certificate to a client',
       'Delivering bad news about a significant project problem requiring immediate discussion',
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
+      'Providing a written summary of a meeting for the record',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2625,9 +2625,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A client sends an angry email about a delay. Following the 24-hour rule, what should you do?',
     options: [
-      'Clearly identifies who did what, making writing more direct and accountable',
-      'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
-      'It demonstrates engagement and helps ensure the listener has correctly understood the message',
+      'Reply immediately with a detailed defence of your position',
+      'Ignore the email until the client raises the issue again',
+      'Forward the email to your team and let them decide how to respond',
       'Acknowledge receipt briefly, then draft a measured response after you have calmed down',
     ] as const,
     correctAnswer: 3,
@@ -2644,9 +2644,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A scope dispute arises where the quote states "electrical installation as per specification E-001." What is the writing error?',
     options: [
       'Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified',
-      'The original model was linear and one-directional, with no mechanism for the receiver to confirm understanding',
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'Personal data on any device is subject to GDPR, and a lost phone could result in a data breach with ICO fines',
+      'The quote uses a specification reference instead of a fixed total price',
+      'The specification number should appear in the email subject line as well',
+      'The quote fails to state the validity period of the specification',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2661,10 +2661,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the critical difference between "Plumber did a poor job" versus "Plumber first fix in kitchen did not comply with building regulations — notified site manager at 14:30" in a site diary?',
     options: [
-      'Send via a dedicated project channel with permission, including context about what the photo shows',
+      'The first is shorter and therefore quicker to write up at the end of the day',
       'The first is subjective opinion; the second is factual, specific, time-stamped and records action taken',
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
-      'Ensuring the intended message is received, understood, and acted upon correctly',
+      'The first names an individual while the second avoids naming anyone',
+      'The first is written in the passive voice; the second in the active voice',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2679,10 +2679,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician shares a progress photo showing a client address on public social media. What issues does this create?',
     options: [
-      '"So what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re saying is that the circuit needs to be re-routed to avoid the water pipe?"',
-      'A record of the topic, date, presenter, attendee signatures and actions agreed',
+      'It breaches copyright on the building design shown in the photo',
+      'It invalidates the electrical certificate for the installation',
       'Potential GDPR breach, security risk (advertising unoccupied property), and privacy violation without consent',
-      'Parent-to-Child, with the manager adopting a Nurturing (or Controlling) Parent role',
+      'It exposes the electrician to liability under the Building Regulations',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2697,9 +2697,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Under NEC contracts, what is the consequence of failing to issue an early warning notice?',
     options: [
-      'Mentally preparing your response while the speaker is still talking',
-      'Ensuring the intended message is received, understood, and acted upon correctly',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
+      'The contract is automatically terminated for breach by the contractor',
+      'The project manager must personally pay any resulting additional costs',
+      'The early warning can be issued retrospectively with no penalty',
       'You may lose the right to claim additional time or money for the resulting event',
     ] as const,
     correctAnswer: 3,
@@ -2716,9 +2716,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'How should a professional email handle a chain where the topic has evolved significantly?',
     options: [
       'Start a new email with a new subject line reflecting the current topic',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
-      'Base agreements on fair, independent standards rather than pressure or willpower',
+      'Keep replying on the same chain so all history stays in one place',
+      'Delete the old chain and start again with no reference to it',
+      'Change the subject line on the existing chain but keep replying to it',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2733,10 +2733,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A commercial tender asks for a "fully inclusive price." What is the safest approach?',
     options: [
-      'Lower your voice, maintain calm body language, use their name, and acknowledge their frustration before addressing the issue',
+      'Submit the lowest possible figure and add charges later as issues arise',
       'Provide the price but clearly define what "fully inclusive" means by listing all inclusions and exclusions',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
-      'Mentally noting points to return to later rather than jumping in immediately',
+      'Decline to quote until the tender defines "fully inclusive" itself',
+      'Quote a high figure to cover every conceivable cost without itemising',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2751,10 +2751,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important to keep customer data secure on personal mobile phones under GDPR?',
     options: [
-      'Keep groups focused with clear purposes, separate social chat from work coordination',
-      'To encourage the person to examine the basis for their belief and think more critically',
+      'GDPR only applies to data held on company-owned computers, not phones',
+      'Customer data on a phone is exempt from GDPR if the phone is password-protected',
       'Personal data on any device is subject to GDPR, and a lost phone could result in a data breach with ICO fines',
-      'Opening hook, single-topic body with key points, close with action or understanding check',
+      'GDPR allows unlimited storage of customer data as long as it is never shared',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2769,9 +2769,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A subcontractor texts "yeah that price is fine just crack on." Is this sufficient acceptance of a quote?',
     options: [
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
-      'Because the speaker believes they have been heard and understood when they have not, leading to false confidence in the communication',
-      'Ranking fears from least to most anxiety-provoking and working through them progressively',
+      'No, a text message can never form a binding acceptance of a quote',
+      'Yes, any informal agreement is fully sufficient and needs no follow-up',
+      'No, acceptance is only valid if the client signs a printed copy in person',
       'Potentially, but it creates risk — follow up with formal written confirmation referencing the specific quote',
     ] as const,
     correctAnswer: 3,
@@ -2787,9 +2787,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is the recommended approach when a client requests a mid-project change?',
     options: [
       'Document the change, confirm cost and time implications, obtain written agreement before proceeding, and update the site diary',
-      'Address the safety issue directly using facts and I-messages, document it, and escalate formally if behaviour continues regardless of relationships',
-      'Potential GDPR breach, security risk (advertising unoccupied property), and privacy violation without consent',
-      'The transition from supervised apprentice to autonomous professional creates a gap between objective competence and subjective confidence',
+      'Carry out the change immediately to keep the client happy and invoice for it later',
+      'Refuse all mid-project changes as a matter of policy to avoid disputes',
+      'Make a verbal note of the change and rely on goodwill if a dispute arises',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2803,10 +2803,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: 'Best practice for sharing progress photos with clients digitally is:',
     options: [
-      'Lower your voice, maintain calm body language, use their name, and acknowledge their frustration before addressing the issue',
+      'Post them on a public social media page so the client can find them easily',
       'Send via a dedicated project channel with permission, including context about what the photo shows',
-      'Gradual, step-by-step exposure to increasingly challenging speaking situations',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
+      'Send them with no caption so the client forms their own impression',
+      'Share them in a group chat with all of your other clients at once',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2820,10 +2820,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: 'What makes a WhatsApp message professional in a construction context?',
     options: [
-      'Avoiding expressing your own opinions or needs to prevent conflict',
-      'A receiver\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
+      'Sending several short messages in quick succession to convey urgency',
+      'Using plenty of abbreviations and emojis to keep the tone friendly',
       'Clear, purposeful, respectful of working hours, and separate from social chat',
-      'Clearly identifies who did what, making writing more direct and accountable',
+      'Sending messages at any time of day or night so nothing is forgotten',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2837,9 +2837,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'What is the recommended date format for site diary entries?',
     options: [
-      'Competence and confidence reinforce each other in a positive cycle',
-      '"Did you isolate the supply before starting work?"',
-      'Imposter syndrome as described by Clance and Imes (1978)',
+      'A numeric-only format such as "03/04/25" to save space',
+      'The day of the week only, such as "Tuesday morning"',
+      'A relative reference such as "two days after the delivery"',
       'Unambiguous format such as "14 March 2025" with 24-hour clock',
     ] as const,
     correctAnswer: 3,
@@ -2856,9 +2856,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A colleague posts a photo of defective work by another contractor on a public forum, naming the company. What issues could this create?',
     options: [
       'Potential defamation, damage to professional relationships, GDPR breach if individuals identifiable, and breach of site confidentiality',
-      'It starts with broad, open questions and progressively narrows to specific, closed questions to focus the conversation',
-      'An electrician uses the term "earth continuity conductor" while the plumber thinks they mean a physical earth wire to the ground',
-      'A question that suggests the desired answer, which can manipulate the response and prevent the speaker from sharing their genuine perspective',
+      'No issues at all, since the defective work is a matter of public interest',
+      'Only a minor etiquette breach with no legal or professional consequences',
+      'A breach of copyright in the photograph but nothing more serious',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2876,10 +2876,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'Who developed "principled negotiation" in the book "Getting to Yes"?',
     options: [
-      'A complementary Adult-to-Adult transaction',
+      'Robert Cialdini and Sharon Bower',
       'Roger Fisher, William Ury and Bruce Patton',
-      'Ignoring — making no effort to listen at all',
-      'Identifying the specific unhelpful thought',
+      'Stephen Covey and Eric Berne',
+      'Albert Bandura and Carol Dweck',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2961,10 +2961,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'What is the "broken record" technique?',
     options: [
-      'High anxiety with physical symptoms such as trembling and nausea',
-      'To express feelings and needs without blaming or accusing the other person',
+      'Raising your voice gradually until the other person backs down',
+      'Acknowledging any truth in criticism without conceding your position',
       'Calmly repeating your position without getting drawn into arguments',
-      'Delivering bad news about a significant project problem requiring immediate discussion',
+      'Restating the other person\'s point back to them to show you understand',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2978,9 +2978,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'What is "fogging" as an assertive communication technique?',
     options: [
-      'To encourage the person to examine the basis for their belief and think more critically',
-      'Mentally noting points to return to later rather than jumping in immediately',
-      'Hearing only the parts of a message that interest you or confirm your existing views',
+      'Deliberately giving vague answers so the other person loses their thread',
+      'Repeating your position calmly each time the other person pushes back',
+      'Deflecting criticism by immediately raising a complaint of your own',
       'Agreeing with the truth in criticism without becoming defensive, which defuses aggression',
     ] as const,
     correctAnswer: 3,
@@ -3013,10 +3013,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What is the difference between a "position" and an "interest" in negotiation?',
     options: [
-      'Two quick inhales through the nose followed by a long exhale through the mouth',
+      'A position is the opening offer; an interest is the final agreed price',
       'A position is what someone says they want; an interest is why they want it',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
-      'Parent-to-Child, with the manager adopting a Nurturing (or Controlling) Parent role',
+      'A position is your walkaway point; an interest is the other party\'s walkaway point',
+      'A position is a written demand; an interest is a verbal one',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3031,7 +3031,7 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'Thomas Gordon developed which communication framework?',
     options: [
       'Cognitive Behavioural Therapy',
-      'General Data Protection Regulation',
+      'The Shannon-Weaver transmission model',
       'I-messages versus You-messages',
       'Separate the people from the problem',
     ] as const,
@@ -3047,9 +3047,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'What is the preparation framework for a difficult conversation?',
     options: [
-      'Hearing is a passive physical process; listening is an active mental process of interpreting and understanding',
-      'Provide contact details, role, company information and relevant accreditations',
-      'Making small verbal acknowledgements like "mm-hmm," "I see," or nodding to show you are engaged',
+      'Rehearse a forceful opening so the other person knows you mean business',
+      'Avoid planning so the conversation stays natural and spontaneous',
+      'Wait until tempers flare so the issue is dealt with in the moment',
       'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
     ] as const,
     correctAnswer: 3,
@@ -3065,9 +3065,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is "anchoring" in negotiation?',
     options: [
       'The first number mentioned tends to influence the final outcome',
-      'Gradual, step-by-step exposure to increasingly challenging speaking situations',
-      'Confirmation that the message has been received and understood as intended',
-      'A position is what someone says they want; an interest is why they want it',
+      'Refusing to state any figure until the other party commits first',
+      'Repeating your position calmly until the other party concedes',
+      'Splitting the difference between two offers to reach a quick deal',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3081,10 +3081,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'De-escalation techniques are primarily designed to:',
     options: [
-      'There is no opportunity for the receiver to ask questions or provide feedback',
+      'Win the argument quickly before the other person can respond',
       'Reduce emotional intensity so productive conversation can occur',
-      'Mastery experiences — succeeding at a task yourself',
-      'High anxiety with physical symptoms such as trembling and nausea',
+      'Establish who is at fault before the conversation continues',
+      'End the conversation as fast as possible to avoid confrontation',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3115,9 +3115,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'Using DESC, how would you address a consistently late subcontractor?',
     options: [
-      'Acknowledge their concern, explore interests, use objective criteria: "I understand price is important. What does that quote include? My price is based on NICEIC standards and full certification"',
-      'Communication of residual risks is required when hazards cannot be eliminated or reduced through design, forming part of the "inform" step after designing out risk',
-      'It overgeneralises Mehrabian\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s findings, which only apply to the communication of feelings and attitudes when verbal and non-verbal cues are incongruent',
+      '"You are always letting the team down — sort your timekeeping out or you are off the job."',
+      '"It does not really matter, but try to be a bit earlier in future if you can."',
+      '"Everyone has noticed you turning up late — it is becoming a bit of a joke."',
       '"Describe: You have arrived after 09:00 on four occasions. Express: This causes concern as it delays the programme. Specify: I need you on site by 08:00. Consequences: This keeps the project on track"',
     ] as const,
     correctAnswer: 3,
@@ -3133,9 +3133,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What does "invent options for mutual gain" mean in principled negotiation?',
     options: [
       'Look for creative solutions where both parties get something they value',
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'Scope of work, exclusions, price, validity period and payment terms',
-      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
+      'Make the first offer so high that any compromise still favours you',
+      'Identify your walkaway point before the negotiation begins',
+      'Stick firmly to your opening position until the other side concedes',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3149,10 +3149,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: 'How does knowing your BATNA strengthen your negotiation position?',
     options: [
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'Personal data on any device is subject to GDPR, and a lost phone could result in a data breach with ICO fines',
-      'Avoiding expressing your own opinions or needs to prevent conflict',
+      'It guarantees the other party will accept your first offer',
+      'It gives you confidence to walk away from a bad deal because you know your best alternative',
+      'It removes the need to prepare any objective criteria in advance',
+      'It allows you to anchor the discussion with an extreme opening figure',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3166,10 +3166,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is the "social proof" principle of influence?',
     options: [
-      'Parent-to-Child, with the manager adopting a Nurturing (or Controlling) Parent role',
-      'Competence and confidence reinforce each other in a positive cycle',
+      'People comply more with those who hold recognised credentials',
+      'People feel obliged to return a favour they have been given',
       'People follow the behaviour of others, especially in uncertainty',
-      'It signals genuine interest and attentiveness to the speaker',
+      'People value something more when it appears to be in short supply',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3183,9 +3183,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'How should you deliver bad news about a cost overrun?',
     options: [
-      'Send via a dedicated project channel with permission, including context about what the photo shows',
-      'A deliberate effort to fully concentrate on, understand, and respond to a speaker',
-      'There is no opportunity for the receiver to ask questions or provide feedback',
+      'Delay telling the client until the work is finished and the bill is final',
+      'Bury the extra cost in the final invoice without flagging it in advance',
+      'Email a brief note so you do not have to discuss it face to face',
       'Be direct and honest, explain what happened and why, present cost impact clearly, and offer solutions',
     ] as const,
     correctAnswer: 3,
@@ -3201,9 +3201,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is "framing" in negotiation?',
     options: [
       'Presenting information in a way that emphasises different aspects to influence perception',
-      'Allowing pauses gives the speaker time to think and often encourages them to share more detail',
-      'Personal data on any device is subject to GDPR, and a lost phone could result in a data breach with ICO fines',
-      'The overt (social) message differs from the covert (psychological) message, creating hidden agendas',
+      'Setting the first figure to anchor the discussion in your favour',
+      'Knowingly making a false statement to gain an advantage',
+      'Repeating your position calmly until the other party gives way',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3217,10 +3217,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'When addressing unsafe behaviour on site, what is the recommended approach?',
     options: [
-      'De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue',
+      'Call it out loudly in front of the whole team to set an example',
       'Address privately, describe the specific behaviour factually, explain the risk, and agree the correct procedure',
-      '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
-      'When the matter is urgent, complex, sensitive, or requires back-and-forth discussion',
+      'Ignore it the first time and only act if the behaviour is repeated',
+      'Report it straight to the HSE without speaking to the worker first',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3234,10 +3234,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'What does "insist on objective criteria" mean in principled negotiation?',
     options: [
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'Mirroring back the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings and content to show understanding',
+      'Holding firmly to your stated position until the other party gives way',
+      'Knowing your best alternative so you can walk away if needed',
       'Base agreements on fair, independent standards rather than pressure or willpower',
-      'Eye contact, because norms for direct eye contact vary significantly across cultures',
+      'Separating the people from the problem to keep emotions out of it',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3249,11 +3249,11 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 183,
-    question: 'Which Cialdini principle explains "commitment and consistency"?',
+    question: 'Which statement best describes Cialdini\'s "commitment and consistency" principle?',
     options: [
-      'Ask relevant follow-up questions to deepen understanding and show continued interest',
-      'Challenge the thought by examining evidence: "I am qualified, I was asked because of my knowledge, and the audience wants to learn"',
-      'Acknowledging the emotional impact before attempting to gather factual details about the incident',
+      'People comply more readily with requests from those they like',
+      'People value an offer more highly when it is scarce or time-limited',
+      'People defer to those who display recognised expertise and credentials',
       'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
     ] as const,
     correctAnswer: 3,
@@ -3270,9 +3270,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'What is the difference between assertive and aggressive communication when chasing an unpaid invoice?',
     options: [
       'Assertive states rights and facts calmly; aggressive attacks the person',
-      'Vague terms like "approximately", "if required", "as necessary" without further definition',
-      'Ensuring the intended message is received, understood, and acted upon correctly',
-      'Imposter syndrome as described by Clance and Imes (1978)',
+      'Assertive avoids mentioning the debt; aggressive states it plainly',
+      'Assertive is always done in writing; aggressive is always done by phone',
+      'Assertive gives in to keep the client; aggressive holds firm on the facts',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3287,10 +3287,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How would you convert "You never give me enough time" into a Thomas Gordon I-message?',
     options: [
-      'Address privately, describe the specific behaviour factually, explain the risk, and agree the correct procedure',
+      '"You need to start giving me realistic deadlines from now on."',
       '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
-      'Personal data on any device is subject to GDPR, and a lost phone could result in a data breach with ICO fines',
-      'De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue',
+      '"Why do you always set deadlines that are impossible to meet?"',
+      '"Everyone on the team thinks the deadlines you set are unreasonable."',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3304,10 +3304,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'What is "saying no professionally"?',
     options: [
-      'Making small verbal acknowledgements like "mm-hmm," "I see," or nodding to show you are engaged',
-      'Capture attention with a real example, statistic or question that makes the topic personally relevant',
+      'Avoiding a direct answer in the hope the request quietly goes away',
+      'Agreeing reluctantly to avoid any awkwardness with the other person',
       'Declining clearly and respectfully, with a brief explanation and where possible an alternative',
-      'Hearing only the parts of a message that interest you or confirm your existing views',
+      'Refusing bluntly and ending the conversation to make your position clear',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3322,9 +3322,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Cialdini "liking" principle suggests people agree more with those they like. How is this applied ethically?',
     options: [
-      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
-      '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
+      'Flatter the client repeatedly so they feel obliged to choose you',
+      'Pretend to share the client\'s every opinion to win them over',
+      'Mirror the client\'s accent and mannerisms to seem more similar',
       'Build genuine rapport through professionalism, reliability, clear communication and authentic common ground',
     ] as const,
     correctAnswer: 3,
@@ -3339,10 +3339,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 188,
     question: 'What is the key danger of positional bargaining versus principled negotiation?',
     options: [
-      'Focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
-      'The first is subjective opinion; the second is factual, specific, time-stamped and records action taken',
-      'Repeating the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s exact words back to them word-for-word, as this can feel mechanical and does not demonstrate true understanding',
-      'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
+      'It focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
+      'It always takes far longer to reach any agreement at all',
+      'It can only be used when both parties already trust each other',
+      'It relies entirely on objective criteria and ignores underlying interests',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3357,10 +3357,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which de-escalation technique is most effective when someone is shouting at you on site?',
     options: [
-      'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
+      'Raise your own voice to match theirs so you are not drowned out',
       'Lower your voice, maintain calm body language, use their name, and acknowledge their frustration before addressing the issue',
-      'Gives you confidence to walk away from a bad deal because you know your best alternative',
-      'Focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
+      'Walk away immediately and refuse to speak until they apologise',
+      'Stand your ground and list the facts loudly until they stop shouting',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3375,10 +3375,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A client says "Your price is too high — my mate would do it for half." Using principled negotiation, what is the best response?',
     options: [
-      'Empathetic listening seeks to understand the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings and perspective from their frame of reference, not just the factual content',
-      'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
+      'Immediately drop your price to match the mate\'s figure to win the work',
+      'Tell the client their mate clearly is not a properly qualified electrician',
       'Acknowledge their concern, explore interests, use objective criteria: "I understand price is important. What does that quote include? My price is based on NICEIC standards and full certification"',
-      'Broad questions first allow the witness to recall events in their own way without being influenced by specific prompts, preserving the accuracy and completeness of their account',
+      'End the conversation, since a client who haggles is not worth the work',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3393,9 +3393,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician needs to tell a client a rewire will cost 30% more due to unforeseen asbestos. Using DESC and principled negotiation, what approach is best?',
     options: [
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re caught between wanting to meet the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s expectations and knowing the timeline isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t realistic — that must be really frustrating.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
-      'Identify and address the most impactful barrier first, then systematically reduce others using channel selection, language adaptation, and emotional awareness',
-      'Empathetic listening to acknowledge feelings, SOLER body language to show presence, reflective statements to validate, and clear signposting to appropriate support services',
+      'Carry out the asbestos removal first and add the cost to the final bill without warning',
+      'Quietly absorb the extra cost yourself to avoid an awkward conversation',
+      'Pause the job and tell the client you cannot continue until they accept the increase',
       'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
     ] as const,
     correctAnswer: 3,
@@ -3412,9 +3412,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A main contractor pressures you to reduce price by 15% or lose the work. Your BATNA is two other available projects. How does this inform your approach?',
     options: [
       'Evaluate whether the reduced price is still better than your BATNA. If not, decline confidently. If close, negotiate for other value (better payment terms, future work)',
-      'Identify and address the most impactful barrier first, then systematically reduce others using channel selection, language adaptation, and emotional awareness',
-      'Because the rule only applies to the communication of feelings and attitudes with incongruent messages, not to factual information',
-      'It starts with broad, open questions and progressively narrows to specific, closed questions to focus the conversation',
+      'Accept the 15% reduction immediately to secure the relationship for the future',
+      'Refuse to discuss price at all and walk away from the negotiation entirely',
+      'Counter with a 15% increase to anchor the discussion back in your favour',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3428,10 +3428,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'How can Cialdini "scarcity" principle be applied ethically when presenting a quote?',
     options: [
-      'The first is subjective opinion; the second is factual, specific, time-stamped and records action taken',
+      'Invent a fake deadline to pressure the client into deciding quickly',
       'Honestly communicate genuine constraints: "My next available start is 6 weeks out, but I could fit you in sooner if we confirm by Friday"',
-      'The original model was linear and one-directional, with no mechanism for the receiver to confirm understanding',
-      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
+      'Claim materials are about to run out when stock is actually plentiful',
+      'Tell every client they are your last available slot to create urgency',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3446,10 +3446,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'You need to discuss persistent late payment with a long-standing client. Combining I-messages and DESC, what is most effective?',
     options: [
-      'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
-      'The Shannon-Weaver model provides a useful structural framework but must be supplemented with interpersonal elements like feedback, context, and shared meaning to fully represent human communication',
+      '"You are always paying late and it is really starting to take the mick."',
+      '"Could you possibly try to pay a bit sooner next time, if that is alright?"',
       'Describe: "The last three invoices were paid 30+ days late." Express: "I value our relationship, but late payment creates cash flow difficulties." Specify: "I need invoices paid within 14-day terms." Consequences: "This allows me to continue prioritising your work"',
-      'Separate person from problem, describe instances factually (DESC), express impact using I-messages, specify a solution like written instruction confirmation, and frame consequence as mutual interest',
+      '"If the next invoice is late I will have to stop working for you altogether."',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3464,9 +3464,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In negotiation, a party reveals their interest is cash flow certainty rather than lowest price. What options for mutual gain could you explore?',
     options: [
-      'Proactive, contemporaneous record-keeping with early warning notices and compensation event documentation',
-      'To communicate foreseeable risks that cannot be designed out to those who need the information',
-      'Documented with variation description, reason, cost implication and written agreement before work is carried out',
+      'Offer the lowest possible headline price and absorb any cost increases yourself',
+      'Insist on a single lump-sum payment on completion to keep things simple',
+      'Refuse to discuss payment structure until the scope is fully agreed',
       'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
     ] as const,
     correctAnswer: 3,
@@ -3480,12 +3480,12 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
   {
     id: 196,
     question:
-      'You observe an apprentice (the site manager child) performing unsafe cable terminations. How should you approach this?',
+      'You observe an apprentice, who happens to be the site manager\'s son, performing unsafe cable terminations. How should you approach this?',
     options: [
       'Address the safety issue directly using facts and I-messages, document it, and escalate formally if behaviour continues regardless of relationships',
-      'Repeating the speaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s exact words back to them word-for-word, as this can feel mechanical and does not demonstrate true understanding',
-      'Proactive, contemporaneous record-keeping with early warning notices and compensation event documentation',
-      'Honestly communicate genuine constraints: "My next available start is 6 weeks out, but I could fit you in sooner if we confirm by Friday"',
+      'Say nothing, since raising it could create friction with the site manager',
+      'Mention it casually to the site manager and leave them to deal with it',
+      'Wait to see whether anyone is harmed before deciding whether to act',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3499,10 +3499,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: 'How do BATNA and the "zone of possible agreement" (ZOPA) work together?',
     options: [
-      'Empathetic listening to acknowledge feelings, SOLER body language to show presence, reflective statements to validate, and clear signposting to appropriate support services',
+      'The ZOPA replaces the need for a BATNA once negotiations begin',
       'Your BATNA sets your walkaway point, the other party BATNA sets theirs, and the ZOPA is the range between where agreement is possible',
-      'Capture attention with a real example, statistic or question that makes the topic personally relevant',
-      'Proactive, contemporaneous record-keeping with early warning notices and compensation event documentation',
+      'The BATNA is the opening offer and the ZOPA is the final agreed figure',
+      'A strong BATNA always guarantees a wide ZOPA in your favour',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3517,10 +3517,10 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A client becomes aggressive about additional costs, shouting and pointing. Combining de-escalation and assertive communication, what is the correct sequence?',
     options: [
-      'Providing a contemporaneous record of events, progress, weather, labour and issues on site',
-      'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
+      'Present the facts and figures immediately to correct their misunderstanding',
+      'Match their energy and assert your position firmly until they calm down',
       'De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue',
-      'The response comes from a different ego state than the one addressed, causing communication breakdown',
+      'Walk away at once and refuse to continue until they put it in writing',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3554,9 +3554,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A foreman needs to confront a project manager about contradictory instructions causing rework. Using principled negotiation, I-messages and DESC together, which approach is best?',
     options: [
       'Separate person from problem, describe instances factually (DESC), express impact using I-messages, specify a solution like written instruction confirmation, and frame consequence as mutual interest',
-      'The electrician is probably solving problems FOR team members rather than helping them think through solutions; they should use Socratic questions to guide self-discovery and ownership',
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re caught between wanting to meet the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s expectations and knowing the timeline isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t realistic — that must be really frustrating.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
-      'It overgeneralises Mehrabian\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s findings, which only apply to the communication of feelings and attitudes when verbal and non-verbal cues are incongruent',
+      'Raise it loudly in the next site meeting so the whole team hears the concern',
+      'Send a blunt email listing every contradiction and copy in senior management',
+      'Say nothing and absorb the rework cost to avoid challenging a superior',
     ] as const,
     correctAnswer: 0,
     explanation:

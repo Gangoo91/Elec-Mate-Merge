@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     question:
       'What is the FIRST priority in the three-tier hierarchy for managing confined space risk?',
     options: [
-      'Avoid entry to the confined space entirely — find an alternative way to do the work',
+      'Avoid entry entirely — find another way to do the work',
       'Put a safe system of work in place so the entry can go ahead',
       'Ensure emergency rescue arrangements are ready before anyone enters',
-      'Carry out atmospheric monitoring inside the space',
+      'Carry out atmospheric monitoring inside the space before entry',
     ],
     correctIndex: 0,
     explanation:
@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'dynamic-risk-assessment',
     question: 'Why is a dynamic risk assessment important during confined space entry?',
     options: [
-      'Because conditions inside a confined space can change rapidly and without warning during the work',
-      'Because the initial risk assessment is only valid for one calendar year',
-      'Because dynamic assessments are cheaper than written assessments',
-      'Because the HSE requires a new paper form to be completed every 30 minutes',
+      'Because the initial written assessment is only valid for one calendar year',
+      'Because conditions inside can change rapidly and without warning',
+      'Because dynamic assessments cost less to produce than written ones',
+      'Because the HSE requires a fresh paper form every thirty minutes',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Conditions inside a confined space can change rapidly — for example, an oxygen-depleting process may accelerate, a toxic gas may seep in from surrounding ground, or work activities (such as using adhesives or solvents) may introduce new hazards. A dynamic risk assessment means the entrants and the top person continuously monitor conditions, reassess the risks, and are prepared to evacuate immediately if anything changes.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'review-triggers',
     question: 'Which of the following should trigger a review of a confined space risk assessment?',
     options: [
-      'All of the following: a change in conditions, a near miss, new information about the space, or before each new entry',
-      'Only a fatality or serious injury',
-      'Only when the HSE issues new regulations',
-      'Only at the annual health and safety audit',
+      'Only a fatality or serious injury arising from an entry',
+      'Only when the HSE publishes new confined space regulations',
+      'A change in conditions, a near miss, or each new entry',
+      'Only at the scheduled annual health and safety audit',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'A confined space risk assessment must be reviewed whenever there is a change in conditions (e.g. weather, water ingress, process changes), after any near miss or incident, when new information about the space becomes available (e.g. updated survey data), and before each new entry — because the space may have changed since the last entry. Waiting for a fatality, a regulatory change, or an annual audit is far too late.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why is a generic risk assessment insufficient for confined space work?',
     options: [
-      'Because generic assessments are not recognised by the HSE',
-      'Because every confined space has unique hazards, conditions, and access requirements that must be individually assessed',
-      'Because generic assessments are too expensive to produce',
-      'Because generic assessments can only be used for office environments',
+      'Because each space has unique hazards that must be individually assessed',
+      'Because generic assessments are not recognised in law by the HSE',
+      'Because generic assessments are too expensive for most firms to produce',
+      'Because generic assessments may only be used for office environments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Every confined space is different — it has its own atmospheric hazards, physical layout, access restrictions, and environmental conditions. A generic assessment cannot capture these unique factors. The Confined Spaces Regulations 1997 require a risk assessment specific to the particular space, task, and conditions at the time of entry.',
   },
@@ -107,9 +107,9 @@ const quizQuestions = [
     question: 'What is the purpose of a confined space register?',
     options: [
       'To record the names of all workers who have entered confined spaces',
-      'To provide a documented inventory of all confined spaces on site, their locations, hazards, and access requirements',
-      'To log the results of atmospheric monitoring during each entry',
-      'To track the expiry dates of gas detection equipment',
+      'To inventory every confined space on site, its location and its hazards',
+      'To log the results of atmospheric monitoring taken during each entry',
+      'To track the calibration expiry dates of all gas detection equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'In the three-tier hierarchy, what should you do if entry to a confined space cannot be avoided?',
     options: [
-      'Cancel the work entirely',
-      'Enter without precautions to complete the job quickly',
-      'Implement a safe system of work, with emergency arrangements in place before entry',
-      'Ask an apprentice to carry out the entry instead',
+      'Cancel the work entirely and abandon the task',
+      'Enter without precautions to complete the job more quickly',
+      'Implement a safe system of work with emergency arrangements ready',
+      'Ask an apprentice to carry out the entry on your behalf',
     ],
     correctAnswer: 2,
     explanation:
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is an atmospheric hazard in a confined space?',
     options: [
-      'Risk of engulfment by loose materials',
-      'Excessive noise from mechanical equipment',
-      'Oxygen depletion, toxic gas accumulation, or a flammable atmosphere',
-      'Risk of entrapment by moving machinery parts',
+      'Risk of engulfment by loose free-flowing materials such as grain',
+      'Excessive noise reflected from running mechanical equipment',
+      'Risk of entrapment by moving machinery parts inside the space',
+      'Oxygen depletion, toxic gas build-up or a flammable atmosphere',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Atmospheric hazards include oxygen depletion (below 19.5%), oxygen enrichment (above 23.5%), toxic gases (such as hydrogen sulphide, carbon monoxide, or methane), and flammable atmospheres. Engulfment and entrapment are physical hazards; noise is an environmental hazard.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     id: 5,
     question: "What is meant by 'dynamic risk assessment' during confined space entry?",
     options: [
+      'Continuous real-time monitoring and reassessment of conditions during the entry',
       'A risk assessment completed on a moving vehicle',
       'An assessment that is only valid for one shift',
-      'Continuous real-time monitoring and reassessment of conditions during the entry',
       'A risk assessment carried out by a team rather than an individual',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Dynamic risk assessment is the continuous, real-time process of monitoring conditions, watching for changes, and reassessing risks throughout the confined space entry. If conditions change (e.g. gas readings rise, ventilation fails, weather deteriorates), the dynamic assessment should trigger an immediate response — which may include evacuating the space.',
   },
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is an example of avoiding confined space entry (tier 1)?',
     options: [
-      'Sending two workers into the space instead of one',
-      'Using CCTV cameras to inspect the inside of a tank instead of sending a person in',
-      'Wearing a self-contained breathing apparatus during entry',
-      'Posting a top person at the entrance while the entrant works inside',
+      'Sending two workers into the space together instead of one',
+      'Using CCTV cameras to inspect a tank rather than entering it',
+      'Wearing self-contained breathing apparatus throughout the entry',
+      'Posting a top person at the entrance while the entrant works',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'At what point in the risk assessment process should emergency arrangements be decided?',
     options: [
-      'After the first entry has been completed',
-      'Before any person enters the confined space — as part of the pre-entry planning',
-      'Only after an incident has occurred',
-      'When the work is 50% complete',
+      'After the first entry into the space has been completed',
+      'Only once an incident or near miss has actually occurred',
+      'When the planned work is roughly fifty per cent complete',
+      'Before anyone enters the space, as part of pre-entry planning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Emergency arrangements must be decided and put in place BEFORE any person enters the confined space. This is a fundamental requirement of the Confined Spaces Regulations 1997 (Regulation 5) and the third tier of the hierarchy. No entry should ever take place without emergency rescue arrangements being ready, tested, and understood by all involved.',
   },

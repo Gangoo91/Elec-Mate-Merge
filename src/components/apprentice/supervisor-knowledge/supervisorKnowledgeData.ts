@@ -1313,12 +1313,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'quiz-004',
     question: 'You arrive at a new construction site. What is the first thing you should do?',
     options: [
-      'Find your supervisor and start working immediately',
       'Report to the main office, present your CSCS card, and attend the site induction',
+      'Find your supervisor and start working immediately',
       'Set up your tools in the nearest available space',
       'Introduce yourself to everyone on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Always report to the main office first. Present your CSCS card and certifications, attend the mandatory site induction, and get properly introduced to your supervisor before starting any work.',
     section: 'first-day',
@@ -1345,11 +1345,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: 'You discover a cable run damaged by another trade. What do you do first?',
     options: [
       'Repair it yourself to save time',
-      'Document the damage and inform your supervisor immediately',
       'Ignore it \u2014 it is not your responsibility',
       'Tell the other trade to fix it',
+      'Document the damage and inform your supervisor immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Always document damage with photos and report to your supervisor. Do not attempt repairs without authorisation, and do not ignore it as it could be a safety hazard.',
     section: 'when-things-go-wrong',
@@ -1359,12 +1359,12 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       'Your supervisor asks you to work on a circuit. You test it and find it is still live. What do you do?',
     options: [
-      'Work carefully around the live parts',
       'Refuse to work on it until it is properly isolated, and explain why',
+      'Work carefully around the live parts',
       'Ask a colleague to hold the cables out of the way',
       'Turn off the nearest switch and assume it is safe',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Never work on a live circuit. Follow the safe isolation procedure: identify, isolate, secure, test dead, and prove your tester. If pressured to skip safety, escalate to your training provider or HSE.',
     section: 'when-things-go-wrong',
@@ -1375,11 +1375,11 @@ export const quizQuestions: QuizQuestion[] = [
       'You have made a wiring error that could affect the safety of the installation. What is your best course of action?',
     options: [
       'Fix it quietly before anyone notices',
-      'Report it immediately to your supervisor and explain what happened',
       'Leave it and hope it is picked up during testing',
       'Ask a colleague to fix it for you',
+      'Report it immediately to your supervisor and explain what happened',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Always report safety-related mistakes immediately. Honesty builds trust with your supervisor and ensures the error is corrected properly. Hiding mistakes can lead to serious safety consequences.',
     section: 'when-things-go-wrong',
@@ -1391,12 +1391,12 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       'Your supervisor regularly makes comments that make you uncomfortable. What is the most appropriate response?',
     options: [
-      'Laugh along to fit in',
       'Set boundaries politely but firmly, and document incidents if they continue',
+      'Laugh along to fit in',
       'Ignore it \u2014 it is just how things are on site',
       'Retaliate with similar comments',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "You have the right to a respectful workplace. Set boundaries calmly: 'I am not comfortable with that kind of talk.' If it continues, document incidents and speak to your training provider. This is not 'being soft' \u2014 it is being professional.",
     section: 'difficult-people',
@@ -1424,11 +1424,11 @@ export const quizQuestions: QuizQuestion[] = [
       'You are asked to carry out work that is beyond your level of competence as an apprentice. What should you do?',
     options: [
       'Do it anyway to impress your supervisor',
-      'Politely explain your limitations and suggest working under supervision',
       'Refuse outright without explanation',
       'Pretend you know how and figure it out as you go',
+      'Politely explain your limitations and suggest working under supervision',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Never work beyond your competence level. Explain politely: 'I am only qualified to do X as an apprentice. I would be happy to help with this under supervision.' If pressured, contact your training provider.",
     section: 'your-rights',
@@ -1438,12 +1438,12 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       'You have not been paid correctly for three consecutive weeks. What steps should you take?',
     options: [
-      'Stop turning up to work until you are paid',
       'Keep records, raise it with your supervisor, then escalate to your training provider and ACAS if not resolved',
+      'Stop turning up to work until you are paid',
       'Accept it as part of being an apprentice',
       'Post about it online to shame the company',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Keep accurate records of hours worked and pay received. Check your contract, raise it with your supervisor, then your training provider. If still unresolved, ACAS provides free employment advice on 0300 123 1100.',
     section: 'your-rights',
@@ -1456,11 +1456,11 @@ export const quizQuestions: QuizQuestion[] = [
       'You want to learn about three-phase systems but have not covered them yet. How should you approach this?',
     options: [
       'Start working on a three-phase board to learn by doing',
-      'Ask your supervisor if you can observe and learn about three-phase work when the opportunity arises',
       'Wait until college covers it before mentioning it',
       'Watch YouTube videos and then tell your supervisor you know how to do it',
+      'Ask your supervisor if you can observe and learn about three-phase work when the opportunity arises',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Show initiative by asking your supervisor for learning opportunities. Suggest observing first, then assisting under supervision. This shows enthusiasm while respecting safety and your current competence level.',
     section: 'building-career',
@@ -1485,11 +1485,11 @@ export const quizQuestions: QuizQuestion[] = [
     question: 'You learn that BS 7671 has been amended. How should you stay up to date?',
     options: [
       'Wait until someone tells you what has changed',
-      'Subscribe to IET updates, attend CPD events, and discuss changes with your supervisor and training provider',
       'Buy a new copy of the regulations and read it cover to cover',
+      'Subscribe to IET updates, attend CPD events, and discuss changes with your supervisor and training provider',
       'It does not matter \u2014 your college will cover it eventually',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Staying current is your professional responsibility. Subscribe to IET updates, follow industry publications, attend CPD events, and discuss amendments with your supervisor. Make notes about changes in your regulations book.',
     section: 'building-career',

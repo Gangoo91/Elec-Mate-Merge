@@ -24,7 +24,7 @@ const inlineChecks = [
       'What is the minimum illuminance required at floor level on an escape route under BS EN 1838:2024?',
     options: [
       '0.5 lx — same as anti-panic open-area lighting.',
-      '1 lx minimum across the FULL WIDTH of the escape route at floor level, with edge exclusions: outer 0.5 m on routes wider than 2 m, outer ¼ width on routes 2 m or narrower. The 2013 centre-line + central-band wording is superseded.',
+      '1 lx minimum across the full width at floor level, with edge exclusions.',
       '5 lx — same as fire equipment vertical illuminance.',
       '15 lx — same as high-risk task area.',
     ],
@@ -38,7 +38,7 @@ const inlineChecks = [
       'BS EN 1838:2024 changed how illuminance is verified on escape routes. What is the 2024 requirement?',
     options: [
       'Still measured only on the centre line.',
-      'Verified across the FULL WIDTH of the route at floor level, with edge exclusions (outer 0.5 m on routes > 2 m, outer ¼ width on routes ≤ 2 m). The 2013 centre-line + central-band wording is superseded. The change reflects how people actually walk — spreading across the usable width, particularly when crowded.',
+      'Verified across the full width at floor level, with permitted edge exclusions.',
       'Now measured only at the wall edges.',
       'Reduced to 0.5 lx for wider routes.',
     ],
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'What is the maximum allowable max-to-min uniformity ratio along an escape route under BS EN 1838:2024?',
     options: [
-      '10:1.',
-      '40:1 maximum ratio of brightest point to darkest point along the route. Beyond 40:1 the eye cannot adapt rapidly enough as the occupant walks from a bright zone to a dark zone, producing temporary blindness. The ratio is measured along the length of the route within the non-excluded width.',
-      '100:1.',
-      'No limit — only the minimum matters.',
+      '10:1 — a tighter ratio than the standard requires.',
+      '40:1 — brightest to darkest point along the route.',
+      '100:1 — the brightest point may be up to 100 times the darkest.',
+      'No limit — only the 1 lx minimum matters.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Within how many seconds of mains failure must escape route lighting reach 50 % of its required illuminance, per BS EN 1838:2024?',
     options: [
-      '0.5 s.',
-      '5 s — 50 % of rated illuminance must be available within 5 seconds, with full rated illuminance available within 60 seconds at the latest. The 5 s figure is the response-time baseline for general escape route lighting and anti-panic lighting; high-risk task lighting tightens this to 0.5 s because of the safety consequences of operating machinery in darkness.',
-      '15 s.',
-      '60 s.',
+      '0.5 s — the high-risk task-area figure.',
+      '5 s — with full rated illuminance available within 60 s.',
+      '15 s — with full output within 60 s.',
+      '60 s — matching the full-output allowance.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,26 +82,26 @@ const quizQuestions = [
     question:
       'A new BS 5266-1:2025 design office wants escape route lighting in a 1.6 m wide corridor. What minimum illuminance is required and where is it measured?',
     options: [
-      '0.5 lx anywhere on the floor.',
-      '1 lx minimum, measured at floor level across the FULL WIDTH of the corridor with the outer ¼ width each side excluded (because the route is ≤ 2 m wide). The 1 lx figure is the BS EN 1838:2024 baseline for escape routes; the 2013 centre-line + central-band wording is superseded. Floor-level measurement is specified because the eye is looking down at trip hazards and walking surface as much as forward; floor illuminance is what governs safe passage.',
-      '5 lx vertical at the walls.',
-      '15 lx everywhere.',
+      '1 lx minimum, at floor level across the full width with the outer ¼ width each side excluded.',
+      '0.5 lx minimum, measured anywhere on the floor of the corridor.',
+      '5 lx minimum, measured vertically at the corridor walls.',
+      '15 lx minimum, measured uniformly across the whole corridor floor.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 1838:2024 §4.2 — escape route lighting minimum 1 lx across the full width at floor level, with edge exclusions (outer ¼ width each side on routes ≤ 2 m). The figure is the lower bound; designers usually target 1.5-2 lx to give margin against luminaire ageing, soiling, and battery depletion at end of duration.',
+      'BS EN 1838:2024 §4.2 — escape route lighting minimum 1 lx across the full width at floor level, with edge exclusions (outer ¼ width each side on routes ≤ 2 m, since the corridor is under 2 m). The 2013 centre-line + central-band wording is superseded. Floor-level measurement is specified because the eye is looking down at trip hazards as much as forward; floor illuminance governs safe passage. The figure is the lower bound; designers usually target 1.5-2 lx for margin against ageing, soiling, and battery depletion.',
   },
   {
     id: 2,
     question:
       'A wide foyer that forms part of an escape route widens from 1.5 m at one end to 4 m at the other. How does BS EN 1838:2024 require illuminance to be verified along the foyer?',
     options: [
-      'Centre line throughout.',
-      'Full width with edge exclusions throughout — outer ¼ width each side excluded in the 1.5 m section; outer 0.5 m each side excluded in any portion that exceeds 2 m. The 2024 rule replaces the 2013 centre-line + central-band wording. Either way the 1 lx minimum has to be met across the whole non-excluded width.',
-      'Only at the doorways.',
-      'Only at the perimeter.',
+      'On the centre line throughout the length of the foyer.',
+      'Only at the doorways at each end of the foyer.',
+      'Full width with edge exclusions throughout — ¼ width in the narrow section, 0.5 m where it exceeds 2 m.',
+      'Only at the perimeter, against the foyer walls.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 2024 change closes a defect in the 2013 wording. Under BS EN 1838:2013 the rule was 1 lx on the centre line + 0.5 lx on a 2 m central band, leaving edges dim. People walk along the edges, not just the centre, particularly in crowds. The 2024 full-width rule (with edge exclusions) matches how the route is actually used.',
   },
@@ -110,40 +110,40 @@ const quizQuestions = [
     question:
       'What is the maximum allowable max-to-min uniformity ratio along an escape route?',
     options: [
-      '10:1.',
-      '40:1 — the brightest point along the route may be no more than 40 times the darkest point. Beyond 40:1 the dark-adapted eye cannot keep up as the occupant walks from bright zones into dark zones; the bright zones bleach the rods and the dark zones become invisible until the eye recovers. The ratio is measured along the length of the route (longitudinally) within the non-excluded width.',
-      '100:1.',
-      'No limit.',
+      '10:1 — a tighter ratio than the standard requires for an escape route.',
+      '100:1 — the brightest point may be up to 100 times the darkest.',
+      'There is no maximum ratio; only the 1 lx minimum has to be met.',
+      '40:1 — the brightest point may be no more than 40 times the darkest, measured along the route.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 40:1 cap is a glare-versus-shadow rule. It is satisfied through luminaire spacing — the closer the spacing, the lower the ratio. Designers typically achieve 10:1 or 20:1 in modern LED installations; 40:1 is the absolute permissible limit, not the design target.',
+      'The 40:1 cap is a glare-versus-shadow rule, measured longitudinally within the non-excluded width. Beyond 40:1 the dark-adapted eye cannot keep up as the occupant walks from bright zones into dark zones; the bright zones bleach the rods and the dark zones become invisible until the eye recovers. It is satisfied through luminaire spacing — the closer the spacing, the lower the ratio. Designers typically achieve 10:1 or 20:1 in modern LED installations; 40:1 is the absolute permissible limit, not the design target.',
   },
   {
     id: 4,
     question:
       'How fast must escape route lighting reach 50 % of its rated illuminance after mains failure, per BS EN 1838:2024?',
     options: [
-      '0.5 s — same as high-risk task lighting.',
-      '5 seconds maximum to 50 % of rated illuminance, with full rated illuminance achieved within 60 seconds. The 5 s figure ensures the route is usable almost immediately; the 60 s allowance accommodates discharge-lamp warm-up. LED systems normally meet both figures within milliseconds. The 5 s rule is the GENERAL response time; high-risk task lighting tightens this to 0.5 s because operators may be controlling machinery.',
-      '15 s.',
-      '60 s.',
+      '5 seconds to 50 %, with full rated illuminance achieved within 60 seconds.',
+      '0.5 s — the same fast response required for high-risk task-area lighting.',
+      '15 s to 50 % of rated illuminance, with full output within 60 s.',
+      '60 s to 50 % of rated illuminance, matching the full-output allowance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 1838:2024 §4.3 — escape route lighting response time: 50 % within 5 s, 100 % within 60 s. The split timing is a legacy of mixed-technology installations; modern LED is effectively instant on switchover.',
+      'BS EN 1838:2024 §4.3 — escape route lighting response time: 50 % within 5 s, 100 % within 60 s. The 5 s figure ensures the route is usable almost immediately; the 60 s allowance accommodates discharge-lamp warm-up, a legacy of mixed-technology installations. LED is effectively instant on switchover. The 5 s rule is the GENERAL response time; high-risk task lighting tightens this to 0.5 s because operators may be controlling machinery.',
   },
   {
     id: 5,
     question:
       'What rated DURATION is BS 5266-1:2025 standard for escape route lighting in a non-domestic premises (e.g. office, shop, industrial)?',
     options: [
-      '30 minutes.',
-      '3 hours — the standard non-domestic figure. Shorter durations (1 h or 2 h) are permitted in specific limited circumstances under BS 5266-1:2025 (e.g. small premises with simple escape routes, with the duration justified by risk assessment) but 3 h is the default expectation. The duration represents the minimum time the system must hold the rated illuminance after mains failure, allowing for safe evacuation, fire-fighting and re-entry.',
-      '8 hours.',
-      '24 hours.',
+      '30 minutes — the standard figure for most non-domestic premises.',
+      '8 hours — to cover the full overnight period in an unoccupied building.',
+      '3 hours — the default for most non-domestic premises, holding rated illuminance after mains failure.',
+      '24 hours — continuous standby for a full day.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1:2025 retains 3 h as the standard duration for most non-domestic escape route lighting. Shorter durations are an exception that has to be justified, not the default. Note: rated duration is what the system delivers at end of life and after temperature derating, not the brand-new manufacturer figure.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'Where in an escape route does the 1 lx minimum NOT apply?',
     options: [
-      'On staircases.',
-      'Within an outer edge strip on each side of the route — outer 0.5 m on routes wider than 2 m, outer ¼ width on routes 2 m or narrower. These edge exclusions are part of the BS EN 1838:2024 escape-route methodology. Anti-panic open-area lighting uses a different 0.5 m perimeter exclusion against walls and obstacles for its 0.5 lx average; the two methodologies are separate.',
-      'On the floor.',
-      'At doorways.',
+      'On staircases, where the treads are exempt from the floor-level check.',
+      'On any floor-level surface — the 1 lx rule applies only to vertical surfaces.',
+      'At doorways along the route, which are checked separately from the corridor.',
+      'Within the outer edge strip each side — 0.5 m on routes over 2 m, ¼ width on routes 2 m or narrower.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 1838:2024 explicitly permits an outer edge strip on each side of the escape route to be excluded from the 1 lx check — 0.5 m on routes > 2 m, ¼ width on routes ≤ 2 m. Anti-panic methodology (§4.3) uses its own 0.5 m perimeter exclusion for the 0.5 lx open-area average. Mixing the two is a common design error.',
   },
@@ -165,54 +165,54 @@ const quizQuestions = [
     question:
       'A landlord asks for escape route lighting on a domestic block of flats internal corridor. How does BS 5266-1:2025 treat this corridor?',
     options: [
-      'Domestic — exempt from BS 5266-1.',
-      'Common parts of multi-occupancy residential premises (block of flats) ARE in scope of BS 5266-1:2025. The internal common corridor that serves multiple dwellings is the means of escape from those dwellings; it requires escape route lighting to BS EN 1838 illuminance levels. The exemption from BS 5266 covers single dwellings (house, flat treated as single residence) — but the COMMON PARTS of a block of flats are non-domestic for emergency lighting purposes.',
-      'Only one luminaire required regardless of layout.',
-      'Maintained lighting only — non-maintained not permitted.',
+      'The common corridor IS in scope — it is the means of escape and needs escape route lighting.',
+      'It is domestic throughout and therefore wholly exempt from BS 5266-1.',
+      'It requires only a single luminaire, regardless of the corridor layout.',
+      'It requires maintained lighting only; non-maintained luminaires are not permitted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A surprising number of designers treat blocks of flats as "domestic" for emergency lighting and therefore exempt. They are not — the common corridor, lobby, staircase, and any shared escape route are non-domestic for BS 5266 purposes. The single dwelling within a flat is exempt; the common parts are not.',
+      'Common parts of multi-occupancy residential premises ARE in scope of BS 5266-1:2025. The internal common corridor serving multiple dwellings is the means of escape and requires escape route lighting to BS EN 1838 illuminance levels. The BS 5266 exemption covers single dwellings only; the common corridor, lobby, staircase, and shared escape routes are non-domestic for emergency lighting purposes. A surprising number of designers treat blocks of flats as "domestic" and miss this.',
   },
   {
     id: 8,
     question:
       'An escape route corridor in an office is 3.2 m wide. Anti-panic lighting is also being designed. What does BS EN 1838:2024 require?',
     options: [
-      'Only escape route lighting — anti-panic does not apply to corridors.',
-      'Both apply. Escape route methodology requires 1 lx full width with the outer 0.5 m each side excluded (because the corridor exceeds 2 m). Anti-panic methodology applies because the unobstructed area exceeds 60 m² OR the occupancy exceeds 10 (whichever triggers first). The anti-panic 0.5 lx requirement is verified across the unobstructed area excluding the 0.5 m perimeter. Designers usually combine both into a single luminaire layout that satisfies the more demanding metric at every point.',
-      'Anti-panic only — escape route superseded by anti-panic in wide spaces.',
-      '15 lx high-risk task lighting required.',
+      'Only escape route lighting applies — anti-panic does not apply to corridors at all.',
+      'Anti-panic only — escape route requirements are superseded by anti-panic in wide spaces.',
+      'Both apply — 1 lx full width for the route plus 0.5 lx across the anti-panic area.',
+      '15 lx high-risk task-area lighting is required throughout the corridor.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A wide corridor that is also a large unobstructed area triggers both the escape route AND the anti-panic functional categories. The design must satisfy both. In practice this rarely produces a conflict — escape route 1 lx is more demanding than anti-panic 0.5 lx, so a layout that meets escape route across the width also meets anti-panic.',
+      'A wide corridor that is also a large unobstructed area triggers both the escape route AND anti-panic categories. Escape route methodology requires 1 lx full width with the outer 0.5 m each side excluded (the corridor exceeds 2 m); anti-panic applies because the unobstructed area exceeds 60 m² OR occupancy exceeds 10, verified at 0.5 lx excluding the 0.5 m perimeter. In practice this rarely conflicts — escape route 1 lx is more demanding than anti-panic 0.5 lx, so a layout meeting the route also meets anti-panic. Designers combine both into a single layout that satisfies the more demanding metric at every point.',
   },
   {
     id: 9,
     question:
       'Which luminaire failure mode is the dominant cause of in-service escape route lighting non-compliance, in surveys conducted under BS 5266-1?',
     options: [
-      'Bulb life.',
-      'Battery degradation — the rated 3 h duration falls below the requirement after 3-5 years of normal cycling, well before any visible defect appears. The luminaire still illuminates briefly on test but cannot sustain the rated duration. Daily/monthly visual checks miss this; only the annual full-duration discharge test catches it. This is why BS 5266-1:2025 retains the annual 3 h test as a non-negotiable maintenance requirement.',
-      'Corrosion of the housing.',
-      'Lens yellowing.',
+      'LED / lamp life — the light source reaching the end of its rated burning hours.',
+      'Battery degradation — the rated duration falls below requirement after a few years of cycling.',
+      'Corrosion of the luminaire housing degrading the electrical connections.',
+      'Lens yellowing reducing the light output below the required level.',
     ],
     correctAnswer: 1,
     explanation:
-      'NiCd and NiMH batteries lose capacity through cycling and ageing. A luminaire that was compliant when commissioned may be at 50 % capacity by year 4. The monthly switch-on test confirms the luminaire still lights up; only the annual full-discharge test confirms it still holds the duration. The annual test is the load-bearing maintenance check.',
+      'The rated 3 h duration falls below requirement after 3-5 years of normal cycling, well before any visible defect appears. The luminaire still illuminates briefly on test but cannot sustain the rated duration. NiCd and NiMH batteries lose capacity through cycling and ageing; a luminaire compliant at commissioning may be at 50 % capacity by year 4. The monthly switch-on test confirms it still lights up; only the annual full-discharge test confirms it still holds the duration. The annual test is the load-bearing maintenance check, which is why BS 5266-1:2025 retains it as non-negotiable.',
   },
   {
     id: 10,
     question:
       'Under BS 5266-1:2025 risk assessment, when may the duration of escape route lighting be reduced from 3 h to 1 h?',
     options: [
-      'Always — 1 h is the new default.',
-      'Only by exception, justified by risk assessment, in small simple premises where evacuation is rapid (low occupancy, short routes, single floor) AND the building is normally unoccupied at night AND re-entry is not required. The risk assessment must document the basis for the reduced duration, and the figure is recorded in the logbook. The 3 h default applies in the absence of such justification — designers cannot simply choose 1 h to save battery cost.',
-      'Whenever the premises has a sprinkler system.',
-      'Whenever the premises has under 50 people.',
+      'Only by exception, justified by risk assessment in small simple premises with rapid evacuation.',
+      'Always — 1 h is the new default duration under BS 5266-1:2025.',
+      'Whenever the premises is fitted with an automatic sprinkler system.',
+      'Whenever the premises has a maximum occupancy of fewer than 50 people.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5266-1:2025 retains 3 h as the default and treats reductions as exceptions requiring documented justification. The risk-assessment-led approach prevents both over-engineering (everywhere defaulting to 8 h) and under-engineering (everywhere dropping to 1 h on cost grounds). The duration must match the evacuation profile of the building.',
   },

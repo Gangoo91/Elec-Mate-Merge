@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A drum is labelled "9/125 µm". What does that pair of numbers tell you about the fibre, and what fibre type is it?',
     options: [
-      'A multimode fibre with a 9 µm cladding and 125 µm coating.',
-      'A single-mode fibre — 9 µm core diameter, 125 µm cladding diameter — used for long reach and high bandwidth.',
-      'The pulling tension limits in newtons.',
-      'The maximum bend radius in millimetres.',
+      'A multimode fibre with a 9 µm cladding and a 125 µm protective coating.',
+      'A single-mode fibre — 9 µm core, 125 µm cladding — for long reach and high bandwidth.',
+      'The cable’s pulling-tension limits, expressed in newtons.',
+      'The cable’s maximum bend radius, expressed in millimetres.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A 175 m horizontal fibre run will carry 10GBASE-SR (10 Gbps Ethernet over multimode at 850 nm). Which OM grade is the minimum that can deliver this reach?',
     options: [
-      'OM1 — 33 m at 10 GbE.',
-      'OM2 — 82 m at 10 GbE.',
-      'OM3 — 300 m at 10 GbE at 850 nm.',
-      'OS2 single-mode — single-mode is mandatory for any fibre over 100 m.',
+      'OM1 — reaches only 33 m at 10 GbE.',
+      'OM2 — reaches only 82 m at 10 GbE.',
+      'OM3 — reaches 300 m at 10 GbE at 850 nm.',
+      'OS2 single-mode, taken as mandatory above 100 m.',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A campus job runs a data link between two buildings on different earth electrodes. Which BS 7671:2018+A4:2026 clause states the preferred medium for this link, and why?',
     options: [
-      '§411.3.1.1 — protective earthing.',
-      '§444.4.9 — separate buildings — recommends metal-free optical fibre or other non-conducting systems for signal and data transmission, because the buildings have separate equipotential bonding systems and a copper data cable would carry stray potentials between them.',
-      '§528.3.5 — no cable in lift wells.',
-      '§716.521.101 — PoE cable category.',
+      '§411.3.1.1 — protective earthing of exposed-conductive-parts.',
+      '§444.4.9 — separate buildings: prefer metal-free fibre, as a copper link would carry stray potentials between them.',
+      '§528.3.5 — no cable installed within lift (elevator) wells.',
+      '§716.521.101 — the permitted PoE cable Category list.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What is the fundamental optical difference between single-mode and multimode fibre that drives every other characteristic?',
     options: [
-      'Single-mode uses glass; multimode uses plastic.',
-      'Single-mode has a small core (9 µm) that admits only one propagation mode, eliminating modal dispersion and giving very long reach with high bandwidth. Multimode has a larger core (50 µm or 62.5 µm) that admits multiple modes — modal dispersion limits the bandwidth-distance product but the larger core is cheaper to align, splice and terminate, and is well matched to short-wave VCSEL transceivers for in-building reach.',
-      'Multimode is faster.',
-      'Single-mode has more strands per cable.',
+      'Single-mode uses a glass core; multimode uses a plastic optical core.',
+      'Multimode runs at a higher data rate than single-mode over any distance.',
+      'A 9 µm single-mode core admits one mode (no modal dispersion); a 50/62.5 µm multimode core admits many.',
+      'Single-mode cables carry more individual fibre strands than multimode.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Mode count is the root cause. A 9 µm SMF core (relative to a ~1310 / 1550 nm wavelength) admits only the fundamental mode — no modal dispersion, just chromatic and polarisation-mode dispersion, so the bandwidth-distance product runs into thousands of GHz·km. A 50 / 62.5 µm MMF core admits hundreds of modes — each takes a slightly different path length, so a single pulse spreads in time (modal dispersion) and the bandwidth-distance product is bounded. SMF wins on reach and bandwidth; MMF wins on transceiver cost and termination tolerance.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does "OM3" tell you about the fibre on the drum?',
     options: [
-      'A single-mode fibre with 0.3 dB/km attenuation.',
-      'A laser-optimised multimode fibre — 50/125 µm, VCSEL-optimised at 850 nm, 2000 MHz·km effective modal bandwidth, supports 10GBASE-SR to 300 m. Aqua jacket is the industry convention.',
-      'A 3 mm jacket diameter.',
-      'A 3-fibre cable.',
+      'Laser-optimised 50/125 µm multimode (VCSEL at 850 nm, 2000 MHz·km) — 10GBASE-SR to 300 m, aqua jacket.',
+      'A single-mode fibre rated at 0.3 dB/km maximum attenuation.',
+      'An outer jacket diameter of exactly 3 mm.',
+      'A cable containing three individual fibre strands.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OM grades are the multimode fibre performance classification. OM1 (62.5/125, LED) and OM2 (50/125, LED) are legacy. OM3 / OM4 / OM5 are laser-optimised 50/125 multimode for VCSEL transceivers at 850 nm. OM3 supports 10G to 300 m, OM4 to 400 m, OM5 (wide-band, SWDM-capable across 850-953 nm) to 400 m at 10 G with parallel-optic and SWDM support for 40/100 G. OM3 / OM4 are the standard 10G-to-the-floor choice; OM5 is an emerging spec for SWDM-based 40/100 G short reach.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the difference between OS1, OS1a and OS2 single-mode fibre?',
     options: [
-      'They are different core sizes.',
-      'All three are 9/125 µm single-mode. OS1 is tight-buffered for indoor use, with a 1.0 dB/km attenuation specification; OS1a is the indoor-rated low-water-peak update aligned with ITU-T G.652.D (allows transmission across the full 1260-1625 nm band including the historical "water peak" near 1383 nm); OS2 is loose-tube outdoor / long-haul with a 0.4 dB/km maximum attenuation, designed for outside-plant runs up to ~200 km with appropriate transceivers.',
-      'OS1 is multimode and OS2 is single-mode.',
-      'OS2 is fibre-to-the-home only.',
+      'They are three different core diameters within the single-mode family.',
+      'OS1 is a multimode grade while OS2 is single-mode.',
+      'OS2 is reserved exclusively for fibre-to-the-home access networks.',
+      'All 9/125 µm single-mode — OS1/OS1a tight-buffered indoor; OS2 loose-tube outside-plant, ≤ 0.4 dB/km.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'All three are 9/125 µm single-mode — the difference is construction and attenuation budget. OS1 / OS1a are tight-buffered for indoor / short-reach campus use (≤ 10 km typical). OS1a adds low-water-peak compliance so all transmission bands work. OS2 is loose-tube outside-plant fibre with the lowest attenuation and the longest reach — the standard for outdoor and inter-building runs. Choosing OS1a vs OS2 indoors is mostly an attenuation-budget and construction-style decision; choosing OS2 outdoors is essentially mandatory.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A campus runs a 280 m fibre link between two buildings on a metal-free outdoor route. The link will carry 10GBASE-LR. Which fibre is the textbook choice?',
     options: [
-      'OM1 multimode.',
-      'OS2 single-mode (9/125 µm, loose-tube outside-plant). 10GBASE-LR is a 1310 nm single-mode service — multimode cannot carry it. OS2 absorbs the 280 m comfortably (rated to ~200 km with appropriate optics) and is the correct choice for inter-building outdoor routes. BS 7671 §444.4.9 also recommends metal-free fibre between buildings on separate bonding systems.',
-      'OM3 multimode.',
-      'Cat6A copper with surge protection.',
+      'OM1 multimode in an outdoor loose-tube construction.',
+      'OM3 laser-optimised multimode with VCSEL optics.',
+      'OS2 single-mode — 10GBASE-LR is a 1310 nm single-mode service multimode cannot carry.',
+      'Cat6A copper fitted with inter-building surge protection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The transceiver picks the fibre. 10GBASE-LR is single-mode at 1310 nm — multimode is electrically incompatible with the optics. OS2 is the outside-plant single-mode standard. The reach (280 m) is trivial for OS2. BS 7671 §444.4.9 (verbatim A4:2026): "Where different buildings have separate equipotential bonding systems, metal-free optical fibre cables or other non-conducting systems are preferred for signal and data transmission."',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'Why does BS 7671 §444.4.9 prefer metal-free fibre between buildings rather than just any optical fibre?',
     options: [
-      'Metal armour is fragile.',
-      'A metallic strength member or armour in an inter-building cable would be a long conductor between two buildings on different earth electrodes — exactly the scenario §444.4.9 is trying to avoid. A potential difference between the buildings would drive current through the metallic element and back through earth, causing exposure and equipment-damage risk. Metal-free (all-dielectric) fibre carries no such path. The light still passes; the unwanted current never had a wire to flow on.',
-      'Metallic fibre is more expensive.',
-      'It is a labelling convention.',
+      'Metallic armour or strength members form a conductor between buildings on different earths, importing stray current.',
+      'Metal armour is mechanically too fragile for outdoor inter-building duct routes.',
+      'Fibre with metallic elements simply costs more than all-dielectric fibre.',
+      'It is only a jacket-colour and labelling convention, not a real concern.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The clause exists to break the metallic path between buildings. Steel-armoured ("ICCS" or "loose-tube armoured") fibre is fine within one building, but between buildings on separate equipotential systems, the armour becomes a long-conductor liability. All-dielectric self-supporting (ADSS) cable, FRP / aramid strength members and non-metallic armour are the routine answers. Where armoured fibre must be used between buildings (mechanical reasons), the armour ends are bonded to local earth at each building entry — but the metal-free option is cleaner, and the clause prefers it.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'You have a project that needs 100 G to a high-density AP cluster on a 120 m run inside a building. Which fibre choice is most cost-effective and forward-looking?',
     options: [
-      'OM3 multimode using 100GBASE-SR4 parallel optics — supported to 100 m, would not reach 120 m.',
-      'OM4 multimode using 100GBASE-SR4 parallel optics or OM5 with SWDM4 — OM5 reaches 150 m at 100 G with SWDM4 transceivers, OM4 reaches 150 m with SR4. Both are workable; OM5 gives an SWDM upgrade path on duplex LC pairs.',
-      'OS2 single-mode — necessary for any link over 100 m.',
-      'Cat8 copper at 25 G.',
+      'OM3 with 100GBASE-SR4 parallel optics, which only reaches 100 m — short of the 120 m run.',
+      'OS2 single-mode, taken as mandatory for any optical link over 100 m.',
+      'Cat 8 copper running 25 G, taken as a viable 120 m channel.',
+      'OM4 with 100GBASE-SR4, or OM5 with SWDM4 — both reach 150 m; OM5 adds an SWDM upgrade path.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multimode supports 100 G in-building at modest cost. OM4 with 100GBASE-SR4 (4-pair parallel optics over MTP/MPO) reaches 150 m. OM5 wide-band MMF supports SWDM4 on a single duplex pair, reaching ~150 m at 100 G — same fibre count as 10 G LC duplex, future-proof to multi-wavelength upgrades. Single-mode is overkill for in-building campus and adds optics cost. Copper at 25 G (Cat 8) is data-centre top-of-rack only — limited to 30 m channel.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'Why is the cladding diameter standardised at 125 µm across every telecoms fibre — single-mode or multimode, OM1 through OS2?',
     options: [
-      'It is the strongest available glass.',
-      'It is the dimension that fits standard ferrules (1.25 mm LC, 2.5 mm SC/ST/FC), standard cleavers and standard fusion-splicer V-grooves. Standardising the cladding makes connector and splice tooling universal across fibre types — the core size (9 / 50 / 62.5 µm) is what changes between fibre grades.',
-      'It is required by BS 7671.',
-      'It matches optical wavelength.',
+      'It is simply the strongest glass cross-section available to manufacturers.',
+      'It is a dimension specifically required by BS 7671 for telecoms fibre.',
+      'It fits the standard ferrules, cleavers and splicer V-grooves, so tooling is universal across grades.',
+      'It is chosen to match the optical transmission wavelength of the fibre.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cladding standardisation is the reason a single set of connectors, splice trays, mechanical splices and cleavers works across the whole product family. The ferrule is the precision part — 1.25 mm for LC, 2.5 mm for SC / ST / FC — and it bores down to accept a 125 µm cladding. Change the core (9 / 50 / 62.5 µm) and the optics change; the mechanical interface stays the same. This is one of the quiet reasons fibre installation is far simpler than it would otherwise be.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 clause applies to fibre cable supports — even though fibre carries no electrical current?',
     options: [
-      'It does not — fibre is exempt.',
-      '§521.10.202 — wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire. NOTE 3 precludes non-metallic ties / clips as the sole means of support; NOTE 4 allows steel or copper clips, saddles, ties. Fibre clipped only with plastic ties along an escape route is non-compliant.',
-      '§444.4.9 — separate buildings.',
-      '§411.3.1 — protective earthing.',
+      '§521.10.202 — support against premature collapse in fire; non-metallic ties cannot be the sole support.',
+      'No clause applies — optical fibre is exempt from support rules.',
+      '§444.4.9 — the separate-buildings metal-free fibre preference.',
+      '§411.3.1 — protective earthing and automatic disconnection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§521.10.202 (verbatim from RAG) is medium-agnostic — it applies to "wiring systems", and fibre is a wiring system. NOTE 3 explicitly precludes non-metallic cable clips or cable ties as the SOLE means of support where cables are clipped direct to exposed surfaces or suspended under cable tray. Steel or copper clips / saddles / ties (NOTE 4) meet the requirement. Cables in steel containment systems are deemed to comply (NOTE 2). For fibre this matters because it is often pulled through the same routes as copper — and a non-compliant support method on either medium is non-compliant.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'What is the primary technical reason multimode fibre cannot match single-mode\u2019s reach at high bit rates?',
     options: [
-      'Multimode glass is dirtier.',
-      'Modal dispersion. The larger MMF core admits many propagation modes; each has a slightly different optical path length, so a single transmitted pulse arrives at the receiver as a small ensemble of pulses, smeared in time. As bit rate rises, the time gap between bits shrinks until the smear consumes the gap and the receiver can no longer distinguish them. SMF, with one mode, has no modal dispersion — only chromatic and polarisation-mode dispersion, both of which are much smaller.',
-      'Multimode has higher attenuation.',
-      'Multimode is shorter wavelength.',
+      'The multimode glass is inherently dirtier and harder to keep clean.',
+      'Multimode fibre has substantially higher per-kilometre attenuation.',
+      'Multimode systems operate at a shorter, more lossy transmission wavelength.',
+      'Modal dispersion — the many modes arrive at slightly different times, smearing the pulse as bit rate rises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modal dispersion is the dominant limit on multimode reach at high data rates. The bandwidth-distance product (e.g. 4700 MHz·km for OM4) is the contract: at 10 G, the symbol time is so short that even small modal-delay spreads degrade the eye. OM3 / OM4 / OM5 attack this with laser-optimised refractive-index profiles (graded-index, tightly controlled) to equalise mode delays. SMF sidesteps the problem entirely — only one mode propagates, so modal dispersion is by construction zero.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'A junior says: "fibre carries no current — laser safety is just a sticker, not a real concern." How do you correct them?',
     options: [
-      'Agree — fibre is electrically passive.',
-      'BS EN 60825-2 governs the safety of optical fibre communication systems. Class 1 is generally safe for unintentional exposure. Class 1M and Class 3R can deliver power densities high enough to damage the retina if viewed with magnifying optics or directly without protection. Never look into an active fibre, an active connector, or an active patch lead with the naked eye OR with a microscope without confirming the link has been transceived down. The energy is invisible (1310 / 1550 nm sits beyond the visible spectrum), so the eye has no warning reflex. Treat every fibre as live until proven otherwise.',
-      'Lasers are eye-safe under 1 mW.',
-      'Only fibre amplifiers are dangerous.',
+      'Agree with them — fibre is electrically passive, so the laser sticker is just a formality.',
+      'Reassure them that any telecoms laser is eye-safe so long as it is under 1 mW.',
+      'BS EN 60825-2 governs fibre laser safety — invisible IR can damage the retina; never inspect an active fibre by eye.',
+      'Tell them only fibre amplifiers, not ordinary transceivers, pose any eye hazard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fibre safety is governed by BS EN 60825-2. The infrared wavelengths used in telecoms (850 / 1310 / 1550 nm) are entirely invisible — there is no blink reflex, no heat sensation at low power, no warning. Class 1M sources (caution under magnification) are common; Class 3R appears in long-haul / amplified systems. The discipline is: physically darken before inspection (port covers on, transceivers down, link de-bounced), use a fibre microscope or video probe (never the naked eye), keep ports capped when not patched, and always assume a connector face you cannot account for is live.',
   },

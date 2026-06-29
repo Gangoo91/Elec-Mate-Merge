@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'interlock-purpose',
     question: 'What is the primary purpose of an interlocking guard?',
     options: [
-      'Gap between design predictions and actual operational energy use',
+      'Speed up production by allowing the machine to run with the guard open',
       'Prevent access to hazards while the machine is running',
-      'Building interference creates turbulent, low-velocity airflow',
-      'Cable is totally surrounded by thermal insulation over 0.5m',
+      'Provide overcurrent protection for the machine control circuit',
+      'Improve operator visibility of the moving parts during operation',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'guard-locking',
     question: 'What is guard locking used for?',
     options: [
-      'Regular assessment of work completed for interim payment certification',
-      'Understanding environmental context and user habits for relevant responses',
+      'Holding the guard open automatically when the machine is switched off',
+      'Allowing only trained operators to unlock the guard with a personal code',
       'Preventing the guard from being opened until hazardous conditions have ceased',
-      'It can melt and adhere to skin in an arc flash, worsening burns',
+      'Locking the machine isolator in the OFF position during maintenance',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'According to the hierarchy of safeguarding measures, what is the first priority?',
     options: [
-      'The householder who commissioned the work',
+      'Providing operators with suitable personal protective equipment',
       'Elimination of the hazard by design',
-      'Depends on condition code',
-      'To ensure the conductor is secure',
+      'Fitting warning signs and labels around the danger zone',
+      'Installing an interlocking guard on the moving parts',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     question:
       'What additional feature does a guard with guard locking provide beyond a standard interlocking guard?',
     options: [
-      'The tongue withdraws from the switch head, breaking the safety circuit',
-      'To prevent defeat of the interlock using substitution',
-      'Hand/body approach speed per BS EN ISO 13855',
+      'It stops the machine faster when the guard is opened during operation',
+      'It uses a coded actuator instead of a plain tongue to resist tampering',
+      'It allows the guard to be opened without stopping the machine at all',
       'Keeps the guard locked closed until the hazard has ceased',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'In a tongue-operated interlock, what happens when the guard is opened?',
     options: [
       'The tongue withdraws from the switch head, breaking the safety circuit',
-      'Keeps the guard locked closed until the hazard has ceased',
-      'To prevent defeat of the interlock using substitution',
-      'General requirements for the design and construction of guards',
+      'The tongue locks more firmly into the switch head, holding the guard shut',
+      'The switch energises the machine motor to begin the run-down sequence',
+      'The safety contacts close, allowing the machine to continue running',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of using coded actuators in safety interlock switches?',
     options: [
-      'The physical key transfer sequence between locks',
+      'To increase the switching current the contacts can carry',
       'To prevent defeat of the interlock using substitution',
-      'Keeps the guard locked closed until the hazard has ceased',
-      'Hand/body approach speed per BS EN ISO 13855',
+      'To speed up the response time of the safety circuit',
+      'To allow the same actuator to operate several different switches',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'What does BS EN ISO 14120 cover?',
     options: [
-      'The tongue withdraws from the switch head, breaking the safety circuit',
-      'To prevent electromagnetic interference causing false safe states',
-      'The physical key transfer sequence between locks',
+      'The calculation of minimum safety distances for safeguarding devices',
+      'The design and selection of interlocking devices associated with guards',
+      'The performance levels required for safety-related control systems',
       'General requirements for the design and construction of guards',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
       'In a trapped-key interlock system with multiple locks, what determines the sequence of operations?',
     options: [
       'The physical key transfer sequence between locks',
-      'Hand/body approach speed per BS EN ISO 13855',
-      'Keeps the guard locked closed until the hazard has ceased',
-      'The employer who provides the work equipment',
+      'A programmable timer in the machine control system',
+      'The order in which the operator presses the control buttons',
+      'The priority level assigned to each lock in the PLC software',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'What must be considered when selecting the approach speed for calculating safety distance?',
     options: [
-      'The employer who provides the work equipment',
+      'The rated supply voltage of the machine control circuit',
       'Hand/body approach speed per BS EN ISO 13855',
-      'To prevent defeat of the interlock using substitution',
-      'Keeps the guard locked closed until the hazard has ceased',
+      'The maximum running speed of the machine motor',
+      'The colour coding of the guard and its actuator',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why should safety interlock wiring be run separately from power wiring?',
     options: [
-      'The physical key transfer sequence between locks',
-      'Keeps the guard locked closed until the hazard has ceased',
+      'To reduce the total length of cable needed for the installation',
+      'To allow the safety circuit to share a neutral with the power circuit',
       'To prevent electromagnetic interference causing false safe states',
-      'General requirements for the design and construction of guards',
+      'To make the safety wiring carry the full motor load current',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is a muting function in a safety guarding system?',
     options: [
-      'Single-core PVC-insulated cables (non-armoured) in specific installation methods',
-      'When there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s risk from dust, fumes, gases, vapours, or oxygen deficiency',
-      'Plant rooms, laboratories, industrial processes, operating theatres',
+      'Reducing the audible alarm volume during normal machine operation',
+      'Locking the guard closed until all rotating parts have stopped',
+      'Disabling the emergency stop button during a planned maintenance task',
       'Temporarily suspending the safety function under specific conditions to allow material passage',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
       'Under PUWER 1998, who is responsible for ensuring that guards and interlocks are maintained in an efficient state?',
     options: [
       'The employer who provides the work equipment',
-      'To prevent defeat of the interlock using substitution',
-      'Hand/body approach speed per BS EN ISO 13855',
-      'The physical key transfer sequence between locks',
+      'The original machine manufacturer for the whole of the machine life',
+      'The individual operator who uses the machine each day',
+      'The Health and Safety Executive inspector for the area',
     ],
     correctAnswer: 0,
     explanation:

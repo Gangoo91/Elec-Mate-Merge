@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'hysteresis-loss',
     question: 'What property of magnetic materials causes hysteresis loss?',
     options: [
-      'Different metals in contact with electrolyte present',
-      'Creating gaps in illumination with excessive spacing',
+      'The electrical resistance of the conducting winding',
+      'Eddy currents circulating within the laminations',
       'Magnetic domain resistance to realignment',
-      'Easier tap-off connections at each floor',
+      'Skin effect concentrating current near the surface',
     ],
     correctIndex: 2,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which material property is most important for reducing hysteresis losses?',
     options: [
-      'Automatic monitoring of energy consumption',
-      'Regularly, after incidents, when changes occur',
+      'High electrical conductivity of the core',
+      'A wide hysteresis loop with high remanence',
       'Low coercivity (soft magnetic material)',
-      'Specific training and assessment by the employer',
+      'High mechanical hardness of the steel',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Why must cables be derated when grouped together?',
     options: [
       'Because I²R losses cause heat that cannot dissipate',
-      'To maintain circuit integrity during fire conditions',
-      'A tuning problem with the PID controller',
-      'Mechanical binding or single phasing',
+      'Because grouped cables increase the circuit voltage drop',
+      'Because adjacent cables induce harmonics in each other',
+      'Because grouping raises the prospective fault current',
     ],
     correctAnswer: 0,
     explanation:

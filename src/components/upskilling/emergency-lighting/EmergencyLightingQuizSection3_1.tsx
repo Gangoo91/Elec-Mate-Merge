@@ -12,103 +12,103 @@ export const EmergencyLightingQuizSection3_1 = () => {
   const questions = [
     {
       id: 1,
-      question: 'What is the minimum lux requirement along the centre line of escape routes?',
+      question: 'What is the minimum illuminance required along the centre line of an escape route?',
       options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
       correctAnswer: 1,
       explanation:
-        'BS 5266-1 requires a minimum of 1 lux along the centre line of escape paths to ensure safe navigation during evacuation.',
+        'BS 5266-1 requires a minimum of 1 lux along the centre line of an escape route to allow safe movement during evacuation.',
     },
     {
       id: 2,
-      question: 'How many lux are required for high-risk task areas?',
+      question: 'What illuminance is required in high-risk task areas?',
       options: [
-        '5 lux minimum',
-        '10 lux minimum',
-        '15 lux or 10% of normal lighting (whichever is greater)',
-        '20 lux minimum',
+        '15 lux, or 10% of the normal task lighting if greater',
+        '5 lux minimum, regardless of the normal task lighting',
+        '10 lux minimum, regardless of the normal task lighting',
+        '20 lux minimum, regardless of the normal task lighting',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
-        'High-risk task areas require 15 lux minimum or at least 10% of the normal task lighting level, whichever is greater, to enable safe shutdown procedures.',
+        'High-risk task areas require at least 15 lux, or 10% of the normal task lighting level if that is greater, so a hazardous activity can be made safe.',
     },
     {
       id: 3,
-      question: 'What is the minimum lux requirement in open areas (anti-panic lighting)?',
+      question: 'What is the minimum illuminance in open (anti-panic) areas?',
       options: ['0.2 lux', '0.5 lux', '1 lux', '1.5 lux'],
       correctAnswer: 1,
       explanation:
-        'Open areas (anti-panic lighting) require a minimum of 0.5 lux across the floor area to prevent panic and enable orderly evacuation.',
+        'Open (anti-panic) areas require a minimum of 0.5 lux across the core floor area to reduce panic and enable orderly evacuation.',
     },
     {
       id: 4,
-      question: 'Why is uniformity important in emergency lighting design?',
+      question: 'Why is good uniformity important in emergency lighting design?',
       options: [
-        'To save energy',
-        'To avoid shadows or dark patches that could cause panic',
-        'To reduce installation costs',
-        'To improve battery life',
+        'It reduces the energy the system consumes',
+        'It avoids shadows and dark patches that could cause panic',
+        'It lowers the cost of the installation',
+        'It extends the life of the batteries',
       ],
       correctAnswer: 1,
       explanation:
-        'Uniformity prevents dark patches and shadows that could cause panic, disorientation, or accidents during emergency evacuation.',
+        'Good uniformity avoids dark patches and harsh shadows that could cause panic, disorientation or accidents during evacuation.',
     },
     {
       id: 5,
-      question: 'What is the maximum ratio of maximum to minimum illuminance typically allowed?',
+      question: 'What is the maximum ratio of maximum to minimum illuminance typically allowed on an escape route?',
       options: ['20:1', '40:1', '60:1', '80:1'],
       correctAnswer: 1,
       explanation:
-        'The uniformity ratio should typically not exceed 40:1 for escape routes to ensure adequate light distribution without excessive contrast.',
+        'For escape routes the diversity (uniformity) ratio of maximum to minimum illuminance should not exceed 40:1 to avoid excessive contrast.',
     },
     {
       id: 6,
-      question: 'How long must emergency lighting last in general buildings?',
+      question: 'What is the minimum emergency lighting duration in a general building?',
       options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
       correctAnswer: 1,
       explanation:
-        'General buildings require a minimum 1-hour duration, though many installations use 3-hour systems for greater safety margin and compliance flexibility.',
+        'General buildings require a minimum 1-hour duration, although many installations use 3-hour fittings for a greater safety margin.',
     },
     {
       id: 7,
-      question: 'In public assembly spaces, how long must emergency lighting last?',
+      question: 'In a public assembly space, how long must emergency lighting operate?',
       options: ['1 hour', '2 hours', '3 hours', '4 hours'],
       correctAnswer: 2,
       explanation:
-        'Public assembly spaces, workplaces, and premises where re-entry may be required must have emergency lighting that operates for a minimum of 3 hours.',
+        'Public assembly spaces, and premises where re-entry may be required, must have emergency lighting that operates for a minimum of 3 hours.',
     },
     {
       id: 8,
-      question: 'Why should designers allow for battery ageing in calculations?',
+      question: 'Why should designers allow for battery ageing in their calculations?',
       options: [
-        'To reduce costs',
-        'To improve efficiency',
-        'Systems must meet requirements at end of battery life, not just when new',
-        'To comply with warranty terms',
+        'The system must still meet the lux levels at end of battery life',
+        'It reduces the overall material cost of the installation',
+        'It improves the lighting efficiency of the luminaires',
+        "It is needed to satisfy the manufacturer's battery warranty",
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
-        'Battery performance degrades over time, so systems must be designed to still achieve required lux levels when batteries reach end of service life (typically 80% of original capacity).',
+        'Battery capacity falls with age, so the design must still achieve the required lux levels at the end of the battery service life.',
     },
     {
       id: 9,
       question: 'Which instrument is used to measure lux levels during testing?',
-      options: ['Multimeter', 'Calibrated lux meter', 'Oscilloscope', 'Infrared thermometer'],
-      correctAnswer: 1,
+      options: ['A multimeter', 'An oscilloscope', 'A calibrated lux meter', 'An infrared thermometer'],
+      correctAnswer: 2,
       explanation:
-        'A calibrated lux meter is essential for accurate measurement of illumination levels at floor level during commissioning and periodic testing.',
+        'A calibrated lux meter is used to measure illuminance at floor level during commissioning and periodic testing.',
     },
     {
       id: 10,
-      question: 'Why is a 3-hour duration fitting often used as the default choice?',
+      question: 'Why is a 3-hour duration fitting often chosen as the default?',
       options: [
-        "It's cheaper to install",
-        'It meets requirements for most building types and future-proofs compliance',
-        'It uses less energy',
-        "It's required by law in all buildings",
+        'It is the cheapest fitting available to install on site',
+        'It meets the requirements for most building types',
+        'It consumes the least standby energy of any fitting',
+        'It is required by law in every type of building',
       ],
       correctAnswer: 1,
       explanation:
-        '3-hour fittings meet the requirements for most commercial and public buildings, provide safety margin for complex evacuations, and future-proof against changing regulations.',
+        '3-hour fittings satisfy the requirements of most commercial and public premises and give margin for complex evacuations and future changes.',
     },
   ];
 

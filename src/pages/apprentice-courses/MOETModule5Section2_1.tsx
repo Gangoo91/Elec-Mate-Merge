@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the primary function of the CPU module in a PLC?',
     options: [
       'To execute the stored program by reading inputs, processing logic and updating outputs',
-      'Test results, performance verification, defect lists, and acceptance criteria',
-      'The individual — their capability, fitness, training, and any health conditions',
-      'A device that changes the size, direction or speed of a force to do useful work',
+      'To convert the incoming mains supply into regulated DC voltages',
+      'To interface directly between field devices and the program',
+      'To provide network connectivity to other controllers and HMIs',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'plc-memory-types',
     question: 'Which type of PLC memory retains its contents when power is removed?',
     options: [
-      'Scheduled updates with testing and rollback capability',
-      'Electromagnetic interference from external sources',
+      'Non-backed RAM holding the input/output image tables',
+      'The volatile working registers used during the scan',
       'Flash memory or EEPROM (non-volatile memory)',
-      'Due to hydrostatic pressure from the water column above',
+      'The temporary buffers used for communications',
     ],
     correctIndex: 2,
     explanation:
@@ -56,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'A PLC is best described as:',
     options: [
-      'A document providing information about a hazardous substance including hazards, handling, and emergency measures',
+      'A standard desktop computer adapted for office automation tasks',
       'A ruggedised industrial computer designed to control machines and processes using a stored program',
-      'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
-      'To prevent the insertion of objects other than a correctly shaped plug pin',
+      'A hardwired relay panel with no reprogrammable logic',
+      'A single sensor that converts a physical input into a digital signal',
     ],
     correctAnswer: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a modular PLC system, what is the purpose of the backplane?',
     options: [
-      'Updated drawings, test certificates, and modification records',
-      'Digital inputs are on/off signals, analog inputs are variable signals like 0-10V or 4-20mA',
+      'To convert mains AC into the regulated DC the modules need',
+      'To store the working program and retentive data values',
       'To provide the communication bus and power distribution between the CPU and I/O modules',
-      'Reduces conflicts between activities, controls access, manages hazards',
+      'To filter electrical noise from the incoming field wiring',
     ],
     correctAnswer: 2,
     explanation:
@@ -82,9 +82,9 @@ const quizQuestions = [
     id: 3,
     question: 'The PLC scan time is affected by:',
     options: [
-      'Experience as a resource \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 build on what they already know',
-      'Normally Closed (contact is closed when the relay is de-energised)',
-      'Most-used tools accessible; everything with a designated place; regular cleaning',
+      'The ambient temperature of the control panel only',
+      'The colour coding of the field wiring',
+      'The number of HMI screens connected to the network',
       'The length of the program, the number of I/O points and the CPU processing speed',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ const quizQuestions = [
       'What happens to the PLC outputs if the CPU detects a fatal error during program execution?',
     options: [
       'The CPU enters FAULT mode and all outputs are switched off (de-energised) for safety',
-      'False triggering from heat sources or incorrect positioning',
-      'Yes, the red Labourer card requires Level 1 or the CSCS Health and Safety Awareness course',
-      'Prevention costs less than correction; correction costs less than failure',
+      'All outputs are latched in their last known state until reset',
+      'The CPU restarts the program automatically with no warning',
+      'The outputs are set to a default ON state to keep the plant running',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 5,
     question: 'The watchdog timer in a PLC is used to:',
     options: [
-      'Remove it from use, tag it as defective, and use a replacement component from the same manufacturer',
+      'Switch the PLC into RUN mode automatically on power-up',
       'Detect if the scan cycle takes longer than expected, indicating a program or hardware fault',
-      'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
-      'That there are no gaps where a person could fall between the scaffold and the building face',
+      'Count the number of times each output is energised',
+      'Synchronise the scan cycle with the mains supply frequency',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 6,
     question: 'A compact (fixed) PLC differs from a modular PLC in that:',
     options: [
-      'Self-control, trustworthiness, conscientiousness, adaptability, and innovation',
-      'Apply direct pressure with a large pad and maintain it firmly',
+      'It can be expanded almost without limit by adding I/O racks',
+      'It has no CPU and relies on an external processor',
       'The CPU, power supply and a fixed number of I/O points are all in one unit',
-      'Only when all other reasonably practicable measures are insufficient',
+      'It cannot be reprogrammed once installed on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,9 +135,9 @@ const quizQuestions = [
     id: 7,
     question: 'The input image table in a PLC stores:',
     options: [
-      'All dead tests are satisfactory and the supply characteristics are known',
-      'Reduces trips, falls, fire risks and improves working conditions',
-      'An inverter that manages both solar PV and battery storage in one unit',
+      'The compiled program ready for execution by the CPU',
+      'The final states written out to the physical outputs',
+      'The firmware and configuration settings of the CPU',
       'A snapshot of all input states taken at the start of each scan cycle',
     ],
     correctAnswer: 3,
@@ -149,9 +149,9 @@ const quizQuestions = [
     question: 'When replacing a PLC CPU module, the maintenance technician should:',
     options: [
       'Isolate the power, note the firmware version, transfer the program, verify configuration and test before returning to service',
-      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling frustrated because the timeline has been pushed back again"',
-      'Other Specified Feeding or Eating Disorder — an eating disorder that does not meet the full criteria for anorexia, bulimia, or binge eating disorder',
-      'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
+      'Swap the module live to avoid losing the working data',
+      'Fit any spare CPU without checking the firmware version',
+      'Leave the program backup until after the new CPU is running',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 9,
     question: 'Battery-backed RAM in a PLC is used to:',
     options: [
-      'To prevent water tracking along the cable into the enclosure',
+      'Permanently store the PLC firmware and operating system',
       'Retain program data, timer values and counter values during short power outages',
-      'Test with switches in various positions to verify all paths',
-      'Multiple interconnected communication paths for reliability',
+      'Power the field devices when the mains supply fails',
+      'Convert the incoming supply into regulated DC for the backplane',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 10,
     question: 'A PLC power supply module typically provides:',
     options: [
-      'In a semi-seated or W-position (knees raised towards chest) initially, NOT laid flat immediately',
-      '0300 123 3393 (Mon-Fri 9am-6pm) — for support, info and guidance on mental health concerns',
+      'The data and address bus connections between modules',
+      'A snapshot of all input states at the start of each scan',
       'Regulated DC voltages (commonly 5 V for the backplane logic and 24 V for I/O) from the mains supply',
-      'Coordinating aftercare activities and maintaining focus on performance outcomes',
+      'Network connectivity to other controllers and HMIs',
     ],
     correctAnswer: 2,
     explanation:

@@ -52,24 +52,24 @@ const inlineChecks = [
     question:
       'A consumer unit position has a measured prospective fault current of 8 kA. The protective device chosen has Icn = 6 kA. What does BS 7671 require?',
     options: [
-      'Use the device anyway — Icn is advisory',
-      'Reject the device. Either choose one with Icn ≥ 8 kA, or apply Reg 536.5 (back-up) back-up coordination so the upstream device limits the let-through energy',
-      'Derate the cable to suit the smaller device',
-      'Use two devices of Icn = 6 kA in parallel',
+      'Use the device anyway, since the Icn rating is only advisory guidance',
+      'Reject it — choose Icn ≥ 8 kA or apply Reg 536.5 back-up coordination',
+      'Derate the protected cable so it suits the smaller-Icn device',
+      'Fit two of the 6 kA devices in parallel to share the fault current',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 432 / 434.5.1 require the device to be capable of breaking the maximum prospective fault current at its installation point. Where the device Icn is below the prospective fault current, Reg 536.5 (back-up) permits back-up: an upstream device with sufficient breaking capacity that limits the energy the downstream device must interrupt. Documented manufacturer back-up tables / declaration is needed.',
+      'Reg 432 / 434.5.1 require the device to be capable of breaking the maximum prospective fault current at its installation point. Where the device Icn is below the prospective fault current, Reg 536.5 permits back-up: an upstream device with sufficient breaking capacity limits the energy the downstream device must interrupt. Documented manufacturer back-up tables or declaration are needed.',
   },
   {
     id: 'm4s2-conventional-time',
     question:
       "Appendix 3 figures 3A4 / 3A5 / 3A6 show MCB time-current curves with a horizontal band labelled 'conventional time'. What does that band actually mean?",
     options: [
-      'The time the device takes to detect a short-circuit',
-      'The standardised observation period (1 hour for In ≤ 63 A, 2 hours above) within which an overload device must operate at I₂ — used for type-testing per BS EN 60898',
-      'The factory ageing time before delivery',
-      'The minimum disconnection time for ADS',
+      'The time the magnetic element takes to detect a short-circuit fault',
+      'The type-test observation period within which an overload device must operate at I₂',
+      'The factory burn-in / ageing time applied before the device is delivered',
+      'The maximum permitted ADS disconnection time for a final circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'Where do you get the PSCC value to compare against device Icn for a domestic property?',
     options: [
-      'It is always 16 kA at every UK consumer unit',
-      'Read it from the MCB type label',
-      'Either request the maximum prospective short-circuit current from the DNO, or measure PSCC at the cut-out using a dedicated PSCC tester (most loop-tester instruments measure this)',
-      'Calculate from the cable length only',
+      'It is fixed at 16 kA at every UK domestic consumer unit',
+      'Read the prospective value printed on the MCB type label',
+      'Request the DNO maximum, or measure PSCC at the cut-out with a tester',
+      'Calculate it from the final-circuit cable length alone',
     ],
     correctIndex: 2,
     explanation:
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which BS EN standard governs the time/current characteristic of a domestic Type B circuit-breaker?',
-    options: ['BS 88-3', 'BS EN 60898', 'BS EN 60947-2', 'BS 3036'],
-    correctAnswer: 1,
+    options: ['BS 88-3', 'BS EN 60947-2', 'BS EN 60898', 'BS 3036'],
+    correctAnswer: 2,
     explanation:
       'BS EN 60898 covers circuit-breakers for household and similar fixed installations (Type B / C / D characteristics, Figures 3A4, 3A5, 3A6 in App 3 of BS 7671). BS 88-3 covers domestic / commercial cartridge fuses; BS EN 60947-2 covers industrial circuit-breakers (e.g. MCCBs, ACBs); BS 3036 covers semi-enclosed (rewireable) fuses.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     question:
       'A 50 kW three-phase induction motor is being installed. Standard practice is to fit a Type C or Type D MCB rather than Type B. Why?',
     options: [
-      'Type B is not certified for three-phase use',
-      'Direct-on-line motor starting current can be 6–8× FLC; a Type B MCB (3–5× In magnetic threshold) would nuisance-trip on every start',
-      'Three-phase motors must use BS 3036 fuses',
-      'Type D has lower breaking capacity, which is required for motors',
+      'Type B MCBs are not certified for three-phase motor circuits',
+      'DOL inrush of 6–8× FLC would nuisance-trip a Type B (3–5× In) on every start',
+      'BS 7671 requires three-phase motors to be protected by BS 3036 fuses',
+      'Type D has a lower breaking capacity, which motor circuits require',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'Reg 435.2 covers protection where overload and fault current protection are provided by SEPARATE devices. What does it require?',
     options: [
-      'Only one of the two devices needs to be installed',
-      'The overload device must satisfy Section 433 AND the fault-current device must satisfy Section 434 — independently',
-      'Both devices must be the same type and rating',
-      'The two devices must be from the same manufacturer',
+      'Each device meets its own Section — overload to 433, fault current to 434',
+      'Only one of the two protective devices actually needs to be installed',
+      'Both devices must share the same type, rating and characteristic curve',
+      'Both devices must be sourced from the same approved manufacturer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 435.2: where overload and fault-current protection are split, each device is judged against its own Section. The overload device only has to meet Section 433 (coordination with cable thermal limits); the fault-current device only has to meet Section 434 (fault-current capability and adiabatic). A combined device (Section 435 / RCBO / MCB) must satisfy both Sections together.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'Which device may be used ONLY for short-circuit protection per Section 432, and never for overload?',
     options: [
-      'Type B MCB to BS EN 60898',
-      'RCBO to BS EN 61009-1',
-      'Instantaneous-trip circuit-breaker (ICB) to Annex O of BS EN 60947-2 / aM and aR fuses',
-      'BS 88-3 cartridge fuse',
+      'A Type B MCB to BS EN 60898 on a final circuit',
+      'An RCBO to BS EN 61009-1 with a thermal element',
+      'A BS 88-3 general-purpose cartridge fuse',
+      'An instantaneous-trip CB (Annex O of BS EN 60947-2) or aM / aR fuses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reg 432: instantaneous-trip circuit-breakers (ICBs to Annex O of BS EN 60947-2) and aM / aR type fuses (BS HD 60269-2 / -3) may be used only for short-circuit protection — they have no overload thermal element. They must always be paired with a separate overload device (e.g. a thermal overload relay on a motor starter) to satisfy Reg 435.2.',
   },
@@ -185,10 +185,10 @@ const quizQuestions = [
     question:
       'Reg 533.2.2 adds a layer to Reg 433.1 selection where harmonic currents are present. What does it require?',
     options: [
-      'Use BS 3036 fuses instead of MCBs',
-      'When selecting an overload protective device, take account of harmonic currents — the RMS current including harmonic content must inform the device rating',
-      'Halve the cable CCC to allow for harmonics',
-      'Disable additional protection where harmonics are present',
+      'Replace MCBs with BS 3036 fuses on harmonic-rich circuits',
+      'When selecting the overload device, take account of harmonic currents in the RMS rating',
+      'Halve the cable current-carrying capacity to allow for harmonics',
+      'Disable additional RCD protection wherever harmonics are present',
     ],
     correctAnswer: 1,
     explanation:

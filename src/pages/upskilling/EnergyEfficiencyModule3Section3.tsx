@@ -44,12 +44,12 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
       id: 'qc1-m3s3',
       question: 'What does a Display Energy Certificate (DEC) rating of "A" indicate?',
       options: [
-        'The building uses more energy than the benchmark',
         'The building uses significantly less energy than the typical benchmark',
-        'The building has no heating system',
-        'The building is newly constructed',
+        'The building uses more energy than the typical benchmark',
+        'The building has no fixed heating or cooling system',
+        'The building was constructed within the last two years',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'A DEC rating of "A" indicates the building uses significantly less energy than the typical benchmark for that building type. The scale runs from A (most efficient, less than 25% of typical) to G (least efficient, over 150% of typical).',
     },
@@ -87,88 +87,108 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
     {
       question:
         'According to CIBSE TM46, what is the typical electricity benchmark for a general office building?',
-      options: ['50 kWh/m²/year', '95 kWh/m²/year', '150 kWh/m²/year', '200 kWh/m²/year'],
+      options: ['50 kWh/m²/year', '75 kWh/m²/year', '95 kWh/m²/year', '150 kWh/m²/year'],
       correctAnswer: '95 kWh/m²/year',
+      explanation:
+        'CIBSE TM46 gives a typical electricity benchmark of around 95 kWh/m²/year for general office accommodation, used as the comparator when calculating a DEC rating.',
     },
     {
       question:
         'What is the formula for calculating the Energy Performance Indicator used in DECs?',
       options: [
         'Total energy cost ÷ floor area',
+        'kWh consumed × carbon emission factor',
         'Actual energy use ÷ benchmark energy use × 100',
-        'kWh consumed × carbon factor',
-        'Floor area × occupancy hours',
+        'Floor area × annual occupancy hours',
       ],
       correctAnswer: 'Actual energy use ÷ benchmark energy use × 100',
+      explanation:
+        'The DEC Energy Performance Indicator expresses actual energy use as a percentage of the typical benchmark (actual ÷ benchmark × 100), so 100 means exactly typical performance.',
     },
     {
       question: 'Which public buildings in England and Wales require a Display Energy Certificate?',
       options: [
-        'All public buildings',
         'Public buildings over 250m² frequently visited by the public',
-        'Only government offices',
-        'Buildings built after 2008',
+        'Every public building regardless of size or visitor numbers',
+        'Only central government office buildings',
+        'Only buildings constructed after 2008',
       ],
       correctAnswer: 'Public buildings over 250m² frequently visited by the public',
+      explanation:
+        'A DEC is required for public-authority buildings with a total useful floor area over 250m² that are frequently visited by the public, and must be displayed prominently.',
     },
     {
       question: 'What is a heating degree day based on in the UK?',
       options: [
-        'The average outdoor temperature being below 15.5°C',
         'The indoor temperature falling below 21°C',
+        'The average outdoor temperature being below 15.5°C',
         'The difference between outdoor and indoor temperatures',
-        'The number of hours heating is required',
+        'The total number of hours heating is switched on',
       ],
       correctAnswer: 'The average outdoor temperature being below 15.5°C',
+      explanation:
+        'UK heating degree days are calculated against a base temperature of 15.5°C; the more the daily mean outdoor temperature falls below it, the greater the heating demand recorded.',
     },
     {
       question:
         'Which electricity tariff component is charged based on usage during peak demand periods (Triads)?',
       options: ['DUoS charges', 'TNUoS charges', 'BSUoS charges', 'Commodity charges'],
       correctAnswer: 'TNUoS charges',
+      explanation:
+        'Transmission Network Use of System (TNUoS) charges for half-hourly customers are based on demand during the three Triad periods of highest national demand each winter.',
     },
     {
       question: 'What is the typical CIBSE TM46 electricity benchmark for schools?',
-      options: ['32 kWh/m²/year', '55 kWh/m²/year', '95 kWh/m²/year', '120 kWh/m²/year'],
+      options: ['55 kWh/m²/year', '95 kWh/m²/year', '120 kWh/m²/year', '32 kWh/m²/year'],
       correctAnswer: '32 kWh/m²/year',
+      explanation:
+        'Schools have a relatively low typical electricity benchmark of around 32 kWh/m²/year under CIBSE TM46, reflecting their daytime, term-time occupancy pattern.',
     },
     {
       question:
         'When normalising consumption data to kWh/m², which area measurement should typically be used?',
       options: [
-        'External footprint area',
-        'Gross Internal Area (GIA)',
+        'External building footprint area',
         'Net lettable area only',
-        'Car park area',
+        'Gross Internal Area (GIA)',
+        'Car park and external hardstanding area',
       ],
       correctAnswer: 'Gross Internal Area (GIA)',
+      explanation:
+        'Energy intensity (kWh/m²) is normally based on the Gross Internal Area, giving a consistent measure that matches how CIBSE TM46 benchmarks are defined.',
     },
     {
       question: 'What does BSUoS stand for in electricity billing?',
       options: [
         'British Standard Use of System',
-        'Balancing Services Use of System',
         'Building Services Use of System',
         'Base Supply Use of System',
+        'Balancing Services Use of System',
       ],
       correctAnswer: 'Balancing Services Use of System',
+      explanation:
+        'BSUoS stands for Balancing Services Use of System — the charge that recovers the cost of the system operator keeping supply and demand balanced in real time.',
     },
     {
       question:
         'A building has an Energy Performance Indicator of 75. What DEC rating would it receive?',
       options: ['A', 'B', 'C', 'D'],
       correctAnswer: 'C',
+      explanation:
+        'DEC bands run A (0-25) through G (over 150). An EPI of 75 falls in the 51-75 band, which is a C rating.',
     },
     {
       question:
         'Which organisation publishes degree day data that is freely available for UK locations?',
       options: [
-        'Only commercial providers',
-        'Degree Days.net and Carbon Trust',
-        'Building Research Establishment only',
+        'Only paid commercial weather providers',
+        'The Building Research Establishment only',
+        'Degree Days.net and the Carbon Trust',
         'National Grid exclusively',
       ],
-      correctAnswer: 'Degree Days.net and Carbon Trust',
+      correctAnswer: 'Degree Days.net and the Carbon Trust',
+      explanation:
+        'Free UK degree day data is available from Degree Days.net and the Carbon Trust, letting analysts weather-correct consumption without paying for commercial datasets.',
     },
   ];
 

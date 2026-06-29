@@ -27,10 +27,10 @@ const inlineChecks = [
     question:
       'You are specifying a consumer unit for a domestic rewire. The wholesaler offers two visually identical units: one declared to BS EN 61439-3 (current edition with the latest BSI-declared amendment), the other to a superseded edition of the same standard at clearance pricing. Which does Reg 511.1 actually allow you to install?',
     options: [
-      'Either — both still carry the BS EN number',
-      'Only the current edition with BSI-declared amendments — Reg 511.1 binds you to "the edition of the standard ... the current edition, with those amendments declared by BSI to be applicable"',
-      'Only the cheaper one if the customer agrees in writing',
-      'Either, provided the unit carries a CE or UKCA mark',
+      'Either unit — both still carry the BS EN 61439-3 number',
+      'Only the current edition with the BSI-declared amendments, per Reg 511.1',
+      'Only the cheaper superseded unit if the customer agrees in writing',
+      'Either unit, provided it carries a valid CE or UKCA mark',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const inlineChecks = [
     question:
       'A site has a measured nominal supply voltage of 230 V with documented over-voltage events to 253 V (the +10 % limit) during light-load periods. You are selecting a contactor rated 230 V AC. Reg 512.1.1 requires you to do what?',
     options: [
-      'Nothing — the 230 V rating matches the nominal voltage',
-      'Confirm the contactor coil and main contact ratings cover the highest steady-state voltage that may occur, including the documented +10 % excursion (253 V), not just the nominal',
-      'Apply a derating factor of 0.85',
-      'Specify a 110 V contactor with a step-down transformer',
+      'Nothing — the 230 V rating already matches the nominal supply voltage',
+      'Confirm the coil and contact ratings cover the highest steady-state voltage, including the +10 % excursion to 253 V',
+      'Apply a blanket derating factor of 0.85 to the contactor rating',
+      'Specify a 110 V contactor fed through a step-down transformer',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'A customer wants to install a one-off, hand-built control panel imported from outside the UK. There is no British or Harmonized Standard the panel can claim conformity to. Under Reg 511.2 you may install it provided what?',
     options: [
-      'You attach a CE mark from a printer roll',
-      'The designer confirms in writing that the equipment provides a degree of safety not less than that afforded by compliance with the relevant standard, and the justification is recorded on the EIC',
-      'The customer signs a disclaimer absolving you of responsibility',
-      'You de-rate every protective device by 50 %',
+      'You attach a CE mark printed from a label roll to the panel',
+      'The designer confirms in writing equivalent safety to the standard and records it on the EIC',
+      'The customer signs a disclaimer absolving you of all responsibility',
+      'You de-rate every protective device in the panel by 50 %',
     ],
     correctIndex: 1,
     explanation:
@@ -78,10 +78,10 @@ const inlineChecks = [
     question:
       'You are installing socket-outlets in an outdoor garden room with a damp concrete floor and no heating. Reg 512.2 requires equipment selection for external influences. Which Reg 522 codes are most directly relevant?',
     options: [
-      'AA1 (ambient temperature -60 to +5 °C) and AB1',
-      'AD3 / AD4 (presence of water — splashes / sprays) and BB2 / BB3 (low / very low body resistance from damp conditions)',
-      'AG1 (no mechanical impact) only',
-      'AN1 (no solar radiation) only',
+      'AA1 (ambient temperature -60 to +5 °C) and AB1 (humidity) only',
+      'AD3 / AD4 (water — splashes / sprays) and BB2 / BB3 (low body resistance)',
+      'AG1 (no mechanical impact) on its own, nothing further',
+      'AN1 (no solar radiation) on its own, nothing further',
     ],
     correctIndex: 1,
     explanation:
@@ -92,10 +92,10 @@ const inlineChecks = [
     question:
       'A contractor proposes building a luminaire and its driver permanently behind a sealed plasterboard ceiling, accessed only by destructive removal of the ceiling. Reg 513.1 says what?',
     options: [
-      'Acceptable — once installed, equipment does not need to be reached again',
-      'Equipment shall be installed so as to be accessible for operation, inspection, testing, fault-finding, maintenance and repair — sealed-in inaccessible mounting fails 513.1 unless the equipment is specifically designed to be maintenance-free for its installed life and a suitable means of replacement is provided',
-      'Acceptable, but only if the plasterboard is fire-rated',
-      'Acceptable, provided the customer signs a waiver',
+      'Acceptable — once installed, the equipment never needs to be reached again',
+      'Equipment shall be accessible for operation, inspection, testing, maintenance and repair, so sealed-in mounting fails 513.1',
+      'Acceptable, but only where the plasterboard ceiling is fire-rated',
+      'Acceptable, provided the customer signs a maintenance waiver',
     ],
     correctIndex: 1,
     explanation:
@@ -106,10 +106,10 @@ const inlineChecks = [
     question:
       "A manufacturer's installation manual for an EV charger specifies a maximum 25 mm² supply CPC, 30 mA Type A RCD upstream, and a minimum bend radius of 8× cable OD. The installer fits 16 mm² CPC (oversized to the manual's view, undersized to the installer's preference for cost), a Type AC RCD, and folds the cable tighter than 8× OD. What is the regulatory position?",
     options: [
-      'Manufacturer instructions are advisory — BS 7671 prevails',
-      "Manufacturer instructions are a binding regulatory document under Reg 510.3 / 134.1.1: the installation must comply with both BS 7671 AND the manufacturer's instructions; departing from any of the three points listed creates EICR observations and may void warranty / conformity",
-      'Only the BS 7671 points matter',
-      'Only the bend radius matters because it is a physical risk',
+      'Manufacturer instructions are advisory only and BS 7671 always prevails',
+      "Manufacturer instructions are binding under Reg 510.3 / 134.1.1, so departures attract EICR observations",
+      'Only the BS 7671 points matter; the manufacturer points can be ignored',
+      'Only the bend radius matters here because it is a physical damage risk',
     ],
     correctIndex: 1,
     explanation:
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Which combination correctly describes the headline scope of Section 511 (Compliance with Standards) and Section 512 (Operational conditions and external influences)?',
     options: [
-      'Section 511 covers only voltage; Section 512 covers only IP ratings',
-      'Section 511 binds equipment to the relevant British / Harmonized Standard at its current edition with BSI-declared amendments (511.1) and provides a designed-departure route for out-of-standard equipment (511.2); Section 512 then governs selection for voltage (512.1.1), current (512.1.2), frequency (512.1.3), power (512.1.4), compatibility (512.1.5), impulse withstand voltage (512.1.6) and external influences (512.2)',
-      'Section 511 is advisory; Section 512 is mandatory',
-      'Both sections only apply to switchgear',
+      'Section 511 is the standards-conformity gate (current edition, BSI amendments); Section 512 is the suitability gate (voltage, current, frequency, power, compatibility, impulse withstand, external influences)',
+      'Section 511 covers only voltage rating; Section 512 covers only enclosure IP ratings',
+      'Section 511 is advisory guidance only; Section 512 is the mandatory requirement',
+      'Both sections apply solely to switchgear and not to accessories or cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The two sections work as a pair. 511 is the conformity gate (does the equipment have a relevant standard, and is the version current?). 512 is the suitability gate (is the conformant equipment suitable for THIS installation's voltage, current, frequency, power, compatibility, impulse withstand and external influences?). Both gates must be cleared before equipment may be used (Reg 132.1 / 132.5 — designer's duty).",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A designer claims that because a piece of equipment carries the UKCA mark, Reg 511.1 is satisfied. Why is the designer wrong?',
     options: [
-      'UKCA is exactly equivalent to Reg 511.1 — the designer is correct',
-      'UKCA / CE marking is a market-access declaration of conformity to applicable UK / EU regulations (LVD, EMC, RoHS, etc.) made by the manufacturer; Reg 511.1 separately requires conformity to the relevant British or Harmonized installation standard at its current BSI-declared edition. The two requirements are independent and both must be met',
-      'UKCA only applies to imports from outside the UK',
-      'UKCA expired in 2024',
+      'UKCA marking is exactly equivalent to Reg 511.1, so the designer is correct',
+      'UKCA marking only applies to products imported from outside the UK',
+      'UKCA is market-access conformity; Reg 511.1 is a separate installation-standard requirement, and both must be met',
+      'The UKCA marking regime expired in 2024 and no longer has any effect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Common confusion. UKCA / CE = product market-access (the manufacturer's declaration that the product complies with applicable supply-side regulations such as the Electrical Equipment (Safety) Regulations 2016 and the EMC Regulations 2016). Reg 511.1 = installation-side requirement that the equipment also conforms to the relevant British / Harmonized Standard for its intended use, in its current edition. A UKCA-marked accessory built to a superseded edition of its product standard is conformant for market access but non-compliant for installation under 511.1.",
   },
@@ -165,10 +165,10 @@ const quizQuestions = [
     question:
       'You are selecting a 32 A MCB to protect a final circuit. Which Reg 512.1.x requirements must the device satisfy beyond simply "32 A nominal"?',
     options: [
-      'Only 512.1.1 (voltage)',
-      '512.1.1 (voltage rating ≥ system voltage incl. excursions), 512.1.2 (current rating coordinated with cable Iz and load Ib per Reg 433.1.1), 512.1.3 (rated frequency 50 Hz for UK LV), 512.1.4 (power / breaking capacity ≥ prospective fault current at point of installation per Reg 434.5.1), 512.1.5 (compatibility — RCD selectivity, AFDD compatibility, busbar / DIN-rail mounting)',
-      'Only 512.1.4 (power)',
-      'Only 512.1.6 (impulse withstand)',
+      'Only 512.1.1 (voltage rating) needs to be satisfied',
+      'Voltage, current, frequency, breaking capacity and compatibility (512.1.1 to 512.1.5)',
+      'Only 512.1.4 (rated power / breaking capacity) needs to be satisfied',
+      'Only 512.1.6 (impulse withstand voltage) needs to be satisfied',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'A bespoke piece of equipment has no relevant British or Harmonized Standard it can claim conformity to. Which BS 7671 mechanism allows the equipment to still be installed, and what evidence must accompany it?',
     options: [
-      'Reg 511.1 — a CE mark is enough',
-      'Reg 511.2 — provided the designer (per Reg 132.1) confirms the equipment provides a degree of safety not less than that obtained by compliance with the relevant standard, and the matter is recorded as a designed departure under Reg 120.3 on the EIC',
-      'Reg 411.3.4 — automatic 30 mA RCD makes any equipment compliant',
-      'No mechanism exists; the equipment cannot be installed',
+      'Reg 511.1 — a CE mark on the equipment is sufficient evidence',
+      'Reg 411.3.4 — a 30 mA RCD makes any equipment compliant',
+      'No mechanism exists; the equipment cannot lawfully be installed',
+      'Reg 511.2 — designer confirms equivalent safety and records a Reg 120.3 designed departure on the EIC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 511.2 is the explicit out-of-standard route. The designer must satisfy themselves that equivalent safety is achieved (often by reference to similar standards, type-test reports, manufacturer technical files, third-party assessment), and the departure must be declared on the EIC under Reg 120.3 with the justification attached. The burden of proof sits with the designer — the customer cannot waive it, the contractor cannot inherit it via instruction.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'Reg 513.1 (Accessibility) requires equipment to be installed for operation, inspection, testing, fault-finding, maintenance and repair. Which scenario most clearly fails 513.1?',
     options: [
-      'A consumer unit at 1.4 m above floor level with a hinged door',
-      'A junction box concealed inside a sealed plasterboard ceiling void with no access hatch and no documented maintenance-free strategy',
-      'A switch beside a doorway',
-      'A socket-outlet at 450 mm above floor level',
+      'A junction box sealed inside a plasterboard ceiling void with no access hatch or maintenance-free strategy',
+      'A consumer unit mounted at 1.4 m above floor level with a hinged accessible door',
+      'A functional light switch mounted beside a doorway at normal switch height',
+      'A socket-outlet mounted at 450 mm above finished floor level in a habitable room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 526.3 specifically prohibits inaccessible joints — every connection must be accessible for inspection, testing and maintenance, except where (a) the joint is in equipment complying with Reg 526.3(i) (compound-filled / encapsulated), (b) brazed / welded / soldered joints in equipment listed in 526.3(ii)–(iv), or (c) maintenance-free joints listed in 526.3 (e.g. crimped joints in compliant accessories). A standard junction box behind sealed plasterboard fails on both 526.3 and 513.1.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'A manufacturer\'s installation manual specifies "30 mA Type A RCD upstream — Type AC not permitted". The installer fits a Type AC. Which BS 7671 regulation does this most directly breach, and what is the regulatory consequence?',
     options: [
-      'No breach — RCDs are interchangeable',
-      "Breach of Reg 510.3 / 134.1.1 (installation per manufacturer's instructions); the equipment's declared conformity is conditional on the instruction being followed, so the install is non-compliant, the EIC must record a departure, the manufacturer's warranty is voidable, and the install attracts EICR observation typically C2",
-      'Breach of Reg 411.3.4 only',
-      'Breach of Reg 511.1 only',
+      'No breach — Type AC and Type A RCDs are interchangeable',
+      'Breach of Reg 411.3.4 (additional protection) only',
+      "Breach of Reg 510.3 / 134.1.1 — installing against the manufacturer's instructions voids conformity and attracts an EICR observation",
+      'Breach of Reg 511.1 (compliance with standards) only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 510.3 binds equipment selection / installation to the manufacturer's instructions. Reg 134.1.1 binds initial verification to the same. Where the manufacturer is more restrictive than BS 7671, the manufacturer's instruction governs. Wrong-type RCD (Type AC where Type A is required) is a documented EICR fail mode and a documented warranty exclusion. The cert must record the departure under Reg 120.3 — but a designed departure must justify equivalent safety, which is impossible to argue when the manufacturer's own document says \"not permitted\".",
   },
@@ -224,7 +224,7 @@ const quizQuestions = [
       'CAT I — Uw 1.5 kV',
       'CAT II — Uw 2.5 kV',
       'CAT III — Uw 4 kV',
-      'CAT IV — Uw 6 kV (origin equipment — meter, service head, supply-side switchgear — sees the highest impulse stress and Table 443.2 mandates the highest Uw)',
+      'CAT IV — Uw 6 kV',
     ],
     correctAnswer: 3,
     explanation:

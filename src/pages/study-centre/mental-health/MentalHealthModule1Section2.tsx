@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       "In the ALGEE action plan, what does the first 'A' stand for, and what does it involve?",
     options: [
-      'Assess the situation and call 999 immediately',
       'Approach, assess, and assist with any crisis',
+      'Assess the situation and call 999 immediately',
       'Ask the person what medication they are taking',
       'Advise the person to see their GP within 24 hours',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The first step in ALGEE is 'Approach, assess, and assist with any crisis'. This means approaching the person in a non-threatening way, assessing whether they may be at risk of harm to themselves or others, and assisting with any immediate crisis such as suicidal thoughts or self-harm. It does not mean calling 999 automatically — that depends on the level of risk assessed.",
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'A colleague discloses they have been feeling severely depressed for several months. As a Mental Health First Aider, what is the most appropriate response?',
     options: [
       'Diagnose them with clinical depression and recommend antidepressants',
-      'Tell their manager immediately so they can arrange time off',
       'Listen non-judgementally, offer reassurance, and encourage them to seek professional help',
+      'Tell their manager immediately so they can arrange time off',
       'Tell them everyone feels down sometimes and they should try to think more positively',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "A Mental Health First Aider is trained to listen without judgement, provide reassurance and information, and encourage the person to access appropriate professional support. An MHFA is NOT qualified to diagnose, prescribe, or provide therapy. Minimising someone's experience ('everyone feels down') is harmful and dismissive. Disclosing to a manager without consent would breach confidentiality unless there is immediate risk.",
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 1,
     question: 'According to MHFA England, what is the primary role of a Mental Health First Aider?',
     options: [
-      'To diagnose mental health conditions in the workplace',
-      'To provide ongoing counselling support to colleagues',
-      'To spot early signs of mental ill health, provide initial support, and guide towards professional help',
-      'To replace the need for professional mental health services',
+      'To spot early signs and guide the person towards professional help',
+      'To diagnose and treat mental health conditions in the workplace',
+      'To provide ongoing weekly counselling sessions to colleagues',
+      'To replace local NHS and professional mental health services',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The primary role of a Mental Health First Aider is to recognise the early signs of mental ill health, provide initial reassurance and support, and encourage the person to seek appropriate professional help. An MHFA does not diagnose, treat, counsel, or replace professional services.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Listening to a colleague who is feeling anxious',
       'Providing reassurance and information about support services',
-      'Prescribing a course of cognitive behavioural therapy',
       'Encouraging someone to contact their GP',
+      'Prescribing a course of cognitive behavioural therapy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Prescribing therapy of any kind — including CBT — is outside the scope of an MHFA. Only qualified mental health professionals (psychiatrists, clinical psychologists, counsellors) can prescribe or deliver therapeutic interventions. The MHFA's role is to listen, reassure, inform, and encourage professional help.",
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'Under which UK legislation does an employer have a general duty of care for employee health, safety, and welfare at work?',
     options: [
-      'Equality Act 2010',
       'Health and Safety at Work etc. Act 1974',
+      'Equality Act 2010',
       'Mental Health Act 1983',
       'Social Action, Responsibility and Heroism Act 2015',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Health and Safety at Work etc. Act 1974 (HSWA) places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees. This includes mental health. The Management of Health and Safety at Work Regulations 1999 require employers to assess risks, including psychosocial risks, to employees.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       'What protection does the Social Action, Responsibility and Heroism Act 2015 (SARAH Act) offer to Mental Health First Aiders?',
     options: [
-      'It grants full legal immunity from prosecution',
-      'It requires courts to consider whether the person was acting for the benefit of society and responsibly when assessing negligence claims',
-      'It makes the MHFA role a legally protected position',
-      'It removes any requirement for confidentiality',
+      'It grants full legal immunity from any prosecution or claim',
+      'It makes the MHFA a legally protected, regulated position',
+      'It removes the requirement for confidentiality in a crisis',
+      'It requires courts to weigh whether someone acted responsibly and for the public good',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The SARAH Act 2015 does not grant immunity, but it does require courts to take into account whether a person was acting heroically, for the benefit of society, or demonstrated a generally responsible approach when determining negligence. This provides reassurance to those acting voluntarily in good faith, including Mental Health First Aiders.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       "When encouraging professional help (the second 'E' in ALGEE), which of the following would be the MOST appropriate referral pathway?",
     options: [
-      'Suggest they search online for advice',
-      'Recommend a specific therapist you know personally',
-      'Encourage them to speak to their GP as a first step, and provide information about the EAP, Samaritans, and other relevant services',
-      'Tell them they need to be referred by their manager',
+      'Suggest they search online for advice on their own',
+      'Recommend a specific private therapist you know personally',
+      'Encourage their GP first and share EAP and helpline options',
+      'Tell them they must be referred through their manager',
     ],
     correctAnswer: 2,
     explanation:
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'Which of the following statements about the legal position of Mental Health First Aiders in the UK is correct?',
     options: [
-      'MHFAs are regulated by the Health and Care Professions Council',
-      'There is specific UK legislation that governs the MHFA role',
-      'The MHFA role is voluntary, and there is no specific legislation governing it in the UK',
-      'MHFAs have the same legal status as registered mental health nurses',
+      'MHFAs are registered and regulated by the Health and Care Professions Council',
+      'The MHFA role is voluntary, with no specific UK legislation governing it',
+      'Specific UK legislation governs and mandates the MHFA role in workplaces',
+      'MHFAs hold the same legal status as registered mental health nurses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Mental Health First Aider role is entirely voluntary in the UK. There is no specific legislation that governs, regulates, or mandates the role. MHFAs are not registered professionals and are not regulated by any professional body such as the HCPC. The role is comparable to that of a physical first aider — a trained volunteer who provides initial support until professional help is available.',
   },

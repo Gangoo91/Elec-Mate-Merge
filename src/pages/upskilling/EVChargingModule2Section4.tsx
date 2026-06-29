@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s4-check1',
     question: 'What is the main difference between Type 1 and Type 2 AC connectors?',
     options: [
-      'Type 1 is faster',
-      'Type 2 supports three-phase charging',
-      'Type 1 is used in Europe',
-      'Type 2 is only for DC charging',
+      'Type 1 always charges faster than Type 2',
+      'Type 1 is the European standard connector',
+      'Type 2 supports three-phase AC charging',
+      'Type 2 is used only for DC charging',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Type 2 (Mennekes) connectors have 7 pins supporting three-phase AC charging up to 43kW, while Type 1 (SAE J1772) has 5 pins and only supports single-phase AC up to 19.2kW.',
   },
@@ -23,22 +23,22 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s4-check2',
     question: 'What does CCS stand for and what makes it unique?',
     options: [
-      'Combined Charging System - combines AC and DC in one connector',
       'Continuous Charging Standard - maintains constant power',
+      'Combined Charging System - combines AC and DC in one connector',
       'Commercial Charging Solution - for business use only',
       'Controlled Charging Sequence - manages charging stages',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Combined Charging System (CCS) adds DC charging pins to the existing Type 1 or Type 2 AC connector, allowing a single vehicle inlet to support both AC and DC charging without separate ports.',
   },
   {
     id: 'evcharging-m2s4-check3',
-    question: 'What PWM duty cycle on the Control Pilot signal indicates 32A available current?',
-    options: ['10%', '25%', '50%', '90%'],
-    correctIndex: 2,
+    question: 'What PWM duty cycle on the Control Pilot signal indicates 30A available current?',
+    options: ['10%', '25%', '90%', '50%'],
+    correctIndex: 3,
     explanation:
-      'The Control Pilot PWM duty cycle directly correlates to available current: 10% = 6A, 25% ≈ 15A, 50% = 32A, and 90% = 57A (or digital communication enabled above 85%).',
+      'For duty cycles between 10% and 85%, available current = duty cycle (%) × 0.6A. So 50% signals 30A, 10% signals 6A, and 25% signals about 15A; above 85% indicates digital high-power communication.',
   },
 ];
 

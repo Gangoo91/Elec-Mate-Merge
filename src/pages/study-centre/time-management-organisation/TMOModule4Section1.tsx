@@ -19,10 +19,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the key difference between an EIC and a Minor Works Certificate?',
     options: [
-      'An EIC is for commercial work; a MWC is for domestic work only',
-      'An EIC covers a new installation or addition to an installation; a MWC covers minor work that does not include a new circuit',
-      'A MWC is legally required; an EIC is optional',
-      'An EIC must be completed on-site; a MWC can be completed at home',
+      'An EIC is for commercial work, whereas a MWC is for domestic work only',
+      'An EIC covers a new installation or new circuit; a MWC covers work without one',
+      'A MWC is legally required, whereas an EIC is entirely optional to issue',
+      'An EIC must be completed on-site, whereas a MWC can be finished at home',
     ],
     correctAnswer: 1,
     explanation:
@@ -32,12 +32,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the recommended EICR frequency for a domestic rental property?',
     options: [
-      'Every year',
-      'Every 3 years',
-      'Every 5 years (legally required since 2020)',
-      'Every 10 years',
+      'Every year, at the start of each tenancy',
+      'Every 3 years, as for an industrial site',
+      'Every 10 years, as for an owner-occupied home',
+      'Every 5 years, a legal requirement since 2020',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 made 5-yearly EICR inspections a legal requirement for rental properties. The landlord must ensure the inspection is carried out at least every 5 years and supply a copy to the tenant within 28 days.',
   },
@@ -45,10 +45,10 @@ const quizQuestions = [
     id: 4,
     question: 'What is the "do it at the job" principle for certification?',
     options: [
-      'Always complete and issue certificates while still on-site, or as close to completion as possible',
-      'Only perform paperwork during working hours, never at home',
-      'Complete certificates within 30 days of the work',
-      'Have the client sign all paperwork before you begin work',
+      'Complete and issue certificates on-site, while details are still fresh',
+      'Only ever do paperwork during working hours, and never at home',
+      'Complete the certificates within 30 days of finishing the work',
+      'Have the client sign all of the paperwork before you begin work',
     ],
     correctAnswer: 0,
     explanation:
@@ -59,10 +59,10 @@ const quizQuestions = [
     question:
       'Which filing structure is recommended for organising electrical certificates digitally?',
     options: [
-      'Client Name \u2192 Job Type \u2192 Date',
+      'Client Name \u2192 Job Type \u2192 Date (e.g. Smith/Rewire/June)',
       'Year \u2192 Client \u2192 Job (e.g. 2025/Smith/Kitchen-Rewire)',
-      'Certificate Type \u2192 Date \u2192 Client',
-      'Random numbering with a separate spreadsheet index',
+      'Certificate Type \u2192 Date \u2192 Client (e.g. EIC/June/Smith)',
+      'Random numbering held against a separate spreadsheet index',
     ],
     correctAnswer: 1,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'What is the primary risk of leaving certificate completion until you return to the office?',
     options: [
-      'You may run out of paper',
-      'The client may refuse to pay',
-      'You lose context &mdash; details blur, test values may be misremembered, and errors increase significantly',
-      'It is illegal to complete certificates off-site',
+      'You may run out of certificate paper back at the office',
+      'The client may simply refuse to pay for the completed work',
+      'You lose context &mdash; details blur and the error rate rises sharply',
+      'It is actually illegal to complete certificates away from the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 7,
     question: 'What information must a properly completed EIC include?',
     options: [
-      'Only the test results and the electrician\u2019s signature',
-      'Details of the installation, design, construction, and inspection/testing with signatures from the designer, constructor, and inspector',
-      'A brief description of the work and the total cost',
-      'Only the client\u2019s name and the date of completion',
+      'Only the test results and the electrician\u2019s own signature',
+      'A brief description of the work and the total cost charged',
+      'Only the client\u2019s name and the date the work was completed',
+      'Installation, design, construction and testing details, with the three signatures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A complete EIC requires details of the installation (address, description, extent), the design basis, construction details, and full inspection and test results. It must be signed by the designer, constructor, and inspector (which may all be the same person for smaller jobs). Incomplete certificates are not compliant with BS 7671.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 8,
     question: 'How long should electrical certificates and associated records be retained?',
     options: [
-      '1 year',
-      '3 years',
-      '6 years minimum, with the recommendation to keep them indefinitely where practical',
-      'Only until the next EICR is carried out',
+      'At least 6 years, and ideally kept indefinitely where practical',
+      '1 year, then they may be securely destroyed',
+      '3 years, in line with the warranty period',
+      'Only until the next EICR is carried out on the installation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The limitation period for most civil claims in England and Wales is 6 years (12 years for claims under deed). Keeping records for at least 6 years provides legal protection. Many electricians keep certificates indefinitely as digital storage costs are negligible and the records may be needed for future EICRs or if disputes arise years later.',
   },
@@ -430,10 +430,10 @@ export default function TMOModule4Section1() {
             id="tmo-4-1-filing"
             question="A letting agent calls asking for a copy of an EICR you completed 14 months ago for a property on Oak Street. Using the Year/Client/Job system, how quickly should you find it?"
             options={[
-              'It will take at least an hour of searching through old emails',
-              'Within 60 seconds by navigating to the year folder, then the client or agent name, then the job folder',
-              'You will need to redo the EICR because records that old cannot be retrieved',
-              'You need to call your accountant to find it',
+              'At least an hour, searching back through old emails and van paperwork',
+              'Within 60 seconds: open the year, then the agent, then the job folder',
+              'You will have to redo the EICR, as records that old cannot be retrieved',
+              'You need to call your accountant, who holds the only copy of the report',
             ]}
             correctIndex={1}
             explanation="With a proper Year/Client/Job filing system in cloud storage, you simply navigate to the correct year, find the client or letting agent folder, open the job folder, and the EICR PDF is right there. Total retrieval time: under 60 seconds. This speed of retrieval builds enormous trust with commercial clients and letting agents."
@@ -546,10 +546,10 @@ export default function TMOModule4Section1() {
             id="tmo-4-1-onsite"
             question="Why is completing an EIC two weeks after the work is finished significantly riskier than completing it on-site?"
             options={[
-              'Because the client may have already sold the property',
-              'Because the certificate software licence may have expired',
-              'Because memory fades, cables are covered by plasterboard, and you cannot verify details against the physical installation',
-              'Because the test instrument calibration may have changed',
+              'Because the client may have already sold the property on by then',
+              'Because the certificate software licence may have expired in the meantime',
+              'Because memory fades and covered cables can no longer be verified on site',
+              'Because the test instrument calibration may have drifted in the interim',
             ]}
             correctIndex={2}
             explanation="Two weeks after completion, your memory of specific details has faded, the installation may have been covered by other trades (plasterboard, screed, ceilings), and you cannot physically verify circuit routes, cable types, or observation details. Errors on retrospective certificates are far more common than on certificates completed at the job."

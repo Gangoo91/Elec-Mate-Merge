@@ -71,103 +71,124 @@ const quizQuestions = [
     question:
       'What is the primary purpose of root cause analysis (RCA) in industrial electrical maintenance?',
     options: [
-      'To identify who made a mistake',
-      'To prevent fault recurrence by identifying and addressing underlying causes',
-      'To complete paperwork requirements',
-      'To justify equipment replacement costs',
+      'To identify which individual made the mistake',
+      'To prevent recurrence by addressing the underlying cause',
+      'To satisfy paperwork and audit requirements',
+      'To justify the cost of replacing equipment',
     ],
-    correctAnswer: 'To prevent fault recurrence by identifying and addressing underlying causes',
+    correctAnswer: 'To prevent recurrence by addressing the underlying cause',
+    explanation:
+      'RCA looks past the immediate symptom to the systemic cause so the same fault does not return. It is about improving the system, not assigning blame or completing forms.',
   },
   {
     question: 'In the 5 Whys technique, what indicates you have reached the root cause?',
     options: [
-      'You have asked exactly five questions',
-      'You have identified a person responsible',
-      'Further "why" questions lead to factors outside your control or reveal a systemic issue',
+      'You have asked exactly five "why" questions',
       'The equipment is now working again',
+      'You have identified a specific person to blame',
+      'Further "why" questions reveal a systemic issue or factors outside your control',
     ],
     correctAnswer:
-      'Further "why" questions lead to factors outside your control or reveal a systemic issue',
+      'Further "why" questions reveal a systemic issue or factors outside your control',
+    explanation:
+      'Five is only a guideline. You have reached the root cause when the next "why" points to a systemic/organisational gap (e.g. a missing PM task) rather than another symptom.',
   },
   {
     question:
-      'Which Fishbone diagram category would "incorrect cable size specified on drawing" belong to?',
-    options: ['Manpower', 'Material', 'Method', 'Machine'],
+      'Which Fishbone (Ishikawa) category would "incorrect cable size specified on the drawing" belong to?',
+    options: ['Method', 'Manpower', 'Material', 'Machine'],
     correctAnswer: 'Method',
+    explanation:
+      'A specification error on a drawing is a procedure/documentation failure, which falls under Method. Material would be a faulty cable, Manpower a skills gap, and Machine the equipment itself.',
   },
   {
     question: 'In Fault Tree Analysis (FTA), what does an OR gate represent?',
     options: [
-      'All input events must occur simultaneously for the output event',
-      'Any single input event can independently cause the output event',
-      'The probability of the output event occurring',
-      'A basic event that cannot be further analysed',
+      'All input events must occur simultaneously to cause the output',
+      'Any single input event can independently cause the output',
+      'The calculated probability of the output event',
+      'A basic event that cannot be developed further',
     ],
-    correctAnswer: 'Any single input event can independently cause the output event',
+    correctAnswer: 'Any single input event can independently cause the output',
+    explanation:
+      'An OR gate passes the top event if any one input occurs, so it models alternative independent causes. An AND gate is the one that needs all inputs together.',
   },
   {
-    question: 'According to UK best practice, what should a fault report include as a minimum?',
+    question: 'As a minimum, what should an effective fault report include?',
     options: [
-      'Fault symptoms, root cause, repair action, and recommendations to prevent recurrence',
-      'Only the repair action and parts used',
+      'Only the repair action and the parts used',
       'The name of the person who caused the fault',
+      'Symptoms, root cause, repair action and recommendations to prevent recurrence',
       'A full equipment history going back five years',
     ],
     correctAnswer:
-      'Fault symptoms, root cause, repair action, and recommendations to prevent recurrence',
+      'Symptoms, root cause, repair action and recommendations to prevent recurrence',
+    explanation:
+      'A useful report captures what was observed, why it failed, what was done and how to stop it happening again. "Replaced part, working now" wastes the diagnostic effort.',
   },
   {
-    question: 'What does CAPA stand for in maintenance management?',
+    question: 'What does CAPA stand for in maintenance and quality management?',
     options: [
       'Computer-Aided Problem Analysis',
-      'Corrective Action and Preventive Action',
       'Centralised Asset Performance Assessment',
+      'Corrective Action and Preventive Action',
       'Continuous Automated Process Adjustment',
     ],
     correctAnswer: 'Corrective Action and Preventive Action',
+    explanation:
+      'CAPA pairs the corrective fix for the existing fault with a preventive action that stops the same issue arising on this or similar equipment — a cornerstone of quality systems.',
   },
   {
     question: 'Which is an example of a preventive action rather than a corrective action?',
     options: [
-      'Replacing a failed motor bearing',
-      'Adding bearing condition monitoring to all similar motors to detect early wear',
-      'Resetting the overload relay after a trip',
-      'Tightening a loose connection that caused overheating',
+      'Replacing a motor bearing that has already failed',
+      'Resetting the overload relay after it has tripped',
+      'Tightening a loose connection that has overheated',
+      'Adding condition monitoring to all similar motors to catch early bearing wear',
     ],
-    correctAnswer: 'Adding bearing condition monitoring to all similar motors to detect early wear',
+    correctAnswer:
+      'Adding condition monitoring to all similar motors to catch early bearing wear',
+    explanation:
+      'Preventive actions stop a potential failure before it happens, on this or similar equipment. The other options all react to a fault that has already occurred (corrective actions).',
   },
   {
     question: 'What is the primary benefit of integrating RCA findings into a CMMS?',
     options: [
-      'It reduces the amount of paperwork',
-      'It creates searchable knowledge that improves future fault diagnosis and maintenance planning',
-      'It automatically repairs faults',
-      'It eliminates the need for skilled electricians',
+      'It simply reduces the amount of paperwork',
+      'It creates searchable knowledge that improves future diagnosis and planning',
+      'It automatically repairs the faults it records',
+      'It removes the need for skilled electricians',
     ],
     correctAnswer:
-      'It creates searchable knowledge that improves future fault diagnosis and maintenance planning',
+      'It creates searchable knowledge that improves future diagnosis and planning',
+    explanation:
+      'Logging causes and fixes in a CMMS builds a searchable history that speeds future fault-finding, exposes repeat failures and informs maintenance and spares planning.',
   },
   {
     question:
       'A "lessons learned" session after a significant electrical failure should focus primarily on:',
     options: [
-      'Disciplining those responsible for the failure',
-      'Identifying systemic improvements to prevent similar failures',
+      'Disciplining those involved in the failure',
       'Calculating the exact cost of the downtime',
-      'Updating equipment warranties',
+      'Identifying systemic improvements to prevent similar failures',
+      'Updating the equipment warranty paperwork',
     ],
     correctAnswer: 'Identifying systemic improvements to prevent similar failures',
+    explanation:
+      'Lessons learned thrive on a blame-free culture; the value comes from systemic fixes (procedures, training, design) that prevent recurrence, not from punishing individuals.',
   },
   {
     question: 'When conducting RCA for an intermittent fault, which approach is most appropriate?',
     options: [
       'Wait until the fault becomes permanent before investigating',
-      'Replace all components in the circuit',
-      'Gather data over time, look for patterns, and correlate with environmental or operational conditions',
-      'Assume it is not a real fault if it does not happen during testing',
+      'Replace every component in the circuit as a precaution',
+      'Assume it is not real if it does not occur during testing',
+      'Gather data over time and correlate it with operating and environmental conditions',
     ],
     correctAnswer:
-      'Gather data over time, look for patterns, and correlate with environmental or operational conditions',
+      'Gather data over time and correlate it with operating and environmental conditions',
+    explanation:
+      'Intermittent faults need monitoring and pattern analysis (temperature, vibration, load, time) to catch the conditions that trigger them, rather than waiting or replacing parts blindly.',
   },
 ];
 

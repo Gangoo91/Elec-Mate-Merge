@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'A scheme auditor pulls an EICR you signed in May 2026 and flags Reg 641.1 cited in the observations. Why is that a defect?',
     options: [
-      'Reg 641.1 is fine — it is a long-standing reference.',
-      'A4:2026 restructured Part 6. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic) numbering is gone — Reg 641.1 does not exist in the edition the certificate is supposed to be against. The current equivalents are Chapter 64 (Reg 641 / 642 / 643 / 644) for initial and Chapter 65 (Reg 651 / 652 / 653) for periodic.',
-      'Reg 641.1 only applies to industrial installations.',
-      'Reg 641.1 has been renumbered to Reg 510.1.',
+      'Reg 641.1 is fine — it is a long-standing and still-valid Part 6 reference.',
+      'A4:2026 restructured Part 6, so Reg 641.1 does not exist in the certificate’s edition.',
+      'Reg 641.1 applies only to industrial installations, not domestic ones like this.',
+      'Reg 641.1 has been renumbered to Reg 510.1 and the citation should read that.',
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 (in force 15 April 2026) renumbered Part 6 to align with CENELEC. Citations on a current certificate must reference the in-force regulation numbers — pre-A4 reg numbers on an A4-edition certificate are a defective citation regardless of how familiar they are.',
+      'A4:2026 (in force 15 April 2026) restructured Part 6 to align with CENELEC. The old Chapter 61 (Initial verification) and Chapter 62 (Periodic) numbering is gone — the current equivalents are Chapter 64 (Reg 641 / 642 / 643 / 644) for initial and Chapter 65 (Reg 651 / 652 / 653) for periodic. Citations on a current certificate must reference the in-force numbers; pre-A4 reg numbers on an A4-edition certificate are a defective citation regardless of how familiar they are.',
   },
   {
     id: 'mod1-s2-643-1-order',
     question:
       'You are tempted to do polarity (643.6) at the same accessory while you take the IR reading (643.3) — saves walking the circuit twice. What does Reg 643.1 say?',
     options: [
-      "Order is at the inspector's discretion provided every test is completed.",
-      'The tests of Reg 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised. Continuity → IR → separation → floor/wall → polarity is a mandatory sequence, not a stylistic preference.',
-      '643.1 only applies to initial verification, not periodic inspection.',
-      'Polarity may be done at any time after IR, including in parallel.',
+      "Order is at the inspector's discretion provided every test is eventually completed.",
+      'Reg 643.2 to 643.6 must be carried out in that order before the installation is energised.',
+      'Reg 643.1 applies only to initial verification, not to periodic inspection work.',
+      'Polarity may be done at any time after IR, including in parallel with the IR test.',
     ],
     correctIndex: 1,
     explanation:
-      "Reg 643.1 is explicit on the order. The sequence matters because each test's validity depends on its predecessor — an IR reading on a circuit with broken CPC continuity hides the real fault, and a polarity check in parallel with IR risks the IR test going through a path the polarity has not yet confirmed.",
+      "Reg 643.1 is explicit: continuity → IR → separation → floor/wall → polarity is a mandatory sequence, not a stylistic preference. The order matters because each test's validity depends on its predecessor — an IR reading on a circuit with broken CPC continuity hides the real fault, and a polarity check in parallel with IR risks the IR test going through a path the polarity has not yet confirmed.",
   },
   {
     id: 'mod1-s2-250v-followup',
     question:
       'You disconnected an LED driver and a Type 2 SPD for the 500 V IR test (both correct under Reg 643.3.3 first sentence). After reconnecting them, what does A4:2026 require?',
     options: [
-      'Nothing — the primary IR test on the disconnected circuit is sufficient.',
-      'A test at 250 V DC between live conductors and the protective conductor connected to the earthing arrangement, after reconnection. Reg 643.3.3 second sentence makes this mandatory; minimum acceptable insulation is 1 MΩ.',
-      'A repeat 500 V test with the equipment still connected.',
-      'A continuity check on the SPD only.',
+      'Nothing further — the primary 500 V IR test on the disconnected circuit is sufficient.',
+      'A 250 V DC test between live conductors and the earthed protective conductor, after reconnection.',
+      'A repeat 500 V IR test with the sensitive equipment left connected this time.',
+      'A continuity check on the SPD alone, with no further insulation testing required.',
     ],
     correctIndex: 1,
     explanation:
-      'A4 introduced the two-stage protocol: primary 500 V DC test with sensitive equipment disconnected, then a 250 V DC follow-up after reconnection between live conductors and the earthed protective conductor. The schedule has a column for it; missing it is a defective certificate.',
+      'A4 introduced the two-stage protocol: primary 500 V DC test with sensitive equipment disconnected, then a 250 V DC follow-up after reconnection between live conductors and the earthed protective conductor. Reg 643.3.3 second sentence makes this mandatory; minimum acceptable insulation is 1 MΩ. The schedule has a column for it; missing it is a defective certificate.',
   },
   {
     id: 'mod1-s2-max-zs-column',
     question:
       'The schedule of circuit details has a max-permitted-Zs entry of 1.10 Ω for a B32 circuit. BS 7671 Table 41.3 gives 1.37 Ω for the same device at 70 °C. Your measured Zs is 1.25 Ω. Compliant?',
     options: [
-      '1.25 Ω is below 1.37 Ω → compliant against Table 41. Pass.',
-      '1.25 Ω is above the design value of 1.10 Ω in the max-permitted-Zs column → fail. Reg 643.7 / 411 verifies against the column value when the designer has set a tighter limit, not the BS 7671 table value.',
-      'Average 1.10 and 1.37 to give 1.235 Ω → 1.25 Ω is borderline.',
-      'Use whichever value is higher.',
+      '1.25 Ω is below 1.37 Ω in Table 41.3, so the circuit passes against the table value.',
+      '1.25 Ω exceeds the 1.10 Ω design value in the max-permitted-Zs column, so it fails.',
+      'Average 1.10 Ω and 1.37 Ω to give 1.235 Ω, against which 1.25 Ω is borderline.',
+      'Use whichever of the two values is higher, so 1.37 Ω applies and it passes.',
     ],
     correctIndex: 1,
     explanation:
-      "A4:2026 introduced the explicit max-permitted-Zs column on the Schedule of Circuit Details specifically so the designer's tighter limit (reserving headroom for temperature rise, special-location disconnection times, or selectivity) is the verification benchmark. Defaulting to Table 41 when the column has a tighter value defeats the design.",
+      "Reg 643.7 / 411 verifies against the column value when the designer has set a tighter limit, not the BS 7671 table value. A4:2026 introduced the explicit max-permitted-Zs column on the Schedule of Circuit Details specifically so the designer's tighter limit (reserving headroom for temperature rise, special-location disconnection times, or selectivity) is the verification benchmark. Defaulting to Table 41 when the column has a tighter value defeats the design.",
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 has restructured Part 6. Which two chapters now hold the substantive requirements for initial verification and periodic inspection respectively?',
     options: [
-      'Chapter 61 (initial) and Chapter 62 (periodic)',
       'Chapter 64 (initial verification) and Chapter 65 (periodic inspection and testing)',
-      'Chapter 70 (initial) and Chapter 71 (periodic)',
-      'Chapter 41 (initial) and Chapter 53 (periodic)',
+      'Chapter 61 (initial verification) and Chapter 62 (periodic inspection and testing)',
+      'Chapter 70 (initial verification) and Chapter 71 (periodic inspection and testing)',
+      'Chapter 41 (initial verification) and Chapter 53 (periodic inspection and testing)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4:2026 completely renumbered Part 6 to align with the CENELEC standard. The old Chapter 61 / 62 numbering is gone. Chapter 64 is now Initial verification (the old 61 territory) and Chapter 65 is now Periodic inspection and testing (the old 62 territory). Pre-A4 references to 61.x / 62.x are no longer correct.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'What does Reg 643.1 of BS 7671 require regarding the order of pre-energisation tests?',
     options: [
-      'The order is at the inspector’s discretion provided all tests are completed',
-      'The tests of Reg 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised',
-      'Live tests first, dead tests second',
-      'Only continuity is mandatory before energisation; the rest may be done after',
+      'The order is at the inspector’s discretion provided all tests are eventually completed',
+      'Live tests are carried out first, with the dead tests following after energisation',
+      'Only continuity is mandatory before energisation; the rest may be done afterwards',
+      'Reg 643.2 to 643.6 shall, where relevant, be done in that order before energisation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.1 is explicit: the tests of Reg 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised. The order matters because each test’s validity depends on the previous test’s result — you cannot trust an insulation resistance reading on a circuit whose continuity is unverified.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
     question: 'Reg 643.2.1 (continuity) requires which two limbs?',
     options: [
       'Continuity of every protective conductor on every circuit, plus continuity of every live conductor on every circuit',
-      'Continuity of every protective conductor (and bonding) on every circuit, plus continuity of live conductors on ring final circuits only',
       'Continuity of bonding conductors only',
+      'Continuity of every protective conductor (and bonding) on every circuit, plus continuity of live conductors on ring final circuits only',
       'Continuity of CPCs by visual inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.2.1 splits the duty: protective conductor and protective bonding continuity is required on every circuit by resistance measurement; live conductor continuity is additionally required for ring final circuits.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 of A4:2026 prescribes a specific test where connected equipment was disconnected for the main insulation resistance test. What is it?',
     options: [
-      'A 500 V DC test between live conductors',
-      'A 250 V DC test between live conductors and the protective conductor connected to the earthing arrangement, after the equipment is reconnected',
-      'A 1000 V AC dielectric strength test',
-      'A polarity check at the equipment terminals',
+      'A 250 V DC test between live conductors and the earthed protective conductor, after reconnection',
+      'A 500 V DC insulation test taken between the two live conductors only',
+      'A 1000 V AC dielectric strength (flash) test across the reconnected equipment',
+      'A polarity check carried out at the reconnected equipment terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.3 second sentence: following connection of equipment that was disconnected for the prior insulation test, a test at 250 V DC shall be applied between live conductors and the protective conductor connected to the earthing arrangement. This is mandatory after re-connection.',
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where does Reg 642.1 say inspection sits in the workflow?',
     options: [
-      'After all testing is complete',
-      'In parallel with live testing',
-      'Inspection shall precede testing and shall normally be done with the part of the installation under inspection disconnected from the supply',
-      'At the discretion of the duty holder',
+      'After all testing is complete, as a final documentary check of the work',
+      'In parallel with the live testing phase to save a second visit to each accessory',
+      'Inspection precedes testing, normally with that part disconnected from the supply',
+      'At the discretion of the duty holder, who decides when inspection takes place',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,8 +149,8 @@ const quizQuestions = [
     id: 6,
     question:
       'A4:2026 introduced an explicit reference to AFDD operational indication on the inspection. Which regulations cluster around AFDD verification?',
-    options: ['411.3.4 only', '421.1.7, 532.6 and 651.2(e)', '434.1 and 643.7', '514.9 alone'],
-    correctAnswer: 1,
+    options: ['411.3.4 only', '434.1 and 643.7', '514.9 alone', '421.1.7, 532.6 and 651.2(e)'],
+    correctAnswer: 3,
     explanation:
       'BS 7671 ties AFDD verification to three regulations: 421.1.7 (the recommendation to install AFDDs to mitigate fire risk), 532.6 (selection / location), and 651.2(e) (confirmation of operational indication during periodic inspection). All three are referenced together in the inspection schedules.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'Reg 644.4 of BS 7671 requires a specific recommendation to be recorded on the EIC. What is it?',
     options: [
-      'The recommended replacement date for the consumer unit',
       'The recommended interval between initial verification and the first periodic inspection',
-      'The recommended manufacturer for the protective devices',
-      'The recommended Zs limit per circuit',
+      'The recommended replacement date for the consumer unit and its protective devices',
+      'The recommended manufacturer for the protective devices used on each circuit',
+      'The recommended maximum measured Zs limit to be applied to each final circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 644.4 places a record duty: the recommendation for the interval between initial verification and the first periodic inspection — itself made by the designer under Reg 134.2.2 — shall be recorded on the EIC. Reg 653.4 carries the equivalent duty into the EICR.',
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       'Reg 652.2 of BS 7671 permits periodic inspection and testing to be replaced by an alternative regime. What is the regime, and what conditions apply?',
     options: [
-      'Continuous monitoring and maintenance by skilled persons competent in such work, where the installation is under an effective management system for preventative maintenance in normal use',
-      'Annual self-certification by the duty holder',
-      'A reduction to visual inspection only after the first 10 years',
-      'No replacement is permitted',
+      'Continuous monitoring and maintenance by skilled persons under an effective management system',
+      'Annual self-certification by the duty holder in place of any inspection by a third party',
+      'A reduction to visual inspection only once the installation passes its first 10 years',
+      'No replacement regime is permitted; periodic inspection and testing is always required',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,11 +188,11 @@ const quizQuestions = [
       'Reg 643.7.3.201 in A4:2026 references which earlier regulation, importing its requirements into the test programme?',
     options: [
       'Reg 411.3.2 (disconnection times)',
-      'Reg 434.1 (prospective fault current Ips determination)',
       'Reg 543.1 (CPC sizing)',
+      'Reg 434.1 (prospective fault current Ips determination)',
       'Reg 522.6 (cable installation)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.7.3.201 introduces the requirements of Reg 434.1 into the testing section. This means designers and inspectors must include determination of prospective short-circuit current and prospective earth fault current at the origin and other relevant points as part of the test programme.',
   },
@@ -201,12 +201,12 @@ const quizQuestions = [
     question:
       'An EICR has been completed. Reg 651.4 requires what specific recording duty regarding defects?',
     options: [
-      'Photograph every defect and attach to the EICR',
-      'Details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report',
-      'Verbal handover to the duty holder is sufficient',
-      'Only C1 defects need to be recorded',
+      'Photograph every defect found and attach the images to the issued EICR',
+      'A verbal handover of the findings to the duty holder on site is sufficient',
+      'Only C1 (danger present) defects need to be formally recorded in the report',
+      'Details of any damage, deterioration, defects or dangerous conditions shall be recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 651.4: details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report. Combined with Reg 653.1 (the EICR shall be produced on completion of the periodic inspection and testing, based on the Appendix 6 model), this gives the full documentary duty.',
   },

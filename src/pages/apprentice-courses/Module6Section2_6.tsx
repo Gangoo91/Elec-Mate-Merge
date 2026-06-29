@@ -16,14 +16,14 @@ const Module6Section2_6 = () => {
       id: 1,
       question: 'What is the main purpose of a visual inspection checklist?',
       options: [
-        'Minor symptoms often indicate developing serious faults',
+        'To speed the job up by skipping items already known to be fine',
         'To ensure all items are systematically checked',
-        'Ensuring cables and equipment survive fault conditions',
-        'Door contact sensor showing open/closed',
+        'To replace the need for any instrument testing',
+        'To record the cost of the inspection work',
       ],
       correctAnswer: 1,
       explanation:
-        'The main purpose is to ensure systematic coverage of all inspection items without oversight.',
+        'A checklist ensures every inspection item is covered systematically, so nothing is overlooked.',
     },
     {
       id: 2,
@@ -41,14 +41,14 @@ const Module6Section2_6 = () => {
       id: 3,
       question: 'Name two items that should be included in an inspection checklist.',
       options: [
-        'To verify operation under simulated failure',
-        'Output power divided by input power, multiplied by 100%',
-        'Allow capacitive discharge before touching conductors',
+        'The client\'s electricity tariff and supplier',
+        'The cost of materials and labour used',
+        'The make and model of the test instrument only',
         'Condition of accessories and earthing/bonding',
       ],
       correctAnswer: 3,
       explanation:
-        'Inspection checklists must include condition of accessories, earthing and bonding, circuit labelling, cable routing, and IP ratings.',
+        'Inspection checklists must cover items such as the condition of accessories, earthing and bonding, circuit labelling, cable routing, and IP ratings.',
     },
     {
       id: 4,
@@ -62,10 +62,10 @@ const Module6Section2_6 = () => {
       id: 5,
       question: 'Which certificates include inspection records?',
       options: [
-        'To ensure the tester is working correctly and hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t failed during testing',
+        'Only a Building Regulations Compliance Certificate',
         'Electrical Installation Certificate (EIC) and Minor Works Certificate',
-        'Coordinating between employer, college, and apprentice to ensure learning progresses',
-        'Reported and the cable replaced or properly repaired',
+        'Only the manufacturer\'s installation instructions',
+        'Only a verbal report to the client',
       ],
       correctAnswer: 1,
       explanation:
@@ -75,10 +75,10 @@ const Module6Section2_6 = () => {
       id: 6,
       question: 'Why should cosmetic defects not always be recorded?',
       options: [
-        'Safety, temperature effects, and component ratings',
-        'Transmitter cannot source enough voltage, signal drops',
+        'Because cosmetic defects are impossible to see',
+        'Because the client is never shown the report',
         'Only safety or compliance issues must be documented',
-        'To verify protective device operation under fault conditions',
+        'Because cosmetic defects always become dangerous',
       ],
       correctAnswer: 2,
       explanation:
@@ -88,9 +88,9 @@ const Module6Section2_6 = () => {
       id: 7,
       question: 'What should be done if a safety-critical issue is found?',
       options: [
-        'Dedicated circuits with RCD protection and appropriate equipment',
-        'Isolate, secure, test the tester, test the circuit, retest the tester',
-        'A planned series of deliveries from a framework agreement',
+        'Leave it and note it at the next periodic inspection',
+        'Energise the circuit first to confirm it is really a fault',
+        'Record it only if the client specifically asks',
         'Record it clearly and arrange remedial action before energising',
       ],
       correctAnswer: 3,
@@ -102,9 +102,9 @@ const Module6Section2_6 = () => {
       question: 'Give one benefit of proper inspection record-keeping.',
       options: [
         'Legal protection and supports maintenance',
-        'A fracture of the arm sustained at work',
-        'Concept design (RIBA Stage 2)',
-        'Screened/shielded cable with symmetrical construction',
+        'It removes the need to test the installation',
+        'It guarantees the installation cannot fail',
+        'It allows the inspection to be skipped next time',
       ],
       correctAnswer: 0,
       explanation:
@@ -114,10 +114,10 @@ const Module6Section2_6 = () => {
       id: 9,
       question: 'In the real-world example, what was missed due to lack of a checklist?',
       options: [
-        'Over budget and ahead of schedule',
+        'The colour of the consumer unit enclosure',
         'Bonding to exposed structural steelwork',
-        'Expected inrush current of load',
-        'No - only employers with 5 or more employees',
+        'The brand of the socket outlets fitted',
+        'The age of the property being inspected',
       ],
       correctAnswer: 1,
       explanation:
@@ -127,10 +127,10 @@ const Module6Section2_6 = () => {
       id: 10,
       question: 'How should completed inspection records be stored?',
       options: [
-        'Use appropriate protective measures against corrosion',
-        'To ensure only the device nearest the fault operates',
+        'Discarded once the client has been informed',
+        'Kept loose in the van for quick access',
         'Securely with certificates and test results',
-        'Construction site installations',
+        'Stored only on the electrician\'s phone',
       ],
       correctAnswer: 2,
       explanation:

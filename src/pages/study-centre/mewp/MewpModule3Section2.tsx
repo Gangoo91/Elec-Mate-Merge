@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     id: 'mewp-te-frequency',
     question: 'How often must a MEWP undergo a thorough examination under LOLER 1998?',
     options: [
-      'Every 3 months',
       'Every 6 months',
+      'Every 3 months',
       'Every 12 months',
       'Only when a defect is reported',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under LOLER 1998, any lifting equipment used for lifting persons — including all MEWPs — must undergo a thorough examination at least every 6 months. The 12-month interval applies only to lifting equipment that does NOT lift persons.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
       'Which daily inspection responsibility falls on the MEWP operator rather than the employer?',
     options: [
       'Arranging the 6-monthly thorough examination',
-      'Completing a pre-use visual and functional check',
       'Maintaining documented service records',
       'Acting on defects found during a thorough examination',
+      'Completing a pre-use visual and functional check',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The operator is responsible for completing a pre-use inspection before every shift — checking fluid levels, controls, safety devices, guardrails, tyres, and general condition. The employer is responsible for arranging thorough examinations, maintaining service records, and acting on defect reports.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       "A thorough examination report identifies an 'immediate danger' defect. What must happen?",
     options: [
-      'The defect must be rectified within 28 days',
       'The machine is taken out of service immediately and the HSE must be notified',
+      'The defect must be rectified within 28 days',
       'The operator can continue using the machine until the next service',
       'An advisory note is recorded for future attention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An 'immediate danger' defect means the machine must be taken out of service NOW and must not be used until the defect is rectified. The defect is also notifiable to the HSE or the relevant enforcing authority.",
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     options: [
       'The MEWP operator who uses the machine daily',
       "The employer's own maintenance engineer",
-      'A competent person independent of the organisation using the equipment',
       'Any person holding an IPAF operator licence',
+      'A competent person independent of the organisation using the equipment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A thorough examination must be carried out by a competent person who is independent of the organisation using the equipment. They must have appropriate knowledge, experience, and impartiality. Operators, in-house engineers, and IPAF licence holders are not automatically qualified to conduct thorough examinations.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'Which of the following events would trigger the need for an additional thorough examination outside the normal 6-month schedule?',
     options: [
+      'A major repair, modification, or incident involving the MEWP',
       'Routine daily pre-use inspection',
       'A scheduled manufacturer service',
-      'A major repair, modification, or incident involving the MEWP',
       'Movement of the MEWP between different areas on the same site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A thorough examination is required after any major repair, modification, or incident involving the MEWP, in addition to the regular 6-month examinations. Moving the machine around the same site does not trigger a new examination.',
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     options: [
       'Arranging the 6-monthly thorough examination',
       'Maintaining documented service records',
-      'Completing a daily pre-use visual and functional inspection',
       'Acting on defects identified in a thorough examination report',
+      'Completing a daily pre-use visual and functional inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The operator is responsible for completing a pre-use inspection before every shift. Arranging thorough examinations, maintaining service records, and acting on examination defect reports are all employer responsibilities.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       'A MEWP has been out of use and stored for several weeks. Before returning it to service, what inspection is recommended?',
     options: [
       'No inspection is needed if the thorough examination certificate is still in date',
-      'Only a quick visual check by the operator',
       'A full pre-use inspection and any additional checks recommended by the manufacturer for equipment returning from a period of disuse',
+      'Only a quick visual check by the operator',
       'A new thorough examination must be carried out',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'After a period of disuse, a full pre-use inspection should be carried out along with any additional checks the manufacturer recommends for equipment returning to service. This covers fluid levels, battery condition, tyre pressures, hydraulic leaks, corrosion, and functionality of all controls and safety devices.',
   },

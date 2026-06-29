@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS 7671 design for parallel circuits should include...',
     options: [
-      'Time + Materials, with uplift for profit and risk',
+      'Ignoring branch currents because they are always equal',
       'Checking volt drop and protective device disconnection times',
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'To show the original approved programme for comparison',
+      'Adding the branch resistances together to find total resistance',
+      'Designing every branch to carry the full supply current',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,9 +138,9 @@ const quizQuestions = [
     id: 7,
     question: 'In parallel circuits, which branch carries the most current?',
     options: [
-      'Preliminary costs already paid',
-      'Total useful floor area greater than 500m²',
-      'Weekly or as new hazards arise',
+      'The branch with the highest resistance',
+      'The branch physically nearest the supply',
+      'Every branch carries exactly the same current',
       'The branch with lowest resistance',
     ],
     correctAnswer: 3,
@@ -151,9 +151,9 @@ const quizQuestions = [
     question: 'For BS 7671 compliance, parallel circuit design must consider...',
     options: [
       'Voltage drop, Zs, and protective device ratings',
-      'Ensures warranty validity and safe installation',
-      'Enthalpy remains approximately constant',
-      'A refurbishment and demolition asbestos survey (R&D survey)',
+      'Only the colour coding of the branch conductors',
+      'The order in which the branches were installed',
+      'The ambient air pressure around the consumer unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'What happens when you add more branches to a parallel circuit?',
     options: [
-      'Dampen pressure pulsations and protect gauge',
+      'Total resistance increases and total current decreases',
       'Total resistance decreases and total current increases',
-      'A tuning problem with the PID controller',
-      'To improve contact resistance at joints and protect against oxidation',
+      'Both total resistance and total current stay the same',
+      'The supply voltage across each branch falls',
     ],
     correctAnswer: 1,
     explanation:

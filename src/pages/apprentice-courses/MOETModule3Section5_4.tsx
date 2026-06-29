@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ats-purpose',
     question: 'What is the primary function of an automatic transfer switch (ATS)?',
     options: [
-      'Systematically evaluate each potential cause using evidence (test data, inspection findings, maintenance records) to identify the most probable root cause or causes',
-      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
-      'To automatically detect a mains supply failure and transfer the load to a standby source (typically a generator) without manual intervention, then retransfer when normal supply is restored',
-      '6 mm² — passes CCC comfortably (47 A vs 32 A), Vd at 2.54 percent leaves 2.46 percent headroom inside the 5 percent limit. The standard sensible spec.',
+      'To regulate the output voltage of the standby generator to a constant level',
+      'To synchronise the mains and generator continuously so they run in parallel',
+      'To detect a mains failure, transfer the load to a standby source, then retransfer on restoration',
+      'To protect the standby generator against overload by shedding its entire load',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'open-transition',
     question: 'What is the key characteristic of an open-transition (break-before-make) transfer?',
     options: [
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'Deaf and hard-of-hearing people, non-native English speakers, anyone in a noisy environment, and many neurodivergent people — universal benefit',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'There is a brief interruption of supply (typically 100-500 ms) during transfer as the load is disconnected from one source before being connected to the other',
+      'The two sources are briefly paralleled so the load sees no interruption at all',
+      'The load is gradually ramped from one source to the other over several seconds',
+      'The transfer can only take place once the two sources have been synchronised',
+      'There is a brief interruption (typically 100-500 ms) as the load drops one source before taking the other',
     ],
     correctIndex: 3,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'ats-testing',
     question: 'How often should an ATS be tested under simulated mains failure conditions?',
     options: [
-      'Monthly, with a full-load transfer test at least annually, to verify the complete sequence: mains failure detection, generator start, load transfer, retransfer and generator cooldown',
-      'A permit-to-work system with phase-specific permits, a coordination plan for concurrent trades, exclusion zones below, and a site-specific rescue plan tested with a practice drill',
-      'The risk assessment identifies hazards and evaluates risks; the method statement describes how the work will be done safely, incorporating the controls identified in the risk assessment',
-      'There is a brief interruption of supply (typically 100-500 ms) during transfer as the load is disconnected from one source before being connected to the other',
+      'Monthly under simulated mains failure, with a full-load transfer test at least annually',
+      'Only once, during commissioning, as the operating sequence cannot change afterwards',
+      'Every five years, in line with the periodic inspection interval for the installation',
+      'Only after a genuine mains failure has occurred, to confirm it operated correctly',
     ],
     correctIndex: 0,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'bypass-isolation',
     question: 'What is the purpose of a bypass-isolation facility on an ATS?',
     options: [
-      'To allow the ATS to be completely isolated from the circuit for maintenance or replacement without interrupting the power supply to the load',
-      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
-      'Make safe (isolate, barrier, warn), then notify the duty holder in writing, then document on certification (Code C1 on EICR if applicable)',
-      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
+      'To synchronise the mains and generator so they can run in parallel permanently',
+      'To isolate the ATS from the circuit for maintenance without interrupting the load supply',
+      'To shed non-essential loads automatically when the generator is overloaded',
+      'To override the source interlock so both contactors can be closed together',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'A bypass-isolation facility provides a manual means of connecting the load directly to one supply source (usually the normal mains) while completely isolating the ATS from the circuit. This allows the ATS to be maintained, tested, repaired or replaced without interrupting the power supply to the load. It is an essential feature for ATS installations serving critical loads where power continuity is paramount. The bypass switch must be interlocked to prevent paralleling of sources.',
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The two main types of ATS contactor arrangement are:',
     options: [
-      'Workers are more likely to open up to someone who understands their daily reality than to a formal professional they have never met',
-      'Mechanically interlocked contactors (two contactors with mechanical and electrical interlocking) and motorised changeover switches (single device with motor-driven mechanism)',
-      'Stop, don\\\\\\\'t disturb the tile, ring the supervisor, ask the dutyholder for the asbestos register before any work happens above the ceiling.',
-      'The emotional residue of exposure to others\\\\\\\' traumatic stories, which can lead to changes in the MHFA\\\\\\\'s own worldview, beliefs, and psychological functioning',
+      'Air circuit breakers and oil circuit breakers operating in tandem',
+      'Mechanically interlocked contactor pairs and motorised changeover switches',
+      'A single MCB feeding both sources through a common busbar arrangement',
+      'Two fuse-switches wired in parallel with no interlock between them',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'The time delay between mains failure detection and generator start signal is typically:',
     options: [
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
-      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
-      '3-10 seconds, to avoid unnecessary starts during brief supply interruptions (voltage dips, transient faults) that are resolved by the DNO within seconds',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
+      'Zero seconds — the start signal is sent the instant a voltage dip is detected',
+      '5-30 minutes, to confirm the normal supply has genuinely stabilised first',
+      '3-10 seconds, to avoid starts during brief dips and transient faults that self-clear',
+      '1-2 hours, to give the DNO ample time to restore the mains before starting',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'Closed-transition (make-before-break) transfer is used when:',
     options: [
-      '3-10 seconds, to avoid unnecessary starts during brief supply interruptions (voltage dips, transient faults) that are resolved by the DNO within seconds',
-      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      'Zero interruption is required and the two sources can be momentarily paralleled (synchronised) during the transfer, typically for less than 100 ms',
+      'A brief interruption of 100-500 ms is acceptable and the sources must never be paralleled',
+      'The generator is too small to take the full load and must build up to it in stages',
+      'The two sources are deliberately left unsynchronised to keep the control system simple',
+      'Zero interruption is needed and the synchronised sources can be briefly paralleled (under 100 ms)',
     ],
     correctAnswer: 3,
     explanation:
@@ -107,25 +107,25 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'BS 7671 Regulation 551.7 requires that:',
+    question: 'BS 7671 Section 551 (low-voltage generating sets) requires that:',
     options: [
-      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
-      'Verifying the mechanical and electrical interlocks operate correctly to prevent both source contactors closing simultaneously, which would parallel the sources',
+      'Source-switching arrangements must prevent parallel operation unless specifically designed for it',
+      'Every standby generator must be rated to supply at least twice the total installation load',
+      'A standby generator must always be connected through a three-pole rather than four-pole switch',
+      'The generator neutral must never be connected to the installation earthing system',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 Section 551 covers low-voltage generating sets. Regulation 551.7 requires that where switching arrangements transfer between sources, they must prevent unintended parallel operation. Paralleling unsynchronised sources can cause massive fault currents, generator damage and supply network disturbance. The ATS interlock system (mechanical and electrical) is the primary means of compliance. Where intentional paralleling is required (closed transition), appropriate synchronising controls must be installed.',
+      'BS 7671 Section 551 covers low-voltage generating sets and standby supplies. Where switching arrangements transfer between sources, they must prevent unintended parallel operation. Paralleling unsynchronised sources can cause massive fault currents, generator damage and supply network disturbance. The ATS interlock system (mechanical and electrical) is the primary means of compliance. Where intentional paralleling is required (closed transition), appropriate synchronising controls must be installed.',
   },
   {
     id: 5,
     question: 'During ATS maintenance, the most critical check is:',
     options: [
-      '3-10 seconds, to avoid unnecessary starts during brief supply interruptions (voltage dips, transient faults) that are resolved by the DNO within seconds',
-      'Verifying the mechanical and electrical interlocks operate correctly to prevent both source contactors closing simultaneously, which would parallel the sources',
-      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
+      'Confirming the indicator lamps and display backlight on the front panel are all illuminated',
+      'Verifying the interlocks prevent both source contactors closing together (which would parallel sources)',
+      'Topping up the lubricating oil reservoir that drives the motorised changeover mechanism',
+      'Adjusting the retransfer delay to the shortest possible setting to minimise generator run time',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'The retransfer time delay (after normal supply restoration) is typically set to:',
     options: [
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
-      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
-      'Zero interruption is required and the two sources can be momentarily paralleled (synchronised) during the transfer, typically for less than 100 ms',
+      'Zero, so the load is switched back to the mains the instant any voltage reappears on it',
+      '100-500 milliseconds, matching the break time used during an open-transition transfer',
+      '5-30 minutes, to confirm the restored mains is genuinely stable before retransferring the load',
+      '24 hours, so the load only ever returns to the mains during the next scheduled maintenance visit',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 7,
     question: 'A four-pole ATS is required instead of a three-pole ATS when:',
     options: [
-      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
-      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
-      'The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources',
+      'The load current exceeds 400 A, as a three-pole switch is only rated up to that current',
+      'The generator is single-phase, so a fourth pole is added to carry the return conductor',
+      'The installation requires closed-transition transfer, the extra pole being used for synchronising',
+      'The neutral must be switched with the phases to stop neutral current circulating between sources',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'Load shedding in conjunction with an ATS is used to:',
     options: [
-      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
-      'Zero interruption is required and the two sources can be momentarily paralleled (synchronised) during the transfer, typically for less than 100 ms',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
+      'Disconnect non-essential loads when the generator cannot carry the full load, protecting critical services',
+      'Synchronise the mains and generator by briefly removing all load so the two sources can be paralleled',
+      'Reduce the brief interruption during an open-transition transfer to below 100 ms for all loads',
+      'Increase the generator output voltage automatically when heavy motor loads are started',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'The ATS control panel typically monitors which parameters on each supply source?',
     options: [
-      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      'Zero interruption is required and the two sources can be momentarily paralleled (synchronised) during the transfer, typically for less than 100 ms',
+      'Insulation resistance and earth loop impedance only, sampled once at each transfer event',
+      'Voltage on all phases, frequency, phase sequence and phase angle against programmable thresholds',
+      'Power factor and harmonic distortion only, ignoring voltage and frequency entirely',
+      'Conductor temperature and ambient humidity, transferring the load when either exceeds a limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'During a monthly ATS test, the technician should record:',
     options: [
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
-      'All timing parameters (mains failure to gen start, gen start to stable output, stable output to load transfer, retransfer delay), voltage and frequency readings from both sources, and any abnormalities in the mechanical operation',
-      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
+      'Only the final position of the changeover switch, as the timing figures are not relevant to a monthly test',
+      'Only the generator fuel level and oil pressure, since the ATS itself needs no routine recording',
+      'All transfer timings, voltage and frequency from both sources, and any mechanical abnormalities',
+      'Only the insulation resistance of the load cables, measured before and after the transfer',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'Soft-load transfer is a feature that:',
     options: [
-      'Verifying the mechanical and electrical interlocks operate correctly to prevent both source contactors closing simultaneously, which would parallel the sources',
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
-      'Gradually transfers load from one source to the other over several seconds (in closed-transition systems) to minimise transient voltage disturbances and mechanical stress on the generator',
+      'Reduces the generator output voltage during transfer so the load receives a gentler supply',
+      'Delays the transfer until the load current has fallen to zero, then switches with no load present',
+      'Sheds all non-essential loads before transfer so only the lightest possible load is switched',
+      'Gradually shifts load between paralleled sources over seconds to cut transients and generator stress',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'If an ATS fails to transfer during a genuine mains failure, the maintenance technician should first check:',
     options: [
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
-      'The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources',
-      'Voltage (all phases), frequency, phase sequence and phase angle — comparing each against programmable thresholds to determine if the source is acceptable for load connection',
-      '3-10 seconds, to avoid unnecessary starts during brief supply interruptions (voltage dips, transient faults) that are resolved by the DNO within seconds',
+      'Whether the generator has started and reached stable output, then the ATS control circuit and interlock',
+      'The downstream load circuits, by disconnecting every final circuit before looking at the ATS itself',
+      'The retransfer delay setting, increasing it so the load stays on the mains for longer',
+      'The earthing arrangement, by disconnecting the main earth to rule out a neutral fault first',
     ],
     correctAnswer: 0,
     explanation:

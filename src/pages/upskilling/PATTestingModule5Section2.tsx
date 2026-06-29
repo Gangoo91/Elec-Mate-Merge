@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A test record contains: "Kettle — passed — 12 Jan 2026". Is this an acceptable in-service test record under HSG107?',
     options: [
-      'Yes — pass + date is the legal minimum.',
-      'No — there is no asset ID, no location, no tester ID, no class, no numerical test results. HSG107 paragraph 70 expects a record that lets the test be reconstructed and audited. "Passed" with no readings cannot be defended as evidence of test.',
-      'Yes, provided the company logo is on the page.',
-      'Only if it is countersigned.',
+      'Yes — a pass plus a date is the recognised legal minimum.',
+      'No — it lacks the asset ID, location, tester, class and numerical results.',
+      'Yes, provided the company logo appears on the page.',
+      'Only if a second competent person countersigns the line.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A piece of equipment is disposed of in 2026. How long should its PAT records be retained, in line with normal in-service inspection practice?',
     options: [
-      'Records can be deleted on disposal.',
-      'Typically 6 years post-disposal — aligned with the Limitation Act 1980 contract / negligence claim window — and longer where the equipment was involved in an HSE-relevant incident or in regulated environments where extended retention applies.',
-      '12 months.',
-      'Indefinitely — never delete.',
+      'Records can be deleted as soon as the item is disposed of.',
+      'Typically 6 years post-disposal, aligned with the Limitation Act 1980 claim window.',
+      '12 months from the date of the final test on the item.',
+      'Indefinitely — PAT records must never be deleted at all.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A PAT record and a Schedule of Test Results (SoTR) on an EICR — what is the relationship?',
     options: [
-      'They are the same document.',
-      'They are different. PAT records cover individual portable appliances (asset, results per item). The SoTR is part of the EIC/EICR for the fixed installation and records the circuit-level test results (Zs, R1+R2, RCD trip times). They live in different regulatory regimes — IET CoP / HSG107 / EAWR vs BS 7671.',
-      'PAT records replace the SoTR if both are done on the same day.',
-      'Only the SoTR is legally required; PAT records are optional.',
+      'They are the same document under two different names.',
+      'They are different — PAT covers portable appliances, the SoTR covers fixed circuits.',
+      'PAT records replace the SoTR when both are done on the same day.',
+      'Only the SoTR is legally required; PAT records are entirely optional.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A duty holder is investigated after an electric shock incident. The PAT records produced show only "all equipment passed — annual test" on a single line. What is the legal exposure?',
     options: [
-      'None — the test was carried out and recorded.',
-      'High — the record cannot demonstrate which items were tested, by whom, with which instrument, with which results. The "reasonably practicable" defence in HSAW Sec 2 requires evidence the duty holder can produce; an unspecific record is barely defensible.',
-      'Low — pass is pass.',
-      'Only if the incident involved a fatality.',
+      'None — the test was carried out and a record was kept.',
+      'High — the record cannot show which items, tester, instrument or readings.',
+      'Low — a pass is a pass, so the summary line is sufficient.',
+      'Exposure only arises if the incident involved a fatality.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'HSG107 paragraph 70 lists the minimum information a PAT record should contain. Which set best matches it?',
     options: [
-      'Pass/fail and date only',
-      'Asset identification, equipment type/class, location, name of tester, date of test, test results (including numerical values where applicable), retest interval, and the result (pass/fail)',
-      'Manufacturer, model, serial number',
-      'Cost and depreciation',
+      'Asset ID, type/class, location, tester, date, numerical results, retest interval and result',
+      'The pass/fail outcome and the date of test only',
+      'The manufacturer, model and serial number of the item',
+      'The purchase cost and the depreciation schedule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HSG107 paragraph 70 and IET CoP 5th Ed. Chapter 16 between them list this set: asset ID, type/class, location, tester, date, results (numerical), retest interval, and pass/fail. The numerical values are what distinguish a record from a claim.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'EAWR 1989 Reg 4(2) requires "all systems shall be maintained so as to prevent, so far as is reasonably practicable, danger". How does this give rise to the record-keeping duty for PAT?',
     options: [
-      'It does not — records are voluntary',
-      'Maintenance is unverifiable without records. To demonstrate compliance with Reg 4(2) you have to produce evidence the maintenance has been done — that evidence is the record. HSE and case law treat absent records as absent maintenance.',
-      'The regulation explicitly mandates records',
-      'Records only matter for fixed wiring',
+      'It does not — keeping PAT records is entirely voluntary',
+      'The regulation explicitly mandates written records by name',
+      'Maintenance is unverifiable without records, so the record is the evidence',
+      'Records only matter for the fixed wiring, not for appliances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EAWR Reg 4(2) does not explicitly demand records, but the implicit duty is unavoidable: a duty holder cannot demonstrate "so far as is reasonably practicable" without contemporaneous evidence. HSG107 makes the implicit explicit — records are how the duty is demonstrated.',
   },
@@ -110,26 +110,26 @@ const quizQuestions = [
     question:
       'Why does "the equipment passed" without numerical results fail the HSE\'s expectation of a useful record?',
     options: [
-      'It does not — pass is sufficient',
-      'A pass with no numerical readings cannot be re-examined later. If the item subsequently fails or causes an incident, there is no way to show whether earlier readings were trending towards failure or whether the test was even genuine. The numerical values are the audit trail.',
-      'It only fails for industrial equipment',
+      'It does not — a bare pass is sufficient for any equipment',
+      'It only fails the expectation for heavy industrial equipment',
       'It is acceptable provided a company seal is on the document',
+      'A pass with no numerical readings cannot be re-examined or trended later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Numerical readings (insulation resistance in MΩ, earth continuity in Ω, leakage in mA) are what let a future investigator confirm the test was conducted properly. A bare "pass" cannot be retested or trended.',
+      'Numerical readings (insulation resistance in MΩ, earth continuity in Ω, leakage in mA) are what let a future investigator confirm the test was conducted properly. If the item subsequently fails or causes an incident, a bare "pass" gives no way to show whether earlier readings were trending towards failure or whether the test was even genuine. The numerical values are the audit trail.',
   },
   {
     id: 4,
     question:
       'Industry practice (driven by Limitation Act 1980 considerations) for retaining PAT records is:',
     options: [
-      '6 months',
-      '6 years post-disposal of the equipment, longer where an incident has occurred or where regulated environments require it',
-      'Until the next test only',
-      'Indefinitely with no review',
+      '6 years post-disposal, longer where an incident occurred or a regulated sector requires it',
+      '6 months from the date of the final test on the item',
+      'Until the next scheduled test only, then they can be discarded',
+      'Indefinitely, with no review or scheduled deletion at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Limitation Act 1980 sets the standard claim window at 6 years (with longer where a claimant's date of knowledge is later, and 3 years for personal injury). Industry practice is to retain records 6 years post-disposal so the records exist if a claim is brought. Some sectors (healthcare, education, regulated industries) require longer.",
   },
@@ -138,40 +138,40 @@ const quizQuestions = [
     question:
       'A PAT record and the BS 7671 Schedule of Test Results (SoTR) on an EIC — what is the right way to think about them?',
     options: [
-      'They are the same document',
-      'Different scopes, different regimes. PAT records are for portable / lead-fed equipment under IET CoP / HSG107 / EAWR. The SoTR records circuit-level fixed-installation test results under BS 7671. They live alongside each other but are not interchangeable.',
-      'PAT records replace SoTRs',
-      'SoTRs replace PAT records',
+      'They are the same document recorded twice',
+      'A PAT record fully replaces the SoTR on the EIC',
+      'Different scopes and regimes — they sit alongside each other, not interchangeable',
+      'The SoTR fully replaces the PAT records for the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PAT covers the appliance side; the Schedule of Test Results on an EIC/EICR covers the fixed installation. They are produced by different processes and answer different questions. Treating them as substitutes is a common audit failure.',
+      'PAT records cover portable / lead-fed equipment under IET CoP / HSG107 / EAWR; the Schedule of Test Results on an EIC/EICR records circuit-level fixed-installation results (Zs, R1+R2, RCD trip times) under BS 7671. They are produced by different processes and answer different questions. Treating them as substitutes is a common audit failure.',
   },
   {
     id: 6,
     question:
       'Which of the following items belongs in a PAT test record but not on the equipment label?',
     options: [
-      'Asset ID',
-      'Numerical test values: insulation resistance in MΩ, earth continuity in Ω, leakage current in mA, and the test instrument used / its calibration date',
-      'Retest date',
-      'Tester ID',
+      'The asset ID for the item',
+      'The next retest date for the item',
+      'The tester ID who carried out the test',
+      'Numerical test values plus the instrument used and its calibration date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The label is a summary; the record is the detail. Numerical readings, instrument identification and calibration status live in the record. The label carries the headline status (pass/fail + dates + IDs).',
+      'The label is a summary; the record is the detail. Numerical readings (insulation resistance in MΩ, earth continuity in Ω, leakage in mA), instrument identification and calibration status live in the record. The label carries the headline status — pass/fail plus dates and IDs.',
   },
   {
     id: 7,
     question:
       'Under HSAW 1974 Section 2, what is the relationship between PAT records and the "reasonably practicable" defence?',
     options: [
-      'No relationship',
-      'The records are the evidence. "Reasonably practicable" requires the duty holder to demonstrate they have done what was reasonable to manage risk; PAT records are the contemporaneous evidence of one of those risk-management actions. Without records, the defence is undermined.',
-      'Records only matter in court',
-      'Section 2 does not apply to electrical equipment',
+      'The records are the contemporaneous evidence the defence relies on',
+      'There is no relationship between the records and the defence',
+      'Records only matter once a case reaches the courtroom',
+      'Section 2 does not apply to electrical equipment at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HSAW Sec 2(1) places the "reasonably practicable" duty on every employer. Discharge requires evidence; PAT records are part of that evidence. HSE will ask for them in any investigation.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'GDPR / Data Protection Act 2018 — when do PAT records become a data-protection concern?',
     options: [
-      'Never',
-      'When the asset register or PAT record carries personal data — e.g. a personal asset ID linked to a named employee, or an asset assigned to a home address. The register then becomes a personal data processing activity and needs a lawful basis, retention rules, and access controls.',
-      'Only when records are shared externally',
-      'Only on cloud storage',
+      'Never — PAT records are not personal data',
+      'Only when the records are shared with an external party',
+      'When the register carries personal data such as named assignees or home addresses',
+      'Only when the records are held on cloud storage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A PAT record itself is not personal data, but the asset register often is — particularly where an asset is assigned to a named user, located at a home address (homeworkers), or where the tester ID is identifiable. Treat the register as a personal data processing activity and apply DPA 2018 / UK GDPR principles.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'A PAT instrument provides automatic data logging. What is the procedural advantage of using it instead of paper records?',
     options: [
-      'It is faster',
-      "It captures numerical results, time-stamps and instrument ID automatically, removing transcription error. The record can be exported to the asset register or test-management system without manual re-keying. Crucially, the instrument's calibration history is also linked, providing the audit chain.",
-      'It is required by HSG107',
-      'It removes the need for a competent person',
+      'It is simply faster to work through the bench',
+      'Automatic logging is mandated outright by HSG107',
+      'It removes the need for a competent person to test',
+      'It captures results, time-stamps and instrument ID automatically, removing transcription error',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The procedural advantage is record fidelity: the meter writes numerical readings the same way every time, links them to a specific test, and ties them to the instrument's own calibration record. Paper records lose data to transcription. The competent-person duty does not change — automatic logging records what the competent person tested, it does not replace them.",
   },
@@ -208,14 +208,14 @@ const quizQuestions = [
     question:
       'When a PAT record is challenged in an HSE investigation, what makes the difference between a defensible record and an indefensible one?',
     options: [
-      'How thick the file is',
-      'Specificity. A defensible record identifies the item (asset ID), the tester (named, identifiable), the date (precise, not "during 2026"), the instrument (model + calibration), the readings (numerical), and the result (pass/fail). An indefensible record is a summary or a tick-box without backing detail.',
-      'Whether the record is on letterhead',
-      'The number of signatures',
+      'Specificity — item, tester, date, instrument, numerical readings and the result',
+      'How thick the overall record file is on the shelf',
+      'Whether the record is printed on company letterhead',
+      'The number of signatures collected on the record',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The defensibility test is: can a third party reconstruct the test from the record? If yes, the record is doing its job. If the record is "all equipment passed", the answer is no — and the "reasonably practicable" defence under HSAW Sec 2 is undermined.',
+      'A defensible record identifies the item (asset ID), the tester (named, identifiable), the date (precise, not "during 2026"), the instrument (model and calibration), the readings (numerical) and the result. The defensibility test is whether a third party can reconstruct the test from the record. If the record is "all equipment passed", the answer is no — and the "reasonably practicable" defence under HSAW Sec 2 is undermined.',
   },
 ];
 

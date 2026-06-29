@@ -60,14 +60,14 @@ const AM2Module6Section4 = () => {
       id: 'reading-questions',
       question: "What's the difference between 'minimum IR value' and 'recommended IR value'?",
       options: [
-        'They melt at 120-180°C causing cables to collapse',
-        'Direct to the light fitting, bypassing switches',
-        'UK legislation mandating fire safety including emergency lighting',
-        'Minimum is 1 MO (legal pass), recommended is best practice target',
+        'Minimum applies to SELV only; recommended applies to LV circuits',
+        'Minimum is measured at 250 V; recommended is measured at 500 V',
+        'They are two names for the same 1 MΩ pass figure',
+        'Minimum is 1 MΩ (legal pass), recommended is best practice target',
       ],
       correctIndex: 3,
       explanation:
-        'Minimum is the legal pass mark (1 MO), recommended is the best practice target for good installations.',
+        'Minimum is the legal pass mark (1 MΩ), recommended is the best practice target for good installations.',
     },
     {
       id: 'units-conversion',
@@ -102,10 +102,10 @@ const AM2Module6Section4 = () => {
       id: 2,
       question: 'Why should you underline or note keywords in a question?',
       options: [
-        "At the origin of the installation",
-        "Both a 6 kW reduction and 50% improvement",
+        'To make the exam paper look neat for the assessor',
+        'To use up spare time between questions',
         "To prevent misreading what's actually asked",
-        "No, proper testing with measured currents is required",
+        'To signal to the assessor which answer you chose',
       ],
       correctAnswer: 2,
       explanation:
@@ -188,14 +188,14 @@ const AM2Module6Section4 = () => {
       id: 9,
       question: "What's the benefit of breaking the test into 'chunks' of 10?",
       options: [
-        "It's required by exam rules",
-        'Both B and C',
-        'Reduces mental pressure',
-        'Makes time management easier',
+        "It's required by the exam rules",
+        'It lets you skip the harder sections',
+        'It earns extra marks for organisation',
+        'It eases time pressure and mental load',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
-        "Both - breaking into chunks makes time management easier and reduces the mental pressure of a 'big' 90-minute test.",
+        "Breaking the test into chunks makes time management easier and reduces the mental pressure of a 'big' 90-minute test.",
     },
     {
       id: 10,

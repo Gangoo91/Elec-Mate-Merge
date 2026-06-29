@@ -70,10 +70,10 @@ const checks = [
     question:
       "A standard clamp meter shows 0 A on a 32 A radial that you know is loaded. The likely cause:",
     options: [
-      'Boosting optical signal strength without converting to electrical',
+      'The clamp jaws are not fully closed, so no field is sensed',
       'You are clamping ALL the conductors of the circuit (line + neutral) so the fields cancel',
-      'All connections secure, covers replaced, no tools left, all tests complete',
-      'Verify all results are within limits and calculations are correct',
+      'The meter is set to measure voltage rather than current',
+      'The conductor carries DC and the clamp only senses AC',
     ],
     correctIndex: 1,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'CAT IV 600 V means the meter is rated for:',
     options: [
-      'Up to 600 V transients only',
-      '600 V at any installation point',
-      'The maximum DC voltage is 600 V',
+      '600 V maximum, but only on distribution boards (CAT III locations)',
+      '600 V maximum, suitable only for plug-in appliances downstream of a socket',
+      '600 V continuous with no allowance for transient overvoltage',
       '600 V at the supply origin (CAT IV)',
     ],
     correctAnswer: 3,
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'An oscilloscope shows you:',
     options: [
-      'Dusts, fumes, and chemical vapours',
-      'Polarised Light Microscopy',
-      'Check for proper sealing and protection',
+      'Only the RMS value of an AC voltage, like a true-RMS meter',
+      'The earth fault loop impedance at the point of measurement',
+      'The total harmonic distortion as a single percentage figure',
       'The voltage waveform shape vs time',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'When should you proof-test a meter on a known supply before and after use?',
     options: [
       'Before AND after every isolation procedure',
-      'Manufacturing plants, factories, and heavy industry',
-      'Automatic failure for unsafe practice',
-      'O₂ at 20.8%, LEL at 0%, CO at 0 ppm, H₂S at 0 ppm',
+      'Only once a year, at the annual calibration',
+      'Only before the test, never after',
+      'Only if the meter has previously given a doubtful reading',
     ],
     correctAnswer: 0,
     explanation:
@@ -366,8 +366,10 @@ export default function Sub5() {
                 Reg 643.3 is the test that pulls a Megger MFT through its full range. The
                 instrument has to deliver 500 V DC for a normal LV test, drop to 250 V DC where
                 sensitive equipment is connected (LED drivers, SPDs, electronic controls), and
-                read insulation in megohms accurately. The A4:2026 redraft also simplified RCD
-                verification to a single AC test at IΔn — no more 1/2 IΔn or 5 IΔn sequence.
+                read insulation in megohms accurately. A4:2026 also simplified RCD verification
+                (the operative requirement is Reg 643.8) to a single AC test at 1× IΔn — a
+                general non-delay RCD must disconnect within 300 ms; the ½× and 5× IΔn sequence
+                and Appendix 3 Table 3A were deleted.
                 Knowing the MFT is doing what it claims — and reading correctly through its lead
                 resistance and zeroing — is part of the L3 measurement competence the regulation
                 expects.
@@ -427,8 +429,11 @@ export default function Sub5() {
                 supply voltage.
               </li>
               <li>
-                <strong>RCD trip time and trip current</strong> — injects a known fault current at
-                ½×, 1× or 5× the rated trip current, measures time to trip.
+                <strong>RCD trip time</strong> — injects an alternating current at 1× the rated
+                residual operating current (IΔn) and measures the disconnection time. Under
+                A4:2026 (Reg 643.8) this single 1× test verifies effectiveness — a general
+                non-delay RCD must disconnect within 300 ms; the historic ½× and 5× IΔn tests
+                and Appendix 3 Table 3A were deleted.
               </li>
             </ul>
           </ConceptBlock>

@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is an example of a Task factor?',
     options: [
-      'The load has no handles and is difficult to grip',
       'The handler must reach upward above shoulder height',
+      'The load has no handles and is difficult to grip',
       'The floor surface is wet and slippery',
       'The handler is returning to work after a back injury',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reaching upward above shoulder height is a Task factor because it relates to the physical demands of the task and the postures required. Poor grip is a Load factor, wet floors are an Environment factor, and returning from injury is an Individual factor.',
   },
@@ -107,8 +107,8 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the HSE guideline weight for a woman lifting close to the body at waist height?',
-    options: ['10 kg', '16 kg', '20 kg', '25 kg'],
-    correctAnswer: 1,
+    options: ['10 kg', '20 kg', '25 kg', '16 kg'],
+    correctAnswer: 3,
     explanation:
       'The HSE guideline figure for women lifting close to the body at waist height is 16 kg. For men in the same position, the figure is 25 kg. These are not absolute limits but trigger points for requiring a more detailed risk assessment.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: 'A load with its centre of gravity offset to one side is more hazardous because:',
     options: [
-      'It weighs more on one side than the other',
       'It creates an uneven force distribution, causing the handler to compensate with asymmetric posture',
+      'It weighs more on one side than the other',
       'It is always heavier than a balanced load',
       'It can only be carried by two people',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An offset centre of gravity creates an uneven force distribution that causes the handler to lean or twist to compensate, adopting asymmetric postures. These postures place uneven stress on the spine, muscles, and joints, significantly increasing injury risk even when the overall weight is within acceptable limits.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     options: [
       'Repetition has no effect if the load is light',
       'Repetition is only a concern if the frequency exceeds 100 lifts per hour',
-      'Repetitive lifting increases the cumulative load on the body, leading to fatigue and increased injury risk even with lighter loads',
       'Repetition only matters for loads above the HSE guideline weights',
+      'Repetitive lifting increases the cumulative load on the body, leading to fatigue and increased injury risk even with lighter loads',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Repetitive lifting is a Task factor that increases cumulative musculoskeletal loading. Even light loads, when lifted repeatedly over a shift, cause progressive fatigue in muscles, tendons, and ligaments. The HSE guideline weights are significantly reduced when the lifting frequency increases. For example, a load that might be acceptable for a single lift may need to be halved or more for frequent repetitive lifting.',
   },

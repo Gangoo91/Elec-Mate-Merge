@@ -16,10 +16,10 @@ const Module6Section7_4 = () => {
       id: 1,
       question: 'Who can legally sign electrical certificates?',
       options: [
-        'The certificate is invalid and fraud may have occurred',
+        'Any apprentice who carried out the testing',
         'Competent persons with sufficient training and experience',
-        'Compliance with design, construction, inspection, and testing standards',
-        'Fraud, disciplinary action, loss of employment, or prosecution',
+        'The client who commissioned the work',
+        'Anyone holding a basic electrical qualification',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module6Section7_4 = () => {
       id: 2,
       question: "What does 'competent person' mean in BS 7671?",
       options: [
-        'Compliance with design, construction, inspection, and testing standards',
-        'Assist with testing and recording under supervision',
+        'Anyone working on a building site',
+        'A person who holds public liability insurance',
         'Someone with sufficient training, technical knowledge, and experience',
-        'An apprentice signed it instead of a qualified person',
+        'Any tradesperson supervising an apprentice',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module6Section7_4 = () => {
       id: 3,
       question: 'What does a signatory confirm when signing a certificate?',
       options: [
-        'Fraud, disciplinary action, loss of employment, or prosecution',
-        'Assist with testing and recording under supervision',
-        'An apprentice signed it instead of a qualified person',
+        'That payment for the work has been received',
+        'That the client is satisfied with the work',
+        'That the work was completed on schedule',
         'Compliance with design, construction, inspection, and testing standards',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module6Section7_4 = () => {
       question: 'What happens if an unqualified person signs a certificate?',
       options: [
         'The certificate is invalid and fraud may have occurred',
-        'Someone with sufficient training, technical knowledge, and experience',
-        'An apprentice signed it instead of a qualified person',
-        'Assist with testing and recording under supervision',
+        'The certificate remains valid for 12 months',
+        'The supervising electrician becomes liable instead',
+        'The certificate must simply be countersigned later',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module6Section7_4 = () => {
       id: 5,
       question: 'Can Level 2 electricians carry out electrical testing?',
       options: [
-        'Loose laminations or overloading',
+        'No, testing is never permitted at Level 2',
         'Yes, but only under supervision',
-        '500W per m² or similar rules of thumb',
-        'Lithium iron phosphate (LiFePO4)',
+        'Yes, on any circuit without restriction',
+        'Only on circuits they have wired themselves',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module6Section7_4 = () => {
       id: 6,
       question: 'Can Level 2 electricians legally sign off a Minor Works Certificate?',
       options: [
-        'Cg improves to a higher value',
-        'Accurate measurement of low resistances',
+        'Yes, for single-circuit jobs only',
+        'Yes, if the supervisor is on site',
         'No, they cannot sign any certificates',
-        'Wind speed vs. power output',
+        'Yes, once they have passed Level 2',
       ],
       correctAnswer: 2,
       explanation:
@@ -94,9 +94,9 @@ const Module6Section7_4 = () => {
       id: 7,
       question: 'Why is supervision important during Level 2 training?',
       options: [
-        'Risk of damage from moisture or debris',
-        'Working on de-energised equipment',
-        'Construction Industry Training Board',
+        'It speeds up completion of the work',
+        'It reduces the cost of the installation',
+        'It removes the need for the apprentice to test',
         'Legal safeguard and skill development',
       ],
       correctAnswer: 3,
@@ -108,9 +108,9 @@ const Module6Section7_4 = () => {
       question: 'What are the risks of signing a certificate without being competent?',
       options: [
         'Fraud, disciplinary action, loss of employment, or prosecution',
-        'Compliance with design, construction, inspection, and testing standards',
-        'The certificate is invalid and fraud may have occurred',
-        'An apprentice signed it instead of a qualified person',
+        'A small fine and a written warning only',
+        'No risk provided the work was tested correctly',
+        'The certificate simply being returned for re-signing',
       ],
       correctAnswer: 0,
       explanation:
@@ -120,10 +120,10 @@ const Module6Section7_4 = () => {
       id: 9,
       question: 'What role should a Level 2 learner play in the certification process?',
       options: [
-        'Competent persons with sufficient training and experience',
+        'Sign the certificate on the supervisor’s behalf',
         'Assist with testing and recording under supervision',
-        'Fraud, disciplinary action, loss of employment, or prosecution',
-        'No, they cannot sign any certificates',
+        'Take full legal responsibility for the results',
+        'Issue the certificate directly to the client',
       ],
       correctAnswer: 1,
       explanation:
@@ -133,10 +133,10 @@ const Module6Section7_4 = () => {
       id: 10,
       question: 'In the real-world example, why was the Minor Works Certificate invalid?',
       options: [
-        'Competent persons with sufficient training and experience',
-        'Assist with testing and recording under supervision',
+        'The wrong certificate type had been used',
+        'The test results had not been recorded',
         'An apprentice signed it instead of a qualified person',
-        'Fraud, disciplinary action, loss of employment, or prosecution',
+        'The installation had not actually been tested',
       ],
       correctAnswer: 2,
       explanation:

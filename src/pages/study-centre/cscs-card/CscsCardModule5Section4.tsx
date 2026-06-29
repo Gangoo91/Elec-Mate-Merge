@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'Before any demolition work begins, which two surveys must be completed as part of the planning process?',
     options: [
-      'A fire risk assessment and a noise survey',
       'A structural survey and an asbestos refurbishment/demolition survey',
+      'A fire risk assessment and a noise survey',
       'A ground contamination survey and a wildlife survey',
       'A topographical survey and a drainage survey',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 6187 requires both a structural survey (to determine the condition and construction method of the building) and an asbestos refurbishment/demolition survey (to identify and plan for the safe removal of any asbestos-containing materials) before demolition work begins. These surveys inform the method statement and sequence of operations for the demolition.',
   },
@@ -87,8 +87,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which British Standard covers the code of practice for full and partial demolition?',
-    options: ['BS 5228', 'BS 6187', 'BS 7671', 'BS 8110'],
-    correctAnswer: 1,
+    options: ['BS 5228', 'BS 7671', 'BS 8110', 'BS 6187'],
+    correctAnswer: 3,
     explanation:
       'BS 6187 is the Code of Practice for Full and Partial Demolition. It sets out the requirements for planning, managing, and carrying out demolition work safely, including the need for structural surveys, method statements, exclusion zones, and competent contractors. BS 5228 covers noise and vibration control, BS 7671 is the Wiring Regulations, and BS 8110 covers structural concrete.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What type of asbestos survey is required before demolition work begins?',
     options: [
-      'A management survey',
       'A refurbishment and demolition survey',
+      'A management survey',
       'A visual inspection only',
       'An air quality survey',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A refurbishment and demolition survey is required before any demolition work begins. This is more invasive than a management survey and involves destructive inspection to locate all asbestos-containing materials within the structure, including those that are hidden behind walls, above ceilings, and within floor voids. All identified asbestos must be safely removed by a licensed contractor before demolition can proceed.',
   },
@@ -137,8 +137,8 @@ const quizQuestions = [
     id: 5,
     question:
       'On a construction site with 80 workers, how many first aiders should be available as a minimum according to HSE guidance?',
-    options: ['One first aider', 'Two first aiders', 'Three first aiders', 'Four first aiders'],
-    correctAnswer: 1,
+    options: ['Two first aiders', 'One first aider', 'Three first aiders', 'Four first aiders'],
+    correctAnswer: 0,
     explanation:
       'For a higher-risk workplace such as a construction site with 80 workers, HSE guidance recommends at least one first aider for the first 50 workers, plus an additional first aider for every additional 50 workers (or part thereof). Therefore, 80 workers would require a minimum of two first aiders. The employer should carry out a first aid needs assessment, which may indicate that more are needed depending on site-specific factors.',
   },
@@ -159,8 +159,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What TWO numbers can be used to contact the emergency services in the UK?',
-    options: ['999 and 111', '999 and 112', '112 and 101', '999 and 0800'],
-    correctAnswer: 1,
+    options: ['999 and 111', '112 and 101', '999 and 0800', '999 and 112'],
+    correctAnswer: 3,
     explanation:
       'In the UK, you can contact the emergency services by dialling 999 (the traditional UK emergency number) or 112 (the European emergency number, which also works in the UK). Both numbers connect to the same emergency call centre and can be used to request police, fire, or ambulance services. The 112 number works from any mobile phone, even without a SIM card or credit, and can be useful if 999 is not available.',
   },

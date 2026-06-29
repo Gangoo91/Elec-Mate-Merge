@@ -28,10 +28,10 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'Which of the following is a popular electrical certification app used by UK electricians?',
       options: [
-        '25-35 litres per second per kW',
+        'Microsoft Outlook',
         'Certsure / NICEIC Certification Portal',
-        'They must be locked (brakes engaged)',
-        'It determines the direction of motor rotation',
+        'Google Maps',
+        'Adobe Photoshop',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,10 +42,10 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'When annotating a PDF of a wiring diagram on site, which tool would you most commonly use?',
       options: [
-        'Dangerous high voltages develop that can damage insulation and harm personnel',
-        'Moving desks and computers within a finished office',
+        'The crop tool to remove the parts of the diagram you do not need',
+        'The signature field to formally approve the drawing',
         'A highlighter and text comment tool to mark areas needing attention',
-        'Check for hidden services and structural elements',
+        'The page-rotate tool to view the diagram in landscape',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,9 +56,9 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What metadata should you ensure is enabled on site photographs taken for compliance documentation?',
       options: [
-        'Safety interlocks and fan proving',
-        'Brushes wear, sparking, RFI emission',
-        'Supply disruption if the sole supplier fails',
+        'Image resolution lowered to keep the file size small',
+        'The camera make and lens model only',
+        'A colour filter applied to enhance the image',
         'Date, time, and GPS location stamps',
       ],
       correctAnswer: 3,
@@ -70,10 +70,10 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What is the primary purpose of Building Information Modelling (BIM) in electrical work?',
       options: [
-        "A 3D digital representation of a building's physical and functional characteristics, including electrical systems",
-        "Have multiple language subtitles, use clear visuals, avoid colloquialisms, and include a short comprehension check at the end",
-        "Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath",
-        "A witness testimony from a qualified assessor who directly observed the apprentice performing the task",
+        "A 3D digital model of a building's physical and functional characteristics, including its electrical systems",
+        "A scheduling method that sets the order in which the trades carry out their work on a project",
+        "A cloud storage system used purely for emailing finished certificates and drawings to clients",
+        "A cost-estimating package that produces priced quotations directly from a material takeoff list",
       ],
       correctAnswer: 0,
       explanation:
@@ -83,10 +83,10 @@ const FunctionalSkillsModule3Section3 = () => {
       id: 5,
       question: 'Which feature makes digital signatures legally valid in the UK?',
       options: [
-        'The designer/contractor who signs the design certificate',
+        'They are printed and then physically posted to the recipient',
         'They comply with the Electronic Communications Act 2000 and eIDAS regulations',
-        'It requires a balance between the level of risk and the cost, time, and effort of reducing it',
-        'Regulation 4(1) — construction of systems to prevent danger',
+        'They are witnessed and stamped by a qualified solicitor',
+        'They are saved as a locked PDF that cannot be edited',
       ],
       correctAnswer: 1,
       explanation:
@@ -97,10 +97,10 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What is the main advantage of using a project management app like Trello or Monday.com for electrical projects?',
       options: [
-        'Ask relevant follow-up questions to deepen understanding and show continued interest',
-        'Electric shock or arc flash to the second person if they assume the system is dead — potentially fatal',
+        'It automatically sizes the cables and protective devices for each circuit',
+        'It generates BS 7671 certificates from the completed test results',
         'It provides visibility of task progress, deadlines, and team responsibilities in one place',
-        'Work only under a permit issued to a competent person, follow its conditions exactly and never extend it',
+        'It calculates the VAT and profit margin to add to a job quotation',
       ],
       correctAnswer: 2,
       explanation:
@@ -111,9 +111,9 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'When taking site photographs for documentation, what framing technique ensures the photo is useful?',
       options: [
-        'Raising awareness, addressing stigma, and improving mental health support in the UK construction industry',
-        'Apps automatically calculate test result pass/fail criteria and reduce human error',
-        '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
+        'Photograph only the finished work, never the existing condition beforehand',
+        'Use a heavy zoom and shoot from across the room to capture everything at once',
+        'Take a single overall photo of the whole room and rely on memory for the detail',
         'Take a wide establishing shot first, then close-up detail shots with identifiable reference points',
       ],
       correctAnswer: 3,
@@ -126,9 +126,9 @@ const FunctionalSkillsModule3Section3 = () => {
         'Which electrical design software is commonly used by UK electrical engineers and designers?',
       options: [
         'Amtech ProDesign or Trimble ID',
-        'Asbestos Mines of South Africa',
-        '300-600mm apart depending on size',
-        'Plug earth pin to appliance earth',
+        'Sage Accounts or QuickBooks',
+        'AutoRoute or Google Earth',
+        'Audacity or VLC Media Player',
       ],
       correctAnswer: 0,
       explanation:

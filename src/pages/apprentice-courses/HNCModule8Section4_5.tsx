@@ -129,10 +129,10 @@ const quizQuestions = [
     question:
       'A supply air fan consumes 15 kW at full speed. If the ductwork dampers are throttled to reduce flow to 70%, approximately what power is saved?',
     options: [
-      'No significant savings - dampers dissipate energy',
-      'Overheating, interference, equipment malfunction',
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
-      'To ensure the switch breaks the phase conductor',
+      'Little - dampers dissipate energy while the motor runs at full speed',
+      'About 5.1 kW, following the cube law for the speed reduction',
+      'Exactly 30%, in direct proportion to the reduction in flow',
+      'About 8.2 kW, following the square law for the pressure reduction',
     ],
     correctAnswer: 0,
     explanation:
@@ -213,14 +213,14 @@ const quizQuestions = [
     question:
       'Under the Energy-related Products (ErP) Directive, which motors are exempt from minimum efficiency requirements?',
     options: [
-      'Motors below 0.75 kW',
-      'Motors integrated into machinery',
-      'All of the above',
-      'Motors for intermittent duty',
+      'Standard three-phase induction motors rated 7.5 kW for continuous duty',
+      'Premium-efficiency motors already certified to the IE3 class',
+      'Motors integrated into machinery where efficiency cannot be tested separately',
+      'Any motor installed in a commercial office building',
     ],
     correctAnswer: 2,
     explanation:
-      'ErP exemptions include motors below 0.75 kW or above 375 kW, motors designed for intermittent duty, brake motors, and motors integrated into products where efficiency cannot be tested separately.',
+      'ErP exemptions include motors designed for intermittent duty, brake motors, and motors integrated into products where their efficiency cannot be tested separately from the host machine.',
   },
   {
     id: 11,

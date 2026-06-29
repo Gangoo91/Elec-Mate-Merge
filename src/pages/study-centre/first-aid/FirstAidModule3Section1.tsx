@@ -10,8 +10,8 @@ const quickCheckQuestions = [
     id: 'fa-bleeding-arterial',
     question:
       'A casualty has a wound that is spurting bright red blood in time with their heartbeat. What type of bleeding is this?',
-    options: ['Capillary bleeding', 'Venous bleeding', 'Arterial bleeding', 'Internal bleeding'],
-    correctIndex: 2,
+    options: ['Arterial bleeding', 'Capillary bleeding', 'Venous bleeding', 'Internal bleeding'],
+    correctIndex: 0,
     explanation:
       'Bright red blood spurting in time with the heartbeat is arterial bleeding — the most dangerous type. Arteries carry oxygenated blood under high pressure directly from the heart, so blood loss is rapid and life-threatening without immediate intervention.',
   },
@@ -75,8 +75,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which type of bleeding is characterised by dark red blood flowing steadily from the wound?',
-    options: ['Arterial bleeding', 'Venous bleeding', 'Capillary bleeding', 'Internal bleeding'],
-    correctAnswer: 1,
+    options: ['Venous bleeding', 'Arterial bleeding', 'Capillary bleeding', 'Internal bleeding'],
+    correctAnswer: 0,
     explanation:
       'Venous bleeding produces dark red blood that flows steadily from the wound. The blood is darker because it is deoxygenated, returning to the heart via the veins. Although less immediately dramatic than arterial bleeding, venous bleeding from a large vein can still be life-threatening.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: 'In the C-ABC approach to major trauma, what is the correct sequence?',
     options: [
       'Circulation → Airway → Breathing → Catastrophic haemorrhage',
-      'Catastrophic haemorrhage → Airway → Breathing → Circulation',
       'Consciousness → Airway → Breathing → CPR',
       'Cervical spine → Airway → Breathing → Circulation',
+      'Catastrophic haemorrhage → Airway → Breathing → Circulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The C-ABC sequence is: Catastrophic haemorrhage (control first), then Airway, Breathing, and Circulation. This replaces the traditional ABC in major trauma because uncontrolled catastrophic bleeding can kill faster than airway obstruction.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'When treating a nosebleed, which position should the casualty adopt?',
     options: [
-      'Lie flat on their back with their head tilted back',
       'Sit upright and lean forward, pinching the soft part of the nose',
+      'Lie flat on their back with their head tilted back',
       'Stand up and tilt the head as far back as possible',
       'Lie on their side in the recovery position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The casualty should sit upright and lean forward while pinching the soft part of the nose firmly for 10–15 minutes. Leaning forward prevents blood running down the throat (which can cause nausea and vomiting). Tilting the head back is incorrect — it does not stop the bleeding and can cause the casualty to swallow or inhale blood.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'Give them water to drink and keep them walking to maintain circulation',
       'Apply a tourniquet to the limb nearest the impact site',
-      'Call 999, lie them flat, raise their legs (if no spinal injury), keep warm, and give nothing by mouth',
       'Sit them upright and apply cold compresses to the abdomen',
+      'Call 999, lie them flat, raise their legs (if no spinal injury), keep warm, and give nothing by mouth',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For suspected internal bleeding: call 999 immediately, lie the casualty flat, raise their legs to improve blood flow to vital organs (only if no spinal injury is suspected), keep them warm with blankets or coats, and give nothing by mouth (nil by mouth) as they may need surgery. Monitor and reassure them while waiting for the ambulance.',
   },

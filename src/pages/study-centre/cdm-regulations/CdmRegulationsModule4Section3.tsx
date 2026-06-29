@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A designer specifies a flat roof with rooftop mechanical plant but provides no permanent safe access route from the building interior to the roof. Under CDM 2015, which whole-life design failure does this represent?',
     options: [
-      'A construction sequencing error — the contractor should install temporary access during the build phase and remove it afterwards',
-      "A failure to consider safe maintenance — the designer has not provided permanent safe access for the maintenance personnel who will service the rooftop plant repeatedly throughout the building's 50–60 year life",
-      'No failure at all — maintenance contractors are expected to provide their own access equipment such as scaffolding or cherry pickers',
-      'A planning compliance issue only — the local authority requires roof access for fire safety inspections',
+      'A failure to design in safe maintenance access for the personnel who will service the rooftop plant throughout the building life',
+      'A construction sequencing error, solved by temporary access during the build phase that is removed once handover is complete',
+      'No failure, because maintenance contractors are expected to bring their own scaffolding or cherry pickers to each visit',
+      'A planning compliance issue only, because the local authority requires roof access for fire safety inspections',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "CDM 2015 Regulation 9 requires designers to consider the health and safety of all persons affected by the design throughout the entire lifecycle of the structure — not just during construction, but during maintenance, cleaning, refurbishment, and demolition. A flat roof with mechanical plant will require regular maintenance visits (typically quarterly for HVAC systems, annually for comprehensive servicing) over the building's entire operational life. If the designer provides no permanent safe access route, every maintenance visit will require temporary access equipment — scaffolding, mobile elevated work platforms, or ladders — each of which introduces foreseeable risks of falls from height, manual handling injuries, and struck-by hazards. The designer has a duty to design in permanent safe access: internal staircase access to roof level, guardrailed walkways between the access point and the plant, and anchor points for fall arrest systems where guardrails are not practicable.",
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       "Which of the following is the MOST effective way for a designer to reduce the risk of falls from height during the construction of a multi-storey building's electrical installation?",
     options: [
-      'Specify that all electricians must wear safety harnesses when working above 2 metres',
+      'Specify that all electricians must wear safety harnesses when working above 2 metres throughout the build',
       'Include a note on the drawings requiring the contractor to provide scaffolding at all high-level working locations',
-      'Design the electrical containment and distribution systems so that cable tray assemblies, luminaire brackets, and riser components are pre-fabricated at ground level or offsite and lifted into position as complete assemblies, minimising the time workers spend at height',
-      'Require the principal contractor to carry out a risk assessment for work at height and produce a method statement',
+      'Design the containment and distribution to be pre-fabricated at ground level and lifted into position as complete assemblies',
+      'Require the principal contractor to carry out a work-at-height risk assessment and produce a method statement',
     ],
     correctIndex: 2,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "A designer is specifying a structural steel frame with bolted connections for a new industrial building. From a 'designing for demolition' perspective under CDM 2015, why are bolted connections preferable to welded connections?",
     options: [
-      'Bolted connections are always cheaper than welded connections, so they reduce the project budget',
-      "Bolted connections are easier to fabricate in the steel workshop, reducing the manufacturer's production time",
-      'Bolted connections allow the structure to be disassembled in a controlled manner during future demolition — individual members can be unbolted and removed sequentially, maintaining structural stability throughout the process, whereas welded connections require cutting which is less predictable and creates fire and fume hazards',
-      'There is no difference between bolted and welded connections from a demolition perspective — both are equally safe to demolish',
+      'Bolted connections are always cheaper than welded connections, so they reduce the overall project budget',
+      "Bolted connections are easier to fabricate in the workshop, reducing the steel manufacturer's production time",
+      'There is no demolition difference between bolted and welded connections, as both are equally safe to take down',
+      'Bolted connections allow controlled disassembly of the frame, member by member, whereas welded ones must be cut',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'CDM 2015 requires designers to consider the entire lifecycle of the structure, including its eventual demolition. Bolted connections are significantly preferable from a demolition perspective because they allow controlled disassembly — individual structural members can be unbolted and removed in a planned sequence, maintaining the stability of the remaining structure throughout the process. This is far safer than cutting welded connections, which requires hot work (creating fire and fume hazards), produces less predictable structural behaviour during cutting (because the load path changes suddenly when a weld is cut through), and generates sparks and molten metal that can injure workers below. Additionally, bolted steel members can often be reused or recycled more easily because they are removed intact, whereas cutting damages the member ends. The designer should record the connection details, bolt sizes, and torque values in the Health and Safety File so that future demolition engineers have the information they need to plan a safe disassembly sequence. BS 6187 (the demolition code) emphasises the importance of understanding structural connections before commencing demolition work.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 1,
     question: "Which of the following best describes 'buildability' in the context of CDM 2015?",
     options: [
-      'The ability to construct a building within budget and on programme regardless of the methods used',
       'Designing structures that can be constructed safely and efficiently, considering how the building will be built and not just what it will look like when finished',
+      'The ability to construct a building within budget and on programme regardless of the methods used',
       'The structural capacity of a building to withstand applied loads during the construction phase only',
       'The speed at which a building can be erected using the fastest available construction methods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Buildability means designing for safe and efficient construction — it requires designers to consider HOW the building will be built, not just what the finished product will look like. Under CDM 2015, designers must take into account the general principles of prevention when preparing designs, which includes considering the construction methods, sequences, plant and equipment, access arrangements, and working conditions that will be required. A design with good buildability can be constructed safely, with foreseeable risks eliminated or reduced at the design stage. While cost and programme are important considerations, the CDM definition of buildability is fundamentally about health and safety during the construction process and throughout the structure's entire lifecycle.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'Which of the following is the MOST effective way for a designer to address the risk of falls from height during construction?',
     options: [
-      'Specify that all workers must wear safety harnesses when working above 2 metres',
+      'Specify that all workers must wear safety harnesses whenever they are working above 2 metres',
       'Include a requirement in the specification for the contractor to provide scaffolding at all times',
-      'Design the structure so that work at height is eliminated or reduced — for example, by specifying ground-level pre-assembly or offsite manufacture of components',
-      "Add a note to the drawings stating 'Contractor to manage work at height risks'",
+      "Add a note to the drawings stating 'Contractor to manage work at height risks' on site",
+      'Design the structure so that work at height is eliminated or reduced, using ground-level pre-assembly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under CDM 2015, the hierarchy of risk control requires designers to first eliminate hazards through design before relying on protective measures. Designing out work at height is the most effective approach because it removes the hazard entirely rather than managing it. Pre-assembly at ground level, offsite manufacture, and designing connections that can be made from below are all examples of eliminating work at height through design. Specifying harnesses is the lowest level of the hierarchy and should only be relied upon when higher-level controls are not reasonably practicable. Adding notes transferring risk to the contractor is a breach of Regulation 9 — designers cannot simply pass their responsibilities down the supply chain.',
   },
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       'Under CDM 2015, which of the following is an example of designing for safe maintenance?',
     options: [
-      'Locating all rooftop mechanical plant behind a parapet wall with permanent guardrailed walkways, anchor points for harnesses, and safe isolation points accessible from a standing position',
-      'Installing rooftop plant in the cheapest available location regardless of maintenance access arrangements',
-      'Assuming that maintenance contractors will bring their own mobile access equipment and safety measures for each visit',
-      'Specifying that maintenance should only be carried out by industrial rope access technicians to avoid the cost of permanent access',
+      'Locating rooftop plant behind a parapet with permanent guardrailed walkways and standing-height isolation points',
+      'Installing rooftop plant in the cheapest available location, regardless of how it will be reached for servicing',
+      'Assuming maintenance contractors will bring their own mobile access equipment and safety measures to each visit',
+      'Specifying that maintenance be done only by rope access technicians, to avoid the cost of permanent access',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 5,
     question: 'What guidance does BS 8213-1 provide in relation to designing for safe cleaning?',
     options: [
-      'BS 8213-1 covers the structural design of window frames only and has no relevance to cleaning safety',
-      'BS 8213-1 provides guidance on the design of windows that can be cleaned safely, including requirements for reversible windows, accessible openings, and the avoidance of designs that require external access at height for routine cleaning',
-      'BS 8213-1 is a superseded standard that has been withdrawn and replaced by CDM 2015',
-      'BS 8213-1 only applies to residential buildings and has no application to commercial or industrial properties',
+      'It covers the structural design of window frames only and has no relevance to cleaning safety',
+      'It guides the design of windows that can be cleaned safely, avoiding external access at height',
+      'It is a superseded standard that has been withdrawn and replaced in full by CDM 2015',
+      'It applies only to residential buildings and has no application to commercial or industrial property',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'Why must designers consider demolition at the design stage, even though the building has not yet been constructed?',
     options: [
-      "They do not need to — demolition is solely the demolition contractor's responsibility under CDM 2015",
-      "Because CDM 2015 requires designers to consider the health and safety of all persons affected by the design throughout the structure's entire lifecycle, including those who will eventually demolish it, potentially 50–100 years in the future",
+      "They do not need to, because demolition is solely the demolition contractor's responsibility on the day",
       "Only to calculate the demolition cost for the client's whole-life cost analysis and budget planning",
       'Because planning permission always requires a demolition method statement before construction can begin',
+      'Because Reg 9 covers everyone affected across the whole lifecycle, including those who will demolish it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CDM 2015 Regulation 9 requires designers to consider the health and safety of all persons affected by the design throughout the entire lifecycle of the structure, including those who will carry out future demolition work. Design decisions made today can have significant health and safety implications for demolition workers 50–100 years in the future. For example: specifying composite materials that cannot be easily separated creates hazardous waste processing challenges; using structural adhesives instead of mechanical fixings makes disassembly difficult and dangerous; and designing complex interconnected structural systems without clear load paths makes partial demolition risky. Good design for demolition includes designing for disassembly, recording structural systems in the Health and Safety File, and avoiding materials that become hazardous over time. BS 6187 (the demolition code) provides detailed guidance.',
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'Which of the following must the principal designer include in the Health and Safety File?',
     options: [
-      "Only the original architect's drawings and the project budget — no other information is required",
-      'A comprehensive record including as-built drawings, information about materials (especially hazardous ones), structural system details, services routing, designed-in access provisions, and residual hazard information',
-      'Only information about accidents that occurred during the construction phase',
-      "A copy of the principal contractor's construction phase plan and nothing else",
+      "Only the original architect's drawings and the project budget, with no other information required",
+      'Only information about accidents and near misses that occurred during the construction phase',
+      'As-built drawings, hazardous materials, structural details, services routing, access provisions and residual hazards',
+      "A copy of the principal contractor's construction phase plan, and nothing else besides it",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "CDM 2015 Regulation 12 requires the principal designer to prepare a Health and Safety File containing information likely to be needed for the health and safety of anyone carrying out future construction work on the structure. This includes: 'as built' drawings showing actual construction details; information about materials used, especially hazardous materials such as asbestos-containing products, lead paint, or structural adhesives; details of the structural system including pre-stressed or post-tensioned elements and their load paths; the routing and specification of all building services with isolation points; details of designed-in safe access provisions such as roof anchor points, cradle tracks, and maintenance walkways; and information about any residual hazards that could not be eliminated through design. The file is a living document that must be updated when alterations are made and must be kept available for the life of the structure.",
   },
@@ -187,10 +187,10 @@ const quizQuestions = [
     question:
       'A case study describes a school building where the designer specified an internal courtyard with a fully glazed roof at 8 metres height. From a buildability and maintainability perspective, what is the PRIMARY concern?',
     options: [
-      'The glazed roof will allow too much solar gain into the courtyard, creating overheating issues',
-      "The design creates a foreseeable requirement for repeated work at height throughout the building's life — for cleaning, maintenance, and eventual replacement of the glazing — and the designer must provide permanent safe access systems or redesign to eliminate the height hazard",
-      'The glazed roof will be more expensive to construct than a solid roof, exceeding the project budget',
-      'The courtyard design will reduce the lettable floor area of the school and is therefore poor value for money',
+      'The glazed roof will allow too much solar gain into the courtyard, creating ongoing overheating issues',
+      'It creates foreseeable repeated work at height for cleaning, maintenance and replacement of the glazing',
+      'The glazed roof will cost more to construct than a solid roof, pushing the project over its set budget',
+      'The courtyard reduces the lettable floor area of the school and is therefore poor value for the money',
     ],
     correctAnswer: 1,
     explanation:

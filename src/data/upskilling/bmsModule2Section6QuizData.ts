@@ -3,12 +3,12 @@ import { QuizQuestion } from '@/types/quiz';
 export const bmsModule2Section6QuizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Why are BMS analog signals more sensitive to interference than digital signals?',
+    question: 'Why are BMS analogue signals more sensitive to interference than digital signals?',
     options: [
-      'Installing sensor cables in the same containment as HVAC fan power cables',
-      'Analog signal values are directly affected by any noise, while digital signals have switching thresholds',
-      'For easy identification, troubleshooting, and future system modifications',
-      'To prevent electromagnetic fields from power cables inducing interference in control cables',
+      'Analogue signals always operate at a much higher voltage than digital signals',
+      'Analogue signal values are directly affected by any noise, while digital signals have switching thresholds',
+      'Analogue signals travel over longer cable runs and so pick up more resistance',
+      'Analogue signals use a higher frequency that couples more readily with earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -29,11 +29,11 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
   },
   {
     id: 3,
-    question: 'Why should power and control cables be kept separate?',
+    question: 'Why should power and control cables be kept separated within an installation?',
     options: [
-      'Installing sensor cables in the same containment as HVAC fan power cables',
-      'For easy identification, troubleshooting, and future system modifications',
-      'Analog signal values are directly affected by any noise, while digital signals have switching thresholds',
+      'To keep the control cables at a lower operating temperature',
+      'To make the power cables easier to disconnect during isolation',
+      'To balance the current loading equally across both containment routes',
       'To prevent electromagnetic fields from power cables inducing interference in control cables',
     ],
     correctAnswer: 3,
@@ -107,12 +107,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
   },
   {
     id: 9,
-    question: 'Why is cable labelling important for maintenance?',
+    question: 'Why is clear cable labelling important for BMS maintenance?',
     options: [
-      'When a conductor is broken or disconnected, stopping current flow',
-      'For easy identification, troubleshooting, and future system modifications',
-      'Record all test results with locations and conditions',
-      'Identify what a worker should or should not do in a described workplace scenario',
+      'It increases the current-carrying capacity of the labelled cable',
+      'It allows easy identification, troubleshooting, and future system modifications',
+      'It provides additional electromagnetic shielding around the conductors',
+      'It reduces the resistance of the joints at each termination',
     ],
     correctAnswer: 1,
     explanation:

@@ -28,22 +28,27 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What should you use to mark electrical positions before plastering?',
     options: [
-      'Remove or protect them from ignition',
-      'Check for damage and strain relief',
       'Spray markers, chalk, or tape',
-      'Team members or supervisors',
+      'A note in your phone only',
+      'Nothing - the drawings are enough',
+      'Permanent ink on the brickwork',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Use spray markers, chalk, or tape to clearly mark electrical positions. This ensures plasterers can work around electrical installations properly.',
   },
   {
     id: 3,
-    question: "True or False: You can move plumbing pipework if it's in your way.",
-    options: ["True - if it's urgent", 'False - never without approval'],
-    correctIndex: 1,
+    question: "Can you move plumbing pipework if it's in your way?",
+    options: [
+      'No - never without the relevant trade or supervisor approving it',
+      "Yes - if it's only a small adjustment",
+      'Yes - provided you put it back afterwards',
+      "Yes - if it's slowing your own work down",
+    ],
+    correctIndex: 0,
     explanation:
-      "False. You should never move or interfere with another trade's work without proper approval from supervisors.",
+      "You should never move or interfere with another trade's work without proper approval from supervisors.",
   },
 ];
 
@@ -55,12 +60,12 @@ const Module5Section5_3 = () => {
       id: 1,
       question: 'Why is coordination with other trades important?',
       options: [
-        'To show authority over other trades',
         'To prevent delays, clashes, and rework',
+        'To show authority over other trades',
         'To speed up your own work only',
         'To avoid talking to supervisors',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Coordination with other trades is essential to prevent delays, clashes, and costly rework that can affect the entire project schedule and budget.',
     },
@@ -69,11 +74,11 @@ const Module5Section5_3 = () => {
       question: 'Who installs stud walls and fittings that may affect electrical containment?',
       options: [
         'Plasterers',
-        'Plumbers',
         'Joiners',
+        'Plumbers',
         'Painters',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Joiners install stud walls, floors, and fittings. Electrical containment often needs to be coordinated with their work schedule.',
     },
@@ -81,33 +86,38 @@ const Module5Section5_3 = () => {
       id: 3,
       question: 'What must be installed before plastering begins?',
       options: [
-        'Yes, with limitations noted',
-        'Asbestos-containing materials',
-        'High resistance connections',
+        'Final accessories and faceplates',
         'Electrical boxes and conduits',
+        'Skirting boards and architraves',
+        'Light fittings and switches',
       ],
-      correctAnswer: 3,
+      correctAnswer: 1,
       explanation:
         'Electrical boxes and conduits must be properly installed and positioned before plasterers begin their work to avoid having to cut back plaster later.',
     },
     {
       id: 4,
-      question: "True or False: You can move plumbing pipework if it's in your way.",
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: "Are you allowed to move plumbing pipework if it's in your way?",
+      options: [
+        "Yes, if it's only a minor adjustment",
+        'Yes, provided you reinstate it afterwards',
+        'No, not without approval from the relevant trade or supervisor',
+        'Yes, if it is blocking access to your work',
+      ],
+      correctAnswer: 2,
       explanation:
-        "False. You should never move or interfere with another trade's work without proper approval from supervisors. This could affect their system integrity.",
+        "You should never move or interfere with another trade's work without proper approval from supervisors, as this could affect their system integrity.",
     },
     {
       id: 5,
       question: 'Which trade is responsible for installing heating systems and drainage?',
       options: [
         'Electricians',
-        'Plumbers',
         'Plasterers',
         'Joiners',
+        'Plumbers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Plumbers install pipework, heating systems, and drainage. Careful planning is needed to avoid clashes between pipes and cable runs.',
     },
@@ -115,12 +125,12 @@ const Module5Section5_3 = () => {
       id: 6,
       question: 'What should you use to mark out electrical positions before plastering?',
       options: [
-        'Nothing - just remember the positions',
-        'Permanent marker on walls',
         'Spray markers, chalk, or tape',
+        'Permanent marker on walls',
+        'Nothing - just remember the positions',
         'Sticky notes',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Use spray markers, chalk, or tape to clearly mark electrical positions. This ensures plasterers can work around electrical installations properly.',
     },
@@ -129,11 +139,11 @@ const Module5Section5_3 = () => {
       question: 'Who should you report a clash with another trade to?',
       options: [
         'The other trade directly',
-        'No one - resolve it yourself',
-        'The client',
         'Your supervisor/foreman',
+        'The client',
+        'No one - resolve it yourself',
       ],
-      correctAnswer: 3,
+      correctAnswer: 1,
       explanation:
         'Always report clashes to your supervisor or foreman. They have the authority and knowledge to coordinate between trades properly.',
     },
@@ -141,12 +151,12 @@ const Module5Section5_3 = () => {
       id: 8,
       question: 'What is a common issue between electricians and plasterers?',
       options: [
-        'Socket boxes being plastered over',
         'Different working hours',
         'Competing for workspace',
+        'Socket boxes being plastered over',
         'Tool sharing disputes',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Socket boxes being plastered over is a common issue. Ensure boxes are properly fixed, flush, and clearly marked before plastering begins.',
     },
@@ -155,21 +165,26 @@ const Module5Section5_3 = () => {
       question: 'What should you do before drilling through shared walls or joists?',
       options: [
         'Drill immediately if urgent',
-        'Check with joiners or plumbers',
         'Use the largest drill bit available',
         "Ignore other trades' requirements",
+        'Check with joiners or plumbers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Always check with joiners or plumbers before drilling through shared structural elements to avoid damaging their installations.',
     },
     {
       id: 10,
-      question: 'True or False: Proper coordination only benefits electricians.',
-      options: ['True', 'False'],
+      question: 'Who benefits from proper coordination between trades?',
+      options: [
+        'Only the electricians on site',
+        'All trades and the whole project',
+        'Only the main contractor',
+        'Only the trade that finishes first',
+      ],
       correctAnswer: 1,
       explanation:
-        'False. Proper coordination benefits all trades and the entire project by reducing delays, preventing rework, and maintaining safety standards.',
+        'Proper coordination benefits all trades and the entire project by reducing delays, preventing rework, and maintaining safety standards.',
     },
   ];
 

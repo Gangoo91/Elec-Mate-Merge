@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'A client appoints a principal contractor to begin construction work on Monday morning. The PC arrives on site and says the welfare facilities will be ordered this week and should be on site by Wednesday. Is this acceptable under CDM 2015?',
     options: [
+      'No — Schedule 2 welfare facilities must be available from day one; work must not begin until they are in place',
       'Yes — a two-day delay is reasonable to allow for logistics',
-      'No — CDM 2015 requires that welfare facilities complying with Schedule 2 are available from day one of the construction phase; work must not begin until they are in place',
       'Yes — as long as the PC provides bottled water and allows workers to use a nearby public toilet',
       'No — but only if there are more than five workers on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 4(8) of CDM 2015 requires the client to ensure that welfare facilities are provided before construction work begins. The principal contractor must not start work unless satisfied that Schedule 2 facilities are or will be available. A two-day gap is not acceptable — facilities must be in place on the first day. The client should have made arrangements during pre-construction so that facilities were delivered and operational before the construction phase started.',
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Workers on a construction site are removing old lead paint from structural steelwork. The site has washing facilities with hot and cold water, soap, and paper towels, but no showers. Is this sufficient?',
     options: [
-      'Yes — hot and cold water with soap meets the Schedule 2 requirements',
-      'No — showers must be provided where the nature of the work involves exposure to hazardous substances such as lead, to ensure workers can properly decontaminate before eating, drinking, or leaving site',
-      'Yes — showers are only required on sites with more than 50 workers',
-      'No — but only if the workers are employed directly by the principal contractor',
+      'Yes — hot and cold water with soap fully meets the Schedule 2 washing requirements here',
+      'Yes — showers are only required on sites with more than 50 workers on the books',
+      'No — but only because the workers are not employed directly by the principal contractor',
+      'No — showers are needed where work exposes workers to substances such as lead, so they can decontaminate',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Schedule 2 of CDM 2015 requires showers to be provided where the nature of the work demands it — specifically where workers are exposed to hazardous substances such as lead, asbestos, or chemicals. Lead paint removal is a notifiable activity under the Control of Lead at Work Regulations 2002, and workers must be able to shower to remove lead contamination from their skin and hair before breaks and at the end of the shift. Hand-washing alone is insufficient for this type of contamination.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     question:
       'During an HSE site inspection, the inspector finds that the site toilets are dirty, there is no soap at the washing stations, and the drinking water tap is unlabelled and adjacent to a non-potable supply. The inspector says this indicates wider management failings. Why does the HSE view welfare failures this way?',
     options: [
-      'Because welfare is the most expensive item on site, so poor welfare means poor budgeting',
-      'Because the HSE is primarily concerned with worker comfort rather than safety',
-      'Because welfare provision is a reliable indicator of overall site management standards — a PC who cannot maintain basic toilets and washing facilities is unlikely to be managing more complex risks such as falls from height, structural stability, or hazardous substances effectively',
-      'Because welfare failures always result in prosecution, which generates revenue for the HSE',
+      'Because welfare is the most expensive item on site, so poor welfare signals poor overall budgeting',
+      'Because the HSE is primarily concerned with worker comfort on site rather than with worker safety',
+      'Because welfare provision is a reliable indicator of management — basic neglect implies wider risk neglect',
+      'Because welfare failures always lead straight to prosecution, which generates fee income for the HSE',
     ],
     correctIndex: 2,
     explanation:
@@ -122,11 +122,11 @@ const quizQuestions = [
       'What is the minimum ratio of flushing toilets to workers required under Schedule 2 of CDM 2015?',
     options: [
       '1 toilet per 15 workers',
-      '1 toilet per 7 workers',
       '1 toilet per 10 workers',
       '1 toilet per 20 workers',
+      '1 toilet per 7 workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Schedule 2 of CDM 2015, read alongside the guidance in HSE publication L153, requires a minimum of 1 flushing toilet (or suitable alternative where flushing is not reasonably practicable) per 7 workers. These must be adequately ventilated, lit, and maintained in a clean and orderly condition. Separate facilities or lockable single-occupancy cubicles must be provided for men and women.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 3,
     question: 'When must washing facilities include showers on a construction site?',
     options: [
-      'On every construction site regardless of the work being carried out',
-      'Only on sites with more than 50 workers',
-      'Where the work is particularly dirty, involves exposure to contaminants, or involves work with hazardous substances',
-      'Only when specifically requested by the workforce',
+      'Where the work is particularly dirty or exposes workers to contaminants or hazardous substances',
+      'On every construction site, regardless of the type of work actually being carried out there',
+      'Only on larger sites where more than 50 workers are present at any one time',
+      'Only when showers are specifically requested by the workforce or their representatives',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Showers must be provided where the nature of the work involves exposure to contaminants, hazardous substances, or is particularly dirty. This includes work involving asbestos, lead, certain chemicals, or heavily dusty and dirty conditions where ordinary washing is insufficient to prevent workers carrying contaminants home or to other areas of the site. The requirement is based on the nature of the work, not the number of workers.',
   },
@@ -150,7 +150,7 @@ const quizQuestions = [
     options: [
       'Bottled water must be provided as the primary supply',
       'Water must be available only in the rest area',
-      'Wholesome drinking water must be readily accessible, clearly marked, and free from contamination risk, with cups or a drinking fountain provided',
+      'Wholesome water readily accessible, clearly marked, free from contamination, with cups or a fountain',
       'Drinking water only needs to be available during scheduled break times',
     ],
     correctAnswer: 2,
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'What facilities must be provided in a rest area on a construction site under Schedule 2?',
     options: [
-      'A television and comfortable seating only',
-      'Heated, sheltered accommodation with tables, seating, means of preparing hot drinks, and means of warming food',
-      'Just a covered area with folding chairs',
-      'A canteen with full catering staff',
+      'A television and comfortable seating, with no requirement for tables or hot drinks',
+      'Just a covered area with folding chairs and shelter from the wind and the rain',
+      'A fully staffed canteen with full catering and cooked meals served to workers',
+      'Heated, sheltered space with tables, seating, and means of making hot drinks and warming food',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rest facilities must be heated, sheltered from the weather, and provided with tables and seating with backs. Workers must have access to a means of boiling water (for hot drinks) and a means of warming food (such as a microwave). The rest area must be separate from the work area and kept clean and orderly. The size must be adequate for the number of workers using it at any one time.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'What specific provision must be made for workers who need to change into specialist clothing on site?',
     options: [
-      'They can change in the rest area to save space',
-      'Separate changing facilities with secure storage for personal clothing and drying facilities for wet clothing must be provided',
-      'A screened area near the work zone is sufficient',
-      'No specific provision is required — workers can change anywhere convenient',
+      'Separate changing facilities with secure clothing storage and drying for wet work clothing',
+      'They can change in the rest area to save space, provided it is kept reasonably private',
+      'A screened-off area near the work zone is sufficient for changing into specialist clothing',
+      'No specific provision is required, as workers can change anywhere convenient on the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Where workers need to wear special clothing (such as protective overalls, hi-vis, or PPE), separate changing facilities must be provided. These must include secure storage for workers' own clothing (so it is not contaminated or stolen), and drying facilities for wet working clothing. Changing areas must offer privacy and be separate from the rest area to prevent contamination of the eating environment. Separate facilities or time-separated use must be arranged for men and women.",
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'A construction site has 36 workers. The principal contractor has provided 4 toilets and says this is adequate. Is the PC correct?',
     options: [
-      'Yes — 4 toilets for 36 workers is generous',
-      'No — with 36 workers the minimum requirement is 6 toilets (36 divided by 7, rounded up)',
-      'Yes — the requirement is 1 toilet per 10 workers',
-      'No — 36 workers require at least 10 toilets',
+      'Yes — 4 toilets for 36 workers is generous and exceeds the minimum required',
+      'Yes — the requirement is 1 toilet per 10 workers, so 4 covers 36 comfortably',
+      'No — with 36 workers the minimum is 6 toilets (36 divided by 7, rounded up)',
+      'No — 36 workers require at least 10 toilets under the Schedule 2 ratio',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The minimum ratio is 1 toilet per 7 workers. For 36 workers: 36 / 7 = 5.14, which rounds up to 6. The PC must provide a minimum of 6 toilets. Providing only 4 is a breach of Schedule 2 and would likely result in an improvement notice from the HSE. The PC should also consider whether additional toilets are needed based on the site layout, shift patterns, and nature of the work.',
   },
@@ -205,7 +205,7 @@ const quizQuestions = [
       'What is the most common welfare-related enforcement action taken by the HSE on construction sites?',
     options: [
       'Prosecution for lack of drinking water',
-      'Improvement notices for inadequate toilet and washing facilities (dirty, insufficient number, no hot water, poor maintenance)',
+      'Improvement notices for inadequate toilet and washing facilities',
       'Prohibition notices for missing rest facilities',
       'Written warnings for no changing rooms',
     ],

@@ -23,10 +23,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the purpose of safe wiring zones?',
     options: [
-      'Up to double the phase conductor size',
+      'To make cables easier to find during fault finding',
       'To protect cables from accidental damage',
-      'V = I × R (ignoring reactance for small cables)',
-      'Cable management flexibility',
+      'To reduce the length of cable used on a job',
+      'To keep cables away from data and signal wiring',
     ],
     correctIndex: 1,
     explanation:
@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should multi-stranded conductors be fitted with ferrules?',
     options: [
-      'Ratchet mechanism ensuring complete crimp',
-      'Consulting, training, inspection, or reduced-hours roles',
-      'Mutual induction between two coils on a magnetic core',
+      'To increase the current rating of the conductor',
+      'To colour-code the conductor for identification',
+      'To make the conductor more flexible at the terminal',
       'To ensure secure connection and prevent strand breakage',
     ],
     correctIndex: 3,
@@ -80,24 +80,24 @@ const Module4Section6_4 = () => {
     {
       id: 2,
       question:
-        'True or False: You can leave cables loosely supported if they will be hidden behind plaster.',
+        'Can cables be left loosely supported if they will be hidden behind plaster?',
       options: [
-        'Only for low voltage circuits',
-        'True',
-        'False',
-        'Only temporarily during installation',
+        'Yes, hidden cables do not need support',
+        'Yes, but only for lighting circuits',
+        'No, all cables must be properly supported',
+        'Yes, provided they are buried at least 50 mm deep',
       ],
       correctAnswer: 2,
       explanation:
-        "False - all cables must be properly supported regardless of whether they're visible or hidden. Loose cables can cause damage, create hazards, and fail to meet BS 7671 requirements.",
+        "No - all cables must be properly supported regardless of whether they're visible or hidden. Loose cables can cause damage, create hazards, and fail to meet BS 7671 requirements.",
     },
     {
       id: 3,
       question: 'Name two safe wiring zones.',
       options: [
-        'Prevention, reuse, recycling, recovery, disposal',
-        'Delta primary, star secondary with neutral, 330 degrees (11 o\\\\\\\\\\\\\\\'clock) phase shift',
-        'To prevent short cycling and provide system volume',
+        'Diagonal between sockets, and along skirting boards',
+        'Within 50 mm of any pipe, and behind plasterboard',
+        'Anywhere on internal walls, and across ceilings',
         'Horizontal above switches/sockets, vertical from switches/sockets',
       ],
       correctAnswer: 3,
@@ -121,10 +121,10 @@ const Module4Section6_4 = () => {
       id: 5,
       question: 'Why is over-tightening terminal screws a problem?',
       options: [
-        'As close as possible to the inductive load',
+        'It improves the electrical connection too much',
         'It can damage conductors and reduce connection integrity',
-        'To verify that controls, interlocks, and devices operate correctly',
-        'The duty holder (employer or person controlling the work)',
+        'It makes the terminal easier to loosen later',
+        'It increases the current-carrying capacity',
       ],
       correctAnswer: 1,
       explanation:
@@ -161,9 +161,9 @@ const Module4Section6_4 = () => {
       question: 'Give one consequence of loose terminations.',
       options: [
         'Overheating, arcing, potential fire hazard',
-        'Proportional-Integral-Derivative control algorithm',
-        'Immediately, by the quickest practicable means',
-        '500W per m² or similar rules of thumb',
+        'Reduced voltage drop along the circuit',
+        'Improved earth fault loop impedance',
+        'Lower running costs for the installation',
       ],
       correctAnswer: 0,
       explanation:

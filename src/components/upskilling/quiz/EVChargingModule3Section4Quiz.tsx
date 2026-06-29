@@ -8,51 +8,53 @@ import { QuizQuestion } from '@/types/quiz';
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What is the minimum bend radius for a 10mm² SWA cable during installation?',
+    question:
+      'What is the typical minimum bend radius for a multicore SWA cable when being pulled into position during installation?',
     options: [
-      '3 times the cable diameter',
-      '6 times the cable diameter',
-      '8 times the cable diameter',
-      '12 times the cable diameter',
+      '6 times the overall cable diameter',
+      '3 times the overall cable diameter',
+      '10 times the overall cable diameter',
+      '15 times the overall cable diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'For SWA (Steel Wire Armoured) cables, the minimum bend radius during installation is 6 times the cable diameter. Once installed and fixed, this increases to 8 times the diameter to prevent damage to the armour and conductors.',
+      'Industry guidance gives a minimum bend radius of around 6 times the overall diameter for multicore steel wire armoured cable. A tighter radius risks damaging the armour, bedding and conductor insulation, which BS 7671 Regulation 522.8.3 prohibits.',
   },
   {
     id: 2,
     question:
-      'According to BS 7671, what is the maximum spacing for supports when installing PVC insulated cables horizontally?',
-    options: ['300mm', '400mm', '600mm', '750mm'],
-    correctAnswer: 1,
+      'Per IET On-Site Guide support tables, what is the maximum horizontal support spacing for a small (up to 9mm) PVC-insulated and sheathed cable run on a surface?',
+    options: ['250mm', '300mm', '400mm', '550mm'],
+    correctAnswer: 2,
     explanation:
-      'BS 7671 requires PVC insulated cables to be supported at maximum 400mm intervals when installed horizontally, and 300mm when installed vertically. This ensures adequate support and prevents cable sag.',
+      'The On-Site Guide support table gives 400mm horizontal (and 250mm vertical) for non-armoured PVC cables up to 9mm overall diameter. Adequate support satisfies the BS 7671 requirement that cables do not collapse prematurely or suffer mechanical strain.',
   },
   {
     id: 3,
     question:
-      'What minimum IP rating is required for containment systems in external installations?',
-    options: ['IP44', 'IP54', 'IP65', 'IP68'],
-    correctAnswer: 2,
+      'What minimum IP rating is generally specified for enclosures and containment exposed to the weather on an outdoor EV charging installation?',
+    options: ['IP44', 'IP65', 'IP54', 'IP55'],
+    correctAnswer: 1,
     explanation:
-      'External installations require a minimum IP65 rating to provide protection against dust ingress (IP6X) and water jets from any direction (IPX5). This ensures adequate protection in outdoor environments.',
+      'IP65 gives complete dust protection (first digit 6) plus protection against water jets from any direction (second digit 5), which is the practical minimum for weather-exposed outdoor enclosures and containment.',
   },
   {
     id: 4,
-    question: 'What is the minimum depth for burying EV charging cables under a domestic driveway?',
-    options: ['300mm', '450mm', '600mm', '750mm'],
-    correctAnswer: 2,
+    question:
+      'What burial depth is generally recommended for a direct-buried cable running under a domestic driveway subject to vehicle loading?',
+    options: ['350mm', '450mm', '500mm', '600mm'],
+    correctAnswer: 3,
     explanation:
-      'Cables under roads and driveways must be buried at a minimum depth of 600mm to provide adequate protection from vehicle loading and potential excavation damage. Normal burial depth is 450mm for areas without vehicle access.',
+      'Under driveways and roads where vehicles pass, a burial depth of about 600mm is recommended to resist loading and reduce the risk of accidental excavation damage; 450mm is typical only in areas without vehicle access.',
   },
   {
     id: 5,
     question:
-      'When installing cables in containment systems, what is the maximum fill factor to ensure proper heat dissipation?',
-    options: ['30%', '40%', '50%', '60%'],
-    correctAnswer: 1,
+      'As a common rule of thumb, what maximum space factor is used when filling trunking to allow heat dissipation and easy cable drawing-in?',
+    options: ['25%', '35%', '45%', '55%'],
+    correctAnswer: 2,
     explanation:
-      'The maximum fill factor for cable containment is 40% to ensure adequate heat dissipation and space for thermal expansion. This prevents overheating and allows for proper airflow around the cables.',
+      'A 45% space factor is the long-standing rule of thumb for trunking fill, leaving room for heat dissipation, thermal expansion and pulling additional cables in later without forcing them.',
   },
 ];
 

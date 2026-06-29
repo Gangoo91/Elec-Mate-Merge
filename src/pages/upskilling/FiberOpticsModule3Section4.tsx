@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fo-m3s4-qc1',
     question: 'What is the primary purpose of a fibre splice enclosure?',
     options: [
-      'Signal amplification',
       'Protect splices from environment and provide organisation',
+      'Signal amplification',
       'Convert singlemode to multimode',
       'Provide power to equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Splice enclosures protect fusion splices and mechanical splices from environmental factors (moisture, dirt, physical damage) while organising fibres and maintaining bend radius.',
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'Dome-style splice closures are typically used for:',
     options: [
       'Indoor rack mounting',
-      'Underground and aerial installations',
       'Desktop applications',
       'High-temperature environments only',
+      'Underground and aerial installations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Dome closures (vertical entry) are designed for underground chambers and aerial mounting, providing 360 degree cable entry and excellent environmental sealing.',
   },
@@ -51,12 +51,12 @@ const quizQuestions = [
     id: 1,
     question: 'An inline splice closure is characterised by:',
     options: [
-      'Vertical cable entry from top',
       'Horizontal cable entry from both ends',
+      'Vertical cable entry from top',
       'Single cable entry only',
       'No cable entry - self-contained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inline closures have horizontal cable entry from both ends, making them ideal for duct routes.',
   },
@@ -65,11 +65,11 @@ const quizQuestions = [
     question: 'Heat-shrink splice closures provide sealing through:',
     options: [
       'Mechanical gaskets only',
-      'Applied heat shrinking outer sleeve and sealant',
       'Adhesive tape',
+      'Applied heat shrinking outer sleeve and sealant',
       'Pressure fit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat-shrink closures use an outer sleeve that shrinks when heated along with sealant for environmental protection.',
   },
@@ -78,11 +78,11 @@ const quizQuestions = [
     question: 'When re-entering a sealed splice closure, you should:',
     options: [
       'Cut through the seal and replace closure',
-      'Use the designed re-entry method if available',
       'Never re-enter - always replace',
       'Drill through the side',
+      'Use the designed re-entry method if available',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Use the manufacturer's designed re-entry method when available to maintain the closure's integrity.",
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 5,
     question: "The IP rating 'IP68' on a closure indicates:",
     options: [
-      'Indoor use only',
       'Protection against dust and continuous water immersion',
+      'Indoor use only',
       'Fire resistance only',
       'EMI shielding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'IP68 means dust-tight and protected against continuous water immersion.',
   },
   {
@@ -116,11 +116,11 @@ const quizQuestions = [
     question: 'Cable sealing in closures is typically achieved with:',
     options: [
       'Standard PVC tape',
-      'Gel seals, gaskets, or heat-shrink entries',
       'Cable ties only',
+      'Gel seals, gaskets, or heat-shrink entries',
       'No sealing required for fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Professional closures use gel seals, compression gaskets, or heat-shrink boots for reliable sealing.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'A wall-mount splice enclosure is appropriate for:',
     options: [
       'Underground chambers',
-      'Indoor termination points',
       'Aerial installations',
       'Submarine cables',
+      'Indoor termination points',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Wall-mount closures are designed for indoor termination points and protected environments.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'Splice tray organisation should ensure:',
     options: [
       'Maximum fibre density',
-      'Each splice is labelled, accessible, and bend radius maintained',
       'Fibres are coiled as tightly as possible',
+      'Each splice is labelled, accessible, and bend radius maintained',
       'Random placement for faster work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Proper organisation ensures splices are labelled, accessible for maintenance, and bend radius is maintained.',
   },

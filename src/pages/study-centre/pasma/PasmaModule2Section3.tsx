@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a stabiliser and an outrigger on a mobile access tower?',
     options: [
-      'Stabilisers are for indoor use, outriggers for outdoor use',
       'Stabilisers brace diagonally to the ground; outriggers extend the base horizontally',
+      'Stabilisers are for indoor use, outriggers for outdoor use',
       'Stabilisers are permanent; outriggers are temporary',
       'There is no difference — the terms are interchangeable',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Stabilisers are diagonal braces that extend from the tower to the ground at an angle, increasing the effective base width. Outriggers extend horizontally from the base of the tower to increase the base area. Both increase stability but work in different ways.',
   },
@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'When climbing the internal ladder of a tower, the three-point contact rule requires:',
     options: [
-      'Both feet and one hand in contact with the ladder at all times',
-      'Two hands and one foot, or two feet and one hand, in contact at all times',
-      'Both hands and both feet in contact at all times',
-      'At least one hand in contact at all times',
+      'Both feet plus one hand on the ladder, with the other hand free to work',
+      'Both hands and both feet on the ladder, with all four limbs static',
+      'At least one hand on the ladder, with the feet free to reposition',
+      'Two hands and one foot, or two feet and one hand, on the ladder',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The three-point contact rule means maintaining contact with the ladder at three points simultaneously — either two hands and one foot, or two feet and one hand. This ensures stability while climbing. Moving only one limb at a time maintains three points of contact.',
   },
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 2,
     question: 'At what approximate height should the mid-rail be positioned?',
     options: [
-      '250mm above the platform',
-      '470mm above the platform (approximately halfway between toeboard and guardrail)',
-      '700mm above the platform',
-      'At any height the operative chooses',
+      '250mm above the platform, just clear of the toeboard',
+      '470mm above the platform, roughly midway up the gap',
+      '700mm above the platform, just below the top guardrail',
+      'At any convenient height the operative chooses to set it',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,8 +93,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the minimum height of toeboards on a mobile access tower?',
-    options: ['50mm', '100mm', '150mm', '200mm'],
-    correctAnswer: 2,
+    options: ['50mm', '100mm', '200mm', '150mm'],
+    correctAnswer: 3,
     explanation:
       'Toeboards must be a minimum of 150mm high above the platform surface. They prevent tools, materials, and debris from falling off the platform edge, protecting people below from being struck by falling objects.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 4,
     question: 'Stabilisers on a mobile access tower work by:',
     options: [
-      'Adding weight to the top of the tower',
-      'Bracing diagonally from the tower to the ground, increasing the effective base',
-      'Tying the tower to an adjacent structure',
-      'Locking the castors more securely',
+      'Bracing diagonally from the tower to the ground to widen the base',
+      'Adding ballast weight to the top platform of the tower',
+      'Tying the tower into an adjacent building or structure',
+      'Locking the castor brakes more securely against movement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Stabilisers are diagonal braces that extend from the tower structure down to the ground at an angle. By doing so, they increase the effective base area of the tower, improving resistance to overturning. They must not obstruct access routes.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 6,
     question: 'The three-point contact rule for climbing internal ladders means:',
     options: [
-      'Climbing three rungs at a time',
-      'Having three people hold the tower',
-      'Maintaining two hands and one foot, or two feet and one hand, on the ladder at all times',
-      'Resting at every third platform level',
+      'Keeping two hands and one foot, or two feet and one hand, on the ladder',
+      'Climbing three rungs at a time to reach the platform faster',
+      'Having three people hold the tower steady while you climb',
+      'Stopping to rest at every third platform level on the way up',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Three-point contact means keeping three limbs in contact with the ladder while moving the fourth. This could be two hands and one foot, or two feet and one hand. It ensures stability during climbing and prevents falls.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'During tower assembly using the AGR (Advance Guard Rail) method, when is the operative protected from falls?',
     options: [
-      'Only when the tower is fully complete',
-      'At all times — the AGR provides temporary guardrail protection during the build process',
-      'Only when wearing a harness in addition to the AGR',
-      'Only at platform levels, not between them',
+      'Only once the tower has been fully assembled and signed off',
+      'At all times — the AGR gives temporary guardrails during the build',
+      'Only when a harness and lanyard are worn in addition to the AGR',
+      'Only at the platform levels themselves, not in between them',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following is NOT a valid reason to use a harness during tower work?',
     options: [
-      'During assembly without AGR method',
+      'During assembly without the AGR method',
       'Site-specific risk assessment requirement',
-      'As a substitute for missing guardrails on a completed tower',
       'During disassembly in high winds',
+      'As a substitute for missing guardrails on a completed tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A harness must never be used as a substitute for missing guardrails on a completed tower. If guardrails are missing, the tower is incomplete and must not be used. Guardrails are collective protection — they protect everyone on the platform without requiring individual action. A harness should only supplement, not replace, collective measures.',
   },

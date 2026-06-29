@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'G98 is fit-and-notify, G99 is apply-and-wait. The 16 A per phase threshold drives the split. On a customer install where the inverter output rating is borderline against the threshold, what is the safest practical approach?',
     options: [
-      'Submit G98 — it\'s simpler',
-      'Submit G99 — the apply-and-wait route, because the borderline case is hard to defend later if the install is challenged. The cost of waiting for approval is small compared to the cost of a forced retrofit on a non-compliant G98 notification',
-      'Don\'t notify the DNO at all',
-      'Notify Building Control instead',
+      'Submit G99 — accept the apply-and-wait timeline to hold an unambiguous position the borderline case is hard to defend otherwise',
+      'Submit G98, since it is the simpler fit-and-notify route and avoids the approval wait',
+      'Install without notifying the DNO at all and rely on the export-limitation settings',
+      'Notify Building Control instead of the DNO, as the work is a notifiable electrical alteration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The G98 / G99 split is binary at the 16 A per phase threshold. Submitting G98 on a borderline install creates legal exposure if the inverter is later found to exceed 16 A under specific operating conditions. The defensive move on borderline cases is G99 — accept the apply-and-wait timeline cost in exchange for an unambiguous regulatory position.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.4 requires automatic disconnection of the generating set from the public supply on loss of supply or voltage / frequency deviation. For a 7 kWp PV install with a single-phase inverter rated below 16 A, what is the practical compliance route?',
     options: [
-      'A custom-designed protective relay',
-      'An inverter certified to BS EN 50549-1, which encompasses the protection requirements for generating sets up to and including 16 A intended to operate in parallel with the public supply',
-      'A manually operated isolation switch',
-      'A second consumer unit',
+      'A bespoke protective relay designed and commissioned specifically for this installation',
+      'A manually operated isolation switch that the customer opens during a grid disturbance',
+      'An inverter certified to BS EN 50549-1, covering the protection requirements for ≤16 A parallel generators',
+      'A second consumer unit dedicated to the generation circuits with its own main switch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50549-1 is the practical compliance route for generators ≤ 16 A intended to parallel with the public supply. A G98-listed inverter holds BS EN 50549-1 certification covering anti-islanding (551.7.4), prevention of reconnection (551.7.5) and isolation accessibility (551.7.6). The compliance evidence is the inverter\'s certification document, retained as part of the EIC bundle.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A homeowner wants to add a 5 kWp PV array plus a 10 kWh BESS to an existing dwelling with a 100 A single-phase supply. The DNO ANM (Active Network Management) area is capacity-bound. The customer agrees to export limitation. Which DNO process applies?',
     options: [
-      'G98 — the install is small',
-      'G100 export limitation via EREC G100 documentation, with the underlying connection assessed under G99 (apply-and-wait) given the combined PV + BESS export potential, even though the export will be limited by the G100 scheme',
-      'G99 with no export limitation',
-      'No notification required',
+      'G98 fit-and-notify, on the basis that each individual unit is small',
+      'G99 apply-and-wait with no export limitation applied to the connection',
+      'No DNO notification is required because the customer has agreed to limit export',
+      'G100 export limitation, with the underlying connection assessed under G99 given the combined export potential',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'G100 is the export-limitation scheme that lets a customer install more nameplate generation than the unconstrained DNO connection would permit. The underlying connection is assessed under G99 because the combined PV + BESS export capacity exceeds the G98 threshold; the G100 documentation defines the export cap and the measurement / control scheme that enforces it. In capacity-bound (ANM) regions, G100 is often the only viable route to install meaningful BESS-coupled PV at residential scale.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'On a workplace install with six 22 kW three-phase EV chargepoints, the aggregate import capacity drives a supply upgrade. What is the right DNO question to ask first?',
     options: [
-      'What inverter brand should I specify?',
-      'What is the current connection capacity, what is the local feeder headroom, what is the connection queue position for a supply upgrade, and what is the indicative timeline — all in writing — before the install quote is finalised',
-      'How much does an EV charger cost?',
-      'When is the next holiday?',
+      'Current connection capacity, local feeder headroom, queue position and indicative timeline for an upgrade — in writing, before the quote',
+      'Which inverter or charger brand the DNO would prefer to see specified on the install',
+      'Whether the DNO can recommend a competitive price for the EV charging hardware',
+      'Whether the DNO can confirm the chargepoints qualify for any grant funding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The DNO precheck — capacity, headroom, queue, timeline — is the standing item on every LCT survey where supply uprating is plausibly needed. Six × 22 kW = 132 kW of EV load at three-phase simultaneous, before any other site load. The realistic project shape depends on the answers to those four questions; the install timeline follows the DNO timeline.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.5 prevents an inverter autonomously reconnecting to the public supply during a brief grid disturbance. Why is this prevention important to the DNO?',
     options: [
-      'To make the customer use more grid electricity',
-      'To protect the network restoration sequence — the DNO must be able to bring the network up cleanly without distributed inverters silently re-energising during the restoration',
-      'To force a manual reset',
-      'To preserve the inverter warranty',
+      'To protect the network restoration sequence so the DNO can re-energise cleanly without inverters silently re-engaging',
+      'To increase the customer\'s reliance on grid electricity during and after a disturbance',
+      'To force the customer to perform a manual reset so they notice the outage occurred',
+      'To preserve the inverter manufacturer\'s warranty conditions after a grid fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '551.7.5 protects the DNO network restoration sequence. During a fault or planned outage, the DNO de-energises a section, performs work, then re-energises in a controlled sequence. Distributed inverters that autonomously re-engage during the restoration confuse the sequence and create safety risk for workers. The required disconnection-then-verified-reconnection behaviour is built into BS EN 50549-1 certified inverters.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A4:2026 introduced Chapter 82 (Prosumer\'s Electrical Installations). On a hybrid PV + BESS + heat pump + EV install, what is the strategic significance of Chapter 82?',
     options: [
-      'It changes the design conversation only at the cert level',
-      'Chapter 82 provides PEI-specific design, erection and verification requirements that sit on top of the technology-specific chapters (712 PV, Chapter 57 BESS, 722 EV) — recognising that the prosumer install is a coherent system, not a collection of independent installations',
-      'It only applies to off-grid systems',
-      'It is the same as Section 551',
+      'It affects the design conversation only at certification, not during design or erection',
+      'It applies only to off-grid systems with no connection to the public supply',
+      'Chapter 82 adds PEI design, erection and verification rules over the technology chapters, treating the install as one coherent system',
+      'It is simply a renamed version of the existing Section 551 with no new requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Chapter 82 treats the hybrid install as one PEI, not as PV + BESS + EV separately. The chapter adds requirements for the interaction between the technologies — load management, export coordination, fault current contribution from multiple sources, protection coordination across the combined installation. For the designer this is the chapter that frames the install holistically, complementing the per-technology rules.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'A G99 application requires DNO approval before installation. The customer wants to install in eight weeks. The DNO indicative timeline for approval in the region is 14 months. What is the right customer conversation?',
     options: [
-      'Promise the eight-week timeline and start work pending DNO approval',
-      'Put the DNO timeline in writing to the customer up front as a project gating item — install proceeds only after DNO approval. The customer\'s timeline expectation needs to be reset before the deposit is taken',
-      'Submit G98 instead',
-      'Ask the DNO to make an exception',
+      'Promise the eight-week timeline and begin work pending the DNO approval coming through',
+      'Submit a G98 notification instead so the install can proceed without waiting for approval',
+      'Ask the DNO to make an exception and fast-track this single domestic application',
+      'Put the 14-month DNO timeline in writing as a gating item and reset the customer\'s expectation before the deposit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'G99 requires DNO approval before installation. Starting work pending approval risks an unfundable install if the approval is delayed or denied. The honest customer conversation puts the DNO timeline up front, in writing, as a gating item — and the customer who values the install will adjust their timeline expectation accordingly. The customer who walks because of the timeline is a customer who would have disputed a non-compliant install.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'The Energy Networks Association (ENA) publishes EREC G98, G99 and G100. How do these relate to BS 7671 Section 551?',
     options: [
-      'They replace Section 551',
-      'EREC G98/G99/G100 are the ENA Engineering Recommendations governing the customer-DNO connection process for parallel generation. BS 7671 Section 551 (especially 551.7.4–551.7.6) sets the BS 7671-side requirements for parallel generation. Both apply — the EREC documents govern the application/notification process; Section 551 governs the design-and-install requirements',
-      'They are the same thing',
-      'EREC G98/G99/G100 are statutory',
+      'The EREC documents govern the DNO connection process; Section 551 sets the BS 7671 design-and-install requirements — both apply',
+      'The EREC documents replace Section 551 for any grid-tied generation installation',
+      'They are the same documents published under two different names by different bodies',
+      'EREC G98/G99/G100 are statutory instruments that override BS 7671 where they differ',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EREC G98, G99 and G100 are Engineering Recommendations published by the ENA covering the customer-DNO connection process. They are not BS 7671. BS 7671 Section 551 covers the design-and-install requirements (anti-islanding, prevention of reconnection, isolation accessibility). On a grid-tied LCT install both apply: the EREC documents drive the notification / approval process with the DNO; Section 551 drives the design compliance under BS 7671.',
   },

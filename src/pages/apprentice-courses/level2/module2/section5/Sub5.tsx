@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why does a coil rotating at constant speed in a magnetic field produce a sine wave?',
     options: [
-      'Internal thermal mass moderates temperature swings and reduces peak loads',
+      'Because the slip rings switch the connection twice every revolution',
       'Because the rate of change of flux through the coil varies sinusoidally with the angle',
-      'Appropriate mechanical protection such as conduit or trunking',
-      'To record labour, materials, and plant for work done outside the contract scope',
+      'Because the magnetic field strength rises and falls as the coil turns',
+      'Because the coil resistance changes smoothly as it rotates',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'How is the 50 Hz UK mains frequency actually produced at the power station?',
     options: [
       'A 2-pole alternator spinning at 3000 rpm, or a 4-pole alternator at 1500 rpm, etc.',
-      'They prove the circuit between two test points, confirming complete circuit',
-      'After completing full GS38 procedure and posting warning notices',
-      'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
+      'An electronic oscillator chops the DC output into 50 cycles per second',
+      'A step-down transformer divides the generator output to reach 50 Hz',
+      'A capacitor bank resonates the supply at exactly 50 Hz',
     ],
     correctAnswer: 0,
     explanation:

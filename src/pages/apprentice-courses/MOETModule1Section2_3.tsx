@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'Insulating gloves for electrical work must comply with:',
     options: [
-      'Power consumed by controls, sensors and standby',
-      'Accidental damage and safety hazards',
+      'BS EN 397 (industrial safety helmets)',
+      'BS EN 166 (personal eye protection)',
       'BS EN 60903 (live working — insulating gloves)',
-      'To protect against overcurrent and short circuit faults',
+      'BS EN ISO 20345 (safety footwear)',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'An arc flash face shield or hood visor must be rated to protect against:',
     options: [
       'Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc',
-      'The product conforms to the essential health and safety requirements of the relevant regulations',
-      'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
-      'An electrically insulated safety helmet tested to withstand electrical contact',
+      'Flying debris and dust only, as in general construction work',
+      'Chemical splash and corrosive liquids encountered in laboratories',
+      'Impact from falling objects, the same as a standard hard hat',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Safety footwear for electrical work should be:',
     options: [
-      'Check for damage to leads, probes, body; ensure probes are insulated',
+      'Standard steel toe-cap boots with metal eyelets and studs',
       'Electrically insulating (EH-rated) safety boots with composite toe caps',
-      'Degree-level qualification plus professional development review',
-      'Employers, the self-employed AND employees — including you',
+      'Lightweight trainers with reinforced toes for better dexterity',
+      'Conductive (anti-static) boots to drain charge to earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The ATPV rating of an arc flash garment indicates:',
     options: [
-      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
-      'The duty to provide PPE was extended to cover \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'limb (b) workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' — those personally performing work under a contract',
+      'The maximum voltage the garment can be exposed to before it conducts',
+      'The number of wash cycles the garment can withstand before disposal',
       'The incident energy level at which there is a 50% probability of a second-degree burn through the fabric',
-      'The product conforms to the essential health and safety requirements of the relevant regulations',
+      'The maximum ambient temperature at which the garment may be worn',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'Under the PPE at Work Regulations 2022, a key change from the 1992 regulations was:',
     options: [
-      "The product conforms to the essential health and safety requirements of the relevant regulations",
-      "Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat",
-      "Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc",
+      "Workers became responsible for buying their own PPE",
+      "Arc flash suits were made compulsory for all electrical work",
+      "Insulating gloves no longer required periodic retesting",
       "The duty to provide PPE was extended to cover 'limb (b) workers' — those personally performing work under a contract",
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'A hard hat (safety helmet) worn for electrical work should be:',
     options: [
       'An electrically insulated safety helmet tested to withstand electrical contact',
-      'The product conforms to the essential health and safety requirements of the relevant regulations',
-      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
-      'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
+      'A standard helmet with metal ventilation slots for cooling',
+      'Any bump cap, as full helmets are not needed indoors',
+      'A conductive helmet that bonds the wearer to earth',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Before using insulating gloves, a user should perform which daily check?',
     options: [
-      "An electrically insulated safety helmet tested to withstand electrical contact",
+      "A full laboratory dielectric proof test to the glove class voltage",
       "Inflate each glove by rolling from the cuff and check for air leaks (the 'air test')",
-      "The product conforms to the essential health and safety requirements of the relevant regulations",
-      "Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc",
+      "Measure the resistance across the glove with an insulation tester",
+      "Soak the gloves in water and check for bubbles forming",
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'CE and UKCA markings on PPE indicate that:',
     options: [
-      'Electrically insulating (EH-rated) safety boots with composite toe caps',
-      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'The PPE was manufactured within the United Kingdom',
+      'The PPE has passed its most recent periodic retest',
       'The product conforms to the essential health and safety requirements of the relevant regulations',
-      'Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc',
+      'The PPE is suitable for the highest arc flash category',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
       'When working on a 400 V three-phase distribution board, the MINIMUM PPE should include:',
     options: [
       'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
-      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
-      'An electrically insulated safety helmet tested to withstand electrical contact',
-      'The incident energy level at which there is a 50% probability of a second-degree burn through the fabric',
+      'Safety glasses and standard work gloves only',
+      'A high-visibility vest and steel toe-cap boots',
+      'Class 4 insulating gloves rated to 36,000 V',
     ],
     correctAnswer: 0,
     explanation:

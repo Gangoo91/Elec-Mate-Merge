@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Using the SBI model, which of the following is the correct way to give feedback to an apprentice who arrived late to site three times this week?',
     options: [
-      '"You\'re always late. Sort it out or I\'ll have a word with the office."',
-      '"On Monday, Wednesday and today you arrived after 08:00 when site start is 07:30. The impact is that I had to set up on my own and we lost half an hour of productive time each day. Going forward, I need you here by 07:25."',
-      '"You need to be more professional about timekeeping."',
-      '"Some people on site have noticed you\'re not pulling your weight with early starts."',
+      '"On Monday, Wednesday and today you arrived after 08:00 when site start is 07:30. I had to set up on my own and we lost half an hour each day. Going forward I need you here by 07:25."',
+      '"You\'re always late and it\'s starting to wind me up. Sort your timekeeping out or I\'ll have to have a word with the office about your attitude."',
+      '"You really need to be a lot more professional about your timekeeping if you want to get on in this trade and finish your apprenticeship."',
+      '"A few of the lads on site have been saying you\'re not pulling your weight in the mornings, so you might want to think about that."',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The SBI model (Situation, Behaviour, Impact) requires specific, factual feedback. The correct answer identifies the specific situation (Monday, Wednesday and today), the specific behaviour (arriving after 08:00 when site start is 07:30), and the specific impact (having to set up alone, losing productive time). It then states the expectation going forward. The other options are vague, accusatory, or reference unnamed third parties — all of which trigger defensiveness rather than behaviour change. Notice that the correct answer contains no character judgements ("lazy," "unprofessional") — it focuses entirely on observable facts.',
   },
@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     question:
       'You receive feedback from a colleague that your cable management on the last project was messy. Your immediate reaction is defensive. What should you do?',
     options: [
-      'Explain why the cable management looked that way and defend your work',
-      'Tell the colleague they are not qualified to judge your work',
+      'Explain in detail why the cable management looked that way and defend the standard of your work',
+      'Point out that the colleague is not qualified or experienced enough to judge your work',
       'Thank them for the feedback, ask for specific examples, and look for the kernel of truth',
-      'Ignore the feedback because it was unsolicited',
+      'Ignore the comment entirely, since it was unsolicited and you did not ask for their opinion',
     ],
     correctIndex: 2,
     explanation:
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice tells you they are being bullied by another member of the team. What is your primary responsibility?',
     options: [
-      'Tell the apprentice to toughen up — construction sites are rough environments',
-      "Investigate the allegation privately, take it seriously, and follow the JIB grievance procedure or your company's policy",
-      'Confront the alleged bully immediately in front of the team',
-      'Tell the apprentice to avoid the other person and it will sort itself out',
+      'Tell the apprentice to toughen up, because construction sites have always been rough environments',
+      'Confront the alleged bully immediately and publicly, in front of the rest of the team',
+      'Advise the apprentice to keep their distance and assume the problem will sort itself out',
+      "Investigate the allegation privately, take it seriously, and follow the JIB or company procedure",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'As a supervisor or team leader, you have a duty of care towards all team members, particularly apprentices who are in a vulnerable position as trainees. Bullying allegations must be taken seriously, investigated privately (speaking to both parties separately), and handled through the appropriate formal process — either the JIB grievance procedure or your company\'s internal grievance and bullying policy. Telling the apprentice to "toughen up" is dismissive and may constitute a failure of your duty of care. Confronting the alleged bully publicly risks escalation and denies them natural justice. Ignoring the problem allows it to continue and may expose you to liability.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the SBI model stand for?',
     options: [
-      'Safety, Behaviour, Investigation',
       'Situation, Behaviour, Impact',
+      'Safety, Behaviour, Investigation',
       'Standard, Benchmark, Improvement',
       'Specific, Brief, Immediate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SBI stands for Situation, Behaviour, Impact. Developed by the Center for Creative Leadership, it is a structured feedback model that focuses on observable facts rather than character judgements. You describe the specific Situation (when and where), the specific Behaviour you observed (what the person did or said), and the Impact of that behaviour (on you, the team, the project or the client). This structure keeps feedback objective, specific and actionable — making it far more likely to result in positive change.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: 'What is the primary purpose of the JIB grievance procedure?',
     options: [
       'To punish employees who perform poorly',
-      'To provide a fair, structured process for resolving workplace complaints and disputes',
       'To enable employers to dismiss staff more easily',
+      'To provide a fair, structured process for resolving workplace complaints and disputes',
       'To replace direct conversation between colleagues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The JIB (Joint Industry Board for the Electrical Contracting Industry) grievance procedure provides a fair, structured framework for resolving workplace complaints and disputes. It ensures that both the person raising the grievance and the person it is raised against are treated fairly, with clear steps, timescales and rights of representation. The procedure typically involves: informal discussion, formal written grievance, investigation, grievance hearing, and right of appeal. Its purpose is resolution, not punishment — although disciplinary action may result from the findings. The JIB procedure exists alongside (and is broadly consistent with) the ACAS Code of Practice on Disciplinary and Grievance Procedures.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       'An apprentice becomes defensive when you give them feedback about their cable terminations. What is the best response?',
     options: [
-      'Raise your voice to assert authority',
-      'End the conversation and report them to HR',
-      'Acknowledge their frustration, restate the specific issue calmly, and ask what support they need to improve',
-      'Accept their defence and drop the subject',
+      'Raise your voice and assert your authority to shut the defensiveness down',
+      'End the conversation immediately and report them straight to HR',
+      'Accept their defence at face value and drop the subject to keep the peace',
+      'Acknowledge their frustration, restate the issue calmly, and ask what support they need',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When someone becomes defensive in response to feedback, the worst thing you can do is escalate (by raising your voice or asserting authority) or withdraw (by dropping the subject). Instead, acknowledge the emotional response calmly: "I can see this is frustrating to hear." Then restate the specific, factual issue without changing your message: "The terminations in the last two distribution boards had exposed copper at the terminals, which is a safety issue." Finally, move to a collaborative approach: "What support do you need to get this right? Do you want me to show you the technique I use?" This approach validates the person\'s feelings while maintaining the importance of the feedback.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'Under the Health and Safety at Work Act 1974, what duty does an employer have regarding bullying and harassment?',
     options: [
-      'No specific duty — bullying is a personal matter between individuals',
-      'A duty to ensure, so far as is reasonably practicable, the health, safety and welfare of all employees — which includes psychological wellbeing',
-      'A duty only to address physical bullying, not verbal harassment',
-      'A duty only if the bullying results in a formal complaint',
+      'A duty to ensure the health, safety and welfare of employees, including psychological wellbeing',
+      'No specific duty, since bullying is a personal matter between the individuals involved',
+      'A duty to address physical bullying only, but not verbal harassment or intimidation',
+      'A duty that applies only once the bullying results in a formal written complaint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 2 of the Health and Safety at Work Act 1974 places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. "Health" includes mental health, and "welfare" includes protection from bullying, harassment and other forms of psychological harm. This means employers have a legal duty to prevent bullying and harassment, not just to respond to complaints after the event. An employer who knows about bullying and fails to act may be in breach of their statutory duty, which can result in enforcement action by the HSE and civil liability for personal injury claims.',
   },
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is the feedback sandwich (positive-negative-positive) no longer recommended?',
     options: [
-      'Because it takes too long to deliver',
-      'Because people learn to distrust positive feedback, the critical message gets diluted, and it feels manipulative',
-      'Because it only works with apprentices, not experienced workers',
-      'Because it was never recommended — it has always been considered poor practice',
+      'Because it takes far too long to deliver compared with direct feedback',
+      'Because it dilutes the message and trains people to distrust positive feedback',
+      'Because it only works with apprentices and not with experienced workers',
+      'Because it was never recommended and has always been considered poor practice',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     question:
       'What is the most important quality a supervisor needs when managing conflict within their team?',
     options: [
-      'Technical electrical expertise',
-      'Physical presence and authority',
-      'The ability to listen without immediately judging and to remain impartial until both sides have been heard',
-      'Extensive knowledge of employment law',
+      'Deep technical electrical expertise across all types of installation',
+      'A commanding physical presence and unquestioned positional authority',
+      'The ability to listen impartially until both sides have been heard',
+      'Extensive and up-to-date knowledge of employment and equality law',
     ],
     correctAnswer: 2,
     explanation:
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'An apprentice approaches you about a colleague who is constantly making derogatory comments about their race. According to ACAS guidance, what should you do?',
     options: [
-      'Tell the apprentice that this is normal site banter and not to worry about it',
-      "Take the complaint seriously, record the details, follow your company's equality and harassment policy, and report it to your line manager or HR",
-      'Speak to the colleague informally and ask them to stop',
-      'Advise the apprentice to confront the colleague directly',
+      'Reassure the apprentice that this is normal site banter and nothing to worry about',
+      'Have a quiet informal word with the colleague and simply ask them to stop it',
+      'Advise the apprentice to stand up for themselves and confront the colleague directly',
+      "Take it seriously, record the details, follow the harassment policy and report it to HR",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Derogatory comments about race constitute racial harassment under the Equality Act 2010, and this is a matter that must be taken seriously regardless of any claimed intention of "banter." According to ACAS guidance, you should: take the complaint seriously and believe the person raising it; record the details (what was said, when, where, who witnessed it); follow your company\'s equality, diversity and harassment policy; and report it to your line manager, HR department, or the person designated in your company\'s policy. You should not attempt to resolve this informally — racial harassment is a serious matter that requires formal investigation. The employer has a legal duty under the Equality Act 2010 to prevent harassment and to take all reasonable steps to address it when it occurs.',
   },

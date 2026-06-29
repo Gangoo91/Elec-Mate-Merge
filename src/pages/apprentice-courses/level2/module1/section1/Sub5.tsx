@@ -49,9 +49,9 @@ const checks = [
     id: 'epa-duty-of-care-check',
     question: "What is the 'Duty of Care' under section 34 of the Environmental Protection Act 1990?",
     options: [
-      "The first is subjective opinion; the second is factual, specific, time-stamped and records action taken",
-      "CLT sequesters carbon during tree growth and has lower embodied carbon than concrete or steel",
-      "Specifically to periodic inspection and testing intervals — it is intended for use during periodic verification rather than initial verification.",
+      "A duty to label every waste container with the correct CLP hazard pictogram",
+      "A duty to recycle at least 90% of all waste produced on every job",
+      "A duty to notify the Environment Agency before any waste leaves site",
       "A duty on anyone who produces, holds or transports waste to make sure it’s handled safely and only passed to an authorised carrier",
     ],
     correctIndex: 3,
@@ -62,10 +62,10 @@ const checks = [
     id: 'weee-check',
     question: "Your last job left you with a box of dead LED drivers and two old fluorescent fittings. Where do they legally go?",
     options: [
-      "Additions or alterations not requiring new circuits",
-      "Increased loss around 1383nm due to hydroxyl ions",
+      "General waste skip — they’re too small to count as regulated waste",
+      "Straight to the scrap-metal merchant with the copper offcuts",
       "WEEE waste stream — separated, recorded, taken to a permitted recycler",
-      "An agreement to buy electricity from a third-party owned system",
+      "Hazardous waste consignment only — no transfer note is needed",
     ],
     correctIndex: 2,
     explanation:
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which Act is the parent piece of UK environmental legislation that sets the Duty of Care for waste?',
     options: [
-      'Bathrooms and dusty workshops',
+      'Health and Safety at Work etc Act 1974',
       'Environmental Protection Act 1990',
-      'Depends only on relative roughness',
-      'Cross-sectional area of conductor',
+      'Clean Air Act 1993',
+      'Control of Pollution Act 1974',
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'You produce 200 kg of hazardous waste in a year at one site. What paperwork do you need when it leaves?',
+    question: 'You produce hazardous waste at one site. What paperwork do you need when it leaves?',
     options: [
-      'Celebrate with a small positive emotion',
-      'Designing infrastructure that can adapt to changing requirements',
+      'Nothing — hazardous waste is exempt from paperwork below 500 kg',
+      'A standard duty-of-care waste transfer note (kept for 2 years)',
       'A hazardous waste consignment note (kept for 3 years)',
-      'Optimal power point tracking to maximise PV harvest',
+      'A WEEE producer registration certificate from the recycler',
     ],
     correctAnswer: 2,
     explanation:
@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: "Under WEEE 2013, who is responsible for the cost of recycling commercial electrical equipment at end of life?",
     options: [
-      'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
-      'To provide a secondary means of lowering the platform if the primary controls fail',
-      'That access is safe, ladders are secured and extend above the platform, and stairways are clear',
+      'The electrician who removes the equipment from the installation',
+      'The end customer who owned the equipment when it failed',
+      'The local authority that operates the nearest household tip',
       'The original producer / importer (Producer Responsibility) — usually via a compliance scheme',
     ],
     correctAnswer: 3,
@@ -133,9 +133,9 @@ const quizQuestions = [
     question: 'A fluorescent tube smashes in the back of your van. Why does that matter beyond the broken glass?',
     options: [
       "Tubes contain mercury vapour and phosphor powder — both regulated as hazardous; ventilate, don’t sweep up dry, double-bag",
-      "Make proper use of control measures and PPE provided by the employer, and report defects",
-      "The contractor appointed to plan, manage, and coordinate health and safety during the construction phase",
-      "To protect the health of workers and nearby residents and prevent nuisance and ecological harm",
+      "The glass shards count as WEEE so the whole van load now needs a transfer note",
+      "The phosphor coating is highly flammable and can ignite from the van’s heat",
+      "The broken tube voids the producer compliance scheme that funds the recycling",
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 5,
     question: "What does a Site Waste Management Plan (SWMP) do?",
     options: [
-      'A type of adjustable guardrail frame that provides collective fall protection during assembly',
+      'Lists the CLP hazard pictograms found on every substance on site',
       'Forecasts the waste a project will produce, sets segregation + recycling targets, records what actually happened',
-      'Consider load distribution, loop impedance, and cable routing for balanced loading',
-      'Adequate, suitable and sufficient first-aid equipment, facilities and personnel based on a needs assessment',
+      'Records the producer compliance scheme that funds WEEE recycling',
+      'Sets the consignment-note retention period for hazardous waste',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which GB CLP pictogram is a flame over a circle?',
     options: [
-      'Between 450 mm and 1200 mm above FFL — the "reach range".',
-      'Communication protocols, monitoring points, control interfaces, and data requirements',
+      'Flammable (GHS02) — catches fire easily near heat or sparks',
+      'Gas under pressure (GHS04) — compressed or liquefied gas',
       'Oxidising (GHS03) — can intensify fire / cause a fire by giving off oxygen',
-      'The voltage difference between positive and negative peaks',
+      'Acute toxic (GHS06) — life-threatening even in small doses',
     ],
     correctAnswer: 2,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     id: 7,
     question: "Cable offcuts: copper inside, PVC outside. Best practice on site?",
     options: [
-      "When climbing through the trap opening before guardrails at the new level are fully installed",
-      "To notify the HSE of a notifiable construction project before the construction phase begins",
-      "Sickness absence rates, EAP utilisation, staff survey results, and number of MHFA interactions",
+      "Burn the PVC off on site so the clean copper is ready for the merchant",
+      "Bin the lot in general waste — small offcuts aren’t regulated waste",
+      "Put them in the WEEE cage with the dead drivers and fittings",
       "Strip the copper for the recycler, bag the PVC sleeve for separate disposal — most metal merchants pay for clean copper",
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
     question: 'You finish a job and drop the customer’s broken washing machine at a mate’s metal yard who isn’t licensed. What’s the legal risk?',
     options: [
       "Breach of EPA s.34 Duty of Care — you passed waste to an unauthorised person; fixed penalty up to £5,000 or unlimited fine on indictment",
-      "A potentially fatal condition caused by the body remaining motionless in a vertical position in a harness after a fall",
-      "Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants",
-      "You have not confirmed quantity or condition — protects against signing for items you haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t verified, but limits a later claim",
+      "None — once waste leaves your van the Duty of Care passes to whoever takes it",
+      "A WEEE offence only, since a washing machine is electrical equipment",
+      "A Hazardous Waste Regs breach, because all appliances are classed as hazardous",
     ],
     correctAnswer: 0,
     explanation:

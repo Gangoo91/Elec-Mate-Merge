@@ -47,12 +47,12 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
       question:
         'To reverse the direction of a three-phase induction motor, what must be done to the supply connections?',
       options: [
-        'Reverse all three phase connections',
         'Swap any two of the three phase connections',
+        'Reverse all three phase connections',
         'Reverse the neutral and earth connections',
         'Change the frequency of the supply',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Reversing any two of the three phase connections (e.g., swapping L1 and L2 while L3 remains the same) reverses the rotating magnetic field direction, causing the motor to run in the opposite direction. This is the fundamental principle behind all reversing starter designs.',
     },
@@ -75,10 +75,10 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
       question:
         'What is the primary purpose of a timing delay between forward and reverse operations?',
       options: [
-        'To save energy during motor operation',
-        'To allow the motor to coast down before reversing, preventing mechanical stress',
-        'To reduce the motor starting current',
-        'To synchronise with other equipment',
+        'To save energy during normal motor operation',
+        'To let the motor coast down before reversing',
+        'To reduce the motor starting current on each run',
+        'To synchronise the motor with other plant equipment',
       ],
       correctIndex: 1,
       explanation:
@@ -89,14 +89,16 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
   const quizQuestions = [
     {
       question:
-        'What is the phase sequence for clockwise rotation when viewed from the drive end using a phase rotation meter reading L1-L2-L3?',
+        'A phase rotation meter connected to the supply in the order L1-L2-L3 indicates a positive (clockwise) sequence. What rotation will a standard motor wired U-V-W produce, viewed from the drive end?',
       options: [
         'Anti-clockwise rotation',
         'Clockwise rotation (forward)',
-        'No rotation - motor will not start',
-        'Direction depends on motor design',
+        'No rotation - the motor will not start',
+        'Direction depends entirely on motor design',
       ],
       correctAnswer: 'Clockwise rotation (forward)',
+      explanation:
+        'A positive L1-L2-L3 sequence into U-V-W gives the conventional clockwise (forward) rotation viewed from the drive end under the IEC 60034 convention.',
     },
     {
       question:
@@ -108,6 +110,8 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
         'Thermal overload contact',
       ],
       correctAnswer: 'Normally closed (NC) contact',
+      explanation:
+        'A normally closed auxiliary contact from the forward contactor opens when it energises, breaking the reverse coil circuit - this is the electrical interlock that prevents both contactors closing together.',
     },
     {
       question:
@@ -119,33 +123,46 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
         'To provide overload protection',
       ],
       correctAnswer: 'To physically prevent both contactors from closing simultaneously',
+      explanation:
+        'The mechanical interlock is a physical barrier that blocks both armatures closing at once, protecting against a phase-to-phase short even if a contact welds or the control logic fails.',
     },
     {
       question: 'What is "plugging" in the context of motor control?',
       options: [
         'Starting a motor under full load',
-        'Reversing a motor while it is still running to achieve rapid braking',
+        'Reversing a running motor to brake it rapidly',
         'Running a motor at reduced voltage',
         'Connecting a motor to a VSD',
       ],
-      correctAnswer: 'Reversing a motor while it is still running to achieve rapid braking',
+      correctAnswer: 'Reversing a running motor to brake it rapidly',
+      explanation:
+        'Plugging applies reverse phase rotation to a spinning motor to brake it quickly; it draws very high current (up to ~20x FLC) and stresses the drive train, so anti-plugging protection is often used.',
     },
     {
       question:
-        'According to BS 7671, what protection must be provided for motor circuits that may experience reverse current flow?',
+        'What overcurrent protection does BS 7671 require for a motor circuit such as a reversing starter?',
       options: [
         'RCD protection only',
-        'Overcurrent protection suitable for the prospective fault current',
-        'Surge protection devices',
-        'Type D MCBs only',
+        'Overcurrent protection rated for the prospective fault current',
+        'Surge protection devices only',
+        'Type D MCBs in every case',
       ],
-      correctAnswer: 'Overcurrent protection suitable for the prospective fault current',
+      correctAnswer: 'Overcurrent protection rated for the prospective fault current',
+      explanation:
+        'Protective devices must be capable of safely interrupting the prospective fault current at that point; RCDs and SPDs address different hazards and Type D is not universally required.',
     },
     {
       question:
-        'What is the minimum number of poles required on a reversing contactor for a three-phase motor?',
-      options: ['2 poles', '3 poles', '4 poles', '6 poles (3 per contactor)'],
+        'How many power poles in total are needed to reverse a three-phase motor using two contactors?',
+      options: [
+        '2 poles',
+        '3 poles',
+        '4 poles',
+        '6 poles (3 per contactor)',
+      ],
       correctAnswer: '6 poles (3 per contactor)',
+      explanation:
+        'Each contactor switches all three phases, so a two-contactor reversing arrangement uses six power poles in total - one set straight-through and one set with two phases crossed.',
     },
     {
       question:
@@ -157,37 +174,45 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
         'By changing the DC bus polarity',
       ],
       correctAnswer: 'Via a digital input or parameter command to the drive',
+      explanation:
+        'A VSD reverses the output phase sequence electronically in response to a digital input, fieldbus command or parameter, giving controlled reversal with no contactor wear.',
     },
     {
       question:
         'What is the recommended method for testing direction of rotation before coupling a motor to its load?',
       options: [
-        'Always couple first, then test',
-        'Use a phase rotation meter on the supply, then briefly energise uncoupled',
-        'Reverse the motor connections and hope for the best',
+        'Couple to the load first, then test under load',
+        'Check the supply with a phase rotation meter, then briefly energise the uncoupled motor',
+        'Energise at full speed coupled and observe the load',
         'Phase rotation testing is not necessary',
       ],
-      correctAnswer: 'Use a phase rotation meter on the supply, then briefly energise uncoupled',
+      correctAnswer: 'Check the supply with a phase rotation meter, then briefly energise the uncoupled motor',
+      explanation:
+        'Confirming supply sequence and then "bumping" the uncoupled motor lets you verify direction safely before the load is connected, avoiding damage from wrong rotation.',
     },
     {
       question: 'What happens if both forward and reverse contactors close simultaneously?',
       options: [
         'The motor runs at half speed',
-        'A phase-to-phase short circuit occurs across two phases',
-        'The motor becomes single-phased',
+        'A phase-to-phase short circuit occurs across the crossed phases',
+        'The motor simply runs single-phased',
         'Nothing - the motor will not run',
       ],
-      correctAnswer: 'A phase-to-phase short circuit occurs across two phases',
+      correctAnswer: 'A phase-to-phase short circuit occurs across the crossed phases',
+      explanation:
+        'Because the reverse contactor crosses two phases, closing both contactors connects two phases directly together - a phase-to-phase short, which interlocking exists to prevent.',
     },
     {
-      question: 'In an anti-plugging circuit, what device monitors motor shaft rotation?',
+      question: 'In an anti-plugging circuit, what device confirms the motor shaft has slowed enough to reverse?',
       options: [
-        'Current transformer',
-        'Zero-speed switch or anti-plugging relay with tachometer',
-        'Thermal overload relay',
-        'Voltage monitoring relay',
+        'A current transformer',
+        'A zero-speed switch or anti-plugging relay with speed feedback',
+        'A thermal overload relay',
+        'A voltage monitoring relay',
       ],
-      correctAnswer: 'Zero-speed switch or anti-plugging relay with tachometer',
+      correctAnswer: 'A zero-speed switch or anti-plugging relay with speed feedback',
+      explanation:
+        'A zero-speed switch (or anti-plugging relay using a tachometer/encoder) only permits reversal once shaft speed has dropped below a set threshold, giving positive confirmation rather than relying on a fixed time delay.',
     },
   ];
 

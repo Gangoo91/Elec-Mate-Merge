@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 443.4.1 requires SPD protection where the consequence of a transient overvoltage could result in which of these? (Pick the most complete answer.)',
     options: [
-      'Loss of human life only',
-      'Serious injury to, or loss of, human life; or significant financial or data loss',
-      'Only damage to electronic equipment',
-      'Only loss of internet connectivity',
+      'Loss of human life only, but not serious injury falling short of death',
+      'Serious injury or loss of human life, or significant financial or data loss',
+      'Damage to electronic equipment only, with no associated life-safety dimension',
+      'Loss of internet or telecoms connectivity to the premises and its occupants',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'When installing an SPD at the consumer unit, what is the most important wiring rule for the connecting conductors between the SPD and the busbars / earthing terminal?',
     options: [
-      'Use the largest cable available',
-      "Keep all conductors and interconnections as short and as straight as possible — avoid unnecessary cable loops — because cable inductance adds to the SPD's let-through voltage",
-      'Wrap them around a core to act as a noise filter',
-      'Run them through a separate conduit',
+      'Use the largest available conductor CSA to lower the connection resistance',
+      'Keep all conductors as short and as straight as possible, with no unnecessary loops',
+      'Coil them around a ferrite core so they act as a surge noise filter',
+      'Run them through a separate dedicated steel conduit for screening',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     id: 'm4s5-uc-rating',
     question: "An SPD's continuous operating voltage Uc must be selected against what?",
     options: [
-      'The fault current at origin',
-      'The nominal phase-to-earth voltage of the supply system, with margin per BS 7671 Table 534.2 for the system earthing arrangement',
-      'The maximum lightning peak voltage',
-      'The cable length',
+      'The prospective fault current at the origin of the installation',
+      'The nominal phase-to-earth voltage, with margin per Table 534.2 for the earthing arrangement',
+      'The maximum expected lightning peak voltage at the supply intake',
+      'The total length of the connecting conductors to the busbars',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       "BS 7671 sets a ceiling on the SPD assembly's effective voltage protection level for a 230/400 V installation. What is it?",
     options: [
-      '1.5 kV',
-      '2.5 kV — the assembly Uc/Up combination must keep the protected voltage below this for typical equipment per Table 443.2',
-      '6 kV',
-      '10 kV',
+      '1.5 kV — the Category I withstand for sensitive electronics',
+      '2.5 kV — the Category II withstand the assembly must stay below per Table 443.2',
+      '6 kV — the Category IV withstand for equipment at the origin',
+      '10 kV — the open-circuit test voltage for the SPD itself',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       "Reg 534 requires the SPD to be protected by an upstream OCPD. The SPD manufacturer's installation manual states a maximum OCPD rating of 100 A gG. What does BS 7671 expect you to do?",
     options: [
-      'Always use a 32 A MCB regardless',
-      "Follow the manufacturer's installation instructions — choose the highest permissible OCPD rating up to 100 A gG to give the SPD assembly the largest surge-current capability",
-      'Use a smaller OCPD to be safe',
-      'Omit the OCPD if the SPD has internal protection',
+      'Always fit a 32 A MCB upstream regardless of the manual',
+      'Use the highest permissible rating up to the stated 100 A gG, for maximum surge capability',
+      'Use a deliberately smaller OCPD than the maximum to be on the safe side',
+      'Omit the upstream OCPD altogether if the SPD has any internal protection',
     ],
     correctIndex: 1,
     explanation:
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 1,
     question: 'Section 443 had a significant A4 update. Which of the following is correct?',
     options: [
-      'Section 443 was deleted entirely',
-      'Reg 443.5 (the risk-assessment / CRL method) and Annex A443 were removed; the simplified Reg 443.4 / 443.4.1 consequence-based assessment is now the route to determine where SPDs are required',
-      'A4 added a new requirement to install SPDs in every installation regardless of risk',
-      'A4 deleted Reg 443.4',
+      'Section 443 was deleted from BS 7671 in its entirety.',
+      'A4 mandated SPDs in every installation regardless of any risk assessment.',
+      'Reg 443.5 / Annex A443 were removed; consequence-based Reg 443.4 is now the route.',
+      'A4 deleted Reg 443.4 and retained the older risk-assessment / CRL method.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 deleted the Reg 443.5 risk-assessment / CRL (Calculated Risk Level) method and the supporting Annex A443. The consequence-based assessment in Reg 443.4 / 443.4.1 remains — and is now the primary route to determine SPD requirement. Practical effect: simpler decision tree, but in practice most domestic / commercial installs now meet at least one of the consequence triggers.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A new dwelling has no external lightning protection system. What SPD type is the appropriate default at the consumer unit origin?',
     options: [
-      'Type 1',
-      'Type 2 — Reg 534.4.1.1; Type 1 is only required where there is an external LPS or direct-strike risk',
-      'Type 3',
-      'No SPD needed',
+      'Type 2 — Type 1 is needed only where an external LPS or direct-strike risk exists.',
+      'Type 1 SPD at the origin, for direct-strike current handling.',
+      'Type 3 SPD at the origin, as close protection for the whole board.',
+      'No SPD is needed at the origin of a dwelling without an LPS.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 534.4.1.1: SPDs at the origin shall be Type 1 OR Type 2. Type 1 is required where the structure has an external LPS or where direct-strike risk has been identified per BS EN 62305-3 / BS EN 62305-2. Type 2 is the default for domestic / commercial installations without LPS. Some manufacturers offer combined "Type 1+2" devices that satisfy both circumstances.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'You are installing a Type 2 SPD at the consumer unit. The SPD is mounted in the spare way; the line / neutral / earth tails to the busbars are 1.2 m long because the SPD has been positioned at the far end of the board. What is the issue?',
     options: [
-      'No issue — the SPD will work as specified',
-      '1.2 m of connecting conductor is far too long. At the typical lightning dV/dt, ~1 µH/m of cable inductance contributes ~1.0-1.5 kV of additional drop across the leads — likely pushing the protected-voltage above the 2.5 kV BS 7671 limit and defeating the SPD',
-      'The cable should be larger to compensate',
-      'The cable colours need changing',
+      'No issue — the SPD will perform exactly as the nameplate Up specifies.',
+      '1.2 m is far too long — lead inductance adds ~1.0-1.5 kV, pushing past the 2.5 kV limit.',
+      'A larger conductor CSA should be used to compensate for the extra length.',
+      'The conductor sheath colours must be changed to comply with the wiring rules.',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,26 +165,26 @@ const quizQuestions = [
     question:
       "Where the consequence of overvoltage 'could result in serious injury to or loss of human life' (Reg 443.4.1(a)), is SPD provision required by BS 7671?",
     options: [
-      'No — risk assessment may waive it',
-      'Yes — Reg 443.4.1 mandates SPD provision unconditionally where any of its listed consequences apply',
-      'Only if the building has an LPS',
-      'Only on commercial premises',
+      'No — a risk assessment may waive the requirement.',
+      'Only if the building has an external lightning protection system.',
+      'Only on commercial premises, not dwellings.',
+      'Yes — where the consequence is serious injury or loss of human life, protection shall be provided.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "Reg 443.4.1: protection against transient overvoltages SHALL be provided where the consequence could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss (limb (b) was deleted by the A2:2022 Corrigendum, May 2023). 'Serious injury to, or loss of, human life' is item (a) — and triggers the mandatory protection requirement. For all other cases protection shall still be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk.",
+      "Reg 443.4 (A4:2026): protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life; (b) interruption of public services or damage to cultural heritage; (c) interruption of commercial or industrial activity; or (d) effect on a large number of co-located individuals. Limb (a) — serious injury or loss of human life — triggers the mandatory protection requirement.",
   },
   {
     id: 6,
     question:
       'A small commercial unit installation has the structure protected by an external lightning protection system (LPS). What does this change about the SPD specification?',
     options: [
-      'No change',
-      'Reg 534 / 712.534.102.1: where an external LPS exists and direct-strike protection is required, Type 1 SPDs shall be installed as close as possible to the origin of the electrical installation — typically combined with Type 2 SPDs downstream',
-      'Type 2 only is now sufficient',
-      'No SPDs are required at all',
+      'Type 1 SPDs are now required at the origin, typically combined with Type 2 downstream.',
+      'No change to the origin SPD specification is needed once an LPS is present.',
+      'Type 2 SPDs alone become sufficient at the origin under the LPS.',
+      'No SPDs are required at all once an external LPS protects the structure.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type 1 SPDs handle direct-strike currents (10/350 µs waveform — significantly higher peak energy than the induced-surge 8/20 µs handled by Type 2). Where the structure has an external LPS, Type 1 is required at the origin per Reg 712.534.102.1 / Reg 534 for direct-strike protection. Practical implementations combine Type 1 + Type 2 at origin (often as combined T1+T2 devices) plus Type 3 close to sensitive equipment.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       "An SPD's nameplate shows Up = 1.4 kV, Uc = 275 V, Iimp = 12.5 kA, In = 20 kA. Connecting leads will be 0.4 m total. Will this satisfy BS 7671 for a 230/400 V TN-S install?",
     options: [
-      "Need more information — but on the face of it, Uc 275 V > 1.1 × 230 = 253 V ✓, Iimp / In are reasonable for Type 1+2 origin protection, and 0.4 m leads should keep the effective Up well within the 2.5 kV ceiling. Verify against the manufacturer's installation manual and Table 534.2 for the exact Uc requirement",
-      'Fail — Uc is too low',
-      'Fail — In is too low',
-      'Always pass without checking',
+      'Fail — the Uc of 275 V is too low for a 230/400 V TN-S system.',
+      'On the numbers it passes, but still verify against the manual and Table 534.2.',
+      'Fail — the In of 20 kA is too low for origin protection on this system.',
+      'It passes outright, so no manufacturer or table cross-check is needed.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Quick sanity check: Uc 275 V exceeds 1.1 × 230 = 253 V (Table 534.2 typical TN-S requirement). Up = 1.4 kV plus the inductive drop on 0.4 m leads (~0.4-0.6 kV at typical dV/dt) gives effective ~2.0 kV — under the 2.5 kV BS 7671 ceiling for 230/400 V. Iimp 12.5 kA is in normal Type 1 range. The numerical check should always be paired with the manufacturer's manual confirming the system earthing match and OCPD selection.",
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       "You are inspecting an existing installation and notice the SPD's status indicator is showing 'replace' (red flag visible through the inspection window). What's the right call on the EICR?",
     options: [
-      'No code — SPDs are advisory',
-      'C2 — potentially dangerous; SPD has reached end of life or has been hit by a surge above its capability and is no longer providing protection. Recommend replacement; record on EICR observations',
-      'C3 — improvement only; SPD failure is a reliability issue not a safety issue',
-      'C1 — danger present',
+      'No code — SPD status is advisory and need not be recorded on the EICR.',
+      'C3 — improvement only, as an end-of-life SPD is a reliability not a safety issue.',
+      'C2 — potentially dangerous; the protection required by Reg 443 is no longer in place.',
+      'C1 — danger present, requiring immediate action before leaving site.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 7671 / GN3 inspection: an end-of-life SPD indicator means the device has reached the end of its surge-handling capability or has been damaged. The installation is no longer protected against transient overvoltages — Reg 443 / 534 conditions are no longer met. C2 reflects 'potentially dangerous' because the surge protection that was specified at install (and is required by Reg 443.4.1) is no longer in place. Replacement is the standard remedy.",
   },

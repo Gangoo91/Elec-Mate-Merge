@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician wants to measure whether their business is growing. They track total revenue each month. What type of measure is this, and what is the main limitation?',
     options: [
-      'Lead measure &mdash; it predicts future performance but does not show what is already achieved',
       'Lag measure &mdash; it shows past results but does not directly indicate what actions will improve future performance',
+      'Lead measure &mdash; it predicts future performance but does not show what is already achieved',
       'Lead measure &mdash; it shows current activity levels in real time',
       'Lag measure &mdash; it measures daily activity and can be directly controlled',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Revenue is a lag measure &mdash; it shows what has already happened (results) but does not tell you what specific actions to take to improve future revenue. Lag measures are important for tracking outcomes, but they are not directly controllable on a day-to-day basis. Lead measures, by contrast, are predictive and influenceable &mdash; they measure the activities that drive the lag measures. For example, the number of quotes sent per week (lead) predicts future revenue (lag). Peter Drucker is often quoted as saying &ldquo;what gets measured gets managed&rdquo;, but to manage effectively, you need both lead and lag measures: lag measures show the destination, lead measures show the path.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'An apprentice electrician is tracking their progress towards achieving their Level 3 qualification. Which of the following is the BEST example of a lead measure they could track weekly?',
     options: [
       'Whether they have passed their final exams at the end of the year',
-      'The number of hours spent revising technical content each week',
       'Their overall grade at the end of each college term',
+      'The number of hours spent revising technical content each week',
       'Whether they have been offered a permanent position after completing their apprenticeship',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The number of hours spent revising each week is a lead measure &mdash; it is predictive (more revision hours typically lead to better exam results), influenceable (the apprentice can directly control how much they study), and measurable on a short cycle (weekly). The other options are all lag measures: exam results, term grades, and job offers are outcomes that show what has already happened, not actions that the apprentice can take this week to improve their future results. The power of lead measures is that they give you something concrete to act on every day or week, which builds momentum and keeps you engaged with the process rather than just fixating on distant outcomes.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following is the BEST example of a lead measure for an electrician aiming to increase their annual income?',
     options: [
-      'Total revenue earned at the end of the year',
       'The number of new client quotes sent per week',
+      'Total revenue earned at the end of the year',
       'Whether they achieved a 10% income increase by December',
       'The size of their bank balance at the end of each month',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The number of new client quotes sent per week is a lead measure because it is predictive (more quotes typically lead to more work and higher income), influenceable (you can directly control how many quotes you send), and measurable on a short cycle (weekly). The other options are all lag measures &mdash; they measure outcomes that have already occurred. Annual revenue, income increase percentage, and bank balance are all results, not drivers. Lead measures give you something actionable to focus on each week, whereas lag measures only tell you whether you succeeded or failed after the fact.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'Teresa Amabile&rsquo;s research on the "progress principle" found that the single most motivating factor at work was:',
     options: [
-      'Receiving public recognition for major achievements',
       'Experiencing small, incremental progress in meaningful work',
+      'Receiving public recognition for major achievements',
       'Earning financial bonuses for hitting targets',
       'Being assigned increasingly challenging tasks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Teresa Amabile&rsquo;s research at Harvard Business School, based on analysis of nearly 12,000 daily diary entries from knowledge workers, found that the most significant driver of motivation, positive emotions, and performance was the experience of making progress &mdash; even small progress &mdash; in work that mattered to the individual. This progress principle was more powerful than recognition, bonuses, or challenge. For electricians, this has a practical implication: rather than waiting for major milestones (finishing your apprenticeship, passing AM2, starting a business) to feel motivated, deliberately track and celebrate small daily or weekly wins (completing a difficult task, learning a new skill, solving a problem). These small wins create a sense of momentum and achievement that fuels continued effort.',
   },
@@ -132,10 +132,10 @@ const quizQuestions = [
     options: [
       'They are not working hard enough and need to increase their effort',
       'They lack the natural talent required to succeed in multiple areas',
-      'They are spreading their focus too thin across too many goals, diluting their effectiveness',
       'Their goals are too easy and not challenging enough to drive motivation',
+      'They are spreading their focus too thin across too many goals, diluting their effectiveness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The problem is almost certainly diluted focus. Research on willpower and self-control (notably by Roy Baumeister) shows that self-regulation is a limited resource &mdash; the more goals you are actively pursuing, the less mental energy and willpower you have available for each one. Trying to make progress on five significant goals simultaneously often results in making minimal progress on all of them, which then creates a sense of failure and demotivation. A better approach is to prioritise ruthlessly: choose one or two primary goals to focus on intensively, and put the others on hold or reduce them to maintenance mode. Once the primary goals are achieved or have become habitual, bring another goal into active focus. This principle is supported by the concept of &ldquo;Wildly Important Goals&rdquo; from The 4 Disciplines of Execution &mdash; identify the one or two goals that matter most right now, and give them the majority of your effort and attention. Progress on fewer goals beats stagnation on many.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
       'An electrician feels demotivated because a peer who qualified at the same time is now earning significantly more and running a larger business. According to research on social comparison, what is the healthiest response?',
     options: [
       'Avoid all contact with the peer to eliminate the source of negative comparison',
-      'Use the peer as a role model, identify what they are doing differently, and adapt useful strategies while accepting that everyone&rsquo;s path is different',
       'Decide that success is determined by luck and natural talent, so there is no point trying to improve',
       'Compete directly by trying to copy everything the peer does, even if it does not suit your own circumstances',
+      'Use the peer as a role model, identify what they are doing differently, and adapt useful strategies while accepting that everyone&rsquo;s path is different',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The healthiest approach to upward social comparison (comparing yourself to someone more advanced) is to use it as a learning opportunity rather than a source of shame or envy. Identify what the other person is doing that you are not &mdash; are they marketing more effectively? Taking on more complex projects? Building stronger client relationships? Investing in additional qualifications? Extract actionable insights that you can apply to your own situation, while also recognising that everyone starts from different circumstances, has different resources, and faces different challenges. The key is to shift from competitive comparison (&ldquo;they are better than me&rdquo;) to collaborative learning (&ldquo;what can I learn from their success?&rdquo;). At the same time, maintain perspective by comparing yourself primarily to your past self &mdash; are you better than you were a year ago? That is the comparison that matters most.',
   },

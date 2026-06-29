@@ -23,55 +23,55 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 sets minimum sound pressure levels for fire alarm sounders. What are the three principal cases?',
     options: [
-      'Just one number.',
-      'THREE cases. (a) GENERAL — minimum 65 dB(A) at any point in the protected area where a person may be present. (b) SMALL ENCLOSED SPACES (typically <60 m² stairwells, lobbies and similar) — minimum 60 dB(A); the lower threshold reflects the smaller volume and the lower likely risk profile. (c) AT BED-HEAD positions — minimum 75 dB(A) measured at the head of the bed; this higher threshold is calibrated to reliably wake a sleeping person, who may be partially protected by bedding, sleep depth, and (in older premises) age-related hearing loss. Important note: the dB(A) values are MINIMA at the QUIETEST point in the protected area, not averages.',
-      '50 dB(A) only.',
-      '120 dB(A) only.',
+      'Three cases: 65 dB(A) general, 60 dB(A) small enclosed spaces, and 75 dB(A) at the bed-head.',
+      'A single 65 dB(A) minimum applied uniformly to every area in every building type.',
+      'A single 50 dB(A) minimum applied to general, enclosed and sleeping areas alike.',
+      'A single 120 dB(A) minimum set at the pain threshold to cover every area.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'The 65 / 60 / 75 dB(A) trio is one of the load-bearing rules for sounder design. In waking-occupant areas, 65 dB(A) is the universal floor. In small enclosed spaces, the floor relaxes to 60 dB(A). In sleeping-risk areas, the bed-head minimum rises to 75 dB(A). The bed-head 75 dB(A) is a 2025 reaffirmation of evidence-based wake-up thresholds; lower levels do not reliably rouse a sleeping adult.',
+      'Three minima, each at the quietest point (not an average): (a) general — 65 dB(A) anywhere a person may be present; (b) small enclosed spaces (typically <60 m² stairwells, lobbies) — 60 dB(A), reflecting the smaller volume and lower risk profile; (c) bed-head — 75 dB(A) measured at the head of the bed, calibrated to wake a sleeping person who may be protected by bedding, sleep depth and age-related hearing loss. The 75 dB(A) bed-head figure is a 2025 reaffirmation of evidence-based wake-up thresholds; lower levels do not reliably rouse a sleeping adult.',
   },
   {
     id: 'fam2-s4-tone',
     question:
       'BS 5839-1:2025 clause 15.1.12 governs use of fire alarm tones for purposes other than warning of fire. What does it permit?',
     options: [
-      'Anything.',
-      'TWO exceptions to the rule that fire alarm evacuation tones should not be used for other purposes. (a) Where the response required is IDENTICAL to that for fire (i.e. immediate evacuation by all escape routes). Example: a major hazardous chemical release that requires the same evacuation as fire — using the fire tone is permitted because the human response is the same. (b) In schools, where the fire alarm signal is used to indicate the start or finish of predetermined periods (class change). The duration of the class-change signal SHOULD NOT EXCEED 10 SECONDS — extended in 2025 from 5 seconds in the 2017 edition to address data-lag in addressable systems. Lockdown / invacuation alarms are now ACKNOWLEDGED in BS 5839-1:2025 with reference to FIA guidance.',
-      'Music only.',
-      'Anything except music.',
+      'Any purpose the duty-holder wants — the fire tone may be reused freely for any signalling.',
+      'Music only — the tone may double as a chime or background announcement signal.',
+      'Two exceptions: where the response is identical to fire, and the school class-change signal.',
+      'Any purpose except music — every non-musical reuse of the fire tone is permitted.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'Clause 15.1.12 is one of the operationally important 2025 clarifications. The 10-second class-change extension addresses a real engineering problem (data lag in addressable systems made 5-second signals unreliable). The lockdown/invacuation acknowledgement responds to growing use of fire infrastructure for non-fire emergency communication, and points users to the FIA guidance document for design.',
+      'Clause 15.1.12 permits two exceptions to the rule that evacuation tones should not be reused: (a) where the required response is identical to fire — i.e. immediate full evacuation, such as a major hazardous chemical release; and (b) in schools, where the signal marks the start or finish of class periods. The class-change signal should not exceed 10 seconds — extended from 5 seconds in 2017 to address data-lag in addressable systems. Lockdown/invacuation alarms are now acknowledged in the 2025 edition with reference to FIA guidance, but must use a different signal from the fire tone.',
   },
   {
     id: 'fam2-s4-vad',
     question:
       'A fire alarm system in a hotel uses sounders that meet the 75 dB(A) bed-head rule. The hotel also installs visual alarm devices (VADs). Which standard governs the VADs, and is BS EN 54-23 compliance always required?',
     options: [
-      'EN 54-23 always required.',
-      'BS EN 54-23 is the product standard for VADs. Compliance with BS EN 54-23 is mandatorily required ONLY where the VAD is the PRIMARY EVACUATION SOURCE — i.e. where there are no audible sounders or where audible coverage is genuinely inadequate (perhaps because of acoustic isolation in some rooms). In a hotel with 75 dB(A) audible coverage at every bed-head, the VAD is supplementary — it supports occupants who cannot hear the audible signal — and BS EN 54-23 is recommended but not strictly required. ACCESSIBILITY guidance (Approved Document M, BS 8300) drives WHERE VADs should be provided in addition to audible.',
-      'No VAD standard exists.',
-      'BS EN 54-3.',
+      'BS EN 54-23 governs VADs and compliance is mandatory wherever any VAD is fitted at all.',
+      'No product standard exists for VADs; performance is left entirely to the manufacturer.',
+      'VADs are governed by BS EN 54-3, the same standard that covers audible sounders.',
+      'BS EN 54-23 governs VADs, but is strictly required only where the VAD is the primary evacuation source.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'The BS EN 54-23 / Approved Document M relationship is one of the more nuanced VAD topics. EN 54-23 specifies the device performance (light intensity, coverage volume, flash rate). Approved Document M / BS 8300 specifies WHERE VADs are needed for accessibility. The two together drive a compliant inclusive design.',
+      'BS EN 54-23 specifies VAD performance (light intensity, coverage volume, flash rate). Compliance is mandatory only where the VAD is the primary evacuation source — no audible sounders, or genuinely inadequate audible coverage. In a hotel with 75 dB(A) coverage at every bed-head the VAD is supplementary, supporting occupants who cannot hear the audible signal, so BS EN 54-23 is recommended but not strictly required. Accessibility guidance (Approved Document M, BS 8300) drives where supplementary VADs are provided.',
   },
   {
     id: 'fam2-s4-tone-type',
     question: 'What evacuation tone is recommended by BS 5839-1:2025 for the audible alarm signal?',
     options: [
-      'Any tone.',
-      "BS 5839-1 evacuation tone — a slow whoop (sweep from approximately 800 Hz down to 500 Hz over about 1 second, repeated) OR a two-tone (alternating between two tones approximately 500 Hz and 1000 Hz). Both are within the recommended 500-1000 Hz frequency range, which corresponds to peak human auditory sensitivity and reliably penetrates typical building structures. The tone signal is HARMONISED across BS 5839-1 systems — a person familiar with one fire alarm should recognise the tone in any other building. Steady continuous tones are not recommended; the modulated character of slow-whoop and two-tone is what the brain identifies as 'alarm'.",
-      'A continuous monotone.',
-      'A spoken voice message.',
+      'A modulated slow-whoop (~800 down to 500 Hz) or two-tone (~500/1000 Hz), within the 500-1000 Hz band.',
+      'Any tone the installer prefers, as the standard makes no recommendation on tone character.',
+      'A continuous, unchanging monotone held at one frequency for the duration of the alarm.',
+      'A spoken voice message only, with no audible tone, as the default BS 5839-1 signal.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Recognisability of the alarm tone is a deliberate design choice. People react faster to a tone they have learned to associate with fire than to an arbitrary sound. The 500-1000 Hz band, with the slow-whoop or two-tone modulation, is the BS 5839-1 standard. Voice evacuation messages are permitted (and required for VAD systems and PA-VAD systems under BS 5839-8) but the BS 5839-1 default is the modulated tone.',
+      'The recommended evacuation tone is a slow whoop (sweep from approximately 800 Hz down to 500 Hz over about 1 second, repeated) or a two-tone (alternating roughly 500 Hz and 1000 Hz). Both sit in the 500-1000 Hz band of peak human auditory sensitivity, which penetrates typical building structures. The tone is harmonised so a person familiar with one fire alarm recognises it anywhere. Steady continuous tones are not recommended — the modulated character is what the brain identifies as "alarm". Voice messages are permitted (and required for PA-VAD systems under BS 5839-8) but the BS 5839-1 default is the modulated tone.',
   },
 ];
 
@@ -81,136 +81,136 @@ const quizQuestions = [
     question:
       'What is the BS 5839-1:2025 minimum sound pressure level at the QUIETEST point in a general protected area?',
     options: [
-      '50 dB(A).',
-      '65 dB(A). At the quietest point in any general (non-sleeping, non-small-enclosed) protected area where a person may be present, the sounder coverage must produce at least 65 dB(A). The number is a MINIMUM at the WORST point, not an average. The 65 dB(A) threshold ensures the alarm signal is reliably above the typical ambient noise of an occupied building (offices, retail, manufacturing) and above the perception threshold for an alert adult. Levels significantly above 65 dB(A) are normal in many areas (typical mid-corridor coverage produces 75-85 dB(A)); 65 dB(A) is the floor.',
-      '85 dB(A).',
-      '120 dB(A).',
+      '65 dB(A) at the quietest point, reliably above typical occupied-building ambient noise.',
+      '50 dB(A) at the quietest point, matching the ambient level of a typical quiet office.',
+      '85 dB(A) at the quietest point, ensuring the alarm is heard over heavy machinery noise.',
+      '120 dB(A) at the quietest point, set at the threshold of pain for guaranteed attention.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Memorise: 65 dB(A) general, 60 dB(A) small enclosed (<60 m²), 75 dB(A) bed-head. The numbers are unchanged in the 2025 edition from the 2017 edition; they are evidence-calibrated against reliable arousal and recognition thresholds.',
+      'At the quietest point in any general (non-sleeping, non-small-enclosed) area where a person may be present, the sounder coverage must produce at least 65 dB(A) — a minimum at the worst point, not an average. It keeps the alarm above typical office, retail and manufacturing ambient noise and above the perception threshold of an alert adult; mid-corridor coverage often reaches 75-85 dB(A), but 65 dB(A) is the floor. Memorise 65 general, 60 small enclosed (<60 m²), 75 bed-head — unchanged from 2017 and evidence-calibrated.',
   },
   {
     id: 2,
     question:
       'For a small enclosed space such as a stairwell or lobby of less than 60 m², what is the minimum SPL?',
     options: [
-      '65 dB(A).',
-      '60 dB(A). The 60 dB(A) threshold (5 dB lower than the general 65 dB(A) minimum) reflects the smaller volume of small enclosed spaces and the lower likely time-of-occupancy risk profile. A person in a small lobby is typically transiting through; the alarm will be audible at the higher level once they reach the corridor or larger space. The 5 dB relaxation acknowledges practical sounder-loading constraints in tight stairwells while preserving meaningful audibility.',
-      '50 dB(A).',
-      '40 dB(A).',
+      '65 dB(A) — the same general-area minimum applies, with no relaxation for small spaces.',
+      '50 dB(A) — small enclosed transit spaces are relaxed by a full 15 dB below the general floor.',
+      '60 dB(A) — relaxed 5 dB below the general minimum for the smaller volume and transit use.',
+      '40 dB(A) — barely above the background level of a quiet, unoccupied stairwell at night.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 60 dB(A) small-enclosed-space minimum is one of the easier numbers to remember by exception: general 65, small enclosed 60. The 5 dB difference looks small but corresponds to a meaningful acoustic-power difference (a halving of perceived loudness needs a 10 dB drop, so 5 dB is close to the perceptual threshold of difference).',
+      'The 60 dB(A) threshold is 5 dB below the general 65 dB(A) minimum, reflecting the smaller volume of small enclosed spaces and their lower time-of-occupancy risk profile. A person in a small lobby is usually transiting through and will hear the higher level once they reach the corridor. The relaxation acknowledges practical sounder-loading constraints in tight stairwells while preserving audibility. Remember by exception: general 65, small enclosed 60, bed-head 75.',
   },
   {
     id: 3,
     question: 'For a sleeping-risk area, what is the minimum SPL at the BED-HEAD?',
     options: [
-      '50 dB(A).',
-      '75 dB(A). Measured at the head of the bed itself, NOT in the room or corridor outside. The 75 dB(A) bed-head minimum is calibrated against evidence-based wake-up thresholds for sleeping adults — including those partially protected by bedding, sleep depth, and (in older premises) age-related hearing loss. Levels lower than 75 dB(A) at the bed-head do not reliably rouse a sleeping person; investigations following residential fires have repeatedly identified inadequate bed-head SPL as a contributory factor to fatality.',
-      '65 dB(A).',
-      '120 dB(A).',
+      '50 dB(A) at the bed-head, on the basis that a sleeping person is close to the sounder.',
+      '65 dB(A) at the bed-head — the same level as the general waking-area minimum.',
+      '120 dB(A) at the bed-head, set well above the pain threshold to guarantee waking.',
+      '75 dB(A) measured at the head of the bed itself, not in the room or corridor outside.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 75 dB(A) bed-head requirement is the highest of the three SPL minima and the hardest to achieve in practice — many existing systems with corridor-mounted sounders fall short because the closed bedroom door attenuates the signal by 15-20 dB. The fix is typically a sounder or sounder-base inside the bedroom, or PA-VAD with voice messaging. Existing systems should be measured at the bed-head as part of the BS 5839-1:2025 maintenance regime.',
+      'The 75 dB(A) bed-head minimum is measured at the head of the bed and is calibrated against evidence-based wake-up thresholds for sleeping adults — including those protected by bedding, sleep depth and age-related hearing loss. Lower levels do not reliably rouse a sleeping person; residential-fire investigations repeatedly cite inadequate bed-head SPL as a contributory factor to fatality. It is the highest of the three minima and the hardest to achieve — a closed bedroom door attenuates 15-20 dB, so the fix is usually a sounder/sounder-base inside the room or PA-VAD with voice messaging.',
   },
   {
     id: 4,
     question: 'What frequency range is recommended for fire alarm sounder tones?',
     options: [
-      '50-100 Hz.',
-      '500 to 1000 Hz, with the BS 5839-1 evacuation tone (slow whoop sweeping 500-800 Hz over ~1 s, or two-tone alternating between roughly 500 Hz and 1000 Hz). This frequency range corresponds to the peak sensitivity of the human auditory system and penetrates typical building structures (walls, doors, partitions) with relatively little attenuation. Tones much below 500 Hz are absorbed by soft furnishings and lose directional information; tones much above 1000 Hz attenuate sharply through doors and walls. The 500-1000 Hz band is the engineering sweet spot.',
-      '20 kHz.',
-      '50 Hz.',
+      '500 to 1000 Hz, matching peak human auditory sensitivity and penetrating building structures.',
+      '50 to 100 Hz, a low rumble chosen because bass frequencies travel furthest through walls.',
+      'Around 20 kHz, at the very top of the human hearing range for maximum urgency.',
+      'A single fixed tone of 50 Hz, matched to the mains supply frequency for stability.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 500-1000 Hz frequency choice is a hearing-physiology decision, not an arbitrary one. Lower frequencies are absorbed; higher frequencies are blocked. The fire alarm tone needs to penetrate the building and reach the listener; 500-1000 Hz does both reliably.',
+      'The recommended 500-1000 Hz band carries the BS 5839-1 evacuation tone (slow whoop sweeping ~500-800 Hz, or two-tone alternating ~500/1000 Hz) and corresponds to peak human auditory sensitivity, penetrating walls, doors and partitions with little attenuation. Tones much below 500 Hz are absorbed by soft furnishings and lose directional cues; tones much above 1000 Hz attenuate sharply through doors. The choice is hearing-physiology, not arbitrary — the tone must both penetrate the building and reach the listener.',
   },
   {
     id: 5,
     question:
       'BS 5839-1:2025 clause 15.1.12 permits fire alarm evacuation tones to be used for purposes OTHER than fire under what conditions?',
     options: [
-      'Never.',
-      'TWO exceptions. (a) Where the response required is IDENTICAL to fire response (i.e. immediate full evacuation by all escape routes). Example: a hazardous chemical release that requires the same evacuation as fire. (b) In schools, where the fire alarm signal indicates the start or finish of predetermined class periods. The duration of class-change signals SHOULD NOT EXCEED 10 seconds (extended from 5 seconds in 2017 to address data lag in addressable systems). Lockdown / invacuation use of fire infrastructure is now ACKNOWLEDGED with reference to FIA guidance, but the lockdown signal must be DIFFERENT from the fire evacuation tone.',
-      'Anything goes.',
-      'Only with FRS approval.',
+      'Never — the fire evacuation tone may only ever signal an actual fire, with no exceptions.',
+      'For any purpose the building manager chooses, provided occupants are briefed in advance.',
+      'Two exceptions: where the response is identical to fire, and the school class-change signal.',
+      'For any purpose, but only with prior written approval from the Fire and Rescue Service.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 2025 clause 15.1.12 changes are operationally significant. The 10-second class-change extension fixes a real engineering issue. The lockdown acknowledgement responds to the growing use of fire infrastructure for non-fire communication. Both retain the principle: distinct signals for distinct responses, except where responses are identical.',
+      'Clause 15.1.12 permits two exceptions: (a) where the required response is identical to fire — immediate full evacuation, e.g. a hazardous chemical release; and (b) in schools, marking the start or finish of class periods. The class-change signal should not exceed 10 seconds (extended from 5 seconds in 2017 to address addressable-system data lag). Lockdown/invacuation use is now acknowledged with reference to FIA guidance, but the lockdown signal must differ from the fire evacuation tone. The principle holds: distinct signals for distinct responses, except where responses are identical.',
   },
   {
     id: 6,
     question: 'Which BS EN standard governs visual alarm devices (VADs)?',
     options: [
-      'BS EN 54-3.',
-      'BS EN 54-23. The standard specifies the optical performance of fire alarm VADs — light intensity, coverage volume, flash characteristics, colour (red), and mounting requirements. Compliance with BS EN 54-23 is required where the VAD is the PRIMARY evacuation source (e.g. in environments where audible coverage is inadequate). Where the VAD is supplementary to compliant audible coverage, BS EN 54-23 is recommended but not strictly mandatory; ACCESSIBILITY guidance (Approved Document M / BS 8300) drives WHERE supplementary VADs are needed.',
-      'BS EN 50291.',
-      'BS EN 54-7.',
+      'BS EN 54-3, the product standard that covers fire alarm sounders and their output.',
+      'BS EN 50291, the product standard for domestic carbon monoxide detection devices.',
+      'BS EN 54-7, the product standard for point-type optical and ionisation smoke detectors.',
+      'BS EN 54-23, the product standard specifying VAD light intensity, coverage and flash.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 54-23 is one of the more recent additions to the EN 54 family (published 2010). The primary-vs-supplementary distinction is important: VADs as primary evacuation source must be 54-23 compliant; supplementary VADs may use less-stringent products. Always check the design intent before procurement.',
+      'BS EN 54-23 specifies VAD optical performance — light intensity, coverage volume, flash characteristics, red colour and mounting. Compliance is required where the VAD is the primary evacuation source (e.g. inadequate audible coverage). Where the VAD is supplementary to compliant audible coverage, BS EN 54-23 is recommended but not strictly mandatory; accessibility guidance (Approved Document M / BS 8300) drives where supplementary VADs are needed. It is a relatively recent EN 54 addition (published 2010) — check the design intent before procurement.',
   },
   {
     id: 7,
     question:
       'A school wants to use the fire alarm sounders for the start-of-class signal. Per BS 5839-1:2025, what duration limit applies to the class-change signal?',
     options: [
-      'No limit.',
-      '10 SECONDS. Clause 15.1.12 limits the class-change signal to no more than 10 seconds. The duration was extended from 5 seconds in the 2017 edition to address data-lag in modern addressable systems — 5 seconds was found to be unreliable in some installations because the panel processing and bus communication consumed enough of the 5-second window that not all sounders received and ceased the signal in time. The 10-second extension provides margin while keeping the class-change signal clearly distinct from a fire alarm (which would persist much longer).',
-      '60 seconds.',
-      '5 minutes.',
+      '10 seconds maximum, extended from 5 seconds in 2017 to address addressable-system data lag.',
+      'No limit applies, provided staff are trained to recognise the class-change signal.',
+      '60 seconds, long enough for pupils to move between rooms before the signal stops.',
+      '5 minutes, mirroring the minimum alarm duration required for a genuine evacuation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 5-to-10-second extension is a small but meaningful 2025 change. Schools with existing 5-second signals are not necessarily non-compliant against the edition under which they were installed, but at next system modification the 10-second value should be programmed.',
+      'Clause 15.1.12 limits the class-change signal to no more than 10 seconds. The duration was extended from 5 seconds in 2017 because, in some addressable installations, panel processing and bus communication consumed enough of the 5-second window that not all sounders received and ceased the signal in time. The 10-second value provides margin while keeping the signal clearly distinct from a fire alarm (which persists much longer). Schools with existing 5-second signals should reprogram to 10 seconds at the next modification.',
   },
   {
     id: 8,
     question: 'What is the recommended evacuation tone for BS 5839-1 systems?',
     options: [
-      'Steady tone.',
-      "BS 5839-1 evacuation tone — typically slow whoop (sweep from ~800 Hz down to ~500 Hz over approximately 1 second, repeated) OR two-tone (alternating between approximately 500 Hz and 1000 Hz). Both are within the recommended 500-1000 Hz frequency range. The MODULATED character of the tone (rising-falling sweep or two-tone alternation) is what the brain reliably identifies as 'alarm' — distinct from telephone rings, doorbells, machinery noise, and other steady or single-frequency sounds in the acoustic environment.",
-      'A bell.',
-      'A whistle.',
+      'A steady, continuous single-frequency tone held at a constant pitch and volume.',
+      'A traditional rotating mechanical bell, as used in older manually operated systems.',
+      'A modulated slow-whoop or two-tone in the 500-1000 Hz band, the BS 5839-1 standard.',
+      'A high-pitched whistle blast, chosen to cut through general background noise.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Slow whoop and two-tone are the BS 5839-1 standard. Steady tones are not recommended; the modulated character is the alarm-recognition cue. Voice evacuation messages are an option (BS 5839-8 PA-VAD systems) but the default for BS 5839-1 is the modulated tone.',
+      'The recommended evacuation tone is typically a slow whoop (sweep ~800 down to ~500 Hz over about 1 second, repeated) or a two-tone (alternating ~500 and 1000 Hz), both within the 500-1000 Hz band. The modulated rising-falling or alternating character is what the brain reliably identifies as "alarm" — distinct from telephone rings, doorbells and machinery noise. Steady tones are not recommended. Voice evacuation messages are an option (BS 5839-8 PA-VAD) but the BS 5839-1 default is the modulated tone.',
   },
   {
     id: 9,
     question:
       'For a hotel with audible coverage meeting the 75 dB(A) bed-head minimum, are VADs required in every bedroom?',
     options: [
-      'Yes always.',
-      "Not by BS 5839-1 — the audible coverage already meets the requirement. However, ACCESSIBILITY guidance (Approved Document M, BS 8300, the Equality Act 2010) requires reasonable adjustment for occupants who cannot hear the audible signal. A typical answer is: provide VADs as standard in a defined percentage of bedrooms (often 5-10 percent) marked as 'accessible rooms', and provide additional VADs on request for any room where a hearing-impaired guest is staying. The hotel's accessibility policy and FRA drive the specific provision. Per the BS 5839-1:2025 clause 15 commentary, where VADs are supplementary to compliant audible coverage, BS EN 54-23 compliance is recommended but not strictly required.",
-      'Only one.',
-      'No, just sounders.',
+      'Yes — a VAD is mandatory in every bedroom regardless of the audible coverage achieved.',
+      'Yes, but only one VAD is needed for the whole sleeping floor, sited in the corridor.',
+      'No — sounders are always sufficient, and VADs are never required in sleeping accommodation.',
+      'Not by BS 5839-1, but accessibility law drives targeted VAD provision in accessible and on-request rooms.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'VAD-in-every-bedroom is rare and not required. Targeted VAD provision (accessible rooms, on-request rooms) plus the audible system is the typical design. Where the audible system cannot meet the 75 dB(A) bed-head minimum (older buildings with heavy bedroom-door attenuation), VADs may become primary evacuation source and BS EN 54-23 compliance becomes mandatory.',
+      'The audible coverage already meets the BS 5839-1 requirement, so VADs are not required by that standard. However, accessibility guidance (Approved Document M, BS 8300, the Equality Act 2010) requires reasonable adjustment for occupants who cannot hear the signal: typically VADs as standard in a defined percentage of bedrooms (often 5-10 percent of accessible rooms) plus additional VADs on request for hearing-impaired guests. Where an older building cannot meet the 75 dB(A) bed-head minimum, VADs may become the primary evacuation source and BS EN 54-23 compliance becomes mandatory.',
   },
   {
     id: 10,
     question:
       'A sounder/VAD circuit is being calculated for loop loading. What information do you need to size the circuit?',
     options: [
-      'Only the panel rating.',
-      'The OPERATING (alarm) current of each sounder/VAD device, the QUIESCENT current of each device, the cable resistance, the standby battery capacity, and the panel circuit rating. Sounder/VAD devices typically draw 3-30 mA quiescent (very low) and 30-200 mA when active (depending on volume setting and VAD light intensity). Total active current must not exceed the panel circuit rating; total quiescent + active current must allow the standby battery to support 24 hours quiescent + 30 minutes alarm operation (the BS 5839-1:2025 minimum). In practice, modern panels and devices provide manufacturer load-calculation tools that handle the cable-resistance and battery-capacity calculations automatically.',
-      'Just battery capacity.',
-      'Just cable length.',
+      'Operating and quiescent current per device, cable resistance, battery capacity and panel circuit rating.',
+      'Only the panel rating — once the panel current limit is known, no other figure is needed.',
+      'Only the standby battery capacity, since the battery alone determines how many devices fit.',
+      'Only the total cable length of the circuit, which fixes the device count on its own.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Sounder/VAD circuit calculation is one of the more error-prone areas of fire alarm design. The combination of high alarm current, end-of-line voltage drop on long cable runs, and battery capacity for the 24-hour-plus-30-minute scenario must all balance. Manufacturer software is the practical tool; understanding the inputs is what lets you sanity-check the output.',
+      'You need the operating (alarm) current and quiescent current of each device, the cable resistance, the standby battery capacity and the panel circuit rating. Devices typically draw 3-30 mA quiescent and 30-200 mA active (depending on volume and VAD intensity). Total active current must not exceed the panel circuit rating, and battery capacity must support 24 hours quiescent plus 30 minutes alarm (the BS 5839-1:2025 minimum). The combination of high alarm current, end-of-line voltage drop and battery capacity must balance; manufacturer software handles the detail, but understanding the inputs lets you sanity-check the output.',
   },
 ];
 

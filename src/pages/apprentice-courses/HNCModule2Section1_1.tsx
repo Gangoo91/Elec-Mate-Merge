@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     id: 'steady-state',
     question: 'What characterises steady-state conduction?',
     options: [
-      'Combined PEN in supply, separated in installation',
-      'Missing grommets and exposed copper conductors',
-      'By providing 24/7 remote monitoring and quick response to issues',
+      'Heat is stored within the material as its temperature rises',
+      'The temperature gradient reverses direction periodically',
+      'Heat flows only when the material is being actively heated',
       'Temperature is constant at any given point over time',
     ],
     correctIndex: 3,
@@ -170,14 +170,14 @@ const quizQuestions = [
     id: 7,
     question: 'What causes a thermal bridge in building construction?',
     options: [
-      'A gap in the insulation layer',
+      'A thicker-than-specified layer of insulation in the wall',
       'A material with higher thermal conductivity penetrating the insulation',
-      'Poor workmanship in installation',
-      'All of the above',
+      'An air cavity that is fully sealed against moisture',
+      'A continuous, unbroken layer of low-conductivity insulation',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'Thermal bridges occur when the insulation layer is compromised - whether by gaps, structural elements (steel lintels, mortar joints), or installation defects. All allow increased heat flow and can cause condensation.',
+      'Thermal bridges occur when a more conductive element (such as a steel lintel, mortar joint or wall tie) penetrates or interrupts the insulation layer, providing a low-resistance path for heat and causing localised cold spots where condensation can form.',
   },
   {
     id: 8,
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'During transient conduction, which property determines how quickly a material responds to temperature changes?',
     options: [
-      'Isolate the circuit from supply',
-      'Safety override functions',
+      'Thermal conductivity (k) alone',
+      'Density (ρ) alone',
       'Thermal diffusivity (α = k/ρc)',
-      'Ensure metalwork is at earth potential',
+      'Specific heat capacity (c) alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -240,9 +240,9 @@ const quizQuestions = [
       'Why is the internal surface resistance (R_si) typically higher than the external surface resistance (R_se)?',
     options: [
       'Internal air movement is lower, reducing convective heat transfer',
-      'Use measures that minimise the distance and consequences of a fall',
-      'Current-carrying conductor in a magnetic field experiences a force',
-      'A range from very formal to semi-formal to informal, matched to context',
+      'Internal surfaces are always thicker than external surfaces',
+      'External surfaces are protected from wind by the building fabric',
+      'Internal air is denser and therefore conducts heat more readily',
     ],
     correctAnswer: 0,
     explanation:

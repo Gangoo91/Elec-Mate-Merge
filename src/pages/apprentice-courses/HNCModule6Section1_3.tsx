@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'u-value-definition',
     question: 'What does the U-value of a building element measure?',
     options: [
-      'To bind strands together and ensure reliable connection',
-      'The Principal Contractor (who co-ordinates all trades)',
+      'The total heat stored within the element',
+      'The solar radiation absorbed by the external surface',
       'The rate of heat transfer per unit area per degree temperature difference',
-      'Constant power delivery and more efficient power transmission',
+      'The air leakage rate through the element at 50 Pa',
     ],
     correctIndex: 2,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'thermal-bridge',
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'Provide contact details, role, company information and relevant accreditations',
-      'Adequate illumination, duration, and reliability during emergencies',
+      'A structural beam used to span large openings in walls',
+      'A layer of insulation that connects two separate elements',
       'An area where heat transfer is significantly higher than surrounding elements',
-      'Fabricated or falsified documents claiming work that was not performed',
+      'A gap left in the cavity to allow moisture to drain',
     ],
     correctIndex: 2,
     explanation:
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question:
       'For Part L compliance, which approach considers both fabric elements and thermal bridges?',
     options: [
-      '5 to 8 times full-load current',
-      'At the origin (closest to supply)',
-      'Near exits and at changes of direction',
+      'Elemental U-value method, element by element only',
+      'Air permeability testing of the completed building',
+      'Solar gain assessment through glazed elements',
       'Target Fabric Energy Efficiency (TFEE)',
     ],
     correctIndex: 3,

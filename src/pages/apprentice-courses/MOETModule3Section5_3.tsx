@@ -27,9 +27,9 @@ const quickCheckQuestions = [
     id: 'avr-function',
     question: 'What is the function of the AVR (Automatic Voltage Regulator) on a generator?',
     options: [
-      'That there are no gaps where a person could fall between the scaffold and the building face',
-      'When delays occur that may affect the completion date or cause additional costs',
-      'Cutting consistent corner notches in trunking so right-angle and tee joints fit cleanly',
+      'To control the engine speed so the output frequency stays at 50 Hz under varying load',
+      'To switch the load automatically from the mains supply to the generator on a power failure',
+      'To filter water and particulates out of the diesel fuel before it reaches the injectors',
       'To maintain a constant output voltage by controlling the excitation current to the alternator field windings',
     ],
     correctIndex: 3,
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'load-bank',
     question: 'What is the purpose of load bank testing a generator?',
     options: [
-      'To identify the root causes of the injury so that corrective actions can prevent recurrence',
-      '10 A + 30 percent of (39 - 10) + 5 A (cooker socket) = 10 + 8.7 + 5 = 23.7 A. Round up to 24 A. Specify 32 A breaker, 6 mm² T+E typical.',
+      'To recharge the starting batteries quickly after a failed start attempt',
+      'To measure the insulation resistance of the alternator stator windings',
       'To apply a controlled electrical load to verify the generator can deliver its rated output and to exercise the engine under load',
-      'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
+      'To top up the coolant and check the antifreeze concentration before winter',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'wet-stacking',
     question: "What is 'wet stacking' in a diesel generator?",
     options: [
-      'The line conductor of one end of the ring and the neutral conductor of the other end (and vice versa)',
-      'Wrong — each person needs their own padlock and key (multi-hasp if working on the same isolation)',
+      'Condensation collecting on the outside of the fuel tank in humid weather',
+      'Coolant leaking past the water pump seal and pooling beneath the engine',
       'Accumulation of unburned fuel and carbon deposits in the exhaust system due to prolonged light-load operation',
-      'Separation distances, interference prevention, and shared containment systems',
+      'Stacking spare fuel drums too close together against fire safety guidance',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The engine governor on a generator controls:',
     options: [
-      'PV arrays generate DC voltage whenever light is present',
+      'The output voltage by adjusting the alternator excitation current',
       'The engine speed (and therefore the output frequency)',
-      'Daily visual check, monthly brief test, annual full duration test',
-      'DECs measure actual energy use, EPCs assess theoretical performance',
+      'The transfer of load between the mains and the generator',
+      'The engine temperature by regulating the radiator fan speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A typical automatic start sequence for a standby generator involves:',
     options: [
-      'Noise, exhaust emissions, fuel storage bunding, oil containment and planning permission',
-      'Microbial growth (diesel bug), water contamination, oxidation and sedimentation',
+      'Immediate load transfer to the generator before the engine has started cranking',
+      'A manual start by the duty technician within five minutes of the mains failing',
       'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
-      'A flat or degraded battery will prevent the engine from cranking and starting during an emergency',
+      'Continuous running of the engine so it is always ready to take load instantly',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'Diesel generator engine oil should typically be changed at intervals of:',
     options: [
-      'Ventilation adjusted based on occupancy levels and CO2 readings',
-      '5 years after the tax year they relate to',
-      'Providing specific knowledge for products installed',
+      'Only when the oil pressure warning lamp illuminates on the control panel',
+      'Every 5,000 hours of run time, regardless of how much calendar time has passed',
+      'Once every five years, since standby generators accumulate very few running hours',
       'Every 250-500 hours or annually, whichever comes first',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'The coolant in a diesel generator serves which functions?',
     options: [
       'To cool the engine, provide freeze protection, prevent corrosion and lubricate the water pump seal',
-      'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
-      'Noise, exhaust emissions, fuel storage bunding, oil containment and planning permission',
-      'A flat or degraded battery will prevent the engine from cranking and starting during an emergency',
+      'To lubricate the engine bearings and reduce friction between moving metal parts',
+      'To filter combustion air and trap dust before it enters the cylinders',
+      'To store electrical energy for cranking the starter motor on demand',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'The generator starting batteries must be maintained because:',
     options: [
-      'It determines when maintenance tasks (oil changes, filter replacements, overhauls) are due',
+      'They supply the building load directly until the generator reaches rated speed',
       'A flat or degraded battery will prevent the engine from cranking and starting during an emergency',
-      'Uses exhaust gas energy to compress intake air, increasing engine power output and efficiency',
-      'To cool the engine, provide freeze protection, prevent corrosion and lubricate the water pump seal',
+      'They regulate the output voltage of the alternator under changing load',
+      'They store diesel fuel for the first few minutes of generator operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Run hours monitoring on a generator is important because:',
     options: [
-      'To cool the engine, provide freeze protection, prevent corrosion and lubricate the water pump seal',
-      'Microbial growth (diesel bug), water contamination, oxidation and sedimentation',
+      'It sets the output frequency of the alternator during a mains failure',
+      'It measures the diesel fuel remaining in the bulk storage tank',
       'It determines when maintenance tasks (oil changes, filter replacements, overhauls) are due',
-      'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
+      'It controls the changeover time of the automatic transfer switch',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     question:
       'Fuel stored in standby generator day tanks and bulk tanks can degrade over time due to:',
     options: [
-      'To cool the engine, provide freeze protection, prevent corrosion and lubricate the water pump seal',
-      'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
-      'Monthly for at least 30 minutes at a minimum of 50% rated load',
+      'The addition of antifreeze, which thins the fuel and lowers its flash point',
+      'Exposure to the engine exhaust gases drawn back into the tank vent',
+      'Excessive cranking of the starter motor during failed start attempts',
       'Microbial growth (diesel bug), water contamination, oxidation and sedimentation',
     ],
     correctAnswer: 3,
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should a standby generator be exercised (test run) under load?',
     options: [
-      'Every 250-500 hours or annually, whichever comes first',
+      'Once every five years, at the same time as the major engine overhaul',
       'Monthly for at least 30 minutes at a minimum of 50% rated load',
-      'Leaks, corrosion, backpressure and lagging condition',
-      'Microbial growth (diesel bug), water contamination, oxidation and sedimentation',
+      'Only when an actual mains failure occurs, to avoid wearing the engine',
+      'Daily at no load, since running under load risks damaging the alternator',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'Environmental considerations for diesel generators include:',
     options: [
-      'It determines when maintenance tasks (oil changes, filter replacements, overhauls) are due',
-      'Microbial growth (diesel bug), water contamination, oxidation and sedimentation',
+      'The output voltage tolerance and the frequency regulation of the alternator',
+      'The cranking current and the rest periods between failed start attempts',
       'Noise, exhaust emissions, fuel storage bunding, oil containment and planning permission',
-      'Uses exhaust gas energy to compress intake air, increasing engine power output and efficiency',
+      'The insulation resistance of the stator windings and the diode pack condition',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'A turbocharger on a diesel generator engine:',
     options: [
-      'A flat or degraded battery will prevent the engine from cranking and starting during an emergency',
-      'To cool the engine, provide freeze protection, prevent corrosion and lubricate the water pump seal',
-      'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
+      'Stores excess electrical output as compressed air for the next start',
+      'Regulates the alternator excitation to keep the output voltage constant',
+      'Cools the exhaust gases before they are discharged to atmosphere',
       'Uses exhaust gas energy to compress intake air, increasing engine power output and efficiency',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     question: 'Which maintenance record should be kept for a standby generator?',
     options: [
       'A comprehensive log including run hours, fuel levels, test results, maintenance carried out, faults and remedial actions',
-      'It determines when maintenance tasks (oil changes, filter replacements, overhauls) are due',
-      'Mains failure detection, time delay (to avoid nuisance starts), engine crank, warm-up, load transfer',
-      'Uses exhaust gas energy to compress intake air, increasing engine power output and efficiency',
+      'Only the purchase invoice and the manufacturer’s original sales brochure',
+      'Nothing, because the control panel stores all the information needed automatically',
+      'Only a note of the date the generator was first commissioned into service',
     ],
     correctAnswer: 0,
     explanation:

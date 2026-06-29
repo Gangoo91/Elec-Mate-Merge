@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A colleague is eating lunch on site and suddenly starts coughing forcefully, clutching their throat. They are still able to speak between coughs and their face is flushed but not turning blue. What should you do?',
     options: [
-      'Immediately give 5 back blows between the shoulder blades',
       'Encourage them to keep coughing and do NOT interfere with their efforts',
+      'Immediately give 5 back blows between the shoulder blades',
       'Perform abdominal thrusts (Heimlich manoeuvre) straight away',
       'Call 999 immediately as all choking is life-threatening',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This person has a MILD airway obstruction — they can still cough effectively and speak. The correct action is to encourage them to keep coughing, as a forceful cough is the most effective way to clear the obstruction. Do NOT interfere with their efforts by slapping their back or performing thrusts. Only intervene with back blows and abdominal thrusts if the obstruction becomes severe (unable to cough, speak, or breathe).',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'A 7-month-old baby at a site welfare room is choking and cannot cry or make any sound. Which technique should you use?',
     options: [
       '5 back blows then 5 abdominal thrusts (Heimlich manoeuvre)',
-      '5 back blows then 5 chest thrusts using 2 fingers on the lower breastbone',
       'Abdominal thrusts only — they are most effective for infants',
       'Turn the baby upside down and shake gently to dislodge the object',
+      '5 back blows then 5 chest thrusts using 2 fingers on the lower breastbone',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'For infants under 1 year, give 5 back blows (baby face-down, head lower than chest, on your forearm) then 5 chest thrusts using 2 fingers on the lower half of the breastbone. Do NOT use abdominal thrusts on infants — their internal organs are too fragile. Alternate back blows and chest thrusts until the obstruction clears or the infant becomes unconscious. If the infant becomes unconscious, begin infant CPR.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the universal choking sign that a first aider should recognise?',
     options: [
-      'The casualty points at their chest and coughs loudly',
       'The casualty clutches their throat with one or both hands',
+      'The casualty points at their chest and coughs loudly',
       'The casualty waves their arms above their head',
       'The casualty lies down on the floor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The universal choking sign is the casualty clutching their throat with one or both hands. This instinctive gesture indicates airway obstruction. Other signs include sudden onset during eating or drinking, inability to speak, cough or breathe, and progressive cyanosis (blue discolouration of the lips and face). The casualty may also look panicked and distressed.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     options: [
       'Severe obstruction — immediate intervention required',
       'Complete obstruction — begin CPR',
-      'Mild obstruction — encourage coughing, do NOT interfere',
       'Partial obstruction — give 5 back blows',
+      'Mild obstruction — encourage coughing, do NOT interfere',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "If the casualty can cough effectively and speak, this is a MILD obstruction. The airway is partially blocked but air is still passing. An effective cough is the body's best mechanism for clearing the obstruction. The first aider should encourage the casualty to keep coughing and must NOT interfere by giving back blows or abdominal thrusts — intervention at this stage could make the obstruction worse.",
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
     question: 'Where should you position your fist when performing abdominal thrusts?',
     options: [
       'On the chest, over the breastbone',
-      'On the stomach, below the navel',
       'Between the navel and the bottom of the breastbone',
+      'On the stomach, below the navel',
       'On the side of the abdomen, below the ribs',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'When performing abdominal thrusts (Heimlich manoeuvre), place your fist between the navel (belly button) and the bottom of the breastbone (sternum). This position allows the upward thrust to compress the diaphragm and force air from the lungs, creating an artificial cough to dislodge the obstruction. Placing the fist too low risks injury to internal organs; too high risks fracturing the xiphoid process.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'After 5 back blows fail to clear a severe obstruction, what do you do next?',
     options: [
-      'Give 5 more back blows with greater force',
       'Give 5 abdominal thrusts',
+      'Give 5 more back blows with greater force',
       'Call 999 and wait for the ambulance',
       'Place the casualty in the recovery position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Resuscitation Council UK protocol is to alternate 5 back blows with 5 abdominal thrusts. If 5 back blows do not clear the obstruction, immediately move to 5 abdominal thrusts. If the obstruction still has not cleared, repeat the cycle: 5 back blows then 5 abdominal thrusts. Continue this alternating pattern until the obstruction clears, the casualty becomes unconscious, or emergency services arrive.',
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     options: [
       'Infants are too small to get your arms around',
       'Abdominal thrusts are not effective on infants',
-      'The risk of internal organ damage is too high in infants',
       'It is easier to turn infants upside down instead',
+      'The risk of internal organ damage is too high in infants',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Abdominal thrusts must NOT be used on infants under 1 year because their internal organs (liver, spleen, stomach) are very fragile and the force of abdominal thrusts could cause serious internal injuries. Instead, use chest thrusts: place 2 fingers on the lower half of the breastbone and push sharply inwards and upwards. Alternate 5 back blows with 5 chest thrusts.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       'After a choking incident where abdominal thrusts were used, the casualty says they feel fine and wants to go back to work. What should you advise?',
     options: [
       'If they feel fine, they can return to work immediately',
-      'Rest for 30 minutes then return to work if no symptoms develop',
       'They MUST go to hospital — abdominal thrusts can cause internal injuries that are not immediately apparent',
+      'Rest for 30 minutes then return to work if no symptoms develop',
       'Apply an ice pack to the abdomen and monitor for 1 hour',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'If abdominal thrusts were used, the casualty MUST attend hospital for medical assessment, even if they feel completely fine. Abdominal thrusts can cause damage to the stomach, spleen, liver, and abdominal blood vessels that may not produce symptoms immediately but could become life-threatening. This is a non-negotiable requirement. Document the incident and ensure the casualty is transported to hospital.',
   },

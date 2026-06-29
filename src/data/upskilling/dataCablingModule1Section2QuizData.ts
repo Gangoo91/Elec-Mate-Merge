@@ -9,16 +9,16 @@ export interface QuizQuestion {
 export const dataCablingModule1Section2Quiz: QuizQuestion[] = [
   {
     id: 1,
-    question: 'In a star topology, what happens if the central hub fails?',
+    question: 'In a star topology, what happens if the central hub or switch fails?',
     options: [
-      'Only the devices directly connected to the hub are affected',
+      'Only the single device that detected the fault is affected',
       'The entire network goes down',
-      'The network automatically switches to bus topology',
-      'Only half of the network is affected',
+      'Traffic reroutes through a neighbouring node',
+      'Only the segment beyond the hub is affected',
     ],
     correct: 1,
     explanation:
-      'In a star topology, all devices depend on the central hub for communication. If the hub fails, the entire network becomes non-functional, which is the main disadvantage of this topology.',
+      'In a star topology every device connects back to one central hub or switch, so all communication depends on it. If that central node fails the whole network goes down, which is the main weakness of the star.',
   },
   {
     id: 2,
@@ -30,29 +30,29 @@ export const dataCablingModule1Section2Quiz: QuizQuestion[] = [
   },
   {
     id: 3,
-    question: 'What is the main advantage of bus topology?',
+    question: 'What is the main advantage of a bus topology?',
     options: [
-      'Excellent fault tolerance',
-      'Easy to troubleshoot',
-      'Cost-effective with minimal cable requirements',
-      'High performance with many devices',
+      'Cost-effective with minimal cabling',
+      'Simple to isolate and troubleshoot faults',
+      'Continues working if the backbone is cut',
+      'Sustains high throughput with many devices',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
-      "Bus topology's main advantage is its cost-effectiveness, requiring the least amount of cable since all devices share a single backbone connection.",
+      'A bus topology uses the least cable because every device taps into one shared backbone, making it cheap to install. Its trade-off is poor fault tolerance, since a single break in the backbone takes down the whole segment.',
   },
   {
     id: 4,
     question: 'In which scenario would you most likely choose a hybrid topology?',
     options: [
-      'Small home office with 5 computers',
-      'Large enterprise with multiple buildings and varying requirements',
-      'Simple point-of-sale system',
-      'Temporary network for an event',
+      'Small home office with five computers',
+      'A single temporary network for an event',
+      'A standalone point-of-sale till',
+      'Large enterprise spanning multiple buildings with varying requirements',
     ],
-    correct: 1,
+    correct: 3,
     explanation:
-      'Hybrid topologies are ideal for large enterprises with complex requirements, allowing different parts of the network to use the most appropriate topology for their specific needs whilst maintaining overall connectivity.',
+      'Hybrid topologies suit large enterprises with complex, mixed requirements, letting each part of the network adopt the most appropriate topology whilst staying interconnected. Small or temporary installations rarely justify the added complexity.',
   },
   {
     id: 5,

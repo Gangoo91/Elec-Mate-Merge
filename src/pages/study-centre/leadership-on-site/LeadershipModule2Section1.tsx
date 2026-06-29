@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       "According to Patrick Lencioni's 'The Five Dysfunctions of a Team', what is the foundational dysfunction that undermines everything else?",
     options: [
-      'Fear of conflict between team members',
       'Absence of trust among the team',
+      'Fear of conflict between team members',
       'Lack of commitment to shared goals',
       'Avoidance of accountability for results',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Lencioni identifies absence of trust as the foundational dysfunction at the base of his pyramid. Without trust, team members will not engage in open conflict, commit to decisions, hold each other accountable, or focus on collective results. On a construction site, this means people will not speak up about hazards or admit mistakes if they do not trust their supervisor.',
   },
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     options: [
       'Credibility — your expertise and qualifications',
       'Reliability — whether you do what you say you will do',
-      'Intimacy — the safety people feel sharing with you',
       'Self-Orientation — how much you focus on yourself vs others',
+      'Intimacy — the safety people feel sharing with you',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'The Trust Equation is (Credibility + Reliability + Intimacy) / Self-Orientation. Self-Orientation is the only factor in the denominator, meaning the more self-focused you are, the less trustworthy you appear. A supervisor who is visibly focused on their own career advancement rather than the welfare of their team will struggle to earn trust, no matter how skilled or reliable they are.',
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'Positional authority gets the best work from people; earned respect only gets compliance',
       'Earned respect requires a management qualification; positional authority does not',
-      "Positional authority gets minimum compliance; earned respect gets people's best effort",
       'There is no meaningful difference — both produce the same results on site',
+      "Positional authority gets minimum compliance; earned respect gets people's best effort",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Positional authority (your job title, your rank) can compel people to do the minimum required to avoid consequences. Earned respect — built through consistent actions, competence, fairness, and genuine care — motivates people to give their best effort, go the extra mile, and actively support the team's goals. The most effective site leaders combine both, but earned respect is far more powerful.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     options: [
       'Inattention to results',
       'Avoidance of accountability',
-      'Absence of trust',
       'Fear of conflict',
+      'Absence of trust',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Absence of trust is the foundational dysfunction in Lencioni's model. Without trust, teams cannot engage in healthy conflict, commit to decisions, hold each other accountable, or focus on collective results.",
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "The Trust Equation from 'The Trusted Advisor' is calculated as:",
     options: [
-      'Credibility x Reliability x Intimacy x Self-Orientation',
       '(Credibility + Reliability + Intimacy) / Self-Orientation',
+      'Credibility x Reliability x Intimacy x Self-Orientation',
       'Self-Orientation / (Credibility + Reliability + Intimacy)',
       '(Credibility + Reliability) / (Intimacy + Self-Orientation)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Trust Equation is (Credibility + Reliability + Intimacy) / Self-Orientation. The three numerator factors increase trust, while self-orientation (the denominator) decreases it. A supervisor focused on their own interests rather than the team's will always struggle with trust.",
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
     question: 'Which of the following behaviours is most likely to BUILD trust on site?',
     options: [
       'Telling the team you are in charge and expect full compliance',
-      'Consistently doing what you say you will do, even on small things',
       'Always agreeing with the team to avoid any conflict',
+      'Consistently doing what you say you will do, even on small things',
       'Keeping information to yourself so people come to you for answers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Consistency between words and actions is the single most powerful trust-builder. When a supervisor reliably follows through on commitments — even small ones like returning a borrowed tool or passing on a message — the team learns they can be depended upon. This reliability is a core component of the Trust Equation.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     options: [
       'Positional authority produces better results than earned respect',
       'Earned respect is only possible after five or more years of experience',
-      "Positional authority gets compliance; earned respect gets people's best effort",
       'There is no practical difference between the two',
+      "Positional authority gets compliance; earned respect gets people's best effort",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Positional authority can compel minimum compliance — people do what they must to avoid consequences. Earned respect motivates people to give their best, take initiative, and actively support the team. The most effective leaders combine positional authority with earned respect.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is a common trust-destroyer on a construction site?',
     options: [
-      'Admitting openly that you made a mistake',
       'Saying one thing to the team and doing another',
+      'Admitting openly that you made a mistake',
       'Asking the team for their input before making a decision',
       "Learning every team member's name in the first week",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Saying one thing and doing another — inconsistency between words and actions — is one of the fastest ways to destroy trust. If a supervisor promises something and fails to deliver, or says they value safety but cuts corners, the team quickly learns that the supervisor's words cannot be trusted.",
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
     question: 'When building trust with a new team, the most critical period is typically:',
     options: [
       'The first day on site',
-      'The first 90 days',
       'The first full year',
+      'The first 90 days',
       "Trust cannot be built — people either like you or they don't",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The first 90 days are widely recognised as the critical window for establishing trust with a new team. Early actions set the tone for the entire working relationship. Being visible, learning names, keeping promises, and demonstrating competence during this period creates a strong foundation. First impressions are powerful and difficult to change later.',
   },

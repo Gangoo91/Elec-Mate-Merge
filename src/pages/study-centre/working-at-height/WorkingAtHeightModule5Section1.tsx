@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A worker has been suspended in a harness for approximately 20 minutes after a fall. They are now semi-conscious. Rescue has just been completed. What position should you place them in?',
     options: [
-      'Flat on their back to aid breathing',
       'W-position (knees raised to chest) or seated, and maintain for at least 30 minutes',
+      'Flat on their back to aid breathing',
       'Standing upright to restore circulation',
       'Recovery position on their side immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A suspension trauma casualty must NEVER be laid flat immediately. The pooled blood in the legs can rush back to the heart causing cardiac arrest (rescue death). Keep them in the W-position with knees raised or seated for at least 30 minutes while monitoring their condition.',
   },
@@ -55,11 +55,11 @@ const quickCheckQuestions = [
       'When should workers be briefed on the site emergency action plan for working at height?',
     options: [
       'After the first incident occurs',
-      'Only if they will be working above 10 metres',
       'Before any work at height begins — during the site induction',
+      'Only if they will be working above 10 metres',
       'It is optional — only the supervisor needs to know the plan',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The Work at Height Regulations 2005 require that emergency procedures are planned before work begins. ALL workers involved in or near work at height must be briefed on the emergency action plan during their site induction, before they start any tasks.',
   },
@@ -93,8 +93,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Suspension trauma can cause death within approximately how many minutes if the casualty is not rescued?',
-    options: ['5 minutes', '15 minutes', '30 minutes', '60 minutes'],
-    correctAnswer: 2,
+    options: ['30 minutes', '15 minutes', '5 minutes', '60 minutes'],
+    correctAnswer: 0,
     explanation:
       'Suspension trauma can progress to unconsciousness within 15-30 minutes and death within approximately 30 minutes. This is why rescue must begin immediately and cannot wait for emergency services.',
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
     question: 'What causes blood to pool in the legs during harness suspension?',
     options: [
       'The harness cuts off blood supply to the legs',
-      'Gravity pulls blood downward and the leg straps restrict venous return',
       "The casualty's heart stops beating",
+      'Gravity pulls blood downward and the leg straps restrict venous return',
       'Cold temperatures cause blood vessels to constrict',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When suspended upright with limited leg movement, gravity causes blood to pool in the lower extremities. The harness leg straps can compress veins, further restricting the return of blood to the heart. This progressive reduction in cardiac output leads to orthostatic intolerance.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
       'After rescuing a suspension trauma casualty, why must you NOT lay them flat immediately?',
     options: [
       'It could cause them to vomit',
-      'It makes it harder for them to breathe',
       'The sudden rush of pooled blood to the heart can cause fatal cardiac arrest (rescue death)',
+      'It makes it harder for them to breathe',
       'It puts pressure on their spine',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Laying a suspension trauma casualty flat allows the pooled blood in the legs to rush back to the heart in a sudden surge. The heart, already weakened by reduced blood flow, cannot cope with this sudden volume overload, potentially causing fatal cardiac arrest — known as rescue death.',
   },
@@ -131,10 +131,10 @@ const quizQuestions = [
     options: [
       'Flat on their back with legs straight',
       'Standing upright supported by colleagues',
-      'W-position (knees raised) or seated for at least 30 minutes',
       'Recovery position on their left side',
+      'W-position (knees raised) or seated for at least 30 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The W-position (knees raised towards the chest) or a seated position slows the return of pooled blood to the heart. This position must be maintained for at least 30 minutes while monitoring the casualty's condition and awaiting advanced medical care.",
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'In the emergency action plan sequence, what is the FIRST step after a fall from height occurs?',
     options: [
-      'Call 999 immediately',
-      'Begin first aid on the casualty',
       'Raise the alarm and assess scene safety',
+      'Begin first aid on the casualty',
+      'Call 999 immediately',
       'Preserve the scene for investigation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The first step is always to raise the alarm and assess scene safety. Rushing to help a casualty without checking for ongoing hazards (unstable structures, electrical dangers, further fall risks) could result in additional casualties. Once the scene is safe, rescue and first aid can proceed.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
     question: 'What does ABC stand for in first-aid assessment?',
     options: [
       'Assess, Bandage, Call for help',
-      'Airway, Breathing, Circulation',
       'Alert, Bones, Consciousness',
+      'Airway, Breathing, Circulation',
       'Approach, Balance, Check',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ABC stands for Airway, Breathing, Circulation — the primary survey sequence used in first aid. Check the airway is clear, check the casualty is breathing, and check for signs of circulation (pulse, skin colour). Life-threatening conditions in this order take priority over all other injuries.',
   },
@@ -171,11 +171,11 @@ const quizQuestions = [
       'If a spinal injury is suspected after a fall, when is it acceptable to move the casualty?',
     options: [
       'When they ask to be moved',
-      'After 10 minutes of immobilisation',
       'Only if there is immediate danger to life (fire, structural collapse, drowning)',
+      'After 10 minutes of immobilisation',
       'It is never acceptable to move them under any circumstances',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A suspected spinal injury casualty should only be moved if remaining in position poses an immediate threat to life — such as fire, structural collapse, flooding, or exposure to hazardous substances. Otherwise, keep them still and wait for paramedics with proper spinal immobilisation equipment.',
   },
@@ -185,10 +185,10 @@ const quizQuestions = [
     options: [
       'Only a first-aid kit',
       'A mobile phone to call 999',
-      'Trained rescuers, rescue equipment, and a practised rescue plan',
       'Nothing specific — the fire brigade handles all rescues',
+      'Trained rescuers, rescue equipment, and a practised rescue plan',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Work at Height Regulations 2005 require that rescue arrangements are in place before work begins. This includes trained personnel who can perform the rescue, appropriate equipment (rescue kits, lowering devices, stretchers), and a plan that has been communicated and ideally practised. Relying solely on emergency services is not acceptable due to response times.',
   },

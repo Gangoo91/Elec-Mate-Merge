@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'industrial-vs-office-ethernet',
     question: 'What distinguishes Industrial Ethernet from standard office Ethernet?',
     options: [
-      'Address privately, describe the specific behaviour factually, explain the risk, and agree the correct procedure',
-      'Tell your supervisor immediately, isolate if needed, and put it right — errors caught and corrected are not disciplinary issues; errors hidden are',
-      'Segregated compartments for power, data and telecommunications services at desk height, allowing flexible reconfiguration of workstations',
-      'Industrial Ethernet adds deterministic real-time communication, ruggedised hardware, and specific automation protocols on top of standard Ethernet',
+      'It uses a completely different cabling standard, incompatible with IEEE 802.3',
+      'It always runs at a fixed 10 Mbit/s in order to guarantee link reliability',
+      'It removes the need for any switches by connecting all the devices directly',
+      'It adds deterministic real-time communication and ruggedised hardware to Ethernet',
     ],
     correctIndex: 3,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'profinet-definition',
     question: 'What is Profinet and why is it significant in industrial automation?',
     options: [
-      'Improvement notices give time to remedy a contravention; prohibition notices stop activities involving serious risk immediately',
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
-      'The leading Industrial Ethernet protocol providing real-time I/O communication and seamless integration with existing Profibus installations',
-      'To review insurance cover, check progress towards goals, and adjust savings as income or circumstances change',
+      'A wireless protocol designed to replace all of the cabled field networks',
+      'A proprietary fieldbus that only works with serial RS485 wiring connections',
+      'The leading Industrial Ethernet protocol, integrating with existing Profibus',
+      'A cybersecurity standard for isolating control networks from the IT networks',
     ],
     correctIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'deterministic-meaning',
     question: "What does 'deterministic' mean in the context of industrial communication networks?",
     options: [
-      'The network topology is determined by the IT department',
-      'The number of devices on the network is fixed and cannot change',
-      'The network always fails in the same predictable way',
-      'Communication has guaranteed, predictable timing — data arrives within a defined maximum time',
+      'The network topology is determined entirely by the IT department',
+      'The number of devices on the network is fixed and cannot be changed',
+      'The network always fails in the same way each time, predictably',
+      'Communication has guaranteed timing — data arrives within a defined maximum time',
     ],
     correctIndex: 3,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'modbus-tcp-role',
     question: 'What is Modbus TCP and where is it typically used in industrial systems?',
     options: [
-      'The Modbus serial protocol encapsulated in TCP/IP packets, widely used for simple device communication and SCADA integration where real-time determinism is not critical',
-      'The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits',
-      'Continuous repetitive loading on the same structures exceeds tissue recovery rates, leading to cumulative micro-damage and eventual injury',
-      'The ladder may not be properly secured, the scaffold may not be designed for this load point, and it bypasses controlled access',
+      'The Modbus serial protocol over TCP/IP, used for simple device and SCADA links',
+      'A safety-rated protocol used exclusively for SIL 3 emergency stop circuits',
+      'A motion control protocol giving sub-microsecond synchronisation for servo drives',
+      'A fibre-optic backbone protocol used only between separate buildings on a campus',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'What speed does Industrial Ethernet typically operate at for field-level devices?',
     options: [
-      'Keep existing systems operational through repairs and planned maintenance',
+      '9.6 kbit/s, matching legacy serial fieldbus speeds',
       '100 Mbit/s (Fast Ethernet) or 1 Gbit/s for backbone connections',
-      'Large, complex, or high-occupancy sites like hospitals and airports',
-      'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
+      '10 Gbit/s minimum for every field-level connection',
+      '1.2 Mbit/s, the maximum rate of a Profibus DP segment',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main difference between Profinet IO (RT) and Profinet IRT?',
     options: [
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
-      'IO uses standard Ethernet switching for real-time communication (cycle times 1-10 ms); IRT provides isochronous real-time with sub-microsecond jitter for high-performance motion control',
-      'For long distances (up to several km), electrical isolation between buildings, EMI-immune communication in electrically noisy environments, and backbone connections',
+      'IO runs over copper cable only, whereas IRT runs only over fibre optic cable',
+      'IO carries safety-rated data up to SIL 3, whereas IRT carries non-safety I/O',
+      'IO uses standard switching (1-10 ms); IRT is isochronous for fast motion control',
+      'IO is used for controller-to-controller links, whereas IRT is only for HMI updates',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'What is EtherNet/IP and which vendor ecosystem primarily uses it?',
     options: [
-      'For long distances (up to several km), electrical isolation between buildings, EMI-immune communication in electrically noisy environments, and backbone connections',
-      'Managed industrial switches with DIN-rail mounting, extended temperature range, redundancy support, and diagnostics',
-      'Direct connection exposes the control system to IT security threats, broadcast storms, and uncontrolled traffic that could disrupt real-time control communication',
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
+      'A wireless Industrial Ethernet protocol from PI, dominant in Siemens systems',
+      'A serial RS485 fieldbus protocol used mainly in legacy Profibus DP installs',
+      'A safety-only protocol based on PROFIsafe, dominant in ABB process control',
+      'The CIP-based Industrial Ethernet protocol from ODVA, dominant in Rockwell systems',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'What type of network switch is required for Industrial Ethernet installations?',
     options: [
-      'Managed industrial switches with DIN-rail mounting, extended temperature range, redundancy support, and diagnostics',
-      'A protocol providing ring topology redundancy for Profinet networks with fast recovery after a link failure',
-      'The XML-based device description file for Profinet devices, equivalent to the GSD file used in Profibus',
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
+      'Managed industrial switches with DIN-rail mounting, redundancy and diagnostics',
+      'Unmanaged domestic switches, as the automation protocol handles redundancy itself',
+      'A simple Ethernet hub broadcasting every frame to all ports for deterministic delivery',
+      'A wireless access point that removes the need for any cabled switch on the network',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is MRP (Media Redundancy Protocol) in Industrial Ethernet?',
     options: [
-      'Cat 5e or Cat 6A shielded cable with M12 D-coded or IP67-rated RJ45 connectors',
+      'A protocol that assigns IP addresses automatically to every device on a star topology',
       'A protocol providing ring topology redundancy for Profinet networks with fast recovery after a link failure',
-      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
+      'A protocol that prioritises real-time frames over best-effort traffic on a managed switch',
+      'A protocol that encrypts control traffic crossing the boundary between the OT and IT networks',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is a GSDML file in Profinet and what is it equivalent to in Profibus?',
     options: [
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
-      'Cat 5e or Cat 6A shielded cable with M12 D-coded or IP67-rated RJ45 connectors',
+      'A firmware image loaded into the device at power-up, equivalent to the boot ROM in Profibus',
+      'A log file recording communication errors, equivalent to the diagnostic buffer in Profibus',
       'The XML-based device description file for Profinet devices, equivalent to the GSD file used in Profibus',
-      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
+      'An IP address configuration table, equivalent to the bus address rotary switches in Profibus',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'What is TSN (Time-Sensitive Networking) and why is it important for industrial automation?',
     options: [
-      'A platform-independent, secure, standard interface for data exchange between automation systems, MES, and enterprise IT systems',
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
-      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
+      'A cabling standard defining shielded Cat 6A and M12 connectors for field links',
+      'A proprietary Siemens scheduling protocol that runs only on IRT Profinet hardware',
+      'A wireless mesh standard synchronising mobile robots without cabled infrastructure',
+      'IEEE 802.1 standards giving deterministic, low-latency comms over standard Ethernet',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
       'What cable category and connector type are typically specified for Industrial Ethernet in the field?',
     options: [
       'Cat 5e or Cat 6A shielded cable with M12 D-coded or IP67-rated RJ45 connectors',
-      'Current carrying capacity, voltage drop, and fault protection',
-      'Ensure buildings perform as designed through extended aftercare',
-      'That no person at work shall enter a confined space to carry out work unless entry is unavoidable',
+      'Cat 3 unshielded cable with standard domestic RJ11 connectors',
+      'Coaxial cable with BNC connectors as used in legacy 10BASE2 networks',
+      'Single-pair telephone cable with insulation-displacement connectors',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'What advantage does OPC UA provide for industrial communication and integration?',
     options: [
-      'Direct connection exposes the control system to IT security threats, broadcast storms, and uncontrolled traffic that could disrupt real-time control communication',
-      'A platform-independent, secure, standard interface for data exchange between automation systems, MES, and enterprise IT systems',
-      'For long distances (up to several km), electrical isolation between buildings, EMI-immune communication in electrically noisy environments, and backbone connections',
-      'Managed industrial switches with DIN-rail mounting, extended temperature range, redundancy support, and diagnostics',
+      'It replaces the field-level I/O protocol, giving sub-microsecond motion control',
+      'A secure, platform-independent interface for data exchange across automation and IT',
+      'It locks the plant into a single vendor, with all devices from one manufacturer',
+      'It guarantees deterministic real-time cyclic I/O without managed switches or TSN',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is PROFIsafe and what safety integrity level can it achieve?',
     options: [
-      'A protocol providing ring topology redundancy for Profinet networks with fast recovery after a link failure',
-      'Direct connection exposes the control system to IT security threats, broadcast storms, and uncontrolled traffic that could disrupt real-time control communication',
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
-      'The XML-based device description file for Profinet devices, equivalent to the GSD file used in Profibus',
+      'A cybersecurity firewall protocol for Profinet, blocking unauthorised access to SIL 1',
+      'A diagnostic protocol that monitors switch health and reports faults up to SIL 2',
+      'A safety protocol over Profinet, enabling safety comms to SIL 3 without safety wiring',
+      'A redundancy protocol that duplicates safety frames on parallel rings up to SIL 4',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'Why should the industrial control network be isolated from the office IT network?',
     options: [
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
-      'Managed industrial switches with DIN-rail mounting, extended temperature range, redundancy support, and diagnostics',
-      'A platform-independent, secure, standard interface for data exchange between automation systems, MES, and enterprise IT systems',
-      'Direct connection exposes the control system to IT security threats, broadcast storms, and uncontrolled traffic that could disrupt real-time control communication',
+      'Office Ethernet uses a cabling standard physically incompatible with control devices',
+      'Isolation is needed as control and office protocols cannot share an IP address range',
+      'It lets the control network run at a higher voltage than the office one, for range',
+      'Direct connection exposes control to IT threats, broadcast storms and stray traffic',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'When is fibre optic cable used in Industrial Ethernet installations?',
     options: [
-      'For long distances (up to several km), electrical isolation between buildings, EMI-immune communication in electrically noisy environments, and backbone connections',
-      'A safety communication protocol over Profinet that enables safety-related communication up to SIL 3 without dedicated safety wiring',
-      'The Industrial Ethernet protocol based on CIP (Common Industrial Protocol), promoted by ODVA and dominant in Rockwell Automation systems',
-      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
+      'For long distances, isolation between buildings, EMI immunity and backbone links',
+      'Only for the final short drop to each field device, where copper cannot terminate',
+      'Whenever the network must carry safety-rated I/O, as copper cannot achieve SIL 3',
+      'Only inside control panels, where short runs and low EMI make fibre the cheapest',
     ],
     correctAnswer: 0,
     explanation:

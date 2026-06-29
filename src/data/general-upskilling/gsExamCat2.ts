@@ -270,13 +270,13 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question: 'Which of the following is a long-term career goal for an electrician?',
     options: [
       'Achieve Chartered Engineer (CEng) status within five years',
-      'A goal focused on the end result you want to achieve',
-      'A tool for prioritising tasks by urgency and importance',
-      'You are significantly more likely to achieve them',
+      'Complete next week&rsquo;s timesheet before Friday',
+      'Pass tomorrow&rsquo;s mock exam on inspection and testing',
+      'Read one chapter of BS 7671 this evening',
     ],
     correctAnswer: 0,
     explanation:
-      'Long-term goals span 1&ndash;5+ years and represent significant career milestones. Achieving CEng status through the IET is a substantial professional goal requiring years of experience and development. The other options are short-term tasks that could be completed within days.',
+      'Long-term goals span 1&ndash;5+ years and represent significant career milestones. Achieving CEng status through the IET is a substantial professional goal requiring years of experience and development. The other options are short-term tasks completed within days.',
     section: 'Setting Effective Goals',
     difficulty: 'basic' as const,
     topic: 'Goal Timeframes',
@@ -429,10 +429,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 65,
     question: 'What is a "personal mission statement" as described by Stephen Covey?',
     options: [
-      'Achieve Chartered Engineer (CEng) status within five years',
+      'A formal business plan submitted to your employer each year',
       'A written declaration of your core values, purpose, and long-term vision',
-      'The tendency to underestimate the time needed to complete tasks',
-      'A goal focused on the type of person you want to become',
+      'A list of measurable targets with deadlines for the next quarter',
+      'A signed contract committing you to a specific qualification',
     ],
     correctAnswer: 1,
     explanation:
@@ -483,9 +483,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An electrician sets the goal: "I want to earn more money." Why does this fail the SMART criteria?',
     options: [
       'It is not specific, measurable, or time-bound',
-      'A goal focused on the end result you want to achieve',
-      'A skills card confirming competence level',
-      'You are significantly more likely to achieve them',
+      'It is too specific and leaves no room for flexibility',
+      'It is challenging but not relevant to an electrician',
+      'It has a deadline but no clear method of measurement',
     ],
     correctAnswer: 0,
     explanation:
@@ -535,9 +535,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 71,
     question: 'How does an implementation intention differ from a standard goal?',
     options: [
-      'Achieve Chartered Engineer (CEng) status within five years',
-      'Pass next month&rsquo;s City &amp; Guilds 2365 unit assessment',
-      'A goal focused on the specific actions or behaviours you will carry out',
+      'It is always set by an employer rather than the individual',
+      'It removes the need for any measurable outcome',
+      'It applies only to long-term career goals, not daily tasks',
       'It specifies when, where, and how you will act, not just what you want to achieve',
     ],
     correctAnswer: 3,
@@ -554,9 +554,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'What is the primary benefit of setting both outcome goals and process goals together?',
     options: [
       'Outcome goals provide direction while process goals provide daily actionable steps',
-      'Regularly reviewing progress towards your goal and adjusting your approach',
-      'The tendency to underestimate the time needed to complete tasks',
-      'They create automatic cue-response links that bypass the need for conscious deliberation',
+      'It guarantees the goal will be achieved regardless of effort',
+      'It removes the need to set any deadline for the goal',
+      'It means only one goal needs to be tracked at a time',
     ],
     correctAnswer: 0,
     explanation:
@@ -628,9 +628,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'A self-employed electrician consistently underestimates how long jobs take, leading to missed deadlines and financial losses. Which combination of strategies from goal-setting research would best address this?',
     options: [
       'Use reference class forecasting (Kahneman) to estimate durations, set specific time-bound goals (Locke &amp; Latham), and create implementation intentions (Gollwitzer) for schedule reviews',
-      'Year 1: Complete C&amp;G 2396 &amp; 2919 &rarr; Year 2: Gain design experience &amp; register with NICEIC &rarr; Year 3: Begin IET IEng application &rarr; Year 4: Achieve Technician then Senior Technician grade',
-      'For complex tasks, the positive effect of difficult goals is weaker unless individuals are also given adequate strategies and time to learn',
-      'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
+      'Set vague &ldquo;do your best&rdquo; goals so there is no pressure to hit a deadline',
+      'Quote more optimistic timescales to win work, then explain overruns afterwards',
+      'Avoid setting deadlines altogether to remove the stress of missing them',
     ],
     correctAnswer: 0,
     explanation:
@@ -645,10 +645,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'Which of the following best explains why Locke &amp; Latham found that goal commitment moderates the goal&ndash;performance relationship?',
     options: [
-      'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
+      'Commitment only matters for easy goals, not for challenging ones',
       'Without genuine commitment, even well-structured goals fail to direct behaviour because the individual does not invest sufficient effort or persistence',
-      'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
-      'For complex tasks, the positive effect of difficult goals is weaker unless individuals are also given adequate strategies and time to learn',
+      'Commitment automatically follows from setting a specific deadline',
+      'Commitment is irrelevant once an implementation intention has been written',
     ],
     correctAnswer: 1,
     explanation:
@@ -681,9 +681,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'How does the concept of "task complexity" function as a moderator in Locke &amp; Latham&rsquo;s Goal Setting Theory?',
     options: [
-      'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
-      'Without genuine commitment, even well-structured goals fail to direct behaviour because the individual does not invest sufficient effort or persistence',
-      'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
+      'Task complexity has no measurable effect on the goal&ndash;performance link',
+      'For complex tasks, specific difficult goals always outperform simpler ones',
+      'Complex tasks require easy goals only, with no need for any strategy',
       'For complex tasks, the positive effect of difficult goals is weaker unless individuals are also given adequate strategies and time to learn',
     ],
     correctAnswer: 3,
@@ -700,9 +700,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An experienced electrician creates a personal mission statement, uses the Eisenhower Matrix daily, and sets implementation intentions for study sessions. Despite this, progress towards their City &amp; Guilds 2396 qualification stalls. Based on goal-setting research, what is the most likely root cause?',
     options: [
       'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
-      'Year 1: Complete C&amp;G 2396 &amp; 2919 &rarr; Year 2: Gain design experience &amp; register with NICEIC &rarr; Year 3: Begin IET IEng application &rarr; Year 4: Achieve Technician then Senior Technician grade',
-      'Use reference class forecasting (Kahneman) to estimate durations, set specific time-bound goals (Locke &amp; Latham), and create implementation intentions (Gollwitzer) for schedule reviews',
-      'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
+      'The planning tools are mutually incompatible and cancel each other out',
+      'The Eisenhower Matrix should never be combined with implementation intentions',
+      'A personal mission statement guarantees success on its own, so the others are redundant',
     ],
     correctAnswer: 0,
     explanation:

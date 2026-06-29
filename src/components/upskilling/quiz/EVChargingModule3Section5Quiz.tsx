@@ -9,52 +9,52 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
     question:
-      'When planning for dual EV charging in a domestic installation, what diversity factor should be applied with smart charging systems?',
+      'When planning dual EV charging on a domestic supply with smart charging, which diversity factor is typically applied?',
     options: [
-      '1.0 (no diversity)',
-      '0.8 (20% diversity)',
-      '0.6 (40% diversity)',
-      '0.4 (60% diversity)',
+      '0.8 (around 20% diversity)',
+      '1.0 (no diversity at all)',
+      '0.6 (around 40% diversity)',
+      '0.4 (around 60% diversity)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'With smart charging systems managing load dynamically, a diversity factor of 0.8 (20% diversity) is appropriate for dual domestic EV charging. This allows for some simultaneous charging whilst preventing grid connection overload.',
+      'Smart charging manages load dynamically, so a factor of around 0.8 is commonly used for two domestic chargers, allowing some simultaneous charging without overloading the supply.',
   },
   {
     id: 2,
     question:
-      'For a residential PV-EV integrated system, what percentage of EV energy consumption can typically be met by solar generation?',
-    options: ['30-40%', '50-60%', '60-70%', '80-90%'],
-    correctAnswer: 2,
+      'For a typical UK residential PV-and-EV system, roughly what share of annual EV charging energy can solar realistically supply?',
+    options: ['30-40%', '50-60%', '80-90%', '60-70%'],
+    correctAnswer: 3,
     explanation:
-      'In the UK, a well-designed 6kWp PV system can typically provide 60-70% of annual EV charging energy (approximately 3,500kWh) through a combination of direct charging and battery storage systems.',
+      'A well-designed domestic PV array of around 6 kWp can supply roughly 60-70% of annual EV charging energy when combined with direct use and battery storage.',
   },
   {
     id: 3,
     question:
-      'What is the minimum spare capacity that should be planned in cable containment systems for future expansion?',
-    options: ['15%', '25%', '40%', '50%'],
+      'What minimum spare capacity is good practice to leave in cable containment for future expansion?',
+    options: ['About 15%', 'About 25%', 'About 40%', 'About 50%'],
     correctAnswer: 2,
     explanation:
-      'Cable containment systems should have a minimum of 40% spare capacity to accommodate future cable installations, maintenance access, and heat dissipation requirements whilst allowing for system growth.',
+      'Leaving roughly 40% spare in containment allows for future cables, easier maintenance access and heat dissipation, supporting later system growth.',
   },
   {
     id: 4,
     question:
-      'Which communication protocol is essential for Vehicle-to-Grid (V2G) implementations?',
-    options: ['OCPP 1.6', 'Modbus TCP', 'ISO 15118', 'IEC 61851'],
-    correctAnswer: 2,
+      'Which communication standard underpins Vehicle-to-Grid (V2G) charging?',
+    options: ['OCPP 1.6', 'ISO 15118', 'Modbus TCP', 'IEC 61851'],
+    correctAnswer: 1,
     explanation:
-      'ISO 15118 is the key standard for V2G communication, enabling plug-and-charge functionality, bidirectional power flow control, and secure authentication between vehicles and charging infrastructure.',
+      'ISO 15118 enables plug-and-charge, bidirectional power flow and secure authentication between the vehicle and charging infrastructure, making it central to V2G.',
   },
   {
     id: 5,
     question:
-      'By 2030, what percentage of UK properties are projected to have multiple EVs according to current forecasts?',
-    options: ['25%', '40%', '55%', '70%'],
-    correctAnswer: 1,
+      'Roughly what proportion of UK properties are forecast to have more than one EV by around 2030?',
+    options: ['About 25%', 'About 55%', 'About 40%', 'About 70%'],
+    correctAnswer: 2,
     explanation:
-      'Current UK government and industry forecasts suggest that approximately 40% of properties will have 2 or more electric vehicles by 2030, driven by falling vehicle costs and improved charging infrastructure.',
+      'Industry forecasts suggest roughly 40% of properties could have two or more EVs by around 2030, driven by falling vehicle prices and better charging infrastructure.',
   },
 ];
 

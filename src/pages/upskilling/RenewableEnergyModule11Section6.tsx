@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What does PSCC at the customer side now include in a multi-source PEI?',
     options: [
-      'Just DNO',
-      'PSCC (Prospective Short-Circuit Current) at any point in the installation now includes contributions from: (1) DNO supply (the traditional source — limited by transformer + supply cable impedance); (2) PV inverter Isc contribution (limited to ~1.0-1.2× rated AC current by inverter electronics during a fault); (3) BESS inverter Isc contribution (similar limit, but BESS can sustain longer + may provide grid-forming current); (4) Wind / CHP / generator Isc (depends on machine type). Designer assesses total Ipscc + selects OCPD breaking capacity accordingly',
-      'Random',
-      'No change',
+      'Only the DNO supply contributes; inverter-based sources current-limit and so add nothing to the PSCC at any point',
+      'The DNO supply plus a contribution from each on-site source (PV, BESS, wind, CHP), summed to a total Ipscc',
+      'The PV array DC short-circuit current only, since the AC side is protected separately by the DNO service fuse',
+      'The combined kVA rating of every source divided by the nominal voltage, giving a single figure regardless of impedance',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Why do PV / BESS inverters typically contribute LOWER fault current than the DNO supply?',
     options: [
-      'Random',
-      'Inverter electronics actively limit output current — IGBT switching, current sense + control loop trips inverter on overcurrent within milliseconds. Typical inverter Isc ~1.0-1.2× rated AC current vs DNO transformer supply which can deliver many × rated. Inverter "drops off" within ~50-100 ms after detecting fault. Engineering implication: fault clearance time matters; OCPD selection still per DNO max PSCC; inverter contribution is small but not zero',
-      'Inverters bigger',
-      'Same as DNO',
+      'Because the inverter output voltage collapses to zero the instant a fault appears, so no current can be driven into the fault',
+      'Inverter electronics actively limit output current to roughly 1.0-1.2× rated, then trip within milliseconds',
+      'Because the inverter is fused at its rated current, so its fault contribution can never exceed the fuse rating whatever the electronics do',
+      'Because inverters are physically smaller than a DNO transformer, and fault current scales directly with the size of the source',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'How do multiple sources affect disconnection time per Reg 411.3.2?',
     options: [
-      'No effect',
-      'Reg 411.3.2 disconnection times (0.4 s final circuits ≤32 A, 5 s distribution) require fault current to be high enough that OCPD operates within the time. In a multi-source PEI, fault current at a point depends on which sources are operating. Designer assesses fault current under each combination of sources + verifies disconnection time achievable for each. Reg 826.1.1.3 PEI: protective device selection shall consider minimum earth-fault current value. Min source combination = slowest disconnection; design must still meet times',
-      'Random',
-      'Slower always',
+      'Multiple sources have no effect — disconnection time depends only on the cable Zs, which is fixed however many sources feed the fault',
+      'Fault current at a point varies with which sources are running, so disconnection time is checked for each source combination',
+      'More sources always make disconnection slower, because each additional inverter adds impedance to the earth-fault path',
+      'Multiple sources always make disconnection faster, so the multi-source case never needs separate checking against the 0.4 s limit',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Per Reg 826.1.2.2, what does selection of overcurrent protective devices consider in a PEI?',
     options: [
-      'Random',
-      '"Selection and erection of overcurrent protective devices shall take account of all possible directions of current flow and polarity." Conventional installs assume one-directional current flow (DNO → loads); PEI has bidirectional flow (DNO ↔ loads + sources ↔ loads + sources ↔ DNO). Designer selects OCPDs that operate correctly for current in either direction + at the location\'s expected fault current contribution. Also: connection via switchgear / controlgear shall comply with Reg 551.7.2',
-      'Only DNO direction',
-      'No bidirectional',
+      'Overcurrent devices are selected only for current flowing from the DNO toward the loads, as that is the dominant direction in any installation',
+      'All possible directions of current flow and polarity, since a PEI has bidirectional flow between the DNO, the sources and the loads',
+      'Bidirectional flow is prevented by the export limiter, so the devices only ever see current in the conventional load direction',
+      'Polarity is reversed on the generation side, so the OCPDs are wired backwards relative to the load circuits to suit the export current',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A 3-source residential PEI: DNO + 6 kWp PV + 13 kWh BESS. What is the PSCC at the consumer unit, and how is OCPD breaking capacity selected?',
     options: [
-      'Random',
-      'PSCC at CU = DNO contribution (typical UK residential ~16 kA per DNO statement) + PV inverter contribution (~30 A brief) + BESS inverter contribution (~40-50 A brief, BESS can hold longer). Total Ipscc ~16-17 kA. OCPD breaking capacity per Reg 434.5: select MCB/RCBO with Icn ≥ 16 kA (or higher for safety margin). Inverter contributions don\'t change MCB sizing materially (small vs DNO) but must be assessed per Reg 826.1.2.1 for completeness. Cert evidence: Ipscc per source combination + OCPD specs',
-      'Same as DNO',
-      'No PSCC',
+      'PSCC at the CU is simply the sum of every source rating in kA, so a 6 kW PV plus a 13 kWh BESS roughly doubles the DNO figure to about 32 kA',
+      'PSCC is set entirely by the inverters, so the OCPD breaking capacity only needs to exceed the combined inverter Isc of about 70 A',
+      'About 16-17 kA — dominated by the DNO, with small inverter additions; choose Icn at least 16 kA per Reg 434.5',
+      'Adding generation removes the need to assess PSCC, since the inverters current-limit the whole installation below any MCB breaking capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Multi-source PSCC assessment: (1) DNO contribution — dominant; typically 6-16 kA UK residential (verify per DNO statement / measurement). For commercial 25-50 kA. (2) PV inverter contribution — limited by electronics; for 6 kWp single-phase ~26 A nominal AC, Isc ~26-31 A brief (1.0-1.2× rated). Drops out within ~50-100 ms on inverter internal protection. (3) BESS inverter contribution — similar electronics limit; for 5-7 kW BESS inverter ~30-40 A Isc brief; may hold longer than PV (storage doesn\'t deplete as fast); some grid-forming BESS designs intentionally higher. (4) Total Ipscc at CU ≈ DNO + inverter contributions = ~16-17 kA. Inverter contributions are second-order vs DNO. (5) OCPD breaking capacity per Reg 434.5 — select MCB / RCBO with Icn (rated short-circuit breaking capacity) ≥ Ipscc. Typical UK CU MCBs Icn 6 kA / 10 kA / 16 kA / 25 kA — choose ≥16 kA for typical residential. RCBOs typically same range. (6) Reg 826.1.2.1 — assess per protective device location + per source combination; document. (7) Cert evidence: Ipscc per source combination per protective device location + OCPD specs + manufacturer DoCs.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'What is "supply-side fault current" vs "load-side fault current" in a PEI, and why does direction matter?',
     options: [
-      'Random',
-      'Supply-side fault: short-circuit on the source side of a protective device (between source + device). Load-side fault: short-circuit on the load side of a protective device (between device + load). In single-source install, fault is always on load side. In PEI, sources on each side of an OCPD mean a fault can be supplied from either direction. OCPD must trip on fault from either direction — bidirectional capability per Reg 826.1.2.2 + Reg 551.7.2.1 source-supply-side placement. Coordination tests both directions',
-      'Same direction',
-      'No fault',
+      'Direction is irrelevant — all MCBs and RCBOs trip the same way whichever side the fault is on, so a single-source study covers a PEI',
+      'Supply-side and load-side describe which side of a device the fault sits; in a PEI an OCPD must trip on current from either direction',
+      'Supply-side faults are cleared by the DNO fuse and load-side faults by the MCBs, so customer-side devices never handle reverse current',
+      'Direction matters only for the export meter; protective device selection in a PEI is unaffected by which way the fault current flows',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Reg 826.1.2.3 covers combined short-circuit protection in PEI. What does it require?',
     options: [
-      'Random',
-      '"Where combined short-circuit protection is used in the electrical installation in accordance with Regulation 434.5.1, coordination between two or more short-circuit protective devices shall consider all possible configurations of power supplies. This requires that the installation designer considers all possible short-circuit currents through all sources + their combinations." Practical: discrimination between upstream + downstream OCPDs is verified for every source combination, not just one',
-      'No coordination',
-      'Same as conventional',
+      'Coordination only needs checking for the DNO-only case, since adding sources can never make a downstream device trip before an upstream one',
+      'It requires every protective device in the PEI to be the same type and rating, so discrimination is automatic regardless of source configuration',
+      'It applies only to the inverter internal protection, so the consumer-unit MCB coordination is unchanged from a conventional installation',
+      'Coordination between short-circuit protective devices shall consider all possible configurations of power supplies, not just one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 826.1.2.3 covers combined short-circuit protection in PEI: where combined short-circuit protection per Reg 434.5.1 is used (e.g. discrimination / cascading between upstream + downstream OCPDs), coordination must consider ALL possible power-supply configurations. (1) Conventional install — discrimination between MCB upstream + MCB downstream verified for one source (DNO); time-current curves overlap analysed at typical fault levels. (2) PEI — discrimination must hold for every combination of sources operating. Each source combination changes fault current at each point + thus changes which OCPD operates first. (3) Practical implication — designer models per source combination: DNO only, DNO + PV, DNO + PV + BESS, BESS only (island mode), etc. Verify discrimination time / current at each combination. (4) Coordination check — upstream OCPD must NOT trip before downstream OCPD for a downstream fault; otherwise nuisance trips disconnect more than needed. (5) PEI complexity — multi-source + island-mode + grid-forming BESS create many configurations to verify. Software tools support per-configuration analysis. (6) Reg 826.1.2.3 implementation — designer documents per source combination + OCPD coordination verification + cert evidence. (7) Cert evidence bundle: per-configuration coordination report + OCPD time-current curves + manufacturer DoCs + commissioning verification.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'Wind turbine + CHP generator on a multi-source site — how do their fault contributions differ from PV / BESS inverters?',
     options: [
-      'Same as PV',
-      'Wind + CHP can have either electronics-limited (inverter-coupled / PMG via inverter) OR conventional synchronous generator with field excitation. Synchronous generator can deliver multiple × rated current during fault (sub-transient ~6-8× then transient ~3-4× decaying over cycles) — much higher fault contribution than inverter-coupled sources. Manufacturer DoC declares fault current characteristic. Designer assesses per source; combined Ipscc at customer side may be substantially higher with sync generators',
-      'No fault current',
-      'Random',
+      'They behave identically to PV and BESS inverters, contributing about 1.0-1.2× rated current, as all modern generation is electronics-limited',
+      'If synchronous, they deliver several times rated current during a fault — much more than inverter-coupled sources',
+      'They contribute no fault current at all, since rotating machines disconnect instantly on a short circuit before any current flows',
+      'Their contribution is always lower than PV because the rotor inertia slows the rise of fault current below the inverter limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'Reg 826.1.1.3 says protective device selection shall consider the minimum earth-fault current. Why is this critical in PEI?',
     options: [
-      'Random',
-      'Reg 411.3.2 disconnection times require fault current ≥ I_a (OCPD operating current) for the time-current characteristic to clear within 0.4 s / 5 s. In PEI, earth-fault current depends on which sources are operating + their impedance. Minimum scenario (fewest sources, longest impedance path) = lowest fault current = slowest disconnection. If minimum fault current < I_a, OCPD won\'t operate in time — Reg 411.3.2 breach. Designer assesses minimum case + verifies disconnection time still met under all configurations',
-      'No effect',
-      'Maximum only',
+      'Because adding sources always raises the fault current, so the minimum case is the easiest to satisfy and never governs the design',
+      'If the minimum fault current is too low, the OCPD will not operate within the 0.4 s / 5 s disconnection time — a Reg 411.3.2 breach',
+      'Because the minimum earth-fault current sets the maximum Zs, which only matters for export tariff metering rather than for shock protection',
+      'Because the smallest source determines the breaking capacity of every OCPD, so the minimum current fixes the MCB short-circuit rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'How does fault contribution affect the DNO PSCC declaration at the supply position?',
     options: [
-      'No change',
-      'DNO PSCC declaration is the prospective short-circuit current at the supply position from the DNO transformer / network. Adding customer-side generation (PV / BESS / wind / CHP) does NOT change the DNO PSCC declaration — DNO scope ends at the supply terminals. However: customer-side OCPD selection must account for customer-side sources too per Reg 826.1.2.1. EREC G99 application for non-Type-A generation includes coordination check; G98 fast-track assumes ≤16 A per phase + inverter-limited contribution',
-      'DNO recalculates',
-      'Random',
+      'It does not change the declaration — the DNO\'s figure ends at the supply terminals; customer-side OCPDs still account for on-site sources',
+      'The DNO must reissue a higher PSCC figure each time generation is added, as the customer sources feed back into the supply-position calculation',
+      'The customer\'s generation cancels part of the DNO contribution, so the effective PSCC at the supply position falls below the declared value',
+      'The DNO PSCC declaration becomes void once any export-capable source is connected, and the customer must measure PSCC themselves each visit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DNO PSCC declaration + customer-side generation: (1) DNO declaration — prospective short-circuit current at the supply position, calculated from DNO transformer impedance + supply cable length + supply fuse. UK residential typical 16 kA; commercial varies. This is the DNO\'s contribution. (2) Customer-side generation — does NOT alter the DNO declaration (DNO scope ends at the supply terminals). The DNO sees the customer-side fault contribution flowing INTO the DNO supply during a fault on the customer side; if customer-side contribution is significant, DNO connection agreement may include grid protection considerations. (3) Customer-side OCPD selection — must include all customer-side contributions per Reg 826.1.2.1. Total Ipscc at any customer-side point = DNO contribution + customer-side source contributions. Inverter-limited sources add small Ipscc; synchronous generators add larger Ipscc. (4) EREC notification — G98 fast-track ≤16 A per phase + inverter-limited contribution = simple coordination assumed; G99 formal application for larger / synchronous generators includes coordination assessment by DNO. (5) DNO connection offer (G99) may specify customer-side fault current contribution limits or grid protection requirements. (6) Cert evidence bundle: DNO PSCC declaration + customer-side source contributions assessment + total Ipscc per protective device + EREC G98 / G99 reference.',
   },

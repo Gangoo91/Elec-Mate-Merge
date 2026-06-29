@@ -10,8 +10,8 @@ const quickCheckQuestions = [
     id: 'pf-2-4-check1',
     question:
       'Which free business bank account includes a complimentary FreeAgent accounting subscription?',
-    options: ['Starling Business', 'Monzo Business', 'Mettle by NatWest', 'Tide Free'],
-    correctIndex: 2,
+    options: ['Mettle by NatWest', 'Monzo Business', 'Starling Business', 'Tide Free'],
+    correctIndex: 0,
     explanation:
       'Mettle by NatWest includes a free FreeAgent subscription with every business account. FreeAgent is one of the most popular accounting packages among UK sole traders and normally costs around &pound;35 per month. This makes Mettle an excellent choice for tradespeople who want accounting software without the monthly cost.',
   },
@@ -72,8 +72,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which accounting software is specifically designed for UK sole traders and small businesses and integrates tightly with UK tax requirements?',
-    options: ['QuickBooks', 'Sage', 'FreeAgent', 'Xero'],
-    correctAnswer: 2,
+    options: ['FreeAgent', 'Sage', 'QuickBooks', 'Xero'],
+    correctAnswer: 0,
     explanation:
       'While all four packages support UK businesses, FreeAgent was specifically designed for UK freelancers and sole traders. It includes built-in Self Assessment filing, automatic tax calculations based on UK rules, and is the only one offered free through a banking partnership (Mettle by NatWest). It also has excellent support for the Construction Industry Scheme (CIS).',
   },
@@ -94,8 +94,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which receipt management tool is owned by Xero?',
-    options: ['Dext', 'Xero Capture', 'Hubdoc', 'AutoEntry'],
-    correctAnswer: 2,
+    options: ['Dext', 'AutoEntry', 'Expensify', 'Xero Capture'],
+    correctAnswer: 3,
     explanation:
       'Xero Capture (formerly known as Hubdoc) is owned by Xero and is included free with all Xero subscriptions. It allows you to photograph receipts and bills, which are then automatically processed and matched to transactions in your Xero account. Dext (formerly Receipt Bank) is a third-party tool that works with multiple accounting packages.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
     question: 'What does YNAB stand for, and what budgeting method does it implement?',
     options: [
       'Your Net Asset Balance &mdash; implements the 50/30/20 rule',
-      'You Need A Budget &mdash; implements zero-based budgeting',
       'Yearly National Accounting Bulletin &mdash; implements cash flow forecasting',
+      'You Need A Budget &mdash; implements zero-based budgeting',
       'Your New Account Builder &mdash; implements the envelope system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'YNAB stands for &ldquo;You Need A Budget&rdquo; and is the leading implementation of zero-based budgeting as an app. Its core principle is that every pound is assigned a job before it is spent. It is particularly effective for irregular income because you budget only with money you have actually received, not money you expect to receive.',
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a Government Gateway account used for?',
     options: [
-      'Ordering materials from trade suppliers at discounted prices',
       'Logging into HMRC online services such as Self Assessment and VAT',
+      'Ordering materials from trade suppliers at discounted prices',
       'Applying for a business bank account',
       'Registering your business with Companies House',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Government Gateway account is your login for all HMRC online services, including Self Assessment, VAT, PAYE, and your Personal Tax Account. Every self-employed person needs one. It requires a user ID and password, and increasingly uses two-factor authentication for security. Registration is free and can be done at gov.uk.',
   },

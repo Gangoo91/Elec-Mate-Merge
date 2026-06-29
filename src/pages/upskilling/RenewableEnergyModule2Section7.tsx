@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'DC-coupled hybrid PV+BESS — what does the energy flow look like?',
     options: [
-      'PV to grid, battery to grid, no shared path',
-      'PV → hybrid inverter DC bus → battery (via DC-DC stage) OR DC-AC inverter → grid. Energy from PV to battery stays on the DC side (one conversion: DC-DC with MPPT). Energy from PV or battery to grid takes one DC-AC conversion. The hybrid inverter handles both functions in one product',
-      'PV bypasses the inverter',
-      'Battery only charges from grid',
+      'PV and battery each have their own inverter to the grid, with no shared internal DC bus',
+      'PV and battery share a common DC bus in one hybrid inverter — PV to battery is one DC-DC stage',
+      'PV feeds the grid directly and the battery is charged only from a separate AC-DC charger',
+      'The battery charges solely from imported grid energy, never directly from the PV array',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'AC-coupled hybrid PV+BESS — what does the energy flow look like?',
     options: [
-      'Same as DC-coupled',
-      'PV → PV string inverter → AC grid → battery inverter → battery (DC). Energy from PV to battery takes DC-AC-DC conversion (two stages). Energy from battery to grid takes DC-AC conversion (one stage). Two inverters share the AC connection: the PV string inverter and the battery inverter',
-      'No inverters needed',
-      'Battery has no AC path',
+      'Identical to DC-coupled — both share a single internal DC bus',
+      'Two inverters share the AC side — PV to battery takes DC-AC-DC (two stages); battery to grid takes one DC-AC stage',
+      'A single inverter handles PV and battery with no AC interconnection between them',
+      'The battery connects only on the DC side and never reaches the AC consumer unit',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A 5 kWh charge from PV → battery, compared on DC-coupled vs AC-coupled architectures. Approximate energy actually stored in the battery (each conversion stage ~98% efficient):',
     options: [
-      'Both architectures lose 50%',
-      'DC-coupled: 5 kWh × 0.98 (DC-DC) = ~4.9 kWh stored. AC-coupled: 5 kWh × 0.96 (DC-AC) × 0.96 (AC-DC) = ~4.6 kWh stored. The DC-coupled advantage is ~6% on every PV-to-battery transfer — a material long-term yield difference',
-      'AC-coupled stores more',
-      'Both store exactly 5 kWh',
+      'Both lose about half the energy to conversion before it ever reaches the battery cells',
+      'DC-coupled stores ~4.9 kWh (×0.98); AC-coupled stores ~4.6 kWh (×0.96×0.96) — a ~6% advantage',
+      'AC-coupled stores more, because its two stages share the load and each runs cooler',
+      'Both store the full 5 kWh, since conversion losses only appear on discharge to the grid',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'When does DC-coupled hybrid architecture win the design conversation?',
     options: [
-      'Never',
-      'On new-build PV+BESS installs (single hybrid inverter, single product, fewest conversions). On planned PV+BESS where the battery is part of the original design. On installs where backup-power capability matters (most hybrid inverters provide a backup port; the same product handles PV, battery, grid and backup loads)',
-      'Only off-grid',
-      'Only commercial',
+      'Only where the grid connection has already failed and the site is running islanded',
+      'On new-build or planned PV+BESS with the battery in scope from the start — single product, fewest conversions',
+      'Only on off-grid installs with no DNO connection and no export at all',
+      'Only on commercial three-phase sites, never on a domestic single-phase supply',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'When does AC-coupled hybrid architecture win the design conversation?',
     options: [
-      'Never',
-      'On retrofit installs where existing PV string inverter is working and battery is being added later — the existing PV inverter is kept; a separate battery inverter is added. Also on installs where the battery is sourced separately from the PV system, or where the PV and battery are managed by different ownership entities (e.g. utility-owned battery on customer-owned PV)',
-      'Only on new-builds',
-      'Only on off-grid',
+      'Only where the customer has no existing PV array on the property at all',
+      'On retrofit-battery installs keeping a working PV inverter, or where PV and battery have different owners',
+      'Only on new-build installs where PV and battery go in together at once',
+      'Only on off-grid installs that have no grid export connection at all',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Chapter 82 (Prosumer\'s Electrical Installations, new in A4:2026) treats hybrid PV+BESS as a system. How does it relate to the DC vs AC coupling architectural choice?',
     options: [
-      'Chapter 82 prefers DC-coupled',
-      'Chapter 82 applies regardless of coupling — both DC-coupled and AC-coupled hybrid installs are PEIs (installations with local production and storage of energy). Chapter 82 requires the system-level design discipline (load management, multi-source fault contribution, protection coordination) on either architecture',
-      'Chapter 82 only applies to AC-coupled',
-      'Chapter 82 excludes hybrid systems',
+      'Chapter 82 mandates DC-coupled and disallows AC-coupled architectures for new PEIs',
+      'It applies regardless of coupling — both are PEIs needing the same system-level design discipline',
+      'It applies only to AC-coupled installs, since those use two separate inverters',
+      'It excludes hybrid PV+BESS systems, which fall under Section 712 on its own',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Many DC-coupled hybrid inverters include a backup port — what does it do?',
     options: [
-      'Nothing useful',
-      'During a grid outage, the inverter disconnects from the grid (anti-islanding per Section 551 — Module 1 Section 5) but continues to power dedicated backup loads via the backup port, using PV + battery (where available). The customer\'s essential loads (e.g. fridge, lighting, broadband router) stay running during the outage. Configuration limits typically apply — backup port power rating, the number of essential loads, manual or automatic transfer',
-      'It charges the battery faster',
-      'It bypasses the inverter',
+      'It provides a faster grid-export path for surplus PV while the grid is healthy',
+      'On grid loss it anti-islands but keeps dedicated essential loads running from PV and battery',
+      'It charges the battery faster by drawing extra current from the grid at night',
+      'It lets PV bypass the inverter and feed the consumer-unit loads as raw DC',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A new-build customer with 5 kWp PV and 10 kWh BESS planned together. Which coupling architecture is the natural choice?',
     options: [
-      'AC-coupled — separate PV and battery inverters',
-      'DC-coupled hybrid inverter — single product, fewest conversions, lowest cost overall for PV+BESS in one project. The hybrid inverter handles PV MPPT, battery management, grid synchronisation, and backup port output in one box',
-      'No coupling needed',
-      'Two batteries',
+      'A DC-coupled hybrid inverter — one product, fewest conversions, lowest total cost, with a backup port',
+      'AC-coupled — a PV string inverter plus a separate battery inverter, claimed as the lower-loss option here',
+      'A PV-only string inverter now, adding a second hybrid inverter purely for the battery later',
+      'A microinverter-per-module array feeding the battery directly on its DC side, bypassing the inverter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New-build PV+BESS installed together is the natural DC-coupled hybrid case. One hybrid inverter handles everything. Fewer products on the wall. Lower conversion losses (one DC-DC for PV-to-battery, one DC-AC for output). Simpler cert evidence bundle. Most modern hybrid inverters also include a backup port for grid-outage operation. The architectural alternative (AC-coupled with separate PV inverter + battery inverter) has no advantage in this scenario — more products, more conversions, higher cost, no offsetting benefit.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A customer with a 2019-vintage 4 kWp PV install (working SMA string inverter, no battery) wants to add a 10 kWh battery now. The PV inverter has 8+ years of useful life remaining. Best architecture?',
     options: [
-      'Replace the existing PV inverter with a hybrid and start over',
-      'AC-coupled battery — add a separate battery inverter that connects to the AC grid (alongside the existing PV inverter). The PV inverter continues unchanged; the battery inverter handles battery-to-grid and grid-to-battery flows. Accept the conversion-loss penalty (DC-AC-DC for PV-to-battery transfers) in exchange for keeping the working PV inverter',
-      'Disconnect the PV',
-      'Add a second PV array',
+      'Replace the working PV string inverter with a DC-coupled hybrid now, to gain the lower conversion losses',
+      'AC-coupled — add a separate battery inverter and keep the working PV inverter, accepting the conversion penalty',
+      'Move the battery onto the existing PV inverter\'s DC input as a third MPPT string instead',
+      'Fit a DC-coupled battery to the existing string inverter\'s DC bus without changing the inverter at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'Calculate the round-trip efficiency for AC-coupled hybrid: PV → battery → later grid export. Each conversion stage ~96% efficient (DC-AC and AC-DC).',
     options: [
-      '100% — no losses',
-      'PV → AC (96%) → battery (96% AC-DC) → battery storage (~95% round-trip battery efficiency, captured separately) → AC (96% DC-AC) → grid. PV-to-grid round-trip via battery: 0.96 × 0.96 × 0.95 × 0.96 ≈ 0.84 = ~84% effective round-trip. Vs DC-coupled equivalent ~89–91% — the AC-coupled architecture loses ~5–7% on every PV-via-battery cycle',
-      '50%',
-      '25%',
+      '~96% — only the single PV-inverter DC-AC conversion counts; the battery AC-DC and DC-AC stages are lossless',
+      '~92% — counting the two inverter conversions but ignoring the battery\'s own round-trip electrochemical loss',
+      '~84% — 0.96 × 0.96 (inverter stages) × 0.95 (battery) × 0.96, a few points below the DC-coupled equivalent',
+      '~99% — conversion losses at this scale are negligible and can be treated as effectively zero',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The round-trip arithmetic: AC-coupled PV → battery → grid is four conversion stages (DC-AC at PV inverter; AC-DC at battery inverter; battery round-trip efficiency on storage; DC-AC at battery inverter for export). 0.96 × 0.96 × 0.95 × 0.96 ≈ 0.84. DC-coupled equivalent: DC-DC at PV stage (~98%) × battery round-trip (~95%) × DC-AC at output (~96%) ≈ 0.89. The ~5% difference is the conversion-loss penalty for AC coupling. Over a 25-year install at typical battery cycling, the cumulative energy loss difference is material — but the retrofit benefit (not replacing the PV inverter) often dominates the decision.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A customer wants backup-power capability during grid outages — essential loads (fridge, lighting, broadband, kitchen) supplied from PV+battery during the outage. Which architecture is best matched?',
     options: [
-      'AC-coupled with no backup',
-      'DC-coupled hybrid with a backup port (EPS / Emergency Power Supply). The backup port output operates independently of the grid — when the grid fails, the inverter disconnects from grid (anti-islanding per Section 551) but continues to power the backup loads from PV and battery. The customer\'s essential loads stay running during the outage',
-      'Standalone diesel generator',
-      'Manual transfer switch only',
+      'AC-coupled with a battery inverter that has no backup output, relying on the grid for the essential circuits',
+      'A standalone diesel standby generator with an automatic transfer switch, separate from the PV and battery',
+      'A manual changeover switch the customer throws by hand during an outage, fed from the battery alone',
+      'A DC-coupled hybrid inverter with an integrated backup port that anti-islands and runs essential loads on PV and battery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Backup-power capability is the natural strength of DC-coupled hybrid inverters. Most modern hybrid inverters include a backup port that maintains AC output to dedicated essential loads during a grid outage. The customer\'s essential consumer unit (fridge, lighting, broadband router, etc.) is fed from the backup port; the standard consumer unit (general loads) is on the grid-supplied side. During a grid outage, the hybrid inverter disconnects from the grid (anti-islanding) but continues operating the backup port — the customer\'s essential loads remain powered as long as PV + battery have capacity.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Chapter 82 (PEI framework) applies to hybrid PV+BESS regardless of coupling architecture. What system-level design discipline does it require?',
     options: [
-      'No additional design discipline',
-      'Load management coordination (when PV exports, when battery discharges, when EV charges, when heat pump runs — system-level orchestration); multi-source fault current contribution (PV + battery can both contribute to a fault, design must handle the combined fault current); protection coordination across sources (the bidirectional protective device per Reg 551.7.1(c) applied per source)',
-      'Just paint the inverter yellow',
-      'Manual switching only',
+      'Load management, multi-source fault current contribution, and protection coordination across sources',
+      'Only a single warning label at the origin, with no system-level design work required for a PEI',
+      'Only DC-side insulation monitoring, with the AC integration treated as a standard load circuit',
+      'Manual changeover between PV and battery, with no automatic load or fault coordination at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Chapter 82 PEI framework requires system-level design discipline above the per-technology chapters. Three key items. Load management — orchestrating when PV exports, battery discharges, EV charges, heat pump operates, to stay within supply constraints and optimise self-consumption. Multi-source fault current contribution — under fault, both PV inverter and battery inverter contribute fault current; the protection must handle the combined contribution. Protection coordination — the bidirectional protective device under Reg 551.7.1(c) applies to each source; the cert evidence bundle records the per-source arrangement.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A 6 kWp PV install in 2022 with an AC-coupled 5 kWh battery added in 2024. The customer in 2026 wants to add EV charging and a heat pump. What\'s the architectural conversation now?',
     options: [
-      'Just add the new technology',
-      'Re-survey under Chapter 82 PEI framework — the full hybrid stack now includes PV (AC-coupled to grid) + battery (AC-coupled, separate inverter) + EV charging + heat pump. Load management, multi-source fault contribution, protection coordination need design-stage attention; possibly the existing AC-coupled architecture stays (simpler retrofit) or possibly migrate to a hybrid inverter (cleaner architecture, but at the cost of replacing the existing PV and battery inverters). Cost-benefit per the specific install',
-      'Disconnect everything',
-      'Use only one technology at a time',
+      'Add the EV charger and heat pump as ordinary circuits, with no re-survey of the existing PV and battery',
+      'Re-survey under the Chapter 82 PEI framework across the expanded stack, then weigh AC-coupled against migrating to a hybrid',
+      'Convert the existing AC-coupled battery to DC-coupled by moving it onto the PV string inverter\'s input',
+      'Cap the site at one active source at a time so the multi-source coordination work never applies',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,26 +210,26 @@ const quizQuestions = [
     question:
       'A customer\'s typical day looks like: PV produces ~25 kWh; household uses ~15 kWh during daylight; battery cycles ~8 kWh per day; remaining 2 kWh exports to grid. Over a year, how do the DC-coupled and AC-coupled architectures compare on energy delivered to household + battery + grid?',
     options: [
-      'They\'re identical',
-      'DC-coupled delivers ~5–7% more usable energy over the year because PV-to-battery transfers happen at one DC-DC conversion (~98% efficient) rather than the AC-coupled two-conversion path (DC-AC-DC, ~92% on the conversions). Over 25 years and ~3,000 battery cycles per year, the cumulative energy difference is substantial',
-      'AC-coupled delivers more',
-      'Neither stores energy',
+      'They deliver identical usable energy; coupling architecture affects only hardware count, not annual yield',
+      'AC-coupled delivers slightly more, because the battery inverter can oversize its output during peaks',
+      'DC-coupled delivers ~5–7% more per year — one DC-DC stage (~98%) versus the AC-coupled DC-AC-DC path (~92%)',
+      'Direct-to-load energy dominates so much that the battery-path losses are immaterial to annual yield',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The DC-coupled advantage on the daily PV-to-battery cycle is ~5–7% over the year. On a customer cycling 8 kWh per day through the battery, that\'s ~145 kWh of saved energy per year vs AC-coupled — at typical UK electricity pricing, ~£40–50/year. Over 25 years, ~£1,000–1,500. This is the operational case for DC-coupled on new-build PV+BESS installs. On retrofit-battery cases, the calculation flips because replacing the working PV inverter to migrate to DC-coupled is a sunk cost that exceeds the conversion-loss saving over the remaining PV inverter life.',
+      'The DC-coupled advantage on the daily PV-to-battery cycle is ~5–7% over the year. On a customer cycling 8 kWh per day through the battery (roughly one full cycle a day, ~365 cycles a year), that\'s ~145 kWh of saved energy per year vs AC-coupled — at typical UK electricity pricing, ~£40–50/year. Over 25 years, ~£1,000–1,500. This is the operational case for DC-coupled on new-build PV+BESS installs. On retrofit-battery cases, the calculation flips because replacing the working PV inverter to migrate to DC-coupled is a sunk cost that exceeds the conversion-loss saving over the remaining PV inverter life.',
   },
   {
     id: 8,
     question:
       'A customer-side question: &ldquo;why is the hybrid inverter so much more expensive than the PV string inverter, when the PV array is the same size?&rdquo;. The right professional explanation:',
     options: [
-      'No reason',
-      'The hybrid inverter combines PV inverter + battery inverter + battery management + backup port into one product. The premium over a PV-only string inverter (~£100–200 typically) reflects the additional functionality. The cost saved is the separate battery inverter that AC-coupled architecture would require — typically £700–1,500 depending on battery size',
-      'Marketing',
-      'Tax',
+      'The hybrid inverter uses higher-rated PV power electronics, because it must process the whole array twice',
+      'Hybrid inverters carry a higher G99 notification fee that the manufacturer passes on in the unit price',
+      'The premium is an MCS product-listing surcharge applied only to battery-capable inverter models',
+      'It bundles PV, battery management and a backup port in one — a ~£100–200 premium that saves a separate battery inverter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The hybrid inverter premium over PV-only string inverter is real but modest (~£100–200). The product combines PV inverter + battery management + backup port functionality. The architectural saving is the separate battery inverter that AC-coupled requires (typically £700–1,500). On a new-build PV+BESS install, hybrid is materially cheaper than PV-only string inverter + separate battery inverter combined. On a retrofit PV-only install where battery is added later, AC-coupled (existing PV inverter + new battery inverter) is the natural path because the PV inverter is sunk.',
   },

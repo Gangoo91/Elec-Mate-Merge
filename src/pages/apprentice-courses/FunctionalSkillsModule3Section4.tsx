@@ -28,10 +28,10 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'You receive an email claiming to be from your electrical wholesaler asking you to verify your account by clicking a link. The email address is support@electrcal-wholesale-uk.com (note the misspelling). What should you do?',
       options: [
-        'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
-        'Do not click the link — this is likely a phishing attempt. Contact the wholesaler directly using their known phone number or website',
-        'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
-        'The rapid transition to a state of full involvement of all combustible materials in a compartment, caused by intense radiant heat',
+        'Click the link quickly to verify your account before it gets suspended',
+        'Do not click; contact the wholesaler directly on a number you already know',
+        'Reply to the email asking the sender to confirm the request is genuine',
+        'Forward the email to all your colleagues so they can verify their accounts too',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,10 +42,10 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         "Under GDPR, how long can you retain a customer's personal data (name, address, contact details) after completing their electrical work?",
       options: [
-        'Provide a tagged accessible PDF (or large-print/braille if requested), an audio summary, and offer a verbal walk-through of any concerns',
-        'Complex PTSD includes all PTSD symptoms plus difficulties with emotional regulation, self-concept, and relationships',
-        'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
-        'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
+        'Indefinitely, because old customer records may always prove useful in future',
+        'Exactly 12 months, after which all of the data must be permanently deleted',
+        'Only while there is a legitimate reason, such as warranty or legal retention',
+        'For 30 days only, unless the customer specifically requests a longer extension',
       ],
       correctAnswer: 2,
       explanation:
@@ -69,10 +69,10 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'Which of the following is the best practice for professional email communication with a client?',
       options: [
-        'Use a clear subject line, professional greeting, concise body text, and a signature block with your contact details and registration numbers',
-        'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
-        'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
-        'The tower must be immediately taken out of use and reduced to a compliant configuration or dismantled entirely',
+        'A clear subject line, professional greeting, concise body, and signature block',
+        'Lower case with no subject line, to keep the message informal and friendly',
+        'Plenty of abbreviations and emojis, so the client knows you are approachable',
+        'No greeting or sign-off at all, to save the client a little reading time',
       ],
       correctAnswer: 0,
       explanation:
@@ -83,10 +83,10 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'A customer posts a negative review about your work on social media. What is the best response?',
       options: [
-        'The step-by-step safe sequence of work, including the hazards, controls, and responsibilities for each stage',
+        'Ignore the review completely so as not to draw attention to it',
         'Respond politely and professionally, acknowledge their concern, and offer to discuss the matter privately to resolve it',
-        'The SPD has reached end of life and needs replacement — it is no longer providing protection',
-        '60 Ω is well below 1667 Ω → extraneous → bond to the MET via a main protective bonding conductor sized per Reg 544.1 (typically 10 mm² Cu).',
+        'Reply publicly to argue your case and prove the customer is wrong',
+        'Ask friends and family to post fake positive reviews to bury it',
       ],
       correctAnswer: 1,
       explanation:
@@ -96,10 +96,10 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 6,
       question: 'What is a password manager and why should electricians use one?',
       options: [
-        'Pass — well below the 300 ms maximum for general non-delay type, indicating a healthy RCD with margin.',
-        'A high-resistance joint, loose connection, damaged conductor, or incorrect cable size in the circuit',
-        'Software that securely stores and generates unique, strong passwords for all your accounts, so you only need to remember one master password',
-        'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
+        'An app that automatically logs you out of every account after each use',
+        'A device that physically locks your laptop to your desk, van, or toolbox',
+        'Software that generates and stores unique passwords behind one master password',
+        'A service that emails you a reminder whenever one of your passwords needs changing',
       ],
       correctAnswer: 2,
       explanation:
@@ -109,10 +109,10 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 7,
       question: 'Which of the following would constitute a GDPR breach if done by an electrician?',
       options: [
-        "It structures a clinical/safety handover so nothing important is missed — increasingly used in construction safety briefings too",
-        "Any person who is or may be lawfully on the premises, and any person in the immediate vicinity who is at risk from a fire on the premises",
-        "That the scaffold is not overloaded and that materials are evenly distributed as per the design loading class",
-        "Sharing a customer's name, address, and phone number with a third party without their consent for marketing purposes",
+        "Sending a completed certificate to the customer who commissioned the work",
+        "Keeping electrical installation records to meet legal retention requirements",
+        "Photographing your own finished work for your portfolio with no people in shot",
+        "Passing a customer's contact details to a third party for marketing, without consent",
       ],
       correctAnswer: 3,
       explanation:
@@ -122,10 +122,10 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 8,
       question: "What is 'screen fatigue' and how can electricians manage it?",
       options: [
-        'Tiredness, eye strain, and reduced concentration from prolonged screen use — managed through regular breaks, the 20-20-20 rule, and limiting non-essential screen time',
-        'Use a clear subject line, professional greeting, concise body text, and a signature block with your contact details and registration numbers',
-        'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-        'Be polite and helpful, but tell them you cannot give access without the householder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permission and call your supervisor for guidance',
+        'Eye strain and lost concentration from screens — managed by breaks and the 20-20-20 rule',
+        'A fault that makes a tablet screen flicker — managed by replacing the display unit',
+        'Glare from working under bright site lighting — managed by wearing tinted safety glasses',
+        'A drop in battery life on older devices — managed by dimming the screen permanently',
       ],
       correctAnswer: 0,
       explanation:
@@ -423,10 +423,10 @@ const FunctionalSkillsModule3Section4 = () => {
         <InlineCheck
           question="You receive a text message saying: 'HMRC: You are due a tax refund of £1,847.20. Claim now at: hmrc-refunds-uk.co.com'. What should you do?"
           options={[
-            'Click the link and enter your bank details to receive the refund',
-            'Forward the text to a friend to check if they received the same message',
-            'Ignore and delete the message — HMRC does not send refund notifications via text with links. Report it by forwarding to 7726',
-            'Reply asking for more details',
+            'Click the link and enter your bank details to receive the refund quickly',
+            'Forward the text to a friend to check whether they got the same message',
+            'Delete it — HMRC never texts refund links — and report it by forwarding to 7726',
+            'Reply to the message asking the sender for a few more details first',
           ]}
           correctIndex={2}
           explanation="This is a smishing (SMS phishing) attack. HMRC never sends text messages with links for tax refunds. The domain 'hmrc-refunds-uk.co.com' is not a genuine HMRC domain. Delete the message and report it by forwarding to 7726 (the UK's scam text reporting number). Never click links in unsolicited messages claiming to offer refunds or requiring urgent action."

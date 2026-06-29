@@ -44,8 +44,8 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
       id: 'qc1-thermal-overloads',
       question:
         'A motor has a full load current (FLC) of 25A and a service factor of 1.15. What should the thermal overload be set to?',
-      options: ['25A', '28.75A', '21.75A', '30A'],
-      correctIndex: 1,
+      options: ['28.75A', '25A', '21.75A', '30A'],
+      correctIndex: 0,
       explanation:
         'The overload setting = FLC x Service Factor = 25A x 1.15 = 28.75A. The service factor allows for normal overload conditions during operation without nuisance tripping.',
     },
@@ -69,11 +69,11 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         'In Type 2 coordination, what is permitted to happen to the contactor during a short-circuit fault?',
       options: [
         'Complete destruction requiring replacement',
+        'No damage whatsoever is permitted',
         'Welded contacts that can be separated',
-        'No damage whatsoever',
-        'Thermal damage to the coil',
+        'Thermal damage to the contactor coil',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Type 2 coordination allows contact welding during a short-circuit, provided the contacts can be separated (manually or automatically) without significant damage. The starter must remain operational after the fault is cleared. Type 1 allows complete destruction requiring replacement.',
     },
@@ -89,27 +89,33 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         'Pressure changes in a sealed chamber',
       ],
       correctAnswer: 'Differential expansion of two bonded metals when heated',
+      explanation:
+        'A bimetallic strip is two metals with different expansion rates bonded together; heating from the motor current bends the strip, and at a set deflection it trips the contactor coil circuit.',
     },
     {
       question:
-        'A Class 10 thermal overload relay will trip within what time at 7.2 times the set current?',
-      options: ['4 seconds', '10 seconds', '20 seconds', '30 seconds'],
-      correctAnswer: '10 seconds',
+        'Within what time range will a Class 10 thermal overload trip at 7.2 times the set current?',
+      options: ['About 2 seconds', 'About 4 to 10 seconds', 'About 6 to 20 seconds', 'About 9 to 30 seconds'],
+      correctAnswer: 'About 4 to 10 seconds',
+      explanation:
+        'The trip class is the maximum trip time at 7.2x setting: Class 10 trips by 10s (4-10s band), Class 20 by 20s and Class 30 by 30s for progressively higher-inertia loads.',
     },
     {
       question:
-        'According to BS 88, what does the first numeral in a fuse link designation (e.g., 88-2) indicate?',
+        'In a BS 88 fuse-link designation such as "BS 88-2", what does the numeral after the dash indicate?',
       options: [
         'The current rating',
         'The voltage rating',
-        'The physical size/type',
+        'The part of the standard / fuse system and size',
         'The breaking capacity',
       ],
-      correctAnswer: 'The physical size/type',
+      correctAnswer: 'The part of the standard / fuse system and size',
+      explanation:
+        'The number after the dash identifies the part of BS 88 (e.g. -2 industrial, -3 domestic, -4 semiconductor), not the current, voltage or breaking capacity.',
     },
     {
       question:
-        'When selecting an HRC fuse for a DOL motor starter, the fuse rating should typically be:',
+        'When selecting an aM HRC fuse for a DOL motor starter, the fuse rating should typically be:',
       options: [
         'Equal to the motor FLC',
         '1.5 to 2 times the motor FLC',
@@ -117,6 +123,8 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         '3 to 4 times the motor FLC',
       ],
       correctAnswer: '1.5 to 2 times the motor FLC',
+      explanation:
+        'An aM fuse must ride through the 6-8x DOL starting inrush, so it is rated above FLC (roughly 1.5-2x) - always confirmed against the manufacturer coordination table.',
     },
     {
       question: 'What is the main advantage of electronic overload relays over thermal types?',
@@ -127,6 +135,8 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         'No power supply required',
       ],
       correctAnswer: 'Adjustable trip classes and better accuracy',
+      explanation:
+        'Electronic overloads use CT sensing and a microprocessor, giving selectable trip classes, tighter accuracy and extras such as phase-loss and imbalance detection, at higher cost.',
     },
     {
       question: 'In motor circuit protection, the thermal overload provides protection against:',
@@ -137,43 +147,53 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         'Voltage fluctuations',
       ],
       correctAnswer: 'Sustained overcurrent (overload) conditions',
+      explanation:
+        'The thermal overload models motor heating and trips on a sustained overcurrent; short-circuit protection is the job of the HRC fuse or MCB ahead of it.',
     },
     {
       question: 'A gG fuse differs from an aM fuse in that gG fuses:',
       options: [
         'Can only protect motors',
-        'Provide overload AND short-circuit protection',
-        'Have higher breaking capacity',
+        'Provide both overload and short-circuit protection',
+        'Always have a higher breaking capacity',
         'Are only used in DC circuits',
       ],
-      correctAnswer: 'Provide overload AND short-circuit protection',
+      correctAnswer: 'Provide both overload and short-circuit protection',
+      explanation:
+        'gG is full-range (overload plus short circuit) and would blow on motor inrush, whereas aM is back-up (short-circuit only) and rides through starting current with a separate overload doing the overload protection.',
     },
     {
       question:
         'What should be checked before resetting a thermal overload relay that has tripped?',
       options: [
         'Only the motor winding resistance',
-        'The cause of the overload and allow cooling time',
+        'The cause of the overload, allowing cooling time',
         'Only the supply voltage',
-        'The contactor coil resistance',
+        'The contactor coil resistance only',
       ],
-      correctAnswer: 'The cause of the overload and allow cooling time',
+      correctAnswer: 'The cause of the overload, allowing cooling time',
+      explanation:
+        'Always investigate why it tripped (overloading, single-phasing, high ambient, wrong setting) and let the relay cool before resetting, rather than simply resetting and restarting.',
     },
     {
       question:
-        'For a motor with high inertia loads requiring extended starting times, which trip class is most appropriate?',
+        'For a motor with high-inertia loads requiring extended starting times, which trip class is most appropriate?',
       options: ['Class 5', 'Class 10', 'Class 20 or 30', 'Class 10A'],
       correctAnswer: 'Class 20 or 30',
+      explanation:
+        'Higher classes (20 or 30) tolerate longer starting currents before tripping, preventing nuisance trips on high-inertia loads while still protecting the motor.',
     },
     {
-      question: 'When testing thermal overload relay operation, the primary test method involves:',
+      question: 'Which statement best describes how a thermal overload relay is verified by testing?',
       options: [
-        'Applying twice the set current and timing the trip',
-        'Injecting current at 1.05x setting to verify no trip in 2 hours',
-        'Using a current injection set at 6x setting and verifying trip within class time',
-        'Both B and C depending on test requirements',
+        'Apply exactly twice the set current and confirm an instantaneous trip',
+        'Inject around 1.05x setting (no trip in 2 hours) and/or around 6x setting (trip within the class time)',
+        'Measure only the coil resistance with a multimeter',
+        'Briefly press the test button and assume the calibration is correct',
       ],
-      correctAnswer: 'Both B and C depending on test requirements',
+      correctAnswer: 'Inject around 1.05x setting (no trip in 2 hours) and/or around 6x setting (trip within the class time)',
+      explanation:
+        'Verification uses current injection: at about 1.05x setting it must not trip within 2 hours, and at a high multiple (around 6-7.2x) it must trip within the time band for its class.',
     },
   ];
 

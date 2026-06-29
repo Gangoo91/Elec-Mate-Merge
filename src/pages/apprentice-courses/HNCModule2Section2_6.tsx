@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     id: 'operating-point',
     question: 'Where is the operating point on a pump-system diagram?',
     options: [
-      'Temperature, humidity, and other relevant factors',
-      'Clear responsibility boundaries between disciplines',
-      'They move from negative to positive terminal',
+      'At the pump curve maximum (best efficiency point)',
+      'Where the system curve crosses the zero-flow axis',
+      'At the peak (shut-off head) of the pump curve',
       'Where pump curve intersects system curve',
     ],
     correctIndex: 3,
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: 'What is the effect of running two identical pumps in parallel?',
     options: [
       'Flow increases but less than doubles at the operating point',
-      'Hazardous waste requiring special disposal',
-      'By using the CSCS Smart Check app to scan the card\\\\\\\\\\\\\\\'s QR code',
-      'Unexpected twisting forces on the handler\\\\\\\\\\\\\\\'s spine as the load tilts',
+      'Head doubles while flow stays exactly the same',
+      'Both flow and head are halved at the operating point',
+      'Flow exactly doubles regardless of the system curve',
     ],
     correctIndex: 0,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main advantage of differential pressure control on a VSD pump?',
     options: [
-      '30-40% - to ensure adequate motor cooling and prevent recirculation',
+      'It runs the pump at full speed continuously for reliability',
       'Maintains constant head across the system, matching pump speed to demand',
-      'The system has no static head - friction losses only',
-      'Motor overheating due to reduced cooling flow through pump',
+      'It eliminates the need for any control valves in the circuit',
+      'It increases the static head to improve flow at the index circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     id: 7,
     question: 'What problem can occur if a pump operates at very low flow (far left of its curve)?',
     options: [
-      'To hydraulically decouple primary and secondary circuits',
-      'Maintains constant head across the system, matching pump speed to demand',
-      'The system has no static head - friction losses only',
+      'Cavitation caused by excessive flow velocity at the impeller eye',
+      'The impeller spinning faster than its rated maximum speed',
+      'A sudden drop in system static head below atmospheric pressure',
       'Motor overheating due to reduced cooling flow through pump',
     ],
     correctAnswer: 3,
@@ -186,9 +186,9 @@ const quizQuestions = [
       'In a primary-secondary pumping system, what is the purpose of the bypass (common) pipe?',
     options: [
       'To hydraulically decouple primary and secondary circuits',
-      'Head approximately doubles at any given flow',
-      'Motor overheating due to reduced cooling flow through pump',
-      'Moves to lower flow, higher head (towards shutoff)',
+      'To double the available head for the secondary distribution',
+      'To increase the static head seen by the primary pumps',
+      'To provide a drain point for emptying the system',
     ],
     correctAnswer: 0,
     explanation:
@@ -198,10 +198,10 @@ const quizQuestions = [
     id: 9,
     question: 'When should you consider parallel pumps rather than a single larger pump?',
     options: [
-      'Maintains constant head across the system, matching pump speed to demand',
+      'When the system requires the maximum possible head at low flow',
       'For variable demand systems, redundancy, and better part-load efficiency',
-      'To hydraulically decouple primary and secondary circuits',
-      'The system has no static head - friction losses only',
+      'Only when the building has no space for a single large pump',
+      'When the system has a very high static head to overcome',
     ],
     correctAnswer: 1,
     explanation:
@@ -225,9 +225,9 @@ const quizQuestions = [
     question:
       'What happens to the pump operating point if the system develops an air lock or blockage?',
     options: [
-      'Motor overheating due to reduced cooling flow through pump',
-      'Head approximately doubles at any given flow',
-      'To hydraulically decouple primary and secondary circuits',
+      'Moves to higher flow, lower head (towards run-out)',
+      'Stays exactly where it was before the blockage occurred',
+      'The pump curve itself shifts upward to compensate',
       'Moves to lower flow, higher head (towards shutoff)',
     ],
     correctAnswer: 3,
@@ -239,9 +239,9 @@ const quizQuestions = [
     question: 'In a VSD-controlled pump system, what is the typical minimum speed limit and why?',
     options: [
       '30-40% - to ensure adequate motor cooling and prevent recirculation',
-      'Maintains constant head across the system, matching pump speed to demand',
-      'Motor overheating due to reduced cooling flow through pump',
-      'For variable demand systems, redundancy, and better part-load efficiency',
+      '5-10% - to keep the pump barely turning and save maximum energy',
+      '80-90% - because pumps cannot run efficiently below this speed',
+      '0% - the pump can safely stop and restart on demand at any time',
     ],
     correctAnswer: 0,
     explanation:

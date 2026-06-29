@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'practical-completion-def',
     question: 'What does practical completion mean in building contracts?',
     options: [
-      'Ballast bypass - direct mains connection to lamp holders',
-      'Showing electrical connections and circuit operation',
-      'Ensuring all team members lift and lower on a coordinated signal',
+      'Every minor snagging item has been fully rectified',
+      'The final account has been agreed with the client',
+      'All retention money has been released to the contractor',
       'Works substantially complete and fit for occupation',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'sectional-completion',
     question: 'Sectional completion provisions allow:',
     options: [
-      'To provide legal proof of compliance and protect professional reputation',
-      'Using batteries to reduce maximum demand by discharging during peak consumption periods',
+      'The contractor to delay handover of the whole project',
+      'Retention to be withheld until the final section completes',
       'Client to take possession of defined sections before overall completion',
-      'Switching transients and earth leakage during starting',
+      'Liquidated damages to be waived across the entire contract',
     ],
     correctIndex: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which document formally certifies that practical completion has been achieved?',
     options: [
-      'Rate of heat transfer through a building element (thermal transmittance)',
+      'The electrical installation certificate (EIC)',
       'Practical completion certificate issued by contract administrator',
-      'To ensure all team members understand hazards and safety procedures',
-      'To normalise energy consumption for weather variations',
+      'The certificate of making good defects',
+      'The final account statement agreed with the client',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'Partial possession differs from sectional completion because:',
     options: [
       'Partial possession is not planned from contract start',
-      'Investigate and rectify the cause before energising',
-      'Either the Project Manager or Contractor',
-      'Disconnected clamp or broken conductor',
+      'Partial possession releases all retention immediately',
+      'Partial possession ends the defects liability period early',
+      'Partial possession does not require the client’s involvement',
     ],
     correctAnswer: 0,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which building services documentation forms part of the health and safety file?',
     options: [
-      'Comfort from radiant heating/cooling surfaces',
-      'Insulation breakdown or poor earth connections',
-      'Distributed throughout the day between scheduled blocks',
+      'The contractor’s tender pricing and cost breakdown',
+      'The daily site attendance and timesheet records',
+      'The client’s internal staff appraisal documents',
       'As-built drawings and maintenance requirements',
     ],
     correctAnswer: 3,
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'For building services, seasonal commissioning may require:',
     options: [
-      'To confirm the supply has correct phase and neutral identification',
+      'All systems to be commissioned on the same single day',
       'Return visits to commission heating in winter and cooling in summer',
-      'Both emotional consequences (how you feel) and behavioural consequences (what you do)',
-      'A competent person with appropriate knowledge and experience',
+      'Commissioning to be deferred until the end of the defects period',
+      'The client to carry out commissioning without the contractor',
     ],
     correctAnswer: 1,
     explanation:

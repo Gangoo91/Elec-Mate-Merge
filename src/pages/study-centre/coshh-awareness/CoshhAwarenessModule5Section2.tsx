@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is NOT one of the conditions that must be met before health surveillance is required under COSHH?',
     options: [
+      'The employee has specifically requested health surveillance in writing',
       'There is an identifiable disease or adverse health effect related to the exposure',
       'There is a valid technique available to detect the disease or effect',
-      'The employee has specifically requested health surveillance in writing',
       'There is a reasonable likelihood of the disease occurring under the conditions of work',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Health surveillance is required when four conditions are met: identifiable disease/effect linked to exposure, a valid detection technique exists, reasonable likelihood of occurrence under work conditions, and surveillance is likely to further protect employee health. An employee's written request is not one of the conditions \u2014 the duty is the employer's regardless of whether the employee asks for it.",
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
       'A trained responsible person on site carries out regular skin inspections of workers handling solvents. What level of health surveillance does this represent?',
     options: [
       'Initial assessment (baseline)',
-      'Skin inspection by a trained responsible person',
       'Clinical examination by an occupational health professional',
       'Biological effect monitoring',
+      'Skin inspection by a trained responsible person',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regular skin inspections carried out by a trained responsible person (not a medical professional) represent the second level of health surveillance described in HSG61. The responsible person is trained to look for early signs of dermatitis \u2014 redness, dryness, cracking, or itching \u2014 and to refer any abnormal findings to an occupational health professional. This is a practical and cost-effective surveillance method commonly used for workers exposed to skin sensitisers and irritants.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does FEV1 measure in spirometry testing?',
     options: [
-      'The total volume of air the lungs can hold after maximum inhalation',
       'The volume of air forcefully expelled in the first second of a forced exhalation',
+      'The total volume of air the lungs can hold after maximum inhalation',
       'The peak flow rate achieved during a single breath',
       'The oxygen saturation level in arterial blood',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FEV1 (Forced Expiratory Volume in 1 second) measures the volume of air that a person can forcefully blow out in the first second of a forced exhalation, starting from full inspiration. It is one of the two key measurements in spirometry (the other being FVC \u2014 Forced Vital Capacity). A declining FEV1 over time, or a reduced FEV1/FVC ratio, can indicate developing obstructive airways disease such as occupational asthma.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'How long must individual health surveillance records be retained under COSHH Regulation 11(4)?',
     options: [
+      '40 years from the date of the last entry',
       '10 years from the date of the last entry',
       '20 years from the date of the last entry',
-      '40 years from the date of the last entry',
       "For the duration of the employee's career only",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Health surveillance records must be kept for at least 40 years from the date of the last entry. This exceptionally long retention period exists because many occupational diseases have very long latency periods \u2014 occupational asthma symptoms may worsen over decades, and other conditions may not appear until long after exposure has ceased. The 40-year period also ensures records remain available for retrospective investigation, compensation claims, and epidemiological research.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'During a return-to-work health surveillance assessment after a period of sickness, what is the primary purpose of the assessment?',
     options: [
       'To discipline the employee for the period of absence',
-      'To determine whether the employee is fit to return to the same exposure level, or whether adjustments are needed',
       "To recalculate the employee's sick pay entitlement",
       "To update the company's absence management records",
+      'To determine whether the employee is fit to return to the same exposure level, or whether adjustments are needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The primary purpose of a return-to-work health surveillance assessment is to determine whether the employee can safely return to the same level of exposure, or whether adjustments are needed to protect their health. This may include temporary or permanent redeployment away from the hazardous substance, additional control measures, reduced exposure duration, or enhanced PPE. It is a health protection measure, not a disciplinary process.',
   },

@@ -14,29 +14,29 @@ const Module6Section3_4 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: 'What regulation requires proving dead before work?',
+      question: 'Which regulation requires circuits to be proven dead before work?',
       options: [
-        'At the origin (closest to supply)',
-        'Electricity at Work Regulations',
-        'Voltage drop calculations',
-        '0.5 lux on the floor area',
+        'The Building Regulations Part P',
+        'The Electricity at Work Regulations 1989',
+        'The Work at Height Regulations 2005',
+        'The Provision and Use of Work Equipment Regulations',
       ],
       correctAnswer: 1,
       explanation:
-        'The Electricity at Work Regulations (EAWR) 1989 requires that systems are proven dead before work begins to prevent electrical accidents.',
+        'The Electricity at Work Regulations (EAWR) 1989 require that systems are proven dead before work begins to prevent electrical accidents.',
     },
     {
       id: 2,
       question: 'What is the first step in safe isolation?',
       options: [
-        '6 months of practical completion',
-        'Both certificate and manual',
+        'Apply the lock-off device',
+        'Prove the tester on a proving unit',
         'Identify the correct circuit',
-        'Record all test points and results',
+        'Test between live, neutral and earth',
       ],
       correctAnswer: 2,
       explanation:
-        'Circuit identification is crucial first step - working on the wrong circuit is a common cause of electrical accidents.',
+        'Identifying the correct circuit is the crucial first step - working on the wrong circuit is a common cause of electrical accidents.',
     },
     {
       id: 3,
@@ -55,10 +55,10 @@ const Module6Section3_4 = () => {
       id: 4,
       question: 'What is the correct tool to prove dead?',
       options: [
-        'Two-pole voltage indicator',
-        'Need additional security measures',
-        'Any safety-critical fault',
-        'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
+        'A two-pole voltage indicator',
+        'A non-contact voltage pen',
+        'A neon screwdriver',
+        'A clamp meter',
       ],
       correctAnswer: 0,
       explanation:

@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'pasma-dismantle-golden-rule',
     question: 'What is the golden rule of dismantling a mobile scaffold tower?',
     options: [
-      'Always start from the bottom up',
       'Dismantling is always the reverse of the assembly sequence',
+      'Always start from the bottom and work upwards',
       'Remove the platform first to reduce weight',
       'Only the site supervisor needs to be present',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The golden rule of dismantling is that it must always follow the exact reverse of the assembly sequence. Skipping steps or removing components out of order creates serious fall and collapse hazards.',
   },
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
       'If a tower is left partially dismantled, what must be in place at the working level?',
     options: [
       'A warning sign only',
-      'Guardrails and the tower must be stable',
       'A padlock on the access point',
       'Nothing — partial dismantling is always prohibited',
+      'Guardrails at the working level and the tower must be stable',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A partially dismantled tower must remain stable, have guardrails at the working level, and be clearly signed to prevent unauthorised access. Leaving a partially dismantled tower without these precautions creates an immediate fall hazard.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'During AGR tower dismantling, how are the advance guardrails removed?',
     options: [
-      'They are cut off with a grinder',
       'They are unlocked and folded down from the platform above',
+      'They are cut off with a grinder',
       'They are removed from below by reaching up',
       'They are left in place and the tower is moved whole',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AGR (advance guardrail) systems are unlocked and folded down from the platform level. This is the reverse of the assembly process where they are raised and locked into position from below.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'What should be established on the ground before any dismantling begins?',
     options: [
-      'A tea station for the crew',
-      'An exclusion zone preventing people from walking beneath the tower',
+      'A rest area for the crew',
       'A vehicle for transporting components',
-      'A concrete pad for stacking',
+      'A concrete pad for stacking components',
+      'An exclusion zone preventing people from walking beneath the tower',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An exclusion zone must be established at the base of the tower before dismantling begins. This prevents anyone on the ground from being struck by a component that is accidentally dropped during the lowering process.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is a common error that creates immediate danger during dismantling?',
     options: [
-      'Using gloves while handling components',
       'Removing guardrails and then climbing down without edge protection',
+      'Using gloves while handling components',
       'Passing components hand to hand',
       'Briefing the team before starting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Removing guardrails and then descending without edge protection is extremely dangerous. The operative is exposed to an unprotected edge at height. The 3T method exists specifically to ensure guardrails are only removed from below, keeping the operative protected at all times.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'Components are left where they fall for the next crew',
       'The area is immediately released without checks',
-      'Components are inspected, sorted, and the completion is handed over to the supervisor',
       'Nothing — the job is done once the last piece is removed',
+      'Components are inspected, sorted, and the completion is handed over to the supervisor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'After dismantling, all components must be inspected for damage, sorted by type, and prepared for storage or transport. The completion of dismantling should be formally handed over to the supervisor, and any defects found must be reported and recorded.',
   },

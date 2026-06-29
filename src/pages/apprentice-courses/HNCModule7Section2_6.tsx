@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'What is the maximum interval for functional testing of emergency luminaires under BS 5266-1?',
     options: [
       'Six-monthly',
-      'Monthly',
       'Quarterly',
+      'Monthly',
       'Weekly',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 5266-1 requires emergency luminaires to receive a brief functional test at intervals not exceeding one month to verify they illuminate when the normal supply fails.',
   },
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question:
       "Under the Regulatory Reform (Fire Safety) Order 2005, who is the 'responsible person'?",
     options: [
-      'Knowledge, training, experience, and understanding of hazards',
-      'Provides consistent, accurate bends with less physical effort',
-      'Minimum current from supply (maximum impedance)',
+      'The local fire and rescue authority for the area',
+      'The competent person who carries out the fire alarm servicing',
+      'The building control body that approved the construction',
       'The employer or person in control of the premises',
     ],
     correctIndex: 3,
@@ -69,9 +69,9 @@ const quickCheckQuestions = [
     question: 'How often should a fire risk assessment typically be reviewed?',
     options: [
       'Annually or when significant changes occur',
-      'By multiplying likelihood and severity scores',
-      'Lower than individual readings due to parallel paths',
-      'At design stage (RIBA Stage 3-4)',
+      'Only once, when the building is first occupied',
+      'Every ten years, in line with the building survey cycle',
+      'Only after a fire has occurred on the premises',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'Under BS 5266-1, what is the duration of the full rated duration test for emergency lighting?',
     options: [
-      'Use appropriate sealing gaskets or compounds',
+      'One hour for all commercial premises',
       'The full rated duration (typically 3 hours)',
-      'Correct type, rating, and indicator status',
-      'Creating a loop in the bus topology',
+      'Thirty minutes regardless of building type',
+      'Five seconds to verify illumination only',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'The Regulatory Reform (Fire Safety) Order 2005 applies to:',
     options: [
       'All non-domestic premises and common areas of residential buildings',
-      'Promptly, before the modifications are put into use',
-      'Recorded in the log book and as-built drawings updated',
-      'To ensure test frequencies match risk levels and changes are captured',
+      'Only purpose-built factories and industrial warehouses',
+      'Individual private dwellings and the flats within them',
+      'Only buildings over four storeys or with sleeping risk',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What documentation must be maintained for emergency lighting under BS 5266-1?',
     options: [
-      'Define what each device does when activated and system responses',
+      'Only the original purchase receipts for the luminaires',
       'A log book recording all tests, inspections, and defects',
-      'All non-domestic premises and common areas of residential buildings',
-      'Recorded in the log book and as-built drawings updated',
+      'A verbal record passed between maintenance staff',
+      'Only the manufacturer battery datasheets need be kept',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'During the weekly fire alarm test, what should be recorded?',
     options: [
-      'Recorded in the log book and as-built drawings updated',
-      'Promptly, before the modifications are put into use',
+      'Only the total number of detectors in the building',
+      'The ambient temperature and humidity at the panel',
       'The call point tested, date, time, and any faults',
-      'A log book recording all tests, inspections, and defects',
+      'The make and model of every sounder on the system',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is an automatic test system (ATS) for emergency lighting?',
     options: [
-      'A log book recording all tests, inspections, and defects',
-      'Recorded in the log book and as-built drawings updated',
-      'All non-domestic premises and common areas of residential buildings',
+      'A backup battery that powers luminaires during a long outage',
+      'A central inverter that supplies all luminaires from one source',
+      'A photometric meter that measures lux levels on escape routes',
       'A system that automatically tests and records emergency luminaire function',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'Under the RRO, failure to comply with fire safety requirements can result in:',
     options: [
       'Enforcement notices, prohibition notices, or prosecution',
-      'Recorded in the log book and as-built drawings updated',
-      'Define what each device does when activated and system responses',
-      'A log book recording all tests, inspections, and defects',
+      'A written warning only, with no further legal sanction',
+      'Automatic withdrawal of the building insurance policy',
+      'A fixed penalty notice capped at fifty pounds per breach',
     ],
     correctAnswer: 0,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of coordinating testing schedules with fire risk assessments?',
     options: [
-      'Promptly, before the modifications are put into use',
-      'Define what each device does when activated and system responses',
+      'To reduce the number of tests required by halving the schedule',
+      'To transfer legal responsibility from the owner to the assessor',
       'To ensure test frequencies match risk levels and changes are captured',
-      'All non-domestic premises and common areas of residential buildings',
+      'To allow the fire risk assessment to replace routine testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'BS 5839-1 requires cause and effect documentation to:',
     options: [
-      'To ensure test frequencies match risk levels and changes are captured',
-      'All non-domestic premises and common areas of residential buildings',
-      'Recorded in the log book and as-built drawings updated',
+      'List only the manufacturer and part number of each detector',
+      'Record the daily battery voltage readings at the panel',
+      'Show the cable routes and containment for the whole system',
       'Define what each device does when activated and system responses',
     ],
     correctAnswer: 3,
@@ -232,9 +232,9 @@ const quizQuestions = [
       'When must a fire risk assessment be updated following emergency system modifications?',
     options: [
       'Promptly, before the modifications are put into use',
-      'Recorded in the log book and as-built drawings updated',
-      'Enforcement notices, prohibition notices, or prosecution',
-      'A log book recording all tests, inspections, and defects',
+      'Only at the next scheduled annual review, whenever that falls',
+      'Only if the fire authority specifically requests an update',
+      'Within five years of the modification being completed',
     ],
     correctAnswer: 0,
     explanation:

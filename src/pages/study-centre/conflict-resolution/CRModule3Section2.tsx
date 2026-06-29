@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'cr-3-2-check1',
     question: 'What is the single most important element of a variation order?',
     options: [
-      'The original quote reference number',
       'A written description of what changed, why, the cost implication, and client confirmation',
+      'The original quote reference number',
       'A verbal agreement witnessed by a third party',
       'A photograph of the additional work required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The most important element of a variation order is a written record that includes what changed from the original scope, why the change is needed, the cost implication (additional charge or credit), and written confirmation from the client that they agree to the change and the associated cost. This protects both parties. Verbal agreements, even witnessed ones, are difficult to prove. Photographs can support a variation order but are not sufficient on their own. The written confirmation can be as simple as a text message or email reply saying "Yes, go ahead" in response to a clearly worded description of the extra work and cost.',
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Do it for free to keep the client happy',
       'Refuse outright and explain it is not in the contract',
-      'Acknowledge positively, explain it is outside the original scope, provide a cost, and get written confirmation',
       'Add it to the invoice at the end without discussing it with the client first',
+      'Acknowledge positively, explain it is outside the original scope, provide a cost, and get written confirmation',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The best response is to acknowledge the request positively ("That is a great idea"), explain that it is outside the original scope of work, provide a clear cost for the additional work, and get written confirmation before proceeding. This approach is professional, transparent, and protects both parties. Doing it for free sets a precedent and devalues your time. Refusing outright damages the relationship. Adding it to the invoice without discussion creates a surprise charge that will almost certainly lead to a dispute. The key is to be helpful and willing, while also being clear that additional work has additional cost.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is scope creep?',
     options: [
-      'A deliberate strategy by clients to get free work',
       'The gradual expansion of work beyond the original agreement, often through small incremental requests',
+      'A deliberate strategy by clients to get free work',
       'A contractual term that allows the client to add work at no extra cost',
       'The process of a project taking longer than the estimated timeline',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scope creep is the gradual expansion of work beyond the original agreement, typically through small, individually trivial requests that collectively amount to significant additional unpaid labour. It is usually not a deliberate strategy — it happens because of unclear original scope, genuine misunderstandings, or the "while you\'re here" syndrome where clients assume that small extras are included. Recognising scope creep as it happens is the first step to managing it effectively.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT a common reason why scope creep happens?',
     options: [
       'Unclear original scope of work',
-      'Verbal agreements instead of written ones',
       'The tradesperson deliberately over-quoting to absorb extras',
+      'Verbal agreements instead of written ones',
       "The tradesperson's desire to please the client and avoid confrontation",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Deliberately over-quoting to absorb extras is not a common cause of scope creep — in fact, most tradespeople under-quote if anything. The common causes of scope creep include unclear original scope, verbal agreements that are open to interpretation, the tradesperson's desire to please the client and maintain a good relationship, fear of confrontation or appearing difficult, and genuine misunderstandings about what was included. All of these can be addressed through clear written scope, written variation orders, and confident communication about additional costs.",
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'What are the four steps of the variation conversation framework?',
     options: [
       'Refuse, explain, negotiate, compromise',
-      'Acknowledge positively, explain outside scope, provide cost, get written confirmation',
       'Accept the request, do the work, add it to the invoice, hope the client pays',
+      'Acknowledge positively, explain outside scope, provide cost, get written confirmation',
       'Escalate to a manager, document the request, seek legal advice, send a formal letter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The four steps are: (1) Acknowledge positively — validate the client's request and show willingness; (2) Explain outside scope — clearly state that the request falls outside the original agreement; (3) Provide cost — give a clear price for the additional work; (4) Get written confirmation — secure agreement in writing before proceeding. This framework works because it maintains the relationship (the client feels heard and respected) while protecting your interests (the additional cost is agreed before work begins).",
   },
@@ -127,10 +127,10 @@ const quizQuestions = [
     options: [
       'The highest standard available in the industry',
       'The standard specified in the contract and no higher',
-      'Reasonable care and skill',
       'Whatever standard the consumer considers acceptable',
+      'Reasonable care and skill',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under the Consumer Rights Act 2015 (Section 49), services must be provided with "reasonable care and skill". This is an objective standard — it means the level of care and skill that a reasonably competent tradesperson in that field would apply. It does not mean perfection, nor does it mean the absolute best in the industry. It means competent, professional workmanship. For electricians, this standard also intersects with the requirements of BS 7671 (the IET Wiring Regulations), meaning that work must at minimum comply with the relevant regulations and standards.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the "sunk cost trap" in the context of scope creep?',
     options: [
-      'The cost of materials that have already been installed and cannot be returned',
       'The tendency to continue doing unpaid extra work because you have already started, rather than stopping and having the cost conversation',
+      'The cost of materials that have already been installed and cannot be returned',
       'The tax deduction available for materials wasted during a job',
       'The penalty clause in a contract for work not completed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The sunk cost trap in scope creep context is the tendency to keep doing unpaid extra work because you have already started, rather than stopping and having the cost conversation. The reasoning goes: "I have already spent 30 minutes on this extra, so I might as well finish it." But this logic is flawed, because the time already spent is gone regardless — the relevant question is whether you should invest more unpaid time going forward. The solution is to pause as soon as you realise the work is outside scope, have the conversation, and get agreement before continuing.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'A client verbally agreed to a £300 variation but now refuses to pay, claiming they never agreed. You have no written confirmation. What is your legal position?',
     options: [
       'You have no legal standing whatsoever without written proof',
-      'You can claim a reasonable price under the Consumer Rights Act 2015, but proving the agreement is more difficult without written evidence',
       'Verbal contracts are automatically void under UK law',
+      'You can claim a reasonable price under the Consumer Rights Act 2015, but proving the agreement is more difficult without written evidence',
       'The client must pay because all verbal agreements are legally binding and enforceable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Without written confirmation, your position is weaker but not hopeless. Verbal contracts are legally binding in the UK (they are not automatically void), but they are significantly harder to prove. Under the Consumer Rights Act 2015, you are entitled to a reasonable price for work done. If you can demonstrate that the work was requested, that you communicated it would be extra, and that the client allowed you to proceed, you have a reasonable basis for the charge. However, this situation perfectly illustrates why written confirmation is essential — it removes the "I never agreed to that" defence entirely.',
   },
@@ -180,11 +180,11 @@ const quizQuestions = [
       'An electrician quoted £2,500 for a kitchen rewire. During the job, the client makes five separate "while you\'re here" requests, each worth approximately £80-£150. The electrician does them all without discussing price or getting written confirmation. What is the most likely outcome?',
     options: [
       'The client will happily pay the additional £500+ when they see it on the invoice',
-      'A dispute over the final invoice, with the client arguing the extras were included in the original price',
       'The electrician can claim the full amount under the Late Payment Act',
       'The client is legally obligated to pay because the work has been completed',
+      'A dispute over the final invoice, with the client arguing the extras were included in the original price',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most likely outcome is a dispute. The client will see a final invoice significantly higher than the quoted price and argue that the additional work was included. Without written variation orders, the electrician has no documentary evidence that the extras were agreed at an additional cost. This is the classic scope creep trap: five individually small requests, each seeming too minor to "make a fuss about", collectively amounting to a significant additional charge that the client was not expecting. The lesson is clear: every variation, no matter how small, needs a cost conversation and written confirmation before the work is done.',
   },

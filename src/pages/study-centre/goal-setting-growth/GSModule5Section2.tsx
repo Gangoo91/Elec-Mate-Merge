@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     question:
       'According to Peter Gollwitzer&rsquo;s research on implementation intentions, what is the most effective way to increase follow-through on a planned action?',
     options: [
-      'Write the action down on a to-do list and hope you remember to do it',
-      'Tell as many people as possible about the action to create social pressure',
-      'Specify the exact when, where, and how using an &ldquo;if-then&rdquo; or &ldquo;when-then&rdquo; statement',
-      'Visualise the outcome you want to achieve and use positive affirmations',
+      'Write the action down somewhere on a to-do list and simply hope you remember to do it later',
+      'Tell as many people as possible about the action in order to build up external social pressure',
+      'Specify the exact when, where and how using an &ldquo;if-then&rdquo; or &ldquo;when-then&rdquo; statement',
+      'Visualise the outcome you want to achieve and reinforce it with regular positive affirmations',
     ],
     correctIndex: 2,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'In a 90-day plan, what is the difference between a &ldquo;milestone&rdquo; and a &ldquo;daily habit&rdquo;?',
     options: [
-      'There is no difference &mdash; they are the same thing',
-      'A milestone is a specific outcome or checkpoint achieved at a point in time; a daily habit is a recurring action performed consistently',
-      'A milestone is something you do every day; a daily habit is something you do once',
-      'Milestones are for business goals; daily habits are for personal development goals',
+      'A milestone is an outcome or checkpoint reached at a point in time; a daily habit is a recurring action',
+      'There is no real difference between them; the two terms describe exactly the same thing in a plan',
+      'A milestone is something you do every single day, whereas a daily habit is something you do just once',
+      'Milestones apply only to business goals, while daily habits apply only to personal development goals',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Milestones are interim checkpoints that mark progress toward the final outcome. For example, in a 90-day AM2 preparation plan, milestones might be: &ldquo;Week 4: Complete all conduit bending practice scenarios&rdquo;, &ldquo;Week 8: Pass mock fault-finding assessment&rdquo;, &ldquo;Week 12: Sit AM2 exam&rdquo;. Daily habits are the recurring behaviours that drive progress toward those milestones: &ldquo;Every evening, 30 minutes installation practice&rdquo;. Milestones provide structure and urgency (deadlines create focus). Habits provide the mechanism (consistent small actions compound into big results). A good 90-day plan has both.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'gs-5-2-check3',
     question: 'Why is Sunday evening recommended as the ideal time for the weekly planning ritual?',
     options: [
-      'Because Sunday is a religious day and therefore more meaningful',
-      'Because it is the end of the weekend and allows you to mentally transition into the working week with clarity and intention',
-      'Because research shows the brain is more creative on Sunday evenings',
-      'Because HMRC requires tax planning to be done on Sundays',
+      'Because Sunday is traditionally a religious day and is therefore inherently more meaningful for planning',
+      'Because it sits at the end of the weekend and lets you transition into the week with clarity and intention',
+      'Because scientific research has shown that the human brain is reliably more creative on Sunday evenings',
+      'Because HMRC formally requires that all self-employed tax planning is carried out on a Sunday',
     ],
     correctIndex: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'In the worked example of an apprentice preparing for AM2, what were the two lead measures identified?',
     options: [
-      'Number of hours worked on site, and number of college assignments completed',
-      'Hours of hands-on installation practice per week, and number of timed fault-finding scenarios completed per week',
-      'Number of mock exams passed, and number of study books read',
-      'Amount of money saved for the exam fee, and number of practice rigs purchased',
+      'Hours of hands-on installation practice per week, and timed fault-finding scenarios completed per week',
+      'Number of hours worked on site each week, and the number of college assignments handed in',
+      'Number of mock exams passed before the date, and the number of revision study books read',
+      'Amount of money saved towards the exam fee, and the number of practice rigs that were purchased',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The lead measures for AM2 preparation were: (1) 6 hours of hands-on installation practice per week (conduit bending, trunking, wiring, terminations, testing), and (2) 2 timed fault-finding scenarios per week. These are predictive (more practice increases pass likelihood) and influenceable (the apprentice controls whether they practise). The lag measure (the outcome) is &ldquo;pass AM2&rdquo;, which cannot be directly controlled but is highly likely if the lead measures are consistently met. This distinction &mdash; focusing on controllable inputs rather than anxiously fixating on the outcome &mdash; is one of the most powerful aspects of the 4DX framework.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'What is the purpose of &ldquo;obstacles planning&rdquo; in a 90-day plan, and when should it be done?',
     options: [
-      'Obstacles planning is done after the 90 days to analyse what went wrong',
-      'Obstacles planning is done at the start of the 90 days to pre-identify likely barriers and create contingency strategies before they derail progress',
-      'Obstacles planning is only necessary for business goals, not personal development goals',
-      'Obstacles planning is a weekly ritual where you list everything that went wrong that week',
+      'It is done only after the 90 days are over, as a way to analyse what went wrong in hindsight',
+      'It is only ever necessary for business goals and has no real value for personal development goals',
+      'It is a weekly ritual in which you simply list out everything that happened to go wrong that week',
+      'It is done at the start of the 90 days to pre-identify likely barriers and plan contingencies before they derail you',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Obstacles planning (also called &ldquo;pre-mortem&rdquo; or &ldquo;failure mode analysis&rdquo;) is done at the START of the 90-day cycle, not at the end. You ask: &ldquo;What are the most likely obstacles that will prevent me achieving this goal?&rdquo; For an electrician, common obstacles include: busy work periods crowding out study time, emergency call-outs disrupting the schedule, family commitments, van breakdown, seasonal lulls affecting income (and therefore ability to pay for courses), loss of motivation in the middle phase. For each obstacle, you create a contingency plan BEFORE it happens. Example: &ldquo;If I have a busy week and miss both practice sessions, I will do a single 90-minute session on Sunday morning to maintain momentum.&rdquo; This pre-planning dramatically increases resilience.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     question:
       'In Covey&rsquo;s &ldquo;Big Rocks&rdquo; analogy, what does the &ldquo;sand&rdquo; represent?',
     options: [
-      'The most important strategic priorities that should be scheduled first',
-      'Small, low-value tasks (emails, minor admin, interruptions) that fill time if you let them',
-      'Beach holidays and rest periods',
-      'Financial savings that accumulate over time',
+      'The most important strategic priorities, which should always be scheduled into the week first',
+      'Small, low-value tasks such as emails, minor admin and interruptions that fill time if you let them',
+      'Beach holidays, weekends away and the rest periods you take throughout the working year',
+      'Financial savings that quietly accumulate over time while you focus on the bigger priorities',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'What is the recommended structure for the weekly planning ritual at the end of each week?',
     options: [
-      'Spend 2 hours creating a detailed minute-by-minute schedule for every day of the coming week',
-      'A 10&ndash;15 minute session reviewing last week (what worked, what did not, scoreboard update) and committing to next week&rsquo;s specific actions (when, where, how)',
-      'Write a journal entry about your feelings and emotions related to the goal',
-      'Only review progress if you are behind on your target',
+      'Spend two full hours building a detailed minute-by-minute schedule for every day of the coming week',
+      'Write a long journal entry exploring your feelings and emotions related to the goal you are pursuing',
+      'A 10&ndash;15 minute session reviewing last week against the scoreboard, then committing to next week&rsquo;s specific actions',
+      'Only bother to review progress at all in the weeks where you already know you are behind target',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The weekly planning ritual is deliberately short (10&ndash;15 minutes) to ensure it is sustainable. The structure is: (1) Review last week&rsquo;s commitments &mdash; did you do them? If not, why not? (2) Update the scoreboard &mdash; record your lead measure data (hours practised, sessions completed). Are you on track? (3) Identify obstacles and adjust &mdash; what got in the way? How will you protect time next week? (4) Commit to specific actions using implementation intentions &mdash; &ldquo;On Tuesday at 7pm, I will practise conduit bending in the garage for 45 minutes.&rdquo; This is your Cadence of Accountability. It transforms the goal from an abstract aspiration into a weekly operating rhythm. The ritual should feel energising, not burdensome.',
   },
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       'In the worked example for a self-employed electrician aiming to grow their business, what was identified as the keystone habit?',
     options: [
-      'Send 5 cold emails to potential clients every day',
-      'Every Monday morning, before starting jobs, spend 30 minutes on client relationship and business development tasks',
-      'Attend one networking event per month',
-      'Post daily updates on social media to attract new customers',
+      'Every Monday morning, before starting jobs, spend 30 minutes on client relationship and pipeline tasks',
+      'Send five cold emails to potential new clients every single day, without fail, throughout the quarter',
+      'Attend one trade or business networking event each and every month for the duration of the plan',
+      'Post daily updates on social media in order to attract a steady stream of new paying customers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The keystone habit was: &ldquo;Every Monday morning, 8&ndash;8:30am, before starting jobs: review current quotes, follow up 3 prospects, update CRM.&rdquo; This habit is small (30 minutes), linked to an existing routine (Monday morning), and creates a cascade effect. The consistent weekly focus on client relationships prevents the common failure mode where self-employed electricians get busy with current work and neglect pipeline development, leading to feast-famine cycles. The Monday slot works because it is the start of the week (high mental energy, proactive rather than reactive), and the time-boxing (30 minutes) prevents the task expanding to consume the entire morning. This is a classic keystone habit: small, strategic, and triggering multiple positive downstream effects.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'Why is the 90-day timeframe considered optimal for tradespeople, compared to annual or monthly planning cycles?',
     options: [
-      'Because the tax year is divided into 90-day quarters',
-      'Because 90 days is long enough to achieve meaningful progress but short enough to maintain urgency and adapt to changing circumstances',
-      'Because most qualifications take exactly 90 days to complete',
-      'Because research shows human attention span peaks at 90 days',
+      'Because the UK tax year is conveniently divided up into four equal 90-day quarters',
+      'Because most electrical qualifications happen to take exactly 90 days to complete from start to finish',
+      'Because research has shown that the human attention span reliably peaks at around the 90-day mark',
+      'Because 90 days is long enough for meaningful progress yet short enough to keep urgency and allow adapting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '90 days (one quarter) is the sweet spot for focused execution. It is long enough to complete a significant project (a CPD course, an AM2 preparation programme, a client acquisition campaign, a new system implementation) but short enough that the deadline feels real and maintains urgency. Annual goals often lack urgency until Q4, by which point they are rushed or abandoned. Monthly goals feel too short for complex projects and create pressure without allowing time for compounding. 90 days also allows for quarterly adaptation: if a strategy is not working in Q1, you pivot in Q2 rather than wasting the full year. For electricians whose work is seasonal or project-based, 90-day cycles allow different priorities each quarter (Q1 = study during quiet period, Q2 = business growth, Q3 = operational improvements, Q4 = financial review and tax planning).',
   },
@@ -185,10 +185,10 @@ const quizQuestions = [
     question:
       'What is an &ldquo;implementation intention&rdquo;, and why is it more effective than a general goal statement?',
     options: [
-      'An implementation intention is a detailed business plan with financial projections',
-      'An implementation intention is a specific if-then or when-then statement that pre-commits you to an action in a particular context, removing the need for in-the-moment willpower',
-      'An implementation intention is a motivational affirmation you repeat daily',
-      'An implementation intention is the same as a SMART goal',
+      'It is a detailed written business plan, complete with full financial projections for the year ahead',
+      'It is a specific if-then or when-then statement that pre-commits you to an action, removing in-the-moment willpower',
+      'It is a short motivational affirmation that you repeat to yourself out loud every single day',
+      'It is essentially just another name for a SMART goal, with no meaningful difference between them',
     ],
     correctAnswer: 1,
     explanation:

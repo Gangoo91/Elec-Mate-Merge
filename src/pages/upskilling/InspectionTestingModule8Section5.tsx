@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'You added two sockets to a kitchen ring AND replaced a bathroom light fitting. Can you issue one MEIWC for the lot?',
     options: [
-      'Yes — one MEIWC covers all minor work in a single visit',
-      'No — Reg 644.4.201 says “a Minor Electrical Installation Works Certificate ... may be provided for each circuit that has been added to or altered”. The two sockets are on the kitchen ring (one circuit); the bathroom light is on a different circuit. Two separate MEIWCs — one per affected circuit — or a single EIC under EIC case (d)',
-      'Only if the customer signs both off together',
-      'Yes — MEIWCs are not circuit-specific',
+      'Yes, because one MEIWC covers all the minor work done in a single visit',
+      'No, because a MEIWC is per circuit — two circuits need two MEIWCs or an EIC',
+      'Yes, but only if the customer signs both pieces of work off together',
+      'Yes, because a MEIWC is not tied to any one particular circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'An EICR has no C1 or C2 codes, but two FI (Further Investigation) codes for cables concealed under a floor that could not be lifted. What is the correct verdict in Section E?',
     options: [
-      'Unsatisfactory — FI items prevent a Satisfactory verdict',
-      'Satisfactory — A4:2026 confirmed FI no longer drives Unsatisfactory. Only C1 or C2 trigger Unsatisfactory. The FI items are recorded in Section K and Section F can recommend follow-up by a specified date',
-      'Pending',
-      'Provisional',
+      'Unsatisfactory, because the FI items prevent a Satisfactory verdict',
+      'Satisfactory, because FI no longer drives Unsatisfactory — only C1 or C2 do',
+      'Pending, held open until the concealed cables can be investigated',
+      'Provisional, pending the further investigation of the concealed cables',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A 2008-installed lighting circuit in a domestic property has no 30 mA RCD. Which classification code applies on the EICR?',
     options: [
-      'C1 — danger',
-      'C3 (Improvement recommended). Per EICR Note 4, an installation designed to an earlier version of BS 7671 is not necessarily unsafe; the absence is a non-compliance with the current Reg 411.3.4 but does not give rise to immediate danger',
-      'C2',
-      'FI',
+      'C1 — danger present, immediate remedial action required',
+      'C3 — improvement recommended; a current-standard non-compliance, not a danger',
+      'C2 — potentially dangerous, urgent remedial action required',
+      'FI — further investigation required before any verdict',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A client asks why their EICR Section D states “No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made”. What is the rationale?',
     options: [
-      'It is a decorative clause',
-      'It is the A4:2026 default limitation, in force unless specifically agreed between the client and inspector prior to the inspection. Recall-checking is not part of a standard EICR; if the client wants it, they must agree it explicitly in advance. Without that agreement, the limitation is in force and the inspector’s liability is bounded',
-      'It absolves the inspector of all liability',
-      'It is mandatory follow-up by the client',
+      'It is a decorative clause carried over from the previous edition',
+      'It is the A4:2026 default limitation — recall checks are outside standard EICR scope',
+      'It absolves the inspector of all liability arising from the condition report',
+      'It mandates that the client carries out the recall checks as a follow-up',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 644.4.201 sets the boundary for when a Minor Electrical Installation Works Certificate (MEIWC) may be used. What does that boundary actually say?',
     options: [
-      'For any electrical work whatsoever',
-      'Where electrical installation work does not include the provision of a new circuit or replacement of a distribution board or consumer unit, a MEIWC based on the model in Appendix 6 may be provided for each circuit that has been added to or altered as an alternative to an EIC',
-      'Only for socket additions',
-      'Only for residential premises',
+      'It permits a MEIWC for any electrical installation work whatsoever, with no scope restriction',
+      'It permits a MEIWC only for the addition of socket-outlets to an existing ring final circuit',
+      'It permits a MEIWC only on residential premises, for additions and alterations alike',
+      'It permits a MEIWC per added-to or altered circuit, provided there is no new circuit and no DB or consumer-unit replacement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 644.4.201 reads: "Where electrical installation work does not include the provision of a new circuit or replacement of a distribution board or consumer unit, a Minor Electrical Installation Works Certificate, based on the model given in Appendix 6, may be provided for each circuit that has been added to or altered as an alternative to an Electrical Installation Certificate". Two boundaries: (a) no new circuit; (b) no DB / CU replacement. If either is breached, you must use an EIC.',
   },
@@ -97,11 +97,11 @@ const quizQuestions = [
       'On the A4:2026 MEIWC Section A ("Description of the minor works"), item 4 explicitly cites four BS 7671 regulations relating to permitted departures. Which are they?',
     options: [
       'Reg 411.3.3, 415.1, 522.6.202, 643.2',
-      'Reg 120.3, 133.1.2, 133.1.3, 133.5 — plus Reg 411.3.3 specifically called out for permitted exceptions',
       'Reg 651, 652, 653, 654',
+      'Reg 120.3, 133.1.2, 133.1.3, 133.5 — plus Reg 411.3.3 specifically called out for permitted exceptions',
       'Reg 644.1, 644.2, 644.3, 644.4',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MEIWC Section A item 4 reads: "Details of any departures from BS 7671:2018 as amended to ......... (date) for the circuit altered or extended (Regulation 120.3, 133.1.2, 133.1.3 and 133.5). Details of permitted exceptions (Regulation 411.3.3). Where applicable, a suitable risk assessment(s) must be attached to this Certificate. ............................................. Risk assessment attached [box]". The four departure regulations (120.3, 133.1.2, 133.1.3, 133.5) are the same as on the EIC; Reg 411.3.3 is the additional protection / risk-assessed exception.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'On the A4:2026 EICR, the overall verdict in Section E is one of two outcomes: SATISFACTORY or UNSATISFACTORY. Which observation classification codes drive an UNSATISFACTORY verdict?',
     options: [
-      'C1 only',
-      'C1 or C2 only — per Section E: "An unsatisfactory assessment indicates that dangerous (code C1) and/or potentially dangerous (code C2) conditions have been identified"',
-      'C1, C2, C3 and FI',
-      'C3 only',
+      'C1 or C2 only — dangerous or potentially dangerous conditions',
+      'C1 only — only a confirmed dangerous condition triggers it',
+      'C1, C2, C3 and FI — any coded observation triggers it',
+      'C3 only — improvement-recommended items are what trigger it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EICR Section E states: "An unsatisfactory assessment indicates that dangerous (code C1) and/or potentially dangerous (code C2) conditions have been identified". C3 (Improvement recommended) and FI (Further investigation) do NOT drive UNSATISFACTORY. The Notes for the Producer item 12 reinforces this: "The overall assessment of the installation is to be reported as unsatisfactory where any observation is given a code C1 or C2 classification". Note that A4 confirmed FI no longer makes the report unsatisfactory.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'On the EICR Schedule of Inspection, item 4.23 reads "Confirmation of indication that AFDD(s) are operational (421.1.7; 532.6; 651.2(e))". A house has no AFDDs fitted. What is the correct outcome?',
     options: [
-      'C1',
-      'N/A — there is no AFDD to confirm operational; the absence is recorded against item 4.18 (additional protection considerations) rather than item 4.23',
-      'C2',
-      'Skip the item',
+      'C1 — danger present, immediate remedial action required',
+      'C2 — potentially dangerous, urgent remedial action required',
+      'Skip the item entirely and leave it unmarked on the schedule',
+      'N/A — there is no AFDD to confirm operational at this item',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Item 4.23 confirms an AFDD&rsquo;s OPERATIONAL STATUS — it does not require an AFDD to be present. If no AFDD is installed, item 4.23 is N/A (there is nothing to confirm operational). The absence of AFDD where Reg 421.1.7 recommends one is a separate consideration — typically a C3 (Improvement recommended) at item 4.18 (RCD/RCBO additional protection / requirements), since 421.1.7 is a recommendation, not a hard requirement. Always read item 4.23 against what is actually fitted.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'On the EICR Schedule of Inspection item 5.12, the bullet list of circuits requiring 30 mA RCD additional protection now includes "Final circuits supplying luminaires within domestic (household) premises (411.3.4)". A 2008-installed lighting circuit in a domestic property has no 30 mA RCD. Which classification?',
     options: [
-      'C1 — danger',
-      'C3 (Improvement recommended) — current Reg 411.3.4 was not in force when the installation was constructed; the absence is a non-compliance with the current standard but not an immediate danger',
-      'C2',
-      'FI',
+      'C1 — danger present, immediate remedial action required',
+      'C2 — potentially dangerous, urgent remedial action required',
+      'C3 (Improvement recommended) — a non-compliance, but not an immediate danger',
+      'FI — further investigation is required without delay',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Per the EICR Notes for the Producer item 4: "An installation which was designed to an earlier version of BS 7671 or the IEE Wiring Regulations and which does not fully comply with the current version is not necessarily unsafe for continued use, or require upgrading". The 2008 installation predates the current Reg 411.3.4 lighting RCD requirement; the absence is a non-compliance with the current standard, classified C3 (Improvement recommended) — not C1 or C2. Note 15 confirms: "C3 observation is advisory and does not affect the overall assessment of the Report".',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'EICR Section D ("Extent and Limitations") includes an A4:2026 explicit limitation: "No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made." What does this clause achieve?',
     options: [
-      'It absolves the inspector of any responsibility',
-      "It is a clear, written acknowledgement that the inspector did not check manufacturer safety alerts / recalls (e.g. Wylex / FuseBox / Hager device recalls) — this is a routine limitation that the client accepts in advance, narrowing the inspector's liability for missed recalls",
-      'It is mandatory follow-up by the client',
-      'It is decorative',
+      'A written acknowledgement that recalls were not checked, bounding the inspector’s liability',
+      'It absolves the inspector of any responsibility for the whole condition report',
+      'It mandates that the client carries out the recall checks as a follow-up action',
+      'It is a decorative clause carried over from the previous edition of the form',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section D lists default limitations that "unless specifically agreed between the client and inspector prior to the inspection" apply. The recall-check limitation is an A4:2026-era clarification that recall-checking is not part of a standard EICR. If the client wants recall-checking they must agree it explicitly in advance and pay for it. Without that agreement, the limitation is in force and the inspector&rsquo;s liability is bounded.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'On the EICR, an inspector finds that a final circuit&rsquo;s polarity is reversed at one accessory. Which classification, and what action is mandated?',
     options: [
-      'C3 — improvement recommended',
-      'C1 — danger present, risk of injury, immediate remedial action is necessary; per Note 13 "items classified as Danger present (C1) are to be made safe on discovery"',
-      'C2',
-      'FI',
+      'C3 — improvement recommended, advisory only with no urgent action',
+      'C2 — potentially dangerous, urgent remedial action required',
+      'FI — further investigation required before any verdict is reached',
+      'C1 — danger present; the item must be made safe on discovery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reversed polarity (line and neutral swapped) is a C1 — Danger present. EICR Notes for the Producer item 13: "Wherever practicable, items classified as Danger present (C1) are to be made safe on discovery. Where this is not possible the owner or user is to be given written notification as a matter of urgency". The inspector cannot leave site without either making it safe (with consent) or issuing the urgent written notification. C1 always drives an UNSATISFACTORY verdict.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'On the EICR Section K Observations, the form provides separate sub-tables for "C1 and C2 OBSERVATION(S)" and "C3 and FI OBSERVATION(S)". What is the rationale for this split?',
     options: [
-      'It is purely visual',
-      'The split is normative: C1 and C2 affect the overall assessment (driving UNSATISFACTORY); C3 and FI do not. The split makes the assessment-affecting observations visually distinct and forces the inspector to classify correctly before writing',
-      'It is for archiving',
-      'C3 observations are optional',
+      'It is purely a visual layout choice with no bearing on the assessment',
+      'It is to make the report easier to archive and retrieve in future',
+      'C1 and C2 affect the overall assessment, whereas C3 and FI do not',
+      'C3 observations are optional and need not be recorded at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section K is split into two sub-tables for a reason: the upper sub-table (C1, C2) carries the assessment-affecting observations, footnoted "These items affect the overall assessment of the report"; the lower sub-table (C3, FI) carries the advisory observations, footnoted "These items do not affect the overall assessment of the report". The split forces honest classification — if you write a finding under C1/C2, you have committed to UNSATISFACTORY; if you write under C3/FI, you have not.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'EICR Section F ("Recommendation for Next Inspection") is supported by Reg 653.4 and Note 20 (Reg 651.4 / 652.1). What does it require?',
     options: [
-      'A fixed 10-year interval for all installations',
-      'A recommended date for the next EICR, supported by an explanation. Per Reg 653.4 the report shall indicate a recommended interval until the next inspection, supported by an explanation. The interval should consider Reg 652.1 frequency factors and the overall condition',
-      'A guarantee of installation life',
-      'The next utility bill',
+      'A recommended interval until the next inspection, supported by an explanation',
+      'A fixed ten-year interval applied uniformly to all installations',
+      'A guarantee of the installation’s remaining service life in years',
+      'The date by which the next utility supply contract should be renewed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 653.4 reads: "The Report shall indicate a recommended interval until the next inspection, supported by an explanation for the recommendation". Section F captures this. Note 20: "The interval until the next inspection is recorded in Section F in the form of a date by which the next Electrical Installation Condition Report is recommended, supported by an explanation for the recommendation, as required by Regulation 653.4. The interval between inspections should take into account the requirements of Regulation 652.1 and the overall condition of the installation."',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'A new A4:2026 note added to Reg 653.2 makes a specific recording method permissible. What is it?',
     options: [
-      'Voice recording',
-      'A note pointing out that photographic and/or thermographic images can be appended to the report — explicitly permitted in support of observations',
-      'Witness statements',
-      'AI-generated reports',
+      'Voice recordings of the inspection can be appended in support of observations',
+      'Signed witness statements can be appended in support of observations',
+      'AI-generated narrative reports can be appended in support of observations',
+      'Photographic and/or thermographic images can be appended to support observations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4:2026 added a note to Reg 653.2: "A note has also been added pointing out that photographic and/or thermographic images can be appended to the report". The EICR Section K confirms: "NOTE: Photographic and/or thermographic images can be attached to the report to support observations made in this Section". This is the regulatory basis for thermal-imaging photos and visible-light defect photos in modern EICRs.',
   },

@@ -23,14 +23,14 @@ const inlineChecks = [
     question:
       'What is the minimum horizontal illuminance required across an open area (anti-panic) under BS EN 1838:2024?',
     options: [
-      '0.2 lx.',
-      '0.5 lx minimum across the unobstructed area, measured at floor level. The figure is half of escape route illuminance because anti-panic lighting answers a different question — not "can occupants follow a route" (escape route lighting handles that) but "can occupants in a large open area perceive the layout well enough to identify and reach an escape route without panic". Visual identification of the surroundings, not navigation along a specific path, is what 0.5 lx delivers.',
+      '0.5 lx across the unobstructed area, at floor level.',
+      '0.2 lx across the unobstructed area, at floor level.',
       '1 lx — same as escape route lighting.',
       '15 lx — same as high-risk task area.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'BS EN 1838:2024 §5.1 sets 0.5 lx as the minimum across the unobstructed area of an anti-panic open-area space. The function is panic prevention through orientation, which requires less illuminance than route navigation. Anti-panic and escape route are separate functional categories with separate illuminance figures.',
+      'BS EN 1838:2024 §5.1 sets 0.5 lx as the minimum across the unobstructed area of an anti-panic open-area space. The figure is half of escape route illuminance because anti-panic answers a different question — not "can occupants follow a route" but "can occupants perceive the layout well enough to identify and reach an escape route without panic". Visual orientation, not navigation along a path, is what 0.5 lx delivers. Anti-panic and escape route are separate functional categories with separate illuminance figures.',
   },
   {
     id: 'elm2-s2-perimeter',
@@ -38,34 +38,34 @@ const inlineChecks = [
       'What is excluded from the area over which the 0.5 lx minimum is verified, under BS EN 1838:2024?',
     options: [
       'Nothing — the rule applies to every square metre.',
-      'A 0.5 m perimeter band against walls, columns, and obstacles is excluded from the area used for verification. The rule reflects two facts: (a) people are unlikely to be standing pressed against walls during the panic phase, and (b) walls absorb light unevenly so corner illuminance is hard to design for and not functionally critical. The 0.5 lx minimum applies to the body of the unobstructed area excluding this perimeter strip.',
-      'Only the centre of the room.',
+      'Only the centre of the room is excluded.',
+      'A 0.5 m perimeter band against walls, columns, and obstacles.',
       'The entire room — only doorways are verified.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'The 0.5 m perimeter exclusion is a key methodological feature of anti-panic open-area calculation. It distinguishes anti-panic methodology from escape route methodology (which has no perimeter exclusion). Mixing the two is one of the most common design errors at the boundary between functional categories.',
+      'A 0.5 m perimeter band against walls and obstacles is excluded from the verification area. The rule reflects two facts: people are unlikely to be pressed against walls during the panic phase, and walls absorb light unevenly so corner illuminance is hard to design for and not functionally critical. The 0.5 lx minimum applies to the body of the unobstructed area excluding this strip. This is a key methodological feature of anti-panic calculation that distinguishes it from escape route methodology (which has no perimeter exclusion). Mixing the two is one of the most common errors at the boundary between functional categories.',
   },
   {
     id: 'elm2-s2-uniformity',
     question:
       'What is the maximum permissible max-to-min uniformity ratio for open-area (anti-panic) lighting under BS EN 1838:2024?',
     options: [
-      '10:1.',
-      '40:1 maximum ratio across the unobstructed area excluding the 0.5 m perimeter. The figure is the same as escape route lighting (along the route) and reflects the same physiological constraint — bright-to-dark contrast that exceeds 40:1 produces eye-adaptation problems for the dark-adapted occupant. Anti-panic uniformity is verified ACROSS the area; escape route uniformity is verified ALONG the route. Different geometries, same ratio.',
-      '60:1.',
+      '10:1 — tighter than the standard requires.',
+      '60:1 across the unobstructed area.',
       'No limit applies to anti-panic lighting.',
+      '40:1 across the unobstructed area, excluding the 0.5 m perimeter.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Both escape route and anti-panic lighting share the 40:1 maximum uniformity ratio. The shared figure makes the design easier when both methodologies apply to the same area: a layout that achieves 40:1 uniformity for escape route purposes also achieves it for anti-panic.',
+      'Both escape route and anti-panic lighting share the 40:1 maximum uniformity ratio — the same physiological constraint, since bright-to-dark contrast over 40:1 produces eye-adaptation problems for the dark-adapted occupant. Anti-panic uniformity is verified ACROSS the area; escape route uniformity is verified ALONG the route — different geometries, same ratio. The shared figure makes design easier when both methodologies apply to one area: a layout achieving 40:1 for the route also achieves it for anti-panic.',
   },
   {
     id: 'elm2-s2-trigger',
     question: 'When does anti-panic open-area lighting become mandatory under BS EN 1838:2024?',
     options: [
-      'Only when the area exceeds 100 m².',
-      'When the unobstructed area exceeds 60 m² OR when occupancy exceeds 10 persons regardless of area size, whichever triggers first. The dual trigger captures two different risk profiles: (a) large empty spaces where occupants could lose orientation in darkness even at low occupancy (the 60 m² rule), and (b) crowded spaces where panic could spread rapidly even in a smaller room (the 10-occupant rule). A small 30 m² meeting room with 12 occupants triggers anti-panic; an empty 80 m² warehouse aisle also triggers.',
+      'Only when the unobstructed area exceeds 100 m².',
+      'When the unobstructed area exceeds 60 m² OR occupancy exceeds 10 persons.',
       'Only when occupancy exceeds 50 persons.',
       'In all rooms regardless of size or occupancy.',
     ],
@@ -81,138 +81,138 @@ const quizQuestions = [
     question:
       'What is the FUNCTIONAL purpose of open-area (anti-panic) emergency lighting under BS EN 1838:2024?',
     options: [
-      'Identical to escape route lighting — illuminate the path to a final exit.',
-      'Prevent panic in large unobstructed spaces by giving occupants enough light to perceive the layout, identify the direction of an escape route, and reach that route without losing orientation. The anti-panic category covers the GAP between "I am in this open area" and "I have entered a defined escape route". Escape route lighting takes over once the occupant is on the route. The 0.5 lx anti-panic minimum is calibrated for visual orientation, not for following a defined path.',
-      'Replace escape route lighting in spaces over 60 m².',
-      'Provide 15 lx for safe machinery shutdown.',
+      'Give occupants enough light to perceive layout and identify an escape route without losing orientation.',
+      'Identical to escape route lighting — illuminate the defined path to a final exit.',
+      'Replace escape route lighting in any open space over 60 m².',
+      'Provide 15 lx at the working plane for safe machinery shutdown.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Anti-panic, escape route, and high-risk task lighting are three independent functional categories answering three different questions. Anti-panic answers: can the occupant in an open space identify and reach an escape route without losing orientation. The 0.5 lx figure is the calibrated answer.',
+      'Anti-panic, escape route, and high-risk task lighting are three independent functional categories answering three different questions. Anti-panic covers the gap between being in an open area and entering a defined escape route — perceiving the layout, identifying the exit direction, and starting to move, without losing orientation. Escape route lighting takes over once the occupant is on the route. The 0.5 lx minimum is calibrated for visual orientation, not for following a defined path.',
   },
   {
     id: 2,
     question:
       'A meeting room has unobstructed floor area 35 m² and seats 14 people. Does anti-panic emergency lighting apply?',
     options: [
-      'No — area is below 60 m².',
-      'Yes — the 10-occupant trigger fires regardless of area. BS EN 1838:2024 mandates anti-panic lighting where unobstructed area > 60 m² OR occupancy > 10 persons (either trigger). 14 occupants in a 35 m² room exceeds the occupancy trigger, so anti-panic 0.5 lx applies across the unobstructed area excluding the 0.5 m perimeter. This catches small meeting rooms, conference rooms, training rooms, and waiting areas that would otherwise slip through if only the area trigger were applied.',
-      'No — meeting rooms are exempt.',
+      'No — the unobstructed area is below 60 m².',
+      'No — meeting rooms are exempt from anti-panic.',
+      'Yes — the 10-occupant trigger fires regardless of area.',
       'Only if the meeting is held after dark.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The dual trigger is one of the headline 1838:2024 rules. Either the area OR the occupancy can fire it. A small high-occupancy meeting room is a classic trigger case that designers frequently miss; the 0.5 lx anti-panic illuminance is mandatory in that room.',
+      'BS EN 1838:2024 mandates anti-panic lighting where unobstructed area > 60 m² OR occupancy > 10 persons (either trigger). 14 occupants in a 35 m² room exceeds the occupancy trigger, so anti-panic 0.5 lx applies across the unobstructed area excluding the 0.5 m perimeter. This dual trigger catches small meeting rooms, conference rooms, training rooms, and waiting areas that would otherwise slip through if only the area trigger were applied — a classic case designers frequently miss.',
   },
   {
     id: 3,
     question: 'What is the maximum max-to-min uniformity ratio for anti-panic open-area lighting?',
     options: [
-      '10:1.',
-      '40:1 across the unobstructed area excluding the 0.5 m perimeter. Same figure as escape route lighting (which applies along the route). The shared 40:1 means a single luminaire layout can satisfy both metrics in spaces where both functional categories apply.',
-      '100:1.',
-      'No limit.',
+      '10:1 across the unobstructed area.',
+      '100:1 across the unobstructed area.',
+      'No limit applies to the unobstructed area.',
+      '40:1 across the unobstructed area, excluding the 0.5 m perimeter.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 1838:2024 retains 40:1 as the uniformity cap for both escape route (longitudinal) and anti-panic (areal) lighting. The figure caps glare-to-shadow contrast that the dark-adapted eye cannot accommodate.',
+      'BS EN 1838:2024 retains 40:1 as the uniformity cap for both escape route (longitudinal) and anti-panic (areal) lighting. The figure caps glare-to-shadow contrast the dark-adapted eye cannot accommodate. The shared 40:1 means a single luminaire layout can satisfy both metrics where both functional categories apply.',
   },
   {
     id: 4,
     question:
       'A 0.5 m perimeter band against the walls of an open area is treated how, in anti-panic verification?',
     options: [
-      'Treated identically to the rest of the area.',
-      'EXCLUDED from the area over which 0.5 lx is verified. The perimeter exclusion is a methodological feature of anti-panic lighting (BS EN 1838:2024 §5). Walls absorb light unevenly and corners are hard to design for; people in the panic phase are unlikely to be pressed against walls. The 0.5 lx minimum applies to the body of the unobstructed area, excluding this strip.',
-      'Verified to a higher 1 lx minimum.',
-      'Verified at 5 lx vertical only.',
+      'Excluded from the area over which the 0.5 lx minimum is verified.',
+      'Treated identically to the rest of the unobstructed area.',
+      'Verified to a higher 1 lx minimum than the rest of the area.',
+      'Verified at 5 lx vertical illuminance only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 0.5 m perimeter exclusion belongs to anti-panic methodology and NOT to escape route methodology. Escape route verification applies the 1 lx rule to the full route width with no exclusion. The two methodologies treat the boundary differently — a frequent source of errors when both apply to the same space.',
+      'The perimeter exclusion is a methodological feature of anti-panic lighting (BS EN 1838:2024 §5). Walls absorb light unevenly and corners are hard to design for; people in the panic phase are unlikely to be pressed against walls. The 0.5 lx minimum applies to the body of the unobstructed area, excluding this strip. The exclusion belongs to anti-panic methodology and NOT to escape route methodology, which applies 1 lx to the full route width with no exclusion. The two treat the boundary differently — a frequent source of errors when both apply to the same space.',
   },
   {
     id: 5,
     question:
       'Within how many seconds of mains failure must anti-panic lighting reach 50 % of its rated illuminance, under BS EN 1838:2024?',
     options: [
-      '0.5 s.',
-      '5 s — anti-panic lighting follows the same general response-time rule as escape route lighting: 50 % of rated illuminance within 5 s, full rated illuminance within 60 s. The 5 s figure is the GENERAL response time for emergency escape lighting categories. Only high-risk task lighting tightens this further (to 0.5 s) because of the safety consequences of operating machinery in darkness.',
-      '15 s.',
-      '60 s.',
+      '0.5 s — the high-risk task-area figure.',
+      '15 s to 50 %, with full output within 60 s.',
+      '5 s to 50 %, with full output within 60 s.',
+      '60 s, matching the full-output allowance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BS EN 1838:2024 §5.3 — anti-panic response time identical to escape route: 50 % within 5 s, 100 % within 60 s. Modern LED systems achieve both within milliseconds; the 60 s allowance is a legacy of discharge-lamp warm-up.',
+      'BS EN 1838:2024 §5.3 — anti-panic response time follows the same general rule as escape route lighting: 50 % within 5 s, full rated illuminance within 60 s. The 5 s figure is the GENERAL response time for emergency escape lighting categories. Only high-risk task lighting tightens this further (to 0.5 s) because of the safety consequences of operating machinery in darkness. Modern LED systems achieve both within milliseconds; the 60 s allowance is a legacy of discharge-lamp warm-up.',
   },
   {
     id: 6,
     question:
       'A retail unit has a 220 m² open shopfloor with display fixtures occupying about 40 m² of that area. What anti-panic methodology applies?',
     options: [
-      'Treat the full 220 m² as the verification area.',
-      'The UNOBSTRUCTED area is the full 220 m² minus the fixture footprint, leaving roughly 180 m² as the unobstructed area against which 0.5 lx is verified. Display fixtures are obstructions that occupants navigate around; they form part of the 0.5 m perimeter exclusion concept extended to internal obstacles. Verify 0.5 lx across the floor space that occupants can actually walk on, not the gross room area.',
-      'Treat the fixtures as separate task areas.',
-      'Apply 1 lx escape route across the whole floor.',
+      'Treat the full 220 m² gross floor as the verification area.',
+      'Treat each fixture cluster as a separate high-risk task area.',
+      'Apply 1 lx escape route across the whole shopfloor.',
+      'Verify 0.5 lx across the unobstructed area — gross minus the fixture footprint (about 180 m²).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The "unobstructed" qualifier is load-bearing. Anti-panic methodology applies to the floor area occupants can stand on or walk through. Internal obstructions (fixtures, plant, partitions) are excluded along with their 0.5 m perimeter. The 0.5 lx minimum applies to the unobstructed floor that remains.',
+      'The unobstructed area is the full 220 m² minus the fixture footprint, leaving roughly 180 m² against which 0.5 lx is verified. Display fixtures are obstructions occupants navigate around; they form part of the perimeter-exclusion concept extended to internal obstacles. The "unobstructed" qualifier is load-bearing — verify 0.5 lx across the floor occupants can actually walk on, not the gross room area. Internal obstructions are excluded along with their 0.5 m perimeter.',
   },
   {
     id: 7,
     question:
       'A wide office open-plan area is 18 m × 12 m (216 m²) with the main escape route running diagonally across the floor. Both functional categories apply. What does the design need to satisfy?',
     options: [
-      'Only escape route — anti-panic is suppressed by escape route.',
-      'Both. Escape route methodology requires 1 lx across the full width of the diagonal route at floor level (with edge exclusions per BS EN 1838:2024), with 40:1 uniformity along the route within the non-excluded width. Anti-panic methodology requires 0.5 lx across the unobstructed area excluding the 0.5 m perimeter, with 40:1 uniformity across the area. In practice the layout that satisfies escape route 1 lx (the more demanding metric) usually also satisfies anti-panic 0.5 lx — but the area-wide verification still has to be performed because the perimeter and uniformity rules differ between the two methodologies.',
-      'Only anti-panic — escape route does not apply in open spaces.',
-      'Apply 15 lx high-risk task across the whole area.',
+      'Both — 1 lx along the diagonal route AND 0.5 lx across the unobstructed area.',
+      'Only escape route — anti-panic is suppressed by the escape route requirement.',
+      'Only anti-panic — escape route does not apply within open spaces.',
+      'Apply 15 lx high-risk task lighting across the whole area.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Both functional categories apply concurrently when the geometry triggers both. Verify each at every point. In commissioning, the escape route lux meter walk follows the route; the anti-panic verification is a grid of measurements across the unobstructed area.',
+      'Both functional categories apply concurrently when the geometry triggers both. Escape route methodology requires 1 lx across the full width of the diagonal route at floor level (with BS EN 1838:2024 edge exclusions) and 40:1 uniformity along the route; anti-panic requires 0.5 lx across the unobstructed area excluding the 0.5 m perimeter, with 40:1 across the area. The layout satisfying escape route 1 lx (the more demanding metric) usually also satisfies anti-panic, but area-wide verification must still be performed because the perimeter and uniformity geometries differ. In commissioning, the route is a lux-meter walk; anti-panic is a grid of measurements across the area.',
   },
   {
     id: 8,
     question: 'What rated DURATION applies to anti-panic open-area lighting under BS 5266-1:2025?',
     options: [
-      '30 minutes.',
-      'Same as escape route lighting in the same premises — typically 3 h for non-domestic, with shorter durations (1 h or 2 h) by exception with risk-assessment justification. Anti-panic and escape route lighting share a duration because they share a battery / central system; designing them to different durations is mechanically possible but rarely done. The premises duration applies to the whole emergency installation.',
-      '8 hours.',
+      '30 minutes, regardless of the building duration.',
+      '8 hours, regardless of the building duration.',
+      'Same as escape route in the same premises — typically 3 h non-domestic.',
       'Anti-panic lighting has no minimum duration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Duration is a property of the emergency installation as a whole, not a separate property of each functional category. The 3 h default for non-domestic premises applies to escape route, anti-panic, signage, and high-risk task lighting alike (where high-risk task is provided).',
+      'Duration is a property of the emergency installation as a whole, not a separate property of each functional category. Anti-panic and escape route share a duration because they share a battery / central system. The 3 h default for non-domestic premises applies to escape route, anti-panic, signage, and high-risk task lighting alike, with shorter durations (1 h or 2 h) only by exception with risk-assessment justification.',
   },
   {
     id: 9,
     question:
       'During mains failure, what happens to occupants in an unlit large open area BEFORE anti-panic lighting kicks in (within the 5 s response window)?',
     options: [
-      'Nothing — vision is preserved by ambient light.',
-      'Total or near-total darkness produces immediate disorientation. The eye is light-adapted (operating from photopic vision via cone cells). Sudden darkness leaves cones non-functional and rod cells (scotopic vision) require 20-30 minutes to fully dark-adapt. In the first 5 s, occupants effectively cannot see. Crowded spaces produce panic responses — pushing toward perceived exits, knocking down others, blocking doorways. The 5 s response time is calibrated to interrupt this physiological/psychological cascade before the panic response fires.',
-      'Cone cells continue to operate normally.',
-      'Vision is preserved by emergency floor lighting only.',
+      'Nothing — vision is preserved by residual ambient light.',
+      'Cone cells continue to operate normally in the dark.',
+      'Vision is preserved by the emergency floor lighting only.',
+      'Near-total darkness produces immediate disorientation while the eye is still light-adapted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 5 s figure is a human-factors rule, not an arbitrary engineering target. The point is to restore visual orientation BEFORE the dark-adaptation lag and the panic-response cascade fire. Once panic starts in a crowd it is hard to interrupt; the 5 s rule prevents it from starting.',
+      'The eye is light-adapted, operating from photopic vision via cone cells. Sudden darkness leaves cones non-functional, and rod cells (scotopic vision) require 20-30 minutes to fully dark-adapt — so in the first 5 s occupants effectively cannot see. Crowded spaces produce panic responses: pushing toward perceived exits, knocking down others, blocking doorways. The 5 s response time is a human-factors rule calibrated to interrupt this physiological and psychological cascade before the panic response fires — once panic starts in a crowd it is hard to interrupt.',
   },
   {
     id: 10,
     question:
       'A small bar with 8 occupants and a 25 m² floor area requests an emergency lighting design. What category(ies) apply?',
     options: [
-      'No emergency lighting required — below all triggers.',
-      'Escape route lighting (mandatory at the exit door, change of direction, top/bottom of any stair, and along any defined escape route) applies. Anti-panic does NOT apply because BOTH triggers fail: 25 m² < 60 m² AND 8 occupants ≤ 10 persons. The bar still needs escape route lighting at its mandatory points (exit door, etc.) and signage at the exit. Anti-panic methodology is suppressed because the space is small enough and lightly occupied enough that orientation is achieved by the escape route luminaires alone. As soon as either trigger fires (occupancy 11+, area 60 m²+) anti-panic kicks in.',
-      'Anti-panic mandatory.',
-      'High-risk task mandatory.',
+      'Escape route lighting only — both anti-panic triggers fail at 25 m² and 8 occupants.',
+      'No emergency lighting required — the premises is below all triggers.',
+      'Anti-panic lighting is mandatory across the unobstructed area.',
+      'High-risk task lighting at 15 lx is mandatory throughout.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Anti-panic is conditional — it applies above thresholds, not to all premises. Escape route lighting is unconditional — it applies wherever a defined escape route exists, in any non-domestic premises (and in common parts of multi-occupancy residential). The two categories overlap when both triggers fire; below the anti-panic thresholds, only escape route applies.',
+      'Escape route lighting applies at the exit door, change of direction, top/bottom of any stair, and along any defined escape route, plus signage at the exit. Anti-panic does NOT apply because both triggers fail: 25 m² < 60 m² AND 8 occupants ≤ 10 persons. Anti-panic is conditional — it applies above thresholds, not to all premises. Escape route lighting is unconditional wherever a defined escape route exists, in any non-domestic premises (and in common parts of multi-occupancy residential). As soon as either trigger fires (occupancy 11+, or area 60 m²+) anti-panic kicks in alongside it.',
   },
 ];
 

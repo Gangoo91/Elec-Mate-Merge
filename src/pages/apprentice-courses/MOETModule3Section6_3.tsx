@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of a battery energy storage system (BESS) in an electrical installation?',
     options: [
-      'Stop. Call the supervisor / contractor coordinator. Agree a remedial sequence — usually: wait for plaster to dry, cut neat access channels, install, and bring the plasterer back for a small make-good. Document the additional work.',
-      'To store electrical energy (as chemical energy in batteries) for later use — enabling time-shifting of renewable generation, peak demand reduction, frequency response, backup power and grid stabilisation services',
-      'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
-      'The mentor must act regardless of whether a formal complaint is made \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 challenge the behaviour, support the apprentice, and report it as the Equality Act 2010 places a duty on employers to prevent harassment',
+      'To convert direct current from the battery into the 50 Hz mains supply for the installation',
+      'To store electrical energy for later use, enabling time-shifting, peak reduction, frequency response and backup',
+      'To correct the power factor of the installation towards unity under varying load conditions',
+      'To provide overcurrent protection for the final circuits supplying the building loads',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'Why is lithium-ion the dominant battery chemistry for modern energy storage systems?',
     options: [
-      'Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note "no documentation available" as a limitation against affected items on the schedule.',
-      's.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades, visitors. On a domestic install it\\\\\\\\\\\\\\\'s s.3 that catches the customer\\\\\\\\\\\\\\\'s family. On a commercial fit-out it\\\\\\\\\\\\\\\'s s.3 that catches the trades next to you.',
-      'Indirectly - 30-year DPA liability, competence framework changes, Building Regs amendments (Approved Doc B fire safety especially), regulatory direction-of-travel emphasising traceability and certified competence.',
-      'It offers a combination of high energy density (storing more energy per kg and per litre), high round-trip efficiency (90-95%), long cycle life (3,000-10,000 cycles), low self-discharge, and no memory effect — making it suitable for both domestic and grid-scale applications',
+      'It is the cheapest battery chemistry available and contains no hazardous or flammable materials',
+      'It can be fully discharged repeatedly without any reduction in its rated cycle life',
+      'It requires no battery management system because the cells cannot overheat or overcharge',
+      'It combines high energy density, 90-95% round-trip efficiency, long cycle life and low self-discharge',
     ],
     correctIndex: 3,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'bms-function',
     question: 'What is the primary function of a battery management system (BMS)?',
     options: [
-      'To monitor and control individual cell voltages, temperatures and state of charge — preventing overcharge, over-discharge, overcurrent and thermal conditions that could lead to cell degradation or thermal runaway',
-      'Shift focus from the outcome (&ldquo;I failed&rdquo;) to identity (&ldquo;I am someone who persists&rdquo;), analyse specific skill gaps with lead measures, and use deliberate practice on weak areas',
-      'Normal — the live Zs measurement includes some additional impedance from the protective device internal contacts and from any small leakage paths at the time of the live measurement. A 0.03 Ω difference is well within the expected agreement between the two methods.',
-      '3 years per ESF/GN3 guidance for general industrial — adjusted shorter for higher-risk processes (chemical, foundry, heavy machinery) or where the installation operates 24/7 with elevated thermal cycling.',
+      'To monitor and control cell voltages, temperatures and state of charge, preventing overcharge, over-discharge and overheating',
+      'To convert the battery DC output into 230 V AC for export to the grid and household loads',
+      'To physically support and restrain the weight of the battery modules within the enclosure',
+      'To provide an automatic backup grid connection in the event that the main supply fails',
     ],
     correctIndex: 0,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     id: 'thermal-runaway',
     question: 'What is thermal runaway in a lithium-ion battery system?',
     options: [
-      'The electrical contractor\\\\\\\\\\\\\\\'s Foreman or Charge-hand at the morning brief — they translate the day\\\\\\\\\\\\\\\'s programme into specific tasks for each pair of hands. The Approved Electrician you\\\\\\\\\\\\\\\'re paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.',
-      'Yes — Reg 411.3.1.1 has one specific exception: a lampholder having no exposed-conductive-parts and suspended from such a point. An all-plastic Class II pendant from an all-plastic rose meets that exception.',
-      'An uncontrollable, self-sustaining exothermic chemical reaction within a cell — caused by overcharge, internal short circuit, mechanical damage or external heat — that can reach temperatures exceeding 700 degrees C and propagate to adjacent cells, causing fire and toxic gas release',
-      'A contractual provision that materials you supply remain your property until you have been paid in full. Protects you if a customer doesn\\\\\\\\\\\\\\\'t pay — you have legal grounds to reclaim unpaid materials, subject to the practicalities (the goods being identifiable and recoverable).',
+      'A gradual loss of usable capacity caused by repeated shallow charge and discharge cycles over time',
+      'A controlled, deliberate discharge of the battery to prevent overcharging during peak generation',
+      'An uncontrollable, self-sustaining exothermic reaction in a cell that can exceed 700 degrees C and spread to other cells',
+      'The normal warming of the battery enclosure during a sustained high-current discharge into loads',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The main lithium-ion battery chemistries used in BESS are:',
     options: [
-      'Strips of material fitted around the door edge that expand rapidly when exposed to heat, sealing the gap between the door and frame to prevent the passage of fire and hot gases',
-      'NMC (Nickel Manganese Cobalt — high energy density), LFP (Lithium Iron Phosphate — safer, longer cycle life, lower energy density), and NCA (Nickel Cobalt Aluminium — highest energy density, used in some commercial systems)',
-      'Respect their autonomy as an adult while expressing concern, exploring their reasons for not wanting others to know, strongly encouraging professional help, and documenting the conversation for your own safeguarding records',
-      'A detector that combines two or more sensing technologies (typically optical smoke and heat) in a single unit, using algorithms to analyse combined data for improved detection accuracy and reduced false alarms',
+      'Lead-acid, nickel-cadmium and nickel-metal-hydride rechargeable chemistries',
+      'NMC (Nickel Manganese Cobalt), LFP (Lithium Iron Phosphate) and NCA (Nickel Cobalt Aluminium)',
+      'Vanadium redox, zinc-bromine and other liquid flow-battery chemistries only',
+      'Alkaline, zinc-carbon and lithium-primary single-use disposable cells',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'A typical domestic battery storage system (e.g., Tesla Powerwall) operates at:',
     options: [
-      'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
-      'Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation',
-      '48-400 V DC internally, with an integrated inverter producing 230 V AC output — storing 5-15 kWh of usable energy with a peak power output of 3-7 kW',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      '11 kV DC internally, storing several megawatt-hours of usable energy',
+      '12 V DC internally, the same as a standard road vehicle starter battery',
+      '48-400 V DC internally with an integrated inverter, storing 5-15 kWh at 3-7 kW peak',
+      '230 V AC directly, with no inverter or internal DC stage at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'Grid-scale BESS installations are typically rated at:',
     options: [
-      'Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life',
-      '48-400 V DC internally, with an integrated inverter producing 230 V AC output — storing 5-15 kWh of usable energy with a peak power output of 3-7 kW',
-      'Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences',
-      '1-1,000 MWh capacity with power ratings of 1-500 MW — housed in shipping container-sized modules containing thousands of battery cells, power conversion equipment, cooling systems and fire suppression',
+      '5-15 kWh capacity, the same as a single domestic wall-mounted storage unit',
+      'A few hundred watt-hours, suited only to portable equipment and hand tools',
+      '1-10 kWh capacity, designed for individual flats and small apartments',
+      '1-1,000 MWh capacity at 1-500 MW, housed in container-sized modules with thousands of cells',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'The round-trip efficiency of a lithium-ion BESS is:',
     options: [
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
-      'Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life',
-      'Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release',
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
+      '90-95%, so most of the energy put in during charging is available again on discharge',
+      '40-50%, broadly comparable to the efficiency of a conventional diesel generator',
+      '100%, since there are effectively no losses at all in the charge and discharge cycle',
+      '70-80%, about the same figure as lead-acid batteries and pumped hydro storage',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'When installing a domestic BESS, BS 7671 requires:',
     options: [
-      '1-1,000 MWh capacity with power ratings of 1-500 MW — housed in shipping container-sized modules containing thousands of battery cells, power conversion equipment, cooling systems and fire suppression',
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
-      'Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding',
+      'No additional protective measures, since the battery is inherently safe at extra-low voltage',
+      'General requirements plus DC protection, isolation, labelling, ventilation, fire separation and bonding',
+      'Only AC-side protection, since the entire DC side is the equipment manufacturer’s responsibility',
+      'Installation inside a habitable room with no isolation, labelling or fire separation provided',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The state of charge (SoC) of a battery indicates:',
     options: [
-      'Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences',
-      'Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life',
-      'The remaining stored energy expressed as a percentage of the total usable capacity — monitored by the BMS using a combination of voltage measurement, current integration (coulomb counting), and temperature compensation algorithms',
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
+      'The total number of charge and discharge cycles the battery has completed in its life',
+      'The maximum instantaneous power the battery can deliver in a single full discharge',
+      'The remaining stored energy as a percentage of total usable capacity, tracked by the BMS',
+      'The permanent loss of capacity compared with the original rated capacity when new',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'Fire suppression systems in grid-scale BESS typically use:',
     options: [
-      'The remaining stored energy expressed as a percentage of the total usable capacity — monitored by the BMS using a combination of voltage measurement, current integration (coulomb counting), and temperature compensation algorithms',
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
-      'A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation',
+      'A single domestic smoke alarm fitted inside the container enclosure',
+      'A dry powder extinguisher operated manually by a passing site technician',
+      'No suppression at all, relying entirely on the surrounding building sprinkler system',
+      'Early detection with water mist or aerosol suppression plus ventilation to manage toxic gas',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'The depth of discharge (DoD) affects battery cycle life because:',
     options: [
-      'Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life',
-      '1-1,000 MWh capacity with power ratings of 1-500 MW — housed in shipping container-sized modules containing thousands of battery cells, power conversion equipment, cooling systems and fire suppression',
-      'The remaining stored energy expressed as a percentage of the total usable capacity — monitored by the BMS using a combination of voltage measurement, current integration (coulomb counting), and temperature compensation algorithms',
-      'Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences',
+      'Deeper cycles stress the electrode materials more, so limiting DoD (e.g. 80%) extends cycle life',
+      'Deeper discharge has no effect at all on cycle life, provided the cells are kept cool',
+      'Shallower discharge cycles always shorten cycle life and should therefore be avoided',
+      'Discharging fully to empty on every cycle is the recommended way to extend battery life',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'A hybrid inverter in a domestic PV-battery system:',
     options: [
-      'Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding',
-      'Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences',
-      'Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release',
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
+      'Only converts PV array output to AC and cannot interact with a battery at all',
+      'Manages power flow between the PV array, battery, household loads and the grid to suit tariffs',
+      'Provides the overcurrent protection for every final circuit throughout the dwelling',
+      'Stores energy chemically in the same way as the lithium-ion battery cells themselves',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'The main maintenance requirements for a domestic BESS include:',
     options: [
-      'Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release',
-      '1-1,000 MWh capacity with power ratings of 1-500 MW — housed in shipping container-sized modules containing thousands of battery cells, power conversion equipment, cooling systems and fire suppression',
-      'Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding',
-      'Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life',
+      'Opening every individual cell to top up the liquid electrolyte once each year',
+      'No maintenance at all, as the system is fully sealed for its entire service life',
+      'Visual inspection, BMS log review, ventilation checks, and testing of isolation and protection devices',
+      'Fully discharging and recharging the whole battery every week to recalibrate it',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     question:
       'If a maintenance technician discovers signs of battery swelling or electrolyte leakage:',
     options: [
-      '1-1,000 MWh capacity with power ratings of 1-500 MW — housed in shipping container-sized modules containing thousands of battery cells, power conversion equipment, cooling systems and fire suppression',
-      'A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation',
-      'Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding',
-      'Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release',
+      'Continue charging the battery to confirm whether the swelling gets any worse',
+      'Puncture the swollen cell carefully to release the trapped gas in a safe manner',
+      'Pick the battery up and move it outside immediately by hand, leaving it in the open',
+      'Evacuate, do not disturb the battery, call the fire service and contact the manufacturer',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'The UK electricity market uses BESS for frequency response because:',
     options: [
-      'Batteries can respond to frequency deviations within milliseconds (compared to seconds or minutes for conventional generators), injecting or absorbing power almost instantaneously to stabilise the grid frequency at 50 Hz — this fast response is increasingly critical as intermittent renewables replace conventional synchronous generators that provided inherent inertia',
-      'Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release',
-      'Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding',
-      'Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences',
+      'Batteries respond to frequency deviations within milliseconds, far faster than conventional generators',
+      'Batteries are the cheapest possible source of bulk energy available anywhere on the grid',
+      'Batteries provide the large rotating mechanical inertia that synchronous generators lack',
+      'Batteries can supply rated power continuously for several weeks without any recharging',
     ],
     correctAnswer: 0,
     explanation:

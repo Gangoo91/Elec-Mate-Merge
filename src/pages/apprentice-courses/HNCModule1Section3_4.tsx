@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'audit-vs-inspection',
     question: 'What is the key difference between an audit and an inspection?',
     options: [
-      'Organizing lights into logical groups for coordinated control',
+      'Audits are carried out by external bodies; inspections never are',
       'Audits examine systems and compliance; inspections check physical conditions',
-      'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
-      'Electromagnetic field limits and cookware compatibility',
+      'Audits check physical conditions; inspections examine paperwork only',
+      'Audits are legally required; inspections are entirely voluntary',
     ],
     correctIndex: 1,
     explanation:
@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     question: 'How often should workplace safety inspections typically be conducted?',
     options: [
       'Weekly to monthly depending on risk level',
-      'Where pump curve intersects system curve',
-      'Temperature sensors were miswired',
-      'Green-sheathed twisted pair cable certified for KNX',
+      'Only once at the start of a project',
+      'Every five years regardless of risk',
+      'Only after an accident has occurred',
     ],
     correctIndex: 0,
     explanation:
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'audit-evidence',
     question: 'What type of evidence should safety auditors gather?',
     options: [
-      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
-      '7.2 V (1.8 percent) — passes 5 percent.',
+      'Only the organisation’s written safety policy document',
+      'Only verbal assurances from senior management',
       'Documents, observations, and interviews combined',
-      'For safety, reliability, and patient comfort',
+      'Only photographs of the workplace taken on the day',
     ],
     correctIndex: 2,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of a safety audit?',
     options: [
-      'Mastery experiences — succeeding at a task yourself',
+      'To apportion blame to individuals after an accident',
       'To verify that safety management systems are effective',
-      'Avoid working at height altogether where possible',
-      'Consistent load profile making efficient use of capacity',
+      'To replace the need for workplace inspections entirely',
+      'To record the physical condition of equipment on the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: "What does a 'statutory inspection' refer to?",
     options: [
-      'Competent persons including managers, supervisors, and safety reps',
-      'Scope, findings, evidence, conclusions, and recommendations',
-      'Required inspection of electrical installations at defined intervals',
+      'An inspection requested voluntarily by the workforce',
+      'A management walk-round to demonstrate visible leadership',
+      'A daily housekeeping check carried out by the site supervisor',
       'Legally required inspection of specific equipment or systems',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'Who should conduct workplace safety inspections?',
     options: [
       'Competent persons including managers, supervisors, and safety reps',
-      'Required inspection of electrical installations at defined intervals',
-      'Scope, findings, evidence, conclusions, and recommendations',
-      'Logical sequence covering all relevant areas systematically',
+      'Only an external HSE inspector appointed by the regulator',
+      'Only the company director, as the legally accountable person',
+      'Any available operative, regardless of training or experience',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What is a 'non-conformance' in audit terminology?",
     options: [
-      'Rating decreases due to heating effects',
+      'A positive finding of good practice worth replicating',
       'A failure to meet a specified requirement',
-      'Overall assessment and recommendations',
-      'Flicker performance and smoothness',
+      'A worker who declines to take part in the audit',
+      'A recommendation for future improvement only',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the recommended structure for an inspection checklist?',
     options: [
-      'Scope, findings, evidence, conclusions, and recommendations',
-      'Competent persons including managers, supervisors, and safety reps',
+      'A single open-ended box for free-text general comments only',
+      'Items listed in random order to keep the inspector alert',
       'Logical sequence covering all relevant areas systematically',
-      'Logged, assigned owners, target dates set, and verified closed',
+      'Only the items that failed at the previous inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What should an audit report include?',
     options: [
-      'Logical sequence covering all relevant areas systematically',
-      'Required inspection of electrical installations at defined intervals',
-      'To demonstrate commitment and engage with workers on safety',
+      'A list of individuals at fault and proposed disciplinary action',
+      'Only the non-conformances, with no positive findings recorded',
+      'A pass or fail grade with no supporting detail or evidence',
       'Scope, findings, evidence, conclusions, and recommendations',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'How should corrective actions from inspections be prioritised?',
     options: [
       'By risk level - highest risk first',
-      '7.2 V (1.8 percent) — passes 5 percent.',
-      'Regularly based on competency assessment',
-      'Before each use and regularly during use',
+      'By the order in which they were found during the walk-round',
+      'By the lowest cost to fix first, regardless of risk',
+      'Alphabetically by the area or department affected',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "What is the purpose of a 'site safety tour' by senior management?",
     options: [
-      'Competent persons including managers, supervisors, and safety reps',
+      'To replace the formal weekly inspection carried out by supervisors',
       'To demonstrate commitment and engage with workers on safety',
-      'Inspection reports, findings, corrective actions, and close-out evidence',
-      'Scope, findings, evidence, conclusions, and recommendations',
+      'To identify individuals to discipline for unsafe behaviour',
+      'To satisfy a legal duty to inspect every site location daily',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'How should audit non-conformances be tracked?',
     options: [
-      'Logical sequence covering all relevant areas systematically',
-      'Scope, findings, evidence, conclusions, and recommendations',
+      'Noted verbally in the closing meeting, with no written record',
+      'Closed immediately once the auditor leaves the site',
       'Logged, assigned owners, target dates set, and verified closed',
-      'Competent persons including managers, supervisors, and safety reps',
+      'Held confidentially by the auditor and not shared with managers',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: "What is a 'periodic inspection' under the Electricity at Work Regulations?",
     options: [
-      'To demonstrate commitment and engage with workers on safety',
-      'Logged, assigned owners, target dates set, and verified closed',
-      'Legally required inspection of specific equipment or systems',
+      'A one-off inspection carried out only when the installation is new',
+      'A daily visual check of portable appliances before use',
+      'An inspection triggered solely by a reported electric shock',
       'Required inspection of electrical installations at defined intervals',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: 'What documentation should be retained from safety inspections?',
     options: [
       'Inspection reports, findings, corrective actions, and close-out evidence',
-      'Competent persons including managers, supervisors, and safety reps',
-      'Scope, findings, evidence, conclusions, and recommendations',
-      'Required inspection of electrical installations at defined intervals',
+      'Only records of inspections where a serious hazard was found',
+      'Nothing in writing, provided the actions were completed verbally',
+      'Only the blank checklist template used on the day',
     ],
     correctAnswer: 0,
     explanation:

@@ -45,9 +45,9 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     question: 'What role does BMS play in hospital operating theatres?',
     options: [
       'Maintains strict air quality standards and ventilation',
-      'Energy efficiency, comfort, and productivity',
-      'Through remote monitoring and predictive maintenance',
-      'For safety, reliability, and patient comfort',
+      'Switches off ventilation outside theatre hours to save energy',
+      'Controls only the lighting levels for the surgical team',
+      'Manages staff access and scheduling for the theatre',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Give one benefit of BMS in retail environments.',
     options: [
-      'It automatically prioritised critical systems like operating theatres and ICU',
+      'It guarantees a fixed temperature regardless of customer numbers',
       'Customer comfort and cost savings through optimised lighting and temperature',
-      'Maintains strict air quality standards and ventilation',
-      'Because regulations and priorities differ between healthcare, retail, and commercial environments',
+      'It removes the need for any manual store-management controls',
+      'It runs heating and lighting continuously to avoid cold starts',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'How can BMS integrate with security systems in retail?',
     options: [
-      'Customer comfort and cost savings through optimised lighting and temperature',
-      'Maintains strict air quality standards and ventilation',
+      'By replacing CCTV cameras with temperature sensors',
+      'By disabling alarms during opening hours to save power',
       'Through lighting scenes and monitoring systems to prevent theft',
-      'It automatically prioritised critical systems like operating theatres and ICU',
+      'By controlling till operations and stock-room access codes',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'Name one industrial facility where BMS is commonly applied.',
     options: [
-      'For safety, reliability, and patient comfort',
-      'Energy efficiency, comfort, and productivity',
-      'Universities, schools, and airports',
+      'Private residential flats and houses',
+      'Small high-street retail units',
+      'GP surgeries and dental practices',
       'Factories and manufacturing plants',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     question: 'What other type of public facility benefits from BMS?',
     options: [
       'Universities, schools, and airports',
-      'Factories and manufacturing plants',
-      'For safety, reliability, and patient comfort',
-      'Energy efficiency, comfort, and productivity',
+      'Domestic garages and garden sheds',
+      'Individual market stalls and kiosks',
+      'Temporary site welfare cabins',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians be aware of sector-specific requirements?',
     options: [
-      'Acceptable — Icn 6kA exceeds Ipf 4.2kA, satisfying Reg 432.1 breaking capacity requirement',
+      'Because the same BMS controller is fitted in every type of building',
       'Because regulations and priorities differ between healthcare, retail, and commercial environments',
-      'Learners anticipate the pattern and dismiss the positives as insincere padding around the real message',
-      'Cable ducts, distribution board cupboards in basements, underground chambers, and switch rooms with restricted ventilation',
+      'Because only healthcare sites are covered by BS 7671',
+      'Because cable colours change depending on the building sector',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: "In the real-world example, how did the hospital's BMS respond during a power cut?",
     options: [
-      'Because regulations and priorities differ between healthcare, retail, and commercial environments',
-      'Customer comfort and cost savings through optimised lighting and temperature',
+      'It shut down all systems until mains power was restored',
+      'It switched every circuit to the standby generator at once',
       'It automatically prioritised critical systems like operating theatres and ICU',
-      'Through lighting scenes and monitoring systems to prevent theft',
+      'It alerted the local network operator to dispatch an engineer',
     ],
     correctAnswer: 2,
     explanation:

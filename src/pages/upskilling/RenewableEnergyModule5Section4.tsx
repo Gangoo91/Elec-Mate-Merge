@@ -24,24 +24,24 @@ const inlineChecks = [
     question:
       'BS EN IEC 62485 series — what is it, and which part is most relevant for UK domestic LFP BESS?',
     options: [
-      'Just one document',
-      'BS EN IEC 62485 is a multi-part international standard family covering safety of secondary batteries and battery installations. Parts: -1 general safety + hazards; -2 stationary batteries (Pb-acid, VRLA, NiCd specifics); -3 traction batteries (industrial trucks); -4 small Li-ion (consumer / portable); -5 Li-ion stationary (the part most relevant for UK domestic BESS). UK domestic LFP BESS conformance is via the manufacturer&rsquo;s product certification declaration. Reg 570.6.1.1.1 mandates conformance to the relevant parts',
-      'Only -1 applies',
-      'No standard exists',
+      'A single document covering every battery type in one specification',
+      'A multi-part battery-safety series; the Li-ion stationary part suits UK domestic',
+      'Only Part -1 ever applies, whatever the battery chemistry being installed',
+      'A withdrawn standard with no relevance to current UK domestic BESS installs',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN IEC 62485 is the international standard family for battery installation safety. Five parts: -1 general (basic safety principles, hazard mitigation, common requirements); -2 stationary batteries (Pb-acid, VRLA, NiCd, alkaline) — covers hydrogen ventilation, charging safety, traditional chemistry installation; -3 traction batteries (forklifts, automated guided vehicles); -4 small Li-ion (consumer / portable, not stationary BESS); -5 Li-ion stationary — the part directly applicable to UK domestic LFP BESS. For UK domestic install: Part -1 (general principles) + Part -5 (Li-ion stationary specifics) are the relevant ones. Pb-acid legacy off-grid: Part -1 + Part -2. Reg 570.6.1.1.1 mandates conformance via &ldquo;the relevant parts&rdquo;. Manufacturer&rsquo;s product certification declares which parts applied. Cert evidence bundle records the declaration.',
+      'BS EN IEC 62485 is the international standard family for battery installation safety. It is a multi-part series: Part -1 sets the general/common safety principles; Part -2 covers stationary batteries (Pb-acid, VRLA, NiCd, alkaline) — hydrogen ventilation, charging safety, traditional chemistry installation; Part -3 covers traction batteries (forklifts, automated guided vehicles); later parts in the series extend the framework to lithium-ion, with the lithium-ion stationary part being the one directly applicable to UK domestic LFP BESS. For UK domestic install: the general part (-1) plus the lithium-ion stationary part are the relevant ones. Pb-acid legacy off-grid: Part -1 + Part -2. Reg 570.6.1.1.1 (BS 7671:2018+A4:2026) mandates conformance to &ldquo;the relevant parts of the BS EN IEC 62485 series&rdquo; — it does not itself enumerate the parts, so always confirm the exact current part-numbering against the published standard. The manufacturer&rsquo;s product certification declares which parts applied; the cert evidence bundle records the declaration.',
   },
   {
     id: 'm5s4-pas-63100',
     question:
       'PAS 63100:2024 — what is it, and how does it interact with BS 7671 Chapter 57?',
     options: [
-      'Same thing',
-      'PAS 63100:2024 = &ldquo;Specification for the installation and safe use of battery energy storage systems in electrical installations of dwellings.&rdquo; UK-specific Publicly Available Specification (PAS) published by BSI in 2024. Operational install guidance: location rules, clearances, fire detection, signage, commissioning workflow. Reg 570.6.7.203 (Chapter 57) EXPLICITLY cross-references PAS 63100 for batteries in UK dwellings. So: Chapter 57 = regulatory framework; PAS 63100 = UK domestic install detail. The competent installer complies with BOTH',
-      'Replaces Chapter 57',
-      'Optional',
+      'PAS 63100 and Chapter 57 are the same document under two different names',
+      'A UK domestic BESS install spec; Reg 570.6.7.203 cross-references it from Chapter 57',
+      'PAS 63100 replaces Chapter 57 entirely for any UK dwelling battery install',
+      'PAS 63100 is fully optional and has no link to BS 7671 requirements',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'BS EN IEC 62485-1 (general safety) — what high-level safety principles does it set for battery installations?',
     options: [
-      'No principles',
-      'Part -1 sets common safety principles applicable to all secondary battery installations regardless of chemistry: (1) electrical safety — shock protection, basic insulation, separation, isolation; (2) chemical safety — gas evolution mitigation, electrolyte handling, spill containment; (3) thermal safety — ventilation, temperature limits, fire-risk mitigation; (4) mechanical safety — mounting, vibration, impact; (5) maintenance procedures — safe-work practices, PPE, training. The chemistry-specific parts (-2, -5) build on Part -1\'s common framework',
-      'Customer\'s choice',
-      'Only for Pb-acid',
+      'Part -1 sets no principles; it simply lists the other parts in the series',
+      'Common electrical, chemical, thermal, mechanical and maintenance safety principles',
+      'Part -1 leaves all safety principles to the installer to decide on site',
+      'Part -1 applies only to Pb-acid batteries and not to any other chemistry',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'BS EN IEC 62485-5 (Li-ion stationary) — what Li-ion-specific safety topics does it address that don\'t apply to Pb-acid?',
     options: [
-      'No differences',
-      'Part -5 covers Li-ion-specific safety: (1) THERMAL RUNAWAY scenarios — propagation prevention, fire-rated enclosures, escape routes; (2) BMS function — V/I/T monitoring per cell, balancing, fault detection, contactor control; (3) cell-level safety — over-V / under-V / over-T limits; (4) communication protocols — CAN bus / Modbus / proprietary; (5) commissioning tests — capacity baseline, BMS handshake, first cycle; (6) end-of-life + disposal — Li-ion-specific recycling. Pb-acid Part -2 covers hydrogen evolution (irrelevant for LFP) + electrolyte handling — different focus',
-      'Customer\'s choice',
-      'Same as Pb-acid',
+      'There are no Li-ion-specific topics; Part -5 simply repeats the Part -2 content',
+      'Thermal runaway, BMS function, cell-level limits and Li-ion commissioning tests',
+      'The Li-ion-specific topics are left to the customer rather than the standard',
+      'Part -5 covers exactly the same hydrogen and electrolyte topics as Pb-acid',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'PAS 63100:2024 location rules for UK domestic BESS — what are the key prohibitions and requirements?',
     options: [
-      'No rules',
-      'PROHIBITED locations: (a) habitable rooms — bedrooms, lounge, dining, kitchen; (b) main escape routes / hallways serving as escape; (c) directly above / below bedrooms with insufficient fire separation. REQUIREMENTS: (1) location accessible for maintenance + emergency response; (2) clearances from windows / doors / openings to habitable spaces (typically &gt;1 m); (3) interconnected smoke / heat detection in the BESS room + adjoining areas; (4) appropriate fire-rated separation if multi-occupancy; (5) signage per Reg 570.6.8.201/202. Typical acceptable: garage (preferred), utility room, outbuilding, fire-rated external enclosure',
-      'Customer\'s choice',
-      'Anywhere indoors',
+      'There are no location rules; a domestic BESS can go in any convenient room',
+      'No habitable rooms or escape routes; clearances, detection and signage required',
+      'The customer alone decides where the battery is sited, with no constraints',
+      'It may be sited anywhere indoors provided the enclosure is sealed and locked',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'PAS 63100:2024 fire detection requirements — what does it specify, and how does it integrate with the dwelling alarm?',
     options: [
-      'No detection',
-      'PAS 63100 requires smoke / heat detection IN the BESS location AND interconnection with the dwelling\'s main fire alarm where present. Specifics: (a) appropriate detector type for the location — smoke detector (typical) OR heat detector (where smoke false-alarms likely, e.g. dusty garage); (b) detector connected to mains-powered fire alarm circuit per BS 5839-6 grades; (c) battery backup per BS 5839-6; (d) interconnection — when BESS-room detector activates, dwelling alarm sounds; (e) testing per annual EICR + smoke alarm service schedule. Customer information pack includes the detector location + test procedure',
-      'Customer\'s discretion',
-      'Only for commercial',
+      'No fire detection is required where the BESS sits in an external enclosure',
+      'Smoke or heat detection in the BESS location, interconnected to the dwelling alarm',
+      'Fire detection is at the customer\'s discretion once the install is signed off',
+      'Detection is required only for commercial BESS, never for domestic installs',
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const inlineChecks = [
     question:
       'How does the installer verify a BESS product\'s BS EN IEC 62485 conformance?',
     options: [
-      'Trust the brand',
-      'Read the manufacturer\'s product certification declaration. Reputable UK BESS brands (GivEnergy, Tesla, Sigenergy, FoxESS, Huawei, Enphase, BYD) publish: (a) Declaration of Conformity citing BS EN IEC 62485 parts applied; (b) test reports from accredited test labs (TÜV, UL, Intertek, etc.); (c) UKCA / CE marking documentation; (d) datasheets with safety + performance specs. Cert evidence bundle includes the manufacturer DoC + datasheet + the test certificate references. The installer doesn\'t test cells themselves — verifies via the manufacturer documentation',
-      'Customer verifies',
-      'No verification needed',
+      'Trust the brand name; reputable makers do not need their paperwork checked',
+      'Read the maker\'s Declaration of Conformity, test reports and UKCA/CE marking',
+      'Ask the customer to confirm conformance with the supplier before install',
+      'No verification is needed because the cells are sealed inside the enclosure',
     ],
     correctIndex: 1,
     explanation:
@@ -122,10 +122,10 @@ const inlineChecks = [
     question:
       'For a UK domestic LFP BESS install, what\'s the FULL set of standards / specs / regs that apply?',
     options: [
-      'Just BS 7671',
-      'Integrated stack: (1) BS 7671:2018+A4:2026 Chapter 57 (regulatory framework); (2) BS 7671:2018+A4:2026 Chapter 82 (PEI integration where hybrid PV+BESS or multi-source); (3) BS EN IEC 62485-1 + -5 (international safety standard for Li-ion stationary batteries); (4) PAS 63100:2024 (UK domestic-specific install spec); (5) BS EN 62619 (Li-ion battery safety); (6) BS 5839-6 (fire detection in dwellings); (7) BS 5839 series (general fire detection if multi-occupancy); (8) Approved Document B (Building Regulations fire safety); (9) MCS MIS 3001 / 3002 (for grant-funded installs). The competent installer references all of these in the cert evidence bundle',
-      'Customer\'s problem',
-      'Just one standard',
+      'Only BS 7671 applies; no product or building-safety standards are relevant',
+      'A stack: BS 7671 Ch 57/82, BS EN IEC 62485, PAS 63100, 62619, 5839-6, AD-B, MCS',
+      'Compliance is the customer\'s problem once the battery has been handed over',
+      'Just one standard governs the whole install, chosen by the manufacturer',
     ],
     correctIndex: 1,
     explanation:
@@ -137,114 +137,114 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Customer install: 10 kWh GivEnergy LFP BESS in integral garage. Which standards / regs apply, and where do they each touch the install?',
+      'Customer install: 10 kWh GivEnergy LFP BESS in integral garage. Which set of standards / regs governs the install?',
     options: [
-      'Just BS 7671',
-      'Integrated stack: (1) BS 7671 Chapter 57 — regulatory framework, all Reg 570.x apply; (2) BS 7671 Chapter 82 — PEI integration (this is a PEI install with PV+BESS); (3) BS EN IEC 62485-1 + -5 — manufacturer product certification; (4) PAS 63100:2024 — install location (integral garage acceptable per UK rules), clearances, fire detection (smoke alarm in garage interconnected with dwelling alarm), signage; (5) BS EN 62619 — Li-ion cell safety, manufacturer cert; (6) BS 5839-6 — fire detection grade (D mains-powered for new build), interconnection; (7) Approved Document B — fire separation between garage and dwelling habitable space. Cert evidence bundle integrates all',
-      'No standards apply',
-      'Customer\'s choice',
+      'BS 7671 Chapter 57 plus the manufacturer instructions are the only documents that apply to a domestic battery',
+      'BS 7671 plus the IET Wiring Regulations On-Site Guide, with no product-safety or building-regulation input needed',
+      'An integrated stack: BS 7671 Ch 57 + Ch 82, BS EN IEC 62485, PAS 63100:2024, BS EN 62619, BS 5839-6 and Approved Document B',
+      'Only PAS 63100:2024, since it is the UK-specific document and supersedes the others for dwellings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Comprehensive standards stack for a UK domestic LFP BESS install in integral garage: BS 7671 (Chapter 57 protection regs + Chapter 82 PEI design); BS EN IEC 62485-1 (general battery safety) + -5 (Li-ion stationary); PAS 63100:2024 (location, clearances, fire detection, signage); BS EN 62619 (cell-level Li-ion safety); BS 5839-6 (smoke/heat detector grades in dwellings); Approved Document B (Building Reg Part B fire safety, including garage-to-habitable separation). Each touches a different aspect: regulatory framework (BS 7671), international product safety (62485, 62619), UK install spec (PAS 63100), fire detection (5839-6), fire-rated separation (AD-B). Cert evidence bundle records compliance against each. The competent installer treats this as a checklist at design + commissioning.',
+      'A UK domestic LFP BESS install navigates an integrated stack: BS 7671 (Ch 57 protection + Ch 82 PEI), BS EN IEC 62485 (battery-install safety), PAS 63100:2024 (UK domestic install spec), BS EN 62619 (cell safety), BS 5839-6 (fire detection grade) and Approved Document B (garage-to-habitable fire separation). Each layer touches a different aspect; the cert evidence bundle records compliance against all of them.',
   },
   {
     id: 2,
     question:
-      'Customer wants the BESS in a small utility room that adjoins a master bedroom. PAS 63100 review?',
+      'Customer wants the BESS in a small utility room that adjoins a master bedroom. What does a PAS 63100 review conclude?',
     options: [
-      'Approve',
-      'INVESTIGATE the adjoining-room concern. PAS 63100 prohibits installation in habitable rooms AND requires consideration of adjacent habitable rooms for fire propagation risk. If the utility room has a non-fire-rated common wall with the bedroom, this is a problem — thermal-runaway scenario could expose the bedroom occupants. Mitigation options: (a) relocate to safer location (integral garage if available); (b) upgrade the utility-room/bedroom wall to fire-rated construction (typically 30-minute rating per AD-B); (c) accept the risk after written customer-informed-decision (rare for compliant installs). Cert evidence bundle records the location decision + the PAS 63100 assessment',
-      'Customer\'s decision',
-      'No issue',
+      'Approve as installed — a utility room is non-habitable, so the adjoining bedroom is not a PAS 63100 consideration',
+      'Investigate the adjoining-room risk: a non-fire-rated common wall to the bedroom needs relocation or fire-rated upgrade',
+      'Reject outright — PAS 63100 prohibits a BESS anywhere on the same floor as a bedroom regardless of separation',
+      'Approve only if the customer signs a disclaimer accepting all thermal-runaway risk to the bedroom occupants',
     ],
     correctAnswer: 1,
     explanation:
-      'PAS 63100:2024 location rules consider not just the BESS room itself but also adjacent rooms. A utility room adjoining a bedroom is borderline: the utility room itself isn\'t habitable, but a thermal-runaway scenario could affect the bedroom through non-fire-rated walls. Assessment factors: (1) wall construction (timber stud + plasterboard vs fire-rated drywall / masonry); (2) door between utility + bedroom — fire-rated FD30 vs standard door; (3) ventilation paths between rooms; (4) escape route through the affected area. Mitigations: relocate to integral garage (best); upgrade wall to 30-min FR construction; install in fire-rated cabinet within utility room. The competent surveyor identifies the issue at site visit; cert evidence bundle records the assessment + the chosen mitigation. PAS 63100 explicitly addresses adjacent-room considerations.',
+      'PAS 63100:2024 considers adjacent rooms, not just the BESS room. A utility room is non-habitable, but a thermal-runaway event could reach the bedroom through a non-fire-rated wall. The correct response is to assess wall/door construction and either relocate (integral garage), upgrade to 30-min fire-rated construction, or use a fire-rated cabinet — recording the decision in the cert evidence bundle.',
   },
   {
     id: 3,
     question:
-      'A customer has an existing LFP BESS install commissioned in 2022 (before PAS 63100:2024). EICR-style review identifies no smoke detector in the BESS room. Is this a finding?',
+      'An LFP BESS commissioned in 2022 (before PAS 63100:2024) has no smoke detector in the BESS room. How should an EICR-style review code this?',
     options: [
-      'No finding',
-      'YES — likely C3 (improvement recommended). The install pre-dates PAS 63100:2024 so wasn\'t retrospectively non-compliant when commissioned. However: best-practice expects updating to current standards where reasonable. EICR would record: &ldquo;PAS 63100:2024 not in force at original commissioning; current recommended practice requires smoke detector interconnected with dwelling alarm in BESS location. Recommend retrofit&rdquo;. C3 = recommend improvement, not immediate hazard. Customer informed; if they want to remediate, fit detector + record in cert evidence bundle',
-      'C1 immediate danger',
-      'Customer ignores it',
+      'C1 (immediate danger) — the absence of fire detection is always an immediately dangerous condition',
+      'C2 (potentially dangerous) — missing detection must be classed as potentially dangerous on every battery install',
+      'No code — the install pre-dates PAS 63100:2024 so it cannot attract any observation',
+      'C3 (improvement recommended) — compliant when commissioned, but below current best practice; recommend a retrofit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'EICR coding for pre-PAS install: typically C3 (improvement recommended). The install was compliant when commissioned (2022, before PAS 63100:2024 effective). It doesn\'t become retrospectively non-compliant. However: EICR evaluates against current best practice as well as the standards in force at commission. Missing smoke detection in a current-practice context is a recommended improvement. C3 communicates this to the customer without implying immediate danger. C1 (immediate danger) would be for an actively-dangerous condition (live exposed parts, etc.). C2 (potentially dangerous) for a situation that could become dangerous. C3 captures the &ldquo;below current best practice but operating safely&rdquo; case. Cert evidence bundle records the EICR coding + any remediation undertaken.',
+      'The install was compliant when commissioned (before PAS 63100:2024) and does not become retrospectively non-compliant, so C1/C2 are not appropriate for an otherwise safe install. Missing detection is below current best practice, which is exactly what C3 (improvement recommended) communicates without implying danger.',
   },
   {
     id: 4,
     question:
-      'Customer asks if their NEW BESS install needs UKCA marking or CE marking. What\'s the UK 2025-2026 position?',
+      'Customer asks whether their new BESS install needs UKCA marking or CE marking. What is the UK 2025-2026 position?',
     options: [
-      'No marking needed',
-      'UK 2025-2026: UKCA marking is the UK post-Brexit conformity mark for products sold in Great Britain (England, Scotland, Wales). CE marking remains valid for Northern Ireland (which follows EU rules) and is accepted in GB through transition arrangements. Most BESS manufacturers carry BOTH UKCA + CE markings to cover the whole UK market. The marking declares conformity with relevant UK / EU regulations covering electrical safety + EMC + radio (for any wireless interfaces). Cert evidence bundle includes the manufacturer\'s DoC citing the markings and the standards applied',
-      'CE only',
-      'Customer\'s choice',
+      'UKCA covers Great Britain and CE remains valid for Northern Ireland and accepted in GB; most BESS carry both',
+      'CE marking only — the UK still recognises CE for all electrical products and UKCA was withdrawn before launch',
+      'UKCA marking only — CE marking is no longer accepted anywhere in the UK including Northern Ireland',
+      'No conformity marking is required on a battery product so long as it carries a manufacturer serial number',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'UK conformity marking 2025-2026: UKCA (UK Conformity Assessed) is the post-Brexit mark for Great Britain. CE marking remains valid in Northern Ireland (still aligned with EU rules) and is accepted in GB during ongoing transition. Most BESS manufacturers carry both to cover the whole UK + EU. The marking declares conformity with: Electrical Equipment (Safety) Regulations 2016 (UK), Low Voltage Directive 2014/35/EU (EU), EMC Regulations 2016 + Directive 2014/30/EU, Radio Equipment Regulations 2017 + Directive 2014/53/EU (for wireless interfaces). Standards underlying the marking: BS EN IEC 62485 series, BS EN 62619, BS EN 61000 series (EMC), etc. Cert evidence bundle includes the manufacturer\'s DoC + the markings + the standards list.',
+      'UKCA is the post-Brexit conformity mark for Great Britain; CE remains valid in Northern Ireland and is still accepted in GB during the transition. Most BESS manufacturers carry both. The marking declares conformity with the Electrical Equipment (Safety) Regulations 2016, EMC Regulations 2016 and (for wireless interfaces) Radio Equipment Regulations 2017.',
   },
   {
     id: 5,
     question:
-      'A customer\'s BESS install in a flat (multi-occupancy building) — what additional PAS 63100 + Approved Document B considerations apply?',
+      'A BESS install in a flat (multi-occupancy building) — what additional PAS 63100 and Approved Document B considerations apply?',
     options: [
-      'Same as single dwelling',
-      'Multi-occupancy raises the bar significantly. PAS 63100: (1) fire-rated separation between BESS and other dwellings/common areas (typically 60-minute or 90-minute per the building&rsquo;s fire strategy); (2) consultation with the building&rsquo;s fire strategy and fire safety officer; (3) coordination with the building&rsquo;s fire alarm system; (4) potential planning permission or building regs application. Approved Document B + Building Regs: stricter rules in flats / shared buildings — fire spread between dwellings must be controlled; BESS introduces a fire load that must be assessed. Some buildings prohibit domestic BESS install in individual flats; commercial communal BESS may be the alternative',
-      'No flats allowed',
-      'Customer\'s choice',
+      'None — a flat is treated identically to a single dwelling once the unit itself is non-habitable',
+      'Fire-rated separation (typically 60-90 min) to other dwellings/common areas, plus fire-strategy and managing-agent consultation',
+      'Only a higher BS 5839-6 detector grade is needed; the rest of the install is unchanged from a house',
+      'Planning permission alone is required; no extra fire-separation or fire-strategy work is needed for flats',
     ],
     correctAnswer: 1,
     explanation:
-      'BESS in flats / multi-occupancy = significantly higher bar than single dwelling. PAS 63100 + AD-B + fire strategy considerations: (1) fire-rated separation between the BESS and neighbouring dwellings + common areas — typically 60-min FR construction minimum, 90-min in higher-risk buildings; (2) fire strategy consultation — the building&rsquo;s overall fire strategy must accommodate the BESS; (3) building owner / managing agent involvement — they may have policies prohibiting individual BESS installs; (4) fire detection coordination — BESS local detector interconnected with the building alarm system; (5) planning permission may be needed; (6) Building Regulations notice (Part P / Part B) for the install. Some UK multi-occupancy buildings now prohibit individual BESS installs due to insurance + fire safety concerns. Alternative: commercial communal BESS at the building level. Cert evidence bundle records the multi-occupancy assessment + the chosen approach.',
+      'Multi-occupancy raises the bar significantly: PAS 63100 and AD-B require fire-rated separation (typically 60-min minimum, 90-min in higher-risk buildings) between the BESS and neighbouring dwellings/common areas, plus consultation with the building fire strategy and managing agent. Some buildings now prohibit individual BESS installs, making a communal solution the alternative.',
   },
   {
     id: 6,
     question:
-      'Reg 570.6.7.203 says BESS in dwellings must be installed taking account of PAS 63100. If PAS 63100 conflicts with the manufacturer instructions, which wins?',
+      'Reg 570.6.7.203 says a dwelling BESS shall be installed taking account of PAS 63100. If PAS 63100 and the manufacturer instructions appear to conflict, which prevails?',
     options: [
-      'Customer chooses',
-      'Both must be satisfied — neither alone is sufficient. Reg 570.6.7.203: &ldquo;taking account of manufacturer\'s instructions AND PAS 63100&rdquo;. If they appear to conflict, the more restrictive applies (taking the union of all requirements). In practice: manufacturer instructions tend to focus on product-specific safety (clearances, electrical, environmental); PAS 63100 focuses on UK domestic location + fire detection. They\'re generally complementary, not conflicting. Where genuine conflict exists, raise with manufacturer support + PAS 63100 query channel; document the resolution in the cert evidence bundle',
-      'Manufacturer wins',
-      'PAS 63100 wins',
+      'The manufacturer instructions always prevail because they are product-specific and take legal precedence',
+      'PAS 63100 always prevails because it is the UK-specific document referenced by BS 7671',
+      'The customer chooses which document to follow once both have been explained to them',
+      'Both must be satisfied; where they appear to conflict the more restrictive requirement applies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Reg 570.6.7.203 uses &ldquo;taking account of&rdquo; both — implying both must be satisfied. In practice the two rarely conflict because they cover complementary aspects: manufacturer instructions handle product-level safety (clearances, electrical config, environmental limits, mounting); PAS 63100 handles location-level UK domestic install practice (no habitable rooms, fire detection, signage, multi-occupancy). Where apparent conflict arises (e.g. manufacturer permits installation in a location PAS 63100 prohibits, or vice versa): the MORE RESTRICTIVE wins — the install satisfies BOTH. Real conflicts are rare; usually clarification reveals one or both was misread. Cert evidence bundle records the location decision + the compliance evidence for both manufacturer + PAS 63100.',
+      'Reg 570.6.7.203 says "taking account of" both manufacturer instructions and PAS 63100, so both must be satisfied. They rarely truly conflict because they cover complementary aspects (product-level vs location-level); where they appear to, the more restrictive requirement wins so the install satisfies both.',
   },
   {
     id: 7,
     question:
-      'A customer asks if their BESS commissioning needs to include any tests specific to BS EN IEC 62485-5 (Li-ion stationary). What does the standard require?',
+      'Which commissioning tests are specific to BS EN IEC 62485-5 (Li-ion stationary) beyond the standard BS 7671 Part 6 sequence?',
     options: [
-      'No specific tests',
-      'Part -5 commissioning typically includes: (1) capacity baseline test — full charge then controlled discharge to BMS cut-off; record actual Ah delivered; comparison to nameplate; (2) BMS handshake — verify CAN bus / Modbus communication between BMS and PCE; verify limits published correctly; (3) first cycle — observe complete charge / discharge cycle for any anomalies; (4) cell balance check — confirm all cells finish within tolerance; (5) fault simulation — verify protective responses (over-V trip, comms loss, etc.); (6) warning notice verification — confirm all Reg 570.6.8.x notices in place; (7) cert evidence bundle assembly. Most modern UK BESS PCE includes a guided commissioning workflow that walks through these',
-      'Customer\'s choice',
-      'No tests',
+      'Hydrogen ventilation measurement and electrolyte specific-gravity checks before first charge',
+      'Only the standard insulation-resistance and polarity tests already required by BS 7671 Part 6',
+      'Capacity baseline, BMS handshake, first-cycle observation, cell-balance and fault-simulation checks',
+      'No battery-specific tests are needed; the manufacturer commissions the unit remotely with no on-site checks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BS EN IEC 62485-5 commissioning for Li-ion stationary BESS includes specific tests beyond standard BS 7671 Part 6: (1) CAPACITY BASELINE — first full-charge-to-empty cycle measures actual usable Ah; records the baseline for future comparison (warranty + EICR tracking); (2) BMS HANDSHAKE — verifies communication between BMS and PCE; commissioning app typically shows the battery profile + max charge/discharge currents being respected; (3) FIRST CYCLE — observation for anomalies; modern BMS logs cell-level V trajectories; (4) BALANCE CHECK — at end of first full charge, all cells should be within manufacturer tolerance (~30-50 mV typical); (5) FAULT SIMULATION — manufacturer-guided test of over-V trip, comms-loss response (where supported); (6) NOTICES — all warning notices per Reg 570.6.8.x in place + photographed; (7) BUNDLE — cert evidence bundle assembled with commissioning records. Manufacturer apps (GivEnergy, Tesla, Sigenergy etc.) typically guide this workflow. Section 5.7 covers commissioning in depth.',
+      'Part -5 commissioning adds Li-ion-specific tests: a capacity baseline (first full charge/discharge), a BMS handshake to the power-conversion equipment, first-cycle observation, a cell-balance check (cells within ~30-50 mV) and manufacturer-guided fault simulation. Hydrogen/electrolyte checks belong to Pb-acid (Part -2), not LFP.',
   },
   {
     id: 8,
     question:
-      'For a hybrid PV+BESS install, the cert evidence bundle integrates multiple compliance packages. What\'s the typical bundle contents?',
+      'For a hybrid PV+BESS install, what does the cert evidence bundle typically integrate?',
     options: [
-      'One certificate',
-      'Comprehensive bundle: (1) MCS MIS 3002 PV design pack (Module 3 content); (2) Chapter 57 BESS design pack + manufacturer DoC + BS EN IEC 62485 + PAS 63100 compliance evidence (this module); (3) Chapter 82 PEI design pack (Module 4 Section 5); (4) BS EN 62446-1 PV commissioning records (Module 3 Section 7); (5) BESS commissioning records per BS EN IEC 62485-5 (Section 5.7); (6) EREC G98/G99/G100 paperwork + DNO confirmation (Module 4 Section 7); (7) BS 5839-6 fire detection + interconnection evidence; (8) Approved Document B compliance assessment; (9) UKCA / CE markings + manufacturer datasheets for each component; (10) customer information pack + handover record',
-      'Customer\'s problem',
-      'No bundle needed',
+      'A single MCS certificate that covers both the PV and the battery in one document',
+      'Only the BS 7671 electrical certificate plus the manufacturer datasheets for each component',
+      'The PV design pack and DNO paperwork only, since the battery is covered by its manufacturer warranty',
+      'MCS PV design pack, Ch 57/82 BESS packs, BS EN 62446-1 + 62485-5 commissioning, G98/G99 + DNO, BS 5839-6 and AD-B evidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Hybrid PV+BESS cert evidence bundle is comprehensive — integrates multiple compliance packages: MCS MIS 3002 PV (Section 712); Chapter 57 BESS (manufacturer DoC + BS EN IEC 62485 + PAS 63100); Chapter 82 PEI design pack; BS EN 62446-1 PV commissioning; BS EN IEC 62485-5 BESS commissioning; EREC G98/G99/G100 + DNO; BS 5839-6 fire detection; AD-B fire safety; UKCA / CE markings; customer handover record. The bundle is the install&rsquo;s long-term legibility — supports future EICR, MCS audit, insurance claims, ownership transfer, fault investigation. Modern UK installers increasingly deliver this as a digital package alongside the paper certs. Customer handover includes a copy + access credentials for any manufacturer cloud portals.',
+      'A hybrid PV+BESS bundle integrates multiple packages: MCS PV design pack, BS 7671 Ch 57 + Ch 82 BESS packs, BS EN 62446-1 PV and BS EN IEC 62485-5 battery commissioning records, EREC G98/G99/G100 + DNO confirmation, BS 5839-6 fire-detection evidence, AD-B assessment and UKCA/CE documentation — the install\'s long-term legibility for future EICR, audit and insurance.',
   },
 ];
 

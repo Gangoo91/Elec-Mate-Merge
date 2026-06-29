@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What does Category 3 require that Category 1 does not?',
     options: [
       'Redundancy so a single fault does not cause loss of the safety function',
-      'The manufacturer\\\\\\\\\\\\\\\'s installation instructions for that specific RCBO',
-      'Test results, circuit details, and any departures from standards',
-      'A legal notice requiring immediate cessation of activities that pose imminent danger',
+      'The use of well-tried components in the safety circuit',
+      'The application of basic safety principles to the design',
+      'A higher mean time to dangerous failure for each component',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       'If the required Performance Level (PLr) is d and the achieved PL is c, is this acceptable?',
     options: [
       'No — the achieved PL must be greater than or equal to the required PLr',
-      'Ask the learner to reflect on their own performance first',
-      'That systems must be safe and maintained in a safe condition',
-      'Securing the scaffold to a building by wedging a tube into a window or door reveal',
+      'Yes — PL c is acceptable provided the architecture is Category 3 or higher',
+      'Yes — any achieved PL is acceptable once a risk assessment has been done',
+      'No — the achieved PL must always be exactly equal to the required PLr',
     ],
     correctIndex: 0,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the required Performance Level (PLr) determined by?',
     options: [
-      'Bar charts in the annexes (simplified approach) or calculation per the detailed method',
-      'The proportion of dangerous failures that are detected by automatic testing',
+      'The number of redundant channels used in the safety circuit architecture',
+      'The MTTFd rating of the least reliable component in the system',
       'A risk assessment considering severity, frequency and possibility of avoidance',
-      'Safety function performed using basic safety principles only — no specific fault resistance',
+      'The diagnostic coverage achieved by the automatic test functions',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'What is Diagnostic Coverage (DCavg)?',
     options: [
       'The proportion of dangerous failures that are detected by automatic testing',
-      'Safety function performed using basic safety principles only — no specific fault resistance',
-      'The achieved PL must be greater than or equal to the required PLr',
-      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
+      'The average time before a component suffers a dangerous failure mode',
+      'The proportion of channels that are physically separated from one another',
+      'The total number of safety functions performed by the control system',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'A Category B system has what fundamental requirement?',
     options: [
-      'A risk assessment considering severity, frequency and possibility of avoidance',
+      'Dual-channel redundancy so that a single fault is always tolerated',
       'Safety function performed using basic safety principles only — no specific fault resistance',
-      'The achieved PL must be greater than or equal to the required PLr',
-      'The proportion of dangerous failures that are detected by automatic testing',
+      'Periodic automatic testing to detect dangerous faults between demands',
+      'Tolerance to an accumulation of faults without loss of the safety function',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is Common Cause Failure (CCF)?',
     options: [
-      'The proportion of dangerous failures that are detected by automatic testing',
-      'Bar charts in the annexes (simplified approach) or calculation per the detailed method',
+      'A failure that affects only one channel of a redundant safety system',
+      'A failure that is always detected and reported by the diagnostic functions',
       'A single event that causes failure of multiple channels simultaneously',
-      'Points system totalling a minimum of 65 out of 100',
+      'A failure that occurs gradually as a component reaches the end of its life',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'How are measures against CCF scored in ISO 13849-1?',
     options: [
-      'A complementary Adult-to-Adult transaction',
-      'Future project briefing, design, and specifications',
-      'Accessible heights for switches and controls',
+      'A pass or fail judgement made by the design engineer alone',
+      'A percentage of the total PFHd calculated for the system',
+      'A star rating from one to five awarded by the certifying body',
       'Points system totalling a minimum of 65 out of 100',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'What is the relationship between Category and Performance Level?',
     options: [
       'Category defines the architecture; PL is the achieved reliability calculated from category, MTTFd, DCavg and CCF',
-      'Safety function performed using basic safety principles only — no specific fault resistance',
-      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
-      'Bar charts in the annexes (simplified approach) or calculation per the detailed method',
+      'Category and PL are interchangeable terms describing exactly the same property',
+      'PL defines the architecture; Category is then looked up directly from the PL value',
+      'Category sets the proof-test interval; PL has no connection to the architecture',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'Which tool does ISO 13849-1 provide for determining the achieved PL from quantitative parameters?',
     options: [
-      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
+      'The risk graph using the severity, frequency and avoidance parameters',
       'Bar charts in the annexes (simplified approach) or calculation per the detailed method',
-      'A single event that causes failure of multiple channels simultaneously',
-      'The safety function is always performed — an accumulation of faults does not cause loss of the safety function',
+      'A scoring table awarding points for measures against common cause failure',
+      'A fault tree drawn from the machine circuit diagram by the design engineer',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'What must be true for the safety system to be acceptable?',
     options: [
-      'A risk assessment considering severity, frequency and possibility of avoidance',
-      'A single event that causes failure of multiple channels simultaneously',
+      'The achieved PL must be exactly equal to the required PLr, never higher',
+      'The achieved PL must be lower than the required PLr to avoid over-engineering',
       'The achieved PL must be greater than or equal to the required PLr',
-      'The proportion of dangerous failures that are detected by automatic testing',
+      'The category must always be 4 regardless of the required PLr',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'In Category 4, what happens when faults accumulate?',
     options: [
-      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
-      'Category defines the architecture; PL is the achieved reliability calculated from category, MTTFd, DCavg and CCF',
-      'A risk assessment considering severity, frequency and possibility of avoidance',
+      'The first fault is tolerated, but a second accumulated fault causes loss of the safety function',
+      'The safety function is lost as soon as any single fault occurs in either channel',
+      'Faults are ignored entirely because Category 4 relies only on well-tried components',
       'The safety function is always performed — an accumulation of faults does not cause loss of the safety function',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'What is SISTEMA and what is it used for?',
     options: [
       'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
-      'The proportion of dangerous failures that are detected by automatic testing',
-      'A risk assessment considering severity, frequency and possibility of avoidance',
-      'The achieved PL must be greater than or equal to the required PLr',
+      'A label printer used to mark safety components with their PL rating on site',
+      'A handheld instrument for measuring the response time of a safety circuit',
+      'A mandatory annual inspection scheme administered by the HSE for machinery',
     ],
     correctAnswer: 0,
     explanation:

@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     id: 'core-losses',
     question: 'Which type of transformer loss remains essentially constant regardless of load?',
     options: [
-      'Action + Location + Re-test',
-      'Tender pricing breakdowns',
+      'Copper losses (I²R in the windings)',
+      'Stray load losses in the tank',
       'Core losses (iron losses)',
-      'External wall insulation (EWI)',
+      'Dielectric losses in the cable insulation',
     ],
     correctIndex: 2,
     explanation:
@@ -132,9 +132,9 @@ const quizQuestions = [
     question: 'What causes hysteresis losses in a transformer core?',
     options: [
       'Molecular friction as magnetic domains realign each cycle',
-      'Proportional-Integral-Derivative control algorithm',
-      'The voltage at which an insulator fails and becomes conductive',
-      'Test during non-occupied hours with proper notifications',
+      'Circulating eddy currents induced within the laminations',
+      'Resistance heating in the copper primary winding',
+      'Leakage flux escaping the core into the surrounding air',
     ],
     correctAnswer: 0,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'How are eddy current losses minimised in transformer cores?',
     options: [
-      'Flow increases but less than double due to system curve',
+      'Using a single solid block of iron for the core',
       'Using thin laminations insulated from each other',
-      'The starter motor and battery bank',
-      'False - homemade or modified test equipment must never be used',
+      'Increasing the supply frequency above 50Hz',
+      'Winding the conductors with a larger cross-section',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     id: 7,
     question: 'At what load does a transformer achieve maximum efficiency?',
     options: [
-      'Separated Extra-Low Voltage',
-      'IP44 minimum or suitable for the location',
-      'Fail for non-compliance with specification',
+      'At exactly 100% of full rated load',
+      'At no-load, when copper losses are zero',
+      'When copper losses are double the core losses',
       'When copper losses equal core losses',
     ],
     correctAnswer: 3,
@@ -211,10 +211,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why are isolation transformers used in building services applications?',
     options: [
-      'The equivalent DC voltage that would produce the same heating effect',
-      'To ensure materials arrive when needed and in correct quantities',
+      'To step the voltage up for long cable runs',
+      'To correct the power factor of inductive loads',
       'To provide galvanic isolation between circuits for safety',
-      'To establish the Target Emission Rate (TER) as a compliance benchmark',
+      'To filter harmonic currents from non-linear loads',
     ],
     correctAnswer: 2,
     explanation:

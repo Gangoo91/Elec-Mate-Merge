@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'visual-inspection',
     question: 'What is the primary purpose of a visual inspection during PPM?',
     options: [
-      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
-      'Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and Reg 643.7.3 verification)',
+      'To measure the exact insulation resistance of every circuit in the installation',
+      'To confirm the disconnection time of each protective device under fault conditions',
       'To identify visible signs of deterioration, damage, overheating or unsafe conditions without the need for testing equipment',
-      'Switch off and lock out electrical supplies, close isolation valves, and vent trapped pressure',
+      'To record the load current drawn by each item of connected equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question:
       'A thermographic survey of a distribution board reveals a hot spot of 85°C on one connection while surrounding connections are at 40°C. This indicates:',
     options: [
-      'The method statement describes how to implement the controls identified in the risk assessment',
-      'The constant (σ = 5.67 × 10⁻⁸ W/m²K⁴) used to calculate radiant heat transfer from a surface',
-      'Schedule of Accessories, Schedule of Cables, Schedule of Luminaires, Circuit Chart (per-DB).',
+      'A correctly loaded connection operating well within its normal temperature range',
+      'A measurement error caused by the wrong emissivity setting on the camera',
+      'Normal heating of the busbar that requires no further action or investigation',
       'A high-resistance connection that requires immediate investigation and likely re-torquing or replacement',
     ],
     correctIndex: 3,
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
       'When trending insulation resistance readings over time, a steadily decreasing value indicates:',
     options: [
       'Progressive deterioration of the insulation, which may eventually lead to breakdown if not addressed',
-      'Prove the voltage indicator on a known live source, then re-test for dead, then prove the indicator again',
-      'Accuracy is how close to the true value; precision is how repeatable the readings are',
-      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
+      'A steady improvement in the insulation condition that requires no action',
+      'A fault in the test instrument that is producing inconsistent readings',
+      'Normal seasonal variation that always returns to the original value',
     ],
     correctIndex: 0,
     explanation:
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
       'Under BS 5266-1, what is the required duration for the annual full-duration discharge test of emergency lighting?',
     options: [
       'The full rated duration of the system (typically 3 hours for most non-maintained systems)',
-      'A preset combination of light levels and colours for different activities or moods',
-      'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
+      'A brief flick test of just a few seconds to confirm each luminaire illuminates',
+      'Exactly 30 minutes regardless of the rated duration of the system',
+      'A continuous 24-hour discharge to fully exhaust the batteries',
     ],
     correctIndex: 0,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'During a visual inspection of a distribution board, you notice a brown discolouration on the casing above one MCB. This most likely indicates:',
     options: [
-      'Through remote monitoring and predictive maintenance',
+      'Normal ageing of the plastic casing that needs no investigation',
       'Overheating at the MCB connection or within the MCB itself',
-      'Charge their employer for safety equipment or training',
-      'Raise their legs, ensure fresh air, and monitor them',
+      'Moisture ingress that has stained the casing from the outside',
+      'A manufacturing mark applied to the casing during production',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question: 'When carrying out a thermographic survey of electrical switchgear, you should:',
     options: [
       'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
-      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
-      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'Both the integral test button check and an instrument test measuring actual trip time and trip current',
+      'Always isolate and de-energise the switchgear first, then open all covers and scan the cold equipment for residual heat',
+      'Scan only the painted front panels with the covers in place, as the heat from any fault will conduct straight through to the surface',
+      'Carry out the survey under no-load conditions so that the connections are at their hottest and easiest to detect',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'A motor inspection checklist should include:',
     options: [
-      'Both the integral test button check and an instrument test measuring actual trip time and trip current',
+      'Front glass condition, frame fixings, MC4 connector integrity, string voltage and earthing continuity only',
       'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
-      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
+      'Battery charge state, lamp illumination, changeover time and the rated discharge duration of the unit',
+      'Detector cleanliness, sounder volume, control panel indications and the cause-and-effect response only',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under BS 5839-1, the weekly fire alarm test should:',
     options: [
-      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
-      'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
+      'Functionally test every automatic detector in the building and verify each one signals the panel correctly',
+      'Run the system on battery backup for its full standby duration to confirm the standby supply capacity',
       'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
+      'Be carried out only by an accredited servicing engineer, as weekly testing is not a task the responsible person may perform',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     id: 7,
     question: 'Cable condition assessment during inspection should check for:',
     options: [
-      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
-      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
-      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
+      'Phase rotation, polarity and earth-fault loop impedance at every termination along the cable run',
+      'Only the conductor cross-sectional area, since current-carrying capacity is the sole factor affecting cable life',
+      'The exact insulation resistance value of every core, recorded to two decimal places at each support clip',
       'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
     ],
     correctAnswer: 3,
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: 'The monthly emergency lighting function test requires:',
     options: [
       'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
-      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
-      'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
-      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
+      'A full discharge of every luminaire for its complete rated duration of three hours, followed by a 24-hour recharge',
+      'A measurement of the illuminance level at floor level along every escape route using a calibrated lux meter',
+      'A visual check only, confirming each fitting is undamaged and in place, with no operation of the test switch',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'When inspecting switchgear, signs of partial discharge include:',
     options: [
-      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
+      'A steady rise in busbar temperature across the whole panel with no localised hot spots',
       'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
-      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
-      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
+      'A measurable increase in the insulation resistance of the affected phase when tested at 500 V DC',
+      'A drop in the supply frequency accompanied by flickering of the panel indicator lamps',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: 'RCD testing during PPM should include:',
     options: [
-      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
-      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
+      'Operating the integral test button alone, which fully confirms the device will trip at the correct current and time',
+      'An insulation resistance test across the RCD terminals at 500 V DC to confirm the device is healthy',
       'Both the integral test button check and an instrument test measuring actual trip time and trip current',
-      'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
+      'Measuring the load current through the RCD and confirming it does not exceed the rated residual operating current',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     question:
       'What severity classification system is commonly used for thermographic survey findings?',
     options: [
-      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
-      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
+      'An absolute temperature scale: any connection above 40°C is automatically classed as a defect requiring immediate shutdown',
+      'A colour-coding of the thermal image alone, where any red pixel indicates a critical fault regardless of temperature',
+      'A classification based purely on the load current at the time of the survey, independent of any temperature measurement',
       'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
     question: 'Under the Regulatory Reform (Fire Safety) Order 2005, fire alarm testing is:',
     options: [
       'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
-      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
-      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
+      'A purely voluntary best-practice activity that carries no legal weight if the records are not kept',
+      'The sole responsibility of the local fire and rescue authority, who must carry out all testing themselves',
+      'Required only in premises taller than 18 metres, with lower buildings exempt from any testing duty',
     ],
     correctAnswer: 0,
     explanation:

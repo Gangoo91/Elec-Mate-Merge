@@ -134,16 +134,16 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'Before testing continuity, you must:',
+    question: 'Before testing continuity on a circuit, you must:',
     options: [
-      'The colour of the meter cover.',
-      'Multi-zone stratified thermal store',
+      'Energise the circuit to confirm it is live',
+      'Connect the test leads without nulling them',
       'Isolate, lock-off and prove dead',
-      'Multiple-choice with one correct answer',
+      'Remove the protective device and leave it open',
     ],
     correctAnswer: 2,
     explanation:
-      'Safety first: always isolate, lock-off and prove dead before working on any electrical installation.',
+      'Continuity testing is a dead test: always isolate, lock-off and prove dead before working on any electrical installation.',
   },
 ];
 

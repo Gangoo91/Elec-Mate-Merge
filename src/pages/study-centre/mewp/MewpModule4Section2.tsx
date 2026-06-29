@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     id: 'swl-definition',
     question: 'What does the Safe Working Load (SWL) of a MEWP platform include?',
     options: [
-      'Only the weight of the operators',
-      'Only the weight of tools and materials',
       'The combined weight of ALL operators, ALL tools, and ALL materials on the platform',
+      'Only the weight of tools and materials',
+      'Only the weight of the operators',
       'The total weight of the machine including the platform',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The SWL is the combined weight of ALL operator(s) plus ALL tools plus ALL materials on the platform. Everything carried onto the platform counts towards the SWL. If you are unsure whether you are within the limit, you must cease work and verify before continuing.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What must be deployed BEFORE elevating a category 1A or 1B (static) MEWP?',
     options: [
-      'The platform extension',
-      'The warning beacon',
       'All outriggers and stabilisers',
+      'The warning beacon',
+      'The platform extension',
       'The wind speed indicator',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'All outriggers and stabilisers must be fully deployed and the machine levelled BEFORE elevating a static (1A/1B) MEWP. Elevating without outriggers deployed risks catastrophic overturn. Never partially deploy outriggers — all must be fully extended and set on firm ground.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'Nothing — MEWPs have a large safety margin and will still function normally',
       'The machine will automatically lower to the ground',
-      'Load-sensing systems may prevent operation (stranding occupants at height), or the machine risks overturn or structural failure',
       'An alarm sounds but the machine continues to operate normally',
+      'Load-sensing systems may prevent operation (stranding occupants at height), or the machine risks overturn or structural failure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Overloading a MEWP can trigger load-sensing systems that prevent further operation — potentially stranding occupants at height. More seriously, overloading risks overturn and structural failure. IPAF warns of the potential for catastrophic collapse. The SWL must never be exceeded.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'What requirements must be met before loading a MEWP onto a transport vehicle?',
     options: [
-      'Only a valid driving licence is needed',
       'Firm level ground, rated ramps, competent driver, clear communication, exclusion zone, machine at minimum height with boom stowed and outriggers retracted',
+      'Only a valid driving licence is needed',
       'Just a flat piece of ground and two people',
       "Only the manufacturer's manual needs to be present",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Loading a MEWP onto transport requires: firm, level ground; suitable ramps rated for the machine's weight; a competent driver; clear communication between all personnel; an exclusion zone around the loading area; the machine at minimum height; the boom fully stowed; and outriggers fully retracted. About one third of rental company-reported accidents occur during this activity.",
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'When repositioning a static MEWP (category 1A/1B), what is the correct sequence?',
     options: [
       'Drive to the new position, then lower the platform',
-      'Lower the platform fully, retract outriggers, retract boom/scissor, reposition, re-deploy outriggers, re-level, re-inspect',
       'Simply drag the machine with a forklift',
       'Only retract the outriggers — the platform can stay elevated',
+      'Lower the platform fully, retract outriggers, retract boom/scissor, reposition, re-deploy outriggers, re-level, re-inspect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'For static machines (1A/1B), you must: lower the platform fully, retract the outriggers, retract the boom or scissor mechanism, then reposition using the drive function or tow as appropriate. At the new position, re-deploy outriggers, re-level the machine, and re-inspect before elevating again. Never move a static MEWP with the platform elevated.',
   },

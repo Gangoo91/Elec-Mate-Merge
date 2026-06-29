@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'asbestos-greek-name',
     question: "What does the Greek word 'asbestos' mean?",
     options: [
-      'Fireproof stone',
       'Indestructible / inextinguishable',
+      'Fireproof stone',
       'Magic mineral',
       'White fibre',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The word 'asbestos' derives from the ancient Greek 'asbestos' (ἄσβεστος), meaning indestructible or inextinguishable — a reference to its remarkable resistance to fire and heat.",
   },
@@ -41,8 +41,8 @@ const quickCheckQuestions = [
     id: 'asbestos-annual-deaths',
     question:
       'Approximately how many people die from asbestos-related diseases each year in the UK?',
-    options: ['500', '1,500', '5,000', '10,000'],
-    correctIndex: 2,
+    options: ['500', '5,000', '1,500', '10,000'],
+    correctIndex: 1,
     explanation:
       'Asbestos-related diseases kill approximately 5,000 people per year in the UK — more than those killed in road traffic accidents. Of these, around 2,700 are mesothelioma deaths.',
   },
@@ -75,8 +75,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which of the following is the ONLY serpentine form of asbestos?',
-    options: ['Amosite', 'Crocidolite', 'Chrysotile', 'Tremolite'],
-    correctAnswer: 2,
+    options: ['Chrysotile', 'Amosite', 'Crocidolite', 'Tremolite'],
+    correctAnswer: 0,
     explanation:
       'Chrysotile (white asbestos) is the only serpentine form. It has curly, layered fibres and accounted for approximately 90–95% of all asbestos used worldwide. All other types belong to the amphibole family.',
   },
@@ -107,8 +107,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'In what year was the link between asbestos and mesothelioma confirmed?',
-    options: ['1930', '1955', '1960', '1985'],
-    correctAnswer: 2,
+    options: ['1930', '1955', '1985', '1960'],
+    correctAnswer: 3,
     explanation:
       'In 1960, Dr Christopher Wagner published research confirming the link between asbestos exposure and mesothelioma — a cancer of the lining of the lungs. This was a landmark finding, though it took many more years before comprehensive bans were introduced.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following is NOT a property of asbestos?',
     options: [
+      'Biodegradable',
       'Electrical insulation',
       'Chemical resistance',
-      'Biodegradable',
       'High tensile strength',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Asbestos is not biodegradable — in fact, its extreme durability and resistance to degradation are among the reasons it is so dangerous. Once inhaled, asbestos fibres remain in the lungs permanently because the body cannot break them down.',
   },
@@ -144,11 +144,11 @@ const quizQuestions = [
     question: 'How many asbestos-related mesothelioma deaths occur in the UK each year?',
     options: [
       'Approximately 500',
-      'Approximately 1,200',
       'Approximately 2,700',
+      'Approximately 1,200',
       'Approximately 5,000',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Approximately 2,700 people die from mesothelioma each year in the UK. The total annual death toll from all asbestos-related diseases is approximately 5,000, which also includes asbestos-related lung cancer and asbestosis.',
   },

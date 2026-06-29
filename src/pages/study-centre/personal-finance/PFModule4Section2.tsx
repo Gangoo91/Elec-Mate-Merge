@@ -19,12 +19,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which Act of Parliament introduced automatic enrolment into workplace pensions?',
     options: [
-      'Finance Act 2004',
       'Pensions Act 2008',
+      'Finance Act 2004',
       'Pensions Act 2014',
       'Employment Rights Act 1996',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Pensions Act 2008 introduced automatic enrolment. It was phased in from 2012 for large employers, with all employers included by 2018.',
   },
@@ -33,19 +33,19 @@ const quizQuestions = [
     question: 'What are "qualifying earnings" for auto-enrolment contributions?',
     options: [
       'Your total gross pay',
-      'Your take-home pay after tax',
       'Earnings between &pound;6,240 and &pound;50,270 per year (2024/25)',
+      'Your take-home pay after tax',
       'Your basic salary excluding overtime',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Qualifying earnings are the band of earnings between the lower limit (&pound;6,240) and the upper limit (&pound;50,270) for 2024/25. Contributions are calculated on this band, not your full salary.',
   },
   {
     id: 4,
     question: 'What is the JIB/ECA default pension scheme for electricians?',
-    options: ['NEST', "The People's Pension", 'Scottish Widows', 'Royal London'],
-    correctAnswer: 1,
+    options: ['NEST', 'Scottish Widows', 'Royal London', "The People's Pension"],
+    correctAnswer: 3,
     explanation:
       "The Joint Industry Board (JIB) and the Electrical Contractors' Association (ECA) use The People's Pension as their default workplace pension scheme for the electrical industry.",
   },
@@ -53,36 +53,36 @@ const quizQuestions = [
     id: 5,
     question: 'If an employee opts out of auto-enrolment, what happens?',
     options: [
-      'They can never rejoin',
       'Their employer must re-enrol them roughly every three years',
+      'They can never rejoin',
       'They receive the employer contribution as extra salary instead',
       'Nothing further happens unless they request to rejoin',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Employers must re-enrol opted-out workers approximately every three years (on the employer's re-enrolment date). The worker can opt out again, but this cyclical process is designed to catch people who may change their mind.",
   },
   {
     id: 6,
-    question: 'What is the annual management charge (AMC) cap for NEST?',
-    options: ['0.1%', '0.3%', '0.5%', '0.75%'],
-    correctAnswer: 1,
+    question: 'What is the annual management charge (AMC) that NEST levies on members?',
+    options: ['0.1%', '0.5%', '0.75%', '0.3%'],
+    correctAnswer: 3,
     explanation:
-      'NEST charges 0.3% annual management charge plus a 1.8% contribution charge on each payment in. The 0.3% AMC is competitive with most workplace pension providers.',
+      'NEST charges a 0.3% annual management charge plus a 1.8% contribution charge on each payment in. The 0.3% AMC is competitive with most workplace pension providers.',
   },
   {
     id: 7,
     question:
-      'What is the effective rate of "return" from the employer\'s minimum 3% contribution if you earn &pound;30,000 per year?',
+      "Ignoring tax relief, the employer's minimum 3% contribution is what percentage of your own minimum 5% contribution?",
     options: [
-      'You get an immediate 37.5% boost on your own contribution',
-      'You get an immediate 60% boost on your own contribution',
-      'You get an immediate 100% boost on your own contribution',
-      'There is no meaningful boost',
+      '37.5% &mdash; the employer adds just over a third of what you pay',
+      '60% &mdash; the employer adds three-fifths of what you pay',
+      '100% &mdash; the employer matches your contribution pound for pound',
+      '160% &mdash; the employer pays more in than you do',
     ],
     correctAnswer: 1,
     explanation:
-      'If you contribute 5% and your employer adds 3%, the employer contribution is 60% of what you put in. This is an immediate 60% return before any investment growth &mdash; no other savings product offers this.',
+      'Comparing the contributions alone, 3% divided by 5% = 0.6, so the employer pays in 60% of what you do. This is an immediate 60% addition before any tax relief or investment growth. (Once 20% basic-rate tax relief on your own share is added as well, the total reaching your pot is roughly double your net cost.)',
   },
   {
     id: 8,
@@ -377,8 +377,8 @@ export default function PFModule4Section2() {
           <InlineCheck
             id="pf-4-2-check1"
             question="An electrician earns &pound;30,000 per year. What are their qualifying earnings for auto-enrolment in 2024/25?"
-            options={['&pound;30,000', '&pound;23,760', '&pound;19,730', '&pound;26,240']}
-            correctIndex={1}
+            options={['&pound;23,760', '&pound;30,000', '&pound;19,730', '&pound;26,240']}
+            correctIndex={0}
             explanation="Qualifying earnings = &pound;30,000 minus the lower limit of &pound;6,240 = &pound;23,760. This is the amount on which the 3% employer and 5% employee contributions are calculated."
           />
 
@@ -594,11 +594,11 @@ export default function PFModule4Section2() {
             question="What are the two charges that NEST levies on pension members?"
             options={[
               '0.5% AMC plus a &pound;10 annual fee',
-              '0.3% AMC plus a 1.8% charge on each contribution',
               '0.75% AMC with no contribution charge',
               '1% AMC plus a 0.5% exit fee',
+              '0.3% AMC plus a 1.8% charge on each contribution',
             ]}
-            correctIndex={1}
+            correctIndex={3}
             explanation="NEST charges a 0.3% annual management charge (AMC) on your total pot and a 1.8% contribution charge on each payment going in. The contribution charge is unique to NEST but the overall cost remains competitive."
           />
 

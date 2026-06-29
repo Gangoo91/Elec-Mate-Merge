@@ -49,11 +49,11 @@ const quickCheckQuestions = [
     question: 'Which legislation specifically covers fire safety during construction work?',
     options: [
       'The Regulatory Reform (Fire Safety) Order 2005',
-      'The Health and Safety at Work Act 1974 only',
       'The Construction (Design and Management) Regulations 2015 (CDM 2015)',
+      'The Health and Safety at Work Act 1974 only',
       'BS 9999: Fire Safety in Building Design',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'During the construction phase, fire safety is primarily managed under CDM 2015 — not the RRFSO. The RRFSO applies to completed or occupied premises, not to construction sites. CDM 2015 places duties on the principal contractor to prepare a fire safety plan, provide temporary fire detection, manage hot works, and ensure adequate means of escape for all workers on site. The Joint Codes of Practice on Fire Prevention in Construction (including FPA RC 35/59) provide detailed guidance.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Under the Health and Safety at Work Act 1974, which sections impose general duties on employers towards employees and non-employees?',
     options: [
-      'Sections 1 and 2 only',
       'Sections 2 (employees) and 3 (non-employees)',
+      'Sections 1 and 2 only',
       'Sections 7 and 8 only',
       'Sections 10 and 11 only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Section 2 of HASAWA 1974 imposes a general duty on employers to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all their employees. Section 3 extends this duty to non-employees — members of the public, visitors, contractors, and anyone else who may be affected by the employer's undertaking. Together, these sections establish the overarching duty of care framework within which all more specific fire safety legislation (including the RRFSO) operates.",
   },
@@ -131,11 +131,11 @@ const quizQuestions = [
       'In BS 5839-1, what is the key difference between Category L3 and Category L2 fire detection systems?',
     options: [
       'L3 requires detectors throughout all areas; L2 covers only escape routes',
-      'L3 covers escape routes only; L2 covers escape routes plus defined high-risk areas',
       'L3 is for domestic premises; L2 is for commercial buildings',
       'L3 is a manual system; L2 is fully automatic',
+      'L3 covers escape routes only; L2 covers escape routes plus defined high-risk areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Category L3 provides automatic fire detection on escape routes only — corridors, stairways, and circulation areas — to give early warning when fire threatens the means of escape. Category L2 extends this to include automatic detection in defined rooms or areas that present a high fire risk (such as kitchens, plant rooms, or storage areas) in addition to the escape routes. L2 therefore provides broader coverage than L3 and is specified where specific high-risk areas need protection beyond the escape routes alone. The fire risk assessment determines which category is appropriate for the building.',
   },
@@ -143,8 +143,8 @@ const quizQuestions = [
     id: 5,
     question:
       'Under BS 5266-1, what is the minimum required duration for emergency escape lighting in most premises?',
-    options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
-    correctAnswer: 1,
+    options: ['1 hour', '30 minutes', '2 hours', '3 hours'],
+    correctAnswer: 0,
     explanation:
       'BS 5266-1 requires emergency escape lighting to operate for a minimum of 1 hour in most premises. However, for sleeping accommodation (hotels, hostels, hospitals, care homes) or premises where re-occupation is not immediate (the building cannot be simply evacuated and left), a minimum duration of 3 hours is required. The 1-hour minimum assumes that the building will be fully evacuated and not re-entered until the normal lighting supply is restored. Monthly functional tests and annual full-duration tests are required to verify that the batteries and luminaires can sustain the required duration.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     options: [
       'It prevents water ingress into cable routes during fire-fighting operations',
       'It ensures the electrical cables are protected from mechanical damage',
-      'It maintains the fire resistance of the compartment boundary, preventing fire and smoke spread between compartments',
       'It reduces the electrical resistance of the cable installation',
+      'It maintains the fire resistance of the compartment boundary, preventing fire and smoke spread between compartments',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Fire stopping around cable penetrations maintains the fire resistance of the compartment boundary. When cables pass through a fire-rated wall or floor, they create an opening that, if left unsealed, allows fire, smoke, and hot gases to spread from one compartment to another — defeating the building's fire strategy. Approved Document B (section B3) requires that all penetrations through fire-separating elements are sealed to maintain the required period of fire resistance (typically 30, 60, 90, or 120 minutes). Electricians have a direct responsibility to ensure that penetrations they create are properly fire stopped using tested and approved products installed in accordance with the manufacturer's tested details.",
   },

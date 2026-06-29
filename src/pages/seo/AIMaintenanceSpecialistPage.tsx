@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Does the AI cover statutory testing requirements?',
     answer:
-      'Yes. The AI tracks all statutory and regulatory testing requirements applicable to the installation. For commercial properties, this includes the periodic inspection intervals recommended by BS 7671 Table 3A (5 years for commercial installations, 1 year for swimming pools and construction sites, etc.), emergency lighting testing requirements under BS 5266 (monthly functional tests, annual full-duration tests), fire alarm testing under BS 5839 (weekly, monthly, quarterly, and annual tests), and RCD testing requirements for landlords under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. The AI maintains a compliance calendar showing when each test is due and alerts you in advance so nothing is missed.',
+      'Yes. The AI tracks all statutory and regulatory testing requirements applicable to the installation. For commercial properties, this includes the recommended periodic inspection intervals set out in IET Guidance Note 3 (5 years for commercial installations, 1 year for swimming pools and construction sites, etc.), emergency lighting testing requirements under BS 5266 (monthly functional tests, annual full-duration tests), fire alarm testing under BS 5839 (weekly, monthly, quarterly, and annual tests), and RCD testing requirements for landlords under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. The AI maintains a compliance calendar showing when each test is due and alerts you in advance so nothing is missed.',
   },
   {
     question: 'Can I use this for commercial maintenance contracts?',
@@ -246,7 +246,7 @@ const sections = [
         </p>
         <p>
           For domestic installations, the AI follows the recommended periodic inspection intervals
-          from BS 7671 Table 3A — typically 10 years for a domestic dwelling, 5 years for a rented
+          set out in IET Guidance Note 3 — typically 10 years for a domestic dwelling, 5 years for a rented
           property (or as required by the landlord electrical safety regulations). Within these
           intervals, it schedules interim checks where appropriate — for example, annual RCD testing
           by the householder, or five-yearly smoke and heat detector battery replacement.

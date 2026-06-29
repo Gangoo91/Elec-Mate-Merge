@@ -54,10 +54,10 @@ const checks = [
     question:
       "Six final-circuit cables are bunched touching in a single layer along a 12 m route in a sub-floor void. From BS 7671 Appendix 4 Table 4C1, what Cg applies, and does it apply to the whole 12 m or only the bunched section?",
     options: [
-      "To identify hazards, estimate risk and determine the required risk reduction measures",
-      "Welcome back, identify any ongoing health needs, confirm fitness for normal duties and discuss any reasonable adjustments",
+      "Cg = 0.80, applies only to the consumer-unit entry zone where the cables first leave the board.",
+      "Cg = 1.0, because cables in a sub-floor void are treated as being in free air.",
       "Cg = 0.57, applies to the entire 12 m of bunched run because the cables are touching for that length.",
-      "To provide legal evidence of compliance and demonstrate ongoing maintenance",
+      "Cg = 0.57, but applies only to the final metre before the load where the cables converge.",
     ],
     correctIndex: 2,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     question:
       'You have selected Method 103 (cable totally enclosed in thermal insulation) for the worst section of a run. Should you also apply Ci = 0.5 from any separate table on top of the Method 103 column?',
     options: [
-      "The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day",
+      "Yes — apply Ci = 0.5 on top of the Method 103 column to be conservative, because the tabulated value assumes only partial enclosure.",
       "No — the in-insulation derate is already built into Method 103 tabulated values; applying Ci on top is double-counting and over-engineers the cable.",
-      "From the level below: fit frames, fit bracing, fit platform with trap, climb through trap, fit guardrails from inside the trap opening",
-      "Type (rod / plate / mat), accessibility for measurement (test link), corrosion, label per Reg 514.13.1, and a measured Ra giving compliant Zs at the furthest point",
+      "Yes — Method 103 covers only the cable construction, and Ci must always be applied separately for any insulation contact.",
+      "Yes — apply Ci once for each face of the cable in contact with insulation, so for a totally enclosed cable apply it four times.",
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       "Where in BS 7671 do you find the Ca correction factor for ambient temperature, and which column do you use for a 70 °C thermoplastic cable?",
     options: [
-      'As a last resort when other control measures are not sufficient',
+      'Table 4C1, the column for grouped cables touching in a single layer.',
       'Table 4B1, the column for 70 °C general purpose thermoplastic insulation.',
-      'Common applications like ring finals, radials, and lighting circuits',
-      'Electrocution — electricity can arc across gaps and does not require direct contact',
+      'Table 52.2, the column for cables installed in thermal insulation.',
+      'Table 4B3, the column for soil thermal resistivity on buried cables.',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       "What does Ca actually represent physically?",
     options: [
-      "No-blame reporting; easy reporting mechanism; structured analysis (5-whys, root cause); feedback to team; visible changes in practice; trend tracking; celebrate reporting (the act, not the near-miss); leadership modelling.",
-      "Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables",
-      "Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown",
+      "The ratio between the cable's resistance at the operating temperature and its resistance at 20 °C, used to correct the voltage-drop figure.",
+      "The number of other circuits grouped with the cable, each of which adds heat the cable must shed.",
+      "The depth of thermal insulation surrounding the cable, expressed as a fraction of the cable diameter.",
       "The ratio between the thermal headroom available at the actual ambient temperature and the thermal headroom available at the 30 °C reference — a hotter ambient leaves less room for the cable to dissipate heat, so the cable can carry less current.",
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
       "Cg = 0.5 is given for ten cables grouped together touching in a single layer. What does that 0.5 mean in practical terms?",
     options: [
       "Each cable can carry half the current it would if it were on its own — the heat each cable produces warms its neighbours, so collectively they all run hotter than a single cable would.",
-      "Ib = P / (V x cos φ) — real power divided by the product of voltage and power factor. The motor or inductive load draws apparent power = P / cos φ, and line current carries apparent power.",
-      "Modern fire-resistant cables — silicone-rubber or insulating-tape construction with a stainless-steel screen. Easier to install than MICC, lower cost, BS 5839 compliant for fire alarm and emergency lighting circuits.",
-      "Stop. The MS can’t be followed as written. Either get key access (call building manager), find an alternative isolation point in the MS, or pause the work until tomorrow",
+      "The whole group together can carry half the current that a single cable could — the cables share one common rating.",
+      "Half the cables in the group must be left de-energised at any time so the others can dissipate their heat.",
+      "The cable's voltage drop doubles when grouped, so the design current must be halved to stay within the 5 percent limit.",
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       "Ci is the in-thermal-insulation correction. For Methods 100–103 you should:",
     options: [
-      "Every time they are required to operate a type of MEWP they have not used before",
+      "Apply Ci = 0.5 on top of the Method 100–103 value as a standard conservative margin.",
       "Not apply Ci at all — it is already built into the Method 100–103 tabulated It values.",
-      "IP44 minimum (IP54/IP55 in dustier or wetter areas) per Reg 705.512.2",
-      "The process of restoring the building and its systems to a safe and operational condition after a fire",
+      "Apply Ci and also re-apply Ca, because thermal insulation changes the effective ambient temperature.",
+      "Apply Ci from Table 52.2 but ignore Cg, because grouped cables in insulation do not share heat.",
     ],
     correctAnswer: 1,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       "Two cables grouped touching for 0.6 m at the consumer-unit entry zone, then running on their own for the rest of a 30 m route. Note 14 of BS 7671 Appendix 4 §5.1 tells you:",
     options: [
-      "A temporary pond where sediment-laden water is held to allow suspended solids to settle out before discharge",
-      "Have a phased return with gradually increasing demands, regular check-ins, and clear boundaries to prevent relapse",
-      "Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making",
+      "Apply Cg to the entire 30 m route, because once cables touch anywhere they are treated as grouped for their whole length.",
+      "Apply Cg of 0.80 to the whole route as a fixed penalty for any cable that shares an entry zone with another.",
+      "Re-route the cable to remove the touching zone entirely, because any grouping at the consumer unit is a Code 2 defect.",
       "Apply no Cg — grouping under about 1 m of run is treated as trivial because the cables cool quickly past the brief touching zone.",
     ],
     correctAnswer: 3,

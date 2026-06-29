@@ -42,12 +42,12 @@ const Module6Section2_1 = () => {
       id: 3,
       question: 'Name two defects to look for on socket outlets.',
       options: [
-        'Brand and model',
-        'Colour and size',
-        'Age and warranty',
         'Cracks and scorch marks',
+        'Loose mounting and current rating',
+        'Manufacturer and CE marking',
+        'Faceplate finish and switch direction',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
         'Physical damage like cracks and signs of overheating such as scorch marks indicate potential safety hazards that must be addressed.',
     },
@@ -55,12 +55,12 @@ const Module6Section2_1 = () => {
       id: 4,
       question: 'True or False: Minor scratches on accessories must always be recorded.',
       options: [
-        'False - only safety-affecting defects',
         'True - all defects must be recorded',
         'True - for insurance purposes',
+        'False - only safety-affecting defects',
         'False - scratches are acceptable',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         "Only defects that affect safety, functionality, or compliance need to be recorded. Minor cosmetic issues that don't impact safety are not required to be documented.",
     },

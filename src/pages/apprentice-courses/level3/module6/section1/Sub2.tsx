@@ -39,10 +39,10 @@ const checks = [
     question:
       'Your client asks why the design pack quotes Reg 311.1 instead of just listing the cable sizes. What is the most professional response?',
     options: [
-      'Assess the scene for danger, then check their airway, breathing, and circulation (ABC) without moving them unnecessarily due to potential spinal injury',
-      'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
+      'Reg 311.1 is simply the cable manufacturer\'s reference number, so quoting it is just a way of citing the supplier rather than any assessment step.',
+      'Reg 311.1 only applies to three-phase installations, so on a single-phase job the cable sizes can be listed without any reference to it at all.',
       'Reg 311.1 forces you to assess maximum demand BEFORE you size anything. The cable schedule is the output of the calc, not the calc itself — Part 3 is the audit trail that proves the calc was done.',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
+      'Reg 311.1 governs the testing sequence at verification, so it belongs in the inspection and testing pack rather than the design pack.',
     ],
     correctIndex: 2,
     explanation:
@@ -53,9 +53,9 @@ const checks = [
     question:
       'A client wants you to design the LV side of a 11 kV/400 V transformer-fed installation in a small data centre. Which Part of BS 7671 tells you this is in scope, and what does it specifically exclude?',
     options: [
-      'Below 0.05 ohm — typical readings on a healthy 10 mm² bond of 4-5 m are 0.02 to 0.05 ohm. BS 7671 doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t specify an absolute maximum but the joint must be reliable and verifiable.',
-      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
+      'Part 7 (special locations) covers the whole installation including the 11 kV side, because a data centre is a special location and Part 7 extends BS 7671 up to the HV transformer primary.',
+      'Part 4 (protection for safety) excludes the LV side entirely because the transformer provides separation, so BS 7671 does not apply to any of this installation.',
+      'Part 6 (inspection and testing) sets the scope, and it specifically includes HV switchgear testing as part of the initial verification of a transformer-fed installation.',
       'Part 1 (Reg 110) covers the LV installation up to and including the main switchgear; the HV side and the supply transformer are excluded because they are the property and responsibility of the DNO or private network operator.',
     ],
     correctIndex: 3,
@@ -68,9 +68,9 @@ const checks = [
       'You read in a manufacturer datasheet: "suitable for use as a circuit-breaker in accordance with BS EN 60898." A junior asks if this means the same thing as RCBO. The correct answer references which Part?',
     options: [
       'Part 2 — Definitions. A circuit-breaker (BS EN 60898) provides overcurrent protection only; an RCBO (BS EN 61009) combines overcurrent with residual-current protection. The two terms are not interchangeable and the wrong device gives the wrong protection.',
-      'Apply a structured diagnostic approach: gather information about the symptoms, consult technical documentation, form a hypothesis, test it methodically, and escalate if the fault is beyond your competence',
-      'Record the actual value, flag it as marginal, investigate the possible cause, and consider recommending remedial action — a value near the limit today may deteriorate to a fail before the next inspection',
-      'Smart charging enables the charge rate, timing and duration to be managed dynamically in response to grid conditions, electricity tariffs, local network constraints and user preferences — it is essential to prevent network overloading as millions of EVs connect to a grid that was not designed for their combined demand',
+      'Part 4 — Protection for safety. The device standards are listed in Chapter 41, and a circuit-breaker and an RCBO are treated as equivalent because both satisfy the ADS requirement.',
+      'Part 5 — Selection and erection. The terms are interchangeable in everyday use, so a BS EN 60898 circuit-breaker can be specified wherever an RCBO is needed and the wholesaler will supply whichever is in stock.',
+      'Part 6 — Inspection and testing. The distinction only matters at verification, where the tester decides on site whether the device also needs an RCD function based on the circuit.',
     ],
     correctIndex: 0,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 is divided into seven Parts. Which three sit above all the design work in this module?',
     options: [
-      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
+      'Parts 4 (Protection for safety), 5 (Selection and erection) and 6 (Inspection and testing).',
       'Parts 1 (Scope, object and fundamental principles), 2 (Definitions), and 3 (Assessment of general characteristics).',
-      'Stop and raise an RFI — joist depth is a structural constraint, the designer needs to resolve the route.',
-      'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
+      'Parts 5 (Selection and erection), 6 (Inspection and testing) and 7 (Special locations).',
+      'Parts 2 (Definitions), 4 (Protection for safety) and 7 (Special locations).',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 311 (Maximum demand and diversity) requires you to do what at the design stage?',
     options: [
-      'Avoid identifying clients or live worksites without consent, no derogatory comments about colleagues/clients/competitors, and respect confidentiality',
-      'The complete system of sensor, controller and final control element that measures a process variable, compares it to a setpoint, and adjusts the process accordingly',
+      'Add up the nameplate rating of every connected appliance and size the supply to that full connected load, with no allowance for diversity.',
+      'Measure the actual demand of the existing installation with a clamp meter over a week and design the new supply to match the recorded peak.',
       'Determine the maximum demand of the installation, having due regard to diversity, before selecting cables and protective devices.',
-      'A building with very high energy performance where remaining energy is largely from renewable sources',
+      'Apply a fixed 100 A per phase to every domestic dwelling regardless of the loads, since that is the standard DNO service capacity.',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'Reg 312 covers division of the installation. Why does the designer care about this at design stage?',
     options: [
-      'A systematic process of looking beyond the immediate cause to identify the underlying organisational, procedural, or design failures that allowed the injury to occur',
-      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\' before work begins',
-      'Circuit protection devices that detect dangerous electrical arcing (series and parallel arcs) in final circuits and disconnect the supply before the arc can cause a fire',
+      'To decide which manufacturer\'s consumer unit to buy, since division of the installation is purely a procurement choice between board brands.',
+      'To split the cost of the installation fairly between the client and the contractor, dividing the bill by circuit at the design stage.',
+      'To allocate the work between operatives on site, dividing the circuits among the available electricians so the install is shared evenly.',
       'To limit the consequences of a fault, simplify safe inspection and testing, take account of danger, and avoid hazards arising from a single fault — by deciding how circuits are grouped, how DBs are arranged and how isolation works.',
     ],
     correctAnswer: 3,
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'Reg 314 covers external influences. Which BS 7671 Appendix gives you the full classification matrix?',
     options: [
-      'A battery or generator backup that powers the hydraulic system when the main engine fails',
+      'Appendix 3 — the time/current characteristics of protective devices, which sets the external-influence classifications.',
       'Appendix 5 — the AA / AB / AC and BD classification of environment, utilisation and building construction.',
-      'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
-      'Physical separation OR equivalent insulation OR an earthed metallic screen — to prevent transfer of mains potential into ELV circuits',
+      'Appendix 4 — the current-carrying capacity tables, which include the environmental classification matrix.',
+      'Appendix 15 — the ring final circuit data, which is where the external-influence codes are tabulated.',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why does the L3 designer care about Reg 132 (in Part 1) AND Reg 311 to 314 (in Part 3)?',
     options: [
-      'It has a secondary heat exchanger that recovers latent heat by condensing water vapour from flue gases',
-      'Zero tolerance with for-cause and post-incident testing, supported by an employee assistance referral route',
+      'Reg 132 applies only to commercial work and Reg 311 to 314 only to domestic, so the designer picks one set depending on the premises type.',
+      'Reg 132 is the older numbering and Reg 311 to 314 is the A4:2026 replacement, so only the newer Part 3 numbers now apply.',
       'Part 1 says what must be done; Part 3 says how to assess the inputs to those decisions. Both apply.',
-      'To carry out routine visual skin inspections and questionnaires, and refer any concerns to occupational health',
+      'Reg 132 covers the design and Reg 311 to 314 covers the inspection, so the designer uses Part 1 and the tester uses Part 3.',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'On a small commercial fit-out the DNO declares Ze = 0.35 ohm, PSCC = 16 kA, three-phase 400/230 V TN-C-S, 100 A per phase. Which Reg is this information collected against?',
     options: [
-      'The person on whose behalf the inspection is carried out (typically the employer or person controlling the work)',
-      'Code C2 (potentially dangerous) on EICR, isolate, plan replacement of affected components, investigate water ingress and moisture source as the root cause',
-      'You should keep what the person tells you private unless there is a risk of harm to themselves or others',
+      'Reg 311 — maximum demand and diversity, because the 100 A per phase figure is the demand assessment for the installation.',
+      'Reg 314 — external influences, because the PSCC and Ze describe the electrical environment the installation sits in.',
+      'Reg 312 — division of the installation, because the three-phase arrangement determines how the circuits are grouped.',
       'Reg 313 — supply characteristics. The figures must be on the design pack and on the EIC, and they cap every protective device decision downstream.',
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'You discover during the survey that the existing building is classified BE2 (fire propagation risk) under Appendix 5. Which design decisions follow from that?',
     options: [
       'Wiring systems must be selected to limit propagation of fire (Reg 527.1.2), penetrations must be fire-stopped (Reg 527.2), specific cable types may be required (LSF/LSZH or fire-resistant), and segregation from escape routes must be reviewed (Section 422).',
-      'The insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s right, after paying your claim, to step into your legal position and pursue recovery from any third party who caused or contributed to the loss. This is why you shouldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t settle directly with a third party or admit liability — it can prejudice the insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recovery and void your cover.',
-      'Non-compliant — Zs exceeds the A4:2026 maximum of 1.37 Ω; the circuit fails disconnection time and must be re-designed (larger conductor, RCD additional protection, or supplementary bonding) before energising',
-      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
+      'No design decisions follow — BE2 is purely an administrative label recorded on the assessment sheet and has no effect on cable selection, fire-stopping or segregation.',
+      'The whole installation must be downgraded to a TT earthing arrangement, because BE2 fire risk is incompatible with TN-C-S supplies.',
+      'Every circuit must be RCD-protected at 30 mA regardless of use, because BE2 classification triggers blanket additional protection across the installation.',
     ],
     correctAnswer: 0,
     explanation:

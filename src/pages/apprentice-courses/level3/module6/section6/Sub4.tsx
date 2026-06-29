@@ -44,10 +44,10 @@ const checks = [
     question:
       "Which of the following best describes BIM (Building Information Modelling) as the L3 designer needs to understand it?",
     options: [
-      "A competent person — typically the supervisor, contracts manager, technical lead. At L3 you may contribute to the MS or write a short one for a small job, but the formal MS is normally the supervisor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s document. The RAMS is signed off by a designated competent person.",
-      "Distribute across L1, L2, L3 to balance — e.g. cafe split across two phases (37 + 38 A), retail on L3 (18 A) plus office on L3 (22 A) = 40 A on L3. Phase loads: L1 ~40 A, L2 ~37 A, L3 ~40 A. Imbalance under 10 percent acceptable.",
-      "A coordinated digital model of the building containing geometry plus structured information (object types, properties, relationships, system memberships) that all disciplines contribute to and read from. The information matters more than the 3D — the 'I' in BIM is the value.",
-      "Recognise the physical stress response (jaw clenching) and racing thoughts as signals that his amygdala has been triggered, then pause to allow the prefrontal cortex to re-engage before deciding on a course of action",
+      "A photo-realistic 3D rendering of the finished building, produced purely for the client's marketing brochure with no technical data attached to any object.",
+      "A single CAD package that replaces AutoCAD for drawing 2D electrical schematics, the 'M' standing for the modelling toolset rather than any information layer.",
+      "A coordinated digital model of the building carrying geometry plus structured object information that all disciplines contribute to and read from.",
+      "A cloud file-sharing service where the team uploads finished PDFs for the client to download, with no model, geometry or object data involved.",
     ],
     correctIndex: 2,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       "Which of the following best matches the typical role of each tool on a UK commercial fit-out?",
     options: [
-      "AutoCAD for 2D drawings (SLDs, layouts, schedules) and small projects; Revit for full BIM model authoring on multi-discipline projects; Trimble Stabicad / ProDesign / Amtech for electrical-specific design (calc + schedule + drawing in one electrical-aware environment); IFC for cross-tool exchange.",
-      "ERA 1996 s.44 (no detriment for raising H&S concerns); PIDA 1998 (whistleblowing, qualifying disclosures including external regulator); HASAWA s.7 (personal duty so refusal is required); EAWR Reg 16 (competence-based refusal).",
-      "Ib = (4000) / (230 x 0.85) = 20.46 A — apparent power is real power divided by power factor, then current is apparent power divided by voltage. Round to 21 A and apply a starting allowance for protective coordination.",
-      "Response time too slow. Asphyxiation can cause unconsciousness in 30 seconds and death in minutes. Pre-positioned rescue plan with standby person + equipment is essential. Fire and Rescue may attend but cannot be the primary rescue route.",
+      "AutoCAD for 2D drawings; Revit for full BIM model authoring; Trimble Stabicad / ProDesign / Amtech for electrical-specific design; IFC for cross-tool exchange.",
+      "Revit for 2D schematics only; AutoCAD for the BS 7671 calculations; Trimble Stabicad for clash detection between disciplines; IFC for printing the final drawings.",
+      "AutoCAD for the calc engine; Revit for procurement and ordering; Stabicad as the file-sharing platform; IFC as the inspection-and-testing tool.",
+      "All four are interchangeable CAD packages doing the same job, so the firm picks whichever licence is cheapest and uses it for everything.",
     ],
     correctIndex: 0,
     explanation:
@@ -72,10 +72,10 @@ const checks = [
     question:
       "BS EN ISO 19650 (UK BIM standard) primarily addresses:",
     options: [
-      "Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed",
-      "Information management for the construction phase of building works — defining roles (Appointing Party, Lead Appointed Party, Task Team), information requirements (EIR, OIR, AIR), the Common Data Environment (CDE), and how information flows between the parties throughout the lifecycle.",
-      "GN3 was updated to align with BS 7671:2018+A4:2026 — including the simplified RCD test method (single AC at 1×IΔn under Reg 643.7.3), AFDD recommendations under Reg 421.1.7, and updated Table 41.3 maximum Zs values.",
-      "The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes",
+      "The graphical symbols used on electrical drawings — the symbol standard that BS EN 60617 is derived from, defining breaker and cable symbols.",
+      "Information management for construction — the roles, information requirements, Common Data Environment and information flows between parties across the lifecycle.",
+      "The minimum hardware specification a CAD workstation must meet to run Revit — processor, memory and graphics-card requirements for BIM authoring.",
+      "The cable current-carrying capacity tables for BIM-modelled circuits, replacing BS 7671 Appendix 4 when a project is delivered in a digital model.",
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What does BIM stand for and what is its core idea?",
     options: [
-      "The substrate cannot be chased (solid concrete, structural steel, glass) or the install is intended to be visible/temporary.",
+      "British Installation Method — the UK system for classifying cable installation methods, replacing the Reference Methods in BS 7671 Appendix 4.",
       "Building Information Modelling — a coordinated digital model of the building containing geometry plus structured information that all disciplines contribute to and read from.",
-      "It prevents tasks from being forgotten, ensures deadlines are visible, allows you to review priorities when circumstances change, and provides evidence of your workload management for the EPA",
-      "Because the DC side is energised by daylight on the panels, and the AC side is energised by the grid. To work safely on the inverter or its terminals you need to isolate BOTH sources independently and prove both dead.",
+      "Bonded Insulation Membrane — a fire-resistant lining used on cable routes through fire compartments in higher-risk buildings.",
+      "Backup Inverter Management — the control system that switches a building between grid supply and battery storage.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "What is the difference between AutoCAD and Revit?",
     options: [
-      "The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness",
-      "Test equipment leads, probes and accessories — limiting exposed metal at the probe tip, fused leads, no clip ends for live testing, current limiters, and the requirement for prove/test/prove on a known-good supply.",
-      "AutoCAD is primarily a 2D drafting tool with 3D extensions; it is the lingua franca for drawings and works well for SLDs, layouts and schedules. Revit is a 3D BIM authoring tool — every object carries metadata and is part of a coordinated model with structural, mechanical and architectural disciplines.",
-      "No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.",
+      "AutoCAD is the BS 7671 calculation engine and Revit is the drafting tool — AutoCAD runs the cable-sizing and Zs maths while Revit only draws.",
+      "AutoCAD is the file-sharing platform (the CDE) and Revit is the clash-detection tool, with neither one used for drawing at all.",
+      "AutoCAD is a 2D drafting tool for SLDs, layouts and schedules; Revit is a 3D BIM authoring tool where objects carry metadata in a coordinated model.",
+      "AutoCAD and Revit are the same product under two names — Autodesk sells the identical software twice, so a firm only ever needs one of them.",
     ],
     correctAnswer: 2,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     question:
       "What is Trimble Stabicad (and similar packages such as Amtech, ProDesign, Hevacomp)?",
     options: [
-      "Because toxic gases in smoke (primarily carbon monoxide and hydrogen cyanide) cause incapacitation and death before flames reach the victim, and thick smoke prevents evacuation by obscuring escape routes",
-      "A loose terminal was not gas-tight, oxidisation built up at the contact face over weeks, contact resistance climbed, the joint heated under any current draw, the heat softened the terminal screw and conductor, and the connection failed mechanically. Reg 526.1 (durable electrical continuity and adequate mechanical strength) failure.",
-      "Issue a formal written instruction to comply, increase monitoring of the sub-contractor's activities, consider stopping their work until compliance is achieved, and if necessary remove them from site — documenting all actions taken",
-      "Electrical-specific design suites that combine BS 7671 calculation engines with schedule generation and CAD drafting in one environment. They produce SLDs, schedules, calc sheets and Revit-exportable models from one shared dataset, removing the duplication between calc tool and CAD tool.",
+      "Common Data Environment platforms that host project files — the cloud storage where drawings and models are shared, not design tools at all.",
+      "Clash-detection engines used to combine discipline models — they find geometric collisions but do no calculation or drafting of their own.",
+      "Manufacturer product catalogues in software form — they list breakers and cables for ordering but cannot size circuits or draw schematics.",
+      "Electrical-specific design suites combining the BS 7671 calc engine, schedule generation and CAD drafting in one environment from a single shared dataset.",
     ],
     correctAnswer: 3,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 4,
     question: "What is IFC (Industry Foundation Classes)?",
     options: [
-      "An open, vendor-neutral file format defined by buildingSMART for exchanging BIM data between tools. IFC lets a Revit model be read by ArchiCAD, a Trimble Stabicad model be read by Revit, and an MEP model be checked against a structural model regardless of authoring tool.",
-      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
-      "In stages — during erection (first-fix verification of buried items before cover-up), at second-fix completion, and final at energisation. Reg 641.1 explicitly covers \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"during erection and on completion\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\".",
-      "Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is 'EV-ready' from construction",
+      "An open, vendor-neutral file format defined by buildingSMART for exchanging BIM data between tools regardless of which one authored the model.",
+      "Industry Fire Classification — the system that grades cables and fire-stopping products for use in higher-risk residential buildings.",
+      "Integrated Fault Calculator — the calculation engine inside Revit that works out Zs and prospective fault current for every circuit in the model.",
+      "Interim Final Certificate — the document issued at construction handover before the full Electrical Installation Certificate is signed off.",
     ],
     correctAnswer: 0,
     explanation:
@@ -141,23 +141,23 @@ const quizQuestions = [
     id: 5,
     question: "What is a Common Data Environment (CDE)?",
     options: [
-      "Intervention is immediate, in-the-moment, focused on the unsafe act and the correction. Done politely. Documents the act and the correction; doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t embarrass or punish. Followed up if the issue recurs. The HSE expects a strong intervention culture in firms with mature safety systems.",
-      "The single shared online platform where all project information is stored, controlled and exchanged — drawings, models, schedules, RFIs, change orders, all under structured access control and revision management. Examples include Autodesk Construction Cloud, Procore, Asite, Aconex, Viewpoint For Projects.",
-      "Employees must take reasonable care for the safety of themselves and others, cooperate with the responsible person, and inform the employer of any situation they consider a serious and immediate danger or any shortcomings in fire safety arrangements",
-      "Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation's annual turnover band (micro / small / medium / large). A 'very high culpability + Category 1 harm + large organisation' combination has produced fines well into seven figures.",
+      "The cable-data environment — the set of derating factors (ambient, grouping, insulation) applied to a cable to find its current-carrying capacity.",
+      "The single shared online platform where all project information is stored, controlled and exchanged under structured access control and revision management.",
+      "The controlled distribution enclosure — a sealed cabinet on site where the master paper drawings are locked away for security against loss.",
+      "The combined design estimate — the priced bill of materials that the procurement team compiles from the project schedules.",
     ],
     correctAnswer: 1,
     explanation:
-      "A CDE is the central source-of-truth platform for project information. BS EN ISO 19650 defines the CDE roles (Work In Progress, Shared, Published, Archive) and the workflows between them. Every drawing, every model, every RFI, every revision lives on the CDE; nothing important should live on someone's local laptop. The CDE is what makes coordinated multi-discipline working possible at scale.",
+      "A CDE is the central source-of-truth platform for project information — drawings, models, schedules, RFIs and change orders under structured access control. Examples include Autodesk Construction Cloud, Procore, Asite, Aconex and Viewpoint For Projects. BS EN ISO 19650 defines the CDE states (Work In Progress, Shared, Published, Archive) and the workflows between them. Every revision lives on the CDE; nothing important should live on someone's local laptop. The CDE is what makes coordinated multi-discipline working possible at scale.",
   },
   {
     id: 6,
     question: "What is 'clash detection' in a BIM workflow?",
     options: [
-      "The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time",
-      "Behave professionally, maintain confidentiality about internal matters, never criticise colleagues or competitors, only promise what the firm can deliver and refer complex issues to the right person rather than guess. You're the firm's public face on every call.",
-      "A coordination check run in tools like Navisworks or Revit's built-in clash detection that finds geometric collisions between disciplines — e.g. a cable tray running through a structural beam, an HVAC duct passing through a fire compartment without a fire-stop, electrical conduit crossing a sprinkler pipe at the same height.",
-      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"good enough\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
+      "A check that two protective devices discriminate — confirming a downstream breaker trips before the upstream one on a fault, from the manufacturer's coordination tables.",
+      "A check that two cables of the same circuit are not cross-connected at the consumer unit, carried out by tracing each conductor before energising.",
+      "A coordination check in tools like Navisworks or Revit that finds geometric collisions between disciplines, such as a cable tray running through a structural beam.",
+      "A check that the design pack and the install agree at handover, where the inspector compares the as-built work against the drawings before the EIC is issued.",
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 7,
     question: "What is the typical level of BIM literacy expected of an L3 electrical designer?",
     options: [
-      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
-      "Confirm headroom for the future EV / heat-pump loads in the design ultimate column; if the ultimate exceeds the standard 80 A per phase capacity, request a 100 A or load-management upgrade now while the build is open, rather than reapplying when the spare way is wired in two years.",
-      "CAT IV 600 V two-pole testers — Martindale VI-13800 (~£60), Fluke T130 (~£100), Kewtech KT1780 (~£70). CAT III 1000 V / CAT IV 600 V multimeters — Fluke 87V (~£400), Megger AVO830 (~£200). CAT IV-rated MFTs — Megger MFT1721+ (~£900), Kewtech KT200 (~£500). Personal apprentice purchases typically: Martindale VI-13800 + Fluke 117 (CAT III 600 V — adequate for DB work but not cut-out). Firm-issued: Megger MFT1741+ and Fluke 87V for senior staff.",
-      "Functional literacy — able to navigate a coordinated model, read electrical objects with their attached information, raise and respond to clashes, contribute electrical content via either Revit (if competent) or by working with a BIM technician who imports the L3 designer's content into Revit, and understand the CDE and ISO 19650 roles. Full Revit authoring skill is a specialist add-on.",
+      "Full Revit MEP authoring competence — every L3 designer must build native Revit families and author the whole electrical model unaided before any project.",
+      "No BIM knowledge at all — the L3 designer hands a paper SLD to the BIM team and never needs to open, read or understand a model.",
+      "BIM-manager level — the L3 designer writes the BIM Execution Plan, runs the CDE and sets the ISO 19650 information requirements for the whole project.",
+      "Functional literacy — navigate a model, read electrical objects, raise and respond to clashes, contribute content and understand the CDE and ISO 19650 roles.",
     ],
     correctAnswer: 3,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: "Why does BIM matter for the L3 electrical designer specifically?",
     options: [
-      "On any multi-discipline project of meaningful size, BIM is how electrical coordinates with structural, mechanical, architectural and fire engineering disciplines. The L3 designer who cannot read or contribute to a BIM model is locked out of a growing share of commercial, public sector and HRRB work where BIM is the procurement default.",
-      "Pass — the reading is above the meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">999 MΩ\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" or the equivalent symbol the form specifies.",
-      "AFDDs offered per Reg 421.1.7 advisory wording. Customer accepted on bedroom socket ring, lounge socket ring and kitchen socket ring (engineering benefit strongest on socket circuits with mixed appliance use and aged flex). Customer declined on dedicated single-load circuits (shower, EV, heat pump) and lighting (LED on fixed wiring, no flex). Documented in the design pack.",
-      "Understand the strategic context of maintenance (why different strategies exist for different assets), apply structured analytical techniques (RCA, FMEA, criticality analysis), contribute to continuous improvement, and articulate how maintenance effectiveness is measured and improved — demonstrating the knowledge, skills and behaviours expected of a competent maintenance technician",
+      "On any sizeable multi-discipline project, BIM is how electrical coordinates with the other disciplines, and a designer who cannot use it is locked out of that work.",
+      "It does not matter for the L3 designer at all — BIM is purely an architect's tool and the electrical designer never interacts with it on any project.",
+      "It matters only for the marketing renders — the L3 designer uses BIM solely to produce attractive 3D images for client presentations.",
+      "It matters only on domestic CU upgrades — BIM is the standard tool for small single-dwelling work and is rarely used on large commercial projects.",
     ],
     correctAnswer: 0,
     explanation:

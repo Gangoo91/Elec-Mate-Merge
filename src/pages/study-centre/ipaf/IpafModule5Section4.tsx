@@ -26,12 +26,12 @@ const quizQuestions = [
   {
     question: 'What is the absolute rule about moving a mobile access tower with people on board?',
     options: [
+      'It is NEVER permitted — zero tolerance, regardless of distance',
       'It is allowed for short distances under 2 metres',
       'It is allowed if the person holds on tightly',
-      'It is NEVER permitted — zero tolerance, regardless of distance',
       'It is only prohibited above 4 metres height',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Moving a tower with anyone on board is a zero-tolerance rule. There are NO exceptions — regardless of distance, tower height, urgency, or how securely the person thinks they are holding on. The person must descend completely before the tower is moved.',
   },
@@ -39,11 +39,11 @@ const quizQuestions = [
     question: 'Where should you push a mobile access tower when moving it?',
     options: [
       'At mid-height for better leverage',
-      'At the top for maximum control',
       'At the base to minimise tipping risk',
+      'At the top for maximum control',
       'Anywhere — it makes no difference',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Always push at the base of the tower. Pushing at mid-height or above creates a lateral force above the centre of gravity, which generates a tipping moment. Pushing at the base keeps the force below the centre of gravity, significantly reducing the risk of overturning.',
   },
@@ -51,11 +51,11 @@ const quizQuestions = [
     question: 'What is the maximum wind speed for safely moving a mobile access tower?',
     options: [
       'Any wind speed is acceptable if you are careful',
-      'Below Beaufort Force 4 (20-28 km/h)',
       'Below Beaufort Force 6 (39-49 km/h)',
+      'Below Beaufort Force 4 (20-28 km/h)',
       'Below Beaufort Force 2 (6-11 km/h)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Towers should not be moved when wind speed reaches Beaufort Force 4 (20-28 km/h, moderate breeze — loose paper blows around, small branches move). Wind creates lateral force that increases tipping risk during movement. Always check conditions before and during the move.',
   },
@@ -63,23 +63,23 @@ const quizQuestions = [
     question: 'What is the typical maximum height for moving a tower on castors?',
     options: [
       '2 metres',
-      "4 metres or the manufacturer's specified limit",
       '8 metres',
       'There is no height limit for moving towers',
+      "4 metres or the manufacturer's specified limit",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "As a general guideline, towers should not be moved when the platform height exceeds 4 metres, unless the manufacturer's instructions specify a different limit. Taller towers have a higher centre of gravity and are more susceptible to tipping during movement. Always check the manufacturer's data.",
   },
   {
     question: 'Before moving a tower, all loose materials must be removed from the platform. Why?',
     options: [
-      'To make the tower lighter for moving',
-      "Loose materials can fall during movement, striking people below, and unsecured items shift the tower's balance",
-      'To prevent theft',
-      'It is not necessary if the materials are tied down',
+      'They can fall and strike people below, and shift the tower out of balance',
+      'To make the assembled tower noticeably lighter and easier to move',
+      'To prevent the tools and materials from being stolen during the move',
+      'It is not actually necessary as long as the materials are tied down',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Loose materials on the platform during movement can fall and strike people below. They also shift during movement, changing the tower's centre of gravity and potentially contributing to overturning. All loose tools, materials, and equipment must be removed or properly secured before the tower is moved.",
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
   {
     question: 'After moving a tower to a new location, what must be done before anyone climbs it?',
     options: [
-      'Nothing — it was inspected before the move',
-      'Re-check stability, re-level, lock all castors, verify stabilisers, and re-inspect before use',
-      'Just lock the castors',
-      'Take a photograph for the records',
+      'Nothing further — it was already inspected before the move',
+      'Just lock the castors and the tower is ready for use',
+      'Re-check stability, re-level, lock castors, check stabilisers, re-inspect',
+      'Take a photograph of the new position for the site records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "After every move, the tower must be fully re-checked: verify the ground is firm and level, re-level using a spirit level, lock ALL castors, check that stabilisers and outriggers are properly deployed, and conduct a full pre-use inspection. Movement can loosen connections and change the tower's relationship with the ground.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       "A colleague suggests moving the tower 'just half a metre' with the operative still on the platform to save time. What should you do?",
     options: [
-      'Agree — half a metre is too short to cause problems',
-      'Agree — but only if the wind is calm',
-      'Refuse — the zero-tolerance rule applies regardless of distance; the person must descend first',
-      'Agree — but ask them to crouch down',
+      'Agree — half a metre is far too short a distance to cause any problem',
+      'Agree — but only go ahead if the wind on site is completely calm',
+      'Agree — but ask the operative to crouch down low on the platform',
+      'Refuse — zero tolerance applies at any distance; they must descend first',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The zero-tolerance rule for moving towers with people on board applies regardless of distance. Even 'just half a metre' can cause the tower to tip if a castor catches a crack, cable, or debris. The potential consequences — a person falling from height — are the same whether the move is 0.5 metres or 50 metres.",
   },
@@ -127,12 +127,12 @@ const quickCheckQuestions = [
     question:
       'You need to move a tower across a warehouse floor to a new work position. The floor has several cable runs taped across it. What precautions are needed?',
     options: [
-      'Roll over the cables slowly',
-      'Remove or protect the cables from the route, check the entire path is clear and level, ensure minimum two people, push at the base, and have someone watch for hazards ahead',
-      'Just avoid the biggest cables',
-      'Move the tower diagonally to cross fewer cables',
+      'Remove or ramp the cables, clear and level the path, and push at the base with two people',
+      'Roll the tower slowly and carefully straight over the cable runs',
+      'Just steer around the biggest cables and roll over the smaller ones',
+      'Move the tower diagonally across the floor to cross fewer cables',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cable runs are a significant hazard — castors can catch on them, causing the tower to stop suddenly and tip. The route must be completely clear before moving. Remove cables, use cable ramps, or choose a different route. A dedicated lookout should walk ahead to identify obstacles, while minimum two people push at the base.',
   },
@@ -153,12 +153,12 @@ const quickCheckQuestions = [
     question:
       "After moving a tower to a new position on a tarmac car park, you lock all four castors and the tower seems stable. A colleague says 'That's fine, let's get on with it.' What steps are still missing?",
     options: [
-      'Nothing — locked castors on tarmac is sufficient',
-      'Re-level using a spirit level, deploy and adjust stabilisers/outriggers, conduct a full pre-use inspection of all components, and check the new position for overhead hazards',
-      'Just check the overhead clearance',
-      'Take a photograph',
+      'Nothing further — locked castors on a tarmac surface is sufficient',
+      'Just check the overhead clearance and then carry on with the work',
+      'Re-level, deploy stabilisers, do a full pre-use inspection, and check overhead',
+      'Take a photograph of the new position and start using the tower',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Locking castors is only one step. After every move: (1) Check the new ground is firm and free from voids, (2) Re-level using a spirit level — tarmac car parks often have drainage cambers, (3) Deploy and adjust stabilisers/outriggers for the new position, (4) Conduct a full pre-use inspection — movement can loosen connections, (5) Check overhead clearance at the new location.',
   },
@@ -464,10 +464,10 @@ export default function IpafModule5Section4() {
         <InlineCheck
           question="An experienced operative says: 'I've been moving towers with people on board for 20 years and nothing has ever happened. It's fine as long as you're careful.' How should you respond?"
           options={[
-            'Accept their experience — 20 years proves it is safe',
-            'Ask them to sign a disclaimer',
-            'Explain that past luck does not equal safety, the rule is zero tolerance, and continuing this practice puts everyone at legal and physical risk',
-            'Report them after the job is finished',
+            'Accept their experience — 20 years without incident proves it is safe',
+            'Ask them to sign a disclaimer taking responsibility for the risk',
+            'Explain that past luck is not safety; the zero-tolerance rule still applies',
+            'Say nothing now and report the unsafe practice after the job is finished',
           ]}
           correctIndex={2}
           explanation="Survivorship bias ('nothing has happened to me yet') is not a safety argument. The zero-tolerance rule exists because the consequences of a single failure are catastrophic. Address the behaviour immediately, calmly, and firmly. If they refuse to comply, escalate to the site manager. You have a legal duty not to walk past unsafe behaviour."
@@ -884,10 +884,10 @@ export default function IpafModule5Section4() {
         <InlineCheck
           question="After moving a tower to a new position, an operative locks the castors and says 'right, up you go.' No other checks have been done. Is the tower ready for use?"
           options={[
-            'Yes — locked castors mean the tower is secure',
-            'No — the tower must also be re-levelled, stabilisers re-deployed, a full pre-use inspection conducted, and overhead clearance verified',
-            'Yes — if the tower was inspected before the move it does not need re-checking',
-            'No — but only if the tower was moved more than 10 metres',
+            'Yes — once the castors are locked the tower is secure and ready',
+            'No — it must also be re-levelled, stabilisers set, inspected, and overhead checked',
+            'Yes — if it was inspected before the move it needs no re-checking',
+            'No — but only where the tower has been moved more than 10 metres',
           ]}
           correctIndex={1}
           explanation="Locking castors is necessary but far from sufficient. After every move: (1) Check the new ground, (2) Re-level with a spirit level, (3) Re-deploy stabilisers/outriggers, (4) Conduct a full pre-use inspection of all connections (movement can loosen them), and (5) Verify overhead clearance at the new position. Only then is the tower ready for use."

@@ -35,9 +35,9 @@ const quickCheckQuestions = [
     id: 'method-purpose',
     question: 'What is the primary purpose of a method statement?',
     options: [
-      'Lathes, machine tools, conveyors needing constant speed',
-      'Essential for coordination, safety information, emergency response',
-      'To maintain autonomy and reliability',
+      'To list the materials and their costs for the job',
+      'To record the qualifications held by each operative',
+      'To set out the project programme and completion dates',
       'To document safe systems of work for specific tasks',
     ],
     correctIndex: 3,
@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     question: 'Who is typically responsible for preparing a method statement?',
     options: [
       'The contractor undertaking the work',
-      'Perfecting one detail while neglecting others',
-      'A loss of contact with reality',
-      'Multi-junction concentrator',
+      'The building\'s end users or occupants',
+      'The Health and Safety Executive inspector',
+      'The client\'s insurance company',
     ],
     correctIndex: 0,
     explanation:
@@ -61,9 +61,9 @@ const quickCheckQuestions = [
     id: 'method-review',
     question: 'When should a method statement be reviewed?',
     options: [
-      'To include all wiring in the test',
-      'At tender stage with confirmed lead times',
-      'All cables to be LSF (low smoke and fume)',
+      'Only once the work has been fully completed',
+      'Only at the annual company safety audit',
+      'Only if an enforcement notice is served',
       'Before work begins and when conditions change',
     ],
     correctIndex: 3,
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'sequence-importance',
     question: 'Why is task sequencing important in method statements?',
     options: [
-      'By showing equipment running outside of scheduled hours',
+      'To reduce the overall cost of the materials used',
       'To ensure safe progression and identify dependencies',
-      'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
-      '30°C ambient, single circuit, no thermal insulation',
+      'To allow more workers to be assigned to the task',
+      'To shorten the time the job takes to complete',
     ],
     correctIndex: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under CDM 2015, when must method statements be provided?',
     options: [
-      'Design clear visual cues and triggers in your environment',
-      'A large number of single-phase computer loads unevenly distributed across phases',
+      'For domestic work only, never for commercial projects',
+      'Only after an accident has already occurred on site',
       'For notifiable projects and when requested by the principal contractor',
-      'Create immediate positive feedback or rewards after completing the habit',
+      'Only for projects lasting longer than twelve months',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the relationship between risk assessments and method statements?',
     options: [
-      'Replacing a consumer unit, or any new circuit, or work in a bathroom',
-      'Emergency activation that triggers all alarms and notifications',
-      'When there\\\\\\\\\\\\\\\'s risk of cuts, chemical contact, burns, or electrical shock',
+      'They are two names for exactly the same document',
+      'Method statements identify hazards; risk assessments describe the work steps',
+      'A risk assessment is only needed if a method statement is unavailable',
       'Risk assessments identify hazards; method statements describe how to control them',
     ],
     correctAnswer: 3,
@@ -131,9 +131,9 @@ const quizQuestions = [
       'Which of the following should be included in a method statement for electrical isolation?',
     options: [
       'Lock-off procedures and verification testing',
-      'Due to hydrostatic pressure from the water column above',
-      'Continuous monitoring and recreating fault conditions',
-      'Superior chemical and temperature resistance',
+      'The cost of replacement components',
+      'The manufacturer\'s warranty details',
+      'The expected lifespan of the equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: "What does 'task breakdown' mean in a method statement?",
     options: [
-      'Secure storage to prevent damage and theft',
+      'Estimating the labour cost of each part of the job',
       'Dividing work into logical, sequential steps',
-      'Visual inspection and insulation resistance',
-      'Disconnect or isolate SPDs before testing',
+      'Listing the tools required for the whole project',
+      'Splitting the work between different subcontractors',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'Who should sign off a method statement before work commences?',
     options: [
-      'Safety, capacity, and protection requirements',
-      'Refrigerant type, charge quantity, and GWP',
+      'The client and their architect only',
+      'The Health and Safety Executive',
       'The supervisor/manager and those undertaking the work',
-      'COP (Conference of the Parties) agreements',
+      'The materials supplier and wholesaler',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of the emergency procedures section in a method statement?',
     options: [
-      'Tenants, HVAC, lighting, small power, and specialist loads',
-      'External earth fault loop impedance',
-      'Background noise levels and microphone placement',
+      'To list the emergency contact numbers for material suppliers',
+      'To record the warranty terms for installed equipment',
+      'To set out the schedule for routine maintenance visits',
       'To ensure rapid, appropriate response to incidents',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'For cable installation in an occupied building, which control measure is essential?',
     options: [
       'Segregation, barriers, and dust control to protect occupants',
-      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
-      'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
-      'Because I²R losses cause heat that cannot dissipate',
+      'Working only at weekends regardless of the task',
+      'Using the cheapest available cable to reduce waste',
+      'Completing all paperwork before any survey is done',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'What should happen if site conditions differ from those described in the method statement?',
     options: [
-      'Verifying correct phase sequence in three-phase supplies',
+      'Continue working and note the difference for later',
       'Stop work, reassess, and update the method statement',
-      'Correct start/stop function and latching',
-      'Mind-reading, personalising, and catastrophising',
+      'Ask the client whether it is acceptable to proceed',
+      'Carry on, since the method statement is only a guide',
     ],
     correctAnswer: 1,
     explanation:

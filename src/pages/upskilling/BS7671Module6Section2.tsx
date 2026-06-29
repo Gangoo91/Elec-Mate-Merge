@@ -27,12 +27,12 @@ const inlineChecks = [
     question:
       'You arrive on site to verify a new consumer unit change. The board is energised. According to BS 7671:2018+A4:2026, what is the correct sequence?',
     options: [
-      'De-energise, run all dead tests, then perform a visual inspection at the end',
       'Carry out a visual inspection FIRST (Reg 642.2), preferably with the installation isolated, then proceed to dead tests, then live tests',
+      'De-energise, run all dead tests, then perform a visual inspection at the end',
       'Live tests first, dead tests next, visual at the end as a sense-check',
       'Visual inspection is only required where dead-test results suggest a problem',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 642.2 is unambiguous: the visual inspection shall be carried out PRIOR to testing, normally with the installation disconnected from the supply. The sequence is fixed for a reason — half the defects an inspector finds (missing labels, wrong cable colours, loose terminations, no CPC at an accessory) are visible without an instrument. Skipping the visual to "save time" is the single most common audit failure. Reg 643 then sets the testing sequence (continuity, IR, polarity, Zs, RCD).',
   },
@@ -42,11 +42,11 @@ const inlineChecks = [
       'What is the actual function of the Schedule of Inspection on an EIC under BS 7671:2018+A4:2026?',
     options: [
       'A list of optional checks the inspector may perform if time permits',
-      'A formal record demonstrating that every applicable item required by Reg 642.2 has been inspected and either passed, failed, or marked not applicable — with the inspector taking professional responsibility for each tick',
       'A summary printed by the test instrument automatically',
+      'A formal record demonstrating that every applicable item required by Reg 642.2 has been inspected and either passed, failed, or marked not applicable — with the inspector taking professional responsibility for each tick',
       'A marketing document for the customer',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Appendix 6 (model forms) plus Reg 642.2 make the Schedule of Inspection part of the EIC. Each numbered item (1.0 through 17.0+ in A4) corresponds to a specific group of regulations. A tick is a professional declaration that the requirement was checked and met; a cross declares non-compliance; N/A declares the item does not apply. Leaving items blank invalidates the cert — there is no "did not check" option in the schema.',
   },
@@ -55,12 +55,12 @@ const inlineChecks = [
     question:
       'Under A4:2026, item 4.23 of the Schedule of Inspection asks the inspector to verify what?',
     options: [
-      'AFDD presence on every final circuit, regardless of premises type',
-      'AFDD presence on AC final circuits supplying socket-outlets up to 32 A in higher-risk residential buildings (HRRBs), care homes, HMOs and similar — per Reg 421.1.7',
-      'AFDD presence only on three-phase boards',
-      'AFDD operational test result, not its physical presence',
+      'AFDD presence on every final circuit in the installation, regardless of premises type',
+      'AFDD presence only on three-phase distribution boards within the installation',
+      'The AFDD operational test result rather than the physical presence of the device',
+      'AFDD presence on socket-outlet circuits up to 32 A in HRRBs, care homes and HMOs (Reg 421.1.7)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 421.1.7 (A4) requires AFDD additional protection on AC final circuits supplying socket-outlets rated up to 32 A in specific premises: higher-risk residential buildings (purpose-built blocks of flats over 18 m or 7 storeys), HMOs, care homes, and certain other higher-risk occupancies. Item 4.23 of the Schedule of Inspection is the new tick-box that records compliance. For ordinary single-family dwellings AFDDs are recommended (NOTE in 421.1.7) but not mandatory — the schedule then expects N/A.',
   },
@@ -69,12 +69,12 @@ const inlineChecks = [
     question:
       'During inspection of a domestic CU change, the inspector finds the consumer unit has all RCBOs labelled correctly but no circuit chart inside the cover or at the origin. What action is correct?',
     options: [
-      'No action — Reg 514 only requires labels on the devices themselves',
-      'Issue the EIC and add the circuit chart later',
-      'Treat as non-compliance with Reg 514.9 — a circuit chart, table or schedule shall be provided at every distribution board; the EIC schedule of inspection cannot tick item 7.1 until it is in place',
-      'A circuit chart is only required for three-phase boards',
+      'Non-compliance with Reg 514.9 — a circuit chart is required at the board, so item 7.1 cannot be ticked',
+      'Issue the EIC now and arrange for the circuit chart to be added afterwards',
+      'No action needed — Reg 514 only requires labels on the protective devices themselves',
+      'A circuit chart is only required for three-phase distribution boards, not domestic units',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Reg 514.9.1 requires that a durable copy of the certificate, together with a chart, table or schematic showing the type and composition of each circuit, the means of identification of devices for protection, isolation and switching, and information enabling protective devices to be identified, shall be provided at the origin. Item 7.1 (Identification — Section 514) on the Schedule of Inspection cannot be ticked without it. The schedule of test results (printed list of circuits) on the EIC does NOT replace the on-site chart — both are required.',
   },
@@ -83,10 +83,10 @@ const inlineChecks = [
     question:
       'You are inspecting a 2026 install. A three-phase distribution circuit uses red / yellow / blue conductor identification throughout. Per BS 7671 Table 51 cable colours, what is the correct call?',
     options: [
-      'Pass — red / yellow / blue is the current harmonised standard',
-      'Pass — colours are aesthetic only and not part of inspection',
-      'Fail — Table 51 (harmonised colours since 2004) requires brown / black / grey for L1 / L2 / L3 in three-phase AC; red/yellow/blue is the pre-harmonised standard and must not be used in new installations. Where mixed colours occur from alteration to existing, durable warning notices are required at every distribution board',
-      'Fail — but only if the cables are surface-mounted',
+      'Pass — red / yellow / blue is the current harmonised three-phase identification standard',
+      'Pass — conductor colours are aesthetic only and are not part of the inspection',
+      'Fail — Table 51 requires brown / black / grey for L1 / L2 / L3; red/yellow/blue is pre-harmonised',
+      'Fail — but only where the three-phase cables happen to be surface-mounted',
     ],
     correctIndex: 2,
     explanation:
@@ -97,12 +97,12 @@ const inlineChecks = [
     question:
       'During inspection of a bathroom rewire, the inspector finds the property has 30 mA RCD on every bathroom circuit, all disconnection times are met, BUT the incoming cold-water plastic pipe is connected via a copper tail under the sink and no main bonding has been run to that copper tail. What is the correct call?',
     options: [
-      'Pass — RCDs are present so no bonding required',
-      'Pass — plastic incoming pipe means there is no extraneous-conductive-part requiring bonding',
-      'Wait — verify with continuity test (Reg 643.2.2) whether the copper section is still an extraneous-conductive-part by measuring resistance to earth at the MET; if below 23 kΩ at 230 V it is extraneous and main bonding under Reg 411.3.1.2 / 544.1.1 is required',
-      'Fail — main bonding is always required to every metal pipe regardless',
+      'Pass — RCDs are present on every bathroom circuit so no main bonding is required',
+      'Pass — the plastic incoming pipe means there is no extraneous-conductive-part to bond',
+      'Fail — main bonding is always required to every metal pipe in the property regardless',
+      'Wait — measure resistance to the MET (Reg 643.2.2); below 23 kΩ it is extraneous and must be bonded',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'A pipe is an extraneous-conductive-part only if it can introduce a potential (typically earth potential) into the installation. The text-book test is the Reg 643.2.2 / GN3 procedure: measure the resistance between the suspect part and the MET. If the value is at or above 23 kΩ (calculated for touch voltage no more than 50 V at 230 V) it is not extraneous — bonding can be omitted. Below that, bond. The plastic incoming section breaks the earth path only IF the metal section beyond it is not extraneous through some other route (e.g. structural metal contact). The schedule of inspection (item 4.5 main protective bonding) forces this thinking before any tick goes on the cert.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       "Reg 642.2 places visual inspection BEFORE testing for one principal reason. Which reason most accurately captures the regulation's intent?",
     options: [
-      'It saves the inspector time at the end of the day',
-      'Visual inspection identifies defects (damage, wrong components, missing labels, incorrect connections) that could make subsequent live testing dangerous OR could already explain a fault — sequencing it first protects the inspector and prevents wasted instrument time',
-      'The order is purely administrative',
-      'Live testing must come first to confirm the supply is present',
+      'Visual inspection catches defects that could make later live testing dangerous or already explain a fault',
+      'Sequencing the visual first simply saves the inspector time at the end of the day',
+      'The order is purely administrative and has no bearing on inspector safety',
+      'Live testing must come first to confirm that the supply is actually present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Reg 642.2 ordering is a safety-critical sequencing rule. A live test on a circuit with a missing CPC, an incorrectly wired socket, or a damaged enclosure can injure the inspector and damage the test instrument. Doing the visual first lets the inspector identify and rectify safety issues before any energised test, AND lets them mark items as already failed without wasting test time. Reg 642.3 then requires the testing sequence of Reg 643 — itself ordered (continuity, IR, polarity, Zs, RCD) so that a faulty circuit fails on a benign test before a punishing one.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'The Schedule of Inspection on an A4:2026 EIC contains item 4.23. Which of the following is the correct tick rule for a single-family dwelling EICR?',
     options: [
-      'Tick — AFDD always required',
-      'Cross — AFDD missing means non-compliant',
-      'N/A — Reg 421.1.7 mandates AFDDs only in higher-risk premises (HRRBs, care homes, HMOs etc.); for ordinary dwellings AFDD is recommended (NOTE) but not mandatory, so item 4.23 is N/A',
-      'Leave blank — N/A is not permitted',
+      'Tick — an AFDD is always required on every socket circuit in a dwelling',
+      'Cross — a missing AFDD on a single-family dwelling means it is non-compliant',
+      'N/A — Reg 421.1.7 mandates AFDDs only in higher-risk premises, not ordinary dwellings',
+      'Leave the item blank — N/A is not a permitted entry on the schedule',
     ],
     correctAnswer: 2,
     explanation:
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'A new domestic CU is found to have one circuit labelled "Cooker" but actually feeding the shower, and another labelled "Shower" feeding the cooker. The cables, RCBOs and protective devices are otherwise correct. What is the correct inspection action?',
     options: [
-      'Code C3 only — labels are aesthetic',
-      'No action — the circuits work',
-      'Code C2 — incorrect identification breaches Reg 514.1.1; an emergency isolator pulled for the labelled circuit will leave the actual circuit live, presenting a real shock risk to the next person to work on it. Item 7.1 on the schedule of inspection cannot be ticked',
-      'Code C1 only if the cables are unsafe',
+      'Code C3 only — circuit labels are an aesthetic matter rather than a safety one',
+      'No action — the circuits function correctly so the swapped labels do not matter',
+      'Code C1 only if the cables themselves are found to be unsafe on test',
+      'Code C2 — wrong identification breaches Reg 514.1.1 and leaves the wrong circuit live on isolation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reg 514.1.1 requires identification to enable safe isolation. Wrong labels create a foreseeable shock hazard: the next electrician (or homeowner) will isolate the wrong way and assume safety. GN3 typically codes mislabelling as C2 (potentially dangerous). The schedule of inspection item for Section 514 identification cannot be ticked. The correction is a label swap — quick fix, but the cert cannot issue until done.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'Reg 642.5 requires the designer / installer to provide what to the person ordering the verification, before completion of the EIC?',
     options: [
-      'A copy of BS 7671 itself',
-      'Only the design data',
-      "Information necessary for inspection and testing — including circuit charts, certificates of equipment used in the installation (Declarations of Conformity, BS / BS EN markings) and manufacturer's instructions for items needing them",
-      "The installer's qualifications only",
+      'Information for inspection and testing — circuit charts, equipment certificates and manufacturer instructions',
+      'A printed copy of the BS 7671 standard itself for reference on site',
+      'Only the design data, such as maximum demand and the assumed Ze',
+      "The installer's individual qualifications and competence certificates only",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Reg 642.5 places a duty on the designer / contractor to provide information sufficient to allow inspection and testing to be carried out. In practice that is the circuit chart (Reg 514.9), product certificates and DoCs for the consumer unit / RCBOs / AFDDs / EV charger / PV inverter / SPDs, and manufacturer's installation instructions where the standard refers to them (e.g. EV chargers per Section 722). Without this info-pack the inspector cannot complete the schedule of inspection — items relating to manufacturer ratings, AFDDs, SPDs and equipment selection cannot be evidenced.",
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       'A skilled person (electrically) per BS 7671 Part 2 is defined how, and why does the definition matter for the Schedule of Inspection?',
     options: [
-      'Anyone who has done a 1-day course; they sign the cert and that is the end of it',
-      'A person who possesses, as appropriate to the nature of the electrical work, technical knowledge or sufficient experience to enable them to avoid dangers which electricity may create — and the EIC declarations (designer / constructor / inspector) are LEGAL signatures only valid where the signatory is competent for the scope of work declared',
-      'Only the customer counts as a skilled person',
-      'A skilled person is anyone with insurance',
+      'Anyone who has completed a one-day course; they sign the cert and that is the end of it',
+      'Only the customer ordering the work counts as a skilled person for the cert',
+      'A person with the knowledge or experience to avoid electrical dangers; EIC signatures bind that competence',
+      'A skilled person is simply anyone who holds public-liability insurance for the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part 2 (Definitions) of BS 7671 defines the skilled (electrically) person and the instructed person separately. The EIC declarations under Reg 644 are professional sign-offs: the designer takes responsibility for design, the constructor for construction, the inspector for inspection-and-test. Each must be competent for the scope. Where a single person signs all three, that one signature carries all three duties. EAWR 1989 Reg 16 (and HSWA) sit behind this — competent person duty is statutory, BS 7671 is the technical evidence framework.',
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'A junior inspector finds a 32 A radial circuit with twin terminations at the socket — two 2.5 mm² conductors crammed into one terminal, neither fully clamped. What is the correct schedule-of-inspection treatment?',
     options: [
-      'Leave it — RCD will catch any fault',
-      'Code C2 against item 7.5 (connections of conductors); refer to Reg 526 — every connection shall be accessible for inspection, mechanically and electrically sound, and not impose appreciable mechanical strain. A loose / overstuffed terminal is a fire risk and a source of pulse-loading on the OPD',
-      'Code C3 only — connections are aesthetic',
-      'Issue the EIC and recommend the customer arrange a re-terminate',
+      'Leave it — the upstream RCD will catch any fault the terminal develops',
+      'Code C3 only — the quality of connections is essentially an aesthetic matter',
+      'Issue the EIC now and recommend the customer arrange a re-terminate later',
+      'Code C2 against item 7.5 — Reg 526 requires sound connections; a loose, overstuffed terminal is a fire risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 526 (Connections) is one of the most-often-failed parts of an EICR. Loose terminations cause arcing, heating and intermittent operation. Item 7.5 of the Schedule of Inspection is "connections of live conductors" / "connections of protective conductors" depending on layout, and a loose double-stuffed terminal fails it. GN3 typically codes C2; if there is visible heat damage / discolouration C1 is also defensible. The reg does not have an "RCD will catch it" exception — a series arc fault may not draw enough residual current to operate an RCD until it has caused a fire.',
   },
@@ -198,12 +198,12 @@ const quizQuestions = [
     question:
       'On a TT-supply property the inspector verifies the earth electrode resistance is 87 Ω, with a 100 mA Type S RCD upstream. Schedule of inspection item 4.4 (earthing arrangement). Pass or fail?',
     options: [
-      'Fail — anything over 50 Ω is automatic fail',
-      'Pass-with-evidence — Reg 542.2.4 sets no fixed maximum; the requirement is Ra × IΔn ≤ 50 V (Reg 411.5.3 b). 87 × 0.1 = 8.7 V which is well under 50 V; the value is high but acceptable provided the electrode connection is sound, the conductor is appropriately sized per Reg 543, and stability is reasonable',
-      'Pass without further checks',
-      'Fail — TT systems must always have Ra ≤ 1 Ω',
+      'Pass-with-evidence — Ra × IΔn ≤ 50 V is the test (87 × 0.1 = 8.7 V); high but acceptable if sound and stable',
+      'Fail — any earth-electrode resistance over 50 Ω is an automatic fail on TT',
+      'Pass without any further checks, since a Type S RCD is fitted upstream',
+      'Fail — TT systems must always achieve an electrode resistance Ra of 1 Ω or less',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 542.2.4 deliberately avoids a fixed Ra ceiling because the figure depends on the upstream device. The mandatory test is Ra × IΔn ≤ 50 V from Reg 411.5.3 limb b — for a 100 mA RCD that gives Ra ≤ 500 Ω; for a 30 mA it gives Ra ≤ 1667 Ω. Item 4.4 of the schedule of inspection is the tick, supported by the test result on the schedule of test results. GN3 also asks for stability evidence (the soil dries in summer); a 200 Ω electrode in summer is fine for 30 mA but would fail with a 300 mA upstream.',
   },

@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A two-letter code in the BS 7671 external-influence classification — for example AD4 or AG2 — encodes which two pieces of information?',
     options: [
-      'The IP rating and the IK rating of the equipment',
-      'The category of influence (first letter A/B/C) and the type within that category (second letter), with the digit indicating severity',
-      'The Reference Method and the cable type',
-      'The amendment number and the regulation number',
+      'The IP ingress rating and the IK impact rating of the equipment',
+      'The category of influence (first letter) and the type within it (second letter), the digit being severity',
+      'The Appendix 4 Reference Method and the cable construction type',
+      'The BS 7671 amendment number and the specific regulation number',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'A bathroom contains a bath, shower over the bath, and a low-level downlight directly above the bath. Which Section 522 / Part 7 chain of reasoning gives you the correct IP rating for the downlight?',
     options: [
-      'Section 522 alone — IP44 is sufficient for any bathroom luminaire',
-      'Section 701 (Part 7 special location) classifies the position as zone 1, which mandates IPX4 minimum — and for shower-over-bath the splashing zone effectively forces IPX5 in practice; Section 522 / 522.3 (water) underpins the requirement',
-      'Any IP rating is acceptable provided the circuit is RCD protected',
-      'Section 522 only applies to outdoor installations; bathrooms are governed solely by Part 7',
+      'Section 522 alone applies, and IP44 suits any bathroom luminaire position',
+      'Section 701 classifies the position zone 1 (IPX4 min), IPX5 for shower-over-bath',
+      'Any IP rating is acceptable provided the circuit has 30 mA RCD protection',
+      'Section 522 covers outdoor work only; bathrooms fall solely under Chapter 701',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'A car wash bay uses sodium-hydroxide-based traffic-film remover daily. A contractor specs standard galvanised-steel containment. Which AF class applies and why is the choice wrong?',
     options: [
-      'AF1 — no special action; galvanised steel is fine',
-      'AF2 / AF3 — chemicals present intermittently or continuously; galvanised zinc is attacked by alkali, so 316 stainless steel, GRP or specialist polymer is required',
-      'AF4 only applies to acid environments, not alkali — so galvanised is acceptable',
-      'AF classification does not apply to wash bays because water is the dominant influence',
+      'AF1 — no special action needed; galvanised steel is suitable here',
+      'AF2 / AF3 — alkali attacks the zinc, so 316 stainless, GRP or polymer is required',
+      'AF4 covers acids only, not alkalis, so galvanised steel remains acceptable',
+      'AF does not apply to wash bays because water is the dominant influence',
     ],
     correctIndex: 1,
     explanation:
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'Section 522 of BS 7671:2018+A4:2026 is the general regulation covering external influences and selection of wiring systems. Which statement best captures its scope?',
     options: [
-      'It applies only to outdoor installations',
-      'It applies to all installations and requires equipment to be selected and erected appropriate to the external influences likely to be encountered, with Appendix 5 providing the classification system',
-      'It is informative only and has no enforceable requirements',
-      'It applies only where Part 7 special-location chapters do not override it',
+      'It applies to every installation, with Appendix 5 as the classification system',
+      'It applies only to outdoor installations exposed directly to weather and damp',
+      'It is informative guidance only, carrying no enforceable "shall" requirement',
+      'It applies only where no Part 7 special-location chapter overrides the design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 522 is a general "shall" requirement applying to every installation under BS 7671. Appendix 5 lists the classification codes (AA-AR for environment, BA-BE for utilisation, CA-CB for construction). Part 7 chapters add overlays for specific locations (bathrooms, swimming pools, agricultural, EV, marinas etc.) but do not displace Section 522 — they sit on top of it. The default assumption on every cert is that Section 522 has been considered for every cable run and every accessory.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'A specifier writes "IP44" on a board specification. Under BS EN 60529, what does each digit guarantee?',
     options: [
-      'First 4 = dust tight; second 4 = continuous immersion',
-      'First 4 = protection against solid objects greater than or equal to 1 mm (tools, wires); second 4 = protection against splashing water from any direction',
+      'First 4 = dust-tight enclosure; second 4 = continuous immersion in water',
       'First 4 = protection against fingers; second 4 = protection against vertical drips',
-      'Both digits refer to mechanical impact in joules',
+      'First 4 = solid objects greater than or equal to 1 mm; second 4 = splashing water from any direction',
+      'Both digits refer to mechanical impact energy measured in joules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 60529 IP code: first digit 4 = solid foreign object greater than or equal to 1.0 mm (tools, thicker wires); second digit 4 = water splashing against the enclosure from any direction with no harmful effect. IP44 is a common minimum for protected outdoor positions (under canopy, soffit-mounted) but is generally insufficient for unsheltered exposed outdoor (use IP55 / IP65) or for jet-wash environments (IP66, IP69K).',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'A cable installation is planned in a foundry where ambient is 45 degC sustained, cables are grouped (six circuits in close proximity), and the cable is 90 degC thermosetting (XLPE/SWA). Which set of correction factors must be combined?',
     options: [
-      'Ca only — grouping factors do not apply to thermosetting cable',
-      'Ca (ambient correction from App 4 Table 4B1) AND Cg (grouping correction from App 4 Table 4C1) AND Ci where thermal insulation is present — applied multiplicatively to Iz',
-      'Cg only — ambient is irrelevant if the cable is rated 90 degC',
-      'No correction is needed because XLPE is rated for 90 degC',
+      'Ca only — grouping factors never apply to thermosetting XLPE cable',
+      'Cg only — ambient is irrelevant once the cable is rated at 90 degC',
+      'No correction is needed at all because XLPE is rated to 90 degC',
+      'Ca and Cg (plus Ci where insulation is present), applied multiplicatively to It',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'App 4 of BS 7671 makes the rating factors cumulative. Iz_corrected = It x Ca x Cg x Ci x Cs (where applicable). At 45 degC ambient with 90 degC XLPE, Ca is roughly 0.87 from Table 4B1; Cg for six grouped circuits, Reference Method C, is approximately 0.57 from Table 4C1. The combined effect is around 0.50 — a tabulated 30 A cable derates to about 15 A. Missing either factor leaves the cable thermally over-loaded under design current, accelerating insulation ageing and risking fault-current rupture below the OPD trip point.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'A contractor installs a cable buried 0.45 m deep across a domestic garden with no warning tape and no mechanical protection. What does Section 522 require, and what is the EICR observation likely to be?',
     options: [
-      'Nothing — depth alone is sufficient',
-      'Reg 522.6 requires mechanical protection appropriate to the AG (impact) classification — typically armoured cable (SWA), conduit, or steel plate over the cable, plus warning tape buried 150-300 mm above the cable. The omission would typically be coded C2 (potentially dangerous) where future digging is foreseeable',
-      'Only warning tape is required; SWA is optional',
-      'BS 7671 has no requirement for buried cables — that is a Building Regulations matter',
+      'Reg 522.6 requires mechanical protection (SWA, conduit or plate) plus marker tape — omission is typically coded C2',
+      'Nothing further — 0.45 m of cover is on its own sufficient protection under Reg 522.8',
+      'Only buried warning tape is required; armoured cable or conduit is an optional extra',
+      'BS 7671 sets no requirement for buried cables — depth is a Building Regulations matter only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 522.6 (mechanical stress) and Reg 522.8 cover buried cables. The standard defensible spec is SWA cable, buried 0.5 m or deeper across cultivated land, with marker tape buried 150-300 mm above. Where mechanical protection is omitted and the cable is in a location where digging or disturbance is foreseeable, the danger is direct contact with a live conductor by a future user (gardener, contractor). EICR coding under GN3 typically resolves to C2 — potentially dangerous — because the risk is real and not remote.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'IK ratings and IP ratings answer different questions. Which statement correctly distinguishes them?',
     options: [
-      'IP and IK are the same scale, just different unit systems',
-      'IP (BS EN 60529) classifies ingress of solids and water; IK (BS EN 50102) classifies impact energy resistance in joules from IK00 (no protection) to IK10 (20 J)',
-      'IK is a UK-only system; the rest of Europe uses IP',
-      'IK applies only to luminaires; IP applies only to enclosures',
+      'IP and IK are the same scale, expressed in two different unit systems',
+      'IK is a UK-only system, while the rest of Europe relies on the IP code',
+      'IP (BS EN 60529) classifies ingress of solids and water; IK (BS EN 50102) classifies impact-energy resistance in joules',
+      'IK applies only to luminaires, whereas IP applies only to switchgear enclosures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IP and IK are independent ratings that often appear together on a data sheet. IP under BS EN 60529 covers solids (first digit 0-6) and water (second digit 0-8/9K). IK under BS EN 50102 covers external mechanical impact: IK00 = unprotected, IK02 = 0.2 J, IK04 = 0.5 J, IK06 = 1 J, IK07 = 2 J, IK08 = 5 J, IK09 = 10 J, IK10 = 20 J. A car-park luminaire might be IP65 / IK10; a domestic indoor downlight typically IP20 / IK02.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'Reg 522.10 covers corrosive or polluting substances. Which design response is wrong for a coastal seafront installation (heavy salt-laden air, AF2/AF3, AD3 wind-driven rain)?',
     options: [
       'Specify 316 stainless steel containment and fixings',
-      'Specify zinc-plated steel screws and brackets to BS EN ISO 4042 standard finish',
       'Specify IP66 enclosures with stainless steel hinges and locks',
       'Specify cable glands with anti-corrosion compound and a marine-grade gland (BS EN 62444)',
+      'Specify zinc-plated steel screws and brackets to BS EN ISO 4042 standard finish',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standard zinc plating is sacrificial and consumed rapidly in salt-spray (AF) environments. Within 6-18 months in coastal conditions, zinc-plated fixings show red rust and structural compromise. The right specification is 316 stainless (not 304 — 304 still pits in chloride), or proprietary marine-grade galvanic-protected systems. Reg 522.10 requires the designer to consider the substances likely to be encountered — salt aerosol is one of the most aggressive and predictable.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'A cable is routed through wall thermal insulation in a domestic loft conversion (Reference Method 100/101/102/103, App 4). What does this affect, and which BS 7671 factor applies?',
     options: [
-      'Nothing — thermal insulation does not affect cable rating',
-      'It restricts heat dissipation from the cable, requiring the Ci correction factor (App 4) — for a cable surrounded by thermal insulation for greater than 0.5 m, Ci = 0.5 (i.e. cable must be derated to half its tabulated rating)',
-      'It improves cable rating because the insulation prevents fire spread',
-      'It applies only to cables in cold lofts, not warm-roof construction',
+      'It restricts heat dissipation, requiring the Ci factor — surrounded for greater than 0.5 m gives Ci = 0.5',
+      'Nothing — thermal insulation has no effect on a cable\'s current-carrying capacity',
+      'It raises the cable rating, because the surrounding insulation also limits fire spread',
+      'It applies only to cables in cold lofts, never to warm-roof or stud-wall construction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'App 4 Reference Methods 100-103 cover cables in walls / ceilings with thermal insulation. The Ci factor depends on length-of-cable-in-insulation: short crossings (less than 0.5 m) have minor effect, but cables run within insulation for greater than 0.5 m attract Ci values down to 0.5. This is one of the most-missed rating factors on real installations — a 2.5 mm^2 cable rated 27 A in free air can be effectively limited to 13.5 A when buried in 200 mm of mineral wool. Combined with Cg and Ca, the practical Iz can be far below the tabulated value.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'The Section 522 / Appendix 5 classification system uses three category letters at the front of every code. Which statement maps them correctly?',
     options: [
-      'A = appliance, B = building, C = circuit',
-      'A = environment (climatic / physical), B = utilisation (capability of persons, body resistance, evacuation, materials), C = construction of buildings (combustible materials, building structure)',
-      'A = AC, B = battery, C = control',
-      'A = amendment-protected, B = baseline, C = compliance',
+      'A = appliance fitted, B = building fabric, C = circuit arrangement',
+      'A = AC supply type, B = battery storage, C = control and metering',
+      'A = environment, B = utilisation, C = construction of buildings',
+      'A = amendment-protected, B = baseline edition, C = compliance status',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Appendix 5 uses three groups. Group A (environment): AA temperature, AB humidity, AC altitude, AD water, AE foreign bodies, AF corrosion, AG impact, AH vibration, AK flora, AL fauna, AM EMC, AN solar, AP seismic, AQ lightning, AR wind. Group B (utilisation): BA capability of persons, BB body resistance, BC contact with earth, BD evacuation, BE handled materials. Group C (construction): CA combustible building materials, CB building structure (fire propagation, flexible movement). Every cert-relevant external influence falls into one of these — and the design log should record which classes apply at which location.',
   },

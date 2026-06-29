@@ -68,14 +68,14 @@ const quizQuestions = [
     question:
       "For a domestic kitchen renovation where cables need to be hidden, what's the most practical approach?",
     options: [
-      'Environmental conditions',
-      'Continuous earth path',
-      'Concealed conduit in walls',
-      'SWA to weatherproof outlets',
+      'Surface trunking run along the skirting',
+      'Steel conduit clipped to the wall face',
+      'Concealed PVC conduit chased into the walls',
+      'SWA cable surface-clipped to the plaster',
     ],
     correctAnswer: 2,
     explanation:
-      'Concealed PVC conduit allows cables to be hidden within walls while providing protection and allowing future cable changes.',
+      'Concealed PVC conduit chased into the walls hides the cables while still protecting them and allowing future cable changes.',
   },
   {
     id: 3,
@@ -88,7 +88,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 recommends flexible cords should generally not exceed 2 metres and should not be used as permanent wiring.',
+      'BS 7671 sets no general fixed maximum length for flexible cords — length limits apply only to specific applications (e.g. luminaire and portable-equipment guidance). As a rule of thumb, flexible cords used as connections are kept short (around 2 metres) and never used as a substitute for permanent fixed wiring. Of the options offered, 2 metres reflects that good-practice figure.',
   },
   {
     id: 4,
@@ -336,9 +336,15 @@ const Module3Section1_1: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-2">BS 7671 Requirements:</p>
+                <p className="text-sm font-medium text-white mb-2">Support and erection requirements:</p>
                 <ul className="text-sm text-white space-y-1 ml-4">
-                  <li>Cable clips maximum 300mm apart horizontally, 400mm vertically</li>
+                  <li>
+                    Cables supported so they are not exposed to undue mechanical strain (BS 7671 Reg
+                    522.8.5). BS 7671 gives no fixed clip-spacing figure — the working figures come
+                    from the IET On-Site Guide Table 4A. For small flat twin-and-earth (≤9 mm) the
+                    OSG gives roughly 250 mm horizontal / 400 mm vertical, increasing with cable
+                    size. 300 mm is a common teaching round-figure for horizontal runs
+                  </li>
                   <li>Appropriate cable type for environmental conditions</li>
                   <li>Protection against mechanical damage where necessary</li>
                   <li>Separate routes for different circuits where practical</li>
@@ -360,10 +366,10 @@ const Module3Section1_1: React.FC = () => {
 
           <InlineCheck
             id="ic-surface-wiring"
-            question="What's the maximum spacing for cable clips on horizontal surface runs?"
+            question="On a horizontal surface run of small flat twin-and-earth, which clip spacing is the commonly taught maximum?"
             options={['200mm', '300mm', '400mm', '500mm']}
             correctIndex={1}
-            explanation="BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs and 400mm for vertical runs."
+            explanation="BS 7671 Reg 522.8.5 only requires cables to be supported so they are not exposed to undue mechanical strain — it gives no numeric clip spacing. The working figures come from the IET On-Site Guide Table 4A, which gives around 250 mm horizontal / 400 mm vertical for small flat twin-and-earth, increasing with cable size. 300 mm is the round-figure commonly taught for horizontal runs and is the best fit among the options here."
           />
 
           {/* Section 2: PVC Conduit */}
@@ -574,7 +580,7 @@ const Module3Section1_1: React.FC = () => {
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Appropriate glands for indoor/outdoor termination</li>
                   <li>Armour earthing at both ends (or one end with earth link)</li>
-                  <li>Burial depth minimum 450mm (or protection)</li>
+                  <li>Sufficient burial depth to avoid foreseeable disturbance (BS 7671 Reg 522.8.10 — no fixed figure; the common 450 mm garden / 600 mm under-road figures come from NJUG / utility guidance)</li>
                   <li>Sand bed and warning tape for buried cables</li>
                   <li>Route marking and cable detection</li>
                 </ul>
@@ -597,7 +603,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="p-4 rounded-lg bg-amber-500/10 mb-4">
                 <p className="text-sm font-medium text-white mb-2">Limitations and Restrictions:</p>
                 <ul className="text-sm text-white space-y-1 ml-4">
-                  <li>Maximum length typically 2 metres</li>
+                  <li>Kept short as good practice (rule of thumb around 2 metres — no fixed BS 7671 length limit)</li>
                   <li>Not for permanent installation</li>
                   <li>Requires mechanical protection where at risk</li>
                   <li>Regular inspection needed</li>

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What is the Chapter 81 cable-upsize payback model — the typical calculation?',
     options: [
-      'No calculation',
-      'Annual I²R loss = design current² × cable resistance per metre × cable length × operating hours per year. Multiply by electricity unit price = annual cost of cable losses (£/year). Compare to incremental cable + install cost for upsize (£). Payback = incremental cost / annual loss saving. UK 2025-26 reasonable threshold 5-10 years. Designer records the inputs + payback per circuit',
-      'Random number',
-      'Always 1 year',
+      'Payback = cable cost divided by the inverter rating, giving the number of years the generation takes to cover the upsized conductor',
+      'Annual I²R loss × unit price = annual loss cost; payback = incremental upsize cost / annual saving, with a reasonable threshold of 5-10 years',
+      'Annual loss = voltage drop percentage × the circuit rating in amps, converted to pounds at the standing-charge rate rather than the unit rate',
+      'Payback is fixed at one year by Chapter 81; any upsize that does not repay within twelve months is not permitted under the energy-efficiency chapter',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'What is "tariff-aware design" under Chapter 81 + the EEMS (Reg 825.1)?',
     options: [
-      'Not a thing',
-      'Designing circuits + equipment + EEMS for operation on time-of-use (TOU) tariffs. UK 2025-26 typical tariffs: Octopus Agile / Cosy / Go; British Gas Electric Driver; EDF GoElectric. Off-peak rates 5-12 p/kWh; peak 30-40 p/kWh; export tariffs (SEG) varied. Design implications: EV + heat pump + immersion + BESS charging scheduled to off-peak; EEMS coordinates. Sub-meter + smart-meter export wired to confirm operation. The efficiency design records the tariff assumptions',
-      'Premium pricing',
-      'Random',
+      'Designing the install so the customer pays a single premium tariff that covers all LCT equipment, simplifying the bill into one flat rate',
+      'Designing circuits and the EEMS for time-of-use tariffs, scheduling EV, heat pump, immersion and BESS charging to off-peak; the tariff assumptions are recorded',
+      'Sizing the consumer unit so that every LCT circuit can run simultaneously at peak rate, guaranteeing the customer never has to wait for an off-peak window',
+      'Selecting protective devices rated for the supplier\'s half-hourly settlement so the meter can bill each circuit on a different tariff',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What goes in the Chapter 81 post-install monitoring plan?',
     options: [
-      'Nothing',
-      'Monitoring points + reporting cadence + verification expectation. Typical: sub-meter on PV / BESS / heat pump / EV; CT clamp on smart-meter export; portal / app for monthly review; year-1 verification of annual energy estimate vs actual. Customer can see if PV yield, heat pump SCOP, EV consumption match the design assumptions. Chapter 81 design records the plan + the verification trigger',
-      'Inspector visit',
-      'Random',
+      'A single power-quality reading taken at handover; once recorded, no further monitoring of the LCT components is expected under Chapter 81',
+      'Monitoring points, reporting cadence and a year-1 verification of actual vs design energy — sub-meters per LCT component, CT clamp on export, a review app',
+      'The schedule of statutory EICR dates only, since periodic inspection is the mechanism by which efficiency performance is checked over time',
+      'The manufacturer warranty registration details for each LCT component, which serve as the post-install performance record',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'For a 32 A heat pump dedicated circuit, 25 m run, what cable CSA does Chapter 81 typically justify beyond the Reg 525 minimum?',
     options: [
-      'No change',
-      'Worked case: Reg 525 minimum is typically 6 mm² T+E (voltage drop ~3.5-4% within the 5% cap). Chapter 81 upsize to 10 mm² T+E reduces voltage drop to ~2% and I²R loss by ~40%. Heat pump 4-6 h/day × 5 months ≈ 750 h/year at ~25 A average; annual I²R saving ~30-50 kWh ≈ £8-15/year. Cable cost delta ~£40-80. Payback ~4-8 years — Chapter 81 design records the rationale + designer chooses 10 mm²',
-      '4 mm²',
-      'Always 16 mm²',
+      'Drop to 4 mm² — Chapter 81 favours the smallest conductor that passes the voltage-drop check, because less copper is the more efficient outcome',
+      'Typically 10 mm² T+E — one step above the 6 mm² Reg 525 minimum; it cuts I²R loss ~40% with a ~4-8 year payback, and the rationale is recorded',
+      'Jump straight to 16 mm² on every heat pump circuit, since the largest practical CSA always gives the shortest payback regardless of run length',
+      'Keep 6 mm² but double up the conductors in parallel, which halves the resistance more cheaply than moving to a single larger CSA',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer with 6 kWp PV + 13 kWh BESS + tariff with off-peak fill option asks: how should the Chapter 81 design coordinate the BESS charging?',
     options: [
-      'No coordination',
-      'Tariff-aware design: BESS charging scheduled off-peak (lowest rate window typically 23:30-05:30) where PV is not generating + electricity unit price is lowest. PV self-consumption + BESS discharge during peak (16:00-19:00). EEMS coordinates schedule via inverter / BESS controller; smart-meter informs. Designer records the schedule + tariff assumption + annual cost saving estimate. Customer monitoring shows BESS cycle pattern + £ saved vs flat tariff',
-      'Charge at peak',
-      'Random',
+      'Charge the BESS only from PV surplus and never from the grid, so the off-peak fill option is left disabled regardless of the tariff differential',
+      'Charge the BESS during the daytime peak window so it is full before the evening, accepting the higher import rate to guarantee capacity',
+      'Keep the BESS at a fixed 50% state of charge at all times and let it float, since cycling the battery against the tariff shortens its life',
+      'Tariff-aware: charge off-peak (~23:30-05:30), self-consume PV, discharge through peak (16:00-19:00); the EEMS coordinates and the saving is recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Efficiency-led BESS coordination (Chapter 81; EEMS per Reg 825.1) for a tariff-aware customer: (1) BESS charges off-peak when grid unit price is lowest + PV is not generating (typical off-peak 23:30-05:30 at 5-12 p/kWh). (2) PV generates daytime — direct self-consumption first; surplus to BESS if not full; remainder to grid (export at SEG rate). (3) BESS discharges through peak window (16:00-19:00 at 30-40 p/kWh) to displace grid import. (4) The EEMS (Reg 825.1) / BESS controller coordinates the schedule via tariff signal (smart-meter) + PV inverter + load priority list. (5) Designer records: tariff identified + charge schedule + discharge schedule + annual cost saving estimate vs flat tariff. (6) Customer monitoring: BESS cycle log + £ saved per month vs flat-rate baseline. Cert evidence: tariff assumption + EEMS commissioning sheet + monitoring plan. UK 2025-26 typical saving £100-300/year on a 13 kWh BESS on Octopus Cosy / Go vs flat tariff.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'PV DC string from roof to inverter — 15 m run, 8 A string current. How does Chapter 81 frame the cable selection?',
     options: [
-      'Use any cable',
-      'PV DC cable selection per Reg 712.521.1041 (cables on the DC side selected + erected to minimise the risk of earth faults and short-circuits) with sizing per Reg 712.433.103 (cable continuous current-carrying capacity ≥ the PV array maximum DC current) + manufacturer guidance (4 mm² typical for ~10 A string current at 1000 V DC). Reg 525 voltage drop applies to AC — DC has its own analogous voltage drop consideration affecting MPP tracking. Chapter 81 upsize to 6 mm² may improve string yield by reducing IR-loss + holding voltage closer to MPP. Designer models PV daily generation hours (4-7 h/day summer) × I² × R × annual hours; payback 4-7 years typical for upsize. Records rationale',
-      'Smallest possible',
-      'No DC voltage drop',
+      'Size the DC string cable purely for mechanical robustness; voltage drop is irrelevant on the DC side because the inverter regulates the output',
+      'Size per Section 712 (Iz ≥ array max DC current); DC voltage drop affects MPP tracking, so Chapter 81 may upsize to hold voltage closer to MPP and lift yield',
+      'Always use the smallest CSA the connectors accept, since a shorter, thinner DC cable reduces capacitance and improves inverter performance',
+      'Match the DC cable CSA to the AC output cable so both sides of the inverter share the same conductor size for simplicity',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'What is the role of the EEMS (Electrical Energy Management System) in Chapter 81 efficiency design — and where is it defined in BS 7671?',
     options: [
-      'Replaces Chapter 81',
-      'The EEMS is defined at Reg 825.1 and managed within the Chapter 82 prosumer installation. The Chapter 81 efficiency design integrates the EEMS scope: the EEMS coordinates PV / BESS / heat pump / EV operation per tariff + load profile; load-shifting; export priority. The efficiency design records the EEMS configuration as part of the rationale. They work together — efficiency design (Chapter 81) + the EEMS (Reg 825.1) as the control mechanism. Cert evidence bundle: efficiency design + EEMS commissioning sheet',
-      'No EEMS in UK',
-      'Random',
+      'The EEMS is the consumer unit\'s main switch, defined in Chapter 53; Chapter 81 simply requires it to be rated for the combined LCT load',
+      'The EEMS is the smart meter installed by the supplier, so it falls outside BS 7671 and is not referenced anywhere in the standard',
+      'Defined at Reg 825.1 within Chapter 82, the EEMS is the control mechanism that delivers the Chapter 81 efficiency design — coordinating PV/BESS/heat pump/EV per tariff',
+      'The EEMS is the inverter\'s anti-islanding relay, defined in Section 551, and Chapter 81 relies on it to disconnect generation during a grid fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The EEMS (Electrical Energy Management System) is defined at Reg 825.1 and sits within the Chapter 82 prosumer installation — it is the control + automation + monitoring layer. Chapter 81 efficiency design + the EEMS work together: (1) Chapter 81 = the design rationale (methodology per BS HD 60364-8-1:2019) — what efficiency outcome the designer aims for (cable upsize + tariff-aware load shifting + LCT coordination). (2) The EEMS (Reg 825.1) = the control mechanism — it coordinates operation: PV inverter + BESS controller + heat pump controller + EV charger + immersion diverter, all coordinated against tariff + load priority + export setting. (3) Integration — the efficiency design records the EEMS configuration as part of the rationale; the prosumer commissioning records its operation. (4) UK 2025-26 typical EEMS — manufacturer-specific (SolarEdge ONE, Tesla Powerwall app, MyEnergi Eddi / Zappi + libbi, Enphase Enlighten) or open-protocol (Modbus + home automation). (5) Designer documents which EEMS, the coordinated devices, the tariff signal, the load priority. Cert evidence bundle: efficiency design + EEMS commissioning sheet + monitoring plan + customer handover.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'A customer reads about Chapter 81 + asks "is my cable choice optimal?" How does the designer answer in concrete terms?',
     options: [
-      'Trust me',
-      'Designer shows the per-circuit Chapter 81 design table: design current, run length, operating hours/year assumption, Reg 525 minimum CSA, Chapter 81 upsize candidate, incremental cost, annual I²R saving, payback in years. Customer can see the rationale for each circuit. If payback is reasonable (5-10 years) + customer accepts, install with the upsize. If payback is unreasonable (>15 years), Reg 525 floor is the right choice. Transparency = trust',
-      'No answer',
-      'Random',
+      'The designer points to the EIC and explains that any cable passing the Reg 525 voltage-drop check is by definition optimal, so no further analysis applies',
+      'The designer shows the per-circuit design table — current, length, hours, CSA, cost, saving and payback — so the customer sees the rationale and accepts or modifies',
+      'The designer recommends upsizing every circuit by two CSA steps, since larger cable is always nearer optimal and removes the need for a payback calculation',
+      'The designer defers to the SAP assessor, since cable efficiency is assessed as part of the EPC rather than by the electrical designer',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'How does Chapter 81 design verification at commissioning differ from the safety verification per Reg 643?',
     options: [
-      'Same thing',
-      'Reg 643 verifies safety + correctness: continuity, IR, polarity, RCD operation, EFLI, functional test. Chapter 81 verification confirms the install matches the efficiency design records: cable CSA as designed; voltage-drop calculation matches; EEMS configured per design; monitoring points operational; annual energy estimate documented. Inspector / verifier signs off both. Cert evidence bundle: Reg 643 schedule of test + Chapter 81 efficiency verification record',
-      'No Chapter 81 verification',
-      'Random',
+      'Reg 643 and Chapter 81 are verified by measuring the same values; the only difference is that the efficiency results are recorded in kWh rather than ohms',
+      'Reg 643 verifies safety; Chapter 81 verification confirms the install matches the efficiency design — CSA, voltage drop, EEMS config and monitoring points',
+      'Chapter 81 replaces the Reg 643 live tests on LCT circuits, so loop impedance and RCD operation are no longer checked once the efficiency design is signed off',
+      'Chapter 81 verification is carried out a year after commissioning by reviewing the monitoring data, so nothing efficiency-related is checked at handover itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A commercial site with 50 kW PV + 100 kWh BESS + air-source heat pump + EV fleet charging — how does Chapter 81 scale?',
     options: [
-      'No change',
-      'Commercial Chapter 81 = same framework, larger payback magnitude. Sustained-load circuits much higher current (32-125 A typical) × much longer hours/year = much larger annual I²R losses. Cable upsize from minimum to one or two steps above often pays back in 2-5 years. EEMS coordinates the multi-source PEI per Chapter 82. Designer records per-circuit + per-component rationale + commercial-tariff model + monitoring. Customer evidence bundle structurally same but content larger',
-      'Different framework',
-      'Not allowed',
+      'Chapter 81 does not apply above domestic scale; large commercial LCT sites are designed to BS HD 60364-8-1 directly with no BS 7671 efficiency layer',
+      'Payback lengthens at commercial scale because the cable cost rises faster than the energy saving, so upsizing rarely repays on large circuits',
+      'Same framework, larger magnitude — higher currents and longer hours mean bigger I²R losses, so upsizing often pays back in 2-5 years across more circuits',
+      'Commercial sites use a fixed efficiency target set by the DNO at connection, so the per-circuit payback model is replaced by a single site-wide loss limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Commercial Chapter 81 = same design framework, larger payback magnitude + more circuits. UK 2025-26 commercial LCT typical: 50-500 kW PV array; 100-1000 kWh BESS; multi-circuit EV fleet charging (10-100 chargers); commercial heat pump (50-300 kW); CHP if present (Chapter 82 PEI). Chapter 81 application: (1) Sustained-load circuits — 32-125 A typical per dedicated circuit; long operating hours (industrial process / fleet charging / heat pump on commercial duty). (2) Cable upsize often pays back in 2-5 years — annual I²R losses scale with I² (much larger at commercial current ratings). (3) The EEMS (Reg 825.1) / building management system (BMS) coordinates the multi-source PEI per Chapter 82. (4) Designer records per-circuit + per-component rationale + commercial-tariff model (DUoS, TNUoS, capacity charges) + monitoring. (5) Customer evidence bundle structurally same: Chapter 81 efficiency design + Chapter 82 PEI records + EEMS commissioning + Reg 643 verification + EIC. Larger document set; same framework. Commercial customers typically more attuned to operational cost reduction => Chapter 81 strongly supports the business case.',
   },

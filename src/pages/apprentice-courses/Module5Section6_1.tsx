@@ -10,12 +10,14 @@ const quizQuestions = [
     id: 1,
     question: 'Why is clear verbal communication important on site?',
     options: [
-      'System readiness, testing sequences, witness requirements, and documentation completeness',
+      'It removes the need to keep written records of instructions',
       'It prevents mistakes, improves coordination, and reduces risks of accidents',
-      'Create immediate positive feedback or rewards after completing the habit',
-      'Both the client (or Responsible Person) and the installer',
+      'It allows work to proceed without supervisor approval',
+      'It guarantees the job will always finish ahead of programme',
     ],
     correctAnswer: 1,
+    explanation:
+      'Clear verbal communication prevents installation mistakes, improves coordination between trades, and reduces the risk of accidents caused by misheard instructions.',
   },
   {
     id: 2,
@@ -27,94 +29,112 @@ const quizQuestions = [
       'Casual, friendly, and relaxed',
     ],
     correctAnswer: 2,
+    explanation:
+      'Professional communication is built on clarity (easy to understand), conciseness (to the point), and professionalism (respectful and accurate).',
   },
   {
     id: 3,
     question: 'Give one example of technical jargon that might confuse a non-electrician.',
     options: [
-      "Using 'socket' instead of 'outlet'",
-      "Using 'cable' instead of 'wire'",
-      "Using 'switch' instead of 'control'",
+      "Saying 'power point' when you mean a socket-outlet",
+      "Saying 'mains' when you mean the incoming supply",
+      "Saying 'spur' when you mean a single outlet",
       "Using 'MCB' instead of saying 'circuit breaker'",
     ],
     correctAnswer: 3,
+    explanation:
+      "Abbreviations such as 'MCB' are everyday terms to electricians but are technical jargon that can confuse a client, so plain language like 'circuit breaker' is clearer.",
   },
   {
     id: 4,
     question: 'What should you do before giving verbal instructions?',
     options: [
       'Plan what you need to say and structure it clearly',
-      'Maintaining eye contact while giving instructions',
-      'Clarity, conciseness, and professionalism',
-      'Using \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'MCB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' instead of saying \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'circuit breaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Start speaking immediately so no time is wasted',
+      'Assume the listener already knows the background',
+      'Wait until the task is half-finished before explaining',
     ],
     correctAnswer: 0,
+    explanation:
+      'Planning your message and structuring it clearly before speaking helps you deliver complete, unambiguous instructions that are less likely to be misunderstood.',
   },
   {
     id: 5,
     question: 'What does it mean to be concise?',
     options: [
-      'Plan what you need to say and structure it clearly',
-      'Delivering your message quickly and directly, without unnecessary words',
-      'It prevents mistakes, improves coordination, and reduces risks of accidents',
-      'It ensures you fully understand the message and can confirm it back',
+      'Adding extra detail so nothing can be missed',
+      'Delivering your message directly, without unnecessary words',
+      'Speaking as loudly as possible over site noise',
+      'Repeating the instruction several times to be safe',
     ],
     correctAnswer: 1,
+    explanation:
+      'Being concise means getting to the point and giving the essential information first, without rambling or padding the message with unnecessary words.',
   },
   {
     id: 6,
     question: 'How can background noise affect communication?',
     options: [
-      'Ask for clarification immediately',
-      'Using \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'MCB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' instead of saying \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'circuit breaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'It improves concentration on the task in hand',
+      'It has no real effect once you raise your voice',
       'It can cause misheard instructions and mistakes',
-      'It prevents mistakes and improves safety',
+      'It makes written instructions unnecessary',
     ],
     correctAnswer: 2,
+    explanation:
+      'Background noise from machinery and tools is common on site and can lead to instructions being misheard, causing errors and safety risks.',
   },
   {
     id: 7,
     question: 'What is the purpose of repeating back instructions?',
     options: [
-      'Clarity, conciseness, and professionalism',
-      'Using \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'MCB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' instead of saying \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'circuit breaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'Plan what you need to say and structure it clearly',
+      'To show the speaker you were paying attention only',
+      'To slow the work down so mistakes are caught later',
+      'To avoid having to ask any follow-up questions',
       'To confirm understanding and avoid errors',
     ],
     correctAnswer: 3,
+    explanation:
+      'Repeating or paraphrasing key instructions back confirms that you have understood them correctly and lets the speaker correct any misunderstanding before work starts.',
   },
   {
     id: 8,
     question: 'Give one example of professional body language.',
     options: [
       'Maintaining eye contact while giving instructions',
-      'To confirm understanding and avoid errors',
-      'Using \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'MCB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' instead of saying \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'circuit breaker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'It prevents mistakes and improves safety',
+      'Folding your arms and looking away while listening',
+      'Checking your phone while someone is speaking',
+      'Turning your back to the speaker to carry on working',
     ],
     correctAnswer: 0,
+    explanation:
+      'Facing the speaker and maintaining appropriate eye contact shows you are engaged and listening, which is part of professional, respectful communication.',
   },
   {
     id: 9,
     question: "What should you do if you don't understand an instruction?",
     options: [
-      'Guess what they meant',
+      'Make a reasonable assumption and start the work',
       'Ask for clarification immediately',
-      'Ignore it and move on',
-      'Ask someone else later',
+      'Carry on with a different task instead',
+      'Wait until the end of the day to raise it',
     ],
     correctAnswer: 1,
+    explanation:
+      'If an instruction is unclear, ask for clarification straight away. Guessing or delaying risks doing the wrong work and creating safety hazards.',
   },
   {
     id: 10,
     question: 'How does active listening help communication?',
     options: [
-      'Plan what you need to say and structure it clearly',
-      'It can cause misheard instructions and mistakes',
+      'It lets you continue working while half-listening',
+      'It removes the need to make eye contact',
       'It ensures you fully understand the message and can confirm it back',
-      'It prevents mistakes, improves coordination, and reduces risks of accidents',
+      'It speeds the conversation up by interrupting the speaker',
     ],
     correctAnswer: 2,
+    explanation:
+      'Active listening means giving full attention and paraphrasing key points, so you fully understand the message and can confirm it back to avoid errors.',
   },
 ];
 

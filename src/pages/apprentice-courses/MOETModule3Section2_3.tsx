@@ -27,9 +27,9 @@ const quickCheckQuestions = [
     id: 'open-transition',
     question: 'What is the main disadvantage of open transition in star-delta starting?',
     options: [
-      'Starting current and protection coordination',
-      'Mandatory energy audit for large UK organisations every 4 years',
-      'Mutual induction between two coils on a magnetic core',
+      'It requires twice as many cables to the motor as closed transition',
+      'It cannot be used on motors rated above 7.5 kW',
+      'It permanently reduces the running torque of the motor',
       'A transient current spike may occur during changeover',
     ],
     correctIndex: 3,
@@ -41,11 +41,11 @@ const quickCheckQuestions = [
     question: 'What speed should the motor reach in star before transition to delta?',
     options: [
       '50-60%',
+      '80-90%',
       '65-75%',
       '100%',
-      '80-90%',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'The motor should reach approximately 80-90% of full speed in star before transition occurs. This minimises the current transient at changeover and reduces mechanical shock to the drive coupling. The star-delta timer must be set to allow sufficient acceleration time.',
   },
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What is the main advantage of closed transition over open transition?',
     options: [
       'Eliminates current transient at changeover',
-      'They move from negative to positive terminal',
-      'According to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
-      'When a building is built, sold, or rented',
+      'Reduces the number of contactors needed in the starter',
+      'Removes the need for the star-delta timer entirely',
+      'Allows the motor to be started under full load',
     ],
     correctAnswer: 0,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'What happens if the timer is set too short?',
     options: [
-      'Eliminates current transient at changeover',
-      'Conveyors and crushers (high starting torque loads)',
-      'To prevent a short circuit across the supply',
+      'The motor overheats from running too long in star',
+      'The motor fails to start because the star contactor never closes',
+      'The starting current is reduced below the normal running current',
       'High current transient and mechanical shock at transition',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'What type of loads are NOT suitable for star-delta starting?',
     options: [
       'Conveyors and crushers (high starting torque loads)',
-      'Timer too short -- high transition current trips overload',
-      'High current transient and mechanical shock at transition',
-      'Eliminates current transient at changeover',
+      'Centrifugal pumps started against a closed valve',
+      'Fans and blowers with low inertia',
+      'Compressors started in an unloaded condition',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why must the star and delta contactors be interlocked?',
     options: [
-      'Timer too short -- high transition current trips overload',
+      'To reduce the starting current drawn during the star period',
       'To prevent a short circuit across the supply',
-      'Conveyors and crushers (high starting torque loads)',
-      'Eliminates current transient at changeover',
+      'To allow the motor to reach full speed more quickly',
+      'To remove the need for a separate overload relay',
     ],
     correctAnswer: 1,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the most common reason a motor trips on star-delta transition?',
     options: [
-      'Eliminates current transient at changeover',
-      'Conveyors and crushers (high starting torque loads)',
-      'High current transient and mechanical shock at transition',
+      'The supply voltage is too high for the motor windings',
+      'The main contactor opens before the delta contactor closes',
+      'The overload relay has been set below the full-load current',
       'Timer too short -- high transition current trips overload',
     ],
     correctAnswer: 3,

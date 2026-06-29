@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'Which ISO 7010 pictogram is the correct emergency exit sign showing a running man through a door, with the door on the LEFT and the figure running RIGHT?',
     options: [
-      'E001 — running man with the door on the LEFT and the figure running to the right (the "exit on the right" or "right-handed" version). The mirror-image E002 has the door on the RIGHT and the figure running LEFT (the "left-handed" version). The two are not interchangeable; selection depends on the actual direction of travel at that point in the building. Using a "right-handed" sign at a left-handed exit confuses occupants under low-adaptation conditions.',
-      'E002.',
-      'E003 — first aid.',
-      'E007 — assembly point.',
+      'E001 — running man, door on the left, figure running right.',
+      'E002 — running man, door on the right, figure running left.',
+      'E003 — the first-aid pictogram.',
+      'E007 — the assembly-point pictogram.',
     ],
     correctIndex: 0,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A non-internally-illuminated emergency exit sign has a pictogram height of 150 mm. What is the maximum viewing distance under BS EN 1838:2024 d = s × p?',
     options: [
-      '15 m — using p = 100 (internally illuminated) — incorrect because the sign is externally illuminated.',
-      '30 m — using p = 200 (externally illuminated). The formula d = s × p where d is the maximum viewing distance, s is the height of the pictogram or text on the sign, and p is the distance factor: 100 for internally illuminated signs, 200 for externally illuminated signs. With s = 0.15 m and p = 200, d = 0.15 × 200 = 30 m. Beyond 30 m an occupant cannot reliably read the sign and a larger sign or closer placement is required. This is one of the load-bearing calculations in the design of any emergency exit signage scheme.',
-      '7.5 m.',
-      '60 m.',
+      '15 m — using p = 100, the internally illuminated factor.',
+      '30 m — using p = 200, the externally illuminated factor.',
+      '7.5 m — using half the pictogram height as a factor.',
+      '60 m — using p = 400 in error.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Under BS EN 1838:2024 what is the minimum luminance of any part of a self-luminous emergency exit sign safety-colour area?',
     options: [
-      '0.5 cd/m² — far too dim.',
-      '5 cd/m² minimum, 500 cd/m² maximum, with the ratio of brightest to darkest area on the sign no greater than 10:1. The 5 cd/m² floor ensures the sign is visible against typical ambient brightness during an evacuation; the 500 cd/m² ceiling prevents glare which would reduce sign legibility (and which would also impair adaptation to the dim escape route). The 10:1 internal uniformity rule prevents "hot spots" on the pictogram that mask darker areas — particularly relevant for back-lit signs with poor diffusion.',
-      '50 cd/m² fixed.',
-      '5000 cd/m² minimum.',
+      '0.5 cd/m² minimum on the safety-colour area.',
+      '5 cd/m² minimum (500 cd/m² maximum, ratio across the face no more than 10:1).',
+      '50 cd/m² fixed across the safety-colour area.',
+      '5000 cd/m² minimum on the safety-colour area.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'What is the typical mounting height range for emergency exit signs in commercial premises?',
     options: [
-      '0.5 to 1.0 m (low-level only).',
-      '2.0 to 2.5 m typical, measured to the underside of the sign. The range puts the sign above head height (so it is visible over occupants in front during a queue at an exit) but not so high that the viewing-distance / sign-height calculation breaks down in low ceilings. Above 2.5 m the sign begins to require a larger pictogram height to maintain the same viewing distance under the d = s × p rule. Below 2 m the sign is in the visual field of nearby occupants and may be obscured by tall people or signage on the same wall.',
-      '4.0 to 5.0 m always.',
-      'No standard — designer\'s choice.',
+      '0.5 to 1.0 m — low-level only.',
+      '2.0 to 2.5 m, measured to the underside of the sign.',
+      '4.0 to 5.0 m, regardless of ceiling height.',
+      'No standard range — entirely the designer\'s choice.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'A new office is fitted with externally-illuminated emergency exit signs with a pictogram height of 200 mm. What is the maximum viewing distance under BS EN 1838:2024?',
     options: [
-      '20 m.',
-      '40 m. The formula d = s × p uses p = 200 for externally illuminated signs. With s = 0.20 m, d = 0.20 × 200 = 40 m. Beyond 40 m the sign is no longer reliably legible to an occupant during a low-adaptation evacuation. The viewing-distance calculation determines the spacing of signs along an escape route; a designer working backwards from sign size knows the maximum sign-to-sign distance.',
-      '10 m.',
-      '100 m.',
+      '20 m — using p = 100, the internally illuminated factor, in error.',
+      '10 m — using a quarter of the sign height as the distance.',
+      '40 m — using p = 200, the externally illuminated factor.',
+      '100 m — using p = 500 in error.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 1838:2024 §5.5 — d = s × p, p = 200 for externally illuminated. 200 mm × 200 = 40 m. A common 150 mm pictogram externally illuminated reads at 30 m; a 100 mm pictogram only at 20 m. Sign size ladders directly from required viewing distance.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'Which value of p is used in d = s × p for an internally illuminated emergency exit sign under BS EN 1838:2024?',
     options: [
-      '100. Internally illuminated signs are slightly less effective per millimetre of pictogram height than externally illuminated signs because the sign face becomes the light source — the contrast across the safety colour boundary is reduced compared to a sign reflecting external light. The factor difference (100 vs 200) reflects this contrast difference. A 150 mm pictogram internally illuminated reads at 15 m max; the same pictogram externally illuminated reads at 30 m max.',
-      '200.',
-      '50.',
-      '500.',
+      '100 — half the externally illuminated factor.',
+      '200 — the externally illuminated factor.',
+      '50 — a quarter of the externally illuminated factor.',
+      '500 — the luminance ceiling, misused as a distance factor.',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,68 +110,68 @@ const quizQuestions = [
     question:
       'What is the minimum luminance of any part of the safety-colour area on an emergency exit sign under BS EN 1838:2024?',
     options: [
-      '0.5 cd/m².',
-      '5 cd/m². The floor figure is calibrated against typical ambient luminance during an evacuation — corridors at 1 to 5 lx have wall surfaces around 0.5 to 2 cd/m² depending on reflectance. The sign at 5 cd/m² is therefore at least 2 to 10 times brighter than the surrounding walls, ensuring it is unambiguously the brightest object in the visual field and draws the eye. Below 5 cd/m² the sign blends into the wall and loses its function as a visual beacon.',
-      '500 cd/m².',
-      '50 cd/m².',
+      '0.5 cd/m² — the minimum brightness anywhere on the safety-colour area.',
+      '500 cd/m² — the minimum brightness anywhere on the safety-colour area.',
+      '50 cd/m² — the minimum brightness anywhere on the safety-colour area.',
+      '5 cd/m² — the minimum brightness anywhere on the safety-colour area.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 1838:2024 §5.4 — sign-face luminance ≥ 5 cd/m². The 5 cd/m² figure is the minimum brightness anywhere on the safety colour area. The maximum is 500 cd/m² (above which glare impairs adaptation and reduces legibility) and the brightness ratio across the sign face is capped at 10:1.',
+      'BS EN 1838:2024 §5.4 — sign-face luminance ≥ 5 cd/m². The floor figure is calibrated against typical ambient luminance during an evacuation: corridors at 1 to 5 lx have wall surfaces around 0.5 to 2 cd/m², so a sign at 5 cd/m² is at least 2 to 10 times brighter than the surrounding walls and unambiguously the brightest object in the visual field. Below 5 cd/m² the sign blends into the wall. The maximum is 500 cd/m² (above which glare impairs adaptation) and the brightness ratio across the face is capped at 10:1.',
   },
   {
     id: 4,
     question:
       'What is the minimum proportion of the sign area that must be the safety colour (Pantone 354c green) under BS EN 1838:2024 / ISO 7010?',
     options: [
-      '20 %.',
-      '50 % — the safety colour (green for safe condition signs) must occupy at least half the sign area. This ensures the colour is the dominant visual cue and the sign is unambiguously identifiable as a "safe condition / escape" sign rather than a generic information sign. Pantone 354c is the specified green; other greens are not interchangeable. The pictogram itself is rendered in white over the green background, taking up the remainder of the sign area.',
-      '10 %.',
-      '90 %.',
+      '20 % — at least a fifth of the sign area must be the safety colour.',
+      '50 % — at least half the sign area must be the safety colour.',
+      '10 % — at least a tenth of the sign area must be the safety colour.',
+      '90 % — almost the whole sign area must be the safety colour.',
     ],
     correctAnswer: 1,
     explanation:
-      'ISO 7010:2020 + BS EN 1838:2024 §5.3 — safety colour ≥ 50 % of sign area. Pantone 354c is the specified green for safe-condition signs (escape, first aid, assembly point). Reds, yellows, blues are reserved for prohibition, warning, and mandatory signs respectively. Sign manufacturers specify Pantone 354c on their product data; designers should verify on procurement.',
+      'ISO 7010:2020 + BS EN 1838:2024 §5.3 — safety colour ≥ 50 % of sign area, so it is the dominant visual cue and the sign reads unambiguously as a safe-condition / escape sign rather than a generic information sign. Pantone 354c is the specified green for safe-condition signs (escape, first aid, assembly point); other greens are not interchangeable. The pictogram is rendered in white over the green background. Reds, yellows and blues are reserved for prohibition, warning and mandatory signs respectively.',
   },
   {
     id: 5,
     question:
       'Under BS EN 1838:2024 §5.4, what is the maximum permissible ratio of brightest to darkest area on the safety-colour portion of an emergency exit sign face?',
     options: [
-      '40:1.',
-      '10:1. The cap prevents internal "hot spots" on back-lit signs where the LED light source is not adequately diffused. A hot spot at 200 cd/m² with a darker area at 5 cd/m² gives 40:1 — failing the 10:1 cap. Such signs are technically luminous everywhere on the safety colour area but are visually deceptive because the hot spot dominates the perception and the rest of the sign reads as "off". 10:1 forces uniform diffusion; well-designed back-lit signs achieve 3:1 or better.',
-      '100:1.',
-      '2:1.',
+      '40:1 — matching the uniformity ratio used along an escape route.',
+      '100:1 — the brightest area may be up to a hundred times the darkest.',
+      '2:1 — a far tighter cap than the standard requires.',
+      '10:1 — the brightest area no more than ten times the darkest.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 1838:2024 §5.4 — Lmax/Lmin on safety colour ≤ 10:1. The cap is part of the three-part luminance rule (≥ 5 cd/m² floor, ≤ 500 cd/m² ceiling, ≤ 10:1 internal uniformity). Manufacturers achieve compliance by using LED edge-lighting with light-guide panels rather than direct LED illumination of the sign face.',
+      'BS EN 1838:2024 §5.4 — Lmax/Lmin on safety colour ≤ 10:1, part of the three-part luminance rule (≥ 5 cd/m² floor, ≤ 500 cd/m² ceiling, ≤ 10:1 internal uniformity). The cap prevents internal hot spots on back-lit signs with poor diffusion: a 200 cd/m² hot spot with a 5 cd/m² darker area gives 40:1 and fails. Such signs are luminous everywhere but visually deceptive because the hot spot dominates and the rest reads as off. Manufacturers achieve compliance with LED edge-lighting and light-guide panels rather than direct LED illumination of the face; well-designed signs achieve 3:1 or better.',
   },
   {
     id: 6,
     question:
       'A maintained emergency exit sign and a non-maintained emergency exit sign have what fundamental difference?',
     options: [
-      'Different pictogram.',
-      'A maintained sign is illuminated continuously during normal operation AND remains illuminated on mains failure (battery takes over). A non-maintained sign is OFF during normal operation and only illuminates on mains failure. Maintained signs are required where occupants do not know the building (cinemas, theatres, hotels, public spaces); non-maintained signs are acceptable where occupants are familiar with the layout (offices, factories during occupied hours). BS 5266-1:2025 §7.7 retains both as valid options with the maintained option preferred for unfamiliar-occupant premises.',
-      'Different colour.',
-      'Different size.',
+      'A maintained sign is lit continuously and on mains failure; a non-maintained sign lights only on mains failure.',
+      'They carry different pictograms — maintained uses E001, non-maintained uses E002.',
+      'They use a different safety colour — maintained green, non-maintained blue.',
+      'They are different physical sizes for the same viewing distance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 1838:2024 + BS 5266-1:2025 — maintained signs always illuminated; non-maintained illuminate on mains failure only. The choice is driven by occupant familiarity. A theatre (audience seeing the room for the first time) needs maintained signage; a private office (staff who know the layout) can use non-maintained.',
+      'A maintained sign is illuminated continuously during normal operation and remains illuminated on mains failure (the battery takes over); a non-maintained sign is off during normal operation and illuminates only on mains failure. The choice is driven by occupant familiarity: maintained signs are required where occupants do not know the building (cinemas, theatres, hotels, public spaces); non-maintained signs are acceptable where occupants know the layout (offices, factories during occupied hours). BS 5266-1:2025 §7.7 retains both, with maintained preferred for unfamiliar-occupant premises.',
   },
   {
     id: 7,
     question:
       'BS 5266-1:2025 strengthened the rules around external escape signage at final exits. What is the new requirement?',
     options: [
-      'No external signage required.',
-      'External emergency exit signs at every final exit, identifying the exit from outside the building and confirming the route to the assembly point. This complements the expansion of the escape route definition itself (BS 5266-1:2025 §7.3) — the escape route now extends through the door and along the external path, so the signage must extend with it. External signs must be IP65 minimum, illuminated to the same luminance and uniformity rules as internal signs, and visible from the path of travel away from the building. Pantone 354c green and ISO 7010 pictograms apply identically.',
-      'Only verbal instructions required.',
-      'Only assembly point sign required.',
+      'No external signage is required beyond the final exit door.',
+      'Only verbal evacuation instructions are required at the final exit.',
+      'External exit signs at every final exit, confirming the route to the assembly point.',
+      'Only a single assembly-point sign is required, with no signs at the exits.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1:2025 §7.3 + §7.7 — external escape signage at every final exit, plus signage along the external path to the assembly point. IP65 minimum. Same pictogram, luminance, and viewing-distance rules. Existing buildings without external signage should retrofit at the next major refurbishment.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'A new shopping centre has high-bay corridors at 4.5 m mounting height. The emergency exit signs are externally illuminated. What pictogram height is required to maintain a 30 m viewing distance under BS EN 1838:2024?',
     options: [
-      '50 mm.',
-      '150 mm. d = s × p; with d = 30 m and p = 200 (externally illuminated), s = 30 / 200 = 0.15 m = 150 mm. The mounting height of the sign itself does not enter the formula directly, but high-mounted signs are typically larger because the sight-line distance from a viewer near the floor to the sign is longer than the simple horizontal distance — designers often use the next size up for high-bay applications. A 200 mm pictogram is common in shopping centres and large retail.',
-      '500 mm.',
-      '15 mm.',
+      '50 mm — using p = 600 in error.',
+      '500 mm — using p = 60 in error.',
+      '15 mm — confusing the pictogram height with a tenth of the distance.',
+      '150 mm — from d = s × p, with d = 30 m and p = 200.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'd = s × p — for d = 30 m and p = 200 (external), s = 0.15 m = 150 mm. In practice high-bay applications often step up to 200 mm pictograms to give a 40 m viewing distance and accommodate the additional sight-line geometry.',
   },
@@ -194,26 +194,26 @@ const quizQuestions = [
     question:
       'What is the BS 5266-1:2025 position on legend-only signs (text only, no pictogram, e.g. the word "EXIT")?',
     options: [
-      'Recommended for all premises.',
-      'Deprecated — pictogram-based signs (ISO 7010 E001 / E002) are mandatory; legend-only signs do not satisfy the standard. Legend-only signs are language-dependent and unreadable to non-English-speakers. Pictograms are language-independent and recognised internationally under ISO 7010. Existing legend-only signs in old installations should be upgraded to pictogram signs at the next refurbishment cycle. New installations must use ISO 7010 E001 / E002 pictograms; supplementary text below the pictogram is permitted but cannot substitute for it.',
-      'Required.',
-      'Mandatory in addition to pictogram.',
+      'Deprecated — ISO 7010 pictogram signs are mandatory; legend-only signs do not satisfy the standard.',
+      'Recommended as the preferred sign type for all premises.',
+      'Required as the primary escape sign in all new installations.',
+      'Mandatory in addition to the pictogram on every escape sign.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5266-1:2025 §7.7 + ISO 7010:2020 — pictograms mandatory, legend-only deprecated. The pictogram-first rule reflects multilingual occupancy in modern UK premises and the long-established research that pictograms outperform text under low-adaptation conditions. Supplementary text (e.g. the word "EXIT" below the pictogram) is permitted as additional information but does not replace the pictogram.',
+      'BS 5266-1:2025 §7.7 + ISO 7010:2020 — pictograms mandatory, legend-only deprecated. Legend-only signs (e.g. the word "EXIT") are language-dependent and unreadable to non-English-speakers; ISO 7010 E001 / E002 pictograms are language-independent and outperform text under low-adaptation conditions. New installations must use the pictograms; supplementary text below the pictogram is permitted as additional information but cannot substitute for it. Existing legend-only signs should be upgraded at the next refurbishment cycle.',
   },
   {
     id: 10,
     question:
       'BS EN 1838:2024 specifies the response time for emergency exit signs. Which option matches?',
     options: [
-      'Instant — full luminance immediately.',
-      '50 % of rated luminance within 5 s, full rated luminance within 60 s of mains failure — same response profile as escape route lighting in §4.3. Maintained signs effectively meet the 5 s figure trivially because they are already illuminated; non-maintained signs must transition from off to 50 % within 5 s of mains failure. LED technology meets this comfortably; older fluorescent-backed signs may not. Existing signs with discharge-tube backlighting should be audited at the next refurbishment.',
-      '0.5 s — same as high-risk task.',
-      '120 s — slow ballast warm-up.',
+      'Instant — full rated luminance must be reached immediately on mains failure.',
+      '0.5 s to full luminance — the same fast response as high-risk task-area lighting.',
+      '50 % of rated luminance within 5 s, full within 60 s — same profile as escape route lighting.',
+      '120 s to full luminance — allowing for slow ballast warm-up.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 1838:2024 §5.4 — sign response: 5 s to 50 % luminance, 60 s to 100 %. Same profile as escape route lighting illuminance in §4.3. Maintained signs (always on) trivially comply; non-maintained signs need fast LED switching to meet 5 s.',
   },

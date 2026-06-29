@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'ip-rating',
     question: 'What does an IP rating of IP54 indicate?',
     options: [
+      'Dust protected, splash proof',
       'Dust tight, splash proof',
       'Dust tight, water jet proof',
-      'Dust protected, splash proof',
       'Dust protected, water jet proof',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'IP54 means protected against dust ingress (5) and protected against splashing water from all directions (4). The first digit is solids protection (0-6), second is liquids (0-8).',
   },
@@ -87,12 +87,12 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'What is the primary purpose of main switchboard in a building?',
+    question: 'What is the primary purpose of a main switchboard in a building?',
     options: [
-      'Above the insulation material\\\\\\\'s thermal limit',
+      'To convert the incoming AC supply to DC for distribution',
       'To receive and distribute the incoming electrical supply',
-      'Surveying a building with no physical intervention',
-      'Electrical installation certificates and test results',
+      'To correct the power factor of the incoming supply',
+      'To step the DNO supply voltage down to 230 V',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why would you specify Form 3b separation?',
     options: [
-      'An accredited domestic or non-domestic energy assessor',
-      'Possible insulation damage or contamination',
-      'High temperatures require heat-resistant cables and equipment',
+      'To reduce the assembly footprint and lower the purchase cost',
+      'To increase the busbar current rating of the assembly',
+      'To improve the IP rating of the enclosure against water',
       'To allow access to terminals while other units remain live',
     ],
     correctAnswer: 3,
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'partially type-tested assembly' (PTTA) mean?",
     options: [
-      'Carry out full initial verification style testing',
-      'Hazards and mitigation measures incorporated in design',
+      'An assembly that has passed only the dielectric type test',
+      'An assembly tested for half its rated short-circuit current',
       'Verification based on tested components plus design rules',
-      'Energy cable can withstand during fault without damage',
+      'An assembly verified only by routine factory inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which busbar configuration provides the best continuity of supply?',
     options: [
-      'At the cooker control unit and cooker outlet',
-      'To eliminate steady-state error over time',
-      'Provides tensile strength and strain relief',
+      'Single busbar serving all outgoing circuits',
+      'Single busbar split by one section switch',
+      'Single busbar with a higher current rating',
       'Duplicate busbars with bus coupler',
     ],
     correctAnswer: 3,
@@ -188,16 +188,16 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 requires 700mm minimum clear working space in front of switchgear. This allows safe operation, access for testing, and emergency escape.',
+      'Industry guidance specifies 700mm minimum clear working space in front of switchgear. This allows safe operation, access for testing, and emergency escape.',
   },
   {
     id: 9,
     question: 'When is IP65 rated switchgear required?',
     options: [
-      'Current lags voltage by 53° (inductive)',
+      'Dedicated switchrooms with controlled, clean access',
       'Wash-down areas or external locations',
-      'Date, time, and GPS location data (if enabled)',
-      'Insulated gloves and face protection',
+      'General office distribution boards in dry rooms',
+      'Riser cupboards with no water or dust exposure',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of arc fault containment in modern switchgear?',
     options: [
-      'Cables can be drawn in without damage and heat dissipation is adequate',
-      'One socket showing half the expected value',
+      'To increase the continuous current rating of the busbars',
+      'To improve the assembly IP rating against dust ingress',
       'To protect personnel and limit damage during internal faults',
-      'Frequency weighting matching human ear sensitivity',
+      'To reduce the operating noise of the circuit breakers',
     ],
     correctAnswer: 2,
     explanation:

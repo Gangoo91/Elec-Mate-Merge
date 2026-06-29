@@ -18,10 +18,10 @@ export const dataCablingModule2Section2QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Why is proper grounding critical for shielded cables?',
     options: [
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
-      'The real power (kW) output to increase — the grid holds the frequency constant',
+      'It increases the bandwidth the cable can carry over a given distance',
+      'It allows the pairs to be untwisted without raising crosstalk',
       'To prevent the shield from acting as an antenna and picking up more interference',
-      'Underground and overhead services such as power lines and gas mains',
+      'It reduces the conductor resistance and therefore signal attenuation',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const dataCablingModule2Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'In which environment would STP cable be most appropriate?',
     options: [
-      'How we unconsciously move from observing data to making assumptions and taking action',
-      'True - digital copies are acceptable with proper security',
-      'RCD protection with rated residual current not exceeding 30mA',
+      'A domestic study running a single broadband router',
+      'A small office with short runs between desks and a switch',
+      'A loft space with cables clipped well away from any wiring',
       'Industrial facility with welding equipment and variable frequency drives',
     ],
     correctAnswer: 3,

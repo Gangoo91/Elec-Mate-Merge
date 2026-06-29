@@ -28,28 +28,28 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician works alone most days and has no colleagues, line manager, or formal mentor. They want to complete their Level 4 Design qualification within 12 months but are struggling with motivation. Which approach would be MOST effective for creating accountability?',
     options: [
-      'Relying entirely on self-discipline and willpower, since working alone means accountability must come from within',
-      'Joining or forming a mastermind group of 3&ndash;5 tradespeople who meet fortnightly to review progress, share challenges, and hold each other accountable',
-      'Posting the goal on social media and hoping the public commitment creates enough pressure',
-      'Waiting until they find a full-time employer who can provide formal structure and oversight',
+      'Relying entirely on self-discipline and willpower, on the basis that accountability must come from within',
+      'Joining or forming a mastermind group of 3&ndash;5 tradespeople who meet fortnightly to review progress',
+      'Posting the goal on social media and hoping the public commitment alone creates enough sustained pressure',
+      'Waiting until they find a full-time employer who can provide the formal structure and oversight they lack',
     ],
     correctIndex: 1,
     explanation:
-      'A mastermind group is one of the most effective accountability structures for self-employed tradespeople. It provides regular check-ins (creating the accountability meeting structure that the ASTD research identifies as most effective), peer support from people who understand the realities of trade work, diverse perspectives on problem-solving, and a social commitment that is harder to break than a private resolution. Relying solely on self-discipline (Option A) ignores decades of research showing that external accountability dramatically improves follow-through. Social media posting (Option C) is a form of public accountability that can help, but without regular meetings and genuine relationship, it often becomes performative rather than functional. Waiting for formal employment (Option D) delays action indefinitely. Mastermind groups can be formed informally &mdash; even two or three electricians meeting at a cafe every fortnight to discuss their goals can create transformative accountability.',
+      'A mastermind group is one of the most effective accountability structures for self-employed tradespeople. It provides regular check-ins (creating the accountability meeting structure that the ASTD research identifies as most effective), peer support from people who understand the realities of trade work, diverse perspectives on problem-solving, and a social commitment that is harder to break than a private resolution. Relying solely on self-discipline ignores decades of research showing that external accountability dramatically improves follow-through. Posting on social media is a form of public accountability that can help, but without regular meetings and genuine relationship, it often becomes performative rather than functional. Waiting for formal employment delays action indefinitely. Mastermind groups can be formed informally &mdash; even two or three electricians meeting at a cafe every fortnight to discuss their goals can create transformative accountability.',
   },
   {
     id: 'gs-4-4-check3',
     question:
       'Reverse mentoring is the concept where younger or less experienced workers mentor older or more experienced colleagues. In the electrical trade, which scenario best illustrates effective reverse mentoring?',
     options: [
-      'A 22-year-old apprentice teaches a 55-year-old electrician how to use cloud-based certification software, digital job sheets, and social media marketing, while the experienced electrician shares knowledge of complex fault-finding techniques and customer relationship management',
-      'A young electrician tells an experienced electrician that their methods are outdated and need to change',
-      'An apprentice refuses to learn traditional methods because they believe technology has made them obsolete',
-      'A young electrician takes over a senior role because they are more digitally skilled',
+      'An apprentice teaches digital certification software while the experienced electrician shares fault-finding and customer skills',
+      'A young electrician simply tells an experienced colleague that their working methods are outdated and must change',
+      'An apprentice refuses to learn any traditional methods, believing technology has made them entirely obsolete',
+      'A young electrician takes over a senior role purely on the grounds of being more digitally skilled than others',
     ],
     correctIndex: 0,
     explanation:
-      'Effective reverse mentoring is a two-way exchange where both parties contribute genuine expertise. Option A illustrates this perfectly: the younger electrician has grown up with digital technology and can share practical skills in cloud software, apps, digital marketing, and social media that the experienced electrician may not have developed. In return, the experienced electrician shares decades of accumulated knowledge in fault finding, customer management, regulatory interpretation, and practical problem-solving that cannot be learned from a textbook. Both parties benefit, and neither is positioned as superior. This model is particularly powerful in the electrical trade because the industry is experiencing rapid digital transformation while simultaneously requiring deep traditional knowledge. Options B, C, and D describe one-sided, disrespectful, or hierarchical approaches that miss the collaborative essence of reverse mentoring.',
+      'Effective reverse mentoring is a two-way exchange where both parties contribute genuine expertise. The apprentice-and-experienced-electrician swap illustrates this perfectly: the younger electrician has grown up with digital technology and can share practical skills in cloud software, apps, digital marketing, and social media that the experienced electrician may not have developed. In return, the experienced electrician shares decades of accumulated knowledge in fault finding, customer management, regulatory interpretation, and practical problem-solving that cannot be learned from a textbook. Both parties benefit, and neither is positioned as superior. This model is particularly powerful in the electrical trade because the industry is experiencing rapid digital transformation while simultaneously requiring deep traditional knowledge. The other options describe one-sided, disrespectful, or hierarchical approaches that miss the collaborative essence of reverse mentoring.',
   },
 ];
 
@@ -112,89 +112,89 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Regular scheduled meetings with a specific accountability partner produce the highest rates of goal completion according to the ASTD research (approximately 95%). The key elements are: regularity (scheduled, not ad hoc), specificity (a particular person, not a vague audience), and structure (reporting on progress, discussing obstacles, setting next commitments). Self-accountability through tracking (Option A) is valuable but limited by self-deception and the ease of quietly abandoning a commitment when no one else knows. Public accountability on social media (Option B) creates initial pressure but often fades because the audience is diffuse and rarely follows up. Formal performance reviews (Option D) happen too infrequently (typically annually or quarterly) and are often focused on the employer&rsquo;s priorities rather than the individual&rsquo;s personal development goals. The power of regular peer meetings lies in the combination of social commitment, genuine relationship, and frequent check-ins that make it psychologically difficult to repeatedly show up and say &ldquo;I didn&rsquo;t do what I said I would.&rdquo;',
+      'Regular scheduled meetings with a specific accountability partner produce the highest rates of goal completion according to the ASTD research (approximately 95%). The key elements are: regularity (scheduled, not ad hoc), specificity (a particular person, not a vague audience), and structure (reporting on progress, discussing obstacles, setting next commitments). Self-accountability through tracking and journaling is valuable but limited by self-deception and the ease of quietly abandoning a commitment when no one else knows. Public accountability on social media creates initial pressure but often fades because the audience is diffuse and rarely follows up. Formal performance reviews with a line manager happen too infrequently (typically annually or quarterly) and are often focused on the employer&rsquo;s priorities rather than the individual&rsquo;s personal development goals. The power of regular peer meetings lies in the combination of social commitment, genuine relationship, and frequent check-ins that make it psychologically difficult to repeatedly show up and say &ldquo;I didn&rsquo;t do what I said I would.&rdquo;',
   },
   {
     id: 3,
     question:
       'A qualified electrician wants to transition from domestic work into commercial inspection and testing. They have no formal mentor. Which combination of accountability and support strategies would be MOST effective?',
     options: [
-      'Setting a private goal and relying on self-discipline to study for the 2391 qualification',
-      'Posting the career goal on LinkedIn and waiting for opportunities to present themselves',
-      'Finding a mentor who specialises in commercial inspection (via IET, trade forums, or local networking), joining a study group for the 2391, and scheduling fortnightly accountability check-ins with a colleague who is also pursuing career development',
-      'Enrolling on a training course and assuming that course attendance alone will be sufficient',
+      'Finding a commercial-inspection mentor, joining a 2391 study group, and scheduling fortnightly peer check-ins',
+      'Setting a private goal and relying purely on self-discipline to study for the 2391 inspection qualification',
+      'Posting the career goal on LinkedIn and waiting for the right opportunities to present themselves in time',
+      'Enrolling on a single training course and assuming that course attendance alone will prove sufficient',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Option C combines multiple layers of support that address different aspects of the transition. A mentor who specialises in commercial inspection provides domain-specific guidance, real-world insight, and potentially the opportunity to shadow experienced inspectors &mdash; knowledge that cannot be obtained from textbooks alone. A study group creates academic accountability and collaborative learning for the 2391 qualification. Fortnightly accountability check-ins with a peer create the regular meeting structure that the ASTD research identifies as most effective for goal completion. Together, these three elements form a comprehensive support system. Option A relies entirely on willpower, which research shows is insufficient for sustained goal pursuit. Option B is passive and provides no structural support. Option D addresses only the formal learning component without accountability, mentoring, or real-world experience, and many electricians who enrol on courses fail to complete them or pass the exam because course attendance alone is not enough.',
+      'Combining a mentor, a study group, and peer check-ins layers multiple forms of support that address different aspects of the transition. A mentor who specialises in commercial inspection provides domain-specific guidance, real-world insight, and potentially the opportunity to shadow experienced inspectors &mdash; knowledge that cannot be obtained from textbooks alone. A study group creates academic accountability and collaborative learning for the 2391 qualification. Fortnightly accountability check-ins with a peer create the regular meeting structure that the ASTD research identifies as most effective for goal completion. Together, these three elements form a comprehensive support system. Relying on a private goal and self-discipline depends entirely on willpower, which research shows is insufficient for sustained goal pursuit. Posting on LinkedIn is passive and provides no structural support. Enrolling on a course alone addresses only the formal learning component without accountability, mentoring, or real-world experience, and many electricians who enrol on courses fail to complete them or pass the exam because course attendance alone is not enough.',
   },
   {
     id: 4,
     question:
       'In a reverse mentoring relationship within the electrical trade, which of the following represents the most effective exchange?',
     options: [
-      'The younger electrician teaches everything and the older electrician simply listens and learns',
-      'The older electrician dismisses the younger person&rsquo;s input because experience always trumps innovation',
-      'The younger electrician shares expertise in digital tools, apps, and marketing, while the experienced electrician shares deep knowledge of complex installations, fault finding, and customer management &mdash; creating genuine two-way value',
-      'Both parties focus exclusively on technical electrical knowledge, ignoring business and technology skills',
+      'The younger electrician teaches everything while the older electrician simply listens and learns in return',
+      'The older electrician dismisses the younger colleague&rsquo;s input, since experience always trumps innovation',
+      'The younger one shares digital tools and marketing while the experienced one shares installation and customer skills',
+      'Both parties focus only on technical electrical knowledge, ignoring all business and technology skills entirely',
     ],
     correctAnswer: 2,
     explanation:
-      'Effective reverse mentoring is fundamentally a two-way exchange. The concept was popularised by Jack Welch at General Electric in the late 1990s, who paired senior executives with younger employees to learn about the internet and digital technology. In the electrical trade, this model is particularly powerful because the industry sits at the intersection of traditional craft knowledge (which takes decades to accumulate) and rapid digital transformation (which younger electricians navigate more naturally). The younger electrician might teach cloud-based certification software, social media marketing for the business, drone inspection technology, smart home programming, or digital project management tools. The experienced electrician shares fault-finding methodology, regulatory interpretation, customer relationship skills, commercial awareness, and the tacit knowledge that comes from decades of varied installations. Neither party&rsquo;s contribution is more valuable than the other&rsquo;s &mdash; they are complementary. Options A, B, and D all describe one-sided or limited exchanges that miss the collaborative essence of the concept.',
+      'Effective reverse mentoring is fundamentally a two-way exchange. The concept was popularised by Jack Welch at General Electric in the late 1990s, who paired senior executives with younger employees to learn about the internet and digital technology. In the electrical trade, this model is particularly powerful because the industry sits at the intersection of traditional craft knowledge (which takes decades to accumulate) and rapid digital transformation (which younger electricians navigate more naturally). The younger electrician might teach cloud-based certification software, social media marketing for the business, drone inspection technology, smart home programming, or digital project management tools. The experienced electrician shares fault-finding methodology, regulatory interpretation, customer relationship skills, commercial awareness, and the tacit knowledge that comes from decades of varied installations. Neither party&rsquo;s contribution is more valuable than the other&rsquo;s &mdash; they are complementary. The other three options all describe one-sided or limited exchanges that miss the collaborative essence of the concept.',
   },
   {
     id: 5,
     question:
       'What is the primary purpose of building a &ldquo;personal board of advisers&rdquo; for career development?',
     options: [
-      'To have a group of people who always agree with your decisions and provide encouragement',
-      'To create a formal governance structure similar to a company board of directors',
-      'To assemble 3&ndash;5 trusted individuals who each bring different expertise and perspectives to support various aspects of your professional development, providing honest feedback, diverse viewpoints, and accountability',
-      'To build a network of contacts who can provide job referrals and business leads',
+      'To gather a group of people who always agree with your decisions and provide steady encouragement',
+      'To create a formal legal governance structure that mirrors a limited company board of directors',
+      'To build a wide network of contacts whose main value is providing job referrals and business leads',
+      'To assemble 3&ndash;5 trusted people with different expertise who give honest feedback and accountability',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'A personal board of advisers is an informal concept where you deliberately identify 3&ndash;5 individuals who each contribute different types of support and expertise to your development. The key word is &ldquo;different&rdquo; &mdash; each person should fill a distinct role. For example, one might be a technical expert who can advise on complex electrical matters; another might be a successful business owner who can advise on commercial decisions; a third might be someone who knows you personally and can provide honest, candid feedback about your behaviour and blind spots; a fourth might be someone in a different industry who brings a fresh perspective. The board is not a formal structure (Option B) and its purpose is not agreement (Option A) or networking (Option D). Its purpose is to ensure that you have access to diverse, honest counsel across the different dimensions of your career. No single person can provide all the guidance you need, but a well-chosen group of 3&ndash;5 people can cover most of the important areas: technical development, business strategy, personal growth, industry trends, and honest accountability.',
+      'A personal board of advisers is an informal concept where you deliberately identify 3&ndash;5 individuals who each contribute different types of support and expertise to your development. The key word is &ldquo;different&rdquo; &mdash; each person should fill a distinct role. For example, one might be a technical expert who can advise on complex electrical matters; another might be a successful business owner who can advise on commercial decisions; a third might be someone who knows you personally and can provide honest, candid feedback about your behaviour and blind spots; a fourth might be someone in a different industry who brings a fresh perspective. The board is not a formal governance structure, and its purpose is not unconditional agreement or networking. Its purpose is to ensure that you have access to diverse, honest counsel across the different dimensions of your career. No single person can provide all the guidance you need, but a well-chosen group of 3&ndash;5 people can cover most of the important areas: technical development, business strategy, personal growth, industry trends, and honest accountability.',
   },
   {
     id: 6,
     question:
       'When accountability crosses the line from helpful motivation into unhelpful pressure, the most common warning sign is:',
     options: [
-      'Feeling a healthy sense of commitment to your stated goals',
-      'Experiencing mild discomfort when you consider not following through on a commitment',
-      'Feeling anxiety, guilt, shame, or dread associated with accountability check-ins, leading to avoidance, dishonesty about progress, or abandonment of the goal entirely',
-      'Your accountability partner asking challenging questions about your progress',
+      'Anxiety, guilt or dread around check-ins that leads to avoidance, dishonesty about progress, or quitting the goal',
+      'Feeling a healthy and motivating sense of commitment to the goals you have set yourself',
+      'Experiencing mild, productive discomfort when you consider not following through on a commitment',
+      'Your accountability partner asking you challenging but fair questions about your recent progress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Accountability should create a moderate, motivating level of social commitment &mdash; the feeling that you do not want to let someone down, which drives you to follow through. This mild discomfort (Option B) is normal and productive. However, when accountability becomes associated with anxiety, guilt, shame, or dread, it has crossed from motivation into pressure. The warning signs are: dreading accountability meetings, feeling compelled to lie or exaggerate progress, experiencing physical stress symptoms (poor sleep, irritability) related to the accountability relationship, feeling judged rather than supported, or abandoning the goal entirely because the emotional cost of the accountability relationship exceeds the benefit. This often happens when accountability partners are overly critical, when the goals were set too ambitiously, when the relationship lacks empathy and flexibility, or when the individual has people-pleasing tendencies that turn accountability into a source of shame rather than motivation. The solution is to recalibrate: adjust goals to be challenging but achievable, choose accountability partners who balance challenge with support, and remember that the purpose of accountability is to help you succeed, not to punish you for imperfection.',
+      'Accountability should create a moderate, motivating level of social commitment &mdash; the feeling that you do not want to let someone down, which drives you to follow through. Mild discomfort about not following through is normal and productive. However, when accountability becomes associated with anxiety, guilt, shame, or dread, it has crossed from motivation into pressure. The warning signs are: dreading accountability meetings, feeling compelled to lie or exaggerate progress, experiencing physical stress symptoms (poor sleep, irritability) related to the accountability relationship, feeling judged rather than supported, or abandoning the goal entirely because the emotional cost of the accountability relationship exceeds the benefit. This often happens when accountability partners are overly critical, when the goals were set too ambitiously, when the relationship lacks empathy and flexibility, or when the individual has people-pleasing tendencies that turn accountability into a source of shame rather than motivation. The solution is to recalibrate: adjust goals to be challenging but achievable, choose accountability partners who balance challenge with support, and remember that the purpose of accountability is to help you succeed, not to punish you for imperfection.',
   },
   {
     id: 7,
     question:
       'A self-employed electrician who works alone is considering forming a mastermind group. According to the principles of effective mastermind groups, the IDEAL structure would be:',
     options: [
-      'A large group of 15&ndash;20 people who meet quarterly for networking',
-      'A small group of 3&ndash;5 committed individuals who meet regularly (fortnightly or monthly), with a structured agenda including progress reports, problem-solving, and goal-setting for the next period',
-      'An informal group with no fixed schedule that meets whenever members are available',
-      'A group exclusively of electricians at the same career stage, to ensure everyone has similar challenges',
+      'A large group of 15&ndash;20 people who meet only quarterly, mainly for general networking',
+      'A small group of 3&ndash;5 committed people meeting regularly, with a structured progress and goal-setting agenda',
+      'An informal group with no fixed schedule that simply meets whenever the members happen to be available',
+      'A group made up only of electricians at the same career stage, so that everyone faces similar challenges',
     ],
     correctAnswer: 1,
     explanation:
-      'Effective mastermind groups share several key characteristics: small size (3&ndash;5 members, rarely more than 6), regular meetings on a fixed schedule (fortnightly or monthly, not ad hoc), a structured agenda that ensures each member gets dedicated time for accountability and problem-solving, and genuine commitment from all participants. The concept was popularised by Napoleon Hill in Think and Grow Rich (1937), who described the mastermind as &ldquo;the coordination of knowledge and effort of two or more people who work toward a definite purpose in the spirit of harmony.&rdquo; Large groups (Option A) lose intimacy and individual attention. Groups without fixed schedules (Option C) quickly dissolve because there is no structural commitment. Homogeneous groups (Option D) miss the benefit of diverse perspectives &mdash; a mastermind group is often most valuable when members come from different specialisms or career stages, because they see each other&rsquo;s problems from fresh angles. For electricians, a mastermind might include a domestic installer, a commercial contractor, an inspection specialist, and a designer &mdash; each bringing different expertise and challenges to the table.',
+      'Effective mastermind groups share several key characteristics: small size (3&ndash;5 members, rarely more than 6), regular meetings on a fixed schedule (fortnightly or monthly, not ad hoc), a structured agenda that ensures each member gets dedicated time for accountability and problem-solving, and genuine commitment from all participants. The concept was popularised by Napoleon Hill in Think and Grow Rich (1937), who described the mastermind as &ldquo;the coordination of knowledge and effort of two or more people who work toward a definite purpose in the spirit of harmony.&rdquo; Large groups of 15&ndash;20 lose intimacy and individual attention. Groups without fixed schedules quickly dissolve because there is no structural commitment. Homogeneous groups of electricians at the same career stage miss the benefit of diverse perspectives &mdash; a mastermind group is often most valuable when members come from different specialisms or career stages, because they see each other&rsquo;s problems from fresh angles. For electricians, a mastermind might include a domestic installer, a commercial contractor, an inspection specialist, and a designer &mdash; each bringing different expertise and challenges to the table.',
   },
   {
     id: 8,
     question:
       'The IET (Institution of Engineering and Technology) offers a formal mentoring scheme for members. Which statement about formal mentoring programmes is MOST accurate?',
     options: [
-      'Formal mentoring is always superior to informal mentoring because it has more structure and oversight',
-      'Informal mentoring is always superior because it develops naturally and is therefore more authentic',
-      'Both formal and informal mentoring have distinct advantages: formal programmes provide structure, matching expertise, and clear expectations, while informal mentoring offers flexibility, natural rapport, and organic development &mdash; the most effective approach often combines elements of both',
-      'Formal mentoring programmes are only useful for apprentices and early-career professionals, not for experienced electricians',
+      'Formal mentoring is always superior to informal mentoring because it has more structure and oversight in place',
+      'Informal mentoring is always superior, because it develops naturally and is therefore more authentic and genuine',
+      'Formal mentoring programmes are useful only for apprentices and early-career staff, never for experienced electricians',
+      'Both have distinct strengths &mdash; formal offers structure and matching, informal offers rapport &mdash; so combining them works best',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Both formal and informal mentoring have genuine advantages, and the most effective development strategies often incorporate both. Formal mentoring programmes (such as the IET scheme, or structured workplace mentoring within larger contractors) provide: deliberate matching based on skills and goals, clear expectations and timelines, structure that prevents the relationship from drifting, and institutional support. Informal mentoring (such as a naturally developing relationship with an experienced electrician you meet on site or at a trade event) provides: organic rapport built on genuine connection, flexibility to adapt to changing needs, and a less pressured dynamic. Neither is universally superior. Many successful electricians have both a formal mentor (perhaps through a professional institution or employer programme) and one or more informal mentors (experienced colleagues they turn to for advice). The key is not the format but the quality: effective mentoring requires trust, honest feedback, relevant expertise, regular contact, and genuine investment from both parties.',
   },

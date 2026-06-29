@@ -126,112 +126,112 @@ const quizQuestions = [
     question:
       'A homeowner asks for a 6 kWp PV array, a 10 kWh battery, and a 7.4 kW EV chargepoint installed as one project. Which set of BS 7671 chapters / sections must the designer engage with?',
     options: [
-      'Section 712 only',
-      'Sections 712, 722, 551 and Chapter 57 — plus Appendix 17 considerations and the three relevant IET Codes of Practice',
-      'Section 826 alone (it covers the whole thing)',
-      'Chapter 57 only — BESS dominates the design',
+      'Section 712 only, since the PV array is the dominant generating source in the project',
+      'Chapter 57 only, on the basis that the BESS governs the whole multi-source design',
+      'Sections 712, 722, 551 and Chapter 57 — plus Appendix 17 and the relevant IET Codes of Practice',
+      'Section 826 alone, treating the combined system as a single prosumer electrical installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PV is governed by Section 712. EV charging is governed by Section 722. The BESS is governed by Chapter 57. All three are sources of supply or bidirectional energy flow, which engages Section 551 — particularly 551.7.1(c) and 551.7.2.1 (BESS treated as a generating set). Appendix 17 may apply to cable sizing and inverter efficiency choices. The IET Codes of Practice are the operational references.',
+      'PV is governed by Section 712, EV charging by Section 722 and the BESS by Chapter 57. As sources of supply with bidirectional flow they also engage Section 551 (551.7.2.1 treats the BESS as a generating set). Appendix 17 informs efficiency choices and the IET Codes of Practice are the operational references.',
   },
   {
     id: 2,
     question:
       'Reg 551.7.2.1 (redrafted in A4:2026) sets a rule that reshapes how Chapter 57 interlocks with the rest of the standard. What is the rule?',
     options: [
-      'Stationary batteries are exempt from Section 551',
-      'Stationary batteries (per Chapter 57) shall be considered a generating set and not a load, and the generating set shall be installed on the supply side of all the protective devices',
-      'Stationary batteries may share an RCD with the PV inverter',
-      'Stationary batteries do not require automatic disconnection',
+      'Stationary batteries are exempt from Section 551 and are treated purely as a final-circuit load',
+      'Stationary batteries may share a single RCD with the PV inverter on the same final circuit',
+      'Stationary batteries do not require a means of automatic disconnection in a parallel arrangement',
+      'A stationary battery is a generating set, not a load, installed on the supply side of all protective devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The rule has two parts. First, the generating set must be installed on the supply side of all protective devices — meaning the BESS / PV inverter interface must sit upstream of the consumer\'s downstream protection. Second, the rule explicitly classifies stationary batteries (Chapter 57) as generating sets, not loads, for the purposes of Section 551.',
+      'The rule has two parts: the generating set must be installed on the supply side of all the final-circuit protective devices, and stationary batteries to Chapter 57 are explicitly classified as generating sets, not loads, for the purposes of Section 551.',
   },
   {
     id: 3,
     question:
       'Reg 551.8 was deleted by A4:2026. Where did its content go?',
     options: [
-      'Into Section 712 (PV)',
-      'Into the new Chapter 57 (stationary secondary batteries)',
-      'Into Appendix 17 (energy efficiency)',
-      'Removed from BS 7671 entirely',
+      'Into the new Chapter 57 dedicated to stationary secondary batteries',
+      'Into Section 712, alongside the existing solar PV requirements',
+      'Into Appendix 17, the new energy-efficiency appendix',
+      'It was removed from BS 7671 entirely with no replacement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The deletion of 551.8 reads "Deleted by BS 7671:2018+A4:2026. See Chapter 57" — confirming that the battery-related content previously embedded in Section 551 was extracted into the new dedicated Chapter 57.',
+      'The deletion of 551.8 reads "Deleted by BS 7671:2018+A4:2026. See Chapter 57", confirming the battery content previously embedded in Section 551 was extracted into the new dedicated Chapter 57.',
   },
   {
     id: 4,
     question:
       'On a domestic install where the customer has an existing certified plug-in UPS for a home office, does Chapter 57 apply to that UPS?',
     options: [
-      'Yes — all batteries fall under Chapter 57',
-      'No — Chapter 57 explicitly excludes batteries incorporated into products covered by product safety standards (e.g. pluggable UPS conforming to BS EN 62040)',
-      'Yes, but only if rated above 1 kVA',
-      'Yes, but only if the UPS supplies emergency lighting',
+      'Yes — every battery in the installation falls within the scope of Chapter 57',
+      'No — Chapter 57 excludes batteries within products covered by product safety standards, e.g. a pluggable UPS to BS EN 62040',
+      'Yes, but only where the UPS is rated above 1 kVA continuous output',
+      'Yes, but only where the UPS provides a supply to emergency lighting',
     ],
     correctAnswer: 1,
     explanation:
-      'Chapter 57 applies to stationary secondary battery installations whose designed purpose is storage and supply of electrical installations. The chapter explicitly excludes batteries within products covered by product safety standards — pluggable UPS units, fire and emergency lighting systems, central safety power supplies.',
+      'Chapter 57 covers stationary secondary battery installations whose purpose is storage and supply for electrical installations. It explicitly excludes batteries within products covered by product safety standards — pluggable UPS units, emergency lighting systems and central safety power supplies.',
   },
   {
     id: 5,
     question:
       'Section 753 was extended in A4:2026. What does its extended scope now cover?',
     options: [
-      'Industrial induction heating only',
-      'Embedded electric heating systems for surface heating, de-icing and frost prevention — including both indoor and outdoor systems',
-      'Heat pumps only',
-      'Underfloor heating in commercial premises only',
+      'Industrial induction heating processes in manufacturing environments only',
+      'Heat-pump primary circuits, but not the associated electric heating elements',
+      'Embedded electric heating for surface heating, de-icing and frost prevention, indoor and outdoor',
+      'Electric underfloor heating in commercial premises only, excluding domestic dwellings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Section 753 was retitled and its scope extended in A4. It now covers embedded electric heating systems for surface heating, de-icing and frost prevention, indoor and outdoor. A heat pump installation with electric underfloor heating engages Section 753.',
+      'Section 753 was retitled and its scope extended in A4 to cover embedded electric heating systems for surface heating, de-icing and frost prevention, both indoor and outdoor. A heat-pump install with electric underfloor heating engages Section 753.',
   },
   {
     id: 6,
     question:
       'A4:2026 introduced Appendix 17 as a new appendix. Which framing is most accurate?',
     options: [
-      'Appendix 17 is a deletion notice for old content',
-      'Appendix 17 is energy efficiency design recommendations including for installations with local production and storage of energy — intended to be developed into a Part 8 of BS 7671 in a future amendment',
-      'Appendix 17 covers earth electrode design only',
-      'Appendix 17 replaces Section 826',
+      'A consolidated deletion notice listing all content removed by the A4:2026 amendment',
+      'A design guide for earth electrode arrangements and protective-conductor sizing',
+      'Energy-efficiency design recommendations, including for local generation and storage, intended to become Part 8',
+      'A direct replacement for Section 826 covering prosumer low-voltage installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Appendix 17 is the new energy efficiency appendix in A4:2026, providing recommendations for the design and erection of installations to optimise efficient use of electricity — including those with local production and storage. The stated intention is that Appendix 17 will be developed into Part 8 in a future amendment.',
+      'Appendix 17 is the new energy-efficiency appendix in A4:2026, giving recommendations to optimise efficient use of electricity, including installations with local production and storage. The stated intention is to develop it into a Part 8 in a future amendment.',
   },
   {
     id: 7,
     question:
       'Section 730 in A4:2026 has what scope?',
     options: [
-      'Marina pontoon supplies for sea-going vessels',
-      'Onshore installations dedicated to the supply of inland navigation vessels for commercial and administrative purposes, berthed in ports and berths — an entirely new section in this amendment',
-      'Aircraft ground power',
-      'Railway traction signalling',
+      'Onshore installations supplying inland navigation vessels berthed in ports — a new section in this amendment',
+      'Marina pontoon supplies for sea-going leisure craft and yachts at coastal berths',
+      'Aircraft ground-power supplies on airport aprons and maintenance stands',
+      'Railway traction and signalling supplies on mainline and light-rail networks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Section 730 was added in A4:2026 specifically for onshore installations supplying inland navigation vessels (i.e. canal and river commercial vessels) berthed in ports. It sits alongside the existing Section 729 (marinas) but addresses a distinct case.',
+      'Section 730 was added in A4:2026 for onshore installations supplying inland navigation vessels (canal and river commercial vessels) berthed in ports. It sits alongside Section 709 (marinas) but addresses the distinct inland-navigation case, where the supply size differs.',
   },
   {
     id: 8,
     question:
       'A designer is reviewing the 18th Edition LCT chapter map and asks "is this the final structure?" The most accurate answer in 2026 is:',
     options: [
-      'Yes — the structure is settled',
-      'No — the 19th Edition (currently in IET/BSI committee, expected 2028–2030) is widely expected to consolidate the scattered LCT chapters into a clearer Part 7 LCT framework and promote Appendix 17 into a new Part 8 on energy efficiency',
-      'It will all be replaced by BS EN 60364',
-      'IET has indicated it will hand the standard to HSE',
+      'Yes — the LCT chapter structure is now settled and no further consolidation is expected',
+      'No — BS 7671 will shortly be replaced wholesale by the IEC standard BS EN 60364',
+      'No — the 19th Edition is expected to consolidate the scattered LCT chapters and promote Appendix 17 into a Part 8',
+      'No — the IET has indicated it intends to hand the standard over to the HSE to maintain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 18th Edition with A4 amendments has the LCT content spread across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and Appendix 17. That fragmentation is being addressed in the 19th Edition. The 18th Edition + A4 remains in force during the transition.',
+      'The 18th Edition + A4 spreads LCT content across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and Appendix 17. That fragmentation is expected to be consolidated in the 19th Edition, with Appendix 17 promoted to a Part 8. The 18th Edition + A4 remains in force during the transition.',
   },
 ];
 

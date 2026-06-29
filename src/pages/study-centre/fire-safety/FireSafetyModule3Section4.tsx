@@ -77,8 +77,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which British Standard governs the design, installation, and maintenance of emergency lighting systems?',
-    options: ['BS 5839 Part 1', 'BS 5266 Part 1', 'BS 7671', 'BS 5499 Part 4'],
-    correctAnswer: 1,
+    options: ['BS 5266 Part 1', 'BS 5839 Part 1', 'BS 7671', 'BS 5499 Part 4'],
+    correctAnswer: 0,
     explanation:
       'BS 5266 Part 1 is the Code of Practice for the emergency lighting of premises. It covers the design, installation, wiring, commissioning, maintenance, and testing of emergency lighting systems. BS 5839 Part 1 covers fire detection and alarm systems. BS 7671 is the IET Wiring Regulations. BS 5499 Part 4 covers safety signs.',
   },
@@ -104,8 +104,8 @@ const quizQuestions = [
     id: 4,
     question:
       'Which type of emergency luminaire operates continuously regardless of mains supply status?',
-    options: ['Non-maintained', 'Maintained', 'Sustained', 'Standby'],
-    correctAnswer: 1,
+    options: ['Non-maintained', 'Sustained', 'Standby', 'Maintained'],
+    correctAnswer: 3,
     explanation:
       'A maintained emergency luminaire operates continuously — the lamp is lit at all times from the mains supply, and when the mains fails, it continues to operate from its internal battery. Non-maintained luminaires only illuminate when the mains supply fails. Maintained luminaires are required in places of entertainment, sleeping accommodation, and where the emergency luminaire also serves as the normal room lighting. A sustained luminaire contains two lamps — one for normal use and one for emergency use — and the emergency lamp activates only on mains failure.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 5,
     question: 'How often must a monthly functional test of emergency lighting be performed?',
     options: [
+      'A brief simulated mains failure to verify each luminaire illuminates and then is restored',
       'A brief test of each luminaire for its full rated duration',
       'A visual inspection only with no operational test',
-      'A brief simulated mains failure to verify each luminaire illuminates and then is restored',
       'A test of the batteries only using a multimeter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The monthly functional test involves briefly simulating a mains failure (by operating the test switch or isolating the supply) to verify that each emergency luminaire illuminates correctly and that the charging indicator restores when the mains is reconnected. This is a short test — not a full-duration test — and is designed to confirm that the system is operational. Any failures are recorded in the log book and repaired promptly. The full-duration test (1 or 3 hours) is performed annually.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     options: [
       'BS 5266 Part 1',
       'BS 5839 Part 1',
-      'BS 5499 Part 4 / BS ISO 7010',
       'BS 7671 Chapter 56',
+      'BS 5499 Part 4 / BS ISO 7010',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Exit sign design — including the internationally recognised green running man pictogram and directional arrows — is governed by BS 5499 Part 4 (which is aligned with BS ISO 7010 for graphical symbols). These standards ensure that exit signs are universally understood regardless of language. BS 5266 Part 1 covers emergency lighting systems, BS 5839 Part 1 covers fire alarm systems, and BS 7671 Chapter 56 covers safety services wiring.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'What is a key advantage of a central battery emergency lighting system over self-contained luminaires?',
     options: [
+      'It provides centralised battery management, easier maintenance, and typically longer battery life',
       'It does not require any special wiring',
       'It is cheaper and simpler to install',
-      'It provides centralised battery management, easier maintenance, and typically longer battery life',
       'It does not require fire-resistant cabling',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Central battery systems provide centralised battery management, making maintenance easier because all batteries are in one location. The batteries are typically industrial-grade and have a longer service life than the small NiCd or NiMH cells in self-contained luminaires. However, central battery systems require fire-resistant cabling (to BS 8519 or BS 7629) to maintain circuit integrity during a fire, and the installation is more complex and costly. Self-contained systems are simpler to install because each luminaire has its own battery and no special wiring is required.',
   },

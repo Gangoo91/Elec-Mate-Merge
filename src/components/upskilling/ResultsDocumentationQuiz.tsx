@@ -13,64 +13,69 @@ export const ResultsDocumentationQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: 'What must Zs values be compared against?',
+      question: 'What must measured Zs values be compared against to confirm compliance?',
       options: [
-        'Previous test results',
-        'The maximums listed in BS7671 Appendix 3',
-        'Industry average values',
-        'Manufacturer recommendations only',
+        'The maximum values tabulated in BS 7671 for the protective device',
+        'The readings taken on the previous periodic inspection',
+        'A typical industry average for similar circuits',
+        'The cable manufacturer’s published resistance figures',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'Zs values must be compared against the maximum values specified in BS7671 Appendix 3 for the type and rating of protective device installed.',
+        'Measured Zs must not exceed the maximum earth fault loop impedance tabulated in BS 7671 for the type and rating of the protective device, confirming disconnection within the required time.',
     },
     {
       id: 2,
       question:
-        "True or False: It's acceptable to write 'pass' instead of the test value on a certificate.",
-      options: ['True', 'False'],
-      correctAnswer: 1,
-      explanation:
-        "False. You must always record actual test values with units. Writing 'pass' or 'OK' is unacceptable and potentially illegal.",
-    },
-    {
-      id: 3,
-      question: 'What information must be recorded for every test result?',
+        'On a certificate, how should the result of an earth fault loop impedance test be recorded?',
       options: [
-        'Just the numerical value',
-        'Value, units, test method, and environmental conditions',
-        'Only pass or fail',
-        'Just the date tested',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Complete documentation requires actual values with units, test methods used, and relevant environmental conditions.',
-    },
-    {
-      id: 4,
-      question: 'How long must test records be retained?',
-      options: [
-        '1 year minimum',
-        'Until the next inspection',
-        'Permanently for legal protection',
-        '6 months only',
+        'As the word “pass” once the circuit is confirmed safe',
+        'As a tick against the relevant circuit reference',
+        'As the actual measured value in ohms',
+        'As “satisfactory” in the comments column',
       ],
       correctAnswer: 2,
       explanation:
-        'Test records should be retained permanently as they provide legal evidence of due diligence and proper testing.',
+        'Actual measured values with their units must always be recorded; entries such as “pass”, “OK” or a tick are not acceptable as they provide no evidence the value was within limits.',
+    },
+    {
+      id: 3,
+      question: 'What should be recorded to fully document a test result?',
+      options: [
+        'Just the numerical value on its own',
+        'The value with its units and the instrument used',
+        'Only whether the circuit passed or failed',
+        'Just the date the test was carried out',
+      ],
+      correctAnswer: 1,
+      explanation:
+        'Complete documentation records the actual value together with its units and identifies the calibrated instrument used, so the result can be traced and verified later.',
+    },
+    {
+      id: 4,
+      question: 'How long should electrical test records and certificates be retained?',
+      options: [
+        'For a minimum of one year',
+        'Only until the next periodic inspection',
+        'For six months after completion',
+        'For the lifetime of the installation as legal evidence',
+      ],
+      correctAnswer: 3,
+      explanation:
+        'Certificates and test records should be kept for the life of the installation, as they provide legal evidence of due diligence and a baseline for future inspections.',
     },
     {
       id: 5,
       question: 'What should you do if a test result appears unusually high or low?',
       options: [
-        'Record it without question',
-        'Change it to a normal value',
-        'Investigate and retest to verify accuracy',
-        'Ignore the unusual reading',
+        'Investigate the cause and retest to verify the reading',
+        'Record it as found without further checks',
+        'Adjust it to a value that looks more typical',
+        'Disregard it as a likely instrument glitch',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
-        'Unusual readings should always be investigated and verified through retesting to ensure accuracy and identify potential issues.',
+        'Unexpected readings should be investigated and re-measured to confirm accuracy, as they often reveal a genuine fault such as a poor connection or wrong cable size.',
     },
   ];
 

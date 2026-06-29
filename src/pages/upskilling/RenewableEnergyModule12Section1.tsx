@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Per Reg 641.1, when must initial verification take place on a renewable-energy installation?',
     options: [
-      'After it has been running for a year',
-      'During erection and on completion before being put into service. Reg 641.1: every installation shall, during erection and on completion before being put into service, be inspected and tested to verify so far as is reasonably practicable that the requirements of BS 7671 have been met. For LCT this means continuous verification during install + final IV before energisation + final IV before grid-paralleled export commencement',
-      'Only when the customer asks',
-      'Only if the DNO mandates it',
+      'During erection and on completion, before the installation is put into service',
+      'Only after it has been running for about a year and the system has bedded in',
+      'Only when the customer specifically requests an inspection of the work',
+      'Only if the DNO specifically mandates it as a condition of that connection',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 641.1 is categorical — verification happens during erection AND on completion BEFORE being put into service. For renewable-energy installs this has three implications: (1) continuous verification during the install rather than a one-off at the end (PV DC string isolation tested before connecting strings to the inverter; BESS DC bus IR tested before energising the BESS; etc); (2) final initial verification before the installation is energised on the AC side; (3) for grid-paralleled generators, an additional verification gate before export commencement per Reg 551.7.5 anti-islanding + the EREC G98 / G99 sign-off. Reg 641.2: results of assessment of fundamental principles + general characteristics (Sections 311-313) + info from Reg 514.9.1 must be available to the verifier — meaning the design + drawings + manufacturer DoCs + commissioning procedure are pre-requisites for verification.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Per Reg 651.3, what is the role of BS EN 61557 in instrument selection for LCT testing?',
     options: [
-      'Optional preference',
-      'Mandatory framework. Reg 651.3: measuring instruments and monitoring equipment and methods shall be chosen in accordance with the relevant parts of BS EN 61557. If other instruments are used they shall provide no less a degree of performance and safety. BS EN 61557 family covers: -1 general, -2 IR, -3 loop impedance, -4 continuity, -5 earth electrode resistance, -6 RCD, -8 insulation monitoring (for PV IMD), -9 IT fault location, -10 multi-function. LCT tester must comply with the relevant parts',
-      'Only for new instruments',
-      'Only for IR testers',
+      'An optional preference the installer may choose to follow if it is convenient',
+      'A requirement that applies only to newly purchased measuring instruments',
+      'A mandatory framework: instruments and methods shall meet the relevant parts of BS EN 61557, or give no less performance and safety',
+      'A requirement that applies only to insulation-resistance testers, not other instruments',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 651.3 mandates BS EN 61557 compliance for measuring instruments + monitoring equipment + methods used in inspection + testing. BS EN 61557 family parts relevant to LCT verification: Part 1 General requirements; Part 2 Insulation resistance (PV string IR, BESS DC bus IR, AC IR); Part 3 Loop impedance (Zs measurement); Part 4 Continuity (R1+R2, R2); Part 5 Earth electrode resistance; Part 6 RCD operation (essential — Type AC / A / B per the source electronics); Part 8 Insulation monitoring devices (Reg 712.421.101 PV IMD complies with BS EN 61557-8); Part 9 IT fault location; Part 10 Multi-function. The LCT installer\'s tester (typical Megger MFT, Fluke 1664, Metrel MI series) declares compliance with the relevant parts on its manufacturer datasheet. Cert evidence bundle records: tester make + model + serial + calibration date + BS EN 61557 part compliance on the EIC + Schedule of Test Results.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Why does multi-source LCT verification require extending beyond standard single-source AC verification?',
     options: [
-      'Identical to single source',
-      'Multi-source sites (PV + BESS + EV + heat pump + grid) have multiple energy paths. The standard single-source AC IV checks one supply at the origin + each circuit downstream. With multi-source: (a) each generator is its own source with its own IV requirement; (b) Reg 551.4.2 RCD effectiveness must be verified across EVERY combination of sources operating; (c) anti-islanding (Reg 551.7.5) verified per source + collectively; (d) DC circuit IV (PV strings, BESS DC bus) sits alongside AC IV with different test voltages + procedures',
-      'Random',
-      'No reason',
+      'It is identical to single-source verification; nothing additional needs doing',
+      'There is no real reason; the extra steps are optional good practice only',
+      'It is reduced, because the multiple sources provide redundancy that needs less checking',
+      'Several energy paths mean per-source IV, RCD checks across source combinations, anti-islanding per source and DC IV alongside AC IV',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Standard single-source verification (DNO supply → MET → CU → circuits → loads) is the BS 7671 baseline. Multi-source LCT verification extends this: (1) Per-source IV — PV array verified per Section 712 (DC IR + AC IR + IMD + anti-islanding), BESS verified per Chapter 57 (DC bus IR + AC IR + BMS commissioning + anti-islanding), heat pump verified per Part 4-7 + manufacturer commissioning. (2) Reg 551.4.2 multi-source RCD effectiveness — at commissioning, induce a fault while DIFFERENT COMBINATIONS of sources are running (PV-only, PV + BESS, all sources) + verify the correct RCD trips for each combination. (3) Reg 551.7.5 anti-islanding verified per source via DNO-witnessed or simulated grid-loss test. (4) DC IV on PV / BESS / EV DC fast — different test voltages (250 V / 500 V / 1000 V) + manufacturer-permitted procedures + risk of damage if standard AC IV procedure applied to DC equipment. Cert evidence bundle: per-source EIC entries + multi-source RCD test matrix + anti-islanding records + DC IV records.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What is the distinction between Reg 642 (inspection) and Reg 643 (testing) in the initial verification sequence?',
     options: [
-      'Identical',
-      'Reg 642 = visual / dead inspection precedes testing. Reg 642.1: inspection shall precede testing and shall normally be done with the installation under inspection disconnected from the supply. Reg 642.3 lists at least 18 inspection items (connections, identification, routing, conductor selection, protective device selection, voltage drop, isolators, warning notices, etc). Reg 643 = live tests — continuity, IR, polarity, ADS, RCD, prospective fault current, functional, voltage drop verification. Sequence matters — fail an inspection item, fix it, then test',
-      'Reg 642 is live',
-      'Reg 643 is dead',
+      'They are the same activity described twice over in the regulations',
+      'Reg 642 is the dead visual inspection, normally with the supply off, which precedes the Reg 643 live tests',
+      'Reg 642 is the live-testing stage and is always carried out first of the two',
+      'Reg 643 is the dead inspection and is carried out last in the sequence',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A combined PV (6 kWp) + BESS (10 kWh) + EV charger (7 kW) install. What initial verification framework applies?',
     options: [
-      'Single AC IV only',
-      'Full Part 6 IV applied per source + multi-source extensions: PV per Section 712 (Reg 712.421.101 IMD + DC IR at 1000 V + AC IR + anti-islanding per Reg 551.7.5) + BESS per Chapter 57 (BMS commissioning + DC bus IR + AC IR + anti-islanding) + EV per Section 722 (Reg 722.411.4 PME / open-PEN check + RDC-DD + RCD Type B if integral) + Reg 551.4.2 multi-source RCD effectiveness across combinations + EIC + Schedule of Inspections + Schedule of Test Results + cert evidence bundle integrating all sources',
-      'Only PV',
-      'Only EV',
+      'A single AC initial verification at the origin covers the whole install on its own',
+      'Only the PV needs verifying; the battery and charger are fully manufacturer-commissioned',
+      'Only the EV charger needs full verification under Part 6; the rest are exempt',
+      'Full Part 6 IV per source — PV per Section 712, BESS per Chapter 57, EV per Section 722 — plus RCD checks across source combinations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Combined LCT install initial verification: each source has its specific framework + the multi-source extensions apply. (1) PV — Section 712.421.101 IMD verification + Section 712 DC IR procedure (test voltage per Table 64 — typically 500 V or 1000 V depending on system Voc); AC IR per Reg 643.3; anti-islanding per Reg 551.7.5. (2) BESS — BMS commissioning per manufacturer (cell balance, communications, fault tolerance); Chapter 57 DC bus isolation + IR; AC IR per Reg 643.3; anti-islanding. (3) EV — Section 722.411.4 PME / open-PEN architecture; Type B RCD or RDC-DD per manufacturer DoC; protective conductor + earthing verification specific to the EV charging point. (4) Multi-source extensions — Reg 551.4.2 RCD effectiveness: induce a fault, verify RCD trip across combinations (PV only, PV + BESS, PV + BESS + EV charging); record results matrix. (5) Documentation — single EIC covers the additions + Schedule of Test Results lists each source\'s tests + cert evidence bundle integrates per-MCS handover packs (MIS 3002 PV + Chapter 57 BESS + Section 722 EV). Cert + handover go to customer + DNO + MCS Ofgem registration where applicable.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BS EN 61557 part for an insulation monitoring device (IMD) on PV per Reg 712.421.101 — which part?',
     options: [
-      'Part 6',
-      'Part 8 — Insulation monitoring devices. Reg 712.421.101.1: an insulation monitoring device (IMD) shall be installed except where Reg 712.421.101.2 applies, to verify the insulation status on the DC side throughout the life cycle of the PV array. The NOTE confirms IMDs complying with BS EN 61557-8 provide this function. The monitoring function may be provided by an inverter with integrated insulation monitoring. At IV the IMD presence + function + alarm path are inspected + tested',
-      'Part 2',
-      'Part 10',
+      'Part 8 — insulation monitoring devices, the standard the PV DC-side IMD complies with',
+      'Part 6 — RCD operation, covering tripping current and time',
+      'Part 2 — insulation resistance, the standard for IR testers',
+      'Part 10 — multi-function instruments combining several tests',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 712.421.101 + BS EN 61557-8: PV systems require an IMD on the DC side to verify insulation status throughout the array life. BS EN 61557-8 is the IMD standard. Most modern grid-tied PV inverters have integrated IMD (the inverter checks DC isolation before connection + on fault). At initial verification: (1) inspect that an IMD is present (either integrated into the inverter or as a separate device); (2) verify the IMD alarm function via the manufacturer self-test feature; (3) record the IMD type + DoC reference; (4) document the IMD trip threshold (typically configured per manufacturer — kohm range for low-voltage DC); (5) confirm the IMD trip path (does it disable the inverter, raise alarm, or both). Cert evidence bundle records: IMD make + model + manufacturer DoC + BS EN 61557-8 compliance + IV test result. The IMD complements (not replaces) the standard DC string IR test at install. Reg 712.421.101.2 exception: where galvanic separation between AC + DC sides plus other conditions are met, the IMD may be omitted — verify the exception applies before omitting.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Reg 642.1 inspection precedes testing. Why is this sequence critical for LCT installs?',
     options: [
-      'No reason',
-      'Live testing (Reg 643) on an installation with a visible inspection defect (e.g. wrong polarity, missing earth, unsupported cable, incorrect Type RCD for the source electronics) can be DANGEROUS — risk of damage to the tester, equipment, or person. Reg 642.1 also requires inspection while disconnected from supply — for LCT this includes confirming DC isolators + AC isolators are open + PV array covered or string isolators open + BESS DC bus open. Catches install errors before they become fault events',
-      'Random',
-      'Reg 642 is optional',
+      'There is no real reason; the order of inspection and testing makes no difference',
+      'The inspection stage is optional and can be skipped to save time on LCT installs',
+      'A dead inspection catches defects such as reversed DC polarity before live testing turns them into a fault event',
+      'Testing must come first so that the inspection can then confirm the test results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inspection precedes testing because: (1) Safety — live testing on an installation with visible defects (cross-connected polarity, missing earth, broken termination, wrong-rated protective device) risks tester damage + fault current + equipment damage + personal injury. (2) Dead inspection — Reg 642.1 specifies the installation under inspection should be disconnected from supply. For LCT this means: DC string isolators open + PV modules covered or shaded + BESS DC bus isolator open + AC supply isolated. Catches: incorrect polarity at the inverter DC terminals (PV inverter destroyed in seconds if polarity reversed + DC isolator closed); BESS DC fuses installed wrong rating; battery cell strings cross-connected. (3) Documentation flow — Reg 642.2 requires sufficient information to be available + Reg 642.3 mandates checking specific items (18+ items listed). The inspection record feeds the Schedule of Inspections on the EIC. (4) Order — Reg 643.2 Continuity precedes Reg 643.3 Insulation Resistance (must verify the protective conductor is continuous + connected before applying 500 V or higher to verify the insulation). Cert evidence bundle: Schedule of Inspections shows the inspection completion + outcome.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'A skilled person under Reg 641.6 must compile + sign the EIC per Reg 644.5. What does "skilled person competent to verify" mean for LCT?',
     options: [
-      'Anyone with a course',
-      'BS 7671 + LCT competency. Reg 641.6: verification shall be made by one or more skilled persons competent in such work. Reg 644.5: EICs shall be compiled + signed by skilled persons competent to verify BS 7671 has been met. For LCT this means: BS 7671 18th Edition / A4:2026 qualification (C&G 2382 + 2391 etc); LCT-specific competency where applicable (PV per MCS PV competency; EV per IEE COP; BESS per manufacturer training); manufacturer commissioning training for the specific equipment (proprietary inverter + BMS commissioning typically requires manufacturer course + sign-off)',
-      'Random',
-      'No competency required',
+      'Anyone who has attended a short course, regardless of their qualification',
+      'A current BS 7671 verification qualification plus the relevant technology and manufacturer commissioning competency',
+      'The customer or site manager, who signs the certificate to confirm acceptance',
+      'No particular competency is required in order to sign the certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Where does the EIC fit in the larger LCT handover documentation?',
     options: [
-      'It is the only document',
-      'EIC is ONE document in a larger pack. The MCS handover pack typically contains: MCS sizing report (energy yield + payback); product DoCs (modules + inverters + BMS); commissioning report (inverter + BMS + anti-islanding); BS 7671 EIC + Schedule of Inspections + Schedule of Test Results (the electrician\'s contribution); DNO EREC G98 / G99 reference; warranty registration; customer operating guide. EIC is the BS 7671-side anchor + the cert evidence bundle assembles around it',
-      'Only EIC matters',
-      'Random',
+      'The EIC is the only document the customer ever receives at handover',
+      'Only the EIC carries any weight; the rest of the handover pack is informal',
+      'The EIC is held separately from the handover pack and not shared with the customer',
+      'It is one document in a larger pack — with the MCS report, DoCs, schedules and warranties — and is the BS 7671 anchor for the rest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EIC is the BS 7671 electrical install certificate — a critical document but one part of a larger LCT handover pack. The MCS handover pack typical contents: (1) MCS sizing report — yield modelling + payback + grant submission (for technologies eligible like heat pumps under BUS). (2) Product DoCs + datasheets — PV modules, inverters, BMS, mounting + ancillary equipment. (3) Commissioning report — inverter + BMS + anti-islanding + DNO sign-off. (4) BS 7671 EIC — the electrician\'s contribution per Reg 644.5; integrated alongside the technology-specific commissioning record. (5) Schedule of Inspections + Schedule of Test Results — supporting the EIC. (6) EREC G98 / G99 reference — DNO notification documentation. (7) Warranty registration — per manufacturer (PV typically 10-25 yr; inverters 10-25 yr; BMS 10-15 yr). (8) Customer operating guide — how to operate the system, fault response, contacts. (9) Annual monitoring expectations — yield monitoring portal access, alerts. The cert evidence bundle assembles these into a single deliverable to the customer + a digital + paper copy for the installer\'s records + a submission to MCS where applicable.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Reg 641.5 covers additions / alterations. What does this mean when retrofitting PV onto an existing 1990s installation?',
     options: [
-      'No relevance',
-      'Reg 641.5: for an addition or alteration, it shall be verified that the addition or alteration COMPLIES with BS 7671 AND DOES NOT IMPAIR the safety of the existing installation. PV retrofit onto a 1990s install: (a) the new PV circuit must meet BS 7671:2018+A4:2026; (b) the existing CU + earthing arrangement must be assessed to confirm the PV addition doesn\'t impair safety. If the existing CU has no main RCD, no Type S architecture, insufficient ways, the PV addition may trigger CU replacement / upgrade',
-      'Random',
-      'New install only',
+      'The addition must comply with current BS 7671 and not impair the existing installation, so the CU and earthing are assessed too',
+      'It has no relevance to a retrofit onto an older existing installation',
+      'It applies only where the work is a brand-new installation, not an addition',
+      'It requires the entire existing installation to be rewired before any PV can be added',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 641.5 is the addition / alteration verification gate. For PV retrofit on a 1990s install: (1) The new PV circuit must comply with current BS 7671 — Section 712 + Reg 551 + Reg 415.1 + manufacturer DoC. (2) The existing installation must be assessed for whether the PV addition impairs its safety. Common findings: (a) Existing CU has no main RCD (or only a 100 mA Type AC) — the PV inverter electronics may produce DC fault leakage requiring Type B; (b) Existing earthing arrangement is TT or TN-C-S with no PV-specific consideration — re-evaluate for the new export path; (c) Existing CU has no spare ways for the new PV circuit; (d) Existing wiring shows degraded insulation that won\'t pass current IR thresholds. (3) The verifier\'s judgment: minor non-conformance may be acceptable with notification; substantial impairment requires remediation before PV commissioned. UK 2025-26 typical: PV retrofit ~£5-8k + CU replacement frequently required ~£600-1500 + cert evidence bundle records both the new PV install + the existing-install assessment + any remediation.',
   },

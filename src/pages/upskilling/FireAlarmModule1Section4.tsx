@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Which legislative duty is the master driver of fire-alarm category selection in non-domestic premises in England and Wales?',
     options: [
-      'BS 5839-1:2025 itself.',
-      'Approved Document B (Building Regulations).',
-      'The Regulatory Reform (Fire Safety) Order 2005 — Article 9 places the duty on the responsible person to make a suitable and sufficient assessment of the risks to which relevant persons are exposed, for the purpose of identifying the general fire precautions needed. The fire-alarm category selection is part of "the general fire precautions" — the FRA findings drive the choice. BS 5839-1:2025 is the code of practice for implementing the choice once made; Approved Document B is the building-regs design support; insurer requirements often layer on top.',
-      'Insurer requirements.',
+      'BS 5839-1:2025, the code of practice for fire detection systems.',
+      'Approved Document B, the Building Regulations fire-safety guidance.',
+      'The Regulatory Reform (Fire Safety) Order 2005, via the Article 9 FRA duty.',
+      'The property insurer\'s conditions of cover for the premises.',
     ],
     correctIndex: 2,
     explanation:
-      'The RRO 2005 is the legislative anchor in England and Wales (separate but equivalent regimes apply in Scotland and Northern Ireland). The fire risk assessment under Article 9 is the master document; everything else (BS 5839-1:2025, Approved Document B, insurer requirements, sector-specific regulation) feeds into or implements its findings.',
+      'The RRO 2005 is the legislative anchor in England and Wales (separate but equivalent regimes apply in Scotland and Northern Ireland). Article 9 places the duty on the responsible person to make a suitable and sufficient assessment of the risks to relevant persons, to identify the general fire precautions needed — and category selection is part of those precautions. The FRA findings drive the choice; BS 5839-1:2025 is the code of practice for implementing it, Approved Document B is the building-regs design support, and insurer requirements often layer on top.',
   },
   {
     id: 'fam1-s4-causeeffect',
     question:
       'BS 5839-1:2025 introduces a documentation requirement for handover. What is the new item?',
     options: [
-      'A photographic record of every detector.',
-      'A cause-and-effect matrix (or text description of how the cause and effect operates) included with the documentation provided to the purchaser or user. This could be as simple as "this system operates as a simultaneous evacuation" or, for more complex strategies, a full matrix document. The standard does not dictate the format — only that the description must be produced. The 2025 revision adds this because handover documentation often omitted any record of how the system was supposed to behave on activation.',
-      "A copy of every detector's test certificate.",
-      'A signed copy of the FRA.',
+      'A photographic record of every detector as installed on site.',
+      'A cause-and-effect matrix, or text description of how the system behaves.',
+      "A copy of every detector's individual product test certificate.",
+      'A signed copy of the fire risk assessment for the premises.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 21 (documentation/handover) recommends the cause-and-effect matrix or text description be included in the handover pack. Even a simple system needs a record of behaviour: "fire alarm signal causes simultaneous evacuation by all sounders". Complex systems need a full matrix mapping each input device to each output behaviour (zoned evacuation, phased evacuation, ancillary outputs, ARC transmission).',
+      'BS 5839-1:2025 21 (documentation/handover) recommends a cause-and-effect matrix or text description be included with the documentation given to the purchaser or user. It can be as simple as "operates as a simultaneous evacuation" for a basic system, or a full matrix mapping each input device to each output behaviour (zoned or phased evacuation, ancillary outputs, ARC transmission) for complex strategies. The standard does not dictate the format. The 2025 revision adds this because handover packs often omitted any record of how the system was supposed to behave on activation.',
   },
   {
     id: 'fam1-s4-variation',
     question:
       'Under BS 5839-1:2025 6, all variations from the standard must now be recorded where?',
     options: [
-      'In the design drawing only.',
-      'In the system logbook — a change from the 2017 edition, which only required "major variations" to be recorded (with no clear definition of what counted as major). The 2025 revision requires ALL variations to be documented in the logbook, including the rationale and any agreement with the responsible person, the enforcing authority or the insurer. This makes the system\'s as-built configuration visible to anyone consulting the logbook.',
-      'In the FRA.',
-      'On the panel.',
+      'In the design drawing only, as an annotated as-built mark-up.',
+      'In the system logbook, with the rationale and any agreement recorded.',
+      'In the fire risk assessment held by the responsible person.',
+      'On a label fixed to the control panel (CIE) itself.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 25 (logbook) updates Annex H (was Annex F in 2017) to reflect the variations-recording requirement. ALL variations now go in the logbook; the "major" qualifier is gone. The logbook is the authoritative record of the system\'s as-built and as-modified configuration.',
+      'BS 5839-1:2025 25 (logbook) updates Annex H (was Annex F in 2017) to require ALL variations to be recorded in the logbook, including the rationale and any agreement with the responsible person, enforcing authority or insurer. This is a change from the 2017 edition, which required only "major variations" (with no clear definition). The "major" qualifier is gone; the logbook is the authoritative record of the system\'s as-built and as-modified configuration.',
   },
   {
     id: 'fam1-s4-maint',
     question:
       'BS 5839-1:2025 43.2.1 specifies the period between successive servicing visits. What is the rule?',
     options: [
-      'Every 12 months exactly.',
-      'Successive inspection and servicing visits should be undertaken at intervals of approximately 6 months. Note 1 clarifies that any interval between 5 and 7 months after the previous service is acceptable — the 2017 wording (period should not exceed 6 months) is replaced with a more practical window. The date of acceptance is the datum for the period.',
-      'Every 24 months.',
-      'Whenever the responsible person decides.',
+      'Exactly every 12 months, fixed to the anniversary of acceptance.',
+      'Approximately every 6 months, with a 5-to-7-month window allowed.',
+      'Approximately every 24 months between successive servicing visits.',
+      'Whenever the responsible person decides a service is needed.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 43.2.1 changes the maintenance-interval rule. The 2017 edition deemed a system non-compliant if a service was more than 6 months after the previous one; the 2025 wording allows servicing within a 5-to-7-month window relative to the previous service. The change reflects custom and practice (servicing engineers commonly book a month either side of the strict 6-month line); "approximately 6 months" with a 5-to-7-month tolerance is the new wording.',
+      'BS 5839-1:2025 43.2.1 recommends successive servicing visits at intervals of approximately 6 months, with Note 1 clarifying that any interval between 5 and 7 months after the previous service is acceptable. This replaces the 2017 wording (period should not exceed 6 months) with a more practical window, taking the date of acceptance as the datum. The change reflects custom and practice — servicing engineers commonly book a month either side of the strict 6-month line.',
   },
 ];
 
@@ -82,26 +82,26 @@ const quizQuestions = [
     question:
       'In England and Wales, who has the legal duty to ensure a "suitable and sufficient" fire risk assessment is in place under the Regulatory Reform (Fire Safety) Order 2005?',
     options: [
-      'The fire-alarm contractor.',
-      "The responsible person — defined under the RRO 2005 as the employer (where the premises is a workplace), or any person with control of the premises in connection with their trade, business or other undertaking. The responsible person's duty is non-delegable; engaging a fire-alarm contractor or a third-party fire-risk assessor does not transfer the duty, only the technical input. The RRO 2005 places liability for failure on the responsible person, not on the contractor.",
-      'The fire and rescue service.',
-      'The insurer.',
+      'The fire-alarm contractor who designed and installed the system.',
+      'The fire and rescue service responsible for the local area.',
+      'The buildings insurer underwriting the premises and its contents.',
+      "The responsible person — the employer or person in control of the premises.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The duty rests with the responsible person (employer or person in control). The fire-alarm contractor and the fire-risk assessor are advisers; the responsible person is duty-holder. Misunderstanding this is one of the most common compliance gaps — building owners assume engaging a contractor discharges the duty, but it does not.',
+      'The duty rests with the responsible person — the employer where the premises is a workplace, or any person in control of the premises for their trade or undertaking. The duty is non-delegable: engaging a contractor or fire-risk assessor transfers the technical input, not the liability. Misunderstanding this is one of the most common compliance gaps — building owners assume engaging a contractor discharges the duty, but it does not.',
   },
   {
     id: 2,
     question:
       'Which of the following is the correct top-down decision flow for selecting a BS 5839-1:2025 system category in a non-domestic premises?',
     options: [
-      'Pick the category from BS 5839-1:2025 first, then write the FRA to support it.',
-      'FRA findings (RRO 2005 Article 9) → identify life-safety + property objectives → cross-check with Approved Document B (Building Regs) → cross-check with sector-specific guidance and insurer requirements → select BS 5839-1:2025 category that meets ALL the requirements (most demanding wins) → document selection rationale → produce design.',
-      'Insurer specifies the category; designer implements.',
-      'Use whatever is cheapest.',
+      'FRA findings → Approved Document B → sector and insurer requirements → BS 5839-1:2025 category (most demanding wins) → design.',
+      'BS 5839-1:2025 category first, then write the FRA afterwards to support it.',
+      'The insurer specifies the category and the designer simply implements it.',
+      'The cheapest category to install, then justify it against the FRA later.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The decision flow runs FRA → ADB → sector / insurer → BS 5839-1:2025 selection. The FRA is the master driver; the standard is the implementation tool. Designers who pick the category from the standard first and rationalise back into the FRA produce systems that meet the standard's minimum but not necessarily the responsible person's actual life-safety duty.",
   },
@@ -110,98 +110,98 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 21 (documentation/handover) introduces a new recommendation. What document is to be included with the handover pack?',
     options: [
-      'A list of detectors.',
-      'A cause-and-effect matrix (or text description of how the cause and effect operates). For a simple system this can be as short as "this system operates as a simultaneous evacuation"; for a complex system a full matrix is needed. The 2025 revision adds this because handover documentation often omitted any record of how the system was supposed to behave on activation, creating ambiguity for later modifications, maintenance and any post-incident investigation.',
-      'A signed copy of the FRA.',
-      'A photograph of the panel.',
+      'A simple itemised list of the detectors installed on the system.',
+      'A signed copy of the building\'s current fire risk assessment.',
+      'A cause-and-effect matrix or text description of how the system behaves.',
+      'A photograph of the control panel as fitted at handover.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The cause-and-effect description (or matrix) is the new 2025 handover deliverable. The standard does not dictate the format — text description is acceptable for simple systems; a formal matrix is needed for complex ones. The objective is that anyone consulting the documentation knows what the system is meant to do on each input.',
+      'The cause-and-effect description (or matrix) is the new 2025 handover deliverable. It can be as short as "operates as a simultaneous evacuation" for a simple system, or a full matrix for a complex one. The standard does not dictate the format — text is acceptable for simple systems, a formal matrix for complex ones. It was added because handover packs often omitted how the system should behave on activation; the objective is that anyone consulting the documentation knows what the system is meant to do on each input.',
   },
   {
     id: 4,
     question:
       'BS 5839-1:2025 25 changed the rule on which variations must be recorded in the system logbook. What is the new rule?',
     options: [
-      'Major variations only.',
-      'All variations — the 2017 edition only required "major variations" to be recorded (with no definition of major); the 2025 revision requires ALL variations to be documented in the system logbook, with rationale and any agreement with the responsible person, enforcing authority or insurer. The change makes the as-built and as-modified configuration visible to anyone consulting the logbook.',
-      'No variations need to be recorded.',
-      'Variations are recorded only on the design drawing.',
+      'ALL variations, each logged with rationale and any agreement reached.',
+      'Major variations only, as under the previous 2017 edition.',
+      'No variations need recording in the logbook under the 2025 revision.',
+      'Variations recorded on the design drawing only, not in the logbook.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The 2025 logbook recommendation closes a long-standing gap. With "major" undefined under the 2017 edition, variations were recorded inconsistently. Under 2025, every variation goes in the logbook, every time. The Annex H format (was Annex F) is updated to reflect the broader scope.',
+      'The 2025 revision requires every variation to be recorded in the logbook, with the rationale and any agreement with the responsible person, enforcing authority or insurer. This closes a long-standing gap: with "major" undefined under the 2017 edition, variations were recorded inconsistently. Now every variation goes in the logbook, every time, making the as-modified configuration visible. The Annex H format (was Annex F) is updated to reflect the broader scope.',
   },
   {
     id: 5,
     question:
       'BS 5839-1:2025 43.2.1 specifies the period between successive servicing visits. What is the figure?',
     options: [
-      'Approximately 12 months, with no tolerance.',
-      'Approximately 6 months — Note 1 clarifies that any interval between 5 and 7 months after the previous service is acceptable. The 2017 edition\'s strict "should not exceed six months" is replaced with a 5-to-7-month window that better reflects custom and practice. Note 2 specifies that the date of acceptance is the datum for the period.',
-      'Annually.',
-      'Quarterly.',
+      'Approximately 12 months, with no permitted tolerance either side.',
+      'Annually, fixed strictly to the anniversary of system acceptance.',
+      'Approximately 6 months, with a 5-to-7-month window allowed.',
+      'Quarterly, that is four servicing visits per year.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 2025 revision relaxes the 2017 strict 6-month rule into a 5-to-7-month window. Servicing organisations commonly book a month either side of the strict line; the 2025 wording acknowledges this practice. The annual (12-monthly) service visit retains the additional checks (functional testing of smoke detectors in ventilation ducts is now explicitly listed for the 12-monthly visit per 22).',
+      'BS 5839-1:2025 43.2.1 recommends approximately 6-monthly servicing, with Note 1 allowing any interval between 5 and 7 months after the previous service. This replaces the 2017 strict "should not exceed six months" with a 5-to-7-month window, taking the date of acceptance as the datum. Servicing organisations commonly book a month either side of the strict line. The annual (12-monthly) visit retains additional checks — functional testing of smoke detectors in ventilation ducts is now explicitly listed for the 12-monthly visit per 22.',
   },
   {
     id: 6,
     question:
       'BS 5839-1:2025 introduces a new clause on remote services and cyber security. What is the recommendation?',
     options: [
-      'Remote access is prohibited.',
-      'Remote services and cyber security recommendations include preventing unauthorised access to the system, access points and network pathways by physical means (e.g. locking the comms cabinet, fitting anti-tamper plugs to patch leads); a method of authentication of any request to accept a remote connection should be included in the CIE or gateway software before remote access is allowed; prior to performing remote service (read, control, write functions), a thorough risk assessment should evaluate potential impact on CIE operation; if remote service might compromise correct CIE functioning, the responsible individual must ensure the system is fully operational on completion.',
-      'Remote access is unconditionally permitted.',
-      'Remote access requires fire-and-rescue authorisation.',
+      'Remote access to the CIE is prohibited outright in all cases.',
+      'Remote access is unconditionally permitted once the system is installed.',
+      'Remote access requires fresh fire-and-rescue authorisation on each connection.',
+      'Control access physically and logically, authenticate and risk-assess each remote operation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 2025 revision adds clause 43.4 on remote services and cyber security. With increasing IP-connected fire panels, the standard now expects access controls (physical and logical), authentication of remote-access requests, and risk-assessment of remote operations. The CIE and the network around it are now treated as security-relevant infrastructure.',
+      'The 2025 revision adds clause 43.4 on remote services and cyber security. With increasing IP-connected fire panels, the standard expects unauthorised access to be prevented by physical means (locked comms cabinet, anti-tamper plugs), each remote-connection request authenticated in the CIE/gateway software, remote read/control/write operations risk-assessed beforehand, and the system confirmed fully operational on completion. The CIE and surrounding network are now treated as security-relevant infrastructure.',
   },
   {
     id: 7,
     question:
       'BS 5839-1:2025 24 (extensions and modifications) clarifies that one specific maintenance action is now classed as a modification requiring a certificate. What is it?',
     options: [
-      'Replacing a battery.',
-      'Updating the firmware of the CIE — the 2025 revision now classes a firmware update as a modification, requiring an extension or modification certificate to be produced. This is a new explicit recognition that firmware changes can affect system behaviour and must be documented like a hardware modification. Replacing detectors with the same product code is not a modification; replacing a detector with a different product is.',
-      'Cleaning a sounder.',
-      'Resetting the panel.',
+      'Updating the firmware of the control panel (CIE).',
+      'Replacing a standby battery on a like-for-like basis.',
+      'Cleaning a sounder during a routine service visit.',
+      'Resetting the panel after a functional test of the system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Firmware updates can change cause-and-effect behaviour, change alarm-transmission timing, change false-alarm filtering, change diagnostic output. The 2025 revision treats firmware changes as modifications because they modify how the system behaves, even if no hardware changes. The extension or modification certificate documents the change and is added to the logbook.',
+      'The 2025 revision classes a CIE firmware update as a modification needing an extension/modification certificate, because firmware can change cause-and-effect behaviour, alarm-transmission timing, false-alarm filtering and diagnostic output — even if no hardware changes. Replacing a detector with the same product code is not a modification, but a different product is. The certificate documents the change and is added to the logbook.',
   },
   {
     id: 8,
     question:
       'A 2026-design L2 hotel system has been installed. The hotel manager (the responsible person) wants to record an agreed variation: heat detectors were installed in two specific bedrooms because installing smoke detectors caused chronic false alarms (the bedrooms have steam-shower en-suites). The contractor proposes documenting the variation. Is this acceptable under BS 5839-1:2025?',
     options: [
-      'Yes — heat detectors are always permitted in bedrooms.',
-      'No, because heat detectors are now NOT permitted in sleeping rooms within new L2 designs (BS 5839-1:2025). The 2025 revision is firm — "no longer permitted", not "not preferred". Documenting this as a variation is not adequate; the prohibition cannot be agreed away. The correct response is engineering to solve the false-alarm problem (multi-sensor detection with steam-tolerant configuration, alternative siting away from the en-suite door, ventilation improvements). If multi-sensor cannot be made to work, the design must escalate to fire-engineering review — but heat detectors in sleeping rooms is no longer in the variations envelope.',
-      'Yes — variations can cover anything.',
-      "Only with the insurer's consent.",
+      'Yes — heat detectors are always permitted in hotel bedrooms.',
+      'Yes — once documented, a variation can cover any departure from the standard.',
+      'No — the heat-detector prohibition in sleeping rooms cannot be varied away.',
+      "Yes, but only with the property insurer's written consent on file.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 2025 prohibition of heat detectors in sleeping rooms within new L2 / L3 designs is one of the cases where the variation envelope is closed. Installer-led work-arounds for false-alarm problems must use multi-sensor or alternative engineering, not revert to a prohibited detector type. Designers and contractors must understand which 2025 changes admit variations and which do not.',
+      'Heat detectors are now NOT permitted in sleeping rooms within new L2 designs under BS 5839-1:2025, and this is one of the cases where the variation envelope is closed — the prohibition cannot be agreed away. The false-alarm problem must be solved with steam-tolerant multi-sensor detection or alternative siting, escalating to fire-engineering review if needed. Designers and contractors must understand which 2025 changes admit variations and which do not.',
   },
   {
     id: 9,
     question:
       'A property owner has signed a lease that obliges them to maintain the fire alarm "to BS 5839-1". A modification is proposed that involves removing two detectors from a void area judged to be of minimal risk. What is the correct treatment?',
     options: [
-      'The contractor can remove the detectors and update the drawing.',
-      'Treat as a modification. Document the proposal as a variation; obtain agreement from the responsible person (and the enforcing authority and the insurer where relevant); under the 2025 rules, record ALL variations in the system logbook (not just "major" variations as under 2017); produce an extension or modification certificate per 24; update the cause-and-effect description; verify the variation does not fall within the BS 5839-1:2025 6 list of NOT-acceptable variations (zone plan absence, ARC transmission absence in supported housing / care homes); confirm the responsible person\'s FRA still supports the modified design.',
-      'Remove the detectors silently.',
-      'Wait until the next major refurbishment.',
+      'Treat it as a formal modification — document, agree, log, certify and review the FRA.',
+      'Let the contractor remove the detectors and update the as-built drawing.',
+      'Remove the detectors quietly and make no record of the change.',
+      'Defer the change until the next major refurbishment of the building.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "Modifications are formal events under BS 5839-1:2025 24. The modification must be documented as a variation, agreed with the responsible person, recorded in the logbook (all variations now), and accompanied by an extension or modification certificate. Where the modification removes protection, the FRA must be reviewed. The contractor is not authorised to make unilateral coverage reductions — that is the responsible person's decision, supported by the FRA.",
+      'Modifications are formal events under BS 5839-1:2025 24. The change must be documented as a variation, agreed with the responsible person (and enforcing authority / insurer where relevant), recorded in the logbook (all variations now), and accompanied by an extension or modification certificate per 24, with the cause-and-effect updated and a check that it is not a prohibited variation. Where the modification removes protection, the FRA must be reviewed. The contractor is not authorised to make unilateral coverage reductions — that is the responsible person\'s decision, supported by the FRA.',
   },
   {
     id: 10,

@@ -47,9 +47,9 @@ const quickCheckQuestions = [
     question:
       'In a balanced three-phase system with non-linear loads, which harmonics add together in the neutral conductor?',
     options: [
-      'To ensure insulation against electric shock',
-      'Location-based automation triggers',
-      'Public Interest Disclosure Act 1998',
+      'Even harmonics (2nd, 4th, 6th)',
+      'Positive-sequence harmonics (7th, 13th)',
+      'Negative-sequence harmonics (5th, 11th)',
       'Triplen harmonics (3rd, 9th, 15th)',
     ],
     correctIndex: 3,
@@ -73,9 +73,9 @@ const quickCheckQuestions = [
     id: 'k-rated-transformer',
     question: 'What is the primary purpose of a K-rated transformer?',
     options: [
-      'They only operate with the correct key',
-      'The ratio of true power to apparent power',
-      'Habits reduce reliance on willpower by making behaviour automatic',
+      'Step the voltage up for long-distance transmission',
+      'Correct the power factor of non-linear loads',
+      'Filter out triplen harmonics before the neutral',
       'Withstand additional heating from harmonic currents',
     ],
     correctIndex: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'What is Total Harmonic Distortion (THD)?',
     options: [
       'The RMS value of all harmonics expressed as a percentage of the fundamental',
-      'Be connected through an RCD and comply with the relevant product standard',
-      'Use non-damaging, removable marking methods and seek conservation advice',
-      'To enable HSE and local authorities to identify workplace risks and investigate serious accidents',
+      'The peak value of the highest single harmonic present',
+      'The phase shift between the fundamental and the 3rd harmonic',
+      'The ratio of neutral current to total phase current',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What effect do harmonics have on energy meter accuracy?',
     options: [
-      'Diagrams, schedules, and manufacturer documentation',
-      'They use analog signals without digital feedback capability',
+      'They have no effect on any type of energy meter',
+      'They always cause meters to over-read consumption',
       'Older meters may under-read actual energy consumption',
-      'The reason and limitation in the report',
+      'They reduce the metered voltage but not the current',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,16 +176,16 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 Regulation 523.6.3 addresses neutral current in harmonic-rich circuits. Where third harmonic current exceeds 15% of the fundamental, the neutral conductor may need to be larger than the phase conductors.',
+      'BS 7671 Regulation 523.6.1 addresses neutral current in harmonic-rich circuits. Where third harmonic distortion exceeds 15% of the fundamental, the neutral conductor is treated as a loaded conductor and shall be at least equal to the line conductors.',
   },
   {
     id: 8,
     question: 'What is the primary advantage of using a 12-pulse VSD over a 6-pulse VSD?',
     options: [
       'Elimination of 5th and 7th harmonics',
-      'To keep runs straight and symmetrical',
-      'Some faults only appear under load conditions',
-      'Manual handling injuries from cable drums',
+      'Removal of all triplen harmonics from the neutral',
+      'A lower output voltage to the connected motor',
+      'A reduced number of input rectifier diodes',
     ],
     correctAnswer: 0,
     explanation:

@@ -39,10 +39,10 @@ const checks = [
     id: 'mod7-s5-sub5-cra',
     question: 'Under the Consumer Rights Act 2015, what is the standard required for services?',
     options: [
-      "Section 4 — First aid measures. Subsections cover inhalation, skin contact, eye contact and ingestion, with the specific response for each. For corrosive substances (e.g. brick acid) this typically reads 'irrigate with copious running water for at least 15 minutes, remove contaminated clothing, seek medical advice if persistent'.",
-      "Accessible WC cubicle with: door switch reachable from wheelchair, light switch within reach, mirror at appropriate height, occupancy indicator, emergency pull-cord (red, reaching the floor, with a visible-from-corridor strobe and audible alarm at reception), and slow-acting timer on lights to avoid trapping users in darkness.",
+      "Performed to the absolute highest standard achievable in the industry, regardless of the agreed price — the Act requires perfection, and any defect however minor entitles the consumer to a full refund.",
+      "Performed strictly to the written contract only — if a fault is not specifically listed in the contract, the consumer has no remedy under the Act, so a detailed written scope removes all liability.",
       "Performed with reasonable care and skill (s.49); within a reasonable time if no time is agreed (s.52); for a reasonable price if no price is agreed (s.51); statements made by the trader about the service that the consumer relied on become binding contract terms (s.50).",
-      "The Health and Safety Executive (HSE). Construction sites are higher-risk premises under the Health and Safety (Enforcing Authority) Regulations 1998, so HSE inspectors take the lead. They enforce HASAWA, EAWR, CDM 2015, MHSWR, COSHH, RIDDOR and the rest of the workplace H&S regime on site.",
+      "Performed only by an electrician personally named on the contract — the Act prohibits the work being delegated to an employee or apprentice, and any substitution voids the consumer's rights.",
     ],
     correctIndex: 2,
     explanation:
@@ -52,10 +52,10 @@ const checks = [
     id: 'mod7-s5-sub5-cooling-off',
     question: "What is the 'cooling-off' period for contracts signed in a consumer's home?",
     options: [
-      "Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system",
+      "7 calendar days from the day the work is completed — under the Consumer Rights Act 2015, the consumer has a week after the job finishes to cancel and reclaim payment for any reason.",
       "14 calendar days from the day after the contract is concluded — under the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 for contracts concluded away from business premises (in the consumer's home, by phone, online).",
-      "BS 7671 defines the technical standards against which electrical systems are designed, installed, tested and maintained — a maintenance technician must understand these standards to maintain systems safely",
-      "The full per-DB chart requirement is relaxed for domestic premises — but Reg 132.13 design documentation still applies, and a circuit list (numbered circuits with description and protective device) is still expected on or near the CU. Read the amended A4:2026 text for the precise wording and scope.",
+      "28 calendar days from the date of the quotation — the consumer has a month to cancel a quote signed in their home, after which the contract becomes binding.",
+      "There is no cooling-off period for contracts signed in the home — because the consumer invited the trader in, they are bound from the moment they accept the quote and can only cancel with the trader's agreement.",
     ],
     correctIndex: 1,
     explanation:
@@ -65,9 +65,9 @@ const checks = [
     id: 'mod7-s5-sub5-gdpr',
     question: 'What does UK GDPR / DPA 2018 require for customer personal data?',
     options: [
-      "FI — further investigation needed. The reading is over the permitted maximum but you have one method only and a single reading. Confirm with R1+R2 plus Ze, retest with a fresh battery and lead-resistance check, and if the high reading is confirmed then reclassify as C2 (or C1 if dangerous combination present).",
-      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three must be satisfied. The bar is deliberately high — the HSE prosecutes Reg 14 breaches harshly because the consequences are usually fatal.",
-      "Control of Asbestos Regulations 2012 — the principal UK asbestos regulation. Covers duty to manage (Reg 4), exposure assessment (Reg 6), prevention or reduction (Reg 7), licensed work (Reg 8), training (Reg 10), respiratory PPE, hygiene, monitoring, surveillance.",
+      "Encrypt all customer records and store them on a server physically located within the UK — UK GDPR makes on-shore encrypted storage the single mandatory requirement, and nothing else is needed once that is in place.",
+      "Obtain written, signed consent from every customer before holding any of their details — consent is the only lawful basis available to a small trader, so a job cannot proceed until the consent form is signed.",
+      "Delete all customer data immediately on completion of each job — UK GDPR prohibits keeping any personal data once the work is finished, so records must be wiped the moment the invoice is paid.",
       "Process it lawfully, fairly and transparently; collect only what's needed for the specified purpose; keep it accurate; retain only as long as needed; keep it secure; provide a privacy notice; respond to data-subject rights requests; report serious breaches to ICO within 72 hours.",
     ],
     correctIndex: 3,
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which legislation protects consumers when buying services from tradespeople?',
     options: [
-      "It means preventing waste from being produced in the first place; it is the top priority because it avoids the environmental impacts of resource extraction, manufacturing, transport, and disposal entirely",
+      "The Health and Safety at Work etc. Act 1974 — it places the duty on tradespeople to protect their customers, and a customer unhappy with the work claims under this Act.",
       "The Consumer Rights Act 2015 — implies statutory terms into consumer service contracts (reasonable care and skill, reasonable time, reasonable price). Replaced the Supply of Goods and Services Act 1982 for consumer contracts.",
-      "The remaining stored energy expressed as a percentage of the total usable capacity — monitored by the BMS using a combination of voltage measurement, current integration (coulomb counting), and temperature compensation algorithms",
-      "Up the chain in writing — contracts manager, technical manager, Qualified Supervisor, director, then external (HSE) only if internal demonstrably fails (PIDA 1998). Document each step. ERA 1996 s.44 protects you from detriment.",
+      "The Electricity at Work Regulations 1989 — it governs the standard of all electrical work and gives the customer the right to a refund if the installation is not to BS 7671.",
+      "Part P of the Building Regulations — it is the consumer-protection statute for trade work and entitles a homeowner to compensation if notifiable work is not certified.",
     ],
     correctAnswer: 1,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'limitation period' mean for contractual claims?",
     options: [
-      "Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality",
-      "It is the quality assurance scheme for PV installations in the UK — only MCS-certified installers can register installations for Smart Export Guarantee (SEG) payments and access certain warranty provisions",
+      "The period during which a customer must pay an invoice before late-payment interest can be charged — typically 30 days for commercial work under the Late Payment Act 1998.",
+      "The maximum length of time a quotation remains valid before the price must be re-confirmed — usually stated as 30 days on the quotation itself.",
       "The time limit set by the Limitation Act 1980 for bringing legal action — 6 years from breach for simple contracts; 12 years for contracts under deed; 3 years for personal injury claims from the date of injury or knowledge.",
-      "The client / building owner / occupier in whose name the EIC is issued — they take on the duty to maintain the installation in safe condition once the certificate is signed and handed over.",
+      "The length of time an electrician must keep a customer's personal data before deleting it under UK GDPR — generally six years for tax purposes.",
     ],
     correctAnswer: 2,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'What should happen if a customer claims your work is defective?',
     options: [
-      "Every point on every circuit. Conductors can be crossed at intermediate junctions, back-boxes, junction boxes — verifying only at the CU and the first accessory misses errors deeper in the circuit. Test at every accessory, every JB, every termination point.",
-      "Without delay — telephone notification expected before the F2508 follows. F2508 within 10 days. The 'specified injury' list (Schedule 1) includes fractures (excl fingers/thumbs/toes), amputations, sight loss, crush injuries, serious burns, scalpings, head-injury unconsciousness, enclosed-space injuries.",
-      "Single AC test at 1 times IΔn — must operate within 300 ms (or 200 ms for circuits subject to Reg 415.1.1 and certain Part 7 location limits). The half-current 'no-trip' test and 5x 'fast trip' test were deleted as redundant under modern RCD design.",
+      "Refer the customer straight to your insurer and take no further part — once a defect is alleged it becomes an insurance matter, and engaging with the customer yourself only weakens your position.",
+      "Refuse to return unless the customer pays a fresh call-out charge — your contractual obligation ended when the job was signed off, so any further visit is chargeable new work.",
+      "Wait for the customer to take you to court before responding — there is no obligation to act on a complaint until a formal legal claim is served, and reacting early only invites more complaints.",
       "Investigate the complaint fairly. Under CRA 2015 s.49 (reasonable care and skill), if the work is defective the consumer is entitled to remedies — re-performance, or price reduction / partial refund if re-performance isn't possible or proportionate. Address the issue promptly; don't make it adversarial unless the claim is obviously baseless.",
     ],
     correctAnswer: 3,
@@ -121,9 +121,9 @@ const quizQuestions = [
     question: 'What is a retention of title clause?',
     options: [
       "A contractual provision that materials you supply remain your property until you have been paid in full. Protects you if a customer doesn't pay — you have legal grounds to reclaim unpaid materials, subject to the practicalities (the goods being identifiable and recoverable).",
-      "Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.",
-      "Sleep deprivation impairs prefrontal cortex function, reducing the brain's ability to regulate emotional responses from the amygdala, leading to increased emotional reactivity and poorer self-control",
-      "Personal prosecution of the named individual director/manager/officer alongside (not instead of) the company. Same conviction, same fines, and on indictment up to two years' custody. s.37 is the legal mechanism for piercing the corporate veil in H&S prosecutions.",
+      "A clause that transfers ownership of the completed installation to the customer the moment work starts, so the customer is liable for any damage to the work before it is finished.",
+      "A clause stating that the title deeds of the property must be checked before any work begins, to confirm the customer actually owns the building they are asking you to wire.",
+      "A clause that retains the contractor's right to be credited as the installer on any future certificate or sale particulars for the property, protecting their professional reputation.",
     ],
     correctAnswer: 0,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does the Construction (Design and Management) Regulations 2015 (CDM) apply to?',
     options: [
-      "Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity (design, specification, recommendation). PL covers physical damage / injury from the contractor's activities; PI covers economic loss caused by bad advice or design. Increasingly relevant as installers move into design-and-build, EV charging design, solar PV design and prosumer's installations under BS 7671 Part 8.",
+      "Only large commercial construction projects with more than 20 workers — small domestic jobs and single-contractor work are entirely outside the scope of CDM 2015.",
       "All construction work in Great Britain, with proportionate duties based on project type and size. Notifiable projects (more than 30 working days with 20+ workers simultaneously, or exceeding 500 person-days) trigger additional duties including HSE notification (F10) and the appointment of Principal Designer and Principal Contractor for multi-contractor projects.",
-      "Capability to handle the 10/350 microsecond impulse waveform — partial direct-lightning current. Required at the installation origin where the building has an external lightning protection system (LPS) per BS EN 62305-3 or where direct-strike risk to the supply exists. Higher Iimp rating, higher Up than Type 2 / 3.",
-      "Re-evaluation. Heat pumps run for longer (longer plateau, less peaky), EV chargers concentrate demand in specific hours (often peak time without smart control), batteries can shift demand. The combined effect is to flatten and broaden peaks but raise sustained demand. Traditional dwelling diversity may understate.",
+      "Only new-build construction — refurbishment, maintenance, alteration and repair work fall under separate regulations and are not covered by CDM 2015.",
+      "Only the design stage of a project — CDM 2015 governs how a building is designed but places no duties on the contractors who actually carry out the construction work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: "When must you register with the Information Commissioner's Office (ICO)?",
     options: [
-      "Wide range: textured ceilings (artex), insulation board (AIB), cement products (roofing, soffits, downpipes), pipe and boiler lagging, sprayed coatings, floor tiles and adhesive, gaskets and seals, electrical components (rare in UK but some old fuse boards), bath panels, window putty, wall claddings.",
-      "Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.",
+      "Only once your turnover crosses the VAT threshold — ICO registration is tied to VAT registration, so a sole trader below the threshold has no data-protection obligations.",
+      "Only if you employ ten or more staff — ICO registration applies to medium and large organisations, and a sole trader or small firm is exempt regardless of the data they hold.",
       "If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.",
-      "The electrical contractor's Foreman or Charge-hand at the morning brief — they translate the day's programme into specific tasks for each pair of hands. The Approved Electrician you're paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.",
+      "Only if you store customer data on a computer — paper records of names and addresses are outside the scope, so a firm working entirely on paper job sheets need not register.",
     ],
     correctAnswer: 2,
     explanation:
@@ -159,9 +159,9 @@ const quizQuestions = [
     id: 7,
     question: "What is 'vicarious liability'?",
     options: [
-      "The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced",
-      "Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services",
-      "Cable cutters (or T+E shears) to crop the tail square; a stripper sized for 6/10 mm² to remove the green/yellow PVC; long-nose pliers to form the conductor into the clamp aperture OR a ratchet crimper to fit a bootlace ferrule (red for 10 mm², blue for 6 mm²) before insertion. Squared cut + clean strip + correct termination = 526.1 compliant.",
+      "An employee's personal legal liability for their own mistakes, which the employer cannot be drawn into — the worker alone answers for any harm they cause at work.",
+      "The liability a customer takes on for the safety of a contractor working in their home, making the homeowner responsible for any injury the electrician suffers on the job.",
+      "The shared liability between two trades working on the same site, where each is responsible for half of any damage caused regardless of who actually caused it.",
       "An employer's legal liability for wrongful acts committed by employees in the course of their employment. Distinct from personal liability of the employee. This is why Employers' Liability insurance is compulsory and why proper training, supervision and safe systems of work matter.",
     ],
     correctAnswer: 3,
@@ -173,9 +173,9 @@ const quizQuestions = [
     question: 'Under what circumstances can / should you refuse to do work a customer requests?',
     options: [
       "When the work would breach regulations (BS 7671, Building Regulations Part P, planning permission); be unsafe (EWR Reg 16 competence; HASAWA general duty); or be illegal (Bribery Act, tax evasion, etc.). You can and must decline regardless of customer pressure or commercial incentive.",
-      "Section 4 — First aid measures. Subsections cover inhalation, skin contact, eye contact and ingestion, with the specific response for each. For corrosive substances (e.g. brick acid) this typically reads 'irrigate with copious running water for at least 15 minutes, remove contaminated clothing, seek medical advice if persistent'.",
-      "The star-delta timer relay (KT1), the delta contactor (KM3) coil and contacts, the star contactor (KM2) auxiliary contacts that enable the delta contactor, interlocking contacts between KM2 and KM3, and the control circuit wiring between these components",
-      "It introduced the right for the payee's own payment application to become the default payment notice if the payer fails to issue one, strengthened adjudication provisions, and removed the requirement for construction contracts to be in writing",
+      "Only when the customer refuses to pay a deposit up front — payment terms are the sole legitimate reason to turn down a job, and any work must otherwise be carried out as requested.",
+      "Only when you are too busy to fit the job into your schedule — you must accept any work you have the capacity for, however it is to be carried out, because refusing compliant-looking work risks a discrimination claim.",
+      "Never — a contractor must carry out whatever the paying customer asks, since the customer's wishes take priority and refusing work could be treated as breach of contract.",
     ],
     correctAnswer: 0,
     explanation:

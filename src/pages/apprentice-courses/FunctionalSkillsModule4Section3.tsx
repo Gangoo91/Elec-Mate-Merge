@@ -82,10 +82,10 @@ const FunctionalSkillsModule4Section3 = () => {
       question:
         'You quote £4,500 fixed price for a rewire. During the job you discover the consumer unit needs upgrading, adding £450 in materials and 4 hours labour at £40/hr. What should you do?',
       options: [
-        'False - retesting is essential to verify safety and compliance',
+        'Absorb the extra cost yourself to keep the customer happy',
         'Issue a written variation order and get it signed before proceeding',
-        'The substance is a serious health hazard such as a carcinogen or respiratory sensitiser',
-        'Using apps, software, and digital tools for efficiency',
+        'Carry out the work and add the cost to the final invoice without notice',
+        'Stop the job until the customer agrees to a brand-new quote',
       ],
       correctAnswer: 1,
       explanation:
@@ -96,10 +96,10 @@ const FunctionalSkillsModule4Section3 = () => {
       question:
         'You are quoting for 12 twin sockets, 6 LED downlights, and a consumer unit upgrade. How would you structure the material takeoff?',
       options: [
-        'At each end of every wire or conductor, close to the termination point',
-        'Ultra-low energy demand through exceptional fabric and airtightness',
+        'Quote a single lump sum to keep the figure simple for the client',
+        'Estimate a rough total based on a similar past job',
         'List each item, quantity, unit cost, and total cost in a spreadsheet',
-        'Suspension or permanent removal from approved schemes',
+        'Order everything first, then add up the receipts afterwards',
       ],
       correctAnswer: 2,
       explanation:

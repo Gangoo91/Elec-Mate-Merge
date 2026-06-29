@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m6s3-check1',
     question: 'What test voltage is used for insulation resistance testing on circuits up to 500V?',
-    options: ['250V DC', '500V DC', '1000V DC', '1500V DC'],
-    correctIndex: 1,
+    options: ['500V DC', '250V DC', '1000V DC', '1500V DC'],
+    correctIndex: 0,
     explanation:
       'For circuits up to 500V, a 500V DC test voltage is used. The minimum acceptable insulation resistance is 1MΩ for new installations.',
   },
@@ -26,8 +26,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m6s3-check3',
     question: 'What is the minimum test current for continuity testing of protective conductors?',
-    options: ['50mA', '100mA', '200mA', '500mA'],
-    correctIndex: 2,
+    options: ['50mA', '200mA', '100mA', '500mA'],
+    correctIndex: 1,
     explanation:
       'A minimum 200mA test current is required for continuity testing to ensure accurate resistance measurements and detect high-resistance connections.',
   },
@@ -62,12 +62,12 @@ const quizQuestions = [
     question:
       'An EV charging circuit has measured Zs of 1.2Ω with a 32A Type B MCB. What is the correct assessment?',
     options: [
-      'Fail - Zs exceeds maximum permitted value',
-      'Pass - Zs is within maximum permitted value',
-      'Cannot determine - need more information',
-      'Marginal - recommend cable upgrade',
+      'Fail - Zs exceeds the maximum permitted value',
+      'Cannot determine - more information is needed',
+      'Marginal - recommend a cable upgrade before energising',
+      'Pass - Zs is within the maximum permitted value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The maximum Zs for a 32A Type B MCB is 1.44Ω. The measured value of 1.2Ω is within this limit, so the circuit passes. However, applying the 0.8 multiplier for conductor temperature (1.2 ÷ 0.8 = 1.5Ω) may exceed the limit at elevated temperatures.',
   },

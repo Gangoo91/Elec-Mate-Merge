@@ -18,14 +18,14 @@ export const bmsModule2Section1QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Give one example of a digital input.',
     options: [
-      'Push button stop with no lockoff',
-      'Intrinsically safe without barriers',
+      'A temperature sensor reading 0-50°C',
+      'A humidity transmitter reading 0-100% RH',
       'Door contact sensor showing open/closed',
-      '25-35 litres per second per kW',
+      'A CO₂ sensor reading in parts per million',
     ],
     correctAnswer: 2,
     explanation:
-      'Door contact sensors are digital inputs as they provide binary states - either open or closed. Temperature and humidity sensors provide variable (analog) readings.',
+      'Door contact sensors are digital inputs as they provide binary states - either open or closed. Temperature, humidity and CO₂ sensors provide variable (analog) readings.',
   },
   {
     id: 3,
@@ -123,10 +123,10 @@ export const bmsModule2Section1QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, what mistake caused the HVAC system to misread the temperature?',
     options: [
-      'Cooling fans, microwave ovens, small clocks (low torque, low cost)',
-      'Formal change notifications, updated drawings, impact assessments, and approval records',
+      'The temperature sensor was supplied with the wrong excitation voltage',
+      'The temperature setpoint was entered in Fahrenheit instead of Celsius',
       'Wiring the temperature sensor into a digital input instead of analog input',
-      'When there are significant changes, after incidents, or if it\\\\\\\\\\\\\\\'s no longer valid',
+      'The temperature sensor cable was run alongside a mains power cable',
     ],
     correctAnswer: 2,
     explanation:

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician quotes a consumer unit change at 4 hours but does not add buffer time. The job encounters an unexpected asbestos flash plate behind the old board. What scheduling principle was violated?',
     options: [
-      'The Pareto Principle — they should have focused on the 20% that matters most',
-      'The 20% buffer rule — always add at least 20% to estimated job duration to account for unforeseen complications',
-      'The Eisenhower Matrix — they should have classified the job as urgent-important',
+      'The Pareto Principle — focus only on the 20% that matters most',
+      'The Eisenhower Matrix — the job should be classed urgent-important',
       "Parkinson's Law — the job expanded to fill the available time",
+      'The 20% buffer rule — add 20% to every estimate for the unforeseen',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The 20% buffer rule states that you should always add at least 20% to your estimated job duration to account for unforeseen complications. A 4-hour CU change should be scheduled as a 5-hour block (4 hours + 48 minutes buffer, rounded up). The asbestos flash plate is exactly the kind of complication that is unpredictable on any individual job but statistically inevitable across all jobs. Without buffer time, every unexpected issue causes a cascade: the current job overruns, the next job starts late, the client is kept waiting, and the day ends with stress and incomplete work.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A sole-trader electrician says: "I don\'t need to block out admin time — I just do paperwork whenever I get a spare moment." According to scheduling best practice, why is this approach problematic?',
     options: [
-      'Admin work is not important enough to schedule',
-      'Spare moments rarely materialise, and when they do, the electrician is usually too tired for focused admin work — treating admin as a real appointment ensures it actually gets done',
-      'Paperwork should only be done at weekends',
-      'Admin time should be delegated to a bookkeeper',
+      'Spare moments rarely materialise, and when they do you are too tired',
+      'Admin work simply is not important enough to warrant scheduling',
+      'Paperwork should only ever be done at weekends, never on weekdays',
+      'All admin time should be delegated to a bookkeeper or accountant',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Stephen Covey\'s principle of "scheduling your priorities rather than prioritising your schedule" applies directly here. Admin — invoicing, certificates, quoting, bookkeeping — is essential business work. When it is left to "spare moments," two things happen: spare moments are rarer than expected (see Parkinson\'s Law), and when they do occur, the electrician is often physically tired from on-site work and mentally drained, leading to poor-quality admin or deferral. Blocking a specific recurring slot (e.g., Monday 7-8am or Friday 2-4pm) treats admin as a genuine commitment that gets done consistently.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrician plans their week on a Sunday evening and discovers they have 5 confirmed domestic jobs, 2 hours of admin, and an evening training session across the 5-day week. What should they do first?',
     options: [
-      'Cancel the training session to make room for more jobs',
-      'Map all fixed commitments (jobs with specific times, training session) onto the calendar first, then fit flexible items (admin, material collection) into the remaining gaps',
-      'Work Saturday to fit everything in',
-      'Reduce admin time to 30 minutes',
+      'Cancel the training session to make room for more paying jobs',
+      'Work the Saturday as well to fit absolutely everything in',
+      'Map fixed commitments first, then fit flexible items into the gaps',
+      'Reduce the admin block down to 30 minutes to free up time',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Covey\'s "Big Rocks" principle applies: place your fixed, non-negotiable commitments onto the calendar first, then fit smaller, flexible items around them. The training session has a fixed time. Confirmed jobs with agreed start times are fixed. Admin, material collection, and travel planning are flexible — they can go into any available gap. Starting with flexible items and trying to squeeze fixed items in afterwards leads to double-booking and missed commitments.',
   },
@@ -87,9 +87,9 @@ const quizQuestions = [
     id: 1,
     question: 'Stephen Covey\'s principle "organise weekly, adapt daily" suggests that:',
     options: [
-      'You should rewrite your entire plan every day',
-      'Weekly planning provides the strategic framework, while daily adjustments handle the tactical reality of changing circumstances',
-      'Daily planning is unnecessary if you have a weekly plan',
+      'You should rewrite your entire plan from scratch every single day',
+      'The weekly plan sets the framework; daily tweaks handle reality',
+      'Daily planning becomes unnecessary once you have a weekly plan',
       'Weekly planning is too infrequent — daily planning is always better',
     ],
     correctAnswer: 1,
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'The 20% buffer rule means:',
     options: [
-      'You should leave 20% of your week completely unscheduled',
-      'You should add 20% to every estimated job duration to account for unforeseen complications',
-      'You should charge 20% more than your competitors',
-      'You should allocate 20% of your time to learning and development',
+      'Add 20% to every estimated job duration for the unforeseen',
+      'Leave 20% of every working week completely unscheduled',
+      'Charge clients 20% more than your nearest competitors do',
+      'Allocate 20% of your time to learning and development',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 20% buffer rule is a scheduling discipline: if you estimate a job will take 4 hours, schedule 4 hours 48 minutes (or round to 5 hours). This buffer absorbs the complications that are individually unpredictable but statistically inevitable: unexpected wiring routes, difficult access, additional faults discovered during work, client conversations, and material issues. Without buffer, every complication causes the schedule to cascade, creating stress and late arrivals at subsequent jobs.',
   },
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 3,
     question: 'Blocking admin time means:',
     options: [
-      'Doing admin only when you feel like it',
-      'Delegating all admin to someone else',
-      'Scheduling specific, recurring time slots for administrative work and treating them as real, non-negotiable appointments',
-      'Completing admin at weekends only',
+      'Doing admin only when you happen to feel like it that day',
+      'Delegating every admin task to someone else in the business',
+      'Scheduling recurring slots and treating them as real appointments',
+      'Completing all admin at the weekend only, never on weekdays',
     ],
     correctAnswer: 2,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'A sole-trader electrician has 5 confirmed jobs for the week but no travel time or admin time scheduled. This schedule is:',
     options: [
-      'Efficient — every hour is billable',
-      'Unrealistic — it ignores essential non-billable activities that are necessary for the business to function',
-      'Ideal — admin and travel should not be scheduled, they just happen',
+      'Efficient — every single hour of the week is billable work',
+      'Ideal — admin and travel should never be scheduled, they just happen',
       'Only problematic if the jobs are far apart geographically',
+      'Unrealistic — it ignores essential non-billable business activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A schedule with no travel time, no admin blocks, no buffer time, and no material collection time is a fantasy, not a plan. Travel between jobs, invoicing, certificate writing, quoting, material ordering, van restocking, and communication with clients are all essential business activities. Ignoring them does not make them disappear — it means they either get done at evenings and weekends (creating burnout) or they do not get done at all (creating cash flow problems, legal risk from missing certificates, and lost clients from unresponded quotes).',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'Which of the following is the best use of a Monday morning admin block (7:00-8:00am)?',
     options: [
-      'Scrolling trade forums and social media',
-      "Reviewing the weekly plan, sending overdue invoices, confirming Monday and Tuesday job details with clients, and ordering materials for Wednesday's jobs",
-      'Doing a full van clean and restock',
-      'Calling potential new clients for sales prospecting',
+      'Scrolling trade forums and social media to ease into the week',
+      'Reviewing the plan, sending overdue invoices, confirming jobs, ordering materials',
+      'Doing a full van clean and complete restock of consumables',
+      'Calling potential new clients for cold sales prospecting',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'Visual scheduling tools (diary, whiteboard, app) are effective because:',
     options: [
+      'They make commitments concrete and visible, cutting cognitive load',
       'They look professional when clients visit your home office',
-      'They make abstract commitments concrete and visible, reducing the cognitive load of holding the schedule in your head',
-      'They are required by law for self-employed electricians',
-      'They replace the need for a weekly planning session',
+      'They are required by law for all self-employed electricians',
+      'They remove any need for a separate weekly planning session',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Visual scheduling externalises the weekly plan, making it concrete and visible rather than abstract and mental. A whiteboard showing the week at a glance, a diary open on the desk, or a calendar app on the phone screen — all serve the same purpose: you can see your commitments without having to recall them. This reduces cognitive load (consistent with the GTD principle of external capture) and makes gaps, conflicts, and opportunities immediately apparent.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'The recommended maximum number of substantive domestic jobs per day for a sole trader is:',
     options: [
       '1 job per day — anything more is overwork',
-      '2 substantive jobs per day, with travel, buffer, and admin time factored in',
       '4 jobs per day — tradespeople should maximise billable hours',
+      '2 substantive jobs per day, with travel, buffer, and admin time factored in',
       '3 jobs per day minimum to cover business costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Two substantive domestic jobs per day is a realistic maximum when travel time (30-60 minutes between jobs), buffer time (20% per job), client conversations, setup and cleanup, and end-of-day admin are factored in. A "substantive" job is one taking 2+ hours — a CU change, a rewire, a fault-find. Attempting 3 or more substantive jobs per day leads to rushing, late arrivals, skipped testing, and missed quality standards. Smaller jobs (socket additions, smoke alarms) can be batched more densely, but even then, 4+ stops per day creates significant travel overhead.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'Covey\'s "Big Rocks" principle, applied to weekly planning, means:',
     options: [
-      'Focus on the biggest, most expensive jobs first and ignore small ones',
-      'Place your most important, fixed commitments onto the calendar first, then fit smaller and flexible items around them',
-      'Only work on large commercial projects because they pay more',
-      'Prioritise physical labour over administrative tasks',
+      'Focus on the biggest, most expensive jobs and ignore the small ones',
+      'Only ever work on large commercial projects because they pay more',
+      'Always prioritise physical labour over any administrative tasks',
+      'Place fixed commitments on the calendar first, then fit the rest around them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Covey\'s "Big Rocks" analogy comes from "First Things First" (1994): if you have a jar and need to fit in big rocks, pebbles, and sand, you must put the big rocks in first — if you fill the jar with sand and pebbles first, the big rocks will not fit. In weekly planning, the "big rocks" are fixed, non-negotiable commitments: confirmed jobs with specific times, training sessions, family obligations, admin blocks. Once these are placed on the calendar, flexible items (material collection, phone calls, van maintenance) fill the remaining gaps naturally.',
   },

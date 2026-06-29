@@ -37,10 +37,10 @@ export const bmsModule4Section3QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is the difference between a fail-safe and fail-secure lock?',
     options: [
-      'Fail-safe locks are more expensive than fail-secure locks',
+      'Fail-safe locks stay locked when power is cut, fail-secure locks release without power',
       'Fail-safe locks release when power is cut, fail-secure locks stay locked without power',
-      'Fail-safe locks use AC power, fail-secure locks use DC power',
-      'There is no difference, they are the same thing',
+      'Fail-safe locks require a key override, fail-secure locks do not',
+      'Fail-safe locks are battery powered, fail-secure locks are mains powered',
     ],
     correct: 1,
     explanation:

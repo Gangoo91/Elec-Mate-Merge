@@ -90,14 +90,14 @@ const quizQuestions = [
     question:
       'What is the standard mounting height above the working plane (Hm) used in office lighting calculations?',
     options: [
-      'Fabric loss + Ventilation loss',
-      '2.15m (2.8m ceiling - 0.65m desk)',
-      'Testing and commissioning',
-      'Capacitors and UPS systems',
+      '2.80m (the full floor-to-ceiling height)',
+      '1.95m (2.8m ceiling - 0.85m desk)',
+      '0.85m (the working plane height alone)',
+      '3.45m (ceiling height plus desk height)',
     ],
     correctAnswer: 1,
     explanation:
-      'For offices with 2.8m ceiling and 0.85m working plane, Hm = 2.8 - 0.85 = 1.95m (often rounded to 2.0m). However, the actual value depends on ceiling height and working plane height for the specific application.',
+      'For offices with 2.8m ceiling and 0.85m working plane, Hm = 2.8 - 0.85 = 1.95m (often rounded to 2.0m). Mounting height is measured above the working plane, not the floor.',
   },
   {
     id: 2,
@@ -170,9 +170,9 @@ const quizQuestions = [
     question:
       "In DIALux software, what does 'point-by-point' calculation provide that the lumen method does not?",
     options: [
-      'At the furthest point from the distribution board',
-      'On the exterior facade or rooftop facing the sky',
-      'Breaking capacity ≥ Ipf at installation point',
+      'The total installed load in watts per square metre',
+      'The average illuminance across the whole room',
+      'The colour temperature of each luminaire',
       'Illuminance at specific grid points showing uniformity',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
     question: "What does the Flux Code on a luminaire's intensity distribution indicate?",
     options: [
       'The proportion of light emitted in different directions',
-      'Identifying whether the space meets the definition of a confined space',
-      'Revision number, approval status, and distribution list',
-      'The volume of air forcibly exhaled in the first one second',
+      'The total luminous flux of the lamp in lumens',
+      'The energy efficiency of the luminaire in lm/W',
+      'The recommended mounting height for the luminaire',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,16 +195,16 @@ const quizQuestions = [
   {
     id: 9,
     question:
-      'A room requires 20 luminaires spaced on a 3m × 2m grid. What room dimensions would this suit?',
+      'A room requires 20 luminaires arranged on a 3m × 2m spacing grid. Which room size suits a 5 × 4 layout?',
     options: [
-      '0.90 or 0.85 (varies by supplier)',
-      'Both B and C are possible arrangements',
-      'The Distribution Network Operator (DNO)',
-      'Learning user patterns and predictive automation',
+      '6m × 4m (24m²)',
+      '15m × 8m (120m²)',
+      '9m × 6m (54m²)',
+      '20m × 15m (300m²)',
     ],
     correctAnswer: 1,
     explanation:
-      '20 luminaires could be arranged as 4 × 5 (12m × 10m at 3m × 2m spacing) or 5 × 4 (15m × 8m). The actual room dimensions and required spacing determine the best arrangement.',
+      'A 5 × 4 grid at 3m × 2m spacing covers 15m (5 × 3m) by 8m (4 × 2m), giving a 120m² room. The grid dimensions multiplied by the spacing give the room size.',
   },
   {
     id: 10,

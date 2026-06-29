@@ -5,10 +5,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of BS 5266-1?',
     options: [
-      'Missing documentation and standards referencing despite adequate performance',
+      'To set the photometric light levels and durations only',
       'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'Design calculations, as-built drawings, certificates, and maintenance schedules',
-      'To avoid large variations between bright and dark areas that could impair visibility',
+      'To specify the construction standards for luminaire batteries',
+      'To define the wiring colours used for emergency lighting circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 2,
     question: 'What does EN 1838 focus on?',
     options: [
-      'Record non-attendance and proceed with the test as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'deemed witnessed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'How one efficiency measure affects the savings of another',
+      'The maintenance and testing regime for installed systems',
+      'The selection and installation of cabling for safety circuits',
       'Photometric performance criteria (light levels and duration)',
-      'They have been advised of work completed and any recommendations',
+      'The siting and dimensions of illuminated exit signage',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,23 +83,23 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is uniformity important in emergency lighting design?',
     options: [
-      'Because it lacks proper documentation and standards referencing',
-      'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'Design calculations, as-built drawings, certificates, and maintenance schedules',
+      'To allow fewer luminaires to be installed along the route',
+      'To increase the overall average illuminance on the escape route',
+      'To extend the rated battery duration of each luminaire',
       'To avoid large variations between bright and dark areas that could impair visibility',
     ],
     correctAnswer: 3,
     explanation:
-      'Uniformity (max/min ratio < 40:1) prevents dangerous dark spots that could hinder safe evacuation and cause disorientation.',
+      'Uniformity (the ratio of maximum to minimum illuminance, not exceeding 40:1 on escape routes) prevents dangerous dark spots that could hinder safe evacuation and cause disorientation.',
   },
   {
     id: 8,
     question: 'What type of documentation proves compliance with BS 5266-1?',
     options: [
       'Design calculations, as-built drawings, certificates, and maintenance schedules',
-      'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'Missing documentation and standards referencing despite adequate performance',
-      'To avoid large variations between bright and dark areas that could impair visibility',
+      'The luminaire purchase invoices and delivery notes',
+      'A signed declaration from the building occupier alone',
+      'The manufacturer data sheets for the batteries used',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why can a system that works still fail compliance?',
     options: [
-      'To identify points requiring extra luminaires and potential obstructions',
+      'Because the luminaires are not the correct colour temperature',
       'Because it lacks proper documentation and standards referencing',
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
-      'Gather information from the user about symptoms',
+      'Because the system has not yet been running for a full year',
+      'Because the batteries have not reached their full charge cycle',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 10,
     question: 'What was the main issue found in the Manchester case study?',
     options: [
-      'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'Photometric performance criteria (light levels and duration)',
+      'Luminaires that failed to achieve the required illuminance levels',
+      'Battery durations that fell short of the three-hour requirement',
       'Missing documentation and standards referencing despite adequate performance',
-      'To avoid large variations between bright and dark areas that could impair visibility',
+      'Exit signs that did not comply with the ISO 7010 pictogram standard',
     ],
     correctAnswer: 2,
     explanation:

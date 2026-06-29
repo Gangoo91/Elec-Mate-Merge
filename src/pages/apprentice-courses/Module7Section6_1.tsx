@@ -16,10 +16,10 @@ const Module7Section6_1 = () => {
       id: 1,
       question: 'Why is accurate recording of test results legally required?',
       options: [
-        'Cash flows over the project life discounted to present value',
+        'To make the job take longer and justify the labour charge',
         'To demonstrate compliance with BS 7671 and safety regulations',
-        'For high-risk activities, complex work, CDM projects',
-        'About 0.36-0.40Ω (50m × ~7.41mΩ/m ≈ 0.37Ω at 20°C; OSG mΩ/m table)',
+        'Only to keep the client happy with a tidy-looking document',
+        'Because the wholesaler needs it before supplying materials',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section6_1 = () => {
       id: 2,
       question: 'What information must always be recorded during testing?',
       options: [
-        'Regularly, after incidents, and when circumstances change',
-        'Regular calibration schedules, certified procedures, and maintenance records',
+        'Only the final pass or fail result for the whole job',
+        'Just the date the work was completed and the address',
         'Test results, instrument details, environmental conditions, and observations',
-        'That it meets the essential health and safety requirements set out in UK/EU regulations',
+        'Only the circuits that failed — passing circuits need no record',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module7Section6_1 = () => {
       id: 3,
       question: 'How should test results be recorded for maximum clarity?',
       options: [
-        'BRUKL (Building Regulations UK Part L)',
-        'Fan failure or pump fault detected by the BMS',
-        'Discharge circuit and reconnect equipment',
+        'In pencil so any errors can be rubbed out later',
+        'From memory once back at the office at the end of the day',
+        'As rough approximations rounded to the nearest whole number',
         'Clearly and legibly in permanent ink or digitally',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section6_1 = () => {
       question: 'What should be done if a test result appears unexpected?',
       options: [
         'Record it and investigate further',
-        'Available capacity remaining',
-        'Work-Related Upper Limb Disorder',
-        'Missing or incorrectly fitted bracing',
+        'Ignore it if the circuit still seems to work',
+        'Round it to the value you expected to see',
+        'Re-test until you get the result you wanted',
       ],
       correctAnswer: 0,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section6_1 = () => {
       id: 5,
       question: 'When must test instruments be calibrated?',
       options: [
-        "They add up to equal the supply voltage",
+        "Only once when the instrument is first bought",
         "Annually or as per manufacturer's recommendations",
-        "Increasing the resistance of the coil winding",
-        "Registration as a waste carrier with the Environment Agency",
+        "Only if a result looks obviously wrong",
+        "Every five years, in line with the EICR cycle",
       ],
       correctAnswer: 1,
       explanation:
@@ -81,10 +81,10 @@ const Module7Section6_1 = () => {
       id: 6,
       question: 'What happens if test records are incomplete or inaccurate?',
       options: [
-        'To maintain constant magnetic flux and prevent motor overheating',
-        'Objectives, membership, meeting frequency, agenda setting, and reporting arrangements',
+        'Nothing — the installation still works regardless',
+        'The client simply fills in the missing details themselves',
         'Certificates may be invalid and legal compliance cannot be demonstrated',
-        'It automatically takes up slack, reducing free-fall distance',
+        'The records are automatically corrected at the next inspection',
       ],
       correctAnswer: 2,
       explanation:
@@ -103,9 +103,9 @@ const Module7Section6_1 = () => {
       question: 'How long should test records be retained?',
       options: [
         'For the life of the installation or as specified by regulations',
-        'Grease-laden air, odours and combustion products',
-        'A unit of energy equal to using 1000 watts for one hour',
-        'To maintain constant magnetic flux in the motor',
+        'Only until the customer has paid the invoice',
+        'For 30 days after the work is completed',
+        'They can be discarded as soon as the job is signed off',
       ],
       correctAnswer: 0,
       explanation:
@@ -115,10 +115,10 @@ const Module7Section6_1 = () => {
       id: 9,
       question: 'What environmental conditions should be recorded during testing?',
       options: [
-        'A formal concern, problem or complaint that an employee raises with their employer',
+        'The weather forecast for the following week',
         'Temperature, humidity, and any relevant conditions affecting testing',
-        'An equivalent product may be proposed subject to engineer approval',
-        'Dust masks or respirators appropriate to the dust type',
+        'The number of people present on the site that day',
+        'The make and model of the van used to reach the job',
       ],
       correctAnswer: 1,
       explanation:
@@ -128,10 +128,10 @@ const Module7Section6_1 = () => {
       id: 10,
       question: 'Who can sign electrical certificates?',
       options: [
-        'COP (Conference of the Parties) agreements',
-        'Safety for emergency responders',
-        'Only the person who carried out the testing',
-        'Energy retained during storage and discharge',
+        'Anyone working for the same electrical company',
+        'The customer who is paying for the work',
+        'Only the competent person who carried out the testing',
+        'The wholesaler who supplied the materials',
       ],
       correctAnswer: 2,
       explanation:

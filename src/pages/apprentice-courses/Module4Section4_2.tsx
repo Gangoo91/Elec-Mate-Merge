@@ -13,19 +13,19 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 1,
-    question: 'What is the maximum recommended support spacing for PVC conduit horizontally?',
-    options: ['2.5m', '1.2m', '3.0m'],
-    correctIndex: 1,
+    question: 'What is the maximum recommended horizontal support spacing for PVC conduit?',
+    options: ['1.2m', '2.5m', '3.0m'],
+    correctIndex: 0,
     explanation:
-      'PVC conduit requires closer spacing (1.2m max) due to its flexibility and thermal expansion properties compared to steel conduit.',
+      'PVC conduit requires closer spacing (1.2m max horizontally) due to its flexibility and thermal expansion properties compared to steel conduit.',
   },
   {
     id: 2,
     question: 'Why should supports be closer together in high-vibration areas?',
     options: [
-      'To save materials',
+      'To use up more materials',
       'To prevent loosening and fatigue damage',
-      'To make installation faster',
+      'To make the installation quicker',
     ],
     correctIndex: 1,
     explanation:
@@ -34,8 +34,8 @@ const quickCheckQuestions = [
   {
     id: 3,
     question: 'Where should extra supports always be placed?',
-    options: ['Only at ends', 'On both sides of bends and junctions', 'Every 5 metres'],
-    correctIndex: 1,
+    options: ['Only at the ends of the run', 'At fixed 5 metre intervals', 'On both sides of bends and junctions'],
+    correctIndex: 2,
     explanation:
       'Extra supports on both sides of bends and junctions prevent stress concentration and maintain structural integrity at these critical points.',
   },
@@ -47,16 +47,16 @@ const Module4Section4_2 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: 'What is the typical maximum horizontal spacing for steel conduit?',
-      options: ['1.2 m', '2.5 m', '3.0 m'],
+      question: 'What is the typical maximum horizontal support spacing for steel conduit?',
+      options: ['1.2 m', '2.5 m', '4.0 m'],
       correctAnswer: 1,
       explanation:
         "Steel conduit typically requires supports every 2.5m maximum horizontally, as it's stronger than PVC but still needs adequate support.",
     },
     {
       id: 2,
-      question: 'Which material generally requires closer support spacing, PVC or steel?',
-      options: ['PVC', 'Steel', 'Both the same'],
+      question: 'Which material generally requires closer support spacing?',
+      options: ['PVC conduit', 'Steel conduit', 'Both need identical spacing'],
       correctAnswer: 0,
       explanation:
         "PVC requires closer spacing (max 1.2m horizontal) because it's more flexible and prone to sagging than steel conduit.",
@@ -64,57 +64,61 @@ const Module4Section4_2 = () => {
     {
       id: 3,
       question:
-        'True or False: You can increase spacing if the tray looks strong enough without cables.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+        'Can you increase support spacing if the empty tray looks strong enough without cables?',
+      options: [
+        'Yes, provided the tray feels rigid by hand',
+        'Only for short indoor runs',
+        'No, spacing must account for the full cable load',
+      ],
+      correctAnswer: 2,
       explanation:
-        'False. Spacing must account for the full cable load, and containment must be adequately supported even before cables are installed.',
+        'Spacing must account for the full cable load, and containment must be adequately supported even before cables are installed.',
     },
     {
       id: 4,
-      question: 'Name two conditions that might require reducing support spacing.',
+      question: 'Which combination of conditions would require reducing support spacing?',
       options: [
-        'High cable load and outdoor exposure',
-        'Light cables and indoor use',
-        'Single cable runs',
+        'Light cables run indoors',
+        'High cable load combined with outdoor exposure',
+        'A single lightweight cable run',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'High cable loads, outdoor exposure, high-vibration environments, and thermal expansion all require closer support spacing.',
     },
     {
       id: 5,
-      question: 'What does deflection in cable trays indicate?',
-      options: ['Normal operation', 'The tray is bending under load', 'Cables are too light'],
-      correctAnswer: 1,
+      question: 'What does deflection in a cable tray indicate?',
+      options: ['Normal, expected operation', 'The cables are too light', 'The tray is bending under load'],
+      correctAnswer: 2,
       explanation:
         'Deflection indicates the tray is bending under load and may fail over time, requiring additional supports.',
     },
     {
       id: 6,
-      question: 'Where should supports always be placed in relation to bends?',
-      options: ['Only after bends', 'Only before bends', 'On both sides of the bend'],
-      correctAnswer: 2,
+      question: 'Where should supports be placed in relation to bends?',
+      options: ['On both sides of the bend', 'Only after the bend', 'Only before the bend'],
+      correctAnswer: 0,
       explanation:
         'Supports should always be placed on both sides of bends to prevent stress concentration and maintain structural integrity.',
     },
     {
       id: 7,
-      question: 'Why might manufacturer guidelines be stricter than BS 7671?',
+      question: 'Why might a manufacturer specify stricter spacing than the general BS 7671 guidance?',
       options: [
-        'To ensure warranty compliance',
-        'To account for specific product characteristics',
-        'Both A and B',
+        'To make the product cheaper to install',
+        'To account for the specific load rating and characteristics of their product',
+        'Because BS 7671 does not mention containment at all',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
-        'Manufacturers may specify stricter requirements for warranty validity and to account for specific product characteristics.',
+        'Manufacturers specify spacing based on the tested load rating of their specific product, which may be stricter than the general guidance, and this is also tied to warranty validity.',
     },
     {
       id: 8,
-      question: 'What is the main risk of exceeding recommended spacing?',
-      options: ['Higher costs', 'Sagging and structural failure', 'Easier installation'],
-      correctAnswer: 1,
+      question: 'What is the main risk of exceeding the recommended support spacing?',
+      options: ['Sagging and structural failure', 'Higher material costs', 'A quicker installation'],
+      correctAnswer: 0,
       explanation:
         'Exceeding recommended spacing can lead to sagging, damage to cables, and potential structural failure of the containment system.',
     },

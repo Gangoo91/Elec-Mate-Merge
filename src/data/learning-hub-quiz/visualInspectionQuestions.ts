@@ -5,10 +5,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-1',
     question: 'What is the primary purpose of visual inspection before testing?',
     options: [
-      'Appropriate IP rating for dust protection (IP5X or IP6X)',
-      'Each socket is correctly connected with ring continuity possible',
+      'To confirm the prospective fault current at the origin',
+      'To verify the polarity of every final circuit',
       'To identify obvious defects and safety hazards before energising',
-      'Current-carrying capacity and correct type for the environment',
+      'To measure the insulation resistance of all conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -21,9 +21,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-2',
     question: 'During visual inspection, what must be verified regarding cable selection?',
     options: [
-      'Supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s equipment, earthing arrangement, and isolation point',
-      'Presence, correct size, and secure connections',
-      'Cables must not pose a fire hazard and meet fire resistance requirements',
+      'Conductors are all stranded rather than solid for flexibility',
+      'Conductor cross-sectional area always exceeds 2.5mm²',
+      'Cable manufacturer matches that of the consumer unit',
       'Current-carrying capacity and correct type for the environment',
     ],
     correctAnswer: 3,
@@ -38,9 +38,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What should be checked regarding protective devices during visual inspection?',
     options: [
       'Correct type and rating for circuit protection',
-      'Green/yellow bi-colour throughout their length',
-      'Flexible cables used and connections suitable for vibration',
-      'Between 450mm and 1200mm from finished floor level',
+      'They are all of the same rating regardless of circuit',
+      'They are wired in the neutral conductor for isolation',
+      'They are colour-coded green/yellow on the front panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -69,10 +69,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-5',
     question: 'What must be verified regarding the connection of conductors?',
     options: [
-      'Cable colour matches the terminal',
-      'All connections use the same terminal type',
+      'Conductor colours match between adjacent terminals',
+      'All terminals are of an identical proprietary type',
       'Connections are secure and correctly made',
-      'Connections are soldered',
+      'Every connection is additionally soldered for security',
     ],
     correctAnswer: 2,
     explanation:
@@ -85,9 +85,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-6',
     question: 'What should be checked regarding accessible equipotential bonding?',
     options: [
-      'Appropriate type, mounting, and cable connections',
-      'Earthing conductor size, routing, and connection to MET',
-      'Green/yellow bi-colour throughout their length',
+      'A minimum size of 25mm² regardless of the supply',
+      'Connection only to the consumer unit earth bar',
+      'Black insulation to distinguish it from earthing conductors',
       'Presence, correct size, and secure connections',
     ],
     correctAnswer: 3,
@@ -103,9 +103,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
       'During visual inspection of a consumer unit, what enclosure requirement must be verified?',
     options: [
       'Non-combustible material for domestic installations',
-      'Between 450mm and 1200mm from finished floor level',
-      'Each socket is correctly connected with ring continuity possible',
-      'Bushings or grommets protect cables from damage by sharp edges',
+      'Transparent material so internal connections are visible',
+      'A minimum IP65 rating against water and dust ingress',
+      'Manufactured from insulating plastic to prevent shock',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-9',
     question: 'What documentation must be available for inspection?',
     options: [
-      'Fire stopping is present and appropriate',
-      'Presence, correct size, and secure connections',
+      'Only the original quotation and invoice for the work',
+      'A signed copy of the client\'s buildings insurance policy',
       'Diagrams, schedules, and manufacturer documentation',
-      'Isolation arrangements to prevent parallel operation with supply',
+      'The installer\'s qualification certificates and CV',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-11',
     question: 'What should be verified regarding the labelling of circuits?',
     options: [
-      'Presence, correct size, and secure connections',
+      'Handwritten labels in pencil are sufficient for identification',
       'Durable labels identifying each circuit clearly',
-      'Connections are secure and correctly made',
-      'Appropriate protection or location for the reduced conductor',
+      'Only high-current circuits above 32A need labelling',
+      'Labels are required solely on the outgoing supply tails',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,9 +184,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What enclosure rating is required for electrical equipment installed outdoors?',
     options: [
       'IP44 minimum or suitable for the location',
-      'Earth electrode installation and connection',
-      'Correct type and rating for circuit protection',
-      'Connections are secure and correctly made',
+      'IP20 is acceptable provided it is under a canopy',
+      'No specific IP rating is required outdoors',
+      'IPX0 minimum as long as it is weather-painted',
     ],
     correctAnswer: 0,
     explanation:
@@ -199,9 +199,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-13',
     question: 'What must be checked for cables installed in thermal insulation?',
     options: [
-      'Non-combustible material for domestic installations',
-      'Diagrams, schedules, and manufacturer documentation',
-      '30mA RCD protection for socket outlets up to 32A',
+      'The cable can be uprated because insulation aids cooling',
+      'No derating is needed for runs shorter than one metre',
+      'Only the protective conductor size needs increasing',
       'Appropriate derating or cable positioning',
     ],
     correctAnswer: 3,
@@ -216,10 +216,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question:
       'What must be verified for accessibility of equipment requiring operation or maintenance?',
     options: [
-      'Cables are in prescribed zones or have RCD protection',
-      'Connection at origin with separate earth and neutral terminals',
+      'Equipment may be concealed once commissioning is complete',
+      'Access is only required for equipment rated above 100A',
       'Adequate access for operation, inspection, and maintenance',
-      'Insulation is complete, undamaged, and appropriate for the environment',
+      'A minimum clearance of exactly 2 metres in all directions',
     ],
     correctAnswer: 2,
     explanation:
@@ -249,9 +249,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What check should be made for cables in areas subject to mechanical damage?',
     options: [
       'Appropriate mechanical protection is provided',
-      'Cable jacketing is a bright colour',
-      'Cables are twisted together',
-      'Warning labels are attached to cables',
+      'Cable sheaths are of a high-visibility colour',
+      'Cables are bunched and clipped together for strength',
+      'Each cable carries a durable damage-warning label',
     ],
     correctAnswer: 0,
     explanation:
@@ -264,9 +264,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-17',
     question: 'What must be inspected regarding earthing arrangements?',
     options: [
-      'Adequate separation or protection from non-electrical services',
-      'Correct rating, test button present, and indicator functional',
-      'Zone classification and equipment suitability for each zone',
+      'The earthing conductor is always 6mm² regardless of supply',
+      'The earthing conductor may share a terminal with the neutral',
+      'The earthing conductor only needs checking on TT systems',
       'Earthing conductor size, routing, and connection to MET',
     ],
     correctAnswer: 3,
@@ -280,10 +280,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-18',
     question: 'What visual check is required for surge protective devices (SPDs)?',
     options: [
-      'Diagrams, schedules, and manufacturer documentation',
-      'Durable labels identifying each circuit clearly',
+      'SPDs are connected only in the protective conductor',
+      'A single Type 3 SPD always protects the whole installation',
       'Correct type, rating, and indicator status',
-      'Non-combustible material for domestic installations',
+      'SPDs require no connection length restrictions',
     ],
     correctAnswer: 2,
     explanation:
@@ -296,10 +296,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-19',
     question: 'What must be verified for emergency switching devices?',
     options: [
-      'Appropriate mechanical protection is provided',
+      'They may be located in a locked plant room only',
       'Correct identification, location, and accessibility',
-      'Zone classification and equipment suitability for each zone',
-      'They are installed in the line conductor only',
+      'They must be coloured green to indicate safe operation',
+      'They are permitted to be recessed behind removable panels',
     ],
     correctAnswer: 1,
     explanation:
@@ -312,10 +312,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-20',
     question: 'When inspecting a TT system, what specific item must be verified?',
     options: [
-      'Correct type and rating for circuit protection',
+      'The PEN conductor splits correctly at the origin',
       'Earth electrode installation and connection',
-      'Connections are secure and correctly made',
-      'Green/yellow bi-colour throughout their length',
+      'The supply neutral provides the earth reference',
+      'A combined earth and neutral block is fitted at the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -328,10 +328,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-21',
     question: 'What should be inspected at the intake position?',
     options: [
-      "Correct type and rating for circuit protection",
-      "Appropriate IP rating for dust protection (IP5X or IP6X)",
+      "The colour and length of every final circuit conductor",
+      "The torque setting applied to each consumer unit terminal",
       "Supplier's equipment, earthing arrangement, and isolation point",
-      "Durable notices at appropriate locations (voltage, RCD test, isolation)",
+      "The number of socket outlets fed from each ring circuit",
     ],
     correctAnswer: 2,
     explanation:
@@ -344,9 +344,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-22',
     question: 'What must be checked for cables running in close proximity to other services?',
     options: [
-      'Appropriate IP rating for dust protection (IP5X or IP6X)',
-      'Durable labels identifying each circuit clearly',
-      '30mA RCD protection for socket outlets up to 32A',
+      'Cables may share a duct with gas pipes if both are insulated',
+      'No separation is needed where services run vertically',
+      'Electrical cables must always run above water services',
       'Adequate separation or protection from non-electrical services',
     ],
     correctAnswer: 3,
@@ -361,9 +361,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What visual inspection is required for luminaires?',
     options: [
       'Appropriate type, mounting, and cable connections',
-      'Earth electrode installation and connection',
-      'Connections are secure and correctly made',
-      'Secure fitting, all knockouts blanked, and IP rating maintained',
+      'That all luminaires are fed from a single radial circuit',
+      'That standard PVC cable is used at every termination',
+      'That every luminaire is double-pole switched at the fitting',
     ],
     correctAnswer: 0,
     explanation:
@@ -376,10 +376,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-24',
     question: 'What must be verified for installations in locations containing a bath or shower?',
     options: [
-      'To identify obvious defects and safety hazards before energising',
+      'That all accessories are rated IP20 throughout the room',
       'Zone classification and equipment suitability for each zone',
-      'Flexible cables used and connections suitable for vibration',
-      'Durable labels identifying each circuit clearly',
+      'That socket outlets are permitted within 1m of the bath',
+      'That supplementary bonding is never required in any zone',
     ],
     correctAnswer: 1,
     explanation:
@@ -392,10 +392,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-25',
     question: 'What should be checked regarding cable support and fixings?',
     options: [
-      'Cables are loose for flexibility',
-      'All fixings are plastic',
+      'Cables are left slack to allow for thermal movement',
+      'Fixings are spaced to suit the room dimensions',
       'Appropriate support at correct intervals',
-      'Minimum one fixing per circuit',
+      'A single fixing is provided at each accessory only',
     ],
     correctAnswer: 2,
     explanation:
@@ -408,9 +408,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-26',
     question: 'What is the minimum height for a consumer unit in a domestic dwelling?',
     options: [
-      'Diagrams, schedules, and manufacturer documentation',
-      'Flexible cables used and connections suitable for vibration',
-      'Appropriate mechanical protection is provided',
+      'A minimum of 1800mm from finished floor level',
+      'Exactly 300mm above the highest worktop in the room',
+      'No higher than 2200mm to the top of the enclosure',
       'Between 450mm and 1200mm from finished floor level',
     ],
     correctAnswer: 3,
@@ -425,9 +425,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What must be verified regarding the identification of protective conductors?',
     options: [
       'Green/yellow bi-colour throughout their length',
-      'Diagrams, schedules, and manufacturer documentation',
-      'Presence, correct size, and secure connections',
-      'Connections are secure and correctly made',
+      'Plain green insulation along the whole conductor',
+      'Blue sleeving applied at every termination',
+      'Black with a green band only at the ends',
     ],
     correctAnswer: 0,
     explanation:
@@ -440,10 +440,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-28',
     question: 'What should be checked regarding basic insulation of live parts?',
     options: [
-      'Clearly identified, accessible, and capable of being secured in the OFF position',
+      'Insulation may be removed where parts are out of reach',
       'Insulation is complete, undamaged, and appropriate for the environment',
-      'To identify obvious defects and safety hazards before energising',
-      'Diagrams, schedules, and manufacturer documentation',
+      'A single layer of tape is sufficient over any exposed conductor',
+      'Basic insulation is only required on the neutral conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -456,10 +456,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-29',
     question: 'What is verified during inspection of a distribution board cover?',
     options: [
-      'Presence, correct size, and secure connections',
-      'They are installed in the line conductor only',
+      'Unused cable entries may be left open for ventilation',
+      'The cover must be transparent to allow live inspection',
       'Secure fitting, all knockouts blanked, and IP rating maintained',
-      'Isolation arrangements to prevent parallel operation with supply',
+      'A loose-fitting cover is acceptable on surface-mounted boards',
     ],
     correctAnswer: 2,
     explanation:
@@ -473,9 +473,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What must be inspected for socket outlets on ring final circuits?',
     options: [
       'Each socket is correctly connected with ring continuity possible',
-      'Connection at origin with separate earth and neutral terminals',
-      'Bushings or grommets protect cables from damage by sharp edges',
-      'Secure connection, correct size, and labelled with safety warning',
+      'Each socket is fed by its own dedicated radial conductor',
+      'No more than four socket outlets are wired on the ring',
+      'Every socket is connected via an unfused spur in series',
     ],
     correctAnswer: 0,
     explanation:
@@ -488,9 +488,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-31',
     question: 'What check is required for cables passing through metal enclosures?',
     options: [
-      'To identify obvious defects and safety hazards before energising',
-      'Appropriate mechanical protection is provided',
-      'Secure fitting, all knockouts blanked, and IP rating maintained',
+      'The cable sheath may be stripped back at the entry point',
+      'Only single-insulated conductors should pass through metal',
+      'The enclosure must be left unearthed at the cable entry',
       'Bushings or grommets protect cables from damage by sharp edges',
     ],
     correctAnswer: 3,
@@ -504,10 +504,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-32',
     question: 'What visual inspection is required for equipotential bonding connections?',
     options: [
-      'Earth electrode installation and connection',
-      'DC isolator, labelling, and cable segregation from AC circuits',
+      'Clamps may be fitted over painted or coated pipework',
+      'Soldered joints are required in place of bonding clamps',
       'Clamps are correct type, tight, and on clean metal surfaces',
-      'Connection at origin with separate earth and neutral terminals',
+      'Bonding may be taken from the neutral bar at the board',
     ],
     correctAnswer: 2,
     explanation:
@@ -520,10 +520,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-33',
     question: 'What is checked regarding the earthing conductor connection to the MET?',
     options: [
-      'Durable labels identifying each circuit clearly',
+      'The connection may be made with insulation tape only',
       'Secure connection, correct size, and labelled with safety warning',
-      'Clamps are correct type, tight, and on clean metal surfaces',
-      'Non-combustible material for domestic installations',
+      'The conductor is sized to half the line conductor area',
+      'The MET may be relocated outside the building enclosure',
     ],
     correctAnswer: 1,
     explanation:
@@ -537,9 +537,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What must be verified for an AFDD (Arc Fault Detection Device) installation?',
     options: [
       'Correct rating, test button present, and indicator functional',
-      'Presence, correct size, and secure connections',
-      'They are installed in the line conductor only',
-      'Green/yellow bi-colour throughout their length',
+      'They are wired into the protective conductor only',
+      'A single AFDD protects all circuits in the board',
+      'They replace the need for any overcurrent protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -552,9 +552,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-35',
     question: 'What visual check applies to cables in escape routes?',
     options: [
-      'Non-combustible material for domestic installations',
-      'Current-carrying capacity and correct type for the environment',
-      'Secure fitting, all knockouts blanked, and IP rating maintained',
+      'Standard PVC cable is always acceptable in escape routes',
+      'Cables may be left unsupported provided they are clipped',
+      'Cables only need protection where they cross doorways',
       'Cables must not pose a fire hazard and meet fire resistance requirements',
     ],
     correctAnswer: 3,
@@ -568,10 +568,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-36',
     question: 'What should be inspected regarding isolation devices?',
     options: [
-      'Equipment suitable for environment including livestock protection',
-      'Zone classification and equipment suitability for each zone',
+      'They isolate the neutral conductor only for safe working',
+      'They may be located in an adjacent locked room out of sight',
       'Clearly identified, accessible, and capable of being secured in the OFF position',
-      'Bushings or grommets protect cables from damage by sharp edges',
+      'They are coloured red and require no means of locking off',
     ],
     correctAnswer: 2,
     explanation:
@@ -584,10 +584,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-37',
     question: 'What is verified for cables installed in walls at depths less than 50mm?',
     options: [
-      'Between 450mm and 1200mm from finished floor level',
+      'Cables may run at any angle if mechanically protected',
       'Cables are in prescribed zones or have RCD protection',
-      'IP44 minimum or suitable for the location',
-      'Fire stopping is present and appropriate',
+      'A 100mA RCD is sufficient for cables at this depth',
+      'No additional measures apply below 50mm in solid walls',
     ],
     correctAnswer: 1,
     explanation:
@@ -601,9 +601,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What must be checked for luminaires installed in fire-rated ceilings?',
     options: [
       'Fire hood or intumescent cover fitted where required',
-      'Current-carrying capacity and correct type for the environment',
-      'Appropriate protection or location for the reduced conductor',
-      'Clamps are correct type, tight, and on clean metal surfaces',
+      'A larger cut-out is acceptable to improve ventilation',
+      'Any downlight may be used if it carries a CE mark',
+      'The ceiling fire rating is unaffected by recessed fittings',
     ],
     correctAnswer: 0,
     explanation:
@@ -616,9 +616,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-39',
     question: 'What inspection is required for cables subject to vibration?',
     options: [
-      'Earth electrode installation and connection',
-      'Presence, correct size, and secure connections',
-      'Earthing conductor size, routing, and connection to MET',
+      'Solid single-core conductors are preferred for rigidity',
+      'Terminations should be soldered to resist movement',
+      'Cables must be clipped rigidly with no allowance for movement',
       'Flexible cables used and connections suitable for vibration',
     ],
     correctAnswer: 3,
@@ -632,9 +632,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-40',
     question: 'What should be verified regarding the presence of appropriate warning notices?',
     options: [
-      'Appropriate IP rating for dust protection (IP5X or IP6X)',
-      'Secure connection, correct size, and labelled with safety warning',
-      'Clamps are correct type, tight, and on clean metal surfaces',
+      'A single notice at the meter covers the whole installation',
+      'Notices are only required on commercial installations',
+      'Handwritten paper notices are acceptable in all locations',
       'Durable notices at appropriate locations (voltage, RCD test, isolation)',
     ],
     correctAnswer: 3,
@@ -649,9 +649,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What inspection is needed for electrical equipment in dusty environments?',
     options: [
       'Appropriate IP rating for dust protection (IP5X or IP6X)',
-      'Correct rating, test button present, and indicator functional',
-      'Adequate separation or protection from non-electrical services',
-      'Supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s equipment, earthing arrangement, and isolation point',
+      'IPX4 rating provides adequate dust protection',
+      'The first IP digit relates to water, so it is ignored',
+      'IP20 is sufficient if the equipment is wiped regularly',
     ],
     correctAnswer: 0,
     explanation:
@@ -664,10 +664,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-42',
     question: 'What must be verified for PEN conductor connections in TN-C-S systems?',
     options: [
-      'They are installed in the line conductor only',
+      'The PEN conductor is split at every distribution board',
       'Connection at origin with separate earth and neutral terminals',
-      '30mA RCD protection for socket outlets up to 32A',
-      'Clearly identified, accessible, and capable of being secured in the OFF position',
+      'The earth and neutral remain combined throughout the install',
+      'An earth electrode is connected in place of the PEN',
     ],
     correctAnswer: 1,
     explanation:
@@ -680,10 +680,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-43',
     question: 'What check is required for socket outlet circuits in kitchens?',
     options: [
-      'All sockets are at worktop height',
-      'Maximum 4 sockets per circuit',
+      'All worktop sockets are on a dedicated radial circuit',
+      'No more than two socket outlets are spurred per circuit',
       '30mA RCD protection provided',
-      'Sockets are waterproof rated',
+      'Sockets near the sink have a minimum IP44 rating',
     ],
     correctAnswer: 2,
     explanation:
@@ -696,9 +696,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-44',
     question: 'What should be inspected at a change of conductor size?',
     options: [
-      '30mA RCD protection for socket outlets up to 32A',
-      'To identify obvious defects and safety hazards before energising',
-      'They are installed in the line conductor only',
+      'A reduction in size requires no additional protection',
+      'The smaller conductor may carry the full upstream rating',
+      'The reduced conductor must always be in the neutral',
       'Appropriate protection or location for the reduced conductor',
     ],
     correctAnswer: 3,
@@ -713,9 +713,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What visual inspection applies to EV charging installations?',
     options: [
       'Appropriate protective measures, earthing, and dedicated circuit',
-      'Flexible cables used and connections suitable for vibration',
-      'Current-carrying capacity and correct type for the environment',
-      'Correct rating, test button present, and indicator functional',
+      'A standard 13A socket spur is sufficient for any charger',
+      'PME earthing may always be used without further measures',
+      'No RCD is required where the charger has its own switch',
     ],
     correctAnswer: 0,
     explanation:
@@ -728,10 +728,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-46',
     question: 'What must be checked for cables installed underground?',
     options: [
-      'Clamps are correct type, tight, and on clean metal surfaces',
+      'Standard twin-and-earth may be buried directly in soil',
       'Appropriate cable type, depth, and route marking',
-      'Earthing conductor size, routing, and connection to MET',
-      'Earth electrode installation and connection',
+      'A burial depth of 100mm is sufficient under driveways',
+      'No marker tape is needed where cables are armoured',
     ],
     correctAnswer: 1,
     explanation:
@@ -744,10 +744,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-47',
     question: 'What inspection is required for functional switching devices?',
     options: [
-      'Cables are in prescribed zones or have RCD protection',
-      'To identify obvious defects and safety hazards before energising',
+      'They must be capable of being locked in the OFF position',
+      'They must isolate all live conductors including neutral',
       'Correct rating and suitable for the intended purpose',
-      'Appropriate protective measures, earthing, and dedicated circuit',
+      'They must be double-pole regardless of the load',
     ],
     correctAnswer: 2,
     explanation:
@@ -760,9 +760,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-48',
     question: 'What should be verified for installations in agricultural premises?',
     options: [
-      'Supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s equipment, earthing arrangement, and isolation point',
-      'Isolation arrangements to prevent parallel operation with supply',
-      'Diagrams, schedules, and manufacturer documentation',
+      'Standard domestic accessories are acceptable throughout',
+      'A 100mA RCD provides adequate shock protection for livestock',
+      'No supplementary bonding is needed in animal housing',
       'Equipment suitable for environment including livestock protection',
     ],
     correctAnswer: 3,
@@ -777,9 +777,9 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     question: 'What visual check is needed for generator installations?',
     options: [
       'Isolation arrangements to prevent parallel operation with supply',
-      'Equipment suitable for environment including livestock protection',
-      'Presence, correct size, and secure connections',
-      'DC isolator, labelling, and cable segregation from AC circuits',
+      'A simple plug-and-socket connection to a ring final circuit',
+      'No earthing is required where the generator is portable',
+      'The generator neutral must be left floating at all times',
     ],
     correctAnswer: 0,
     explanation:
@@ -792,10 +792,10 @@ export const visualInspectionQuestions: QuizQuestion[] = [
     id: 'vi-50',
     question: 'What must be inspected for photovoltaic (PV) system installations?',
     options: [
-      'They are installed in the line conductor only',
-      'Cables must not pose a fire hazard and meet fire resistance requirements',
+      'A single AC isolator is sufficient for the whole array',
+      'DC cables may share trunking with the AC final circuits',
       'DC isolator, labelling, and cable segregation from AC circuits',
-      '30mA RCD protection for socket outlets up to 32A',
+      'No warning labels are required on the DC side of the system',
     ],
     correctAnswer: 2,
     explanation:

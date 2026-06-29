@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'traceability-purpose',
     question: "What does 'traceability' mean in the context of maintenance records?",
     options: [
-      "Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge",
-      "Unlimited fines, imprisonment up to 2 years, Prohibition Notices closing premises, and potential corporate manslaughter charges",
-      "Regularly, and whenever there is a significant change in the work activity, equipment, or following an incident",
       "The ability to trace the complete history of an asset's maintenance back to specific dates, personnel and documentation",
+      "Keeping all maintenance records in a single locked filing cabinet on site",
+      "Tracking the physical location of maintenance tools and spare parts in the stores",
+      "Recording only the final outcome of each job without the intermediate steps",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Traceability means being able to trace every maintenance intervention back to when it was done, who did it, what was found, what action was taken, and what documentation was produced. It creates an unbroken chain of evidence demonstrating that maintenance was properly carried out.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'audit-trail',
     question: 'An audit trail in a CMMS provides:',
     options: [
-      'Non-Violent Communication (NVC), the STATE model, and the assertiveness formula',
+      'A summary report of total maintenance costs for the financial year',
       'A chronological record of all data entries, modifications and approvals, showing who did what and when',
-      'A serious incident or near-miss — work stops, the workforce is briefed on what happened and what changes',
-      'The Principal Contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s site manager — welfare is their CDM 2015 Schedule 2 duty',
+      'An automatic schedule of upcoming planned maintenance tasks',
+      'A backup copy of records stored on a separate server',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'retention-period',
     question: 'Under BS 7671, electrical installation records should be retained for:',
     options: [
-      'Be individually removable so other employees cannot access personal data',
+      'A fixed period of 6 years from the date of issue',
       'The life of the installation — available for inspection at all times',
-      'Check for damage to leads, probes, body; ensure probes are insulated',
-      'High resistance connections or inadequate cable sizing',
+      'Until the next periodic inspection is completed',
+      'A minimum of 12 months after the installation is energised',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'calibration-trace',
     question: 'Why must test instrument calibration be traceable to national standards?',
     options: [
-      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
-      'Listen carefully without interrupting, giving the client space to express their frustration',
-      'They are internationally standardised so workers from any background can recognise the meaning instantly',
+      'It reduces the frequency at which instruments need to be recalibrated',
+      'It allows instruments from different manufacturers to share the same leads',
+      'It removes the need to prove voltage indicators before and after use',
       'Traceable calibration ensures measurement accuracy, legal defensibility of test results, and GS38/BS 7671 compliance',
     ],
     correctIndex: 3,
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Traceability in maintenance means:',
     options: [
-      'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
+      'Storing records only at head office so they cannot be tampered with on site',
       'Tracing every maintenance activity back to specific dates, personnel, procedures and documentation',
-      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
-      'It sets a hard limit preventing work from expanding to fill available time',
+      'Recording maintenance activities once a month in a single summary log',
+      'Tracking the movement of spare parts between the stores and the plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A regulatory compliance audit typically checks for:',
     options: [
-      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
-      'Understanding which regulations apply, how to access them, and how daily practices ensure compliance',
+      'Whether the maintenance team met its productivity and cost targets',
+      'How quickly faults are reported through the helpdesk system',
       'Evidence that maintenance was planned, executed by competent persons, documented accurately, and statutory requirements met',
-      'Controls, stores, organises and provides access to all documentation in a structured, searchable system',
+      'Whether spare parts are sourced from approved suppliers only',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'EAWR 1989 requires:',
     options: [
-      'Filed in the quality system with instrument identity, calibration date, due date and traceability reference',
-      'Records are available for the required period for audits, investigations and legal proceedings',
-      'Everyone works to the current, approved version and obsolete versions are withdrawn',
+      'Test instruments to be calibrated by the manufacturer every six months',
+      'All electrical work to be notified to the local authority in advance',
+      'Each technician to hold a current first-aid certificate',
       'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'Document retention policies ensure:',
     options: [
       'Records are available for the required period for audits, investigations and legal proceedings',
-      'Asset management systems — managing assets throughout their lifecycle',
-      'Filed in the quality system with instrument identity, calibration date, due date and traceability reference',
-      'Make a clear, dated correction preserving the original entry and audit trail',
+      'Records are deleted as soon as a job is signed off to save storage',
+      'Only senior managers may access historic maintenance records',
+      'Paper records are always preferred over digital copies',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'Calibration certificates for test instruments should be:',
     options: [
-      'Evidence that maintenance was planned, executed by competent persons, documented accurately, and statutory requirements met',
+      'Discarded once the instrument has been recalibrated',
       'Filed in the quality system with instrument identity, calibration date, due date and traceability reference',
-      'Records are available for the required period for audits, investigations and legal proceedings',
-      'Understanding which regulations apply, how to access them, and how daily practices ensure compliance',
+      'Stored only by the calibration laboratory, not the user',
+      'Combined into a single certificate covering all instruments on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'ISO 55001 relates to:',
     options: [
-      'A requirement has not been met, and corrective action is needed',
-      'Potentially dangerous — urgent remedial action required',
+      'Information security management for digital records',
+      'Occupational health and safety management systems',
       'Asset management systems — managing assets throughout their lifecycle',
-      'Everyone works to the current, approved version and obsolete versions are withdrawn',
+      'Environmental management and carbon reporting',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'A non-conformance in a quality audit means:',
     options: [
-      'Make a clear, dated correction preserving the original entry and audit trail',
-      'Asset management systems — managing assets throughout their lifecycle',
-      'Potentially dangerous — urgent remedial action required',
+      'An improvement opportunity that is optional to act on',
+      'A record that has been archived after its retention period',
+      'A task that has been completed ahead of schedule',
       'A requirement has not been met, and corrective action is needed',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'Version control of maintenance procedures ensures:',
     options: [
       'Everyone works to the current, approved version and obsolete versions are withdrawn',
-      'Asset management systems — managing assets throughout their lifecycle',
-      'Filed in the quality system with instrument identity, calibration date, due date and traceability reference',
-      'Make a clear, dated correction preserving the original entry and audit trail',
+      'Procedures are reviewed only when an incident occurs',
+      'Each technician keeps a personal copy of every procedure',
+      'Older versions are retained for daily use alongside the latest one',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'An EICR C2 code means:',
     options: [
-      'BACnet, Modbus, KNX, or DALI for lighting',
+      'Improvement recommended but not urgent',
       'Potentially dangerous — urgent remedial action required',
-      'On EIC/EICR and Schedule of Test Results',
-      'An area where heat transfers more readily through the building envelope',
+      'Danger present, risk of injury, immediate action required',
+      'Further investigation required without delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'A document management system (DMS) in maintenance:',
     options: [
-      'Evidence that maintenance was planned, executed by competent persons, documented accurately, and statutory requirements met',
-      'Understanding which regulations apply, how to access them, and how daily practices ensure compliance',
+      'Automatically carries out planned maintenance tasks',
+      'Replaces the need for competent maintenance technicians',
       'Controls, stores, organises and provides access to all documentation in a structured, searchable system',
-      'Everyone works to the current, approved version and obsolete versions are withdrawn',
+      'Stores only completed certificates, not work-in-progress records',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under ST1426, demonstrating compliance awareness means:',
     options: [
-      'Records are available for the required period for audits, investigations and legal proceedings',
-      'Controls, stores, organises and provides access to all documentation in a structured, searchable system',
-      'Evidence that maintenance was planned, executed by competent persons, documented accurately, and statutory requirements met',
+      'Memorising the full text of every applicable regulation',
+      'Delegating all compliance responsibility to the quality department',
+      'Completing maintenance tasks as quickly as possible',
       'Understanding which regulations apply, how to access them, and how daily practices ensure compliance',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'If a maintenance record contains an error, the correct procedure is to:',
     options: [
       'Make a clear, dated correction preserving the original entry and audit trail',
-      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
-      'A requirement has not been met, and corrective action is needed',
-      'Records are available for the required period for audits, investigations and legal proceedings',
+      'Erase the error completely so the record reads cleanly',
+      'Create a fresh record and destroy the original',
+      'Leave the error and note it verbally to the supervisor',
     ],
     correctAnswer: 0,
     explanation:

@@ -29,10 +29,10 @@ const Module6Section7_3 = () => {
       id: 2,
       question: 'What is the purpose of a Minor Works Certificate?',
       options: [
-        'Encourage them to keep coughing and monitor closely',
+        'To record the design of a brand-new installation',
         'To report on the condition of an existing installation and identify defects',
         'To provide evidence that small electrical work complies with BS 7671',
-        '5 years (or 40 years for personal exposure records of identifiable employees)',
+        'To list the materials used so the client can be invoiced',
       ],
       correctAnswer: 2,
       explanation:
@@ -40,11 +40,11 @@ const Module6Section7_3 = () => {
     },
     {
       id: 3,
-      question: 'Give two examples of jobs that require an MWC.',
+      question: 'Which pair of jobs would typically require an MWC?',
       options: [
-        'Cash flows over the project life discounted to present value',
-        'In the pocket of the person doing the work',
-        'Use equivalent annual cost (EAC) to compare different lifespans',
+        'Replacing a consumer unit and rewiring a house',
+        'Installing two new circuits from the board',
+        'Wiring a new bathroom and a swimming pool',
         'Adding a socket outlet and adding a lighting point',
       ],
       correctAnswer: 3,
@@ -68,10 +68,10 @@ const Module6Section7_3 = () => {
       id: 5,
       question: 'What test results are typically recorded on an MWC?',
       options: [
-        'It must match system response requirements for proper control',
+        'Only the date and time the work was completed',
         'Continuity, insulation resistance, polarity, and Zs values',
-        'Bonding between exposed and extraneous parts',
-        'Cause production downtime and reputation damage',
+        'A photograph of the finished installation',
+        'The cost of the materials and labour used',
       ],
       correctAnswer: 1,
       explanation:
@@ -79,19 +79,19 @@ const Module6Section7_3 = () => {
     },
     {
       id: 6,
-      question: 'True or False: Small alterations do not require certification.',
-      options: ['True', 'False'],
+      question: 'Do small alterations to a circuit require any certification?',
+      options: ['No, only new circuits need certification', 'Yes, an MWC is required even for small alterations'],
       correctAnswer: 1,
       explanation:
-        'False. All electrical alterations, however small, require appropriate certification - either an MWC for minor works or EIC for major works.',
+        'All electrical alterations, however small, require appropriate certification - an MWC for minor works or an EIC for new circuits and major works.',
     },
     {
       id: 7,
       question: 'Who is responsible for signing a Minor Works Certificate?',
       options: [
-        'Every bay horizontally and every lift vertically',
-        'To provide a detailed plan of how work will be carried out safely',
-        'Self-awareness, self-regulation, motivation, empathy, and social skills',
+        'The client who paid for the work',
+        'The wholesaler who supplied the parts',
+        'Any apprentice present on site',
         'A competent person who carried out or supervised the work',
       ],
       correctAnswer: 3,
@@ -102,10 +102,10 @@ const Module6Section7_3 = () => {
       id: 8,
       question: 'Why is it important to provide the client with a copy of the MWC?',
       options: [
-        'Legal requirement and proof of compliance',
-        'The Work at Height Regulations 2005',
-        'Similar tasks requiring the same mental mode or tools',
-        'To withstand the 325V peak voltage with safety margin',
+        'It is a legal requirement and gives proof of compliance',
+        'It allows the client to carry out their own testing',
+        'It transfers responsibility for the work to the client',
+        'It is only needed if the client requests it in writing',
       ],
       correctAnswer: 0,
       explanation:
@@ -128,10 +128,10 @@ const Module6Section7_3 = () => {
       id: 10,
       question: 'In the real-world example, what problem occurred because no MWC was issued?',
       options: [
-        'Creating custom voice commands and integrations',
-        'Proper isolation and depressurisation',
-        'The sale was delayed and additional costs occurred',
-        'Either mains connection or bowser with appropriate treatment',
+        'The work failed its insulation resistance test',
+        'The electrician was fined by the HSE',
+        'The house sale was delayed and extra costs occurred',
+        'The circuit had to be completely rewired',
       ],
       correctAnswer: 2,
       explanation:

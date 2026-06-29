@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'What is the purpose of the Plan-Do-Check-Act (PDCA) cycle in an Environmental Management System?',
     options: [
-      'To complete a one-off environmental audit and then close the project',
       'To provide a framework for continual improvement of environmental performance',
+      'To complete a one-off environmental audit and then close the project',
       'To satisfy planning permission requirements for new developments',
       'To calculate the carbon footprint of individual employees',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The Plan-Do-Check-Act (PDCA) cycle is the fundamental framework underpinning an Environmental Management System. It provides a structured, iterative approach to continual improvement of environmental performance. In the 'Plan' phase, the organisation identifies its environmental aspects, sets objectives, and plans actions. In 'Do', it implements those actions and operational controls. In 'Check', it monitors and measures performance against objectives. In 'Act', it takes corrective action and makes improvements based on the findings. The cycle then repeats, driving ongoing improvement. This is not a one-off exercise — it is a perpetual cycle that ensures the organisation never stops improving its environmental performance.",
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'emas-vs-iso-difference',
     question: 'What is the key difference between EMAS and ISO 14001 regarding public disclosure?',
     options: [
-      'EMAS requires a publicly available environmental statement; ISO 14001 does not',
       'ISO 14001 requires public disclosure; EMAS keeps all information confidential',
+      'EMAS requires a publicly available environmental statement; ISO 14001 does not',
       'Both require identical levels of public disclosure',
       'Neither scheme requires any form of public reporting',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "The key difference is that EMAS (Eco-Management and Audit Scheme) requires organisations to produce and publish an environmental statement that is publicly available and validated by an accredited environmental verifier. This statement must include a description of the organisation's activities, its environmental policy, a summary of significant environmental impacts, environmental performance data, objectives and targets, and evidence of legal compliance. ISO 14001, by contrast, does not require any public disclosure of environmental performance data. Whilst an organisation certified to ISO 14001 must have an environmental policy available to the public, the detailed performance information remains internal. This transparency requirement makes EMAS more demanding but also more credible in the eyes of regulators and the public.",
   },
@@ -58,11 +58,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of an internal environmental audit within an EMS?',
     options: [
       'To prepare marketing materials about environmental performance',
-      'To verify conformance with the EMS requirements and identify opportunities for improvement',
       'To calculate annual energy bills for the finance department',
+      'To verify conformance with the EMS requirements and identify opportunities for improvement',
       'To replace the need for external certification audits',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The primary purpose of an internal environmental audit is to verify that the Environmental Management System conforms to the planned arrangements, including the requirements of ISO 14001 or EMAS, and to identify opportunities for improvement. Internal audits are a systematic, independent, and documented process for obtaining audit evidence and evaluating it objectively to determine the extent to which the audit criteria are fulfilled. They check whether procedures are being followed, whether operational controls are effective, whether objectives and targets are being met, and whether legal compliance is maintained. Internal audits do not replace external certification audits — rather, they complement them by providing ongoing assurance between external audit visits. The findings from internal audits feed into the management review process, which in turn drives continual improvement.',
   },
@@ -102,20 +102,20 @@ const quizQuestions = [
     id: 1,
     question: 'What does the acronym EMS stand for in the context of environmental management?',
     options: [
-      'Electrical Monitoring System',
       'Environmental Management System',
+      'Electrical Monitoring System',
       'Energy Measurement Standard',
       'European Manufacturing Specification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EMS stands for Environmental Management System. It is a structured framework that helps organisations manage their environmental responsibilities in a systematic way. An EMS provides the organisational structure, planning activities, responsibilities, practices, procedures, processes, and resources for developing, implementing, maintaining, and continually improving environmental performance. The most widely recognised EMS framework is ISO 14001, which provides the international standard for environmental management systems.',
   },
   {
     id: 2,
     question: 'How many clauses does ISO 14001:2015 contain?',
-    options: ['5 clauses', '7 clauses', '10 clauses', '14 clauses'],
-    correctAnswer: 2,
+    options: ['5 clauses', '10 clauses', '7 clauses', '14 clauses'],
+    correctAnswer: 1,
     explanation:
       'ISO 14001:2015 contains 10 clauses, following the High Level Structure (HLS) that is common to all modern ISO management system standards. The 10 clauses are: 1 — Scope, 2 — Normative references, 3 — Terms and definitions, 4 — Context of the organisation, 5 — Leadership, 6 — Planning, 7 — Support, 8 — Operation, 9 — Performance evaluation, and 10 — Improvement. Clauses 1 to 3 are introductory and non-auditable; clauses 4 to 10 contain the requirements that organisations must meet to achieve certification.',
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     options: [
       'Environmental objectives and targets are established',
       'Operational controls and procedures are implemented',
-      'Performance is monitored, measured, and evaluated against objectives',
       'Corrective actions are taken to address non-conformances',
+      'Performance is monitored, measured, and evaluated against objectives',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "During the 'Check' phase of the PDCA cycle, performance is monitored, measured, and evaluated against objectives and targets. This includes tracking key performance indicators (KPIs), conducting compliance evaluations to verify legal requirements are being met, performing internal audits to assess system conformance, and analysing data to identify trends and areas for improvement. The 'Plan' phase is where objectives and targets are established, the 'Do' phase is where operational controls are implemented, and the 'Act' phase is where corrective actions are taken. The 'Check' phase is the critical feedback loop that provides the evidence base for informed decision-making in the subsequent 'Act' and 'Plan' phases.",
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'What must an organisation identify as the first step in implementing an EMS on site?',
     options: [
-      'The cost of certification',
       'Its environmental aspects and their associated impacts',
+      'The cost of certification',
       'The name of the EMS coordinator',
       'The schedule for the first external audit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The first step in implementing an EMS on site is to identify the organisation's environmental aspects and their associated impacts. An environmental aspect is any element of an organisation's activities, products, or services that interacts with the environment — for example, energy consumption, waste generation, emissions to air, discharges to water, use of raw materials, and noise. The associated impact is the resulting change to the environment — for example, greenhouse gas emissions, landfill use, air pollution, water contamination, resource depletion, or disturbance to wildlife. This identification process forms the foundation of the entire EMS because it determines what the organisation needs to manage, control, and improve.",
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
       'Which KPI would be most appropriate for measuring waste management performance on a construction site?',
     options: [
       'Number of employees trained in fire safety',
-      'Tonnes of waste diverted from landfill as a percentage of total waste generated',
       'The total value of the construction contract',
+      'Tonnes of waste diverted from landfill as a percentage of total waste generated',
       'Number of site visitors per month',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Tonnes of waste diverted from landfill as a percentage of total waste generated is the most appropriate KPI for measuring waste management performance. This KPI captures both the volume of waste being managed and the effectiveness of recycling and recovery efforts. It is a widely used metric in the construction industry, with many clients and frameworks setting targets of 90% or higher diversion from landfill. The KPI can be tracked using waste transfer notes and duty of care documentation, which are already legal requirements. It provides a clear, measurable, and comparable indicator that can be benchmarked against industry standards and tracked over time to demonstrate continual improvement.',
   },
@@ -191,11 +191,11 @@ const quizQuestions = [
     question: 'What practical benefit does EMS certification provide when tendering for work?',
     options: [
       'It guarantees the organisation will win every tender',
-      'It qualifies the organisation for tenders that require demonstrated environmental management capability',
       'It removes the need to submit method statements',
       'It allows the organisation to charge higher rates without justification',
+      'It qualifies the organisation for tenders that require demonstrated environmental management capability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EMS certification (ISO 14001 or EMAS) qualifies the organisation for tenders that require demonstrated environmental management capability. Many principal contractors, public sector clients, and framework agreements now include ISO 14001 certification (or equivalent) as a mandatory pre-qualification requirement. Without certification, the organisation is excluded from the tender process entirely, regardless of its technical competence or price competitiveness. Certification demonstrates to clients that the organisation takes environmental management seriously, has a systematic approach to managing its environmental impacts, is subject to independent third-party verification, and is committed to continual improvement. This does not guarantee winning tenders, but it is increasingly a prerequisite for being invited to tender at all.',
   },

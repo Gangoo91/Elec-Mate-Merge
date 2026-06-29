@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'admittance-def',
     question: 'What does the admittance (Y-value) of a building element describe?',
     options: [
-      'Temperature and pressure effects on gas density',
-      'Metalwork each side may need individual bonding',
-      'Learning — identifying root cause and preventing recurrence',
+      'Its steady-state rate of heat loss to the outside',
+      'The air permeability of the construction in m³/hr/m²',
+      'The amount of daylight the surface reflects into the room',
       'Its ability to store and release heat cyclically',
     ],
     correctIndex: 3,
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     question:
       'Why do lightweight buildings typically have higher peak cooling loads than heavyweight buildings?',
     options: [
-      'Red to line conductor, black to earth/CPC',
+      'They have higher U-values and lose more heat in winter',
       'They cannot store heat to spread gains over time',
-      'Significant findings, people at risk, control measures',
-      'Device ID (and possibly IP addresses or node IDs)',
+      'They always have larger glazed areas facing south',
+      'They require more ventilation air than heavyweight buildings',
     ],
     correctIndex: 1,
     explanation:
@@ -131,9 +131,9 @@ const quizQuestions = [
       'How does internal thermal mass (exposed concrete soffit) benefit an office building?',
     options: [
       'Absorbs daytime gains, reducing cooling load and enabling night purge',
-      'Helps in heavyweight construction by reducing peak temperatures',
-      'Using cool night air to remove heat stored in thermal mass',
-      'Whether mass is on warm (internal) or cold (external) side',
+      'Increases the U-value of the roof, lowering winter heat loss',
+      'Reduces the structural loading on the building frame',
+      'Improves the acoustic performance between floors',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     question:
       'A building has high admittance sum (ΣAY). What does this indicate about its cooling load profile?',
     options: [
-      'Earthing, bonding, main switch, and consumer unit',
-      'Phase conductor cross-sectional area',
-      'To avoid electromagnetic interference',
+      'Higher peak and shorter duration cooling',
+      'No cooling will ever be required',
+      'A constant cooling load throughout the day and night',
       'Lower peak but longer duration cooling',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
       'Which factor determines the position of insulation for best thermal mass performance?',
     options: [
       'Whether mass is on warm (internal) or cold (external) side',
-      'Absorbs daytime gains, reducing cooling load and enabling night purge',
-      'Using cool night air to remove heat stored in thermal mass',
-      'Helps in heavyweight construction by reducing peak temperatures',
+      'The colour of the external wall finish',
+      'The orientation of the building relative to north',
+      'The thickness of the internal plaster skim coat',
     ],
     correctAnswer: 0,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     id: 10,
     question: 'In CIBSE Guide A, what is the response factor (fr) used for?',
     options: [
-      'Helps in heavyweight construction by reducing peak temperatures',
-      'Lower peak but longer duration cooling',
+      'Calculating the steady-state heat loss of the building',
+      'Determining the required ventilation air change rate',
       'Classifying buildings as fast, medium or slow response',
-      'Whether mass is on warm (internal) or cold (external) side',
+      'Setting the design air permeability target for the fabric',
     ],
     correctAnswer: 2,
     explanation:
@@ -236,10 +236,10 @@ const quizQuestions = [
     id: 12,
     question: 'For Part O overheating assessment, how does thermal mass affect compliance?',
     options: [
-      'Helps in heavyweight construction by reducing peak temperatures',
-      'Absorbs daytime gains, reducing cooling load and enabling night purge',
-      'Classifying buildings as fast, medium or slow response',
-      'Air removes heat faster than mass can store it',
+      'It helps heavyweight buildings comply by reducing peak temperatures',
+      'It has no effect on the overheating assessment outcome',
+      'It makes compliance harder by trapping heat in the structure',
+      'It is only relevant to the winter heating assessment',
     ],
     correctAnswer: 0,
     explanation:

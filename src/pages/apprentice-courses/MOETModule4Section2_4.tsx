@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'ir-temperature-effect',
     question: 'How does temperature affect insulation resistance readings?',
     options: [
-      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
+      'Temperature has no measurable effect on insulation resistance',
       'Higher temperature decreases insulation resistance — readings roughly halve for every 10 degrees C rise',
-      'Counts input pulses via dedicated hardware, independent of the PLC scan cycle',
-      'Unique Device ID, manufacturer & model, location, range & units, and accuracy class',
+      'Higher temperature increases insulation resistance proportionally',
+      'Insulation resistance only changes below freezing point',
     ],
     correctIndex: 1,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'Before performing an insulation resistance test, which safety precaution is essential?',
     options: [
-      'Applying progressively higher test voltages and comparing readings at each step',
-      'Safely discharge the stored capacitive charge before touching conductors',
+      'Apply the test voltage with the circuit still energised for comparison',
+      'Connect all sensitive electronic equipment to share the test load',
       'Ensure the circuit is safely isolated, proved dead, and all sensitive equipment is disconnected',
-      'Condition monitoring, electrical testing and diagnostic fault-finding',
+      'Select the highest available test voltage to obtain the clearest reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,9 +101,9 @@ const quizQuestions = [
       'When testing insulation resistance on a three-phase motor, which connections should be tested?',
     options: [
       'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
-      'Significant insulation deterioration requiring investigation',
-      'The 10-minute reading by the 1-minute reading',
-      'Condition monitoring, electrical testing and diagnostic fault-finding',
+      'Only L1 to earth, as the windings are internally connected',
+      'Only phase-to-phase, since the frame is already earthed',
+      'Only the neutral to earth at the star point',
     ],
     correctAnswer: 0,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     question:
       'A motor insulation resistance drops from 50 megohms to 2 megohms over six months. This indicates:',
     options: [
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'Normal seasonal variation that needs no action',
       'Significant insulation deterioration requiring investigation',
-      'Condition monitoring, electrical testing and diagnostic fault-finding',
-      'Misleadingly low insulation resistance readings',
+      'A faulty test instrument, since 2 megohms is impossible',
+      'An improvement, because the reading is now closer to the minimum',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'After completing an insulation resistance test on a long cable run, what must be done?',
     options: [
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
-      'A standard reference temperature, typically 40 degrees C',
+      'Leave the cable disconnected for 24 hours before re-energising',
+      'Apply the test voltage a second time to confirm the reading',
       'Safely discharge the stored capacitive charge before touching conductors',
-      'Significant insulation deterioration requiring investigation',
+      'Re-energise the circuit immediately to dissipate the charge',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,9 +155,9 @@ const quizQuestions = [
     question: 'Step voltage testing involves:',
     options: [
       'Applying progressively higher test voltages and comparing readings at each step',
-      'Significant insulation deterioration requiring investigation',
-      'Ensure the circuit is safely isolated, proved dead, and all sensitive equipment is disconnected',
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'Reducing the test voltage in steps until the reading stabilises',
+      'Switching between AC and DC test voltages during the test',
+      'Stepping the reading down to a reference temperature',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 9,
     question: 'High ambient temperature and surface moisture cause:',
     options: [
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'Misleadingly high insulation resistance readings',
       'Misleadingly low insulation resistance readings',
-      '60 seconds and 30 seconds into the test',
-      'A standard reference temperature, typically 40 degrees C',
+      'No change, provided the test voltage is correct',
+      'The polarisation index to rise above its true value',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,9 +193,9 @@ const quizQuestions = [
     id: 11,
     question: 'For meaningful trending of motor insulation data, readings should be corrected to:',
     options: [
-      'Safely discharge the stored capacitive charge before touching conductors',
-      'The 10-minute reading by the 1-minute reading',
-      'Significant insulation deterioration requiring investigation',
+      'The voltage at which the test was carried out',
+      'The minimum acceptable value in BS 7671',
+      'The ambient humidity on the day of the test',
       'A standard reference temperature, typically 40 degrees C',
     ],
     correctAnswer: 3,
@@ -207,9 +207,9 @@ const quizQuestions = [
     question: 'Under ST1426, insulation resistance testing relates to which competence area?',
     options: [
       'Condition monitoring, electrical testing and diagnostic fault-finding',
-      'Significant insulation deterioration requiring investigation',
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
-      'A standard reference temperature, typically 40 degrees C',
+      'Manual handling and safe lifting of heavy plant',
+      'Producing quotations and managing client invoices',
+      'Excavation and underground cable installation',
     ],
     correctAnswer: 0,
     explanation:

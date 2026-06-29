@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'rising-main',
     question: 'What is the primary advantage of a rising main busbar system over cable risers?',
     options: [
-      '450mm from floor level (accessibility guidance)',
-      'Unenforceable except where the payer is insolvent',
-      'They are significantly reduced',
+      'It removes the need for any overcurrent protection',
+      'It operates safely without any fire compartmentation',
+      'It carries a higher voltage than cable can withstand',
       'Easier tap-off connections at each floor',
     ],
     correctIndex: 3,
@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     id: 'fire-barrier',
     question: 'How often must fire barriers be installed in vertical busbar risers?',
     options: [
-      'Provide safe systems of work',
-      'Investment-grade audit (Level 3)',
-      'Multi-function power meter',
+      'Only at the top and bottom of the riser',
+      'Every 3 metres regardless of floor position',
+      'Only where the riser changes direction',
       'At each floor penetration',
     ],
     correctIndex: 3,
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is busbar trunking?',
     options: [
-      'High-speed storage networking protocol commonly using fibre',
+      'A single large-CSA cable run in a steel containment tray',
       'Prefabricated conductor system in protective housing',
-      'Test date, next test date, and tester ID',
-      'Where cables pass through fire-rated walls, floors and partitions',
+      'A series of parallel SWA cables clipped to a cable ladder',
+      'An overhead catenary wire supporting suspended luminaires',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why must busbar joints be carefully torqued during installation?',
     options: [
-      'One complete positive and negative alternation',
+      'To allow the conductors to expand freely along the run',
       'To ensure low-resistance connections and prevent overheating',
-      'Fire hood or intumescent cover fitted where required',
-      'Calculating optimal start times to reach target temperatures',
+      'To improve the IP rating of the busbar housing',
+      'To increase the short-circuit withstand rating of the system',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the typical application for lighting busbar trunking?',
     options: [
-      'BRUKL (Building Regulations UK Part L)',
-      'Logical sequence covering all relevant areas systematically',
+      'Supplying a single high-power motor at the end of a run',
+      'Carrying the main incoming supply from the transformer',
       'Feeding multiple luminaires along a linear run',
-      'They vary with the square of the load current (I squared R)',
+      'Providing the earthing connection for a rising main',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What protection is required where busbar trunking passes through fire barriers?',
     options: [
-      'Stop high-risk activities, provide shelter, monitor conditions',
-      'Annually or when systems change significantly',
-      'The bill of quantities or material schedule',
+      'An additional earth bonding conductor at the penetration',
+      'A local isolation switch on each side of the wall',
+      'Extra ventilation louvres to dissipate heat at the gap',
       'Fire-rated collars or seals to maintain compartmentation',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What is the advantage of sandwich-type busbar construction?',
     options: [
       'Compact size with good heat dissipation',
-      'A competent person scheme for electrical work',
-      'Annually or as per manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommendations',
-      'Failed battery or charging circuit fault',
+      'It removes the need for any tap-off protection',
+      'It allows aluminium to be used instead of copper',
+      'It eliminates the need for fire barriers at penetrations',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'How are tap-off units typically connected to busbar trunking?',
     options: [
-      '4mA baseline allows fault detection',
+      'Welded directly onto the busbar conductors',
       'Plug-in connection through access opening',
-      'Individual room temperature control',
-      'Process material adhering to sensor surfaces',
+      'Bolted through a drilled hole in the conductor',
+      'Crimped onto a flying lead at the busbar end',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'What derating factor must be considered for busbar systems at elevated ambient temperatures?',
     options: [
-      'Initial verification (inspection and testing)',
-      'Life safety and emergency systems',
+      'An increased rating, as heat improves conductivity',
+      'No change, since busbar ratings are temperature-independent',
       'Reduced rating per manufacturer data',
-      'At least 3 out of 4 faults',
+      'A fixed 50% reduction above 25°C in all cases',
     ],
     correctAnswer: 2,
     explanation:

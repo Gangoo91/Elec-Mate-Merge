@@ -14,23 +14,23 @@ const quickCheckQuestions = [
     question: 'Which type of dimmer is generally recommended for LED lamps?',
     options: [
       'Leading-edge (TRIAC)',
-      'Trailing-edge (electronic)',
       'Rotary rheostat',
       'Any standard dimmer',
+      'Trailing-edge (electronic)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Trailing-edge (electronic) dimmers are recommended for LEDs because they switch off more smoothly, reducing flicker and buzzing that can occur with leading-edge dimmers.',
   },
   {
     question: 'What causes LED lamps to flicker when connected to some dimmers?',
     options: [
-      'Too much voltage',
       'Insufficient minimum load',
+      'Too much voltage',
       'Wrong colour temperature',
       'Faulty LED chip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Many dimmers have a minimum load requirement. When the connected LED load is too low, the dimmer cannot regulate properly, causing flicker.',
   },
@@ -64,12 +64,12 @@ const quizQuestions = [
   {
     question: 'What is the main advantage of a smart relay switch over a smart dimmer?',
     options: [
-      'It can change colour temperature',
       'It works with non-dimmable loads',
+      'It can change colour temperature',
       'It provides smoother dimming',
       'It uses less energy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Smart relay switches simply turn loads on or off, making them suitable for non-dimmable loads like some LED drivers, motors, or fluorescent fittings.',
   },
@@ -77,11 +77,11 @@ const quizQuestions = [
     question: 'When installing LED downlights with a dimmer, you should always:',
     options: [
       'Use the highest wattage rating',
-      "Check the dimmer's compatibility list",
       'Install a bypass capacitor regardless',
       'Use leading-edge dimmers only',
+      "Check the dimmer's compatibility list",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Manufacturers provide compatibility lists showing which LED lamps work with which dimmers. Checking this prevents flickering, buzzing, and premature failure.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'DALI is a protocol specifically designed for:',
     options: [
       'Security system integration',
-      'Digital addressable lighting control',
       'Audio system connection',
+      'Digital addressable lighting control',
       'HVAC automation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DALI (Digital Addressable Lighting Interface) is an international standard protocol for controlling and dimming lighting fixtures in commercial and industrial applications.',
   },

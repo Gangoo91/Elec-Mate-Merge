@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Per Reg 551.1.1, which power sources are considered "generating sets" under BS 7671 Section 551?',
     options: [
-      'Only PV',
-      'Combustion engines (CHP, biomass with electric gen), turbines (wind, micro-hydro, gas turbine CHP), electric motors (rare — pumped storage), photovoltaic cells (PV), batteries (BESS treated as generating set per Reg 551.7.2.1), other suitable sources. Section 551 is the UNIFYING BS 7671 framework for ANY electricity-generating source on the customer side of the meter',
-      'Only wind',
-      'Only diesel',
+      'Combustion engines, turbines, electric motors, PV cells, batteries and other suitable sources',
+      'Only solar PV cells and grid-tied PV inverters; other technologies fall under separate parts',
+      'Only rotating sources such as wind, hydro and gas-turbine generators',
+      'Only diesel and gas standby generators rated above 16 A per phase, not renewables',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 551.1.1 lists power sources considered as generating sets in BS 7671 Section 551: (a) combustion engines (typical CHP, biomass plants with engine-driven generators); (b) turbines (wind, micro-hydro, gas-turbine CHP); (c) electric motors (pumped storage — rare); (d) photovoltaic cells (PV — covered in M2-M4); (e) batteries (BESS — covered in M5; explicitly classified as generating set per Reg 551.7.2.1, not as load); (f) other suitable sources (fuel cells, emerging technologies). Section 551 is therefore the unifying BS 7671 framework for EVERY non-utility electricity source on the customer side of the meter. M9 covers the categories from this list not already covered in M2-M5: wind, micro-hydro, CHP — plus solar thermal (no electrical generation, but electrical install scope) and biomass (combustion may include generator stage or be heat-only).',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What MCS Installer Standards cover the M9 technologies?',
     options: [
-      'No standards',
-      'MIS 3001 = solar thermal; MIS 3002 = solar PV; MIS 3003 = micro-wind; MIS 3004 = biomass (wood / pellet); MIS 3005 = heat pumps (covered M8); MIS 3007 = micro-CHP; MIS 3008 = micro-hydro. Each is the installer competency framework + customer-grant entry point for that technology. MCS-certified company submits sizing + commissioning + handover paperwork to Ofgem',
-      'Only MCS',
-      'Only MIS 3002',
+      'There are no installer standards for these technologies; only manufacturer instructions apply',
+      'A single MIS 3002 standard covers every renewable technology across the whole module',
+      'A separate MIS 300x standard per technology — 3001 solar thermal, 3003 wind, 3004 biomass, 3007 micro-CHP, 3008 micro-hydro',
+      'MCS alone is the standard; the MIS numbers are manufacturer product part numbers, not standards',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'MCS (Microgeneration Certification Scheme) Installer Standards (MIS) cover the M9 technologies: MIS 3001 = solar thermal heating; MIS 3002 = solar PV; MIS 3003 = small wind (≤50 kW); MIS 3004 = biomass heating (wood / pellet); MIS 3005 = heat pumps (covered in M8); MIS 3006 = ground source heat pumps (older — now consolidated into 3005); MIS 3007 = micro-CHP; MIS 3008 = micro-hydro. Each standard sets sizing methodology + product approval list + installer competence + customer handover documentation. UK Government Boiler Upgrade Scheme grant requires MCS-certified company. For solar thermal: BUS does NOT currently cover solar thermal (heat pump-focused) but the Renewable Heat Premium Payment historically did; verify current UK grants. Cert evidence bundle for each technology includes the relevant MIS handover pack + the BS 7671 electrical install EIC.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Why does most M9 generating-set technology trigger EREC G99 rather than G98?',
     options: [
-      'No reason',
-      'EREC G98 fast-track Type A limit: ≤16 A per phase generation. Wind / micro-hydro / CHP installs sustaining export above this threshold trigger G99 formal application — DNO design + connection offer + approval + completion notification. G98 only fits the smallest end (1-3 kW wind, <16 A inverter export). G99 lead time 6-18 weeks + cost / coordination overhead vs G98 post-installation notification',
-      'No DNO',
-      'Random',
+      'The choice between the two is made arbitrarily by the installer at the design stage',
+      'Because these technologies require no DNO involvement at all, unlike grid-tied PV',
+      'Because the loss-of-mains test method, not the export level, decides which recommendation applies',
+      'Their sustained export exceeds the G98 ≤16 A per phase limit, so the formal G99 application applies',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'EREC G98 = Type A small-scale generation up to 16 A per phase, fast-track post-installation notification. EREC G99 = larger generation, formal pre-installation application. For M9 technologies: (1) Wind microgeneration — small (≤3 kW) may fit G98; most domestic micro-wind (3-6 kW) and commercial (10+ kW) trigger G99 due to sustained export. (2) Micro-hydro — typically sustained generation 5-30 kW; G99 typical. (3) CHP — micro-CHP domestic (~1 kW electrical) may fit G98; commercial CHP (10-500 kW) firmly G99. (4) Solar thermal — no electrical generation, so no G98/G99 trigger. (5) Biomass — heat-only systems no trigger; biomass with combined-heat-and-power has the engine-generator triggering G98 / G99 per output. UK 2025-26 reality: G99 application is part of the project plan from day one for any sustained-export technology.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What is "anti-islanding" + why does Reg 551.7.5 apply to all M9 generating sets?',
     options: [
-      'Imaginary',
-      'Anti-islanding = the generating set must NOT continue to export to a lost public supply. Under DNO supply outage / fault, a connected generator continuing to feed creates a dangerous "island" with live grid conductors that the DNO assumed were dead. Reg 551.7.5 mandates protection against this — typically via the inverter / generator controller. Applies to wind, hydro, CHP, PV, BESS — anything that can export',
-      'Custom feature',
-      'Optional',
+      'A theoretical hazard that does not occur in practice on real UK installations',
+      'It stops a generating set feeding a lost public supply, so it applies to anything that can export',
+      'An optional manufacturer convenience feature the customer can enable or disable at will',
+      'A protection that applies only to large commercial generators above 50 kW, not domestic ones',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A rural farm wants 10 kW micro-hydro from a stream + 5 kW small wind + existing solar PV. What BS 7671 + regulatory framework applies?',
     options: [
-      'Only Section 712',
-      'Section 551 applies to ALL three generating sets (Reg 551.1.1 lists turbines + PV); coordinated parallel operation per Reg 551.7; anti-islanding per Reg 551.7.5 on all three. EREC G99 formal application for the combined site (multiple sources + sustained export). Multiple MCS standards: MIS 3008 micro-hydro, MIS 3003 wind, MIS 3002 PV. Cert evidence bundle integrates all sources + the DNO connection agreement covers the aggregate',
-      'No regulation',
-      'Random',
+      'Only Section 712 (PV) applies, since the wind and hydro are too small to regulate',
+      'No BS 7671 framework applies to a rural, off-grid-leaning multi-source site',
+      'Each source is treated independently under its own MCS standard, with no site-wide framework',
+      'Section 551 covers all three sets together, with a single G99 application and the per-technology MCS standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-source rural site = full Section 551 + Chapter 82 PEI integration. Reg 551.1.1 lists turbines (wind, hydro) and PV as generating sets — all three are Section 551 sources. Reg 551.4.2: RCD effectiveness must remain for every intended combination of sources (with three sources, this is a real constraint). Reg 551.7 parallel operation requirements: each source must coordinate; Reg 551.7.2.1 each on supply side of protective devices; Reg 551.7.5 anti-islanding on all three. EREC G99 formal application — DNO design accounts for combined export (potentially up to 17 kW total). MCS coverage: MIS 3008 micro-hydro, MIS 3003 wind, MIS 3002 PV. The DNO connection agreement is one document covering the aggregate site. Cert evidence bundle: Section 712 PV install + Chapter 57 BESS (if added later) + Section 551 generator coordination + EREC G99 reference + per-source MCS handover packs.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Solar thermal does NOT generate electricity. Why is it in a renewable-energy course module for electricians?',
     options: [
-      'Mistake',
-      'Solar thermal has real electrical install scope despite no electrical generation. Components: differential-temperature controller (compares collector vs cylinder temperature → starts/stops circulation pump), circulation pumps (40-100 W), drainback / pressurised system controls, freeze-protection (where applicable), interface to existing CH / DHW controls. Reg 314 dedicated controls way + Reg 411.4 ADS + Reg 415.1 RCD all apply. MCS MIS 3001 is the installer standard',
-      'Random',
-      'Not real',
+      'It has real electrical scope — a controller, circulation pumps, sensors and heating-control interface',
+      'It was included by mistake and is not really an electrical install topic for the course',
+      'It is here only as general background, with no actual electrical work for the installer to do',
+      'Solar thermal does in fact generate electricity via its collectors, which is why it appears here',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Solar thermal install electrical scope: (1) Differential-temperature controller — compares collector sensor temperature vs cylinder sensor; starts circulation pump when collector > cylinder + delta-T threshold; stops when temperature drop or cylinder reaches setpoint. (2) Circulation pump(s) — typically 40-100 W single-phase (smaller pump than CH primary); some systems use solar-direct PV-powered DC pumps (no AC supply needed). (3) Drainback / pressurised system controls — drainback systems use gravity, pressurised systems use expansion vessel + pressure sensor; both have electrical control elements. (4) Freeze protection — antifreeze (glycol mix) common, or controller-managed dump cycle in colder climates. (5) Interface to DHW cylinder + existing heating controls — integrate with heat pump / boiler primary so solar contribution doesn\'t fight other heat sources. BS 7671 applies via Reg 314 dedicated controls way + Reg 411.4 ADS + Reg 415.1 30 mA RCD + Reg 522.2.1 cable thermal protection (cable near hot pipework). MCS MIS 3001 is the heat-pump-equivalent installer standard for solar thermal. Cert evidence bundle records the electrical scope alongside MCS sizing + commissioning.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.2.1 says generating set on the supply side of all protective devices + BESS treated as generating set, not load. Why?',
     options: [
-      'Random',
-      'Generating sets feed energy INTO the installation from their supply terminals — if connected on the load side of a protective device, a fault on the protective device may not see the generator side, and the generator can backfeed an isolated section creating a hazard. Treating BESS as a generating set (not a load) places it on the supply side correctly + ensures parallel-operation protective devices coordinate with all sources. Reg 551.4.2 RCD effectiveness depends on this',
-      'No reason',
-      'Customer choice',
+      'It is an arbitrary classification with no real electrical-safety significance',
+      'There is no technical reason; a battery could equally be wired downstream as a load',
+      'A source can back-feed a load-side section a device cannot see, so supply-side keeps protection effective',
+      'It is left to the customer to decide whether the battery counts as a source or a load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 551.7.2.1 codifies a fundamental electrical-architecture rule for generating sets. Energy direction matters: a generating set is a source, not a load. If the source is on the LOAD side of a protective device: (1) fault on the load-side circuit may not be seen by the supply-side protective device (energy flowing from the wrong direction); (2) protective device tripping leaves the source still energising the isolated downstream — bypass or fail-to-disconnect risk; (3) RCD discrimination breaks (Reg 551.4.2 effectiveness compromised). Placing the source on the SUPPLY side of all protective devices ensures: parallel-operation protective devices coordinate with all sources; RCD continues to see all relevant fault current paths; isolation works correctly. BESS as generating set: even though BESS can be both source (discharging) AND load (charging), its electrical architecture connection is per the generating-set rule (supply side, not load side). This applies to all M9 technologies that export: wind, hydro, CHP, BESS, PV. Cert evidence bundle records the source-connection topology vs protective device hierarchy.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'A customer asks "should I install solar thermal for hot water OR a heat pump?" What is the electrician\'s honest answer in UK 2025-26?',
     options: [
-      'Solar thermal always',
-      'Different functions: solar thermal generates HOT WATER directly (no electricity); heat pump generates BOTH heating AND hot water (uses electricity efficiently). UK 2025-26 reality: Boiler Upgrade Scheme grant covers heat pumps (£7,500) NOT solar thermal. Solar thermal economic case has weakened vs PV + heat pump combination. Solar thermal still has niche use (high DHW demand, no roof space for PV, off-grid). Heat pump + PV is the dominant UK 2025-26 retrofit path',
-      'Heat pump always',
-      'Random',
+      'Always recommend solar thermal, as it heats water more cheaply than any heat pump',
+      'They do different jobs — heat pump (heat + DHW + BUS grant) plus PV now dominates; solar thermal is niche',
+      'Always recommend a heat pump, as solar thermal has no remaining valid use case anywhere',
+      'The two are interchangeable, so the customer can pick either with the same outcome',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'CHP — Combined Heat and Power — what is unique vs the other M9 technologies?',
     options: [
-      'No difference',
-      'CHP generates BOTH electricity AND heat from a single fuel source (typically natural gas; biogas / biofuel / hydrogen variants emerging). The combined efficiency (~80-90% vs ~35% for grid electricity + boiler heat separately) is the value proposition. Other M9 generators are electrical-only (wind, hydro) or heat-only (solar thermal, most biomass). Section 551 framework applies + heat-network interface adds complexity',
-      'Random',
-      'No heat',
+      'There is no real difference from the other generating technologies in the module',
+      'It produces only heat and no electricity, unlike the wind and hydro turbines',
+      'It produces only electricity, with the heat being a waste by-product that is simply vented',
+      'It makes both electricity and useful heat from one fuel (~80-90% combined), adding heat-network complexity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CHP (Combined Heat and Power) is unique among M9 technologies: it generates BOTH electricity AND useful heat from a single fuel source. Combined efficiency: typically 80-90% (where the waste heat from electrical generation is captured + used). Compare: grid electricity ~35-40% efficient at point of generation; separate gas boiler ~85-90% efficient. CHP combined is roughly 2× the primary-energy efficiency. Other M9 technologies: electrical-only (wind, micro-hydro) or heat-only (solar thermal, biomass heat-only). Biomass with engine-driven generator IS a form of CHP. Section 551 framework applies — Reg 551.7 parallel operation + Reg 551.7.5 anti-islanding. Heat-network interface adds complexity (hydraulic + control + thermal storage). UK 2025-26 CHP landscape: micro-CHP domestic largely Stirling engine + fuel cell (limited deployment); commercial CHP (10 kW - 5 MW) widespread in hospitals, leisure centres, large commercial; biogas CHP at anaerobic digestion sites; hydrogen-blend CHP emerging. Cert evidence bundle integrates Section 551 + heat-network + fuel-source compliance.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Hydrogen for heating — what is the UK 2025-26 installer position?',
     options: [
-      'Mainstream',
-      'Predominantly POLICY DIRECTION, not deployment. UK 2025-26 reality: HyDeploy trials (20% hydrogen blend in natural gas) at limited sites; UK Government hydrogen-village trials cancelled or scaled back; mainstream hydrogen heating decision deferred. Hydrogen-ready boilers + heat pumps marketed but very limited active hydrogen supply. Installer position: aware of direction, no current widespread install obligation; track regulatory decisions',
-      'Banned',
-      'Imaginary',
+      'Mostly policy direction — limited blend trials, villages scaled back, decision deferred; stay aware only',
+      'Mainstream and widely deployed, with most UK homes already heated by hydrogen today',
+      'Banned outright across the UK, with no blend or village trials permitted anywhere',
+      'Entirely imaginary; no hydrogen heating trial or deployment has ever taken place in the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hydrogen for heating UK 2025-26 reality: predominantly policy direction + emerging technology, NOT widespread deployment. (1) HyDeploy trials — 20% hydrogen blend in natural gas at limited sites (Keele University, Winlaton). Continues at trial scale. (2) Hydrogen heating village trials — Whitby + Redcar trials cancelled / scaled back over public + technical concerns. (3) UK Government strategic decision on hydrogen for heating deferred (originally targeted 2026; now later or possibly no widespread deployment). (4) Hydrogen-ready boilers + heat pumps — marketed by manufacturers; very limited active hydrogen supply to use them on. (5) Hydrogen for transport + industry — separate policy stream, more momentum. Installer 2025-26 position: aware of direction; understand the technologies; track regulatory decisions; no immediate widespread install obligation. M9 covers hydrogen direction in §9.7 alongside other emerging LCT (fuel cells) — keeps awareness without overstating deployment.',
   },

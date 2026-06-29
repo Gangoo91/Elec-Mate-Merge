@@ -49,10 +49,10 @@ const AM2Module2Section3 = () => {
       question:
         'If the spec calls for segregated trunking for ELV cabling but you run it with mains, what happens?',
       options: [
-        'Warning of presence of more than one supply',
+        'Pass, provided the cables are correctly terminated',
         'Fail for not following spec and breaching safety segregation',
-        'Investigation to identify root cause before taking action',
-        'Steel toe-capped boots with anti-static soles',
+        'Minor mark deduction for an installation method error',
+        'Pass, as long as you note the deviation in writing',
       ],
       correctIndex: 1,
       explanation:
@@ -88,9 +88,9 @@ const AM2Module2Section3 = () => {
       id: 'measurement-accuracy',
       question: 'Why is exact measurement crucial when following AM2 drawings?',
       options: [
-        'Loss of RCD protection for affected circuits',
-        'Buildability input and early coordination is needed',
-        'Specific PPE required for each stage of the work',
+        'Measurements are only a rough guide to the layout',
+        'Accuracy matters only for the consumer unit position',
+        'A tolerance of 50mm is always acceptable on the day',
         'Measurements in drawings are treated as exact requirements',
       ],
       correctIndex: 3,
@@ -182,9 +182,9 @@ const AM2Module2Section3 = () => {
       id: 7,
       question: "What's the main reason candidates fail this section?",
       options: [
-        '+/-5mm tolerance for exact positioning',
-        'To show you can follow instructions precisely',
-        'False - exact positioning is required',
+        'Running out of time before completing the install',
+        'Poor cable terminations at accessory points',
+        'Untidy containment and trunking workmanship',
         'Not following drawings/specifications exactly',
       ],
       correctAnswer: 3,
@@ -196,9 +196,9 @@ const AM2Module2Section3 = () => {
       question: 'Why should you mark out before fixing accessories?',
       options: [
         'To ensure exact positioning as per drawings',
-        'Fail for non-compliance with specification',
-        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
-        'To show you can follow instructions precisely',
+        'To save time during the practical assessment',
+        'To make the cable routing look neater on the wall',
+        'Because the assessor requires it before energising',
       ],
       correctAnswer: 0,
       explanation:

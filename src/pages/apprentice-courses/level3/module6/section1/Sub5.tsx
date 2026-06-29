@@ -39,10 +39,10 @@ const checks = [
     question:
       'You receive a DNO Form 1 declaring Ze = 0.35 ohm. You also have a previous EICR for the building from 18 months ago that recorded measured Ze = 0.42 ohm. Which figure do you use for design-stage Zs calculation?',
     options: [
-      'Absence of trust — without trust, team members will not be vulnerable with each other, leading to fear of conflict, lack of commitment, avoidance of accountability, and ultimately inattention to collective results',
+      'The measured 0.42 ohm from the EICR — a real on-site measurement always overrides a declared figure for design purposes.',
       'The DNO declared 0.35 ohm — design uses the worst-case declared figure (lower Ze means higher Zs at fault, which the design must still satisfy). The measured figure is for verification, not design.',
-      'A notice served by the fire authority requiring the responsible person to notify them before making changes to the premises or its use that could increase fire risk or affect fire safety measures',
-      'Under-torque causes high-resistance joints leading to overheating; over-torque damages conductors and terminal components, both creating fire and failure risks',
+      'The average of the two figures (0.385 ohm) — splitting the difference between the declared and measured values gives the most realistic design input.',
+      'Whichever figure is higher (0.42 ohm) — using the larger Ze is always the most conservative choice for any design calculation.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const checks = [
     question:
       'A manufacturer datasheet for a heat-pump compressor says "minimum cable 4 mm² T+E." Your IET GN1 cable selection method gives 6 mm² for the same load and route. Which do you specify?',
     options: [
-      'Test results shall be recorded. The recording forms part of the certification process and the records shall be retained for the lifetime of the installation (or as required by the contracting party). The Schedule of Test Results is the standard form.',
-      'The DNO declared 0.35 ohm — design uses the worst-case declared figure (lower Ze means higher Zs at fault, which the design must still satisfy). The measured figure is for verification, not design.',
-      'Standard MCB ratings (6, 10, 16, 20, 25, 32, 40 A) with Type B or C overcurrent characteristic, combined with 30 mA Type A or Type AC residual current protection (Type B / F variants becoming available). Same form factor as a standard RCBO; same cascade and breaking-capacity specifications.',
+      '4 mm² — the manufacturer datasheet always overrides BS 7671 because the maker knows the appliance best, so the lower figure governs.',
+      'Either is acceptable — pick whichever is cheaper, because both the datasheet and the GN1 method are equally valid and the installer chooses.',
+      'Split the difference at 5 mm² — averaging the two figures gives a practical cable size that satisfies both sources.',
       '6 mm² — IET GN1 method is BS 7671-aligned and is what the EIC will be judged against. The manufacturer datasheet is product-specific minimum; BS 7671 cable selection is installation-specific worst-case (with all derating factors). Specify the higher of the two.',
     ],
     correctIndex: 3,
@@ -67,12 +67,12 @@ const checks = [
     question:
       'On a domestic CU upgrade you are unsure whether a 32 A ring final on 2.5 mm² T+E with the cable partly in 100 mm of insulation needs derating. The On-Site Guide (OSG) shows it as fine for typical domestic use. BS 7671 Table 4D5 plus the App 4 Reference Method derating gives a different answer. Which governs?',
     options: [
-      'MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.',
+      'The On-Site Guide — it is a simpler, more recent publication, so its figure overrides the full BS 7671 calculation whenever the two disagree.',
+      'Neither — once the OSG and BS 7671 disagree, the circuit cannot be designed at all and the work must be referred to the DNO for a ruling.',
       'BS 7671 — it is the source of truth. The OSG is a trusted simplification but is bounded by the assumptions on its inside cover. Where the install differs from those assumptions, go back to BS 7671 Appendix 4 directly. Document the BS 7671 calc in the design pack.',
-      'EN 397 (industrial helmets, general purpose) or EN 12492 (mountaineering / rope access — sometimes used for working at height with chinstrap). Date of manufacture marked underneath; typical service life 5 years from manufacture or 3 years from first use, whichever shorter (per manufacturer).',
-      'Inspect what is visible without disturbing the install where practicable, record any item where access was limited as a limitation in the Schedule of Inspections, and flag the supervisor.',
+      'Whichever gives the larger cable — pick the more conservative answer without checking why the two sources differ.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The OSG codifies BS 7671 selection for typical domestic and small commercial cases, with explicit assumptions (typical Reference Methods, no exceptional grouping, no exceptional ambient). When install conditions exceed those assumptions, go back to BS 7671 Appendix 4 Tables 4D1A through 4F4A and apply the proper Ca/Cg/Ci stack. The design pack documents the BS 7671 calc so the EIC defends correctly under audit. The OSG is a tool for everyday work; the regs are the source of truth.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which document is the source-of-truth for the supply characteristics required by Reg 313 of BS 7671?',
     options: [
-      'A short briefing to site workers about specific ecological risks, protected species, and the mitigation measures they must follow',
+      'The previous EICR for the building — the most recent measured figures are the authoritative source for supply characteristics.',
       'The DNO declaration (DNO Form 1 or equivalent) — written confirmation from the Distribution Network Operator of voltage, Ze, PSCC, earthing arrangement and conductor configuration.',
-      'Task description, step-by-step sequence, hazards per step, control measures per step, responsible persons, emergency arrangements and required resources',
-      'To verify that alarms activate at the correct setpoints, display correctly on the operator station, and generate the correct response',
+      'The On-Site Guide default values — the OSG tables give the standard supply figures for each system type, which can be used in place of a DNO request.',
+      'The meter operator\'s verbal estimate at the time of survey — a quick on-site confirmation from the meter installer is sufficient.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'IET Guidance Notes pair with which Parts of BS 7671?',
     options: [
-      '10 to 20 times In. Used for circuits with very high in-rush — large transformers, welding plant, motor circuits with DOL starting on heavy loads.',
-      'Swivel couplers have a lower safe working load than right-angle couplers and may compromise structural integrity',
+      'GN1 with Part 6; GN3 with Part 5; GN5 with Part 7; GN6 with Chapter 54 — each Guidance Note pairs with a different Part than its subject.',
+      'All eight Guidance Notes pair only with Part 4 (Protection for safety), because every GN is fundamentally about protection.',
       'GN1 with Part 5; GN3 with Part 6; GN5 with Chapter 41; GN6 with Chapter 43; GN7 with Part 7; GN8 with Chapter 54.',
-      'Polite reminder at 7 days overdue, firmer follow-up at 14 days, formal action at 30 days',
+      'The Guidance Notes do not pair with any Part — they are standalone documents that replace BS 7671 rather than elaborating on it.',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'On a multi-discipline project, the architect’s drawings conflict with the M&E coordinator’s service routes. The L3 designer should:',
     options: [
-      'Cables can’t shed heat properly (Cg derate worsens), pulling new cables becomes very difficult, and the original CCC calculation may now be non-compliant with 433.1.1',
-      'Mental Health First Aiders, EAP access, signposting (Lighthouse, Mind, Mates in Mind, Samaritans), regular wellbeing toolbox talks, and a no-blame reporting culture',
-      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
+      'Pick whichever drawing looks correct and carry on, since the architect\'s and M&E coordinator\'s drawings are advisory and the electrical designer has final say.',
+      'Average the two routes shown and run the cable halfway between them, splitting the difference to satisfy both disciplines.',
+      'Phone the architect, agree a verbal fix, and proceed immediately without recording anything so the programme is not held up.',
       'Raise a Request for Information (RFI), record the conflict in the design log, propose a resolution that maintains BS 7671 and CDM safety, and only proceed once the resolution is recorded by the Principal Designer.',
     ],
     correctAnswer: 3,
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'Manufacturer datasheets give which kind of information for the L3 design pack?',
     options: [
       'Product-specific minimum cable, fuse or breaker rating; protective device characteristic curves; PME compatibility statements; specific environmental ratings (IP / IK / temperature); installation method and clearances.',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'BSR can serve compliance notices; can ultimately direct evacuation if risk is severe; PAP can be prosecuted for failure to maintain safety case; Defective Premises Act + civil claims if defects later cause harm.',
-      'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
+      'The declared external earth fault loop impedance Ze and prospective fault current at the origin — the supply data the design depends on.',
+      'The notifiable status of the work under Part P and the route for Building Control notification in the relevant nation.',
+      'The diversity factors to apply to the maximum-demand calculation for each appliance type in the installation.',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'When the IET On-Site Guide simplification disagrees with a BS 7671 Appendix 4 detailed calc, which governs?',
     options: [
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
+      'The On-Site Guide — it is the most recent and most practical document, so its simplified figure overrides the detailed Appendix 4 calculation.',
       'BS 7671 (the source standard). The OSG is a trusted simplification bounded by stated assumptions. Where install conditions exceed the OSG assumptions, go back to BS 7671 Appendix 4 directly.',
-      'Tiredness, eye strain, and reduced concentration from prolonged screen use — managed through regular breaks, the 20-20-20 rule, and limiting non-essential screen time',
-      'Investigate the complaint — check harness fit and size, provide training if needed, and ensure no worker is permitted to work at height without the required PPE; escalate to the subcontractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s management if necessary',
+      'Whichever the client prefers — the choice between the OSG and Appendix 4 is a commercial decision rather than a technical one.',
+      'Neither — once the two disagree the circuit must be redesigned from scratch using manufacturer data only.',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which UK regulator publishes Approved Documents A through to S that interpret the Building Regulations?',
     options: [
-      'An underground or surface-level storage system that temporarily holds surface water runoff and releases it at a controlled rate',
-      'Secondary containment (bund) sized for 110% of the largest container or 25% of total stored, whichever is greater, with no drainage outlet — preventing spills reaching watercourses or soakaways',
+      'The Institution of Engineering and Technology (IET) — the same body that publishes BS 7671 and the Guidance Notes.',
+      'The Health and Safety Executive (HSE) — as part of its enforcement of construction safety on site.',
       'The Department for Levelling Up, Housing and Communities (DLUHC, now MHCLG) — administered by Building Control bodies (local authority Building Control or Approved Inspectors).',
-      'The exact location and type of confined space, the nature of the emergency, number of casualties, suspected hazards (gas type if known), what rescue measures are in progress, and any access difficulties',
+      'The British Standards Institution (BSI) — which writes both the British Standards and the Approved Documents.',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'The client brief is a primary design input. What should it include for an L3 designer to start work?',
     options: [
-      '(1) Eliminate — could the work be done quieter? (2) Substitute — manual torque wrench? (3) Engineer — quieter tool, sound-absorbing barriers? (4) Administrative — limit duration, exclude others from area. (5) PPE — ear defenders LAST. Noise at Work Regs 2005 require risk assessment at 80dB action level.',
-      'Because the voltage at the cut-out is one end of an unbroken chain that starts at 400 kV — understanding the chain explains why supply is stable, where it can fail, and why ESQCR statutory limits exist on the 230 V you actually work with',
-      'A document accompanying the transfer of controlled waste from the producer to the next holder. Must contain a description of the waste, the European Waste Catalogue (EWC) code, the SIC (Standard Industrial Classification) code of the producer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s activity, the quantity, the carrier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s licence details, the destination, and signatures of both parties. Kept for 2 years (3 years for Hazardous Waste Consignment Notes).',
+      'Only the budget — once the designer knows how much the client will spend, every technical decision follows automatically.',
+      'Only the cable types and protective devices to use — the brief is essentially the client specifying the design themselves.',
+      'Only the start and finish dates — the brief is purely a programme document and carries no functional or performance information.',
       'Functional requirements (what the installation must do), performance requirements (loads, future expansion, criticality of supplies), aesthetic requirements (accessory styles, colour, locations), operational requirements (maintenance access, isolation strategy, energy targets), and constraints (timescale, budget, planning conditions).',
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'How should the L3 designer record the source of every key design input?',
     options: [
       'Citation in the design pack — DNO Form 1 reference number, manufacturer datasheet name and revision, IET Guidance Note edition and section, BS 7671 reg or table number. Each input traceable to its source on a single page.',
-      'No — measured Zs = 0.35 + 1.95 = 2.30 Ω, which exceeds the corrected max of 2.18 Ω. The cable is too long/thin for this MCB rating; either uprate the cable to 2.5 mm², or reduce the run, or change the device.',
-      'Death that occurs after rescue from suspension, caused by the sudden redistribution of pooled blood overwhelming the heart — prevented by adopting a semi-seated recovery position rather than laying the casualty flat',
-      'The scheme flags a missed notification (audit risk + potential scheme penalty); the Building Control Compliance Certificate to the customer is delayed; in some cases late notification fees apply; persistent missed notifications can put scheme membership at risk.',
+      'Save the source documents in a folder and rely on that alone — filing the PDFs replaces the need to cite anything in the design pack itself.',
+      'Keep the sources in your head — an experienced designer remembers where each figure came from, so written citation is unnecessary.',
+      'Cite only the BS 7671 edition on the cover sheet — that single reference covers every input the design used.',
     ],
     correctAnswer: 0,
     explanation:

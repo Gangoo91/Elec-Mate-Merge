@@ -10,7 +10,7 @@ const quickCheckQuestions = [
     id: 'ptw-definition',
     question: 'A permit-to-work is best described as which of the following?',
     options: [
-      'A formal documented procedure that forms part of the safe system of work',
+      'A formal documented procedure within the safe system of work',
       'A simple tick-box form that allows entry into any space',
       'A verbal agreement between the entrant and the site manager',
       'A generic risk assessment that covers all tasks on site',
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'What is the primary responsibility of the permit issuer (authorising authority)?',
     options: [
       'Carrying out the physical work inside the confined space',
-      'Assessing hazards, confirming precautions are in place, and authorising the permit',
       'Standing outside the confined space as the safety attendant',
+      'Assessing hazards, confirming precautions are in place, and authorising the permit',
       'Completing the emergency rescue plan after entry has commenced',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The permit issuer (authorising authority) is responsible for assessing the hazards, confirming that all required precautions are in place, and formally authorising the permit before entry is allowed. They must visit the site and satisfy themselves that conditions are safe before signing.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'Why must a confined space permit-to-work be cross-referenced with other active permits?',
     options: [
-      'To reduce the number of forms that need to be completed',
-      'To ensure that conflicting activities (such as hot work or electrical isolation) are identified and controlled',
+      'To reduce the number of permit forms that need to be completed',
       'Because cross-referencing is a legal requirement under BS 7671',
-      'To allow multiple teams to share the same permit document',
+      'To allow several teams to share a single permit document',
+      'To ensure conflicting activities such as hot work are controlled',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cross-referencing ensures that conflicting activities are identified and controlled. For example, if hot work is being carried out near a confined space, additional fire risks must be managed. If electrical isolation is in place, the confined space permit must reference the isolation certificate to prevent inadvertent re-energisation.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT typically recorded on a confined space permit-to-work?',
     options: [
+      "The entrant's National Insurance number",
       'Description of the work and location of the confined space',
       'Hazards identified and precautions required',
-      "The entrant's National Insurance number",
       'Time limits and communication requirements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A confined space PTW records the description of work, location, hazards, precautions (isolation, ventilation, monitoring, PPE), emergency arrangements, time limits, communication requirements, and signatures. Personal identification details such as National Insurance numbers are not part of the permit document.',
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the correct sequence of the permit lifecycle?',
     options: [
-      'Issue → Request → Work → Closure → Assessment',
-      'Request → Assessment → Issue → Work under permit → Extension (if needed) → Closure → Cancellation',
-      'Assessment → Issue → Work → Request → Closure',
-      'Work → Request → Issue → Closure → Assessment',
+      'Issue → Request → Assessment → Work → Extension → Closure',
+      'Request → Assessment → Issue → Work → Extension → Closure',
+      'Assessment → Issue → Request → Work → Extension → Closure',
+      'Work → Request → Issue → Assessment → Extension → Closure',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 3,
     question: 'The permit holder (entrant/team leader) is responsible for which of the following?',
     options: [
-      'Authorising the permit and assessing all hazards',
-      'Ensuring the work is carried out in accordance with the permit conditions and that all team members understand the requirements',
-      'Designing the confined space ventilation system',
+      'Authorising the permit and assessing all of the hazards present',
+      'Designing the forced ventilation system for the confined space',
+      'Ensuring the work follows the permit conditions and briefing the team',
       'Carrying out the annual audit of the permit-to-work system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The permit holder is the person in charge of the work — usually the entrant or team leader. They are responsible for ensuring that the work is carried out in accordance with the permit conditions, that all team members have been briefed, that precautions are maintained throughout the work, and that the permit is returned for closure when the work is complete.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is a common cause of permit-to-work failures?',
     options: [
-      'Issuing the permit after a thorough site visit',
-      'Updating the permit when conditions change',
-      'Permits issued without a site visit, or permits treated as mere paperwork',
-      'Closing the permit promptly when the work is finished',
+      'Issuing the permit only after a thorough visit to the site',
+      'Updating the permit whenever the conditions on site change',
+      'Closing the permit promptly as soon as the work is finished',
+      'Issuing permits without a site visit, treating them as paperwork',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Common permit failures include: permits issued without a site visit (the issuer signs without checking conditions), permits treated as mere paperwork (a tick-box exercise rather than a genuine safety process), permits not closed when work is finished, and permits not updated when conditions change. Each of these failures undermines the purpose of the permit system and can lead to serious incidents.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'When hot work is carried out inside a confined space, which additional requirements apply?',
     options: [
-      'No additional requirements — the standard confined space permit covers hot work',
-      'A separate hot work permit, gas-free certification, fire watch, and removal or protection of flammable materials',
-      'Only a verbal agreement with the site manager',
-      'Hot work is never permitted inside a confined space under any circumstances',
+      'A separate hot work permit, gas-free certification and a fire watch',
+      'No extra requirements — the standard confined space permit covers it',
+      'Only a verbal agreement with the site manager before starting',
+      'Hot work is never permitted inside a confined space in any case',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hot work inside a confined space requires a separate hot work permit cross-referenced with the confined space permit, gas-free certification confirming the atmosphere is below the lower explosive limit, a fire watch during and after the work, removal or protection of all flammable materials within the space, and appropriate fire-fighting equipment immediately available at the entry point.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'How does an electrical isolation permit relate to BS 7671 and the safe isolation procedure?',
     options: [
-      'BS 7671 does not apply to confined spaces',
-      'The electrical isolation permit documents that the safe isolation procedure (lock off, prove dead, secure) has been completed in accordance with BS 7671 requirements',
-      'The electrical isolation permit replaces the need for a safe isolation procedure',
-      'BS 7671 only applies to domestic installations',
+      'BS 7671 does not apply to work inside confined spaces',
+      'The isolation permit records that safe isolation was done per BS 7671',
+      'The isolation permit removes any need for a safe isolation procedure',
+      'BS 7671 applies only to domestic electrical installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
     id: 7,
     question: 'Where should the permit-to-work document be displayed during the work?',
     options: [
-      'In the site office filing cabinet',
-      'At the point of entry to the confined space, clearly visible to all personnel',
-      'On the company intranet only',
-      "In the entrant's pocket, out of sight",
+      'In the site office filing cabinet, with the other records',
+      'On the company intranet only, for managers to view',
+      'At the point of entry, clearly visible to all personnel',
+      "In the entrant's pocket, out of sight of the team",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The permit must be displayed at the point of entry to the confined space so that it is clearly visible to all personnel involved in the work — entrants, the top person/safety attendant, and any other workers in the area. This ensures everyone can verify that a valid permit is in force and can check the conditions, time limits, and emergency arrangements at any time during the work.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'During a permit-to-work audit, which of the following would be considered a serious finding?',
     options: [
-      'Permits filed in date order with all sections completed',
-      'Gas test records attached to each permit',
-      'Multiple permits found without closure signatures, indicating work was completed but permits were never formally closed',
+      'Permits filed in date order with every section completed in full',
+      'Gas test records correctly attached to each permit issued',
       'Emergency arrangements clearly documented on every permit',
+      'Multiple permits found without closure signatures after completion',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Permits without closure signatures indicate that the permit system is not being followed properly. If permits are not formally closed, the organisation has no confirmation that the confined space has been made safe, that all personnel have exited, that temporary equipment has been removed, and that the space has been handed back. This is a serious audit finding because it represents a breakdown in the control system.',
   },

@@ -24,10 +24,10 @@ const inlineChecks = [
     id: 'm4s6-what-afdd-detects',
     question: 'What does an AFDD (Arc Fault Detection Device) detect that an MCB or RCD cannot?',
     options: [
-      'Excessive current beyond the cable rating',
-      'Earth-fault residual current on a TT system',
-      'The characteristic high-frequency electrical signature of a series or parallel arc — a damaged conductor that is producing heat through arcing without necessarily drawing the high current that would trip an MCB',
-      'Earth-fault loop impedance above the maximum',
+      'Excessive current beyond the cable rating, as an overload would',
+      'Earth-fault residual current returning to earth on a TT system',
+      'The high-frequency signature of a series or parallel arc, at normal load current',
+      'Earth-fault loop impedance rising above the tabulated maximum Zs',
     ],
     correctIndex: 2,
     explanation:
@@ -38,36 +38,36 @@ const inlineChecks = [
     question:
       'In BS 7671:2018+A4:2026, which of the following premises types has an EXPLICIT requirement that AFDDs SHALL be installed on single-phase socket circuits ≤ 32 A?',
     options: [
-      'A standard 3-bed family home',
-      'Houses in multiple occupation (HMOs), purpose-built student accommodation, care homes, and high-rise residential buildings (HRRBs)',
-      'Industrial workshops only',
-      'Any premises with combustible materials',
+      'A standard owner-occupied 3-bed family home on a suburban estate',
+      'HMOs, purpose-built student accommodation, care homes, and high-rise residential buildings',
+      'Industrial workshops and process plant where machinery is present',
+      'Any premises storing significant quantities of combustible materials',
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 mandates AFDDs ("shall") on single-phase AC final circuits supplying socket-outlets ≤ 32 A in: HMOs, purpose-built student accommodation, care homes, and high-rise residential buildings (HRRBs). For other premises (typical owner-occupied dwellings, commercial offices) Reg 421.1.7 currently RECOMMENDS AFDDs to mitigate fire risk — it does not yet mandate them, but specification by designers is increasingly common.',
+      'Reg 421.1.7 (redrafted in A4:2026, now a requirement) mandates AFDDs ("shall be provided") on single-phase AC final circuits supplying socket-outlets ≤ 32 A in: high-rise residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built student accommodation, and care homes. For all other premises the same regulation RECOMMENDS AFDDs on those circuits to mitigate fire risk — specification by designers is increasingly common.',
   },
   {
     id: 'm4s6-where-prohibited',
     question: 'Reg 710.421.1.7 PROHIBITS AFDDs from certain medical-location circuits. Which?',
     options: [
-      'All medical locations regardless of group',
-      'Group 0 and Group 2 medical locations — where unwanted disconnection of supply would cause unacceptable risk to patients',
+      'All medical locations of Group 0, 1 and 2 — i.e. every defined medical-location group',
+      'Group 0 and Group 2 medical locations only',
       'Group 1 only',
       'Operating theatres only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      "Reg 710.421.1.7: AFDDs shall NOT be used in circuits in medical locations of Group 0 or Group 2. The rationale is that AFDDs use complex signal-processing to detect arcs and can be triggered by certain switching transients or motor-start signatures — an unwanted disconnection in a Group 2 (life-supporting medical equipment) location is unacceptable. Group 1 medical locations may use AFDDs subject to manufacturer's coordination guidance.",
+      "Reg 710.421.1.7 (BS 7671:2018+A4:2026): AFDDs shall NOT be used in circuits in medical locations of Group 0, 1 and 2 — the prohibition covers every defined medical-location group, not just Group 2. The rationale is that AFDDs use complex signal-processing to detect arcs and can be triggered by certain switching transients or motor-start signatures — an unwanted disconnection in a medical location is unacceptable where supply continuity protects patient safety. Reg 710.421.1.7.101 additionally prohibits AFDDs in circuits supplied by medical IT systems (Reg 710.411.6).",
   },
   {
     id: 'm4s6-placement',
     question: 'When AFDDs are installed, where must they be placed within the protected circuit?',
     options: [
-      'Anywhere along the circuit',
-      'At the origin of the final circuit they protect — typically in the consumer unit / distribution board',
-      'Close to the load only',
-      'In each socket outlet',
+      'Anywhere convenient along the length of the protected circuit',
+      'At the origin of the final circuit, in the consumer unit or distribution board',
+      'Close to the load end only, near the equipment being protected',
+      'Built into each individual socket-outlet on the circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -91,10 +91,10 @@ const inlineChecks = [
     question:
       "How do you verify an AFDD's manually-operated test facility on initial verification or EICR?",
     options: [
-      'Use a generic RCD tester at IΔn',
-      "Follow the manufacturer's recommendations — AFDDs use a manufacturer-specific test sequence; generic RCD testers do not exercise the arc-detection signal-processing",
-      'No test is required',
-      'Loop tester at the socket',
+      'Use a generic multifunction RCD tester at IΔn and 5×IΔn',
+      "Follow the manufacturer's recommendations using the device's own test facility",
+      'No test of the arc-detection function is required at verification',
+      'Use a loop-impedance tester at the furthest socket on the circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       'A house in multiple occupation (HMO) is being rewired. The consumer unit has 6-way space. The lighting circuit (16 A) and 4 socket circuits (32 A each, single-phase) are present. What does Reg 421.1.7 demand?',
     options: [
-      'AFDDs on all circuits',
-      'AFDDs on the four 32 A single-phase socket circuits — Reg 421.1.7 mandates AFDDs on single-phase AC final circuits supplying socket-outlets ≤ 32 A in HMOs. Lighting circuits are not in scope of the mandatory AFDD requirement',
-      'AFDDs on the lighting circuit only',
-      'No AFDDs required — only RCDs',
+      'AFDDs on all five circuits, including the 16 A lighting circuit at the consumer unit',
+      'AFDDs on the four 32 A single-phase socket circuits — the lighting circuit is out of scope',
+      'AFDDs on the 16 A lighting circuit only, as the highest fire-risk circuit in the HMO',
+      'No AFDDs required in this HMO — 30 mA RCDs on each circuit are sufficient instead',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the difference between a series arc fault and a parallel arc fault?',
     options: [
-      'No difference — both are the same',
-      'Series arc — current passes through a damaged contact (e.g. loose terminal, broken conductor strand) generating heat at the gap; current is the normal load current. Parallel arc — current jumps between two conductors (e.g. line-to-neutral or line-to-PE) through degraded insulation; can be limited by load impedance to below MCB trip levels',
-      'Series arc has higher current than parallel',
-      'Only parallel arcs are detectable',
+      'Series arc — a gap in the normal current path (loose terminal); parallel arc — a path between conductors through degraded insulation',
+      'There is no meaningful difference — both terms describe exactly the same fault condition',
+      'A series arc always carries a higher current than a parallel arc on the same circuit',
+      'Only parallel arcs are detectable, because series arcs produce no measurable signature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Series arc: current flows along the normal circuit path but jumps a small gap somewhere (loose terminal, broken strand, damaged plug pin). Power dissipation at the arc is small but localised — it produces extreme heat at the contact. Parallel arc: current finds a partial path between two conductors via degraded insulation — line-to-neutral or line-to-PE. Both are fire risks. Both produce the characteristic high-frequency electrical signature that AFDDs are designed to detect. MCBs see only RMS current — they're blind to both arc types as long as the magnitude stays below trip thresholds.",
   },
@@ -135,25 +135,25 @@ const quizQuestions = [
     question:
       'On a domestic owner-occupied dwelling (NOT an HMO, NOT high-rise, NOT care home), what is the BS 7671 status of AFDDs in 2026?',
     options: [
-      'Mandatory',
-      'Reg 421.1.7 RECOMMENDS the installation of AFDDs to mitigate fire risk in AC final circuits — it is a recommendation, not a mandatory requirement, in standard domestic dwellings',
-      'Prohibited',
-      'No mention',
+      'Mandatory — every socket circuit must be AFDD-protected in a standard dwelling',
+      'Recommended — Reg 421.1.7 advises AFDDs to mitigate fire risk, but does not mandate them',
+      'Prohibited — AFDDs may not be used in standard owner-occupied domestic dwellings',
+      'No mention — BS 7671 says nothing about AFDDs in domestic premises at all',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 421.1.7 recommends AFDDs in standard domestic dwellings — it uses "consideration shall be given" language rather than "shall be installed". The mandatory requirement is restricted to HMOs, purpose-built student accommodation, care homes, and HRRBs. Designers may specify AFDDs as a default for standard domestic — many now do, particularly on bedroom socket circuits where the fire-risk consequence is greatest.',
+      'Reg 421.1.7 (A4:2026) recommends AFDDs in standard domestic dwellings — for all other premises the regulation states "the use of AFDDs ... is recommended" for single-phase socket-outlet circuits ≤ 32 A, rather than "shall be provided". The mandatory ("shall") requirement is restricted to HMOs, purpose-built student accommodation, care homes, and HRRBs. Designers may specify AFDDs as a default for standard domestic — many now do, particularly on bedroom socket circuits where the fire-risk consequence is greatest.',
   },
   {
     id: 4,
     question: 'Which equipment standard does an AFDD/RCBO COMBINATION device comply with?',
     options: [
-      'BS EN 62606 only',
+      'BS EN 62606 only, since the arc-detection function defines the whole device',
+      'BS EN 60898 only, covering the overcurrent element of the combination',
       'BS EN 62606 (for the arc-detection function) AND BS EN 61009 / 62423 (for the overcurrent + RCD functions)',
-      'BS EN 60898 only',
-      'BS 88 series',
+      'The BS 88 series, as for any combined overcurrent protective device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A combined AFDD+RCBO device must satisfy BS EN 62606 for the arc-detection element AND BS EN 61009 (Type AC/A) or BS EN 62423 (Type F/B) for the overcurrent + residual-current functions. The product label will declare both standards. The advantage over separate devices: one DIN-rail position, one wiring connection, integrated coordination between the three protection functions.',
   },
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'A care-home rewire includes a 16 A lighting circuit, a 32 A socket ring, a 20 A fixed cooker outlet, and a 16 A immersion-heater radial. Where are AFDDs mandated?',
     options: [
-      'All four',
-      'On the 32 A socket ring only — Reg 421.1.7 mandates AFDDs on single-phase socket circuits ≤ 32 A in care homes. Lighting, fixed cooker outlet, and immersion heater (fixed equipment) are not in the mandatory scope',
-      'Only on the lighting circuit',
-      'Nothing — care homes are exempt',
+      'On all four circuits, including the lighting circuit and the fixed cooker outlet',
+      'On the 32 A socket ring only — the fixed-equipment and lighting circuits are out of scope',
+      'On the 16 A lighting circuit only, as the circuit most exposed to fire risk',
+      'On none of them — care homes are exempt from the AFDD requirement entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       "An AFDD nuisance-trips on a customer's vacuum cleaner that has a worn brush. The customer asks whether the AFDD is faulty. What's the right response?",
     options: [
-      'Replace the AFDD',
-      "The AFDD is detecting a real arc fault — the worn carbon brush of the vacuum motor is producing arcing characteristic that the AFDD's signal-processing identifies. The vacuum needs servicing or replacement; the AFDD is doing exactly what it's specified to do",
-      'Bypass the AFDD',
-      'The customer needs a smaller appliance',
+      'Replace the AFDD, since repeated tripping shows that the device itself has failed',
+      'Bypass the AFDD for that circuit so the customer can carry on using the appliance',
+      'Advise the customer to run a lower-powered appliance on that circuit instead',
+      'The AFDD is detecting a real arc from the worn brush — the vacuum needs servicing, not the AFDD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "AFDDs sometimes detect arcing in failing motor brushes, contactors with degraded contacts, or appliances with damaged plug pins. The 'nuisance trip' is usually a real fire-risk indicator — the appliance has a fault that would eventually start a fire if not addressed. Resist customer pressure to bypass; explain that the AFDD has identified a maintenance issue. Modern AFDDs include diagnostic indicators (some via Bluetooth apps) that show whether the trip was overcurrent, residual-current or arc-fault — useful for explaining the cause.",
   },
@@ -189,25 +189,25 @@ const quizQuestions = [
     id: 7,
     question: 'Why does BS 7671 prohibit AFDDs in medical Group 2 locations (Reg 710.421.1.7)?',
     options: [
-      "AFDDs don't work at low voltage",
-      'Group 2 medical locations support life-critical equipment where unwanted disconnection of supply could endanger patient life. AFDDs use signal-processing that may occasionally trip on transients that are not fires — the risk of an unwanted disconnection on life-support outweighs the fire-risk mitigation benefit',
-      'Group 2 has higher voltages',
-      'Medical equipment cannot use AFDDs',
+      "AFDDs simply do not function at the low voltages used in medical equipment",
+      'Group 2 supports life-critical equipment where an unwanted disconnection could endanger a patient',
+      'Group 2 locations operate at higher voltages than an AFDD is rated to interrupt',
+      'Medical equipment is electrically incompatible with arc-fault detection devices',
     ],
     correctAnswer: 1,
     explanation:
-      'Group 2 medical locations are operating theatres, intensive care units, and similar — where supply continuity is paramount. AFDDs occasionally false-trip on motor-start transients or specific switching signatures; in a normal building the disconnection is an inconvenience, in a Group 2 location it could be fatal. The trade-off favours continuity of supply over arc-fault detection. Group 0 (areas where no patient contact equipment is in use) is also prohibited; Group 1 is permitted with manufacturer guidance.',
+      'Group 2 medical locations are operating theatres, intensive care units, and similar — where supply continuity is paramount. AFDDs occasionally false-trip on motor-start transients or specific switching signatures; in a normal building the disconnection is an inconvenience, in a Group 2 location it could be fatal. The trade-off favours continuity of supply over arc-fault detection. Reg 710.421.1.7 in fact prohibits AFDDs across ALL medical-location groups (Group 0, 1 and 2), and Reg 710.421.1.7.101 also bars them on circuits supplied by medical IT systems.',
   },
   {
     id: 8,
     question: 'What is the A4:2026 cert-form change related to AFDDs?',
     options: [
-      'No change',
-      'A4 added a column (item 4.23 / column 30 on the EIC schedule of inspection) for explicit recording of AFDD provision per circuit, plus an inspection item for confirming the AFDD test facility was operated successfully',
-      'A4 deleted AFDDs from BS 7671',
-      'A4 replaced AFDDs with RCDs',
+      'No change — the A4 model certification forms make no mention of AFDDs at all',
+      'A4 deleted AFDDs from BS 7671 altogether, removing them from the regulations',
+      'A4 added per-circuit AFDD recording to the model forms, plus a test-facility inspection item',
+      'A4 replaced AFDDs with RCDs on the model EIC and EICR certification forms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The A4:2026 model EIC and EICR forms include explicit AFDD coverage: schedule of inspection item 4.23 (presence of AFDD where required), and an entry on the schedule of test results (column 30) confirming the AFDD's manually-operated test facility was successfully operated per the manufacturer's instructions. This makes AFDD provision and verification visible on every cert from 15 April 2026.",
   },

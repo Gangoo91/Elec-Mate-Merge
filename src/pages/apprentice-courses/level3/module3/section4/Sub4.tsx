@@ -62,10 +62,10 @@ const checks = [
 
 const quizQuestions = [
   { id: 1, question: 'Iron (core) losses include:', options: [
-    '500 V DC, minimum 1.0 MΩ.',
+    'Winding I²R losses only',
     'Hysteresis + eddy currents',
-    'Non-verbal / visual communication',
-    'Welded brackets or beam clamps',
+    'Stray leakage and terminal contact losses',
+    'Friction and windage in the bearings',
   ], correctAnswer: 1, explanation: 'Iron losses = hysteresis (re-orienting domains) + eddy currents (induced circulating in laminations). Both depend on flux density and frequency, not on load.' },
   { id: 2, question: 'Copper losses depend on:', options: [
     'Voltage',
@@ -92,15 +92,15 @@ const quizQuestions = [
     'η = P_loss / P_in',
   ], correctAnswer: 1, explanation: 'η = useful output / total input × 100. P_in = P_out + P_loss.' },
   { id: 6, question: 'A no-load test on a transformer measures primarily:', options: [
-    'Rotary motion (typically 90°)',
-    'Triple-N harmonics add in neutral',
+    'Full-load copper loss in the windings',
+    'The short-circuit impedance of the unit',
     'Iron loss + magnetising VA',
-    'Annually to traceable standards',
+    'The insulation resistance to the frame',
   ], correctAnswer: 2, explanation: 'No load = no current in secondary = no copper loss. The wattmeter reads iron losses.' },
   { id: 7, question: 'Stray losses in a transformer are caused by:', options: [
-    'A ROES is elected by employees in non-unionised workplaces',
-    'Maintaining eye contact while giving instructions',
-    'Date, time, and name of the person writing it',
+    'Hysteresis in the main core laminations',
+    'Magnetising current at no load',
+    'I²R heating in the main windings',
     'Magnetic flux leakage and eddy currents in tank/core clamps',
   ], correctAnswer: 3, explanation: 'Leakage flux induces eddies in steel tanks, end-windings and clamping plates. Small but counted in load loss measurements.' },
   { id: 8, question: 'Which loss is dominant at no-load?', options: [

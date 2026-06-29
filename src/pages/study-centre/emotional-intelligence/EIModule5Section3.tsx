@@ -26,24 +26,24 @@ const quickCheckQuestions = [
     question:
       'According to Goleman, which four leadership styles typically create a POSITIVE emotional climate?',
     options: [
-      'Visionary, Coaching, Democratic, Commanding',
       'Visionary, Coaching, Affiliative, Democratic',
+      'Visionary, Coaching, Democratic, Commanding',
       'Coaching, Affiliative, Pace-Setting, Commanding',
       'Visionary, Affiliative, Pace-Setting, Democratic',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Goleman's research found that the Visionary, Coaching, Affiliative, and Democratic styles typically create a positive emotional climate. The Pace-Setting and Commanding styles, while useful in specific situations, tend to create a negative climate when overused because they rely on pressure and compliance rather than inspiration and empowerment.",
   },
   {
     question: 'What is the key difference between a resonant leader and a dissonant leader?',
     options: [
-      'Resonant leaders are louder; dissonant leaders are quieter',
+      'Resonant leaders are louder and more forceful; dissonant leaders are quieter',
+      'Resonant leaders avoid conflict at all costs; dissonant leaders actively seek it out',
       "Resonant leaders are in tune with others' emotions and drive positive feelings; dissonant leaders are out of touch and create negativity",
-      'Resonant leaders avoid conflict; dissonant leaders embrace it',
-      'There is no meaningful difference — both terms describe the same thing',
+      'Resonant leaders rely on systems and processes; dissonant leaders rely on inspiration',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Resonant leaders are attuned to the emotions of those around them and create an emotional climate that drives positive feelings — hope, compassion, and inspiration. Dissonant leaders are out of touch with the emotional needs of their team and create toxic environments characterised by fear, anxiety, and resentment.',
   },
@@ -95,8 +95,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which of Goleman\'s six leadership styles is characterised by "come with me" and focuses on long-term vision and direction?',
-    options: ['Coaching', 'Visionary', 'Affiliative', 'Democratic'],
-    correctAnswer: 1,
+    options: ['Visionary', 'Coaching', 'Affiliative', 'Democratic'],
+    correctAnswer: 0,
     explanation:
       'The Visionary style (also called Authoritative) is characterised by "come with me". The leader articulates a compelling vision and inspires people to move toward it, while giving them freedom to choose their own route. It requires self-confidence, empathy, and the ability to act as a change catalyst.',
   },
@@ -105,11 +105,11 @@ const quizQuestions = [
     question: 'The Pace-Setting leadership style is most likely to create a negative climate when:',
     options: [
       'Used briefly to meet a critical deadline',
-      'Used as the primary, default leadership approach over an extended period',
       'Combined with the Coaching style',
       'Applied to a highly motivated, self-directed team',
+      'Used as the primary, default leadership approach over an extended period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Pace-Setting style ("do as I do, now") can be effective in short bursts with a highly competent, self-motivated team. However, when used as the default approach over time, it creates anxiety, exhaustion, and the feeling that nothing is ever good enough. Team members burn out trying to match the leader\'s relentless standards, and morale collapses.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 3,
     question: 'In Goleman, Boyatzis & McKee\'s "Primal Leadership", what does "primal" refer to?',
     options: [
-      "The leader's primitive instincts",
-      'The first and most fundamental job of leadership: driving the emotional climate',
+      "The leader's primitive, instinctive reactions under stress",
       'Being the strongest or most dominant person in the group',
-      "The leader's technical expertise",
+      'The first and most fundamental job of leadership: driving the emotional climate',
+      "The leader's technical expertise and command of the detail",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The "primal" in "Primal Leadership" refers to the idea that the first and most fundamental act of leadership is emotional. Before any strategy, planning, or decision-making, the leader\'s most basic job is to drive the collective emotions in a positive direction. The emotional climate a leader creates has more impact on performance than the specific decisions they make.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does it mean to "lead without a title"?',
     options: [
-      'Pretending to be a manager when you are not',
       'Influencing through example, emotional tone, and relationships regardless of formal position',
+      'Pretending to be a manager when you are not',
       'Refusing to accept any formal leadership responsibility',
       'Only leading when your actual manager is not present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Leading without a title means exercising leadership through your behaviour, attitude, and emotional impact rather than through formal authority. An experienced electrician who mentors apprentices, a team member who keeps morale up during tough weeks, or a colleague who always speaks up about safety issues — all of these are leadership acts that require no title or position.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
     question: 'The concept of "emotional wake" in leadership refers to:',
     options: [
       'The morning meeting where leaders set the emotional tone for the day',
-      'The lasting emotional impact a leader leaves behind after every interaction',
-      'The process of waking up the team when they are disengaged',
+      'The process of re-engaging a team that has become disengaged',
       'A technique for emotional regulation before a difficult meeting',
+      'The lasting emotional impact a leader leaves behind after every interaction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "emotional wake" is the trail of emotions a leader leaves behind after every interaction — positive or negative. Just as a boat leaves a wake in water, a leader leaves an emotional impression on everyone they interact with. A resonant leader leaves people feeling energised, valued, and motivated. A dissonant leader leaves people feeling drained, anxious, and undervalued.',
   },

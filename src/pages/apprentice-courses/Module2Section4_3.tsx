@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'true-rms',
     question: 'When do you need a true-RMS meter instead of average-responding?',
     options: [
-      'Maximum 1/6 of wall thickness',
-      'It makes procedures feel automatic and natural',
+      'For any voltage above 230 V',
+      'Only when measuring direct current',
       'For distorted/non-sinusoidal waveforms',
-      'Guard rails and safety nets',
+      'For long cable runs with high voltage drop',
     ],
     correctIndex: 2,
     explanation:
@@ -43,10 +43,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does RMS represent for an AC waveform?',
     options: [
-      'Digital communication over the same wires as the 4-20mA signal',
+      'The highest instantaneous value the waveform reaches',
       'The DC voltage that gives the same heating effect',
-      'All three: current capacity, voltage drop, and fault withstand',
-      'Consistently delivering work that meets or exceeds standards',
+      'The average of the positive and negative peaks',
+      'The voltage measured between the two peaks',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why do we label Vrms on equipment instead of peak?',
     options: [
-      'Possible arcing or loose connections',
+      'Peak voltage is too difficult to measure accurately',
       'RMS matches power/heat effects in real loads',
-      'Handling underperformance in people who are your friends',
-      'The layout (general arrangement) drawing',
+      'RMS is always a rounder, simpler number',
+      'Peak voltage changes with the supply frequency',
     ],
     correctAnswer: 1,
     explanation: 'RMS relates directly to power and heating in resistive loads.',

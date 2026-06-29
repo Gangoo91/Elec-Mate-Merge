@@ -130,16 +130,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'A cable route passes through 50mm of thermal insulation on one side. What correction factor applies?',
+      'A cable is totally surrounded by thermal insulation for a length of 50mm. What correction factor (Ci) applies?',
     options: [
-      '0.81',
+      '0.88',
       '0.55',
       '0.70',
       '1.0',
     ],
-    correctIndex: 0,
+    correctAnswer: 0,
     explanation:
-      'For 50mm contact with thermally insulating material on one side, the correction factor (Ci) is approximately 0.81 (BS 7671 Table 4A2). Greater insulation thickness requires lower factors.',
+      'For a cable enclosed in thermal insulation over a 50mm length, the derating factor is 0.88. Longer lengths in insulation require progressively lower factors (0.78 at 100mm, 0.63 at 200mm, 0.51 at 400mm).',
   },
   {
     id: 5,

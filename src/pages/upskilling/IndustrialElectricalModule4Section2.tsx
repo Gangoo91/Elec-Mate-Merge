@@ -45,8 +45,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
     {
       id: 'iec-languages',
       question: 'How many programming languages are defined in the IEC 61131-3 standard?',
-      options: ['3 languages', '4 languages', '5 languages', '6 languages'],
-      correctIndex: 2,
+      options: ['5 languages', '3 languages', '4 languages', '6 languages'],
+      correctIndex: 0,
       explanation:
         'IEC 61131-3 defines 5 programming languages: Ladder Diagram (LD), Function Block Diagram (FBD), Structured Text (ST), Instruction List (IL), and Sequential Function Chart (SFC).',
     },
@@ -78,11 +78,15 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
       question: 'In ladder logic, what symbol represents a Normally Open (NO) contact?',
       options: ['|/|', '| |', '( )', '(/)'],
       correctAnswer: '| |',
+      explanation:
+        'Two parallel vertical bars | | are the Normally Open contact, which passes logic when its tag is TRUE. |/| is Normally Closed, and the round ( ) symbols are output coils.',
     },
     {
       question: 'What is the output symbol in ladder logic called?',
       options: ['Contact', 'Coil', 'Rung', 'Rail'],
       correctAnswer: 'Coil',
+      explanation:
+        'The output element drawn as ( ) is the coil, which energises when the rung is TRUE. A rung is a horizontal line of logic and the rails are the vertical power lines.',
     },
     {
       question: 'In a TOF (Timer Off-Delay) timer, when does the output turn OFF?',
@@ -93,9 +97,11 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'When the reset input is activated',
       ],
       correctAnswer: 'After preset time elapses following input going FALSE',
+      explanation:
+        'A TOF turns its output ON immediately when the input goes TRUE, then keeps it ON for the preset time after the input goes FALSE - delaying the OFF transition (e.g. a fan run-on).',
     },
     {
-      question: 'What does the .DN bit indicate on a timer in ladder logic?',
+      question: 'What does the .DN (Done) bit indicate on a timer in ladder logic?',
       options: [
         'Timer is currently timing',
         'Timer has reached its preset value',
@@ -103,6 +109,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'Timer has been reset',
       ],
       correctAnswer: 'Timer has reached its preset value',
+      explanation:
+        'The Done bit (.DN) sets TRUE once the accumulated time reaches the preset; the .TT (Timing) bit indicates it is still counting and .EN indicates the input is enabled.',
     },
     {
       question: 'Which IEC 61131-3 language is most similar to traditional relay logic?',
@@ -113,12 +121,16 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'Sequential Function Chart (SFC)',
       ],
       correctAnswer: 'Ladder Diagram (LD)',
+      explanation:
+        'Ladder Diagram deliberately mirrors relay schematics with contacts and coils, making it the most familiar language for electricians coming from hard-wired relay control.',
     },
     {
       question:
         'What happens to a CTU counter when the CU input has a rising edge and CV is less than PV?',
       options: ['CV decrements by 1', 'CV increments by 1', 'CV resets to 0', 'Q output turns ON'],
       correctAnswer: 'CV increments by 1',
+      explanation:
+        'A CTU increments its current value (CV) by one on each rising edge of CU. The Q output only sets once CV reaches or exceeds the preset value (PV).',
     },
     {
       question: 'In Function Block Diagram (FBD), how are logic operations represented?',
@@ -129,6 +141,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'As state transition diagrams',
       ],
       correctAnswer: 'As graphical blocks with input/output connections',
+      explanation:
+        'FBD represents logic as interconnected rectangular blocks with inputs on the left and outputs on the right, with lines showing data flow between them.',
     },
     {
       question:
@@ -140,6 +154,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'Instruction List (IL)',
       ],
       correctAnswer: 'Structured Text (ST)',
+      explanation:
+        'Structured Text is a high-level, Pascal-like language with loops, conditionals and arithmetic, making it far better than graphical languages for complex maths and data handling.',
     },
     {
       question: 'What is the purpose of the TP (Timer Pulse) function block?',
@@ -150,6 +166,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'To count input pulses',
       ],
       correctAnswer: 'To generate a pulse of fixed duration',
+      explanation:
+        'A TP produces a single output pulse of exactly the preset duration on a rising edge of the input, regardless of what the input does during that pulse.',
     },
     {
       question: 'In ladder logic, what does a branch (parallel path) represent?',
@@ -160,6 +178,8 @@ const IndustrialElectricalModule4Section2: React.FC = () => {
         'XOR logic operation',
       ],
       correctAnswer: 'OR logic operation',
+      explanation:
+        'Parallel branches give OR logic - if any one path is TRUE the rung is TRUE. Contacts in series (one after another) give AND logic.',
     },
   ];
 

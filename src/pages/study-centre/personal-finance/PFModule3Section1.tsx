@@ -382,12 +382,12 @@ export default function PFModule3Section1() {
             id="pf-3-1-check2"
             question="A sole trader electrician wants a mortgage. What document from HMRC do most lenders require?"
             options={[
-              'P60 end-of-year summary',
               'SA302 tax calculation',
+              'P60 end-of-year summary',
               'CIS payment and deduction statement',
               'VAT return',
             ]}
-            correctIndex={1}
+            correctIndex={0}
             explanation="The SA302 is the key document for self-employed mortgage applications. It is a summary of your declared income and tax for each year, and most lenders require two or three years of SA302s."
           />
 
@@ -562,11 +562,11 @@ export default function PFModule3Section1() {
             question="What is the recommended maximum credit card utilisation to maintain a healthy credit score?"
             options={[
               '10% of your total limit',
-              '30% of your total limit',
               '50% of your total limit',
               '75% of your total limit',
+              '30% of your total limit',
             ]}
-            correctIndex={1}
+            correctIndex={3}
             explanation="Keeping your credit utilisation below 30% of your total available credit limit is the widely recommended threshold. Higher utilisation signals potential financial stress to lenders."
           />
 
@@ -709,8 +709,8 @@ export default function PFModule3Section1() {
               {
                 id: 2,
                 question: 'Which free service allows you to check your Equifax credit report?',
-                options: ['Credit Karma', 'ClearScore', 'MSE Credit Club', 'Experian app'],
-                correctAnswer: 1,
+                options: ['ClearScore', 'Credit Karma', 'MSE Credit Club', 'Experian app'],
+                correctAnswer: 0,
                 explanation:
                   'ClearScore provides free access to your Equifax credit report. Credit Karma covers TransUnion, and MSE Credit Club covers Experian.',
               },
@@ -720,10 +720,10 @@ export default function PFModule3Section1() {
                 options: [
                   'How many credit cards you have',
                   'Your salary',
-                  'Your payment history',
                   'The length of your credit history',
+                  'Your payment history',
                 ],
-                correctAnswer: 2,
+                correctAnswer: 3,
                 explanation:
                   'Payment history is the strongest factor in credit scoring. Consistently paying on time builds your score; missed payments damage it significantly.',
               },
@@ -740,12 +740,12 @@ export default function PFModule3Section1() {
                 question:
                   'How many years of trading history do most mainstream lenders require from self-employed applicants?',
                 options: [
-                  'One year',
                   'Two to three years',
+                  'One year',
                   'Four to five years',
                   'No minimum required',
                 ],
-                correctAnswer: 1,
+                correctAnswer: 0,
                 explanation:
                   'Most mainstream lenders require at least two years of trading history, with some asking for three years of accounts.',
               },
@@ -761,8 +761,8 @@ export default function PFModule3Section1() {
               {
                 id: 7,
                 question: 'How long do most negative markers remain on your credit file?',
-                options: ['Three years', 'Five years', 'Six years', 'Ten years'],
-                correctAnswer: 2,
+                options: ['Three years', 'Five years', 'Ten years', 'Six years'],
+                correctAnswer: 3,
                 explanation:
                   'Most negative information, including missed payments, defaults, and CCJs, stays on your credit file for six years from the date it was recorded.',
               },

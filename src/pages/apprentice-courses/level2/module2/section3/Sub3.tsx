@@ -159,9 +159,9 @@ const quizQuestions = [
     question:
       'A loose terminal in a junction box — what changes about the local resistance?',
     options: [
-      'Industrial and commercial applications with multiple cables',
-      'Visual inspection, testing, documentation',
-      'Maintaining three points of contact at all times',
+      'Falls to almost zero, so no heat is produced',
+      'Stays the same as the rest of the conductor',
+      'Rises slightly but is shared evenly along the cable',
       'Rises significantly, causing local heating (I²R)',
     ],
     correctAnswer: 3,

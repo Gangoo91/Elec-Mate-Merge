@@ -42,12 +42,12 @@ const checks = [
     question:
       "An 8.5 kW resistive electric shower on a 230 V single-phase supply. Design current Ib?",
     options: [
-      "Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions",
-      "Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building the tower higher than the manufacturer's specified freestanding limit",
-      "Early intervention allows workplace modifications and treatment before the condition becomes chronic and potentially irreversible",
       "Ib = P / V = 8500 / 230 = 36.96 A — round up to 37 A for cable sizing. Pure resistive load so power factor is 1; no diversity since the shower draws full rated load when running.",
+      "Ib = P / (V x cos φ) = 8500 / (230 x 0.85) = 43.5 A — apply a 0.85 power factor because the heating element behaves as a partly inductive load at full power.",
+      "Ib = P x V = 8500 x 230 = 1.96 MA before scaling — divide by 1000 twice to give 1.96 A for the shower circuit.",
+      "Ib = (P / V) x diversity = (8500 / 230) x 0.4 = 14.8 A — apply 40 percent diversity because a shower is rarely run at full temperature.",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "Single-phase resistive: Ib = P / V where P is the rated power in watts and V is the nominal supply voltage. 8500 / 230 = 36.96 A. The shower is a pure resistive load (heating element) with power factor 1, so apparent power equals real power and the design current is the same as if you had used kVA. No diversity is applied to a single-load dedicated circuit when it runs — when the shower is on, it draws full load. The cable schedule rounds up to a whole-amp figure for protective device matching.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "A 4 kW single-phase induction motor with a power factor of 0.85 lagging at full load. Design current Ib at the motor?",
     options: [
+      "Ib = P x cos φ / V = 4000 x 0.85 / 230 = 14.78 A — multiply by power factor because the motor draws less than its rated power when running below unity.",
+      "Ib = P / V = 4000 / 230 = 17.39 A — ignore the power factor since current is always just power divided by voltage.",
       "Ib = (4000) / (230 x 0.85) = 20.46 A — apparent power is real power divided by power factor, then current is apparent power divided by voltage. Round to 21 A and apply a starting allowance for protective coordination.",
-      "To provide a complete record of all maintainable assets including their location, criticality, technical specifications, maintenance history, and spare parts, enabling effective maintenance planning",
-      "Verify the timer is receiving its enable/trigger signal, check the time setting, and confirm the timer type (on-delay, off-delay, pulse) is correct for the application",
-      "Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix",
+      "Ib = P / (V x sqrt(3) x cos φ) = 4000 / (230 x 1.732 x 0.85) = 11.81 A — include the sqrt(3) factor for the motor's three windings.",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "Inductive single-phase: Ib = P / (V x cos φ). The motor draws apparent power S = P / cos φ = 4000 / 0.85 = 4706 VA, and the line current carries apparent power not real power. So Ib = 4706 / 230 = 20.46 A. Round up to 21 A. For motor circuits the starting current is typically 6-8 x FLC for a few seconds; the cable carries the start (short duration, OK on cable thermal) but the protective device must be coordinated for it (Type C MCB or motor-rated MPCB).",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "A 22 kW three-phase induction motor at 400 V line-to-line, power factor 0.86, efficiency 0.93. Full-load current?",
     options: [
-      "An electricity meter, a gas meter (if applicable), a communications hub (connecting to the DCC network), and an in-home display (IHD) showing real-time energy usage and cost information",
+      "Ib = 22000 / (400 x 0.86 x 0.93) = 68.8 A. Use line-to-line voltage directly without the sqrt(3) factor for a balanced three-phase load.",
       "Ib = 22000 / (1.732 x 400 x 0.86 x 0.93) = 39.7 A. Three-phase formula uses sqrt(3) and the input power must be derived from the rated mechanical output divided by efficiency.",
-      "Stop work immediately, verify the status of their own isolation, and challenge the colleague — the integrity of the safe isolation system has been compromised",
-      "An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation",
+      "Ib = 22000 / (1.732 x 230 x 0.86 x 0.93) = 69.0 A. Use the 230 V phase-to-neutral voltage in the three-phase formula.",
+      "Ib = (22000 x 0.93) / (1.732 x 400 x 0.86) = 34.3 A. Multiply by efficiency because the input power is less than the mechanical output.",
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "What does Ib (design current) represent in BS 7671 terminology?",
     options: [
-      "Your business details, client details, unique number, date, description of work, amount, VAT if applicable",
+      "The prospective short-circuit current at the origin — the highest current that can flow on a bolted fault before the device operates.",
       "The current intended to be carried by the circuit in normal service, after diversity has been applied — the demand the circuit has to deliver.",
-      "Working near overhead power lines with cranes, MEWPs, scaffold towers, or other equipment that could approach the lines",
-      "The Electricity at Work Regulations 1989, COSHH 2002, PUWER 1998, and the CDM Regulations 2015 may all be relevant depending on the work",
+      "The rated current of the protective device protecting the circuit — the value stamped on the MCB or fuse.",
+      "The maximum current-carrying capacity of the chosen cable in its installed condition after all derating factors.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: "For a single-phase resistive load, the design current formula is:",
     options: [
-      "A short, focused, informal training session delivered at the workplace covering a specific manual handling topic relevant to current work",
-      "Workers are more likely to open up to someone who understands their daily reality than to a formal professional they have never met",
+      "Ib = V / P — voltage divided by power, because current rises as the supply voltage increases.",
+      "Ib = P x V — power multiplied by voltage gives the demand in amps for a resistive load.",
       "Ib = P / V — power in watts, voltage in volts, current in amps. No power factor term because resistive loads have unity power factor.",
-      "Each test relies on the integrity of a previous test (e.g. IR cannot be safely interpreted without continuity of cpc; live tests require dead-test confirmation of earthing)",
+      "Ib = P / (V x cos φ) — power divided by voltage and power factor, applying a default cos φ of 0.85 to all loads.",
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: "For an inductive single-phase load, the design current formula is:",
     options: [
-      "The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate",
-      "The inspector, based on installation type, environment, intensity of use, and the GN3 frequency table — recorded as the inspector\\\\\\\\\\\\\\\\'s \\\\\\\\\\\\\\\"reasonable and informed decision\\\\\\\\\\\\\\\" with the rationale documented.",
-      "Communication of residual risks is required when hazards cannot be eliminated or reduced through design, forming part of the \\\\\\\\\\\\\\\"inform\\\\\\\\\\\\\\\" step after designing out risk",
+      "Ib = P x cos φ / V — real power multiplied by power factor then divided by voltage, because the reactive component reduces the line current.",
+      "Ib = P / V — the same as a resistive load, because power factor only affects the kVAr reading on the meter, not the line current.",
+      "Ib = (P x cos φ) / (V x sqrt(3)) — include sqrt(3) because an inductive load has both a real and a reactive winding.",
       "Ib = P / (V x cos φ) — real power divided by the product of voltage and power factor. The motor or inductive load draws apparent power = P / cos φ, and line current carries apparent power.",
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: "For a three-phase balanced load, the design current formula is:",
     options: [
       "Ib = P / (sqrt(3) x VL x cos φ) — three-phase line current uses sqrt(3) (1.732), line-to-line voltage VL (typically 400 V in UK LV), and power factor.",
-      "The part number, description, serial/batch number, date of issue, who issued it, which equipment it was fitted to, and the work order number",
-      "Tell your supervisor immediately, isolate if needed, and put it right — errors caught and corrected are not disciplinary issues; errors hidden are",
-      "A description of the waste, the quantity, the type of container, the date of transfer, the SIC code of the waste producer, details of both parties, and the waste carrier's registration number",
+      "Ib = P / (3 x VL x cos φ) — divide by 3 because the power is shared across three line conductors.",
+      "Ib = (sqrt(3) x P) / (VL x cos φ) — multiply the power by sqrt(3) before dividing by voltage and power factor.",
+      "Ib = P / (VL x cos φ) — no sqrt(3) term is needed because the line-to-line voltage already accounts for all three phases.",
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: "On a 30 kW resistive electric heater bank at 400 V three-phase, balanced, the design current Ib is:",
     options: [
-      "Used lubricants are classified as hazardous waste and must be collected, stored and disposed of through a licensed waste carrier",
+      "Ib = 30000 / (400 x 1) = 75 A. Use the line-to-line voltage directly with no sqrt(3) factor.",
       "Ib = 30000 / (1.732 x 400 x 1) = 43.3 A. Balanced three-phase resistive (heating elements arranged in star or delta configuration), power factor 1.",
-      "Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold",
-      "Strategies that involve escaping from or denying the stressor rather than addressing it, such as substance use or withdrawal",
+      "Ib = 30000 / (1.732 x 230 x 1) = 75.3 A. Use the 230 V phase voltage in the three-phase formula.",
+      "Ib = 30000 / (3 x 400 x 1) = 25 A. Divide by 3 because the load is split equally across three conductors.",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: "Diversity is applied at the design current calculation when:",
     options: [
-      "RCBO 50 A Type B 6 kA Icn 30 mA Type A; 10 mm² T&E cable; Ib = 9500 / 230 = 41.3 A so In = 50 A (next standard rating); 10 mm² T&E Reference Method C tabulated It approximately 64 A so Iz greater than or equal to In comfortably; design max Zs Type B 50 A approximately 0.87 ohms per Table 41.3 A4:2026.",
-      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
+      "On every circuit without exception — a blanket diversity factor of 0.4 is applied to the connected load to keep cable sizes economical.",
+      "Only on three-phase circuits, where the imbalance between phases allows the total demand to be reduced.",
       "When the circuit supplies multiple loads that will not all run simultaneously at full power. Apply diversity to the connected load before deriving Ib. For a dedicated single-load circuit (single shower, single hob), no diversity applies — Ib equals the rated current of the load.",
-      "Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.",
+      "Only after the cable has been selected, as a final check that the chosen size has spare capacity for future loads.",
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: "A 230 V domestic ring final circuit serving a kitchen has connected load of 30 A worth of appliances. The On-Site Guide standard circuit assumption for ring final design current is:",
     options: [
-      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
-      "Physiological response to electric current passing through the body. Effects scale with current (mA): perception (1mA), pain (5-10mA), can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t-let-go (10-20mA), respiratory paralysis (20-50mA), ventricular fibrillation (50-100mA+). Duration matters — long exposure at lower current can be lethal.",
-      "To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.",
+      "The ring must be re-rated to a 40 A device once the connected appliance load reaches 30 A, because the protective device must always exceed the total connected load.",
+      "Each socket-outlet on the ring is individually assessed at 13 A, and the sum of all outlets sets the design current for the protective device.",
+      "Design current equals the sum of the connected appliance ratings, so a 30 A connected load requires the cable to be sized for a continuous 30 A on each leg of the ring.",
       "Standard ring final is designed and protected at 30 A or 32 A regardless of connected appliance count, on the basis that diversity across the multiple outlets keeps simultaneous draw below the protective device rating. The ring itself is the protected entity, not each outlet.",
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: "A 7 kW EV charger at 230 V single-phase. Design current Ib?",
     options: [
       "Ib = 7000 / 230 = 30.4 A — round up to 32 A for the charger circuit. EV charging is essentially resistive (charger is a switchmode converter with near-unity power factor at full power) and continuous at full rating during a charging cycle, so no diversity applies on a dedicated EV circuit.",
-      "Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.",
-      "Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles",
-      "Are essential — they prevent re-energisation by another person who might assume the breaker is off because of a tripped fault. Multiple lock-offs allow each person working on the circuit to fit their own padlock.",
+      "Ib = (7000 / 230) x 0.4 = 12.2 A — apply 40 percent diversity because the vehicle is rarely charging at full rate.",
+      "Ib = 7000 / (230 x 0.85) = 35.8 A — apply a 0.85 power factor because the on-board charger is an inductive load.",
+      "Ib = 7000 / 400 = 17.5 A — use the 400 V three-phase line voltage because EV chargers are always three-phase.",
     ],
     correctAnswer: 0,
     explanation:

@@ -18,93 +18,93 @@ const Module6Section4_3 = () => {
       id: 1,
       question: 'What does polarity testing confirm?',
       options: [
+        'Earth fault loop impedance values',
         'Correct connection of line, neutral, and CPC',
-        'Earth loop impedance values',
-        'Insulation resistance',
+        'Insulation resistance between conductors',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Polarity testing confirms the correct connection of line, neutral, and CPC conductors to their intended terminals.',
     },
     {
       id: 2,
       question: 'Which conductor must always be switched?',
-      options: ['Neutral', 'Line', 'CPC'],
-      correctAnswer: 1,
+      options: ['Line', 'Neutral', 'CPC'],
+      correctAnswer: 0,
       explanation:
-        'The line conductor must always be switched to ensure proper isolation when the switch is in the off position.',
+        'The line conductor must always be switched so the circuit is dead when the switch is in the off position.',
     },
     {
       id: 3,
-      question: 'What tool is used to confirm polarity safely?',
-      options: ['Socket tester', 'Two-pole voltage tester', 'Clamp meter'],
-      correctAnswer: 1,
+      question: 'When the installation is energised, which instrument confirms polarity at the origin safely?',
+      options: ['Plug-in socket tester', 'Clamp meter', 'Two-pole voltage tester'],
+      correctAnswer: 2,
       explanation:
-        'A two-pole voltage tester is the proper instrument for safely confirming polarity in electrical installations.',
+        'Once energised, a GS38-compliant two-pole voltage tester is the proper instrument for confirming live polarity at the origin. The dead initial-verification polarity test (643.6) is carried out earlier with a low-resistance ohmmeter.',
     },
     {
       id: 4,
       question: 'What is the risk if the switch interrupts the neutral instead of the line?',
       options: [
-        'No risk if CPC is present',
-        'The circuit remains live, even if switched off',
-        'Overheating only',
+        'The circuit remains live even when switched off',
+        'No risk, provided the CPC is connected',
+        'Overheating of the switch only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'If a switch interrupts the neutral instead of line, the circuit remains live even when switched off, creating a serious shock hazard.',
+        'If a switch interrupts the neutral instead of the line, the circuit stays live when switched off — a serious shock hazard.',
     },
     {
       id: 5,
       question: 'When must polarity testing be carried out?',
       options: [
         'Only during EICR inspections',
-        'During initial verification, alterations, and fault-finding',
-        'Only if sockets fail',
+        'During initial verification, after alterations, and when fault-finding',
+        'Only if a socket fails to work',
       ],
       correctAnswer: 1,
       explanation:
-        'Polarity testing is required during initial verification, after alterations or additions, and during fault-finding procedures.',
+        'Polarity testing is required during initial verification, after alterations or additions, and during fault-finding.',
     },
     {
       id: 6,
       question: 'What happens if line and neutral are reversed at a socket?',
       options: [
-        "Appliances won't work",
-        "Appliances work but safety devices won't disconnect properly",
-        'It has no effect',
+        'The appliance will not work at all',
+        'It has no practical effect on safety',
+        "Appliances work, but safety devices may not disconnect a fault properly",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
-        "Reversed polarity means appliances may function but internal fuses and safety devices won't operate correctly during faults.",
+        'With reversed polarity an appliance may still function, but its internal fuse and switching may sit in the neutral, so faults are not cleared safely.',
     },
     {
       id: 7,
-      question: 'Which test instrument can measure low resistance for polarity checks?',
-      options: ['Insulation tester', 'Low resistance ohmmeter', 'Clamp meter'],
-      correctAnswer: 1,
+      question: 'Which test instrument measures low resistance for continuity and polarity checks?',
+      options: ['Low resistance ohmmeter', 'Insulation tester', 'Clamp meter'],
+      correctAnswer: 0,
       explanation:
-        'A low resistance ohmmeter is used for continuity checks to confirm polarity in electrical installations.',
+        'A low resistance ohmmeter (continuity tester) is used to confirm continuity and correct polarity of conductors.',
     },
     {
       id: 8,
       question: 'Why is a socket tester not sufficient for polarity?',
       options: [
-        'It is illegal to use them',
+        'It cannot detect the CPC at all',
         'It only gives a basic indication, not full verification',
-        'They cannot detect CPC',
+        'It is not legal to use one on site',
       ],
       correctAnswer: 1,
       explanation:
-        'Socket testers only provide basic indication and are not a substitute for formal polarity testing with calibrated instruments.',
+        'Socket testers only give a basic indication and are not a substitute for formal polarity verification with calibrated instruments.',
     },
     {
       id: 9,
       question: 'Which part of a lampholder must always be connected to neutral?',
-      options: ['The shell (outer contact)', 'The centre pin', 'Both can be live'],
-      correctAnswer: 0,
+      options: ['The centre contact', 'Either contact may be live', 'The shell (outer contact)'],
+      correctAnswer: 2,
       explanation:
-        'The lampholder shell (outer contact) must always be connected to neutral to prevent shock hazards when changing bulbs.',
+        'The lampholder shell (outer contact) must be connected to neutral, so the exposed metal is not live when changing a lamp.',
     },
     {
       id: 10,
@@ -305,7 +305,7 @@ const Module6Section4_3 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>
-                      Regulation 132.7 requires single-pole devices to break line conductors only
+                      Regulation 132.14.1 requires single-pole devices to be inserted in the line conductor only
                     </span>
                   </li>
                   <li className="flex items-start gap-2">

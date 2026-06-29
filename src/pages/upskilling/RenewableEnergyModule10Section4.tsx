@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is EREC G100 and why does it exist?',
     options: [
-      'A meter type',
-      'EREC G100 is the UK Engineering Recommendation that governs Export Limitation Schemes (ELS) for sites where the DNO’s network cannot accept the full installed generation capacity. The customer installs more generation than the DNO will allow as gross export; an export limitation device curtails the export at a DNO-defined limit (e.g. 0 kW or 3.68 kW or any agreed limit). G100 specifies the device approval, commissioning evidence, and operational requirements. Allows installation of larger systems on constrained networks without forcing a costly DNO reinforcement.',
-      'BS 7671 reg',
-      'Random',
+      'The ENA Engineering Recommendation for Export Limitation Schemes — curtails export to a DNO-agreed limit',
+      'A type of bidirectional electricity meter installed at the grid connection point to record export',
+      'A specific regulation within BS 7671 Part 7 covering generating sets and microgeneration',
+      'A grid-connection class that replaced G98 and G99 for all new generation installs',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'EREC G100 (Engineering Recommendation G100 — "Technical Requirements for Customer Export Limiting Schemes") is published by the Energy Networks Association (ENA) and adopted across all UK DNOs. Purpose: many UK 2025-26 LV networks are constrained — they cannot accept additional export from PV / wind / BESS without reinforcement (transformer upgrade, cable upgrade, voltage management). Reinforcement is expensive + slow (6-24 months, £5-100k+). G100 provides an alternative: customer installs more generation than the network can take as gross export, but commits via an ELS to limit actual export to an agreed value. The DNO can therefore approve the connection without reinforcement. UK 2025-26 typical limits: 0 kW (zero export), 3.68 kW (16 A single-phase G98 cap), 11.04 kW (3-phase G98 cap), or any agreed value. G100 covers: device type approval (ENA-listed devices), commissioning evidence (signed certificate from approved person), monitoring + reporting, fail-safe behaviour. The ELS hardware: typically integrated into the inverter (modern hybrid inverters: SolarEdge, Solis, Huawei FusionSolar) or a separate device (Carlo Gavazzi EM340 + relay). Cert evidence: G100 commissioning certificate signed by approved person + included in cert evidence bundle.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What’s the difference between G100 soft limiting and hard limiting?',
     options: [
-      'No difference',
-      'Soft limiting: the ELS continuously measures export at the point of grid connection and curtails inverter output (via Modbus / CT-clamp control loop) so net export stays at or below the limit. Inverter may run at lower power than its rated capacity. Fast response (typically <5 s). Hard limiting: the ELS measures export and physically disconnects the generator (opens a contactor) when export exceeds the limit; generator can’t run until reset. More conservative, less useful for self-consumption. UK 2025-26 typical: soft limiting dominant; hard limiting only where required by DNO.',
-      'Random',
-      'Hard always better',
+      'Soft limiting is for single-phase supplies and hard limiting is for three-phase supplies',
+      'Soft limiting caps generation and hard limiting caps consumption at the connection point',
+      'Soft limiting curtails inverter output via a control loop; hard limiting disconnects on exceedance',
+      'Hard limiting always maximises self-consumption, so it is the better choice for every site',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'G100 distinguishes soft limiting (control-loop curtailment) from hard limiting (disconnection on exceedance). Soft limiting in detail: (1) CT clamp on the supply tail measures bidirectional current at the MET (Main Earthing Terminal) / grid connection point; (2) ELS controller calculates net export = generation − self-consumption; (3) if net export approaches the limit, controller sends a power-curtailment signal to the inverter (via Modbus RTU / TCP or proprietary protocol); (4) inverter reduces output — the excess generation is wasted (clipped) BUT the limit is respected; (5) when local self-consumption rises (e.g. EV starts charging), the curtailment lifts and inverter resumes full output. UK 2025-26 typical response time <5 s; faster on modern hybrid inverters. Use case: customer wants full PV self-consumption + occasional partial export. Hard limiting in detail: (1) CT clamp + controller; (2) if export exceeds limit, ELS opens a contactor that physically disconnects the generator from the LV side; (3) generator stays disconnected until manual / automatic reset. More conservative, prevents brief excursions, but interrupts generation. Used where DNO requires zero tolerance (typically zero-export sites). UK 2025-26 inverter market: most hybrid inverters (SolarEdge StorEdge, Solis S6, Huawei FusionSolar, GivEnergy AIO) integrate soft limiting natively. Carlo Gavazzi EM340 + external contactor is a common retrofit hard-limit solution. Cert evidence: G100 certificate notes soft / hard + the configured limit + the device type + the commissioning test result.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'When does G100 apply vs G99?',
     options: [
-      'Same thing',
-      'G98 (≤16 A per phase): small-scale fast-track, post-installation notification. G99 (>16 A per phase): formal pre-installation application, DNO design + connection offer + approval + commissioning. G100: an EXPORT LIMITATION layer that can be applied to a G99-scale install — customer installs more generation than the DNO will allow as export, but limits export via G100-approved ELS to a lower value the DNO can accept. G100 doesn’t replace G99; it sits alongside as a constraint that enables connection where reinforcement would otherwise be needed.',
-      'Random',
-      'G100 only',
+      'G98, G99 and G100 are three names for the same connection process',
+      'G100 alone applies to every generation install, with G98 and G99 now withdrawn',
+      'G99 is the small fast-track route and G98 is the formal application for larger sites',
+      'G98 is small-scale fast-track, G99 the formal application, and G100 an export-limit layer alongside G99',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The EREC framework hierarchy: (1) G98 — small-scale single-phase ≤16 A per phase (i.e. ≈3.68 kW single-phase / ≈11.04 kW three-phase Type A) parallel generation. Fast-track post-installation notification. (2) G99 — anything larger or multi-source. Formal pre-installation application: customer / installer submits design → DNO evaluates network capacity → DNO issues connection offer (may require reinforcement) → customer accepts + pays connection cost → install → DNO-witnessed commissioning → G99 completion. Lead time 6-18 weeks typical; cost £500-100k+ depending on reinforcement. (3) G100 — NOT a replacement for G99; sits AS A CONSTRAINT alongside G99. Use case: customer wants to install (say) 10 kWp PV + 10 kW BESS but the DNO’s LV transformer is constrained — reinforcement £30k + 12 months. DNO offers: connect under G99 with G100 export limit of 3.68 kW (or 0 kW); customer accepts; install G100-approved ELS to enforce the limit; commissioning per G100. Customer gets the full installed capacity for self-consumption + storage but limited export. Avoids reinforcement cost + delay. UK 2025-26 reality: G100 increasingly common as DNO networks become more constrained by widespread PV + BESS adoption.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'Who can commission a G100 export limitation scheme + what is the cert evidence?',
     options: [
-      'Anyone',
-      'G100 requires commissioning by a person competent + recognised as suitable to commission an ELS. The G100 commissioning certificate signed by that person evidences: (a) the ELS device is from the ENA-listed G100 approved equipment list; (b) the export limit value as agreed with DNO is correctly configured; (c) the soft / hard limit type is correctly set; (d) the commissioning test result (deliberate over-generation → verify curtailment / disconnect within the specified time); (e) any monitoring / fault reporting is operational. Certificate provided to DNO + customer + included in cert evidence bundle.',
-      'No specific person',
-      'Random',
+      'A competent person, via a signed G100 certificate recording device, limit, type and test result',
+      'The DNO engineer alone, as the only party permitted to sign off an export limit',
+      'The customer themselves, by accepting the inverter’s default export setting in the app',
+      'The meter operator, as part of fitting the SMETS2 smart meter at the property',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'G100 commissioning rigour reflects its role in DNO network compliance: (1) Competence — the commissioning person must be competent in: ELS device operation + inverter Modbus / control protocol + CT clamp installation + DNO requirements + commissioning testing. The MCS-certified installer’s electrical scope typically covers this; some DNOs maintain approved-person lists. (2) Cert content — G100 commissioning certificate template: customer name + address + MPAN; DNO + connection reference; generator type + rated capacity + installed capacity; export limit value (kW) as agreed with DNO; ELS device type (from ENA G100 approved list) + serial + firmware version; soft / hard limit configuration; commissioning test result — deliberate over-generation simulation (or actual peak generation event) → measured response time → measured curtailment effectiveness; monitoring + fault reporting verified; signature of commissioning person + date. (3) Distribution — copy to DNO (closes the G99 + G100 application), copy to customer (handover pack), copy in installer’s records (cert evidence bundle for future audit). (4) Ongoing — G100 typically requires a recommissioning / verification at intervals (e.g. annually) or after major equipment change. (5) Failure consequence — if G100 ELS fails to curtail correctly, DNO may revoke the connection agreement + require reinforcement or hard disconnection. Cert evidence bundle is the foundation of the DNO’s assurance.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer in a rural village wants 10 kWp PV + 10 kW BESS. DNO LV network is constrained — voltage rise during summer peak generation already at limit. DNO offers: (a) connect under G99 with G100 limit of 3.68 kW export; (b) full G99 connection requiring £25k transformer upgrade + 9 months. Customer chooses (a).',
     options: [
-      'Cannot install',
-      'Standard UK 2025-26 G100 scenario. Install proceeds: 10 kWp PV + 10 kW BESS installed; G100 ELS configured at 3.68 kW export limit. EMS prioritises self-consumption + BESS charging; only excess after BESS full reaches the export point; ELS curtails inverter when export approaches 3.68 kW. Customer gets full installed self-consumption + arbitrage value (≈70-80% PV self-consumed via BESS); export income is capped but small relative to avoided import savings. DNO accepts the connection without reinforcement.',
-      'No solution',
-      'Wait years',
+      'The full 10 kWp PV + 10 kW BESS installs with the ELS set to 3.68 kW and no reinforcement',
+      'The PV must be downsized to 3.68 kWp so the array can never generate above the export limit',
+      'The BESS must be left off-grid because a battery cannot be combined with an export limit',
+      'The customer must accept the £25k reinforcement first, then the ELS can be added afterwards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The UK 2025-26 G100 economic case in action: (1) Without G100 — customer faces £25k reinforcement + 9 months delay. Most customers walk away or downsize. (2) With G100 — customer installs full 10 kWp + 10 kW BESS (no DNO reinforcement). Export limited to 3.68 kW. (3) Annual generation ≈10 × 900 = 9,000 kWh. With 10 kW BESS + sensible EMS, self-consumption ≈70-80% (7,000 kWh self-used); export ≈1,500-2,500 kWh annually. G100 limit of 3.68 kW only binds during sunny midday with full BESS + low load — a few hundred hours / year. (4) Economics — avoided import £7,000 × £0.27 = £1,890/year; SEG export £2,000 × £0.15 = £300/year; total £2,190/year. Customer satisfied. (5) Curtailment loss — typically 200-500 kWh/year clipped at the limit (the kWh that would have exported above 3.68 kW). Worth £30-75/year in lost SEG income. Tiny vs the saved reinforcement cost. (6) Cert evidence: PEI EIC + Section 712 + Chapter 57 + Chapter 82 + G99 reference + G100 commissioning certificate + EMS configuration record + DNO acceptance.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A customer with PV + BESS expands by adding wind + EV V2G. The DNO’s G99 conditions cap export at 3.68 kW via G100. After expansion, the EMS struggles to keep export at 3.68 kW because the V2G EV may discharge during peak generation — multiple sources contributing. How should this be handled?',
     options: [
-      'No solution',
-      'The G100 ELS must measure NET export at the MET (single CT clamp at the grid tail) and curtail ANY source(s) needed to keep export ≤3.68 kW. Modern multi-source ELS: ELS controller communicates via Modbus / OCPP with PV inverter + BESS inverter + V2G EV charger; curtails the most-easily-curtailable source first (typically V2G > BESS > PV); fallback hard disconnect if soft control fails. EMS + ELS coordination is the integration challenge. May require re-commissioning + DNO re-acceptance.',
-      'Random',
-      'Disable EMS',
+      'A separate ELS and CT clamp must be fitted to each source and the limit shared equally between them',
+      'The EMS must be disabled so that only the PV inverter is left to manage the export limit',
+      'The ELS measures NET export at one CT at the MET and curtails sources in priority (V2G > BESS > PV)',
+      'The V2G charger must be set to import-only so it can never contribute to export',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Multi-source G100 ELS architecture: (1) Single measurement point — the G100 limit applies to NET export at the grid connection point. One CT clamp / smart meter reading at the MET. The ELS doesn’t care which source is exporting; only that the aggregate net export at the MET is ≤ the limit. (2) Multi-source curtailment hierarchy — ELS controller has a priority order for curtailment (typically: V2G discharge first → BESS discharge second → PV inverter third). Curtails the highest-priority source until net export at the MET drops below the limit. (3) Integration — ELS controller communicates with each source: Modbus to PV / BESS inverter; OCPP to V2G charger. EMS coordinates above this layer (priority + tariff + customer preferences); ELS enforces the G100 limit regardless. (4) Failure modes — if EMS fails (offline), ELS still works (independent of EMS, has its own measurement + curtailment loop). If ELS fails, DNO connection conditions may be breached; install must have a fail-safe (typically hard disconnect of all sources, or alarm-and-curtail-all). (5) Re-commissioning — adding new sources to a G100 install requires re-commissioning + DNO re-acceptance: new ELS commissioning cert + verification test + DNO sign-off. (6) Cert evidence: integrated PEI EIC with ELS architecture diagram + G100 cert (updated per source addition) + EMS-ELS coordination diagram + commissioning test results per source.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'G100 zero-export sites: when is zero-export the configured limit?',
     options: [
-      'Never',
-      'Use case: site where the DNO will not accept ANY export from this customer (network too constrained, urban centre, social housing where customer doesn’t own the export rights, or commercial site where the lease prohibits export). Customer installs PV / BESS purely for self-consumption + storage. ELS configured at 0 kW export limit. Any generation surplus to instantaneous load must go into BESS or be curtailed (clipped). Common in dense urban + apartment-block deployments + landlord-owned roof + community generation behind a master meter.',
-      'Always',
-      'Random',
+      'Where the DNO accepts no export (constrained network, leased/landlord roof): the ELS is set to 0 kW',
+      'On every site, because exporting to the grid is no longer permitted under current ENA rules',
+      'Only on three-phase commercial sites, as single-phase domestic sites cannot be set to zero export',
+      'Only where the customer has no battery, since a BESS makes zero-export impossible to achieve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Zero-export G100 deployment use cases: (1) DNO-constrained urban site — the LV network truly cannot accept ANY export from this customer; reinforcement infeasible or extremely expensive. Customer accepts zero-export connection. (2) Landlord-owned roof / leased commercial — customer occupies the building, landlord owns the roof + the generation; tenant cannot legally export under their MPAN. Configured zero-export prevents disputes. (3) Apartment block community generation — PV array shared across multiple residents behind a master meter; export complications resolved by zero-export to grid + only feeding common areas + apartments behind the master meter. (4) Lease conditions — some commercial leases explicitly prohibit grid export by tenants. (5) Customer choice — customer simply doesn’t want export hassle (SEG admin); configures zero-export. (6) Operational behaviour — ELS at 0 kW: any generation surplus to instantaneous load + BESS charging gets clipped (wasted). EMS prioritises BESS to maximise self-consumption + minimise clipping. (7) Economic impact — lose SEG export income entirely; rely on avoided import. With well-sized BESS, self-consumption ≆80-95%; clipping 5-20% of annual generation. Lost income relative to 3.68 kW G100 limit: minor (most export is below 3.68 kW anyway except sunny midday peak). (8) Cert evidence: ELS configured zero-export + commissioning test verifying curtailment to zero at the MET + DNO acceptance + customer handover acknowledging zero-export operating mode.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'Does BS 7671 cover G100 directly, or is it external?',
     options: [
-      'Direct chapter',
-      'G100 is an EREC (Engineering Recommendation) published by the ENA and adopted by UK DNOs as a network compliance instrument — not a BS 7671 regulation. BS 7671 covers the customer-side electrical installation safety (Section 712 PV, Chapter 57 BESS, Section 722 EV, Chapter 82 PEI integration); G100 covers the DNO-customer interface for export limiting. The two integrate: the ELS device itself is electrical equipment under BS 7671 scope (Reg 411 / 415 / 530 series for power supply + Reg 528 for comms wiring), but its G100 compliance is verified per ENA G100 commissioning evidence, not BS 7671 verification.',
-      'Random',
-      'Same scope',
+      'BS 7671 has a dedicated chapter that covers G100 export limiting directly',
+      'G100 is an external ENA Recommendation; BS 7671 covers the install and ELS hardware only',
+      'Section 712 of BS 7671 is the export-limiting standard and G100 simply repeats it',
+      'G100 and BS 7671 cover exactly the same scope, so only one certificate is ever needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What’s the typical UK 2025-26 hardware for soft G100 limiting on a SolarEdge PV + StorEdge BESS site?',
     options: [
-      'External hardware required',
-      'Native: SolarEdge inverters + Energy Meter (CT clamp at MET) + StorEdge controller all natively support G100 soft limiting via the SolarEdge ecosystem. Configure the export limit value in SolarEdge monitoring portal; the inverter + BESS read MET export reading via the Energy Meter + curtail when needed. ENA-listed for G100. UK 2025-26 reality: SolarEdge, Solis, Huawei FusionSolar, GivEnergy AIO, Enphase IQ8 + IQ Combiner all support native soft G100. Older installs may use external Carlo Gavazzi EM340 + controller.',
-      'Random',
-      'No hardware',
+      'Native: SolarEdge inverter + Energy Meter (CT at MET) + StorEdge soft-limit from the portal',
+      'No measuring hardware at all is needed; the inverter limits export from its internal data alone',
+      'A separate external controller is always required, even with a SolarEdge hybrid inverter',
+      'A second smart meter must be fitted purely to enforce the soft export limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'UK 2025-26 G100 hardware landscape: (1) Native vendor support — most modern hybrid inverters integrate soft G100 limiting via the vendor’s own CT-clamp accessory and configuration. Examples: SolarEdge + Energy Meter, Solis + S6 metering, Huawei FusionSolar + Smart Power Sensor, GivEnergy AIO + EM340 / native CT, Enphase IQ8 + IQ Combiner + Envoy. Configure the limit value in the vendor app / portal; vendor commissioning person signs the G100 certificate. (2) External / retrofit — older installs or non-supporting vendors use Carlo Gavazzi EM340 (a popular industrial export-limiting controller with CT clamps + relay outputs + Modbus integration). Sits external to the inverter; talks to inverter via Modbus / proprietary protocol; physically curtails or disconnects. (3) ENA G100 approved list — the ENA maintains a list of G100-compliant devices. Installer chooses from this list; DNO accepts the device. (4) Commissioning — most vendor portals walk through the G100 commissioning steps; certificate generated automatically + signed by commissioning person. (5) Cert evidence: device type + serial + firmware + configuration record + commissioning test result + DNO acceptance + customer handover.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A customer’s G100 ELS has been working for 2 years. They want to add a 7 kW EV charger (NOT V2G). Does G100 need re-commissioning?',
     options: [
-      'Yes always',
-      'EV charger as a LOAD (not source) doesn’t add export capacity — it adds local consumption that lifts the curtailment (less excess to limit). Strictly, G100 commissioning is per the GENERATION configuration; adding a load doesn’t change the export limit logic. BUT: DNO may require notification of the new EV charger via G98 / G99 process (load notification, not generation); EMS configuration may benefit from re-tuning; cert evidence bundle should be updated to reflect the new load. UK 2025-26 typical: notify DNO of the EV charger + update EMS + add EV charger note to ELS configuration record. Full G100 recommissioning not required for adding a pure load.',
-      'No, never',
-      'Random',
+      'Yes — full G100 recommissioning is always required for any equipment added to the install',
+      'No — a new EV charger never needs any notification to the DNO under any circumstances',
+      'Yes — adding any load reduces self-consumption and so changes the export curtailment logic',
+      'No G100 recommissioning for a pure load — but notify the DNO of the charger and retune the EMS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'G100 recommissioning triggers — the nuance matters: (1) Adding a GENERATING source (new PV string, new BESS, wind turbine, V2G EV) — G100 recommissioning REQUIRED. New source changes the export curtailment logic; ELS must include the new source in its curtailment hierarchy; DNO re-acceptance needed. (2) Adding a pure LOAD (EV charger non-V2G, heat pump, immersion heater, additional sockets) — G100 recommissioning typically NOT required. The load lifts curtailment (more local consumption → less export pressure on the limit). DNO may require G98 / G99 LOAD notification depending on capacity (heat pumps + EV chargers often need DNO load notification for max demand reasons — Reg 311.1). Cert evidence bundle updated. (3) Changing the export limit value — recommissioning REQUIRED. DNO updates the connection agreement; ELS reconfigured; commissioning verifies the new limit. (4) ELS firmware upgrade — may require recommissioning depending on the change scope. (5) Replacing the ELS device — recommissioning REQUIRED. New ENA-approved device + commissioning evidence. (6) UK 2025-26 typical: keep the G100 commissioning certificate as a living document; annex new equipment additions / changes; full recommissioning only when generation or limit changes. Cert evidence bundle accumulates updates over the life of the install.',
   },

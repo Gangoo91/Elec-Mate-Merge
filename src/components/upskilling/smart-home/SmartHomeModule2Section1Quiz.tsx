@@ -12,73 +12,103 @@ export const SmartHomeModule2Section1Quiz = () => {
     {
       question: 'What is the purpose of a wireless protocol?',
       options: [
-        'To provide power to smart devices',
         'To define how devices communicate and exchange data',
-        'To connect devices to the internet',
-        'To control device brightness',
+        'To supply electrical power to smart devices',
+        'To connect every device directly to the internet',
+        'To control the brightness of smart lights',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'A wireless protocol is the agreed set of rules that lets devices talk to and understand each other over the air.',
     },
     {
       question: 'Name two reasons why protocols matter in smart homes.',
       options: [
-        'Speed and colour',
+        'Their colour and switching speed',
         'Compatibility and power consumption',
-        'Size and weight',
-        'Price and warranty',
+        'Their physical size and weight',
+        'Their price and warranty length',
       ],
       correct: 1,
+      explanation:
+        'The protocol a device uses determines what it can pair with (compatibility) and how much energy it draws — both critical in a smart home.',
     },
     {
-      question: 'Give one example of a protocol that uses mesh networking.',
-      options: ['Wi-Fi', 'Bluetooth', 'Zigbee', 'Ethernet'],
+      question: 'Which of these protocols uses mesh networking?',
+      options: ['Wi-Fi', 'Bluetooth Classic', 'Zigbee', 'Ethernet'],
       correct: 2,
+      explanation:
+        'Zigbee forms a self-healing mesh where mains-powered devices relay messages, extending range across the home.',
     },
     {
-      question: 'Which protocol is best for streaming cameras?',
-      options: ['Zigbee', 'Z-Wave', 'Wi-Fi', 'Bluetooth'],
+      question: 'Which protocol is best suited to streaming camera video?',
+      options: ['Wi-Fi', 'Zigbee', 'Z-Wave', 'Bluetooth'],
+      correct: 0,
+      explanation:
+        'Wi-Fi provides the high bandwidth that video streaming needs, which the low-data-rate mesh protocols cannot match.',
+    },
+    {
+      question: 'Which of these connection types consumes the least power?',
+      options: ['Wi-Fi', 'Ethernet', '4G', 'Bluetooth Low Energy'],
+      correct: 3,
+      explanation:
+        'Bluetooth Low Energy is designed for tiny power draw, letting battery sensors run for months or years between charges.',
+    },
+    {
+      question: 'Do Zigbee and Z-Wave operate on the same radio frequency?',
+      options: [
+        'Yes — both use the 2.4 GHz band',
+        'Yes — both use the 5 GHz band',
+        'No — Zigbee uses 2.4 GHz while Z-Wave uses sub-1 GHz',
+        'No — both avoid radio and use infrared',
+      ],
       correct: 2,
+      explanation:
+        'Zigbee runs on 2.4 GHz, whereas Z-Wave uses the less-congested sub-1 GHz band (around 868 MHz in the UK).',
     },
     {
-      question: 'Which protocol consumes the least power?',
-      options: ['Wi-Fi', 'Bluetooth LE', 'Ethernet', '4G'],
-      correct: 1,
+      question: 'What is the main drawback of using Wi-Fi for battery sensors?',
+      options: [
+        'It is too slow for sensors',
+        'It is too expensive to license',
+        'It offers poor security',
+        'Its high power consumption drains batteries',
+      ],
+      correct: 3,
+      explanation:
+        'Wi-Fi’s relatively high power draw flattens small batteries quickly, which is why low-power mesh protocols are preferred for sensors.',
     },
     {
-      question: 'True or False: Zigbee and Z-Wave operate on the same frequency.',
-      options: ['True', 'False'],
-      correct: 1,
-    },
-    {
-      question: 'What is the main drawback of Wi-Fi in smart sensors?',
-      options: ['Too slow', 'Too expensive', 'High power consumption', 'Poor security'],
-      correct: 2,
-    },
-    {
-      question: 'What protocol is designed specifically for IoT with mesh networking?',
-      options: ['Wi-Fi', 'Thread', 'Bluetooth', 'Ethernet'],
-      correct: 1,
+      question: 'Which protocol was designed specifically for IoT with mesh networking?',
+      options: ['Thread', 'Wi-Fi', 'Bluetooth Classic', 'Ethernet'],
+      correct: 0,
+      explanation:
+        'Thread is a low-power, IPv6-based mesh protocol built for IoT devices and underpins many Matter products.',
     },
     {
       question: "What is 'Matter' and why is it important?",
       options: [
-        'A new type of battery',
+        'A new type of rechargeable battery',
+        'A dedicated security encryption protocol',
+        'A type of high-gain antenna',
         'An interoperability standard for cross-platform compatibility',
-        'A security protocol',
-        'A type of antenna',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Matter is an industry interoperability standard that lets devices from different brands and ecosystems work together reliably.',
     },
     {
       question:
-        "Scenario: You're installing a smart lock — which protocol would you likely use and why?",
+        "Scenario: You're installing a battery smart lock — which protocol is the most likely choice and why?",
       options: [
-        'Wi-Fi for high speed',
-        'Zigbee for mesh networking',
-        'Bluetooth for smartphone integration',
-        'Z-Wave for long range',
+        'Wi-Fi for its high speed',
+        'Zigbee or Z-Wave for low-power mesh operation',
+        'Ethernet for a wired connection',
+        '4G for nationwide range',
       ],
-      correct: 2,
+      correct: 1,
+      explanation:
+        'Battery smart locks favour low-power mesh protocols like Zigbee or Z-Wave, which preserve battery life far better than Wi-Fi.',
     },
   ];
 

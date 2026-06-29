@@ -14,8 +14,8 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the minimum exclusion zone distance from overhead power lines when assembling a mobile tower?',
-    options: ['5 metres', '9 metres', '15 metres', '20 metres'],
-    correctAnswer: 2,
+    options: ['15 metres', '5 metres', '9 metres', '20 metres'],
+    correctAnswer: 0,
     explanation:
       'A minimum exclusion zone of 15 metres must be maintained from overhead power lines during tower assembly and use. This accounts for the height of the tower plus potential conductor swing.',
   },
@@ -37,11 +37,11 @@ const quizQuestions = [
     question: 'What ground condition check is essential before positioning a mobile tower?',
     options: [
       'The ground is dry',
-      'The ground is load-bearing, level, and firm',
       'The ground is made of concrete',
+      'The ground is load-bearing, level, and firm',
       'The ground has been recently laid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The ground must be assessed for load-bearing capacity, levelness, and firmness. Soft, uneven, or sloping ground can cause instability and tower collapse.',
   },
@@ -50,11 +50,11 @@ const quizQuestions = [
     question: 'What is the maximum allowable gradient for a mobile tower base position?',
     options: [
       'Zero — must be perfectly level',
-      '1 in 100 (0.6 degrees)',
       '1 in 50 (1.1 degrees)',
       '1 in 10 (5.7 degrees)',
+      '1 in 100 (0.6 degrees)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The maximum allowable gradient is typically 1 in 100 (approximately 0.6 degrees). Greater slopes require levelling using adjustable legs or choosing an alternative location.',
   },
@@ -62,12 +62,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why must you only use components from the same manufacturer on a single tower?',
     options: [
-      'For colour matching purposes',
       "Because mixing brands voids the manufacturer's safety certification",
+      'For colour matching purposes',
       'To keep invoices simple',
       'It makes assembly faster',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Components from different manufacturers may not be compatible in dimension, locking mechanism, or load rating. Mixing brands voids the safety certification and creates unpredictable structural behaviour.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'What must you check regarding the instruction manual before beginning assembly?',
     options: [
       'That it is written in English',
-      'That it is the correct manual for the specific tower model and configuration',
       'That it has colour illustrations',
+      'That it is the correct manual for the specific tower model and configuration',
       'That it has fewer than 20 pages',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The instruction manual must be specific to the tower model and configuration being assembled. Generic manuals may omit critical steps or give incorrect component sequences for your tower.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'An exclusion zone around the base during assembly should be established because:',
     options: [
       'It keeps the area tidy',
-      'It prevents unauthorised persons from being struck by falling components',
       'It gives the assembler more room to work',
       'It is only required indoors',
+      'It prevents unauthorised persons from being struck by falling components',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An exclusion zone prevents unauthorised persons from entering the area where components could fall during assembly. Barriers, signage, or a banksman should be used to enforce this zone.',
   },
@@ -118,12 +118,12 @@ const quickCheckQuestions = [
     question:
       'You arrive on site and the tower components are already unloaded. What must you do before starting assembly?',
     options: [
-      'Start assembling the base immediately',
       'Conduct a site survey and risk assessment',
+      'Start assembling the base immediately',
       'Check your watch for break time',
       'Ask a colleague to hold the first frame',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A site survey and risk assessment must always come first, regardless of whether components are ready. You need to verify ground conditions, overhead hazards, and access before positioning any components.',
   },
@@ -147,11 +147,11 @@ const quickCheckQuestions = [
       'There are overhead power lines approximately 12 metres from your proposed tower position. Can you proceed?',
     options: [
       'Yes, 12 metres is far enough',
-      'No — the 15 metre exclusion zone has not been met',
       'Yes, if you assemble quickly',
+      'No — the 15 metre exclusion zone has not been met',
       'Yes, if you wear rubber gloves',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A 15 metre exclusion zone is required from overhead power lines. At 12 metres you are within the danger zone and must choose an alternative position or contact the electricity supplier for a line outage.',
   },

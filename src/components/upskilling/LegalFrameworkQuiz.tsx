@@ -16,12 +16,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Which regulation places a legal duty on employers to maintain electrical systems?',
     options: [
+      'The Electricity at Work Regulations 1989',
       'Building Regulations Part P',
-      'BS 7671',
-      'Electricity at Work Regulations 1989',
+      'BS 7671 Wiring Regulations',
       'Management of Health and Safety at Work Regulations 1999',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Electricity at Work Regulations 1989 place a legal duty on employers to ensure electrical systems are maintained so as to prevent danger. This is a statutory requirement with legal backing.',
   },
@@ -43,12 +43,12 @@ const quizQuestions: QuizQuestion[] = [
     question:
       'Under the Electricity at Work Regulations, who is responsible for electrical safety?',
     options: [
-      'Only qualified electricians',
-      'Building control officers',
+      'Only fully qualified electricians',
+      'Local authority building control officers',
+      'The relevant insurance companies',
       'Duty holders (employers, employees, self-employed)',
-      'Insurance companies',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Electricity at Work Regulations place duties on all duty holders including employers, employees, and self-employed persons. Everyone has responsibilities for electrical safety.',
   },
@@ -56,25 +56,25 @@ const quizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What is the primary purpose of BS 7671?',
     options: [
-      'To provide legal requirements for electrical work',
+      'To set out the legal requirements for electrical work',
+      'To define insurance requirements for installers',
       'To provide technical standards for electrical installations',
       'To replace the Electricity at Work Regulations',
-      'To define insurance requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 7671 provides the technical standards and requirements for electrical installations. Whilst not law itself, it's recognised as the standard of good practice and compliance with it can demonstrate due diligence.",
   },
   {
     id: 5,
-    question: "What happens if electrical work doesn't comply with Building Regulations Part P?",
+    question: "What can happen if electrical work doesn't comply with Building Regulations Part P?",
     options: [
-      "Nothing, as it's only guidance",
-      'The work may need to be redone and certified properly',
-      'Only the electrician is liable',
-      'Insurance automatically covers any issues',
+      'The work may need to be remedied and certified properly',
+      "Nothing, as Part P is only optional guidance",
+      'Only the individual electrician is ever held liable',
+      'Insurance automatically covers any resulting issues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-compliance with Building Regulations Part P can result in enforcement action, requirements to remedy the work, and potential legal consequences. Proper certification and compliance are essential.',
   },

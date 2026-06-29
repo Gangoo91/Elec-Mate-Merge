@@ -5,14 +5,14 @@ export const emergencyEscapeRouteQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of escape route lighting?',
     options: [
-      'To comply with environmental regulations',
-      'To ensure safe evacuation during emergency lighting failure',
-      'To provide general illumination in buildings',
-      'To reduce energy costs during peak hours',
+      'To highlight building security features after hours',
+      'To enable safe evacuation when the normal lighting supply fails',
+      'To provide general background illumination throughout the building',
+      'To reduce lighting energy costs during peak tariff periods',
     ],
     correctAnswer: 1,
     explanation:
-      'The main purpose of escape route lighting is to ensure safe evacuation during mains lighting failure. It provides illumination along designated paths so occupants can safely navigate to exits during emergencies.',
+      'Escape route lighting exists to enable safe evacuation when the normal (mains) lighting supply fails, illuminating designated paths so occupants can navigate safely to a final exit.',
   },
   {
     id: 2,
@@ -123,10 +123,10 @@ export const emergencyEscapeRouteQuizData: QuizQuestion[] = [
     id: 10,
     question: 'Name one common mistake electricians make when installing escape route lighting.',
     options: [
-      'Using LED luminaires instead of fluorescent',
-      'Installing too many luminaires',
-      'Creating gaps in illumination with excessive spacing',
-      'Connecting to the wrong electrical circuit',
+      'Specifying LED luminaires in place of fluorescent fittings',
+      'Spacing luminaires too closely along the route',
+      'Leaving gaps in illumination through excessive luminaire spacing',
+      'Mounting luminaires slightly above the recommended height',
     ],
     correctAnswer: 2,
     explanation:

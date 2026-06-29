@@ -23,28 +23,28 @@ const inlineChecks = [
     question:
       'You are testing a kitchen-extension ring on a tenanted flat. The tenant is at home and using the laundry circuit on the same DB. Method 1 or Method 2?',
     options: [
-      'Method 1 — short L–CPC at the board, take the reading at the far socket. It is the default for new work.',
-      'Method 2 (wandering lead) — keeps one probe on the MET and probes each accessory CPC in turn, without shorting the live circuit. The right tool when occupancy means you cannot interrupt other circuits at the board.',
-      'Either is fine; record whichever is lower.',
-      'Skip it and rely on the live Zs reading.',
+      'Method 1 — short L–CPC at the board, read at the far socket; the default for new work.',
+      'Method 2 (wandering lead) — probes each CPC from the MET without shorting the live circuit.',
+      'Either is fine here; simply record whichever reading is the lower of the two.',
+      'Skip the continuity test and rely on the live Zs reading taken later.',
     ],
     correctIndex: 1,
     explanation:
-      'GN3 Reg 2.12 names Method 2 as the correct choice when shorting the circuit at the board is impractical — exactly the tenanted-property case. Method 1 stays the default for new and unoccupied work.',
+      'Method 2 keeps one probe on the MET and probes each accessory CPC in turn, without interrupting other circuits at the board. GN3 Reg 2.12 names it as the correct choice when shorting the circuit at the board is impractical — exactly the tenanted-property case. Method 1 stays the default for new and unoccupied work.',
   },
   {
     id: 'mod3-s1-low-reading',
     question:
       'Method 1 reading at the far socket is 0.18 Ω; calculated R1+R2 from GN3 Table BI is 0.31 Ω. The cable runs in steel conduit. What do you record on the Schedule?',
     options: [
-      '0.18 Ω. The reading is what the meter reads.',
-      '0.31 Ω (the calculated value), with a comment noting parallel earth paths via the conduit. The 0.18 Ω reading is the parallel combination of the CPC and the conduit, not a true R1+R2.',
-      'Average the two: 0.245 Ω.',
-      'Re-test using Method 2.',
+      '0.18 Ω, because the reading is simply what the meter displays.',
+      '0.31 Ω (calculated), with a comment noting parallel earth paths via the conduit.',
+      'Average the measured and calculated values to record 0.245 Ω.',
+      'Re-test the circuit using Method 2 and record that result instead.',
     ],
     correctIndex: 1,
     explanation:
-      'Earthed metal containment in series with the CPC creates a parallel earth path that under-reads the cable-only R1+R2. Use the calculated value for the Zs sum and flag the parallel path in the comments. GN3 Reg 2.13 makes the all-insulated, accessories-clear-of-earth precondition explicit.',
+      'The 0.18 Ω reading is the parallel combination of the CPC and the conduit, not a true R1+R2. Earthed metal containment in series with the CPC creates a parallel earth path that under-reads the cable-only R1+R2. Use the calculated value for the Zs sum and flag the parallel path in the comments. GN3 Reg 2.13 makes the all-insulated, accessories-clear-of-earth precondition explicit.',
   },
   {
     id: 'mod3-s1-null',
@@ -77,12 +77,12 @@ const quizQuestions = [
     question:
       'Reg 643.2.1 splits the continuity test into two limbs. Which conductors must be checked across every circuit type, and which only on ring final circuits?',
     options: [
-      'Live conductors on every circuit; protective conductors only on rings',
-      'Protective and bonding conductors on every circuit; live conductors only on ring finals',
-      'Only ring finals — radials are exempt',
-      'Only line conductors — neutral and CPC are checked elsewhere',
+      'Live conductors on every circuit; protective conductors only on rings.',
+      'Only ring finals are tested for continuity; radials are exempt.',
+      'Only line conductors; neutral and CPC continuity is checked elsewhere.',
+      'Protective and bonding conductors on every circuit; live conductors only on ring finals.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.2.1 requires continuity of protective conductors (and protective bonding) on every circuit by resistance measurement. Live-conductor continuity by resistance measurement is required only for ring final circuits — that is the second limb of the regulation.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'GN3 names two methods for protective-conductor continuity testing. What distinguishes Method 1 from Method 2?',
     options: [
-      'Method 1 is for radials, Method 2 is for rings',
-      'Method 1 shorts the circuit (line linked to CPC at the board) and reads R1+R2; Method 2 uses a long wandering lead from the MET and reads R2 only at each point',
-      'Method 1 uses a multimeter, Method 2 uses an insulation tester',
-      'Method 1 is for new work, Method 2 is for periodic only',
+      'Method 1 links L to CPC at the board and reads R1+R2; Method 2 reads R2 via a wandering lead.',
+      'Method 1 is used only for radials, while Method 2 is used only for ring finals.',
+      'Method 1 uses a multimeter, while Method 2 uses an insulation-resistance tester.',
+      'Method 1 is for new work only and Method 2 for periodic inspection only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Per GN3 Reg 2.12, Method 1 links L to CPC at the origin so a measurement at the far end gives R1+R2 directly. Method 2 (the wandering lead) keeps one probe on the protective conductor at the distribution board via a long lead and checks the CPC at each circuit point — useful when shorting the ring is impractical.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Why does Reg 643.2.1 stop short of giving a numeric maximum acceptance value for protective-conductor continuity?',
     options: [
-      'Because no maximum is required by law',
-      "It's an oversight in A4:2026",
-      'Because acceptance is intentionally referred to schedule-of-tests guidance and the calculated R1+R2 from cable data — a fixed numeric limit would not work across cable sizes and lengths',
-      'Because the maximum is the same as Zs',
+      'Because the acceptance maximum is simply the same as the circuit Zs limit.',
+      'Because acceptance is judged against the calculated R1+R2, which varies with cable size and length.',
+      'Because a continuity maximum is simply not required anywhere by law.',
+      'Because the omission is an oversight in the A4:2026 amendment text.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Reg 643.2.1 deliberately does not set a numeric ceiling. Acceptance is judged against the calculated R1+R2 derived from cable cross-section, length and the resistance-per-metre values in GN3 Table BI / OSG Table I1. Anything significantly higher than the calculated value is the warning sign.',
   },
@@ -118,8 +118,8 @@ const quizQuestions = [
     id: 4,
     question:
       'On an all-insulated installation where cable accessories are not in contact with earth, what does the L-to-E reading at the far end of the circuit (with L linked to CPC at the board) actually represent?',
-    options: ['Zs', 'Ze', 'R1 + R2 only', 'R1 + R2 + parallel earth paths via metalwork'],
-    correctAnswer: 2,
+    options: ['Zs', 'Ze', 'R1 + R2 + parallel earth paths via metalwork', 'R1 + R2 only'],
+    correctAnswer: 3,
     explanation:
       "GN3 Reg 2.13 is explicit: where the wiring is all-insulated AND accessories are not in contact with earth, the test 'measures (R1 + R2)' with no parallel paths. If the wiring is in metallic containment that touches earth, parallel paths short the CPC — the reading then under-reads the true R2 and the simplification breaks.",
   },
@@ -129,9 +129,9 @@ const quizQuestions = [
       'Which instrument is appropriate for protective-conductor continuity testing per GN3?',
     options: [
       'A general-purpose multimeter on the lowest ohm range',
-      'An insulation-resistance tester switched to ohms',
-      'A low-resistance ohmmeter (or multifunction tester) capable of resolving below 0.1 Ω with lead-resistance compensation',
-      'A continuity buzzer',
+      'An insulation-resistance tester switched to its ohms range',
+      'A low-resistance ohmmeter resolving below 0.1 Ω with lead compensation',
+      'A continuity buzzer that beeps when a path is present',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A bathroom has supplementary equipotential bonding installed. What does Reg 643.2.1, read with GN3 Ch 2, require you to do at continuity stage?',
     options: [
-      'Nothing — supplementary bonding is covered by visual inspection only',
-      'Continuity-test each supplementary bonding conductor and record the readings on the schedule of test results',
-      'Insulation-resistance test the bonding conductor',
-      'Test only if Reg 415.2 has been applied as the protective measure',
+      'Nothing — supplementary bonding is covered by visual inspection only.',
+      'Insulation-resistance test each supplementary bonding conductor instead.',
+      'Continuity-test each supplementary bonding conductor and record the readings on the schedule of test results.',
+      'Test the bonding only if Reg 415.2 has been applied as the protective measure.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 Reg 2.12 explicitly extends Reg 643.2.1 to "all supplementary bonding conductors" where applicable. Each conductor must be continuity tested to confirm a low-resistance bond between the simultaneously accessible conductive parts and recorded — the bond is what limits touch voltage, not the visual presence of a green-and-yellow strap.',
   },
@@ -165,42 +165,42 @@ const quizQuestions = [
     question:
       'Why is "null the test leads" the first thing GN3 tells you to do before a continuity test, not just an optional nicety?',
     options: [
-      'It calibrates the meter against the manufacturer reference',
-      'Test-lead resistance is typically 0.1–0.3 Ω — on the same order as a real R1+R2 reading. Without nulling, every result is artificially inflated and Zs verification can mistakenly fail',
-      "It's only required for ring continuity",
-      "It charges the meter's internal capacitor",
+      'It calibrates the meter against the manufacturer reference value',
+      'Lead resistance (0.1–0.3 Ω) is the size of a real R1+R2, so it inflates every result',
+      "It is only required when testing ring final continuity",
+      "It charges the meter's internal capacitor before the test",
     ],
     correctAnswer: 1,
     explanation:
-      'GN3 Reg 2.13 requires that lead resistance is either nulled out or measured and deducted. Lead resistance is comparable to typical R1+R2 values, so skipping nulling can convert a passing circuit into an apparent failure — or worse, mask a marginal joint by being inconsistent run-to-run.',
+      'Test-lead resistance is typically 0.1–0.3 Ω — on the same order as a real R1+R2 reading — so without nulling every result is artificially inflated and Zs verification can mistakenly fail. GN3 Reg 2.13 requires that lead resistance is either nulled out or measured and deducted. Skipping nulling can convert a passing circuit into an apparent failure — or worse, mask a marginal joint by being inconsistent run-to-run.',
   },
   {
     id: 9,
     question:
       'You are using Method 2 (wandering lead) on an existing radial in a tenanted flat. The reading at a switched-spur FCU jumps about 0.4–0.6 Ω above the calculated R2-only value. What should you do?',
     options: [
-      'Average the reading and accept',
-      'Investigate — likely a switch or fused connection in the test path adding series resistance, OR a poor termination at the spur. Resolve before recording an acceptance value',
-      'Accept the higher reading because Method 2 is approximate',
-      'Re-test using Method 1 and use whichever is lower',
+      'Average the high and calculated readings and accept the result.',
+      'Accept the higher reading on the basis that Method 2 is only approximate.',
+      'Re-test using Method 1 and record whichever value is the lower one.',
+      'Investigate — a switch, fuse or poor termination is adding series resistance; resolve it first.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "GN3 Reg 1.07 warns that switches, fuses and connection units sit in series with the Method 2 path and contribute extra resistance. That doesn't make the high reading 'normal' — it makes it diagnostic. You investigate the joint or device, not paper over it.",
+      "GN3 Reg 1.07 warns that switches, fuses and connection units sit in series with the Method 2 path and contribute extra resistance. That doesn't make the high reading 'normal' — it makes it diagnostic. You investigate the joint or device, not paper over it, before recording an acceptance value.",
   },
   {
     id: 10,
     question:
       "You forget to remove the L–CPC link at the board after a Method 1 test on a 32 A B-curve MCB circuit. The MCB is then closed. What's the worst-case outcome and what's the procedural fix?",
     options: [
-      'Nothing happens — the MCB will simply trip',
-      "Direct line-to-earth short. Best case: instantaneous magnetic trip. Worst case: weld-on contacts, RCD nuisance trip elsewhere on the board, dangerous arc-flash at the board if a fault current is high. Fix: write the link removal into your test sheet as a discrete step before re-energisation, and use a brightly coloured / labelled flying lead so it's visually obvious",
-      "The CPC will dissipate the fault safely — it's designed for this",
-      'The link will burn out before any device operates',
+      'Nothing happens — the MCB simply trips and the link is harmless.',
+      'A direct line-to-earth short — instantaneous trip at best, welded contacts or arc-flash at worst.',
+      'The CPC safely dissipates the fault current, as it is designed to do.',
+      'The link burns out harmlessly before any protective device operates.',
     ],
     correctAnswer: 1,
     explanation:
-      'Leaving the link in place is the most common Method 1 failure. The procedural mitigation is twofold: a high-visibility flying lead, and link-removal as a tick-box step on your test record before any breaker is closed.',
+      'Leaving the link in place is the most common Method 1 failure: closing the breaker puts a direct line-to-earth short across the board, at best an instantaneous trip and at worst welded contacts or arc-flash. The procedural mitigation is twofold: a high-visibility flying lead, and link-removal as a tick-box step on your test record before any breaker is closed.',
   },
 ];
 

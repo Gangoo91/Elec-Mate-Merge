@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'bacnet-device-link',
     question: 'What type of BACnet device links two different network types together?',
-    options: ['Controller', 'Router or Gateway', 'Sensor'],
-    correctIndex: 1,
+    options: ['A field controller', 'A sensor or actuator', 'A router or gateway'],
+    correctIndex: 2,
     explanation:
       'Routers and gateways link different BACnet networks together or connect BACnet to other protocols, enabling system integration across different network types.',
   },
@@ -18,11 +18,11 @@ const quickCheckQuestions = [
     id: 'bacnet-ip-coordination',
     question: 'Why does BACnet/IP require coordination with IT departments?',
     options: [
-      'It runs faster than other protocols',
       'It uses IP networks requiring addressing and VLAN planning',
-      'It is more expensive than other options',
+      'It runs faster than every other protocol',
+      'It is more expensive than the alternatives',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BACnet/IP uses standard Ethernet infrastructure and requires IP addressing, VLAN setup, and network segregation planning to avoid conflicts with corporate IT systems.',
   },
@@ -30,8 +30,8 @@ const quickCheckQuestions = [
     id: 'bacnet-multiple-buildings',
     question:
       'Which BACnet network type is best for connecting hundreds of devices across multiple buildings?',
-    options: ['BACnet MSTP (RS-485)', 'BACnet/IP', 'Both work equally well'],
-    correctIndex: 1,
+    options: ['BACnet MSTP (RS-485)', 'Both work equally well', 'BACnet/IP'],
+    correctIndex: 2,
     explanation:
       "BACnet/IP is ideal for large-scale installations across multiple buildings because it's scalable, high-speed, and can leverage existing Ethernet infrastructure for long-distance communication.",
   },
@@ -39,9 +39,9 @@ const quickCheckQuestions = [
     id: 'rs485-topology',
     question: 'Why should RS-485 networks be wired as daisy chains rather than stars?',
     options: [
-      'Star wiring is more expensive',
+      'Star wiring is more expensive to install',
       'Star wiring causes signal reflections and communication errors',
-      'Daisy chains work faster',
+      'Daisy chains transmit data faster',
     ],
     correctIndex: 1,
     explanation:

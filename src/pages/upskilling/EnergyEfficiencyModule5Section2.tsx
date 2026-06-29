@@ -46,8 +46,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
       id: 'qc1',
       question:
         'What is the recommended maximum data refresh rate for real-time energy dashboards in most commercial applications?',
-      options: ['Every 1 second', 'Every 15-30 seconds', 'Every 5 minutes', 'Every hour'],
-      correctIndex: 1,
+      options: ['Every 15-30 seconds', 'Every 1 second', 'Every 5 minutes', 'Every hour'],
+      correctIndex: 0,
       explanation:
         'A 15-30 second refresh rate provides a good balance between real-time visibility and system performance. More frequent updates rarely add value for decision-making but significantly increase server load and data costs.',
     },
@@ -81,11 +81,13 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
       question: 'What is the primary purpose of an energy dashboard in building management?',
       options: [
         'To replace the building management system entirely',
-        'To provide visual representation of energy consumption patterns and KPIs',
-        'To automatically reduce energy consumption without human intervention',
-        'To generate invoices for energy suppliers',
+        'To provide a visual representation of energy consumption patterns and KPIs',
+        'To automatically reduce energy consumption without any human intervention',
+        'To generate the invoices issued by energy suppliers',
       ],
-      correctAnswer: 'To provide visual representation of energy consumption patterns and KPIs',
+      correctAnswer: 'To provide a visual representation of energy consumption patterns and KPIs',
+      explanation:
+        'A dashboard turns raw meter data into clear visuals and KPIs so people can spot waste and make decisions; it informs control but does not replace the BMS or act automatically.',
     },
     {
       question: 'Which KPI measures the energy consumption per square metre of floor space?',
@@ -96,6 +98,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Carbon Intensity',
       ],
       correctAnswer: 'Energy Use Intensity (EUI)',
+      explanation:
+        'Energy Use Intensity normalises annual energy use by floor area (kWh/m²), allowing fair benchmarking between buildings of different sizes.',
     },
     {
       question: 'Energy Elephant is a UK-based energy management platform primarily focused on:',
@@ -106,6 +110,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Grid-scale renewable energy trading',
       ],
       correctAnswer: 'Multi-site portfolio management and sustainability reporting',
+      explanation:
+        'Energy Elephant is geared towards organisations with many sites, automating data collection and SECR/ESOS-style sustainability reporting across a portfolio.',
     },
     {
       question: 'What does ECON Energy specialise in for UK commercial buildings?',
@@ -116,6 +122,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Electricity generation',
       ],
       correctAnswer: 'Automatic Meter Reading (AMR) and energy monitoring',
+      explanation:
+        'ECON Energy is known for AMR hardware and sub-metering, providing real-time monitoring and tenant billing data rather than generation or manufacturing.',
     },
     {
       question:
@@ -127,6 +135,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Hiding navigation menus to increase screen space',
       ],
       correctAnswer: 'Visual hierarchy with important KPIs prominently displayed',
+      explanation:
+        'A clear visual hierarchy puts the most important KPIs front and centre so the eye is drawn to them first, with supporting detail available on drill-down.',
     },
     {
       question:
@@ -138,6 +148,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Only IT staff should have any access to energy data',
       ],
       correctAnswer: 'Access levels should align with job responsibilities and data sensitivity',
+      explanation:
+        'RBAC follows the principle of least privilege - each user gets only the access their role needs, protecting sensitive billing data and system settings.',
     },
     {
       question:
@@ -149,6 +161,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Traffic light indicator',
       ],
       correctAnswer: 'Line chart or area chart',
+      explanation:
+        'Line and area charts are designed to show change over time, making seasonal trends and year-on-year patterns easy to read; pie charts only show part-to-whole at one instant.',
     },
     {
       question:
@@ -160,27 +174,33 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Wind turbine maintenance',
       ],
       correctAnswer: 'Bureau services including bill validation and procurement',
+      explanation:
+        'Stark Group offers a managed (bureau) service - validating supplier bills, supporting procurement and handling reporting - for organisations with limited in-house resource.',
     },
     {
       question:
-        'What is the typical data retention requirement for energy consumption data under UK regulations for large organisations?',
+        'What is the typical data retention period for energy consumption data needed to support UK reporting schemes for large organisations?',
       options: [
         '30 days',
         '6 months',
-        '2-7 years depending on reporting requirements',
-        'No retention requirement exists',
+        '2-7 years depending on the reporting requirement',
+        'No retention period is ever needed',
       ],
-      correctAnswer: '2-7 years depending on reporting requirements',
+      correctAnswer: '2-7 years depending on the reporting requirement',
+      explanation:
+        'Schemes such as ESOS and SECR work on multi-year cycles, so consumption data is typically retained for several years (commonly around 2-7) to support audits and trend analysis.',
     },
     {
       question: 'Which feature is essential for mobile access to energy dashboards?',
       options: [
         'Flash-based animations',
         'Responsive design that adapts to screen size',
-        'Desktop-only viewing mode',
+        'A desktop-only viewing mode',
         'Mandatory landscape orientation',
       ],
       correctAnswer: 'Responsive design that adapts to screen size',
+      explanation:
+        'Responsive design reflows the layout to fit phones and tablets with touch-friendly targets, so field staff can read key KPIs on any device.',
     },
   ];
 

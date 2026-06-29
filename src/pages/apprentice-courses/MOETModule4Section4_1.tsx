@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Why must you prove a voltage indicator is working both before AND after testing a circuit for dead?',
     options: [
-      "An arc across a loose terminal in line with the load — current stays low, MCB doesn’t see it, but it generates intense heat",
-      "To confirm the indicator has not failed during the test, which could give a false 'dead' reading",
-      "Each small behaviour reinforces or undermines your desired identity, and the accumulation of these votes shapes who you are",
-      "An HSE publication listing Workplace Exposure Limits for hazardous substances",
+      "To calibrate the indicator so it reads the exact supply voltage at the point of work",
+      "To confirm the indicator has not failed and given a false 'dead' reading",
+      "To warm up the indicator's battery so it reads correctly under load",
+      "To record the proving result on the certificate as evidence of compliance",
     ],
     correctIndex: 1,
     explanation:
@@ -30,9 +30,9 @@ const quickCheckQuestions = [
       'In a motor control centre with a mains supply and a standby generator, what must be isolated before work begins?',
     options: [
       'All sources of supply that could energise the equipment, including mains, generator and any UPS or battery systems',
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-      'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
-      'Boards get re-arranged, spare ways re-used, labels mis-copied or never updated — the label may not match the actual circuit',
+      'Only the mains supply, since the generator cannot start while the mains is present',
+      'Only the generator, because the mains is automatically disconnected during maintenance',
+      'Just the final circuit feeding the motor, leaving the incoming supply live',
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     id: 're-energisation',
     question: 'What checks should be carried out BEFORE re-energising a circuit after repair?',
     options: [
-      'Provide a thorough verbal briefing backed up by written documentation covering work completed, outstanding issues and safety status',
-      'Insulation resistance test, continuity check, visual inspection, verification that all tools and temporary earths have been removed, and confirmation that all personnel are clear',
-      'Dead tests first (continuity of protective conductors and ring final, IR, polarity, electrode resistance), then live tests (Ze, PFC, Zs, RCD operation, AFDD, functional). Each step depends on the previous passing.',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
+      'A visual check that the covers are back on, with all testing done once the circuit is live',
+      'Insulation resistance, continuity, visual inspection, removal of tools and temporary earths, personnel clear',
+      'A loop impedance test and an RCD trip test carried out with the circuit still live',
+      'No checks, provided the same components were refitted in the same positions as before',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Under BS 7671 and GS38, what is the first step in the safe isolation procedure?',
     options: [
-      '140-200 kg (depending on manufacturer and model)',
+      'Apply your personal safety lock to the main isolator',
       'Identify the circuit to be worked on and all sources of supply',
-      'To provide statutory testing records and regulatory compliance evidence',
-      'Issue a written variation order and get it signed before proceeding',
+      'Prove the voltage indicator on a known live source',
+      'Test between all live conductors and earth at the point of work',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'A proving unit (such as a Martindale VI-15700) is used to:',
     options: [
-      'Automatically adjusting artificial light based on available daylight',
-      'Noise, time pressure, technical jargon, assumptions and hierarchical reluctance to challenge',
+      'Measure the earth fault loop impedance of the circuit',
+      'Discharge any stored energy in capacitors before work begins',
       'Provide a known voltage source to prove that a voltage indicator is functioning correctly',
-      'To physically prevent the switching device from being operated and ensure it cannot be inadvertently re-energised',
+      'Physically prevent the switching device from being re-energised',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 4,
     question: 'When using a voltage indicator to prove dead, you should test between:',
     options: [
-      'All live conductors to earth and between all live conductors (L-N, L-E, N-E for single phase; all phase combinations plus each phase to N and E for three phase)',
-      'A multi-lock hasp (scissor clamp) allowing each person to apply their own personal lock — the isolator cannot be re-energised until ALL locks are removed',
-      'To provide a path that will cause protective devices to operate immediately if the circuit is accidentally re-energised, protecting the worker',
-      'They test between two points giving a definitive result, whereas single-pole indicators can give false readings due to induced voltages or capacitive coupling',
+      'All live conductors and earth, and between all live conductors at the point of work',
+      'The line conductor and earth only, since neutral sits at earth potential anyway',
+      'The two ends of the protective conductor, to confirm circuit continuity is intact',
+      'The supply terminals of the isolator, taken just before the isolator is opened',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does Regulation 13 of the Electricity at Work Regulations 1989 require?',
     options: [
-      'A multi-lock hasp (scissor clamp) allowing each person to apply their own personal lock — the isolator cannot be re-energised until ALL locks are removed',
+      'That all electrical work must be carried out by a qualified electrician only',
       'Adequate precautions shall be taken to prevent electrical equipment that has been made dead from becoming live while work is in progress',
-      'The DC bus capacitors may retain a lethal charge for several minutes after isolation — manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified discharge time must be observed',
-      'All live conductors to earth and between all live conductors (L-N, L-E, N-E for single phase; all phase combinations plus each phase to N and E for three phase)',
+      'That every circuit must be tested annually and the results recorded',
+      'That live working is permitted whenever it is more convenient than isolating',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Why should two-pole voltage indicators be preferred over single-pole indicators (neon screwdrivers) for proving dead?',
     options: [
-      'A multi-lock hasp (scissor clamp) allowing each person to apply their own personal lock — the isolator cannot be re-energised until ALL locks are removed',
-      'Complete pre-energisation checks, confirm all personnel are clear, remove temporary earths, replace covers, remove lock and tag, re-energise in a controlled manner, carry out functional tests',
+      'They are cheaper and quicker to use than single-pole indicators',
+      'They can measure earth fault loop impedance as well as voltage',
       'They test between two points giving a definitive result, whereas single-pole indicators can give false readings due to induced voltages or capacitive coupling',
-      'Adequate precautions shall be taken to prevent electrical equipment that has been made dead from becoming live while work is in progress',
+      'They do not need to be proved on a known source before use',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'In a repair context, what additional isolation consideration applies when working on variable speed drives (VSDs)?',
     options: [
-      "They test between two points giving a definitive result, whereas single-pole indicators can give false readings due to induced voltages or capacitive coupling",
-      "Adequate precautions shall be taken to prevent electrical equipment that has been made dead from becoming live while work is in progress",
-      "All live conductors to earth and between all live conductors (L-N, L-E, N-E for single phase; all phase combinations plus each phase to N and E for three phase)",
-      "The DC bus capacitors may retain a lethal charge for several minutes after isolation — manufacturer's specified discharge time must be observed",
+      "The drive can be safely opened the instant the AC supply is switched off",
+      "Only the neutral conductor needs isolating; the line conductors can stay connected",
+      "The motor must be left running afterwards to discharge any stored energy",
+      "DC bus capacitors hold a lethal charge for minutes — wait the specified discharge time",
     ],
     correctAnswer: 3,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     id: 8,
     question: 'What is the correct sequence for re-energisation after repair?',
     options: [
-      'Complete pre-energisation checks, confirm all personnel are clear, remove temporary earths, replace covers, remove lock and tag, re-energise in a controlled manner, carry out functional tests',
-      'The DC bus capacitors may retain a lethal charge for several minutes after isolation — manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified discharge time must be observed',
-      'All live conductors to earth and between all live conductors (L-N, L-E, N-E for single phase; all phase combinations plus each phase to N and E for three phase)',
-      'Adequate precautions shall be taken to prevent electrical equipment that has been made dead from becoming live while work is in progress',
+      'Pre-energisation checks, personnel clear, remove earths and lock/tag, re-energise, functional test',
+      'Remove the lock and tag, re-energise, then carry out all the checks once power is on',
+      'Re-energise first and only replace the covers if the equipment is working correctly',
+      'Re-energise from the load end and work back towards the incoming supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'When multiple persons are working on the same isolated circuit, which locking-off arrangement should be used?',
     options: [
-      'To provide a path that will cause protective devices to operate immediately if the circuit is accidentally re-energised, protecting the worker',
-      'A multi-lock hasp (scissor clamp) allowing each person to apply their own personal lock — the isolator cannot be re-energised until ALL locks are removed',
-      'Adequate precautions shall be taken to prevent electrical equipment that has been made dead from becoming live while work is in progress',
-      'They test between two points giving a definitive result, whereas single-pole indicators can give false readings due to induced voltages or capacitive coupling',
+      'A single lock applied by the most senior person on behalf of the whole group',
+      'A multi-lock hasp, so each person fits their own lock and all must be removed to re-energise',
+      'A danger tag alone, with the isolator key left in the isolator for convenience',
+      'One lock per circuit, with all the keys kept together in a central key box',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'What is the purpose of applying temporary earths (safety earths) after isolation in HV systems?',
     options: [
-      'They test between two points giving a definitive result, whereas single-pole indicators can give false readings due to induced voltages or capacitive coupling',
-      'The DC bus capacitors may retain a lethal charge for several minutes after isolation — manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified discharge time must be observed',
-      'A multi-lock hasp (scissor clamp) allowing each person to apply their own personal lock — the isolator cannot be re-energised until ALL locks are removed',
-      'To provide a path that will cause protective devices to operate immediately if the circuit is accidentally re-energised, protecting the worker',
+      'To improve the accuracy of any insulation resistance measurements taken afterwards',
+      'To discharge the DC bus capacitors inside any connected variable speed drives',
+      'To prove the voltage indicator is functioning correctly before testing for dead',
+      'To trip the protective devices instantly if the circuit is accidentally re-energised',
     ],
     correctAnswer: 3,
     explanation:
@@ -222,9 +222,9 @@ const quizQuestions = [
       'After completing a repair, you measure the insulation resistance and obtain a reading of 0.5 MΩ between line and earth on a 230 V circuit. What should you do?',
     options: [
       'Investigate further — the minimum acceptable value for a 230 V circuit is 1.0 MΩ per BS 7671',
-      'The sideways distortion of the scaffold frame caused by horizontal forces',
-      'To accommodate thermal expansion of water and maintain system pressure',
-      'Each person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s share should be reduced by at least one-third compared to their equal mathematical share',
+      'Re-energise the circuit — 0.5 MΩ comfortably exceeds the minimum requirement',
+      'Record the value as a pass — any reading above zero is acceptable',
+      'Reduce the test voltage to 250 V and retest to obtain a higher reading',
     ],
     correctAnswer: 0,
     explanation:

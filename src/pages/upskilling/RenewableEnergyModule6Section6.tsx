@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'What standard defines the Type 2 EV connector used on UK 2025-26 domestic Mode 3 installs?',
     options: [
-      'BS 1363 (UK 3-pin)',
-      'BS EN IEC 62196-2:2022 — dimensional compatibility and interchangeability requirements for AC pin and contact-tube accessories for conductive EV charging. Superseded BS EN 62196-2:2017. The 2022 edition is the current normative reference for new installs',
-      'IEC 60884 (general plugs)',
-      'No standard',
+      'BS 1363, the standard for UK 13 A 3-pin domestic plugs and socket-outlets',
+      'BS EN IEC 62196-2:2022, the current normative reference for the AC Type 2 connector',
+      'BS EN 60884, the general standard for household plugs and socket-outlets',
+      'BS EN 60309, the standard for industrial plugs, socket-outlets and couplers',
     ],
     correctIndex: 1,
     explanation:
@@ -37,12 +37,12 @@ const inlineChecks = [
     id: 'm6s6-cp-signal',
     question: 'What is the Control Pilot (CP) signal in a Mode 3 install?',
     options: [
-      'Mains voltage AC',
-      'A ±12 V signal between the wallbox and the vehicle, PWM duty-cycle modulated. The duty cycle communicates the maximum available current (e.g. 53% duty = 32 A). The CP signal coordinates contactor closure, current limit announcement, charging-in-progress monitoring, and error states',
-      'Battery voltage',
-      'Earth conductor',
+      'A ±12 V PWM signal whose duty cycle announces the available current and coordinates the charge sequence',
+      'The mains AC supply voltage delivered from the wallbox to the vehicle inlet for charging',
+      'The traction battery DC voltage fed back from the vehicle to the wallbox electronics',
+      'A duplicate protective earth conductor providing a redundant path back to the wallbox',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Control Pilot (CP) per BS EN 61851-1 / IEC 61851-1 — ±12 V PWM signal between wallbox and vehicle through a dedicated wire in the Type 2 cable. PWM duty cycle announces the maximum current available: 53% = 32 A; 25% = 16 A; 16% = 10 A; etc. Per IEC 61851-1 Annex A. The vehicle reads the duty cycle and complies. CP also signals: vehicle detected (CP-PE voltage drops from 12 V to 9 V on plug-in); vehicle ready to charge (transitions to 6 V); fault / unplug detected. Wallbox does not close the contactor until CP signalling confirms readiness.',
   },
@@ -50,12 +50,12 @@ const inlineChecks = [
     id: 'm6s6-pp-signal',
     question: 'What does the Proximity Pilot (PP) signal communicate?',
     options: [
-      'Same as CP',
-      'PP is a resistance-coded signal in the Type 2 cable that identifies the cable’s current rating to the wallbox. The cable contains a resistor between PP and PE whose value encodes the maximum current capacity (e.g. 1.5 kΩ = 13 A; 680 Ω = 20 A; 220 Ω = 32 A; 100 Ω = 63 A). The wallbox reads PP to ensure it doesn’t exceed the cable’s rating regardless of CP duty cycle',
-      'Battery state',
-      'Customer’s ID',
+      'The same data as the Control Pilot, duplicated on a second wire for signalling redundancy',
+      'The vehicle battery state of charge, so the wallbox knows when to end the session',
+      'A resistance-coded signal that identifies the cable current rating to the wallbox',
+      'The customer account identity used for session billing on a public charging point',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Proximity Pilot (PP) is a resistance-coded signal in the Type 2 cable. The cable contains a resistor between PP and PE at the wallbox-side connector whose value encodes the cable’s maximum current rating. Standard PP values (IEC 61851-1 Annex B): 1.5 kΩ = 13 A; 680 Ω = 20 A; 220 Ω = 32 A; 100 Ω = 63 A. The wallbox reads the PP value at plug-in and limits its CP duty-cycle current announcement to no more than the cable’s rating. Prevents a 13 A cable being driven at 32 A regardless of wallbox capability. Cert evidence bundle records: untethered wallbox + customer cable rating; tethered wallbox + integrated cable rating.',
   },
@@ -63,12 +63,12 @@ const inlineChecks = [
     id: 'm6s6-tethered-vs-untethered',
     question: 'Tethered vs untethered wallbox — what’s the install consideration?',
     options: [
-      'No difference',
-      'Tethered = cable permanently attached to wallbox (manufacturer-supplied, integrated PP rating, cable holster on wallbox). Customer convenience: just plug into vehicle. Cable limited to single rating. Untethered = socket on wallbox; customer brings their own Type 2 cable (typical 5 m, kept in vehicle boot). Flexibility: customer can match cable rating to vehicle. Lower install cost. UK 2025-26: ~50/50 split; tethered preferred by less technical customers',
-      'Tethered is illegal',
-      'Untethered is illegal',
+      'There is no practical difference; the choice is purely cosmetic and customer preference',
+      'Tethered installs are not permitted under BS 7671 and must always use a socket-outlet',
+      'Untethered installs are not permitted under BS 7671 and must always use a fixed cable',
+      'Tethered has the cable fixed to the wallbox; untethered has a socket and a customer-supplied cable',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Tethered = cable attached to wallbox. Pros: customer convenience (just plug in), cable rating fixed and known. Cons: cable damage means replacing the wallbox or paying for cable-replacement service; cable rating limits future upgrades. Untethered = socket on wallbox. Pros: customer cable in vehicle boot; can match cable to vehicle; cable replaceable; works with any Type 2-compliant cable. Cons: customer must remember to plug both ends; cable left out gets damaged / stolen; PP signalling reads customer cable rating which may be lower than expected. UK 2025-26: split market; tethered preferred by less technical customers + new EV buyers; untethered by enthusiasts + multi-vehicle households.',
   },
@@ -79,24 +79,24 @@ const quizQuestions = [
     question:
       'The customer’s wallbox shows the EV is plugged in but won’t start charging. What’s the first diagnostic step?',
     options: [
-      'Replace the wallbox',
-      'Check the CP / PP signalling. Common causes: (1) vehicle reporting not ready (CP voltage not transitioning correctly); (2) PP resistor in cable damaged → wallbox reads no cable / wrong rating; (3) firmware mismatch between wallbox and vehicle; (4) wallbox configured for higher current than cable PP allows. Use the wallbox app diagnostic screen + try a different cable to isolate. Most "won’t charge" complaints are signalling not power',
-      'Reset the consumer unit',
-      'Call the DNO',
+      'Check the CP/PP signalling state first via the wallbox app, then try a different cable',
+      'Replace the wallbox straight away before carrying out any diagnostic checks on it',
+      'Reset the whole consumer unit and re-energise every circuit in the installation',
+      'Call the DNO to report a supply fault on the incoming service to the property',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CP/PP signalling diagnostics first. The wallbox’s display / app typically shows the signalling state. Common diagnoses: (1) CP not transitioning to 6 V = vehicle not ready (battery full, vehicle firmware paused, charge schedule active); (2) PP unreadable = damaged cable resistor, dirty connector pins; (3) firmware mismatch = wallbox or vehicle firmware update needed (manufacturer support); (4) charge schedule = wallbox waiting for off-peak window (smart-charging regs M6.7). Power-side diagnostics (CB tripped, RCBO not closed) come second. Manufacturer support line is the next step where signalling reveals nothing obvious.',
   },
   {
     question: 'BS EN IEC 62196-2:2022 — what changed from the 2017 edition?',
     options: [
-      'Nothing',
-      'The 2022 edition supersedes the 2017 edition with updated dimensional + interchangeability requirements + clarifications. UK installer practice: when verifying wallbox conformity, check the manufacturer DoC cites the current 2022 edition. Reg 722 cross-references the latest edition. Most 2025-26 wallboxes declare 2022 edition; some older inventory may still cite 2017',
-      '2022 added DC fast charging to Type 2',
-      '2022 removed Type 2',
+      'Nothing of substance changed; the two editions are functionally identical for installers',
+      'The 2022 edition added DC fast-charging capability directly to the AC Type 2 connector',
+      'The 2022 edition supersedes 2017 with updated dimensional and interchangeability requirements',
+      'The 2022 edition withdrew the Type 2 connector and replaced it with the CCS Combo 2 inlet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN IEC 62196-2:2022 supersedes the 2017 edition. The standard family covers connector dimensions, interchangeability, durability, electrical performance and safety. The 2022 update reflects refinements + clarifications + alignment with the latest IEC text. UK installer practice: check the wallbox DoC cites BS EN IEC 62196-2:2022 (or the IEC equivalent). Most reputable UK 2025-26 wallbox manufacturers updated their DoCs to the 2022 edition. Older inventory may still cite 2017 (technically superseded; UK regulators usually accept transition). Cert evidence bundle records the standard edition cited.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'DLM (Dynamic Load Management) communicates the throttled current limit to the vehicle via what mechanism?',
     options: [
-      'Wi-Fi message',
-      'The Control Pilot (CP) PWM duty cycle. As the wallbox dynamically calculates the available current, it changes the CP PWM duty cycle to communicate the new limit; the vehicle reads the changed duty cycle and adjusts its charge draw. This happens in real time with sub-second response',
-      'Mobile phone app',
-      'Manual switch',
+      'A Wi-Fi message sent directly from the wallbox to the vehicle telematics system',
+      'A notification pushed to the customer mobile phone app for them to action manually',
+      'A manual rotary switch on the wallbox the customer turns to select the charge current',
+      'The Control Pilot PWM duty cycle, which the vehicle reads and adjusts its draw to in real time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'DLM modulates the CP PWM duty cycle to announce the available current limit. The vehicle continuously reads CP and adjusts its draw. Example: household load drops, wallbox can offer more current → CP duty cycle increases (e.g. from 25% / 16 A to 53% / 32 A); vehicle ramps up draw. Conversely, household load rises → CP duty cycle decreases; vehicle ramps down. The CP signalling protocol (per BS EN 61851-1) supports this dynamic adjustment by design. No customer-side intervention; happens automatically.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'A customer has a tethered 7.4 kW wallbox with a damaged cable end. What’s the remediation path?',
     options: [
-      'Use Mode 2 instead',
-      'Tethered wallboxes have manufacturer-specific cable replacement options: (1) some have replaceable connector-end assemblies (warranty service or DIY-friendly kit); (2) some require full cable replacement by manufacturer engineer; (3) some require full wallbox replacement (cable not separately serviceable). Customer’s warranty status + manufacturer support determine the path. EICR finding: damaged connector cable end = C2 (potential danger)',
-      'Replace the EV',
-      'Tape it up',
+      'Follow the manufacturer-specific repair path, which warranty status and unit design decide',
+      'Switch the customer to Mode 2 charging from a 13 A socket-outlet on a permanent basis',
+      'Advise the customer to replace the electric vehicle rather than repair the charging cable',
+      'Tape over the damaged connector end and tell the customer to keep using the cable as is',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tethered wallbox damaged cable is a real UK 2025-26 service scenario. Manufacturer-specific paths: some wallboxes have replaceable Type 2 connector heads on the cable (e.g. some Wallbox / Andersen models); some require the manufacturer engineer to replace the cable assembly; some require full wallbox replacement. Customer’s warranty status + age of unit determine cost. EICR coding: damaged connector / cable end with exposed conductors = C2 (potential danger, urgent remediation). Cable damage at strain-relief point near the connector is the typical failure mode after a few years of UK weather + plugging cycles.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'A customer’s untethered wallbox + their own 13 A-rated Mode 3 cable. Vehicle requests 32 A. What happens?',
     options: [
-      'Cable burns out at 32 A',
-      'The wallbox reads the PP resistor in the cable (1.5 kΩ = 13 A rating); the wallbox’s CP PWM duty cycle is capped to announce no more than 13 A regardless of the vehicle’s capability or the wallbox’s upstream supply. Vehicle draws ≤ 13 A. The PP signalling prevents the cable being driven beyond its rating',
-      'Wallbox refuses to start',
-      'No effect',
+      'The cable overheats and burns out because it is driven at 32 A beyond its 13 A rating',
+      'The wallbox refuses to start charging at all because the cable rating is below the vehicle request',
+      'The wallbox reads the cable PP resistor and caps the announced current to the 13 A rating',
+      'No effect — the cable PP rating is ignored once charging has actually started flowing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PP signalling protects the cable from over-driving. The cable’s PP resistor identifies its rating to the wallbox; the wallbox caps its CP duty cycle to that rating. Example: 7.4 kW wallbox (32 A capable) + customer’s 13 A travel cable → wallbox announces 13 A via CP PWM (16% duty cycle approximately); vehicle draws ≤ 13 A even though both sides are nominally capable of more. The protective signalling makes the Type 2 connector + cable family safe across the rating range (13 / 16 / 20 / 32 / 63 A). Customer-facing implication: charge speed limited by cable rating; recommend a 32 A cable for daily use with a 7 kW wallbox.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     question:
       'How does the CP signal indicate that the customer has unplugged their vehicle mid-charge?',
     options: [
-      'No indication',
-      'The CP voltage transitions back to +12 V (open-circuit) when the connector is removed from the vehicle inlet. The wallbox detects this transition and immediately opens the internal contactor, removing AC from the cable. The Type 2 connector’s PP signal also breaks when unplugged — providing a redundant detection path. Combined response < 1 second',
-      'Customer phones in',
-      'Wallbox waits 30 minutes',
+      'There is no indication; the cable stays live until the customer manually intervenes at the unit',
+      'The wallbox only learns of the disconnection when the customer phones in to report it',
+      'The wallbox waits a fixed 30 minutes after the unplug before reacting and opening the contactor',
+      'The CP voltage returns to +12 V open-circuit; the wallbox detects this and opens the contactor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CP voltage transition is the unplug detection. Plugged-in vehicle ready: CP at ±6 V. Vehicle unplugged: CP returns to ±12 V (open circuit). Wallbox immediately opens contactor; cable de-energised. The Type 2 connector also includes a mechanical latch that locks the connector while charging — vehicle must signal "OK to unlock" before the customer can pull the connector. PP signal also breaks at unplug (redundant detection path). The whole sequence (vehicle stops drawing → wallbox detects → contactor opens) completes in well under 1 second. Customer safety: pulling the connector mid-charge is mechanically prevented by the latch + electrically resolved by the signalling protocol.',
   },

@@ -25,11 +25,16 @@ const quickCheckQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: All metallic containment can automatically be used as a CPC.',
-    options: ['True', 'False'],
+    question: 'Can all metallic containment automatically be used as a CPC?',
+    options: [
+      'Yes, any metal containment is a valid CPC',
+      'No, only if it meets continuity, CSA and robustness requirements',
+      'Yes, provided it is earthed at one end',
+      'Yes, unless it is painted',
+    ],
     correctIndex: 1,
     explanation:
-      'False. Containment can only act as a CPC if it meets specific requirements for continuity, cross-sectional area, and mechanical robustness.',
+      'No. Containment can only act as a CPC if it meets specific requirements for continuity, cross-sectional area, and mechanical robustness.',
   },
   {
     id: 3,
@@ -62,11 +67,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'True or False: All metallic containment can automatically be used as a CPC.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'Can all metallic containment automatically be used as a CPC?',
+    options: [
+      'Yes, any metal containment is a valid CPC',
+      'Yes, provided it is earthed at one end',
+      'No, only if it meets continuity, CSA and robustness requirements',
+      'Yes, unless it is painted',
+    ],
+    correctAnswer: 2,
     explanation:
-      'False. Containment can only act as a CPC if it meets specific requirements for continuity, cross-sectional area, and mechanical robustness.',
+      'No. Containment can only act as a CPC if it meets specific requirements for continuity, cross-sectional area, and mechanical robustness.',
   },
   {
     id: 3,
@@ -98,10 +108,10 @@ const quizQuestions = [
     id: 5,
     question: 'When should you fit a separate CPC alongside containment?',
     options: [
-      'Flow coefficient - gallons per minute at 1 psi pressure drop',
+      'Only when the circuit exceeds 32 A',
       'If containment is mechanically weak or has poor conductivity',
-      'Individual temperature control for different areas',
-      'Check for danger and then check for a response',
+      'Whenever the containment is made of steel',
+      'Only on circuits without an RCD',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,10 +121,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why should joint surfaces be cleaned before assembly?',
     options: [
-      'Prospective fault current function of EFLI/MFT',
-      'Loose terminals or poor connections',
+      'To improve the appearance of the finished joint',
+      'To make the joint easier to dismantle later',
       'To ensure good metal-to-metal contact',
-      'Every 1.5-3 metres depending on load',
+      'To prevent the bolts from working loose',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,9 +134,9 @@ const quizQuestions = [
     id: 7,
     question: 'What can happen if a painted surface interrupts continuity?',
     options: [
-      'Person with control of premises',
-      '3% of nominal voltage for lighting, 5% for other uses',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
+      'Reduced earth fault loop impedance',
+      'Improved corrosion protection at the joint',
+      'Faster operation of protective devices',
       'Increased resistance, breaking the CPC path',
     ],
     correctAnswer: 3,

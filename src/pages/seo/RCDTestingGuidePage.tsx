@@ -38,8 +38,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671 Regulation 643.3 and 643.7.3.201 (Chapter 64) require RCDs to be tested at the time of installation and as part of every periodic inspection and test. The single A4:2026 verification criterion is an AC test at rated residual operating current (IΔn): the RCD must disconnect within 300ms (general non-delay type). Note: Appendix 3 Table 3A (the previous time/current criteria framework) has been deleted by A4:2026 — half-rated and 5× values now derive from BS EN 61008/61009 product standards, not BS 7671 Chapter 64.',
-  'A 30mA RCD tested at its rated residual operating current (30mA) must trip within 300ms (0.3 seconds) per BS EN 61008/61009 and Reg 643.7.3.201. The AC test at IΔn applies regardless of RCD type (AC, A, F, B) per Reg 643.3.',
+  'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require RCDs to be tested at the time of installation and as part of every periodic inspection and test. The single A4:2026 verification criterion is an AC test at rated residual operating current (IΔn): the RCD must disconnect within 300ms (general non-delay type). Note: Appendix 3 Table 3A (the previous time/current criteria framework) has been deleted by A4:2026 — half-rated and 5× values now derive from BS EN 61008/61009 product standards, not BS 7671 Chapter 64.',
+  'A 30mA RCD tested at its rated residual operating current (30mA) must trip within 300ms (0.3 seconds) per BS EN 61008/61009 and Reg 643.8. The AC test at IΔn applies regardless of RCD type (AC, A, F, B) per Reg 643.3.',
   'S-type (time-delayed) RCDs have different limits to general type RCDs and are used in series to provide discrimination. They must not operate in less than 130ms at rated current to allow a downstream standard RCD to trip first.',
   'The test must be performed with the instrument connected between the line terminal (downstream of the RCD) and the main earth terminal. Never connect to the neutral — the instrument must drive current through the RCD sensing coil.',
   'All RCDs must be tested at 0 degrees (positive half-cycle) and 180 degrees (negative half-cycle) phase angles. Prove the test instrument on a proving unit before and after use — an unproved instrument invalidates all results.',
@@ -50,17 +50,17 @@ const faqs = [
   {
     question: 'What tests are required for RCDs under BS 7671?',
     answer:
-      'BS 7671 Regulation 643.3 and 643.7.3.201 (Chapter 64) require the effectiveness of RCDs to be verified at the time of installation and as part of every periodic inspection. The A4:2026 verification criterion is an alternating current test at rated residual operating current (IΔn): for a general non-delay type RCD, it must disconnect within 300ms. Note that Appendix 3 Table 3A (which previously listed half-rated and 5× trip-time criteria) has been deleted. The half-rated and 5× values used by test instruments derive from BS EN 61008/61009 product standards. Many inspectors also perform a ramp test to determine the actual tripping current threshold.',
+      'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require the effectiveness of RCDs to be verified at the time of installation and as part of every periodic inspection. The A4:2026 verification criterion is an alternating current test at rated residual operating current (IΔn): for a general non-delay type RCD, it must disconnect within 300ms. Note that Appendix 3 Table 3A (which previously listed half-rated and 5× trip-time criteria) has been deleted. The half-rated and 5× values used by test instruments derive from BS EN 61008/61009 product standards. Many inspectors also perform a ramp test to determine the actual tripping current threshold.',
   },
   {
     question: 'What is the half-rated current test and what must the result be?',
     answer:
-      'The half-rated current test applies a residual current equal to half the rated tripping current of the RCD — so 15mA for a 30mA RCD. At this current level, the RCD must NOT trip during the test period. This confirms the RCD does not have an excessively low trip threshold that would cause nuisance tripping. If the RCD trips at half rated current, it is out of specification and must be replaced. Note: the half-rated non-trip criterion derives from BS EN 61008 and BS EN 61009 product standards. BS 7671:2018+A4:2026 Appendix 3 Table 3A (which previously documented time/current criteria) has been deleted; the single BS 7671 verification requirement is now the AC test at IΔn (Reg 643.7.3.201).',
+      'The half-rated current test applies a residual current equal to half the rated tripping current of the RCD — so 15mA for a 30mA RCD. At this current level, the RCD must NOT trip during the test period. This confirms the RCD does not have an excessively low trip threshold that would cause nuisance tripping. If the RCD trips at half rated current, it is out of specification and must be replaced. Note: the half-rated non-trip criterion derives from BS EN 61008 and BS EN 61009 product standards. BS 7671:2018+A4:2026 Appendix 3 Table 3A (which previously documented time/current criteria) has been deleted; the single BS 7671 verification requirement is now the AC test at IΔn (Reg 643.8).',
   },
   {
     question: 'What is the maximum trip time for a 30mA RCD at rated current?',
     answer:
-      'A 30mA RCD tested at its rated residual operating current (30mA) must trip within 300ms (0.3 seconds). This applies to general type (non-time-delayed) RCDs per BS EN 61008-1 and RCBOs per BS EN 61009-1, and is confirmed by BS 7671 Reg 643.7.3.201 NOTE. Importantly, the AC test at IΔn applies regardless of RCD type (AC, A, F, B) per Reg 643.3 — so a Type A RCBO protecting an EV charger or washing machine circuit is tested and accepted by the same 300ms criterion. For S-type (selective or time-delayed) RCDs, the limit is 500ms at rated current, and they must NOT trip before 130ms — providing a delay that allows a downstream standard RCD to trip first.',
+      'A 30mA RCD tested at its rated residual operating current (30mA) must trip within 300ms (0.3 seconds). This applies to general type (non-time-delayed) RCDs per BS EN 61008-1 and RCBOs per BS EN 61009-1, and is confirmed by BS 7671 Reg 643.8 NOTE. Importantly, the AC test at IΔn applies regardless of RCD type (AC, A, F, B) per Reg 643.3 — so a Type A RCBO protecting an EV charger or washing machine circuit is tested and accepted by the same 300ms criterion. For S-type (selective or time-delayed) RCDs, the limit is 500ms at rated current, and they must NOT trip before 130ms — providing a delay that allows a downstream standard RCD to trip first.',
   },
   {
     question: 'At what phase angle should RCDs be tested?',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Can you use the test button on an RCD instead of an instrument test?',
     answer:
-      'The test button on an RCD is a self-test function that checks the RCD mechanism is free and will operate — it does NOT test the RCD to the required current and time limits of BS 7671. The test button is suitable for a user monthly check (recommended in BS 7671 Regulation 514.12.2 notices), but it does not constitute a compliant inspection and testing procedure. A properly calibrated instrument must be used for the measured current and trip time tests required by BS 7671 Chapter 64 (Regs 643.3 and 643.7.3.201).',
+      'The test button on an RCD is a self-test function that checks the RCD mechanism is free and will operate — it does NOT test the RCD to the required current and time limits of BS 7671. The test button is suitable for a user monthly check (recommended in BS 7671 Regulation 514.12.2 notices), but it does not constitute a compliant inspection and testing procedure. A properly calibrated instrument must be used for the measured current and trip time tests required by BS 7671 Chapter 64 (Regs 643.3 and 643.8).',
   },
   {
     question: 'Does BS 7671 A4:2026 require RCD protection on lighting circuits?',
@@ -157,7 +157,7 @@ const sections = [
           obvious external sign. A mechanically stuck or electrically degraded RCD may fail to trip
           when required, leaving connected equipment and persons unprotected.{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-          Regulation 643.3 and 643.7.3.201 (Chapter 64) therefore require RCDs to be verified at the
+          Regulation 643.3 and 643.8 (Chapter 64) therefore require RCDs to be verified at the
           time of installation and as part of every periodic inspection and test.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -325,7 +325,7 @@ const sections = [
               half-rated and 5× trip-time values that test instruments display derive from BS EN
               61008/61009 product standards, not from a BS 7671 Chapter 64 pass/fail table. The
               single BS 7671 A4:2026 verification criterion is the AC test at IΔn, with
-              disconnection within 300ms for a general non-delay type (Reg 643.7.3.201 NOTE).
+              disconnection within 300ms for a general non-delay type (Reg 643.8 NOTE).
             </span>
           </div>
         </div>
@@ -676,7 +676,7 @@ export default function RCDTestingGuidePage() {
           RCD Testing Guide: <span className="text-yellow-400">RCD Test Procedures to BS 7671</span>
         </>
       }
-      heroSubtitle="The complete UK electrician's guide to RCD testing to BS 7671:2018+A4:2026 — half-rated current test, rated current trip time (300ms maximum for 30mA general type, Reg 643.7.3.201), 5 times current test, ramp test, correct instrument connection, recording results, and diagnosing nuisance tripping. Updated for A4:2026 including Reg 411.3.4 (30mA RCD on domestic lighting circuits)."
+      heroSubtitle="The complete UK electrician's guide to RCD testing to BS 7671:2018+A4:2026 — half-rated current test, rated current trip time (300ms maximum for 30mA general type, Reg 643.8), 5 times current test, ramp test, correct instrument connection, recording results, and diagnosing nuisance tripping. Updated for A4:2026 including Reg 411.3.4 (30mA RCD on domestic lighting circuits)."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

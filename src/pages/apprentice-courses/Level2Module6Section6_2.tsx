@@ -33,10 +33,10 @@ const Level2Module6Section6_2 = () => {
       id: 2,
       question: "If a continuity test shows 'OL' or infinity, what does this mean?",
       options: [
-        'Well above 1 MΩ (typically 10+ MΩ)',
-        'Investigate and rectify the fault',
-        'No continuity - open circuit',
-        'Below minimum requirements',
+        'A perfectly continuous conductor',
+        'Very low resistance, well within limits',
+        'No continuity - an open circuit',
+        'A short circuit between conductors',
       ],
       correctAnswer: 2,
       explanation:
@@ -46,9 +46,9 @@ const Level2Module6Section6_2 = () => {
       id: 3,
       question: 'What is considered a good insulation resistance reading?',
       options: [
-        'Poor connections or damaged conductors',
-        'Investigate the cause before proceeding',
-        'Below minimum requirements',
+        'Exactly 1 MΩ, the minimum value',
+        'A reading just below 1 MΩ',
+        'Any reading the instrument can display',
         'Well above 1 MΩ (typically 10+ MΩ)',
       ],
       correctAnswer: 3,
@@ -58,16 +58,16 @@ const Level2Module6Section6_2 = () => {
     {
       id: 4,
       question:
-        'A loop impedance reading of 2.5 Ω on a 32A circuit with 1.44 Ω maximum - what action is needed?',
+        'A loop impedance reading of 2.5 Ω on a 32A circuit with a 1.44 Ω maximum - what action is needed?',
       options: [
-        'Investigate and rectify the fault',
-        'Below minimum requirements',
-        'Poor connections or damaged conductors',
-        'Well above 1 MΩ (typically 10+ MΩ)',
+        'Investigate and rectify before energising',
+        'Record it as a pass, it is below 1 MΩ',
+        'Increase the protective device rating to suit',
+        'Re-test on a higher impedance range',
       ],
       correctAnswer: 0,
       explanation:
-        'The reading exceeds the maximum permitted value, so the fault must be investigated and corrected before the circuit can be energised.',
+        'At 2.5 Ω the reading exceeds the 1.44 Ω maximum Zs, so the fault must be investigated and corrected before the circuit can be energised.',
     },
     {
       id: 5,
@@ -84,12 +84,12 @@ const Level2Module6Section6_2 = () => {
     },
     {
       id: 6,
-      question: 'What does a high continuity reading suggest about circuit protective conductors?',
+      question: 'What does an unexpectedly high continuity reading suggest about protective conductors?',
       options: [
-        'The RCD trips within the specified time limits',
-        'Well above 1 MΩ (typically 10+ MΩ)',
+        'Excellent, low-resistance connections',
+        'Correct polarity throughout the circuit',
         'Poor connections or damaged conductors',
-        'Investigate the cause before proceeding',
+        'A healthy, fully bonded earth path',
       ],
       correctAnswer: 2,
       explanation:
@@ -99,9 +99,9 @@ const Level2Module6Section6_2 = () => {
       id: 7,
       question: 'Why is reversed polarity always considered a fail?',
       options: [
-        "Lower than individual readings due to parallel paths",
-        "Progressively throughout construction with staged reviews",
-        "Room proportions, surface reflectances, and luminaire distribution",
+        'It causes the insulation resistance to read low',
+        'It makes the RCD trip too quickly',
+        'It increases the earth fault loop impedance',
         "It can leave live conductors energised when switches are 'off'",
       ],
       correctAnswer: 3,
@@ -113,13 +113,13 @@ const Level2Module6Section6_2 = () => {
       question: 'For an RCD test, what indicates a pass result?',
       options: [
         'The RCD trips within the specified time limits',
-        'Poor connections or damaged conductors',
-        'Investigate and rectify the fault',
-        'Well above 1 MΩ (typically 10+ MΩ)',
+        'The RCD does not trip at the rated current',
+        'The reading is well above 1 MΩ',
+        'The loop impedance is below the BS 7671 value',
       ],
       correctAnswer: 0,
       explanation:
-        'An RCD must trip within specified time limits (typically 30ms for 30mA RCDs) when the correct test current is applied.',
+        'An RCD passes when it trips within the specified time limits when the correct test current is applied (a 30 mA RCD must trip within 300 ms at I∆n and 40 ms at 5×I∆n).',
     },
     {
       id: 9,
@@ -140,10 +140,10 @@ const Level2Module6Section6_2 = () => {
       question:
         'According to BS 7671, what is the consequence of energising a circuit that has failed testing?',
       options: [
-        'Investigate the cause before proceeding',
-        'It can leave live conductors energised when switches are \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-        'Potential danger to users and breach of regulations',
-        'Poor connections or damaged conductors',
+        'It is acceptable if the client agrees to it',
+        'It improves the readings once load is applied',
+        'Potential danger to users and a breach of regulations',
+        'It only affects the warranty, not safety',
       ],
       correctAnswer: 2,
       explanation:

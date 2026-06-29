@@ -40,10 +40,10 @@ const checks = [
     id: 'm5-s4-sub3-single-test',
     question: 'Under A4:2026 Reg 643.7.3, the in-service RCD test for a 30 mA RCD is:',
     options: [
-      'No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.',
-      'A single AC test at 1 x I delta n (i.e. 30 mA for a 30 mA RCD). The trip time must be within 300 ms for a general-purpose 30 mA RCD per Table 41.1. The older multi-test sequence (1/2 to confirm no nuisance trip, 1 to confirm operation within 300 ms, 5 to confirm fast operation) was removed in A4:2026 and is no longer required for verification. Modern MFTs still offer the older test as a menu option but it is NOT required.',
-      'Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate\\\'s warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.',
-      'Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.',
+      'A three-test sequence at 1/2, 1 and 5 times I delta n — the half test confirms no nuisance trip and the higher tests confirm timely operation.',
+      'A single AC test at 1 x I delta n, with the trip time required within 300 ms for a general-purpose 30 mA RCD per Table 41.1.',
+      'A single AC test at 5 times I delta n (150 mA), with the trip time required within 40 ms — the 1 times test having been removed in A4:2026.',
+      'A DC test at 6 mA to confirm the device responds to smooth residual current, replacing the AC test entirely for all RCD types from A4:2026.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     id: 'm5-s4-sub3-types',
     question: 'A 30 mA RCD on a circuit feeding a single-phase variable-speed drive (VSD) should be type:',
     options: [
-      'Five locations in approximate frequency order. (1) The CP (control pilot) signal between charger and EV — corroded connector, moisture in J1772 / Type 2 socket; intermittent charge fail. (2) The 6 mA DC RCM (residual current monitoring) within the charger — often the cause of \\\'charger won\\\'t start\\\' symptoms; sometimes a real fault, sometimes a glitch. (3) The supply tail to the charger — if installed alongside an existing CU, the tail termination can loosen under high load (32 A continuous for 5+ hours per charge cycle). (4) The earth electrode for TT-converted installations — Reg 722.411 sometimes requires a dedicated electrode; degradation causes earth-fault timing issues. (5) The charger\\\'s internal contactor — wears after 5+ years of daily switching at 32 A.',
-      'The MCS-certified installer (or, for non-MCS installs, the contractor energising the system). The duty is set out in the Distribution Connection and Use of System Agreement (DCUSA) and is enforced via the licensee framework Ofgem oversees. Failure to notify is a breach of the connection conditions and can result in disconnection and loss of any export tariff. As an apprentice you do not sign the notification — but you should recognise that on the install team the duty has a named owner and a 28-day clock from energisation.',
-      'You loop back to stage 2 and update the hypothesis. The results have eliminated one hypothesis and may have suggested another. Re-plan tests based on the updated hypothesis (stage 3), execute (stage 4), re-analyse (stage 5). The diagnosis loops between stages 2–5 until you reach a hypothesis that explains all the test results. This iterative loop is normal — first hypotheses are usually partial. The discipline is to keep iterating with structured tests rather than abandon the process and guess.',
-      'Type A or Type F minimum, ideally Type B for a true VSD with rectified DC content. Type AC RCDs only detect pure sinusoidal AC residual current — they\\\\\\\'re blind to DC components or pulsed DC. Modern electronic loads (LED drivers, switch-mode PSUs, EV chargers, VSDs, induction hobs) generate residual currents with DC components that Type AC cannot see. A4:2026 leans heavily toward Type A as the default for general use, with Type B mandatory for EV charging (Section 722) and certain industrial applications. Schedule of Test Results column for RCD type accepts AC / A / F / B with (S) suffix for time-delayed.',
+      'Type AC. A simple sinusoidal-sensing RCD is sufficient because the drive output is still alternating current, and Type AC is the most economical choice.',
+      'Type S (time-delayed). The drive produces inrush currents that nuisance-trip an instantaneous device, so a selective time-delayed RCD is required.',
+      'Type G (general-purpose). Variable-speed drives are treated as ordinary loads for RCD selection, so a standard device covers them with no waveform consideration.',
+      'Type A or Type F minimum, ideally Type B — the drive\'s DC residual content is invisible to a Type AC RCD, which detects pure sinusoidal AC only.',
     ],
     correctIndex: 3,
     explanation:
@@ -66,12 +66,12 @@ const checks = [
     id: 'm5-s4-sub3-test-button',
     question: 'The manufacturer test button on an RCD verifies:',
     options: [
-      'Five questions. (1) IS PARTS AVAILABLE? Older MCBs may be obsolete; replacement requires new model. (2) IS REPAIR EVEN POSSIBLE? Most MCBs are sealed units; \\\'repair\\\' usually means swap. (3) IS THE EXISTING DESIGN STILL APPROPRIATE? Modern installations may need RCBO (RCD + MCB combined) instead of MCB-only. (4) WILL THE NEW COMPONENT FIT THE BUSBAR? Some old CUs need full CU replacement to fit modern devices. (5) WHAT\\\'S THE OVERALL CU AGE / CONDITION? If the CU itself is approaching end of life (typical 25–30 years), full CU replacement may be the right call. Engineering decision is rarely just \\\'repair vs replace one device\\\'.',
-      'The mechanical operation of the device — the test button injects a small simulated residual current through an internal resistor that bypasses the load side, exercising the trip mechanism. It does NOT verify trip time or trip current accuracy. The instrument test (single AC at 1 x I delta n) is the verification of trip current and time. Both are part of the test set: instrument test for performance verification, manufacturer test button as a periodic functional check that the customer can perform between professional inspections.',
-      'Sunlight → silicon cells → DC voltage in panel → DC string conductors (panels in series) → DC string isolator at the array → inverter (MPPT, DC-AC conversion) → AC isolator at the inverter → MID-compliant generation meter → AC isolator at the consumer unit (or directly into a dedicated MCB) → consumer unit / DNO supply. Earth-bonding of the array frame to MET; labels at each isolator; manufacturer\\\'s signage at the meter position. Battery storage adds a DC battery and BMS in parallel with the inverter (hybrid topology) or a separate AC-coupled battery inverter.',
-      'Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.',
+      'The mechanical operation only — it injects a simulated residual current through an internal resistor to exercise the trip mechanism, not trip time or current accuracy.',
+      'The trip current accuracy — pressing it injects exactly I delta n through the load side and confirms the rated residual current, making an instrument test unnecessary.',
+      'The trip time — the test button times how long the device takes to open and displays a pass if within 300 ms, duplicating the instrument verification.',
+      'The earth fault loop impedance at the device — it briefly connects line to earth through an internal resistor and confirms Zs is low enough to operate.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The test button is a functional check, not a calibration check. Pressing it confirms the device operates mechanically; it does not measure performance. The customer is expected to test their RCDs quarterly using the test button — this is the Reg 132.13 documentation handover. The professional inspection at EICR intervals uses the instrument test for the actual performance verification.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'A4:2026 made a major simplification to in-service RCD testing. What was deleted from the test set?',
     options: [
-      'A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.',
-      'The multi-test sequence at multiples of I delta n was deleted. Specifically: the 1/2 x I delta n no-trip test, the 1 x I delta n trip-within-300ms test, and the 5 x I delta n trip-within-40ms test were the older three-test sequence. A4:2026 Reg 643.7.3 simplified this to a SINGLE AC test at 1 x I delta n, with the trip time compared against Table 41.1. The 5 x I delta n test in particular is gone — not just optional, deleted from the verification requirement. Some textbooks, instrument menus and older training materials still reference it; be aware of the change and use the single-test method.',
-      'Customer-management overhead. Domestic = single homeowner, conversational, dust sheets, agreed working hours, kids and pets to consider. Commercial = sign-in/sign-out, contractor induction, principal contractor coordination, working out-of-hours where the business operates during the day, retail floor lifts and office desk-shifts to plan around. The wiring may be similar; the choreography around the work is wildly different.',
-      '(1) Eliminate — can the chase be avoided entirely (surface mount, alternative route)? (2) Substitute — can a less dust-producing tool be used (resin-bonded chase saw with extraction vs hammer-and-bolster)? (3) Engineer — on-tool extraction connected to an M-class vacuum, water suppression. (4) Administrative — limit duration, rotate operatives, restrict access. (5) PPE — FFP3 mask as the LAST line, not the first. RPE alone is not COSHH-compliant for routine silica work.',
+      'The manufacturer test-button requirement was deleted — A4:2026 no longer requires an integral test button, relying on the instrument test alone.',
+      'The multi-test sequence at multiples of I delta n (1/2, 1 and 5 x I delta n) was deleted, leaving a single AC test at 1 x I delta n per Reg 643.7.3.',
+      'The half-times test was deleted but the 1 times and 5 times tests were retained — A4:2026 kept both trip tests and only removed the 1/2 times no-trip check.',
+      'The AC test was deleted in favour of a DC ramp test — A4:2026 now finds the trip current by slowly raising a DC current until the device operates.',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'The Schedule of Test Results column for RCD type accepts the following codes:',
     options: [
-      'Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions ("Just think positive!"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.',
-      'A pro forma is a quote-style document that looks like an invoice but doesn\\\\\\\'t trigger a tax point — typically used for upfront payment requests before work begins (e.g. materials deposit). Once the customer pays the pro forma, you issue the actual VAT invoice. Useful for cash-flow management on jobs where you need materials money upfront. Doesn\\\\\\\'t count toward turnover until converted to a real invoice.',
-      'AC, A, F or B — and a time-delayed device adds (S) suffix for devices to BS EN 61008, BS EN 61009 or BS EN 62423. So a time-delayed Type A device is recorded as "A (S)". The type code reflects the residual-current waveform sensitivity: AC = pure sinusoidal AC; A = AC + pulsating DC; F = A + composite (motor drives); B = A + F + smooth DC. Time-delayed (S) means selective tripping coordination — typically used as an upstream device with downstream non-delayed RCDs on individual circuits.',
-      'Annual visual inspection by the user (cable condition, no damage to connector, no signs of overheating). Periodic BS 7671 EICR every 5 years (or change of tenancy for landlord properties under the Electrical Safety Standards Regulations 2020). EV-specific tests: RCD operation (Type B or RDC-DD), open-PEN protection function (where fitted), Zs at the charge point. Manufacturer-recommended firmware updates as available. Where the charger has been involved in a fault event (known surge, vehicle-side incident) bring forward the inspection.',
+      'AC, A and B only — Type F was withdrawn in A4:2026 because composite-waveform sensitivity is built into Type A; a time-delayed device adds a (T) suffix.',
+      '1, 2, 3 and 4 — the numeric class of the device by sensitivity, with a (D) suffix for time-delayed devices to BS EN 61008.',
+      'AC, A, F or B — with an (S) suffix for time-delayed devices, so a time-delayed Type A is recorded as "A (S)".',
+      'AC, A, F, B and G, where G denotes a general-purpose instantaneous device; the (S) suffix is used only for devices rated above 100 mA.',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 3,
     question: 'Table 41.1 (A4:2026) maximum disconnection times for a 230 V final circuit not exceeding 32 A:',
     options: [
-      'A damaged or over-charged lithium cell can heat itself by internal short-circuit. Above a chemistry-dependent threshold (around 200 °C for NMC, around 270 °C for LFP) the cell\\\\\\\\\\\\\\\'s internal materials decompose exothermically — releasing more heat that propagates to neighbouring cells. The reaction is self-sustaining and standard water-based extinguishers do not stop it. Hence the emphasis on chemistry, BMS, segregation and detection.',
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
-      'C&I is a specialised electrical-technician discipline covering process control systems, instrumentation, PLCs, SCADA and DCS. Typical route: Approved Electrician + HNC/HND in Electrical/Electronic or Process Control + employer-specific training (Siemens, Rockwell, Schneider PLC training). Common employers: process industries (food, pharma, water utilities), petrochemical, large manufacturing.',
-      '0.4 seconds (400 ms) for TN, 0.2 seconds (200 ms) for TT — these are the maximum disconnection times specified in Table 41.1 for the supply system and final-circuit type. For a 30 mA general-purpose RCD operated by a 30 mA residual current (1 x I delta n), the manufacturer\\\\\\\\\\\\\\\'s declared maximum trip time is 300 ms (per BS EN 61008 / BS EN 61009 product standards) — well within the Table 41.1 system requirement. The verification is the Table 41.1 limit; the 300 ms is the product spec.',
+      '0.2 seconds (200 ms) for TN and 0.4 seconds (400 ms) for TT — with TT given the longer time because the soil return path is slower to clear a fault.',
+      '5 seconds for both TN and TT — the time for a final circuit not exceeding 32 A is the same as for a distribution circuit because the device is the same.',
+      '0.4 seconds for both TN and TT — Table 41.1 sets a single disconnection time for all final circuits up to 32 A regardless of earthing system.',
+      '0.4 seconds (400 ms) for TN and 0.2 seconds (200 ms) for TT — the Table 41.1 limits, both comfortably met by the 300 ms RCD product spec.',
     ],
     correctAnswer: 3,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 4,
     question: 'On a TT installation with Ra = 100 Omega and a 30 mA RCD, the Ra x I delta n test gives:',
     options: [
-      '3 V — pass. Calculation: Ra x I delta n = 100 x 0.030 = 3 V. The acceptance criterion (Reg 411.5.3(b)) is Ra x I delta n less than or equal to 50 V (the conventional touch-voltage limit). 3 V is well within 50 V — the RCD will operate well before the touch-voltage approaches dangerous level. For the same Ra with a 100 mA RCD: 100 x 0.100 = 10 V — still pass. With a 300 mA RCD: 100 x 0.300 = 30 V — still pass but tighter. The Ra x I delta n calculation is the TT-specific acceptance test.',
-      '(1) Take the tool out of service immediately — don\\\'t try to use it \\\'gently\\\'. (2) Apply the firm\\\'s quarantine tag (\\\'do not use\\\', signed and dated). (3) Move the tool to the firm\\\'s quarantine area (or, on site, to the supervisor\\\'s box). (4) Log the defect in the firm\\\'s tool register or defect log. (5) Tell the supervisor — verbally as well as written. (6) Get an alternative tool to continue the work. The fix happens later by a competent person; the apprentice\\\'s job ends at quarantine + report.',
-      'Schedule 1 Part P of the Building Regulations 2010 sets the legal requirement that \\\'reasonable provision shall be made in the design and installation of electrical installations in order to protect persons operating, maintaining or altering the installations from fire or injury\\\'. The Approved Document P guidance then names BS 7671 as the recognised way to meet that requirement. So in a dwelling in England, BS 7671 compliance is the practical route to legal compliance.',
-      'Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.',
+      '3 V — pass. Ra x I delta n = 100 x 0.030 = 3 V, well within the 50 V acceptance limit of Reg 411.5.3(b).',
+      '30 V — borderline. Calculation: Ra x I delta n = 100 x 0.300 = 30 V, using the 300 mA product trip threshold. 30 V is under 50 V but should be improved for margin.',
+      '300 V — fail. Calculation: Ra x I delta n = 100 x 3.0 = 300 V, using a 3 A operating current. 300 V far exceeds the 50 V limit, so the electrode must be improved.',
+      '0.3 V — pass. Calculation: Ra x I delta n = 100 x 0.003 = 0.3 V, using the 3 mA leakage threshold. 0.3 V is comfortably within the 50 V limit.',
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'You measure RCD trip time at 1 x I delta n = 35 ms on a 30 mA RCD. Compliance per A4:2026 / Table 41.1?',
     options: [
-      'Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification — for example, omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning and accepted by the duty-holder.',
-      'Pass. The maximum trip time at 1 x I delta n for a general-purpose 30 mA RCD is 300 ms per the product standard, and the system disconnection time is 400 ms (TN) or 200 ms (TT) per Table 41.1. 35 ms is well under all limits. A trip time of 35 ms is typical for a healthy modern RCD; older RCDs may give 80-200 ms — also within limits. Trip times near or exceeding 300 ms suggest the RCD is approaching end of life and should be replaced.',
-      'A witness-by-assessor practical in a controlled environment (lab or training centre with realistic installation rigs). Candidate completes a full test sequence on a sample installation: continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, RCD operation, prospective fault current. Then completes the relevant certificate (EIC or EICR) accurately. Time-pressured but realistic.',
-      'MCS now covers battery storage as a separate technology category (alongside PV, solar thermal, heat pumps, biomass, wind). Battery installation typically pairs with PV (combined PV+battery system) or as a standalone retrofit. MCS battery certification follows MIS 3012 install standard and requires installer competence in DC battery systems, BMS commissioning, and grid-tie inverter integration.',
+      'Fail. 35 ms is too fast — a healthy 30 mA RCD should trip between 130 ms and 300 ms, and a reading this low suggests a hypersensitive device.',
+      'Pass. 35 ms is well under the 300 ms product limit and the 400 ms TN / 200 ms TT Table 41.1 limits, and is typical of a healthy device.',
+      'Inconclusive. The single AC test at 1 times I delta n cannot confirm compliance alone; a second test at 5 times I delta n is needed before the device can pass.',
+      'Fail. The 300 ms figure is a minimum — the device must take at least 300 ms so it does not operate on transient leakage, so 35 ms fails the requirement.',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'On an installation with all-RCBO consumer unit (e.g. 12 RCBOs), how many RCD tests do you carry out for verification?',
     options: [
-      'Voltage drop on the upstairs lighting circuit, OR a problem at the upstairs lighting tap-off. Most likely causes: (1) HRJ at a junction box upstream of the upstairs lights, (2) loose terminal at the lighting RCBO, (3) high-resistance neutral on the upstairs circuit (broken or partially connected), (4) under-sized cable retrofit (someone replaced cable with smaller cross-section). Test: measure voltage at an upstairs lampholder under normal load; compare to nominal 230 V. If significantly low (&lt;220 V), trace upstream for the HRJ. Thermal imaging at the suspected location.',
-      'Isolate AC and DC sides, lock-off, prove dead. Disconnect strings panel by panel. Remove panels using safe roof-access procedures. Recover the panels for recycling — established PV recycling streams in the UK take aluminium frames, glass, copper wiring and silicon cells separately. Inverter and any battery component handled as WEEE (electronics) and hazardous waste (battery) respectively. Roof penetrations made good. Update the EIC to reflect the removal. The MCS-certified installer (or successor) typically arranges the decommissioning chain through authorised waste carriers.',
-      'One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\\\\\\\\\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\\\\\\\\\\\\'re paired with certification software.',
-      'Brings the installed systems to life — energising, testing, setting parameters, demonstrating compliance, and signing the system over to the client. On a commercial project commissioning is a distinct phase after the install: the Commissioning Engineer runs the test sequence, configures the BMS, programmes the panels, sets the protection settings and produces the commissioning records that go in the O&M manual.',
+      'One test for the whole board — with an all-RCBO consumer unit a single test at the main switch verifies every RCBO at once, as they share a busbar.',
+      'Two tests — one on the highest-rated RCBO and one on the lowest; if both pass, the devices in between are taken to comply by interpolation.',
+      'One per RCBO — each is an independent RCD device, so test each at 1 x I delta n and record the trip time per circuit on the schedule.',
+      'Six tests — one per pair of RCBOs; they share a neutral connection at the busbar, so testing alternate devices is sufficient.',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 7,
     question: 'A 30 mA RCD on a kitchen socket circuit fails the trip-time test (reads 380 ms, limit 300 ms). What\'s the appropriate response?',
     options: [
-      'Over-torquing crushes the conductor strands, deforms the terminal, can crack the device housing, and reduces the long-term mechanical and electrical reliability of the connection. It also voids the manufacturer\\\\\\\'s warranty (most warranties are explicitly conditional on the specified torque) and creates a Reg 526.1 risk because a damaged connection is no longer \\\\\\\'durable\\\\\\\'.',
-      '(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer\\\\\\\'s value (typically 2–3 Nm for Schneider isolators).',
-      'Although the PD\\\\\\\'s primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.',
-      'Fail the device. Issue a Code C2 (potentially dangerous) on the EICR if applicable, document on the Schedule of Test Results, replace the RCD or RCBO. A trip time exceeding the 300 ms manufacturer\\\\\\\\\\\\\\\'s declared limit means the device cannot be relied upon to disconnect within the Table 41.1 system requirement. The RCD is approaching end of life and may fail to operate at all on the next fault. Replace, retest, document the remediation. Do not leave the installation in service relying on a failed RCD.',
+      'Pass it with a note. 380 ms is within the 400 ms TN Table 41.1 time, so the RCD still clears a fault and only needs a watch-and-review note.',
+      'Re-test in DC mode. The 380 ms AC result is unreliable on a circuit feeding electronic loads; a DC ramp test usually brings it back within 300 ms.',
+      'Adjust the limit. The 300 ms figure applies only to new devices; an in-service RCD is allowed up to 500 ms, so 380 ms is an acceptable pass.',
+      'Fail the device. Code it C2 on the EICR and replace the RCD — exceeding the 300 ms limit means it cannot be relied on to disconnect in time.',
     ],
     correctAnswer: 3,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 8,
     question: 'The manufacturer\'s test button on a domestic RCD is intended to be operated by:',
     options: [
-      'The customer / occupier as a periodic functional check, typically quarterly. Reg 132.13 requires the documentation handover to include test instructions for the customer. The test button verifies mechanical operation only — it does NOT verify trip time. The professional verification (instrument test at 1 x I delta n) happens at EICR intervals (typically 5 years residential rented, 10 years owner-occupied). The two tests are complementary — frequent functional checks by the customer + periodic performance verification by the inspector.',
-      'Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer\\\\\\\'s documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.',
-      'Because a ladder is a personal access platform that doesn\\\\\\\'t have a guardrail and depends on the user\\\\\\\'s three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn\\\\\\\'t reasonably practicable.',
-      'Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.',
+      'The customer / occupier as a periodic functional check, typically quarterly, per the Reg 132.13 documentation handover — verifying mechanical operation, not trip time.',
+      'The inspector only, during the periodic EICR. The test button duplicates the instrument test, so only the qualified person operates it at inspection intervals.',
+      'The installer once, at handover. Pressing it during commissioning proves the device works, after which it should not be operated again to avoid wearing the mechanism.',
+      'A competent person only, annually. The test button injects a live residual current unsafe for an occupier to operate, so it is restricted to professional checks.',
     ],
     correctAnswer: 0,
     explanation:

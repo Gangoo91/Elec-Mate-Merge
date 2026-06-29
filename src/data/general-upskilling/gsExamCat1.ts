@@ -51,9 +51,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What does the concept of &ldquo;the power of yet&rdquo; mean in growth mindset theory?',
     options: [
-      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
-      'The belief that your qualities are carved in stone and cannot be changed',
-      'Mastery experiences &mdash; successfully completing a task yourself',
+      'Setting a strict deadline by which a skill must be fully mastered',
+      'Accepting that some abilities are simply beyond your reach for now',
+      'Delaying any attempt at a task until you feel completely ready',
       'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
     ],
     correctAnswer: 3,
@@ -224,10 +224,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 13,
     question: 'What is a &ldquo;belief system&rdquo; in the context of personal performance?',
     options: [
-      'It establishes your current baseline so you can measure progress accurately',
+      'A formal performance review process used by employers to rank staff',
       'A set of deeply held assumptions about yourself and the world that shape your behaviour',
-      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
-      'Making excuses and finding reasons not to attempt the new task',
+      'A short-term feeling of confidence that changes from day to day',
+      'A list of personal goals written down at the start of a training course',
     ],
     correctAnswer: 1,
     explanation:
@@ -260,9 +260,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the &ldquo;growth zone&rdquo; in the comfort zone model?',
     options: [
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
-      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
-      'The belief that your qualities are carved in stone and cannot be changed',
+      'The zone where tasks feel safe, familiar, and free from any challenge',
+      'The zone where self-doubt and the opinions of others hold you back',
+      'The zone where you steadily acquire new skills through productive struggle',
       'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
     ],
     correctAnswer: 3,
@@ -278,9 +278,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question: 'What is the key difference between a performance goal and a learning goal?',
     options: [
       'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
-      'The belief that abilities can be developed through dedication and hard work',
-      'People can have a growth mindset in some areas of life and a fixed mindset in others',
-      'It establishes your current baseline so you can measure progress accurately',
+      'A performance goal is short-term, whereas a learning goal must always be long-term',
+      'A performance goal is set by a manager, whereas a learning goal is set by the individual',
+      'A performance goal applies to practical skills; a learning goal applies only to theory',
     ],
     correctAnswer: 0,
     explanation:
@@ -316,10 +316,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'According to Bandura, which of the following is an example of a &ldquo;vicarious experience&rdquo; building self-efficacy?',
     options: [
-      'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
-      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
+      'Being reassured by your supervisor that you are perfectly capable of the task',
+      'Completing a complex wiring task yourself for the first time without help',
       'Watching a colleague who is similar to you successfully complete a complex wiring task',
-      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
+      'Feeling calm and steady-handed while carrying out a complex wiring task',
     ],
     correctAnswer: 2,
     explanation:
@@ -353,9 +353,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'In Duckworth&rsquo;s grit research, what did she find about the relationship between grit and talent?',
     options: [
       'Grit and talent are often inversely related &mdash; high talent can reduce perseverance',
-      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
-      'The belief that your qualities are carved in stone and cannot be changed',
-      'People can have a growth mindset in some areas of life and a fixed mindset in others',
+      'Grit and talent are essentially the same trait measured in two different ways',
+      'High talent reliably produces high grit, so the two always rise together',
+      'Talent fully determines achievement, leaving grit with no measurable effect',
     ],
     correctAnswer: 0,
     explanation:
@@ -388,10 +388,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Dweck&rsquo;s research found that praising children for intelligence (&ldquo;You&rsquo;re so smart&rdquo;) had what effect when they later faced a difficult task?',
     options: [
-      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
-      'The belief that your qualities are carved in stone and cannot be changed',
+      'They tried harder and persisted longer to prove how clever they were',
+      'They showed no measurable change in their willingness to take on challenges',
       'They were more likely to give up and chose easier tasks to protect their &ldquo;smart&rdquo; label',
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
+      'They became more accurate at judging their own ability on later tasks',
     ],
     correctAnswer: 2,
     explanation:
@@ -406,9 +406,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'In the comfort zone model, what is a characteristic behaviour when someone is in the &ldquo;fear zone&rdquo;?',
     options: [
-      'Neural pathways are strengthened through a process called myelination',
-      'Form new neural connections and reorganise itself throughout life',
-      '&ldquo;I&rsquo;m just not a maths person&rdquo;',
+      'Confidently tackling unfamiliar problems and learning quickly from them',
+      'Setting ambitious new goals and acting with a clear sense of purpose',
+      'Calmly repeating familiar tasks that present no real challenge',
       'Making excuses and finding reasons not to attempt the new task',
     ],
     correctAnswer: 3,
@@ -478,9 +478,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth&rsquo;s &ldquo;Hard Thing Rule&rdquo; requires family members to do which of the following?',
     options: [
-      'Grit and talent are often inversely related &mdash; high talent can reduce perseverance',
-      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
-      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
+      'Each person must take on a new hard thing every single week without fail',
+      'Only the children in a family are required to commit to a hard thing',
+      'A person may abandon their hard thing the moment it stops being enjoyable',
       'Each person must commit to one hard thing and cannot quit until a natural stopping point is reached',
     ],
     correctAnswer: 3,
@@ -497,9 +497,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'How do negative belief systems typically affect an electrician&rsquo;s career progression?',
     options: [
       'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
-      'It establishes your current baseline so you can measure progress accurately',
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
-      'Research shows the adult brain continues forming new neural connections well into old age',
+      'They have no real effect on progression because skills speak for themselves',
+      'They tend to push people to overwork in order to disprove their own doubts',
+      'They only affect newly qualified electricians, not experienced tradespeople',
     ],
     correctAnswer: 0,
     explanation:
@@ -513,10 +513,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 29,
     question: 'What does Dweck mean when she says everyone has a &ldquo;mixed mindset&rdquo;?',
     options: [
-      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
+      'A mindset that gradually shifts from fixed to growth as a person matures',
       'People can have a growth mindset in some areas of life and a fixed mindset in others',
-      'It establishes your current baseline so you can measure progress accurately',
-      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
+      'A balanced blend of confidence and caution applied evenly to every task',
+      'A mindset shared across a whole team rather than held by one individual',
     ],
     correctAnswer: 1,
     explanation:
@@ -549,9 +549,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'In Bandura&rsquo;s theory, how do &ldquo;physiological and emotional states&rdquo; influence self-efficacy?',
     options: [
-      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
-      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
-      'The belief that abilities can be developed through dedication and hard work',
+      'Physical fitness directly raises self-efficacy regardless of the task involved',
+      'Emotional states only affect motivation, never a person&rsquo;s belief in their ability',
+      'A racing heart is always an accurate signal that a person is not yet competent',
       'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
     ],
     correctAnswer: 3,
@@ -568,9 +568,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'Which of the following is a common characteristic of the &ldquo;learning zone&rdquo; in the comfort zone model?',
     options: [
       'Acquiring new skills, dealing with challenges, and extending your comfort zone',
-      'A set of deeply held assumptions about yourself and the world that shape your behaviour',
-      'The belief that your qualities are carved in stone and cannot be changed',
-      'People can have a growth mindset in some areas of life and a fixed mindset in others',
+      'Repeating well-mastered tasks where you feel completely safe and relaxed',
+      'Avoiding new tasks because of self-doubt and concern about others&rsquo; opinions',
+      'Living with full purpose and achieving goals once thought impossible',
     ],
     correctAnswer: 0,
     explanation:
@@ -624,9 +624,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth distinguishes between &ldquo;harmonious passion&rdquo; and &ldquo;obsessive passion.&rdquo; Why is this distinction important for sustained grit?',
     options: [
-      'Each person must commit to one hard thing and cannot quit until a natural stopping point is reached',
-      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
+      'Harmonious passion produces faster results, while obsessive passion produces more durable results',
+      'Obsessive passion is required for elite performance, while harmonious passion suits hobbies only',
+      'Harmonious passion applies to teams, while obsessive passion applies to individuals',
       'Harmonious passion integrates with your identity and promotes wellbeing, while obsessive passion leads to burnout and rigid persistence',
     ],
     correctAnswer: 3,
@@ -660,10 +660,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does Dweck&rsquo;s growth mindset theory intersect with Vygotsky&rsquo;s &ldquo;Zone of Proximal Development&rdquo; (ZPD)?',
     options: [
-      'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
+      'Both frameworks argue that ability is fixed and learning merely reveals it',
       'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
-      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
-      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
+      'Both frameworks claim that learners progress fastest when working entirely without support',
+      'Both frameworks reject the role of mentoring and feedback in skill development',
     ],
     correctAnswer: 1,
     explanation:
@@ -678,10 +678,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A contracting firm wants to build a growth mindset culture. According to Dweck&rsquo;s organisational research, which approach is most effective?',
     options: [
-      'Harmonious passion integrates with your identity and promotes wellbeing, while obsessive passion leads to burnout and rigid persistence',
-      'A set of deeply held assumptions about yourself and the world that shape your behaviour',
+      'Running a single motivational workshop and displaying growth mindset posters',
+      'Rewarding only the highest individual performers to drive everyone else harder',
       'Creating systems where learning from failure is valued, feedback is normalised, and development pathways are transparent',
-      'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
+      'Discouraging staff from admitting mistakes so confidence stays high across the team',
     ],
     correctAnswer: 2,
     explanation:
@@ -696,9 +696,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What criticism has been levelled at growth mindset research by scholars such as Broer, Bai, and Fonseca (2019)?',
     options: [
-      'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
-      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
+      'Replication studies found mindset interventions actively harmed most students&rsquo; results',
+      'The research relied entirely on self-report surveys with no objective measures',
+      'The theory was shown to apply only to adults and never to school-age learners',
       'Large-scale replication studies found that mindset interventions had very small effect sizes, particularly for disadvantaged students',
     ],
     correctAnswer: 3,

@@ -54,10 +54,10 @@ const AM2Module5Section2 = () => {
       id: 'first-action',
       question: "What's the first action before testing a faulted circuit?",
       options: [
-        'Series-connected airfield runway lighting',
-        'Grandiose thinking and inflated self-esteem',
+        'Start a continuity test from the consumer unit',
+        'Visually inspect every accessory on the circuit',
         'Apply safe isolation to prove the circuit is dead',
-        'Ratio of optical power in \\\\\\\\\\\\\\\'1\\\\\\\\\\\\\\\' state to power in \\\\\\\\\\\\\\\'0\\\\\\\\\\\\\\\' state',
+        'Re-energise the circuit to confirm the symptom',
       ],
       correctIndex: 2,
       explanation:
@@ -68,9 +68,9 @@ const AM2Module5Section2 = () => {
       question: "If an MCB trips immediately when energised, what's your first test?",
       options: [
         'Insulation resistance to check for a short or earth fault',
-        'Commissioning engineers and controls specialists',
-        'Pushing a loaded trolley along a corridor',
-        'Rated voltage, current, frequency, and IP rating',
+        'Polarity test at the final socket outlet',
+        'Earth fault loop impedance (Zs) at the origin',
+        'RCD trip-time test at five times rated current',
       ],
       correctIndex: 0,
       explanation:
@@ -80,10 +80,10 @@ const AM2Module5Section2 = () => {
       id: 'fault-recording',
       question: "Why is it not enough to just say 'ring final fault'?",
       options: [
-        'Appropriate protection or location for the reduced conductor',
+        'Because the assessor only wants the test readings recorded',
         'Because you must give type, location, and rectification - assessor needs detail',
-        'Bi-directional communication, status feedback, and coordinated sequences',
-        'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
+        'Because ring circuits are never faulted on the AM2',
+        'Because the fault type alone is all that is marked',
       ],
       correctIndex: 1,
       explanation:
@@ -109,10 +109,10 @@ const AM2Module5Section2 = () => {
       id: 2,
       question: 'Why must you observe symptoms before testing?',
       options: [
-        'Flow-down clauses in the subcontract',
-        'Correct indication of equipment status',
+        'It removes the need for safe isolation',
+        'It allows you to skip the dead tests',
         'Symptoms guide which test to perform first',
-        'Recorded in the log book and as-built drawings updated',
+        'It proves the circuit is safe to energise',
       ],
       correctAnswer: 2,
       explanation:
@@ -122,9 +122,9 @@ const AM2Module5Section2 = () => {
       id: 3,
       question: 'Which test is best for suspected short circuits?',
       options: [
-        'Up to 1000V AC or 1500V DC',
-        'RCD protection not exceeding 30mA',
-        '3-phase star with neutral',
+        'Earth fault loop impedance (Zs) test',
+        'Polarity test at the accessory',
+        'Continuity test of the CPC',
         'Insulation resistance test',
       ],
       correctAnswer: 3,
@@ -148,10 +148,10 @@ const AM2Module5Section2 = () => {
       id: 5,
       question: 'Why must you start fault-finding at the CU?',
       options: [
-        'Accumulated earth leakage from multiple sources',
+        'It is the only safe point to prove dead',
         'To work systematically from origin outward',
-        'Review it to understand the installation history',
-        'All batteries are in one location for servicing',
+        'The fault is always located inside the CU',
+        'It avoids the need to test the final circuits',
       ],
       correctAnswer: 1,
       explanation:
@@ -195,10 +195,10 @@ const AM2Module5Section2 = () => {
       id: 9,
       question: 'Why should you explain your process out loud to the assessor?',
       options: [
-        'Red to line conductor, black to earth/CPC',
+        'It speeds up the test instruments',
         'Assessors mark reasoning and methodology',
-        'Make the reading artificially lower',
-        'Appropriate mechanical protection is provided',
+        'It is required before every isolation',
+        'It removes the need to record results',
       ],
       correctAnswer: 1,
       explanation:
@@ -208,10 +208,10 @@ const AM2Module5Section2 = () => {
       id: 10,
       question: "After diagnosing a fault, what's the final step before handing back?",
       options: [
-        'High loop resistance or partial short circuit',
-        'An impulse line filled with fill fluid',
+        'Record only the fault type on the schedule',
+        'Leave the circuit energised for the assessor',
         'Prove the circuit would be safe after rectification',
-        'Multiple meters had the same default address causing conflicts',
+        'Move straight on to the next faulted circuit',
       ],
       correctAnswer: 2,
       explanation:

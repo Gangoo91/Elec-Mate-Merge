@@ -77,9 +77,9 @@ const quickCheckQuestions = [
     question:
       'Which is the most effective method for communicating safety information to site workers?',
     options: [
-      'Its excellent thermal resistance',
-      'According to BS7671 tables',
-      'Below minimum requirements',
+      'A single email sent to the whole company',
+      'A notice pinned to the canteen board',
+      'A clause buried in the employment contract',
       'Toolbox talks and briefings',
     ],
     correctIndex: 3,
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 1,
     question: 'What are the three main parts of a health and safety policy?',
     options: [
-      'To establish true vertical reference lines',
+      'Risk assessment, method statement, permit to work',
       'Statement of intent, organisation, arrangements',
-      'Its maximum continuous apparent power output',
-      'MTBF divided by (MTBF + MTTR), expressed as a percentage',
+      'Induction, training records, accident log',
+      'Policy, procedure, work instruction',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who has ultimate responsibility for health and safety in an organisation?',
     options: [
-      'Optimise accuracy and safety',
-      'The scaffold may collapse due to instability',
+      'The appointed competent person or safety adviser',
+      'The site supervisor in charge on the day',
       'The most senior person (MD/CEO/Owner)',
-      'Equal load on each phase with equal phase angles',
+      'The trade union safety representative',
     ],
     correctAnswer: 2,
     explanation:
@@ -134,9 +134,9 @@ const quizQuestions = [
     question: 'Which document demonstrates management commitment to health and safety?',
     options: [
       'Signed statement of intent in the safety policy',
-      'Being regularly reviewed, communicated, and implemented',
-      'Changes in legislation, organisation, or after incidents',
-      'To cooperate with the employer and follow safety arrangements',
+      'The site-specific risk assessment register',
+      'The completed accident and incident book',
+      'The training matrix recording staff competencies',
     ],
     correctAnswer: 0,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'How should safety responsibilities be communicated to employees?',
     options: [
-      'Signed statement of intent in the safety policy',
-      'Cascade from management through supervisors to operatives',
+      'Only verbally on the first day, with no written record',
+      'By displaying the policy on a notice board and nothing more',
       'Through job descriptions, induction, and ongoing communication',
-      'To cooperate with the employer and follow safety arrangements',
+      'Solely through the annual appraisal and pay review meeting',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,9 +172,9 @@ const quizQuestions = [
     id: 7,
     question: 'What triggers the need for a safety policy review?',
     options: [
-      'To cooperate with the employer and follow safety arrangements',
-      'Cascade from management through supervisors to operatives',
-      'To advise the employer on health and safety matters',
+      'Only a formal request from the Health and Safety Executive',
+      'A change of company logo or registered trading name',
+      'The recruitment of any new operative to the workforce',
       'Changes in legislation, organisation, or after incidents',
     ],
     correctAnswer: 3,
@@ -186,9 +186,9 @@ const quizQuestions = [
     question: 'What is the role of safety representatives appointed by trade unions?',
     options: [
       'To represent employees and consult on safety matters',
-      'To advise the employer on health and safety matters',
-      'Signed statement of intent in the safety policy',
-      'Changes in legislation, organisation, or after incidents',
+      'To issue improvement and prohibition notices to the employer',
+      'To carry out all of the employer’s statutory risk assessments',
+      'To act as the appointed competent person for the firm',
     ],
     correctAnswer: 0,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     question:
       'Which building services scenario requires specific mention in the arrangements section?',
     options: [
-      'To advise the employer on health and safety matters',
+      'The annual financial budget for the safety department',
       'Isolation procedures for electrical work',
-      'The most senior person (MD/CEO/Owner)',
-      'Signed statement of intent in the safety policy',
+      'The marketing plan for winning new contracts',
+      'The list of company shareholders and directors',
     ],
     correctAnswer: 1,
     explanation:
@@ -212,10 +212,10 @@ const quizQuestions = [
     id: 10,
     question: "What makes a safety policy 'live' and effective?",
     options: [
-      'To represent employees and consult on safety matters',
-      'Through job descriptions, induction, and ongoing communication',
+      'Being printed on headed paper and stored in head office',
+      'Being written by an external consultant rather than staff',
       'Being regularly reviewed, communicated, and implemented',
-      'To detail who is responsible for what aspects of health and safety',
+      'Being as long and detailed as possible to cover every case',
     ],
     correctAnswer: 2,
     explanation:
@@ -225,9 +225,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under HASAWA 1974, what duty do employees have regarding safety policies?',
     options: [
-      'Cascade from management through supervisors to operatives',
-      'Through job descriptions, induction, and ongoing communication',
-      'Signed statement of intent in the safety policy',
+      'To write and sign the organisation’s safety policy themselves',
+      'To appoint the firm’s competent person for health and safety',
+      'To carry out and record all workplace risk assessments',
       'To cooperate with the employer and follow safety arrangements',
     ],
     correctAnswer: 3,
@@ -240,9 +240,9 @@ const quizQuestions = [
       'What is the recommended structure for communicating safety information on a construction site?',
     options: [
       'Cascade from management through supervisors to operatives',
-      'Being regularly reviewed, communicated, and implemented',
-      'To cooperate with the employer and follow safety arrangements',
-      'To advise the employer on health and safety matters',
+      'Email all information directly to operatives, bypassing supervisors',
+      'Rely on operatives to read the policy in their own time',
+      'Communicate only at the annual company safety conference',
     ],
     correctAnswer: 0,
     explanation:

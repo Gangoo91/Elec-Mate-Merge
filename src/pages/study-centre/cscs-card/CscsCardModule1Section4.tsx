@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'cscs-m1s4-key-focus-areas',
     question: 'Which of the following groups of topics carries the most weight in the HS&E test?',
     options: [
-      'Working at height, manual handling, fire safety, PPE, risk assessment, asbestos, COSHH, and electrical safety',
       'Contract law, employment rights, trade union regulations, and pension schemes',
       'Environmental sustainability, carbon reduction, renewable energy, and recycling procedures',
+      'Working at height, manual handling, fire safety, PPE, risk assessment, asbestos, COSHH, and electrical safety',
       'Vehicle maintenance, plant operation, crane signalling, and demolition techniques',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Based on test analysis, the areas that carry the most weight include working at height, manual handling, fire safety, PPE, risk assessment, asbestos awareness, COSHH, electrical safety, and behavioural responses to unsafe situations. These core health and safety topics form the backbone of the HS&E test across all card categories.',
   },
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'What is the recommended approach if you are unsure about an answer during the HS&E test?',
     options: [
-      'Eliminate obviously wrong answers first, select your best option, and use the flag feature to revisit it later',
       'Leave the question blank and come back to it at the very end',
+      'Eliminate obviously wrong answers first, select your best option, and use the flag feature to revisit it later',
       'Spend as long as needed on that single question until you are certain',
       'Choose the longest answer option, as these are usually correct',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The recommended approach is to eliminate obviously wrong answers first to improve your odds, select your best option (your first instinct is usually right), and use the flag feature to mark it for review. This keeps you moving through the test at a good pace while allowing you to revisit uncertain questions with any remaining time.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'How far in advance can you book the CITB HS&E test, and how late can you cancel without charge?',
     options: [
-      'Up to 6 months in advance; cancel up to 5 working days before',
       'Up to a year in advance; cancel up to 3 clear working days before',
+      'Up to 6 months in advance; cancel up to 5 working days before',
       'Up to 3 months in advance; cancel up to 24 hours before',
       'Up to 2 years in advance; cancel up to 7 working days before',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Bookings can be made up to a year in advance through the CITB website or by phone. You can cancel or reschedule up to 3 clear working days before the test without charge. If you cancel with less notice, you will forfeit your booking fee.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "What is the official CITB study publication commonly known as the 'yellow book'?",
     options: [
-      'GE700 — Health, Safety and Environment Information',
       'HSG65 — Managing for Health and Safety',
       'L21 — Management of Health and Safety at Work Regulations',
+      'GE700 — Health, Safety and Environment Information',
       'INDG163 — Five Steps to Risk Assessment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "The official CITB publication for HS&E test preparation is GE700 — Health, Safety and Environment Information, commonly referred to as the 'yellow book' due to its cover colour. It covers all the core topics that appear in the HS&E test and is updated regularly to reflect current regulations.",
   },
@@ -131,10 +131,10 @@ const quizQuestions = [
     options: [
       'Health and Safety at Work Act 1974 (HASAWA)',
       'Control of Substances Hazardous to Health Regulations 2002 (COSHH)',
-      'Consumer Rights Act 2015',
       'Work at Height Regulations 2005',
+      'Consumer Rights Act 2015',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Consumer Rights Act 2015 relates to consumer protection and is not relevant to the HS&E test. The key regulations to know include HASAWA 1974, CDM 2015, COSHH 2002, Work at Height Regulations 2005, Manual Handling Operations Regulations 1992, Electricity at Work Regulations 1989, and the Control of Asbestos Regulations 2012.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'What score should you aim for on practice tests before booking the real HS&E test?',
     options: [
-      'Above 50% consistently',
-      'Above 70% on at least one attempt',
       'Above 90% consistently',
+      'Above 70% on at least one attempt',
+      'Above 50% consistently',
       '100% on every practice test',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'You should aim for consistently scoring above 90% on practice tests before booking the real exam. This provides a comfortable margin above the pass mark and accounts for the fact that the real test may include questions you have not seen in practice. Consistency is key — a single high score followed by lower scores suggests knowledge gaps that need addressing.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'What should you look for when reading HS&E test questions carefully?',
     options: [
-      "Keywords like 'MOST appropriate', 'FIRST thing', 'ALWAYS', and 'NEVER'",
       'The length of the question — longer questions are usually harder',
+      "Keywords like 'MOST appropriate', 'FIRST thing', 'ALWAYS', and 'NEVER'",
       'Whether the question has been asked before in previous tests',
       'The position of the correct answer — it is usually option B or C',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "You should look for keywords like 'MOST appropriate', 'FIRST thing', 'ALWAYS', and 'NEVER'. These qualifier words are critical because they change the meaning of the question significantly. For example, several answers might be acceptable actions, but the question asks which is the MOST appropriate or the FIRST thing you should do.",
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
     question: 'If you fail the HS&E test, how long must you wait before re-sitting?',
     options: [
       '24 hours',
-      'At least 2 clear working days',
       'At least 7 calendar days',
+      'At least 2 clear working days',
       'At least 30 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If you fail the HS&E test, you must wait at least 2 clear working days before re-sitting. This gives you time to review the areas you scored poorly on and do focused revision. The results screen shows broad categories of performance, helping you identify which topics need more study. Re-sit fees apply at the same rate as the original test.',
   },
@@ -183,11 +183,11 @@ const quizQuestions = [
       'Once you pass the HS&E test, how long is the result valid for, and approximately how much does the CSCS card cost?',
     options: [
       '1 year; approximately £20 including VAT',
-      '2 years; approximately £36 including VAT',
       '5 years; approximately £50 including VAT',
       'The result never expires; the card is free',
+      '2 years; approximately £36 including VAT',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Your HS&E test result is stored on the CITB system for 2 years. You must apply for your CSCS card within this period. The card costs approximately £36 including VAT, and processing takes about 10 working days. You apply online at cscs.uk.com with your test pass, proof of qualification, valid photo ID, a passport-style photo, and payment.',
   },

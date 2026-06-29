@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m3s1-check1',
     question: 'What is the typical diversity factor for 3 domestic EV chargers?',
-    options: ['100% (no diversity)', '85-90%', '70-75%', '50-60%'],
-    correctIndex: 1,
+    options: ['85-90%', '100% (no diversity)', '70-75%', '50-60%'],
+    correctIndex: 0,
     explanation:
       'Multiple domestic chargers rarely operate at full load simultaneously. For 2-3 chargers, diversity factors of 85-90% are typical as usage patterns vary between households.',
   },
@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m3s1-check3',
     question: 'What factors affect diversity in workplace charging?',
     options: [
-      'Cable colour and length only',
+      'The length and routing of the supply cables',
+      'The make and model of the charging equipment',
+      'The colour coding used on the final circuits',
       'Employee arrival/departure patterns, charging durations, vehicle types',
-      'The brand of charging equipment',
-      'Weather conditions only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Workplace diversity is affected by employee arrival/departure patterns, charging durations, vehicle types, and shift patterns - all of which determine simultaneous usage likelihood.',
   },

@@ -16,12 +16,12 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'Why must monthly tests be kept short?',
+    question: 'Why must monthly functional tests be kept short?',
     options: [
-      'To maintain some emergency lighting coverage while testing other zones',
-      'To confirm luminaires switch to emergency mode when mains fails',
+      'To avoid tripping the residual current device on the final circuit',
+      'To reduce the electricity cost of running the luminaires on test',
       'To prevent unnecessary battery discharge and avoid 24-hour recharge periods',
-      'Insurance may be invalid, enforcement notices issued, and Responsible Person may face prosecution',
+      'To stop the self-test electronics resetting the fault log',
     ],
     correctAnswer: 2,
     explanation:
@@ -44,10 +44,10 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What key factor does the annual test prove that the monthly test does not?',
     options: [
-      'That batteries can sustain illumination for the full 3-hour rated period',
-      'To maintain some emergency lighting coverage while testing other zones',
-      'To prevent unnecessary battery discharge and avoid 24-hour recharge periods',
-      'To confirm luminaires switch to emergency mode when mains fails',
+      'That batteries can sustain illumination for the full rated duration',
+      'That the luminaires switch over the instant the mains supply fails',
+      'That the charging circuit restores the battery within 24 hours',
+      'That the correct emergency luminaires are fitted on each route',
     ],
     correctAnswer: 0,
     explanation:
@@ -82,11 +82,11 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
   {
     id: 7,
     question:
-      'What details must be recorded in the emergency lighting logbook? (Select all that apply - multiple correct answers)',
+      'Which set of details must be recorded for each entry in the emergency lighting logbook?',
     options: [
-      'That batteries can sustain illumination for the full 3-hour rated period',
-      'To prevent unnecessary battery discharge and avoid 24-hour recharge periods',
-      'Insurance may be invalid, enforcement notices issued, and Responsible Person may face prosecution',
+      'Battery manufacturer, cell chemistry, and warranty expiry date',
+      'Ambient temperature, humidity, and lux level at the time of test',
+      'Names of all occupants present in the building during the test',
       'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
     ],
     correctAnswer: 3,
@@ -108,12 +108,12 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
   },
   {
     id: 9,
-    question: 'What is the risk of not keeping test records?',
+    question: 'What is the risk of failing to keep emergency lighting test records?',
     options: [
-      'That batteries can sustain illumination for the full 3-hour rated period',
-      'Insurance may be invalid, enforcement notices issued, and Responsible Person may face prosecution',
-      'To maintain some emergency lighting coverage while testing other zones',
-      'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
+      'The self-test luminaires will automatically disable themselves',
+      'Insurance may be invalid, enforcement notices issued, and the Responsible Person may face prosecution',
+      'The batteries will lose their rated 3-hour duration capacity',
+      'The fire alarm panel will register a permanent fault condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What happened at the Birmingham retail park case study?',
     options: [
-      'Each person applies their own personal safety lock — the circuit cannot be re-energised until every individual lock has been removed by its owner',
-      'A programmed response that triggers specific actions based on which devices are activated',
-      'Fire inspection found working lights but no logbook records, resulting in enforcement notice and £5,150 remedial costs',
-      'The rapid transition to a state of full involvement of all combustible materials in a compartment, caused by intense radiant heat',
+      'A short-circuit in the central battery system caused a small fire during testing',
+      'The wrong duration of luminaire was installed, failing the annual three-hour test',
+      'Fire inspection found working lights but no logbook records, resulting in an enforcement notice and £5,150 remedial costs',
+      'Staggered testing left one floor without emergency lighting when a power cut occurred',
     ],
     correctAnswer: 2,
     explanation:

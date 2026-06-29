@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       "According to Thomas-Kilmann's model, which conflict mode should be used for safety non-negotiables?",
     options: [
+      "Competing — assertive, non-cooperative, 'I win, you lose'",
       'Collaborating — work together to find a win-win',
       'Compromising — split the difference quickly',
-      "Competing — assertive, non-cooperative, 'I win, you lose'",
       'Accommodating — put their needs first',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The Competing mode (high assertiveness, low cooperativeness) is appropriate when the issue is a safety non-negotiable. When someone wants to take a shortcut that compromises safety, this is not a situation for compromise or collaboration — the answer is no, clearly and firmly. The Competing mode is 'I win, you lose,' which is the correct stance on safety matters.",
   },
@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     options: [
       'Formal disciplinary proceedings',
       'Mediation by a neutral third party',
-      'Early, informal resolution through voluntary conversation',
       'Written warning followed by a review period',
+      'Early, informal resolution through voluntary conversation',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'ACAS (the Advisory, Conciliation and Arbitration Service) strongly recommends early, informal resolution as the first approach to workplace conflict. A voluntary conversation between the parties, facilitated by the line manager if needed, resolves most issues before they escalate. Formal procedures, mediation, and disciplinary action are later steps if informal resolution fails.',
   },
@@ -79,10 +79,10 @@ const quizQuestions = [
     options: [
       'Absence of accountability',
       'Inattention to results',
-      'Absence of trust',
       'Avoidance of commitment',
+      'Absence of trust',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "In Lencioni's Five Dysfunctions of a Team, fear of conflict is the second dysfunction, and it follows directly from the first: absence of trust. When team members do not trust each other, they avoid honest debate and conflict — leading to artificial harmony where problems go unaddressed.",
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 2,
     question: "Thomas-Kilmann's conflict model has two axes. These are:",
     options: [
-      'Speed and accuracy',
       'Assertiveness and cooperativeness',
+      'Speed and accuracy',
       'Urgency and importance',
       'Task focus and relationship focus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Thomas-Kilmann's model plots five conflict-handling modes on two axes: Assertiveness (the extent to which you try to satisfy your own concerns) and Cooperativeness (the extent to which you try to satisfy the other person's concerns). The five modes — Competing, Collaborating, Compromising, Avoiding, and Accommodating — represent different combinations of these two dimensions.",
   },
@@ -118,11 +118,11 @@ const quizQuestions = [
     question: 'When de-escalating a heated conflict on site, you should NOT:',
     options: [
       'Lower your voice and speak calmly',
-      'Move to a private space away from others',
       'Match their energy to show you are taking it seriously',
+      'Move to a private space away from others',
       'Acknowledge their feelings before addressing the issue',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Matching their energy (raising your voice, mirroring aggression) will escalate the conflict further. Instead, lower your voice, move to a private space, acknowledge their feelings, use their name, and ask open questions. The goal is to bring the emotional temperature down so rational discussion can happen.',
   },
@@ -131,11 +131,11 @@ const quizQuestions = [
     question: 'ACAS stands for:',
     options: [
       'Advisory Council for Arbitration Services',
-      'Advisory, Conciliation and Arbitration Service',
       'Association of Construction and Allied Services',
       'Approved Code of Administrative Standards',
+      'Advisory, Conciliation and Arbitration Service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "ACAS is the Advisory, Conciliation and Arbitration Service — the UK's statutory body for workplace relations. It provides guidance on resolving workplace conflict, offers mediation services, and publishes codes of practice on disciplinary and grievance procedures that employment tribunals consider.",
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'The Avoiding conflict mode (low assertiveness, low cooperativeness) is appropriate when:',
     options: [
+      'The issue is trivial or emotions are too high for productive discussion',
       'The issue is a safety non-negotiable',
       'Both parties have complex, important concerns',
-      'The issue is trivial or emotions are too high for productive discussion',
       'You need to build goodwill with the other party',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Avoiding — stepping back from the conflict — is appropriate when the issue is genuinely trivial and not worth the effort, or when emotions are so high that productive discussion is impossible. In the latter case, it is a temporary tactic ('Let us come back to this in 10 minutes') not a permanent solution. Overusing the Avoiding mode allows problems to fester.",
   },

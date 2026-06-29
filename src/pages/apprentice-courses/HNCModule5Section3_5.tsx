@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'retention-release',
     question: 'When is the second half of retention typically released?',
     options: [
-      'All workers to provide essential H&S awareness',
+      'Immediately on signing the contract',
+      'At the start of the works on site',
       'At the end of the defects liability period',
-      'To prevent fingers slipping onto live conductors',
-      'Maximum winding temperature of 155 degrees C',
+      'When the first interim payment is certified',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Half of retention is released at practical completion, and the remaining half is released at the end of the defects liability period once all defects have been satisfactorily rectified.',
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'final-certificate',
     question: 'What does the issue of a Final Certificate signify?',
     options: [
-      'To provide protection against electric shock',
       'Final settlement of all financial matters',
-      'Temperature and voltage drop effects vary with load',
-      'Test date, next test date, and tester ID',
+      'The start of the defects liability period',
+      'That practical completion has been achieved',
+      'That the building is ready for occupation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Final Certificate represents the conclusive settlement of financial matters between the parties, confirming the final contract sum and releasing any remaining retention.',
   },
@@ -114,9 +114,9 @@ const quizQuestions = [
     question:
       "A contractor's final account includes provisional sum expenditure of £45,000. The provisional sum allowed was £50,000. What adjustment is made?",
     options: [
-      'Certificate of Making Good Defects',
-      'Preliminary costs already paid',
-      'Depends on the contract terms',
+      'Add £45,000 to the contract sum with no omission',
+      'Deduct £45,000 from the contract sum',
+      'Make no adjustment as it is within the allowance',
       'Deduct £50,000 and add £45,000',
     ],
     correctAnswer: 3,
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'In lump sum contracts, variations are valued using:',
     options: [
-      'Identifying the specific unhelpful thought',
-      'Single insulation providing equivalent protection to double',
+      "The contractor's day rate plus a fixed mark-up only",
+      'The original tender sum, unadjusted',
       'Contract rates where applicable, or fair rates where not',
-      'Clear coordination between team members and other trades',
+      'Whatever figure the employer chooses to allow',
     ],
     correctAnswer: 2,
     explanation:

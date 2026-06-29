@@ -46,7 +46,7 @@ const checks = [
       "Suitable precautions (including, where appropriate, the provision of suitable protective equipment) are taken to prevent injury.",
       "It is reasonable in all the circumstances for the work to be carried out on or near the conductor while it is live.",
       "It is unreasonable in all the circumstances for the conductor to be dead.",
-      "The customer has signed a written waiver accepting the risk.",
+      "The customer has signed a written waiver accepting the risk on their own installation.",
     ],
     correctIndex: 3,
     explanation:
@@ -57,28 +57,28 @@ const checks = [
     question:
       "You've isolated a circuit at the consumer unit, locked the breaker off and proved it dead with a GS38-compliant voltage indicator. Halfway through the work the customer's child wanders past and asks whether they can flip the lock-off back. Under EAWR Reg 13, what does 'adequate precautions' actually require you to have done?",
     options: [
-      "Follow all instructions exactly; submit on time (late tenders are rejected without consideration); include all required documents (method statements, H&S policy, insurance certificates, ISO accreditations if requested, references, financial accounts); price every BoQ line; sign and bind the submission as required.",
-      "Safety documents (RAMS, COSHH, risk assessments, permits, fire muster, welfare info), design documents (drawings, specs, schedules, schematics, BIM, RFI logs), standards (BS 7671, IET OSG, manufacturer data), contract / commercial (programme, snag list, variations, delay notices) and HR (employment contract, JIB Working Rules, holiday and grievance procedures).",
-      "Take ALL adequate precautions: secure isolation (lock-off + key in pocket, not left in lock); a warning notice at the point of isolation; in some installations a separate caution at the point of work; voltage proving on a known live source before AND after testing the isolation; all to prevent the equipment becoming live again whilst work is in progress. Talking to the customer about not touching it is part of the precaution chain.",
-      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
+      "A single warning notice on the board, with the lock-off and voltage-proving treated as good practice but outside the regulation.",
+      "Leaving the key in the lock-off for emergency re-energising, plus a verbal instruction to the household not to touch it.",
+      "The full safe-isolation chain — lock-off, key removed, warning notice, prove before and after — kept in place throughout.",
+      "Proving dead once at the start with a socket tester, then working on without locking the breaker off at all.",
     ],
     correctIndex: 2,
     explanation:
-      "Reg 13 requires 'adequate precautions' — which the HSE interprets as the full safe-isolation procedure: lock-off, key removed, warning notice, voltage-proving before/after with a known live source, communication with anyone who could interfere. A child interfering is a foreseeable risk on a domestic and the precautions must address it. Telling the customer to keep their kids away IS part of compliance.",
+      "Reg 13 requires 'adequate precautions' — which the HSE interprets as the full safe-isolation procedure: lock-off, key removed, warning notice, voltage-proving before/after with a known live source, and communication with anyone who could interfere. A child interfering is a foreseeable risk on a domestic, so briefing the household to keep away from the board is part of the precaution chain, not an optional extra. The precautions must stay in place for the whole job, not just at the start.",
   },
   {
     id: 'mod3-s1-sub4-reg16-competence',
     question:
       "EAWR Reg 16 says no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or injury, UNLESS they possess such knowledge or experience OR are under such degree of supervision as may be appropriate having regard to the nature of the work. As an apprentice, what does this mean for what you can be put on?",
     options: [
-      "0.4 seconds (400 ms) for TN, 0.2 seconds (200 ms) for TT — these are the maximum disconnection times specified in Table 41.1 for the supply system and final-circuit type. For a 30 mA general-purpose RCD operated by a 30 mA residual current (1 x I delta n), the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\'s declared maximum trip time is 300 ms (per BS EN 61008 / BS EN 61009 product standards) — well within the Table 41.1 system requirement. The verification is the Table 41.1 limit; the 300 ms is the product spec.",
-      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
-      "You can be on technical work that exceeds your current competence ONLY under appropriate supervision — the degree of which scales with the danger of the task. A first-year on a CU change is heavy supervision; a third-year on socket extensions is lighter supervision. The supervisor is part of YOUR Reg 16 compliance — and they're personally on the hook under their own Reg 16 if the supervision is inadequate.",
-      "Walk the customer through the report on site or by booked call — explain the overall classification, walk through each C1/C2/FI observation, agree the remedial works priority, confirm the make-safe actions taken (if any) for C1 items, give the customer the report in writing with attached photos where available, and confirm the next inspection date recommendation. Document the handover.",
+      "Only on work you can already do unsupervised — Reg 16 has no supervision provision, so nothing beyond your current independent competence until you qualify.",
+      "On any technical work, because apprentices are exempt from Reg 16 — the competence duty falls entirely on your employer and supervisor, not on you personally.",
+      "On work beyond your current competence, but only under appropriate supervision that scales with the task danger and your level of experience, never on dangerous work unsupervised.",
+      "On any work once you pass the 18th Edition exam — Reg 16 treats that qualification as proof of competence and supervision is no longer relevant.",
     ],
     correctIndex: 2,
     explanation:
-      "Reg 16 is the legal definition of 'competence' for electrical work in Great Britain. It explicitly recognises supervision as a way of meeting the duty when the operative isn't yet competent on their own. The supervisor's competence has to be matched to the work AND the apprentice. As you progress through the standard, the supervision regime relaxes — but it never disappears entirely until you're signed off as competent in your own right.",
+      "Reg 16 is the legal definition of 'competence' for electrical work in Great Britain. It explicitly recognises supervision as a way of meeting the duty when the operative isn't yet competent on their own. The degree of supervision scales with the danger of the task and the trainee's experience — a first-year on a CU change is heavy, hands-on supervision; a third-year on socket extensions is lighter. The supervisor is part of your Reg 16 compliance and is personally on the hook under their own Reg 16 if the supervision is inadequate. As you progress the regime relaxes, but never disappears until you're signed off as competent in your own right.",
   },
 ];
 
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "EAWR Reg 4(1) requires that 'all systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger'. What does 'system' mean in EAWR terms?",
     options: [
-      "It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies.",
-      "An 'electrical system' is defined in Reg 2 as 'a system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy'. So everything from the cut-out to the final accessory is one system. Reg 4(1) applies to the whole of it, not just the bit you happened to touch.",
-      "Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme",
-      "Escalate up the chain — contracts manager, technical manager, Qualified Supervisor, director. Document every attempt to reach someone in writing (text/email). If no-one responds and the work cannot wait safely, decline to proceed and inform the customer in writing of the reason. EAWR Reg 16, HASAWA s.7 and ERA 1996 s.44 all protect this position.",
+      "Only the individual circuit you are working on — each final circuit is a separate 'system' under EAWR, so your Reg 4(1) duty stops at the circuit boundary and the rest of the installation is someone else's responsibility.",
+      "Reg 2 defines a system as all electrical equipment connected to a common source of energy — so everything from the cut-out to the final accessory is one system, and Reg 4(1) applies to all of it.",
+      "Only the fixed wiring, not the equipment connected to it — a 'system' means the cables and accessories alone, so appliances and portable equipment plugged into the installation fall outside Reg 4(1).",
+      "Only the parts of the installation rated above 230 V — EAWR defines a 'system' as the higher-voltage distribution, so ordinary single-phase final circuits are excluded from the Reg 4(1) construction duty.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "EAWR Reg 4(2) requires that 'as may be necessary to prevent danger, all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger'. Whose duty is that and how does it apply to an EICR?",
     options: [
-      "An IET volunteer (typically MIET or above) in your local region who supports new and prospective members, advises on professional registration applications, and runs regional member activities. Free service. Particularly useful for vocational-route practitioners considering EngTech application — the ambassador can review your CV and tell you whether you're eligible plus suggest what to strengthen.",
-      "Stop using it. Apply a 'DO NOT USE' label or tag. Inform the supervisor. At base, do a function check on a known live source, calibration check against a reference instrument, visual inspection. If anything fails — send for repair / re-calibration; substitute with backup. PUWER 1998 Reg 5 + Reg 6 put the duty on the employer; the operative's prompt action protects the next user.",
-      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
-      "When the fault is obvious AND the obvious fix is risk-free AND the customer has been informed. Example: a blown bulb in an emergency-bulb socket — replace the bulb, verify operation, document. No need for full hypothesis. But — even the 'obvious' fix benefits from a quick stage check: is the customer's report consistent with the fix (yes, blown bulb explains 'no light'); is the bulb the correct rating; is the lampholder undamaged. The 5-second mental check catches the cases where 'obvious' wasn't actually right. Apprentices who skip even the mental check create comeback work.",
+      "It binds the electrician who carried out the original installation for the life of the system — once you install a circuit, the Reg 4(2) maintenance duty stays with you personally, which is why an EICR must always be done by the original installer.",
+      "It binds the DNO up to the consumer's cut-out and the manufacturer beyond it — the maintenance duty follows the equipment supplier, so the EICR is really the manufacturer's responsibility to arrange for any installation containing their product.",
+      "It binds whoever is the duty-holder controlling the premises (employer, landlord). They discharge it by arranging a periodic EICR, acting on its condition codes and keeping records.",
+      "It binds the occupier of the premises personally regardless of whether they own the installation — so a tenant in a rented flat, not the landlord, carries the Reg 4(2) duty to arrange and pay for the EICR on the property they live in.",
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       "EAWR Reg 4(3) — 'every work activity, including operation, use and maintenance of a system and work near a system, shall be carried out in such manner as not to give rise to danger, so far as is reasonably practicable'. Why is this the everyday workhorse regulation for electricians?",
     options: [
-      "Section 753 'Heating cables and embedded heating systems' covers electric heating cables embedded in floors, walls or ceilings, plus surface heating systems and de-icing / frost-prevention applications. The A4:2026 amendment completely revised Section 753 — extending its scope, retitling it, and adding new requirements relocated from Chapter 53 covering impact protection and installation of heating cables. Industrial heating systems complying with BS EN 60519, BS EN 62395 and BS EN 60079 are excluded from Section 753.",
-      "Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.",
-      "Specific cover for theft of tools and equipment from your van or work vehicle, typically with a per-claim limit (e.g. £5,000) and conditions about secure storage (alarmed van, specific locking systems, overnight storage location). Tool theft is a major UK trades risk — police-reported tool theft from vans runs into hundreds per week. Annual premium £100-300; high deductibles common.",
-      "Because it covers the whole work activity (not just the install), it covers operation, use AND maintenance, AND it covers work NEAR a system as well as on it. So it's the legal hook for safe-isolation procedures, lock-off, voltage-proving, and the way you organise the work around live equipment that you're not directly working on. Reg 4(3) is what the HSE charges most often after an electrical incident.",
+      "Because it sets out the exact disconnection times every circuit must achieve — it is the regulation the HSE checks first because it gives the numerical limits that prove a circuit is safe.",
+      "Because it is the only EAWR regulation that applies to domestic work — the others apply only to commercial and industrial installations, so for a domestic electrician Reg 4(3) is effectively the whole of EAWR.",
+      "Because it lists the specific PPE an electrician must wear for every task — it is the everyday regulation because it dictates the gloves, mats and visors required for each activity.",
+      "Because it covers the whole work activity — operation, use, maintenance and work NEAR a system — making it the legal hook for safe isolation and the reg the HSE charges most after an incident.",
     ],
     correctAnswer: 3,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       "EAWR Reg 4(4) requires that 'any equipment provided under these Regulations for the purpose of protecting persons at work on or near electrical equipment shall be suitable for the use for which it is provided, be maintained in a condition suitable for that use, and be properly used'. What does this catch in practice?",
     options: [
-      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
-      "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
-      "Three uses. (1) Load current measurement on individual circuits without breaking the circuit — confirms which circuit feeds an unidentified appliance. (2) Earth leakage measurement — clamp around L+N together (the imbalance is the earth leakage) — diagnoses RCD nuisance trips. (3) Inrush current capture (Fluke 376FC) — captures motor / HVAC compressor / ballast start-up to diagnose nuisance trips on undersized breakers. Modern clamps have iFlex flexible transducers for cables too thick for the rigid jaw.",
-      "Generators (PV, wind, micro-CHP) put energy into the system that wasn't there before from the user's point of view. Demand-reduction tech (LED lighting, smart controls, MVHR, insulation) makes the existing energy do more useful work. From a carbon perspective the cheapest watt is the one you don't use — demand reduction usually has a shorter payback than generation. From a Building Regs perspective both count toward Part L compliance via the SAP / SBEM calculation.",
+      "Test instruments, insulated tools, electrical PPE, lock-off devices and warning labels — so your MFT must be in calibration, your indicator GS38-compliant and your lock-off kit must actually work.",
+      "Only the fixed protective devices in the installation — the RCDs, MCBs and SPDs that protect the circuits — because Reg 4(4) is about the protection built into the system rather than the kit the electrician carries.",
+      "Only the high-visibility clothing, hard hats and boots worn on site — Reg 4(4) is the general site-PPE regulation and does not extend to test instruments or insulated tools, which are covered by PUWER instead.",
+      "Only the earthing and bonding conductors — Reg 4(4) refers to the equipment that protects persons by providing a path to earth, so it catches the protective conductors rather than the electrician's tools or instruments.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "Why does the HSE prosecute EAWR breaches in parallel with HASAWA breaches rather than just one or the other?",
     options: [
-      "Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.",
-      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
-      "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
+      "Because EAWR and HASAWA cover completely different incidents — EAWR applies to the electrical fault and HASAWA to any non-electrical injury, so the prosecution charges both only when there is a mix of electrical and non-electrical harm.",
+      "Because EAWR is made under HASAWA (s.15) and HASAWA's general duties sit underneath the EAWR breach, so charging both gives the prosecution two routes to conviction.",
+      "Because the HSE must always charge under HASAWA but the Local Authority must always charge under EAWR — charging both ensures that whichever enforcing body ends up with the case has a valid charge to bring.",
+      "Because a conviction under EAWR is spent after five years while a HASAWA conviction is permanent — charging both guarantees a lasting record even if the EAWR conviction later drops off.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       "Reg 14 makes live working an exceptional rather than a default activity. What documentation does meeting the Reg 14 three-condition test typically require BEFORE the work starts?",
     options: [
-      "A standard AC rotary switch has no DC breaking capacity. Opening it under load on a high-voltage DC string draws an arc that does not self-extinguish at zero crossing (DC has no zero crossing) and can sustain inside the switch — starting a fire. Reg 712.537 and the broader Section 462 require a switch suitable for DC isolation, normally a purpose-built PV DC isolator.",
-      "UK GDPR (the UK's adoption of the EU GDPR after Brexit) governs how organisations handle personal data. For an electrical firm: customer names, addresses, phone numbers, email addresses, payment details, photos of work in customer property all count as personal data. Headline obligations: lawful basis for processing, data minimisation, security, customer's right to access their data, breach notification within 72 hours. Most small firms register with ICO (Information Commissioner's Office) for £40-60/year.",
-      "A live-working permit (or equivalent documented authorisation), a specific risk assessment justifying conditions (a) and (b), a method statement detailing the precautions for condition (c), evidence of operative competence specifically for live working (not just general electrical competence), and frequently a second authorised person present. Documented BEFORE the work, signed off by an authorising engineer, retained on file as the audit trail.",
-      "Per BS EN 62305 and BS 7671 Reg 411.3.1.2, the LPS earth electrode network is typically bonded to the building\\\\\\\\'s MET — either directly or via a spark gap (isolating SPD) depending on the LPS class and system designer\\\\\\\\'s arrangement. This prevents large potential differences between the LPS earth and the electrical earth during a strike.",
+      "Nothing in advance — Reg 14 is satisfied by the operative making a judgement on the spot that the work can be done live, so the documentation is completed afterwards as a record of what was done.",
+      "Only a signed customer authorisation accepting the risk — because the customer owns the installation, their written consent is the document that satisfies Reg 14 and no internal permit or risk assessment is needed.",
+      "A live-working permit, a specific risk assessment, a method statement, evidence of competence for live work and often a second person — all documented and signed off before the work starts.",
+      "Only a calibration certificate for the test instruments being used — Reg 14 is about ensuring the equipment is suitable for live measurement, so the in-date instrument records are the documentation it requires.",
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       "EAWR Reg 16 recognises supervision as a route to compliance when the operative isn't independently competent. What makes the supervision 'appropriate' under the regulation?",
     options: [
-      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
-      "The programme tells you the sequence and the deadline — miss it and your firm is at risk of liquidated damages. The snag list is your end-of-job homework. Variations and delay notices are how additional work or extra time is recorded so the firm can claim it. Your firm's cash flow — and ultimately your wages — depend on this paperwork being right. Even as an apprentice, learning to read the programme and the snag list is part of becoming a tradesperson.",
-      "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
-      "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
+      "The supervision is appropriate as long as a qualified electrician is somewhere on the same site and contactable by phone — physical presence isn't required, because Reg 16 is satisfied by the trainee being able to call for help if they need it.",
+      "The supervision is appropriate when the supervisor signs the trainee's portfolio and certificates at the end of the job — Reg 16 is met by the paperwork sign-off rather than by oversight during the work itself.",
+      "The supervision is appropriate whenever the supervisor holds the 18th Edition qualification, regardless of the task — the qualification alone makes any level of oversight sufficient under Reg 16 because it proves the supervisor is competent.",
+      "The supervisor is competent for the task, can see the work and trainee, can intervene before danger, and the level of oversight matches both the task danger and the trainee's experience.",
     ],
     correctAnswer: 3,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "An electrician is prosecuted after an electrocution caused by an inadequately isolated supply on a customer's CU change. Which combination of EAWR regs is most likely to be in the indictment?",
     options: [
-      "Reg 4(3) — failure to carry out the work activity safely (the safe-isolation procedure) — likely as the lead charge. Reg 13 — failure to take adequate precautions to prevent equipment becoming live again. Reg 14 if there's evidence of deliberate live working without the three conditions met. Reg 16 if the operative was inadequately competent or supervised. Plus HASAWA s.7 against the individual operative and s.2 against the firm. A multi-charge indictment is the norm for serious electrical incidents.",
-      "The drivers are at the wrong voltage. Either (a) the supply voltage has dropped below the driver's input range — supply test L–N at the cut-out gives 215 V, drivers spec'd for 220–240 V, drivers under-supply and reduce output proportionally; check the upstream sub-main and the DNO if voltage is &lt; 216 V (UK statutory 230 V −6%). OR (b) the drivers are dimmable and the dimmer is set to its minimum, OR (c) the drivers have aged and their constant-current circuit is degrading (typical onset 4–7 years in a hot environment). Diagnostic: measure supply voltage; bypass dimmer; check driver age and replace one as a test.",
-      "Verify polarity LIVE during the energised testing in Section 4 — confirm at the supply origin that L and N are correctly identified per the supply provider, and verify single-pole switches at every accessory really do interrupt the line as designed. The dead test catches static wiring errors; the live test catches errors at the supply or hidden swaps further upstream.",
-      "Speak directly to the customer, identify yourself by name when you arrive and when you leave a room, describe what you're doing and where ('I'm just going to the consumer unit by the front door now'), don't move furniture or leave tools where they could be a trip hazard for the guide dog or the customer, ask before touching the guide dog (don't pet a working guide dog without asking), and offer to provide written documentation in large print, audio or accessible PDF as required. Equality Act 2010 makes this a service-provider duty.",
+      "Reg 4(3) as the lead charge, plus Reg 13 for the isolation failure, Reg 14 if live work is in evidence, Reg 16 for any competence gap, and HASAWA s.7 and s.2 — a multi-charge indictment.",
+      "Reg 8 (earthing) alone — because an electrocution always traces back to an earthing defect, the indictment is limited to the single earthing regulation and no other EAWR reg is charged.",
+      "Reg 14 (live working) alone — any electrocution is treated in law as live working by definition, so the indictment is built solely on Reg 14 regardless of how the supply came to be live.",
+      "Building Regulations Part P alone — because the incident happened on a domestic consumer-unit change, the charge is the unnotified-work offence rather than any EAWR regulation.",
     ],
     correctAnswer: 0,
     explanation:

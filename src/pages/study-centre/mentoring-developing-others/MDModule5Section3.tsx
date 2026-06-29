@@ -23,8 +23,8 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     question: 'How many protected characteristics are listed under the Equality Act 2010?',
-    options: ['Six', 'Seven', 'Nine', 'Twelve'],
-    correctIndex: 2,
+    options: ['Nine', 'Seven', 'Six', 'Twelve'],
+    correctIndex: 0,
     explanation:
       'The Equality Act 2010 lists nine protected characteristics: age, disability, gender reassignment, marriage and civil partnership, pregnancy and maternity, race, religion or belief, sex, and sexual orientation. These are the characteristics on the basis of which it is unlawful to discriminate against someone. As a mentor, you have both a legal and moral duty to ensure your mentoring practice treats everyone fairly regardless of these characteristics.',
   },
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     options: [
       'Insist they improve their written English before gathering any evidence',
       'Complete the written evidence for them',
-      'Use professional discussion (oral evidence) as the primary method, supplemented by photographs, annotated diagrams, and video evidence',
       'Reduce the evidence requirements because English is not their first language',
+      'Use professional discussion (oral evidence) as the primary method, supplemented by photographs, annotated diagrams, and video evidence',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Using professional discussion as the primary evidence method is a reasonable adjustment that allows the apprentice to demonstrate their genuine competence without being penalised for language skills that are separate from their electrical ability. Supplementing with photographs, annotated diagrams, and video evidence provides robust proof of competence in a way that plays to their strengths. This is not lowering the standard — it is removing an unnecessary barrier to demonstrating that the standard has been met.',
   },
@@ -91,8 +91,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which of the following is NOT a protected characteristic under the Equality Act 2010?',
-    options: ['Age', 'Social class', 'Gender reassignment', 'Religion or belief'],
-    correctAnswer: 1,
+    options: ['Social class', 'Age', 'Gender reassignment', 'Religion or belief'],
+    correctAnswer: 0,
     explanation:
       'Social class is not a protected characteristic under the Equality Act 2010, although it is often discussed in the context of equality and diversity. The nine protected characteristics are: age, disability, gender reassignment, marriage and civil partnership, pregnancy and maternity, race, religion or belief, sex, and sexual orientation.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
       'A mentor unconsciously gives more positive feedback and attention to male apprentices than female apprentices. This is an example of:',
     options: [
       'Halo effect',
-      'Attribution bias',
       'Affinity bias or gender bias',
+      'Attribution bias',
       'Confirmation bias',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'This is an example of affinity bias (favouring people similar to yourself) combined with gender bias (treating people differently based on sex). In a male-dominated industry like electrical installation, mentors — who are predominantly male — may unconsciously give more time, attention, and positive feedback to male apprentices who remind them of their younger selves, while being less naturally comfortable or engaged with female apprentices.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
       'What is the best definition of a "reasonable adjustment" in the context of mentoring a learner with a disability?',
     options: [
       'Reducing the standard that the learner needs to meet',
-      'Removing a barrier that prevents a disabled person from demonstrating their genuine competence, without changing the standard itself',
       'Giving the learner less work to do',
+      'Removing a barrier that prevents a disabled person from demonstrating their genuine competence, without changing the standard itself',
       'Treating the learner the same as everyone else regardless of their disability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A reasonable adjustment removes or reduces a barrier that puts a disabled person at a disadvantage compared to a non-disabled person, without lowering the standard they need to meet. For example, allowing extra time for a dyslexic apprentice to complete a written exam does not change the content or pass mark — it removes the speed disadvantage that dyslexia creates. The learner still has to demonstrate the same competence; the adjustment ensures they have a fair opportunity to do so.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
       'A Polish apprentice is excellent practically but struggles with written English. Which assessment method would be most appropriate for gathering portfolio evidence?',
     options: [
       'Written assignments only — they need to improve their English',
-      'Professional discussion supplemented with photographs and annotated diagrams',
       'No assessment is needed — their practical work speaks for itself',
       'The same written assessments as everyone else — treating them differently would be unfair',
+      'Professional discussion supplemented with photographs and annotated diagrams',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Professional discussion (oral evidence) supplemented with visual evidence is a reasonable and inclusive approach. It allows the apprentice to demonstrate their genuine competence in the electrical trade without being penalised for a language barrier that is separate from their technical ability. This is not lowering the standard — it is using an alternative evidence method that is equally valid. Most awarding organisations explicitly permit professional discussion as an evidence method.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'That the older apprentice will be slower to learn because of their age',
       'That the older apprentice should be treated exactly the same as a 17-year-old apprentice',
-      'That the older apprentice brings valuable life experience and transferable skills, but may feel uncomfortable being "the beginner" again',
       'That the older apprentice will resent being mentored by someone younger',
+      'That the older apprentice brings valuable life experience and transferable skills, but may feel uncomfortable being "the beginner" again',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Mature apprentices and career changers bring significant assets: life experience, maturity, work ethic, and transferable skills from previous careers. However, they may feel uncomfortable in the role of learner, especially when mentored by someone younger. The most effective approach is to acknowledge and respect their experience, recognise the transferable skills they bring, and be patient with the adjustment to being a beginner in a new field. Assumptions based on age (either positive or negative) should be avoided.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'An apprentice with ADHD struggles to follow long verbal instructions for multi-step tasks. Which of the following is the most appropriate reasonable adjustment?',
     options: [
-      'Remove them from complex tasks until they can concentrate better',
       'Break instructions into smaller steps, use written checklists, and check understanding at each stage',
+      'Remove them from complex tasks until they can concentrate better',
       'Repeat the same long instructions more slowly and more loudly',
       'Ask their college to provide a support worker to accompany them on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Breaking tasks into smaller, manageable steps with written checklists plays to the strengths of someone with ADHD rather than fighting against the condition. ADHD affects working memory and sustained attention, so long sequences of verbal instructions are particularly challenging. Short, clear steps with visual reminders (checklists, labelled diagrams) provide external scaffolding that compensates for the working memory difficulty. This is a practical, on-site reasonable adjustment that maintains the standard while removing the barrier.',
   },
@@ -186,7 +186,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'The primary purpose is to develop genuine awareness and practical skills for inclusive mentoring. Legal compliance is important but it is the minimum, not the goal. Treating everyone "exactly the same" (option C) is not the same as treating everyone fairly — different people may need different support to achieve the same outcome. And preferential treatment (option D) is positive discrimination, which is generally unlawful under the Equality Act 2010. The goal is equitable practice: giving every learner what they need to succeed.',
+      'The primary purpose is to develop genuine awareness and practical skills for inclusive mentoring. Legal compliance is important but it is the minimum, not the goal. Treating everyone "exactly the same" is not the same as treating everyone fairly — different people may need different support to achieve the same outcome. And giving preferential treatment to particular groups is positive discrimination, which is generally unlawful under the Equality Act 2010. The goal is equitable practice: giving every learner what they need to succeed.',
   },
 ];
 

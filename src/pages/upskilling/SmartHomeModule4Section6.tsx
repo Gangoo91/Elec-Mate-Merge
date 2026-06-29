@@ -53,8 +53,8 @@ const quizQuestions = [
   {
     question:
       'What communication protocol is widely used for BMS integration in commercial buildings?',
-    options: ['HTTP', 'BACnet', 'SMTP', 'FTP'],
-    correctAnswer: 1,
+    options: ['HTTP', 'SMTP', 'FTP', 'BACnet'],
+    correctAnswer: 3,
     explanation:
       "BACnet (Building Automation and Control Networks) is the ISO standard protocol for building automation, enabling communication between different manufacturers' systems.",
   },
@@ -62,31 +62,31 @@ const quizQuestions = [
     question:
       'In a BMS-controlled building, what typically happens when a meeting room booking ends?',
     options: [
-      'Nothing changes',
       'Lights and HVAC enter setback or switch off',
-      'Temperature increases',
-      'Security alarm activates',
+      'The room temperature is increased',
+      'Nothing changes until manually adjusted',
+      'A security alarm is activated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Integration with room booking systems allows the BMS to automatically reduce lighting and HVAC output when meetings end, preventing conditioning of unoccupied spaces.',
   },
   {
     question: 'What is a typical ROI timeframe for BMS installation in commercial buildings?',
-    options: ['1-2 months', '2-5 years', '10-15 years', 'Never achieves ROI'],
-    correctAnswer: 1,
+    options: ['1-2 months', '10-15 years', '2-5 years', 'It rarely achieves ROI'],
+    correctAnswer: 2,
     explanation:
       'Commercial BMS installations typically achieve return on investment within 2-5 years through energy savings, though this varies with building size, energy costs, and previous efficiency measures.',
   },
   {
     question: 'What does daylight harvesting mean in BMS lighting control?',
     options: [
-      'Installing solar panels',
       'Automatically dimming artificial lights based on natural light levels',
-      'Scheduling lights by sunrise/sunset',
-      'Using daylight colour temperature lamps',
+      'Installing solar panels to power the lighting',
+      'Scheduling lights to switch by sunrise and sunset times',
+      'Fitting lamps with a daylight colour temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Daylight harvesting uses light sensors to automatically dim or switch off artificial lighting when sufficient natural light is available, reducing energy consumption while maintaining required illumination levels.',
   },
@@ -95,11 +95,11 @@ const quizQuestions = [
       'Which BMS integration provides the most significant energy savings in office buildings?',
     options: [
       'Security system integration',
+      'Fire alarm system integration',
+      'Lift and escalator control integration',
       'Occupancy-based HVAC and lighting control',
-      'Fire alarm integration',
-      'Lift control integration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Occupancy-based control of HVAC and lighting typically provides the largest energy savings in offices, where spaces are often unoccupied for significant periods despite being conditioned and lit.',
   },

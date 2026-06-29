@@ -85,100 +85,120 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
     {
       question: 'What is a carpet plot used for in energy reporting?',
       options: [
-        'Calculating total energy costs',
+        'Calculating the total energy cost for a period',
         'Visualising consumption patterns across time of day and date',
-        'Measuring power factor',
-        'Determining cable sizes',
+        'Measuring the site power factor',
+        'Determining the required cable sizes',
       ],
       correctAnswer: 'Visualising consumption patterns across time of day and date',
+      explanation:
+        'A carpet plot (heatmap) maps half-hourly consumption against hour-of-day and date, using colour intensity to reveal operating patterns and anomalies at a glance across two time dimensions.',
     },
     {
       question: 'Which metric is essential for benchmarking commercial building energy use?',
       options: [
-        'Total kilowatt-hours only',
-        'kWh per square metre per year',
+        'Total kilowatt-hours consumed only',
         'Maximum demand in amps',
-        'Number of light fittings',
+        'kWh per square metre per year',
+        'The number of light fittings installed',
       ],
       correctAnswer: 'kWh per square metre per year',
+      explanation:
+        'Energy Use Intensity (kWh/m²/year) normalises consumption by floor area, allowing fair comparison between buildings of different sizes against published benchmarks.',
     },
     {
       question: 'What does a high baseload during non-operational hours typically indicate?',
       options: [
-        'Efficient equipment operation',
-        'Normal building function',
+        'Particularly efficient equipment operation',
+        'Entirely normal building function',
+        'Accurate, well-calibrated metering',
         'Potential energy waste from equipment left running',
-        'Accurate metering',
       ],
       correctAnswer: 'Potential energy waste from equipment left running',
+      explanation:
+        'A high overnight or weekend baseload means significant load is drawn when the building is unoccupied — usually HVAC, lighting or plant left on, which is a prime target for quick-win savings.',
     },
     {
       question: 'In a professional energy report, what should the executive summary contain?',
       options: [
-        'All raw data and measurements',
-        'Key findings, recommendations, and potential savings overview',
-        'Only the methodology used',
-        'Detailed technical specifications',
+        'All the raw data and measurements collected',
+        'Key findings, recommendations, and a potential savings overview',
+        'Only the methodology that was used',
+        'Detailed technical specifications of the equipment',
       ],
-      correctAnswer: 'Key findings, recommendations, and potential savings overview',
+      correctAnswer: 'Key findings, recommendations, and a potential savings overview',
+      explanation:
+        'The executive summary is written for busy decision-makers; it should fit on a page and lead with the key findings, top recommendations and savings potential. Raw data and methodology belong in appendices.',
     },
     {
       question: 'What colour typically represents high energy consumption in a heatmap?',
       options: [
         'Blue or green (cool colours)',
         'White or grey (neutral colours)',
+        'Black (absence of colour)',
         'Red or orange (warm colours)',
-        'Black (no colour)',
       ],
       correctAnswer: 'Red or orange (warm colours)',
+      explanation:
+        'Intuitive heatmaps use warm colours (red/orange) for high consumption and cool colours (blue/green) for low, so viewers instantly read where the energy hotspots are.',
     },
     {
       question:
-        'What is the recommended maximum payback period for "quick win" energy efficiency measures?',
+        'What is the typical maximum payback period for a "quick win" energy efficiency measure?',
       options: ['10+ years', '5-10 years', '2-3 years or less', '15-20 years'],
       correctAnswer: '2-3 years or less',
+      explanation:
+        'Quick wins are low-cost, fast-return actions (e.g. adjusting time switches), typically paying back within 2-3 years. Longer paybacks fall into strategic or capital-upgrade categories.',
     },
     {
       question:
-        'When identifying load profile anomalies, what pattern suggests equipment malfunction?',
+        'When analysing a load profile, which pattern most strongly suggests an equipment malfunction?',
       options: [
         'Consistent daily peaks during business hours',
-        'Sudden unexplained spikes or erratic consumption patterns',
-        'Gradual seasonal variations',
-        'Weekend reduction in consumption',
+        'Gradual, predictable seasonal variation',
+        'Sudden unexplained spikes or erratic consumption',
+        'A reduction in consumption at weekends',
       ],
-      correctAnswer: 'Sudden unexplained spikes or erratic consumption patterns',
+      correctAnswer: 'Sudden unexplained spikes or erratic consumption',
+      explanation:
+        'Regular daily, seasonal and weekend variations are expected. Sudden spikes or erratic, unexplained behaviour point to a faulty control, sticking actuator or failing piece of plant.',
     },
     {
       question:
-        'What software tool is commonly used for creating professional load profile visualisations?',
+        'Which tool is commonly used to create professional load profile visualisations?',
       options: [
-        'Word processor only',
-        'Excel with charts, or specialised energy software',
-        'Basic calculator',
-        'Email client',
+        'A word processor on its own',
+        'A spreadsheet with charts, or specialised energy software',
+        'A basic pocket calculator',
+        'An email client',
       ],
-      correctAnswer: 'Excel with charts, or specialised energy software',
+      correctAnswer: 'A spreadsheet with charts, or specialised energy software',
+      explanation:
+        'Spreadsheets (with conditional-formatting heatmaps and pivot charts) and dedicated energy-management/BI tools are the practical choices; word processors, calculators and email clients cannot build the visualisations.',
     },
     {
-      question: 'What is the purpose of including comparison benchmarks in energy reports?',
+      question: 'What is the purpose of including comparison benchmarks in an energy report?',
       options: [
-        'To make the report longer',
-        'To provide context and show how the site compares to similar facilities',
-        'To confuse the client',
-        'To hide poor performance',
+        'To make the report appear longer',
+        'To deliberately confuse the client',
+        'To provide context against similar facilities',
+        'To disguise poor performance',
       ],
-      correctAnswer: 'To provide context and show how the site compares to similar facilities',
+      correctAnswer: 'To provide context against similar facilities',
+      explanation:
+        'Benchmarks let a client judge whether their consumption is reasonable for their building type and climate, turning a raw number into an actionable "better or worse than peers" insight.',
     },
     {
-      question: 'Which recommendation format is most effective for client presentations?',
+      question: 'Which recommendation format is most effective for a client presentation?',
       options: [
         'Long paragraphs of technical text',
-        'Prioritised list with costs, savings, and payback periods',
-        'Verbal-only explanations',
-        'Raw spreadsheet data',
+        'Verbal-only explanations with no handout',
+        'Raw spreadsheet data dumps',
+        'A prioritised list with costs, savings and payback periods',
       ],
-      correctAnswer: 'Prioritised list with costs, savings, and payback periods',
+      correctAnswer: 'A prioritised list with costs, savings and payback periods',
+      explanation:
+        'Clients act on clear, ranked options showing what each measure costs, saves and how quickly it pays back — far more persuasive than dense text or unstructured data.',
     },
   ];
 

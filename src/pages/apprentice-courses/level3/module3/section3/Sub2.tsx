@@ -57,12 +57,12 @@ const checks = [
     question:
       "A 7.5 kW (output) motor at 400 V 3-phase, η = 90 %, pf = 0.86. Line current is approximately:",
     options: [
-      '14.0 A',
       '21.7 A',
+      '14.0 A',
       '12.5 A',
       '7.5 A',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'P_input = 7500 / 0.9 = 8333 W. I_L = P / (√3 × V_L × cos φ) = 8333 / (1.732 × 400 × 0.86) = 8333 / 595.6 = 14.0 A.',
   },

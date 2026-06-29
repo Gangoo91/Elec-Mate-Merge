@@ -8,120 +8,120 @@ const quizData: QuizQuestion[] = [
   {
     id: 1,
     question:
-      'Within how many days must an Electrical Installation Certificate be provided to the customer?',
-    options: ['7 days', '14 days', '28 days', '30 days'],
+      'Under Part P notification rules, within how many days should the certificate normally reach the customer?',
+    options: ['7 days', '14 days', '28 days', '90 days'],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires that a copy of the Electrical Installation Certificate must be provided to the customer within 28 days of completion of the work.',
+      'Under Building Regulations Part P self-certification scheme rules, a copy of the certificate is normally provided to the customer within about 28 days of completing the work.',
   },
   {
     id: 2,
     question:
-      'What is the recommended frequency for RCD testing using the test button in domestic installations?',
-    options: ['Weekly', 'Monthly', 'Quarterly', 'Annually'],
-    correctAnswer: 1,
+      'How often does the BS 7671 user notice say the RCD test button should be pressed?',
+    options: ['Weekly', 'Quarterly', 'Six-monthly', 'Annually'],
+    correctAnswer: 2,
     explanation:
-      'RCD test buttons should be operated monthly to ensure the device is functioning correctly. This is a simple test that can be performed by the user.',
+      'The RCD instruction notice required by BS 7671 (Regulation 514.12.1) tells users to test six-monthly by pressing the test button and then switching the device back on.',
   },
   {
     id: 3,
     question:
-      'Which document provides legal evidence that an installation has been designed and constructed in accordance with BS 7671?',
+      'Which document certifies that a new installation complies with BS 7671?',
     options: [
-      'Minor Works Certificate',
-      'Electrical Installation Certificate',
-      'Condition Report',
-      'Test Result Schedule',
+      'The Electrical Installation Certificate',
+      'A Minor Works Certificate',
+      'An Electrical Installation Condition Report',
+      'A Schedule of Test Results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The Electrical Installation Certificate (EIC) is the legal document that certifies compliance with BS 7671 for new installations or additions.',
+      'The Electrical Installation Certificate (EIC) is the document that certifies a new installation, addition or alteration complies with BS 7671.',
   },
   {
     id: 4,
     question:
-      'What should be done if an error is discovered on a completed Electrical Installation Certificate?',
+      'What should be done if an error is found on a completed Electrical Installation Certificate?',
     options: [
-      'Use correction fluid to fix the error',
-      'Overwrite the incorrect information',
-      'Strike through the error, initial it, and attach an amendment',
-      'Issue a completely new certificate',
+      'Apply correction fluid over the error',
+      'Strike through the error, initial it and attach an amendment',
+      'Simply overwrite the incorrect entry',
+      'Discard it and issue an unrelated new certificate',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Errors should be formally corrected by striking through, initialing the change, and providing an amendment sheet if necessary. Never use correction fluid or overwrite.',
+      'An error should be struck through and initialled, with an amendment provided if needed; correction fluid and overwriting are not acceptable.',
   },
   {
     id: 5,
     question:
-      'How long should installation certificates and test results be retained by the installer?',
-    options: ['2 years', '5 years', '6 years minimum', 'Life of the installation'],
-    correctAnswer: 2,
+      'How long should the installer retain copies of certificates and test results?',
+    options: ['2 years', '6 years minimum', '5 years', '6 months'],
+    correctAnswer: 1,
     explanation:
-      'Installers should retain copies for at least 6 years for insurance and legal purposes, though customers should keep them for the life of the installation.',
+      'Installers should keep copies for at least 6 years for insurance and legal purposes, while customers should keep theirs for the life of the installation.',
   },
   {
     id: 6,
     question: 'What is the purpose of the Schedule of Test Results?',
     options: [
-      'To record material costs',
+      'To record the material costs of the job',
+      'To schedule the next maintenance visit',
       'To provide detailed evidence of electrical test compliance',
-      'To schedule future maintenance',
-      'To list equipment warranties',
+      'To list the equipment warranty periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The Schedule of Test Results provides detailed evidence that all required electrical tests have been performed and results meet BS 7671 requirements.',
+      'The Schedule of Test Results records the values measured and provides evidence that the required tests were performed and meet BS 7671 requirements.',
   },
   {
     id: 7,
     question:
-      'Which of the following should be included in emergency contact information for customers?',
+      'What should the emergency contact information given to customers include?',
     options: [
-      'Only the installation company details',
-      '24/7 emergency electrical services and company contacts',
-      'Just the equipment manufacturer support',
-      'Only local emergency services',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Emergency contacts should include 24/7 electrical emergency services, installation company details, equipment manufacturer support, and guidance on when to use each.',
-  },
-  {
-    id: 8,
-    question: 'What type of labels are recommended for outdoor EV charging installations?',
-    options: [
-      'Standard paper labels',
-      'Laminated paper labels',
-      'Marine-grade vinyl or aluminium labels',
-      'Temporary adhesive labels',
+      'The installation company details only',
+      'The equipment manufacturer support line only',
+      '24/7 emergency electrical contacts and company details',
+      'The local emergency services number only',
     ],
     correctAnswer: 2,
     explanation:
-      'Outdoor installations require marine-grade vinyl or aluminium labels with UV-stable inks and weather-resistant adhesive for 15+ year durability.',
+      'Emergency contact details should cover 24/7 electrical call-out, the installer, the manufacturer support line and guidance on when to use each.',
+  },
+  {
+    id: 8,
+    question: 'Which labels are recommended for outdoor EV charging installations?',
+    options: [
+      'Standard paper labels',
+      'Marine-grade vinyl or aluminium labels',
+      'Laminated paper labels',
+      'Temporary adhesive labels',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Outdoor installations need marine-grade vinyl or aluminium labels with UV-stable inks and weather-resistant adhesive for long-term durability.',
   },
   {
     id: 9,
     question:
-      'In a comprehensive handover package, what documentation relates to future maintenance planning?',
+      'In a handover package, which documentation supports future maintenance planning?',
     options: [
-      'Installation drawings only',
-      'Warranty certificates only',
-      'Maintenance schedule, procedures, and contact information',
-      'Test results only',
+      'The installation drawings only',
+      'A maintenance schedule, procedures and contact information',
+      'The warranty certificates only',
+      'The test results only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Maintenance planning requires a schedule of tasks, detailed procedures for each maintenance activity, and contact information for support services.',
+      'Maintenance planning needs a schedule of tasks, the procedures for each activity and the contact details for ongoing support.',
   },
   {
     id: 10,
     question:
-      'What is the recommended interval for professional inspection and testing of commercial EV charging installations?',
-    options: ['6 months', 'Annually', 'Every 2 years', 'Every 5 years'],
-    correctAnswer: 1,
+      'What is the recommended interval for professional inspection and testing of a commercial EV charging installation?',
+    options: ['Annually', 'Every 6 months', 'Every 2 years', 'Every 5 years'],
+    correctAnswer: 0,
     explanation:
-      'Commercial EV charging installations should receive professional inspection and testing annually to ensure continued safe operation and compliance.',
+      'Commercial EV charging installations should be professionally inspected and tested annually to confirm continued safe operation and compliance.',
   },
 ];
 

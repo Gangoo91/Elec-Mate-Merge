@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Stephen Covey argued that highly effective people spend most of their time in which quadrant of the Eisenhower Matrix?',
     options: [
-      'Q1 — Urgent and Important: constantly fighting fires and dealing with crises',
       'Q2 — Not Urgent but Important: planning, preparation, relationship building, and professional development',
+      'Q1 — Urgent and Important: constantly fighting fires and dealing with crises',
       'Q3 — Urgent but Not Important: responding quickly to every request from others',
       'Q4 — Neither Urgent nor Important: taking regular breaks and avoiding stress',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Covey\'s central argument in "The 7 Habits of Highly Effective People" (1989) is that Q2 is where the highest-value work happens. Q2 activities — planning, preparation, skill development, relationship building, systems improvement — are not urgent, so they are easy to postpone. But they are profoundly important because they prevent crises (reducing Q1), build capability, and create long-term results. People who live in Q1 are always reacting; people who invest in Q2 are proactively building a life and business that requires less crisis management over time.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'In the Eisenhower Matrix, Quadrant 2 (Q2) contains tasks that are:',
     options: [
       'Urgent and Important — crises and emergencies',
-      'Not Urgent but Important — planning, preparation, and growth activities',
       "Urgent but Not Important — interruptions and other people's priorities",
       'Neither Urgent nor Important — time wasters and distractions',
+      'Not Urgent but Important — planning, preparation, and growth activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Q2 is the quadrant of planning, preparation, relationship building, professional development, and strategic thinking. These activities are profoundly important but not urgent — they do not demand immediate action, so they are easy to postpone. Covey argued that Q2 is where the highest-value work happens, and that effective people deliberately schedule Q2 time rather than waiting for it to become urgent (at which point it moves to Q1).',
   },
@@ -144,11 +144,11 @@ const quizQuestions = [
       'Weekly job scheduling and route planning for the week ahead is an example of which quadrant?',
     options: [
       'Q1 — it is urgent because jobs need to be done',
-      'Q2 — it is important for efficiency but not urgent today',
       'Q3 — it is urgent because clients are waiting',
+      'Q2 — it is important for efficiency but not urgent today',
       'Q4 — it is optional admin that can be skipped',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Planning the week ahead — scheduling jobs, optimising routes, pre-ordering materials — is a classic Q2 activity. It is not urgent right now (you could skip it and figure things out day-by-day), but it is highly important because it saves time, reduces stress, prevents crises, and increases efficiency. An hour of planning on Sunday evening can save several hours of reactive scrambling during the week.',
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
       'Why does Covey argue that investing time in Q2 reduces the amount of time spent in Q1?',
     options: [
       'Because Q2 activities are more enjoyable, so you stop worrying about crises',
-      'Because Q2 activities (planning, prevention, preparation) prevent many Q1 crises from occurring in the first place',
       'Because Q1 tasks can always be delegated to someone else',
       'Because spending time in Q2 means there are fewer hours left in the day for Q1',
+      'Because Q2 activities (planning, prevention, preparation) prevent many Q1 crises from occurring in the first place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Covey's central argument is that Q2 activities are preventive. Planning your week in advance (Q2) prevents the last-minute scramble to find work (Q1). Maintaining your tools and van (Q2) prevents breakdowns and delays (Q1). Keeping certifications up to date (Q2) prevents the crisis of an expired qualification (Q1). Pre-ordering materials (Q2) prevents the emergency merchant trip (Q1). Every hour invested in Q2 planning and prevention eliminates multiple hours of Q1 crisis management.",
   },

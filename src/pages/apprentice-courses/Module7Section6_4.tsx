@@ -14,10 +14,10 @@ const quizQuestions = [
     id: 1,
     question: 'What types of faults are considered minor?',
     options: [
-      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
+      'Damaged cables buried inside walls or under floors',
       'Loose connections, miswiring at accessories, and straightforward termination issues',
-      'It caused the lamp holder to remain live when switched off, creating a shock risk',
-      'To ensure safety, proper technique, and professional development while maintaining responsibility',
+      'Failed insulation resistance across a whole circuit',
+      'Design faults that need the circuit to be rewired',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,10 +27,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why are loose connections still dangerous?',
     options: [
-      'A loose CPC (earth conductor) at one outlet',
-      'To prove the fault has been resolved and the circuit is safe',
+      'They reduce the supply voltage across the whole circuit',
+      'They make connected equipment run faster than normal',
       'They can cause overheating, arcing, or electric shock',
-      'Switch connected in the neutral rather than the line conductor',
+      'They have no real effect as long as the circuit works',
     ],
     correctAnswer: 2,
     explanation:
@@ -40,9 +40,9 @@ const quizQuestions = [
     id: 3,
     question: 'What must always be done before rectifying a fault?',
     options: [
-      'Loose connections, miswiring at accessories, and straightforward termination issues',
-      'Switch connected in the neutral rather than the line conductor',
-      'To ensure safety, proper technique, and professional development while maintaining responsibility',
+      'Take a photo of the fault for the records',
+      'Inform the customer how long the repair will take',
+      'Check the wholesaler has the replacement parts in stock',
       'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
     ],
     correctAnswer: 3,
@@ -54,9 +54,9 @@ const quizQuestions = [
     question: 'What is an example of miswiring at a light fitting?',
     options: [
       'Switch connected in the neutral rather than the line conductor',
-      'Be individually removable so other employees cannot access personal data',
-      'Fault current must exceed device rating for operation within required time',
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
+      'Using a cable that is oversized for the lighting load',
+      'Fitting a lamp with a higher wattage than recommended',
+      'Protecting the circuit with a slightly larger MCB',
     ],
     correctAnswer: 0,
     explanation:
@@ -66,10 +66,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why must repairs always be retested?',
     options: [
-      'Switch connected in the neutral rather than the line conductor',
+      'To use up the remaining time on the job',
       'To prove the fault has been resolved and the circuit is safe',
-      'They can cause overheating, arcing, or electric shock',
-      'A loose CPC (earth conductor) at one outlet',
+      'To give the apprentice practice with the test meter',
+      'Because the customer expects to see the meter used',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,9 +92,9 @@ const quizQuestions = [
     id: 7,
     question: 'True or False: Apprentices can sign off test records after rectifying minor faults.',
     options: [
-      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
-      'It caused the lamp holder to remain live when switched off, creating a shock risk',
-      'Loose connections, miswiring at accessories, and straightforward termination issues',
+      'True - as long as the fault was a minor one',
+      'True - provided the circuit retested correctly',
+      'True - once the supervisor has left the site',
       'False - apprentices must always work under supervision and cannot sign off certifications',
     ],
     correctAnswer: 3,
@@ -106,9 +106,9 @@ const quizQuestions = [
     question: 'Why is supervision important when apprentices correct faults?',
     options: [
       'To ensure safety, proper technique, and professional development while maintaining responsibility',
-      'Loose connections, miswiring at accessories, and straightforward termination issues',
-      'It caused the lamp holder to remain live when switched off, creating a shock risk',
-      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
+      'To make sure the apprentice works as quickly as possible',
+      'To keep the apprentice away from the customer',
+      'To reduce the amount of paperwork the supervisor must do',
     ],
     correctAnswer: 0,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 9,
     question: 'In the socket circuit example, what fault was corrected by the apprentice?',
     options: [
-      'Services requiring access go to the outside',
+      'A reversed line and neutral at the socket',
       'A loose CPC (earth conductor) at one outlet',
-      'Check security and box condition',
-      'Dedicated frequency band with less interference',
+      'A cracked socket faceplate that needed replacing',
+      'An undersized cable feeding the socket',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 10,
     question: 'In the lighting example, why was connecting the switch in the neutral dangerous?',
     options: [
-      'Switch connected in the neutral rather than the line conductor',
-      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
+      'It made the lamp glow dimly even when switched off',
+      'It caused the protective device to trip every time',
       'It caused the lamp holder to remain live when switched off, creating a shock risk',
-      'To prove the fault has been resolved and the circuit is safe',
+      'It drew far more current than the circuit was rated for',
     ],
     correctAnswer: 2,
     explanation:

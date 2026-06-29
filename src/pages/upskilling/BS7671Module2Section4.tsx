@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A customer rings on 12 May 2026 asking whether their new-build EIC must be issued against A3:2024 or A4:2026. What is the correct answer?',
     options: [
-      'A3:2024 — A4 only takes effect when A3 is withdrawn on 15 October 2026',
-      'A4:2026 — published 15 April 2026 and in force from that date for new design; A3 is withdrawn 15 October 2026',
+      'A3:2024 — A4 only takes effect once A3 is withdrawn on 15 October 2026',
+      'A4:2026 — published and in force for new design from 15 April 2026',
       "Either is acceptable — the installer's choice for the whole transition window",
-      'Neither — there is a six-month consultation period before A4 is enforceable',
+      'Neither — a six-month consultation period runs before A4 becomes enforceable',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const inlineChecks = [
     question:
       'Reg 421.1.7 (A4) — for which premises is AFDD protection MANDATED rather than recommended?',
     options: [
-      'All single-family dwellings over £500,000 in value',
-      'HMOs, purpose-built student accommodation, care homes and high-rise residential buildings (HRRBs ≥ 18 m or ≥ 7 storeys)',
-      'Only premises with timber-frame construction',
+      'All single-family dwellings valued over £500,000',
+      'HMOs, student accommodation, care homes and high-rise residential buildings',
+      'Only premises built with timber-frame construction',
       'All commercial offices fitted out after 15 April 2026',
     ],
     correctIndex: 1,
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Section 443 (overvoltage protection) — what was the most significant A4 change to its application route?',
     options: [
-      'Section 443 has been deleted entirely',
-      'The risk-assessment method (formerly Reg 443.5) AND Annex A443 have been DELETED — designers must now use the consequence-based Reg 443.4.1 route to decide whether SPDs are required',
-      'SPDs are now banned in domestic premises',
-      'Surge protection now only applies to TT installations',
+      'Section 443 has been deleted from BS 7671 entirely',
+      'The Reg 443.5 risk-assessment method and Annex A443 are deleted',
+      'SPDs are now banned outright in all domestic premises',
+      'Surge protection now applies only to TT earthing installations',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You are installing an EV charger on a TN-C-S (PME) supply. Reg 722.312.2.1 (A4) directly affects the EV circuit — what does it require?',
     options: [
-      'A separate 30 mA Type B RCD for every EV connector',
-      'The EV-charging circuit shall NOT include a PEN conductor — split N and PE before the circuit, or apply one of the listed alternative measures',
-      'The EV charger must be fed through an isolating transformer',
-      'A maximum cable run of 10 m to the charge point',
+      'A separate 30 mA Type B RCD for every EV connector outlet',
+      'The EV-charging circuit shall not include a PEN conductor',
+      'The EV charger must be fed through a safety isolating transformer',
+      'A maximum permitted cable run of 10 m to the charge point',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A new domestic dwelling has a 6 kWp PV array with battery storage feeding back through the consumer unit. Reg 530.3.201 (A4) requires consideration of which device characteristic?',
     options: [
-      'The protective device must be Type B RCD',
-      'The protective device must be suitable for bidirectional current flow — confirm via the manufacturer that the OCPD/RCD/RCBO is rated for current flow in either direction',
-      'A 100 kA fault rating',
-      'Only mechanical interlocking is required — no electrical changes',
+      'The protective device must be a Type B RCD throughout',
+      'The protective device must be suitable for bidirectional current flow',
+      'The protective device must carry a 100 kA fault rating',
+      'Only mechanical interlocking is required, with no electrical changes',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A4:2026 was published 15 April 2026. What is the latest date on which a new design may still be issued under A3:2024?',
     options: [
-      '14 April 2026 — the day before A4 publication',
-      '15 October 2026 — A3 is withdrawn on this date and from 16 October every new design must reference A4',
-      '31 December 2026 — full calendar-year transition',
-      '15 April 2027 — one year after A4 publication',
+      '14 April 2026 — the day immediately before A4 was published',
+      '31 December 2026 — the end of a full calendar-year transition window',
+      '15 April 2027 — exactly one year after the A4 publication date',
+      '15 October 2026 — the date A3:2024 is withdrawn',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The transition arrangement: A4:2026 is in force from publication on 15 April 2026 for any new design. Designs whose work started before that date may continue and certify under A3:2024 up to 15 October 2026. From 16 October 2026 A3 is withdrawn — every new design and every cert form must reference A4. Old A3 certs already issued remain valid evidence of compliance at the time they were issued; they are not retrospectively invalidated.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Reg 411.3.4 (NEW in A4) — which statement is correct about its scope and exceptions?',
     options: [
-      'Applies to all premises; risk assessment exception available per Reg 411.3.3(b)',
-      'Applies to domestic (household) premises only; no exception — every AC final circuit supplying luminaires must have 30 mA RCD additional protection',
-      'Applies only to bathroom and kitchen lighting circuits',
-      'Applies only to luminaires fitted with LED drivers',
+      'Domestic premises only, no exception — every AC luminaire final circuit needs 30 mA RCD',
+      'All premises, with a documented risk-assessment exception per Reg 411.3.3(b)',
+      'Only the bathroom and kitchen lighting circuits within a dwelling',
+      'Only luminaire circuits whose luminaires use electronic LED drivers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 411.3.4 reads: "Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires." It is a "shall", scoped to dwellings, with NO exception — unlike Reg 411.3.3(b) which permits a documented risk-assessment exception for non-domestic socket circuits. From 15 April 2026 every new dwelling lighting circuit is on an RCD or RCBO.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'Reg 421.1.7 (A4) — which combination of premises has the AFDD requirement upgraded from "recommendation" to MANDATORY?',
     options: [
-      'All commercial offices and all retail premises',
+      'All commercial offices and all retail premises fitted out after the A4 date',
+      'Only listed buildings and heritage assets with vulnerable fabric',
       'HMOs, purpose-built student accommodation, care homes, and HRRBs (high-rise residential buildings)',
-      'Only listed buildings and heritage assets',
-      'All premises with PV installations regardless of occupancy type',
+      'All premises with a PV installation, regardless of the occupancy type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 elevates AFDD requirements for higher-risk sleeping accommodation. Mandatory ("shall") on AC final circuits up to 32 A in: HMOs, purpose-built student accommodation, care/nursing homes, and HRRBs (typically ≥ 18 m or ≥ 7 storeys). For single-family dwellings, holiday accommodation, hotels and most commercial premises, AFDDs remain a "strongly recommended" — meaning a documented departure under Reg 120.3 is needed if not fitted. The cert form schedule of inspection has a new item 4.23 to record AFDD presence/absence and column 30 in the schedule of test results captures the AFDD test result.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 4,
     question: 'Section 419 — what is its purpose and when does it apply?',
     options: [
-      'It is a deleted section with no current application',
-      'It is a group of regulations covering ALTERNATIVE protective measures where automatic disconnection of supply (ADS) is not feasible — e.g. Class II zones, electrical separation, equipotential local zones',
-      'It defines the maximum cable lengths for TN-C-S installations',
-      'It applies only to industrial 110 V CTE supplies',
+      'A deleted section with no current application in A4:2026',
+      'Alternative protective measures where ADS is not feasible',
+      'The rules defining maximum permitted cable lengths on TN-C-S',
+      'Requirements applying only to industrial 110 V CTE supplies',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,26 +181,26 @@ const quizQuestions = [
     question:
       'On a parallel-source installation (PV with battery export), Reg 551.7.1(d) (A4) PROHIBITS connecting the source where?',
     options: [
-      'On the supply side of the main switch',
-      'On the LOAD side of an upstream RCD — because injected source current can mask residual currents the RCD is meant to detect',
-      'On a circuit shorter than 5 metres',
-      'On any 3-phase supply',
+      'On the supply side of the installation main switch',
+      'On any final circuit shorter than 5 metres in length',
+      'On any three-phase parallel-source supply arrangement',
+      'On the load side of an upstream RCD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Reg 551.7.1(d) is a direct response to nuisance-trip and missed-fault scenarios documented in real PV/battery installations. Connecting the parallel source on the load side of an upstream RCD means the RCD sees the difference between line-side and load-side currents distorted by the injected source — fault currents can be masked, or the device can trip without a real fault. The compliant arrangement: parallel source connects on the supply side of any RCD, with each downstream final circuit having its own RCD/RCBO providing additional protection.',
+      'Connecting on the load side of an upstream RCD lets injected source current mask the residual current the RCD must detect. Reg 551.7.1(d) is a direct response to nuisance-trip and missed-fault scenarios documented in real PV/battery installations. Connecting the parallel source on the load side of an upstream RCD means the RCD sees the difference between line-side and load-side currents distorted by the injected source — fault currents can be masked, or the device can trip without a real fault. The compliant arrangement: parallel source connects on the supply side of any RCD, with each downstream final circuit having its own RCD/RCBO providing additional protection.',
   },
   {
     id: 6,
     question:
       'Section 443 (overvoltage / surge protection) — A4 has DELETED two things and made the application route consequence-based. Which two items were deleted?',
     options: [
-      'Reg 443.4.1 and Reg 443.5',
-      'Reg 443.5 (the calculated CRL risk-assessment method) and Annex A443 — designers can no longer compute their way to "no SPDs required"',
-      'All of Section 443',
-      'Reg 443.4.1 and the consequence categories',
+      'Reg 443.5 (the calculated CRL risk-assessment method) and Annex A443',
+      'Reg 443.4.1 (the consequence route) together with Reg 443.5',
+      'The whole of Section 443, leaving no surge-protection rules at all',
+      'Reg 443.4.1 together with the listed overvoltage consequence categories',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4 removed the quantitative risk-assessment route. Reg 443.5 used to allow a calculation (CRL = AL × NL) which, if below a threshold, justified omitting SPDs. Both that regulation and the supporting Annex A443 are deleted in A4. The replacement route is the consequence-based Reg 443.4.1: if either active limb applies — (a) serious injury to, or loss of, human life; (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May-2023 corrigendum) — SPDs SHALL be fitted. The practical effect: most UK installations now fit SPDs at the origin by default, with the owner declaration documented if they are omitted.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'On the new A4 cert form, what change applies to the system-earthing-arrangement field?',
     options: [
-      'Removed entirely — the inspector now writes a free description',
-      'TN-C-S is now subdivided in the drop-down: TN-C-S (PME) and TN-C-S (PNB) are distinct selections, because the open-PEN failure-mode analysis differs',
-      'TN-C-S has been replaced by IT for all UK supplies',
-      'Only TT and TN remain — TN-C-S is no longer recognised',
+      'The field is removed entirely — the inspector now writes a free description',
+      'TN-C-S has been replaced by IT as the standard arrangement for all UK supplies',
+      'TN-C-S is now subdivided into TN-C-S (PME) and TN-C-S (PNB), because their open-PEN analysis differs',
+      'Only TT and TN remain — TN-C-S is no longer a recognised arrangement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 makes the cert form distinguish between TN-C-S (PME — Protective Multiple Earthing, the dominant DNO arrangement) and TN-C-S (PNB — Protective Neutral Bonding, where there is only one connection point to true earth — typically a private substation feeding one customer). The fault-current paths and the open-PEN consequence analysis differ between the two — the schedule of inspection items now reflect this. Inspectors and designers must select the right sub-type rather than ticking a generic "TN-C-S".',
   },
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'A new EV charge point is being installed at a private dwelling on a TN-C-S (PME) supply. Reg 722.312.2.1 forbids a PEN in the EV circuit. Which two routes are compliant?',
     options: [
-      'Use a single 100 mA Type AC RCD; reduce the cable size to 6 mm²',
-      '(a) Bring only PE (not the PEN) to the EV circuit by splitting N and PE before the EV way; OR (b) apply one of the alternative measures listed in Section 722 — e.g. an open-PEN protection device, or a separate earth electrode with documented Ra',
-      'Switch the supply to TT for the whole property',
-      'Install a Type B RCBO and ignore the PEN rule',
+      'Fit a single 100 mA Type AC RCD and reduce the EV cable to 6 mm²',
+      'Bring only PE to the EV way, OR apply a listed Section 722 measure',
+      'Convert the whole property supply from TN-C-S to TT earthing',
+      'Install a Type B RCBO and disregard the PEN prohibition entirely',
     ],
     correctAnswer: 1,
     explanation:

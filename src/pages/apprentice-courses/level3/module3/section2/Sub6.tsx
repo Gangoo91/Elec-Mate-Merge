@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why does opening a contactor coil produce a spark?',
     options: [
-      'A detailed assessment focused on a particular activity or operation',
+      'The coil resistance suddenly drops to zero as the contacts part',
       'The collapsing magnetic field induces a high voltage that arcs across the opening contacts',
-      'Members of the public could walk into the tower, attempt to climb it, or be struck by falling objects',
-      'For a sensitive performance discussion or a heated disagreement that needs de-escalation',
+      'The supply voltage briefly doubles at the instant of disconnection',
+      'Capacitance between the contacts stores enough charge to flash over',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,9 +176,9 @@ const quizQuestions = [
       'A capacitor across an AC contactor coil acts as a:',
     options: [
       'Snubber to suppress switch-off transients',
-      'A storage tank that previously held chemicals',
-      'For compliance and future maintenance reference',
-      'BS 7671 IET Wiring Regulations',
+      'Voltage divider to drop the coil supply voltage',
+      'Smoothing capacitor to convert the AC supply to DC',
+      'Power-factor correction for the coil inductance',
     ],
     correctAnswer: 0,
     explanation:

@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'A vibration spectrum shows a dominant peak at 1x the running speed (shaft rotational frequency). The most likely cause is:',
     options: [
-      'Levelised Cost of Electricity',
-      'Investigate cause of variation',
+      'A bearing outer race defect',
+      'A broken rotor bar in the motor',
       'Mass imbalance (unbalance)',
-      'Current-limiting capability',
+      'Mechanical looseness in the mounting',
     ],
     correctIndex: 2,
     explanation:
@@ -44,9 +44,9 @@ const quickCheckQuestions = [
       'When mounting an accelerometer on a motor bearing housing, which orientation typically gives the best sensitivity to bearing defects?',
     options: [
       'Radial (perpendicular to the shaft centreline, vertical or horizontal)',
-      'HVAC and lighting integration for occupancy simulation',
-      'A DP/PA coupler or link device that converts between the two physical layers',
-      'Correct type, properly tightened, and providing earth continuity where required',
+      'Axial (parallel to the shaft centreline) only',
+      'At 45 degrees to the shaft in the tangential direction',
+      'On the motor frame as far from the bearing as possible',
     ],
     correctIndex: 0,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'Vibration analysis is classified as which type of maintenance strategy?',
     options: [
-      'Document and report them to the customer',
+      'Reactive (run-to-failure) maintenance',
       'Condition-based predictive maintenance',
-      'Current capacity vs. rated capacity',
-      'The contract administrator or architect',
+      'Fixed-interval time-based maintenance',
+      'Breakdown maintenance carried out after failure',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     id: 3,
     question: 'A piezoelectric accelerometer works by:',
     options: [
-      'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
-      'The time between a detectable potential failure (P) and the actual functional failure (F)',
-      'Condition monitoring and predictive maintenance for maintenance technicians',
+      'Measuring the change in resistance of a strain gauge bonded to the shaft',
+      'Detecting the magnetic field produced by the rotating shaft',
+      'Counting the number of shaft revolutions using an optical sensor',
       'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
     ],
     correctAnswer: 3,
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'Bearing defect frequencies (BPFO, BPFI, BSF, FTF) are determined by:',
     options: [
-      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
-      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
+      'The supply frequency and the number of motor poles only',
+      'The ambient temperature and the lubricant grade used',
       'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
-      'After the motor has reached stable thermal equilibrium at normal operating load',
+      'The mounting orientation of the accelerometer on the housing',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     question:
       'When trending vibration data over time, an exponential increase in vibration level typically indicates:',
     options: [
-      'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
-      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
-      'After the motor has reached stable thermal equilibrium at normal operating load',
+      'A stable machine operating normally within its acceptable zone',
+      'A measurement error caused by a loose accelerometer',
+      'Normal warming of the bearings during the first hour of running',
       'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
     ],
     correctAnswer: 3,
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'An electrical motor running at 1480 RPM on a 50 Hz supply has a slip frequency of 20 RPM. Vibration peaks at exactly 50 Hz with sidebands at slip frequency indicate:',
     options: [
-      '5-10 years depending on update rate and configuration',
+      'A bearing outer race defect requiring lubrication',
       'An electrical fault such as broken rotor bars or uneven air gap',
-      'Formal sign-off before proceeding, documented in ITP with witness signatures',
-      'Open circuit = no continuity, high resistance = poor continuity',
+      'Coupling misalignment between the motor and driven load',
+      'Mass imbalance on the motor shaft requiring rebalancing',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,9 +208,9 @@ const quizQuestions = [
     question:
       'For baseline vibration measurements on a newly commissioned motor, readings should be taken:',
     options: [
-      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
-      'Condition monitoring and predictive maintenance for maintenance technicians',
-      'The time between a detectable potential failure (P) and the actual functional failure (F)',
+      'The moment the motor is first switched on from cold',
+      'Only when the motor is isolated and stationary',
+      'During the run-down period after the supply is removed',
       'After the motor has reached stable thermal equilibrium at normal operating load',
     ],
     correctAnswer: 3,
@@ -222,9 +222,9 @@ const quizQuestions = [
     question: 'Under ST1426, vibration analysis falls within which knowledge and skills area?',
     options: [
       'Condition monitoring and predictive maintenance for maintenance technicians',
-      'After the motor has reached stable thermal equilibrium at normal operating load',
-      'An electrical fault such as broken rotor bars or uneven air gap',
-      'The time between a detectable potential failure (P) and the actual functional failure (F)',
+      'Initial verification and certification of new installations',
+      'Estimating and quoting for electrical installation work',
+      'Health and safety law relating to working at height',
     ],
     correctAnswer: 0,
     explanation:

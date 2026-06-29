@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of BIM clash detection?',
     options: [
       'To identify conflicts between services before installation',
-      'Marks lost for non-compliance with BS 7671',
-      'Close proximity to distribution transformer',
-      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
+      'To calculate the total material cost of all building services',
+      'To schedule labour and plant hire across the project programme',
+      'To generate the operation and maintenance manuals at handover',
     ],
     correctIndex: 0,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'installation-priority',
     question: 'Which service typically has installation priority in ceiling voids?',
     options: [
-      'Drainage (gravity-fed)',
       'Data cabling',
       'Electrical containment',
       'Lighting fixtures',
+      'Drainage (gravity-fed)',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Drainage and gravity-fed services have priority because they cannot be rerouted easily - they require specific gradients (falls) to function. All other services must work around them.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'coordination-drawing',
     question: 'A coordination drawing shows:',
     options: [
-      'Longer cables give lower readings',
+      'Only the electrical containment routes for a single trade',
+      'The structural steelwork and foundations of the building',
       'All services overlaid with routing agreements',
-      'Trunking, conduit, or cable tray',
-      'Opposite direction to conventional current',
+      'A schedule of the test results for each final circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Coordination drawings show all MEP services overlaid on the same drawing with agreed routing, levels, and separation distances. They are the master reference for installation.',
   },
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why do gravity drainage systems have installation priority?',
     options: [
-      'Services requiring access go to the outside',
-      'Clearance violations for access or maintenance',
-      'To resolve routing conflicts and agree installation sequence',
+      'They are the most expensive services to install on a project',
+      'They carry the highest fire risk of all building services',
+      'They are always installed by the principal contractor first',
       'They cannot be rerouted - require specific gradients',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'What is the purpose of a services coordination meeting?',
     options: [
       'To resolve routing conflicts and agree installation sequence',
-      'Level of Development - accurate geometry and quantities',
-      'They cannot be rerouted - require specific gradients',
-      'During design development before construction',
+      'To negotiate the final contract price with the client',
+      'To select the BIM software each contractor will use',
+      'To review the health and safety method statements only',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: "A 'soft clash' in BIM coordination typically refers to:",
     options: [
       'Clearance violations for access or maintenance',
-      'Clear responsibility boundaries between disciplines',
+      'A disagreement between contractors at a coordination meeting',
       'Physical intersection of two objects',
-      'They cannot be rerouted - require specific gradients',
+      'A modelling error caused by an out-of-date software version',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of service zone allocation in coordination?',
     options: [
-      'To resolve routing conflicts and agree installation sequence',
+      'To assign each trade a separate area of the site to work in',
       'To define specific vertical and horizontal zones for each service type',
-      'They cannot be rerouted - require specific gradients',
-      'Clear responsibility boundaries between disciplines',
+      'To set the working hours during which each trade may install',
+      'To allocate the project budget between the different disciplines',
     ],
     correctAnswer: 1,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'When should BIM clash detection ideally occur?',
     options: [
-      'Services requiring access go to the outside',
-      'Clear responsibility boundaries between disciplines',
-      'Physical intersection of two objects',
+      'Only after the building has been handed over to the client',
+      'Once all services have been physically installed on site',
+      'During the final commissioning and testing phase',
       'During design development before construction',
     ],
     correctAnswer: 3,

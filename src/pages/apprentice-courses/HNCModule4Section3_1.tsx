@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'short-circuit-time',
     question: 'What determines the maximum disconnection time for short-circuit protection?',
     options: [
-      'Investigate voltage drop and circuit loading',
-      '30mA RCD protection provided',
-      'Higher illuminance and intercom visibility',
-      'Cable conductor thermal limit (k²S²)',
+      'The thermal withstand of the cable conductor (k²S²)',
+      'The nominal rating of the upstream RCD',
+      'The voltage drop along the final circuit',
+      'The ambient temperature of the consumer unit',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'The disconnection time must not exceed t = (k²S²)/I², ensuring the thermal limit of the cable conductor is not exceeded during a short-circuit fault.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'adiabatic-equation',
     question: 'What does the adiabatic equation t = k²S²/I² calculate?',
     options: [
-      'JCT Design and Build Contract (DB)',
-      'Loud noise from machinery',
-      'Maximum fault clearance time',
-      'Test instrument safety requirements',
+      'The voltage drop under fault conditions',
+      'The maximum fault clearance time before conductor damage',
+      'The prospective fault current at the origin',
+      'The minimum conductor size for the load',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The adiabatic equation calculates the maximum time a conductor can withstand fault current before its temperature exceeds safe limits. k is the conductor constant, S is cross-sectional area, I is fault current.',
   },
@@ -121,8 +121,7 @@ const quizQuestions = [
       '115',
       '176',
     ],
-    correctIndex: 3,
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'For PVC-insulated copper conductors, k = 115. This value accounts for the thermal properties of both the copper conductor and PVC insulation.',
   },
@@ -157,14 +156,14 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of back-up protection in a distribution system?',
     options: [
-      'Installing fibre units into pre-installed tubes using air pressure',
-      'The one connected to the motor or input shaft',
+      'To reduce the design current of the final circuit',
+      'To limit voltage drop on long cable runs',
       'To provide protection if the primary device fails to operate',
-      'Chemical splash goggles to EN 166 with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' marking for liquid droplets',
+      'To increase the current-carrying capacity of the cable',
     ],
     correctAnswer: 2,
     explanation:
-      'Back-up protection (Reg 434.5) ensures that if a downstream device fails to clear a fault, the upstream device will operate. This is typically achieved through discrimination coordination.',
+      'Back-up protection (Reg 434.5) ensures that if a downstream device cannot interrupt a fault within its breaking capacity, an upstream device with adequate capacity will operate.',
   },
   {
     id: 7,
@@ -184,23 +183,23 @@ const quizQuestions = [
     question:
       'Calculate the maximum fault clearance time for a 4mm² copper/PVC cable with 3kA fault current.',
     options: [
-      '0.59s',
-      '1.18s',
-      '0.29s',
-      '2.36s',
+      '0.024s',
+      '0.094s',
+      '0.235s',
+      '0.470s',
     ],
     correctAnswer: 0,
     explanation:
-      'Using t = k²S²/I²: t = (115² × 4²) / (3000²) = (13225 × 16) / 9000000 = 0.024s. Wait - recalculating: t = (115 × 4)² / 3000² = 460² / 9000000 = 211600/9000000 = 0.024s. Actually for k=115, S=4, I=3000: t = (k×S/I)² = (115×4/3000)² = 0.024s. The question may expect different method. Using t=k²S²/I²: (115²×16)/9000000 = 0.023s approximately.',
+      'Using t = k²S²/I² with k = 115, S = 4 and I = 3000: t = (115² × 4²) / 3000² = 211,600 / 9,000,000 ≈ 0.024s. The protective device must clear the fault within this time to protect the conductor.',
   },
   {
     id: 9,
     question: 'When can overload protection be omitted according to BS 7671?',
     options: [
-      'Higher resistance than copper and thermal expansion issues',
-      'When the supply cannot produce overload currents',
-      'Career goals, skill gaps, and industry developments',
-      'They limit toxic smoke in the event of a fire',
+      'When the circuit is protected by a 30mA RCD',
+      'When the supply cannot deliver currents exceeding the cable capacity',
+      'When the cable is run in steel conduit',
+      'When the circuit length is under 10 metres',
     ],
     correctAnswer: 1,
     explanation:
@@ -212,10 +211,10 @@ const quizQuestions = [
     options: [
       'Ib ≥ In ≥ Iz',
       'Iz ≤ In ≤ Ib',
-      'Ib ≤ In ≤ Iz',
       'In ≤ Ib ≤ Iz',
+      'Ib ≤ In ≤ Iz',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The fundamental protective device coordination rule: Design current (Ib) ≤ Device rating (In) ≤ Cable capacity (Iz). This ensures the device protects the cable from overload whilst being able to carry the design current.',
   },
@@ -282,17 +281,17 @@ const HNCModule4Section3_1 = () => {
               'Three layers of circuit protection: overload (Reg 433 series), fault current / short-circuit (Reg 434 series), and earth fault (Reg 411 / 415 series).',
               'Selection hierarchy: I_b ≤ I_n ≤ I_z and I_2 ≤ 1.45 × I_z. Both must be satisfied — never just one.',
               'Automatic disconnection times depend on system earthing and circuit type — Table 41.1 (TN: 0.4&nbsp;s for ≤ 32&nbsp;A circuits) and Reg 411 series.',
-              'BS 7671 Reg 432.1 requires the protective device to be of the appropriate type for the protection function (overload, short-circuit, or both).',
+              'BS 7671 Reg 432 requires the protective device to be of the appropriate type for the protection function (overload, short-circuit, or both).',
               'A single device can protect against both overload AND short-circuit (the usual MCB / MCCB) but separate devices are sometimes needed (e.g. motor circuits with HRC fuses + MPCB).',
             ]}
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 432.1 (Nature of protective devices)"
+            source="BS 7671:2018+A4:2026 — Reg 432 (Nature of protective devices)"
             clause="A protective device shall be of the appropriate type indicated in Regulations 432.1 to 432.3. This establishes that selection of protective devices shall comply with the specific types and characteristics set out in those sub-regulations."
             meaning={
               <>
-                Reg 432.1 establishes the device-selection principle. The protective device must
+                Reg 432 establishes the device-selection principle. The protective device must
                 match the protection function: overload only (gG fuse, Type B/C/D MCB), fault
                 only (HRC current-limiting fuse), both (MCB / MCCB), or both with discrimination
                 (MCCB with adjustable instantaneous trip). As designer you specify the device
@@ -301,7 +300,7 @@ const HNCModule4Section3_1 = () => {
                 tests.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 432.1; BS 7671 Chapter 43; manufacturer time-current characteristic curves."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 432; BS 7671 Chapter 43; manufacturer time-current characteristic curves."
           />
 
           <LearningOutcomes
@@ -680,7 +679,7 @@ const HNCModule4Section3_1 = () => {
                 trips at 5–10× I_n: a Type C 16&nbsp;A clears at ≈ 80–160&nbsp;A instantaneous,
                 still tight against a 140&nbsp;A inrush. Type D (10–20× I_n) is the right
                 selection for transformer / motor inrush: a Type D 16&nbsp;A clears at
-                160–320&nbsp;A instantaneous, comfortably above the inrush. Reg 432.1 requires
+                160–320&nbsp;A instantaneous, comfortably above the inrush. Reg 432 requires
                 the device type to suit the load — change to Type D 16&nbsp;A. Re-verify the
                 fault-current adiabatic check (Reg 434.5.2): higher instantaneous threshold means
                 slower clearance on a low-level fault, so confirm Z_s satisfies Table 41.3 for
@@ -689,7 +688,7 @@ const HNCModule4Section3_1 = () => {
             }
             whyItMatters={
               <>
-                Reg 432.1 makes device-type selection a design decision matched to the load
+                Reg 432 makes device-type selection a design decision matched to the load
                 characteristic. Defaulting to Type B everywhere triggers nuisance trips on
                 inductive / transformer loads; defaulting to Type D everywhere risks slower
                 fault clearance that may breach Reg 411 disconnection times.
@@ -706,7 +705,7 @@ const HNCModule4Section3_1 = () => {
           <KeyTakeaways
             points={[
               'Three protection layers: overload (Reg 433), fault / short-circuit (Reg 434), earth fault (Reg 411 / 415).',
-              'Reg 432.1 requires the device to be of the appropriate type for the protection function — design choice, not default.',
+              'Reg 432 requires the device to be of the appropriate type for the protection function — design choice, not default.',
               'Selection hierarchy: I_b ≤ I_n ≤ I_z AND I_2 ≤ 1.45 × I_z. Both must be satisfied.',
               'MCB curves: Type B (3–5× I_n) for resistive / lighting; Type C (5–10×) for general / mixed; Type D (10–20×) for motor / transformer inrush.',
               'Automatic disconnection times in Table 41.1: 0.4&nbsp;s for ≤ 32&nbsp;A TN circuits and ≤ 63&nbsp;A circuits with sockets; 5&nbsp;s for distribution circuits.',

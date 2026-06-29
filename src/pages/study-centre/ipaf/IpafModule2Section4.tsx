@@ -13,8 +13,8 @@ const quizQuestions = [
     options: [
       'Double-width (1.35m) for maximum stability',
       'Single-width (0.7m) to fit the available space',
-      'Either width — both will fit',
-      'Use a ladder instead — no tower will fit',
+      'Either width — both will fit comfortably',
+      'A double-width tower turned diagonally to fit',
     ],
     correctAnswer: 1,
     explanation:
@@ -25,12 +25,12 @@ const quizQuestions = [
     question:
       'What is the FIRST factor you should consider when selecting a tower for an outdoor job?',
     options: [
-      'The colour of the tower',
       'The wind conditions and weather forecast',
-      'Whether the tower has a warranty',
-      'The brand name of the tower',
+      'The width of the platform boards',
+      'Whether the tower has a recent inspection tag',
+      'The total weight of the tower components',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For outdoor work, wind conditions are the primary concern. Check the weather forecast, assess current conditions, and plan for gusts. Wind loading affects the maximum permissible height and determines whether stabilisers are required.',
   },
@@ -38,7 +38,7 @@ const quizQuestions = [
     id: 3,
     question:
       'You are working in a data centre with live server racks either side. What tower material must you use?',
-    options: ['Standard aluminium', 'Steel', 'GRP (fibreglass)', 'Any material is acceptable'],
+    options: ['Standard aluminium', 'Steel', 'GRP (fibreglass)', 'Aluminium with insulated castors'],
     correctAnswer: 2,
     explanation:
       'GRP (fibreglass) must be used when there is any risk of the tower contacting live electrical equipment. Data centres have live power distribution throughout, making a non-conductive tower essential for safety.',
@@ -50,10 +50,10 @@ const quizQuestions = [
     options: [
       'Standard double-width aluminium tower',
       'Folding low-level tower',
-      'Stairwell tower with adjustable legs',
       'Single-width aluminium tower on the landing',
+      'Stairwell tower with adjustable legs',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A stairwell tower with adjustable legs is the correct choice. The independently adjustable legs allow the tower to sit level on the staircase, providing a safe platform at the required height. Standard towers cannot be safely levelled on stairs.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       'When selecting a tower for outdoor use, what additional equipment is typically required compared to indoor use?',
     options: [
-      'Larger platforms',
       'Stabilisers or outriggers',
+      'Larger platforms',
       'Taller guardrails',
       'Heavier castors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Outdoor towers typically require stabilisers or outriggers to provide additional stability against wind loading. The manufacturer's instructions will specify when stabilisers are required — this is usually at lower heights for outdoor use compared to indoor use.",
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'A client asks you to install lighting in a swimming pool hall with high humidity and a chlorinated atmosphere. What should you consider when selecting the tower?',
     options: [
-      'Only the height requirement matters',
-      'Use a GRP tower to avoid corrosion and electrical risks in the damp environment',
-      'Any aluminium tower is fine — aluminium does not corrode',
-      'Towers cannot be used in swimming pool halls',
+      'Select on height alone — the atmosphere does not affect tower choice',
+      'Choose any aluminium tower — anodised aluminium is immune to chlorine corrosion',
+      'Choose a steel tower for its extra resistance to humid conditions',
+      'Use a GRP tower to resist corrosion and electrical risk in the damp atmosphere',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A GRP tower is the best choice for swimming pool environments. The high humidity and chlorinated atmosphere can accelerate corrosion of aluminium components and create electrical hazard risks. GRP is also non-conductive, important in a wet environment with electrical installations.',
   },
@@ -121,26 +121,26 @@ const quickCheckQuestions = [
     question:
       'You are installing external security lighting on a building fascia at 6m height. The weather forecast shows gusts of 15 mph. Can you proceed?',
     options: [
-      'Yes — 15 mph is below the Beaufort 4 threshold',
+      'No — any wind above a gentle breeze means towers must never be used outdoors',
       'No — outdoor work requires zero wind',
       'Yes — but only with stabilisers fitted',
       'Yes — 15 mph is fine, but monitor for increases',
     ],
     correctIndex: 3,
     explanation:
-      "15 mph is Beaufort Force 3 (gentle breeze), which is below the Beaufort 4 cease-work threshold of 17 mph. You can proceed but must monitor conditions closely, as gusts may be higher than the sustained wind speed. Stabilisers will be required for outdoor use at 6m — check the manufacturer's manual.",
+      "15 mph is Beaufort Force 4 (moderate breeze), which is below the PASMA cease-work threshold of around 17 mph (7.7 m/s) for mobile towers. You can proceed but must monitor conditions closely, as gusts may be higher than the sustained wind speed and could push you over the limit. Stabilisers will be required for outdoor use at 6m — check the manufacturer's manual.",
   },
   {
     id: 'load-class-check',
     question:
       'You need to position 120kg of cable drums on the platform alongside yourself (85kg). Before climbing, what should you calculate?',
     options: [
-      'The cost of the cable',
-      'The total platform load (85 + 120 = 205kg) against the 275kg limit',
-      'The length of cable needed',
-      'How many drums will fit on the platform',
+      'The total platform load against the 275kg per-platform limit',
+      'The combined height of the drums against the guard-rail height',
+      'The number of drums against the tower base footprint',
+      'The wind speed against the maximum outdoor working height',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Before climbing, always calculate the total platform load. In this case: 85kg (you) + 120kg (cable drums) = 205kg, which is within the 275kg per-platform limit. You have 70kg of remaining capacity for tools and other materials. Always do this calculation before loading the tower.',
   },
@@ -150,11 +150,11 @@ const quickCheckQuestions = [
       'An 8-storey residential block requires emergency lighting installation in all stairwells. What combination of tower types would you plan for?',
     options: [
       'One large double-width tower for all areas',
-      'Stairwell towers for stairs, plus standard towers for landing corridors',
       'Folding towers throughout — they are the easiest to move',
+      'Stairwell towers for stairs, plus standard towers for landing corridors',
       'Ladders for the stairs, towers only for the landings',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'This job requires stairwell towers (with adjustable legs) for the staircase areas and standard towers for the flat landing corridors. Using the right type for each location ensures safe, stable access throughout the building. Ladders on stairs are extremely hazardous and should never be used.',
   },

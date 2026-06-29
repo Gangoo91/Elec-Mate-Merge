@@ -17,12 +17,12 @@ const InstrumentationModule3Section4 = () => {
       id: 1,
       question: 'What does signal scaling achieve in instrumentation?',
       options: [
-        'Making signals larger in amplitude',
         'Converting one signal range to match another range requirement',
+        'Making signals larger in amplitude',
         'Filtering unwanted frequencies from signals',
         'Isolating signals electrically',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Signal scaling converts one signal range (e.g., 0-5V) to match another range requirement (e.g., 0-100 degrees C) to ensure proper interpretation by receiving systems.',
     },
@@ -30,12 +30,12 @@ const InstrumentationModule3Section4 = () => {
       id: 2,
       question: 'What is quantisation error?',
       options: [
-        'Error caused by filtering',
-        'The difference between actual analogue value and its digital representation',
+        'Error caused by input filtering',
         'Error in signal timing',
+        'The difference between actual analogue value and its digital representation',
         'Noise introduced by amplification',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'Quantisation error is the difference between the actual analogue signal value and its nearest digital representation, caused by the finite resolution of analogue-to-digital converters.',
     },
@@ -43,10 +43,10 @@ const InstrumentationModule3Section4 = () => {
       id: 3,
       question: 'Why convert a voltage signal to current for transmission?',
       options: [
-        'To reduce power consumption',
+        'To reduce the power consumed by the sensor',
         'To improve noise immunity and enable long-distance transmission',
-        'To increase signal frequency',
-        'To reduce system complexity',
+        'To increase the signal frequency',
+        'To reduce overall system complexity',
       ],
       correct: 1,
       explanation:
@@ -57,11 +57,11 @@ const InstrumentationModule3Section4 = () => {
       question: 'How does poor scaling affect accuracy?',
       options: [
         'Scaling always improves accuracy',
-        'Poor scaling can introduce errors and reduce resolution',
         'Scaling has no effect on accuracy',
         'Scaling only affects signal speed',
+        'Poor scaling can introduce errors and reduce resolution',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Poor scaling can introduce errors through mathematical rounding, inappropriate range matching, and resolution loss. Proper scaling maintains or enhances measurement accuracy.',
     },
@@ -71,8 +71,8 @@ const InstrumentationModule3Section4 = () => {
       options: [
         'Converting temperature to humidity',
         'Converting RTD resistance to temperature display in degrees Celsius',
-        'Converting pressure to flow',
-        'Converting AC to battery power',
+        'Converting pressure directly to flow rate',
+        'Converting AC mains to battery power',
       ],
       correct: 1,
       explanation:

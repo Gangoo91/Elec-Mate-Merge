@@ -3,10 +3,10 @@ export const bmsModule6Section2Quiz = [
     id: 1,
     question: 'What is trend logging in a BMS?',
     options: [
-      'Too frequent creates data overload; too slow misses important events',
+      'The automatic raising of an alarm when a value exceeds its setpoint',
       'The process of recording values at set intervals for historical analysis',
-      'Miscalibrated sensors create misleading historical data',
-      'By showing equipment running outside of scheduled hours',
+      'The live display of current sensor values on the head-end graphics',
+      'The averaging of multiple sensors into a single control value',
     ],
     correctAnswer: 1,
     explanation:
@@ -17,9 +17,9 @@ export const bmsModule6Section2Quiz = [
     question: 'What is the difference between continuous data and event-based data?',
     options: [
       'Continuous data is for temperatures, event-based is for pressures',
-      'There is no difference between the two types',
-      'Continuous data is recorded constantly, event-based only when something changes',
-      'Event-based data is more accurate than continuous data',
+      'Continuous data is stored on the controller, event-based on the server',
+      'Continuous data is recorded at regular intervals, event-based only when something changes',
+      'Continuous data is unprocessed, event-based has been scaled into units',
     ],
     correctAnswer: 2,
     explanation:
@@ -43,9 +43,9 @@ export const bmsModule6Section2Quiz = [
     question: 'Why is historical data useful for fault diagnosis?',
     options: [
       'It allows engineers to trace what happened before and after an alarm',
-      'By showing equipment running outside of scheduled hours',
-      'To provide statutory testing records and regulatory compliance evidence',
-      'The process of recording values at set intervals for historical analysis',
+      'It automatically resets tripped equipment back to normal operation',
+      'It removes the need to attend site to investigate intermittent faults',
+      'It guarantees the sensor readings are correctly calibrated',
     ],
     correctAnswer: 0,
     explanation:
@@ -55,10 +55,10 @@ export const bmsModule6Section2Quiz = [
     id: 5,
     question: 'Give one compliance reason for logging historical data.',
     options: [
-      'Miscalibrated sensors create misleading historical data',
+      'To reduce the storage capacity required on the BMS server',
       'To provide statutory testing records and regulatory compliance evidence',
-      'The process of recording values at set intervals for historical analysis',
-      'By showing equipment running outside of scheduled hours',
+      'To speed up the controller scan rate during normal operation',
+      'To eliminate the need for periodic sensor calibration',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,10 +68,10 @@ export const bmsModule6Section2Quiz = [
     id: 6,
     question: 'How can trend logs help identify wasted energy?',
     options: [
-      'It allows engineers to trace what happened before and after an alarm',
-      'To provide statutory testing records and regulatory compliance evidence',
+      'By raising an alarm the instant any energy meter exceeds its limit',
+      'By automatically switching off plant that is not in use',
       'By showing equipment running outside of scheduled hours',
-      'The CO₂ sensor was wired but never powered',
+      'By increasing the logging frequency of every energy meter',
     ],
     correctAnswer: 2,
     explanation:
@@ -81,9 +81,9 @@ export const bmsModule6Section2Quiz = [
     id: 7,
     question: 'Why is sensor calibration important in trend logging?',
     options: [
-      'To provide statutory testing records and regulatory compliance evidence',
-      'It allows engineers to trace what happened before and after an alarm',
-      'The CO₂ sensor was wired but never powered',
+      'It reduces the amount of disk space the trend logs consume',
+      'It increases the maximum logging frequency the controller supports',
+      'It prevents the BMS from raising any false alarms',
       'Miscalibrated sensors create misleading historical data',
     ],
     correctAnswer: 3,
@@ -107,10 +107,10 @@ export const bmsModule6Section2Quiz = [
     id: 9,
     question: 'Why should log frequencies be chosen carefully?',
     options: [
-      'To provide statutory testing records and regulatory compliance evidence',
+      'A faster log frequency always improves sensor accuracy',
       'Too frequent creates data overload; too slow misses important events',
-      'By showing equipment running outside of scheduled hours',
-      'Miscalibrated sensors create misleading historical data',
+      'The log frequency must match the mains supply frequency of 50 Hz',
+      'A slower log frequency increases the controller processing load',
     ],
     correctAnswer: 1,
     explanation:

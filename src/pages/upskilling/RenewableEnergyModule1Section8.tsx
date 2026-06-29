@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A4:2026 made a substantial structural change to Part 6 (Inspection and Testing). What was it — and what is the underlying CENELEC alignment story?',
     options: [
-      'Deleted Part 6 entirely',
-      'Part 6 has been further restructured and renumbered in A4:2026. The underlying CENELEC alignment is older — HD 60364-6 was introduced in 2016, causing the initial Part 6 alignment (chapters 61–63 unused, Part 6 starting at Chapter 64). A4:2026 is the latest tranche of the same alignment',
-      'Renamed Part 6 to Part 9',
-      'Moved Part 6 to an appendix',
+      'Deleted Part 6 entirely from the standard',
+      'Restructured and renumbered Part 6, continuing the 2016 HD 60364-6 alignment',
+      'Renamed Part 6 to Part 9 of the standard',
+      'Moved the whole of Part 6 into an appendix',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Appendix 6 of BS 7671:2018+A4:2026 contains what?',
     options: [
-      'A complete rewrite of the regulations',
-      'Model forms for initial certification (EIC and MEIWC), minor changes to the certificates in A4, changes to the inspections for new installation work in domestic and similar premises with up to 100 A supply, and examples of items requiring inspection for an EICR',
-      'Energy efficiency calculations only',
-      'Equipment selection criteria only',
+      'A complete rewrite of the regulations themselves',
+      'The model forms (EIC, MEIWC) and EICR inspection examples, with minor A4 changes',
+      'Energy-efficiency calculations and targets only',
+      'Equipment selection criteria and ratings only',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What is the practical difference between the EIC and the MEIWC?',
     options: [
-      'They are interchangeable',
-      'EIC (Electrical Installation Certificate) covers new installation, addition or alteration involving new circuits. MEIWC (Minor Electrical Installation Works Certificate) covers work on existing circuits that does not include provision of a new circuit. Most LCT installs require the EIC because they involve dedicated new circuits',
-      'EIC is for commercial work only',
-      'MEIWC is for design only',
+      'They are interchangeable for any kind of work',
+      'EIC covers new circuits; MEIWC covers existing-circuit work with no new circuit',
+      'The EIC is for commercial work only',
+      'The MEIWC is for design-stage work only',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'On the EIC, where do departures from BS 7671 get recorded?',
     options: [
-      'In an email to the customer',
-      'In the "Departures from BS 7671" section of the EIC — describing the departure, the alternative measure adopted, and the equivalent-safety reasoning under Reg 120.3',
-      'On a separate document never shared',
-      'Verbally with the customer',
+      'In an email sent to the customer after the work',
+      'In the "Departures from BS 7671" section of the EIC, with the Reg 120.3 reasoning',
+      'On a separate internal document that is never shared',
+      'Verbally with the customer at handover',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'What is an EICR for, and what does it produce?',
     options: [
-      'An EICR is a sales document',
-      'An EICR (Electrical Installation Condition Report) is the formal inspection report on an existing electrical installation, identifying observations and assigning condition codes (C1, C2, C3, FI) that drive remedial work prioritisation. EICRs are produced on periodic inspection and on change of occupancy / sale',
-      'An EICR is a Building Control form',
-      'An EICR replaces the EIC',
+      'An EICR is a sales document for the customer',
+      'A formal condition report on an existing installation, assigning codes (C1/C2/C3/FI)',
+      'An EICR is a Building Control notification form',
+      'An EICR replaces the EIC for new work',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A4:2026 Reg 133.1.3 changed the equipment-selection regime. What does it now require?',
     options: [
-      'No change',
-      'Certain usage of equipment shall be recorded on the appropriate electrical certification specified in Part 6 — embedding equipment-selection disclosures within the formal certification process. Where BS 7671 calls for the usage of particular equipment to be identified, that usage is now entered on the cert',
-      'All equipment must be MCS-listed',
-      'Equipment usage must be photographed',
+      'No change to the equipment-selection regime',
+      'Certain equipment usage must now be recorded on the appropriate Part 6 certificate',
+      'All equipment must now be MCS-listed',
+      'Equipment usage must now be photographed on site',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'On an MCS-funded hybrid LCT install in an English dwelling, what is the complete cert evidence bundle?',
     options: [
-      'EIC only',
-      'BS 7671 EIC + CPS Part P notification reference + DNO G98/G99 notification reference + MCS certificate(s) for each MIS / MPS combination + manufacturer commissioning evidence + survey artefact + customer handover pack + any departure register entries',
-      'MCS certificate only',
-      'A receipt from the customer',
+      'The BS 7671 EIC on its own, with no supporting notifications or scheme certs',
+      'EIC, CPS and DNO references, MCS certs, commissioning evidence, survey and handover pack',
+      'The MCS certificate on its own, covering both the regulatory and scheme layers',
+      'A signed customer receipt confirming the work was completed to satisfaction',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A4:2026 restructured Part 6 (Inspection and Testing) and renumbered the regulations to align with the CENELEC standard. Practical implication for the installer who has been using BS 7671 for years:',
     options: [
-      'No change — Part 6 numbering is irrelevant',
-      'Update working references — the regulation numbers in Part 6 have changed substantially, and pre-A4 numbers should not be cited on a 2026+ cert. The technical content of Part 6 is largely preserved; the cross-references and numbering are renumbered',
-      'Part 6 has been deleted',
-      'Part 6 is now optional',
+      'Update working references — Part 6 was renumbered, so do not cite pre-A4 numbers on 2026+ certs',
+      'No practical change — the Part 6 numbering can be ignored when citing on certs',
+      'Part 6 has been deleted from the standard, so the references no longer apply',
+      'Part 6 is now optional for the installer, so the numbering need not be tracked',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part 6 was completely restructured in A4 to align with CENELEC. Practitioners referring to specific Part 6 regulations on a 2026+ cert must use the A4-aligned numbering. Pre-A4 regulation cites are an audit finding. The technical content (inspection sequence, test methodology, model form structure) is largely preserved; the numbering and cross-referencing apparatus is new.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A4:2026 Reg 133.1.3 requires certain equipment-usage decisions to be recorded on Part 6 certs. For an LCT install, what kind of decisions are likely to fall under this requirement?',
     options: [
-      'All equipment purchase decisions',
-      'Decisions where BS 7671 calls for the usage of particular equipment to be identified — e.g. the specific PEN-fault protective measure chosen on a PME EV install (per 722.411.4.1), the bidirectional protective device specified per 551.7.1(c), the specific protective devices on a BESS interface',
-      'Customer\'s choice of paint colour',
-      'No decisions',
+      'All equipment purchase decisions made by the installer on the job',
+      'The customer\'s choice of paint colour, finish and cosmetic enclosure trim',
+      'Decisions BS 7671 flags — the PEN-fault measure, bidirectional device, BESS protection',
+      'No decisions fall under this requirement, since recording is unchanged by A4',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 133.1.3 recording requirement applies to certain usages of equipment that BS 7671 identifies as needing documentation. On LCT installs, this includes the PEN-fault protective measure chosen on PME EV chargepoints, the bidirectional protective device under 551.7.1(c), the protective device specifications on the BESS interface, and similar design choices. The recording lands on the appropriate Part 6 cert; the next inspector reads the design intent rather than infers it.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A customer in 2031 calls for an EICR on a 2026-installed hybrid PV+BESS+EV install. The cert is in their possession; the original installer is no longer trading. What is the most useful artefact in the cert bundle to the new inspector?',
     options: [
-      'The customer\'s satisfaction rating',
-      'The original EIC including the equipment-usage records under Reg 133.1.3 (the PEN-fault protective measure chosen, the bidirectional protective device specified, the BESS protection arrangements) and any departure register entries — letting the inspector read the design intent rather than infer it',
-      'The MCS marketing brochure',
-      'The customer\'s electricity bill',
+      'The customer\'s satisfaction rating recorded at the original install handover',
+      'The MCS marketing brochure for the inverter and battery products fitted',
+      'The customer\'s most recent electricity bill showing import and export',
+      'The original EIC with its Reg 133.1.3 records and departure register entries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The original EIC with the A4 recordkeeping disciplines (133.1.3 equipment usage, departure register, 551.7.1(c) bidirectional protective device documentation) is the durable design audit trail. The next inspector reads the intent — what was specified, why, against which edition of BS 7671. Without the audit trail the inspector must infer the design, which often leads to over-coding (treating safe but undocumented choices as defects) or under-coding (missing departures that were genuine).',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A hybrid PV + BESS + EV install completes. The installer\'s post-install workflow includes which notifications?',
     options: [
-      'Just the customer',
-      'CPS notification under Part P (within 30 days), DNO notification under EREC G98 or G99 (G98 within 28 days of energisation, G99 typically pre-energisation per the application approval), MCS certificate registration for each MIS / MPS combination, customer\'s SEG application via their electricity supplier, BUS / ECO application as applicable',
-      'Just HMRC',
-      'No notifications',
+      'CPS Part P, DNO G98/G99, MCS registration, customer SEG, and BUS/ECO as applicable',
+      'Just an informal handover note left with the customer once the install completes',
+      'Just a single notification to HMRC covering the tax treatment of the installation',
+      'No notifications at all are required once the install is energised and signed off',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A typical hybrid LCT install triggers multiple notifications in parallel. Part P via CPS within 30 days. DNO via EREC G98 within 28 days of energisation, or G99 per application approval timing. MCS certificate registration for each MIS / MPS combination. Customer\'s SEG application via the licensed electricity supplier (the supplier asks for the MCS cert + DNO notification reference). BUS / ECO applications where the customer is claiming the funding. The post-install workflow is itself a project management exercise.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'On the EIC, the "Departures from BS 7671" section is empty. The installer applied a Reg 120.3 departure during the install (e.g. a non-standard cable route to preserve a feature wall) but didn\'t record it. What is the legal position of the departure?',
     options: [
-      'It\'s still a Reg 120.3 departure if the install is safe',
-      'It is not a Reg 120.3 departure — Reg 120.3 explicitly requires the departure to be recorded on the appropriate Part 6 certification. An unrecorded departure is documented non-compliance, not a permitted departure. EAWR Reg 4 exposure follows',
-      'It depends on what the customer thinks',
-      'Departures are never recorded',
+      'It is still a Reg 120.3 departure provided the install is safe',
+      'It depends entirely on what the customer thinks of it',
+      'It is not a Reg 120.3 departure — unrecorded means non-compliance, with EAWR exposure',
+      'Departures from BS 7671 are never recorded on the cert',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 120.3 is a recording-conditional permission. Departures from BS 7671 are permitted where the alternative measure delivers at least equivalent safety AND the departure is recorded on the appropriate Part 6 certification. An unrecorded departure fails the recording test — it is non-compliance with documentation, not a protected Reg 120.3 departure. EAWR Reg 4 (the absolute statutory duty) bites on the underlying installation; the missing record removes the BS 7671 defence.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'An EICR observation flags a 2024-vintage EV chargepoint on a PME supply with no PEN-fault protective measure. Pre-A4 the observation was C3 (informational, "reasonably practicable" exception applied). On a 2026 install the same observation would most likely be:',
     options: [
-      'Still C3',
-      'C2 — potentially dangerous, urgent remedial work. The deletion of the "reasonably practicable" exception in A4 Reg 722.411.4.1 makes the omission a contravention of the current requirements with potential danger. The EICR coding reflects the change in regulatory floor',
-      'No observation',
-      'C1',
+      'Still C3 — improvement recommended only, with the old exception still applied',
+      'No observation needed, since a compliant pre-A4 design carries forward unchanged',
+      'C1 — danger present, immediate action, treating the absence as a live hazard',
+      'C2 — potentially dangerous, as A4 deleted the exception in 722.411.4.1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EICR codes are assessed against current safety. The 2024 install was lawful under A2:2022 with the "reasonably practicable" exception applied. A4:2026 deleted the exception. On a 2026 install with no PEN-fault measure, the absence is non-compliance against current standards with potential danger — typically C2. Existing pre-A4 installs may be C3 with the recommendation to upgrade to the current standard, depending on the inspector\'s judgement and the specific risk picture.',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'A customer asks why they need an MCS certificate AND an EIC. The right professional explanation:',
     options: [
-      'They are the same thing',
-      'They evidence different things. The EIC evidences the BS 7671-side electrical safety and compliance of the install. The MCS certificate evidences the LCT-scheme conformity (installer competence per MIS, product conformity per MPS). The two together form the funded-market evidence; either alone is incomplete',
-      'Only one is needed',
-      'MCS replaces the EIC',
+      'They are the same document issued under two different scheme names',
+      'Different things — the EIC evidences BS 7671 compliance, the MCS cert scheme conformity',
+      'Only one of the two is actually needed on a funded LCT install',
+      'The MCS certificate replaces the EIC once the install is registered',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'The cert evidence bundle on an LCT install carries records that may be checked by which parties over the install\'s lifetime?',
     options: [
-      'Only the customer',
-      'PI insurers at renewal, MCS auditors at scheme audit, EICR inspectors at periodic inspection, HSE in the event of an EAWR investigation, the customer at sale of the property, the next contractor on subsequent additions / alterations — multiple parties over a 25+ year lifespan',
-      'No-one',
-      'Only Building Control',
+      'Only the customer who originally commissioned and paid for the installation work',
+      'PI insurers, MCS auditors, EICR inspectors, HSE, buyers at sale, the next contractor',
+      'No-one checks the bundle again once the install is completed and fully energised',
+      'Only Building Control, and only at the original notification stage of the project',
     ],
     correctAnswer: 1,
     explanation:

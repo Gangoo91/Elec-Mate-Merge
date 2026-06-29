@@ -52,12 +52,12 @@ const checks = [
     id: 'cable-temperature-check',
     question: 'What’s the maximum continuous operating temperature for standard PVC cable insulation?',
     options: [
-      '70°C',
       '40°C',
       '90°C',
+      '70°C',
       '120°C',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "Standard PVC tops out at 70°C continuous. Past that, the insulation degrades — it goes brittle, then it cracks, then it burns. That’s why Reg 433.1.1 limits the device operating current to 1.45 × the cable’s capacity.",
   },
@@ -65,12 +65,12 @@ const checks = [
     id: 'afdd-purpose-check',
     question: 'What’s an AFDD actually for?',
     options: [
-      'Detecting series and parallel arcing that an MCB or RCD can’t see',
       'Detecting earth faults the RCD might miss',
+      'Detecting series and parallel arcing that an MCB or RCD can’t see',
       'Replacing the main switch in a consumer unit',
       'Measuring prospective fault current at the origin',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "AFDDs spot the high-frequency signature of an arc — a loose terminal cooking away, or insulation breaking down. An MCB only sees overcurrent; an RCD only sees imbalance. Neither catches a series arc. A4:2026 mandates AFDDs in HMOs and high-rise dwellings.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'What’s the difference between an overload and a short circuit?',
     options: [
-      'An \\\\\\\'alert\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\'evacuate\\\\\\\' signal (continuous) for all occupants',
+      'Overload = a direct L-N connection; short circuit = current above rating with the circuit intact',
       'Overload = current above rating with circuit intact; short circuit = direct L-N or L-L connection bypassing the load',
-      'To assess the hazards, define the precautions, issue the permit, and ensure the safe system of work is followed',
-      'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
+      'Overload = a fault to earth; short circuit = too many appliances on one socket',
+      'Overload = a momentary inrush at switch-on; short circuit = a slow leakage to earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why does cable insulation matter when a circuit is overloaded?',
     options: [
-      'Removed safely from the platform and lowered to the ground',
-      'Employees, contractors, visitors, and members of the public',
+      'It carries part of the load current alongside the conductor',
+      'It increases the current-carrying capacity of the cable',
       'PVC degrades above 70°C — then it cracks, then it burns',
-      'EN ISO 20345 SB (basic safety footwear with toe protection)',
+      'It lowers the resistance of the circuit as it heats up',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'A nail through a buried cable in a wall causes which fault type?',
     options: [
-      "To discharge stored energy and protect against inadvertent re-energisation",
-      "Whether there are underground voids, buried services, slopes, or soft ground that could cause instability",
-      "Ensuring workers look out for each other, notice behavioural changes early, and have someone to talk to regularly",
       "Could be a short circuit (L-N), an earth fault (L-PE), or both — depends what the nail bridges",
+      "Always an overload, because the nail adds extra load to the circuit",
+      "Always a short circuit, because metal always bridges line to neutral",
+      "Never a fault — the nail simply blocks current flow in the cable",
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "Depends what the nail hits. Line to neutral = short circuit. Line to the cpc or to a metal box = earth fault. Often it’s both at once. Either way, the device should clear it instantly — that’s why we use 50mm safe zones and capping.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'What’s a series arc, and why is it dangerous?',
     options: [
+      "An arc between line and neutral that draws huge current and trips the MCB instantly",
+      "An arc to earth that the RCD always catches before any heat builds up",
+      "An arc caused only by overloading the circuit beyond its rated current",
       "An arc across a loose terminal in line with the load — current stays low, MCB doesn’t see it, but it generates intense heat",
-      "Co-operate with the Principal Contractor, comply with directions and H&S information, and report anything you see that puts you or others at risk",
-      "Deaf and hard-of-hearing people, non-native English speakers, anyone in a noisy environment, and many neurodivergent people — universal benefit",
-      "Structured (sections: progress, programme, RFIs, variations, H&S incidents, look-ahead) so the reader can scan quickly",
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "A loose terminal arcs as the load draws current — the current is normal, so the MCB has no reason to trip, but the arc temperature is thousands of degrees. Classic kitchen fire cause. AFDDs are the only protection that catches it.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "What does Regulation 433.1.1 require about the operating current of an overload device?",
     options: [
-      "Offsets should only be used for residual emissions after 90%+ reduction",
+      "It must not exceed 2.5 × the lowest current-carrying capacity (Iz) of the circuit conductors",
       "It must not exceed 1.45 × the lowest current-carrying capacity (Iz) of the circuit conductors",
-      "Quietly raise it with your supervisor — competence concerns are investigated through the line, not by peers",
-      "Barriers, warning signs and banksmen/spotters should be used to control pedestrian and vehicle movement near the tower",
+      "It must be exactly equal to the design current (Ib) of the circuit",
+      "It must not exceed 0.8 × the lowest current-carrying capacity (Iz) of the circuit conductors",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'What’s breaking capacity, and why does it matter?',
     options: [
-      "Ensuring work is planned, supervised, and carried out safely by people with appropriate skills",
-      "It must be re-inspected by a competent person and the tag updated accordingly",
+      "The maximum continuous current the device can carry without overheating",
+      "The residual current at which the device will trip on an earth fault",
       "The maximum fault current the device can safely interrupt without exploding or welding shut",
-      "To verify protective conductor continuity from origin to each point",
+      "The number of times the device can be switched before it must be replaced",
     ],
     correctAnswer: 2,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'Where does A4:2026 require AFDDs?',
     options: [
-      "Topics, time allocation, resources, practice test dates, and progress review points",
-      "Ask relevant follow-up questions to deepen understanding and show continued interest",
-      "Your BATNA sets your walkaway point, the other party BATNA sets theirs, and the ZOPA is the range between where agreement is possible",
+      "On every final circuit in all new domestic installations without exception",
+      "Only on three-phase distribution circuits in industrial premises",
       "Single-phase socket-outlet circuits up to 32 A in HMOs and high-rise residential buildings (and recommended elsewhere)",
+      "On lighting circuits in bathrooms and other special locations only",
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       "A4:2026 makes AFDDs mandatory for socket-outlet final circuits ≤ 32 A in HMOs and HRRBs. They’re recommended elsewhere (and increasingly being specified). Note: AFDDs are NOT permitted in medical group 0/1/2 locations.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'You’re on site and notice scorch marks around a connector block in a junction box. What does that tell you?',
     options: [
+      "It’s normal discolouration from age and can safely be left alone",
+      "The cable is simply running at its rated temperature, which is fine",
+      "An RCD must be fitted — scorching is always a sign of earth leakage",
       "There’s been arcing at a loose or high-resistance termination — isolate, investigate and remake the connection",
-      "A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work",
-      "Expectations, meeting frequency, goals, confidentiality boundaries, and review dates",
-      "At least 200 mA short-circuit test current with a no-load voltage in the range 4 V to 24 V AC or DC",
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Scorching = past arcing. Loose terminal, dry joint, undersized terminal for the conductor — something’s been sparking. Don’t just retighten and walk away. Isolate, find the cause, replace the connector if it’s damaged. Note it on the next inspection.",
   },

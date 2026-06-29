@@ -13,12 +13,12 @@ const quickCheckQuestions = [
     id: 'tmo-5-3-emotional',
     question: 'According to Pychyl and Sirois, procrastination is fundamentally a problem of:',
     options: [
-      'Poor time management and lack of organisational skills',
-      'Laziness and a weak work ethic',
       'Emotional regulation — we avoid tasks because of negative emotions associated with them, not because we cannot manage time',
+      'Laziness and a weak work ethic',
+      'Poor time management and lack of organisational skills',
       'Intelligence — more intelligent people procrastinate less because they plan better',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Timothy Pychyl and Fuschia Sirois\'s research has consistently demonstrated that procrastination is an emotional regulation problem, not a time management problem. We procrastinate not because we lack schedules or calendars, but because the task triggers negative emotions — boredom, anxiety, frustration, resentment, fear of failure — and we seek short-term mood repair by doing something more pleasant instead. Understanding this is critical because it changes the solution: the answer is not "get a better diary" but "address the emotional barrier."',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'An electrician avoids doing their quarterly VAT return until the deadline day, then spends a stressful evening gathering receipts and invoices. This is an example of:',
     options: [
       'Efficient time management — completing the task just before the deadline minimises wasted effort',
-      'Administrative procrastination — avoiding paperwork until external pressure (the deadline) forces action, causing unnecessary stress and risk of errors',
       'Good prioritisation — on-site work should always take priority over paperwork',
+      'Administrative procrastination — avoiding paperwork until external pressure (the deadline) forces action, causing unnecessary stress and risk of errors',
       'A normal and healthy approach that most successful business people follow',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Administrative procrastination is one of the most common and costly forms of procrastination for tradespeople. The quarterly VAT return is a known, predictable task with a fixed deadline, yet it is repeatedly delayed because the emotional experience of doing it (boring, tedious, anxiety-inducing) triggers avoidance. The cost is significant: last-minute rushes increase error rates, the stress contaminates the evening, and important receipts or invoices may be missing. A 20-minute weekly bookkeeping habit would make the quarterly return a 30-minute formality rather than a 4-hour crisis.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     question:
       'According to research by Timothy Pychyl and Fuschia Sirois, procrastination is primarily:',
     options: [
-      'A time management problem caused by poor scheduling',
-      'A character flaw indicating laziness or lack of discipline',
       'An emotional regulation problem — avoiding tasks that trigger negative feelings',
+      'A character flaw indicating laziness or lack of discipline',
+      'A time management problem caused by poor scheduling',
       'A rational strategy for managing workload by deferring less important tasks',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Pychyl and Sirois have demonstrated through extensive research that procrastination is fundamentally about emotional regulation. We avoid tasks not because we lack time or skill, but because the task triggers negative emotions — anxiety, boredom, frustration, fear of failure, resentment — and we choose short-term mood repair (doing something pleasant) over long-term goal completion (doing the difficult task). This reframing is essential because it redirects the solution from "get a better planner" to "manage the emotional barriers."',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'Brian Tracy\'s "eat the frog" method recommends:',
     options: [
-      'Completing the easiest task first to build momentum and confidence',
-      'Delegating the worst task to someone else whenever possible',
       'Doing the hardest, most important, or most dreaded task first thing in the morning when willpower is highest',
+      'Delegating the worst task to someone else whenever possible',
+      'Completing the easiest task first to build momentum and confidence',
       'Breaking every task into frog-sized pieces before starting',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Tracy\'s method is based on the principle that willpower is a depletable resource that is highest at the start of the day. The "frog" is your most important task — the one you are most likely to procrastinate on. By doing it first, you ensure it gets done when your mental resources are strongest. Everything else in the day feels easier by comparison. As Tracy writes: "If it is your job to eat a frog, it is best to do it first thing in the morning. And if it is your job to eat two frogs, it is best to eat the biggest one first."',
   },
@@ -155,10 +155,10 @@ const quizQuestions = [
     options: [
       'Better quality paperwork because the tradesperson has more time to complete it',
       'No significant consequences — paperwork can always be done later',
-      'End-of-quarter crises, cash flow problems from delayed invoicing, compliance risks from overdue certificates, and unnecessary stress',
       'Improved on-site productivity because more time is spent on technical work',
+      'End-of-quarter crises, cash flow problems from delayed invoicing, compliance risks from overdue certificates, and unnecessary stress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Administrative procrastination is one of the costliest forms for tradespeople. Delayed invoices directly hurt cash flow — if you complete a job on the 1st but do not invoice until the 28th, you have given the client a free month of credit. Overdue certificates risk compliance issues and undermine professional reputation. Deferred VAT returns, self-assessment submissions, and insurance renewals create end-of-quarter emergencies that could have been avoided with regular admin habits. The paradox is that the time "saved" by skipping admin is always repaid with interest — the last-minute rush takes longer, produces more errors, and generates far more stress.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'An electrician has been putting off a difficult phone call to a client about additional costs for 3 days. Using the "just 5 minutes" rule, the best approach would be:',
     options: [
-      'Wait until the client calls them instead, avoiding the discomfort entirely',
-      'Send an email instead of calling, because emails are less stressful',
       'Commit to picking up the phone and dialling the number — just start the call, and the dread will typically dissolve once the conversation begins',
+      'Send an email instead of calling, because emails are less stressful',
+      'Wait until the client calls them instead, avoiding the discomfort entirely',
       'Ask a colleague to make the call on their behalf',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The difficult client call is a classic procrastination scenario: the anticipated experience (conflict, awkwardness, rejection) is far worse than the actual experience (most clients are more reasonable than we imagine). The "just 5 minutes" rule applies directly: commit to making the call and speaking for 5 minutes. Once the conversation starts, the emotional barrier dissolves and you deal with the situation professionally. Every day you delay, the call gets harder (the client wonders why they have not heard from you), the problem potentially gets bigger, and the dread accumulates. Starting is the cure.',
   },

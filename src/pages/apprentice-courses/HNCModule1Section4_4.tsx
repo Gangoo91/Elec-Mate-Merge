@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: 'To whom should a worker first make a protected disclosure?',
     options: [
-      'Implement responsive design with prioritised information',
-      'To confirm work is complete, the area is safe, and controls can be removed',
+      'A national newspaper or broadcast journalist',
+      'Their local Member of Parliament',
       'Their employer or, for health and safety matters, the HSE',
-      'Limited dust ingress protection and splash water protection',
+      'A competitor company in the same industry',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,9 +117,9 @@ const quizQuestions = [
     id: 3,
     question: "What does professional 'integrity' require in building services engineering?",
     options: [
-      'To evaluate fire safety measures including emergency lighting',
-      'Activity, inspection stage, acceptance criteria, responsibility, and reference documents',
-      'To balance heating and cooling systems and avoid simultaneous operation that wastes energy',
+      'Always prioritising the lowest possible project cost',
+      'Following the client’s instructions without question',
+      'Keeping all design decisions confidential from colleagues',
       'Acting honestly, fairly, and transparently in professional relationships',
     ],
     correctAnswer: 3,
@@ -132,9 +132,9 @@ const quizQuestions = [
       'An electrician discovers their company is routinely bypassing safety interlocks to speed up commissioning. What is the ethical course of action?',
     options: [
       'Raise the concern through appropriate channels, internally first',
-      'The space where occupants use telecommunications services',
-      'Maintain adequate clearance or use heat-resistant cables',
-      'The patch may block energy delivery and cause a skin burn',
+      'Say nothing, as commissioning is not their responsibility',
+      'Bypass the interlocks too, to keep pace with colleagues',
+      'Wait until an accident happens before reporting it',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question:
       'A consultant engineer is offered a commission by a supplier if they specify their products. What should they do?',
     options: [
-      'Carry out a suitable and sufficient assessment of risks to health and safety, including stress',
-      'How much the actual value can vary either side of the marked value.',
-      'A freestanding, moveable scaffold on wheels or castors used for short-duration tasks',
+      'Accept it quietly, as long as the products are adequate',
+      'Accept it but increase the client’s fee to compensate',
+      'Accept it and disclose it only if the client asks',
       'Decline, as it creates a conflict of interest that could compromise professional judgement',
     ],
     correctAnswer: 3,
@@ -187,9 +187,9 @@ const quizQuestions = [
     question: 'What protection does PIDA provide to workers who make qualifying disclosures?',
     options: [
       'Protection from dismissal and detriment by their employer',
-      'A pulsating DC earth fault current from a rectifier circuit',
-      'Prospective short-circuit current (Ipsc)',
-      'Locate and mark existing services before setting out new positions',
+      'A guaranteed financial reward for every disclosure made',
+      'Automatic promotion within their organisation',
+      'Immunity from any future disciplinary action whatsoever',
     ],
     correctAnswer: 0,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: "The ECA (Electrical Contractors' Association) requires member companies to:",
     options: [
-      'Between the navel and the bottom of the breastbone (sternum)',
+      'Use only one named manufacturer’s products on every job',
       'Maintain high standards of workmanship and business ethics',
-      'First fault does not cause disconnection - monitoring required',
-      'Based on installation type, use, and condition found',
+      'Charge the same fixed price as all other member firms',
+      'Employ only directly contracted staff and never subcontract',
     ],
     correctAnswer: 1,
     explanation:

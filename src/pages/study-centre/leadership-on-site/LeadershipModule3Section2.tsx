@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'According to the five levels of listening model, at which level do most workplace conversations operate?',
     options: [
-      'Level 1 (Ignoring) — most people simply ignore each other at work',
       'Levels 2-3 (Pretend listening and selective listening) — nodding but not truly processing',
+      'Level 1 (Ignoring) — most people simply ignore each other at work',
       'Level 4 (Attentive listening) — fully focused on the speaker',
       "Level 5 (Empathic listening) — seeking to understand the other person's perspective",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Most workplace communication sits at levels 2-3: pretend listening (nodding while thinking about something else) and selective listening (hearing only what you want to hear). Leaders need to consciously operate at levels 4-5 to be truly effective communicators.',
   },
@@ -33,11 +33,11 @@ const quickCheckQuestions = [
     question: "In Gerard Egan's SOLER model for active listening, what does the 'O' stand for?",
     options: [
       "Observe the speaker's body language carefully",
-      'Open posture — arms uncrossed, body language receptive',
       'Offer advice and solutions promptly',
+      'Open posture — arms uncrossed, body language receptive',
       'Organise your response while the other person is speaking',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The SOLER model stands for: Sit/stand Squarely, Open posture (arms uncrossed, receptive body language), Lean slightly forward (showing interest), Eye contact (maintaining appropriate connection), and Relax (appearing calm and unhurried). Open posture signals that you are receptive to what the person is saying.',
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'Open questions that encourage fuller responses',
       'Probing questions that dig deeper into an issue',
-      'Leading questions that suggest the answer you want to hear',
       'Closed questions that confirm specific facts',
+      'Leading questions that suggest the answer you want to hear',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Leading questions ('You did check the isolations, didn't you?') should generally be avoided because they suggest the answer and put pressure on the person to agree rather than give an honest response. They can mask problems, discourage truthful reporting, and damage trust.",
   },
@@ -86,11 +86,11 @@ const quizQuestions = [
     question: "Stephen Covey's observation about listening states that most people:",
     options: [
       "Listen with the intent to understand the other person's perspective",
-      'Listen with the intent to reply rather than to understand',
       'Are naturally skilled listeners who need no training',
       'Prefer written communication to verbal conversations',
+      'Listen with the intent to reply rather than to understand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Stephen Covey observed that 'Most people do not listen with the intent to understand; they listen with the intent to reply.' This means most people are formulating their response while the other person is still talking, rather than genuinely trying to understand what is being said.",
   },
@@ -98,20 +98,25 @@ const quizQuestions = [
     id: 2,
     question: "In the five levels of listening model, 'empathic listening' means:",
     options: [
+      "Seeking to understand the other person's perspective and feelings",
       'Feeling sorry for the person who is speaking',
       'Agreeing with everything the speaker says to avoid conflict',
-      "Seeking to understand the other person's perspective and feelings",
       'Listening only when the topic is emotionally charged',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Empathic listening (Level 5) means actively seeking to understand the other person's perspective, feelings, and underlying needs — not just their words. It goes beyond attentive listening by trying to see the situation through their eyes. It does not require you to agree with them, only to understand them.",
   },
   {
     id: 3,
     question: 'The SOLER model for active listening was developed by:',
-    options: ['Stephen Covey', 'Gerard Egan', 'Daniel Goleman', 'Simon Sinek'],
-    correctAnswer: 1,
+    options: [
+      'Stephen Covey',
+      'Daniel Goleman',
+      'Gerard Egan',
+      'Simon Sinek',
+    ],
+    correctAnswer: 2,
     explanation:
       'The SOLER model was developed by Gerard Egan as a framework for effective active listening body language: Sit/stand Squarely, Open posture, Lean slightly forward, Eye contact, and Relax.',
   },
@@ -134,10 +139,10 @@ const quizQuestions = [
     options: [
       'Having a simple yes or no answer',
       'Suggesting the answer you want to hear',
-      'Encouraging a fuller, more detailed response',
       'Being used only in formal meetings',
+      'Encouraging a fuller, more detailed response',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Open questions encourage fuller, more detailed responses by beginning with words like 'how', 'what', 'why', 'tell me about', or 'describe'. For example, 'How did you approach the cable routing?' invites a detailed answer, whereas the closed version 'Did you route the cable correctly?' only invites yes or no.",
   },
@@ -146,12 +151,12 @@ const quizQuestions = [
     question:
       "A leading question such as 'You did check the isolations, didn't you?' is problematic because:",
     options: [
-      'It takes too long to ask',
       'It suggests the answer and pressures the person to agree rather than respond honestly',
+      'It takes too long to ask',
       'It is too informal for use on a construction site',
       'It focuses on safety rather than productivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Leading questions suggest the desired answer and put pressure on the person to confirm rather than give an honest response. This is particularly dangerous in safety-critical contexts — a worker may say 'yes' to avoid embarrassment or conflict, even if the truth is 'no'. This can mask genuine hazards.",
   },
@@ -161,11 +166,11 @@ const quizQuestions = [
       'Which of the following is a sign that a team member may be struggling with a personal or mental health issue?',
     options: [
       'Consistently arriving early and volunteering for extra tasks',
-      'Withdrawal, irritability, drop in work quality, and changes in timekeeping',
       'Asking for clarification on technical procedures',
+      'Withdrawal, irritability, drop in work quality, and changes in timekeeping',
       'Requesting additional training on new equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Withdrawal from the team, increased irritability, a noticeable drop in work quality, and changes in timekeeping (arriving late, leaving early, increased absence) are common signs that someone may be struggling. These behavioural changes often indicate underlying issues that the person may not feel able to raise directly.',
   },

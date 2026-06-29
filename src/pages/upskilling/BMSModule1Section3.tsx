@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     id: 'energy-reduction',
     question: 'How does a BMS help reduce wasted energy in heating or cooling?',
     options: [
-      'By running systems at maximum capacity constantly',
       'By using occupancy scheduling, weather compensation, and zone-based control',
-      'By turning off all systems permanently',
-      'By relying solely on manual adjustments',
+      'By running systems at maximum capacity constantly',
+      'By switching off all systems permanently outside hours',
+      'By relying solely on manual operator adjustments',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BMS reduces energy waste through demand-based control, using occupancy scheduling, weather compensation, and zone-based control to operate systems only when and where needed.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'comfort-improvement',
     question: 'Give one way BMS improves comfort for building occupants.',
     options: [
-      'By keeping all rooms at the same temperature regardless of use',
+      'By keeping every room at the same temperature regardless of use',
+      'By requiring occupants to make manual temperature adjustments',
       'By automatic adjustments based on environmental conditions or occupancy',
-      'By disabling all environmental controls',
-      'By requiring manual temperature adjustments',
+      'By disabling environmental controls to save energy',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BMS improves comfort through automatic adjustments based on environmental conditions, occupancy patterns, and even weather forecasts, maintaining consistent conditions proactively.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'centralised-advantage',
     question: 'What is one advantage of centralised control through a BMS?',
     options: [
-      'Increased response times to issues',
-      'Single point visibility, faster response times, and improved operational efficiency',
-      'Less visibility into building systems',
-      'More manual intervention required',
+      'Slower response times when issues arise',
+      'Reduced visibility into building systems',
+      'More frequent manual intervention is required',
+      'Single point visibility, faster response times, and improved efficiency',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Centralised control provides unprecedented visibility into all building systems, enabling faster response times, proactive management, and improved operational efficiency.',
   },
@@ -56,8 +56,8 @@ const quickCheckQuestions = [
     options: [
       'By running equipment at maximum capacity continuously',
       'By operating equipment at optimal efficiency points and enabling predictive maintenance',
-      'By ignoring maintenance schedules',
-      'By overriding all safety limits',
+      'By relaxing routine maintenance schedules',
+      'By overriding equipment safety limits when needed',
     ],
     correctIndex: 1,
     explanation:

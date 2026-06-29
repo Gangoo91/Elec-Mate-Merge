@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'How many duty holders does CDM 2015 identify for a multi-contractor construction project?',
     options: [
-      '3 — Client, Contractor, Designer',
-      '4 — Client, Principal Contractor, Contractor, Designer',
       '5 — Client, Principal Designer, Principal Contractor, Designer, Contractor',
+      '4 — Client, Principal Contractor, Contractor, Designer',
+      '3 — Client, Contractor, Designer',
       '6 — Client, Principal Designer, Principal Contractor, Designer, Contractor, Worker',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'CDM 2015 identifies five key duty holders: Client, Principal Designer, Principal Contractor, Designer, and Contractor. Each has specific legal responsibilities for managing health and safety on construction projects.',
   },
@@ -99,8 +99,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which regulation specifically requires that work equipment is maintained in an efficient state, in efficient working order, and in good repair?',
-    options: ['HSWA 1974', 'LOLER 1998', 'PUWER 1998', 'CDM 2015'],
-    correctAnswer: 2,
+    options: ['PUWER 1998', 'LOLER 1998', 'HSWA 1974', 'CDM 2015'],
+    correctAnswer: 0,
     explanation:
       'Regulation 5 of PUWER 1998 requires that every employer shall ensure that work equipment is maintained in an efficient state, in efficient working order, and in good repair. This applies to MEWPs as work equipment.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'The client',
       'The principal designer',
-      'The principal contractor',
       'Each individual contractor',
+      'The principal contractor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The principal contractor is responsible for preparing the construction phase plan before the construction phase begins. On single-contractor projects, the contractor assumes this duty. The plan must set out the arrangements for managing health and safety during construction.',
   },
@@ -147,8 +147,8 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which ISO standard covers MEWP operator training internationally?',
-    options: ['ISO 9001', 'ISO 45001', 'ISO 18878', 'ISO 14001'],
-    correctAnswer: 2,
+    options: ['ISO 18878', 'ISO 45001', 'ISO 9001', 'ISO 14001'],
+    correctAnswer: 0,
     explanation:
       'ISO 18878:2013 (updated 2025) establishes the requirements for training MEWP operators. It covers theoretical and practical training content, operator assessment, and competence verification. IPAF training is aligned with this international standard.',
   },
@@ -159,10 +159,10 @@ const quizQuestions = [
     options: [
       'Only the hire company has duties — the contractor has no responsibility',
       'Only the contractor has duties — the hire company has no responsibility',
-      'Both have duties: the hire company for supply condition, the contractor for safe use and ongoing maintenance',
       'Neither has duties — the operator is solely responsible',
+      'Both have duties: the hire company for supply condition, the contractor for safe use and ongoing maintenance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Both parties have duties. The hire company must ensure the MEWP is in a safe condition with valid thorough examination when supplied. The contractor (as the employer/user) must ensure it remains suitable, is maintained during use, operators are trained, and it is used safely. Duties overlap but are complementary.',
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
       'Before a MEWP is used on a construction site, which of the following documents must be in place?',
     options: [
       "Only the operator's PAL Card",
-      'A valid thorough examination report, risk assessment, method statement, and evidence of operator competence',
       "Only the manufacturer's instruction manual",
+      'A valid thorough examination report, risk assessment, method statement, and evidence of operator competence',
       'Only the construction phase plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Before using a MEWP on site, you need: a valid LOLER thorough examination report (less than 6 months old), a suitable and sufficient risk assessment, a method statement or safe system of work, evidence of operator training/competence (e.g. IPAF PAL Card), and the manufacturer's operator manual. On CDM projects, this should be referenced in the construction phase plan.",
   },

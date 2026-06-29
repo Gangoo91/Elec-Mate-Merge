@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Which UPS topology provides the highest level of protection with zero transfer time?',
     options: [
-      'Visual inspection and testing',
+      'Offline (standby) UPS',
       'Online double conversion UPS',
-      'Use UV-resistant cable or conduit',
-      'National Building Specification',
+      'Line-interactive UPS',
+      'Ferroresonant UPS',
     ],
     correctIndex: 1,
     explanation:
@@ -69,9 +69,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a maintenance bypass switch in a UPS system?',
     options: [
       'To enable UPS servicing without disrupting the load',
-      'To allow the client to verify system performance',
-      'The Control of Asbestos Regulations 2012',
-      'An approved body for electrical contractor registration',
+      'To increase the stored energy capacity of the battery bank',
+      'To improve the input power factor of the UPS',
+      'To reduce the harmonic distortion drawn from the mains',
     ],
     correctIndex: 0,
     explanation:
@@ -109,25 +109,25 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'Calculate the autonomy time for a 10 kVA UPS with a 120 Ah battery bank at 192V DC and 80% discharge depth, powering an 8 kW load.',
+      'A UPS battery bank stores 24,000 Wh and is usable to 80% depth of discharge. Allowing for 90% inverter efficiency, what is the approximate autonomy when supplying a 36 kW load?',
     options: [
-      '28 minutes',
-      '15 minutes',
-      '35 minutes',
-      '23 minutes',
+      '40 minutes',
+      '29 minutes',
+      '60 minutes',
+      '12 minutes',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'Battery capacity = 192V × 120Ah = 23,040 Wh. Usable capacity at 80% DOD = 18,432 Wh. Autonomy = 18,432 ÷ 8,000W = 2.3 hours = 138 minutes. However, accounting for inverter efficiency (~90%), actual autonomy ≈ 23 minutes. Real-world calculation requires battery discharge curves.',
+      'Usable energy = 24,000 × 0.8 = 19,200 Wh. After 90% inverter efficiency, deliverable energy = 19,200 × 0.9 = 17,280 Wh. Autonomy = 17,280 ÷ 36,000 W = 0.48 h ≈ 29 minutes.',
   },
   {
     id: 4,
     question: 'What advantage does lithium-ion technology offer over VRLA in UPS applications?',
     options: [
       'Higher energy density and longer cycle life',
-      'To transfer load to mains if UPS fails or is overloaded',
-      'Continuous double conversion with zero transfer time',
-      'Bypass mode with monitoring for improved efficiency',
+      'Lower purchase cost per kWh of stored energy',
+      'No need for any battery management electronics',
+      'Better tolerance of deep discharge without any monitoring',
     ],
     correctAnswer: 0,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of an automatic static bypass in a UPS?',
     options: [
-      'Higher energy density and longer cycle life',
-      'Unity power factor input drawing minimal reactive current',
+      'To recharge the batteries more quickly after a discharge',
+      'To regulate the output voltage during normal operation',
       'To transfer load to mains if UPS fails or is overloaded',
-      'Bypass mode with monitoring for improved efficiency',
+      'To isolate the UPS for scheduled maintenance work',
     ],
     correctAnswer: 2,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: "What does 'True Online' UPS topology mean?",
     options: [
       'Continuous double conversion with zero transfer time',
-      'To transfer load to mains if UPS fails or is overloaded',
-      'Unity power factor input drawing minimal reactive current',
-      'Higher energy density and longer cycle life',
+      'Remote monitoring of the UPS over a network connection',
+      'A UPS permanently connected to a standby generator',
+      'A UPS that only powers the load when the mains fails',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     question:
       'What function does a Battery Management System (BMS) perform in a lithium-ion UPS installation?',
     options: [
-      'Emergency circuits must be kept separate from normal supply',
-      'Risk remaining after control measures have been implemented',
+      'Converts the battery DC output to AC for the load',
+      'Switches the load to the static bypass during a fault',
       'Controls charging, monitors cell balance, temperature, and provides protection',
-      'Soil and groundwater contamination from spills and drips during refuelling',
+      'Steps the mains voltage down to the battery charging voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,10 +218,10 @@ const quizQuestions = [
     id: 11,
     question: "A UPS specification states 'Input power factor: 0.99'. What does this indicate?",
     options: [
-      'Higher energy density and longer cycle life',
-      'Continuous double conversion with zero transfer time',
-      'Bypass mode with monitoring for improved efficiency',
-      'Unity power factor input drawing minimal reactive current',
+      'The UPS delivers 99% of its rated kVA to the load',
+      'The batteries retain 99% of their capacity over their design life',
+      'The inverter operates at 99% conversion efficiency',
+      'Near-unity power factor input drawing minimal reactive current',
     ],
     correctAnswer: 3,
     explanation:

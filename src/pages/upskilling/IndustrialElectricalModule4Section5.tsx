@@ -64,12 +64,12 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
       question:
         'According to ISA-101 high-performance HMI principles, what colour should be used for normal operating conditions on process displays?',
       options: [
-        'Bright green to indicate everything is working',
         'Grey or muted colours to reduce visual clutter',
-        'Blue to represent safe operation',
-        'Yellow for continuous attention',
+        'Bright green to confirm everything is working',
+        'Blue to represent safe, normal operation',
+        'Yellow to keep operators continuously alert',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'ISA-101 high-performance HMI standards recommend grey and muted colours for normal operations. This allows abnormal conditions (shown in colour) to stand out clearly, reducing operator fatigue and improving situational awareness. Bright colours are reserved for alarms and deviations.',
     },
@@ -98,12 +98,16 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
         'System Communication and Data Administration',
       ],
       correctAnswer: 'Supervisory Control and Data Acquisition',
+      explanation:
+        'SCADA stands for Supervisory Control and Data Acquisition — a system that supervises and controls plant while acquiring data from field devices, often across dispersed sites.',
     },
     {
       question:
         'Which communication protocol is recommended for modern SCADA systems due to its security features and platform independence?',
       options: ['Modbus RTU', 'PROFIBUS', 'OPC UA (Unified Architecture)', 'DeviceNet'],
       correctAnswer: 'OPC UA (Unified Architecture)',
+      explanation:
+        'OPC UA is the modern choice for SCADA: it is platform-independent and includes built-in security (authentication and encryption), unlike the older fieldbuses listed.',
     },
     {
       question:
@@ -111,10 +115,12 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
       options: [
         'Flashing to attract attention',
         'In bright green text',
-        'As static numerical values without colour emphasis',
         'Hidden until they become abnormal',
+        'As static numerical values without colour emphasis',
       ],
       correctAnswer: 'As static numerical values without colour emphasis',
+      explanation:
+        'High-performance HMI design shows in-range values as plain static numerics with no colour emphasis, so that colour and movement are reserved for genuine abnormal conditions.',
     },
     {
       question:
@@ -126,6 +132,8 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
         '30 alarms per hour average',
       ],
       correctAnswer: '1 alarm per 5 minutes average (12 per hour)',
+      explanation:
+        'EEMUA 191 sets a long-term target of around 1 alarm every 5 minutes (≈12 per hour) per operator, a manageable rate that avoids alarm flooding and fatigue.',
     },
     {
       question:
@@ -137,22 +145,28 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
         'British Standards Institution (BSI)',
       ],
       correctAnswer: 'National Cyber Security Centre (NCSC)',
+      explanation:
+        'The NCSC is the UK authority issuing cyber-security guidance for Critical National Infrastructure, including SCADA and operational-technology systems.',
     },
     {
       question: 'What is the primary function of a historian in a SCADA system?',
       options: [
         'To control field devices in real-time',
-        'To provide long-term storage and retrieval of process data',
         'To generate operator alarms',
-        'To program PLC logic',
+        'To program the PLC logic',
+        'To provide long-term storage and retrieval of process data',
       ],
       correctAnswer: 'To provide long-term storage and retrieval of process data',
+      explanation:
+        'A historian time-stamps and archives process data for long-term trending, reporting and analysis; it does not perform real-time control, alarming or PLC programming.',
     },
     {
       question:
         'When selecting HMI hardware for an industrial environment, what IP rating would typically be required for a panel-mounted touchscreen in a washdown area?',
       options: ['IP20', 'IP54', 'IP65 or higher', 'IP40'],
       correctAnswer: 'IP65 or higher',
+      explanation:
+        'A washdown area needs protection against water jets, so the panel face should be rated IP65 or higher; IP54 only withstands splashing and IP20/IP40 offer no real water protection.',
     },
     {
       question:
@@ -164,28 +178,34 @@ const IndustrialElectricalModule4Section5: React.FC = () => {
         'Multi-factor authentication',
       ],
       correctAnswer: 'Network segmentation (DMZ)',
+      explanation:
+        'Separating the SCADA/OT network from corporate IT with a demilitarised zone is network segmentation; defence-in-depth is the broader strategy that segmentation contributes to.',
     },
     {
       question:
         'According to high-performance HMI principles, what should be the primary navigation method for operators?',
       options: [
-        'Pull-down menus only',
         'Hierarchical display structure with clear navigation paths',
-        'Command line interface',
-        'Random access to any screen',
+        'Pull-down menus only',
+        'A command line interface',
+        'Random access to any screen at any time',
       ],
       correctAnswer: 'Hierarchical display structure with clear navigation paths',
+      explanation:
+        'High-performance HMIs use a hierarchical display structure (overview down to detail) with clear navigation, letting operators move purposefully rather than hunting through menus.',
     },
     {
       question: 'What is the purpose of alarm shelving in modern SCADA systems?',
       options: [
-        'To permanently delete unwanted alarms',
         'To temporarily suppress known alarms during maintenance while maintaining audit trail',
+        'To permanently delete unwanted alarms',
         'To increase alarm priority levels',
-        'To convert alarms into events',
+        'To convert alarms into informational events',
       ],
       correctAnswer:
         'To temporarily suppress known alarms during maintenance while maintaining audit trail',
+      explanation:
+        'Alarm shelving lets an operator temporarily silence a known nuisance alarm (e.g. during maintenance) for a set time while keeping an audit trail, rather than deleting it permanently.',
     },
   ];
 

@@ -34,12 +34,12 @@ const quizData = [
     question:
       'During an open PEN fault condition, what is the worst-case voltage that could appear on exposed metalwork?',
     answers: [
+      '230V above earth potential',
       '50V above earth potential',
       '110V above earth potential',
-      '230V above earth potential',
       '400V above earth potential',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In the worst-case scenario during an open PEN fault, the full line voltage (230V) can appear on exposed metalwork relative to true earth, creating a fatal shock hazard.',
   },
@@ -47,12 +47,12 @@ const quizData = [
     question:
       'What type of RCD is essential for TT earthing systems converted from TN-C-S during PEN faults?',
     answers: [
-      'Any standard RCD will work',
-      'Type A RCD only',
       '30mA RCD with earth electrode ≤200Ω',
-      '100mA time-delayed RCD',
+      'Any standard AC-type RCD will suffice',
+      'A Type A RCD with no electrode limit',
+      'A 100mA time-delayed RCD',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'For TT systems, RCD protection is mandatory as overcurrent devices cannot operate due to high earth fault loop impedance. A 30mA RCD requires earth electrode resistance ≤200Ω (50V ÷ 0.03A = 1667Ω maximum, but 200Ω provides better safety margin).',
   },
@@ -60,12 +60,12 @@ const quizData = [
     question:
       'What is the main advantage of automatic earth changeover systems in EV charging installations?',
     answers: [
-      'Reduces installation costs',
-      'Eliminates the need for RCD protection',
-      'Provides continuous operation during PEN faults',
+      'Reduces overall installation costs',
+      'Eliminates the need for any RCD protection',
       'Switches from TN-C-S to TT operation during faults',
+      'Removes the need for equipotential bonding',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Automatic earth changeover systems detect PEN faults and switch the installation from TN-C-S to TT earthing system, isolating from the faulty PEN conductor and connecting to a local earth electrode for continued safe operation.',
   },
@@ -86,12 +86,12 @@ const quizData = [
     question:
       'How frequently should automatic VMR test functions operate in critical EV charging installations?',
     answers: [
-      'Daily automatic tests',
-      'Weekly with manual backup',
       'Monthly automatic with annual manual verification',
-      'Only when faults are suspected',
+      'Daily automatic tests only',
+      'Weekly automatic with manual backup',
+      'Only when a fault is suspected',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Monthly automatic testing ensures system reliability without excessive wear, while annual manual verification confirms proper operation of all protection functions and settings.',
   },
@@ -113,11 +113,11 @@ const quizData = [
       'In an automatic earth changeover system, what happens to the installation earthing during a PEN fault?',
     answers: [
       'The installation remains connected to the PEN conductor',
-      'All earthing connections are temporarily disconnected',
       'The installation switches from TN-C-S to TT operation',
+      'All earthing connections are temporarily disconnected',
       'A temporary TN-S system is created',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The system disconnects from the faulty PEN conductor and connects the installation's earth system to a local earth electrode, creating a TT system for continued safe operation.",
   },
@@ -125,12 +125,12 @@ const quizData = [
     question:
       'What is the typical reconnection delay after a VMR trip in EV charging applications?',
     answers: [
-      'Instant reconnection when fault clears',
-      '30 seconds to allow fault clearance',
+      'Instant reconnection as soon as the fault clears',
+      '30 seconds to allow initial fault clearance',
+      'Manual reset is required in all cases',
       '3 minutes to prevent cycling on intermittent faults',
-      'Manual reset required in all cases',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A 3-minute delay prevents automatic cycling on intermittent PEN faults while allowing reasonable recovery time for genuine clearance of the fault condition.',
   },

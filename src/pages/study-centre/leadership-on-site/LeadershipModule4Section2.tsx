@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'ld-5whys',
     question: 'The 5 Whys technique is used primarily to:',
     options: [
-      'Identify five possible solutions to a problem',
       "Get to the root cause of a problem by asking 'why' repeatedly",
+      'Identify five possible solutions to a problem',
       'Prioritise the five most important tasks each day',
       "Evaluate five different team members' performance",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The 5 Whys technique, developed by Sakichi Toyoda for the Toyota Production System, is a root cause analysis method. By asking 'why' five times (or as many times as needed), you move beyond the obvious symptoms to uncover the underlying root cause. The goal is to find the systemic or process issue that, if fixed, will prevent the problem recurring.",
   },
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     options: [
       'Treating the root cause effectively',
       'Using the 5 Whys technique correctly',
-      'Treating the symptom, not the root cause',
       'Applying the DECIDE model',
+      'Treating the symptom, not the root cause',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Replacing cables that fail insulation resistance tests treats the symptom (failed test) rather than the root cause (which might be damp storage conditions, damage during installation, or incorrect cable specification). The 5 Whys or fishbone analysis would help identify why the cables keep failing, allowing you to fix the actual cause and prevent recurrence.',
   },
@@ -76,11 +76,11 @@ const quizQuestions = [
     question: 'The 5 Whys technique was developed by Sakichi Toyoda as part of the:',
     options: [
       'British Standards Institution',
-      'Toyota Production System',
       'ISO 9001 quality framework',
       'Six Sigma methodology',
+      'Toyota Production System',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 5 Whys technique was developed by Sakichi Toyoda and became a core tool within the Toyota Production System. It is a simple but powerful root cause analysis method that involves asking 'why' repeatedly until the underlying cause is identified.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 2,
     question: 'In root cause analysis, the most common problem-solving mistake is:',
     options: [
+      'Treating the symptom instead of the root cause',
       'Asking too many questions before acting',
       'Involving too many people in the analysis',
-      'Treating the symptom instead of the root cause',
       'Using too many frameworks simultaneously',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most common mistake in problem-solving is treating the symptom rather than the root cause. This provides a temporary fix but the problem keeps recurring. For example, replacing cables that fail tests treats the symptom, while fixing the damp storage that caused the failures treats the root cause.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'The six steps of the DECIDE model in order are:',
     options: [
       'Define, Evaluate, Consider, Implement, Develop, Execute',
-      'Define, Establish criteria, Consider alternatives, Identify best, Develop plan, Evaluate',
       'Discuss, Establish, Consult, Investigate, Decide, Evaluate',
+      'Define, Establish criteria, Consider alternatives, Identify best, Develop plan, Evaluate',
       'Define, Examine, Choose, Implement, Document, Evaluate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The DECIDE model follows six steps: Define the problem clearly, Establish criteria for a good solution, Consider all alternatives, Identify the best alternative, Develop and implement a plan, and Evaluate and monitor the results.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
       'A fishbone (Ishikawa) diagram categorises potential causes into which typical groups?',
     options: [
       'Safety, Quality, Cost, Programme, Environment, Welfare',
-      'Who, What, When, Where, Why, How',
       'People, Process, Equipment, Materials, Environment, Management',
+      'Who, What, When, Where, Why, How',
       'Design, Build, Test, Commission, Handover, Maintenance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A fishbone diagram typically categorises potential causes into six groups: People, Process, Equipment, Materials, Environment, and Management. These categories provide a structured framework for brainstorming all possible contributing factors to a problem.',
   },
@@ -131,10 +131,10 @@ const quizQuestions = [
     options: [
       'Apply the 5 Whys technique to find the root cause',
       'Use a fishbone diagram to categorise the contributing factors',
-      'Use coaching (GROW), feedback (SBI), or conversation (DESC) models',
       'Apply the DECIDE model to choose the best technical solution',
+      'Use coaching (GROW), feedback (SBI), or conversation (DESC) models',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'People problems require people tools — not technical analysis tools. The GROW model (Goal, Reality, Options, Will) works for coaching, the SBI model (Situation, Behaviour, Impact) works for giving feedback, and the DESC framework (Describe, Express, Specify, Consequence) works for difficult conversations. These require empathy and listening, not engineering analysis.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 6,
     question: "In the DECIDE model, why is 'Establish criteria' the second step?",
     options: [
-      'Because criteria help you define the problem more clearly',
       "Because knowing what 'good' looks like helps you evaluate alternatives objectively",
+      'Because criteria help you define the problem more clearly',
       'Because the team needs to agree on criteria before the leader can decide',
       'Because criteria must be documented for contractual purposes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Establishing criteria early ensures you know what a good solution looks like before you start generating and evaluating options. Without clear criteria (for example: no safety compromise, budget increase under 5%, achievable this week), you have no objective basis for comparing alternatives and risk choosing based on gut feeling alone.',
   },

@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'discrimination-definition',
     question: 'What is discrimination (selectivity) in protective device coordination?',
     options: [
-      'Yes — minimum CSA needed is √(I²t)/k = √(800² × 0.1)/115 = √64000/115 = 252.98/115 ≈ 2.20 mm². 2.5 mm² is above 2.20 — pass.',
-      'Using AI and data to predict and optimise future energy consumption patterns',
+      'The practice of selecting all protective devices in an installation from the same manufacturer',
+      'The simultaneous operation of every protective device in series when any fault occurs',
       'The ability of the device nearest the fault to operate and isolate it whilst upstream devices remain closed',
-      'EPC is based on calculated/design performance; DEC shows actual measured energy use',
+      'The method of choosing cable sizes so that the smallest conductor is protected first',
     ],
     correctIndex: 2,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'total-vs-partial',
     question: 'What is the difference between total and partial discrimination?',
     options: [
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'Simultaneous two-way transmission over a single fibre using different wavelengths',
-      'IET GN1 Section 7 — broader installation categories with worked examples for offices, retail, hospitality, education, healthcare and industrial.',
+      'Total discrimination uses fuses only, whereas partial discrimination uses circuit breakers only',
+      'Total discrimination applies to single-phase circuits and partial discrimination to three-phase circuits',
+      'Total discrimination is required by BS 7671 while partial discrimination is never permitted',
       'Total discrimination works up to the maximum prospective fault current; partial only works up to a defined limit',
     ],
     correctIndex: 3,
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'time-current-curve',
     question: 'On a time-current characteristic curve, what does the x-axis represent?',
     options: [
-      'Identify, assess, control through appropriate measures, monitor conditions',
-      'Use the auxiliary power unit or the manual lowering valve to lower the platform',
+      'Operating time of the protective device in seconds',
+      'Ambient temperature around the protective device',
       'Prospective fault current (typically in multiples of In or Amperes)',
-      'Storage systems located on the customer side of the meter',
+      'The let-through energy (I²t) of the protective device',
     ],
     correctIndex: 2,
     explanation:
@@ -66,9 +66,9 @@ const quickCheckQuestions = [
     id: 'cascading-backup',
     question: 'What is backup protection (cascading) in protective device coordination?',
     options: [
-      "Allow time for discharge of capacitors, verify dissipation, consider UPS systems, battery supplies, and generators",
-      "Hazards going unreported, isolation of the new starter, and slower integration into the team — a missed induction is a real cost",
-      "Segregated into its own skip — the disposal cost is much lower and it can often be reused or recycled as aggregate",
+      "Fitting a second identical device in parallel so that one takes over if the other fails to trip",
+      "Providing a standby generator that energises a circuit if the main protective device operates",
+      "Adding a time delay to the downstream device so the upstream device always clears the fault first",
       "Using the upstream device's breaking capacity to supplement the downstream device's lower breaking capacity",
     ],
     correctIndex: 3,
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'According to BS 7671, what is the minimum discrimination ratio typically required between upstream and downstream fuses for reliable discrimination?',
     options: [
-      'Overheating and possible fire risk',
+      '1.2:1 for HRC fuses (gG type)',
       '1.6:1 for HRC fuses (gG type)',
-      'Unlimited fine and/or imprisonment',
-      'Ci (thermal insulation factor)',
+      '3:1 for HRC fuses (gG type)',
+      '1:1 for HRC fuses (gG type)',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'When analysing time-current curves, discrimination is achieved when:',
     options: [
-      'MCBs have overlapping magnetic trip regions, making discrimination at high fault currents difficult',
-      'The combination has been tested by the manufacturer and the enhanced breaking capacity is stated',
+      'The two device curves cross within the range of expected fault currents',
+      'The upstream and downstream devices have the same time-current characteristic',
       'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'Settings can be adjusted to achieve time and current grading with upstream and downstream devices',
+      'The upstream device operates faster than the downstream device at every fault level',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What is the primary advantage of using HRC fuses over MCBs for discrimination?',
     options: [
       'HRC fuses have better current limitation and more predictable time-current characteristics at high fault levels',
-      'Uses communication between relays to achieve faster clearing at fault location whilst maintaining backup protection',
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'Prospective fault currents at each point, device characteristics, cable data, and system configuration',
+      'HRC fuses can be reset after operating, avoiding the need for replacement',
+      'HRC fuses provide adjustable thermal and magnetic settings for precise grading',
+      'HRC fuses inherently provide RCD-type earth fault protection in addition to overcurrent protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a cascading (backup protection) arrangement, what must be verified?',
     options: [
-      'Uses communication between relays to achieve faster clearing at fault location whilst maintaining backup protection',
+      'That the downstream device has a higher breaking capacity than the upstream device',
       'The combination has been tested by the manufacturer and the enhanced breaking capacity is stated',
-      'Approximately 0.3 decades (30% of a decade) of horizontal separation',
-      'HRC fuses have better current limitation and more predictable time-current characteristics at high fault levels',
+      'That both devices are the same rating so they share the fault current equally',
+      'That a minimum 0.4 second time delay is set on the downstream device',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'When using coordination software tools, what input data is essential?',
     options: [
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'The combination has been tested by the manufacturer and the enhanced breaking capacity is stated',
+      'Only the rated current of each protective device in the installation',
+      'The ambient lighting levels and luminaire layout of the building',
       'Prospective fault currents at each point, device characteristics, cable data, and system configuration',
-      'Settings can be adjusted to achieve time and current grading with upstream and downstream devices',
+      'The historical maintenance records and previous fault logs for the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     question:
       'For discrimination between an upstream MCB and downstream MCB, what is the main challenge?',
     options: [
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'Prospective fault currents at each point, device characteristics, cable data, and system configuration',
-      'HRC fuses have better current limitation and more predictable time-current characteristics at high fault levels',
+      'Two MCBs of identical rating can never be installed in series in the same circuit',
+      'MCBs cannot provide thermal overload protection, only magnetic short-circuit protection',
+      'MCBs have no published time-current curves, so coordination cannot be verified',
       'MCBs have overlapping magnetic trip regions, making discrimination at high fault currents difficult',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'What is I²t let-through energy and why is it important for discrimination?',
     options: [
       'It represents the thermal energy let through during fault clearance - the upstream device must limit more energy than downstream for discrimination',
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'HRC fuses have better current limitation and more predictable time-current characteristics at high fault levels',
-      'Uses communication between relays to achieve faster clearing at fault location whilst maintaining backup protection',
+      'It is the reactive power drawn by the protective device while carrying its rated current',
+      'It is the time delay in seconds before a magnetic trip operates at a given fault current',
+      'It is the voltage drop across the device measured during normal full-load operation',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'Zone Selective Interlocking (ZSI) in protective relay coordination:',
     options: [
-      'It represents the thermal energy let through during fault clearance - the upstream device must limit more energy than downstream for discrimination',
+      'Mechanically links the operating handles of adjacent breakers so they trip together',
       'Uses communication between relays to achieve faster clearing at fault location whilst maintaining backup protection',
-      'MCBs have overlapping magnetic trip regions, making discrimination at high fault currents difficult',
-      'Prospective fault currents at each point, device characteristics, cable data, and system configuration',
+      'Divides the installation into zones each fed from a separate transformer for redundancy',
+      'Locks out a circuit so it cannot be re-energised until a fault has been investigated',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 10,
     question: 'What does Regulation 536.4 of BS 7671 require regarding backup protection?',
     options: [
-      'Uses communication between relays to achieve faster clearing at fault location whilst maintaining backup protection',
-      'HRC fuses have better current limitation and more predictable time-current characteristics at high fault levels',
+      'That backup protection may be assumed from device ratings without any verification',
+      'That all protective devices in a backup arrangement must be of the fuse type',
       'The characteristics of the devices shall be coordinated and the combination verified as suitable for the maximum prospective fault current',
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
+      'That backup protection is prohibited and every device must independently meet the full fault current',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     question:
       'When plotting time-current curves on log-log scales, a 2:1 current ratio appears as:',
     options: [
-      'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
-      '72 hours of awareness, where the breach is likely to result in a risk to individuals',
-      'To comply with separation requirements and prevent physical damage',
+      'A full decade (100%) of horizontal separation',
+      'Exactly half (50%) of a decade of horizontal separation',
+      'A fixed 2 cm gap regardless of the scale used',
       'Approximately 0.3 decades (30% of a decade) of horizontal separation',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
       'An MCCB with adjustable settings (Ir, Im, Ig) provides discrimination advantages because:',
     options: [
       'Settings can be adjusted to achieve time and current grading with upstream and downstream devices',
-      'MCBs have overlapping magnetic trip regions, making discrimination at high fault currents difficult',
-      'The downstream device curve is entirely to the left of and below the upstream curve at all fault levels',
-      'Approximately 0.3 decades (30% of a decade) of horizontal separation',
+      'The fixed trip points remove any need to verify discrimination with curves',
+      'Adjustable settings increase the breaking capacity of the device beyond its rating',
+      'The settings automatically prevent the downstream device from ever operating',
     ],
     correctAnswer: 0,
     explanation:

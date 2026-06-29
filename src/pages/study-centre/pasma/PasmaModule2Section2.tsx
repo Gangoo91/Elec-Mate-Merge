@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'horizontal-vs-diagonal-brace',
     question: 'What is the primary purpose of diagonal braces on a mobile access tower?',
     options: [
-      'To provide a climbing surface for the operative',
       'To add rigidity and prevent racking (parallelogram distortion)',
+      'To provide a climbing surface for the operative',
       'To support the weight of the platform',
       'To connect the castors to the end frames',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Diagonal braces (cross-braces) prevent the tower from racking — a parallelogram distortion where the tower leans to one side. They are fitted in opposing pairs to triangulate the structure, which is the most effective way to resist lateral forces.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'Why must working platforms on a mobile access tower have a trapdoor?',
     options: [
       'To allow ventilation through the tower structure',
-      'To provide access from below without removing guardrails',
       'To reduce the weight of the platform',
       'To allow rain to drain through the platform',
+      'To provide access from below without removing guardrails',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Trapdoor platforms allow the operative to climb up through the platform from below without having to remove guardrails. The trapdoor is closed once the operative is on the platform, maintaining edge protection at all times. This is a critical safety feature.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: 'What are the vertical ladder frames of a mobile access tower called?',
     options: [
-      'Diagonal braces',
       'End frames (standards and transoms)',
+      'Diagonal braces',
       'Plan braces',
       'Outriggers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The vertical ladder frames are called end frames. They consist of two vertical tubes (standards) connected by horizontal rungs (transoms). End frames form the skeleton of the tower and provide the climbing surface.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'What must be done with castors when operatives are working on the tower platform?',
     options: [
       'They should be removed and replaced with base plates',
-      'They must be locked (brakes applied) at all times',
       'They should be left unlocked for easy repositioning',
       'Two diagonal castors should be locked, two unlocked',
+      'They must be locked (brakes applied) at all times',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'All castors must be locked (brakes applied) whenever anyone is on the tower. Unlocked castors allow the tower to roll, which could cause it to move away from the work area or collide with obstructions, potentially causing a fall.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'During inspection, you find a bent tube on an end frame. What is the correct action?',
     options: [
+      'Remove the frame from service, tag it as defective, and quarantine it',
       'Straighten the tube and continue using the frame',
       'Use the frame only for lower lifts where loads are lighter',
-      'Remove the frame from service, tag it as defective, and quarantine it',
       'Report it to the manufacturer but continue using it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A bent tube indicates the frame has been overloaded or impacted. Its structural integrity is compromised and it must be immediately removed from service. Tag the component as defective and quarantine it to prevent accidental reuse. Never attempt to straighten or repair structural components on site.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
     question: 'What do platform locking hooks do?',
     options: [
       'They lock the trapdoor in the open position',
-      'They secure the platform to the frame, preventing it from being dislodged',
       'They connect adjacent platforms together',
       'They attach the toeboards to the platform edge',
+      'They secure the platform to the frame, preventing it from being dislodged',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Platform locking hooks engage with the frame tubes to secure the platform in position. They prevent the platform from being lifted by wind or dislodged by movement on the tower. Always check that all locking hooks are fully engaged before stepping onto a platform.',
   },

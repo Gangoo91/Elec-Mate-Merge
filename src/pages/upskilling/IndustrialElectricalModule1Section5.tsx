@@ -56,11 +56,11 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
     {
       id: 'qc3-zs-calculation',
       question:
-        'For a 400V three-phase motor circuit protected by a 63A Type D MCB, what is the maximum Zs at the design stage (using 0.8 multiplier)?',
-      options: ['0.54 ohms', '0.68 ohms', '0.43 ohms', '0.85 ohms'],
-      correctIndex: 2,
+        'A motor circuit is protected by a 63A Type D MCB requiring 0.4s disconnection. The tabulated maximum Zs is 0.17 ohms. What is the maximum design Zs after applying the 0.8 multiplier?',
+      options: ['0.21 ohms', '0.14 ohms', '0.17 ohms', '0.34 ohms'],
+      correctIndex: 1,
       explanation:
-        'For a 63A Type D MCB, the maximum tabulated Zs is 0.54 ohms (from BS 7671 Table 41.3). At design stage, we apply the 0.8 multiplier: 0.54 x 0.8 = 0.432 ohms (rounded to 0.43 ohms). This accounts for conductor temperature rise under fault conditions.',
+        'For a 63A Type D MCB at 230V the maximum tabulated Zs for 0.4s disconnection is 0.17 ohms (BS 7671 Table 41.3). Applying the 0.8 rule-of-thumb for conductor temperature rise: 0.17 x 0.8 = 0.14 ohms, the value to design to so the measured cold Zs leaves margin.',
     },
   ];
 
@@ -68,84 +68,109 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
     {
       question: 'What does PEN stand for in a TN-C-S earthing system?',
       options: [
-        'Primary Earth Neutral',
-        'Protective Earth Neutral',
         'Protective Earthed Neutral',
+        'Protective Earth Neutral',
+        'Primary Earth Neutral',
         'Primary Earthing Network',
       ],
       correctAnswer: 'Protective Earthed Neutral',
+      explanation:
+        'PEN means Protective Earthed Neutral - a single conductor that combines neutral and protective earth functions in the supply of a TN-C-S (PME) system before splitting at the intake.',
     },
     {
       question:
-        'According to BS 7671 Regulation 542.4.1, what is the maximum resistance for a TT system earth electrode in normal conditions?',
-      options: ['100 ohms', '200 ohms', 'No maximum specified - depends on RCD rating', '20 ohms'],
-      correctAnswer: 'No maximum specified - depends on RCD rating',
+        'In a TT system, how is the acceptability of the installation earth electrode resistance ultimately judged?',
+      options: [
+        'A fixed maximum of 200 ohms applies in all cases',
+        'A fixed maximum of 20 ohms applies in all cases',
+        'No single fixed limit - it must satisfy Ra x Ia <= 50V for the protective device',
+        'It must always be below 1 ohm',
+      ],
+      correctAnswer: 'No single fixed limit - it must satisfy Ra x Ia <= 50V for the protective device',
+      explanation:
+        'BS 7671 sets no universal numeric limit; in a TT system the electrode resistance Ra must be low enough that Ra x Ia does not exceed 50V, where Ia is the RCD operating current, so the touch voltage stays safe.',
     },
     {
       question:
         'What is the main purpose of supplementary bonding in an industrial motor installation?',
       options: [
+        'To reduce the potential difference between simultaneously accessible parts locally',
         'To improve motor efficiency',
-        'To reduce earth fault loop impedance locally',
         'To provide a parallel neutral path',
         'To increase motor starting current',
       ],
-      correctAnswer: 'To reduce earth fault loop impedance locally',
+      correctAnswer: 'To reduce the potential difference between simultaneously accessible parts locally',
+      explanation:
+        'Supplementary bonding creates a local equipotential zone, limiting the touch voltage between simultaneously accessible conductive parts to a safe level where automatic disconnection alone cannot guarantee safety.',
     },
     {
-      question: 'In BS EN 62305, what is a Lightning Protection Zone (LPZ)?',
+      question: 'In BS EN 62305, what does a Lightning Protection Zone (LPZ) define?',
       options: [
         'The area where lightning is most likely to strike',
-        'A zone where electromagnetic environment is defined',
-        'The distance from the lightning rod',
-        'A restricted area during storms',
+        'The distance from the lightning rod to earth',
+        'A region in which the electromagnetic environment is defined and controlled',
+        'A restricted area to evacuate during storms',
       ],
-      correctAnswer: 'A zone where electromagnetic environment is defined',
+      correctAnswer: 'A region in which the electromagnetic environment is defined and controlled',
+      explanation:
+        'LPZs divide a structure into zones of progressively reduced lightning electromagnetic impulse (LEMP), allowing SPDs and shielding to be coordinated at each zone boundary.',
     },
     {
       question:
-        'What is the typical earth electrode resistance target for a clean earth system serving sensitive IT equipment?',
-      options: ['Less than 200 ohms', 'Less than 100 ohms', 'Less than 10 ohms', 'Less than 1 ohm'],
+        'What is the typical earth electrode resistance target for a clean/technical earth serving sensitive IT equipment?',
+      options: ['Less than 200 ohms', 'Less than 100 ohms', 'Less than 50 ohms', 'Less than 10 ohms'],
       correctAnswer: 'Less than 10 ohms',
+      explanation:
+        'A target of 10 ohms or less is commonly specified for technical/clean earth electrodes to give a stable low-impedance reference for sensitive electronics, though it must still be bonded to the MET for safety.',
     },
     {
       question:
-        'According to BS 7671, what is the disconnection time requirement for a 400V final circuit in a TN system?',
-      options: ['0.2 seconds', '0.4 seconds', '5 seconds', '1 second'],
+        'For a standard 400V three-phase TN final circuit (line-to-earth voltage 230V), what is the maximum disconnection time required by BS 7671 Table 41.1?',
+      options: ['5 seconds', '0.4 seconds', '1 second', '0.1 seconds'],
       correctAnswer: '0.4 seconds',
+      explanation:
+        'Disconnection time is set by the line-to-earth voltage Uo. A 400V three-phase circuit has Uo = 230V, placing it in the 120V < Uo <= 230V band, which requires 0.4s for a TN final circuit.',
     },
     {
       question:
-        'What type of SPD (Surge Protective Device) should be installed at the main distribution board?',
-      options: ['Type 3', 'Type 2', 'Type 1', 'Type 4'],
+        'What type of SPD (Surge Protective Device) is required at the origin/main intake to handle direct lightning currents?',
+      options: ['Type 3', 'Type 2', 'Type 4', 'Type 1'],
       correctAnswer: 'Type 1',
+      explanation:
+        'Type 1 (Class I) SPDs at the service entrance are tested with the 10/350 microsecond waveform and divert partial direct-strike lightning currents; Type 2 and 3 handle progressively smaller induced surges downstream.',
     },
     {
       question:
-        'For a motor with exposed-conductive-parts simultaneously accessible with structural steelwork, what is the maximum touch voltage permitted without supplementary bonding?',
+        'Where exposed-conductive-parts are simultaneously accessible with structural steelwork, supplementary bonding aims to keep the touch voltage during a fault below what limit?',
       options: ['230V', '120V', '50V', '25V'],
       correctAnswer: '50V',
+      explanation:
+        '50V AC is the conventional touch-voltage limit in BS 7671 for dry conditions; supplementary bonding is sized and verified (R <= 50/Ia) to ensure this is not exceeded during an earth fault.',
     },
     {
       question: 'What is the purpose of a technical earth (TE) bar in a data centre?',
       options: [
         'To provide lightning protection only',
-        'To create an isolated reference point for sensitive equipment',
-        'To replace the main earthing terminal',
-        'To bond all metalwork together',
+        'To replace the main earthing terminal entirely',
+        'To bond all building metalwork into a single mesh',
+        'To create a low-noise reference point for sensitive equipment',
       ],
-      correctAnswer: 'To create an isolated reference point for sensitive equipment',
+      correctAnswer: 'To create a low-noise reference point for sensitive equipment',
+      explanation:
+        'A technical earth bar gives a clean, single-point star reference for sensitive electronics to reduce electrical noise, while still being connected to the MET so protective earthing is maintained.',
     },
     {
       question:
-        'According to BS 7671 Chapter 54, how should the main earthing terminal be connected in a TN-C-S system?',
+        'According to BS 7671 Chapter 54, where is the main earthing terminal derived from in a TN-C-S (PME) system?',
       options: [
-        'To a local earth electrode only',
-        'To the PEN conductor of the supply',
-        'To the water main only',
-        'To the gas main',
+        'A local earth electrode only',
+        'The water main only',
+        'The gas main only',
+        'The PEN conductor of the supply',
       ],
-      correctAnswer: 'To the PEN conductor of the supply',
+      correctAnswer: 'The PEN conductor of the supply',
+      explanation:
+        'In TN-C-S the installation earth is taken from the supply PEN conductor at the intake; main protective bonding is additionally required and sized per Table 54.8 against the PEN size.',
     },
   ];
 
@@ -548,9 +573,9 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-2">63A</td>
-                    <td className="text-center text-elec-yellow">0.73 ohms</td>
+                    <td className="text-center text-elec-yellow">0.72 ohms</td>
                     <td className="text-center text-elec-yellow">0.36 ohms</td>
-                    <td className="text-center text-elec-yellow">0.18 ohms</td>
+                    <td className="text-center text-elec-yellow">0.17 ohms</td>
                   </tr>
                   <tr>
                     <td className="py-2">100A</td>

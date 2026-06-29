@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'For buildings over 1000m², Part L requires sub-metering by which categories?',
     options: [
-      'Frequency rating and performance',
-      'Extensive experience and specialist knowledge',
+      'Individual tenant or lease boundary only',
+      'Floor level and orientation only',
       'End-use category (lighting, heating, etc.)',
-      'Ensure safe isolation and verify circuits are dead',
+      'Phase (L1, L2, L3) of the supply only',
     ],
     correctAnswer: 2,
     explanation:
@@ -182,16 +182,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'What is the maximum circuit watts loss (CWL) allowed under Part L for LED lighting circuits?',
+      'How does Part L set the lighting energy efficiency requirement for LED circuits?',
     options: [
-      'No specific limit - varies by space type',
-      'Hot spots indicating problems',
-      'Before using any chemical products or materials',
-      'Timing, conditions, frequency, and triggering events',
+      'By minimum luminaire efficacy (lumens per circuit watt), varying by space type',
+      'By a fixed maximum of 5 W/m² for every building',
+      'By a maximum cable length per lighting circuit',
+      'By limiting each circuit to a maximum of 12 luminaires',
     ],
     correctAnswer: 0,
     explanation:
-      'Part L specifies maximum lighting efficacy requirements (lamp-circuit lumens per circuit watt) rather than fixed W/m² limits. Requirements vary by space type and are detailed in the Non-Domestic Building Services Compliance Guide.',
+      'Part L specifies minimum lighting efficacy (luminaire lumens per circuit watt) rather than fixed W/m² limits. Requirements vary by space type and are detailed in the Non-Domestic Building Services Compliance Guide.',
   },
   {
     id: 9,

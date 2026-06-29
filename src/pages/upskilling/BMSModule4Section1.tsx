@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'dali-flexibility',
     question: 'Why is DALI more flexible than traditional on/off lighting control?',
     options: [
-      'It uses higher voltage for brighter lights',
       'Individual addressability and digital feedback enable sophisticated control',
-      'It requires less wiring than standard systems',
-      'It operates without any controller',
+      'It drives the lamps at a higher voltage for more brightness',
+      'It needs significantly less control wiring than any other system',
+      'It can operate without any controller or gateway',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'DALI allows each lighting fitting to be individually addressed and controlled, enabling sophisticated strategies like automatic daylight compensation, individual dimming, and real-time status monitoring, unlike simple on/off systems that only provide basic switching functionality.',
   },
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: '1-10v-feedback',
     question: "Why can't a 1-10V system provide feedback on lamp failures?",
     options: [
-      'The voltage is too low for status signals',
-      'Analog signals only flow one direction without digital feedback capability',
-      "The protocol doesn't support LEDs",
-      'It requires special sensors',
+      'The 1-10V control voltage is too low to carry status signals',
+      'The 1-10V standard is not compatible with LED drivers',
+      'Analog signals only flow one direction, with no digital feedback capability',
+      'It would require an additional dedicated sensor at each fitting',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '1-10V systems use simple analog voltage control signals that only flow in one direction (from controller to driver). They lack the bidirectional digital communication required to send status information back from individual fittings to the control system.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'Which lighting protocol would you choose for a small warehouse with simple dimming needs?',
     options: [
-      'DALI for individual control',
-      'Smart lighting for analytics',
-      '1-10V dimming systems for reliability and cost',
+      'DALI for individual fitting control',
+      'Smart wireless lighting for analytics',
       'PoE lighting for data integration',
+      '1-10V dimming systems for reliability and cost',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'For a small warehouse with simple dimming requirements, 1-10V systems are ideal because they offer reliable, cost-effective group dimming control with minimal installation complexity and very low maintenance requirements.',
   },

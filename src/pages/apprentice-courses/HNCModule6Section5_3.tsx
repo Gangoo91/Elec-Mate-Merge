@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'mt-definition',
     question: 'What is the primary purpose of Monitoring and Targeting (M&T)?',
     options: [
-      'Loads should be distributed across phases to minimise neutral current',
-      'When you reach a cause you can actually fix at a system level (not just blame an individual)',
+      'To record total energy consumption for utility billing purposes',
+      'To switch off non-essential plant automatically at peak times',
       'To compare actual energy use against expected performance and identify variances',
-      'Reduces artificial lighting when natural daylight is sufficient',
+      'To forecast future energy prices based on market trends',
     ],
     correctIndex: 2,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'degree-day-purpose',
     question: 'Why are degree days used in energy analysis?',
     options: [
-      'Only when dead working is not practicable and properly risk assessed',
       'To normalise energy consumption for weather variations',
-      'Misleadingly low insulation resistance readings',
-      'Clear fluid leaking from the ear or nose',
+      'To count the number of days the building was occupied',
+      'To measure the internal comfort temperature directly',
+      'To record how many days the heating plant was in service',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Degree days provide a method to normalise heating or cooling energy consumption for weather variations, enabling fair comparison between different periods regardless of outdoor conditions.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'exception-reporting',
     question: 'What triggers an exception report in an M&T system?',
     options: [
-      'Elimination of 5th and 7th harmonics',
+      'The end of each calendar month regardless of consumption',
+      'A change in the published energy tariff rate',
+      'The installation of a new sub-meter on a circuit',
       'Variance exceeding predetermined threshold limits',
-      'General-purpose indoor cables (not plenum)',
-      'Protect themselves and deliver what\\\\\\\'s agreed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Exception reports are triggered when actual consumption deviates from expected values by more than predetermined threshold limits, highlighting potential problems requiring investigation.',
   },
@@ -129,9 +129,9 @@ const quizQuestions = [
       'A cusum chart shows a sudden upward step change in the line. This most likely indicates:',
     options: [
       'A specific event causing increased consumption (e.g., new equipment, system fault)',
-      'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
-      'Fraction of lumens that reach the task surface vs lost to walls/ceiling',
-      'Body language, facial expressions, tone of voice, eye contact and physical gestures',
+      'A gradual improvement in the building thermal performance',
+      'A period of consistently mild outdoor weather conditions',
+      'A meter reading taken at the wrong time of the month',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'The slope of a performance line (energy vs degree days) represents:',
     options: [
-      '5-10% variance from expected values',
-      'Energy = (Slope × Degree days) + Base load',
-      'At least 12 months to capture seasonal variations',
+      'The weather-independent base load consumption',
+      'The total energy consumed over the baseline period',
+      'The coefficient of determination of the regression',
       'Building thermal performance (weather sensitivity)',
     ],
     correctAnswer: 3,
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'What does R² (coefficient of determination) indicate in regression analysis?',
     options: [
-      'A specific event causing increased consumption (e.g., new equipment, system fault)',
-      'Building thermal performance (weather sensitivity)',
+      'The total energy consumed across the baseline period',
+      'The base load consumption at zero degree days',
       'The percentage of consumption variation explained by degree days',
-      'Investigation to identify root cause before taking action',
+      'The exception threshold at which an alert is raised',
     ],
     correctAnswer: 2,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: 'When establishing a baseline for M&T, what period should typically be used?',
     options: [
       'At least 12 months to capture seasonal variations',
-      'Building thermal performance (weather sensitivity)',
-      '5-10% variance from expected values',
-      'Investigation to identify root cause before taking action',
+      'A single representative week of consumption',
+      'The coldest month of the heating season only',
+      'Three months covering one calendar quarter',
     ],
     correctAnswer: 0,
     explanation:

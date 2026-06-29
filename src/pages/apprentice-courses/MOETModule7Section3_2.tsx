@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Who is the most appropriate person to provide a witness statement for your portfolio?',
     options: [
-      'Capturing CO2 emissions and storing them underground to prevent atmospheric release',
-      'A supervisor, qualified colleague or mentor who directly observed you performing the work activity being evidenced',
-      'It must be continuously reviewed, updated, and revised as the project progresses and circumstances change',
-      'Remove the lowest section of internal access (ladder/climb frames), display warning signs, and check weather forecasts for high winds',
+      'A family member who can vouch for your general character and work ethic',
+      'A supervisor, qualified colleague or mentor who directly observed the activity',
+      'A colleague who heard about the activity from someone else afterwards',
+      'Any member of staff in the company, whether or not they saw the work',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'witness-content',
     question: 'A good witness statement should include:',
     options: [
-      'The date and activity observed, a description of what the apprentice did, the standard of work observed, and specific KSBs demonstrated',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
-      'Liver disease, heart disease, brain damage, increased cancer risk, pancreatitis, and mental health problems',
-      'Open protocols are standardised and support multiple manufacturers, while proprietary protocols are owned by a single manufacturer',
+      'The date, the activity observed, what the apprentice did, and the standard achieved',
+      'A general statement of the apprentice’s character and timekeeping over the year',
+      'The witness’s opinion of how the apprenticeship programme could be improved',
+      'A list of the apprentice’s qualifications and previous job roles only',
     ],
     correctIndex: 0,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'witness-timing',
     question: 'When should you request witness statements during your apprenticeship?',
     options: [
-      "At every exit, and at points where direction must be indicated along escape routes",
+      "Only in the final week before your end-point assessment is booked",
       "As close to the activity as possible, while the details are fresh in both your mind and the witness's mind",
-      "Network of connected sensors and devices enabling data collection and automated control",
-      "To show the spatial relationship of all services and identify potential clashes",
+      "Only after you have completed the entire apprenticeship programme",
+      "At the very start of the apprenticeship, before you have done the work",
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'Why is it helpful to provide a template or prompts when requesting a witness statement?',
     options: [
-      'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
-      'Most witnesses are unfamiliar with apprenticeship evidence requirements, so prompts help them produce specific, structured statements that cover the information the assessor needs',
-      'The exact work to be done, who’s authorised to do it, the duration, the precautions required, and how the permit is closed off when work is finished',
-      'Oversized equipment, poor power factor, lighting left on in unoccupied areas, worn drive belts, air leaks, and equipment running outside its optimal parameters',
+      'It allows you to write the statement yourself and have the witness simply sign it',
+      'Most witnesses are unfamiliar with evidence requirements, so prompts guide a useful statement',
+      'It guarantees the witness will give you a distinction-level assessment of your work',
+      'It removes the need for the witness to have actually observed the activity at all',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'A witness statement for the EPA portfolio must be:',
     options: [
-      'Ensure power is isolated and use appropriate IP-rated equipment',
+      'Anonymous, to protect the identity of the person who observed the work',
       'Signed, dated, and from a named individual who directly observed the activity described',
-      'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
-      'A cable with three conductors total (e.g. line, neutral and CPC)',
+      'Written by the apprentice and approved verbally by the witness',
+      'Limited to a single sentence summarising the apprentice’s overall ability',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'The ideal number of witness statements in a portfolio is:',
     options: [
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
-      'Explain what the statement is for, remind them of the specific activity, and provide a template or guidance on what to include',
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
-      'Specific observable actions you took, the technical quality of your work, safety behaviours demonstrated, and the level of competence the witness assessed',
+      'Exactly one, from your direct line manager, covering your whole apprenticeship',
+      'As many as possible from a single observer, to keep the evidence consistent',
+      'Typically 3-6, from different observers covering different activities and KSBs',
+      'At least twenty, regardless of how many different activities they describe',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'When asking a supervisor for a witness statement, you should:',
     options: [
-      'Review it to confirm it covers the intended KSBs, add it to your mapping matrix, and prepare to discuss the evidenced activity in your professional discussion',
-      'Specific observable actions you took, the technical quality of your work, safety behaviours demonstrated, and the level of competence the witness assessed',
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'Explain what the statement is for, remind them of the specific activity, and provide a template or guidance on what to include',
+      'Insist they complete it on the spot, regardless of how busy they are',
+      'Write the statement yourself and ask them only to add their signature',
+      'Ask them to comment on your character rather than a specific activity',
+      'Explain its purpose, remind them of the activity, and provide a template',
     ],
     correctAnswer: 3,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       "A witness statement that says 'John is always a reliable and hardworking apprentice' is:",
     options: [
-      'Too vague — it does not describe a specific activity, observable competence, or link to KSBs',
-      'Organised with each statement linked to the relevant evidence and KSBs in your mapping matrix',
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
+      'Too vague — it describes no specific activity, competence or KSB link',
+      'Ideal, because it gives a positive overall impression of the apprentice',
+      'Acceptable, provided it is signed and dated by a named supervisor',
+      'The strongest evidence, because it covers the whole apprenticeship at once',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Witness statements from different people are valuable because:',
     options: [
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
-      'They provide multiple perspectives on your competence, cover different activities, and add credibility through independent verification',
-      'Review it to confirm it covers the intended KSBs, add it to your mapping matrix, and prepare to discuss the evidenced activity in your professional discussion',
-      'Explain the importance of the statement for your EPA, offer to provide a template, and suggest discussing the specific activity to help them recall details',
+      'They allow you to submit far more pages of evidence than a single witness would',
+      'They give multiple perspectives, cover different activities and add independent credibility',
+      'They mean the assessor does not need to ask you any questions in the discussion',
+      'They remove the requirement to keep your own work logs and reflective accounts',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'If a witness is reluctant to provide a statement, you should:',
     options: [
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
-      'Explain the importance of the statement for your EPA, offer to provide a template, and suggest discussing the specific activity to help them recall details',
-      'Specific observable actions you took, the technical quality of your work, safety behaviours demonstrated, and the level of competence the witness assessed',
+      'Write the statement on their behalf and forge their signature to save time',
+      'Report them to your training provider for failing to support your EPA',
+      'Explain its importance, offer a template, and discuss the activity to aid recall',
+      'Abandon that area of evidence completely and hope it is not assessed',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'Witness statements should be stored in your portfolio:',
     options: [
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
-      'Too vague — it does not describe a specific activity, observable competence, or link to KSBs',
-      'Organised with each statement linked to the relevant evidence and KSBs in your mapping matrix',
+      'Loose at the back of the folder with no cross-reference to anything else',
+      'Separately from the portfolio so the assessor cannot link them to your work',
+      'Only as digital copies that are deleted once the activity is complete',
+      'Linked to the relevant evidence and KSBs in your mapping matrix',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: "The witness's position or role should be recorded on the statement because:",
     options: [
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
-      'They provide multiple perspectives on your competence, cover different activities, and add credibility through independent verification',
+      'It establishes their credibility to observe and evaluate the work described',
+      'It is required so the EPAO can contact them to offer them a job',
+      'It allows the assessor to grade the witness rather than the apprentice',
+      'It replaces the need for the witness to sign and date the statement',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'A witness statement can cover:',
     options: [
-      'Explain what the statement is for, remind them of the specific activity, and provide a template or guidance on what to include',
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'Organised with each statement linked to the relevant evidence and KSBs in your mapping matrix',
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
+      'Only a single activity, never more than one, regardless of what was observed',
+      'One or more related activities the witness saw, each specifically described',
+      'Activities the witness was told about but did not see for themselves',
+      'Any activity in the standard, even those the apprentice has not yet attempted',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'After collecting a witness statement, you should:',
     options: [
-      'Explain the importance of the statement for your EPA, offer to provide a template, and suggest discussing the specific activity to help them recall details',
-      'Identify key activities in advance, brief potential witnesses beforehand, and collect statements progressively after each significant activity throughout the apprenticeship',
-      'Review it to confirm it covers the intended KSBs, add it to your mapping matrix, and prepare to discuss the evidenced activity in your professional discussion',
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
+      'File it away unread and assume it covers the evidence you need',
+      'Edit the wording yourself to make the statement sound more impressive',
+      'Review it against the intended KSBs, map it, and prepare to discuss the activity',
+      'Submit it immediately to the EPAO ahead of the rest of your portfolio',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 11,
     question: 'A witness statement is most effective when it describes:',
     options: [
-      'Review it to confirm it covers the intended KSBs, add it to your mapping matrix, and prepare to discuss the evidenced activity in your professional discussion',
-      'Enough to cover the range of KSBs in the standard, typically 3-6 from different observers covering different activities',
-      'It establishes their credibility and demonstrates they were in a position to observe and evaluate the work described',
-      'Specific observable actions you took, the technical quality of your work, safety behaviours demonstrated, and the level of competence the witness assessed',
+      'Your general attitude and enthusiasm, without reference to any specific task',
+      'How long you have worked at the company and your overall attendance record',
+      'The witness’s own qualifications and career history described in full detail',
+      'The specific actions you took, the quality of your work and your competence',
     ],
     correctAnswer: 3,
     explanation:
@@ -216,10 +216,10 @@ const quizQuestions = [
     question:
       'When planning your witness statement collection across the apprenticeship, you should:',
     options: [
-      'Identify key activities in advance, brief potential witnesses beforehand, and collect statements progressively after each significant activity throughout the apprenticeship',
-      'They provide multiple perspectives on your competence, cover different activities, and add credibility through independent verification',
-      'Explain the importance of the statement for your EPA, offer to provide a template, and suggest discussing the specific activity to help them recall details',
-      'Review it to confirm it covers the intended KSBs, add it to your mapping matrix, and prepare to discuss the evidenced activity in your professional discussion',
+      'Identify key activities early, brief witnesses, and collect statements progressively',
+      'Leave all collection until the final month and gather them in one rushed effort',
+      'Use only one witness for everything to keep the wording consistent throughout',
+      'Collect statements only for the activities you personally found easiest to perform',
     ],
     correctAnswer: 0,
     explanation:

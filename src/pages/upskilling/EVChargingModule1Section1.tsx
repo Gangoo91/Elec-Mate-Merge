@@ -17,8 +17,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m1s1-check2',
     question: 'Which connector type is the European standard for AC charging?',
-    options: ['Type 1', 'Type 2', 'CHAdeMO', 'Tesla Supercharger'],
-    correctIndex: 1,
+    options: ['Type 2', 'Type 1', 'CHAdeMO', 'CCS Combo 1'],
+    correctIndex: 0,
     explanation:
       'Type 2 (Mennekes) is the European standard for AC charging. It supports both single-phase and three-phase charging and is now mandatory for new public charging points in Europe.',
   },

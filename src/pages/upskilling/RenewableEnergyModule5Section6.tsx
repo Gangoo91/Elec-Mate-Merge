@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 570.5.1 lists ten battery selection factors (a)–(j). Which four are the SIZING-relevant ones (capacity, time, cycling)?',
     options: [
-      '(a), (b), (e), (i) — demand, voltage, coupling mode, fixed-install suitability',
-      '(a), (c), (g), (h) — nature of demand, charge/discharge TIME, charge/discharge PROFILES, load profiles + cyclic operation capability',
-      '(b), (d), (f), (j) — voltage, generation profiles, utilization voltage range, external influences',
-      '(c), (e), (g), (i) — charge/discharge time, coupling mode, charge/discharge profiles, fixed-install suitability',
+      '(a), (b), (e), (i) — demand, voltage, coupling mode and fixed-install suitability',
+      '(a), (c), (g), (h) — demand, charge/discharge time, charge/discharge profiles and cyclic operation',
+      '(b), (d), (f), (j) — voltage, generation profiles, utilisation range and external influences',
+      '(c), (e), (g), (i) — charge/discharge time, coupling mode, profiles and fixed-install suitability',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A customer picks a 10 kWh nameplate LFP pack with 80% recommended depth of discharge. How much energy can the pack USABLY deliver to the loads per full discharge?',
     options: [
-      '10 kWh — nameplate equals usable',
-      '8 kWh from the pack, then ~7.6 kWh delivered after the ~95% round-trip on discharge (LFP DC-coupled hybrid)',
-      '5 kWh — half the nameplate for safety',
-      '12 kWh — nameplate plus 20% headroom',
+      '10 kWh — nameplate equals usable, with no derating applied',
+      '8 kWh from the pack, then ~7.6 kWh delivered after the ~95% discharge round-trip',
+      '5 kWh — half the nameplate held back as a safety reserve',
+      '12 kWh — nameplate plus a 20% usable headroom margin',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A 9.5 kWh LFP pack is paired with a 5 kW hybrid inverter. The cells are rated for 0.5C continuous discharge. What is the steady-state limiting factor on discharge power?',
     options: [
-      'The inverter, because the cells can deliver 0.5C × 9.5 kWh = 4.75 kW continuously — slightly less than the inverter rating, so the pack throttles the inverter to ~4.75 kW',
-      'The DNO supply at 100 A',
-      'The MET',
-      'The Type 2 SPD on the AC side',
+      'The cells at 0.5C × 9.5 kWh = 4.75 kW continuous, throttling the higher-rated inverter',
+      'The DNO 100 A main fuse, which caps continuous discharge below the cell rating',
+      'The main earthing terminal, whose conductor sizing limits the discharge current',
+      'The Type 2 SPD on the AC side, which clamps the inverter output current',
     ],
     correctIndex: 0,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'On a UK domestic site with 5 kWp PV and 14 kWh daily load, the customer is choosing between a 9.5 kWh, a 13.5 kWh and a 19 kWh BESS. Modelling against half-hourly smart-meter data shows self-consumption rising from 30% (PV-only) to 73% (9.5 kWh), 79% (13.5 kWh), then 81% (19 kWh). What is the knee point?',
     options: [
-      'The 19 kWh option — bigger is always better',
-      'There is no knee point — self-consumption rises linearly',
-      'Around the 9.5 kWh option — beyond it, each additional kWh of BESS only buys a fraction of a percentage point of self-consumption uplift, so the extra capacity is wasted on this household pattern',
-      'The 13.5 kWh option — it is the middle one',
+      'The 19 kWh option, because a bigger pack always improves self-consumption further',
+      'There is no knee point here — self-consumption keeps rising linearly with capacity',
+      'Around 9.5 kWh — beyond it each extra kWh buys only a fraction of a point of uplift',
+      'The 13.5 kWh option, simply because it sits in the middle of the three sizes',
     ],
     correctIndex: 2,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'A UK domestic customer has 5 kWp south-facing PV (midlands), a 14 kWh average daily load, no EV, no heat pump, no time-of-use tariff. They want maximum PV self-consumption. Which BESS size is in the right ballpark per the typical UK domestic ratio?',
     options: [
-      '4.5 kWh — match daily PV-to-battery flow conservatively',
-      '9.5–10 kWh — roughly 2 kWh BESS per kWp PV, which captures the bulk of daily surplus without sizing past the knee',
-      '20 kWh — buy big and run at low DoD for cycle-life headroom',
-      '50 kWh — match annual consumption',
+      '4.5 kWh — sized conservatively to the daily PV-to-battery surplus flow',
+      '9.5–10 kWh — about 2 kWh BESS per kWp PV, capturing the bulk of daily surplus',
+      '20 kWh — sized large and run at low DoD for extra cycle-life headroom',
+      '50 kWh — sized to match the household’s total annual consumption',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,25 +109,25 @@ const quizQuestions = [
     question:
       'A customer is choosing between DC-coupled (95% round-trip) and AC-coupled (88% round-trip) for a PV-paired 10 kWh LFP install. They use 40% of PV via the battery. Annual PV = 4,200 kWh. What is the approximate energy DIFFERENCE between the two topologies per year?',
     options: [
-      'Around 12 kWh — almost nothing (4,200 × 0.40 × (0.95 − 0.88))',
-      '420 kWh',
-      '4,000 kWh',
-      'No difference — efficiency is the same',
+      'No difference — round-trip efficiency is the same for both topologies',
+      'Around 12 kWh — negligible either way',
+      'Around 120 kWh — i.e. 4,200 × 0.40 × (0.95 − 0.88), worth roughly £25–£30/yr',
+      'Around 4,000 kWh — most of the annual generation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      '4,200 kWh annual PV × 40% goes via the battery = 1,680 kWh. Efficiency delta = 95% − 88% = 7 percentage points. 1,680 × 0.07 ≈ 118 kWh — sorry, that’s 118, not 12. The correct order-of-magnitude is ~100 kWh, worth ~£25–£30/yr. The point: efficiency differences between DC and AC coupling are real but small in absolute terms — usually dwarfed by the install cost difference. Section 5.5 covers the topology choice; the efficiency arithmetic informs but rarely decides it.',
+      '4,200 kWh annual PV × 40% goes via the battery = 1,680 kWh. Efficiency delta = 95% − 88% = 7 percentage points. 1,680 × 0.07 ≈ 118 kWh — call it ~120 kWh, worth roughly £25–£30/yr. The point: efficiency differences between DC and AC coupling are real but small in absolute terms — usually dwarfed by the install cost difference. Section 5.5 covers the topology choice; the efficiency arithmetic informs but rarely decides it.',
   },
   {
     question:
       'Reg 570.5.1(g) requires sizing to take account of "battery charge and discharge profiles", specifically including C-rates and depth of discharge. Why does C-rate matter for sizing, not just performance?',
     options: [
-      'It does not — C-rate only affects performance',
-      'Because C-rate sets the maximum continuous power the pack can deliver (C-rate × capacity = power); sizing the kWh capacity without checking the C-rate limit risks under-delivering peak load when the customer wants it',
-      'Because C-rate is a DNO requirement',
-      'Because C-rate is needed for the SEG application',
+      'It does not — C-rate only affects in-service performance, never the sizing decision',
+      'Because C-rate is a mandatory DNO connection requirement under EREC G98 / G99',
+      'Because the C-rate figure must be declared on the SEG export tariff application',
+      'Because C-rate × capacity sets the maximum continuous power, so kWh alone can underdeliver peak load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 570.5.1(g) explicitly bundles C-rate with depth of discharge and rate-related ageing into the sizing decision. A 9.5 kWh pack with 0.3C continuous limit gives 2.85 kW maximum continuous discharge — fine for evening loads, marginal for an EV charger or electric shower. A 9.5 kWh pack with 0.5C gives 4.75 kW — covers more peak loads. Sizing kWh in isolation, without checking C-rate, is a recipe for a customer disappointed at the first big load event. Cert evidence bundle records the manufacturer C-rate alongside the nameplate kWh.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'A customer on Octopus Intelligent Go (7p/kWh import 23:30–05:30, ~27p peak rest of day) wants a BESS for tariff arbitrage — NO PV planned. They want to charge cheap, discharge expensive. Daily peak-hour consumption ~10 kWh. What is the sensible sizing approach?',
     options: [
-      'Size against PV generation — but there is none',
-      'Size to peak-hour consumption + round-trip + DoD: 10 kWh delivered ÷ (0.95 round-trip) ÷ (0.8 DoD) ≈ 13.2 kWh nameplate; then check whether the 6-hour cheap window can recharge it at the pack’s C-rate via the inverter',
-      'Size to total daily consumption × 7 — buy a week’s worth',
-      'Size to 5 kWh — small is safer',
+      'Work back from peak-hour energy: 10 kWh ÷ 0.95 round-trip ÷ 0.8 DoD ≈ 13.2 kWh, then check the cheap-window recharge',
+      'Size against modelled PV generation, even though no PV is planned for this site',
+      'Size to total daily consumption × 7, buying a full week of stored energy',
+      'Size to a fixed 5 kWh regardless of the load, since a smaller pack is always safer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tariff-led sizing without PV targets the peak-hour energy that you want to displace. Work backwards: 10 kWh delivered ÷ 0.95 round-trip = 10.5 kWh from the pack ÷ 0.8 DoD = 13.2 kWh nameplate. Then check the cheap-window recharge constraint: 13.2 kWh × 0.8 = 10.5 kWh to put in during 6 hours = 1.75 kW average inverter throughput — easily within a 5 kW inverter’s range, comfortably within typical LFP charge C-rate. Cert evidence bundle records the tariff and the sizing rationale per Reg 570.5.1(a)(c)(g)(h).',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'On a half-hourly smart-meter modelling exercise for a 5 kWp PV + variable BESS sizing, the customer’s self-consumption rises: 30% (PV-only) → 73% (9.5 kWh BESS) → 79% (13.5 kWh) → 81% (19 kWh). Where should the installer recommend the customer stop?',
     options: [
-      '19 kWh — bigger is always better',
-      '9.5 kWh — beyond the knee, each additional kWh buys very little; the marginal cost outweighs the marginal self-consumption uplift',
-      '13.5 kWh — the middle is always the right answer',
-      '4.5 kWh — half the smallest option',
+      '19 kWh, on the basis that a bigger pack is always the better recommendation',
+      '13.5 kWh, on the basis that the middle option is always the right answer',
+      '9.5 kWh — past the knee, each extra kWh buys little and the marginal cost outweighs it',
+      '4.5 kWh — half the smallest modelled option, to keep the cost down',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The knee on the curve is between 9.5 kWh and 13.5 kWh. Going from 9.5 to 13.5 buys 6 self-consumption points (worth perhaps ~£60–£80/yr on this load profile) for ~£2,500 in extra kit — a ~30-year payback that exceeds the warranty period. Going further still (to 19 kWh) buys 2 more points for another ~£2,000 — flatly uneconomic. Reg 570.5.1(h) load profiles + cyclic operation capability is the regulatory hook. The right recommendation is the smaller pack with the rationale captured in the cert evidence bundle. Customer can revisit if circumstances change (EV arrives, heat pump arrives, tariff arrives).',
   },

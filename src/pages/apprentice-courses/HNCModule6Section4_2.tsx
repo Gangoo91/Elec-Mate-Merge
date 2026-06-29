@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: 'What does Energy Use Intensity (EUI) measure?',
     options: [
       'Energy consumption per unit floor area per year (kWh/m²/year)',
-      'Events that are likely to happen or could reasonably be expected',
-      'Record the significant findings of the COSHH assessment in writing',
-      'Report it to their employer and seek occupational health assessment',
+      'Peak electrical demand of the building in kilowatts',
+      'Carbon emitted per kilowatt-hour of grid electricity',
+      'Total annual energy cost divided by the number of occupants',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'carbon-hierarchy',
     question: 'In the carbon reduction hierarchy, which action should be prioritised first?',
     options: [
-      'PVC degrades above 70°C — then it cracks, then it burns',
-      'Power supplied to field devices through communication cables',
+      'Purchase carbon offsets to cover residual emissions',
+      'Install renewable generation such as solar PV',
       'Reduce energy demand through fabric and efficiency',
-      'When additional insulation or identification is required',
+      'Switch the heating fuel from gas to grid electricity',
     ],
     correctIndex: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'Which document defines the methodology for calculating regulated energy in new buildings?',
     options: [
-      'Yes, but only under supervision',
-      'Building Management System',
-      'Check documentation and plan tests',
+      'CIBSE TM46 benchmarking guidance',
+      'The RICS Whole Life Carbon Assessment',
+      'BREEAM Energy category criteria',
       'SAP/SBEM (Part L compliance)',
     ],
     correctAnswer: 3,
@@ -140,25 +140,25 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'What is the UK grid electricity carbon factor used for 2025 carbon calculations?',
+    question: 'What grid electricity carbon factor does SAP 10.2 use for Part L compliance calculations?',
     options: [
-      '0.136 kgCO₂e/kWh',
-      '0.193 kgCO₂e/kWh',
-      '0.519 kgCO₂e/kWh',
       '0.233 kgCO₂e/kWh',
+      '0.136 kgCO₂e/kWh',
+      '0.519 kgCO₂e/kWh',
+      '0.314 kgCO₂e/kWh',
     ],
     correctAnswer: 1,
     explanation:
-      'The UK grid electricity carbon factor for 2025 is approximately 0.193 kgCO₂e/kWh (SAP 10.2 methodology). This represents significant decarbonisation from historical values (0.519 in 2013) due to renewable energy growth and coal phase-out.',
+      'SAP 10.2, used for Part L 2021 compliance, sets the grid electricity factor at 0.136 kgCO₂e/kWh. This is much lower than earlier figures (0.519 in 2013) and reflects renewable growth and coal phase-out; note that annual DESNZ reporting factors for actual emissions run higher than the SAP design value.',
   },
   {
     id: 6,
     question: 'Display Energy Certificates (DECs) are required for which buildings?',
     options: [
-      'Investigate, rectify, and retest before certification',
-      'Not all loads operate at maximum simultaneously',
+      'All newly constructed dwellings on completion',
+      'Any commercial building being sold or let',
       'Public buildings over 250m² frequently visited by the public',
-      'Adjusting artificial lighting based on available natural light',
+      'Industrial buildings with on-site power generation',
     ],
     correctAnswer: 2,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'Which building services system typically has the highest operational carbon impact in a UK office building?',
     options: [
-      'Basic operation verification',
-      'Cat5e or higher Ethernet cable',
+      'Fire detection and alarm systems',
+      'Lifts and escalators',
       'Space heating and cooling',
-      'Reduce current or resistance',
+      'Small power and IT equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     id: 11,
     question: "What is sub-metering's primary role in operational carbon management?",
     options: [
-      'The module\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s communication address and point configuration',
-      'Heat cannot dissipate effectively through thermal insulation',
-      'A detailed assessment focused on a particular activity or operation',
+      'To bill individual tenants for their shared landlord services',
+      'To replace the main fiscal meter for utility settlement',
+      'To verify the building meets Part L at design stage',
       'To identify consumption patterns and target reduction opportunities',
     ],
     correctAnswer: 3,

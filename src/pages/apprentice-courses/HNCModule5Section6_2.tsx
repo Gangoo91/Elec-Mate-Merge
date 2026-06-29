@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'site-diary-purpose',
     question: 'What is the primary purpose of a site diary in building services projects?',
     options: [
-      'Date, test type, results, faults, remedial action, and engineer details',
-      'To ensure exits are clearly visible and accessible during evacuation',
-      'To prevent accidents during critical shutdown procedures',
+      'To record only the defects found during quality inspections',
+      'To replace the formal weekly progress report to the client',
+      'To list the names of operatives for payroll purposes',
       'To create a contemporaneous record of daily site events',
     ],
     correctIndex: 3,
@@ -58,10 +58,10 @@ const quickCheckQuestions = [
     id: 'critical-path-definition',
     question: "What does 'critical path' mean in programme management?",
     options: [
-      'Call 999 immediately, as the pain may indicate a heart attack',
-      'A single-phase motor using a capacitor to create phase shift for starting',
+      'The shortest route a delivery vehicle can take onto the site',
+      'The activity with the largest amount of float in the programme',
       'The sequence of activities that determines project duration',
-      'Incorrect energy modelling assumptions and operational factors',
+      'The order in which trades are paid at each valuation',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What information should be recorded in a site diary every day?',
     options: [
-      'Stop. Ask for the lock-off and the prove-dead. Won’t take long.',
+      'Only the final account figures for the completed works',
       'Weather, workforce, visitors, work completed, deliveries, and issues',
-      'To verify protective devices have adequate breaking capacity',
-      'A habit triggered by a specific environment or situation rather than a time of day',
+      'A summary of the project at practical completion only',
+      'The names of any operatives who were absent that week',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a programme update meeting?',
     options: [
-      'Adding delay events to the original baseline programme to show their impact',
-      'How efficiently time is being used against the plan',
-      'A detailed short-term programme showing activities for the next 2-6 weeks',
+      'To agree the final account and release retention',
+      'To set the original baseline programme before work starts',
+      'To allocate the labour budget across each work package',
       'To review progress, update the programme, and agree recovery actions',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
       'In building services installation, what typically represents a key progress milestone?',
     options: [
       'First fix completion, pressure testing, and commissioning sign-off',
-      'The amount of time an activity can be delayed without affecting the critical path',
-      'It analyses trends and forecasts future performance',
-      'Adding delay events to the original baseline programme to show their impact',
+      'Each daily site diary entry recorded by the supervisor',
+      'The weekly delivery of materials to the site compound',
+      'The issue of every revised drawing by the design team',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'float' in programme management?",
     options: [
-      'First fix completion, pressure testing, and commissioning sign-off',
+      'The spare budget held back for unforeseen costs',
       'The amount of time an activity can be delayed without affecting the critical path',
-      'To review progress, update the programme, and agree recovery actions',
-      'Adding delay events to the original baseline programme to show their impact',
+      'The time lost each day to weather and access delays',
+      'The buffer of materials kept in stock on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does SPI (Schedule Performance Index) measure?',
     options: [
-      'The project is over budget and behind schedule',
-      'It analyses trends and forecasts future performance',
+      'How efficiently money is being spent against the budget',
+      'The number of safety incidents recorded per week',
       'How efficiently time is being used against the plan',
-      'First fix completion, pressure testing, and commissioning sign-off',
+      'The percentage of defects closed out at handover',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'When should a delay analysis be undertaken?',
     options: [
-      'To review progress, update the programme, and agree recovery actions',
-      'A detailed short-term programme showing activities for the next 2-6 weeks',
-      'To provide visual proof of conditions, progress, and issues at specific points in time',
+      'Only at practical completion when the full picture is known',
+      'At every weekly progress meeting as a standing item',
+      'Only if the client formally requests one in writing',
       'When delays occur that may affect the completion date or cause additional costs',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What is the 'impacted as-planned' method of delay analysis?",
     options: [
       'Adding delay events to the original baseline programme to show their impact',
-      'When delays occur that may affect the completion date or cause additional costs',
-      'To review progress, update the programme, and agree recovery actions',
-      'To provide visual proof of conditions, progress, and issues at specific points in time',
+      'Comparing the as-built programme with the as-planned week by week',
+      'Inserting delays into the updated programme at the date each occurred',
+      'Measuring the loss of productivity caused by disruption events',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What should be the first item discussed at a progress meeting?',
     options: [
-      'It analyses trends and forecasts future performance',
-      'The project is over budget and behind schedule',
+      'The look-ahead programme for the next four weeks',
+      'Any outstanding payment and final account matters',
       'Review of actions from the previous meeting',
-      'How efficiently time is being used against the plan',
+      'A trade-by-trade report of progress achieved',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'Why is photographic evidence important in progress monitoring?',
     options: [
-      'First fix completion, pressure testing, and commissioning sign-off',
-      'The amount of time an activity can be delayed without affecting the critical path',
-      'A detailed short-term programme showing activities for the next 2-6 weeks',
+      'It replaces the need to keep a written site diary',
+      'It is a contractual requirement under all NEC contracts',
+      'It allows progress payments to be made without inspection',
       'To provide visual proof of conditions, progress, and issues at specific points in time',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: "What is a 'look-ahead programme'?",
     options: [
       'A detailed short-term programme showing activities for the next 2-6 weeks',
-      'To provide visual proof of conditions, progress, and issues at specific points in time',
-      'First fix completion, pressure testing, and commissioning sign-off',
-      'The amount of time an activity can be delayed without affecting the critical path',
+      'The original baseline programme agreed at contract award',
+      'A forecast of the final completion date and total cost',
+      'A record of all activities already completed on site',
     ],
     correctAnswer: 0,
     explanation:

@@ -10,12 +10,12 @@ const questions = [
     question:
       'Which observation code should be used for a socket outlet with exposed live parts accessible to touch?',
     options: [
-      'C3 - Improvement recommended',
-      'C2 - Potentially dangerous',
       'C1 - Danger present',
+      'C2 - Potentially dangerous',
+      'C3 - Improvement recommended',
       'FI - Further investigation required',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
       'C1 indicates immediate danger present. Exposed live parts accessible to touch present an immediate risk of electric shock and must be addressed immediately.',
   },
@@ -25,10 +25,10 @@ const questions = [
     options: [
       'Cost estimate for repairs',
       "Client's preferred solution",
-      'Specific location and regulation reference',
       'Installation date of the equipment',
+      'Specific location and regulation reference',
     ],
-    correct: 2,
+    correct: 3,
     explanation:
       'Clear location identification and relevant regulation references provide the technical and legal foundation for any defect observation.',
   },
@@ -37,11 +37,11 @@ const questions = [
     question: 'How should inspection limitations be documented?',
     options: [
       "Generally mention 'some areas not accessible'",
-      'Only note if they affect test results',
       "Specifically detail what couldn't be accessed and why",
+      'Only note if they affect test results',
       'Include only if client requests documentation',
     ],
-    correct: 2,
+    correct: 1,
     explanation:
       'Specific documentation of limitations protects the inspector legally and helps others understand the inspection scope and any potential risks.',
   },
@@ -50,11 +50,11 @@ const questions = [
     question: 'What is the primary legal purpose of inspection documentation?',
     options: [
       'To provide cost estimates for repairs',
-      'To demonstrate professional competence and due diligence',
       'To satisfy insurance requirements only',
+      'To demonstrate professional competence and due diligence',
       'To create maintenance schedules',
     ],
-    correct: 1,
+    correct: 2,
     explanation:
       'Documentation serves as legal evidence of your professional assessment and compliance with standards, protecting both you and the client.',
   },
@@ -64,10 +64,10 @@ const questions = [
     options: [
       'When repairs are too expensive',
       'When client disagrees with findings',
-      'When full investigation is prevented by access or safety limitations',
       'When defects are older installations',
+      'When full investigation is prevented by access or safety limitations',
     ],
-    correct: 2,
+    correct: 3,
     explanation:
       'FI is used when you suspect problems but cannot fully investigate due to access limitations, safety concerns, or need for specialised equipment.',
   },
@@ -76,11 +76,11 @@ const questions = [
     question: "When should the 'LIM' observation code be used?",
     options: [
       'When equipment is limited by design',
-      'When inspection is limited by access or safety constraints',
       'When time is limited for the inspection',
+      'When inspection is limited by access or safety constraints',
       'When the client limits the scope of work',
     ],
-    correct: 1,
+    correct: 2,
     explanation:
       'LIM (Limitation) is used when the inspection cannot be completed due to access restrictions, safety constraints, or other physical limitations.',
   },
@@ -88,12 +88,12 @@ const questions = [
     id: 7,
     question: 'Which certificate should be used for replacing a single socket outlet?',
     options: [
-      'Electrical Installation Certificate (EIC)',
-      'Electrical Installation Condition Report (EICR)',
       'Minor Electrical Installation Works Certificate (MEIWC)',
+      'Electrical Installation Condition Report (EICR)',
+      'Electrical Installation Certificate (EIC)',
       'Periodic Inspection Report',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
       "A MEIWC is appropriate for small additions and alterations like replacing a single socket outlet, as it's a minor work that doesn't require a full EIC.",
   },
@@ -102,11 +102,11 @@ const questions = [
     question: "What does observation code 'NA' indicate?",
     options: [
       'Not Accessible during inspection',
-      'Not Applicable to this installation',
       'Needs Assessment by specialist',
       'No Action required',
+      'Not Applicable to this installation',
     ],
-    correct: 1,
+    correct: 3,
     explanation:
       "NA (Not Applicable) indicates that a particular requirement or regulation doesn't apply to the specific installation being inspected.",
   },
@@ -115,11 +115,11 @@ const questions = [
     question: 'How long should EICR documentation be retained?',
     options: [
       'Until the next inspection',
-      'For 3 years minimum',
       'For 6 years minimum',
+      'For 3 years minimum',
       'Permanently',
     ],
-    correct: 2,
+    correct: 1,
     explanation:
       'BS 7671 recommends retaining inspection and test records for at least 6 years, though some regulations may require longer retention periods.',
   },
@@ -127,12 +127,12 @@ const questions = [
     id: 10,
     question: "When using observation code 'NV', what must be clearly documented?",
     options: [
-      'The cost of verification',
       'Why verification could not be completed',
+      'The cost of verification',
       "The client's refusal to allow verification",
       'The age of the installation',
     ],
-    correct: 1,
+    correct: 0,
     explanation:
       "NV (Not Verified) requires clear documentation explaining why verification couldn't be completed, such as energised circuits that couldn't be safely isolated.",
   },

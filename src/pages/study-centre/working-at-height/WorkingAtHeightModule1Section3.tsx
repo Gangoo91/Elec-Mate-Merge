@@ -94,12 +94,12 @@ const quizQuestions = [
     question:
       'Which of the following is a site-specific factor that must be considered in a work at height risk assessment?',
     options: [
-      "The colour of the electrician's overalls",
-      'The brand of ladder being used',
       'The presence of overhead power lines near the work area',
-      "The electrician's star sign",
+      'The colour of the operative\'s overalls',
+      'The preferred brand of the access equipment',
+      'The day of the week the work is scheduled',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The presence of overhead power lines is a critical site-specific factor. Overhead power lines present an electrocution hazard when using ladders, scaffolds, MEWPs, or any equipment that could come into contact with or close to live conductors. This must be identified and controlled in the risk assessment.',
   },
@@ -135,11 +135,11 @@ const quizQuestions = [
       'Which of the following weather conditions is MOST likely to cause a work at height task to be stopped?',
     options: [
       'Light cloud cover',
-      'Temperatures below 15°C',
-      'High winds exceeding 23 mph with rain',
       'A sunny day with high UV levels',
+      'Mild temperatures around 15°C',
+      'High winds exceeding 23 mph with rain',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'High winds combined with rain are extremely dangerous for work at height. Wind can destabilise access equipment and catch materials like sheet metal, while rain makes surfaces slippery and reduces grip. Most work at height should be suspended when sustained wind speeds exceed approximately 23 mph (Force 5).',
   },
@@ -164,23 +164,23 @@ const quizQuestions = [
     options: [
       'The duration of the task',
       'The complexity of the electrical work',
-      "The worker's favourite football team",
       'The type of access equipment required',
+      'The make of vehicle the operative drove to site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Task-specific factors include the duration of the task, its complexity, the equipment needed, the competence required, the tools and materials that must be taken to height, and the physical demands of the work. Personal preferences unrelated to the task are not relevant factors.',
+      'Task-specific factors include the duration of the task, its complexity, the equipment needed, the competence required, the tools and materials that must be taken to height, and the physical demands of the work. Matters unrelated to the task itself, such as how the worker travelled to site, are not relevant factors.',
   },
   {
     id: 8,
     question: 'For employers with 5 or more employees, risk assessment findings must be:',
     options: [
+      'Recorded in writing and made available to those affected',
       'Memorised by the site supervisor',
       'Communicated verbally only',
-      'Recorded in writing and made available to those affected',
       'Submitted to the HSE within 24 hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under the Management of Health and Safety at Work Regulations 1999, employers with 5 or more employees must record the significant findings of their risk assessments in writing. These records must be accessible and communicated to those affected by the risks. Even for employers with fewer than 5 employees, recording findings is considered best practice.',
   },

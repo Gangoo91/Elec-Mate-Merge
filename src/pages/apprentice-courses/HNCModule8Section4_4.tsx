@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'phase-failure',
     question: 'What is single-phasing and why is it dangerous for motors?',
     options: [
-      'The patch may block energy delivery and cause a skin burn',
-      'Installations with variable speed drives and switched mode power supplies',
-      'That the earth conductor is complete from origin to final point',
+      'Running a three-phase motor on a single-phase supply by design',
+      'A momentary voltage dip that causes the motor to slow briefly',
+      'Connecting the three phases in the wrong rotation sequence',
       'Loss of one phase causing remaining windings to carry excess current',
     ],
     correctIndex: 3,
@@ -66,10 +66,10 @@ const quickCheckQuestions = [
     id: 'earth-fault',
     question: 'What is the purpose of earth fault protection on a motor circuit?',
     options: [
-      'Assign addresses systematically and label devices permanently',
-      'Take reasonable care for yourself and others, and cooperate with the system',
+      'To limit the starting current drawn by the motor windings',
+      'To prevent the motor running in the wrong direction',
       'To detect current flowing to earth indicating insulation failure',
-      'As soon as practicable before the construction phase begins',
+      'To balance the load evenly across all three phases',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the advantage of electronic overload relays over thermal types?',
     options: [
-      'All of the above may apply depending on requirements',
-      'Current at or above locked rotor current for extended period',
+      'They do not require any upstream short-circuit protection',
+      'They provide instantaneous interruption of fault currents',
       'Adjustable trip class and more accurate protection',
-      'To force investigation of the trip cause before restart',
+      'They allow the motor to start without drawing inrush current',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'Why is phase sequence (rotation) protection important for some motor applications?',
     options: [
       'It ensures correct rotation direction for pumps, fans and conveyors',
-      'Current at or above locked rotor current for extended period',
-      'To force investigation of the trip cause before restart',
-      'Adjustable trip class and more accurate protection',
+      'It prevents the motor from drawing excessive starting current',
+      'It detects the loss of one supply phase during running',
+      'It limits the winding temperature during sustained overload',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the difference between NTC and PTC thermistors in motor protection?',
     options: [
-      'It ensures correct rotation direction for pumps, fans and conveyors',
-      'Current at or above locked rotor current for extended period',
-      'A device suitable for the motor starting current characteristics',
+      'NTC measures current while PTC measures winding voltage',
+      'NTC is fitted externally while PTC is embedded in the windings',
+      'Both have identical resistance characteristics with temperature',
       'NTC resistance decreases with temperature, PTC increases sharply at trip point',
     ],
     correctAnswer: 3,
@@ -173,16 +173,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'What is the typical earth fault current setting for motor circuits in commercial installations?',
+      'Which earth fault setting typically provides fire protection for a fixed motor circuit?',
     options: [
-      'All of the above may apply depending on requirements',
-      'It ensures correct rotation direction for pumps, fans and conveyors',
-      'Adjustable trip class and more accurate protection',
-      'A device suitable for the motor starting current characteristics',
+      '100-300 mA',
+      '6-10 mA',
+      '30 mA',
+      '1-3 A',
     ],
     correctAnswer: 0,
     explanation:
-      'Earth fault settings vary by application: 30mA provides personnel protection, 100-300mA provides fire protection for fixed equipment, and higher settings may be used where nuisance tripping must be avoided. BS 7671 specifies requirements based on circuit type and location.',
+      'Earth fault settings vary by application: 30 mA provides personnel protection, while 100-300 mA is typically used to provide fire protection for fixed equipment such as motors. Higher settings may be used where nuisance tripping must be avoided.',
   },
   {
     id: 9,
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 10,
     question: 'What indicates a motor is stalling according to protection relay criteria?',
     options: [
-      'It ensures correct rotation direction for pumps, fans and conveyors',
-      'Adjustable trip class and more accurate protection',
+      'Current falling below the no-load value with the motor running',
+      'A loss of one supply phase while the motor is at full speed',
       'Current at or above locked rotor current for extended period',
-      'All of the above may apply depending on requirements',
+      'A rise in winding resistance measured by the thermistor relay',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of protective device is required for motor circuits?',
     options: [
-      'Current at or above locked rotor current for extended period',
-      'All of the above may apply depending on requirements',
-      'It ensures correct rotation direction for pumps, fans and conveyors',
+      'A Type B MCB sized exactly to the motor full load current',
+      'A 30 mA RCD as the sole means of overcurrent protection',
+      'A semi-enclosed rewireable fuse rated below the running current',
       'A device suitable for the motor starting current characteristics',
     ],
     correctAnswer: 3,
@@ -229,9 +229,9 @@ const quizQuestions = [
     question: 'What is the purpose of the manual reset function on overload relays?',
     options: [
       'To force investigation of the trip cause before restart',
-      'All of the above may apply depending on requirements',
-      'A device suitable for the motor starting current characteristics',
-      'Adjustable trip class and more accurate protection',
+      'To allow the motor to restart automatically once it has cooled',
+      'To reduce the trip class while the motor is starting',
+      'To bypass the overload protection during commissioning',
     ],
     correctAnswer: 0,
     explanation:

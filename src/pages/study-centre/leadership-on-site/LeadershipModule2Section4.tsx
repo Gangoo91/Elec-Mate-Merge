@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       "In the SBI feedback model (Situation, Behaviour, Impact), what does the 'B' (Behaviour) focus on?",
     options: [
-      "The person's attitude and personality traits",
       'What you observed the person actually do or say — factual and specific',
+      "The person's attitude and personality traits",
       "What you believe the person's intentions were",
       "How the person's behaviour compares to their colleagues",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The 'B' in SBI stands for Behaviour — what you actually OBSERVED the person do or say, not your interpretation of it. It must be factual, specific, and free from judgement. Not 'you were being disrespectful' (interpretation) but 'you interrupted Dave twice during the toolbox talk' (observable behaviour). This keeps feedback objective and defensible.",
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'It gives too much negative feedback and damages confidence',
       'It takes too long and is not practical in a busy workplace',
-      'It conditions people to hear praise as a warning signal that criticism is coming',
       'It focuses too much on future actions rather than past behaviour',
+      'It conditions people to hear praise as a warning signal that criticism is coming',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "One of the key research-based problems with the feedback sandwich is that it conditions praise as a warning signal. When people learn that praise is always followed by criticism, they stop trusting positive feedback — every time you say something nice, they brace for the 'but.' This undermines both the praise AND the critical feedback, making the entire approach counterproductive.",
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question: 'The SBI feedback model stands for:',
     options: [
       'Summary, Belief, Instruction',
-      'Situation, Behaviour, Impact',
       'Standard, Benchmark, Improvement',
       'Specific, Brief, Immediate',
+      'Situation, Behaviour, Impact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SBI stands for Situation (when and where), Behaviour (what you observed), Impact (the effect it had). Developed by the Center for Creative Leadership, it provides a factual, non-judgemental structure for giving both positive and corrective feedback.',
   },
@@ -99,14 +99,14 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is an example of GOOD SBI feedback?',
     options: [
-      "'You are always late and it is really unprofessional.'",
       "'During the toolbox talk this morning, you interrupted Dave twice, which meant the lads did not get the full safety briefing.'",
+      "'You are always late and it is really unprofessional.'",
       "'You need to improve your attitude — everyone has noticed.'",
       "'You did well today. Keep it up.'",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Option B follows the SBI model: Situation (during the toolbox talk this morning), Behaviour (you interrupted Dave twice), Impact (the lads did not get the full safety briefing). It is specific, factual, and describes observable behaviour rather than making vague judgements about attitude or character.',
+      'The statement about interrupting Dave twice during the toolbox talk follows the SBI model: Situation (during the toolbox talk this morning), Behaviour (you interrupted Dave twice), Impact (the lads did not get the full safety briefing). It is specific, factual, and describes observable behaviour rather than making vague judgements about attitude or character.',
   },
   {
     id: 3,
@@ -127,11 +127,11 @@ const quizQuestions = [
       'Why does the feedback sandwich (praise-criticism-praise) not work according to research?',
     options: [
       'It gives too much positive feedback and people become complacent',
-      'It takes too long to deliver and is impractical on a busy site',
       'The critical message gets lost, praise becomes a warning signal, and it is perceived as manipulative',
+      'It takes too long to deliver and is impractical on a busy site',
       'It only works with experienced workers, not with apprentices',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Research identifies multiple problems: the critical message gets lost due to primacy/recency effects (people remember the first and last things said), praise becomes conditioned as a warning signal ('here comes the but'), it is perceived as manipulative and formulaic, it undermines the corrective message, and there is no empirical evidence supporting its effectiveness.",
   },
@@ -140,11 +140,11 @@ const quizQuestions = [
     question: "Marshall Goldsmith's 'Feedforward' approach focuses on:",
     options: [
       'Detailed analysis of what went wrong in the past',
-      'Future-focused suggestions for improvement rather than critique of past behaviour',
       'Written feedback delivered via email to avoid face-to-face confrontation',
       'Giving feedback only after a formal review process',
+      'Future-focused suggestions for improvement rather than critique of past behaviour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Feedforward is future-focused: instead of critiquing what went wrong (which cannot be changed), it asks for suggestions about what to do differently next time. 'Tomorrow's toolbox talk — what two things could you do to make sure everyone is clear?' The only reply allowed is 'thank you.' It is particularly effective with experienced people who resist being told what they did wrong.",
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "Sir John Whitmore was emphatic that the 'W' in GROW means 'Will', not 'Wish'. The key difference is:",
     options: [
-      "'Will' means the supervisor tells the person what to do; 'Wish' means the person decides",
       "'Will' requires a firm commitment to specific action with a deadline; 'Wish' is vague",
+      "'Will' means the supervisor tells the person what to do; 'Wish' means the person decides",
       "'Will' focuses on positive outcomes; 'Wish' focuses on avoiding negative ones",
       "'Will' applies to short-term goals; 'Wish' applies to long-term aspirations",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Whitmore emphasised that 'Will' means a genuine commitment to concrete action: 'What WILL you do? By when? What might get in the way? How will you overcome that?' A 'wish' is a vague intention ('I will try to do better') with no specific action or timeline. Without firm commitment, coaching conversations produce interesting discussions but no change.",
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
     question: 'When using the SBI model for POSITIVE feedback, the most effective approach is:',
     options: [
       "Keep it vague and general — 'Good job today, well done.'",
-      'Be just as specific as with corrective feedback — describe the situation, behaviour, and positive impact',
       'Only give positive feedback in group settings to maximise its motivational effect',
+      'Be just as specific as with corrective feedback — describe the situation, behaviour, and positive impact',
       'Save positive feedback for annual performance reviews to make it more meaningful',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Positive feedback is most effective when it follows the same SBI structure as corrective feedback: specific situation, observable behaviour, and the positive impact. 'During the testing today, you spotted that loose connection and flagged it immediately, which prevented a potential fault' is far more powerful than 'good job' because the person knows exactly what they did well and why it mattered.",
   },
@@ -180,11 +180,11 @@ const quizQuestions = [
     question: 'The best time to give feedback is:',
     options: [
       'During the annual performance review',
-      'At the end of each month in a formal meeting',
       'As close to the event as possible, informally and regularly',
+      'At the end of each month in a formal meeting',
       'Only when there is a serious problem that needs addressing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Feedback is most effective when given as close to the event as possible — while the details are fresh and the person can connect the feedback to their actions. Regular, informal feedback (both positive and corrective) normalises the process and removes the anxiety associated with rare, formal feedback events. Waiting months for an annual review makes feedback far less useful.',
   },

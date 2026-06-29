@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: 'What type of output signal do most humidity sensors provide?',
     options: [
       'Digital on/off switching only',
-      'Analog signals (0-10V or 4-20mA)',
       'High-frequency pulse trains',
       '230V relay contact switching',
+      'Analog signals (0-10V or 4-20mA)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Most humidity sensors provide analog output signals (0-10V or 4-20mA) that correspond to the relative humidity percentage, allowing precise monitoring and control by the BMS.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'co2-ventilation',
     question: 'Why does a BMS increase ventilation when CO2 levels rise?',
     options: [
-      'To reduce energy consumption in the building',
       'To ensure good air quality and prevent drowsiness',
+      'To reduce overall ventilation energy consumption',
       'To lower the room temperature automatically',
-      'To activate fire safety systems',
+      'To trigger the building fire safety systems',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'When CO2 levels rise, it indicates poor air quality and insufficient fresh air. The BMS increases ventilation to bring in fresh air, maintaining good indoor air quality and preventing occupant drowsiness.',
   },

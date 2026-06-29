@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'forced-guided',
     question: 'What is the primary advantage of a safety relay module over a standard relay?',
     options: [
-      'Different light modes (paths) arriving at different times',
-      'Rejecting signals common to both input lines',
-      'Record tests performed and recommend further investigation',
+      'A higher current rating on its output contacts than a standard relay',
+      'A faster switching speed that reduces machine cycle times',
+      'A lower coil power consumption that saves energy in the control panel',
       'Forced-guided contacts providing fault detection',
     ],
     correctIndex: 3,
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'dual-channel',
     question: 'What does dual-channel monitoring mean in a safety circuit?',
     options: [
-      'Reducing heating/cooling setpoints during unoccupied periods',
+      'Two separate machines are monitored by a single safety relay',
       'Two independent signal paths monitor the same safety function',
-      'A large university campus with 850 luminaires across multiple buildings',
-      'L1, L2, L3 (with N for neutral and PE for protective earth)',
+      'The relay switches between two voltage ranges depending on the load',
+      'Two reset buttons must be pressed together to restart the machine',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'cross-fault',
     question: 'What is cross-fault detection in a dual-channel safety relay?',
     options: [
-      'Scope, findings, evidence, conclusions, and recommendations',
-      'Verified against maximum values for the protective device',
+      'Detecting that an output contactor has welded closed during operation',
+      'Detecting an open circuit in the reset button wiring before a restart',
       'Detecting a short circuit between the two input channels that could mask a fault',
-      'They compress multiple disciplines\\\\\\\' input into intensive collaborative sessions',
+      'Detecting electromagnetic interference on the safety relay supply',
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of the EDM (External Device Monitoring) feedback loop?',
     options: [
       'Confirming that external contactors have opened before allowing a reset',
-      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
-      'The body releases cortisol and adrenaline, triggering the fight-or-flight response',
-      'Not usually - unless it hides or misrepresents a dangerous condition',
+      'Boosting the output current so larger contactors can be driven directly',
+      'Synchronising the two input channels so they change state together',
+      'Logging the number of operating cycles for maintenance scheduling',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'What standard specifies requirements for safety relay modules used in safety-related control systems?',
     options: [
-      'Sustainable transportation',
+      'BS 7671 and the IET Wiring Regulations',
       'IEC 62061 and ISO 13849-1',
-      'Decreases (derating required)',
-      'Prevent dragging and abrasion',
+      'IEC 60947-2 and BS EN 60898 only',
+      'ISO 9001 and ISO 14001',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'What is the feedback loop on a safety relay used for?',
     options: [
       'Confirming that external contactors have opened before allowing a reset',
-      'The safety function is still performed despite the fault',
-      'To prevent electromagnetic interference causing false safe signals',
-      'A Pilz PNOZmulti or Sick Flexi Classic programmed with graphical safety logic',
+      'Boosting the relay output current to drive larger external contactors',
+      'Monitoring the supply voltage to the safety relay for dips and surges',
+      'Counting the number of E-stop activations for maintenance records',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the difference between automatic and monitored manual reset?',
     options: [
-      'Can handle multiple safety functions in one device with logic configuration',
+      'Automatic reset is only permitted on E-stop circuits, not on guards',
       'Monitored manual reset requires a deliberate operator action and detects stuck reset buttons',
-      'The two input channels did not change state within the defined time window, indicating a wiring fault or stuck contact',
-      'Detecting short circuits and cross-faults in the input wiring by sending test pulses',
+      'Automatic reset needs two buttons pressed together, manual reset needs one',
+      'Monitored manual reset re-enables outputs as soon as the inputs are satisfied',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'What advantage does a configurable safety controller have over individual safety relay modules?',
     options: [
-      'Monitored manual reset requires a deliberate operator action and detects stuck reset buttons',
-      'A Pilz PNOZmulti or Sick Flexi Classic programmed with graphical safety logic',
+      'It removes the need for any external contactors in the safety circuit',
+      'It does not require forced-guided contacts or dual-channel monitoring',
       'Can handle multiple safety functions in one device with logic configuration',
-      'Confirming that external contactors have opened before allowing a reset',
+      'It can be used as a standard PLC for non-safety machine control',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: "What does the term 'safe state' mean for a machine safety system?",
     options: [
-      'To prevent electromagnetic interference causing false safe signals',
-      'Can handle multiple safety functions in one device with logic configuration',
-      'The safety function is still performed despite the fault',
+      'The state in which the machine runs at its maximum rated speed',
+      'The state in which all safety devices have been bypassed for setting',
+      'The state in which the machine is fully isolated from its power supply only',
       'The state in which the machine presents no hazard to personnel',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'What is the purpose of pulse testing in safety input circuits?',
     options: [
       'Detecting short circuits and cross-faults in the input wiring by sending test pulses',
-      'A Pilz PNOZmulti or Sick Flexi Classic programmed with graphical safety logic',
-      'Contacts where NO and NC are mechanically linked so they cannot both be in the same state simultaneously',
-      'The state in which the machine presents no hazard to personnel',
+      'Periodically pulsing the output contactors to test for welded contacts',
+      'Sending a reset pulse to clear stored faults at the start of each shift',
+      'Pulsing the machine drive to confirm it stops within the safety distance',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why must safety relay wiring use separate cable runs from power wiring?',
     options: [
-      'The state in which the machine presents no hazard to personnel',
+      'To allow the safety wiring to use a smaller conductor than the power wiring',
       'To prevent electromagnetic interference causing false safe signals',
-      'Can handle multiple safety functions in one device with logic configuration',
-      'The safety function is still performed despite the fault',
+      'To make it easier to identify the safety wiring by its separate route',
+      'To reduce the volt drop on the long power cables to the motor',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'Which of these is an example of a configurable safety controller?',
     options: [
-      'The safety function is still performed despite the fault',
-      'The state in which the machine presents no hazard to personnel',
-      'Monitored manual reset requires a deliberate operator action and detects stuck reset buttons',
+      'A single-function E-stop monitoring relay with fixed internal wiring',
+      'A standard general-purpose PLC running ladder logic',
+      'A din-rail mounted contactor with auxiliary feedback contacts',
       'A Pilz PNOZmulti or Sick Flexi Classic programmed with graphical safety logic',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
       'A safety relay has locked out and the LED indicates a channel discrepancy fault. What is the most likely cause?',
     options: [
       'The two input channels did not change state within the defined time window, indicating a wiring fault or stuck contact',
-      'Detecting short circuits and cross-faults in the input wiring by sending test pulses',
-      'Contacts where NO and NC are mechanically linked so they cannot both be in the same state simultaneously',
-      'Monitored manual reset requires a deliberate operator action and detects stuck reset buttons',
+      'The supply voltage to the safety relay has dropped below its rated minimum',
+      'The output contactor has welded closed and the EDM loop has not reset',
+      'The reset button has been pressed before the safety condition was restored',
     ],
     correctAnswer: 0,
     explanation:

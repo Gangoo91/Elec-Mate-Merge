@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'What right does an employee have if they believe they are being asked to work unsafely with asbestos?',
     options: [
-      'The right to stop work and refuse to continue until the situation is resolved',
       "No right — they must follow the employer's instructions at all times",
+      'The right to stop work and refuse to continue until the situation is resolved',
       'They can only raise a concern after the work is completed',
       'They must continue working but can complain to the HSE afterwards',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Employees have the right to refuse unsafe work. If you believe you are being asked to work in a way that puts you or others at serious risk of asbestos exposure, you have the legal right to stop work. You should report your concerns to your supervisor, safety representative, or the HSE. Under the Employment Rights Act 1996, you are protected from dismissal or detriment for raising genuine health and safety concerns.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What enforcement action can the HSE take to immediately stop work where there is a risk of serious injury from asbestos exposure?',
     options: [
-      'Issue a prohibition notice, which stops work immediately',
       'Issue an improvement notice, giving 21 days to fix the problem',
       'Send an advisory letter recommending improvements',
+      'Issue a prohibition notice, which stops work immediately',
       'The HSE cannot stop work — only a court can do that',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "A prohibition notice is the HSE's most powerful enforcement tool short of prosecution. It stops work immediately where an inspector believes there is a risk of serious personal injury. Unlike an improvement notice, which allows time to make changes, a prohibition notice takes effect straight away. Ignoring a prohibition notice is a criminal offence that can result in prosecution and imprisonment.",
   },
@@ -85,8 +85,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under CAR 2012, which regulation requires employers to provide adequate information, instruction, and training on asbestos?',
-    options: ['Regulation 4', 'Regulation 10', 'Regulation 14', 'Regulation 22'],
-    correctAnswer: 1,
+    options: ['Regulation 10', 'Regulation 4', 'Regulation 14', 'Regulation 22'],
+    correctAnswer: 0,
     explanation:
       'Regulation 10 of the Control of Asbestos Regulations 2012 requires employers to ensure that adequate information, instruction, and training is given to employees who are, or may be, exposed to asbestos. This includes asbestos awareness training for all workers who may come into contact with ACMs, and more detailed training for those carrying out asbestos work.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
       'A client commissioning refurbishment work on a pre-1990 building has specific duties under which regulations?',
     options: [
       'The Management of Health and Safety at Work Regulations 1999 only',
-      'The Construction (Design and Management) Regulations 2015 (CDM 2015)',
       'RIDDOR 2013 only',
       'No specific duties — these fall to the contractor alone',
+      'The Construction (Design and Management) Regulations 2015 (CDM 2015)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under CDM 2015, the client (the person commissioning the work) has specific duties including providing pre-construction information such as asbestos survey reports, ensuring a Refurbishment & Demolition survey is carried out before work that disturbs the building fabric, and not allowing work to start until satisfied that asbestos risks have been addressed. These duties apply to commercial and domestic clients, although domestic client duties transfer to the contractor.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'What is the maximum penalty for the most serious asbestos offences prosecuted by the HSE?',
     options: [
-      'A fixed penalty of £10,000',
       'Unlimited fines for organisations, plus imprisonment for up to 2 years for individuals',
+      'A fixed penalty of £10,000',
       'A maximum fine of £50,000 and a written warning',
       'Community service only — imprisonment is not possible for health and safety offences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For the most serious asbestos offences, organisations face unlimited fines. Individual directors, managers, and other persons can face personal fines and imprisonment for up to 2 years. The courts also consider the adverse publicity and reputational damage suffered by the offender. Sentencing guidelines introduced in 2016 significantly increased the level of fines for health and safety offences, with some organisations receiving fines in the millions of pounds.',
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
     question: 'What does Fee for Intervention (FFI) mean in the context of HSE enforcement?',
     options: [
       'A fee charged to workers who request asbestos training',
-      'A fee the dutyholder/employer must pay if the HSE finds a material breach during an inspection',
       'A fee charged to the HSE by licensed asbestos contractors',
       "A voluntary contribution to the HSE's enforcement budget",
+      'A fee the dutyholder/employer must pay if the HSE finds a material breach during an inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fee for Intervention (FFI) means that if an HSE inspector identifies a material breach of health and safety law, the dutyholder or employer must pay for the time the HSE spends investigating the breach and taking enforcement action. The current rate is set by the HSE and is charged per hour. FFI applies from the point the material breach is identified. This means that poor asbestos management can cost money even before any formal enforcement action is taken.',
   },
@@ -176,7 +176,7 @@ const quizQuestions = [
     id: 8,
     question:
       'How often must detailed asbestos training (for workers who carry out asbestos work) be refreshed as a minimum?',
-    options: ['Every year', 'Every 2 years', 'Every 3 years', 'Every 5 years'],
+    options: ['Every year', 'Every 5 years', 'Every 3 years', 'Every 2 years'],
     correctAnswer: 2,
     explanation:
       'Workers who carry out asbestos work (beyond basic awareness) must receive a full refresher of their detailed asbestos training every 3 years as a minimum. Asbestos awareness training (for those who may encounter but not work with ACMs) should be refreshed annually. Licensed workers must maintain their training as a condition of their licence. These refresher requirements are not optional — they are a legal requirement under Regulation 10 of CAR 2012.',

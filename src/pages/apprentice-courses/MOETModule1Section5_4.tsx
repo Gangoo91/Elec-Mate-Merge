@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'epa-1990',
     question: 'What is the primary purpose of the Environmental Protection Act 1990?',
     options: [
-      'Your business details, client details, unique number, date, description of work, amount, VAT if applicable',
+      'To set the minimum energy efficiency standards for new and existing buildings',
       'To provide the framework for waste management, contaminated land control and statutory nuisance, protecting the environment from pollution',
-      'Assessed for replacement — silver or silver-alloy contacts should not be filed as this removes the contact material',
-      'A periodic assessment of calibration intervals based on drift data, reliability trends, and risk to optimise the frequency of calibration',
+      'To regulate the handling and recovery of fluorinated greenhouse gases such as SF6',
+      'To establish the net zero greenhouse gas emissions target for the UK',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Under the F-Gas Regulations, what is required when maintaining switchgear containing SF6?',
     options: [
-      'Deliberately limiting screen time and digital device use to reduce stimulation and allow genuine mental recovery',
-      'Prize winnings are completely tax-free, unlike savings interest which is taxable above the Personal Savings Allowance',
+      'SF6 may be vented to atmosphere provided the area is well ventilated',
+      'SF6 must be replaced with nitrogen at every scheduled maintenance visit',
       'SF6 must be recovered by certified personnel, leaks detected and repaired, and records maintained',
-      'Elimination (isolate if possible), engineering (barriers), administrative (permit), PPE',
+      'SF6 equipment can be worked on by any competent electrician without certification',
     ],
     correctIndex: 2,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'What is the minimum secondary containment requirement for oil storage under the Oil Storage Regulations?',
     options: [
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
-      'Analysis of historical failure data, condition monitoring trends, KPI performance and cost data to optimise maintenance strategies',
-      'A bund capable of containing 110% of the volume of the largest container or 25% of the total volume, whichever is greater',
+      'A bund capable of containing 50% of the volume of the largest container',
+      'A drip tray capable of holding 10% of the total volume of oil stored',
+      'A bund capable of containing 100% of the total volume of all containers',
+      'A bund holding 110% of the largest container, or 25% of the total volume',
     ],
     correctIndex: 3,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'If transformer oil spills into a surface water drain during maintenance, what should you do FIRST?',
     options: [
-      'Manufacturer instructions, safety data sheets, accident records, industry guidance, and worker input',
-      'Explain each step as you perform it, including the safety reason for the step and any relevant regulation',
-      'Contain the spill to prevent further spread, prevent oil entering the drain, and notify the Environment Agency immediately',
-      'Electrical equipment, hot surfaces, friction, static electricity, hot work (welding/cutting), radiant heat, and naked flames',
+      'Dilute the oil with water and flush it through the drain to disperse it',
+      'Apply detergent to break up the oil so it washes away more easily',
+      'Contain the spill, keep oil out of the drain and notify the Environment Agency',
+      'Leave the spill to evaporate and record it in the site diary after the shift',
     ],
     correctIndex: 2,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'The Environment Act 2021 introduced several new environmental provisions. Which of the following is a key feature?',
     options: [
-      'They must assist the client in providing pre-construction information and ensure it is provided to every designer and contractor',
-      'It established the Office for Environmental Protection (OEP) as an independent body to scrutinise environmental law and policy',
-      'Delayed gratification — the ability to resist an immediate reward in favour of a larger future benefit, which predicted better life outcomes decades later',
-      'A ratchet hydraulic crimper with the correct hex die for the lug barrel size — applies the manufacturer-specified compression force, releases only at full crimp.',
+      'It abolished the Environmental Protection Act 1990 and replaced it entirely',
+      'It set up the Office for Environmental Protection as an independent watchdog',
+      'It transferred all environmental enforcement powers to local authorities',
+      'It removed the requirement for environmental permits on industrial sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     id: 3,
     question: 'Building Regulations Part L relates to:',
     options: [
-      'Gives itemised rates for common MEP components with labour constants',
-      'As soon as practicable before the construction phase begins',
-      'To ensure they point in the correct direction towards actual exits',
+      'Fire safety — means of escape and fire-resisting construction',
+      'Ventilation — air supply rates and condensation control in buildings',
+      'Electrical safety — design and installation of fixed wiring',
       'Conservation of fuel and power — energy efficiency requirements for buildings',
     ],
     correctAnswer: 3,
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Under the Control of Pollution (Oil Storage) Regulations, which of the following applies to transformer oil storage?',
     options: [
-      'Identification of environmental risks, pollution prevention measures, waste management procedures, emergency response plans, and monitoring arrangements',
-      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
-      'At specified intervals depending on the quantity of SF6, by certified personnel, with records maintained for at least 5 years',
-      'The Control of Noise at Work Regulations 2005 (occupational) and the Environmental Protection Act 1990 Part III (environmental/nuisance)',
+      'Oil may be stored in any container provided it is kept under cover from rain',
+      'Oil must sit in impermeable bunds, with secure fittings, clear of drains',
+      'Oil must be removed from the site at the end of every working day',
+      'Oil storage is exempt from regulation if the total volume is below 1,000 litres',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'The Environmental Permitting (England and Wales) Regulations 2016 require an environmental permit for:',
     options: [
-      'Stop work immediately, do not disturb the material, secure the area, and report to your supervisor and the duty holder for the building',
-      'At specified intervals depending on the quantity of SF6, by certified personnel, with records maintained for at least 5 years',
-      'Activities that have the potential to pollute the environment, including waste operations, industrial emissions, water discharge and flood risk activities',
-      'The Control of Noise at Work Regulations 2005 (occupational) and the Environmental Protection Act 1990 Part III (environmental/nuisance)',
+      'Any electrical work carried out on a commercial or industrial premises',
+      'The storage of any quantity of oil or fuel on a construction site',
+      'Activities that may pollute: waste, emissions, discharge and flood risk',
+      'The installation of renewable energy systems above a certain capacity',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 7,
     question: 'Noise from electrical maintenance activities is regulated under:',
     options: [
-      'Stop work immediately, do not disturb the material, secure the area, and report to your supervisor and the duty holder for the building',
-      'Activities that have the potential to pollute the environment, including waste operations, industrial emissions, water discharge and flood risk activities',
-      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
-      'The Control of Noise at Work Regulations 2005 (occupational) and the Environmental Protection Act 1990 Part III (environmental/nuisance)',
+      'The Control of Noise at Work Regulations 2005 only, covering worker exposure',
+      'The Environmental Protection Act 1990 Part III only, covering statutory nuisance',
+      'The Health and Safety at Work etc. Act 1974, Section 2, exclusively',
+      'Both the Noise at Work Regulations 2005 and EPA 1990 Part III together',
     ],
     correctAnswer: 3,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'A site environmental management plan (SEMP) for a maintenance project should include:',
     options: [
-      'Identification of environmental risks, pollution prevention measures, waste management procedures, emergency response plans, and monitoring arrangements',
-      'Stop work immediately, do not disturb the material, secure the area, and report to your supervisor and the duty holder for the building',
-      'Activities that have the potential to pollute the environment, including waste operations, industrial emissions, water discharge and flood risk activities',
-      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
+      'Environmental risks, prevention measures, waste, emergency and monitoring plans',
+      'A schedule of all the electrical test results recorded during the works',
+      'The commercial pricing and payment terms agreed with the client',
+      'The competence and training records of every operative on the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'If you discover asbestos-containing material while carrying out electrical maintenance in an older building, you should:',
     options: [
-      'The Control of Noise at Work Regulations 2005 (occupational) and the Environmental Protection Act 1990 Part III (environmental/nuisance)',
-      'Stop work immediately, do not disturb the material, secure the area, and report to your supervisor and the duty holder for the building',
-      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
-      'Identification of environmental risks, pollution prevention measures, waste management procedures, emergency response plans, and monitoring arrangements',
+      'Carefully remove the material yourself and bag it as hazardous waste',
+      'Stop, do not disturb it, secure the area and report to the duty holder',
+      'Dampen the material with water to suppress dust and continue working around it',
+      'Continue the work but wear a dust mask and wash your hands afterwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 10,
     question: 'Corporate environmental responsibility for a maintenance company includes:',
     options: [
-      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
-      'Licence checks, insurance, MOT, vehicle inspection, mobile phone use, fatigue management — all part of the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duty under HASAWA s.3 to others',
-      'Complying with legislation, implementing an environmental management system, setting improvement targets, training staff, reporting performance and engaging with the supply chain on environmental standards',
-      'Create a private, safe environment, express what you have observed factually, reassure confidentiality within safety limits, and leave the door open for future conversations',
+      'Meeting only the minimum legal requirements and nothing further',
+      'Delegating all environmental duties to a single appointed officer',
+      'Compliance plus a management system, targets, training and supply-chain action',
+      'Focusing solely on carbon reduction while ignoring waste and pollution',
     ],
     correctAnswer: 2,
     explanation:
@@ -222,10 +222,10 @@ const quizQuestions = [
     question:
       'Under the F-Gas Regulations, leak checks on switchgear containing SF6 must be carried out:',
     options: [
-      'At specified intervals depending on the quantity of SF6, by certified personnel, with records maintained for at least 5 years',
-      'The Control of Noise at Work Regulations 2005 (occupational) and the Environmental Protection Act 1990 Part III (environmental/nuisance)',
-      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
-      'Activities that have the potential to pollute the environment, including waste operations, industrial emissions, water discharge and flood risk activities',
+      'At intervals set by gas quantity, by certified staff, records kept 5 years',
+      'Only once, when the equipment is first installed and commissioned',
+      'Every five years regardless of the quantity of gas in the equipment',
+      'Only when a fault or low-pressure alarm is indicated by the equipment',
     ],
     correctAnswer: 0,
     explanation:

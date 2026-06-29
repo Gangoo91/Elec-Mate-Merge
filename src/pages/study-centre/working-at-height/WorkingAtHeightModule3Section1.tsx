@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations, which type of protection must always be considered first?',
     options: [
-      'Personal fall protection',
       'Collective fall prevention',
+      'Personal fall protection',
       'Administrative controls',
       'Warning signs',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The hierarchy of control requires collective protection measures — those that protect everyone without individual action — to be considered before personal protection systems.',
   },
@@ -47,8 +47,8 @@ const quickCheckQuestions = [
     id: 'qc3',
     question:
       'What is the maximum fall distance permitted when safety netting complies with EN 1263?',
-    options: ['2 metres', '4 metres', '6 metres', '10 metres'],
-    correctIndex: 2,
+    options: ['2 metres', '6 metres', '4 metres', '10 metres'],
+    correctIndex: 1,
     explanation:
       'Safety nets complying with EN 1263 must be installed so the maximum fall distance from the working level to the net does not exceed 6 metres.',
   },
@@ -84,8 +84,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which British Standard covers the requirements for temporary edge protection systems (guard rails)?',
-    options: ['BS EN 12811', 'BS EN 13374', 'BS EN 1263', 'BS EN 795'],
-    correctAnswer: 1,
+    options: ['BS EN 13374', 'BS EN 12811', 'BS EN 1263', 'BS EN 795'],
+    correctAnswer: 0,
     explanation:
       'BS EN 13374 specifies the requirements and test methods for temporary edge protection systems used during construction and maintenance work.',
   },
@@ -100,8 +100,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which of the following is NOT an example of collective fall prevention?',
-    options: ['Guard rails', 'Safety netting', 'A full body harness', 'Safety decking'],
-    correctAnswer: 2,
+    options: ['Guard rails', 'A full body harness', 'Safety netting', 'Safety decking'],
+    correctAnswer: 1,
     explanation:
       'A full body harness is personal fall protection equipment. Collective measures — guard rails, netting, decking — protect everyone in the area without individual equipment.',
   },
@@ -109,8 +109,8 @@ const quizQuestions = [
     id: 4,
     question:
       'At approximately what height should the mid rail be positioned on a standard guard rail system?',
-    options: ['250 mm', '350 mm', '470 mm', '600 mm'],
-    correctAnswer: 2,
+    options: ['250 mm', '350 mm', '600 mm', '470 mm'],
+    correctAnswer: 3,
     explanation:
       'The intermediate (mid) rail should be positioned at approximately 470 mm — roughly halfway between the toe board and top rail — to prevent a person falling between the two.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'Safety nets complying with EN 1263 are positioned to catch a person who has fallen. What is the key advantage of safety netting over personal harnesses?',
     options: [
-      'Netting is cheaper to purchase',
       'Netting protects everyone in the work area without individual training or equipment',
+      'Netting is cheaper to purchase',
       'Netting allows a longer fall distance',
       'Netting can be re-used indefinitely without inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The main advantage is that netting provides collective protection — it safeguards every person working above it without requiring them to wear, inspect, or correctly use personal equipment.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
     question: 'What is the primary purpose of safety decking installed below a working level?',
     options: [
       'To provide additional storage space for tools',
-      'To prevent falls through openings in the working platform',
       'To reduce noise from work above',
+      'To prevent falls through openings in the working platform',
       'To provide a walkway for site visitors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety decking is a close-boarded platform installed below the working level. Its primary purpose is to prevent people and materials from falling through gaps, openings, or incomplete floor areas.',
   },
@@ -147,11 +147,11 @@ const quizQuestions = [
       'When using scaffolding as collective fall prevention, what TWO features are essential for it to serve this purpose?',
     options: [
       'Painted uprights and weather sheeting',
-      'Properly boarded platforms and full guard railing',
       'Ladder access and a loading bay',
       'Brick guards and debris netting only',
+      'Properly boarded platforms and full guard railing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scaffolding functions as collective protection when it has fully boarded working platforms (so no one can fall through) and compliant guard railing with top rail, mid rail, and toe board around all open edges.',
   },
@@ -159,8 +159,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Which class of guard rail system under BS EN 13374 is designed to resist dynamic forces from a person falling down a sloped surface?',
-    options: ['Class A', 'Class B', 'Class C', 'Class D'],
-    correctAnswer: 2,
+    options: ['Class A', 'Class C', 'Class B', 'Class D'],
+    correctAnswer: 1,
     explanation:
       'BS EN 13374 defines three classes: Class A for flat/low-slope surfaces (static loads only), Class B for slopes where a person could slide towards the edge (limited dynamic loads), and Class C for steep slopes where a falling person generates significant dynamic forces.',
   },

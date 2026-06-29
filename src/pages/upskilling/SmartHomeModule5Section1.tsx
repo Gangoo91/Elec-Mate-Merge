@@ -24,10 +24,10 @@ const quickCheckQuestions = [
   {
     question: 'Why should temporary PIN codes have an expiry time?',
     options: [
-      'To save battery power',
-      'To reduce memory usage',
+      'To reduce wear on the keypad over repeated use',
+      'To free up code slots so more permanent users can be added',
       'To prevent unauthorised access after the intended period',
-      'To comply with Bluetooth standards',
+      'To keep the access log short enough to store locally',
     ],
     correctAnswer: 2,
     explanation:
@@ -51,8 +51,8 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     question: 'Which smart lock type completely replaces the existing lock mechanism?',
-    options: ['Retrofit lock', 'Full replacement lock', 'Keypad overlay', 'Cylinder adapter'],
-    correctAnswer: 1,
+    options: ['Full replacement lock', 'Retrofit lock', 'Keypad overlay', 'Cylinder adapter'],
+    correctAnswer: 0,
     explanation:
       'Full replacement smart locks replace the entire lock mechanism with an integrated smart unit, often including a keypad or fingerprint reader.',
   },
@@ -77,18 +77,18 @@ const quizQuestions = [
   },
   {
     question: 'Which protocol allows local control without internet dependency?',
-    options: ['Cloud API', 'Z-Wave or Zigbee', 'HTTPS', 'SMS messaging'],
-    correctAnswer: 1,
+    options: ['Cloud API', 'A REST webhook', 'A manufacturer cloud bridge', 'Z-Wave or Zigbee'],
+    correctAnswer: 3,
     explanation:
       'Z-Wave and Zigbee protocols enable local mesh communication with a hub, allowing smart lock operation even without internet connectivity.',
   },
   {
     question: 'What should be verified before installing a smart lock on a fire door?',
     options: [
-      'Battery capacity',
-      'Colour matching',
+      'That the lock has the longest available battery life',
+      'That the keypad backlight does not exceed the door rating',
       'Fire door certification compliance',
-      'Voice assistant compatibility',
+      'That the lock supports the customer\'s preferred voice assistant',
     ],
     correctAnswer: 2,
     explanation:

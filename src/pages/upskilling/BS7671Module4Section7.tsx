@@ -26,10 +26,10 @@ const inlineChecks = [
     id: 'm4s7-prosumer-meaning',
     question: "What does 'prosumer' mean in the BS 7671 context (Reg 826 / GN3 'PEIs')?",
     options: [
-      'A professional consumer of premium electrical products',
-      'A user whose electrical installation BOTH consumes electricity from the grid AND produces / exports electricity to the grid (or to local energy storage) — typically via solar PV, wind, battery storage, or EV vehicle-to-grid',
-      'Any installation with three-phase supply',
-      'A commercial customer on a half-hourly tariff',
+      'A professional consumer of premium electrical products and services',
+      'A user whose installation both consumes electricity from the grid and produces or exports it back',
+      'Any installation supplied by a three-phase 400 V grid connection',
+      'A commercial customer billed on a half-hourly import tariff',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const inlineChecks = [
     question:
       'Reg 419 (new in A4:2026) covers situations where automatic disconnection is NOT FEASIBLE. Which of the following triggers it?',
     options: [
-      'Any circuit feeding sensitive electronics',
-      'Either (a) electronic equipment with limited short-circuit current is installed, or (b) the required disconnection times cannot be achieved by a protective device — Reg 419.1 lists these specific cases',
-      'Only EV charging circuits',
-      'Any TT system',
+      'Any circuit feeding sensitive electronic equipment downstream',
+      'Electronic equipment with limited short-circuit current, or unachievable disconnection times',
+      'Only dedicated EV charging circuits on a domestic supply',
+      'Any installation forming part of a TT earthing system',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const inlineChecks = [
     question:
       'Reg 419.2 sets a voltage limit for installations with power electronic converters where ADS is not feasible. What does the source voltage need to be reduced to?',
     options: [
-      '230 V AC',
-      '50 V AC / 120 V DC ripple-free — i.e. extra-low voltage band I — within a defined time',
-      '110 V AC',
-      'No voltage limit applies',
+      '230 V AC, the standard UK nominal supply voltage',
+      '50 V AC / 120 V DC ripple-free — band I — within a defined time',
+      '110 V AC, the reduced low-voltage site supply level',
+      'No voltage limit applies once a converter is fitted',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const inlineChecks = [
     question:
       'On the DC side of a PV array, what does BS 7671 require of the overcurrent protective devices?',
     options: [
-      'Standard unidirectional MCBs are sufficient',
-      'Devices shall be BIDIRECTIONAL — they must provide overcurrent protection for currents flowing in either direction, because PV strings can deliver fault current FROM the panels and battery storage on a hybrid system can deliver fault current TOWARD the panels',
-      'Only fuses are permitted',
-      'No overcurrent protection is required on DC',
+      'Standard unidirectional MCBs are sufficient on the DC side',
+      'Devices shall be bidirectional, protecting against fault current flowing in either direction',
+      'Only HRC fuses are permitted, never circuit-breakers',
+      'No overcurrent protection is required on the DC side at all',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const inlineChecks = [
     question:
       "A power conversion equipment (PCE — typically the inverter / charger / rectifier) does NOT provide simple separation between its AC and DC sides, and the manufacturer hasn't stated Type B is unnecessary. What RCD type is required?",
     options: [
-      'Type AC',
-      'Type A',
-      'Type B per BS EN 62423 or BS EN 60947-2 — required because smooth DC residual currents can be produced and would blind a Type A device',
-      'No RCD needed',
+      'Type AC, detecting alternating residual currents only',
+      'Type A, detecting AC and pulsating DC residual currents',
+      'Type B per BS EN 62423 or 60947-2, for smooth DC residual currents',
+      'No RCD is needed where a PCE is present',
     ],
     correctIndex: 2,
     explanation:
@@ -96,10 +96,10 @@ const inlineChecks = [
     question:
       'Reg 551.7.1 has been redrafted in recent amendments. What does the new indent (d) prohibit?',
     options: [
-      'Connecting a generator to the line side of an RCD',
-      "Connecting a source (e.g. a generator, inverter, battery) to the LOAD SIDE of an RCD — because energy flow from the source can defeat the RCD's residual-current detection",
-      'Three-phase prosumer installations',
-      'Any battery storage',
+      'Connecting a generator to the line side of an upstream RCD',
+      'Connecting a source (generator, inverter, battery) to the load side of an RCD',
+      'Three-phase prosumer installations with multiple sources',
+      'Any battery storage connected to a domestic supply',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const inlineChecks = [
     question:
       'On a TN-C-S (PME) supply, an EV charging circuit must comply with Reg 722.312.2.1 (A4). What does that regulation prohibit?',
     options: [
-      'RCD additional protection',
-      'Including a PEN conductor in the EV charging circuit — instead, either provide a TN-S configuration (split N and PE before the EV circuit) or apply alternative protective measures like an open-PEN detection device',
-      'Type B RCDs',
-      'Earthing of the EV chassis',
+      'Using RCD additional protection on the EV final circuit',
+      'Including a PEN conductor in the EV charging circuit on a TN system',
+      'Fitting a Type B RCD on the EV charging final circuit',
+      'Earthing the EV chassis through the charging equipment',
     ],
     correctIndex: 1,
     explanation:
@@ -127,24 +127,24 @@ const quizQuestions = [
     question:
       'A standard domestic install has solar PV with battery storage. The battery operates in self-consumption mode (charges from PV, discharges to local load). Why does BS 7671 treat this as a "prosumer" installation?',
     options: [
-      'Because it has a battery',
-      'Because energy can flow in both directions across the installation boundary — PV exports to the grid when the battery is full, and the battery itself moves energy from / to the AC side',
-      'Because solar is renewable',
-      'Because it has a smart meter',
+      'Because energy can flow in both directions across the installation boundary',
+      'Because it has a battery fitted in the consumer unit enclosure',
+      'Because solar is a renewable, low-carbon generation source',
+      'Because it has a smart meter recording half-hourly consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Prosumer (PEI in GN3) is defined by bidirectional energy flow across the installation. When PV produces more than the load consumes and the battery is full, surplus exports to the grid — bidirectional flow at the cut-out. When the battery charges from PV during the day and discharges to AC loads in the evening, energy flows internally across the inverter in both directions at different times. Both characteristics trigger the bidirectional protection requirements.',
+      'Prosumer (PEI in GN3) is defined by bidirectional energy flow across the installation, not merely by the presence of a battery, renewable source or smart meter. When PV produces more than the load consumes and the battery is full, surplus exports to the grid — bidirectional flow at the cut-out. When the battery charges from PV during the day and discharges to AC loads in the evening, energy flows internally across the inverter in both directions at different times. Both characteristics trigger the bidirectional protection requirements.',
   },
   {
     id: 2,
     question:
       'The new Reg 419 group in A4:2026 provides alternative protective measures where ADS is not feasible. Which of the following is one of those alternative measures?',
     options: [
-      'Increasing the cable size',
-      'Reducing the source output voltage to within band I (≤ 50 V AC / 120 V DC) within a specified time — Reg 419.2',
-      'Switching to a TT system',
-      'Adding more RCDs in series',
+      'Increasing the cable cross-sectional area to lower loop impedance',
+      'Reducing the source output voltage to within band I within a specified time',
+      'Switching the affected circuits to a TT earthing arrangement',
+      'Adding a second RCD in series to share the residual current',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       "A hybrid solar-PV / battery installation has a transformerless inverter with no internal galvanic separation between AC and DC sides. The manufacturer's installation manual is silent on RCD type. What does BS 7671 require?",
     options: [
-      'Type AC RCD',
-      'Type A RCD',
-      "Type B RCD per BS EN 62423 or BS EN 60947-2 — when a PCE doesn't provide simple separation AND the manufacturer doesn't explicitly state that Type B is unnecessary, Type B is mandatory",
-      'No RCD requirement',
+      'Type AC RCD on the AC supply circuit',
+      'Type A RCD on the AC supply circuit',
+      'Type B RCD per BS EN 62423 or BS EN 60947-2',
+      'No RCD is required on a transformerless inverter',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'Reg 530.3.201 places a mandatory consideration on equipment selection for prosumer installations. What is it?',
     options: [
-      'Cable size',
-      'Take account of appropriate use of either a unidirectional protective device or a bidirectional protective device — the directional characteristics of the protection must match the bidirectional energy flow',
-      'Cable colour',
-      'Operating temperature only',
+      'Select the cable cross-sectional area for the export current',
+      'Identify circuits by an approved cable-colour scheme',
+      'Verify the operating temperature of every protective device',
+      'Take account of appropriate use of a unidirectional or bidirectional protective device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 530.3.201: selection and erection of protective equipment shall take account of appropriate use of either unidirectional or bidirectional devices. In a prosumer installation where energy can flow in both directions, a unidirectional device (typical traditional MCB / fuse) may operate correctly when current flows in the design direction but fail when current flows in the reverse direction. The regulation requires installers to consciously consider the directional characteristic — a mandatory part of equipment selection, not optional.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'A 7 kW solar PV system is being added to an existing TN-C-S domestic property. The G98 connection certificate has been issued. What is the BS 7671 requirement around the inverter-grid interface?',
     options: [
-      'Just connect to the spare way in the consumer unit',
-      "The G98 spec defines the grid-interface protection (LoM detection, voltage/frequency limits, anti-islanding). BS 7671 then governs the AC side cable, OCPD coordination, RCD type per the inverter's PCE separation, and ensures the bidirectional energy flow is appropriately protected per Reg 551.7.1",
-      "G98 alone is sufficient — BS 7671 doesn't apply",
-      'Always Type B RCD upstream',
+      'G98 defines the grid interface; BS 7671 governs the installation-side AC protection',
+      'Connect the inverter to the nearest spare way in the consumer unit',
+      'G98 alone is sufficient and BS 7671 does not apply to the AC side',
+      'A Type B RCD upstream is always mandatory regardless of the inverter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'G98 (single-phase ≤ 16 A per phase) and G99 (above 16 A) are the DNO-side connection standards — they cover the grid-interface requirements: anti-islanding, voltage / frequency / phase windows for connection, loss-of-mains (LoM) detection. They do NOT replace BS 7671 — they sit alongside it. BS 7671 governs the installation-side AC cabling, OCPD coordination, RCD selection per PCE characteristics, the prohibition of source-on-load-side-of-RCD (Reg 551.7.1(d)), and the cert-form recording. Both certificates are issued: G98 by the installer to the DNO; EIC by the installer to the customer.',
   },
@@ -197,10 +197,10 @@ const quizQuestions = [
     question:
       'A vehicle-to-home (V2H) EV charger is being installed — the EV battery can power the home during a grid outage. From a BS 7671 perspective, what changes vs a standard charge-only EV install?',
     options: [
-      'No difference',
-      'The EV is now a SOURCE as well as a load — it flows energy into the home installation. The bidirectional flow triggers Reg 530.3.201 (bidirectional protection consideration), Reg 551.7.1 (parallel-source requirements), and the existing Reg 722.312.2.1 PEN prohibition for EV circuits on TN supplies. The whole installation is now a prosumer (PEI)',
-      'Only the cable changes',
-      'It becomes exempt from BS 7671',
+      'No difference from a charge-only installation',
+      'The EV is now a source as well as a load, making the installation a prosumer',
+      'Only the supply cable size needs to be increased',
+      'The EV circuit becomes exempt from BS 7671 requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,12 +211,12 @@ const quizQuestions = [
     question:
       'Per Reg 570.6.8.203, every PCE (power conversion equipment) requires a specific warning notice. What does it say?',
     options: [
-      "'High voltage — keep clear'",
-      "'WARNING — Isolate both AC and DC sides before servicing' — because the PCE has live energy on both sides and isolating one does not de-energise the other",
-      "'Do not touch'",
-      "'For trained personnel only'",
+      "'High voltage — keep clear of the enclosure'",
+      "'Do not touch — risk of electric shock'",
+      "'WARNING — Isolate both AC and DC sides before servicing'",
+      "'For trained personnel only — no unauthorised access'",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 570.6.8.203 requires every PCE to carry a warning notice: 'WARNING — Isolate both AC and DC sides before servicing' (or words to similar effect). The reason is the PCE's bidirectional nature — isolating only the AC side leaves the DC side (PV strings, battery) live; isolating only the DC side leaves the AC side (grid, loads) live. Maintenance staff must explicitly isolate BOTH. The notice is part of the install spec — fit it during commissioning, check for it on every EICR.",
   },
@@ -225,12 +225,12 @@ const quizQuestions = [
     question:
       "A domestic battery storage installation has the battery's PCE connected directly to the consumer unit's main busbar — line side of all the RCBOs. The installer has put a Type AC RCBO on the battery circuit because that's what was in the cabinet. What's wrong?",
     options: [
-      'Nothing — Type AC is fine',
-      "Two issues. (1) Reg 551.7.1(d): the PCE is on the load side of any RCD that protects it — wrong topology, source must be on line side of any final-circuit RCD (which it appears to be) but the RCBO on the battery's own circuit creates a similar problem. (2) The battery's PCE may not provide simple separation, in which case Type B is required, not Type AC. Always default to Type B unless the manufacturer's manual specifically states otherwise",
-      'Only the cable size is wrong',
-      'Earthing is the issue',
+      'Nothing is wrong — Type AC is acceptable on a battery circuit',
+      'Only the supply cable cross-sectional area is incorrect',
+      'The earthing arrangement at the battery is the sole issue',
+      'Type AC is the wrong type for a transformerless battery PCE, and the source topology must be checked against Reg 551.7.1(d)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Two real issues. (1) Topology: Reg 551.7.1(d) bans source on load side of an RCD. A standard domestic CU layout has each circuit's RCBO between the source (battery) and the rest of the installation — meaning the battery is on the line side of the CIRCUIT'S RCD but on the load side of any whole-house RCD. Designers must verify the topology end-to-end. (2) RCD type: Type AC is the wrong default for a battery PCE. Most domestic transformerless inverters require Type B unless the manufacturer states otherwise. Type AC was probably specified by habit; the regulation requires the design to follow the load characteristics, not the cabinet stock.",
   },

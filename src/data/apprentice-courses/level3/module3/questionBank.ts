@@ -264,10 +264,10 @@ export const module3Questions: Question[] = [
     id: 18,
     question: 'What is resistivity?',
     options: [
-      'The ratio of true power to apparent power (cos φ)',
-      'Sum of voltages around a closed loop equals zero',
+      'The total resistance of a complete circuit',
+      'The resistance of a conductor per metre of length',
       'A material property indicating how strongly it opposes current flow',
-      'Smoother power delivery and more efficient for motors',
+      'The opposition a conductor offers only to alternating current',
     ],
     correctAnswer: 2,
     explanation:
@@ -339,9 +339,9 @@ export const module3Questions: Question[] = [
     id: 23,
     question: 'In a parallel circuit, voltage across each branch is:',
     options: [
-      'Approximately 8.66A',
-      'The turns ratio (N2/N1)',
-      'Phase rotation indicator/meter',
+      'Divided equally between the branches',
+      'Highest in the branch with most resistance',
+      'Proportional to each branch resistance',
       'The same for all branches',
     ],
     correctAnswer: 3,
@@ -519,12 +519,12 @@ export const module3Questions: Question[] = [
       'A motor is 85% efficient and produces 2kW of mechanical output. What electrical power does it consume?',
     options: [
       '1.7kW',
-      '1.7kW',
+      '1.85kW',
       '2kW',
       '2.35kW',
     ],
     correctAnswer: 3,
-    explanation: 'Input Power = Output Power / Efficiency = 2000W / 0.85 = 2,353W ≈ 2.35kW',
+    explanation: 'Input Power = Output Power / Efficiency = 2000W / 0.85 = 2,353W ≈ 2.35kW. A common error is multiplying (2000 × 0.85 = 1.7kW) instead of dividing.',
     section: '3.1',
     difficulty: 'intermediate',
   },
@@ -594,9 +594,9 @@ export const module3Questions: Question[] = [
     question: 'What is RMS voltage?',
     options: [
       'The DC equivalent that produces the same heating effect',
-      'To maintain constant magnetic flux and prevent motor overheating',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Current-carrying conductor in a magnetic field experiences a force',
+      'The maximum instantaneous value the waveform reaches',
+      'The average value of the waveform over one cycle',
+      'The total swing from positive peak to negative peak',
     ],
     correctAnswer: 0,
     explanation:
@@ -608,10 +608,10 @@ export const module3Questions: Question[] = [
     id: 41,
     question: 'What is the relationship between RMS and peak values for a sine wave?',
     options: [
-      'Current decreases proportionally',
+      'Vrms = Vp × √2 (or Vp × 1.414)',
       'Vrms = Vp / √2 (or Vp × 0.707)',
-      'Three phases plus neutral',
-      'Typically 0.9 or 0.95 lagging minimum',
+      'Vrms = Vp × 2 (twice the peak)',
+      'Vrms = Vp × π/2 (or Vp × 1.571)',
     ],
     correctAnswer: 1,
     explanation:
@@ -638,9 +638,9 @@ export const module3Questions: Question[] = [
     id: 43,
     question: 'What is inductive reactance?',
     options: [
-      'To provide a return path for unbalanced currents and single-phase loads',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'By adding capacitors to counteract inductive reactive power',
+      'Opposition of an inductor to DC, increasing with current',
+      'Opposition of an inductor to AC, decreasing with frequency',
+      'The resistance of the inductor winding at rest',
       'Opposition of an inductor to AC, increasing with frequency',
     ],
     correctAnswer: 3,
@@ -682,10 +682,10 @@ export const module3Questions: Question[] = [
     id: 46,
     question: 'What is capacitive reactance?',
     options: [
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'Opposition of a capacitor to AC, increasing with frequency',
+      'Opposition of a capacitor to DC, independent of frequency',
       'Opposition of a capacitor to AC, decreasing with frequency',
-      'Sum of voltages around a closed loop equals zero',
+      'The leakage resistance of the capacitor dielectric',
     ],
     correctAnswer: 2,
     explanation:
@@ -756,9 +756,9 @@ export const module3Questions: Question[] = [
     id: 51,
     question: 'What is impedance?',
     options: [
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Moving a conductor through a magnetic field induces an EMF',
-      'A motor using permanent magnets instead of electromagnetic field windings',
+      'Opposition to current from resistance only',
+      'Opposition to current from reactance only',
+      'The phase angle between voltage and current',
       'Total opposition to AC, combining resistance and reactance',
     ],
     correctAnswer: 3,
@@ -814,9 +814,9 @@ export const module3Questions: Question[] = [
     id: 55,
     question: 'What is reactive power?',
     options: [
-      'Reducing starting current of large three-phase motors',
-      'Sum of voltages around a closed loop equals zero',
-      'Ingress Protection - protection against solid objects and liquids',
+      'Power converted to heat in resistive elements',
+      'The total power drawn from the supply in VA',
+      'The useful mechanical or thermal power delivered to a load',
       'Power stored and returned by inductors and capacitors',
     ],
     correctAnswer: 3,
@@ -830,9 +830,9 @@ export const module3Questions: Question[] = [
     question: 'What is apparent power?',
     options: [
       'V × I (the product of RMS voltage and current)',
-      'Lagging, typically 0.8-0.9 at full load',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Typically 0.9 or 0.95 lagging minimum',
+      'V × I × cos φ (the power doing useful work)',
+      'V × I × sin φ (the power stored and returned)',
+      'The difference between true and reactive power',
     ],
     correctAnswer: 0,
     explanation:
@@ -903,10 +903,10 @@ export const module3Questions: Question[] = [
     id: 61,
     question: 'What is resonance in an AC circuit?',
     options: [
-      'Opposition of a capacitor to AC, decreasing with frequency',
+      'When resistance equals the total reactance',
       'When inductive reactance equals capacitive reactance',
-      'Total opposition to AC, combining resistance and reactance',
-      'The difference between synchronous speed and actual rotor speed',
+      'When the supply frequency reaches its maximum',
+      'When current and voltage are 90° out of phase',
     ],
     correctAnswer: 1,
     explanation:
@@ -948,9 +948,9 @@ export const module3Questions: Question[] = [
     question: 'What is the skin effect in AC conductors?',
     options: [
       'Tendency for AC current to flow near the conductor surface',
-      'A device that reduces starting current by gradually increasing voltage',
-      'Power stored and returned by inductors and capacitors',
-      'The reciprocal of resistance, measured in siemens (S)',
+      'Tendency for AC current to concentrate at the conductor centre',
+      'Surface heating of insulation caused by high frequency',
+      'Loss of insulation resistance due to surface moisture',
     ],
     correctAnswer: 0,
     explanation:
@@ -1174,9 +1174,9 @@ export const module3Questions: Question[] = [
     id: 79,
     question: 'What is the main advantage of three-phase over single-phase power?',
     options: [
-      'Adjusting the turns ratio to regulate output voltage',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'V × I (the product of RMS voltage and current)',
+      'It removes the need for any earth connection',
+      'It operates safely at a lower voltage than single-phase',
+      'It eliminates the need for protective devices',
       'Smoother power delivery and more efficient for motors',
     ],
     correctAnswer: 3,
@@ -1190,9 +1190,9 @@ export const module3Questions: Question[] = [
     question: 'What is a balanced three-phase load?',
     options: [
       'Equal load on each phase with equal phase angles',
-      'As close to the inductive load as possible',
-      'Simple, robust, low maintenance, and lower cost',
-      'The effect of harmonic distortion on total power factor',
+      'A load connected across all three phases and neutral',
+      'A load where two phases carry equal current and one carries none',
+      'A load that automatically switches between phases',
     ],
     correctAnswer: 0,
     explanation:
@@ -1219,10 +1219,10 @@ export const module3Questions: Question[] = [
     id: 82,
     question: 'What is the purpose of the neutral conductor in a three-phase system?',
     options: [
-      'It reduces neutral current, voltage imbalance and supply losses',
-      'No changing current means no changing magnetic field, so no induced voltage',
+      'To carry the earth fault current back to the supply',
+      'To balance the load equally across the three phases',
       'To provide a return path for unbalanced currents and single-phase loads',
-      'Current-carrying conductor in a magnetic field experiences a force',
+      'To increase the line voltage available to loads',
     ],
     correctAnswer: 2,
     explanation:
@@ -1234,9 +1234,9 @@ export const module3Questions: Question[] = [
     id: 83,
     question: 'What is phase rotation (phase sequence)?',
     options: [
-      'Photovoltaic effect in a semiconductor p-n junction',
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'By adding capacitors to counteract inductive reactive power',
+      'The speed at which the supply alternates in hertz',
+      'The 120° displacement between any two phases',
+      'The direction a three-phase motor physically spins',
       'The order in which the three phases reach their peak values',
     ],
     correctAnswer: 3,
@@ -1264,10 +1264,10 @@ export const module3Questions: Question[] = [
     id: 85,
     question: 'What is a star-delta starter used for?',
     options: [
-      'Photovoltaic effect in a semiconductor p-n junction',
+      'Reversing the direction of a three-phase motor',
       'Reducing starting current of large three-phase motors',
-      'Sum of voltages around a closed loop equals zero',
-      'Rotor with aluminium or copper bars short-circuited by end rings',
+      'Increasing the running speed of a motor above synchronous',
+      'Converting a single-phase supply to three-phase',
     ],
     correctAnswer: 1,
     explanation:
@@ -1333,7 +1333,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'For unbalanced loads, neutral current requires vector addition of the three phase currents. Simple calculation gives approximately 8.66A for this example.',
+      'For unbalanced loads displaced by 120°, neutral current is the phasor sum: IN = √[(I1²+I2²+I3²) − (I1·I2+I2·I3+I3·I1)] = √[(900+400+625) − (600+500+750)] = √75 ≈ 8.66A.',
     section: '3.3',
     difficulty: 'advanced',
   },
@@ -1431,9 +1431,9 @@ export const module3Questions: Question[] = [
     question: 'What instrument measures phase rotation?',
     options: [
       'Phase rotation indicator/meter',
-      'Three phases with no neutral',
-      '2πf (radians per second)',
-      '70-95% depending on size and type',
+      'A clamp meter on the neutral conductor',
+      'An insulation resistance tester',
+      'A two-pole voltage indicator',
     ],
     correctAnswer: 0,
     explanation:
@@ -1445,10 +1445,10 @@ export const module3Questions: Question[] = [
     id: 97,
     question: 'What is an unbalanced load?',
     options: [
-      'By adding capacitors to counteract inductive reactive power',
+      'A load drawing the same current on every phase',
       'A load with unequal current draw on each phase',
-      'Direction of induced EMF in a generator',
-      'A motor that runs at exactly synchronous speed',
+      'A load connected only between two phases',
+      'A load that draws no current from the neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -1460,10 +1460,10 @@ export const module3Questions: Question[] = [
     id: 98,
     question: 'What problems can phase unbalance cause in three-phase motors?',
     options: [
-      'No changing current means no changing magnetic field, so no induced voltage',
-      'Rotational force produced by the motor, measured in Nm',
+      'Increased speed and improved efficiency',
+      'Reduced starting current and smoother running',
       'Increased heating, reduced torque, and potential motor damage',
-      'Smoother power delivery and more efficient for motors',
+      'A higher power factor and lower running current',
     ],
     correctAnswer: 2,
     explanation:
@@ -1617,9 +1617,9 @@ export const module3Questions: Question[] = [
     question: 'What causes eddy current losses in transformers?',
     options: [
       'Circulating currents induced in the iron core',
-      'A load with unequal current draw on each phase',
-      'Simple, robust, low maintenance, and lower cost',
-      'When copper losses equal iron losses',
+      'Resistance of the copper primary and secondary windings',
+      'Repeated reversal of magnetic domains in the core',
+      'Leakage of magnetic flux into the surrounding air',
     ],
     correctAnswer: 0,
     explanation:
@@ -1631,10 +1631,10 @@ export const module3Questions: Question[] = [
     id: 109,
     question: 'How are eddy current losses minimised?',
     options: [
-      'A DC motor without brushes, using electronic commutation',
+      'Using a solid one-piece iron core',
       'Using laminated cores (thin insulated sheets)',
-      'Reducing starting current of large three-phase motors',
-      'Equal load on each phase with equal phase angles',
+      'Operating the transformer on direct current',
+      'Increasing the supply frequency to the core',
     ],
     correctAnswer: 1,
     explanation:
@@ -1646,10 +1646,10 @@ export const module3Questions: Question[] = [
     id: 110,
     question: 'What are hysteresis losses in transformers?',
     options: [
-      'Smoother power delivery and more efficient for motors',
-      'The reciprocal of resistance, measured in siemens (S)',
+      'Energy lost as heat in the resistance of the windings',
+      'Energy lost through circulating currents in the core',
       'Energy lost in repeatedly magnetising and demagnetising the core',
-      'A load with unequal current draw on each phase',
+      'Energy lost through magnetic flux leaking into the air',
     ],
     correctAnswer: 2,
     explanation:
@@ -1661,9 +1661,9 @@ export const module3Questions: Question[] = [
     id: 111,
     question: 'What is the purpose of an isolation transformer?',
     options: [
-      'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
-      'Lower power factor means transformer handles more kVA for the same kW delivered',
+      'To step the voltage up for long-distance transmission',
+      'To smooth a pulsating DC supply into clean DC',
+      'To correct a lagging power factor on the supply',
       'To provide electrical isolation between primary and secondary with no voltage change',
     ],
     correctAnswer: 3,
@@ -1677,9 +1677,9 @@ export const module3Questions: Question[] = [
     question: "Why can't transformers work with DC?",
     options: [
       'No changing current means no changing magnetic field, so no induced voltage',
-      'Energy lost in repeatedly magnetising and demagnetising the core',
-      'A meter measuring reactive energy consumption over time',
-      'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
+      'DC voltage is always too low to magnetise the core',
+      'The core saturates instantly and rejects all current',
+      'DC reverses the polarity of the secondary winding',
     ],
     correctAnswer: 0,
     explanation:
@@ -1691,10 +1691,10 @@ export const module3Questions: Question[] = [
     id: 113,
     question: 'What is a current transformer (CT) used for?',
     options: [
-      'An electronic device that controls motor speed by varying the supply frequency',
+      'Stepping high voltage down for measurement and protection',
       'Measuring high currents by stepping them down to a safe measurable level',
-      'A motor using permanent magnets instead of electromagnetic field windings',
-      'Sum of individual demands × appropriate diversity factors',
+      'Limiting fault current in a high-voltage circuit',
+      'Correcting power factor on a heavily loaded feeder',
     ],
     correctAnswer: 1,
     explanation:
@@ -1706,10 +1706,10 @@ export const module3Questions: Question[] = [
     id: 114,
     question: 'Why must a CT secondary never be open-circuited while energised?',
     options: [
-      'Current-carrying conductor in a magnetic field experiences a force',
-      'The effect of harmonic distortion on total power factor',
+      'The primary current drops suddenly to zero',
+      'The meter reading reverses polarity',
       'Dangerous high voltages develop that can damage insulation and harm personnel',
-      'Direct-On-Line starting - connecting the motor directly to full supply voltage',
+      'The core demagnetises and the CT loses calibration permanently',
     ],
     correctAnswer: 2,
     explanation:
@@ -1721,9 +1721,9 @@ export const module3Questions: Question[] = [
     id: 115,
     question: 'What is a voltage transformer (VT/PT) used for?',
     options: [
-      'Total opposition to AC, combining resistance and reactance',
-      'To maintain constant magnetic flux and prevent motor overheating',
-      'Sum of individual demands × appropriate diversity factors',
+      'Stepping high current down to a measurable level',
+      'Providing electrical isolation with no change in voltage',
+      'Correcting voltage drop on a long distribution cable',
       'Stepping down high voltage for measurement and protection circuits',
     ],
     correctAnswer: 3,
@@ -1737,9 +1737,9 @@ export const module3Questions: Question[] = [
     question: 'What is an auto-transformer?',
     options: [
       'A transformer with a single winding serving as both primary and secondary',
-      'The order in which the three phases reach their peak values',
-      'To maintain constant magnetic flux and prevent motor overheating',
-      'Direction of force on a current-carrying conductor in a magnetic field (motor action)',
+      'A transformer that automatically adjusts its output voltage to the load',
+      'A transformer with fully separate, electrically isolated windings',
+      'A transformer that converts AC to DC for automotive use',
     ],
     correctAnswer: 0,
     explanation:
@@ -1751,10 +1751,10 @@ export const module3Questions: Question[] = [
     id: 117,
     question: 'What advantage does an auto-transformer have?',
     options: [
-      'Energy lost in repeatedly magnetising and demagnetising the core',
+      'Complete electrical isolation between input and output',
       'Smaller, lighter, cheaper, and more efficient for small voltage changes',
-      'Multiply tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
-      'Direct-On-Line starting - connecting the motor directly to full supply voltage',
+      'The ability to operate directly from a DC supply',
+      'A fixed output voltage regardless of the input',
     ],
     correctAnswer: 1,
     explanation:
@@ -1766,10 +1766,10 @@ export const module3Questions: Question[] = [
     id: 118,
     question: 'What is voltage regulation in transformers?',
     options: [
-      'Power factor determined by the phase angle between fundamental voltage and current',
-      'A transformer with a single winding serving as both primary and secondary',
+      'The ratio of secondary to primary turns',
+      'The maximum continuous current the secondary can deliver',
       'The change in secondary voltage from no-load to full-load, expressed as a percentage',
-      'A device that reduces starting current by gradually increasing voltage',
+      'The percentage of input power lost as heat in the core',
     ],
     correctAnswer: 2,
     explanation:
@@ -1781,9 +1781,9 @@ export const module3Questions: Question[] = [
     id: 119,
     question: 'What is transformer impedance (Z%)?',
     options: [
-      'The order in which the three phases reach their peak values',
-      'By reducing current flow for the same real power, current squared losses decrease',
-      'To protect the motor from excessive current that could cause overheating',
+      'The ratio of iron losses to copper losses at full load',
+      'The percentage of rated current drawn when the secondary is open',
+      'The turns ratio expressed as a percentage of the primary',
       'The percentage voltage drop at full load due to resistance and reactance',
     ],
     correctAnswer: 3,
@@ -1811,10 +1811,10 @@ export const module3Questions: Question[] = [
     id: 121,
     question: 'What is a three-phase transformer connection Dy11?',
     options: [
-      "Stepping down high voltage for measurement and protection circuits",
+      "Star primary, delta secondary with no phase shift",
       "Delta primary, star secondary with 11 o'clock phase shift",
-      "True power divided by apparent power (cos φ)",
-      "The reciprocal of resistance, measured in siemens (S)",
+      "Delta primary, delta secondary with 1 o'clock phase shift",
+      "Star primary, star secondary with 180° phase shift",
     ],
     correctAnswer: 1,
     explanation:
@@ -1841,9 +1841,9 @@ export const module3Questions: Question[] = [
     id: 123,
     question: 'What is a tap changer used for?',
     options: [
-      'A load with unequal current draw on each phase',
-      'The ratio of true power to apparent power (cos φ)',
-      'Ingress Protection - protection against solid objects and liquids',
+      'Switching the transformer between AC and DC operation',
+      'Disconnecting the transformer under fault conditions',
+      'Cooling the windings by circulating insulating oil',
       'Adjusting the turns ratio to regulate output voltage',
     ],
     correctAnswer: 3,
@@ -1857,9 +1857,9 @@ export const module3Questions: Question[] = [
     question: 'What is the kVA rating of a transformer?',
     options: [
       'Its maximum continuous apparent power output',
-      'Power stored and returned by inductors and capacitors',
-      'A load with unequal current draw on each phase',
-      'Sum of voltages around a closed loop equals zero',
+      'Its real power output in kilowatts at unity power factor',
+      'The reactive power it stores in its magnetic core',
+      'The power lost as heat in the core and windings',
     ],
     correctAnswer: 0,
     explanation:
@@ -1884,10 +1884,10 @@ export const module3Questions: Question[] = [
     id: 126,
     question: 'What is the principle of motor operation?',
     options: [
-      'Equal load on each phase with equal phase angles',
-      'Sum of individual demands × appropriate diversity factors',
+      'Moving a conductor through a magnetic field induces an EMF',
+      'A changing current induces a voltage in a nearby winding',
       'Current-carrying conductor in a magnetic field experiences a force',
-      'To provide a return path for unbalanced currents and single-phase loads',
+      'Opposite electric charges attract and like charges repel',
     ],
     correctAnswer: 2,
     explanation:
@@ -1899,9 +1899,9 @@ export const module3Questions: Question[] = [
     id: 127,
     question: 'What is the principle of generator operation?',
     options: [
-      'Resistance increases as temperature increases',
-      'When inductive reactance equals capacitive reactance',
-      'True power divided by apparent power (cos φ)',
+      'A current-carrying conductor in a magnetic field feels a force',
+      'A steady current produces a steady magnetic field',
+      'Heat applied to a junction of two metals produces a voltage',
       'Moving a conductor through a magnetic field induces an EMF',
     ],
     correctAnswer: 3,
@@ -1915,9 +1915,9 @@ export const module3Questions: Question[] = [
     question: "What does Fleming's Left Hand Rule determine?",
     options: [
       'Direction of force on a current-carrying conductor in a magnetic field (motor action)',
-      'The change in secondary voltage from no-load to full-load, expressed as a percentage',
-      'Converting kinetic energy back to electrical energy during deceleration',
-      'A single-phase motor using a capacitor to create phase shift for starting',
+      'Direction of induced EMF when a conductor moves in a field (generator action)',
+      'The magnitude of the force on a conductor in a magnetic field',
+      'The direction of magnetic flux around a current-carrying conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -1929,10 +1929,10 @@ export const module3Questions: Question[] = [
     id: 129,
     question: "What does Fleming's Right Hand Rule determine?",
     options: [
-      'Sum of voltages around a closed loop equals zero',
+      'Direction of force on a conductor carrying current (motor action)',
       'Direction of induced EMF in a generator',
-      'A load with unequal current draw on each phase',
-      'V × I (the product of RMS voltage and current)',
+      'The direction of magnetic flux inside a solenoid',
+      'The polarity of a charged capacitor plate',
     ],
     correctAnswer: 1,
     explanation:
@@ -1944,10 +1944,10 @@ export const module3Questions: Question[] = [
     id: 130,
     question: 'What is an induction motor?',
     options: [
-      "Direct-On-Line starting - connecting the motor directly to full supply voltage",
-      "To maintain constant magnetic flux and prevent motor overheating",
+      "A motor whose rotor is fed with current through brushes and slip rings",
+      "A motor that runs at exactly synchronous speed with no slip",
       "A motor where the rotor current is induced by the stator's rotating magnetic field",
-      "To reduce I²R transmission losses by reducing current for the same power",
+      "A motor using permanent magnets in the rotor with electronic commutation",
     ],
     correctAnswer: 2,
     explanation:
@@ -1959,9 +1959,9 @@ export const module3Questions: Question[] = [
     id: 131,
     question: 'What is synchronous speed?',
     options: [
-      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
-      'A material property indicating how strongly it opposes current flow',
-      'A device that reduces starting current by gradually increasing voltage',
+      'The actual running speed of the rotor under full load',
+      'The speed at which the motor draws its lowest current',
+      'The maximum speed before the motor overheats',
       'The speed of the rotating magnetic field, determined by supply frequency and number of poles',
     ],
     correctAnswer: 3,
@@ -1988,10 +1988,10 @@ export const module3Questions: Question[] = [
     id: 133,
     question: 'What is slip in an induction motor?',
     options: [
-      'Capacitors installed to improve power factor by supplying reactive power locally',
+      'The mechanical wear between the rotor and bearings',
       'The difference between synchronous speed and actual rotor speed',
-      'No changing current means no changing magnetic field, so no induced voltage',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
+      'The amount the rotor speed exceeds synchronous speed',
+      'The phase difference between stator current and voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -2018,9 +2018,9 @@ export const module3Questions: Question[] = [
     id: 135,
     question: 'Why does an induction motor need slip to operate?',
     options: [
-      'Converting kinetic energy back to electrical energy during deceleration',
-      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
+      'Slip allows the rotor to run faster than the rotating field',
+      'Slip reduces the starting current drawn at switch-on',
+      'Slip keeps the power factor close to unity at all loads',
       'Without slip, there would be no relative motion between rotor and field, so no induced current',
     ],
     correctAnswer: 3,
@@ -2034,9 +2034,9 @@ export const module3Questions: Question[] = [
     question: 'What type of rotor does a squirrel cage motor have?',
     options: [
       'Rotor with aluminium or copper bars short-circuited by end rings',
-      'No changing current means no changing magnetic field, so no induced voltage',
-      'Adjusting the turns ratio to regulate output voltage',
-      'Simple, robust, low maintenance, and lower cost',
+      'Rotor with insulated windings connected to external slip rings',
+      'Rotor made from permanent magnets bonded to a steel core',
+      'Rotor with a commutator and carbon brushes',
     ],
     correctAnswer: 0,
     explanation:
@@ -2048,10 +2048,10 @@ export const module3Questions: Question[] = [
     id: 137,
     question: 'What is the advantage of a squirrel cage motor?',
     options: [
-      'The reciprocal of resistance, measured in siemens (S)',
+      'Easily adjustable speed via external rotor resistance',
       'Simple, robust, low maintenance, and lower cost',
-      'A load with unequal current draw on each phase',
-      'Sum of individual demands × appropriate diversity factors',
+      'Very high starting torque with low starting current',
+      'Runs at exactly synchronous speed with no slip',
     ],
     correctAnswer: 1,
     explanation:
@@ -2079,9 +2079,9 @@ export const module3Questions: Question[] = [
     id: 139,
     question: 'What is a Variable Frequency Drive (VFD)?',
     options: [
-      'Slight voltage rise due to reduced voltage drop from lower reactive current',
-      'The change in secondary voltage from no-load to full-load, expressed as a percentage',
-      'To provide a return path for unbalanced currents and single-phase loads',
+      'A resistor bank that limits motor starting current',
+      'A mechanical gearbox that varies output shaft speed',
+      'A transformer that steps motor voltage up and down',
       'An electronic device that controls motor speed by varying the supply frequency',
     ],
     correctAnswer: 3,
@@ -2095,9 +2095,9 @@ export const module3Questions: Question[] = [
     question: 'Why is V/f ratio kept constant in VFD control?',
     options: [
       'To maintain constant magnetic flux and prevent motor overheating',
-      'The order in which the three phases reach their peak values',
-      'A single-phase motor using a capacitor to create phase shift for starting',
-      'Energy lost in repeatedly magnetising and demagnetising the core',
+      'To keep the motor power factor at unity across the speed range',
+      'To allow the motor to run faster than synchronous speed',
+      'To eliminate the need for any overload protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -2109,10 +2109,10 @@ export const module3Questions: Question[] = [
     id: 141,
     question: 'What is a soft starter?',
     options: [
-      'Smoother power delivery and more efficient for motors',
+      'A device that connects the motor straight to full supply voltage',
       'A device that reduces starting current by gradually increasing voltage',
-      'A motor where the rotor current is induced by the stator\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rotating magnetic field',
-      'The order in which the three phases reach their peak values',
+      'A device that varies motor speed by changing supply frequency',
+      'A device that reverses the phase rotation for braking',
     ],
     correctAnswer: 1,
     explanation:
@@ -2124,10 +2124,10 @@ export const module3Questions: Question[] = [
     id: 142,
     question: 'What is the main function of motor starters?',
     options: [
-      'To safely discharge stored energy when disconnected, preventing shock hazard',
-      'Stepping down high voltage for measurement and protection circuits',
+      'To correct the lagging power factor of the motor',
+      'To convert the AC supply into DC for the windings',
       'To provide starting, stopping, protection, and sometimes speed control',
-      'When inductive reactance equals capacitive reactance',
+      'To step the supply voltage down for the motor windings',
     ],
     correctAnswer: 2,
     explanation:
@@ -2139,9 +2139,9 @@ export const module3Questions: Question[] = [
     id: 143,
     question: 'What is DOL starting?',
     options: [
-      'The ratio of the sum of harmonic powers to the fundamental power',
-      'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'Maximum temperature rating of 155°C for the winding insulation',
+      'Starting in star then switching to delta when up to speed',
+      'Gradually ramping voltage up with a thyristor soft starter',
+      'Starting through a step-down auto-transformer tapping',
       'Direct-On-Line starting - connecting the motor directly to full supply voltage',
     ],
     correctAnswer: 3,
@@ -2155,9 +2155,9 @@ export const module3Questions: Question[] = [
     question: 'What is the purpose of a motor overload relay?',
     options: [
       'To protect the motor from excessive current that could cause overheating',
-      'A motor using permanent magnets instead of electromagnetic field windings',
-      'The steady current producing the same heating effect as the intermittent load',
-      'Reducing starting current of large three-phase motors',
+      'To detect earth faults and provide additional shock protection',
+      'To limit the high inrush current during starting only',
+      'To correct the power factor of the motor circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2169,10 +2169,10 @@ export const module3Questions: Question[] = [
     id: 145,
     question: 'What is the difference between overload and short circuit protection?',
     options: [
-      'By reducing current flow for the same real power, current squared losses decrease',
+      'Overload protects against high fault currents; short circuit protects against sustained moderate overcurrent',
       'Overload protects against moderate sustained overcurrent; short circuit protects against very high fault currents',
-      'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
-      'Without slip, there would be no relative motion between rotor and field, so no induced current',
+      'Overload protects against earth faults; short circuit protects against overvoltage transients',
+      'There is no difference - both trip instantly on any current above the rated value',
     ],
     correctAnswer: 1,
     explanation:
@@ -2184,10 +2184,10 @@ export const module3Questions: Question[] = [
     id: 146,
     question: 'What is motor power factor typically like?',
     options: [
-      'A load with unequal current draw on each phase',
-      '60 seconds to discharge to <50V',
+      'Leading, typically 0.8-0.9 at full load',
+      'Unity at all loads because motors are resistive',
       'Lagging, typically 0.8-0.9 at full load',
-      '70-95% depending on size and type',
+      'Lagging, but highest when the motor is lightly loaded',
     ],
     correctAnswer: 2,
     explanation:
@@ -2199,9 +2199,9 @@ export const module3Questions: Question[] = [
     id: 147,
     question: 'What is motor efficiency typically?',
     options: [
-      'P = √3 × VL × IL × cos(φ)',
-      'Lagging, typically 0.8-0.9 at full load',
-      'Phase rotation indicator/meter',
+      '30-50% depending on size and type',
+      '50-65% depending on size and type',
+      'Always 100% as motors do not dissipate heat',
       '70-95% depending on size and type',
     ],
     correctAnswer: 3,
@@ -2215,9 +2215,9 @@ export const module3Questions: Question[] = [
     question: 'What are motor IE efficiency classes?',
     options: [
       'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
-      'Increased heating, reduced torque, and potential motor damage',
-      'The effect of harmonic distortion on total power factor',
-      'Stepping down high voltage for measurement and protection circuits',
+      'Insulation Endurance classes rating winding temperature limits',
+      'Ingress Enclosure classes rating dust and water protection',
+      'Inrush Energy classes rating the motor starting current',
     ],
     correctAnswer: 0,
     explanation:
@@ -2229,10 +2229,10 @@ export const module3Questions: Question[] = [
     id: 149,
     question: 'What is a single-phase induction motor?',
     options: [
-      'Converting kinetic energy back to electrical energy during deceleration',
+      'A motor that runs only on a three-phase supply',
       'A motor designed to run on single-phase supply using starting mechanisms',
-      'Energy lost in repeatedly magnetising and demagnetising the core',
-      'To safely discharge stored energy when disconnected, preventing shock hazard',
+      'A motor that runs on DC using a commutator and brushes',
+      'A motor that runs at exactly synchronous speed with no slip',
     ],
     correctAnswer: 1,
     explanation:
@@ -2244,10 +2244,10 @@ export const module3Questions: Question[] = [
     id: 150,
     question: 'What is a capacitor-start motor?',
     options: [
-      'A meter measuring reactive energy consumption over time',
-      'Rotational force produced by the motor, measured in Nm',
+      'A three-phase motor with a capacitor across each winding',
+      'A motor that stores starting energy in a large capacitor bank',
       'A single-phase motor using a capacitor to create phase shift for starting',
-      'To protect the motor from excessive current that could cause overheating',
+      'A motor with power factor correction capacitors fitted internally',
     ],
     correctAnswer: 2,
     explanation:
@@ -2259,9 +2259,9 @@ export const module3Questions: Question[] = [
     id: 151,
     question: 'What is a synchronous motor?',
     options: [
-      'Direction of induced EMF in a generator',
-      'Power stored and returned by inductors and capacitors',
-      'The DC equivalent that produces the same heating effect',
+      'A motor that runs slightly below synchronous speed due to slip',
+      'A motor whose speed varies directly with the mechanical load',
+      'A motor that relies on induced rotor currents for torque',
       'A motor that runs at exactly synchronous speed',
     ],
     correctAnswer: 3,
@@ -2275,9 +2275,9 @@ export const module3Questions: Question[] = [
     question: 'What is back-EMF in a motor?',
     options: [
       'The voltage induced in motor windings that opposes the supply, increasing with speed',
-      'Stepping down high voltage for measurement and protection circuits',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
-      'Energy lost in repeatedly magnetising and demagnetising the core',
+      'The voltage drop caused by the resistance of the motor windings',
+      'The surge voltage produced when the motor is switched off',
+      'The supply voltage applied across the motor terminals',
     ],
     correctAnswer: 0,
     explanation:
@@ -2289,10 +2289,10 @@ export const module3Questions: Question[] = [
     id: 153,
     question: 'Why is starting current so high in motors?',
     options: [
-      'A device that reduces starting current by gradually increasing voltage',
+      'The power factor is at its highest during starting',
       'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
-      'A transformer with a single winding serving as both primary and secondary',
-      'The percentage voltage drop at full load due to resistance and reactance',
+      'The supply voltage is momentarily boosted at switch-on',
+      'The rotor resistance falls sharply when the motor is at rest',
     ],
     correctAnswer: 1,
     explanation:
@@ -2304,10 +2304,10 @@ export const module3Questions: Question[] = [
     id: 154,
     question: 'What is a permanent magnet motor?',
     options: [
-      'Capacitors installed to improve power factor by supplying reactive power locally',
-      'Smoother power delivery and more efficient for motors',
+      'A motor that uses electromagnets energised by DC field current',
+      'A motor relying on induced currents in a squirrel-cage rotor',
       'A motor using permanent magnets instead of electromagnetic field windings',
-      'To maintain constant magnetic flux and prevent motor overheating',
+      'A motor with magnets that must be re-magnetised periodically',
     ],
     correctAnswer: 2,
     explanation:
@@ -2319,9 +2319,9 @@ export const module3Questions: Question[] = [
     id: 155,
     question: 'What is a brushless DC (BLDC) motor?',
     options: [
-      'Using laminated cores (thin insulated sheets)',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Total opposition to AC, combining resistance and reactance',
+      'A DC motor that uses a mechanical commutator and brushes',
+      'An AC induction motor with a squirrel-cage rotor',
+      'A motor that runs only on a three-phase AC supply',
       'A DC motor without brushes, using electronic commutation',
     ],
     correctAnswer: 3,
@@ -2335,9 +2335,9 @@ export const module3Questions: Question[] = [
     question: 'What is motor torque?',
     options: [
       'Rotational force produced by the motor, measured in Nm',
-      'It reduces neutral current, voltage imbalance and supply losses',
-      'The difference between synchronous speed and actual rotor speed',
-      'The effect of harmonic distortion on total power factor',
+      'The rotational speed of the motor, measured in RPM',
+      'The electrical power consumed by the motor, measured in watts',
+      'The mechanical energy delivered by the motor, measured in joules',
     ],
     correctAnswer: 0,
     explanation:
@@ -2349,10 +2349,10 @@ export const module3Questions: Question[] = [
     id: 157,
     question: 'What is the relationship between power, torque, and speed?',
     options: [
-      'Direction of induced EMF in a generator',
+      'P = T / (2π × n) where n is RPM',
       'P = (2π × n × T) / 60 where n is RPM',
-      'Its maximum continuous apparent power output',
-      'Vrms = Vp / √2 (or Vp × 0.707)',
+      'P = T × n × 60 where n is RPM',
+      'P = (60 × T) / (2π × n) where n is RPM',
     ],
     correctAnswer: 1,
     explanation:
@@ -2364,10 +2364,10 @@ export const module3Questions: Question[] = [
     id: 158,
     question: 'What is the IP rating of a motor?',
     options: [
-      'Capacitors installed to improve power factor by supplying reactive power locally',
-      'Multiply tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
+      'Internal Power - the rated continuous output in kilowatts',
+      'Insulation Performance - the winding temperature class',
       'Ingress Protection - protection against solid objects and liquids',
-      'A device that reduces starting current by gradually increasing voltage',
+      'Inrush Period - the duration of high starting current',
     ],
     correctAnswer: 2,
     explanation:
@@ -2379,9 +2379,9 @@ export const module3Questions: Question[] = [
     id: 159,
     question: 'What does motor insulation Class F mean?',
     options: [
-      'Using four diodes that conduct in pairs on each half cycle',
-      'To provide a return path for unbalanced currents and single-phase loads',
-      'The percentage voltage drop at full load due to resistance and reactance',
+      'Maximum temperature rating of 105°C for the winding insulation',
+      'Maximum temperature rating of 130°C for the winding insulation',
+      'Maximum temperature rating of 180°C for the winding insulation',
       'Maximum temperature rating of 155°C for the winding insulation',
     ],
     correctAnswer: 3,
@@ -2395,9 +2395,9 @@ export const module3Questions: Question[] = [
     question: 'What is regenerative braking in motors?',
     options: [
       'Converting kinetic energy back to electrical energy during deceleration',
-      'Ingress Protection - protection against solid objects and liquids',
-      'The order in which the three phases reach their peak values',
-      'A motor designed to run on single-phase supply using starting mechanisms',
+      'Dissipating kinetic energy as heat in a braking resistor',
+      'Applying a mechanical friction brake to the motor shaft',
+      'Injecting DC into the windings to bring the rotor to rest',
     ],
     correctAnswer: 0,
     explanation:
@@ -2413,10 +2413,10 @@ export const module3Questions: Question[] = [
     id: 161,
     question: 'What is power factor?',
     options: [
-      'Opposition of an inductor to AC, increasing with frequency',
+      'The ratio of reactive power to apparent power (sin φ)',
       'The ratio of true power to apparent power (cos φ)',
-      'Its maximum continuous apparent power output',
-      'Sum of voltages around a closed loop equals zero',
+      'The ratio of apparent power to true power',
+      'The ratio of reactive power to true power',
     ],
     correctAnswer: 1,
     explanation:
@@ -2473,10 +2473,10 @@ export const module3Questions: Question[] = [
     id: 165,
     question: 'Why is low power factor undesirable?',
     options: [
-      'The reciprocal of resistance, measured in siemens (S)',
+      'It causes the supply voltage to rise above safe limits',
       'Higher current needed for same power, causing increased losses and charges',
-      'A DC motor without brushes, using electronic commutation',
-      'Without slip, there would be no relative motion between rotor and field, so no induced current',
+      'It increases the real power consumed for the same load',
+      'It raises the supply frequency above 50Hz',
     ],
     correctAnswer: 1,
     explanation:
@@ -2500,11 +2500,11 @@ export const module3Questions: Question[] = [
   },
   {
     id: 167,
-    question: 'How is power factor corrected?',
+    question: 'How is a typical (lagging) power factor corrected?',
     options: [
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Tendency for AC current to flow near the conductor surface',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'By adding more inductive load to the circuit',
+      'By increasing the supply voltage to the load',
+      'By raising the supply frequency above 50Hz',
       'By adding capacitors to counteract inductive reactive power',
     ],
     correctAnswer: 3,
@@ -2518,9 +2518,9 @@ export const module3Questions: Question[] = [
     question: 'What are power factor correction capacitors?',
     options: [
       'Capacitors installed to improve power factor by supplying reactive power locally',
-      'A device that reduces starting current by gradually increasing voltage',
-      'Converting kinetic energy back to electrical energy during deceleration',
-      'No changing current means no changing magnetic field, so no induced voltage',
+      'Capacitors used to smooth the DC output of a rectifier',
+      'Capacitors that store charge to ride through brief supply dips',
+      'Capacitors that filter high-frequency noise from the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -2548,10 +2548,10 @@ export const module3Questions: Question[] = [
     id: 170,
     question: 'Where should PFC capacitors ideally be installed?',
     options: [
-      'Vd = I × (R cos φ + X sin φ) × L',
-      'Photovoltaic effect in a semiconductor p-n junction',
+      'At the incoming supply transformer only',
+      'On the neutral conductor of the final circuit',
       'As close to the inductive load as possible',
-      'If = kVA × 100 / (√3 × V × Z%)',
+      'As far from the inductive load as possible',
     ],
     correctAnswer: 2,
     explanation:
@@ -2563,9 +2563,9 @@ export const module3Questions: Question[] = [
     id: 171,
     question: 'What is automatic power factor correction (APFC)?',
     options: [
-      'The speed of the rotating magnetic field, determined by supply frequency and number of poles',
-      'Direction of force on a current-carrying conductor in a magnetic field (motor action)',
-      'By adding capacitors to counteract inductive reactive power',
+      'A fixed capacitor permanently connected at the supply intake',
+      'A controller that adjusts the supply voltage to correct power factor',
+      'A relay that disconnects inductive loads when power factor drops',
       'A system that switches capacitor banks automatically based on measured power factor',
     ],
     correctAnswer: 3,
@@ -2579,9 +2579,9 @@ export const module3Questions: Question[] = [
     question: 'What is the danger of over-correction (leading power factor)?',
     options: [
       'Can cause voltage rise, resonance issues, and equipment damage',
-      'To protect the motor from excessive current that could cause overheating',
-      'Simple, robust, low maintenance, and lower cost',
-      'The DC equivalent that produces the same heating effect',
+      'It permanently lowers the true power consumed by the load',
+      'It causes the supply frequency to drift below 50Hz',
+      'It increases the real power losses in the load itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -2593,10 +2593,10 @@ export const module3Questions: Question[] = [
     id: 173,
     question: 'What is reactive power measured in?',
     options: [
-      'The same for all branches',
+      'Watts (W)',
       'VAr (volt-amperes reactive)',
-      'The turns ratio (N2/N1)',
-      '20 × full load current',
+      'Volt-amperes (VA)',
+      'Joules (J)',
     ],
     correctAnswer: 1,
     explanation:
@@ -2608,10 +2608,10 @@ export const module3Questions: Question[] = [
     id: 174,
     question: 'What is a kVArh meter?',
     options: [
-      'A material property indicating how strongly it opposes current flow',
-      'Can cause voltage rise, resonance issues, and equipment damage',
+      'A meter measuring real energy consumption in kilowatt-hours',
+      'A meter measuring instantaneous apparent power in kVA',
       'A meter measuring reactive energy consumption over time',
-      'Resistance increases as temperature increases',
+      'A meter measuring the power factor of the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2623,9 +2623,9 @@ export const module3Questions: Question[] = [
     id: 175,
     question: 'What supply tariff penalty might apply for low power factor?',
     options: [
-      'Maximum power is transferred when load resistance equals source resistance',
-      'Energy lost in repeatedly magnetising and demagnetising the core',
-      'Opposition of a capacitor to AC, decreasing with frequency',
+      'A reduced unit rate for off-peak consumption',
+      'A lower standing charge on the supply',
+      'A rebate proportional to the reactive energy used',
       'Reactive power charges or maximum demand charges on kVA instead of kW',
     ],
     correctAnswer: 3,
@@ -2639,9 +2639,9 @@ export const module3Questions: Question[] = [
     question: 'What typical power factor do utilities require?',
     options: [
       'Typically 0.9 or 0.95 lagging minimum',
-      'A load with unequal current draw on each phase',
-      'Simple, robust, low maintenance, and lower cost',
-      'Its maximum continuous apparent power output',
+      'Typically 0.5 lagging minimum',
+      'Typically a leading power factor of 0.8',
+      'No minimum is ever specified by utilities',
     ],
     correctAnswer: 0,
     explanation:
@@ -2653,10 +2653,10 @@ export const module3Questions: Question[] = [
     id: 177,
     question: 'What is displacement power factor?',
     options: [
-      'The order in which the three phases reach their peak values',
+      'Power factor caused solely by harmonic distortion of the current',
       'Power factor determined by the phase angle between fundamental voltage and current',
-      'The difference between synchronous speed and actual rotor speed',
-      'Total opposition to AC, combining resistance and reactance',
+      'The product of true power factor and distortion power factor',
+      'The ratio of peak current to RMS current in the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -2668,10 +2668,10 @@ export const module3Questions: Question[] = [
     id: 178,
     question: 'What is distortion power factor?',
     options: [
-      'Smoother power delivery and more efficient for motors',
-      'The ratio of true power to apparent power (cos φ)',
-      'The effect of harmonic distortion on total power factor',
-      'Adjusting the turns ratio to regulate output voltage',
+      'Power factor caused only by the phase shift at 50Hz',
+      'The phase displacement between line and phase voltages',
+      'The component of power factor due to current harmonics',
+      'The ratio of reactive power to apparent power',
     ],
     correctAnswer: 2,
     explanation:
@@ -2683,9 +2683,9 @@ export const module3Questions: Question[] = [
     id: 179,
     question: 'What is the effect of harmonics on power factor?',
     options: [
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'The effect of harmonic distortion on total power factor',
-      'A material property indicating how strongly it opposes current flow',
+      'Harmonics have no effect on power factor at all',
+      'Harmonics always improve the true power factor',
+      'Harmonics only affect power factor on DC circuits',
       'Harmonics reduce true power factor even if displacement power factor is good',
     ],
     correctAnswer: 3,
@@ -2699,9 +2699,9 @@ export const module3Questions: Question[] = [
     question: 'What is a detuned PFC capacitor bank?',
     options: [
       'Capacitors with series reactors to avoid resonance with system harmonics',
-      'No changing current means no changing magnetic field, so no induced voltage',
-      'The reciprocal of resistance, measured in siemens (S)',
-      'Reducing starting current of large three-phase motors',
+      'Capacitors switched manually rather than automatically',
+      'Capacitors sized below the load requirement on purpose',
+      'Capacitors connected in delta rather than star',
     ],
     correctAnswer: 0,
     explanation:
@@ -2713,10 +2713,10 @@ export const module3Questions: Question[] = [
     id: 181,
     question: 'What voltage rise might occur with power factor correction?',
     options: [
-      'Direct-On-Line starting - connecting the motor directly to full supply voltage',
+      'A large voltage drop because capacitors absorb supply voltage',
       'Slight voltage rise due to reduced voltage drop from lower reactive current',
-      'The difference between synchronous speed and actual rotor speed',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'No change in voltage as capacitors draw no current',
+      'A drop in supply frequency that reduces the voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -2728,10 +2728,10 @@ export const module3Questions: Question[] = [
     id: 182,
     question: 'Why do capacitors need discharge resistors?',
     options: [
-      'Capacitors with series reactors to avoid resonance with system harmonics',
-      'To reduce I²R transmission losses by reducing current for the same power',
+      'To limit the inrush current when the capacitor is switched on',
+      'To improve the power factor correction at light load',
       'To safely discharge stored energy when disconnected, preventing shock hazard',
-      'Rotor with aluminium or copper bars short-circuited by end rings',
+      'To tune the capacitor away from harmonic resonance',
     ],
     correctAnswer: 2,
     explanation:
@@ -2743,9 +2743,9 @@ export const module3Questions: Question[] = [
     id: 183,
     question: 'What is the effect of power factor on transformer loading?',
     options: [
-      'A device that reduces starting current by gradually increasing voltage',
-      'An electronic device that controls motor speed by varying the supply frequency',
-      'Capacitors with series reactors to avoid resonance with system harmonics',
+      'Lower power factor reduces the kVA the transformer must supply',
+      'Power factor has no effect on transformer loading',
+      'Higher power factor increases the kVA loading on the transformer',
       'Lower power factor means transformer handles more kVA for the same kW delivered',
     ],
     correctAnswer: 3,
@@ -2759,9 +2759,9 @@ export const module3Questions: Question[] = [
     question: 'What is the typical discharge time requirement for PFC capacitors?',
     options: [
       '60 seconds to discharge to <50V',
-      '2πf (radians per second)',
-      'Approximately 1.9 hours',
-      'Lagging, typically 0.8-0.9 at full load',
+      'Instantly, with no residual voltage',
+      '1 hour to discharge to <50V',
+      '24 hours to discharge to <50V',
     ],
     correctAnswer: 0,
     explanation:
@@ -2773,10 +2773,10 @@ export const module3Questions: Question[] = [
     id: 185,
     question: 'How does power factor correction reduce I²R losses?',
     options: [
-      'Without slip, there would be no relative motion between rotor and field, so no induced current',
+      'By lowering the resistance of the supply cables directly',
       'By reducing current flow for the same real power, current squared losses decrease',
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'Using four diodes that conduct in pairs on each half cycle',
+      'By raising the supply voltage so less current is needed',
+      'By converting the reactive losses into useful real power',
     ],
     correctAnswer: 1,
     explanation:
@@ -2792,10 +2792,10 @@ export const module3Questions: Question[] = [
     id: 186,
     question: 'What is the voltage drop formula for single-phase AC circuits?',
     options: [
-      'Lagging, typically 0.8-0.9 at full load',
-      'Direction of induced EMF in a generator',
+      'Vd = I × (R sin φ + X cos φ) × L',
+      'Vd = I × R × L only, ignoring reactance',
       'Vd = I × (R cos φ + X sin φ) × L',
-      'P = √3 × VL × IL × cos(φ)',
+      'Vd = I × (R + X) × L regardless of power factor',
     ],
     correctAnswer: 2,
     explanation:
@@ -2882,9 +2882,9 @@ export const module3Questions: Question[] = [
     question: 'What temperature correction applies to cable resistance at operating temperature?',
     options: [
       'Multiply tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
-      'Smaller, lighter, cheaper, and more efficient for small voltage changes',
-      'A motor using permanent magnets instead of electromagnetic field windings',
-      'A single-phase motor using a capacitor to create phase shift for starting',
+      'Divide tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
+      'No correction is needed as conductor resistance is independent of temperature',
+      'Multiply tabulated values by 0.80 (for 70°C operating) for thermoplastic cables',
     ],
     correctAnswer: 0,
     explanation:
@@ -2896,14 +2896,14 @@ export const module3Questions: Question[] = [
     id: 193,
     question: 'What is the formula for prospective fault current at transformer secondary?',
     options: [
-      'The resistance R alone',
-      'If = kVA × 100 / (√3 × V × Z%)',
-      'P = √3 × VL × IL × cos(φ)',
-      'Approximately 1.9 hours',
+      'If = √3 × V × Z% / kVA',
+      'If = (kVA × 1000 × 100) / (√3 × V × Z%)',
+      'If = kVA / (√3 × V × cos φ)',
+      'If = V × Z% / (√3 × kVA)',
     ],
     correctAnswer: 1,
     explanation:
-      'For three-phase transformer: If = (kVA × 1000 × 100) / (√3 × V × Z%) where Z% is the transformer impedance percentage.',
+      'For a three-phase transformer: If = (kVA × 1000 × 100) / (√3 × V × Z%), where V is line voltage and Z% is the transformer impedance percentage.',
     section: '3.7',
     difficulty: 'advanced',
   },
@@ -2926,9 +2926,9 @@ export const module3Questions: Question[] = [
     id: 195,
     question: 'What is diversity in electrical design?',
     options: [
-      'The order in which the three phases reach their peak values',
-      'Using four diodes that conduct in pairs on each half cycle',
-      'An electronic device that controls motor speed by varying the supply frequency',
+      'A factor increasing design load to allow for future expansion',
+      'The variety of cable types used in an installation',
+      'The spread of circuits evenly across the three phases',
       'A factor reducing total design load based on non-simultaneous maximum demands',
     ],
     correctAnswer: 3,
@@ -2942,9 +2942,9 @@ export const module3Questions: Question[] = [
     question: 'How is total maximum demand calculated with diversity?',
     options: [
       'Sum of individual demands × appropriate diversity factors',
-      'Increased heating, reduced torque, and potential motor damage',
-      'To reduce I²R transmission losses by reducing current for the same power',
-      'A meter measuring reactive energy consumption over time',
+      'Simple sum of every connected load at full rating',
+      'The single largest circuit load multiplied by the number of circuits',
+      'Total connected load divided by the number of phases',
     ],
     correctAnswer: 0,
     explanation:
@@ -2969,7 +2969,7 @@ export const module3Questions: Question[] = [
   },
   {
     id: 198,
-    question: 'What minimum CPC size is needed for 6000A fault for 0.4s with k=115?',
+    question: 'What minimum CPC size is needed for a 2000A fault lasting 0.1s with k=115?',
     options: [
       '4mm²',
       '2.5mm²',
@@ -2978,7 +2978,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'S = √(I²t)/k = √(6000² × 0.4)/115 = √14,400,000/115 = 3794.7/115 = 33mm² minimum (use 6mm² from calculation: √(36,000,000×0.4)/115 ≈ 5.2mm²)',
+      'S = √(I²t)/k = √(2000² × 0.1)/115 = √400,000/115 = 632.5/115 = 5.5mm². The next standard size up (6mm²) is selected, as the adiabatic result must be rounded up.',
     section: '3.7',
     difficulty: 'advanced',
   },
@@ -2986,9 +2986,9 @@ export const module3Questions: Question[] = [
     id: 199,
     question: 'What is the thermal equivalent current for intermittent loads?',
     options: [
-      'Rotor with aluminium or copper bars short-circuited by end rings',
-      'Can cause voltage rise, resonance issues, and equipment damage',
-      'By adding capacitors to counteract inductive reactive power',
+      'The peak current reached during the load cycle',
+      'The average of the maximum and minimum load currents',
+      'The total current summed over the whole load cycle',
       'The steady current producing the same heating effect as the intermittent load',
     ],
     correctAnswer: 3,
@@ -3295,10 +3295,10 @@ export const module3Questions: Question[] = [
     question:
       "Total harmonic distortion (THD) measures what?",
     options: [
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'Circulating currents induced in the iron core',
-      'The ratio of the sum of harmonic powers to the fundamental power',
-      'Sum of currents entering a node equals sum leaving',
+      'The phase angle between the supply voltage and current',
+      'The peak-to-RMS ratio of the supply waveform',
+      'The ratio of the sum of harmonic content to the fundamental',
+      'The variation in supply frequency around 50Hz',
     ],
     correctAnswer: 2,
     explanation:
@@ -3318,7 +3318,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      "Third harmonics (and other triplens) from each phase add arithmetically in the neutral instead of cancelling. BS 7671 requires the neutral to be treated as a current-carrying conductor when triplen harmonics exceed 15% of fundamental.",
+      "Third harmonics (and other triplens) from each phase add arithmetically in the neutral instead of cancelling rather than summing to zero. Under BS 7671 (Appendix 4, Section 5.5 / Reg 523.6.3) an increase in neutral cross-sectional area may be required where triplen harmonic content exceeds 33% of the fundamental line current.",
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -3423,10 +3423,10 @@ export const module3Questions: Question[] = [
     question:
       "Why should three-phase loads be balanced as far as practicable?",
     options: [
-      'Total opposition to AC, combining resistance and reactance',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
+      'It increases the line voltage available to each phase',
+      'It allows the neutral conductor to be omitted entirely',
       'It reduces neutral current, voltage imbalance and supply losses',
-      'When inductive reactance equals capacitive reactance',
+      'It raises the supply power factor towards unity',
     ],
     correctAnswer: 2,
     explanation:
@@ -3471,10 +3471,10 @@ export const module3Questions: Question[] = [
     question:
       "At what load does a transformer reach maximum efficiency?",
     options: [
-      'Direction of induced EMF in a generator',
+      'At no load, when only iron losses are present',
       'When copper losses equal iron losses',
-      'True power divided by apparent power (cos φ)',
-      'Its maximum continuous apparent power output',
+      'At full rated load, where output is greatest',
+      'When iron losses are twice the copper losses',
     ],
     correctAnswer: 1,
     explanation:
@@ -3535,10 +3535,10 @@ export const module3Questions: Question[] = [
     question:
       "A variable frequency drive (VFD) controls motor speed by:",
     options: [
-      'To safely discharge stored energy when disconnected, preventing shock hazard',
+      'Switching extra resistance into the rotor circuit',
       'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'Dangerous high voltages develop that can damage insulation and harm personnel',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
+      'Adjusting the mechanical gearing on the output shaft',
+      'Reversing two supply phases to change motor speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3549,7 +3549,7 @@ export const module3Questions: Question[] = [
   {
     id: 234,
     question:
-      "An LED luminaire produces 4,000 lm at a height of 4 m above a workbench (point directly below). What is the illuminance at the bench?",
+      "A directional LED luminaire has a luminous intensity of 4,000 cd aimed vertically down at a workbench 4 m directly below. What is the illuminance at the bench?",
     options: [
       '62.5 lx',
       '125 lx',
@@ -3558,7 +3558,7 @@ export const module3Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "Inverse square law: E = I / d². Treating the luminaire as a point source where I (cd) = lumens / (4π) for omnidirectional, or use E = lumens / area for downlight: 4,000 / (4×4×π) ≈ 80 lx for omnidirectional. For a downlit beam: E = I/d² with I = 4,000 cd gives 4,000/16 = 250 lx for a directional fitting. The lumen method (Φ = E × A / (UF × MF)) gives more accurate results for room lighting design.",
+      "Inverse square law: E = I / d² = 4,000 / 4² = 4,000 / 16 = 250 lx. Doubling the mounting height would quarter the illuminance to 62.5 lx.",
     section: '3.8',
     difficulty: 'advanced',
   },
@@ -3663,10 +3663,10 @@ export const module3Questions: Question[] = [
     question:
       "A full-wave bridge rectifier converts AC to DC by:",
     options: [
-      'Opposition of an inductor to AC, increasing with frequency',
+      'Using a single diode that conducts on one half cycle only',
       'Using four diodes that conduct in pairs on each half cycle',
-      'To protect the motor from excessive current that could cause overheating',
-      'International Efficiency classes - IE1 (Standard) to IE5 (Ultra Premium)',
+      'Using a transformer to invert the negative half cycle',
+      'Using a capacitor alone to block the negative half cycle',
     ],
     correctAnswer: 1,
     explanation:
@@ -3712,9 +3712,9 @@ export const module3Questions: Question[] = [
       "Why is electricity transmitted at high voltages over long distances?",
     options: [
       'To reduce I²R transmission losses by reducing current for the same power',
-      'Adjusting the turns ratio to regulate output voltage',
-      'To provide starting, stopping, protection, and sometimes speed control',
-      'Opposition of a capacitor to AC, decreasing with frequency',
+      'To make the supply safer to touch on overhead lines',
+      'To allow thinner, cheaper insulation on the conductors',
+      'To increase the frequency and so transmit more power',
     ],
     correctAnswer: 0,
     explanation:
@@ -3727,10 +3727,10 @@ export const module3Questions: Question[] = [
     question:
       "A photovoltaic (PV) cell generates DC electricity directly from sunlight using which physical effect?",
     options: [
-      'By adding capacitors to counteract inductive reactive power',
+      'The thermoelectric effect, where heat alone drives the current',
       'Photovoltaic effect in a semiconductor p-n junction',
-      'Smoother power delivery and more efficient for motors',
-      'P = (2π × n × T) / 60 where n is RPM',
+      'Electromagnetic induction in a rotating coil',
+      'The piezoelectric effect from pressure on a crystal',
     ],
     correctAnswer: 1,
     explanation:
@@ -3759,9 +3759,9 @@ export const module3Questions: Question[] = [
     question:
       "A relay differs from a contactor in that:",
     options: [
-      'A motor designed to run on single-phase supply using starting mechanisms',
-      'No changing current means no changing magnetic field, so no induced voltage',
-      'Reactive power charges or maximum demand charges on kVA instead of kW',
+      'A relay is operated mechanically, a contactor electromagnetically',
+      'A relay switches AC only, a contactor switches DC only',
+      'A relay provides overcurrent protection, a contactor does not',
       'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
     ],
     correctAnswer: 3,

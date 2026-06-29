@@ -36,8 +36,8 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
       id: 'qc1-submetering-coverage',
       question:
         'According to CIBSE TM39, what percentage of total building energy consumption should sub-metering typically cover?',
-      options: ['50% minimum', '70% minimum', '90% minimum', '100% coverage'],
-      correctIndex: 2,
+      options: ['90% minimum', '50% minimum', '70% minimum', '100% coverage'],
+      correctIndex: 0,
       explanation:
         'CIBSE TM39 recommends that sub-metering should cover at least 90% of the anticipated energy consumption to enable effective energy management and identify significant energy uses.',
     },
@@ -69,48 +69,58 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         'To ensure 80% of meters are MID-approved',
         'To identify the 20% of loads that typically consume 80% of energy',
         'To achieve 80% accuracy in all measurements',
-        'To install meters on 80% of circuits',
+        'To install meters on exactly 80% of circuits',
       ],
       correctAnswer: 'To identify the 20% of loads that typically consume 80% of energy',
+      explanation:
+        'The Pareto principle focuses spend on the small number of large loads (chillers, AHUs, lighting) that dominate consumption, giving the most insight for the least cost.',
     },
     {
       question:
         'Which meter type MUST be used for tenant billing in multi-occupied buildings under UK regulations?',
       options: [
-        'Any digital meter with display',
-        'MID-approved meter with certification',
-        'Standard pulse-output meter',
-        'BMS-integrated meter only',
+        'Any digital meter with a display',
+        'A MID-approved, certified meter',
+        'A standard pulse-output meter',
+        'A BMS-integrated meter only',
       ],
-      correctAnswer: 'MID-approved meter with certification',
+      correctAnswer: 'A MID-approved, certified meter',
+      explanation:
+        'Meters used for billing or resale of energy must be MID-approved (carrying the "M" mark); using a non-MID meter for billing is unlawful and makes invoices unenforceable.',
     },
     {
       question:
-        'What is the minimum CT burden rating that should be considered when calculating cable runs to the meter?',
+        'When calculating the total CT burden for a metering installation, what must be included?',
       options: [
-        'The exact burden of the connected meter',
-        'The meter burden plus cable resistance losses',
-        'Half the CT rated burden',
-        'Double the meter burden',
+        'Only the exact burden of the connected meter',
+        'The meter burden plus the cable resistance losses',
+        'Half of the CT rated burden',
+        'Double the meter burden as a safety margin',
       ],
-      correctAnswer: 'The meter burden plus cable resistance losses',
+      correctAnswer: 'The meter burden plus the cable resistance losses',
+      explanation:
+        'The CT has to drive the meter plus the resistance of the secondary wiring, so long runs add burden; exceeding the CT rated burden degrades accuracy.',
     },
     {
       question:
-        'According to CIBSE TM39, which of the following should be separately sub-metered in a commercial building?',
+        'According to CIBSE TM39, which loads should typically be separately sub-metered in a commercial building?',
       options: [
         'Only the main incoming supply',
-        'HVAC, lighting, small power, and major process loads',
-        'Just tenant areas',
+        'HVAC, lighting, small power and major process loads',
+        'Just the tenant areas',
         'Only loads above 100kW',
       ],
-      correctAnswer: 'HVAC, lighting, small power, and major process loads',
+      correctAnswer: 'HVAC, lighting, small power and major process loads',
+      explanation:
+        'TM39 advocates metering by end-use category - HVAC, lighting, small power and significant process/equipment loads - so consumption can be attributed and managed.',
     },
     {
       question:
         'What is the maximum recommended cable length for Modbus RS485 communication in a sub-metering installation?',
       options: ['100 metres', '500 metres', '1200 metres', '2000 metres'],
       correctAnswer: '1200 metres',
+      explanation:
+        'RS485 supports reliable communication up to about 1200m at standard baud rates when wired as a daisy-chain with 120 ohm terminations at each end.',
     },
     {
       question:
@@ -118,43 +128,53 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
       options: [
         'The circuit must always be isolated first',
         'Split-core CTs cannot be used on live circuits',
-        'Ensure CT secondary is never open-circuited while primary is energised',
-        'Only use CTs with built-in fuses',
+        'The CT secondary must never be open-circuited while the primary is energised',
+        'Only CTs with built-in fuses may be used',
       ],
-      correctAnswer: 'Ensure CT secondary is never open-circuited while primary is energised',
+      correctAnswer: 'The CT secondary must never be open-circuited while the primary is energised',
+      explanation:
+        'An open CT secondary on an energised primary develops a dangerous high voltage; always short the secondary before disconnecting the meter, even though split-cores can be fitted live.',
     },
     {
       question:
-        'For ESOS (Energy Savings Opportunity Scheme) compliance, what percentage of total energy must be covered by measurement or estimation?',
+        'For ESOS (Energy Savings Opportunity Scheme) compliance, what proportion of total energy must be covered by measurement or estimation?',
       options: ['70%', '80%', '90%', '100%'],
       correctAnswer: '90%',
+      explanation:
+        'ESOS requires that at least 90% of an organisation\'s significant energy consumption is covered by the audit, aligning neatly with the CIBSE TM39 90% metering target.',
     },
     {
       question:
-        'What pulse output value is typically used for electricity sub-meters to interface with BMS systems?',
+        'What pulse output value is commonly used for electricity sub-meters interfacing with a BMS?',
       options: ['1 pulse per Wh', '1 pulse per kWh', '100 pulses per kWh', '1000 pulses per kWh'],
       correctAnswer: '1000 pulses per kWh',
+      explanation:
+        'A common electricity pulse rate is 1000 pulses per kWh (one pulse per Wh of resolution), giving fine granularity for the BMS to count consumption.',
     },
     {
       question: 'In a sub-metering hierarchy, what does Level 2 metering typically represent?',
       options: [
         'Main incoming utility meters',
         'Distribution board or floor-level metering',
-        'Individual circuit metering',
+        'Individual final-circuit metering',
         'Tenant billing meters only',
       ],
       correctAnswer: 'Distribution board or floor-level metering',
+      explanation:
+        'Level 1 is the fiscal incoming supply; Level 2 sits below it at main distribution boards or floor level, with end-use and individual circuits at Levels 3 and 4.',
     },
     {
       question:
-        'What is the primary advantage of using M-Bus protocol over pulse outputs for sub-metering?',
+        'What is the primary advantage of using the M-Bus protocol over simple pulse outputs for sub-metering?',
       options: [
-        'Lower installation cost',
-        'Simpler wiring requirements',
-        'Bi-directional communication enabling remote reading and diagnostics',
-        'Higher accuracy measurements',
+        'It is always cheaper to install',
+        'It uses simpler wiring than any other method',
+        'It offers bi-directional communication enabling remote reading and diagnostics',
+        'It inherently produces more accurate measurements',
       ],
-      correctAnswer: 'Bi-directional communication enabling remote reading and diagnostics',
+      correctAnswer: 'It offers bi-directional communication enabling remote reading and diagnostics',
+      explanation:
+        'M-Bus is a two-way digital protocol, so meters can be polled, read remotely and diagnosed, and many parameters retrieved - unlike a one-way pulse that only counts kWh.',
     },
   ];
 

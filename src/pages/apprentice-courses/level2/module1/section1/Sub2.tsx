@@ -37,10 +37,10 @@ const checks = [
     id: 'eawr-purpose-check',
     question: 'What is EAWR 1989 actually for?',
     options: [
-      'General electrical safety duties on duty-holders at work',
-      'By providing 24/7 remote monitoring and quick response to issues',
-      'Building thermal performance (weather sensitivity)',
-      'To work systematically from origin outward',
+      'Placing electrical safety duties on duty-holders at work',
+      'Setting the prices the DNO can charge for connections',
+      'Specifying the energy efficiency of new buildings',
+      'Listing the order to test circuits during inspection',
     ],
     correctIndex: 0,
     explanation:
@@ -51,9 +51,9 @@ const checks = [
     question: 'When can you legally work on or near a live conductor under EAWR Reg 14?',
     options: [
       'Only if dead working is unreasonable AND it’s reasonable to do live AND suitable precautions are taken',
-      'Material verification, tool checks, safety equipment, and drawing reviews',
-      'It\\\\\\\\\\\\\\\'s required for FDA-regulated industries to ensure electronic record integrity',
-      'NC contacts provide fail-safe operation — a broken wire or contact failure causes the circuit to open and stop the machine',
+      'Whenever isolating the circuit would take longer than 30 minutes',
+      'Any time the customer asks you to keep the power on',
+      'As long as you are wearing insulated gloves and rubber boots',
     ],
     correctIndex: 0,
     explanation:
@@ -63,10 +63,10 @@ const checks = [
     id: 'competence-check',
     question: "You’re a first-year. Where do you sit under Reg 16?",
     options: [
-      'Switchover from primary to standby controller occurs without any disturbance to the control outputs',
+      'Skilled person — fully competent to work unsupervised already',
       'Instructed person — you can do what you’ve been shown, under suitable supervision',
-      'The XML-based device description file for Profinet devices, equivalent to the GSD file used in Profibus',
-      'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
+      'Ordinary person — you should not be doing electrical work at all',
+      'Duty-holder exempt from Reg 16 because you are still training',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'Where does EAWR 1989 sit in the legal stack?',
     options: [
-      "A transmitter with digital communication and diagnostics",
+      "It’s an Act of Parliament that HASAWA was later made under",
       "It’s a regulation made under HASAWA 1974, specifically for electrical work",
-      "The task — what does it involve and can it be avoided or redesigned?",
-      "Table F6 (current-carrying capacity, two-core 70 °C thermoplastic flat cable).",
+      "It’s a British Standard with no legal force of its own",
+      "It’s a code of practice published by the IET",
     ],
     correctAnswer: 1,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who counts as a "duty-holder" under EAWR?',
     options: [
-      'To distinguish between a zero reading and a fault condition',
-      'Bend radius, conduit length, and cable pulling requirements',
+      'Only the employer who owns the business',
+      'Only qualified electricians who hold an ECS card',
       'Employers, the self-employed AND employees — including you',
-      'Fines, prohibition notices, and imprisonment',
+      'Only the HSE inspector responsible for the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'Reg 4 of EAWR is about:',
     options: [
-      'To indicate which protocols are being converted and ensure proper maintenance',
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'To reduce potential differences between simultaneously accessible parts',
+      'The competence required to carry out electrical work',
+      'The precautions for keeping isolated equipment dead',
+      'The three tests that must be met before live working',
       'Systems, work activities and protective equipment being safe',
     ],
     correctAnswer: 3,
@@ -121,9 +121,9 @@ const quizQuestions = [
     question: 'Under EAWR Reg 14, when is live working actually allowed?',
     options: [
       'Only if it’s unreasonable to be dead, reasonable to do live, and suitable precautions are taken',
-      'The employer, and potentially the individuals who knew the assessment was inadequate',
-      'Step out of the content, restore safety by establishing Mutual Purpose and Mutual Respect, then return to the issue',
-      'Convert DC electricity from panels to AC electricity for use or export',
+      'Whenever a skilled person is present to supervise the work',
+      'On any circuit rated below 50 V where the shock risk is lower',
+      'As long as the work is recorded on the installation certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'Reg 16 is about:',
     options: [
-      'An instrument for measuring insulation resistance in megohms',
-      'It specifies photometric performance requirements for emergency lighting',
+      'Maintenance — keeping systems in good order to prevent danger',
+      'Isolation — the precautions for working on dead equipment',
       'Competence — having the technical knowledge OR being suitably supervised',
-      'Investigate the connection and clean/retighten as necessary',
+      'Earthing — providing a path for fault current to operate the protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,9 +159,9 @@ const quizQuestions = [
     id: 7,
     question: "You’re sent to swap a faulty socket. The lead electrician says 'breaker’s off, crack on'. No padlock, no tester out. What do you do?",
     options: [
-      'It encourages design for disassembly, material reuse, and waste minimisation',
-      'To provide mechanical protection and rigidity to the splice point',
-      'Overloading, short circuits, earth faults, or protective device problems',
+      'Crack on — if he says it’s off, that’s his responsibility not yours',
+      'Touch the terminals with the back of your hand to check it’s dead',
+      'Switch the breaker back on and off yourself to confirm the right one',
       'Stop. Ask for the lock-off and the prove-dead. Won’t take long.',
     ],
     correctAnswer: 3,
@@ -173,9 +173,9 @@ const quizQuestions = [
     question: "What’s the difference between an 'absolute' duty and a 'reasonably practicable' one in EAWR?",
     options: [
       'Absolute = MUST be met, no excuses. Reasonably practicable = balance the risk against the cost and trouble.',
-      'Trust will decrease because high self-orientation (focus on self rather than the client) is the denominator that reduces overall trust',
-      'To separate and return compressor oil to prevent accumulation in heat exchangers',
-      'The directions of the principal designer and relevant requirements of the construction phase plan',
+      'Absolute = applies only to employers. Reasonably practicable = applies only to employees.',
+      'Absolute = applies on commercial sites. Reasonably practicable = applies in domestic dwellings.',
+      'Absolute = enforced by the HSE. Reasonably practicable = enforced by local authorities.',
     ],
     correctAnswer: 0,
     explanation:

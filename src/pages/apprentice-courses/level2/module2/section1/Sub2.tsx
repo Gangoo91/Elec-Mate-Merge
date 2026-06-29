@@ -51,9 +51,9 @@ const checks = [
       "A 'newton-metre' (N·m) is the unit of torque. Two SI base units sit underneath it. Which two?",
     options: [
       'Kilogram and metre (with second underneath)',
-      'Repair or replace the damaged conductor and retest',
-      '15th January the following year',
-      'A skills card confirming competence level',
+      'Ampere and second',
+      'Metre and kelvin',
+      'Mole and candela',
     ],
     correctIndex: 0,
     explanation:
@@ -64,10 +64,10 @@ const checks = [
     question:
       'The coulomb (C) is the SI derived unit of electric charge. How is it built from base units?',
     options: [
-      'Give up to 5 back blows between the shoulder blades',
-      'Solvents used for cleaning switchgear contacts',
+      '1 C = 1 V × 1 A (one volt across one ampere)',
+      '1 C = 1 A ÷ 1 s (one ampere divided by one second)',
       '1 C = 1 A × 1 s (one ampere flowing for one second)',
-      'During the design and planning stage, before construction begins',
+      '1 C = 1 W × 1 s (one watt for one second)',
     ],
     correctIndex: 2,
     explanation:
@@ -174,9 +174,9 @@ const quizQuestions = [
       'Why does it matter that electrical units are SI rather than imperial?',
     options: [
       'Manufacturers, BS 7671 and instruments worldwide all use SI, so cross-checks always work',
-      'The site manager, recorded in the accident/incident book and used to update the RA',
-      'A brief risk assessment carried out immediately before starting a task at the work location',
-      'Role modelling \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 demonstrating correct practice through consistent personal behaviour',
+      'Imperial units are banned by law on all UK electrical work',
+      'SI units are easier to write by hand than imperial ones',
+      'It only matters for export work, not for UK domestic jobs',
     ],
     correctAnswer: 0,
     explanation:

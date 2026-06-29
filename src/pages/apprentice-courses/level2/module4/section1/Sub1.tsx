@@ -43,12 +43,12 @@ const checks = [
     question:
       "You're forming a tight loop in a 1.5 mm² solid copper conductor to land it under a screw terminal on an old metal-clad switch. Which plier in your pouch does the cleanest job?",
     options: [
+      "Side cutters — grip the conductor in the cutting jaws and twist it round the screw thread. They are the only plier with a jaw narrow enough to wrap a single core.",
       "Long-nose pliers — slim jaws let you wrap the conductor around the screw thread to form a clockwise loop without crushing the copper. Combination pliers are too bulky for the job; side cutters are for cutting only and will nick the strand if you try to form with them.",
-      "Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology",
-      "It breaks the CPC link in the ADS chain — any fault between line and exposed metal beyond the JB has no return path. The MCB will not trip and the metalwork will sit at line voltage until somebody touches it.",
-      "Dedicated RCD column(s) on the per-circuit row of the STR — typically headed \\\\\\\\\\\\\\\"RCD trip time at IΔn\\\\\\\\\\\\\\\" with sub-columns for the test current used and the measured trip time. Plus a note that the user test facility was verified.",
+      "Combination pliers — the flat serrated jaws give the firmest grip, so they bend the loop tightest against the screw and hold the conductor square while you tighten.",
+      "Water-pump (slip-joint) pliers — the wide adjustable jaw lets you set the exact loop diameter to match the screw thread before you wrap the conductor.",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Long-nose (sometimes called needle-nose) are the forming tool. The slim taper gets into a screw-terminal recess that combination jaws can't reach, and the smooth inner surface forms a clean loop without nicking the conductor. Side cutters are dedicated cutting tools and using them to grip will leave a crush mark that becomes a stress riser — that's where the conductor breaks six months later.",
   },
@@ -58,9 +58,9 @@ const checks = [
       "You've got a roll of 2.5 mm² T+E to first-fix a kitchen ring. The cores are solid copper PVC. What's the right stripping tool and why?",
     options: [
       "An auto-adjusting wire stripper (Knipex 12 62 180 or similar) OR a preset-jaw stripper sized for 2.5 mm². Both grip the insulation cleanly, separate it from the conductor without scoring the copper, and leave a square shoulder for the terminal. Knife stripping a solid conductor scores the copper, creates a fracture point, and fails BS 7671 526.1 'durable mechanical strength' on first inspection.",
-      "No. PAT (Portable Appliance Testing) is one layer of inspection — typically annual for offices, every 3 months for harsh construction-site use. PUWER Reg 5 ALSO requires user pre-use visual checks every shift AND periodic competent-person in-service inspections between PATs. A tool can pass PAT in January and develop a damaged cable in February — the user check is what catches it.",
-      "Sole trader: 5 years from the 31 January Self Assessment deadline for that tax year — so effectively 5 years and 10 months from the end of the tax year. Ltd company: 6 years from the end of the company's accounting period. VAT registered: 6 years for VAT records. Practical advice: keep all records 7+ years. Cloud accounting (Xero, QuickBooks, FreeAgent) makes this easier — records stored indefinitely.",
-      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
+      "A sharp Stanley knife run circumferentially around the core — score right through the insulation in one pass, then snap it off. It is the fastest method and what most electricians use on solid conductors.",
+      "A pair of side cutters used as a stripper — pinch the insulation just hard enough to bite it, then pull. The blades give a cleaner cut on solid copper than any dedicated stripper.",
+      "Combination pliers — grip the insulation in the serrated jaws and pull it off. The grip is firm enough to take PVC off a solid core without marking the copper.",
     ],
     correctIndex: 0,
     explanation:
@@ -71,12 +71,12 @@ const checks = [
     question:
       "You're terminating into a Hager 6 kA RCBO in a domestic consumer unit. The terminal screw is captive and small. The senior electrician says 'use the right driver'. Which one and why?",
     options: [
-      "Neither — they conflict. The conflict must be resolved before any document issues. Trace back to the calc sheet (cable CCC and design Ib) to see which rating the calc supports, fix the wrong document, log the change in the revision history, and re-issue. A pack with internal conflict cannot be issued for construction.",
+      "A Phillips #2 (PH2) screwdriver — it is the standard cross-head tip and seats deeper in the RCBO terminal screw than a Pozidriv, so it grips better and won't cam out.",
+      "A small flat-blade (slotted) driver — its single straight blade is the most positive fit for a captive terminal screw and can't slip sideways the way a cross-head can.",
       "A VDE-insulated screwdriver of the size and tip type the manufacturer specifies (Hager terminal screws are typically Pozidriv #2). 'VDE' means the shaft is tested to 1000 V AC and the handle insulated — so if the supply gets re-energised you're protected. The right tip prevents cam-out (the slip that strips the screw and leaves you scrapping a £30 RCBO).",
-      "Protecting the client's personal information, security arrangements (alarm codes, key locations, access routines) and any commercially or personally sensitive matters you become aware of during the work. Casual chat about 'they've got a nice setup' can enable theft and breach the Data Protection Act 2018 if shared further.",
-      "Design Engineer (M&E Consultant or sub-contractor design team), Senior Project Engineer, and Chartered Engineer roles. The degree-level qualification gives the design knowledge (load calcs, voltage drop, discrimination, protection coordination) and the management knowledge needed for the more senior roles. Many apprentices add an HNC or HND part-time once they've passed AM2 to open these routes.",
+      "Any cross-head driver with a magnetic tip — the magnet holds the captive screw steady while you start it, which matters more than whether the tip is Pozidriv or Phillips.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Two things matter — VDE insulation (in case the supply is energised by mistake, even though you've isolated) AND the correct tip profile. Hager / Schneider / Wylex DBs use Pozidriv (PZ2 mostly) in their terminals; using a Phillips (PH2) looks similar but the angle is wrong and it cams out, mangling the screw. Wera, Wiha, CK and Klein all do certified VDE sets — most apprentices end up with the Wera Kraftform 7-piece as a starter kit.",
   },
@@ -118,9 +118,9 @@ const quizQuestions = [
     question:
       "Your supervisor tells you to mark out the position of a 47 mm metal-clad back box on a brick wall before chasing. What set of marking and measuring tools does a tidy first-fix use?",
     options: [
-      "A BSI Publicly Available Specification — \\\\\\\"PAS 63100:2024 Electrical installations. Protection against fire of battery energy storage systems intended for use in dwellings\\\\\\\" — that sets out fire safety requirements for domestic battery storage, including location restrictions, separation distances from sleeping accommodation and escape routes, fire detection requirements and segregation from combustibles.",
-      "Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions (\\\\\\\"Just think positive!\\\\\\\"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.",
-      "Approved Electrician is a competence grade — the JIB grade above Electrician, awarded after AM2 plus experience and CPD. Mentor is a role — an experienced electrician (usually Approved or above) who is formally allocated to support a specific apprentice through portfolio, on-site learning and the AM2. The same person is often both.",
+      "Just a pencil and your eye — an experienced electrician judges the height and level by sight, so a tape and level only slow a first-fix down.",
+      "An SDS drill and a 47 mm core bit — you mark the position by simply plunging the core where the box should sit, which is faster than measuring and levelling.",
+      "A chalk line snapped across the whole wall plus a laser level — the chalk line alone fixes every box position, so no tape or square is needed for individual boxes.",
       "Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.",
     ],
     correctAnswer: 3,

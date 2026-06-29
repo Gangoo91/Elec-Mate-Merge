@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question:
       'Under GS38, which features must a voltage indicator have for safe use on low voltage systems?',
     options: [
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'Because some energy always converts into "less useful" forms like heat, sound and friction',
-      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
+      'A digital display showing the exact voltage to two decimal places',
+      'A single probe and a long flexible earth lead with a crocodile clip',
+      'A high-impedance input and an audible continuity buzzer for fault finding',
       'Fused test leads with finger guards, a maximum tip exposure of 4 mm, and a proving unit or known supply for verification',
     ],
     correctIndex: 3,
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'When performing an insulation resistance test on a 230 V circuit, the standard test voltage is:',
     options: [
-      '250 V AC',
-      '230 V DC',
+      '250 V DC',
       '500 V DC',
+      '230 V AC',
       '1000 V DC',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'For circuits rated up to 500 V (which includes standard 230 V single-phase and 400 V three-phase LV systems), BS 7671 Table 6.1 specifies a test voltage of 500 V DC. The minimum acceptable insulation resistance is 1 megohm (1 MΩ), although higher values are expected in healthy installations.',
   },
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
       'For fault finding on an industrial control panel operating at 415 V, the minimum CAT rating for your multimeter should be:',
     options: [
       'CAT III — distribution level (fixed installation)',
-      'They are metal and within the building',
-      'Voltage between simultaneously accessible parts during a fault',
-      'To stop current leaking out and to prevent shock',
+      'CAT I — protected electronic equipment only',
+      'CAT II — single-phase socket-outlet circuits',
+      'No CAT rating is required below 1000 V',
     ],
     correctIndex: 0,
     explanation:
@@ -74,10 +74,10 @@ const quizQuestions = [
     question:
       'The purpose of proving a voltage indicator before and after use (as required by GS38) is to:',
     options: [
-      "Mental health awareness, training and support across the construction sector",
+      "Calibrate the indicator so it reads the exact supply voltage",
       "Confirm the instrument is functioning correctly and that a 'dead' reading can be trusted",
-      "Automatic lighting control based on detecting presence or absence of people",
-      "Wash the graze under the tap, dry it, use ONE plaster, and tell the first aider you used one so it gets replaced",
+      "Discharge any stored energy held in the indicator's internal capacitors",
+      "Record the test result automatically for the certificate",
     ],
     correctAnswer: 1,
     explanation:
@@ -94,15 +94,15 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 Table 6.1 requires a minimum insulation resistance of 1 MΩ for circuits tested at 500 V DC. A reading of 0.5 MΩ is below this minimum and indicates degraded insulation that could lead to earth leakage, RCD tripping or eventual breakdown. The circuit should not be energised until the insulation fault is located and rectified.',
+      'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits tested at 500 V DC. A reading of 0.5 MΩ is below this minimum and indicates degraded insulation that could lead to earth leakage, RCD tripping or eventual breakdown. The circuit should not be energised until the insulation fault is located and rectified.',
   },
   {
     id: 3,
     question: 'When measuring DC voltage with a multimeter, selecting the AC range will:',
     options: [
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
-      'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
-      'The overvoltage withstand capability appropriate to the measurement location in the installation',
+      'Display the correct DC value with no effect on accuracy',
+      'Damage the meter and blow the internal fuse immediately',
+      'Convert the DC reading into an equivalent RMS value automatically',
       'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
     ],
     correctAnswer: 3,
@@ -115,9 +115,9 @@ const quizQuestions = [
       'A continuity test on a cable shows 0.2 Ω on one core and OL (over limit / open circuit) on another. This indicates:',
     options: [
       'The first core is continuous and the second core has a break (open circuit)',
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
-      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
-      'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
+      'Both cores are healthy and the test leads need replacing',
+      'The first core is short-circuited to earth and the second is sound',
+      'The cable insulation has failed between the two cores',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'Before connecting an insulation resistance tester to a circuit, you must ensure:',
     options: [
-      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
+      'The circuit is energised so a live reading can be compared',
       'The circuit is isolated, proved dead, and all sensitive electronic equipment is disconnected',
-      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
-      'The overvoltage withstand capability appropriate to the measurement location in the installation',
+      'The earth conductor is disconnected from the main earthing terminal',
+      'The circuit is loaded to its full rated current before testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 6,
     question: 'An earth loop impedance test measures:',
     options: [
-      'The overvoltage withstand capability appropriate to the measurement location in the installation',
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'The resistance of the circuit protective conductor on its own',
+      'The insulation resistance between line and earth',
       'The total impedance of the earth fault loop from the point of test back to the supply transformer',
-      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
+      'The current that would flow in the neutral under normal load',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     id: 7,
     question: 'A true-RMS multimeter is necessary when measuring:',
     options: [
-      'The circuit is isolated, proved dead, and all sensitive electronic equipment is disconnected',
-      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
-      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
+      'Pure sinusoidal mains voltage at a socket outlet',
+      'Steady DC voltage across a battery terminal',
+      'The resistance of an isolated conductor',
       'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
       'When using a clamp meter on a single-phase circuit, clamping around both the line and neutral conductors together will read:',
     options: [
       'Approximately zero (or the earth leakage current if present)',
-      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
-      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
-      'The first core is continuous and the second core has a break (open circuit)',
+      'Double the load current flowing in the circuit',
+      'The full line current as if only one conductor were clamped',
+      'The supply voltage rather than the current',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 9,
     question: 'The CAT (Category) rating of a test instrument relates to:',
     options: [
-      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
+      'The maximum continuous current the instrument can measure',
       'The overvoltage withstand capability appropriate to the measurement location in the installation',
-      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
-      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
+      'The accuracy of the displayed reading as a percentage',
+      'The ingress protection of the instrument against dust and water',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'During insulation resistance testing, a reading that starts high and gradually decreases over 60 seconds suggests:',
     options: [
-      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
-      'The overvoltage withstand capability appropriate to the measurement location in the installation',
+      'A perfectly healthy circuit reaching its final stable value',
+      'A short circuit between line and neutral conductors',
       'Moisture absorption in the insulation — the polarisation index indicates deterioration',
-      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
+      'An open circuit in the conductor under test',
     ],
     correctAnswer: 2,
     explanation:
@@ -207,9 +207,9 @@ const quizQuestions = [
     id: 11,
     question: 'A phase rotation meter is used during fault finding to verify:',
     options: [
-      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
-      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'The insulation resistance between phases',
+      'The earth loop impedance at the equipment',
+      'The load current drawn by each phase',
       'The correct phase sequence (L1-L2-L3) at the equipment terminals',
     ],
     correctAnswer: 3,
@@ -222,9 +222,9 @@ const quizQuestions = [
       'When selecting test leads for a multimeter being used at distribution board level, the leads must comply with:',
     options: [
       'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
-      'Approximately zero (or the earth leakage current if present)',
-      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'BS 7671 Table 64 — the insulation resistance minimum values',
+      'IEC 61851 — the requirements for EV charging connectors',
+      'BS EN 60898 — the standard for circuit breaker characteristics',
     ],
     correctAnswer: 0,
     explanation:

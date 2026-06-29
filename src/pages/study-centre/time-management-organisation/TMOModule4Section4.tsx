@@ -32,12 +32,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the recommended timing for issuing invoices to maximise payment speed?',
     options: [
-      'At the end of each month in a batch',
       'Within 48 hours of completing the work, ideally on the same day',
+      'At the end of each month in a batch',
       'When the client requests the invoice',
       'At the end of the financial year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Invoicing on the day of completion (or within 48 hours at most) maximises payment speed for two reasons. First, the client is most satisfied immediately after the work is completed, making them psychologically more willing to pay quickly. Second, the earlier the invoice enters their payment cycle, the sooner it is processed. Delays in invoicing directly cause delays in payment.',
   },
@@ -47,10 +47,10 @@ const quizQuestions = [
     options: [
       'Wait 60 days then send a solicitor\u2019s letter',
       'Call daily until the client pays',
-      'Gentle reminder at 7 days, firmer reminder at 14 days, formal notice at 30 days',
       'Do nothing and hope for the best',
+      'Gentle reminder at 7 days, firmer reminder at 14 days, formal notice at 30 days',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A structured escalation sequence maintains the relationship while progressively increasing urgency. At 7 days: a friendly reminder (often the client simply forgot). At 14 days: a firmer reminder noting the terms were 14 days. At 30 days: a formal notice stating that further action may be necessary. Most invoices are paid after the first or second reminder. Automating these through your accounting software eliminates the emotional discomfort of chasing.',
   },
@@ -72,12 +72,12 @@ const quizQuestions = [
     id: 6,
     question: 'What should you do with receipts for business expenses?',
     options: [
-      'Keep the paper receipts in a shoebox until year end',
       'Photograph or scan them immediately and store digitally in a categorised system, then keep paper copies as backup',
+      'Keep the paper receipts in a shoebox until year end',
       'Only keep receipts for purchases over \u00a3100',
       'Your accountant will obtain all receipts from the suppliers directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HMRC accepts digital copies of receipts, so photographing them immediately (using your phone or an app like Receipt Bank / Dext) ensures they are captured before fading or getting lost. Categorise them by expense type (materials, tools, fuel, van costs, insurance, subscriptions). Paper originals can be kept as backup, but the digital copy is your primary record.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
       'Why is financial admin considered a time management issue, not just an accounting issue?',
     options: [
       'Because financial admin takes time away from billable work',
-      'Because poor financial admin leads to cash flow crises, late tax returns, penalties, and emergency admin sessions that consume far more time than regular maintenance would',
       'Because accountants charge by the hour',
       'Because HMRC requires daily financial reporting',
+      'Because poor financial admin leads to cash flow crises, late tax returns, penalties, and emergency admin sessions that consume far more time than regular maintenance would',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When financial admin is neglected, it does not disappear \u2014 it compounds. Unchased invoices become bad debts. Unfiled receipts become estimated expenses. Unmade tax payments become penalties and interest. The emergency weekend spent reconstructing a year\u2019s accounts consumes 20+ hours that would have been 25 hours across the year if done weekly (30 min \u00d7 50 weeks). Worse, the stress of financial uncertainty affects your performance on every other task.',
   },

@@ -49,12 +49,12 @@ const quizQuestions = [
     id: 3,
     question: 'When must pre-construction information be provided to designers and contractors?',
     options: [
+      'As soon as is practicable, and before detailed design or planning begins',
       'Only after the construction phase plan is complete',
       'At the pre-construction phase meeting only',
-      'As soon as is practicable, and before detailed design or planning begins',
       'Within 14 days of the contract being signed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "CDM 2015 requires that PCI be provided 'as soon as is practicable' to every designer and contractor. The information must be available early enough for designers to take it into account in their designs and for contractors to plan their work safely. Late provision of PCI undermines the entire purpose of the duty.",
   },
@@ -64,11 +64,11 @@ const quizQuestions = [
       'A client does not have an asbestos survey for an existing building scheduled for refurbishment. What should happen?',
     options: [
       'Work can proceed as long as operatives are careful',
-      'The client must arrange for a suitable asbestos survey before work begins',
       'The principal contractor should assume there is no asbestos present',
       'The designer can waive the requirement if the building is modern',
+      'The client must arrange for a suitable asbestos survey before work begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If the client does not have relevant information such as an asbestos survey, they must make reasonable enquiries to obtain it. For refurbishment or demolition work on an existing building, a refurbishment and demolition (R&D) asbestos survey is required before work begins. The duty holder for the asbestos management survey is the building owner, but the client for the CDM project must ensure this information is provided as PCI.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     question:
       'Who is responsible for distributing pre-construction information to designers on a notifiable project?',
     options: [
-      'The client distributes to all parties directly',
       'The principal designer distributes to designers',
+      'The client distributes to all parties directly',
       'The principal contractor distributes to designers',
       'Each designer must request the information themselves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On a notifiable project, the client provides PCI to the principal designer and principal contractor. The principal designer then distributes relevant PCI to all designers working on the project, whilst the principal contractor distributes relevant PCI to all contractors. This ensures each party receives the information pertinent to their scope of work.',
   },
@@ -91,11 +91,11 @@ const quizQuestions = [
     question: 'What is the purpose of a PCI register?',
     options: [
       'To record which contractors have been paid',
-      'To document what PCI has been provided, identify gaps, and track assumptions',
       'To list all accidents that have occurred on previous projects',
       'To register the project with the HSE',
+      'To document what PCI has been provided, identify gaps, and track assumptions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A PCI register is a management tool that documents what pre-construction information has been provided, identifies gaps in the information available, records any assumptions that have been made where information is missing, and tracks ongoing updates as new information becomes available during the project. It provides an auditable record of compliance with Regulation 4(4).',
   },
@@ -105,11 +105,11 @@ const quizQuestions = [
       'An electrician is about to begin a rewire of an existing commercial building. Which piece of PCI is most critical for their safety?',
     options: [
       "The architect's colour scheme",
-      'The asbestos survey report showing locations of asbestos-containing materials',
       'The project budget breakdown',
+      'The asbestos survey report showing locations of asbestos-containing materials',
       'The landscaping plan for external areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For an electrician carrying out a rewire, the asbestos survey report is the most safety-critical piece of PCI. Rewiring involves drilling through walls, lifting floorboards, accessing ceiling voids, and running cables through partitions — all activities that can disturb asbestos-containing materials. The electrician must know where ACMs are located to avoid disturbing them or to arrange for licensed removal before work begins.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
       'On a new-build project, which of the following would be included in the pre-construction information?',
     options: [
       'The construction phase plan',
-      "The contractor's risk assessments",
       'Ground investigation reports and contamination assessments',
+      "The contractor's risk assessments",
       'The scaffold design drawings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Ground investigation reports and contamination assessments are classic examples of new-build PCI. They inform designers and contractors about ground conditions, potential contamination, load-bearing capacity, and water table levels — all essential for safe planning. The construction phase plan and risk assessments are produced by the contractor, not the client, and scaffold designs come later in the process.',
   },
@@ -135,12 +135,12 @@ const quickCheckQuestions = [
     question:
       "You arrive on site for a rewire and discover no asbestos survey has been provided. The site manager says 'just crack on, the building is only 15 years old.' What should you do?",
     options: [
+      'Stop work and refuse to proceed until a suitable asbestos survey is provided as PCI',
       'Proceed carefully — modern buildings rarely contain asbestos',
-      'Stop work and refuse to proceed until a suitable asbestos survey has been provided as part of the PCI',
       'Ask a colleague whether they think there might be asbestos',
       'Start work in areas that look safe and avoid any suspicious materials',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'You must stop and request the asbestos survey. Buildings constructed before 2000 (and some materials used after) may contain asbestos. The client has a legal duty under CDM 2015 to provide this as part of the pre-construction information. Working without this information puts you at risk of disturbing asbestos-containing materials. Report the gap to your supervisor and the principal contractor immediately.',
   },
@@ -165,10 +165,10 @@ const quickCheckQuestions = [
     options: [
       'The Health and Safety Executive',
       'The client directly',
-      'The principal contractor, who is responsible for distributing PCI to contractors',
       'The local authority building control',
+      'The principal contractor, who is responsible for distributing PCI to contractors',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'On a notifiable project, the principal contractor is responsible for distributing relevant PCI to all contractors, including subcontractors. Your first point of contact should be the principal contractor (or your appointing contractor, who should escalate to the PC). If the PC has not received PCI from the client, they must raise this with the client. You should not proceed with planning or work until you have the PCI you need.',
   },

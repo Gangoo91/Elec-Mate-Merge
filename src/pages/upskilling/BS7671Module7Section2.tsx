@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A homeowner plugs a Mode 1 cable from a portable EV into a standard 13 A BS 1363 socket in their garage. Does Part 722 apply to this socket-outlet?',
     options: [
-      'Yes — any socket used to charge an EV falls under Part 722',
-      'No — Part 722 covers dedicated EV charging equipment (typically Mode 2/3/4); a 13 A socket used incidentally with a Mode 1 cable remains a general-purpose socket under the rest of BS 7671',
-      'Only if the socket is outdoors',
-      'Only if the supply is TN-C-S',
+      'Yes — any socket-outlet used to charge an EV falls under Part 722',
+      'No — Part 722 covers dedicated EV equipment; a general 13 A socket does not',
+      'Only if the socket-outlet is mounted in an outdoor location',
+      'Only if the supply to the property is a TN-C-S arrangement',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'The manufacturer\'s installation manual for a modern 7 kW domestic charger states "integrated 6 mA DC fault detection per BS EN 61851-1". What RCD type is needed UPSTREAM at the consumer unit?',
     options: [
-      'Type AC',
-      'Type A — the charger handles smooth DC residual itself, so 6 mA DC detection covers the route Type B would otherwise cover',
-      'Type B — always required for any EV install regardless of internal detection',
-      "No RCD needed — the charger's internal device replaces the upstream one",
+      'Type AC, since the charger handles all DC fault current internally',
+      'Type A — the charger handles the smooth DC residual itself',
+      'Type B — always required for any EV install regardless of detection',
+      "No RCD at all — the charger's internal device replaces the upstream one",
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A dedicated 32 A EV final circuit is being designed on TN-C-S. Which BS 7671 regulation requires 30 mA additional protection on the circuit?',
     options: [
-      'Reg 411.3.4 (luminaires)',
-      'Reg 411.3.3 — sockets and the EV charger circuit are within scope of 30 mA additional protection',
-      'Reg 461.2 — PEN switching',
-      'Reg 415.2.1 — supplementary bonding',
+      'Reg 411.3.4 — the luminaire RCD rule for domestic premises',
+      'Reg 411.3.3 — 30 mA additional protection covering the EV circuit',
+      'Reg 461.2 — the prohibition on switching the PEN conductor',
+      'Reg 415.2.1 — supplementary equipotential bonding requirements',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'On a TN-C-S supply, you cannot reasonably split N and PE upstream of the EV charger to give a TN-S configuration. What alternative compliance route does Section 722 permit?',
     options: [
-      'Ignore the requirement and rely on the upstream 30 mA RCD',
-      'Use a charger or in-line device with open-PEN detection that disconnects all live conductors (including PE) on a PEN fault',
-      'Substitute a Type AC RCD for a Type B',
-      'Bond the vehicle chassis to the gas pipe',
+      'Ignore the requirement and rely solely on the upstream 30 mA RCD',
+      'Use a charger or device with open-PEN detection that disconnects all poles',
+      'Substitute a Type AC RCD in place of the specified Type B device',
+      'Bond the vehicle chassis directly to the incoming gas pipe',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Reg 722.55 covers the mounting and positioning of EV charging equipment. Which of the following is most relevant when fixing a charger to an exterior wall in a UK domestic install?',
     options: [
-      'Mount no higher than 0.5 m from ground',
-      'Mount such that mechanical impact, water ingress and vehicle collision risk are addressed (typically IP44 minimum and impact-resistant location)',
-      'Mount only on east-facing walls',
-      'Mount at 2.5 m minimum height',
+      'Mount the charger no higher than 0.5 m above ground level',
+      'Mount so impact, water ingress and collision risk are addressed (IP44 min)',
+      'Mount only on an east-facing wall to limit weather exposure',
+      'Mount at a minimum height of 2.5 m above the ground',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'BS EN 61851 is the international product standard family that BS 7671 Section 722 references for EV charging equipment. What does BS EN 61851-1 cover?',
     options: [
-      'The colour of the charging cable insulation only',
-      'General requirements for conductive charging systems for electric vehicles — control pilot signalling, modes, protective functions including DC fault detection at 6 mA',
-      'The roof structure of public charging stations',
-      'Battery chemistry and cell-level safety',
+      'The colour of the EV charging cable insulation only',
+      'General requirements for conductive EV charging — modes, control pilot, 6 mA detection',
+      'The roof and canopy structure of public charging stations',
+      'Battery chemistry, cell balancing and cell-level safety',
     ],
     correctIndex: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Reg 722.312.2.1 (new in A4:2026) introduces an explicit prohibition. What does it forbid in an EV charging circuit on a TN supply?',
     options: [
-      'Use of any RCD smaller than 100 mA',
       'Inclusion of a PEN conductor in the EV charging circuit',
-      'Use of single-phase chargers above 7 kW',
-      'Outdoor installation of the charging equipment',
+      'Use of any RCD with a rating smaller than 100 mA',
+      'Use of single-phase chargers rated above 7 kW',
+      'Outdoor installation of the EV charging equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 722.312.2.1 (verbatim): "A circuit supplying charging equipment for electric vehicles in a TN system shall not include a PEN conductor." This is one of the headline A4 changes for EV charging — the combined PEN must be split into separate N and PE before the EV circuit, or one of the alternative protective measures (open-PEN detection device, separate earth electrode TT island) must be used.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'Which RCD type is required for an EV charging circuit where the charging equipment does NOT provide internal 6 mA DC fault detection?',
     options: [
-      'Type AC',
-      'Type A',
-      'Type F',
-      'Type B (or Type A combined with a separate device sensing DC fault current of 6 mA)',
+      'Type AC, sensing alternating residual current only',
+      'Type A, sensing pulsating DC residual current',
+      'Type F, intended for single-phase frequency drives',
+      'Type B, or Type A combined with a 6 mA RDC-DD',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     question:
       'A Mode 3 EV charger on a TN-C-S supply — which compliance route SATISFIES Reg 722.312.2.1?',
     options: [
-      'Run a single PEN to the EV charger and rely on the upstream 100 A main switch',
-      'Provide a TN-S configuration to the EV (split N and PE before the EV final circuit) OR use an integrated open-PEN detection device that disconnects all live conductors AND PE on a PEN fault OR install a separate earth electrode (TT island)',
-      'Increase the cable size to 10 mm² and accept TN-C-S as-is',
-      'Use a Type AC 30 mA RCD without further measures',
+      'Run a single PEN to the charger and rely on the upstream 100 A main switch',
+      'Provide TN-S to the EV, OR an open-PEN detection device, OR a TT island',
+      'Increase the cable to 10 mm² and accept the bare TN-C-S supply as it is',
+      'Fit a Type AC 30 mA RCD on the circuit without any further measures',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'A commercial site is installing a 22 kW three-phase Mode 3 charger. The site has a TN-S supply and the chosen charger has integrated 6 mA DC detection. What RCD configuration is correct?',
     options: [
-      'A single 100 mA Type AC at the origin',
-      "Type A 30 mA RCBO per phase or Type A 30 mA four-pole RCD on the EV circuit (the charger's 6 mA DC detection covers the smooth DC route)",
-      'Type B 300 mA — the smaller IΔn Type A is unsafe at 22 kW',
-      'No RCD — three-phase chargers are exempt from 411.3.3',
+      'A single 100 mA Type AC RCD at the origin covering the whole EV circuit',
+      'Type B 300 mA, because a 30 mA Type A device is unsafe on a 22 kW charger',
+      'No RCD at all — three-phase chargers are exempt from Reg 411.3.3',
+      'Type A 30 mA four-pole RCD or per-phase RCBOs, with the charger handling DC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Three-phase EV chargers with internal 6 mA DC detection per BS EN 61851-1 can be protected upstream by a Type A 30 mA device (Reg 722.531.3.101). The 30 mA additional protection requirement still applies (Reg 411.3.3 — sockets and equipment used by ordinary persons). A four-pole Type A 30 mA RCD or four Type A 30 mA RCBOs (one per pole) are both common arrangements. Type AC is obsolete; 100 mA / 300 mA do not satisfy the 30 mA additional protection requirement.',
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'Reg 461.2 has long prohibited switching the PEN in TN-C / TN-C-S installations. How does Reg 722.312.2.1 (A4) extend that thinking specifically for EV charging?',
     options: [
-      'It permits switching the PEN as long as a Type B RCD is used',
-      'It bans the PEN entirely from any EV charging circuit on TN systems — not just switching but the conductor itself',
-      'It requires a second PEN conductor in parallel for redundancy',
-      'It applies only to chargers above 22 kW',
+      'It permits switching the PEN provided a Type B RCD is fitted on the circuit',
+      'It requires a second PEN conductor run in parallel for added redundancy',
+      'It bans the PEN conductor entirely from the EV circuit on a TN supply',
+      'It applies only to EV chargers rated above 22 kW on three-phase supplies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 461.2 (general): you may not isolate or switch the PEN in a TN-C / TN-C-S system. Reg 722.312.2.1 (EV-specific, new in A4) goes much further — the EV circuit itself shall not include a PEN conductor at all. The combined PEN must be split into separate N and PE before the EV circuit. The reason: the conductive vehicle chassis provides a high-area touch contact during charging, and an open PEN with load on the rest of the property would push the vehicle body to dangerous touch voltage.',
   },
@@ -214,10 +214,10 @@ const quizQuestions = [
     question:
       'On an EICR of an existing Mode 3 EV charger installation, what observation classification typically applies if the installation predates A4 but includes a PEN in the EV circuit with no open-PEN detection device fitted?',
     options: [
-      'No code — it complied with the edition in force at install',
-      'C3 only — purely advisory because A4 is not retrospective',
-      'C2 (potentially dangerous) — the open-PEN failure mode presents a real shock risk via the vehicle body; document the observation and recommend remedial action (open-PEN device retrofit, or split N/PE to give TN-S to the EV)',
-      'C1 — danger present, requires immediate isolation in every case',
+      'No code — it complied with the edition in force at the time of install',
+      'C3 only — purely advisory, because A4 is not applied retrospectively',
+      'C2 — the open-PEN failure mode presents a real shock risk via the vehicle body',
+      'C1 — danger present, requiring immediate isolation in every case',
     ],
     correctAnswer: 2,
     explanation:

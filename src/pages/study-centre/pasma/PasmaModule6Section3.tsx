@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'rescue-hierarchy-levels',
     question: 'What are the three levels of the PASMA rescue hierarchy, in order?',
     options: [
-      'Call 999, wait for ambulance, go to hospital',
-      'Self-rescue, assisted rescue by colleagues, professional rescue by emergency services',
-      'Run, hide, call for help',
-      'PPE check, risk assessment, method statement',
+      'Call 999, wait for the ambulance, then transfer to hospital',
+      'Self-rescue, assisted rescue by colleagues, then professional rescue',
+      'Run from the tower, take cover, then call out for help',
+      'PPE check, then risk assessment, then method statement review',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Under which regulation is the requirement for rescue procedures before work at height established?',
     options: [
-      'The Electricity at Work Regulations 1989',
       'The Work at Height Regulations 2005 (WAHR)',
+      'The Electricity at Work Regulations 1989',
       'The Construction Design and Management Regulations 2015',
       'The Personal Protective Equipment Regulations 2022',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Work at Height Regulations 2005 (WAHR) specifically require that every employer ensures, so far as is reasonably practicable, that rescue procedures (including rescue equipment) are in place before any work at height begins. This is a legal duty, not optional good practice.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why can you NOT rely solely on emergency services for rescue from a mobile tower?',
     options: [
-      'Emergency services do not attend construction sites',
-      'Response times may be too long, especially for suspension trauma casualties who can deteriorate in 5-15 minutes',
-      'Emergency services do not have ladders tall enough',
-      'It is only illegal to call 999 on Sundays',
+      'Emergency services are not permitted to attend construction sites',
+      'Response times may be too long for suspension trauma casualties',
+      'Emergency services do not carry ladders tall enough to reach a tower',
+      'Calling 999 from a construction site is only permitted on weekdays',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'A written rescue plan for tower work must include which of the following?',
     options: [
-      'Only the telephone number for 999',
-      'The rescue team, available equipment, communication methods, access for emergency services, nearest A&E, and first-aid provision',
-      'Only the name of the site manager',
-      'Only the height of the tower',
+      'Only the telephone number to dial for the emergency services',
+      'Only the name and contact details of the appointed site manager',
+      'Only the overall working height of the tower being used',
+      'The rescue team, equipment, communication, emergency access, nearest A&E, and first aid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A comprehensive rescue plan must cover: who forms the rescue team and their training, what rescue equipment is available and where it is stored, communication methods for raising the alarm, access arrangements for emergency services, the location of the nearest A&E department, and on-site first-aid provision including trained first aiders and equipment.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary danger of suspension trauma?',
     options: [
-      'The harness may cause bruising',
-      'Blood pools in the legs, reducing cardiac output and potentially causing circulatory failure and death within minutes',
-      'The person may get sunburnt while waiting',
-      'The harness may stretch and become uncomfortable',
+      'Blood pools in the legs, reducing cardiac output and risking circulatory failure',
+      'The harness leg straps may cause bruising to the casualty',
+      'The person may get sunburnt while waiting to be rescued',
+      'The harness webbing may stretch and become uncomfortable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Suspension trauma causes blood to pool in the legs when the harness compresses the femoral veins. With blood trapped in the lower extremities, less returns to the heart, cardiac output drops, blood pressure falls, and the brain is deprived of oxygen. Without rescue and treatment, this sequence can lead to unconsciousness and death in as little as 5-15 minutes.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'After rescuing a casualty who has been suspended in a harness, what position should they be placed in?',
     options: [
-      'Laid completely flat on their back',
-      'Sitting position or W-position (knees raised) — NOT laid flat, to prevent reflow syndrome',
-      'Standing upright immediately',
-      'Hung upside down to restore blood flow',
+      'Laid completely flat on their back on the ground',
+      'A sitting or W-position with knees raised, not laid flat',
+      'Stood fully upright on their feet immediately after rescue',
+      'Hung upside down to help restore blood flow to the heart',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'What communication method is MOST important to have in place before work at height begins?',
     options: [
-      'A semaphore flag system',
-      'A reliable method of raising the alarm that works from the platform — mobile phone with signal, two-way radio, or buddy system with agreed signals',
-      'A postal address for written correspondence',
-      'An email distribution list',
+      'A semaphore flag system operated from the working platform',
+      'A postal address for sending written correspondence to the team',
+      'A reliable means of raising the alarm from the platform (phone, radio, or buddy)',
+      'An email distribution list shared between all site operatives',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rescue plan must include a reliable method of raising the alarm from the working platform. This could be a mobile phone (confirm signal coverage first), two-way radios, or a buddy system with agreed visual or audible signals. The method must work from the platform height and in the specific location — not all sites have mobile phone coverage.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why must rescue plans be practised through drills, not just written?',
     options: [
-      'To give the team a break from productive work',
-      'Because drills reveal practical problems — equipment access issues, unclear roles, communication failures — that are invisible on paper',
-      'Because the HSE sells drill equipment',
-      'Drills are optional and provide no benefit',
+      'To give the team a welcome break from their productive work',
+      'Because the HSE requires drill equipment to be bought from them',
+      'Drills are entirely optional and provide no real safety benefit',
+      'Because drills reveal practical problems that are invisible on paper',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A plan that looks perfect on paper may fail completely in practice. Drills reveal problems such as: rescue equipment stored in a locked room with no key available, team members unsure of their roles, communication methods that do not work at the actual location, or procedures that take too long. Regular drills ensure the plan is realistic, the team is competent, and the equipment is available and functional.',
   },

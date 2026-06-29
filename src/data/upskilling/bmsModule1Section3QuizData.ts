@@ -31,9 +31,9 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What type of reports can BMS provide to identify inefficiencies?',
     options: [
-      'CC-CV (Constant Current-Constant Voltage)',
-      'Turn off all lights in the system',
-      'A proving unit (battery-powered known voltage source)',
+      'Fire alarm test logs only',
+      'Occupant satisfaction survey summaries',
+      'Statutory electrical inspection certificates',
       'Energy consumption and trend analysis reports',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     question: 'How can BMS improve workplace productivity?',
     options: [
       'By maintaining optimal temperature, lighting, and air quality conditions',
-      'By reducing unnecessary operation and enabling predictive maintenance',
-      'By providing 24/7 remote monitoring and quick response to issues',
-      'Provides a single dashboard for all building systems enabling quick issue identification',
+      'By restricting building access to core working hours only',
+      'By automatically logging staff attendance for payroll',
+      'By increasing lighting levels well above recommended task levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Give one example of BMS improving occupant comfort.',
     options: [
-      'By scheduling operation based on occupancy and weather conditions',
+      'Shutting off ventilation completely outside working hours',
       'Dimming lights when natural daylight is sufficient',
-      'Energy consumption and trend analysis reports',
-      'By providing 24/7 remote monitoring and quick response to issues',
+      'Locking thermostats so occupants cannot adjust them',
+      'Running heating at full output regardless of conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What is one advantage of centralised monitoring?',
     options: [
-      'By reducing unnecessary operation and enabling predictive maintenance',
-      'By maintaining optimal temperature, lighting, and air quality conditions',
+      'It removes the need for any on-site maintenance staff',
+      'It eliminates the need for individual room sensors',
       'Provides a single dashboard for all building systems enabling quick issue identification',
-      'By scheduling operation based on occupancy and weather conditions',
+      'It guarantees the building can never lose mains power',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 7,
     question: 'How does BMS improve reliability?',
     options: [
-      'By reducing unnecessary operation and enabling predictive maintenance',
-      'By maintaining optimal temperature, lighting, and air quality conditions',
-      'Dimming lights when natural daylight is sufficient',
+      'By running every plant item continuously to avoid restarts',
+      'By disabling alarms to prevent nuisance call-outs',
+      'By replacing all field controllers on a fixed annual cycle',
       'By providing 24/7 remote monitoring and quick response to issues',
     ],
     correctAnswer: 3,
@@ -109,10 +109,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How does BMS extend equipment lifespan?',
     options: [
-      'By scheduling operation based on occupancy and weather conditions',
+      'By running plant harder to finish duty cycles faster',
       'By reducing unnecessary operation and enabling predictive maintenance',
-      'By providing 24/7 remote monitoring and quick response to issues',
-      'By maintaining optimal temperature, lighting, and air quality conditions',
+      'By disabling protective interlocks to avoid shutdowns',
+      'By extending the warranty period offered by manufacturers',
     ],
     correctAnswer: 1,
     explanation:

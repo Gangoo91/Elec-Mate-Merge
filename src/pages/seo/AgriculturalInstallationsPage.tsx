@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'How often should agricultural installations be inspected?',
     answer:
-      'The recommended maximum interval between periodic inspections for agricultural and horticultural installations is 3 years. This is shorter than the 5-year interval recommended for domestic installations, reflecting the harsher environmental conditions and higher risk of damage in agricultural settings. The 3-year interval is a recommendation in IET Guidance Note 3 (Inspection and Testing) and Table 3A of BS 7671. Some insurance providers and farm assurance schemes may require more frequent inspections — particularly for dairy farms, poultry units, and pig units where the electrical installation is critical to animal welfare and production. The inspection should cover all fixed electrical installations in the agricultural premises, including outbuildings, external supplies, and any temporary installations (for example, seasonal lighting in livestock buildings). The inspector should pay particular attention to the condition of bonding conductors, the integrity of IP-rated enclosures, and any evidence of corrosion or mechanical damage.',
+      'The recommended maximum interval between periodic inspections for agricultural and horticultural installations is 3 years. This is shorter than the 5-year interval recommended for domestic installations, reflecting the harsher environmental conditions and higher risk of damage in agricultural settings. The 3-year interval is a recommendation in IET Guidance Note 3 (Inspection and Testing), set out in its Table 3A. Some insurance providers and farm assurance schemes may require more frequent inspections — particularly for dairy farms, poultry units, and pig units where the electrical installation is critical to animal welfare and production. The inspection should cover all fixed electrical installations in the agricultural premises, including outbuildings, external supplies, and any temporary installations (for example, seasonal lighting in livestock buildings). The inspector should pay particular attention to the condition of bonding conductors, the integrity of IP-rated enclosures, and any evidence of corrosion or mechanical damage.',
   },
   {
     question: 'Can I use standard domestic consumer units in a farm building?',
@@ -445,9 +445,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing.</strong> All RCDs must be tested at the rated residual
-                operating current (typically 30 mA) and at 5x the rated current (150 mA) to verify
-                trip time. Record both the trip current and the trip time for each RCD.
+                <strong>RCD testing.</strong> Under BS 7671:2018+A4:2026 (Reg 643.8, with Appendix
+                3 Table 3A deleted), effectiveness is verified by a single alternating-current test
+                at the rated residual operating current (IΔn, typically 30 mA) — a general non-delay
+                RCD must disconnect within 300 ms. The former ×5 IΔn / 40 ms test no longer applies.
+                Record the measured disconnection time for each RCD.
               </span>
             </li>
           </ul>

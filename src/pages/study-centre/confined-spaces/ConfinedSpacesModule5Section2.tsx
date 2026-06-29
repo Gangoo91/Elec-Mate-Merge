@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Why is non-entry rescue considered the preferred method for retrieving a casualty from a confined space?',
     options: [
-      'It is cheaper than entry rescue',
       'It avoids exposing rescue personnel to the same hazards that incapacitated the casualty',
+      'It is cheaper than entry rescue',
       'It does not require any special equipment',
       'It is only used when the casualty is conscious and cooperative',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Non-entry rescue is the preferred method because it retrieves the casualty from outside the confined space using mechanical means (tripod, winch, lifeline). This avoids placing rescue personnel inside the hazardous atmosphere or environment that caused the original incident. Statistics consistently show that a significant proportion of confined space fatalities are would-be rescuers who entered without adequate protection. Eliminating the need for rescuers to enter the space dramatically reduces the risk of multiple casualties.',
   },
@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'What specific certification must a rescue winch hold before it can be used to raise or lower a person?',
     options: [
       'CE marking only',
-      'Man-riding certification with a rated load capacity typically between 140 and 180 kg',
       'A general lifting equipment certificate',
+      'Man-riding certification with a rated load capacity typically between 140 and 180 kg',
       'No specific certification is required if it is inspected before each use',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A rescue winch used for raising or lowering persons must hold man-riding certification. This confirms the winch has been designed, tested, and approved specifically for the purpose of suspending or transporting a human being. Man-riding equipment is subject to more stringent design standards than general lifting equipment, including built-in fall arrest capability, controlled descent speed, and a rated load capacity (typically 140-180 kg to accommodate a worker plus PPE and tools). It must also undergo thorough examination under LOLER at least every 6 months.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'When must all rescue equipment be positioned at the entry point of a confined space?',
     options: [
       'Within 15 minutes of work commencing',
-      'Before any person enters the confined space',
       'Once the standby person has confirmed the atmosphere is safe',
       'Only when a rescue situation has been identified',
+      'Before any person enters the confined space',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'All rescue equipment must be positioned at the entry point BEFORE any person enters the confined space. This is a fundamental requirement of the rescue plan under Regulation 5 of the Confined Spaces Regulations 1997. Equipment stored elsewhere on site — in a van, a stores compound, or a different building — is useless when seconds count. The rescue plan must specify exactly what equipment is required, and a pre-entry check must confirm that every item is present, functional, and ready for immediate use at the point of entry.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of non-entry rescue over entry rescue for confined space incidents?',
     options: [
-      'Non-entry rescue is faster in all situations',
       'Non-entry rescue avoids exposing rescue personnel to the hazards inside the confined space',
+      'Non-entry rescue is faster in all situations',
       'Non-entry rescue does not require any planning or equipment',
       'Non-entry rescue can only be used for vertical entries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary advantage of non-entry rescue is that it avoids exposing rescue personnel to the same hazardous conditions — toxic atmosphere, oxygen deficiency, engulfment risk — that caused the original incident. A significant proportion of confined space fatalities are would-be rescuers. Non-entry rescue uses mechanical means (tripod, winch, lifeline) to retrieve the casualty from outside the space, eliminating the need for anyone else to enter the hazardous environment.',
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
     question: 'What is the correct purpose of a dorsal attachment point on a rescue harness?',
     options: [
       'To attach a tool lanyard for carrying hand tools',
-      'To connect the rescue lifeline for vertical suspension and retrieval',
       'To clip the harness to a fixed anchor during normal work',
       'To attach a personal gas monitor',
+      'To connect the rescue lifeline for vertical suspension and retrieval',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The dorsal (back) attachment point — the D-ring located between the shoulder blades — is specifically rated for suspension rescue. It is the point where the rescue lifeline from the winch is connected before the worker enters the confined space. In a rescue situation, the worker is raised vertically by this attachment point, which positions the body upright and distributes the load through the harness. The dorsal attachment must be rated for the full suspended weight of the wearer and connected to the lifeline at all times during confined space entry.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'Which type of breathing apparatus provides the longest duration of respiratory protection for a rescue team entering a contaminated confined space?',
     options: [
+      'Airline breathing apparatus (airline BA)',
       'A filtering facepiece (FFP3) disposable mask',
       'Self-contained breathing apparatus (SCBA)',
-      'Airline breathing apparatus (airline BA)',
       'An escape set',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Airline breathing apparatus (airline BA) provides the longest duration of respiratory protection because it supplies clean breathing air from an external source (compressed air cylinder bank or compressor) via a hose. Unlike SCBA, which is limited to the air in the cylinder on the wearer's back (typically 30-45 minutes), airline BA can supply air continuously for as long as the external source lasts. This makes it the preferred option for extended rescue operations where the rescue team may need to work inside the confined space for a prolonged period.",
   },
@@ -142,11 +142,11 @@ const quizQuestions = [
       'A horizontal confined space entry requires casualty extraction. Which of the following methods is most appropriate?',
     options: [
       'Tripod and rescue winch',
-      'Stretcher extraction with drag rescue device or guide rails',
       'Davit arm system',
+      'Stretcher extraction with drag rescue device or guide rails',
       'Free-standing ladder and manual lifting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "For horizontal entry points (tunnels, culverts, pipes), a stretcher extraction using a drag rescue device (DRD) or guide rail system is most appropriate. Tripods and davit arms are designed for vertical entries (manholes, hatches) where the casualty is raised vertically. In a horizontal space, the casualty must be placed on a narrow-profile stretcher and drawn horizontally along the length of the space to the entry point. Guide rails or slide systems reduce friction and allow a single rescuer to move the stretcher smoothly. A drag rescue device — a webbing harness integrated into the casualty's clothing — allows rapid dragging extraction if a stretcher cannot be deployed.",
   },
@@ -156,11 +156,11 @@ const quizQuestions = [
       'What is the critical requirement for the rescue lifeline connected to a worker entering a confined space via a tripod and winch system?',
     options: [
       'The lifeline must be colour-coded red',
-      'The lifeline must be kept taut at all times so that retrieval can begin immediately',
       'The lifeline must be disconnected once the worker reaches the bottom',
       'The lifeline is only required if the space has a hazardous atmosphere',
+      'The lifeline must be kept taut at all times so that retrieval can begin immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The rescue lifeline must be kept taut at all times during the worker's presence inside the confined space. A slack lifeline means that if the worker collapses, the winch operator would first need to take up the slack before any upward movement begins — wasting critical seconds. By keeping the line taut (with the winch paying out smoothly as the worker moves), retrieval can begin immediately the moment the winch operator engages the raise function. The lifeline must be connected to the worker's dorsal attachment point before entry and must remain connected throughout the entire period of work.",
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
       'Which of the following items must be included in the rescue equipment pre-positioned at the entry point before confined space work begins?',
     options: [
       'Only the tripod and winch — other equipment can be fetched if needed',
-      'All equipment specified in the rescue plan, including rescue BA, stretcher, first aid kit, and communication equipment',
       'Only equipment required for non-entry rescue — entry rescue equipment can be stored elsewhere',
+      'All equipment specified in the rescue plan, including rescue BA, stretcher, first aid kit, and communication equipment',
       'A first aid kit only, as rescue equipment is provided by the emergency services',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ALL rescue equipment specified in the rescue plan must be pre-positioned at the entry point before any person enters the confined space. This includes the tripod/davit, winch, rescue harnesses, breathing apparatus sets for the rescue team, confined space stretcher, first aid equipment (resuscitation kit, oxygen therapy, spinal immobilisation), communication equipment (backup systems), atmospheric monitoring equipment for the rescue team, and any specialist equipment such as cutting tools. Equipment stored elsewhere on site is useless in an emergency where every second counts. Pre-entry checks must confirm every item is present and functional.',
   },

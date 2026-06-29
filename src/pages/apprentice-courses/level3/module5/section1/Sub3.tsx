@@ -44,23 +44,23 @@ const checks = [
     id: 'm5-s1-sub3-gn3-status',
     question: 'GN3 has what legal status relative to BS 7671?',
     options: [
-      'Electrotechnical Certification Scheme — administered by the JIB (Joint Industry Board). The card evidences qualifications, competence grade, health-and-safety currency and CPD; required for access to most construction sites.',
-      'The system of authorisation where a master permit may require additional subsidiary permits (e.g., hot work, electrical isolation) to be in place simultaneously',
-      'GN3 is a non-statutory IET publication that provides practical guidance on how to comply with BS 7671 Part 6 — it expands on test methods, sequences, acceptance criteria and frequency tables.',
-      'Is passive and repetitive, focusing on "why" and "what if" without generating actionable steps, whereas problem-solving is active and goal-directed',
+      'A statutory instrument that legally replaces BS 7671 Part 6.',
+      'A document with the same legal force as BS 7671, overriding it on conflict.',
+      'Non-statutory IET guidance on how to comply with BS 7671 Part 6.',
+      'A British Standard that BS 7671 must be read alongside to stay valid.',
     ],
     correctIndex: 2,
     explanation:
-      'GN3 is published by the IET as practical guidance. It is not statutory and does not replace BS 7671. It is the recognised practitioner reference for HOW to verify and inspect installations to BS 7671. Where BS 7671 says "verify continuity", GN3 tells you the methods (R1+R2, R2-only, the three-part ring test) and the acceptable readings.',
+      'GN3 is published by the IET as practical guidance. It is not statutory and does not replace BS 7671. It is the recognised practitioner reference for HOW to verify and inspect installations to BS 7671, expanding on test methods, sequences, acceptance criteria and frequency tables. Where BS 7671 says "verify continuity", GN3 tells you the methods (R1+R2, R2-only, the three-part ring test) and the acceptable readings.',
   },
   {
     id: 'm5-s1-sub3-frequency',
     question: 'GN3 contains a frequency table for periodic inspection. For an owner-occupied dwelling the recommendation is typically:',
     options: [
-      'To hold 30% of gross income for tax obligations',
+      'Every 12 months, regardless of occupancy.',
       'Every 10 years, OR on change of occupancy — whichever is sooner.',
-      'Regularly, after incidents, and when circumstances change',
-      'Electrical equipment may have live cases when switched off',
+      'Every 3 years, the same as for industrial premises.',
+      'Only when the property is sold or extended.',
     ],
     correctIndex: 1,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'GN3 Section 5 contains:',
     options: [
-      'Changeover to battery, duration under load, and charging',
+      'The full list of BS 7671 maximum Zs values for every device type.',
       'A model Schedule of Inspections that practitioners may use as a template.',
-      'The difference between predicted and actual energy consumption',
-      'Reverse biased to provide a stable reference voltage at the Zener voltage',
+      'The legal text of the Electricity at Work Regulations 1989.',
+      'A pricing guide for inspection and testing work.',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: 'When the GN3 inspection-and-testing checklist refers to "periodic testing" activities, the checklist applies:',
     options: [
-      'The names and signatures of everyone who handled the sample, dates and times of transfer, and sample condition',
-      'A burn or scald covering more than 10% of the body or causing damage to eyes, respiratory system or vital organs',
-      'Specifically to periodic inspection and testing intervals — it is intended for use during periodic verification rather than initial verification.',
-      'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
+      'To both initial verification and periodic inspection equally, with no distinction.',
+      'Only to the design stage, before any installation work begins on site.',
+      'Specifically to periodic inspection rather than initial verification.',
+      'Only to special locations such as bathrooms and swimming pools.',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,36 +99,36 @@ const quizQuestions = [
     id: 3,
     question: 'GN3 9th Edition + A4 update is the current edition. What changed in the A4 update relative to earlier editions?',
     options: [
-      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
-      '70-90 percent of cooking equipment aggregate (high coincidence at service times — multiple hobs, oven, grill running together at lunch and dinner peaks). Refrigeration is 100 percent (compressors cycle independently). Lighting is 100 percent for opening hours. EPOS / IT is low.',
-      'GN3 was updated to align with BS 7671:2018+A4:2026 — including the simplified RCD test method (single AC at 1×IΔn under Reg 643.7.3), AFDD recommendations under Reg 421.1.7, and updated Table 41.3 maximum Zs values.',
+      'It removed all test methods, leaving only BS 7671 cross-references.',
+      'It reverted the RCD test to the older multi-current (½×, 1×, 5×) sequence.',
+      'It dropped the model forms and schedules from the publication entirely.',
+      'It was realigned to BS 7671:2018+A4:2026, including the simplified RCD test.',
     ],
     correctAnswer: 3,
     explanation:
-      'IET guidance notes get amendment updates to align with BS 7671 amendments. GN3 9th Edition 2022 was updated to follow A4:2026. Practitioners should ensure they are working from the current edition — using older editions risks applying superseded test methods (notably the old multi-test RCD sequence with Table 3A values).',
+      'IET guidance notes get amendment updates to align with BS 7671 amendments. GN3 9th Edition 2022 was updated to follow A4:2026 — including the simplified RCD test method (single AC at 1×IΔn), AFDD recommendations, and updated Table 41.3 maximum Zs values. Practitioners should work from the current edition; older editions risk applying superseded test methods (notably the old multi-test RCD sequence).',
   },
   {
     id: 4,
     question: 'GN3 specifies the four-terminal earth tester for measuring earth electrode resistance because:',
     options: [
-      'It separates current and potential connections (C1/P1, C2/P2), reducing measurement error from lead resistance and giving a direct reading of the electrode-plus-soil resistance.',
-      'At least six years for civil liability under the Limitation Act, with most professional indemnity insurers and Competent Person Schemes requiring 10 to 25 years. Cloud storage of PDFs is standard contractor practice now.',
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
-      'The armour strip length (determined by the gland size), the outer sheath strip length, the inner sheath strip length, and the conductor tail length — all specified in the gland manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation guide',
+      'It separates the current and potential connections, cancelling lead resistance.',
+      'It uses a DC test current, which prevents corrosion of the electrode under test.',
+      'It measures electrode resistance without disconnecting any other earthing path.',
+      'It needs only a single test spike, making it faster than two-terminal methods.',
     ],
     correctAnswer: 0,
     explanation:
-      'The four-terminal arrangement injects current via C1/C2 and measures voltage via P1/P2. This separates current and voltage paths so the resistance of the test leads does not appear in the reading. Two-terminal earth resistance measurements are unreliable for low resistances. GN3 mandates the four-terminal arrangement.',
+      'The four-terminal arrangement injects current via C1/C2 and measures voltage via P1/P2. Separating the current and voltage paths means the resistance of the test leads does not appear in the reading, giving a direct reading of electrode-plus-soil resistance. Two-terminal earth measurements are unreliable for low resistances, so GN3 mandates the four-terminal arrangement.',
   },
   {
     id: 5,
     question: 'When carrying out an earth electrode test under GN3 guidance, parallel metallic paths (bonded water/gas services, adjacent earthing systems) should be:',
     options: [
-      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
-      'Isolated or disconnected before the test, so test current is not diverted through them and the reading reflects the electrode resistance alone.',
-      'Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs',
-      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
+      'Left fully connected so the test reflects the system as it normally operates.',
+      'Isolated or disconnected so the reading reflects the electrode alone.',
+      'Bonded together with an extra temporary link to lower the reading taken.',
+      'Tested first with an insulation resistance tester before the electrode test.',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 6,
     question: 'GN3 advice on when to carry out earth electrode testing:',
     options: [
-      'Reasonable care and skill, within a reasonable time, for a reasonable price (where not pre-agreed)',
-      'Open posture, eye contact, nodding to acknowledge, calm tone — encourages trust and openness',
-      'Ideally in least-favourable ground conditions — for example when soil is frozen or very dry — to obtain conservative results.',
-      'A non-statutory British Standard that is widely cited and referenced by Approved Document P of the Building Regulations',
+      'Only in warm, damp weather, when readings are at their lowest.',
+      'Immediately after heavy rainfall to obtain a representative reading.',
+      'Ideally in least-favourable ground conditions, such as frozen or dry soil.',
+      'Only once, at the time the electrode is first installed on site.',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,22 +151,22 @@ const quizQuestions = [
     id: 7,
     question: 'GN3 dynamic risk assessment requirement:',
     options: [
-      'Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.',
-      'Performed fully and correctly every time, following your standard procedure — safe isolation is always assessed and errors in this area are treated very seriously by assessors',
-      'Fluorescent tubes (mercury), batteries (lead/lithium/nickel), used solvents, used oil, asbestos waste, lead-paint waste, certain WEEE items containing hazardous substances, and many others on the European Waste Catalogue (EWC) hazardous list.',
-      'If unexpected issues are discovered during inspection and testing, the person carrying out the work shall perform a dynamic risk assessment to determine immediate actions, any change to test sequence, and the need for additional precautions.',
+      'A risk assessment is only needed before work starts and never updated on site.',
+      'Dynamic risk assessment is optional once a written method statement exists.',
+      'It applies only to live working and never to dead testing of a circuit.',
+      'Discovering an unexpected issue requires a dynamic risk assessment on the spot.',
     ],
     correctAnswer: 3,
     explanation:
-      'GN3 explicitly requires dynamic risk assessment on discovery of unexpected issues. Verification work routinely turns up things the original design didn\'t anticipate — degraded equipment, undocumented alterations, mis-coloured conductors, energised parts you didn\'t expect to be live. The dynamic risk assessment lets you stop, reassess, change approach if needed, and document the decision.',
+      'GN3 explicitly requires dynamic risk assessment on discovery of unexpected issues — to determine immediate actions, any change to the test sequence, and the need for additional precautions. Verification work routinely turns up things the original design didn\'t anticipate: degraded equipment, undocumented alterations, mis-coloured conductors, energised parts you didn\'t expect to be live. The assessment lets you stop, reassess, change approach if needed, and document the decision.',
   },
   {
     id: 8,
     question: 'The information the inspector needs to conduct initial verification (per Reg 642.1 and GN3) does NOT include:',
     options: [
       'The cost of the original installation work.',
-      'Earthing system (TN-S/TN-C-S/TT) and Ze.',
-      'Maximum demand and ADS arrangement.',
+      'The earthing system (TN-S/TN-C-S/TT) and Ze.',
+      'The maximum demand and the ADS arrangement.',
       'The number and type of live conductors.',
     ],
     correctAnswer: 0,
@@ -758,13 +758,13 @@ export default function Sub3() {
             id="m5-s1-sub3-part6-restructure"
             question="What practical impact does the A4:2026 Part 6 restructure have for an inspector who already owns GN3 8th Edition?"
             options={[
-              "None — guidance notes are timeless.",
-              "The 8th Edition references pre-A4 regulation numbering and pre-A4 RCD test sequences (½×, 1×, 1×IΔn). The inspector should upgrade to the 9th Edition + A4 update to align with the renumbered Part 6 and the single-current AC RCD test at 1×IΔn.",
-              "The 8th Edition is now illegal to use.",
-              "Only the front cover changed.",
+              "None — guidance notes are timeless and never need updating.",
+              "It references pre-A4 numbering and the deleted multi-test RCD sequence.",
+              "The 8th Edition is now illegal to use on any installation.",
+              "Only the front cover and publication date changed in the new edition.",
             ]}
             correctIndex={1}
-            explanation="Part 6 was renumbered in A4:2026 to align with the CENELEC inspection and testing standard, and the RCD verification method was simplified to a single AC test at 1×IΔn. Pre-A4 GN3 editions reference the old numbering and the deleted multi-test sequence — current practice requires the updated edition."
+            explanation="Part 6 was renumbered in A4:2026 to align with the CENELEC inspection and testing standard, and the RCD verification method was simplified to a single AC test at 1×IΔn. The 8th Edition references the old numbering and the deleted multi-test RCD sequence (½×, 1×, 5×), so the inspector should upgrade to the 9th Edition + A4 update to align with current practice."
           />
 
           <SectionRule />

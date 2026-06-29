@@ -64,10 +64,10 @@ const checks = [
     id: 'ohms-sanity-check',
     question: 'You calculate 2000 A through a domestic light bulb. What is most likely wrong?',
     options: [
-      'Mechanical fasteners and plug-in connections',
-      'Current concentrating near the conductor surface at high frequencies',
+      'The supply voltage is far higher than you assumed',
+      'The bulb has an unusually low resistance by design',
       'You skipped a unit conversion (probably mA vs A or kΩ vs Ω)',
-      'Adjusting PID parameters for optimal performance',
+      'Ohm’s law does not apply to filament lamps',
     ],
     correctIndex: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'Why does Ohm’s law not always give the exact answer for a real component?',
     options: [
       'Because resistance changes with temperature in many components',
-      'When the works are substantially complete and ready for the client to occupy',
-      'Creating gaps in illumination with excessive spacing',
-      'To record the actual installation for future reference and maintenance',
+      'Because the formula only works on AC, never on DC',
+      'Because voltage is not actually related to current',
+      'Because real meters can never read accurately enough',
     ],
     correctAnswer: 0,
     explanation:

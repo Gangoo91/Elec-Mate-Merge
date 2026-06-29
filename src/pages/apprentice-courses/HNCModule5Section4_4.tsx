@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of BSRIA workmanship standards in building services?',
     options: [
       'To provide visual benchmarks for acceptable installation quality',
-      'Installation method, ambient temperature, and grouping factors',
-      'A wireless protocol designed for smart home device communication',
-      'Bi-directional communication, status feedback, and coordinated sequences',
+      'To set the legal minimum wage rates for site operatives',
+      'To define the electrical design calculations for a project',
+      'To replace the requirement for inspection and testing',
     ],
     correctIndex: 0,
     explanation:
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     id: 'quality-walkdown',
     question: 'When should quality walk-downs be conducted during installation?',
     options: [
+      'Only once, at final handover to the client',
       'Progressively at key milestones before covering up',
-      'Expansion joints and flexible supports',
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'Heating, ventilation, and air conditioning system knowledge',
+      'Only when the client specifically requests an inspection',
+      'After all services have been concealed to save time',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Quality walk-downs should be conducted progressively at key milestones, particularly before work is covered up (e.g., before ceiling closure, before boxing in services), as remediation costs increase dramatically after concealment.',
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'photographic-records',
     question: 'Why are photographic records essential during M&E installation?',
     options: [
-      'When they have a mortgage or dependants who rely on their income',
-      'Electric shock or burn causing death, specified injury, or incapacity for more than 7 days',
+      'They remove the need to complete written inspection checklists',
+      'They are only used for marketing the completed project',
+      'They allow operatives to skip the snagging process entirely',
       'To document concealed work, prove compliance, and assist future maintenance',
-      'Regularly reviewing progress towards your goal and adjusting your approach',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Photographic records document concealed installations before covering, provide evidence of compliance with specifications, assist defect investigation, and support future maintenance and modification works.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'Which BSRIA publication provides illustrated workmanship standards for building services installations?',
     options: [
-      'All earthing and bonding conductors to the means of earthing',
+      'BS 7671 - Requirements for Electrical Installations',
       'BSRIA BG 55/2020 - Illustrated Guide to Electrical Building Services',
-      'An automated external defibrillator (AED) alongside CPR',
-      'As a last resort when all other rescue options have been exhausted or are unsuitable',
+      'CIBSE Guide A - Environmental Design',
+      'BS EN 60439 - Low-voltage switchgear assemblies',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "What is the 'cost of quality' principle in installation management?",
     options: [
-      'Systematic quality checks at defined stages throughout the installation process',
-      'Item description, location, inspector name, date, result, and any defects noted',
+      'Higher-quality materials always cost more than the budget allows',
+      'Quality inspections should be minimised to control project costs',
       'Prevention costs less than correction; correction costs less than failure',
-      'Formal sign-off before proceeding, documented in ITP with witness signatures',
+      'The client always bears the full cost of any quality failures',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'What should a quality hold point inspection include?',
     options: [
-      'Item description, location, inspector name, date, result, and any defects noted',
-      'To document defects requiring remediation before handover',
-      'Prevention costs less than correction; correction costs less than failure',
+      'An informal verbal check that work may continue',
+      'A photograph taken only after the work is concealed',
+      'A review carried out by the installing operative alone',
       'Formal sign-off before proceeding, documented in ITP with witness signatures',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'What minimum information should installation checklists capture?',
     options: [
       'Item description, location, inspector name, date, result, and any defects noted',
-      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
-      'Systematic quality checks at defined stages throughout the installation process',
-      'They form part of the contractual requirement and non-compliance invalidates warranties',
+      'Only a simple pass or fail tick against each system',
+      'The names of every operative who worked on the project',
+      'The total project cost and the contractor profit margin',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'According to CIBSE guidance, what percentage of installations should typically be subject to detailed quality inspection?',
     options: [
-      'The easiest to access components (fuses, contactors)',
+      '5% sample only, regardless of item criticality',
       '25% sample minimum, with 100% of critical items',
-      'Hands-free device control for mobility-limited users',
-      'Event-driven notification when a value changes significantly',
+      '50% sample of every system on the project',
+      '100% of all items including repetitive fit-out',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is progressive verification in installation quality management?',
     options: [
-      'Item description, location, inspector name, date, result, and any defects noted',
-      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
+      'A single comprehensive inspection carried out at handover',
+      'Verification performed only by an external third party',
       'Systematic quality checks at defined stages throughout the installation process',
-      'Prevention costs less than correction; correction costs less than failure',
+      'Checking quality only after defects have been reported',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What should be verified during a cable installation quality check?',
     options: [
-      'Supervision logs showing coverage, inspections conducted, issues identified, and corrective actions taken',
-      'Formal sign-off before proceeding, documented in ITP with witness signatures',
-      'Item description, location, inspector name, date, result, and any defects noted',
+      'Only the colour of the cable outer sheath',
+      'The brand name printed on the cable drum',
+      'Only that the cable reaches its destination',
       'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'How should photographic quality records be organised?',
     options: [
       'Systematically by location/system with clear naming convention, metadata, and cross-reference to drawings',
-      'Supervision logs showing coverage, inspections conducted, issues identified, and corrective actions taken',
-      'Systematic quality checks at defined stages throughout the installation process',
-      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
+      'Stored loosely on the inspector personal phone with no naming',
+      'Deleted once the relevant area has been signed off',
+      'Kept in a single unsorted folder with generic file names',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "What is the purpose of a 'snagging list' in installation quality management?",
     options: [
-      '25% sample minimum, with 100% of critical items',
+      'To record the materials ordered for the installation',
       'To document defects requiring remediation before handover',
-      'Prevention costs less than correction; correction costs less than failure',
-      'Before mass installation begins, with formal approval documented',
+      'To list the operatives assigned to each work area',
+      'To schedule the commissioning of completed systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What supervision documentation should be maintained for quality assurance?',
     options: [
-      'Formal sign-off before proceeding, documented in ITP with witness signatures',
-      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
+      'Only a record of operatives clocking in and out each day',
+      'Only the final certificate issued at project completion',
       'Supervision logs showing coverage, inspections conducted, issues identified, and corrective actions taken',
-      'Systematically by location/system with clear naming convention, metadata, and cross-reference to drawings',
+      'Only verbal handovers between shift supervisors',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'When should first-of-type installation approval be obtained?',
     options: [
-      'Item description, location, inspector name, date, result, and any defects noted',
-      '25% sample minimum, with 100% of critical items',
-      'Formal sign-off before proceeding, documented in ITP with witness signatures',
+      'After all repetitive installations are already complete',
+      'Only if the client raises a complaint about quality',
+      'Halfway through the mass installation programme',
       'Before mass installation begins, with formal approval documented',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'What role do manufacturer installation instructions play in workmanship standards?',
     options: [
       'They form part of the contractual requirement and non-compliance invalidates warranties',
-      'Supervision logs showing coverage, inspections conducted, issues identified, and corrective actions taken',
-      'Item description, location, inspector name, date, result, and any defects noted',
-      'Systematically by location/system with clear naming convention, metadata, and cross-reference to drawings',
+      'They are advisory only and can be safely ignored on site',
+      'They apply solely to mechanical plant, never to electrical work',
+      'They override the requirements of BS 7671 where they conflict',
     ],
     correctAnswer: 0,
     explanation:

@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'tt-system-rcd',
     question: 'In a TT system, why are RCDs essential for earth fault protection?',
     options: [
-      'General assessment covering similar activities that can be adapted',
+      'The supply neutral provides a low-impedance return path',
       'High earth electrode resistance limits fault current',
-      'Incorrect reading due to viewing scale at an angle',
-      'Fire-resistant, LSZH, or MICC cable where required',
+      'Overcurrent devices alone always disconnect within 0.4s',
+      'Touch voltage is inherently held below 50V without them',
     ],
     correctIndex: 1,
     explanation:
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     id: 'time-delayed-rcd',
     question: 'What is the purpose of a time-delayed (Type S) RCD?',
     options: [
-      'Verify the circuit now meets regulatory requirements',
-      'Investigate further and consider remedial action',
-      'The art and science of teaching children',
+      'To increase sensitivity below the standard 30mA threshold',
+      'To detect smooth DC residual currents from EV chargers',
+      'To remove the need for any downstream RCD protection',
       'To allow discrimination with downstream RCDs',
     ],
     correctIndex: 3,
@@ -150,7 +150,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 redrafted Reg 643.3 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
+      'A4:2026 redrafted Reg 643.8 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
   },
   {
     id: 6,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'When is a 300mA RCD typically used instead of 30mA?',
     options: [
       'Fire protection for fixed equipment',
-      'Control of Substances Hazardous to Health',
-      'Visitor sign-in / fire register',
-      'Accuracy and compliance with regulations',
+      'Additional protection for socket-outlets ≤32A',
+      'Shock protection in a bathroom zone 1',
+      'Protection of a circuit feeding a medical IT system',
     ],
     correctAnswer: 0,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'Which RCD type is required for EV charging circuits according to BS 7671?',
     options: [
-      'Signing the EIC construction declaration.',
-      'All batteries are in one location for servicing',
+      'Type AC, as the supply is purely sinusoidal AC',
+      'Type F, to handle high-frequency drive components',
       'Type B or Type A with additional DC protection',
-      'To confirm system meets design and regulatory requirements',
+      'Any 100mA time-delayed Type S device',
     ],
     correctAnswer: 2,
     explanation:
@@ -238,7 +238,7 @@ const faqs = [
   {
     question: 'How do I test RCDs on site?',
     answer:
-      'Under BS 7671:2018+A4:2026 (Reg 643.3 redrafted, Table 3A deleted): use a calibrated RCD tester that applies an AC test current between line and earth at the rated residual operating current (IΔn) — regardless of RCD Type. For 30mA RCDs the maximum operating time is 300ms. Also operate the integral test button (verifies mechanical operation) and run the no-trip test at 0.5 × IΔn. For time-delayed (Type S) RCDs, verify both minimum (130ms) and maximum operating times. The older 5 × IΔn shot is no longer part of the BS 7671 verification methodology.',
+      'Under BS 7671:2018+A4:2026 (Reg 643.8 redrafted, Table 3A deleted): use a calibrated RCD tester that applies an AC test current between line and earth at the rated residual operating current (IΔn) — regardless of RCD Type. For 30mA RCDs the maximum operating time is 300ms. Also operate the integral test button (verifies mechanical operation) and run the no-trip test at 0.5 × IΔn. For time-delayed (Type S) RCDs, verify both minimum (130ms) and maximum operating times. The older 5 × IΔn shot is no longer part of the BS 7671 verification methodology.',
   },
   {
     question: 'What is RCD discrimination and how is it achieved?',
@@ -358,11 +358,11 @@ const HNCModule4Section3_5 = () => {
               <strong>RCD operating times — BS 7671:2018+A4:2026 verification (test current / general instantaneous / Type S time-delayed):</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>IΔn (single AC test per Reg 643.3) — ≤300ms — 130ms - 500ms</li>
+              <li>IΔn (single AC test per Reg 643.8) — ≤300ms — 130ms - 500ms</li>
               <li>0.5 × IΔn — must NOT trip (both types)</li>
             </ul>
             <p className="text-sm text-white/70">
-              A4:2026 redrafted Reg 643.3 and deleted Appendix 3 Table 3A. Regardless of RCD Type,
+              A4:2026 redrafted Reg 643.8 and deleted Appendix 3 Table 3A. Regardless of RCD Type,
               an AC test at IΔn is used to verify effectiveness — the older 5 × IΔn shot (≤40ms)
               is no longer part of BS 7671 verification. Manufacturer product standards
               (BS EN 61008/61009) still set the 40ms figure at 5 × IΔn for type-test purposes.
@@ -511,7 +511,7 @@ const HNCModule4Section3_5 = () => {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Main incomer — Type S (delayed) — 300mA — 300-500ms</li>
               <li>Sub-distribution — Type S (delayed) — 100mA — 150-200ms</li>
-              <li>Final circuits — instantaneous — 30mA — ≤300ms @ IΔn (BS 7671 A4:2026 verification per Reg 643.3)</li>
+              <li>Final circuits — instantaneous — 30mA — ≤300ms @ IΔn (BS 7671 A4:2026 verification per Reg 643.8)</li>
             </ul>
             <p>
               <strong>Discrimination benefits:</strong>
@@ -631,7 +631,7 @@ const HNCModule4Section3_5 = () => {
                 TT requirement: <strong>RA × IΔn ≤ 50V</strong>
               </li>
               <li>
-                30mA RCD max trip time at 150mA: <strong>40ms</strong>
+                30mA RCD max disconnection time at 1×IΔn (single AC test): <strong>300ms</strong>
               </li>
               <li>
                 Type S minimum delay at IΔn: <strong>130ms</strong>

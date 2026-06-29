@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is the MOST accurate reason why a CSCS card is considered essential for working on UK construction sites?',
     options: [
-      'It replaces the need for any formal qualifications',
-      'It proves you have paid your CITB levy',
       'It verifies that you hold the required qualifications and training for your role',
+      'It proves you have paid your CITB levy',
+      'It replaces the need for any formal qualifications',
       'It is only required for supervisors and managers',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The CSCS card scheme verifies that workers on construction sites have the required qualifications and training for the type of work they carry out. It does not replace qualifications — it confirms them. Most major clients and tier 1 contractors require all operatives to hold a valid CSCS card before being allowed on site.',
   },
@@ -50,11 +50,11 @@ const quickCheckQuestions = [
     question: 'What are the two general requirements to obtain most CSCS cards?',
     options: [
       'A first aid certificate and a site induction',
-      'A CITB Health, Safety and Environment (HS&E) test pass and a relevant NVQ/SVQ or qualifying qualification',
       'An employer reference and five years of experience',
+      'A CITB Health, Safety and Environment (HS&E) test pass and a relevant NVQ/SVQ or qualifying qualification',
       'A DBS check and a CITB registration number',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'To obtain most CSCS cards, you generally need to pass the CITB Health, Safety and Environment (HS&E) test and hold a relevant NVQ/SVQ or other qualifying qualification. The specific HS&E test level and qualification required depend on the card type you are applying for.',
   },
@@ -93,16 +93,16 @@ const quizQuestions = [
   {
     id: 1,
     question: 'In what year was the Construction Skills Certification Scheme (CSCS) established?',
-    options: ['1990', '1995', '2000', '2003'],
-    correctAnswer: 1,
+    options: ['1995', '1990', '2000', '2003'],
+    correctAnswer: 0,
     explanation:
       'CSCS was established in 1995. It was created to provide a means of verifying that workers on construction sites have the required qualifications and training for the type of work they carry out. Over 2.1 million cards are currently in circulation.',
   },
   {
     id: 2,
     question: 'Which of the following major clients does NOT typically mandate CSCS cards?',
-    options: ['Network Rail', 'HS2', 'Local corner shops', 'Highways England'],
-    correctAnswer: 2,
+    options: ['Network Rail', 'Local corner shops', 'HS2', 'Highways England'],
+    correctAnswer: 1,
     explanation:
       'Network Rail, HS2, Highways England, Crossrail, and Tideway are all major construction clients that mandate CSCS cards. Local corner shops are not construction clients and do not require CSCS cards. The Build UK Code of Conduct requires all operatives to hold a CSCS card.',
   },
@@ -112,10 +112,10 @@ const quizQuestions = [
     options: [
       'Only skilled tradespeople',
       'Only labourers and apprentices',
-      'Only supervisors and managers',
       'Everyone working on site, from labourers to managers, including visitors',
+      'Only supervisors and managers',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Everyone working on a construction site should hold an appropriate card — from labourers and apprentices to skilled trades, supervisors, managers, and professionals. Even visitors need a temporary visitor card. Different card types exist for different roles and qualification levels.',
   },
@@ -125,26 +125,26 @@ const quizQuestions = [
     options: [
       'The Health and Safety Executive (HSE)',
       'Build UK',
-      'CITB and the Construction Leadership Council',
       'The Federation of Master Builders',
+      'CITB and the Construction Leadership Council',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'CSCS Ltd is owned by CITB (Construction Industry Training Board) and the Construction Leadership Council. The scheme is endorsed by Build UK, the Civil Engineering Contractors Association, and the Home Builders Federation.',
   },
   {
     id: 5,
     question: 'Which of the following is a CSCS partner card scheme for plant operators?',
-    options: ['CISRS', 'CPCS', 'TICA', 'SEATS'],
-    correctAnswer: 1,
+    options: ['CPCS', 'CISRS', 'TICA', 'SEATS'],
+    correctAnswer: 0,
     explanation:
       'CPCS (Construction Plant Competence Scheme) is the partner card scheme for plant operators. CISRS covers scaffolders, TICA covers thermal insulation contractors, and SEATS covers safety and environmental awareness. All partner scheme cards carry the CSCS logo.',
   },
   {
     id: 6,
     question: 'What is the standard validity period for most CSCS cards?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 2,
+    options: ['1 year', '5 years', '3 years', '10 years'],
+    correctAnswer: 1,
     explanation:
       'Most CSCS cards are valid for 5 years from the date of issue. Renewal requires passing a current HS&E test (if the previous test was taken more than 2 years ago), holding current qualifications, and completing the application process. Some cards, such as Experienced Worker cards, may have shorter validity periods.',
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
     question: 'For an electrician, what is the typical CSCS card progression path?',
     options: [
       'Red Trainee → Blue Skilled → Gold Advanced',
-      'Green Labourer → Blue Skilled Worker → Gold Advanced Craft',
       'White Visitor → Green Labourer → Black Manager',
+      'Green Labourer → Blue Skilled Worker → Gold Advanced Craft',
       'Blue Skilled → Gold Supervisor → Platinum Professional',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The typical path for an electrician is: Green Labourer card during apprenticeship, then Blue Skilled Worker card (Electrotechnical) after completing NVQ Level 3 in Electrical Installation or Electrotechnical Technology, then Gold Advanced Craft card for those with additional qualifications.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
     question: 'What does the JIB ECS card provide in relation to CSCS?',
     options: [
       'It is a completely separate scheme with no CSCS recognition',
-      'It provides CSCS recognition for electrical workers — your ECS card IS your CSCS card',
       'It is only valid for domestic electrical work, not construction sites',
       'It replaces the need for any HS&E test',
+      'It provides CSCS recognition for electrical workers — your ECS card IS your CSCS card',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The JIB (Joint Industry Board) issues ECS (Electrotechnical Certification Scheme) cards that carry the CSCS logo. Your JIB/ECS card IS your CSCS card for electrical work on construction sites. It is a partner card scheme within the wider CSCS framework and is fully recognised on sites requiring 'a CSCS card'.",
   },

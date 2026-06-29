@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'In the trigger-response chain (stimulus → thought → emotion → behaviour), which step offers the greatest opportunity for intervention?',
     options: [
-      'Stimulus — you can always change the external event',
       'Thought — reappraising the event changes the emotional outcome',
+      'Stimulus — you can always change the external event',
       'Emotion — you can choose to feel differently instantly',
       'Behaviour — you can only act after the emotion has fully run its course',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'While you often cannot control the stimulus and cannot directly choose your emotions, you can change your interpretation (thought) of the event. Cognitive reappraisal at the thought stage alters the emotional response before it fully forms, which in turn changes the behavioural outcome.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'In Albert Ellis\'s ABC Model, what does the "B" stand for, and why is it the most important element?',
     options: [
       'Behaviour — because actions determine outcomes',
-      'Beliefs — because your interpretation of the event determines the emotional consequence',
       'Biology — because emotions are purely physical reactions',
+      'Beliefs — because your interpretation of the event determines the emotional consequence',
       'Balance — because emotional equilibrium is the goal',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The "B" stands for Beliefs — the thoughts, interpretations, and assumptions you hold about the Activating event. Ellis argued that it is not the event itself (A) that causes the emotional Consequence (C), but your Beliefs (B) about the event. Changing irrational or unhelpful beliefs changes the emotional outcome.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the correct order of the trigger-response chain?',
     options: [
-      'Emotion → Stimulus → Behaviour → Thought',
       'Stimulus → Thought → Emotion → Behaviour',
+      'Emotion → Stimulus → Behaviour → Thought',
       'Thought → Stimulus → Behaviour → Emotion',
       'Behaviour → Emotion → Thought → Stimulus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The trigger-response chain follows the sequence: Stimulus (the external event) → Thought (your interpretation of it) → Emotion (the feeling that arises from your interpretation) → Behaviour (your outward action). Understanding this chain reveals where you can intervene.',
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     options: [
       'The supervisor used different words with each person',
       'One electrician is inherently more emotional than the other',
-      'Their different beliefs and interpretations of the feedback',
       'The time of day the feedback was given',
+      'Their different beliefs and interpretations of the feedback',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The ABC Model specifically predicts that the same Activating event (A) can lead to different Consequences (C) depending on the Beliefs (B) each person holds. One electrician may believe "feedback helps me grow", while the other may believe "criticism means I am incompetent".',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
       'Viktor Frankl\'s insight about the "space between stimulus and response" suggests that:',
     options: [
       'We have no control over our emotional responses',
-      'There is always a moment of choice between what happens to us and how we respond',
       'Emotional responses should be suppressed completely',
       'Triggers only affect weak-minded individuals',
+      'There is always a moment of choice between what happens to us and how we respond',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Frankl, writing from his experience in concentration camps, observed that even in the most extreme circumstances, humans retain the ability to choose their response. The "space" is the moment of awareness where choice exists — and self-awareness is the skill that expands that space.',
   },

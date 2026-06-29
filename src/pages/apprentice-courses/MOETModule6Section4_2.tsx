@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'escalation-when',
     question: 'When should a maintenance technician escalate an issue to a supervisor?',
     options: [
-      '55°C maximum design flow temperature for new wet space heating systems — encouraging emitter sizing that suits low-temperature heat pumps',
-      'Be polite and helpful, but tell them you cannot give access without the householder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permission and call your supervisor for guidance',
-      'To protect the health of workers and nearby residents and prevent nuisance and ecological harm',
-      'When the issue exceeds their competence, authority, or involves safety risk that requires higher-level decision-making',
+      'Only at the end of the shift, so the supervisor is not interrupted during the day',
+      'Only after attempting the repair, even when it is clearly beyond their competence',
+      'Only when a colleague is unavailable to give a second opinion on the fault',
+      'When it exceeds their competence or authority, or involves a safety decision',
     ],
     correctIndex: 3,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'When reporting a fault to a supervising engineer, what information should you provide?',
     options: [
-      'Visual inspection, testing (insulation resistance, earth continuity, polarity, RCD, loop impedance) and sampling of circuits as appropriate',
-      'Cumulative loading causes gradual damage over weeks, months, or years through repeated sub-maximal forces, rather than a single overload event',
-      'The collective understanding created when all parties freely contribute their ideas, opinions, and feelings to the dialogue',
-      'A clear, structured account: what you found, what you measured, what you have done so far, and what you recommend as the next step',
+      'Only your opinion on the likely cause, leaving the detail for the engineer to find',
+      'Only the asset number, so that the engineer can look up the full history themselves',
+      'As much background detail as possible, even where much of it is not relevant',
+      'A structured account: what you found, measured, did so far, and recommend next',
     ],
     correctIndex: 3,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'written-vs-verbal',
     question: 'Why is it important to follow up a verbal report with a written record?',
     options: [
-      'It confirms that the action has actually been implemented, is effective in preventing recurrence, and has not introduced new problems',
-      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
-      'That the duty holder must balance the risk against the time, trouble, cost, and difficulty of taking measures to avoid it — unless the risk is grossly disproportionate to the cost',
-      'Because verbal communication alone lacks an audit trail — written records ensure traceability, prevent misunderstandings, and satisfy compliance requirements',
+      'Because verbal reports are not permitted at all under health and safety law',
+      'Because a written record removes any need to speak to the supervisor in person',
+      'Because it transfers responsibility for the fault entirely to the supervisor',
+      'Because verbal alone has no audit trail — written records ensure traceability',
     ],
     correctIndex: 3,
     explanation:
@@ -58,10 +58,10 @@ const quizQuestions = [
     question:
       'A technician discovers a fault that requires parts costing more than their authorised spending limit. The correct action is to:',
     options: [
-      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
-      'Report the fault to their supervisor with full diagnostic findings and a recommendation, then await authorisation before ordering',
-      'The process of adapting well in the face of adversity, trauma, threats, or significant sources of stress',
-      'To define the method, equipment, acceptance criteria, and documentation requirements for a specific calibration task',
+      'Order the parts anyway, since the repair is clearly needed to restore the equipment',
+      'Report the findings and recommendation, then await authorisation before ordering',
+      'Leave the fault unrepaired and move on, as it is above their pay grade to handle',
+      'Split the order into smaller purchases that each fall under the spending limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 2,
     question: 'When communicating with a design engineer about a recurring fault, you should:',
     options: [
-      'Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding',
-      'Brief the team on specific safety topics, method statements, or risk assessments before starting work, ensuring everyone understands the hazards and controls',
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-      'Use clear, concise language: state the concern, the evidence, the risk, and your recommended action',
+      'Give only the most recent occurrence, as older events are no longer relevant',
+      'Wait until you have a confirmed root cause before contacting the engineer at all',
+      'Provide the fault history — dates, frequencies, measurements and your analysis',
+      'Summarise the fault verbally only, to avoid creating a lengthy written record',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 3,
     question: 'During a verbal briefing to your supervisor about a safety concern, you should:',
     options: [
-      'Carry out a risk assessment and implement appropriate control measures',
-      'To cover design development, coordination issues, and market volatility',
-      'The total amount of energy required to extract, process, manufacture, transport, and install a building material or product',
-      'Use clear, concise language: state the concern, the evidence, the risk, and your recommended action',
+      'Downplay the concern so as not to alarm the supervisor unnecessarily',
+      'Wait to see whether the concern resolves itself before mentioning it at all',
+      'Raise it only informally in passing, so that it does not seem like a complaint',
+      'State the concern, the evidence, the risk and your recommended action clearly',
     ],
     correctAnswer: 3,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'A supervisor asks you to carry out a task you believe is unsafe. The correct response is to:',
     options: [
-      'Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding',
-      'Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language',
-      'Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making',
-      'At each significant stage: on arrival, during diagnosis, when parts are ordered, when work is completed, and at sign-off — providing a real-time audit trail',
+      'Explain your safety concern, cite the risk or regulation, and ask for a review',
+      'Carry out the task as instructed, since the supervisor holds responsibility for it',
+      'Refuse outright and walk off the site without giving any explanation at all',
+      'Complete the task, but document afterwards that you thought it was unsafe',
     ],
     correctAnswer: 0,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'When writing a technical email to an engineer about a complex fault, best practice is to:',
     options: [
-      'Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making',
-      'Use a structured format: subject line with equipment ID, opening summary, chronological findings, measurements in a table, and clear next-steps request',
-      'Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding',
-      'Brief the team on specific safety topics, method statements, or risk assessments before starting work, ensuring everyone understands the hazards and controls',
+      'Write a single long paragraph so all the detail is kept together in one place',
+      'Use a clear subject and summary, then findings, a measurements table and next steps',
+      'Keep it as brief as possible, leaving out measurements to save the reader time',
+      'Use a vague subject line so the engineer opens the email to find the detail',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 6,
     question: 'The purpose of a toolbox talk is to:',
     options: [
-      'Current status, percentage complete, any delays or obstacles, revised completion estimate, and any decisions required from the supervisor',
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-      'Brief the team on specific safety topics, method statements, or risk assessments before starting work, ensuring everyone understands the hazards and controls',
-      'Explain what resource is needed, why it is needed, the consequence of not having it, and the expected benefit — enabling the supervisor to make an informed decision',
+      'Provide a formal annual training course leading to a recognised qualification',
+      'Record the hours that each operative has worked for payroll purposes',
+      'Brief the team on the hazards, controls and method before work starts',
+      'Discipline operatives who breached site safety rules during the previous shift',
     ],
     correctAnswer: 2,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'When a supervising engineer gives you technical instructions you do not fully understand, you should:',
     options: [
-      "Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding",
-      "Current status, percentage complete, any delays or obstacles, revised completion estimate, and any decisions required from the supervisor",
-      "Use clear, concise language: state the concern, the evidence, the risk, and your recommended action",
-      "Ask for clarification immediately, repeating back your understanding to confirm it matches the engineer's intent",
+      "Begin the task and work out the unclear parts as you go, to avoid seeming unsure",
+      "Ask a colleague to interpret the instructions rather than trouble the engineer",
+      "Carry out only the parts you understand and leave the rest for someone else",
+      "Ask for clarification at once, reading back your understanding to confirm it",
     ],
     correctAnswer: 3,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 8,
     question: 'Progress reports to supervisors should include:',
     options: [
-      'Current status, percentage complete, any delays or obstacles, revised completion estimate, and any decisions required from the supervisor',
-      'Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language',
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-      'Use clear, concise language: state the concern, the evidence, the risk, and your recommended action',
+      'Status, percentage complete, delays, revised estimate and any decisions needed',
+      'Only a note confirming the work has started, with detail saved until completion',
+      'A full technical history of the equipment going back to its installation date',
+      'Only the obstacles encountered, since good progress does not need reporting',
     ],
     correctAnswer: 0,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 9,
     question: 'Under ST1426, effective upward communication demonstrates:',
     options: [
-      'Use clear, concise language: state the concern, the evidence, the risk, and your recommended action',
-      'Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making',
-      'Current status, percentage complete, any delays or obstacles, revised completion estimate, and any decisions required from the supervisor',
-      'Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language',
+      'That a technician can complete tasks without ever needing to consult a supervisor',
+      'Responsibility, competence and clear communication of technical information',
+      'That a technician prefers written communication over speaking to colleagues',
+      'That a technician can work faster than others on the same maintenance team',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       "When documenting a disagreement with a supervisor's decision, the correct approach is to:",
     options: [
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-      'Explain what resource is needed, why it is needed, the consequence of not having it, and the expected benefit — enabling the supervisor to make an informed decision',
-      'Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language',
-      'Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making',
+      'Record your personal opinion of the supervisor and why you think they were wrong',
+      'Avoid writing anything down, to keep the disagreement informal and off the record',
+      'Record the facts objectively — what was discussed, decided and by whom, without emotion',
+      'Send a copy of your notes to everyone on site so the disagreement is widely known',
     ],
     correctAnswer: 2,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 11,
     question: 'A CMMS work order should be updated:',
     options: [
-      'Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding',
-      'Brief the team on specific safety topics, method statements, or risk assessments before starting work, ensuring everyone understands the hazards and controls',
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
-      'At each significant stage: on arrival, during diagnosis, when parts are ordered, when work is completed, and at sign-off — providing a real-time audit trail',
+      'Only once, at the very end of the job, in order to avoid duplicating entries',
+      'Only if the job takes longer than a single working day to fully complete',
+      'Only by the supervisor, after the technician has reported in to them verbally',
+      'At each stage — arrival, diagnosis, parts, completion and sign-off — in real time',
     ],
     correctAnswer: 3,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 12,
     question: 'When requesting additional resources from a supervisor, you should:',
     options: [
-      'Explain what resource is needed, why it is needed, the consequence of not having it, and the expected benefit — enabling the supervisor to make an informed decision',
-      'Politely but firmly explain your safety concern, referencing the specific risk or regulation, and request the task be reviewed before proceeding',
-      'Record the facts objectively: what was discussed, what concerns were raised, what decision was made, and by whom — without emotional language',
-      'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
+      'Explain what is needed, why, the impact of not having it, and the expected benefit',
+      'Simply state what you want and leave it to the supervisor to work out why',
+      'Request more than you actually need so there is room to negotiate down later',
+      'Wait until the lack of resources has actually caused a delay before raising it',
     ],
     correctAnswer: 0,
     explanation:

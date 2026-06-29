@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'om-manual-purpose',
     question: 'What is the primary purpose of an O&M manual?',
     options: [
-      'Ensure use is restricted to designated persons and repairs by competent persons only',
+      'To record the contractor’s labour and material costs for final account settlement',
       'To provide information for safe operation, maintenance and future modification of building systems',
-      'The lowest temperature at which the liquid gives off sufficient vapour to form an ignitable mixture with air near its surface',
-      'Deliberate practice targets specific weaknesses with focused effort and feedback',
+      'To demonstrate compliance with the design specification for the building control body',
+      'To list every spare part with current supplier pricing for procurement',
     ],
     correctIndex: 1,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'as-built-purpose',
     question: 'When should as-built drawings be prepared?',
     options: [
-      'Confirming calculations are correct through independent review',
-      'In at least two separate locations with version control, date stamps and change notes',
-      'They may be experiencing significant stress and should be approached with concern',
+      'Only after the building has been occupied for twelve months',
+      'In full before construction starts, then left unchanged on site',
+      'At the design stage, alongside the original tender drawings',
       'Progressively during construction, finalised at practical completion',
     ],
     correctIndex: 3,
@@ -68,11 +68,11 @@ const quickCheckQuestions = [
     question: 'What does COBie stand for?',
     options: [
       'Construction Operational Building Interface Equipment',
-      'Construction Operations Building information exchange',
       'Consolidated Operations Building Information Environment',
       'Certified Operations Building information exchange',
+      'Construction Operations Building information exchange',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'COBie (Construction Operations Building information exchange) is a structured data format for exchanging building information from design through construction to operation. It enables digital handover of asset data without relying on proprietary software formats.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What information must be included in the Health and Safety File under CDM 2015?',
     options: [
-      'Design parameters, installed capacities, control strategies and target energy consumption',
-      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
+      'A full schedule of the contractor’s spare parts and recommended suppliers',
+      'Predicted annual energy consumption and carbon emission benchmarks for the building',
       'Information about risks to health and safety during future construction, maintenance or demolition work',
-      'Variations, actual cable routes, final equipment positions and any deviations from design',
+      'Detailed maintenance schedules and recommended cleaning frequencies for each system',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'Which document provides the format specification for digital asset data handover?',
     options: [
       'BS 8536 (now incorporated into BS EN ISO 19650)',
-      'The Principal Designer during construction, then the client',
-      'Energy efficient operation throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life',
-      'Progressively throughout construction with staged reviews',
+      'BS 7671 Part 6 — Inspection and Testing',
+      'CIBSE Code M — Commissioning Management',
+      'BSRIA BG 8 — Model O&M Manual',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'What must be recorded in the building log book regarding HVAC systems?',
     options: [
-      'Information about risks to health and safety during future construction, maintenance or demolition work',
+      'Terminal connections, cable cores and control circuit wiring for each plant item',
       'Design parameters, installed capacities, control strategies and target energy consumption',
-      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
-      'To evidence that systems have been tested and perform to specification',
+      'The names of every operative who worked on the HVAC installation and their CSCS cards',
+      'Manufacturer warranty claim procedures and the contractor’s defects liability period',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Who is responsible for preparing and maintaining the Health and Safety File?',
     options: [
-      'BS 8536 (now incorporated into BS EN ISO 19650)',
-      'To evidence that systems have been tested and perform to specification',
+      'The Principal Contractor during construction, then the building control body',
+      'The CDM coordinator throughout, retained permanently after handover',
       'The Principal Designer during construction, then the client',
-      'Progressively throughout construction with staged reviews',
+      'The HSE inspector, who issues it on completion of the works',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     question:
       'What type of drawings should show cable routes, containment systems and equipment locations?',
     options: [
-      'Competence varies with work complexity',
-      'Within 24 hours of the request',
-      'Unique defect numbering and audit trail',
+      'Single line diagrams',
+      'Schematic control diagrams',
+      'Title block and revision sheets',
       'Installation or layout drawings',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'What is the purpose of commissioning records in handover documentation?',
     options: [
       'To evidence that systems have been tested and perform to specification',
-      'Variations, actual cable routes, final equipment positions and any deviations from design',
-      'Progressively throughout construction with staged reviews',
-      'The Principal Designer during construction, then the client',
+      'To record the spatial coordination of services to avoid future clashes',
+      'To set out the recommended spare parts holding for the maintenance team',
+      'To confirm the energy efficiency targets required under Part L',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'According to BSRIA Soft Landings, when should O&M manual content be reviewed?',
     options: [
-      'The Principal Designer during construction, then the client',
+      'Only once, by the client, after practical completion',
       'Progressively throughout construction with staged reviews',
-      'Energy efficient operation throughout the building\\\\\\\\\\\\\\\'s life',
-      'BS 8536 (now incorporated into BS EN ISO 19650)',
+      'At the final account stage, alongside the retention release',
+      'After the first year of occupation, during the warranty period',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 10,
     question: 'What information should as-built drawings show that differs from design drawings?',
     options: [
-      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
-      'Information about risks to health and safety during future construction, maintenance or demolition work',
+      'The intended design loads and assumed diversity figures for each circuit',
+      'The predicted energy consumption and carbon benchmarks for the installation',
       'Variations, actual cable routes, final equipment positions and any deviations from design',
-      'To evidence that systems have been tested and perform to specification',
+      'The original tender quantities and the contractor’s priced rates',
     ],
     correctAnswer: 2,
     explanation:
@@ -214,9 +214,9 @@ const quizQuestions = [
     id: 11,
     question: 'What does the building log book requirement under Part L help achieve?',
     options: [
-      "BS 8536 (now incorporated into BS EN ISO 19650)",
-      "The Principal Designer during construction, then the client",
-      "To evidence that systems have been tested and perform to specification",
+      "Safe maintenance access to all concealed services",
+      "A complete audit trail of every site variation and instruction",
+      "Verification that all systems meet their design fire ratings",
       "Energy efficient operation throughout the building's life",
     ],
     correctAnswer: 3,
@@ -228,9 +228,9 @@ const quizQuestions = [
     question: 'Which testing records must be included for fire alarm systems?',
     options: [
       'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
-      'The Principal Designer during construction, then the client',
-      'To evidence that systems have been tested and perform to specification',
-      'Variations, actual cable routes, final equipment positions and any deviations from design',
+      'Insulation resistance and earth fault loop impedance results for each final circuit',
+      'Duration test results and luminaire schedule verification to BS 5266-1',
+      'Motor rotation checks, VSD parameter records and interlock verification',
     ],
     correctAnswer: 0,
     explanation:

@@ -62,10 +62,10 @@ const checks = [
     id: 'motor-cap-job',
     question: 'What is a motor-start (or motor-run) capacitor doing on a single-phase induction motor?',
     options: [
-      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
+      'Smoothing the supply voltage to stop the motor running noisily',
       'Phase-shifting the start winding so the motor sees a rotating magnetic field and produces starting torque.',
-      'Evacuating the fire floor first then adjacent floors sequentially; used in tall buildings',
-      'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
+      'Correcting the power factor of the motor so the supply runs cooler',
+      'Storing energy to keep the motor turning through brief supply interruptions',
     ],
     correctIndex: 1,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does a capacitor store?',
     options: [
-      'Small additions like extra socket',
+      'Energy in a magnetic field around a coil',
       'Charge in an electric field between two plates.',
-      'Reduces current and therefore I²R losses',
-      'Between a line and a common neutral point',
+      'Current, which it releases at a steady rate',
+      'Voltage, by chemically converting it like a battery',
     ],
     correctAnswer: 1,
     explanation:
@@ -104,9 +104,9 @@ const quizQuestions = [
     id: 3,
     question: 'When you first connect a capacitor to a DC supply through a resistor, what happens?',
     options: [
-      'Each light gets full voltage and works independently',
-      'Where there is risk of head injury from falling objects or impact',
-      'Separation distances, interference prevention, and shared containment systems',
+      'No current flows at all because the capacitor blocks DC entirely',
+      'A steady current flows for as long as the supply is connected',
+      'The current rises slowly from zero to a steady maximum',
       'Current flows briefly while the capacitor charges, then drops to zero.',
     ],
     correctAnswer: 3,
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does a smoothing capacitor do after a rectifier?',
     options: [
-      'Show empathy and adjust expectations temporarily while maintaining core safety and competence standards',
-      'By wearing high-visibility vests or armbands, often in a distinct colour',
+      'Converts the pulsating DC back into an AC waveform',
+      'Blocks the DC so only the ripple voltage reaches the load',
       'Holds charge between rectifier pulses, filling in the gaps to give a steadier DC voltage.',
-      'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
+      'Limits the peak current the rectifier diodes have to carry',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,9 +156,9 @@ const quizQuestions = [
     id: 7,
     question: 'You replace a faulty motor-run capacitor on a single-phase compressor. The new cap is the same µF but a lower voltage rating. Is that OK?',
     options: [
-      'The existing ballast must be bypassed or the LED tube must be compatible with the existing ballast type',
-      'They provide timestamped, tamper-evident proof that both parties agreed to the terms',
-      'Step out of the content, restore safety by establishing Mutual Purpose and Mutual Respect, then return to the issue',
+      'Yes — the µF value is what matters; the voltage rating is only a rough guide',
+      'Yes — a lower voltage rating actually makes the motor start more gently',
+      'Only if you fit two of them in series to share the voltage',
       'No — voltage rating must equal or exceed the original. Underrated caps fail (often explosively) under mains-side stress.',
     ],
     correctAnswer: 3,
@@ -167,12 +167,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Why does BS 7671 require capacitors over a certain size to discharge automatically when isolated?',
+    question: 'Why does BS 7671 require compensation capacitors over a certain size to be used with discharge resistors?',
     options: [
       'Because a charged capacitor can hold a dangerous voltage long after the supply is removed — a hidden shock hazard for whoever opens the unit next.',
-      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
-      'A fire where the rate of burning is limited by the available oxygen supply rather than by the fuel available',
-      'Load-sensing or proximity detection systems that prevent or warn of potential entrapment between the platform and surrounding structures',
+      'Because the capacitor would otherwise draw current continuously and waste energy when isolated.',
+      'Because an undischarged capacitor raises the power factor of the installation above unity.',
+      'Because the discharge resistor is needed to limit the inrush current when the supply is first connected.',
     ],
     correctAnswer: 0,
     explanation:

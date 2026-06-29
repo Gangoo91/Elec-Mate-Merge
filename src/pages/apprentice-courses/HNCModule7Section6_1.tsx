@@ -29,9 +29,9 @@ const quickCheckQuestions = [
       'What does a Type B distribution board designation indicate according to BS EN 61439-3?',
     options: [
       'A board designed for use by ordinary persons (non-skilled)',
-      'To provide evidence of compliance and ensure safety',
-      'Claims arising from design work and certification advice',
-      'Explaining repair made, any limitations, and operating instructions',
+      'A board restricted to skilled persons in locked areas',
+      'A board rated only for three-phase industrial supplies',
+      'A board with no requirement for a circuit chart',
     ],
     correctIndex: 0,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'X' in an IP rating indicate?",
     options: [
-      'Gradual voltage increase to test voltage',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
-      'No specific requirement for that digit',
-      '100–120 per minute, depth around 5–6 cm',
+      'The highest possible level of protection for that digit',
+      'A rating that has not yet been certified by a test house',
+      'No specific protection level is defined for that characteristic',
+      'Protection against accidental contact only',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'When designing distribution board layouts, circuits should be arranged so that:',
     options: [
-      'Higher rated circuits are at the bottom',
-      'All MCBs are the same rating',
-      'Three-phase circuits are always on the left side',
+      'The highest rated circuits are always positioned at the bottom',
+      'Every protective device is given the same nominal rating',
+      'Three-phase circuits are always placed on the left side',
       'Circuits are grouped by function with clear labelling',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'What is the purpose of a busbar chamber within a distribution board?',
     options: [
       'To distribute incoming supply to outgoing circuit protective devices',
-      'Circuits are grouped by function with clear labelling',
-      'Loads should be distributed across phases to minimise neutral current',
-      'Nominal current and type of protective device, circuit designation, and points served',
+      'To provide a terminal point for the main earthing conductor only',
+      'To house the residual current monitoring electronics',
+      'To act as the cable entry gland plate for outgoing circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS 7671 requires that distribution board circuit charts must include:',
     options: [
-      'Entry positions must allow adequate bending radii and heat dissipation',
+      'Only the total number of ways and the main switch rating',
       'Nominal current and type of protective device, circuit designation, and points served',
-      'The need to avoid danger and minimise inconvenience in the event of a fault',
-      'To distribute incoming supply to outgoing circuit protective devices',
+      'The manufacturer name and the date of the next periodic inspection only',
+      'The prospective fault current at each outgoing terminal only',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,24 +193,24 @@ const quizQuestions = [
     question:
       'According to BS 7671:2018+A4:2026 Regulation 314.1, what must be considered when dividing an installation into circuits at a distribution board?',
     options: [
-      'It defines the level of internal segregation between functional units',
+      'The internal form of separation between functional units',
       'The need to avoid danger and minimise inconvenience in the event of a fault',
-      'To distribute incoming supply to outgoing circuit protective devices',
-      'Loads should be distributed across phases to minimise neutral current',
+      'The colour coding of the busbars within the enclosure',
+      'The need to keep all circuits on a single residual current device',
     ],
     correctAnswer: 1,
     explanation:
-      'Regulation 314.1 states: "Every installation shall be divided into circuits, as necessary, to: (a) avoid danger and minimize inconvenience in the event of a fault; (b) facilitate safe inspection, testing and maintenance..." This means essential circuits may need separate RCDs, and critical loads should be distributed appropriately. (Note: Reg 132.12 covers Accessibility of electrical equipment — a related but distinct requirement.)',
+      'Regulation 314.1 requires that every installation shall be divided into circuits, as necessary, to avoid danger and minimise inconvenience in the event of a fault, and to facilitate safe inspection, testing and maintenance. This means essential circuits should be separated so a single fault does not disable the whole installation.',
   },
   {
     id: 10,
     question:
       'What documentation must be provided with a completed distribution board installation?',
     options: [
-      'To protect internal components from ingress of solid objects and moisture',
-      'Loads should be distributed across phases to minimise neutral current',
+      'A single-line diagram of the entire site distribution system only',
+      'A copy of the board manufacturer marketing brochure only',
       'Circuit chart, test results, and warning labels as required by BS 7671',
-      'The need to avoid danger and minimise inconvenience in the event of a fault',
+      'A risk assessment for the installation contractor only',
     ],
     correctAnswer: 2,
     explanation:
@@ -221,9 +221,9 @@ const quizQuestions = [
     question:
       'What is the primary purpose of selecting an appropriate IP rating for a distribution board?',
     options: [
-      'Circuits are grouped by function with clear labelling',
-      'Loads should be distributed across phases to minimise neutral current',
-      'To distribute incoming supply to outgoing circuit protective devices',
+      'To increase the short-circuit withstand rating of the busbars',
+      'To reduce the prospective fault current at the origin',
+      'To improve the power factor of the connected circuits',
       'To protect internal components from ingress of solid objects and moisture',
     ],
     correctAnswer: 3,

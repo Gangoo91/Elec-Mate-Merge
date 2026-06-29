@@ -39,9 +39,9 @@ const checks = [
     id: 'hse-role-check',
     question: "What’s the HSE’s actual job?",
     options: [
-      'Pulling cables through later when the second fix begins',
-      'Thermocouples can measure much higher temperatures',
-      'Full conversion to electrical, retiming, and retransmission as optical',
+      'Issues your ECS card so you can get on commercial sites',
+      'Sets the national pay rates for apprentices and electricians',
+      'Certifies individual electricians as competent to work',
       'Enforces UK workplace safety law and publishes guidance',
     ],
     correctIndex: 3,
@@ -52,10 +52,10 @@ const checks = [
     id: 'cps-vs-trade-check',
     question: "What’s the difference between NICEIC and the ECA?",
     options: [
-      '0.35 + (0.030 × 19.51 × 1.20) = 0.35 + 0.702 = 1.05 Ω (rounded). At 70 degrees C operating temperature, applying the 1.20 OSG correction.',
-      'Do not click the link — this is likely a phishing attempt. Contact the wholesaler directly using their known phone number or website',
-      'The leading Industrial Ethernet protocol providing real-time I/O communication and seamless integration with existing Profibus installations',
-      'NICEIC is a competent person scheme (sign off your own Part P work). ECA is a trade body (membership, insurance, voice in the industry)',
+      'NICEIC sets the national pay rates; the ECA enforces safety law',
+      'NICEIC publishes BS 7671; the ECA issues your ECS site card',
+      'They are the same organisation under two different brand names',
+      'NICEIC is a competent person scheme; the ECA is a trade body',
     ],
     correctIndex: 3,
     explanation:
@@ -65,9 +65,9 @@ const checks = [
     id: 'jib-ecs-check',
     question: 'You need a card to get on a commercial site. Who issues it?',
     options: [
-      'Line and Neutral conductors at the distribution board',
-      'Converting energy meter data from Modbus format to BACnet for BMS integration',
-      'To reduce friction and pulling tension during installation',
+      'The HSE, as part of its workplace enforcement role',
+      'NICEIC, once your firm passes its annual assessment',
+      'The IET, when you take out student membership',
       'The JIB administers ECS — the Electrotechnical Certification Scheme',
     ],
     correctIndex: 3,
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "What is the HSE’s main role?",
     options: [
-      'To ensure the instrument hasn\\\\\\\'t failed during the test period',
+      'Publishing BS 7671 and the IET Guidance Notes',
       'Enforcing workplace health and safety law and publishing guidance',
-      'Cash flows over the project life discounted to present value',
-      'Through inhalation of airborne fibres into the lungs',
+      'Registering firms to self-certify domestic Part P work',
+      'Setting the national grading and pay scales for the trade',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'An electrician gets a serious shock in a high-street shop. Who would investigate?',
     options: [
-      'Gnaw marks and stripped insulation',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s converted to heat, sound, or other forms',
+      'The NICEIC, as the firm’s certification body',
+      'The JIB, because it administers the site card scheme',
       'The local authority (Environmental Health)',
-      'Between 15mA and 30mA (50-100% of rated current)',
+      'The IET, as the professional engineering body',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 3,
     question: "What’s the point of a Competent Person Scheme like NICEIC or NAPIT?",
     options: [
-      'Insert the correct size bending spring into the conduit and apply steady, gradual pressure to form the bend',
-      'Ensure the machine is in a safe state, personnel are clear, and a risk assessment has been completed',
-      'Making small verbal acknowledgements like "mm-hmm," "I see," or nodding to show you are engaged',
-      'They let registered firms self-certify their own domestic work for Building Regs Part P, instead of going through Building Control',
+      'They set the national pay rates and grading for electricians',
+      'They enforce the Electricity at Work Regulations on site',
+      'They publish BS 7671 and the supporting Guidance Notes',
+      'They let registered firms self-certify their own Part P work',
     ],
     correctAnswer: 3,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: "Under Part P (England), which is notifiable work in a dwelling?",
     options: [
       'Replacing a consumer unit, or any new circuit, or work in a bathroom',
-      'Enforcement notices, prohibition notices, or prosecution',
-      'Ranges from thriving through to struggling and crisis, and can fluctuate over time',
-      'The weight of all persons, tools, materials, and equipment on the platform',
+      'Adding a single socket to an existing ring final circuit',
+      'Replacing a damaged light switch like-for-like in a hallway',
+      'Swapping a faulty 13 A socket-outlet for an identical one',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does the JIB do?',
     options: [
-      'The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues',
-      'Sets pay rates, holiday pay, working conditions and the grading card for the electrical contracting industry',
-      'An exclusion zone with barriers and warning signs to keep people away from the danger area',
-      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
+      'Enforces health and safety law and prosecutes serious breaches',
+      'Sets pay rates, holiday pay and the grading card for the trade',
+      'Registers firms to self-certify their domestic Part P work',
+      'Publishes the Wiring Regulations jointly with the BSI',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'What do you need before most main contractors let you on a commercial site?',
     options: [
-      'Non-combustible material for domestic installations',
-      'Break down into series and parallel sections, solve step by step',
+      'Personal NICEIC registration as a competent person',
+      'Individual membership of the IET as a student engineer',
       'A valid ECS card with health and safety assessment',
-      'Ensure RCD operates within required time (typically Ra×IΔn ≤ 50V)',
+      'Your own copy of the current BS 7671 Wiring Regulations',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 7,
     question: "What’s the difference between the IET and the ECA?",
     options: [
-      'Origin of the supply, every accessory (sockets, switches), and every Edison-screw lampholder (centre contact must be LINE)',
-      'Identify circuit, obtain permission, isolate, lock off, prove dead using a proven test instrument',
-      'Hazardous to the aquatic environment — the substance is toxic to aquatic life with long-lasting effects',
-      'IET is the professional body for engineers (publishes BS 7671 with BSI). ECA is a trade association for electrical contracting firms.',
+      'IET enforces safety law; ECA issues prohibition and improvement notices',
+      'IET registers firms for Part P; ECA administers the ECS card scheme',
+      'IET sets apprentice pay; ECA inspects domestic electrical work',
+      'IET is the professional body for engineers; ECA is a contractors trade body',
     ],
     correctAnswer: 3,
     explanation:

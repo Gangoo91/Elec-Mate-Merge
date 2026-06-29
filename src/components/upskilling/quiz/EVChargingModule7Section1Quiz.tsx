@@ -38,20 +38,20 @@ const quizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'How many sockets can an organisation claim for under the WCS?',
     options: [
+      '40 sockets maximum',
       '20 sockets maximum',
       '30 sockets maximum',
-      '40 sockets maximum',
       '50 sockets maximum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under the Workplace Charging Scheme, organisations can claim grants for a maximum of 40 sockets per applicant, providing significant support for larger charging installations.',
   },
   {
     id: 4,
     question: 'What percentage of total costs does the WCS typically cover?',
-    options: ['Up to 50%', 'Up to 65%', 'Up to 75%', 'Up to 85%'],
-    correctAnswer: 2,
+    options: ['Up to 50%', 'Up to 65%', 'Up to 85%', 'Up to 75%'],
+    correctAnswer: 3,
     explanation:
       'The Workplace Charging Scheme covers up to 75% of the total costs of purchasing and installing charge points, making EV infrastructure more affordable for businesses.',
   },
@@ -60,11 +60,11 @@ const quizQuestions: QuizQuestion[] = [
     question: 'Who can install charge points under OZEV grant schemes?',
     options: [
       'Any qualified electrician',
-      'Only OZEV approved installers',
       'Any EV charging specialist',
-      'Licensed electrical contractors only',
+      'Only OZEV approved installers',
+      'Any licensed electrical contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Only OZEV approved installers can carry out installations under grant schemes. This ensures quality standards are maintained and proper procedures are followed for grant-funded projects.',
   },
@@ -85,12 +85,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What is a key requirement for WCS eligibility regarding parking?',
     options: [
-      'Shared parking spaces',
-      'Dedicated parking spaces',
+      'Shared public parking spaces',
       'Visitor parking only',
+      'Dedicated parking spaces',
       'Street parking access',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Organisations must have dedicated parking spaces for their staff or fleet vehicles to be eligible for the Workplace Charging Scheme, ensuring the charge points serve their intended purpose.',
   },
@@ -98,12 +98,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'In the WCS application process, what happens after OZEV approval?',
     options: [
-      'Immediate payment is made',
+      'Installation proceeds with an approved installer',
+      'Immediate payment is made to the applicant',
       'Installation must be completed within 6 months',
-      'Installation proceeds with approved installer',
       'Another application round begins',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Once the WCS application is approved, the organisation can proceed with installation using an OZEV approved installer, followed by submitting evidence for reimbursement.',
   },
@@ -125,11 +125,11 @@ const quizQuestions: QuizQuestion[] = [
     question: 'What should installers check regarding WCS before making applications?',
     options: [
       'Local planning permissions',
-      'Customer credit rating',
       'Latest OZEV guidance and scheme status',
-      'Competitor pricing',
+      'The customer’s credit rating',
+      'Competitor pricing in the area',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The WCS is subject to review and changes, so installers should always check the latest OZEV guidance and scheme status before making applications to ensure current requirements are met.',
   },

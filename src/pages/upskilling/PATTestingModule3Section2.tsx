@@ -23,37 +23,37 @@ const inlineChecks = [
     question:
       'A bench lamp is rated 60 W at 230 V and the supplied flex is 0.75 mm² 3-core. Which BS 1362 fuse should be in the BS 1363 plug?',
     options: [
-      '13 A — the standard plug fuse',
-      '3 A — appliance current is ~0.26 A and 0.75 mm² flex is rated around 6 A. The fuse must protect the flex; IET CoP s.15.4 / Table 15.4 sets 3 A for low-current appliances',
-      '5 A — closest match to the 0.26 A appliance current',
-      '13 A — fuse rating only matters for the appliance, not the flex',
+      '13 A — the standard plug fuse fitted to almost every appliance lead',
+      '3 A — the fuse must protect the 0.75 mm² flex, not just match the appliance current',
+      '5 A — the closest available rating above the 0.26 A appliance running current',
+      '13 A — fuse rating only matters for the appliance, never for the flex itself',
     ],
     correctIndex: 1,
     explanation:
-      'IET CoP Table 15.4 gives 3 A for appliances rated up to about 700 W on 230 V where the flex is small (0.75 mm² or smaller). The cardinal rule: the fuse protects the flex, not the appliance. A 13 A fuse on 0.75 mm² flex leaves the flex unprotected on overload.',
+      'IET CoP Table 15.4 gives 3 A for appliances rated up to about 700 W on 230 V where the flex is small (0.75 mm² or smaller). Here the appliance current is ~0.26 A and the 0.75 mm² flex is rated around 6 A. The cardinal rule: the fuse protects the flex, not the appliance. A 13 A fuse on 0.75 mm² flex leaves the flex unprotected on overload.',
   },
   {
     id: 'patm3-s2-rewire-trigger',
     question:
       'A moulded BS 1363 plug on a kettle lead has a damaged cord grip — the outer sheath has been pulled past the strain-relief boot. The flex is otherwise undamaged. Repair, rewire, or replace?',
     options: [
-      'Glue the sheath back into the boot.',
-      'Cut the moulded plug off, strip back to undamaged flex, and fit a new BS 1363 rewireable plug — IET CoP recognises “convert-to-rewireable” as a permitted remediation when the moulded plug is the failed component and the flex is sound.',
-      'Tape the boot.',
-      'Discard the kettle.',
+      'Glue the displaced sheath back into the strain-relief boot and return it to service.',
+      'Cut off the moulded plug, strip back to sound flex, and fit a BS 1363 rewireable plug.',
+      'Wrap the strain-relief boot in self-amalgamating tape to hold the sheath in place.',
+      'Discard the whole kettle, since a slipped cord grip cannot be remedied on a moulded plug.',
     ],
     correctIndex: 1,
     explanation:
-      'When the failed component is the moulded plug and the flex is sound and long enough, the CoP-permitted remediation is to remove the moulded plug, cut back to undamaged sheath, and fit a compliant BS 1363 rewireable plug with the correct fuse for the flex. Re-inspect before returning to service.',
+      'When the failed component is the moulded plug and the flex is sound and long enough, the CoP-permitted "convert-to-rewireable" remediation applies: remove the moulded plug, cut back to undamaged sheath, and fit a compliant BS 1363 rewireable plug with the correct fuse for the flex. Re-inspect before returning to service.',
   },
   {
     id: 'patm3-s2-cable-rule',
     question: 'The “fuse must protect the cable” rule from IET CoP s.15.4 means what, exactly?',
     options: [
-      'The fuse rating must be ≥ the cable rating so the fuse never blows.',
-      'The fuse rating must be ≤ the current-carrying capacity of the flex, so an overload large enough to damage the flex causes the fuse to operate before the flex is damaged.',
-      'The fuse rating must equal the appliance running current.',
-      'The fuse rating must be the lowest available BS 1362 rating regardless.',
+      'The fuse rating must be at least the cable rating, so the fuse never blows in service.',
+      'The fuse rating must be no greater than the flex current-carrying capacity, so it operates first.',
+      'The fuse rating must equal the appliance running current measured under normal load.',
+      'The fuse rating must always be the lowest available BS 1362 rating, regardless of the flex.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,14 +64,14 @@ const inlineChecks = [
     question:
       'A 2 kW fan heater (~8.7 A at 230 V) comes with 1.0 mm² 3-core flex and a moulded plug fitted with a 13 A fuse. Pass or fail at inspection?',
     options: [
-      'Pass — heater current is within 13 A.',
-      'Fail. 1.0 mm² flex on BS 6500 / BS EN 50525 PVC ratings is typically rated around 10 A — close to the heater current with no margin. The 13 A fuse does not protect the flex on overload. A 10–13 A appliance should normally use 1.25 mm² or 1.5 mm² flex; the lead is incorrectly assembled.',
-      'Pass after a successful insulation-resistance test.',
-      'Pass if the heater has a thermal cut-out.',
+      'Pass — the heater running current is comfortably within the 13 A fuse rating.',
+      'Fail — 1.0 mm² flex is rated around 10 A, so the 13 A fuse cannot protect it on overload.',
+      'Pass once a successful insulation-resistance test confirms the cores are sound.',
+      'Pass, since the heater\'s internal thermal cut-out provides the overload protection.',
     ],
     correctIndex: 1,
     explanation:
-      'For appliances drawing close to 13 A, the flex must be rated to carry that current with margin and the fuse must protect it. 1.0 mm² flex with a 13 A fuse is the classic mis-match — technically capable in steady-state but with no overload margin. Heating appliances should be on 1.25 mm² or 1.5 mm² heat-resisting flex.',
+      'For appliances drawing close to 13 A, the flex must be rated to carry that current with margin and the fuse must protect it. 1.0 mm² flex on BS 6500 / BS EN 50525 PVC ratings is typically around 10 A — close to the heater current with no margin — so a 13 A fuse does not protect it. A 10–13 A appliance should normally use 1.25 mm² or 1.5 mm² heat-resisting flex; the lead is incorrectly assembled.',
   },
 ];
 
@@ -80,12 +80,12 @@ const quizQuestions = [
     id: 1,
     question: 'A BS 1362 fuse is fitted in a BS 1363 plug. What is its primary purpose?',
     options: [
-      'To protect the appliance from supply faults',
       'To protect the flexible cord (the flex) from sustained overload current that would damage it',
-      'To protect the user from electric shock',
-      'To act as the appliance’s on/off switch',
+      'To protect the appliance’s internal components from supply-side overvoltage and surges',
+      'To provide the primary protection against electric shock to the user',
+      'To limit the inrush current the appliance draws at switch-on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 1362 / BS 1363 are clear that the plug fuse protects the flex from overload. Shock protection is provided by the fixed-wiring protective devices and earthing/RCDs, not the plug fuse. The fuse is sized to the flex, with the appliance start current accommodated by the fuse time-current curve.',
   },
@@ -93,8 +93,8 @@ const quizQuestions = [
     id: 2,
     question:
       'IET CoP 5th Edition Table 15.4 gives indicative fuse ratings by appliance. Which set is the standard BS 1362 ratings used in BS 1363 plugs?',
-    options: ['1 A, 2 A, 5 A, 10 A', '3 A, 5 A, 13 A', '3 A, 13 A only', '6 A, 10 A, 16 A, 20 A'],
-    correctAnswer: 1,
+    options: ['1 A, 2 A, 5 A, 10 A', '3 A and 13 A only — 5 A is not a BS 1362 rating', '6 A, 10 A, 16 A, 20 A', '3 A, 5 A, 13 A'],
+    correctAnswer: 3,
     explanation:
       'BS 1362 cartridge fuses for use in BS 1363 plugs are made in 3 A, 5 A and 13 A as the common preferred ratings (1 A, 2 A and 7 A also exist but are rarely fitted by manufacturers). 3 A and 13 A are by far the most common; 5 A is used for some appliances such as TVs, audio kit and some small motors.',
   },
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 3,
     question: 'IET CoP s.15.4 — “the fuse must protect the cable” — means the fuse rating must be:',
     options: [
-      'Equal to the appliance rated current',
+      'Equal to the appliance rated current under normal running load',
       'Equal to or greater than the cable’s current-carrying capacity',
-      'Equal to or less than the cable’s current-carrying capacity, so the cable cannot be damaged by an overload before the fuse operates',
-      'Set to 13 A for any appliance under 3 kW',
+      'Equal to or less than the cable’s current-carrying capacity',
+      'Set to 13 A for any appliance rated under 3 kW',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'A 5 m extension lead has a BS 1363 plug fitted with a 13 A fuse, 1.0 mm² 3-core flex, and a single 13 A trailing socket. Compliant?',
     options: [
-      'Yes — 13 A flex, 13 A fuse, 13 A socket all match',
-      'No — 1.0 mm² flex is rated below 13 A; the fuse does not protect the flex on overload. The plug fuse must be sized to the flex, or the flex up-sized to 1.25 mm² or 1.5 mm² for 13 A use',
-      'Yes if used only indoors',
-      'Yes if the lead is < 10 m',
+      'No — 1.0 mm² flex is rated below 13 A, so the fuse does not protect it on overload',
+      'Yes — the 13 A flex, 13 A fuse and 13 A socket all match, so the lead is correctly rated',
+      'Yes, provided the extension lead is only ever used indoors at room temperature',
+      'Yes, provided the lead is under 10 m so that volt-drop stays within limits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '1.0 mm² flex is typically rated around 10 A on BS 6500 / BS EN 50525 ratings. A 13 A fuse on a 1.0 mm² flex breaks the cable rule. Either the fuse must come down (and the trailing socket effectively de-rated, which is poor practice on a generic extension lead) or the flex must come up. Generic 13 A extension leads should be 1.25 mm² or 1.5 mm² flex.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'When should a moulded BS 1363 plug be cut off and replaced with a rewireable BS 1363 plug under the IET CoP?',
     options: [
-      'Whenever the inspector prefers a rewireable',
-      'When the moulded plug is the failed component and the flex is sound — for example, damaged cord grip, scorched body around a pin, cracked plug body. The conversion preserves the sound flex and is a CoP-permitted remediation',
-      'Never — moulded plugs cannot be replaced',
-      'Only if the appliance is Class II',
+      'Whenever the inspector prefers a rewireable plug for ease of future fuse changes',
+      'Never — a moulded plug must never be cut off, so the whole lead is replaced instead',
+      'Only on Class II (double-insulated) appliances, where the earth pin is non-functional',
+      'When the moulded plug is the failed component but the flex is sound and worth preserving',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IET CoP allows conversion of a moulded plug to a rewireable BS 1363 plug as a permitted remediation when the moulded plug is the failed component and the flex is otherwise sound. The new plug is fitted with the correct BS 1362 fuse for the flex and the lead is re-inspected before return to service.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'A 2 kW kettle (~8.7 A at 230 V) is supplied with 1.25 mm² heat-resistant flex and a moulded plug. What BS 1362 fuse is appropriate?',
     options: [
-      '3 A — minimises nuisance current',
-      '5 A — middle of the range',
-      '13 A — kettle current is close to 13 A and 1.25 mm² flex is rated for 13 A use; the fuse protects the flex',
-      'No fuse — kettles are exempt',
+      '3 A — the lowest rating, to minimise nuisance fault current',
+      '5 A — a safe middle-of-the-range choice for any kettle',
+      '13 A — kettle current is close to 13 A and the 1.25 mm² flex is rated to match',
+      'No fuse at all — high-power kettles are exempt from plug fusing',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'You inspect a desk lamp with 0.5 mm² 3-core flex and a 13 A fuse fitted in the plug. The lamp is 40 W. Action?',
     options: [
-      'Pass — appliance current is well below 13 A',
-      'Fail / remediate. 0.5 mm² flex is typically rated below 5 A; a 13 A fuse does not protect the flex. Replace the fuse with a 3 A and re-inspect',
-      'Fail and replace the lamp',
-      'Pass after PAT',
+      'Fail and remediate — 0.5 mm² flex is rated below 5 A, so fit a 3 A fuse and re-inspect',
+      'Pass — the 40 W appliance current is well below 13 A, so the fuse rating is not a concern',
+      'Fail — and the lamp must be replaced because a 0.5 mm² flex can never be made compliant',
+      'Pass — once the lamp has been through the electrical test sequence the fuse rating is confirmed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '0.5 mm² flex is the smallest commonly-used flex size and is rated around 3 A in many BS 6500 / BS EN 50525 tables. A 13 A fuse is far above the flex rating. Replace with a 3 A fuse and re-inspect. The remediation is in scope of the PAT inspection.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'A repair has been made by twisting two flexes together inside a piece of insulation tape, between the plug and the appliance. What is the IET CoP position?',
     options: [
-      'Acceptable if the insulation tape is heavy-duty',
-      'Fail. Cable joints in flexes are not permitted by IET CoP s.15 — a flex must be a single continuous run from plug to appliance, or use a proper coupler. The repair is unauthorised modification (Section 3) and the lead is failed at inspection',
-      'Pass after a successful insulation-resistance test',
-      'Pass if the joint is staggered',
+      'Acceptable provided heavy-duty self-amalgamating tape is used over the join',
+      'Pass, provided the join passes a subsequent insulation-resistance test at 500 V',
+      'Pass, provided the conductors are staggered so the join is not all in one plane',
+      'Fail — joints in flexes are not permitted; a flex must be continuous or use a proper coupler',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IET CoP does not permit cable joints in flexes by twisting and taping. Flex must be continuous, or use approved couplers (BS 1363 plug-and-trailing-socket, or proper 3-core couplers). Twisted-and-taped joints are unauthorised modification — failed at inspection.',
   },
@@ -186,24 +186,24 @@ const quizQuestions = [
     question:
       'An older audio amplifier has a label on the rear: “Replace fuse only with 5 A type”. The plug has a 13 A fuse fitted. Does the manufacturer’s label override the inspector’s judgement?',
     options: [
-      'No — manufacturer labels are advisory',
-      'Yes. IET CoP s.15.4 directs the inspector to follow the manufacturer’s instructions where a specific fuse rating is specified. Replace the 13 A with a 5 A and re-inspect. The manufacturer has sized the fuse for both the flex and any internal protection',
-      'Only if the equipment is under warranty',
-      'Only on Class I equipment',
+      'Yes — the CoP follows a specified rating, so replace the 13 A with a 5 A and re-inspect',
+      'No — manufacturer labels are advisory only, and the inspector applies Table 15.4 instead',
+      'Only if the equipment is still within its original manufacturer warranty period',
+      'Only on Class I equipment, where the earth path makes the fuse rating critical',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Where the manufacturer specifies a fuse rating on the equipment, that rating is followed. The CoP defers to manufacturer instructions in such cases — a 13 A fuse where 5 A is specified is a fail at inspection.',
+      'Where the manufacturer specifies a fuse rating on the equipment, IET CoP s.15.4 directs the inspector to follow it — the manufacturer has sized the fuse for both the flex and any internal protection. A 13 A fuse where 5 A is specified is a fail at inspection; replace it with a 5 A and re-inspect.',
   },
   {
     id: 10,
     question:
       'You rewire a BS 1363 plug. The flex is 1.5 mm² 3-core. What conductor lengths inside the plug — L, N, E — are correct per BS 1363 construction?',
     options: [
-      'All three the same length',
-      'Earth shortest, line and neutral longer',
-      'Earth longest, then neutral, then line shortest — so that under any flex pull, line disconnects first, neutral second, and earth is last to break',
-      'Line longest (active conductor)',
+      'All three conductors cut to exactly the same length inside the plug',
+      'Earth shortest, with line and neutral both cut longer than the earth',
+      'Earth longest, then neutral, then line shortest, so earth is the last to break',
+      'Line longest, as the active conductor, with earth and neutral cut shorter',
     ],
     correctAnswer: 2,
     explanation:

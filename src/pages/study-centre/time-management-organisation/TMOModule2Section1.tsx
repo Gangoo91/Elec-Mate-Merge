@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'During a GTD weekly review, an electrician discovers an unsent EICR report from 10 days ago. What GTD step does the weekly review primarily belong to?',
     options: [
-      'Capture — because the review captures new tasks',
-      'Clarify — because the review defines next actions',
-      'Reflect — because the review involves stepping back to assess all commitments and ensure nothing has slipped',
-      'Engage — because the review is about doing the work',
+      'Capture — collecting new inputs into the inbox',
+      'Clarify — defining the next action for each item',
+      'Reflect — stepping back to assess all commitments',
+      'Engage — getting on with doing the actual work',
     ],
     correctIndex: 2,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrician on site receives a text asking them to call back a supplier about a delayed delivery. The call will take about 90 seconds. According to the GTD 2-minute rule, what should they do?',
     options: [
-      'Add it to their task list and do it during admin time',
       'Do it immediately — it will take less than 2 minutes, so processing it takes longer than doing it',
+      'Add it to their task list and do it during admin time',
       'Ignore it until the end of the day',
       'Delegate it to someone else',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The GTD 2-minute rule states that if a next action will take less than 2 minutes to complete, you should do it immediately rather than capturing, organising, and tracking it. The overhead of recording, filing, reviewing, and then executing a 90-second phone call far exceeds the time required to simply make the call now. This rule prevents your task lists from being clogged with trivial items and ensures small actions do not accumulate into a backlog.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: "David Allen's GTD methodology is built on the principle that:",
     options: [
-      'You should keep all commitments in your head to stay mentally sharp',
-      'The mind is for having ideas, not holding them — external capture frees cognitive bandwidth',
-      'Multi-tasking is the most productive way to work',
-      'Planning is unnecessary if you are experienced enough',
+      'The mind is for having ideas, not holding them',
+      'Commitments are best kept in your head to stay mentally sharp',
+      'Multi-tasking is the most productive way to get work done',
+      'Planning is unnecessary once you are experienced enough',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Allen\'s foundational insight is that using your brain as a storage device for commitments, reminders, and open loops creates stress and reduces cognitive performance. When you capture everything into a trusted external system, your mind is freed to focus on the task at hand — what Allen calls "mind like water," a state of calm responsiveness rather than anxious reactivity.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'The five steps of the GTD workflow, in order, are:',
     options: [
       'Plan, Execute, Review, Adjust, Complete',
-      'Capture, Clarify, Organise, Reflect, Engage',
       'List, Prioritise, Schedule, Do, Review',
       'Collect, Sort, File, Act, Archive',
+      'Capture, Clarify, Organise, Reflect, Engage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The five steps are: Capture (collect everything that has your attention into an inbox), Clarify (determine what each item means and what the next action is), Organise (put items into the appropriate lists — next actions, waiting for, calendar, someday/maybe), Reflect (review the whole system regularly, especially in the weekly review), and Engage (do the work with confidence that you are working on the right thing).',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     question:
       'According to the GTD 2-minute rule, if a next action will take less than 2 minutes you should:',
     options: [
-      'Add it to your next-actions list for later',
-      'Delegate it to someone else',
-      'Do it immediately — the overhead of tracking it exceeds the time to complete it',
-      'Batch it with other small tasks for efficiency',
+      'Add it to your next-actions list to handle later',
+      'Delegate it to someone else and track the handover',
+      'Do it immediately — tracking it costs more than doing it',
+      'Batch it with other small tasks for processing efficiency',
     ],
     correctAnswer: 2,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'In GTD, a "trusted system" means:',
     options: [
-      'An expensive digital tool with cloud backup',
-      'A system you review regularly enough that you trust it contains everything — so your brain can let go',
-      'A fireproof filing cabinet for paper records',
-      'A system recommended by a professional productivity consultant',
+      'A system you review often enough to trust it holds everything',
+      'An expensive digital tool with automatic cloud backup built in',
+      'A fireproof filing cabinet for storing important paper records',
+      'A system formally recommended by a paid productivity consultant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A trusted system is any external system — paper, digital, or hybrid — that you capture everything into and review regularly enough that you genuinely trust it contains all your commitments. The format does not matter; the trust does. If you trust your system, your brain will stop trying to hold everything, reducing stress and improving focus. If the system is unreliable or unreviewed, your brain reverts to anxious internal tracking.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'For a sole-trader electrician adapting GTD, which contexts are most practical?',
     options: [
-      'Home, Office, Computer, Phone, Errands — the standard GTD contexts',
-      'Van, Site, Office/Home, Phone, Merchant — contexts that match how a tradesperson actually works',
+      'Home, Office, Computer, Phone, Errands — the standard office-worker contexts',
+      'Van, Site, Office/Home, Phone, Merchant — contexts matching trade work',
       'Urgent, Important, Delegate, Delete — the Eisenhower Matrix categories',
-      'Morning, Afternoon, Evening — time-based contexts only',
+      'Morning, Afternoon, Evening — purely time-of-day contexts',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'An electrician finishes a job and has 15 minutes before their next appointment. According to GTD, the best approach is:',
     options: [
-      'Scroll social media to relax',
-      'Check their context-based next-actions list for tasks that can be done in 15 minutes with the tools currently available',
-      'Start driving to the next job early and wait outside',
-      'Call a friend to fill the time',
+      'Scroll social media until the next appointment to relax',
+      'Drive to the next job early and sit waiting outside',
+      'Call a friend to pass the spare quarter of an hour',
+      'Check the context-based next-actions list for a 15-minute task',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GTD provides a framework for these exact situations. By maintaining context-based lists, you always know what you can do right now with the time and tools available. In 15 minutes from the van, you might: make a quick phone call, send a quote, order materials, capture notes from the job just completed, or update your job tracking. These small windows add up — five 15-minute windows per week is over an hour of recovered productivity.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: 'The concept of "mind like water" in GTD refers to:',
     options: [
-      'A meditation technique performed before each workday',
-      'The ability to drink lots of water for better concentration',
-      'A state of calm readiness where you respond appropriately to inputs because nothing is forgotten or nagging at you',
-      'A technique for memorising long task lists',
+      'A meditation routine performed before starting each workday',
+      'Drinking plenty of water to sharpen concentration on site',
+      'A state of calm readiness in which nothing is nagging at you',
+      'A mnemonic technique for memorising very long task lists',
     ],
     correctAnswer: 2,
     explanation:

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'actuator-difference',
     question: 'What is the difference between an on/off actuator and a modulating actuator?',
     options: [
-      'On/off actuators are faster than modulating actuators',
+      'On/off actuators always operate faster than modulating actuators',
+      'On/off actuators draw more power than modulating actuators',
+      'On/off actuators are only ever used for safety systems',
       'On/off actuators move fully open or closed, while modulating actuators adjust position gradually',
-      'On/off actuators use more power than modulating actuators',
-      'On/off actuators are only used for safety systems',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'On/off (digital) actuators provide binary control with only two positions - fully open or fully closed. Modulating (analog) actuators allow precise positioning at any point between 0-100% for proportional control.',
   },
@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'damper-use',
     question: 'Give one example of how dampers are used in a ventilation system.',
     options: [
-      'To control water temperature in heating coils',
-      'To detect occupancy in meeting rooms',
       'To control fresh air intake for ventilation',
+      'To detect occupancy in meeting rooms',
+      'To control water temperature in heating coils',
       'To measure CO2 levels in classrooms',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Dampers are commonly used to control fresh air intake in ventilation systems, regulating the amount of outside air entering the building for proper ventilation and energy efficiency.',
   },

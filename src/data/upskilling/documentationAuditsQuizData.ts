@@ -5,10 +5,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is documentation considered part of compliance for emergency lighting systems?',
     options: [
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
+      'It is only needed when the building changes ownership or use',
       'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
-      'Missing or incomplete logbook entries and certificates not signed or incorrectly dated',
-      'To show all monthly and annual test entries, remedial work, and component replacements',
+      'It replaces the need for physical testing of the luminaires',
+      'It is required solely by the system manufacturer, not by law',
     ],
     correctAnswer: 1,
     explanation:
@@ -57,10 +57,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Where should emergency lighting records be stored on-site?',
     options: [
-      'At least six years, though ideally for the life of the installation',
+      'Off-site at the maintenance contractor’s head office only',
       'Near the main fire alarm panel or security office for easy access during inspections',
-      'To show all monthly and annual test entries, remedial work, and component replacements',
-      'Missing or incomplete logbook entries and certificates not signed or incorrectly dated',
+      'In a locked archive accessible only to senior management',
+      'With the local Fire and Rescue Authority for safekeeping',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'How long must emergency lighting records be retained?',
     options: [
-      'Near the main fire alarm panel or security office for easy access during inspections',
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
+      'At least twelve months from the last test',
+      'Until the next annual inspection only',
       'At least six years, though ideally for the life of the installation',
-      'To show all monthly and annual test entries, remedial work, and component replacements',
+      'Only while the original installer remains responsible',
     ],
     correctAnswer: 2,
     explanation:
@@ -81,11 +81,11 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 7,
-    question: 'What is the purpose of an emergency lighting logbook?',
+    question: 'What is the main purpose of an emergency lighting logbook?',
     options: [
-      'At least six years, though ideally for the life of the installation',
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
-      'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
+      'To list the manufacturer’s warranty terms for each luminaire',
+      'To record the building’s energy consumption for the lighting',
+      'To hold the original system design calculations only',
       'To show all monthly and annual test entries, remedial work, and component replacements',
     ],
     correctAnswer: 3,
@@ -94,12 +94,12 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: 'List two common documentation errors that cause compliance failures.',
+    question: 'Which of the following are common documentation errors that cause compliance failures?',
     options: [
       'Missing or incomplete logbook entries and certificates not signed or incorrectly dated',
-      'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
-      'Improvement Notices, Prohibition Notices, and fines or prosecution',
-      'Near the main fire alarm panel or security office for easy access during inspections',
+      'Using black ink instead of blue when signing the logbook',
+      'Storing the logbook digitally rather than on paper',
+      'Recording test results more frequently than required',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What types of enforcement action can Fire Authorities issue for missing records?',
     options: [
-      'At least six years, though ideally for the life of the installation',
+      'Verbal cautions and a written apology to occupants',
       'Improvement Notices, Prohibition Notices, and fines or prosecution',
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
-      'Near the main fire alarm panel or security office for easy access during inspections',
+      'Mandatory re-training of the installing electrician',
+      'Suspension of the building’s electrical supply by the DNO',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What happened during the Liverpool hotel case study?',
     options: [
-      "Near the main fire alarm panel or security office for easy access during inspections",
-      "Missing or incomplete logbook entries and certificates not signed or incorrectly dated",
+      "The emergency luminaires failed their three-hour duration test during the audit",
+      "The wrong type of luminaire had been installed throughout the building",
       "The logbook hadn't been updated for nine months and certificates were missing, resulting in a £6,000 enforcement notice",
-      "It provides legal evidence that the system was designed, installed, tested, and maintained correctly",
+      "The system had never been commissioned after installation",
     ],
     correctAnswer: 2,
     explanation:

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A specifier writes "the cabling system shall comply with TIA-568, ISO/IEC 11801 and BS EN 50173". Which statement is most accurate about what they are asking for?',
     options: [
-      'Three completely different cabling specifications, each requiring its own cable plant.',
-      'Three regional expressions of essentially the same generic-cabling architecture — TIA-568 (North America), ISO/IEC 11801 (international), BS EN 50173 (Europe / UK harmonised). They share the same six-zone topology, the same channel model, and broadly equivalent performance Classes/Categories. A single well-designed install commonly satisfies all three.',
-      'TIA-568 governs copper, ISO/IEC 11801 governs fibre, BS EN 50173 governs management.',
-      'They are mutually exclusive — you must pick one and reject the others.',
+      'Three completely different cabling specifications, each needing its own separate cable plant.',
+      'Three regional expressions of one architecture sharing a topology, so one install satisfies all.',
+      'TIA-568 governs copper, ISO/IEC 11801 governs fibre, and BS EN 50173 governs administration.',
+      'They are mutually exclusive — you must pick one family and reject the other two entirely.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'ANSI/TIA-568 is a series. Which part covers BALANCED twisted-pair cable and components specifically (Cat 5e, 6, 6A, 8 transmission performance)?',
     options: [
-      'TIA-568.0-E — generic premises cabling.',
-      'TIA-568.1-E — commercial buildings.',
-      'TIA-568.2-E (2024) — Balanced Twisted-Pair Telecommunications Cabling and Components Standard.',
-      'TIA-568.3-E — optical fibre.',
+      'TIA-568.0-E — generic premises cabling common requirements.',
+      'TIA-568.1-E — commercial-building cabling integration design.',
+      'TIA-568.2-E (2024) — Balanced Twisted-Pair Cabling and Components.',
+      'TIA-568.3-E — optical-fibre cabling and components standard.',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Which standard does BS 7671:2018+A4:2026 §444.410 verbatim require to be applied for control, signalling and communication circuits inside buildings?',
     options: [
-      'ANSI/TIA-568.0-E and TIA-942-C.',
-      'ISO/IEC 11801 series only.',
-      'BS EN 50174-1 (specification & QA), BS EN 50174-2 (planning & practices inside buildings), and BS EN 50310 (telecommunications bonding networks for buildings and other structures).',
-      'BS 6701 only.',
+      'ANSI/TIA-568.0-E generic cabling and TIA-942-C data-centre infrastructure.',
+      'The ISO/IEC 11801 international generic-cabling series and nothing else.',
+      'BS EN 50174-1, BS EN 50174-2 (planning inside buildings) and BS EN 50310 (bonding).',
+      'BS 6701 (telecoms equipment installation) only, with no EN series applied.',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A facilities manager asks "which TIA standard tells me how to label every link, port and outlet, and which one tells me how to bond and earth the comms infrastructure?". What is the answer?',
     options: [
-      'Both come from TIA-568.',
-      'TIA-606-D (2021) governs administration / labelling / records; TIA-607-E (2024) governs telecommunications bonding and earthing (TBB, TGB, TMGB, BCT). They are separate standards with different scopes, both essential for a complete structured-cabling job.',
-      'TIA-942-C governs labelling; TIA-569-E governs earthing.',
-      'Neither — those topics are only in BS EN 50310.',
+      'Both labelling and earthing are covered together within the TIA-568 cabling series.',
+      'TIA-606-D governs administration and labelling; TIA-607-E governs bonding and earthing.',
+      'TIA-942-C governs labelling, while TIA-569-E governs bonding and earthing of comms.',
+      'Neither — labelling and earthing are addressed only in BS EN 50310, not any TIA document.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Which statement most accurately describes the relationship between TIA-568, ISO/IEC 11801 and BS EN 50173?',
     options: [
-      'They are competing standards; only one applies to any given job.',
-      'They are three parallel, broadly aligned generic-cabling families: TIA-568 (North America), ISO/IEC 11801 (international, ISO/IEC), BS EN 50173 (European / UK harmonised, CENELEC). They share the same six-subsystem topology and channel model and use closely-aligned Classes/Categories. The UK regulatory pointer (BS 7671 §444.410) is to the EN series, but TIA and ISO documents remain valid international references.',
-      'TIA-568 governs Layer 1, ISO/IEC 11801 governs Layer 2, BS EN 50173 governs Layer 3.',
-      'BS EN 50173 is a translation of TIA-568.',
+      'They are competing standards; only one of the three may ever be applied to a given job.',
+      'TIA-568 governs Layer 1, ISO/IEC 11801 governs Layer 2 and BS EN 50173 governs Layer 3.',
+      'BS EN 50173 is a direct British translation of the American TIA-568 document, clause for clause.',
+      'Three parallel, aligned generic-cabling families sharing a topology; the UK pointer is the EN series.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Three parallel families, broadly aligned. The UK is a BS EN 50173 jurisdiction in regulatory terms (§444.410 names the EN documents verbatim). On a multi-region project, specifying compliance with all three is normal — a Class EA / Cat 6A install built to BS EN 50174-2 will satisfy TIA-568.2-E and ISO/IEC 11801-2 simultaneously.',
   },
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'You are reading the ANSI/TIA-568 series and need the document that gives transmission performance limits for Cat 6A balanced cable. Which part?',
     options: [
-      'ANSI/TIA-568.0-E.',
-      'ANSI/TIA-568.1-E.',
-      'ANSI/TIA-568.2-E (2024) — Balanced Twisted-Pair Telecommunications Cabling and Components Standard.',
-      'ANSI/TIA-568.3-E.',
+      'ANSI/TIA-568.0-E — the generic cabling common-requirements umbrella part.',
+      'ANSI/TIA-568.1-E — the commercial-building cabling integration part.',
+      'ANSI/TIA-568.2-E (2024) — Balanced Twisted-Pair Cabling and Components.',
+      'ANSI/TIA-568.3-E — the optical-fibre cabling and components part.',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which CENELEC document is the European harmonised generic-cabling performance standard (Class D, E, EA, F, FA, I, II)?',
     options: [
-      'BS EN 50174-1.',
-      'BS EN 50173 (Information technology — Generic cabling systems). Part 1 is general requirements; further parts cover offices (-2), industrial (-3), residential (-4), data centres (-5) and distributed building services (-6).',
-      'BS EN 50310.',
-      'BS EN 50346.',
+      'BS EN 50173 — Generic cabling systems, the EN performance family mirroring ISO/IEC 11801.',
+      'BS EN 50174-1 — Cabling installation: specification and quality assurance for the works.',
+      'BS EN 50310 — Telecommunications bonding networks for buildings and other structures.',
+      'BS EN 50346 — Cabling installation: testing of installed balanced and optical cabling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50173 is the EN performance family — the European mirror of ISO/IEC 11801. It defines the Classes the channel must measure to. BS EN 50174 is install practice; BS EN 50310 is bonding; BS EN 50346 is testing — all separate documents with separate scopes.',
   },
@@ -126,26 +126,26 @@ const quizQuestions = [
     question:
       'A UK installer is challenged on standards compliance. What is the verbatim BS 7671:2018+A4:2026 clause that names the EN cabling-installation standards as mandatory inside buildings?',
     options: [
-      '§528.1 — proximity to other circuits.',
-      '§444.410 — Inside buildings: "Within a building, the requirements and recommendations of the following standards shall be applied for control, signalling and communication circuits: (a) BS EN 50174-1; (b) BS EN 50174-2; (c) BS EN 50310."',
-      '§716.1 — scope of PoE.',
-      '§545.1.1 — functional bonding.',
+      '§528.1 — proximity of wiring systems to other electrical and non-electrical services.',
+      '§716.1 — scope of the new power-over-data (PoE) installation requirements.',
+      '§444.410 — the "shall be applied" pointer to BS EN 50174-1, 50174-2 and 50310.',
+      '§545.1.1 — ICT functional earthing and bonding network arrangements.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      '§444.410 is the verbatim cite. It lifts BS EN 50174-1, -2 and BS EN 50310 from "good practice" status to "shall be applied" status for any control / signalling / communication circuit inside a UK building. From 15 April 2026, ignoring those EN documents is non-compliance with BS 7671.',
+      '§444.410 is the verbatim cite: "Within a building, the requirements and recommendations of the following standards shall be applied for control, signalling and communication circuits: (a) BS EN 50174-1; (b) BS EN 50174-2; (c) BS EN 50310." It lifts those EN documents from "good practice" to "shall be applied" status for any control / signalling / communication circuit inside a UK building. From 15 April 2026, ignoring them is non-compliance with BS 7671.',
   },
   {
     id: 5,
     question:
       'Which TIA document covers telecommunications PATHWAYS AND SPACES — the rooms, the trays, the conduits, the entrance facilities — including the 18-27 °C / 8-60 % RH environmental envelope for a TR?',
     options: [
-      'ANSI/TIA-568.0-E.',
-      'ANSI/TIA-569-E (2019) + Addendum 1 (2022) — Telecommunications Pathways and Spaces.',
-      'ANSI/TIA-606-D.',
-      'ANSI/TIA-942-C.',
+      'ANSI/TIA-568.0-E — Generic Telecommunications Cabling for Customer Premises.',
+      'ANSI/TIA-606-D — Administration Standard for Telecommunications Infrastructure.',
+      'ANSI/TIA-942-C — Telecommunications Infrastructure Standard for Data Centres.',
+      'ANSI/TIA-569-E with Addendum 1 — Telecommunications Pathways and Spaces.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TIA-569-E + Addendum 1 (2022) is the spaces standard. It defines the TR (Telecommunications Room), ER (Equipment Room), EF (Entrance Facility), pathway types, and the 18-27 °C / 8-60 % RH envelope (the 2022 Addendum updated the older 18-24 °C / 40-55 % numbers). TIA-942-C is the data-centre standard, often confused with -569-E for floor loading and environmental questions.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'You inherit a building cabled in 2010. Drawings reference "ISO/IEC 11801:2002". Which version is current today?',
     options: [
-      'ISO/IEC 11801:2002 — still current.',
-      'ISO/IEC 11801-1:2017+A1:2021 (general requirements), with application-specific parts ISO/IEC 11801-2 (offices), -3 (industrial), -4 (residential), -5 (data centres), -6 (distributed building services). The 2002 single-document edition was superseded by the multi-part series.',
-      'ISO/IEC 11801:2010.',
-      'ISO/IEC 11801 has been withdrawn.',
+      'ISO/IEC 11801-1:2017+A1:2021 plus application parts; the 2002 single document was superseded.',
+      'ISO/IEC 11801:2002 remains current — the multi-part series is only a future unpublished proposal.',
+      'ISO/IEC 11801:2010 is the latest single-document edition and supersedes the 2002 version outright.',
+      'ISO/IEC 11801 has been withdrawn entirely and replaced by the ANSI/TIA-568 series of standards.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2002 edition was superseded by the multi-part series. ISO/IEC 11801-1:2017+A1:2021 is current for general requirements, and dedicated parts cover office, industrial, residential, data-centre and distributed-building applications. BS EN 50173 mirrors this multi-part structure.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'TIA-568.0-E and BS EN 50173-1 both define a "permanent link" and a "channel". What is the difference?',
     options: [
-      'There is no difference — the terms are interchangeable.',
-      'The permanent link is the contractor-installed, semi-permanent cabling between the work-area outlet and the floor-distributor patch panel — solid conductor, terminated at both ends, ≤ 90 m. The channel is the complete signal path from active equipment port to user device — permanent link plus all cords (work-area cord, patch cord, equipment cord), ≤ 100 m. The contractor certifies the permanent link; the channel is what the active equipment "sees".',
-      'The permanent link is fibre, the channel is copper.',
-      'The permanent link is for testing only and has no length limit.',
+      'There is no real difference — "permanent link" and "channel" are interchangeable terms.',
+      'The permanent link is always optical fibre, while the channel is always copper twisted-pair.',
+      'The permanent link is installed solid cabling ≤ 90 m; the channel adds cords to ≤ 100 m.',
+      'The permanent link is a test-only construct and carries no maximum-length limit at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Permanent link = installed cabling, ≤ 90 m, solid conductor, contractor-tested. Channel = end-to-end signal path including cords, ≤ 100 m, what the equipment sees. Both TIA-568.0-E and ISO/IEC 11801-1 / BS EN 50173-1 use this same model. The 90 m / 100 m / 10 m budget is identical across the three families.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Which TIA document covers ADMINISTRATION — the labelling identifiers, the records, the as-built documentation — for telecommunications infrastructure?',
     options: [
+      'ANSI/TIA-607-E — Bonding and Grounding (Earthing) for Customer Premises.',
       'ANSI/TIA-606-D (2021) — Administration Standard for Telecommunications Infrastructure.',
-      'ANSI/TIA-607-E.',
-      'ANSI/TIA-1152-A.',
-      'ANSI/TIA-942-C.',
+      'ANSI/TIA-1152-A — Requirements for Field Test Instruments and Measurements.',
+      'ANSI/TIA-942-C — Telecommunications Infrastructure Standard for Data Centers.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'TIA-606-D (2021) is the administration standard. It defines the identifier hierarchy (TR identifier, link identifier, outlet identifier, panel/port format) and the records that must be maintained. The European equivalent is BS EN 50174-1 §6. Section 4 of this module covers both in detail.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A data-centre RFP requires "ANSI/TIA-942-C compliance, Rated-3". What is TIA-942 and what does "Rated-3" mean?',
     options: [
-      'It is an Ethernet standard; Rated-3 means 3 Gbps.',
-      'ANSI/TIA-942-C (2024) is the Telecommunications Infrastructure Standard for Data Centers. It defines four redundancy classes — Rated 1 (basic), Rated 2 (redundant components), Rated 3 (concurrently maintainable), Rated 4 (fault tolerant). Rated 3 means the facility can be maintained without taking IT services down.',
-      'It is a fibre standard; Rated-3 means OM3.',
-      'It is a fire-rating standard.',
+      'It is an Ethernet transmission standard; Rated-3 denotes a 3 Gbps link speed at the rack.',
+      'It is a multimode fibre standard; Rated-3 denotes OM3-grade fibre throughout the facility.',
+      'It is a cable fire-performance standard; Rated-3 denotes a particular reaction-to-fire class.',
+      'It is the data-centre infrastructure standard; Rated 1-4 classes, Rated 3 concurrently maintainable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TIA-942-C is the data-centre standard. Rated 1 to Rated 4 (sometimes still called "Tier", though Uptime Institute uses Tier exclusively now and TIA uses "Rated"). Rated 3 = concurrently maintainable; Rated 4 = fault tolerant. The European equivalent family is BS EN 50600.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'Which TIA document specifies the field-test instrument requirements (Levels III / IIIe / IV / V) used to certify a balanced twisted-pair channel against its Class?',
     options: [
-      'ANSI/TIA-568.2-E.',
-      'ANSI/TIA-1152-A (2016) — Requirements for Field Test Instruments and Measurements for Balanced Twisted-Pair Cabling.',
-      'ANSI/TIA-606-D.',
-      'BS EN 50174-2.',
+      'ANSI/TIA-1152-A — Field Test Instruments and Measurements for Twisted-Pair Cabling.',
+      'ANSI/TIA-568.2-E — Balanced Twisted-Pair Cabling and Components Standard.',
+      'ANSI/TIA-606-D — Administration Standard for Telecommunications Infrastructure.',
+      'BS EN 50174-2 — Cabling installation: planning and practices inside buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-1152-A (2016) is the field-test instrument standard. Level V is the current top accuracy. The European equivalent is BS EN 50346. A "Class EA pass" certificate must come from an instrument that meets the relevant accuracy level — without that, the certification has no defensible basis.',
   },

@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'coshh-purpose',
     question: 'What is the primary purpose of the COSHH Regulations 2002?',
     options: [
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
-      'That the scaffold conforms to the design or TG20 compliance sheet and no unauthorised modifications have been made',
-      'The resistance between conductors and earth, preventing dangerous currents',
+      'To require manufacturers to label all chemical products with hazard warnings before sale',
+      'To set a list of banned substances that may not be used in any UK workplace',
+      'To require employers to provide free PPE to all workers handling any chemical',
       'To require employers to assess and control exposure to hazardous substances to prevent ill health',
     ],
     correctIndex: 3,
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What are the three main routes of entry for hazardous substances into the body?',
     options: [
       'Inhalation, skin absorption (including eyes) and ingestion',
-      'Chilled water systems with fan coil units',
-      'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
-      'The Regulatory Reform (Fire Safety) Order 2005 (RRFSO)',
+      'Inhalation, injection and radiation exposure',
+      'Skin contact, ingestion and electrical conduction',
+      'Inhalation, ingestion and hearing damage',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'In the COSHH hierarchy of control, what should be considered first?',
     options: [
       'Eliminating the substance or substituting it with a less hazardous alternative',
-      'High-frequency E-field rotating water dipoles in food, generating heat by molecular friction',
-      'They provide automated reminders, fault alerts, cloud backup, and instant compliance reports',
-      'Pause to create space between the stimulus and their response, then choose a measured approach',
+      'Issuing respiratory protective equipment to all workers in the area',
+      'Installing local exhaust ventilation at the point of generation',
+      'Limiting the time each worker is exposed to the substance',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'COSHH Regulations 2002 apply to:',
     options: [
-      'Stop, raise the alarm, evacuate everyone in adjacent areas, call 999, do not enter the collapsed area',
+      'Only substances supplied with a hazard label bearing a skull-and-crossbones pictogram',
       'Any substance that could cause harm to health through workplace exposure, including dusts, vapours, gases, fumes and biological agents',
-      'Determine the maximum demand of the installation, having due regard to diversity, before sizing cables and protective devices.',
-      'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
+      'Only chemicals purchased in containers, not substances produced by work processes',
+      'Lead, asbestos and radioactive substances encountered on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'When soldering electrical connections, the primary COSHH hazard is:',
     options: [
       'Inhalation of solder flux fumes containing colophony (rosin)',
-      'Working near an open window and assuming natural ventilation is adequate',
-      'The supplier or manufacturer of the hazardous substance',
-      'The average exposure over an 8-hour working day must not exceed 5 mg/m³',
+      'Skin contact with the molten solder causing chemical burns',
+      'Ingestion of lead from handling the solder wire',
+      'Ultraviolet radiation emitted by the heated soldering iron tip',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'The 8 steps of a COSHH assessment, in order, are:',
     options: [
-      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
+      'Issue PPE, train workers, monitor exposure, record findings, review the assessment, audit, certify, archive',
       'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
-      'It is a simple asphyxiant that can displace oxygen in enclosed spaces, and its decomposition products from arcing are toxic',
-      'There is a reasonable likelihood that workers are exposed to a substance linked to a specific disease or adverse health effect, and valid techniques exist to detect it',
+      'Substitute the substance, eliminate the hazard, ventilate, isolate, train, sign off, file the record, dispose of waste',
+      'Risk-assess, permit to work, atmospheric-test, ventilate, supervise, rescue-plan, debrief, report',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'SF6 gas, used in some HV switchgear, poses a COSHH risk because:',
     options: [
-      'At least annually, or sooner if there is reason to believe the assessment is no longer valid',
-      'In acid-resistant, sealed containers within a bunded area, away from incompatible materials such as alkalis and oxidisers',
+      'It is highly flammable and can ignite explosively if exposed to a spark',
+      'It is corrosive to skin and eyes on direct contact with the liquid form',
       'It is a simple asphyxiant that can displace oxygen in enclosed spaces, and its decomposition products from arcing are toxic',
-      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
+      'It is a respiratory sensitiser that causes occupational asthma after repeated exposure',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'Under COSHH, health surveillance is required when:',
     options: [
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
-      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
-      'In acid-resistant, sealed containers within a bunded area, away from incompatible materials such as alkalis and oxidisers',
+      'Any hazardous substance is stored on the premises, regardless of whether workers are exposed',
+      'A worker requests it after handling any chemical product during their shift',
+      'PPE has been issued, because surveillance confirms the PPE is being worn correctly',
       'There is a reasonable likelihood that workers are exposed to a substance linked to a specific disease or adverse health effect, and valid techniques exist to detect it',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'Battery acid (dilute sulphuric acid) from UPS systems should be stored:',
     options: [
       'In acid-resistant, sealed containers within a bunded area, away from incompatible materials such as alkalis and oxidisers',
-      'At least annually, or sooner if there is reason to believe the assessment is no longer valid',
-      'It is a simple asphyxiant that can displace oxygen in enclosed spaces, and its decomposition products from arcing are toxic',
-      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
+      'In open containers in a warm room to prevent the acid from freezing',
+      'Alongside alkaline cleaning products so neutralising agents are readily to hand',
+      'In sealed metal drums to provide maximum mechanical protection against impact',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'A safety data sheet (SDS) must be provided by:',
     options: [
-      'Circuit integrity maintained with water spray application',
+      'The Health and Safety Executive on request from any employer',
       'The supplier or manufacturer of the hazardous substance',
-      'At waist height to minimise bending and stretching',
-      '7 days written notice after the final date for payment',
+      'The worker who first opens and uses the product on site',
+      'The site principal contractor as part of the construction phase plan',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Cable-pulling lubricant is classified as a COSHH substance because:',
     options: [
-      'In acid-resistant, sealed containers within a bunded area, away from incompatible materials such as alkalis and oxidisers',
-      'It is a simple asphyxiant that can displace oxygen in enclosed spaces, and its decomposition products from arcing are toxic',
+      'It is highly flammable and presents a significant fire risk in conduit',
+      'It releases toxic gases when it comes into contact with copper conductors',
       'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
+      'It is corrosive and degrades the PVC insulation of the cables being pulled',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'Under COSHH, how often should a risk assessment be reviewed as a minimum?',
     options: [
       'At least annually, or sooner if there is reason to believe the assessment is no longer valid',
-      'Adding a socket outlet to an existing circuit (not in special location)',
-      'To distribute incoming supply to outgoing circuit protective devices',
-      'To carry out routine visual skin inspections and questionnaires, and refer any concerns to occupational health',
+      'Only once, when the substance is first introduced to the workplace',
+      'Every five years, in line with the fixed-wiring inspection cycle',
+      'Each working day, before the substance is used for the first time that shift',
     ],
     correctAnswer: 0,
     explanation:

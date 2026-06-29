@@ -43,10 +43,10 @@ const checks = [
     id: 'gs38-probe-tip-check',
     question: 'GS38 says the exposed metal tip of a test probe should be no more than:',
     options: [
-      'Providing specific knowledge for products installed',
-      '24/7 continuous operation with varied intensity',
+      '10 mm — measured from the tip of the finger guard',
+      '20 mm — enough to reach into a terminal',
       '4 mm — measured from the tip of the finger guard',
-      '0.1 fibres per cubic centimetre of air',
+      'There is no limit as long as a finger guard is fitted',
     ],
     correctIndex: 2,
     explanation:
@@ -56,12 +56,12 @@ const checks = [
     id: 'prove-test-prove-check',
     question: 'You’ve used a voltage indicator to confirm a circuit is dead. Are you done?',
     options: [
-      'The load receives reduced voltage (1/sqrt(3) of intended)',
-      'Last — it is the final line of defence when other controls are insufficient',
       'No — you also need to PROVE the indicator was working before AND after the test',
-      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
+      'Yes — once the indicator reads dead, the job is done',
+      'No — you also need to lock off the circuit after testing',
+      'Yes — provided you proved the indicator before the test',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Prove → test → prove. Use a known live source (proving unit OR a confirmed live circuit) BEFORE the test and AFTER. If the indicator was broken / the battery was flat / a fuse blew during your test, the second prove is what catches it. A ‘dead’ reading from a broken instrument looks identical to a real dead circuit.",
   },
@@ -69,12 +69,12 @@ const checks = [
     id: 'voltmeter-vs-vi-check',
     question: 'Why is a voltage indicator (VI) generally preferred over a multimeter for proving dead?',
     options: [
-      'A VI doesn’t rely on selecting the correct range, has integral fused leads and shrouded probes, and can’t give a misleading reading from a wrong setting',
-      'Internal fitting joints used to connect scaffold tubes end to end, which must be positioned close to a node point to maintain structural integrity',
-      'Both sets of duties apply simultaneously — the person must comply with designer duties when carrying out design work and contractor duties when carrying out construction work',
-      'Self-heating of a material to its ignition temperature without an external heat source, common in oily rags, linseed oil-soaked cloths, coal dust, and certain organic materials',
+      'A VI also measures resistance and continuity as well as voltage',
+      'A VI is cheaper and lighter than a multimeter to carry around',
+      'A VI gives a more precise numerical voltage reading on its display',
+      'A VI has no range to select, has fused shrouded leads, and can’t misread',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "A VI is a SINGLE-PURPOSE instrument: dead vs. live, no range to select, no maths to do, no possibility of leaving it on milliamps and bridging the line conductor. GS38 strongly favours dedicated VIs over multimeters for proving dead — a wrongly-set multimeter has been the root cause of multiple UK electrical fatalities.",
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does GS38 stand for?',
     options: [
-      'Adequate precautions are taken to prevent the conductor becoming live',
+      'A BS 7671 regulation covering test instrument accuracy',
       'HSE Guidance Note GS38 — Electrical test equipment for use on low voltage electrical systems',
-      'To give a brief, focused safety briefing on a specific hazard relevant to the day\\\\\\\'s work',
-      'A certificate showing actual energy use in public buildings over 250m²',
+      'A British Standard for the construction of consumer units',
+      'The grade of safety glasses rated for live electrical work',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'GS38 sets the maximum exposed metal at the tip of a test probe at:',
     options: [
-      'Electromagnetic Compatibility',
-      'RCD and overcurrent protection',
+      '12 mm or less (with finger guards)',
+      '8 mm or less (with finger guards)',
       '4 mm or less (with finger guards)',
-      'Earth symbol or 3-core cable',
+      '25 mm or less (with finger guards)',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 3,
     question: 'The fuses inside GS38-compliant test leads are there to:',
     options: [
-      "Hand digging using non-metallic tools (hand tools or vacuum excavation)",
-      "Spurious input signals, communication errors, and data corruption",
-      "To prevent the cable from overheating due to reduced heat dissipation",
-      "Limit the current the leads can carry — so a fault doesn’t turn the lead into a glowing wire",
+      "Protect the meter’s internal display from over-voltage damage",
+      "Allow the leads to carry much higher currents for measurement",
+      "Make the leads more flexible and easier to coil up after use",
+      "Limit fault current so the lead can’t turn into a glowing wire",
     ],
     correctAnswer: 3,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'A "proving unit" is used to:',
     options: [
       'Generate a known voltage to prove that a voltage indicator is working before and after a dead-test',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
-      'A large university campus with 850 luminaires across multiple buildings',
-      'Description of work, hazards, precautions, isolation details, time limits, authorisation signatures',
+      'Measure the insulation resistance of a dead circuit',
+      'Confirm the polarity of a socket once power is restored',
+      'Test the trip time of an RCD on a live circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'You proved the VI on the proving unit, tested the circuit, got 0 V. Then you tried to prove again — and the VI didn’t light up. What does this mean?',
     options: [
-      "A fire extinguisher, first aid kit, and the machine's operating manual with emergency procedures",
-      "The VI failed sometime during your test — your ‘0 V’ reading is unreliable, treat the circuit as POTENTIALLY LIVE until proven otherwise",
-      "In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site's emergency information",
-      "The resin and hardener components can cause severe skin sensitisation (allergic contact dermatitis) and respiratory sensitisation",
+      "The circuit is confirmed dead — the VI has simply run out of battery",
+      "The VI failed during the test — the ‘0 V’ reading is unreliable, treat as live",
+      "The proving unit is flat — just replace its battery and carry on working",
+      "Nothing to worry about here — the second prove is optional anyway",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'GS38 says test leads should have:',
     options: [
-      'Entrapment is when the operator or platform is crushed between the MEWP and a fixed structure; it is prevented by maintaining safe distances and awareness of surroundings',
-      'Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye',
-      'Insulated lead-to-instrument connections (no exposed metal at the plug), shrouded probes, finger guards, fused tips, and CAT-rated insulation',
-      'When the material cannot be positively identified as non-asbestos and a presumption is not appropriate',
+      'Long exposed probe tips so they reach deep into the terminals',
+      'Detachable crocodile clips fitted as standard for hands-free testing',
+      'Insulated shrouded plugs and probes, finger guards, fused tips, CAT-rated insulation',
+      'A coiled stretchy lead that extends to at least three metres long',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: 'Which is the SAFEST instrument for proving dead on a 230 V circuit?',
     options: [
-      "Analog signal values are directly affected by any noise, while digital signals have switching thresholds",
-      "The inductor generates a high back-EMF voltage spike as the magnetic field collapses",
-      "Yes — agonal gasps are not effective breathing and CPR must continue",
-      "A two-pole voltage indicator (VI) — single function, GS38 leads, prove-test-prove",
+      "A neon screwdriver that lights up only when the circuit is genuinely live",
+      "A non-contact ‘pen’ tester held near the conductor to detect a field",
+      "A digital multimeter carefully set to the AC volts measurement range",
+      "A two-pole voltage indicator — single function, GS38 leads, prove-test-prove",
     ],
     correctAnswer: 3,
     explanation:
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: "The CAT rating on a multimeter (e.g. CAT III 600 V) tells you:",
     options: [
       "What category of electrical environment the meter is rated to use safely on, and the max voltage in that category",
-      "Give them the written brief in advance, allow processing time, follow up one-to-one in a quiet area for questions",
-      "Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer",
-      "Drawings, design details, specifications, calculations, and bills of quantities relating to a structure, including any modifications",
+      "The calibration interval in months before the next service",
+      "The maximum current the meter can measure on its amps range",
+      "The IP rating for dust and water ingress into the meter case",
     ],
     correctAnswer: 0,
     explanation:

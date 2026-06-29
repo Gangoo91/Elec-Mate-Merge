@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What factors affect the Utilisation Factor (UF)?',
     options: [
-      'To adjust ventilation rates based on actual occupancy or pollutant levels',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
-      'Linking a new habit to an existing habit as a trigger',
+      'Lamp wattage, colour temperature, and switching frequency',
+      'The cleaning interval and the type of cleaning agent used',
+      'The number of occupants and the hours of occupancy',
       'Room proportions, surface reflectances, and luminaire distribution',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'The maintenance factor (MF) typically accounts for which depreciation effects?',
     options: [
       'Both lamp depreciation and luminaire/room dirt accumulation',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
-      'XLPE has higher maximum operating temperature (90°C vs 70°C)',
-      'Written (email) so there is a clear record both parties can refer back to',
+      'Voltage drop along the final circuit to the luminaires',
+      'Changes in room proportions as partitions are added',
+      'The angle of incidence of light on the working plane',
     ],
     correctAnswer: 0,
     explanation:

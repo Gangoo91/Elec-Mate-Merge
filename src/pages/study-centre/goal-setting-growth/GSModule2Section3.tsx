@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician holds a Level 3 Diploma and has completed the AM2 practical assessment. According to the JIB grading structure, they are now eligible for which grade?',
     options: [
-      'Graded Electrician &mdash; the AM2 is not required for this grade',
       'Approved Electrician &mdash; the AM2 is the gateway assessment for this grade',
+      'Graded Electrician &mdash; the AM2 is not required for this grade',
       'Technician &mdash; the AM2 automatically qualifies you for Technician status',
       'Senior Technician &mdash; the AM2 plus Level 3 Diploma is all that is required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The AM2 practical assessment is the gateway to Approved Electrician status within the JIB grading structure. It is a two-day practical assessment (conducted at one of the NET assessment centres across the UK) that tests real-world installation competence including conduit bending, trunking, wiring a consumer unit, fault finding, inspection and testing, and safe isolation. Passing the AM2 &mdash; combined with holding a Level 3 qualification such as the 2365 Diploma &mdash; entitles you to apply for the JIB Approved Electrician grade and the corresponding ECS Gold Card (Installation Electrician). This is a critical career milestone because many employers require Approved Electrician status for higher pay grades, and it is a prerequisite for working unsupervised on many sites. The Technician grade requires additional qualifications beyond the AM2, typically including the 2391 Inspection &amp; Testing qualification.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'An electrician wants to achieve IET EngTech (Engineering Technician) professional registration. Which combination best describes the typical requirements?',
     options: [
       'A Level 3 qualification plus a minimum of one year&rsquo;s experience &mdash; no further assessment needed',
-      'A relevant Level 3 or HNC qualification, evidence of professional competence and commitment to CPD, an application reviewed by professional assessors, and often a professional review interview',
       'A university degree in electrical engineering is the minimum requirement for any IET registration',
       'Completion of the AM2 assessment automatically grants EngTech status',
+      'A relevant Level 3 or HNC qualification, evidence of professional competence and commitment to CPD, an application reviewed by professional assessors, and often a professional review interview',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'IET EngTech (Engineering Technician) registration is a professional qualification awarded by the Institution of Engineering and Technology (IET), licensed by the Engineering Council. It requires applicants to demonstrate that they meet the UK Standard for Professional Engineering Competence (UK-SPEC) at Technician level. This typically involves holding a relevant Level 3 qualification (such as a Level 3 Diploma or HNC in Electrical Installation), providing evidence of professional competence through a detailed application describing your work experience and technical skills, demonstrating commitment to continuing professional development (CPD), and attending a professional review interview where assessors evaluate your competence against the UK-SPEC criteria. It is not automatic &mdash; it requires active engagement with the application process. The benefits include professional recognition, enhanced credibility with clients and employers, use of the post-nominal letters &ldquo;EngTech MIET&rdquo;, and a clear pathway to higher registration levels (IEng, CEng) if you continue to develop.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
       'An electrician wants to specialise in periodic inspection and testing of existing installations. They already hold the Level 3 Diploma. What is the most appropriate next qualification?',
     options: [
       'City &amp; Guilds 2396 Design and Verification &mdash; this covers all testing work',
-      'City &amp; Guilds 2391 Inspection and Testing of Electrical Installations',
       'City &amp; Guilds 5357 PAT Testing &mdash; this covers all types of testing',
       'City &amp; Guilds 2919 Electric Vehicle Charging Equipment Installation',
+      'City &amp; Guilds 2391 Inspection and Testing of Electrical Installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The City &amp; Guilds 2391 (Level 3 Award in Inspection and Testing of Electrical Installations) is the specific qualification designed for electricians who want to carry out initial verification of new installations and periodic inspection of existing installations. It covers the theory and practical skills required to inspect, test, and report on electrical installations in accordance with BS 7671, including understanding the sequence of tests, interpreting results, identifying defects, coding observations, and completing Electrical Installation Certificates (EICs) and Electrical Installation Condition Reports (EICRs). The 2396 covers design and verification, which is a different discipline focused on designing installations rather than inspecting existing ones. The 5357 covers only portable appliance testing, which is a narrow specialism. The 2919 covers EV charging installation, which is unrelated to periodic inspection. The 2391 is widely considered one of the most important qualifications an electrician can hold after the Level 3 Diploma and AM2, because inspection and testing work is in high demand and commands premium rates.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of registering with a competent person scheme such as NICEIC, NAPIT, or ELECSA?',
     options: [
-      'To obtain a higher JIB grading and increased pay rate',
       'To gain the legal authority to self-certify notifiable electrical work under Part P of the Building Regulations without involving local authority building control',
+      'To obtain a higher JIB grading and increased pay rate',
       'To qualify for IET EngTech professional registration automatically',
       'To receive a free subscription to BS 7671 and all associated guidance notes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of competent person scheme registration is to authorise electrical contractors to self-certify notifiable electrical work under Part P of the Building Regulations (England and Wales). Part P requires that certain types of electrical work in dwellings (such as new circuits, consumer unit changes, work in bathrooms and kitchens, and work in special locations) must either be carried out by a registered competent person or notified to and inspected by local authority building control. Registration with a competent person scheme (NICEIC, NAPIT, ELECSA, or others) allows electricians to self-certify their work, issue building regulations compliance certificates directly to homeowners, and avoid the delays and costs associated with building control notification. The scheme operators assess applicants&rsquo; technical competence, inspect a sample of completed work at regular intervals, and require evidence of appropriate qualifications, insurance, and equipment. Scheme registration does not directly affect JIB grading (though the qualifications required often overlap), does not automatically grant IET registration, and does not include free publications &mdash; although many schemes offer technical helplines and some discounted resources.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'An electrician is considering the transition from employment to self-employment. Which of the following represents the most prudent approach to this transition?',
     options: [
       'Resign immediately, register as self-employed with HMRC, and start advertising for clients',
-      'Build a client base and financial reserve while still employed, obtain competent person scheme registration, arrange insurance, and plan a phased transition',
       'Wait until you are made redundant &mdash; self-employment should only be considered when you have no other option',
       'Skip competent person scheme registration initially to reduce costs, and register once the business is profitable',
+      'Build a client base and financial reserve while still employed, obtain competent person scheme registration, arrange insurance, and plan a phased transition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most prudent approach to transitioning from employment to self-employment is a planned, phased transition. This involves: building a client base through word-of-mouth, referrals, and reputation while still in employment; saving a financial reserve (typically recommended at least three to six months of living expenses) to cover the period before income becomes consistent; obtaining competent person scheme registration (NICEIC, NAPIT, or ELECSA) before starting, because without it you cannot legally self-certify notifiable work; arranging public liability insurance and professional indemnity insurance; registering with HMRC as self-employed or forming a limited company; setting up basic business systems (invoicing, bookkeeping, client records); and understanding your tax obligations including self-assessment, National Insurance, VAT thresholds, and Construction Industry Scheme (CIS) requirements. Skipping competent person scheme registration is not a cost-saving measure &mdash; it is a legal risk that could result in enforcement action and reputational damage. The transition from employed to self-employed is one of the most significant career decisions an electrician can make, and thorough preparation significantly increases the likelihood of success.',
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'The National Careers Service Skills Health Check is a free online tool. What is its primary purpose and how can it benefit an electrician considering career development?',
     options: [
-      'It is a formal assessment that results in a nationally recognised qualification',
       'It is a diagnostic tool that helps you identify your existing skills, interests, and potential career directions by assessing your strengths across multiple areas',
+      'It is a formal assessment that results in a nationally recognised qualification',
       'It is an employer-facing tool that generates a CV automatically based on your qualifications',
       'It is a mandatory assessment required before enrolling on any government-funded training course',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The National Careers Service Skills Health Check is a free online self-assessment tool provided by the UK government. It is not a formal qualification or mandatory assessment &mdash; it is a diagnostic tool designed to help individuals identify their existing skills, personal strengths, preferred working styles, and potential career directions. The assessment covers areas such as numerical ability, verbal reasoning, problem-solving, communication, teamwork, and personal effectiveness. For electricians considering career development, it can be valuable in several ways: it provides an objective view of your skills beyond just your electrical qualifications, it may highlight strengths you had not considered (for example, strong communication skills that would suit a training or supervisory role), it can suggest career directions aligned with your profile (such as project management, consulting, or specialist technical roles), and it serves as a starting point for goal-setting conversations. The tool is available at nationalcareers.service.gov.uk and takes approximately 30 to 45 minutes to complete. It is particularly useful for electricians at decision points in their career &mdash; such as whether to specialise, move into management, or start a business.',
   },

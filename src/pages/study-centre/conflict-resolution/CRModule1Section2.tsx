@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A main contractor tells a subcontractor electrician that they must work overtime this weekend with no additional pay, or they will not be invited back. The electrician knows they are contractually entitled to overtime rates. Which TKI style is the most appropriate response?',
     options: [
-      'Avoiding — ignore the request and hope it goes away',
-      'Accommodating — agree to the overtime to maintain the relationship',
-      'Competing — firmly assert the contractual right to overtime rates, presenting the contract terms clearly',
-      'Compromising — offer to work one day at standard rates and one day at overtime rates',
+      'Competing — firmly assert the contractual right to overtime rates',
+      'Avoiding — ignore the request entirely and hope that it simply goes away',
+      'Accommodating — agree to the unpaid overtime to keep the relationship intact',
+      'Compromising — offer one day at standard rates and one day at overtime rates',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "When there is a clear contractual right at stake and the other party is attempting to override it through pressure, competing (asserting your position firmly) is the appropriate style. This is not about being aggressive — it is about standing firm on a legitimate entitlement. The electrician should present the contract terms calmly and professionally, making it clear that they are willing to work overtime but only on the agreed terms. Avoiding would allow the exploitation to continue. Accommodating would set a precedent for future unreasonable demands. Compromising would still involve surrendering a legitimate entitlement. Competing protects the electrician's rights whilst keeping the communication professional.",
   },
@@ -28,14 +28,14 @@ const quickCheckQuestions = [
     question:
       'Two electricians on a commercial site disagree about whether to use MICC or SWA cable for a fire alarm circuit. Both approaches are compliant with BS 5839-1 but have different cost and installation implications. Which TKI style would produce the best outcome?',
     options: [
-      'Competing — the senior electrician should impose their preference',
-      'Collaborating — both should discuss the technical merits, cost implications, and client requirements to find the optimal solution',
-      'Avoiding — let the project manager decide',
-      'Accommodating — the less experienced electrician should defer automatically',
+      'Competing — the senior electrician should simply impose their own preference',
+      'Collaborating — discuss the technical merits, cost and client needs to find the best solution',
+      'Avoiding — neither engages and the project manager is left to decide it alone',
+      'Accommodating — the less experienced electrician should defer to the other automatically',
     ],
     correctIndex: 1,
     explanation:
-      "Collaborating is the optimal style here because both options are technically valid, and the best solution depends on factors that require discussion: cost, installation time, maintenance access, client preference, and building-specific requirements. By collaborating, both electricians bring their knowledge and experience to bear on the decision, and the outcome is likely to be better than either individual's initial preference. Competing would waste the knowledge of whichever electrician is overruled. Avoiding abddicates professional responsibility. Accommodating wastes the less experienced electrician's perspective, which may include valid observations about installation practicalities.",
+      "Collaborating is the optimal style here because both options are technically valid, and the best solution depends on factors that require discussion: cost, installation time, maintenance access, client preference, and building-specific requirements. By collaborating, both electricians bring their knowledge and experience to bear on the decision, and the outcome is likely to be better than either individual's initial preference. Competing would waste the knowledge of whichever electrician is overruled. Avoiding abdicates professional responsibility. Accommodating wastes the less experienced electrician's perspective, which may include valid observations about installation practicalities.",
   },
   {
     id: 'cr-1-2-check3',
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'A domestic client wants their kitchen rewired by Friday because they are having guests, but the electrician knows the job realistically needs until Monday. The relationship is good, and the client is a regular source of referrals. What is the best TKI approach?',
     options: [
       "Competing — refuse and insist on Monday regardless of the client's wishes",
-      'Accommodating — rush the job and cut corners to meet Friday',
-      'Compromising — propose completing the essential circuits (cooker, sockets, lighting) by Friday and finishing the remaining work on Monday',
-      'Avoiding — do not discuss the timeline and hope the client does not notice the overrun',
+      'Accommodating — rush the job and cut corners in order to hit the Friday deadline',
+      'Avoiding — say nothing about the timeline and hope the client misses the overrun',
+      'Compromising — finish the essential circuits by Friday and the rest on Monday',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Compromising is the best approach in this scenario because both parties have legitimate concerns, and a partial solution exists that addresses the most important needs of both. The client's core need is a functional kitchen by Friday (not necessarily a fully completed rewire), and the electrician's core need is sufficient time to do the work safely and to standard. By completing the essential circuits by Friday and scheduling the remaining work for Monday, the client has a working kitchen for their guests, and the electrician does not compromise on quality or safety. This is a pragmatic, real-world application of the compromising style that preserves the relationship whilst being honest about what is achievable.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'The Thomas-Kilmann Conflict Mode Instrument (TKI) maps conflict behaviour on two axes. These axes are:',
     options: [
-      'Aggression and passivity',
       'Assertiveness and cooperativeness',
+      'Aggression and passivity',
       'Introversion and extraversion',
       'Logic and emotion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The TKI, developed by Kenneth Thomas and Ralph Kilmann in 1974, maps conflict behaviour on two dimensions: assertiveness (the degree to which you try to satisfy your own concerns) and cooperativeness (the degree to which you try to satisfy the other person's concerns). These two dimensions create five distinct conflict-handling modes: competing (high assertiveness, low cooperativeness), collaborating (high both), compromising (moderate both), avoiding (low both), and accommodating (low assertiveness, high cooperativeness). The model is descriptive, not prescriptive — it does not say which style is best, only that different situations call for different approaches.",
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'The "competing" conflict style is characterised by:',
     options: [
-      'High cooperativeness and low assertiveness',
-      'Low assertiveness and low cooperativeness',
-      "High assertiveness and low cooperativeness — pursuing your own concerns at the other person's expense",
-      'Moderate assertiveness and moderate cooperativeness',
+      'High cooperativeness and low assertiveness, yielding to the other person',
+      'Low assertiveness and low cooperativeness, withdrawing from the issue',
+      'Moderate assertiveness and moderate cooperativeness, splitting the difference',
+      "High assertiveness and low cooperativeness, pursuing your own concerns",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Competing sits in the high assertiveness, low cooperativeness quadrant of the TKI model. A person using the competing style pursues their own concerns at the potential expense of the other person's. This style uses whatever power is available — positional authority, expertise, contractual rights, or force of argument — to win. It is appropriate when quick, decisive action is needed (safety issues), when you are confident you are right on an important issue, or when you need to protect yourself from exploitation. It is inappropriate when the relationship matters more than the outcome, when you might be wrong, or when you need the other person's future cooperation.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'A site manager asks an electrician to relocate a distribution board that has already been installed and tested. The electrician believes the current position complies with regulations and the approved drawings. The most collaborative response would be:',
     options: [
-      'Refuse outright and cite the approved drawings',
-      'Relocate the board immediately without question',
-      'Ask the site manager to explain the reason for the change, discuss the implications (time, cost, compliance), and explore whether there is a solution that addresses their concern without a full relocation',
-      'Agree to relocate but submit a formal complaint afterwards',
+      'Refuse the request outright and simply cite the approved drawings as final',
+      'Ask why the change is needed, discuss the implications, and explore alternatives to a full relocation',
+      'Relocate the board immediately without question to keep the site manager happy',
+      'Agree to relocate the board but then submit a formal written complaint afterwards',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Collaborating means seeking to understand the other person's underlying concern and then working together to find a solution that satisfies both parties. By asking why the relocation is needed, the electrician may discover that the concern is about access, aesthetics, or a design change — and there may be a solution that addresses that concern without the full cost and delay of relocation. Perhaps the board can be screened, the door swing changed, or the layout adjusted. Refusing outright (competing) wins the battle but damages the relationship. Relocating without question (accommodating) absorbs unnecessary cost. Agreeing then complaining (passive-aggressive) is the worst option.",
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'An apprentice electrician notices that a qualified colleague has made an error in a consumer unit installation. The apprentice is reluctant to speak up because of the seniority difference. They decide to say nothing. Which TKI style is the apprentice using?',
     options: [
+      'Avoiding — they are sidestepping the conflict by not raising the issue at all',
       'Accommodating',
       'Compromising',
-      'Avoiding — they are sidestepping the conflict by not raising the issue at all',
       'Competing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The apprentice is using the avoiding style — low assertiveness (not pursuing their concern) and low cooperativeness (not helping the colleague correct the error). Avoiding means withdrawing from the conflict situation entirely. In this case, avoiding is clearly inappropriate because there is a potential safety issue at stake. The error in the consumer unit could have serious consequences. The apprentice\'s reluctance is understandable — challenging a more senior colleague feels risky — but the correct approach would be to raise the concern, perhaps framed as a question ("I noticed this — could you help me understand?") rather than a direct challenge. This is an example of why understanding your default style matters: if your default is avoiding, you need to recognise situations where it is dangerous.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'The "accommodating" conflict style is most appropriate when:',
     options: [
-      'You are certain you are right and the issue is critical',
-      'The issue matters more to the other person than to you, preserving the relationship is important, and you recognise that you may be wrong or the issue is minor',
-      'Both parties have equal stakes and neither will budge',
-      'You want to avoid dealing with the situation entirely',
+      'You are certain you are right and the issue at stake is genuinely critical',
+      'Both parties have equal stakes in the outcome and neither side will budge',
+      'You want to sidestep the situation entirely and not engage with it at all',
+      'The issue matters more to them, the relationship is important, or you may be wrong',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Accommodating — low assertiveness, high cooperativeness — involves yielding to the other person's position. It is appropriate when the issue matters more to them than to you, when preserving the relationship is your priority, when you recognise that you are wrong or the evidence supports their position, or when the issue is so minor that asserting yourself would create unnecessary friction. For example, if a client wants a socket 50mm higher than you suggested, and both positions are compliant, accommodating is sensible — the client lives with the result. However, accommodating is inappropriate when the issue involves safety, legal compliance, or significant financial impact, because yielding in those situations creates real risk.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'An electrician uses the competing style in every dispute — with clients, contractors, suppliers, and colleagues. The most likely long-term consequence is:',
     options: [
-      'They will earn a reputation as a strong, respected professional',
-      'They will win every dispute and maximise their income',
-      'They will damage relationships, lose repeat business, and find themselves excluded from projects because other people avoid working with them',
-      'They will be promoted to management due to their decisiveness',
+      'They will earn a lasting reputation as a strong and widely respected professional',
+      'They will damage relationships, lose repeat work, and be excluded as people avoid them',
+      'They will win virtually every dispute and steadily maximise their overall income',
+      'They will be promoted into a management role on the strength of their decisiveness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Using any single conflict style exclusively creates predictable problems, and competing is particularly damaging when overused. While competing may win individual disputes, the cumulative effect is relationship damage. Clients stop recommending. Contractors stop inviting. Colleagues stop cooperating. Suppliers stop prioritising. In construction, where work flows through relationships and reputation, an electrician who is known as combative and unwilling to compromise will gradually find themselves excluded — not because they were wrong on any individual issue, but because nobody wants to work with someone who treats every interaction as a battle to be won. The TKI model's key insight is that flexibility across all five styles is the mark of a skilled conflict handler.",
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     options: [
       'Always choosing the collaborating style because it produces the best outcomes',
       'Avoiding conflict whenever possible to maintain harmony',
-      'Winning every argument through superior knowledge and assertiveness',
       'Being able to diagnose the situation accurately and choose the most appropriate conflict style from all five options',
+      'Winning every argument through superior knowledge and assertiveness',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'The fundamental insight of the TKI model is that no single conflict style is universally superior. Each of the five styles has situations where it is the most effective approach. The key skill is situational awareness — reading the context (importance of the issue, importance of the relationship, time available, power dynamics) and selecting the style that will produce the best outcome in that specific situation. This requires having all five styles in your repertoire and being able to deploy them deliberately rather than defaulting to your habitual pattern. A skilled conflict handler might compete on a safety issue, collaborate on a design problem, compromise on a scheduling dispute, accommodate on a minor client preference, and avoid a trivial argument — all in the same week.',
   },

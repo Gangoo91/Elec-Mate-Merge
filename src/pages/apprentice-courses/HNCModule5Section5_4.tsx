@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of point-to-point verification in BMS commissioning?',
     options: [
       'To verify each field device connects to the correct controller address',
-      'The employer or person in control of the premises',
-      'Client, principal designer, principal contractor, designers, and contractors',
-      'Formal change notifications, updated drawings, impact assessments, and approval records',
+      'To confirm the control software logic matches the design strategy',
+      'To check the BMS network bandwidth is sufficient for all controllers',
+      'To prove the operator graphics display the correct engineering units',
     ],
     correctIndex: 0,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'actuator-stroke',
     question: 'What does actuator stroke testing verify?',
     options: [
-      'AC sinusoidal and pulsating DC residual currents',
+      'That the actuator draws the correct current at rated voltage',
       'Full travel from 0-100% and correct direction of operation',
-      'Flexible section or loop to accommodate movement',
-      'An ID card confirming qualifications and competence',
+      'That the valve is correctly sized for the design flow rate',
+      'That the controller address matches the points schedule',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'graphics-testing',
     question: 'During graphics testing, what must be verified for each displayed value?',
     options: [
-      'The basic unit of matter consisting of protons, neutrons, and electrons',
+      'That the value is logged to the trend archive at the correct interval',
       'Correct value, units, and real-time update from field devices',
-      'Prevention costs less than correction; correction costs less than failure',
-      'Both heating and cooling loads where applicable',
+      'That the value falls within the alarm setpoint band at all times',
+      'That the value is duplicated on the head-end and local controller',
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What document is essential for conducting point-to-point verification?',
     options: [
-      'Approximately half a million or more',
+      'The operating and maintenance manual for the plant',
       'The points schedule with controller addresses',
-      'Regular updates, monitoring, and periodic restarts',
-      'The cable bend radius requirements and quantity of cables',
+      'The fire alarm cause-and-effect matrix',
+      'The electrical installation certificate for the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'When testing a temperature sensor during commissioning, what should be verified?',
     options: [
-      'Completion of a PASMA-approved training course',
-      'Prosecution, fines, insurance denial, and personal liability',
+      'The mechanical fixing torque of the sensor pocket',
+      'The supply voltage feeding the field controller',
       'Reading accuracy, response time, and correct scaling',
-      'To provide a known voltage source to prove a voltage indicator',
+      'The colour coding of the sensor cabling at both ends',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
       'During functional performance testing of an AHU, what sequence should be tested first?',
     options: [
       'Safety interlocks and fan proving',
-      'Voltage drop calculations',
-      'Switches, contacts, and alarm devices',
-      'Criminal and civil liability possible',
+      'Economy cycle and free cooling control',
+      'Humidity control and dewpoint compensation',
+      'Night setback and unoccupied operation',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of alarm testing in BMS commissioning?',
     options: [
-      'Designs building systems at a higher technical/professional level',
+      'To confirm the plant runs continuously without ever tripping',
       'To verify alarms activate at correct setpoints and route to appropriate recipients',
-      'Locations with specific risks requiring additional protection measures',
-      'Radial is designed as one-way feed, broken ring is faulty two-way feed',
+      'To check that trend logs are archived to the correct database',
+      'To prove the graphics navigation between screens is logical',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'When integrating a BMS with a fire alarm system, what protocol is commonly used in the UK?',
     options: [
-      'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
-      'During the planning phase before work begins',
+      'DALI lighting telegrams over a dedicated bus',
+      'M-Bus metering with primary addressing',
       'Volt-free contacts or BACnet/Modbus',
-      'Use proper clamping or holding techniques',
+      'KNX group addressing over twisted pair',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What should be verified during BMS network commissioning?',
     options: [
-      'Temperature rise should not cause degradation of insulation or surrounding materials',
-      'Learning about opportunities and industry developments',
-      'It establishes when the inspection was carried out and when the next inspection is due',
+      'The mechanical fixing of each controller within its panel',
+      'The calibration certificate of every connected field sensor',
+      'The colour and labelling of the network cabling only',
       'Network topology, addressing, communication speeds, and redundancy failover',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
       'A trend log shows a temperature oscillating rapidly between 18°C and 22°C. This likely indicates:',
     options: [
       'A tuning problem with the PID controller',
-      'When disconnection times cannot be met',
-      'Clear description and location',
-      'Age, environment, and original standards',
+      'A faulty temperature sensor giving random readings',
+      'Correct operation within the design control band',
+      'A communication fault between the controller and head-end',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What documentation must be provided at BMS handover?',
     options: [
-      'Double-check conductor connections before final fix',
+      'Only the software backup on a memory stick',
       'As-built drawings, points schedule, O&M manuals, and training records',
-      'A power drill running while a colleague explains a task',
-      'A receiver\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
+      'The original tender documents and pricing breakdown',
+      'A verbal handover briefing with no written records',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'During system integration testing, what must be verified between the BMS and lighting control system?',
     options: [
-      'Sense motor current and trip if the running current exceeds set value for a sustained period',
-      'Site supervisor, affected trades, and project coordinator',
+      'That each luminaire draws its rated power at full output',
+      'That the lighting design meets the required lux levels',
       'Bi-directional communication, status feedback, and coordinated sequences',
-      'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
+      'That the emergency luminaires achieve a three-hour duration',
     ],
     correctAnswer: 2,
     explanation:

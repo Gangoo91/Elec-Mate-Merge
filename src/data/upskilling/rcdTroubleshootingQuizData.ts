@@ -12,10 +12,10 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     question:
       'What is the first step when troubleshooting an RCD that trips immediately upon reset?',
     options: [
-      'Isolate all circuits sharing neutrals together',
+      'Replace the RCD before carrying out any testing',
       'Disconnect all loads and test for earth faults',
-      'Switching transients and earth leakage during starting',
-      'Test equipment failure or incorrect connections',
+      'Increase the rated residual operating current of the device',
+      'Link out the RCD to keep the circuit energised',
     ],
     correctAnswer: 1,
     explanation:
@@ -34,9 +34,9 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 3,
     question: 'What typically causes RCD nuisance tripping during motor starting?',
     options: [
-      'Disconnect all loads and test for earth faults',
-      'Test equipment failure or incorrect connections',
-      'Main earthing system and supply conditions',
+      'A reduced supply voltage at the moment of starting',
+      'A momentary drop in earth fault loop impedance',
+      'Excessive resistance in the main protective bonding',
       'Switching transients and earth leakage during starting',
     ],
     correctAnswer: 3,
@@ -49,9 +49,9 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
       'If an RCD test button works but electrical testing shows no trip, what is the most likely cause?',
     options: [
       'Test equipment failure or incorrect connections',
-      'Complete failure to trip at any test current',
-      'Main earthing system and supply conditions',
-      'Switching transients and earth leakage during starting',
+      'A seized mechanical trip mechanism inside the RCD',
+      'An open-circuit main earthing conductor',
+      'An undersized line conductor on the final circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -70,10 +70,10 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 6,
     question: 'When multiple RCDs trip simultaneously, what should be investigated first?',
     options: [
-      'Switching transients and earth leakage during starting',
-      'Isolate all circuits sharing neutrals together',
+      'A single faulty appliance on one final circuit',
+      'The calibration of the RCD test instrument',
       'Main earthing system and supply conditions',
-      'Disconnect all loads and test for earth faults',
+      'The insulation resistance of one lighting circuit',
     ],
     correctAnswer: 2,
     explanation:

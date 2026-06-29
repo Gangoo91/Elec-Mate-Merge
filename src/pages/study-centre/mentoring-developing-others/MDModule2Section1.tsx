@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'grow-reality',
     question: 'In the GROW model, what is the purpose of the "Reality" stage?',
     options: [
-      'To set a SMART goal for the mentee',
       'To explore where the learner is now, including current skills and obstacles',
+      'To set a SMART goal for the mentee',
       'To brainstorm all possible options without judgement',
       'To agree a specific commitment and timeline for action',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Reality stage explores the learner\u2019s current situation \u2014 their skill level, what is going well, what obstacles exist, and what has already been tried. This honest assessment grounds the conversation before moving to Options.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'What is the key difference between coaching and mentoring?',
     options: [
       'Coaching is directive; mentoring is non-directive',
-      'Coaching focuses on a specific skill or goal and is shorter-term; mentoring is a longer-term, holistic relationship',
       'Coaching requires a formal qualification; mentoring does not',
+      'Coaching focuses on a specific skill or goal and is shorter-term; mentoring is a longer-term, holistic relationship',
       'Coaching is only used for underperformance; mentoring is for high performers',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Coaching tends to be shorter-term and focused on a specific skill, goal, or performance area. It is primarily non-directive, using questions to help the learner find their own answers. Mentoring is a longer-term, holistic relationship where the mentor shares their own experience and wisdom.',
   },
@@ -37,11 +37,11 @@ const quickCheckQuestions = [
     question: 'When should a mentor use directive instruction rather than coaching?',
     options: [
       'When the mentee is a slow learner',
-      'When the mentor is in a hurry',
       'When there is a safety-critical situation or immediate risk of harm',
+      'When the mentor is in a hurry',
       'When the mentee has more than two years of experience',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Safety-critical situations always require directive instruction. If someone is about to do something dangerous, you tell them to stop \u2014 you do not ask a coaching question. Coaching is for development situations where there is time and space to explore.',
   },
@@ -74,8 +74,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What does the "G" in the GROW model stand for?',
-    options: ['Guidance', 'Goal', 'Growth', 'Group'],
-    correctAnswer: 1,
+    options: ['Goal', 'Guidance', 'Growth', 'Group'],
+    correctAnswer: 0,
     explanation:
       'G stands for Goal. The first stage of the GROW model involves establishing what the learner wants to achieve. Goals should be SMART \u2014 Specific, Measurable, Achievable, Relevant, and Time-bound.',
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
       'Which approach is MOST appropriate when an apprentice is about to make a dead circuit live without testing it first?',
     options: [
       'Use the GROW model to coach them through the situation',
-      'Ask Socratic questions to help them discover the error themselves',
       'Give immediate directive instruction to stop what they are doing',
+      'Ask Socratic questions to help them discover the error themselves',
       'Wait until after the task is complete, then discuss it in a mentoring session',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Safety-critical situations always require directive instruction. You tell the person to stop immediately. Coaching is for development situations where there is no immediate risk of harm.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'In the GROW model, what happens during the "Options" stage?',
     options: [
-      'The learner sets a SMART goal',
-      'The mentor tells the learner exactly what to do',
       'The learner and mentor brainstorm possible actions without judgement',
+      'The mentor tells the learner exactly what to do',
+      'The learner sets a SMART goal',
       'The learner commits to a specific action plan',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Options stage is about generating possibilities. The mentor encourages the learner to brainstorm as many options as they can without judging or filtering them. "What could you do?" and "What else?" are key questions at this stage.',
   },
@@ -124,19 +124,19 @@ const quizQuestions = [
     question: 'Which statement BEST describes mentoring as distinct from coaching?',
     options: [
       'Mentoring is always formal and scheduled; coaching is always informal',
-      'Mentoring is a longer-term, holistic relationship where the mentor shares their experience',
       'Mentoring focuses only on technical skills; coaching covers personal development',
       'Mentoring is only for apprentices; coaching is for qualified electricians',
+      'Mentoring is a longer-term, holistic relationship where the mentor shares their experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mentoring is characterised by a longer-term, holistic relationship where the mentor draws on their own experience to guide the mentee\u2019s overall development. Coaching is typically shorter-term, focused on a specific skill or goal, and more non-directive.',
   },
   {
     id: 6,
     question: 'What does the "W" in GROW stand for?',
-    options: ['Work', 'Will / Way Forward', 'Wisdom', 'Workplace'],
-    correctAnswer: 1,
+    options: ['Work', 'Wisdom', 'Will / Way Forward', 'Workplace'],
+    correctAnswer: 2,
     explanation:
       'W stands for Will or Way Forward. This is the commitment stage where the learner decides exactly what they will do, by when, and what support they need. It turns discussion into action.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
   {
     id: 8,
     question: 'At which ILM level is the introductory Award in Coaching and Mentoring offered?',
-    options: ['Level 1', 'Level 2', 'Level 4', 'Level 5'],
-    correctAnswer: 1,
+    options: ['Level 1', 'Level 4', 'Level 5', 'Level 2'],
+    correctAnswer: 3,
     explanation:
       'The ILM Level 2 Award in Coaching and Mentoring is the introductory qualification, suitable for team leaders, mentors, and those new to a coaching role. The Level 3 Certificate is the next step up for those wanting a more advanced qualification.',
   },

@@ -15,53 +15,58 @@ const questions: QuizQuestion[] = [
   {
     id: 1,
     question:
-      'Which connectivity technology offers the highest reliability for EV charging stations?',
-    options: ['Wi-Fi (802.11ac)', '4G/5G Cellular', 'Ethernet/Hardwired', 'OCPP over PLC'],
-    correctAnswer: 2,
+      'Which connectivity method generally offers the highest reliability for a fixed EV charging station?',
+    options: [
+      'A wired Ethernet (hardwired) connection',
+      'Wi-Fi on the 802.11ac band',
+      'A 4G/5G cellular link',
+      'Power line communication (PLC)',
+    ],
+    correctAnswer: 0,
     explanation:
-      'Ethernet/hardwired connections provide the highest stability with no interference and are ideal for commercial installations requiring maximum reliability.',
+      'A hardwired Ethernet link is the most stable, with no radio interference or signal contention, making it the preferred choice for commercial installations.',
   },
   {
     id: 2,
-    question: 'What is the primary benefit of OCPP (Open Charge Point Protocol)?',
+    question: 'What is the primary benefit of the Open Charge Point Protocol (OCPP)?',
     options: [
-      'Faster charging speeds',
-      'Lower installation costs',
-      'Interoperability between systems',
-      'Better user interface design',
+      'It delivers faster charging speeds to the vehicle',
+      'It reduces the physical cost of installation',
+      'It improves the on-screen user interface',
+      'It gives interoperability between different vendors’ systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'OCPP ensures interoperability between charging stations and central management systems from different manufacturers, preventing vendor lock-in.',
+      'OCPP is an open standard that lets charge points and central management systems from different manufacturers work together, preventing vendor lock-in.',
   },
   {
     id: 3,
     question: 'Which OCPP version introduced ISO 15118 support and enhanced security features?',
-    options: ['OCPP 1.5', 'OCPP 1.6J', 'OCPP 2.0.1', 'OCPP 3.0'],
-    correctAnswer: 2,
+    options: ['OCPP 1.5', 'OCPP 2.0.1', 'OCPP 1.6J', 'OCPP 3.0'],
+    correctAnswer: 1,
     explanation:
-      'OCPP 2.0.1, released in 2020, introduced ISO 15118 support, enhanced security, device model framework, and display message support among other new features.',
+      'OCPP 2.0.1 added ISO 15118 support, a device model framework, improved security and display-message handling, which earlier 1.x versions lacked.',
   },
   {
     id: 4,
-    question: "In dynamic load management, what does 'equal distribution' algorithm do?",
+    question: 'In dynamic load management, what does an “equal distribution” algorithm do?',
     options: [
-      'Gives priority to paying customers',
-      'Divides available power equally among active sessions',
-      'Allocates power based on vehicle type',
-      'Charges vehicles in order of arrival',
+      'Gives charging priority to paying customers',
+      'Divides the available power equally between active sessions',
+      'Allocates power according to the vehicle type',
+      'Serves vehicles strictly in order of arrival',
     ],
     correctAnswer: 1,
     explanation:
-      'Equal distribution algorithm divides the available power equally among all active charging sessions, ensuring fair power allocation.',
+      'Equal distribution shares the available supply capacity evenly across all active charging sessions, giving each vehicle a fair proportion of the power.',
   },
   {
     id: 5,
-    question: 'What is the typical range limitation for OCPP over PLC (Power Line Communication)?',
-    options: ['Up to 100m', 'Up to 200m', 'Up to 300m', 'Up to 500m'],
-    correctAnswer: 2,
+    question: 'What is the typical range limit for OCPP carried over power line communication (PLC)?',
+    options: ['Up to 100 m', 'Up to 200 m', 'Up to 500 m', 'Up to 300 m'],
+    correctAnswer: 3,
     explanation:
-      "OCPP over PLC can work up to 300m on low voltage networks, though it's susceptible to noise and has variable performance compared to other connectivity methods.",
+      'PLC can typically carry communications up to around 300 m on low-voltage networks, but it is more susceptible to electrical noise than a wired data link.',
   },
 ];
 

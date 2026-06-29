@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     question:
       'What is a key advantage of lithium-ion batteries over lead-acid for domestic storage?',
     options: [
-      'To give practical guidance on complying with legal duties',
-      'Lead and rosin (colophony) fumes from solder and flux',
-      'Standard inputs and methods for Part L calculations',
+      'Lower purchase cost per kilowatt-hour of capacity',
+      'No requirement for any form of battery management',
+      'Tolerance of indefinite storage at full discharge',
       'Higher cycle life and deeper discharge capability',
     ],
     correctIndex: 3,
@@ -59,9 +59,9 @@ const quickCheckQuestions = [
     question: 'What is the primary function of a Battery Management System (BMS)?',
     options: [
       'To monitor and protect battery cells from damage',
-      'Process material adhering to sensor surfaces',
-      'To predict and plan for income and expense patterns',
-      'Digital communication with diagnostics and precise positioning',
+      'To convert the DC output of the battery into AC for the grid',
+      'To track the maximum power point of the PV array',
+      'To meter the energy imported from and exported to the grid',
     ],
     correctIndex: 0,
     explanation:
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     question: 'Which grid service involves batteries absorbing excess renewable generation?',
     options: [
       'Grid balancing and absorption',
-      'Gantt charts or daily task sheets',
-      'Avoid work at height where possible',
-      'Environmental Protection Act 1990',
+      'Frequency response and inertia',
+      'Peak shaving and demand reduction',
+      'Reactive power and voltage support',
     ],
     correctIndex: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'Which battery technology is most suitable for applications requiring very high cycle counts with minimal degradation?',
     options: [
-      'IP44 or higher depending on zone',
+      'Lead-acid AGM',
       'Lithium iron phosphate (LiFePO4)',
-      'Check integrity and compliance',
-      'Measuring from different reference points',
+      'Lithium nickel manganese cobalt (NMC)',
+      'Sealed gel lead-acid',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'According to BS EN 62619, what is required for lithium battery installations in domestic premises?',
     options: [
-      'Fuse or circuit breaker suitable for DC fault current',
-      'Optimal power point tracking to maximise PV harvest',
+      'Installation only in a sealed, fully airtight enclosure',
+      'Permanent connection to a mains-powered cooling system',
       'Fire-rated enclosure or separation from occupied spaces',
-      'Degradation that occurs over time regardless of use',
+      'Installation at high level to keep cells above flood risk',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: 'What function does an MPPT charge controller provide that a PWM controller cannot?',
     options: [
-      'Fast response time and high power capability',
-      'Degradation that occurs over time regardless of use',
-      'Fuse or circuit breaker suitable for DC fault current',
+      'Balancing of individual cells within the battery pack',
+      'Galvanic isolation between the array and the battery',
+      'Interruption of DC fault current to protect the battery',
       'Optimal power point tracking to maximise PV harvest',
     ],
     correctAnswer: 3,
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'For frequency response grid services, what characteristic is most important in a battery system?',
     options: [
-      'Lithium iron phosphate (LiFePO4)',
-      'Fuse or circuit breaker suitable for DC fault current',
+      'Very large energy capacity for long-duration discharge',
+      'Lowest possible cost per kilowatt-hour of storage',
       'Fast response time and high power capability',
-      'Fire-rated enclosure or separation from occupied spaces',
+      'Maximum round-trip efficiency over a full cycle',
     ],
     correctAnswer: 2,
     explanation:
@@ -224,9 +224,9 @@ const quizQuestions = [
     question:
       'What safety device is required between a battery bank and the inverter according to BS 7671?',
     options: [
-      'Fire-rated enclosure or separation from occupied spaces',
-      'Fast response time and high power capability',
-      'Degradation that occurs over time regardless of use',
+      'An AC-rated residual current device on the battery side',
+      'A surge protection device referenced to the array frame',
+      'A maximum power point tracking charge controller',
       'Fuse or circuit breaker suitable for DC fault current',
     ],
     correctAnswer: 3,
@@ -239,9 +239,9 @@ const quizQuestions = [
       'What is the primary advantage of flow batteries over lithium-ion for grid-scale storage?',
     options: [
       'Decoupled power and energy scaling with very long duration',
-      'Fast response time and high power capability',
-      'Optimal power point tracking to maximise PV harvest',
-      'Fuse or circuit breaker suitable for DC fault current',
+      'Higher round-trip efficiency than any lithium chemistry',
+      'Much higher energy density allowing a smaller footprint',
+      'Lower installed cost per kilowatt-hour at small scale',
     ],
     correctAnswer: 0,
     explanation:

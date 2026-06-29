@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'podium-step-advantage',
     question: 'What is the key safety advantage of a podium step over a standard stepladder?',
     options: [
-      'Podium steps can reach greater heights',
-      'Podium steps are lighter and easier to carry',
       'Podium steps have an enclosed guardrail and larger platform for safer standing',
+      'Podium steps are lighter and easier to carry',
+      'Podium steps can reach greater heights',
       'Podium steps do not require any training to use',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The key advantage is the enclosed guardrail and larger platform. This provides a secure, guarded standing position that dramatically reduces the risk of falling compared to standing on the top treads of a stepladder. The user is enclosed on all sides by guard rails while working from the platform.',
   },
@@ -111,19 +111,19 @@ const quizQuestions = [
     question: "What is the purpose of a roof ladder's ridge hook?",
     options: [
       'To attach a safety harness',
-      "To hook over the roof ridge to secure the ladder and distribute the user's weight",
       'To lift materials onto the roof',
       'To measure the roof pitch angle',
+      "To hook over the roof ridge to secure the ladder and distribute the user's weight",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The ridge hook secures the roof ladder by hooking over the apex (ridge) of the roof. This prevents the ladder sliding down the roof and, critically, distributes the user's weight over a larger area of the roof surface — essential when working on or near fragile roofing materials.",
   },
   {
     id: 4,
     question: 'Safety nets must be installed so the maximum fall distance does not exceed:',
-    options: ['2 metres', '4 metres', '6 metres', '10 metres'],
-    correctAnswer: 2,
+    options: ['6 metres', '4 metres', '2 metres', '10 metres'],
+    correctAnswer: 0,
     explanation:
       'The maximum fall distance into a safety net must not exceed 6 metres (including net deflection). Nets must be positioned as close below the working area as possible. Safety nets comply with EN 1263.',
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
       'Temporary edge protection systems that are free-standing typically rely on what for stability?',
     options: [
       'Drilling into the floor or roof',
-      'Counterweights positioned at the base',
       'Clamping to existing steelwork',
       'Adhesive fixings to the surface',
+      'Counterweights positioned at the base',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Free-standing temporary edge protection systems use counterweights to provide stability without penetrating the surface. This is a major advantage on flat roofs, concrete decks, and areas where drilling is not permitted (e.g. waterproof membranes). The counterweights must be correctly positioned per the manufacturer's instructions.",
   },
@@ -153,8 +153,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Which piece of access equipment would be most suitable for changing a ceiling light fitting in an office, where the work will take 10 minutes?',
-    options: ['A hop-up', 'A podium step', 'A mobile scaffold tower', 'A telescopic boom lift'],
-    correctAnswer: 1,
+    options: ['A podium step', 'A hop-up', 'A mobile scaffold tower', 'A telescopic boom lift'],
+    correctAnswer: 0,
     explanation:
       'A podium step is ideal — it provides a safe, guarded platform at low level, is quick to position, and is proportionate to the task (10 minutes of light work at ceiling height in an office). A hop-up lacks guardrails, a tower is disproportionate for a 10-minute task, and a boom lift is entirely unnecessary indoors for low-level work.',
   },

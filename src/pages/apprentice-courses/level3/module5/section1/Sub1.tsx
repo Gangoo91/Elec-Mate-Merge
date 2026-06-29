@@ -40,10 +40,10 @@ const checks = [
     id: 'm5-s1-sub1-eawr-reg4',
     question: 'Under EAWR Reg 4(1), the duty to construct, maintain and use systems so as to prevent danger applies to:',
     options: [
-      'Absolute = MUST be met, no excuses. Reasonably practicable = balance the risk against the cost and trouble.',
+      'Only the employer of the firm carrying out the work — never the individual electrician or apprentice on site.',
       'Every "duty holder" — employer, self-employed person, and to a more limited extent every employee — in respect of the matters within their control.',
-      '4V and 24V (per BS EN 61557-4) and a minimum short-circuit current of 200mA — to break through any film of oxide on connections',
-      'Recommended for final circuits in dwellings, with mandatory installation in higher-risk residential buildings (HRRBs) under the Building Safety Act 2022',
+      'Only the original designer of the installation, whose duty ends once the design is handed to the installer.',
+      'Only the building owner or occupier, on whom the whole duty rests once the installation is energised.',
     ],
     correctIndex: 1,
     explanation:
@@ -54,9 +54,9 @@ const checks = [
     question: 'EAWR Reg 16 (persons to be competent to prevent danger and injury) is satisfied by:',
     options: [
       'Possessing technical knowledge or experience appropriate to the nature of the work, such that danger and injury are prevented — proportionate to the work being undertaken.',
-      'An underlying belief such as "They think I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m incompetent" or "They are always looking for someone to blame"',
-      'An estimate allows flexibility for unforeseen work (hidden junction boxes, asbestos, damaged existing wiring), while a quote locks in a fixed price regardless of what is discovered',
-      'Embodied carbon relates to the emissions from manufacturing, transporting, and constructing materials; operational carbon relates to emissions from the energy used to run the building during its lifetime',
+      'Holding a current ECS card, regardless of the type of work being carried out.',
+      'Having completed the Level 3 qualification, after which a person is competent for any electrical work.',
+      'Being directly employed by an NICEIC or NAPIT registered firm, which confers competence on every employee.',
     ],
     correctIndex: 0,
     explanation:
@@ -66,12 +66,12 @@ const checks = [
     id: 'm5-s1-sub1-bs7671-link',
     question: 'How does BS 7671 connect to the Electricity at Work Regulations?',
     options: [
+      'BS 7671 is itself a statutory instrument made under the Health and Safety at Work Act, so breaching it is automatically a breach of the EAWR.',
+      'There is no connection — BS 7671 governs design and installation while the EAWR governs only the operation of completed installations, and the two never overlap.',
       'BS 7671 is a non-statutory standard, but compliance with it is widely accepted as evidence that the duty holder has taken the precautions required by the EAWR. HSE guidance HSR25 explicitly references this relationship.',
-      'Inform the client in writing that they must appoint a principal designer (Reg 5) where more than one contractor is involved, and that without it the project cannot lawfully proceed',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
-      'Verify provision is adequate for the work; inspect kits before/during work; restock after use; ensure trained persons available; brief team on emergency procedures (location of kit, AED, trained persons, nearest A&E); maintain inspection records.',
+      'BS 7671 replaced the EAWR when the 18th Edition was published, so the EAWR is no longer in force for installations wired to the current standard.',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'BS 7671 is a British Standard published by the IET — not a statutory instrument. But it is the recognised industry standard. Compliance with BS 7671 is accepted by HSE as evidence the duty holder met the precautions required by EAWR. HSR25 (the guidance to the regulations) makes this link explicit. Failing to comply with BS 7671 puts the duty holder in the position of having to prove some other equivalent precaution was taken.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'During a Schedule of Test Results entry on a new install, who is the "person responsible for the safety of the electrical installation" referred to on the EIC?',
     options: [
-      'Arrange reasonable adjustments: extra time, use of technology, verbal evidence methods, and support from the college\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s learning support team',
-      'The insulation chemistry differs — standard thermoplastic (PVC) softens above ~70 °C, modern thermosetting (LSF, XLPE) cross-links and tolerates 90 °C continuously. The cable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tabulated CCC depends on which insulation it has.',
+      'The scheme provider (NICEIC, NAPIT or similar) that registered the contractor, who carries the ongoing safety duty on the contractor\'s behalf.',
+      'The manufacturer of the consumer unit, who warrants the installation\'s safety for the life of the equipment.',
       'The client / building owner / occupier in whose name the EIC is issued — they take on the duty to maintain the installation in safe condition once the certificate is signed and handed over.',
-      'At the origin of the installation, identifying every circuit, the type and composition, OCPD, and characteristics necessary for inspection and testing',
+      'The DNO, who becomes responsible for the installation\'s safety once the supply is energised at the cut-out.',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'A first-year apprentice is asked to carry out the dead tests on a kitchen rewire alone, with the supervisor on a different site. Under EAWR Reg 16:',
     options: [
-      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
-      'Are essential — they prevent re-energisation by another person who might assume the breaker is off because of a tripped fault. Multiple lock-offs allow each person working on the circuit to fit their own padlock.',
-      'A thermistor has a highly non-linear resistance-temperature characteristic and a much larger change in resistance per degree, making it very sensitive but over a narrow range',
+      'This is fully compliant — once an apprentice is enrolled on a Level 3 course they are competent for any dead testing, because dead tests carry no risk of shock.',
+      'This is compliant provided the apprentice can phone the supervisor for advice during the tests, which satisfies the "appropriate supervision" requirement of Reg 16.',
+      'This is compliant because dead testing is not a "work activity where technical knowledge is necessary to prevent danger", so Reg 16 does not apply to it at all.',
       'This is non-compliant — Reg 16 requires the person to have technical knowledge or experience proportionate to the work. A first-year solo on a full domestic dead-test sequence is unlikely to meet that bar without close supervision available.',
     ],
     correctAnswer: 3,
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'A duty holder who allows an unsafe electrical installation to remain in service after an EICR has identified a C2 (potentially dangerous) defect is potentially in breach of:',
     options: [
-      'C2 — potentially dangerous; the hot Zs in service will probably exceed the Table 41.3 max, meaning ADS may not clear in time at the worst case.',
-      '"I feel under pressure when timescales are tight because I want to deliver quality work. Could we discuss the programme?"',
+      'EAWR Reg 14 — the prohibition on live working, because leaving a C2 defect means the installation is effectively being worked on live.',
+      'EAWR Reg 16 — the competence requirement, because only an incompetent duty holder would leave a C2 unremedied.',
       'EAWR Reg 4(2) — the duty to maintain systems in safe condition. This duty does not stop when an inspection finds a defect; it continues until the defect is remedied.',
-      'A durable caution/danger notice or padlock-mounted tag identifying the person who applied the lock and the reason for isolation',
+      'No regulation — a C2 is only "potentially" dangerous, so the duty holder is entitled to leave it until the next scheduled EICR.',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: 'You are inspecting an existing TT installation and find the earth electrode resistance has degraded to 800 Ω over time, with only an RCD as ADS. The C-coding for this on the EICR would be:',
     options: [
-      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
-      'Citizens Advice offers free guidance on consumer and employment rights, while the FSB provides legal advice, mediation support, and business guidance for members',
-      'Withdraw, tell your site manager and the school\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Designated Safeguarding Lead — they decide next steps including any police involvement',
+      'C1 — danger present. An 800 Ω electrode means the installation has no earth fault protection at all and is immediately dangerous to touch, requiring the supply to be cut off on the spot.',
+      'C3 — improvement recommended only. With a 30 mA RCD fitted, the touch voltage stays within 50 V, so the high electrode resistance is acceptable and no urgent action is needed.',
+      'Satisfactory — no code applies. BS 7671 sets no maximum value for an earth electrode on a TT system, so 800 Ω is recorded as a reading with no observation.',
       'C2 — potentially dangerous. The RCD provides additional protection but the high electrode resistance compromises the disconnection-of-supply protection. The combination is unreliable in fault conditions.',
     ],
     correctAnswer: 3,
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'On a brand-new install, the contractor signs the EIC. They later discover a wiring error that creates a Class I metallic enclosure with no CPC connection. Their position under EAWR is:',
     options: [
       'They have a continuing duty under EAWR Reg 4 (system in safe condition) AND a contractual duty to put the work right. Failure to act on discovery, especially if anyone could be exposed to the danger, could be a criminal offence under EAWR. Notify the client immediately, isolate the affected circuit if necessary, return to remedy.',
-      'Recommended (per the wording of Reg 421.1.7) — discuss with the customer, present the cost vs benefit, and let them decide. Document the conversation. AFDDs are a sensible choice for the bedroom and lounge socket circuits in particular; less of a priority on shower, immersion, hob and dedicated EV circuits.',
-      'Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says "I feel with you," sympathy says "I feel for you"',
-      'Micro-expressions reveal genuine emotions that a person may be trying to conceal, providing empathic individuals with additional emotional data. Recognising a flash of fear or contempt that someone is hiding can help you respond to their actual emotional state rather than just their words',
+      'They have no further duty — signing the EIC discharged their responsibility in full, so the error is now solely the client\'s problem to fix as the new duty holder.',
+      'They must wait until the next scheduled EICR to record the defect, as it is not permitted to amend or re-issue a certificate once it has been signed and handed over.',
+      'They should leave the error in place but note it on their own records, since returning to a completed job would invalidate the original EIC and the scheme registration.',
     ],
     correctAnswer: 0,
     explanation:

@@ -51,12 +51,12 @@ const quizQuestions = [
     question:
       'What document should be issued after completing electrical work on a smart home installation?',
     options: [
-      'A simple receipt',
       'An appropriate electrical installation certificate or minor works certificate',
+      'A simple receipt',
       'A warranty card only',
       'No documentation is required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Electrical work must be documented with appropriate certificates (EIC or Minor Works) as required by Part P and BS 7671 to demonstrate compliance and provide records.',
   },
@@ -65,47 +65,47 @@ const quizQuestions = [
       'Why is SPD (Surge Protection Device) protection recommended for smart home installations?',
     options: [
       'To reduce electricity bills',
-      'To protect sensitive electronics from voltage surges',
       'To improve Wi-Fi signal',
-      'It is not recommended',
+      'To protect sensitive electronics from voltage surges',
+      'To increase the current rating of the circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'SPDs protect sensitive smart home electronics from damage caused by voltage surges from lightning strikes or switching events on the electrical network.',
   },
   {
     question: 'When installing smart devices in a bathroom, what must be considered?',
     options: [
-      'Only the colour of the device',
+      'Only the colour and finish of the device',
+      "The customer's preferred mounting height only",
+      'The brand of consumer unit installed',
       'IP rating, zone restrictions, and supplementary bonding requirements',
-      "Just the customer's preference",
-      'Nothing special - standard installation applies',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Bathrooms are special locations under BS 7671. Equipment must have appropriate IP ratings for the zone, and supplementary bonding may be required.',
   },
   {
     question: 'What is the safe isolation procedure sequence?',
     options: [
-      'Switch off, lock off, warn others',
+      'Switch off the main switch and warn others verbally',
+      'Test the circuit with a multimeter on its voltage setting',
       'Identify circuit, isolate, secure, prove dead',
-      'Test with multimeter only',
-      'Turn off main switch only',
+      'Switch off, then re-test after the work is complete',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The safe isolation procedure involves: identifying the circuit, isolating at the correct point, securing the isolation (lock off), and proving the circuit is dead using approved equipment.',
   },
   {
     question: 'Under Part P of the Building Regulations, which smart home work is notifiable?',
     options: [
+      'New circuits and work in special locations',
       'All smart device installations',
       'Only Wi-Fi device setup',
-      'New circuits and work in special locations',
       'None - smart home work is exempt',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Part P requires notification of new circuits, consumer unit work, and work in special locations (bathrooms, swimming pools, etc.). Minor alterations and additions may be exempt.',
   },

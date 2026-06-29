@@ -5,10 +5,10 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 1,
     question: 'Why are control strategies important in BMS?',
     options: [
-      'By using variable frequency drives (VFDs)',
+      'They remove the need to calibrate field sensors',
       'They maintain stable and efficient building operation',
-      'It provides smoother operation and better comfort',
-      'The differential pressure sensor was installed in the wrong location',
+      'They allow plant to run continuously at full output',
+      'They replace the need for occupant temperature setpoints',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 2,
     question: 'What is the difference between on/off and proportional control for temperature?',
     options: [
-      'Increase neutral currents, affect cable sizing, and influence transformer selection',
-      'They extract renewable heat from the environment (air, ground, or water)',
+      'On/off control uses analog sensors; proportional control uses digital sensors',
+      'On/off control is used for heating; proportional control is used only for cooling',
       'On/off control switches at fixed points; proportional control gradually adjusts outputs',
-      'Safety shoes/boots with toe protection, puncture resistance, electrical insulation',
+      'On/off control needs a VFD; proportional control switches the plant directly',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,8 +31,8 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Give one advantage of proportional control.',
     options: [
-      'They maintain stable and efficient building operation',
-      'By using variable frequency drives (VFDs)',
+      'It needs no field sensors to operate',
+      'It removes the need for plant maintenance',
       'It causes false readings leading to poor control',
       'It provides smoother operation and better comfort',
     ],
@@ -122,10 +122,10 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the real-world example, what mistake caused pumps to waste energy?',
     options: [
-      'On/off control switches at fixed points; proportional control gradually adjusts outputs',
-      'It causes false readings leading to poor control',
+      'The pump VFD had been left in manual at full speed',
+      'The chilled water valves were wired to fail open',
       'The differential pressure sensor was installed in the wrong location',
-      'They maintain stable and efficient building operation',
+      'The pump setpoint was set higher than the design pressure',
     ],
     correctAnswer: 2,
     explanation:

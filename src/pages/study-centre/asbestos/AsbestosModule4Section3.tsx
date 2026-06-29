@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'During the decontamination sequence, which item of protective equipment is removed LAST?',
     options: [
-      'RPE (respiratory protective equipment)',
       'Disposable coverall',
       'Boot covers',
+      'RPE (respiratory protective equipment)',
       'Outer gloves',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'RPE is always the LAST item of protective equipment to be removed during decontamination. The coverall, boot covers, and gloves are all removed first because they may carry asbestos fibres on their outer surfaces. Removing the RPE last ensures that your lungs remain protected while contaminated PPE is being stripped away. Removing your mask before your suit is one of the most dangerous and common mistakes in asbestos work.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'facial-hair-rpe',
     question: 'What type of RPE must be used by a worker who has a beard?',
     options: [
-      'A powered air-purifying respirator (PAPR) with a loose-fitting hood or helmet',
       'An FFP3 disposable mask with the straps tightened extra firmly',
+      'A powered air-purifying respirator (PAPR) with a loose-fitting hood or helmet',
       'A half-mask respirator with a larger face seal',
       'No RPE is needed if the beard is short and neatly trimmed',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Workers with facial hair in the seal area cannot use any tight-fitting RPE (FFP3, half-mask, or full-face) because the hair prevents an airtight seal against the face. They must use a loose-fitting powered air-purifying respirator (PAPR) with a hood or helmet, or an air-fed hood/helmet. There is no acceptable way to make tight-fitting RPE work with a beard, regardless of beard length or how tightly the straps are adjusted.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which type of RPE does NOT require a face-fit test?',
     options: [
+      'Loose-fitting powered air-purifying respirator (PAPR)',
       'FFP3 disposable mask',
       'Half-mask respirator with P3 filters',
-      'Loose-fitting powered air-purifying respirator (PAPR)',
       'Full-face mask with P3 filters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A loose-fitting powered air-purifying respirator (PAPR) does not require a face-fit test because it does not rely on a seal against the face to provide protection. Instead, a battery-powered fan draws air through a P3 filter and delivers clean air inside a loose-fitting hood or helmet, maintaining positive pressure that prevents contaminated air from entering. This makes PAPRs suitable for workers with facial hair.',
   },
@@ -112,10 +112,10 @@ const quizQuestions = [
     options: [
       'Type 1 Category I',
       'Type 3 Category II',
-      'Type 5 Category III',
       'Any disposable coverall is acceptable',
+      'Type 5 Category III',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Type 5 Category III disposable coveralls are required for licensed asbestos work. Type 5 means they are tested and certified for protection against airborne solid particles. Category III indicates the highest level of PPE risk category under the PPE Regulation. For non-licensed work, Type 5/6 coveralls may be acceptable, but for licensed work, the minimum standard is Type 5.',
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'When must a face-fit test be repeated?',
     options: [
       'Only once per year, regardless of circumstances',
-      'When the RPE model changes, when facial features change significantly, or when a different size is used',
       'Only when the employer requests it',
+      'When the RPE model changes, when facial features change significantly, or when a different size is used',
       'Every time before entering a work area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A face-fit test must be repeated whenever the RPE model or size changes, when the wearer's facial features change significantly (due to weight gain or loss, dental work, scarring, or other changes), or when a different type of tight-fitting RPE is selected. The test result is specific to the combination of that wearer and that particular RPE model and size.",
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is a common and dangerous PPE/RPE mistake in asbestos work?',
     options: [
+      'Removing RPE before the decontamination process is complete',
       'Wearing disposable coveralls with elasticated wrists',
       'Double-gloving with nitrile gloves',
-      'Removing RPE before the decontamination process is complete',
       'Using a full-face mask for licensed work',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Removing RPE before the decontamination process is complete is one of the most dangerous and common mistakes in asbestos work. While the coverall and other PPE are being removed, asbestos fibres can become airborne. If the RPE has already been removed, the worker will inhale these fibres. RPE must always be the LAST item removed during decontamination.',
   },

@@ -42,9 +42,9 @@ const Module7Section2_6 = () => {
       id: 3,
       question: 'How can thermal cycling loosen a connection?',
       options: [
-        'Equipment is maintained in efficient state, working order and good repair',
-        'Without slip there\\\\\\\\\\\\\\\'s no relative motion → no induced EMF in the rotor → no torque',
-        'To record energy consumption and maintenance activities throughout building operation',
+        'It increases the supply voltage at the terminal over time',
+        'It corrodes the conductor until it snaps inside the terminal',
+        'It draws excess current that strips the terminal thread',
         'It causes metal to expand and contract, gradually loosening connections',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section2_6 = () => {
       question: 'Why are loose connections dangerous even without high currents?',
       options: [
         'They cause resistance which generates heat, leading to arcing and fire',
-        'AC residual currents (and some types handle DC components)',
-        'Electrical Installation Certificate or Minor Works Certificate as appropriate',
-        'Only if small, you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re trained, have escape route, and feel confident',
+        'They cause the supply voltage to rise across the circuit',
+        'They draw enough current to trip the protective device instantly',
+        'They have no real effect until the current becomes very high',
       ],
       correctAnswer: 0,
       explanation:
@@ -89,9 +89,9 @@ const Module7Section2_6 = () => {
       id: 7,
       question: 'What test might show a poor connection in continuity results?',
       options: [
-        'Changes in legislation, organisation, or after incidents',
-        'Specific details of what could not be inspected and why',
-        'To capture knowledge from project experiences for future benefit',
+        'A reading of exactly zero ohms on every measurement',
+        'An insulation resistance reading above 200 MΩ',
+        'A perfectly stable voltage reading at the socket',
         'High resistance readings indicating poor conductivity',
       ],
       correctAnswer: 3,
@@ -115,10 +115,10 @@ const Module7Section2_6 = () => {
       id: 9,
       question: 'What should be done after tightening or re-terminating a conductor?',
       options: [
-        'Variable Speed Drive/Variable Frequency Drive',
+        'Energise the circuit straight away without testing',
         'Record the work and retest the circuit',
-        'BS 8536 (now incorporated into BS EN ISO 19650)',
-        'Grid stability characteristic',
+        'Leave the cover off so the joint can cool down',
+        'Apply extra torque again after one hour of use',
       ],
       correctAnswer: 1,
       explanation:

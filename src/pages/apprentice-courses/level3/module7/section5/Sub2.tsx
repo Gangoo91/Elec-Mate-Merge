@@ -39,12 +39,12 @@ const checks = [
     id: 'mod7-s5-sub2-structure',
     question: 'What is the key difference between trading as a sole trader and as a limited company?',
     options: [
-      "Energy efficiency requirements drive heat pump installations (F-Gas + electrical), LED lighting, BMS controls, EV charging infrastructure, on-site renewables (solar PV, batteries). All have electrical contractor implications.",
-      "Visual inspection for damage, verification of part number and specification against the order, checking certificates of conformity, verifying quantity, and confirming storage requirements are met",
       "Limited companies have separate legal personality — the company is liable for debts, not the individual director (subject to personal guarantees and director duties). Sole traders have unlimited personal liability — personal assets can be pursued for business debts.",
-      "G99 (which replaced G59 in 2019) — it requires formal application, technical assessment and DNO approval before connection, and specifies protection settings, power quality limits and anti-islanding requirements",
+      "Sole traders pay no tax on their profits, whereas limited companies pay corporation tax — so trading as a sole trader is always the cheaper option regardless of earnings.",
+      "Only a limited company is allowed to employ staff or take on apprentices; a sole trader must work entirely alone and cannot have anyone on the payroll.",
+      "A sole trader can carry out domestic work only, while a limited company is required for any commercial or industrial contract — the structure dictates which jobs you may take.",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The big practical difference is liability. A limited company is its own legal entity; the director's personal assets are generally protected (with exceptions: personal guarantees given to suppliers, breaches of director duties under the Companies Act 2006, wrongful trading). A sole trader IS their business; debts and claims attach personally. There are tax-efficiency differences too at higher earnings (corporation tax + dividends vs income tax + NI), but liability is the headline difference.",
   },
@@ -52,10 +52,10 @@ const checks = [
     id: 'mod7-s5-sub2-vat-threshold',
     question: 'When does VAT registration become mandatory?',
     options: [
-      "Innovation requires regulating the fear of failure, discomfort with uncertainty, and resistance to change — all self-regulation processes — before creative thinking can occur",
-      "CDM 2015 requires that pre-construction information — which must include details of any asbestos present — is provided, and that health and safety risks (including asbestos) are managed throughout a construction project",
+      "As soon as you start trading — every business must register for VAT from its first day of trading regardless of how little it turns over.",
+      "Only when you choose to — VAT registration is entirely voluntary for trades and there is no turnover figure at which it becomes compulsory.",
       "When your VAT-taxable turnover over the previous 12 months exceeds the VAT registration threshold (currently £90,000, set by HMRC and updated periodically) — or when you expect to exceed it in the next 30 days.",
-      "Every point on every circuit. Conductors can be crossed at intermediate junctions, back-boxes, junction boxes — verifying only at the CU and the first accessory misses errors deeper in the circuit. Test at every accessory, every JB, every termination point.",
+      "When you take on your first employee — VAT registration is triggered by employing staff rather than by turnover, and a sole trader working alone never needs to register.",
     ],
     correctIndex: 2,
     explanation:
@@ -65,10 +65,10 @@ const checks = [
     id: 'mod7-s5-sub2-cash-flow',
     question: 'Why is cash-flow management particularly critical for electrical contractors?',
     options: [
-      "They are the person who accepts the permit, understands the precautions, and is responsible for ensuring the work is carried out in accordance with the permit conditions",
+      "Because electrical materials are unusually cheap, so margins are thin and a single bad month wipes out a whole year's profit if costs are not watched closely.",
       "Because you typically pay for materials up-front (suppliers want 30 days at best) and pay staff weekly / monthly — but customers often pay 30-90 days after the work. The gap between cash out and cash in can sink a profitable business.",
-      "A normal response to an important assessment that most people experience — the key is managing it through preparation, familiar routines, positive self-talk, and understanding that some nervousness actually improves performance",
-      "Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight",
+      "Because HMRC requires electrical contractors to pay their tax weekly rather than annually, so money must be set aside far more often than in other trades.",
+      "Because customers always pay a full deposit before any work starts, leaving the contractor holding large sums that must be carefully ring-fenced until the job completes.",
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is a Unique Taxpayer Reference (UTR) and when do you need one?',
     options: [
-      "Dedicated RCD column(s) on the per-circuit row of the STR — typically headed \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"RCD trip time at IΔn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" with sub-columns for the test current used and the measured trip time. Plus a note that the user test facility was verified.",
-      "Have smart functionality including default off-peak charging window, randomised start delay, and the ability to respond to a demand-side response signal — practically meaning the charger can be load-managed.",
+      "A reference printed on your VAT certificate that identifies you to HMRC for VAT purposes only — you need it once you cross the registration threshold and not before.",
+      "The unique number on your ECS card that identifies you to the JIB — you need it to renew the card and to gain access to construction sites.",
       "A 10-digit reference number issued by HMRC when you register for Self Assessment as a self-employed individual or when you register a limited company. You need it for tax returns and HMRC correspondence; partners and directors each have their own.",
-      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
+      "A trading-standards licence number issued by your local authority that authorises you to carry out paid electrical work — you must display it on your invoices and van.",
     ],
     correctAnswer: 2,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the Construction Industry Scheme (CIS)?',
     options: [
-      'Tubes are hazardous WEEE (mercury) — segregate, store carefully, transfer under HWCN to permitted facility; ballasts are also WEEE — separate ferrous metals where possible to maximise material recovery',
-      'PME conditions don’t apply on petrol forecourts because of the explosive-atmosphere risk — a PEN fault could cause sparks at the metalwork. Industry practice (and the energy networks’ guidance) is to derive a TT zone for the hazardous-area equipment.',
-      'A 10-digit reference number issued by HMRC when you register for Self Assessment as a self-employed individual or when you register a limited company. You need it for tax returns and HMRC correspondence; partners and directors each have their own.',
+      'A health-and-safety registration scheme run by the HSE — every construction firm must enrol before working on site, and the scheme issues the safety induction card workers carry.',
+      'An insurance pool that construction firms pay into to cover injuries to the public on building sites — claims are settled from the shared fund rather than individual policies.',
+      'A pension scheme specific to the construction industry that all subcontractors must join, with contributions deducted at source and managed by a central trustee.',
       'An HMRC tax-deduction scheme — contractors in construction must deduct tax (20% for registered subcontractors, 30% for unregistered) from payments to subcontractors and pass it to HMRC. The subcontractor reconciles via their tax return.',
     ],
     correctAnswer: 3,
@@ -121,9 +121,9 @@ const quizQuestions = [
     question: 'What should a business plan include?',
     options: [
       "Business description, target market and competition, services and pricing strategy, financial projections (year 1 month-by-month, years 2-3 quarterly), marketing plan, operational plan. A working document, not a one-time exercise.",
-      "Politely decline and explain your limitation, suggesting a colleague or specialist who is qualified. Working outside competence breaches EWR 1989 Reg 16 and is also a scheme rule for CPS-registered firms.",
-      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
-      "To ensure single-pole devices (switches, fuses, MCBs) are connected in the LINE conductor only (not neutral), preventing equipment remaining live when switched off",
+      "Only a list of the tools and the van you intend to buy — a business plan for a trade is simply an equipment shopping list with prices.",
+      "Just a one-line mission statement — banks and lenders only want to see a short slogan describing what the business stands for, not detailed financials.",
+      "Only the names and contact details of your first ten customers — securing the customers is the whole plan, and everything else follows naturally from that.",
     ],
     correctAnswer: 0,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: "Which insurance is a legal requirement if you employ staff?",
     options: [
-      "A specific aspect of the design that does not comply with BS 7671 but achieves equivalent safety via an alternative standard or technical justification — must be documented on the EIC with the alternative referenced.",
+      "Professional Indemnity insurance — legally required of any firm that issues electrical certificates, covering claims arising from defective design or advice.",
       "Employers' Liability insurance — required by the Employers' Liability (Compulsory Insurance) Act 1969 for any employee (full-time, part-time, casual, apprentice). Minimum statutory cover is £5m; most policies provide £10m. Certificate must be displayed where employees can see it.",
-      "On-site assessment of the actual conditions found on arrival, by the operative(s) doing the work, in real time. Catches what the static RAMS couldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t have known. MHSWR Reg 3 expects current assessment; the dynamic version is the closing-the-gap mechanism.",
-      "Because the line conductor only ever carries the design current Ib for hours on end (steady state), but the CPC briefly carries a fault current that can be many tens of times Ib for a fraction of a second. The two thermal regimes are completely different.",
+      "Public Liability insurance — legally compulsory for every electrical firm because the work always carries a risk of injury to members of the public, with a statutory minimum of £2m.",
+      "Tools-in-transit insurance — legally required because an electrician cannot work without tools, so the law obliges every firm to insure its equipment against theft and loss.",
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the purpose of a trading name?",
     options: [
-      "Wiring system mechanical stress — selection and erection to avoid damage to the sheath or insulation of cables and their terminations during installation, use or maintenance. Lubricants that damage the cable are not permitted.",
-      "Normal — the live Zs measurement includes some additional impedance from the protective device internal contacts and from any small leakage paths at the time of the live measurement. A 0.03 Ω difference is well within the expected agreement between the two methods.",
+      "It is a legally protected name registered with Companies House that no other business in the UK may use, giving you exclusive rights to the brand nationwide.",
+      "It is the name HMRC uses on your tax record instead of your own name, replacing your personal details on all official correspondence once you adopt it.",
       "A business name that's different from your personal name (sole trader) or registered company name (limited company). Allows trading under a more professional or memorable brand. Must appear on business documents alongside your legal name.",
-      "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor's team. For a client representative the escort is usually the Project Manager or Site Manager because they'll want to talk through progress, snags and any commercial issues.",
+      "It is a separate legal entity from you that limits your liability, so trading under a trading name gives a sole trader the same protection as a limited company.",
     ],
     correctAnswer: 2,
     explanation:
@@ -159,9 +159,9 @@ const quizQuestions = [
     id: 7,
     question: "When are Self Assessment tax payments typically due?",
     options: [
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Double socket outlet in kitchen — no earth continuity detected. Requires rewire of circuit from JB to accessory.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions",
-      "That all work at height is properly planned, appropriately supervised, and carried out in a safe manner by competent persons",
+      "Monthly, by the 19th of each month, in the same way that PAYE and CIS deductions are paid over to HMRC.",
+      "Weekly, alongside your staff wages, so that tax is paid as income is earned throughout the year.",
+      "Quarterly, on the same dates as VAT returns, with four equal instalments across the tax year.",
       "31 January following the end of the tax year (5 April), with payments on account for the following year due 31 January and 31 July.",
     ],
     correctAnswer: 3,
@@ -173,9 +173,9 @@ const quizQuestions = [
     question: "What should you consider when setting your charge-out rate?",
     options: [
       "Labour cost (your time + on-costs), overheads (van, insurance, tools, training, admin, scheme fees), materials margin, profit margin, local market rates, and the value you provide. Below true cost is unsustainable.",
-      "A coordination procedure that defines time-zoning or space-zoning, communication protocols between subcontractors, a single point of coordination responsibility, and a review of combined loading on the scaffold",
-      "Mental Health First Aiders, EAP access, signposting (Lighthouse, Mind, Mates in Mind, Samaritans), regular wellbeing toolbox talks, and a no-blame reporting culture",
-      "A detector that projects an infrared beam across a large open space to a receiver; when smoke obscures the beam, the alarm is triggered — used in warehouses, atriums, churches, and large open-plan areas",
+      "Only what the cheapest competitor charges — match the lowest local quote on every job so you never lose work on price, and worry about your own costs later.",
+      "Only your hourly wage as an employee — charge customers the same rate you used to earn per hour, since that is what your time is worth.",
+      "Only the cost of the materials plus a small fixed handling fee — labour should be given away cheaply to win the job and build a customer base.",
     ],
     correctAnswer: 0,
     explanation:

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What is the typical UK PV annual yield in kWh per kWp installed for a well-designed south-facing array?',
     options: [
-      '300–500 kWh/kWp/year',
-      'Approximately 850–1,100 kWh/kWp/year across the UK — south-east England typically at the upper end (~1,050–1,100), Scotland at the lower end (~850–950). PVGIS-modelled yield is the operational reference; the figure already includes performance ratio derating',
-      '5,000 kWh/kWp/year',
-      '100 kWh/kWp/year',
+      'About 300–500 kWh/kWp/year, fairly uniform across the whole of the UK',
+      'About 850–1,100 kWh/kWp/year, varying by region',
+      'About 5,000 kWh/kWp/year for a typical south-facing UK array',
+      'About 100 kWh/kWp/year, even on a well-designed south-facing roof',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'For maximum annual yield in the UK, what is the optimal PV array azimuth (compass orientation)?',
     options: [
-      'North-facing (0° / 360°)',
-      'South-facing (180°). East (90°) loses ~15–20% vs south; west (270°) loses ~15–20% vs south. North-facing is roughly 50%+ loss — typically not viable',
-      'East-facing only',
-      'Any direction works equally',
+      'North-facing (0° / 360°), capturing the sun across the northern sky',
+      'South-facing (180°)',
+      'East-facing only (90°), peaking in the morning for the best annual yield',
+      'Any orientation works equally well for annual yield in the UK',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'For UK latitudes, what is the optimal PV array tilt for annual yield?',
     options: [
-      'Vertical (90°)',
-      'Approximately 30–40° tilt — matches the latitude-appropriate average solar elevation across the year. Flatter tilts favour summer; steeper tilts favour winter. Typical UK roof pitches (30–45°) are often close to optimal',
-      'Flat (0°)',
-      '60–70° for all latitudes',
+      'Vertical (90°), as used on a south-facing wall array',
+      'About 30–40°',
+      'Flat (0°), laid horizontally to catch the high summer sun',
+      'A steep 60–70° tilt as the optimum for all UK latitudes',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A chimney casts a shadow over 2 modules in a 12-module string for 3 hours per day. What is the realistic impact on string yield without module-level optimisation?',
     options: [
-      'Loss proportional to shaded area — about 16%',
-      'Much higher loss than the shaded area alone. The bypass-diode bypass on the affected sub-strings means an entire 20-cell sub-string (1/3 of each shaded module) is bypassed during the shade window — typically 30–40% loss during the 3-hour window, or 10–15% annualised. Module-level optimisation (Section 2.5) recovers most of this',
-      'Zero impact — bypass diodes solve it',
-      'Total string failure',
+      'Loss roughly proportional to the shaded area, about 16% in the shade window',
+      'Much higher than the shaded area, around 30–40% in-window',
+      'Zero impact, because the bypass diodes fully compensate for the shade',
+      'Total failure of the entire string for as long as any shade is present',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'PVGIS yield modelling applies a performance ratio (PR) to scale from STC nameplate to real-world yield. What is the typical PR for a well-designed UK install, and what does it account for?',
     options: [
-      'PR = 1.0 — no derating',
-      'PR typically 0.75–0.85 for a well-designed UK install. Accounts for temperature derate, soiling losses, mismatch losses, inverter conversion losses, DC and AC cable losses, and the difference between STC and real operating conditions. PR below 0.70 indicates a poorly-designed or degraded install',
-      'PR = 0.20',
-      'PR = 1.50 — performance gain',
+      'PR = 1.0, with no derating between nameplate and real-world yield',
+      'PR ≈ 0.75–0.85, covering temperature, soiling, mismatch and inverter losses',
+      'PR = 0.20, the array delivering only a fifth of nameplate output',
+      'PR = 1.50, a performance gain over the STC nameplate',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.512.2.1 sets a requirement on installer responsibility for site conditions. What does it require?',
     options: [
-      'Nothing site-specific',
-      'PV modules shall be installed in such a way that there is adequate heat dissipation under the conditions of maximum solar radiation for the site. The installer must record the site\'s maximum solar radiation assessment and evidence that the install meets the manufacturer\'s thermal specifications for those conditions',
-      'Modules must be water-cooled',
-      'Only for sites above 500 m altitude',
+      'Nothing site-specific; heat dissipation is left entirely to the manufacturer',
+      'Adequate heat dissipation under the site\'s maximum solar radiation conditions',
+      'Modules must be actively water-cooled to meet the heat dissipation requirement',
+      'The requirement applies only to sites above 500 m altitude',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'For an MCS MIS 3002 design pack, what tool is typically used for PV yield modelling, and what inputs does it need?',
     options: [
-      'Manual calculation only',
-      'PVGIS (European Commission JRC tool) or equivalent (PVsyst, HelioScope). Inputs: location (postcode or coordinates), array azimuth and tilt, module type and nameplate, shading factor, and performance ratio assumption. Output: modelled annual and monthly yield in kWh',
-      'Customer\'s gut feeling',
-      'Just the inverter datasheet',
+      'Manual calculation only, from STC nameplate and an assumed number of sun hours',
+      'PVGIS or equivalent, taking location, azimuth, tilt, nameplate and losses',
+      'The customer\'s own gut feeling about how sunny the site is',
+      'Just the inverter datasheet, read directly for the expected yield',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A customer in southern England with a south-facing roof, 30° tilt, no shading, wants a 5 kWp install. Modelled annual yield?',
     options: [
-      '~500 kWh/year',
-      'Approximately 5,000–5,500 kWh/year (PVGIS-modelled, performance ratio ~0.80). Southern England with south-facing 30° tilt is close to the UK optimum; a well-designed install delivers ~1,000–1,100 kWh per kWp installed',
-      '50,000 kWh/year',
-      'No yield — too far north',
+      'About 5,000–5,500 kWh/year, near the UK optimum',
+      'About 500 kWh/year from a south-facing 5 kWp array in southern England',
+      'About 50,000 kWh/year from a domestic 5 kWp south-facing roof',
+      'No usable yield, because southern England is too far north for PV',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Southern England + south-facing + 30° tilt + no shading is close to the UK theoretical optimum. PVGIS-modelled annual yield typically 1,000–1,100 kWh per kWp installed; for a 5 kWp array that gives 5,000–5,500 kWh per year. The figure includes PR derating; STC nameplate alone would predict ~5,200–5,700 kWh without losses. Customer self-consumption + SEG export should be modelled separately to inform the financial case.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A customer with an east-west split roof (50/50) wants PV across both sides. Compared with an equivalent capacity on south-only, what\'s the realistic yield?',
     options: [
-      'Same yield',
-      'East-west split typically delivers ~85–90% of equivalent south-only yield (each side captures less than south-facing, but the combined profile is flatter across the day and may better match household consumption). PVGIS models each side separately and sums; the design pack records the per-side modelling',
-      'Triple the yield',
-      'Zero yield from east-west',
+      'The same yield as an equivalent south-only array of the same capacity',
+      'Roughly triple the yield of an equivalent south-only array',
+      'About 85–90% of equivalent south-only yield, with a flatter daily profile',
+      'Effectively zero yield, because the two sides cancel each other out',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'East-west arrays trade peak yield for daily profile flatness. Each side individually produces ~80–85% of south-facing; combined the array typically delivers ~85–90% of equivalent south-only yield. The flatter daily profile (morning east peak + afternoon west peak vs single midday south peak) often matches household consumption better — improving self-consumption ratio and reducing reliance on battery storage. PVGIS models each orientation independently.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'The PWI common-mistakes list flags &ldquo;ignoring shading from nearby objects&rdquo; as a high-frequency error. What\'s the survey-stage discipline to avoid it?',
     options: [
-      'Just look at the sky',
-      'Walk the proposed array area at survey, identify shading sources (trees, chimneys, neighbouring buildings, distant horizon), use a shade-analysis tool (SunEye, Solmetric, mobile apps) to capture the annual shading pattern objectively, and produce a shading factor for the design pack. Plan architectural mitigation (multi-MPPT or module-level optimisation per Section 2.5) where shading is meaningful',
-      'Tell the customer to remove all trees',
-      'Use ground-mount instead',
+      'Glance at the sky on the day and note whether it seems clear or overcast',
+      'Advise the customer to remove every tree near the proposed array',
+      'Switch the proposal to a ground-mount array in the garden as standard',
+      'Walk the array area, capture the annual shading pattern with a shade-analysis tool, and produce a shading factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Shading survey discipline is a Module 1 Section 6 standing item. The competent surveyor walks the proposed array area, identifies shading sources, tracks the shading pattern across day and year using a shade-analysis tool, and produces an objective shading factor (typically expressed as a percentage of total annual irradiance lost to shade). The factor feeds the PVGIS / equivalent modelling. Architectural mitigation (multi-MPPT inverter or module-level optimisation) recovers most shading losses on heavily-shaded arrays.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A customer in Scotland with a 30° south-facing roof wants 6 kWp. The expected annual yield is materially lower than a comparable south-east England install. By how much, approximately?',
     options: [
-      'Same yield',
-      'Roughly 10–20% lower — Scotland\'s solar resource is ~10–15% below south-east England due to higher latitude and more cloud cover. A 6 kWp Scottish install typically delivers ~5,100–5,500 kWh/year vs ~6,000–6,500 kWh/year for the same array in the south-east. Still commercially viable; the PVGIS model captures the location precisely',
-      'Triple the yield',
-      'Half the yield',
+      'Roughly 10–20% lower, but still commercially viable',
+      'The same yield, since latitude makes no practical difference within the UK',
+      'Roughly triple the yield, because Scottish air is clearer at altitude',
+      'About half the yield of the same array in south-east England',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scotland\'s solar resource is ~10–15% below south-east England — higher latitude (lower solar elevation) and higher annual cloud cover. The PVGIS model handles location precisely; the customer\'s expected yield is set by the modelling, not by a national average. Scottish PV installs remain commercially viable — the unit cost is similar to England, the yield is ~85–90% of the south-east, and the SEG / Home Energy Scotland framework supports the commercial case.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Performance ratio (PR) on a UK install is modelled at 0.80 in the design pack. After 12 months of operation, the customer\'s measured PR is 0.72. Most likely cause:',
     options: [
-      'Modelling error',
-      'Performance below modelled — investigation candidates include soiling (dust / leaves / bird droppings reducing transmittance), shading not captured in the original model, module degradation (uncommon at year 1), inverter underperformance, or DC / AC cable losses higher than assumed. EICR-style inspection finds the cause',
-      'Customer is using too much electricity',
-      'Sun is broken',
+      'A modelling error in the original PVGIS yield figure, not real underperformance',
+      'The customer simply using more household electricity than was expected',
+      'Real underperformance, such as soiling, uncaptured shading or inverter losses',
+      'A fault in the solar resource itself rather than in the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A measured PR significantly below modelled is the customer\'s performance fault investigation trigger. Common causes: soiling (clean the array — UK installs often need 1–2 cleans per year in dusty or bird-active locations); previously-unidentified shading; inverter MPPT operating off-MPP (string sizing fault); DC fault at module or connector level; degraded module (rare at year 1). The competent contractor diagnoses with module-level V_oc / I_sc readings against the commissioning baseline (Section 2.3).',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 712.512.2.1 sets a requirement on installer responsibility for the site\'s &ldquo;maximum solar radiation&rdquo;. What does this mean in practice for a UK install?',
     options: [
-      'No practical impact',
-      'The installer records the assessed maximum solar radiation for the site (typically ~1,000 W/m² for STC, may be higher for high-altitude or unobstructed sites) and evidences that the install meets the manufacturer\'s thermal spec at that irradiance. The 70–100 mm roof standoff is the standard mitigation; the cert evidence bundle records the assessment',
-      'PV is prohibited in high-irradiance sites',
-      'Only manual cooling permitted',
+      'No practical impact on a typical UK domestic install whatsoever',
+      'PV is prohibited outright at any high-irradiance site in the UK',
+      'Only manual or active water cooling of the modules is permitted',
+      'Record the site\'s max solar radiation and evidence the thermal spec is met',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 712.512.2.1 makes the installer responsible for the site-specific thermal assessment. For typical UK domestic sites, maximum solar radiation is the STC reference 1,000 W/m² — and the standard 70–100 mm standoff plus manufacturer mounting spec satisfies the requirement. For high-altitude sites, low-latitude sites (less relevant for the UK), or sites with high reflective ground (snow cover, water surfaces) the irradiance assessment may need to reflect higher peak values. The cert evidence bundle captures the assessment and the resulting mounting arrangement.',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'A residential PV install proposes 4 kWp on a south-facing roof of 25° tilt with a chimney casting partial shade on 2 modules from 2–4 pm in summer. PVGIS modelling without shading shows 4,400 kWh/year. With shading factored?',
     options: [
-      'Identical 4,400 kWh',
-      'Likely 4,000–4,200 kWh/year after the shading factor — 5–10% annual loss from the partial shade on the affected modules. The exact figure depends on the bypass-diode arrangement and whether module-level optimisation is specified. Module-level optimisation (microinverters or power optimisers — Section 2.5) recovers most of the loss',
-      'Zero yield',
-      'Double the yield',
+      'Identical to 4,400 kWh, since partial shade has no annual effect',
+      'About 4,000–4,200 kWh/year, a 5–10% loss',
+      'Zero yield, because shading on two modules disables the whole array',
+      'Double the yield, as the shaded modules cool and the rest run harder',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'PVGIS is the standard PV yield modelling tool for UK MCS-funded installs. What is it, and what makes it the operational reference?',
     options: [
-      'A paid commercial product',
-      'Photovoltaic Geographical Information System — a free online tool maintained by the European Commission Joint Research Centre. Pulls long-term irradiance data from satellite measurements for any European location. Open data, transparent methodology, widely cross-checked against measured PV installs. MCS MIS 3002 design packs commonly use PVGIS output as the modelled yield evidence',
-      'A government regulator',
-      'Customer\'s preference',
+      'A paid commercial design product licensed per install in the UK',
+      'A free European Commission JRC tool using satellite irradiance data',
+      'A government regulator that approves all PV grid connections',
+      'A simple measure of the customer\'s own preferred yield figure',
     ],
     correctAnswer: 1,
     explanation:

@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'wbs-definition',
     question: 'What is a Work Breakdown Structure (WBS)?',
     options: [
-      'Sensitivity to dielectric constant changes in the medium',
+      'A time-ordered list of activities showing when each task starts and finishes',
       'A hierarchical decomposition of project scope into deliverables',
-      'To resolve routing conflicts and agree installation sequence',
-      'Maintain positive communication and verify isolation at point of work',
+      'An organisation chart showing the reporting lines of the project team',
+      'A risk register listing hazards and their mitigation measures',
     ],
     correctIndex: 1,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'wbs-purpose',
     question: 'What is the primary purpose of creating a WBS?',
     options: [
-      'UV resistance and temperature rating',
-      'It provides logical progression and prevents missing faults',
+      'To sequence activities and calculate the critical path',
+      'To allocate labour resources to individual tasks',
       'To define and organise the total project scope',
-      'Give up to 5 back blows between the shoulder blades',
+      'To produce the cash flow forecast for the project',
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'work-package',
     question: 'A work package in a WBS is:',
     options: [
-      'Ensuring fixed building services are installed and adjusted to operate efficiently',
+      'The top-level summary element representing the whole project',
       'The lowest level of deliverable that can be scheduled and estimated',
-      'Advance notification, coordination meetings, and progress updates',
-      'A smaller tube installed inside larger conduit to subdivide space',
+      'A grouping of all the project risks into a single category',
+      'The contingency reserve held back for unforeseen work',
     ],
     correctIndex: 1,
     explanation:
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     id: 'coding-system',
     question: 'Why do WBS elements require a coding system?',
     options: [
-      'A possible high-resistance joint or break in the cpc at or near that socket',
-      'Standard inputs and methods for Part L calculations',
-      'Zero electrical resistance at very low temperatures',
+      'To encrypt the project data for commercial confidentiality',
+      'To rank the work packages in order of priority',
+      'To comply with a mandatory legal numbering standard',
       'For unique identification, tracking, and integration with cost systems',
     ],
     correctIndex: 3,
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a building services WBS, what would typically be at Level 2?',
     options: [
-      'Shown as a separate element with clear identification',
-      'Project 1, Phase 3, System 2, Work Package 4',
+      'The individual cable runs and final circuits',
+      'The single overall project title',
       'Major systems (Electrical, Mechanical, Controls)',
-      'It overlaps with other work packages to ensure coverage',
+      'The names of the assigned site operatives',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'For an MEP project, what level of detail is typically appropriate for a work package?',
     options: [
-      'Major systems (Electrical, Mechanical, Controls)',
-      'Project 1, Phase 3, System 2, Work Package 4',
+      'The entire electrical installation as one item',
+      'Terminate each individual core in the consumer unit',
       'Install power distribution to Level 3',
-      'Deliverable/system-oriented',
+      'The complete project across all trades',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is a WBS dictionary?',
     options: [
-      'Charging employees for anything provided in pursuance of health and safety requirements',
-      'Whether the sensor face is level with the mounting surface or protrudes from it',
-      'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
+      'A glossary of standard construction terms used across the project',
+      'A list of approved suppliers and subcontractors for each trade',
+      'A schedule of the activities and their durations for the programme',
       'A document describing the content, boundaries, and deliverables of each WBS element',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'How should contingency work be handled in a WBS?',
     options: [
       'Shown as a separate element with clear identification',
-      'Enabling accurate cost collection and analysis by WBS element',
-      'Project 1, Phase 3, System 2, Work Package 4',
-      'Major systems (Electrical, Mechanical, Controls)',
+      'Spread evenly and hidden within every work package',
+      'Added as a percentage uplift to each labour rate',
+      'Left out of the WBS and tracked separately by the QS',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'When integrating a WBS with cost codes, the primary benefit is:',
     options: [
-      'Shown as a separate element with clear identification',
+      'Removing the need for a separate project schedule',
       'Enabling accurate cost collection and analysis by WBS element',
-      'Project 1, Phase 3, System 2, Work Package 4',
-      'Major systems (Electrical, Mechanical, Controls)',
+      'Guaranteeing the project comes in under its budget',
+      'Allowing work packages to be deleted without rework',
     ],
     correctAnswer: 1,
     explanation:
@@ -233,9 +233,9 @@ const quizQuestions = [
       'For a hospital MEP project, which WBS structure would best support separate subcontractor packages?',
     options: [
       'Deliverable/system-oriented',
-      'The Managers and Professionals test',
-      'Never until all tests pass',
-      'Metal trunking or conduit',
+      'Time-phased by reporting period',
+      'Organised by individual operative',
+      'A single undivided work package',
     ],
     correctAnswer: 0,
     explanation:

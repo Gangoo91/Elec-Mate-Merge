@@ -40,9 +40,9 @@ const checks = [
     id: 'mod7-s3-sub2-pl',
     question: "What does Public Liability (PL) insurance cover?",
     options: [
-      "Daily site diary, weekly time sheet, NVQ portfolio entries (evidence for the End-Point Assessment), off-the-job training log (apprenticeship standards), monthly apprentice review forms (you + employer + tutor), JIB grading entries where applicable, and any required H&S sign-on records (RAMS sign-on, toolbox talk attendance).",
-      "Politely decline and explain you must work within the law. Tax evasion is a criminal offence under the Fraud Act 2006 and VAT legislation; accepting it puts your business, scheme registration and personal liability at serious risk. Decline firmly without lecturing the client.",
-      "Stop. MEWP operation requires an IPAF licence (or equivalent recognised training). The Provision and Use of Work Equipment Regulations 1998 Reg 9 requires the operator to be adequately trained, and LOLER 1998 Reg 9 requires the MEWP itself to be subject to thorough examination. Plus you need a harness for boom-type MEWPs (cherry pickers) clipped to the basket anchor, and a familiarisation on the specific machine. Until the training is in place, the work goes to a competent operator.",
+      "PL covers your own employees if they are injured at work — e.g. an apprentice who falls from a ladder, or a labourer hurt by a power tool. It is the policy that pays wages and medical costs for staff injuries, and is legally compulsory from the day you employ anyone.",
+      "PL covers damage to your own tools, equipment and stock — theft from the van, fire at your premises, accidental breakage of test instruments. It is the policy electricians rely on to replace expensive kit, with a typical per-claim limit of around £5,000.",
+      "PL covers financial loss a customer suffers because of bad advice or a design error you made — e.g. you specified the wrong cable size and their switchgear failed. It is the cover needed by any firm doing design, certification or technical consultancy work.",
       "PL covers your legal liability for injury to third parties or damage to third-party property arising from your work — e.g. a customer injured by an electric shock from a fault you introduced, or fire damage caused by an installation defect. Typical cover £5-10m. Cost £200-500/year for a small electrical firm. Effectively required by all commercial clients and most CPS schemes.",
     ],
     correctIndex: 3,
@@ -53,10 +53,10 @@ const checks = [
     id: 'mod7-s3-sub2-el',
     question: "When is Employers' Liability (EL) insurance legally required?",
     options: [
-      "Posting customer property, customer information, project details or photos taken on site without explicit written consent; making derogatory comments about customers, colleagues, suppliers or competitors; representing personal opinions as the firm's opinions; sharing anything that could damage the firm's reputation. The policy applies to personal accounts because the duty travels with the content, not the platform.",
-      "Two-way radios on a pre-agreed channel, tested before the pull starts. Brief both ends on the agreed call-words ('pull', 'stop', 'slack', 'snag'), confirm channel volume so both parties hear over background noise, and agree a default action if comms drop ('stop' is always the default). Phones are a backup, not the primary — they can ring while you're holding cable.",
+      "EL is legally required from the moment your annual turnover exceeds £85,000, the same threshold as VAT registration. Below that figure a firm is exempt, which is why most small sole traders do not carry EL until the business grows.",
+      "EL is legally required only once you take on your fifth employee. Firms with four or fewer staff, including apprentices, are exempt under the Employers' Liability (Compulsory Insurance) Act 1969, mirroring the five-employee threshold for a written safety policy.",
       "EL is legally required from the moment you employ anyone (including apprentices) under the Employers' Liability (Compulsory Insurance) Act 1969. Statutory minimum cover is £5m; most policies provide £10m. EL covers claims by employees for injury or illness caused by their work. The current EL certificate must be displayed at the workplace and be available for inspection by HSE.",
-      "Treat every fire alarm as real until proven otherwise. Stop work, leave tools where they are, ensure the customer evacuates with you, walk the planned escape route to the muster point, and await account-for. Re-entry only when the fire-marshal / building manager declares the all-clear. Tools and van keys can be retrieved later; the alarm response cannot be re-done.",
+      "EL is legally required only when you work on CDM-regulated commercial sites, because the main contractor's site rules mandate it. On domestic work it is optional, since the Employers' Liability (Compulsory Insurance) Act 1969 applies only to construction sites.",
     ],
     correctIndex: 2,
     explanation:
@@ -68,9 +68,9 @@ const checks = [
       "What does Professional Indemnity (PI) insurance cover and who needs it?",
     options: [
       "PI covers your legal liability for financial loss caused to a customer by professional advice or design errors — e.g. you specified the wrong cable size and it caused equipment damage; you made a calculation error in a fault-level study and the customer's switchgear failed. Typical cover £1-2m for small firms; £200-500+/year. Needed if you do any design work, technical advice, certification or specification.",
-      "The Joint Industry Board (JIB) is the body that sets the working rules, pay rates, holiday entitlements, sick-pay and pension arrangements for electricians in England, Wales and Northern Ireland. It also runs the JIB grading structure (Apprentice / Improver / Electrician / Approved / Technician) and the Apprentice Code of Practice. As an apprentice your pay rate, your training requirements and your grading are set by JIB rules.",
-      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
-      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — requires the responsible person (employer / self-employed / person in control of premises) to report to the HSE certain work-related deaths, specified injuries, over-7-day injuries, occupational diseases and dangerous occurrences. Reports are made via the F2508 forms / online RIDDOR portal.",
+      "PI covers third-party injury and property damage arising from your physical work on site — a customer shocked by a fault you introduced, or fire damage from a defective install. It is the foundational cover every commercial client and CPS scheme requires, regardless of whether you do any design work.",
+      "PI covers your own employees for injury or illness caused by their work, and is legally compulsory under the Employers' Liability (Compulsory Insurance) Act 1969 from the day you hire anyone. Only firms that employ staff, including apprentices, need it.",
+      "PI covers theft of tools and equipment from your van, with specific conditions on overnight parking and locking. Tool theft is a major UK trades risk, and any firm carrying valuable kit in a vehicle needs this cover regardless of the work they do.",
     ],
     correctIndex: 0,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the EL Compulsory Insurance Act 1969 statutory minimum cover?",
     options: [
-      "That pressing the emergency stop immediately de-energises all hazardous motion, that the stop is maintained (latched) until manually reset, and that the machine cannot restart until the stop is released and a deliberate start action is taken",
+      "£1 million per claim. The Act sets a £1m floor, and most insurers issue at exactly that level because it is enough to cover a typical workplace injury. The certificate must be displayed at the workplace where employees can see it.",
       "£5 million per claim. The Act requires every UK employer (with limited specific exceptions) to hold an EL policy for at least £5m. Most policies offer £10m or more by default. The certificate must be displayed at the workplace where employees can see it. Failure to hold cover = fine up to £2,500 per day; failure to display = £1,000 fine.",
-      "FI — further investigation needed. The reading is over the permitted maximum but you have one method only and a single reading. Confirm with R1+R2 plus Ze, retest with a fresh battery and lead-resistance check, and if the high reading is confirmed then reclassify as C2 (or C1 if dangerous combination present).",
-      "Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).",
+      "£10 million per claim. The Act fixes the statutory minimum at £10m, and insurers may not issue cover below that level. There is no requirement to display the certificate, only to produce it on request by the HSE.",
+      "£250,000 per claim. The Act sets a relatively low floor because EL is only intended to top up the employee's own income-protection cover. Firms that want more must buy additional cover separately, and the certificate is held at head office rather than displayed.",
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: "Are apprentices counted as employees for EL purposes?",
     options: [
-      "The insulation chemistry differs — standard thermoplastic (PVC) softens above ~70 °C, modern thermosetting (LSF, XLPE) cross-links and tolerates 90 °C continuously. The cable's tabulated CCC depends on which insulation it has.",
-      "Loss of fire alarm interfaces, loss of automatic doors, loss of emergency lighting (if isolated), interruption of process equipment, loss of computer-room cooling, loss of safety-critical controls in industrial environments. Plan and brief accordingly.",
+      "No — apprentices are classed as trainees rather than employees, so EL does not apply to them. They are covered instead by the training provider's insurance, which is why the college rather than the employer carries the cover during the apprenticeship.",
+      "Only once the apprentice passes the AM2 and becomes a qualified electrician. Until then they are not employees for EL purposes, and the employer's existing Public Liability policy is sufficient to cover any injury to an apprentice.",
       "Yes — apprentices are employees and EL applies to them in full. The Apprenticeship Agreement (under the Apprenticeships, Skills, Children and Learning Act 2009) is a specific form of employment contract. From the day the apprentice starts you must have EL in place covering them.",
-      "An Electrical Installation Certificate (EIC), accompanied by a Schedule of Inspections AND a Schedule of Test Results — the three-document set required by Section 644 for full initial verification.",
+      "Only if the apprentice is over 18. Apprentices under 18 are covered by their parents' household insurance under child-employment rules, so EL is only required once the apprentice reaches adulthood partway through their training.",
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: "Does PL cover damage to your customer's existing installation?",
     options: [
-      "Multiple sources accepted by CPS schemes: scheme-organised events (NICEIC Connect, NAPIT events, ELECSA training), accredited training providers (JTL, NET, IET Academy, Elec-Mate), trade events (ECA Live, Electric Vehicles Show), online platforms (IET Academy, scheme portals), manufacturer training (sometimes counts), reading and self-study (some schemes accept evidence). Keep a CPD log with date, topic, time, source.",
-      "Typically £1,200-1,800 for the course, exam fees and practical assessment combined. Premium providers (SECTT in Scotland, JIB-approved providers, NICEIC training arm) sometimes charge £2,000+. Lower-cost providers around £900-1,200 with smaller class sizes or basic practical facilities. Always check exam and assessment fees are included in the headline price.",
-      "Strictly there's no formal pre-requisite — anyone can sit 2391-52 if they can pass the exam and practical. In practice most providers expect candidates to hold C&G 2365-03 (or equivalent NVQ Level 3) and to have meaningful site experience. AM2 isn't formally required but is the strong norm because the practical content assumes installation competence.",
+      "Always — covering the customer's existing installation is the core purpose of Public Liability. Any damage you cause to their wiring, consumer unit or accessories is automatically paid out, with no exclusions, which is why PL is the only cover most electricians need.",
+      "Never — Public Liability covers only injury to people, never any property damage at all. Damage to a customer's existing installation can only be covered by a separate Property Damage policy bought in addition to PL.",
+      "Only if the customer's installation is brand new. PL covers damage to recently-installed wiring but excludes anything more than a year old, on the basis that older installations are assumed to be at the end of their life and not worth insuring.",
       "It depends on policy wording. Many PL policies have 'damage to property in your custody/care' exclusions that limit cover for damage to the very equipment or installation you're working on. Some policies offer a sub-limit (e.g. £25,000) for property in care; others exclude entirely. Always check the policy schedule. Specialist trade brokers (NICEIC Insurance, NAPIT Insurance, Hiscox, Tradesman Saver) understand this and offer relevant cover.",
     ],
     correctAnswer: 3,
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: "What's Tools-in-Transit insurance?",
     options: [
       "Specific cover for theft of tools and equipment from your van or work vehicle, typically with a per-claim limit (e.g. £5,000) and conditions about secure storage (alarmed van, specific locking systems, overnight storage location). Tool theft is a major UK trades risk — police-reported tool theft from vans runs into hundreds per week. Annual premium £100-300; high deductibles common.",
-      "Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or 'snips') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.",
-      "On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2. The plastic supply pipe is not an extraneous-conductive-part (it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t introduce a potential) so doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding — but the metal consumer pipework downstream of the meter does.",
-      "A dutyholder is a person on whom statute imposes a duty regardless of contract. Employer, self-employed person, employee, occupier, manufacturer, designer, importer — each has statute-imposed duties under HASAWA or its associated regulations. Contractual reallocation of the risk doesn't transfer the statutory duty. You can't 'contract out' of HASAWA.",
+      "Cover for damage to tools caused by misuse on site — a drill burnt out by overloading, a tester dropped and broken, a grinder disc shattering. It is a wear-and-tear policy that replaces worn-out or damaged equipment regardless of how the damage happened.",
+      "The motor insurance on your work vehicle that covers third-party damage and injury when driving between sites. It is the legally required Road Traffic Act cover for the van itself, and includes the tools carried inside it as standard.",
+      "Cover that pays you a daily allowance while your tools are away being repaired or replaced, so you can hire substitutes and keep working. It is a business-interruption policy triggered whenever your kit is out of action for any reason.",
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "Do CPS schemes require specific insurance?",
     options: [
-      "Safely isolate. Open all switches and disconnect any wired-in fixed appliances (or accept Reg 643.3.3 two-stage method). Disconnect L and N at the protective device; if the circuit shares a neutral bar with other circuits, lift its neutral too. Connect the IR tester between L and CPC, then N and CPC, then L and N (each combination). Press TEST. Reading must be ≥ 1 MΩ for a 500 V test.",
+      "No. CPS schemes are concerned only with technical competence and the standard of your work, not your commercial arrangements. Insurance is left entirely to the firm's discretion, and the annual assessor never asks to see any insurance documents.",
       "Yes. NICEIC, NAPIT, ELECSA all require members to hold PL (typically £5m+), EL if employing anyone, and (often) PI if doing design work. Specific minimum cover levels are set in scheme rules; the assessor checks evidence at annual assessment. Some schemes offer affiliated insurance products (NICEIC Insurance, NAPIT Insurance) at member rates.",
-      "(1) Supply cable — full length for cuts, abrasion, kinks, exposed conductor; (2) Plug — body intact, pins straight, cord-grip in place; (3) Tool casing — cracks, missing screws, contamination ingress; (4) Guard or shield — present, correctly fitted, not damaged; (5) Switch — operates positively, no stuck contacts, anti-restart works after release; (6) PAT label — current, in date, legible. Plus check the tool is the right one for the job.",
-      "The location, the specific activity (gas torch, grinding, welding), the operative names, the permit validity window (start time, end time), the precautions in place (combustibles cleared, fire blanket / extinguisher to hand, fire watch arranged for after work), the cool-down / fire-watch requirement (typically 30-60 minutes after work ceases), and signatures from issuer, operative and (on completion) the fire-watch confirming no smouldering.",
+      "Yes, but only Public Liability — and you must buy it through the scheme's own affiliated insurer as a condition of membership. Members are not permitted to source PL elsewhere, and EL and PI are never required by any CPS scheme.",
+      "Yes, but only for firms doing commercial work. CPS schemes require no insurance from members who work solely on dwellings, because Part P self-certification is treated as carrying no liability risk on domestic jobs.",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: "What's the typical insurance cost for a one-person sole trader electrical firm?",
     options: [
-      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
-      "Because the high earth electrode resistance limits fault current to a few amps, far below what an MCB or fuse needs to operate. Without an RCD the fault current can flow indefinitely through the earth path with no clearing — the RCD is the only practical means of automatic disconnection.",
+      "Roughly £50-100/year all-in — a single package policy covering PL, Tools-in-Transit and van insurance combined. Trade insurance is cheap because the risk is low, which is why electricians rarely bother shopping around at renewal.",
+      "Roughly £5,000-8,000/year for the basic stack. Insurance is the largest single overhead for a sole trader, exceeding van and tool costs combined, mainly because the Public Liability minimum of £10m carries a very high premium.",
       "Roughly £400-800/year for the basic stack: PL £5-10m (£200-500), Tools-in-Transit (£100-300), van insurance (commercial separately, typically £600-1,200/year for a small van). Add EL if you have an apprentice (£200-600). Add PI if you do any design work (£200-500). Total annual insurance bill for a sole trader with apprentice and design work: roughly £1,500-2,500.",
-      "To record what was actually done on the visit — labour hours, materials used, parts replaced, tests performed, customer comments, photos. It's the contemporaneous record that supports the invoice, feeds into the cert, and protects the firm if there's a later complaint about scope or quality.",
+      "There is no typical figure because trade insurance is priced per job rather than annually. A sole trader pays a small premium each time they take on work, calculated as a percentage of the contract value, so the cost rises and falls with how busy they are.",
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: "What's a 'product recall' or 'defective workmanship' extension?",
     options: [
-      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
-      "A heat pump struggles in a poorly-insulated house with undersized radiators — it’s designed to deliver lots of low-temperature heat, not a little high-temperature heat. The realistic CoP will be poor (closer to 2 than 3), the running costs will surprise the customer, and the property may need insulation upgrades and rad-replacement first. Be honest before quoting.",
-      "Read it, follow it, sign on, work to the controls and steps as written, and flag anything on site that doesn't match what the document describes. Writing RAMS is a Level 3 / 4 / supervisor competency — at Level 2 you're a reader and follower of RAMS, and a flagger when reality doesn't match.",
+      "Mandatory clauses written into every PL policy by law, covering faulty work and product faults as standard. Because they are compulsory, there is no extra premium for them, and every electrician's PL policy includes defective workmanship and product recall cover automatically.",
+      "Cover for the cost of recalling your own staff from a job that has gone wrong, paying their wages while the work is re-done. It is a labour-cost policy triggered when a customer rejects completed work and the gang has to return to put it right.",
+      "Government-backed schemes that compensate customers directly when a registered electrician's work is defective, funded by the CPS schemes. The electrician pays nothing; the scheme covers the recall and remediation as part of the consumer protection that comes with registration.",
       "Optional extensions to PL covering specific risks: defective workmanship (claims arising from faulty work after completion, e.g. a fire caused by an installation defect months after the install), product recall (cost of recalling products you supplied if a fault is found). Increasingly important as electrical work involves more complex equipment (PV inverters, EV chargers, BMS components).",
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: "Should I use a price-comparison site for trade insurance?",
     options: [
       "Comparison sites are useful for pricing benchmarks but specialist trade brokers (NICEIC Insurance, NAPIT Insurance, ECA Insure, Hiscox, Tradesman Saver) typically offer better-fitting policies because they understand electrical-trade risks. Comparison sites can miss nuances (property-in-care exclusion, defective workmanship, scheme requirements). Use comparison sites to set a benchmark; talk to a trade-specialist broker for the actual purchase.",
-      "A genuine shift to: \\\\\\\"This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager\\\\\\\" — with the motivation to act matching the new belief",
-      "(1) Take the tool out of service immediately — don't try to use it 'gently'. (2) Apply the firm's quarantine tag ('do not use', signed and dated). (3) Move the tool to the firm's quarantine area (or, on site, to the supervisor's box). (4) Log the defect in the firm's tool register or defect log. (5) Tell the supervisor — verbally as well as written. (6) Get an alternative tool to continue the work. The fix happens later by a competent person; the apprentice's job ends at quarantine + report.",
-      "That the installation has more than one source of supply (mains plus PV, battery, generator, etc.), that opening the main switch does NOT isolate the entire installation, what additional isolation is needed, and where each isolation point is located. Critical for anyone working on the system because back-feed from PV/battery can energise the install with the main switch open.",
+      "Always — comparison sites give you the cheapest possible premium every time, and the cover is identical to a broker's, so there is never a reason to pay a broker. Buy whatever the comparison site ranks first and you cannot go wrong.",
+      "Never — comparison sites do not list trade insurance at all, only home and motor cover for consumers. An electrician must go directly to a specialist broker because trade policies are not available through any online comparison service.",
+      "Only for your van insurance, never for your business cover. Motor insurance is the one product comparison sites handle for trades, while PL, EL and PI can only be arranged through a CPS scheme as part of membership.",
     ],
     correctAnswer: 0,
     explanation:

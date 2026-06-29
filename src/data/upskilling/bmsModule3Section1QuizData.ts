@@ -45,9 +45,9 @@ export const bmsModule3Section1QuizData: QuizQuestion[] = [
     question: 'Where are FCUs (Fan Coil Units) typically installed?',
     options: [
       'In individual rooms or zones for localised control',
-      'Hot water or steam for heating and domestic use',
-      'By controlling fans via digital or analog outputs',
-      'It matches cooling output to actual demand, avoiding waste',
+      'In the central plant room alongside the chillers',
+      'Within the main supply ductwork serving the whole building',
+      'Outdoors on the roof as part of the cooling tower',
     ],
     correctAnswer: 0,
     explanation:
@@ -97,8 +97,8 @@ export const bmsModule3Section1QuizData: QuizQuestion[] = [
     question: 'What do boilers provide in HVAC systems?',
     options: [
       'Hot water or steam for heating and domestic use',
-      'In individual rooms or zones for localised control',
-      'To condition and circulate air through ducts',
+      'Filtered fresh air for ventilation systems',
+      'Compressed refrigerant for the cooling circuit',
       'Chilled water for cooling systems',
     ],
     correctAnswer: 0,
@@ -109,10 +109,10 @@ export const bmsModule3Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How does BMS scheduling reduce boiler fuel use in schools?',
     options: [
-      'Granular control, energy monitoring per fixture, and integration with building systems',
+      'By raising the flow temperature so spaces heat up faster',
       'By pre-heating classrooms before lessons then reducing output during empty periods',
-      'Three adaptive comfort criteria based on operative temperature',
-      'They eliminate the need to decide what to do, preserving mental energy for important decisions',
+      'By running the boilers continuously to avoid cold starts',
+      'By switching heating to electric panel heaters out of hours',
     ],
     correctAnswer: 1,
     explanation:

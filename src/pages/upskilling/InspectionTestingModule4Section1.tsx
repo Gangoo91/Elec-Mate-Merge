@@ -22,12 +22,12 @@ const inlineChecks = [
     id: 'mod4-s1-dc-not-ac',
     question: 'Why does the insulation resistance test use DC and not AC?',
     options: [
-      'AC is unsafe at the high test voltages required',
-      'DC settles to a steady-state leakage current that reads true insulation resistance; AC would be dominated by cable capacitance and would read reactance, not resistance',
-      'DC is cheaper to generate inside a battery-powered tester',
-      'The regulations only permit DC for electrical safety reasons',
+      'DC reads the steady-state leakage as true resistance; AC would be dominated by cable capacitance',
+      'AC becomes unsafe at the high test voltages required, whereas DC of the same magnitude is safe',
+      'DC is cheaper and simpler to generate from the battery inside a portable tester than an AC supply',
+      'The regulations permit only DC for the insulation test purely for operator electrical-safety reasons',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A length of insulated cable behaves as a long capacitor. Under AC the capacitive reactance dominates and you read a value that reflects geometry, not insulation health. Under DC, the capacitance charges, the dielectric absorption decays, and what is left is the steady-state leakage current that gives R = V/I.',
   },
@@ -37,11 +37,11 @@ const inlineChecks = [
       'A 230 V lighting circuit is being tested. What test voltage and minimum acceptance does Reg 643.3.2 / Table 64 require?',
     options: [
       '250 V DC, minimum 0.5 MΩ',
-      '500 V DC, minimum 1.0 MΩ',
-      '1000 V DC, minimum 1.0 MΩ',
       '500 V DC, minimum 0.5 MΩ',
+      '1000 V DC, minimum 1.0 MΩ',
+      '500 V DC, minimum 1.0 MΩ',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Table 64 row 2: circuits up to and including 500 V (other than SELV/PELV) — test at 500 V DC, minimum 1.0 MΩ. A 230 V lighting circuit sits in this row.',
   },
@@ -50,12 +50,12 @@ const inlineChecks = [
     question:
       'You measure a 230 V circuit and get 1.2 MΩ at 500 V DC. The Table 64 minimum is 1.0 MΩ. What is the right action?',
     options: [
-      'Record as a clean pass and move on — it is above the minimum',
-      'Treat the minimum as the floor it is. 1.2 MΩ on a healthy thermoplastic cable should read in the hundreds of MΩ — investigate cause (connected equipment, moisture, contamination, cable degradation) before recording',
-      'Re-test at 1000 V DC to confirm',
-      'Fail the circuit outright',
+      'Record it as a clean pass and move on, since 1.2 MΩ is above the 1.0 MΩ minimum',
+      'Fail the circuit outright, because a reading this close to the minimum cannot be accepted',
+      'Treat the minimum as a floor — 1.2 MΩ is poor for healthy cable, so investigate the cause',
+      'Re-test at 1000 V DC to confirm the reading, since the higher voltage gives a better figure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'GN3 Ch 2 frames Table 64 minimums as the floor below which the test fails outright, not as a target. A reading within an order of magnitude of the floor is a deteriorated-cable signal. Investigate before recording — disconnect connected equipment, dry damp accessories, clean contaminated surfaces, then re-test.',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'A4:2026 redrafted Reg 643.3.3. After equipment is reconnected, what test is now explicitly required?',
     options: [
-      'Repeat the full Table 64 test at 500 V DC',
-      '250 V DC between live conductors and the protective conductor connected to the earthing arrangement, minimum 1 MΩ',
-      'A separate continuity test on each piece of equipment',
-      'No further test — the Table 64 step is sufficient',
+      'A 250 V DC test between live conductors and the protective conductor, minimum 1 MΩ',
+      'A repeat of the full Table 64 test at 500 V DC, now with all the equipment connected',
+      'A separate continuity test on the protective conductor of each piece of connected equipment',
+      'No further test — the Table 64 step performed before reconnection is sufficient on its own',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The A4 redraft codifies the two-step approach: Table 64 voltage with current-using equipment disconnected (cable alone), then 250 V DC after connection between live conductors and the protective conductor with a 1 MΩ minimum. The 250 V step is the new explicit clarification.',
   },
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'What is insulation resistance actually a measurement OF, and why is the test conducted with DC rather than AC?',
     options: [
-      'Conductor resistance using AC for accuracy',
-      'The high resistance between live conductors and earth (and between live conductors of different polarity), measured by applying DC and reading the steady-state leakage current',
-      'AC impedance of the cable',
-      'Earth fault loop impedance using rectified AC',
+      'The high resistance of the insulation between live conductors and earth, read as DC leakage',
+      'The resistance of the conductor itself, measured with AC for accuracy at the test frequency',
+      'The AC impedance of the cable, combining its resistance and reactance into one value',
+      'The earth fault loop impedance of the circuit, derived from a rectified AC measurement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Insulation resistance is the resistance offered by the insulation between conductors that should be electrically isolated from each other and from earth. A DC test voltage is applied and the steady-state leakage current is read; resistance = V/I. DC is used because cable capacitance would otherwise dominate an AC measurement and mask the true insulation property.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'Reg 643.3.2 (Table 64) sets minimum insulation resistance values. What are they for SELV/PELV, for circuits up to 500 V, and for circuits above 500 V?',
     options: [
-      '1 MΩ for everything',
+      'A single value of 1 MΩ for every circuit, regardless of voltage or whether it is SELV/PELV',
+      'SELV/PELV: 1 MΩ; up to 500 V: 2 MΩ; above 500 V: 5 MΩ, tested at the nominal circuit voltage',
+      'Reg 643.3.2 sets the test voltages but leaves the minimum acceptance values to GN3',
       'SELV/PELV: 0.5 MΩ at 250 V DC; up to 500 V: 1.0 MΩ at 500 V DC; above 500 V: 1.0 MΩ at 1000 V DC',
-      'SELV/PELV: 1 MΩ; up to 500 V: 2 MΩ; above 500 V: 5 MΩ',
-      'Reg 643.3.2 sets no minimum values',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Table 64 in Reg 643.3.2: SELV and PELV — 250 V DC, minimum 0.5 MΩ. Circuits up to and including 500 V (other than SELV/PELV) — 500 V DC, minimum 1.0 MΩ. Circuits above 500 V — 1000 V DC, minimum 1.0 MΩ.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'A4:2026 redrafted Reg 643.3.3. What is the headline change in the test procedure when connected equipment may be damaged or may influence the test?',
     options: [
-      'No change — still 500 V DC throughout',
+      'No change — the test stays at 500 V DC throughout, before and after equipment connection',
+      'The insulation resistance test is omitted entirely where vulnerable equipment is connected',
       'A 250 V DC test is applied AFTER connection of equipment, between live conductors and the protective conductor, with a minimum acceptance value of 1 MΩ',
-      'The test is omitted entirely',
-      'A 1000 V AC test is now required',
+      'A 1000 V AC test is now required to verify the insulation with equipment connected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.3.3 (A4 redraft) clarifies the post-connection step. The Table 64 voltage (typically 500 V DC) is applied PRIOR to connection of vulnerable equipment. AFTER connection, a 250 V DC test is applied between live conductors and the protective conductor, with a minimum acceptance of 1 MΩ. The 250 V step is the new clarified requirement.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Why is a 250 V DC test used for the post-connection step rather than just continuing at 500 V DC?',
     options: [
-      'Because 250 V is more accurate',
-      'Because 500 V DC can damage electronic equipment (LED drivers, surge protection devices, dimmers, electronic transformers) connected to the circuit; 250 V DC reduces the stress while still providing a meaningful insulation resistance verification',
-      "Because the cable can't take 500 V",
-      'For consistency with EU standards',
+      'Because 500 V DC can damage connected electronics (LED drivers, SPDs, dimmers); 250 V is gentler',
+      'Because a 250 V DC test is inherently more accurate than 500 V at reading insulation resistance',
+      'Because the cable insulation itself cannot withstand 500 V DC once equipment is connected to it',
+      'For consistency with EU standards that mandate 250 V DC for all post-connection testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Connected equipment — particularly switched-mode power supplies, LED drivers, surge protective devices (which clamp at much lower voltages), and dimmers — can be damaged by a 500 V DC test or can themselves distort the result. 250 V DC is a controlled stress that does not damage modern equipment while still revealing gross insulation breakdown. The acceptance of 1 MΩ at 250 V is the new explicit threshold.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A 230 V circuit reads insulation resistance of 0.7 MΩ at 500 V DC. What does Table 64 say, and what is the next step?',
     options: [
-      'Pass — anything above 0.5 MΩ is fine',
-      'Fail by Table 64 (minimum 1 MΩ for circuits up to and including 500 V at 500 V DC). Investigate before recording — disconnect equipment if any is connected, and re-test to isolate cable insulation from connected loads',
-      'Pass with note',
-      'Insulation resistance does not apply to 230 V circuits',
+      'Pass — anything above 0.5 MΩ is acceptable for a low-voltage final circuit',
+      'Pass, with a schedule note recording the relatively low value for future comparison',
+      'The insulation resistance test does not apply to 230 V final circuits in this way',
+      'Fail — 0.7 MΩ is below the 1 MΩ minimum; disconnect equipment and re-test the cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Table 64 sets 1.0 MΩ as the minimum at 500 V DC for circuits up to and including 500 V. 0.7 MΩ is below the minimum. Reg 643.3.3 NOTE recognises that connected equipment may influence the result — so the immediate next step is to confirm the test was performed with current-using equipment disconnected (per Reg 643.3.2's 'all final circuits connected but with current-using equipment disconnected'). Re-test if needed before condemning.",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'Insulation resistance and continuity are both resistance measurements. What is the fundamental practical difference between them?',
     options: [
-      'No difference',
-      'Continuity measures LOW resistance (mΩ to a few Ω) of an intended conductive path with a low DC test current. Insulation resistance measures HIGH resistance (MΩ) between conductors that should be electrically isolated, with a high DC test voltage and a tiny leakage current',
-      'Continuity uses AC, insulation resistance uses DC',
-      'Insulation resistance is on live circuits, continuity is on dead circuits',
+      'There is no fundamental difference; both are resistance readings on the same instrument',
+      'Continuity uses an AC test current while insulation resistance uses DC — the key distinction',
+      'Continuity reads low resistance of an intended path; insulation reads high resistance of isolation',
+      'Insulation resistance is done on live circuits while continuity is done on dead circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Continuity is a low-resistance test — typical R1+R2 values are tenths of an ohm — and uses a meter that pushes enough current to reveal poor terminations. Insulation resistance is a high-resistance test — typical good values are tens to hundreds of MΩ — performed by applying a known DC voltage and measuring the tiny leakage current that flows. The instruments are different, the orders of magnitude are different, and what they're each diagnosing is different.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'You measure a circuit and get an initial high reading that drops over the first few seconds before stabilising. What is the likely explanation?',
     options: [
-      'Faulty meter — replace it',
-      'The cable behaves like a capacitor; charging current flows initially and decays as the dielectric polarises. The steady-state reading after stabilisation is the true insulation resistance — let the reading settle for the manufacturer-recommended dwell time before recording',
-      'A real fault — fail the circuit immediately',
-      'Always discard the result',
+      'The cable charges like a capacitor; let it settle and record the steady-state reading',
+      'A faulty meter is giving an unstable reading and should be replaced before continuing',
+      'A real fault is developing in the cable and the circuit should be failed immediately',
+      'The reading is unreliable whenever it changes during the test and should be discarded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A cable is a long capacitor with the conductor as one plate, the insulation as the dielectric, and earth (or the other conductor) as the other plate. When you apply DC, an initial charging current flows and the resistance reading appears low; as the dielectric polarises, the current decays and the reading rises to its steady-state value. Wait for the reading to stabilise — typical dwell time is the duration the meter applies the test voltage automatically.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'A low insulation resistance is measured on a circuit that has heaters and SPDs connected. Before condemning the cable, what is the procedural sequence per Reg 643.3.3?',
     options: [
-      'Just condemn the cable',
-      'Apply Table 64 voltage with equipment disconnected as Reg 643.3.2 implies. Then, after connection, apply 250 V DC and verify ≥ 1 MΩ between live conductors and protective conductor as required by Reg 643.3.3',
-      'Apply 1000 V DC',
-      'Skip the test',
+      'Condemn the cable straight away, since the low reading proves the insulation has failed',
+      'Re-apply the test at 1000 V DC, the higher voltage giving a more reliable insulation figure',
+      'Skip the insulation test on this circuit because the connected SPDs make it unreliable',
+      'Test the cable alone at Table 64 voltage, then 250 V DC ≥ 1 MΩ with equipment reconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.3.2 reads the Table 64 test as performed with all final circuits connected but with current-using equipment disconnected. Reg 643.3.3 then specifies that AFTER connection of equipment likely to influence or be damaged by the test, a 250 V DC test between live conductors and the protective conductor is applied, with a minimum 1 MΩ acceptance. The two-step approach — full Table 64 voltage on the cable alone, then 250 V DC with equipment back in — is what the A4 redraft codifies.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'A circuit reads infinite (open) on the insulation resistance test. What does this MEAN for that circuit, and is it the result you want?',
     options: [
-      'It is a fail — re-test',
-      "Infinite (or 'beyond range', typically > 999 MΩ on a digital tester) is the IDEAL result — the insulation is so good that no measurable leakage current flows at the test voltage. Record the upper-range value the meter displays (e.g. > 999 MΩ) and proceed",
-      'It means the cable is broken',
-      'It means a faulty meter',
+      'It is a fail and the circuit should be re-tested, because no genuine reading was obtained',
+      'It means the cable conductor is broken (an open circuit) somewhere along its length',
+      'It is the ideal result — no measurable leakage; record the meter ceiling (e.g. > 999 MΩ)',
+      'It indicates a faulty meter that has lost its connection to the circuit under test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Infinite is the goal. A perfect insulator allows zero leakage current at any DC voltage, which the meter reports as 'beyond range' or '> 999 MΩ'. Record the upper-range value on the schedule (most testers will store this as a numeric ceiling). The test is asking the question 'how good is the insulation?'; an off-the-scale-good answer is exactly what compliant cable should deliver.",
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'You test a cable circuit and get 5 MΩ at 500 V DC. The reading is above the 1 MΩ Table 64 minimum, so you record it as a pass. Two weeks later the cable develops a phase-to-earth fault. What does the reading have told you that you missed?',
     options: [
-      'Nothing — the reading was a pass',
-      "5 MΩ is above the absolute minimum but is significantly degraded compared to a healthy cable (which would read tens to hundreds of MΩ). A reading near the lower end of acceptable is a deteriorated insulation that has limited service life — investigate the cause (moisture ingress, surface contamination, thermal damage) rather than simply ticking the 'pass' box",
-      'The meter was wrong',
-      'You should have used 1000 V DC',
+      '5 MΩ passes the floor but is far below a healthy cable — deteriorating insulation to investigate',
+      'Nothing — the reading was a clear pass against the Table 64 minimum and gave no useful warning',
+      'The meter was reading wrongly, and a correctly calibrated instrument would have shown a fault',
+      'You should have tested at 1000 V DC, which would have revealed the impending phase-to-earth fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GN3 Ch 2 frames Table 64 minimums as the FLOOR, not a target. A healthy thermoplastic insulated cable in dry conditions typically reads in the hundreds of MΩ range. 5 MΩ is technically a pass but is symptomatically poor — the cable is on a degradation curve. A pass without context is a record-and-forget; a pass with context flags the circuit for monitoring or remediation.',
   },

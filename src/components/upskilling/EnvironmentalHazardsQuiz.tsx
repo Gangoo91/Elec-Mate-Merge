@@ -15,14 +15,14 @@ const EnvironmentalHazardsQuiz = () => {
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "What's a key hazard when testing near a leaking ceiling?",
+      question: "What's the key hazard when testing near a leaking ceiling?",
       options: [
-        'Poor lighting reduces visibility',
-        'Moisture significantly increases shock risk and could damage test equipment',
-        'Ceiling tiles might fall',
-        'The noise from dripping water',
+        'Moisture sharply increases shock risk and can damage test equipment',
+        'The reduced lighting makes the work harder to see',
+        'Ceiling tiles overhead might come loose and fall',
+        'The sound of dripping water is distracting',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Moisture significantly increases shock risk and could cause serious damage to sensitive test equipment, making it the primary safety concern.',
     },
@@ -43,38 +43,43 @@ const EnvironmentalHazardsQuiz = () => {
     {
       id: 3,
       question:
-        'You should proceed with testing even if access is poor, as long as the distribution board is properly isolated.',
-      options: ['True', 'False'],
+        'How should poor access to a distribution board be handled before testing, even when it is properly isolated?',
+      options: [
+        'Proceed regardless, since isolation removes all the risk',
+        'Address the access problem, as it adds risk and hinders emergencies',
+        'Proceed only if you are working alone on site',
+        'Proceed but work twice as fast to limit exposure',
+      ],
       correctAnswer: 1,
       explanation:
-        'False - Poor access creates additional safety risks and can compromise both the quality of testing and emergency response procedures.',
+        'Poor access creates additional safety risks and can compromise both the quality of testing and emergency response, so it should be resolved first.',
     },
     {
       id: 4,
       question: 'How can you effectively reduce trip hazards when conducting electrical testing?',
       options: [
-        'Work as quickly as possible',
-        'Keep all leads properly organised, use cable protectors, and implement appropriate floor signage',
-        'Only test during quiet periods',
-        'Use shorter test leads only',
+        'Work as quickly as possible to clear up sooner',
+        'Restrict testing to quiet periods only',
+        'Organise leads neatly, use cable protectors and floor signage',
+        'Use only the shortest available test leads',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
-        'Keeping all leads properly organised and positioned, using cable protectors where necessary, and implementing appropriate floor signage to warn others are the most effective measures.',
+        'Keeping leads tidy and routed safely, using cable protectors, and warning others with floor signage are the most effective ways to control trip hazards.',
     },
     {
       id: 5,
       question:
         'What should you do before starting testing work in an unfamiliar commercial or industrial site?',
       options: [
+        'Request and take part in a full site walkthrough or local induction',
         'Start testing immediately if you have the right equipment',
-        'Request and participate in a comprehensive site walkthrough or formal local induction',
-        'Only check the distribution board location',
-        'Ask for the building plans',
+        'Just confirm where the distribution board is located',
+        'Simply ask for a copy of the building plans',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'You should request and participate in a comprehensive site walkthrough or formal local induction to identify hazards and understand site-specific procedures.',
+        'A comprehensive site walkthrough or formal local induction lets you identify hazards and understand site-specific procedures before any work begins.',
     },
   ];
 

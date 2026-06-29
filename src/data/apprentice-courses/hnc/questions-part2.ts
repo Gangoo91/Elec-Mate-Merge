@@ -387,9 +387,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 147,
     question: "What does Kirchhoff's Voltage Law (KVL) state?",
     options: [
-      'It causes terminal voltage to drop under load',
-      'The load receives reduced voltage (1/sqrt(3) of intended)',
-      'To carry unbalanced current and provide the return path for single-phase loads',
+      'The sum of currents at a junction equals zero',
+      'Voltage is directly proportional to the current squared',
+      'The total resistance equals the sum of branch resistances',
       'The algebraic sum of voltages around any closed loop equals zero',
     ],
     correctAnswer: 3,
@@ -440,10 +440,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 150,
     question: "In applying Kirchhoff's Laws, what is a node?",
     options: [
-      'The opposition to AC current flow by a capacitor',
-      'f = 1/(2 x pi x sqrt(L x C))',
+      'A single component connected between two terminals',
+      'A closed conducting loop with no branches',
       'A point where two or more branches meet',
-      'The speed of the rotating magnetic field',
+      'The path of lowest resistance through a network',
     ],
     correctAnswer: 2,
     explanation:
@@ -457,9 +457,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 151,
     question: 'What is a mesh in circuit analysis?',
     options: [
-      'The order in which the phases reach their maximum values',
-      'Open circuit the load terminals and measure voltage',
-      'No, because all three line currents must be equal',
+      'Any point where three or more branches meet',
+      'A loop containing at least one other loop within it',
+      'The set of all parallel branches between two nodes',
       'A closed loop that contains no other closed loops within it',
     ],
     correctAnswer: 3,
@@ -509,10 +509,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 154,
     question: 'What is the superposition theorem used for?',
     options: [
-      'The order in which the phases reach their maximum values',
-      'To run at exactly synchronous speed with the supply frequency',
+      'Combining all resistances into a single equivalent value',
+      'Finding the maximum power a source can deliver to a load',
       'Analysing circuits with multiple sources by considering one source at a time',
-      'The difference between synchronous speed and actual rotor speed',
+      'Replacing a network with one voltage source and one series resistance',
     ],
     correctAnswer: 2,
     explanation:
@@ -544,9 +544,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: "What is Thevenin's theorem used to determine?",
     options: [
       'The equivalent circuit seen by a load as a voltage source in series with a resistance',
-      'To allow current flow in the rotor by relative motion between field and rotor',
-      'The algebraic sum of voltages around any closed loop equals zero',
-      'A current-carrying conductor in a magnetic field experiences a force',
+      'The equivalent circuit seen by a load as a current source in parallel with a resistance',
+      'The frequency at which inductive and capacitive reactance are equal',
+      'The load resistance at which maximum power is transferred from the source',
     ],
     correctAnswer: 0,
     explanation:
@@ -594,14 +594,14 @@ export const questionsPart2: HNCQuestion[] = [
     id: 159,
     question: 'How is Thevenin resistance calculated?',
     options: [
-      'Analysing circuits with multiple sources by considering one source at a time',
-      'The difference between synchronous speed and actual rotor speed',
-      'The equivalent circuit seen by a load as a voltage source in series with a resistance',
+      'Divide the open-circuit voltage by the short-circuit current at the terminals',
+      'Add together all the resistances in the original circuit',
+      'Measure the resistance across the load while it is still connected',
       'Deactivate all independent sources and find resistance looking into the terminals',
     ],
     correctAnswer: 3,
     explanation:
-      'R_th is found by deactivating all independent sources (voltage sources shorted, current sources opened) and calculating resistance seen looking into the terminals.',
+      'R_th is found by deactivating all independent sources (voltage sources shorted, current sources opened) and calculating resistance seen looking into the terminals. It can equivalently be found as open-circuit voltage divided by short-circuit current.',
     section: "Kirchhoff's Laws",
     difficulty: 'advanced',
     topic: "Thevenin's Theorem",
@@ -821,9 +821,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is impedance?',
     options: [
       'The total opposition to AC current flow combining resistance and reactance',
-      'To reduce lagging reactive current and improve power factor',
-      'When inductive reactance equals capacitive reactance',
-      'A device that allows current in one direction only (when forward biased)',
+      'The opposition to current flow offered by resistance alone',
+      'The opposition to AC current flow offered by reactance alone',
+      'The ratio of true power to apparent power in an AC circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -890,9 +890,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is resonance in an AC circuit?',
     options: [
       'When inductive reactance equals capacitive reactance',
-      'Using laminated cores with insulation between laminations',
-      'A closed loop that contains no other closed loops within it',
-      'It determines the direction of motor rotation',
+      'When resistance equals the total reactance of the circuit',
+      'When the supply frequency falls to zero',
+      'When the power factor of the circuit is zero',
     ],
     correctAnswer: 0,
     explanation:
@@ -906,10 +906,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 177,
     question: 'What is the resonant frequency formula for an LC circuit?',
     options: [
-      'Replaced with a short circuit',
+      'f = 2 x pi x sqrt(L x C)',
       'f = 1/(2 x pi x sqrt(L x C))',
-      'The reciprocal of resistance',
-      'Base, collector, emitter',
+      'f = 1/(2 x pi x L x C)',
+      'f = sqrt(L x C) / (2 x pi)',
     ],
     correctAnswer: 1,
     explanation:
@@ -940,9 +940,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 179,
     question: 'What is the Q factor of a resonant circuit?',
     options: [
-      'Replaced with a short circuit',
-      'To reduce starting current and starting torque',
-      'The opposition to AC current flow by a capacitor',
+      'A measure of the total power dissipated at resonance',
+      'A measure of the phase angle between voltage and current',
+      'A measure of the bandwidth over which the circuit conducts',
       'A measure of the sharpness of resonance',
     ],
     correctAnswer: 3,
@@ -1008,9 +1008,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 183,
     question: 'What is reactive power?',
     options: [
-      'The speed of the rotating magnetic field',
-      'A current-carrying conductor in a magnetic field experiences a force',
-      'The algebraic sum of voltages around any closed loop equals zero',
+      'The actual power converted into heat or useful work',
+      'The total power that appears to flow in the circuit',
+      'The product of true power and the power factor',
       'Power exchanged between source and reactive components',
     ],
     correctAnswer: 3,
@@ -1187,10 +1187,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 193,
     question: 'What is the total power in a balanced three-phase system?',
     options: [
-      'Power control and switching in AC circuits',
+      'P = V_L x I_L x cos(phi)',
       'P = sqrt(3) x V_L x I_L x cos(phi)',
-      'The reciprocal of resistance',
-      'A point where two or more branches meet',
+      'P = 3 x V_L x I_L x cos(phi)',
+      'P = V_L x I_L x sin(phi)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1221,9 +1221,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 195,
     question: 'What is the purpose of the neutral conductor in a three-phase system?',
     options: [
-      'Circulating currents induced in the solid core material',
-      'It continues to run but may overheat, or fails to start if stationary',
-      'The difference between synchronous speed and actual rotor speed',
+      'To carry the full line current of all three phases combined',
+      'To provide the protective earthing connection for the installation',
+      'To increase the voltage available to three-phase loads',
       'To carry unbalanced current and provide the return path for single-phase loads',
     ],
     correctAnswer: 3,
@@ -1255,10 +1255,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 197,
     question: 'What happens if a star-connected motor loses one phase?',
     options: [
-      'The order in which the phases reach their maximum values',
+      'It speeds up to compensate for the lost phase',
       'It continues to run but may overheat, or fails to start if stationary',
-      'Deactivate all independent sources and find resistance looking into the terminals',
-      'To allow current flow in the rotor by relative motion between field and rotor',
+      'It stops instantly with no risk of damage to the windings',
+      'It reverses its direction of rotation',
     ],
     correctAnswer: 1,
     explanation:
@@ -1272,10 +1272,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 198,
     question: 'What is phase sequence in a three-phase system?',
     options: [
-      'The product of RMS voltage and RMS current',
-      'A current source in parallel with a resistance',
+      'The phase angle of 120 degrees between adjacent phases',
+      'The ratio of line voltage to phase voltage in a star system',
       'The order in which the phases reach their maximum values',
-      'No, because all three line currents must be equal',
+      'The total number of conductors in the supply system',
     ],
     correctAnswer: 2,
     explanation:
@@ -1324,10 +1324,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 201,
     question: 'What is the advantage of three-phase power over single-phase?',
     options: [
-      'To run at exactly synchronous speed with the supply frequency',
+      'It eliminates the need for any neutral or earth conductor',
       'Constant power delivery and more efficient power transmission',
-      'It causes terminal voltage to drop under load',
-      'Power exchanged between source and reactive components',
+      'It allows higher voltages to be used without insulation',
+      'It removes the need for power factor correction entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -1378,9 +1378,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is the purpose of power factor correction capacitors in a three-phase system?',
     options: [
       'To reduce lagging reactive current and improve power factor',
-      'A device that allows current in one direction only (when forward biased)',
-      'Circulating currents induced in the solid core material',
-      'Voltage induced in the armature that opposes the supply voltage',
+      'To increase the true power consumed by inductive loads',
+      'To raise the supply voltage delivered to the load',
+      'To provide short-circuit protection for the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -1400,9 +1400,9 @@ export const questionsPart2: HNCQuestion[] = [
       '51.0 kVAr',
       '34.6 kVAr',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Q1 = P x tan(arccos(0.7)) = 50 x 1.02 = 51.0 kVAr. Q2 = P x tan(arccos(0.95)) = 50 x 0.329 = 16.4 kVAr. Q_cap = Q1 - Q2 = 34.6 kVAr (closest is 35.7 kVAr accounting for rounding).',
+      'Q1 = P x tan(arccos(0.7)) = 50 x 1.02 = 51.0 kVAr. Q2 = P x tan(arccos(0.95)) = 50 x 0.329 = 16.4 kVAr. Q_cap = Q1 - Q2 = 51.0 - 16.4 = 34.6 kVAr.',
     section: 'Three-Phase Systems',
     difficulty: 'advanced',
     topic: 'Power Factor Correction',
@@ -1448,9 +1448,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is the effect of connecting a delta load to a star supply incorrectly?',
     options: [
       'The load receives reduced voltage (1/sqrt(3) of intended)',
-      'The sum of currents entering a node equals the sum leaving',
-      'DC does not produce a changing magnetic flux',
-      'It determines the direction of motor rotation',
+      'The load receives increased voltage (sqrt(3) times intended)',
+      'The load operates normally with no change in performance',
+      'The phase sequence of the supply is reversed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1609,10 +1609,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 217,
     question: 'What causes eddy current losses in a transformer core?',
     options: [
-      'A point where two or more branches meet',
+      'Resistive heating in the copper windings under load',
       'Circulating currents induced in the solid core material',
-      'The opposition to AC current flow by an inductor',
-      'When inductive reactance equals capacitive reactance',
+      'Magnetic friction as the domains in the core realign',
+      'Leakage of magnetic flux outside the transformer core',
     ],
     correctAnswer: 1,
     explanation:
@@ -1626,10 +1626,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 218,
     question: 'How are eddy current losses reduced in a transformer?',
     options: [
-      'A current-carrying conductor in a magnetic field experiences a force',
-      'The ratio of true power to apparent power',
+      'Using a solid one-piece core of high-permeability steel',
+      'Increasing the cross-sectional area of the core conductors',
       'Using laminated cores with insulation between laminations',
-      'Power exchanged between source and reactive components',
+      'Winding the primary and secondary coils closer together',
     ],
     correctAnswer: 2,
     explanation:
@@ -1678,10 +1678,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 221,
     question: 'What is an autotransformer?',
     options: [
-      'Maximum power is transferred when load resistance equals source resistance',
+      'A transformer that automatically adjusts its turns ratio under load',
       'A transformer with a single winding serving as both primary and secondary',
-      'The order in which the phases reach their maximum values',
-      'The sum of currents entering a node equals the sum leaving',
+      'A transformer with two electrically isolated secondary windings',
+      'A transformer that converts single-phase supply to three-phase',
     ],
     correctAnswer: 1,
     explanation:
@@ -1695,10 +1695,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 222,
     question: 'Why cannot a transformer operate on DC?',
     options: [
-      'Voltage leads current by 90 degrees',
-      'The opposition to AC current flow by a capacitor',
+      'DC cannot pass through the insulation between the windings',
+      'DC is blocked by the laminations in the transformer core',
       'DC does not produce a changing magnetic flux',
-      'Power control and switching in AC circuits',
+      'DC would saturate the core and reverse the turns ratio',
     ],
     correctAnswer: 2,
     explanation:
@@ -1730,9 +1730,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is voltage regulation of a transformer?',
     options: [
       'The change in secondary voltage from no-load to full-load expressed as a percentage',
-      'The direction of conventional current flow and biasing polarities are reversed',
-      'To allow current flow in the rotor by relative motion between field and rotor',
-      'Analysing circuits with multiple sources by considering one source at a time',
+      'The ratio of secondary voltage to primary voltage expressed as a percentage',
+      'The variation in output voltage caused by changes in supply frequency',
+      'The percentage of input power lost as heat in the windings and core',
     ],
     correctAnswer: 0,
     explanation:
@@ -1768,10 +1768,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 226,
     question: 'What is the principle of operation of an electric motor?',
     options: [
-      'Power exchanged between source and reactive components',
-      'The sum of currents entering a node equals the sum leaving',
+      'A changing magnetic flux induces a voltage in a stationary coil',
+      'A heated junction of two metals generates an electric current',
       'A current-carrying conductor in a magnetic field experiences a force',
-      'A transformer with a single winding serving as both primary and secondary',
+      'An electric field between two plates stores energy as charge',
     ],
     correctAnswer: 2,
     explanation:
@@ -1785,9 +1785,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 227,
     question: 'What creates the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'Constant power delivery and more efficient power transmission',
-      'To allow current flow in the rotor by relative motion between field and rotor',
-      'A device that allows current in one direction only (when forward biased)',
+      'Direct current fed to the rotor through slip rings and brushes',
+      'A permanent magnet mounted on the rotating rotor shaft',
+      'A commutator that reverses the armature current each half-cycle',
       'Three-phase currents displaced by 120 degrees in the stator windings',
     ],
     correctAnswer: 3,
@@ -1803,9 +1803,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is synchronous speed?',
     options: [
       'The speed of the rotating magnetic field',
-      'R_th = R_N and I_N = V_th/R_th',
-      'The reciprocal of resistance',
-      'Replaced with a short circuit',
+      'The actual speed at which the rotor turns under load',
+      'The speed at which the motor develops maximum torque',
+      'The difference between rotor speed and field speed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1836,10 +1836,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 230,
     question: 'What is slip in an induction motor?',
     options: [
-      'Power exchanged between source and reactive components',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'The gradual loss of speed as the motor bearings wear',
+      'The angle by which rotor current lags the stator field',
       'The difference between synchronous speed and actual rotor speed',
-      'When inductive reactance equals capacitive reactance',
+      'The reduction in torque as the supply voltage falls',
     ],
     correctAnswer: 2,
     explanation:
@@ -1872,9 +1872,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'Why is slip necessary for an induction motor to develop torque?',
     options: [
       'To allow current flow in the rotor by relative motion between field and rotor',
-      'The total opposition to AC current flow combining resistance and reactance',
-      'Deactivate all independent sources and find resistance looking into the terminals',
-      'The order in which the phases reach their maximum values',
+      'To keep the rotor speed exactly matched to the supply frequency',
+      'To reduce the starting current drawn by the motor windings',
+      'To prevent the rotor from overheating at full load',
     ],
     correctAnswer: 0,
     explanation:
@@ -1923,9 +1923,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 235,
     question: 'What is the purpose of a star-delta starter?',
     options: [
-      'Current lags voltage by an angle whose cosine is 0.8',
-      'DC does not produce a changing magnetic flux',
-      'The speed of the rotating magnetic field',
+      'To increase starting torque for heavily loaded motors',
+      'To reverse the direction of rotation on demand',
+      'To allow the motor to run above synchronous speed',
       'To reduce starting current and starting torque',
     ],
     correctAnswer: 3,
@@ -1941,9 +1941,9 @@ export const questionsPart2: HNCQuestion[] = [
     question: 'What is the function of a synchronous motor?',
     options: [
       'To run at exactly synchronous speed with the supply frequency',
-      'The opposition to AC current flow by an inductor',
-      'It causes terminal voltage to drop under load',
-      'It determines the direction of motor rotation',
+      'To run with a large slip to produce high starting torque',
+      'To convert mechanical energy into three-phase electrical power',
+      'To vary its speed continuously as the load changes',
     ],
     correctAnswer: 0,
     explanation:
@@ -1957,10 +1957,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 237,
     question: 'What is back EMF in a motor?',
     options: [
-      'The algebraic sum of voltages around any closed loop equals zero',
+      'Voltage lost across the resistance of the armature windings',
       'Voltage induced in the armature that opposes the supply voltage',
-      'Circulating currents induced in the solid core material',
-      'T = P / omega (where omega is angular velocity in rad/s)',
+      'Voltage generated in the field windings during starting',
+      'Voltage spike produced when the supply is switched off',
     ],
     correctAnswer: 1,
     explanation:
@@ -1992,9 +1992,9 @@ export const questionsPart2: HNCQuestion[] = [
     id: 239,
     question: 'What is the torque formula for a motor?',
     options: [
-      'The order in which the phases reach their maximum values',
-      'The sum of currents entering a node equals the sum leaving',
-      'A current-carrying conductor in a magnetic field experiences a force',
+      'T = P x omega (where omega is angular velocity in rad/s)',
+      'T = omega / P (where omega is angular velocity in rad/s)',
+      'T = P x I (where I is the motor line current)',
       'T = P / omega (where omega is angular velocity in rad/s)',
     ],
     correctAnswer: 3,
@@ -2047,10 +2047,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 242,
     question: 'What is a PN junction diode?',
     options: [
-      'When inductive reactance equals capacitive reactance',
-      'To allow current flow in the rotor by relative motion between field and rotor',
+      'A device that amplifies a small signal current into a larger one',
+      'A device that stores electric charge between two conducting plates',
       'A device that allows current in one direction only (when forward biased)',
-      'The equivalent circuit seen by a load as a voltage source in series with a resistance',
+      'A device that maintains a constant voltage regardless of current',
     ],
     correctAnswer: 2,
     explanation:
@@ -2115,10 +2115,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 246,
     question: 'What is the primary function of a transistor?',
     options: [
-      'The reciprocal of resistance',
-      'The opposition to AC current flow by a capacitor',
+      'To convert alternating current into direct current',
+      'To store energy in an electric or magnetic field',
       'To amplify signals or act as a switch',
-      'DC does not produce a changing magnetic flux',
+      'To maintain a fixed reference voltage in a circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2167,10 +2167,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 249,
     question: 'What is a thyristor (SCR) commonly used for?',
     options: [
-      'The opposition to AC current flow by an inductor',
+      'Small-signal voltage amplification in audio circuits',
       'Power control and switching in AC circuits',
-      'DC does not produce a changing magnetic flux',
-      'Open circuit the load terminals and measure voltage',
+      'Storing digital data in memory circuits',
+      'Generating high-frequency oscillations in radio circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2184,10 +2184,10 @@ export const questionsPart2: HNCQuestion[] = [
     id: 250,
     question: 'What is the difference between NPN and PNP transistors?',
     options: [
-      'Using laminated cores with insulation between laminations',
-      'Constant power delivery and more efficient power transmission',
+      'NPN transistors have two terminals while PNP have three',
+      'NPN are used only for switching and PNP only for amplifying',
       'The direction of conventional current flow and biasing polarities are reversed',
-      'T = P / omega (where omega is angular velocity in rad/s)',
+      'NPN are made from silicon while PNP are made from germanium',
     ],
     correctAnswer: 2,
     explanation:

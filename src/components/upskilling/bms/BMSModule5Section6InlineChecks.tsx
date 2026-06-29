@@ -17,36 +17,36 @@ export const BMSModule5Section6InlineChecks = ({
     {
       id: 'q1',
       question: 'What is the maximum recommended cable length for an RS-485 Modbus RTU segment?',
-      options: ['500m', '1200m', '2000m', '100m'],
-      correct: 1,
+      options: ['1200m', '300m', '600m', '2500m'],
+      correct: 0,
       explanation:
-        'RS-485 has a maximum recommended cable length of approximately 1200m per segment before signal loss occurs. Beyond this distance, signal quality degrades and communication becomes unreliable.',
+        'RS-485 is specified to roughly 1200m (about 4000ft) per segment at lower data rates before reflections and attenuation degrade the signal. Longer runs need repeaters or fibre to keep communication reliable.',
     },
     {
       id: 'q2',
       question: 'Why is segmentation important in large BACnet MSTP networks?',
       options: [
-        'It reduces cable costs',
-        'It reduces traffic congestion and improves reliability',
         'It eliminates the need for termination resistors',
-        'It allows unlimited device connections',
+        'It allows an unlimited number of devices per segment',
+        'It reduces traffic congestion and improves reliability',
+        'It removes the need to set unique device addresses',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Segmentation breaks large networks into smaller sections, reducing data traffic on each segment and isolating faults. This improves communication speed and system reliability.',
+        'Segmentation breaks a large network into smaller sections, reducing data traffic on each segment and isolating faults. This improves communication speed and overall system reliability.',
     },
     {
       id: 'q3',
       question: 'What is one common cause of high latency on a BMS network?',
       options: [
-        'Using shielded cables',
-        'Proper cable termination',
+        'Using correctly screened cable',
         'Too many devices on a single bus segment',
-        'Regular network maintenance',
+        'Fitting end-of-line termination resistors',
+        'Setting a higher baud rate on the segment',
       ],
-      correct: 2,
+      correct: 1,
       explanation:
-        'Having too many devices on a single bus segment creates data bottlenecks, where devices must wait their turn to communicate. This increases response times and overall system latency.',
+        'On a shared serial bus, devices must take turns to communicate. Overloading one segment with too many devices creates a polling bottleneck that increases response times and overall latency.',
     },
   ];
 

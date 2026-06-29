@@ -60,10 +60,10 @@ const Module4Section6_3 = () => {
       id: 1,
       question: 'What does insulation resistance measure?',
       options: [
-        'Estimate the order of magnitude with rounded numbers',
+        'The current drawn by the circuit under load',
         'The ability of insulation to resist current flow',
-        'No, it only proves the mechanical trip mechanism',
-        'Safety, capacity, and protection requirements',
+        'The earth fault loop impedance of the circuit',
+        'The disconnection time of the protective device',
       ],
       correctAnswer: 1,
       explanation:
@@ -71,16 +71,16 @@ const Module4Section6_3 = () => {
     },
     {
       id: 2,
-      question: 'True or False: A reading of 0.5 MΩ is acceptable for most LV circuits.',
+      question: 'Is a reading of 0.5 MΩ acceptable for most LV circuits?',
       options: [
-        'Only for lighting circuits',
-        'True',
-        'False',
-        'Only for power circuits',
+        'Yes - it is acceptable for all LV circuits',
+        'Yes - but only for lighting circuits',
+        'No - it is below the 1 MΩ minimum',
+        'Yes - but only for power circuits',
       ],
       correctAnswer: 2,
       explanation:
-        'False - BS 7671 requires a minimum of 1 MΩ for most LV circuits. A reading of 0.5 MΩ is below this minimum and unsatisfactory.',
+        'BS 7671 requires a minimum of 1 MΩ for most LV circuits. A reading of 0.5 MΩ is below this minimum and unsatisfactory.',
     },
     {
       id: 3,
@@ -126,10 +126,10 @@ const Module4Section6_3 = () => {
       id: 6,
       question: 'Why should sensitive equipment be disconnected before testing?',
       options: [
-        'Variation of wind speed with height',
-        'Plan equipment use and resolve potential conflicts',
+        'To reduce the test time required',
+        'To improve the accuracy of the earth reading',
         'To prevent damage from the high test voltage',
-        'Operating below maximum ratings to ensure reliability',
+        'To allow a lower test voltage to be used',
       ],
       correctAnswer: 2,
       explanation:
@@ -139,9 +139,9 @@ const Module4Section6_3 = () => {
       id: 7,
       question: 'What should you do if you get a reading below the minimum value?',
       options: [
-        'Current type they can safely interrupt',
-        'To prioritise audit effort on areas with greatest saving potential',
-        'Enclosure IP rating is suitable for the location and environment',
+        'Record it and energise the circuit anyway',
+        'Increase the test voltage and retest',
+        'Accept it if other circuits passed',
         'Investigate and rectify the fault before re-testing',
       ],
       correctAnswer: 3,

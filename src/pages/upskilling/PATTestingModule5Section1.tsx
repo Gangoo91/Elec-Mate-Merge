@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A green PASS label on a kettle shows only "PASS" and the tester\'s initials. Is this label compliant with IET CoP 5th Edition Chapter 16?',
     options: [
-      'Yes — pass + tester ID is the legal minimum.',
-      "No — without a test date and a retest date the label is unable to demonstrate when the test occurred or when the next is due, and the asset cannot be matched to a record. IET CoP 5th Ed. Chapter 16 names test date, retest date, asset ID and tester ID as the label's minimum useful field set.",
-      'Yes, provided the company name appears on the bottom of the label.',
-      'Only if the kettle is in a low-risk office environment.',
+      'Yes — pass plus tester ID is the recognised minimum field set.',
+      'No — it is missing the test date, retest date and asset ID the CoP expects.',
+      'Yes, provided the company name appears at the bottom of the label.',
+      'Only if the kettle is used in a low-risk office environment.',
     ],
     correctIndex: 1,
     explanation:
@@ -38,9 +38,9 @@ const inlineChecks = [
       'A handheld drill fails earth continuity. What is the correct labelling action under HSG107 / IET CoP?',
     options: [
       'Leave the previous PASS label in place and tell the user verbally not to use it.',
-      'Apply a clearly worded FAIL / DO NOT USE label, remove the item from service, and record the failure against the asset ID. The previous PASS label must be removed or covered so it cannot be acted on.',
-      'Mark the case with a marker pen and put it back on the rack.',
-      'Cut the plug off — that is the only acceptable response.',
+      'Apply a FAIL / DO NOT USE label, remove from service and record against the asset ID.',
+      'Mark the case with a marker pen and return it to the rack for the next user.',
+      'Cut the plug off and dispose of the drill — no label or record is needed.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'You are labelling a fan heater. The rating plate is on the underside of the chassis. Where should the PAT label go?',
     options: [
-      'Directly over the rating plate so it is in the same place as the original markings.',
-      'On a clean, flat, visible surface that does not obscure the rating plate, ventilation grilles, type-test marks, or the cord-grip. Typical placement is the side of the casing or on a moulded flat near the inlet.',
-      'On the flex itself, near the plug.',
-      'Inside the battery compartment.',
+      'Directly over the rating plate so it sits with the original markings.',
+      'On a clean, visible surface that does not obscure the rating plate or safety markings.',
+      'On the flex itself, near the plug, where the user looks first.',
+      'Inside the battery compartment, hidden from accidental damage.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'You are sourcing labels for a commercial kitchen catering hire fleet. What label specification is appropriate?',
     options: [
-      'Standard paper labels — they are cheaper.',
-      'Self-adhesive vinyl or polyester with a strong industrial adhesive, water and grease resistant, with permanent black-on-coloured-background printing. Tamper-evident "destructible" stock is preferable so a removed label does not transfer cleanly.',
-      'Hand-written sticky notes refreshed at each test.',
-      'Cable ties with the date written in marker.',
+      'Standard paper labels — they are cheaper and quick to apply.',
+      'Water- and grease-resistant vinyl/polyester with industrial adhesive and permanent print.',
+      'Hand-written sticky notes refreshed at each test visit.',
+      'Cable ties with the test date written on in marker pen.',
     ],
     correctIndex: 1,
     explanation:
-      'Catering kit lives in a hot, wet, greasy environment. A label that fades, peels or smudges in three months is not a record. IET CoP 5th Ed. Chapter 16 expects labels to remain legible until the next scheduled test — choose materials matched to the environment.',
+      'Catering kit lives in a hot, wet, greasy environment. A label that fades, peels or smudges in three months is not a record. Choose self-adhesive vinyl or polyester with strong industrial adhesive and permanent black-on-coloured-background print; tamper-evident "destructible" stock is preferable so a removed label does not transfer cleanly. IET CoP 5th Ed. Chapter 16 expects labels to remain legible until the next scheduled test — match the material to the environment.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'IET CoP 5th Ed. Chapter 16 lists the minimum information a PAT label should carry. Which of the following sets is correct?',
     options: [
-      'Pass/fail and tester signature only',
-      'Asset ID, test date, retest date (or "next test due") and tester identification — with pass/fail status implied by the label colour or wording',
-      'Manufacturer, model, serial number and date of manufacture',
-      'Just the next test date — everything else is in the records',
+      'Asset ID, test date, retest date and tester identification',
+      'Pass/fail status and the tester signature only, with no dates',
+      'Manufacturer, model, serial number and the date of manufacture',
+      'Just the next test date, with everything else held in the records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IET CoP 5th Ed. Chapter 16 names the four data fields that make a label useful: asset ID (so the label maps to a record), test date, retest/due date, and tester ID. Pass/fail is conveyed through the label itself (a green PASS or a red FAIL).',
   },
@@ -95,39 +95,39 @@ const quizQuestions = [
     id: 2,
     question: 'Why is a "PASS" label without a date practically meaningless?',
     options: [
-      'Because users prefer dates',
-      'Because no third party — next user, manager, HSE inspector, insurer — can tell whether the test occurred this week or three years ago, and whether the next test is overdue',
-      'Because the colour fades',
-      'It is not meaningless — pass is pass',
+      'Because the green dye in the label fades over time and becomes unreadable',
+      'Because users generally prefer to see a date printed on the label',
+      'Because no third party can tell whether the test or the next due date is current',
+      'It is not meaningless — a pass is a pass regardless of any date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The label is the visible portion of the record. Without a test date and a retest date, the label cannot answer the only question anyone needs to ask: is this item still inside its test interval. HSG107 and IET CoP 5th Ed. Chapter 16 both treat the date as load-bearing.',
+      'The label is the visible portion of the record. Without a test date and a retest date, no third party — next user, manager, HSE inspector, insurer — can tell whether the test occurred this week or three years ago, or whether the next test is overdue. The label cannot answer the only question anyone needs to ask: is this item still inside its test interval. HSG107 and IET CoP 5th Ed. Chapter 16 both treat the date as load-bearing.',
   },
   {
     id: 3,
     question:
       'A retest date on the label is best expressed as a calendar date rather than an interval. Why?',
     options: [
-      'Calendars are nicer to look at',
-      'A calendar date removes ambiguity about when the interval started — the next user does not need to know the test date and add 12 months in their head, and there is no dispute about whether "annual" means 365 days or "by the end of next calendar year"',
-      'Intervals are forbidden',
-      'It is a Companies Act requirement',
+      'A calendar date is a single source of truth; an interval needs arithmetic and invites dispute',
+      'Expressing the retest as an interval is prohibited outright by the IET Code of Practice',
+      'A calendar date is simply easier for the tester to read at a glance on the bench',
+      'It is a specific statutory requirement set out in the Companies Act',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'IET CoP 5th Ed. Chapter 16 recommends a clear "next test due" date over an interval. A specific date is a single source of truth; an interval requires arithmetic and produces disputes when the test date is itself smudged or missing.',
+      'IET CoP 5th Ed. Chapter 16 recommends a clear "next test due" date over an interval. A specific date removes ambiguity: the next user does not need to know the test date and add 12 months, and there is no dispute about whether "annual" means 365 days or "by the end of the next calendar year". An interval requires arithmetic and produces disputes when the test date is itself smudged or missing.',
   },
   {
     id: 4,
     question: 'What is the HSG107 / IET CoP expectation for a label on a failed item?',
     options: [
-      'Leave the existing PASS in place and add a verbal warning',
-      'A clearly worded FAIL or DO NOT USE label that overrides any previous PASS marking, plus removal of the item from service and a record of the failure against the asset ID',
-      'A small red dot in the corner of the existing label',
-      'No label change — failure is recorded only in the database',
+      'Leave the existing PASS in place and add a verbal warning to the user',
+      'Add a small red dot in the corner of the existing green PASS label',
+      'A clear FAIL / DO NOT USE label that overrides the PASS, plus removal and a record',
+      'No label change — the failure is recorded only in the database',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HSG107 paragraph 67 and IET CoP 5th Ed. Chapter 16 require the failure to be visible at the equipment AND recorded centrally. A previous PASS must be removed or covered so it cannot be acted on by someone unaware of the failure.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'Which of the following is the most appropriate label material for site equipment used in dusty, damp construction environments?',
     options: [
-      'Standard paper with clear tape over the top',
+      'Standard paper with clear tape applied over the top',
+      'Hand-written plastic cable tags refreshed each visit',
       'Self-adhesive vinyl or polyester with industrial adhesive, water/oil resistant, with thermally printed text',
-      'Hand-written cable-tag plastic',
-      'Anything — paper is fine for indoor temperatures',
+      'Any label stock — paper is perfectly fine across indoor and outdoor use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IET CoP 5th Ed. Chapter 16 expects labels to remain legible until the next test. On sites the failure mode for paper labels is moisture and dust within weeks. Vinyl/polyester with a thermal print stays legible across the full retest interval.',
   },
@@ -149,69 +149,69 @@ const quizQuestions = [
     id: 6,
     question: 'Where on a fan heater should the PAT label be placed?',
     options: [
-      'Over the rating plate so all data is together',
-      'On a visible, clean, flat surface that does not obscure the rating plate, ventilation grilles, type-test marks or the cord-grip',
-      'On the flex near the plug',
-      'Inside the casing',
+      'Over the rating plate so all the data sits together in one place',
+      'On a visible, clean, flat surface that does not obscure the rating plate or grilles',
+      'On the flex near the plug, where the user looks before plugging in',
+      'Inside the casing, protected from knocks and cleaning chemicals',
     ],
     correctAnswer: 1,
     explanation:
-      'The label must not cover safety information. IET CoP 5th Ed. Chapter 16: durable, visible, but never blocking ratings or type-test marks. Labelling the flex moves with cable changes and detaches the label from the asset.',
+      'The label must be durable and visible but never cover safety information — the rating plate, ventilation grilles, type-test marks or the cord-grip. IET CoP 5th Ed. Chapter 16 is firm on this. Labelling the flex is poor practice: it moves with cable changes and detaches the label from the asset.',
   },
   {
     id: 7,
     question: 'What is the purpose of the asset ID field on a PAT label?',
     options: [
-      'It is decorative',
-      'It uniquely links the physical item to a row in the asset register / test records, so the label is auditable in both directions: from item to record and from record to item',
-      'It identifies the manufacturer',
-      "It is the engineer's personal reference",
+      'It identifies the equipment manufacturer and model on the label',
+      "It serves as the testing engineer's personal reference number",
+      'It is a decorative serial number used for stock control only',
+      'It uniquely links the physical item to its row in the asset register, both ways',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Without an asset ID, a label is anonymous: you can read it but cannot find the corresponding record, and a record search cannot tell you which physical item is meant. The ID is what makes the label part of a system, not just a sticker.',
+      'The asset ID uniquely links the physical item to a row in the asset register / test records, so the label is auditable in both directions: from item to record and from record to item. Without it, a label is anonymous — you can read it but cannot find the corresponding record, and a record search cannot tell you which physical item is meant. The ID is what makes the label part of a system, not just a sticker.',
   },
   {
     id: 8,
     question:
       'A laptop charger is too small to take a standard label without obscuring its rating plate. What is the correct response?',
     options: [
-      'Put the label over the rating plate anyway',
-      'Use a smaller "mini" label that carries the asset ID and date but cross-refer to the full record for the rest, OR attach the label to a tag that travels with the item — the rating plate must remain visible',
-      'Skip the label entirely — small items are exempt',
-      'Write the asset ID on the casing in marker pen',
+      'Put the standard label over the rating plate anyway to fit it on',
+      'Use a mini-label with asset ID and retest date, full record held via the ID',
+      'Skip the label entirely — small items such as chargers are exempt',
+      'Write the asset ID directly on the casing in permanent marker pen',
     ],
     correctAnswer: 1,
     explanation:
-      'IET CoP 5th Ed. Chapter 16 acknowledges small items: the label must not cover safety markings. The accepted compromise is a shrunk-down label with at minimum asset ID + retest date, with the full record held centrally and retrievable via the ID.',
+      'IET CoP 5th Ed. Chapter 16 acknowledges small items: the label must not cover safety markings. The accepted compromise is a shrunk-down label carrying at minimum the asset ID and retest date, with the full record held centrally and retrievable via the ID. Alternatively the label can travel on a tag attached to the item, provided the rating plate stays visible.',
   },
   {
     id: 9,
     question:
       'Why is tester ID — initials, signature or a unique tester number — required on the label?',
     options: [
-      'To name and shame in the event of a fault',
-      'To create traceability: any third party can identify who carried out the test and follow up if the result is queried, the item fails in service, or the records are audited',
-      'It is optional',
-      "For the company's payroll",
+      'To apportion blame and name the tester in the event of a later fault',
+      "To feed the company's payroll and timesheet reconciliation system",
+      'It is an optional extra on the label with no real audit function',
+      'To create traceability — any third party can identify and follow up the tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Tester ID is the audit-trail field. HSG107 and IET CoP 5th Ed. Chapter 16 expect a competent person to have carried out the test; the label evidences that a specific competent person did, and links to whoever signed off on the record.',
+      'Tester ID is the audit-trail field: any third party can identify who carried out the test and follow up if the result is queried, the item fails in service, or the records are audited. HSG107 and IET CoP 5th Ed. Chapter 16 expect a competent person to have carried out the test; the label evidences that a specific competent person did, and links to whoever signed off on the record.',
   },
   {
     id: 10,
     question:
       'A label is "tamper evident" or "destructible". Why is this an advantage on hired or shared equipment?',
     options: [
-      'It looks more professional',
-      'A destructible label cannot be peeled off intact and re-applied, so a removed or interfered-with label is visibly broken — preventing a label being moved between items or re-stuck after a failure to mask the FAIL',
-      'It is cheaper to print',
-      'It complies with GDPR',
+      'It looks more professional to clients on the hire fleet',
+      'It cannot be peeled off intact and re-applied, so interference is visibly broken',
+      'It is cheaper to print than a standard vinyl PAT label',
+      'It is needed to comply with GDPR on the asset register',
     ],
     correctAnswer: 1,
     explanation:
-      'Hire fleets and shared equipment are the highest-risk environments for label fraud — moving a PASS label from a tested item to an untested one. Destructible vinyl tears on removal, making the interference visible at the next inspection.',
+      'Hire fleets and shared equipment are the highest-risk environments for label fraud — moving a PASS label from a tested item to an untested one, or re-sticking it after a failure to mask the FAIL. Destructible vinyl tears on removal, making the interference visible at the next inspection.',
   },
 ];
 

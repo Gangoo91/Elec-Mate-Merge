@@ -81,20 +81,25 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'True or False: Plastic cable clips are acceptable as the only fixing method in escape routes.',
-    options: ['True', 'False'],
+      'Are plastic cable clips acceptable as the only fixing method in escape routes?',
+    options: [
+      'Yes - plastic clips are acceptable anywhere',
+      'No - non-combustible fixings are required in escape routes',
+      'Yes - provided they are UV-stabilised',
+      'Only if the cables are run in conduit',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. BS 7671 18th Edition requires non-combustible fixings in escape routes to prevent cables falling during a fire.',
+      'BS 7671 requires non-combustible cable fixings in escape routes so that cables do not fall and obstruct egress if plastic clips melt in a fire.',
   },
   {
     id: 4,
     question: 'What is the main reason for using non-combustible fixings in escape routes?',
     options: [
       'To prevent cables falling and obstructing escape routes during a fire',
-      'It may be unclear, inconsistent, and less durable',
-      'Safety rating appropriate for the voltage and environment',
-      'Non-Violent Communication (NVC), the STATE model, and the assertiveness formula',
+      'To improve the appearance of the installation',
+      'To reduce the cost of the cable fixings',
+      'To allow cables to carry more current',
     ],
     correctAnswer: 0,
     explanation:
@@ -144,13 +149,13 @@ const quizQuestions = [
     question: 'Give one example of a fixing suitable for conduit systems.',
     options: [
       'Saddles, brackets, or conduit clips',
-      'Within 15 days of the accident',
-      'Approximately half a million or more',
-      'Iz = It / correction factors',
+      'Flat twin cable clips',
+      'Solvent-weld cement only',
+      'Adhesive pads',
     ],
     correctAnswer: 0,
     explanation:
-      'Saddles, brackets, and purpose-made conduit clips provide proper mechanical support for conduit systems.',
+      'Saddles, brackets and purpose-made conduit clips provide proper mechanical support for conduit systems.',
   },
 ];
 

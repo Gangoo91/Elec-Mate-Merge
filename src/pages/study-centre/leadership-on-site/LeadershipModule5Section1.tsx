@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'lead-plan-programme',
     question: 'What is the primary purpose of a look-ahead programme on a construction site?',
     options: [
-      'To replace the master programme entirely with a simpler version',
       'To break the master programme into manageable weekly or fortnightly chunks for day-to-day planning',
+      'To replace the master programme entirely with a simpler version',
       'To create a record of work completed for invoicing purposes only',
       'To give the project manager a document to present to the client',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The look-ahead programme breaks the master programme into manageable weekly or fortnightly chunks. It allows supervisors to plan daily activities, identify resource needs, check progress, and adjust in real time. It is the supervisor's primary planning tool for translating the overall programme into daily reality.",
   },
@@ -45,11 +45,11 @@ const quickCheckQuestions = [
     question: 'What does the OODA loop stand for?',
     options: [
       'Order, Organise, Direct, Assess',
-      'Observe, Orient, Decide, Act',
       'Outline, Operate, Deliver, Adjust',
+      'Observe, Orient, Decide, Act',
       'Oversee, Optimise, Delegate, Analyse',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The OODA loop stands for Observe, Orient, Decide, Act. Originally developed for military decision-making, it is a powerful framework for supervisors when plans go wrong. Observe the situation, orient yourself to the new reality, decide on the best response, and act quickly. Then repeat the cycle as conditions continue to change.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 1,
     question: "What is the supervisor's primary role in site planning?",
     options: [
-      'Creating the master programme from scratch',
       'Translating the programme into daily reality for their team',
+      'Creating the master programme from scratch',
       'Deciding the overall project completion date',
       'Negotiating contracts with the client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The supervisor's primary planning role is translating the master programme into daily reality — ensuring the right people are in the right place with the right materials at the right time. The master programme is created by the project manager; the supervisor makes it happen on the ground.",
   },
@@ -123,11 +123,11 @@ const quizQuestions = [
     question: "When planning resources, what does 'lead time' refer to?",
     options: [
       'The time it takes to train a new apprentice',
-      'The time between ordering materials and their delivery to site',
       'The amount of time a supervisor has been in their role',
       'The distance between the site entrance and the work area',
+      'The time between ordering materials and their delivery to site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lead time is the period between placing an order for materials and their arrival on site. Lead times vary widely: standard cable might be a few days, but switchgear or bespoke distribution boards can be 8-12 weeks or more. Supervisors must understand lead times to order materials in advance and avoid programme delays.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 5,
     question: 'The OODA loop is used by supervisors when:',
     options: [
-      'Writing a new project programme from scratch',
       'Plans go wrong and rapid adaptation is needed',
+      'Writing a new project programme from scratch',
       'Completing end-of-project documentation',
       'Conducting annual performance reviews',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The OODA loop (Observe, Orient, Decide, Act) is a decision-making framework used when plans go wrong and rapid adaptation is needed. It helps supervisors assess the new situation, understand the implications, decide on the best response, and act quickly — then repeat the cycle as conditions change.',
   },

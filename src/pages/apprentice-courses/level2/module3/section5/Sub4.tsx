@@ -45,9 +45,9 @@ const checks = [
       'You arrive at a property to swap the consumer unit. The DNO cut-out has a wire-and-lead seal across the fuse holder. The customer says "just pull the fuse, I won’t tell anyone". What do you do?',
     options: [
       'Refuse to break the seal. Phone 105 and arrange for the DNO (or a MOP under their authority) to attend and isolate the supply',
-      'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
-      'It provides a systematic method for identifying and labelling equipment, components, and signals on drawings and in the field',
-      'To be trained, equipped, and immediately available to effect rescue of any person who becomes incapacitated in the confined space',
+      'Break the seal yourself but photograph it first so you can prove you re-sealed it correctly',
+      'Pull the fuse, do the work, and fit a generic replacement seal from your van',
+      'Carry on with the consumer-unit swap live, since the cut-out cannot be safely isolated anyway',
     ],
     correctIndex: 0,
     explanation:
@@ -58,9 +58,9 @@ const checks = [
     question:
       'The Main Earthing Terminal (MET) on a typical TN-C-S installation is located:',
     options: [
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
-      'Standard or Enhanced fire-resistant cable (e.g. FP200 / Firetuf), separation from other circuits, and fire-rated supports/clips that survive collapse temperatures',
-      'A person with sufficient training, knowledge, and experience to understand the hazards and necessary precautions',
+      'At the secondary substation, where the supply earth is referenced to the star point',
+      'Inside the DNO cut-out, bolted directly to the supply fuse carrier',
+      'On the gas service incomer, within 600 mm of the meter outlet',
       'In or close to the consumer’s installation, with the earthing conductor connecting it to the supplier’s earth terminal at the cut-out',
     ],
     correctIndex: 3,
@@ -73,9 +73,9 @@ const checks = [
       'The service cable that runs from the secondary substation (or a joint box in the street) to the cut-out at the property is owned by:',
     options: [
       'The DNO (Distribution Network Operator)',
-      'Prioritise by safety risk, then operational impact',
-      'A to G (with A being most efficient)',
-      'At both the control unit and outlet',
+      'The Meter Operator (MOP)',
+      'The energy supplier',
+      'The customer',
     ],
     correctIndex: 0,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'A pole-mounted transformer (PMT) on a wooden pole in a rural area typically converts:',
     options: [
-      'The coupling between two magnetically linked coils',
-      'In the reverse order to assembly (top down)',
+      '33 kV to 11 kV three-phase',
+      '400 V three-phase to 230 V single-phase',
       '11 kV to 400 V three-phase / 230 V single-phase',
-      '0.30 - at the lower acceptable limit',
+      '132 kV to 33 kV three-phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,9 +117,9 @@ const quizQuestions = [
     question:
       'The fuse inside the DNO cut-out on a typical UK domestic property is:',
     options: [
-      'Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity',
-      'Two controllers running the same program, with automatic switchover if one fails',
-      '35°C generally for floors regularly walked on barefoot (warmer permitted in border zones)',
+      'A BS 88 industrial fuse, sealed by the customer, sized at 200 A or above',
+      'A rewireable BS 3036 fuse that the customer can replace without breaking a seal',
+      'A miniature circuit-breaker (MCB) housed in the meter, owned by the supplier',
       'A BS 1361 (or HRC) fuse, sealed by the DNO, sized at typically 60 A, 80 A or 100 A',
     ],
     correctAnswer: 3,
@@ -132,9 +132,9 @@ const quizQuestions = [
       'On a TN-C-S (PME) supply, the consumer’s earth comes from:',
     options: [
       'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
-      'Inhale sharply while covering the filters to check the mask draws inward against the face',
-      'To ensure electrical supplies match equipment needs and controls integrate',
-      'Collapse of the sides, contact with underground services, flooding, falling into the excavation, and hazardous atmospheres',
+      'A local earth electrode driven into the ground at the property',
+      'The metallic sheath of the supply cable, separate from the neutral',
+      'A connection to the metal water service pipe at the stop tap',
     ],
     correctAnswer: 0,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       'Which of the following is correctly described as part of the DNO’s assets (not the customer’s, and not the MOP’s)?',
     options: [
-      'One person should be designated as the coordinator, giving clear verbal commands',
-      'The tower loses structural rigidity and could collapse or rack (parallelogram) under load or wind',
+      'The electricity meter and the meter-side tails up to the meter',
+      'The consumer unit, the main isolator and the meter tails to the CU',
       'The cut-out, the service cable from the substation, the secondary transformer feeding the street',
-      'Apparent power (VA) is greater than true power (W) for reactive loads',
+      'The main earthing terminal (MET) and the protective bonding conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question:
       'A property has a TT supply (no DNO earth provided). What does this mean in practice for the electrician designing the installation?',
     options: [
-      'Circuit protection devices that detect dangerous electrical arcing (series and parallel arcs) in final circuits and disconnect the supply before the arc can cause a fire',
-      'Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold',
-      'It provides a loop for the feet to stand in, allowing the worker to periodically straighten their legs and restore blood circulation while awaiting rescue',
+      'No earth electrode is needed because the supply neutral provides the earth reference',
+      'A Type B MCB on every circuit is sufficient, as the soil gives a low loop impedance',
+      'The DNO will install and maintain the earth electrode as part of the service connection',
       'The customer needs to install an earth electrode (rod or mat) and the installation must use RCD protection because the loop impedance is too high to rely on overcurrent protection alone for ADS',
     ],
     correctAnswer: 3,
@@ -188,9 +188,9 @@ const quizQuestions = [
       'An electrician is asked by a customer "where exactly does my electricity start?" Most accurate electrician answer:',
     options: [
       '"At the secondary substation transformer at the end of your street, where 11 kV is converted to 400 V three-phase / 230 V single-phase, then a service cable feeds your cut-out"',
-      'They are substantially enclosed with limited access, and may contain hazardous atmospheres from decomposing material or leaked services',
-      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
-      'A fixed or portable arm-and-base system that provides an anchor point above a confined space entry, functioning similarly to a tripod but suited to spaces where a tripod cannot be positioned',
+      '"At your consumer unit, because that is the first thing the electricity reaches that you own"',
+      '"At the 400 kV power station, because that is where the electricity is actually generated"',
+      '"At the meter, because that is the point where your supply is measured and billed"',
     ],
     correctAnswer: 0,
     explanation:

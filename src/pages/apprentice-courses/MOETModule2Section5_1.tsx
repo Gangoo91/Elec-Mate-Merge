@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'copper-vs-aluminium',
     question: 'Why is copper the preferred conductor material for most electrical installations?',
     options: [
-      'Copper has lower resistivity, higher current-carrying capacity, is easier to terminate, and is more ductile',
-      'Electrical Installation Certificate or Minor Works Certificate as appropriate',
-      'Because no formal commissioning certificate had been issued, despite the system being physically operational',
-      'Optimise what is working and kill what is not &mdash; make small, strategic adjustments rather than dramatic changes',
+      'It has lower resistivity, higher current-carrying capacity and is easier to terminate',
+      'It is significantly lighter and cheaper than aluminium for the same length',
+      'Its higher resistivity usefully limits the fault current in a circuit',
+      'It needs no protective insulation around the conductor when run in conduit',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'xlpe-advantage',
     question: 'What is the main advantage of XLPE insulation over PVC for power cables?',
     options: [
-      'Own up to it, put it right properly at your own expense, document the corrective action, and treat it as CPD — what went wrong and how to stop it recurring.',
-      'The excess materials must be removed immediately and the scaffold checked for damage before resuming use',
-      'XLPE has a higher continuous operating temperature (90°C vs 70°C), allowing higher current ratings for the same conductor size',
-      'Nulled (zeroed) by short-circuiting them together and subtracting the lead resistance from subsequent readings',
+      'It is a thermoplastic that can be re-melted and re-formed during installation',
+      'It costs less than PVC and is easier to strip and terminate on site',
+      'Its higher operating temperature (90°C vs 70°C) allows higher current ratings',
+      'It emits less smoke and no toxic gas when burned in a fire',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'swa-cable',
     question: 'Steel wire armoured (SWA) cable provides:',
     options: [
-      'Fire procedures, evacuation routes, equipment use, emergency communication',
-      'Prior warnings from regulators about the risk that caused harm',
+      'Inherent fire resistance, allowing it to function during a fire',
+      'A higher operating temperature than any other cable type available',
       'Mechanical protection for the cable and can serve as the circuit protective conductor',
-      'Scope of work, exclusions, price, validity period and payment terms',
+      'Low smoke and zero halogen emission in the event of a fire',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The resistivity of copper at 20°C is approximately:',
     options: [
-      'Ipsc = U₀ ÷ (Ze + circuit impedance)',
+      '2.82 x 10^-8 ohm-metres (28.2 x 10^-9 ohm-metres)',
       '1.72 x 10^-8 ohm-metres (17.2 x 10^-9 ohm-metres)',
-      'Identify which 20% of admin tasks deliver 80% of the value',
-      'Protection against solid objects and dust',
+      '1.72 x 10^-6 ohm-metres (1.72 micro-ohm-metres)',
+      '17.2 x 10^-8 ohm-metres (172 x 10^-9 ohm-metres)',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'Aluminium conductors require special attention at terminations because:',
     options: [
-      'Thermoplastic softens when heated and can be re-shaped; thermosetting materials undergo a permanent chemical change and do not soften on re-heating',
-      'UV resistance of the sheath material — standard PVC degrades in UV light; UV-resistant compounds or additional protection may be needed',
-      'Aluminium forms a resistive oxide layer, is prone to cold-flow under pressure, and has a different thermal expansion coefficient from copper terminal components',
-      'Smoke and toxic gas emission during fire must be minimised — typically in public buildings, confined spaces and areas with high occupancy',
+      'It is too brittle to bend and snaps when formed into a terminal',
+      'It conducts heat away so quickly that solder will not adhere to it',
+      'It forms a resistive oxide layer, is prone to cold-flow and expands differently from copper',
+      'It reacts with PVC insulation and degrades it over time at the termination',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'A thermoplastic insulation material differs from a thermosetting insulation material in that:',
     options: [
-      'Aluminium forms a resistive oxide layer, is prone to cold-flow under pressure, and has a different thermal expansion coefficient from copper terminal components',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
-      'Thermoplastic softens when heated and can be re-shaped; thermosetting materials undergo a permanent chemical change and do not soften on re-heating',
+      'Thermoplastic has the higher temperature rating, so it is used on power cables',
+      'Thermoplastic is only used outdoors, whereas thermosetting is for indoor use',
+      'Thermoplastic is an inorganic mineral whereas thermosetting is a polymer',
+      'Thermoplastic softens and re-shapes when heated; thermosetting sets permanently',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'The construction of a typical twin-and-earth flat cable (6242Y) consists of:',
     options: [
       'Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
-      'A silicone rubber insulation that forms a ceramic barrier when exposed to fire, plus a mica tape wrap',
-      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
+      'Three insulated conductors (brown, blue, green-and-yellow) with no outer sheath',
+      'A single insulated conductor surrounded by steel wire armour and a PVC sheath',
+      'Two insulated conductors plus an insulated green-and-yellow CPC, with no outer sheath',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Cable current-carrying capacity is determined by:',
     options: [
-      'Thermoplastic softens when heated and can be re-shaped; thermosetting materials undergo a permanent chemical change and do not soften on re-heating',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
-      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
-      'Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath',
+      'The conductor cross-sectional area alone, with all other factors ignored',
+      'Conductor material, insulation type, install method, ambient temperature and grouping',
+      'The circuit voltage and the total length of the cable run together',
+      'The type of protective device and the prospective fault current at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'When cables are grouped together in trunking, the current-carrying capacity must be derated because:',
     options: [
-      'Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath',
-      'A silicone rubber insulation that forms a ceramic barrier when exposed to fire, plus a mica tape wrap',
+      'Grouped cables share the load current, so each carries proportionally less',
+      'The magnetic fields of adjacent cables cancel, reducing the effective current',
       'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
+      'Grouping increases the resistance of each cable, raising the volt drop',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'MICC (mineral-insulated copper-clad) cable is particularly suitable for:',
     options: [
-      'UV resistance of the sheath material — standard PVC degrades in UV light; UV-resistant compounds or additional protection may be needed',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
-      'A silicone rubber insulation that forms a ceramic barrier when exposed to fire, plus a mica tape wrap',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
+      'Low-cost domestic ring final circuits where flexibility is the priority',
+      'Buried underground supplies where corrosion resistance matters most',
+      'Damp and wet locations where the cable is permanently submerged in water',
+      'Fire-rated circuits, high-temperature areas and heavy mechanical-protection duties',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'The insulation resistance of a cable is measured:',
     options: [
-      'With an insulation resistance tester (megohmmeter) at a test voltage appropriate to the circuit voltage (typically 500 V DC for circuits up to 500 V)',
-      'Thermoplastic softens when heated and can be re-shaped; thermosetting materials undergo a permanent chemical change and do not soften on re-heating',
-      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
+      'With an insulation resistance tester applying 500 V DC for circuits up to 500 V',
+      'With a low-resistance ohmmeter applying a low DC test voltage of 4 to 24 V',
+      'With a clamp meter measuring the leakage current under normal load conditions',
+      'With an earth fault loop impedance tester applied between line and earth',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The harmonised colour code for a three-phase cable in the UK is:',
     options: [
-      'Setting the zero point above the lower range value',
+      'Red, Yellow, Blue (with black for neutral)',
       'Brown, Black, Grey (with blue for neutral)',
-      'Tighten or replace it to prevent arcing/overheating',
-      'Adjusting for ambient temperature effects',
+      'Brown, Blue, Grey (with black for neutral)',
+      'Red, Brown, Orange (with grey for neutral)',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'FP200 (fire-performance) cable achieves its fire resistance through:',
     options: [
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
-      'Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath',
+      'A thick steel wire armour layer that shields the conductors from the flames',
+      'A water-filled jacket that cools the conductors as the temperature rises',
       'A silicone rubber insulation that forms a ceramic barrier when exposed to fire, plus a mica tape wrap',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
+      'A compacted magnesium oxide powder insulation within a seamless copper sheath',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     question:
       'When selecting cable for an outdoor installation exposed to direct sunlight, you should consider:',
     options: [
-      'With an insulation resistance tester (megohmmeter) at a test voltage appropriate to the circuit voltage (typically 500 V DC for circuits up to 500 V)',
-      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
-      'UV resistance of the sheath material — standard PVC degrades in UV light; UV-resistant compounds or additional protection may be needed',
+      'The fire-resistance rating of the insulation, as sunlight raises ignition risk',
+      'The smoke and toxic gas emission of the sheath if the cable overheats outdoors',
+      'The voltage rating of the cable, as sunlight increases the supply voltage',
+      'The UV resistance of the sheath, as standard PVC degrades and cracks in sunlight',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'LSZH (Low Smoke Zero Halogen) cable is specified where:',
     options: [
-      'Smoke and toxic gas emission during fire must be minimised — typically in public buildings, confined spaces and areas with high occupancy',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
-      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
-      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
+      'Smoke and toxic gas must be minimised in public, high-occupancy or confined spaces',
+      'The cable must maintain circuit integrity and keep functioning throughout a fire',
+      'Exceptional mechanical protection is needed against impact and crushing damage',
+      'The installation is permanently submerged or buried directly in the ground',
     ],
     correctAnswer: 0,
     explanation:

@@ -23,140 +23,140 @@ const quizQuestions = [
     question:
       'You have isolated and locked-off the lighting circuit at the main DB. The same building has a 5 kWp rooftop PV array. Why does your lock-off at the main DB not, on its own, make the wiring downstream of a luminaire safe to work on?',
     options: [
-      'It does — the PV array can only feed back when the grid is present',
-      'PV inverters with G98/G99 anti-islanding will trip on grid loss, but a lighting circuit is not the only path between the PV and your work area; a borrowed neutral, a shared switch drop, or a wired-in emergency fitting can bring the PV-side voltage onto the conductors you are working on. The general principle in BS 7671 is that every supply must be isolated, not just the supply you remember',
-      'Because the lock-off is at the wrong end of the circuit',
-      'Because PV is DC, not AC',
+      'The PV is a second supply, so a borrowed neutral or shared fitting can bring its voltage onto your conductors',
+      'It does make it safe — the PV array can only ever feed back when the grid is present',
+      'The lock-off is at the wrong end of the lighting circuit, away from the PV tie-in point',
+      'PV is DC not AC, so it physically cannot energise the lighting conductors at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 7671 Reg 537.1.2 requires a durable warning notice where an installation contains live parts connected to more than one supply, and Reg 462.1 requires provisions for isolation from each supply. PV anti-islanding is a fault-protection measure, not an isolation method. You isolate at every source — array DC isolator, AC isolator at the inverter, and the consumer-unit feed — before you can rely on the lighting circuit being dead.',
+      'BS 7671 Reg 537.1.2 requires a durable warning notice where an installation contains live parts connected to more than one supply, and Reg 462.1 requires provisions for isolation from each supply. PV inverters with G98/G99 anti-islanding trip on grid loss, but anti-islanding is a fault-protection measure, not an isolation method — and the lighting circuit is not the only path between the PV and the work area. You isolate at every source — array DC isolator, AC isolator at the inverter, and the consumer-unit feed — before you can rely on the lighting circuit being dead.',
   },
   {
     id: 2,
     question:
       'On a TN-C-S (PME) installation, you have isolated and locked-off the local circuit and proven dead. While you are working, a fault develops on the supply network and the PEN conductor opens upstream. What happens at your workplace?',
     options: [
-      'Nothing — your local isolation protects you',
-      'The neutral and earth at the installation can rise to a significant fraction of phase voltage relative to true earth. Any exposed-conductive-part you are touching, including the metalwork of the enclosure you are working in, can become live with respect to ground even though your circuit is locked off',
-      'The MCB trips',
-      'The RCD trips',
+      'Nothing happens — your local isolation and lock-off fully protect you from this fault',
+      'The local MCB on the circuit you are working on trips and removes the hazard',
+      'Neutral and earth rise toward phase voltage, so bonded metalwork you touch becomes live to ground',
+      'The installation RCD detects the imbalance and trips, removing the hazard at source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PEN faults on TN-C-S systems are the canonical reason BS 7671 distinguishes "isolated from the supply" from "safe with respect to true earth". Reg 411.4.3 prohibits switching or isolating devices in a PEN conductor and the supply-side PEN remains a single point of failure. A broken supply PEN can lift the installation MET above true earth — your circuit lock-off does nothing about that, which is why touching simultaneously accessible metalwork while standing on a damp floor or holding a bonded radiator is the real risk.',
+      'PEN faults on TN-C-S systems are the canonical reason BS 7671 distinguishes "isolated from the supply" from "safe with respect to true earth". Reg 411.4.3 prohibits switching or isolating devices in a PEN conductor and the supply-side PEN remains a single point of failure. A broken supply PEN can lift the installation MET above true earth — every exposed-conductive-part bonded to it, including the metalwork of the enclosure you are working in, can become live with respect to ground even though your circuit is locked off. That is why touching simultaneously accessible metalwork while standing on a damp floor or holding a bonded radiator is the real risk.',
   },
   {
     id: 3,
     question:
       'You need to verify the protective conductor continuity on a circuit you have already disconnected and re-landed. The only instrument to hand is your insulation-resistance tester. Is this acceptable for the continuity test?',
     options: [
-      'Yes — switch it to the lowest range and read the ohms',
-      'No. The insulation-resistance tester applies 500 V DC; on a re-connected circuit that is not fully discharged or that has stray capacitance, that voltage can re-energise components, damage electronics, or cause a shock. Continuity is a low-resistance ohmmeter test (GN3 Ch 2). The two instruments do different jobs',
-      'Only if the circuit is disconnected at both ends',
-      'Yes, provided the building is unoccupied',
+      'Yes — simply switch it to the lowest resistance range and read off the ohms',
+      'Yes, provided the building is left unoccupied while the test is carried out',
+      'It is acceptable only if the circuit is disconnected at both ends beforehand',
+      'No — its 500 V DC output can damage electronics or shock you; continuity needs a low-resistance ohmmeter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'GN3 Ch 2 names a low-resistance ohmmeter for the continuity duty in Reg 643.2.1. An IR tester injects 250–1000 V DC and is the wrong tool for verifying a CPC on live-side wiring you intend to put back into service. Use the right instrument; do not improvise on the dead side.',
+      'GN3 Ch 2 names a low-resistance ohmmeter for the continuity duty in Reg 643.2.1. An insulation-resistance tester applies 250–1000 V DC; on a re-connected circuit that is not fully discharged or has stray capacitance, that voltage can re-energise components, damage electronics, or cause a shock. The two instruments do different jobs — use the right one and do not improvise on the dead side.',
   },
   {
     id: 4,
     question:
       'You are extending a circuit. The new conductors are run, terminated and locked off at the DB. The customer asks why the section of cable between the DB and the new accessory still needs an insulated barrier or screen across the open enclosure where you are working.',
     options: [
-      'It does not — the lock-off is sufficient',
-      'BS 7671 Section 416 (basic protection) requires that live parts in the rest of the board are kept inaccessible. Your lock-off applies to one circuit; the rest of the busbar, neighbouring outgoing ways and incoming tails are still live. Insulated barriers, shrouds or a screen at the boundary keep the live side basic-protected while you work on the dead side',
-      'Only if the board is metal-clad',
-      'Only if the customer is present',
+      'Basic protection (Section 416) must be kept on the rest of the live board; a screen or shroud restores it while you work the dead side',
+      'It does not need a barrier — the lock-off on the single circuit is sufficient on its own',
+      'A barrier is only required where the board is metal-clad rather than all-insulated',
+      'A barrier is only required for as long as the customer is present in the room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 416.2 requires barriers or enclosures that prevent contact with live parts. When a board is open for work, basic protection at the rest of the board has been temporarily lost — restoring it with shrouds, insulated screens or a temporary barrier is part of the work-area control, not an optional courtesy. This is what GN3 calls "protection of the live side of the boundary".',
+      'Reg 416.2 requires barriers or enclosures that prevent contact with live parts. Your lock-off applies to one circuit; the rest of the busbar, neighbouring outgoing ways and incoming tails are still live. When a board is open for work, basic protection at the rest of the board has been temporarily lost — restoring it with shrouds, insulated screens or a temporary barrier is part of the work-area control, not an optional courtesy. This is what GN3 calls "protection of the live side of the boundary".',
   },
   {
     id: 5,
     question:
       'A premises has a 22 kW EV charge point fitted as part of an earlier project. You are now isolating a final circuit elsewhere on the same DB. The EV charger has its own RCD and is fed from a dedicated way. Does the charger affect your safe-isolation procedure for the final circuit?',
     options: [
-      'No — different circuits, no interaction',
-      'Yes — although the charger does not feed back into your circuit through the DB, you should still treat the DB as a multi-source environment. EV charge points can present residual DC fault currents on their own circuit, and bonding/parallel earth paths between the charge-point CPC and the rest of the installation can carry voltage during a fault. Confirm the charger circuit is isolated too if you are working anywhere on the shared earth/bonding system',
-      'Only if the charger is rated above 32 A',
-      'Only if it is a tethered unit',
+      'No — they are different circuits, so there is no interaction to worry about',
+      'It only matters where the charge point is rated above 32 A on its own way',
+      'Yes — it shares the earth, so a parallel earth path can carry fault voltage onto your work',
+      'It only matters where the charge point is a tethered unit rather than a socket',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'EV charging circuits are an additional supply-coupled load on the installation earth. Reg 722 has specific requirements for the EV-side wiring. When isolating elsewhere on the same board, you should still ensure no parallel earth path can carry fault voltage onto the conductors you are about to touch. The general principle from Reg 537.1.2 — multiple supplies need warning and separate isolation — applies any time the installation has back-feed sources.',
+      'EV charging circuits are an additional supply-coupled load on the installation earth. Reg 722 has specific requirements for the EV-side wiring. Although the charger does not feed back into your circuit through the DB, EV charge points can present residual DC fault currents on their own circuit, and bonding/parallel earth paths between the charge-point CPC and the rest of the installation can carry voltage during a fault. When isolating elsewhere on the same board, ensure no parallel earth path can carry fault voltage onto the conductors you are about to touch. The general principle from Reg 537.1.2 — multiple supplies need warning and separate isolation — applies any time the installation has back-feed sources.',
   },
   {
     id: 6,
     question:
       'A UPS supplies a comms rack. The maintenance bypass is an external manual switch with three positions: NORMAL / BYPASS / OFF. You need to work on the rack distribution. What is the correct sequence?',
     options: [
-      'Set the switch to OFF and start work',
-      'Switch to BYPASS so the load runs from the raw mains, then isolate the UPS at its own input/output isolators, prove the rack is dead at the point of work, then lock-off the upstream circuit feeding the bypass. Two supplies, two isolations',
-      'Switch to NORMAL, then isolate upstream',
-      'Pull the UPS battery isolator only',
+      'Set the maintenance bypass switch to OFF and start work on the rack straight away',
+      'Set the switch to NORMAL first, then isolate the single upstream circuit only',
+      'Pull only the UPS battery isolator, since the battery is the sole back-up source',
+      'Switch to BYPASS, isolate the UPS input and output, prove the rack dead, then lock off the bypass feed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A UPS is, by definition, a second supply (Reg 537.1.2 territory). OFF on a maintenance bypass usually disconnects the load from both feeds, but that is the design intent — not the verification. You isolate each supply explicitly, prove dead at the point of work, and lock-off both. Trusting a single switch position on a multi-source system is the failure mode that gets people hurt.',
+      'A UPS is, by definition, a second supply (Reg 537.1.2 territory). Switching to BYPASS routes the load from raw mains and idles the inverter. OFF on a maintenance bypass usually disconnects the load from both feeds, but that is the design intent — not the verification. You isolate each supply explicitly at its own input/output isolators, prove dead at the point of work, and lock-off both. Trusting a single switch position on a multi-source system is the failure mode that gets people hurt.',
   },
   {
     id: 7,
     question:
       "You are working in an opened consumer unit. The customer's child enters the room. What does Reg 416.2 require of you in this moment, and what is the practical control?",
     options: [
-      "Nothing — the child is the customer's responsibility",
-      'Reg 416.2 requires that basic protection (preventing contact with live parts) is maintained. While the board is open, that protection is degraded. The practical controls are: a screen / barrier across the opening, a person at the boundary controlling access, or stopping work until the area can be cleared. "Carry on and hope" is not a control',
-      'Tell the child to stand back',
-      'Close the cover only when finished',
+      'Maintain basic protection (Reg 416.2): screen the opening, control access at the boundary, or stop work until the area is cleared',
+      "Nothing is required — the child's safety is solely the customer's responsibility here",
+      'Simply tell the child to stand well back and then continue working as normal',
+      'Carry on, and only close the consumer-unit cover once the work is finished',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Section 416 of BS 7671 sets the requirements for basic protection — and an open board on a live side is exactly the situation those requirements address. Work-area control during isolated working is not a soft skill; it is the live application of the standard. A screen, an authorised person at the door, or a pause in work are all valid. Continuing without one is the breach.',
+      'Reg 416.2 requires that basic protection — preventing contact with live parts — is maintained, and while the board is open that protection is degraded. Section 416 of BS 7671 is exactly the situation an open live board addresses. The practical controls are a screen or barrier across the opening, a person at the boundary controlling access, or stopping work until the area can be cleared. Work-area control during isolated working is not a soft skill; it is the live application of the standard. "Carry on and hope" is not a control.',
   },
   {
     id: 8,
     question:
       'During isolated working on a DB, you notice the PV inverter status light is green and pulsing despite the AC isolator being open. Which of the following is the correct interpretation?',
     options: [
-      'The inverter is malfunctioning',
-      "The AC isolator opens the inverter's grid connection but the DC side from the array is still live whenever there is daylight. The inverter's internal capacitors and the DC string are at potentially lethal voltages until the DC isolator at the array (or combiner) is also opened and the capacitors have discharged. A permanent warning notice at the DC-side equipment is required for exactly this reason",
-      'The AC isolator has failed',
-      'The grid is back-feeding the array',
+      'The inverter is malfunctioning and should be replaced before any further work',
+      'The AC isolator has failed and is not actually open as it appears to be',
+      'The DC side stays live in daylight and the capacitors hold charge until the DC isolator opens too',
+      'The grid is back-feeding the array through the open AC isolator somehow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PV systems are dual-supply at heart: AC from the grid and DC from the array. The DC side is energised by daylight, not by the grid. BS 7671 Section 712 and the relevant industry guidance require warning notices at DC-side equipment indicating that live parts may remain energised after isolation. Believing the AC isolator is the whole story is a common and dangerous mistake.',
+      "PV systems are dual-supply at heart: AC from the grid and DC from the array. The AC isolator opens the inverter's grid connection, but the DC string and the inverter's internal capacitors stay at potentially lethal voltages whenever there is daylight, until the DC isolator at the array or combiner is also opened and the capacitors have discharged. BS 7671 Section 712 and the relevant industry guidance require a permanent warning notice at DC-side equipment for exactly this reason. Believing the AC isolator is the whole story is a common and dangerous mistake.",
   },
   {
     id: 9,
     question:
       'You are alone on a small job. The isolation point is in a different room from the work area. What does good practice require?',
     options: [
-      'Nothing — lock-off is enough',
-      'Lock-off plus a personal padlock with the key on you, plus a visible "Do Not Switch" notice at the isolation point, plus a check that no other person could re-energise the supply during your work. If supervision is impractical, you adjust the work plan — for example, by completing the dead-side work in shorter blocks and proving dead at the point of work each time you re-engage',
-      'Lock-off and a verbal warning to the building owner',
-      'Lock-off and trust the building owner not to interfere',
+      'Nothing further — a lock-off on the isolation device is enough on its own',
+      'Lock-off plus a single verbal warning to the building owner to leave it alone',
+      'Lock-off, then trust the building owner not to interfere with the supply at all',
+      'Lock-off, key on you, a visible "Do Not Switch" notice, and access controlled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Reg 462.3 and Reg 537.2.4 both require that isolation devices are designed and installed to prevent unintentional or inadvertent closure. The behavioural complement — the key on your person, a visible notice, supervision or compensating controls — is what turns a regulation about hardware into a safe procedure on site.',
+      'Reg 462.3 and Reg 537.2.4 both require that isolation devices are designed and installed to prevent unintentional or inadvertent closure. The behavioural complement — the key on your person, a visible notice, supervision or compensating controls — is what turns a regulation about hardware into a safe procedure on site. Where supervision is impractical, adjust the work plan: complete the dead-side work in shorter blocks and prove dead at the point of work each time you re-engage.',
   },
   {
     id: 10,
     question:
       'A back-up generator is fitted to a small commercial unit with a manual changeover switch. While you are working on the lighting circuit, the customer starts the generator "to test it" without telling you. What protected against re-energisation, and what almost did not?',
     options: [
-      'The MCB protected you; nothing else',
-      'A correctly designed manual changeover should mechanically prevent both supplies being live at the same time, so the generator alone should not re-feed the lighting circuit if the changeover is in the mains-supply position. What almost did not protect you is your assumption: the changeover is the design control, but Reg 462.3 / 537.2.4 expect the changeover to be padlocked or interlocked against unwanted operation, and your lock-off should have included it. Trusting "the customer would not do that" is not a control',
-      'The generator was earthed',
-      'The lighting circuit was RCD-protected',
+      'The changeover blocks paralleling, but it was unlocked — it should have been in your lock-off',
+      'The circuit MCB protected you, and nothing else was relevant to the situation',
+      'The fact that the generator frame was earthed is what protected you here',
+      'The lighting circuit being RCD-protected is what protected you in this case',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A break-before-make manual changeover is designed to prevent paralleling. But "designed to prevent" is not the same as "physically prevented" — a worn changeover, a wrongly wired changeover, or a person operating a changeover whose position you have not verified can all break the assumption. The lock-off in a multi-supply environment is multi-point. This is exactly the situation Reg 537.1.2 is written for.',
+      'A correctly designed manual changeover should mechanically prevent both supplies being live at once, so with it in the mains-supply position the generator alone should not re-feed the lighting circuit. But "designed to prevent" is not the same as "physically prevented" — a worn changeover, a wrongly wired changeover, or a person operating a changeover whose position you have not verified can all break the assumption. Reg 462.3 / 537.2.4 expect the changeover to be padlocked or interlocked against unwanted operation, and your lock-off should have included it. The lock-off in a multi-supply environment is multi-point — exactly what Reg 537.1.2 is written for. Trusting "the customer would not do that" is not a control.',
   },
 ];
 
@@ -166,56 +166,56 @@ const inlineChecks = [
     question:
       'You open the AC isolator at a PV inverter — the inverter status lights go out. The DC isolator at the array is still closed and it is midday in July. You need to open the inverter cover. What is the actual state of the inverter, and what is the duty?',
     options: [
-      'Dead — the AC isolator removed all sources.',
-      'Live on the DC side and inside the inverter capacitors. The DC string is energised by sunlight, the inverter capacitors hold charge for the manufacturer-stated discharge time, and BS 7671 Section 712 requires a permanent warning notice at DC-side equipment for exactly this reason. Open the DC isolator at the array and wait the discharge time before opening the cover.',
-      'Dead — anti-islanding stops the array contributing.',
-      'Dead, but you should wear gloves anyway.',
+      'Live on the DC side and in the capacitors — open the DC isolator and wait the discharge time.',
+      'Dead — opening the AC isolator removed all sources from the inverter completely.',
+      'Dead — anti-islanding (G98/G99) stops the array from contributing any voltage.',
+      'Dead, although you should wear insulating gloves as a sensible precaution anyway.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'PV is dual-supply: AC from the grid via the inverter, and DC from the array. Anti-islanding (G98/G99) is fault-protection for the network, not isolation for the operative. Open both isolators, observe the manufacturer discharge time on the capacitors, then prove dead inside the inverter. Section 712 + the DC-side warning notice exist because this is the failure mode that has injured installers.',
+      'PV is dual-supply: AC from the grid via the inverter, and DC from the array energised by sunlight. The inverter capacitors hold charge for the manufacturer-stated discharge time. Anti-islanding (G98/G99) is fault-protection for the network, not isolation for the operative. Open both isolators, observe the manufacturer discharge time, then prove dead inside the inverter. BS 7671 Section 712 + the DC-side warning notice exist because this is the failure mode that has injured installers.',
   },
   {
     id: 'mod2-s5-pen-fault',
     question:
       'A TN-C-S domestic install. Your circuit is locked off and proved dead at the point of work. While you are working, an upstream PEN conductor opens on the supply network. What can happen at the property, and what Reg framing covers it?',
     options: [
-      'Nothing — your local isolation protects you.',
-      'The installation MET, all CPCs and bonded metalwork can rise to a significant fraction of phase voltage above true earth as load current tries to return through parallel earth paths. Your local lock-off does nothing about it. Reg 411.4.3 (no switching/isolating device in a PEN conductor) is why supply-side PEN cannot be locally isolated — awareness of the failure mode is the only operative-side control.',
-      'The local RCD trips and removes the hazard.',
-      'The MCB trips and removes the hazard.',
+      'Nothing happens — your local isolation and lock-off protect you.',
+      'The local RCD detects the imbalance, trips, and removes the hazard.',
+      'The MET and bonded metalwork can rise toward phase voltage above true earth, beyond your lock-off.',
+      'The local MCB trips on the resulting fault current and removes the hazard.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'PEN faults on TN-C-S are the classic reason "isolated from the supply" is not the same as "safe with respect to true earth". Reg 411.4.3 prohibits any switching or isolating device in a PEN conductor — there is no operative lock-off available on the supply-side PEN. Real-world PEN faults have lifted MET to over 200 V above true earth. Stay alert; minimise simultaneous contact with bonded metalwork.',
+      'PEN faults on TN-C-S are the classic reason "isolated from the supply" is not the same as "safe with respect to true earth". As load current tries to return through parallel earth paths, the installation MET, all CPCs and bonded metalwork can rise to a significant fraction of phase voltage above true earth, and a local lock-off does nothing about it. Reg 411.4.3 prohibits any switching or isolating device in a PEN conductor — there is no operative lock-off available on the supply-side PEN. Real-world PEN faults have lifted MET to over 200 V above true earth. Stay alert; minimise simultaneous contact with bonded metalwork.',
   },
   {
     id: 'mod2-s5-ir-on-reconnected',
     question:
       'You have re-landed the conductors at a junction box and want to verify CPC continuity before re-closing the breaker. Your only instrument is your insulation-resistance tester. What is the correct call?',
     options: [
-      'Switch it to ohms range and read the value.',
-      'Wrong instrument. The IR tester applies 250–1000 V DC and on a re-connected circuit can damage downstream electronics, energise stray capacitance or cause a shock. GN3 Ch 2 names a low-resistance ohmmeter (per Reg 643.2.1) for the continuity duty. Stop and use a multifunction tester or dedicated low-Ω ohmmeter.',
-      'Disconnect everything downstream and run the IR test on ohms.',
-      'Use a multimeter instead.',
+      'Switch the IR tester to its ohms range and read the continuity value off directly.',
+      'Disconnect everything downstream first, then run the IR tester on its ohms range.',
+      'Use a general-purpose multimeter on its resistance range for the continuity check.',
+      'Wrong instrument — use a low-resistance ohmmeter; the IR tester can damage or shock.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Continuity and insulation resistance are different tests with different instruments and different injected voltages. GN3 Ch 2 + Reg 643.2.1 specify a low-resistance ohmmeter for continuity. An IR tester injecting 500 V DC into a re-connected circuit with electronic loads on the line side is a recipe for collateral damage and an unreliable reading.',
+      'Continuity and insulation resistance are different tests with different instruments and different injected voltages. The IR tester applies 250–1000 V DC, and on a re-connected circuit that can damage downstream electronics, energise stray capacitance or cause a shock. GN3 Ch 2 + Reg 643.2.1 specify a low-resistance ohmmeter for continuity. Stop and use a multifunction tester or dedicated low-Ω ohmmeter — an IR tester injecting 500 V DC into a circuit with electronic loads on the line side is a recipe for collateral damage and an unreliable reading.',
   },
   {
     id: 'mod2-s5-open-board-basic-protection',
     question:
       'You are changing one outgoing way on a 12-way TP+N consumer unit. You have isolated and locked off your circuit. The customer’s child enters the room while the cover is off. Which BS 7671 section bites in this moment, and what are the valid controls?',
     options: [
-      'No regulation applies — the lock-off is sufficient.',
-      'Reg 416.2 (basic protection — preventing contact with live parts) bites. The cover that normally provides basic protection has been removed; the other 11 ways and the busbar are still live. Valid controls: a barrier or screen across the opening, a person at the boundary controlling access, or stopping work until the area is cleared. "Carry on and hope" is not a control.',
-      'Only Reg 462.3 — keep the lock visible.',
-      'Only the customer’s parental responsibility applies.',
+      'Reg 416.2 (basic protection) bites — screen the opening, control access, or stop work until cleared.',
+      'No regulation applies in this moment — the lock-off on your circuit is sufficient.',
+      'Only Reg 462.3 applies here — it is enough simply to keep the lock visible.',
+      'No electrical regulation applies — only the customer’s parental responsibility.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Section 416 sets the basic-protection requirements: contact with live parts must be prevented. An open enclosure on a multi-way board temporarily removes that protection on the live side. Reg 416.2 expects you to restore it — barriers, screens, controlled access, or pausing work — for the duration. Work-area control during isolated working is the live application of the standard, not a soft skill.',
+      'Section 416 sets the basic-protection requirements: contact with live parts must be prevented. The cover that normally provides basic protection has been removed; the other 11 ways and the busbar are still live. Reg 416.2 expects you to restore it — a barrier or screen across the opening, a person at the boundary controlling access, or pausing work — for the duration. Work-area control during isolated working is the live application of the standard, not a soft skill; "carry on and hope" is not a control.',
   },
 ];
 

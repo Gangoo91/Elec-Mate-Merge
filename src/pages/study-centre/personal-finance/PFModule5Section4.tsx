@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'An electrician wants to save a &pound;25,000 house deposit over 5 years. Which time horizon does this fall into?',
     options: [
-      'Short-term (0&ndash;2 years)',
       'Medium-term (2&ndash;10 years)',
+      'Short-term (0&ndash;2 years)',
       'Long-term (10+ years)',
       'It depends on the interest rate',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A 5-year savings goal falls into the medium-term category (2&ndash;10 years). Medium-term goals include saving for a house deposit, building a significant qualification fund, or saving for a new van. The timeframe affects where you save: medium-term goals suit a mix of Cash ISA (for safety) and possibly a Stocks &amp; Shares ISA (for growth, accepting some risk).',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'What is the purpose of an annual &ldquo;financial MOT&rdquo;?',
     options: [
       'To submit your tax return to HMRC',
-      'To review your financial goals, check your progress, update your insurance, and adjust your plan for the year ahead',
       'To cancel all your subscriptions',
+      'To review your financial goals, check your progress, update your insurance, and adjust your plan for the year ahead',
       'To apply for a new credit card',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An annual financial MOT is a comprehensive review of your entire financial situation. You check progress against your goals, review insurance policies, update your budget, reassess your emergency fund, check your credit file, review pension contributions, and plan for the year ahead. It takes 2&ndash;3 hours once a year and ensures you stay on track rather than drifting.',
   },
@@ -97,8 +97,8 @@ const quizQuestions = [
     id: 3,
     question:
       'A self-employed electrician earns &pound;35,000 per year. Their medium-term goal is to save a &pound;25,000 house deposit using a Lifetime ISA. If they save &pound;4,000 per year in the LISA and receive the 25% government bonus, how long will it take approximately?',
-    options: ['3 years', '5 years', '7 years', '10 years'],
-    correctAnswer: 1,
+    options: ['5 years', '3 years', '7 years', '10 years'],
+    correctAnswer: 0,
     explanation:
       'Contributing &pound;4,000 per year to a LISA gives a 25% bonus of &pound;1,000, so &pound;5,000 per year goes into the account (before interest). &pound;25,000 divided by &pound;5,000 = 5 years. With interest or investment growth on top, it could be slightly less. This is a perfect example of a SMART medium-term goal: specific (house deposit), measurable (&pound;25,000), achievable (&pound;4,000/year savings), relevant (first home), and time-bound (5 years).',
   },
@@ -107,11 +107,11 @@ const quizQuestions = [
     question: 'Which short-term financial priority should typically come first?',
     options: [
       'Saving for a holiday',
-      'Building a &pound;1,000 starter emergency fund',
       'Investing in a Stocks &amp; Shares ISA',
       'Overpaying your mortgage',
+      'Building a &pound;1,000 starter emergency fund',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A &pound;1,000 starter emergency fund should come first. Without this safety net, any unexpected expense forces you into expensive debt, which undermines all other financial goals. Once the starter emergency fund is in place, you can focus on paying off high-interest debt, building the full emergency fund, and then saving for other goals. Holidays, investing, and mortgage overpayments come later in the priority order.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Your personal financial action plan should pull together learning from which modules?',
     options: [
-      'Only Module 5 (this module)',
-      'Only Modules 1 and 2 (income and budgeting)',
       'All 5 modules of the Personal Finance course',
+      'Only Modules 1 and 2 (income and budgeting)',
+      'Only Module 5 (this module)',
       'Only the modules about tax',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Your personal financial action plan pulls together everything from all 5 modules: understanding your income and tax (Module 1), budgeting and spending (Module 2), managing debt and credit (Module 3), pensions and retirement (Module 4), and financial protection and planning (Module 5). Each module contributes a piece of the puzzle. The action plan brings them all together into a single, coherent financial strategy.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'What is the main benefit of setting SMART financial goals rather than vague intentions?',
     options: [
       'SMART goals are required by HMRC',
-      'SMART goals give you a clear, measurable target with a deadline, making it much more likely you will achieve them',
       'SMART goals earn higher interest rates',
+      'SMART goals give you a clear, measurable target with a deadline, making it much more likely you will achieve them',
       'SMART goals are only for self-employed workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Research consistently shows that specific, measurable goals with deadlines are far more likely to be achieved than vague intentions. &ldquo;I will save &pound;200 per month for 12 months&rdquo; gives you a clear target, a trackable metric, and a completion date. &ldquo;I should save more&rdquo; gives you nothing to work towards. SMART goals turn good intentions into concrete actions with accountability.',
   },

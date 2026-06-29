@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'What is the maximum spacing between emergency luminaires on an escape route (2m wide)?',
     options: [
-      'Serpentine and amphibole groups',
-      'Clamp meter to measure load current',
-      'Depends on luminaire output',
-      'Up to 1000V AC or 1500V DC',
+      'A fixed 10m for all emergency luminaires',
+      'A fixed 6m regardless of luminaire type',
+      'Depends on the luminaire output and distribution',
+      'Twice the mounting height of the luminaire',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which locations require emergency lighting to BS 5266?',
     options: [
-      'Investigate, rectify, and retest before certification',
-      'To avoid confusion and ensure each repair is verified',
-      'Continuous background fresh air when windows are closed',
+      'Only rooms with no windows or natural daylight',
+      'Only areas where flammable materials are stored',
+      'Only the main entrance and reception of a building',
       'All escape routes and specified safety features',
     ],
     correctAnswer: 3,
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'When is maintained emergency lighting required?',
     options: [
-      'Results, conditions, and observations',
-      'Where normal lighting may be dimmed or switched off',
-      'Insulated tools, gloves, mats, footwear',
-      'Circuit cannot complete and lamp will not illuminate',
+      'In any room with more than one exit door',
+      'Where normal lighting may be dimmed or switched off while occupied',
+      'Only in buildings taller than three storeys',
+      'Wherever the escape route exceeds 30 metres',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is high-risk task area emergency lighting designed for?',
     options: [
-      'Document conditions found and repairs made',
-      'Immediately upon completion of installation',
-      'Areas where sudden loss of light creates danger',
-      'Dwellings including houses, flats, and communal areas',
+      'Illuminating exit signs along the escape route',
+      'Providing light in large open areas to prevent panic',
+      'Areas where sudden loss of light creates immediate danger',
+      'Lighting the assembly point outside the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What minimum illuminance is required for high-risk task area emergency lighting?',
     options: [
-      'Meets European safety standards',
-      'To save time and maintain momentum',
-      'P = (2π × n × T) / 60 where n is RPM',
+      '1 lux on the centre line of the route',
+      '0.5 lux at floor level across the area',
+      '5% of normal illuminance, minimum 10 lux',
       '10% of normal illuminance, minimum 15 lux',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'How should emergency lighting be designed for disabled refuges?',
     options: [
-      'Low coercivity (soft magnetic material)',
-      'Higher illuminance and intercom visibility',
-      'Heavy series leakage reactance to limit weld current',
-      'Aluminium or copper bars short-circuited by end rings',
+      'At the same 0.5 lux level as open-area lighting',
+      'Adequate illuminance so communication equipment is visible',
+      'With non-maintained luminaires only',
+      'Omitted, as refuges are outside the escape route',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'What testing regime is required for emergency lighting to BS 5266?',
     options: [
-      'Self-certify notifiable electrical work',
-      'To provide a known voltage source to verify tester operation',
+      'Weekly function test, monthly full duration test',
+      'Annual function test only, with no duration test',
       'Monthly function test, annual full duration test',
-      'Heavy series leakage reactance to limit weld current',
+      'A single commissioning test, with no periodic testing',
     ],
     correctAnswer: 2,
     explanation:

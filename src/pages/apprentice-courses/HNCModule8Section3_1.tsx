@@ -69,10 +69,10 @@ const quickCheckQuestions = [
     question:
       'Under F-Gas regulations, what is the minimum charge requiring an F-Gas certificate to handle refrigerants?',
     options: [
-      'Check with joiners or plumbers',
-      'Output (V1 × I1 = V2 × I2)',
+      'Only charges above 3 kg require certification',
+      'Only charges above 5 tonnes CO2e require certification',
       'Any amount requires certification',
-      'EV chargers, solar PV, or heat pumps',
+      'Only charges above 6 kg in sealed systems require it',
     ],
     correctIndex: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary function of the condenser in a refrigeration system?',
     options: [
-      'ATEX compliant equipment and charge limits in occupied spaces',
-      'Cooling the liquid refrigerant below its saturation temperature',
+      'To compress the low-pressure vapour to high pressure',
+      'To absorb heat from the space being cooled',
       'To reject heat from the refrigerant to the surroundings',
-      'To ensure only vapour enters the compressor',
+      'To reduce the pressure of the liquid refrigerant',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which expansion device automatically adjusts to maintain constant superheat?',
     options: [
-      'Lower flammability, lower toxicity',
+      'Fixed-bore capillary tube',
       'Thermostatic expansion valve (TXV)',
-      'Sealing, lubrication, and cooling',
-      'To ensure only vapour enters the compressor',
+      'Fixed orifice (piston) device',
+      'Manual hand-operated throttle valve',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is subcooling in a refrigeration system?',
     options: [
-      'ATEX compliant equipment and charge limits in occupied spaces',
+      'Heating the vapour above its saturation temperature',
       'Cooling the liquid refrigerant below its saturation temperature',
-      'Both stay relatively constant as heat is absorbed',
-      'Precise control via BMS integration and wider operating range',
+      'Lowering the suction pressure below atmospheric pressure',
+      'Adding extra refrigerant charge to raise the head pressure',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'R290 (propane) refrigerant requires which safety classification considerations?',
     options: [
-      'Cooling the liquid refrigerant below its saturation temperature',
-      'To ensure only vapour enters the compressor',
+      'No special precautions as it is completely non-flammable',
+      'High-toxicity handling procedures and breathing apparatus',
       'ATEX compliant equipment and charge limits in occupied spaces',
-      'To reject heat from the refrigerant to the surroundings',
+      'Pressurised storage only, with no charge limit in any space',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the main advantage of an electronic expansion valve (EEV) over a TXV?',
     options: [
-      'To reject heat from the refrigerant to the surroundings',
-      'To ensure only vapour enters the compressor',
-      'Both stay relatively constant as heat is absorbed',
+      'It requires no electrical connection or control signal',
+      'It is significantly cheaper and simpler to install',
+      'It needs no superheat sensing to operate correctly',
       'Precise control via BMS integration and wider operating range',
     ],
     correctAnswer: 3,
@@ -245,10 +245,10 @@ const quizQuestions = [
     question:
       'What happens to refrigerant pressure and temperature during the evaporation process?',
     options: [
-      'To reject heat from the refrigerant to the surroundings',
+      'Both rise sharply as the refrigerant is compressed',
       'Both stay relatively constant as heat is absorbed',
-      'Precise control via BMS integration and wider operating range',
-      'To ensure only vapour enters the compressor',
+      'Pressure rises whilst temperature falls steadily',
+      'Temperature rises whilst pressure drops to near zero',
     ],
     correctAnswer: 1,
     explanation:

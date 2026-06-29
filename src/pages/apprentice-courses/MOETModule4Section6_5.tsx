@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'rca-report-audience',
     question: 'An RCA report should be written for:',
     options: [
-      '"There could be several causes, such as a loose connection or a faulty switch. I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll carry out some tests to identify the exact issue and let you know what I find."',
-      'The temperature of the cooling coil surface where air would reach saturation (100% RH) if in perfect contact',
-      'Risks arising from work that involves specific hazards such as work near high voltage power lines, in cofferdams, or involving diving',
-      'Multiple audiences — management (for decisions), technicians (for knowledge sharing), auditors (for compliance) and the CMMS (for data analysis)',
+      'The maintenance technician who carried out the investigation, and no one else',
+      'The equipment manufacturer alone, so that they can process a warranty claim',
+      'The site auditor alone, purely as a record for compliance purposes',
+      'Several audiences at once — management, technicians, auditors and the CMMS',
     ],
     correctIndex: 3,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'rca-report-structure',
     question: 'The most important section of an RCA report for driving improvement is:',
     options: [
-      'The client (often via the contract administrator) — the client must satisfy themselves the project is being managed safely',
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
-      'The recommendations and corrective/preventive actions section — because this translates the investigation findings into specific actions that prevent recurrence',
-      'Achieve appropriate resolution and accuracy for the value being measured, AND avoid false trip/damage to RCD-protected circuits',
+      'The executive summary, because managers tend to read only the first page',
+      'The problem description, because it records exactly which equipment failed',
+      'The recommendations and actions section, which turns findings into preventive actions',
+      'The appendices, because they hold all of the detailed test and instrument data',
     ],
     correctIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'rca-data-trends',
     question: 'Analysing RCA data across multiple investigations can reveal:',
     options: [
-      'Ib = P / V — power in watts, voltage in volts, current in amps. No power factor term because resistive loads have unity power factor.',
-      'The maximum airborne concentration of a hazardous substance averaged over a reference period that a worker may be exposed to',
-      '<= 80% of Table 41.3 maximum to allow for instrument uncertainty (typically +/- 30% for loop testers) and temperature rise above test temperature',
-      'Common root cause patterns, systemic weaknesses in maintenance strategy, equipment design issues, and training gaps that would not be visible from individual investigations',
+      'The exact root cause of any single future failure, predicted in advance',
+      'Which individual technician is personally responsible for the most faults',
+      'The precise replacement cost of every component installed across the site',
+      'Common patterns and systemic weaknesses invisible in single investigations',
     ],
     correctIndex: 3,
     explanation:
@@ -56,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'An RCA report should be completed:',
     options: [
-      'The specific way in which a component or system can fail to perform its required function',
-      'For every significant fault investigation, with the level of detail proportionate to the severity and complexity of the fault',
-      'When the material cannot be positively identified as non-asbestos and a presumption is not appropriate',
-      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
+      'Only for failures that result in a serious personal injury on site',
+      'For every significant fault, with detail proportionate to its severity and complexity',
+      'Only when the equipment manufacturer specifically requests one',
+      'For every fault, however trivial, all to the same level of detail',
     ],
     correctAnswer: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 2,
     question: 'The executive summary of an RCA report should include:',
     options: [
-      'A single-fitting coupler that fixes a putlog or transom to a ledger, allowing the tube to rest on the ledger rather than being fixed around it',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'A concise overview of the problem, root cause, key findings and recommended actions — typically no more than one page',
-      'Hazard identification, first aid measures, handling and storage, exposure controls, and disposal information',
+      'The full set of raw test readings and instrument calibration records',
+      'A step-by-step description of every diagnostic test that was performed',
+      'A concise one-page overview of the problem, root cause, findings and actions',
+      'A list of all personnel who attended the site while the fault was present',
     ],
     correctAnswer: 2,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 3,
     question: 'When presenting RCA findings to management, you should focus on:',
     options: [
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'A suitably qualified person who can verify the technical accuracy of the findings, the appropriateness of the recommendations, and that the report meets organisational standards',
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
+      'The detailed waveform captures and the instrument settings that were used',
+      'A full word-for-word transcript of the 5 Whys discussion with the team',
+      'Which individual was at fault and what disciplinary action they should face',
+      'Business impact, the root cause in clear terms, and costed recommended actions',
     ],
     correctAnswer: 3,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 4,
     question: 'RCA findings should be shared with the wider maintenance team because:',
     options: [
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
-      'A suitably qualified person who can verify the technical accuracy of the findings, the appropriateness of the recommendations, and that the report meets organisational standards',
+      'It builds collective knowledge, helping others diagnose similar faults faster',
+      'It allows the cost of the investigation to be charged back to the team',
+      'It satisfies a legal requirement to publish every single fault report',
+      'It removes the need for the maintenance team to attend any future training',
     ],
     correctAnswer: 0,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 5,
     question: 'A lessons learned database is valuable because it:',
     options: [
-      'Focus on the systemic factors that allowed or contributed to the error — inadequate procedures, unclear instructions, insufficient training, poor ergonomics or time pressure — rather than individual blame',
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
-      'Number of RCAs completed, percentage of actions completed on time, repeat failure rate, MTBF improvement after corrective action, and cost of failure versus cost of prevention',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
+      'It replaces the need to carry out any future fault investigations at all',
+      'It is a searchable repository of past diagnoses, solutions and preventive measures',
+      'It records which technician closed each work order the fastest',
+      'It stores the spare parts inventory together with the reorder levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 6,
     question: 'Action tracking following an RCA should include:',
     options: [
-      'Be labelled with captions explaining what the image shows, the date, location and asset reference, and placed in context within the report near the relevant text',
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
-      'The action description, responsible person, deadline, current status, evidence of completion and verification of effectiveness',
-      'A concise overview of the problem, root cause, key findings and recommended actions — typically no more than one page',
+      'Only the action description and an approximate target completion date',
+      'The names of everyone who attended the investigation review meeting',
+      'Action, owner, deadline, status, completion evidence and effectiveness check',
+      'The total cost of the failure and the related insurance claim reference',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'When documenting an RCA that identifies human error as a contributing factor, you should:',
     options: [
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'Number of RCAs completed, percentage of actions completed on time, repeat failure rate, MTBF improvement after corrective action, and cost of failure versus cost of prevention',
-      'Focus on the systemic factors that allowed or contributed to the error — inadequate procedures, unclear instructions, insufficient training, poor ergonomics or time pressure — rather than individual blame',
+      'Name the individual responsible and record a formal written warning',
+      'Omit the human factor from the report entirely to avoid embarrassment',
+      'Recommend that the individual be retrained as the sole corrective action',
+      'Focus on systemic factors — procedures, training, ergonomics — not individual blame',
     ],
     correctAnswer: 3,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 8,
     question: 'Key performance indicators (KPIs) derived from RCA data include:',
     options: [
-      'Number of RCAs completed, percentage of actions completed on time, repeat failure rate, MTBF improvement after corrective action, and cost of failure versus cost of prevention',
-      'They can be used as evidence of due diligence, demonstrate compliance with maintenance obligations, and may be disclosed in the event of regulatory investigation, legal proceedings or insurance claims',
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
+      'RCAs completed, on-time actions, repeat-failure rate, MTBF gain and prevention cost',
+      'The number of staff employed and the overall size of the maintenance budget',
+      'The age of each item of plant together with its original purchase price',
+      'The total length of cable installed across the whole of the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 9,
     question: 'Photographic evidence in an RCA report should:',
     options: [
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
-      'Be labelled with captions explaining what the image shows, the date, location and asset reference, and placed in context within the report near the relevant text',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'They can be used as evidence of due diligence, demonstrate compliance with maintenance obligations, and may be disclosed in the event of regulatory investigation, legal proceedings or insurance claims',
+      'Be stored in a separate folder with no cross-reference in the report',
+      'Be captioned with what they show plus date and asset, and placed in context',
+      'Be limited to one general photograph of the whole of the installation',
+      'Be edited to remove anything that could imply fault or apportion blame',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 10,
     question: 'An RCA report should be reviewed and approved by:',
     options: [
-      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
-      'Number of RCAs completed, percentage of actions completed on time, repeat failure rate, MTBF improvement after corrective action, and cost of failure versus cost of prevention',
-      'A suitably qualified person who can verify the technical accuracy of the findings, the appropriateness of the recommendations, and that the report meets organisational standards',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
+      'The technician who wrote it, with no further independent review needed',
+      'Any available member of staff, regardless of their relevant experience',
+      'A qualified person who verifies the findings, recommendations and standards',
+      'The equipment supplier, before the report is shared internally at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 11,
     question: 'The legal significance of RCA reports in the UK includes:',
     options: [
-      'Number of RCAs completed, percentage of actions completed on time, repeat failure rate, MTBF improvement after corrective action, and cost of failure versus cost of prevention',
-      'Be labelled with captions explaining what the image shows, the date, location and asset reference, and placed in context within the report near the relevant text',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'They can be used as evidence of due diligence, demonstrate compliance with maintenance obligations, and may be disclosed in the event of regulatory investigation, legal proceedings or insurance claims',
+      'They are legally privileged and can never be disclosed to any third party',
+      'They are required by BS 7671 for every single electrical installation',
+      'They transfer all liability for the failure across to the equipment manufacturer',
+      'They evidence due diligence and may be disclosed in investigations or claims',
     ],
     correctAnswer: 3,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 12,
     question: 'Continuous improvement through RCA requires:',
     options: [
-      'A systematic, ongoing commitment to investigating significant failures, implementing and verifying corrective actions, sharing lessons learned, and using aggregate data to improve maintenance strategy',
-      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
-      'Be labelled with captions explaining what the image shows, the date, location and asset reference, and placed in context within the report near the relevant text',
-      'The business impact (safety risk, downtime cost, production loss), the root cause in clear language, and the recommended actions with their costs and benefits',
+      'An ongoing cycle of investigating, acting, verifying and sharing across failures',
+      'A single comprehensive investigation carried out just once each year',
+      'Investigating only those failures that cause the very longest downtime',
+      'Producing as many RCA reports as possible regardless of their outcome',
     ],
     correctAnswer: 0,
     explanation:

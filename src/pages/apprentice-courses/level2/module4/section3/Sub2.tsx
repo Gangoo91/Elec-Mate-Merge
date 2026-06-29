@@ -40,10 +40,10 @@ const checks = [
     question:
       'A drawing shows socket centres at 450 mm. The screed is not in yet. What height do you mark from?',
     options: [
-      'Customer premises equipment converting optical to electrical signals in PON',
-      'Check the toaster for a series arc fault (loose terminal, broken element strand) using IR test on the appliance lead and visual inspection',
+      'From the bare concrete slab you are standing on — it is the only fixed surface available.',
+      'From the underside of the joists overhead, measuring downwards by tape.',
       'From the FFL (floor finish level) — the top of the finished floor as it will be when the customer walks in.',
-      'Because self-employed income is more variable and they have no sick pay or redundancy protection',
+      'From the skirting board line, since sockets traditionally sit just above the skirting.',
     ],
     correctIndex: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'Approved Document M (accessibility) typically requires socket centres in new dwellings to be set at:',
     options: [
-      'High circuit impedance that may affect device operation',
-      'Set artificial earlier deadlines to increase efficiency',
+      'At a fixed 150 mm above FFL, the traditional "skirting plus 50 mm" height.',
+      'At 300 mm above FFL throughout, to clear most skirting boards.',
       'Between 450 mm and 1200 mm above FFL — the "reach range".',
-      'To prevent electric shock and equipment damage',
+      'At 1000 mm above FFL, level with the standard 1 m datum line.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'A datum line is best described as:',
     options: [
-      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
-      'To physically prevent the switching device from being operated and ensure it cannot be inadvertently re-energised',
-      'That the route is clear of obstructions, well lit, and fire doors are operational',
+      'The line on the floor marking where the consumer unit tails enter the building.',
+      'The horizontal centre line of the consumer unit, used to align the meter tails.',
+      'The maximum height to which any accessory may be mounted in a habitable room.',
       'A reference line on the wall at a known height (typically 1 m above FFL) from which other heights are measured.',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'Why mark with chinagraph (wax pencil) on concrete or block, rather than a regular HB pencil?',
     options: [
-      'A purpose-formulated cable-pulling lubricant — wax-free for plastic conduit (some lubes attack PVC), and PVC-compatible. Polywater is a common brand.',
-      'HB pencil leaves a graphite line that washes away with water-based marking and barely shows on rough textured surfaces; chinagraph is wax-bound and stays visible on dust, oil and rough mineral surfaces.',
-      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
-      'Below-minimum or above-maximum values indicate a fault that prevents the protective measure from operating as designed — risking shock, fire, or equipment damage',
+      'Chinagraph leaves a finer, more precise line than HB pencil, which matters for accurate setting out.',
+      'HB pencil leaves a graphite line that barely shows on rough textured surfaces, whereas chinagraph is wax-bound and stays visible on dust, oil and rough mineral surfaces.',
+      'HB pencil is conductive and could leave a graphite trace that compromises insulation resistance.',
+      'Chinagraph is the only marking medium permitted by BS 7671 for setting out on masonry.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'Tolerances on accessory positioning. The drawing says 450 mm centres. Acceptable tolerance for first fix:',
     options: [
-      'Continuously throughout the task, and whenever conditions change or something does not seem right',
-      'Heat mapping and aggregated counting without personal identification',
+      '±50 mm typically; first-fix positions are rough and adjusted again at second fix.',
+      '±1 mm typically; setting out must be exact or the faceplate will not cover the box.',
       '±10 mm typically; tighter for visible runs of accessories where misalignment shows.',
-      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\'s pre-arcing I²t',
+      'No tolerance applies — every centre must land exactly on the dimensioned figure.',
     ],
     correctAnswer: 2,
     explanation:
@@ -184,9 +184,9 @@ const quizQuestions = [
       'You need to mark out a vertical line for a switch drop on a stud wall. The wall has a slight bow in it. Best tool:',
     options: [
       'Plumb bob (gravity-true vertical) or a self-levelling laser plumb.',
-      'Understanding normal operation and basic troubleshooting',
-      'Verifying correct pull-in and drop-out operation',
-      'Measure end-to-end resistance of each conductor (L, N, E)',
+      'A 600 mm spirit level held flat against the wall surface and drawn down.',
+      'A chalk line snapped vertically between floor and ceiling.',
+      'A tape measure run from the nearest corner to keep the line parallel to the wall.',
     ],
     correctAnswer: 0,
     explanation:

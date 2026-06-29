@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'class-b-liquids',
     question: 'Which class of fire involves flammable liquids?',
     options: [
-      'Class A — ordinary combustibles',
       'Class B — flammable liquids',
+      'Class A — ordinary combustibles',
       'Class C — flammable gases',
       'Class F — cooking oils and fats',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Class B fires involve flammable liquids and liquefiable solids such as petrol, diesel, solvents, paints, and oils. They are extinguished by smothering the fire to cut off the oxygen supply, typically using foam or CO2 extinguishers. Class F is a separate category specifically for cooking oils and fats, which burn at much higher temperatures and require wet chemical extinguishers.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following materials would be classified as a Class A fire?',
     options: [
-      'Burning petrol spill on a workshop floor',
       'Timber framing and cardboard packaging on a construction site',
+      'Burning petrol spill on a workshop floor',
       'A ruptured propane cylinder venting and burning',
       'A deep fat fryer with ignited cooking oil',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Class A fires involve ordinary combustible solid materials that leave an ash residue when burnt — wood, paper, textiles, cardboard, rubber, and many plastics. Timber framing and cardboard packaging are typical Class A fuels found on construction sites. Petrol is Class B (flammable liquid), propane is Class C (flammable gas), and cooking oil is Class F.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
       'What is the PRIMARY danger of using water to extinguish a fire involving live electrical equipment?',
     options: [
       'Water damages expensive electrical components',
-      'Water conducts electricity, creating a serious electrocution risk for the user',
       'Water causes electrical equipment to explode',
+      'Water conducts electricity, creating a serious electrocution risk for the user',
       'Water makes the electrical fire burn more intensely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Water is an electrical conductor. Directing a water jet at energised electrical equipment creates a conductive path between the live equipment and the person holding the extinguisher, resulting in a potentially fatal electric shock. This is why CO2 and dry powder extinguishers — both non-conductive — are specified for use on electrical fires. The first action should always be to isolate the electrical supply if it is safe to do so.',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
     question: 'What does the term "flash point" mean in the context of flammable liquids?',
     options: [
       'The temperature at which a liquid spontaneously ignites without a spark',
-      'The lowest temperature at which a liquid produces enough vapour to ignite briefly when an ignition source is applied',
       'The maximum temperature a liquid can reach before it evaporates completely',
       'The temperature at which a liquid changes from a solid to a liquid state',
+      'The lowest temperature at which a liquid produces enough vapour to ignite briefly when an ignition source is applied',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The flash point is the lowest temperature at which a flammable liquid produces sufficient vapour above its surface to form an ignitable mixture with air. When an external ignition source is applied at or above the flash point, the vapour will ignite briefly. This is different from the auto-ignition temperature, which is the temperature at which the substance ignites spontaneously without any external ignition source.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'You discover a fire involving a leaking acetylene cylinder on site. What should you do FIRST?',
     options: [
+      'Evacuate the area, call the fire service, and attempt to isolate the gas supply only if safe to do so',
       'Extinguish the flame with a dry powder extinguisher',
       'Apply water to cool the cylinder',
-      'Evacuate the area, call the fire service, and attempt to isolate the gas supply only if safe to do so',
       'Smother the fire with a fire blanket',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Acetylene is a Class C flammable gas. The critical principle for gas fires is that you should NOT extinguish the flame unless the gas supply can be isolated first. If the flame is extinguished while gas continues to leak, the unburned gas will accumulate and could cause a catastrophic explosion when it encounters an ignition source. Evacuate the area, call 999, and only attempt to shut off the gas supply if it is safe to do so. Let the fire service handle the situation if the supply cannot be safely isolated.',
   },
@@ -165,8 +165,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which fire class was added to the BS EN 2 standard in 2005 to cover cooking oils and fats?',
-    options: ['Class D', 'Class E', 'Class F', 'Class G'],
-    correctAnswer: 2,
+    options: ['Class D', 'Class F', 'Class E', 'Class G'],
+    correctAnswer: 1,
     explanation:
       'Class F was added to BS EN 2 in 2005 specifically to address fires involving cooking oils and fats. These fires were previously grouped with Class B flammable liquids, but cooking oils behave very differently — they burn at much higher temperatures (above 340 degrees C) and react violently with water. The introduction of Class F recognised the need for specialist wet chemical extinguishers that use saponification to safely suppress these fires.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'What is the correct procedure when you discover a fire involving energised electrical equipment?',
     options: [
       'Immediately apply foam to smother the fire',
-      'De-energise the equipment if safe, then treat the fire according to its underlying fuel class; if unable to isolate, use CO2 or dry powder',
       'Apply water from a safe distance of at least 3 metres',
+      'De-energise the equipment if safe, then treat the fire according to its underlying fuel class; if unable to isolate, use CO2 or dry powder',
       'Leave the fire to burn and wait for the fire service — electrical fires cannot be fought',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The correct procedure for electrical fires is: first, de-energise the equipment if it is safe to do so (isolate at the distribution board or consumer unit). Once de-energised, the fire is reclassified according to the fuel that is burning — usually Class A (cable insulation, plastic housings) or Class B (transformer oil). If the equipment cannot be isolated and remains live, use only non-conductive extinguishing agents: CO2 (black label) or dry powder (blue label). NEVER use water or foam on live electrical equipment.',
   },
@@ -191,10 +191,10 @@ const quizQuestions = [
     options: [
       'Oxidation — it adds oxygen to cool the fire',
       'Emulsification — it mixes water into the oil to dilute it',
-      'Saponification — it reacts with the oil to form a soap-like seal over the surface',
       'Sublimation — it converts the oil directly from liquid to gas',
+      'Saponification — it reacts with the oil to form a soap-like seal over the surface',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Wet chemical extinguishers contain a solution of potassium acetate (or potassium citrate/potassium carbonate). When this solution is applied as a fine mist onto burning cooking oil, it reacts with the fatty acids in the oil through a process called saponification — literally "soap making". This reaction produces a thick, soap-like layer that seals the surface of the oil, cutting off the oxygen supply and preventing the release of flammable vapour. The fine mist application also gently cools the oil without causing the violent steam explosion that a water jet would produce.',
   },

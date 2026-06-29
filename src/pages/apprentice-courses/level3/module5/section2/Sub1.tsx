@@ -67,11 +67,11 @@ const checks = [
     question: 'On the Schedule of Inspections, the standard recording symbols are:',
     options: [
       'The employer or another responsible person (with wider routes including prescribed persons such as the HSE or ICO if conditions are met)',
-      'Tick (acceptable), cross (not acceptable), N/A (not applicable), LIM (limitation), with comments mandatory wherever a cross or LIM is recorded.',
       'The line conductor of one end of the ring and the neutral conductor of the other end (and vice versa)',
+      'Tick (acceptable), cross (not acceptable), N/A (not applicable), LIM (limitation), with comments mandatory wherever a cross or LIM is recorded.',
       'Prize winnings are completely tax-free, unlike savings interest which is taxable above the Personal Savings Allowance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The Appendix 6 Schedule of Inspections uses tick / cross / N/A / LIM. A cross or LIM without a comment is incomplete and unauditable. N/A means the item cannot apply (e.g. SPD section on an installation with no SPD). A blank entry means the item was not assessed — which is itself a problem on a verification document.',
   },
@@ -84,7 +84,7 @@ const quizQuestions = [
     options: [
       'Direct conversation with the individual, then their supervisor, then site manager, then formal written complaint, then contractual dispute mechanism (adjudication)',
       'Non-compliant — for 25 mm² PME tails the minimum main earthing conductor is 16 mm² (Table 54.7), so this is a visible verification failure to record on the schedule and remedy before energising.',
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
+      '"I\'ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
       'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
     ],
     correctAnswer: 1,
@@ -122,7 +122,7 @@ const quizQuestions = [
     question: "The Schedule of Inspections section header 'Methods of protection against electric shock' would include items such as:",
     options: [
       'SELV / PELV barriers, basic protection (insulation, barriers, enclosures, obstacles, placing out of reach), fault protection (ADS via overcurrent device or RCD, double or reinforced insulation, electrical separation, earth-free local equipotential bonding), additional protection (RCD ≤ 30 mA, supplementary equipotential bonding).',
-      'At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a clear, justifiable reason for the retention period.',
+      'At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there\'s a clear, justifiable reason for the retention period.',
       'Within 15 days of the incident — Reg 4(2). The over-7-day injury is one where the worker is incapacitated for more than 7 consecutive days (excluding the day of the accident) and unable to perform their normal duties. The day-of-incident counting trips firms up — the count starts the day AFTER.',
       'Describe: "The last three invoices were paid 30+ days late." Express: "I value our relationship, but late payment creates cash flow difficulties." Specify: "I need invoices paid within 14-day terms." Consequences: "This allows me to continue prioritising your work"',
     ],
@@ -147,7 +147,7 @@ const quizQuestions = [
     id: 6,
     question: 'A4:2026 changes affecting visual inspection include:',
     options: [
-      'Display the certificate where employees can readily see it, or make an electronic copy accessible to employees. The Employers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' Liability (Compulsory Insurance) Regulations 1998 require display and reasonable access. Records of all certificates from the previous 40 years must be retained.',
+      'Display the certificate where employees can readily see it, or make an electronic copy accessible to employees. The Employers\' Liability (Compulsory Insurance) Regulations 1998 require display and reasonable access. Records of all certificates from the previous 40 years must be retained.',
       'Terminating into spring-cage or screw-cage terminals to prevent strand separation, ensure all strands make contact, and provide a reliable, repeatable connection',
       'Updated Schedule of Inspections columns to reflect new requirements, AFDD presence to be checked where Reg 421.1.7 recommends them (HRRBs require under Building Safety Act 2022), and SPD presence/type checked per Section 443.',
       'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'During visual inspection of a TT installation, the earth electrode is buried with no inspection pit and no test link at the MET. The correct response is:',
     options: [
       'Record as a non-compliance — Reg 542.4 requires the means to disconnect the earthing conductor for testing (test link), and accessibility for inspection of the earth electrode is required for periodic verification of Ra. Recommend installation of a test link and an inspection pit/marker.',
-      'Although the PD\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.',
+      'Although the PD\'s primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.',
       'Approved Electrician is a competence grade — the JIB grade above Electrician, awarded after AM2 plus experience and CPD. Mentor is a role — an experienced electrician (usually Approved or above) who is formally allocated to support a specific apprentice through portfolio, on-site learning and the AM2. The same person is often both.',
-      'G98 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Connect and Notify\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' applies because the inverter output is up to and including 16 A per phase. The MCS installer notifies the DNO within 28 days of commissioning using the standard G98 notification form. No prior DNO approval is required for G98 connections — the installer connects, then notifies. The DNO is required to update its network records and confirm receipt.',
+      'G98 \'Connect and Notify\' applies because the inverter output is up to and including 16 A per phase. The MCS installer notifies the DNO within 28 days of commissioning using the standard G98 notification form. No prior DNO approval is required for G98 connections — the installer connects, then notifies. The DNO is required to update its network records and confirm receipt.',
     ],
     correctAnswer: 0,
     explanation:

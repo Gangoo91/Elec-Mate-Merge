@@ -12,88 +12,113 @@ export const SmartHomeModule4Section1Quiz = () => {
     {
       question: 'What is a smart thermostat?',
       options: [
-        'A traditional wall thermostat',
-        'An electronic device that allows app/voice/web-based temperature control',
-        'A heating element for radiators',
-        'A temperature sensor only',
+        'An electronic device allowing app, voice or web-based temperature control',
+        'A traditional mechanical wall thermostat',
+        'A heating element fitted inside a radiator',
+        'A temperature sensor with no control function',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'A smart thermostat adds connectivity so heating can be controlled and scheduled remotely via an app, voice assistant or web.',
     },
     {
       question: 'Give one example of a smart thermostat brand.',
       options: ['British Gas', 'Worcester Bosch', 'Nest', 'Vaillant'],
       correct: 2,
+      explanation:
+        'Google Nest is a well-known smart thermostat brand; the others listed are primarily energy suppliers or boiler manufacturers.',
     },
     {
       question: 'How does a smart thermostat differ from a traditional thermostat?',
       options: [
-        "It's larger in size",
-        'It only works with gas boilers',
         'It offers remote access and advanced features',
-        "It's more expensive to run",
+        'It is simply larger in physical size',
+        'It only works with gas boilers',
+        'It is more expensive to run day to day',
       ],
-      correct: 2,
+      correct: 0,
+      explanation:
+        'The key difference is connectivity — remote access, scheduling, learning and integration — rather than size or running cost.',
     },
     {
       question: 'What is room zoning?',
       options: [
-        'Dividing a property into independent heating zones',
-        'Installing multiple boilers',
-        'Using different fuel types',
+        'Installing multiple separate boilers',
+        'Dividing a property into independently heated zones',
+        'Using several different heating fuels',
         'Setting the same temperature everywhere',
       ],
-      correct: 0,
+      correct: 1,
+      explanation:
+        'Zoning lets different areas be heated to different temperatures or schedules, improving comfort and cutting wasted energy.',
     },
     {
-      question: 'Name one method of zoning using radiators.',
+      question: 'Name one method of zoning a radiator heating system.',
       options: [
-        'Motorised dampers',
+        'Motorised air dampers',
+        'Central distribution manifolds',
         'Smart TRVs (Thermostatic Radiator Valves)',
-        'Central manifolds',
-        'Wireless sensors only',
+        'Wireless sensors used on their own',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Smart TRVs control each radiator individually, allowing room-by-room zoning without major pipework changes.',
     },
     {
       question: 'Name one method of zoning used in underfloor heating.',
-      options: ['Smart TRVs', 'Radiator valves', 'Manifold zoning with actuators', 'Duct dampers'],
-      correct: 2,
+      options: ['Smart TRVs', 'Radiator valves', 'Ductwork dampers', 'Manifold zoning with actuators'],
+      correct: 3,
+      explanation:
+        'Underfloor heating is zoned at the manifold, where actuators open and close the flow to each loop under thermostat control.',
     },
     {
       question: 'What is geofencing in smart heating?',
       options: [
-        'Installing fences around heating equipment',
-        'Automatic control based on occupant location',
-        'Setting temperature boundaries',
-        'Wireless signal range limitation',
+        'Installing fences around the heating equipment',
+        'Automatic heating control based on occupant location',
+        'Setting maximum temperature boundaries',
+        'Limiting the wireless signal range',
       ],
       correct: 1,
+      explanation:
+        'Geofencing uses the location of occupants’ phones to turn heating down when everyone leaves and back up as they return.',
     },
     {
       question: 'Give one limitation of zoning systems.',
       options: [
-        'They always save money',
-        'Retrofit can be disruptive',
-        'They work with all heating systems',
-        'They never need maintenance',
+        'Retrofitting them can be disruptive',
+        'They always guarantee cost savings',
+        'They work with every heating system',
+        'They never require any maintenance',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Adding zoning to an existing property can mean significant pipework or wiring changes, making retrofit disruptive and costly.',
     },
     {
-      question: 'True or False: Smart thermostats cannot integrate with voice assistants.',
-      options: ['True', 'False'],
-      correct: 1,
+      question: 'Can smart thermostats integrate with voice assistants?',
+      options: [
+        'No — they cannot connect to voice assistants at all',
+        'No — voice control is blocked for safety reasons',
+        'Yes — but only with a paid yearly subscription',
+        'Yes — most work with assistants like Alexa and Google Assistant',
+      ],
+      correct: 3,
+      explanation:
+        'Most modern smart thermostats integrate with Alexa and Google Assistant, allowing hands-free temperature control.',
     },
     {
       question:
         'A homeowner wants to reduce heating costs but still keep bedrooms warm at night. What zoning approach would you recommend?',
       options: [
         'Heat the whole house at night',
-        'Use smart TRVs to heat only bedrooms at night while reducing other zones',
         'Turn off all heating at night',
-        'Install multiple boilers',
+        'Use smart TRVs to heat only the bedrooms while turning down other zones',
+        'Install multiple separate boilers',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Smart TRVs let only the bedrooms be heated overnight while other zones are turned down, saving energy without sacrificing comfort.',
     },
   ];
 

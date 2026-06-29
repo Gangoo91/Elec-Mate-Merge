@@ -46,42 +46,42 @@ const checks = [
     question:
       "BS 7671 643 sets out the test sequence for an EICR. For fault diagnosis the same sequence applies — what's the order and why?",
     options: [
-      "Six tests in order: (1) continuity of protective conductors (R1+R2 and earth), (2) continuity of ring final conductors, (3) insulation resistance (IR), (4) polarity, (5) earth fault loop impedance (EFLI), (6) operation of RCDs. Order matters because each test assumes the previous tests passed — IR can damage electronics if polarity is wrong; EFLI assumes IR is good (otherwise the test current goes through the fault); RCD assumes EFLI is healthy. Tests 1–4 are dead tests; tests 5–6 are live. The dead-then-live order keeps you safe and gives clean diagnostic data.",
-      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
-      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
-      "A digital, accurate, accessible, secure information set covering the design, construction and ongoing management of an HRRB. Held by the Accountable Person during occupation. Includes design drawings, specifications, materials and product information, fire-safety strategy, evacuation arrangements, and changes through the building's life. Provides traceability of who designed/installed/changed what — including the electrical installation.",
+      "Continuity (protective conductors then ring final), insulation resistance, polarity, EFLI, then RCD operation — dead tests first, live tests last.",
+      "Live tests first (EFLI and RCD) while the circuit is still energised, then the dead tests (continuity and IR) once it is isolated, to save an isolation step.",
+      "RCD operation first, then insulation resistance, then continuity, then EFLI, so the most safety-critical device is always tested before anything else on the board.",
+      "Order is irrelevant — each test is independent, so the EICR runs in whatever sequence suits the layout of the board.",
     ],
     correctIndex: 0,
     explanation:
-      "The BS 7671 643 sequence is the gold standard. For fault diagnosis you might focus on a subset (e.g. just IR + EFLI on the affected circuit) but the underlying logic is the same — verify cleanliness, then verify continuity, then verify protection. The MFT (Megger MFT1741+, Kewtech KT64+, Fluke 1664FC) is designed around this sequence with a dedicated function knob position for each test.",
+      "Each test assumes the previous one passed, so the sequence runs continuity, IR, polarity, EFLI then RCD — verify cleanliness, then continuity, then protection. Tests 1–4 are dead and 5–6 are live, so dead-then-live keeps you safe and gives clean diagnostic data. For fault diagnosis you might focus on a subset (e.g. just IR + EFLI on the affected circuit) but the logic is identical. The MFT (Megger MFT1741+, Kewtech KT64+, Fluke 1664FC) has a dedicated function knob position for each test.",
   },
   {
     id: 'mod4-s2-sub4-ir-voltage',
     question:
       "What test voltage do you use for insulation resistance and why does it matter for fault diagnosis on circuits with electronics?",
     options: [
-      "Make suitable arrangements for managing the project (resources, time, competent appointments), provide pre-construction information to designers and contractors, ensure the principal designer and principal contractor (where required) are appointed, and co-operate with all duty-holders. The client duties are real and enforceable — the HSE has prosecuted clients (including domestic clients in some cases) for failing to make those arrangements.",
-      "BS 7671 643.3 specifies 500 V DC for SELV/PELV at 250 V; 500 V DC for LV up to 500 V; 1000 V DC for LV &gt;500 V. BUT — modern installations have electronic devices (LED drivers, dimmers, AFDDs, RCBOs with electronic detection, surge protection devices, smart meters) that 500 V will damage. Standard L3 practice: disconnect or shunt-out electronic devices before IR test, OR test at 250 V (lower, less damaging) and apply manufacturer's compliance criterion. Megger MFT1741+ supports 250 V / 500 V / 1000 V. The risk of damage is high; the cost of a customer-replaced LED driver wall is real.",
-      "Site rules, welfare arrangements, fire muster point, first-aid arrangements, accident and near-miss reporting routes, the Construction Phase Plan headlines, the specific hazards on this site, the PPE policy, the no-go areas, your duties as a worker under Reg 15, and any project-specific risks (asbestos survey results, live services, traffic management). The induction is the formal mechanism for transferring CDM information from the Principal Contractor to operatives joining the site.",
-      "ASHP source is outdoor air, which in the UK varies from -10°C in cold spells to 25°C+ in summer. The cold-day source temperature drops the COP because the unit has a bigger temperature lift to make. GSHP source is the ground at 1-2 m depth (horizontal slinky) or at 50-150 m depth (borehole), which sits at a stable 8-12°C year-round. So GSHP doesn't suffer the cold-day SCOP penalty — typical SCOP 4.0-5.0 vs ASHP 2.8-3.8. The trade-off is GSHP capital cost (£20-35k vs £10-15k for ASHP) and constructability (boreholes / trenching).",
+      "Always test at 1000 V DC regardless of circuit type, because a higher test voltage gives a clearer pass/fail and electronics are immune to DC stress.",
+      "500 V DC for LV up to 500 V — but on circuits carrying electronics, disconnect or shunt them first, or drop to 250 V.",
+      "Use an AC test voltage of 230 V matching the supply, because testing at the working voltage avoids damaging any connected electronics.",
+      "The test voltage is fixed automatically by the MFT and cannot be changed, so there is no decision to make about electronics on the circuit.",
     ],
     correctIndex: 1,
     explanation:
-      "IR testing at 500 V on a circuit with embedded electronics is the most damage-prone test in the MFT's repertoire. BS 7671 643.3 lets you adapt the test voltage; GN3 (Guidance Note 3) gives the practical guidance on disconnection vs shunting. The L3 expectation is that you check for electronic loads BEFORE pressing the IR test button.",
+      "BS 7671 643.3 gives 500 V DC for LV up to 500 V (250 V for SELV/PELV, 1000 V for >500 V). Modern circuits carry electronics (LED drivers, dimmers, AFDDs, SPDs, smart meters) that a 500 V pulse can damage silently — IR is the most damage-prone test in the MFT's repertoire. GN3 gives the practical guidance on disconnection vs shunting. The L3 expectation is that you check for electronic loads BEFORE pressing the IR test button. The MFT supports all three voltage ranges.",
   },
   {
     id: 'mod4-s2-sub4-eflivalues',
     question:
       "What are typical EFLI (earth fault loop impedance) values you'd expect on different circuit types in a healthy installation?",
     options: [
-      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
-      "Three points. (1) WHAT'S INCLUDED — make-good (no holes, no exposed cable, accessories refitted) is part of the work. Basic patching of small areas (if your firm includes this) is part of the quote. Full restoration (re-plaster / re-tile / re-paint) is separate. (2) WHAT'S NOT INCLUDED — be explicit about what the customer will need a separate trade for. (3) WHO TO USE — recommend a plasterer / decorator / tiler if the customer needs one (referrals are good business). The brief upfront prevents the post-work dispute about 'why isn't the wall finished?'.",
-      "Retention is the percentage of contract value (typically 3-5%) that the main contractor (or client) holds back from payments until the end of the contract — released in two halves: 50% at practical completion, 50% after the defects liability period (typically 12 months). It's an industry-standard mechanism for the customer's protection against post-completion defects but it ties up significant cash for the sub-contractor.",
-      "Domestic single-phase 230 V: Ze (origin) typically 0.35–0.65 Ω on TN-C-S, 0.5–1.0 Ω on TN-S, 1–10+ Ω on TT. Zs (final circuit) = Ze + R1+R2 + cable loop impedance. For a typical 32 A B6 RCBO ring final with 50 m of 2.5 mm² T+E: Zs typically 0.6–1.2 Ω. For a 6 A B6 lighting circuit with 30 m of 1.0 mm² T+E: Zs typically 1.0–1.8 Ω. BS 7671 Appendix 3 / Table 41.3 sets the maximum Zs for each protective device — typically 1.4 Ω for B16 RCBO at 230 V (for 0.4s disconnection). Readings above the table value indicate poor cable, poor termination, or supply-side problems.",
+      "Every healthy final circuit reads a Zs of exactly 0 Ω, so any reading above zero indicates a fault on the circuit being tested.",
+      "A healthy domestic circuit reads a Zs of around 50–200 Ω, with lighting circuits at the higher end because they are run in thinner cable.",
+      "Zs is identical on every circuit in a property because it depends only on the supply origin Ze, not on the length of the cable run to the test point.",
+      "Around 0.6–1.2 Ω on a 32 A ring final and 1.0–1.8 Ω on a 6 A lighting circuit, each well within the Table 41.3 maximum for its device.",
     ],
     correctIndex: 3,
     explanation:
-      "EFLI readings are the headline diagnostic for circuit health. A reading wildly different from the calculated expected value (Ze + R1+R2 + cable loop) suggests either supply-side issue (high Ze) or circuit fault (loose termination, broken CPC, partial open). The BS 7671 Appendix 3 maximum values are pass/fail thresholds; the diagnostic is the trend.",
+      "Zs = Ze + R1+R2. Ze at the origin is typically 0.35–0.65 Ω on TN-C-S, 0.5–1.0 Ω on TN-S, 1–10+ Ω on TT. A 32 A ring final reads ~0.6–1.2 Ω, a 6 A lighting circuit ~1.0–1.8 Ω; Table 41.3 sets the maximum per device. A reading wildly different from the calculated expected value suggests a supply-side issue (high Ze) or a circuit fault (loose termination, broken CPC, partial open). The Appendix 3 maximum values are pass/fail thresholds; the diagnostic is the trend.",
   },
 ];
 
@@ -90,105 +90,105 @@ const quizQuestions = [
     id: 1,
     question: "What's an R1+R2 test and how is it different from a simple continuity test?",
     options: [
-      "It tells you that 60% of the copper mass in the conductor came from recycled (post-consumer or post-industrial) copper feedstock rather than primary mined copper. Recycled copper carries roughly 15-20% of the embodied carbon of primary copper because the energy-intensive smelting from ore is avoided. What it does not tell you is the recycled content of the insulation polymer, the bedding, the sheath, the steel armour or the drum packaging. A complete environmental picture needs the full EPD, not just one headline number.",
-      "R1+R2 is the resistance from the line conductor at the origin (R1) plus the resistance of the protective conductor back to the origin (R2) — measured by linking L and CPC at the far end of the circuit and reading from the DB end. Gives you the loop resistance for use in calculating Zs (Zs = Ze + R1+R2). Simple continuity is just R2 — CPC continuity from the DB to a single point. R1+R2 is the more useful measurement for fault diagnosis because it characterises the whole circuit; simple continuity confirms a single-point connection.",
-      "Mat 01 (Environmental impact of materials) awards points for using construction products with verified third-party EPDs because they enable life-cycle assessment of the building materials and so reward designers for choosing lower-impact options. On a target BREEAM rating (typically Very Good or Excellent on commercial UK projects) the Mat 01 credit can be the difference between achieving the rating and missing it. That feeds back into the cable spec — the specifier asks for EPD-backed cable from the wholesaler, the wholesaler asks the manufacturer, the manufacturer publishes EPDs to stay on tender lists. The market signal is real.",
-      "Explain clearly that refrigerant work is restricted by law to F-Gas-certified persons under the F-Gas Regulation. If the unit feels less effective they should call the original installer or an F-Gas certified service company who will leak-test and re-charge as needed. Topping up a refrigerant circuit DIY is illegal, dangerous (some refrigerants are A2L mildly flammable and R-290 is A3 flammable), and would void the warranty. The cost of professional service is small relative to the cost of an uncovered failure.",
+      "R1+R2 is the resistance of the line conductor alone, measured between its two ends; it has nothing to do with the protective conductor and is not used in Zs calculations.",
+      "Line resistance plus CPC resistance, measured by linking L and CPC at the far end — it gives the whole-circuit loop, whereas simple continuity is just R2 to a single point.",
+      "R1+R2 is a live test injecting current at 230 V, whereas simple continuity is a dead test — that injection voltage is the only difference between the two methods.",
+      "R1+R2 and simple continuity are the same measurement under two names, both reading CPC resistance from the board to one accessory's earth terminal.",
     ],
     correctAnswer: 1,
     explanation:
-      "R1+R2 is the standard L3 test method for circuit continuity in BS 7671 643.2. Linking L and CPC at the furthest point, measuring at the DB. The MFT (Megger MFT1741+) has a dedicated continuity function with null-leads compensation. Typical reading on a healthy domestic ring: R1+R2 = 0.3–0.7 Ω; R1+rn = 0.2–0.5 Ω (line + neutral, ring closed).",
+      "R1+R2 links L and CPC at the furthest point and reads at the DB, giving the loop resistance for Zs (Zs = Ze + R1+R2) and characterising the whole circuit; simple continuity reads R2 only to a single point. It is the standard L3 continuity method in BS 7671 643.2. The MFT (Megger MFT1741+) has a dedicated continuity function with null-leads compensation. Typical healthy domestic ring: R1+R2 = 0.3–0.7 Ω; R1+rn = 0.2–0.5 Ω (line + neutral, ring closed).",
   },
   {
     id: 2,
     question: "How do you test ring final continuity to verify the ring is actually a ring (not a broken-into-radial)?",
     options: [
-      "Isolate AC and DC sides, lock-off, prove dead. Disconnect strings panel by panel. Remove panels using safe roof-access procedures. Recover the panels for recycling — established PV recycling streams in the UK take aluminium frames, glass, copper wiring and silicon cells separately. Inverter and any battery component handled as WEEE (electronics) and hazardous waste (battery) respectively. Roof penetrations made good. Update the EIC to reflect the removal. The MCS-certified installer (or successor) typically arranges the decommissioning chain through authorised waste carriers.",
-      "Because it covers the whole work activity (not just the install), it covers operation, use AND maintenance, AND it covers work NEAR a system as well as on it. So it's the legal hook for safe-isolation procedures, lock-off, voltage-proving, and the way you organise the work around live equipment that you're not directly working on. Reg 4(3) is what the HSE charges most often after an electrical incident.",
-      "Three-step BS 7671 643.2.2 test. (1) Measure end-to-end resistance of L (r1), N (rn), CPC (r2) — disconnect at the DB. (2) Cross-connect L1 of one leg to N2 of the other leg, and N1 of one leg to L2 of the other leg, at the DB. (3) Measure resistance L–N at every socket on the ring — readings should all be within 0.05 Ω of each other (the geometric average of the ring) for a healthy ring. A socket showing wildly different reading is on a spur or the ring is broken at that point. The test physically confirms the ring topology, not just continuity.",
-      "Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries",
+      "Measure CPC continuity from the board to one socket only; if it reads under 1 Ω the ring is confirmed as a complete ring.",
+      "Insulation-resistance test the ring at 500 V; a reading above 1 MΩ proves the ring is continuous and not broken into a radial.",
+      "The three-step 643.2.2 cross-connection test, with L–N at every socket reading within 0.05 Ω — confirming topology, not just continuity.",
+      "Energise the ring and clamp the load current at each socket; equal currents at every socket prove the ring is intact and unbroken.",
     ],
     correctAnswer: 2,
     explanation:
-      "The cross-connection technique creates a parallel circuit that allows the engineer to measure at each socket and confirm the ring is closed. A broken ring shows up as one or more sockets with much higher resistance (because they're now on the dead-end side of a break). Standard L3 fault-diagnosis test for ring problems.",
+      "The three-step 643.2.2 test: measure end-to-end r1, rn and r2 with the legs disconnected; cross-connect L1↔N2 and N1↔L2 at the DB; then measure L–N at every socket. Readings within 0.05 Ω confirm a healthy ring; an outlier is on a spur or marks a break. The cross-connection creates a parallel circuit so a broken ring shows up as one or more sockets with much higher resistance (now on the dead-end side of a break). It is the standard L3 fault-diagnosis test for ring problems.",
   },
   {
     id: 3,
     question: "What's the IR test telling you and what readings indicate a problem?",
     options: [
-      "(1) Supply cable — full length for cuts, abrasion, kinks, exposed conductor; (2) Plug — body intact, pins straight, cord-grip in place; (3) Tool casing — cracks, missing screws, contamination ingress; (4) Guard or shield — present, correctly fitted, not damaged; (5) Switch — operates positively, no stuck contacts, anti-restart works after release; (6) PAT label — current, in date, legible. Plus check the tool is the right one for the job.",
-      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
-      "All charge points sold for use in domestic and workplace settings in Great Britain must be 'smart' — capable of being scheduled, default off-peak charging hours pre-set, randomised delay function (to avoid grid spikes when half a million chargers turn on at midnight), data privacy / cybersecurity baseline, and a 'safety provision' that disconnects on certain fault detections. Compliance is a condition of sale; the installer should fit a unit that the manufacturer has self-certified as Regulations-compliant. The apprentice does not need to verify each technical clause but should recognise that any new domestic install is using a smart-compliant unit.",
-      "IR (insulation resistance) measures the resistance between live conductors and earth, AND between live conductors themselves, with the circuit dead. BS 7671 643.3 limit: ≥ 1 MΩ for LV circuits up to 500 V (test at 500 V DC); ≥ 0.5 MΩ for SELV/PELV (test at 250 V DC). BUT — modern installations should typically read 100+ MΩ on healthy circuits; a reading of 1–5 MΩ even though it 'passes' the threshold suggests degradation worth investigating. A reading of 0.1–0.9 MΩ is below threshold and indicates real insulation breakdown — wet cable, damaged sheath, contaminated terminal.",
+      "IR measures the loop impedance from line to earth at the test point, confirming the protective device disconnects within the required time.",
+      "IR measures the resistance of the protective conductor from the board to each accessory, confirming the CPC is continuous along the circuit.",
+      "IR measures the current that flows when a deliberate earth fault is applied, confirming the RCD trips within 300 ms of the fault.",
+      "IR measures resistance between live conductors and earth, and between live conductors, with the circuit dead — a real breakdown reads well below the limit.",
     ],
     correctAnswer: 3,
     explanation:
-      "IR is the early-warning test for insulation degradation. The 1 MΩ minimum is a 30-year-old threshold; modern thermoplastic cables typically read 100+ MΩ. A circuit at 2 MΩ is technically 'passing' but is showing signs that warrant investigation. The MFT (Megger MFT1741+) reads up to 200+ GΩ — well into the healthy range.",
+      "The 643.3 limit is ≥ 1 MΩ for LV (test at 500 V DC), but healthy modern thermoplastic cables read 100+ MΩ. A 1–5 MΩ result 'passes' yet warrants investigation; 0.1–0.9 MΩ is real breakdown (wet cable, damaged sheath, contaminated terminal). The 1 MΩ minimum is a 30-year-old threshold and IR is the early-warning test for insulation degradation. The MFT (Megger MFT1741+) reads up to 200+ GΩ — well into the healthy range.",
   },
   {
     id: 4,
     question: "What's a polarity test and what does it find?",
     options: [
-      "Polarity test confirms that the line conductor is connected to the line terminal at every accessory and switching device, AND that switches break the line conductor (not the neutral). BS 7671 643.6 requires polarity verification at every accessory and at the origin. Failed polarity findings: switch breaks neutral instead of line (entire fitting remains live when off — common older-installation fault); reversed polarity at a socket (line and neutral swapped — appliances work but earth/neutral references are wrong); two-way switching wired wrong (intermittent operation). MFT has a polarity test mode; socket testers do polarity-only on 13A sockets.",
-      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
-      "Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.",
-      "Five-step. (1) MAKE SAFE immediately — isolate the affected circuit / component if you can do so within your competence. (2) LABEL the fault prominently — 'OUT OF SERVICE — DO NOT RE-ENERGISE' — with date and your name. (3) INFORM CUSTOMER in writing — Dangerous Condition Notification (DCN) form describing the hazard, action taken, recommended remedial work, urgency. (4) ESCALATE to supervisor immediately — phone call, not email. (5) DOCUMENT on job sheet — what found, what done, customer brief delivered, supervisor informed. The make-safe action is non-negotiable; the customer's permission is not required for emergency safety action.",
+      "It confirms line is on the line terminal at every accessory and that switches break line not neutral, finding reversed polarity and switches left in the neutral.",
+      "Polarity test confirms the magnetic field rotation direction on a three-phase supply, finding motors and pumps that would otherwise run backwards.",
+      "Polarity test measures the resistance between line and neutral, finding shorted conductors on the circuit before it is first energised.",
+      "Polarity test checks that the insulation between conductors stays above 1 MΩ, finding damaged sheaths, wet cable and contaminated terminals.",
     ],
     correctAnswer: 0,
     explanation:
-      "Polarity faults are surprisingly common on older installations — pre-1990s wiring sometimes broke neutral on lighting switches, leaving the lampholder energised at all times. Modern accessories with integral switching (some downlights, EV chargers) MUST switch line; reversed polarity defeats the protection. BS 7671 643.6 makes verification mandatory.",
+      "Polarity verification finds switches breaking neutral (the fitting stays live when off), reversed polarity at sockets, and miswired two-way switching. The MFT has a polarity mode; socket testers do polarity-only checks on 13 A sockets. Faults are common on older installations — pre-1990s wiring sometimes broke neutral on lighting switches, leaving the lampholder permanently energised. Modern accessories with integral switching (some downlights, EV chargers) MUST switch line; reversed polarity defeats the protection. BS 7671 643.6 makes verification mandatory.",
   },
   {
     id: 5,
     question: "How do you do an EFLI test with the MFT and what's the safety procedure?",
     options: [
-      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
-      "Setup: MFT in EFLI / Loop mode (typically position '4' on Megger MFT1741+). Test leads to L and CPC at the test point (typically a socket, an accessory, or the DB output). Safety: this is a LIVE test — circuit must be energised, RCD-protected (MFT injects a low-current test pulse that doesn't trip the RCD on most tests, but use the 'Hi' or 'no-trip' mode for verification on RCD-protected circuits). Press TEST. The MFT measures the current that flows during the brief test pulse and calculates Zs. Reading appears in 1–3 seconds. Compare to BS 7671 Appendix 3 / Table 41.3 maximum for the protective device.",
-      "Both are predominantly single-phase domestic in the UK. The differences are in the install scope, not the electrical interface. Air-source has an outdoor unit on the property exterior — a single electrical supply, refrigerant pipework to the indoor cylinder/buffer, controls cabling. Ground-source has either horizontal slinky coils in trenches or vertical boreholes — much larger civils scope, ground-loop pumps that are themselves loads on the electrical supply, and an indoor unit that contains the compressor (so no outdoor unit). Electrical sizing is similar (5-12 kW typical); cable runs are different (ground-source indoor unit is fed from the CU; air-source has cable to the outdoor unit). MCS MIS 3005 covers both.",
-      "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
+      "Set the MFT to insulation-resistance mode at 500 V, isolate and prove dead, then connect L and CPC and press TEST — the loop impedance reads the same as the IR value because both use the line-to-earth path.",
+      "Set the MFT to Loop/EFLI mode, leads to L and CPC; it is a LIVE test, so select no-trip mode on RCD-protected circuits before pressing TEST.",
+      "Isolate and prove dead first, since EFLI is a dead test; link L and N at the far end, measure from the board, and read Zs directly.",
+      "Clamp the MFT's current jaw around the earth conductor at the consumer unit with the circuit live; the leakage current it reads converts internally into a Zs value.",
     ],
     correctAnswer: 1,
     explanation:
-      "EFLI is one of the live tests in BS 7671 643. The 'no-trip' mode (Megger calls it 'Hi-Z' or 'Loop No-Trip') uses a sequence of low-current pulses that statistically don't accumulate enough residual current to trip a 30 mA RCD; standard mode injects a brief higher-current pulse and may trip RCDs. Always select no-trip mode on RCD-protected circuits.",
+      "EFLI is a live test — the circuit is energised. With leads on L and CPC the MFT measures the test-pulse current and calculates Zs in 1–3 seconds; compare to the Table 41.3 maximum for the device. The 'no-trip' mode (Megger 'Hi-Z' or 'Loop No-Trip') uses low-current pulses that statistically don't accumulate enough residual current to trip a 30 mA RCD; standard mode injects a brief higher-current pulse and may trip RCDs. Always select no-trip mode on RCD-protected circuits.",
   },
   {
     id: 6,
     question: "What does an RCD trip-time test measure and what are the BS 7671 maximum times?",
     options: [
-      "Part L (Conservation of Fuel and Power) requires every new build and every notifiable refurbishment to demonstrate compliance via a SAP calculation that meets the Target Emission Rate (TER) and Target Fabric Energy Efficiency (TFEE) for the property type. A heat pump's contribution to the SAP calculation depends on its SCOP and the carbon intensity of grid electricity. Modern heat pumps in well-designed homes pass Part L comfortably. The Future Homes Standard (in force from 2025) effectively rules out fossil-fuel boilers from new-build because the SAP calculation cannot reach compliance with a gas boiler under the tightening targets. The MCS designer's SCOP estimate feeds the SAP calculation.",
-      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\"good enough\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
-      "Trip-time test injects a calibrated residual current and measures how long the RCD takes to disconnect. BS 7671 Reg 643.7.3 maximums: at I∆n (rated trip current, e.g. 30 mA): ≤ 300 ms (general type, ≤ 40 ms for type S); at 1×IΔn: ≤ 40 ms (general type). Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit. Slow tripping (&gt;50 ms at I∆n) indicates a failing RCD. The MFT (Megger MFT1741+) tests at multiple injection levels and at 0° / 180° phase angles — the slowest of the four readings is the recorded trip time.",
-      "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
+      "It measures the residual current at which the RCD operates rather than the time; a general 30 mA RCD is expected to trip somewhere between 50 mA and 100 mA of leakage.",
+      "It measures the earth fault loop impedance of the RCD-protected circuit and confirms it sits below the Table 41.3 maximum for the device.",
+      "It injects a calibrated residual current and times the disconnection: ≤ 300 ms at I∆n for a general RCD, 130–500 ms for a Type S delay device.",
+      "It measures how long the RCD's internal contacts take to close when the test button is pressed, confirming the mechanism is not seized up.",
     ],
     correctAnswer: 2,
     explanation:
-      "RCD trip-time is the diagnostic for the RCD's responsiveness. A passing time at I∆n confirms basic operation; the 1×IΔn test confirms operation at higher fault currents. Failing RCDs typically show slowing trip times before they fail completely — periodic testing catches them before they cause harm.",
+      "RCD trip-time is the diagnostic for responsiveness. A general 30 mA RCD must disconnect within 300 ms at rated I∆n; a time-delayed Type S device is allowed 130–500 ms to give selectivity with downstream RCDs. Modern RCDs trip in 10–40 ms, so slow tripping near the limit signals a failing device — periodic testing catches them before they cause harm. The MFT tests at 0° and 180° and records the slower result. A4:2026 simplified verification to a single AC trip at I∆n.",
   },
   {
     id: 7,
     question: "What's a phase sequence test and when is it needed?",
     options: [
-      "Export limitation caps the maximum kW the system is allowed to send back to the grid, regardless of how much the array can produce. Implemented by a current transformer (CT) clamp at the supply head, feeding a smart meter or export controller that throttles the inverter when export approaches the limit. The DNO requires it where adding the customer full inverter output to the local network would push voltage outside statutory limits or exceed substation thermal capacity. A 5 kWp array might be limited to 3.68 kW export with the rest used on site (charge a battery, run a heat pump, charge an EV). The MCS designer specifies the limiter; the L3 electrician fits the CT and routes the data cable to the inverter.",
-      "ATEX zones (Zone 0 / 1 / 2 for gas, Zone 20 / 21 / 22 for dust) require all equipment in the zone — including test instruments — to be ATEX-rated for the zone. Standard kit: intrinsically-safe two-pole tester (Martindale VI-15800 or Megger DET14C with Ex marking), no mobile phones in zone, no battery tools without Ex rating, no smoking, no metal tools that could spark on contact with steel. The fault diagnosis approach is — bring everything to a non-zoned area where possible, isolate at the boundary, only work in-zone with intrinsically-safe instruments and a hot-work permit.",
-      "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",
-      "Phase sequence test confirms the order of phase rotation (L1, L2, L3 or A, B, C in correct sequence) on three-phase supplies. Wrong sequence reverses the rotation of three-phase induction motors and pumps — can cause damage to driven plant and wrong direction of conveyors / lifts. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) — three probe leads, instrument indicates correct or reversed sequence. Required at three-phase commissioning and after any maintenance that may have disturbed phase identification (e.g. cable replacement, supply transformer changes).",
+      "It confirms all three line conductors sit at the same voltage to earth, and is needed on every single-phase final circuit before energising.",
+      "It measures the time delay between the three phases reaching peak voltage, and is needed only on DC installations and battery systems.",
+      "It checks the neutral is correctly identified on a three-phase supply, and is needed only when adding a new three-phase socket circuit.",
+      "It confirms the order of phase rotation (L1-L2-L3) on three-phase supplies, needed at commissioning and after any work that disturbs phase identification.",
     ],
     correctAnswer: 3,
     explanation:
-      "Phase sequence matters for any three-phase rotating plant. A reversed sequence runs the motor backwards — driven plant runs backwards (conveyor, fan, pump). Specific test instruments (Fluke 9040, Megger PRMA1) indicate sequence with a clear arrow direction. Modern MFTs (Megger MFT1741+) include phase sequence as a function on three-phase tests.",
+      "Phase sequence matters for any three-phase rotating plant. A wrong sequence reverses induction motors and pumps — driven plant runs backwards (conveyor, fan, lift), damaging equipment or running the wrong way. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) that shows a clear arrow direction. Modern MFTs (Megger MFT1741+) include phase sequence as a function on three-phase tests.",
   },
   {
     id: 8,
     question: "What test results indicate a high-resistance joint somewhere on the circuit?",
     options: [
-      "Three readings in combination. (1) R1+R2 higher than calculated expected (a 50 m run of 2.5 mm² ring should give R1+R2 of 0.5 Ω; if it reads 1.4 Ω something is adding resistance). (2) EFLI Zs higher than expected for the same reason. (3) Voltage drop on full load greater than calculated — an in-service measurement with a clamp meter showing &gt;5% volt drop confirms IR² heating at a high-resistance joint. The thermal camera (Sub 2.3) then locates the joint by its heat signature. Diagnostic combination: high R1+R2 + high Zs + thermal hotspot = HRJ at the hotspot location.",
-      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
-      "Modern EV chargers can leak smooth DC current under fault conditions — and a Type AC RCD won't trip on smooth DC. So Section 722 requires either a Type B RCD (which detects AC, pulsating DC and smooth DC) OR a Type A RCD plus an RDC-DD (a separate device that adds smooth-DC detection to a Type A RCD). The RDC-DD route is often cheaper than fitting a Type B RCD because Type A RCDs are widely available and inexpensive. The certified installer chooses the architecture; the customer doesn't see the difference but the regulatory compliance requires one or the other.",
-      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
+      "A combination of high R1+R2, raised EFLI Zs and excess voltage drop on load, pinned down by a thermal hotspot at the joint.",
+      "A low insulation-resistance reading (below 1 MΩ) between line and earth, the classic signature of a high-resistance joint.",
+      "An RCD that trips on its test button but holds at 5×IΔn, indicating resistance gradually building up in a joint.",
+      "A higher-than-expected prospective fault current at the origin, because a high-resistance joint increases the available fault current.",
     ],
     correctAnswer: 0,
     explanation:
-      "High-resistance joints don't show up on a single test — they show up as a pattern across multiple tests. The diagnostic combination of high continuity reading + high EFLI + thermal hotspot is the classic L3 HRJ identification. Sub 3.3 (likely fault locations) walks through the locations they typically appear.",
+      "High-resistance joints show up as a pattern across multiple tests, not on one. R1+R2 reads higher than calculated (a 50 m 2.5 mm² ring should give ~0.5 Ω, not 1.4 Ω); EFLI Zs is raised for the same reason; and voltage drop on load runs above 5% by clamp meter, confirming I²R heating. The thermal camera then locates the joint. High continuity + high EFLI + thermal hotspot is the classic L3 HRJ identification. Sub 3.3 walks through where they typically appear.",
   },
 ];
 
@@ -247,7 +247,7 @@ export default function Sub4() {
           <TLDR
             points={[
               "BS 7671 643 tests in order: continuity (R1+R2 + ring), IR, polarity, EFLI, RCD, phase sequence. Order matters — each test assumes previous tests passed.",
-              "Test voltages: IR at 500 V DC for LV (250 V if electronics on circuit). EFLI uses Hi-Z mode on RCD-protected circuits to avoid tripping. RCD trip-time at I∆n and 1×IΔn.",
+              "Test voltages: IR at 500 V DC for LV (250 V if electronics on circuit). EFLI uses Hi-Z mode on RCD-protected circuits to avoid tripping. RCD verification (Reg 643.8) is a single AC test at 1×IΔn.",
               "High-resistance joint diagnostic = high R1+R2 + high Zs + thermal hotspot. No single test catches HRJ; the pattern across multiple tests does.",
             ]}
           />
@@ -277,7 +277,7 @@ export default function Sub4() {
               <li><strong>3. Insulation resistance</strong> (Reg 643.3) — between live conductors and earth, between live conductors. 500 V DC for LV (250 V for circuits with electronics).</li>
               <li><strong>4. Polarity</strong> (Section 643) — confirms line connected to line terminal at every accessory; switches break line not neutral.</li>
               <li><strong>5. Earth fault loop impedance</strong> (Reg 643.7.3) — Ze at origin, Zs at every protective device. Verify against Table 41.3 maximums.</li>
-              <li><strong>6. Operation of RCDs</strong> (Reg 643.7.1, 643.8) — trip-time at I∆n and 1×IΔn. Verify against Reg 643.7.3 maximums.</li>
+              <li><strong>6. Operation of RCDs</strong> (Reg 643.8) — a single AC test at rated 1×IΔn. Verify the operating time against the Reg 643.8 limits (≤ 300 ms general non-delay; 130–500 ms delay 'S' type).</li>
             </ul>
             <p>Tests 1–4 are dead tests; tests 5–6 are live. The dead-then-live order keeps you safe and gives clean diagnostic data.</p>
           </ConceptBlock>
@@ -380,7 +380,7 @@ export default function Sub4() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 643.3"
+            source="BS 7671:2018+A4:2026 — Summary of changes / Reg 643.8"
             clause={
               <>
                 "The requirements for RCD testing have been changed and Table 3A (Time/current performance criteria for RCDs) in Appendix 3 has been deleted. Regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness."
@@ -388,7 +388,7 @@ export default function Sub4() {
             }
             meaning={
               <>
-                A4:2026 simplified the RCD test to a single AC trip at rated I&Delta;n. The 5&times;I&Delta;n test is gone, Table 3A is gone, and the test pass criterion is whichever device-standard limit applies (BS EN 61008 / 61009 / 62423 / 7288). Update your firm&apos;s test pro forma if it still has a 5&times; column.
+                A4:2026 simplified the RCD test to a single AC trip at rated I&Delta;n. The 5&times;I&Delta;n test is gone and Table 3A is gone. The pass criterion is now stated in Reg 643.8 itself: a general non-delay RCD must disconnect within 300 ms, and a delay &apos;S&apos; type within 130&ndash;500 ms. Update your firm&apos;s test pro forma if it still has a 5&times; column.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft)."
@@ -402,11 +402,11 @@ export default function Sub4() {
             title="Verifying the protective device is actually protecting"
             onSite="An RCD that\'s slow to trip is more dangerous than no RCD at all — the customer believes they\'re protected. Trip-time testing is the L3 fault-diagnosis equivalent of putting your hand in front of a fan to check it\'s spinning the right speed."
           >
-            <p>BS 7671 Reg 643.7.1 / Reg 643.7.3 maximum trip times:</p>
+            <p>BS 7671 Reg 643.8 (A4:2026) verification — a single AC test at rated I∆n:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>At I∆n (rated trip current, 30 mA): ≤ 300 ms (general type), ≤ 40 ms for type S.</li>
-              <li>At 1×IΔn (150 mA on a 30 mA RCD): ≤ 40 ms (general type).</li>
-              <li>Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit.</li>
+              <li>At I∆n (rated residual current, 30 mA): ≤ 300 ms (general non-delay type).</li>
+              <li>A delay 'S' type RCD: between 130 ms and 500 ms at I∆n, to give selectivity.</li>
+              <li>A4:2026 deleted Table 3A and the 5×IΔn test — there is no longer a 40 ms / 5×IΔn pass criterion. Modern RCDs typically operate in ~25–40 ms in practice, but that is real-world behaviour, not the regulatory limit.</li>
             </ul>
             <p>
               Phase sequence test (3-phase only) confirms L1 / L2 / L3 rotation order. Wrong sequence reverses three-phase induction motor rotation. Tested with phase rotation indicator (Fluke 9040, Megger PRMA1).
@@ -442,13 +442,13 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The MFT's RCD test functions — what each tells you"
-            plainEnglish="The MFT's RCD test injects a defined fault current and measures the trip time. BS EN 61008 / 61009 specifies the limits: a Type AC 30 mA RCD must trip within 300 ms at 1×IΔn (30 mA) and within 40 ms at 1×IΔn (150 mA). The MFT runs the tests automatically and reports the actual trip time."
-            onSite="The Megger MFT1741+, Kewtech KT64+ and Fluke 1664FC all have AutoRCD modes that walk through 1× / 5× / ramp tests and produce a pass/fail report. For fault diagnosis the trip-time tells you whether the RCD is operating within spec OR whether it's slow (suggesting wear, contamination, or wrong-type RCD for the load — e.g. Type AC on a circuit with DC components)."
+            plainEnglish="The MFT's RCD test injects a defined fault current and measures the trip time. Under A4:2026 the BS 7671 verification (Reg 643.8) is a single AC test at 1×IΔn: a general non-delay 30 mA RCD must disconnect within 300 ms, a delay 'S' type within 130–500 ms. The MFT runs the test and reports the actual operating time. (MFTs can still offer ½× and ramp functions as diagnostics, but the standard's pass criterion is the single 1×IΔn test.)"
+            onSite="The Megger MFT1741+, Kewtech KT64+ and Fluke 1664FC all have AutoRCD modes; for verification you now only need the 1×IΔn AC operating time. For fault diagnosis the trip-time tells you whether the RCD is operating within spec OR whether it's slow (suggesting wear, contamination, or wrong-type RCD for the load — e.g. Type AC on a circuit with DC components)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>×½ test</strong> — 15 mA injection on a 30 mA RCD. Should NOT trip. If it does, the RCD is over-sensitive (typically ageing).</li>
-              <li><strong>×1 test</strong> — 30 mA injection. Trip within 300 ms (Type AC) or 200 ms (Type A on DC pulse).</li>
-              <li><strong>×5 test</strong> — 150 mA injection. Trip within 40 ms.</li>
+              <li><strong>×½ test</strong> — 15 mA injection on a 30 mA RCD. Should NOT trip. If it does, the RCD is over-sensitive (typically ageing). Diagnostic only — not part of the A4:2026 verification.</li>
+              <li><strong>×1 test (the BS 7671 verification)</strong> — 30 mA AC injection at rated IΔn. General non-delay type must disconnect within 300 ms; delay 'S' type within 130–500 ms. This single 1×IΔn AC test is the A4:2026 pass criterion (Reg 643.8).</li>
+              <li><strong>×5 test</strong> — 150 mA injection. A legacy diagnostic that some MFTs still offer; the old 40 ms / 5×IΔn pass criterion and Table 3A were DELETED in A4:2026, so it is no longer a verification requirement.</li>
               <li><strong>Ramp test</strong> — gradually increases current from 0 mA upward, captures the actual trip current. A 30 mA RCD should trip between 15 mA and 30 mA. Below 15 mA = nuisance-trip risk; above 30 mA = won't protect at the rated current.</li>
               <li><strong>Type AC vs Type A vs Type B</strong> — Type AC sees only sinusoidal AC residual current (legacy); Type A also sees pulsating DC residual (modern domestic standard); Type B also sees smooth DC (required for EV chargers, VSDs, certain solar PV). Mismatch causes nuisance trips OR worse, no protection.</li>
               <li><strong>Phase angle</strong> — modern MFTs let you choose 0° or 180° phase angle for the test. Faulty RCDs sometimes pass on one angle and fail on the other.</li>
@@ -506,7 +506,7 @@ export default function Sub4() {
               "Ring final continuity uses three-step cross-connection (BS 7671 643.2.2) to verify ring topology — readings within 0.05 Ω at every socket.",
               "IR test at 500 V damages electronics. Disconnect / shunt electronic loads OR test at 250 V per GN3 guidance.",
               "EFLI Hi-Z (no-trip) mode for RCD-protected circuits; standard mode for non-RCD. Always check supply arrangement before pressing TEST.",
-              "RCD trip-time max 300 ms at I∆n (40 ms for type S), 40 ms at 1×IΔn. Modern RCDs typically trip in 10–30 ms.",
+              "A4:2026 RCD verification (Reg 643.8) is a single AC test at 1×IΔn: ≤ 300 ms for a general non-delay RCD, 130–500 ms for a delay 'S' type. Table 3A and the 5×IΔn/40 ms test were deleted. Modern RCDs typically operate in ~25–40 ms in practice — but that is real-world behaviour, not the limit.",
               "Phase sequence (3-phase) confirms rotation order. Wrong sequence reverses motor direction. Tested with Fluke 9040 / Megger PRMA1.",
               "High-resistance joint diagnostic = high R1+R2 + high Zs + voltage drop on load + thermal hotspot. No single test catches HRJ.",
             ]}

@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'management-survey-purpose',
     question: 'What is the main purpose of a management survey?',
     options: [
-      'To locate ACMs and assess their condition so they can be managed during normal occupation',
       'To remove all asbestos from the building before demolition',
       'To find every single ACM including those hidden behind walls and in voids',
+      'To locate ACMs and assess their condition so they can be managed during normal occupation',
       'To certify that a building is completely free of asbestos',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'A management survey (formerly Type 2) is designed to locate ACMs that could be disturbed during normal occupation, including routine maintenance. It assesses their condition and provides the information needed to manage them safely. It does NOT involve destructive inspection of hidden areas.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'r-and-d-survey-timing',
     question: 'When must a refurbishment and demolition survey be completed?',
     options: [
-      'Before any work that will disturb the building fabric begins',
       'During the refurbishment work as each area is opened up',
+      'Before any work that will disturb the building fabric begins',
       'After the refurbishment is finished, to check what was found',
       'Only if the management survey found asbestos in the building',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'A refurbishment and demolition survey MUST be completed before any work that will disturb the building fabric begins. It cannot be done progressively during the work. The survey is fully intrusive and may require the building or area to be vacated.',
   },
@@ -88,8 +88,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What was a management survey previously known as?',
-    options: ['Type 1 survey', 'Type 2 survey', 'Type 3 survey', 'Preliminary survey'],
-    correctAnswer: 1,
+    options: ['Type 2 survey', 'Type 1 survey', 'Type 3 survey', 'Preliminary survey'],
+    correctAnswer: 0,
     explanation:
       'A management survey was previously known as a Type 2 survey. The terminology was updated by HSG264 to make the purpose of each survey type clearer. A Type 2 survey is now called a management survey, and a Type 3 survey is now called a refurbishment and demolition survey.',
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
     question: 'What qualification does the HSE recommend asbestos surveyors hold?',
     options: [
       'NEBOSH National General Certificate',
-      'BOHS P402 — Building Surveys and Bulk Sampling for Asbestos',
       'CITB Site Safety Plus',
       'IOSH Managing Safely',
+      'BOHS P402 — Building Surveys and Bulk Sampling for Asbestos',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The HSE recommends that asbestos surveyors hold the BOHS P402 qualification — Building Surveys and Bulk Sampling for Asbestos. This is a specialist qualification that covers survey methodology, sampling techniques, risk assessment, and report writing specific to asbestos surveys.',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'What must the dutyholder do if a survey report states that certain areas were not accessed?',
     options: [
       'Nothing — the survey is still valid for the areas that were covered',
-      'Presume that those areas contain asbestos until they are surveyed or sampled',
       'Arrange for the areas to be demolished so they can be inspected',
       "Ask the building's original architect for the construction details",
+      'Presume that those areas contain asbestos until they are surveyed or sampled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under Regulation 4 of CAR 2012, if materials have not been sampled and analysed, the dutyholder must presume they contain asbestos until proven otherwise. Any areas not accessed during the survey must be managed on this presumption, and the dutyholder should arrange for them to be surveyed before any work disturbs them.',
   },

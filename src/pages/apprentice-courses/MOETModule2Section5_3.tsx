@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Why are 110 V CTE (centre-tapped earth) power tools specified for construction and maintenance sites?',
     options: [
-      'Examine the evidence: how many inspections have they actually failed versus passed, and what is the realistic worst-case outcome?',
-      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
-      'With a CTE transformer, the maximum voltage to earth is only 55 V — significantly reducing the risk of fatal electric shock if a fault occurs',
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
+      'They run cooler than 230 V tools, so the motor lasts longer in heavy use',
+      'They draw less current, allowing thinner and lighter supply cables on site',
+      'The centre tap limits voltage to earth to 55 V, cutting shock risk on a fault',
+      'They do not require RCD protection because the voltage is already reduced',
     ],
     correctIndex: 2,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of an SDS (Slotted Drive System) rotary hammer drill over a standard hammer drill?',
     options: [
-      'Any injury arising from work in an enclosed space leading to (i) hypothermia or heat-induced illness, OR (ii) requiring resuscitation, OR (iii) requiring admittance to hospital for more than 24 hours.',
-      'A short, focused safety briefing on a specific topic delivered to the work team — interactive, recorded with attendees signed in',
-      'A chronic state of feeling emotionally drained, overwhelmed, and unable to face the emotional demands of work or life',
-      'SDS delivers a dedicated pneumatic hammering mechanism independent of the rotation, providing much greater impact energy for drilling into masonry, concrete and brick',
+      'SDS bits are tightened with a chuck key, giving a more secure grip than keyless',
+      'SDS drills spin at a much higher rotational speed than standard hammer drills',
+      'SDS drills run from a battery only, removing the need for any transformer on site',
+      'A pneumatic hammer independent of rotation gives far greater impact into masonry',
     ],
     correctIndex: 3,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'angle-grinder',
     question: 'Before using an angle grinder, the most critical safety check is:',
     options: [
-      "Ensuring the guard is fitted and correctly positioned, the disc is rated for the grinder's speed (RPM), the disc is not damaged or cracked, and the operator has appropriate PPE (eye protection, gloves, hearing protection)",
-      "Disconnect at the EV charger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).",
-      "A formal procedure resulting from systematic examination of a task to identify hazards, define safe methods to eliminate or minimise those hazards. Documented in the Method Statement portion of RAMS. Permits-to-work are a specific form of SSoW for high-hazard activity.",
-      "Pulling the AC isolator at the consumer unit doesn’t kill the panels — the DC string is still live. You need to operate the DC isolator AND prove dead at DC before any work on the inverter, the combiner box or the string cables.",
+      "That the guard is fitted, the disc is undamaged and RPM-rated, and PPE is worn",
+      "Confirming the grinder takes the right disc diameter, whatever its speed rating",
+      "Checking the supply lead reaches without an extension and the plug is undamaged",
+      "Running the grinder for a full minute at no load to warm the motor before cutting",
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'PAT (Portable Appliance Testing) of power tools on a construction or maintenance site involves:',
     options: [
-      'Competent persons with knowledge of the system design, equipment operation, and testing procedures, who have been briefed on the specific requirements of the installation',
-      'No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work.',
-      'By leading by example with open conversations, supporting campaigns like Time to Talk Day, and normalising mental health discussions through toolbox talks and awareness events',
-      'A combination of user checks (before each use), formal visual inspection (weekly/monthly), and combined inspection and testing (3-monthly for construction site tools) including earth continuity, insulation resistance and functional tests',
+      'A single annual electrical test carried out by an external contractor only',
+      'A one-off insulation resistance test performed when the tool is first purchased',
+      'A visual check by the operator that replaces the need for any electrical testing',
+      'User checks, formal visual inspection, and 3-monthly combined inspection and testing',
     ],
     correctIndex: 3,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'On a construction site, portable power tools should operate at:',
     options: [
-      'To document final status, lessons learned, and formally close the project',
-      '110 V from a centre-tapped earth (CTE) transformer, giving a maximum of 55 V to earth',
-      'Correct polarity, switch in phase conductor, and socket polarity if fitted',
-      'XLPE can withstand higher temperatures (90°C vs 70°C) before damage',
+      '230 V single-phase taken direct from the nearest socket outlet',
+      '110 V from a centre-tapped earth transformer, giving 55 V to earth',
+      '400 V three-phase to provide enough power for heavy-duty tools',
+      '12 V SELV from a battery pack for all corded site equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'A Class II (double-insulated) power tool is identified by:',
     options: [
-      'The ability to make fine-grained distinctions between similar emotions, such as differentiating irritation from frustration from anger',
-      'Using the diagnostic buffer timestamps, data logging, trend recording, and systematic environmental checks',
-      'The double-square symbol on the rating plate, indicating reinforced insulation throughout — the tool has no earth connection',
-      'To provide a systematic method for identifying, assessing, and controlling manual handling risks',
+      'A green-and-yellow earth symbol printed on the rating plate',
+      'A three-core supply cable terminating in an earthed 13 A plug',
+      'The double-square symbol, denoting reinforced insulation and no earth',
+      'A diamond-in-rectangle symbol denoting SELV battery operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 3,
     question: 'An SDS-Plus drill bit differs from a standard drill chuck bit in that:',
     options: [
-      'All 230 V portable equipment must be protected by a 30 mA RCD — but 110 V CTE is the preferred and standard supply for construction site power tools',
-      'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
-      'All work equipment (including power tools) is suitable for its intended use, maintained in a safe condition, inspected at suitable intervals, and used only by trained and competent persons',
-      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
+      'It has a smooth round shank that grips through chuck pressure alone',
+      'It is made from tungsten carbide so it can only be used in softwood',
+      'It must be tightened firmly with a chuck key before every use',
+      'Its slotted shank lets the bit move axially for hammering while driven in rotation',
     ],
     correctAnswer: 3,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 4,
     question: 'When drilling into a wall for cable containment fixings, you should first:',
     options: [
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
-      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
-      'Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow',
+      'Scan for concealed services, check the wall type, and mark the fixings accurately',
+      'Drill a small pilot hole quickly to see whether you strike anything live',
+      'Switch the tool to hammer mode regardless of the wall material being drilled',
+      'Fit the largest bit available to make a single pass through the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'A reciprocating saw is used in electrical maintenance primarily for:',
     options: [
-      'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
-      'Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
-      'All work equipment (including power tools) is suitable for its intended use, maintained in a safe condition, inspected at suitable intervals, and used only by trained and competent persons',
+      'Precision drilling of accurately positioned fixing holes in masonry',
+      'Cutting containment and plasterboard openings where a hacksaw is too slow',
+      'Grinding down welds and deburring cut metal edges on enclosures',
+      'Stripping insulation from large-diameter cables before termination',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'The maximum disc speed (RPM) rating marked on an angle grinder cutting disc must:',
     options: [
-      "Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow",
-      "All 230 V portable equipment must be protected by a 30 mA RCD — but 110 V CTE is the preferred and standard supply for construction site power tools",
-      "Be equal to or greater than the grinder's no-load speed — a disc rated below the grinder speed may disintegrate at operating speed",
-      "The double-square symbol on the rating plate, indicating reinforced insulation throughout — the tool has no earth connection",
+      "Be lower than the grinder's no-load speed so the disc is never over-driven",
+      "Be exactly half the grinder's no-load speed for safe steady cutting",
+      "Be equal to or greater than the grinder's no-load speed, or it may shatter",
+      "Match the diameter of the disc in millimetres rather than the grinder speed",
     ],
     correctAnswer: 2,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'Cordless (battery) power tools offer advantages for electrical maintenance work because:',
     options: [
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
-      'The double-square symbol on the rating plate, indicating reinforced insulation throughout — the tool has no earth connection',
-      'Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
+      'They never require any inspection because they have no supply cable',
+      'They always deliver more power than equivalent corded 110 V tools',
+      'They can be safely submerged in water during use without any IP rating',
+      'They remove trailing cables and transformers and run at a safe battery voltage',
     ],
     correctAnswer: 3,
     explanation:
@@ -164,10 +164,10 @@ const quizQuestions = [
     id: 8,
     question: 'PUWER (Provision and Use of Work Equipment Regulations) 1998 requires that:',
     options: [
-      'All work equipment (including power tools) is suitable for its intended use, maintained in a safe condition, inspected at suitable intervals, and used only by trained and competent persons',
-      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
-      'All 230 V portable equipment must be protected by a 30 mA RCD — but 110 V CTE is the preferred and standard supply for construction site power tools',
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
+      'Work equipment is suitable, maintained, inspected and used by competent persons',
+      'Only electrical work equipment is covered, not mechanical hand tools',
+      'Work equipment is inspected solely by the Health and Safety Executive',
+      'Tools may be used without training provided they carry a current PAT label',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'When using a hole saw to cut a large hole in a metal distribution board enclosure:',
     options: [
-      'Carry out a full PAT test (visual inspection, earth continuity for Class I, insulation resistance, and functional test), verify the repair was effective, and update the maintenance/PAT records',
-      'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
-      'Striking a concealed live cable can cause fatal electric shock, and striking a gas pipe can cause an explosion — detection before drilling prevents these potentially fatal incidents',
+      'Run the saw at maximum speed with no pilot bit to cut through quickly',
+      'Use the pilot bit to guide it, lubricate, run at moderate speed and clamp the work',
+      'Hold the enclosure loosely in one hand so it can move freely while cutting',
+      'Use water as the cutting lubricant directly on the energised enclosure',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'A cable avoidance tool (CAT scanner) should be used before drilling because:',
     options: [
-      'Carry out a full PAT test (visual inspection, earth continuity for Class I, insulation resistance, and functional test), verify the repair was effective, and update the maintenance/PAT records',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
-      'Striking a concealed live cable can cause fatal electric shock, and striking a gas pipe can cause an explosion — detection before drilling prevents these potentially fatal incidents',
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
+      'It confirms the drill bit is the correct diameter for the fixing',
+      'It measures the depth of the wall so the drill stop can be set',
+      'Striking a hidden live cable can be fatal and a gas pipe can explode',
+      'It records the drilling location for the as-built drawings automatically',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'The RCD protection requirement for 230 V portable equipment on construction sites is:',
     options: [
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
-      'The double-square symbol on the rating plate, indicating reinforced insulation throughout — the tool has no earth connection',
-      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
-      'All 230 V portable equipment must be protected by a 30 mA RCD — but 110 V CTE is the preferred and standard supply for construction site power tools',
+      'No RCD is needed provided the tool is double-insulated Class II',
+      'A 100 mA RCD is sufficient for all portable site equipment',
+      'A 300 mA time-delayed RCD at the origin covers every tool',
+      'A 30 mA RCD is required, though 110 V CTE remains the preferred site supply',
     ],
     correctAnswer: 3,
     explanation:
@@ -217,10 +217,10 @@ const quizQuestions = [
     id: 12,
     question: 'Before returning a power tool to service after repair, you should:',
     options: [
-      'Carry out a full PAT test (visual inspection, earth continuity for Class I, insulation resistance, and functional test), verify the repair was effective, and update the maintenance/PAT records',
-      'They eliminate trailing cables (trip hazard), do not require a 110 V transformer, can be used where no power supply is available, and the battery voltage is inherently safer',
-      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
-      'Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately',
+      'Carry out a full PAT test, confirm the repair worked, and update the records',
+      'Return it straight away, as the repair itself proves it is safe to use',
+      'Only carry out a functional test, skipping the electrical safety tests',
+      'Wait until the next scheduled 3-monthly test before recording anything',
     ],
     correctAnswer: 0,
     explanation:

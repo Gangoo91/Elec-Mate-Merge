@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'An induction motor must run BELOW synchronous speed because:',
     options: [
-      "Yes, if they result from work activity and require hospital treatment",
-      "That they are properly located, secured, free from damage and that trapdoors function correctly",
+      "The rotor windings would overheat at synchronous speed",
+      "The commutator can only switch below synchronous speed",
       "Without slip there's no relative motion → no induced EMF in the rotor → no torque",
-      "Self-contained breathing apparatus (SCBA) in positive pressure mode",
+      "The supply frequency limits the rotor to 90 % of N_s",
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'Squirrel-cage rotor:',
     options: [
-      'DECs measure actual energy use, EPCs assess theoretical performance',
-      'Organisational — the commissioning procedure was incomplete',
-      'Radio, mobile phone, visual signals, and audible signals such as a whistle or horn',
+      'Has three-phase windings brought out via slip rings',
+      'Uses permanent magnets embedded in the rotor core',
+      'Carries a separate DC excitation supply to the rotor',
       'Has solid bars short-circuited at the ends — no electrical connection to the outside',
     ],
     correctAnswer: 3,
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'Wound-rotor motor uses:',
     options: [
       'Three-phase windings on the rotor brought out via slip rings to external resistance',
-      'To prove that the holder has the required training and qualifications for their occupation',
-      'To ensure illumination from both directions regardless of which end occupants enter from',
-      'Maximum demand, load type, power factor, and growth expectations',
+      'Solid aluminium bars cast into the rotor laminations',
+      'A permanent-magnet rotor driven by an inverter',
+      'A commutator and carbon brushes for the rotor supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'Maximum (pull-out) torque of an induction motor occurs at:',
     options: [
-      'Based on cable manufacturer\\\\\\\\\\\\\\\'s specifications',
-      'Safety level for electrical environments',
+      'Zero slip, exactly at synchronous speed',
+      'Full-load slip of around 4 %',
       'Slip ~15-20 % (depends on rotor R)',
-      'Fundamental principles of design',
+      'Slip of 100 %, at the locked-rotor condition',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,9 +159,9 @@ const quizQuestions = [
     id: 7,
     question: 'Increasing rotor resistance (wound-rotor):',
     options: [
-      'Minor Electrical Installation Works Certificate (MEIWC)',
-      'Wind speed monitoring, precipitation alerts, temperature limits, and lightning detection',
-      'Document as non-compliance and specify corrective actions',
+      'Raises the synchronous speed of the motor',
+      'Eliminates slip entirely at full load',
+      'Reduces the starting torque to near zero',
       'Shifts maximum torque to higher slip — useful for high starting torque',
     ],
     correctAnswer: 3,

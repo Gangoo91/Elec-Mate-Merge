@@ -37,10 +37,10 @@ const checks = [
     id: 'm5-s5-sub1-purpose',
     question: 'A landlord asks you for "a safety certificate" on a recently purchased rental dwelling. What is the correct document and why?',
     options: [
-      'Drilled within the centre third of the joist depth, in the middle 25-40% of the span, and not weaken the structural integrity. Notches allowed in top of joist within prescribed limits per Building Regulations Part A and BS 5268.',
-      'Removing all lamps from the circuit before testing — other lamps in the circuit can provide a conductive path between L and N (via their filaments / drivers) which would let an incorrectly connected lampholder show false continuity / pass polarity check. Test with lamps out, verify each holder, then refit.',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
-      'An Electrical Installation Condition Report (EICR) — it documents the condition of an existing installation in service. It is what the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require for rented accommodation, on a five-year cycle (or sooner if the report says so).',
+      'An Electrical Installation Certificate (EIC) — the standard safety certificate issued for any property, confirming the wiring meets BS 7671 whether new or existing.',
+      'A Minor Electrical Installation Works Certificate (MEIWC) — the correct certificate for an existing dwelling because no new circuits are being added during the inspection.',
+      'A PAT (Portable Appliance Test) certificate — it covers the safety of the electrical equipment in the dwelling, which is what landlord safety legislation requires.',
+      'An Electrical Installation Condition Report (EICR) — it documents the condition of an existing installation in service, as the PRS Regulations 2020 require.',
     ],
     correctIndex: 3,
     explanation:
@@ -50,10 +50,10 @@ const checks = [
     id: 'm5-s5-sub1-eicr-vs-eaw',
     question: 'How does the Electricity at Work Regulations 1989 (EAWR) relate to BS 7671 Part 6 and GN3?',
     options: [
-      'When the work would breach regulations (BS 7671, Building Regulations Part P, planning permission); be unsafe (EWR Reg 16 competence; HASAWA general duty); or be illegal (Bribery Act, tax evasion, etc.). You can and must decline regardless of customer pressure or commercial incentive.',
-      'Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.',
-      'EAWR is the underlying statutory law (criminal liability for the duty-holder) — Reg 4(2) requires that systems be maintained in a condition that prevents danger. BS 7671 Part 6 is the technical inspection and testing standard you apply to evidence that maintenance, and GN3 (IET Guidance Note 3) is the practical companion telling you how to do it.',
-      '398V — in a star (Y) system the line voltage equals phase voltage &times; root-3 (~1.732). The trap is candidates either forgetting the relationship entirely (picking 230V) or using delta logic (line = phase, picking 230V) when star logic applies.',
+      'EAWR is non-statutory guidance, BS 7671 Part 6 is the enforceable law, and GN3 is the British Standard; the HSE prosecutes breaches of BS 7671 directly as an Act of Parliament.',
+      'BS 7671 Part 6 is the statutory law, EAWR is the technical inspection standard, and GN3 the model-forms appendix; an EICR evidences compliance with BS 7671 Part 6, not EAWR.',
+      'EAWR is the underlying statutory law (Reg 4(2) maintain to prevent danger), BS 7671 Part 6 is the technical inspection standard, and GN3 is the practical companion on method.',
+      'All three are British Standards published by BSI with equal legal weight, so an inspector may cite any of them interchangeably on an EICR as one body of inspection law.',
     ],
     correctIndex: 2,
     explanation:
@@ -63,12 +63,12 @@ const checks = [
     id: 'm5-s5-sub1-cenelec',
     question: 'BS 7671:2018+A4:2026 has restructured Part 6. What is the practical impact for an inspector reading older material?',
     options: [
-      'Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development',
-      'Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.',
-      'Part 6 has been completely restructured and renumbered to align with the CENELEC standard for inspection and testing. Pre-A4 regulation numbers (e.g. old 621.x, 631.x, 651.x) do not match the new 64x.x numbering. Old training materials, old EICR templates, and old citations all need cross-referencing — never quote a pre-A4 Part 6 reg number on a current report.',
-      'PRESERVE the scene. Don\\\'t move anything (tools, equipment, locks, voltage indicators), don\\\'t tidy, don\\\'t restore power. Photograph the scene and the work in progress. Identify witnesses and ask them to write down what they saw. Notify the firm\\\'s responsible person immediately. The HSE will likely attend (a specified injury triggers immediate notification under RIDDOR Reg 4); the scene as it was is the prosecution evidence in either direction.',
+      'Part 6 has been restructured and renumbered to align with the CENELEC standard, so pre-A4 regulation numbers no longer match the new 64x.x numbering.',
+      'Part 6 was deleted in A4:2026 and merged into Part 7, so inspection and testing requirements now sit among the special-location chapters rather than in their own part.',
+      'Part 6 is unchanged in A4:2026 — only Part 4 protection requirements were amended, so older Part 6 regulation numbers remain valid on current EICR forms.',
+      'Part 6 now applies only to initial verification; periodic requirements moved into a separate IET Guidance Note, so the EICR no longer cites BS 7671 regulation numbers at all.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A4:2026 explicitly restructured Part 6 (Inspection and testing) to align numbering with the CENELEC standard. The old Chapter 62 (initial verification) and Chapter 63 (periodic inspection) numbering has shifted into the 64x.x family. Inspectors should not rely on pre-A4 Part 6 numbers when citing current requirements on EIC or EICR forms. Training materials and template forms predating A4:2026 must be updated.',
   },
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of periodic inspection and testing of an electrical installation?',
     options: [
-      'Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.',
-      'To assess the condition of an installation in service, identify any deficiencies that may give rise to danger, and produce a documented report (EICR) that the duty-holder can use to evidence compliance with their statutory duty under the Electricity at Work Regulations 1989.',
-      'Yes — Reg 411.3.1.2 requires that connection of a lightning protection system to the protective equipotential bonding shall be made in accordance with the BS EN 62305 series. The bond keeps both earthing systems at the same potential during a strike, preventing dangerous side-flashing inside the building.',
-      'Engineering technology, regulations and best practices evolve continuously, so maintaining and developing your competence through ongoing learning is a professional obligation — not just for your benefit but for the safety of those affected by your work',
+      'To bring every existing installation fully up to the current edition of BS 7671, replacing any wiring or device below the latest standard before the report can be issued.',
+      'To assess the condition of an installation in service, identify deficiencies that may give rise to danger, and produce a documented EICR for the duty-holder.',
+      'To re-certify the original installation work, confirming the design, construction, inspection and testing all met BS 7671 when the installation was first energised.',
+      'To test every portable appliance in the property and confirm each carries a valid PAT label, since fixed wiring rarely deteriorates and is not the focus of a periodic.',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which statutory instrument creates the legal duty for landlords in the English private rented sector to commission periodic EICRs?',
     options: [
-      'Inversely proportional. Doubling the cable length doubles the surface area for leakage, halving the apparent IR. A 50 m run reading 200 MΩ would read approximately 100 MΩ at 100 m for the same insulation quality. On long runs (especially underground or in damp conditions), the absolute MΩ figure matters less than the consistency between runs of similar length.',
-      'Actively imagining the situation from the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s viewpoint: they may have taken time off work, arranged for the kitchen to be cleared, and planned meals around the completion date — understanding that the delay has a ripple effect on their daily life that extends beyond the electrical work itself',
-      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — requiring an EICR at intervals not exceeding five years (or sooner if the report states), a copy to the tenant within 28 days, a copy to a new tenant before occupation, and a copy to the local housing authority on request within 7 days.',
-      'Physiological response to electric current passing through the body. Effects scale with current (mA): perception (1mA), pain (5-10mA), can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t-let-go (10-20mA), respiratory paralysis (20-50mA), ventricular fibrillation (50-100mA+). Duration matters — long exposure at lower current can be lethal.',
+      'The Housing Act 2004 — requiring landlords to commission an EICR every three years and lodge a copy with the local authority before each new tenancy begins.',
+      'The Electricity at Work Regulations 1989 — Regulation 4(2) directly obliging landlords to obtain a five-yearly EICR for every rented dwelling and supply it to tenants.',
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — requiring a five-yearly EICR with copies to tenants and the local authority.',
+      'The Landlord and Tenant Act 1985 — making a ten-yearly EICR a condition of any assured shorthold tenancy and requiring the report to be displayed in the property.',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,10 +105,10 @@ const quizQuestions = [
     id: 3,
     question: 'BS 7671:2018+A4:2026 — what changed in Part 6 (Inspection and testing)?',
     options: [
-      'A non-compliance with BS 7671 because when the switch is open the line conductor remains live to the load — anyone working on the load thinks it is dead but the line is still energised. Reg 643.6(a) requires single-pole switches in the line.',
-      'The complete earth fault loop impedance — Ze (external supply network impedance to the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s MET) plus R1+R2 (line + CPC of the circuit from MET to test point). The measured value should equal the calculated Zs from Ze (measured live) and R1+R2 (measured dead in Section 3) within instrument tolerance.',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
-      'Part 6 has been completely restructured and renumbered to align with the CENELEC standard for inspection and testing. The old chapter and regulation numbers do not map directly to the new 64x.x numbering. Inspectors must use the new numbers on certificates and EICRs from A4:2026 onward.',
+      'The minimum insulation resistance value was raised from 1 MΩ to 2 MΩ for all final circuits, requiring re-testing of any installation previously passed at the lower figure.',
+      'Periodic inspection intervals were fixed in regulation for the first time, replacing inspector judgement of frequency with mandatory maximum periods for each premises type.',
+      'The EICR was replaced by a new Electrical Condition Statement and the C1/C2/C3 coding system withdrawn in favour of a simple pass or fail outcome.',
+      'Part 6 was restructured and renumbered to align with the CENELEC standard, so old chapter and regulation numbers no longer map to the new 64x.x numbering.',
     ],
     correctAnswer: 3,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 4,
     question: 'What does an EICR NOT do?',
     options: [
-      'Certify new installation work — that is the role of an Electrical Installation Certificate (EIC) per Reg 644.1, issued at the completion of new work or additions involving a new circuit. An EICR is for existing installations in service only and reports condition, not new compliance.',
-      'Goleman\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s optimism involves realistic assessment of obstacles combined with genuine belief that effort and strategy can lead to success — it acknowledges difficulties but maintains persistent, evidence-based hope, unlike naive positivity which ignores or denies problems',
-      'Method E (cable on a cable ladder, single-layer, with at least one cable diameter spacing) allows free convection on all sides, which is more efficient cooling than Method C\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s clipped-against-a-surface arrangement.',
-      'Understand why different maintenance strategies are applied to different assets, contribute to FMEA and RCM reviews, and make better decisions about maintenance priorities based on failure consequences rather than simply equipment age',
+      'Certify new installation work — that is the role of an Electrical Installation Certificate (EIC) per Reg 644.1, not the condition-reporting EICR.',
+      'Recommend a next inspection interval — that is the duty-holder, who sets the re-inspection date from insurance requirements rather than inspector judgement.',
+      'Record observations with classification codes — an EICR lists defects in plain language only, because C1/C2/C3 codes are reserved for the EIC on new work.',
+      'Assess the condition of an existing installation — that is a separate condition survey, while the EICR is limited to confirming the next test date and inspector details.',
     ],
     correctAnswer: 0,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 5,
     question: 'Who can carry out an EICR?',
     options: [
-      'Response time too slow. Asphyxiation can cause unconsciousness in 30 seconds and death in minutes. Pre-positioned rescue plan with standby person + equipment is essential. Fire and Rescue may attend but cannot be the primary rescue route.',
-      'A "skilled person (electrically)" as defined in BS 7671 Part 2 — typically evidenced by membership of a competent person scheme (NICEIC, NAPIT, ELECSA, Stroma) and current 2391/2394/2395 (or equivalent) inspection and testing qualification. The duty-holder is liable if they appoint someone not competent.',
-      'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
+      'Any electrician who holds a current Part P registration, because Part P self-certification competence is the legal threshold for an EICR on any dwelling.',
+      'A "skilled person (electrically)" per BS 7671 Part 2 — evidenced by competent person scheme membership and a current inspection and testing qualification.',
+      'The original installer of the wiring only, because EICR competence depends on familiarity with the specific installation rather than a recognised qualification.',
+      'Any competent person scheme member regardless of qualification, because scheme membership alone satisfies the EAWR Regulation 16 competence requirement.',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 6,
     question: 'During an EICR you find an old non-compliant installation that was compliant when first installed. How do you code this?',
     options: [
-      'The label records the refrigerant type, GWP value, charge weight in kilograms and the equivalent tonnes of CO2 the charge represents. The label is a statutory requirement under the F-Gas Regulation. It triggers leak-check frequency rules (typically once a year for charges over 5 tonnes CO2 equivalent without an automatic leak detection system, less often with one), drives the recovery requirements at end of life, and helps the F-Gas engineer choose the right recovery cylinder if the unit is decommissioned.',
-      'Because the single-pole switch on the circuit must still interrupt the LINE conductor — reverse polarity means the switch interrupts neutral, leaving the lampholder live when "off". Bayonet holders do not have the screw-thread access hazard of E14/E27, but the switch behaviour is still a safety issue. Polarity verified at every accessory regardless of holder type.',
-      'You assess against current BS 7671 but use the C1/C2/C3 codes per Best Practice Guide 4. Departures that were compliant at installation but no longer meet the current edition (e.g. a fully metal CU on a 16th edition install) are typically C3 (improvement recommended) — not C1 or C2 — unless they present an actual present danger or potential danger. The EICR is not a vehicle for upgrading every old install to the latest edition.',
-      'MCS handles the technical certification. HIES (Home Insulation and Energy Systems Contractors Scheme) and RECC (Renewable Energy Consumer Code) handle the consumer-protection side — installer-customer contracts, deposit protection, dispute resolution, complaints handling. MCS-registered installers must also be members of one of these consumer codes. They\\\\\\\'re complementary regulatory layers.',
+      'You assess against the edition in force when the installation was built, and any item compliant at that time is automatically coded satisfactory regardless of present condition.',
+      'You code every departure from the current edition as C2 (potentially dangerous), because any installation below the latest standard is by definition a potential danger to users.',
+      'You assess against current BS 7671 but code per Best Practice Guide 4 — departures compliant at install but now superseded are typically C3, not C1 or C2.',
+      'You issue a C1 (danger present) for any feature superseded by a later edition, because the duty-holder must bring it up to the current standard before it can be used.',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 7,
     question: 'What must the inspector record on an EICR even if the chosen frequency follows a set licensing period?',
     options: [
-      'ERA 1996 s.44 (no detriment for raising H&S concerns); PIDA 1998 (whistleblowing, qualifying disclosures including external regulator); HASAWA s.7 (personal duty so refusal is required); EAWR Reg 16 (competence-based refusal).',
-      'Third-person self-talk creates psychological distance from the emotion, activating more of the prefrontal cortex\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s analytical capacity and reducing the amygdala\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s emotional intensity, allowing for more objective self-reflection',
-      'A copy of the EICR to be given to existing tenants within 28 days, new tenants before occupation, and to the local authority on request — Electrical Safety Standards in the Private Rented Sector Regs 2020',
-      'The reasons for the chosen frequency, including a note that licensing requirements were the basis. GN3 is explicit: even where set periods imposed by local authority licensing apply, the inspector shall still record on the EICR that those set periods were applied and the reason.',
+      'Nothing additional — where a licensing period sets the frequency, the inspector simply enters that date and need record no reasoning on the EICR.',
+      'The licence number and issuing authority only, because the licensing body justifies the interval rather than the inspector who carries out the work.',
+      'A signed declaration that the installation now complies with the current edition of BS 7671, because a licensing-driven inspection must result in a full upgrade.',
+      'The reasons for the chosen frequency, including a note that the licensing periods were applied and were the basis for the interval.',
     ],
     correctAnswer: 3,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     id: 8,
     question: 'What is the relationship between an EICR observation and a "departure" entered on the EICR?',
     options: [
-      'A departure is a deliberate, design-stage deviation from BS 7671 (e.g. designer specified non-standard impedances) recorded by the inspector if discovered. An observation is a finding during the inspection — a defect, deterioration or condition. Observations get C1/C2/C3/FI codes; departures are recorded separately with the rationale and the responsible designer.',
-      'Take time to familiarise yourself with the equipment, ask the assessor for clarification about its operation if needed, and apply your transferable skills and knowledge systematically — the assessor assesses your approach and reasoning, not just equipment-specific knowledge',
-      'Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.',
-      'Microgeneration Certification Scheme — a UK-government-backed certification scheme for installers and products of micro-generation. MCS is required to access most consumer financial schemes (including the Smart Export Guarantee) and is in practice mandatory for any commercial domestic install.',
+      'A departure is a deliberate design-stage deviation from BS 7671; an observation is a finding at inspection (a defect, deterioration or condition) that gets a C1/C2/C3/FI code.',
+      'A departure and an observation are two names for the same thing — both describe a defect found at site, and either term may go in the observations section of the EICR.',
+      'A departure is a defect presenting immediate danger coded C1, while an observation is a minor item coded C3 — the most and least serious ends of one coding scale.',
+      'An observation is a design-stage deviation recorded by the original designer, while a departure is a deterioration found by the inspector at the periodic inspection.',
     ],
     correctAnswer: 0,
     explanation:

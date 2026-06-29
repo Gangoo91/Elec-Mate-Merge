@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'sensor-placement-check1',
     question: 'Why does poor sensor placement lead to poor system performance?',
     options: [
-      'Sensors become more expensive to maintain',
       'False readings cause inappropriate BMS control decisions',
+      'Sensors become more expensive to maintain over time',
       'Poor placement makes sensors harder to access',
-      'Sensors placed incorrectly consume more power',
+      'Incorrectly placed sensors consume more power',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Poor sensor placement leads to false readings, which cause the BMS to make inappropriate control decisions. This creates a cascade of problems including energy waste, occupant discomfort, and equipment stress.',
   },
@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'Why should wall-mounted temperature sensors not be installed near windows or radiators?',
     options: [
       'Windows and radiators are difficult to access for maintenance',
-      'Solar gain and heat from radiators cause false temperature readings',
       'Windows and radiators may interfere with wireless signals',
       'Building regulations prohibit sensors near these locations',
+      'Solar gain and heat from radiators cause false temperature readings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Solar gain from windows and heat from radiators cause false temperature readings that don't represent actual room conditions, leading to poor temperature control and occupant discomfort.",
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'Why should CO₂ sensors not be installed next to ventilation grilles?',
     options: [
       'Ventilation grilles are too noisy for proper sensor operation',
-      'Fresh air from grilles causes false low CO₂ readings',
       'Grilles may physically damage the sensitive sensor elements',
+      'Fresh air from grilles causes false low CO₂ readings',
       'Vibration from grilles affects sensor calibration',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Fresh air from ventilation grilles causes false low CO₂ readings because the sensor detects the low CO₂ content of the incoming fresh air rather than the representative CO₂ levels in the occupied space.',
   },
@@ -52,9 +52,9 @@ const quickCheckQuestions = [
     question: 'What can cause a PIR occupancy sensor to give false triggers?',
     options: [
       'High humidity levels in the environment',
-      'Direct sunlight or heat sources affecting the sensor',
+      'Direct sunlight or nearby heat sources affecting the sensor',
       'Low ambient temperature in the room',
-      'Background electrical noise from equipment',
+      'Background electrical noise from nearby equipment',
     ],
     correctIndex: 1,
     explanation:

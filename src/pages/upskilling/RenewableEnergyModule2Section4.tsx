@@ -26,10 +26,10 @@ const inlineChecks = [
     question:
       'What does MPPT (Maximum Power Point Tracking) do?',
     options: [
-      'Tracks the sun across the sky to point the panels',
-      'Continuously adjusts the operating voltage of the PV string to keep it at the maximum power point (MPP) on the I-V curve — where V × I is at maximum. As irradiance and temperature change throughout the day, the MPP shifts; MPPT tracks it in real time',
-      'Mechanically tilts the panels',
-      'Switches the array off at night',
+      'Mechanically tracks the sun across the sky to keep the panels pointed at it',
+      'Continuously adjusts the string operating voltage to hold the maximum power point as conditions change',
+      'Mechanically tilts the panels through the day to follow the sun\'s elevation',
+      'Switches the array off at night and back on at dawn to protect the cells',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const inlineChecks = [
     question:
       'On a PV module I-V curve, where is the Maximum Power Point (MPP)?',
     options: [
-      'At V_oc (right-hand end, current = 0)',
-      'At the "knee" of the I-V curve — where V × I is at maximum. The MPP is at V_mp on the voltage axis and I_mp on the current axis. Both V_mp and I_mp are typically below their respective open-circuit / short-circuit values',
-      'At I_sc (top, voltage = 0)',
-      'At the intersection of V_oc and I_sc',
+      'At V_oc, the right-hand end of the curve where current is zero',
+      'At the "knee" of the curve, at V_mp and I_mp, where V × I is greatest',
+      'At I_sc, the top of the curve where the terminal voltage is zero',
+      'At the point where the V_oc and I_sc axes would intersect',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const inlineChecks = [
     question:
       'What causes the MPP to move during a day?',
     options: [
-      'The MPP is fixed by the module',
-      'Irradiance (W/m²) shifts the whole I-V curve up and down — higher irradiance, higher I_sc, higher MPP power. Temperature shifts V_oc and V_mp horizontally — hotter cells, lower V_oc and V_mp. The MPP moves continuously as the day progresses',
-      'Only nightfall affects it',
-      'Only cloud cover affects it',
+      'The MPP is fixed by the module and does not move during the day',
+      'Irradiance shifts the curve up/down (I_sc) and temperature shifts it sideways (V_oc, V_mp)',
+      'Only nightfall moves it, when generation stops at the end of the day',
+      'Only passing cloud cover moves it; temperature has no effect on the MPP',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const inlineChecks = [
     question:
       'The perturb-and-observe (P&O) MPPT algorithm is the most common implementation. How does it work?',
     options: [
-      'It measures the module datasheet and uses the V_mp value',
-      'It perturbs the operating voltage by a small step in one direction, measures whether power increased or decreased, and continues stepping in the direction of increasing power until power starts decreasing — at which point it reverses direction. The algorithm continuously oscillates around the MPP',
-      'It uses GPS to track the sun position',
-      'It is a manual adjustment',
+      'It reads the module datasheet V_mp value and fixes the operating voltage there',
+      'It steps the voltage, observes if power rose, keeps stepping that way, and reverses when power falls',
+      'It uses GPS sun-position data to predict the optimum operating voltage',
+      'It relies on a manual adjustment the installer sets at commissioning',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const inlineChecks = [
     question:
       'Incremental conductance MPPT is an alternative algorithm to perturb-and-observe. What\'s the principle?',
     options: [
-      'It is identical to P&O',
-      'It uses the property that at the MPP, dP/dV = 0 (the power-vs-voltage slope is zero). Equivalently dI/dV = -I/V at MPP. The algorithm tracks dI/dV against -I/V in real time and adjusts operating voltage to satisfy the equality — typically faster and more accurate under rapidly changing irradiance than P&O',
-      'It only works on monocrystalline cells',
-      'It requires GPS data',
+      'It is functionally identical to perturb-and-observe, just renamed',
+      'It uses dI/dV = -I/V at MPP, tracking that equality directly for faster response',
+      'It works only on monocrystalline cells, not poly or thin-film modules',
+      'It requires GPS data to compute the curve slope at the operating point',
     ],
     correctIndex: 1,
     explanation:
@@ -96,10 +96,10 @@ const inlineChecks = [
     question:
       'Why do modern residential hybrid inverters typically have 2 or 3 MPPT inputs?',
     options: [
-      'Just for flexibility',
-      'Each MPPT input operates one string independently at its own MPP. Multi-MPPT lets the installer design strings for different orientations, different shading conditions, or different module counts — each string optimised separately. Without multi-MPPT, mismatched strings would have to be combined and dragged to the weakest string\'s operating point',
-      'They are decorative',
-      'For redundancy only',
+      'Purely for wiring flexibility, with no effect on yield',
+      'Each MPPT runs one string at its own MPP, so different orientations are optimised separately',
+      'They are decorative terminals with no functional role in tracking',
+      'They exist only for redundancy if one tracking channel fails',
     ],
     correctIndex: 1,
     explanation:
@@ -110,10 +110,10 @@ const inlineChecks = [
     question:
       'When sizing a PV string against an inverter\'s MPPT input, three voltage parameters must align. What are they?',
     options: [
-      'Just the V_oc',
-      'Cold-morning string V_oc < inverter absolute maximum DC input (covered in Section 2.3); hot-day string V_mp > inverter MPPT minimum voltage (else the inverter can\'t operate the string at MPP); cool-condition string V_mp < inverter MPPT maximum voltage (else the inverter is forced to operate the string off-MPP at the upper end)',
-      'Only the I_sc matters',
-      'Only the power rating',
+      'Only the string V_oc needs to be checked against the inverter',
+      'Cold-morning V_oc < inverter max input; hot-day V_mp > MPPT minimum; cool-day V_mp < MPPT maximum',
+      'Only the string I_sc matters for MPPT compatibility',
+      'Only the inverter\'s power rating matters; voltage is not a constraint',
     ],
     correctIndex: 1,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'A PV string with V_oc 540 V at STC and V_mp 440 V at STC connects to a hybrid inverter with MPPT range 100–500 V and absolute maximum DC input 600 V. On a hot summer day, V_mp drops to ~370 V (due to temperature coefficient). On a cold winter morning, V_oc rises to ~590 V. Is the design compatible across the operating envelope?',
     options: [
-      'No — outside MPPT range',
-      'Yes — cold-morning V_oc 590 V < 600 V inverter absolute maximum (with 10 V margin); hot-day V_mp 370 V > 100 V MPPT minimum; cool-condition V_mp 440 V (STC) < 500 V MPPT maximum. All three voltage rules satisfied across the operating envelope',
-      'Only at STC',
-      'Cannot tell',
+      'Yes — V_oc 590 V < 600 V max, V_mp 370 V > 100 V min, V_mp 440 V < 500 V max; all three pass',
+      'No — the string sits outside the inverter\'s MPPT voltage range in operation',
+      'Only at STC — the design fails once temperature shifts V_oc and V_mp',
+      'Cannot be determined from the voltage figures given for the string',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The three MPPT voltage checks: cold-morning V_oc (590 V) vs inverter Vmax (600 V) — passes with margin. Hot-day V_mp (370 V) vs MPPT min (100 V) — passes comfortably. Cool-condition V_mp (440 V) vs MPPT max (500 V) — passes. The string is compatible across the operating envelope. The 10 V margin on cold-morning V_oc is the minimum acceptable; 20+ V margin is the safer design. This three-check method is mandatory on every MCS MIS 3002 design pack.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'Without MPPT, a PV array connected directly to a 24 V battery operates at approximately what voltage? And what does that cost in yield?',
     options: [
-      'At V_mp — no loss',
-      'At the battery voltage (~24–28 V depending on charge state) — well below typical V_mp values (130 V for a 4-module 24 V battery system would be impossible; for a smaller array sized at ~30 V V_mp, operating at 24 V means operating well left of MPP, losing 20–40% of available power',
-      'At V_oc — maximum',
-      'At zero volts',
+      'At its V_mp — directly connecting array to battery costs no yield',
+      'At the battery voltage (~24–28 V), well left of V_mp, losing 20–40% of available power',
+      'At V_oc — the array sits at its maximum open-circuit voltage point',
+      'At zero volts — the battery clamps the array terminals to no output',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Perturb-and-observe (P&O) MPPT exhibits a characteristic behaviour at steady state. What is it?',
     options: [
-      'Exact MPP operation with no oscillation',
-      'Small oscillation around the MPP — the operating voltage steps continuously back and forth across the MPP, never settling exactly at V_mp. The result is a small steady-state loss (typically 0.5–2% depending on step size) compared to a hypothetical perfect-tracking algorithm',
-      'Random voltage jumps',
-      'Total shutdown',
+      'Exact MPP operation, settling precisely at V_mp with no oscillation',
+      'Random voltage jumps unrelated to the position of the MPP',
+      'Small continuous oscillation around the MPP, costing ~0.5–2% in steady state',
+      'Total shutdown of tracking once the operating point reaches V_mp',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'P&O\'s perturb-and-observe action produces continuous small oscillation around the MPP — the operating voltage swings within a few volts of V_mp at each tracking cycle. Smaller step sizes reduce the oscillation but slow the response to fast-changing conditions (passing clouds). Adaptive-step P&O implementations vary the step size based on the rate of change — larger steps under fast irradiance changes, smaller steps under steady-state — minimising both tracking error and steady-state oscillation loss. Modern hybrid inverters typically achieve &gt;99% MPPT efficiency.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A customer with a two-pitch roof (south and east) considers single-MPPT vs dual-MPPT inverter options. The single-MPPT inverter is £200 cheaper. The dual-MPPT inverter handles the two strings separately. Across a 25-year install life, which is the better choice?',
     options: [
-      'Single-MPPT — save the £200',
-      'Dual-MPPT — eliminates the mismatch loss between the two orientations. Annual yield gain is typically 5–15% on a multi-orientation array. Over 25 years at typical UK PV economics, the cumulative additional yield is worth £1,500–£3,500 — far exceeding the £200 inverter cost differential',
-      'Either is equivalent',
-      'Manual switching between the two strings',
+      'Single-MPPT — save the £200 and accept the orientation mismatch',
+      'Either is equivalent over the life of a multi-orientation array',
+      'Neither — manually switch the inverter between the two strings through the day',
+      'Dual-MPPT — removes the orientation mismatch; the yield gain far exceeds £200',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The dual-MPPT inverter\'s additional cost pays back many times over on a multi-orientation install. Mismatch losses on a single-MPPT array combining south and east orientations are typically 10–20% during peak-mismatch periods, and 5–15% on an annual basis. The cumulative cost of the lost yield over 25 years vastly exceeds the inverter price differential. Always specify multi-MPPT on multi-orientation arrays — the &ldquo;save £200 on the inverter&rdquo; option is the most expensive line item on the install over its life.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'A PV string commissions in summer and operates correctly. The first cold sunny February morning, the inverter trips on over-voltage. Most likely root cause:',
     options: [
-      'Module failure',
-      'Cold-morning V_oc calculation was not done at design time. STC V_oc was below the inverter\'s absolute maximum, but cold-morning V_oc (10–15% above STC due to the temperature coefficient) exceeds the limit. The string is one module too long for the inverter\'s cold-day operating envelope',
-      'Inverter firmware bug',
-      'Customer overloaded the system',
+      'Cold-morning V_oc was not checked at design time, so the string is one module too long',
+      'A module has failed open-circuit, raising the string voltage above the limit',
+      'An inverter firmware bug is mis-reporting the DC input voltage on cold mornings',
+      'The customer has overloaded the system with too much connected load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This failure pattern is the most-common UK PV design error in action — the cold-morning V_oc calculation skipped at design time, surfaced as an inverter over-voltage trip on the first cold sunny morning post-install. The fix: reduce the string by one module (and verify the resulting hot-day V_mp still exceeds the MPPT minimum). The diagnostic: pull the cold-morning V_oc value from the inverter log alongside the cell temperature. Section 2.3\'s worked example walks the calculation; MIS 3002 mandates it in the design pack.',
   },
@@ -197,10 +197,10 @@ const quizQuestions = [
     question:
       'Module-level MPPT via microinverters or power optimisers (Section 2.5 covers in detail) — what advantage do they offer over string-level MPPT?',
     options: [
-      'Lower cost',
-      'Module-level MPPT operates each module at its own MPP, eliminating string-level mismatch losses entirely. Each module produces its maximum regardless of partial shade, orientation differences, or module age variation. The trade-off is per-module hardware cost and additional electronic components per install',
-      'Higher voltage',
-      'Mechanical tracking of the sun',
+      'Lower overall hardware cost than a single string inverter',
+      'Each module runs at its own MPP, eliminating string-level mismatch entirely',
+      'Higher DC string voltage delivered to the inverter input',
+      'Mechanical sun-tracking of each module across the sky',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,12 +211,12 @@ const quizQuestions = [
     question:
       'Why does incremental conductance MPPT typically outperform perturb-and-observe under rapidly changing irradiance (passing clouds)?',
     options: [
-      'It uses GPS data',
-      'P&O\'s step-and-observe approach takes 2–3 perturbation cycles to recognise a new MPP after a step-change in irradiance. Incremental conductance directly evaluates the MPP condition (dI/dV = -I/V) in one measurement cycle and adjusts immediately. The difference matters most on UK partial-cloud days where irradiance changes 5–10 times per minute',
-      'Both algorithms are identical in performance',
-      'P&O cannot work under cloud',
+      'It uses GPS irradiance forecasts to anticipate cloud passes',
+      'Both algorithms perform identically under changing irradiance',
+      'It evaluates the MPP condition in one cycle, where P&O needs 2–3 to react',
+      'P&O cannot operate at all under intermittent cloud cover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under rapidly changing irradiance (passing cumulus clouds, partial shade moving across the array), P&O can momentarily &ldquo;confuse&rdquo; the irradiance change for a power change due to its own perturbation — causing tracking errors. Incremental conductance evaluates the I-V curve mathematics directly in one measurement cycle, identifying the new MPP without the ambiguity. On UK installs where irradiance variability is the norm (cloud-passes happen many times per hour), incremental conductance can capture 1–3% more annual energy than P&O. Most modern inverters use enhanced P&O variants or hybrid algorithms; pure incremental conductance is less common but appears in some premium-tier inverters.',
   },
@@ -225,12 +225,12 @@ const quizQuestions = [
     question:
       'A small off-grid PV system uses a PWM charge controller into a 12 V battery bank. The customer asks whether upgrading to an MPPT controller is worthwhile. The right professional advice:',
     options: [
-      'PWM is fine — no upgrade needed',
-      'MPPT upgrade typically recovers 20–40% additional annual energy vs PWM, because PWM forces the array to operate at the battery voltage (well below V_mp). The MPPT controller cost differential (typically £80–150 vs PWM) is recovered in 1–3 years on most off-grid systems. The upgrade is worthwhile on any system above a few hundred watts',
-      'MPPT only works on grid-tied systems',
-      'PWM has higher efficiency than MPPT',
+      'PWM is fine here — there is no worthwhile upgrade for this off-grid system',
+      'MPPT only works on grid-tied systems, not off-grid battery systems',
+      'PWM controllers have higher harvesting efficiency than MPPT controllers',
+      'MPPT recovers ~20–40% more annual energy and pays back in 1–3 years above a few hundred watts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PWM controllers operate the array at the battery voltage, losing 20–40% of available array power compared to MPP operation. MPPT controllers run the array at V_mp and step the voltage down to the battery via a DC-DC converter, capturing the full array power. On any off-grid system above ~100 W array capacity, the MPPT upgrade pays back in 1–3 years through additional energy harvested. For very small systems (under 50 W) the cost differential may not pay back; for typical &gt; 500 W off-grid PV, MPPT is the standard. The customer\'s question deserves a yes recommendation backed by the cost-benefit calculation.',
   },

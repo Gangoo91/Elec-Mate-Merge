@@ -37,23 +37,23 @@ const checks = [
     id: 'm5-s3-sub4-test-voltage',
     question: 'Per BS 7671 Table 64, the test voltage and minimum acceptable IR for a 230 V LV final circuit is:',
     options: [
-      'Charge-hand is a senior trade lead — typically an experienced Approved Electrician who runs a small gang of electricians and apprentices on a specific area of the work, reporting up to the Foreman. On a larger job there can be several Charge-hands under one Foreman, each leading a wing or a floor.',
-      'Higher-risk activities (live working, hot works, work in confined spaces, work near other live services) on commercial and industrial sites — issued by the responsible person with named conditions and time limits.',
-      'Business description, target market and competition, services and pricing strategy, financial projections (year 1 month-by-month, years 2-3 quarterly), marketing plan, operational plan. A working document, not a one-time exercise.',
-      '500 V DC, ≥ 1 MΩ. Test voltage 500 V DC for any circuit rated up to and including 500 V (excluding SELV / PELV); minimum acceptable IR 1 MΩ. Anything below 1 MΩ requires investigation — between which conductors and what fixed appliance is contributing.',
+      '230 V DC, ≥ 1 MΩ (test at the nominal circuit voltage).',
+      '250 V DC, ≥ 0.5 MΩ (the reduced-voltage SELV/PELV setting).',
+      '1000 V DC, ≥ 2 MΩ (the above-500 V circuit setting).',
+      '500 V DC, ≥ 1 MΩ (the LV setting, excluding SELV / PELV).',
     ],
     correctIndex: 3,
     explanation:
-      'Table 64 (A4:2026) — for nominal circuit voltages up to and including 500 V (excluding SELV/PELV), test at 500 V DC, minimum IR 1 MΩ. The 1 MΩ figure is the absolute minimum for compliance; healthy modern installations typically read 100 MΩ+ (the meter often shows ">200 MΩ" or ">500 MΩ"). Readings between 1 MΩ and 100 MΩ should prompt investigation — could be a fixed appliance, a damp run, or early insulation degradation.',
+      'Table 64 (A4:2026) — for nominal circuit voltages up to and including 500 V (excluding SELV/PELV), test at 500 V DC, minimum IR 1 MΩ. The 1 MΩ figure is the absolute minimum for compliance; healthy modern installations typically read 100 MΩ+ (the meter often shows ">200 MΩ" or ">500 MΩ"). Readings between 1 MΩ and 100 MΩ should prompt investigation — could be a fixed appliance, a damp run, or early insulation degradation. There is no 230 V test setting; 1000 V is for above-500 V circuits; 250 V is for SELV/PELV.',
   },
   {
     id: 'm5-s3-sub4-disconnect-electronics',
     question: 'Before performing an IR test on a final circuit that includes an RCBO at the CU and SPDs in the consumer unit, you should:',
     options: [
-      'Disconnect or isolate components that present a low resistance during the IR test — RCBOs, RCDs, AFDDs, SPDs, electronic dimmers, capacitors, pilot/indicator lamps. Test in two stages per Reg 643.3.3 if the circuit cannot be cleanly isolated from these components, then verify the components separately.',
-      'Apply the 0.8 rule for measured-vs-table comparison: Zs(measured) ≤ 0.8 × Zs(table) = 0.8 × 1.37 = 1.10 Ω. 1.05 ≤ 1.10 → pass with small margin (5 %). Worth noting on the schedule that compliance is borderline; investigate any reasons the cable might be hot in service (long run, bundled cables, high ambient temperature).',
-      'The button only proves the trip mechanism (electromechanical or electronic latch + tripping spring) operates — it does not prove the residual-current-sensing transformer and electronics are detecting an actual residual current. An instrument-based test injects a real residual current of 30 mA at IΔn and measures the trip time, verifying the complete protective function.',
-      'Identify which technology controls the faulty function by reading the drawings, then apply the appropriate diagnostic technique for that part of the system — I/O status for PLC, multimeter tracing for relay circuits',
+      'Disconnect or isolate the low-resistance components — RCBOs, AFDDs, SPDs, dimmers, capacitors — or use the Reg 643.3.3 two-stage method.',
+      'Leave the RCBO and SPDs in place but lower the test voltage to 100 V DC, too low to trigger the SPD while still proving the cable.',
+      'Operate the RCBO test button first to discharge the SPD, then test at full 500 V DC with all devices connected for the measurement.',
+      'Test the circuit live at 500 V AC rather than DC, so the alternating test voltage passes harmlessly through the SPD and RCBO electronics.',
     ],
     correctIndex: 0,
     explanation:
@@ -63,10 +63,10 @@ const checks = [
     id: 'm5-s3-sub4-parallel-paths',
     question: 'You IR test a 200 m underground submain on a commercial site. Reading is 0.8 MΩ at 500 V DC. The cable is single-core 95 mm² Al SWA, three runs in parallel per phase. What is your interpretation?',
     options: [
-      'Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.',
-      'Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).',
-      'Fail at first glance (< 1 MΩ). But long parallel cables behave like resistors in parallel — three 200 m runs in parallel reduce the apparent IR by approximately 1/3. Each individual run could be reading roughly 2.4 MΩ. Test each parallel run independently to localise; document per-run IR. Long damp runs of underground cable show lower IR than short dry indoor runs — context matters.',
-      'No — each extraneous-conductive-part must have its own dedicated main protective bonding conductor running back to the MET (or via a properly designed bonding bar). Daisy-chaining means a disconnection at one part disables bonding to the next, and the conductor’s integrity becomes dependent on the previous clamp.',
+      'A clear pass. 0.8 MΩ on a 200 m submain is well within range once you allow for length — the 1 MΩ minimum only applies to short final circuits, not to submains.',
+      'A clear fail requiring cable replacement. Any reading below 1 MΩ means the cable insulation has broken down and the submain must be re-pulled before energising.',
+      'Fail at first glance (< 1 MΩ), but three 200 m runs in parallel reduce apparent IR by ~1/3, so each run could read ~2.4 MΩ. Test each run independently to localise.',
+      'A meter error. SWA armour shorts the test to earth, so 0.8 MΩ is simply the resistance of the armour and the reading should be ignored on any SWA cable.',
     ],
     correctIndex: 2,
     explanation:
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Table 64 (A4:2026) test voltage and minimum IR for SELV / PELV circuits:',
     options: [
-      'MCCBs typically have adjustable trip settings (Ir, Isd, Ii) that must be correctly configured for the specific application, and their higher breaking capacities require careful verification against prospective fault current',
-      '250 V DC, ≥ 0.5 MΩ for basic insulation and live-to-earth tests on SELV/PELV. The lower test voltage protects SPD-style components on low-voltage equipment; the lower acceptance threshold reflects the lower stress on the insulation in service.',
-      'Annual leak check by F-Gas-certified personnel where charge ≥ 5 tonnes CO₂e, or every 2 years where charge < 5 tonnes; frequencies double if a leak detection system is installed and operational',
-      'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
+      '500 V DC, ≥ 1 MΩ — the same as a standard LV final circuit, because the test voltage is set by the insulation type rather than the circuit voltage.',
+      '250 V DC, ≥ 0.5 MΩ for both basic insulation and live-to-earth tests on SELV/PELV circuits.',
+      '50 V DC, ≥ 0.25 MΩ — the test voltage matches the SELV upper limit of 50 V AC so the extra-low-voltage components are never over-stressed.',
+      '250 V DC, ≥ 1 MΩ — the reduced voltage protects the components but the 1 MΩ threshold is retained to match all other circuits.',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 2,
     question: 'Test voltage for circuits rated above 500 V (e.g. some 1 kV control circuits or motor feeders):',
     options: [
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'Because the design uses a worst-case Cmin factor (0.95 in BS 7671 A4:2026 Appendix 14, since moved to Appendix 3) to allow for declared rather than measured Ze, expected temperature rise of conductors, and manufacturing tolerance — the install is then verified at ambient with the actual cable.',
-      '1000 V DC, minimum IR per Table 64 (typically 1 MΩ at 1000 V). Used for circuits rated above 500 V up to 1000 V — the higher test voltage stresses the insulation appropriately for its in-service voltage and reveals defects that would not show at 500 V.',
-      'Absence of trust — without trust, team members will not be vulnerable with each other, leading to fear of conflict, lack of commitment, avoidance of accountability, and ultimately inattention to collective results',
+      '500 V DC, minimum IR 1 MΩ — the standard LV test voltage is used for all circuits up to 1000 V, with no increase needed above 500 V.',
+      '1500 V DC, minimum IR 2 MΩ — the test voltage is set at three times the circuit voltage to provide a deliberate over-stress margin.',
+      '1000 V DC, minimum IR 1 MΩ — for circuits rated above 500 V up to 1000 V.',
+      '690 V DC, minimum IR 1 MΩ — the test voltage matches the most common above-500 V rating, 690 V three-phase, exactly.',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,10 +105,10 @@ const quizQuestions = [
     id: 3,
     question: 'Setting up an IR test on a final circuit at the CU:',
     options: [
-      'Redesign — options include increasing the cpc CSA (e.g. from 1.5 mm² to 2.5 mm² as a separate cpc on a single-cable run), shortening the route by relocating the device or the load, dropping to a lower-rated device (B25 max Zs = 1.75 Ω), or fitting a 30 mA RCD as the alternative path under Reg 411.4.204 if the circuit type allows it.',
-      'Witnesses fade fast — by the next day they\\\\\\\\\\\\\\\'ve reconstructed events differently, by the next week they\\\\\\\\\\\\\\\'ve forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm\\\\\\\\\\\\\\\'s defence team will all want this evidence later.',
-      'Internal to firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person; external to Environment Agency 0800 80 70 60 (24/7) in England, SEPA in Scotland, NRW in Wales. For controlled waters / water pollution / land contamination / hazardous-substance escape. Local authority for noise nuisance / contaminated land issues.',
-      'Safely isolate. Open all switches and disconnect any wired-in fixed appliances (or accept Reg 643.3.3 two-stage method). Disconnect L and N at the protective device; if the circuit shares a neutral bar with other circuits, lift its neutral too. Connect the IR tester between L and CPC, then N and CPC, then L and N (each combination). Press TEST. Reading must be ≥ 1 MΩ for a 500 V test.',
+      'Leave the circuit live with all loads on to read the in-service condition, then disconnect L and N and test each combination at 500 V.',
+      'Safely isolate but leave the neutral landed on the shared bar, so one test through the common neutral gives the IR of the whole board.',
+      'Safely isolate and test only L to N at 500 V — continuity has already proven the L-E and N-E paths, so one L-N reading is enough.',
+      'Safely isolate, disconnect L and N (and any shared neutral), then test L-CPC, N-CPC and L-N — each must read ≥ 1 MΩ at 500 V.',
     ],
     correctAnswer: 3,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 4,
     question: 'You measure IR L-E on a kitchen radial = 0.4 MΩ at 500 V DC. The circuit feeds a built-in dishwasher (still wired in) and a recessed 230 V LED downlight strip. Most likely cause:',
     options: [
-      'A fixed appliance is contributing leakage. Disconnect the dishwasher at its connection unit, retest. If IR rises above 1 MΩ the dishwasher was the cause. Disconnect the LED driver at the downlights, retest. The reading should now reflect the cable insulation alone — typically tens or hundreds of MΩ.',
-      'Indirectly - 30-year DPA liability, competence framework changes, Building Regs amendments (Approved Doc B fire safety especially), regulatory direction-of-travel emphasising traceability and certified competence.',
-      'Because both have finite lives — panels are typically guaranteed for 25+ years (with declining output), inverters for 5–15 years (and need replacing within the system life), lithium-ion batteries for 10–15 years before significant capacity fade. The customer should understand the install isn’t fit-and-forget forever.',
-      'That it correctly transfers the load between sources, that the make-before-break or break-before-make sequence is correct for the application, and that mechanical and electrical interlocks prevent paralleling of sources',
+      'A fixed appliance is contributing leakage. Disconnect the dishwasher and LED driver, retest, and watch the cable-only reading rise.',
+      'Damaged cable insulation between line and CPC. 0.4 MΩ is below the minimum, so the cable must be condemned and replaced.',
+      'A faulty test lead. 0.4 MΩ is the typical resistance of un-nulled IR test leads, so re-nulling will raise the reading above 1 MΩ.',
+      'Moisture in the consumer unit. A 0.4 MΩ L-E reading always means water ingress at the board; dry the enclosure and retest first.',
     ],
     correctAnswer: 0,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 5,
     question: 'Effect of cable length on measured insulation resistance:',
     options: [
-      'Regulation 132.13 — the explicit requirement for design documentation. Plus Reg 514.9.1 which addresses the on-site distribution board diagram requirement (with the A4:2026 domestic exception). Plus Reg 644.1.1 which makes the EIC and supporting documentation conditional on defect rectification. Plus Section 514 series on identification and notices.',
-      'Inversely proportional. Doubling the cable length doubles the surface area for leakage, halving the apparent IR. A 50 m run reading 200 MΩ would read approximately 100 MΩ at 100 m for the same insulation quality. On long runs (especially underground or in damp conditions), the absolute MΩ figure matters less than the consistency between runs of similar length.',
-      'Mandatory medical assessment. ECG to check for cardiac arrhythmia (which can develop hours after the event). Examination for entry / exit burns (often deep with little surface marking). Assessment for muscle damage and rhabdomyolysis. Even a brief 230V shock warrants A&E.',
-      'Shock / direct contact → EAWR Reg 4 / 13 + BS 7671. Arc-flash → EAWR Reg 4 + 14 + COSHH (combustion products) + EN 61482 PPE. Fire → EAWR + RRFSO 2005 + Approved Doc B. Secondary injury → MHSWR Reg 3 (assessment of consequence chain). Each hazard has its regulatory home.',
+      'Directly proportional. Doubling the length doubles the apparent IR, because a longer insulation path offers more resistance to leakage.',
+      'Inversely proportional. Doubling the length doubles the leakage surface area, halving the apparent IR for the same insulation quality.',
+      'No effect. IR is a property of the insulation material only, so a 5 m run and a 500 m run of the same cable read the same MΩ.',
+      'Inversely proportional to the square of the length. Doubling the length quarters the apparent IR, because both area and volume rise.',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 6,
     question: 'Effect of parallel cables (multi-core or single-core in parallel) on measured IR:',
     options: [
-      'Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.',
-      'An Electrical Installation Certificate (EIC), accompanied by a Schedule of Inspections AND a Schedule of Test Results — the three-document set required by Section 644 for full initial verification.',
-      'Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.',
-      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
+      'Like series resistors. Two equal-IR cables in parallel double the apparent IR, because the leakage paths add together end to end.',
+      'No effect. Parallel cables share the load but each presents its full individual IR, so the combined reading equals one cable.',
+      'Like parallel resistors. Two equal cables in parallel halve the apparent IR; three reduce it to one-third — localise by isolating each run.',
+      'The apparent IR is set by the best cable. The tester reports the highest individual IR, so one good cable masks any faulty parallel runs.',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 7,
     question: 'Reg 643.3.3 — two-stage IR test required when:',
     options: [
-      'Right not to suffer detriment for raising a H&S concern, refusing dangerous work, leaving the workplace in serious and imminent danger, or being a designated H&S representative. Detriment = sacking, demotion, removal from job, disciplinary, victimisation, harassment.',
-      'Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re locked out of growing markets like heat pumps, EV, PV and battery',
-      'Confirm: (1) clamp is on consumer side of the meter and on hard metal pipework before any branch; (2) within 600 mm of the meter outlet union where practicable; (3) pipe cleaned to bare metal under the clamp jaw; (4) jointing paste applied; (5) clamp screw torqued to manufacturer spec; (6) "Safety Electrical Connection — Do Not Remove" warning label fitted on the clamp body or conductor; (7) bonding conductor secure and labelled at the MET end.',
-      'When the circuit contains components that may present low resistance during the IR test or be damaged by the test voltage — RCBOs, RCDs, AFDDs, SPDs, capacitors, electronic dimmers — and cannot be disconnected for the test. First stage: test L+N together to earth at full voltage with everything in place. Second stage: test L to N with electronics isolated.',
+      'When the cable run exceeds 100 m, so that the first stage tests the near half of the cable and the second stage the far half, avoiding the length-related drop in apparent IR.',
+      'When testing a three-phase circuit, where stage one covers the line-to-line combinations and stage two covers the line-to-earth and neutral-to-earth combinations.',
+      'When the previous IR reading was below 1 MΩ, so that stage one re-tests at 250 V to protect the cable and stage two confirms the result at the full 500 V.',
+      'When the circuit contains components that present low resistance or can be damaged by the test — RCBOs, AFDDs, SPDs, dimmers — and cannot be disconnected.',
     ],
     correctAnswer: 3,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     id: 8,
     question: 'IR result interpretation — a healthy modern installation typically reads:',
     options: [
-      'Between 50 MΩ and over the meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s maximum range (typically &gt; 200 MΩ or &gt; 999 MΩ depending on model). The 1 MΩ minimum is for borderline acceptance; a well-installed dry circuit with no contributing components should read tens or hundreds of MΩ. Readings between 1-50 MΩ warrant investigation even though they pass — there is leakage from somewhere.',
-      'Close to specific sensitive equipment — usually within a few metres of the equipment terminals (server cabinet, medical equipment, AV / studio gear, specialised electronic plant). Provides the final stage of cascade reduction; typically combined with Type 2 upstream.',
-      'Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries',
-      'A comprehensive assessment that accounts for all greenhouse gas emissions over the entire life of a building, including embodied carbon (materials and construction), operational carbon (energy in use), and end-of-life carbon (demolition and disposal)',
+      'Between 50 MΩ and over the meter maximum range (typically above 200 MΩ), well clear of the 1 MΩ minimum.',
+      'Exactly 1 MΩ. A healthy circuit reads the Table 64 minimum; anything higher indicates the test voltage was set too low to fully stress the insulation.',
+      'Between 1 MΩ and 5 MΩ. Modern PVC insulation deliberately leaks a small current to bleed off static, so readings in this band are the normal healthy range.',
+      'Around 0.5 MΩ. The SELV minimum applies to all modern circuits because most now contain electronics, so a healthy install sits just above 0.5 MΩ.',
     ],
     correctAnswer: 0,
     explanation:

@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question:
       'When taking an oil sample from a gearbox for analysis, the most important consideration is:',
     options: [
-      'Safety helmet, safety footwear, gloves and high-visibility clothing as appropriate to the site',
-      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
-      'Optimise what is working and kill what is not &mdash; make small, strategic adjustments rather than dramatic changes',
+      'Filling the bottle from the drain plug after the equipment has cooled',
+      'Filtering the sample to remove visible debris before sending it to the lab',
+      'Topping the bottle right up so there is no air space above the oil',
       'Taking the sample from a consistent, representative location while the equipment is at operating temperature',
     ],
     correctIndex: 3,
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'An oil analysis report shows elevated levels of iron and chromium particles in a gearbox oil sample. This most likely indicates:',
     options: [
-      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
+      'Water contamination from a failed seal allowing moisture ingress',
       'Wear of steel gears and bearings — the iron and chromium come from the gear and bearing materials',
-      'Cherry-red colouration of the skin, along with headache and confusion',
-      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
+      'Bronze bush wear, which releases copper and tin into the oil',
+      'Oxidation of the base oil raising the total acid number',
     ],
     correctIndex: 1,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     question: 'Dissolved gas analysis (DGA) of transformer oil can detect:',
     options: [
       'Internal faults such as overheating, arcing and partial discharge by analysing gases dissolved in the oil',
-      'Folders by client name, with subfolders for quotes, certificates, photos, and invoices',
-      'A daily contemporaneous record of weather, deliveries, visitors, instructions received and progress',
-      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
+      'The viscosity grade of the oil and whether it is still fit for service',
+      'The particle count and ISO cleanliness code of the oil',
+      'The total acid number, indicating how far the oil has oxidised',
     ],
     correctIndex: 0,
     explanation:
@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'Oil analysis is classified as which type of maintenance approach?',
     options: [
-      'Detection sensitivity and alarm functionality',
+      'Reactive (breakdown) maintenance',
       'Condition-based predictive maintenance',
-      'The Health and Safety Executive (HSE)',
-      'No energy input required beyond fan power',
+      'Fixed-interval planned preventive maintenance',
+      'Run-to-failure maintenance',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,9 +84,9 @@ const quizQuestions = [
     id: 3,
     question: 'Water contamination in lubricating oil is harmful because:',
     options: [
-      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
-      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
-      'Quantify the number and size distribution of solid contaminant particles in the oil',
+      'It improves the oil film strength and reduces friction',
+      'It raises the dielectric strength, masking insulation faults',
+      'It increases the viscosity, improving load-carrying capacity',
       'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
     ],
     correctAnswer: 3,
@@ -98,9 +98,9 @@ const quizQuestions = [
     question: 'Ferrography differs from spectrometric oil analysis because it:',
     options: [
       'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
-      'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
-      'The number and size distribution of solid particles per millilitre of oil',
-      'Annually for critical transformers, with increased frequency if gas levels are rising',
+      'Measures only the total acid number rather than wear metals',
+      'Requires no sample and is performed continuously online',
+      'Can detect dissolved water but not solid particles',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'For transformer oil, the breakdown voltage test (BDV) measures:',
     options: [
-      'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
+      'The viscosity of the oil at operating temperature',
       'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
-      'Annually for critical transformers, with increased frequency if gas levels are rising',
-      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
+      'The concentration of dissolved gases from internal faults',
+      'The total acid number indicating oxidation',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 6,
     question: 'The ISO cleanliness code (e.g., ISO 4406:21/18/15) refers to:',
     options: [
-      'Condition monitoring and predictive maintenance strategies',
-      'Water contamination — water emulsified in the oil gives a milky appearance',
+      'The viscosity grade of the oil at three reference temperatures',
+      'The dissolved water content expressed in parts per million',
       'The number and size distribution of solid particles per millilitre of oil',
-      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
+      'The dielectric strength of the oil at three test voltages',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,9 +137,9 @@ const quizQuestions = [
     question:
       'An oil sample from a motor bearing housing shows a milky white appearance. The most likely cause is:',
     options: [
-      'The number and size distribution of solid particles per millilitre of oil',
-      'Condition monitoring and predictive maintenance strategies',
-      'Annually for critical transformers, with increased frequency if gas levels are rising',
+      'High iron content from advanced bearing wear',
+      'Air entrainment that will clear once the oil settles',
+      'Normal darkening of the oil through thermal ageing',
       'Water contamination — water emulsified in the oil gives a milky appearance',
     ],
     correctAnswer: 3,
@@ -164,10 +164,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should transformer oil samples typically be taken for DGA?',
     options: [
-      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
+      'Only once, at the time the transformer is commissioned',
       'Annually for critical transformers, with increased frequency if gas levels are rising',
-      'Quantify the number and size distribution of solid contaminant particles in the oil',
-      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
+      'Every ten years, in line with the EICR periodic interval',
+      'Only after a protection trip has already occurred',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 10,
     question: 'Viscosity is the most important physical property of a lubricant because:',
     options: [
-      'A document that sets out how waste will be managed on a construction site, including waste types, quantities, and disposal routes',
-      'Citizens Advice offers free guidance on consumer and employment rights, while the FSB provides legal advice, mediation support, and business guidance for members',
+      'It sets the dielectric strength of the oil for insulation purposes',
+      'It indicates how much water the oil has absorbed',
       'It determines the oil film thickness that separates moving surfaces — too thin and metal contact occurs, too thick and energy is wasted',
-      'Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified',
+      'It measures the acidity produced by oxidation of the base oil',
     ],
     correctAnswer: 2,
     explanation:
@@ -190,9 +190,9 @@ const quizQuestions = [
     id: 11,
     question: 'Particle counting in oil analysis is used to:',
     options: [
-      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
-      'Annually for critical transformers, with increased frequency if gas levels are rising',
-      'Water contamination — water emulsified in the oil gives a milky appearance',
+      'Measure the dielectric strength of insulating oil',
+      'Identify which dissolved gases are present in transformer oil',
+      'Determine the dissolved water content of the oil',
       'Quantify the number and size distribution of solid contaminant particles in the oil',
     ],
     correctAnswer: 3,
@@ -205,9 +205,9 @@ const quizQuestions = [
       'Under ST1426, oil and fluid analysis knowledge supports which maintenance competence?',
     options: [
       'Condition monitoring and predictive maintenance strategies',
-      'High-energy arcing within the transformer',
-      'Water contamination — water emulsified in the oil gives a milky appearance',
-      'The number and size distribution of solid particles per millilitre of oil',
+      'Initial verification of new electrical installations',
+      'Manual handling and lifting operations',
+      'Producing risk assessments and method statements',
     ],
     correctAnswer: 0,
     explanation:

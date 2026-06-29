@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'series-identification',
     question: 'What visual clue indicates a series circuit on site?',
     options: [
-      'Divides proportionally to resistance',
+      'Multiple junction boxes feeding separate branches',
       'One cable in, one out, no branches',
-      'Substantially the same (within 0.05Ω)',
-      'Higher temperature increases conductivity',
+      'Two conductors returning to the same MCB',
+      'Each load fitted with its own switch and fuse',
     ],
     correctIndex: 1,
     explanation: 'A single daisy-chain path without branching suggests series wiring.',
@@ -66,9 +66,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which type of installation is most likely to be parallel?',
     options: [
-      'Scaffold couplers (fittings)',
-      'Regulations, science, safety',
-      'Earth fault loop impedance (Zs)',
+      'A string of series-connected decorative lamps',
+      'A series-connected control sensing circuit',
+      'A daisy-chained data communication run',
       'A domestic socket circuit',
     ],
     correctAnswer: 3,
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 7,
     question: 'Before opening accessories to trace branches, your first step should be:',
     options: [
-      'To prioritise audit effort on areas with greatest saving potential',
-      'In a prominent position on site accessible to all workers',
-      'Continuous double conversion with zero transfer time',
+      'Photograph the consumer unit for your records',
+      'Switch every circuit back on to check operation',
+      'Label each cable with coloured tape',
       'Prove dead using an approved tester after isolation',
     ],
     correctAnswer: 3,
@@ -562,12 +562,12 @@ const Module2Section3_6 = () => {
             <p className="text-sm text-elec-yellow/70">
               <strong>BS 7671 Testing Requirements:</strong>
               <br />
-              Regulation 643.2: Continuity testing of protective conductors and equipotential
-              bonding
+              Regulation 643.2: Continuity of conductors, including protective conductors and ring
+              final circuit conductors
               <br />
-              Regulation 643.3: Continuity of ring final circuit conductors
+              Regulation 643.3: Insulation resistance
               <br />
-              Regulation 643.7: Functional testing to verify correct operation
+              Regulation 643.10: Functional testing to verify correct operation
               <br />
               Part 6 requirements: Document circuit arrangements and test results
             </p>

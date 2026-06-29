@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'What is the FIRST thing an electrician should do before starting any work in a pre-2000 building?',
     options: [
-      'Ask the dutyholder or client about the asbestos register',
       'Visually inspect the work area for suspected ACMs',
+      'Ask the dutyholder or client about the asbestos register',
       'Put on an FFP3 mask as a precaution',
       'Begin work carefully and stop only if something suspicious is found',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The very first step is to ask the dutyholder or client about the asbestos register and check whether a management survey has been carried out. This should happen before you even enter the work area. Visual inspection is important but comes after checking the register.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'Which of the following should an electrician NEVER do if they suspect a material contains asbestos?',
     options: [
       'Stop work immediately and leave the area',
-      'Drill through the material carefully while wearing a dust mask',
       'Report the material to the supervisor and dutyholder',
+      'Drill through the material carefully while wearing a dust mask',
       'Presume the material is asbestos until proven otherwise',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An electrician must NEVER drill into, cut, or disturb suspected asbestos-containing materials, regardless of what PPE they are wearing. A standard dust mask does not protect against asbestos fibres. The correct actions are to stop work, leave the area, and report the suspected ACM immediately.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'Why are electricians considered one of the trades MOST at risk of asbestos exposure?',
     options: [
-      'They work with high-voltage equipment that generates asbestos fibres',
       'Their work frequently involves drilling, chasing, and accessing concealed spaces where ACMs may be present',
+      'They work with high-voltage equipment that generates asbestos fibres',
       'Electrical tools generate static that attracts asbestos fibres',
       'They are required to remove asbestos as part of their normal duties',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Electricians are among the highest-risk trades because their work routinely involves drilling into walls, chasing cables, opening consumer units, and working in ceiling voids and confined spaces — all activities that can disturb hidden asbestos-containing materials in pre-2000 buildings.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     options: [
       'Post-2000 domestic new-builds',
       'Modern modular housing',
-      'Industrial buildings, power stations, and older commercial premises',
       'Garden sheds and outbuildings',
+      'Industrial buildings, power stations, and older commercial premises',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Asbestos cement cable trench covers and floor duct systems are most commonly found in industrial buildings, power stations, and older commercial premises where large cable runs required protected routes. They may be hidden under raised floors or carpet tiles.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'Before starting any electrical work in a pre-2000 building, what should you check FIRST?',
     options: [
+      'The asbestos register and whether a management survey has been carried out',
       'Whether you have an FFP3 mask in your toolkit',
       'Whether the building has been recently redecorated',
-      'The asbestos register and whether a management survey has been carried out',
       'Whether the local council has an asbestos database',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The first action is always to ask the dutyholder or client about the asbestos register and check whether a management survey has been carried out under the Control of Asbestos Regulations 2012, Regulation 4. If no register exists, you must presume that ACMs may be present.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
       'Older night storage heaters may contain which of the following asbestos-containing components?',
     options: [
       'Asbestos-wrapped copper cables',
-      'Asbestos insulation bricks',
       'Sprayed crocidolite coatings',
       'Asbestos cement roof tiles',
+      'Asbestos insulation bricks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Older night storage heaters may contain asbestos insulation bricks inside the unit. These bricks retain heat and were manufactured using asbestos for its excellent thermal insulation properties. Always check before disconnecting or removing old electric heating equipment.',
   },

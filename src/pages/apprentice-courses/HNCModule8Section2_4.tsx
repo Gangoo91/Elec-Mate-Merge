@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary function of an MVHR (Mechanical Ventilation with Heat Recovery) system?',
     options: [
-      'The raw mains supply, filtered by a basic surge suppressor',
+      'To cool supply air using refrigerant before delivery',
       'To recover heat from exhaust air and transfer it to supply air',
-      'Secure connections, adequate size, accessibility, and correct labelling',
-      'Work sequence, safety measures, resource requirements, and quality controls',
+      'To dehumidify incoming air through a desiccant wheel',
+      'To boost extract airflow during peak occupancy periods',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'plate-exchanger-type',
     question: 'In a cross-flow plate heat exchanger, the air streams:',
     options: [
-      'Upload files to a shared cloud storage folder and send the link',
-      'UPS engineer present and backup power arrangements',
+      'Flow in opposite directions along the same channel',
+      'Mix briefly to equalise temperature then separate',
       'Pass through each other at 90 degrees without mixing',
-      'To reduce heat demand and allow lower flow temperatures',
+      'Flow in the same direction through shared plates',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'thermal-wheel-operation',
     question: 'How does a thermal wheel (rotary heat exchanger) transfer heat?',
     options: [
-      'Carbon stored in bio-based materials like timber',
-      'To verify that safety management systems are effective',
+      'By circulating a glycol solution between two coils',
+      'By evaporating and condensing a sealed working fluid',
       'By rotating a matrix between exhaust and supply air streams',
-      'Parallel earth paths through bonding or water pipes',
+      'By conducting heat through fixed separating plates',
     ],
     correctIndex: 2,
     explanation:
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     question:
       'Why do run-around coil systems typically have lower efficiency than plate heat exchangers?',
     options: [
-      'The point where escape routes terminate at a place of ultimate safety',
-      'Appropriate type, mounting, and cable connections',
+      'The air streams flow in the same direction throughout',
+      'The coils have a smaller surface area than plates',
       'Heat transfer occurs twice - air to liquid, then liquid to air',
-      'At intervals not exceeding 6 months (quarterly recommended for domestic)',
+      'The circulating pump adds heat that must be removed',
     ],
     correctIndex: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a summer bypass in an MVHR system?',
     options: [
-      'Ability to connect non-adjacent air streams with zero cross-contamination',
-      'Supply and extract temperature measurement under steady-state conditions',
-      'Transfer of pollutants or odours from exhaust to supply air stream',
+      'To increase heat recovery efficiency on warm days',
+      'To filter pollen from incoming air during summer',
+      'To boost supply airflow when cooling demand is high',
       'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
     ],
     correctAnswer: 3,
@@ -123,16 +123,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'At what outdoor temperature is frost protection typically required for heat recovery systems?',
+      'In the range of outdoor temperatures, when does frost protection on a domestic MVHR heat exchanger typically begin to activate?',
     options: [
-      'Below 0°C to -5°C',
-      'Below 5°C',
-      'Below 10°C',
-      'Below -10°C only',
+      'As the outdoor temperature falls into the 0°C to -5°C band',
+      'As soon as the outdoor temperature falls below +5°C',
+      'Only once the outdoor temperature drops below +10°C',
+      'Only in extreme cold below -10°C',
     ],
     correctAnswer: 0,
     explanation:
-      'Frost protection is typically required when outdoor temperatures fall below 0°C to -5°C. At these temperatures, moisture in the warm exhaust air can condense and freeze on the cold surfaces of the heat exchanger, blocking airflow and reducing efficiency.',
+      'Frost protection typically begins to activate as outdoor temperatures fall into the 0°C to -5°C band, with most systems triggering at around -5°C. At these temperatures, moisture in the warm exhaust air can condense and freeze on the cold surfaces of the heat exchanger, blocking airflow and reducing efficiency. Activation above freezing (+5°C or +10°C) would waste energy, and waiting until below -10°C risks ice damage.',
   },
   {
     id: 5,
@@ -165,9 +165,9 @@ const quizQuestions = [
     question:
       'In a run-around coil system, what fluid is typically used in the connecting pipework?',
     options: [
-      'Frequency rating and performance',
-      'By danger level and urgency',
-      'Below about 50Ω (depending on meter)',
+      'Pure deionised water with no additives',
+      'A volatile refrigerant under pressure',
+      'Light mineral oil for corrosion protection',
       'Water with glycol antifreeze',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'What is the main advantage of run-around coils over other heat recovery methods?',
     options: [
       'Ability to connect non-adjacent air streams with zero cross-contamination',
-      'Transfer of pollutants or odours from exhaust to supply air stream',
-      'Supply and extract temperature measurement under steady-state conditions',
-      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
+      'The highest heat recovery efficiency of any method',
+      'No requirement for a circulating pump or fluid',
+      'Built-in moisture (enthalpy) recovery capability',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'Counter-flow plate heat exchangers achieve higher efficiency than cross-flow because:',
     options: [
-      'Transfer of pollutants or odours from exhaust to supply air stream',
+      'The plates are made from a more conductive material',
       'The air streams maintain maximum temperature difference throughout',
-      'Ability to connect non-adjacent air streams with zero cross-contamination',
-      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
+      'The supply air passes through the exchanger twice',
+      'A rotating matrix stores and releases more heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'Heat pipe heat exchangers operate on which principle?',
     options: [
-      'True power divided by apparent power (cos φ)',
-      'To operate systems under load to identify early failures',
+      'Conduction through a rotating aluminium matrix',
+      'Circulation of a pumped glycol solution',
       'Evaporation and condensation of a working fluid',
-      'Converting curved sensor response to linear output',
+      'Direct mixing of supply and extract air streams',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: 'What commissioning test should verify MVHR heat recovery performance?',
     options: [
-      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
-      'Transfer of pollutants or odours from exhaust to supply air stream',
-      'Ability to connect non-adjacent air streams with zero cross-contamination',
+      'Airflow measurement at each supply and extract terminal',
+      'Insulation resistance testing of the unit wiring',
+      'Smoke release to check for cross-contamination leakage',
       'Supply and extract temperature measurement under steady-state conditions',
     ],
     correctAnswer: 3,
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'What is cross-contamination in the context of heat recovery systems?',
     options: [
       'Transfer of pollutants or odours from exhaust to supply air stream',
-      'Supply and extract temperature measurement under steady-state conditions',
-      'Evaporation and condensation of a working fluid',
-      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
+      'Heat leaking from the unit casing into the plant room',
+      'Outdoor air bypassing the exchanger through leaky ducts',
+      'Condensation forming on the cold side of the exchanger',
     ],
     correctAnswer: 0,
     explanation:

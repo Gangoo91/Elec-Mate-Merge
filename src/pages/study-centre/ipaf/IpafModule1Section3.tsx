@@ -86,8 +86,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the maximum uniformly distributed load for a Class 2 tower?',
-    options: ['100 kg/m\u00B2', '150 kg/m\u00B2', '200 kg/m\u00B2', '250 kg/m\u00B2'],
-    correctAnswer: 1,
+    options: ['150 kg/m\u00B2', '100 kg/m\u00B2', '200 kg/m\u00B2', '250 kg/m\u00B2'],
+    correctAnswer: 0,
     explanation:
       'Class 2 towers support a maximum uniformly distributed load of 150 kg/m\u00B2 on the working platform. This is suitable for light-duty work such as inspection, painting, and light maintenance.',
   },
@@ -112,19 +112,19 @@ const quizQuestions = [
     question: 'What must be permanently marked on every EN 1004-compliant tower?',
     options: [
       'The date of manufacture only',
-      'The load class, manufacturer, standard reference, and maximum height',
       'The name of the site where it was first used',
+      'The load class, manufacturer, standard reference, and maximum height',
       'The colour code for the scaffold type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EN 1004 requires permanent marking showing the load class (2 or 3), manufacturer's identity, the standard reference (EN 1004-1:2020), and the maximum platform height of the tower.",
   },
   {
     id: 6,
     question: 'Which standard would apply to a tower exceeding 12 metres indoors?',
-    options: ['BS EN 1004-1:2020', 'BS EN 12811-1', 'BS 1139-6', 'No standard applies'],
-    correctAnswer: 2,
+    options: ['BS 1139-6', 'BS EN 12811-1', 'BS EN 1004-1:2020', 'No standard applies'],
+    correctAnswer: 0,
     explanation:
       'Towers exceeding the height limits of BS EN 1004 (12m indoors, 8m outdoors) may fall under BS 1139-6, which covers non-standard and special scaffold structures requiring bespoke design calculations.',
   },
@@ -132,8 +132,8 @@ const quizQuestions = [
     id: 7,
     question:
       'A tower is rated Class 3 with a 1.3m x 1.8m platform. What is the maximum total platform load?',
-    options: ['234 kg', '351 kg', '468 kg', '702 kg'],
-    correctAnswer: 2,
+    options: ['234 kg', '351 kg', '702 kg', '468 kg'],
+    correctAnswer: 3,
     explanation:
       'Platform area = 1.3 \u00D7 1.8 = 2.34 m\u00B2. Class 3 allows 200 kg/m\u00B2, so maximum load = 2.34 \u00D7 200 = 468 kg. This includes people, tools, and materials on the platform.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the minimum safety factor applied to EN 1004 tower components during design?',
-    options: ['1.2', '1.5', '2.0', '2.5'],
-    correctAnswer: 1,
+    options: ['1.5', '1.2', '2.0', '2.5'],
+    correctAnswer: 0,
     explanation:
       'EN 1004-1:2020 requires structural components to be designed with a minimum safety factor of 1.5 against ultimate failure. This means the tower must withstand at least 1.5 times the maximum rated load without structural failure.',
   },

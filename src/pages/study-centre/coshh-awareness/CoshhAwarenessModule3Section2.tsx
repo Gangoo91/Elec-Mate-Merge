@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'Why must electricians take special precautions when working with switchgear that has experienced an internal arc in an SF6-filled compartment?',
     options: [
-      'SF6 gas is flammable after arcing',
-      'The arc produces toxic decomposition products including sulphur dioxide and hydrogen fluoride',
-      'SF6 becomes radioactive after electrical discharge',
-      'The gas pressure doubles after an arc event',
+      'The SF6 gas becomes highly flammable once it has been exposed to an arc',
+      'The SF6 gas becomes radioactive following the electrical discharge',
+      'The arc creates toxic decomposition products such as sulphur dioxide and HF',
+      'The internal gas pressure roughly doubles immediately after an arc event',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Sulphur hexafluoride (SF6) is itself non-toxic and chemically inert under normal conditions. However, when an electrical arc passes through SF6 \u2014 during a fault, switching operation, or equipment failure \u2014 the gas decomposes to produce highly toxic by-products including sulphur dioxide (SO2), hydrogen fluoride (HF), sulphur tetrafluoride (SF4), and metal fluorides. These decomposition products are acutely toxic and corrosive, causing severe burns to the lungs, eyes, and skin. Compartments that have experienced internal arcing must only be opened by trained personnel wearing full RPE (including supplied-air breathing apparatus) and chemical-resistant PPE.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'What is the correct hierarchy of control for managing colophony fume exposure during soldering?',
     options: [
-      'RPE first, then ventilation if RPE is uncomfortable',
-      'Open a window, and wear a dust mask if fumes are visible',
-      'Local exhaust ventilation (LEV) at the point of soldering, supplemented by RPE where LEV alone is insufficient',
-      'General room ventilation is always adequate for soldering',
+      'RPE first, then add ventilation only if the RPE becomes uncomfortable to wear',
+      'Open a nearby window, and wear a dust mask only if the fumes become visible',
+      'General room ventilation alone is always adequate for any soldering work',
+      'Local exhaust ventilation at the soldering point, with RPE where LEV is insufficient',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The correct approach follows the COSHH hierarchy of control. Local exhaust ventilation (LEV) \u2014 typically a bench-top fume extractor positioned close to the soldering point \u2014 is the primary engineering control. This captures fume at source before it reaches the breathing zone. Where LEV alone cannot reduce exposure below the WEL (for example, in awkward positions or confined spaces), RPE must be provided as a supplementary measure. General room ventilation and open windows are NOT adequate substitutes for LEV.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'Why is trichloroethylene (TCE) no longer recommended as an electrical cleaning agent?',
     options: [
-      'It is too expensive for commercial use',
-      'It evaporates too quickly to be effective',
-      'It is classified as a carcinogen (category 1B) and causes liver and kidney damage',
-      'It leaves a residue that reduces electrical conductivity',
+      'It is far too expensive to be used cost-effectively for commercial cleaning',
+      'It evaporates much too quickly to remain effective as a degreasing agent',
+      'It is a category 1B carcinogen and also causes liver and kidney damage',
+      'It leaves behind a residue that noticeably reduces electrical conductivity',
     ],
     correctAnswer: 2,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary health risk from petroleum-based cable pulling lubricants?',
     options: [
-      'Explosive vapour in confined spaces',
-      'Skin irritation, dermatitis, and potential aspiration hazard if swallowed',
-      'Radiation exposure from petroleum compounds',
-      'Allergic reaction causing anaphylaxis',
+      'Explosive vapour building up in confined and poorly ventilated spaces',
+      'Skin irritation and dermatitis, plus an aspiration hazard if swallowed',
+      'Radiation exposure from the petroleum compounds in the lubricant',
+      'A severe allergic reaction causing life-threatening anaphylaxis',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why must older transformer oil be treated as potentially highly hazardous?',
     options: [
-      'It may contain PCBs (polychlorinated biphenyls), which are persistent toxic pollutants',
-      'Transformer oil becomes radioactive over time',
-      'All transformer oil contains asbestos fibres',
-      'Older oil produces methane gas spontaneously',
+      'It may contain PCBs (polychlorinated biphenyls), persistent toxic pollutants',
+      'Transformer oil gradually becomes radioactive over its long service life',
+      'All transformer oil, regardless of age, contains hazardous asbestos fibres',
+      'Older insulating oil spontaneously produces flammable methane gas over time',
     ],
     correctAnswer: 0,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'When cutting fire-resistant boards or intumescent coatings, what is the primary inhalation hazard?',
     options: [
-      'Asbestos fibres from modern fire-stop products',
-      'Respirable dust containing mineral fibres, calcium silicate, or vermiculite particles',
-      'Radioactive particles from fire-resistant additives',
-      'Carbon monoxide from thermal decomposition',
+      'Asbestos fibres released from modern post-2000 fire-stop products',
+      'Radioactive particles given off by the fire-resistant additives in the board',
+      'Carbon monoxide produced by thermal decomposition of the coating',
+      'Respirable dust containing mineral fibres, calcium silicate or vermiculite',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern fire-resistant boards, intumescent coatings, and fire-stop compounds (post-2000) do not contain asbestos, but cutting, drilling, or sanding them generates respirable dust that can contain mineral fibres (ceramic or glass), calcium silicate particles, vermiculite, or chemical additives. This dust irritates the respiratory system and may cause occupational lung disease with chronic exposure. Controls include wet cutting where possible, on-tool extraction (H-class vacuum), RPE (minimum FFP3 for prolonged work), and thorough cleanup to prevent secondary exposure.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'What neutralising agent should be applied to a small sulphuric acid spill from a lead-acid battery?',
     options: [
-      'Water only \u2014 dilute and mop up',
-      'Bleach solution',
-      'Sodium bicarbonate (baking soda) or proprietary acid neutraliser',
-      'Petroleum jelly to seal the spill',
+      'Sodium bicarbonate (baking soda) or a proprietary acid neutraliser',
+      'Water only, applied generously to dilute the acid and then mopped up',
+      'A household bleach solution poured directly onto the spilled acid',
+      'A layer of petroleum jelly spread over the spill to seal it in',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Sodium bicarbonate (baking soda) is the standard neutralising agent for sulphuric acid spills from lead-acid batteries. It reacts with the acid in a controlled exothermic reaction, converting it to sodium sulphate, carbon dioxide, and water. Apply generously until fizzing stops, indicating complete neutralisation. Proprietary acid spill neutralisers (often sodium bicarbonate-based with pH indicator dye) are also suitable. Never use water alone on concentrated acid \u2014 it can cause violent spattering and spread the acid. Bleach is never used as it can react dangerously with acids to produce toxic chlorine gas.',
   },

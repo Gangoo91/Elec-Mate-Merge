@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the maximum cable resistance permitted for a fire alarm sounder circuit?',
     options: [
-      'Individual device identification and status',
-      'Optical (photoelectric) detector',
-      'Depends on system design and voltage',
-      'Lift recalled to ground floor',
+      'A fixed 50 ohms for every system, regardless of sounder type',
+      'A fixed 0.5 ohms, the same as a final ring circuit',
+      'It depends on the system design voltage, sounder current and minimum operating voltage',
+      'There is no limit, as sounders operate correctly at any cable resistance',
     ],
     correctAnswer: 2,
     explanation:
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'What is the required minimum sound level for fire alarm sounders in BS 5839-1?',
     options: [
       '65 dB(A) or 5 dB(A) above background, whichever is greater',
-      'Individual device identification and status',
-      'Small invisible particles from fast-flaming fires',
-      'P1 covers all areas, P2 covers high-risk areas only',
+      '55 dB(A) at all points within the protected area',
+      '85 dB(A) measured at the sounder itself',
+      '40 dB(A) or equal to the background noise level',
     ],
     correctAnswer: 0,
     explanation:

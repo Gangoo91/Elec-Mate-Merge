@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'poe-definition',
     question: 'What is the primary purpose of Post-Occupancy Evaluation (POE)?',
     options: [
-      'To show the spatial relationship of all services and identify potential clashes',
-      'Durable and legible marking identifying each circuit',
-      'Pilot wire integrity and in-cable control box function',
+      'To coordinate building services and identify clashes during design',
+      'To verify the structural integrity of the building frame',
+      'To document the as-installed wiring for the O&M manual',
       'To assess building performance and user satisfaction after handover',
     ],
     correctIndex: 3,
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     id: 'bus-methodology',
     question: 'What does the BUS methodology primarily measure?',
     options: [
-      '25V from a suitable transformer or extra-low voltage (ELV) equipment',
-      'Stop immediately and investigate the cause',
-      'To ensure even wear and extend service life across all boilers',
+      'Plant energy efficiency under part-load conditions',
+      'Compliance of the design with Building Regulations',
+      'The carbon emissions of the construction materials',
       'Occupant satisfaction with comfort and building usability',
     ],
     correctIndex: 3,
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the recommended minimum duration for post-handover energy monitoring?',
     options: [
-      'Cavity fixings or toggle bolts',
-      'Electricity tariff prices',
+      '1 month (initial settling-in period)',
+      '3 months (one quarter)',
       '12 months (full seasonal cycle)',
-      'Regularly based on competency assessment',
+      '5 years (long-term lifecycle)',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'In BUS surveys, which parameter is NOT typically measured?',
     options: [
-      'Size, type, route, and condition',
-      'Armoured loose-tube with PE jacket',
-      'When the coil is parallel to the field',
+      'Thermal comfort in summer and winter',
+      'Perceived air quality and ventilation',
+      'Lighting and noise satisfaction',
       'Construction programme duration',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: "What is 'continuous commissioning' in the context of POE?",
     options: [
       'Ongoing optimisation of building systems based on performance data',
-      'Coordinating aftercare activities and maintaining focus on performance outcomes',
-      'Public buildings over 250m² frequently visited by the public',
-      'Temperature, humidity, air movement, and radiant temperature',
+      'A one-off commissioning check carried out at handover only',
+      'Commissioning of new plant added during the warranty period',
+      'Verification that the BMS graphics match the as-installed layout',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Display Energy Certificates (DECs) are required for:',
     options: [
-      'Unregulated loads, extended operating hours, and poor controls commissioning',
+      'All commercial buildings at the point of sale or lease',
       'Public buildings over 250m² frequently visited by the public',
-      'To identify energy use by system, zone, or tenant for targeted improvements',
-      'Ongoing optimisation of building systems based on performance data',
+      'New-build dwellings before occupation',
+      'Industrial process buildings of any floor area',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: "The 'lessons learned' process should primarily feed into:",
     options: [
-      'Ongoing optimisation of building systems based on performance data',
-      'Public buildings over 250m² frequently visited by the public',
+      'The final account and cost reconciliation for the project',
+      'The health and safety file for the completed building',
       'Future project briefing, design, and specifications',
-      'Temperature, humidity, air movement, and radiant temperature',
+      'The planned preventive maintenance schedule only',
     ],
     correctAnswer: 2,
     explanation:
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'Thermal comfort surveys should assess which of the following?',
     options: [
       'Temperature, humidity, air movement, and radiant temperature',
-      'To identify energy use by system, zone, or tenant for targeted improvements',
-      'Ongoing optimisation of building systems based on performance data',
-      'Public buildings over 250m² frequently visited by the public',
+      'Lighting levels, glare, and daylight availability',
+      'Background noise, reverberation, and speech privacy',
+      'Floor area per person, desk spacing, and circulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of sub-metering in POE?',
     options: [
-      'Coordinating aftercare activities and maintaining focus on performance outcomes',
+      'To provide the data used for tenant utility billing only',
       'To identify energy use by system, zone, or tenant for targeted improvements',
-      'Public buildings over 250m² frequently visited by the public',
-      'Temperature, humidity, air movement, and radiant temperature',
+      'To replace the fiscal meter for statutory reporting',
+      'To measure indoor environmental quality directly',
     ],
     correctAnswer: 1,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'The Soft Landings Champion role is responsible for:',
     options: [
-      'To identify energy use by system, zone, or tenant for targeted improvements',
-      'Unregulated loads, extended operating hours, and poor controls commissioning',
-      'Ongoing optimisation of building systems based on performance data',
+      'Signing off the building as structurally complete at handover',
+      'Carrying out the statutory energy assessment for the DEC',
+      'Acting as the principal designer under the CDM Regulations',
       'Coordinating aftercare activities and maintaining focus on performance outcomes',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'Which factor commonly contributes to the building performance gap?',
     options: [
       'Unregulated loads, extended operating hours, and poor controls commissioning',
-      'Public buildings over 250m² frequently visited by the public',
-      'Ongoing optimisation of building systems based on performance data',
-      'To identify energy use by system, zone, or tenant for targeted improvements',
+      'Over-specification of insulation beyond Part L requirements',
+      'Use of the BUS occupant satisfaction methodology',
+      'Installation of sub-metering on major energy uses',
     ],
     correctAnswer: 0,
     explanation:

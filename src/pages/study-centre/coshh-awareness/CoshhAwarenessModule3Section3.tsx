@@ -11,10 +11,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of capture velocity in a Local Exhaust Ventilation (LEV) system?',
     options: [
-      'To cool the air inside the ductwork',
-      "To draw contaminated air into the hood before it reaches the worker's breathing zone",
-      'To push clean air out of the building',
-      'To increase the air pressure inside the workplace',
+      'To cool the air passing through the ductwork before it is filtered',
+      "To draw contaminated air into the hood before it reaches the breathing zone",
+      'To push clean air out of the building and lower the indoor temperature',
+      'To increase the overall air pressure inside the working area',
     ],
     correctIndex: 1,
     explanation:
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'h-class-vs-m-class',
     question: 'When MUST an H-class dust extractor be used instead of an M-class extractor?',
     options: [
-      'Whenever working outdoors on a windy day',
-      'Only when cutting metal with an angle grinder',
-      'When the dust is classified as carcinogenic, contains silica, or may include asbestos fibres',
-      'Only when the employer specifically requests it in writing',
+      'When the dust is carcinogenic, contains silica, or may include asbestos fibres',
+      'Whenever working outdoors on a windy day where dust may blow around',
+      'Only when cutting metal with an angle grinder rather than other materials',
+      'Only when the employer specifically requests it in writing beforehand',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'H-class extractors (99.995% filtration at 0.3\u03bcm) are required for hazardous dust classified as carcinogenic (e.g. hardwood dust), respirable crystalline silica (RCS), and any dust that may contain asbestos fibres. M-class (99.9% at 0.3\u03bcm) is only suitable for medium-hazard dusts with a WEL above 0.1 mg/m\u00b3.',
   },
@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     id: 'housekeeping-compressed-air',
     question: 'Why should compressed air NEVER be used to blow dust off clothing or work surfaces?',
     options: [
-      'It is too expensive to use compressed air for cleaning',
-      'It creates a fire risk from static electricity',
-      'It disperses settled dust back into the air, creating a respirable hazard that can be inhaled',
-      'It damages the compressor seals over time',
+      'Using compressed air for cleaning is too expensive to justify the cost',
+      'It creates a serious fire risk from a build-up of static electricity',
+      'It disperses settled dust back into the air as a respirable hazard',
+      'It gradually damages the seals inside the compressor over time',
     ],
     correctIndex: 2,
     explanation:
@@ -76,10 +76,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does LEV stand for, and what is its primary function under COSHH?',
     options: [
-      'Low Energy Ventilation \u2014 reduces energy consumption in workshops',
-      "Local Exhaust Ventilation \u2014 captures airborne contaminants at or near the source before they reach the worker's breathing zone",
-      'Large Exhaust Vent \u2014 a roof-mounted fan that extracts all air from a building',
-      'Localised Emergency Ventilation \u2014 only activated during spillage incidents',
+      'Low Energy Ventilation \u2014 a system that reduces energy consumption in workshops',
+      'Local Exhaust Ventilation \u2014 captures contaminants at source before they are inhaled',
+      'Large Exhaust Vent \u2014 a roof-mounted fan that extracts all the air from a building',
+      'Localised Emergency Ventilation \u2014 only activated during a spillage incident',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 4,
     question: 'How should used filter bags from an H-class extractor be disposed of?',
     options: [
-      'Emptied into a standard bin and reused',
-      'Shaken out on site and replaced when torn',
-      'Sealed in a labelled bag and disposed of as hazardous waste through an authorised waste carrier',
-      'Washed with water and dried for reuse',
+      'Sealed in a labelled bag and removed as hazardous waste by an authorised carrier',
+      'Emptied into a standard waste bin and then reused on the next job',
+      'Shaken out on site to clear them and replaced only when they tear',
+      'Washed out with water and dried thoroughly so they can be reused',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Used filter bags from H-class extractors contain concentrated hazardous dust (potentially carcinogenic, silica, or asbestos-containing). They must be sealed without releasing dust, placed in a labelled hazardous waste bag, and disposed of through an authorised hazardous waste carrier. They must never be emptied, shaken, or reused.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'What is the Assigned Protection Factor (APF) of an FFP3 disposable mask?',
     options: [
       'APF 4 \u2014 reduces exposure by a factor of 4',
-      'APF 10 \u2014 reduces exposure by a factor of 10',
       'APF 20 \u2014 reduces exposure by a factor of 20',
+      'APF 10 \u2014 reduces exposure by a factor of 10',
       'APF 40 \u2014 reduces exposure by a factor of 40',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "An FFP3 disposable mask has an Assigned Protection Factor (APF) of 20, meaning it reduces the wearer's exposure to one-twentieth of the ambient concentration, provided it is correctly face-fit tested and worn. FFP2 has an APF of 10, and FFP1 has an APF of 4.",
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Under COSHH, what is the required interval for thorough examination and testing of LEV systems?',
-    options: ['Every 6 months', 'Every 12 months', 'Every 14 months', 'Every 24 months'],
-    correctAnswer: 2,
+    options: ['Every 6 months', 'Every 12 months', 'Every 24 months', 'Every 14 months'],
+    correctAnswer: 3,
     explanation:
       'COSHH Regulation 9 requires LEV systems to undergo thorough examination and testing at least every 14 months. This ensures the system continues to perform as designed and captures contaminants effectively. Records must be kept for at least 5 years. Some specific regulations (e.g. for certain processes) may require more frequent testing.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is sweeping construction dust with a broom considered bad practice?',
     options: [
-      'It takes too long compared to other methods',
-      'Brooms are not allowed on construction sites under CDM regulations',
-      'Sweeping re-suspends fine respirable dust particles into the air, creating an inhalation hazard',
-      'Sweeping damages floor surfaces and coatings',
+      'Sweeping re-suspends fine respirable dust into the air as an inhalation hazard',
+      'It takes far too long compared with other available cleaning methods',
+      'Brooms are banned from all construction sites under the CDM regulations',
+      'Sweeping damages the floor surfaces and any protective coatings on them',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Sweeping with a broom disturbs settled dust and re-suspends fine respirable particles back into the air. These particles are too small to see but can penetrate deep into the lungs. The correct approach is to use a suitable vacuum (M-class or H-class depending on the dust type) or damp wiping to capture the dust without making it airborne again.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       'When using wet suppression for cutting concrete, what additional hazard does the process create that must be managed?',
     options: [
-      'Electrical sparks from the wet blade',
-      'Toxic gas emissions from water reacting with cement',
-      'Silica-laden slurry that must be cleaned up while still wet to prevent it drying and becoming airborne',
-      'Noise levels increase significantly with wet cutting',
+      'Electrical sparks thrown out from the wet blade during the cut',
+      'Toxic gas emissions produced as the water reacts with the cement',
+      'Silica-laden slurry that must be cleared while wet before it dries and goes airborne',
+      'Noise levels that increase significantly once wet cutting begins',
     ],
     correctAnswer: 2,
     explanation:

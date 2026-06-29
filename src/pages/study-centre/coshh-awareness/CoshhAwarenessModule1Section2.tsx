@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'ghs-pictograms',
     question: 'How many hazard pictograms are used in the GHS/CLP classification system?',
-    options: ['6', '7', '9', '12'],
-    correctIndex: 2,
+    options: ['9', '7', '6', '12'],
+    correctIndex: 0,
     explanation:
       'The GHS/CLP system uses 9 hazard pictograms, each displayed within a red diamond-shaped border on a white background. They are: flame, exploding bomb, oxidising flame over circle, gas cylinder, corrosion, skull and crossbones, health hazard (silhouette), exclamation mark, and environment (dead tree and fish).',
   },
@@ -18,8 +18,8 @@ const quickCheckQuestions = [
     id: 'dust-wel',
     question:
       'What is the workplace exposure limit (WEL) for respirable dust under UK regulations?',
-    options: ['10 mg/m\u00B3', '4 mg/m\u00B3', '0.1 mg/m\u00B3', '1 mg/m\u00B3'],
-    correctIndex: 1,
+    options: ['10 mg/m\u00B3', '1 mg/m\u00B3', '4 mg/m\u00B3', '0.1 mg/m\u00B3'],
+    correctIndex: 2,
     explanation:
       'The WEL for respirable dust (particles small enough to reach the gas exchange region of the lungs) is 4 mg/m\u00B3 as an 8-hour TWA. Inhalable dust has a WEL of 10 mg/m\u00B3. Specific substances such as respirable crystalline silica have much lower limits \u2014 0.1 mg/m\u00B3.',
   },
@@ -27,8 +27,8 @@ const quickCheckQuestions = [
     id: 'biological-groups',
     question:
       'Under the COSHH Regulations, biological agents are classified into how many hazard groups?',
-    options: ['2', '3', '4', '5'],
-    correctIndex: 2,
+    options: ['2', '4', '3', '5'],
+    correctIndex: 1,
     explanation:
       'Biological agents are classified into 4 hazard groups under COSHH. Group 1 is unlikely to cause human disease. Group 2 can cause disease but is unlikely to spread to the community and effective treatment is available. Group 3 can cause severe disease and may spread. Group 4 causes severe disease with no effective treatment and a high risk of spreading.',
   },
@@ -62,8 +62,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which of the following is NOT one of the nine GHS/CLP hazard pictograms?',
-    options: ['Flame', 'Skull and crossbones', 'Radioactive trefoil', 'Exploding bomb'],
-    correctAnswer: 2,
+    options: ['Radioactive trefoil', 'Skull and crossbones', 'Flame', 'Exploding bomb'],
+    correctAnswer: 0,
     explanation:
       'The radioactive trefoil is not one of the nine GHS/CLP hazard pictograms. The nine pictograms are: flame, exploding bomb, oxidising flame over circle, gas cylinder, corrosion, skull and crossbones, health hazard (silhouette), exclamation mark, and environment (dead tree and fish). Radioactive materials are classified under separate regulations (IRR 2017 in the UK).',
   },
@@ -100,8 +100,8 @@ const quizQuestions = [
     id: 5,
     question:
       'Which hazard group of biological agent can cause severe human disease AND may spread to the community, with no effective treatment available?',
-    options: ['Group 1', 'Group 2', 'Group 3', 'Group 4'],
-    correctAnswer: 3,
+    options: ['Group 4', 'Group 2', 'Group 3', 'Group 1'],
+    correctAnswer: 0,
     explanation:
       'Hazard Group 4 biological agents cause severe human disease, present a serious hazard to workers, may spread to the community, and there is usually no effective prophylaxis or treatment available. Examples include Ebola virus and Marburg virus. Group 3 agents can cause severe disease and may spread but effective treatment or prophylaxis is usually available (e.g. hepatitis B, tuberculosis).',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
     question: 'A substance classified as a CMR is toxic to which of the following?',
     options: [
       'The cardiovascular system only',
-      'The central nervous system only',
       'It can cause cancer, genetic mutations, or damage to reproduction',
+      'The central nervous system only',
       'The musculoskeletal system only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'CMR stands for Carcinogen, Mutagen, or substance toxic to Reproduction. Carcinogens cause cancer. Mutagens cause heritable genetic damage. Reprotoxins can impair fertility or harm the developing foetus. CMRs have special requirements under COSHH \u2014 exposure must be reduced to as low as is reasonably practicable, and substitution with a less hazardous substance must be considered as a priority.',
   },
@@ -138,11 +138,11 @@ const quizQuestions = [
       'Which of the following correctly lists the physical forms a hazardous substance can take?',
     options: [
       'Solid, liquid, gas only',
-      'Solid, liquid, gas, vapour, mist, fume, dust, fibre',
       'Powder, liquid, smoke',
       'Dust, fume, gas only',
+      'Solid, liquid, gas, vapour, mist, fume, dust, fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hazardous substances can exist in eight physical forms: solids, liquids, gases, vapours, mists, fumes, dusts, and fibres. Understanding the physical form is essential because it determines how the substance enters the body (route of exposure), how far it can travel in the air, how deep it penetrates the respiratory system, and what control measures are needed.',
   },

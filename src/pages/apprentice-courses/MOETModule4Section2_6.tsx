@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'trend-pf-curve',
     question: 'The P-F curve describes the relationship between:',
     options: [
-      'Ongoing learning is needed as standards and technology change',
-      'Correct type, current-carrying capacity, and suitability for the environment',
-      'To provide grip, stability, and protection from dropped loads',
       'The point of detectable potential failure (P) and the point of functional failure (F)',
+      'The preventive maintenance interval (P) and the failure rate (F) over time',
+      'The performance (P) and the frequency (F) of condition monitoring readings',
+      'The probability of failure (P) and the financial cost of failure (F)',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'The P-F curve (also called the failure development curve) shows how a fault progresses from the point at which it can first be detected by condition monitoring (P — potential failure) to the point at which the equipment can no longer perform its required function (F — functional failure). The P-F interval is the window of opportunity to plan and carry out maintenance before breakdown.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'trend-alarm-levels',
     question: 'When setting alarm levels for condition monitoring parameters, best practice is to:',
     options: [
+      "Apply the manufacturer's generic limit to every asset of the same type without adjustment",
       "Base alarm levels on the specific equipment's baseline readings plus a statistically determined threshold",
-      "Assess temperature, humidity, corrosive atmospheres, and IP protection requirements",
-      "The risk must be weighed against the sacrifice needed to reduce it — if grossly disproportionate, the duty is discharged",
-      "Keep groups focused with clear purposes, separate social chat from work coordination",
+      "Set the alarm at the maximum value the instrument is capable of measuring",
+      "Wait until the first failure occurs and set the alarm just below that recorded value",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Effective alarm levels are based on each equipment item's own baseline readings, not just generic standards. A statistically determined threshold (e.g., 2 or 3 standard deviations above baseline) accounts for normal variation. Generic limits are a useful starting point but should be refined using actual operating data. Two levels are typically set: alert (investigate) and danger (immediate action).",
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'A computerised maintenance management system (CMMS) supports predictive maintenance by:',
     options: [
-      'To remain at the entry point, maintain communication with entrants, and initiate emergency procedures if needed',
-      'The ability to understand and share the feelings of another person — to see the world from their perspective and to sense their emotional state',
+      'Replacing the need for technicians to take any physical condition readings on site',
+      'Automatically repairing faults detected by condition monitoring sensors without intervention',
       'Storing historical data, generating trend reports, triggering work orders from alarm conditions and tracking KPIs',
-      'Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions',
+      'Calculating the exact remaining life of every component to the nearest hour',
     ],
     correctIndex: 2,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'The single most important factor determining the success of a predictive maintenance programme is:',
     options: [
-      'When there\\\\\\\'s risk from dust, fumes, gases, vapours, or oxygen deficiency',
-      'The powder cloud severely reduces visibility, can cause breathing difficulties, and leaves residue',
-      'Healthy headroom — 22 A margin for transients, future creep, and seasonal swings. Good design target.',
       'Consistent, accurate data collection with disciplined recording practices and regular trend review',
+      'Purchasing the most expensive and advanced monitoring instruments available',
+      'Monitoring every asset on site at the same fixed weekly interval',
+      'Employing the largest possible number of maintenance technicians',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Without consistent, accurate data, even the most sophisticated monitoring equipment and CMMS software are worthless. Every reading must be taken under comparable conditions, at the correct measurement point, with a calibrated instrument, and recorded accurately with the correct asset identifier. Inconsistent data produces misleading trends that can lead to either unnecessary maintenance or missed faults.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'Predictive maintenance differs from preventive maintenance because it:',
     options: [
-      'Use a laser level or temporarily fit all faceplates before final fixing',
+      'Is carried out only after equipment has already broken down',
       'Schedules maintenance based on actual measured condition rather than fixed time intervals',
-      'Make a clear, dated correction preserving the original entry and audit trail',
-      'No site rule about cable management; supervisors don’t enforce; nowhere to coil cables off the floor',
+      'Replaces components strictly at fixed calendar intervals regardless of condition',
+      'Eliminates the need to keep any maintenance records or asset history',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'The monitoring interval for condition-based maintenance must be:',
     options: [
-      'The average operating time between consecutive failures of a repairable system',
-      'Condition monitoring, maintenance planning and continuous improvement competences',
+      'Longer than the P-F interval to reduce the number of readings required',
+      'Exactly equal to the P-F interval so a reading is taken at the moment of failure',
       'Shorter than half the P-F interval to ensure at least two data points before failure',
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
+      'Identical for all assets regardless of their individual P-F intervals',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     question:
       'A trend graph showing vibration levels slowly increasing over 12 months then sharply rising in the last two months indicates:',
     options: [
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
-      'It captures data continuously, enabling detection of rapidly developing faults and providing real-time alarm capability',
+      'A normal seasonal variation that requires no action or investigation',
+      'A calibration drift in the instrument rather than a real change in the equipment',
+      'That the equipment has self-corrected and vibration will return to baseline',
       'The equipment has entered the final stage of the P-F curve and failure is approaching rapidly',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'Mean time between failures (MTBF) is a KPI that measures:',
     options: [
       'The average operating time between consecutive failures of a repairable system',
-      'Control charts with upper and lower control limits based on statistical analysis of the data',
-      'Shorter than half the P-F interval to ensure at least two data points before failure',
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
+      'The average time taken to complete a repair once a failure has occurred',
+      'The total number of failures recorded across the whole asset fleet in a year',
+      'The percentage of maintenance work that is planned rather than reactive',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Statistical process control (SPC) applied to condition monitoring data uses:',
     options: [
-      'Shorter than half the P-F interval to ensure at least two data points before failure',
+      'A single fixed threshold copied from the equipment manufacturer for every asset',
       'Control charts with upper and lower control limits based on statistical analysis of the data',
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
+      'The manufacturer’s recommended service interval as the only trigger for action',
+      'The age of the equipment alone to predict when failure will occur',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'The main advantage of continuous online monitoring over periodic route-based monitoring is:',
     options: [
-      'Shorter than half the P-F interval to ensure at least two data points before failure',
-      'It may replace components that are still in good condition (over-maintenance) or miss faults developing between intervals (under-maintenance)',
+      'It requires far less sensor and data acquisition hardware to install',
+      'It removes the need to set any alarm thresholds or baseline values',
       'It captures data continuously, enabling detection of rapidly developing faults and providing real-time alarm capability',
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
+      'It is always cheaper to implement than periodic handheld measurements',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     question:
       'When combining multiple condition monitoring techniques on a single asset, the benefit is:',
     options: [
-      'It may replace components that are still in good condition (over-maintenance) or miss faults developing between intervals (under-maintenance)',
-      'Control charts with upper and lower control limits based on statistical analysis of the data',
-      'The combined effect of availability, performance and quality results in 65% of the theoretical maximum output being achieved',
+      'It reduces the total amount of data that needs to be recorded and reviewed',
+      'It allows alarm thresholds to be removed because the techniques cross-check each other',
+      'It guarantees that no failure can ever occur on that asset',
       'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
     ],
     correctAnswer: 3,
@@ -167,9 +167,9 @@ const quizQuestions = [
       "The 'bathtub curve' describes equipment failure rate over its lifecycle. The three stages are:",
     options: [
       'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
-      'The combined effect of availability, performance and quality results in 65% of the theoretical maximum output being achieved',
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
-      'Shorter than half the P-F interval to ensure at least two data points before failure',
+      'Commissioning, normal operation and decommissioning at end of service',
+      'Installation, calibration and recalibration on a fixed annual cycle',
+      'Detection, diagnosis and repair of a single developing fault',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'A maintenance KPI showing OEE (Overall Equipment Effectiveness) of 65% means:',
     options: [
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
+      'The equipment is available for 65% of the working week only',
       'The combined effect of availability, performance and quality results in 65% of the theoretical maximum output being achieved',
-      'It captures data continuously, enabling detection of rapidly developing faults and providing real-time alarm capability',
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
+      '65% of maintenance work on the asset is planned rather than reactive',
+      'The equipment will fail within 65% of its remaining design life',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: 'Data-driven maintenance decision-making requires:',
     options: [
-      'Condition monitoring, maintenance planning and continuous improvement competences',
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
+      'A single annual inspection with no ongoing trend tracking in between',
+      'Reliance on the experience of senior technicians instead of recorded readings',
       'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
+      'Replacing every component as soon as it reaches its rated design life',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     id: 11,
     question: 'The primary risk of relying solely on time-based preventive maintenance is:',
     options: [
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
-      'The combined effect of availability, performance and quality results in 65% of the theoretical maximum output being achieved',
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
+      'It generates far too much condition monitoring data to analyse effectively',
+      'It requires expensive online sensors to be fitted to every asset',
+      'It can only be applied to electrical equipment, not mechanical plant',
       'It may replace components that are still in good condition (over-maintenance) or miss faults developing between intervals (under-maintenance)',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
     question: 'Under ST1426, trend analysis and predictive maintenance knowledge maps to:',
     options: [
       'Condition monitoring, maintenance planning and continuous improvement competences',
-      'Consistent data collection, accurate record keeping, trend analysis and clear action thresholds',
-      'Control charts with upper and lower control limits based on statistical analysis of the data',
-      'The average operating time between consecutive failures of a repairable system',
+      'Initial design and specification of new electrical installations',
+      'Customer-facing sales and commercial negotiation competences',
+      'Manual handling and working-at-height safety competences only',
     ],
     correctAnswer: 0,
     explanation:

@@ -16,12 +16,12 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'Give one example of an analog output device.',
+    question: 'Which of the following is an example of an analog output device in a BMS?',
     options: [
-      'Follow manufacturer instructions',
-      'Complete system documentation',
-      'Modulating valve actuator',
-      '1.35 metres (approximately)',
+      'A door contact switch',
+      'A push-button override station',
+      'A modulating valve actuator',
+      'A volt-free alarm relay',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
     id: 3,
     question: 'Why must polarity be observed when wiring analog signals?',
     options: [
-      'Measuring high currents by stepping them down to a safe measurable level',
-      'Talk through safety steps and make actions visible',
-      'Provides earthing for equipment operation rather than safety',
+      'It increases the signal voltage to overcome cable resistance',
+      'It allows the controller to draw less current from the supply',
+      'It converts the 4-20mA signal into a digital on/off state',
       'To ensure correct signal transmission and prevent reversed readings',
     ],
     correctAnswer: 3,
@@ -57,10 +57,10 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
     id: 5,
     question: 'Why should BMS controllers sometimes be connected to a UPS?',
     options: [
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
+      'To step the mains voltage down to the 24V the controller needs',
       'To ensure continuity during power outages for critical systems',
-      'Cracked insulation, damaged probes, or intermittent readings',
-      'Only protects the individual, can fail, may give false sense of security',
+      'To provide a return path for the analog signal conductors',
+      'To suppress electromagnetic interference on the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,16 +68,16 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: 'Why must mains cables be segregated from LV control wiring?',
+    question: 'Why must mains (Band II) cables be segregated from extra-low-voltage (Band I) control wiring?',
     options: [
-      'Evaluating and prioritising risks by plotting likelihood against severity',
-      'Unless the cost and effort greatly outweigh the risk reduction',
-      'To prevent electromagnetic interference and ensure safety',
-      'An accredited domestic or non-domestic energy assessor',
+      'To balance the load evenly across all three phases',
+      'To allow both cable types to share the same earth conductor',
+      'To prevent electromagnetic interference and ensure safety separation',
+      'To reduce the overall voltage drop on the control circuit',
     ],
     correctAnswer: 2,
     explanation:
-      'Mains voltage cables can induce electromagnetic interference in low voltage control circuits, causing signal errors or equipment malfunction. Segregation also provides safety separation between different voltage bands.',
+      'BS 7671 requires Band I (ELV) and Band II (LV) circuits to be segregated; mains cables can induce interference in low-voltage signal circuits, and separation maintains safe isolation between voltage bands.',
   },
   {
     id: 7,
@@ -103,16 +103,16 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      '40% spare capacity should be maintained in trunking to avoid overcrowding, allow for future additions, maintain proper heat dissipation, and facilitate cable installation and maintenance.',
+      'As a design convention, around 40% spare capacity is left in trunking to allow for future additions, ease cable installation, and avoid overcrowding that hinders heat dissipation.',
   },
   {
     id: 9,
     question: 'Why are ferrules used on stranded conductors?',
     options: [
-      'To ensure correct signal transmission and prevent reversed readings',
+      'To increase the current-carrying capacity of the conductor',
       'To prevent loose strands causing faults and ensure secure terminations',
-      'Digital inputs are on/off signals, analog inputs are variable signals like 0-10V or 4-20mA',
-      'Electromagnetic interference from nearby mains cables',
+      'To provide electrical screening against interference',
+      'To colour-code conductors for identification',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
     id: 10,
     question: 'In the real-world example, what caused the CO₂ sensors to give unstable readings?',
     options: [
-      'Authorised staff can view and control BMS functions off-site',
-      'Regulatory Reform (Fire Safety) Order 2005',
+      'Reversed polarity on the sensor signal terminals',
+      'A controller supply voltage set too low for the sensors',
       'Electromagnetic interference from nearby mains cables',
-      'For the life of the electrical installation',
+      'Ferrules omitted from the stranded signal conductors',
     ],
     correctAnswer: 2,
     explanation:

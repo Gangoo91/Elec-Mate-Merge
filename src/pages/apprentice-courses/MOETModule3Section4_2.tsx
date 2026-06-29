@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a maintained and a non-maintained emergency luminaire?',
     options: [
-      'The fraction of airborne particles that is inhaled through the nose and mouth during breathing',
+      'Maintained luminaires use LED lamps; non-maintained luminaires use fluorescent tubes',
       'Maintained luminaires operate continuously; non-maintained only operate when the mains supply fails',
-      'For complex, high-risk activities or when required by clients/principal contractors',
-      'Reverse the lifting technique — bend the knees and hips, keep the back straight',
+      'Maintained luminaires have their own battery; non-maintained run from a central battery',
+      'Maintained luminaires require a 3-hour duration; non-maintained require only 1 hour',
     ],
     correctIndex: 1,
     explanation:
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'What is the minimum emergency lighting duration required for most premises under BS 5266?',
     options: [
-      '1 hour',
-      '3 hours',
       '30 minutes',
       '2 hours',
+      '3 hours',
+      '1 hour',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'BS 5266-1 requires a minimum of 3 hours duration for most premises, particularly sleeping accommodation and premises that cannot be evacuated immediately. A 1-hour duration is only permitted where the premises can be evacuated immediately and are not used for sleeping, and where the premises will not be reoccupied until the system has fully recharged.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'monthly-test',
     question: 'What is the purpose of the monthly functional test on emergency lighting?',
     options: [
-      'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
+      'To fully discharge each battery so that its remaining capacity can be accurately measured',
       'To confirm that each luminaire illuminates correctly when the mains supply is simulated to fail',
-      'Adequate ventilation must be provided to prevent accumulation of hazardous vapours or gases',
-      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
+      'To measure the illuminance on the escape route and confirm it still meets 1 lux',
+      'To check that the charging indicator on every luminaire is showing a green LED',
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'During the annual full-duration test, for how long must a 3-hour rated emergency lighting system be tested?',
     options: [
-      'ETAP, SKM PowerTools, and Amtech ProDesign',
+      '1 hour, then the remaining duration is calculated from the battery voltage',
       '3 hours (the full rated duration)',
-      'A multimeter set to DC volts',
-      'To divert transient overvoltages to earth',
+      '30 minutes, as a sample is sufficient to prove the battery condition',
+      'Until the luminaires dim, with the elapsed time recorded as the actual duration',
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a self-contained emergency luminaire, where is the battery located?',
     options: [
-      'In every room with windows providing natural light',
-      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
+      'In a dedicated plant room serving the whole building',
+      'At the distribution board supplying the lighting circuit',
       'Within or immediately adjacent to the luminaire itself',
-      'A centralised monitoring panel with fault indication for each circuit',
+      'In a sealed enclosure mounted at the final exit door',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,9 +100,9 @@ const quizQuestions = [
     question:
       'A central battery system for emergency lighting typically uses which monitoring arrangement?',
     options: [
-      'In every room with windows providing natural light',
-      'Within or immediately adjacent to the luminaire itself',
-      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
+      'A test button on each individual luminaire that must be pressed in turn',
+      'An automatic monthly self-test built into every separate fitting',
+      'Periodic manual inspection of each luminaire with no remote indication',
       'A centralised monitoring panel with fault indication for each circuit',
     ],
     correctAnswer: 3,
@@ -153,9 +153,9 @@ const quizQuestions = [
     id: 7,
     question: "What is an 'open area' or 'anti-panic' emergency luminaire designed to achieve?",
     options: [
-      'Within or immediately adjacent to the luminaire itself',
-      'The date of test, type of test, any defects found and remedial action taken',
-      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
+      'Illumination of the escape route signage only, leaving the floor area in darkness',
+      'Continuous illumination at full normal lighting levels throughout the area',
+      'Illumination focused solely on high-risk machinery so it can be shut down safely',
       'Illumination to prevent panic and enable safe movement towards escape routes',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
       'NiCd (nickel-cadmium) batteries in emergency luminaires are being phased out in favour of:',
     options: [
       'NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries',
-      'A centralised monitoring panel with fault indication for each circuit',
-      'Illumination to prevent panic and enable safe movement towards escape routes',
-      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
+      'Flooded lead-acid (wet cell) batteries with topped-up electrolyte',
+      'Alkaline (zinc-manganese) primary cells replaced at each annual test',
+      'Sealed nickel-iron (NiFe) batteries with a vented gas outlet',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'Under BS 5266, who is responsible for ensuring emergency lighting is properly maintained and tested?',
     options: [
-      "To ensure the sign is visible from the required viewing distance and angle",
+      "The original installing contractor, for the lifetime of the system",
       "The building's responsible person (employer, owner or occupier)",
-      "NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries",
-      "Illumination to prevent panic and enable safe movement towards escape routes",
+      "The local fire and rescue service that carries out inspections",
+      "The manufacturer of the emergency luminaires under warranty",
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 10,
     question: 'A high-risk task area emergency luminaire must provide a minimum illuminance of:',
     options: [
-      'NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries',
-      'To ensure the sign is visible from the required viewing distance and angle',
+      '1 lux measured on the centre line of the nearest escape route',
+      '0.5 lux across the area, excluding a 0.5 m perimeter border',
       '10% of the normal maintained illuminance or 15 lux, whichever is greater',
-      'Within or immediately adjacent to the luminaire itself',
+      '50% of the normal maintained illuminance or 20 lux, whichever is lower',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,9 +208,9 @@ const quizQuestions = [
     question:
       'When recording emergency lighting test results, which of the following must be documented?',
     options: [
-      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
-      'Illumination to prevent panic and enable safe movement towards escape routes',
-      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
+      'Only the measured illuminance readings at each luminaire on the day of test',
+      'Only the total number of luminaires that failed during the test period',
+      'Only the name of the contractor and the next scheduled test date',
       'The date of test, type of test, any defects found and remedial action taken',
     ],
     correctAnswer: 3,
@@ -223,9 +223,9 @@ const quizQuestions = [
       "What is the purpose of the 'fish-tail' or directional lens on an emergency exit sign luminaire?",
     options: [
       'To ensure the sign is visible from the required viewing distance and angle',
-      'The date of test, type of test, any defects found and remedial action taken',
-      'Within or immediately adjacent to the luminaire itself',
-      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
+      'To diffuse the light evenly so the sign has no bright or dark patches',
+      'To filter the light to the green wavelength specified for safety signs',
+      'To concentrate the light downward so the floor below the sign is illuminated',
     ],
     correctAnswer: 0,
     explanation:

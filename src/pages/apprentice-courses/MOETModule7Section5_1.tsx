@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'signoff-purpose',
     question: 'What is the purpose of employer and training provider sign-off before the EPA?',
     options: [
-      'The main contractor controls access, programme, payment, and future work opportunities, which can make subcontractors reluctant to raise legitimate disputes for fear of consequences',
-      'The third-party component must meet or exceed all critical specifications of the original including voltage, current, temperature ratings, certifications and dimensional compatibility',
-      'Both parties must confirm that you have completed all required on-programme learning, achieved the required standards of competence, and are ready to proceed to end-point assessment — this protects you from being assessed before you are prepared',
-      'The client is in breach of Regulation 4(4) and may be prosecuted by the HSE; additionally, designers and contractors may be unable to plan their work safely, leading to further foreseeable risks',
+      'It is simply an administrative formality to confirm your apprenticeship funding has been paid, and has no bearing on your readiness',
+      'It allows the employer to extend your apprenticeship indefinitely so they can keep you on apprentice pay for longer',
+      'Both parties confirm you have completed on-programme learning and are ready for end-point assessment',
+      'It transfers responsibility for your assessment result to the employer and training provider, so any EPA failure is recorded against them rather than you',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'signoff-tripartite',
     question: 'What is a tripartite review in the context of EPA readiness?',
     options: [
-      'A meeting between you, your employer and your training provider to review your progress, confirm readiness for EPA, agree any final actions, and formally authorise progression to the gateway',
-      'Flammable liquids must be stored in suitable fire-resistant cabinets or stores with adequate ventilation, bunding to contain spills, separation from ignition sources, and appropriate signage and labelling',
-      'Compliant with BS EN 61557 (safety + functional standard for low-voltage test equipment), CAT III/IV rated, calibrated annually, with GS38 leads',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
+      'A meeting between you, your employer and your training provider to confirm readiness and authorise the gateway',
+      'A meeting between you and the independent end-point assessor to plan the structure and timing of the EPA components',
+      'A review carried out solely by the awarding body to confirm your qualification certificates have been issued',
+      'A check carried out by the EPAO after the EPA to decide whether you have passed each assessment component',
     ],
     correctIndex: 0,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'If there are outstanding issues identified during the sign-off review, what should happen?',
     options: [
-      'An action plan should be agreed with specific tasks, responsibilities and deadlines to resolve the issues before the EPA gateway is opened — no one should be pushed through the gateway with unresolved concerns',
-      'Employers\\\\\\\\\\\\\\\' Liability insurance — Compulsory Insurance Act 1969. Minimum statutory cover £5 million. The certificate must be displayed where employees can see it. Penalty for trading without: up to £2,500 per day. HSE enforces.',
-      'It is the regulator responsible for protecting the environment, including preventing pollution of water, land, and air, and can take enforcement action',
-      'Verify that a voltage indicator/two-pole tester is functioning correctly before and after testing for dead, without exposing the user to a live source',
+      'The apprentice should be entered for the EPA anyway, since the issues can be resolved during the assessment itself',
+      'An action plan should be agreed with specific tasks, responsibilities and deadlines to resolve the issues before the gateway is opened',
+      'The training provider should remove the affected KSBs from the standard so the gateway can proceed',
+      'The employer should sign off alone, since their workplace judgement overrides the training provider',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Outstanding issues must be resolved before progressing to EPA. An action plan should specify: what needs to be done (e.g., additional evidence, further training, more workplace experience), who is responsible, and when it will be completed. Rushing through the gateway with unresolved issues risks EPA failure — it is better to delay slightly and be properly prepared.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'signoff-role',
     question: 'What is your role as the apprentice in the sign-off process?',
     options: [
-      'Actively ensure your portfolio is complete and well-organised, confirm all required qualifications are achieved, honestly assess your own readiness, and raise any concerns about areas where you feel underprepared',
-      'Disconnect at the EV charger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).',
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
-      'Every circuit listed with its connected load, diversity factor, demand load, priority category and the supply source (normal, essential, critical, life safety)',
+      'Ensure your portfolio is complete, confirm your qualifications, and honestly assess your own readiness',
+      'Wait passively for your employer and training provider to decide, since the gateway decision is entirely theirs to make',
+      'Arrange and pay for your own end-point assessment directly with the EPAO before the gateway is opened',
+      'Assess the readiness of the other apprentices in your cohort and report your findings to the training provider',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Before entering the EPA gateway, sign-off is required from:',
     options: [
-      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
+      'The independent end-point assessment organisation (EPAO) alone',
       'Both the employer and the training provider, confirming the apprentice has met all on-programme requirements and is ready for end-point assessment',
-      'To check that the equipment is in safe working condition before each use, identifying any damage, wear, or defects',
-      'Component quality, correct specification of replacement parts, storage conditions, counterfeit or substandard components, and material degradation over time',
+      'The employer alone, since they hold the apprenticeship contract',
+      'The awarding body that issues the Level 3 Diploma certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: "The employer's sign-off specifically confirms:",
     options: [
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready, and any genuine concerns should result in an action plan to achieve readiness before proceeding',
+      'That your Level 3 Diploma and Functional Skills certificates have all been issued by the awarding body',
+      'That you have read and understood the EPA assessment plan and know the structure of each assessment component',
+      'That you have demonstrated the required knowledge, skills and behaviours in practice and are ready to be assessed',
+      'That the independent EPAO has reviewed your portfolio and agreed it meets the minimum evidence requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: "The training provider's sign-off specifically confirms:",
     options: [
-      'Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed',
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
-      'That you have completed all required on-programme qualifications, achieved the learning outcomes, built a portfolio that meets the minimum requirements, and are educationally ready for the EPA',
+      'That you have demonstrated the required knowledge, skills and behaviours competently in real workplace situations',
+      'That a suitable EPA date has been booked with the EPAO and the assessment venue has been confirmed',
+      'That your employer is satisfied with your attendance, timekeeping and conduct in the workplace',
+      'That you have completed all required qualifications, built a sufficient portfolio, and are educationally ready for the EPA',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'English and maths requirements for EPA gateway typically require:',
     options: [
       'Achievement of Level 2 English and maths (or Functional Skills equivalents) as a minimum before the EPA gateway can be opened',
-      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
-      'The location, symptoms, test results, your diagnosis, any immediate actions taken and recommended next steps',
-      'Provide physical separation between workers and live parts, preventing accidental contact',
+      'Achievement of Level 3 English and maths before any on-programme learning can begin',
+      'A pass in GCSE science in addition to English and maths at Level 1',
+      'No formal English and maths requirement, provided the portfolio is complete',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'A tripartite review should take place:',
     options: [
-      'Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed',
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready, and any genuine concerns should result in an action plan to achieve readiness before proceeding',
-      'Actively ensuring your portfolio is complete, your evidence is well-organised, any required qualifications are completed, and you honestly assess your own readiness — raising any concerns you have about specific areas',
+      'Only once, immediately before the EPA, since holding earlier reviews would simply duplicate effort',
+      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision',
+      'After the EPA has been completed, to review how the assessment went and capture lessons learned',
+      'Whenever a problem arises, with no scheduled reviews in between, so that meetings are only held when something has gone wrong',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'If the employer wants to push you through the gateway but the training provider has concerns, the correct outcome is:',
     options: [
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready, and any genuine concerns should result in an action plan to achieve readiness before proceeding',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'The employer can sign off alone, since they hold the apprenticeship contract and their judgement overrides the provider',
+      'The apprentice decides, choosing whether to proceed despite the training provider’s concerns',
+      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready',
+      'The EPAO is asked to settle the disagreement and decide whether the gateway should be opened',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'Your role in the sign-off process includes:',
     options: [
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
-      'Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'Actively ensuring your portfolio is complete, your evidence is well-organised, any required qualifications are completed, and you honestly assess your own readiness — raising any concerns you have about specific areas',
+      'Waiting passively for your employer and provider to decide, since the gateway decision is entirely theirs to make',
+      'Arranging and paying for your own end-point assessment directly with the EPAO before the gateway is opened',
+      'Assessing the readiness of the other apprentices in your cohort and reporting your findings to the training provider',
+      'Ensuring your portfolio is complete, your qualifications are done, and you honestly assess your own readiness',
     ],
     correctAnswer: 3,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
       'If you do not feel ready for the EPA but your employer and provider want to proceed, you should:',
     options: [
       'Express your concerns clearly and specifically — identify the areas you feel underprepared in and request additional support or time to address them before the gateway is opened',
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
-      'Actively ensuring your portfolio is complete, your evidence is well-organised, any required qualifications are completed, and you honestly assess your own readiness — raising any concerns you have about specific areas',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'Say nothing and proceed, since admitting you feel underprepared would only undermine your employer’s confidence in you',
+      'Refuse to attend the EPA altogether until you feel completely confident in every area of the standard',
+      'Proceed anyway and rely on resitting any failed components afterwards, treating the first attempt as a practice run',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'The sign-off documentation typically includes:',
     options: [
-      'That you have completed all required on-programme qualifications, achieved the learning outcomes, built a portfolio that meets the minimum requirements, and are educationally ready for the EPA',
-      'Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed',
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'A graded mark sheet showing how the EPAO assessed each of your EPA components',
+      'Written confirmation from both parties, a record of the gateway review, and formal agreement to proceed',
+      'A signed declaration from the apprentice alone confirming that they personally feel ready to be assessed',
+      'A copy of the apprenticeship funding agreement and the employer’s invoice for the training delivered',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'Off-the-job training hours must be completed before sign-off because:',
     options: [
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'Express your concerns clearly and specifically — identify the areas you feel underprepared in and request additional support or time to address them before the gateway is opened',
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
-      'Actively ensuring your portfolio is complete, your evidence is well-organised, any required qualifications are completed, and you honestly assess your own readiness — raising any concerns you have about specific areas',
+      'They are only recommended rather than required, so completing them before sign-off simply looks good to the EPAO',
+      'They can be made up after the EPA if there is a shortfall, provided the apprentice agrees to do so',
+      'The funding rules require a minimum of 20% off-the-job training to be evidenced before the EPA can proceed',
+      'They replace the need for a portfolio, since logged training hours are sufficient evidence on their own',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 11,
     question: 'After sign-off is completed, the next step is:',
     options: [
-      'That you have completed all required on-programme qualifications, achieved the learning outcomes, built a portfolio that meets the minimum requirements, and are educationally ready for the EPA',
-      'The concerns must be addressed before sign-off — both parties must agree the apprentice is ready, and any genuine concerns should result in an action plan to achieve readiness before proceeding',
-      'Express your concerns clearly and specifically — identify the areas you feel underprepared in and request additional support or time to address them before the gateway is opened',
-      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'The Level 3 Diploma is awarded, marking the formal completion of the whole apprenticeship',
+      'A further round of off-the-job training begins to top up any hours still outstanding',
+      'The employer issues the apprentice with their final pay rise to reflect qualified status',
+      'The gateway is formally opened with the EPAO, who then schedules the EPA components',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'A common reason for gateway sign-off being delayed is:',
     options: [
-      'Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed',
-      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed',
+      'Outstanding qualification certificates, incomplete portfolio evidence, or off-the-job hours below the minimum',
+      'The EPAO being fully booked, since gateway sign-off cannot happen until an assessment date is confirmed',
+      'The apprentice scoring too highly in mock assessments, which prompts the provider to delay and re-check the evidence',
+      'The employer wanting the apprentice to sit the EPA sooner than the training provider has scheduled it',
     ],
     correctAnswer: 0,
     explanation:

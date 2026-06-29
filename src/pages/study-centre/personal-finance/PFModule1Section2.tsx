@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'An electrician buys a new &pound;2,400 multifunction tester (Megger MFT1845) for their self-employed business. Under the Annual Investment Allowance (AIA), how much of this cost can they deduct from their taxable profit in the year of purchase?',
     options: [
-      'Nothing &mdash; test instruments are not allowable expenses',
-      '&pound;600 &mdash; 25% of the cost, spread over four years',
       'The full &pound;2,400 &mdash; the AIA allows 100% first-year deduction for qualifying equipment',
+      '&pound;600 &mdash; 25% of the cost, spread over four years',
+      'Nothing &mdash; test instruments are not allowable expenses',
       '&pound;1,200 &mdash; 50% in the first year, 50% in the second year',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The Annual Investment Allowance (AIA) allows businesses to deduct 100% of the cost of qualifying plant and machinery in the year of purchase, up to the AIA limit (currently &pound;1,000,000 per year). A multifunction tester is qualifying plant and machinery, so the full &pound;2,400 can be deducted from taxable profit in the tax year it was purchased. This is a capital allowance rather than a revenue expense, but the effect is the same &mdash; it reduces your taxable profit by the full amount. This is significantly more generous than the old writing-down allowance, which spread the deduction over several years. For most sole trader electricians, the AIA limit is more than sufficient to cover all equipment purchases in a given year.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'Making Tax Digital for Income Tax Self Assessment (MTD for ITSA) will require quarterly digital reporting. From April 2026, which self-employed individuals will be required to comply?',
     options: [
       'All self-employed individuals regardless of income',
-      'Self-employed individuals with gross income over &pound;50,000',
       'Only limited company directors',
       'Only those registered for VAT',
+      'Self-employed individuals with gross income over &pound;50,000',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'MTD for ITSA is being rolled out in phases. From April 2026, self-employed individuals and landlords with gross income over &pound;50,000 must comply. From April 2027, the threshold drops to &pound;30,000. There are currently no confirmed plans for income below &pound;30,000, although HMRC has indicated that the threshold may be lowered further in future. Under MTD, affected individuals must keep digital records using compatible software and submit quarterly updates to HMRC, followed by an end-of-period statement and a final declaration. This is a significant change from the current annual Self Assessment system and will require many electricians to invest in accounting software and potentially change how they keep records.',
   },
@@ -86,8 +86,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The Personal Allowance for the 2024/25 tax year is:',
-    options: ['&pound;10,000', '&pound;11,850', '&pound;12,570', '&pound;15,000'],
-    correctAnswer: 2,
+    options: ['&pound;12,570', '&pound;10,000', '&pound;11,850', '&pound;15,000'],
+    correctAnswer: 0,
     explanation:
       'The Personal Allowance for 2024/25 is &pound;12,570. This is the amount of income you can earn before paying any Income Tax. It has been frozen at this level since 2021/22 and is expected to remain frozen until at least April 2028 as part of the government&rsquo;s fiscal drag policy. The Personal Allowance reduces by &pound;1 for every &pound;2 of income above &pound;100,000, meaning it is completely eliminated at income of &pound;125,140. This creates an effective marginal tax rate of 60% on income between &pound;100,000 and &pound;125,140 &mdash; a trap that catches some higher-earning electrical contractors.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
     question: 'Class 4 National Insurance for self-employed individuals is charged at:',
     options: [
       '12% on all self-employed profits',
-      '6% on profits between &pound;12,570 and &pound;50,270, plus 2% on profits above &pound;50,270',
       '13.8% on all profits above the secondary threshold',
+      '6% on profits between &pound;12,570 and &pound;50,270, plus 2% on profits above &pound;50,270',
       '8% flat rate on all profits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Class 4 NI is charged at 6% on profits between &pound;12,570 (the lower profits limit) and &pound;50,270 (the upper profits limit), plus 2% on profits above &pound;50,270. For a self-employed electrician with &pound;50,000 profit, the Class 4 NI would be: (&pound;50,000 - &pound;12,570) x 6% = &pound;37,430 x 6% = &pound;2,245.80. The 6% rate was reduced from 9% in the 2024/25 tax year as part of the government&rsquo;s National Insurance reduction programme. Class 2 NI (&pound;3.45 per week) became voluntary from April 2024 but is still payable if you wish to protect your State Pension entitlement.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Professional subscription to the IET (Institution of Engineering and Technology)',
       'Cost of a new Megger multifunction tester',
-      'A fine for speeding while driving to a job',
       'Public liability insurance premium',
+      'A fine for speeding while driving to a job',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Fines and penalties for breaking the law are never allowable expenses, regardless of whether the offence occurred during business activities. HMRC is explicit about this &mdash; it includes parking fines, speeding fines, and any other legal penalties. The IET subscription is allowable as a professional subscription directly related to your trade. The Megger tester is allowable as either a capital allowance (under AIA) or a revenue expense depending on how you choose to treat it. Public liability insurance is a core business expense. The key test for any expense is whether it was incurred &ldquo;wholly and exclusively for the purposes of the trade&rdquo; &mdash; fines fail this test because they are a consequence of illegal behaviour, not a necessary business cost.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'Under the simplified expenses system, a self-employed electrician who uses their own car for business can claim:',
     options: [
-      'The actual cost of all fuel purchased during the year',
       '45p per mile for the first 10,000 business miles, then 25p per mile after that',
+      'The actual cost of all fuel purchased during the year',
       'A flat &pound;500 per month vehicle allowance',
       '30p per mile for all business miles with no limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The approved mileage rate under simplified expenses is 45p per mile for the first 10,000 business miles in the tax year, dropping to 25p per mile for any additional business miles. This rate is designed to cover all motoring costs: fuel, insurance, road tax, maintenance, repairs, and depreciation. If you use the mileage rate method, you cannot also claim the actual costs of running the vehicle. The alternative is to claim the actual costs and apply a business-use percentage, but this requires detailed record-keeping. Most sole trader electricians find the mileage rate method simpler. Note: these rates apply to cars only. If you use a van, you can claim the actual costs or the flat-rate van mileage allowance, which is different.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'An electrician who works from home one day a week doing paperwork, invoicing, and design work can claim home office expenses under the simplified method at:',
     options: [
-      '&pound;6 per week without needing to provide evidence of actual costs',
       '&pound;26 per month regardless of hours worked',
+      '&pound;6 per week without needing to provide evidence of actual costs',
       '10% of their mortgage or rent',
       'Nothing &mdash; home office expenses are not claimable for tradespeople',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Under the simplified expenses system, you can claim a flat rate for business use of your home without calculating the actual costs. The rates are based on hours of business use per month: 25&ndash;50 hours = &pound;10/month, 51&ndash;100 hours = &pound;18/month, 101+ hours = &pound;26/month. The &pound;6 per week figure (&pound;312 per year) is the HMRC-approved flat rate that PAYE employees can claim for working from home, and many self-employed individuals use this as a simpler alternative. The key requirement is that you genuinely use part of your home for business purposes. For electricians, this typically covers time spent on administration, quoting, invoicing, and design work. You do not need to have a dedicated room &mdash; regular use of a kitchen table is sufficient.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'Payments on account are advance payments towards your tax bill. They are typically required when:',
     options: [
       'You owe any amount of tax through Self Assessment',
-      'Your Self Assessment tax bill is more than &pound;1,000 AND less than 80% of your total tax was collected at source',
       'You earn more than the Personal Allowance',
+      'Your Self Assessment tax bill is more than &pound;1,000 AND less than 80% of your total tax was collected at source',
       'You are registered for CIS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Payments on account are required when your Self Assessment tax bill is more than &pound;1,000 AND less than 80% of your total tax liability for the year was deducted at source (through PAYE or CIS). Each payment on account is 50% of the previous year&rsquo;s tax bill. The first payment is due on 31 January (during the tax year) and the second on 31 July (after the tax year ends). A balancing payment (or refund) is then made on the following 31 January when the actual tax bill is calculated. This system catches many first-year self-employed electricians off guard because their first Self Assessment bill includes the full year&rsquo;s tax PLUS the first payment on account for the following year &mdash; effectively 18 months&rsquo; worth of tax in one payment.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
     question: 'Making Tax Digital for Income Tax (MTD for ITSA) requires affected individuals to:',
     options: [
       'Pay their tax monthly instead of annually',
-      'Keep digital records using compatible software and submit quarterly updates to HMRC',
       'File their Self Assessment return by 31 October instead of 31 January',
       'Register all business expenses with HMRC in advance before incurring them',
+      'Keep digital records using compatible software and submit quarterly updates to HMRC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MTD for ITSA requires affected self-employed individuals and landlords to keep digital records using HMRC-compatible software, submit quarterly updates summarising income and expenses, submit an end-of-period statement after the tax year ends, and submit a final declaration (replacing the current Self Assessment return). The quarterly updates do not change when tax is due &mdash; they are information submissions, not payment deadlines. The purpose is to give HMRC a more up-to-date picture of taxpayers&rsquo; affairs and to reduce errors in Self Assessment returns. From April 2026, this applies to those with gross income over &pound;50,000; from April 2027, the threshold drops to &pound;30,000.',
   },

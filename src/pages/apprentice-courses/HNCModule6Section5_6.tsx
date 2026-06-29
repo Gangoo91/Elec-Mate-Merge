@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'ecm-definition',
     question: 'What is an Energy Conservation Measure (ECM)?',
     options: [
-      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
-      'Both when RCD protection and disconnection times criteria are met',
+      'A statutory inspection of an electrical installation’s energy use',
+      'A government grant available for renewable energy projects',
       'A specific action that reduces energy consumption while maintaining service levels',
-      'People follow the behaviour of others, especially in uncertainty',
+      'A target figure for annual carbon emissions set by the client',
     ],
     correctIndex: 2,
     explanation:
@@ -58,10 +58,10 @@ const quickCheckQuestions = [
     id: 'ipmvp-purpose',
     question: 'What is the primary purpose of the IPMVP protocol?',
     options: [
-      'Anticipate future error and reduce overshoot',
-      'The zero or minimum value of the measured range',
+      'To set the maximum payback period allowed for an ECM',
+      'To rank energy suppliers by their carbon intensity',
       'To standardise measurement and verification of energy savings',
-      'Tracking peak power demand to manage electricity costs and capacity',
+      'To define the minimum insulation standards for new buildings',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const quickCheckQuestions = [
     id: 'rebound-effect',
     question: "What is the 'rebound effect' in energy efficiency?",
     options: [
-      'It detects current leaking to earth and disconnects within milliseconds',
-      'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
+      'A sudden surge in demand when equipment is switched back on',
+      'The recovery of waste heat back into the building',
       'Increased energy use due to behavioural changes after efficiency improvements',
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
+      'The point at which an efficiency measure has paid for itself',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which ECM category typically offers the shortest payback period?',
     options: [
-      'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
+      'Building fabric and insulation upgrades',
       'Controls and operational improvements',
-      'Installation has its own earth electrode',
-      'Fail, pass, and distinction',
+      'Renewable energy generation installations',
+      'Major HVAC plant replacement',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'Which IPMVP option is most appropriate for verifying savings from a lighting retrofit in a single zone?',
     options: [
-      'NPV accounts for the time value of money',
-      'Changed occupant behaviour and comfort expectations',
-      'Capital, energy, maintenance, and disposal costs',
+      'Option C: Whole Facility - utility meter analysis',
+      'Option D: Calibrated simulation modelling',
+      'Option B: Retrofit Isolation - All Parameter Measurement',
       'Option A: Retrofit Isolation - Key Parameter Measurement',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'In life cycle costing, which costs are typically included?',
     options: [
       'Capital, energy, maintenance, and disposal costs',
-      'Short payback, low risk, high energy savings',
-      'Option A: Retrofit Isolation - Key Parameter Measurement',
-      'Changed occupant behaviour and comfort expectations',
+      'Only the upfront capital and installation costs',
+      'Energy and maintenance costs but excluding capital cost',
+      'Capital cost less any available grant funding only',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'What baseline adjustment is typically required when verifying savings from HVAC improvements?',
     options: [
-      'NPV accounts for the time value of money',
-      'Capital, energy, maintenance, and disposal costs',
+      'Adjustment for the prevailing electricity tariff in each period',
+      'Adjustment for the discount rate applied to future cash flows',
       'Adjustment for weather (heating/cooling degree days)',
-      'Option A: Retrofit Isolation - Key Parameter Measurement',
+      'Adjustment for the depreciated capital value of the plant',
     ],
     correctAnswer: 2,
     explanation:
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'Which factor most commonly causes the rebound effect in commercial buildings?',
     options: [
       'Changed occupant behaviour and comfort expectations',
-      'Adjustment for weather (heating/cooling degree days)',
-      'Capital, energy, maintenance, and disposal costs',
-      'Use equivalent annual cost (EAC) to compare different lifespans',
+      'Faulty metering that under-records the post-retrofit consumption',
+      'Colder than average weather during the verification period',
+      'Premature failure of the newly installed efficient equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -237,9 +237,9 @@ const quizQuestions = [
       'What discount rate consideration is important when comparing ECM options across different equipment lifespans?',
     options: [
       'Use equivalent annual cost (EAC) to compare different lifespans',
-      'Adjustment for weather (heating/cooling degree days)',
-      'Option A: Retrofit Isolation - Key Parameter Measurement',
-      'Capital, energy, maintenance, and disposal costs',
+      'Apply a higher discount rate to the longer-lived option',
+      'Compare the options using simple payback period instead',
+      'Ignore the lifespan difference and compare raw NPV figures',
     ],
     correctAnswer: 0,
     explanation:

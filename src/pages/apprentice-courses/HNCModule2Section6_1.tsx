@@ -48,9 +48,9 @@ const quickCheckQuestions = [
     question: 'A diversity factor of 0.7 for small power in offices means:',
     options: [
       'Only 70% of connected load operates simultaneously at peak',
-      'To document final status, lessons learned, and formally close the project',
-      'Plate heat exchangers, control valves, and energy meters',
-      'Some faults only appear under load conditions',
+      'The cabling must be derated to 70% of its current rating',
+      'The system runs at 70% efficiency under design conditions',
+      'Each circuit must be loaded to at least 70% of capacity',
     ],
     correctIndex: 0,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: 'The sol-air temperature concept accounts for:',
     options: [
-      'Fire alarm systems and emergency circuits requiring fire resistance',
-      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
+      'The internal heat gains from occupants, lighting and equipment',
+      'The temperature drop across a glazing unit due to its U-value',
       'Combined effect of solar radiation and external air temperature on surfaces',
-      'Poor housekeeping, uneven surfaces, inadequate lighting, unsuitable footwear',
+      'The latent cooling load from moisture in the incoming fresh air',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,9 +132,9 @@ const quizQuestions = [
     question: "What does 'thermal admittance' (Y-value) indicate about building elements?",
     options: [
       'Ability to absorb and release heat over a 24-hour cycle',
-      'Proper installation techniques and regular maintenance',
-      'Isolation procedures for electrical work',
-      'They display a fault via an LED indicator on the luminaire',
+      'The steady-state rate of heat loss through the element (U-value)',
+      'The air leakage rate through gaps in the construction',
+      'The proportion of solar radiation transmitted through glazing',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: "The CIBSE 'admittance method' for cooling load calculations:",
     options: [
-      'Realistic operational energy prediction methodology',
+      'Ignores thermal mass and treats all gains as instantaneous',
       'Accounts for time lag and decrement factor of building elements',
-      'Ability to absorb and release heat over a 24-hour cycle',
-      'Combined effect of solar radiation and external air temperature on surfaces',
+      'Applies only to lightweight, naturally ventilated buildings',
+      'Calculates only the latent component of the fresh-air load',
     ],
     correctAnswer: 1,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     id: 11,
     question: 'What information does CIBSE TM54 provide for load calculations?',
     options: [
-      'Detailed U-value calculations',
-      'Refrigerant charge calculations',
-      'Heating system sizing procedures',
+      'Detailed U-value calculations for the building fabric',
+      'Refrigerant charge calculations for chiller plant',
+      'Peak heating load procedures for boiler sizing',
       'Realistic operational energy prediction methodology',
     ],
     correctAnswer: 3,

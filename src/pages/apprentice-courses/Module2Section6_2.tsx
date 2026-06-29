@@ -177,16 +177,16 @@ const Module2Section6_2: React.FC = () => {
     {
       id: 8,
       question:
-        'A business uses 150 kWh per month. If they switch from 30p/kWh to an Economy 7 tariff (18p night, 35p day) with 60% night usage, monthly saving is:',
+        'A business uses 150 kWh per month. If they switch from 30p/kWh to an Economy 7 tariff (18p night, 35p day) with 60% night usage, the monthly saving is approximately:',
       options: [
-        '£9.00',
+        '£7.80',
         '£4.50',
         '£15.00',
         '£11.25',
       ],
       correctAnswer: 0,
       explanation:
-        'Standard: 150 × £0.30 = £45. E7: (90×£0.18) + (60×£0.35) = £16.20 + £21 = £37.20. Saving = £45 - £37.20 = £7.80 ≈ £9.',
+        'Standard: 150 × £0.30 = £45. E7: (90 × £0.18) + (60 × £0.35) = £16.20 + £21.00 = £37.20. Saving = £45 − £37.20 = £7.80.',
     },
     {
       id: 9,

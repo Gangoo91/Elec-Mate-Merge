@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is a "PEN fault" + why is it especially dangerous for outdoor LCT?',
     options: [
-      'Just a tripped breaker',
-      'PEN (Protective Earth + Neutral combined conductor in TN-C-S / PME) fault = open-circuit in the PEN conductor between the DNO transformer + the customer earth electrode / MET. Without intact PEN, the earth reference is lost: exposed-conductive-parts may rise toward line voltage (up to 230 V) relative to true earth. Customer touching an exposed-conductive-part = potential lethal shock. Outdoor LCT (EV, outdoor PV inverter, ASHP unit, outdoor BESS) is exposed to wider extraneous-conductive-parts — pavement, wet ground, parked vehicle, fence — increasing the risk vector',
-      'Random',
-      'Only indoors',
+      'An open circuit in the PME PEN conductor that can raise exposed-conductive-parts toward line voltage',
+      'A short between line and neutral that the supply fuse clears almost immediately on occurrence',
+      'An RCD nuisance trip caused by accumulated standing earth-leakage current over time',
+      'A fault confined to the DC side of the PV array that cannot reach exposed metalwork at all',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'PEN fault mechanism: (1) TN-C-S (PME) supply combines protective + neutral functions in a single PEN conductor from the transformer to the customer. The PEN is normally bonded at the customer side to the MET + via main equipotential bonding to extraneous-conductive-parts (gas + water + structural metalwork). (2) When the PEN opens (broken connection at street level, transformer end, customer service head): the customer-side earth reference is lost. (3) Load current that should return via the PEN now finds an alternative return path — often through customer earthing arrangements (electrode + bonded metalwork) — making everything bonded sit at a voltage above true earth. (4) In severe cases: exposed-conductive-parts can rise to almost line voltage (~230 V) relative to remote true earth. (5) Customer touching exposed-conductive-part while standing on wet ground (or touching a separately-earthed extraneous-conductive-part) = current path through them = potentially lethal shock. (6) Outdoor LCT vulnerability: EV charging point + outdoor PV inverter + ASHP outdoor unit + outdoor BESS are exposed to wider extraneous-conductive-parts (pavement, parked vehicle metalwork, wet ground, fences, drainage). The risk vector is wider than indoor installs. (7) BS 7671 response: Reg 722.411.4 restricts PME on EV outdoors; the open-PEN methods under it are the voltage-detection device (OPDD, indent (c), measuring CPC-to-Earth voltage + disconnecting) and the earth-electrode resistance condition (indent (b), TT-style). RDC-DD (residual DC detection) is a separate matter — it sits under the Reg 722.531.3.101 RCD architecture, not the open-PEN methods.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What does Reg 722.411.4 say about PME on EV charging points + outdoor use?',
     options: [
-      'Allow PME freely',
-      'Reg 722.411.4.1: A PME earthing facility shall not be used as the means of earthing for the protective conductor contact of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors UNLESS one of the methods listed in Reg 722.411.4.1 (b) to (e) is used. (b) = a condition on the earth-electrode + protective-conductor resistance (TT-style local earthing); (c) = an OPDD (Open-PEN Detection Device) that measures the voltage between the CPC and Earth and disconnects on an open-PEN condition. In A4:2026 the former indent (a) was deleted, so the valid methods are now lettered (b) to (e). The phrase "might reasonably be expected to be used to charge a vehicle outdoors" is the scope trigger that defines when the reg applies — not an exception',
-      'Random',
-      'Indoors only',
+      'PME may be used freely as the earth for any outdoor EV charging point',
+      'The regulation applies to indoor charging points only, never to outdoor ones',
+      'PME is permitted outdoors provided a 30 mA Type A RCD is fitted, with no further measure',
+      'PME must not earth an outdoor charging point unless a method in (b)-(e) is used',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 722.411.4.1 (BS 7671:2018+A4:2026 wording): A PME earthing facility shall not be used as the means of earthing for the protective conductor contact of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors UNLESS one of the methods listed in (b) to (e) is used. The acceptable methods (paraphrased): (b) the charging point is connected via a separate earthing arrangement — a condition on the sum of the earth-electrode + protective-conductor resistance (TT-style local earthing) + RCD architecture; (c) an OPDD that measures the voltage between the CPC of the EV charging equipment and Earth, disconnecting all live conductors of the affected circuit on detection of an open-PEN condition; (d) and (e) further specified methods, with the protective device operating per Reg 543.3.3.101(b) and selected per Table 537.4. The A4:2026 changes were the deletion of the former indent (a), redraft of the indent (c) voltage-monitoring device, and an added indent — so the valid methods are now lettered (b) to (e). The "might reasonably be expected to be used to charge a vehicle outdoors" wording is the retained scope trigger (it defines when the reg bites), not a deleted exception. (3) Practical implementation: most modern EV chargers (Zappi, Ohme, Hypervolt, Easee, Pod Point) include integrated OPDD as standard — verify the manufacturer DoC + BS EN compliance + functional test at install. (4) Verification at IV: OPDD presence, manufacturer DoC, functional test (simulated open-PEN if manufacturer permits), connection to disconnect path. (5) Cert evidence bundle records: OPDD make + model + DoC + functional test result + verified Reg 722.411.4 compliance.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What is an RDC-DD + how does it differ from a standard RCD?',
     options: [
-      'Identical',
-      'RDC-DD = Residual Direct Current Detecting Device — detects smooth DC fault current that standard Type A / Type AC RCDs may not see. For EV charging the vehicle\'s DC-DC converter + charger electronics may produce smooth DC fault currents that a Type A RCD doesn\'t reliably detect. The RDC-DD threshold typically 6 mA DC; on detection it disconnects or sends signal to the upstream RCD to trip. Standard RCDs handle AC residual (Type AC) or AC + pulsating DC (Type A) — but not smooth DC. Type B RCD has built-in RDC-DD + smooth-DC capability',
-      'Random',
-      'Same thing',
+      'It is identical to a standard Type A RCD in every respect and detects the same currents',
+      'It is a surge protective device that diverts transient overvoltages to earth on a strike',
+      'It detects smooth DC fault current (typically 6 mA) that a Type A or AC RCD may not see',
+      'It is just another name for a Type AC RCD with no functional difference at all',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'RDC-DD vs RCD types: (1) Standard RCD types: Type AC detects AC residual current; Type A detects AC + pulsating DC (most common modern type); Type F detects AC + pulsating DC + composite waveforms; Type B detects AC + pulsating DC + smooth DC. (2) Smooth DC fault current problem: EV charger + PV inverter + BESS + heat pump VSD + EV vehicle electronics produce smooth DC fault currents under fault conditions. Type AC + Type A may not reliably detect smooth DC residual. (3) RDC-DD = Residual Direct Current Detecting Device — typically a separate device or integrated function that detects smooth DC residual at the 6 mA DC threshold (lower than Type B\'s typical trip threshold). On detection: (a) disconnects directly OR (b) trips the upstream RCD by injecting a residual signal it can detect. (4) Section 722 EV: Reg 722.531.3.101 (paraphrased) requires either Type B RCD OR Type A RCD + RDC-DD. Many modern EV chargers include integrated RDC-DD with a Type A upstream RCD — cheaper than full Type B for the application. (5) Verification: RDC-DD presence + manufacturer DoC + BS EN 62752 (where applicable) + functional test (some manufacturers permit injection test). (6) Cert evidence bundle: RDC-DD make + model + DoC + functional test result + Reg 722.531 compliance.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Why is open-PEN risk a SHARED concern across outdoor LCT (EV + outdoor PV + ASHP + outdoor BESS)?',
     options: [
-      'Only EV',
-      'All outdoor LCT share the open-PEN risk profile: (1) outdoor installation = exposed to wider extraneous-conductive-parts (paving, ground, vehicles, fences); (2) PME earthing facility + open-PEN fault = exposed-conductive-parts may rise toward line voltage; (3) shock risk to anyone touching the equipment while contacting other earthed metalwork. The Section 722 framework (EV) has the explicit reg; but the same open-PEN protective architecture (OPDD voltage-detection device, indent (c), or the TT-style local earth-electrode condition, indent (b)) is good practice across outdoor LCT. (RDC-DD is a separate smooth-DC matter under Reg 722.531.3.101, not an open-PEN method.) Section 712 outdoor PV + ASHP outdoor unit + outdoor BESS = same risk vector, same mitigation logic',
-      'Random',
-      'Indoors only',
+      'Only EV charging points carry any open-PEN risk; other outdoor LCT is exempt',
+      'PME plus an open PEN can raise exposed-conductive-parts toward line voltage on any outdoor LCT',
+      'Only Class II double-insulated outdoor equipment carries the risk, since it has no earth',
+      'Open-PEN risk only ever applies to indoor equipment, never to outdoor installations',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Domestic outdoor EV charger install on TN-C-S PME supply. What architecture options satisfy Reg 722.411.4?',
     options: [
-      'Just connect to PME',
-      'Per Reg 722.411.4.1, valid methods are lettered (b) to (e): (c) OPDD-equipped charger — a device that measures CPC-to-Earth voltage + disconnects on a detected open-PEN condition; most modern domestic EV chargers (Zappi, Ohme, Hypervolt, Easee) include integrated OPDD as standard; verify manufacturer DoC + BS EN compliance. (b) TT-style alternative — local earth electrode dedicated to the charging point, meeting the earth-electrode + protective-conductor resistance condition, + RCD architecture; avoids relying on PME for the charging-point protective contact; physical separation of earth electrode from PME bonding. (d) / (e) further specified methods per the section (protective device per Reg 543.3.3.101(b), selected per Table 537.4). Verify functional + cert evidence bundle records',
-      'No protection',
-      'Type AC RCD',
+      'Simply connect the charger to the PME earth directly with no additional protective measures',
+      'Fit only a Type AC RCD on the charging circuit and rely on the PME earth for the contact',
+      'Either method (c), an OPDD-equipped charger, or method (b), a TT-style local earth electrode',
+      'No earth-fault protection of any kind is required on a domestic EV charging circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 722.411.4 architecture options for outdoor domestic EV (valid methods lettered (b) to (e)): (1) Method (c) OPDD-integrated charger: most modern chargers (Zappi V2.1+, Ohme ePod, Hypervolt 3, Easee Home, Pod Point Solo 3) include an integrated OPDD — a device measuring CPC-to-Earth voltage that disconnects on open-PEN — as a standard manufacturer feature. Manufacturer DoC declares the OPDD compliance + Reg 722.411.4 satisfaction. Verification: inspect presence; functional test per manufacturer (some permit injection simulation; others rely on manufacturer factory test + DoC). (2) Method (b) TT-style alternative: local earth electrode (driven rod or buried plate) dedicated to the EV charging point meeting the earth-electrode + protective-conductor resistance condition; the protective conductor on the EV charger circuit connects to this local earth NOT the PME / MET; main equipotential bonding still serves the installation; RCD on the EV circuit (Type B or Type A + RDC-DD per Section 722.531). Used where the customer / installer / DNO prefers physical separation from PME risk. (3) Methods (d) / (e) other specified methods: per Section 722 + manufacturer DoC (protective device per Reg 543.3.3.101(b), selected per Table 537.4). Note: the former indent (a) was deleted in A4:2026. (4) Section 722.531: RCD type + sensitivity for EV: 30 mA + Type B OR Type A + RDC-DD. (5) Verification documentation: EIC + Schedule of Test Results + manufacturer DoC + OPDD or TT architecture choice rationale + functional test results. (6) UK 2025-26 typical: OPDD-integrated charger is dominant choice; TT alternative used where DNO prefers OR existing supply has known PEN issues.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A customer\'s outdoor PV inverter on the garage exterior, TN-C-S PME supply. Does open-PEN protection apply?',
     options: [
-      'Only EV',
-      'Yes — same protective logic. Outdoor PV inverter on PME has the same open-PEN risk vector as outdoor EV charger. While Section 712 doesn\'t have an explicit Reg 722.411.4-equivalent, best practice + DNO + manufacturer guidance: (1) verify the inverter has integrated insulation monitoring (Reg 712.421.101 IMD) — provides DC-side fault detection; (2) consider OPDD on the supply circuit OR TT alternative — local earth electrode; (3) confirm RCD architecture appropriate to the inverter electronics. The principle: open-PEN risk applies wherever PME serves outdoor exposed-conductive-parts',
-      'Random',
-      'No protection needed',
+      'No — open-PEN protection only ever applies to dedicated EV charging points',
+      'No — the inverter’s Reg 712.421.101 insulation monitoring device already covers the open-PEN case',
+      'No — an outdoor PV inverter needs no open-PEN protection of any kind',
+      'Yes — the same open-PEN risk applies; consider an OPDD or TT alternative for the inverter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Outdoor PV inverter + open-PEN risk: (1) Risk vector same as outdoor EV — wall-mounted on garage exterior; metal casing; exposed-conductive-parts; PME earthing + open-PEN scenario = casing rises toward line voltage. (2) Section 712 specifics: Reg 712.421.101 IMD provides DC-side insulation monitoring (not direct open-PEN detection); Reg 712.514 warning notices required. No explicit Reg 722.411.4-equivalent in Section 712. (3) Best practice / DNO + manufacturer guidance: apply open-PEN logic. Options: (a) OPDD on the inverter\'s AC supply circuit — increasingly available as separate device or integrated in some new inverters; (b) TT alternative — local earth electrode for the inverter circuit + RCD architecture; (c) install the inverter indoors / in conditioned space where practical — eliminates outdoor open-PEN risk vector. (4) Reality 2025-26: many existing outdoor PV inverter installs rely on PME + IMD + Type B RCD; emerging consensus that explicit OPDD or TT is better. (5) DNO inspection — some DNOs raise this at PV install inspection (especially commercial); others accept current installer convention. (6) Cert evidence bundle: architecture choice + rationale + manufacturer DoC + verification. (7) Future-proofing: A4:2026 trend is toward tightening outdoor LCT protection; the next BS 7671 amendment may extend Reg 722.411.4-equivalent to outdoor PV explicitly.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Standard Type A 30 mA RCD on an EV circuit — what fault scenario does it MISS?',
     options: [
-      'None',
-      'Smooth DC fault current. Type A RCD detects AC residual + pulsating DC residual but NOT smooth DC. EV vehicle electronics (battery + charger circuit) can produce smooth DC fault current. Without RDC-DD or Type B RCD, a smooth-DC fault may go undetected → the RCD never trips → fault current continues until detected by other means or causes equipment damage. Reg 722.531.3.101 + Section 722 require either Type B OR Type A + RDC-DD on EV circuits',
-      'AC only',
-      'Random',
+      'Smooth DC fault current — needing Type B, or Type A plus RDC-DD, on the EV circuit',
+      'It misses no fault scenario at all; a Type A RCD reliably covers every fault current an EV can produce',
+      'It misses high-frequency residual currents above 1 kHz generated by the charger power electronics',
+      'It misses pulsating DC residual current, which in fact only a Type AC RCD is able to detect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type A RCD smooth-DC blind spot: (1) Type A definition (BS EN 61008 + BS EN 61009): detects AC residual currents + pulsating DC residual currents. NOT smooth DC. (2) EV vehicle scenario: the EV battery + onboard charger + DC-DC converter under fault conditions can produce smooth DC residual current — flowing from the vehicle through any fault path to earth. Type A RCD\'s internal current transformer is designed for AC + pulsating DC; smooth DC may saturate the CT or pass unseen. (3) Consequence: smooth DC fault → Type A RCD doesn\'t trip → fault current continues → may damage equipment, persist as hazard, eventually detected by other means (over-current, isolation monitoring, ground fault). (4) Mitigation per Reg 722.531.3.101: (a) Type B RCD — detects AC + pulsating DC + smooth DC across its operating range; built for the scenario; more expensive (~£100-200 vs ~£30-50 for Type A). (b) Type A RCD + RDC-DD — RDC-DD is the separate device or integrated function that detects smooth DC residual at 6 mA threshold + signals upstream RCD or disconnects directly. Cheaper combined cost (~£60-100) than Type B; the dominant approach in modern domestic EV chargers (manufacturer integrates RDC-DD; customer installer uses standard Type A upstream). (5) Verification: at IV check the RCD type + RDC-DD presence + manufacturer DoC + Reg 722.531 compliance.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'OPDD functional test at IV — how is it verified?',
     options: [
-      'No test',
-      'OPDD functional test methods: (1) Manufacturer self-test feature — many integrated OPDDs include a self-test sequence triggered via the manufacturer commissioning interface or button; the OPDD simulates the open-PEN condition + verifies the disconnect path. (2) Manufacturer DoC + factory test — some OPDDs rely on factory testing + DoC declaration without re-test at install. (3) Simulated open-PEN at install — physically disconnect the PEN at a controlled point + verify the OPDD detects + disconnects (potentially destructive + manufacturer-permission-required only). (4) Manufacturer-specified procedure governs; verify per DoC + record in cert evidence bundle',
-      'Random',
-      'Always destructive',
+      'There is no way to verify an OPDD at inspection once it is installed and energised',
+      'By measuring the loop impedance at the charging point and confirming it is below the OPDD threshold',
+      'By a manufacturer self-test where available, or the factory test and DoC, recording the result',
+      'By disconnecting the main earth and confirming the charger still energises normally',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'OPDD verification options: (1) Manufacturer self-test (most common) — modern integrated OPDD includes a self-test triggered via commissioning interface (touch screen / app / installer button sequence). The OPDD simulates internal open-PEN signal + verifies the disconnect path; records pass / fail in the device log. (2) Factory test + DoC — some manufacturers rely on factory testing + the BS EN compliance DoC + visual inspection at install (verify the device is the right model + correctly connected + power applied). No additional install-time test required per their DoC. (3) Simulated open-PEN at install — physically opening the PEN conductor at a controlled point (e.g. between the meter + the CU) + verifying the OPDD detects + disconnects. Potentially hazardous if not done with full understanding + DNO permission + manufacturer authorisation. (4) DNO-witnessed test — some commercial installs have DNO witness the open-PEN test. (5) Reg 722.411.4 doesn\'t specify the test method — it specifies the requirement (OPDD or alternative architecture). The verification method per manufacturer DoC + Section 722 + industry good practice. (6) Cert evidence bundle records: OPDD make + model + manufacturer DoC + BS EN compliance + test method used + result + Reg 722.411.4 architecture confirmation. (7) Periodic review at EICR-equivalent: re-run OPDD self-test where available.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Multi-source LCT site with TN-C-S PME — outdoor EV + outdoor PV inverter + ASHP. How is open-PEN risk addressed across all three?',
     options: [
-      'Same Type AC RCD',
-      'Per-source open-PEN architecture: (1) Outdoor EV charger — Reg 722.411.4: OPDD-integrated OR TT alternative; verify per manufacturer DoC. (2) Outdoor PV inverter — best practice: OPDD on the inverter circuit OR TT alternative for the inverter\'s AC supply; Reg 712.421.101 IMD for DC side. (3) ASHP outdoor unit — protective conductor architecture per manufacturer + Section 722-equivalent good practice. (4) Coordinated approach: option to use single TT earth electrode serving all outdoor LCT circuits OR per-circuit OPDD; cert evidence bundle records the architecture rationale + per-source verification',
-      'Random',
-      'No protection',
+      'Fit the same single Type AC RCD to all three outdoor circuits and rely on the PME earth',
+      'Protect only the EV circuit, since Reg 722.411.4 names EV explicitly and the other two are exempt',
+      'Leave all three outdoor sources without any open-PEN protection, as the supply already provides it',
+      'Per-source OPDD or TT alternative on each, optionally one TT electrode serving all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-source outdoor LCT open-PEN coordination: (1) Per-source approach — each source has its own architecture choice. EV uses OPDD-integrated; PV uses OPDD or TT; ASHP per manufacturer + good practice. (2) Coordinated TT approach — install one local earth electrode serving all outdoor LCT circuits; the EV + PV + ASHP all connect protective conductors to the local earth electrode (not PME); main equipotential bonding still services the rest of the installation per BS 7671. Requires careful design + earth electrode resistance verification (Reg 542 + Reg 644). (3) Hybrid approach — EV uses OPDD-integrated (per Reg 722.411.4); PV + ASHP use the existing PME with manufacturer-DoC-acceptable architecture. (4) DNO position — some DNOs prefer coordinated TT for outdoor LCT; others accept OPDD-per-source; verify at design stage. (5) Reg 551.4.2 multi-source RCD effectiveness — across the combinations of sources operating, RCD effectiveness must be maintained. With TT alternative architecture, RCD protection on each outdoor circuit operates independently of PME. (6) Documentation — cert evidence bundle records: architecture choice rationale + per-source verification + multi-source RCD test matrix + manufacturer DoCs. (7) UK 2025-26 trend: increasing use of OPDD-integrated equipment + DNO acceptance of OPDD as alternative to mandatory TT — but TT remains the conservative robust choice for outdoor LCT.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'Periodic EICR-equivalent on outdoor LCT — what open-PEN architecture verification applies?',
     options: [
-      'None at EICR',
-      'EICR-equivalent reviews open-PEN architecture: (1) Visual inspection of OPDD presence + LED / display status; (2) self-test feature where manufacturer-supported; (3) verification that the architecture hasn\'t changed since install (no additions / modifications affecting the protection); (4) RDC-DD where applicable functional test; (5) TT alternative — earth electrode resistance re-test per Reg 643.7.3 + Reg 651-653; (6) RCD time + sensitivity test per BS EN 61557-6; (7) cert evidence bundle updated. Open-PEN architecture is not a one-time-at-install verification — periodic re-test confirms ongoing protection',
-      'Random',
-      'Reg 722 only',
+      'No open-PEN verification applies at an EICR-equivalent once the install has been signed off',
+      'Visual and self-test of the OPDD, architecture-continuity, RCD tests, plus TT electrode re-test',
+      'Only a visual check of the OPDD indicator light, with no functional testing of any protective device',
+      'Only the Reg 722 EV charger is reviewed at the periodic; no other outdoor LCT source is checked',
     ],
     correctAnswer: 1,
     explanation:

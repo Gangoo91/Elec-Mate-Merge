@@ -18,117 +18,117 @@ export const SoftwareCalculationQuiz = () => {
     {
       question: 'Why is software used in emergency lighting design?',
       options: [
-        "It's legally required by BS 5266-1",
         'To accurately simulate lux levels and verify compliance before installation',
-        'To replace the need for physical testing',
-        "It's only used for very large projects",
+        'Because BS 5266-1 makes its use a legal requirement',
+        'To remove the need for any physical testing',
+        'Because it is only ever used on very large projects',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
-        'Software helps simulate lux levels, verify compliance, and reduce installation errors, though physical testing is still required.',
+        'Software simulates lux levels and verifies compliance before installation, reducing errors, although physical testing is still required afterwards.',
     },
     {
-      question: 'Name two benefits of simulating lighting performance before installation.',
+      question: 'What is a key benefit of simulating lighting performance before installation?',
       options: [
-        'Reduces cost and eliminates testing requirements',
-        'Accurate compliance verification and reduced risk of installation errors',
-        'Faster installation and automatic approval',
-        'Cheaper luminaires and simplified wiring',
+        'It removes the need for any on-site testing',
+        'It guarantees automatic Building Control approval',
+        'It verifies compliance and reduces the risk of installation errors',
+        'It allows cheaper luminaires and simplified wiring',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Pre-installation simulation helps verify compliance and reduces the risk of costly installation errors and rework.',
+        'Pre-installation simulation verifies compliance and reduces the risk of costly installation errors and rework.',
     },
     {
-      question: 'List two software tools commonly used in the UK for lighting design.',
+      question: 'Which two software tools are commonly used in the UK for lighting design?',
       options: [
         'AutoCAD and SketchUp',
-        'DIALux and Relux',
         'Excel and Word',
         'Photoshop and Illustrator',
+        'DIALux and Relux',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
-        'DIALux and Relux are the most widely used emergency lighting design software tools in the UK.',
+        'DIALux and Relux are the most widely used lighting design tools in the UK and support emergency lighting calculations.',
     },
     {
       question: 'What does a polar diagram show?',
       options: [
-        'The floor plan layout of luminaires',
-        'Light distribution curves for each luminaire type',
-        'Electrical connection diagrams',
-        'Building orientation relative to north',
+        'The floor plan layout of the luminaires',
+        'The light distribution curve for a luminaire type',
+        'The electrical connection diagram for the circuit',
+        'The orientation of the building relative to north',
       ],
       correct: 1,
       explanation:
-        'Polar diagrams show the light distribution pattern and intensity curves for specific luminaire types.',
+        'A polar diagram shows the light distribution pattern and intensity of a specific luminaire type.',
     },
     {
       question: 'What is the purpose of lux contour maps?',
       options: [
-        'To show electrical circuits',
-        'To display colour-coded compliance areas on floor plans',
-        'To indicate fire escape routes',
-        'To show building elevations',
-      ],
-      correct: 1,
-      explanation:
-        'Lux contour maps use colour coding to show areas of compliance and failure across the floor plan.',
-    },
-    {
-      question: 'Why should manufacturer photometric data files be used in software?',
-      options: [
-        'They are legally required',
-        'They are cheaper than generic data',
-        'They provide accurate luminaire performance characteristics',
-        'They install automatically',
+        'To show the electrical circuits feeding the luminaires',
+        'To indicate the designated fire escape routes',
+        'To display colour-coded compliance areas across the floor plan',
+        'To show the building elevations',
       ],
       correct: 2,
       explanation:
-        'Manufacturer photometric data ensures accurate representation of specific luminaire performance characteristics.',
+        'Lux contour maps use colour coding to show where illuminance levels pass or fail across the floor plan.',
+    },
+    {
+      question: 'Why should manufacturer photometric data files be used in the software?',
+      options: [
+        'They are cheaper to obtain than generic data',
+        'They provide accurate, specific luminaire performance data',
+        'They are a legal requirement for every project',
+        'They configure and install the fittings automatically',
+      ],
+      correct: 1,
+      explanation:
+        'Manufacturer photometric files give an accurate representation of how each specific luminaire actually performs.',
     },
     {
       question: 'What is one limitation of relying only on software?',
       options: [
-        'Software is too expensive',
-        'Models assume ideal conditions that may not reflect site reality',
-        'Software takes too long to run',
-        'Results are always inaccurate',
+        'The software licences are too expensive',
+        'The calculations take too long to run',
+        'The models assume ideal conditions that may not reflect site reality',
+        'The results produced are always inaccurate',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Software models assume ideal conditions like clean surfaces and no obstructions, which may not reflect actual site conditions.',
+        'Software models assume ideal conditions such as clean surfaces and no obstructions, which may not match the real installation.',
     },
     {
       question: 'What additional step must always follow software design to confirm compliance?',
       options: [
-        'Building Control approval',
-        'Client sign-off',
         'On-site lux testing after installation',
-        'Manufacturer warranty registration',
+        'Obtaining Building Control approval',
+        'Securing written client sign-off',
+        'Registering the manufacturer warranty',
       ],
-      correct: 2,
+      correct: 0,
       explanation:
-        'Physical lux testing after installation is essential to verify that actual performance matches software predictions.',
+        'On-site lux testing after installation is essential to confirm that the actual performance matches the software prediction.',
     },
     {
-      question: 'What file formats are commonly used for photometric data?',
-      options: ['PDF and DOC', 'IES and LDT', 'JPG and PNG', 'XLS and CSV'],
-      correct: 1,
+      question: 'Which file formats are commonly used for photometric data?',
+      options: ['PDF and DOC', 'JPG and PNG', 'XLS and CSV', 'IES and LDT'],
+      correct: 3,
       explanation:
-        'IES (Illuminating Engineering Society) and LDT (Luminaire Data Transfer) are standard photometric data formats.',
+        'IES (Illuminating Engineering Society) and LDT (Luminaire Data Transfer) are the standard photometric data file formats.',
     },
     {
-      question: 'Why should software-generated reports be included in handover documentation?',
+      question: 'Why should software-generated reports be included in the handover documentation?',
       options: [
-        'They look professional',
-        'They are required by insurance companies',
+        'They simply look professional in the file',
+        'They reduce the installer’s legal liability',
         'They provide compliance evidence and design justification',
-        'They reduce liability',
+        'They are demanded by insurance companies',
       ],
       correct: 2,
       explanation:
-        'Software reports provide essential compliance evidence and design justification for audits and Building Control.',
+        'Software reports provide compliance evidence and design justification for audits and Building Control.',
     },
   ];
 

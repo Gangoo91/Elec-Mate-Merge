@@ -12,12 +12,12 @@ const quickCheckQuestions = [
   {
     question: 'What enables homeowners to control their security system whilst away from home?',
     options: [
-      'Local Bluetooth connection',
       'Cloud connectivity and mobile app',
+      'Local Bluetooth connection',
       'Landline telephone',
       'Physical key fob',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Remote access relies on cloud connectivity that bridges the home network to internet-accessible servers, allowing mobile apps to communicate with the security system from anywhere.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'What is a key risk of remote access functionality?',
     options: [
       'Increased battery consumption',
-      'Potential unauthorised access if credentials are compromised',
       'Slower local response times',
       'Higher equipment costs',
+      'Potential unauthorised access if credentials are compromised',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Remote access creates an attack surface where compromised passwords or weak security could allow unauthorised users to control the system, making strong credentials and 2FA essential.',
   },
@@ -53,11 +53,11 @@ const quizQuestions = [
     question: 'What is required for remote access to function?',
     options: [
       'Bluetooth connection',
-      'Working internet connection at the property',
       'Landline telephone',
       'Direct radio link',
+      'Working internet connection at the property',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Remote access requires a working internet connection at the property to communicate with cloud servers, which then relay commands and notifications to mobile apps.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'What should happen if internet connectivity is lost?',
     options: [
       'All sensors stop working',
-      'Local hub continues operating and stores events for later sync',
       'System completely disarms',
+      'Local hub continues operating and stores events for later sync',
       'Cameras delete all footage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Well-designed systems maintain local operation during internet outages. The hub continues monitoring sensors and storing events, syncing to the cloud when connectivity returns.',
   },

@@ -45,23 +45,23 @@ const checks = [
     id: 's5-5-locked-off-but-live-check',
     question: 'A circuit is correctly switched off and locked off, but the conductor is still live. What is the most likely cause?',
     options: [
-      'Uncontrolled expansion of project scope without corresponding adjustments',
-      'A dangerously high voltage develops across the open secondary, risking flashover and fatal shock',
-      'A second source (PV, UPS, generator, borrowed neutral) is feeding the conductor from somewhere else',
-      'In an area of clean, uncontaminated air, away from exhaust fumes and other contaminant sources',
+      'The padlock you used was a cheap, easily-defeated type that vibrated open',
+      'The breaker was not switched fully to the off position when you locked it',
+      'A second source is still feeding the conductor from somewhere else',
+      'The voltage indicator was reading residual capacitance from the cable run',
     ],
     correctIndex: 2,
     explanation:
-      "‘Locked off but live’ almost always means there’s a SECOND supply path you didn’t isolate. PV inverter, UPS-fed essential ring, borrowed neutral from another circuit, generator backfeed, dual-incomer board with the other incomer still live. The lock-off worked perfectly — there was just more than one ‘main switch’ on the system.",
+      "‘Locked off but live’ almost always means there’s a SECOND supply path you didn’t isolate — PV inverter, UPS-fed essential ring, borrowed neutral from another circuit, generator backfeed, or a dual-incomer board with the other incomer still live. The lock-off worked perfectly; there was just more than one ‘main switch’ on the system.",
   },
   {
     id: 's5-5-near-miss-reporting-check',
     question: 'You discover a circuit you’d locked off was actually still live (PV backfeed). Nobody got hurt. What do you do?',
     options: [
-      'Focuses on winning and losing rather than solutions, often damaging relationships and producing suboptimal outcomes',
+      'Nothing — nobody got hurt, so there’s nothing to report',
       'Report the near miss to your supervisor and via the company’s incident system, log it for learning',
-      'Combined functional maths (measurement, calculation, costing) and English (writing for purpose and audience) skills',
-      'Only when the task is of short duration, low risk, and the site conditions are suitable',
+      'Quietly fix the isolation and say nothing to avoid blame',
+      'Mention it only if someone else noticed the same thing',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     id: 's5-5-removing-someone-elses-lock-check',
     question: 'You arrive on Monday and find a lock-off and tag from an electrician who didn’t come back on Friday. The site needs the circuit back on. What’s the right process?',
     options: [
-      "Don’t remove it. Contact the named person. If they genuinely cannot return, follow the formal lock removal process (usually requires manager + safety officer + recorded reason)",
-      "Rotor and blades, gearbox (in geared designs), generator, power converter (rectifier/inverter), transformer, switchgear, control system and grid connection equipment",
-      "A first aid kit, oxygen resuscitation equipment, automated external defibrillator (AED), and blankets as a minimum — with additional items based on the specific risk assessment",
-      "FAIL — contactor showing signs of distress (worn contacts, coil insulation degrading); investigate and rectify before energising in service",
+      "Don’t remove it; contact the named person, and if they can’t return, follow the formal lock removal process",
+      "Cut the padlock off, since the circuit is needed and nobody appears to be using it",
+      "Remove it yourself and re-energise, on the basis that the person clearly forgot it on Friday",
+      "Wait until lunchtime, then take it off yourself if they still haven’t turned up by then",
     ],
     correctIndex: 0,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'A common cause of "locked-off but still live" is:',
     options: [
-      "The differential pressure sensor was installed in the wrong location",
-      "A second source of supply (PV, generator, UPS, borrowed neutral) wasn’t identified at Step 1",
-      "Their filters cannot trap asbestos fibres, so they exhaust contaminated air back into the environment",
-      "It affects the real power (kW) the UPS can deliver for a given kVA rating",
+      "The padlock was the wrong type to fit that breaker properly",
+      "A second source of supply wasn’t identified at Step 1",
+      "The warning notice fell off the consumer unit door during the work",
+      "The voltage indicator was set to the wrong measurement range",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: "Trusting the breaker label without proving dead is dangerous because:",
     options: [
-      "A hazard that remains despite isolation measures, such as sludge containing toxic substances or residual energy in a system",
-      "The emotional residue of exposure to others' traumatic stories, which can lead to changes in the MHFA's own worldview, beliefs, and psychological functioning",
-      "Boards get re-arranged, spare ways re-used, labels mis-copied or never updated — the label may not match the actual circuit",
-      "Flaming combustion is no longer supported, though smouldering may continue and hot, unburned pyrolysis gases accumulate",
+      "Labels are always accurate, so trusting them wastes no time at all",
+      "The label only tells you the breaker rating, never the circuit it feeds",
+      "Boards get re-arranged and labels mis-copied, so the label may not match the circuit",
+      "Labels fade over time and become impossible to read on older boards",
     ],
     correctAnswer: 2,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 4,
     question: "You proved dead at Step 5 but skipped re-proving on the proving unit afterwards. What might have happened?",
     options: [
-      "Your voltage indicator could have failed silently between proving and testing — your ‘dead’ reading might actually be a ‘can’t indicate anything’ reading",
-      "Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques",
-      "The VI failed sometime during your test — your ‘0 V’ reading is unreliable, treat the circuit as POTENTIALLY LIVE until proven otherwise",
-      "Land where substances are present at concentrations that could cause harm to human health or the environment",
+      "Your indicator could have failed silently, so ‘dead’ may mean ‘can’t indicate anything’",
+      "Nothing went wrong, because the first prove already confirmed the indicator works",
+      "The proving unit battery may have gone flat at some point during the test",
+      "The lock-off may have been removed by someone else while you were testing",
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "Working live because ‘it’s only 230 V’ is:",
     options: [
-      "The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate",
-      "An EAWR Reg 14 breach unless all three live-working tests are met (and ‘convenience’ is not one of them)",
-      "To ensure no one returns to a potentially dangerous environment before it is declared safe",
-      "A hazard is something with potential to cause harm; risk is the likelihood of that harm occurring combined with its severity",
+      "Fine, because 230 V is below the dangerous-voltage threshold for shock",
+      "An EAWR Reg 14 breach unless all three live-working conditions are met",
+      "Acceptable for short jobs, as long as you wear insulating gloves throughout",
+      "Allowed, provided the customer signs to accept the risk beforehand",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: "Sharing one padlock and one key between you and another electrician is:",
     options: [
-      "Clear speech, appropriate technical level, and confirmation of understanding",
-      "Maximum fault current the busbars can carry for a specified time without damage",
-      "Wrong — each person needs their own padlock and key (multi-hasp if working on the same isolation)",
-      "To prevent the spread of fire and smoke through cavities while managing thermal bridging",
+      "Fine, as long as you both know where the shared key is kept",
+      "Acceptable, provided you’re working in the same room together",
+      "Wrong — each person needs their own padlock and key, multi-hasped",
+      "Fine, provided the supervisor holds the shared key for you both",
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 7,
     question: "The customer turned the main switch back on while you were eating lunch. What does that tell you about the isolation?",
     options: [
-      "Capture a specific situation, the automatic thought, the emotion, the evidence for and against the thought, and a balanced alternative",
-      "A four-step breathing pattern (inhale for 4 counts, hold for 4 counts, exhale for 4 counts, hold for 4 counts) that activates the parasympathetic nervous system to reduce stress and restore calm",
-      "The total amount of combustible material within a space, expressed as an equivalent mass of wood per unit floor area (kg/m² or MJ/m²)",
-      "The isolation was inadequate — the device was either not locked off, or the lock-off was easily defeated, or there was no warning notice. All of those are procedural failures",
+      "Nothing is wrong — the customer is allowed to operate their own main switch",
+      "The voltage indicator must have given you a false ‘dead’ reading earlier on",
+      "The circuit was never actually proved dead at the point of work in the first place",
+      "The isolation was inadequate — no effective lock-off or warning notice was in place",
     ],
     correctAnswer: 3,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: "After a near miss caused by skipped isolation, the most useful response is:",
     options: [
-      "Report it, investigate the root cause, share the lesson with the team — the same gap kills the next person if it isn’t closed",
-      "ISO 50001 focuses on energy while ISO 14001 covers broader environmental management, but they share common structure",
-      "Start at the top of the hierarchy with elimination and work down, applying the most effective controls that are reasonably practicable",
-      "Additional protection by 30 mA RCD (415.1.1) OR comply with 522.6.204 (mechanical protection)",
+      "Report it, investigate the root cause, and share the lesson with the team",
+      "Forget about it quickly, because dwelling on near misses lowers morale",
+      "Keep it between you and the person involved, to avoid anyone being blamed",
+      "Wait to see whether it happens again before raising it formally with anyone",
     ],
     correctAnswer: 0,
     explanation:

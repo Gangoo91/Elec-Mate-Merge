@@ -23,10 +23,10 @@ const quickCheckQuestions = [
     id: 'mewp-ipaf-legal-status',
     question: 'Is IPAF training a direct legal requirement for operating a MEWP in the UK?',
     options: [
-      'Yes, it is required by law under PUWER',
-      'No, but it is the industry-recognised standard for demonstrating compliance with PUWER, LOLER, and WAHR',
-      'Only for operators working above 10 metres',
-      'Only on construction sites regulated by CDM',
+      'Yes, a PAL card is directly required by law under PUWER',
+      'No, but it is the recognised standard for proving competence',
+      'Only for operators working above a height of 10 metres',
+      'Only on construction sites that are regulated under CDM',
     ],
     correctIndex: 1,
     explanation:
@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     id: 'mewp-familiarisation-vs-training',
     question: 'What is the key difference between familiarisation and training for MEWP operation?',
     options: [
-      'They are the same thing with different names',
-      'Familiarisation replaces the need for formal training',
-      'Familiarisation is a short activity on a specific make/model; training is the formal IPAF course covering general MEWP operation',
-      'Training is only needed for scissor lifts, familiarisation for boom lifts',
+      'Familiarisation covers a specific make/model; training is the formal IPAF course',
+      'Familiarisation replaces the need for any formal IPAF training',
+      'They are the same activity, simply known by two different names',
+      'Training is for scissor lifts and familiarisation is for boom lifts',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Familiarisation is NOT training. It is a separate short activity required on EVERY specific make and model of MEWP before use, covering that machine's features, controls, emergency procedures, and limitations. Training is the formal IPAF course that provides the general knowledge and skills for a category of MEWP.",
   },
@@ -50,10 +50,10 @@ const quickCheckQuestions = [
     question:
       'If an operator has a medical condition such as controlled epilepsy, what should happen?',
     options: [
-      'They are automatically banned from operating MEWPs',
-      'They can operate any MEWP without restriction',
-      'The employer must assess the condition and put adequate measures in place — having a condition does not automatically preclude operation',
-      'They only need to inform the hire company',
+      'They are automatically banned from operating any MEWP',
+      'They can operate any MEWP without any restriction at all',
+      'The employer must assess the condition and put measures in place',
+      'They only need to inform the equipment hire company',
     ],
     correctIndex: 2,
     explanation:
@@ -97,8 +97,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How long is an IPAF PAL card valid before renewal is required?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 2,
+    options: ['5 years', '3 years', '1 year', '10 years'],
+    correctAnswer: 0,
     explanation:
       'The IPAF PAL (Powered Access Licence) card is valid for 5 years from the date of successful completion. Holders must complete a renewal course before expiry to maintain their certified status and continue operating MEWPs.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is true about familiarisation?',
     options: [
-      'It replaces the need for IPAF training',
-      'It is only required for boom-type MEWPs',
-      'It is a short activity required on every specific make and model before use',
-      'It is part of the PAL card renewal process',
+      'It removes the need for formal IPAF operator training',
+      'It is only required for boom-type MEWPs, not scissor lifts',
+      'It forms part of the five-yearly PAL card renewal process',
+      'It is a short activity required on every specific make and model',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Familiarisation is NOT training. It is a separate short activity required on EVERY specific make and model of MEWP before use. It must cover that machine's features, functions, devices, limitations, warnings, operating characteristics, emergency lowering procedures, and local site requirements.",
   },
@@ -142,20 +142,20 @@ const quizQuestions = [
     question:
       'Which of the following conditions would automatically preclude someone from operating a MEWP?',
     options: [
-      'Controlled high blood pressure',
-      'Corrected eyesight (wearing glasses)',
       'None — all conditions require individual assessment by the employer',
+      'Corrected eyesight (wearing glasses)',
+      'Controlled high blood pressure',
       'A previous history of epilepsy that is now controlled',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'No medical condition automatically precludes someone from operating a MEWP. The employer must carry out an individual assessment for each operator and determine whether adequate control measures can be put in place. Having a condition listed on the IPAF health and fitness statement requires assessment, not automatic exclusion.',
   },
   {
     id: 7,
     question: 'Who is responsible for producing the rescue plan for MEWP operations on site?',
-    options: ['The MEWP operator', 'The hire company', 'The employer or site manager', 'IPAF'],
-    correctAnswer: 2,
+    options: ['The MEWP operator', 'The hire company', 'IPAF', 'The employer or site manager'],
+    correctAnswer: 3,
     explanation:
       'The employer or site manager is responsible for producing the rescue plan as part of the overall risk assessment and method statement for MEWP operations. The rescue plan must be in place before any MEWP work begins and must account for the specific risks of the task, location, and equipment being used.',
   },

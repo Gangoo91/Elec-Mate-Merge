@@ -54,9 +54,9 @@ const Level2Module6Section6_3 = () => {
       question: 'What might a very high Zs reading suggest about the earthing arrangement?',
       options: [
         'Missing or undersized protective conductor',
-        'Continuity and earth fault loop impedance tests',
-        'Low insulation resistance values',
-        'False - switching must be in the line conductor',
+        'An oversized line conductor',
+        'Excessive RCD sensitivity',
+        'A correctly bonded gas service',
       ],
       correctAnswer: 0,
       explanation:
@@ -69,10 +69,10 @@ const Level2Module6Section6_3 = () => {
       id: 1,
       question: 'What type of test often reveals loose connections?',
       options: [
-        'Overheating and potential fire risk',
+        'Polarity verification',
         'Continuity and earth fault loop impedance tests',
-        'Low insulation resistance reading',
-        'Equipment remains live when switched off',
+        'Insulation resistance testing',
+        'RCD trip-time testing',
       ],
       correctAnswer: 1,
       explanation:
@@ -147,9 +147,9 @@ const Level2Module6Section6_3 = () => {
       id: 7,
       question: 'What might high Zs readings indicate about the earthing system?',
       options: [
-        'Low insulation resistance reading',
-        'Equipment remains live when switched \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-        'Overheating and potential fire risk',
+        'An oversized main earthing conductor',
+        'Excessive insulation resistance',
+        'A correctly functioning RCD',
         'Missing or inadequate protective conductors',
       ],
       correctAnswer: 3,
@@ -161,9 +161,9 @@ const Level2Module6Section6_3 = () => {
       question: 'Why must all CPCs be correctly connected?',
       options: [
         'For protective device operation during faults',
-        'Equipment remains live when switched off',
-        'Overheating and potential fire risk',
-        'Continuity and earth fault loop impedance tests',
+        'To reduce the installation\'s power consumption',
+        'To improve the quality of the supply voltage',
+        'To prevent nuisance flickering of lighting',
       ],
       correctAnswer: 0,
       explanation:
@@ -173,10 +173,10 @@ const Level2Module6Section6_3 = () => {
       id: 9,
       question: 'What should an electrician do if they find a common defect during testing?',
       options: [
-        'Overheating and potential fire risk',
+        'Ignore it if the circuit still functions',
         'Record clearly and investigate thoroughly',
-        'Missing or inadequate protective conductors',
-        'Continuity and earth fault loop impedance tests',
+        'Energise the circuit to confirm the fault',
+        'Leave it for the next periodic inspection',
       ],
       correctAnswer: 1,
       explanation:

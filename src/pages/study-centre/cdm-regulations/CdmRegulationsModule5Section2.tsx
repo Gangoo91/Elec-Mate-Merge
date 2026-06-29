@@ -27,11 +27,11 @@ const quickCheckQuestions = [
     question: 'Is holding a CSCS card a legal requirement under CDM 2015?',
     options: [
       'Yes — CDM 2015 specifically requires all workers to hold a valid CSCS card',
-      'No — CSCS is an industry standard that supports compliance with CDM 2015, but holding a card is not itself a legal requirement',
       'Only for electricians and plumbers working on notifiable projects',
       'Yes — but only for workers on projects lasting more than 30 working days',
+      'No — CSCS is an industry standard supporting compliance, but the card itself is not a legal requirement',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Holding a CSCS card is not a legal requirement under CDM 2015 or any other UK legislation. However, CSCS is the industry-recognised standard for evidencing that a worker has passed a health and safety test and holds an appropriate qualification. Major clients and principal contractors require CSCS cards as a practical means of demonstrating compliance with CDM 2015 Regulation 15 (skills, knowledge, training, and experience). The Build UK commitment means that virtually all major contractor sites require valid CSCS cards for entry.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of toolbox talks on a construction site?',
     options: [
       'To replace the site induction for returning workers',
-      'To reinforce safety messages, address specific risks relevant to current site activities, and share lessons learned from incidents and near misses',
       'To satisfy the requirement for annual safety training refreshers',
+      'To reinforce safety messages, address current risks, and share lessons from incidents and near misses',
       'To provide formal qualifications to operatives on site',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Toolbox talks are short, focused safety briefings designed to reinforce key safety messages, address specific risks relevant to current activities on site, and share lessons learned from incidents, near misses, and inspection findings. They are typically delivered by site supervisors or managers, last 10–15 minutes, and should be directly linked to the construction phase plan and the work taking place at the time. Toolbox talks do not replace formal inductions or training — they supplement them as part of an ongoing programme of safety communication.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       'Under Regulation 15 of CDM 2015, what must a person possess before carrying out construction work?',
     options: [
+      'The necessary skills, knowledge, training, and experience — or supervision by a person who has them',
       'A university degree in a construction-related discipline',
-      'The necessary skills, knowledge, training, and experience — or be under the supervision of a person who does',
       "A minimum of five years' site experience",
       'A CSCS manager-level card',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Regulation 15 of CDM 2015 states that no person shall carry out work in relation to a project unless they have the necessary skills, knowledge, training, and experience (SKTE) to do so in a manner that secures the health and safety of any person working on or affected by the project, or they are under the supervision of a person who has such SKTE. This replaced the previous single concept of 'competence' used in CDM 2007.",
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'What does the CSCS Health, Safety and Environment (HS&E) test assess?',
     options: [
       "A worker's practical ability to carry out their trade",
-      "A worker's knowledge of health, safety, and environmental matters relevant to the construction industry",
       "A worker's fitness to work on a construction site",
       "A worker's ability to complete paperwork and administration tasks",
+      "A worker's knowledge of health, safety, and environmental matters in construction",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The CSCS HS&E test is a computer-based, multiple-choice test that assesses a worker's knowledge of health, safety, and environmental matters relevant to the construction industry. The test covers topics including working at height, manual handling, hazardous substances, fire prevention, first aid, electrical safety, noise and vibration, PPE, and environmental awareness. Different test versions exist for different card levels (operatives, specialists, managers, professionals). Passing the relevant HS&E test is a prerequisite for obtaining a CSCS card. The test assesses knowledge, not practical trade skills — those are evidenced through separate qualifications (NVQs/SVQs).",
   },
@@ -140,11 +140,11 @@ const quizQuestions = [
       'Which of the following is a statutory training requirement (rather than an industry best-practice standard)?',
     options: [
       'CSCS card for all site operatives',
-      'Asbestos awareness training for workers who may disturb asbestos-containing materials (ACMs)',
       'SMSTS qualification for all site managers',
       'IPAF licence for all workers on a construction site',
+      'Asbestos awareness training for workers who may disturb asbestos-containing materials (ACMs)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Asbestos awareness training is a statutory requirement under Regulation 10 of the Control of Asbestos Regulations 2012. Every employer whose employees may be exposed to asbestos during their work must ensure that those employees receive adequate information, instruction, and training. This includes workers who may inadvertently disturb ACMs during maintenance, refurbishment, or demolition work. CSCS cards, SMSTS qualifications, and IPAF licences, while widely required by industry, are not themselves statutory requirements — they are industry standards that help demonstrate compliance with the legal duty to ensure workers have the necessary SKTE.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'What is the purpose of PAS 91 in the context of assessing organisational competence?',
     options: [
+      'It provides a standardised pre-qualification questionnaire for assessing organisations’ health and safety capability',
       'It is a mandatory legal standard that all subcontractors must comply with',
-      'It provides a standardised pre-qualification questionnaire framework for assessing the health, safety, and environmental capability of construction organisations',
       'It replaces the need for CSCS cards on construction sites',
       'It is a training course for health and safety managers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PAS 91 (Publicly Available Specification 91) is a standardised pre-qualification questionnaire framework published by BSI. It provides a consistent set of questions that clients, principal contractors, and others can use to assess the health, safety, and environmental capability of construction organisations during the procurement process. PAS 91 helps to avoid the proliferation of different, inconsistent questionnaires and ensures that the assessment focuses on relevant matters. It is not a legal requirement in itself, but it supports compliance with CDM 2015 by providing a structured approach to assessing whether organisations have the necessary skills, knowledge, and experience.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
       "A 17-year-old apprentice electrician starts work on a construction site. Which of the following is the principal contractor's duty regarding this young worker?",
     options: [
       'No special duties apply — the apprentice is treated the same as all other workers',
-      'The PC must ensure the young worker has enhanced supervision, a specific risk assessment addressing age-related vulnerabilities, and is not exposed to work beyond their competence without direct supervision',
       'The PC must refuse to allow anyone under 18 on site',
+      'The PC must provide enhanced supervision, a young-worker risk assessment, and no work beyond their competence without direct supervision',
       'The PC must only allow the young worker to carry out cleaning duties',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under the Management of Health and Safety at Work Regulations 1999 (Regulation 19), employers must carry out a specific risk assessment for young workers (those under 18) that takes account of their inexperience, lack of awareness of existing or potential risks, and physical and psychological immaturity. The principal contractor must ensure that the young worker receives enhanced supervision proportionate to the risks, is not exposed to hazards beyond their competence, and is given clear instructions and training before undertaking any task. There is no blanket prohibition on young workers on construction sites, provided appropriate measures are in place.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'Which of the following best describes a common competence failure that has contributed to construction site incidents?',
     options: [
       'A worker holding too many qualifications for the task at hand',
+      'Agency workers arriving without induction or verified cards, allocated tasks beyond their experience without supervision',
       'Workers being briefed too frequently through toolbox talks',
-      'Agency workers arriving on site without site-specific induction, without verified CSCS cards, and being allocated tasks beyond their experience without adequate supervision',
       'A principal contractor requiring too many pre-qualification checks before appointing subcontractors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'One of the most commonly cited competence failures in HSE investigation reports is the use of agency or temporary workers who arrive on site without receiving a proper site-specific induction, without their qualifications being verified, and who are then allocated tasks that are beyond their skills and experience without adequate supervision. Language barriers, unfamiliarity with UK safety standards, and pressure to start work immediately compound the problem. The HSE has repeatedly highlighted this pattern in enforcement notices and prosecution cases. Thorough induction, verification of SKTE, and appropriate supervision of all workers — particularly those who are new, temporary, or inexperienced — are fundamental to preventing competence-related incidents.',
   },

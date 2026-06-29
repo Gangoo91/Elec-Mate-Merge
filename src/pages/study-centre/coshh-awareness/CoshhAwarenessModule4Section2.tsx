@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Under COSHH Regulation 9, how often must local exhaust ventilation (LEV) systems undergo thorough examination and testing?',
     options: [
-      'Every 6 months for all processes without exception',
       'At least every 14 months (or every 6 months for certain specified processes)',
+      'Every 6 months for all processes without exception',
       'Only when a fault is reported by the operator',
       'Every 24 months as part of the general workplace inspection',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'COSHH Regulation 9 requires LEV systems to be thoroughly examined and tested at least every 14 months. For certain higher-risk processes — such as those involving lead, asbestos, or substances with very high toxicity — the interval is reduced to every 6 months. The employer must keep records of all examinations for at least 5 years.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       "Under COSHH Regulation 8, what is the employer's duty regarding engineering controls?",
     options: [
       'Install engineering controls only if employees request them in writing',
-      'Ensure all control measures are maintained in an efficient state, in efficient working order, and in good repair',
       'Replace engineering controls with PPE if maintenance costs become excessive',
+      'Ensure all control measures are maintained in an efficient state, in efficient working order, and in good repair',
       'Carry out a visual inspection of controls once per calendar year',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'COSHH Regulation 8 places a clear duty on employers to ensure that all control measures provided under Regulation 7 — including engineering controls — are maintained in an efficient state, in efficient working order, and in good repair. This requires a planned programme of maintenance, not just reactive repairs when something breaks down.',
   },
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Do I need LEV every time I chase a wall for cables?',
     answer:
-      'Yes, chasing walls generates significant quantities of silica dust (from brick, block, and morite) and potentially other hazardous dusts depending on the wall construction. The HSE expects on-tool extraction (a dust-extracting disc cutter or SDS drill with integrated extraction) as the primary control, supplemented by RPE. A standard SDS drill without extraction, even with an RPE mask, is not an adequate control for prolonged chasing work. The COSHH assessment for the task must specify the controls required. Many modern wall chasers have built-in LEV connections — always use them.',
+      'Yes, chasing walls generates significant quantities of silica dust (from brick, block, and mortar) and potentially other hazardous dusts depending on the wall construction. The HSE expects on-tool extraction (a dust-extracting disc cutter or SDS drill with integrated extraction) as the primary control, supplemented by RPE. A standard SDS drill without extraction, even with an RPE mask, is not an adequate control for prolonged chasing work. The COSHH assessment for the task must specify the controls required. Many modern wall chasers have built-in LEV connections — always use them.',
   },
   {
     question: 'What is the difference between on-tool extraction and a standalone LEV unit?',
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the PRIMARY purpose of engineering controls in COSHH?',
     options: [
-      'To provide workers with comfortable working conditions and reduce noise levels',
       "To control exposure to hazardous substances at or near the source before they reach the worker's breathing zone",
+      'To provide workers with comfortable working conditions and reduce noise levels',
       'To replace the need for risk assessments and COSHH data sheets',
       'To ensure compliance with building regulations for workplace ventilation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Engineering controls are physical or mechanical measures designed to control exposure to hazardous substances at or near the source — preventing contaminants from reaching the worker's breathing zone. They sit third in the hierarchy of control (after elimination and substitution) and are preferred over administrative controls and PPE because they do not rely on human behaviour to be effective.",
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
       'Which component of an LEV system is responsible for drawing contaminated air through the system?',
     options: [
       'The hood or enclosure at the capture point',
-      'The air cleaner or filter unit',
       'The fan (also called the air mover)',
+      'The air cleaner or filter unit',
       'The discharge stack at the exhaust point',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The fan (air mover) is the component that creates the negative pressure which draws contaminated air into the hood, through the ducting, through the air cleaner, and out through the discharge point. Without the fan, there is no airflow. The fan must be correctly sized for the system — too small and capture velocity will be insufficient; too large and energy is wasted and noise increases.',
   },
@@ -108,11 +108,11 @@ const quizQuestions = [
       'A captor hood is positioned away from the source of contamination and must actively pull contaminants towards it. What is the MAIN limitation of captor hoods?',
     options: [
       'They are too expensive for most construction site applications',
-      'Capture velocity drops rapidly with distance — doubling the distance reduces capture to about one-quarter',
       'They can only be used for gases and vapours, not for dusts or fumes',
+      'Capture velocity drops rapidly with distance — doubling the distance reduces capture to about one-quarter',
       'They require a separate air cleaning system that total enclosures do not need',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The capture velocity of a captor hood falls off very rapidly with distance from the hood face. As a rule of thumb, doubling the distance from the hood reduces the capture velocity to approximately one-quarter. This means captor hoods must be positioned as close to the source as physically possible. Even a small increase in distance dramatically reduces their effectiveness. Cross-draughts can also deflect the contaminated air away from the hood.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     options: [
       '1 year from the date of the examination',
       '3 years from the date of the examination',
-      'At least 5 years from the date of the examination',
       'Indefinitely — records must never be destroyed',
+      'At least 5 years from the date of the examination',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'COSHH Regulation 9(5) requires that records of every thorough examination and test of LEV equipment must be kept for at least 5 years from the date on which they were made. These records must be readily available for inspection by the HSE or local authority enforcement officers. The records should include the date of the test, the condition of the equipment, any repairs required, and the results of all performance measurements.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'When using an angle grinder to cut a cable tray in an area with poor ventilation, what is the MOST effective engineering control?',
     options: [
-      'Opening a window to increase natural ventilation in the room',
       'Fitting a dust/fume extraction shroud connected to an M-class or H-class vacuum',
+      'Opening a window to increase natural ventilation in the room',
       'Wearing an FFP3 disposable mask and safety goggles',
       'Limiting the cutting time to 15 minutes and taking a break',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On-tool extraction — fitting a shroud to the angle grinder connected to a suitable vacuum extractor — captures grinding dust and fumes at the point of generation. This is an engineering control and sits higher in the hierarchy than PPE (the FFP3 mask) or administrative controls (time limits). Opening a window provides some dilution but does not capture contaminants at source. The RPE and time limits may still be needed as additional measures, but the on-tool extraction should be the primary control.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
       'Which of the following is an example of process modification as an engineering control?',
     options: [
       'Providing workers with chemical-resistant gloves and safety goggles',
-      'Replacing a manual powder-dispensing process with an automated closed-transfer system',
       'Displaying COSHH data sheets on a notice board near the work area',
+      'Replacing a manual powder-dispensing process with an automated closed-transfer system',
       'Rotating workers every two hours to limit individual exposure time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Replacing manual powder dispensing with an automated closed-transfer system is a process modification — it changes the physical process to reduce or eliminate the release of hazardous substances. Gloves and goggles are PPE (last resort). Displaying data sheets is an administrative control. Job rotation is also an administrative control. Process modification aims to change the way the work is done so that exposure is reduced at source.',
   },
@@ -177,11 +177,11 @@ const quizQuestions = [
       'An electrician is soldering joints on a cable tray in a plant room. What engineering control should be used to manage solder fumes?',
     options: [
       'A general-purpose desk fan to blow fumes away from the worker',
-      'A portable fume extraction unit with a flexible arm positioned close to the soldering point',
       'An open door to allow fumes to disperse naturally into the corridor',
       'A carbon-activated air freshener placed on the work bench',
+      'A portable fume extraction unit with a flexible arm positioned close to the soldering point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A portable fume extraction unit with a flexible arm (tip extraction) is the correct engineering control for soldering. The arm is positioned 50-100 mm from the soldering point to capture rosin flux fumes at source before they reach the worker's breathing zone. A desk fan simply moves contaminated air around (and may blow it into other workers' faces). An open door does not provide controlled extraction and would spread fumes into other areas. Fume extraction for soldering is a specific requirement under COSHH wherever soldering is carried out regularly.",
   },

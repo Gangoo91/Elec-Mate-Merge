@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'Under the MHOR 1992, what is the FIRST thing an employer must do when a manual handling task is identified?',
     options: [
+      'Avoid the hazardous manual handling operation altogether, so far as is reasonably practicable',
       'Provide training on correct lifting technique',
       'Issue PPE such as back support belts',
-      'Avoid the hazardous manual handling operation altogether, so far as is reasonably practicable',
       'Carry out a risk assessment and provide mechanical aids',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The MHOR 1992 follows a clear hierarchy. The FIRST duty is to AVOID hazardous manual handling so far as is reasonably practicable — can the task be eliminated, automated, or redesigned so that manual handling is not needed? Only if avoidance is not reasonably practicable does the employer move to step 2: assess the remaining risk. Training alone is never sufficient if the task could have been avoided or mechanised.',
   },
@@ -56,11 +56,11 @@ const quickCheckQuestions = [
     question: 'How often should manual handling training be refreshed?',
     options: [
       'Only once — initial training is sufficient for a whole career',
-      'Every 1 to 3 years, or sooner if tasks, equipment, or legislation change',
       'Every 10 years',
       'Refresher training is optional and has no recommended frequency',
+      'Every 1 to 3 years, or sooner if tasks, equipment, or legislation change',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Industry best practice and HSE guidance recommend refresher training every 1 to 3 years. The exact frequency depends on the risk level of the tasks, the worker's role, and whether anything has changed (new tasks, new equipment, new legislation, or after incidents). Training should also be repeated if a worker moves to a new role or returns after long-term absence.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Under the MHOR 1992, what information must an employer provide to workers about loads they will be handling?',
     options: [
-      'Only the colour of the load for identification',
       'The weight of the load and, where the centre of gravity is not central, the heaviest side',
+      'Only the colour of the load for identification',
       'Only verbal reassurance that the load is safe to lift',
       'No information is required — workers should assess loads themselves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 4(1)(b)(iii) of the MHOR 1992 requires employers to provide workers with information about the weight of each load and, where the centre of gravity is not at the geometric centre, to indicate which side is the heaviest. This enables workers to plan their lift correctly and judge whether mechanical aids or team lifting is needed.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Using the systems of work provided by the employer',
       'Using mechanical aids when they are provided',
-      'Writing the risk assessment for their own manual handling tasks',
       'Reporting problems, symptoms, and difficulties to their supervisor',
+      'Writing the risk assessment for their own manual handling tasks',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Writing risk assessments is an EMPLOYER duty, not an employee duty. Employees must: use the safe systems of work provided, use mechanical aids when available, cooperate with training, and report any problems. However, employees should contribute to the assessment process by sharing their knowledge of the task.',
   },
@@ -149,11 +149,11 @@ const quizQuestions = [
     question: 'What should good manual handling training ALWAYS include, in addition to theory?',
     options: [
       'A written exam lasting at least 2 hours',
-      'Practical demonstration and hands-on practice of correct technique',
       'A tour of the nearest hospital to show the consequences of injury',
       'Only a certificate of attendance — practical skills are not required',
+      'Practical demonstration and hands-on practice of correct technique',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Good manual handling training must include practical demonstration and hands-on practice. Theory alone is insufficient because manual handling is a physical skill. Workers need to practise the kinetic lifting technique under supervision, receive feedback on their posture and movements, and have the opportunity to ask questions about their specific tasks. A certificate without practical competence is meaningless.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of toolbox talks in the context of manual handling?',
     options: [
-      'They replace formal manual handling training entirely',
       'They provide short, focused reinforcement of specific manual handling topics relevant to current work',
+      'They replace formal manual handling training entirely',
       'They are only required if a worker has been injured',
       'They are purely social events with no safety content',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Toolbox talks are short (5-15 minute) focused briefings that reinforce specific aspects of manual handling relevant to current tasks. For example, a talk on correct technique for a specific load, how to use a new piece of equipment, or lessons learned from a recent near miss. They supplement but do NOT replace formal training.',
   },

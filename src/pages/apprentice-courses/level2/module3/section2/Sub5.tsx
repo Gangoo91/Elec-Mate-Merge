@@ -45,10 +45,10 @@ const checks = [
     question:
       'You open a fresh drawing pack for a job you have never seen before. Which sheet do you read FIRST?',
     options: [
-      'The cable schedule — so you can start ordering materials',
-      'The front sheet (drawing register, revision history, scale legend, title block)',
-      'The wiring diagram for the busiest circuit — that tells you the most',
-      'The schedule of accessories — so you know what to buy',
+      'The cable schedule — so you can start ordering materials straight away',
+      'The front sheet — drawing register, revision history, scale legend, title block',
+      'The wiring diagram for the busiest circuit — it carries the most detail',
+      'The schedule of accessories — so you know exactly what to buy',
     ],
     correctIndex: 1,
     explanation:
@@ -59,10 +59,10 @@ const checks = [
     question:
       'On the 1:50 ground-floor plan you measure the run from the consumer unit to the kitchen ring "first socket" with a scale rule on the 1:50 face. The rule reads 4.6 m direct. The actual cable will follow the skirting and drop into a back-box. What do you write on the take-off?',
     options: [
-      'Significant findings including hazards identified, who is at risk, control measures, and review date',
-      'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
-      'Around 5.5 m — add a sensible allowance for skirting follow, the back-box drop and a bit of slack at each end',
-      'Distributed ledger technology enabling transparent, secure energy transactions and trading',
+      'Exactly 4.6 m — the scale rule reading on the 1:50 face is already the final cable length',
+      '230 m — multiply the 4.6 m reading by the 1:50 scale denominator to get the true run',
+      'Around 5.5 m — add an allowance for skirting follow, the back-box drop and slack at each end',
+      '2.3 m — halve the 4.6 m reading because the rule is set to the 1:50 face',
     ],
     correctIndex: 2,
     explanation:
@@ -73,10 +73,10 @@ const checks = [
     question:
       'The floor plan shows six sockets along the kitchen wall. The schedule of accessories lists eight sockets for the same kitchen, one of them an FCU for the boiler. What do you do?',
     options: [
-      'Each device rated for full prospective fault current at its location',
-      'The tower can collapse or become unstable, causing falls and crushing injuries',
+      'Fit six sockets — the layout drawing always takes priority over a schedule',
+      'Fit eight sockets — the schedule of accessories is the more detailed document',
       'Stop, raise an RFI in writing to the designer, work with whatever they confirm in writing',
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
+      'Fit seven — split the difference between the two documents',
     ],
     correctIndex: 2,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       'A floor plan shows a circle with a horizontal line through it and "FCU 13A" written next to it, positioned on the kitchen wall above worktop height. What is it and what does it feed?',
     options: [
-      'A short, focused, informal training session delivered at the workplace covering a specific manual handling topic relevant to current work',
-      'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
-      'A Fused Connection Unit, 13 A fuse — typically feeding a fixed appliance like a boiler, towel rail or extractor from the ring final or a radial',
-      'The area directly below the working area plus a margin for falling objects, typically established with barriers and warning signs',
+      'A flush cooker unit, 13 A — the dedicated supply point for a built-in electric hob',
+      'A floor cable union, 13 A — an in-line junction box set down into the floor screed',
+      'A Fused Connection Unit, 13 A fuse — feeding a fixed appliance such as a boiler or extractor',
+      'A final circuit unit, 13 A — the last socket position on the end of a radial circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,9 +135,9 @@ const quizQuestions = [
       'The cable schedule says "Cct 4 — 2.5 mm² T&E, 32 A Type B RCBO, 30 mA". The board layout drawing shows Cct 4 protected by a "B20" device. Which do you trust?',
     options: [
       'Neither — raise an RFI, two designer documents disagreeing is an unresolved item',
-      'Record tests performed and recommend further investigation',
-      'By scheduling operation based on occupancy and weather conditions',
-      'According to tables in BS 7671 based on line conductor size',
+      'The cable schedule — schedules always override board layout drawings',
+      'The board layout — what is drawn at the board is what gets installed',
+      'Whichever device the merchant has already delivered to site',
     ],
     correctAnswer: 0,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'You are about to drill into a stud wall to fix a back-box. The original layout drawing was issued three years ago, before the kitchen was extended. There is no as-built drawing for the extension. What is the safe course of action?',
     options: [
-      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
-      'Stop, ask the supervisor, do not drill into a wall the drawing pack does not cover until you have either an as-built or a cable detector confirms the area is clear',
-      'Tell the appointed person or first-aider so the kit is restocked, and note it in the accident book if the use was for an injury',
-      'To provide short, focused briefings on specific health and safety topics relevant to the current work activities, reinforcing safe practices and raising awareness of specific hazards',
+      'Drill anyway — the original drawing shows the wall as empty, so the area must be clear',
+      'Stop and check — get an as-built or sweep with a cable/pipe detector before drilling',
+      'Drill a small pilot hole first to feel for anything before committing to the fixing',
+      'Assume the extension was wired to the same layout and drill in the matching positions',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'The drawing pack symbol legend is incomplete — there is a symbol on the kitchen layout that is not in the legend, and it does not match anything in BS EN 60617 / IEC 60617. What does Reg 514.9.2 (A4:2026) say about this?',
     options: [
-      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
-      'A competent person must carry out a thorough inspection, all suspect components must be withdrawn, and the tower must be fully re-inspected before reuse',
-      'Diagrams, charts and information notices shall comply with the applicable standards specified — non-standard symbols are a non-conformance the designer needs to fix',
-      'Activities that may pollute the environment, such as waste operations, water discharges, or certain industrial processes',
+      'Non-standard symbols are acceptable on site provided a legend entry is added to the pack later',
+      'The installer may define any missing symbol to mean whatever best fits the rest of the layout',
+      'Diagrams and notices shall comply with the applicable standards — a non-standard symbol is a non-conformance for the designer to fix',
+      'The regulation applies only to commercial installation drawings, never to domestic ones',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'The schedule of accessories specifies "MK Logic Plus white moulded, switched, 2-gang" for every socket. The merchant has only delivered Crabtree equivalents. What do you do?',
     options: [
-      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
-      'That the label is present, legible, and the tower configuration matches the label\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated maximum platform height and load class',
-      'Recommended (the regulation uses "recommending" wording); mandatory in HRRBs via Building Safety Act 2022',
-      'Stop, raise an RFI / Technical Query in writing, install nothing until the designer or specifier confirms the substitution in writing',
+      'Fit the Crabtree — any equivalent-quality accessory automatically satisfies the spec',
+      'Fit the Crabtree, then note the substitution on the certificate once the job is done',
+      'Return everything to the merchant and refuse to start until the exact MK items arrive',
+      'Stop and raise an RFI in writing — install nothing until the specifier confirms the swap',
     ],
     correctAnswer: 3,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'You have walked the install with the drawing pack open, ticked off every accessory location, cross-checked the schedule of accessories against the layout, and checked the cable schedule against the board configuration. The pack is consistent. What is the LAST thing to check before you start lifting tools?',
     options: [
-      "Confirm safe isolation procedure for the supply, check the RAMS for any site-specific hazards, and confirm with your supervisor what the day's priorities are",
-      "The material assessment scores the condition and type of the ACM itself, while the priority assessment considers the likelihood of disturbance based on location and human activity",
-      "Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed",
-      "Below-minimum or above-maximum values indicate a fault that prevents the protective measure from operating as designed — risking shock, fire, or equipment damage",
+      "Confirm safe isolation of the supply, check the RAMS for site-specific hazards, and agree the day's priorities with your supervisor",
+      "Re-measure every cable run a second time over to be completely certain the take-off is right",
+      "Order all the materials for the entire plot up front before lifting a single tool on site",
+      "Photograph each drawing sheet so you keep a digital backup of the whole pack on your phone",
     ],
     correctAnswer: 0,
     explanation:

@@ -51,19 +51,19 @@ const quizQuestions = [
   {
     question: 'Why does Z-Wave experience less interference from Wi-Fi than Zigbee?',
     options: [
-      'Z-Wave uses stronger encryption',
       'Z-Wave operates on sub-GHz frequencies',
+      'Z-Wave uses stronger encryption',
       'Z-Wave has a lower data rate',
       'Z-Wave uses mesh networking',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Z-Wave operates at 868 MHz (UK), well separated from the 2.4 GHz band used by Wi-Fi, eliminating frequency overlap interference.',
   },
   {
     question: 'What common household item can cause 2.4 GHz interference?',
-    options: ['LED bulbs', 'Microwave ovens', 'Refrigerators', 'Washing machines'],
-    correctIndex: 1,
+    options: ['LED bulbs', 'Refrigerators', 'Washing machines', 'Microwave ovens'],
+    correctIndex: 3,
     explanation:
       'Microwave ovens operate at 2.4 GHz and can leak RF energy, causing significant interference with Wi-Fi and Zigbee devices nearby.',
   },
@@ -76,15 +76,15 @@ const quizQuestions = [
   },
   {
     question: 'What is the recommended minimum distance between a Zigbee hub and a Wi-Fi router?',
-    options: ['10 cm', '30 cm', '1 metre', '3 metres'],
-    correctIndex: 2,
+    options: ['10 cm', '1 metre', '30 cm', '3 metres'],
+    correctIndex: 1,
     explanation:
       'Keeping Zigbee hubs at least 1 metre from Wi-Fi routers helps reduce direct interference between the devices.',
   },
   {
     question: 'Which tool can help identify wireless interference issues?',
-    options: ['Multimeter', 'Spectrum analyser', 'Oscilloscope', 'Clamp meter'],
-    correctIndex: 1,
+    options: ['Multimeter', 'Oscilloscope', 'Clamp meter', 'Spectrum analyser'],
+    correctIndex: 3,
     explanation:
       'A spectrum analyser (or Wi-Fi analyser app) shows RF activity across frequency bands, revealing interference sources and congested channels.',
   },

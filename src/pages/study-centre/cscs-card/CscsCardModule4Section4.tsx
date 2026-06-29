@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'A construction site generates a large quantity of timber offcuts. According to the waste hierarchy, what is the most preferred option for dealing with this waste?',
     options: [
-      'Send it to landfill immediately — timber rots and is biodegradable',
-      'Burn it on site to reduce volume',
-      'Prevent the waste in the first place by ordering accurate quantities, then reuse offcuts where possible, then recycle any remaining timber',
-      'Mix it with general waste to save on skip costs',
+      'Prevent the waste by ordering accurate quantities and using standard sizes',
+      'Burn the offcuts on site to reduce their volume before removal',
+      'Send the offcuts to landfill at once, as timber rots and is biodegradable',
+      'Mix the offcuts in with the general waste skip to save on skip costs',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The waste hierarchy ranks options from most to least preferred: prevent, reuse, recycle, recover (e.g. energy from waste), and dispose (landfill) as the last resort. Prevention is always the most preferred option — ordering accurate quantities and using standard sizes reduces offcuts. Any offcuts that do arise should be reused on site where possible, and remaining timber should be segregated for recycling. Burning waste on site is illegal without an environmental permit, and mixing waste types prevents recycling.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Workers are cutting concrete blocks on a construction site, generating significant dust. Which combination of control measures would be most effective at reducing dust exposure?',
     options: [
-      'Issue dust masks to all workers and continue cutting as normal',
-      'Use a block cutter with water suppression, position the cutting area downwind of other workers, use local exhaust ventilation (LEV) where possible, and issue RPE as additional protection',
-      'Wait until it rains before cutting any blocks',
-      'Open all doors and windows to improve natural ventilation',
+      'Issue dust masks to all the workers and carry on cutting blocks as normal',
+      'Water suppression and LEV at the cut, working downwind, with RPE as backup',
+      'Wait until it next rains before cutting any of the concrete blocks',
+      'Open all the doors and windows to improve the natural ventilation',
     ],
     correctIndex: 1,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'During demolition work, a worker discovers a bat roosting in the roof space of a building being demolished. What is the correct course of action?',
     options: [
-      'Carefully remove the bat and place it in a nearby tree, then continue work',
-      'Stop work immediately in that area, do not disturb the bat, inform your supervisor, and contact a licensed ecologist — bats and their roosts are protected by law',
-      'Continue work carefully, avoiding the bat if possible',
-      'Report it at the end of the shift — one bat is not a significant issue',
+      'Carefully remove the bat and place it in a nearby tree, then carry on working',
+      'Continue working carefully and avoid disturbing the bat if at all possible',
+      'Report it at the end of the shift, as a single bat is not a significant issue',
+      'Stop work in that area, do not disturb the bat, and call a licensed ecologist',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'All bat species in the UK are protected under the Wildlife and Countryside Act 1981 and the Conservation of Habitats and Species Regulations 2017. It is a criminal offence to deliberately kill, injure, or disturb a bat, or to damage or destroy a bat roost — even if no bats are present at the time. Work must stop immediately in the affected area, the bat must not be disturbed, and a licensed ecologist must be contacted. Penalties for wildlife offences include unlimited fines and up to six months imprisonment.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'Under the Environmental Protection Act 1990, who has a duty of care for waste produced on a construction site?',
     options: [
-      'Only the site manager',
-      'Only the waste carrier who removes it from site',
-      'Everyone in the waste chain — from the producer to the final disposer',
-      'Only the client who commissioned the project',
+      'Only the site manager who runs the construction site',
+      'Only the licensed waste carrier who removes it from site',
+      'Everyone in the waste chain, from the producer to the final disposer',
+      'Only the client who commissioned and paid for the project',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'Cement washings from a concrete pour are about to flow into a nearby stream. What should you do?',
     options: [
-      'Allow it — cement is a natural product and will not harm the water',
-      'Dilute it with clean water from a hose to reduce concentration',
-      'Contain the washings immediately, prevent them reaching the watercourse, and report the incident to your supervisor and the Environment Agency if contamination has occurred',
-      'Wait until the pour is finished before taking action',
+      'Allow it, as cement is a natural product and will not harm the water',
+      'Dilute it with clean water from a hose to bring the concentration down',
+      'Wait until the concrete pour is finished before taking any action',
+      'Contain the washings, stop them reaching the stream, and report it to the EA',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Cement is highly alkaline (pH 11-13) and extremely toxic to aquatic life. Even small amounts entering a watercourse can kill fish and other organisms over a significant distance. Cement washings must be contained using settlement tanks, bunds, or absorbent materials. If contamination has reached a watercourse, the Environment Agency must be notified immediately on 0800 80 70 60. Allowing cement to enter a watercourse is an offence under the Environmental Permitting Regulations 2016 and can result in unlimited fines.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'Which type of construction dust is most dangerous to health and requires the strictest controls?',
     options: [
-      'General construction dust from sweeping',
-      'Wood dust from cutting timber',
-      'Silica dust from cutting concrete, sandstone, or morite',
-      'Plaster dust from demolition work',
+      'Silica dust from cutting concrete, sandstone, or mortar',
+      'Wood dust from sawing and sanding softwood timber',
+      'General construction dust raised by sweeping up debris',
+      'Plaster dust released during demolition and strip-out',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Respirable crystalline silica (RCS) dust is the most dangerous type of construction dust. It is generated when cutting, drilling, grinding, or demolishing materials containing silica — including concrete, sandstone, mortar, and brick. Inhaling RCS can cause silicosis (a serious, irreversible lung disease), lung cancer, and chronic obstructive pulmonary disease (COPD). The workplace exposure limit (WEL) for RCS is very low at 0.1 mg/m³, and strict controls including water suppression, LEV, and RPE are required.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'A local authority serves a Section 60 notice on a construction site. What does this require?',
     options: [
-      'The site must shut down permanently',
-      'The contractor must comply with specified requirements to control noise — such as restricted working hours, specific methods, or noise limits',
-      'All workers must wear hearing protection at all times',
-      'The site must relocate to a different area',
+      'The site must shut down permanently and not reopen',
+      'The contractor must meet specified noise controls, such as hours and noise limits',
+      'All workers on the site must wear hearing protection at all times',
+      'The whole site must relocate its operations to a different area',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'What is the first action to take if you discover a fuel spill on a construction site?',
     options: [
-      'Report it to your supervisor at the end of the shift',
-      'Wash it away with water from a hose',
-      'Contain the spill immediately using materials from the spill kit — prevent it from reaching drains or watercourses',
-      'Cover it with soil to absorb the fuel',
+      'Report it to your supervisor at the end of the working shift',
+      'Wash it away with water from a hose to clear the surface',
+      'Cover it with loose soil so the soil can absorb the fuel',
+      'Contain it with the spill kit, keeping it clear of drains and watercourses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The priority with any spill is immediate containment to prevent the pollutant from spreading, particularly to drains and watercourses. Use absorbent granules, pads, or booms from the nearest spill kit. Block any nearby drains with drain covers or absorbent booms. Do NOT wash the spill away with water — this spreads the contamination and makes it more likely to reach watercourses. Do NOT cover with soil — this does not contain the spill effectively and creates contaminated soil that must be disposed of as hazardous waste. Report to your supervisor immediately.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does BREEAM assess in relation to construction projects?',
     options: [
+      'The environmental and sustainability performance of a building',
       'The structural strength and load-bearing capacity of a building',
-      'The environmental and sustainability performance of a building across categories including energy, water, materials, and ecology',
-      'The fire resistance rating of building materials',
-      'The electrical installation compliance of a building',
+      'The fire resistance rating of the materials used in a building',
+      'The electrical installation compliance of a finished building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BREEAM (Building Research Establishment Environmental Assessment Method) is the world's leading sustainability assessment method for buildings and infrastructure. It assesses performance across categories including energy efficiency, water use, health and wellbeing, pollution, transport, materials, waste, land use and ecology, and management. Buildings are rated as Pass, Good, Very Good, Excellent, or Outstanding. Many public sector and large commercial projects require a minimum BREEAM rating. Awareness of BREEAM helps construction workers understand why certain sustainable practices and materials are specified.",
   },

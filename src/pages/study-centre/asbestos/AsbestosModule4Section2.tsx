@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'You discover suspected ACMs during work that were not identified beforehand. What should you do FIRST?',
     options: [
-      'STOP work immediately and assess whether the material has been disturbed',
       'Put on an FFP3 mask and continue working carefully',
       'Take a sample of the material for laboratory analysis',
+      'STOP work immediately and assess whether the material has been disturbed',
       'Spray the material with water and carry on with caution',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'If you discover suspected ACMs during work that were not expected, you must STOP work immediately. Assess whether the material has been disturbed. If it has, follow the 4-S emergency procedure. If not, secure the area and report to your supervisor. Do NOT resume work until the material has been identified and appropriate controls are in place.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is NOT typically included in a method statement for asbestos work?',
     options: [
-      "The building's original construction cost and architect details",
       'The sequence of operations (step by step)',
+      "The building's original construction cost and architect details",
       'Emergency procedures in case of uncontrolled fibre release',
       'Names and competencies of workers carrying out the task',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "A method statement for asbestos work must include the description of work, location of ACMs, category of work, sequence of operations, equipment required, control measures, decontamination procedures, waste handling, emergency procedures, and the names and competencies of workers. The building's original construction cost and architect details are not relevant to the safe system of work.",
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     options: [
       'Issuing a permit to work before entering the area',
       'Rotating workers to limit individual exposure time',
-      'Using local exhaust ventilation (LEV) to capture fibres at source',
       'Briefing workers on the risk assessment before work begins',
+      'Using local exhaust ventilation (LEV) to capture fibres at source',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Local exhaust ventilation (LEV) is an engineering control — it physically isolates people from the hazard by capturing airborne fibres at the point of release. Permits to work and worker briefings are administrative controls. Job rotation is also an administrative control.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'When carrying out a site-specific assessment, why is building ventilation important to consider?',
     options: [
-      'Because ventilation systems must be turned up to maximum to clear fibres quickly',
       'Because natural and mechanical ventilation could spread asbestos fibres to other areas',
+      'Because ventilation systems must be turned up to maximum to clear fibres quickly',
       'Because ventilation is only relevant for outdoor asbestos work',
       'Because the HSE requires all ventilation to be upgraded before any asbestos work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Natural and mechanical ventilation systems can spread asbestos fibres from the work area to other parts of the building, potentially exposing building occupants who are not involved in the work. Ventilation systems in and around the work area may need to be isolated or sealed before asbestos work begins.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'Which of the following must be included in a method statement for asbestos work?',
     options: [
       'A list of all employees in the company and their home addresses',
-      'The sequence of operations, control measures, and decontamination procedures',
       "The building's energy performance certificate rating",
       'A photograph of every room in the building',
+      'The sequence of operations, control measures, and decontamination procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A method statement for asbestos work must include the description of work, location and extent of ACMs, category of work, sequence of operations, equipment required, control measures, decontamination procedures, waste handling, emergency procedures, names and competencies of workers, and supervision arrangements.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'During work, you notice that site conditions have changed since the RAMS was written. What should you do?',
     options: [
-      'Continue working — the RAMS was approved and cannot be changed',
       'Stop work, review and update the RAMS, and re-brief workers before resuming',
+      'Continue working — the RAMS was approved and cannot be changed',
       'Make a mental note and mention it at the next weekly safety meeting',
       'Ask a colleague to carry on while you update the paperwork',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If site conditions change, work must stop until the RAMS has been reviewed and updated to reflect the new conditions. Workers must be re-briefed on any changes before work resumes. The RAMS is a living document and must always reflect current conditions. Continuing to work under an outdated RAMS puts workers at risk.',
   },

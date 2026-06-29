@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       "According to the Trust Equation (Maister, Green & Galford), which of the following would MOST damage a tradesperson's trustworthiness?",
     options: [
-      'Having a slightly higher price than competitors for equivalent work',
-      "Consistently prioritising their own financial interest over the client's best outcome (high self-orientation)",
-      'Occasionally being 10 minutes late to a site visit but always calling ahead',
-      'Not having a website or social media presence',
+      "Consistently putting their own financial interest ahead of the client's best outcome",
+      'Charging a slightly higher price than competitors for an equivalent piece of work',
+      'Occasionally arriving 10 minutes late to a site visit but always calling ahead first',
+      'Not having a professional website or any kind of active social media presence',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "In the Trust Equation — Trust = (Credibility + Reliability + Intimacy) / Self-Orientation — self-orientation is the denominator. This means that high self-orientation (being perceived as primarily motivated by your own interests rather than the client's) divides and therefore reduces all the trust you have built through credibility, reliability, and intimacy. You could be highly credible, perfectly reliable, and personally warm, but if the client believes your primary motivation is extracting money from them rather than solving their problem, all of that trust evaporates. This is why pushy upselling, recommending unnecessary work, and prioritising speed over quality are so destructive to trust — they signal that your own interests come first.",
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'An electrician finishes a job and the client mentions they are having problems with their plumbing. The electrician knows a reliable plumber. According to the reciprocity principle, what should the electrician do?',
     options: [
-      'Ignore the comment — plumbing is not their concern and helping would be unprofessional',
-      'Offer to fix the plumbing themselves to earn extra income',
-      'Recommend the reliable plumber genuinely and without expecting anything in return, knowing that this kind of genuine helpfulness builds goodwill that tends to be reciprocated over time',
-      'Only recommend the plumber if the plumber agrees to pay a referral fee',
+      'Ignore the comment, since plumbing is not their concern and helping would be unprofessional',
+      'Offer to fix the plumbing problem themselves in order to earn some extra income from the job',
+      'Recommend the reliable plumber genuinely, expecting nothing back, knowing goodwill is reciprocated',
+      'Only recommend the plumber on condition that the plumber agrees to pay them a referral fee',
     ],
     correctIndex: 2,
     explanation:
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'An electrician always delivers high-quality work but frequently misses agreed start times, forgets to return calls, and occasionally leaves tools on site that need collecting the following week. According to the Trust Equation, which component of trust are they failing on?',
     options: [
       'Credibility — their technical knowledge is in question',
-      'Reliability — they do not consistently do what they say they will do',
       'Intimacy — they are not building personal connections with clients',
       "Self-orientation — they are prioritising their own needs over the client's",
+      'Reliability — they do not consistently do what they say they will do',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reliability in the Trust Equation means consistently doing what you say you will do — keeping promises, meeting deadlines, and delivering a predictable standard of behaviour. The electrician in this scenario has strong credibility (high-quality technical work) but weak reliability (inconsistent on timing, communication, and organisation). Clients value predictability almost as much as quality. An electrician who always arrives within five minutes of the agreed time, always returns calls the same day, and always cleans up after themselves is perceived as more trustworthy than one who does excellent work but is unreliable on everything else. Reliability is demonstrated through the small, consistent behaviours that accumulate over time to build — or destroy — confidence.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'The Trust Equation (Maister, Green & Galford) is expressed as:',
     options: [
-      'Trust = Credibility × Reliability × Intimacy',
       'Trust = (Credibility + Reliability + Intimacy) / Self-Orientation',
+      'Trust = Credibility × Reliability × Intimacy',
       'Trust = Self-Orientation / (Credibility + Reliability)',
       'Trust = (Experience + Qualifications) / Price',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Trust Equation is Trust = (Credibility + Reliability + Intimacy) / Self-Orientation. The three numerator factors all contribute positively to trust: Credibility (your expertise and track record), Reliability (your consistency in delivering on promises), and Intimacy (the safety and comfort the other person feels with you). Self-Orientation is the denominator, which means it divides the total. The higher your self-orientation (the more you are perceived as self-serving), the more it reduces your overall trustworthiness. This formula explains why highly competent tradespeople can still be distrusted — if clients perceive that the tradesperson is primarily motivated by their own financial gain, all the credibility and reliability in the world will not fully compensate.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'In the context of the Trust Equation, "Reliability" for a tradesperson means:',
     options: [
-      'Having the most advanced tools and equipment available',
-      'Consistently doing what you say you will do — keeping promises, meeting deadlines, delivering a predictable standard',
-      'Being available 24 hours a day, 7 days a week for emergencies',
-      'Having been in business for at least 10 years',
+      'Having the most advanced tools and test equipment available on every job',
+      'Consistently doing what you say — keeping promises and meeting deadlines',
+      'Being available 24 hours a day, 7 days a week to respond to any emergency',
+      'Having been established and trading in business for at least 10 years',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "Cialdini's reciprocity principle suggests that in professional relationships:",
     options: [
-      'You should always expect immediate payment for any favour or referral',
-      'Genuine helpfulness and generosity create a natural psychological obligation in others to return the favour, building long-term goodwill',
-      'Reciprocity only works in personal relationships, not professional ones',
-      'You should keep a detailed ledger of favours given and received to ensure fairness',
+      'You should always expect immediate payment or return for any favour or referral given',
+      'Reciprocity only really works within personal relationships, never within professional ones',
+      'Genuine helpfulness creates a natural obligation to return the favour, building long-term goodwill',
+      'You should keep a detailed written ledger of favours given and received to ensure fairness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Robert Cialdini's research on influence and persuasion identifies reciprocity as one of the most powerful drivers of human social behaviour. When someone does something genuinely helpful for you — without expecting immediate return — you feel a natural psychological obligation to reciprocate. For tradespeople, this principle operates constantly: recommending a reliable plumber creates goodwill with both the client and the plumber, lending tools to another trade on site creates an informal bond, sharing useful information helps build your professional network. The key is authenticity — the gesture must be genuine, not calculated. People are remarkably perceptive at distinguishing authentic generosity from strategic manipulation, and calculated reciprocity quickly erodes rather than builds trust.",
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why do strong professional relationships reduce conflict frequency and severity?',
     options: [
-      'Because people who like each other never disagree about anything',
-      'Because strong relationships create mutual respect, assumed good intent, investment in resolution, and informal accountability',
-      'Because professional relationships are purely transactional and have no emotional component',
-      'Because people in strong relationships always avoid raising difficult issues',
+      'Because people who genuinely like each other never disagree about anything at all',
+      'Because professional relationships are purely transactional with no emotional component',
+      'Because people in strong relationships always avoid raising any difficult or awkward issues',
+      'Because they create mutual respect, assumed good intent and informal accountability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Strong professional relationships reduce conflict through multiple mechanisms. Mutual respect means that disagreements start from a position of goodwill rather than suspicion. Assumed good intent means that when problems arise, both parties assume the other meant well rather than assuming malice. Investment in the relationship creates a shared motivation to resolve disputes constructively rather than destructively. Informal accountability means that people who value a professional relationship are more careful to behave well within it. Conflicts will still occur — they are an inevitable part of any working relationship — but in the context of a strong relationship, they are less frequent (because many triggers are prevented), less intense (because trust provides a buffer), and more likely to be resolved constructively (because both parties want to preserve the relationship).',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'An electrician consistently delivers excellent technical work but is perceived by clients as only interested in maximising their invoice. According to the Trust Equation, what is the problem?',
     options: [
-      'Low Credibility — the quality of their work is being questioned',
-      'Low Reliability — they are not meeting deadlines',
-      'High Self-Orientation — the perception that they prioritise their own financial interest divides and reduces the trust built by their credibility',
-      'Low Intimacy — they are not building personal connections',
+      'High Self-Orientation — being seen as self-interested divides and reduces their trust',
+      'Low Reliability — they are repeatedly failing to meet the deadlines they have agreed',
+      'Low Credibility — the technical quality of their work is increasingly being questioned',
+      'Low Intimacy — they are not building any personal connection or rapport with clients',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "This scenario perfectly illustrates the power of Self-Orientation as the denominator in the Trust Equation. The electrician has high Credibility (excellent technical work), presumably adequate Reliability, and perhaps reasonable Intimacy. But high Self-Orientation — the perception that they are primarily motivated by maximising their own income — divides all of that positive trust. The result is that despite being technically excellent, the client does not fully trust them because they suspect every recommendation is financially motivated. The solution is not to reduce the quality of work or lower prices — it is to demonstrate genuine concern for the client's interest. This might mean recommending a cheaper option when appropriate, explaining why a more expensive solution is genuinely better rather than just more profitable, or occasionally doing small favours that have no financial benefit.",
   },
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'What is the most effective way for an electrician to build "Intimacy" (as defined in the Trust Equation) with clients?',
     options: [
-      'Sharing personal problems and asking clients about their private lives',
-      "Creating genuine rapport through remembering details, showing interest in the client's home and plans, and making them feel safe to raise concerns without judgement",
-      'Adding clients on social media and liking their posts',
-      'Offering significant discounts to make clients feel valued',
+      'Sharing your own personal problems and asking the client probing questions about their private life',
+      "Building genuine rapport by remembering details and making the client feel safe to raise concerns",
+      'Adding all of your clients on social media and regularly liking and commenting on their posts',
+      'Offering significant discounts on every job so that clients feel valued and looked after',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following best describes the relationship between trust and conflict?',
     options: [
-      'Trust eliminates conflict entirely — trusted relationships never experience disagreements',
-      'Trust has no effect on conflict — disputes happen regardless of the relationship quality',
-      'Trust acts as a buffer — it reduces conflict frequency, reduces severity when it occurs, and increases the likelihood of constructive resolution',
-      'Trust makes conflict worse because expectations are higher',
+      'Trust eliminates conflict entirely, so trusted relationships never experience disagreements',
+      'Trust has no real effect on conflict, since disputes happen regardless of relationship quality',
+      'Trust acts as a buffer, reducing conflict frequency and severity and aiding resolution',
+      'Trust actually makes conflict worse, because expectations in the relationship are far higher',
     ],
     correctAnswer: 2,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'An electrician knows the owner of the local electrical wholesale by first name, always chats when collecting materials, and occasionally recommends the branch to other tradespeople. This is an example of:',
     options: [
-      'Wasting time that should be spent on productive work',
-      'Building supplier relationships through genuine rapport and reciprocity, which creates goodwill that can be invaluable during material shortages, urgent orders, or pricing negotiations',
-      'An unprofessional approach to business relationships',
-      'A strategy that only benefits the wholesale branch, not the electrician',
+      'Wasting valuable time that should really be spent on productive, fee-earning work',
+      'An unprofessional and overly familiar approach to important business relationships',
+      'A strategy that only ever benefits the wholesale branch and not the electrician at all',
+      'Building supplier relationships through rapport, creating goodwill that pays off later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Supplier relationships are one of the most undervalued aspects of professional networking for tradespeople. An electrician who has a genuine personal relationship with their wholesale branch staff receives tangible benefits: priority access during material shortages (the branch will hold stock for someone they know and like), better pricing (wholesale staff have discretion on pricing, and they use it for customers they value), faster processing of urgent orders, advance notice of new products or price increases, and credit terms that may not be available to anonymous customers. All of this is built through the same principles that build client trust: genuine interest, reciprocity, reliability, and consistent professional behaviour. The five minutes spent chatting at the trade counter is not wasted time — it is an investment in a commercial relationship that pays dividends throughout your career.',
   },

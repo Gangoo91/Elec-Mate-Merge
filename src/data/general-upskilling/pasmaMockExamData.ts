@@ -183,9 +183,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'Under the HSWA 1974, Section 3 places duties on employers in respect of whom?',
     options: [
       'Persons not in their employment (e.g. members of the public)',
-      'The tower must not be used until the defect is rectified by a competent person',
-      'Before assembly begins and whenever the tower is being worked on',
-      'Completion of a PASMA-approved training course',
+      'Only the directors and senior managers of the employing company',
+      'Employees of other employers working on the same site only',
+      'Self-employed contractors engaged under a written contract',
     ],
     correctAnswer: 0,
     explanation:
@@ -217,10 +217,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'Under Section 8 of the HSWA 1974, what must employees not do?',
     options: [
-      'Before assembly begins and whenever the tower is being worked on',
-      'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
+      'Refuse to attend health and safety training arranged by their employer',
+      'Report any defects in work equipment to their immediate supervisor',
       'Intentionally or recklessly interfere with anything provided for health and safety',
-      'To the platform height specified by the manufacturer for safe moving, generally no more than 4m',
+      'Work overtime without the prior written agreement of the employer',
     ],
     correctAnswer: 2,
     explanation:
@@ -234,9 +234,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'What does BS 1139-6 specifically cover?',
     options: [
-      'Only persons who have received appropriate PASMA-approved training',
-      'At the lowest recommended level as specified by the manufacturer',
-      'Removed safely from the platform and lowered to the ground',
+      'Tube and fitting tubular scaffolding for general building use',
+      'Couplers and special fittings used in tube-and-fitting scaffolds',
+      'Personal fall protection equipment and harness anchorage systems',
       'Metal scaffolding — prefabricated mobile access and working towers',
     ],
     correctAnswer: 3,
@@ -252,9 +252,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'The PASMA Code of Practice provides guidance on which of the following?',
     options: [
       'The safe use and operation of mobile access towers',
-      'Maintaining three points of contact at all times',
-      'Internal staircases at a comfortable angle',
-      'They can fall and strike people below, causing injury or death',
+      'The structural design calculations for manufacturing new towers',
+      'The minimum wage rates payable to trained tower operatives',
+      'The licensing of companies that hire out mobile access towers',
     ],
     correctAnswer: 0,
     explanation:
@@ -394,9 +394,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       "Under the WAHR 2005, who is classed as a 'duty holder' with responsibilities for work at height?",
     options: [
       "Any person who controls the work of others, including employers, the self-employed and those who control others' work",
-      "Components can be heavy, awkward to carry, and pose risks of musculoskeletal injuries during assembly and dismantling",
-      "No — they should report their condition to their supervisor and not work at height until they are fit to do so",
-      "Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions",
+      "Only the main contractor named in the construction phase plan for the site",
+      "Only employers who directly employ ten or more people on a site",
+      "Only the Health and Safety Executive and its appointed inspectors",
     ],
     correctAnswer: 0,
     explanation:
@@ -411,10 +411,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What key change did EN 1004:2020 introduce regarding tower load classification compared to the 2004 standard?',
     options: [
-      'Before first use, after alteration, after any adverse event, and every 7 days',
+      'It abolished load classes entirely in favour of a single rating',
       'It introduced new load classes and updated stability requirements',
-      'It should be clearly marked as defective, removed from service and reported',
-      'Only persons who have received appropriate PASMA-approved training',
+      'It lowered the maximum platform load to 50 kg/m² for all classes',
+      'It removed the requirement for guardrails on light-duty towers',
     ],
     correctAnswer: 1,
     explanation:
@@ -428,10 +428,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'Under the WAHR 2005, Regulation 4 requires that work at height is properly what?',
     options: [
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'Metal scaffolding — prefabricated mobile access and working towers',
+      'Insured, certified and witnessed by an independent third party',
+      'Notified to the HSE at least 14 days before the work begins',
       'Planned, appropriately supervised and carried out in a safe manner',
-      'To extend the effective base and prevent overturning',
+      'Recorded in a logbook and signed off by the site first-aider',
     ],
     correctAnswer: 2,
     explanation:
@@ -446,9 +446,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Under PUWER 1998, what must an employer ensure about work equipment provided to employees?',
     options: [
-      'Only persons who have received appropriate PASMA-approved training',
-      'Before first use, after alteration, after any adverse event, and every 7 days',
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
+      'That it is replaced with new equipment at least every five years',
+      'That it carries a current PAT test label regardless of equipment type',
+      'That it is owned outright by the employer and never hired in',
       'It is suitable for the intended use, maintained in a safe condition and inspected',
     ],
     correctAnswer: 3,
@@ -465,9 +465,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'The Management of Health and Safety at Work Regulations 1999 require employers to carry out what before any work activity?',
     options: [
       'A suitable and sufficient risk assessment',
-      'Guardrails and toeboards on a mobile access tower',
-      'Before every use, at the start of each working period',
-      'Health and Safety at Work etc. Act 1974',
+      'A formal application for an HSE work-at-height permit',
+      'A medical examination of every employee on the project',
+      'An environmental impact assessment for the work area',
     ],
     correctAnswer: 0,
     explanation:
@@ -482,10 +482,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Which body is responsible for enforcing the Health and Safety at Work etc. Act 1974?',
     options: [
-      'A suitable and sufficient risk assessment',
+      'The Environment Agency (EA)',
       'The Health and Safety Executive (HSE)',
-      'Work at Height Regulations 2005',
-      'Completion of a PASMA-approved training course',
+      'The Construction Industry Training Board (CITB)',
+      'The British Standards Institution (BSI)',
     ],
     correctAnswer: 1,
     explanation:
@@ -646,10 +646,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the WAHR 2005, Regulation 6 requires duty holders to give collective protection measures priority over personal protection measures. Which of the following is an example of collective protection?',
     options: [
-      'They can fall and strike people below, causing injury or death',
-      'Bending, denting, cracking, corrosion or missing spigot pins',
+      'A safety harness and lanyard attached to an anchor point',
+      'A personal fall-arrest block worn by each operative',
       'Guardrails and toeboards on a mobile access tower',
-      'Maintaining three points of contact at all times',
+      'An individual work-restraint lanyard clipped to the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -758,9 +758,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of outriggers on a mobile access tower?',
     options: [
       'To increase the effective base dimensions and improve stability',
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'They must be removed before the tower is moved',
-      'Avoid work at height, prevent falls, mitigate consequences',
+      'To provide a fixing point for guardrails at platform level',
+      'To act as the climbing route up the inside of the tower',
+      'To lock the castor wheels in position during use',
     ],
     correctAnswer: 0,
     explanation:
@@ -845,10 +845,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of mobile access tower has an internal ladder built into the frame for access?',
     options: [
-      'Health and Safety at Work etc. Act 1974',
-      'Tower with built-in ladder frames',
-      'Missing or incorrectly fitted bracing',
-      'Avoid work at height where possible',
+      'A tower accessed by a separate leaning ladder',
+      'A tower with built-in ladder frames',
+      'A tower with externally clipped step brackets',
+      'A tower accessed only via an adjacent stairway',
     ],
     correctAnswer: 1,
     explanation:
@@ -901,9 +901,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'What is the function of adjustable legs on a mobile access tower?',
     options: [
       'To compensate for uneven ground and ensure the tower is level',
-      'Passed hand-to-hand or lowered carefully using a suitable method',
-      'To extend the effective base and prevent overturning',
-      'Cease dismantling, secure the partially dismantled tower and descend safely',
+      'To extend the effective base width and prevent overturning',
+      'To allow the tower to be steered when it is being moved',
+      'To act as a counterweight at the base of the tower',
     ],
     correctAnswer: 0,
     explanation:
@@ -917,10 +917,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: "What distinguishes a 'through-the-trap' (3T) platform from a standard platform?",
     options: [
-      'A formal inspection must be carried out by a competent person and recorded',
+      'It is made from timber boards rather than aluminium decking',
       'It has a hinged trapdoor that allows internal access while maintaining full guardrail protection',
-      'Before first use, after alteration, after any adverse event, and every 7 days',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
+      'It can only be accessed by a separate ladder leant against the outside',
+      'It is rated to a higher load class than any standard platform',
     ],
     correctAnswer: 1,
     explanation:
@@ -952,9 +952,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is the purpose of stabilisers on a mobile access tower?',
     options: [
-      'To lock the castors in position',
-      'To support the internal ladder',
-      'To connect two towers together',
+      'To level the tower base on sloping ground',
+      'To act as the climbing route up the tower',
+      'To spread the platform load over a wider area',
       'To extend the effective base and prevent overturning',
     ],
     correctAnswer: 3,
@@ -971,9 +971,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'A stairway tower differs from a standard mobile access tower in that it provides access via what?',
     options: [
       'Internal staircases at a comfortable angle',
-      'Completion of a PASMA-approved training course',
-      'Before every use, at the start of each working period',
-      'Work at Height Regulations 2005',
+      'A powered lift platform built into the end frame',
+      'An external ramp running up one side of the tower',
+      'A series of footholds clipped to the outside standards',
     ],
     correctAnswer: 0,
     explanation:
@@ -1022,9 +1022,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: "What is meant by the 'working height' of a mobile access tower?",
     options: [
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
-      'The sheeting acts as a sail, dramatically increasing wind loading and the risk of overturning',
-      'Electrocution — electricity can arc across gaps and does not require direct contact',
+      'The height from the ground to the top of the guardrail',
+      'The total height of the tower including the adjustable legs',
+      'The platform height minus the height of the toeboards',
       'The platform height plus approximately 2 metres (the reach of a person standing on the platform)',
     ],
     correctAnswer: 3,
@@ -1060,10 +1060,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       "When calculating the height-to-base ratio, the 'base' measurement uses the distance between which points?",
     options: [
-      'A thorough inspection must be carried out by a competent person',
+      'The inner faces of the two end frames at platform level',
       'The centres of the castor wheels (or the outermost stabiliser positions if fitted)',
-      'It should be displayed prominently on the tower so users can see the current inspection status',
-      'It introduced new load classes and updated stability requirements',
+      'The midpoints of the diagonal braces on each side',
+      'The outer edges of the working platform decking',
     ],
     correctAnswer: 1,
     explanation:
@@ -1078,10 +1078,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A mobile access tower is to be used outdoors at a platform height of 6m. The base dimension along the narrow side is 0.74m. What additional measure is required?',
     options: [
-      'Planned, appropriately supervised and carried out in a safe manner',
-      'That the tower is vertical (plumb) and not leaning to any side',
+      'A safety harness must be worn by everyone on the platform',
+      'The platform must be reduced to a single-board width',
       'Outriggers or stabilisers must be fitted to extend the effective base',
-      'Avoid work at height, prevent falls, mitigate consequences',
+      'Additional guardrails must be fitted at every platform level',
     ],
     correctAnswer: 2,
     explanation:
@@ -1095,9 +1095,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: "What is a 'span frame' (or 'H-frame') in mobile access tower construction?",
     options: [
-      'Never mixed — only components from the same manufacturer and system should be used together',
-      'The platform height plus approximately 2 metres (the reach of a person standing on the platform)',
-      'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
+      'A diagonal brace fitted across the full width of the tower base',
+      'A removable section of guardrail used during 3T assembly',
+      'A hinged platform unit incorporating a built-in trapdoor',
       'A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower',
     ],
     correctAnswer: 3,
@@ -1131,10 +1131,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Which type of mobile access tower configuration allows a platform to be extended beyond the footprint of the base on one side?',
     options: [
-      'Standards (uprights)',
+      'A single-width configuration',
       'A cantilever configuration',
-      'Tower with built-in ladder frames',
-      'Ledgers (horizontals)',
+      'A stairway configuration',
+      'A double-width configuration',
     ],
     correctAnswer: 1,
     explanation:
@@ -1149,10 +1149,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'For a tower conforming to EN 1004-1:2020, what is the minimum platform length that must be provided?',
     options: [
-      'The hazards present, who might be harmed and what control measures are needed',
-      'To extend the effective base and prevent overturning',
+      'A fixed minimum of 1.5m for all towers',
+      'A fixed minimum of 3.0m for all towers',
       'Determined by the manufacturer based on the tower configuration',
-      'Prefabricated Access Suppliers and Manufacturers Association',
+      'A fixed minimum of 0.5m for all towers',
     ],
     correctAnswer: 2,
     explanation:
@@ -1172,9 +1172,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'Before assembling a mobile access tower, what document should you always consult?',
     options: [
-      "That the route is free from obstructions, holes, slopes and overhead hazards",
-      "Bending, denting, cracking, corrosion or missing spigot pins",
-      "The tower must not be used until the defect is rectified by a competent person",
+      "The site's general construction phase plan only",
+      "The previous tower's inspection record from another job",
+      "A generic scaffolding handbook covering all access systems",
       "The manufacturer's instruction manual for the specific tower model",
     ],
     correctAnswer: 3,
@@ -1242,9 +1242,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During assembly of a mobile access tower, at what point should the castors be locked?',
     options: [
-      'Metal scaffolding — prefabricated mobile access and working towers',
-      'They should be visually inspected for damage, distortion and missing parts',
-      'To increase the effective base dimensions and improve stability',
+      'Only once the tower has reached its full working height',
+      'Only when the operative is standing on the top platform',
+      'Only immediately before the tower is moved to a new position',
       'Before assembly begins and whenever the tower is being worked on',
     ],
     correctAnswer: 3,
@@ -1261,9 +1261,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What should be done with tower components before assembly to ensure they are safe to use?',
     options: [
       'They should be visually inspected for damage, distortion and missing parts',
-      'Prefabricated Access Suppliers and Manufacturers Association',
-      'Determined by the manufacturer based on the tower configuration',
-      'From the top down — the reverse of the assembly sequence',
+      'They should be repainted to cover any scratches or marks',
+      'They should be load-tested to twice their rated working load',
+      'They should be lubricated at every joint before being fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -1278,10 +1278,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When assembling a mobile access tower, components from different manufacturers should be treated in what way?',
     options: [
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Mixed freely as long as they are the same size and colour',
       'Never mixed — only components from the same manufacturer and system should be used together',
-      'Side-loading that shifts the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s centre of gravity and may cause it to overturn',
-      'A competent person, such as the trained operative who will use the tower',
+      'Mixed only if they were purchased in the same calendar year',
+      'Mixed provided a competent person signs off the combination',
     ],
     correctAnswer: 1,
     explanation:
@@ -1295,10 +1295,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What is the purpose of a base plate on a mobile access tower?',
     options: [
-      'Maintaining three points of contact at all times',
-      'Only persons who have received appropriate PASMA-approved training',
+      'To allow the tower to be rolled to a new position',
+      'To lock the diagonal braces into the end frames',
       'To spread the load of the tower over a larger area of ground',
-      'As specified by the manufacturer, typically alternating on each bay level',
+      'To raise the working height of the tower by one bay',
     ],
     correctAnswer: 2,
     explanation:
@@ -1331,9 +1331,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'At which level should the first platform be installed during tower assembly?',
     options: [
       'At the lowest recommended level as specified by the manufacturer',
-      'A hard hat (safety helmet) to protect against falling objects from above',
-      'Inspected for damage, cleaned if necessary and stored safely',
-      'That the tower is vertical (plumb) and not leaning to any side',
+      'At the very top of the completed tower structure',
+      'At exactly 2 metres above ground level on every tower',
+      'At whichever level the operative finds most convenient',
     ],
     correctAnswer: 0,
     explanation:
@@ -1347,10 +1347,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: 'What must be fitted at every working platform level of a mobile access tower?',
     options: [
-      'Work at Height Regulations 2005',
+      'A single top guardrail only',
       'Guardrails, mid-rails and toeboards',
-      'Avoid work at height where possible',
-      'Locked and in good working order',
+      'A safety net slung beneath the platform',
+      'Diagonal bracing on the platform surface',
     ],
     correctAnswer: 1,
     explanation:
@@ -1367,10 +1367,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When using the 3T (Through The Trap) assembly method, at what point is the operative protected by guardrails?',
     options: [
-      'Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe',
-      'The tower should be dismantled or reduced in height, or additional stabilisation provided such as tying to a structure, before the high winds arrive',
+      'Only once the operative reaches the topmost working platform',
+      'Only while the operative is descending the internal ladder',
       'At all times during the assembly process, because guardrails are fitted from the level below before the operative advances',
-      'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
+      'Only after the trapdoor has been removed from the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -1384,9 +1384,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'How does the AGR (Advance Guard Rail) method differ from the 3T method?',
     options: [
-      'The method of rescue, trained personnel, necessary equipment on site, communication method and emergency contact numbers',
-      'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
-      'A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals',
+      'AGR can only be used indoors, whereas 3T is for outdoor towers',
+      'AGR requires a safety harness to be worn, whereas 3T does not',
+      'AGR is used for dismantling only, whereas 3T is for assembly only',
       'AGR uses a temporary guardrail system that is raised to the next level before the operative climbs up, eliminating the need for a trapdoor',
     ],
     correctAnswer: 3,
@@ -1419,10 +1419,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: 'At what height should the mid-rail be fitted on a mobile access tower?',
     options: [
-      'As stated in the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions for that specific tower and configuration',
+      '150mm above the platform, level with the top of the toeboard',
       '470mm above the platform (approximately halfway between platform and guardrail)',
-      'That they engage fully, hold securely under load and are not worn, bent or missing',
-      'To spread the load of the tower over a larger area of ground',
+      '950mm above the platform, in line with the top guardrail',
+      '1200mm above the platform, above the top guardrail',
     ],
     correctAnswer: 1,
     explanation:
@@ -1473,9 +1473,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What should be done immediately after completing the assembly of a mobile access tower?',
     options: [
       'Carry out a full pre-use inspection to confirm the tower is safe',
-      'They should be visually inspected for damage, distortion and missing parts',
-      'At the lowest recommended level as specified by the manufacturer',
-      'Prefabricated Access Suppliers and Manufacturers Association',
+      'Immediately begin work from the top platform without delay',
+      'Release all the castor brakes ready for the tower to be moved',
+      'Remove the guardrails to allow easier access to the platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -1489,10 +1489,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: 'Why must the trapdoor be closed after climbing through it during 3T assembly?',
     options: [
-      'Being struck by falling objects (tools, materials or components)',
+      'To stop rainwater collecting on the platform below',
       'To provide a full working platform area and prevent falls through the opening',
-      'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
-      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
+      'To lock the platform onto the transoms so it cannot lift',
+      'To allow the guardrails to be removed from the level below',
     ],
     correctAnswer: 1,
     explanation:
@@ -1507,10 +1507,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During tower assembly, what is the maximum number of people that should be on the tower at any one time unless the manufacturer specifies otherwise?',
     options: [
-      "Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion",
-      "Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower",
+      "Exactly one, regardless of the size of the tower being built",
+      "Exactly four, on every tower regardless of configuration",
       "As stated in the manufacturer's instructions for that specific tower and configuration",
-      "A competent person, such as the trained operative who will use the tower",
+      "As many as are needed, provided each holds a valid PASMA card",
     ],
     correctAnswer: 2,
     explanation:
@@ -1525,9 +1525,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When assembling a tower near overhead electrical cables, what is the recommended minimum safe distance from the cables?',
     options: [
-      'A hard hat (safety helmet) to protect against falling objects from above',
-      'Only persons who have received appropriate PASMA-approved training',
-      'The tower can collapse or become unstable, causing falls and crushing injuries',
+      'A fixed 1 metre for every power line regardless of voltage',
+      'A fixed 2 metres for every power line regardless of voltage',
+      'No minimum distance, provided the supply has been switched off',
       'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
     ],
     correctAnswer: 3,
@@ -1543,9 +1543,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'Diagonal braces must be fitted in which pattern during assembly?',
     options: [
       'As specified by the manufacturer, typically alternating on each bay level',
-      'The centres of the castor wheels (or the outermost stabiliser positions if fitted)',
-      'From the top down — the reverse of the assembly sequence',
-      'No — nobody should ever be on the tower while it is being moved',
+      'All on the same face of the tower from top to bottom',
+      'Only on the top bay, with lower bays left unbraced',
+      'In whatever pattern the operative finds quickest to fit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1562,10 +1562,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When using the 3T method, what is the correct sequence for advancing to the next platform level?',
     options: [
-      'It raises the centre of gravity, creates an unstable working position and increases fall height with no protection above the guardrails',
+      'Climb through the trap to the unguarded level first, then fit the frames, braces and guardrails from above',
       'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
-      'The floor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s load-bearing capacity must be verified to ensure it can support the combined weight of the tower, operatives, materials and imposed loads',
-      'Use a controlled lowering system such as a rope and gin wheel, or pass components through an access opening to a ground-level operative',
+      'Fit the guardrails for the next level first, then the platform, then climb up and fit the frames and braces',
+      'Climb to the next level, fit the platform only, then come back down to fit the frames and braces afterwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -1598,9 +1598,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During AGR assembly, what happens if the advance guardrail mechanism fails to lock into the correct position?',
     options: [
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
-      'No — a formal documented inspection by a competent person is required on or before day 7, and a pre-use check alone does not satisfy this requirement',
-      'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
+      'Continue assembly carefully, holding the guardrail by hand until the next level is reached',
+      'Tape or tie the guardrail temporarily into position and carry on with the build',
+      'Switch to climbing on the outside of the tower to finish the assembly more quickly',
       'The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues',
     ],
     correctAnswer: 3,
@@ -1616,9 +1616,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: "What is the significance of the 'safe zone' concept during 3T tower assembly?",
     options: [
       'It is the area within the guardrail protection where the operative is safeguarded against falls at all times during assembly',
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
-      'To the platform height specified by the manufacturer for safe moving, generally no more than 4m',
-      'Accelerated corrosion from salt-laden air may require more frequent inspections and specific checks for pitting, white powder deposits and corroded joints',
+      'It is the exclusion zone marked out on the ground beneath the tower',
+      'It is the storage area where unused components are kept during the build',
+      'It is the distance the tower must be kept from overhead power lines',
     ],
     correctAnswer: 0,
     explanation:
@@ -1633,10 +1633,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When assembling a tower with both outriggers and castors, in what order should the components be set up at the base?',
     options: [
-      "At all times during the assembly process, because guardrails are fitted from the level below before the operative advances",
+      "Build the full tower first, then fit the castors and outriggers to the completed structure",
       "Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building the tower higher than the manufacturer's specified freestanding limit",
-      "AGR uses a temporary guardrail system that is raised to the next level before the operative climbs up, eliminating the need for a trapdoor",
-      "It raises the centre of gravity, creates an unstable working position and increases fall height with no protection above the guardrails",
+      "Fit the outriggers first, then add the castors once the tower has reached working height",
+      "Fit castors and outriggers in any order, since the sequence has no effect on stability",
     ],
     correctAnswer: 1,
     explanation:
@@ -1651,10 +1651,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A tower assembly is being carried out when the wind speed increases to Beaufort Force 5. What action should be taken?',
     options: [
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
-      'Use a tool bag, rope and pulley or other approved method — never carry items while climbing',
+      'Continue assembly but fit additional braces to resist the wind',
+      'Carry on working provided everyone clips on a safety harness',
       'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
-      'That they are properly located, secured, free from damage and that trapdoors function correctly',
+      'Speed up the assembly so the tower is finished before the wind worsens',
     ],
     correctAnswer: 2,
     explanation:
@@ -1674,9 +1674,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'In what order should a mobile access tower be dismantled?',
     options: [
-      'A suitable and sufficient risk assessment',
-      'Only persons who have received appropriate PASMA-approved training',
-      'Prefabricated Access Suppliers and Manufacturers Association',
+      'From the bottom up, removing the base components first',
+      'Starting with the middle bay and working outwards',
+      'In any order, provided the guardrails are removed first',
       'From the top down — the reverse of the assembly sequence',
     ],
     correctAnswer: 3,
@@ -1693,9 +1693,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'Before dismantling a mobile access tower, what must be done with all tools and materials on the platform?',
     options: [
       'Removed safely from the platform and lowered to the ground',
-      'The height from the ground to the top of the working platform',
-      'Persons not in their employment (e.g. members of the public)',
-      'That the tower is vertical (plumb) and not leaning to any side',
+      'Left on the platform to be dropped down with the components',
+      'Tied to the guardrails so they descend with the tower',
+      'Stacked against the toeboards to act as a counterweight',
     ],
     correctAnswer: 0,
     explanation:
@@ -1709,10 +1709,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'Should anyone remain on the tower while it is being moved to a new location?',
     options: [
-      'A thorough inspection must be carried out by a competent person',
+      'Yes — one person should stay on the platform to steady the tower',
       'No — nobody should ever be on the tower while it is being moved',
-      'Prefabricated Access Suppliers and Manufacturers Association',
-      'From the base, pushing at or near the bottom of the tower',
+      'Yes — provided they are clipped on with a safety harness',
+      'Yes — but only if the platform is below 4 metres in height',
     ],
     correctAnswer: 1,
     explanation:
@@ -1727,10 +1727,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After a mobile access tower has been dismantled, what should be done with the components?',
     options: [
-      'Before first use, after alteration, after any adverse event, and every 7 days',
-      'Avoid work at height, prevent falls, mitigate consequences',
+      'Left in the open on site ready for the next day\'s work',
+      'Repainted before being returned to the storage compound',
       'Inspected for damage, cleaned if necessary and stored safely',
-      'The required working height and load capacity',
+      'Stacked loosely in the back of the van without securing',
     ],
     correctAnswer: 2,
     explanation:
@@ -1762,9 +1762,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'Before moving a mobile access tower, what must be checked on the intended route?',
     options: [
       'That the route is free from obstructions, holes, slopes and overhead hazards',
-      'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
-      'A thorough inspection must be carried out by a competent person',
-      'The tower can collapse or become unstable, causing falls and crushing injuries',
+      'That the route is no longer than 50 metres in total length',
+      'That the route has been swept clean and freshly tarmacked',
+      'That the route runs in a straight line with no corners to turn',
     ],
     correctAnswer: 0,
     explanation:
@@ -1779,10 +1779,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When dismantling a tower using the 3T method, where should the operative be standing?',
     options: [
-      'A formal inspection must be carried out by a competent person and recorded',
+      'On the topmost unguarded level, removing components below',
       'On a fully guarded platform, working through the trapdoor above',
-      'PASMA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended inspection recording system for mobile access towers',
-      'Passed hand-to-hand or lowered carefully using a suitable method',
+      'On the internal ladder, reaching out to remove the frames',
+      'On the ground, reaching up to remove the lowest components',
     ],
     correctAnswer: 1,
     explanation:
@@ -1813,9 +1813,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'How should tower components be passed down during dismantling?',
     options: [
-      'A competent person, such as the trained operative who will use the tower',
-      'No — nobody should ever be on the tower while it is being moved',
-      'No — the 7-day interval must not be exceeded regardless of use patterns',
+      'Dropped to the ground to save time, as the area is clear',
+      'Thrown to a colleague waiting at the side of the tower',
+      'Slid down the internal ladder one component at a time',
       'Passed hand-to-hand or lowered carefully using a suitable method',
     ],
     correctAnswer: 3,
@@ -1848,10 +1848,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After moving a mobile access tower to a new location, what is the first thing that must be done?',
     options: [
-      'To spread the load of the tower over a larger area of ground',
+      'Climb straight up and begin work from the platform',
       'Lock all castors and ensure the tower is level and stable before use',
-      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
-      'As specified by the manufacturer, typically alternating on each bay level',
+      'Remove the guardrails ready to extend the tower height',
+      'Release the castor brakes ready for the next move',
     ],
     correctAnswer: 1,
     explanation:
@@ -1868,10 +1868,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When dismantling a tower, why must guardrails be the last components removed from each level?',
     options: [
-      'The centres of the castor wheels (or the outermost stabiliser positions if fitted)',
-      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
+      'Because they are the heaviest components and are easiest to lift first',
+      'Because they hold the platform in place and must not be disturbed early',
       'Because they provide fall protection for the operative until the last possible moment',
-      'Metal scaffolding — prefabricated mobile access and working towers',
+      'Because they are needed to brace the tower against wind loading',
     ],
     correctAnswer: 2,
     explanation:
@@ -1904,9 +1904,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'If a tower component is found to be damaged during dismantling, what should happen to it?',
     options: [
       'It should be clearly marked as defective, removed from service and reported',
-      'A hard hat (safety helmet) to protect against falling objects from above',
-      'PASMA\\\'s recommended inspection recording system for mobile access towers',
-      'A competent person, such as the trained operative who will use the tower',
+      'It should be returned to stock and used until it finally fails',
+      'It should be straightened on site and refitted to the tower',
+      'It should be used only on the lower bays where loads are smaller',
     ],
     correctAnswer: 0,
     explanation:
@@ -1920,10 +1920,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'Why should a mobile access tower never be moved by towing it with a vehicle?',
     options: [
-      'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
+      'The exhaust fumes from the vehicle can corrode the aluminium frame',
       'The sudden forces can cause the tower to collapse or overturn, and the speed cannot be safely controlled',
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
-      'The tower must not be used until the defect is rectified by a competent person',
+      'The castor brakes will overheat and seize if towed any distance',
+      'The vehicle\'s weight will crush the tower\'s adjustable legs',
     ],
     correctAnswer: 1,
     explanation:
@@ -1938,10 +1938,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When partially dismantling a tower to reduce its height for moving, to what height should it be reduced?',
     options: [
-      'Guide the castors carefully, watching for changes in level, and stop if the tower begins to lean',
-      'Lock all castors and ensure the tower is level and stable before use',
+      'To exactly half of its current working height in every case',
+      'To the height of the nearest guardrail, around 1 metre',
       'To the platform height specified by the manufacturer for safe moving, generally no more than 4m',
-      'A tool lanyard or tether should be used to prevent the power tool from falling if dropped',
+      'To no more than 8 metres, the freestanding outdoor limit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1955,9 +1955,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'How should tower components be stored to prevent damage and deterioration?',
     options: [
-      'PASMA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended inspection recording system for mobile access towers',
-      'The tower can collapse or become unstable, causing falls and crushing injuries',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Outdoors uncovered, so any rainwater can drain away freely',
+      'Stacked vertically against a wall with no support racking',
+      'Submerged in water to prevent the aluminium from oxidising',
       'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
     ],
     correctAnswer: 3,
@@ -1974,9 +1974,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'During dismantling, what should be done if the wind speed increases to Beaufort Force 4?',
     options: [
       'Cease dismantling, secure the partially dismantled tower and descend safely',
-      'The tower must not be used until the defect is rectified by a competent person',
-      'Before every use, at the start of each working period',
-      'Never mixed — only components from the same manufacturer and system should be used together',
+      'Speed up the dismantling to finish before the wind worsens',
+      'Continue dismantling but have a colleague hold the tower steady',
+      'Add extra braces to the tower to resist the rising wind',
     ],
     correctAnswer: 0,
     explanation:
@@ -2008,10 +2008,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'Who should carry out the dismantling of a mobile access tower?',
     options: [
-      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
-      'A formal inspection must be carried out by a competent person and recorded',
+      'Any general labourer available on site at the time',
+      'The site first-aider, as they are trained in emergencies',
       'Only persons who have received appropriate PASMA-approved training',
-      'The height from the ground to the top of the working platform',
+      'Whoever delivered the tower components to the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2025,9 +2025,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'When moving a tower across uneven ground, what additional precaution must be taken?',
     options: [
-      'The tower can roll away or move unexpectedly, causing the operative to lose balance and fall',
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Move the tower as quickly as possible to cross the ground in one go',
+      'Increase the tower height so the platform clears the uneven ground',
+      'Leave the castor brakes applied so the tower cannot roll away',
       'Guide the castors carefully, watching for changes in level, and stop if the tower begins to lean',
     ],
     correctAnswer: 3,
@@ -2046,9 +2046,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'A tower has been assembled using the AGR method and now needs dismantling. What is the critical difference in the dismantling sequence compared to 3T dismantling?',
     options: [
       "The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer's specific AGR dismantling procedure",
-      "That they are at least 150mm high, fitted on all open sides and free from gaps that would allow materials to fall through",
-      "The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues",
-      "Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe",
+      "AGR towers must be dismantled from the bottom up rather than the top down",
+      "AGR towers require the operative to wear a harness throughout dismantling",
+      "AGR towers can only be dismantled by removing the trapdoor platform first",
     ],
     correctAnswer: 0,
     explanation:
@@ -2063,10 +2063,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A mobile access tower needs to be moved 50 metres across a site. The ground is firm but slopes downhill. What specific risk must be managed?',
     options: [
-      'No — a formal documented inspection by a competent person is required on or before day 7, and a pre-use check alone does not satisfy this requirement',
+      'The castors will wear out more quickly on the downhill gradient',
       'The tower may accelerate uncontrollably on the downhill slope, making it difficult to stop and increasing the overturning risk',
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
-      'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
+      'The adjustable legs will unscrew themselves as the tower descends',
+      'The platform will become slippery as the tower moves downhill',
     ],
     correctAnswer: 1,
     explanation:
@@ -2081,10 +2081,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Following a collision between a forklift and a mobile access tower, what must happen before the tower is used again?',
     options: [
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
-      'Multiple hazards interact and compound each other — the combined effect can exceed the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety margin even when each individual hazard alone would not',
+      'Nothing, provided no damage is visible to the naked eye from the ground',
+      'Only the dented components on the side of impact need replacing',
       'A competent person must carry out a thorough inspection, all suspect components must be withdrawn, and the tower must be fully re-inspected before reuse',
-      'Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe',
+      'The tower simply needs to be re-levelled before work continues',
     ],
     correctAnswer: 2,
     explanation:
@@ -2099,9 +2099,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the recommended procedure if a tower must be left partially dismantled overnight?',
     options: [
-      'Components can be heavy, awkward to carry, and pose risks of musculoskeletal injuries during assembly and dismantling',
-      'The floor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s load-bearing capacity must be verified to ensure it can support the combined weight of the tower, operatives, materials and imposed loads',
-      'The operative should immediately cease work and descend to ground level — metal towers attract lightning and the elevated position increases strike risk',
+      'Leave it as it is, since a partially dismantled tower is too unstable to climb',
+      'Lower the platform to ground level and leave the frame standing freely',
+      'Cover the tower with sheeting to protect the components overnight',
       'Secure the partially dismantled tower to prevent collapse, barricade the area, display warning signs and remove access to prevent unauthorised climbing',
     ],
     correctAnswer: 3,
@@ -2118,9 +2118,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'When storing aluminium tower components, what specific corrosion risk should be considered?',
     options: [
       'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
-      'Use a tool bag, rope and pulley or other approved method — never carry items while climbing',
-      'Outriggers or stabilisers must be fitted to extend the effective base',
-      'At the lowest recommended level as specified by the manufacturer',
+      'Aluminium rusts rapidly and must be repainted before every use',
+      'Aluminium becomes brittle and cracks if stored below freezing point',
+      'Aluminium dissolves on contact with rainwater over a short period',
     ],
     correctAnswer: 0,
     explanation:
@@ -2135,10 +2135,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A tower is being dismantled in a confined area where components cannot be lowered to the ground easily. What is the safest approach?',
     options: [
-      'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
+      'Drop the components straight down, since the confined area keeps people clear',
       'Use a controlled lowering system such as a rope and gin wheel, or pass components through an access opening to a ground-level operative',
-      'A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower',
-      'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
+      'Throw the components clear of the tower to a colleague standing back',
+      'Leave the components on the platform and tip the whole tower over to recover them',
     ],
     correctAnswer: 1,
     explanation:
@@ -2153,10 +2153,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After dismantling a tower that has been in long-term use, what additional checks should be carried out on the castor wheels?',
     options: [
-      'The sheeting acts as a sail, dramatically increasing wind loading and the risk of overturning',
-      'To the platform height specified by the manufacturer for safe moving, generally no more than 4m',
+      'Check that the wheels are painted the correct colour for the tower',
+      'Check that the wheel diameter matches the manufacturer\'s catalogue',
       'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Check that the castors are the same brand as the end frames',
     ],
     correctAnswer: 2,
     explanation:
@@ -2176,9 +2176,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: 'Who should carry out a pre-use inspection of a mobile access tower?',
     options: [
-      'Before assembly begins and whenever the tower is being worked on',
-      'Removed safely from the platform and lowered to the ground',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
+      'Any member of the public passing the tower on site',
+      'The tower manufacturer at their own premises only',
+      'An HSE inspector appointed for that particular site',
       'A competent person, such as the trained operative who will use the tower',
     ],
     correctAnswer: 3,
@@ -2229,10 +2229,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'What should you check regarding the platforms during a pre-use inspection?',
     options: [
-      'Side-loading that shifts the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s centre of gravity and may cause it to overturn',
-      'The sheeting acts as a sail, dramatically increasing wind loading and the risk of overturning',
+      'That they are painted the manufacturer\'s standard colour',
+      'That they are stamped with the current year of manufacture',
       'That they are properly located, secured, free from damage and that trapdoors function correctly',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'That they are rated to twice the load class of the tower',
     ],
     correctAnswer: 2,
     explanation:
@@ -2246,9 +2246,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'What is a key visual check to perform on all bracing during a tower inspection?',
     options: [
-      'Intentionally or recklessly interfere with anything provided for health and safety',
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
+      'Check that the braces are stamped with the correct load class',
+      'Check that the braces are the same length as the guardrails',
+      'Check that the braces have been greased at every connection point',
       'Check that all braces are fitted, correctly positioned and locked in place with no visible damage',
     ],
     correctAnswer: 3,
@@ -2264,9 +2264,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'During a pre-use inspection, what should you check about the guardrails?',
     options: [
       'That they are fitted at the correct height (950mm minimum), secured and undamaged',
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'Side-loading that shifts the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s centre of gravity and may cause it to overturn',
-      'A tool lanyard or tether should be used to prevent the power tool from falling if dropped',
+      'That they are fitted at exactly 470mm above the platform',
+      'That they are painted yellow to improve their visibility',
+      'That they have been removed to allow easier access to the platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -2280,10 +2280,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'What is TowerSure?',
     options: [
-      "Side-loading that shifts the tower's centre of gravity and may cause it to overturn",
+      "A type of mobile access tower designed for use on stairways",
       "PASMA's recommended inspection recording system for mobile access towers",
-      "From the top down — the reverse of the assembly sequence",
-      "Electrocution — electricity can arc across gaps and does not require direct contact",
+      "A British Standard covering the manufacture of tower castors",
+      "An insurance scheme covering damage to hired access towers",
     ],
     correctAnswer: 1,
     explanation:
@@ -2298,10 +2298,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After an event such as high winds or an impact, what must be done before the tower is used again?',
     options: [
-      'Passed hand-to-hand or lowered carefully using a suitable method',
-      'PASMA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended inspection recording system for mobile access towers',
+      'Nothing, provided the tower is still standing upright',
+      'Only the guardrails need to be checked before reuse',
       'A thorough inspection must be carried out by a competent person',
-      'The tower can sink unevenly, causing it to lean and potentially overturn',
+      'The tower can be used straight away once the wind drops',
     ],
     correctAnswer: 2,
     explanation:
@@ -2316,9 +2316,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During a pre-use check, what should you look for on the vertical standards (uprights)?',
     options: [
-      'They can fall and strike people below, causing injury or death',
-      'On a fully guarded platform, working through the trapdoor above',
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
+      'The correct paint colour and a clean, polished finish',
+      'The presence of a current PAT test label on each standard',
+      'That they are the same height as the diagonal braces',
       'Bending, denting, cracking, corrosion or missing spigot pins',
     ],
     correctAnswer: 3,
@@ -2351,10 +2351,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'When should a pre-use inspection of a mobile access tower be carried out?',
     options: [
-      'Persons not in their employment (e.g. members of the public)',
+      'Only once a week, on the same day as the formal inspection',
       'Before every use, at the start of each working period',
-      'Metal scaffolding — prefabricated mobile access and working towers',
-      'Carry out a full pre-use inspection to confirm the tower is safe',
+      'Only when the tower is first delivered to the site',
+      'Only after the tower has been moved to a new position',
     ],
     correctAnswer: 1,
     explanation:
@@ -2371,10 +2371,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What information should be recorded during a formal 7-day inspection of a mobile access tower?',
     options: [
-      'To provide a full working platform area and prevent falls through the opening',
-      'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
+      'Only the date and the inspector\'s initials',
+      'The names of everyone who will use the tower that week',
       'The tower location, date, inspector details, findings, any defects and actions taken',
-      'Prefabricated Access Suppliers and Manufacturers Association',
+      'The purchase price and supplier of the tower components',
     ],
     correctAnswer: 2,
     explanation:
@@ -2388,9 +2388,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'For how long must formal inspection records be retained under the WAHR 2005?',
     options: [
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual for the specific tower model',
-      '5-15 minutes before suspension trauma becomes life-threatening',
-      'A hard hat (safety helmet) to protect against falling objects from above',
+      'For exactly 7 days, then they may be destroyed',
+      'For 5 years from the date of the inspection',
+      'They do not need to be retained once the tower is dismantled',
       'Until the next inspection or 3 months, whichever is greater',
     ],
     correctAnswer: 3,
@@ -2424,10 +2424,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the difference between a pre-use check and a formal inspection under the WAHR 2005?',
     options: [
-      'No — site straightening of bent components can introduce hidden stress fractures and weakened areas; the component must be withdrawn from service and returned to the manufacturer for assessment',
+      'A pre-use check is documented and a formal inspection is not; both are carried out daily',
       'A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals',
-      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
-      'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
+      'A pre-use check is carried out by the HSE; a formal inspection is carried out by the operative',
+      'There is no difference; the two terms describe exactly the same inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -2441,10 +2441,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'If a defect is found during a pre-use inspection, what should happen?',
     options: [
-      'From the base, pushing at or near the bottom of the tower',
-      'No — the 7-day interval must not be exceeded regardless of use patterns',
+      'The tower may be used carefully until the end of the working day',
+      'The defect should be noted and reviewed at the next 7-day inspection',
       'The tower must not be used until the defect is rectified by a competent person',
-      'They can fall and strike people below, causing injury or death',
+      'The defective component may be used on a lower bay where loads are smaller',
     ],
     correctAnswer: 2,
     explanation:
@@ -2459,9 +2459,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When using TowerSure to record an inspection, what should happen to the completed inspection tag?',
     options: [
-      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
-      'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
+      'It should be filed away in the site office and never shown on the tower',
+      'It should be posted to PASMA for central record keeping',
+      'It should be attached to the operative\'s PASMA training card',
       'It should be displayed prominently on the tower so users can see the current inspection status',
     ],
     correctAnswer: 3,
@@ -2478,9 +2478,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What should be specifically checked on locking mechanisms (clips, pins, gravity locks) during an inspection?',
     options: [
       'That they engage fully, hold securely under load and are not worn, bent or missing',
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual for the specific tower model',
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
-      'It should be clearly marked as defective, removed from service and reported',
+      'That they are the correct colour for the tower system',
+      'That they have been oiled and greased before every use',
+      'That they carry a stamp showing the year of manufacture',
     ],
     correctAnswer: 0,
     explanation:
@@ -2495,10 +2495,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A formal 7-day inspection is due on a Friday but the tower will not be used over the weekend. Can the inspection be delayed until Monday?',
     options: [
-      'Only persons who have received appropriate PASMA-approved training',
+      'Yes — the interval only counts days when the tower is actually in use',
       'No — the 7-day interval must not be exceeded regardless of use patterns',
-      'Lock all castors and ensure the tower is level and stable before use',
-      'A tool lanyard or tether should be used to prevent the power tool from falling if dropped',
+      'Yes — provided a pre-use check is carried out on the Monday morning',
+      'Yes — the interval may be extended to 14 days if the tower is idle',
     ],
     correctAnswer: 1,
     explanation:
@@ -2512,10 +2512,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'What should be checked about the toeboards during an inspection?',
     options: [
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
-      'No — they should report their condition to their supervisor and not work at height until they are fit to do so',
+      'That they are at least 950mm high to match the guardrails',
+      'That they are fitted only on the access side of the platform',
       'That they are at least 150mm high, fitted on all open sides and free from gaps that would allow materials to fall through',
-      'To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling',
+      'That they are painted with reflective tape for visibility',
     ],
     correctAnswer: 2,
     explanation:
@@ -2530,9 +2530,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After a mobile access tower has been altered (e.g. height increased or platform repositioned), what must be done before it is used?',
     options: [
-      'Before first use, after alteration, after any adverse event, and every 7 days',
-      'PASMA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended inspection recording system for mobile access towers',
-      'Because they provide fall protection for the operative until the last possible moment',
+      'Nothing further is required if the tower passed its last 7-day inspection',
+      'Only a quick visual pre-use check by the operative is needed',
+      'The alteration must be reported to PASMA before the tower is used',
       'A formal inspection must be carried out by a competent person and recorded',
     ],
     correctAnswer: 3,
@@ -2551,9 +2551,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'A tower has been left erected on site for 6 days without use. On day 7, before anyone uses it, an operative carries out a pre-use check and finds no defects. Does this satisfy the formal inspection requirement?',
     options: [
       'No — a formal documented inspection by a competent person is required on or before day 7, and a pre-use check alone does not satisfy this requirement',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
-      'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
-      'Sufficient training, knowledge, experience and ability to identify defects and assess their significance for safe use',
+      'Yes — a defect-free pre-use check always counts as the 7-day inspection',
+      'Yes — provided the operative records the pre-use check in writing',
+      'Yes — because the tower was not used during the 6 days in question',
     ],
     correctAnswer: 0,
     explanation:
@@ -2568,10 +2568,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the WAHR 2005, who has the legal duty to ensure that inspections of work equipment for work at height are carried out?',
     options: [
-      'It should be displayed prominently on the tower so users can see the current inspection status',
+      'The Health and Safety Executive inspector for that region',
       'The person on whose behalf the inspection is carried out (typically the employer or person controlling the work)',
-      'A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower',
-      'No — they should report their condition to their supervisor and not work at height until they are fit to do so',
+      'The manufacturer who supplied the tower components',
+      'The PASMA trade association that issues training cards',
     ],
     correctAnswer: 1,
     explanation:
@@ -2586,10 +2586,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       "What constitutes 'competence' for the purposes of carrying out a formal tower inspection under the WAHR 2005?",
     options: [
-      'Components can be heavy, awkward to carry, and pose risks of musculoskeletal injuries during assembly and dismantling',
-      'The platform height plus approximately 2 metres (the reach of a person standing on the platform)',
+      'Simply holding any current PASMA training card, regardless of experience',
+      'Being the most senior manager present on the site that day',
       'Sufficient training, knowledge, experience and ability to identify defects and assess their significance for safe use',
-      'The sudden forces can cause the tower to collapse or overturn, and the speed cannot be safely controlled',
+      'Having attended a one-hour toolbox talk on tower safety',
     ],
     correctAnswer: 2,
     explanation:
@@ -2604,9 +2604,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'An inspection reveals that a gravity lock on a horizontal brace is not fully engaging. The brace appears secure when pushed. Can the tower remain in use?',
     options: [
-      'Underground services should be identified using cable avoidance tools and service plans before driving any ground-penetrating anchors or stabilisers',
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'Yes — provided the brace is taped into position as a temporary measure',
+      'Yes — because the brace still appears secure when pushed by hand',
+      'Yes — as long as the tower is not used in windy conditions',
       'No — a malfunctioning locking mechanism is a defect that could lead to sudden component release under load, and the tower must be taken out of service until repaired',
     ],
     correctAnswer: 3,
@@ -2623,9 +2623,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What additional inspection consideration applies to towers used near the coast or in marine environments?',
     options: [
       'Accelerated corrosion from salt-laden air may require more frequent inspections and specific checks for pitting, white powder deposits and corroded joints',
-      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
-      'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
-      'Adequate lighting of the tower and surrounding area, increased fatigue risk in night workers, reduced visibility for inspections, and the availability of rescue personnel throughout the night',
+      'The tower must be rinsed with fresh water but no extra inspection is needed',
+      'Coastal towers are exempt from the standard 7-day inspection interval',
+      'Salt air strengthens aluminium, so inspections can be less frequent',
     ],
     correctAnswer: 0,
     explanation:
@@ -2640,10 +2640,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'An inspection report identifies a bent horizontal brace that has been straightened on site. Is this acceptable?',
     options: [
-      'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
+      'Yes — provided the straightening is carried out by a PASMA card holder',
       'No — site straightening of bent components can introduce hidden stress fractures and weakened areas; the component must be withdrawn from service and returned to the manufacturer for assessment',
-      'Secure the partially dismantled tower to prevent collapse, barricade the area, display warning signs and remove access to prevent unauthorised climbing',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'Yes — as long as the brace appears straight and is refitted correctly',
+      'Yes — provided the brace is only used on the lower bays afterwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -2657,10 +2657,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: "On a TowerSure inspection tag, what does a 'red' status indicate?",
     options: [
-      'To the platform height specified by the manufacturer for safe moving, generally no more than 4m',
-      'It has a hinged trapdoor that allows internal access while maintaining full guardrail protection',
+      'The tower has passed inspection and is safe for general use',
+      'The tower is awaiting its first inspection on site',
       'The tower must not be used — it has failed inspection or is incomplete/unsafe',
-      'Never mixed — only components from the same manufacturer and system should be used together',
+      'The tower is approved for light-duty inspection work only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2699,9 +2699,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main risk to people working below a mobile access tower?',
     options: [
       'Being struck by falling objects (tools, materials or components)',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
-      '470mm above the platform (approximately halfway between platform and guardrail)',
-      'Before first use, after alteration, after any adverse event, and every 7 days',
+      'Suffering hearing damage from the noise of the work above',
+      'Tripping over the castors at the base of the tower',
+      'Exposure to fumes generated by the work on the platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -2716,10 +2716,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary hazard when using a mobile access tower near overhead power lines?',
     options: [
-      'Persons not in their employment (e.g. members of the public)',
+      'The cables can fall and strike the tower platform from above',
       'Electrocution — electricity can arc across gaps and does not require direct contact',
-      'Inspected for damage, cleaned if necessary and stored safely',
-      'That the ground is firm, level and capable of supporting the tower',
+      'The radio interference from the cables can disorientate the operative',
+      'The magnetic field from the cables can demagnetise hand tools',
     ],
     correctAnswer: 1,
     explanation:
@@ -2733,10 +2733,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What can happen if a mobile access tower is overloaded beyond its rated capacity?',
     options: [
-      'From the base, pushing at or near the bottom of the tower',
-      'Passed hand-to-hand or lowered carefully using a suitable method',
+      'The castor brakes will release and the tower will roll away',
+      'Nothing happens until the load is more than double the rating',
       'The tower can collapse or become unstable, causing falls and crushing injuries',
-      'Avoid work at height, prevent falls, mitigate consequences',
+      'The adjustable legs will automatically retract to compensate',
     ],
     correctAnswer: 2,
     explanation:
@@ -2750,9 +2750,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'What hazard is created by leaving tools or materials on an unguarded platform edge?',
     options: [
-      'As specified by the manufacturer, typically alternating on each bay level',
-      'No — nobody should ever be on the tower while it is being moved',
-      'Retracted or removed before the tower is moved',
+      'They will overload the platform and exceed its load class',
+      'They will corrode the platform surface if left out in the rain',
+      'They will block the trapdoor and prevent the operative descending',
       'They can fall and strike people below, causing injury or death',
     ],
     correctAnswer: 3,
@@ -2769,9 +2769,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What is the hazard associated with not locking the castors before using a mobile access tower?',
     options: [
       'The tower can roll away or move unexpectedly, causing the operative to lose balance and fall',
-      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
-      'They should be visually inspected for damage, distortion and missing parts',
-      'The centres of the castor wheels (or the outermost stabiliser positions if fitted)',
+      'The castor bearings will overheat and seize during the work',
+      'The tower will sink into the ground under the operative\'s weight',
+      'The guardrails will work loose from their sockets during use',
     ],
     correctAnswer: 0,
     explanation:
@@ -2802,10 +2802,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What manual handling hazard is associated with mobile access tower components?',
     options: [
-      'To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling',
-      'The floor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s load-bearing capacity must be verified to ensure it can support the combined weight of the tower, operatives, materials and imposed loads',
+      'Components are too light to handle safely and can be blown about',
+      'Components release toxic dust when they are lifted and carried',
       'Components can be heavy, awkward to carry, and pose risks of musculoskeletal injuries during assembly and dismantling',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
+      'Components become electrically charged when carried across the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2820,9 +2820,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the risk of using a mobile access tower on soft ground without adequate base support?',
     options: [
-      'A competent person, such as the trained operative who will use the tower',
-      '470mm above the platform (approximately halfway between platform and guardrail)',
-      'Determined by the manufacturer based on the tower configuration',
+      'The castors will spin freely and the tower cannot be steered',
+      'The aluminium frame will corrode where it touches the damp soil',
+      'The adjustable legs will extend automatically into the ground',
       'The tower can sink unevenly, causing it to lean and potentially overturn',
     ],
     correctAnswer: 3,
@@ -2838,9 +2838,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'Why is it dangerous to climb on the outside of a mobile access tower?',
     options: [
       'External climbing creates outward forces that can overturn the tower and provides no fall protection if the climber slips',
-      'Secure the partially dismantled tower to prevent collapse, barricade the area, display warning signs and remove access to prevent unauthorised climbing',
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'External climbing scratches the paintwork on the outside of the frame',
+      'External climbing is slower than using the internal ladder route',
+      'External climbing wears out the castor brakes more quickly',
     ],
     correctAnswer: 0,
     explanation:
@@ -2854,10 +2854,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: 'What is the risk assessment process designed to identify?',
     options: [
-      'It is suitable for the intended use, maintained in a safe condition and inspected',
+      'The cheapest method of carrying out the work activity',
       'The hazards present, who might be harmed and what control measures are needed',
-      'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
-      'Being struck by falling objects (tools, materials or components)',
+      'The number of operatives needed to complete the task on time',
+      'The make and model of every tool used on the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -2909,9 +2909,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'An operative on a tower platform reaches out to the side to carry out work. What hazard does this create?',
     options: [
       "Side-loading that shifts the tower's centre of gravity and may cause it to overturn",
-      "The tower can sink unevenly, causing it to lean and potentially overturn",
-      "The platform height plus approximately 2 metres (the reach of a person standing on the platform)",
-      "To provide a full working platform area and prevent falls through the opening",
+      "It releases the castor brakes and allows the tower to roll away",
+      "It causes the adjustable legs to retract on the opposite side",
+      "It overloads the platform beyond its rated load class",
     ],
     correctAnswer: 0,
     explanation:
@@ -2926,10 +2926,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the danger of using a ladder or stepladder on a tower platform to gain extra height?',
     options: [
-      'External climbing creates outward forces that can overturn the tower and provides no fall protection if the climber slips',
+      'It scratches the platform surface and damages the non-slip coating',
       'It raises the centre of gravity, creates an unstable working position and increases fall height with no protection above the guardrails',
-      'That they are at least 150mm high, fitted on all open sides and free from gaps that would allow materials to fall through',
-      'The platform height plus approximately 2 metres (the reach of a person standing on the platform)',
+      'It overloads the platform and exceeds the tower\'s load class',
+      'It blocks the trapdoor and prevents the operative descending',
     ],
     correctAnswer: 1,
     explanation:
@@ -2943,10 +2943,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: "What is 'racking' in the context of mobile access tower stability?",
     options: [
-      'Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay',
-      'That they are properly located, secured, free from damage and that trapdoors function correctly',
+      'The storage rack on which tower components are kept when not in use',
+      'The vertical sinking of the tower into soft ground under load',
       'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
-      'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
+      'The system of shelving fitted to the platform for holding tools',
     ],
     correctAnswer: 2,
     explanation:
@@ -2961,9 +2961,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the hazard of using a mobile access tower as a support for a hoist or heavy suspended load?',
     options: [
-      "The tower should be dismantled or reduced in height, or additional stabilisation provided such as tying to a structure, before the high winds arrive",
-      "A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower",
-      "They must not work at height until they have medical clearance confirming the medication does not impair their ability to work safely at height",
+      "The hoist motor will overheat the aluminium frame and weaken it",
+      "The hoist cables will scratch the platform and damage the coating",
+      "The hoist will block the trapdoor and prevent the operative descending",
       "The dynamic and concentrated forces from hoisting can exceed the tower's design capacity and cause collapse or overturning",
     ],
     correctAnswer: 3,
@@ -2980,9 +2980,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What hazard is created when sheeting or banners are attached to a mobile access tower?',
     options: [
       'The sheeting acts as a sail, dramatically increasing wind loading and the risk of overturning',
-      'It has a hinged trapdoor that allows internal access while maintaining full guardrail protection',
-      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
-      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
+      'The sheeting blocks the operative\'s view of the trapdoor below',
+      'The sheeting adds so much weight that the platform is overloaded',
+      'The sheeting traps heat and causes the aluminium frame to expand',
     ],
     correctAnswer: 0,
     explanation:
@@ -2997,10 +2997,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of injury can result from the manual handling of heavy tower frames without proper technique?',
     options: [
-      'Passed hand-to-hand or lowered carefully using a suitable method',
+      'Hearing loss caused by the noise of components being moved',
       'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'As specified by the manufacturer, typically alternating on each bay level',
-      'Carry out a full pre-use inspection to confirm the tower is safe',
+      'Respiratory illness from dust released by the components',
+      'Electric shock from static charge built up in the frames',
     ],
     correctAnswer: 1,
     explanation:
@@ -3015,10 +3015,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the minimum safe distance from underground services (e.g. buried cables) that should be considered when positioning a tower with ground-penetrating stabilisers?',
     options: [
-      'Use a controlled lowering system such as a rope and gin wheel, or pass components through an access opening to a ground-level operative',
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
+      'A fixed 1 metre is always sufficient regardless of the service',
+      'Underground services need not be considered for ground stabilisers',
       'Underground services should be identified using cable avoidance tools and service plans before driving any ground-penetrating anchors or stabilisers',
-      'A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals',
+      'A fixed 5 metres is always required from any buried service',
     ],
     correctAnswer: 2,
     explanation:
@@ -3033,9 +3033,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A mobile access tower is positioned near a busy vehicle route on site. What control measure should be implemented?',
     options: [
-      'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
-      'To protect people at ground level from falling objects and to prevent interference with the tower base',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'The tower should be repainted in a high-visibility colour only',
+      'A spotter should simply shout a warning if a vehicle approaches',
+      'The tower should be moved each time a vehicle needs to pass',
       'Physical barriers, warning signs and traffic management measures should be put in place to prevent vehicle impact',
     ],
     correctAnswer: 3,
@@ -3052,9 +3052,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'When carrying out a risk assessment for mobile access tower work, which of the following should be considered?',
     options: [
       'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
-      'Debris creates trip and slip hazards and can fall from the platform edge, injuring people below',
-      'The tower can roll away or move unexpectedly, causing the operative to lose balance and fall',
-      'A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower',
+      'Only the wind speed forecast for the day of the work',
+      'Only the experience level of the operative using the tower',
+      'Only the colour and brand of the tower being used',
     ],
     correctAnswer: 0,
     explanation:
@@ -3071,10 +3071,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A mobile access tower rated to Beaufort Force 6 is left erected overnight. The weather forecast predicts Force 7 winds. What action is required?',
     options: [
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
+      'Nothing further is needed provided all the castor brakes are applied',
       'The tower should be dismantled or reduced in height, or additional stabilisation provided such as tying to a structure, before the high winds arrive',
-      'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'A safety harness should be left clipped to the top platform overnight',
+      'The tower should simply be covered with sheeting to protect it',
     ],
     correctAnswer: 1,
     explanation:
@@ -3088,10 +3088,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: "What is 'suspension trauma' and how is it relevant to mobile access tower work?",
     options: [
-      'Secure the partially dismantled tower to prevent collapse, barricade the area, display warning signs and remove access to prevent unauthorised climbing',
-      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
+      'It is the structural fatigue of a tower frame after long suspension of loads',
+      'It is the disorientation an operative feels when first working at height',
       'It is a potentially fatal condition where a person suspended motionless in a harness can suffer blood pooling in the legs, leading to loss of consciousness and death within 5-15 minutes',
-      'A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals',
+      'It is the sway of a tall tower caused by suspended sheeting in the wind',
     ],
     correctAnswer: 2,
     explanation:
@@ -3125,9 +3125,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'A tower is erected on a suspended floor in a multi-storey building. What additional hazard must be assessed?',
     options: [
       "The floor's load-bearing capacity must be verified to ensure it can support the combined weight of the tower, operatives, materials and imposed loads",
-      "Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days",
-      "To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling",
-      "Adequate lighting of the tower and surrounding area, increased fatigue risk in night workers, reduced visibility for inspections, and the availability of rescue personnel throughout the night",
+      "Whether the floor is the correct colour for high-visibility working",
+      "Whether the floor has been swept clean before the tower is built",
+      "Whether the floor is at least 8 metres above the ground outside",
     ],
     correctAnswer: 0,
     explanation:
@@ -3142,10 +3142,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the cumulative effect of multiple simultaneous hazards (e.g. high wind, side-loading from work, and partially missing bracing) on tower stability?',
     options: [
-      "No — they should report their condition to their supervisor and not work at height until they are fit to do so",
+      "The hazards cancel each other out, leaving the tower no less safe",
       "Multiple hazards interact and compound each other — the combined effect can exceed the tower's safety margin even when each individual hazard alone would not",
-      "Any person who controls the work of others, including employers, the self-employed and those who control others' work",
-      "That they are at least 150mm high, fitted on all open sides and free from gaps that would allow materials to fall through",
+      "Only the single largest hazard matters; the others can be ignored",
+      "The combined effect is always less than any one hazard on its own",
     ],
     correctAnswer: 1,
     explanation:
@@ -3160,10 +3160,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During a risk assessment, it is identified that the work from the tower will generate sparks near flammable materials. What control hierarchy should be applied?',
     options: [
-      'The operative must stop work immediately, be assisted to descend safely while still conscious, moved to a cool shaded area, given fluids and monitored — if symptoms worsen, call emergency services',
-      'Underground services should be identified using cable avoidance tools and service plans before driving any ground-penetrating anchors or stabilisers',
+      'Simply provide a fire extinguisher and continue the work as planned',
+      'Carry on, as sparks are too small to ignite construction materials',
       'Eliminate the ignition source if possible; if not, remove or protect flammable materials, use fire-resistant sheeting, provide fire-watching and extinguishing equipment as a last resort',
-      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
+      'Move the flammable materials onto the tower platform out of the way',
     ],
     correctAnswer: 2,
     explanation:
@@ -3183,9 +3183,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What type of PPE should be worn when assembling a mobile access tower?',
     options: [
-      'Check that all braces are fitted, correctly positioned and locked in place with no visible damage',
-      'They should be visually inspected for damage, distortion and missing parts',
-      'Never mixed — only components from the same manufacturer and system should be used together',
+      'A high-visibility vest is the only PPE required for assembly',
+      'No PPE is needed as the tower provides full protection',
+      'Only ear defenders to protect against the noise of assembly',
       'As identified by the risk assessment — typically safety boots, hard hat and gloves as a minimum',
     ],
     correctAnswer: 3,
@@ -3201,9 +3201,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'Why must a rescue plan be in place before anyone works from a mobile access tower?',
     options: [
       'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
-      'The dynamic and concentrated forces from hoisting can exceed the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s design capacity and cause collapse or overturning',
-      'It is the area within the guardrail protection where the operative is safeguarded against falls at all times during assembly',
-      'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
+      'Because the insurance policy will not pay out without a written rescue plan',
+      'Because the manufacturer requires a rescue plan to validate the warranty',
+      'Because the rescue plan doubles as the tower assembly method statement',
     ],
     correctAnswer: 0,
     explanation:
@@ -3217,10 +3217,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: 'What is the three-point contact rule when climbing a mobile access tower?',
     options: [
-      'The centres of the castor wheels (or the outermost stabiliser positions if fitted)',
+      'Keep three operatives on the tower at all times during climbing',
       'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
-      'Musculoskeletal disorders including back injuries, hernias and joint damage',
-      'It is suitable for the intended use, maintained in a safe condition and inspected',
+      'Check the tower at three points: base, middle and top before climbing',
+      'Climb no more than three rungs at a time before resting',
     ],
     correctAnswer: 1,
     explanation:
@@ -3234,10 +3234,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'Should an operative work from a mobile access tower if they feel unwell or dizzy?',
     options: [
-      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
-      'Before first use, after alteration, after any adverse event, and every 7 days',
+      'Yes — provided they take a short break before climbing',
+      'Yes — as long as a colleague stays on the platform with them',
       'No — they should report their condition to their supervisor and not work at height until they are fit to do so',
-      'Check that all braces are fitted, correctly positioned and locked in place with no visible damage',
+      'Yes — provided they clip on a safety harness while working',
     ],
     correctAnswer: 2,
     explanation:
@@ -3270,9 +3270,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'What is the safest way to raise tools and materials to the working platform?',
     options: [
       'Use a tool bag, rope and pulley or other approved method — never carry items while climbing',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
-      'Components can be heavy, awkward to carry, and pose risks of musculoskeletal injuries during assembly and dismantling',
-      'It has a hinged trapdoor that allows internal access while maintaining full guardrail protection',
+      'Carry them up in both hands to make a single trip',
+      'Throw them up to a colleague waiting on the platform',
+      'Balance them on the guardrails and slide them up the tower',
     ],
     correctAnswer: 0,
     explanation:
@@ -3286,10 +3286,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'Why should unauthorised persons be prevented from accessing a mobile access tower?',
     options: [
-      'At all times during the assembly process, because guardrails are fitted from the level below before the operative advances',
+      'Because unauthorised persons may damage the paintwork on the tower',
       'Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe',
-      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
-      'No — they should report their condition to their supervisor and not work at height until they are fit to do so',
+      'Because they may move the tower closer to overhead power lines',
+      'Because they could invalidate the tower hire agreement',
     ],
     correctAnswer: 1,
     explanation:
@@ -3304,10 +3304,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What should an operative do if they notice a missing component on a tower that is already in use?',
     options: [
-      'External climbing creates outward forces that can overturn the tower and provides no fall protection if the climber slips',
-      'A competent person must carry out a thorough inspection, all suspect components must be withdrawn, and the tower must be fully re-inspected before reuse',
+      'Continue working but avoid putting weight near the affected area',
+      'Fit any spare part that is roughly the right size as a temporary measure',
       'Stop work immediately, report the defect and ensure the tower is not used until the missing component is replaced and the tower is re-inspected',
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
+      'Make a note to replace the component at the next 7-day inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -3321,9 +3321,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What is the purpose of an exclusion zone around the base of a mobile access tower?',
     options: [
-      'A formal inspection must be carried out by a competent person and recorded',
-      'The tower may accelerate uncontrollably on the downhill slope, making it difficult to stop and increasing the overturning risk',
-      'As specified by the manufacturer, typically alternating on each bay level',
+      'To mark the area where tower components are stored before assembly',
+      'To show where the tower may be moved to without re-inspection',
+      'To reserve parking space for the vehicle delivering the tower',
       'To protect people at ground level from falling objects and to prevent interference with the tower base',
     ],
     correctAnswer: 3,
@@ -3340,9 +3340,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'Why is it important to keep the working platform of a mobile access tower clean and free from debris?',
     options: [
       'Debris creates trip and slip hazards and can fall from the platform edge, injuring people below',
-      'Use a tool bag, rope and pulley or other approved method — never carry items while climbing',
-      'The tower must not be used until the defect is rectified by a competent person',
-      'No — the 7-day interval must not be exceeded regardless of use patterns',
+      'Debris adds weight that can exceed the tower\'s height-to-base ratio',
+      'Debris corrodes the aluminium platform if it is left for too long',
+      'Debris blocks the castor brakes and prevents the tower being moved',
     ],
     correctAnswer: 0,
     explanation:
@@ -3359,10 +3359,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       "What factors should be considered when assessing an operative's fitness to work at height?",
     options: [
-      'Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay',
+      'Only the operative\'s height and weight relative to the tower',
       'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
-      'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
-      'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
+      'Only whether the operative holds a current PASMA training card',
+      'Only the number of years the operative has worked at height',
     ],
     correctAnswer: 1,
     explanation:
@@ -3377,10 +3377,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'In wet weather, what additional safety precaution should be taken when working on a mobile access tower?',
     options: [
-      'Accelerated corrosion from salt-laden air may require more frequent inspections and specific checks for pitting, white powder deposits and corroded joints',
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
+      'The castor brakes should be released so the tower can drain freely',
+      'No extra precautions are needed as rain does not affect a metal tower',
       'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
-      'The operative should immediately cease work and descend to ground level — metal towers attract lightning and the elevated position increases strike risk',
+      'The guardrails should be removed to let the rainwater run off',
     ],
     correctAnswer: 2,
     explanation:
@@ -3395,9 +3395,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the critical time window for rescuing a person who has fallen and is suspended in a harness?',
     options: [
-      'To compensate for uneven ground and ensure the tower is level',
-      'Planned, appropriately supervised and carried out in a safe manner',
-      'They must be removed before the tower is moved',
+      '1-2 hours before suspension trauma becomes life-threatening',
+      '30-45 minutes before suspension trauma becomes life-threatening',
+      'There is no time limit as long as the harness holds the person',
       '5-15 minutes before suspension trauma becomes life-threatening',
     ],
     correctAnswer: 3,
@@ -3413,9 +3413,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question: 'What should a rescue plan for tower work include as a minimum?',
     options: [
       'The method of rescue, trained personnel, necessary equipment on site, communication method and emergency contact numbers',
-      'It should be displayed prominently on the tower so users can see the current inspection status',
-      'That they are properly located, secured, free from damage and that trapdoors function correctly',
-      'At all times during the assembly process, because guardrails are fitted from the level below before the operative advances',
+      'Only the telephone number of the nearest hospital',
+      'Only the name of the operative who assembled the tower',
+      'Only the date the rescue plan was written and last reviewed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3430,10 +3430,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'An operative needs to use a power tool on a tower platform near the edge. What additional safety measure should be considered?',
     options: [
-      'It should be displayed prominently on the tower so users can see the current inspection status',
+      'The guardrails should be removed to give the operative more room',
       'A tool lanyard or tether should be used to prevent the power tool from falling if dropped',
-      'At least the distances specified in the HSE guidance (e.g. 15m for 400kV lines)',
-      'Contact with dissimilar metals (e.g. steel) in damp conditions can cause galvanic corrosion',
+      'The operative should lean out over the guardrail to reach the work',
+      'The power tool should be passed up by throwing it to the operative',
     ],
     correctAnswer: 1,
     explanation:
@@ -3448,10 +3448,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'If lightning is observed while an operative is working on a mobile access tower, what should happen?',
     options: [
-      'The tower may accelerate uncontrollably on the downhill slope, making it difficult to stop and increasing the overturning risk',
-      'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
+      'The operative should crouch down on the platform until the storm passes',
+      'The operative should continue working as aluminium does not conduct electricity',
       'The operative should immediately cease work and descend to ground level — metal towers attract lightning and the elevated position increases strike risk',
-      'It is a potentially fatal condition where a person suspended motionless in a harness can suffer blood pooling in the legs, leading to loss of consciousness and death within 5-15 minutes',
+      'The operative should clip on a safety harness and carry on working',
     ],
     correctAnswer: 2,
     explanation:
@@ -3465,9 +3465,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: "What is the purpose of a 'method statement' for mobile access tower work?",
     options: [
-      'It raises the centre of gravity, creates an unstable working position and increases fall height with no protection above the guardrails',
-      'Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'To record the names and PASMA card numbers of everyone on site',
+      'To list the make, model and serial number of every tower component',
+      'To set out the price and delivery schedule for the tower hire',
       'To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling',
     ],
     correctAnswer: 3,
@@ -3484,9 +3484,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'What PPE might be required when dismantling a tower in an area with overhead working?',
     options: [
       'A hard hat (safety helmet) to protect against falling objects from above',
-      'No — nobody should ever be on the tower while it is being moved',
-      'To increase the effective base dimensions and improve stability',
-      'Prefabricated Access Suppliers and Manufacturers Association',
+      'Ear defenders to protect against noise from the work above',
+      'A dust mask to protect against debris from the work above',
+      'Safety glasses are the only PPE needed for overhead working',
     ],
     correctAnswer: 0,
     explanation:
@@ -3501,10 +3501,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should mobile access tower work not be carried out in freezing conditions without additional precautions?',
     options: [
-      'The person on whose behalf the inspection is carried out (typically the employer or person controlling the work)',
+      'Aluminium components shatter like glass at sub-zero temperatures',
       'Ice can form on rungs, platforms and handholds creating extreme slip hazards, and cold reduces manual dexterity',
-      'AGR uses a temporary guardrail system that is raised to the next level before the operative climbs up, eliminating the need for a trapdoor',
-      'A pre-welded frame unit comprising two standards joined by transoms, forming one end of the tower',
+      'The castor brakes freeze on and the tower cannot be moved at all',
+      'Freezing weather has no effect on tower work and needs no precautions',
     ],
     correctAnswer: 1,
     explanation:
@@ -3519,10 +3519,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the recommended action if an operative on a tower witnesses a colleague collapse on the platform?',
     options: [
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
-      'Stop work immediately, report the defect and ensure the tower is not used until the missing component is replaced and the tower is re-inspected',
+      'Leave the casualty in place and continue working until the shift ends',
+      'Lower the casualty by dropping them onto soft material below',
       'Call for emergency assistance immediately, ensure the area is safe, provide first aid if trained, and initiate the rescue plan to bring the casualty safely to ground level',
-      'Because if an operative is injured or incapacitated at height, a pre-planned rescue procedure is essential to bring them down safely and quickly',
+      'Climb down alone and wait for the casualty to recover by themselves',
     ],
     correctAnswer: 2,
     explanation:
@@ -3539,9 +3539,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'An operative has fallen from a tower and is suspended in a harness at a height of 6m. The rescue plan requires a MEWP for rescue but none is immediately available. What should be done?',
     options: [
-      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
-      'The operative must stop work immediately, be assisted to descend safely while still conscious, moved to a cool shaded area, given fluids and monitored — if symptoms worsen, call emergency services',
-      'At all times during the assembly process, because guardrails are fitted from the level below before the operative advances',
+      'Wait for the MEWP to arrive, however long it takes, as it is the planned method',
+      'Lower the casualty quickly by cutting the harness lanyard from below',
+      'Leave the casualty suspended and monitor them from the ground until help arrives',
       'Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay',
     ],
     correctAnswer: 3,
@@ -3558,9 +3558,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       "An operative is taking prescription medication that lists 'may cause drowsiness' as a side effect. What is the correct course of action regarding work at height?",
     options: [
       'They must not work at height until they have medical clearance confirming the medication does not impair their ability to work safely at height',
-      'The method of rescue, trained personnel, necessary equipment on site, communication method and emergency contact numbers',
-      'Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building the tower higher than the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified freestanding limit',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'They may work at height provided they take the medication after the shift',
+      'They may work at height as long as a colleague stays on the platform',
+      'They may work at height provided they drink plenty of water during the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -3575,10 +3575,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'A site requires continuous 24-hour tower access for maintenance work. What specific safety considerations apply to night shift operations?',
     options: [
-      'The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues',
+      'Night work needs no special considerations beyond the normal daytime controls',
       'Adequate lighting of the tower and surrounding area, increased fatigue risk in night workers, reduced visibility for inspections, and the availability of rescue personnel throughout the night',
-      'Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building the tower higher than the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified freestanding limit',
-      'Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay',
+      'The tower height limits are doubled at night because there is no wind',
+      'The 7-day inspection interval is extended to 14 days for night-shift towers',
     ],
     correctAnswer: 1,
     explanation:
@@ -3593,10 +3593,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the 'hierarchy of rescue' that should be considered in the rescue plan for tower work?",
     options: [
-      'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
-      'A competent person must carry out a thorough inspection, all suspect components must be withdrawn, and the tower must be fully re-inspected before reuse',
+      'Always call the emergency services first and take no other action until they arrive',
+      'Mechanical rescue first, then emergency services, with no role for colleagues',
       'Self-rescue first (if the person can descend unaided), assisted rescue from the tower (colleagues help), mechanical rescue (MEWP, descent device) and emergency services as the final option',
-      'Surfaces become slippery — non-slip platforms should be used, extra care taken when climbing, and the risk assessment reviewed for wet conditions',
+      'Emergency services first, then mechanical rescue, with self-rescue as a last resort',
     ],
     correctAnswer: 2,
     explanation:
@@ -3611,9 +3611,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'An operative working on a tower at 10m height in summer experiences symptoms of heat exhaustion (dizziness, nausea, excessive sweating). What is the safest response?',
     options: [
-      'AGR uses a temporary guardrail system that is raised to the next level before the operative climbs up, eliminating the need for a trapdoor',
-      'It is a potentially fatal condition where a person suspended motionless in a harness can suffer blood pooling in the legs, leading to loss of consciousness and death within 5-15 minutes',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
+      'The operative should sit down on the platform and rest until the symptoms pass',
+      'The operative should carry on working but drink water more frequently',
+      'The operative should remove their PPE on the platform to cool down quickly',
       'The operative must stop work immediately, be assisted to descend safely while still conscious, moved to a cool shaded area, given fluids and monitored — if symptoms worsen, call emergency services',
     ],
     correctAnswer: 3,
@@ -3630,9 +3630,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'A tower is to be used for work involving the removal of materials that may contain asbestos. In addition to the standard tower safety measures, what must be in place?',
     options: [
       'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
-      'The floor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s load-bearing capacity must be verified to ensure it can support the combined weight of the tower, operatives, materials and imposed loads',
-      'The tower should be dismantled or reduced in height, or additional stabilisation provided such as tying to a structure, before the high winds arrive',
-      'The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues',
+      'A standard dust mask and a damp cloth are sufficient for the operative to remove the material',
+      'The operative may remove the material provided they hold a current PASMA card',
+      'The work needs no special controls as the tower itself provides safe access',
     ],
     correctAnswer: 0,
     explanation:

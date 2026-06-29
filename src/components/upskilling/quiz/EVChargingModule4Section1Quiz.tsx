@@ -20,10 +20,10 @@ const quizData = [
   {
     question:
       'What is the maximum earth fault loop impedance (Zs) for a 32A Type B MCB in a TN system?',
-    answers: ['0.87Ω', '1.44Ω', '2.87Ω', '0.55Ω'],
-    correctAnswer: 1,
+    answers: ['1.37Ω', '0.87Ω', '2.87Ω', '0.55Ω'],
+    correctAnswer: 0,
     explanation:
-      'According to BS 7671 Appendix 3, the maximum Zs for a 32A Type B MCB is 1.44Ω to ensure disconnection within 0.4 seconds for circuits ≤32A.',
+      'Under BS 7671:2018+A4:2026 the maximum Zs for a 32A Type B MCB is 1.37Ω (using Cmin = 0.95), ensuring disconnection within the required time for automatic disconnection of supply.',
   },
   {
     question:
@@ -37,11 +37,11 @@ const quizData = [
     question: 'Which regulation specifically addresses PME restrictions for EV charging equipment?',
     answers: [
       'Regulation 411.3.2',
-      'Regulation 722.411.4.1',
       'Regulation 544.1.1',
       'Regulation 531.2.4',
+      'Regulation 722.411.4.1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 722.411.4.1 specifically addresses the restrictions on using PME earthing for EV charging where accessible conductive parts may be touched simultaneously with earthed metallic masses.',
   },
@@ -62,20 +62,20 @@ const quizData = [
   {
     question: 'In a TN-C-S system, what is the main safety concern for outdoor EV charging?',
     answers: [
-      'High earth fault loop impedance',
+      'Excessively high earth fault loop impedance',
+      'Inadequate RCD sensitivity to AC faults',
       'Open PEN conductor creating dangerous voltages',
-      'Inadequate RCD sensitivity',
-      'Poor equipotential bonding',
+      'Poor equipotential bonding of the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The main concern is open PEN conductor faults which can result in dangerous voltages appearing on the installation earthing system and exposed metalwork, creating serious shock risks.',
   },
   {
     question:
       'What is the preferred minimum earth electrode resistance for commercial EV charging installations?',
-    answers: ['1000Ω or less', '500Ω or less', '200Ω or less', '50Ω or less'],
-    correctAnswer: 3,
+    answers: ['50Ω or less', '200Ω or less', '500Ω or less', '1000Ω or less'],
+    correctAnswer: 0,
     explanation:
       'For commercial installations, 50Ω or less provides excellent performance, low touch voltages during faults, and good safety margins. This also allows for future expansion without resistance issues.',
   },
@@ -90,12 +90,12 @@ const quizData = [
     question:
       'What additional protection is required when using PME earthing for EV charging near metallic structures?',
     answers: [
-      'Higher rated RCDs only',
       'Equipotential bonding of all metallic parts within reach',
+      'Higher rated RCDs in place of bonding',
       'Additional earth electrodes only',
-      'Surge protection devices',
+      'Surge protection devices only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Equipotential bonding of all metallic structures within simultaneous reach is essential to prevent dangerous potential differences during fault conditions in PME systems.',
   },

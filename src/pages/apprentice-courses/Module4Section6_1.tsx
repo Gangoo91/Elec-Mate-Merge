@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must cables be routed in recognised safe zones?',
     options: [
-      'Stop work and report to supervisor',
-      'Outside zones or cord operated',
-      'An unwanted fire signal (UwFS)',
+      'To reduce the length of cable required',
+      'To improve the current-carrying capacity',
+      'To avoid the need for mechanical protection',
       'To prevent accidental damage',
     ],
     correctIndex: 3,
@@ -96,17 +96,16 @@ const Module4Section6_1 = () => {
     },
     {
       id: 4,
-      question:
-        'True or False: Visual inspections can identify electrical faults that cannot be seen.',
+      question: 'Can a visual inspection identify electrical faults that cannot be seen?',
       options: [
-        'False',
-        'True',
-        'Only sometimes',
-        'Only with special equipment',
+        'No - hidden faults like insulation breakdown require testing',
+        'Yes - all faults are visible on close inspection',
+        'Yes - but only on domestic installations',
+        'Yes - provided a torch and mirror are used',
       ],
       correctAnswer: 0,
       explanation:
-        'False - Visual inspections only identify defects that can be seen. Electrical faults like insulation breakdown require testing.',
+        'Visual inspections only identify defects that can be seen. Electrical faults like insulation breakdown require testing.',
     },
     {
       id: 5,
@@ -125,10 +124,10 @@ const Module4Section6_1 = () => {
       id: 6,
       question: 'Why is it important to check for grommets or bushes at cable entries?',
       options: [
-        'Gradually increase lighting based on time of day',
-        'Inhalation of solder flux fumes containing colophony (rosin)',
+        'To increase the current-carrying capacity of the cable',
+        'To improve the appearance of the back box',
         'To prevent damage to cable insulation from sharp edges',
-        'Terre-Neutre-Separés (separate earth and neutral)',
+        'To reduce the bend radius needed at the entry',
       ],
       correctAnswer: 2,
       explanation:
@@ -138,9 +137,9 @@ const Module4Section6_1 = () => {
       id: 7,
       question: 'What should you do if a defect is classified as dangerous?',
       options: [
-        'Ask questions or confirm with your supervisor',
-        'Open circuit the load terminals and measure voltage',
-        'Mechanical binding or single phasing',
+        'Note it and continue with the testing',
+        'Energise the circuit to confirm the fault',
+        'Leave it for the next inspection visit',
         'Stop work, report, and make the area safe',
       ],
       correctAnswer: 3,
@@ -150,16 +149,16 @@ const Module4Section6_1 = () => {
     {
       id: 8,
       question:
-        'True or False: A visual inspection can be skipped if the installer is confident in their work.',
+        'Can a visual inspection be skipped if the installer is confident in their work?',
       options: [
-        'False',
-        'Only for simple installations',
-        'True',
-        'Only for experienced installers',
+        'No - it is mandatory under BS 7671 regardless of confidence',
+        'Yes - for simple domestic installations',
+        'Yes - if the installer is experienced',
+        'Yes - if the circuit has already been tested',
       ],
       correctAnswer: 0,
       explanation:
-        'False - Visual inspection is mandatory under BS 7671 regardless of installer confidence or experience level.',
+        'Visual inspection is mandatory under BS 7671 regardless of installer confidence or experience level.',
     },
   ];
 

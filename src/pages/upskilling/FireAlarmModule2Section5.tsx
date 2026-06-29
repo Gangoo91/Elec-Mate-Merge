@@ -23,38 +23,38 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 (clause 30 commentary) recognises four categories of false alarm. What are they, and why does the categorisation matter?',
     options: [
-      'Only one category.',
-      'FOUR categories. (1) EQUIPMENT false alarms — caused by detector or panel faults, ageing, drift. Fixed by service or replacement. (2) ENVIRONMENTAL false alarms — caused by smoke-like phenomena (steam, aerosol, dust, cooking fumes) reaching detectors and triggering legitimate sensitivity. Fixed by detector relocation, mode change (AND-logic), or environmental control. (3) MALICIOUS false alarms — deliberate operation of MCPs without fire intent, typically by pranking pupils or vandalism. Fixed by Type B / transparent covers / staff training / engagement. (4) UNWANTED fire alarm signals — system operated correctly but in a scenario the user did not want (legitimate cooking, hot work without notification). Fixed by procedural changes, notification protocols, and detector siting/mode review. The categorisation matters because each category has a different remediation.',
-      'Two categories.',
-      'They are all the same.',
+      'Only one category, covering every false-alarm event under a single heading.',
+      'Four — equipment, environmental, malicious and unwanted — each with its own remediation.',
+      'Two categories, splitting events only into equipment faults and environmental triggers.',
+      'There are no defined categories; all false alarms are treated identically.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 keeps the four categories used in the 2017 edition but moves them from the terms-and-definitions section into the commentary on clause 30. The 2025 edition also recommends that the commissioning organisation EXPLAIN the categories to the user — so the user can correctly assign each event to a category and direct the right remediation.',
+      'The four categories: (1) equipment — detector/panel faults, ageing, drift (fixed by service/replacement); (2) environmental — steam, aerosol, dust, cooking fumes triggering legitimate sensitivity (fixed by relocation, AND-logic mode change or environmental control); (3) malicious — deliberate MCP operation without fire (fixed by Type B / transparent covers / engagement); (4) unwanted — system operated correctly but in an unwanted scenario like legitimate cooking or unnotified hot work (fixed by procedures and siting review). Each has a different remediation, which is why categorisation matters. The 2025 edition moves them into the clause 30 commentary and asks the commissioner to explain them to the user.',
   },
   {
     id: 'fam2-s5-trigger',
     question:
       'Per BS 5839-1:2025 clause 31, what false-alarm rate triggers a PRELIMINARY investigation, and what triggers an IN-DEPTH investigation?',
     options: [
-      'Same threshold for both.',
-      'PRELIMINARY investigation when the rate of false alarms over the previous 12 months exceeds FOUR FALSE ALARMS PER 100 DETECTORS PER ANNUM. IN-DEPTH investigation when the rate exceeds FIVE FALSE ALARMS PER 100 DETECTORS PER ANNUM AND the system has more than 40 automatic fire detectors. Both thresholds are calculated at every annual service visit and recorded in the system logbook. The trigger points have NOT changed in the 2025 revision but the calculation framework is brought forward to the start of clause 31 to make the obligation visible. The 4-per-100 / 5-per-100 thresholds are calibrated against industry data; below 4-per-100 the system is performing within reasonable expectations, above 5-per-100 something systematic is likely wrong.',
-      '10 per 100 detectors only.',
-      'No quantitative threshold.',
+      'The same single threshold triggers both the preliminary and the in-depth investigation.',
+      'Preliminary above 4 per 100 detectors/annum; in-depth above 5 per 100 with more than 40 detectors.',
+      'A single 10-per-100-detectors threshold triggers both stages of investigation.',
+      'There is no quantitative threshold; investigation is left to the maintainer to judge.',
     ],
     correctIndex: 1,
     explanation:
-      'The 4-per-100 preliminary and 5-per-100 in-depth (>40 detectors) thresholds are the load-bearing numbers of clause 31. They convert "the system has too many false alarms" from a subjective judgement to an auditable trigger point. Calculate at every annual service. Document the rate, the categorisation of each FA, and the remediation plan if a threshold is exceeded.',
+      'Clause 31 triggers a preliminary investigation when false alarms over the previous 12 months exceed four per 100 detectors per annum, and an in-depth investigation when the rate exceeds five per 100 AND the system has more than 40 automatic fire detectors. Both are calculated at every annual service and recorded in the logbook. The trigger points are unchanged in 2025 but moved to the start of clause 31 for visibility. Below 4-per-100 the system performs within reasonable expectations; above 5-per-100 something systematic is likely wrong.',
   },
   {
     id: 'fam2-s5-investigate',
     question:
       'BS 5839-1:2025 clause 29.6 introduces a new requirement on the COMMISSIONING / HANDOVER organisation regarding false-alarm investigation. What is it?',
     options: [
-      'Investigate every alarm themselves.',
-      'The commissioning / handover organisation should ADVISE THE USER to arrange for suitable investigation and, if appropriate, action to be taken on EVERY OCCASION that a false alarm occurs. This is a NEW recommendation in 2025 — the 2017 edition required investigation only when thresholds were breached. The 2025 edition recommends that EVERY false alarm be investigated. The investigation could include managerial changes within the building, modifications to the fire detection and fire alarm system, or further separate investigation by the maintaining organisation. The recommendation puts a positive duty on the commissioner to inform the user, and on the user to act.',
-      'Investigate only after 50 false alarms.',
-      'Wait for the FRS to investigate.',
+      'The commissioner must personally attend and investigate every false alarm at the premises.',
+      'Advise the user to arrange investigation and, if appropriate, action on every occasion a false alarm occurs.',
+      'Investigate only once a cumulative total of 50 false alarms has been reached.',
+      'Take no action and wait for the Fire and Rescue Service to investigate.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 places greater emphasis on multi-sensor detectors as a measure to limit false alarms. In what scenarios specifically does the standard recommend multi-sensor in preference to point smoke detection?',
     options: [
-      'Only in sleeping areas.',
-      'Where point smoke detectors may present a HIGHER RISK of false alarms (clause 33). Typical scenarios: corridors near kitchens or kitchen-vent risers (cooking aerosol, steam); housekeeping or cleaning bays (aerosol, dust raised by vacuuming); hairdressing salons (aerosol propellant); printing rooms (paper-dust); plant rooms with intermittent steam release; bedrooms in HMOs or hotels (aerosol from showers, cooking on en-suite hobs); and any area with FA history. The multi-sensor in AND-logic mode requires both smoke AND heat to confirm before alarming, suppressing single-stimulus false alarms. Annex D (selection and application of fire detectors) provides detailed guidance. The 2025 emphasis reflects the maturation of multi-sensor technology and the reduction in price differential vs single-sensor optical.',
-      'Only in offices.',
-      'Multi-sensor never reduces false alarms.',
+      'Only in sleeping areas such as bedrooms and dormitories.',
+      'Wherever point smoke detection carries a higher risk of false alarms (clause 33).',
+      'Only in general office areas with low ambient noise.',
+      'Nowhere — multi-sensor detection never reduces the false-alarm rate.',
     ],
     correctIndex: 1,
     explanation:
-      'The multi-sensor preference is one of the structural changes in 2025. Point smoke detection in known-FA-risk areas is now considered second-best practice; multi-sensor in AND-logic is the design default for those areas. Combined with clause 20.11 documentation (record the type AND mode), the design intent is preserved through commissioning and maintenance.',
+      'Clause 33 recommends multi-sensor where point smoke detectors present a higher false-alarm risk: corridors near kitchens or kitchen-vent risers (aerosol, steam); housekeeping or cleaning bays (aerosol, vacuum dust); hairdressing salons (propellant); printing rooms (paper dust); plant rooms with intermittent steam; HMO/hotel bedrooms (shower aerosol, en-suite hobs); and any area with FA history. In AND-logic the multi-sensor needs both smoke AND heat to confirm, suppressing single-stimulus false alarms. Annex D gives detailed guidance; record type and mode under clause 20.11.',
   },
 ];
 
@@ -82,140 +82,140 @@ const quizQuestions = [
     question:
       'How many categories of false alarm does BS 5839-1:2025 recognise (clause 30 commentary)?',
     options: [
-      'Two.',
-      'FOUR categories: (1) EQUIPMENT false alarms (detector/panel fault, drift); (2) ENVIRONMENTAL false alarms (steam, aerosol, dust, cooking fumes); (3) MALICIOUS false alarms (deliberate MCP operation without fire); (4) UNWANTED fire alarm signals (system operated correctly but in a non-fire scenario the user did not want). Each category has a different remediation. The 2025 edition moved the categories from the terms section into the clause 30 commentary and recommends the commissioning org EXPLAIN the categories to the user so each event is correctly categorised.',
-      'One.',
-      'Six.',
+      'Four — equipment, environmental, malicious and unwanted — each with its own remediation.',
+      'Two categories — equipment faults and environmental triggers.',
+      'Three categories — equipment, environmental and malicious.',
+      'Six categories, splitting unwanted signals by hot work, cooking and contractor cause.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Equipment / environmental / malicious / unwanted. Each has a specific remediation pathway. The commissioning org explains the categories at handover; the user assigns each event to a category at the time of recording.',
+      'The four categories are equipment (detector/panel fault, drift), environmental (steam, aerosol, dust, cooking fumes), malicious (deliberate MCP operation without fire) and unwanted (system operated correctly in a non-fire scenario the user did not want). Each has a specific remediation pathway. The 2025 edition moved them from the terms section into the clause 30 commentary and asks the commissioning organisation to explain them at handover so the user can categorise each event at the time of recording.',
   },
   {
     id: 2,
     question:
       'What rate of false alarms triggers a PRELIMINARY investigation under BS 5839-1:2025 clause 31?',
     options: [
-      '1 per 100 detectors.',
-      '4 per 100 detectors over the previous 12 months. The threshold is calculated at every annual service visit. If the rate exceeds 4 false alarms per 100 automatic fire detectors per annum, a preliminary investigation is recommended to identify systematic causes and remediation. The threshold has NOT changed in 2025; the framework is moved to clause 31 to make the trigger more visible.',
-      '40 per 100.',
-      '100 per 100.',
+      '1 false alarm per 100 detectors over the previous 12 months.',
+      '2 false alarms per 100 detectors over the previous 12 months.',
+      '4 false alarms per 100 detectors over the previous 12 months.',
+      '10 false alarms per 100 detectors over the previous 12 months.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 4-per-100 preliminary trigger is the first quantitative gate. Below 4-per-100 the system is performing within normal industry expectations; above it, something systematic likely needs attention.',
+      'The preliminary trigger is 4 false alarms per 100 automatic fire detectors per annum, calculated at every annual service visit. Above this rate, a preliminary investigation is recommended to identify systematic causes and remediation. The threshold is unchanged in 2025; the framework was moved to clause 31 to make the trigger more visible. Below 4-per-100 the system performs within normal industry expectations; above it, something systematic likely needs attention.',
   },
   {
     id: 3,
     question:
       'What rate of false alarms triggers an IN-DEPTH investigation under BS 5839-1:2025 clause 31?',
     options: [
-      'Same as preliminary.',
-      '5 per 100 detectors over the previous 12 months, AND the system has MORE than 40 automatic fire detectors. The 5-per-100 threshold is the second gate. Combined with the >40-detector size threshold, it captures medium-to-large systems where the false alarm rate has crossed into territory that suggests fundamental design or operational issues. Below 40 detectors, in-depth investigation is not specifically triggered by clause 31, although the preliminary trigger (4/100) still applies.',
-      '10 per 100, no size limit.',
-      '100 per 100.',
+      'The same 4-per-100 rate as the preliminary trigger, with no system-size limit.',
+      '10 per 100 detectors, applied to systems of any size.',
+      '8 per 100 detectors, and only on systems with fewer than 40 automatic fire detectors.',
+      '5 per 100 detectors, and only on systems with more than 40 automatic fire detectors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The two-step (4-per-100 preliminary, 5-per-100 in-depth with >40 detectors) framework escalates investigation effort with the severity and the system size. Both thresholds appear unchanged in 2025 vs 2017; the 2025 framework is rationalised in clause 31 for clarity.',
+      'The in-depth trigger is 5 false alarms per 100 detectors over the previous 12 months AND a system with more than 40 automatic fire detectors. This second gate captures medium-to-large systems where the rate suggests fundamental design or operational issues. Below 40 detectors, in-depth investigation is not specifically triggered, though the preliminary 4-per-100 trigger still applies. Both thresholds are unchanged from 2017; the 2025 framework is rationalised in clause 31 for clarity.',
   },
   {
     id: 4,
     question:
       'BS 5839-1:2025 clause 29.6 places a NEW positive duty on the commissioning organisation. What is it?',
     options: [
-      'Investigate every alarm themselves.',
-      'Advise the USER to arrange for suitable investigation and, if appropriate, action on EVERY occasion that a false alarm occurs. This is NEW in 2025 — the 2017 edition only required investigation when thresholds were breached. The 2025 edition expects every false alarm to be investigated and recorded. The commissioning organisation has a positive duty to make this expectation clear to the user at handover.',
-      'Disable the system after every false alarm.',
-      'Charge the user a fee.',
+      'Advise the user to arrange investigation and, if appropriate, action on every false-alarm occasion.',
+      'Attend and investigate every false alarm at the premises in person.',
+      'Disable the affected zone of the system after every false alarm.',
+      'Report every false alarm directly to the fire and rescue service.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Clause 29.6 raises the bar — every false alarm investigated, not just when a threshold is breached. The shift reflects FRS pressure on call-out volumes and the maturation of monitoring technology that makes per-event investigation more feasible.',
+      'Clause 29.6 is new in 2025: the commissioning organisation should advise the user to arrange suitable investigation and, if appropriate, action on every occasion a false alarm occurs. The 2017 edition required investigation only when thresholds were breached; the 2025 edition expects every false alarm to be investigated and recorded. The shift reflects FRS pressure on call-out volumes and the maturation of monitoring technology that makes per-event investigation feasible.',
   },
   {
     id: 5,
     question:
       'Why does BS 5839-1:2025 (clause 33) recommend multi-sensor detectors where point smoke detection has a higher risk of false alarms?',
     options: [
-      'Multi-sensors are smaller.',
-      'A multi-sensor in AND logic requires evidence from MORE THAN ONE sensing element before declaring alarm. A short-lived environmental event (steam, aerosol, dust) triggers only the optical element; the heat element does not respond, and the AND logic suppresses the false alarm. A real fire produces both smoke AND elevated heat; the multi-sensor responds. The result: materially fewer false alarms while preserving (or improving) real-fire response. Clause 33 explicitly recommends multi-sensor as a measure to limit unwanted alarms in known-FA-risk areas.',
-      'Cost.',
-      'Aesthetics.',
+      'Multi-sensors are physically smaller and easier to conceal in a ceiling.',
+      'Multi-sensors are cheaper to supply than single-element optical detectors.',
+      'In AND logic a multi-sensor needs both smoke and heat to confirm, suppressing single-stimulus false alarms.',
+      'Multi-sensors respond faster than any single-element smoke detector in all cases.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The multi-sensor + AND-logic combination is the design default for FA-risk areas in 2025. Annex D (Selection and application of fire detectors) gives detailed guidance. Clause 20.11 requires the operating mode to be recorded.',
+      'A multi-sensor in AND logic requires evidence from more than one element before alarming. A short-lived environmental event (steam, aerosol, dust) triggers only the optical element; the heat element does not respond and AND logic suppresses the false alarm. A real fire produces both smoke AND heat, so the detector still responds — materially fewer false alarms while preserving real-fire response. Clause 33 recommends multi-sensor in known-FA-risk areas; Annex D gives detailed guidance and clause 20.11 requires the mode to be recorded.',
   },
   {
     id: 6,
     question:
       'A new BS 5839-1:2025 recommendation involves a label or notice next to the CIE. What does it indicate, and why?',
     options: [
-      'Manufacturer details.',
-      'The 2025 edition recommends a NEW LABEL fixed on or adjacent to the CIE indicating that the system has an ACTIVE CONNECTION to the FRS via an ARC. Typical text: "FALSE ALARM NOTICE — This fire alarm has an active connection to the fire and rescue service. Contact telephone: [ARC telephone number]." The purpose: REMIND PREMISES MANAGEMENT — particularly contractors carrying out hot work, alarms tests, or maintenance — to NOTIFY THE ARC BEFORE undertaking any work that might trigger the alarm. Notification triggers the ARC to suppress FRS dispatch during the test window. The label addresses one of the most common preventable causes of unwanted fire signals: contractor work that triggers the alarm without ARC notification, leading to FRS attendance to a non-event.',
-      'Capacity rating.',
-      'IP rating.',
+      'The manufacturer and model details of the control and indicating equipment.',
+      'The maximum loop capacity and number of devices the panel supports.',
+      'The IP rating and environmental category of the panel enclosure.',
+      'A notice that the system is connected to the FRS via an ARC, with the ARC contact number.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The "false alarm notice" label is one of the practical 2025 additions. It puts the ARC contact number at the panel where contractors and premises management see it — eliminating the "I did not know we had to phone" excuse for unnotified alarm tests.',
+      'The 2025 edition recommends a new label on or adjacent to the CIE indicating that the system has an active connection to the FRS via an ARC (typical text: "FALSE ALARM NOTICE — This fire alarm has an active connection to the fire and rescue service. Contact telephone: [ARC number]."). Its purpose is to remind premises management and contractors carrying out hot work, alarm tests or maintenance to notify the ARC before any work that might trigger the alarm, so FRS dispatch is suppressed during the test window. It addresses a common preventable cause of unwanted signals: unnotified contractor work leading to FRS attendance at a non-event.',
   },
   {
     id: 7,
     question:
       'Per BS 5839-1:2025, what information should the ARC be able to pass to the FRS on receipt of a fire signal?',
     options: [
-      'Just the address.',
-      'PREMISES TYPE (e.g. sleeping accommodation, school, hospital, industrial), and where practicable, the NATURE of the triggering device (smoke, heat, MCP, multi-sensor, sprinkler) and whether COINCIDENCE FILTERING is in place. The 2025 edition emphasises that the ARC should be provided with all relevant information about the premises so that this can be passed to the FRS at attendance. The information helps the FRS prioritise and prepare — knowing it is a sleeping-risk hotel changes the FRS response from knowing it is an unoccupied warehouse. The 2025 emphasis on premises type is a response to FRS call-challenging policies.',
-      'Just the time.',
-      'Just the panel make.',
+      'Premises type and, where practicable, the triggering device type and any coincidence filtering.',
+      'The premises postal address and nothing further.',
+      'The time of the signal and the date of the last service visit.',
+      'The make and model of the control panel that raised the signal.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'FRS attendance protocols are increasingly driven by premises type and signal nature. The 2025 edition aligns BS 5839-1 with this — the ARC delivers not just "fire alarm" but "fire alarm at sleeping-risk hotel, smoke detector triggered, no coincidence". The richer signal supports faster, better-prioritised FRS response.',
+      'The ARC should be able to pass the FRS the premises type (sleeping accommodation, school, hospital, industrial) and, where practicable, the nature of the triggering device (smoke, heat, MCP, multi-sensor, sprinkler) and whether coincidence filtering is in place. The 2025 edition emphasises providing the ARC with all relevant premises information so the FRS can prioritise and prepare — a sleeping-risk hotel warrants a different response from an unoccupied warehouse. The emphasis on premises type responds to FRS call-challenging policies.',
   },
   {
     id: 8,
     question:
       'A maintenance organisation arrives at a building to do alarm-output testing. What MUST they do before triggering any alarm?',
     options: [
-      'Nothing special.',
-      'NOTIFY the ARC that the system is about to undergo a test. The ARC will then suppress FRS dispatch during the agreed test window (and confirm signals during the test if the test plan calls for it). Failure to notify produces an unwanted fire signal: the ARC receives the test trigger as a real fire, dispatches the FRS, and the FRS attends to a non-event — wasting FRS resource and potentially being charged back to the user. The 2025 false-alarm-notice label at the CIE was introduced specifically to remind everyone — contractors, maintenance, premises management — to make this notification.',
-      'Disable the panel.',
-      'Cut the cables.',
+      'No specific action is required before alarm-output testing.',
+      'Place the entire panel into a fault state for the duration of the test.',
+      'Notify the ARC so it suppresses FRS dispatch during the agreed test window.',
+      'Disconnect the standby battery so the panel cannot signal during the test.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'ARC notification before any work that could trigger the alarm is one of the most basic operational disciplines, and one of the most commonly skipped. The 2025 label at the CIE puts the reminder front and centre. Always notify; document the notification in the test record; close the loop with the ARC after the test.',
+      'Before triggering any alarm, the maintainer must notify the ARC that the system is about to undergo a test; the ARC then suppresses FRS dispatch during the agreed window (and confirms signals if the test plan calls for it). Failure to notify produces an unwanted fire signal — the ARC reads the test trigger as a real fire, dispatches the FRS, and the FRS attends a non-event that wastes resource and may be charged back. The 2025 false-alarm-notice label at the CIE exists to remind everyone to make this notification. Always notify, document it, and close the loop afterwards.',
   },
   {
     id: 9,
     question:
       'A school has an FA rate of 6 per 100 detectors per annum. The school has 80 automatic fire detectors. What does clause 31 require?',
     options: [
-      'Nothing.',
-      'BOTH a preliminary AND an in-depth investigation. The rate (6 per 100) exceeds both thresholds: above 4 per 100 (preliminary trigger) and above 5 per 100 (in-depth trigger), AND the system has more than 40 detectors (the in-depth size criterion). The 2025 edition expects: (1) every individual FA investigated and categorised (clause 29.6); (2) preliminary investigation of trends and systematic causes (clause 31); (3) in-depth investigation of fundamental design or operational issues (clause 31). The output of the investigation feeds into a remediation plan — typically combining detector relocation/mode changes (multi-sensor AND-logic), MCP cover changes, staff/pupil engagement, and ARC-notification protocols.',
-      'Disable the system.',
-      'Reduce the detector count.',
+      'No investigation — 6 per 100 sits within the acceptable industry range.',
+      'A preliminary investigation only, because the system has fewer than 100 detectors.',
+      'An in-depth investigation only, the preliminary stage being skipped at this rate.',
+      'Both a preliminary and an in-depth investigation, as 6 per 100 exceeds both thresholds with over 40 detectors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 6-per-100 rate is in the deep zone — above both thresholds in a system big enough to trigger the in-depth gate. The 2025 framework expects active management at this rate: every event categorised, trends analysed, fundamental issues addressed. The school in the example is heading for an FRS call-challenge or charge-back if remediation does not produce results.',
+      'At 6 per 100 the rate exceeds the 4-per-100 preliminary trigger and the 5-per-100 in-depth trigger, and the 80-detector system passes the >40-detector size criterion, so both investigations apply. The 2025 edition expects every individual FA investigated and categorised (clause 29.6), a preliminary investigation of trends (clause 31) and an in-depth investigation of fundamental issues (clause 31). The output feeds a remediation plan — detector relocation/AND-logic mode changes, MCP cover changes, pupil engagement and ARC-notification protocols. Without results, the school risks an FRS call-challenge or charge-back.',
   },
   {
     id: 10,
     question:
       'What is "coincidence filtering" in the context of BS 5839-1 alarm signal transmission?',
     options: [
-      'A form of noise reduction.',
-      'A system feature that requires MORE THAN ONE detector to confirm a fire signal before transmitting an alarm to the ARC. With coincidence filtering active, a single detector triggering does not cause ARC notification (and therefore does not cause FRS attendance); only when a SECOND detector confirms is the alarm transmitted. The 2025 edition recommends that, where practicable, the alarm signal transmitted to the ARC should indicate whether coincidence filtering is in place — so the FRS knows the signal carries higher confidence than a single-detector trigger. Coincidence filtering reduces unwanted FRS attendances from single-stimulus events (one detector momentarily triggered by aerosol, dust or steam) without compromising response to real fires (where multiple detectors typically confirm rapidly).',
-      'A power supply feature.',
-      'A type of detector.',
+      'A panel feature requiring more than one detector to confirm before an alarm is sent to the ARC.',
+      'An electronic signal-filtering circuit that removes electrical noise from the detection loop.',
+      'A standby power supply feature that holds the signal during a mains failure.',
+      'A specific type of dual-optical detector head used in high-risk areas.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Coincidence filtering is a key tool in modern false-alarm management. It is a system-level feature (panel programming) rather than a detector-level feature, and it interacts with detector siting and mode selection. The 2025 emphasis on signalling its presence to the ARC reflects FRS preference for higher-confidence signals.',
+      'Coincidence filtering requires more than one detector to confirm a fire signal before it is transmitted to the ARC: a single detector triggering does not cause ARC notification or FRS attendance; only a second confirming detector transmits the alarm. It reduces unwanted FRS attendances from single-stimulus events (one detector momentarily triggered by aerosol, dust or steam) without compromising real-fire response, where multiple detectors confirm rapidly. It is a panel-programming feature, not a detector feature. The 2025 edition recommends signalling its presence to the ARC so the FRS knows the signal carries higher confidence.',
   },
 ];
 

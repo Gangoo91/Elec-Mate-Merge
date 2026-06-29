@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What does the BS EN 62305 standard series cover, and how does it relate to BS 7671?',
     options: [
-      'Same as BS 7671',
-      'BS EN 62305 is the external standard for lightning protection — separate from BS 7671 but referenced by it. Four parts: -1 general principles, -2 risk management, -3 physical damage to structures + life hazard, -4 electrical + electronic systems within structures. BS 7671 Reg 443.1.1 references BS EN 62305-2 for risk management methodology; Reg 712.534.101 references BS EN 62305-3 for PV separation distance. Designer + installer apply BS EN 62305 alongside BS 7671 for any install needing lightning protection',
-      'Replaces BS 7671',
-      'Random',
+      'BS EN 62305 is the product standard for surge protective devices, defining the Type 1, 2 and 3 SPD test waveforms used in BS 7671 Section 534',
+      'The external lightning-protection standard in four parts (-1 to -4), separate from BS 7671 but referenced by Reg 443.1.1 and Reg 712.534.101',
+      'BS EN 62305 is the wiring standard for outdoor installations, superseding Section 522 of BS 7671 for any equipment exposed to lightning',
+      'BS EN 62305 is a single-part guidance document on earthing resistance, used in place of the BS 7671 earthing chapter where an LPS is present',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'BS EN 62305-2 defines four risk categories. What are they?',
     options: [
-      'Only one',
-      'R1 = risk of loss of human life; R2 = risk of loss of service to the public (telecoms, power, water); R3 = risk of loss of cultural heritage (irreplaceable buildings + artefacts); R4 = risk of economic loss (insurance / business continuity). The designer calculates each applicable risk for the structure + compares to a tolerable threshold (R_T). If calculated R > R_T, protection measures (LPS + SPDs + bonding) are required to reduce R below R_T',
-      'Only economic',
-      'Random',
+      'R1 = direct strike; R2 = indirect strike; R3 = switching surge; R4 = induced surge — the four mechanisms by which lightning energy enters a structure',
+      'R1 loss of human life; R2 loss of public service; R3 loss of cultural heritage; R4 economic loss — each compared to a tolerable threshold R_T',
+      'R1 to R4 are the four Lightning Protection Levels (LPL I-IV), each setting a different air-termination mesh size for the external LPS',
+      'R1 = roof; R2 = walls; R3 = services; R4 = contents — the four parts of the structure assessed separately for strike damage',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What are Lightning Protection Zones (LPZ) per BS EN 62305-1?',
     options: [
-      'Random',
-      'LPZ are zones defined by the level of lightning electromagnetic threat present. LPZ 0A = direct lightning strike + full lightning electromagnetic field. LPZ 0B = no direct strike but full electromagnetic field. LPZ 1 = limited electromagnetic field (typically inside structure with no LPS, or first protection level inside LPS). LPZ 2 = further reduced field. LPZ 3 = innermost protection. SPDs are placed at zone interfaces to reduce the threat as cables cross boundaries — Reg 534.4.1.2 in BS 7671 references this LPZ concept',
-      'Building rooms',
-      'Same as zone 1',
+      'LPZ are the four Lightning Protection Levels (I-IV) that fix the rolling-sphere radius and mesh size of the external air-termination network',
+      'Zones graded by electromagnetic threat (0A/0B/1/2/3); SPDs sit at the interfaces to cut the threat as cables cross, per Reg 534.4.1.2',
+      'LPZ are physical clearance distances measured from the air termination, defining how far cabling must be routed from any down conductor',
+      'LPZ are the four risk categories (life, service, heritage, economic) renamed as zones for the purposes of SPD selection',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What is "separation distance s" in BS EN 62305-3, and why does it matter for PV?',
     options: [
-      'Random',
-      'Separation distance s = minimum required physical distance between metal parts of the protected installation (e.g. PV array frame, DC cables) and parts of the external Lightning Protection System (LPS) such as air terminations and down conductors. If actual distance < required s, dangerous sparks can occur across the gap during a lightning strike. BS 7671 Reg 712.534.101 + 712.534.102.1: if PV is inside the LPS protected volume + separation distance s is NOT kept per BS EN 62305-3, Type 1 SPDs are required (typically with Type 2). The calculation method is in BS EN 62305-3',
-      'Distance to ground',
-      'Cable length',
+      'Separation distance s = the minimum burial depth of the earth electrode below the PV array, set so the LPS earth does not interfere with the array frame bonding',
+      'The minimum gap between installation metalwork (PV frame, DC cables) and LPS parts to prevent flashover; if s is not kept, Type 1 SPDs are required per Reg 712.534.102.1',
+      'Separation distance s = the maximum length of DC string cable permitted before an additional SPD must be fitted along the run',
+      'Separation distance s = the clearance between adjacent PV modules needed to stop a strike arcing from panel to panel across the array',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'A new PV install on a commercial warehouse. The building already has a Lightning Protection System (LPS) installed per BS EN 62305-3. What does the PV designer need to do?',
     options: [
-      'Ignore the LPS',
-      'Coordinate with the existing LPS. Per Reg 712.534.101 + BS EN 62305-3: PV array + DC cables must be separated from LPS air terminations + down conductors by the calculated separation distance s, OR bonded to the LPS where separation is not possible. If s not kept, Reg 712.534.102.1 requires Type 1 SPDs (typically with Type 2). Designer + LPS specialist coordinate the array layout vs LPS routing. Cert evidence: separation distance calculation + SPD selection record + LPS specialist sign-off',
-      'Demolish LPS',
-      'Random',
+      'Bond the PV array frame directly to the nearest down conductor in every case, so the array shares the LPS earth and no separation calculation is needed',
+      'Coordinate with the LPS: keep separation distance s from the array, or bond and add Type 1 SPDs where s cannot be kept, per Reg 712.534.101/.102.1',
+      'Site the array clear of the LPS air terminations and treat the two systems as wholly independent, with no SPDs needed on the PV side',
+      'Extend the air termination network over the new array first, then install the PV beneath it with only Type 3 SPDs at the inverter',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,27 +94,27 @@ const quizQuestions = [
   },
   {
     question:
-      'Reg 443.1.1 references BS EN 62305-2 for SPD risk assessment. What does Reg 443.4.1 require about when SPD protection is mandatory?',
+      'Reg 443.1.1 references BS EN 62305-2 for SPD risk assessment. What does Reg 443.4 (A4:2026) require about when SPD protection is mandatory?',
     options: [
-      'No change',
-      'Per Reg 443.4.1, protection against transient overvoltages is required where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss',
-      'SPDs banned',
-      'Random',
+      'Only criterion (a) — serious injury or loss of human life — is active; for every other case the designer simply applies a Type 2 SPD with no further assessment',
+      'Mandatory where the consequence is (a) injury/loss of life, (b) loss of public service or heritage, (c) loss of commercial/industrial activity or (d) many co-located people; otherwise by risk assessment',
+      'SPDs are required only where an external lightning protection system is present; without an LPS the transient-overvoltage criteria of Reg 443.4 do not apply',
+      'The four criteria were merged into a single financial-loss test in A4:2026, so an SPD is mandatory only where equipment replacement cost exceeds a defined threshold',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 443.4.1 SPD requirement criteria: protection against transient overvoltages is required where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; or (c) significant financial or data loss. There are exactly two active limbs — limb (b) was DELETED by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection against transient overvoltages SHALL be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss (i.e. opt-out is allowed for non-critical cases but must be evidenced by owner declaration). Practical impact: SPDs are expected in most installs unless explicit owner opt-out. For LCT installs (PV, BESS, EV, heat pump) the (c) significant financial / data loss criterion typically triggers the SPD requirement. BS EN 62305-2 risk assessment remains the methodology where formal lightning-protection risk justification is needed. Cert evidence: SPD selection rationale + owner declaration if opted out.',
+      'Reg 443.4 (BS 7671:2018+A4:2026) requires protection against transient overvoltages where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) interruption of public services and/or damage to cultural heritage; (c) interruption of commercial or industrial activity; or (d) a large number of co-located individuals being affected. For all other cases not covered by (a)-(d), a risk assessment is performed to determine if protection is required (and a documented decision not to fit SPDs is permitted where the risk is assessed as tolerable). Practical impact: SPDs are expected in most installs; for LCT installs (PV, BESS, EV, heat pump) criterion (c) commercial/industrial activity, or the risk-assessment route, typically triggers the requirement. BS EN 62305-2 provides the lightning-risk methodology where formal justification is needed. Cert evidence: SPD selection rationale + risk assessment / declaration where the protection is omitted.',
   },
   {
     question:
       'How does the LPZ concept drive SPD type selection — Type 1 vs Type 2 vs Type 3?',
     options: [
-      'Random',
-      'LPZ concept: SPDs placed at zone boundaries reduce surge as cables cross. Type 1 SPDs handle direct or partial direct lightning current — installed at LPZ 0/1 boundary (origin of installation, where structure has external LPS). Type 2 SPDs handle indirect surge — installed at LPZ 1/2 boundary (sub-distribution boards) OR at origin where no external LPS. Type 3 SPDs handle residual surge near sensitive equipment — installed at LPZ 2/3 boundary (close to equipment, within ~10 m). Reg 534.4.1.1 codifies this',
-      'No types',
-      'All same',
+      'Type 3 SPDs handle direct lightning current at the origin, Type 2 protect sub-boards, and Type 1 sit closest to sensitive equipment — the numbering runs from equipment back to origin',
+      'The type is chosen purely by voltage rating, not by zone: a 275 V SPD is Type 1, a 320 V SPD is Type 2, and a 385 V SPD is Type 3',
+      'Type 1 at the LPZ 0/1 boundary (direct current), Type 2 at LPZ 1/2 (indirect surge), Type 3 at LPZ 2/3 within ~10 m of equipment, per Reg 534.4.1.1',
+      'Only one SPD type exists for low voltage installations; the numbers 1, 2 and 3 refer to how many devices are fitted, not to different ratings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LPZ concept drives SPD type per BS EN 62305-4 + BS 7671 Section 534: (1) Type 1 SPD — designed for direct or partial direct lightning current. Tested with 10/350 µs impulse waveform. Used at LPZ 0/1 boundary — the origin of the installation in a structure with external LPS, where partial direct lightning current is possible. Often called "equipotential bonding SPD". (2) Type 2 SPD — designed for indirect surge currents (induced from nearby strikes, distant strikes, switching transients). Tested with 8/20 µs waveform. Used at LPZ 1/2 boundary — sub-distribution boards, OR at the origin of the installation where no external LPS (most domestic installs). (3) Type 3 SPD — designed for residual surge after Type 1 / Type 2 have done their job. Tested with combination waveform. Used at LPZ 2/3 boundary — within ~10 m of sensitive equipment (per Reg 534.4.8). Reg 534.4.1.1: SPDs at origin shall be Type 1 or Type 2; SPDs close to sensitive equipment shall be Type 2 or Type 3. Coordinated SPDs (Type 1 + Type 2 + Type 3) at successive zone boundaries = layered protection. Cert evidence: SPD type per location + LPZ rationale.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A residential PV install — no external LPS on the building. What is the BS EN 62305 + BS 7671 SPD requirement?',
     options: [
-      'No SPDs needed',
-      'Most cases: Type 2 SPDs required. BS EN 62305-2 risk assessment may indicate no direct-strike risk (no LPS = no direct-strike protection but also limited lightning attraction). But BS 7671 Reg 443.4.1 (A4:2026) requires SPDs unless owner opts out + Reg 712.534.102.1 says PV SPDs are generally Type 2. Type 2 at origin (CU end + at inverter location), per Reg 534.4.1.1. Reg 534.4.8 may justify additional Type 3 close to sensitive electronics. Cert evidence: BS EN 62305-2 risk assessment summary + SPD selection record',
-      'Type 1 only',
-      'Type 3 only',
+      'Type 1 SPDs at the origin, because any PV array on a roof is treated as exposed to direct strike whether or not the building has an LPS',
+      'Type 3 SPDs only, fitted within 10 m of the inverter, since the inverter electronics are the only surge-sensitive part of a domestic PV system',
+      'No SPDs are required on domestic PV unless the property is in a high lightning-density area, in which case a full external LPS is fitted instead',
+      'Type 2 SPDs — with no LPS there is no direct-strike scope, so Type 2 at origin and at the inverter per Reg 712.534.102.1, plus Type 3 near electronics where justified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Residential PV with no external LPS = most common UK domestic case. (1) BS EN 62305-2 risk assessment — typically calculated risk R1 (life) is below tolerable threshold for a domestic property without LPS; R4 (economic) may indicate protection needed. (2) BS 7671 Reg 443.4.1 (A4:2026) requires SPDs unless owner explicitly opts out — the (c) significant financial / data loss criterion typically applies to LCT installs (PV inverter, BESS, smart meter all data + costly to replace). (3) Reg 712.534.102.1 for PV: SPDs shall generally be Type 2; if direct strike protection specified + s not kept (no LPS = no direct strike protection scope), Type 1 with Type 2 would be required, but no LPS = no direct-strike-protection scope, so Type 2 is correct. (4) Reg 534.4.1.1: SPDs at origin shall be Type 1 or Type 2; close to sensitive equipment Type 2 or Type 3. (5) Practical install: Type 2 SPD at origin (CU end on AC side); Type 2 SPD on DC side near inverter; consider Type 3 near sensitive electronics if Reg 534.4.8 distance criteria met. (6) Cert evidence bundle: BS EN 62305-2 risk assessment summary + SPD selection record + Type 2 manufacturer DoC.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What is the "tolerable risk" R_T threshold in BS EN 62305-2, and how does the designer use it?',
     options: [
-      'No threshold',
-      'R_T = tolerable risk threshold per risk category. R1 (life) typically 10⁻⁵ per year (1 in 100,000). R2 (services) + R3 (heritage) typically 10⁻³ per year. Designer calculates R per category for the structure; if R > R_T, protection measures (LPS + SPDs + bonding) required to reduce R below R_T. Methodology: lightning ground flash density × area equivalents × probability factors × loss factors. BS EN 62305-2 Annex provides standard values. Risk assessment is the formal justification for LPS + SPD selection',
-      'Always 1',
-      'Random',
+      'The tolerable risk threshold per category (R1 life ~10⁻⁵/yr, R2/R3 ~10⁻³/yr); if the calculated R exceeds R_T, protection is added to bring it below',
+      'R_T is a fixed national figure of 1 in 1,000 applied to all four risk categories equally, so the designer compares one number against the calculated total risk',
+      'R_T is the measured resistance of the earth termination; the designer keeps it below the tolerable value to ensure the LPS discharges a strike safely',
+      'R_T is the residual risk left after protection is fitted, calculated only at the end of the design to confirm the SPDs have reduced exposure to zero',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tolerable risk R_T per BS EN 62305-2: (1) R1 (loss of human life) — tolerable threshold typically 10⁻⁵ per year (1 in 100,000). Strictest. (2) R2 (loss of service to the public) — tolerable threshold typically 10⁻³ per year. (3) R3 (loss of cultural heritage) — tolerable threshold typically 10⁻³ per year. (4) R4 (economic loss) — no mandated threshold; owner-assessed based on insurance + business continuity. Designer\'s calculation methodology: R = N (lightning ground flash density per km²) × A (area equivalent factor based on structure dimensions + position) × P (probability of damage per lightning event) × L (loss factor — type + severity of damage). Compare calculated R to R_T per category. If R > R_T → protection measures required (external LPS per BS EN 62305-3, SPDs per BS EN 62305-4 + BS 7671 Section 534, bonding, separation). Iterate measures until R < R_T. Cert evidence bundle: BS EN 62305-2 risk assessment report — calculated risks, tolerable thresholds, measures applied. UK 2025-26 typical residential: R1 + R4 calculated; R1 usually within tolerance without LPS; R4 informs SPD decision. Commercial / industrial: full risk assessment more often required.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Wind turbine — small (5 kW HAWT) on a 12 m mast in a rural location. What does BS EN 62305 require?',
     options: [
-      'Nothing',
-      'Wind turbines are tall + isolated = high lightning attraction. BS EN 62305-3 external LPS at top of mast (turbine itself may include nacelle / blade strike protection per IEC 61400-24); down conductor along mast; earth termination at base bonded to local equipotential network. BS EN 62305-2 risk assessment determines protection level (LPL I-IV). DC + control cables from nacelle to ground = entry points for surge; Type 1 SPDs at entry to building / control panel; Type 2 SPDs downstream. Coordinate with turbine manufacturer DoC',
-      'Indoor only',
-      'No protection',
+      'Only a single earth rod at the mast base; a tall rural turbine is no more exposed to strike than a domestic roof, so no LPS or SPDs are needed',
+      'A Type 3 SPD at the control panel is sufficient, since the mast itself conducts any strike to earth and the cables carry only residual surge',
+      'Full LPS — air termination at the mast top (per IEC 61400-24), mast down conductor and base earth, with Type 1 SPDs where the cables enter the building',
+      'Bond the mast to the building steel and fit Type 2 SPDs only; direct-strike protection is not within scope for turbines below 6 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wind turbine BS EN 62305 application: (1) Lightning attraction — tall isolated structure in rural location = high probability of direct strike. BS EN 62305-2 risk assessment confirms protection level (LPL I most stringent, LPL IV least). (2) Turbine strike protection — IEC 61400-24 is the wind-turbine-specific lightning standard (subsidiary of BS EN 62305 framework); covers blade strike protection (lightning receptors + down conductor in blade), nacelle, bearings, slip rings. Turbine manufacturer DoC declares strike protection level. (3) Mast LPS per BS EN 62305-3 — air termination at top (often integrated into nacelle); down conductor along mast (often the mast structure itself if it has continuous metallic path); earth termination at base bonded to local equipotential network + dedicated earth electrode. (4) Cable entry to structure — DC power cables + control cables from nacelle + tower base. SPDs at building entry: Type 1 SPDs (direct partial lightning current possible) typically with Type 2 downstream. (5) Bonding — all metal structures at site bonded to common equipotential network (mast, building steel, fences if metallic). (6) Cert evidence bundle: BS EN 62305-2 risk assessment + IEC 61400-24 turbine DoC + LPS specialist sign-off + BS 7671 SPD selection record.',
   },

@@ -68,16 +68,16 @@ const checks = [
   {
     id: 'l3-m3-2-4-rms',
     question:
-      "An average-responding meter reads 9 A on a square-wave load. The actual RMS current is:",
+      'A sine wave has a peak value of 14.14 A. Its RMS value is:',
     options: [
-      '12.7 A',
-      '9 A',
+      '20 A',
+      '7.07 A',
       '10 A',
-      '6.4 A',
+      '9 A',
     ],
     correctIndex: 2,
     explanation:
-      'For a perfect square wave, V_avg = V_peak (over half cycle). Average meter assumes sine and applies form factor 1.11 — it reads V_avg × 1.11. Square wave: V_RMS = V_peak. So actual RMS = reading × (1.0 / 1.11) × correction... For a typical chopped/square-ish PSU current the simple answer is the meter reads low; corrected RMS is roughly 10 A. (True-RMS meters give the right answer directly.)',
+      'I_RMS = I_peak / √2 = 14.14 / 1.414 = 10 A. RMS is the heating-equivalent value a true-RMS meter would display for this sine wave.',
   },
 ];
 

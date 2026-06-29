@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT typically classified as a confined space encountered by electricians?',
     options: [
-      'A cable tunnel beneath a university campus',
       'A well-ventilated open-plan office with suspended ceiling tiles',
+      'A cable tunnel beneath a university campus',
       'An underground transformer chamber accessed via a vertical ladder',
       'A lift motor room at the top of a building shaft',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A well-ventilated open-plan office is not a confined space. It is not substantially enclosed, has multiple means of egress, and does not present a foreseeable risk of serious injury from a specified hazard. Cable tunnels, underground transformer chambers, and lift motor rooms all meet the criteria: substantially enclosed, limited access/egress, and foreseeable risks from heat, gas accumulation, or atmospheric hazards.',
   },
@@ -108,11 +108,11 @@ const quizQuestions = [
       'What are the toxic decomposition products of SF\u2086 gas when exposed to an electrical arc?',
     options: [
       'Carbon dioxide and water vapour',
-      'Sulphur dioxide (SO\u2082) and hydrogen fluoride (HF)',
       'Methane and ethane',
+      'Sulphur dioxide (SO\u2082) and hydrogen fluoride (HF)',
       'Ammonia and chlorine',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When SF\u2086 is exposed to an electrical arc (such as during a fault in gas-insulated switchgear), it decomposes into extremely toxic by-products including sulphur dioxide (SO\u2082), hydrogen fluoride (HF), sulphur tetrafluoride (SF\u2084), and disulphur decafluoride (S\u2082F\u2081\u2080). These compounds are immediately dangerous to life and health (IDLH). Workers must never enter an SF\u2086 switchgear room after a fault without atmospheric monitoring and appropriate respiratory protective equipment.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'At what depth does a cable-laying trench become a confined space under standard guidance?',
     options: [
       'Any depth below 0.5m',
-      'Depths exceeding 1.2m',
       'Only trenches deeper than 2.0m',
       'Trenches over 3.0m deep only',
+      'Depths exceeding 1.2m',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standard industry guidance treats excavations exceeding 1.2m in depth as potential confined spaces, because at this depth a worker cannot easily climb out unaided, and the trench walls create a substantially enclosed environment where gases can accumulate. Ground gas (methane, carbon dioxide, hydrogen sulphide), water ingress, and collapse risk all increase with depth. A specific risk assessment is required for any trench work, and confined-space procedures apply where the 1.2m threshold is exceeded.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Why is arc flash MORE dangerous in a confined space compared to an open switchboard room?',
     options: [
-      'The voltage is higher in confined spaces',
       'Blast pressure waves are reflected and amplified, superheated gases cannot dissipate, and escape is restricted',
+      'The voltage is higher in confined spaces',
       'The electrical equipment in confined spaces is always older and less maintained',
       'Arc flash can only occur in confined spaces, not in open environments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Arc flash in a confined space is amplified because the blast pressure wave reflects off surrounding walls and surfaces rather than dissipating into open air. Superheated gases (potentially exceeding 19,000\u00b0C) engulf the worker for longer because they have nowhere to escape. Molten metal and debris ricochet within the enclosed volume. Toxic combustion fumes accumulate rapidly. And critically, the worker\u2019s ability to move away from the arc is severely restricted. This amplification effect must be factored into arc flash risk assessments for confined-space electrical work.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
       'A wind turbine nacelle is considered a confined space primarily because of which combination of hazards?',
     options: [
       'Noise from the gearbox, vibration from the blades, and UV radiation from the sun',
-      'Height above ground, restricted internal volume, limited egress, heat from machinery, and potential for SF\u2086 or oil vapour accumulation',
       'Electromagnetic fields from the generator, lightning strike risk, and ice throw',
+      'Height above ground, restricted internal volume, limited egress, heat from machinery, and potential for SF\u2086 or oil vapour accumulation',
       'Manual handling of heavy tools, working alone, and fatigue from climbing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A wind turbine nacelle meets confined-space criteria because of its restricted internal volume (typically only enough space for one or two workers), limited egress (a single ladder or hatch leading to the tower interior), significant heat build-up from the gearbox and generator, and potential accumulation of hazardous atmospheres including oil vapour from the gearbox, SF\u2086 from switchgear (in some designs), and reduced oxygen levels. The height above ground (often 80\u2013120m) compounds the danger because emergency rescue is extremely difficult. Working at height and confined-space risks interact to create a particularly hazardous environment.',
   },

@@ -45,10 +45,10 @@ const checks = [
     question:
       "You're about to work on a domestic CU. The supervisor reminds you to follow the JIB safe isolation procedure. Which test instrument(s) confirm the circuit is dead before you touch it?",
     options: [
-      "Optional extensions to PL covering specific risks: defective workmanship (claims arising from faulty work after completion, e.g. a fire caused by an installation defect months after the install), product recall (cost of recalling products you supplied if a fault is found). Increasingly important as electrical work involves more complex equipment (PV inverters, EV chargers, BMS components).",
-      "A two-pole voltage tester (Martindale VI-13800 or equivalent) with an associated proving unit (Martindale GVD2 or equivalent). The voltage tester is GS38-compliant; the proving unit confirms the tester itself is working both BEFORE the test on the live circuit AND AFTER the test on the now-dead circuit. Multimeters are NOT recommended for proving dead — they have small probe tips, no GS38 finger guard, and can show false readings on disconnected high-impedance circuits.",
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
-      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "A neon screwdriver — the bulb lights when the tip touches a live conductor and stays dark when the circuit is dead, giving an instant single-handed check at the terminal.",
+      "A GS38-compliant two-pole voltage tester paired with an associated proving unit, proving the tester both before and after the dead test.",
+      "A multimeter set to AC volts — sweep each conductor against earth and against each other; a reading near zero on every combination confirms the circuit is dead before you touch it.",
+      "A socket tester plugged into the nearest outlet — if all three LEDs stay off, the circuit feeding that socket is isolated and safe to work on.",
     ],
     correctIndex: 1,
     explanation:
@@ -59,28 +59,28 @@ const checks = [
     question:
       "What is a Multifunction Tester (MFT) and what's the apprentice-grade brand realism?",
     options: [
-      "Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing",
-      "Minor Works Certificate (MWC) — the work is an alteration / addition to an existing circuit (re-terminations, device swap) that doesn't constitute a new circuit. MWC covers the circuit altered, the tests performed (continuity of CPC and ring conductors as applicable, IR, Zs, RCD trip time on the replaced device), the conclusion that the circuit complies with BS 7671 after the work. If your work had been a new circuit you'd issue an EIC; if you were re-inspecting an existing installation you'd issue an EICR; for an alteration to one circuit, MWC is the right choice.",
-      "An MFT (Multifunction Tester) is the dedicated installation-test instrument that combines continuity (R1+R2 / R2), insulation resistance, loop impedance (Zs / Ze / PFC), RCD operating time and trip current, and (on most models) earth-electrode resistance into a single unit. Standard apprentice-grade kit: Megger MFT1741+, Fluke 1664FC, Kewtech KT64+, Martindale ET4500. All do the BS 7671 Chapter 61–62 sequence; brand choice depends on the firm's preference.",
-      "Anti-islanding is the inverter's ability to detect when the grid has gone down and to disconnect itself within milliseconds — preventing the inverter from continuing to feed a portion of the local network ('islanding') with the DNO's workers expecting that section to be dead. ENA G98 (and G99 for larger systems) defines the protection settings the inverter must implement (typically G99/1-7 or earlier G83/G59 protection settings depending on inverter age). Modern inverters self-test the anti-islanding regularly. A4:2026 has refined the BS 7671 cross-references to G98/G99.",
+      "An MFT is a high-accuracy multimeter with extra current ranges — it reads volts, amps and ohms to laboratory precision but does not perform the dedicated installation tests. Typical kit: Fluke 87V, Megger AVO410.",
+      "An MFT is the proving-unit-and-voltage-tester combination used for safe isolation — the only instrument GS38 permits for proving dead, measuring no insulation or loop impedance. Typical kit: Martindale VI-13800, Drummond DTL10.",
+      "An MFT (Multifunction Tester) is the dedicated installation-test instrument combining continuity, insulation resistance, loop impedance, RCD and earth-electrode tests in one. Typical kit: Megger MFT1741+, Fluke 1664FC.",
+      "An MFT is a clamp-based current logger used for energy auditing — it clamps round a conductor to record load current over time but cannot perform any of the dead tests. Typical kit: Fluke 376FC, Megger DCM330.",
     ],
     correctIndex: 2,
     explanation:
-      "MFTs are the workhorse of installation testing. They package the four-or-five separate test functions BS 7671 Chapter 61 (initial verification) and Chapter 62 (periodic inspection) require into a single instrument. Megger and Fluke dominate the UK market; Kewtech and Martindale are the budget-leaning options. All deliver the same set of tests; the differences are screen quality, auto-sequence functions, data storage and download to PC for cert generation. Sub 6.x of this Module covers the test sequences in detail.",
+      "MFTs are the workhorse of installation testing. They package the four-or-five separate test functions BS 7671 Chapter 64 (initial verification) and Chapter 65 (periodic inspection) require into a single instrument. Megger and Fluke dominate the UK market; Kewtech and Martindale are the budget-leaning options. All deliver the same set of tests; the differences are screen quality, auto-sequence functions, data storage and download to PC for cert generation. Sub 6.x of this Module covers the test sequences in detail.",
   },
   {
     id: 'mod4-s1-sub5-socket-tester',
     question:
       "A socket tester (the small plug-in unit with the three LEDs) shows 'wiring correct' on a domestic socket. Can you rely on it as confirmation the socket is safe?",
     options: [
-      "No. Socket testers are first-pass verification only. They confirm basic polarity and earth presence (L-N-E in the correct positions) but they do NOT detect borrowed neutrals, reversed polarity at the supply, undersized or shared earths, high-impedance earths, or RCD failure. A socket tester showing 'wiring correct' is a starting point — the full verification needs an MFT for R1+R2, IR, Zs, RCD operating time, and polarity at every accessory.",
-      "C&I is a specialised electrical-technician discipline covering process control systems, instrumentation, PLCs, SCADA and DCS. Typical route: Approved Electrician + HNC/HND in Electrical/Electronic or Process Control + employer-specific training (Siemens, Rockwell, Schneider PLC training). Common employers: process industries (food, pharma, water utilities), petrochemical, large manufacturing.",
-      "Section 826 of BS 7671 covers Electrical Energy Storage Systems (EESS) and was added at the 18th Edition. It applies in addition to the rest of BS 7671 and to any product-specific standards (such as the IEC 62619 cell standard). The IET Code of Practice for Electrical Energy Storage Systems supplements Section 826 with practical guidance on siting, ventilation, fire separation, signage and emergency isolation. A4:2026 has refined parts of this framework as the technology has matured.",
-      "At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be 'the Contractor' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm's representative) is the planning-duty step.",
+      "No — socket testers are first-pass screening only; they confirm L-N-E presence and approximate polarity but miss borrowed neutrals, supply-side reversal, undersized earths and RCD trip-time failure.",
+      "Yes — a 'wiring correct' result confirms line, neutral and earth are all present and in the right pin positions, which is exactly what BS 7671 requires for a socket, so it is acceptable evidence to sign off.",
+      "Yes, provided the unit also has the RCD-trip test button — pressing it and seeing the supply drop proves the protective device works, which together with 'wiring correct' covers the full verification.",
+      "Only if it is a metered socket tester showing the actual earth-loop figure in ohms — the three-LED type alone is unreliable, but a metered model gives a Zs reading you can record on the certificate.",
     ],
     correctIndex: 0,
     explanation:
-      "Socket testers (Kewtech KT1717, Martindale CP501) are useful for rapid first-pass screening on a CU change — plug into every socket on the consumer unit, look for 'wiring correct', flag anything else for investigation. But the BS 7671 Chapter 61 verification needs proper instrument-based testing for R1+R2, IR, Zs, RCD time, polarity. Don't sign anything off based on a green socket-tester light alone.",
+      "Socket testers (Kewtech KT1717, Martindale CP501) are useful for rapid first-pass screening on a CU change — plug into every socket on the consumer unit, look for 'wiring correct', flag anything else for investigation. But the BS 7671 Chapter 64 verification needs proper instrument-based testing for R1+R2, IR, Zs, RCD time, polarity. Don't sign anything off based on a green socket-tester light alone.",
   },
 ];
 
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       "HSE GS38 'Electrical test equipment for use on low-voltage electrical systems' sets requirements for test probes. What are the key features of a GS38-compliant probe?",
     options: [
-      "Because the single-pole switch on the circuit must still interrupt the LINE conductor — reverse polarity means the switch interrupts neutral, leaving the lampholder live when \\\"off\\\". Bayonet holders do not have the screw-thread access hazard of E14/E27, but the switch behaviour is still a safety issue. Polarity verified at every accessory regardless of holder type.",
-      "Three features. (1) Finger guards — a physical barrier on the probe that prevents the operative's fingers contacting the metal tip during use. (2) Limited exposed metal — the probe tip exposes a maximum of 4 mm (originally 2 mm in older GS38 versions) of conductive metal. (3) Insulated leads — the lead itself is insulated and rated for the working voltage; some GS38 sets include in-line fuses for additional protection.",
-      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
-      "Verify polarity LIVE during the energised testing in Section 4 — confirm at the supply origin that L and N are correctly identified per the supply provider, and verify single-pole switches at every accessory really do interrupt the line as designed. The dead test catches static wiring errors; the live test catches errors at the supply or hidden swaps further upstream.",
+      "One feature only — the probe tip must be spring-loaded so it retracts into the body unless pressed firmly against a terminal; lead insulation and exposed-tip length are not part of GS38.",
+      "Three features — finger guards on the probe body, a limited exposed metal tip (4 mm maximum), and insulated leads rated for the working voltage (often with in-line fuses).",
+      "The probe must expose at least 19 mm of bare metal so it can reach into recessed terminals, and the leads must be coiled rather than straight so they retract out of the way during testing.",
+      "The probe must be fitted with a crocodile clip at one end so it can be left attached hands-free, and the leads must be colour-coded brown and blue to match line and neutral on the circuit under test.",
     ],
     correctAnswer: 1,
     explanation:
@@ -106,24 +106,24 @@ const quizQuestions = [
     question:
       "What's the difference between a multimeter and an MFT (Multifunction Tester)?",
     options: [
-      "Five-bag setup, all clearly labelled: (1) WEEE — failed devices, scorched accessories, electronic components. (2) BATTERIES — taped terminals, separate from metalwork. (3) HAZARDOUS — fluorescent tubes (intact, in tube tube), CFLs, mercury switches. (4) COPPER SCRAP — cable offcuts (insulation on, never stripped by burning), bare copper offcuts. (5) GENERAL — packaging, plastic offcuts, non-recyclable. Each bag goes to its correct route at the next wholesaler trip OR firm scrap collection. The five-bag system makes compliance routine, not a special effort.",
-      "Safety Data Sheet — a 16-section document required for all hazardous substances by the CLP Regulation (EU 1272/2008, retained as UK law after Brexit). The SDS is the manufacturer's authoritative source of hazard, handling, exposure and first-aid information for the product. Required by COSHH 2002 Reg 12 to be available to anyone handling the substance.",
-      "A multimeter is a general-purpose measuring instrument — DC volts, AC volts, current, resistance, continuity. Designed for bench work and equipment fault-finding. An MFT (Multifunction Tester) is an installation-test instrument designed specifically for BS 7671 verification — continuity (low-resistance ohms), insulation resistance (500 V DC test), loop impedance (Ze, Zs, PFC), RCD operating time and trip current, and on most models earth-electrode resistance. Different tools, different purposes.",
-      "Operation of mechanical interlocks (e.g. door interlock prevents opening while energised, key interlock prevents racking out a circuit-breaker without permit), confirmation that emergency-off devices break the supply, manual operation of the main switch under load (where safe), and that any control circuit logic (contactors, relays, time delays) operates as designed.",
+      "There is no real difference — 'multimeter' and 'MFT' are two trade names for the same instrument; Fluke call theirs a multimeter, Megger an MFT, but both do the identical installation tests.",
+      "A multimeter is the higher-spec tool — it does everything an MFT does plus oscilloscope and power-quality functions, so a good multimeter makes a separate MFT unnecessary for installation testing.",
+      "A multimeter is a general-purpose fault-finding tool (volts, current, resistance, continuity); an MFT is a dedicated BS 7671 verification instrument for continuity, IR, loop impedance and RCD tests.",
+      "A multimeter is the dead-test instrument and an MFT is the live-test instrument — you use the multimeter for continuity and insulation before energising, then the MFT only for loop and RCD tests after.",
     ],
     correctAnswer: 2,
     explanation:
-      "Different instruments for different jobs. A multimeter (Fluke 117, Megger TPT320) is a fault-finding and equipment-test tool — what's the voltage at this terminal, is this fuse continuous, what's the current draw of this motor. An MFT (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) is an installation-test tool — does this circuit comply with BS 7671 Chapter 61. Most apprentices end up carrying both; the firm will have one or two MFTs shared across the team and each operative carries their own multimeter.",
+      "Different instruments for different jobs. A multimeter (Fluke 117, Megger TPT320) is a fault-finding and equipment-test tool — what's the voltage at this terminal, is this fuse continuous, what's the current draw of this motor. An MFT (Megger MFT1741+, Fluke 1664FC, Kewtech KT64+) is an installation-test tool — does this circuit comply with BS 7671 Chapter 64. Most apprentices end up carrying both; the firm will have one or two MFTs shared across the team and each operative carries their own multimeter.",
   },
   {
     id: 3,
     question:
       "Why is calibration of test instruments mandatory for installation work, and what's the typical interval?",
     options: [
-      "A proving unit is a small portable source of low-voltage AC (typically 240 V or 110 V output) used to verify a voltage tester is functioning BEFORE and AFTER each safe-isolation test. The 'prove dead' routine: prove tester on the unit (should read live), test the circuit (should read dead), prove tester again on the unit (still reads live = tester is working = circuit really IS dead). Without proving the tester at both ends, a faulty tester reading 'dead' on a live circuit could kill you.",
-      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
-      "Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.",
-      "Test instruments drift over time — components age, shock and vibration cause small errors. A drifted instrument produces wrong test results that fail BS 7671 Chapter 61 verification. Annual calibration to a UKAS-traceable standard (with a calibration certificate) is the standard requirement. NICEIC, NAPIT and ELECSA all check for in-date calibration certificates at scheme audit; an out-of-date instrument used to demonstrate compliance invalidates the certificate it was used to produce.",
+      "Calibration is a one-off factory check before the instrument leaves the maker; once an MFT has its original certificate it never needs re-calibrating unless physically damaged, with no recurring interval.",
+      "Calibration is only required for instruments used on commercial or industrial installations; domestic-only testers are exempt because the voltages are lower, and where it applies the interval is five-yearly.",
+      "Calibration means resetting the instrument to zero at the start of each test (nulling the leads) — done by the operative on every job, so there is no external interval and no certificate is involved.",
+      "Instruments drift with age and shock, producing wrong results that fail BS 7671 verification, so annual UKAS-traceable calibration is the standard and out-of-date kit invalidates any cert it produces.",
     ],
     correctAnswer: 3,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       "When using a clamp meter (Fluke 376FC, Megger DCM330) to measure load current, what's the key advantage over breaking the circuit and inserting an in-line ammeter?",
     options: [
-      "You don't have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.",
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
-      "Standard placement: on the case, near the model / serial number, where it's visible during normal use. Should show: lab name, calibration date, next-due date (typically 1 year for MFT/multimeter, 2 years for two-pole), unique certificate reference. Some labs include a barcode that links to the digital certificate. The sticker is the operative's quick check that the instrument is in date — no need to dig out the certificate. Stickers must be replaced after each calibration cycle; old stickers should be removed (multiple stickers cause confusion about which is current).",
-      "Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone",
+      "You don't break the circuit — the clamp senses the magnetic field around the conductor and reads current without electrical contact, so it works on energised circuits without isolation.",
+      "The clamp meter is far more accurate — clamping round the conductor eliminates the lead-resistance error an in-line ammeter introduces, so it is the preferred method when precision matters most.",
+      "The clamp meter measures both line and neutral current at once when you clamp round the whole cable, giving the load and the earth-leakage figure in a single reading an in-line ammeter cannot provide.",
+      "The clamp meter reads currents far higher than any in-line ammeter — site ammeters top out at about 13 A, whereas a clamp reads into the thousands of amps, which is why it is used at distribution boards.",
     ],
     correctAnswer: 0,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       "What's a 'proving unit' (Martindale GVD2, Drummond Lite, Fluke PRV240) and why do you need one alongside a voltage tester?",
     options: [
-      "Consistently demonstrating: (1) framing work as a learning problem (\\\\\\\"what can we learn from this?\\\\\\\"), (2) acknowledging your own fallibility (\\\\\\\"I may have missed something — what do you see?\\\\\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
-      "A proving unit is a small portable source of low-voltage AC (typically 240 V or 110 V output) used to verify a voltage tester is functioning BEFORE and AFTER each safe-isolation test. The 'prove dead' routine: prove tester on the unit (should read live), test the circuit (should read dead), prove tester again on the unit (still reads live = tester is working = circuit really IS dead). Without proving the tester at both ends, a faulty tester reading 'dead' on a live circuit could kill you.",
-      "Propose a scope that includes everything that can be safely tested live (visual inspection, thermographic survey of switchgear, RCD test buttons, live tests on circuits where safe to do so) and clearly excludes what cannot be tested without isolation, recording the exclusion under Limitations with the recommendation that the duty holder schedule a planned outage for full testing within an agreed period. Note any FI for items the live-only inspection cannot fully verify.",
-      "A pro forma is a quote-style document that looks like an invoice but doesn't trigger a tax point — typically used for upfront payment requests before work begins (e.g. materials deposit). Once the customer pays the pro forma, you issue the actual VAT invoice. Useful for cash-flow management on jobs where you need materials money upfront. Doesn't count toward turnover until converted to a real invoice.",
+      "A proving unit is the battery pack that powers the voltage tester — without it the tester has no internal supply, so you fit a fresh one before each isolation and it lasts about a day's testing.",
+      "A small portable AC source used to verify the voltage tester works before and after the dead test — prove tester, test circuit, prove tester again — so a 'dead' reading can be trusted.",
+      "A proving unit is a continuity device that confirms the test leads themselves are unbroken — you touch the probes onto its contacts and a buzzer sounds if the leads are intact, separate from any circuit check.",
+      "A proving unit is the lock-off kit used during isolation — it holds the breaker open and carries the warning tag, so the circuit cannot be re-energised while you prove the tester on the dead conductors.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,26 +160,26 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      "BS 7671 Chapter 61 requires initial verification of a new installation. Which test functions on an MFT are used during the dead-test sequence?",
+      "BS 7671 Chapter 64 requires initial verification of a new installation. Which test functions on an MFT are used during the dead-test sequence?",
     options: [
-      "Explicit consent, given freely, in writing, in advance — separate from the consent to do the work. The customer must be able to refuse without it affecting the work, and to withdraw consent later. Legitimate interest is sometimes used but is harder to defend for marketing because the customer's reasonable expectation is that you photograph for the job, not for advertising.",
-      "Because at the moment the fault occurs the cable is already at its operating temperature (typically 70 degrees C for 70-deg thermoplastic insulation), and the resistance of copper rises with temperature — using the cold value would understate Zs and make the disconnection time look better than it actually is at full load.",
-      "Four dead-test functions on the MFT: (1) Continuity of protective conductors (R1+R2 / R2), low-resistance ohms range; (2) Insulation resistance, 500 V DC test (250 V for SELV / 1000 V for over 500 V circuits); (3) Polarity, by continuity check from origin to accessory; (4) Earth electrode resistance (where TT system or earth electrode used). The live-test sequence then adds Ze, Zs, PFC and RCD time/current. Sub 6.x covers the full sequence in detail.",
-      "Depositing controlled waste, or knowingly permitting the deposit of controlled waste, in or on land without an environmental permit; treating, keeping or disposing of controlled waste without a permit; treating, keeping or disposing of controlled waste in a manner likely to cause pollution of the environment or harm to human health. Fly-tipping is the headline s.33 offence.",
+      "Two dead-test functions only: insulation resistance at 500 V DC and earth fault loop impedance (Zs). Continuity and polarity are live tests done after energising, so they are not part of the dead sequence.",
+      "Three dead-test functions: RCD operating time, prospective fault current and loop impedance (Ze) — all measured with the supply on but the load off. Continuity and insulation are done with a multimeter.",
+      "Four dead-test functions — continuity (R1+R2 / R2), insulation resistance at 500 V DC, polarity from origin to accessory, and earth electrode resistance where a TT system or electrode is used.",
+      "One dead-test function only: insulation resistance at 500 V DC across the whole installation. Everything else — continuity, polarity, earth electrode resistance — is verified by inspection, not by an MFT.",
     ],
     correctAnswer: 2,
     explanation:
-      "Chapter 61 splits into dead tests (done before energising — continuity, IR, polarity, earth electrode resistance) and live tests (done after energising — earth fault loop impedance, RCD operation, prospective fault current). The MFT does all of them on a single instrument. Sub 6.x of this Module unpacks the test sequence in detail; this Sub is the orientation showing where each instrument fits.",
+      "Chapter 64 splits into dead tests (done before energising — continuity, IR, polarity, earth electrode resistance) and live tests (done after energising — earth fault loop impedance, RCD operation, prospective fault current). The MFT does all of them on a single instrument. Sub 6.x of this Module unpacks the test sequence in detail; this Sub is the orientation showing where each instrument fits.",
   },
   {
     id: 7,
     question:
       "Why do most modern test instruments now include data storage and download to PC?",
     options: [
-      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
-      "When you see signs of abuse, neglect, undue pressure, vulnerability or risk that go beyond the scope of an electrical job. Report internally to your firm\\\\\\\\'s safeguarding lead (where one exists) or contracts manager; signpost to local authority adult/children\\\\\\\\'s social care if appropriate. Care Act 2014 (England) places statutory duties on local authorities; you don\\\\\\\\'t make the assessment but you can raise the concern.",
-      "Design Engineer (M&E Consultant or sub-contractor design team), Senior Project Engineer, and Chartered Engineer roles. The degree-level qualification gives the design knowledge (load calcs, voltage drop, discrimination, protection coordination) and the management knowledge needed for the more senior roles. Many apprentices add an HNC or HND part-time once they've passed AM2 to open these routes.",
-      "Two reasons. (1) Auditability — readings are stored against a circuit ID and timestamp, providing tamper-evident evidence at scheme audit and dispute. (2) Cert generation — test results download directly into certificate software (NICEIC PartnerNet, NAPIT, custom firm software, Elec-Mate) and auto-populate the EIC / EICR test schedule, eliminating transcription errors. The combination saves the time previously spent hand-writing and double-checking test schedules.",
+      "To extend battery life — storing readings means the screen can be switched off between tests, so a single charge lasts a full week of testing instead of a single day.",
+      "Because BS 7671 now requires every test result to be encrypted at the point of measurement; an instrument without onboard storage and PC download cannot meet the data-security clause for certification.",
+      "So the instrument can compare today's readings against the manufacturer's database over the internet and automatically tell you pass or fail — without the link the MFT cannot decide whether a reading complies.",
+      "Auditability and cert generation — readings stored against a circuit ID and timestamp give tamper-evident evidence, and download straight into cert software to auto-fill the schedule.",
     ],
     correctAnswer: 3,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       "Which is the right instrument for each of these tasks? (1) Confirming a circuit is dead before working on it. (2) Measuring the current draw of a motor. (3) Verifying R1+R2 on a ring final. (4) First-pass screening of a domestic socket.",
     options: [
-      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
-      "Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC",
-      "Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them",
-      "Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed",
+      "(1) Two-pole voltage tester with proving unit. (2) Clamp meter. (3) MFT in continuity range. (4) Socket tester — first pass only, not for sign-off.",
+      "(1) Socket tester. (2) MFT in current range. (3) Multimeter on resistance. (4) Two-pole voltage tester. Each of the four tasks is covered by whichever instrument is nearest to hand.",
+      "(1) Multimeter on AC volts. (2) MFT in loop-impedance range. (3) Clamp meter. (4) Proving unit. The same four instruments cover all electrical work, just selected in a different order for each task.",
+      "(1) Clamp meter. (2) Socket tester. (3) Two-pole voltage tester. (4) MFT in insulation range. Any of these instruments will do any of the four jobs, so the choice comes down to which is calibrated.",
     ],
     correctAnswer: 0,
     explanation:

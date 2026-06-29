@@ -23,12 +23,12 @@ const quizQuestions = [
     question:
       'Reg 462.3 lists three example precautions for preventing inadvertent closure of an isolation device. Which combination matches the regulation verbatim?',
     options: [
-      'Locking the breaker, removing the fuse, and posting a guard',
+      'Locking the breaker, removing the fuse, and posting a guard at the board',
+      'Tagging the device, padlocking, and obtaining a witness sign-off',
       'Located within a lockable space or lockable enclosure; padlocking; located adjacent to the associated equipment',
-      'Tagging, padlocking, and witness sign-off',
-      'A red lock, a blue lock, and a permit-to-work',
+      'Padlocking, interlocking, and a permit-to-work covering the isolation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 462.3 lists three examples verbatim: (a) located within a lockable space or lockable enclosure, (b) padlocking, (c) located adjacent to the associated equipment. They are not exhaustive — but they are the named precautions you can cite if challenged.',
   },
@@ -38,11 +38,11 @@ const quizQuestions = [
       'A multi-hasp scissor device has six holes. Three operatives are working on the same isolated circuit. How many padlocks should be on the hasp during the work?',
     options: [
       'One — the supervisor opens it for everyone',
-      'Three — one per operative',
-      'Four — one per operative plus the lead spark',
-      'Six — fill every hole for redundancy',
+      'Four — one per operative plus the lead spark overseeing',
+      'Six — fill every hole on the hasp for redundancy',
+      'Three — one per operative working on the system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'One person, one lock. Each operative fits their own padlock when they arrive, removes it when they leave the work. The hasp cannot be reopened until every lock is gone. The supervisor only adds a lock if they themselves are working on the system.',
   },
@@ -65,10 +65,10 @@ const quizQuestions = [
     question:
       'Who can remove a personal lock from an isolation point? Pick the strictest correct answer.',
     options: [
-      'Anyone on site, once the work appears complete',
-      'The site supervisor, at any time',
-      'Only the person who fitted it, except under a documented emergency lock-removal procedure with management authorisation, verification of safety, and witnessed removal',
-      'Anyone holding a duplicate key',
+      'Anyone on site, once the work appears to be complete',
+      'The site supervisor, at any time they judge it necessary',
+      'Only the person who fitted it, save for a documented and witnessed emergency removal procedure',
+      'Anyone holding a duplicate key to the same padlock',
     ],
     correctAnswer: 2,
     explanation:
@@ -79,10 +79,10 @@ const quizQuestions = [
     question:
       'You arrive at a board to start work and find an MCB lock-off device already fitted with an unattended padlock and a tag with no name on it. What do you do?',
     options: [
-      'Cut the lock off — an unsigned tag is invalid',
-      'Identify the owner, contact them to verify status, and if you cannot, escalate via the documented lock-removal procedure. Do not bypass or cut the lock',
-      'Add your own lock to the same MCB and start work',
-      'Override the MCB at the next isolation point upstream',
+      'Cut the lock off, because an unsigned tag makes the lock-off invalid',
+      'Identify and contact the owner to verify status, and if you cannot, escalate without cutting the lock',
+      'Add your own lock to the same MCB lock-off device and start work',
+      'Override the supply at the next isolation point upstream of the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'OSG Appendix M directs you to two external sources for safe-isolation working practice. Which two?',
     options: [
-      'BS EN 61010 and BS EN 61557',
       'HSE HSG85 (Electricity at Work: Safe Working Practices) and Electrical Safety First Best Practice Guide 2',
-      'IET Wiring Regulations summary and BS 7909',
-      'BS 7671 Appendix 6 and the EAWR Approved Code of Practice',
+      'BS EN 61010 (test-equipment safety) and BS EN 61557 (measuring instruments)',
+      'The IET Wiring Regulations summary and BS 7909 (temporary electrical systems)',
+      'BS 7671 Appendix 6 (model forms) and the EAWR Approved Code of Practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OSG Appendix M cites HSE HSG85 (the HSE’s safe-working publication) and Electrical Safety First Best Practice Guide 2 as the procedural sources for safe-isolation and lock-off. BS 7671 itself states the principle (Reg 462.3, Reg 537.2.4); the HSG85 + BPG2 documents give you the step-by-step.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'Reg 537.2.4 reinforces Reg 462.3 by giving the same list of acceptable means. According to Reg 537.2.4, which of these is also explicitly permitted?',
     options: [
-      'Removing the breaker entirely and putting it in a tool bag',
+      'Removing the breaker entirely and storing it in a locked tool bag',
+      'A verbal hand-over of the isolation to the next shift',
       'Locating the device in a lockable space or lockable enclosure, or by padlocking, or by other suitable means',
-      'A verbal hand-over to the next shift',
-      'Painting the breaker red',
+      'A durable warning notice fixed adjacent to the breaker in place of a lock',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 537.2.4 states: “This may be achieved by locating the device in a lockable space or lockable enclosure or by padlocking or by other suitable means.” It deliberately mirrors Reg 462.3 and adds the open phrase “other suitable means” — you can use a method not specifically listed if it achieves the same result, but the burden is on you to justify it.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'A site uses an isolation device that is not directly lockable. Per Reg 537.2.5, what alternative is explicitly permitted for off-load isolating devices?',
     options: [
-      'Just leave a tag on it',
-      'Locate the device in a lockable space or lockable enclosure, padlock it, or interlock it with a load-breaking device',
-      'Replace it with a lockable one only at the next maintenance window',
-      'Use a witness instead of a lock',
+      'Leave a durable danger tag fixed on it in place of any physical lock',
+      'Replace it with a lockable device only at the next planned maintenance window',
+      'Station a witness at the device for the full duration of the work',
+      'Place it in a lockable enclosure, padlock it, or interlock it with a load-breaking device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 537.2.5 covers off-load isolators (e.g. isolation links): “Provision shall be made for securing off-load isolating devices against unwanted or unintentional opening. This may be achieved, for example, by locating the device in a lockable space or lockable enclosure or by padlocking. Alternatively, the off-load device may be interlocked with a load-breaking one.” Interlocking is the third route.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'A tag without a lock on an isolation device — what is its legal/regulatory status under BS 7671?',
     options: [
-      'Equivalent to a lock — Reg 462.3 accepts tags as a precaution',
-      'A useful information aid, but not, on its own, a means of preventing inadvertent closure under Reg 462.3 — it must accompany a physical lock or another listed means',
-      'Required by Reg 537.2.7 in addition to a lock',
-      'Only acceptable on HV systems',
+      'Equivalent to a lock — Reg 462.3 accepts a tag as a precaution in its own right',
+      'A useful information aid, but not on its own a means of preventing inadvertent closure under Reg 462.3',
+      'Mandatory under Reg 537.2.7 as an addition to a physical lock on every device',
+      'Acceptable as a stand-alone precaution only on high-voltage systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'An MCB lock-off jaw fits the breaker toggle but a colleague observes that, with the jaw clipped on, the breaker can still be flicked back to ON if pushed firmly. The padlock is engaged. What is the correct call?',
     options: [
-      'Acceptable — the padlock is on, the device satisfies Reg 462.3',
-      'Not acceptable. Reg 462.3 requires the device to prevent inadvertent closure. If the breaker can still be operated, the lock-off is not fit for purpose. Replace the lock-off jaw with one matched to the breaker, or isolate at the next upstream device',
-      'Acceptable as long as a tag is also fitted',
-      'Acceptable for radial circuits only',
+      'Acceptable — the padlock is engaged, so the device meets Reg 462.3 as fitted',
+      'Acceptable provided a durable danger tag is also fitted alongside on the breaker',
+      'Acceptable on radial circuits, where one firm push cannot re-energise the connected load',
+      'Not acceptable — if the breaker can still be operated, fit a matched jaw or isolate upstream',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A lock-off device that does not actually block the breaker mechanism does not satisfy Reg 462.3 — the regulation is about preventing inadvertent closure, not about looking like it does. MCB lock-off jaws are size/brand specific; the wrong jaw is worse than no jaw, because it gives false confidence. Use the correct jaw or isolate further upstream at a device that can be properly secured.',
   },
@@ -166,10 +166,10 @@ const inlineChecks = [
     question:
       'A client questions why your lock-off scheme uses a padlocked cabinet door rather than a padlock directly on the device. Which Reg 462.3 named route are you relying on, and is it valid?',
     options: [
-      'None — only padlocking on the device satisfies Reg 462.3.',
-      'Reg 462.3(a) — located within a lockable space or lockable enclosure. Yes, it is one of three named routes verbatim in the regulation, alongside (b) padlocking and (c) located adjacent to the associated equipment.',
-      'Reg 537.2.7 — labelling.',
-      'Reg 514 — identification.',
+      'None — only a padlock fitted directly on the device satisfies Reg 462.3.',
+      'Reg 462.3(a) — a lockable space or enclosure, one of the three routes named in the regulation.',
+      'Reg 537.2.7 — the device labelling and identification requirement.',
+      'Reg 514 — the general identification and notices requirement.',
     ],
     correctIndex: 1,
     explanation:
@@ -180,10 +180,10 @@ const inlineChecks = [
     question:
       'Three sparks plus a supervisor are working on the same isolated panel. The supervisor is overseeing only — not touching conductors. How many padlocks should be on the multi-hasp?',
     options: [
-      'Four — one per person on site, including the supervisor.',
-      'Three — one per operative actually working on conductors. The supervisor only adds a lock if they are personally working on the system. A "supervisor blue lock" left after they leave is a fiction nobody is protected by.',
-      'One — the supervisor locks for the team.',
-      'Six — fill every hole for redundancy.',
+      'Four — one lock per person on site, including the overseeing supervisor.',
+      'Three — one per operative actually touching conductors; the supervisor only locks if working too.',
+      'One — the supervisor applies a single lock on behalf of the whole team.',
+      'Six — fill every hole on the hasp for added redundancy and confidence.',
     ],
     correctIndex: 1,
     explanation:
@@ -194,10 +194,10 @@ const inlineChecks = [
     question:
       'You arrive at a board where the previous shift left a paper tag wrapped around the MCB toggle reading "DO NOT OPERATE — DANGER". The MCB is still in the ON position. The tag has a name and a phone number. Is this compliant with Reg 462.3?',
     options: [
-      'Yes — the tag identifies the operative and the danger.',
-      'Yes, provided the tag is laminated.',
-      'No. Reg 462.3 names lockable enclosure, padlocking, and adjacent location as the means of preventing inadvertent closure. A tag is information; it does not physically prevent the toggle moving. The MCB is also still in the ON position — the isolation has not even happened.',
-      'No, but only because the tag is paper.',
+      'Yes — the tag clearly identifies the operative and the danger present.',
+      'Yes, provided the tag is laminated so it survives the conditions on site.',
+      'No — a tag is information that cannot prevent the toggle moving, and the MCB is still ON.',
+      'No, but only because the tag is paper rather than a durable material.',
     ],
     correctIndex: 2,
     explanation:
@@ -208,10 +208,10 @@ const inlineChecks = [
     question:
       'A spark goes home with their personal lock still on a multi-hasp at a tenanted property. Saturday morning the client demands the supply restored. You cannot reach the spark by phone. What is the correct sequence?',
     options: [
-      'Cut the lock — the client is paying.',
-      'Use the documented emergency lock-removal procedure: management authorisation in writing, repeated contact attempts logged, a competent person re-proves dead at the work area, witnessed cutting, lock owner notified at earliest opportunity afterwards. The procedure is for emergencies; over-using it for convenience erodes the principle.',
-      'Re-energise without cutting and address the lock on Monday.',
-      'Cut the lock and bin it without paperwork — the spark forfeited it.',
+      'Cut the lock off straight away, because the paying client wants the supply back on.',
+      'Follow the emergency removal procedure: written authorisation, logged contact attempts, witnessed re-proving.',
+      'Re-energise the supply without cutting the lock and deal with the lock itself on Monday.',
+      'Cut the lock and bin it without any paperwork, since the spark forfeited it by leaving.',
     ],
     correctIndex: 1,
     explanation:

@@ -31,9 +31,9 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'How should emergency distribution boards be labelled?',
     options: [
-      "To ensure safe isolation, rapid testing, and efficient inspections",
-      "The Regulatory Reform (Fire Safety) Order 2005",
-      "Luminaires, distribution boards, and test points",
+      "Labelled only with the installer's name and contact number",
+      "Marked with a small coloured sticker on the consumer unit door",
+      "Left unlabelled to avoid drawing attention to the circuits",
       "Clearly marked as 'Emergency Lighting Circuits Only'",
     ],
     correctAnswer: 3,
@@ -57,10 +57,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'What information should be included in a maintenance logbook entry?',
     options: [
-      'To provide legal evidence of compliance and demonstrate ongoing maintenance',
+      'Only the date and a simple pass or fail mark',
       'Date, test type, results, faults, remedial action, and engineer details',
-      'To ensure safe isolation, rapid testing, and efficient inspections',
-      'They provide automated reminders, fault alerts, cloud backup, and instant compliance reports',
+      'The luminaire manufacturer and battery purchase receipt',
+      'The building occupancy figures at the time of the test',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'Why must failed tests always be recorded?',
     options: [
-      'Enforcement notices, invalid insurance, prosecution, fines, and imprisonment',
-      'To ensure safe isolation, rapid testing, and efficient inspections',
+      'So the manufacturer can be invoiced for warranty repairs',
+      'So the failed luminaire can be removed from the test schedule',
       'To provide legal evidence of compliance and demonstrate ongoing maintenance',
-      'Date, test type, results, faults, remedial action, and engineer details',
+      'So the building can be closed until the fault is resolved',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What regulations require fire safety documentation to be maintained?',
     options: [
-      'Correct operation between supply sources',
-      'Understanding how devices respond to different fault levels',
-      'Person with knowledge and experience',
+      'The Electricity at Work Regulations 1989',
+      'The Construction (Design and Management) Regulations 2015',
+      'The Provision and Use of Work Equipment Regulations 1998',
       'The Regulatory Reform (Fire Safety) Order 2005',
     ],
     correctAnswer: 3,
@@ -109,10 +109,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why are digital logbooks useful in large installations?',
     options: [
-      'No circuit labelling, unlabelled luminaires, incomplete logbook, and missing commissioning records',
+      'They remove the legal requirement to carry out physical testing',
       'They provide automated reminders, fault alerts, cloud backup, and instant compliance reports',
-      'Enforcement notices, invalid insurance, prosecution, fines, and imprisonment',
-      'To provide legal evidence of compliance and demonstrate ongoing maintenance',
+      'They allow luminaires to be tested less frequently than paper records',
+      'They are only accepted by fire authorities for installations over 50 luminaires',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What compliance issue was found in the London leisure centre case study?',
     options: [
-      'They provide automated reminders, fault alerts, cloud backup, and instant compliance reports',
-      'To provide legal evidence of compliance and demonstrate ongoing maintenance',
+      'Luminaires sited too far apart to meet escape route lux levels',
+      'Battery durations falling short of the required three hours',
       'No circuit labelling, unlabelled luminaires, incomplete logbook, and missing commissioning records',
-      'Enforcement notices, invalid insurance, prosecution, fines, and imprisonment',
+      'Maintained fittings wired as non-maintained throughout',
     ],
     correctAnswer: 2,
     explanation:

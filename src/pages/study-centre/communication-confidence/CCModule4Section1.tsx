@@ -48,11 +48,10 @@ const quickCheckQuestions = [
     question: 'What is the 24-hour rule for emails?',
     options: [
       'You must reply to all emails within 24 hours',
-      'If you feel angry or frustrated, wait 24 hours before sending the email',
-      'Emails should be no longer than content that takes 24 seconds to read',
       'You should check your email every 24 minutes during working hours',
-    ],
-    correctIndex: 1,
+      'Emails should be no longer than content that takes 24 seconds to read',
+      'If you feel angry or frustrated, wait 24 hours before sending the email'],
+    correctIndex: 3,
     explanation:
       'The 24-hour rule means that if you are writing an email while feeling angry, frustrated or upset, you should save it as a draft and wait at least 24 hours before sending. This cooling-off period allows your emotional state to settle, giving you the chance to revise the email with a clearer head. Emails sent in the heat of the moment often cause more problems than the original issue.',
   },
@@ -87,12 +86,11 @@ const quizQuestions = [
     question:
       'Which of the following is the most effective email subject line for a construction project?',
     options: [
-      'Quick question',
-      'URGENT!!!',
       'Elm Grove Phase 2 \u2014 Second fix electrical start date confirmation',
-      'Hello',
-    ],
-    correctAnswer: 2,
+      'URGENT!!!',
+      'Quick question',
+      'Hello'],
+    correctAnswer: 0,
     explanation:
       'An effective subject line identifies the project and the specific topic clearly. "Elm Grove Phase 2 \u2014 Second fix electrical start date confirmation" tells the recipient exactly what the email is about before they open it. Vague subject lines like "Quick question" or "Hello" provide no information, and excessive punctuation like "URGENT!!!" is unprofessional and often ignored.',
   },
@@ -125,8 +123,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Which of the following is an appropriate professional email sign-off?',
-    options: ['Cheers mate', 'Kind regards', 'Sent from my iPhone', 'Thx'],
-    correctAnswer: 1,
+    options: ['Cheers mate', 'Thx', 'Sent from my iPhone', 'Kind regards'],
+    correctAnswer: 3,
     explanation:
       '"Kind regards" is a widely accepted professional sign-off that is appropriate for virtually all business correspondence. "Cheers mate" is too informal for professional communication. "Sent from my iPhone" is an auto-generated tag, not a sign-off. "Thx" is text-speak and looks unprofessional. Other acceptable options include "Best regards", "Regards", and "Many thanks".',
   },
@@ -134,12 +132,11 @@ const quizQuestions = [
     id: 5,
     question: 'When should you NOT use email as your communication method?',
     options: [
-      'When confirming agreed dates and actions in writing',
       'When the matter is genuinely urgent and needs an immediate response',
+      'When confirming agreed dates and actions in writing',
       'When you need a written record of a decision',
-      'When sending technical documents or drawings',
-    ],
-    correctAnswer: 1,
+      'When sending technical documents or drawings'],
+    correctAnswer: 0,
     explanation:
       'Email is not suitable for genuinely urgent communication because there is no guarantee the recipient will read it in time. For urgent matters \u2014 such as a safety issue, an imminent delivery, or a time-critical decision \u2014 phone the person directly. Email is excellent for written records, confirmations and document sharing, but it should never be relied upon when an immediate response is essential.',
   },
@@ -162,11 +159,10 @@ const quizQuestions = [
       'You need to notify a main contractor of a two-day delay to your programme. What information should your email include?',
     options: [
       'Just an apology and a promise to catch up',
-      'The reason for the delay, the revised completion date, any impact on other trades, and proposed mitigation',
       'A detailed explanation of why it is not your fault',
-      'A request for a meeting to discuss the situation in person',
-    ],
-    correctAnswer: 1,
+      'The reason for the delay, the revised completion date, any impact on other trades, and proposed mitigation',
+      'A request for a meeting to discuss the situation in person'],
+    correctAnswer: 2,
     explanation:
       'A professional delay notification should include: the specific reason for the delay (factual, not emotional), the revised completion date, any impact on other trades or the overall programme, and what you are doing to mitigate the impact. This demonstrates professionalism, accountability and proactive problem-solving. Simply apologising provides no useful information, blaming others is defensive, and requesting a meeting when a clear email would suffice wastes everyone\u2019s time.',
   },
@@ -175,11 +171,10 @@ const quizQuestions = [
     question: 'Which of the following is the best practice for your email signature?',
     options: [
       'Just your first name',
-      'Your full name, job title, company name, phone number and any relevant certifications',
-      'A long inspirational quote followed by your name',
       'Your name with a row of emojis representing your trade',
-    ],
-    correctAnswer: 1,
+      'A long inspirational quote followed by your name',
+      'Your full name, job title, company name, phone number and any relevant certifications'],
+    correctAnswer: 3,
     explanation:
       'A professional email signature should include your full name, job title or role, company name, a contact phone number, and any relevant certifications or registration numbers (such as NICEIC, NAPIT or ECS card details). This makes it easy for the recipient to identify you, understand your role, and contact you by other means if needed. Inspirational quotes and emojis are unprofessional in a business context.',
   },

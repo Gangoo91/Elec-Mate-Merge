@@ -73,16 +73,16 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Give one consequence of using an IP20 accessory outdoors.',
+    question: 'What is one consequence of using an IP20 accessory outdoors?',
     options: [
-      'Before practical completion inspection',
+      'Improved heat dissipation from the enclosure',
       'Water ingress causing short circuits',
-      'All methods have specific requirements',
-      'To subtract lead resistance from measurements',
+      'A higher current-carrying capacity',
+      'A reduced disconnection time',
     ],
     correctAnswer: 1,
     explanation:
-      'IP20 offers no water protection, leading to water ingress, short circuits, corrosion, and safety hazards outdoors.',
+      'IP20 offers no water protection (second digit 0), so outdoor use leads to water ingress, short circuits, corrosion and safety hazards.',
   },
   {
     id: 6,
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 8,
     question: 'Name one factor to consider when choosing an IP rating.',
     options: [
-      'Environmental exposure conditions',
-      'Ratio of real power to apparent power',
-      '+/-5mm tolerance for exact positioning',
-      'Compensate for lead wire resistance',
+      'The environmental exposure conditions',
+      'The power factor of the load',
+      'The colour of the enclosure',
+      'The fixing centres of the back box',
     ],
     correctAnswer: 0,
     explanation:
@@ -131,10 +131,10 @@ const quickCheckQuestions = [
     id: 'first-digit',
     question: 'What does the first digit of an IP rating indicate?',
     options: [
-      'Rating is appropriate for the circuit and cable',
+      'Protection against water ingress',
       'Protection against solid objects and dust',
-      'Section 8 — Exposure controls/personal protection',
-      'Speed = 120 x f / p (where p = number of poles)',
+      'The temperature rating of the enclosure',
+      'The impact resistance of the enclosure',
     ],
     correctIndex: 1,
     explanation:

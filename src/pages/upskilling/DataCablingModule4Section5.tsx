@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the abbreviation "U" mean in rack sizing, and what is its dimension?',
     options: [
-      'Unit, 10 cm.',
-      'U = rack unit. 1U = 44.45 mm (1.75 in) of vertical rack height. Standard 19-inch racks are described in U — typical floor-standing comms racks are 42U or 48U tall. Equipment is rated by U height (1U for most patch panels, 1-3U for typical switches, 4-8U for chassis switches).',
-      'Unicode.',
-      'Universal — no fixed dimension.',
+      'U = rack unit; 1U = 44.45 mm (1.75 in) of vertical rack height.',
+      'U = "unit" and equals exactly 10 cm of vertical rack height.',
+      'U is the designation for one 19-inch rack mounting hole pitch.',
+      'U means "universal" and carries no fixed standardised dimension.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '1U = 44.45 mm (1.75 in). Standardised by EIA-310 (US) and IEC 60297 (international). 19-inch rack standard refers to the equipment mounting width (482.6 mm between mounting holes). Floor-standing comms racks are typically 42U or 48U tall — about 2 m and 2.2 m respectively. Equipment vendors rate every chassis in U height; rack-elevation drawings stack U numbers from bottom (U1) to top.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'What is the practical reason for using both vertical and horizontal cable management in a comms rack?',
     options: [
-      'Decoration only.',
-      'Vertical cable managers (full rack height, either side of the rack column) handle the bulk patch-lead routing between rows of patch panels. Horizontal cable managers (1U devices between active equipment) provide local dressing and bend-radius space at each panel-to-switch transition. Both are needed: vertical alone leaves panel-to-switch jumpers undressed; horizontal alone forces every patch lead to cross multiple panels. Together they create a clean, accessible, maintainable rack.',
-      'Vertical only is required.',
-      'Cable management is optional.',
+      'They are decorative only and serve no functional purpose in the rack build.',
+      'Only vertical cable management is actually required; horizontal managers are surplus.',
+      'Vertical managers route bulk between rows; horizontal managers dress each transition.',
+      'Cable management of either kind is optional, so long as cords reach the patch ports.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Vertical and horizontal management serve different scales. Vertical managers (full-height) handle bulk routing between many panels in a stack. Horizontal managers (1U between devices) provide local dressing, bend-radius space, and tidy jumper transitions. Both are needed. TIA-569-E recommends about 25-40 percent of rack vertical capacity reserved for management. Skipping either creates a rack that cannot be cleanly maintained.',
   },
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       'What is the recommended TR temperature and relative humidity envelope per TIA-569-E + Addendum 1 (2022)?',
     options: [
-      '15-25 °C and 50-70 percent RH.',
-      '18-27 °C continuous (Class A1 / ASHRAE-aligned) and 8-60 percent RH non-condensing. The pre-2022 figures of 18-24 °C / 40-55 percent RH are out of date.',
-      '0-50 °C and 0-100 percent RH.',
-      '5-10 °C only.',
+      '15-25 °C and 50-70 percent RH, mirroring older office comfort figures.',
+      '18-27 °C continuous and 8-60 percent RH non-condensing (the 2022 envelope).',
+      '0-50 °C and 0-100 percent RH, matching the equipment storage limits.',
+      '5-10 °C with no humidity limit, treating the TR like a chilled store.',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does "hot aisle / cold aisle" mean in rack airflow design?',
     options: [
-      'Decorative naming for rack rows.',
-      'A data-centre / TR layout convention where racks are arranged in alternating rows: equipment fronts (cold-air intakes) face each other across a "cold aisle"; equipment backs (hot-air exhausts) face each other across a "hot aisle". Every device pulls cold air from the front and exhausts hot air to the back. This prevents short-circuit airflow where one device\'s exhaust becomes another\'s intake. All devices must have aligned airflow direction (front-to-back) for it to work.',
-      'A weather pattern in TRs.',
-      'A heating system.',
+      'Racks alternate so cold intakes face one aisle and hot exhausts face the other.',
+      'Decorative naming applied to alternating rack rows with no airflow meaning.',
+      'A description of the natural air-circulation pattern that forms inside any TR.',
+      'A type of split heating-and-cooling system installed within the comms room.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hot aisle / cold aisle is a layout convention for rack rows. Cold aisle = device fronts facing each other; hot aisle = device backs facing each other. Combined with front-to-back airflow on every device, it eliminates short-circuit paths. Modern designs add containment (curtains, doors, ceilings) over the hot or cold aisle to fully separate the two air masses. In small TRs with one or two racks the convention scales down — the principle is the same: align airflow direction across all devices.',
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'A 1U PDU (power distribution unit) is rated 16 A and feeds 8 IEC C13 outlets. Where should it be mounted in the rack and why?',
     options: [
-      'Anywhere — PDU position is arbitrary.',
-      'Mount vertical in the rear cable management space (zero-U PDU, full rack height) so the active equipment fronts remain free for U-mounted gear and patch panels; use right-angled outlets to face the rear of equipment for clean cord routing. Or mount horizontal at the bottom of the rack (1U) for smaller installations. Front-mount horizontal PDUs waste a U of equipment space.',
-      'Only at the top of the rack.',
-      'Only outside the rack.',
+      'Anywhere in the rack — PDU position is arbitrary and has no effect on the build.',
+      'Vertical in the rear zero-U space (or 1U at the base) to keep equipment Us free.',
+      'Only at the very top of the rack, above all of the active equipment and panels.',
+      'Only outside the rack entirely, with the outlet cords fed in through the side panel.',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the TIA-569-E recommended floor loading capacity for a TR / equipment room?',
     options: [
-      '5 kPa minimum.',
-      'Minimum 12 kPa (250 lbs/ft²) recommended; sized to actual equipment loading. Large equipment rooms with multiple loaded racks may require higher figures based on loaded rack weight. Loaded 42U racks can exceed 800 kg each.',
-      '1 kPa is sufficient.',
-      'No minimum exists.',
+      'A minimum of 5 kPa is recommended for a general telecoms room or equipment room.',
+      'A minimum of 1 kPa is sufficient for any TR, regardless of the rack count installed.',
+      'No minimum floor loading figure exists; it is left entirely to the structural engineer.',
+      'A minimum of 12 kPa (250 lbs/ft²), sized up to the actual loaded-rack weights.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TIA-569-E recommends a minimum floor loading of 12 kPa (250 lbs/ft²) for general TR / ER use, with sizing to actual equipment. Loaded 42U racks containing chassis switches, server gear and UPS can exceed 800 kg — concentrated on a small footprint. Older buildings (especially upper floors) may have lower structural capacity than this figure; surveys at design stage prevent floor failures at install. Note: TIA-569-E covers TR / ER. TIA-942-C covers data-centres specifically (different regime).',
   },
@@ -165,10 +165,10 @@ const quizQuestions = [
     question:
       'What is the recommended ratio of patch-cord lengths in a comms rack to support clean cable management?',
     options: [
-      'All cords the same length.',
-      'Use stocked lengths matched to actual rack distances — e.g. 0.5 m, 1 m, 1.5 m, 2 m, 3 m colour-matched to the service-type colour-coding scheme. Every patch run uses the SHORTEST cord that reaches with proper bend-radius space — not "the same length for everything", which leaves slack in long arcs that block cable management. Dressed slack accumulates fast and makes the rack unusable.',
-      'All cords 5 m.',
-      'Cord length is irrelevant.',
+      'All cords the same length, so the rack looks uniform across every patch run.',
+      'A small range of stocked lengths, each run using the shortest cord that reaches.',
+      'All cords a generous 5 m, so any port can reach any other without a length check.',
+      'Cord length is irrelevant to management, provided the cords meet the link spec.',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does TR door access matter, and how should the room be sized to support it?',
     options: [
-      'Door access is irrelevant.',
-      "TIA-569-E requires the door to allow safe entry / exit AND removal of the largest piece of equipment that will live in the room (chassis switches, UPS, full-height racks). Typical specification: 900 mm minimum door width, ideally double-leaf with one leaf of 900 mm; outward-opening (so a fault inside cannot block escape); access-controlled (key card or PIN); door does not foul rack fronts when fully open. The room's working clearance in front of every rack must be at least 1 m (preferably 1.2 m) for moves / adds / changes.",
-      'Doors are not needed in TRs.',
-      'Door size is purely aesthetic.',
+      'Door access to a TR is irrelevant to the design once the racks are positioned.',
+      'A TR does not need a door at all, provided the room is access-controlled at floor level.',
+      'The door must admit the largest equipment — typically 900 mm, with 1 m clearance.',
+      'Door size is purely an aesthetic consideration matched to the rest of the building.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TR door specification is a TIA-569-E requirement and a practical necessity. The door has to admit the largest piece of equipment ever to enter the room — a fully-loaded 42U rack on a wheeled trolley, chassis switches, UPS units. 900 mm minimum, ideally double-leaf, outward-opening for escape, access-controlled. Working clearance in front of racks is at least 1 m, preferably 1.2 m. Skimping on either makes future moves / adds / changes operationally painful.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 9,
     question: 'Why is rack security relevant on a structured-cabling job?',
     options: [
-      'Comms equipment is not security-sensitive.',
-      "Comms racks contain switches handling all the building's data — including business-critical, personal, and possibly card-payment / regulated data. Rack security (locking front and rear doors, access logs, environmental monitoring, intrusion alarms on cabinet) is a standard part of TR / ER design. TIA-569-E addresses physical security as a TR design parameter; CDM 2015 places duties on the principal contractor / designer; the building owner's ISMS / IT-security policy may specify additional measures.",
-      'Locks are decorative.',
-      "Security is the IT department's problem only.",
+      'Comms equipment is not security-sensitive, so racks need no special protection.',
+      'Rack locks are decorative and do not affect the design or the room specification.',
+      "Security is solely the IT department's problem, never the cabling contractor's.",
+      'Racks carry all the building data, so physical security is a TIA-569-E parameter.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rack security is part of cabling design. Comms racks are key infrastructure — switches, controllers, UPS, sometimes routing equipment with regulated-data flows. TIA-569-E requires physical security as a TR design parameter. Locking front and rear cabinet doors, access logs (electronic locks or sign-in registers), environmental monitoring (temperature / humidity / smoke / water leak), intrusion alarms — all standard parts of a competent TR design. The cabling contractor is part of the security supply chain.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'What is the difference between TIA-569-E and TIA-942-C — and why does it matter on a UK 2026 cabling job?',
     options: [
-      'They are the same standard.',
-      'TIA-569-E (2019, with Addendum 1 in 2022) is the Telecommunications Pathways and Spaces standard — covers TR / ER / EF in commercial buildings. TIA-942-C (2024) is the Data Centers standard — covers data-centre infrastructure including rated redundancy classes 1-4. On a typical UK commercial cabling job (offices, retail, education, healthcare) you cite TIA-569-E for TR / ER design. On a data-centre project you also cite TIA-942-C. They are different documents for different scopes.',
-      'TIA-942-C is the only relevant standard.',
-      'Neither applies in the UK.',
+      'TIA-569-E covers commercial-building TR/ER; TIA-942-C covers data-centres.',
+      'They are the same standard published under two different reference numbers.',
+      'TIA-942-C is the only relevant standard for any job, large or small.',
+      'Neither standard applies on a UK job, which uses BS EN documents only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-569-E covers commercial-building TRs, ERs and EFs. TIA-942-C covers data-centres specifically — with rated redundancy classes 1-4. Most UK commercial cabling work cites TIA-569-E (parallel to BS EN 50174-2 inside buildings). Data-centre projects also cite TIA-942-C and BS EN 50600 series for European harmonisation. Using TIA-942-C floor-loading figures on a normal TR is over-spec; using TIA-569-E figures on a data-centre is under-spec. Pick the right document for the scope.',
   },

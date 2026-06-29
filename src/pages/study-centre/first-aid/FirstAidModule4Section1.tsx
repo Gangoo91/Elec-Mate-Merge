@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'fa-stroke-fast',
     question: "In the FAST stroke test, what does the letter 'T' stand for?",
     options: [
-      "Temperature &mdash; check the casualty's body temperature",
-      'Tongue &mdash; check whether the tongue is swollen',
       'Time &mdash; time to call 999 if any single sign is present',
+      'Tongue &mdash; check whether the tongue is swollen',
+      "Temperature &mdash; check the casualty's body temperature",
       'Touch &mdash; test whether the casualty can feel touch on both sides',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'T stands for Time &mdash; time to call 999 immediately if any single sign of stroke is present. Time is critical in stroke treatment because clot-busting medication (thrombolysis) must be administered within 4.5 hours of symptom onset, and noting the exact time symptoms started is vital for treatment decisions.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary cause of a heart attack (myocardial infarction)?',
     options: [
-      'A temporary narrowing of the coronary arteries due to stress',
       'A blockage in one or more coronary arteries cutting off blood supply to the heart muscle',
+      'A temporary narrowing of the coronary arteries due to stress',
       'An irregular heartbeat caused by electrical disturbance',
       'A tear in the wall of the aorta',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A heart attack (myocardial infarction) occurs when one or more of the coronary arteries becomes blocked, usually by a blood clot forming on a fatty plaque. This cuts off the blood supply to part of the heart muscle, which begins to die if the blockage is not cleared quickly.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'What position should an unconscious, breathing stroke casualty be placed in?',
     options: [
-      'Flat on their back with legs elevated',
-      'Seated upright in the W position',
       'Recovery position on the affected side, so the unaffected side is uppermost',
+      'Seated upright in the W position',
+      'Flat on their back with legs elevated',
       'Prone (face down) with head turned to one side',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An unconscious, breathing stroke casualty should be placed in the recovery position on their affected (weak) side. This means the unaffected side is uppermost, allowing the stronger side of the body to maintain posture and keeping the airway clear.',
   },
@@ -164,8 +164,8 @@ const quizQuestions = [
     id: 8,
     question:
       'A TIA (transient ischaemic attack) is a warning sign. Approximately what proportion of TIA patients will have a full stroke within 90 days?',
-    options: ['1 in 100', '1 in 50', '1 in 10', '1 in 5'],
-    correctAnswer: 2,
+    options: ['1 in 100', '1 in 50', '1 in 5', '1 in 10'],
+    correctAnswer: 3,
     explanation:
       'Approximately 1 in 10 people who experience a TIA will go on to have a full stroke within 90 days. This is why a TIA must never be dismissed &mdash; the casualty should be assessed by a medical professional urgently, ideally within 24 hours, to receive preventative treatment.',
   },

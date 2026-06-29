@@ -10,10 +10,10 @@ const quickCheckQuestions = [
     id: 'hazardous-waste-definition',
     question: 'Under UK law, what determines whether a waste is classified as hazardous?',
     options: [
-      'Whether it displays one or more hazardous properties (HP1–HP15) listed in the Hazardous Waste Regulations 2005',
-      'Whether the waste weighs more than 25 kg',
-      'Whether the waste is produced on a construction site',
-      'Whether the waste is liquid rather than solid',
+      'Whether it displays one or more hazardous properties (HP1–HP15) in the 2005 Regulations',
+      'Whether the individual item of waste weighs more than 25 kg in total',
+      'Whether the waste happens to be produced on a construction or demolition site',
+      'Whether the waste is in liquid form rather than a solid or powder',
     ],
     correctIndex: 0,
     explanation:
@@ -24,10 +24,10 @@ const quickCheckQuestions = [
     question:
       'What is the minimum bunding capacity required for the storage of hazardous liquid waste?',
     options: [
-      '50% of the largest container',
-      '75% of the largest container',
-      '100% of the largest container',
-      '110% of the largest container or 25% of total capacity, whichever is greater',
+      '50% of the largest container, or 10% of total capacity, whichever is greater',
+      '75% of the largest container, or 20% of total capacity, whichever is greater',
+      '100% of the largest container, with no overall total-capacity requirement',
+      '110% of the largest container, or 25% of total capacity, whichever is greater',
     ],
     correctIndex: 3,
     explanation:
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     question:
       'Why has plasterboard been banned from co-disposal with biodegradable waste in landfill since 2009?',
     options: [
-      'Plasterboard is too heavy for standard landfill compaction',
-      'Plasterboard releases hydrogen sulphide gas when mixed with biodegradable waste in anaerobic conditions',
-      'Plasterboard is classified as hazardous waste under the EWC',
-      'Plasterboard attracts vermin to landfill sites',
+      'Plasterboard is too heavy and dense for standard landfill compaction equipment to handle',
+      'Plasterboard releases hydrogen sulphide gas when mixed with biodegradable waste anaerobically',
+      'Plasterboard is classified as a hazardous waste under the European Waste Catalogue codes',
+      'Plasterboard attracts vermin and other pests to the working face of landfill sites',
     ],
     correctIndex: 1,
     explanation:
@@ -78,8 +78,8 @@ const quizQuestions = [
     id: 1,
     question:
       'How many hazardous properties (HP codes) are defined under the Hazardous Waste Regulations?',
-    options: ['10 (HP1–HP10)', '12 (HP1–HP12)', '15 (HP1–HP15)', '20 (HP1–HP20)'],
-    correctAnswer: 2,
+    options: ['15 (HP1–HP15)', '10 (HP1–HP10)', '12 (HP1–HP12)', '20 (HP1–HP20)'],
+    correctAnswer: 0,
     explanation:
       'There are 15 hazardous properties, coded HP1 through HP15. These include explosive (HP1), oxidising (HP2), flammable (HP3), irritant (HP4), toxic (HP5/HP6), carcinogenic (HP7), corrosive (HP8), infectious (HP9), toxic for reproduction (HP10), mutagenic (HP11), sensitising (HP12/HP13), ecotoxic (HP14), and capable of yielding another hazardous substance after disposal (HP15).',
   },
@@ -89,7 +89,7 @@ const quizQuestions = [
       'Which guidance document is the standard reference for waste classification in England and Wales?',
     options: [
       'HSG264 — Asbestos: The survey guide',
-      'WM3 — Waste Classification: Guidance on the classification and assessment of waste',
+      'WM3 — Waste Classification: guidance on classifying and assessing waste',
       'CDM 2015 — Construction (Design and Management) Regulations',
       'PPG1 — General guide to the prevention of pollution',
     ],
@@ -113,8 +113,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'How long must consignment note records for hazardous waste be retained?',
-    options: ['1 year', '2 years', '3 years', '5 years'],
-    correctAnswer: 2,
+    options: ['1 year', '2 years', '5 years', '3 years'],
+    correctAnswer: 3,
     explanation:
       'Under the Hazardous Waste Regulations 2005, consignment note records must be retained for a minimum of 3 years. This applies to producers, carriers, and consignees of hazardous waste. The records must be available for inspection by the Environment Agency at any time during the retention period.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is classified as inert waste?',
     options: [
+      'Clean concrete rubble',
       'Plasterboard offcuts',
       'Untreated timber',
-      'Clean concrete rubble',
       'Plastic conduit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Clean concrete rubble is classified as inert waste — it does not undergo any significant physical, chemical, or biological transformation when landfilled. Plasterboard is non-hazardous but NOT inert (it produces hydrogen sulphide under anaerobic conditions). Untreated timber and plastic conduit are non-hazardous non-inert wastes, as timber is biodegradable and plastic does not meet the strict inert criteria.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is CCA-treated timber classified as hazardous waste?',
     options: [
-      'Because it is heavier than untreated timber',
-      'Because it contains chromated copper arsenate — a compound that includes arsenic, chromium, and copper',
-      'Because it produces more smoke when burned',
-      'Because it attracts wood-boring insects',
+      'Because it is noticeably heavier and denser than equivalent untreated timber',
+      'Because it produces far more smoke and soot than untreated timber when burned',
+      'Because the preservative treatment makes it more attractive to wood-boring insects',
+      'Because it contains chromated copper arsenate, which includes arsenic, chromium, and copper',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CCA (chromated copper arsenate) treated timber is classified as hazardous waste because the treatment contains arsenic, chromium, and copper compounds. These are toxic heavy metals that can leach into soil and groundwater. CCA-treated timber must never be burned on site (this releases toxic fumes) and must be segregated from non-hazardous timber waste. It carries the EWC code 17 02 04* (hazardous wood waste).',
   },

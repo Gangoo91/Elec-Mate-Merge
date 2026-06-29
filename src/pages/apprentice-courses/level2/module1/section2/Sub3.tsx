@@ -42,9 +42,9 @@ const checks = [
     question: "On an electrical fire, which leg of the fire triangle does the fault usually provide?",
     options: [
       'Heat (the ignition source)',
-      'Automatic fail - unsafe isolation',
-      'One direction only (forward bias)',
-      'PVC, rubber, glass, ceramics',
+      'Fuel (the material that burns)',
+      'Oxygen (the air that feeds it)',
+      'Smoke (the toxic by-product)',
     ],
     correctIndex: 0,
     explanation:
@@ -54,12 +54,12 @@ const checks = [
     id: 'rcd-fire-rating-check',
     question: "Where an RCD’s installed for ADDITIONAL fire protection, what’s the maximum residual operating current BS 7671 allows?",
     options: [
-      '300 mA',
       '30 mA',
       '100 mA',
-      '10 mA',
+      '300 mA',
+      '500 mA',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "Reg 422.3.9. 300 mA cap for fire protection. Note that’s an upper limit — for resistive fault risks like overhead heating film it tightens to 30 mA (422.3.9(a)). 30 mA RCDs you see on socket circuits are doing shock protection, not fire.",
   },
@@ -67,12 +67,12 @@ const checks = [
     id: 'dsear-zone-check',
     question: "You’re going to wire some lighting in a small chemical store where solvent vapour might escape during normal operation. Which zone is that?",
     options: [
-      'Zone 1',
       'Zone 0',
-      'Zone 22',
+      'Zone 1',
       'Zone 2',
+      'Zone 22',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Zone 1 — explosive atmosphere LIKELY in normal operation. Zone 0 is continuous (inside the tank itself). Zone 2 is unlikely / brief if at all. Zones 20/21/22 are the dust equivalents (e.g. flour mills, grain stores).",
   },
@@ -111,9 +111,9 @@ const quizQuestions = [
     id: 3,
     question: "A cable passes through a fire-rated wall. What does BS 7671 say about the hole afterwards?",
     options: [
-      "The temperature difference between source and sink increases",
-      "Lines of constant moisture content (humidity ratio)",
-      "To induce voltage and current in the rotor conductors",
+      "Leave it open so the cable can dissipate heat freely",
+      "Wrap the cable in PVC tape where it passes through",
+      "Fill it with expanding builder’s foam to hold the cable",
       "Seal it to the same fire-resistance rating as the wall",
     ],
     correctAnswer: 3,
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "What does DSEAR 2002 actually cover?",
     options: [
-      'Reverse the lifting technique — bend the knees and hips, keep the back straight',
+      'Safe manual handling and lifting of heavy electrical equipment',
       'Fire and explosion risk from dangerous substances and explosive atmospheres at work',
-      'Using communication between devices to identify fault location',
-      'It is either at rest or moving at constant velocity in a straight line',
+      'The reporting of electrical injuries and dangerous occurrences to the HSE',
+      'Control of exposure to asbestos in older electrical installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     id: 7,
     question: "You’re cutting trunking with an angle grinder in a plant room. What’s the minimum the boss should put in place?",
     options: [
-      'Large battery installations storing electricity to balance grid supply and demand',
-      'To provide security for remedying defects discovered after completion',
-      'Whether phase, neutral and earth are correctly connected using LED indicators',
+      'Just a pair of safety glasses and a dust mask for the operator',
+      'A method statement, with no need for a permit on a quick job',
+      'Nothing extra — a plant room is already a controlled environment',
       'Hot work permit, fire watch, extinguisher present, and a check for combustibles',
     ],
     correctAnswer: 3,
@@ -177,9 +177,9 @@ const quizQuestions = [
     question: "An LSZH (Low Smoke Zero Halogen) cable is specified for a stairwell. Why?",
     options: [
       "When it burns it doesn’t give off thick smoke or toxic halogen gas — keeps the escape route survivable",
-      "Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records",
-      "Combine \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"eat the frog\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"just-5-minutes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" rule to reduce starting resistance",
-      "That it meets the essential health and safety requirements set out in UK/EU regulations",
+      "It carries more current than standard PVC cable of the same size",
+      "It is cheaper than standard PVC cable and easier to terminate",
+      "It is completely fireproof and will keep working in any blaze",
     ],
     correctAnswer: 0,
     explanation:

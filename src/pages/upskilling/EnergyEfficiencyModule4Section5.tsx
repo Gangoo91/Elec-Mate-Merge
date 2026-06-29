@@ -82,87 +82,107 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
         'Annual Savings / Initial Cost',
         'Initial Cost / Annual Savings',
         'Initial Cost x Annual Savings',
-        '(Initial Cost - Salvage Value) / Annual Savings',
+        '(Initial Cost - Salvage Value) x Annual Savings',
       ],
       correctAnswer: 'Initial Cost / Annual Savings',
+      explanation:
+        'Simple payback divides the upfront cost by the annual saving to give the number of years to recover the investment. It is quick but ignores the time value of money and later cash flows.',
     },
     {
       question:
-        'A heat pump installation costs 25,000 and saves 5,000 annually. What is the payback period?',
+        'A heat pump installation costs £25,000 and saves £5,000 a year. What is the simple payback period?',
       options: ['3 years', '4 years', '5 years', '6 years'],
       correctAnswer: '5 years',
+      explanation:
+        '£25,000 / £5,000 per year = 5 years to recover the cost from the annual savings.',
     },
     {
       question: 'What does NPV stand for in financial analysis?',
       options: [
         'New Project Value',
-        'Net Present Value',
         'Nominal Payment Variable',
+        'Net Present Value',
         'Net Payback Verification',
       ],
       correctAnswer: 'Net Present Value',
+      explanation:
+        'NPV (Net Present Value) sums all the discounted future cash flows minus the initial cost, expressing a project’s total worth in today’s money. A positive NPV means it is financially worthwhile.',
     },
     {
-      question: 'In NPV calculations, what happens to future cash flows when discounted?',
+      question: 'In an NPV calculation, what happens to future cash flows when they are discounted?',
       options: [
         'They increase in value',
         'They decrease in value',
         'They remain the same',
-        'They become negative',
+        'They always become negative',
       ],
       correctAnswer: 'They decrease in value',
+      explanation:
+        'Discounting reflects the time value of money: a pound received in future is worth less than one today, so each future cash flow is reduced by the factor 1/(1+r)^n.',
     },
     {
       question: 'What does IRR represent in project evaluation?',
       options: [
-        'The total profit over project lifetime',
-        'The discount rate that makes NPV equal to zero',
-        'The annual energy savings percentage',
-        'The inflation rate for energy prices',
+        'The total profit over the project lifetime',
+        'The annual energy savings as a percentage',
+        'The discount rate at which NPV equals zero',
+        'The inflation rate applied to energy prices',
       ],
-      correctAnswer: 'The discount rate that makes NPV equal to zero',
+      correctAnswer: 'The discount rate at which NPV equals zero',
+      explanation:
+        'IRR is the discount rate that makes NPV zero — effectively the project’s annual rate of return. If it exceeds the organisation’s hurdle rate, the project is financially viable.',
     },
     {
-      question: 'Which organisation provides free energy efficiency calculation tools in the UK?',
-      options: ['Ofgem', 'Carbon Trust', 'Energy UK', 'British Gas'],
+      question: 'Which UK organisation provides free energy efficiency calculation tools?',
+      options: ['Ofgem', 'Energy UK', 'Carbon Trust', 'British Gas'],
       correctAnswer: 'Carbon Trust',
+      explanation:
+        'The Carbon Trust publishes free calculators and technology guides for lighting, motors and HVAC. Ofgem is the regulator and Energy UK a trade body, neither providing these tools.',
     },
     {
-      question: 'In Life Cycle Cost Analysis, which costs should be included?',
+      question: 'In Life Cycle Cost (LCC) analysis, which costs should be included?',
       options: [
         'Only the purchase price',
-        'Purchase, installation, and energy costs',
-        'All costs from acquisition to disposal',
+        'Purchase, installation and energy costs only',
         'Only maintenance and energy costs',
+        'All costs from acquisition through to disposal',
       ],
-      correctAnswer: 'All costs from acquisition to disposal',
+      correctAnswer: 'All costs from acquisition through to disposal',
+      explanation:
+        'LCC captures the whole life cost — acquisition, operating energy, maintenance and end-of-life disposal — often revealing that a higher purchase price delivers a lower total cost of ownership.',
     },
     {
       question:
-        'When comparing two energy efficiency projects, which metric best accounts for project scale differences?',
+        'When comparing two energy efficiency projects of different sizes, which metric best accounts for the scale difference?',
       options: [
         'Simple payback period',
-        'Total energy savings',
         'IRR (Internal Rate of Return)',
+        'Total energy savings',
         'Installation cost',
       ],
       correctAnswer: 'IRR (Internal Rate of Return)',
+      explanation:
+        'IRR expresses return as a percentage, so it allows fair comparison of projects requiring very different investment levels, whereas total savings or cost favour the larger project regardless of efficiency.',
     },
     {
-      question: 'What Excel function is used to calculate Net Present Value?',
-      options: ['=PMT()', '=NPV()', '=FV()', '=RATE()'],
+      question: 'Which Excel function calculates Net Present Value?',
+      options: ['=PMT()', '=FV()', '=NPV()', '=RATE()'],
       correctAnswer: '=NPV()',
+      explanation:
+        'The =NPV(rate, values) function discounts a series of cash flows; the initial cost is added separately as a negative. =PMT, =FV and =RATE handle loan and annuity calculations instead.',
     },
     {
       question:
-        'When building a business case for energy efficiency, which factor is often most persuasive for decision-makers?',
+        'When building a business case for energy efficiency, which factor is usually most persuasive to decision-makers?',
       options: [
         'Environmental benefits alone',
-        'Technical specifications',
-        'Financial returns with risk mitigation',
+        'Technical specifications of the equipment',
         'Competitor analysis',
+        'Financial returns presented with risk mitigation',
       ],
-      correctAnswer: 'Financial returns with risk mitigation',
+      correctAnswer: 'Financial returns presented with risk mitigation',
+      explanation:
+        'Decision-makers respond to clear financial returns (payback, NPV, IRR) framed with how risks are managed. Environmental or technical detail supports the case but rarely secures approval on its own.',
     },
   ];
 

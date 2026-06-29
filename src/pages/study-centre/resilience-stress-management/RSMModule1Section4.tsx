@@ -10,10 +10,10 @@ const quickCheckQuestions = [
     id: 'rsm-1-4-physical-signs',
     question: 'Which of the following is a common physical symptom of chronic stress?',
     options: [
-      'Improved appetite and weight gain in a healthy range',
-      'Persistent headaches, muscle tension (especially neck and shoulders), and disrupted sleep',
-      'Increased energy levels and improved physical fitness',
-      'Faster wound healing and stronger immune response',
+      'A steadily improving appetite and healthy weight gain',
+      'Persistent headaches, muscle tension, and disrupted sleep',
+      'Noticeably higher energy levels and improved fitness',
+      'Faster wound healing and a stronger immune response',
     ],
     correctIndex: 1,
     explanation:
@@ -25,8 +25,8 @@ const quickCheckQuestions = [
       'An experienced electrician who has always been reliable and sociable on site has started calling in sick on Mondays, avoiding the canteen at break times, and rushing through jobs without their usual care. This pattern of behaviour MOST likely indicates:',
     options: [
       'They are simply getting lazy and need a written warning',
-      'They have found a new job and are losing interest in their current work',
-      'A significant change from their normal behaviour that could indicate stress, mental health difficulties, or personal crisis',
+      'They have found a new job and are losing interest in this one',
+      'A marked change from their normal behaviour that warrants concern',
       'They are just having a bad week and will be fine by next Monday',
     ],
     correctIndex: 2,
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a cognitive symptom of stress (affecting thinking and mental processes)?',
     options: [
-      'Muscle tension and headaches',
+      'Muscle tension, headaches, and a tight jaw',
       'Increased alcohol consumption and poor timekeeping',
-      'Irritability and mood swings',
-      'Poor concentration, forgetfulness, indecision, and catastrophising (imagining the worst possible outcome)',
+      'Irritability, mood swings, and a short temper',
+      'Poor concentration, forgetfulness, indecision, and catastrophising',
     ],
     correctIndex: 3,
     explanation:
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is a physical symptom of chronic stress?',
     options: [
-      'Improved concentration and sharper focus',
       'Persistent fatigue, headaches, and disrupted sleep',
+      'Improved concentration and sharper focus',
       'Increased confidence and self-esteem',
       'Better appetite and improved digestion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Chronic stress causes a range of physical symptoms including persistent fatigue (even after rest), frequent headaches (especially tension headaches), sleep disruption (insomnia, waking in the night, unrefreshing sleep), muscle tension, digestive problems, elevated blood pressure, and weakened immune function. These are the physical consequences of prolonged activation of the stress response and elevated cortisol levels.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'A normally confident and decisive site supervisor has been struggling to make simple decisions, forgetting to order materials, and repeatedly saying "everything is going to go wrong." These are examples of:',
     options: [
-      'Physical symptoms of stress',
-      'Emotional symptoms of stress',
-      'Cognitive symptoms of stress \u2014 poor concentration, forgetfulness, indecision, and catastrophising',
-      'Normal behaviour that does not indicate any problem',
+      'Physical symptoms of stress, such as tension and headaches',
+      'Cognitive symptoms \u2014 indecision, forgetfulness, and catastrophising',
+      'Emotional symptoms of stress, such as irritability and low mood',
+      'Normal behaviour that does not point to any underlying problem',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'These are cognitive symptoms \u2014 changes in thinking and mental processing. Indecision (struggling with choices), forgetfulness (missing tasks, losing track of information), and catastrophising ("everything is going to go wrong") are all cognitive effects of stress. When the brain is overwhelmed by stress, cognitive resources are diverted to monitoring threats, leaving less capacity for planning, memory, and rational decision-making. For a construction supervisor, these cognitive impairments directly affect their ability to manage work safely and effectively.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'The MOST important principle for recognising stress in a colleague is:',
     options: [
-      'Checking whether they match a specific checklist of stress symptoms',
-      'Looking for changes from their normal behaviour \u2014 any significant deviation from how they usually are',
-      'Waiting until they explicitly ask for help before getting involved',
-      'Only paying attention if they show physical symptoms, as emotional symptoms are not reliable indicators',
+      'Looking for any significant change from their normal behaviour',
+      'Checking them against a fixed checklist of stress symptoms',
+      'Waiting until they explicitly ask for help before stepping in',
+      'Watching only for physical symptoms, since emotional ones mislead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The most important principle is to look for changes from the person's normal baseline. Everyone is different \u2014 one person's \"normal\" may be another person's warning sign. What matters is whether this specific person is behaving differently from how they usually behave. A normally chatty person who goes quiet, a normally reliable person who starts being late, a normally meticulous worker who starts making mistakes \u2014 these changes from the baseline are the most reliable indicators that something is wrong. You do not need a clinical checklist; you need to know your colleagues well enough to notice when they change.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'An apprentice who was previously enthusiastic and engaged has become quiet, withdrawn, and is making frequent mistakes. A colleague asks them "are you alright?" in private. Why is this simple action so important?',
     options: [
-      'It is not important \u2014 mental health conversations should only be conducted by trained professionals',
-      'Because informal peer support is often the first and most valued step in getting someone to acknowledge they are struggling and seek help',
-      'Because it is a legal requirement under the Health and Safety at Work etc. Act 1974',
-      "Because it allows the colleague to diagnose the apprentice's condition and prescribe treatment",
+      'It is not important \u2014 only trained professionals should ever ask',
+      'Because the Health and Safety at Work etc. Act 1974 demands it',
+      'Because informal peer support is often the vital first step to help',
+      "Because it lets the colleague diagnose and treat the apprentice",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Research consistently shows that informal peer support \u2014 a colleague who notices and asks a simple, caring question \u2014 is one of the most powerful first steps in the help-seeking process. For many people, especially in construction where cultural barriers are strong, the moment someone notices and asks is the moment the wall of silence starts to break down. You do not need to be a professional. You do not need to diagnose anything. You just need to notice, ask, listen, and if appropriate, signpost towards professional help. That simple conversation could be life-changing.',
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     question:
       'An experienced electrician who has always taken pride in their work has started rushing through installations, not checking their own work, and leaving site early. Their colleagues assume they have "just become lazy." According to what you have learned in this section, what is a more likely explanation?',
     options: [
-      'They have indeed become lazy and need performance management',
-      'These behavioural changes \u2014 rushing work, reduced quality, leaving early \u2014 are classic behavioural symptoms of stress and may indicate that they are struggling with a significant underlying issue',
-      'They are probably looking for a new job and have lost interest',
-      'Experienced electricians do not suffer from stress because they have seen it all before',
+      'They have genuinely become lazy and need performance management',
+      'These changes are classic behavioural symptoms of stress',
+      'They are probably job-hunting and have lost interest in this role',
+      'Experienced electricians are immune to stress, having seen it all',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'Which helpline is available 24/7 and provides free, confidential support specifically for construction workers?',
     options: [
-      'ACAS (Advisory, Conciliation and Arbitration Service)',
-      'The Construction Industry Helpline \u2014 0345 605 1956',
-      'Companies House customer services',
-      'The HMRC CIS helpline',
+      'ACAS, the Advisory, Conciliation and Arbitration Service',
+      'The Companies House general customer services line',
+      'The HMRC Construction Industry Scheme (CIS) helpline',
+      'The Construction Industry Helpline, on 0345 605 1956',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Construction Industry Helpline (0345 605 1956), run by the Lighthouse Construction Industry Charity, provides free, confidential support specifically for construction workers and their families. It covers mental health, wellbeing, financial advice, legal guidance, and crisis support. It is available 24/7. The Samaritans (116 123) also provide 24/7 free confidential support for anyone in distress. Both services should be in every construction worker's phone. You do not need to be in crisis to call.",
   },

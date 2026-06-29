@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pasma-schedule5-basis',
     question: 'Which regulation mandates formal inspections for mobile scaffold towers?',
     options: [
-      'PUWER 1998 Regulation 6',
       'WAHR 2005 Schedule 5',
+      'PUWER 1998 Regulation 6',
       'CDM 2015 Regulation 13',
       'LOLER 1998 Regulation 9',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Schedule 5 of the Work at Height Regulations 2005 mandates formal inspections for scaffolding, which includes mobile scaffold towers. It specifies when inspections must occur, what must be recorded, and how long records must be retained.',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       'Which of the following triggers a formal inspection requirement BEYOND the 7-day interval?',
     options: [
       'A change of operative working from the tower',
-      'The tower being moved to a new position on the same site',
-      'A tea break exceeding one hour',
       'A new subcontractor arriving on site',
+      'The tower being moved to a new position on the same site',
+      'A break in work exceeding one hour',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Relocating a tower to a new position counts as a change that could affect its stability and therefore triggers a formal inspection before the tower is used again in its new position. A change of operative alone does not trigger a formal inspection.',
   },
@@ -46,8 +46,8 @@ const quickCheckQuestions = [
     id: 'pasma-record-retention',
     question:
       'What is the minimum retention period for formal inspection records after work is completed?',
-    options: ['1 month', '3 months', '6 months', '12 months'],
-    correctIndex: 1,
+    options: ['1 month', '6 months', '12 months', '3 months'],
+    correctIndex: 3,
     explanation:
       'Inspection records must be kept on site until the work is completed and then retained for a minimum of 3 months. The HSE can request to see records at any time during this period, and failure to produce them is a criminal offence.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'A tower has been erected and inspected on a Monday. By which day must the next formal inspection take place?',
     options: [
+      'The following Monday (7 days)',
       'The following Thursday (4 days)',
       'The following Friday (5 days)',
-      'The following Monday (7 days)',
       'The following Wednesday (9 days)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The inspection interval must not exceed 7 days. If the tower was inspected on Monday, the next inspection must be carried out no later than the following Monday.',
   },
@@ -127,10 +127,10 @@ const quizQuestions = [
     options: [
       'The tower being relocated to a new position on site',
       'A severe storm occurring overnight whilst the tower was left erected',
-      'A different operative using the tower for the first time',
       'The tower being altered by adding an additional lift',
+      'A different operative using the tower for the first time',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A change of operative does not trigger a formal inspection (though a pre-use check is still required). Relocation, adverse weather events, and alteration of the tower configuration all trigger mandatory formal inspections.',
   },
@@ -147,8 +147,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What type of notice can the HSE serve to stop tower work immediately where there is a risk of serious injury?',
-    options: ['Advisory notice', 'Improvement notice', 'Prohibition notice', 'Warning letter'],
-    correctAnswer: 2,
+    options: ['Prohibition notice', 'Improvement notice', 'Advisory notice', 'Warning letter'],
+    correctAnswer: 0,
     explanation:
       'A prohibition notice requires the activity to stop immediately (or not to start) where the inspector believes there is a risk of serious personal injury. An improvement notice allows time to remedy a breach but does not require immediate cessation.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
     id: 7,
     question:
       'An improvement notice served by the HSE requires compliance within what minimum period?',
-    options: ['24 hours', '7 days', '21 days', '3 months'],
-    correctAnswer: 2,
+    options: ['24 hours', '7 days', '3 months', '21 days'],
+    correctAnswer: 3,
     explanation:
       'An improvement notice sets a deadline of at least 21 days for the duty holder to remedy the breach. The duty holder has the right to appeal to an employment tribunal within this 21-day period.',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'Which of the following is an example of best practice that goes beyond the legal minimum for tower inspections?',
     options: [
       'Only inspecting the tower when the HSE visits the site',
-      'Carrying out daily documented checks with photographic records',
       'Relying on the tower manufacturer to carry out all inspections',
+      'Carrying out daily documented checks with photographic records',
       'Inspecting the tower every 14 days instead of every 7',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Daily documented checks with photographic records go beyond the legal minimum of 7-day formal inspections. This demonstrates a proactive approach to safety and provides an excellent audit trail for compliance purposes.',
   },

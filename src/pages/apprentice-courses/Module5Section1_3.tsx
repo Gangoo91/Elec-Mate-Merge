@@ -98,11 +98,16 @@ const Module5Section1_3 = () => {
     },
     {
       id: 4,
-      question: 'True or False: Site-specific symbols are never used.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'Which statement about site-specific symbols is correct?',
+      options: [
+        'They may be used to clarify particular installations',
+        'They are banned under BS 7671',
+        'They replace all standard BS symbols on a drawing',
+        'They are only allowed on domestic projects',
+      ],
+      correctAnswer: 0,
       explanation:
-        'False. Site-specific symbols may be used to clarify particular installations, which is why checking the legend is essential.',
+        'Site-specific symbols may be used to clarify particular installations, which is why checking the legend is essential.',
     },
     {
       id: 5,
@@ -120,10 +125,10 @@ const Module5Section1_3 = () => {
       id: 6,
       question: 'Why must the legend always be checked?',
       options: [
-        'Before any testing or energising',
-        'DC does not produce a changing magnetic flux',
+        'It lists the cable sizes for every circuit',
+        'It shows the order in which to install accessories',
         'Symbols may differ between projects',
-        'A messaging protocol for IoT devices',
+        'It gives the scale of the drawing',
       ],
       correctAnswer: 2,
       explanation:
@@ -133,10 +138,10 @@ const Module5Section1_3 = () => {
       id: 7,
       question: 'Give one example of a power symbol.',
       options: [
-        'To facilitate maintenance and testing',
-        'On all circuits before energising',
-        'Regulation 526.1 and 526.5',
-        'Double circle for socket outlet',
+        'Circle with a cross for a ceiling light',
+        'A letter S in a square for a switch',
+        'A triangle for an earth connection',
+        'Double circle for a socket outlet',
       ],
       correctAnswer: 3,
       explanation: 'A double circle represents a socket outlet, which is a power symbol.',
@@ -146,9 +151,9 @@ const Module5Section1_3 = () => {
       question: 'What happens if a symbol is misinterpreted?',
       options: [
         'Wrong installation, delays, and rework',
-        'The transformer, push, or bell unit',
-        'Provide mechanical retention and earth continuity',
-        'Electrical safety in all workplaces',
+        'The drawing legend updates automatically',
+        'The circuit will still pass inspection',
+        'Only the appearance of the drawing changes',
       ],
       correctAnswer: 0,
       explanation:
@@ -171,10 +176,10 @@ const Module5Section1_3 = () => {
       id: 10,
       question: "Who should you ask if you don't recognise a symbol?",
       options: [
-        'Report it to your supervisor/foreman',
-        'It calculates fault current: If = U₀/Zs',
+        'Another apprentice working nearby',
+        'The materials supplier who delivered the cable',
         'The supervisor or site manager',
-        'The perimeter-to-area ratio',
+        'Whoever signed off the previous job',
       ],
       correctAnswer: 2,
       explanation:

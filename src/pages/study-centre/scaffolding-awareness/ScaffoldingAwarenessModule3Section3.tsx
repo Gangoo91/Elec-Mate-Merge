@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'What is the minimum platform width for general construction work where materials are stored on the platform?',
     options: [
+      '800 mm (five or six boards wide)',
       '430 mm (three boards wide)',
       '600 mm (four boards wide)',
-      '800 mm (five or six boards wide)',
       '1050 mm (seven boards wide)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'For general construction work where materials need to be stored on the platform, the minimum width is 800 mm. This provides enough room for the operative to move safely while materials are placed alongside. Narrower platforms (600 mm) are acceptable only for inspection or light duties with no material storage.',
   },
@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'What is the minimum height for a top guard rail on a working platform under the Work at Height Regulations?',
     options: [
       '750 mm above the platform surface',
-      '850 mm above the platform surface',
       '950 mm above the platform surface',
+      '850 mm above the platform surface',
       '1100 mm above the platform surface',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The Work at Height Regulations 2005, Schedule 3, require the top guard rail to be at least 950 mm above the platform surface. The gap between the top rail and any intermediate rail, or between the intermediate rail and the toe board, must not exceed 470 mm.',
   },
@@ -80,8 +80,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under Schedule 3 of the Work at Height Regulations 2005, what is the maximum gap permitted between scaffold boards on a working platform?',
-    options: ['10 mm', '15 mm', '25 mm', '50 mm'],
-    correctAnswer: 2,
+    options: ['25 mm', '10 mm', '15 mm', '50 mm'],
+    correctAnswer: 0,
     explanation:
       'Schedule 3 of the Work at Height Regulations 2005 specifies that the maximum gap between boards on a working platform must not exceed 25 mm. Wider gaps create a risk of tools, debris, and small materials falling through onto people below, and present a trip hazard on the platform surface.',
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the minimum height for the top guard rail above the working platform surface?',
-    options: ['750 mm', '850 mm', '950 mm', '1100 mm'],
-    correctAnswer: 2,
+    options: ['750 mm', '850 mm', '1100 mm', '950 mm'],
+    correctAnswer: 3,
     explanation:
       'The Work at Height Regulations 2005 (Schedule 3) require the top guard rail to be at a minimum height of 950 mm above the working platform surface. This height provides an effective barrier against falls from the platform edge. Any lower and the rail would be below the centre of gravity for most adults, significantly reducing its effectiveness.',
   },
@@ -119,16 +119,16 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the maximum gap permitted between the top guard rail and the mid rail (or between the mid rail and the toe board)?',
-    options: ['300 mm', '400 mm', '470 mm', '500 mm'],
-    correctAnswer: 2,
+    options: ['470 mm', '300 mm', '400 mm', '500 mm'],
+    correctAnswer: 0,
     explanation:
       'The maximum gap between the top rail and the mid rail, or between the mid rail and the top of the toe board, must not exceed 470 mm. This dimension ensures that a person cannot easily slip through or fall between the rails. If a single mid rail cannot achieve this, additional intermediate rails or mesh infill panels must be fitted.',
   },
   {
     id: 6,
     question: 'What is the minimum height requirement for a toe board?',
-    options: ['50 mm', '100 mm', '150 mm', '200 mm'],
-    correctAnswer: 2,
+    options: ['50 mm', '150 mm', '100 mm', '200 mm'],
+    correctAnswer: 1,
     explanation:
       "Toe boards must be at least 150 mm high above the platform surface. Their purpose is to prevent tools, materials, and debris from being kicked or rolling off the platform edge. A 150 mm toe board also helps prevent a person's foot from slipping under the guard rail. In areas where materials are stacked, brick guards or mesh panels may be needed in addition to the toe board.",
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'Why are board clips (or board retaining devices) essential on scaffold platforms?',
     options: [
       'They improve the appearance of the scaffold',
-      'They prevent boards from lifting in wind or being displaced by foot traffic and equipment',
       'They are only required on mobile scaffolds, not fixed scaffolds',
+      'They prevent boards from lifting in wind or being displaced by foot traffic and equipment',
       'They reduce the number of boards required on the platform',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Board clips prevent scaffold boards from lifting in windy conditions, being displaced by foot traffic, or being knocked out of position by equipment and materials. An unsecured board can tilt, slide, or flip when stepped on near its edge, potentially causing a fall from height. Board clips are required on all scaffold platforms — not just mobile towers.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     options: [
       'Only when the scaffold is above 4 metres in height',
       'Only when the scaffold is on a public highway',
-      'Always — platforms must be fully boarded, with guard rails, mid rails, and toe boards in place before any person uses them',
       'Only when the client specifically requests it in writing',
+      'Always — platforms must be fully boarded, with guard rails, mid rails, and toe boards in place before any person uses them',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A working platform must always be fully completed before it is used. This means all boards in place with no gaps exceeding 25 mm, guard rails at minimum 950 mm, mid rails fitted so no gap exceeds 470 mm, toe boards at minimum 150 mm, and board clips securing all boards. An incomplete platform is an unsafe platform, regardless of height, location, or perceived urgency. The Work at Height Regulations make no exceptions for partially completed platforms.',
   },

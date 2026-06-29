@@ -67,24 +67,24 @@ const quizQuestions = [
   {
     question: 'In a Zigbee network, which device type can route messages?',
     options: [
-      'Only the coordinator',
-      'End devices',
-      'Routers and the coordinator',
+      'Only the coordinator can route',
+      'Battery-powered end devices',
       'All devices equally',
+      'Routers and the coordinator',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In Zigbee networks, routers (typically mains-powered devices) and the coordinator can route messages. End devices (often battery-powered) cannot route.',
   },
   {
-    question: 'What happens when you add more devices to a mesh network?',
+    question: 'What happens when you add more routing-capable devices to a mesh network?',
     options: [
-      'Performance decreases',
-      'Range typically increases',
-      'Power consumption doubles',
+      'Range and reliability typically increase',
+      'Overall performance decreases',
+      'Power consumption roughly doubles',
       'The network becomes unstable',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Adding more routing-capable devices to a mesh network typically increases coverage and reliability as there are more paths for signals to travel.',
   },

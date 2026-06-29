@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'What does AFDD stand for and what does it detect?',
     options: [
       'Automatic Fire Detection Device — detects smoke and heat',
-      'Arc Fault Detection Device — detects dangerous electrical arcing that could cause fire',
       'Advanced Flame Detection Device — detects open flames in electrical panels',
       'Auxiliary Fire Dampening Device — prevents fire spread through ductwork',
+      'Arc Fault Detection Device — detects dangerous electrical arcing that could cause fire',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'AFDD stands for Arc Fault Detection Device. AFDDs detect dangerous electrical arcing — such as series arcing caused by damaged cables, loose connections, or insulation breakdown — that can generate enough heat to ignite surrounding materials. They were introduced in BS 7671 18th Edition (Amendment 2) and provide an additional layer of fire protection beyond RCDs and MCBs.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: 'Under DSEAR 2002, flammable liquids stored in a workroom must be:',
     options: [
-      'Stored in any available cupboard away from doors',
       'Limited to the minimum quantity needed for the day or shift and kept in approved containers',
+      'Stored in any available cupboard away from doors',
       'Kept near heating equipment so they remain at a consistent temperature',
       'Stored in cardboard boxes on the floor to absorb any spills',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DSEAR requires that only the minimum quantity of flammable liquids needed for immediate use is kept in the workroom. Bulk stocks must be stored in dedicated fire-resistant stores or cabinets. Containers must be kept closed when not in use, and the storage area must be adequately ventilated and free from ignition sources.',
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     options: [
       'Nothing — cables are non-combustible so they do not affect the fire rating',
       'Wrap the cables in aluminium foil where they pass through the wall',
-      'Seal the penetration with approved fire-stopping materials to restore the original fire rating',
       'Leave a 10 mm air gap around each cable for ventilation',
+      'Seal the penetration with approved fire-stopping materials to restore the original fire rating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Any penetration through a fire-rated barrier — for cables, pipes, or ducts — must be sealed with approved fire-stopping materials such as intumescent sealants, fire batts, or proprietary collar systems. The fire stopping must restore the original fire resistance rating of the barrier. Failing to fire-stop cable penetrations is one of the most common fire safety failings found during inspections.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 5,
     question: 'An Arc Fault Detection Device (AFDD) protects against fire risk by:',
     options: [
-      'Detecting smoke particles in the air near the consumer unit',
       'Monitoring for dangerous electrical arcing caused by damaged cables or loose connections',
+      'Detecting smoke particles in the air near the consumer unit',
       'Measuring the temperature of cables and tripping if they overheat',
       'Detecting earth leakage currents above 30 mA',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AFDDs detect dangerous series and parallel arc faults in electrical circuits — such as those caused by damaged cable insulation, crushed conductors, or loose terminal connections. These arcs can generate localised temperatures exceeding 6,000 degrees Celsius, which is more than sufficient to ignite surrounding combustible materials. AFDDs provide fire protection that RCDs and MCBs alone cannot offer.',
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
       'Which of the following is the most important housekeeping measure for fire prevention?',
     options: [
       'Painting walls in fire-retardant colours',
-      'Regular clearing of combustible waste and keeping escape routes unobstructed',
       'Ensuring all furniture is made from metal',
+      'Regular clearing of combustible waste and keeping escape routes unobstructed',
       'Installing carpet throughout the building to reduce static electricity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regular clearing of combustible waste and maintaining clear escape routes is the single most important housekeeping measure for fire prevention. Accumulated waste provides fuel for fire, and blocked escape routes prevent safe evacuation. Poor housekeeping is consistently identified as a leading cause of workplace fires in the UK.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
       'Under DSEAR 2002, the first step an employer must take regarding dangerous substances is to:',
     options: [
       'Install fire suppression sprinkler systems',
-      'Carry out a risk assessment to identify dangerous substances and the risks they present',
       'Replace all flammable substances with water-based alternatives',
       'Train all employees in the use of breathing apparatus',
+      'Carry out a risk assessment to identify dangerous substances and the risks they present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The DSEAR hierarchy requires employers to first carry out a risk assessment to identify all dangerous substances present in the workplace and assess the risks they present. Only after the risks are assessed can appropriate control measures be selected and implemented. This follows the standard UK health and safety approach of assess first, then control.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'On a construction site, which of the following is a key fire prevention requirement during refurbishment works?',
     options: [
-      'All workers must carry personal fire extinguishers',
       'Temporary fire detection systems must be installed and escape routes maintained throughout the works',
+      'All workers must carry personal fire extinguishers',
       'Work should only take place during daylight hours to reduce fire risk',
       'All timber must be treated with fire-retardant paint before installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The FPA Joint Code of Practice for fire prevention on construction sites requires that temporary fire detection and alarm systems are installed during construction and refurbishment works, and that escape routes are maintained and clearly signed throughout all phases. Fire risk on construction sites is significantly elevated due to hot works, temporary electrical installations, combustible building materials, and limited fire protection systems.',
   },

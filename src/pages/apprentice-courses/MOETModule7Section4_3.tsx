@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question:
       'When you arrive at work with multiple maintenance tasks to complete, what is the most effective approach to prioritisation?',
     options: [
-      "Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.",
-      "Consciously shift towards open questions and the GROW model, practise active listening, and ask a peer to observe and give feedback on their question-to-statement ratio",
-      "Use clear subject lines, keep messages short, only CC people who need it, and avoid sending sensitive info as attachments without checking the recipient",
+      'Start with whichever task is physically closest to the workshop so you minimise walking time between jobs',
+      'Tackle the quickest tasks first to clear the list, leaving the larger jobs until the end of the day',
+      'Work through the tasks in the order they were issued, since the first person to ask should be served first',
       "Assess each task's urgency and impact — safety-critical and production-affecting faults take priority, followed by planned maintenance, then non-urgent improvements — and plan your day accordingly",
     ],
     correctIndex: 3,
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'time-planning',
     question: 'Why is planning your work sequence important for maintenance tasks?',
     options: [
-      'Implement regular safety inspections, formal audits of the CPP and risk controls, near-miss reporting, toolbox talks, lessons-learned reviews, worker consultation forums, trend analysis of incidents, and regular CPP updates based on findings',
-      'Segregated, secured against theft, in a labelled and dry container — transferred only to an authorised metal carrier with a transfer note',
+      'It guarantees every task is completed within the manufacturer-recommended service interval regardless of priority',
+      'It allows you to record more billable hours by spreading the same work across a longer period',
       'Planning ensures you have the right tools, parts and permits before starting, minimises wasted time between tasks, and allows you to coordinate with production and other trades effectively',
-      'To detect degradation products, moisture content, dissolved gases, and contaminants that indicate the condition of the insulation system and internal faults',
+      'It removes the need to communicate with production because the sequence is fixed in advance',
     ],
     correctIndex: 2,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
       'How should you handle a situation where you realise you cannot complete a maintenance task within the allocated time?',
     options: [
       'Communicate early with your supervisor, explain the situation and reasons for the delay, and agree a realistic revised timeline or arrange additional support',
-      'Applying the same maintenance strategy and frequency to all equipment regardless of criticality, function, failure modes, or operating context — the \\\\\\\\\\\\\\\'one size fits all\\\\\\\\\\\\\\\' approach',
-      'A wide range of issues including debt, employment rights, benefits, tax, and consumer problems — all free and confidential',
-      'The combined resistance of the line conductor and circuit protective conductor from origin to the furthest point',
+      'Work through your breaks and stay late without telling anyone, so the task is finished by the original deadline',
+      'Rush the remaining steps and skip the final test to recover the lost time before the deadline passes',
+      'Say nothing until the deadline arrives, then explain the delay once the task is clearly overdue',
     ],
     correctIndex: 0,
     explanation:
@@ -56,14 +56,14 @@ const quickCheckQuestions = [
     question:
       'What is the main benefit of using a tracking system (list, spreadsheet or CMMS) to manage your maintenance workload?',
     options: [
-      'A portfolio showing mentee progression (e.g. NVQ completion rates), feedback from mentees, reflective accounts, CPD records, and testimonials from managers or assessors',
-      'Golden thread of digital information including electrical certification, accountability through dutyholder roles, and AFDD-related design considerations',
-      'It prevents tasks from being forgotten, ensures deadlines are visible, allows you to review priorities when circumstances change, and provides evidence of your workload management for the EPA',
-      'Isolated or disconnected before the test, so test current is not diverted through them and the reading reflects the electrode resistance alone.',
+      'It removes the need to prioritise, because every recorded task is treated as equally important',
+      'It automatically completes routine paperwork so you no longer have to write up each job',
+      'It keeps deadlines visible so tasks are not forgotten, and provides EPA evidence of workload management',
+      'It guarantees that no emergency breakdowns will occur while planned work is in progress',
     ],
     correctIndex: 2,
     explanation:
-      'A tracking system — whether a simple written list or a CMMS — ensures nothing falls through the gaps. When you are managing both reactive and planned work, it is easy to lose track of commitments. A single, regularly reviewed system gives you visibility of all tasks, their deadlines and their current status, and provides excellent EPA portfolio evidence of professional workload management.',
+      'A tracking system — whether a simple written list or a CMMS — ensures nothing falls through the gaps. When you are managing both reactive and planned work, it is easy to lose track of commitments. A single, regularly reviewed system gives you visibility of all tasks, their deadlines and their current status, lets you review priorities when circumstances change, and provides excellent EPA portfolio evidence of professional workload management.',
   },
 ];
 
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Effective time management for a maintenance technician includes:',
     options: [
-      'Embodied carbon relates to the emissions from manufacturing, transporting, and constructing materials; operational carbon relates to emissions from the energy used to run the building during its lifetime',
+      'Always working as fast as physically possible on every task so the maximum number of jobs is completed each day',
       'Planning work sequences, gathering materials in advance, coordinating with other teams, communicating realistic timescales and adapting priorities when circumstances change',
-      'A thorough investigation to establish root causes, contributing factors, and lessons learned, with corrective actions implemented to prevent recurrence',
-      'By evaluating whether the space is substantially enclosed and whether there is a foreseeable risk of serious injury from hazardous conditions',
+      'Refusing to take on any reactive breakdown work so the planned schedule is never disrupted',
+      'Completing all paperwork at the end of the week in one batch to keep the working day clear for tools-on tasks',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'When planning a planned maintenance shutdown, the most important time management consideration is:',
     options: [
-      'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'Evidence in your portfolio of planned approaches, prioritisation decisions, deadline management, and professional communication about timescales — demonstrated through activity logs, reflective accounts and witness statements',
+      'Filling every available hour of the shutdown with planned tasks, leaving no idle time so the maximum amount of work is completed in the window',
+      'Scheduling the easiest jobs at the start of the shutdown to build momentum, and leaving the most complex critical work until the final hours',
       'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
-      'Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved',
+      'Spreading tasks evenly across the available team regardless of skill, so that everyone is occupied for the same length of time',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 3,
     question: 'A daily work plan should include:',
     options: [
-      'Maintaining organised tools and test equipment, keeping accurate records, filing documentation systematically, managing spare parts knowledge, and ensuring all work is properly signed off and closed out',
-      'Use a tracking system (list, spreadsheet or app) to monitor all tasks, their deadlines and current status, reviewing and updating it regularly to ensure nothing is missed',
-      'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
+      'Only the largest job of the day, since smaller tasks can be fitted in around it without needing to be planned in advance',
+      'A fixed minute-by-minute timetable that cannot be changed, so that reactive breakdowns are never allowed to disrupt the schedule',
+      'A list of jobs in the order they were issued, with no estimated times, so that requests are simply dealt with first-come first-served',
+      'A prioritised task list with estimated times, required tools, permits, coordination needs and time for documentation',
     ],
     correctAnswer: 3,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'If an emergency breakdown interrupts your planned maintenance schedule, you should:',
     options: [
       'Assess the emergency priority, secure any work in progress safely, respond to the emergency, then re-plan remaining scheduled work and communicate any impact to affected parties',
-      'Discuss workload with your supervisor, identify whether the issue is workload volume, task estimation, or efficiency, and agree adjustments such as re-prioritisation, additional support, or skills development',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
-      'Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved',
+      'Refuse the emergency call and finish your planned task first, since interrupting scheduled work always wastes more time than it saves',
+      'Abandon your current task immediately exactly as it is, leaving panels open and circuits exposed, and rush straight to the breakdown',
+      'Continue the planned work at a faster pace and deal with the breakdown only once every scheduled task for the day is finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'Estimating task duration accurately is important because:',
     options: [
-      'Assess the emergency priority, secure any work in progress safely, respond to the emergency, then re-plan remaining scheduled work and communicate any impact to affected parties',
+      'It guarantees every job will be finished early, since a good estimate always leaves spare time at the end of the task',
       'It enables realistic planning, ensures adequate resources are allocated, allows coordination with production schedules, and builds trust in your professional judgement',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
-      'Discuss workload with your supervisor, identify whether the issue is workload volume, task estimation, or efficiency, and agree adjustments such as re-prioritisation, additional support, or skills development',
+      'It removes the need to add any contingency, because an accurate estimate means unexpected findings will never occur',
+      'It allows you to deliberately overstate timescales so that you always appear to finish ahead of schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 6,
     question: 'Organisational skills for a maintenance technician include:',
     options: [
-      'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'Use a tracking system (list, spreadsheet or app) to monitor all tasks, their deadlines and current status, reviewing and updating it regularly to ensure nothing is missed',
-      'Maintaining organised tools and test equipment, keeping accurate records, filing documentation systematically, managing spare parts knowledge, and ensuring all work is properly signed off and closed out',
-      'It enables realistic planning, ensures adequate resources are allocated, allows coordination with production schedules, and builds trust in your professional judgement',
+      'Keeping all your tools loose in the van so you never waste time putting them away, and finding what you need by searching when each job starts',
+      'Memorising every job detail rather than writing anything down, so that no time is spent on record-keeping or filing',
+      'Keeping tools and test equipment organised, records accurate, documentation filed, and work properly closed out',
+      'Leaving close-out and sign-off until the annual audit, so that day-to-day work is never slowed down by paperwork',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     question:
       'When managing multiple ongoing tasks with different deadlines, an effective approach is:',
     options: [
-      'Maintaining organised tools and test equipment, keeping accurate records, filing documentation systematically, managing spare parts knowledge, and ensuring all work is properly signed off and closed out',
-      'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'It enables realistic planning, ensures adequate resources are allocated, allows coordination with production schedules, and builds trust in your professional judgement',
+      'Keeping all the tasks and their deadlines in your head, relying on memory so you are not slowed down by writing anything down',
+      'Working on whichever task you most enjoy at the time, and only switching once you become bored or stuck',
+      'Always finishing the task with the latest deadline first, on the basis that the urgent ones can be rushed at the end',
       'Use a tracking system (list, spreadsheet or app) to monitor all tasks, their deadlines and current status, reviewing and updating it regularly to ensure nothing is missed',
     ],
     correctAnswer: 3,
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 8,
     question: 'Preparation before starting a maintenance task should include:',
     options: [
-      'Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
-      'Maintaining organised tools and test equipment, keeping accurate records, filing documentation systematically, managing spare parts knowledge, and ensuring all work is properly signed off and closed out',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
+      'Reviewing the scope, checking parts, calibrating equipment, obtaining permits, informing production and briefing the team',
+      'Going straight to the equipment with whatever tools are to hand, then collecting parts and permits only once you discover you need them',
+      'Arranging the permit to work after the task has already begun, so that the work is not delayed waiting for paperwork',
+      'Assuming your test instruments are charged and in calibration, and only checking them if a reading later looks unexpected',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Documentation and record-keeping as part of time management means:',
     options: [
-      'Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved',
+      'Leaving all paperwork until the end of the week and writing up every job from memory in one batch session',
       'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'It enables realistic planning, ensures adequate resources are allocated, allows coordination with production schedules, and builds trust in your professional judgement',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
+      'Treating documentation as optional, completing it only for jobs that go wrong or that are likely to be audited',
+      'Recording only the bare minimum so that no time is taken away from tools-on work during the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,22 +191,22 @@ const quizQuestions = [
     id: 10,
     question: 'The EPA assessor may evaluate your time management through:',
     options: [
-      'Discuss workload with your supervisor, identify whether the issue is workload volume, task estimation, or efficiency, and agree adjustments such as re-prioritisation, additional support, or skills development',
-      'Providing a clear, structured handover — what has been completed, what remains, what parts and tools are needed, any safety considerations, and the expected time to complete — so the next person can continue efficiently',
-      'Evidence in your portfolio of planned approaches, prioritisation decisions, deadline management, and professional communication about timescales — demonstrated through activity logs, reflective accounts and witness statements',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
+      'A separate, standalone timed test of time management taken in isolation from the rest of the EPA components',
+      'A stopwatch record of how quickly you complete each practical task, with the fastest times scoring the highest marks',
+      'Portfolio evidence of planning, prioritisation, deadline management and professional communication about timescales',
+      'A signed declaration from your employer alone, with no portfolio evidence or discussion required',
     ],
     correctAnswer: 2,
     explanation:
-      'Time management is assessed as a professional behaviour throughout the EPA. Your portfolio should show evidence of planning, prioritisation and deadline management. During the professional discussion, you may be asked about how you manage your workload, handle competing priorities, or deal with unexpected changes to your schedule.',
+      'Time management is assessed as a professional behaviour throughout the EPA. Your portfolio should show evidence of planning, prioritisation and deadline management, demonstrated through activity logs, reflective accounts and witness statements. During the professional discussion, you may be asked about how you manage your workload, handle competing priorities, or deal with unexpected changes to your schedule.',
   },
   {
     id: 11,
     question: 'If you consistently find you have too much work and not enough time, you should:',
     options: [
-      'Allocating specific time for completing documentation as part of the task — records are completed while information is fresh, ensuring accuracy and avoiding a backlog of paperwork',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
-      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
+      'Routinely work through your breaks and stay late without telling anyone, treating the overload as a personal failing to hide',
+      'Cut corners on testing and documentation to fit everything in, since the priority is to clear the list each day',
+      'Simply work faster on every task, on the basis that more speed is always the answer to too much work',
       'Discuss workload with your supervisor, identify whether the issue is workload volume, task estimation, or efficiency, and agree adjustments such as re-prioritisation, additional support, or skills development',
     ],
     correctAnswer: 3,
@@ -218,10 +218,10 @@ const quizQuestions = [
     question:
       'When handing over incomplete work to the next shift, effective time management requires:',
     options: [
-      'Providing a clear, structured handover — what has been completed, what remains, what parts and tools are needed, any safety considerations, and the expected time to complete — so the next person can continue efficiently',
-      'Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved',
-      'Discuss workload with your supervisor, identify whether the issue is workload volume, task estimation, or efficiency, and agree adjustments such as re-prioritisation, additional support, or skills development',
-      'Prioritised task list, estimated times, required tools and materials, permits needed, coordination requirements with other teams, and time for documentation and logging',
+      'A clear, structured handover of work done, work remaining, parts and tools needed, safety considerations and expected completion time',
+      'Leaving the job exactly as it is with no notes, on the basis that the next person can work out where you left off for themselves',
+      'Telling the next shift only that the job is unfinished, without explaining what remains or where the parts and tools are',
+      'Leaving a verbal message with a colleague rather than the incoming technician, and recording nothing about safety considerations',
     ],
     correctAnswer: 0,
     explanation:

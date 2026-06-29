@@ -46,12 +46,12 @@ const quizQuestions = [
   {
     question: 'How do smart home devices typically connect to Amazon Alexa?',
     options: [
-      'Direct Bluetooth only',
       'Through skills and account linking',
+      'Direct Bluetooth only',
       'Physical cable connection',
       'Infrared control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Smart home devices connect to Alexa through manufacturer skills. Users enable the skill and link their device manufacturer account to allow Alexa to discover and control devices.',
   },
@@ -59,11 +59,11 @@ const quizQuestions = [
     question: 'What is required for voice control to work when the internet is down?',
     options: [
       'Nothing - all voice assistants work offline',
-      'A local processing capable assistant and locally-connected devices',
       'A backup battery',
       'A stronger Wi-Fi signal',
+      'A local processing capable assistant and locally-connected devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most voice commands require internet for processing. Local voice processing (like some Alexa features) combined with locally-connected devices (Zigbee/Z-Wave) can provide limited offline functionality.',
   },
@@ -83,11 +83,11 @@ const quizQuestions = [
     question: 'Which privacy feature should customers be advised about regarding voice assistants?',
     options: [
       'Battery usage',
-      'Voice recordings may be stored and reviewed',
       'Screen brightness',
+      'Voice recordings may be stored and reviewed',
       'Speaker volume limits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Voice assistants may store recordings of commands for improving services. Customers should be advised about privacy settings, voice history deletion options, and mute functionality.',
   },

@@ -25,24 +25,24 @@ const inlineChecks = [
     question:
       'Step 1 on a 28 m ring of 2.5/1.5 mm² T&E gives r1 = 0.21 Ω, rn = 0.21 Ω, r2 = 0.18 Ω. GN3 Table BI says r1 ≈ 7.41 mΩ/m and r2 ≈ 12.10 mΩ/m at 20 °C. The r2 reading is suspicious. Why?',
     options: [
-      'It is fine — r2 lower than r1 happens on short rings.',
-      'Expected r2 for 28 m of 1.5 mm² CPC is roughly 0.34 Ω. A reading of 0.18 Ω is well below the calculated value, almost certainly a parallel earth path via metalwork or a CPC of the wrong csa. Investigate before progressing to Steps 2 and 3.',
-      'r2 should always equal r1 on a ring.',
-      'The meter needs nulling — that is the only cause.',
+      'It is fine — r2 lower than r1 happens routinely on short rings.',
+      'Expected r2 for 28 m is ≈ 0.34 Ω; 0.18 Ω points to a parallel earth path or wrong-csa CPC.',
+      'r2 should always equal r1 on any correctly wired ring final.',
+      'The meter simply needs nulling — that is the only possible cause.',
     ],
     correctIndex: 1,
     explanation:
-      'GN3 Section 2.6.6 sanity-checks Step 1 against magnitude before progressing. 28 × 12.10 mΩ/m ≈ 0.34 Ω. A reading roughly half that means the CPC is in parallel with another path (steel containment, supplementary bonding) or the cable is not what the design assumed. Either way, Steps 2 and 3 will be unreliable until the cause is found.',
+      'GN3 Section 2.6.6 sanity-checks Step 1 against magnitude before progressing. 28 × 12.10 mΩ/m ≈ 0.34 Ω, so a reading roughly half that means the CPC is in parallel with another path (steel containment, supplementary bonding) or the cable is not what the design assumed. Investigate before Steps 2 and 3, which will be unreliable until the cause is found.',
   },
   {
     id: 'mod3-s2-hill-profile',
     question:
       'Step 2 readings around a ring climb smoothly from 0.18 Ω at the first socket, peak at 0.31 Ω at the midpoint, then fall back to 0.18 Ω at the last socket. What is this telling you?',
     options: [
-      'A correctly wired ring with normal termination variation.',
-      'A spur at the midpoint.',
-      'Figure-of-eight — line and neutral ends are cross-paired at the board. Re-pair the four ends and re-test from Step 1.',
-      'The CPC is broken.',
+      'A correctly wired ring with normal termination variation between sockets.',
+      'A single spur taken off the socket at the midpoint of the ring.',
+      'Figure-of-eight — L and N ends are cross-paired at the board; re-pair and re-test.',
+      'The CPC is broken somewhere around the ring conductor.',
     ],
     correctIndex: 2,
     explanation:
@@ -62,14 +62,14 @@ const inlineChecks = [
     question:
       'Walking Step 3 round a ring, every socket reads 0.27–0.28 Ω except one behind the fridge that reads 0.56 Ω. Other readings are flat. What is the most likely cause?',
     options: [
-      'A figure-of-eight ring.',
-      'That socket is on a spur from the ring — the spur conductor adds series resistance not part of any parallel pair. Confirm at the back-box: one cable in = spur, two = ring connection.',
-      'A broken CPC at the fridge.',
-      'Test-lead resistance not nulled.',
+      'A figure-of-eight ring wired wrongly at the board.',
+      'That socket is a spur from the ring — its conductor adds series resistance there only.',
+      'A broken CPC at the socket behind the fridge.',
+      'Test-lead resistance that was not nulled before testing.',
     ],
     correctIndex: 1,
     explanation:
-      'GN3 Reg 2.19 calls this the spur signature: one isolated reading roughly twice the (r1+r2)/4 value against an otherwise flat profile. Spurs are permitted under OSG Appendix H rules but must be identified, recorded, and counted against the spur-per-ring limit.',
+      'GN3 Reg 2.19 calls this the spur signature: one isolated reading roughly twice the (r1+r2)/4 value against an otherwise flat profile. Confirm at the back-box — one cable in means a spur, two means a ring connection. Spurs are permitted under OSG Appendix H rules but must be identified, recorded, and counted against the spur-per-ring limit.',
   },
 ];
 
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'Reg 643.2.1 requires live-conductor continuity by resistance measurement on which circuits?',
     options: [
-      'Every final circuit',
-      'Only ring final circuits',
-      'Only radial socket circuits',
-      'Only high-integrity earthing arrangements',
+      'Every final circuit in the installation.',
+      'Only radial socket-outlet circuits.',
+      'Only ring final circuits.',
+      'Only high-integrity earthing arrangements.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The second limb of Reg 643.2.1 is specific: live-conductor continuity by measurement of resistance is only required for ring final circuits. On radials, only protective and bonding conductor continuity is required. The ring requirement exists because the ring topology can be wrong in ways visual inspection will not catch — a figure-of-eight, a missing leg, an interconnection — and only the three measurements expose it.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'In the GN3 Section 2.6.6 three-step ring continuity test, what is measured at Step 1?',
     options: [
-      'The resistance at every socket-outlet around the ring',
-      'The end-to-end (open-loop) resistance of each of the three conductors — line, neutral, CPC — measured separately at the consumer unit',
-      'The line-to-neutral resistance with the conductors cross-connected',
-      'The R1+R2 at the furthest socket',
+      'The end-to-end resistance of each conductor (line, neutral, CPC) separately at the board.',
+      'The resistance measured at every socket-outlet around the ring in turn.',
+      'The line-to-neutral resistance with the conductor ends cross-connected.',
+      'The R1+R2 measured at the furthest socket on the ring final.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Step 1 in GN3 Section 2.6.6 (Reg 2.16) is the end-to-end resistance of each conductor of the ring, measured separately at the distribution board / consumer unit with the two ends of each conductor identified. The values are conventionally labelled r1 (line), rn (neutral) and r2 (CPC). For a correctly wired ring, r1 ≈ rn, and r2 will be larger if a reduced CPC has been used.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'On a correctly wired ring final, what should the Step 2 reading at every socket on the ring be — and why?',
     options: [
-      'It should equal r1 + r2 measured in Step 1',
-      'It should equal (r1 + rn) / 4, and be the same at every socket because each socket sees half the line conductor in parallel with the other half',
-      'It should be zero',
-      'It should be exactly half of Step 1',
+      'It should equal the r1 + r2 value measured back in Step 1.',
+      'It should read approximately zero ohms at every socket.',
+      'It should be exactly half of the Step 1 end-to-end value.',
+      'It should equal (r1 + rn)/4 and read the same at every socket.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Step 2 cross-connects the line and neutral ends at the board, then measures L–N at each socket. Each socket sees the cable from one direction in parallel with the cable from the other direction. The two halves are roughly equal, so the result is (r1 + rn) divided by 4, and it should read the same at every socket on the ring. A jump up at one socket flags a spur. A progressive rise then fall around the ring flags a swap.',
   },
@@ -134,8 +134,8 @@ const quizQuestions = [
     id: 5,
     question:
       'You measure r1 = 0.41 Ω, rn = 0.42 Ω, r2 = 0.69 Ω at Step 1 on a 2.5/1.5 mm² ring. What is the expected Step 3 reading at every socket?',
-    options: ['0.55 Ω', '0.275 Ω', '1.10 Ω', '0.69 Ω'],
-    correctAnswer: 1,
+    options: ['0.55 Ω', '1.10 Ω', '0.275 Ω', '0.69 Ω'],
+    correctAnswer: 2,
     explanation:
       '(r1 + r2) / 4 = (0.41 + 0.69) / 4 = 1.10 / 4 = 0.275 Ω. Every socket on a correctly wired ring should read this within a small tolerance. A reading of 0.55 Ω at one socket would suggest a spur. Readings that climb to a peak halfway round and come back down would suggest the L and N ends are crossed.',
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'Around the ring, your Step 2 readings rise progressively from 0.21 Ω at socket 1 to 0.34 Ω at the midpoint and fall back to 0.21 Ω at the last socket. What does this pattern indicate?',
     options: [
-      'A correctly wired ring',
-      'A spur at the midpoint',
-      'The L and N ends of the ring are not joined correctly at the board — typically an L-end is connected to an N-end (the ring is wired as a figure of eight)',
-      'A break in the CPC',
+      'The L and N ends are paired incorrectly at the board — a figure-of-eight ring.',
+      'A correctly wired ring final circuit with normal variation.',
+      'A single spur taken off the midpoint socket of the ring.',
+      'A break in the CPC conductor somewhere on the ring.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'GN3 Reg 2.19 calls this the characteristic profile of a swapped or figure-of-eight ring: progressive increase to a midpoint then decrease. A correctly wired ring gives the same Step 2 reading at every socket. The fix is at the board, not in the cable — re-identify the four ends and pair them correctly.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'Every socket on the ring reads (r1 + r2)/4 within a few milliohms — except one, which reads roughly twice that value. Most likely explanation?',
     options: [
-      'A figure-of-eight ring',
-      'That socket is wired as a spur from the ring rather than being on the ring itself, and the spur conductor adds series resistance',
-      'A broken neutral',
-      'Test-lead resistance was not nulled',
+      'The ring is wired as a figure of eight at the board.',
+      'A broken neutral conductor somewhere on the ring.',
+      'The test-lead resistance was not nulled before testing.',
+      'That socket is a spur off the ring — its conductor adds series resistance there only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GN3 Reg 2.19 explicitly notes that any socket-outlet wired as a spur will indicate a higher resistance value because of the additional spur conductor length and connections. One isolated high reading at one socket — with all other sockets reading the expected (r1+r2)/4 — is the spur signature, not a fault. Confirm by inspection at the back box; one cable in instead of two means it is a spur.',
   },
@@ -172,26 +172,26 @@ const quizQuestions = [
     question:
       'Step 1 readings come back as r1 = 0.40 Ω, rn = 0.40 Ω, r2 = 0.41 Ω on a 2.5/1.5 mm² ring of approximately 35 m total length (GN3 Table BI: r1 + r2 ≈ 19.51 mΩ/m at 20°C, r2 only ≈ 12.10 mΩ/m). The r2 reading looks suspiciously low. What should you do?',
     options: [
-      'Accept — low is good',
-      'Investigate. Expected r2 alone for 35 m of 1.5 mm² CPC is roughly 0.42 Ω, but a reading equal to r1 (where r1 is 2.5 mm²) suggests the ring CPC is in parallel with another earth path, or the CPC has been wired in 2.5 mm² instead of 1.5 mm² — both are deviations from design that need resolving before completion',
-      'Re-measure with a multimeter',
-      'Replace the meter',
+      'Accept it — a lower-than-expected r2 is always on the safe side.',
+      'Investigate — r2 ≈ r1 suggests a parallel earth path or an oversized CPC.',
+      'Re-measure the ring using a general-purpose multimeter instead.',
+      'Assume the test instrument is faulty and replace it before retesting.',
     ],
     correctAnswer: 1,
     explanation:
-      'A measurement that disagrees with the calculated value is a flag, regardless of direction. An unexpectedly low r2 commonly indicates parallel earth paths (steel containment, bonded supplementary bonds in the bathroom that share the route, a back-box screwed to a metallic stud track that runs back to earth) or a CPC of the wrong csa. Either way, the certificate should not be raised on a number that does not match the design.',
+      'A measurement that disagrees with the calculated value is a flag, regardless of direction. r2 ≈ r1 (a 2.5 mm² value) points to a CPC wired in 2.5 mm² instead of 1.5 mm², or a parallel earth path — steel containment, supplementary bonds that share the route, or a back-box screwed to a metallic stud track that runs back to earth. Either way, the certificate should not be raised on a number that does not match the design.',
   },
   {
     id: 9,
     question:
       'On Step 3, the L–E reading at every socket comes back at (r1+r2)/4 ± 5 % — except at one accessory which reads ∞. What is the most likely cause?',
     options: [
-      'The CPC at that accessory is not terminated, or the back-box earth is the only earth path and is not actually connected to the CPC',
-      'The ring is wired as a figure of eight',
-      'A spur',
-      'The link at the board has fallen off',
+      'The ring is wired as a figure of eight.',
+      'That accessory is a spur off the ring.',
+      'The CPC at that accessory is not terminated — or the back-box earth is the only path and is not connected to the CPC.',
+      'The cross-connect link at the board has fallen off.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'If the link at the board had fallen off, every socket would read open. A single open at one accessory while every other accessory reads correctly localises the fault to that accessory: the CPC tail is not landed under the screw, the back-box earth is being relied on without a proper flylead, or there is broken strand conductor between the CPC tail and the terminal.',
   },
@@ -200,14 +200,14 @@ const quizQuestions = [
     question:
       'The Schedule of Test Results has a column for R1+R2 for ring finals. Which of the three readings from the GN3 method goes in that column, and to what precision?',
     options: [
-      'Step 1 r1 + r2, recorded to one decimal',
-      'Step 2 (line–neutral) at the worst socket, recorded as measured',
-      'Step 3 (line–CPC) at the worst socket on the ring — i.e. the highest L–E reading observed during Step 3 — recorded to two decimal places in ohms; this is the (r1+r2)/4 value at the worst socket and is the value used for Zs verification on the ring',
-      'The end-to-end r1 + r2 from Step 1 alone',
+      'The highest Step 3 (line–CPC) reading on the ring, recorded to two decimals.',
+      'The Step 1 r1 + r2 value, recorded to one decimal place in ohms.',
+      'The Step 2 (line–neutral) reading taken at the worst socket, as measured.',
+      'The end-to-end r1 + r2 from Step 1 alone, taken at the board.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'The R1+R2 column for a ring final takes the worst (highest) Step 3 reading around the ring, recorded to two decimals in ohms. This is the conductor-only loop seen at the most remote socket — the value that, added to Ze, gives the Zs at the worst case for the ring. End-to-end r1+r2 from Step 1 is not the R1+R2 the schedule wants; it is a diagnostic intermediate, not the design value.',
+      'The R1+R2 column for a ring final takes the worst (highest) Step 3 reading around the ring — the (r1+r2)/4 value at the most remote socket — recorded to two decimals in ohms and used for Zs verification. This is the conductor-only loop that, added to Ze, gives the Zs at the worst case for the ring. End-to-end r1+r2 from Step 1 is not the R1+R2 the schedule wants; it is a diagnostic intermediate, not the design value.',
   },
 ];
 

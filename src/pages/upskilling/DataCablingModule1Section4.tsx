@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'A junior tells you "10G needs Cat6A, 25G needs Cat8 — they are different cables for different speeds". What is the more accurate way to think about Ethernet evolution and the 100 m channel?',
     options: [
-      'Each speed has its own cable; the channel rule changes too.',
-      'Every Ethernet variant from 100BASE-TX (1995) to 10GBASE-T (2006) and 25GBASE-T (2016) is engineered to preserve the 100 m channel within the appropriate Class — so the design discipline is to specify a CLASS with enough headroom for the foreseeable services and let new speeds slot in. Cat8 (Class I/II) is the special case: 25/40 GbE at 30 m channel only, used in data-centre top-of-rack.',
-      'Class is irrelevant — only Category matters.',
-      'The 100 m channel rule was abolished in 2016.',
+      'Each speed is engineered to keep the 100 m channel within its Class, so you specify a Class with headroom and let speeds slot in.',
+      'Each speed has its own dedicated cable type, and the channel-length rule changes with each new variant.',
+      'Class is irrelevant to the channel — only the Category number printed on the cable jacket matters.',
+      'The 100 m channel rule was abolished in 2016 once 25GBASE-T copper was standardised for the desk.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The 100 m channel is preserved across the Ethernet variants that the building cabling industry cares about. The way Ethernet evolution works is that each new speed is engineered to fit the existing channel budget at the appropriate Class — Class D for 100/1000BASE-T, Class E for 1000BASE-T and 10G to 55 m, Class EA for 10G to 100 m, Class FA for 10G with headroom, and Class I/II (Cat8) only for 25/40 GbE at 30 m channel for data-centre TOR. Future-proofing a generic-cabling install means picking the Class with enough headroom for the services the building will see — not picking a different cable for each speed.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'A 2026 fit-out specifies Class EA / Cat6A horizontal. Without re-pulling, what range of services should the cabling absorb over its 15-20 year life?',
     options: [
-      'Only 1 GbE.',
-      'All four-pair Ethernet variants up to 10GBASE-T at the full 100 m channel, plus IEEE 802.3bt PoE Type 1-4 (up to 90 W PSE / 71.3 W PD, within the 750 mA per-conductor BS 7671 §716.523.2.101 hard cap), plus 2.5GBASE-T and 5GBASE-T, plus IP voice / video / IoT / building-automation / digital-signage services running over Ethernet. 25GBASE-T at 100 m is OUT of scope for Class EA — it needs Class FA / Cat6A-with-headroom or Cat8 at shorter reach.',
-      'Only IP voice and CCTV.',
-      'Only services available in 2026 — anything later requires re-pulling.',
+      'Only 1 GbE — anything faster than gigabit will require the horizontal cabling to be re-pulled.',
+      'Only IP voice and CCTV traffic — any data services above that band need a higher cabling Class.',
+      'All four-pair Ethernet to 10GBASE-T at 100 m, the 2.5G/5G variants, and Type 1-4 PoE within the 750 mA cap.',
+      'Only the specific services available in 2026 — anything introduced later forces a re-pull of the cabling.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Class EA / Cat6A is the 2026 default precisely because it absorbs the foreseeable services for 15-20 years: 10GBASE-T at full 100 m, 2.5G/5G/10G-BASE-T (NBASE-T variants designed for legacy Cat5e/6 reuse), Type 4 PoE++, all 1000BASE-T variants, IP voice / video / IoT. 25GBASE-T at 100 m is the next step up and requires Class FA or Cat8 at shorter reach — that is the boundary at which a 2026 install would consider an upgrade or a fibre-to-the-edge architecture.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'A property developer wants the building "future-proofed for 100 GbE" and asks if they should specify Cat8 horizontal everywhere. What is the correct technical answer?',
     options: [
-      'Yes — Cat8 is the future-proof choice.',
-      'No — Cat8 (Class I/II) is engineered for 25/40 GbE at a 30 m channel and is intended for data-centre top-of-rack short links, not building-wide horizontal cabling. For 100 GbE in a horizontal channel, the appropriate medium is OPTICAL FIBRE (OM4 / OM5 multi-mode for shorter runs, OS2 single-mode for longer) — fibre-to-the-edge. The future-proof building strategy is Cat6A copper to most outlets PLUS fibre to high-density areas (APs, server-rack uplinks, broadcast / lab spaces).',
-      'Yes — but only with Cat8.1.',
-      'Yes — Cat8 supports 100 GbE at 100 m.',
+      'Yes — Cat8 everywhere is the genuinely future-proof horizontal choice.',
+      'Yes — but only if the Cat8.1 variant is specified rather than Cat8.2.',
+      'Yes — Cat8 supports 100 GbE across a full 100 m horizontal channel to every outlet.',
+      'No — Cat8 is a 25/40 GbE 30 m data-centre cable; building-wide 100 GbE needs optical fibre, not Cat8 horizontal.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cat8 (Class I per ANSI/TIA-568.2-E and Class II per ISO/IEC 11801-1) is a SHORT-CHANNEL data-centre cable: 25 / 40 GbE at 30 m channel maximum. It is not the future-proof horizontal medium. 100 GbE horizontal demands fibre — OM4 / OM5 / OS2 — which is what every modern future-proofing strategy specifies for high-density and high-speed areas, alongside Cat6A copper to general outlets. Cat8 is a useful tool in the right context (data-centre TOR), but specifying it building-wide is a category error.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'A future-proofing plan should account for how PoE will grow on the cabling. What are the relevant numbers and clauses for sizing the PASSIVE infrastructure for PoE growth from 15 April 2026?',
     options: [
-      'There is no relevant cap.',
-      'IEEE 802.3bt Type 4 caps PSE at 90 W and PD at 71.3 W (across all four pairs). BS 7671 §716.523.2.101 imposes a HARD regulatory cap of 750 mA per conductor; §716.526.101 imposes 750 mA per contact at the connecting hardware; §716.521.101 requires Cat 5/6/6A/7/7A/8.1/8.2 cable. Bundle thermal management is governed by TIA TSB-184-A and BS EN 50174-2 (cited in §716.523.1.101 NOTE 2). Future-proofing for PoE means: Cat6A or better, generous bundle separation, basket fill < 50 %, and design current within 750 mA per conductor.',
-      'PoE grows beyond 100 W in future amendments.',
-      'BS 7671 caps PoE at 60 W per port.',
+      'Type 4 caps PSE at 90 W / PD at 71.3 W, and §716.523.2.101 caps the cabling at 750 mA per conductor.',
+      'There is no relevant regulatory cap on PoE current — it is limited only by the switch port itself.',
+      'PoE is expected to grow well beyond 100 W per port in the next round of IEEE amendments.',
+      'BS 7671 caps PoE at 60 W per port, matching the older Type 3 four-pair power level.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Future-proofing for PoE growth is bounded by IEEE 802.3bt's Type 4 (90 W PSE / 71.3 W PD) — there is no 100 W class — AND by BS 7671 §716.523.2.101's 750 mA per-conductor hard cap. The cabling-thermal envelope is the operative constraint as bundles grow: TIA TSB-184-A and BS EN 50174-2 (referenced via §716.523.1.101 NOTE 2 to PD CLC/TR 50174-99-1 and BS ISO/IEC 14763-2) give the bundle-management guidance. Specifying Cat6A, generous basket fill, and bundle counts that respect the de-rating tables is the future-proofing discipline.",
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       "What is the central design discipline of 'future-proofing' a structured cabling install?",
     options: [
-      'Buying the most expensive cable available.',
-      'Specifying a CLASS with enough headroom that the foreseeable services over the 15-20 year cabling life slot in without re-pulling — and provisioning pathway capacity, outlet density and bonding for those services. Future-proofing is a SPECIFICATION discipline, not a procurement-of-newest discipline.',
-      'Installing fibre to every outlet.',
-      'Avoiding PoE because it complicates planning.',
+      'Specifying a Class with enough headroom that foreseeable services slot in without re-pulling, plus pathway, density and bonding for them.',
+      'Buying the most expensive cable available on the market and fitting it throughout the whole building.',
+      'Installing optical fibre to every single outlet, regardless of the services actually planned for the site.',
+      'Avoiding PoE entirely, on the basis that it only complicates the cabling planning and thermal design.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Future-proofing is decided at SPEC time. Pick a Class with headroom. Provision pathway capacity for ~50 % growth. Specify generous outlet density at first fit (cheap then, expensive later). Specify bonding and labelling that survive active-equipment refreshes. The cabling absorbs the services it was specified to absorb — and almost no service has ever been retro-specced to a non-future-proofed cabling installation.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Which Ethernet variant introduced 1 Gbps on twisted-pair cabling using all four pairs simultaneously, becoming the long-running default for office networks?',
     options: [
-      '10BASE-T (1990).',
-      '1000BASE-T (IEEE 802.3ab, 1999) — uses all four pairs of Cat5e (Class D) for full-duplex 1 Gbps at 100 m channel, with 5-level PAM-5 signalling. The first widely-deployed gigabit Ethernet on copper, and the variant against which "gigabit to the desk" became a default expectation.',
-      '100BASE-FX (1995).',
-      '40GBASE-T (2016).',
+      '10BASE-T (1990) — the original 10 Mbps Ethernet over two pairs of twisted-pair cabling.',
+      '100BASE-FX (1995) — 100 Mbps Fast Ethernet running over a pair of optical fibres.',
+      '1000BASE-T (IEEE 802.3ab, 1999) — 1 Gbps over all four pairs of Cat5e at the 100 m channel.',
+      '40GBASE-T (2016) — 40 Gbps over a short 30 m copper channel for data-centre links.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '1000BASE-T (1999) was the breakthrough. It used all four pairs simultaneously with PAM-5 signalling to deliver 1 Gbps full-duplex across a 100 m channel of Cat5e (Class D) cabling. It became the default office Ethernet speed for ~15 years and is still ubiquitous today. The 100 m channel rule was preserved (and has been ever since), which is why a 1999 Cat5e office build that was honestly Class D delivered gigabit without a re-pull when 1000BASE-T arrived.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which Ethernet variant requires Class EA / Cat6A cabling to deliver its full 100 m channel reach?',
     options: [
-      '10BASE-T.',
-      '10GBASE-T (IEEE 802.3an, 2006) — 10 Gbps full-duplex over four pairs with DSQ128 signalling at 400 MHz fundamental, channel reach 100 m on Class EA / Cat6A and only 55 m on Class E / Cat6 due to alien crosstalk. This is the variant that drove Cat6A adoption as the post-2010 commercial default.',
-      '100BASE-TX.',
-      '1000BASE-T.',
+      '10BASE-T — the original 10 Mbps Ethernet, which runs on Cat3 cabling to 100 m.',
+      '100BASE-TX — 100 Mbps Fast Ethernet, which reaches 100 m on Cat5 cabling.',
+      '1000BASE-T — gigabit Ethernet, which reaches its full 100 m on Cat5e (Class D).',
+      '10GBASE-T (IEEE 802.3an, 2006) — 10 Gbps reaching 100 m only on Class EA / Cat6A.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "10GBASE-T (2006) is the variant that defines the 2010-2025 cabling-spec landscape. It needs Class EA / Cat6A to reach the full 100 m channel — Class E / Cat6 reaches only 55 m due to alien crosstalk between adjacent cables (which is why Cat6A's separators / shielding matter). This is why Cat6A became the default new-install Class from ~2014 onwards: it future-proofed the building for 10G-to-the-desk without speculative fibre cost.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'How are 2.5GBASE-T and 5GBASE-T (the "NBASE-T" / IEEE 802.3bz variants, 2016) intended to be used?',
     options: [
-      'They are obsolete.',
-      'They are intermediate speeds (2.5 Gbps and 5 Gbps) engineered specifically to run on EXISTING Cat5e / Cat6 installations at the full 100 m channel — preserving the 100 m rule while delivering more than gigabit on cabling that cannot quite manage 10G. The motivating use case was Wi-Fi 5 / Wi-Fi 6 access points outpacing 1 GbE uplinks in older buildings.',
-      'They require Cat8.',
-      'They only work over fibre.',
+      'They are intermediate speeds engineered to run on existing Cat5e / Cat6 at the full 100 m channel.',
+      'They are obsolete variants that were withdrawn shortly after publication in 2016.',
+      'They require Cat8 cabling and a 30 m channel to operate at their rated speed.',
+      'They only work over optical fibre and cannot run on any twisted-pair cabling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "2.5G and 5G-BASE-T (IEEE 802.3bz, 2016) are deliberately engineered to use existing Cat5e / Cat6 cabling at full 100 m. They are an admission that gigabit was no longer enough for high-density Wi-Fi APs but that re-cabling every existing office building to Cat6A was uneconomic. They preserve the 100 m channel rule by reducing the symbol rate compared to 10GBASE-T. They are an excellent example of the cabling industry's discipline of preserving the channel budget across speed transitions.",
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'What does Cat8 (Class I per ANSI/TIA-568.2-E, Class II per ISO/IEC 11801-1) actually deliver, and where is it used?',
     options: [
-      '100 GbE at 100 m channel — the future-proof copper.',
-      'Cat8 supports 25 GBASE-T and 40 GBASE-T at a 30 m CHANNEL (not 100 m), with 2 connector terminations maximum. It is engineered for data-centre top-of-rack copper from a top-of-rack switch to servers in the same or adjacent rack. It is NOT a building-wide horizontal cable — that role belongs to Cat6A or fibre.',
-      'It is identical to Cat6A.',
-      'It is only used for fibre.',
+      '100 GbE at a full 100 m channel — making it the future-proof copper for whole buildings.',
+      'Performance identical to Cat6A, just with a different category label on the jacket.',
+      '25/40 GbE over a 30 m data-centre channel — top-of-rack copper, not a building-wide horizontal cable.',
+      'A fibre-only specification, with no copper conductors, used for optical backbone links.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cat8 is the data-centre TOR copper. ANSI/TIA-568.2-E specifies Cat8 with a 30 m channel and only 2 connector terminations. It is intended for short server-to-switch links inside a rack or between adjacent racks. Specifying Cat8 building-wide is a category error — the building-wide horizontal cable is Cat6A, with fibre to high-density areas. For 100 GbE in a building-wide context, the answer is multi-mode (OM4/OM5) or single-mode (OS2) fibre, not Cat8.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'What does "Class headroom" mean in cabling specification?',
     options: [
-      'The space above the cable basket.',
-      "The margin between the cabling install's certified Class performance and the worst-case Class required by the foreseeable services. A Cat6A install honestly certified to Class EA delivers exactly 10G at 100 m; a Cat6A install certified to Class EA WITH MARGIN (passing Class FA on the same channel) gives headroom for 25G at shorter reach or for tighter PoE thermal regimes.",
-      'The TR ceiling height.',
-      'The patch-panel rack space.',
+      'The physical clearance space left above the cable basket for future cables.',
+      'The spare ceiling height available in the telecommunications room (TR).',
+      'The number of free U-slots left in the patch-panel rack for future hardware.',
+      'The margin between the channel’s certified Class performance and the Class the foreseeable services need.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Class headroom is the certified-margin concept. Cat6A is engineered to MEET Class EA at 100 m. Premium Cat6A (sometimes marketed as "10G-plus" or "Class FA-ready") will pass Class FA on the same channel, giving headroom — meaning that as services tighten (more PoE current, tighter bundle, ageing connectors) the channel still passes Class EA comfortably. Specifying for headroom is a deliberate, defensible future-proofing choice.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'A future-proof building strategy in 2026 typically combines which TWO physical media in the same install?',
     options: [
-      'Cat5e copper everywhere, no fibre.',
-      'Cat6A balanced copper to most general outlets (delivering 10GBASE-T to 100 m, NBASE-T variants, Type 4 PoE) PLUS optical fibre (typically OM4 / OM5 multi-mode and / or OS2 single-mode) to high-density areas — backbone, AP locations, server-rack uplinks, broadcast / lab spaces — for 25/40/100 GbE service density.',
-      'Cat8 copper to every desk plus coax for cameras.',
-      'Wi-Fi only — no cabling.',
+      'Cat6A copper to general outlets, plus optical fibre to high-density and high-speed areas.',
+      'Cat5e copper everywhere, with no fibre provided anywhere in the building.',
+      'Cat8 copper to every desk, plus coaxial cable runs to the CCTV cameras.',
+      'Wi-Fi coverage only, with no fixed cabling installed to the work areas at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2026 future-proof default is Cat6A general copper + fibre to density. Cat6A delivers 10G to the desk and Type 4 PoE within the 750 mA per-conductor cap. Fibre to APs / server uplinks / high-density labs delivers 25/40/100 GbE service density without copper-channel constraints. The hybrid approach absorbs services from voice over IP (small) up to high-density Wi-Fi 7 / fibre-to-the-edge (very large) without re-pulling.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 §716.521.101 lists the cable categories permitted for ELV DC distribution over balanced cabling. Which set of categories is correct?',
     options: [
-      'Cat5 only.',
-      'Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 (or other cables as defined in BS EN 50173-1 by reference to BS EN 50288 series).',
-      'Cat6A and Cat8 only.',
-      'Any cable provided it has a screen.',
+      'Category 5 only — older categories are excluded from DC power distribution.',
+      'Category 6A and Category 8 only — the regulation sets Cat6A as the minimum permitted.',
+      'Category 5, 6, 6A, 7, 7A, 8.1 or 8.2 (or equivalents defined in BS EN 50173-1).',
+      'Any cable at all, provided it carries an overall screen around the conductors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§716.521.101 (verbatim from the A4:2026 RAG): "Information and communication technology (ICT) cables used for the distribution of DC power shall comply with Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 or other cables as defined in BS EN 50173-1 by reference to the specifications given in BS EN 50288 series." Cat5 is included — but for any practical 2026 future-proof install Cat6A is the floor, not Cat5.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'A specifier wants to plan for "100 GbE at 100 m" in a building horizontal channel. Which medium and which standard answer that brief?',
     options: [
-      'Cat8.1 copper.',
-      'Multi-mode optical fibre (OM4 typically reaches 100 m for 100GBASE-SR4 with parallel optics, OM5 stretches further with SWDM4). For longer reach or more conservative futures, OS2 single-mode reaches well beyond building-wide distances. Reach numbers are governed by IEEE 802.3 (the relevant Ethernet variant) and BS EN 50173-1 / ISO/IEC 11801-1.',
-      'Coaxial cable.',
-      'There is no medium that can do that.',
+      'Cat8.1 copper, which is rated for 100 GbE across a full 100 m channel.',
+      'Coaxial cable, run as a high-bandwidth backbone between floors.',
+      'There is no medium capable of carrying 100 GbE over a 100 m channel.',
+      'Optical fibre — OM4 / OM5 multi-mode for building-internal runs, OS2 single-mode for longer reach.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '100 GbE at 100 m horizontal is a fibre brief. OM4 / OM5 multi-mode fibre is the typical building-internal choice, OS2 single-mode for longer reaches and higher per-fibre service rates. The Ethernet variants (100GBASE-SR4 with 4-pair MPO, 100GBASE-DR / FR for longer reach) are governed by IEEE 802.3, and the cabling distances are set by BS EN 50173-1 / ISO/IEC 11801-1. Cat8 cannot reach 100 m at 100 GbE — that is not what it is engineered for.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'Which TWO disciplines, applied at first fit, deliver the most future-proofing for the lowest extra cost?',
     options: [
-      'More expensive cable everywhere; vendor-locked patch panels.',
-      'Specifying GENEROUS OUTLET DENSITY (extra outlets at first fit cost very little — they cost 5-10× more to add later) AND PATHWAY CAPACITY headroom (basket fill below ~50 %, ducts sized for ~50 % growth). Both deliver foreseeable-service absorption at small marginal cost on day one and avoid brutal retrofit costs later.',
-      'Pre-installing all switches at first fit.',
-      'Skipping documentation to save effort.',
+      'Generous outlet density and pathway-capacity headroom, both cheap at first fit and costly to add later.',
+      'Buying more expensive cable everywhere and fitting vendor-locked patch panels.',
+      'Pre-installing all the active network switches during the first fit-out phase.',
+      'Skipping the as-installed documentation to save labour effort on the job.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outlet density and pathway capacity are the two cheap-now / expensive-later levers. An extra Cat6A outlet at first fit costs perhaps £40-£80 including labour and termination; the same outlet retro-fitted into an occupied building costs £200-£400 or more. Pathway capacity (cable basket fill ratios per BS EN 50174-2 / TIA-569-E) is the same logic at the containment scale — a 50 % fill at first fit absorbs growth, a 90 % fill at first fit forces re-tray work in two years. Both choices are made at first fit and both deliver the foreseeable-service absorption that "future-proofing" actually means.',
   },

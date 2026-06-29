@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'On-roof PV mounting — what is it?',
     options: [
-      'Modules built into roof tiles',
-      'Modules mounted on rails fixed above an existing roof covering (tiles, slates, metal). The dominant residential architecture on retrofit installs and most new-build PV. Maintains the original waterproofing of the roof; PV is added on top with a 70–100 mm standoff for cooling airflow',
-      'Modules on the ground',
-      'Modules in a façade',
+      'Modules built into roof tiles, replacing the tile covering over the array area',
+      'Modules mounted on rails fixed above an existing roof covering, with a standoff for cooling airflow',
+      'Modules supported on ground-mounted frame structures on the customer\'s land',
+      'Modules forming a building façade in place of conventional cladding',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'In-roof PV mounting — what is it?',
     options: [
-      'Modules inside the loft',
-      'Modules integrated into the roof structure, replacing tiles or slates over the array area. The modules themselves become the weatherproof roof covering, with a proprietary flashing system around the array perimeter. Mostly used on new-builds or major roof refurbishments — replaces tile/slate cost with module cost',
-      'Modules on the ground',
-      'Modules below ceiling level',
+      'Modules mounted inside the loft beneath the roof covering',
+      'Modules integrated into the roof structure, replacing tiles or slates as the weatherproof covering',
+      'Modules supported on ground-mounted frames near the building',
+      'Modules fixed below ceiling level inside the dwelling',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Ground-mount PV — when is it the right architecture?',
     options: [
-      'Always',
-      'On installs where roof area is insufficient or unsuitable, where the customer has land available (typically rural / agricultural settings), or where commercial-scale installs are economic. Frame structures support the modules above the ground; the rear of the modules is fully ventilated, giving the best cooling performance of any architecture',
-      'Only off-grid',
-      'Only commercial',
+      'On every install, as the default choice regardless of roof suitability',
+      'Where roof area is insufficient or unsuitable and the customer has land available, including rural and commercial-scale sites',
+      'Only on off-grid installs with no DNO connection to the public supply',
+      'Only on commercial installs, never on domestic properties',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BIPV (Building-Integrated PV) — what does it cover?',
     options: [
-      'Standard rooftop PV',
-      'Photovoltaic elements that serve a structural / architectural role in the building as well as generating electricity — solar façades, PV glazing in glass walls, PV-integrated curtain walling, walkable PV on terraces. The PV element IS the building component; removing it would leave a structural / weatherproofing gap',
-      'Wind turbines',
-      'Solar thermal collectors',
+      'Standard rooftop PV mounted on rails above the existing roof covering',
+      'PV elements that serve a structural or architectural building role as well as generating — façades, PV glazing, walkable surfaces',
+      'Wind turbines integrated into the building structure for on-site generation',
+      'Solar thermal collectors heating water rather than generating electricity',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A survey on a retrofit on-roof PV install must verify what about the roof structure?',
     options: [
-      'Just the roof colour',
-      'Roof structural capacity for the additional PV load (modules + mounting + wind uplift), condition of the roof covering and underlay, suitability of the rafter / batten arrangement for the chosen fixings, condition of the flashings around any planned penetrations, and the remaining service life of the roof covering vs the 25+ year PV array life',
-      'Just the roof tile colour',
-      'Only the roof age',
+      'Only the colour of the roof covering against the customer\'s preference',
+      'Structural capacity for the PV load, covering and underlay condition, rafter / batten fixings, flashings, and remaining roof service life',
+      'Only the type of tiles fitted, ignoring the supporting structure',
+      'Only the age of the roof, taken as a single yes / no test',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'On a typical UK domestic on-roof install, the optimal PV array orientation and tilt for maximum annual yield is roughly:',
     options: [
-      'North-facing, 90° tilt',
-      'South-facing (azimuth 180° from north), tilt 30–40° (matches typical UK roof pitches and the latitude-appropriate solar elevation). Real installs typically follow the existing roof pitch rather than optimising — the loss from sub-optimal tilt / orientation is usually 5–15% on a UK install, accepted in exchange for not modifying the roof structure',
-      'East-facing, flat',
-      'West-facing, vertical',
+      'North-facing at a 90° vertical tilt, away from the midday sun',
+      'South-facing (azimuth 180°) at a 30–40° tilt, matching typical UK roof pitches and solar elevation',
+      'East-facing on a flat (0°) array with no tilt applied',
+      'West-facing at a 90° vertical tilt against a gable wall',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Shading topology — what should the survey capture?',
     options: [
-      'Just the time of day',
-      'Sources of shade across the year (trees, chimneys, neighbouring buildings, distant objects), how the shading pattern moves with sun position (morning shade vs midday shade vs afternoon shade — and seasonal variation as sun elevation changes), the impact on specific modules within the proposed array, and the architectural mitigation (separate strings into separate MPPTs, or module-level optimisation)',
-      'Whether the customer likes shade',
-      'The weather forecast',
+      'Only the time of day, recorded as a single survey-visit observation',
+      'Shade sources across the year, how the pattern moves with the sun, the modules affected, and the architectural mitigation',
+      'Only the customer\'s personal preference for a shaded or sunny garden',
+      'Only the short-range weather forecast for the install date',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A new-build customer with a fully-architectural design wants integrated PV on the south roof. Three options at survey: on-roof retrofit-style, in-roof integrated, or full BIPV roof. Which is right for the new-build aesthetic?',
     options: [
-      'On-roof always',
-      'In-roof or BIPV — both deliver the architectural aesthetic of a continuous roof surface without panels &ldquo;sitting on top&rdquo;. In-roof is cheaper and more standard; BIPV is premium and may include glazing, façades and other building elements as PV. The new-build context is when these aesthetics are easiest to deliver because the roof can be designed around the PV',
-      'Ground-mount only',
-      'No PV',
+      'In-roof or BIPV — both give a continuous roof surface, and new-build is when the roof can be designed around the PV',
+      'On-roof retrofit-style mounting in every case, regardless of the architectural design',
+      'Ground-mount only, moving the array off the architectural roof entirely',
+      'No PV, since integrated aesthetics cannot be achieved on a new-build roof',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New-build construction is the natural moment to specify in-roof or BIPV — the roof structure can be designed to accommodate the PV module dimensions and the perimeter flashings without major retrofit complexity. On-roof retrofit is the right architecture for adding PV to an existing roof; new-build PV gets the option of the integrated aesthetics that on-roof can\'t deliver. The Future Homes Standard (covered in Module 1 Section 7) drives much of the new-build PV market.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A customer with a south-facing main roof pitch but also an east extension proposes 12 modules across both. What architectural decision matters most?',
     options: [
-      'Whether the modules are blue or black',
-      'Treating the two roof pitches as separate strings into separate MPPT inputs (Section 2.4) — the architectural decision affects inverter topology and the per-string design. The visible aesthetic on each roof pitch may differ (orientation, tilt, module count) but the electrical architecture treats them as two independent arrays sharing one inverter',
-      'Removing the east roof',
-      'Tilting the modules manually',
+      'Whether the modules are blue or black to match the roof aesthetic',
+      'Treating the two roof pitches as separate strings into separate MPPT inputs on one inverter',
+      'Removing the east extension roof so a single-orientation array can be used',
+      'Tilting the east-pitch modules manually on frames to match the main roof',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A ground-mount PV install on a customer\'s land — what foundation choice matters most for a residential 5 kWp install?',
     options: [
-      'Always concrete',
-      'Concrete ballast (no ground penetration, suitable for soft ground, no planning issues, but heavier hardware footprint) OR driven piles (ground-penetrating, lighter visual footprint, but may require geotechnical assessment and planning consideration). The choice depends on the ground type, the customer\'s long-term land use, and any local planning constraints',
-      'Always piles',
-      'No foundation needed',
+      'Always concrete ballast, regardless of the ground type or planning position',
+      'Always driven piles, regardless of the ground type or planning position',
+      'Concrete ballast or driven piles, chosen on ground type, land use and local planning',
+      'No foundation is needed for a residential ground-mount array of this size',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ground-mount foundations come in two main types. Concrete ballast (precast concrete blocks, no ground penetration — the array sits on the ground supported by the ballast weight) suits soft ground, avoids planning permission complications, and is straightforward to remove if the land use changes. Driven piles (galvanised steel piles driven into the ground) have a lighter visual footprint and better long-term stability but may require geotechnical assessment and planning consideration. The choice depends on ground conditions, planning requirements, and the customer\'s long-term land-use plans.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'The PWI common-mistakes list flags &ldquo;installing modules flush to roof surface&rdquo; as a high-frequency error. What\'s the cooling discipline?',
     options: [
-      'Modules can be installed any way',
-      'Maintain the 70–100 mm (7–10 cm) standoff above the roof surface — encourages natural convection and reduces module operating temperature by 10–20°C vs flush-mounted installs. The yield gain over a 25-year array life is 5–8% accumulated; the structural / thermal cost of flush-mounting is meaningful',
-      'Flush-mounting improves cooling',
-      'Standoff doesn\'t matter',
+      'Modules can be mounted at any clearance, since the standoff has no thermal effect',
+      'Flush-mounting against the roof surface improves cooling and lifts yield',
+      'Standoff distance is a warranty formality with no measurable yield impact',
+      'Maintain a 70–100 mm standoff for natural convection, keeping modules 10–20°C cooler than flush-mounted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Section 712 makes the installer responsible for delivering adequate heat dissipation per the manufacturer\'s spec (Section 2.2). The standard discipline is the 70–100 mm standoff above the roof surface — natural convection between the module backsheet and the roof surface keeps cell temperatures 10–20°C cooler than flush-mounted equivalents. The temperature coefficient (~-0.4 %/°C P_max) means the cooler install yields measurably more annual energy. Flush-mounting also voids the manufacturer\'s warranty in most cases.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A customer with planning constraints (Conservation Area, restrictions on visible-from-public-realm PV) wants PV on their south-facing roof. The on-roof retrofit aesthetic is unacceptable to the local planning authority. What architectural alternative may be acceptable?',
     options: [
-      'No PV',
-      'In-roof integrated PV — the modules replace the tiles over the array area, the array reads as part of the roof rather than as panels on top. Acceptability depends on the local planning policy; engagement with the conservation officer at survey stage is the recommended path. The alternative is rear-roof on-roof (not visible from public realm) where the geometry allows',
-      'Ground-mount in front garden',
-      'Solar thermal instead',
+      'In-roof integrated PV so the array reads as part of the roof, agreed with the conservation officer at survey',
+      'No PV at all, abandoning the install because the roof is in a Conservation Area',
+      'Ground-mount in the front garden, which is more visible from the public realm',
+      'Solar thermal panels instead, which carry the same visible-roof planning concern',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Conservation Area and listed-building restrictions on visible-from-public-realm PV can sometimes be resolved with in-roof integration (where the array reads as part of the roof surface rather than as panels sitting on top). Acceptability is decided by the local planning authority\'s conservation officer; the survey-stage engagement is essential. The alternative is moving the array to a rear-facing roof slope not visible from public realm (where the geometry allows). The competent installer reads the planning landscape (Module 1 Section 7) and proposes the architectural alternative early.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A 60 m² south-facing roof, mid-Wales, customer wants maximum annual yield. The roof pitch is 35°, azimuth 180° (true south). Approximate annual yield for a fully-occupied 60 m² array?',
     options: [
-      'Hard to estimate without more data',
-      'PVGIS or equivalent yield modelling tools are the operational reference. For mid-Wales, south-facing, 35° tilt, modern modules at ~22% efficiency, performance ratio 0.80, the modelled yield is roughly 950–1,050 kWh/kWp per year. A fully-occupied 60 m² roof at ~200 W/m² module density = ~12 kWp = 11,400–12,600 kWh/year',
-      '5,000 kWh/year exactly',
-      '50,000 kWh/year',
+      'Impossible to estimate even with PVGIS modelling and the stated orientation and tilt',
+      'About 11,400–12,600 kWh/year — a ~12 kWp roof at ~950–1,050 kWh/kWp modelled in PVGIS',
+      'Exactly 5,000 kWh/year, fixed regardless of the array size on the roof',
+      'Around 50,000 kWh/year from a 60 m² domestic south-facing roof',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'A solar carport (PV-roofed parking structure) on a commercial site combines two functions — what is the key design consideration distinct from rooftop PV?',
     options: [
-      'No special consideration',
-      'Structural design must handle both the PV load AND the vehicle-impact loads (parked / moving vehicles can collide with carport supports). Foundations must be more substantial than rooftop or typical ground-mount. EV charging integration is often paired with the carport — PV roof feeds chargepoints below, requiring cross-discipline design under Section 712 + Section 722 + Chapter 82',
-      'Just the colour',
-      'Carports cannot have PV',
+      'No special consideration beyond a standard rooftop PV design',
+      'Only the colour of the carport structure to suit the site',
+      'Structural design for PV load plus vehicle-impact loads, with EV charging across Section 712 / 722 / Chapter 82',
+      'Carports cannot carry PV because of the vehicle movement beneath them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Solar carports combine structural engineering (supporting both PV load and vehicle-impact protection), PV electrical design (Section 712), and EV charging design (Section 722) where chargepoints are integrated. Chapter 82 PEI framing applies on hybrid PV + EV installations. The carport structural design typically requires a structural engineer\'s involvement — the load case is more complex than rooftop or ground-mount. Solar carports are growing in the commercial / fleet UK market driven by Part S (Module 1 Section 7) and the supply-constraint-on-EV-charging dynamics (Module 1 Section 5).',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A heavy partial-shade scenario from an adjacent tree affects 4 of 12 modules on a south roof for ~3 hours per day. The customer wants on-roof retrofit. What architectural mitigation pays back?',
     options: [
-      'String inverter with single MPPT — accept the loss',
-      'Module-level optimisation — microinverters or power optimisers on all 12 modules (covered in Section 2.5). The 4 shaded modules operate at their own MPP when shaded (limited by shade) while the 8 unshaded modules continue to operate at full MPP. Without module-level optimisation, string-level mismatch from the bypass-diode bypass would lose significantly more than the shaded modules\' direct production loss',
-      'Remove the tree',
-      'Smaller array',
+      'Single-MPPT string inverter, accepting the full string-mismatch loss during shade',
+      'Removing the adjacent tree to clear the shade from the four affected modules',
+      'Fitting a smaller array that avoids the shaded portion of the roof entirely',
+      'Module-level optimisation so the 8 unshaded modules stay at full MPP while the 4 shaded ones limit only themselves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heavy partial shading is the classic case for module-level optimisation. The bypass-diode behaviour on a shaded sub-string (Section 2.2) loses the entire sub-string\'s production, not just the shaded cell\'s. On a 12-module string with 4 shaded modules, a string-level inverter would lose all 4 (and their sub-string companions) during shade — easily 30–40% of array output during the shade window. Module-level optimisation (microinverters or power optimisers — Section 2.5) lets each shaded module produce what it can while the 8 unshaded modules continue at full MPP. The yield recovery over 25 years is substantially more than the hardware premium.',
   },

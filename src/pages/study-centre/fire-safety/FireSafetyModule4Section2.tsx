@@ -44,8 +44,8 @@ const quickCheckQuestions = [
   {
     id: 'minimum-fire-drill-frequency',
     question: 'What is the minimum frequency for fire drills under the RRFSO?',
-    options: ['Monthly', 'Every 6 months', 'Annually', 'Every 2 years'],
-    correctIndex: 2,
+    options: ['Annually', 'Every 6 months', 'Monthly', 'Every 2 years'],
+    correctIndex: 0,
     explanation:
       'The Regulatory Reform (Fire Safety) Order 2005 requires that fire drills are carried out at suitable intervals. Government guidance recommends a minimum of annually, although 6-monthly drills are considered best practice, particularly for premises with higher risk or a large number of occupants. In premises where shifts operate, drills should be conducted so that all shift patterns are covered over the course of a year.',
   },
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Which evacuation strategy involves everyone leaving the building immediately on hearing the alarm?',
     options: [
-      'Phased evacuation',
       'Simultaneous evacuation',
+      'Phased evacuation',
       'Progressive horizontal evacuation',
       'Defend-in-place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Simultaneous evacuation is the simplest strategy: everyone evacuates the building immediately on hearing the alarm. It is the most common strategy and is suitable for small to medium premises where the building can be cleared quickly. All occupants respond to a single continuous alarm signal and move directly to the assembly point. The target evacuation time is typically 2.5 to 3 minutes.',
   },
@@ -94,8 +94,8 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the maximum travel distance for a normal-risk area with alternative escape routes (no sprinklers)?',
-    options: ['18 metres', '25 metres', '35 metres', '45 metres'],
-    correctAnswer: 2,
+    options: ['18 metres', '35 metres', '25 metres', '45 metres'],
+    correctAnswer: 1,
     explanation:
       'The maximum travel distance for a normal-risk area with alternative escape routes is 35 metres (without sprinklers). Travel distances are specified in Approved Document B Table 2 and BS 9999. High-risk areas with a single direction of travel are limited to 18 metres, whilst low-risk areas with sprinklers and alternative routes can extend to 45 metres.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
     question: 'In a phased evacuation, what type of alarm signal is typically used?',
     options: [
       'A single continuous tone for all floors',
-      'A two-stage alarm: alert tone then evacuate tone',
       'A voice alarm on the fire floor only',
+      'A two-stage alarm: alert tone then evacuate tone',
       'A silent alarm sent to mobile devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Phased evacuation typically uses a two-stage alarm system. The first stage is an alert signal (often an intermittent tone or a voice message) on the fire floor and the floor immediately above, telling occupants to prepare to evacuate. The second stage is the full evacuate signal (continuous tone or voice command) instructing those floors to leave via the stairs. Floors further away receive the alert signal progressively. Voice alarm systems are strongly recommended for phased evacuation as they can deliver clear instructions specific to each zone.',
   },
@@ -118,18 +118,18 @@ const quizQuestions = [
     options: [
       'Only the total evacuation time',
       'Only the names of persons who failed to evacuate',
-      'The date, time, evacuation time, number of occupants, any issues identified, and corrective actions',
       'Only the name of the person who raised the alarm',
+      'The date, time, evacuation time, number of occupants, any issues identified, and corrective actions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Fire drill records must be comprehensive. They should include the date and time of the drill, whether it was announced or unannounced, the total evacuation time, the number of occupants evacuated, any problems encountered (blocked exits, alarm audibility issues, persons unaccounted for), corrective actions taken, and the name of the person responsible for conducting the drill. These records must be kept as part of the fire safety management documentation and may be inspected by the fire authority.',
   },
   {
     id: 5,
     question: 'What is the minimum clear width for an escape route serving up to 220 persons?',
-    options: ['750 mm', '850 mm', '1050 mm', '1200 mm'],
-    correctAnswer: 1,
+    options: ['850 mm', '750 mm', '1050 mm', '1200 mm'],
+    correctAnswer: 0,
     explanation:
       'The minimum clear width for an escape route serving up to approximately 220 persons is 850 mm. Approved Document B Table 4 specifies minimum widths based on the maximum number of persons the route is expected to serve. Routes serving more than 220 persons typically require a minimum of 1050 mm. For routes serving very small numbers (fewer than 60), a minimum of 750 mm may be acceptable in some circumstances, but 850 mm is the standard baseline for most escape routes.',
   },
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: 'What does progressive horizontal evacuation involve?',
     options: [
       'Evacuating all floors simultaneously via the stairs',
-      'Moving occupants horizontally through fire doors into an adjacent compartment on the same floor',
       'Keeping all occupants in their rooms until the fire service arrives',
+      'Moving occupants horizontally through fire doors into an adjacent compartment on the same floor',
       'Evacuating the fire floor first, then adjacent floors in sequence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Progressive horizontal evacuation involves moving occupants horizontally through fire doors into an adjacent fire compartment on the same floor. This is the preferred strategy for hospitals and care homes where many occupants may be non-ambulant or require significant assistance. The compartment walls and doors must provide a minimum of 60 minutes' fire resistance, and each compartment must have an independent escape route for further evacuation if necessary.",
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'What document should be prepared for a person with a disability to ensure their safe evacuation?',
     options: [
       'A Fire Risk Assessment only',
-      'A Personal Emergency Evacuation Plan (PEEP)',
       'A Method Statement',
       'A CDM Phase Plan',
+      'A Personal Emergency Evacuation Plan (PEEP)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A Personal Emergency Evacuation Plan (PEEP) is an individual plan tailored to a specific person's needs, taking into account their disability or condition and the specific building layout. Under the Equality Act 2010, employers and building managers must make reasonable adjustments to ensure the safe evacuation of persons with disabilities. The PEEP should identify the assistance required, the designated escape route, the buddy or support arrangements, and any equipment needed (such as an evacuation chair). Since the Grenfell Tower Inquiry recommendations, Generic Emergency Evacuation Plans (GEEPs) have also been introduced for residential buildings to cover visitors and temporary residents.",
   },

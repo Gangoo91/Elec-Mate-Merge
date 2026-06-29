@@ -58,10 +58,10 @@ const AM2Module4Section6 = () => {
       question:
         'What do assessors do if you fail to record RCD results because you ran out of time?',
       options: [
-        'Safety Extra Low Voltage - separated from earth',
+        'Allow extra time to complete the missing entries',
         'Mark as incomplete → lose marks, likely fail paperwork section',
-        'Problem-focused coping — taking practical steps to improve time management',
-        'Controlling fresh air intake in HVAC systems',
+        'Accept the schedule as long as the RCD physically tripped',
+        'Fill the missing values in for you from the rig specification',
       ],
       correctIndex: 1,
       explanation:
@@ -126,9 +126,9 @@ const AM2Module4Section6 = () => {
       question: "What's the risk of leaving results until the end?",
       options: [
         'Running out of time and rushed/illegible entries',
-        'Linking physical I/O signals to software representations',
-        'Site-specific and proportionate to the risks',
-        'Cable size and installation surface',
+        'The meter readings drift while you wait to record them',
+        'The assessor will refuse to let you start the paperwork',
+        'The test results expire if not written down immediately',
       ],
       correctAnswer: 0,
       explanation:
@@ -151,10 +151,10 @@ const AM2Module4Section6 = () => {
       id: 6,
       question: "What's a common mistake with RCD testing under time pressure (A4:2026)?",
       options: [
-        'Circuit protective conductor connection integrity',
-        'Reactive effects may need to be considered',
+        'Still running the deleted 5×IΔn test out of old habit',
+        'Recording the trip time in ohms rather than milliseconds',
         'Skipping the manual test button after the 1×IΔn trip test',
-        'Presence, size, condition, and connections',
+        'Testing the RCD before energising the installation',
       ],
       correctAnswer: 2,
       explanation:
@@ -190,10 +190,10 @@ const AM2Module4Section6 = () => {
       id: 9,
       question: "What's the golden rule if running out of time?",
       options: [
-        'Have a private, direct conversation to understand the cause and set clear expectations',
+        'Speed up and skip the slower checks to finish on time',
         'Keep work safe - incomplete but safe is better than rushed and unsafe',
-        'Through the visitor sign-in register, which should be taken to the assembly point',
-        'Earth for correct equipment operation, not primarily for safety',
+        'Leave the installation energised so the assessor can finish the tests',
+        'Copy realistic-looking values from a previous candidate',
       ],
       correctAnswer: 1,
       explanation:
@@ -203,10 +203,10 @@ const AM2Module4Section6 = () => {
       id: 10,
       question: 'Give one strategy to manage time during AM2 testing.',
       options: [
-        'Insulation degradation beginning',
-        'In appropriate conditions to prevent damage',
+        'Test every circuit twice to be certain of the readings',
+        'Leave all the paperwork until the testing is finished',
         'Record results circuit-by-circuit as you go',
-        'Recording historical data values over time for analysis',
+        'Skip the visual inspection to save time for testing',
       ],
       correctAnswer: 2,
       explanation:

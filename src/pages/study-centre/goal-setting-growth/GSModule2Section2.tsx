@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice electrician creates the following goal structure: Long-term (5 years): &ldquo;Become a self-employed electrical contractor earning &pound;55,000+.&rdquo; Medium-term (1 year): &ldquo;Complete City &amp; Guilds 2365 Level 3 and AM2 assessment.&rdquo; Short-term (3 months): &ldquo;Achieve 95%+ on all BS 7671 cable selection tests.&rdquo; What is the primary strength of this structure?',
     options: [
-      'All three goals have the same deadline, ensuring focused effort',
-      'Each shorter-term goal is a necessary step towards the longer-term goal, creating a cascading pathway',
-      'The goals are all equally difficult, ensuring consistent motivation',
-      'The short-term goal is more specific than the long-term goal',
+      'Each shorter-term goal is a necessary step towards the longer-term goal',
+      'All three goals share the same deadline, which ensures focused effort',
+      'The goals are all equally difficult, ensuring a consistent level of motivation',
+      'The short-term goal is more specific than the long-term goal is',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This goal structure demonstrates effective goal cascading. The short-term goal (BS 7671 cable selection competence) contributes to the medium-term goal (Level 3 qualification and AM2 assessment, both of which require cable selection skills), which in turn contributes to the long-term goal (self-employed contractor, which requires full electrical competence including qualification completion). Each tier builds on the previous tier, creating a coherent pathway rather than a collection of unrelated goals. This is the essence of the three horizons framework: short-term goals feed into medium-term goals, which feed into long-term goals, ensuring that daily effort compounds towards a meaningful destination.',
   },
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question:
       'An electrical contractor sets quarterly goals in January, but forgets to review them until December. When reviewing, they discover they achieved only one of the four goals. What is the most likely explanation for this poor achievement rate?',
     options: [
-      'The goals were not SMART enough',
-      'The goals were too difficult',
-      'The lack of regular review allowed priorities to drift and effort to dissipate without corrective action',
+      'The goals were not written in a SMART enough format',
+      'The goals were simply set far too difficult to achieve',
+      'The lack of regular review let priorities drift and effort dissipate',
       'Quarterly goals are inherently less effective than annual goals',
     ],
     correctIndex: 2,
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'A qualified electrician has the following long-term goal: &ldquo;Become a NICEIC Approved Contractor and run a successful domestic installation business.&rdquo; Which of the following is the best example of a medium-term goal that supports this long-term goal?',
     options: [
-      'Complete one EICR this week',
-      'Read the NICEIC scheme rules document',
-      'Complete City &amp; Guilds 2391-52 Inspection and Testing qualification and perform 30 documented EICRs by December 2026',
-      'Earn &pound;1 million in revenue within 10 years',
+      'Complete at least one full EICR before the end of this week',
+      'Read through the NICEIC scheme rules and registration documents',
+      'Complete the 2391-52 qualification and 30 documented EICRs by December 2026',
+      'Earn one million pounds in business revenue within the next 10 years',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'The planning fallacy, identified by Kahneman and Tversky, explains why people consistently underestimate how long tasks will take. What is the most effective strategy to counteract the planning fallacy when setting goal deadlines?',
     options: [
-      'Add 10% to your initial time estimate',
-      'Use reference class forecasting: base your estimate on how long similar tasks took for similar people',
-      'Set very ambitious deadlines to increase motivation',
-      'Avoid setting deadlines at all to reduce pressure',
+      'Add a flat 10% to your initial time estimate as a buffer',
+      'Set very ambitious deadlines in order to increase your motivation',
+      'Avoid setting any deadlines at all so as to reduce the pressure',
+      'Use reference class forecasting: base it on how long it took similar people',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reference class forecasting is the most effective strategy to counteract planning fallacy. Instead of asking &ldquo;How long will this take me?&rdquo; (which triggers optimistic bias), ask &ldquo;How long did this take for people similar to me in similar circumstances?&rdquo; For example, if you are planning to complete the City &amp; Guilds 2391-52 qualification, research how long it typically takes electricians working full-time (usually 6&ndash;9 months). Use that as your baseline, then adjust slightly based on your specific circumstances (more or less study time available, prior experience with testing). Adding 10% to your initial estimate helps, but it does not address the root cause of the bias. Avoiding deadlines removes the benefits of time-bound goals. Setting overly ambitious deadlines worsens the problem.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'An apprentice electrician sets three goals: (1) Pass AM2 assessment. (2) Learn to play guitar. (3) Run a half-marathon. All three goals are SMART. However, after three months, the apprentice has made minimal progress on all three. What is the most likely explanation?',
     options: [
-      'The goals were not specific enough',
-      'The apprentice lacks discipline',
-      'Attention and effort are spread too thin across unrelated goals, preventing focused progress on any single goal',
-      'The goals were all too easy',
+      'Attention and effort are spread too thin across unrelated goals',
+      'The three goals were not written specifically enough to act on',
+      'The apprentice simply lacks the discipline to follow through',
+      'The goals were all set far too easy to be motivating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most likely explanation is that attention and effort are spread too thin. Each goal competes for the same scarce resources: time, energy, and willpower. When goals are unrelated (electrical competence, musical skill, running fitness), there is no compounding benefit &mdash; progress on one does not support progress on another. Most people can sustain focused effort on 2&ndash;3 major goals at a time. Beyond that threshold, performance degrades. The solution is to prioritise: choose the 1&ndash;2 goals that matter most right now (for an apprentice, passing AM2 is almost certainly the top priority), commit to those fully, and defer the others until the priority goals are achieved. This approach creates momentum and builds confidence through completed goals rather than scattered effort and incomplete goals.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Stephen Covey advises to &ldquo;begin with the end in mind&rdquo; when setting long-term goals. For an apprentice electrician, what does this principle suggest?',
     options: [
-      'Focus only on short-term goals because the future is uncertain',
-      'Visualise where you want to be in 3&ndash;5 years (qualified electrician, business owner, specialist), then work backwards to identify the medium and short-term goals required to get there',
-      'Set the most difficult goals possible to maximise effort',
-      'Copy the goals of successful electricians you admire',
+      'Focus only on short-term goals, because the future is too uncertain',
+      'Set the most difficult goals you possibly can to maximise your effort',
+      'Visualise where you want to be in 3&ndash;5 years, then work backwards from it',
+      'Copy the career goals of successful electricians whom you admire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '&ldquo;Begin with the end in mind&rdquo; means starting with a clear long-term vision, then working backwards to identify the steps required to achieve it. For an apprentice, the &ldquo;end&rdquo; might be: &ldquo;JIB Approved Electrician, NICEIC registered, earning &pound;45,000+, specialising in domestic rewires.&rdquo; Once the destination is clear, you can ask: What must I achieve in year 3 to reach this destination? (Complete Level 3, pass AM2.) What must I achieve in year 2? (Complete Level 2, demonstrate competence in installation tasks.) What must I achieve in the next 3 months? (Master BS 7671 cable selection, improve conduit bending to AM2 standard.) This backwards planning ensures that short-term effort is aligned with long-term direction. Without the long-term vision, short-term goals can become aimless activity.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'An electrical contractor sets a goal to increase revenue by 25% in the next 12 months. This is a long-term achievement goal. To ensure the goal is achieved, the contractor should also set which type of supporting goals?',
     options: [
-      'More revenue goals at different timeframes',
-      'Activity goals (leading indicators) such as &ldquo;Contact 10 new commercial clients per month&rdquo; and &ldquo;Submit 15 quotes per month&rdquo;',
-      'Easier goals to build confidence',
-      'Goals in unrelated areas to maintain work-life balance',
+      'Several more revenue goals set across different timeframes',
+      'A few easier goals alongside it to help build confidence',
+      'Goals in unrelated areas to help maintain a work-life balance',
+      'Activity goals (leading indicators) such as new client contacts and quotes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'To support a revenue achievement goal (lagging indicator), the contractor must identify and track activity goals (leading indicators) that drive revenue. Revenue is the outcome of specific behaviours: contacting prospects, submitting quotes, delivering quality work that generates referrals, upselling maintenance contracts, etc. By setting activity goals around these behaviours and tracking them weekly or monthly, the contractor can influence the revenue outcome. If the activity goals are being met but revenue is not increasing, the contractor can diagnose the issue (low conversion rate? pricing too low? poor quality leading to no referrals?) and adjust. Leading indicators are controllable; lagging indicators are the result. Manage the leading indicators, and the lagging indicators follow.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'For electricians, which of the following is a legitimate reason to adjust or abandon a previously set goal?',
     options: [
-      'The goal has become difficult or uncomfortable',
-      'New information or changed circumstances make the goal no longer relevant or aligned with your values',
-      'A friend suggests a different goal that sounds more interesting',
-      'You have been working on the goal for two weeks and have not seen results yet',
+      'New information or changed circumstances make the goal no longer relevant',
+      'The goal has simply become too difficult or uncomfortable to pursue',
+      'A friend suggests a different goal that happens to sound more interesting',
+      'You have worked on the goal for two weeks and not yet seen any results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Goals should be adjusted or abandoned when new information or changed circumstances make them no longer relevant or aligned with your values and direction. For example, an electrician sets a goal to specialise in industrial electrical work, then discovers through experience that they strongly prefer domestic installation work. The goal was set based on incomplete information; revising it based on new self-knowledge is rational. However, abandoning a goal because it has become difficult, uncomfortable, or has not produced results in two weeks is avoidance, not wisdom. Goals are meant to be challenging, and meaningful results take time. The test is: &ldquo;If I had already achieved this goal, would I still want the outcome?&rdquo; If yes, persist. If no, revise.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'An electrician sets quarterly goals in January, April, July, and October, and reviews progress monthly. What is the primary benefit of this quarterly goal-setting + monthly review structure?',
     options: [
-      'It reduces the number of goals, making life simpler',
-      'It creates a regular rhythm of planning, action, and reflection that keeps goals aligned with changing circumstances and maintains momentum',
-      'It eliminates the need for long-term goals',
-      'It makes goals easier to achieve',
+      'It reduces the total number of goals, making life much simpler',
+      'It removes the need to set any long-term goals at all',
+      'It creates a regular rhythm of planning, action, and reflection',
+      'It makes the goals themselves significantly easier to achieve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The quarterly planning + monthly review structure creates a feedback loop that keeps goals alive and actionable. Quarterly planning (every 3 months) provides a natural checkpoint to set new short-term goals aligned with medium and long-term direction. Monthly review (every 4 weeks) ensures that you assess progress, identify obstacles, celebrate wins, and adjust tactics before significant drift occurs. This rhythm prevents both the rigidity of never reviewing goals and the chaos of constantly changing direction. It is sustainable, evidence-based, and used by high-performing individuals and organisations across industries. The structure does not eliminate the need for long-term goals (those provide direction) or make goals easier (goal difficulty is separate from review frequency), but it does ensure that goals remain connected to behaviour.',
   },

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What is a PV single-line diagram (SLD)?',
     options: [
-      'A photograph of the install',
-      'A schematic representation of the PV system showing every electrical component in single-line form — modules / strings, DC cables, isolators, fuses, inverters, AC cables, protective devices, meter, grid connection. The design artefact that captures the as-designed and as-installed electrical topology',
-      'The customer\'s wiring diagram for the house',
-      'A 3D model',
+      'A photograph of the finished installation taken at handover',
+      'A schematic showing every electrical component in single-line form, capturing the system\'s electrical topology',
+      'The customer\'s domestic wiring diagram for the existing house circuits',
+      'A 3D architectural model of the building and the array layout',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Who actually reads the SLD?',
     options: [
-      'Nobody',
-      'The designer at design stage; the installer at install stage; the customer at handover; the DNO during G99 approval; the MCS auditor during scheme audit; the EICR inspector at periodic inspection; the next contractor on any future addition or alteration. Multiple audiences over a 25+ year install life',
-      'Only the installer',
-      'Only the customer',
+      'Nobody reads it once the install is signed off, energised and handed over',
+      'Many audiences over 25+ years — designer, installer, customer, DNO, auditor, inspector, next contractor',
+      'Only the installer, who builds the system against it during the install work',
+      'Only the customer, who keeps it purely for their own records at handover',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A PV SLD uses standardised electrical symbols. Which combination of symbols typically appears on a residential PV SLD?',
     options: [
-      'Random shapes',
-      'Module symbol (typically a rectangle with diagonal slash and small triangles representing cells); string interconnection lines; DC isolator (switch symbol); inverter (rectangle with internal converter symbol); AC isolator; protective devices (fuse, MCB, RCD); meter (M in a circle); DNO connection (triangle or transformer symbol)',
-      'Only the inverter shape',
-      'Only the modules',
+      'Random shapes chosen freely by whoever happens to draft the drawing',
+      'Module and string symbols, DC and AC isolators, inverter, protection, meter and DNO connection',
+      'Only the inverter shape, with everything else described in accompanying text',
+      'Only the modules, with no isolators, protection or grid connection shown at all',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'How does the SLD communicate the protection arrangement?',
     options: [
-      'It doesn\'t',
-      'Every protective device appears with its type and rating — fuse ratings, RCD type (A / B / F), MCB curve and rating, surge protective device class. The protection coordination — which device protects which circuit on which fault — is readable from the SLD topology, particularly the per-string fuses per Reg 712.431 (Section 2.3), the RCBO at the consumer unit per Reg 531.3.3 and Reg 551.7.1(d) (Section 2.5)',
-      'Only the consumer unit RCD',
-      'Only the AC isolator',
+      'It does not — protection is recorded only in the separate test schedule',
+      'Every protective device shown with type and rating, so the coordination is readable from the topology',
+      'Only the consumer unit RCD appears; string and DC-side protection is omitted',
+      'Only the AC isolator appears; the protective devices themselves are left off',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'How does the SLD communicate the isolation arrangement?',
     options: [
-      'No isolation shown',
-      'Every isolation point appears with its location, accessibility (locked / readily accessible), and the warning notices required. Particularly: DC isolator at the inverter input (or per-string at combiner box on multi-string designs); AC isolator at the inverter output; lockable disconnection per Reg 551.7.6 / DNO requirements; warning notices per the OSG signposting (Module 1 Section 3) — at the incomer and at the roof / array',
-      'Just the main switch',
-      'Only one isolator',
+      'No isolation points are marked anywhere on the single-line diagram at all',
+      'Each isolation point with location and accessibility — DC and AC isolators, lockable disconnection, notices',
+      'Just the main switch at the origin, with no PV-side or DC-side isolation shown',
+      'Only one isolator, regardless of how many strings or inverters the install has',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'The SLD is part of the cert evidence bundle. What other documents accompany it?',
     options: [
-      'Just the cert',
-      'BS 7671 EIC (with the Reg 133.1.3 equipment-usage records, the departure register per Reg 120.3 if applicable, the test results); MCS certificates (MIS 3002 for PV); inverter datasheet (BS EN 62109-1/-2 conformity); module datasheet (BS EN 61730 conformity); DNO G98/G99 notification reference; CPS Part P notification reference; survey artefact; customer handover pack; commissioning baseline records (V_oc, I_sc, IR, continuity per BS EN 62446-1)',
-      'Only the customer\'s satisfaction survey',
-      'Just the inverter manual',
+      'Just the certificate on its own, with no supporting datasheets or notifications',
+      'The EIC, MCS certs, datasheets, DNO and CPS notifications, survey, handover pack and commissioning records',
+      'Only the customer\'s post-install satisfaction survey form from handover',
+      'Just the inverter manufacturer\'s manual as supplied in the product box',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'A PV install evolves over time (battery added in year 3, EV charger added in year 5, heat pump added in year 7). What happens to the SLD?',
     options: [
-      'The original SLD stays unchanged',
-      'The SLD is updated at every install change — battery addition, EV charging addition, heat pump addition. The updated SLD captures the new topology, the additional protective devices, the changed isolation arrangement. The cert evidence bundle accumulates: original PV SLD + updated SLD post-battery + updated SLD post-EV + updated SLD post-heat-pump. Future contractors and inspectors read the SLD evolution as the install\'s design history',
-      'A new install file is started',
-      'The customer redraws it',
+      'The original SLD stays unchanged through every later addition',
+      'The SLD is updated at every change, and the bundle accumulates the versions as the install\'s design history',
+      'A completely new install file is started for each added technology',
+      'The customer redraws the diagram themselves after each contractor visit',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A domestic single-string PV install — 12 × 400 W modules → DC isolator → single-MPPT string inverter → AC isolator → consumer unit. What level of SLD detail is appropriate?',
     options: [
-      'Just photograph it',
-      'Standard PV SLD: module array (showing the 12 modules in series), DC cable to inverter, DC isolator with rating, inverter symbol with model number, AC cable, AC isolator with rating, dedicated RCBO at consumer unit (with Type A/B per inverter datasheet), generation meter (where applicable for SEG), grid connection symbol. Annotated with string V_oc at STC, cold-day V_oc, inverter MPPT range, AC output capacity',
-      'Hand-drawn sketch',
-      'Just text description',
+      'A photograph of the finished installation in place of any drawing at handover',
+      'A quick hand-drawn sketch of the array and inverter on the survey sheet',
+      'A standard PV SLD — array, isolators, inverter, RCBO, meter and grid, annotated with V_oc and MPPT range',
+      'A short written text description of the system supplied instead of a diagram',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A residential single-string SLD is the most common pattern. The drawing shows all major components — modules, isolators, inverter, protective devices, meter, grid — at the same level of detail. Cable sizes annotated where they affect the design. Protection ratings annotated. Manufacturer model numbers for the inverter and modules. The SLD is typically produced in CAD (AutoCAD, Visio) or a PV-specific design tool (PVsyst, OpenSolar); hand-drawn sketches are not appropriate for a cert evidence bundle on a funded install.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A hybrid PV+BESS install (DC-coupled hybrid inverter). What additional SLD content vs PV-only?',
     options: [
-      'Nothing additional',
-      'Battery symbol with capacity rating; battery-side cable to the hybrid inverter; battery isolator; backup port output to a separate essential-loads consumer unit (if backup configured); standard consumer unit (general loads) from the grid-side output. Chapter 82 PEI design records reference the SLD',
-      'Just add a label',
-      'Bigger inverter symbol',
+      'Battery (kWh rating), battery cable and isolator, backup-port output to an essential-loads CU, and grid-side CU',
+      'Nothing additional beyond the PV-only single-line diagram already produced',
+      'Just an extra annotation label noting that a battery is now present',
+      'Simply a larger inverter symbol drawn onto the existing PV-only diagram',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A hybrid PV+BESS SLD shows the additional battery topology. Battery symbol (typically a rectangle with battery markings and capacity in kWh). Battery-side DC cable to the hybrid inverter\'s battery port. Battery isolator (for safe-isolation maintenance). Backup port output (where configured) feeding the essential-loads consumer unit. Standard consumer unit fed from the grid-side output. The Chapter 82 PEI design records (load management priorities, multi-source fault analysis, protection coordination) reference the SLD as the topology artefact.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A commercial install: 50 kWp PV across two roof pitches, 100 kWh BESS, 6 × 22 kW EV chargepoints, all on a TN-S supply with separate metering. What SLD complexity is appropriate?',
     options: [
-      'Single page is enough',
-      'Multi-page SLD covering: (1) PV side — sub-arrays per pitch, combiner boxes, DC isolators, per-string protection per Reg 712.431, inverter input; (2) inverter side — hybrid inverter or commercial PV inverter + battery inverter, internal DC bus / AC bus topology; (3) AC side — distribution board, EV chargepoint circuits, surge protective devices, meter arrangement; (4) DNO interface — main switch, current transformers, DNO meter, G99 protection scheme. Each page detailed for its discipline; cross-references between pages',
-      'Just a sketch',
-      'Photo of the install',
+      'A single SLD page covering the whole commercial site at one level of detail',
+      'A quick sketch of the main components and the links between them',
+      'A photograph of the installed plant supplied in place of a diagram',
+      'A multi-page SLD — PV side, inverter/battery, AC distribution + EV, and DNO interface, cross-referenced',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commercial-scale PV+BESS+EV installs need multi-page SLDs to capture the system\'s complexity. Each discipline (PV, battery, AC distribution, EV charging, DNO interface) gets its own SLD sheet with appropriate detail. Cross-references between sheets show the connections. The Chapter 82 PEI design pack on a commercial install is substantially more detailed than the residential equivalent — load management, multi-source fault current contribution, protection coordination across multiple sources all documented at sheet-level detail.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A G99 application to the DNO requires the SLD as part of the submission. What does the DNO read on the SLD?',
     options: [
-      'Just the cover page',
-      'The DNO reads: total generation capacity (per inverter, aggregated for the install), the connection point to the public supply, the protection scheme (anti-islanding, prevention of reconnection, isolation per Reg 551.7.4–551.7.6), the metering arrangement, any G100 export-limitation scheme. The DNO\'s G99 approval is conditional on the SLD showing acceptable arrangements',
-      'Only the customer\'s name',
-      'Module brand only',
+      'Only the cover page and title block of the G99 submission document',
+      'Generation capacity, connection point, protection scheme, metering and any G100 export limit',
+      'Only the customer\'s name and the site address on the application form',
+      'Only the module brand and model used across the array sub-strings',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'An MCS audit examines a sampled job. The SLD is one of the design pack records the auditor reviews. What does the auditor look for?',
     options: [
-      'Pretty drawings',
-      'Conformance to MIS 3002 (PV) design pack requirements — sub-array organisation per MPPT input, string sizing calculations cross-referenced, per-string protection per Reg 712.431, inverter selection rationale, cold-day V_oc calculation, MPPT range compatibility check, manufacturer-spec heat dissipation arrangement, customer handover documentation. Plus the SLD\'s alignment with the as-installed system',
-      'Customer\'s signature only',
-      'Inverter colour',
+      'Whether the drawings are neatly presented and laid out on the page',
+      'Only the customer\'s signature on the handover acceptance form',
+      'MIS 3002 conformance — string sizing, per-string protection, MPPT check — and the SLD matching the as-built',
+      'The colour and casing finish of the inverter the installer chose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The MCS auditor reviews the SLD as part of the MIS 3002 design pack check. The audit verifies: the SLD shows the install topology and matches the as-installed system; the string sizing calculations (Section 2.3 cold-day V_oc, MPPT compatibility) are cross-referenced to the SLD; the per-string protection (Reg 712.431) is shown where required; the inverter selection rationale is documented; the manufacturer-spec heat dissipation arrangement is captured; the customer handover documentation references the SLD. Major finding: SLD inconsistent with the as-installed system, or design pack records missing.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'At handover, the customer receives the cert evidence bundle including the SLD. What\'s the right framing for the customer?',
     options: [
-      '&ldquo;Here\'s some paperwork&rdquo;',
-      'Explain the SLD as the system\'s &ldquo;design map&rdquo; — it shows what was installed, where the safety isolation points are, where the protective devices sit, and forms the diagnostic baseline for any future inspection or fault. Note that any future contractor adding to the install (battery, EV charger, heat pump) will need this SLD to design the addition correctly. Retain electronically and as a paper copy with the conveyancing documents',
-      '&ldquo;Throw it away&rdquo;',
-      'No explanation needed',
+      'Explain the SLD as the system\'s design map — isolation points, protection, diagnostic baseline — and retain it with the deeds',
+      'Hand it over as just some paperwork, with no explanation of what it shows',
+      'Tell the customer they can throw the diagram away once the install works',
+      'Provide no explanation of the document to the customer at handover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The customer\'s relationship with the SLD lasts the install\'s lifetime. Explain it as the system\'s design map; the safety document for understanding isolation points; the diagnostic baseline for future faults; the design reference for future additions. Encourage electronic retention (cloud storage) and paper retention with conveyancing documents — the SLD becomes part of the property\'s value chain at sale. Customer-side maintenance of the SLD is part of the install\'s long-term value.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'An EICR inspector at year 5 finds the as-installed system differs from the original SLD (additional combiner box added, different inverter brand, modules moved). What\'s the right inspection finding?',
     options: [
-      'Ignore the discrepancy',
-      'Flag the discrepancy in the EICR. The original SLD is no longer the truth of the install. Investigate whether the changes were properly documented (updated SLD, MCS Product List for the replacement inverter, Section 712 design checks re-done for the new module / inverter combination). Where documentation is missing, code per GN3\'s "relevant criteria" doctrine — the criteria for the install includes the designer\'s spec, which the change may have departed from',
-      'Issue a new EIC',
-      'Just check the inverter',
+      'Ignore the discrepancy and inspect the install against the original SLD',
+      'Issue a fresh EIC to cover the changed installation as if it were new work',
+      'Check only the replacement inverter and leave the rest of the changes alone',
+      'Flag it — the SLD is no longer true; check whether the changes were certified and code per GN3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SLD-vs-reality discrepancies are an EICR observation. The inspector\'s job is to verify the install meets the relevant criteria (Module 1 Section 3 — GN3\'s "relevant criteria" doctrine). The original SLD captures the designer\'s spec; departures from that without documentation are departures from the relevant criteria. The inspection finding: investigate the discrepancy; check whether the changes were properly documented and certified; code per the severity (typically C2 for safety-related undocumented changes, C3 for functional changes without safety impact, FI where the inspector cannot determine the impact).',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A customer in 2031 wants to sell the property. The PV install is now 6 years old. The SLD from the original install is part of the conveyancing documents. Why does this matter?',
     options: [
-      'It doesn\'t',
-      'Property sale includes the PV install\'s warranty, MCS certificate (which transfers to the new owner), and the SLD / cert evidence bundle as part of the install\'s design history. A complete bundle supports the property value and helps the new owner understand the system. An incomplete bundle reduces buyer confidence and may trigger price negotiation',
-      'Just for the seller',
-      'Only for tax',
+      'It does not matter to the sale of the property at all in practice',
+      'It matters only to the seller, never to the incoming buyer at all',
+      'The sale carries the warranty, MCS cert and SLD bundle — a complete bundle supports value, an incomplete one dents it',
+      'It matters only for the tax treatment of the installation at sale',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The PV install\'s cert evidence bundle (including the SLD) is part of the property\'s value at sale. A complete bundle (EIC, SLD, MCS certificate, inverter and module datasheets, commissioning baseline, DNO and CPS notifications, customer handover pack) supports the property valuation and helps the new owner understand the install. An incomplete bundle reduces buyer confidence — the buyer may discount the offer to allow for diagnosis costs or future EICR work on a poorly-documented install. The 25+ year SLD discipline pays back at the property sale, not just at install.',
   },

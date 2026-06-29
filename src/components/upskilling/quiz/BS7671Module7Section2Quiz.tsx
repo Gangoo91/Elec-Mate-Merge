@@ -15,58 +15,63 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What regulation covers EV charging points?',
-    options: ['Part 720', 'Part 722', 'Part 725', 'Part 730'],
-    correctAnswer: 1,
+    question: 'Which Section of BS 7671 specifically covers electric vehicle charging installations?',
+    options: ['Section 722', 'Section 720', 'Section 725', 'Section 730'],
+    correctAnswer: 0,
     explanation:
-      'BS 7671 Part 722 specifically covers electric vehicle charging installations and their requirements.',
+      'Section 722 of Part 7 sets out the particular requirements for electric vehicle charging installations.',
   },
   {
     id: 2,
-    question: 'Is PME earthing allowed?',
+    question: 'Can a PME (TN-C-S) earthing facility be used for an EV charging point?',
     options: [
-      'Never allowed for EV charging',
-      'Yes, but with additional protective measures',
+      'It is never permitted for EV charging',
       'Only for single-phase installations',
+      'Yes, provided additional protective measures are applied',
       'Only for commercial installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PME earthing is allowed for EV charging but requires additional protective measures including PEN fault detection and disconnection devices.',
+      'A PME earth may be used only where additional protection is provided, such as a device that disconnects on an open-PEN condition or an alternative means of earthing.',
   },
   {
     id: 3,
-    question: 'What RCD type is required?',
-    options: ['Type AC is sufficient', 'Type A or Type B RCD', 'Type B only', 'No RCD required'],
-    correctAnswer: 1,
+    question: 'What type of RCD protection is required for an EV charging point?',
+    options: [
+      'A Type AC RCD is sufficient',
+      'No RCD is required',
+      'A Type B RCD in every case',
+      'At least a Type A RCD, with DC fault detection where needed',
+    ],
+    correctAnswer: 3,
     explanation:
-      'EV charging installations require Type A or Type B RCDs due to the DC fault currents that can occur in EV charging systems.',
+      'A Type A RCD is the minimum; where smooth DC residual current can occur, a Type B RCD or equivalent DC fault detection must be provided.',
   },
   {
     id: 4,
-    question: 'What happens if a PEN conductor breaks?',
+    question: 'On a PME supply, what is the danger if the PEN conductor becomes open-circuit?',
     options: [
-      'Nothing - system continues normally',
-      'The vehicle chassis could become live',
-      'Only the charging stops',
-      'A fuse will blow',
+      'The system simply continues to operate normally',
+      'The vehicle chassis and exposed metalwork could become live',
+      'Only the charging session stops',
+      'A protective fuse will always clear it',
     ],
     correctAnswer: 1,
     explanation:
-      'If a PEN conductor breaks in a PME system, the vehicle chassis and exposed metalwork could rise to dangerous potentials, creating shock risk.',
+      'An open PEN conductor can cause the connected vehicle’s chassis and accessible metalwork to rise to a dangerous voltage, creating a serious shock risk.',
   },
   {
     id: 5,
-    question: 'What must installers check when using PME?',
+    question: 'When relying on PME for an EV charging point, what must the installer ensure is in place?',
     options: [
-      'Only the RCD operation',
-      'PEN fault detection and disconnection systems',
-      'Cable colours only',
-      'Charging speed settings',
+      'Only that the RCD operates correctly',
+      'Correct cable colours only',
+      'Open-PEN detection and disconnection (or alternative earthing)',
+      'Appropriate charging speed settings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'When using PME earthing for EV charging, installers must ensure proper PEN fault detection and automatic disconnection systems are in place.',
+      'The installation must include a means of detecting an open-PEN condition and disconnecting, or use an alternative means of earthing, to keep the vehicle safe.',
   },
 ];
 

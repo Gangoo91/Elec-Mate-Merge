@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Why must the secondary winding of a current transformer (CT) NEVER be left open-circuit while the primary is energised?',
     options: [
-      'Ca from Table 4B1 (correction factor for ambient air temperature, 70 °C cable).',
-      'Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue',
-      'A combination of activity modification, physiotherapy, anti-inflammatory treatment, and ergonomic workplace adjustments',
+      'The measured ratio drifts, giving an inaccurate reading on the relay',
+      'The secondary current rises to a level that overloads the connected ammeter',
       'A dangerously high voltage develops across the open secondary, risking flashover and fatal shock',
+      'The primary winding loses its magnetising current and the core demagnetises',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'When a CT secondary is open-circuited, the entire primary current acts as a magnetising current, driving the core into deep saturation. This induces extremely high voltages (potentially several kilovolts) across the secondary terminals, creating a lethal shock and fire hazard. Always short-circuit the secondary before disconnecting any CT load.',
   },
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     id: 'transformer-oil-test',
     question: 'What does dissolved gas analysis (DGA) of transformer oil primarily detect?',
     options: [
+      'The viscosity and pour point of the insulating oil',
+      'The total moisture content expressed in parts per million',
+      'The acidity and colour change of aged transformer oil',
       'Internal faults such as arcing, overheating, or partial discharge',
-      'The design meets BS 7671 and client requirements',
-      'Separate metallic return path via supply cable sheath',
-      'Regularly reviewing progress towards your goal and adjusting your approach',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'DGA identifies gases dissolved in transformer oil that are produced by different types of internal faults. For example, acetylene indicates arcing, ethylene indicates severe overheating, and hydrogen indicates partial discharge or corona. DGA is one of the most valuable diagnostic tools for transformer condition monitoring.',
   },
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the fundamental operating principle of a transformer?',
     options: [
-      'They must be removed from the platform entirely',
+      'Direct conduction of current between the primary and secondary',
       'Electromagnetic induction between two magnetically coupled windings',
-      'Separate different voltage levels and prevent interference',
-      'Pulsating DC — both halves of the AC sine wave folded above the zero line.',
+      'Electrostatic coupling between two charged capacitor plates',
+      'Mechanical rotation converting magnetic energy into voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a characteristic of copper losses in a transformer?',
     options: [
-      'Uses a single winding with a tapping point, providing no galvanic isolation',
-      'To adjust the output voltage by altering the number of turns in use',
-      'Oil Natural, Air Natural — no pumps or fans',
+      'They remain constant whenever the transformer is energised',
+      'They occur only in the laminated steel core, not the windings',
+      'They are measured by the open-circuit (no-load) test',
       'They vary with the square of the load current (I squared R)',
     ],
     correctAnswer: 3,
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'Why are transformer cores constructed from thin laminations rather than solid iron?',
     options: [
       'To reduce eddy current losses by limiting the paths available for circulating currents',
-      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
-      'Uses a single winding with a tapping point, providing no galvanic isolation',
-      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
+      'To reduce copper losses by shortening the winding conductor length',
+      'To lower the cost of the core by using less steel overall',
+      'To increase the operating frequency the transformer can handle',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 9,
     question: 'What type of cooling is designated by the code ONAN on a transformer nameplate?',
     options: [
-      'Motion-activated with auto-off timer',
+      'Oil Forced, Air Forced — pumps and fans assist circulation',
       'Oil Natural, Air Natural — no pumps or fans',
-      'It overlaps with other work packages to ensure coverage',
-      'Between line, neutral and earth at the point of test',
+      'Air Natural — dry-type with no cooling oil',
+      'Oil Natural, Air Forced — fans assist the radiators',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the polarisation index (PI) test for a transformer winding?',
     options: [
-      'Uses a single winding with a tapping point, providing no galvanic isolation',
-      'To reduce eddy current losses by limiting the paths available for circulating currents',
+      'The ratio of secondary to primary turns measured on each tap position',
+      'The difference between the as-found and as-left insulation readings',
       'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
-      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
+      'The ratio of copper losses to iron losses at full rated load',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     id: 11,
     question: 'An auto-transformer differs from a double-wound transformer because it:',
     options: [
-      'To reduce eddy current losses by limiting the paths available for circulating currents',
-      'They vary with the square of the load current (I squared R)',
-      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
+      'Has two completely separate windings giving full galvanic isolation',
+      'Can only step voltage up, never down',
+      'Operates on direct current rather than alternating current',
       'Uses a single winding with a tapping point, providing no galvanic isolation',
     ],
     correctAnswer: 3,
@@ -221,9 +221,9 @@ const quizQuestions = [
       'During a winding resistance test on a transformer, one phase reads significantly lower than the other two. What does this indicate?',
     options: [
       'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
-      'To adjust the output voltage by altering the number of turns in use',
-      'To reduce eddy current losses by limiting the paths available for circulating currents',
-      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
+      'A loose or high-resistance connection on that phase terminal',
+      'Excessive moisture in the insulating oil of that limb',
+      'A correctly balanced winding requiring no further action',
     ],
     correctAnswer: 0,
     explanation:

@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'You have placed the L–CPC link at the board for the dead polarity test. What single procedural detail most reliably stops you re-energising with the link still in place?',
     options: [
-      'Memorising the test sequence',
       'Using a brightly coloured / labelled flying lead and writing link removal as a discrete tick-box step on your test record before any breaker is closed',
-      'A second person watching the board',
-      'Closing the board cover after each test',
+      'Memorising the full Method 1 test sequence and working from memory',
+      'Having a second person stand and watch the board during the test',
+      'Closing the consumer-unit cover after each individual test',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Leaving the link in place is the most common Method 1 / polarity failure. The procedural mitigation is twofold: a high-visibility flying lead so the link is impossible to miss visually, and link-removal as a printed tick-box step on the test sheet before any breaker is closed.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'At a single-pole light switch, the dead polarity probe (L–CPC linked at board) reads continuous L-to-CPC at the COM terminal and open-circuit at the L1 terminal with the switch in the OFF position. The L1 reading goes continuous when the switch is flipped to ON. What does this prove?',
     options: [
-      'A polarity fault — the switch should always read continuous',
-      'The switch is correctly wired with the line conductor entering on COM and the switched line leaving on L1, and the switch is breaking the line conductor as Reg 132.14.1 requires',
-      'The CPC is broken inside the switch back-box',
-      'The switch is faulty and should be replaced',
+      'A polarity fault, because the switch terminals should always read continuous to CPC in both positions',
+      'A broken CPC inside the switch back-box, opening the return path to the L–CPC link at the board',
+      'The switch is correctly wired with line in on COM and switched line out on L1, breaking the line per Reg 132.14.1',
+      'Faulty switch contacts that fail to make on L1; the switch should be replaced before re-testing',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'COM continuous to L–CPC link confirms the line conductor enters the switch on COM. L1 going open-on-OFF and continuous-on-ON confirms the switch is breaking the line conductor between COM and L1 — exactly what Reg 132.14.1 demands. A switch in the neutral would read continuous on both terminals regardless of switch position.',
   },
@@ -51,28 +51,28 @@ const inlineChecks = [
     question:
       'At a ceiling rose (loop-in wiring, lamp removed), the dead polarity probe should read continuous L-to-CPC at which terminal(s) on an earthed-neutral system?',
     options: [
-      'The neutral terminal — that is where the user plugs the bulb in',
-      'The permanent line terminal (where the supply line lands and loops to the next rose) AND the switched line terminal only when its switch is in the ON position. The neutral terminal must read open',
-      'All three terminals — line, neutral and CPC',
-      'Only the CPC terminal',
+      'The neutral terminal, because that is where the lamp draws its return current to the board',
+      'All three terminals together — line, neutral and CPC should each read continuous to the link',
+      'Only the CPC terminal should read continuous to the link; the line terminals stay open',
+      'The permanent line terminal always, plus the switched line terminal only with its switch ON; neutral reads open',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Permanent line is continuous to the L–CPC link at the board because it is the line conductor by definition. Switched line is continuous only when the controlling switch is closed. The neutral terminal must read open — if it reads continuous, line and neutral have been swapped somewhere on the circuit.',
   },
   {
     id: 'mod7-s2-socket-back',
     question:
-      'A BS 1363 socket-outlet has been wired with the line conductor on the right-hand terminal as you face the front of the socket. The dead polarity test confirms electrical continuity from this terminal back to the L–CPC link at the board. Pass or fail?',
+      'On a BS 1363 socket-outlet (front view, earth terminal at the top), the dead polarity test reads continuous L-to-CPC at the LEFT-hand terminal and open at the right-hand terminal. Pass or fail?',
     options: [
-      'Pass — continuity is the only thing the test cares about',
-      'Fail. BS 1363 is non-reversible at the plug, so the right-hand terminal as you face the front is the neutral side. The line conductor lands on the LEFT terminal. Continuity to L–CPC link at the board on the right terminal is a polarity reversal — the conductor that should be neutral is electrically the line',
-      'Pass on a TN-C-S supply, fail on TT',
-      'Cannot be determined without an RCD test',
+      'Fail — BS 1363 puts line on the right, so continuity arriving at the LEFT terminal means line is on the neutral side',
+      'Pass, because continuity at one terminal is all the polarity test at a socket needs to confirm',
+      'Pass on a TN-C-S supply but a fail on a TT supply, because of the different earthing arrangement',
+      'It cannot be determined without first carrying out an RCD trip test at the socket-outlet',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      "BS 1363 socket geometry fixes which pin is line and which is neutral at the plug interface. The terminal-back wiring must follow that geometry — line on the left as you face the front. If continuity to the board's L–CPC link comes back at the right-hand terminal, the socket has been wired in reverse and the appliance now sees 230 V on what its design expects to be the neutral side.",
+      "BS 1363 geometry fixes line and neutral at the plug interface: viewed from the front with the earth at the top, the line is on the right and the neutral is on the left. The socket-back wiring must match. Continuity to the board's L–CPC link arriving at the LEFT terminal means the line has been wired onto the neutral side — a polarity reversal (the line conductor reads continuous where the neutral should read open).",
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'On a single-phase final circuit, what is the first physical step in the dead polarity verification once continuity and IR have passed?',
     options: [
-      'Energise and use a socket tester',
       'Confirm or place the L–CPC link at the consumer unit / distribution board on the circuit being tested',
-      'Insulation resistance test L–N at 500 V',
-      'Disconnect every CPC at the accessories',
+      'Energise the circuit and plug in a socket-outlet polarity tester',
+      'Carry out an insulation resistance test L–N at 500 V',
+      'Disconnect every CPC at the accessories before probing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Method 1 setup is the foundation: line linked to CPC at the board for that circuit. The same link that gave you the R1+R2 reading is what makes the polarity probe possible. If the link is not in, the ohmmeter at the accessory has nothing on the line side to read against.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'At a single-pole light switch on a domestic lighting circuit, the polarity test confirms which conductor is the line conductor by what reading?',
     options: [
-      'Switch in the OFF position, ohmmeter from line input terminal at the switch to the CPC at the back-box → continuous = line is correctly presented at the input terminal',
-      'Switch in the ON position, ohmmeter L–N at the switch',
-      '500 V insulation resistance L–E at the switch',
-      'Two-pole indicator across the switch terminals while energised',
+      'Switch in the ON position, ohmmeter measuring L–N across the switch terminals',
+      'A 500 V insulation resistance test L–E at the switch, reading polarity from the result',
+      'Switch OFF, ohmmeter from line input terminal to the back-box CPC — continuous confirms line at the input',
+      'Two-pole voltage indicator placed across the switch terminals while the circuit is energised',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'At the switch, with L–CPC linked at the board, the input (permanent line) terminal must read continuous to the back-box CPC. The output (switched line) terminal will only read continuous when the switch is closed. Probing both terminals with the switch in OFF then ON proves the line conductor enters the device and the switch is interrupting the line, not the neutral.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'You probe the input terminal of a single-pole switch (switch OFF) and read open circuit. The output terminal reads continuous L-to-E. What is the most likely fault?',
     options: [
-      'The lamp is still in',
-      'The switch has been wired into the neutral conductor — the output is the line in, and the input is being held at switched-line potential',
-      'The CPC is broken at the switch back-box',
-      'The L–CPC link has fallen off at the board',
+      'A lamp has been left in the lampholder, bridging line and neutral during the test',
+      'The CPC is broken at the switch back-box, opening the return path to the board link',
+      'The L–CPC link has fallen off the busbar at the consumer unit part-way through',
+      'The switch is wired into the neutral — the output is line in, the input sits at switched-line potential',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A switch wired into the neutral by mistake reverses the apparent terminal mapping. The conductor that should be the permanent line is now the neutral; the switched-line conductor coming back from the rose is on the input terminal. With the switch OFF, the input terminal sees no continuity — but as soon as you close the switch, both terminals become continuous via the rose. This is the canonical Reg 643.6(a) failure.',
   },
@@ -124,21 +124,26 @@ const quizQuestions = [
     question:
       'At a fused connection unit (FCU) feeding a fixed appliance, what does the polarity test specifically need to verify in addition to the standard line continuity check?',
     options: [
-      'Only that the line conductor enters the FCU',
-      'That the line conductor enters the FCU on the line-input side and the fuse is in the line — i.e. the line conductor passes through the fuse, not the neutral. With the fuse removed (or carrier withdrawn), the load-side line terminal should read open to the L–CPC link at the board; with the fuse in, it reads continuous',
-      'That the fuse rating matches the cable rating only',
-      'That the FCU is fitted with a switch',
+      'That the fuse is in the line, proved by fuse-pull: load-side line terminal open with fuse out, continuous with fuse in',
+      'Only that the line conductor enters the FCU on the input side, with no fuse-pull check needed',
+      'Only that the fuse rating matches the rating of the cable being protected downstream',
+      'Only that the FCU is fitted with a functional switch that isolates the appliance load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The FCU duty under Reg 643.6(a) is twofold: line on the input side, and the fuse element itself in the line conductor. The fuse-pull test (carrier out, expect open at the load-side line terminal; carrier in, expect continuous) is the practical confirmation that the fuse interrupts the line. A fuse in the neutral is a Reg 132.14.1 / 643.6(a) failure.',
   },
   {
     id: 5,
     question:
-      'At a BS 1363 socket-outlet, looking at the face of the socket with the cord-grip downwards, where is the line terminal?',
-    options: ['On the left', 'On the right', 'In the centre', 'It varies by manufacturer'],
-    correctAnswer: 1,
+      'At a BS 1363 socket-outlet, looking at the face of the socket with the earth terminal at the top, where is the line terminal?',
+    options: [
+      'On the left-hand side',
+      'In the centre, below the earth',
+      'On the right-hand side',
+      'It varies from one manufacturer to another',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 1363 fixes the geometry: with the socket viewed from the front and the earth terminal at the top, the line is on the right and the neutral is on the left. The non-reversible plug pin geometry guarantees the appliance side once the socket-back is wired correctly — but the socket-back itself can still be wired wrong, and that is what the polarity test at the socket terminals catches.',
   },
@@ -147,12 +152,12 @@ const quizQuestions = [
     question:
       'On a ceiling rose using the loop-in method, three line conductors meet at the rose: a permanent line in, a permanent line out (looping to the next rose), and a switched line returning from the switch. How does the polarity test confirm the switched line is on the lampholder?',
     options: [
-      'It cannot — visual inspection only',
-      'Switch in OFF, with L–CPC linked at the board: the lampholder centre-contact terminal must read open. Switch in ON: the lampholder centre-contact terminal must read continuous to CPC. The permanent-line terminals at the rose must read continuous in both switch positions',
-      'Switched line is always continuous regardless of switch position',
-      'The neutral terminal at the rose is the test point',
+      'It cannot be confirmed by testing and can only be checked by visual inspection of the rose terminals',
+      'The switched-line terminal reads continuous to CPC regardless of the switch position, which is the pass',
+      'The neutral terminal at the rose is the correct test point for confirming the switched line',
+      'With L–CPC linked: lampholder centre open with switch OFF, continuous with switch ON; permanent lines continuous in both',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A loop-in rose is the densest wiring point on the circuit. The polarity test discriminates by switching the switch: permanent lines stay continuous always (they are tied to the L–CPC link); the switched line reaching the lampholder is open with the switch off and continuous with the switch on. If the lampholder centre stays continuous regardless of switch position, the switched line and a permanent line have been swapped — a code C2 failure.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     question:
       'You are polarity-testing a 32 A radial socket circuit with seven sockets, with all lamps removed from the lighting circuit on the same board. At the fifth socket the line terminal reads continuous to CPC, but the line terminal at sockets 6 and 7 reads open. What is the most likely cause?',
     options: [
-      'The L–CPC link has loosened mid-test',
-      'A broken line conductor between sockets 5 and 6, OR a switched-spur FCU between socket 5 and 6 with the fuse out / load-side connections swapped',
-      'The CPC is shared between circuits',
-      'Sockets 6 and 7 are on a different ring',
+      'A broken line conductor between sockets 5 and 6, or a spur FCU there with the fuse out',
+      'The L–CPC link has loosened at the board part-way through, dropping out every reading',
+      'The CPC is being shared between two different final circuits at the board earth bar',
+      'Sockets 6 and 7 are actually wired on a separate ring final circuit on another way',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A radial test where continuity drops out at a specific accessory localises the fault. Either the line conductor itself is broken between sockets 5 and 6, or there is an intermediate device in the line path (an FCU spur, a switched isolator) and its load-side terminations have been mis-wired. Method-2-style probing along the line conductor at each accessory pin-points the break to the section between sockets 5 and 6.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     question:
       'A wrong-polarity reading at a switched accessory typically takes one of two forms. Which pair is correct?',
     options: [
-      'Open circuit when expected closed (line conductor not at the test terminal); OR closed circuit when expected open (the conductor at the test terminal is line when it should be neutral or switched line)',
-      'High resistance only; never open circuit',
-      'A reading of zero ohms always; never open circuit',
-      'Only voltage readings — resistance is never the diagnostic',
+      'A slightly high resistance reading only; a wrong-polarity reading is never a full open circuit',
+      'A reading of zero ohms in every case; a wrong-polarity reading is never an open circuit',
+      'Open when closed expected (line absent), or closed when open expected (line where neutral should be)',
+      'Only voltage readings reveal the fault; resistance is never the diagnostic for a polarity error',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Both directions of error matter. Open when expected closed (the line is not arriving where the test expects it) catches missing line continuity. Closed when expected open (the test terminal reads continuous to the L–CPC link when in design it should be on neutral or on switched line) catches conductors swapped at terminals. The polarity test interprets readings against the design — both directions are diagnostic.',
   },
@@ -189,12 +194,12 @@ const quizQuestions = [
     question:
       'After polarity passes dead, you energise the consumer unit. At the consumer unit incoming side you read L–E ≈ 230 V and N–E ≈ 230 V. What does that mean and what do you do?',
     options: [
-      'A normal TN-C-S reading — proceed',
-      'Supplier&rsquo;s tails reversed at the cut-out — the conductor presented as neutral is actually line. Isolate, lock off, do not re-energise, and report to the DNO. Issue no certificate',
-      'The consumer unit is faulty',
-      'Disconnect the bonding to verify',
+      'A normal TN-C-S reading — carry on and proceed with the remaining live tests',
+      'The consumer unit is faulty and should be replaced before continuing the test sequence',
+      'Disconnect the main protective bonding and re-read to verify the N–E reading',
+      'Supplier&rsquo;s tails reversed at the cut-out — isolate, report to the DNO, issue no certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A healthy supply reads L–E ≈ 230 V and N–E ≈ 0–10 V (the small N–E reading is the supplier neutral drop on TN-C-S). A 230 V reading on N–E means the conductor labelled N is at line potential — i.e. the cut-out tails are reversed. The supplier is the only party permitted to remediate at the cut-out. Isolate, escalate, do not energise downstream.',
   },
@@ -203,12 +208,12 @@ const quizQuestions = [
     question:
       'On the Generic Schedule of Test Results, a circuit with seven sockets passed polarity at all seven socket-back terminations and at the consumer unit live test. How is the polarity column entry made for that circuit row?',
     options: [
-      'Seven separate ticks, one per socket',
-      'A single tick (or pass mark) on the circuit row — the entry is per-circuit, not per-accessory. The polarity verification is scoped to the whole circuit; failures and the diagnostic detail go in comments',
-      'A numeric ohms value',
-      'The lowest measured resistance from the test',
+      'A single tick on the circuit row — polarity is recorded per-circuit, with any failure detail in comments',
+      'Seven separate ticks, one entered in the column for each individual socket-outlet tested',
+      'A numeric ohms value recorded in the polarity column for the circuit being certified',
+      'The lowest measured resistance obtained anywhere on the circuit during the polarity test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Generic Schedule of Test Results carries one polarity entry per circuit, not per accessory. A pass = tick. A failure = cross with the diagnostic detail (which accessory, what was wrong, what was rectified) in the comments column. The granularity at which polarity is tested (every accessory) is finer than the granularity at which it is recorded (per circuit) — and the comments column is what bridges the two.',
   },

@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'bim-clash-detection',
     question: 'What is the primary purpose of 3D clash detection in BIM coordination?',
     options: [
-      'Description of work, sequence of operations, equipment, control measures, responsible persons',
+      'To calculate the energy performance of the completed building',
       'To identify spatial conflicts between building services before installation',
-      'The back-EMF nearly equals the supply voltage so net driving voltage is small',
-      'Systematic evaluation of fire hazards and risks to implement control measures',
+      'To produce the operation and maintenance manuals at handover',
+      'To estimate the labour cost of each building services trade',
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of a Request for Information (RFI) in the construction process?',
     options: [
-      'Evaluating environmental impacts throughout a product\\\'s life from raw materials to disposal',
-      'Use measures that minimise the distance and consequences of a fall',
-      'Multi-core cables clipped direct to a non-metallic surface in still air.',
+      'To instruct a contractor to begin work on a particular area',
+      'To record the agreed valuation of a variation to the contract',
       'To formally seek clarification on design information or resolve discrepancies',
+      'To confirm that a section of work has passed inspection on site',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'An RFI (Request for Information) is a formal document used to seek clarification on design information, resolve discrepancies between drawings or specifications, or request missing information from the design team. RFIs create an auditable record of design decisions and changes.',
   },
@@ -182,9 +182,9 @@ const quizQuestions = [
       'During a design coordination meeting, who typically chairs the meeting and leads clash resolution?',
     options: [
       'The MEP coordinator or BIM manager',
-      'Cleaning vents and checking cables',
-      'Ask questions and repeat back to confirm',
-      'R1+R2 from continuity + Ze calculation',
+      'The most junior apprentice on the project',
+      'The building control officer for the local authority',
+      'The client representative attending the meeting',
     ],
     correctAnswer: 0,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     question:
       'What documentation should be reviewed before attending a design coordination meeting?',
     options: [
-      'Services requiring least flexibility in routing pass below',
-      'A drawing overlaying all services to show spatial relationships and routing',
-      'An element violating required clearance or access zones',
+      'Only the original tender documents issued at the start of the project',
+      'The site staff timesheets for the previous working week',
+      'The health and safety file for the completed building',
       'Latest clash reports, updated drawings, and outstanding RFI responses',
     ],
     correctAnswer: 3,
@@ -237,9 +237,9 @@ const quizQuestions = [
     question: 'What is a coordination drawing (sometimes called a combined services drawing)?',
     options: [
       'A drawing overlaying all services to show spatial relationships and routing',
-      'Latest clash reports, updated drawings, and outstanding RFI responses',
-      'Services requiring least flexibility in routing pass below',
-      'An element violating required clearance or access zones',
+      'A drawing showing only the electrical containment for a single floor',
+      'A programme bar chart setting out the installation sequence for each trade',
+      'A schedule listing the outstanding clashes still to be resolved',
     ],
     correctAnswer: 0,
     explanation:

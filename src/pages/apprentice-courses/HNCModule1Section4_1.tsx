@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     id: 'negligence-elements',
     question: 'Which elements must be proven to establish negligence in a civil claim?',
     options: [
-      'Circuit has adequate capacity and existing protection is suitable',
-      'Danger present — risk of injury. Immediate remedial action required',
+      'That the defendant intended to cause the harm suffered',
+      'That a written contract existed between the parties',
       'Duty of care existed, it was breached, and harm resulted from the breach',
-      'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
+      'That the harm was reported to the HSE within seven days',
     ],
     correctIndex: 2,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       "What does 'so far as is reasonably practicable' (SFAIRP) mean in health and safety law?",
     options: [
-      'Clearly and concisely summarise the purpose or action required',
-      'Verified against maximum values for the protective device',
+      'All possible risks must be eliminated whatever the cost',
+      'Risk reduction is only required where it is free of charge',
       'Risk reduction measures are required unless grossly disproportionate to the risk',
-      'Voltage can be easily changed with transformers for efficient transmission',
+      'Risk reduction is at the employer\'s sole discretion',
     ],
     correctAnswer: 2,
     explanation:
@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: 'Under Section 37 of HASAWA 1974, when can individual directors be prosecuted?',
     options: [
-      'Lie them flat, raise their legs, keep them warm, and call 999',
-      'Stepping down high voltage for measurement and protection circuits',
-      'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
+      'Only if they were personally present when the incident occurred',
+      'Only if they hold a formal health and safety qualification',
+      'Only if the company has fewer than ten employees',
       'When an offence is committed with their consent, connivance, or through their neglect',
     ],
     correctAnswer: 3,
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'The Corporate Manslaughter and Corporate Homicide Act 2007 applies when death is caused by:',
     options: [
-      'It produces less smoke and no halogen gases when burned',
+      'Any accidental death on a construction site',
       'A gross breach of duty of care by senior management',
-      'Mixing RCD-protected and non-protected neutrals',
-      'PROFINET, EtherNet/IP, or Modbus TCP/IP',
+      'A single employee ignoring a safety procedure',
+      'Any death where no risk assessment existed',
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       'What is the relationship between civil and criminal proceedings following a workplace accident?',
     options: [
-      'Precise control via BMS integration and wider operating range',
-      'Materials with zero electrical resistance at low temperatures',
+      'A criminal conviction automatically settles any civil claim',
+      'Only one set of proceedings is permitted per incident',
       'Both civil and criminal proceedings can run independently',
-      'At regular intervals as specified in regulations',
+      'Civil proceedings must always be concluded before criminal ones',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     question:
       'A building services engineer specifies electrical equipment they know is unsuitable for the environment. Who may be liable?',
     options: [
-      'Continuity, insulation resistance, polarity, and Zs values',
+      'Only the equipment manufacturer who supplied the item',
       'The engineer personally, their employer, and potentially the client',
-      'Tripping before prospective fault current reaches peak',
-      'Awareness of emergency lighting purpose, exit routes, and assembly points',
+      'Only the client, as they commissioned the work',
+      'No one, provided the equipment was correctly installed',
     ],
     correctAnswer: 1,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the Turnover Multiplier approach in the Sentencing Guidelines?',
     options: [
-      "Work in special locations or involving new circuits",
-      "To ensure materials arrive when needed and in correct quantities",
+      "Multiplying the number of employees by a fixed penalty",
+      "Using the number of previous convictions to set the fine",
       "Using the organisation's annual turnover to scale fines appropriately",
-      "The scaffold is incomplete or has use restrictions — check details on the tag",
+      "Doubling the fine for every year the breach continued",
     ],
     correctAnswer: 2,
     explanation:

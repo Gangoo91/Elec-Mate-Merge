@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       "The IET Code of Practice §3 splits in-service equipment into categories that drive the test methods. Which categorisation is the IET CoP's primary axis?",
     options: [
-      'Voltage band only.',
-      'Mobility (movable, portable, hand-held, stationary, fixed) AND construction class (Class I, Class II, Class III).',
-      'Manufacturer.',
-      'Cost.',
+      'Voltage band only — separating extra-low, low and high-voltage equipment.',
+      'Mobility (movable, portable, hand-held, stationary, fixed) and construction class (I, II, III).',
+      'Manufacturer and model — grouping items by who made them and the product range.',
+      'Acquisition cost — banding equipment by purchase price into high, medium and low value.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,42 +37,42 @@ const inlineChecks = [
     question:
       'A wall-mounted hand drier is hard-wired via a fused spur. Is it inside the IET CoP scope?',
     options: [
-      'No — fixed equipment is BS 7671 territory only.',
-      'Yes — IET CoP §3.1 covers fixed equipment in service. The test methods adapt (the unit is energised in situ rather than plugged into the tester), but PE-continuity and IR / leakage are still the duties under EAWR Reg 4(2). The "in-service" question is about use, not mobility.',
-      'Only if it has a removable plate.',
-      'Only on construction sites.',
+      'No — once hard-wired it becomes BS 7671 territory only, covered by the EICR.',
+      'Yes — IET CoP §3.1 covers fixed in-service equipment; the methods adapt but the duties remain.',
+      'Only if it has a removable plate that lets the unit be unplugged from the supply for testing.',
+      'Only on construction sites, where the IET CoP extends to hard-wired equipment.',
     ],
     correctIndex: 1,
     explanation:
-      'A common misconception is that PAT is only for plug-in items. The IET CoP scope includes fixed equipment whose in-service condition needs maintenance. Hand driers, fixed luminaires with on-board electronics, fixed display units — all routinely covered as part of a complete PAT regime.',
+      'IET CoP §3.1 covers fixed equipment in service: the test methods adapt (the unit is energised in situ rather than plugged into the tester), but PE-continuity and IR / leakage remain duties under EAWR Reg 4(2). The "in-service" question is about use, not mobility. PAT is not only for plug-in items — hand driers, fixed luminaires with on-board electronics and fixed display units are routinely covered as part of a complete regime.',
   },
   {
     id: 'patm1-s3-IT',
     question:
       'An IT desktop with an integrated SMPS, a C13 IEC connector, and a separate detachable IEC mains lead. How does the IET CoP §3 classification apply?',
     options: [
-      'Treat as a single item.',
-      'The IT unit is one item (Class I or Class II per its rating plate) AND the IEC mains lead is a separate item (a Class I lead) — IET CoP §3.4 expressly identifies detachable IEC leads as separately tested items, with their own ID, their own continuity and IR readings, their own record.',
-      'Only the IEC lead needs testing.',
-      'Only the desktop needs testing.',
+      'Treat the unit and its lead as a single item under one asset ID and one record.',
+      'The IT unit is one item and the detachable IEC mains lead is a separate Class I item.',
+      'Only the IEC lead needs testing; the desktop is sealed and self-certifying.',
+      'Only the desktop needs testing; the IEC lead is covered by the desktop record.',
     ],
     correctIndex: 1,
     explanation:
-      'IEC leads (and any detachable mains lead) are separately testable items because they wear independently of the equipment they serve. IET CoP §3.4 names them specifically. Pairing them with one item ID is one of the most common record-keeping errors and one that obscures lead-specific defects in the trend data.',
+      'The IT unit is one item (Class I or Class II per its rating plate); the IEC mains lead is a separate Class I item. IET CoP §3.4 expressly identifies detachable IEC leads as separately tested items, each with its own ID, continuity and IR readings and record, because they wear independently of the equipment they serve. Pairing them under one item ID is a common error that obscures lead-specific defects in the trend data.',
   },
   {
     id: 'patm1-s3-110V',
     question:
       'A 110 V CTE site transformer feeds three 110 V hand tools and a temporary lighting set. How many "items" appear on the equipment register?',
     options: [
-      '1 — the transformer covers all of them.',
-      '5 — the transformer plus each of the three hand tools plus the lighting set, each with its own ID, class and test history. The 230 V supply lead to the transformer (and any 110 V extension leads) are additional items.',
-      '4 — one per hand tool plus transformer.',
-      '2 — supply side and load side.',
+      '1 — the transformer is the registered item and covers everything fed from it.',
+      '5 — the transformer plus each of the three hand tools plus the lighting set, separately.',
+      '4 — one entry per hand tool plus the transformer, with the lighting set excluded.',
+      '2 — one entry for the 230 V supply side and one for the 110 V load side.',
     ],
     correctIndex: 1,
     explanation:
-      'Every separately-testable item gets its own register entry. The 110 V system is the canonical example because the transformer + tools + leads + lights are all independently tested at different acceptance values. IET CoP Chapter 9 and §3.5 set this out.',
+      'Each item gets its own ID, class and test history; the 230 V supply lead to the transformer and any 110 V extension leads are additional items on top. Every separately-testable item gets its own register entry. The 110 V system is the canonical example because transformer, tools, leads and lights are all independently tested at different acceptance values (IET CoP Chapter 9 and §3.5).',
   },
 ];
 
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'IET CoP §3.1 distinguishes "movable", "portable" and "hand-held" equipment. Which is correct?',
     options: [
-      'They are interchangeable terms.',
-      'Movable: 18 kg or more, intended to be moved while in operation or wheeled (e.g. floor cleaners). Portable: less than 18 kg and intended to be moved while connected. Hand-held: portable and intended to be held in the hand during normal use (drills, irons, soldering irons).',
-      'Movable means stationary equipment.',
-      'Hand-held only refers to phones.',
+      'Movable: 18 kg or more or wheeled. Portable: under 18 kg. Hand-held: portable and held in use.',
+      'The three terms are interchangeable in the IET CoP and carry no distinct acceptance values.',
+      'Movable is simply another word for stationary equipment that stays in one place during use.',
+      'Hand-held refers only to mains-powered mobile phones, tablets and similar small devices.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The IET CoP definitions matter because hand-held equipment has the tightest acceptance values for protective-conductor continuity and is at higher risk of flex damage. Mis-categorising a hand-held as portable can lead to applying the wrong acceptance value at the test step.',
   },
@@ -109,109 +109,109 @@ const quizQuestions = [
     id: 3,
     question: 'How does the IET CoP treat extension leads, multiway adaptors and IEC mains leads?',
     options: [
-      'They are not in scope.',
-      'IET CoP §3.4 / §15.4 treat them as separately-testable items, each with its own ID and its own test record. Extension leads in particular have their own continuity acceptance value driven by lead length and conductor csa, and are recommended for shorter test intervals because of frequent mechanical handling.',
-      'Only the equipment they connect needs testing.',
-      'They are tested only on construction sites.',
+      'They are not in scope of the IET CoP and never need a separate test of their own.',
+      'Only the equipment they connect to needs testing; the lead is covered by that record.',
+      'They are tested only when used on construction sites, not in offices or workshops.',
+      'They are separately-testable items, each with its own ID, record and length-based continuity limit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Leads are independent failure points. IET CoP Table 15.1 gives PE-continuity values for varying lengths and conductor sizes. Extension leads are also one of the highest-defect-rate categories in HSE incident data, justifying their own register entry and short-cycle frequency.',
+      'IET CoP §3.4 / §15.4 treat them as separately-testable items, each with its own ID and record; extension-lead continuity acceptance is driven by length and csa, with shorter test intervals due to frequent handling. Leads are independent failure points — Table 15.1 gives PE-continuity values for varying lengths and conductor sizes, and extension leads are one of the highest-defect-rate categories in HSE incident data.',
   },
   {
     id: 4,
     question: 'A 400 V three-phase mobile welder on wheels — is this in-scope for PAT (IET CoP)?',
     options: [
-      'No — three-phase equipment is outside scope.',
-      'Yes. IET CoP §3 and Chapter 9 cover three-phase mobile equipment. Test methods adapt to the supply (industrial connector, three-phase test instrument capability) but the duties under EAWR Reg 4(2) and PUWER Reg 5/6 are identical. The competence requirement under EAWR Reg 16 is heightened for the inspector.',
-      'Only if rated below 7.5 kW.',
-      'Only if used outdoors.',
+      'Yes — IET CoP §3 and Chapter 9 cover three-phase mobile equipment; methods adapt, duties are identical.',
+      'No — three-phase equipment is outside the IET CoP scope and handled under BS 7671 only.',
+      'Only if the welder is rated below 7.5 kW; larger sets fall outside the in-service regime.',
+      'Only if the welder is used outdoors, where the deteriorating-conditions trigger applies.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The IET CoP explicitly covers three-phase mobile equipment. The decisive factor is whether the equipment is in service via a connector or detachable supply, not the voltage band. Most general-purpose multifunction PAT testers do not test three-phase equipment directly; specialist three-phase testers or alternative procedures are needed.',
+      'The methods adapt (industrial connector, three-phase instrument) but the EAWR Reg 4(2) / PUWER duties are identical and Reg 16 competence is heightened. The decisive factor is whether the equipment is in service via a connector or detachable supply, not the voltage band. Most general-purpose multifunction PAT testers cannot test three-phase equipment directly; specialist testers or alternative procedures are needed.',
   },
   {
     id: 5,
     question:
       'A purely battery-operated cordless drill (18 V dc, no charger connected during use) — what is its status?',
     options: [
-      'Always in scope.',
-      'During battery use, the drill is generally outside the EAWR scope (no mains connection, no significant electrical danger). The charger and any mains-powered docking station ARE in scope as separate items. Many duty-holders still apply IET CoP user-check / formal-visual hygiene to battery tools because the mechanical risks — flex damage on the charger lead, broken keyless chuck — are still PUWER duties.',
-      'Always out of scope.',
-      'Only in scope above 24 V dc.',
+      'Always in scope of the EAWR combined inspection-and-test, charger connected or not.',
+      'Always out of scope, including its mains charger and any docking station.',
+      'In battery use the drill is generally outside EAWR scope, but the charger and mains dock are in scope.',
+      'In scope only where the battery voltage exceeds 24 V dc, otherwise wholly exempt.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The EAWR scope turns on whether mains energy is involved. Cordless tools in battery use generally are not. Their chargers and any mains accessories are. Best practice is to bring battery tools into the formal-visual programme (PUWER Reg 6) even if the combined inspection-and-test does not apply.',
+      'The drill in battery use has no mains energy, but the charger and any mains dock are in scope; many duty-holders still apply formal-visual hygiene under PUWER for mechanical risks. The EAWR scope turns on whether mains energy is involved. Best practice is to bring battery tools into the formal-visual programme (PUWER Reg 6) even where the combined inspection-and-test does not apply.',
   },
   {
     id: 6,
     question: 'A landlord supplies a kettle to a holiday let. Is the kettle within a PAT scope?',
     options: [
-      'No — it is residential.',
-      'Yes. Landlords have safety duties under the Landlord and Tenant Act, the Homes (Fitness for Human Habitation) Act 2018 and HSWA s.3 for non-employees. Equipment supplied to tenants is within the scope of the maintenance regime. Frequency is risk-assessed; many landlords adopt an annual cycle for furnished short-let properties. The IET CoP §3.6 explicitly covers landlord-supplied equipment.',
-      'Only if the property is over 5 storeys.',
-      'Only with HMOs.',
+      'No — it is a residential setting and sits outside any electrical maintenance regime.',
+      'Only if the property is over five storeys or otherwise subject to higher-risk building rules.',
+      'Yes — landlord-supplied equipment is in scope (IET CoP §3.6), with a risk-assessed frequency.',
+      'Only where the property is a licensed HMO with shared facilities and multiple occupants.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Landlord-supplied equipment is the canonical "non-employee" PAT scope. The duty arises from the supply, not the workplace. The IET CoP §3.6 and Indg236 both confirm landlord-supplied equipment falls within the in-service maintenance framework.',
+      'Landlords owe duties under the Landlord and Tenant Act, the Homes (Fitness for Human Habitation) Act 2018 and HSWA s.3, and the frequency is often annual for furnished short-lets. Landlord-supplied equipment is the canonical "non-employee" PAT scope — the duty arises from the supply, not the workplace. IET CoP §3.6 and INDG236 both confirm it falls within the in-service maintenance framework.',
   },
   {
     id: 7,
     question:
       'A vending machine on a corridor in an office, owned by a third-party vending operator. Whose PAT duty?',
     options: [
-      'The site occupier — they have the equipment on their premises.',
-      'Primarily the vending operator (the duty-holder for their equipment), but the site occupier owes HSWA s.3 duties to non-employees and should verify proportionately that the vending operator has a programme. CDM 2015 / commercial leases often apportion responsibility contractually, but the statutory duties remain.',
-      'Neither — vending machines are exempt.',
-      'The local authority.',
+      'Primarily the vending operator, but the site occupier still owes HSWA s.3 and should verify a programme.',
+      'The site occupier alone, because the equipment is physically located on their premises.',
+      'Neither — third-party vending machines are exempt from the in-service maintenance regime.',
+      'The local authority, as host of the public-facing corridor where the machine stands.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Equipment ownership is the primary driver of the EAWR duty-holder identity. The site occupier still has s.3 obligations to anyone affected by the equipment, which is why most office leases address this in the schedule of services / conditions.',
+      'The vending operator is duty-holder for their own equipment, but the site occupier owes HSWA s.3 to non-employees and should verify proportionately that the operator has a programme; leases apportion this practically, not statutorily. Equipment ownership is the primary driver of EAWR duty-holder identity, which is why most office leases address this in the schedule of services / conditions.',
   },
   {
     id: 8,
     question: 'IET CoP §3.5 covers RCDs and portable RCDs. How are they treated in the PAT regime?',
     options: [
-      'Identically to extension leads.',
-      'Plug-in / portable RCDs (BS 7071, BS 7288) are separately-testable items in their own right. The IET CoP requires a trip-time test (using the instrument RCD function) in addition to the standard continuity / IR. The RCD is part of the protective regime for the downstream equipment.',
-      'They are not testable.',
-      'Only fixed RCDs are testable.',
+      'Identically to plain extension leads, with continuity and IR but no additional functional test.',
+      'They cannot be meaningfully tested in the field and rely on the manufacturer’s sealed certification.',
+      'Only fixed RCDs in the consumer unit are testable; plug-in RCDs are outside the PAT regime.',
+      'Plug-in / portable RCDs are separately-testable items needing a trip-time test on top of continuity / IR.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Portable RCDs are protective devices and need a trip-time check at I&Delta;n on every formal inspection. A failed portable RCD is invisible to the user but compromises the entire downstream protective strategy.',
+      'Plug-in / portable RCDs (BS 7071, BS 7288) are protective devices that protect the downstream equipment, so they need a trip-time check at IΔn (instrument RCD function) on every formal inspection in addition to standard continuity / IR. A failed portable RCD is invisible to the user but compromises the entire downstream protective strategy.',
   },
   {
     id: 9,
     question:
       'Equipment used outdoors that has been temporarily brought inside for testing. What does the IET CoP advise?',
     options: [
-      'No special handling.',
-      'IET CoP §14 advises testing equipment in conditions reasonably representative of its in-service environment. Equipment that lives outdoors should be tested clean and dry (you cannot meaningfully measure IR through a wet enclosure), but the ingress and external-condition formal-visual checks should be performed in or near its service environment so that the inspector can see how it is actually used.',
-      'Test only outdoors.',
-      'Test only in summer.',
+      'Test clean and dry, but do the ingress / external-condition checks in or near the service environment.',
+      'No special handling is needed — outdoor equipment is tested exactly like indoor equipment.',
+      'Such equipment must only ever be tested outdoors, in its actual service location and weather.',
+      'Such equipment must only be tested during the summer months when conditions are driest.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The risk of "test bench / job site" disconnect is that the testing environment is artificially benign. Inspecting equipment in its service location, then performing the instrument tests in clean conditions, is the IET CoP-consistent approach.',
+      'IET CoP §14 advises testing in conditions reasonably representative of service: test clean and dry (IR cannot be read through a wet enclosure), but carry out the ingress and external-condition formal-visual checks in or near the service environment. The risk of a "test bench" disconnect is that the testing environment is artificially benign; inspecting in the service location then testing in clean conditions is the IET CoP-consistent approach.',
   },
   {
     id: 10,
     question:
       'A duty-holder decides to omit "fixed" equipment (hand driers, immersions, fixed display kits) from their PAT register because "BS 7671 covers them via EICR". What is the legal exposure?',
     options: [
-      'No exposure — the EICR is sufficient.',
-      "EAWR Reg 4(2) and PUWER Reg 5/6 are not satisfied for the in-service condition of those items by an EICR alone. The EICR confirms the fixed wiring up to the unit; it does not verify the unit's own protective-conductor continuity, IR, or condition. The IET CoP §3.1 and Chapter 14 explicitly cover the in-service inspection and testing of fixed equipment, and a duty-holder omitting them has a defendable gap to fill.",
-      'PUWER does not apply to fixed equipment.',
-      'Only mobile equipment is in scope of EAWR.',
+      'No exposure — the EICR is sufficient evidence of condition for those fixed units.',
+      'No exposure — PUWER does not apply to fixed equipment, only to portable items.',
+      "Real exposure — an EICR covers the wiring, not the unit's own PE-continuity, IR or condition.",
+      'No exposure — only mobile equipment is ever in scope of the EAWR maintenance duty.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      "The EICR / PAT split is one of the most common boundary errors. Fixed equipment is in-service equipment when in use; its in-service condition is the duty-holder's concern under EAWR / PUWER, separately from the wiring that supplies it. The IET CoP fills the gap.",
+      "An EICR confirms the wiring up to the unit but not the unit's own PE-continuity, IR or condition, so EAWR Reg 4(2) and PUWER Reg 5/6 are unmet, and IET CoP §3.1 / Chapter 14 cover fixed equipment — the omission is a real gap. The EICR / PAT split is one of the most common boundary errors: fixed equipment is in-service equipment when in use, and its in-service condition is the duty-holder's concern separately from the wiring that supplies it.",
   },
 ];
 

@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a phased evacuation, which floor evacuates first?',
     options: [
-      'On-tool extraction (LEV) with H-class vacuum',
-      'To ensure they match the correct circuit details',
+      'The ground floor, then each floor upwards in sequence',
+      'The top floor first, working downwards to ground level',
       'The fire floor, then the floors immediately above and below',
-      'Mental health awareness, training and support across the construction sector',
+      'All floors at once, with the most crowded directed out first',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'A two-stage fire alarm system uses:',
     options: [
-      "At a safe distance from the building, away from access routes for emergency vehicles",
-      "Re-enter the building to search for missing persons after reporting to the assembly point",
-      "At least once a year, with more frequent drills recommended for high-risk premises",
+      "A single continuous tone that sounds throughout the building immediately",
+      "A silent pager system that alerts only the nominated fire wardens",
+      "A voice message repeated until the fire brigade arrives on site",
       "An 'alert' signal (intermittent) for staff followed by an 'evacuate' signal (continuous) for all occupants",
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'Assembly points should be located:',
     options: [
       'At a safe distance from the building, away from access routes for emergency vehicles',
-      'Re-enter the building to search for missing persons after reporting to the assembly point',
-      'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
-      'An \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'Immediately outside the main entrance for the quickest head count',
+      'Inside the nearest neighbouring building to shelter occupants',
+      'On the car park access road so vehicles can be moved if needed',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'A fire warden should NOT:',
     options: [
-      'External hazards such as chemical spills or terrorist incidents make leaving the building more dangerous',
+      'Close doors behind them as they sweep their designated area',
       'Re-enter the building to search for missing persons after reporting to the assembly point',
-      'At least once a year, with more frequent drills recommended for high-risk premises',
-      'An \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'Report anyone unaccounted for to the chief fire warden',
+      'Assist a person with a PEEP to reach a refuge area',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Personal Emergency Evacuation Plans (PEEPs) are required for:',
     options: [
-      'Areas of higher thermal conductivity creating heat flow paths',
-      'Full conversion to electrical, retiming, and retransmission as optical',
+      'Every employee in the building, regardless of ability',
+      'Visitors and contractors only, not permanent staff',
       'Any person who may need assistance to evacuate the building',
-      'Steam from cooking or shower areas affecting detectors',
+      'Fire wardens, so they know their designated sweep area',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'Under BS 5499 / BS ISO 7010, emergency exit signs must be:',
     options: [
-      'A₁v₁ = A₂v₂ (area × velocity is constant for incompressible flow)',
-      'Simple to install with standard wiring',
-      'To provide a clear record and proof of corrective action',
+      'Red with a white pictogram and the word EXIT',
+      'Blue with a white pictogram (mandatory action sign)',
+      'Yellow with a black pictogram and border (warning sign)',
       'Green with white pictogram (running man and arrow)',
     ],
     correctAnswer: 3,
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should fire evacuation drills be carried out?',
     options: [
-      'Any person who may need assistance to evacuate the building',
+      'Only once, when the building is first occupied',
       'At least once a year, with more frequent drills recommended for high-risk premises',
-      'The fire floor, then the floors immediately above and below',
-      'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
+      'Every month, in line with the emergency lighting test cycle',
+      'Whenever a new member of staff joins the organisation',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'Invacuation (staying put) is most appropriate when:',
     options: [
-      'An \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
-      'Re-enter the building to search for missing persons after reporting to the assembly point',
+      'A fire is confirmed on the floor immediately below your own',
+      'The fire alarm sounds and the nearest exit is more than 20 metres away',
       'External hazards such as chemical spills or terrorist incidents make leaving the building more dangerous',
-      'At a safe distance from the building, away from access routes for emergency vehicles',
+      'A drill is in progress and occupants have already been warned',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'Visitor management during an evacuation requires:',
     options: [
-      'External hazards such as chemical spills or terrorist incidents make leaving the building more dangerous',
-      'At least once a year, with more frequent drills recommended for high-risk premises',
-      'An \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'Leaving visitors to find their own way out to avoid delaying staff',
+      'Holding visitors at reception until all staff have evacuated',
+      'Directing visitors to a separate assembly point from staff',
       'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'When working as a contractor in an unfamiliar building, you should:',
     options: [
       'Familiarise yourself with escape routes, assembly points, alarm sounds and fire procedures during your site induction',
-      'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
-      'At least once a year, with more frequent drills recommended for high-risk premises',
-      'An \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'Assume the procedures are the same as the last similar site you visited',
+      'Wait until an alarm sounds before locating the nearest exit',
+      'Rely on the building occupants to guide you out in an emergency',
     ],
     correctAnswer: 0,
     explanation:

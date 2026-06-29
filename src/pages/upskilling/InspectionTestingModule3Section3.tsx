@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'You are working on a TN-C-S supply with a 50 mm² PEN conductor at the cut-out. The earthing conductor is 16 mm². What is the minimum copper-equivalent csa for the main protective bonding conductor?',
     options: [
-      '8 mm² — half the earthing conductor csa.',
-      '10 mm² — Table 54.8 minimum for PEN ≤ 35 mm².',
-      '16 mm² — Table 54.8 row "PEN over 35–50 mm²" requires 16 mm² copper-equivalent on a PME supply. The non-PME "half the earthing conductor" rule does not apply because PME conditions apply.',
-      '25 mm² — same as the line conductor.',
+      '8 mm² — half the earthing conductor csa under the non-PME default rule.',
+      '10 mm² — Table 54.8 minimum for the PEN ≤ 35 mm² row.',
+      '16 mm² — Table 54.8 row for PEN over 35–50 mm² on a PME supply.',
+      '25 mm² — sized to match the line conductor of the installation.',
     ],
     correctIndex: 2,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'You probe to the bonding clamp head on a gas pipe and read 0.05 Ω. The clamp looks well-fitted but the pipe has a layer of yellow factory paint underneath the jaws. What is wrong with relying on this reading?',
     options: [
-      'Nothing — 0.05 Ω is comfortably "low resistance".',
-      'The reading captures the conductor and the clamp screw, but does NOT capture the clamp-to-metalwork interface. The paint between clamp jaws and pipe could be 12–18 Ω. Probe to the bare metalwork beyond the clamp to capture the real bond.',
-      'The clamp should be on the supply side of the meter.',
-      'The reading is too low — gas bonds should read 0.5 Ω minimum.',
+      'Nothing — 0.05 Ω is comfortably within the "low resistance" pass band.',
+      'It misses the clamp-to-metalwork interface; probe the bare metal beyond the clamp.',
+      'The clamp is on the wrong side — it should sit on the supply side of the meter.',
+      'The reading is too low — gas pipe bonds should read at least 0.5 Ω.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,14 +51,14 @@ const inlineChecks = [
     question:
       'MET → gas inlet pipe = 0.05 Ω. MET → water inlet pipe = 0.04 Ω. Gas-to-water reading direct = 0.05 Ω. Gas and water are not directly bonded to each other. What does this tell you?',
     options: [
-      'Both bonds fail — readings inconsistent.',
-      'Each bond passes, but there is a parallel metallic path between gas and water (combi-boiler casing, copper cylinder, or shared metalwork). Expected gas-to-water = 0.04 + 0.05 = 0.09 Ω; measured 0.05 Ω is lower → cross-bond. Note on schedule, do not remediate.',
-      'The MET is not connected to earth.',
-      'Test-lead resistance was not nulled.',
+      'Both bonds fail — the readings are mutually inconsistent.',
+      'Each bond passes, but a parallel metallic path cross-bonds gas to water.',
+      'The MET is not actually connected to earth, shortening the path.',
+      'The test-lead resistance was not nulled before the readings.',
     ],
     correctIndex: 1,
     explanation:
-      'A cross-bond is a parallel metallic path between two already-bonded services. Not a fault, but it lowers Ze / Zs readings and can shift them upward when the parallel path is later removed (cylinder change, boiler swap). Document on the schedule so future inspectors expect the shift if metalwork changes.',
+      'Expected gas-to-water = 0.04 + 0.05 = 0.09 Ω; the measured 0.05 Ω is lower, so a parallel metallic path (combi-boiler casing, copper cylinder or shared metalwork) cross-bonds the two services. A cross-bond is not a fault, but it lowers Ze / Zs readings and can shift them upward when the parallel path is later removed (cylinder change, boiler swap). Document on the schedule, do not remediate, so future inspectors expect the shift if metalwork changes.',
   },
   {
     id: 'mod3-s3-22k-extraneous',
@@ -66,13 +66,13 @@ const inlineChecks = [
       'A property has a plastic incoming water main and all-internal copper pipework. You probe from the internal copper pipework to a separate true-earth electrode and read 38 kΩ. Per Reg 411.3.1.2 NOTE and the IET threshold, is the internal pipework an extraneous-conductive-part?',
     options: [
       'Yes — all metallic pipework must be bonded regardless of incoming pipe type.',
-      'No — 38 kΩ ≥ 22 kΩ threshold, so the metalwork is unlikely to introduce a dangerous potential and is not an extraneous-conductive-part. Reg 411.3.1.2 NOTE applies — bonding not required. Document the test on the certificate.',
-      'Bonding is required only on TT supplies.',
-      'Test invalid — must use a megger at 500 V.',
+      'No — 38 kΩ is above the 22 kΩ threshold, so it is not extraneous.',
+      'Bonding is required here only because the supply is a TT system.',
+      'The test is invalid — it must be run on a megger at 500 V.',
     ],
     correctIndex: 1,
     explanation:
-      'The 22 kΩ IET threshold is the value below which touch voltage during a fault could become unsafe. ≥ 22 kΩ to true earth = not extraneous, no bonding duty. Always document the resistance value and the test method on the certificate so the basis of the no-bonding decision is auditable.',
+      'The 22 kΩ IET threshold is the value below which touch voltage during a fault could become unsafe. 38 kΩ ≥ 22 kΩ to true earth means the metalwork is unlikely to introduce a dangerous potential and is not an extraneous-conductive-part, so Reg 411.3.1.2 NOTE applies and bonding is not required. Always document the resistance value and the test method on the certificate so the basis of the no-bonding decision is auditable.',
   },
 ];
 
@@ -96,28 +96,28 @@ const quizQuestions = [
     question:
       'Reg 544.1.2 sets a location requirement for the main bonding connection to a metallic gas or water service. What is it?',
     options: [
-      'Within 1 metre of the consumer unit',
-      'Within 600 mm of the meter outlet union, on the consumer’s hard metal pipework, before any branch pipework, where practicable',
-      'At any point on the bonded pipe',
-      'Within the boiler cupboard',
+      'On the consumer’s hard metal pipework, before any branch, within 600 mm of the meter outlet.',
+      'Within 1 metre of the consumer unit, on any accessible section of the pipe.',
+      'At any convenient point along the bonded pipe, before the first appliance.',
+      'Inside the boiler cupboard, on the consumer’s pipework after the first branch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 544.1.2 says the connection shall be made on the consumer’s hard metal pipework and before any branch pipework, and where practicable within 600 mm of the meter outlet union, or at the point of entry to the building if the meter is external. The "consumer’s hard pipework, before any branch" wording is what matters — bonding to a flexi or downstream of a tee piece does not satisfy the regulation.',
   },
   {
     id: 3,
     question:
-      'Reg 544.1.1 sets the minimum csa of a main protective bonding conductor on a non-PME supply. What is it?',
+      'Reg 544.11 sets the minimum csa of a main protective bonding conductor on a non-PME supply. What is it?',
     options: [
-      'Always 10 mm² copper',
-      'Not less than half the csa of the earthing conductor of the installation',
-      'Same as the line conductor',
-      'Not less than 25 mm² copper',
+      'Always 10 mm² copper.',
+      'The same csa as the line conductor.',
+      'Not less than 25 mm² copper.',
+      'Not less than half the csa of the earthing conductor of the installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Reg 544.1.1 first sentence: except where PME conditions apply, a main protective bonding conductor shall have a csa not less than half the csa required for the earthing conductor. Where PME applies, sizing follows Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm². The "half the earthing conductor" rule is the non-PME default.',
+      'Reg 544.11: except where PME conditions apply, a main protective bonding conductor shall have a csa not less than half that required for the earthing conductor. Where PME applies, sizing follows Table 54.8 against the PEN conductor — typically 10 mm² for PEN ≤ 35 mm².',
   },
   {
     id: 4,
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'GN3 Chapter 2 names the test for main bonding continuity. What instrument and what acceptance criterion?',
     options: [
-      'A multimeter on the lowest ohms range, with no specific acceptance value',
-      'A low-resistance ohmmeter; acceptance is "low resistance" — no fixed numeric maximum, judged against the conductor size and length',
-      'An insulation resistance tester at 500 V',
-      'A clamp-on earth resistance tester',
+      'A multimeter on the lowest ohms range; acceptance is any reading under 1 Ω.',
+      'An insulation-resistance tester at 500 V; acceptance is greater than 1 MΩ.',
+      'A low-resistance ohmmeter; acceptance is "low resistance", no fixed numeric maximum.',
+      'A clamp-on earth-electrode resistance tester; acceptance is under 200 Ω.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 Chapter 2 names the low-resistance ohmmeter (BS EN 61557-4) as the instrument. The acceptance criterion is "low resistance" — there is no fixed numeric maximum in BS 7671 for main bonding continuity. The test confirms the conductor is electrically continuous and that the connections to the MET and to the extraneous-conductive-part are sound. Anything in the order of an ohm or more on a real bond is investigated.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Where in the test sequence does main bonding continuity sit, and how is the test carried out?',
     options: [
-      'Before isolation, with the supply on, between any two metallic services',
-      'After safe isolation, with the bonding conductor in place: meter from the MET to the extraneous-conductive-part (e.g. the gas meter inlet pipe), reading the resistance of the bonding conductor in series with both terminations',
-      'Only during a periodic inspection, never on initial verification',
-      'By disconnecting the bond at both ends and measuring the conductor on the bench',
+      'After safe isolation, with the bond in place: meter from the MET to the extraneous-conductive-part, reading the conductor in series with both terminations.',
+      'Before isolation, with the supply on, between any two metallic services.',
+      'Only at periodic inspection, never at initial verification.',
+      'By disconnecting the bond at both ends and measuring the conductor on the bench.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'After safe isolation, with the bonding conductor connected as installed, the low-resistance ohmmeter reads from the MET to the extraneous-conductive-part itself (not to the bonding clamp screw — to the metalwork beyond it). The reading captures the conductor + the two terminations + any contact resistance from clamp to pipe. The test verifies the installed system, not the conductor in isolation.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'You measure from the MET to the gas meter inlet pipe and read 0.04 Ω. From the MET to the water meter inlet pipe you read 0.05 Ω. From the gas meter pipe to the water meter pipe you read 0.06 Ω. The gas and water are not directly bonded to each other, so the 0.06 Ω should be the sum of 0.04 + 0.05. Why is it not?',
     options: [
-      'The meter is faulty',
-      'The two services are connected to each other via metallic pipework (e.g. a combi-boiler casing or a copper hot-water cylinder linked to both gas and water), creating a parallel path that is shorter than going via the MET — this is the cross-bond signature',
-      'Test-lead resistance was not nulled',
-      'The MET is not connected to earth',
+      'The test meter is faulty and reading low across its whole range.',
+      'The test-lead resistance was not nulled before the readings were taken.',
+      'The MET is not actually connected to earth, shortening the measured path.',
+      'The two services share a parallel metallic path (combi-boiler or copper cylinder) — the cross-bond signature.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Two bonded services with no direct bond between them should read the sum of their individual resistances back to the MET when measured between them. A reading lower than that sum means there is a parallel metallic path between the two services — typically a combi-boiler that ties gas and water together via the heat exchanger and casing, or a copper cylinder. This is not necessarily a fault but it is a parallel earth path that affects loop impedance readings and Ze, and should be noted.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       'On a domestic install with both gas and water entering the property, plus structural steelwork in a basement, how many main bonding conductors are required?',
     options: [
-      'One — a daisy-chain from MET → gas → water → steelwork',
-      'Three — a separate main bonding conductor from the MET to each extraneous-conductive-part, with no daisy-chaining of the bonding conductor itself between extraneous-conductive-parts',
-      'One conductor to whichever is closest to the MET',
-      'Optional — bonding is recommended but not required',
+      'One conductor daisy-chained from the MET to gas, then water, then steelwork.',
+      'Three — a separate conductor from the MET to each part, no daisy-chaining.',
+      'One conductor, to whichever extraneous part sits closest to the MET.',
+      'None — main bonding to these parts is recommended but not required.',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,28 +189,28 @@ const quizQuestions = [
     question:
       'A copper water service enters a property and is replaced by a plastic insert in the consumer’s pipework before any branch. The downstream pipework is all metallic. Does Reg 411.3.1.2 require main bonding of the downstream metallic pipework?',
     options: [
-      'Yes — all metallic pipework must be bonded regardless',
-      'Reg 411.3.1.2 NOTE: where non-metallic (plastic) pipes enter the building and are then connected to metallic pipes within the building, the metallic pipes within the building do not normally require protective bonding as they are unlikely to be extraneous-conductive-parts. Verify with a resistance test to confirm',
-      'No — plastic anywhere in the run removes the duty',
-      'Only if the property is on TT',
+      'Not normally — verify by a resistance test to true earth before deciding.',
+      'Yes — all metallic pipework must be bonded regardless of the plastic insert.',
+      'No — plastic anywhere in the run automatically removes the bonding duty.',
+      'Only where the property is supplied on a TT earthing system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 411.3.1.2 NOTE explicitly addresses the plastic-insert case: where the incoming pipe is non-metallic and is then connected to metallic internal pipework, the internal metalwork is unlikely to be an extraneous-conductive-part and does not normally require bonding. The "normally" caveat means you verify by resistance measurement to true earth — anything < 22 kΩ (the GN8 / IET threshold for an extraneous-conductive-part) and the duty re-applies.',
+      'Where the incoming pipe is non-metallic and then connects to metallic internal pipework, that metalwork is unlikely to be an extraneous-conductive-part and does not normally require bonding. The "normally" caveat means you verify by resistance to true earth — below the IET threshold (≈ 22 kΩ) the duty re-applies.',
   },
   {
     id: 10,
     question:
       'You measure main bonding continuity from the MET to a metallic structural beam in a basement and read 14.7 Ω. The bonding clamp at the beam is well-fitted. Is this acceptable?',
     options: [
-      'Yes — it’s under 50 Ω, which is the BS 7671 acceptance limit',
-      'Yes — there is no numeric limit so any low value passes',
-      'No — 14.7 Ω is far too high for main bonding. Investigate: the clamp may be on paint or oxide, the conductor may have a broken strand under a screw, the MET termination may be loose, or the bond run includes a joint that has not been made properly',
-      'No — bonding to structural steel is not required',
+      'Yes — it is under the 50 Ω BS 7671 acceptance limit for main bonding.',
+      'Yes — there is no numeric limit, so any value passes the test.',
+      'No — bonding to basement structural steel is not required in the first place.',
+      'No — 14.7 Ω is far too high; investigate the termination or joint.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'There is no fixed numeric maximum in BS 7671, but "low resistance" is the criterion in GN3 — and 14.7 Ω is not low. Real main bonding continuity readings are typically a small fraction of an ohm (the conductor resistance plus a few mΩ for the clamp). 14.7 Ω indicates a poor termination or a series joint and must be remediated — the touch voltage during a fault would be unsafe even though the bond is "present".',
+      'There is no fixed numeric maximum in BS 7671, but "low resistance" is the criterion in GN3 — and 14.7 Ω is not low. Real main bonding continuity readings are typically a small fraction of an ohm (the conductor resistance plus a few mΩ for the clamp). 14.7 Ω points to a clamp on paint or oxide, a broken strand, a loose MET termination or a poor joint, and must be remediated — the touch voltage during a fault would be unsafe even though the bond is "present".',
   },
 ];
 

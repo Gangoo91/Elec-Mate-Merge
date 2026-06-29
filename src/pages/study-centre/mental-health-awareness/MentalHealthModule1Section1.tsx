@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'According to the mental health continuum model, which of the following statements is MOST accurate?',
     options: [
+      'People move back and forth along the continuum throughout their lives depending on circumstances, support, and coping strategies',
       'Once you develop a mental health problem, you stay at that point on the continuum permanently',
       'Everyone sits at a fixed point on the continuum determined by their genetics',
-      'People move back and forth along the continuum throughout their lives depending on circumstances, support, and coping strategies',
       'The continuum only applies to people who have been diagnosed with a mental illness',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The mental health continuum is dynamic, not fixed. Everyone moves along it throughout their life. Factors like stress, support, sleep, physical health, relationships, and life events all influence where you sit at any given time. This is one of the most important concepts in mental health awareness — your position on the continuum can change, and there are things you can do to move towards the thriving end.',
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Biological, pharmaceutical, and social factors',
       'Physical, psychological, and financial factors',
-      'Biological, psychological, and social factors',
       'Genetic, behavioural, and environmental factors',
+      'Biological, psychological, and social factors',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The biopsychosocial model, developed by George Engel in 1977, explains that mental health is influenced by the interaction of biological factors (genetics, brain chemistry, physical health), psychological factors (thoughts, emotions, coping skills, trauma history), and social factors (relationships, work environment, finances, housing, community). No single factor causes mental health problems — it is always the interaction between all three that matters.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       'On the mental health continuum, which of the following represents the correct order from best to worst?',
     options: [
-      'Crisis → Unwell → Struggling → Thriving',
       'Thriving → Struggling → Unwell → Crisis',
+      'Crisis → Unwell → Struggling → Thriving',
       'Unwell → Crisis → Thriving → Struggling',
       'Struggling → Thriving → Crisis → Unwell',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The mental health continuum runs from Thriving (optimal mental health — feeling good, functioning well, resilient) through Struggling (finding things difficult, some symptoms, coping but not easily) to Unwell (significant symptoms, functioning impaired, needing support) to Crisis (severe symptoms, unable to function, immediate help needed). Everyone moves along this continuum throughout their life.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
       'According to the dual continuum model developed by Corey Keyes, which statement is TRUE?',
     options: [
       'If you have a mental illness diagnosis, you cannot have good mental health',
-      'Mental health and mental illness exist on two separate dimensions — you can have a diagnosis and still experience good mental health',
       'Mental health and mental illness are the same thing measured on the same scale',
       'The dual continuum model only applies to people receiving professional treatment',
+      'Mental health and mental illness exist on two separate dimensions — you can have a diagnosis and still experience good mental health',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Keyes's dual continuum model is a breakthrough in how we understand mental health. It shows that mental health (flourishing vs languishing) and mental illness (present vs absent) are two separate dimensions. This means someone with a diagnosis of depression who is receiving good treatment and support can still experience positive mental health. Equally, someone with no diagnosis can be languishing and experiencing poor mental health.",
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'The biopsychosocial model of mental health includes three categories of factors. Which of the following is an example of a SOCIAL factor?',
     options: [
+      'Working on a construction site with poor job security and a toxic culture',
       'Having a family history of depression (genetic predisposition)',
       'Developing negative thinking patterns after repeated setbacks',
-      'Working on a construction site with poor job security and a toxic culture',
       'An imbalance in serotonin levels in the brain',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Working in an environment with poor job security and toxic culture is a social factor — it relates to your external environment, relationships, and social circumstances. A family history of depression is a biological factor (genetics). Negative thinking patterns are a psychological factor. Serotonin imbalance is a biological factor (brain chemistry). The biopsychosocial model shows that all three types of factors interact to influence mental health.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'Around 2 million days',
       'Around 7 million days',
-      'Around 17 million days',
       'Around 50 million days',
+      'Around 17 million days',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Health and Safety Executive (HSE) reports that approximately 17 million working days are lost each year in the UK due to work-related stress, depression, and anxiety. This makes mental health the single largest cause of work-related illness in the country. The economic cost is staggering — estimated at over £118 billion per year when you include lost productivity, NHS costs, and benefits payments. For the construction industry specifically, the impact on productivity, safety, and workforce retention is enormous.',
   },

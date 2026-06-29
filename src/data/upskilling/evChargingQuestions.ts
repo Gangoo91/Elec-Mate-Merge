@@ -50,7 +50,7 @@ export const evChargingQuestions: QuizQuestion[] = [
       "MCB only",
     ],
     correctAnswer: 0,
-    explanation: "RCD Type B is required for EV charging as it can detect DC residual currents that may occur during charging.",
+    explanation: "EV charging requires protection against smooth DC residual current. A Type B RCD achieves this; alternatively a Type A RCD may be used where the charging point incorporates a 6mA DC fault detection device (RDC-DD).",
     moduleId: 4
   },
   {
@@ -107,15 +107,15 @@ export const evChargingQuestions: QuizQuestion[] = [
   },
   {
     id: 9,
-    question: "What type of earthing arrangement is required for outdoor EV charging points?",
+    question: "Where a PME (TN-C-S) supply cannot safely be used, what earthing arrangement is the conventional solution for an outdoor EV charging point?",
     options: [
       "IT",
       "TN-S",
       "TN-C-S",
       "TT",
     ],
-    correctAnswer: 1,
-    explanation: "TN-S earthing is preferred for EV charging installations to ensure proper protective conductor integrity.",
+    correctAnswer: 3,
+    explanation: "Section 722 restricts the use of a PME earth on EV points because of the danger from an open PEN conductor; a local TT island with its own earth electrode and 30 mA RCD is the conventional alternative where an open-PEN protective device is not used.",
     moduleId: 4
   },
   {
@@ -146,7 +146,7 @@ export const evChargingQuestions: QuizQuestion[] = [
   },
   {
     id: 12,
-    question: "What is the maximum loop impedance for a 32A Type B RCD protecting an EV charger?",
+    question: "What is the maximum earth fault loop impedance (Zs) for a 32A Type B circuit-breaker on the final circuit feeding an EV charger (230V, 0.4s)?",
     options: [
       "1.44Ω",
       "1.37Ω",
@@ -154,7 +154,7 @@ export const evChargingQuestions: QuizQuestion[] = [
       "0.35Ω",
     ],
     correctAnswer: 1,
-    explanation: "For a 32A Type B device, maximum Zs is 1.37Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure.",
+    explanation: "For a 32A Type B MCB, maximum Zs is 1.37Ω per Table 41.3, which applies the Cmin factor of 0.95 (230 × 0.95 ÷ (5 × 32)). 1.44Ω is the older pre-Cmin figure.",
     moduleId: 4
   }
 ];

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'HAWT vs VAWT — what are they + when does each suit?',
     options: [
-      'Same thing',
-      'HAWT = Horizontal Axis Wind Turbine — rotor spins on a horizontal shaft; classic three-blade design; needs yaw mechanism to face wind; dominant globally + in domestic micro-wind (1-15 kW). VAWT = Vertical Axis Wind Turbine — rotor spins on a vertical shaft (Darrieus, Savonius, hybrid); omni-directional (no yaw needed); typically quieter; suits urban / low-wind / turbulent sites; lower capacity factor than HAWT; niche application',
-      'Random',
-      'Only HAWT',
+      'They are two names for the same machine; the difference is purely the manufacturer branding',
+      'HAWT yaws to face the wind and dominates; VAWT is omni-directional and quieter for urban sites',
+      'HAWT is for utility-scale wind only; VAWT is the only type permitted for domestic micro-wind',
+      'VAWT always outperforms HAWT in clean wind, which is why it now dominates the domestic market',
     ],
     correctIndex: 1,
     explanation:
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'MCS MIS 3003 — what does it cover?',
     options: [
-      'All wind',
-      'MCS Installer Standard 3003 — small wind turbines ≤50 kW. Sizing methodology (wind speed assessment, site survey), product approval (MCS-approved turbines), installer competence (MCS-certified company + training), customer handover documentation. Required for any UK Government grant (where applicable). Larger turbines (>50 kW commercial / utility) fall outside MIS 3003 scope into commercial-scale wind frameworks',
-      'Only domestic',
-      'No standard',
+      'All wind turbines of any size, from domestic micro-wind up to utility-scale multi-MW machines',
+      'Only domestic building-mounted turbines; any free-standing mast falls outside its scope entirely',
+      'It is not a real standard — wind turbines are covered solely by the inverter manufacturer instructions',
+      'Small wind turbines up to 50 kW — sizing, product approval, installer competence and handover',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'MCS Installer Standard 3003 (current version MIS 3003 issue 5.0) covers small wind turbines up to 50 kW rated power. Requirements include: (1) site wind assessment per MCS sizing methodology (typically MET data + on-site anemometer for 12 months for larger installs); (2) turbine product on MCS-approved list; (3) installer company MCS-certified for small wind; (4) BS EN 61400-2 (small wind turbines) product standard conformity declared; (5) customer handover documentation including expected annual energy yield. Above 50 kW: commercial-scale wind regulatory frameworks apply (planning, EIA Environmental Impact Assessment if very large, separate DNO connection processes). UK 2025-26 reality: domestic micro-wind market much smaller than 2010-2014 peak; commercial / agricultural / community-scale wind continues. Cert evidence bundle: MCS handover pack + BS 7671 electrical EIC + planning consent + DNO correspondence.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Wind turbine 6 kW single-phase grid-tied — what EREC notification?',
     options: [
-      'No notification',
-      '6 kW single-phase ≈ 26 A continuous export at 230 V — exceeds G98 Type A ≤16 A per phase fast-track threshold. EREC G99 formal pre-installation application required: DNO design assessment + connection offer + customer acceptance + outage scheduling (if required) + completion notification + DNO-witnessed (sometimes) anti-islanding test. Lead time typically 6-18 weeks',
-      'G98 always',
-      'EU regulation',
+      'No DNO notification is needed at all for a single-phase turbine rated 6 kW or below',
+      'The fast-track G98 notification always applies regardless of the export current per phase',
+      'About 26 A continuous exceeds the G98 ≤16 A per phase limit, so formal G99 applies',
+      'It is governed by EU rather than UK rules, so no ENA engineering recommendation applies',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'EREC G99 formal process triggered. 6 kW single-phase ≈ 26 A continuous export current at 230 V — well above the G98 Type A ≤16 A per phase fast-track threshold. G99 process: (1) customer application via DNO portal (with site details, turbine spec, installer details, expected yield); (2) DNO design assessment (network capacity check, anti-islanding verification, connection scheme); (3) DNO connection offer + price; (4) customer acceptance + payment (where applicable); (5) outage scheduling (if connection upgrade needed); (6) installer completes install per the connection offer; (7) commissioning + DNO-witnessed anti-islanding test (for some DNOs / sizes); (8) completion notification to DNO + final connection. Lead time: 6-18 weeks typical UK 2025-26. Cert evidence bundle records: G99 application reference + connection offer + completion + DNO witnessed test (if applicable).',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       '60 m run from rural mast-top wind turbine to indoor inverter — what cable sizing?',
     options: [
-      '1.5 mm² T+E',
-      'Long-run voltage drop is the limiting factor. 60 m × continuous current × cable per-mV/A/m → typically need oversized cable to keep Reg 525.202 voltage drop ≤5%. For 6 kW single-phase (26 A): 60 × 26 × 4.4 mV/A/m (10 mm²) = 6.9 V = 3% — within 5% but tight. Practical UK 2025-26: 16 mm² SWA or larger; voltage drop calc per Appendix 4 Section 6.4; SWA armour as CPC per Reg 543',
-      'No calc',
-      'Bare wire',
+      'Voltage drop limits the sizing, so oversize to the ≤5% limit — typically 16 mm² SWA with armour CPC',
+      '1.5 mm² twin-and-earth is adequate because the continuous current is well within its tabulated rating',
+      'No calculation is needed; any cable rated above the turbine continuous current performs fine over any run',
+      'Bare conductors clipped to the mast are the standard accepted method for an outdoor turbine feed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Wind turbine cable run to indoor inverter is typically long (50-200 m at agricultural / rural sites where mast is sited for clean wind). Voltage drop becomes the limiting factor for cable sizing — sustained current carrying capacity is usually well within smaller cable, but Reg 525.202 + Appendix 4 Section 6.4 ≤5% drop forces oversize. Worked example: 6 kW single-phase 26 A continuous; 60 m run; 10 mm² SWA at 4.4 mV/A/m → drop = 60 × 26 × 4.4 / 1000 = 6.9 V = 3% of 230 V. Within 5% but margin tight. Step up to 16 mm² SWA: drop = 60 × 26 × 2.8 / 1000 = 4.4 V = 1.9% — comfortable. UK 2025-26 mature install practice: 16 mm² 3-core SWA (single-phase) or 4-core (three-phase) buried in trench from turbine base to building. Armour as CPC per Reg 543 (16 mm² SWA armour cross-section well above Table 54.7 minimum). Cert evidence bundle: cable type + length + Appendix 4 calc + voltage drop result.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Rural farm install: 10 kW HAWT three-phase grid-tied micro-wind. What is the regulatory + electrical scope?',
     options: [
-      'Plug into socket',
-      'Multi-trade install: MCS-certified company (MIS 3003), turbine specialist, mast erector / civils, electrical installer, planning consultant. Electrical scope: dedicated three-phase circuit from indoor inverter to AC supply panel; AC isolator at inverter; per-Section 551 architecture; 4-pole Type A RCBO C-curve; Reg 551.7.5 anti-islanding (typically integrated into inverter); EREC G99 formal application; BS EN 62305-3 lightning protection for mast + bonding; Reg 643 commissioning + EIC',
-      'No scope',
-      'Random',
+      'The turbine simply plugs into an existing socket-outlet once the mast has been erected',
+      'There is no real electrical scope; the turbine specialist handles BS 7671 certification too',
+      'A single-trade job the electrician completes alone, with no planning or DNO involvement needed',
+      'A multi-trade install — dedicated circuit, Section 551 architecture, G99, mast lightning protection and EIC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-trade rural HAWT install per UK 2025-26 standard practice: (1) MCS-certified company orchestrates + holds MIS 3003 cert; (2) turbine specialist commissions turbine + control electronics; (3) mast erector / civils handles guyed lattice or monopole foundation + mast assembly; (4) electrical installer does the BS 7671 electrical side; (5) planning consultant handles permitted-development assessment + planning permission if needed. Electrical scope: dedicated three-phase circuit (or single-phase for smaller units) from indoor inverter location to AC supply panel; AC isolator at inverter (BS EN 60947-3, lockable OFF); per-Section 551 architecture (Reg 551.7.2.1 supply-side connection); 4-pole Type A RCBO C-curve typically; Reg 551.7.5 anti-islanding integrated into the inverter (verified at commissioning, sometimes DNO-witnessed); EREC G99 formal application from quote stage; BS EN 62305-3 lightning protection for mast (mast = exposed metallic structure; lightning bond + earth electrode at mast base; covered in detail in M11); Reg 643 commissioning sequence + EIC. Cert evidence bundle: MCS handover pack + Section 551 compliance + EREC G99 reference + lightning protection + EIC.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Wind turbine commissioning — what unique tests vs PV?',
     options: [
-      'Same as PV',
-      'Wind-specific tests beyond standard Reg 643: yaw mechanism functional (HAWT — must rotate to face wind); brake operation (mechanical + electrical brake for over-speed / shutdown); over-speed protection cut-out test; cut-in + cut-out wind speed verification (where wind conditions permit); dump load operation (for off-grid / grid-loss scenarios); blade balance + rotation noise check. Plus standard Section 551 anti-islanding + Reg 643 framework',
-      'No tests',
-      'Customer tests',
+      'Yaw, brakes, over-speed cut-out, cut-in/out wind speed, dump load and blade balance, plus the usual tests',
+      'Exactly the same tests as a PV array, since both are simply grid-tied generators with an inverter',
+      'No additional tests are required because the turbine is fully factory-commissioned before delivery',
+      'The customer monitors the turbine over the first month and reports any faults instead of formal testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Wind turbine commissioning adds tests specific to mechanical + control aspects of the turbine: (1) Yaw mechanism functional (HAWT only) — turbine head rotates to face the wind direction; passive vane or active motorised yaw; must operate smoothly without binding. (2) Brake operation — mechanical disc brake AND electrical brake (short-circuit braking via inverter / generator) for emergency stop, over-speed shutdown, maintenance isolation. (3) Over-speed protection — verify cut-out activates at manufacturer-specified rotor RPM; typically tested via simulated over-speed signal not actual wind condition. (4) Cut-in + cut-out wind speed — verify turbine starts generating at ~3-4 m/s, reaches rated power at ~12 m/s, cuts out for safety at ~25 m/s. Verification opportunistic — depends on wind conditions on commissioning day. (5) Dump load — for off-grid + grid-loss scenarios where generated power needs dissipating; resistor bank typically. (6) Blade balance — visual + vibration check; imbalanced blades cause structural stress + noise. Plus standard Reg 643 Part 6 sequence + Section 551 anti-islanding test. Cert evidence bundle: wind-specific test results + manufacturer commissioning procedure + Part 6 EIC.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Planning permission for domestic micro-wind — UK 2025-26 reality?',
     options: [
-      'Never needed',
-      'PDR (Permitted Development Rights) for domestic wind in England: building-mounted ≤4 m above ridge OR free-standing ≤11.1 m total height + ≤5 m highest blade tip from ground for safety, with restrictions (no listed buildings, conservation areas, NSIPs). Most sites require full planning permission. Scotland/Wales have similar but different rules. PDR existed 2011-2017 with various rule changes; current rules per 2026 may differ — verify locally',
-      'PDR everywhere',
-      'EU approval',
+      'Planning permission is never needed for domestic wind, which is always permitted development',
+      'Permitted development covers every site without restriction, so no local authority involvement is needed',
+      'PDR is limited (≤4 m above ridge or ≤11.1 m free-standing), so most sites need full planning permission',
+      'Approval must be sought from an EU body rather than the local planning authority for the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Planning permission for UK domestic micro-wind is restrictive vs solar PV. England PDR for wind: (1) Building-mounted turbine — ≤4 m above the highest point of the ridge; ≤0.6 m blade swept area; restrictions on protected sites (no listed buildings, conservation areas, World Heritage Sites). (2) Free-standing turbine — ≤11.1 m total height including blades; ≤5 m highest blade tip from ground level; ≥0.5 of blade-tip height from property boundary; one per property. (3) Scotland / Wales / Northern Ireland — similar PDR but separate rules per devolved planning. Most domestic micro-wind sites trigger full planning permission (PP) — site-specific assessment of visual impact, noise, ecological impact, shadow flicker (rotating shadow on neighbours). PP timeline: 8-16 weeks typical. Cost: £200-400 application fee + consultant if visual impact / noise assessment needed. UK 2025-26 reality: planning consent is the biggest project-timeline risk after DNO G99 for domestic wind. Many projects don\'t proceed past planning. Cert evidence bundle includes planning consent reference + conditions imposed.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'UK 2025-26 reality of domestic micro-wind vs solar PV — what should an installer tell the customer?',
     options: [
-      'Wind is best',
-      'Direct comparison: solar PV is the dominant UK 2025-26 microgeneration technology (cheap, simple, predictable yield, easy planning). Micro-wind: highly site-dependent (wind speed assessment critical, ~20-25% UK capacity factor vs ~10-12% PV), higher install cost (£3-8k per kW vs ~£1.5-2k per kW for PV), planning permission usually required, MCS competence harder to find, mast structural / civils overhead. Most domestic sites are better served by PV + BESS. Wind suits: very windy rural sites, large-acreage farms, off-grid properties',
-      'Random',
-      'PV is bad',
+      'Micro-wind is the better choice for almost all homes and should be recommended over PV by default',
+      'PV is cheaper and more predictable for most sites; wind is site-dependent and suits only windy rural sites',
+      'The two are interchangeable, so the customer can pick either with no difference in cost or annual yield',
+      'Solar PV is a poor technology that installers should steer customers away from in favour of micro-wind',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Dump load — what is it + why does it matter for wind?',
     options: [
-      'Nothing',
-      'Dump load = resistor bank that dissipates generated power when grid is not available to absorb it. For wind: if grid is lost / disconnected (per Reg 551.7.5 anti-islanding) BUT wind is still blowing, the turbine continues rotating + generating; without dump load, the unloaded generator over-speeds (no resistive torque to brake against) → damaged generator + safety hazard. Dump load typically engages automatically on grid-loss; mechanical brake follows',
-      'No load',
-      'Customer fault',
+      'A resistor bank that absorbs generation on grid loss, stopping the unloaded rotor over-speeding',
+      'A backup battery that stores surplus wind generation overnight for use the next morning',
+      'A spare circuit left disconnected so the customer can add more load to the system later',
+      'A fault condition caused by the customer overloading the turbine well beyond its rated output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dump load is critical for wind safety. Scenario: DNO grid loss occurs → Reg 551.7.5 anti-islanding device disconnects inverter from grid → BUT wind is still blowing → turbine still rotating, generator still producing power. Without somewhere for that power to go: generator unloads → no resistive torque → rotor over-speeds → exceeds mechanical design limits → blade failure / structural damage / safety hazard. Dump load solution: large resistor bank (sized per turbine power rating); automatically engages on grid-loss detection; dissipates the generated power as heat; provides electrical braking torque to keep rotor speed within design limits. Typically followed by mechanical disc brake engaging to bring rotor to full stop. Sized per turbine: e.g. 5 kW turbine needs ~5 kW resistor bank. Located near turbine (not in habitable space — gets hot). Cert evidence bundle: dump load product + sizing + commissioning test (simulated grid-loss verifies dump load + mechanical brake sequence).',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'Wind turbine inverter — what type + what does it do?',
     options: [
-      'No inverter',
-      'Grid-tie inverter — converts variable-frequency variable-voltage AC from the wind generator to grid-synchronised 50 Hz 230 V (single-phase) or 400 V (three-phase) AC. Includes anti-islanding loss-of-mains protection per Reg 551.7.5. Typically integrated into the turbine controller package. Some small turbines use rectifier + DC-link + grid-tie inverter; some use direct AC matching. BS EN 50549 series for power generators connected to LV grid',
-      'Customer DIY',
-      'Random',
+      'A wind turbine has no inverter; it connects its variable AC output straight to the grid',
+      'The inverter is a customer-fitted accessory that just displays the turbine output on a screen',
+      'A grid-tie inverter converts the variable turbine AC to 50 Hz, with anti-islanding built in',
+      'It is a mechanical gearbox that keeps the rotor turning at a fixed speed regardless of the wind',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wind turbine grid-tie inverter is the electrical interface between the turbine generator + the AC grid. Function: wind turbine generator output is variable-frequency variable-voltage AC (wind speed varies → rotor RPM varies → generator output varies); the inverter converts this into stable 50 Hz grid-synchronised AC at the required voltage. Architecture variants: (1) Variable AC → rectifier → DC link → grid-tie inverter (most modern small wind). (2) Direct AC matching with electronic control (older / synchronous generator designs). Anti-islanding protection per Reg 551.7.5 is integrated into the inverter — loss-of-mains detection (ROCOF + voltage / frequency deviation; G99 disallows Vector Shift for type-tested generation, so RoCoF is the standard required method for the type-tested inverters used in virtually all LCT installs, with VS legacy / non-type-tested sites only) → automatic disconnect. Product standards: BS EN 50549-1 (power generators connected to LV) + BS EN 61400 series (wind turbine specific). UK 2025-26 typical inverter brands: SMA Sunny Boy / Tripower (PV inverters used for wind also), ABB, Bornay, FuturEnergy. Cert evidence bundle: inverter product + DoC + Reg 551.7.5 compliance + manufacturer commissioning procedure.',
   },

@@ -83,24 +83,29 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: It is always acceptable to seal containment permanently.',
-    options: ['True', 'False'],
+    question: 'How should containment be treated regarding future access?',
+    options: [
+      'It should always be sealed permanently once cables are in',
+      'It should remain accessible for inspection, testing and maintenance',
+      'It only needs access on industrial sites',
+      'Access is unnecessary if cables are in conduit',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. Containment should remain accessible for inspection, testing, and maintenance unless specific safety requirements demand permanent sealing.',
+      'Containment should remain accessible for inspection, testing and maintenance, except where specific safety requirements demand permanent sealing.',
   },
   {
     id: 4,
     question: 'Name one way to separate power and data cables within the same trunking.',
     options: [
       'Use barriers or separate compartments',
-      'Spark-proof tools and clothing',
-      'To prevent recurrence of the same fault',
-      'Person with knowledge and experience',
+      'Tie them together at regular intervals',
+      'Use the same colour for both cable types',
+      'Run them at the maximum fill factor',
     ],
     correctAnswer: 0,
     explanation:
-      'Physical barriers or separate compartments provide the electromagnetic separation required between power and data cables.',
+      'Physical barriers or separate compartments provide the segregation required between power and data cables.',
   },
   {
     id: 5,
@@ -119,10 +124,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why should installers avoid overfilling containment?',
     options: [
-      'Bypass mode with monitoring for improved efficiency',
-      'Fire and Rescue Authorities (local Fire and Rescue Services)',
+      'It reduces the supply voltage at outlets',
+      'It changes the colour coding of cables',
       'It causes overheating and makes cable pulling difficult',
-      'Predictive maintenance alerts based on system performance',
+      'It increases the earth fault loop impedance',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,23 +137,23 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason why straight, level runs are preferred.',
     options: [
-      'Isolate with plastic/nylon washers and appropriate sealants',
-      'Practical installation, inspection, and testing scenarios',
-      'Both strengths and areas for development',
+      'They reduce the current-carrying capacity needed',
+      'They remove the need for earthing the containment',
+      'They allow cables to be installed without testing',
       'They improve appearance and make maintenance easier',
     ],
     correctAnswer: 3,
     explanation:
-      'Straight, level runs provide a professional appearance and make future maintenance, inspection, and cable pulling much easier.',
+      'Straight, level runs provide a professional appearance and make future maintenance, inspection and cable pulling much easier.',
   },
   {
     id: 8,
     question: 'Which regulation governs best practice for containment in the UK?',
     options: [
       'BS 7671 (IET Wiring Regulations)',
-      'Total weight of cables and containment',
-      'For representative assessment',
-      'Current flowing through the conductor',
+      'The Building Regulations Part L',
+      'The Provision and Use of Work Equipment Regulations',
+      'The Electricity at Work Regulations alone',
     ],
     correctAnswer: 0,
     explanation:

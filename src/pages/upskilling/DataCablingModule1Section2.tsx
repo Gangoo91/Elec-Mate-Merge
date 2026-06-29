@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A new building is cabled in a strict physical star — every work-area outlet has a dedicated home run back to the floor distributor. The active layer is configured as a Layer-2 spanning-tree network with VLAN trunks. Which statement is TRUE about the topology of this installation?',
     options: [
-      'It is a star topology, full stop — the spanning tree is irrelevant.',
-      'It is a logical mesh because spanning tree creates many forwarding paths.',
-      'The PHYSICAL topology is a star (cabling shape), and the LOGICAL topology is whatever the active equipment configures on top of it — here, a spanning-tree forwarding mesh with collapsed-star ingress at the FD. The two are independent and both true at the same time.',
-      'It cannot be both — the standards forbid mixing topologies.',
+      'It is purely a star topology — the spanning-tree configuration has no bearing on the topology of the installation.',
+      'It is a logical mesh, because the spanning tree creates many redundant forwarding paths through the cabling.',
+      'The physical topology is a star and the logical topology is the spanning-tree forwarding pattern on top of it — both true at once, independently.',
+      'It cannot be both at once — the generic-cabling standards forbid mixing topology types on one installation.',
     ],
     correctIndex: 2,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You are surveying an old industrial site that still has a thin coaxial bus segment running between four pieces of legacy plant. The client asks why this needs to be replaced before they can extend the network. What is the SINGLE most defensible technical reason?',
     options: [
-      'Coax is more expensive than twisted pair.',
-      'A bus topology has a single shared electrical medium with terminators at each end — any break, loose T-piece or unterminated end takes down the entire segment, and CSMA/CD performance collapses as devices and traffic are added. Modern Ethernet is switched (logical-star), and structured cabling enforces a physical star, both of which eliminate that shared-medium failure mode.',
-      'Bus is faster than star.',
-      'BS 7671 §716 prohibits coaxial cable.',
+      'Coax costs more per metre than twisted pair, so the segment is uneconomic to keep in service.',
+      'The bus shares one electrical medium with terminators, so any break or loose tap takes down the whole segment, and CSMA/CD performance collapses as load grows.',
+      'A bus is inherently faster than a star, so the legacy plant is over-served and the segment should be downgraded.',
+      'BS 7671 §716 prohibits coaxial cable in fixed installations, so the segment is non-compliant and must be removed.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A small single-floor office is cabled with one comms cabinet near the centre of the floor. All outlets home-run to that one cabinet. Strictly speaking, what is this called in the BS EN 50173-1 model?',
     options: [
-      'A bus topology, because there is only one distributor.',
-      'A collapsed-star topology — the building has only one distributor (BD = FD = single cabinet) because there is only one floor with no need for a backbone, but the horizontal cabling itself remains a strict physical star outwards from that single distributor.',
-      'A daisy chain.',
-      'A non-compliant installation.',
+      'A bus topology, because there is only one distributor serving the whole floor.',
+      'A collapsed-star topology — BD and FD merge into one cabinet, but the horizontal cabling is still a strict physical star.',
+      'A daisy chain, because the outlets are effectively chained back to a common cabinet.',
+      'A non-compliant installation, because a single distributor breaches the hierarchical-star rule.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A university campus has six buildings, each with its own internal structured cabling. The six buildings are connected by single-mode fibre back to a central computer-services building. Which topology label most accurately describes the campus as a whole?',
     options: [
-      'A pure mesh — every building connects to every other.',
-      'A star-of-stars (also called a hierarchical star) — each building has its own internal physical star anchored at the BD, and the BDs all home-run to the campus distributor (CD) in the computer-services building. The whole campus is therefore a star at the campus level AND a star at the building level.',
-      'A bus, because the fibre run is linear.',
-      'A ring, because traffic eventually returns to source.',
+      'A pure mesh — every building connects directly to every other building for redundancy.',
+      'A star-of-stars (hierarchical star) — each building is a physical star at its BD, and the BDs all home-run to the campus distributor.',
+      'A bus, because the inter-building fibre run is essentially one linear backbone medium.',
+      'A ring, because campus traffic eventually returns to its source building over the fibre loop.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,40 +84,40 @@ const quizQuestions = [
     question:
       'In structured cabling, which physical topology is enforced for the horizontal subsystem in BS EN 50173-1, ISO/IEC 11801-1 and ANSI/TIA-568.0-E?',
     options: [
-      'A bus.',
-      'A physical star — every work-area outlet has a dedicated home run back to a single floor distributor. Daisy chains, T-pieces and shared media are not permitted.',
-      'A ring.',
-      'A full mesh.',
+      'A bus, with each outlet tapped off a shared horizontal backbone via a T-piece and end terminators.',
+      'A ring, with each outlet wired to the next and the last looped back to the floor distributor.',
+      'A physical star, with every outlet on its own dedicated home run to a single floor distributor.',
+      'A full mesh, with every outlet directly linked to every other outlet on the same floor.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The horizontal subsystem is, by standard, a physical star anchored at the FD. Every outlet has its own permanent link. This is the foundation of service-independence — the cabling shape is identical regardless of what active equipment plugs in or what logical protocol runs on top.',
+      'The horizontal subsystem is, by standard, a physical star anchored at the FD. Every outlet has its own permanent link — the foundation of service-independence, since the cabling shape is identical regardless of the active equipment or logical protocol on top.',
   },
   {
     id: 2,
     question:
       'Which statement most accurately captures the relationship between physical and logical topology?',
     options: [
-      'They are always the same.',
-      'They are always different.',
-      'Physical topology is the shape of the cabling itself; logical topology is the path traffic takes between active devices. Structured cabling fixes the physical topology to a (hierarchical) star — the active equipment is then free to implement any logical topology (switched star, spanning-tree mesh at backbone, virtual ring, etc.) on top of it.',
-      'Only fibre links have a logical topology.',
+      'They are always identical — the cabling shape and the traffic shape cannot differ on any network.',
+      'They are always different — no network ever runs the same physical and logical shape together.',
+      'Physical is the cabling shape, logical is the traffic path; one fixed physical star carries any logical topology.',
+      'Only fibre links have a logical topology; copper links carry a physical topology and nothing else.',
     ],
     correctAnswer: 2,
     explanation:
-      'Physical and logical topology are independent properties of the same network. Physical = where the wires actually go. Logical = how frames are forwarded. The discipline of structured cabling is to fix the physical topology (a hierarchical star) so that any reasonable logical topology can be supported now and over the cabling life.',
+      'Physical and logical topology are independent properties of the same network. Physical = where the wires actually go; logical = how frames are forwarded. The discipline of structured cabling is to fix the physical topology (a hierarchical star) so any reasonable logical topology can be supported now and over the cabling life — the fixed star can carry any logical topology on top.',
   },
   {
     id: 3,
     question:
       'Which legacy topology had a single shared electrical medium and is now effectively obsolete in commercial premises cabling?',
     options: [
-      'Star.',
-      'Bus — typified by 10BASE2 thin-coax and 10BASE5 thick-coax in 1980s/1990s LANs. A single linear cable with terminators at each end, all stations sharing the medium under CSMA/CD. Any break or unterminated end killed the segment.',
-      'Mesh.',
-      'Tree.',
+      'Star — each station home-runs to a central hub over its own dedicated cable segment.',
+      'Mesh — every station directly linked to several others, sharing no common medium.',
+      'Tree — a hierarchy of branching links fanning out from a single root distributor.',
+      'Bus — a single linear coax cable with end terminators, all stations sharing the medium under CSMA/CD.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bus topology is the historical "shared-medium" Ethernet. Switched Ethernet on twisted pair (10BASE-T onwards, 1990) replaced it because the physical star (a) isolates faults to one link, (b) gives each link its own bandwidth, and (c) plugs cleanly into the structured-cabling six-zone model. BS EN 50173-1 only acknowledges star topologies for generic cabling.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'A ring topology routes traffic around a closed loop, with each device passing frames to the next. Which famous protocols ran logically as rings?',
     options: [
-      'TCP/IP and HTTP.',
-      'IEEE 802.5 Token Ring (logical ring on physical star via the MAU) and FDDI (Fibre Distributed Data Interface, dual counter-rotating fibre rings, 100 Mbps, used as 1990s campus backbones). Both used token-passing for deterministic media access.',
-      'PoE Type 1 and Type 2.',
-      'BGP and OSPF.',
+      'TCP/IP and HTTP, the transport and application protocols said to define ring-based addressing schemes.',
+      'IEEE 802.5 Token Ring (logical ring on a physical star via the MAU) and FDDI (dual counter-rotating fibre rings).',
+      'IEEE 802.3 Ethernet and IEEE 802.11 wireless, the two dominant access protocols on the modern switched LAN.',
+      'BGP and OSPF, the Layer-3 routing protocols said to forward traffic around the network in a closed loop.',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,40 +140,40 @@ const quizQuestions = [
     question:
       'A full mesh topology connects every node to every other node. Why is full mesh almost never used as a building-wide structured-cabling topology?',
     options: [
-      'It is forbidden by BS 7671.',
-      'It scales as n(n−1)/2 links — for n=100 that is 4 950 links. Cost, containment volume, patch-panel density and management complexity all grow quadratically. It is reserved for small numbers of high-value nodes (data-centre core fabrics, SAN switches, critical industrial controllers) where the redundancy justifies the cost.',
-      'Mesh is too slow.',
-      'Mesh requires coaxial cable.',
+      'Its link count scales as n(n−1)/2, so cost, containment and management all grow quadratically with node count.',
+      'It is expressly forbidden by BS 7671, which permits only star and tree topologies for fixed data cabling.',
+      'It is inherently slower than a star because every frame must traverse multiple intermediate nodes en route.',
+      'It can only be built in coaxial cable, which is obsolete and no longer manufactured for premises use.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Full mesh has perfect redundancy but quadratic cost. For 100 nodes you need 4 950 dedicated links. No commercial building is cabled full-mesh. The use cases are small (under ~20 nodes) and high-value: data-centre spine-leaf cores, storage fabrics, critical industrial control rings, military mission systems. For everything else, hierarchical star + active-layer redundancy (spanning tree, Layer-3 routing, link aggregation) gives most of the resilience at a small fraction of the cost.',
+      'Full mesh has perfect redundancy but quadratic cost: for 100 nodes you need n(n−1)/2 = 4,950 dedicated links. No commercial building is cabled full-mesh. The use cases are small (under ~20 nodes) and high-value: data-centre spine-leaf cores, storage fabrics, critical industrial control rings, military mission systems. For everything else, hierarchical star + active-layer redundancy (spanning tree, Layer-3 routing, link aggregation) gives most of the resilience at a small fraction of the cost.',
   },
   {
     id: 6,
     question:
       'In a switched Ethernet network running on a physical-star structured-cabling installation, what is the LOGICAL topology of the access layer?',
     options: [
-      'A bus.',
-      'Also a star — each switch port forwards frames independently to/from one attached device, and the switch acts as the central node. The shared-medium of bus Ethernet is gone; each link is its own collision domain.',
-      'A ring.',
-      'A full mesh.',
+      'Also a star — each port is its own point-to-point link, with the switch as the central node.',
+      'A bus — the switch backplane is a shared medium that all ports contend for under CSMA/CD.',
+      'A ring — frames pass from port to port around the switch before reaching their destination.',
+      'A full mesh — every port is logically connected to every other port on the switch simultaneously.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Switched Ethernet at the access layer is logically a star — the switch is the centre, and each port is a point-to-point link. There is no shared collision domain (each link is its own). Half-duplex Ethernet is dead at access. This is why the physical-star discipline of structured cabling marries so cleanly with modern Layer-2 switching.',
+      'Switched Ethernet at the access layer is logically a star — the switch is the centre and each port is a point-to-point link with its own collision domain, forwarding frames independently to and from one attached device. This is why the physical-star discipline of structured cabling marries so cleanly with Layer-2 switching.',
   },
   {
     id: 7,
     question:
       'A spanning-tree-protocol (STP / RSTP / MSTP) backbone connects three floor distributors and a building distributor with redundant uplinks. What does the protocol do, and why is it relevant to the topology discussion?',
     options: [
-      'It picks the fastest cable.',
-      'STP elects a root bridge, computes the lowest-cost path from every other bridge to the root, and BLOCKS the redundant ports to break loops at Layer 2. The PHYSICAL topology of the backbone is a partial mesh (redundant fibres between FDs and the BD); the LOGICAL forwarding topology that STP enforces is a (collapsed) tree / star — no loops, one active path.',
-      'It encrypts the traffic.',
-      'It is only relevant on coaxial cable.',
+      'It measures each link and routes traffic down whichever cable currently has the highest available bandwidth.',
+      'It encrypts the frames travelling across the backbone so the redundant uplinks cannot be eavesdropped.',
+      'It elects a root bridge and blocks redundant ports to break Layer-2 loops, so a meshed backbone forwards as a loop-free tree.',
+      'It applies only to coaxial backbones and has no role on a fibre or twisted-pair structured-cabling system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'STP / RSTP / MSTP is the textbook example of physical-vs-logical topology divergence. Physically, the backbone is meshed for redundancy. Logically, STP prunes that mesh into a loop-free tree at Layer 2. If a primary link fails, STP unblocks an alternate port within ~50 ms (RSTP) or ~30 s (legacy STP) and forwarding continues. BS EN 50173-1 does not specify the active-layer protocol — it just provides the physical (hierarchical) star that the protocol runs on.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A campus has buildings A, B, C and D arranged geographically in a square. A surveyor proposes a fibre run A-B-C-D-A — a ring around the campus. Is this compliant with BS EN 50173-1 generic cabling for the campus backbone?',
     options: [
-      'Yes — rings are explicitly required by BS EN 50173-1 for campuses.',
-      'No — BS EN 50173-1 (and ISO/IEC 11801-1) define the campus backbone as a hierarchical star anchored at the campus distributor (CD). An A-B-C-D-A ring is not the generic-cabling shape. The fibres can be installed in a physical-ring containment for diversity, but the LOGICAL cabling topology recognised by the standard is a star: each BD home-runs to the CD.',
-      'Yes, provided every building has Cat6A.',
-      'No, because rings are forbidden in BS 7671.',
+      'No — the standards fix the campus backbone as a star at the CD; the fibre route may be a ring, but the topology is not.',
+      'Yes — BS EN 50173-1 explicitly requires a ring backbone on any multi-building campus for resilience.',
+      'Yes, provided every building is cabled to Class EA (Cat6A) so the ring meets the campus bandwidth budget.',
+      'No, because BS 7671 forbids ring topologies in all fixed data-cabling installations as a safety matter.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50173-1 / ISO/IEC 11801-1 fix the campus topology as a star with the CD at the centre. Each BD has its own dedicated home run (or pair of home runs for resilience) back to the CD. The path the fibre takes through the ducts can follow a ring for redundancy, but the cabling topology is a star — and active-layer ring protection (G.8032 ERPS, REP, MRP) provides the logical ring on top if needed. Mixing the two confuses the inspector and the future contractor.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Which TWO physical features of a structured-cabling physical star make it intrinsically more reliable than a bus or daisy-chain?',
     options: [
-      'It uses thicker cable.',
-      'Each link is independent (a fault on one home run affects only one outlet and one user, not the whole segment) AND every link can be tested, certified and replaced individually without disturbing other users. The bus / daisy-chain model has neither property — one fault degrades many users, and you cannot replace one segment without breaking the chain.',
-      'It is shorter.',
-      'It uses higher voltage.',
+      'It uses thicker, more robust cable that is less prone to physical damage inside containment.',
+      'Its links are shorter on average, so attenuation and external noise pick-up are both reduced.',
+      'Each link is independent (one fault affects only that outlet) and can be tested and replaced individually.',
+      'It runs at a higher signalling voltage, giving a better noise margin from end to end.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Independence and isolated maintainability are the two mechanical reasons the physical star wins on reliability. Add the standardised Class / Category performance budget (a known channel) and the BS EN 50174-1 administration discipline (you can find any link by label), and you have an installation that can be safely operated and maintained for fifteen years.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'Why does the structured-cabling discipline FIX the physical topology to a (hierarchical) star but leave the logical topology free?',
     options: [
-      'Because the standards committee could not agree.',
-      'Because service-independence requires that the cabling be installed once and absorb whatever active services (and therefore whatever logical topologies) the building needs over a 15-20 year life. The physical star is the only shape that all reasonable logical topologies can run on. Fixing the physical shape and leaving the logical shape free is the architectural mechanism that delivers service-independence.',
-      'Because mesh is too expensive.',
-      'Because BS 7671 §716 only permits stars.',
+      'Because a mesh of cabling would be too expensive, so a star is chosen purely on cost grounds.',
+      'Because BS 7671 §716 permits only star topologies for data cabling and forbids the alternatives.',
+      'Because the standards predate switched Ethernet and simply never got round to specifying a logical topology.',
+      'Because the physical star is the one shape every reasonable logical topology can run on over a 15-20 year cabling life.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Service-independence is delivered by topology choice. The physical star is the universal substrate — switched Ethernet (logical star at access, logical mesh at backbone), Token Ring (logical ring), ARCnet (logical bus), virtual SAN fabrics, PoE-distributed lighting, and tomorrow's services all run cleanly on it. Any other physical topology constrains the logical choices the building can ever support. BS 7671 has no view on logical topology — §716 governs the electrical-safety dimensions of the cabling, not the network architecture.",
   },

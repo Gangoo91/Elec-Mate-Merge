@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'What qualification does the HSE recommend for a person carrying out bulk sampling of asbestos?',
     options: [
-      'BOHS P402 — Building Surveys and Bulk Sampling for Asbestos',
       'NEBOSH National General Certificate',
+      'BOHS P402 — Building Surveys and Bulk Sampling for Asbestos',
       'IOSH Managing Safely',
       'CITB Site Safety Plus',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The HSE recommends that sampling is carried out by a competent person holding the BOHS P402 qualification (Building Surveys and Bulk Sampling for Asbestos) or equivalent. The sampler should be from a UKAS-accredited organisation and must have appropriate RPE and PPE.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'plm-analysis',
     question: 'What is the standard laboratory method for identifying asbestos in bulk samples?',
     options: [
-      'Polarised Light Microscopy (PLM)',
       'Phase Contrast Microscopy (PCM)',
       'Transmission Electron Microscopy (TEM)',
+      'Polarised Light Microscopy (PLM)',
       'X-ray fluorescence spectroscopy',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Polarised Light Microscopy (PLM) is the standard analytical method for identifying asbestos in bulk samples. It uses polarised light to identify asbestos fibres by their optical properties — colour, refractive index, birefringence, and extinction angle. Analysis must be carried out by a UKAS-accredited laboratory.',
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'Under CAR 2012, what is the default position if a material in a pre-2000 building has not been sampled or identified?',
     options: [
-      'It can be assumed to be safe until a survey is scheduled',
       'It must be presumed to contain asbestos until proven otherwise',
+      'It can be assumed to be safe until a survey is scheduled',
       'It should be removed immediately by any available contractor',
       'It only needs to be considered if refurbishment work is planned',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 5 of CAR 2012 requires that if materials cannot be identified, they MUST be presumed to contain asbestos. This is the default legal position — presume asbestos until sampling and analysis prove otherwise. This presumption applies to all suspect materials and is a legal requirement, not optional.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'A basic dust mask (FFP1)',
       'A half-face respirator with P2 filters',
-      'An FFP3 disposable respirator as a minimum',
       'No RPE is needed if the material is dampened first',
+      'An FFP3 disposable respirator as a minimum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The sampler must wear appropriate RPE, with a minimum of an FFP3 disposable respirator. FFP3 provides the highest level of protection among disposable respirators and is the minimum standard for asbestos work. The sampler must also wear disposable coveralls and follow controlled sampling procedures to minimise fibre release.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does Polarised Light Microscopy (PLM) determine when analysing a bulk sample?',
     options: [
-      'The concentration of airborne asbestos fibres in the atmosphere',
       'Whether the material contains asbestos and which type(s) are present',
+      'The concentration of airborne asbestos fibres in the atmosphere',
       'The age of the material and when it was installed',
       'Whether the material is safe to leave in place without management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PLM is the standard method for identifying asbestos in bulk samples. It uses polarised light to identify asbestos fibres by their optical properties — colour, refractive index, birefringence, and extinction angle. PLM can identify all six types of asbestos and determines whether asbestos is present and which type(s). It does NOT determine airborne fibre concentrations (that is air monitoring) or whether a material is safe to leave in place.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'What is the correct procedure immediately after taking a bulk sample of suspected ACM?',
     options: [
       'Leave the sampling point open so the surveyor can return later if needed',
-      'Seal and label the sampling point, double-bag the sample, and complete the chain of custody form',
       'Send the sample by standard post to any available laboratory',
       'Dispose of the sample on site if it does not look like asbestos',
+      'Seal and label the sampling point, double-bag the sample, and complete the chain of custody form',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'After taking a sample, the sampling point must be sealed and labelled to prevent further fibre release. The sample must be placed in a sealed, labelled container and double-bagged for transport. A chain of custody form must be completed to maintain the integrity of the evidence. The sample must then be sent to a UKAS-accredited laboratory for PLM analysis.',
   },

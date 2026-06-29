@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'According to the Deloitte 2020 research, what is the average return on investment for every \u00a31 spent on mental health interventions in the workplace?',
     options: [
-      '\u00a32 for every \u00a31 spent',
       '\u00a35 for every \u00a31 spent',
+      '\u00a32 for every \u00a31 spent',
       '\u00a310 for every \u00a31 spent',
       '\u00a31.50 for every \u00a31 spent',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Deloitte\u2019s 2020 report \u2018Mental Health and Employers: Refreshing the Case for Investment\u2019 found that for every \u00a31 invested in mental health support in the workplace, employers received an average return of \u00a35. This return comes from reduced absenteeism, lower presenteeism, reduced staff turnover, and fewer workplace incidents. The business case for investing in mental health is now well established and compelling.',
   },
@@ -54,8 +54,8 @@ const quickCheckQuestions = [
     id: 'mh-m5s1-core-standards',
     question:
       'How many core standards were set out in the Stevenson/Farmer \u2018Thriving at Work\u2019 review (2017) for employers to adopt as a minimum?',
-    options: ['4 core standards', '6 core standards', '8 core standards', '10 core standards'],
-    correctIndex: 1,
+    options: ['4 core standards', '8 core standards', '10 core standards', '6 core standards'],
+    correctIndex: 3,
     explanation:
       'The Stevenson/Farmer \u2018Thriving at Work\u2019 review (2017) set out 6 core standards that all employers, regardless of size or sector, should adopt as a minimum. These are: (1) produce, implement and communicate a mental health at work plan, (2) develop mental health awareness among employees, (3) encourage open conversations about mental health, (4) provide good working conditions, (5) promote effective people management, and (6) routinely monitor employee mental health and wellbeing with signposting to support.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'What is the first and most critical step when setting up an MHFA programme in a workplace?',
     options: [
-      'Immediately training all employees as Mental Health First Aiders',
       'Securing management buy-in and commitment at the highest level',
+      'Immediately training all employees as Mental Health First Aiders',
       'Purchasing mental health posters for the canteen',
       'Hiring an external counsellor to attend the office once a week',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Securing management buy-in is the essential first step. Without visible commitment and support from senior leadership, the programme is unlikely to receive adequate funding, time allocation, or organisational priority. Management must champion the programme, allocate resources, and model supportive behaviours. A top-down commitment signals to the entire workforce that mental health is taken seriously.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'There is no difference \u2014 the terms are interchangeable',
       'Champions have completed the full two-day MHFA course, while MHFAs have only completed a half-day awareness session',
-      'MHFAs have completed the full two-day training and are equipped to provide initial support; Champions have completed a shorter awareness course to promote understanding',
       'MHFAs are professionally qualified counsellors, while Champions are volunteers',
+      'MHFAs have completed the full two-day training and are equipped to provide initial support; Champions have completed a shorter awareness course to promote understanding',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Mental Health First Aiders complete the full two-day (16-hour) MHFA England course and are trained to recognise signs of mental ill health, provide initial support using the ALGEE action plan, and guide people towards professional help. Mental Health Champions complete a shorter awareness course (typically one day or half a day) and are equipped to raise awareness, reduce stigma, and encourage open conversations \u2014 but they are not trained to deliver the MHFA intervention itself.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'How can employees identify who the Mental Health First Aiders are in their workplace?',
     options: [
-      'MHFAs should remain anonymous to protect their privacy',
       'Through a combination of lanyards/badges, posters, intranet listings, toolbox talk introductions, and regular communication',
+      'MHFAs should remain anonymous to protect their privacy',
       'Only through the HR department, who can provide names on request',
       'MHFAs should only be known to management, not to the general workforce',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Visibility and accessibility are essential for MHFAs to be effective. If employees do not know who the MHFAs are, they cannot access support. Strategies include MHFA-branded lanyards and badges, posters and notice boards listing MHFAs with photos, intranet pages, introductions at inductions and toolbox talks, and regular reminders through internal communications. MHFAs must be approachable and their identity must be widely known.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'How should mental health be integrated with existing health and safety arrangements?',
     options: [
       'Mental health should be kept entirely separate from physical health and safety',
-      'By adding mental health to risk assessments, H&S committee agendas, inductions, toolbox talks, and aligning with HSE Management Standards',
       'By replacing all physical health and safety measures with mental health initiatives',
       'Mental health is not relevant to health and safety and should be managed by HR only',
+      'By adding mental health to risk assessments, H&S committee agendas, inductions, toolbox talks, and aligning with HSE Management Standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mental health should be fully integrated with existing health and safety systems, not treated as a separate initiative. This means including mental health hazards (such as excessive workload, lack of control, and poor relationships) in risk assessments, adding mental health as a standing item on H&S committee agendas, covering mental health in inductions and toolbox talks, and aligning with the HSE Management Standards which explicitly address psychosocial hazards.',
   },
@@ -179,11 +179,11 @@ const quizQuestions = [
       'Which of the following is a quantitative KPI for measuring the impact of a mental health programme?',
     options: [
       'The colour scheme of the mental health awareness posters',
-      'Sickness absence rates, EAP usage rates, and staff retention figures',
       'The number of mental health posters displayed in the building',
+      'Sickness absence rates, EAP usage rates, and staff retention figures',
       'The personal opinions of the CEO about mental health',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Quantitative KPIs are measurable, numerical indicators that can be tracked over time. Sickness absence rates (particularly mental-health-related absence), EAP usage rates, staff turnover and retention rates, return-to-work success rates, and near-miss reporting figures are all quantitative KPIs. These should be supplemented with qualitative data such as staff survey feedback and anonymised MHFA interaction themes.',
   },

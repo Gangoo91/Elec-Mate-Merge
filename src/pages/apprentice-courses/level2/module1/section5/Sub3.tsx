@@ -43,10 +43,10 @@ const checks = [
     id: 's5-3-vi-vs-multimeter-check',
     question: 'Why is a two-pole voltage indicator preferred over a multimeter for proving dead?',
     options: [
-      'Yes, the worker should inform their GP so it can be noted on their medical records',
+      'It gives a precise numerical reading you can record',
       'It can’t be on the wrong range, has fixed leads, and gives a positive ‘live’ indication you can’t miss',
-      'To provide a systematic method for identifying, assessing, and controlling manual handling risks',
-      'Share relevant, accurate information and reassure the person that help is available and recovery is possible',
+      'It can also measure insulation resistance and continuity',
+      'It is cheaper and smaller than a two-pole indicator',
     ],
     correctIndex: 1,
     explanation:
@@ -57,9 +57,9 @@ const checks = [
     question: 'What is the maximum exposed metal at the tip of a GS38 test probe?',
     options: [
       '2 mm (preferably) or 4 mm maximum',
-      'Controls and operational improvements',
-      'Saddles, brackets, or conduit clips',
-      'Total resistance increases',
+      '8 mm to reach into deep terminals',
+      '15 mm so it can bridge two terminals',
+      'There is no maximum if a finger guard is fitted',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     id: 's5-3-multi-hasp-check',
     question: 'You and another electrician are working on the same isolated sub-main. How should the lock-off be arranged?',
     options: [
-      'Traditional termination using adhesive and mechanical polishing',
+      'One padlock and one shared key between the two of you',
       'One padlock per person, both clipped onto the same multi-hasp on the device',
-      'The ability to isolate only the faulted circuit whilst maintaining supply to healthy circuits',
-      'Calculating optimal start times to reach target temperatures',
+      'Whoever isolates first locks off; the other just relies on it',
+      'No padlock needed — a warning tag is enough for two people',
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does GS38 cover?',
     options: [
-      'Organising your account into Situation, Task, Action, Result',
+      'The minimum insulation resistance values for a new circuit',
       'Test equipment safety for electrical work on LV systems (probes, leads, indicators)',
-      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
-      'Ensuring all team members lift and lower on a coordinated signal',
+      'The selection of protective devices for final circuits',
+      'Safe working loads for ladders and mobile towers',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'What item is specifically designed to test that your voltage indicator is working?',
     options: [
-      'Handling underperformance in people who are your friends',
-      'To identify and control hazards before accidents occur',
+      'A calibration certificate from an accredited laboratory',
+      'A socket tester that lights three LEDs',
       'A proving unit (battery-powered known voltage source)',
-      'Difference between synchronous and rotor speed',
+      'A second voltage indicator used as a back-up',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'Your voltage indicator’s LEDs work but the haptic/buzzer doesn’t. Is the indicator still safe to use?',
     options: [
-      'Building rest and recovery into your schedule as a non-negotiable part of growth',
-      'A written or electronic record covering all matters specified in Schedule 7 of the WAH Regulations',
-      'If I were not already invested in this, would I start it today knowing what I now know?',
+      'Yes — as long as the LEDs work, the buzzer is just a bonus',
+      'Yes — the buzzer is only needed in noisy plant rooms',
+      'Yes — provided you prove it on the proving unit first',
       'No — GS38 expects multiple indication modes; one failure means the unit is suspect and goes out of service',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'What should be on a lock-off tag?',
     options: [
       "Worker’s name, date applied, brief description of work, contact phone number",
-      "Advance payments towards next year's tax bill based on the previous year",
-      "Moving occupants horizontally through fire-resisting barriers into an adjacent safe compartment",
-      "Prohibition notice, prosecution, unlimited fines, and potential imprisonment",
+      "Just the word 'DANGER' in large red letters",
+      "The circuit reference number and nothing else",
+      "The make and model of the lock-off padlock used",
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a CAT rating on test equipment, and what should you use for distribution-board work?',
     options: [
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual and/or a handover certificate',
+      'The continuity-test current the instrument can deliver',
       'It’s the IEC 61010 measurement category — CAT III 600 V or higher for LV distribution work',
-      'A completed inspection by a competent person confirming it is fit for purpose and adequate for the intended load',
-      'Issue a written variation order and get it signed before proceeding',
+      'The IP rating against dust and water ingress',
+      'The maximum cable size the leads can connect to',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'What kind of padlock should you use for personal lock-off?',
     options: [
-      'The resistance between conductors and earth, preventing dangerous currents',
-      'Hundreds of manufacturers produce KNX-compatible devices following the same standard',
+      'A keyed-alike set so the whole team can open any lock',
+      'A combination padlock so there’s no key to lose',
       'A padlock with a unique key — never a ‘keyed-alike’ set someone else could open',
-      'At a safe distance from the building, away from access routes for emergency vehicles',
+      'Any padlock from the van, as long as it closes firmly',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'A pull-out fuse carrier is the only means of isolation and you can’t fit a lock-off. What do you do?',
     options: [
-      'Two of the three phase connections being transposed (swapped)',
-      'They have been advised of work completed and any recommendations',
-      'To ensure safe working environments including emergency lighting',
+      'Leave the carrier in and just post a warning notice',
+      'Tape the carrier in place so it can’t be pulled out',
+      'Skip isolation — there’s nothing lockable, so carry on',
       'Withdraw the fuse carrier and keep it physically with you (in your toolbox or van)',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'You drop your voltage indicator off a step-up. It still appears to work. What now?',
     options: [
       "Take it out of service immediately, prove it on a proving unit + visually inspect, and if there’s any doubt replace it",
-      "Pass — well below the 300 ms maximum for general non-delay type, indicating a healthy RCD with margin.",
-      "Using back-up protection from an upstream HRC fuse with a verified coordination combination",
-      "Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site",
+      "Carry on using it — if it still reads, it’s fine",
+      "Give it a shake and use it for the rest of the day",
+      "Only replace it if the case is visibly cracked",
     ],
     correctAnswer: 0,
     explanation:

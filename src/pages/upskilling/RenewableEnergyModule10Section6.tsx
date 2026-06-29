@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What does it mean for an inverter to be "grid-following"?',
     options: [
-      'Inverter sets voltage + frequency',
-      'A grid-following inverter SYNCHRONISES to the existing grid voltage + frequency reference (the DNO supply or a grid-forming inverter). It does NOT set voltage / frequency itself — it injects current at the phase + frequency it sees from the reference. If the reference disappears (DNO supply lost), the grid-following inverter cannot operate — Reg 551.7.5 anti-islanding disconnects it. UK 2025-26 default: virtually all residential PV / BESS / V2G inverters are grid-following.',
-      'Inverter operates standalone',
-      'Random',
+      'It synchronises to the existing grid voltage and frequency reference and injects current at that phase, and cannot operate if the reference is lost',
+      'It sets the local voltage and frequency itself and holds them at fixed setpoints using droop control and virtual inertia',
+      'It can run as a standalone voltage source with no external reference, supplying its own island network indefinitely',
+      'It alternates between setting and following the reference depending on the load level present at the time',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Grid-following (also called "grid-feeding" or "current-source" inverter): (1) Operating principle — the inverter synchronises to an external voltage + frequency reference (the grid supply); injects current at the same phase + frequency. PLL (phase-locked loop) tracks the reference. The inverter doesn’t hold the voltage — the grid holds it. (2) Behaviour on grid loss — if the reference (DNO supply) disappears, the inverter has no synchronisation source. It detects loss of mains (RoCoF + voltage / frequency window — note G99 disallows Vector Shift for type-tested generation, so RoCoF is the required loss-of-mains method on the type-tested inverters used in virtually all LCT installs; Vector Shift is legacy / non-type-tested only) and disconnects per Reg 551.7.5 anti-islanding. Cannot continue feeding a dead network. (3) UK 2025-26 default — virtually all small-scale residential PV inverters (SolarEdge, Solis, Huawei, Growatt, Fronius), BESS inverters (most hybrid units), V2G chargers (Wallbox Quasar) are grid-following. Type-tested per ENA G98 / G99 + BS EN 50549 + IEC 62116. (4) Strength — simple, cheaper hardware, mature technology, all UK 2025-26 vendors ship grid-following as the default. (5) Limitation — cannot operate without the grid; no island capability without separate grid-forming inverter or backup gateway. (6) Cert evidence: inverter DoC declares grid-following + ENA type approval + Reg 551.7.5 anti-islanding behaviour verified at commissioning.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What does it mean for an inverter to be "grid-forming"?',
     options: [
-      'Same as grid-following',
-      'A grid-forming inverter SETS the voltage + frequency reference itself — acts as the voltage source for its local network (island mode). Holds voltage + frequency within specified limits using its own internal control loop, droop control + virtual inertia. Other grid-following inverters can synchronise to it. UK 2025-26: typically the BESS inverter or a dedicated backup gateway provides grid-forming capability. Required for island mode (Reg 826.1.1.2.2 + Reg 826.1.1.5).',
-      'Random',
-      'Reverse role',
+      'It depends on the DNO supply for its voltage reference and exports current at unity power factor only',
+      'It tracks the grid with a phase-locked loop and trips out within 500 ms whenever the mains is lost',
+      'It sets the voltage and frequency reference itself, acting as the voltage source for its local network so other inverters can synchronise to it',
+      'It only provides reactive power support and cannot supply any real power to connected loads',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Grid-forming (also called "voltage-source" inverter): (1) Operating principle — the inverter HOLDS voltage + frequency at specified setpoints (typically 230 V ±10% and 50 Hz ±1%). Uses droop control (voltage drops with reactive current load, frequency drops with real power load) + virtual inertia (electronic emulation of synchronous-generator mechanical inertia for frequency stability). Doesn’t need an external reference; IS the reference for any other inverters synchronising to it. (2) Use case — island mode operation. When the DNO supply is lost + Reg 826.1.1.2.2 N-E switching transitions to local bond, the grid-forming inverter sets voltage + frequency for the local island. Grid-following inverters (PV, V2G) can then synchronise to the grid-forming voltage + continue contributing power. (3) UK 2025-26 hardware — the BESS inverter typically provides grid-forming when island-capable hardware fitted: Tesla Powerwall (with Backup Gateway 2), SolarEdge StorEdge (with Backup Interface), GivEnergy AIO (with Whole Home Backup), Sonnen, Enphase IQ8 (microinverter + IQ System Controller). The PV inverter often remains grid-following — follows the BESS during island operation. (4) Cost — grid-forming capability is the £2-5k uplift in residential backup-gateway solutions. (5) Reg 826.1.1.5 — island-mode switching device requirement (the backup gateway hardware). Cert evidence: grid-forming inverter DoC + commissioning of island-mode operation + Reg 826.1.1.2.2 N-E switching verification.',
   },
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'What does a UK 2025-26 PEI need to be island-capable?',
     options: [
-      'Just an inverter',
-      'Multiple components must align: (a) grid-forming inverter (typically the BESS inverter); (b) Reg 826.1.1.2.2 N-E switching hardware (backup gateway with controlled non-overlap sequencing); (c) Reg 826.1.1.5 island-mode switching device; (d) sufficient stored energy + load priority configuration (load shedding for non-essential loads); (e) safety architecture verified for island-mode short-circuit current (typically much lower than direct-feeding); (f) commissioning test of grid-loss transition + reverse transition + N-E bond verification. Most UK 2025-26 PEI are NOT island-capable.',
-      'Random',
-      'Just BESS',
+      'Only a grid-following PV inverter rated above the expected peak load of the property',
+      'A grid-forming inverter, N-E switching hardware, an island switching device and stored energy',
+      'A standard BESS of any capacity, since all batteries automatically provide backup on mains failure',
+      'A second DNO supply that can be switched in manually whenever the primary supply is lost',
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'What is "virtual inertia" + why does it matter for grid-forming inverters?',
     options: [
-      'Random',
-      'Virtual inertia = software algorithm in a grid-forming inverter that EMULATES the mechanical inertia of a synchronous generator. Frequency-response behaviour: when load suddenly increases, a traditional generator slows down briefly (kinetic energy from rotating mass supports the load) before its governor responds; virtual inertia in an inverter mimics this with a controlled frequency dip + recovery. Important because: (a) provides stable frequency response during disturbances; (b) supports microgrid stability when multiple inverters parallel; (c) helps National Grid as conventional synchronous generation retires (less natural inertia in the system); (d) emerging requirement for grid-services / microgrid inverters.',
-      'Fast spinning',
-      'Mistake',
+      'A physical flywheel fitted inside the inverter to store rotational kinetic energy for short outages',
+      'A larger DC-link capacitor that holds the output voltage steady when the grid frequency wanders',
+      'A boost in the inverter switching frequency that lets it respond faster to grid voltage changes',
+      'A software algorithm that emulates the mechanical inertia of a synchronous generator, giving a controlled frequency dip and recovery during disturbances',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Virtual inertia (also "synthetic inertia" or "virtual synchronous machine") explained: (1) Traditional grid — dominated by synchronous generators (gas turbine, nuclear, hydro). Each spinning generator has physical kinetic energy in its rotating mass. When grid load suddenly rises, generator slows briefly (releases kinetic energy as electricity); governor + automatic frequency response then ramps fuel input to restore frequency. The inherent kinetic energy provides FREQUENCY INERTIA — the grid resists fast frequency excursions. (2) Inverter-based generation — PV / BESS / wind inverters have NO mechanical inertia. A grid-following inverter doesn’t respond to frequency excursions inherently — just synchronises to whatever the grid does. (3) UK National Grid + ESO concern — as conventional synchronous generation retires (coal closed 2024; gas declining; new build dominated by inverter-based renewables), system inertia decreases. Frequency excursions become faster + harder to control. Risk of RoCoF (rate of change of frequency) protection trips cascading. (4) Virtual inertia solution — grid-forming inverters with virtual inertia algorithm RESPOND to detected frequency excursions by injecting / withdrawing power proportional to df/dt (rate of frequency change). Emulates the kinetic-energy response of synchronous generators. (5) UK 2025-26 deployment — emerging in commercial / grid-scale BESS (Pillswood 100 MW BESS in Yorkshire, Habitat — grid-forming + virtual inertia); residential rare currently. (6) Microgrid applications — essential when multiple inverters parallel without grid reference; grid-forming inverter with virtual inertia stabilises the local frequency. Cert evidence: grid-forming inverter DoC declares virtual inertia capability + commissioning verification of frequency response.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer with PV + 10 kWh BESS asks: "Will my system keep the lights on during a power cut?". Their hardware is SolarEdge inverter + Energy Bank BESS, no Backup Interface installed.',
     options: [
-      'Yes',
-      'No — without the SolarEdge Backup Interface (or equivalent backup gateway from another vendor), the system is grid-following only. On DNO loss, Reg 551.7.5 anti-islanding shuts down both PV + BESS — the BESS does NOT power the home. To enable backup, customer needs to retrofit the SolarEdge Backup Interface (£2,000-4,000 hardware + commissioning) which provides Reg 826.1.1.2.2 N-E switching + Reg 826.1.1.5 island-mode switching + grid-forming mode on BESS.',
-      'Random',
-      'Maybe',
+      'Yes, the BESS automatically powers the home because every battery system provides backup by default',
+      'Yes, but only the PV will keep generating; the BESS stays idle until the mains returns',
+      'No — without a backup gateway it is grid-following only, so both trip on mains loss',
+      'No, because a 10 kWh BESS is too small to support any household load during an outage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'UK 2025-26 typical scenario — customer assumes BESS = backup. Reality: (1) Default hardware — SolarEdge inverter + Energy Bank BESS without Backup Interface = grid-following only. On DNO loss, both PV + BESS disconnect per Reg 551.7.5 anti-islanding. No power to home from BESS. Reg 826.1.3 default behaviour. (2) Customer expectation gap — customer paid for BESS + expects backup during outages. This is one of the most common customer-installer misunderstandings in UK 2025-26 — historically caused complaints + reputation damage. Be explicit at quote stage. (3) Backup retrofit — SolarEdge Backup Interface adds: grid-forming mode on BESS inverter; Reg 826.1.1.2.2 N-E switching hardware; Reg 826.1.1.5 island-mode switching device; commissioning. Hardware cost £2,000-3,000; commissioning + install £1,000-2,000. Total £3,000-5,000 retrofit. (4) Vendor alternatives — Tesla Powerwall + Backup Gateway 2 (£3,000-4,000 uplift); GivEnergy AIO + Whole Home Backup (£2,000-3,000); Enphase IQ8 + IQ System Controller (£2,500-4,000); Sonnen (built-in island capability in some models). (5) Commissioning post-retrofit — simulated grid-loss transition test + N-E bond continuity in each state + island-mode operation duration test (verify BESS holds frequency / voltage in island under expected load) + reverse transition. (6) Cert evidence: backup gateway DoC + retrofit commissioning + customer handover documenting island operating mode + critical-load priority + degraded behaviour expectations.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A grid-forming inverter operating in island mode encounters a sudden 5 kW load increase (customer turns on electric kettle). What happens?',
     options: [
-      'Trips',
-      'Grid-forming inverter responds: (1) voltage holds within its setpoint via droop control + reactive current adjustment; (2) frequency briefly dips proportional to df/dt and inverter’s virtual inertia setting — typically 0.1-0.5 Hz dip for a few cycles; (3) inverter real-power output increases to meet new load (drawing from BESS); (4) frequency recovers as power balance restored. If load exceeds inverter’s peak capability (e.g. 7 kW BESS + 5 kW load suddenly = 12 kW > peak), inverter limits its output + frequency droops further + EMS load-shedding may activate.',
-      'Random',
-      'No effect',
+      'Voltage holds via droop control; frequency briefly dips then recovers as BESS output ramps',
+      'The inverter trips immediately because grid-forming inverters cannot accept any step change in load',
+      'Nothing changes — a grid-forming inverter ignores load steps and keeps a perfectly constant output',
+      'The inverter raises its output voltage above 253 V to push more power into the new load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Grid-forming inverter dynamic response to load step: (1) Voltage control — droop control + reactive current adjustment hold voltage at setpoint (±5% typical). Voltage briefly dips a few volts then recovers (sub-second). (2) Frequency control — the immediate response. Grid-forming inverter’s virtual inertia + frequency droop control respond. Without virtual inertia: frequency drops faster + further. With virtual inertia: frequency drops gracefully (mimics synchronous generator behaviour). Typical UK 2025-26 BESS grid-forming: 0.1-0.5 Hz dip for 1-3 seconds, then recovery. (3) Real-power output — inverter ramps real power to meet new load. Energy drawn from BESS (or other sources if available). PV grid-following inverters continue at MPPT generation. (4) BESS state-of-charge — decreases proportional to power drawn. EMS monitors; load-shedding triggers if BESS approaches critical low. (5) Limits — if step-load exceeds inverter peak capability (e.g. customer turns on a 9 kW shower + EV charger simultaneously while in island, BESS rated 5 kW continuous + 7 kW peak), inverter limits output + voltage / frequency droop further + EMS sheds non-essential loads. (6) Cert evidence: grid-forming inverter DoC declares peak vs continuous power + frequency response characteristics + commissioning verifies acceptable response to expected step loads.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'How does Reg 826.1.1.2.2 N-E switching work in practice during a grid-loss transition?',
     options: [
-      'Random',
-      'Sequence: (1) DNO loss detected (loss-of-mains relay in grid-following inverter / backup gateway: voltage drop, frequency excursion, vector shift, ROCOF); (2) backup gateway opens DNO LINE contactor(s); (3) backup gateway opens DNO NEUTRAL contactor (briefly: PEI has no N-E reference); (4) backup gateway closes LOCAL N-E bond contactor (connects PEI neutral bar to PEI PE bar / local earth electrode); (5) grid-forming inverter transitions from grid-following to grid-forming mode + sets voltage / frequency; (6) PEI now operating as island. Reg 826.1.1.2.2 critically requires steps (3) and (4) do NOT overlap (would short DNO N-E and local N-E together).',
-      'Manual',
-      'No sequence',
+      'The DNO neutral stays bonded throughout and the local earth electrode is simply added in parallel to it',
+      'A single contactor opens the supply and the inverter relies on the DNO N-E bond remaining live',
+      'The transition is performed manually by the occupant operating a changeover switch at the consumer unit',
+      'Open DNO line then neutral, then close the local N-E bond, with the neutral steps non-overlapping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 826.1.1.2.2 N-E switching transition sequence detail: (1) Detection — typically <100ms after DNO supply lost. Methods: voltage drop below threshold; frequency excursion outside window (47-52 Hz typically); vector shift detection (sudden phase angle change); ROCOF threshold exceeded. Built into the loss-of-mains relay (Reg 551.7.5) + backup gateway logic. (2) DNO line disconnection — backup gateway opens phase contactor(s) within ~20-50ms. (3) DNO neutral disconnection — backup gateway opens neutral contactor. At this point the PEI is electrically floating relative to earth (no N-E bond from DNO, none yet from local). RCDs cannot operate correctly. Window <50ms typical. (4) Local N-E bond establishment — backup gateway closes local neutral switch device that bonds the PEI neutral bar to the local earth electrode / PE conductor. PEI now has its own N-E reference for RCD operation. (5) Non-overlap requirement — Reg 826.1.1.2.2 mandates steps (3) and (4) do NOT overlap. If both DNO N-E bond AND local N-E bond were simultaneously in circuit, current would flow through both earthing systems in parallel — risk of unequal earth potential, circulating earth currents, RCD false-trip. The backup gateway hardware enforces non-overlap via interlocked contactors + controlled timing. (6) Grid-forming mode activation — BESS inverter transitions from grid-following (was synchronising to DNO) to grid-forming (now setting voltage + frequency). Sub-second transition. (7) PEI in island mode — grid-forming inverter holds V + f; grid-following inverters (PV) sync to grid-forming; loads served from local sources. (8) Commissioning verification — simulated grid-loss test + N-E continuity measurement at each state + transition timing measurement. Cert evidence: backup gateway DoC + sequence timing diagram + commissioning test result.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'In island mode, the short-circuit current dramatically drops. What does this mean for protective device design?',
     options: [
-      'No impact',
-      'Reg 826.1.2.1 requires overcurrent calculation at every PEI point for ALL configurations + min + max current magnitudes. Direct-feeding mode max PSCC ≈ 6-25 kA (DNO contribution dominates). Island mode max PSCC ≈ inverter peak ≈ 1.1× rated (e.g. 7 kW BESS ≈ 35 A peak). MCBs may NOT trip within Reg 411 disconnection time in island mode. Mitigation: RCDs work via local N-E bond per Reg 826.1.1.2.2 + Reg 415.1 additional protection 30 mA primary ADS in island; inverter automatic disconnection on persistent fault; designed acceptance of higher ADS time in island. Documented in PEI overcurrent study.',
-      'Random',
-      'Always higher',
+      'No impact, because an MCB rated for the direct-feeding fault level always clears island faults too',
+      'Island fault current is only ≈1.1× rated, so MCBs may not trip and 30 mA RCDs become primary ADS',
+      'Island fault current is always higher than direct-feeding, so breakers must be uprated for island operation',
+      'Protective devices can be omitted in island mode because the inverter limits current to a safe value',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Grid-forming + grid-following inverters can coexist in the same PEI. What’s the typical UK 2025-26 architecture?',
     options: [
-      'All grid-forming',
-      'BESS inverter = grid-forming (can run as voltage source in island mode); PV inverter = grid-following (always follows whatever reference is present — DNO in direct-feeding, BESS in island); V2G charger = grid-following (in residential UK 2025-26 hardware; commercial fleet grid-forming-capable emerging). Backup gateway coordinates the transition. Vendor-integrated stacks (Tesla, SolarEdge, GivEnergy, Enphase) handle this seamlessly.',
-      'Random',
-      'Mixed unimportant',
+      'Every inverter in the PEI must be grid-forming so they all set voltage and frequency together',
+      'The PV inverter is grid-forming and the BESS inverter follows it during island operation',
+      'The BESS is grid-forming in island while the PV and V2G stay grid-following and sync to it',
+      'Grid-forming and grid-following inverters cannot be mixed, so a separate consumer unit is needed for each',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Typical UK 2025-26 mixed-inverter PEI architecture: (1) BESS inverter — grid-forming-capable (Tesla Powerwall + Backup Gateway, SolarEdge StorEdge + Backup Interface, GivEnergy AIO + Whole Home Backup, Enphase IQ8 + IQ Combiner). In direct-feeding mode: operates grid-following (synchronises to DNO). In island mode: transitions to grid-forming (sets voltage + frequency for the island). (2) PV inverter — grid-following only (UK 2025-26 standard for residential). Synchronises to whatever voltage / frequency reference is present — DNO in direct-feeding, BESS grid-forming in island. Continues generating in both modes as long as a reference exists. (3) V2G charger — grid-following in UK 2025-26 residential hardware (Wallbox Quasar). Commercial fleet bidirectional units emerging with grid-forming capability for V2X.energy + dnata DC. (4) Backup gateway / island-mode switching device — the coordination layer. Detects DNO loss; opens DNO contactors; switches N-E bond; signals BESS to transition to grid-forming; ensures other inverters re-synchronise to BESS as new reference. (5) UK 2025-26 vendor stacks — handle this transparently: Tesla Backup Gateway 2 + Powerwall 2/3; SolarEdge Backup Interface + StorEdge + SolarEdge PV inverters; GivEnergy Whole Home Backup + AIO + GivEnergy PV inverter; Enphase IQ8 microinverters + IQ System Controller (microinverter advantage — each one is grid-forming-capable). (6) Commissioning — simulated grid-loss test verifies the transition: BESS grid-forming activates within seconds, PV resynchronises, loads served. Cert evidence: per-inverter DoC noting grid-following or grid-forming + backup gateway DoC + commissioning test result.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'A new microgrid project (5 holiday cottages + shared community PV + BESS, no DNO connection) needs grid-forming. Why is grid-forming essential here?',
     options: [
-      'Random',
-      'Microgrid with NO DNO connection has no external voltage / frequency reference. Without a grid-forming inverter, all grid-following inverters would have nothing to synchronise to + couldn’t operate. The BESS inverter must be grid-forming + sets the microgrid’s voltage + frequency. Other PV / generator inverters synchronise to the BESS. Multiple BESS inverters in parallel need coordinated grid-forming control (typically one master + others as droop participants). Reg 826 PEI in permanent island mode — no DNO interaction.',
-      'Mistake',
-      'No need',
+      'Grid-forming is optional here because grid-following inverters can generate their own reference when no DNO is present',
+      'With no DNO reference, a grid-forming BESS must set the microgrid voltage and frequency itself',
+      'Grid-forming is only needed so the cottages can export surplus power back to the DNO network',
+      'Grid-forming simply increases the available fault current to make the MCBs trip faster',
     ],
     correctAnswer: 1,
     explanation:

@@ -50,8 +50,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical splice time for a modern fusion splicer?',
-    options: ['1-2 minutes', '6-10 seconds', '30 seconds', '2-3 minutes'],
-    correctAnswer: 1,
+    options: ['6-10 seconds', '30 seconds', '1-2 minutes', '2-3 minutes'],
+    correctAnswer: 0,
     explanation:
       'Modern fusion splicers complete a splice in 6-10 seconds, with some high-end models even faster.',
   },
@@ -59,28 +59,28 @@ const quizQuestions = [
     id: 2,
     question: 'What does the heat shrink oven on a fusion splicer do?',
     options: [
-      'Heats the electrodes',
-      'Shrinks splice protection sleeves',
+      'Heats the splicer electrodes',
       'Warms the fibre before splicing',
-      'Dries the splice point',
+      'Shrinks splice protection sleeves',
+      'Dries the splice point after fusion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The heat shrink oven applies heat to protection sleeves placed over the splice, shrinking them to protect the bare fibre.',
   },
   {
     id: 3,
     question: 'What type of splicer is recommended for singlemode backbone work?',
-    options: ['Any type is suitable', 'Clad alignment', 'Core alignment', 'Mechanical only'],
-    correctAnswer: 2,
+    options: ['Core alignment', 'Any type is suitable', 'Clad alignment', 'Mechanical only'],
+    correctAnswer: 0,
     explanation:
       'Core alignment splicers are essential for singlemode backbone work where low splice loss is critical.',
   },
   {
     id: 4,
     question: 'How often should fusion splicer electrodes be replaced?',
-    options: ['Every 100 splices', 'Every 2,000-5,000 splices', 'Annually only', 'When they break'],
-    correctAnswer: 1,
+    options: ['Every 100 splices', 'Annually regardless of use', 'Every 2,000-5,000 splices', 'Only when they break'],
+    correctAnswer: 2,
     explanation:
       'Electrodes typically last 2,000-5,000 splices. Track splice count and replace before quality degrades.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is an arc calibration?',
     options: [
-      'Adjusting electrode gap',
-      'Automatic adjustment of arc power for conditions',
-      'Replacing electrodes',
-      'Cleaning the splicer',
+      'Manually adjusting the electrode gap',
+      'Automatic adjustment of arc power for ambient conditions',
+      'Replacing the worn electrodes',
+      'Cleaning the splicer V-grooves',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'What should be checked before using a rental fusion splicer?',
     options: [
       'Nothing - rentals are pre-checked',
-      'Electrode life, calibration date, included accessories',
-      'Colour only',
-      'Brand name',
+      'The casing colour only',
+      'The manufacturer brand name',
+      'Electrode life, calibration date, and included accessories',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Always verify electrode condition, recent calibration, and that all needed accessories are included with rental equipment.',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 7,
     question: 'What power options do field fusion splicers typically offer?',
     options: [
-      'Mains only',
-      'Battery only',
+      'Mains AC only',
+      'Internal battery only',
       'Mains, battery, and often DC (vehicle)',
-      'Generator only',
+      'External generator only',
     ],
     correctAnswer: 2,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of the fibre holder/clamps in a splicer?',
     options: [
-      'Decoration',
+      'To measure the fibre diameter',
       'Securely position fibres during alignment and fusion',
-      'Measure fibre diameter',
-      'Strip the coating',
+      'To strip the fibre coating',
+      'To estimate the final splice loss',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 9,
     question: 'How should a fusion splicer be stored?',
     options: [
-      'In any convenient location',
-      'In protective case, electrodes removed, climate controlled',
-      'Standing upright only',
-      'In direct sunlight',
+      'In any convenient open location',
+      'Standing upright only, uncovered',
+      'In a protective case, in a climate-controlled environment',
+      'In direct sunlight to keep it dry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Store splicers in their protective case, in a climate-controlled environment. Some manufacturers recommend removing electrodes for long-term storage.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 10,
     question: "What does 'estimated splice loss' displayed by the splicer indicate?",
     options: [
-      'Guaranteed actual loss',
-      'Calculated loss based on alignment geometry',
-      'Maximum possible loss',
-      'Testing result from OTDR',
+      'A guaranteed actual loss value',
+      'The maximum possible loss',
+      'A measured OTDR test result',
+      'A calculated loss based on alignment geometry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The estimated loss is calculated from alignment geometry, not actual optical measurement. Always verify with OTDR or power meter testing.',
   },

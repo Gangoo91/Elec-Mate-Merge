@@ -12,7 +12,7 @@ export const rcdTestingQuizData = [
       'An RCD should never trip at ½ × IΔn. If it does, the device is over-sensitive and requires replacement to prevent nuisance tripping.',
   },
   {
-    question: 'What is the maximum permitted trip time for a 30mA RCD at rated current (1 × IΔn)?',
+    question: 'What is the maximum permitted trip time for a general-purpose (non-delay) 30mA RCD at rated current (1 × IΔn)?',
     options: [
       '150ms',
       '500ms',
@@ -21,7 +21,7 @@ export const rcdTestingQuizData = [
     ],
     correctAnswer: 3,
     explanation:
-      'For general purpose RCDs, the maximum trip time at rated current is 300ms according to BS 7671.',
+      'For a general-purpose (non-time-delay) RCD, the maximum trip time at 1 × IΔn is 300ms; an S-type (time-delay) device is permitted up to 500ms.',
   },
   {
     question: 'Why must RCDs be tested at both 0° and 180° phase angles?',
@@ -36,52 +36,52 @@ export const rcdTestingQuizData = [
       'RCD sensitivity varies with the phase angle of the residual current. The 180° test often represents worst-case conditions and may reveal marginal devices.',
   },
   {
-    question: 'Is testing the RCD test button sufficient for compliance verification?',
+    question: 'Is operating the integral RCD test button sufficient for compliance verification?',
     options: [
-      'Only for socket outlets rated 20A or less',
-      'At the furthest practical point from the RCD',
-      'No, proper testing with measured currents is required',
-      'Replace the RCD as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s over-sensitive',
+      'Yes, the test button fully verifies tripping at rated residual current',
+      'Yes, provided it is pressed quarterly as the label advises',
+      'No, instrument testing with measured residual currents and trip times is required',
+      'Yes, but only on socket outlets rated 20A or less',
     ],
     correctAnswer: 2,
     explanation:
-      'The test button only proves the tripping mechanism works, not the electronic detection circuit. Proper testing with measured currents and timed responses is required.',
+      'The test button only confirms the mechanical tripping linkage operates; it does not measure the residual current or trip time, so instrument testing is still required to prove compliance.',
   },
   {
     question: 'Where should RCD testing ideally be performed on a circuit?',
     options: [
-      'No, proper testing with measured currents is required',
+      'At the consumer unit, directly at the RCD terminals',
       'At the furthest practical point from the RCD',
-      'Because RCD sensitivity varies with AC waveform phase',
-      'Test each line to neutral separately',
+      'At the midpoint of the longest circuit on the board',
+      'At whichever socket is nearest the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
-      'Testing should be performed from the furthest practical point to prove circuit integrity and demonstrate protection coverage throughout the installation.',
+      'Testing from the furthest practical point includes the full circuit conductor resistance in the test, proving protection coverage throughout the circuit rather than just at the device.',
   },
   {
-    question: 'What is the maximum trip time for the 5 × IΔn test on socket circuits?',
+    question: 'What is the maximum expected trip time for a non-delay Type AC RCD on the 5 × IΔn test?',
     options: [
       '40ms',
       '150ms',
-      'There is no 5 × IΔn test requirement',
+      '200ms',
       '300ms',
     ],
     correctAnswer: 0,
     explanation:
-      'The 5 × IΔn test must trip within 40ms and is required for socket outlets rated 20A or less to ensure rapid disconnection for personal protection.',
+      'A non-delay RCD should trip within 40ms at 5 × IΔn; the equivalent figure for an S-type (time-delay) device is 150ms.',
   },
   {
-    question: 'When is the 5 × IΔn test required?',
+    question: 'What is the primary purpose of the 5 × IΔn test for additional protection?',
     options: [
-      'Only during initial verification',
-      'Only for socket outlets rated 20A or less',
-      'For all RCD protected circuits',
-      'Only for bathroom circuits',
+      'To verify the RCD survives repeated heavy operation',
+      'To confirm rapid disconnection for personal shock protection',
+      'To check the RCD does not nuisance-trip under load',
+      'To measure the prospective fault current at the board',
     ],
     correctAnswer: 1,
     explanation:
-      'The 5 × IΔn test is required for socket outlets rated 20A or less and circuits supplying mobile equipment to ensure rapid fault clearance for personal protection.',
+      'The high-current 5 × IΔn test confirms the RCD disconnects fast enough (within 40ms) to provide the rapid shock protection expected of a 30mA additional-protection device.',
   },
   {
     question: 'What should you do if an RCD trips during the ½ × IΔn test?',
@@ -96,16 +96,16 @@ export const rcdTestingQuizData = [
       'An RCD that trips at ½ × IΔn is over-sensitive and must be replaced to prevent nuisance tripping in service.',
   },
   {
-    question: 'For three-phase RCDs, how should testing be performed?',
+    question: 'For a three-phase RCD, how should the trip-time test be carried out?',
     options: [
-      'Test each line to neutral separately',
-      "Test only one phase as they're all the same",
-      'Test only the phase with the highest load',
-      'Test between all three phases simultaneously',
+      'Test each line conductor to neutral in turn and record the longest time',
+      'Test one line only, since all poles share the same sensing core',
+      'Test only the line carrying the highest load current',
+      'Test line-to-line across two phases to double the residual current',
     ],
     correctAnswer: 0,
     explanation:
-      'Each line conductor must be tested to neutral separately to ensure balanced protection. Record the longest trip time found across all phases.',
+      'Each line conductor is tested to neutral in turn because tripping performance can differ between poles; the longest trip time recorded is the result for the device.',
   },
   {
     question: 'What is the typical current for the ½ × IΔn test on a 30mA RCD?',

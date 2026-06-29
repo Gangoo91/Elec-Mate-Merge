@@ -64,10 +64,10 @@ const Module6Section1_2 = () => {
       id: 5,
       question: 'What are the two key types of inspection required under BS 7671?',
       options: [
-        'Check internal diameter and remove any restrictions',
+        'Visual inspection and thermal imaging',
         'Initial verification and periodic inspection',
-        'No, proper testing with measured currents is required',
-        'To correct for internal resistance',
+        'Continuity testing and polarity testing',
+        'Pre-work inspection and post-work inspection',
       ],
       correctAnswer: 1,
       explanation:
@@ -90,9 +90,9 @@ const Module6Section1_2 = () => {
       id: 7,
       question: 'Give one legal consequence of failing to comply with EAWR 1989.',
       options: [
-        'Very high — 100 000 to 1 000 000',
-        'A 22 mm copper incoming water service pipe',
-        'An impulse line filled with fill fluid',
+        'A formal written warning from the client',
+        'Loss of scheme membership only',
+        'A requirement to redo the paperwork',
         'Prosecution, fines, or imprisonment',
       ],
       correctAnswer: 3,
@@ -105,9 +105,9 @@ const Module6Section1_2 = () => {
         'Who is legally responsible for safety once they sign the Electrical Installation Certificate?',
       options: [
         'The person who signs the certificate',
-        'Requires skilled installation',
-        'At junction boxes or connection points',
-        'Pellet boiler with vacuum feed',
+        'The wholesaler who supplied the materials',
+        'The client who paid for the work',
+        'The manufacturer of the consumer unit',
       ],
       correctAnswer: 0,
       explanation:
@@ -118,10 +118,10 @@ const Module6Section1_2 = () => {
       question:
         'What could happen to an employer if an employee is injured due to unsafe electrics?',
       options: [
-        'Before every shift the machine is used',
+        'Only the employee is held responsible',
         'The employer can be prosecuted and held liable',
-        'For the life of the electrical installation',
-        'Only to ohmic materials (linear resistance)',
+        'No action is taken if testing was done',
+        'The insurer automatically covers all costs',
       ],
       correctAnswer: 1,
       explanation:
@@ -131,10 +131,10 @@ const Module6Section1_2 = () => {
       id: 10,
       question: 'Why is BS 7671 updated periodically?',
       options: [
-        'Programming step-based sequential control processes with defined transitions',
-        'Plan work during quietest periods, often nights or weekends',
+        'To make older installations non-compliant',
+        'To increase the cost of certification',
         'To keep regulations up to date with technology and safety requirements',
-        'Hard hat, high-visibility clothing, safety boots, and gloves',
+        'To require electricians to buy new test equipment',
       ],
       correctAnswer: 2,
       explanation:

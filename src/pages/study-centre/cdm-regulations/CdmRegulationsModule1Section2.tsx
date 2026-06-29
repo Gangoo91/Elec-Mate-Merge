@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'CDM 1994 introduced a new role responsible for coordinating health and safety during the design phase. What was this role called?',
     options: [
+      'Planning supervisor',
       'CDM coordinator',
       'Principal designer',
-      'Planning supervisor',
       'Health and safety adviser',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'CDM 1994 introduced the planning supervisor role. This person was responsible for coordinating health and safety aspects of the design phase, ensuring the pre-tender health and safety plan was prepared, and developing the health and safety file. The role was widely criticised for being unclear in practice and was replaced by the CDM coordinator in 2007.',
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     options: [
       'Any project lasting more than 14 days',
       'Any project with more than 5 workers on site at any one time',
-      'Projects lasting more than 30 days or exceeding 500 person-days of construction work',
       'Only projects with a value exceeding \u00a3250,000',
+      'Projects lasting more than 30 days or exceeding 500 person-days of construction work',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'CDM 2007 required notification to the HSE for projects lasting more than 30 construction days or involving more than 500 person-days of construction work. This threshold was retained in CDM 2015. Notification must be made on an F10 form before construction work begins.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Which piece of legislation provided the general framework for workplace health and safety in the UK before CDM was introduced?',
     options: [
-      'Factories Act 1961',
       'Health and Safety at Work Act 1974',
+      'Factories Act 1961',
       'Construction (General Provisions) Regulations 1961',
       'EU Directive 92/57/EEC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Health and Safety at Work Act 1974 (HSWA) established the general legal framework for workplace health and safety in the UK, placing duties on employers, employees, and the self-employed. However, it was a general Act that applied to all industries and did not specifically address the unique multi-party risks of construction projects.',
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
       'What was the primary purpose of the EU Temporary or Mobile Construction Sites Directive 92/57/EEC?',
     options: [
       'To ban all construction work lasting more than 30 days',
-      'To set minimum health and safety requirements for temporary or mobile construction sites across EU member states',
       'To require all construction workers to hold a CSCS card',
       'To introduce the CDM coordinator role across Europe',
+      'To set minimum health and safety requirements for temporary or mobile construction sites across EU member states',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EU Directive 92/57/EEC set out minimum health and safety requirements for temporary or mobile construction sites. It required member states to implement national legislation achieving these minimum standards. The UK fulfilled this obligation by introducing the Construction (Design and Management) Regulations 1994.',
   },
@@ -124,20 +124,20 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following was a major criticism of CDM 1994?',
     options: [
+      'It was seen as a bureaucratic paper exercise that failed to improve safety outcomes',
       'It applied to domestic clients',
       'It required too many workers on site',
-      'It was seen as a bureaucratic paper exercise that failed to improve safety outcomes',
       'It gave too much power to designers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A major criticism of CDM 1994 was that it became a bureaucratic paper exercise. The planning supervisor role was often filled by people who produced large health and safety plans and files without genuinely influencing design decisions or site safety. The regulations were perceived as creating paperwork rather than delivering real improvements in construction health and safety.',
   },
   {
     id: 5,
     question: 'What role replaced the planning supervisor when CDM 2007 came into force?',
-    options: ['Principal designer', 'CDM coordinator', 'Client adviser', 'Design risk manager'],
-    correctAnswer: 1,
+    options: ['Principal designer', 'Client adviser', 'Design risk manager', 'CDM coordinator'],
+    correctAnswer: 3,
     explanation:
       'CDM 2007 replaced the planning supervisor with the CDM coordinator. The intention was to clarify the role and improve coordination of health and safety during the design phase. However, the CDM coordinator role was itself criticised for similar reasons \u2014 it was often filled by health and safety consultants who lacked design influence.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
     question: 'Which approved code of practice (ACoP) accompanies CDM 2015?',
     options: [
       'L54 \u2014 Managing Construction for Health and Safety',
-      'L144 \u2014 Managing Health and Safety in Construction',
       'L153 \u2014 Managing Health and Safety in Construction',
+      'L144 \u2014 Managing Health and Safety in Construction',
       'L138 \u2014 Dangerous Substances and Explosive Atmospheres',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'L153 \u2014 Managing Health and Safety in Construction is the approved code of practice that accompanies CDM 2015. It replaced L144, which accompanied CDM 2007. L153 provides practical guidance on how to comply with the regulations and has special legal status: if you are prosecuted for a breach of CDM 2015 and it is proved that you did not follow L153, a court will find you at fault unless you can demonstrate you complied in an equally effective way.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'Which statement best describes the key difference between the CDM coordinator (CDM 2007) and the principal designer (CDM 2015)?',
     options: [
       'The CDM coordinator worked on site; the principal designer works in an office',
-      'The principal designer must be a designer with design competence; the CDM coordinator did not need to be a designer',
       'The CDM coordinator had more legal duties than the principal designer',
+      'The principal designer must be a designer with design competence; the CDM coordinator did not need to be a designer',
       'There is no practical difference \u2014 only the title changed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The principal designer must be a designer \u2014 an organisation or individual that prepares or modifies designs for construction work. This was the most significant change from the CDM coordinator, who did not need to be a designer. The intention is to ensure the person coordinating pre-construction health and safety has genuine design competence and can influence design decisions to eliminate or reduce risks at source.',
   },

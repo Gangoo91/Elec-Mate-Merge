@@ -41,9 +41,9 @@ const checks = [
     question: 'Per Reg 643.1, the order of testing for initial verification is:',
     options: [
       "Dead tests first (continuity of protective conductors and ring final, IR, polarity, electrode resistance), then live tests (Ze, PFC, Zs, RCD operation, AFDD, functional). Each step depends on the previous passing.",
-      "A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals",
-      "The 5 s operating current of the device — the current that causes the device to operate within 5 seconds (typically the current at the magnetic-trip threshold for an MCB, or the BS 88 fuse 5 s curve current).",
-      "That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access",
+      "Live tests first (Ze, Zs, RCD operation) to establish the supply characteristics, then the dead tests (continuity, IR, polarity) carried out afterwards on the energised installation.",
+      "Insulation resistance first, then continuity, then polarity — testing for faults between conductors before proving the protective path, with the live tests interleaved as the circuit allows.",
+      "Any order the inspector prefers, since BS 7671 leaves the test sequence to professional judgement provided every required test is carried out at some point.",
     ],
     correctIndex: 0,
     explanation:
@@ -53,9 +53,9 @@ const checks = [
     id: 'm5-s3-sub1-isolation',
     question: 'Before any dead test, the installation must be:',
     options: [
-      "Approximately (r1 + rn) ÷ 4 = 0.155 Ω at every socket, constant within a few percent. The divide-by-four comes from the parallel combination of two halves of the loop, each half being two quarters in series.",
-      "Plan to have all workers safely descended and equipment secured well before the storm arrives; cease work at height immediately if the 30/30 rule triggers; do not resume until 30 minutes after the last thunder or lightning",
-      "Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work",
+      "Energised at nominal voltage, so the dead tests can be cross-checked against the live readings taken at the same time.",
+      "Disconnected only at the load end, leaving the supply end live so the test instrument has a voltage reference to work against.",
+      "Left connected to the supply but with every protective device switched off, which is sufficient to make the conductors safe to test without a formal isolation.",
       "Safely isolated and proven dead per the safe isolation procedure (lock off, identify, prove dead with a GS38 voltage indicator that has been proved on a known live source before AND after) — confirms the absence of supply for the duration of testing.",
     ],
     correctIndex: 3,
@@ -66,10 +66,10 @@ const checks = [
     id: 'm5-s3-sub1-test-instrument',
     question: 'Test instruments used for initial verification must be:',
     options: [
-      "Visual inspection items at the installation level — connection of conductors, identification of conductors, presence of required diagrams and labels, presence of barriers / enclosures / SPDs / RCDs, suitability of equipment for the location, etc. A tick-list grouped by category.",
+      "Any working multimeter — provided it gives a reading, the brand and calibration status are immaterial because verification is about the value, not the instrument.",
       "Calibrated to a traceable standard, within current calibration date, and appropriate to the test (continuity instrument with output 200 mA at no-load voltage between 4 V and 24 V per Reg 643.2.1, IR tester at the correct test voltage per Table 64, RCD tester with appropriate test current and waveform).",
-      "It introduces additional requirements concerning earth electrodes in Chapter 54 — designers must consult the full text of Reg 542.2.8 in the published amendment to determine the obligations, exceptions and any required testing or labelling for earth electrodes installed under A4:2026.",
-      "Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures",
+      "Supplied by the consumer unit manufacturer, since only the manufacturer's own test kit is type-matched to the protective devices being verified.",
+      "Owned personally by the apprentice rather than the firm, so that responsibility for the readings rests with the individual who took them.",
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: "Reg 643.1 — the test sequence is described as:",
     options: [
-      "Whether there are underlying causes such as personal problems, wrong career choice, bullying, financial stress, or health issues",
+      "A recommended order only — the inspector may vary it freely, as the sequence is guidance rather than a requirement of the regulation.",
       "Mandatory order — dead tests first, with each step a precondition for the next, then live tests in their own internal order.",
-      "To confirm the indicator was still working when it showed the circuit as dead, ruling out a faulty indicator giving a false-safe reading",
-      "The user must maintain two hands and one foot, or two feet and one hand, on the ladder at all times",
+      "Live tests first — the supply characteristics (Ze, Zs) must be established before any dead testing can be interpreted.",
+      "Whatever order the test instrument prompts — modern multifunction testers set the sequence and the inspector simply follows the on-screen steps.",
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: "If a dead test fails (e.g. an IR result of 0.3 MΩ on a 230 V circuit, against Table 64 minimum 1 MΩ), the next step is:",
     options: [
-      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
-      "To provide a low-impedance earth reference for the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation on TN-C-S or TN-S supplies — connected back through the service cable PEN (or PE) to the secondary substation earth.",
+      "Record the 0.3 MΩ value as a pass with a note, since any reading above zero confirms the insulation is not completely broken down.",
+      "Re-test at a lower voltage (250 V instead of 500 V), which will give a higher reading and bring the circuit within the 1 MΩ minimum.",
       "Investigate, isolate the affected circuit, find the fault (often an issue with a fixed appliance or wiring damage), repair, retest. Do NOT proceed to the next test stage on the failed circuit until the fault is resolved.",
-      "It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities",
+      "Energise the circuit and rely on the 30 mA RCD to clear any fault, since the RCD provides adequate protection regardless of the insulation-resistance reading.",
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: "GS38 leads for test instruments are characterised by:",
     options: [
-      "Fail (minimum 1 MΩ for LV) — investigate insulation degradation, moisture ingress, damaged cables or connected equipment that should have been disconnected",
-      "An assessment of the structural integrity of internal fixtures, the suitability of anchor points, and the risk of falls from internal platforms or ladders",
-      "Supplement the notice — e.g. linking to manufacturer instructions, full RAMS or O&M info — but the printed words should still cover the key safety message",
+      "Bare metal probes with a long exposed tip, so the operative can reach recessed terminals deep inside an enclosure without removing accessories.",
+      "Unfused leads of any length, since the test instrument's internal protection makes lead fusing unnecessary on low-voltage work.",
+      "Crocodile clips on both leads, allowing the operative to clip on and step well clear of the live parts during the test.",
       "Insulated probes with maximum 4 mm exposed metal tip, finger barriers, fused leads where applicable, double insulation, and certified for the rated voltage of the test (CAT III / CAT IV depending on application).",
     ],
     correctAnswer: 3,
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: "Test instrument verification before testing is specifically:",
     options: [
       "Per HSE GS38 — prove the voltage indicator on a known live source BEFORE the test, confirm absence of voltage on the test point, then prove on a known live source AFTER. Three-step prove-test-prove sequence ensures the indicator was working at the moment of test.",
-      "Classification, Labelling and Packaging — the EU Regulation (1272/2008) that sets the format of the SDS, the GHS pictograms (skull, exclamation, flame, corrosion, etc.) and the H-statements (e.g. H314 'causes severe skin burns'). Retained as UK law after Brexit. It's the standard the SDS is written to.",
-      "The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults",
-      "Use reference class forecasting (Kahneman) to estimate durations, set specific time-bound goals (Locke &amp; Latham), and create implementation intentions (Gollwitzer) for schedule reviews",
+      "Checking the calibration label is in date — a current calibration certificate is sufficient on its own to confirm the indicator is working at the moment of the dead test.",
+      "Proving the indicator on a known live source once, before the test only — re-proving afterwards is unnecessary because a voltage indicator cannot fail mid-test.",
+      "Reading the indicator against a second meter held by a colleague, so that two simultaneous readings confirm the circuit is dead without needing a proving unit.",
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: "Reg 643.2.1 — continuity test instrument specification:",
     options: [
-      "Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs",
+      "Output current at least 25 A at mains voltage — a high test current is needed to force a measurable reading through long protective conductors and burn off any oxide on the terminations.",
       "Output current at least 200 mA at a no-load voltage between 4 V and 24 V — sufficient to detect intermittent contacts and burn through light surface contamination at terminations, but low enough to avoid energising potential faults.",
-      "Systematically testing each function of the relay — pickup, dropout, timing, contact configuration — and verifying the complete control sequence operates correctly before applying power to the final load",
-      "Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.",
+      "Output current of exactly 30 mA at 230 V, matching the RCD rating, so the continuity test also confirms the RCD will trip correctly.",
+      "Output current below 1 mA at 500 V — the same source used for the insulation-resistance test, so one instrument setting covers both continuity and IR.",
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: "If you discover the installation is not actually isolated when you start a dead test, the correct response is:",
     options: [
-      "Below the 1.0 MΩ minimum from Table 64 → fail. Investigate: damaged cable insulation, water ingress at a back-box, a wired-up neutral that is touching earth somewhere, a trapped conductor under a pinch screw. Do not energise.",
-      "Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)",
+      "Carry on testing carefully — provided you only touch one conductor at a time and wear insulated gloves, the dead-test sequence can be completed on the live circuit.",
+      "Switch the main breaker on and off a few times to clear whatever is back-feeding the circuit, then continue the dead test once the reading settles.",
       "Stop immediately. Re-isolate at the correct point. Prove dead again. Investigate why the original isolation was incomplete (wrong device locked off, back-fed circuit, alternative supply source, parallel CPC path, induced voltage). Document the near-miss.",
-      "Body scanning first (immediate physical awareness) → ABC model (identifying triggering beliefs) → Gibbs' Reflective Cycle (structured reflection on the full incident) → Johari Window (seeking external feedback to identify blind spots)",
+      "Record the unexpected voltage as a test result and move on to the next circuit, returning to investigate the live reading at the end of the job.",
     ],
     correctAnswer: 2,
     explanation:
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: "The Schedule of Test Results (Appendix 6) records, per circuit, the following dead-test entries:",
     options: [
-      "Employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s assessment of the first-aid provision needed — kit, facilities, trained persons. Considers nature of work, hazards, employee numbers, accident history, location, vulnerable persons, distance to medical care. Documented; reviewed periodically and after changes.",
-      "GN3 was updated to align with BS 7671:2018+A4:2026 — including the simplified RCD test method (single AC at 1×IΔn under Reg 643.7.3), AFDD recommendations under Reg 421.1.7, and updated Table 41.3 maximum Zs values.",
-      "The maximum rated current of the automatic disconnecting device in the functional bonding conductor shall be 3 A for arrays over 50 kW up to 100 kW. The full table of the same regulation specifies 1 A for arrays under 25 kW, 2 A for 25 to 50 kW, 3 A for 50 to 100 kW, 4 A for 100 to 250 kW and 5 A above 250 kW.",
+      "Earth fault loop impedance (Zs), prospective fault current and RCD trip time only — the dead tests are recorded separately on the Schedule of Inspections rather than the Schedule of Test Results.",
+      "A single overall pass or fail per circuit — the schedule records only whether the circuit passed, not the individual continuity, IR or polarity values.",
+      "The protective device type and rating only — the measured test values are kept in the contractor's own file and are not entered on the schedule.",
       "Continuity (R1 + R2 OR R2 only depending on method), ring final continuity (r1, rn, r2 — for ring circuits), insulation resistance (per circuit, line-line, line-neutral, line-earth, neutral-earth), polarity confirmation. Each cell with the measured value or pass / fail symbol.",
     ],
     correctAnswer: 3,
@@ -171,16 +171,16 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: "A4:2026 simplified the RCD test under Reg 643.7.3. The current method is:",
+    question: "A4:2026 simplified RCD verification (Reg 643.8). The current method is:",
     options: [
-      "Single AC test at 1 times IΔn — must operate within 300 ms (or 200 ms for circuits subject to Reg 415.1.1 and certain Part 7 location limits). The half-current 'no-trip' test and 5x 'fast trip' test were deleted as redundant under modern RCD design.",
-      "The shortfall must be addressed before the gateway can be opened — your employer and training provider should agree a plan to complete the remaining hours within a realistic timeframe",
-      "Prove the voltage indicator works on a known live source (often a proving unit), test the conductors at the work location to confirm dead, then re-prove the indicator on the known live source to confirm it didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fail during the test.",
-      "Approximately 1.0-1.5 Nm — typical for cage-clamp / screw terminals on small CSAs in domestic RCBOs (Hager NDN, Schneider Resi9, Wylex NHX). Confirm with the actual manufacturer when accessible.",
+      "Single AC test at 1 times IΔn — for a general (non-delay) RCD the device must disconnect within 300 ms maximum. The half-current 'no-trip' test, the 5x 'fast trip' test and Appendix 3 Table 3A were all deleted.",
+      "A test at half the rated residual current (0.5 times IΔn) only — the device must NOT trip, confirming it will not nuisance-trip in normal service.",
+      "Five separate tests at 0.5, 1, 2, 5 and 10 times IΔn, with the slowest trip time of the five recorded as the result.",
+      "Operation of the integral test button alone — pressing the button and confirming the device trips is now the only verification required, with no injected-current test.",
     ],
     correctAnswer: 0,
     explanation:
-      "A4:2026 Reg 643.7.3 simplified the RCD test. Single AC test at 1 times IΔn (rated residual operating current). Trip time at most 300 ms (general), 200 ms / 40 ms in some specific cases per Reg 415.1.1 and Part 7. The half-current and 5-times tests were removed as redundant under modern manufacturer compliance testing. Single-test result + test button operation = compliance.",
+      "A4:2026 deleted Appendix 3 Table 3A and simplified RCD verification. Per the Reg 643.8 NOTE, effectiveness is verified by a single alternating-current test at 1 times IΔn (rated residual operating current); a general non-delay RCD must disconnect within 300 ms maximum. The historic half-current and 5x IΔn tests (and the 40 ms figure that went with 5x) were removed. The injected-current test confirms disconnection; the integral test-button operation is verified separately as a functional check under Reg 643.10.",
   },
 ];
 
@@ -440,9 +440,10 @@ export default function Sub1() {
                 requires no disconnection). Each has its scope and limitations — see Sub 3.6.
               </li>
               <li>
-                <strong>RCD test — Reg 643.7.3 (live).</strong> A4:2026 simplified — single AC
-                test at 1 times IΔn, trip time at most 300 ms general. Higher-end testers offer
-                Type A / B / F mode for verifying RCD type compatibility.
+                <strong>RCD test — Reg 643.8 (live).</strong> A4:2026 simplified — single AC
+                test at 1 times IΔn, disconnection within 300 ms maximum for a general non-delay
+                RCD. Higher-end testers offer Type A / B / F mode for verifying RCD type
+                compatibility.
               </li>
             </ul>
             <p>
@@ -548,7 +549,7 @@ export default function Sub1() {
               <li>Earth fault loop impedance Ze at the origin.</li>
               <li>Prospective fault current PFC at the origin (often read on the same instrument as Ze).</li>
               <li>Earth fault loop impedance Zs at every relevant test point downstream — circuit ends, last sockets, isolators.</li>
-              <li>RCD operation — single AC test at 1×IΔn per Reg 643.3 (the multi-current sequence is deleted in A4:2026).</li>
+              <li>RCD operation — single AC test at 1×IΔn per Reg 643.8 (the multi-current sequence and Table 3A are deleted in A4:2026).</li>
               <li>Functional checks of switchgear, controls, interlocks, AFDDs and SPDs.</li>
             </ul>
           </ConceptBlock>
@@ -658,8 +659,8 @@ export default function Sub1() {
               </li>
               <li>
                 <strong>RCD trip time at 1xIΔn</strong> — measured ms (under 300 ms
-                for general circuits, under 40 ms at 5xIΔn historically — A4:2026
-                deletes the 5x test).
+                for a general non-delay RCD). The historic 5xIΔn / 40 ms test and
+                Appendix 3 Table 3A were deleted in A4:2026.
               </li>
               <li>
                 <strong>Visual inspection schedule</strong> — every Reg-derived
@@ -669,24 +670,27 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.3 (single AC RCD test at 1×IΔn)"
+            source="BS 7671:2018+A4:2026 — Regulation 643.8 (verification of RCD effectiveness)"
             clause={
               <>
-                Regulation 643.3 has been redrafted. The requirements for RCD testing have
-                been changed and Table 3A (Time/current performance criteria for RCDs) in
-                Appendix 3 has been deleted. Regardless of RCD Type, an alternating current
-                test at rated residual operating current (IΔn) is used to verify the
-                effectiveness.
+                Where RCDs are required for additional protection, the effectiveness of
+                automatic disconnection by the RCD shall be verified using suitable test
+                equipment to BS EN 61557-6. Per the NOTE: regardless of RCD Type, effectiveness
+                is deemed verified where the RCD disconnects within 300 ms maximum (general
+                non-delay type) with an alternating-current test at rated residual operating
+                current (IΔn). Appendix 3 Table 3A (Time/current performance criteria for RCDs)
+                has been deleted.
               </>
             }
             meaning={
               <>
-                The old multi-current RCD sequence (½×, 1×, 1×IΔn) has been deleted. A single
-                AC test at 1×IΔn is the new verification method for every RCD type. Test
-                schedules, EIC pro-formas and toolbox-talk crib sheets need updating to match.
+                The old multi-current RCD sequence (½× and 5×IΔn) has been deleted along with
+                Table 3A. A single AC test at 1×IΔn is the verification method for every RCD
+                type — a general non-delay RCD must disconnect within 300 ms. Test schedules,
+                EIC pro-formas and toolbox-talk crib sheets need updating to match.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.8 (and the deletion of Appendix 3 Table 3A)."
           />
 
           <SectionRule />
@@ -704,7 +708,7 @@ export default function Sub1() {
               "All test instruments calibrated, in date, traceable to a national standard. Calibration record accompanies the test results.",
               "A failed dead test is a finding — investigate, isolate, repair, retest. Do NOT proceed to the next stage on the failed circuit.",
               "Multiple supply sources (UPS, generator, PV, EVSE back-feed) are common isolation gotchas. Identify all sources during the visual stage.",
-              "A4:2026 Reg 643.7.3 simplified the RCD test — single AC test at 1 times IΔn, trip time at most 300 ms general. Half-current and 5x tests removed.",
+              "A4:2026 Reg 643.8 simplified RCD verification — single AC test at 1 times IΔn, disconnection within 300 ms maximum for a general non-delay RCD. Half-current and 5x tests and Table 3A removed.",
             ]}
           />
 

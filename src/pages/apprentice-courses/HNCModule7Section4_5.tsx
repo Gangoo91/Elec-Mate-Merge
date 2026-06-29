@@ -29,9 +29,9 @@ const quickCheckQuestions = [
       'What distinguishes IoT-enabled lighting from traditional networked lighting control?',
     options: [
       'Bidirectional communication with cloud connectivity and data analytics',
-      'It guarantees the project would not have happened without offset funding',
-      'Higher resistance than copper and thermal expansion issues',
-      'Reduced operational energy with residual emissions offset',
+      'It uses mains-voltage switching rather than low-voltage control',
+      'It requires a separate dimmer switch for every luminaire',
+      'It can only be controlled from a fixed wall-mounted panel',
     ],
     correctIndex: 0,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 'mesh-network-advantage',
     question: 'What is the primary advantage of mesh networking in smart lighting?',
     options: [
-      'Light output reduction over time due to dirt, lamp ageing, room dirt',
-      'Conduct a detailed baseline carbon assessment',
-      'To receive and distribute the incoming electrical supply',
+      'It removes the need for any wiring to the luminaires',
+      'It allows luminaires to draw more power from the supply',
+      'It requires only a single luminaire to control the whole building',
       'Self-healing networks with no single point of failure',
     ],
     correctIndex: 3,
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'predictive-maintenance-data',
     question: 'What operational data is most valuable for predictive maintenance in LED lighting?',
     options: [
-      'Single-point grounding, typically at the patch panel end',
+      'The retail purchase price of each luminaire installed',
       'Operating hours, temperature, and current draw trends',
-      'Building Regulations Approved Document P',
-      'Interoperability issues between different manufacturer systems',
+      'The colour of the luminaire housing and its finish',
+      'The number of wall switches connected to each circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'For occupancy analytics in smart lighting, what sensor fusion approach provides the most accurate people counting?',
     options: [
-      'kWh consumption correlated with occupancy patterns',
+      'A single PIR sensor mounted at the room entrance',
       'Combination of PIR, thermal imaging, and AI analysis',
-      'Smartphone-based mass provisioning with automatic addressing',
-      'Gradual reduction in light output over LED lifetime',
+      'A daylight sensor measuring the natural light level only',
+      'A manual headcount taken once at the start of each day',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     question:
       'Which data metric is essential for calculating energy savings in smart lighting systems?',
     options: [
-      'Smartphone-based mass provisioning with automatic addressing',
-      'Stores messages for low-power nodes',
-      'Combination of PIR, thermal imaging, and AI analysis',
+      'The number of luminaires connected to the mesh network',
+      'The wireless protocol used by the lighting control system',
+      'The colour temperature range of the installed luminaires',
       'kWh consumption correlated with occupancy patterns',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What is 'lumen depreciation' in the context of predictive maintenance?",
     options: [
       'Gradual reduction in light output over LED lifetime',
-      'Cryptographic code signing and secure boot',
-      'Direct internet connectivity without translation gateways',
-      'Smartphone-based mass provisioning with automatic addressing',
+      'The fall in supply voltage along a long lighting circuit',
+      'The drop in resale value of the luminaire over time',
+      'The reduction in network bandwidth as more nodes are added',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: "What is the primary benefit of Thread's use of IPv6 addressing for smart lighting?",
     options: [
-      'kWh consumption correlated with occupancy patterns',
-      'Gradual reduction in light output over LED lifetime',
+      'It increases the maximum brightness each luminaire can produce',
+      'It removes the need for any wireless radio in the luminaire',
       'Direct internet connectivity without translation gateways',
-      'Combination of PIR, thermal imaging, and AI analysis',
+      'It allows the luminaires to be powered over the data cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     question:
       'For GDPR compliance in occupancy analytics, what anonymisation technique is commonly applied?',
     options: [
-      'Smartphone-based mass provisioning with automatic addressing',
-      'Gradual reduction in light output over LED lifetime',
-      'Direct internet connectivity without translation gateways',
+      'Recording the name and badge number of every person entering a space',
+      'Storing full-resolution camera footage of each occupant indefinitely',
+      'Linking occupancy data to individual staff calendar entries',
       'Heat mapping and aggregated counting without personal identification',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
       'Which commissioning approach is most efficient for large-scale Bluetooth Mesh lighting deployments?',
     options: [
       'Smartphone-based mass provisioning with automatic addressing',
-      'Cryptographic code signing and secure boot',
-      'Combination of PIR, thermal imaging, and AI analysis',
-      'kWh consumption correlated with occupancy patterns',
+      'Manually addressing each luminaire one at a time on site',
+      'Returning each luminaire to the factory for pre-configuration',
+      'Leaving all luminaires on their default settings after install',
     ],
     correctAnswer: 0,
     explanation:

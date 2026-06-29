@@ -75,97 +75,117 @@ const IndustrialElectricalModule3Section3: React.FC = () => {
 
   const quizQuestions = [
     {
-      question: 'What is the standard ferrule colour for 2.5mm² conductors according to DIN 46228?',
-      options: ['Black', 'Blue', 'Grey', 'Yellow'],
+      question: 'What is the standard ferrule colour for 2.5mm² conductors according to DIN 46228-4?',
+      options: ['Black', 'Grey', 'Blue', 'Yellow'],
       correctAnswer: 'Grey',
+      explanation:
+        'Under the DIN 46228-4 colour code, 2.5mm² is grey. Black is 1.5mm², dark blue is 4.0mm² and yellow is 6.0mm², so colour gives a quick visual size check.',
     },
     {
       question:
-        'Twin ferrules (for two conductors) are typically identified by which characteristic?',
+        'Twin ferrules (for two conductors in one terminal) are typically identified by which characteristic?',
       options: [
-        'White stripe on the ferrule',
-        'Extended collar length',
-        'Different colour coding scheme',
-        'Square crimping profile',
+        'A white stripe along the ferrule',
+        'A square crimping profile',
+        'A different colour coding scheme to single ferrules',
+        'An extended metal tube only',
       ],
-      correctAnswer: 'Different colour coding scheme',
+      correctAnswer: 'A different colour coding scheme to single ferrules',
+      explanation:
+        'Twin ferrules follow a separate DIN 46228-4 colour scheme so they are not confused with single ferrules of the same conductor size, and they should only parallel conductors of the same circuit.',
     },
     {
-      question: 'When crimping ferrules, why is die selection critical?',
+      question: 'When crimping ferrules, why is correct die selection critical?',
       options: [
-        'To match the ferrule colour',
-        'To ensure proper compression ratio',
-        'To speed up installation',
-        'To comply with labelling requirements',
+        'To match the colour of the ferrule',
+        'To ensure the correct compression ratio',
+        'To speed up the installation',
+        'To comply with cable labelling rules',
       ],
-      correctAnswer: 'To ensure proper compression ratio',
+      correctAnswer: 'To ensure the correct compression ratio',
+      explanation:
+        'The die sets the compression: too large gives a loose, high-resistance joint, too small damages strands. The right die produces an even, gas-tight crimp at the correct ratio.',
     },
     {
-      question: 'What is the recommended strip length for standard bootlace ferrules?',
+      question: 'What is the recommended conductor strip length for a standard bootlace ferrule?',
       options: [
-        'Equal to ferrule tube length',
-        '2mm longer than ferrule tube',
-        '2mm shorter than ferrule tube',
+        'Equal to the ferrule tube length',
+        '2mm longer than the ferrule tube',
+        '2mm shorter than the ferrule tube',
         'Double the ferrule tube length',
       ],
-      correctAnswer: 'Equal to ferrule tube length',
+      correctAnswer: 'Equal to the ferrule tube length',
+      explanation:
+        'Stripping to the tube length lets the conductor fill the ferrule fully without bare copper protruding beyond the collar, giving a clean, fully supported termination.',
     },
     {
-      question: 'According to IEC 60947-7-1, what must terminal blocks be rated for?',
+      question: 'According to IEC 60947-7-1, what must a terminal block be rated for?',
       options: [
-        'Only voltage rating',
-        'Only current rating',
-        'Voltage, current, and cross-section',
-        'Temperature only',
+        'Voltage rating only',
+        'Current rating only',
+        'Temperature rating only',
+        'Voltage, current and conductor cross-section',
       ],
-      correctAnswer: 'Voltage, current, and cross-section',
+      correctAnswer: 'Voltage, current and conductor cross-section',
+      explanation:
+        'IEC 60947-7-1 terminal blocks are specified by rated voltage, rated current and the range of conductor cross-sections they accept, so all three must be matched to the application.',
     },
     {
       question:
-        'What labelling standard is commonly used for wire identification in industrial installations?',
-      options: ['ISO 9001', 'IEC 62491', 'AS/NZS 3000', 'DIN 40719'],
+        'Which standard is commonly applied to cable and core identification in industrial installations?',
+      options: ['ISO 9001', 'DIN 40719', 'IEC 62491', 'AS/NZS 3000'],
       correctAnswer: 'IEC 62491',
+      explanation:
+        'IEC 62491 covers labelling of cables and cores. ISO 9001 is quality management, DIN 40719 relates to schematic documentation and AS/NZS 3000 is the Australian wiring rules.',
     },
     {
-      question: 'What is the purpose of the plastic collar on insulated ferrules?',
+      question: 'What is the purpose of the plastic collar on an insulated ferrule?',
       options: [
         'Colour identification only',
-        'Strain relief and insulation funnel',
-        'To increase conductivity',
+        'To increase electrical conductivity',
+        'To provide strain relief and funnel the strands',
         'For tool alignment only',
       ],
-      correctAnswer: 'Strain relief and insulation funnel',
+      correctAnswer: 'To provide strain relief and funnel the strands',
+      explanation:
+        'The collar guides the strands into the tube, adds insulation at the transition and provides strain relief, reducing the chance of stray strands and mechanical fatigue.',
     },
     {
       question: 'How should crimp tools be maintained for quality assurance?',
       options: [
-        'Annual visual inspection only',
-        'Replace after every 1000 crimps',
-        'Regular calibration and die inspection',
+        'An annual visual inspection only',
+        'Replacement after every 1000 crimps',
         'Lubrication after each use',
+        'Regular calibration and die inspection',
       ],
       correctAnswer: 'Regular calibration and die inspection',
+      explanation:
+        'Crimp force and die wear drift over time, so periodic calibration and die inspection (with records) keep crimps within spec — far more reliable than visual checks or fixed crimp counts.',
     },
     {
       question:
-        'When terminating multi-conductor cables, what should be applied at the entry point?',
+        'When terminating a multi-conductor cable at a panel, what should be fitted at the entry point?',
       options: [
         'Additional tape wrapping',
-        'Cable gland with appropriate IP rating',
-        'Heat shrink only',
-        'Silicone sealant',
+        'A cable gland of the appropriate IP rating',
+        'Heat shrink alone',
+        'Silicone sealant only',
       ],
-      correctAnswer: 'Cable gland with appropriate IP rating',
+      correctAnswer: 'A cable gland of the appropriate IP rating',
+      explanation:
+        'A correctly sized cable gland provides strain relief and maintains the enclosure IP rating at the entry, which tape, heat shrink or sealant cannot reliably achieve.',
     },
     {
-      question: 'What does a pull test verify in a crimped termination?',
+      question: 'What does a pull test verify on a crimped termination?',
       options: [
-        'Electrical conductivity',
-        'Mechanical retention strength',
-        'Insulation integrity',
-        'Colour accuracy',
+        'The electrical conductivity',
+        'The insulation integrity',
+        'The mechanical retention strength',
+        'The colour accuracy of the ferrule',
       ],
-      correctAnswer: 'Mechanical retention strength',
+      correctAnswer: 'The mechanical retention strength',
+      explanation:
+        'A pull test applies a defined force to confirm the conductor is mechanically held in the crimp. Conductivity and insulation are checked by separate electrical tests.',
     },
   ];
 

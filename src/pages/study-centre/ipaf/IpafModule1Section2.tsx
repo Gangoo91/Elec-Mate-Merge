@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'hswa-section2',
     question: "Under Section 2 of HSWA 1974, what is the employer's general duty?",
     options: [
-      'To carry out all work personally',
       'To ensure, so far as is reasonably practicable, the health, safety, and welfare of employees',
+      'To carry out all work personally',
       'To provide unlimited safety equipment regardless of cost',
       'To report all accidents to the police',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Section 2(1) states that every employer has a duty to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all employees. This is the broadest general duty in UK health and safety law.',
   },
@@ -41,14 +41,14 @@ const quickCheckQuestions = [
     id: 'cdm-notification',
     question: 'When must a construction project be notified to the HSE under CDM 2015?',
     options: [
-      'All projects must be notified regardless of duration',
-      'Only projects involving work at height',
-      'Projects lasting more than 30 working days with more than 20 workers, or exceeding 500 person days',
-      'Only projects over 1 million pounds in value',
+      'Every construction project, regardless of its duration or workforce',
+      'Only projects that involve any work at height on site',
+      'Only projects with a contract value above 1 million pounds',
+      'More than 30 working days and over 20 workers, or 500+ person days',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
-      'CDM 2015 requires notification to the HSE where a project is expected to last more than 30 working days and have more than 20 workers at any one time, or exceed 500 person days of construction work.',
+      'CDM 2015 requires notification to the HSE where a project is expected to last more than 30 working days and have more than 20 workers at any one time, or exceed 500 person days of construction work. Notification is made using form F10.',
   },
 ];
 
@@ -89,12 +89,12 @@ const quizQuestions = [
     id: 2,
     question: 'Under HSWA Section 3, who does the employer owe a duty to besides their employees?',
     options: [
-      'Only sub-contractors',
-      'Only visitors to the premises',
       'Persons not in their employment who may be affected by the work',
+      'Only visitors to the premises',
+      'Only sub-contractors',
       'Only members of the public on adjacent properties',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Section 3 requires employers to conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety.',
   },
@@ -104,10 +104,10 @@ const quizQuestions = [
     options: [
       'To provide their own safety equipment',
       'To carry out risk assessments',
-      "To take reasonable care of their own and others' health and safety",
       'To inspect all equipment before use',
+      "To take reasonable care of their own and others' health and safety",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 7 requires employees to take reasonable care for their own health and safety and that of others who may be affected by their acts or omissions at work.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does CDM 2015 require the principal designer to do?',
     options: [
-      'Physically build the structure',
-      'Plan, manage, and co-ordinate health and safety in the pre-construction phase',
-      'Carry out all risk assessments on site',
-      'Inspect scaffolding every 7 days',
+      'Physically build and assemble the permanent structure',
+      'Plan, manage, and co-ordinate health and safety pre-construction',
+      'Carry out every risk assessment for work on the live site',
+      'Inspect all scaffolding and access towers every 7 days',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'Section 8 of HSWA 1974 makes it an offence to do what?',
     options: [
-      'Work without a qualification',
-      'Refuse to work at height',
       'Intentionally or recklessly interfere with or misuse safety provisions',
+      'Refuse to work at height',
+      'Work without a qualification',
       'Report a safety concern to the HSE',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Section 8 makes it a criminal offence for any person to intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety, or welfare. This includes removing guardrails from towers or disabling safety features.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     options: [
       "In the client's head office",
       'At the HSE office',
-      'In the site office, visible to all workers',
       'It does not need to be displayed',
+      'In the site office, visible to all workers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The F10 notification must be displayed in the construction site office where it is accessible and visible to workers. This ensures everyone on site knows the project has been notified and who the key duty holders are.',
   },
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'Under CDM 2015, what must the client ensure regarding welfare facilities?',
     options: [
-      'Welfare facilities are a nice-to-have',
-      'Only large projects need welfare facilities',
+      'Welfare facilities are optional and provided only at the client wish',
+      'Only large, notifiable projects need to provide welfare facilities',
       'Reasonable welfare facilities are provided throughout the construction phase',
-      'The HSE provides welfare facilities',
+      'The HSE arranges and provides welfare facilities for the site',
     ],
     correctAnswer: 2,
     explanation:

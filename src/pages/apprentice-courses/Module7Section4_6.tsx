@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'When should you stop work immediately?',
     options: [
-      'Health, Safety & Environment',
+      'When the customer asks you to hurry up',
       'When you identify a safety hazard',
-      'Protective devices operate immediately',
-      'FP (fire performance) cable',
+      'Only at the end of the working day',
+      'When you finish the current task first',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Who should you escalate technical problems to?',
     options: [
-      'Local storage with encrypted remote access',
-      'Protection against indirect contact',
+      'Another apprentice on the same site',
+      'The customer who ordered the work',
       'Your supervisor or qualified electrician',
-      'A PT100 resistance temperature detector (RTD)',
+      'The wholesaler who supplied the materials',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should you do if asked to work beyond your competence?',
     options: [
-      'An appliance has an internal earth fault',
-      'Forming, establishing, developing, closing',
-      'SWA to weatherproof outlets',
+      'Attempt it anyway to gain the experience',
+      'Carry on but work more slowly and carefully',
+      'Ask the customer whether they are happy for you to try',
       'Refuse and explain your limitations',
     ],
     correctIndex: 3,
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 5,
     question: 'When is it acceptable to work beyond your competence level?',
     options: [
-      'Output saturation with continued error accumulation',
+      'Whenever the deadline is tight',
       'Only under direct supervision by qualified personnel',
-      'Enhanced safety measures and suitable equipment',
-      'Allowing access only during specified time periods',
+      'If you have the right tools for the job',
+      'As long as the customer gives permission',
     ],
     correctIndex: 1,
     explanation:
@@ -97,24 +97,24 @@ const Module7Section4_6 = () => {
     },
     {
       id: 2,
-      question: 'When should you stop work immediately?',
+      question: 'Which of these requires you to stop work immediately?',
       options: [
-        'When lacking proper tools',
-        'When unsure about procedures',
-        'All of the above',
-        'When discovering dangerous conditions',
+        'You are missing one non-essential hand tool',
+        'You are slightly behind the planned schedule',
+        'You discover an immediately dangerous condition',
+        'The customer has changed their mind on a finish',
       ],
       correctAnswer: 2,
       explanation:
-        'All these situations require you to stop work immediately to ensure safety and compliance.',
+        'Discovering an immediately dangerous condition requires you to stop work at once. Missing tools, delays or finish changes are managed without an immediate stop.',
     },
     {
       id: 3,
       question: 'What should you document when escalating an issue?',
       options: [
-        'Stop work immediately and secure the area',
-        'Location, nature of hazard, immediate actions taken',
-        'Wait for instructions before proceeding',
+        'Only the time the issue was first noticed',
+        'Just the name of the person who found it',
+        'Nothing - verbal reporting is sufficient',
         'The problem, circumstances, and actions taken',
       ],
       correctAnswer: 3,
@@ -126,9 +126,9 @@ const Module7Section4_6 = () => {
       question: 'Who has the authority to design circuit modifications?',
       options: [
         'Qualified electricians only',
-        'Situation, Behaviour, Impact',
-        'Alarm, Resistance, Exhaustion',
-        'Yes, to an employment tribunal',
+        'Any apprentice once they have started training',
+        'The customer who is paying for the work',
+        'Any tradesperson present on the site',
       ],
       correctAnswer: 0,
       explanation:
@@ -146,10 +146,10 @@ const Module7Section4_6 = () => {
       id: 6,
       question: 'What should you do if you discover live conductors in a supposedly dead circuit?',
       options: [
-        'Wait for instructions before proceeding',
-        'The problem, circumstances, and actions taken',
+        'Carry on but avoid touching the live parts',
+        'Re-test the circuit and continue if it reads dead',
         'Stop work immediately and secure the area',
-        'Risk of electrocution or fire',
+        'Finish the current connection then isolate',
       ],
       correctAnswer: 2,
       explanation:
@@ -173,9 +173,9 @@ const Module7Section4_6 = () => {
       question: 'What information should you include when reporting a safety hazard?',
       options: [
         'Location, nature of hazard, immediate actions taken',
-        'The problem, circumstances, and actions taken',
-        'Stop work immediately and secure the area',
-        'Only if directly supervised by a qualified person',
+        'Only the name of the apprentice who found it',
+        'Just an estimate of the repair cost involved',
+        'Nothing in writing until the supervisor arrives',
       ],
       correctAnswer: 0,
       explanation:
@@ -185,10 +185,10 @@ const Module7Section4_6 = () => {
       id: 9,
       question: 'Is it acceptable to work beyond your competence if supervised?',
       options: [
-        'Location, nature of hazard, immediate actions taken',
+        'Yes, once you have read the instructions',
         'Only if directly supervised by a qualified person',
-        'Stop work immediately and secure the area',
-        'Knowledge, skills, and experience combined',
+        'Yes, provided you work slowly and carefully',
+        'Only if the customer agrees to it in writing',
       ],
       correctAnswer: 1,
       explanation:
@@ -198,10 +198,10 @@ const Module7Section4_6 = () => {
       id: 10,
       question: 'What should you do after escalating an issue?',
       options: [
-        'Risk of electrocution or fire',
-        'Stop work immediately and secure the area',
+        'Carry on with the next task on the job sheet',
+        'Pack up your tools and leave the site',
         'Wait for instructions before proceeding',
-        'Only if directly supervised by a qualified person',
+        'Try a different approach to solve it yourself',
       ],
       correctAnswer: 2,
       explanation:
@@ -225,9 +225,9 @@ const Module7Section4_6 = () => {
       question: "What makes an electrician 'competent' for a specific task?",
       options: [
         'Knowledge, skills, and experience combined',
-        'Stop work immediately and secure the area',
-        'The problem, circumstances, and actions taken',
-        'Only if directly supervised by a qualified person',
+        'Holding any recognised electrical qualification',
+        'Having the correct tools for the task',
+        'Being confident enough to attempt the work',
       ],
       correctAnswer: 0,
       explanation:

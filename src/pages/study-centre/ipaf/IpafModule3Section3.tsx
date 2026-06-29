@@ -14,12 +14,12 @@ const quizQuestions = [
     id: 1,
     question: "What does 'AGR' stand for in the context of mobile tower assembly?",
     options: [
-      'Automatic Ground Rail',
       'Advance Guard Rail',
+      'Automatic Ground Rail',
       'Adjustable Guardrail Rack',
       'Attached Guardrail Riser',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "AGR stands for 'Advance Guard Rail'. The system uses frames that have guardrails built in which automatically rise to the correct position when the frame section is installed.",
   },
@@ -28,11 +28,11 @@ const quizQuestions = [
     question: 'How do AGR guardrails reach their correct height?',
     options: [
       'The operative pushes them up manually from below',
-      'They are installed separately after the frame',
       'They are built into the frame and lock automatically when the platform is fitted',
+      'They are installed separately after the frame',
       'They are winched into position by a cable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'AGR guardrails are integrated into the frame sections. When the frame is fitted from below and the platform installed, the guardrails automatically lock at the correct height — no separate guardrail installation is needed.',
   },
@@ -54,11 +54,11 @@ const quizQuestions = [
     question: 'During AGR assembly, from which position does the operative fit the frame sections?',
     options: [
       'From the top of the tower',
-      'From below, on the existing guarded platform',
       'From a separate ladder',
       'From a cherry picker alongside the tower',
+      'From below, on the existing guarded platform',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AGR frames are fitted from below — the operative stands on the existing guarded platform and lifts the new frame section into position above. The integrated guardrails then deploy automatically.',
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which statement about AGR assembly is TRUE?',
     options: [
+      'AGR uses fewer individual components than 3T for the same height',
       'AGR eliminates the need for braces',
       'AGR does not require castors to be locked',
-      'AGR uses fewer individual components than 3T for the same height',
       'AGR towers cannot have outriggers fitted',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'AGR systems typically use fewer individual components because the guardrails are integrated into the frame sections. There are fewer separate pieces to handle, transport, and install compared to the 3T method.',
   },
@@ -93,11 +93,11 @@ const quizQuestions = [
     question: 'What is a potential disadvantage of AGR compared to 3T?',
     options: [
       'AGR is less safe',
-      'AGR frames are heavier because guardrails are built in',
       'AGR towers are less stable',
+      'AGR frames are heavier because guardrails are built in',
       'AGR cannot be used outdoors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'AGR frames are heavier than standard frames because the guardrail mechanism is integrated. This can make them more difficult to lift to higher levels and requires greater physical effort during assembly.',
   },
@@ -107,11 +107,11 @@ const quizQuestions = [
       'Before starting AGR assembly, which base preparation step is identical to the 3T method?',
     options: [
       'None — AGR has a completely different base setup',
-      'Locking castors, fitting adjustable legs, and levelling the base',
       'Only the castor locking step',
       'Only the levelling step',
+      'Locking castors, fitting adjustable legs, and levelling the base',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The base preparation is identical for both methods: castors must be positioned and locked, adjustable legs fitted, and the base levelled with a spirit level. The assembly method only differs from the first working level upwards.',
   },
@@ -122,12 +122,12 @@ const quickCheckQuestions = [
     id: 'agr-guardrail-mechanism',
     question: 'How are AGR guardrails installed on each new level?',
     options: [
-      'Manually by the operative from below via a trapdoor',
       'They are built into the frame and deploy automatically when the platform is fitted',
+      'Manually by the operative from below via a trapdoor',
       'They are winched up by a rope and pulley',
       'A second person installs them from a ladder',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'AGR guardrails are integrated into the frame sections. When the frame is fitted and the platform installed, the guardrails automatically rise and lock at the correct height without any separate installation step.',
   },
@@ -136,11 +136,11 @@ const quickCheckQuestions = [
     question: 'Why does AGR assembly typically involve fewer individual components than 3T?',
     options: [
       'AGR towers are shorter',
-      'AGR does not use braces',
       'The guardrails are built into the frame sections rather than being separate pieces',
+      'AGR does not use braces',
       'AGR does not need platforms',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Because the guardrails are integrated into the AGR frame sections, there are fewer separate guardrail components to transport, handle, and install. This reduces the total number of individual pieces and the assembly time.',
   },
@@ -150,11 +150,11 @@ const quickCheckQuestions = [
       'What prevents an AGR guardrail from being accidentally lowered while someone is on the platform?',
     options: [
       'A padlock on the guardrail',
-      'The platform locks the guardrail mechanism — rails cannot lower until the platform is removed',
       'Warning stickers on the frame',
+      'The platform locks the guardrail mechanism — rails cannot lower until the platform is removed',
       "The operative's body weight holds them up",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The AGR interlock design means the platform locks the guardrail mechanism in the raised position. The guardrails physically cannot be lowered or retracted while the platform is in place — this is a fail-safe engineered into the system.',
   },

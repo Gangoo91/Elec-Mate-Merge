@@ -37,12 +37,12 @@ const checks = [
     question:
       "A Unit 305 question asks: 'What is the MOST suitable cable for a 32A radial circuit run 28m through a domestic loft, surrounded by 100mm of mineral wool insulation, with no other cables grouped alongside?'. What is the command word doing the work here?",
     options: [
-      "All three roles are signed separately by the same competent person, who declares responsibility for each role individually. The signatures are not interchangeable — each is a separate declaration with its own legal weight.",
-      "Electrical Installation Certificate (EIC) + Schedule of Inspections + Schedule of Test Results — the three together form the complete certification pack required by Section 644 for new installations and significant alterations.",
-      "A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay \\\\\\\\\\\\\\\"S\\\\\\\\\\\\\\\" type.",
-      "'Most suitable' means: pick the cable that satisfies BS 7671 for current-carrying capacity AND voltage drop AND the installation method, with reasonable economy. The right answer balances all three constraints — it is not the smallest cable that just-passes CCC, nor the largest 'safe' cable.",
+      "'Most suitable' means the largest cable on the list, since a bigger conductor is always the safest choice regardless of cost or method.",
+      "'Most suitable' means the cable that satisfies CCC, voltage drop and the installation method while staying reasonably economic.",
+      "'Most suitable' means the cheapest cable available, since cost is the only deciding factor once the circuit functions correctly.",
+      "'Most suitable' means whichever cable the manufacturer recommends, ignoring the installation method and voltage-drop calculation.",
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       "L3 questions use command words deliberately. 'Most suitable' is the BS 7671 economic-design language — the answer must comply (CCC after derating, voltage drop within limits, correct installation method) AND be reasonably economic (not over-engineered). Other L3 command words to know: 'minimum' (smallest compliant value), 'maximum' (largest compliant value), 'in accordance with' (read the regs literally), 'recommended' (best practice, may exceed minimum compliance).",
   },
@@ -51,10 +51,10 @@ const checks = [
     question:
       "On a periodic inspection (EICR) you find a 30A BS 3036 rewireable fuse protecting a 2.5mm&sup2; ring final supplying socket-outlets in a domestic kitchen. The installation was completed in 1987 to BS 7671:1981 (15th edition). The fuse and circuit otherwise function correctly. What classification code applies and why?",
     options: [
-      "C3 — improvement recommended. The installation was compliant when installed (BS 3036 fuses were permitted under the 15th edition for ring finals) but no longer reflects current best practice. It is not dangerous in normal service, just dated.",
-      "Move them to a cool place, loosen clothing, give cool water, cool the skin with damp cloths or fan, monitor — call 999 if they lose consciousness or become confused (heat stroke)",
-      "Energy efficiency — primarily lighting (lux levels and luminaire efficacy), heating control (thermostats and zoning), and increasingly EV / PV / battery / heat pump readiness in new dwellings (Future Homes Standard).",
-      "Change ONLY if you can articulate a specific reason (a clause you'd missed, a condition in the stem you'd misread, a calculation step you'd skipped). Otherwise keep your first answer — research shows trained first instinct beats second-guessing absent new information.",
+      "C3 — improvement recommended. Compliant when installed under the 15th edition, now dated but not dangerous in normal service.",
+      "C1 — danger present. The rewireable fuse exposes live parts and presents an immediate risk of injury, so make safe at once.",
+      "C2 — potentially dangerous. A BS 3036 fuse on a ring final is always a credible harm pathway and must be urgently upgraded.",
+      "FI — further investigation. The fuse's age means its condition cannot be judged on visual inspection, so the circuit must be opened up.",
     ],
     correctIndex: 0,
     explanation:
@@ -65,12 +65,12 @@ const checks = [
     question:
       "A Unit 302 question gives you a balanced star-connected three-phase load with a phase voltage of 230V and asks for the line voltage. Three of the options are 230V, 398V and 690V. Which is the right answer and what is the trap?",
     options: [
-      "Either (a) a registered competent person (member of an approved scheme like NICEIC, NAPIT, Stroma) self-certifying via their scheme, or (b) prior building control notification with a third-party inspection.",
-      "Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses",
-      "398V — in a star (Y) system the line voltage equals phase voltage &times; root-3 (~1.732). The trap is candidates either forgetting the relationship entirely (picking 230V) or using delta logic (line = phase, picking 230V) when star logic applies.",
-      "Check for concealed services using a cable/pipe detector (CAT scanner), verify the wall construction, select the correct drill bit and size, and mark the fixing positions accurately",
+      "230V — in a star system the line voltage equals the phase voltage, so root-3 does not apply and the two values are identical.",
+      "690V — the line voltage equals the phase voltage multiplied by 3, giving three times the 230V phase value in a balanced star load.",
+      "133V — the line voltage equals the phase voltage divided by root-3, because the star point reduces the voltage seen between lines.",
+      "398V — in a star (Y) system the line voltage equals phase voltage &times; root-3 (~1.732), so 230 &times; 1.732 gives the line value.",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Star: line voltage = phase voltage &times; root-3, line current = phase current. Delta: line voltage = phase voltage, line current = phase current &times; root-3. The trap distractor 230V works on candidates who haven't internalised the star/delta relationship — it is exactly the kind of 'looks plausible' answer that exam-setters use to catch unprepared candidates. The 690V trap (phase &times; 3) catches candidates who half-remember 'multiply by something around 3'. Memorise root-3 = 1.732 and which side of the equation it lives.",
   },

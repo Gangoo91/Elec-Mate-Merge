@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of the main earthing terminal (MET)?',
     options: [
-      'It should never be removed or loosened by the first aider',
-      'Via a separate metallic connection to the distributor\\\\\\\\\\\\\\\'s earth',
-      'It displaces oxygen and can cause rapid asphyxiation without warning',
+      'To limit the prospective fault current at the origin',
+      'To isolate the installation from the supply during a fault',
+      'To measure the earth electrode resistance of the installation',
       'To provide a common connection point for all protective conductors',
     ],
     correctAnswer: 3,
@@ -134,9 +134,9 @@ const quizQuestions = [
       'For a circuit protected by a 63A Type B MCB, if Ze = 0.35 ohms and (R1+R2) = 0.25 ohms, is automatic disconnection achieved?',
     options: [
       'Yes - Zs = 0.6 ohms which is less than maximum 0.69 ohms',
-      'Only to ohmic materials (linear resistance)',
-      'Working at height, electrical hazards, manual handling, and site access',
-      'Higher rates and consistent demand in specialist areas',
+      'No - Zs = 0.6 ohms which exceeds the maximum 0.44 ohms',
+      'Yes - but only if an RCD is also fitted to the circuit',
+      'No - Zs cannot be found without the supply voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main advantage of MCCBs over MCBs in distribution systems?',
     options: [
-      'In simple, clear language avoiding unnecessary jargon',
+      'MCCBs are smaller and clip onto a standard DIN rail',
       'MCCBs have adjustable trip settings and higher fault ratings',
-      'Test equipment failure or incorrect connections',
-      'The type of earthing system and circuit characteristics',
+      'MCCBs provide residual current protection as standard',
+      'MCCBs are always cheaper than equivalent MCBs',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is PME open PEN conductor risk and why is it significant?',
     options: [
-      'Essential loads maximum demand plus starting currents',
-      'Access logging and remote control capabilities',
+      'Risk of nuisance tripping when the neutral becomes overloaded',
+      'Risk of excessive voltage drop on long supply cables',
       'Risk of the earth becoming live if the PEN conductor breaks',
-      'Accuracy requirements, satellite availability, and local coordinate systems',
+      'Risk of harmonic currents overheating the neutral conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -187,9 +187,9 @@ const quizQuestions = [
       'Why might time-delayed RCDs (Type S) be used at the origin of a three-phase installation?',
     options: [
       'They provide discrimination with downstream instantaneous RCDs',
-      'Temporarily reducing non-essential loads during peak demand',
-      'Unlimited fine, remedial orders, publicity orders',
-      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
+      'They detect smooth DC fault currents that Type AC cannot',
+      'They remove the need for main protective bonding',
+      'They reduce the external earth fault loop impedance Ze',
     ],
     correctAnswer: 0,
     explanation:

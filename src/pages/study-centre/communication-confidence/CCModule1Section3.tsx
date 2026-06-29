@@ -20,12 +20,11 @@ const quickCheckQuestions = [
     question:
       'A site manager asks you to work through your break to finish a second fix. You have a legitimate reason to decline. Which response best demonstrates assertive communication?',
     options: [
-      '"Yeah, fine, whatever you say." (Passive)',
-      '"No chance — you always dump extra work on me." (Aggressive)',
-      '"I understand the pressure to finish, but I need my break to stay safe and focused. Can we look at priorities together?" (Assertive)',
-      'Saying nothing but complaining to colleagues afterwards. (Passive-aggressive)',
-    ],
-    correctIndex: 2,
+      '"I understand the pressure, but I need my break to stay safe. Can we look at priorities together?"',
+      '"No chance — you always dump extra work on me. Sort it out yourself for a change, like usual."',
+      '"Yeah, fine, whatever you say. I will just skip my break and crack on without it, I suppose."',
+      '"OK, no problem" — then quietly complaining to colleagues for the rest of the shift.'],
+    correctIndex: 0,
     explanation:
       'The assertive response acknowledges the other person\u2019s position, states your own needs clearly and calmly, and proposes a collaborative solution. It respects both parties without submitting, attacking, or going behind anyone\u2019s back.',
   },
@@ -48,12 +47,11 @@ const quickCheckQuestions = [
     question:
       'An apprentice asks their supervisor, "Could you show me how to torque-test this connection?" The supervisor replies, "You should know that by now — what have you been doing all week?" What type of Transactional Analysis transaction is this?',
     options: [
-      'Complementary — Adult to Adult',
-      'Crossed — the apprentice spoke Adult-to-Adult but the supervisor replied Critical Parent-to-Child',
-      'Ulterior — both messages carry a hidden meaning',
-      'Complementary — Parent to Child',
-    ],
-    correctIndex: 1,
+      'Complementary — both messages stay Adult-to-Adult throughout',
+      'Ulterior — both messages carry a separate hidden meaning underneath',
+      'Crossed — an Adult request met by a Critical Parent-to-Child reply',
+      'Complementary — Nurturing Parent reassuring an Adapted Child'],
+    correctIndex: 2,
     explanation:
       'The apprentice\u2019s request is Adult-to-Adult (rational, information-seeking). The supervisor\u2019s dismissive, judgemental reply comes from Critical Parent directed at the Child ego state. Because the response goes to a different ego state than intended, this is a crossed transaction — the most common cause of communication breakdown on site.',
   },
@@ -88,8 +86,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which communication style is characterised by indirect resistance, sarcasm and deliberate inefficiency?',
-    options: ['Passive', 'Aggressive', 'Assertive', 'Passive-aggressive'],
-    correctAnswer: 3,
+    options: ['Passive', 'Aggressive', 'Passive-aggressive', 'Assertive'],
+    correctAnswer: 2,
     explanation:
       'Passive-aggressive communication avoids direct confrontation but expresses hostility indirectly — through sarcasm, backhanded comments, deliberate procrastination, or silent obstruction. On a construction site, this might look like an operative who agrees to a task but deliberately does it slowly or incorrectly to make a point.',
   },
@@ -98,11 +96,10 @@ const quizQuestions = [
     question: 'Thomas Gordon\u2019s I-message structure consists of three parts. What are they?',
     options: [
       'Accusation, demand, consequence',
-      'Feeling, specific behaviour, tangible effect',
-      'Problem, solution, deadline',
       'Observation, interpretation, recommendation',
-    ],
-    correctAnswer: 1,
+      'Problem, solution, deadline',
+      'Feeling, specific behaviour, tangible effect'],
+    correctAnswer: 3,
     explanation:
       'Gordon\u2019s I-message formula is: (1) I feel [emotion], (2) when [specific observable behaviour], (3) because [tangible, concrete effect]. This structure keeps the focus on impact rather than blame, making the listener far less likely to become defensive.',
   },
@@ -110,8 +107,8 @@ const quizQuestions = [
     id: 3,
     question:
       'In Eric Berne\u2019s Transactional Analysis, which ego state is characterised by rational, fact-based, emotionally neutral communication?',
-    options: ['Parent (Nurturing)', 'Parent (Critical)', 'Adult', 'Child (Adapted)'],
-    correctAnswer: 2,
+    options: ['Adult', 'Parent (Critical)', 'Parent (Nurturing)', 'Child (Adapted)'],
+    correctAnswer: 0,
     explanation:
       'The Adult ego state processes information objectively, makes decisions based on facts, and communicates without emotional bias. It is the ideal state for professional communication on site — asking clear questions, giving factual instructions, and solving problems collaboratively.',
   },
@@ -120,10 +117,10 @@ const quizQuestions = [
     question:
       'A supervisor says to an electrician: "You always make a mess of the first fix." Which communication style does this represent?',
     options: [
-      'Assertive — it is direct and honest',
-      'Aggressive — it uses a generalisation ("always") and attacks the person rather than the behaviour',
-      'Passive — it avoids the real issue',
-      'Passive-aggressive — it is indirect',
+      'Assertive — it is direct, specific and respectfully honest',
+      'Aggressive — it generalises and attacks the person, not the behaviour',
+      'Passive — it avoids the real issue to keep the peace',
+      'Passive-aggressive — it resists the issue indirectly through hints',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,12 +130,11 @@ const quizQuestions = [
     id: 5,
     question: 'What happens when a crossed transaction occurs in Transactional Analysis?',
     options: [
-      'Both parties agree and communication flows smoothly',
-      'Communication breaks down because the response comes from an unexpected ego state',
-      'The conversation becomes more productive',
-      'Both parties switch to their Adult ego state automatically',
-    ],
-    correctAnswer: 1,
+      'Both parties agree and the conversation flows smoothly to a quick resolution',
+      'The conversation becomes calmer and noticeably more productive than before',
+      'Communication breaks down because the reply comes from an unexpected ego state',
+      'Both parties automatically switch into their rational Adult ego state'],
+    correctAnswer: 2,
     explanation:
       'A crossed transaction occurs when the response comes from a different ego state than the one addressed. For example, an Adult-to-Adult question receives a Critical Parent-to-Child reply. This mismatch breaks the expected communication pattern and typically results in conflict, withdrawal, or a defensive reaction.',
   },
@@ -148,11 +144,10 @@ const quizQuestions = [
       'Which CITB behavioural competency is most directly demonstrated when an electrician raises a safety concern with the site manager calmly and professionally?',
     options: [
       'Technical knowledge',
-      'Communication and influencing',
-      'Planning and organising',
       'Commercial awareness',
-    ],
-    correctAnswer: 1,
+      'Planning and organising',
+      'Communication and influencing'],
+    correctAnswer: 3,
     explanation:
       'CITB\u2019s "Communication and influencing" competency covers the ability to convey information clearly, listen actively, adapt your style to the audience, and raise issues constructively. Calmly raising a safety concern with a site manager — without being passive or aggressive — is a textbook demonstration of this competency.',
   },
@@ -161,12 +156,11 @@ const quizQuestions = [
     question:
       'Convert this You-message to an I-message: "You never clean up after yourself on site." Which is the best conversion?',
     options: [
-      '"I think you\u2019re lazy and inconsiderate."',
       '"I get concerned when materials are left on the floor after a task because it creates a trip hazard for the next trade."',
+      '"I think you\u2019re lazy and inconsiderate."',
       '"I\u2019ve noticed you\u2019re the worst on site for tidiness."',
-      '"I\u2019m telling you to clean up or I\u2019ll report you."',
-    ],
-    correctAnswer: 1,
+      '"I\u2019m telling you to clean up or I\u2019ll report you."'],
+    correctAnswer: 0,
     explanation:
       'The correct I-message follows Gordon\u2019s three-part structure: feeling ("I get concerned"), specific behaviour ("when materials are left on the floor after a task"), and tangible effect ("it creates a trip hazard for the next trade"). It addresses the behaviour without attacking the person.',
   },
@@ -176,11 +170,10 @@ const quizQuestions = [
       'An apprentice responds to constructive feedback by saying "Fine, whatever" and then deliberately works slowly for the rest of the day. This is an example of which communication style?',
     options: [
       'Passive — they did not argue back',
-      'Assertive — they accepted the feedback',
-      'Aggressive — they are being hostile',
       'Passive-aggressive — they verbally complied but behaviourally resisted',
-    ],
-    correctAnswer: 3,
+      'Aggressive — they are being hostile',
+      'Assertive — they accepted the feedback'],
+    correctAnswer: 1,
     explanation:
       'Passive-aggressive behaviour is characterised by surface compliance combined with covert resistance. Saying "fine, whatever" appears to accept the feedback (passive), but deliberately working slowly is an indirect expression of resentment (aggressive). This pattern is common on construction sites and is destructive to team productivity and morale.',
   },

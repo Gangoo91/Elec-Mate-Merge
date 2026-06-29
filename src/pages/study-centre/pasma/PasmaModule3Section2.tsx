@@ -12,12 +12,12 @@ const quickCheckQuestions = [
     question:
       'When setting up the base of a tower using the 3T method, what must be done BEFORE fitting the first pair of end frames?',
     options: [
-      'Install the guardrails at the top',
       'Position castors or base plates, ensuring they are on firm, level ground',
-      'Climb to the first platform level',
-      'Fit diagonal braces to the wall',
+      'Install the guardrails at the top of the tower',
+      'Climb to the first platform level and check the trapdoor',
+      'Fit the diagonal braces between the end frames',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The base must be established first: position castors or base plates on firm, level ground, then fit the first pair of end frames into them. The base provides the foundation for everything above, so it must be correctly positioned and levelled before any further assembly.',
   },
@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'In the 3T method, from what position should guardrails be installed at each new level?',
     options: [
-      'From outside the tower using a ladder',
+      'From outside the tower using a separate ladder',
       'From the ground using an extendable pole',
-      'From inside the tower through the trapdoor, with the operative protected to waist height',
       'From the completed platform after climbing fully onto it',
+      'From inside the tower through the trapdoor, with the operative protected to waist height',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The 3T method requires the operative to pass through the trapdoor to waist height, giving them the protection of the platform edge while they install guardrails on all sides. Only after guardrails are fitted does the operative step fully onto the platform.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
     question: 'Which of the following is NOT part of the completion checks after tower assembly?',
     options: [
       'All braces fitted and locks engaged',
-      'Guardrails on all sides at correct heights',
       'Painting the tower in high-visibility colours',
+      'Guardrails on all sides at correct heights',
       'Castors locked and stabilisers fitted if required',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Completion checks include verifying all braces are fitted with locks engaged, guardrails on all sides at correct heights, the platform is level, castors are locked, and stabilisers are fitted if required. Painting the tower is not part of the standard assembly or inspection process.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: "What does the '3T' in the 3T assembly method stand for?",
     options: [
-      'Three-Tier Tower',
       'Through The Trap',
+      'Three-Tier Tower',
       'Triple-Tested Tower',
       'Three-Turn Technique',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "3T stands for 'Through The Trap', referring to the operative climbing through the trapdoor platform to access each new level during assembly.",
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: 'In what order should the base of a tower be assembled?',
     options: [
-      'End frames, castors, braces, level',
+      'End frames first, then castors, then braces, then level',
+      'Level the ground, install guardrails, then add castors',
+      'Install the platform first, then add the base below it',
       'Castors/base plates, end frames, plan braces, horizontal braces, level, lock castors',
-      'Level the ground, install guardrails, add castors',
-      'Install platform first, then add base below',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct base assembly sequence is: position castors or base plates, fit the first pair of end frames, install plan braces and horizontal braces, level using adjustable legs, then lock all castors.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'When building up using the 3T method, what is fitted BEFORE the operative climbs through the trapdoor?',
     options: [
-      'Guardrails at the next level',
       'The platform with trapdoor at the next level',
+      'The guardrails at the next level',
       'Stabilisers at ground level',
-      'A safety harness to the tower',
+      'A safety harness clipped to the tower',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The platform with its trapdoor must be installed at the next level before the operative climbs through. This gives the operative a surface to pass through and provides edge protection to waist height while guardrails are being fitted.',
   },
@@ -132,11 +132,11 @@ const quizQuestions = [
     question: 'What must happen to the trapdoor after the operative has passed through it?',
     options: [
       'It should be left open for quick escape',
-      'It should be removed and stored at ground level',
       'It must be closed and locked',
+      'It should be removed and stored at ground level',
       'It only needs closing if other people are on the platform',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The trapdoor must always be closed and locked after passing through it. An open trapdoor is a fall hazard, and the platform needs to be fully closed to provide its designed load-bearing capacity.',
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     options: [
       'All braces fitted and locks engaged',
       'Guardrails on all sides at correct heights',
-      'The tower has been painted with identification markings',
       'Castors locked and stabilisers fitted if required',
+      'The tower has been painted with identification markings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Completion checks include verifying all braces, locks, guardrails, platform level, castor locks, and stabilisers. Painting or marking the tower with identification is not a standard assembly completion requirement.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: 'Which of the following is a common 3T assembly error?',
     options: [
       'Using the adjustable legs to level the tower',
-      'Installing plan braces at the base level',
       'Working from outside the tower to fit components at height',
-      'Locking the castors before levelling',
+      'Installing plan braces at the base level',
+      'Locking the castors after the base has been levelled',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Working from outside the tower — such as standing on a separate ladder to fit components — is a dangerous error. The 3T method requires all work at height to be done from inside the tower, passing through the trapdoor.',
   },

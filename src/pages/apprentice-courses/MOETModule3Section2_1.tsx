@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'In star connection on a 400 V supply, what voltage appears across each motor winding?',
     options: [
       '400 V',
-      '110 V',
       '230 V',
+      '110 V',
       '690 V',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'In star connection, the voltage across each winding is the line voltage divided by the square root of 3. For a 400 V supply: 400 / 1.732 = approximately 230 V per winding. This is why a motor rated 400/690 V is connected in star for 690 V (giving 400 V per winding) and delta for 400 V (giving 400 V per winding).',
   },

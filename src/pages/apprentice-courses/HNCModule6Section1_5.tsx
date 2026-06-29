@@ -59,11 +59,11 @@ const quickCheckQuestions = [
       'What is the minimum luminaire efficacy required for general lighting in new non-domestic buildings?',
     options: [
       '60 lm/W',
-      '95 lm/W',
       '80 lm/W',
+      '95 lm/W',
       '100 lm/W',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Part L requires general lighting in new non-domestic buildings to achieve a minimum luminaire efficacy of 80 lumens per Watt (lm/W). Display lighting has a lower threshold of 60 lm/W.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'What documentation must be provided to demonstrate Part L building services compliance?',
     options: [
-      'Disconnect the motor or test the circuit up to the motor terminals',
+      'A single-line distribution diagram for the main switchboard only',
       'Building log book including commissioning records and operating instructions',
-      'The client (employer) — they are the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s eyes and ears for quality on site',
-      'They may retain dangerous voltage even after isolation',
+      'The contractor day-work sheets and labour allocation records',
+      'A copy of the original planning permission application',
     ],
     correctAnswer: 1,
     explanation:

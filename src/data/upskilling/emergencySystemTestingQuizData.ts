@@ -45,9 +45,9 @@ export const emergencySystemTestingQuizData: QuizQuestion[] = [
     question: 'What is the difference between maintained and non-maintained exit signs?',
     options: [
       'Maintained signs remain illuminated at all times, non-maintained only illuminate when mains supply fails',
-      'Step back, take a breath, and propose a quick joint look at the drawings with both supervisors to agree the sequence',
-      'To prevent large dark patches that could cause trips, falls, or disorientation',
-      'They prove the circuit between two test points, confirming complete circuit',
+      'Non-maintained signs remain illuminated at all times, maintained only illuminate when mains supply fails',
+      'Maintained signs run from a central battery, non-maintained have self-contained batteries',
+      'Maintained signs use LED sources, non-maintained always use fluorescent tubes',
     ],
     correctAnswer: 0,
     explanation:
@@ -71,10 +71,10 @@ export const emergencySystemTestingQuizData: QuizQuestion[] = [
     question:
       'Who holds ultimate responsibility for ensuring emergency lighting tests are carried out?',
     options: [
-      'To guide occupants safely towards final exits in an emergency',
-      'They provide reliability and efficiency in large buildings',
+      'The electrical contractor who originally installed the system',
+      'The local fire and rescue service who inspect the premises',
       'The duty holder (building owner, employer, or responsible person)',
-      'On-site in an accessible location near the fire panel or site office',
+      'The manufacturer of the emergency luminaires',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,10 +110,10 @@ export const emergencySystemTestingQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is one advantage of automated emergency lighting test systems?',
     options: [
-      'To guide occupants safely towards final exits in an emergency',
+      'They remove the legal requirement for an annual duration test',
       'They provide reliability and efficiency in large buildings',
-      'On-site in an accessible location near the fire panel or site office',
-      'The duty holder (building owner, employer, or responsible person)',
+      'They allow luminaires to run indefinitely without battery replacement',
+      'They eliminate the need to keep a written test logbook',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const emergencySystemTestingQuizData: QuizQuestion[] = [
     id: 10,
     question: 'Where should the emergency lighting logbook be stored?',
     options: [
-      'The duty holder (building owner, employer, or responsible person)',
-      'To guide occupants safely towards final exits in an emergency',
+      'Off-site at the testing contractor’s registered office',
+      'In the building owner’s home for safekeeping',
       'On-site in an accessible location near the fire panel or site office',
-      'They provide reliability and efficiency in large buildings',
+      'Filed digitally only, with no physical copy kept on site',
     ],
     correctAnswer: 2,
     explanation:

@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician registers for CIS but does not apply for gross payment status. What percentage of their payments from contractors will be deducted at source?',
     options: [
-      '0% &mdash; CIS registration means no deductions',
       '20% &mdash; the standard CIS deduction rate for registered subcontractors',
+      '0% &mdash; CIS registration means no deductions',
       '30% &mdash; the higher rate for unregistered subcontractors',
       '45% &mdash; the additional rate of Income Tax',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under the Construction Industry Scheme, registered subcontractors have 20% deducted from their payments by the contractor. This is not a final tax bill &mdash; it is an advance payment towards the subcontractor&rsquo;s eventual Income Tax and National Insurance liability. If the subcontractor&rsquo;s actual tax bill is less than the total CIS deductions, they can claim a refund through their Self Assessment tax return. Unregistered subcontractors face a 30% deduction rate, which is why registration is strongly recommended. Gross payment status (0% deduction) is available but requires meeting strict HMRC criteria including a turnover threshold and a clean compliance record.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     options: [
       'Travel time allowance and daily travel allowance',
       'Death-in-service benefit and income protection insurance',
-      'A company van and fuel card for personal use',
       'Industry pension contributions through the EPID scheme',
+      'A company van and fuel card for personal use',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The JIB (Joint Industry Board for the Electrical Contracting Industry) benefits package includes travel allowances, death-in-service benefit, income protection, and pension contributions through the EPID (Electrical and Plumbing Industries Defined) pension scheme. However, a company van and fuel card for personal use are not standard JIB benefits &mdash; these are discretionary benefits that individual employers may or may not offer. The total monetary value of the JIB package (including employer NI contributions, pension, and insurances) can add 25&ndash;35% on top of the basic hourly rate, which is a critical factor when comparing JIB-employed rates against self-employed day rates.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Under the Construction Industry Scheme (CIS), what is the deduction rate for a subcontractor who has NOT registered with HMRC?',
     options: [
-      '0% &mdash; unregistered subcontractors are exempt from deductions',
-      '20% &mdash; the standard registered rate',
       '30% &mdash; the higher rate for unregistered subcontractors',
+      '20% &mdash; the standard registered rate',
+      '0% &mdash; unregistered subcontractors are exempt from deductions',
       '45% &mdash; the additional rate of Income Tax',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Unregistered CIS subcontractors face a 30% deduction rate, compared to 20% for registered subcontractors and 0% for those with gross payment status. This higher rate is designed to encourage registration and is one of the most compelling reasons to register with HMRC before undertaking any CIS work. The deduction is not a penalty &mdash; it is still an advance payment towards your tax bill &mdash; but having 30% deducted rather than 20% creates significant cash flow pressure, especially for electricians with substantial material costs that are not covered by the deduction calculation.',
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
       'Which of the following is the MOST important factor HMRC uses to determine whether an electrician is genuinely self-employed or actually employed?',
     options: [
       'Whether the electrician has registered as self-employed with HMRC',
-      'Whether the electrician has their own tools and van',
       'The degree of control the engager has over how, when, and where the electrician works',
+      'Whether the electrician has their own tools and van',
       'Whether the electrician has a written contract stating they are self-employed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Control is the single most important factor in HMRC&rsquo;s employment status determination. If the engager controls how the work is done (not just what is done), when it is done, and where it is done, HMRC is likely to consider the arrangement employment regardless of what the contract says. The other factors listed &mdash; HMRC registration, owning tools, and contract wording &mdash; are relevant but secondary. HMRC consistently applies the principle of &ldquo;substance over form&rdquo;, meaning the reality of the working arrangement matters more than any paperwork. Many electricians have been caught out by assuming that a self-employed contract is sufficient protection when the actual working conditions indicate employment.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
       'An electrician operates through a limited company and is the sole director and shareholder. They take a small salary of &pound;12,570 and the rest of their income as dividends. The primary tax advantage of this structure is:',
     options: [
       'Dividends are completely tax-free regardless of amount',
-      'Dividends do not attract National Insurance contributions, unlike salary, reducing the overall tax burden',
       'Limited company directors do not need to file tax returns',
       'Corporation Tax is always lower than Income Tax',
+      'Dividends do not attract National Insurance contributions, unlike salary, reducing the overall tax burden',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The salary/dividend split is the primary tax efficiency mechanism for limited company directors. By taking a salary at or near the Personal Allowance (&pound;12,570), the director pays no Income Tax and minimal National Insurance on the salary. Dividends do not attract National Insurance contributions (neither employer nor employee), which is where the main saving lies compared to taking the entire income as salary. However, dividends are not tax-free &mdash; they are taxed at 8.75% (basic rate), 33.75% (higher rate), and 39.35% (additional rate) above the &pound;1,000 dividend allowance. Corporation Tax (25% for profits over &pound;250,000, or 19&ndash;25% with marginal relief) must also be paid before dividends can be distributed.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'IR35 (off-payroll working rules) applies when:',
     options: [
-      'Any contractor works on a construction site',
       'A worker provides services through an intermediary (such as a personal service company) and would be considered an employee if engaged directly',
+      'Any contractor works on a construction site',
       'A sole trader earns more than &pound;85,000 per year',
       'A subcontractor is registered for CIS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IR35 targets arrangements where a worker provides services through an intermediary (typically a personal service company &mdash; a limited company owned by the worker) but would be considered an employee if they were engaged directly by the end client. The rules were introduced by ITEPA 2003 (Income Tax (Earnings and Pensions) Act 2003) and were significantly reformed in April 2021 for the private sector. If a contract is &ldquo;inside IR35&rdquo;, the worker must be taxed as if they were employed, losing the tax advantages of the limited company structure. For medium and large private sector clients, the responsibility for determining IR35 status now lies with the end client, not the worker. This has significantly impacted electricians working through personal service companies on larger commercial projects.',
   },
@@ -151,8 +151,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which JIB grading typically requires completion of an approved apprenticeship or equivalent qualification AND passing the AM2 assessment?',
-    options: ['Electrical Labourer', 'Trainee Electrician', 'Approved Electrician', 'Technician'],
-    correctAnswer: 2,
+    options: ['Electrical Labourer', 'Approved Electrician', 'Trainee Electrician', 'Technician'],
+    correctAnswer: 1,
     explanation:
       'The JIB Approved Electrician grading requires completion of an approved apprenticeship (or equivalent qualification pathway) AND successful completion of the AM2 (Achievement Measurement 2) practical assessment. The AM2 is a two-day practical skills assessment that tests installation competence including conduit bending, trunking installation, wiring, testing, and fault finding. It is widely regarded as the industry standard entry point for a fully qualified electrician. The Technician grade sits above Approved Electrician and requires additional qualifications and/or experience, typically including design and inspection and testing competences. The Approved Electrician grading is the most common grading for qualified electricians working under JIB terms.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'A CIS-registered subcontractor has &pound;10,000 deducted over the tax year through CIS. When they complete their Self Assessment return, their actual Income Tax and NI liability is &pound;7,500. What happens?',
     options: [
       'They must pay &pound;7,500 in addition to the &pound;10,000 already deducted',
-      'They receive a &pound;2,500 refund from HMRC because their CIS deductions exceeded their actual tax liability',
       'The &pound;2,500 overpayment is lost and cannot be reclaimed',
+      'They receive a &pound;2,500 refund from HMRC because their CIS deductions exceeded their actual tax liability',
       'They must register for VAT to reclaim the difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CIS deductions are advance payments towards the subcontractor&rsquo;s tax bill, not a final tax. When the subcontractor files their Self Assessment return, HMRC calculates the actual Income Tax and National Insurance liability. If the total CIS deductions (&pound;10,000) exceed the actual liability (&pound;7,500), the subcontractor receives a refund of the difference (&pound;2,500). This is why it is essential to file a Self Assessment return even if you think you have &ldquo;already paid your tax&rdquo; through CIS &mdash; you may be entitled to a significant refund. Conversely, if your actual liability exceeds your CIS deductions (for example, if you have other income sources), you will need to pay the shortfall.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'Paying for their own ECS card renewal',
       'Buying their own work boots',
-      'Paying employer National Insurance contributions, pension contributions, holiday pay provision, sick pay provision, and professional indemnity insurance',
       'Purchasing their own test instruments',
+      'Paying employer National Insurance contributions, pension contributions, holiday pay provision, sick pay provision, and professional indemnity insurance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When moving from PAYE employment to self-employment, the most significant financial shift is taking on responsibilities that were previously covered by the employer. These include: employer National Insurance contributions (13.8% on earnings above the secondary threshold), pension contributions (minimum 3% employer contribution under auto-enrolment), holiday pay provision (you must now save for your own holidays as there is no paid annual leave), sick pay provision (no Statutory Sick Pay as a self-employed person), and business insurances including public liability and professional indemnity. While buying tools and boots may also become your responsibility, these are relatively small costs compared to the employer-side obligations that self-employed electricians must now self-fund. This is why a self-employed day rate must be significantly higher than the equivalent employed hourly rate to provide the same standard of living.',
   },

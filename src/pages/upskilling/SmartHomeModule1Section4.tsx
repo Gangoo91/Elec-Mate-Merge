@@ -57,12 +57,12 @@ const quizQuestions = [
     question:
       'Which architecture type processes all automation locally without requiring internet?',
     options: [
-      'Cloud-only architecture',
       'Local architecture',
+      'Cloud-only architecture',
       'Hybrid architecture',
-      'Distributed architecture',
+      'Vendor-hosted architecture',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Local architecture processes all automation on-premises using a hub or controller, without requiring internet connectivity for basic operation.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is a disadvantage of cloud-only smart home systems?',
     options: [
-      'Too fast response times',
-      'Dependence on internet connectivity',
-      'Too much local storage',
-      'Limited remote access',
+      'Response times that are too fast to be stable',
+      'Dependence on a working internet connection',
+      'Excessive use of local storage capacity',
+      'Severely limited remote access options',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,21 +82,21 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which architecture type is best for maintaining privacy of home data?',
-    options: ['Cloud-only', 'Local-only', 'Social media integrated', 'Public cloud'],
-    correctAnswer: 1,
+    options: ['Cloud-only processing', 'Public cloud hosting', 'Local-only processing', 'Vendor-managed cloud'],
+    correctAnswer: 2,
     explanation:
       'Local-only architectures keep all data on-premises, providing maximum privacy as no data is sent to external servers.',
   },
   {
     id: 4,
-    question: 'What is edge computing in smart home context?',
+    question: 'What is edge computing in a smart home context?',
     options: [
-      'Computing at network boundaries',
-      'Processing at the device or hub level rather than cloud',
-      'Computing at room edges',
-      'External computing services',
+      'Computing performed at the network operator boundary',
+      'Computing carried out at the corners of each room',
+      'Processing at the device or hub level rather than the cloud',
+      'Outsourced computing handled by external services',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Edge computing refers to processing data at the device or hub level locally, reducing latency and cloud dependence.',
   },
@@ -104,33 +104,33 @@ const quizQuestions = [
     id: 5,
     question: 'Which feature typically requires cloud connectivity in smart homes?',
     options: [
-      'Local light switching',
-      'Motion sensor triggering',
+      'Local light switching at the wall',
       'Voice assistant integration and remote access',
-      'Timer-based automation',
+      'On-board motion sensor triggering',
+      'Hub-based timer automation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Voice assistants like Alexa and Google Home typically process voice commands in the cloud, and remote access from outside the home requires cloud connectivity.',
   },
   {
     id: 6,
-    question: "What is a hybrid architecture's response during internet outage?",
+    question: "What is a hybrid architecture's response during an internet outage?",
     options: [
-      'Complete system failure',
-      'Local automation continues, remote access unavailable',
-      'All features continue normally',
-      'Only lighting works',
+      'A complete failure of the whole system',
+      'All features continue running normally',
+      'Local automation continues, but remote access is unavailable',
+      'Only the lighting circuits keep working',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In hybrid systems, local automation continues functioning during outages, but cloud-dependent features like remote access and voice control become unavailable.',
   },
   {
     id: 7,
     question: 'Which architecture requires the most powerful local hardware?',
-    options: ['Cloud-only', 'Local processing', 'Basic timer systems', 'Manual control'],
-    correctAnswer: 1,
+    options: ['Cloud-only', 'Basic timer systems', 'Manual control', 'Local processing'],
+    correctAnswer: 3,
     explanation:
       'Local processing architectures require more powerful local hardware (hub/controller) to handle all automation processing on-premises.',
   },
@@ -138,20 +138,20 @@ const quizQuestions = [
     id: 8,
     question: 'What ongoing cost is typically associated with cloud-based systems?',
     options: [
-      'No ongoing costs',
       'Subscription fees for cloud services',
-      'Only electricity costs',
-      'Hardware replacement costs',
+      'No ongoing costs at all',
+      'Only the additional electricity used',
+      'Frequent hardware replacement costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Many cloud-based systems require subscription fees for cloud storage, advanced features, or continued service access.',
   },
   {
     id: 9,
     question: 'Which architecture provides the lowest latency for automation responses?',
-    options: ['Cloud-only', 'Local processing', 'Internet-dependent', 'Satellite-based'],
-    correctAnswer: 1,
+    options: ['Cloud-only', 'Internet-dependent', 'Local processing', 'Satellite-linked'],
+    correctAnswer: 2,
     explanation:
       'Local processing provides the lowest latency as commands are processed on-premises without the round-trip delay to cloud servers.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'For a client prioritising reliability and privacy, which architecture would you recommend?',
     options: [
-      'Cloud-only system',
-      'Local or hybrid system with strong local processing',
-      'Public cloud system',
-      'Shared network system',
+      'A cloud-only system',
+      'A public cloud system',
+      'A shared-network system',
+      'A local or hybrid system with strong local processing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A local or hybrid system with strong local processing provides reliability during outages and keeps data private on-premises.',
   },

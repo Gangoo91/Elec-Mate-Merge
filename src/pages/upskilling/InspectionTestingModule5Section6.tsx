@@ -23,38 +23,38 @@ const inlineChecks = [
     question:
       'How does the no-trip Zs method on a multifunction tester avoid tripping the 30 mA RCD it is testing through?',
     options: [
-      'It bypasses the RCD electronically inside the meter',
-      'It pulses a small test current well below the RCD IΔn (typically ≈ 15 mA for a 30 mA RCD) for a controlled number of half-cycles, integrates multiple pulses, and extrapolates Zs from the small voltage drop using U₀ / Z',
-      'It uses DC, which the RCD does not detect',
-      'It tests at a higher frequency than the RCD detects',
+      'It electronically bypasses the RCD inside the meter before the test current flows',
+      'It pulses a current below IΔn for a few half-cycles and extrapolates Zs',
+      'It uses DC, which the RCD is designed not to respond to at all',
+      'It tests at a frequency above the band the RCD is designed to detect',
     ],
     correctIndex: 1,
     explanation:
-      'The no-trip method keeps the residual current well below IΔn — typically around 15 mA for a 30 mA RCD — for a controlled number of half-cycles. The voltage drop is small, so the meter sums multiple pulses and applies digital filtering before reporting Zs. The RCD never sees enough residual current to operate within its time window.',
+      'The no-trip method keeps the residual current well below IΔn — typically around 15 mA for a 30 mA RCD — for a controlled number of half-cycles, integrating multiple pulses and extrapolating Zs from the small voltage drop using U₀ / Z. The voltage drop is small, so the meter sums multiple pulses and applies digital filtering before reporting Zs. The RCD never sees enough residual current to operate within its time window.',
   },
   {
     id: 'mod5-s6-table-pick',
     question:
       'On a TN-C-S socket circuit, an MCB is the fault-protection device and a 30 mA RCD provides additional protection (Reg 415.1). No-trip Zs reads 1.21 Ω against an MCB Table 41.3 limit of 1.37 Ω. Which Zs limit governs?',
     options: [
-      'Table 41.5 (1667 Ω) — the RCD is in the loop',
-      'Table 41.3 (1.37 Ω) — the MCB is the fault-protection device; the RCD is additional protection per Reg 415.1, not Reg 411.5.3 fault protection. 1.21 < 1.37 → compliant',
-      'Both 41.3 and 41.5 — record the lower as the limit',
-      'No table applies because the RCD is present',
+      'Table 41.5 (1667 Ω) — the RCD sits in the earth-fault loop here',
+      'Table 41.3 (1.37 Ω) — the MCB is the fault-protection device, so 1.21 < 1.37 passes',
+      'Both 41.3 and 41.5 — apply each and record the lower figure as the limit',
+      'No table applies — the presence of the RCD removes the Zs ceiling',
     ],
     correctIndex: 1,
     explanation:
-      'Table 41.5 only governs when the RCD itself is the fault-protection device under Reg 411.5.3 (TT, or TN where the overcurrent device cannot meet the time). On a TN-C-S socket circuit the MCB is the fault-protection device and Table 41.3 is the limit; the 30 mA RCD provides additional protection (Reg 415.1) but does not change the Zs ceiling.',
+      'Table 41.5 only governs when the RCD itself is the fault-protection device under Reg 411.5.3 (TT, or TN where the overcurrent device cannot meet the time). On a TN-C-S socket circuit the MCB is the fault-protection device and Table 41.3 is the limit; the 30 mA RCD provides additional protection (Reg 415.1) but does not change the Zs ceiling. 1.21 < 1.37 → compliant.',
   },
   {
     id: 'mod5-s6-tt-rcd-limit',
     question:
       'A TT installation has a 30 mA RCD as the fault-protection device. No-trip Zs reads 220 Ω. Apply Table 41.5 and Reg 411.5.3.',
     options: [
-      'Fail — anything over 100 Ω is non-compliant on TT',
-      'Pass — 220 Ω is comfortably below the Table 41.5 maximum of 1667 Ω at 30 mA, and 220 × 0.030 = 6.6 V (under 50 V). Note that Table 41.5 NOTE 2 warns electrode resistance above 200 Ω may not be stable',
-      'Fail — Table 41.3 governs and 220 Ω vastly exceeds it',
-      'Pass only if a 100 mA RCD is fitted instead',
+      'Fail — any reading over 100 Ω is automatically non-compliant on a TT system',
+      'Pass — 220 Ω is well below the Table 41.5 limit of 1667 Ω at 30 mA',
+      'Fail — Table 41.3 governs here and 220 Ω vastly exceeds its limit',
+      'Pass only after a 100 mA RCD is fitted in place of the 30 mA device',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'After a no-trip Zs measurement on a 30 mA RCBO, you trip-test the device at IΔn per Reg 643.8. The displayed disconnection time is 36 ms. Verdict?',
     options: [
-      'Fail — RCDs must operate within 10 ms',
-      'Pass — BS 7671 deems effectiveness verified where a general non-delay RCD disconnects within 300 ms maximum at IΔn. 36 ms is comfortably inside that limit. Record the actual time on the schedule',
-      'Pass only if also tripping at 5 × IΔn',
-      'Fail — 30 mA RCDs must operate within 20 ms',
+      'Fail — a general non-delay RCD must operate within 10 ms at IΔn',
+      'Pass — within the 300 ms maximum at IΔn for a general non-delay RCD; record the actual time',
+      'Pass only if it also trips within 40 ms at 5 × IΔn on the same circuit',
+      'Fail — a 30 mA RCD must operate within 20 ms at its rated residual current',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'On an RCD-protected circuit, why does a standard high-current loop test trip the RCD before it can give a Zs reading?',
     options: [
-      'The RCD is faulty',
-      'A high-current loop test injects ≥ a few amps L–E for several mains cycles. That residual current of several amps far exceeds the 30 mA IΔn — the RCD trips well before the meter completes the loop measurement',
-      'The test current is too low for the RCD to detect',
-      'The meter shorts out the RCD test winding',
+      'The test injects ≈10–25 A line-to-earth — hundreds of times the 30 mA IΔn — so the RCD trips first',
+      'The RCD is faulty and operates below its rated residual current threshold',
+      'The test current is far too low for the RCD to detect or respond to at all',
+      'The meter momentarily shorts out the RCD internal test winding during the test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A traditional loop test injects on the order of 10–25 A line-to-earth for several mains cycles. That is several hundred times a 30 mA RCD trip threshold. The RCD trips long before the meter has the cycles it needs to compute Zs — which is why the no-trip method exists.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'How does the no-trip Zs method on a multifunction tester avoid tripping the RCD it is testing through?',
     options: [
-      'It bypasses the RCD electronically',
-      'It applies a much smaller test current (well below the RCD IΔn) for a controlled number of half-cycles, then mathematically extrapolates to the full Zs from the small voltage drop measured',
-      'It uses DC instead of AC',
-      'It tests at a higher frequency than the RCD detects',
+      'It electronically bypasses the RCD inside the meter before the test current flows',
+      'It uses DC instead of AC, which the RCD is designed not to respond to',
+      'It pulses a current below IΔn for a few half-cycles and extrapolates Zs from the voltage drop',
+      'It tests at a frequency above the band the RCD is designed to detect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The no-trip method injects a test current well below the RCD's rated residual operating current — typically around 15 mA for a 30 mA RCD — for a small number of half-cycles. The meter measures the resulting voltage drop, repeats the pulse to integrate the signal, and extrapolates Zs from U₀ / Z. The RCD stays closed because the residual current never reaches IΔn within the time window required to operate.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'Reg 643.7.3 (and the supporting A4 NOTE) requires what when an RCD is the protective device against indirect contact?',
     options: [
-      'Skip the Zs verification — RCD trip test is enough',
-      'Verify disconnection time using suitable test equipment to BS EN 61557-6 to confirm the relevant requirements of Chapter 41 are met, taking the RCD operating characteristic into account',
-      'Use a 5 A loop tester',
-      'Replace the RCD with an MCB before testing',
+      'Skip the Zs verification because the RCD trip test alone proves Chapter 41 is met',
+      'Use a dedicated 5 A loop tester so the RCD never sees enough current to operate',
+      'Replace the RCD with an MCB of equivalent rating before any Zs measurement',
+      'Verify disconnection by test equipment to BS EN 61557-6, taking the RCD operating characteristic into account',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.7.3 requires verification of automatic disconnection by RCDs using suitable test equipment to BS EN 61557-6 to confirm Chapter 41 disconnection-time requirements are met. The Zs of the protected circuit must still be known (per Reg 411.5.3 and Table 41.5) — the no-trip method is what lets you measure it without tripping the RCD on every test.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'When does Reg 411.5.3 (RCD as the protective device for fault protection) typically apply, and what changes about the Zs limit?',
     options: [
-      'Only on TN-S installations — Zs limit is the same as for MCBs',
-      'On TT systems, where the earth-fault loop impedance is too high for an overcurrent device to disconnect within the required time. The Zs limit becomes the Table 41.5 value (1667 Ω at 30 mA, etc.) — far higher than a MCB-based limit, because the RCD operates on residual current not on Zs',
-      'Only in bathrooms',
-      'Only on circuits over 32 A',
+      'Only on TN-S installations, where the Zs limit is the same as for MCBs',
+      'Only in bathrooms and other special locations covered by Part 7',
+      'On TT systems, where Zs is too high for overcurrent, so the Table 41.5 limit applies',
+      'Only on final circuits rated above 32 A on any earthing arrangement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 411.5.3 applies where an RCD is used for fault protection — almost always on TT systems (where electrode resistance keeps Zs too high for an overcurrent device to operate within the required time) and on parts of TN systems where the same logic applies. The Zs limit jumps to the Table 41.5 value because the RCD trips on residual current, not on a high fault current.',
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "Your meter reports a no-trip Zs reading of 1.21 Ω on a 30 mA RCD-protected socket circuit (TN-C-S). Compare against the Table 41.3 limit for the upstream B32 MCB (1.37 Ω at 70°C). What's your conclusion?",
     options: [
-      'Compliant — Zs is within the MCB Table 41.3 limit, so the MCB will operate within the required disconnection time. The RCD is in addition to (not instead of) the MCB on this circuit, and Table 41.5 does not bite because Reg 411.5.3 is not the protective measure',
-      'Non-compliant — Zs must be within the Table 41.5 RCD limit (1667 Ω) only',
-      'Both Table 41.3 and Table 41.5 limits must be applied — record the lower as the limit',
-      'The reading is invalid because no-trip',
+      'Compliant — 1.21 Ω is within the MCB Table 41.3 limit, and Table 41.5 does not bite',
+      'Non-compliant — Zs must be within the Table 41.5 RCD limit of 1667 Ω only',
+      'Both Table 41.3 and Table 41.5 limits apply, so record the lower as the ceiling',
+      'The reading is invalid because no-trip mode cannot be trusted at this Zs',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'On a TT system with a 30 mA RCD as fault-protection, your no-trip Zs reads 220 Ω and the earth electrode resistance reads 180 Ω. What does Table 41.5 NOTE 2 / 411.5.3 commentary say about this?',
     options: [
-      'Compliant — within 1667 Ω limit',
-      'Compliant against the 1667 Ω limit but the earth-electrode resistance is approaching 200 Ω, where Table 41.5 NOTE warns the value may not be stable. Record the reading and either improve the electrode (additional rod / parallel arrangement) or repeat the test under different soil conditions to confirm',
-      'Non-compliant — anything over 100 Ω fails',
-      'Compliant only if a 100 mA RCD is fitted',
+      'Compliant outright — 220 Ω is comfortably within the 1667 Ω limit, nothing more needed',
+      'Non-compliant — anything over 100 Ω fails automatically on a TT installation',
+      'Compliant only once a 100 mA RCD is fitted in place of the 30 mA device',
+      'Compliant against 1667 Ω, but the electrode nears 200 Ω where the NOTE warns it may drift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Table 41.5 NOTE 2 advises that earth electrode resistance values above 200 Ω may not be stable as soil conditions change due to drying and freezing. 180 Ω is below the limit but close enough that long-term stability is doubtful. Either improve the electrode or document the seasonal context and re-test.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'You are testing an installation with a 100 mA time-delayed (S-type) upfront RCD and 30 mA RCBOs on every final circuit. The no-trip method works on the 30 mA RCBOs but the meter trips the 100 mA RCD on the upfront device whenever you try to test through it. What is the procedural fix?',
     options: [
-      'Disable the 100 mA RCD for the test',
-      'Use the no-trip Zs setting that targets the lower IΔn (the 30 mA limit) — the meter pulses below 30 mA, which is well below 100 mA. If the upfront 100 mA RCD still trips, check it for sensitivity drift or that you are actually on no-trip mode and not high-current loop',
-      'Test at a different time of day',
-      'Replace the upfront RCD',
+      'Use the no-trip setting that pulses below 30 mA; if the 100 mA RCD still trips, check the meter mode',
+      'Disable the 100 mA upfront RCD for the duration of the loop test',
+      'Test at a different time of day when the supply is more lightly loaded',
+      'Replace the upfront 100 mA RCD with a less sensitive 300 mA device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The no-trip method pulses below the lowest RCD IΔn in the chain — typically below 30 mA for any RCD-protected installation. A 100 mA upstream RCD should never see enough current to trip during a no-trip test. If it does, either the RCD is over-sensitive (drifting in operating characteristic), or the meter is actually on high-current loop mode by error. Verify the meter setting first.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'A no-trip Zs reading is reported by the meter as &lsquo;1.4 Ω ±18 %&rsquo;. Why is the no-trip accuracy band wider than the high-current method, and what does that mean for borderline readings?',
     options: [
-      'The accuracy is the same — the meter is faulty',
-      'No-trip works by extrapolation from a small voltage drop on a small test current, which inherently has a worse signal-to-noise ratio than a 25 A high-current test. BS EN 61557-3 / -6 allows the wider band. For borderline readings — within the meter accuracy of a Table 41.3 / 41.5 limit — repeat the test, record both readings, and apply engineering judgement against the calculated value',
-      "It's a meter calibration issue",
-      'Always halve the no-trip reading to get the real value',
+      'The accuracy is identical to high-current — the meter must be faulty',
+      "It is purely a meter calibration issue, fixed by re-zeroing the leads",
+      'Always halve the no-trip reading to recover the real Zs value',
+      'The small test signal gives worse signal-to-noise, so repeat and corroborate borderline readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 61557-3 (loop impedance) and -6 (RCDs) permit a wider accuracy band on no-trip Zs measurements because the test signal is small and the meter relies on extrapolation. A typical published spec is ±15 % to ±20 % vs ±5 % on the high-current method. Borderline readings — within meter accuracy of the limit — need repetition and corroboration with the calculated R1+R2 + Ze, not blind acceptance.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'After a no-trip Zs measurement you also need to confirm the RCD operates within its disconnection time. What does Reg 643.8 (additional protection) require for a 30 mA RCD?',
     options: [
-      'No trip test required — Zs is enough',
-      'Test using equipment to BS EN 61557-6 at the rated residual operating current (IΔn). Effectiveness is deemed verified where a general non-delay RCD disconnects within 300 ms maximum at IΔn (the BS 7671 stated limit). Most multifunction testers report the actual trip time — record it',
-      'Trip at 5 × IΔn only',
-      'Trip at half IΔn — anything above that is a fail',
+      'No trip test is required — a compliant Zs reading is enough on its own',
+      'Trip-test at 5 × IΔn only, recording the fast-disconnection time',
+      'Test to BS EN 61557-6 at IΔn; a general non-delay RCD must clear within 300 ms',
+      'Trip-test at half IΔn — any operation above that current is a fail',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.8 (additional protection) requires verification of RCD operation using equipment to BS EN 61557-6. BS 7671 states that effectiveness is deemed verified where a general non-delay RCD disconnects within 300 ms maximum at IΔn — that is the stated acceptance limit. Most multifunction testers record the actual trip time; record it on the schedule for the next inspector.',
   },

@@ -43,9 +43,9 @@ const checks = [
     question: 'GN3 sets a typical default sampling rate for periodic inspection of an installation in occupied use as:',
     options: [
       "10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.",
-      "Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14",
-      "Under PME (TN-C-S) earthing, if the DNO neutral conductor is lost (open PEN fault), the exposed metalwork of the EVSE and the vehicle could rise to a dangerous voltage — since a person touching the vehicle while standing on the ground could receive a fatal electric shock, the risk is greater outdoors where there is better contact with true earth",
-      "PME conditions don’t apply on petrol forecourts because of the explosive-atmosphere risk — a PEN fault could cause sparks at the metalwork. Industry practice (and the energy networks’ guidance) is to derive a TT zone for the hazardous-area equipment.",
+      "100% of every accessory, DB and circuit on every periodic inspection — sampling is not permitted on an occupied installation because every point must be proven before the report can be issued",
+      "A fixed 25% of accessories with the consumer units excluded — the CUs are covered separately by the manufacturer maintenance contract, so the periodic inspection samples only the final-circuit accessories",
+      "1% of accessories chosen at random, with the sampling rate fixed by GN3 regardless of installation type, so the inspector has no discretion to vary it",
     ],
     correctIndex: 0,
     explanation:
@@ -55,10 +55,10 @@ const checks = [
     id: 'm5-s5-sub3-extent-record',
     question: 'The "Extent and Limitations of the Inspection" section on the EICR exists to:',
     options: [
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
+      "Set the price of the inspection by listing the accessories to be tested, so the customer can see how the quote was built up from the number of points covered",
       "Record exactly what the inspection covered (extent) and what was excluded or sampled rather than 100% inspected (limitations) — agreed with the customer in writing before the inspection started, signed off by the customer, and reproduced on the front of the report so anyone reading the EICR knows what is and is not certified.",
-      "Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\\\\\\'s perspective before sending)",
-      "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
+      "Record the test instrument serial numbers and calibration dates, so the next inspector can confirm the readings were taken with traceable equipment",
+      "List the BS 7671 regulation numbers that each circuit was tested against, so the report demonstrates which clauses were applied during the inspection",
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     id: 'm5-s5-sub3-sample-fail',
     question: 'During a 10% sample of socket-outlets you find that 3 out of 10 sampled have evidence of overheating at terminations. Best response:',
     options: [
-      "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
-      "A short dynamic walk-round of every room you will work in today, comparing what is in front of you against what the RAMS describes. Anything that has changed (new pet, kids home from school, decorating in progress, a damp patch that was not there at the survey) becomes a fresh hazard you record before you start.",
-      "Expand the sample to a higher percentage — typically 100% or until the defect rate falls — because a 30% defect rate in the sample indicates the sampling assumption (occasional rare defects) is broken. Document the expansion in the report. The original sample assumption no longer applies; broader inspection is needed to characterise the true defect rate.",
-      "No fixed maximum — assessed by load × frequency × posture × environment × individual capability. HSE filter values give \\\\\\\"guideline weights\\\\\\\" that depend on lift zone (close to body, near floor, above shoulder etc); typical guideline ~25kg lift from waist by an adult male in close hold.",
+      "Record the three defective sockets as C2 observations and leave the rest of the sample untested, because the agreed 10% sample has now been completed and the inspection scope is therefore satisfied",
+      "Average the defect rate across the whole installation — three faults in ten implies about thirty across a hundred sockets, so record that estimated figure on the report and move on without further testing",
+      "Expand the sample — typically to 100% or until the defect rate falls — because a 30% rate breaks the assumption that defects are rare. Document the expansion; broader inspection is needed to characterise the true condition",
+      "Stop the inspection and issue an Unsatisfactory report straight away, because three faults in the sample is already enough to fail the whole installation and no further testing of the sockets is needed",
     ],
     correctIndex: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'The "scope" of an EICR is set by:',
     options: [
-      "Provide detailed, specific answers drawing on real workplace examples from your portfolio, explain the reasoning behind your decisions, demonstrate your understanding of underpinning knowledge, and be honest about areas you are still developing",
+      "BS 7671 Part 6, which sets a fixed mandatory scope for every EICR — the inspector must cover every circuit and accessory in full, with no scope for negotiation or sampling",
       "Written agreement between the contractor and the customer in advance of the inspection, recorded on the front of the EICR under Extent of the Inspection, defining what is included, what is excluded, and any sampling rates applied.",
-      "During fault diagnosis you discover the agreed scope must change (additional cabling required, asbestos found, hidden defects) — written variation captures cost, time and consent before extra work proceeds",
-      "The installation business must hold MCS PV certification, with at least one Suitably Qualified Person trained to MIS 3002 and the underpinning electrical qualifications",
+      "The competent person scheme the inspector belongs to, which dictates a standard scope for all members so that every EICR issued under the scheme covers identical items",
+      "The age of the installation alone — older installations are inspected in full and newer ones sampled, with the cut-off set by the edition of BS 7671 in force at installation",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'A customer asks you to quote for an EICR but says "just do the bare minimum to get a piece of paper". The right professional response is:',
     options: [
-      "The JIB Apprentice Grading scheme tracks an apprentice's progress through training and uses recorded competence (often drawn from the diary, portfolio and review forms) to support grade progression. JIB grades are tied to industry-standard pay rates under the JIB Working Rules; progressing through the grades requires evidence, and the diary is part of the evidence chain.",
-      "Because in a broken-PEN fault on PME, the entire installation's neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn't melt before it is reset.",
-      "Explain that an EICR has minimum content requirements set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but the sampling itself must be representative and the limitations recorded in writing. Walk the customer through what an EICR can and cannot exclude. If they still want sub-minimum work, decline and document the refusal.",
-      "Three-step matrix: (1) Culpability — Very High / High / Medium / Low; (2) Harm — Category 1 (death/permanent), 2 (serious), 3 (minor) with adjustments for risk of higher harm or multiple persons; (3) Turnover band — Large (£50m+), Medium (£10-£50m), Small (£2-£10m), Micro (under £2m). Cell in the matrix gives a starting point and a range. Adjusted up for aggravating factors, down for mitigating.",
+      "Agree to issue a basic certificate covering only the consumer unit, since the CU is the most important part and a quick CU-only check satisfies the minimum requirement for a periodic report",
+      "Quote for a visual-inspection-only EICR with no testing, because a visual report is quicker and cheaper and still counts as a valid periodic inspection where the customer wants the bare minimum",
+      "Explain that an EICR has minimum content set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but must be representative and the limitations recorded in writing. Walk them through what it can and cannot exclude; if they still want sub-minimum work, decline and document the refusal",
+      "Decline the work entirely and report the customer to the local authority, because any request to limit the scope of an EICR is an attempt to obtain a fraudulent certificate",
     ],
     correctAnswer: 2,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 3,
     question: "On a 1980s industrial unit with documented full O&M records and a competent on-site maintenance team that carries out monthly checks and annual deep maintenance, the inspector can:",
     options: [
-      "An improvement notice gives a specified time period to remedy a contravention, while a prohibition notice requires the immediate or near-immediate cessation of an activity that poses a risk of serious personal injury",
-      "Yes. NICEIC, NAPIT, ELECSA all require members to hold PL (typically £5m+), EL if employing anyone, and (often) PI if doing design work. Specific minimum cover levels are set in scheme rules; the assessor checks evidence at annual assessment. Some schemes offer affiliated insurance products (NICEIC Insurance, NAPIT Insurance) at member rates.",
-      "Lithium batteries are hazardous waste (and class 9 dangerous goods); the design should consider take-back arrangements with the manufacturer/supplier, ease of safe removal, and clear labelling for first responders and end-of-life handlers",
-      "Replace the periodic inspection with reliance on the O&M regime under GN3 guidance — formal periodic can be reduced or replaced where an effective management system with competent permanent on-site maintenance staff is in place. The decision must be documented and the management regime evidenced.",
+      "Skip the inspection entirely, because a competent on-site maintenance team carrying out monthly checks removes the legal need for any periodic inspection of the fixed installation",
+      "Extend the inspection interval to twenty years, because the documented maintenance regime guarantees the installation will remain compliant for that period without further inspection",
+      "Reduce the sampling rate to 1% of accessories, because the maintenance team has already inspected the rest, so the inspector only needs to spot-check a token sample",
+      "Reduce or replace the formal periodic with reliance on the O&M regime under GN3 — permitted where an effective management system with competent permanent on-site maintenance staff is in place, provided the decision is documented and the regime is evidenced",
     ],
     correctAnswer: 3,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 4,
     question: 'You are quoting an EICR on a fully tenanted block of 30 flats. The freeholder commissions the inspection and wants the common parts plus a sample of flats inspected. The right scope to propose:',
     options: [
-      "Common parts (landlord supply, intake, distribution, common-area lighting, lift supplies, cleaner sockets) inspected fully. Flats sampled — typical 10-20% sample with the agreement of the freeholder and ideally the tenants — and the limitation clearly recorded that the EICR covers common parts in full and a defined sample of flats; individual flats not sampled retain their own EICR responsibility under the PRS Regulations or the leaseholder's responsibility.",
-      "MCS certificate; Electrical Installation Certificate (BS 7671); G98 or G99 DNO notification copy; manufacturer commissioning record(s); MCS performance estimate (SCOP, kWh / kWp / yr, payback, etc.); warranty documentation for all major components; user instruction manuals; maintenance schedule and service intervals; F-Gas record (where refrigerant work was carried out); contact details for fault reporting; and the MCS Code complaints process. Pack is provided in physical or durable digital form on handover day.",
-      "Unlimited fine, and / or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline for Health and Safety Offences sets the tariff using a culpability-and-harm matrix — even medium-culpability mid-harm cases against an individual can attract a custodial sentence, particularly where someone has been seriously injured or killed. Companies face fines that scale with turnover; individuals face fines + prison.",
-      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
+      "Inspect the common parts (landlord supply, intake, distribution, common lighting, lift supplies) in full and sample 10-20% of flats with the freeholder's agreement, recording clearly that unsampled flats retain their own EICR responsibility under the PRS Regulations or the leaseholder",
+      "Inspect every flat in full as well as the common parts, because the freeholder is the duty holder for the entire block and sampling only some of the flats would leave the overall report unsatisfactory and incomplete",
+      "Inspect only the common parts and exclude all of the flats, because the installations inside individual flats are always the leaseholder's responsibility and can never be included in a freeholder-commissioned EICR",
+      "Inspect a sample of the flats only and exclude the common parts, because the common-area installations are already covered by the building insurance survey rather than needing a separate EICR",
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "GN3's guidance on the sampling principle is best summarised as:",
     options: [
-      "MFT — annually (Megger UK Service ~£100 per unit, UKAS-traceable). Two-pole tester — every 24 months (Martindale ~£40). Multimeter — annually (Fluke ~£80–150). Clamp meter — annually. Proving unit — annually with the two-pole. Track in a calibration register; replace stickers on receipt back from the lab. NICEIC / NAPIT audits will check.",
+      "Always sample exactly 10% of every item on every installation, because GN3 fixes the sampling rate at 10% and the inspector has no discretion to vary it up or down",
       "Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.",
-      "Third-person self-talk creates psychological distance from the emotion, activating more of the prefrontal cortex's analytical capacity and reducing the amygdala's emotional intensity, allowing for more objective self-reflection",
-      "Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation",
+      "Sample only the circuits the customer specifically asks about, because the scope of a periodic inspection is set entirely by the customer instructions rather than by the inspector judgement",
+      "Sample the easiest-to-access points first and stop once the quoted time is used up, because the commercial limit on the job determines how much of the installation is inspected",
     ],
     correctAnswer: 1,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: "A customer tells you that the data centre's main switchboard cannot be isolated for testing because the IT load is 24/7 critical. Your right response on EICR scope:",
     options: [
-      "Walk test = activating each detector in turn (using a heat / smoke / pull station test tool) and verifying the panel correctly identifies the zone. BS 5839-1 requires a walk test as part of the annual service AND after any change to the system OR rectification of a fault that affected a zone. The L3 apprentice doesn't normally do fire-alarm walk tests (specialist work) but supports the senior fire-alarm engineer. The walk test verifies the addressable / zone identification AND the sounder operation. Documented in the fire alarm log book.",
-      "On any multi-discipline project of meaningful size, BIM is how electrical coordinates with structural, mechanical, architectural and fire engineering disciplines. The L3 designer who cannot read or contribute to a BIM model is locked out of a growing share of commercial, public sector and HRRB work where BIM is the procurement default.",
-      "Propose a scope that includes everything that can be safely tested live (visual inspection, thermographic survey of switchgear, RCD test buttons, live tests on circuits where safe to do so) and clearly excludes what cannot be tested without isolation, recording the exclusion under Limitations with the recommendation that the duty holder schedule a planned outage for full testing within an agreed period. Note any FI for items the live-only inspection cannot fully verify.",
-      "A 1-page document in plain English: (1) WHAT YOU REPORTED — customer's symptom in their words. (2) WHAT WE FOUND — the fault, in plain English. (3) WHAT WE DID — the fix, in plain English. (4) WHAT WE TESTED — the verification, in plain English. (5) RECOMMENDATIONS — anything further the customer should consider. (6) WARRANTY — what's covered for what period. (7) NEXT STEPS — any follow-up work, retest schedule, contact info. Most modern firms have a customer summary template; the apprentice fills it in at the end of each job. Customer keeps the summary; firm keeps the technical job sheet.",
+      "Refuse the inspection until the data centre agrees to a full shutdown, because an EICR cannot be issued unless every circuit has been dead-tested with the supply isolated",
+      "Carry out all the dead tests with the switchboard live, because modern test instruments are designed to take continuity and insulation readings on energised conductors safely",
+      "Propose a scope covering everything that can be tested safely live (visual, thermographic survey, RCD test buttons, live tests where safe), clearly exclude what needs isolation under Limitations, recommend a planned outage within an agreed period, and code FI for items the live-only inspection can't fully verify",
+      "Issue a Satisfactory EICR covering only the visual inspection, recording no limitations, because the IT load being critical is itself a justification for omitting all electrical testing",
     ],
     correctAnswer: 2,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 7,
     question: 'When sampling final circuits for testing, the priorities for inclusion in the sample are:',
     options: [
-      "I apply the requirements of the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, and relevant ACoPs and British Standards such as BS 7671, through practical actions including risk assessment, safe isolation, use of appropriate PPE, maintenance of competence, and accurate record keeping",
-      "Uses an EFLI tester to measure the loop impedance from the supply, with the installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.",
-      "A formal procedure resulting from systematic examination of a task to identify hazards, define safe methods to eliminate or minimise those hazards. Documented in the Method Statement portion of RAMS. Permits-to-work are a specific form of SSoW for high-hazard activity.",
-      "Risk-weighted — circuits in special locations (bathrooms, kitchens, outdoors), socket circuits used by ordinary persons, circuits supplying high-risk equipment (showers, EV chargers, electric heating), circuits showing visible signs of damage or modification, and the dedicated samples needed to characterise common features of the installation. Document the sampling logic.",
+      "Random selection across the whole installation, because a truly random sample is the only statistically valid way to estimate the overall defect rate without bias",
+      "Whichever circuits are easiest to access and quickest to test, because minimising disruption to the occupier is the primary consideration when choosing the sample",
+      "The newest circuits first, because recently installed wiring is most likely to contain workmanship defects, whereas older circuits have already proven themselves in service",
+      "Risk-weighted — circuits in special locations, socket circuits used by ordinary persons, circuits feeding high-risk equipment (showers, EV chargers, electric heating) and any showing visible damage or modification get priority. Document the sampling logic",
     ],
     correctAnswer: 3,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 8,
     question: "The 'Extent and Limitations' agreement should be:",
     options: [
-      "Tailored to the specific installation, agreed in writing in advance, signed by both parties (or evidenced via written quote acceptance), reproduced on the front of the EICR, and specific enough that anyone reading the report can understand exactly what was inspected and what was not.",
-      "Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14",
-      "At minimum: power topology (cables, breakers, DBs); annotations (ratings, calc results); revision clouds and notes; legend and title block. Some designers add layers for fault current, voltage drop, disconnection time and sub-discipline (e.g. emergency lighting circuits, fire alarm circuits, IT critical) so layers can be turned on or off for clarity.",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — treating the setback as permanent, pervasive, and entirely personal",
+      "Tailored to the installation, agreed in writing in advance (or via written quote acceptance), reproduced on the front of the EICR, and specific enough that any reader can understand exactly what was inspected and what was not",
+      "A standard pre-printed paragraph used on every EICR, because a single generic statement covers all eventualities and saves the inspector from having to tailor the extent-and-limitations wording to each individual job",
+      "Agreed verbally on the day of the inspection, because recording extent and limitations in advance would delay the start of the work and is not required by BS 7671",
+      "Left blank where a full inspection was carried out, because the extent and limitations section only needs completing when some part of the installation was excluded from the inspection.",
     ],
     correctAnswer: 0,
     explanation:

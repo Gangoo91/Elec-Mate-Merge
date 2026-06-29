@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Which regulation covers manual handling safety?',
     options: [
-      'To plan work alongside other trades',
+      'Work at Height Regulations 2005',
       'Manual Handling Operations Regulations 1992 (MHOR)',
-      'Protocol choice and network capacity',
-      'Push-pull connector design for reliable mating',
+      'PUWER 1998',
+      'Control of Substances Hazardous to Health 2002',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should you keep a load close to your body when lifting?',
     options: [
-      'It is the same across all branches',
-      'Scaled heating elements or failed elements',
+      'It makes the load feel heavier and easier to control',
+      'It allows you to lift with your back rather than your legs',
       'Reduce strain and leverage on the spine',
-      '1 fire marshal per 50 occupants',
+      'It speeds up the lift by shortening the carry distance',
     ],
     correctIndex: 2,
     explanation:
@@ -72,10 +72,10 @@ const Module4Section7_1 = () => {
       id: 1,
       question: 'What is the main UK regulation covering manual handling?',
       options: [
-        'Short payback, low risk, high energy savings',
+        'Workplace (Health, Safety and Welfare) Regulations 1992',
         'Manual Handling Operations Regulations 1992',
-        'Moisture, dust, heat, or UV light',
-        'Complete electrical path between two points',
+        'Personal Protective Equipment Regulations 1992',
+        'Provision and Use of Work Equipment Regulations 1998',
       ],
       correctAnswer: 1,
       explanation:
@@ -153,9 +153,9 @@ const Module4Section7_1 = () => {
       question:
         'When carrying a long piece of trunking with a partner, what should you do before turning corners?',
       options: [
-        'Continuity of protective conductors',
-        'Test equipment failure or incorrect connections',
-        'tan φ = √3(W1 - W2) / (W1 + W2)',
+        'Speed up to get round the corner quickly',
+        'Lower the load to the floor and drag it round',
+        'Let go of your end so your partner can steer',
         'Communicate clearly with your partner',
       ],
       correctAnswer: 3,

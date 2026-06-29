@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'uk-frequency',
     question: 'What is the standard UK mains supply frequency?',
     options: [
-      '40Hz',
-      '60Hz',
       '50Hz',
+      '60Hz',
+      '40Hz',
       '100Hz',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The UK mains supply operates at 50Hz, meaning the voltage completes 50 full cycles per second. This is standard across Europe, whilst North America uses 60Hz.',
   },
@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     options: [
       '100 rad/s',
       '50 rad/s',
-      '314 rad/s',
       '157 rad/s',
+      '314 rad/s',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Angular frequency ω = 2πf = 2 × π × 50 = 314.16 rad/s ≈ 314 rad/s. This is used in instantaneous value calculations.',
   },
@@ -208,10 +208,10 @@ const quizQuestions = [
     question:
       'A building in the UK receives equipment designed for 60Hz, 120V. Which issue is most critical?',
     options: [
-      'An unlimited fine and/or up to 2 years imprisonment',
-      'Resistance increases as temperature increases',
+      'Only the voltage difference matters, as frequency has no effect on equipment',
+      'Only the frequency difference matters, as voltage is automatically regulated',
       'Both voltage and frequency differences affect operation',
-      'To maintain battery charge during normal operation',
+      'Neither difference matters, as all modern equipment self-adjusts',
     ],
     correctAnswer: 2,
     explanation:

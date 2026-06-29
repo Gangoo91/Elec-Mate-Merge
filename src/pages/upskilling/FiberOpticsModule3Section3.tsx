@@ -56,87 +56,107 @@ const quizQuestions = [
   {
     question: 'Cable tray is available in which common configurations?',
     options: [
-      'Solid bottom only',
       'Ladder and perforated types',
-      'Mesh only',
-      'Enclosed tube only',
+      'Solid-bottom enclosed type only',
+      'Wire mesh basket only',
+      'Sealed circular tube only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
+    explanation:
+      'Cable tray is commonly supplied as ladder rack (side rails with rungs) and as solid or perforated tray, each suiting different cable loads and ventilation needs.',
   },
   {
-    question: 'The purpose of innerduct within a larger duct is to:',
+    question: 'What is the purpose of innerduct within a larger duct?',
     options: [
-      'Increase pulling tension',
-      'Subdivide space and maintain bend radius',
-      'Add fire resistance',
-      'Reduce installation cost',
+      'To deliberately increase pulling tension',
+      'To add a layer of fire resistance to the run',
+      'To subdivide the space and maintain bend radius',
+      'To reduce the cost of the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
+    explanation:
+      'Innerduct subdivides a larger duct into separate channels, protecting each cable and helping maintain the minimum bend radius while leaving capacity for future pulls.',
   },
   {
-    question: 'When calculating conduit fill, fibre cable jam ratio should be:',
-    options: ['Above 1.0', 'Exactly 1.0', 'Below 0.8 (ideally 0.6)', 'Not considered'],
-    correctAnswer: 2,
+    question: 'When calculating conduit fill, the fibre cable jam ratio should be:',
+    options: ['Below 0.8 (ideally 0.6)', 'Above 1.0', 'Exactly 1.0', 'Disregarded entirely'],
+    correctAnswer: 0,
+    explanation:
+      'The jam ratio (conduit ID divided by cable OD) should be kept below 0.8, ideally around 0.6, to avoid cables wedging together during a multi-cable pull.',
   },
   {
     question: 'Underground duct systems for fibre should include:',
     options: [
+      'Direct burial with no access chambers',
       'Manholes or access chambers at intervals',
-      'Direct burial without chambers',
-      'Only straight runs',
-      'No draw ropes',
+      'Only perfectly straight runs',
+      'No draw ropes left in the duct',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
+    explanation:
+      'Access chambers or manholes at regular intervals (typically 200-300m), at direction changes, and at junctions allow pulling, jointing, and future maintenance access.',
   },
   {
     question: 'Vertical cable runs in risers should be supported at intervals not exceeding:',
     options: ['500mm', '1-1.5 metres', '3 metres', '5 metres'],
     correctAnswer: 1,
+    explanation:
+      'Vertical runs should be supported every 1-1.5m so accumulated cable weight does not stretch the cable or strain terminations at the top of the riser.',
   },
   {
-    question: 'When fibre cables must cross power cables:',
+    question: 'When fibre cables must cross power cables, they should:',
     options: [
-      'Route parallel for maximum distance',
+      'Run parallel for the maximum possible distance',
+      'Need no special precautions at all',
+      'Only ever cross inside junction boxes',
       'Cross at right angles',
-      'No precautions needed',
-      'Only at junction boxes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
+    explanation:
+      'Crossing at right angles minimises the length of close proximity to power cables, reducing heat exposure and physical-damage risk during power-cable maintenance.',
   },
   {
     question: 'Cable tray bends should maintain a radius of:',
     options: [
-      'Equal to tray width',
-      'No requirement',
-      'Minimum cable bend radius or greater',
-      '30mm fixed',
+      'The minimum cable bend radius or greater',
+      'A value equal to the tray width',
+      'No particular requirement applies',
+      'A fixed 30mm regardless of cable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
+    explanation:
+      'Tray bends and fittings must meet or exceed the minimum bend radius of every cable installed, or macrobend loss and mechanical damage can result.',
   },
   {
     question: 'Pull boxes are installed in conduit runs to:',
     options: [
-      'Store spare cable',
+      'Provide convenient spare-cable storage',
+      'Act as electrical test points',
       'Break up long pulls and change direction',
-      'Provide test points',
-      'Mount transceivers',
+      'Provide a mounting point for transceivers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
+    explanation:
+      'Pull boxes break up long conduit runs and accommodate direction changes, reducing pulling tension and enabling future cable additions without a full re-pull.',
   },
   {
     question: 'The recommended maximum pull length for fibre in conduit is typically:',
-    options: ['10m', '30m', '60-100m depending on cable and bends', 'Unlimited'],
-    correctAnswer: 2,
+    options: ['10m', '60-100m depending on cable and bends', '30m', 'Effectively unlimited'],
+    correctAnswer: 1,
+    explanation:
+      'A practical maximum pull is around 60-100m, depending on cable construction and the number of bends; beyond this, pull boxes or intermediate pulls are needed to limit tension.',
   },
   {
-    question: 'Segregation from data (Cat6/Cat6A) cables is:',
+    question: 'Segregation of fibre from data (Cat6/Cat6A) cables is:',
     options: [
       'Required - minimum 300mm',
       'Required - minimum 50mm',
-      'Not required - can share containment',
       'Only required for shielded data cables',
+      'Not required - they can share containment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
+    explanation:
+      'Glass fibre is immune to electromagnetic interference, so it can share containment with copper data cables; segregation is only needed from power cables.',
   },
 ];
 

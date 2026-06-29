@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'During a pre-use visual inspection, you notice that some stitching on a shoulder strap has come loose. What should you do?',
     options: [
-      'Continue using the harness — minor stitching damage is normal',
-      'Apply tape to reinforce the damaged area',
       'Remove the harness from service immediately and report it for inspection by a competent person',
+      'Apply tape to reinforce the damaged area',
+      'Continue using the harness — minor stitching damage is normal',
       'Use the harness but avoid attaching a lanyard to the affected side',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Any visible damage to load-bearing stitching is a reason to immediately remove the harness from service. Stitching integrity is critical — it holds the webbing together under the forces of a fall arrest event. The harness must be inspected by a competent person who will decide whether it can be repaired or must be discarded.',
   },
@@ -55,11 +55,11 @@ const quickCheckQuestions = [
       'What information must be recorded for each piece of personal fall protection equipment?',
     options: [
       'Just the date it was purchased',
-      'Only the date of the last thorough examination',
       'Unique identification number, inspection log, thorough examination certificates, and service history',
+      'Only the date of the last thorough examination',
       "The user's name only",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A comprehensive record must be maintained for every piece of PPE including: unique ID number, date of manufacture, date of first use, pre-use inspection records, thorough examination certificates, any repairs or modifications, and date of withdrawal from service.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'How frequently must personal fall protection equipment receive a thorough examination under LOLER?',
     options: [
-      'Every 3 months',
       'Every 6 months',
+      'Every 3 months',
       'Every 12 months',
       'Only when damage is suspected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) require thorough examination at intervals not exceeding 6 months for equipment used to arrest a fall from height.',
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
       'During a pre-use inspection, which of the following would NOT require the harness to be immediately removed from service?',
     options: [
       'Frayed webbing on a leg strap',
-      'A small scuff mark on a non-load-bearing label holder',
       'A bent D-ring',
+      'A small scuff mark on a non-load-bearing label holder',
       'Partially deployed shock absorber indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A small scuff on a non-load-bearing label holder does not affect the harness's ability to arrest a fall. However, frayed webbing, bent D-rings, and deployed shock absorbers are all defects affecting load-bearing components and require immediate removal from service.",
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'Which of the following is the correct way to store a fall arrest harness?',
     options: [
       'Folded in a toolbox at the bottom of the van',
-      'Hung up in a dry, UV-free location away from chemicals and sharp edges',
       'Kept on the scaffold tower between uses',
       'Stored in a sealed plastic bag to keep it dry',
+      'Hung up in a dry, UV-free location away from chemicals and sharp edges',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Harnesses should be hung up (to maintain shape and allow air circulation) in a dry location away from UV light, chemicals, heat, and sharp edges. Sealed bags can trap moisture and promote mould growth; toolboxes can cause abrasion damage.',
   },
@@ -149,8 +149,8 @@ const quizQuestions = [
     id: 5,
     question:
       'A harness label shows the manufacture date as 2016 and the first-use date as 2018. The manufacturer states a maximum service life of 5 years from first use. In which year must this harness be withdrawn from service at the latest?',
-    options: ['2021', '2023', '2026', '2028'],
-    correctAnswer: 1,
+    options: ['2023', '2021', '2026', '2028'],
+    correctAnswer: 0,
     explanation:
       '5 years from first use (2018) = 2023. The harness must be withdrawn from service by 2023 at the latest, even if it passes thorough examinations. Some manufacturers also set a maximum calendar life from manufacture date — always check both limits.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'When inspecting a lanyard, which of the following signs of damage would you look for?',
     options: [
-      'Fraying, kinking, corrosion, chemical staining, and heat damage',
       'Only visible cuts longer than 50 mm',
       'Only rust on the karabiners',
+      'Fraying, kinking, corrosion, chemical staining, and heat damage',
       'Only whether the label is present',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'A thorough lanyard inspection covers all potential damage: fraying or broken strands (webbing or cable), kinking (especially wire rope), corrosion on metalwork, chemical staining or stiffness in webbing, heat damage (melting, discolouration), and correct function of the karabiner gates.',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
     question: 'What must happen to a thorough examination finding that reveals a dangerous defect?',
     options: [
       'The finding is recorded but the equipment can continue in use',
-      'The equipment must be withdrawn from service immediately and the defect report sent to the employer',
       'The user must be retrained before using the equipment again',
       'The employer has 28 days to arrange a repair',
+      'The equipment must be withdrawn from service immediately and the defect report sent to the employer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If a thorough examination reveals a defect that poses an immediate danger, the equipment must be taken out of service on the spot. The competent person must issue a report to the employer detailing the defect, and if the risk is imminent, must also notify the HSE.',
   },

@@ -44,9 +44,9 @@ const quickCheckQuestions = [
       'When carrying out live working on a low voltage system, the minimum requirement for accompaniment is:',
     options: [
       'A second competent person must be present who can render the circuit dead in an emergency',
-      'It is suitable for the intended use, maintained in a safe condition and inspected',
-      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
-      'Aggregated distributed energy resources acting together as a single power plant',
+      'A supervisor must sign the permit but need not remain on site during the work',
+      'A first aider must be on call and reachable by telephone within ten minutes',
+      'Two electricians must work on the live parts together to share the task',
     ],
     correctIndex: 0,
     explanation:
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     id: 'reg29-defence',
     question: 'Regulation 29 of the EAWR 1989 provides what type of legal defence?',
     options: [
-      'Detect if the scan cycle takes longer than expected, indicating a program or hardware fault',
+      'A defence that the breach was caused by a third party outside the duty holder control',
+      'A defence that the cost of compliance was disproportionate to the risk involved',
+      'A defence that no injury actually resulted from the contravention',
       'A defence that the person took all reasonable precautions and exercised all due diligence to avoid the offence',
-      'Test results, performance verification, defect lists, and acceptance criteria',
-      'The "responsible person" (typically the employer) must report — online via HSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s reporting portal, equivalent to F2508',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Regulation 29 provides a 'due diligence' defence: if charged with an offence under Regulations 4-16 (which impose absolute duties), a person may prove that they took all reasonable precautions and exercised all due diligence to avoid committing the offence. This is a high bar — it requires demonstrating systematic, documented compliance, not just good intentions.",
   },
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'Regulation 14 of the EAWR 1989 states that no person shall work on or near a live conductor UNLESS:',
     options: [
-      'The client (employer) — they are the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s eyes and ears for quality on site',
+      'The voltage is below 230 V and the worker holds a current ECS card',
       'It is unreasonable to work dead, reasonable to work live, and suitable precautions are taken',
-      'Charging employees for anything provided in pursuance of health and safety requirements',
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
+      'The work is supervised and a permit to work has been issued by the client',
+      'The circuit is protected by a 30 mA RCD and the work takes under ten minutes',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 2,
     question: "When justifying live working, 'unreasonable to work dead' means:",
     options: [
-      'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
+      'It would be inconvenient or costly for the customer to lose supply during the work',
+      'The work would take longer to complete if the circuit were isolated first',
       'There is a genuine technical or safety reason why making the circuit dead would create equal or greater danger, or is not possible',
-      'Equipment to be isolated, secured against re-energisation, and proved dead before work begins',
+      'The worker is confident and experienced enough to work safely while the circuit is live',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,7 +101,7 @@ const quizQuestions = [
       'For a 33 kV overhead line, the minimum safe approach distance for persons and equipment is approximately:',
     options: [
       '3.0 metres',
-      '1.2 metres',
+      '9.0 metres',
       '15.0 metres',
       '6.0 metres',
     ],
@@ -114,9 +114,9 @@ const quizQuestions = [
     question: 'Barriering around live electrical equipment serves to:',
     options: [
       'Provide physical separation between workers and live parts, preventing accidental contact',
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
-      'Equipment to be isolated, secured against re-energisation, and proved dead before work begins',
-      'Safe approach distances and safe working practices near electricity distribution network equipment',
+      'Discharge any stored energy in the equipment before work begins',
+      'Remove the need for personal protective equipment when working live',
+      'Earth the exposed metalwork so that it cannot become live during a fault',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'ENA Technical Specification 43-8 primarily addresses:',
     options: [
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
+      'The colour coding and labelling of conductors within distribution boards',
       'Safe approach distances and safe working practices near electricity distribution network equipment',
-      'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
-      'Diagnostic fault-finding on a motor control circuit that requires the motor to be running for vibration analysis',
+      'The minimum insulation resistance values for low voltage installations',
+      'The testing and certification of personal protective equipment for live work',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'A live working risk assessment must specifically address:',
     options: [
-      'There is a genuine technical or safety reason why making the circuit dead would create equal or greater danger, or is not possible',
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
+      'Only the voltage of the circuit and the qualifications of the worker',
+      'Only the cost of the work and the time it is expected to take',
       'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
-      'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
+      'Only the manufacturer instructions for the equipment being worked on',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is a legitimate justification for live working?',
     options: [
-      'Equipment to be isolated, secured against re-energisation, and proved dead before work begins',
-      'Safe approach distances and safe working practices near electricity distribution network equipment',
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
+      'The customer does not want to lose supply to their premises during the work',
+      'Isolating the circuit would take too long and delay the rest of the job',
+      'The worker has done this task live many times before without incident',
       'Diagnostic fault-finding on a motor control circuit that requires the motor to be running for vibration analysis',
     ],
     correctAnswer: 3,
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'For LV work (230/400 V), the safe approach distance for live parts that are exposed and uninsulated is:',
     options: [
-      'Sufficient technical knowledge, experience and skill to prevent danger, appropriate to the nature of the work',
+      'A fixed 1.0 metre clearance, the same as for an 11 kV overhead line',
       'Direct contact must be prevented — barriers and/or insulated tools required, with no body part or uninsulated tool within reaching distance of live parts',
-      'There is a genuine technical or safety reason why making the circuit dead would create equal or greater danger, or is not possible',
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
+      'A fixed 600 mm clearance measured from the nearest exposed conductor',
+      'There is no restriction at LV because the flashover distance is negligible',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: "A person who is 'competent' for live electrical work must have:",
     options: [
-      'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
-      'Diagnostic fault-finding on a motor control circuit that requires the motor to be running for vibration analysis',
+      'A current first aid certificate and nothing more',
+      'At least ten years of general electrical experience, regardless of the task',
       'Sufficient technical knowledge, experience and skill to prevent danger, appropriate to the nature of the work',
-      'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
+      'Written permission from the client to carry out the specific task',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     id: 11,
     question: 'The decision to work live must be:',
     options: [
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
-      'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
-      'Provide physical separation between workers and live parts, preventing accidental contact',
+      'Made on the spot by the worker, based on their own judgement at the time',
+      'Agreed verbally with a colleague before the work begins',
+      'Left to the client to decide, since it is their installation',
       'Documented in writing with a formal justification, risk assessment and approval by a responsible person',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
       'If an HV cable is being excavated and the exact position is uncertain, the recommended approach is:',
     options: [
       'Use hand-digging techniques within the defined safety zone, with cable locating equipment and trial holes',
-      'Diagnostic fault-finding on a motor control circuit that requires the motor to be running for vibration analysis',
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
-      'Provide physical separation between workers and live parts, preventing accidental contact',
+      'Use a mechanical excavator slowly, stopping as soon as the cable is seen',
+      'Assume the cable is dead and dig freely once the area has been cordoned off',
+      'Dig from the surface straight down to the expected cable depth in one pass',
     ],
     correctAnswer: 0,
     explanation:

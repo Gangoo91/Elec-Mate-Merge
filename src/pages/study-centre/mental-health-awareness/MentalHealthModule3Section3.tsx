@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'mh3s3-soler-model',
     question: 'What does the SOLER model stand for in active listening?',
     options: [
-      'Speak, Observe, Listen, Empathise, Respond',
       'Sit squarely, Open posture, Lean in, Eye contact, Relax',
+      'Speak, Observe, Listen, Empathise, Respond',
       'Stop, Open up, Look around, Evaluate, React',
       'Stand close, Offer advice, Lean back, Express sympathy, Repeat',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The SOLER model, developed by Gerard Egan, provides a framework for physically showing that you are listening: Sit squarely (face the person), Open posture (uncrossed arms and legs), Lean in slightly (showing interest), Eye contact (comfortable, not intense), and Relax (be natural, not stiff or anxious). These physical cues communicate attentiveness and openness even before you say a word.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
       'What is the key difference between empathy and sympathy in a mental health conversation?',
     options: [
       'Empathy and sympathy are the same thing — both mean feeling sorry for someone',
-      "Empathy means trying to understand and share the person's feelings from their perspective; sympathy means feeling pity or sorrow for them from the outside",
       'Sympathy is more professional than empathy, so it should always be used in a workplace',
       'Empathy means agreeing with everything the person says; sympathy means disagreeing constructively',
+      "Empathy means trying to understand and share the person's feelings from their perspective; sympathy means feeling pity or sorrow for them from the outside",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "This is a crucial distinction. Empathy involves making the effort to understand someone's experience from their perspective — stepping into their shoes, even briefly. It communicates: 'I am trying to understand what this is like for you.' Sympathy, by contrast, involves feeling pity or sorrow for someone from the outside — looking down on their situation. It communicates: 'I feel bad for you.' In a mental health conversation, empathy connects and validates; sympathy can inadvertently create distance and a sense of being pitied.",
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'Carl Rogers identified three core conditions for a therapeutic relationship. Which of the following is one of those conditions?',
     options: [
-      'Technical expertise — knowing the right diagnostic criteria to apply',
       'Unconditional positive regard — accepting the person without judgement or conditions',
+      'Technical expertise — knowing the right diagnostic criteria to apply',
       'Professional distance — maintaining clear emotional boundaries at all times',
       'Directive guidance — telling the person exactly what they need to do to recover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Carl Rogers, the founder of person-centred therapy, identified three core conditions: empathy (understanding the person's experience from their perspective), congruence (being genuine and authentic), and unconditional positive regard (accepting the person fully, without judgement or conditions). These conditions create the psychological safety that allows people to open up, explore their feelings, and begin to heal. While Rogers developed these for therapy, they apply powerfully to any supportive conversation.",
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
     question: "In the SOLER model, what does 'Open posture' specifically mean?",
     options: [
       'Standing with your arms raised to appear welcoming',
-      'Keeping your arms and legs uncrossed, which communicates openness, receptivity, and willingness to listen',
       'Opening a door so the person can leave if they want to',
+      'Keeping your arms and legs uncrossed, which communicates openness, receptivity, and willingness to listen',
       'Keeping your mouth open to show you are ready to speak',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "In Gerard Egan's SOLER model, 'Open posture' means keeping your arms and legs uncrossed. Crossed arms can unconsciously communicate defensiveness, discomfort, or being closed off, even if you are genuinely listening. An open posture — arms at your sides or resting naturally, legs uncrossed — communicates receptivity, warmth, and willingness to hear what the person has to say. This is a simple physical adjustment that can make a significant difference to how safe the person feels.",
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of an empathic response?',
     options: [
       "'I completely understand — the same thing happened to me last year'",
-      "'That sounds really overwhelming. It makes sense that you would feel that way given everything you have been dealing with'",
       "'I feel so sorry for you — that is terrible'",
       "'You need to stop worrying about it and focus on the positive things in your life'",
+      "'That sounds really overwhelming. It makes sense that you would feel that way given everything you have been dealing with'",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An empathic response demonstrates that you are trying to understand the person's experience from their perspective. 'That sounds really overwhelming. It makes sense that you would feel that way...' validates their emotional experience, normalises their reaction, and communicates understanding. The other options represent common pitfalls: relating everything back to yourself, expressing sympathy (pity) rather than empathy, or dismissing the person's feelings with toxic positivity.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: "What is 'reflecting back' or 'paraphrasing' in active listening?",
     options: [
-      "Repeating the person's exact words back to them like a mirror",
       'Summarising what you have heard in your own words to show understanding and check you have grasped the meaning correctly',
+      "Repeating the person's exact words back to them like a mirror",
       'Reflecting on your own similar experiences and sharing them',
       'Writing down what the person says and reading it back to them at the end',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reflecting back (or paraphrasing) means restating what you have heard in your own words to demonstrate that you have understood the person's meaning and to give them the opportunity to correct any misunderstanding. For example, if someone says 'I just cannot face going into work any more — every morning I feel sick with dread,' you might reflect: 'It sounds like the thought of going to work is causing you real physical distress every morning.' This shows you have listened carefully, understood the emotional content, and not just the words.",
   },
@@ -146,11 +146,11 @@ const quizQuestions = [
     question: "Which of the following responses would be classified as 'toxic positivity'?",
     options: [
       "'That sounds really tough. What has it been like for you?'",
-      "'Everything happens for a reason — just stay positive and good things will come!'",
       "'I can see why you would feel that way. Thank you for telling me.'",
+      "'Everything happens for a reason — just stay positive and good things will come!'",
       "'Would it help to talk about what support is available?'",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Toxic positivity is the excessive and misguided belief that people should maintain a positive mindset regardless of what they are going through. 'Everything happens for a reason — just stay positive!' invalidates the person's genuine suffering, implies they are wrong to feel the way they do, and shuts down the conversation. It may be well-intentioned, but it effectively says: 'Your feelings are inconvenient and I would prefer you to be happy.' Genuine support acknowledges the reality of the person's pain while offering hope and presence.",
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
       'A colleague is telling you about their struggles with anxiety. Midway through, your phone buzzes with a message. What is the BEST response?',
     options: [
       'Quickly glance at the phone to check if it is urgent, then return to listening',
-      'Ignore the phone completely — do not look at it, acknowledge it, or let it break your attention',
       'Pause the conversation to reply to the message, then ask the person to continue',
       "Tell the person 'hold on a second' while you check the message",
+      'Ignore the phone completely — do not look at it, acknowledge it, or let it break your attention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When someone is opening up about their mental health, your undivided attention is one of the most powerful things you can offer. Looking at your phone — even for a moment — sends the message that something else is more important. The best response is to ignore the phone completely. If possible, put it on silent or face-down before the conversation starts. If you forgot and it buzzes, simply let it go without acknowledgement. The message can wait. The person in front of you cannot.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       "A colleague tells you: 'I have been feeling really low lately — some days I do not even want to get out of bed.' Which response demonstrates the BEST listening skills?",
     options: [
       "'You should try exercising in the morning — that always helps me feel better'",
-      "'Lots of people feel like that — it is nothing to worry about'",
       "'That sounds really difficult. How long have you been feeling this way? I am glad you are telling me about it.'",
+      "'Lots of people feel like that — it is nothing to worry about'",
       "'When I was feeling low last year, I found that positive thinking really helped'",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "This response demonstrates three key listening skills: validation ('That sounds really difficult' — acknowledging the emotion), an open question ('How long have you been feeling this way?' — inviting more sharing without being intrusive), and reassurance ('I am glad you are telling me about it' — encouraging them to continue and reinforcing that they did the right thing by opening up). The other responses jump to solutions, minimise, or shift the focus to the listener's own experience.",
   },

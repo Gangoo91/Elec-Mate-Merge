@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A functional test under Reg 643.10 and an RCD trip test under Reg 643.8 are commonly confused. What is the load-bearing distinction?',
     options: [
-      'They are the same test, performed twice for redundancy',
-      'The trip test (643.8) measures the electrical performance of the protective device against a numeric standard (e.g. trips at IΔn within the time limit). The functional test (643.10) verifies the device is correctly mounted, adjusted, installed and operates as intended — including manual operation, the test button, and integration with the rest of the assembly. Both are required',
-      'The functional test only applies to RCDs; the trip test only applies to MCBs',
-      'The functional test is purely visual',
+      'They are the same test, performed twice for redundancy on each device',
+      'The trip test (643.8) measures performance to a number; the functional test (643.10) verifies it operates as installed — both required',
+      'The functional test only applies to RCDs, while the trip test only applies to MCBs',
+      'The functional test is purely a visual check of the device rating and label',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A4:2026 introduced AFDDs into the functional-testing landscape. What does the amendment actually require for an AFDD on the functional-test stage?',
     options: [
-      'Nothing — AFDDs are exempt from functional testing',
-      'The AFDD must be functional-tested via its integral test button (and / or the manufacturer-specified procedure), the test recorded on the inspection schedule, and the indication / status verified to confirm the device is armed and self-test is healthy',
-      'AFDDs are tested only by the live arc-fault simulation method, never the test button',
-      'AFDDs are only required to pass continuity and IR — not 643.10',
+      'Nothing — AFDDs are exempt from functional testing under Reg 643.10',
+      'Verify the manual test facility per the manufacturer, record on the inspection schedule, and check the status indication is healthy',
+      'AFDDs are tested only by a live arc-fault simulation method, never via the test button',
+      'AFDDs need only pass continuity and insulation resistance, not the 643.10 functional test',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'You are mid-way through commissioning. Continuity, IR and polarity (dead) are complete and clean. What is the correct next step in the Part 6 sequence before 643.10 functional testing?',
     options: [
-      'Energise straight to 643.10 — functional testing is the next step regardless',
-      'Complete earth-fault loop impedance (Ze, Zs) and the protective-device verification (RCD trip times under 643.8) first — functional testing under 643.10 sits AFTER the protective-device performance has been numerically verified, because the functional test trusts the device is electrically sound',
-      'Skip functional testing if the IR was clean',
-      'Functional testing comes before continuity in the OSG sequence',
+      'Energise straight to 643.10 — functional testing is the next step regardless of the device tests',
+      'Complete Ze, Zs and the RCD trip-time tests (643.8) first; 643.10 functional testing sits after the numeric verification',
+      'Skip functional testing entirely if the insulation resistance result came back clean',
+      'Functional testing comes before continuity at the very start of the OSG sequence',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     id: 'mod7-s4-recording',
     question: 'Where do functional-test results live in the A4:2026 documentation, and why?',
     options: [
-      'In the polarity column on the Schedule of Test Results',
-      'On the Schedule of Inspections — because the functional test is a verification (yes / no / N/A) against an installed-equipment item, not a numeric measurement against a calculated value. The Schedule of Test Results carries the numeric tests (continuity, IR, Ze, Zs, RCD trip)',
-      'In the comments column only — there is no formal location',
-      'On the certificate front page',
+      'In the polarity column on the Schedule of Test Results, alongside the circuit polarity tick',
+      'On the Schedule of Inspections, because it is a yes/no verification, not a numeric measurement',
+      'In the comments column only, since there is no formal location for functional results',
+      'On the certificate front page, as a declaration that functional testing was carried out',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Reg 643.10 — Functional testing — uses one specific verb for the duty. What does the regulation actually require, and to what equipment does it apply?',
     options: [
-      'Equipment shall be tested electrically using an RCD tester only',
       'Equipment shall be subjected to functional testing, as appropriate, to verify that it is properly mounted, adjusted and installed and operates correctly in accordance with the relevant requirements of BS 7671',
-      'Only RCDs shall be functionally tested; switchgear is exempt',
-      'Functional testing is recommended but not required for switchgear',
+      'Equipment shall be tested electrically using an RCD tester applied at the rated residual operating current',
+      'Only RCDs shall be functionally tested; switchgear and controlgear are exempt from this regulation',
+      'Functional testing is recommended as good practice but is not a requirement for switchgear',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.10 verbatim: "Equipment shall be subjected to functional testing, as appropriate, to verify that it is properly mounted, adjusted and installed and operates correctly in accordance with the relevant requirements of BS 7671." Examples named: switchgear and controlgear assemblies, drives, controls and interlocks; emergency switching/stopping systems; insulation monitoring. The list is non-exhaustive.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'A4:2026 added a specific note to Reg 643.10 covering AFDDs. What does the new requirement state?',
     options: [
-      'AFDDs are exempt from functional testing',
+      'AFDDs are exempt from functional testing once they pass their factory type test',
+      'AFDDs shall be tested using an RCD tester applied at the rated residual operating current',
       "Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers' recommendations",
-      'AFDDs shall be tested using an RCD tester at IΔn',
-      'AFDDs shall be replaced every 5 years',
+      'AFDDs shall be replaced every 5 years irrespective of the test-facility result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The A4:2026 amendment added: "Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers\' recommendations." This is a real A4 change — in earlier editions AFDDs were not specifically called out under 643.10. Manufacturer-specified procedure is the operating standard, not a generic test method.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'What is the conceptual difference between a "functional test" of an MCB and a "trip test" of an RCD?',
     options: [
-      'They are the same thing — both confirm the device disconnects on demand',
-      'A functional test confirms the device operates mechanically and electrically — toggle on/off, contacts close, contacts open. A trip test specifically applies a residual current to verify the trip threshold and disconnection time. An MCB with a stuck contact may still pass an on/off functional check yet fail to break a fault current',
-      'A functional test uses a multimeter; a trip test uses an oscilloscope',
-      'A functional test is for new work; a trip test is for periodic inspection',
+      'They are the same thing, since both confirm the device disconnects the circuit on demand',
+      'Functional = does the handle operate (on/off, contacts make/break); trip = injects current to verify threshold and time',
+      'A functional test uses a multimeter, whereas a trip test uses an oscilloscope to capture the waveform',
+      'A functional test is only for new work, while a trip test is only for periodic inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'A four-pole isolator is to be functionally tested. The mechanical test is performed with the upstream supply locked off. What does this prove, and what does it NOT prove?',
     options: [
-      'It proves the isolator works correctly under all conditions',
-      'It proves the handle moves freely, the linkages operate, the contacts open and close mechanically. It does NOT prove that the contacts actually break the circuit electrically — that confirmation requires a continuity test or a live verification with a voltage tester',
-      'It proves the isolator can break fault current',
-      'It is not a valid test — functional testing must always be done live',
+      'It proves the isolator works correctly under all loading and fault conditions',
+      'Handle and linkages operate mechanically, but NOT that the contacts break electrically — that needs continuity or live verification',
+      'It proves the isolator can break the prospective fault current at its terminals',
+      'It is not a valid test, because functional testing must always be carried out live',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       "An RCD's integral test button is pressed and the device trips. What does this confirm — and what limitations does GN3 explicitly state about this check?",
     options: [
-      "It confirms the RCD will operate at IΔn within the regulation's disconnection time",
-      'It confirms the mechanical and electrical parts of the RCD can operate, but does NOT verify (a) the continuity of the earthing conductor or associated CPCs, (b) any earth electrode or means of earthing, (c) any other part of the installation earthing, or (d) the sensitivity of the device. A measured trip test is still required for those',
-      'It confirms the earth electrode is satisfactory',
-      'It is required only on periodic inspection, not initial verification',
+      "It confirms the RCD will operate at IΔn within the regulation's stated disconnection time",
+      'It confirms the earth electrode resistance is within the acceptable limit for the system',
+      'It confirms the parts can operate, but NOT CPC/electrode/earthing continuity or sensitivity — a measured trip test is still required',
+      'It is required only on periodic inspection, not on the initial verification of new work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 Section 2.6.18 is explicit: pressing the integral test button is a basic confirmation that mechanical and electrical parts work. It does not confirm earth-electrode continuity, CPC continuity, earthing-system integrity, or trip sensitivity. The device test button works only when the RCD is energised and is not a substitute for a measured trip test under Reg 643.7.3.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'The correct order of operations for functional testing of a piece of switchgear (e.g. a 4-pole isolator) is:',
     options: [
-      'Energise → live test → mechanical test → lock off',
       'Lock off → mechanical-only test (operate the handle, observe contacts) → energise → live verification (prove dead/live across the contacts)',
+      'Energise → live test → mechanical test → lock off',
       'Energise → mechanical test → continuity test → lock off',
-      'There is no specified order — do whichever is convenient',
+      'There is no specified order — perform the steps in whichever sequence is convenient',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The defensible order is: lock off → mechanical-only test (cheap, safe, catches gross mechanical failures before any energy is applied) → energise → live verification (using approved voltage tester to confirm the contacts actually break and make the circuit). This order minimises live exposure and means a mechanical fault is found before energy is applied.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'You are functionally testing an emergency stop button on a CNC machine. What does Reg 643.10 require you to verify, and what does Reg 465.4 add?',
     options: [
-      'Only that the button physically clicks when pressed',
-      'That the emergency switching arrangement, when actuated by a single deliberate operation, removes supply at the relevant equipment immediately, AND does not introduce further danger or interfere with the operation needed to remove the danger, AND does not impair protective devices',
-      'That the button is coloured red on a yellow background only',
-      "Functional testing of emergency stops is the manufacturer's responsibility, not the installer's",
+      'Only that the button physically clicks and latches when pressed by the operator',
+      'A single deliberate operation removes supply immediately, introduces no further danger, and does not impair protective devices',
+      'That the button is coloured red on a yellow background and is correctly positioned',
+      "That emergency-stop testing is the manufacturer's responsibility, not the installer's, at commissioning",
     ],
     correctAnswer: 1,
     explanation:
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'What does Reg 643.10 require with respect to interlocks (e.g. between a main switch and a sub-board, or between two parallel sources)?',
     options: [
-      'Interlocks are not within the scope of 643.10',
-      'Interlocks shall be functionally tested. For a paralleling interlock, the test shall demonstrably prevent simultaneous closure of both source-isolating devices; any residual possibility of simultaneous closure is a non-acceptance condition',
-      'Interlocks are tested only by visual inspection',
-      'Interlocks shall be tested only on the date of commissioning, never again',
+      'Interlocks fall outside the scope of Reg 643.10 and need no functional test at all',
+      'Interlocks are verified by visual inspection of the mechanism alone, with no operation',
+      'Interlocks need be tested only on the original commissioning date and never again afterwards',
+      'They shall be tested; a paralleling interlock must prevent simultaneous closure — any residual possibility is non-acceptance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.10 explicitly names "switchgear and controlgear assemblies, drives, controls and interlocks" as examples. The interlock acceptance criterion: an interlock intended to avoid paralleling shall demonstrably prevent closing of both source-isolating devices. Any residual possibility of simultaneous closing results in non-acceptance until remedial action is taken. Functional test = try to defeat it under controlled conditions and confirm it holds.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Note 2 to Reg 643.10 states something specific about how the functional test in 643.10 relates to standards-based functional tests. What does Note 2 say?',
     options: [
-      'The 643.10 functional test replaces all manufacturer functional tests',
       'This functional test does not replace the functional test indicated by the relevant standards',
-      'The 643.10 functional test is required only on equipment to BS 7671',
-      'Functional tests in product standards are advisory only',
+      'The 643.10 functional test replaces all manufacturer functional tests for the equipment',
+      'The 643.10 functional test is required only on equipment manufactured to BS 7671',
+      'Functional tests required by product standards are advisory once the 643.10 test passes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Note 2 to Reg 643.10 states verbatim: "This functional test does not replace the functional test indicated by the relevant standards." The installer\'s 643.10 check (does it work in the installation context?) sits alongside, not in place of, the product-standard functional test the manufacturer has already carried out (does it work to its specification?).',
   },
@@ -658,7 +658,7 @@ const InspectionTestingModule7Section4 = () => {
           <ConceptBlock
             title="The new AFDD manual-test-button duty under 643.10"
             plainEnglish="A4:2026 added a sentence to Reg 643.10 specifically for AFDDs. Where one is installed, you have to verify the manual test facility per the manufacturer's recommendations. Earlier editions of BS 7671 did not call this out explicitly under 643.10."
-            onSite="AFDDs vary considerably between manufacturers. Some have a press-and-trip manual test like an RCD button. Others have an automatic self-test that only trips on detected malfunction (and shows status by indicator LED). The procedure depends on the device, which is exactly why A4:2026 wrote 'in accordance with the manufacturers\\' recommendations' rather than a generic procedure."
+            onSite="AFDDs vary considerably between manufacturers. Some have a press-and-trip manual test like an RCD button. Others have an automatic self-test that only trips on detected malfunction (and shows status by indicator LED). The procedure depends on the device, which is exactly why A4:2026 wrote 'in accordance with the manufacturers' recommendations' rather than a generic procedure."
           >
             <p>
               AFDDs (arc-fault detection devices) are now a real protective measure under
@@ -798,15 +798,15 @@ const InspectionTestingModule7Section4 = () => {
               Where manufacturers specify a functional-test procedure beyond the basic
               press-and-watch (typical for AFDDs, smart switchgear, motor protection relays, and
               transfer switches), follow it. The A4:2026 AFDD addition is explicit: "in accordance
-              with the manufacturers\\' recommendations". Read the IFU before you press anything.
+              with the manufacturers' recommendations". Read the IFU before you press anything.
             </p>
           </ConceptBlock>
 
           <Scenario
             title="A new AFDD on a TT-system bedroom socket circuit"
             situation="You are installing a Type-A combined RCBO/AFDD on a bedroom socket circuit in a HMO. The device has a manufacturer-specified test routine: press the T button — RCD trips; press the AFDD-test button — AFDD self-test runs and the LED flashes a sequence. Manufacturer instructs that the AFDD self-test should be performed monthly, with a status-LED reading required immediately after."
-            whatToDo="Two functional tests, both recorded against Reg 643.10 (with the AFDD aspect linked to the A4 addition). (1) Press the integral T button — confirm the device trips. Reset. Record on Schedule of Inspections item 7.13. (2) Press the AFDD-test button — observe the LED sequence per the manufacturer\\'s manual. If the sequence indicates pass, record. If the sequence indicates a fault, the device fails 643.10 and shall be replaced before handover. Provide the user with a notice advising the AFDD self-test should be operated at the manufacturer-specified interval."
-            whyItMatters="The A4:2026 amendment binds the AFDD manual test to the manufacturer\\'s procedure, not a generic press-and-watch. Different manufacturers run different self-test routines — some flash the LED, some send a status code over a Bluetooth interface, some require a held-button sequence. Skipping the manufacturer\\'s specific routine fails 643.10\\'s A4 addition and the user\\'s ongoing maintenance instruction is incomplete."
+            whatToDo="Two functional tests, both recorded against Reg 643.10 (with the AFDD aspect linked to the A4 addition). (1) Press the integral T button — confirm the device trips. Reset. Record on Schedule of Inspections item 7.13. (2) Press the AFDD-test button — observe the LED sequence per the manufacturer's manual. If the sequence indicates pass, record. If the sequence indicates a fault, the device fails 643.10 and shall be replaced before handover. Provide the user with a notice advising the AFDD self-test should be operated at the manufacturer-specified interval."
+            whyItMatters="The A4:2026 amendment binds the AFDD manual test to the manufacturer's procedure, not a generic press-and-watch. Different manufacturers run different self-test routines — some flash the LED, some send a status code over a Bluetooth interface, some require a held-button sequence. Skipping the manufacturer's specific routine fails 643.10's A4 addition and the user's ongoing maintenance instruction is incomplete."
           />
 
           <SectionRule />

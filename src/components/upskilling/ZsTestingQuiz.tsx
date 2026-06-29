@@ -13,68 +13,68 @@ export const ZsTestingQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: 'What is the safest way to test Zs on an RCD circuit?',
+      question: 'What is the safest way to test Zs on an RCD-protected circuit?',
       options: [
-        'Isolate the RCD during testing',
-        'Use non-trip test mode',
-        'Test with maximum current',
-        'Bypass the RCD temporarily',
+        'Use the instrument’s non-trip test mode',
+        'Temporarily isolate the RCD during the test',
+        'Test using the maximum available current',
+        'Link out (bypass) the RCD while testing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Non-trip test mode reduces the test current to below RCD operating levels, preventing unwanted disconnection.',
     },
     {
       id: 2,
-      question: 'Why do we test Zs at the furthest point?',
+      question: 'Why is Zs measured at the furthest point of a circuit?',
       options: [
-        "It's more convenient",
-        'It gives the worst-case reading for disconnection',
-        "It's required by the test equipment",
-        'It reduces testing time',
+        'It is simply the most convenient point to reach',
+        'The test instrument requires the end of the circuit',
+        'It gives the worst-case (highest) value for disconnection',
+        'It reduces the overall testing time',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Testing at the furthest point gives the highest impedance value, representing the worst-case scenario for fault disconnection.',
     },
     {
       id: 3,
-      question: 'What should you do if Zs exceeds the maximum permitted value?',
+      question: 'On an EICR, how is a Zs value that exceeds the maximum permitted value normally classified?',
       options: [
-        'Issue the certificate anyway',
-        'Record it as a code C2 defect',
-        'Ignore it if other tests pass',
-        'Test again hoping for a better result',
+        'Issue the certificate as satisfactory anyway',
+        'Ignore it provided the other tests pass',
+        'Code C2 — potentially dangerous, requires action',
+        'Retest repeatedly until a passing value appears',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
-        'Zs values exceeding permitted limits create a potentially dangerous condition requiring immediate attention (code C2).',
+        'A Zs above the maximum can leave disconnection times unmet, a potentially dangerous condition typically classified as C2 on an EICR.',
     },
     {
       id: 4,
-      question: 'When testing Zs, what must be disconnected?',
+      question: 'How can parallel earth paths affect a measured Zs reading?',
       options: [
-        'All parallel earth paths that could affect the reading',
-        'Only the main earth conductor',
-        'Nothing needs disconnecting',
-        'All circuit protective conductors',
-      ],
-      correctAnswer: 0,
-      explanation:
-        'Parallel earth paths (like bonding conductors) must be disconnected to get accurate Zs readings.',
-    },
-    {
-      id: 5,
-      question: "What does the 'no-trip' function do on modern test equipment?",
-      options: [
-        'Prevents the tester from working',
-        'Reduces test current to avoid RCD operation',
-        'Increases test voltage',
-        'Automatically records results',
+        'They have no effect on the measured value',
+        'They can lower the reading and mask a high impedance',
+        'They make the reading read artificially high',
+        'They prevent the instrument from operating at all',
       ],
       correctAnswer: 1,
       explanation:
-        'No-trip mode limits test current to approximately 15mA to prevent RCD operation during testing.',
+        'Parallel earth paths (such as bonding and metallic services) can give a lower Zs reading than the true circuit value, potentially masking a genuinely high impedance.',
+    },
+    {
+      id: 5,
+      question: "What does the 'no-trip' function do on modern loop testers?",
+      options: [
+        'It stops the tester from functioning until reset',
+        'It increases the test voltage for a clearer reading',
+        'It automatically logs the result to memory',
+        'It limits test current to avoid operating the RCD',
+      ],
+      correctAnswer: 3,
+      explanation:
+        'No-trip mode keeps the test current low (typically below around 15 mA) so a 30 mA RCD does not trip during the loop impedance test.',
     },
   ];
 

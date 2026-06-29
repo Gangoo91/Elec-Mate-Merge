@@ -10,74 +10,99 @@ export const SmartHomeModule2Section2Quiz = () => {
 
   const questions = [
     {
-      question: 'Define mesh networking in your own words.',
+      question: 'Which statement best describes mesh networking?',
       options: [
-        'A single central hub connecting all devices',
-        'Devices that can relay signals through each other to extend coverage',
-        'Wireless devices that only work with internet',
-        'A type of antenna used in smart homes',
+        'Devices relay signals through each other to extend coverage',
+        'A single central hub connects directly to every device',
+        'Devices communicate only via the home broadband router',
+        'A high-gain antenna broadcasts to all rooms at once',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'In a mesh network, mains-powered nodes repeat signals for one another, so coverage and resilience grow as devices are added.',
     },
     {
-      question: 'Which frequency does Zigbee operate on?',
+      question: 'Which frequency band does Zigbee primarily operate on?',
       options: ['868 MHz', '908 MHz', '2.4 GHz', '5 GHz'],
       correct: 2,
+      explanation:
+        'Zigbee mainly uses the global 2.4 GHz ISM band, which gives higher data rates but is shared with Wi-Fi and Bluetooth.',
     },
     {
       question: 'Which frequency does Z-Wave use in Europe?',
-      options: ['2.4 GHz', '868 MHz', '908 MHz', '5 GHz'],
-      correct: 1,
+      options: ['2.4 GHz', '5 GHz', '908 MHz', '868 MHz'],
+      correct: 3,
+      explanation:
+        'Z-Wave operates on sub-1 GHz bands, around 868 MHz in Europe (and 908 MHz in North America), reducing congestion and improving range.',
     },
     {
-      question: 'True or False: Zigbee supports more devices per network than Z-Wave.',
-      options: ['True', 'False'],
-      correct: 0,
-    },
-    {
-      question: 'Which protocol is better at penetrating walls?',
-      options: ['Zigbee', 'Z-Wave', 'Both are equal', 'Neither works through walls'],
-      correct: 1,
-    },
-    {
-      question: 'Give one example of a Zigbee-based product.',
-      options: ['Ring Video Doorbell', 'Philips Hue bulbs', 'Nest Thermostat', 'Amazon Echo'],
-      correct: 1,
-    },
-    {
-      question: "What's a drawback of Z-Wave compared to Zigbee?",
+      question: 'Compared with Z-Wave, how many devices can a Zigbee network support?',
       options: [
-        'Poor range',
-        'High power consumption',
-        'Limited to 232 devices per network',
-        'No mesh capabilities',
+        'Far fewer, capped at around 50 nodes',
+        'Many more, theoretically tens of thousands',
+        'Exactly the same, both cap at 232',
+        'Zigbee supports no more than 100 nodes',
+      ],
+      correct: 1,
+      explanation:
+        'Zigbee can theoretically address tens of thousands of devices per network, whereas Z-Wave is limited to 232 nodes.',
+    },
+    {
+      question: 'Which protocol generally penetrates walls more effectively?',
+      options: ['Zigbee', 'Z-Wave', 'Both are exactly equal', 'Neither works through walls'],
+      correct: 1,
+      explanation:
+        'Z-Wave’s lower sub-1 GHz frequency penetrates walls and solid obstacles better than Zigbee’s 2.4 GHz signal.',
+    },
+    {
+      question: 'Which of these is a well-known Zigbee-based product?',
+      options: ['Nest Thermostat', 'Ring Video Doorbell', 'Philips Hue bulbs', 'Amazon Echo (Wi-Fi)'],
+      correct: 2,
+      explanation:
+        'Philips Hue lighting uses Zigbee, communicating with the Hue Bridge to form a lighting mesh.',
+    },
+    {
+      question: "What is a drawback of Z-Wave compared with Zigbee?",
+      options: [
+        'It is limited to 232 devices per network',
+        'It has noticeably poorer wall penetration',
+        'It consumes far more power on battery devices',
+        'It has no mesh networking capability at all',
+      ],
+      correct: 0,
+      explanation:
+        'Z-Wave’s 232-node ceiling can be restrictive for large installations, whereas Zigbee scales much further.',
+    },
+    {
+      question: 'Why is Zigbee more prone to radio interference than Z-Wave?',
+      options: [
+        'It relies on outdated, unsupported hardware',
+        'It uses weaker encryption that picks up noise',
+        'It only functions reliably indoors',
+        'It shares the 2.4 GHz band with Wi-Fi and Bluetooth',
+      ],
+      correct: 3,
+      explanation:
+        'Operating on the busy 2.4 GHz band, Zigbee competes with Wi-Fi and Bluetooth traffic, making interference more likely.',
+    },
+    {
+      question: 'Which protocol best suits a large house with thick stone walls?',
+      options: ['Z-Wave', 'Zigbee', 'Bluetooth', 'Standard Wi-Fi'],
+      correct: 0,
+      explanation:
+        'Z-Wave’s sub-1 GHz range and strong wall penetration make it well suited to large, solidly built properties.',
+    },
+    {
+      question: 'A client wants 80 smart bulbs in one apartment. Which protocol is most suitable?',
+      options: [
+        'Wi-Fi, for the fastest individual speeds',
+        'Bluetooth, for the simplest pairing',
+        'Zigbee, for high device counts at low cost',
+        'Z-Wave, despite its 232-node limit',
       ],
       correct: 2,
-    },
-    {
-      question: 'Why is Zigbee more prone to interference?',
-      options: [
-        'It uses old technology',
-        'It operates on 2.4GHz band shared with Wi-Fi',
-        'It has poor encryption',
-        'It only works indoors',
-      ],
-      correct: 1,
-    },
-    {
-      question: 'Which protocol would suit a large house with thick walls?',
-      options: ['Zigbee', 'Z-Wave', 'Bluetooth', 'Wi-Fi'],
-      correct: 1,
-    },
-    {
-      question: 'A client wants 80 smart bulbs in their apartment. Which protocol is best?',
-      options: [
-        'Z-Wave - better reliability',
-        'Zigbee - supports high device count and cost-effective',
-        'Wi-Fi - fastest speeds',
-        'Bluetooth - easiest setup',
-      ],
-      correct: 1,
+      explanation:
+        'Zigbee comfortably supports large numbers of low-power devices like bulbs and is cost-effective at scale.',
     },
   ];
 

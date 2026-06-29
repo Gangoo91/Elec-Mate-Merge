@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'Why do electricity suppliers penalise consumers with poor power factor?',
     options: [
       'It increases the current for a given real power, stressing infrastructure',
-      'Tracking how you spend your time over a period to identify patterns',
-      'Circuit diagrams, equipment manuals, and previous test records',
-      'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
+      'It causes the supply frequency to drift away from 50 Hz',
+      'It reduces the real power delivered below the metered figure',
+      'It increases harmonic distortion on the neutral conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the formula for calculating power factor from two-wattmeter readings?',
     options: [
-      'Only if operation button present',
+      'tan φ = (W1 + W2) / √3(W1 - W2)',
       'tan φ = √3(W1 - W2) / (W1 + W2)',
-      'When disconnection times cannot be met',
-      'To provide earth fault protection',
+      'cos φ = (W1 - W2) / (W1 + W2)',
+      'tan φ = √3(W1 + W2) / (W1 - W2)',
     ],
     correctAnswer: 1,
     explanation:

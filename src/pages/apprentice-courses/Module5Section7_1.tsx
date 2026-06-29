@@ -50,9 +50,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'When should documentation be completed?',
     options: [
-      'Stop work and develop alternative safe methods',
-      'High-frequency random pattern',
-      'Listen, Empathise, Ask, Paraphrase, Summarise',
+      'Only at the very end of the whole project',
+      'Whenever the client requests a copy',
+      'A week or two after the work is finished',
       'Immediately after the work is carried out',
     ],
     correctIndex: 3,
@@ -123,10 +123,10 @@ const Module5Section7_1 = () => {
       id: 5,
       question: 'What is a site diary or work log used for?',
       options: [
-        'Embodied carbon coefficients for construction materials',
+        'Listing the materials ordered for the whole job',
         'Recording daily progress, incidents, and variations',
-        'Disconnect or short out neon indicators',
-        'Lower conductivity and connection issues',
+        'Certifying that the installation meets BS 7671',
+        'Setting out the design calculations for circuits',
       ],
       correctAnswer: 1,
       explanation:
@@ -136,10 +136,10 @@ const Module5Section7_1 = () => {
       id: 6,
       question: 'What is one key consequence of poor record keeping?',
       options: [
-        'Too many devices on a single bus segment',
-        'Non-invasive current measurement',
+        'Faster completion of the installation',
+        'Lower material costs across the project',
         'Increased risk of legal and safety issues',
-        'Refractive index difference at glass-air interface',
+        'Reduced need for inspection and testing',
       ],
       correctAnswer: 2,
       explanation:
@@ -149,9 +149,9 @@ const Module5Section7_1 = () => {
       id: 7,
       question: 'When should documentation be completed?',
       options: [
-        'Complete installation and test details',
-        'Remove or control any element of the fire triangle',
-        'Reducing system sizes through fabric-first approach',
+        'Only when the client asks to see it',
+        'A week after the work has finished',
+        'Only at the end of the whole project',
         'Immediately after the work is carried out',
       ],
       correctAnswer: 3,
@@ -163,9 +163,9 @@ const Module5Section7_1 = () => {
       question: 'Why are accurate records important for future maintenance?',
       options: [
         'They help electricians quickly understand the system',
-        'Luminaires, distribution boards, and test points',
-        'The final installation differs from original design',
-        'Energy efficiency, comfort, and productivity',
+        'They reduce the cost of materials on the next job',
+        'They remove the need to test the installation again',
+        'They guarantee the installation will never develop a fault',
       ],
       correctAnswer: 0,
       explanation:
@@ -175,10 +175,10 @@ const Module5Section7_1 = () => {
       id: 9,
       question: 'Who is responsible for ensuring accurate records are kept?',
       options: [
-        'Future cable capacity and pulling requirements',
+        'The materials supplier delivering to site',
         'The site manager and responsible electricians',
-        'Complex or high-risk electrical work',
-        'It overlaps with other work packages to ensure coverage',
+        'The building occupant once work is complete',
+        'The inspector who carries out the periodic check',
       ],
       correctAnswer: 1,
       explanation:
@@ -188,10 +188,10 @@ const Module5Section7_1 = () => {
       id: 10,
       question: 'In the real-world scenario, what problem occurred due to missing records?',
       options: [
-        'Convert AC to DC to AC at a new frequency',
-        '10A plus 30% of remainder over 10A plus socket allowance',
+        'A cable was undersized and overheated in service',
+        'A socket was wired with reversed polarity',
         'The client failed an audit and the project was delayed',
-        'Zone classification and equipment suitability for each zone',
+        'An RCD was omitted from a final circuit',
       ],
       correctAnswer: 2,
       explanation:

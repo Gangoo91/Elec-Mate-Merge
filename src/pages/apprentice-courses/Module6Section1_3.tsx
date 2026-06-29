@@ -29,10 +29,10 @@ const Module6Section1_3 = () => {
       id: 2,
       question: 'What must be carried out before energising any new system?',
       options: [
-        'It accounts for lead resistance and provides best accuracy',
-        'Absorption of current by the insulation (polarisation)',
+        'A periodic inspection of the existing wiring',
+        'A risk assessment for live working',
         'Initial verification (inspection and testing)',
-        'Competent persons, supervisors, and experienced workers',
+        'A check of the supply meter readings',
       ],
       correctAnswer: 2,
       explanation:
@@ -77,10 +77,10 @@ const Module6Section1_3 = () => {
       id: 6,
       question: 'How often should domestic dwellings be periodically inspected under BS 7671?',
       options: [
-        'It could cause fire, injury or death in real work',
-        'Potential danger and legal liability',
+        'Every 12 months without exception',
+        'Every 3 years or after any fault',
         'Every 10 years or on change of occupancy',
-        'Standard first fix electrical installation',
+        'Only when the property is sold',
       ],
       correctAnswer: 2,
       explanation:
@@ -90,9 +90,9 @@ const Module6Section1_3 = () => {
       id: 7,
       question: 'How often should commercial installations be inspected?',
       options: [
-        'Isolated system with no intentional connection to earth',
-        'Remove from service and tag as defective',
-        'In divided by 0.725 (approximately 1.38 times In)',
+        'Every 10 years as a maximum',
+        'Every 12 months without exception',
+        'Only when a fault is reported',
         'Every 5 years (or sooner depending on risk)',
       ],
       correctAnswer: 3,
@@ -104,9 +104,9 @@ const Module6Section1_3 = () => {
       question: 'What is the outcome of a periodic inspection and test?',
       options: [
         'Electrical Installation Condition Report (EICR)',
-        'Reduce capacity for adverse conditions',
-        'Dynamically assigning upstream time slots based on demand',
-        'Arc flash protection due to high energy levels',
+        'Electrical Installation Certificate (EIC)',
+        'Minor Works Certificate',
+        'Building Regulations compliance notice',
       ],
       correctAnswer: 0,
       explanation:
@@ -116,10 +116,10 @@ const Module6Section1_3 = () => {
       id: 9,
       question: 'Why must alterations be tested before being put into service?',
       options: [
-        'Numerical values allow future comparisons and trend analysis',
+        'To increase the value of the property',
         'To ensure the new work has not compromised the safety of the installation',
-        'Protection from electrical arc blast and thermal energy',
-        'Verifying compliance with regulations through inspection and testing',
+        'To avoid having to notify the DNO',
+        'To reduce the cost of future maintenance',
       ],
       correctAnswer: 1,
       explanation:

@@ -5,10 +5,10 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is daylight harvesting?',
     options: [
-      'Using a lux meter to set light levels to industry standards',
+      'Storing surplus daylight in batteries for use after dark',
       'Adjusting artificial lighting based on available natural light',
-      'To prevent nuisance switching when occupants are still but not moving',
-      'Because natural light distribution varies across the space',
+      'Switching lights on and off purely on a fixed time schedule',
+      'Using mirrors and light pipes to bring daylight deeper into a building',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Why might only some lights dim in a daylight harvesting system?',
     options: [
-      'Adjusting artificial lighting based on available natural light',
-      'To prevent nuisance switching when occupants are still but not moving',
+      'Because dimmable drivers are only fitted to a few luminaires',
+      'Because the BMS dims lights in strict rotation to balance lamp wear',
       'Because natural light distribution varies across the space',
-      'Using a lux meter to set light levels to industry standards',
+      'Because interior luminaires use a higher voltage than perimeter ones',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What device measures natural light levels?',
     options: [
-      'Peak value divided by RMS value',
-      'High resistance - investigate',
-      'Not suitable for direct burial',
+      'PIR occupancy sensor',
+      'CO₂ air quality sensor',
+      'Thermistor temperature sensor',
       'Lux sensor (light sensor)',
     ],
     correctAnswer: 3,
@@ -44,23 +44,23 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 4,
     question: 'What does PIR stand for?',
     options: [
-      'Passive Infrared Receiver',
+      'Passive Infrared Sensor',
       'Primary Installation Relay',
-      'Power Infrared Receiver',
+      'Power Infrared Resistor',
       'Programmable Integration Router',
     ],
     correctAnswer: 0,
     explanation:
-      'PIR stands for Passive Infrared Receiver. These sensors detect infrared radiation (heat) emitted by moving objects, particularly human body heat, making them ideal for occupancy detection in lighting control systems.',
+      'PIR stands for Passive Infrared Sensor. These sensors detect changes in infrared radiation (heat) emitted by moving objects, particularly human body heat, making them ideal for occupancy detection in lighting control systems.',
   },
   {
     id: 5,
     question: 'Why do PIR sensors use a time delay before switching off lights?',
     options: [
-      'Using a lux meter to set light levels to industry standards',
+      'To give the lamps time to cool down before being switched off',
       'To prevent nuisance switching when occupants are still but not moving',
-      'Adjusting artificial lighting based on available natural light',
-      'To avoid conflicts like lights switching on at full brightness in bright daylight',
+      'To allow the daylight sensor to take a fresh lux reading first',
+      'To stagger switching so that not all lights turn off at once',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why should PIR sensors not be installed near HVAC vents?',
     options: [
-      'Star wiring instead of daisy-chain topology',
-      'Zero for perfectly balanced loads',
-      'They are metal and within the building',
+      'Condensation from the vent can short the sensor terminals',
+      'The vent blocks the sensor’s line of sight to the floor',
+      'The metal ductwork interferes with the sensor’s wiring',
       'Air movement can cause false triggering',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     question: 'How can electricians calibrate daylight sensors accurately?',
     options: [
       'Using a lux meter to set light levels to industry standards',
-      'Because natural light distribution varies across the space',
-      'Adjusting artificial lighting based on available natural light',
-      'To prevent nuisance switching when occupants are still but not moving',
+      'By estimating the light level by eye against a reference chart',
+      'By setting the sensor to the manufacturer’s default value and leaving it',
+      'By matching the sensor output to the nearest PIR occupancy zone',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule4Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why should PIR and daylight zones be grouped logically?',
     options: [
-      'Because natural light distribution varies across the space',
+      'To reduce the total number of dimmable drivers required',
       'To avoid conflicts like lights switching on at full brightness in bright daylight',
-      'Adjusting artificial lighting based on available natural light',
-      'Using a lux meter to set light levels to industry standards',
+      'To allow every luminaire to be controlled from a single switch',
+      'To ensure all zones share the same logging frequency',
     ],
     correctAnswer: 1,
     explanation:

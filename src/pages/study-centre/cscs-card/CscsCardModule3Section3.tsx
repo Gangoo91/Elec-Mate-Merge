@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Under the Manual Handling Operations Regulations 1992, what is the correct hierarchy of employer duties?',
     options: [
-      'Assess, reduce, avoid',
       'Avoid, assess, reduce',
+      'Assess, reduce, avoid',
       'Reduce, avoid, assess',
       'Train, assess, monitor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct hierarchy under MHOR 1992 is: (1) AVOID hazardous manual handling operations so far as is reasonably practicable, (2) ASSESS the risk of any operations that cannot be avoided, and (3) REDUCE the risk of injury so far as is reasonably practicable. This hierarchy must be followed in order — avoidance is always the first priority.',
   },
@@ -108,8 +108,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'The HSE guideline weight for a woman lifting close to the body at waist height is:',
-    options: ['10 kg', '16 kg', '20 kg', '25 kg'],
-    correctAnswer: 1,
+    options: ['10 kg', '20 kg', '25 kg', '16 kg'],
+    correctAnswer: 3,
     explanation:
       "The HSE guideline figure for a woman lifting close to the body at waist height under ideal conditions is 16 kg. For a man in the same position, the guideline is 25 kg. These figures are significantly reduced when the load is held at arm's length (7 kg for women, 10 kg for men at waist height) or when lifting above shoulder height or below knee level.",
   },
@@ -130,8 +130,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Which of the following is NOT one of the five TILEO assessment factors?',
-    options: ['Task', 'Individual', 'Legislation', 'Environment'],
-    correctAnswer: 2,
+    options: ['Legislation', 'Task', 'Individual', 'Environment'],
+    correctAnswer: 0,
     explanation:
       'The five TILEO factors are Task, Individual, Load, Environment, and Other. "Legislation" is not one of the TILEO factors. While legislation (such as MHOR 1992) provides the legal framework requiring the assessment, it is not itself one of the risk factors being assessed. The "Other" factor covers additional considerations such as PPE restricting movement, team handling requirements, and any other relevant factors.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
       'Which of the following is the most common type of injury caused by poor manual handling?',
     options: [
       'Fractured wrist',
-      'Lower back injury — including disc herniation and muscle strain',
       'Concussion from dropping the load',
       'Chemical burn from load contents',
+      'Lower back injury — including disc herniation and muscle strain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lower back injuries are by far the most common type of manual handling injury. These include muscle strains, ligament sprains, and disc herniation (commonly called a "slipped disc"). The lower back (lumbar spine) bears the greatest load during lifting and is particularly vulnerable when the load is held away from the body, when twisting occurs during a lift, or when the back is bent rather than the knees.',
   },

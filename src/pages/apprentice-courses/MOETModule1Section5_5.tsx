@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'circular-economy',
     question: 'What is the fundamental principle of the circular economy?',
     options: [
-      'Replace all manufactured products with natural alternatives',
-      'Design out waste and pollution, keep products and materials in use, and regenerate natural systems',
-      'Maximise production and consumption to drive economic growth',
-      'Export waste to countries with lower environmental standards',
+      'Design out waste, keep products and materials in use, regenerate nature',
+      'Replace all manufactured products with naturally occurring alternatives',
+      'Maximise production and consumption to drive faster economic growth',
+      'Export surplus waste to countries with lower environmental standards',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The circular economy, as defined by the Ellen MacArthur Foundation, is based on three principles: (1) Design out waste and pollution — prevent waste from being created in the first place; (2) Keep products and materials in use — through repair, reuse, remanufacturing and recycling; (3) Regenerate natural systems — return biological nutrients to the earth. This contrasts with the linear 'take-make-dispose' model that has dominated industry.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'When deciding whether to repair or replace a piece of electrical equipment, what factors should you consider?',
     options: [
-      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
-      'The remaining useful life, repair cost, energy efficiency of old vs new, availability of spare parts, embodied carbon of replacement, and whole-life cost',
-      'Specifically to periodic inspection and testing intervals — it is intended for use during periodic verification rather than initial verification.',
-      'A wiring diagram shows physical connections with terminal numbers and wire references; a circuit diagram shows the logical function and operation of the circuit',
+      'Only the purchase price of the replacement unit, ignoring running costs',
+      'Only the time taken to carry out the repair compared with replacement',
+      'Useful life, repair cost, efficiency, spare parts, carbon and whole-life cost',
+      'Only the manufacturer warranty remaining on the existing equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A sustainable repair vs replace decision considers multiple factors: the remaining useful life of the existing equipment, the cost of repair vs replacement, the energy efficiency difference between old and new (operating cost savings), availability of spare parts, the embodied carbon in manufacturing a replacement, disposal costs of the old equipment, and the whole-life cost including maintenance, energy and end-of-life. Sometimes repair is more sustainable; sometimes replacement is the better choice.',
   },
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
       "What percentage of a typical maintenance company's carbon footprint comes from vehicle travel?",
     options: [
       'Typically 30-50% or more, making it one of the largest emission sources',
-      'Third harmonic content exceeds 15-33% depending on cable type',
-      'Materials with zero electrical resistance at low temperatures',
-      'It receives signals from detection devices and controls the alarm outputs',
+      'Typically less than 2%, making it a negligible part of the footprint',
+      'Typically around 5-10%, well below the emissions from materials',
+      'Typically 80-90%, exceeding every other source combined',
     ],
     correctIndex: 0,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     id: 'net-zero',
     question: "What does 'net zero' mean in the context of a maintenance company's operations?",
     options: [
-      "A schematic shows the logical function of a circuit; a wiring diagram shows the physical connections and routing",
+      "The company produces absolutely zero greenhouse gas emissions from any of its activities",
       "The company's greenhouse gas emissions are balanced by an equivalent amount of carbon removal, resulting in no net addition to the atmosphere",
-      "The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal",
-      "The current intended to be carried by the circuit in normal service, after diversity has been applied — the demand the circuit has to deliver.",
+      "The company offsets all of its emissions and stops measuring them entirely",
+      "The company only uses electricity from renewable sources and ignores other emissions",
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The circular economy differs from the linear economy in that:',
     options: [
-      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
-      'It aims to keep materials and products at their highest value for as long as possible, designing out waste from the start',
-      'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
-      'Prove dead with a GS38-compliant voltage indicator that has itself been proved on a known source',
+      'It relies entirely on landfill disposal once a product has failed in use',
+      'It keeps materials at their highest value for as long as possible',
+      'It focuses only on recycling and ignores repair, reuse and refurbishment',
+      'It maximises the rate of consumption to drive faster product replacement',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'A life cycle assessment (LCA) of electrical equipment considers:',
     options: [
-      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
+      'Only the energy the equipment consumes during its operating life',
+      'Only the purchase price and the cost of the installation labour',
+      'Impact at every stage: materials, manufacture, transport, use and disposal',
+      'Only the emissions produced when the equipment is finally scrapped',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'When selecting low-carbon materials for electrical maintenance, you should consider:',
     options: [
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
+      'Only the lowest purchase price available, regardless of any other factor',
+      'Only the colour and appearance of the completed finished installation',
+      'Only whether the material is in current stock at the local wholesaler',
+      'Embodied carbon, recyclability, durability and fitness for the application',
     ],
     correctAnswer: 3,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 4,
     question: 'Remote diagnostics technology can improve maintenance sustainability by:',
     options: [
-      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
-      'Selecting suppliers and products based on environmental criteria (embodied carbon, recyclability, ethical sourcing, packaging) alongside price, quality and availability',
-      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
+      'Cutting site visits via remote monitoring and diagnosis before travelling',
+      'Increasing the number of routine visits to gather much more data',
+      'Replacing the need for any planned maintenance work whatsoever',
+      'Removing the requirement to keep any maintenance records at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Sustainable procurement for maintenance means:',
     options: [
-      'Technical competencies needed to support the transition to a low-carbon economy, including energy efficiency, renewable technologies, electric vehicle infrastructure, heat pump systems and environmental compliance',
-      'Selecting suppliers and products based on environmental criteria (embodied carbon, recyclability, ethical sourcing, packaging) alongside price, quality and availability',
-      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
+      'Always choosing the cheapest supplier, regardless of any other factor',
+      'Weighing environmental criteria alongside price, quality and availability',
+      'Buying only from a single supplier to simplify the ordering process',
+      'Ordering in the largest possible quantities to reduce delivery trips',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'The carbon footprint of a maintenance activity includes:',
     options: [
-      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
-      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
-      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
-      'The manufacturing process and raw material extraction for metals (copper busbars, steel enclosure) and plastics',
+      'Only the fuel used driving to and from the work site',
+      'Only the embodied carbon of the replacement parts that are fitted',
+      'Travel, work energy, materials, waste and the parts embodied carbon',
+      'Only the electricity consumed by the power tools used on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'Route planning and journey consolidation for maintenance technicians can reduce:',
     options: [
-      'IT systems, equipotential bonding, and power supply reliability',
-      'Simultaneous two-way transmission over a single fibre using different wavelengths',
-      'A record of defects identified at handover that must be put right before final sign-off',
-      'Fuel consumption, CO2 emissions, vehicle wear, driver fatigue and operational costs',
+      'The embodied carbon of the spare parts carried on the van',
+      'The energy consumed by the power tools used while on site',
+      'The amount of hazardous waste generated during the works',
+      'Fuel use, CO2, vehicle wear, driver fatigue and operating costs',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: "What are 'green skills' in the context of maintenance engineering?",
     options: [
-      'Technical competencies needed to support the transition to a low-carbon economy, including energy efficiency, renewable technologies, electric vehicle infrastructure, heat pump systems and environmental compliance',
-      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
+      'Technical skills for the low-carbon transition: efficiency, renewables, EVs',
+      'The interpersonal skills used to communicate with clients and colleagues',
+      'The manual handling techniques used to lift heavy equipment safely',
+      'The administrative skills used to complete waste transfer notes',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'Continuous improvement in sustainability for a maintenance team involves:',
     options: [
-      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
+      'Setting a single target once and then never reviewing it again',
+      'Setting targets, tracking, improving and reviewing in a repeating cycle',
+      'Waiting for the regulators to dictate every change that is made',
+      'Leaving sustainability entirely to the procurement department alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: 'Reporting sustainability metrics helps a maintenance company by:',
     options: [
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
-      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      'Increasing the embodied carbon of the products that it installs',
+      'Removing the legal duty of care for the waste that it produces',
+      'Proving performance to clients, winning tenders and finding cost savings',
+      'Guaranteeing the lowest possible price on every single material order',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     question:
       'When considering the embodied carbon of a replacement distribution board, the largest contribution typically comes from:',
     options: [
-      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'Fuel consumption, CO2 emissions, vehicle wear, driver fatigue and operational costs',
-      'The manufacturing process and raw material extraction for metals (copper busbars, steel enclosure) and plastics',
+      'The fuel used to deliver the finished board to the site',
+      'The electricity used to test the board after its installation',
+      'The cardboard and plastic packaging the board is supplied in',
+      'Making and extracting the metals and plastics it is built from',
     ],
     correctAnswer: 3,
     explanation:
@@ -216,10 +216,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under the ST1426 standard, sustainable work practices are:',
     options: [
-      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
-      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
+      'A core requirement: environmental awareness and continuous improvement',
+      'An optional extra assessed only if the apprentice chooses to cover it',
+      'Relevant only to technicians working on renewable energy systems',
+      'Replaced entirely by the employer environmental management system',
     ],
     correctAnswer: 0,
     explanation:

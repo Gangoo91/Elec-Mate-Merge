@@ -32,9 +32,9 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'Who can sign and issue a Minor Works Certificate?',
     options: [
-      'Adding a single socket outlet to an existing circuit',
-      'Work requires load calculations and design assessment',
-      'Circuit has adequate capacity and existing protection is suitable',
+      'Any person who carried out the physical installation work',
+      'Only a registered electrical inspector, never the installer',
+      'The client or building owner once they have paid for the work',
       'A competent person in both installation and testing work',
     ],
     correctAnswer: 3,
@@ -85,9 +85,9 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'How long must Minor Works Certificates be retained?',
     options: [
-      'Immediate failure for unsafe practice',
-      'Both occupancy and risk changes',
-      '±0.01°C change over 2 minutes',
+      'For a minimum of six months after completion',
+      'Until the next periodic inspection is carried out',
+      'For five years from the date of issue',
       'For the life of the installation',
     ],
     correctAnswer: 3,
@@ -100,9 +100,9 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
       'When adding a socket outlet to an existing ring final circuit, what must be verified?',
     options: [
       'Circuit has adequate capacity and existing protection is suitable',
-      'A competent person in both installation and testing work',
-      'Adding a single socket outlet to an existing circuit',
-      'Stop work and complete under appropriate EIC certification',
+      'That the ring has been converted to a radial before the addition',
+      'That a separate RCBO is fitted for the new socket outlet only',
+      'That the existing circuit is upgraded to a 45A protective device',
     ],
     correctAnswer: 0,
     explanation:
@@ -113,10 +113,10 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     question:
       'Which Building Regulations notification is typically required for minor electrical work?',
     options: [
-      'Stop work and complete under appropriate EIC certification',
+      'All minor electrical work must be notified to building control in advance',
       'No notification required if installer is registered with competent person scheme',
-      'A competent person in both installation and testing work',
-      'Circuit has adequate capacity and existing protection is suitable',
+      'Notification is only required for work in commercial premises',
+      'A full building warrant must be obtained before starting any work',
     ],
     correctAnswer: 1,
     explanation:

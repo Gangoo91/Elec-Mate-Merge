@@ -3,10 +3,10 @@ export const bmsModule5Section4QuizData = [
     id: 1,
     question: 'What does KNX stand for in building automation?',
     options: [
-      "Correct connection of non-reversible plugs and socket-outlets",
+      "Kilo-Network eXchange, a high-speed data backbone protocol",
       "KNX is not an acronym - it's the official name of the standard",
-      "To house major network equipment and backbone terminations",
-      "Ensuring only the nearest device operates during fault",
+      "Knowledge Network eXtension, a cloud management platform",
+      "Konnex eXpress, a proprietary single-manufacturer system",
     ],
     correctAnswer: 1,
     explanation:
@@ -16,10 +16,10 @@ export const bmsModule5Section4QuizData = [
     id: 2,
     question: 'Why is KNX considered vendor-neutral?',
     options: [
-      'A written document describing how work will be carried out safely, step by step',
-      'To ensure materials arrive when needed and in correct quantities',
+      'It can only be installed by manufacturer-approved contractors',
+      'It is owned and licensed exclusively by a single company',
       'Hundreds of manufacturers produce KNX-compatible devices following the same standard',
-      'All maintainable assets with manufacturer, model, serial number, and location',
+      'It works only with devices from the original system designer',
     ],
     correctAnswer: 2,
     explanation:
@@ -29,9 +29,9 @@ export const bmsModule5Section4QuizData = [
     id: 3,
     question: 'What type of cable is typically used for KNX bus wiring?',
     options: [
-      'KNX is not an acronym - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the official name of the standard',
-      'Up to 64 devices (including couplers)',
-      'They cause signal reflections and communication errors',
+      'Standard mains twin-and-earth cable',
+      'Coaxial cable with BNC connectors',
+      'Single-core unscreened bell wire',
       'Green-sheathed twisted pair cable certified for KNX',
     ],
     correctAnswer: 3,
@@ -43,9 +43,9 @@ export const bmsModule5Section4QuizData = [
     question: 'How many devices can be connected on a single KNX line?',
     options: [
       'Up to 64 devices (including couplers)',
-      'Overheating cables or nuisance tripping',
-      'As part of routine maintenance records',
-      'Temperature and humidity sensors',
+      'Up to 8 devices including couplers',
+      'Up to 255 devices including couplers',
+      'There is no limit on a single line',
     ],
     correctAnswer: 0,
     explanation:
@@ -55,10 +55,10 @@ export const bmsModule5Section4QuizData = [
     id: 5,
     question: 'Why are loops not allowed in KNX topology?',
     options: [
-      'Before construction information is issued',
+      'They draw too much current from the bus power supply',
       'They cause signal reflections and communication errors',
-      'Enhanced safety measures and suitable equipment',
-      'Ignition, growth, flashover, fully developed, and decay',
+      'They require a separate earth connection at each device',
+      'They reduce the maximum cable length between devices',
     ],
     correctAnswer: 1,
     explanation:

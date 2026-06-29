@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'What safety feature prevents a motor from restarting automatically after a power failure?',
     options: [
-      'Record it and investigate further',
-      'Investment-grade audit (Level 3)',
+      'The thermal overload relay resetting itself',
+      'A phase-sequence relay locking out the supply',
       'No-volt release (contactor drop-out)',
-      'tan φ = √3(W1 - W2) / (W1 + W2)',
+      'A time-delay timer in the control circuit',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'What is the most likely cause if a motor continues to run even when the stop button is pressed?',
     options: [
-      'It has many free electrons that can move easily',
-      'Risk of damage, theft, or cluttered storage',
+      'A faulty (open-circuit) start push-button',
+      'A tripped overload relay',
       'Contact welding on the main contactor',
-      'A 22 mm copper incoming water service pipe',
+      'An undersized control-circuit fuse',
     ],
     correctIndex: 2,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of the holding (seal-in) contact in a DOL control circuit?',
     options: [
-      'Excessive starting duty or undersized contacts',
+      'To break the coil circuit the moment the start button is released',
       'To keep the coil energised after the start button is released',
-      'Motor full-load current and AC-3 duty rating',
-      'Because electrical interlocking alone can fail if a contact welds',
+      'To limit the motor inrush current during direct-on-line starting',
+      'To open the circuit automatically if the overload relay trips',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'What causes contactor chattering or buzzing?',
     options: [
-      'Plan what you need to say and structure it clearly',
-      'Missing or undersized protective conductor',
-      'Leading pf and possible voltage rise',
+      'An oversized main contactor for the motor',
+      'Excessive supply voltage to the power circuit',
+      'A blocked arc chute above the main contacts',
       'Low coil voltage or broken shading ring',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'Why must forward/reverse interlocking use BOTH electrical and mechanical methods?',
     options: [
       'Because electrical interlocking alone can fail if a contact welds',
-      'Motor protection is reduced, risking winding damage',
-      'To keep the coil energised after the start button is released',
-      'Excessive starting duty or undersized contacts',
+      'Because mechanical interlocking is not permitted by BS 7671',
+      'Because each contactor needs its own separate control transformer',
+      'Because reversing a motor requires swapping all three supply phases',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'What happens if the overload relay is set significantly above the motor FLC?',
     options: [
-      'To keep the coil energised after the start button is released',
+      'The motor will trip out instantly on every start attempt',
       'Motor protection is reduced, risking winding damage',
-      'Because electrical interlocking alone can fail if a contact welds',
-      'Excessive starting duty or undersized contacts',
+      'The contactor coil will overheat and fail prematurely',
+      'The motor starting current is increased above 8 times FLC',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'What causes main contact welding on a contactor?',
     options: [
-      'The number of individual optical fibres in the cable',
-      'Verify operation under normal conditions',
-      'Self, colleagues, building occupants, public',
+      'A coil rated for too high a voltage',
+      'Over-tightened terminal connections',
+      'An overload relay set below the motor FLC',
       'Excessive starting duty or undersized contacts',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: 'What information determines the minimum contactor size for a DOL starter?',
     options: [
       'Motor full-load current and AC-3 duty rating',
-      'Maximum cable occupancy percentage',
-      'Specific reference conditions including 30°C ambient',
-      'A complementary Adult-to-Adult transaction',
+      'The length of the supply cable run to the motor',
+      'The colour coding of the control-circuit conductors',
+      'The number of auxiliary contacts fitted to the contactor',
     ],
     correctAnswer: 0,
     explanation:

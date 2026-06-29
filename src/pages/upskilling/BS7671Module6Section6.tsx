@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'You record on an EICR: "Some areas not accessible." Why is this wording inadequate under GN3?',
     options: [
-      'It is fine — the cert is a summary only',
-      'It is not specific — GN3 requires the limitation to identify what was excluded, why, and (implicitly) what would be needed to lift it',
-      'It must be in red ink to count',
-      "GN3 only requires the inspector's signature",
+      'It is fine — the certificate is only ever a high-level summary',
+      'It is not specific — GN3 requires what was excluded, why, and the date',
+      'It must be entered in red ink before it counts as a valid limitation',
+      "GN3 only requires the inspector's signature against any limitation",
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'Mid-EICR you find a locked DB the client never mentioned. The client is on holiday. What is the correct course of action?',
     options: [
-      'Force the lock — duty of care to the occupants',
-      'Code the DB C1 because it is unknown',
-      'Stop, telephone the client, and either agree a new operational limitation in writing or pause the inspection until access is granted',
-      'Ignore the DB and complete the rest of the cert as satisfactory',
+      'Force the lock open, citing a duty of care to the building occupants',
+      'Code the locked DB as C1, on the basis that its condition is unknown',
+      'Stop, telephone the client, and agree a new limitation in writing or pause',
+      'Ignore the locked DB and complete the rest of the cert as satisfactory',
     ],
     correctIndex: 2,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'During a routine inspection you spot a stored coil of frayed extension lead in a cupboard. It is not part of the fixed installation. What is the correct entry?',
     options: [
-      'Code C1 on the cert',
-      'Ignore — it is not fixed wiring',
-      'Record as a safety observation, with a written recommendation that the lead be withdrawn from use — outside C1/C2/C3/FI scope',
-      'Refuse to issue the cert',
+      'Code it C1 on the certificate, as a present danger to occupants',
+      'Ignore it entirely, since it is not part of the fixed wiring',
+      'Record it as a safety observation, recommending the lead be withdrawn',
+      'Refuse to issue the cert until the frayed lead is removed from site',
     ],
     correctIndex: 2,
     explanation:
@@ -95,9 +95,9 @@ const inlineChecks = [
       'A previously-issued EICR excluded the loft cabling as a limitation. The client now asks you to "lift the limitation." Which approach is right?',
     options: [
       'Re-issue the original cert, ticking off the loft circuits as satisfactory',
-      'Carry out a targeted inspection of the previously-excluded scope, and issue a NEW EICR (or a clearly-marked supplementary cert) with that scope agreed, recorded, signed and dated',
-      'Append a hand-written note to the back of the original',
-      'Tell the client that limitations cannot be lifted',
+      'Inspect the previously-excluded scope and issue a new, dated certificate',
+      'Append a hand-written note to the back of the original certificate',
+      'Tell the client that an agreed limitation can never later be lifted',
     ],
     correctIndex: 1,
     explanation:
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of these statements about a "limitation" on an EICR is CORRECT?',
     options: [
-      'A limitation is a defect found during inspection',
       'A limitation is a scope exclusion — an area, circuit or piece of equipment that was not inspected',
-      'A limitation must always be coded C2',
-      'A limitation can be agreed verbally and need not be recorded',
+      'A limitation is a defect found during the inspection and coded accordingly',
+      'A limitation must always be coded C2 on the schedule of inspection',
+      'A limitation can be agreed verbally on the day and need not be recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A limitation is part of the inspection SCOPE agreement: it describes what was NOT inspected. Defects (codable findings) are entirely separate. GN3 (Section 5) requires limitations to be specific, dated, and recorded on the certificate so a third party (buyer, insurer, mortgage provider, Building Control) can read the cert and understand exactly what coverage they are receiving.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'A client tells you "do not inspect the kitchen — the chef is plating up". You agree, do not inspect the kitchen, and issue the cert. Which entry on the cert is most defensible?',
     options: [
-      'Mark the cert as overall "Unsatisfactory" because the kitchen was not done',
-      'Tick all schedule-of-inspection items as "LIM" (limitation) for the kitchen, list "Kitchen — operational limitation, agreed with [client name] [date], inspection deferred" in the limitations section',
-      'Leave the kitchen schedule rows blank',
-      'Tick the kitchen items as "satisfactory" based on the rest of the property',
+      'Mark the cert overall "Unsatisfactory" because the kitchen was not inspected',
+      'Leave the kitchen schedule-of-inspection rows blank to show they were not done',
+      'Tick the kitchen items "satisfactory" by inference from the rest of the property',
+      'Mark the kitchen rows "LIM" and record the agreed limitation, with party and date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GN3 / BS 7671 Appendix 6 require un-inspected items to be marked LIM (limitation) on the schedule of inspection, NOT left blank, NOT ticked satisfactory, NOT inferred from elsewhere. The limitations section of the cert names the specific area, the reason, the agreed-with party and the date. Leaving rows blank is the single most common failure point and the easiest to spot on a poorly-issued cert.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of these is a "safety observation" rather than a coded EICR observation?',
     options: [
-      'A 32 A socket-outlet circuit on a TN-C-S installation with no 30 mA RCD additional protection',
-      'A measured Zs of 1.45 Ω on a 32 A Type B MCB (max permitted ~1.37 Ω)',
       'A frayed portable extension lead stored in a cupboard, not part of the fixed installation',
-      'A missing CPC at a metal-cased luminaire',
+      'A 32 A socket-outlet circuit on a TN-C-S installation with no 30 mA RCD additional protection',
+      'A measured Zs of 1.45 Ω on a 32 A Type B MCB (max permitted 1.37 Ω)',
+      'A missing CPC at a metal-cased Class I luminaire',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'C1/C2/C3/FI codes apply to the fixed installation within the agreed scope. Portable equipment (PAT scope), stored materials, blocked egress, missing fire-stopping etc. fall outside that scope but are still safety-relevant — they are recorded as separate safety observations under Reg 653.1, with a clear recommendation, but not coded against the fixed installation. The other three options are all in-scope codable findings.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'A previously-issued EICR contained 4 limitations and 6 C3 observations and was overall coded "Satisfactory". Re-inspection in 5 years finds that one of the previously-limited circuits has a C2 defect. Who carries the risk for the gap?',
     options: [
-      'The original inspector — limitations are not a defence',
-      'The duty-holder (client) — they accepted the agreed scope when commissioning the original EICR; the C2 was simply not within that scope to find',
-      'The DNO — they issued the supply',
-      'The new inspector who finds the C2',
+      'The original inspector — a recorded limitation is never a defence against a later defect',
+      'The new inspector who finds the C2 — they had the last opportunity to assess it',
+      'The duty-holder — they accepted the agreed scope that excluded the limited circuit',
+      'The original inspector — they should have inspected the limited circuit anyway',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A clearly-recorded limitation transfers the residual unknown back to the duty-holder. They commissioned a scope, the inspector delivered against that scope, and the duty-holder chose to accept the un-inspected gap. The reason the cert documents limitations specifically is precisely to make this allocation explicit. The original inspector is only exposed where the limitation was vague, missing, or where they over-claimed coverage they did not deliver.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'You complete an EICR with no limitations, but mid-way you found that the meter cupboard contained asbestos lagging on the meter tails. You did not disturb the lagging. Which entry is correct?',
     options: [
-      'Code C1 — danger present',
-      'Code FI — further investigation required, with a clear written observation that asbestos is suspected and a competent asbestos survey is recommended before any future intrusive work; record an operational limitation excluding any disturbed cabling within the meter cupboard',
-      'Ignore — asbestos is not in the BS 7671 scope',
-      'Refuse to issue the cert',
+      'Code FI, add an asbestos safety observation, and limit out the meter cupboard',
+      'Code C1 — danger present, immediate action required at the meter cupboard',
+      'Make no entry, since asbestos falls outside the scope of a BS 7671 inspection',
+      'Code C2 — potentially dangerous, with urgent remedial action within 28 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Asbestos is not directly an electrical danger but it materially affects future intrusive work — the next inspector / installer needs to know before they touch anything. The right combination is FI (further investigation), a specific safety observation, AND an operational limitation excluding the cupboard from the scope you delivered. Reg 653.1 expects safety observations of this kind to be brought to the duty-holder's attention; ignoring it would be a clear failure of duty.",
   },
@@ -216,10 +216,10 @@ const quizQuestions = [
     question:
       'On the schedule of inspection for an EICR, what does the entry "LIM" against an item indicate?',
     options: [
-      'Limited rating — the device is undersized',
-      'Limitation — the item was not inspected within the agreed scope of this inspection',
-      'Linear — the circuit is purely resistive',
-      'Limit value — the maximum permitted Zs',
+      'Limited rating — the protective device is undersized for the load',
+      'Limitation — the item was not inspected within the agreed scope',
+      'Linear — the circuit was found to be purely resistive on test',
+      'Limit value — the maximum permitted Zs for the circuit device',
     ],
     correctAnswer: 1,
     explanation:

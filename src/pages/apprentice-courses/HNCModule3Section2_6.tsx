@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What characterises parallel resonance in a practical circuit?',
     options: [
-      'Adding PFC capacitors to systems with VSD drives',
-      'Higher Q means sharper (narrower) frequency response',
+      'Maximum current from supply (minimum impedance)',
+      'Zero impedance with the supply voltage dropping to zero',
       'Minimum current from supply (maximum impedance)',
-      'The frequency range between -3dB points (f2 - f1)',
+      'A purely capacitive response with the current leading the voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why are detuning reactors used with PFC capacitor banks?',
     options: [
-      'To detail all circuits, protective devices, cable sizes and loads',
-      'Creates room for different interpretations, leading to disputes',
-      'The equivalent DC voltage that would produce the same heating effect',
+      'To increase the capacitance available for power factor correction',
+      'To raise the system resonant frequency to match the 5th harmonic',
+      'To limit the steady-state current drawn by the capacitor bank at 50 Hz',
       'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
       'When capacitors are switched onto a supply, what causes the inrush current transient?',
     options: [
       'The capacitor charging through low source impedance with minimal damping',
-      'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
-      'Higher Q means sharper (narrower) frequency response',
-      'The system may resonate with 7th harmonic (350 Hz) causing capacitor overload',
+      'The slow build-up of charge limited by the high resistance of the capacitor',
+      'The inductance of the capacitor opposing the sudden change in voltage',
+      'The capacitor discharging its stored energy back into the supply network',
     ],
     correctAnswer: 0,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'A 400V three-phase system has 200 kVAr PFC capacitors and transformer inductance creating a resonant frequency of 350 Hz. What is the risk?',
     options: [
-      'To ensure exits are visible from a distance and confirm they lead outside',
-      'By trained personnel to evacuate people who cannot use stairs independently',
+      'There is no risk because 350 Hz is below the fundamental supply frequency',
+      'The capacitors will improve the power factor more strongly at this frequency',
       'The system may resonate with 7th harmonic (350 Hz) causing capacitor overload',
-      'Only if it’s unreasonable to be dead, reasonable to do live, and suitable precautions are taken',
+      'The transformer will be damaged by excessive 3rd harmonic current at 150 Hz',
     ],
     correctAnswer: 2,
     explanation:
@@ -237,9 +237,9 @@ const quizQuestions = [
       'In building services, which scenario most commonly leads to harmonic resonance problems?',
     options: [
       'Adding PFC capacitors to systems with VSD drives',
-      'Higher Q means sharper (narrower) frequency response',
-      'Minimum current from supply (maximum impedance)',
-      'The frequency range between -3dB points (f2 - f1)',
+      'Supplying purely resistive heating loads from a dedicated transformer',
+      'Using incandescent lighting on a lightly loaded final circuit',
+      'Connecting a single-phase motor with a run capacitor to the supply',
     ],
     correctAnswer: 0,
     explanation:

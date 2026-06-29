@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     id: 'scaff-what-is-it',
     question: 'What is the primary purpose of scaffolding on a construction site?',
     options: [
-      'To store materials permanently at height',
       'To provide temporary support for workers and materials during work at height',
+      'To store materials permanently at height',
       'To act as a permanent structural element of the building',
       'To replace the need for personal protective equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Scaffolding is a temporary structure used to support workers and materials during construction, maintenance, repair, and demolition at height. It is never a permanent structure and does not replace the need for PPE where required.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
     question: 'What is a key risk for electricians working on or near scaffold platforms?',
     options: [
       'Scaffolds are always too small for electrical tools',
-      'Working near live services from scaffold platforms',
       'Scaffolds cannot support the weight of cable drums',
       'Electricians are not permitted to use scaffolds',
+      'Working near live services from scaffold platforms',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Electricians face specific risks when working on or near scaffolds, including proximity to live electrical services and the challenge of routing cables through scaffold structures. Understanding these risks is essential even if you never erect a scaffold yourself.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     options: [
       'Only the scaffolding contractor who erected it',
       'Only the site manager',
-      'Everyone on site — scaffolders, users, inspectors, and managers all have defined responsibilities',
       'Only the Health and Safety Executive',
+      'Everyone on site — scaffolders, users, inspectors, and managers all have defined responsibilities',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Everyone on site shares responsibility for scaffold safety. Scaffolders must erect safely and to standard, users must use correctly and never modify, inspectors must carry out thorough and honest inspections, and managers must ensure compliance and resource scaffolding properly.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
     question: 'What is the most common category of scaffold-related accident?',
     options: [
       'Scaffold collapse due to design failure',
-      'Electrocution from overhead power lines',
       'Falls from scaffold platforms',
+      'Electrocution from overhead power lines',
       'Fire damage to scaffold sheeting',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Falls from scaffold platforms are the most common category of scaffold-related accident. Other common incidents include falls during erection and dismantling, being struck by falling objects from scaffolds, and scaffold collapse. Most scaffold accidents are preventable with proper inspection and correct use.',
   },

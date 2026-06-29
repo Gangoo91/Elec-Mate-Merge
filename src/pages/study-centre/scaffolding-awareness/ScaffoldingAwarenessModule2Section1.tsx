@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Under Schedule 2 of the Work at Height Regulations 2005, what is the minimum height for a top guard rail on a scaffold working platform?',
     options: [
-      'At least 950 mm above the platform edge',
-      'At least 750 mm above the platform edge',
-      'At least 1,100 mm above the platform edge',
       'At least 500 mm above the platform edge',
+      'At least 750 mm above the platform edge',
+      'At least 950 mm above the platform edge',
+      'At least 1,100 mm above the platform edge',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Schedule 2, Part 1 of the Work at Height Regulations 2005 requires that the top guard rail on a scaffold working platform is at least 950 mm above the edge of the working platform. This provides an adequate barrier to prevent workers falling from height. An intermediate guard rail or other suitable means must also be fitted so that no unprotected gap exceeds 470 mm.',
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'The Work at Height Regulations 2005 establish a hierarchy of control measures. Which type of protection must always be prioritised over personal protection?',
     options: [
-      'Collective protection (e.g. guard rails, toe boards)',
       'Personal protection (e.g. harnesses, lanyards)',
+      'Collective protection (e.g. guard rails, toe boards)',
       'Administrative controls (e.g. permits, signage)',
       'Elimination of height (e.g. ground-level assembly)',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The WAH Regulations establish a clear hierarchy: first avoid work at height where possible, then use work equipment or measures to prevent falls (collective protection such as guard rails and working platforms), then use measures to minimise the distance and consequences of a fall (collective then personal). Collective protection always takes priority over personal protection because it safeguards everyone in the area without relying on individual behaviour or equipment fit.',
   },
@@ -91,11 +91,11 @@ const quizQuestions = [
     question: 'The Work at Height Regulations 2005 apply to which of the following?',
     options: [
       'Only scaffolding above 2 metres',
-      'All work at height where there is a risk of a fall liable to cause personal injury',
       'Only construction sites with more than five workers',
       'Only work carried out by scaffolding contractors',
+      'All work at height where there is a risk of a fall liable to cause personal injury',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Work at Height Regulations 2005 apply to all work at height where there is a risk of a fall liable to cause personal injury, regardless of the height involved. There is no minimum height threshold. The regulations apply across all industries, not just construction, and cover every person who works at height or who organises, plans, or supervises such work.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'Schedule 1 of the Work at Height Regulations 2005 sets out requirements for existing places of work and means of access at height. Which of the following is a Schedule 1 requirement?',
     options: [
-      'Every scaffold must be painted a high-visibility colour',
       'Every existing workplace at height must be stable and of sufficient strength for its purpose',
+      'Every scaffold must be painted a high-visibility colour',
       'All scaffolds must have powered hoists for material delivery',
       'Ladders must be replaced with scaffolding after 30 minutes of use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Schedule 1 requires that every existing workplace at height is stable, has sufficient strength and rigidity for its purpose, and is kept in a safe condition. It must not be overloaded or used in conditions (such as weather) that could cause a risk to health or safety. These are fundamental requirements that apply to all scaffolds and other existing work-at-height structures.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       'Under the Work at Height Regulations, who has the primary duty to plan, organise, and supervise scaffold work so that it is carried out safely?',
     options: [
       'The scaffolder who erects the scaffold',
-      'The person on whose behalf the work is carried out (the duty holder / employer)',
       'The HSE inspector assigned to the site',
       'The local authority building control officer',
+      'The person on whose behalf the work is carried out (the duty holder / employer)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 4 places the primary duty on every employer, self-employed person, or person who controls the work of others to ensure that work at height is properly planned, appropriately supervised, and carried out in a manner that is safe. While scaffolders must be competent and follow safe working practices, the overarching duty sits with the person on whose behalf the work is being done. This duty cannot be delegated away simply by appointing a contractor.',
   },

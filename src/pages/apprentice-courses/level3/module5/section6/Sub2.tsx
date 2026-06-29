@@ -43,10 +43,10 @@ const checks = [
     question:
       'For a domestic CU swap-out plus a new EV charger circuit, the standard customer handover pack contains:',
     options: [
-      'Prepare thoroughly (reduces uncertainty), practise relaxation techniques, maintain normal routines before the assessment, visualise successful outcomes, and remind yourself that you have been signed off because you are ready',
-      'EIC + Schedule of Inspections + Schedule of Test Results + Building Control Compliance Certificate (issued by the Competent Person Scheme after upload) + operational instructions + as-built records + manufacturer manuals for the new equipment (RCBOs, EV charger, SPDs, AFDDs).',
-      'Internal first — to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person who is the "Reg 3 responsible person" under RIDDOR. They make the F2508 / F2508A submission via riddor.hse.gov.uk or phone 0345 300 9923 for fatalities/specified injuries. Your job is to escalate to them, not to make the report yourself unless you ARE the responsible person.',
-      'Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others\\\\\\\' needs, which requires ongoing emotional regulation of ego and need for recognition',
+      'The EIC on its own — the single certificate is the complete pack, with the schedules, Building Control certificate and manuals retained by the contractor for their own records.',
+      'EIC + the two schedules + Building Control Compliance Certificate + operational instructions + as-built records + manufacturer manuals for the new equipment.',
+      'A Minor Electrical Installation Works Certificate plus the EV charger manual — because a consumer unit swap is minor works, the full EIC pack is not required.',
+      'An EICR plus the Building Control Compliance Certificate — the consumer unit swap is reported on a condition report rather than certified, so no EIC or schedules are issued.',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       'The standard Competent Person Scheme notification window for Part P notifiable work in England is:',
     options: [
-      'By reference to the actual hazards present, the controls implemented, and whether industry good practice (HSG guidance, BS 7671 etc) was followed. The HSE inspector after an incident asks: did this RA engage with the actual conditions?',
-      'The DNO. The cut-out fuse rating is determined by the declared maximum demand, the service cable capacity and the supply infrastructure — all DNO assets. The DNO will assess and either uprate or refuse.',
+      '7 days from completion. The scheme requires the upload within a week so Building Control can inspect the work before it is concealed, and missing the week voids the notification entirely.',
+      '12 months from completion. Notifications are batched annually with the contractor\'s scheme renewal, so the upload simply needs to be in before the next assessment visit.',
       '30 days from completion. NICEIC, NAPIT and ELECSA all operate on a 30-day upload window for Part P notifiable work; missing the window risks scheme penalties and the customer not receiving their Building Control Compliance Certificate in time.',
-      'Part 6 has been completely restructured and renumbered to align with the CENELEC standard for inspection and testing. The old chapter and regulation numbers do not map directly to the new 64x.x numbering. Inspectors must use the new numbers on certificates and EICRs from A4:2026 onward.',
+      'Before work starts. The CPS must be notified in advance of every notifiable job so it can arrange a pre-work Building Control inspection, in the same way as a direct LABC application.',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       'Best-practice handover for a domestic CU swap includes a verbal walk-through covering:',
     options: [
-      'Location of the new CU and main isolator; how the RCDs work and the monthly test-button routine; what each circuit is labelled as; any new features (SPDs, AFDDs, smart switches) plus their manuals; the recommended next inspection date; the contact route for any post-handover issues.',
-      'Inhalation (breathing in), absorption (through skin / eyes / mucous membranes), ingestion (swallowing), and injection (puncture / cut). Different substances exploit different routes; PPE selection follows the route.',
-      'Avoid working at height where reasonably practicable; if unavoidable, use collective protection (scaffold, MEWP, edge protection); if collective inadequate, use personal fall protection (harness + lanyard + anchor); minimise distance and consequences of falls.',
-      'The designer re-runs the voltage drop and Zs calc using the as-installed length, updates the cable schedule and the SLD to read 78 m, marks the change in the revision history, and confirms the calc still passes. Only then can the EIC issue under Reg 644.1.1.',
+      'CU and main isolator location, the monthly RCD test-button routine, the circuit labels, any new features plus manuals, the next inspection date, and the post-handover contact route.',
+      'A full demonstration of how to dead-test and re-energise each circuit, so the customer can carry out their own continuity and insulation-resistance checks between inspections.',
+      'A line-by-line read-through of every test result on the Schedule of Test Results, with the customer signing each reading to confirm they understand the measured values.',
+      'Instructions on how to alter the consumer unit themselves, including changing RCBO ratings and adding circuits, so they need not call an electrician for minor changes.',
     ],
     correctIndex: 0,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Competent Person Scheme upload generates which document for the customer?',
     options: [
-      'Hazard exists; risk is the quantified threat from the hazard given exposure; control reduces the risk; residual risk is what remains after control. ALARP is achieved when residual risk is reduced to a point where further reduction would be grossly disproportionate to the cost.',
-      'The Building Control Compliance Certificate — the legal evidence that the work has been notified to the local Building Control body via the scheme on the Part P notification route. Distinct from the EIC, but part of the same handover pack.',
-      'Below the 1.0 MΩ minimum from Table 64 → fail. Investigate: damaged cable insulation, water ingress at a back-box, a wired-up neutral that is touching earth somewhere, a trapped conductor under a pinch screw. Do not energise.',
-      'The battery and the PV strings both connect to the DC side of one inverter. PV power can charge the battery without first being inverted to AC and back, giving roughly 3–5 % higher round-trip efficiency than AC-coupling. Best for new PV plus battery installs that go in together.',
+      'The Electrical Installation Certificate itself — the scheme generates the EIC on the contractor\'s behalf once the test results are uploaded, so it is not produced on site.',
+      'The Building Control Compliance Certificate — evidence that the work has been notified to Building Control via the scheme on the Part P route, distinct from the EIC.',
+      'A Minor Electrical Installation Works Certificate — the scheme converts the uploaded EIC into an MEIWC for the customer\'s records once Building Control is notified.',
+      'An EICR — the scheme issues a condition report confirming the new work is satisfactory, which the customer keeps in place of the EIC.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'NICEIC, NAPIT and ELECSA are:',
     options: [
-      'Whether the load is well balanced (similar values on all three phases — efficient, low neutral current) or imbalanced (one phase dominant — high neutral, possible 4th-wire derate, possible voltage imbalance issues for the worst-loaded tenant).',
-      'All business income (invoices issued, payments received), all business expenses (receipts, invoices), bank statements, mileage records if claiming vehicle expenses, capital purchases (tools, equipment, vehicle). Keep for at least 5 years after the 31 January filing deadline.',
-      'Competent Person Schemes authorised by the Secretary of State (via DLUHC / its successors) to register contractors who self-certify Part P notifiable electrical work in England, replacing the need for individual Building Control notifications per job.',
-      'Because the high earth electrode resistance limits fault current to a few amps, far below what an MCB or fuse needs to operate. Without an RCD the fault current can flow indefinitely through the earth path with no clearing — the RCD is the only practical means of automatic disconnection.',
+      'The bodies that publish BS 7671 and its amendments, setting the technical requirements that every electrical installation in the UK must meet.',
+      'Government departments within the HSE that directly inspect electrical installations and issue improvement and prohibition notices.',
+      'Competent Person Schemes authorised by the Secretary of State to register contractors who self-certify Part P notifiable work in England.',
+      'The three approved manufacturers of consumer units and protective devices whose products must be used for any Part P notifiable work.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 3,
     question: 'Part P notifiable work in England (post-2013 reforms) is:',
     options: [
-      'The supplier earth terminal on the cut-out, which is connected to the combined PEN conductor in the DNO service cable, ultimately referenced back to the multiple earths along the LV distributor and the secondary substation.',
-      'Labour cost (your time + on-costs), overheads (van, insurance, tools, training, admin, scheme fees), materials margin, profit margin, local market rates, and the value you provide. Below true cost is unsustainable.',
-      'By first stating what they don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t mean ("I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not saying your work is below standard overall") and then what they do mean ("I am saying this particular joint needs attention because it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t meet the specification")',
-      'A defined subset — most non-trivial work in special locations (bathroom Zone 0/1, swimming pool, sauna, etc.); installation of a new circuit; replacement of a consumer unit. Like-for-like accessory replacement, repairs, additions to an existing circuit OUTSIDE special locations are NOT notifiable.',
+      'All electrical work in a dwelling without exception — every socket added, every accessory replaced and every repair must be notified to Building Control via the scheme.',
+      'Only work carried out by contractors who are not registered with a Competent Person Scheme — scheme members are exempt from Part P notification entirely.',
+      'Only commercial and industrial electrical work — Part P applies to non-domestic premises, while work in dwellings is covered by BS 7671 alone.',
+      'A defined subset — new circuits, consumer unit replacement, and most work in special locations; like-for-like swaps and additions outside special locations are NOT notifiable.',
     ],
     correctAnswer: 3,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: 'The contractor misses the 30-day CPS upload window. What happens?',
     options: [
-      'The scheme flags a missed notification (audit risk + potential scheme penalty); the Building Control Compliance Certificate to the customer is delayed; in some cases late notification fees apply; persistent missed notifications can put scheme membership at risk.',
-      'Natural England is the government\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters',
-      'Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
+      'The scheme flags a missed notification, the customer\'s BCCC is delayed, late-notification fees may apply, and persistent misses can put scheme membership at risk.',
+      'Nothing — the 30-day window is advisory only, and notifications can be uploaded any time before the contractor\'s annual scheme renewal with no consequence.',
+      'The EIC is automatically invalidated and the contractor must re-test the entire installation and issue a fresh certificate before the work can be notified.',
+      'Building Control issues an enforcement notice requiring the installation to be removed, and the contractor is barred from any further notifiable work for twelve months.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'For non-CPS work (e.g. a contractor not registered with any scheme) on a Part P notifiable job, the notification route is:',
     options: [
-      'Report it via your own chain (your Foreman in the first instance, escalating to the main contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Site Manager if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s site-wide). You don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t approach the HSE inspector direct — that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.',
-      'Direct application to the Local Authority Building Control (LABC) office before the work starts, with a Building Notice or Full Plans application; LABC inspects and issues a completion certificate. Significantly more expensive and slower than CPS routes — most contractors register with a scheme for this reason.',
-      'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
-      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'Upload directly to NICEIC or NAPIT as a one-off guest notification, paying a single per-job fee without holding scheme membership.',
+      'Direct application to Local Authority Building Control before work starts, who inspect and issue a completion certificate — slower and more expensive than the CPS route.',
+      'No notification is needed — a contractor who is not in a scheme is exempt from Part P, so they simply issue the EIC and the work is complete.',
+      'Notification through another contractor who is scheme-registered, who uploads the job to their scheme on the unregistered contractor\'s behalf for a fee.',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "The customer's copy of the handover pack should be provided:",
     options: [
-      'Vd scales with current, so a 10 percent load uplift gives a 10 percent Vd uplift, taking 4.95 percent to ~5.45 percent — the circuit is now non-compliant and the customer needs the cable upsized. This is exactly why designers leave headroom rather than scrape the limit.',
-      'Every person who is or may be affected by the risk and who needs the information to manage it — this typically includes the principal designer, principal contractor, other designers, contractors, and ultimately the end users via the health and safety file',
-      'As a complete printed pack at handover plus PDF emailed for their records — they need it for any future EICR (so the inspector can compare current readings against the original), any property sale (solicitors increasingly require current EIC), any insurance claim (proof of certification at the time of an incident), any warranty claim on installed equipment.',
-      'Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.',
+      'Only on request — the contractor retains the pack and releases a copy to the customer only if they specifically ask for it, for example when selling the property.',
+      'Only after the Building Control Compliance Certificate has arrived, so the whole pack can be handed over as a single bundle several weeks after completion.',
+      'As a complete printed pack at handover plus a PDF emailed — they need it for any future EICR, property sale, insurance claim or equipment warranty claim.',
+      'Only to the customer\'s solicitor or lender, since the technical documents are not intended for the customer themselves and they keep only the operating instructions.',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: 'On a domestic CU swap, the as-built circuit schedule should typically be:',
     options: [
-      'Higher temperatures generally cause lower insulation resistance readings, and this must be considered when comparing readings taken at different times',
-      'Licensable = highest risk, requires HSE licence; NNLW = sporadic/low intensity but still requires notification, training, medicals, records; Non-licensed = lowest risk asbestos work with limited controls',
-      'After a stressful incident (e.g., a near-miss or heated confrontation), you should delay important decisions and conversations for at least 20 minutes where possible, allowing the physiological stress response to subside before engaging',
-      'Affixed inside the CU door (for the immediate user reference) plus included in the handover pack as a stand-alone document. Future fault diagnosis depends on accurate circuit-to-board labelling at the CU itself.',
+      'Held only by the contractor in their job records, since circuit details are technical information the customer does not need and could be confused by.',
+      'Sent to the DNO so it can be added to the supply records for the property, with no copy kept at the consumer unit.',
+      'Lodged with Building Control as part of the Part P notification, replacing the need for any labelling at the consumer unit itself.',
+      'Affixed inside the CU door for immediate reference plus included in the handover pack, since fault diagnosis depends on accurate labelling at the board.',
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: 'The contractor uploads the EIC to NICEIC Online for a domestic CU swap completed today. Approximately when does the customer receive their Building Control Compliance Certificate?',
     options: [
-      'Typically 2-6 weeks from upload — NICEIC processes the notification, Building Control receives it, and the BCCC is posted to the customer at the property address. Window varies by scheme and by season; most contractors set customer expectations accordingly at handover.',
-      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
-      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
-      'The insulation resistance is at or above the upper limit of the test instrument\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s display range (typically 299 MΩ on a 500 V tester) — a passing result; record as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'>299\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rather than the displayed numeral',
+      'Typically 2-6 weeks from upload — the scheme processes the notification and the BCCC is then posted to the customer at the property address.',
+      'Immediately on upload — the scheme generates the BCCC electronically the moment the EIC is submitted, so the customer can download it the same day.',
+      'Not at all — the contractor prints and hands the BCCC to the customer on completion, since it is part of the on-site handover pack rather than a scheme-issued document.',
+      'After 12 months — the BCCC is issued only once the installation has passed its first periodic inspection, confirming the work has remained safe in service.',
     ],
     correctAnswer: 0,
     explanation:

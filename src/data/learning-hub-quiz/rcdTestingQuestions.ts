@@ -18,12 +18,12 @@ export const rcdTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'rcd-2',
-    question: 'What should you do BEFORE using an RCD test instrument?',
+    question: 'What should you do BEFORE testing an RCD with an instrument?',
     options: [
-      'RCD internal design and construction',
-      'Press the RCD test button first',
-      'There is no specified minimum',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
+      'Disconnect the circuit protective conductor',
+      'Press the RCD test button as a functional check',
+      'Remove the RCD from the consumer unit',
+      'Short line and neutral together at the load',
     ],
     correctAnswer: 1,
     explanation:
@@ -52,9 +52,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-4',
     question: 'Is the 5×IΔn test mandatory per BS 7671:2018+A2:2022?',
     options: [
-      'The RCD is over-sensitive and should be replaced',
-      'Sinusoidal AC and pulsating DC',
-      'Equipment with variable frequency drives',
+      'Yes, on every RCD at every test',
+      'Yes, but only on Type AC RCDs',
+      'Yes, but only on three-phase RCDs',
       'No, it is optional (for fault-finding)',
     ],
     correctAnswer: 3,
@@ -83,10 +83,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-6',
     question: 'Why must RCDs be tested at both 0° and 180° phase angles?',
     options: [
-      'Until the device has mechanically reset',
+      'To confirm the device resets after each test',
       'RCD sensitivity varies with AC waveform phase',
-      'Imbalance between line and neutral currents',
-      'Earth fault loop impedance (EFLI)',
+      'To measure the earth fault loop impedance',
+      'To detect an imbalance between line and neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-8',
     question: 'What essential test must be performed BEFORE RCD testing?',
     options: [
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
-      'Pressing the test button (if fitted)',
-      'AC, pulsating DC, and smooth DC',
+      'The 5×IΔn fault-finding test',
+      'A pulsating DC residual current test',
+      'A phase rotation test on the supply',
       'Earth fault loop impedance (EFLI)',
     ],
     correctAnswer: 3,
@@ -132,9 +132,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'What does IΔn represent?',
     options: [
       'Rated residual operating current',
-      'Sinusoidal AC residual current only',
-      'AC, pulsating DC, and smooth DC',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
+      'The rated load current of the circuit',
+      'The maximum earth fault loop impedance',
+      'The prospective short-circuit current',
     ],
     correctAnswer: 0,
     explanation:
@@ -160,11 +160,11 @@ export const rcdTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'rcd-11',
-    question: 'What should happen if an RCD trips during the ½×IΔn test?',
+    question: 'What does it mean if an RCD trips during the ½×IΔn test?',
     options: [
-      'No, it only proves the mechanical trip mechanism',
-      'For circuits where 30mA would nuisance trip',
-      'Ensure all RCDs are reset and circuits are energised',
+      'The RCD is correctly rated and has passed',
+      'The test current was applied at the wrong phase angle',
+      'The earth fault loop impedance is too high',
       'The RCD is over-sensitive and should be replaced',
     ],
     correctAnswer: 3,
@@ -178,10 +178,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-12',
     question: 'For three-phase RCDs, how should testing be performed?',
     options: [
-      'Earth fault loop impedance (EFLI)',
-      'Press the RCD test button first',
+      'Test only one line conductor to neutral',
+      'Test line to line across all three phases',
       'Test each line to neutral separately',
-      'Pressing the test button (if fitted)',
+      'Test neutral to earth on each phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -210,9 +210,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'Where should RCD testing ideally be performed?',
     options: [
       'At the furthest practical point from the RCD',
-      'RCD internal design and construction',
-      'AC sinusoidal currents (Type AC)',
-      'To ensure only the RCD nearest the fault trips',
+      'Only at the consumer unit terminals',
+      'At the supply side of the main switch',
+      'At the incoming service head',
     ],
     correctAnswer: 0,
     explanation:
@@ -272,9 +272,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'Type AC RCDs detect:',
     options: [
       'Sinusoidal AC residual current only',
-      'RCD internal design and construction',
-      'Press the RCD test button first',
-      'No, it is optional (for fault-finding)',
+      'Sinusoidal AC and pulsating DC currents',
+      'Smooth DC residual currents only',
+      'High-frequency residual currents only',
     ],
     correctAnswer: 0,
     explanation:
@@ -287,9 +287,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-19',
     question: 'Type A RCDs detect:',
     options: [
-      'Rated residual operating current',
-      'RCD and MCB functions',
-      'There is no specified minimum',
+      'Sinusoidal AC residual current only',
+      'Smooth DC residual current only',
+      'High-frequency residual current only',
       'Sinusoidal AC and pulsating DC',
     ],
     correctAnswer: 3,
@@ -319,9 +319,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'Type F RCDs are suitable for protecting:',
     options: [
       'Equipment with variable frequency drives',
-      'Press the RCD test button first',
-      'Earth fault loop impedance (EFLI)',
-      'Sinusoidal AC and pulsating DC',
+      'Standard resistive lighting circuits only',
+      'Circuits supplying smooth DC loads',
+      'Three-phase motor circuits only',
     ],
     correctAnswer: 0,
     explanation:
@@ -334,10 +334,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-22',
     question: 'Type B RCDs detect:',
     options: [
-      'Equipment with variable frequency drives',
+      'Sinusoidal AC residual current only',
       'AC, pulsating DC, and smooth DC',
-      'Until the device has mechanically reset',
-      'Press the RCD test button first',
+      'Sinusoidal AC and pulsating DC only',
+      'High-frequency residual current only',
     ],
     correctAnswer: 1,
     explanation:
@@ -366,9 +366,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-24',
     question: 'What does an RCBO combine?',
     options: [
-      'RCD and timer',
-      'RCD and surge protection',
-      'Two RCDs',
+      'RCD and time-delay functions',
+      'RCD and surge protection functions',
+      'RCD and arc fault detection functions',
       'RCD and MCB functions',
     ],
     correctAnswer: 3,
@@ -383,9 +383,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'Can the test button prove an RCD will trip at the correct current?',
     options: [
       'No, it only proves the mechanical trip mechanism',
-      'Sinusoidal wave over pulsating DC wave',
-      'To ensure only the RCD nearest the fault trips',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
+      'Yes, it confirms both the trip current and trip time',
+      'Yes, it replaces the need for instrument testing',
+      'Yes, but only on Type AC RCDs',
     ],
     correctAnswer: 0,
     explanation:
@@ -447,9 +447,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'What is the purpose of RCD discrimination?',
     options: [
       'To ensure only the RCD nearest the fault trips',
-      'Sinusoidal AC residual current only',
-      'No, it only proves the mechanical trip mechanism',
-      'For circuits where 30mA would nuisance trip',
+      'To make all RCDs in the installation trip together',
+      'To increase the sensitivity of every RCD',
+      'To remove the need for downstream protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -476,12 +476,12 @@ export const rcdTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'rcd-31',
-    question: 'What test configuration shows the RCD type on the device?',
+    question: 'What on the device tells you which RCD type it is?',
     options: [
-      'Rated residual operating current',
+      'The rated residual operating current value',
       'Type marking (AC, A, F, B)',
-      'Press the RCD test button first',
-      'AC sinusoidal currents (Type AC)',
+      'The rated load current value',
+      'The maximum trip time stated',
     ],
     correctAnswer: 1,
     explanation:
@@ -495,9 +495,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'Some manufacturers use 250mA instead of 5×IΔn for 30mA RCDs because:',
     options: [
       'Equipment limitations for high current pulses',
-      'No, it is optional (for fault-finding)',
-      'Socket outlets ≤32A and mobile equipment outdoors',
-      'RCD internal design and construction',
+      '250mA gives a faster trip than 5×IΔn',
+      '250mA is required by BS 7671 for socket circuits',
+      '250mA tests the device at half its rated current',
     ],
     correctAnswer: 0,
     explanation:
@@ -525,10 +525,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-34',
     question: 'RCDs marked with the wave symbol ~ detect:',
     options: [
-      'Test each line to neutral separately',
-      'Type marking (AC, A, F, B)',
+      'Sinusoidal AC and pulsating DC currents',
+      'Smooth DC residual currents',
       'AC sinusoidal currents (Type AC)',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
+      'High-frequency residual currents',
     ],
     correctAnswer: 2,
     explanation:
@@ -541,10 +541,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-35',
     question: 'What indicates an RCD has become unreliable and needs replacement?',
     options: [
-      'For circuits where 30mA would nuisance trip',
+      'It trips faster than the maximum permitted time',
       'Trips at ½×IΔn or fails to trip at 1×IΔn',
-      'There is no specified minimum',
-      'At the furthest practical point from the RCD',
+      'It resets cleanly after each test',
+      'It trips on both the 0° and 180° tests',
     ],
     correctAnswer: 1,
     explanation:
@@ -558,9 +558,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'What does "non-delay" mean for RCD trip times?',
     options: [
       'Standard trip times without intentional delay',
-      'RCD sensitivity varies with AC waveform phase',
-      'Sinusoidal AC residual current only',
-      'Earth fault loop impedance (EFLI)',
+      'A built-in delay for discrimination with downstream devices',
+      'The device only trips on smooth DC currents',
+      'The device has no maximum trip time limit',
     ],
     correctAnswer: 0,
     explanation:
@@ -573,9 +573,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-37',
     question: 'How long must an RCD be allowed to reset between tests?',
     options: [
-      'No, it only proves the mechanical trip mechanism',
-      'Earth fault loop impedance (EFLI)',
-      'Imbalance between line and neutral currents',
+      'No reset is needed between consecutive tests',
+      'Exactly 30 seconds between every test',
+      'At least 5 minutes to allow it to cool',
       'Until the device has mechanically reset',
     ],
     correctAnswer: 3,
@@ -589,10 +589,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-38',
     question: 'What determines whether 0° or 180° phase angle gives the longest trip time?',
     options: [
-      'No, it is optional (for fault-finding)',
-      'Sinusoidal wave over pulsating DC wave',
+      'The rated residual operating current of the device',
+      'The earth fault loop impedance of the circuit',
       'RCD internal design and construction',
-      'There is no specified minimum',
+      'The supply voltage at the time of the test',
     ],
     correctAnswer: 2,
     explanation:
@@ -605,10 +605,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-39',
     question: 'RCD testing on a TT system is particularly important because:',
     options: [
-      'The RCD is over-sensitive and should be replaced',
+      'TT systems have no main earthing terminal',
       'The earth fault path has high impedance, relying on RCD operation',
-      'Socket outlets ≤32A and mobile equipment outdoors',
-      'Ensure all RCDs are reset and circuits are energised',
+      'TT systems do not require any overcurrent protection',
+      'The supply neutral is connected directly to earth at the load',
     ],
     correctAnswer: 1,
     explanation:
@@ -621,10 +621,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-40',
     question: 'After RCD testing, what must be done before leaving the installation?',
     options: [
-      'No, it is optional (for fault-finding)',
+      'Leave the main RCD switched off for safety',
       'Ensure all RCDs are reset and circuits are energised',
-      'The RCD is over-sensitive and should be replaced',
-      'Sinusoidal wave over pulsating DC wave',
+      'Remove the RCD test notice from the consumer unit',
+      'Disconnect the earthing conductor at the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -635,12 +635,12 @@ export const rcdTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'rcd-41',
-    question: 'What is the minimum trip time an RCD should achieve?',
+    question: 'What is the specified minimum trip time an RCD must achieve?',
     options: [
       '25ms for discrimination',
-      'No minimum - faster is always better',
+      '40ms at rated current',
       'There is no specified minimum',
-      '10ms',
+      '10ms at rated current',
     ],
     correctAnswer: 2,
     explanation:
@@ -653,9 +653,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-42',
     question: 'The BS 7671 requirement for 30mA RCD protection applies to:',
     options: [
-      'At the furthest practical point from the RCD',
-      'No, it is optional (for fault-finding)',
-      'Equipment limitations for high current pulses',
+      'Only socket outlets rated above 32A',
+      'Only fixed equipment in dry locations',
+      'Only three-phase distribution circuits',
       'Socket outlets ≤32A and mobile equipment outdoors',
     ],
     correctAnswer: 3,
@@ -685,10 +685,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-44',
     question: 'What factor could cause nuisance tripping of RCDs?',
     options: [
-      'Sinusoidal wave over pulsating DC wave',
+      'A high earth fault loop impedance reading',
       'Accumulated earth leakage from multiple appliances',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
-      'No, it is optional (for fault-finding)',
+      'A circuit operating well below its rated current',
+      'Correct polarity at every socket outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -716,9 +716,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-46',
     question: 'Why might 300mA RCDs be used instead of 30mA?',
     options: [
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
-      'Test each line to neutral separately',
-      'Press the RCD test button first',
+      'They provide better personal shock protection',
+      'They trip faster than a 30mA device',
+      'They are required for all socket outlets',
       'For circuits where 30mA would nuisance trip',
     ],
     correctAnswer: 3,
@@ -748,10 +748,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-48',
     question: 'What symbol indicates a Type A RCD?',
     options: [
-      'Press the RCD test button first',
+      'A single sinusoidal wave symbol',
       'Sinusoidal wave over pulsating DC wave',
-      'Acceptable - within 300ms limit',
-      'No, it is optional (for fault-finding)',
+      'A straight line indicating smooth DC',
+      'The letter F inside a square',
     ],
     correctAnswer: 1,
     explanation:
@@ -764,10 +764,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     id: 'rcd-49',
     question: 'RCDs provide protection by detecting:',
     options: [
-      'RCD sensitivity varies with AC waveform phase',
-      'No, it is optional (for fault-finding)',
+      'An overcurrent in the line conductor',
+      'A rise in the supply voltage',
       'Imbalance between line and neutral currents',
-      'Acceptable - within 300ms limit',
+      'A drop in the circuit insulation resistance',
     ],
     correctAnswer: 2,
     explanation:
@@ -781,9 +781,9 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     question: 'A measured trip time of 28ms at 1×IΔn for a non-delay RCD is:',
     options: [
       'Acceptable - within 300ms limit',
-      'Rated residual operating current',
-      'Equipment with variable frequency drives',
-      'Test each line to neutral separately',
+      'A fail - it must trip in under 10ms',
+      'A fail - it is too fast and over-sensitive',
+      'A fail - it exceeds the 300ms limit',
     ],
     correctAnswer: 0,
     explanation: '28ms is well within the 300ms maximum, so this is an acceptable pass.',

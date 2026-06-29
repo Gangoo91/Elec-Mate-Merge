@@ -40,10 +40,10 @@ const checks = [
     id: 'm5-s1-sub2-purpose',
     question: 'Per Reg 641.1, the purpose of initial verification is to confirm:',
     options: [
-      'The difference between the switch-on point and the switch-off point as the target approaches and then retreats',
-      'NC contacts provide fail-safe operation — a broken wire or contact failure causes the circuit to open and stop the machine',
+      'That the installation will remain safe for the whole of its design life without any further inspection.',
+      'That the client has accepted the quotation and the work has been paid for before energising.',
       'That the requirements of BS 7671 have been met, so far as is reasonably practicable, before the installation is put into service.',
-      'Providing precise, adjustable resistance values to simulate RTD sensors for testing temperature transmitters',
+      'That the DNO has approved the connection and the supply has been energised at the cut-out.',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     id: 'm5-s1-sub2-642-inspection',
     question: 'Reg 642 requires visual inspection to be carried out:',
     options: [
-      'To accommodate the old UK 240 V supplies (which are 240/230 = 1.043, just under +5%) without requiring transformer replacement, while still covering the old continental 220 V (−4.3%)',
+      'Only after all the dead and live tests are complete, as a final check that nothing was disturbed during testing.',
       'Before testing — and during erection where applicable — to confirm that installed equipment complies with regulatory requirements, is correctly selected and erected, and is not visibly damaged or defective.',
-      'To divide a building into fire-resistant compartments that contain fire and smoke to the compartment of origin, limiting fire spread and protecting escape routes',
-      'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
+      'Only on the parts of the installation that cannot be reached by the test instruments, since testing covers everything else.',
+      'At any point the inspector chooses, because the order of inspection and testing is left entirely to professional judgement.',
     ],
     correctIndex: 1,
     explanation:
@@ -66,12 +66,12 @@ const checks = [
     id: 'm5-s1-sub2-eic-vs-mwc',
     question: 'When is a Minor Works Certificate (MWC) appropriate instead of a full EIC?',
     options: [
-      'The Qualified Supervisor and the contracting business — non-conformities go on a written report with corrective action timescales',
       'For additions and alterations to an existing installation that do not include the installation of a new circuit. A new circuit always requires an EIC, regardless of size.',
-      'To divide the busbars into sections, allowing part of the board to be isolated for maintenance while maintaining supply to other sections',
-      'A short, focused safety briefing on a specific topic delivered to the work team — interactive, recorded with attendees signed in',
+      'For any work valued below a set monetary threshold, regardless of whether a new circuit is installed.',
+      'For any single-circuit work, including running a brand-new circuit from the consumer unit, provided only one circuit is involved.',
+      'For a full consumer unit replacement, because the existing circuits are simply being reconnected rather than newly installed.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The MWC was designed for genuinely minor works — adding a socket to an existing ring, replacing a switch, adding a light fitting on an existing circuit. The defining test: no new circuit is installed. As soon as you install a new circuit (even a single point), you cross the line into needing an EIC. Replacing a CU triggers an EIC because every circuit is being newly tested and certified.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Reg 642.3 lists items to be checked during initial inspection. The IET position on this list is:',
     options: [
-      'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
+      'It is an exhaustive list. An inspector who checks every listed item has fully discharged the visual inspection duty and need look at nothing else.',
       'It is a non-exhaustive list. Inspectors must check additional items appropriate to the installation in addition to those listed.',
-      'A measure of the disorder or randomness in a system, which tends to increase in natural processes',
-      'Loss of supply to other tenants/users, loss of life-safety systems (fire alarm, emergency lighting), loss of refrigeration, loss of IT systems',
+      'It is advisory only. The listed items are recommendations, and an inspector may omit any of them at their discretion.',
+      'It applies to periodic inspection only. For initial verification the inspector follows the manufacturer\'s commissioning sheet instead of the Reg 642.3 list.',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'On the Schedule of Inspections, item 1 ("Methods of protection against electric shock") would tick boxes for:',
     options: [
-      'Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork',
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
+      'Basic protection only — confirming that live parts are insulated, enclosed or placed out of reach. Fault protection is a separate item assessed elsewhere on the schedule.',
+      'Fault protection only — confirming that automatic disconnection of supply operates within the required time. Basic protection is assumed and not separately ticked.',
       'Both basic protection (insulation, barriers/enclosures, obstacles, placing out of reach) AND fault protection (ADS, double or reinforced insulation, electrical separation, ELV) — confirming both layers per Section 41.',
-      'Mental Health First Aiders, EAP access, signposting (Lighthouse, Mind, Mates in Mind, Samaritans), regular wellbeing toolbox talks, and a no-blame reporting culture',
+      'RCD additional protection only — confirming a 30 mA RCD is fitted to every circuit, which by itself satisfies the requirement for protection against electric shock.',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'Reg 643.1 specifies the test sequence. Which of the following correctly orders the dead-test sequence?',
     options: [
-      'Periodically (typically monthly) by a designated person — check contents against the kit list, replace expired or used items, verify integrity. After each use, immediate restock. Inspection record maintained.',
-      'Raise a Request for Information (RFI), record the conflict in the design log, propose a resolution that maintains BS 7671 and CDM safety, and only proceed once the resolution is recorded by the Principal Designer.',
-      'IT systems still have exposed-conductive-parts that must be earthed (locally or interconnected via a protective conductor — see Reg 411.6.2). They still need protective equipotential bonding of extraneous parts. The "I" in IT means the source is isolated (or earthed via high impedance), not that the installation has no earthing',
+      'Insulation resistance first, then continuity of protective conductors, then polarity, then ring final continuity, then earth fault loop impedance — testing for faults between conductors before proving the protective path.',
+      'Earth fault loop impedance (Zs) first while the supply is live, then continuity, then insulation resistance, then polarity — establishing the loop impedance before any dead testing.',
+      'Polarity first, then insulation resistance, then continuity of protective conductors, then ring final continuity — confirming correct connections before testing the protective path.',
       'Continuity of protective conductors then continuity of ring final live conductors then insulation resistance then polarity then earth electrode resistance (TT) then automatic disconnection of supply (live) then polarity (live) then RCD then functional checks.',
     ],
     correctAnswer: 3,
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'Reg 644 requires what to be issued at the end of initial verification?',
     options: [
       'An Electrical Installation Certificate (EIC), accompanied by a Schedule of Inspections AND a Schedule of Test Results — the three-document set required by Section 644 for full initial verification.',
-      'Because the line conductor only ever carries the design current Ib for hours on end (steady state), but the CPC briefly carries a fault current that can be many tens of times Ib for a fraction of a second. The two thermal regimes are completely different.',
-      'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
-      'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
+      'A Minor Works Certificate on its own, which covers both the visual inspection and the test results in a single document for any new installation.',
+      'An Electrical Installation Condition Report (EICR) with C-codes, which records the condition of the new installation at the point of handover.',
+      'A verbal confirmation to the client that the installation is safe, with the written certificate to follow within 28 days of energising.',
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'Per Reg 651, periodic inspection should determine whether the installation:',
     options: [
-      'Damage to equipment, fire, RIDDOR-reportable dangerous occurrence, criminal prosecution under EAWR/HASAWA, dismissal, and loss of competent person status',
+      'Was installed to the edition of BS 7671 in force at the time, regardless of whether it remains safe under the current edition.',
       'Remains in a satisfactory condition for continued service, taking into account changes since the last inspection or initial verification — checking for damage, deterioration, defects and dangerous conditions.',
-      'PIRs detect changes in infrared (heat). On hot days, sun-warmed surfaces moving relative to the sensor (clouds passing, breeze through trees) can trigger it. Look at the unit\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s adjustment dials.',
-      'Stop work; preserve scene; escalate to firm + dutyholder + PC. Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t attempt categorisation; that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s for asbestos specialists. Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t restart until confirmation OR licensed contractor takes over.',
+      'Can be brought fully up to the current edition of BS 7671, with every departure from the latest standard recorded as a defect requiring remedy.',
+      'Has been used within the manufacturer\'s warranty terms, so that any failure can be claimed against the original installer.',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'Reg 132.13 (renumbered from earlier 132.13) requires:',
     options: [
-      'Stop the motor immediately, investigate the cause (which could be mechanical overload, incorrect supply voltage, winding fault, or incorrect motor specification), and do not restart until the cause is identified and rectified',
-      'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
+      'The installation to be re-inspected every twelve months and a fresh EICR issued, regardless of the installation type or use.',
+      'A copy of every certificate to be lodged with the local building control body before the installation can be energised.',
       'Information and instructions on the installation, including diagrams, charts and tables that may be required for inspection, testing and maintenance, to be provided to the user/duty holder.',
-      'The official register of MCS-certified installations, generating the MCS Certificate that consumers need to claim Smart Export Guarantee, Boiler Upgrade Scheme grants and other incentives',
+      'The installer to retain ownership of all documentation, releasing it to the duty holder only at the next periodic inspection.',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: 'Appendix 6 of BS 7671 contains the model forms. Which statement is correct?',
     options: [
-      'To ensure that all temporary works are properly designed, checked, installed, maintained, and removed safely, acting as the focal point for temporary works management',
-      'Provides standardised definitions for maintenance terms (corrective, preventive, condition-based, predictive, etc.) ensuring consistent communication within and between organisations',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
+      'Only the exact paper forms printed in Appendix 6 are legally valid — a scheme\'s branded or digital version cannot be used for certification.',
+      'The model forms are illustrative only and have no legal status; any blank sheet of paper recording the test results is equally acceptable.',
+      'A scheme may add or remove fields from the model form as it sees fit, since the signature alone carries the legal weight.',
       'Schemes (NICEIC, NAPIT, Stroma) publish their own branded forms which must contain all required fields from the model — and signing the form has the same legal weight regardless of brand.',
     ],
     correctAnswer: 3,
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'The "design" section of an EIC is signed by:',
     options: [
       'The person responsible for the design of the installation — this might be a separate consulting engineer on a large project, or the same electrician as construction/test on a small domestic job. The signature confirms responsibility for design compliance.',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'Risk Assessment = identifies hazards, evaluates risks, specifies controls. Method Statement = sets out the safe sequence of work, the people, the equipment, the controls in operation. RAMS is the combined document. RA tells you WHAT the risks are; MS tells you HOW to do the work safely.',
-      'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
+      'The client or building owner, who signs to confirm they commissioned the design and accept responsibility for its compliance.',
+      'The scheme provider\'s assessor, who reviews the design remotely and signs the design block on the contractor\'s behalf.',
+      'The inspector who carries out the testing, since the design is only verified once the test results confirm it works.',
     ],
     correctAnswer: 0,
     explanation:
@@ -579,9 +579,9 @@ export default function Sub2() {
               </li>
               <li>
                 <strong>Apply 1×IΔn AC test current.</strong> Single test at the rated residual
-                operating current. Acceptance: trip within 300 ms (general use), within 40 ms for
-                additional protection where 1×IΔn was historically applied (now subsumed in design
-                via the BS EN device standard, not site-tested separately).
+                operating current. Acceptance: a general (non-delay) RCD must disconnect within
+                300 ms; an 'S' (time-delayed) type between 130 ms and 500 ms. There is no separate
+                site test at multiples of IΔn — the old ×5 IΔn / 40 ms check has been removed.
               </li>
               <li>
                 <strong>Record the trip time and the IΔn used.</strong> Schedule of Test Results

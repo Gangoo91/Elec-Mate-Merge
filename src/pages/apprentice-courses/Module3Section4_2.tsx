@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     question: 'Why should Second Fix only occur after decoration is complete?',
     options: [
       'To prevent damage to final fittings and finishes',
-      'Enhanced protection and load management systems',
-      'Before every shift the machine is used',
-      'Different absorption and scattering at different wavelengths',
+      'To allow the circuits to be energised sooner',
+      'Because accessories cannot be tested before painting',
+      'To reduce the amount of cable used on the job',
     ],
     correctIndex: 0,
     explanation:
@@ -90,10 +90,10 @@ const mainQuizQuestions = [
     id: 2,
     question: 'Why is the two-stage approach used?',
     options: [
-      'The quality of insulation between conductors and earth',
-      'The coupling between the coils and their turns',
+      'To reduce the amount of cable needed on the job',
+      'To allow the consumer unit to be energised earlier',
       'To protect final fittings and coordinate with other trades',
-      'To express feelings and needs without blaming or accusing the other person',
+      'To avoid the need for testing at the end',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,11 +101,16 @@ const mainQuizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: All testing is carried out only during First Fix.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'When is the full testing sequence carried out?',
+    options: [
+      'Only during First Fix, before plastering',
+      'Only when a fault is reported after handover',
+      'Before any cables are installed',
+      'At Second Fix, after accessories are fitted',
+    ],
+    correctAnswer: 3,
     explanation:
-      'False — Basic continuity and insulation resistance tests may be done during First Fix, but comprehensive testing including circuit functionality is carried out at Second Fix.',
+      'Basic continuity and insulation resistance tests may be done during First Fix, but comprehensive testing including circuit functionality is carried out at Second Fix.',
   },
   {
     id: 4,
@@ -137,22 +142,22 @@ const mainQuizQuestions = [
     id: 6,
     question: 'Why is trunking installed before plastering?',
     options: [
-      'To hide it completely',
-      'To prevent damage from other trades',
-      'All of the above',
-      'To allow cables to be run easily without damaging finished walls',
+      'Because plaster would not stick to the trunking',
+      'To save the cost of fire-rated trunking',
+      'So it can be concealed in the plaster and cables run without damaging finished walls',
+      'Because trunking cannot be cut once walls are finished',
     ],
     correctAnswer: 2,
     explanation:
-      'All options are correct — trunking is installed before plastering to hide it, protect it from damage, and allow easy cable installation without damaging finished surfaces.',
+      'Trunking is part of the First Fix infrastructure — installing it before plastering lets it be concealed and allows cables to be run without damaging finished surfaces.',
   },
   {
     id: 7,
     question: 'What document must be finalised during Second Fix for compliance?',
     options: [
-      'The success rate rises to approximately 95%',
-      'Near-vertical lines sloping slightly',
-      'Measure downstream of suitable protection',
+      'The risk assessment and method statement',
+      'The cable schedule from the design stage',
+      'The manufacturer guarantee for the consumer unit',
       'Electrical Installation Certificate',
     ],
     correctAnswer: 3,
@@ -164,9 +169,9 @@ const mainQuizQuestions = [
     question: 'Give one reason why Second Fix requires careful handling of accessories.',
     options: [
       'To avoid damaging walls, paintwork, or finishes',
-      'Every 10 years or on change of occupancy',
-      '4mA baseline allows fault detection',
-      'Apply direct pressure over the wound',
+      'To keep the cables from overheating',
+      'To reduce the earth fault loop impedance',
+      'To allow the consumer unit to be moved later',
     ],
     correctAnswer: 0,
     explanation:
@@ -639,7 +644,7 @@ const Module3Section4_2: React.FC = () => {
                 <div className="flex items-start gap-2">
                   <ClipboardCheck className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-white">Week 19:</strong> EICRs issued, handover complete
+                    <strong className="text-white">Week 19:</strong> Electrical Installation Certificate issued, handover complete
                   </span>
                 </div>
               </div>

@@ -22,55 +22,55 @@ const inlineChecks = [
     id: 'fam1-s2-purpose',
     question: 'What is the primary objective of a Category P system under BS 5839-1:2025?',
     options: [
-      'Life safety through early warning for evacuation.',
-      'Manual activation only.',
-      'Property protection — minimising loss to the building, its fabric, contents, processes or business operations through early automatic detection of fire. Life safety is, at most, an incidental benefit; the design is driven by what loss the responsible person is trying to prevent. The fire risk assessment may identify property protection as a primary objective independently of (or in addition to) any life-safety category.',
-      'Smoke control.',
+      'Life safety, through early warning so occupants can evacuate.',
+      'Manual activation only, with no automatic detection element.',
+      'Property protection, minimising loss to the building and its contents.',
+      'Smoke control, managing smoke movement through the building.',
     ],
     correctIndex: 2,
     explanation:
-      'P = property. The whole purpose of a P system is to protect property — buildings, contents, business continuity. P1 covers the entire protected building (analogous to L1 in scope but driven by property loss); P2 covers defined high-value or high-risk areas. Insurer requirements often drive the choice; a property insurer can mandate a P category as a condition of cover.',
+      'P = property. A P system minimises loss to the building, its fabric, contents, processes or business operations through early automatic detection of fire; life safety is at most an incidental benefit. The design is driven by what loss the responsible person is trying to prevent. P1 covers the entire protected building (analogous to L1 in scope but driven by property loss); P2 covers defined high-value or high-risk areas. Insurer requirements often drive the choice; a property insurer can mandate a P category as a condition of cover.',
   },
   {
     id: 'fam1-s2-p1coverage',
     question: 'What does a Category P1 system cover under BS 5839-1:2025?',
     options: [
-      'Defined high-value areas only.',
-      'Manual call points only.',
-      'Escape routes only.',
-      'Automatic detection throughout the protected building, with limited exceptions equivalent to those allowed in L1 (small bathrooms, sanitary accommodation, small voids meeting dimensional limits). The objective is comprehensive property protection — earliest possible detection of fire anywhere within the building so that intervention (sprinkler activation, fire-service summons, manual response) can begin before significant loss occurs.',
+      'The defined high-value or high-risk areas of the building only.',
+      'Manual call points throughout, with no automatic detection.',
+      'The escape routes only, plus rooms opening onto them.',
+      'Automatic detection throughout the building, with the limited Annex D exceptions.',
     ],
     correctIndex: 3,
     explanation:
-      'P1 is to property what L1 is to life — comprehensive coverage. The exceptions in BS 5839-1:2025 Annex D apply to P1 in the same way they apply to L1. The driver is different (property loss minimisation rather than life safety) but the coverage approach is similar.',
+      'P1 is to property what L1 is to life — comprehensive coverage, with limited exceptions equivalent to those allowed in L1 (small bathrooms, sanitary accommodation, small voids meeting dimensional limits). The objective is the earliest possible detection of fire anywhere in the building so that intervention — sprinkler activation, fire-service summons, manual response — can begin before significant loss occurs. The Annex D exceptions apply to P1 the same way they apply to L1; the driver differs (property loss rather than life safety) but the coverage approach is similar.',
   },
   {
     id: 'fam1-s2-p2',
     question:
       'A small manufacturing site has a single high-value plant room, a server room and a chemical store within a much larger general workshop. The fire strategy specifies P2 coverage. What does P2 require?',
     options: [
-      'Detection throughout.',
-      'Detection in the defined high-value / high-risk areas only — in this case the plant room, the server room and the chemical store. The remainder of the building (general workshop) is outside the P2 envelope and is not protected by automatic detection unless a separate L category overlay is specified. P2 is targeted property protection: the designer identifies the areas where loss would be material and protects those, leaving low-value areas without automatic detection.',
-      'Manual call points throughout.',
-      'Heat detection only.',
+      'Automatic detection throughout the whole site, including the workshop.',
+      'Detection in the defined high-value / high-risk areas only.',
+      'Manual call points throughout, with no automatic detection.',
+      'Heat detection only, across all areas of the building.',
     ],
     correctIndex: 1,
     explanation:
-      'P2 is targeted by design. The designer (with the responsible person and the insurer) identifies the areas where fire loss would be material and limits the automatic detection to those areas. P2 is therefore a "designed footprint" category — the system documentation must clearly state which areas are within P2 coverage and which are not. P2 alone gives no protection outside the designated areas.',
+      'P2 is targeted by design — here, detection in the plant room, server room and chemical store only. The remainder (general workshop) is outside the P2 envelope and has no automatic detection unless a separate L category overlay is specified. The designer (with the responsible person and the insurer) identifies the areas where fire loss would be material and limits detection to those. P2 is a "designed footprint" category: the documentation must clearly state which areas are within P2 coverage and which are not; P2 alone gives no protection outside the designated areas.',
   },
   {
     id: 'fam1-s2-arc',
     question:
       'BS 5839-1:2025 14.18 specifies the alarm-transmission timing for Category P systems. What is the maximum time from a fire alarm signal until indication is received at the Alarm Receiving Centre (ARC)?',
     options: [
-      '60 s.',
-      '90 s (the figure for Category L systems per 14.17).',
-      '120 s — the indication must be received at the ARC within a maximum of 120 seconds for a Category P system. A catastrophic transmission failure (no signals can be transmitted at all) should be indicated at the ARC and the CIE within 31 minutes. The 120 s figure is more relaxed than the L-category 90 s because the consequence of delay differs: in P, delay extends property loss; in L, delay extends time to evacuation.',
-      '300 s.',
+      '60 s, matching the tightest IP-network monitoring interval.',
+      '90 s, which is the figure for Category L systems per 14.17.',
+      '120 s, the maximum for a Category P system.',
+      '300 s, reflecting the lower urgency of property protection.',
     ],
     correctIndex: 2,
     explanation:
-      'BS 5839-1:2025 introduced explicit alarm-transmission timings recognising the move to all-IP networks. Category L systems must hit the ARC within 90 s (14.17); Category P within 120 s (14.18). Catastrophic-failure indication must be at the ARC and CIE within 3 min for L and 31 min for P. The split reflects the different urgency profiles of life vs property.',
+      'For a Category P system the indication must reach the ARC within a maximum of 120 s, and catastrophic transmission failure (no signals at all) must be indicated at the ARC and CIE within 31 minutes. BS 5839-1:2025 introduced explicit transmission timings recognising the move to all-IP networks: Category L within 90 s (14.17), Category P within 120 s (14.18), with catastrophic-failure indication within 3 min for L and 31 min for P. The 120 s figure is more relaxed than the L-category 90 s because in P delay extends property loss, whereas in L delay extends time to evacuation.',
   },
 ];
 
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the "P" prefix denote in BS 5839-1:2025 system categorisation?',
     options: [
-      'Permanent.',
-      'Property — the system is designed primarily to protect property (the building, its contents, its processes and the business it supports) through early automatic detection of fire. The whole design is driven by what loss the responsible person and the property insurer are trying to prevent. Life safety is, at most, an incidental benefit.',
-      'Power supply.',
-      'Plant room.',
+      'Property — the system protects the building and its contents.',
+      'Permanent installation.',
+      'Power supply category.',
+      'Plant room coverage.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '"P" = property. The category exists because some buildings need protection of property even where life-safety risk is low (warehouses, data centres, cultural collections, manufacturing plant). The P category is often selected by reference to insurer requirements rather than to life-safety legislation.',
   },
@@ -93,11 +93,11 @@ const quizQuestions = [
     question: 'How does P1 coverage compare to L1 coverage under BS 5839-1:2025?',
     options: [
       'P1 covers only escape routes; L1 covers all areas.',
-      'P1 covers all areas of the protected building (subject to the same Annex D exceptions for areas of low fire risk that apply to L1). The coverage extent is similar; the design driver is different — life safety for L1, property protection for P1. A building can have both an L category and a P category overlaid on the same system to address both objectives at once.',
-      'P1 is a subset of L1.',
-      'They are identical.',
+      'P1 is a strict subset of L1 coverage.',
+      'P1 covers all areas like L1; only the design driver differs.',
+      'P1 and L1 are identical in every respect.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'P1 and L1 share the "everywhere" coverage approach. The categories can be combined: for example, a hospital with both life-safety and property objectives may specify L1/P1 (the same physical detector layout serves both purposes; the documentation acknowledges both objectives).',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the defining characteristic of a Category P2 system?',
     options: [
-      'Detection throughout the building.',
-      'Detection in defined high-value or high-risk areas only — the designer (with the responsible person and the insurer) identifies the areas where fire loss would be material and limits automatic detection to those. The remainder of the building has no automatic detection unless a separate L category overlay is specified. P2 is therefore a "designed footprint" category and must be documented clearly.',
-      'Manual call points only.',
-      'Heat detection throughout.',
+      'Automatic detection throughout the whole building.',
+      'Manual call points only, with no automatic detection.',
+      'Detection in defined high-value or high-risk areas only.',
+      'Heat detection throughout the whole building.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'P2 is the targeted property-protection category. Typical applications: a server room within a low-risk office building; a plant room within a warehouse; a chemical store within a general factory. Outside the P2 zone, there is no automatic detection from the P2 system itself — separate cover (e.g. L4 escape-route detection) must be specified if needed.',
   },
@@ -118,13 +118,8 @@ const quizQuestions = [
     id: 4,
     question:
       'BS 5839-1:2025 14.18 sets the maximum time from a fire-alarm signal until indication is received at the Alarm Receiving Centre (ARC) for Category P systems. What is the figure?',
-    options: [
-      '60 s.',
-      '120 s — for Category P systems, the indication should be received at the ARC within 120 s. A catastrophic failure of the transmission system (whereby no alarm signals can be transmitted) should be indicated at the ARC and the CIE within 31 min. The 120 s P figure is more relaxed than the 90 s L figure because the consequence of delay differs (property loss vs evacuation time).',
-      '300 s.',
-      '600 s.',
-    ],
-    correctAnswer: 1,
+    options: ['60 s.', '300 s.', '600 s.', '120 s.'],
+    correctAnswer: 3,
     explanation:
       'The P-system 120 s figure recognises that the urgency of property-protection alarms differs from life-safety alarms. The 31 min catastrophic-failure indication time is also more relaxed than the L-system 3 min figure for the same reason.',
   },
@@ -133,26 +128,26 @@ const quizQuestions = [
     question:
       'A property insurer requires a "P1 system with /M" for a museum. What does the /M suffix mean?',
     options: [
-      '/M denotes an addressable system.',
-      '/M denotes the addition of manual call points to a P system. P1 and P2 do not include MCPs by default (they are property-protection categories with no expectation of human triggering); the /M suffix explicitly adds MCPs to the design. P1/M = full property cover plus MCPs; P2/M = targeted property cover plus MCPs. By contrast, L1, L2, L3 and L4 all include MCPs by default and the /M suffix is not used with those.',
-      '/M denotes a manual-only system with no detection.',
-      '/M denotes maintenance.',
+      '/M denotes an addressable rather than conventional system.',
+      '/M denotes the addition of manual call points to a P system.',
+      '/M denotes a manual-only system with no automatic detection.',
+      '/M denotes a maintenance contract requirement.',
     ],
     correctAnswer: 1,
     explanation:
-      'The /M suffix is used only with categories that do not include MCPs by default — that is, P1, P2 and L5. For L1 / L2 / L3 / L4, MCPs are part of the category and the /M suffix is redundant. /M is also used with M (manual only) but in a reciprocal sense — that category is all-MCP by definition, and /M suffixes appear when extending P or L5 to include MCPs.',
+      'The /M suffix adds manual call points to categories that do not include them by default — P1, P2 and L5. For L1 to L4, MCPs are already part of the category so the /M suffix is redundant.',
   },
   {
     id: 6,
     question:
       'A Category L1/P2 hybrid is being specified for a hotel with a separate high-value back-of-house catering operation. What does this combination mean?',
     options: [
-      'Two separate systems.',
-      'A single system designed to deliver L1 life-safety coverage throughout the protected building AND P2 property-protection coverage in the defined catering area. The same physical detectors and panel typically serve both objectives; the documentation states both. Hybrid categories are a recognised way of layering objectives — life safety drives the building-wide cover; property protection drives the targeted catering-area design.',
-      'P2 supersedes L1.',
-      'L1 supersedes P2.',
+      'Two physically separate and independent systems.',
+      'P2 coverage supersedes the L1 coverage everywhere.',
+      'L1 building-wide cover plus P2 cover in the defined catering area.',
+      'L1 coverage supersedes the P2 requirement.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hybrid categorisations (L1/P1, L1/P2, L2/P2, L3/P2, etc.) are widely used because real buildings often have both life-safety and property-protection objectives. The system specification documentation should make both objectives explicit so that the maintenance regime, the alarm-transmission setup, and the variations envelope all reflect both requirements.',
   },
@@ -161,12 +156,12 @@ const quizQuestions = [
     question:
       'Where a P category system is installed in a building with sleeping accommodation, BS 5839-1:2025 6 (variations) identifies a specific transmission-related variation as NOT acceptable. Which?',
     options: [
-      'Use of an addressable system.',
-      'Absence of a facility for transmission of fire alarm signals to an ARC in either supported housing where Grade A is necessary, or a residential care home. The 2025 revision treats this as a variation that is NOT acceptable — the system must include ARC transmission. This is a hard departure from the 2017 edition where this could be agreed as an acceptable variation; under the 2025 rules, the absence of transmission in those settings cannot be agreed away.',
-      'Use of multi-sensor detectors.',
-      'Use of optical-smoke detectors.',
+      'Use of an addressable system architecture.',
+      'Use of multi-sensor detectors throughout.',
+      'Use of optical-smoke detectors on escape routes.',
+      'Absence of ARC transmission in supported housing or a care home.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5839-1:2025 introduces a list of variations that are now considered so detrimental to safety that they cannot be agreed as acceptable. The absence of ARC transmission in sleeping-care contexts (supported housing, residential care homes) is one of those. All variations must now be justified and documented in the system logbook; some variations are simply prohibited.',
   },
@@ -175,12 +170,12 @@ const quizQuestions = [
     question:
       'Why is a P category system often specified at the request of the property insurer rather than the building owner?',
     options: [
-      'Insurer policy.',
-      "Because the property insurer carries the financial risk of fire loss to the building and contents. A P category system reduces that risk by enabling early detection and intervention; insurers therefore have a direct commercial interest in P-grade detection and frequently require it as a condition of cover or as a basis for premium reduction. A building that legally requires only L cover may still receive P cover at the insurer's instigation.",
-      'P systems are cheaper.',
-      'P systems are simpler.',
+      'Because the property insurer carries the financial risk of fire loss.',
+      'Because P systems are always cheaper to install.',
+      'Because P systems are simpler to design.',
+      'Because insurer policy forbids L category systems.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The split between life-safety regulation (RRO 2005, Building Regs) and property-protection regulation (essentially commercial — driven by insurer requirements and contract) is the reason P category specifications often come from the insurer. Loss adjusters and risk surveyors employed by insurers routinely specify P-grade detection in commercial property risk assessments.',
   },
@@ -189,12 +184,12 @@ const quizQuestions = [
     question:
       'A 2025-design P1 system in a textile warehouse uses optical-smoke detection. The fire risk assessment notes regular dust generation from material handling. What is the design risk?',
     options: [
-      'No risk.',
-      'False alarms — optical-smoke detectors respond to airborne particles, including dust. A textile warehouse with ongoing dust generation is likely to produce repeated false alarms from optical-smoke heads, undermining confidence in the system and risking management complacency about real alarms. The 2025 revision (clause 33 measures to limit false alarms) recommends multi-sensor detectors as the response in environments where point smoke detection presents an elevated false-alarm risk.',
-      'Cost.',
-      'Cable selection.',
+      'There is no significant design risk.',
+      'Excessive installation cost from the detector count.',
+      'False alarms — optical-smoke heads respond to airborne dust.',
+      'Difficulty selecting the correct cable type.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dust, steam and aerosols are common false-alarm triggers for optical-smoke detectors. The 2025 revision puts greater emphasis on multi-sensor detectors in such environments. A multi-sensor detector requires multiple stimuli (smoke + heat, smoke + CO) before alarming, which suppresses false alarms in dust-prone areas while preserving real-fire sensitivity.',
   },
@@ -203,10 +198,10 @@ const quizQuestions = [
     question:
       'What does BS 5839-1:2025 14.18 specify must be indicated within 31 min for Category P systems?',
     options: [
-      'Routine fault.',
-      'Catastrophic failure of the transmission system — i.e. a failure mode where no alarm signals can be transmitted at all (loss of all paths). Indication must be received at the ARC and at the CIE within 31 min. For Category L systems the equivalent figure is 3 min (per 14.17). The much longer P figure reflects the proportionate response: property-protection systems have a less urgent need to detect and report a transmission outage than life-safety systems.',
-      'Detector test.',
-      'Battery low.',
+      'A routine fault on the panel.',
+      'Catastrophic failure of the transmission system (loss of all paths).',
+      'A scheduled detector test.',
+      'A low standby battery condition.',
     ],
     correctAnswer: 1,
     explanation:

@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What regulation governs electrical safety at work?',
     options: [
-      'Clamp meter to measure load current',
+      'Work at Height Regulations 2005',
       'Electricity at Work Regulations 1989',
-      'Above 50 V AC up to 1000 V AC',
-      'Clear fluid leaking from the ear or nose',
+      'Manual Handling Operations Regulations 1992',
+      'Control of Substances Hazardous to Health 2002',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What does a method statement describe?',
     options: [
-      'Two parallel lines with S2',
-      'Final settlement of all financial matters',
+      'The cost breakdown of the project',
+      'A list of materials required',
       'The safe way of carrying out a task',
-      'C2 - Potentially dangerous',
+      'The names of everyone on site',
     ],
     correctIndex: 2,
     explanation:
@@ -60,10 +60,10 @@ const Module5Section3_6 = () => {
       id: 1,
       question: 'What law sets out the general duties for health and safety at work in the UK?',
       options: [
-        '1 lux on the centre line of travel',
+        'Electricity at Work Regulations 1989',
         'Health and Safety at Work etc. Act 1974',
-        'Misleadingly low insulation resistance readings',
-        'Safety, capacity, and protection requirements',
+        'Work at Height Regulations 2005',
+        'Construction (Design and Management) Regulations 2015',
       ],
       correctAnswer: 1,
       explanation:
@@ -73,10 +73,10 @@ const Module5Section3_6 = () => {
       id: 2,
       question: 'Which regulation covers electrical safety at work?',
       options: [
-        'To simulate mains failure for testing',
+        'Manual Handling Operations Regulations 1992',
         'Regulatory Reform (Fire Safety) Order 2005',
         'Electricity at Work Regulations 1989',
-        'Fixed equipment with exposed metalwork',
+        'Work at Height Regulations 2005',
       ],
       correctAnswer: 2,
       explanation:
@@ -107,10 +107,10 @@ const Module5Section3_6 = () => {
       id: 5,
       question: 'What does a method statement describe?',
       options: [
-        'High frequencies (kHz and above)',
+        'The total cost of the project',
         'The safe way of carrying out a task',
-        'Apply direct pressure over the wound',
-        'Sensible heat / Total heat',
+        'A list of the tools needed',
+        'The names of the site team',
       ],
       correctAnswer: 1,
       explanation:
@@ -133,9 +133,9 @@ const Module5Section3_6 = () => {
       id: 7,
       question: 'What should always be done before working on circuits?',
       options: [
-        'An impulse line filled with fill fluid',
-        'Earth fault return path for each circuit',
-        'Cumulative Sum (CUSUM) analysis',
+        'Increase the protective device rating',
+        'Connect a temporary supply',
+        'Remove the circuit labelling',
         'Isolate and lock off the supply',
       ],
       correctAnswer: 3,
@@ -147,9 +147,9 @@ const Module5Section3_6 = () => {
       question: 'What is the role of PPE?',
       options: [
         'To protect workers from residual risks',
-        'Red: 34.8A, Yellow: 26.1A, Blue: 43.5A',
-        'External earth fault loop impedance',
-        'Electricity at Work Regulations 1989',
+        'To remove the need for a risk assessment',
+        'To speed up the installation work',
+        'To replace the need for isolation',
       ],
       correctAnswer: 0,
       explanation:
@@ -159,10 +159,10 @@ const Module5Section3_6 = () => {
       id: 9,
       question: 'What could happen if poor safety planning leads to an accident?',
       options: [
-        'Appropriate derating or cable positioning',
+        'The project finishes ahead of schedule',
         'HSE investigation, fines, or legal action',
-        'Secure mounting and labelling',
-        'Immediately isolate the supply and investigate safely',
+        'Lower insurance premiums for the firm',
+        'A reduction in the cost of materials',
       ],
       correctAnswer: 1,
       explanation:
@@ -172,10 +172,10 @@ const Module5Section3_6 = () => {
       id: 10,
       question: 'Who is responsible for health and safety on site?',
       options: [
-        'An RCD and an MCB in a single device',
-        'The garment has been washed more than 10 times',
+        'Only the site manager',
+        'Only the health and safety officer',
         'Everyone, with site manager leading enforcement',
-        'The battery is degrading and may need replacement',
+        'Only the qualified electricians',
       ],
       correctAnswer: 2,
       explanation:

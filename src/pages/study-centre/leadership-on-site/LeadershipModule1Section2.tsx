@@ -18,8 +18,13 @@ const quickCheckQuestions = [
     id: 'styles-goleman-coaching',
     question:
       "In Daniel Goleman's framework, which leadership style is characterised by the phrase 'Try this' and focuses on long-term development of team members?",
-    options: ['Authoritative/Visionary', 'Affiliative', 'Coaching', 'Democratic'],
-    correctIndex: 2,
+    options: [
+      'Coaching',
+      'Authoritative/Visionary',
+      'Affiliative',
+      'Democratic',
+    ],
+    correctIndex: 0,
     explanation:
       "The Coaching style ('Try this') focuses on developing people for the future. The leader acts as a mentor, helping team members identify their strengths and weaknesses and linking their personal development to their work goals. On a construction site, this looks like a supervisor spending time teaching an apprentice a new skill, even when it would be quicker to do it themselves.",
   },
@@ -30,10 +35,10 @@ const quickCheckQuestions = [
     options: [
       'S1 — Telling (high direction, low support)',
       'S2 — Selling (high direction, high support)',
-      'S3 — Participating (low direction, high support)',
       'S4 — Delegating (low direction, low support)',
+      'S3 — Participating (low direction, high support)',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'S4 Delegating is appropriate when the follower has both high competence and high commitment — they know what they are doing and are motivated to do it well. In this situation, the leader steps back and gives them autonomy, trusting them to deliver without close supervision. On site, this would be an experienced, trusted electrician who can be given a complex task and left to get on with it.',
   },
@@ -44,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Democratic — ask the team what they think should happen next',
       'Laissez-faire — let the team process the incident in their own way',
-      'Commanding/Coercive — take immediate control, give clear directives, ensure safety',
       'Coaching — use the incident as a learning opportunity for professional development',
+      'Commanding/Coercive — take immediate control, give clear directives, ensure safety',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In a safety-critical situation immediately after a near-miss, the Commanding/Coercive style is most appropriate. The team needs clear, decisive leadership: stop work, secure the area, check everyone is safe, and give clear instructions. There is no time for discussion or delegation. Once the immediate situation is stabilised, you can then shift to other styles — democratic (investigating what happened), coaching (developing safer practices), or affiliative (supporting the team emotionally).',
   },
@@ -81,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       "Daniel Goleman identified six leadership styles based on research into emotional intelligence. Which of the following is NOT one of Goleman's six styles?",
-    options: ['Coaching', 'Transformational', 'Affiliative', 'Pacesetting'],
-    correctAnswer: 1,
+    options: [
+      'Coaching',
+      'Affiliative',
+      'Pacesetting',
+      'Transformational',
+    ],
+    correctAnswer: 3,
     explanation:
       "Goleman's six styles are: Coercive/Commanding, Authoritative/Visionary, Affiliative, Democratic, Pacesetting, and Coaching. 'Transformational' is a leadership style from a different framework (Burns/Bass) and is not one of Goleman's six. This is a common point of confusion in leadership studies.",
   },
@@ -91,12 +101,12 @@ const quizQuestions = [
     question:
       "The Commanding/Coercive leadership style ('Do what I tell you') is most appropriate when:",
     options: [
-      'You want to build long-term team relationships and loyalty',
       'A crisis or safety emergency requires immediate, decisive action',
+      'You want to build long-term team relationships and loyalty',
       'The team is experienced and needs creative freedom to solve problems',
       "You are trying to develop an apprentice's skills over time",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Commanding/Coercive style is most appropriate in genuine emergencies, safety-critical situations, or when dealing with serious underperformance that poses a risk. It provides clear, direct control. However, if used as the default style, it destroys morale, stifles initiative, and drives good people away. It should be reserved for situations where immediate compliance is essential.',
   },
@@ -106,11 +116,11 @@ const quizQuestions = [
       "Goleman's research found that the Authoritative/Visionary style ('Come with me') has the most consistently positive impact on team climate. Why?",
     options: [
       'Because it removes all decision-making from the team, reducing their stress',
-      'Because it gives the team a clear sense of purpose and direction while allowing freedom in how they achieve it',
       'Because it focuses exclusively on building personal relationships',
+      'Because it gives the team a clear sense of purpose and direction while allowing freedom in how they achieve it',
       'Because it sets extremely high performance standards that push the team to excel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Authoritative/Visionary style works because it provides clarity of direction ('this is where we are going and why') while giving people the freedom to determine how they get there. People know the destination but can choose their own route. This creates a sense of purpose, autonomy, and engagement. On site, this looks like a supervisor who explains the week's goals clearly, shows why the work matters, and then trusts the team to figure out the best way to deliver.",
   },
@@ -119,12 +129,12 @@ const quizQuestions = [
     question:
       "In Hersey and Blanchard's Situational Leadership model, an apprentice in their first week on site (low competence, high enthusiasm) would typically need which style?",
     options: [
-      'S1 — Telling: high direction, low support',
       'S2 — Selling: high direction, high support',
+      'S1 — Telling: high direction, low support',
       'S3 — Participating: low direction, high support',
       'S4 — Delegating: low direction, low support',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'A brand-new apprentice typically has low competence (they do not yet know the skills) but high commitment (they are keen and enthusiastic). The S1 Telling style provides the high direction they need — clear, step-by-step instructions on what to do and how to do it. As their competence grows, the leader should progressively move through S2, S3, and eventually S4, giving more autonomy as the apprentice becomes more capable.',
   },
@@ -135,10 +145,10 @@ const quizQuestions = [
     options: [
       'S1 — Telling: give them step-by-step instructions',
       'S2 — Selling: explain and persuade them in detail',
-      'S3 — Participating: provide support and encouragement, involve them in decisions',
       'S4 — Delegating: leave them alone to get on with it',
+      'S3 — Participating: provide support and encouragement, involve them in decisions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This scenario describes high competence but variable/low commitment — the person knows their job but is not in the right headspace. The S3 Participating style provides high support (encouragement, listening, involvement in decisions) with low direction (they do not need you to tell them HOW to do their job). The focus is on re-engaging their motivation, not on providing technical instruction.',
   },
@@ -146,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Autocratic leadership style is most appropriate in which construction scenario?',
     options: [
-      "Planning next month's programme with your experienced team leads",
       'A structural collapse alarm has sounded and the site needs immediate evacuation',
+      "Planning next month's programme with your experienced team leads",
       'Deciding the team social event for the end of the project',
       'An experienced team working on a routine cable installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Autocratic style — where the leader makes decisions unilaterally and issues commands without consultation — is most appropriate in emergencies where immediate, decisive action is needed and there is no time for discussion. A structural collapse alarm requires instant, clear direction: 'Everyone stop work. Drop tools. Proceed to assembly point now.' This is not the time for democratic discussion.",
   },
@@ -161,11 +171,11 @@ const quizQuestions = [
       "A site supervisor uses only the Pacesetting style ('Do as I do, now') with their team. What is the MOST likely long-term consequence?",
     options: [
       'The team becomes highly motivated and self-directed',
-      "Team members become overwhelmed, burned out, and disengaged because they can never meet the leader's relentless standards",
       'The team develops strong problem-solving skills through democratic input',
+      "Team members become overwhelmed, burned out, and disengaged because they can never meet the leader's relentless standards",
       'New team members develop rapidly because of the hands-on coaching',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Pacesetting style sets extremely high standards and expects everyone to match the leader's pace and quality immediately. While this can be effective short-term with a highly competent, motivated team, long-term overuse leads to burnout, anxiety, and disengagement. Team members feel they can never be good enough, stop taking risks, and lose initiative. Goleman's research found that Pacesetting, when overused, has a negative impact on team climate.",
   },
@@ -174,11 +184,11 @@ const quizQuestions = [
     question: 'The key insight about leadership styles on a construction site is that:',
     options: [
       'The commanding style should always be used because construction is a high-risk environment',
-      'The democratic style should always be used because it leads to the best team morale',
       'Flexibility is the most important skill — the best leaders adapt their style to match the situation',
+      'The democratic style should always be used because it leads to the best team morale',
       'Leaders should pick one style early in their career and stick with it consistently',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The single most important insight about leadership styles is that flexibility is the superpower. No single style works in every situation. The best construction leaders can read the situation — the urgency, the people, the task — and adapt their approach accordingly. They might be commanding during a safety incident, coaching during an apprentice's development session, democratic during a planning meeting, and affiliative when team morale needs a boost, all in the same day.",
   },

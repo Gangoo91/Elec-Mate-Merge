@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'analogue-advantage',
     question: 'What is the main advantage of 4-20mA current loop signals?',
     options: [
-      'Lower cost than voltage signals',
       'Excellent noise immunity and long transmission distances',
+      'Lower cost than voltage signals',
       'Simpler wiring requirements',
       'Higher resolution than digital',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "4-20mA current loops provide excellent noise immunity because the signal is independent of cable resistance, and the 4mA 'live zero' allows easy detection of wire breaks.",
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'Which application would benefit most from a digital on/off sensor output?',
     options: [
       'Precise temperature control',
-      'Safety interlock requiring clear trip state',
       'Flow rate measurement',
+      'Safety interlock requiring clear trip state',
       'Pressure trending',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Safety interlocks benefit from digital outputs because they provide unambiguous on/off states for critical safety decisions, with no interpretation required.',
   },
@@ -56,12 +56,12 @@ const quizQuestions = [
     id: 1,
     question: 'What type of output is used to send continuous temperature data?',
     options: [
-      'Digital output with discrete states',
       'Analogue output with continuous voltage or current',
+      'Digital output with discrete states',
       'Binary pulse output',
       'On/off switching output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Analogue output is used for continuous temperature data because it can represent the full range of temperature values with a continuous voltage (0-10V) or current signal (4-20mA).',
   },
@@ -83,11 +83,11 @@ const quizQuestions = [
     question: 'What is a key advantage of analogue signals?',
     options: [
       'Better noise immunity than digital signals',
-      'They provide continuous information and can represent precise values',
       'They require less wiring than digital signals',
       'They consume less power than digital signals',
+      'They provide continuous information and can represent precise values',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Analogue signals provide continuous information and can represent precise values across their full range, making them ideal for applications requiring detailed measurement data.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'What does an ADC do?',
     options: [
       'Amplifies digital control signals',
-      'Converts analogue signals to digital form for processing',
       'Provides automatic device calibration',
+      'Converts analogue signals to digital form for processing',
       'Adds digital communication to analogue devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An ADC (Analogue-to-Digital Converter) converts continuous analogue signals into digital format so they can be processed by digital systems like computers and PLCs.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the benefit of HART protocol on 4-20mA signals?',
     options: [
-      'It replaces the analogue signal entirely',
       'It superimposes digital communication on the analogue signal',
+      'It replaces the analogue signal entirely',
       'It increases the current range',
       'It reduces wiring costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HART protocol superimposes digital communication on top of the 4-20mA analogue signal, allowing configuration, diagnostics, and additional data without extra wiring.',
   },
@@ -135,11 +135,11 @@ const quizQuestions = [
     question: 'What happens at 4mA in a 4-20mA system?',
     options: [
       'The sensor is faulty',
-      'This represents the zero or minimum measurement value',
       'The loop is disconnected',
       'Maximum measurement value',
+      'This represents the zero or minimum measurement value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "In a 4-20mA system, 4mA represents the zero or minimum measurement value. This 'live zero' allows distinguishing between zero reading (4mA) and a broken wire (0mA).",
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
     question: 'What is the resolution of a 12-bit ADC?',
     options: [
       '12 discrete levels',
-      '4096 discrete levels',
       '1200 discrete levels',
+      '4096 discrete levels',
       '120 discrete levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 12-bit ADC provides 2^12 = 4096 discrete levels. Higher bit counts provide finer resolution for more precise measurements.',
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     id: 10,
     question: 'When would you choose a frequency output sensor?',
     options: [
-      'For temperature measurement',
       'For flow totalisation and counting applications',
+      'For temperature measurement',
       'For pressure control',
       'For colour sensing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Frequency output is ideal for flow totalisation because pulses can be easily counted to track total volume, and the signal transmits well over long distances with good noise immunity.',
   },

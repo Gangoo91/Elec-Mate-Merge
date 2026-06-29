@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A barrister cross-examines you: "You followed BS 7671. Is that the law?" What is the technically correct answer?',
     options: [
-      'Yes — BS 7671 has the force of statute by virtue of HSWA 1974.',
-      'No — BS 7671 is a non-statutory British Standard. The statutory law is EAWR 1989, ESQCR 2002 and HSWA 1974; compliance with BS 7671 is the accepted route to demonstrating compliance with EAWR Reg 4, but it is not itself the law.',
-      'Yes — BS 7671 is enforced directly by HSE under SI 2018/447.',
-      'It depends on whether the work is domestic or commercial.',
+      'Yes — BS 7671 has the force of statute by virtue of HSWA 1974, enforced directly by HSE.',
+      'No — BS 7671 is a non-statutory British Standard; the statute is EAWR / ESQCR / HSWA.',
+      'Yes — BS 7671 is enforced directly by HSE under the statutory instrument SI 2018/447.',
+      'It depends — BS 7671 is statutory for commercial work but only guidance for domestic work.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,42 +37,42 @@ const inlineChecks = [
     question:
       'You replace a CU on a tenanted flat. The new circuits are yours; you also need to verify the existing earthing arrangement and main bonding can support the work. Which document(s) are appropriate?',
     options: [
-      'EICR only — everything is "existing" once the CU is in.',
-      'EIC for the new CU and circuits introduced by the work; the verification of the existing earthing / bonding it depends on is folded into the EIC scope, with any defects flagged as observations or remediated before energisation.',
-      'MEIWC only — a CU change is minor works.',
-      'EIC for the new CU and a separate EICR for the rest of the installation, always.',
+      'EICR only — everything counts as "existing" once the new CU is in place.',
+      'EIC for the new CU and circuits, with the existing earthing / bonding verified as part of its scope.',
+      'MEIWC only — a consumer-unit change is classed as minor electrical works.',
+      'EIC for the new CU and a separate full EICR for the rest of the installation, always.',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 644 reserves the EIC for new installations, additions or alterations introducing new circuits, and CU replacements. The existing parts the new work depends on must be verified as part of that EIC — the regulation does not let you sign for a new CU on an unverified earthing arrangement. An EICR is the periodic-inspection document, not the right vehicle here.',
+      'Reg 644 reserves the EIC for new installations, additions or alterations introducing new circuits, and CU replacements. The verification of the existing earthing / bonding the work depends on is folded into the EIC scope, with any defects flagged as observations or remediated before energisation — the regulation does not let you sign for a new CU on an unverified earthing arrangement. An EICR is the periodic-inspection document, not the right vehicle here.',
   },
   {
     id: 'mod1-s1-c2-downgrade',
     question:
       'A landlord asks you to mark a "no RCD on lighting circuits, TN-C-S supply" finding as C3 instead of C2 so the EICR returns Satisfactory. Most defensible response?',
     options: [
-      'Mark it C3 — classification is a matter of professional judgement and the client has a view.',
-      'Refuse, document the request in writing, issue the EICR with the C2 standing. Misclassifying a potentially-dangerous defect as improvement-recommended is a Fraud Act 2006 false representation and an EAWR Reg 4 contributory failure.',
-      'Issue two EICRs — one with C2, one with C3 — and let the landlord choose.',
-      'Mark it C2 but add a footnote saying "treated as C3 by agreement".',
+      'Mark it C3 — classification is professional judgement and the client is entitled to a view.',
+      'Refuse, document the request in writing, and issue the EICR with the C2 standing as assessed.',
+      'Issue two EICRs — one coded C2, one coded C3 — and let the landlord choose between them.',
+      'Mark it C2 but add a footnote saying it is "treated as C3 by agreement" with the landlord.',
     ],
     correctIndex: 1,
     explanation:
-      'Classification codes are an objective assessment of condition, not a negotiation. The "helpful" downgrade is what coroners and HSE prosecutors open with after a fatal incident — see the HMO / Whirlpool / Grenfell-aftermath case patterns. The downside is unlimited; the upside is one client\'s goodwill.',
+      'Classification codes are an objective assessment of condition, not a negotiation. Misclassifying a potentially-dangerous defect as improvement-recommended is a Fraud Act 2006 false representation and an EAWR Reg 4 contributory failure. The "helpful" downgrade is what coroners and HSE prosecutors open with after a fatal incident — see the HMO / Whirlpool / Grenfell-aftermath case patterns. The downside is unlimited; the upside is one client\'s goodwill.',
   },
   {
     id: 'mod1-s1-records-defence',
     question:
       'Two years after you signed an EIC, a fire investigator asks "was this installation maintained?" You no longer hold the schedules of test results — only the front sheet of the EIC. What is your real exposure?',
     options: [
-      'None — the front sheet is the certificate, that is sufficient.',
-      'Direct EAWR Reg 4(2) exposure. HSR25 (cited by GN3 Ch 1) recommends records be kept throughout the working life of the installation. No schedules = no evidence of inspection actually performed = the certificate cannot evidence what it claims, and your PI insurer is likely to deny cover for fraudulent / negligent certification.',
-      'Civil exposure only — criminal prosecution requires intent.',
-      "No exposure — record-keeping is the duty holder's responsibility, not yours.",
+      'None — the front sheet is the certificate, and on its own that is sufficient evidence.',
+      'Direct EAWR Reg 4(2) exposure — without the schedules the certificate cannot evidence what it claims.',
+      'Civil exposure only — criminal prosecution requires proof of deliberate intent.',
+      "No exposure — record-keeping is the duty holder's responsibility and not the inspector's.",
     ],
     correctIndex: 1,
     explanation:
-      'GN3 Ch 1 ties record retention directly to EAWR Reg 4(2). The schedules ARE the evidence the inspection was performed to standard; the front sheet without them is a claim with no supporting basis. Reg 644.3 makes the schedules part of the EIC — issuing the certificate without them is incomplete, and not retaining them after the fact undermines every Reg 4(2) defence you might have run.',
+      'GN3 Ch 1 ties record retention directly to EAWR Reg 4(2), citing HSR25 that records be kept throughout the working life of the installation. The schedules ARE the evidence the inspection was performed to standard; the front sheet without them is a claim with no supporting basis, and your PI insurer is likely to deny cover for fraudulent / negligent certification. Reg 644.3 makes the schedules part of the EIC — issuing it without them is incomplete, and not retaining them undermines every Reg 4(2) defence you might run.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which legal instrument creates the statutory duty to maintain electrical systems so as to prevent danger?',
     options: [
-      'BS 7671:2018+A4:2026 Reg 134',
       'The Electricity at Work Regulations 1989, Regulation 4',
+      'BS 7671:2018+A4:2026 Reg 134',
       'GN3 Chapter 1',
       'Building Regulations Approved Document P',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EAWR 1989 Reg 4(1) requires systems to be of such construction as to prevent danger; Reg 4(2) requires them to be maintained so as to prevent danger. BS 7671 is non-statutory; compliance with it is the accepted route to demonstrating compliance with EAWR Reg 4.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the legal status of BS 7671:2018+A4:2026?',
     options: [
-      'Statutory law — directly enforceable by HSE',
-      'A non-statutory British Standard; compliance is likely to satisfy statutory requirements but is not itself the law',
-      'A guidance document with no legal weight',
-      'Mandatory only for NICEIC and NAPIT scheme members',
+      'Statutory law — directly enforceable by the HSE as a statutory instrument',
+      'An informal guidance document carrying no legal weight in any proceedings',
+      'A non-statutory British Standard — compliance likely satisfies statute but is not itself law',
+      'A document mandatory only for NICEIC and NAPIT registered scheme members',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 is a non-statutory standard published by the IET and BSI. Courts and HSE accept it as defining good practice, and Reg 4 EAWR can be discharged by demonstrating compliance with BS 7671 — but the standard itself is not the law. Statute (EAWR, ESQCR, HSWA) is.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 4,
     question: 'A duty holder under EAWR is best described as which of the following?',
     options: [
-      'Anyone who happens to be on site at the time of an incident',
-      'Only the principal contractor on a CDM project',
-      'An employer, self-employed person, employee or person in control of premises with control over electrical systems — duties bite to the extent of that control',
-      'Only the certifying electrician who signed the EIC',
+      'Anyone who happens to be present on site at the time of an electrical incident',
+      'Only the principal contractor appointed on a notifiable CDM 2015 project',
+      'An employer, self-employed person, employee or person in control of the electrical system',
+      'Only the certifying electrician who signed and issued the original EIC',
     ],
     correctAnswer: 2,
     explanation:
@@ -136,11 +136,11 @@ const quizQuestions = [
     question: 'BS 7671 Reg 134.2.2 requires the designer to do which one of the following?',
     options: [
       'Carry out the periodic inspection personally',
-      'Make a recommendation for the interval to the first periodic inspection and test',
       'Issue an EICR within 28 days of energisation',
       'Sign the Schedule of Test Results on behalf of the inspector',
+      'Make a recommendation for the interval to the first periodic inspection and test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 134.2.2 places the duty to recommend the interval to the first periodic inspection on the designer. Reg 644.4 then requires that recommendation to be recorded on the EIC. The designer does not carry out the periodic inspection — they hand the responsible person a recommended interval to act on.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'Reg 134.1.4 of BS 7671 covers electrical joints and connections. How does the regulation interact with Part 6?',
     options: [
-      'Reg 134.1.4 replaces the Part 6 continuity test',
-      'Reg 134.1.4’s requirements (conductance, insulation, mechanical strength, protection) are verified during inspection and testing using the Part 6 schedules — continuity, insulation resistance and functional checks',
-      'Reg 134.1.4 only applies to permanent connections, not terminal blocks',
-      'Reg 134.1.4 is advisory only',
+      'Reg 134.1.4 replaces the Part 6 continuity test for joints and connections',
+      'Reg 134.1.4 applies only to permanent connections, not to terminal blocks',
+      'Reg 134.1.4 is advisory only and carries no verification duty under Part 6',
+      'Reg 134.1.4’s requirements are verified during inspection and testing using the Part 6 schedules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '134.1.4 sets the design / erection duty for joints and connections. Part 6 (Chapter 64 / 65) is how that duty is verified in practice — continuity, insulation resistance and functional tests on the schedules of inspection and test results. The two regulations are complementary, not interchangeable.',
   },
@@ -172,10 +172,10 @@ const quizQuestions = [
     question:
       'You sign an EIC for a CU change at a rented domestic property without doing the dead tests because the tenant refused access to circuits. Six months later a fire occurs and your certificate is reviewed. What is the most realistic legal exposure?',
     options: [
-      'None — the tenant’s refusal is a complete defence',
+      'None — the tenant’s refusal of access is a complete and sufficient defence',
       'Civil liability only — criminal prosecution is impossible for a non-statutory standard',
-      'Potential breach of EAWR Reg 4 (criminal), professional misconduct findings by your scheme operator (NICEIC/NAPIT/etc.), insurer denial under PI policy and civil claim from the tenant or their estate',
-      'Loss of CSCS card only',
+      'EAWR Reg 4 breach (criminal), scheme misconduct findings, PI insurer denial and a civil claim',
+      'Loss of your CSCS card only, with no other regulatory or civil consequence',
     ],
     correctAnswer: 2,
     explanation:
@@ -187,11 +187,11 @@ const quizQuestions = [
       'Reg 651.5 of BS 7671 places a specific competence requirement on the periodic inspection. How is it worded?',
     options: [
       '"shall be carried out by a registered electrician"',
-      '"shall be carried out by one or more skilled persons competent in such work"',
       '"shall be carried out by a Part P registered installer"',
       '"shall be carried out by a chartered engineer"',
+      '"shall be carried out by one or more skilled persons competent in such work"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 651.5 requires "one or more skilled persons competent in such work". The wording matches the EAWR Reg 16 framing of competence: technical knowledge or experience sufficient to prevent danger. Scheme registration is evidence of competence, not the regulatory test.',
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'A landlord asks for an EICR to be backdated by three months to satisfy a letting-agency cut-off. What is the correct response?',
     options: [
-      'Backdate it — the inspection happened, only the date is wrong',
-      'Refuse and document the request. A backdated EICR is a false instrument; signing one is a criminal offence under Fraud Act 2006 and a near-certain breach of EAWR Reg 4 if the dates have been used to demonstrate compliance',
-      'Backdate it but mark it as "issue date" rather than "inspection date"',
-      'Refuse but issue the genuine EICR with a "valid from" footnote that says three months earlier',
+      'Refuse and document the request — a backdated EICR is a false instrument and a Fraud Act offence',
+      'Backdate it — the inspection genuinely happened, so only the date on it is wrong',
+      'Backdate it but record it as the "issue date" rather than as the "inspection date"',
+      'Refuse, but issue the genuine EICR with a "valid from" footnote dated three months earlier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A backdated EICR is a false instrument. There is no "harmless" backdating: the document is being used to represent a state of compliance at a date when the inspection had not happened. Refuse, document the request, and issue an EICR dated to the actual inspection. A footnote that pretends an earlier validity is the same offence dressed up.',
   },

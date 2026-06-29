@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     id: 'ferrule-purpose',
     question: 'What is the main purpose of using ferrules on flexible conductors?',
     options: [
-      'Registration, insurance, accounts, marketing, and legal requirements',
-      'BMS provides centralised control vs manual individual controls',
-      'Circuit identification, voltage levels, and emergency contact information',
+      'To increase the current-carrying capacity of the cable',
+      'To colour-code the conductor for identification',
+      'To insulate the conductor from earth',
       'To prevent conductor strand splay and ensure reliable connection',
     ],
     correctIndex: 3,
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'Why must sleeving fit snugly over a conductor?',
     options: [
       'To prevent slipping and ensure full protection',
-      'VFDs, fluorescent lighting, or high-frequency switching',
-      'A conductor in the lighting circuit is broken',
-      'Rain, ice, lightning, fog, and extreme temperatures',
+      'To allow the conductor to expand when heated',
+      'To make the conductor easier to bend',
+      'To increase the conductor cross-sectional area',
     ],
     correctIndex: 0,
     explanation:
@@ -107,11 +107,16 @@ const mainQuizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: All crimps are insulated.',
-    options: ['True', 'False'],
+    question: 'Which statement about crimp terminals is correct?',
+    options: [
+      'All crimps must be insulated by law',
+      'Crimps can be either insulated or uninsulated',
+      'Only uninsulated crimps are permitted indoors',
+      'Crimps are never used on stranded conductors',
+    ],
     correctAnswer: 1,
     explanation:
-      'False — crimps can be either insulated or uninsulated. Insulated crimps provide additional protection and are preferred in many applications.',
+      'Crimps can be either insulated or uninsulated; insulated crimps provide additional protection and are preferred in many applications.',
   },
   {
     id: 4,
@@ -143,10 +148,10 @@ const mainQuizQuestions = [
     id: 6,
     question: 'Why should you perform a tug-test on a crimp?',
     options: [
-      'Lithium Iron Phosphate (LiFePO4)',
-      'To maintain minimum flow when TRVs close',
-      'To ensure the conductor is secure',
-      'Pre-Construction Information',
+      'To measure the resistance of the joint',
+      'To check the colour coding is correct',
+      'To ensure the conductor is mechanically secure',
+      'To confirm the crimp is fully insulated',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,23 +161,23 @@ const mainQuizQuestions = [
     id: 7,
     question: 'Give one risk of loose cable terminations.',
     options: [
-      '2 times the mounting height',
-      'Can give false high readings',
-      'Starting current and running current',
+      'Reduced cable cross-sectional area',
+      'Lower voltage at the supply origin',
+      'Increased insulation resistance',
       'Overheating and potential fire risk',
     ],
     correctAnswer: 3,
     explanation:
-      'Loose terminations create high resistance joints that generate heat, potentially leading to overheating, arcing, and fire risk.',
+      'Loose terminations create high resistance joints that generate heat, potentially leading to overheating, arcing and fire risk.',
   },
   {
     id: 8,
     question: 'What must be done before sliding sleeving onto a conductor?',
     options: [
       'Strip the insulation and prepare the conductor end',
-      'A circuit containing both series and parallel combinations',
-      'Higher efficiency, especially at peak ambient temperatures',
-      'Limit fault current in case of errors',
+      'Energise the circuit to test for continuity',
+      'Apply electrical tape over the bare copper',
+      'Crimp a ferrule onto the conductor first',
     ],
     correctAnswer: 0,
     explanation:

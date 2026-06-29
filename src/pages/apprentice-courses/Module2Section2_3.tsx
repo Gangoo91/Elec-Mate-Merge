@@ -96,15 +96,15 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Convert 250 mA to base units:',
+    question: 'Convert 1.5 A to milliamps:',
     options: [
-      '2.5 A',
-      '0.25 A',
-      '0.025 A',
-      '25 A',
+      '15 mA',
+      '0.0015 mA',
+      '1500 mA',
+      '150 mA',
     ],
-    correctAnswer: 1,
-    explanation: 'milli (m) means ÷1000, so 250 ÷ 1000 = 0.25 A.',
+    correctAnswer: 2,
+    explanation: 'milli (m) means ÷1000, so to go from A to mA you ×1000: 1.5 × 1000 = 1500 mA.',
   },
   {
     id: 6,

@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     question:
       'At what height should the heaviest items be stored to minimise manual handling risk?',
     options: [
-      'At floor level, as low as possible',
       'Between waist and shoulder height',
+      'At floor level, as low as possible',
       'Above shoulder height for easy visibility',
       'It does not matter as long as they are accessible',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The heaviest items should be stored between waist and shoulder height because this is the zone where the body can generate the most lifting force with the least spinal stress. Storing heavy items at floor level forces stooping, and above shoulder height forces overhead reaching -- both high-risk postures that significantly reduce safe lifting capacity.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
     question: 'How does providing handles or grip points on packaging reduce manual handling risk?',
     options: [
       'It makes the package look more professional',
-      'It allows the handler to keep the load close to the body with a secure grip, reducing spinal loading and the risk of dropping',
       'It only helps with loads over 25 kg',
       'It eliminates the need for a risk assessment',
+      'It allows the handler to keep the load close to the body with a secure grip, reducing spinal loading and the risk of dropping',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Handles and grip points allow the handler to maintain a secure grip and keep the load close to the body. Holding a load close reduces the lever arm and therefore the compressive force on the spine (potentially by a factor of five compared to holding at arm's length). A secure grip also reduces the risk of the load being dropped unexpectedly.",
   },
@@ -118,8 +118,8 @@ const quizQuestions = [
     id: 3,
     question:
       'A company installs a conveyor system to move cable drums from the delivery bay to the cable store, replacing the previous method of manually rolling drums. This is an example of:',
-    options: ['Elimination', 'Substitution', 'Automation', 'Task improvement'],
-    correctAnswer: 2,
+    options: ['Elimination', 'Substitution', 'Task improvement', 'Automation'],
+    correctAnswer: 3,
     explanation:
       'Installing a conveyor system to move cable drums without human physical involvement is automation. The task (moving drums from bay to store) still needs to happen, but it is now performed by a machine rather than by people. This is different from mechanisation, where the human still participates in the handling.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       'Storing the heaviest cable drums between waist and shoulder height rather than at floor level is an example of:',
     options: [
+      'Storage design to reduce manual handling risk',
       'Elimination of manual handling',
       'Automation of the storage process',
-      'Storage design to reduce manual handling risk',
       'Substitution with lighter materials',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Positioning heavy items in the 'power zone' between waist and shoulder height is storage design. It reduces the risk associated with the manual handling that remains by ensuring handlers do not need to stoop to floor level or reach above their shoulders -- both high-risk postures.",
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'Adjustable-height workstations reduce manual handling risk because they:',
     options: [
-      'Are more expensive and therefore perceived as higher quality',
       'Allow each worker to set the work surface at their optimal height, reducing bending, stooping, and reaching',
+      'Are more expensive and therefore perceived as higher quality',
       'Eliminate all manual handling from the workstation',
       'Are required by law in every workplace',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Adjustable-height workstations allow the working surface to be set at the optimal height for each individual worker and each task. This reduces bending, stooping, and overhead reaching -- all high-risk postures. It is a workstation design measure that addresses the Task and Individual factors of the TILE framework.',
   },

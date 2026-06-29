@@ -13,68 +13,68 @@ export const FaultCurrentQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: 'What does PEFC measure?',
+      question: 'What does prospective earth fault current (PEFC) represent?',
       options: [
-        'Power factor correction',
-        'The fault current in a line-to-earth fault',
-        'Protective equipment fault current',
-        'Peak electrical fault current',
+        'The maximum current in a line-to-earth fault',
+        'The standing current drawn under normal load',
+        'The current taken by protective equipment when healthy',
+        'The peak inrush current when a circuit is energised',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'PEFC (Prospective Earth Fault Current) measures the maximum current that would flow in a line-to-earth fault condition.',
+        'PEFC is the maximum current that would flow in a line-to-earth fault; it is used to confirm the protective device can safely interrupt that current.',
     },
     {
       id: 2,
-      question: 'What must PFC not exceed?',
+      question: 'The prospective fault current at a point must not exceed which device rating?',
       options: [
-        'The supply voltage',
-        'Protective device breaking capacity',
-        'Circuit design current',
-        'Installation power rating',
+        'The nominal supply voltage at that point',
+        'The breaking (short-circuit) capacity of the protective device',
+        'The design current of the circuit it protects',
+        'The maximum power rating of the installation',
       ],
       correctAnswer: 1,
       explanation:
-        'Prospective fault current must not exceed the breaking capacity of the protective device, or the device may fail catastrophically.',
+        'Prospective fault current must not exceed the rated breaking capacity (kA) of the protective device, otherwise the device may fail to clear the fault safely.',
     },
     {
       id: 3,
-      question: 'When would you expect the highest PEFC values?',
+      question: 'Where in an installation would you expect the highest fault current values?',
       options: [
-        'At the end of long circuits',
-        'Close to the supply transformer',
-        'In lighting circuits only',
-        'During low demand periods',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'PEFC is highest close to the supply source where impedance is lowest, allowing maximum fault current to flow.',
-    },
-    {
-      id: 4,
-      question: 'What happens if a protective device cannot handle the prospective fault current?',
-      options: [
-        'It will operate more slowly',
-        'It may fail to clear the fault safely',
-        'It will just make a louder noise',
-        'Nothing - all devices can handle any current',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "If PFC exceeds the device's breaking capacity, it may fail catastrophically, potentially causing fire or explosion.",
-    },
-    {
-      id: 5,
-      question: 'Why must both PFC and PEFC be measured?',
-      options: [
-        'They are the same measurement',
-        'One verifies the other',
-        'They cover different fault scenarios (line-to-line vs line-to-earth)',
-        'Only for redundancy',
+        'At the far end of long final circuits',
+        'In lighting circuits rather than power circuits',
+        'Close to the supply transformer or origin',
+        'During periods of low electrical demand',
       ],
       correctAnswer: 2,
       explanation:
-        'PFC measures line-to-line faults while PEFC measures line-to-earth faults - both scenarios must be considered for safety.',
+        'Fault current is highest near the supply origin where loop impedance is lowest; it falls as cable length and impedance increase towards the load.',
+    },
+    {
+      id: 4,
+      question: 'What can happen if a protective device cannot handle the prospective fault current?',
+      options: [
+        'It simply operates a little more slowly',
+        'It draws a higher standing current when healthy',
+        'It produces a louder operating noise',
+        'It may rupture instead of safely clearing the fault',
+      ],
+      correctAnswer: 3,
+      explanation:
+        'If fault current exceeds the breaking capacity, the device can rupture or weld closed rather than clear the fault, risking fire, arc flash or explosion.',
+    },
+    {
+      id: 5,
+      question: 'Why are both PFC (line-to-line) and PEFC (line-to-earth) values determined?',
+      options: [
+        'They are effectively the same measurement',
+        'One value is only used to verify the other',
+        'They cover different fault scenarios at that point',
+        'It is purely for instrument redundancy',
+      ],
+      correctAnswer: 2,
+      explanation:
+        'Line-to-line and line-to-earth faults can give different currents; the higher of the two (the prospective fault current) is recorded to size the device’s breaking capacity.',
     },
   ];
 

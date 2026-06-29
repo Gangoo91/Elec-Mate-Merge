@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is calibration?',
     options: [
       "Comparing an instrument's reading against a known reference standard and adjusting if necessary",
-      "Asbestos, lead paint, used solvents, fluorescent tubes, and some adhesives",
-      "Optimised for 1550nm with larger effective area for submarine/long-haul",
-      "Report the matter to the site supervisor, safety representative, or principal contractor as required by Regulation 8(4)",
+      "Cleaning and lubricating an instrument's moving parts at fixed intervals",
+      "Replacing an instrument once it reaches the end of its service life",
+      "Recording an instrument's serial number and location in an asset register",
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: "What does 'traceability' mean in calibration?",
     options: [
-      'Mechanical issues such as bearing wear, misalignment, unbalance, looseness, and electrical faults such as rotor bar defects',
+      'A record of every technician who has handled the instrument',
       'An unbroken chain of comparisons linking the instrument to national/international measurement standards',
-      'A precedence clause that ranks the documents (e.g. spec > drawings > BoQ) — read your contract',
-      'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
+      'The ability to locate an instrument anywhere on site using a tag',
+      'A log of all the readings an instrument has taken in service',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a five-point calibration check?',
     options: [
-      'Ensure level ground, apply the trailer\\\\\\\'s parking brake, use wheel chocks, and follow the manufacturer\\\\\\\'s loading procedure',
+      'Checking the instrument with five different reference standards in turn',
       'Checking the instrument at 0%, 25%, 50%, 75%, and 100% of range in both ascending and descending directions',
-      'Flexibility in handling change, being able to adjust your emotional responses and approach when circumstances shift unexpectedly',
-      'At regular intervals as specified in the maintenance schedule, verifying both the stop function and the reset/restart sequence',
+      'Repeating the same reading five times to confirm repeatability only',
+      'Calibrating the instrument once every five years as a fixed interval',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is hysteresis in an instrument?',
     options: [
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
-      'While digital instruments do not suffer mechanical drift, sensors, signal conditioning, and A/D converters can still drift',
+      'The smallest change in input that produces a detectable change in output',
+      'A steady shift in the reading over time away from the true value',
       'A difference in reading at the same input value depending on whether the input is increasing or decreasing',
-      'As determined by risk assessment, historical drift data, and the consequences of out-of-tolerance operation',
+      'The largest deviation of the reading from a straight-line relationship across the range',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a calibration certificate?',
     options: [
-      'A difference in reading at the same input value depending on whether the input is increasing or decreasing',
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
-      'As determined by risk assessment, historical drift data, and the consequences of out-of-tolerance operation',
+      'To set the calibration interval for the next scheduled check',
+      'To record the purchase price and warranty period of the instrument',
+      'To list the spare parts needed to service the instrument',
       'To document the as-found and as-left readings, reference standards used, environmental conditions, and traceability',
     ],
     correctAnswer: 3,
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a deadweight tester used for?',
     options: [
-      'Through voice control, automation, and remote monitoring capabilities',
+      'Generating precise, known temperatures for calibrating thermocouples',
       'Generating precise, known pressures for calibrating pressure instruments',
-      'A fight-or-flight response that temporarily overrides the rational thinking brain',
-      'It visualises processes and relationships between properties',
+      'Measuring the weight of an instrument to check for internal corrosion',
+      'Simulating a 4-20 mA signal for calibrating loop receivers',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'When calibrating a thermocouple, what reference device would you typically use?',
     options: [
-      'To document the as-found and as-left readings, reference standards used, environmental conditions, and traceability',
-      'While digital instruments do not suffer mechanical drift, sensors, signal conditioning, and A/D converters can still drift',
+      'A deadweight tester loaded with calibrated weights on a piston',
+      'A standard multimeter set to read millivolts at room temperature',
       'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
-      'Calibration compares readings against a standard; adjustment physically changes the instrument settings to correct errors',
+      'A loop calibrator injecting a known 4-20 mA current signal',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'What does UKAS accreditation mean for a calibration laboratory?',
     options: [
-      'As determined by risk assessment, historical drift data, and the consequences of out-of-tolerance operation',
-      'While digital instruments do not suffer mechanical drift, sensors, signal conditioning, and A/D converters can still drift',
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
+      'The lab is owned and operated directly by the National Physical Laboratory',
+      'The lab is permitted to set its own calibration tolerances without limit',
+      'The lab is exempt from having its own reference standards calibrated',
       'The lab has been independently assessed and meets ISO/IEC 17025 requirements for competence in calibration',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'What is the recommended calibration interval for critical process instruments?',
     options: [
       'As determined by risk assessment, historical drift data, and the consequences of out-of-tolerance operation',
-      'A difference in reading at the same input value depending on whether the input is increasing or decreasing',
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
-      'While digital instruments do not suffer mechanical drift, sensors, signal conditioning, and A/D converters can still drift',
+      'Exactly five years for every instrument regardless of its duty',
+      'Only when the instrument first gives an obviously wrong reading',
+      'Once on installation, after which no further calibration is needed',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a loop calibration?',
     options: [
-      'As determined by risk assessment, historical drift data, and the consequences of out-of-tolerance operation',
+      'Calibrating only the sensor in isolation on the bench before installation',
       'Calibrating the entire measurement loop from sensor through to the displayed/recorded value, including the transmitter, wiring, and receiving instrument',
-      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
-      'To document the as-found and as-left readings, reference standards used, environmental conditions, and traceability',
+      'Repeatedly cycling the input around the loop to check for hysteresis only',
+      'Calibrating just the receiving instrument while ignoring the transmitter',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the difference between calibration and adjustment?',
     options: [
-      'Calibrating the entire measurement loop from sensor through to the displayed/recorded value, including the transmitter, wiring, and receiving instrument',
-      'The lab has been independently assessed and meets ISO/IEC 17025 requirements for competence in calibration',
+      'Calibration changes the instrument settings; adjustment only compares readings against a standard',
+      'They are two names for exactly the same activity and are interchangeable',
       'Calibration compares readings against a standard; adjustment physically changes the instrument settings to correct errors',
-      'A difference in reading at the same input value depending on whether the input is increasing or decreasing',
+      'Calibration is done in the field; adjustment can only be done in a laboratory',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'What environmental conditions most significantly affect calibration accuracy?',
     options: [
-      'They meet required safety and performance standards',
-      'It provides higher energy savings by requiring manual switch-on',
-      'The environment contains dust, mist or steam that would block light',
+      'The colour of the lighting in the calibration room',
+      'The time of day at which the calibration is carried out',
+      'The age of the calibration certificate currently on file',
       'Temperature of the reference standard and instrument under test',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'Why must digital instruments still be calibrated?',
     options: [
       'While digital instruments do not suffer mechanical drift, sensors, signal conditioning, and A/D converters can still drift',
-      'Calibrating the entire measurement loop from sensor through to the displayed/recorded value, including the transmitter, wiring, and receiving instrument',
-      'The lab has been independently assessed and meets ISO/IEC 17025 requirements for competence in calibration',
-      'Calibration compares readings against a standard; adjustment physically changes the instrument settings to correct errors',
+      'Because the digital display gradually fades and becomes harder to read over time',
+      'Because the firmware must be re-flashed at every calibration to stay accurate',
+      'Because digital signals are far more susceptible to electrical noise than analogue ones',
     ],
     correctAnswer: 0,
     explanation:

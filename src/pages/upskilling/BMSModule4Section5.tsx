@@ -12,12 +12,12 @@ const quickCheckQuestions = [
     question:
       'Why do combined HVAC and lighting strategies achieve greater savings than individual systems?',
     options: [
-      'They use fewer sensors',
+      'They require fewer sensors overall',
+      'They need less commissioning time',
+      'They are cheaper to install per zone',
       'They share data for coordinated response to building conditions',
-      'They require less commissioning',
-      'They cost less to install',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Combined systems share occupancy, daylight, and scheduling data, allowing coordinated responses. When a zone becomes vacant, both lighting and HVAC can respond together, and solar control can coordinate with both systems for maximum efficiency.',
   },
@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'roi-example',
     question: 'What factor most significantly impacts the ROI of energy-saving BMS strategies?',
     options: [
-      'Brand of equipment used',
       'Occupancy patterns and how well controls match actual use',
-      'Number of sensors installed',
-      'Speed of communication protocols',
+      'The brand of control equipment used',
+      'The total number of sensors installed',
+      'The speed of the communication protocols',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Buildings with variable occupancy patterns (meeting rooms, hot-desking) see the greatest ROI because controls can respond to actual use rather than fixed schedules. Systems that accurately match energy supply to actual demand achieve the best returns.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'commissioning-critical',
     question: 'Why is commissioning critical for achieving design energy savings?',
     options: [
-      'It reduces equipment costs',
+      'It reduces the cost of the installed equipment',
+      'It removes the need for ongoing maintenance',
       'It ensures systems are tuned to actual building operation',
-      'It eliminates the need for ongoing maintenance',
-      'It speeds up installation',
+      'It speeds up the installation programme',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Commissioning tunes control setpoints, schedules, and interactions to match actual building operation patterns. Without proper commissioning, systems often operate at default settings that don't reflect real conditions, losing potential savings.",
   },
@@ -51,10 +51,10 @@ const quickCheckQuestions = [
     id: 'kpi-monitoring',
     question: 'What is the purpose of ongoing energy KPI monitoring after commissioning?',
     options: [
-      'To generate reports for management',
+      'To generate routine reports for management',
       'To identify savings drift and optimisation opportunities',
-      'To comply with regulations',
-      'To justify system costs',
+      'To comply with statutory regulations',
+      'To justify the original system cost',
     ],
     correctIndex: 1,
     explanation:

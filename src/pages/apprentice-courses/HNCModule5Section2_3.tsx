@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'nec-option-a',
     question: 'What type of contract is NEC4 ECC Option A?',
     options: [
-      'Increased equipment purchase costs',
-      'Protection against indirect contact',
-      'False sensor readings and system malfunction',
-      'Priced contract with activity schedule',
+      'A cost-reimbursable contract paying Defined Cost plus Fee',
+      'A target cost contract with a pain/gain share mechanism',
+      'A management contract delivered through subcontracts',
+      'A priced contract with an activity schedule',
     ],
     correctIndex: 3,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'early-warning',
     question: 'What is the purpose of an early warning under NEC4?',
     options: [
-      'Statement of intent, organisation, and arrangements',
-      'To notify potential problems before they occur',
-      'Static friction preventing smooth valve movement',
-      'Resistance increases as temperature rises',
+      'To formally claim additional payment after a delay has occurred',
+      'To notify the other party of a matter that could affect cost, time or quality',
+      'To record a defect found during the defects correction period',
+      'To request acceptance of a revised programme from the Project Manager',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'compensation-event',
     question: 'A compensation event under NEC4 typically results in:',
     options: [
-      'Panels, inverter, isolators',
-      'All environmental factors',
-      'Assessment of time and cost impact',
-      'Technical, customer, and business challenges',
+      'Automatic termination of the contract by the Employer',
+      'A reduction in the Contractor’s Fee percentage',
+      'An assessment of the impact on time and cost',
+      'The Contractor paying delay damages to the Employer',
     ],
     correctIndex: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under NEC4, who may raise an early warning?',
     options: [
-      'Savings are shared between Employer and Contractor',
-      'Maintained and reviewed at risk reduction meetings',
+      'Only the Employer',
+      'Only the Project Manager',
       'Either the Project Manager or Contractor',
-      'Option C - Target cost with activity schedule',
+      'Only the Supervisor',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'What happens if the Contractor does not notify a compensation event within 8 weeks?',
     options: [
-      'The cost of components of work as defined in the contract',
-      'Savings are shared between Employer and Contractor',
-      'Option C - Target cost with activity schedule',
+      'The event is assessed automatically by the Project Manager at full value',
+      'The notification period is extended by a further 8 weeks',
+      'The Employer must pay double the assessed cost as a penalty',
       'The Contractor loses their right to additional time and money',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'In NEC4, what is the Accepted Programme used for?',
     options: [
       'Assessing compensation events, monitoring progress, and managing float',
-      'Maintained and reviewed at risk reduction meetings',
-      'The Contractor loses their right to additional time and money',
-      'Enter the matter on the early warning register and call a risk reduction meeting',
+      'Recording defects found during the defects correction period',
+      'Setting the Contractor’s Fee percentage for the contract',
+      'Listing the subcontractors permitted to work on the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under Option C (target cost), what happens if outturn cost is below the target?',
     options: [
-      'Option C - Target cost with activity schedule',
-      'The Contractor loses their right to additional time and money',
+      'The full saving is retained by the Employer',
+      'The full saving is retained by the Contractor',
       'Savings are shared between Employer and Contractor',
-      'Either the Project Manager or Contractor',
+      'The target is reduced to match the lower outturn cost',
     ],
     correctAnswer: 2,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: "What is 'Defined Cost' under NEC4?",
     options: [
-      'The cost of components of work as defined in the contract',
-      'Option C - Target cost with activity schedule',
-      'Maintained and reviewed at risk reduction meetings',
-      'Either the Project Manager or Contractor',
+      'The cost of the components of work calculated using the Schedule of Cost Components',
+      'The fixed lump sum agreed for the whole of the works',
+      'The Contractor’s tendered profit margin on the contract',
+      'The amount of delay damages payable for late completion',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'The early warning register under NEC4 should be:',
     options: [
-      'The Contractor loses their right to additional time and money',
+      'Completed once at the start and then archived',
       'Maintained and reviewed at risk reduction meetings',
-      'Either the Project Manager or Contractor',
-      'Option C - Target cost with activity schedule',
+      'Held confidentially by the Contractor only',
+      'Submitted to the Employer solely for final account purposes',
     ],
     correctAnswer: 1,
     explanation:
@@ -233,9 +233,9 @@ const quizQuestions = [
       'A mechanical contractor gives early warning that a chiller delivery will be delayed by the manufacturer. The Project Manager should:',
     options: [
       'Enter the matter on the early warning register and call a risk reduction meeting',
-      'The cost of components of work as defined in the contract',
-      'Assessing compensation events, monitoring progress, and managing float',
-      'The Contractor loses their right to additional time and money',
+      'Reject the early warning as the delay is the manufacturer’s fault',
+      'Immediately issue delay damages against the Contractor',
+      'Instruct the Contractor to ignore the delay and maintain the programme',
     ],
     correctAnswer: 0,
     explanation:

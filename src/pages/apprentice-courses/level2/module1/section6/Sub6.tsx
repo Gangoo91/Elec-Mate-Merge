@@ -49,10 +49,10 @@ const checks = [
     question:
       'You smell mains gas (rotten eggs / sulphur smell) on a job. What is the FIRST thing you must NOT do?',
     options: [
-      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
-      'The back-EMF nearly equals the supply voltage so net driving voltage is small',
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'Operate any electrical switch — don’t turn lights on or off, don’t use phones in the area',
+      'Leave the building straight away and stay outside until it is made safe',
+      'Open the windows and doors to ventilate the affected room from a doorway',
+      'Call the National Gas Emergency line once you are at a safe distance',
+      'Operate any electrical switch — lights, sockets or a phone in the area',
     ],
     correctIndex: 3,
     explanation:
@@ -63,10 +63,10 @@ const checks = [
     question:
       'You hear a section of suspended ceiling come down in the next room and a colleague’s shouted. What is the right immediate action?',
     options: [
-      'Describes performance, materials, finishes, standards and quality requirements in words; the drawing shows geometry and arrangement',
-      'Sourcing and measuring 4-20 mA signals for testing transmitters and control loop components',
-      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
-      'Stop, raise the alarm, evacuate everyone in adjacent areas, call 999, do not enter the collapsed area',
+      'Rush in straight away and start lifting debris to reach the trapped colleague',
+      'Carry on working quietly and let the supervisor deal with the collapse',
+      'Re-enter the room to check whether the rest of the ceiling is still stable',
+      'Stop, raise the alarm, evacuate adjacent areas, call 999, and stay out',
     ],
     correctIndex: 3,
     explanation:
@@ -77,10 +77,10 @@ const checks = [
     question:
       'A colleague tells you in confidence they’re thinking of ending their life. What do you do?',
     options: [
-      'Stay with them, take it seriously, and signpost them to emergency help (Samaritans 116 123, A&E, GP, 999 if in immediate danger) — confidentiality has to bend when life is at risk',
-      'The face of the terminal box viewed from the front, including cable entry positions, gland plate, terminal layout and external dimensions',
-      'A feeling is an emotion (frustrated, anxious, relieved); a thought is an interpretation disguised as a feeling ("I feel that you are being unfair")',
-      'Wheels can sink, stick, or lose traction in mud, dramatically increasing the pushing force required and the risk of musculoskeletal injury',
+      'Stay with them, take it seriously, and signpost them to emergency help straight away',
+      'Keep it strictly confidential and say nothing to anyone, exactly as they asked',
+      'Tell them to pull themselves together and get on with the job in hand',
+      'Wait a few days quietly to see whether they feel any better on their own',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'Which national emergency number do you call for a suspected gas leak in the UK?',
     options: [
-      'Physical damage and correct routing',
-      '0800 111 999 (National Gas Emergency Service)',
-      'Supply leading reactive current to offset lagging current',
-      'Only 60% of connected load operates at peak',
+      '105 (the power cut and distribution network operator hotline)',
+      '0800 111 999 (the National Gas Emergency Service)',
+      '0800 678 3994 (the Environment Agency incident line)',
+      '111 (the NHS non-emergency advice line)',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'What is the first action when a member of the public tells you they smell gas in a property where you’re working?',
     options: [
-      'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
-      'Near exits, corridor intersections, changes of direction, changes of level, and every 2m throughout',
-      'Stop work, don’t operate any electrical switches, ventilate by opening windows/doors if safe, evacuate, call 0800 111 999',
-      'Clear warning signs indicating work in progress and prohibition against re-energising',
+      'Switch off the lights at the wall to remove any possible ignition source',
+      'Find and pinpoint the source of the leak before anyone leaves the property',
+      'Stop, operate no switches, ventilate if safe, evacuate, then call 0800 111 999',
+      'Finish the job quickly so that you can get everyone out of the property sooner',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'Working outdoors, lightning starts. What is the safe action for an apprentice on a flat roof?',
     options: [
-      'To remain near the machine, maintain communication with the operator, and be trained to operate the ground controls',
-      'Stop, raise an RFI / Technical Query in writing, install nothing until the designer or specifier confirms the substitution in writing',
-      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
-      'Get off the roof immediately, take shelter inside the building or in a vehicle, wait until 30 minutes after the last thunder',
+      'Carry on working, but stop touching any metal ladders or trailing cables',
+      'Crouch down low on the flat roof until the storm has passed overhead',
+      'Shelter under the nearest tall tree until the worst of the rain eases off',
+      'Get off the roof, shelter inside or in a vehicle, and wait out the storm',
     ],
     correctAnswer: 3,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'You discover a suspect package on a commercial site — unattended, unmarked, doesn’t look like building stock. What do you do?',
     options: [
-      'HOT protocol: don’t touch, evacuate the area, raise the alarm, call 999, brief security',
-      'The branch of health care concerned with preventing and managing work-related ill health, disease, and injury',
-      'Controlled breathing, lowering your voice, and maintaining open body language',
-      'Maximum demand, load type, power factor, and growth expectations',
+      'Apply the HOT protocol — don’t touch, evacuate, raise the alarm, call 999, brief security',
+      'Carefully pick it up and carry it outside the building to a safe open area',
+      'Open it just enough to check whether the contents are actually dangerous',
+      'Carry on working and mention it to the site manager at the next break',
     ],
     correctAnswer: 0,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'A worker has collapsed and is unresponsive. You suspect a heart attack — not electrical, not trauma. What is the right sequence?',
     options: [
-      'Use plain English, short sentences, visual aids and check understanding by asking them to summarise back',
-      'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
-      'The ratio of real power to apparent power, indicating how efficiently power is used',
-      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
+      'Sit them upright, give them water, and wait to see whether they recover on their own',
+      'Follow DR ABC, call 999, start CPR if not breathing, and send for an AED',
+      'Lie them on their side and let them sleep it off until colour returns to their face',
+      'Drive them straight to A&E yourself rather than waiting for an ambulance crew',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     question:
       'What is a "lone worker" and what extra emergency arrangements should be in place for them?',
     options: [
-      'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
-      'The Electrical Installation Certificate (EIC) with associated Schedule of Inspections and Schedule of Test Results, required by Regulation 644.1.1',
-      'Anyone working without close supervision (often by themselves on a site or in a property); needs check-in procedures, dynamic risk assessment, and a way to summon help',
-      'No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs',
+      'Anyone who works night shifts; they just need a second person on call by phone',
+      'Anyone on a fixed-term contract; they need a written escalation plan and nothing more',
+      'Anyone without close supervision; they need check-ins and a way to summon help',
+      'Anyone self-employed; they are exempt from lone-worker arrangements entirely',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'A colleague is showing signs of severe heat exhaustion on a hot day — confused, very pale, sweating heavily, struggling to stand. What do you do?',
     options: [
-      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
-      'To provide continuous, conditioned power to critical loads during mains supply disturbances or failure, with no break in supply',
-      'An advanced system where each detector continuously reports its analogue sensor value to the control panel, allowing the panel to monitor trends, set dynamic thresholds, and make intelligent alarm decisions',
-      'Move them to a cool place, loosen clothing, give cool water, cool the skin with damp cloths or fan, monitor — call 999 if they lose consciousness or become confused (heat stroke)',
+      'Keep them working, but in the shade, until their normal colour comes back',
+      'Give them a hot drink and wrap them in a warm blanket to steady them',
+      'Sit them in direct sun so that they sweat the excess heat out of their system',
+      'Move them somewhere cool, hydrate and cool the skin, and call 999 if confused',
     ],
     correctAnswer: 3,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'Mental health emergency — when must you call 999 rather than signpost a colleague to other help?',
     options: [
-      'When the colleague is in immediate danger of harming themselves or others — this is a medical emergency same as any other',
-      'Extended recovery periods such as holidays and annual leave that allow deeper restoration than daily or weekly recovery can achieve',
-      'Prove the voltage indicator on a known source, test the circuit, prove the indicator again on the known source',
-      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
+      'When they are in immediate danger of harming themselves or others',
+      'Only once you have first tried the Samaritans and they could not help',
+      'Only if the colleague gives you their explicit permission to call first',
+      'Never — mental health is always handled through the GP, never 999',
     ],
     correctAnswer: 0,
     explanation:

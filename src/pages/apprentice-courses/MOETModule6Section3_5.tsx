@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'cmms-core',
     question: 'What is the core function of a CMMS in maintenance management?',
     options: [
-      "Segregated collection, recycling where possible, and proper disposal of hazardous waste",
-      "Acknowledge what the learner usually does, but explain the assessment is based on what was observed during this specific assessment",
-      "Link related components that appear on different parts of the diagram or on different sheets — such as a relay coil and its contacts",
-      "Planning, scheduling, tracking and recording all maintenance activities across an organisation's assets",
+      "Designing new electrical installations and producing the circuit diagrams for them",
+      "Managing the procurement and purchasing of all materials used across the site",
+      "Controlling building access, intruder alarms and physical security systems",
+      "Planning, scheduling, tracking and recording maintenance across all the assets",
     ],
     correctIndex: 3,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'asset-register',
     question: 'An asset register in a CMMS contains:',
     options: [
-      'In clearly signed, accessible locations where they can be reached within 3-5 minutes of a cardiac arrest',
-      'The unintentional release of a substance that could reasonably have caused death or specified injury',
-      'It is the area within the guardrail protection where the operative is safeguarded against falls at all times during assembly',
-      'A complete inventory of all maintainable assets with their identification, location, specifications, criticality and maintenance history',
+      'An inventory of all maintainable assets — identity, location, specification and history',
+      'A record of every spare part held in the stores together with its reorder level',
+      'A log of all staff training records and individual competency assessments held',
+      'A schedule of every statutory inspection date due across the whole of the site',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'The asset register is the foundation of the CMMS. It contains every maintainable asset with unique identification, physical location, technical specifications, criticality ranking, warranty information and complete maintenance history.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'pm-scheduling',
     question: 'Preventive maintenance scheduling in a CMMS is based on:',
     options: [
-      'When there are significant changes, after incidents, or if it\\\\\\\'s no longer valid',
-      'Determine the most appropriate maintenance strategy for each asset based on its function, failure modes and the consequences of failure',
-      'Situation, Behaviour, Impact — a structured way to give direct, constructive feedback to a team member',
-      'Time intervals, usage meters, condition triggers, or a combination — generated automatically by the system',
+      'The order in which breakdown reports happen to be received by the team',
+      'Time intervals, usage meters or condition triggers, generated automatically',
+      'The availability of individual technicians and trades on any given day',
+      'The cost of the spare parts that are required to complete each task',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'PM scheduling uses time-based intervals (e.g., every 6 months), usage-based triggers (e.g., every 10,000 hours), condition-based alerts (e.g., vibration exceeding threshold), or combinations. The CMMS automatically generates work orders when triggers are met.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Why is accurate and detailed data entry by technicians the most critical factor in CMMS effectiveness?',
     options: [
-      'Because the quality of every report, KPI and planning decision depends entirely on the accuracy and completeness of the data entered at the point of work',
-      'The formal checkpoint between on-programme learning and end-point assessment, where pre-requisites are verified and the apprentice is confirmed as ready to be assessed independently by the EPAO',
-      'Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building\\\\\\\\\\\\\\\'s life',
-      'Start at the top of the hierarchy with elimination and work down, applying the most effective controls that are reasonably practicable',
+      'Because technicians are legally required to complete every single field in the system',
+      'Because the CMMS will not generate any work order at all without fully complete data',
+      'Because every report, KPI and planning decision depends on the data entered at the job',
+      'Because incomplete records automatically lock the technician out of the system entirely',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "The CMMS follows the principle of 'garbage in, garbage out'. If work orders are closed with minimal detail, test results omitted, or fault descriptions vague, the resulting KPIs, trends and planning decisions will be unreliable. Technicians are the primary data creators — your entries are the foundation upon which the entire maintenance strategy is built.",
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The asset hierarchy in a CMMS typically follows:',
     options: [
-      'Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow',
-      'Site, building, system, sub-system, component — reflecting the physical organisation of the facility',
-      'By notifying building control before starting and arranging inspection',
-      'Droppings, nesting material, gnawed cable insulation, and urine staining on components',
+      'The alphabetical order of the equipment manufacturer names on site',
+      'Site, building, system, sub-system, component — mirroring the facility',
+      'The chronological order in which the assets were originally installed',
+      'The order of criticality, from the most important asset to the least',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'A preventive maintenance (PM) work order differs from a corrective work order because:',
     options: [
-      'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
-      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
-      'PM work orders are pre-planned, recurring tasks aimed at preventing failure, while corrective work orders respond to failures that have already occurred',
-      'Tracking stock levels, linking parts to assets, triggering reorder points, and recording parts usage against work orders',
+      'PM work orders are raised by technicians, while corrective ones are raised by managers',
+      'PM work orders are always high priority, while corrective ones are always low priority',
+      'PM is pre-planned to prevent failure; corrective responds to a failure that has occurred',
+      'PM work orders are recorded on paper, while corrective ones are recorded in the CMMS',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'KPIs (Key Performance Indicators) generated by a CMMS include:',
     options: [
-      'Findings, actions taken, parts used, time spent, test results, and any follow-up actions required',
-      'Trigger maintenance actions based on actual equipment condition data rather than fixed time intervals',
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
-      'MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset',
+      'Cable size, circuit rating, protective device type and disconnection time',
+      'Asset purchase price, depreciation rate and resale value',
+      'Technician hourly rate, overtime hours worked and annual leave taken',
+      'MTBF, MTTR, PM compliance, backlog, first-time fix rate and cost per asset',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'When entering a new work order in the CMMS, the minimum information required is:',
     options: [
-      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
-      'Findings, actions taken, parts used, time spent, test results, and any follow-up actions required',
-      'Tracking stock levels, linking parts to assets, triggering reorder points, and recording parts usage against work orders',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
+      'Asset ID, task description, priority, target completion date and assigned technician',
+      'The full maintenance history and the previous failure dates of the asset',
+      'The current stock level and reorder point of every related spare part held',
+      'The original purchase cost and the current warranty status of the asset',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Spare parts management in a CMMS enables:',
     options: [
-      'PM work orders are pre-planned, recurring tasks aimed at preventing failure, while corrective work orders respond to failures that have already occurred',
-      'Tracking stock levels, linking parts to assets, triggering reorder points, and recording parts usage against work orders',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
-      'MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset',
+      'Automatic ordering of any part, regardless of which assets actually use it',
+      'Tracking stock, linking parts to assets, reordering and recording parts used',
+      'Negotiation of supplier prices and the management of purchase contracts',
+      'Physical stocktaking of the whole stores without any manual counting at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: "The 'backlog' in maintenance management refers to:",
     options: [
-      'Human factors including poor workmanship, procedural violations, and inadequate training',
-      'Learning about opportunities and industry developments',
+      'The number of assets that have exceeded their design life',
+      'The list of spare parts currently below their reorder level',
       'The total volume of approved work orders that have not yet been completed',
-      'Treat the material as if it contains asbestos and manage it accordingly',
+      'The amount of overtime worked beyond contracted hours',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'Condition-based maintenance (CBM) uses CMMS data to:',
     options: [
-      'The total volume of approved work orders that have not yet been completed',
-      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
-      'Trigger maintenance actions based on actual equipment condition data rather than fixed time intervals',
+      'Schedule all maintenance at fixed calendar intervals regardless of condition',
+      'Generate work orders only after equipment has already failed',
+      'Replace components automatically once they reach a set calendar age',
+      'Trigger maintenance from actual condition data rather than fixed time intervals',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'When closing a work order in the CMMS, you should record:',
     options: [
-      'Findings, actions taken, parts used, time spent, test results, and any follow-up actions required',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
-      'MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset',
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
+      'Findings, actions, parts used, time spent, test results and any follow-up needed',
+      'Only a simple confirmation that the work has now been completed in full',
+      'The next scheduled PM date for the asset, and nothing else beyond that',
+      'The names of any other technicians who happened to be on site that day',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The CMMS dashboard is most useful for:',
     options: [
-      'Trigger maintenance actions based on actual equipment condition data rather than fixed time intervals',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
-      'PM work orders are pre-planned, recurring tasks aimed at preventing failure, while corrective work orders respond to failures that have already occurred',
-      'Tracking stock levels, linking parts to assets, triggering reorder points, and recording parts usage against work orders',
+      'Producing the detailed step-by-step method statement for a maintenance task',
+      'Giving real-time visibility of KPIs, overdue work and resources to support decisions',
+      'Storing the manufacturer O&M manuals for every asset across the whole site',
+      'Recording the individual test results captured from each completed work order',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Integration between the CMMS and building management system (BMS) enables:',
     options: [
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
-      'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
-      'Automatic fault detection triggering maintenance work orders, condition monitoring data feeding into the CMMS, and coordinated maintenance scheduling',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
+      'Direct control of plant setpoints from within the CMMS interface itself',
+      'Automatic ordering of spare parts whenever any BMS alarm is triggered',
+      'Automatic work orders from faults, condition data feeds and coordinated scheduling',
+      'Removal of the need for any manual work order entry by the technicians',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'As a maintenance technician, your primary interaction with the CMMS involves:',
     options: [
-      'Trigger maintenance actions based on actual equipment condition data rather than fixed time intervals',
-      'MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset',
-      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
+      'Configuring the asset hierarchy and setting up PM schedules',
+      'Generating management reports and analysing KPI trends',
+      'Approving submitted work orders and allocating the maintenance budget',
+      'Receiving work orders, recording findings, logging parts and closing completed work',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, competence with maintenance management systems means:',
     options: [
-      'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
-      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
-      'Automatic fault detection triggering maintenance work orders, condition monitoring data feeding into the CMMS, and coordinated maintenance scheduling',
-      'Providing real-time visibility of maintenance status, KPIs, overdue work and resource utilisation to support decision-making',
+      'Using the CMMS day to day, knowing how your data feeds planning and keeping accurate records',
+      'Being able to design and configure a complete CMMS database entirely from scratch',
+      'Writing the underlying software code that runs the whole CMMS platform itself',
+      'Setting the organisation-wide maintenance strategy and the annual maintenance budget',
     ],
     correctAnswer: 0,
     explanation:

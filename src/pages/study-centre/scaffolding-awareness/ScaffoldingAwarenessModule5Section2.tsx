@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'During which phase of scaffolding work are operatives statistically most at risk of a fatal fall?',
     options: [
-      'Routine platform work at full height',
       'Erection and dismantling',
+      'Routine platform work at full height',
       'Loading materials onto completed platforms',
       'Carrying out inspections',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Erection and dismantling are the most dangerous phases because guard rails, platforms, and edge protection are incomplete or being removed. HSE data consistently shows that a disproportionate number of scaffold-related fatalities occur during these transitional phases, not during normal working from a completed scaffold.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       'Which of the following is the most common underlying cause of scaffold collapse in the United Kingdom?',
     options: [
       'Use of aluminium instead of steel components',
+      'Standards founded on sole boards rather than directly on the slab',
+      'Guard rails fitted slightly above the 950mm minimum height',
       'Premature or unauthorised removal of ties',
-      'Rain making the standards slippery',
-      'The scaffold being painted a dark colour',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Premature or unauthorised removal of ties is the single most common underlying cause of scaffold collapse. Ties restrain the scaffold against the building and prevent it from buckling or toppling. When trades remove ties to gain access for cladding, window installation, or other facade work without consulting the scaffolder, the structure can become critically unstable.',
   },
@@ -51,9 +51,9 @@ const quickCheckQuestions = [
     question:
       'What is the minimum safe exclusion zone distance from overhead power lines when erecting scaffolding near 33 kV lines?',
     options: ['3 metres', '6 metres', '9 metres', '15 metres'],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'For lines operating at 33 kV, the HSE guidance document GS6 specifies a minimum exclusion zone of 9 metres. This distance accounts for the potential for electrical arcing through air and the risk of scaffold components swinging into proximity during erection. For lines at 132 kV and above, even greater distances apply. The electricity distributor must always be consulted.',
+      'HSE guidance GS6 (Avoiding danger from overhead power lines) recommends a safety zone with a barrier erected a minimum of 6 metres horizontally from the nearest conductor, with this clearance maintained for work beneath or near the line. For higher-voltage transmission lines, and where the voltage is unknown, greater distances apply and the electricity distributor must be consulted. GS6 also advises that, as a general rule, work and plant should be kept at least 10 metres clear of overhead lines wherever possible.',
   },
 ];
 
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'Which of the following is the leading cause of fatal injuries on scaffolding in the UK?',
     options: [
-      'Electrocution from overhead power lines',
       'Falls from scaffold platforms',
+      'Electrocution from overhead power lines',
       'Being struck by falling scaffold tubes',
       'Scaffold collapse due to overloading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Falls from scaffold platforms are the leading cause of fatal injuries on scaffolding. HSE statistics show that falls from height account for the majority of scaffold-related deaths. Missing guard rails, gaps in boards, and access to incomplete platforms are the primary contributing factors.',
   },
@@ -140,11 +140,11 @@ const quizQuestions = [
       'When erecting scaffolding near overhead power lines, which document provides the primary HSE guidance on safe distances?',
     options: [
       'HSG33 — Health and Safety in Roof Work',
-      'GS6 — Avoidance of Danger from Overhead Electric Power Lines',
       'L5 — The Control of Substances Hazardous to Health',
       'INDG401 — Protecting the Public',
+      'GS6 — Avoidance of Danger from Overhead Electric Power Lines',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "HSE guidance document GS6 'Avoidance of Danger from Overhead Electric Power Lines' sets out the safe distances and precautions required when working near overhead lines. It specifies exclusion zones based on the voltage of the line and requires consultation with the electricity distributor before work commences.",
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
     question: 'Which of the following is classified as an unauthorised modification to a scaffold?',
     options: [
       'A competent scaffolder adding an additional lift to the design',
-      'A bricklayer removing a single guard rail to pass materials through',
       'The scaffold inspector attaching a green tag after inspection',
+      'A bricklayer removing a single guard rail to pass materials through',
       'A banksman directing a crane load onto the scaffold platform',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Removing a guard rail, even temporarily, is an unauthorised modification unless it has been approved by the scaffolding contractor and a suitable risk assessment is in place with alternative fall prevention. Any person who modifies a scaffold without authorisation commits a criminal offence under the Work at Height Regulations 2005.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'Overloading a scaffold platform beyond its rated capacity is most likely to cause which type of failure?',
     options: [
-      'Guard rails bending outward',
-      'Toeboard cracking',
       'Platform boards snapping or the scaffold structure buckling',
-      'Castor wheels locking',
+      'Guard rails bowing outward away from the working platform',
+      'Toeboards splitting along their length at the platform edge',
+      'Tie fixings pulling cleanly out of the building facade',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Overloading most commonly causes platform boards to deflect excessively, crack, or snap, and can cause ledger and transom members to buckle. In extreme cases the entire scaffold can progressively collapse. The rated bay load must never be exceeded, and materials must be evenly distributed across the platform.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'What is the most effective control measure to prevent crushing injuries during scaffold erection?',
     options: [
-      'Providing hard hats to all operatives',
+      'Issuing hard hats and gloves to all operatives on the gang',
       'Establishing an exclusion zone at ground level beneath the erection area',
-      'Playing music to keep workers alert',
-      'Painting scaffold tubes in bright colours',
+      'Briefing operatives to catch any dropped tubes before they reach the ground',
+      'Limiting erection to dry days so components are easier to grip',
     ],
     correctAnswer: 1,
     explanation:
@@ -920,11 +920,11 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { voltage: 'Up to 33 kV', distance: '9 metres' },
-                    { voltage: '66 kV', distance: '12 metres' },
-                    { voltage: '132 kV', distance: '12 metres' },
-                    { voltage: '275 kV', distance: '15 metres' },
-                    { voltage: '400 kV', distance: '15 metres' },
+                    { voltage: 'Up to 33 kV', distance: '6 metres' },
+                    { voltage: '66 kV', distance: '6 metres' },
+                    { voltage: '132 kV', distance: '6 metres' },
+                    { voltage: '275 kV', distance: '6 metres' },
+                    { voltage: '400 kV', distance: '6 metres' },
                     { voltage: 'Unknown voltage', distance: '15 metres' },
                   ].map((item) => (
                     <div
@@ -940,8 +940,10 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   ))}
                 </div>
                 <p className="text-xs text-white mt-3">
-                  Distances measured from the nearest line conductor. If the voltage is unknown,
-                  treat as the highest voltage. Always consult the electricity distributor before
+                  Figures are the GS6 minimum safety-zone barrier distance, measured horizontally
+                  from the nearest line conductor. If the voltage is unknown, treat as the highest
+                  voltage and keep a 15 metre clearance. The electricity distributor (DNO) sets the
+                  exact safe distances for the specific line and must always be consulted before
                   commencing work.
                 </p>
               </div>

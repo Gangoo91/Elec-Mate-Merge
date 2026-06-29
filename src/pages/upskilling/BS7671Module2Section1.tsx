@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A junior designer argues that Part 2 of BS 7671 is "just a glossary" and can be skipped. Which statement best captures why that view is wrong?',
     options: [
-      'Part 2 is the largest part of BS 7671 and contains most of the technical rules',
-      'Part 2 is load-bearing — every "shall" in Parts 3 to 7 only has meaning because Part 2 fixes the precise scope of each defined term',
-      'Part 2 is non-binding guidance and exists for context only',
-      'Part 2 only applies to special locations covered in Part 7',
+      'Part 2 is the largest Part of BS 7671 and contains most of the technical rules',
+      'Part 2 is load-bearing — every "shall" in later Parts inherits its meaning from Part 2',
+      'Part 2 is non-binding guidance that exists for background context only',
+      'Part 2 applies only to the special locations covered in Part 7 of the standard',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'You are designing a circuit inside a bathroom (Section 701). A term used in your design has both a Part 2 definition and a different definition given in Section 701. Which prevails inside the location?',
     options: [
-      'Part 2 always overrides Part 7',
-      'Reg 110.1.3 — within a special location, the Part 7 definition modifies or supplements the Part 2 definition for that location',
-      'Whichever is more recent in the published amendment cycle',
-      'The IET Code of Practice glossary takes precedence',
+      'Part 2 always overrides Part 7, even inside a special location',
+      'The Part 7 definition — Reg 110.1.3 lets it modify Part 2 within the location',
+      'Whichever definition is more recent in the published amendment cycle',
+      'The IET Code of Practice glossary takes precedence over both',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'On a domestic EICR you find a metallic boiler flue passing through the kitchen. The flue is connected back to the boiler casing (which is Class I and earthed via its supply CPC). Is the flue an extraneous-conductive-part requiring main bonding back to the MET?',
     options: [
-      'Yes — every metal item in the property is an extraneous-conductive-part',
-      'No — the flue is an exposed-conductive-part of the boiler (it is part of the appliance), not an extraneous-conductive-part introducing an earth potential from outside the installation',
-      'Yes — Reg 411.3.1.2 requires bonding of all flues',
-      'Only if the flue is over 6 mm in cross-section',
+      'Yes — every metal item in the property counts as an extraneous-conductive-part',
+      'No — the flue is an exposed-conductive-part of the boiler, already earthed via its CPC',
+      'Yes — Reg 411.3.1.2 requires main bonding of all metallic boiler flues',
+      'Only if the flue exceeds 6 mm² in conductor cross-sectional area',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'A maintenance electrician needs to replace a faulty contactor inside a control panel. They throw the local rotary switch labelled "switching for mechanical maintenance". Are they entitled to start work?',
     options: [
-      'Yes — switching for mechanical maintenance is the same as isolation',
-      'No — Part 2 defines isolation, switching, and switching for mechanical maintenance as three different functions; only isolation (with secure means of preventing reclosure) permits live electrical work',
-      'Yes, provided they wear gloves',
-      'Only if the switch carries a yellow label',
+      'Yes — switching for mechanical maintenance is functionally equivalent to isolation',
+      'No — only isolation, with a secure means of preventing reclosure, permits the work',
+      'Yes, provided they wear insulating gloves throughout the contactor replacement',
+      'Only if the rotary switch carries a yellow safe-isolation warning label',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'A designer cites the IET Code of Practice for Electrical Energy Storage Systems for a definition that conflicts with BS 7671 Part 2. Which definition prevails for a BS 7671 EIC?',
     options: [
-      'The IET CoP — it is more specialist',
-      "BS 7671 Part 2 — the certificate is issued against BS 7671, and the CoP glossary is non-binding for the standard's own terminology",
-      'Whichever the customer prefers',
-      'The Building Regulations definition overrides both',
+      'The IET CoP definition — it is the more specialist of the two documents',
+      "BS 7671 Part 2 — the cert is issued against BS 7671, and the CoP glossary is non-binding",
+      'Whichever definition the customer prefers to record on the certificate',
+      'The Building Regulations definition, which overrides both the CoP and Part 2',
     ],
     correctIndex: 1,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 1,
     question: "Reg 110.1.1 places Part 2 within which category of BS 7671's structure?",
     options: [
-      'Informative annex — guidance only',
-      'Binding scope of the standard — the definitions are part of the regulations they support',
-      'Optional supplementary material',
-      'Reproduced from the IET Code of Practice',
+      'Binding scope of the standard — the definitions are part of the regulations',
+      'Informative annex — design guidance only, not a binding requirement',
+      'Optional supplementary material the designer may choose to apply',
+      'Reproduced wholesale from the relevant IET Code of Practice glossary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 110.1.1 sets the scope of BS 7671 across all seven Parts. Part 2 is not separated out as informative — it is part of the standard. That is why a regulation referencing a Part 2 term inherits the Part 2 meaning automatically: courts, insurers and inspectors read the duty in Part 3-7 through the lens of Part 2.',
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'Within a special location in Part 7, a term has both a Part 2 definition and a Section 7 definition. Which controls within the location?',
     options: [
-      'Part 2 always',
-      'Whichever is broader',
-      'The Section 7 definition — Reg 110.1.3 makes Part 7 a modifier of Part 2 within the location',
-      'Both apply equally and the designer chooses',
+      'Part 2 always controls, regardless of the location',
+      'Whichever of the two definitions is the broader one',
+      'The Section 7 definition — Reg 110.1.3 makes Part 7 a modifier within the location',
+      'Both apply equally and the designer chooses between them',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following best describes the structural pattern of Part 2?',
     options: [
-      'Numbered regulations 200.1, 200.2, 200.3 ...',
-      'An alphabetical list of defined terms, plus a separate Symbols and Abbreviations sub-section',
-      'A flowchart of installation procedures',
-      'A reprint of EAWR 1989 schedules',
+      'A set of numbered regulations 200.1, 200.2, 200.3 and so on',
+      'An alphabetical list of defined terms plus a Symbols and Abbreviations sub-section',
+      'A flowchart of installation procedures keyed to each Part of the standard',
+      'A reprint of the EAWR 1989 schedules with BS 7671 annotations added',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,40 +165,40 @@ const quizQuestions = [
     question:
       'You are looking up "extraneous-conductive-part" to apply Reg 411.3.1.2. The disciplined order is to read:',
     options: [
-      'The regulation first, then guess the term meaning from context',
-      'The Part 2 definition, then the regulation, then any Part 7 modification for the location you are working in',
-      'The IET Wiring Matters article that quotes it',
-      'Only the regulation; the term is self-explanatory',
+      'The regulation first, then guess the term meaning from surrounding context',
+      'The IET Wiring Matters article that happens to quote the regulation',
+      'Only the regulation itself; the defined term is self-explanatory in use',
+      'The Part 2 definition, then the regulation, then any Part 7 location modification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Definition first, regulation second, special-location override third. Skipping the Part 2 read is the most common source of "we always did it that way" errors on EICRs — bonding what does not need bonding, or omitting bonding where it is required because the part has been mislabelled.',
   },
   {
     id: 5,
     question:
-      'Which of these triplets are NOT interchangeable under Part 2 — they describe three distinct functional concepts?',
+      'Which Part 2 triplet describes three distinct switching FUNCTIONS that operatives most often wrongly treat as the same thing?',
     options: [
-      'Isolation, switching, switching for mechanical maintenance',
-      'CPC, PEN, earth electrode',
-      'TN-S, TN-C-S, TT',
-      'All of the above are distinct',
+      'CPC, PEN and earth electrode — three conductor / electrode types',
+      'TN-S, TN-C-S and TT — three earthing-system arrangements',
+      'Class I, Class II and Class III — three equipment protection classes',
+      'Isolation, switching and switching for mechanical maintenance',
     ],
     correctAnswer: 3,
     explanation:
-      'Each triplet is three separate Part 2 terms with three separate technical meanings. The most common confusion in the field is the first triplet — operatives treating "switched off" as "isolated". Part 2 deliberately keeps them apart so Reg 537.2 / 537.3 / 462 can build different duties on each.',
+      'All four sets are distinct Part 2 terms, but only the last describes three distinct switching FUNCTIONS — and it is the one most confused in the field, where operatives treat "switched off" as "isolated". Part 2 deliberately keeps them apart so Reg 537.2 / 537.3 / 462 can build different duties on each. The other sets are conductor/electrode types, earthing arrangements and equipment classes respectively.',
   },
   {
     id: 6,
     question:
       'A4:2026 added new defined terms to Part 2. Which group correctly captures three of those new terms?',
     options: [
-      'Ring final circuit, radial circuit, lighting circuit',
       "AFDD (Arc Fault Detection Device), PEI (Prosumer's Electrical Installation), bidirectional energy transfer",
+      'Ring final circuit, radial circuit, lighting circuit',
       'Live part, exposed-conductive-part, extraneous-conductive-part',
       'Class I, Class II, Class III',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4:2026 expands Part 2 to support modern energy installations. AFDD enters alongside Reg 421.1.7 (arc-fault detection in domestic and similar premises), PEI supports the prosumer model in Section 712 / 826, and bidirectional energy transfer underpins V2G EV and battery export language used through Sections 712, 722 and 826.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'An installer signs an EIC certifying compliance with BS 7671. They have used a definition taken from the IET Code of Practice for EV Charging because it differs slightly from the BS 7671 Part 2 wording. What is the certifying risk?',
     options: [
-      'No risk — IET CoPs are part of BS 7671',
-      'Material risk — the certificate is issued against BS 7671, so its Part 2 definitions are the only ones that demonstrate compliance; using a different glossary creates a documented departure under Reg 120.3',
-      'No risk if the customer agrees',
-      'No risk if the CoP is more recent',
+      'No risk — IET Codes of Practice are part of BS 7671 by reference',
+      'No risk, provided the customer agrees to the alternative wording',
+      'Material risk — only Part 2 demonstrates compliance, so this is a Reg 120.3 departure',
+      'No risk, provided the IET Code of Practice is the more recent document',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The IET CoPs are sector best-practice guides — extremely useful, but separate documents. Where their glossary differs from Part 2, applying the CoP wording on a BS 7671 certificate creates a departure that the designer must justify under Reg 120.3 in writing. Most disputes start exactly here: two technically literate parties using two different definitions for the same word.',
   },
@@ -221,10 +221,10 @@ const quizQuestions = [
     question:
       'During an EICR an inspector codes a metal radiator pipe as a missing main bond, citing "extraneous-conductive-part — every metal pipe is one." The pipe enters the property in plastic, then transitions to copper internally. Which Part 2-driven correction applies?',
     options: [
-      'The inspector is correct — every metal pipe is extraneous',
-      'The inspector is wrong — Part 2 requires the part to be liable to introduce a potential (typically Earth potential) from outside the installation; a pipe entering in plastic is electrically isolated from the external earth and is not extraneous-conductive',
-      'The inspector should code C1 regardless',
-      'Bonding is required if the pipe is more than 1 m long',
+      'The inspector is correct — every metal pipe in a property is extraneous-conductive',
+      'The inspector is wrong — a pipe entering in plastic introduces no external potential',
+      'The inspector should code C1 regardless of how the pipe enters the property',
+      'Bonding is required wherever the metal pipe run exceeds one metre in length',
     ],
     correctAnswer: 1,
     explanation:

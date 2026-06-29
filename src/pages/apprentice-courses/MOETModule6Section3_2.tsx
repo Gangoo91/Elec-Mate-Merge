@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fault-report-purpose',
     question: 'What is the primary purpose of a fault report?',
     options: [
-      'Current creates heat in the device, which triggers the trip mechanism above the rated value',
-      'Components from different manufacturers may not be compatible and could compromise structural integrity',
-      'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
+      'To allocate the cost of the repair to the correct departmental maintenance budget',
+      'To provide a written warranty claim against the equipment manufacturer',
       'To create a clear, factual record of the fault, its cause and the corrective action taken',
+      'To satisfy the insurance company that the equipment was inspected this year',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'A fault report creates a clear, factual record of what happened, why it happened, and what was done to correct it. It supports future fault diagnosis, asset management decisions, and demonstrates compliance with maintenance procedures.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'corrective-action-priority',
     question: 'How should corrective actions be prioritised?',
     options: [
-      'Correct connection of line, neutral, and earth conductors',
+      'In the order the fault reports were received, on a first-come first-served basis',
       'Based on the risk to safety, production impact and likelihood of recurrence',
-      'Reducing reheat energy and improving chiller efficiency',
-      'It can measure current without breaking the circuit or making contact with live conductors',
+      'By the seniority of the technician who first identified the fault',
+      'According to which repair can be completed within the current shift',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'root-cause-analysis',
     question: 'Root cause analysis aims to identify:',
     options: [
+      'The fastest temporary repair that will restore the equipment to service',
+      'Which individual technician was responsible for the equipment failing',
+      'The total cost of all parts and labour consumed by the breakdown',
       'The underlying reason the fault occurred, not just the immediate symptom',
-      'A form of energy created by the movement of electrons',
-      'To distribute power vertically through the building floors',
-      'Awkward shape, lifted overhead, often with twist — small weight, bad posture',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Root cause analysis looks beyond the immediate symptom to identify the underlying reason the fault occurred. For example, a blown fuse (symptom) might be caused by a loose connection creating high resistance (root cause). Addressing only the symptom means the fault will recur.',
   },
@@ -56,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'A fault report should be written:',
     options: [
-      'Give signal contacts (e.g. to feed a "running" lamp or interlock another circuit)',
+      'Only for faults that caused the equipment to stop completely',
       'For all faults, including those found during routine inspections, regardless of severity',
-      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
-      'Participating — share ideas and facilitate decision-making together',
+      'Only when a replacement part has had to be ordered from stores',
+      'Only for faults that a technician could not repair on the first visit',
     ],
     correctAnswer: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 2,
     question: 'The 5 Whys technique is used in fault diagnosis to:',
     options: [
-      "The life of the asset, or as specified by the organisation's retention policy (typically 5+ years minimum)",
-      "It may not be present when the technician arrives, making diagnosis difficult",
+      "Calculate how many maintenance hours a recurring fault has cost",
+      "Rank five competing faults in order of repair priority",
       "Identify the root cause by repeatedly asking 'why' until the fundamental cause is found",
-      "Reported and documented using the organisation's incident reporting system",
+      "Decide which of five technicians is best suited to attend the fault",
     ],
     correctAnswer: 2,
     explanation:
@@ -82,9 +82,9 @@ const quizQuestions = [
     id: 3,
     question: "A corrective action is classified as 'temporary' when:",
     options: [
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'It may not be present when the technician arrives, making diagnosis difficult',
-      'Identify the root cause by repeatedly asking \\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\' until the fundamental cause is found',
+      'It is carried out by an agency technician rather than a permanent member of staff',
+      'It is completed outside of normal working hours as an emergency callout',
+      'It is expected to be reviewed at the next scheduled maintenance visit',
       'It restores operation but does not address the root cause, requiring further planned work',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ const quizQuestions = [
       'Which failure classification describes equipment that is still running but performing below specification?',
     options: [
       'Degraded performance or partial failure',
-      'Sealing, lubrication, and cooling',
-      'Total number of bends and cumulative angle changes',
-      'Section 4: First Aid Measures',
+      'Catastrophic or total failure',
+      'Intermittent or transient failure',
+      'Hidden or dormant failure',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 5,
     question: 'When documenting a corrective action, you should record:',
     options: [
-      'It restores operation but does not address the root cause, requiring further planned work',
+      'Only the part numbers and quantities of the components replaced',
       'The fault found, diagnostic steps taken, root cause, corrective action performed, parts used, and verification of effectiveness',
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'Verify the repair by testing the equipment under normal operating conditions and recording the results',
+      'Only the date the fault was reported and the date it was closed',
+      'Only the name of the technician and the total time spent on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 6,
     question: 'An intermittent fault is particularly challenging because:',
     options: [
-      'Identify the root cause by repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' until the fundamental cause is found',
-      'Reported and documented using the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s incident reporting system',
+      'It always requires a complete replacement of the affected assembly',
+      'It can only be diagnosed by the original equipment manufacturer',
       'It may not be present when the technician arrives, making diagnosis difficult',
-      'Systematically identify all potential causes of a fault across multiple categories',
+      'It cannot be recorded on a standard fault report form',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,9 +135,9 @@ const quizQuestions = [
     id: 7,
     question: "A 'near miss' related to an electrical fault should be:",
     options: [
-      "It restores operation but does not address the root cause, requiring further planned work",
-      "The fault symptoms, your diagnosis, the urgency level, and your recommended corrective action",
-      "Systematically identify all potential causes of a fault across multiple categories",
+      "Logged informally in the technician's personal diary only",
+      "Ignored if no equipment was actually damaged",
+      "Discussed verbally at the next team meeting without a written record",
       "Reported and documented using the organisation's incident reporting system",
     ],
     correctAnswer: 3,
@@ -149,9 +149,9 @@ const quizQuestions = [
     question: 'The Ishikawa (fishbone) diagram is used to:',
     options: [
       'Systematically identify all potential causes of a fault across multiple categories',
-      'Identify the root cause by repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' until the fundamental cause is found',
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'Reported and documented using the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s incident reporting system',
+      'Plot the rising temperature of a component against time during a fault',
+      'Show the sequence of trips that occurred during a cascade failure',
+      'Map the physical wiring layout of a faulty control panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 9,
     question: 'After completing a corrective action on a motor starter, the final step should be:',
     options: [
-      'Reported and documented using the organisation\\\\\\\\\\\\\\\'s incident reporting system',
+      'Returning all unused parts to the stores before leaving site',
       'Verify the repair by testing the equipment under normal operating conditions and recording the results',
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'Systematically identify all potential causes of a fault across multiple categories',
+      'Informing the operator verbally that the equipment is now working',
+      'Updating the spare parts inventory in the stores catalogue',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 10,
     question: 'Failure Mode and Effects Analysis (FMEA) is used in maintenance to:',
     options: [
-      'Identify the root cause by repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' until the fundamental cause is found',
-      'It restores operation but does not address the root cause, requiring further planned work',
+      'Record the labour and material costs incurred by each breakdown',
+      'Schedule technicians across the available maintenance shifts',
       'Systematically evaluate potential failure modes, their effects and likelihood to prioritise maintenance actions',
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
+      'Test the insulation resistance of motor windings after a repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -187,9 +187,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under ST1426, when reporting a fault to a supervisor, you should communicate:',
     options: [
-      'The life of the asset, or as specified by the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s retention policy (typically 5+ years minimum)',
-      'It may not be present when the technician arrives, making diagnosis difficult',
-      'Systematically identify all potential causes of a fault across multiple categories',
+      'Only the asset tag number and the time the fault was reported',
+      'Only an estimate of how long the repair is likely to take',
+      'Only the part number of any component that needs replacing',
       'The fault symptoms, your diagnosis, the urgency level, and your recommended corrective action',
     ],
     correctAnswer: 3,
@@ -201,9 +201,9 @@ const quizQuestions = [
     question: 'Fault reports and corrective action records should typically be retained for:',
     options: [
       "The life of the asset, or as specified by the organisation's retention policy (typically 5+ years minimum)",
-      "The fault symptoms, your diagnosis, the urgency level, and your recommended corrective action",
-      "Systematically evaluate potential failure modes, their effects and likelihood to prioritise maintenance actions",
-      "It may not be present when the technician arrives, making diagnosis difficult",
+      "Until the equipment is next serviced, then discarded",
+      "A maximum of 12 months, after which they must be deleted",
+      "Only as long as the technician who carried out the work remains employed",
     ],
     correctAnswer: 0,
     explanation:

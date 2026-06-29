@@ -111,11 +111,11 @@ const quizQuestions = [
     question: 'Under the Management of Health and Safety at Work Regulations 1999, employers must:',
     options: [
       'Only assess risks in the construction industry',
-      'Carry out a suitable and sufficient assessment of all workplace risks',
       'Delegate all risk assessment duties to employees',
-      'Only assess risks when an accident has occurred',
+      'Only assess risks once an accident has occurred',
+      'Carry out a suitable and sufficient assessment of all workplace risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires every employer to carry out a suitable and sufficient assessment of the risks to the health and safety of their employees, and of anyone else who may be affected by their undertaking. This applies to all workplaces and all work activities, not just construction.',
   },
@@ -123,16 +123,16 @@ const quizQuestions = [
     id: 4,
     question:
       'Under CDM 2015, which duty holder is responsible for planning, managing, monitoring, and coordinating health and safety during the construction phase?',
-    options: ['The client', 'The principal designer', 'The principal contractor', 'The designer'],
-    correctAnswer: 2,
+    options: ['The principal contractor', 'The principal designer', 'The client', 'The designer'],
+    correctAnswer: 0,
     explanation:
       'Under CDM 2015, the principal contractor is responsible for planning, managing, monitoring, and coordinating the health and safety of the construction phase. This includes managing risks from working at height, ensuring that access equipment is suitable, and coordinating the activities of all contractors on site.',
   },
   {
     id: 5,
     question: 'How often must a MEWP used to lift people be thoroughly examined under LOLER 1998?',
-    options: ['Every 3 months', 'Every 6 months', 'Every 12 months', 'Every 24 months'],
-    correctAnswer: 1,
+    options: ['Every 3 months', 'Every 12 months', 'Every 24 months', 'Every 6 months'],
+    correctAnswer: 3,
     explanation:
       'Under LOLER 1998, any lifting equipment used to lift people must be thoroughly examined by a competent person at least every 6 months. For lifting equipment used only to lift loads (not people), the interval is 12 months. A current report of thorough examination must be available before the equipment is used.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'PUWER 1998 requires that work equipment provided for use at height is:',
     options: [
-      'The cheapest available option',
       'Suitable for its intended purpose, maintained, and inspected',
-      'Only inspected when it breaks',
+      'The cheapest available option that does the job',
+      'Inspected only when it visibly breaks',
       'Certified by the manufacturer every year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PUWER 1998 (the Provision and Use of Work Equipment Regulations) requires that all work equipment is suitable for its intended purpose, properly maintained, and inspected at appropriate intervals. For work at height equipment such as ladders, scaffolds, and harnesses, this means regular inspection, maintenance, and replacement when damaged.',
   },

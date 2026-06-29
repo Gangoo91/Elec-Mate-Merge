@@ -187,10 +187,11 @@ export default function BestAIToolElectriciansPage() {
                     misattribute which edition introduced this.
                   </li>
                   <li>
-                    <strong>Reg 643.3 (RCD testing)</strong> — A4:2026 changed how RCDs are tested:
-                    regardless of RCD type, an AC test at the rated residual current (IΔn) now
-                    verifies operation, and the old Appendix 3 Table 3A tripping-time criteria were
-                    deleted. A general chatbot will still quote the withdrawn test method.
+                    <strong>Reg 643.8 (RCD testing)</strong> — A4:2026 changed how RCDs are tested:
+                    regardless of RCD type, a single AC test at the rated residual operating current
+                    (IΔn) now verifies effectiveness — a general non-delay RCD must disconnect within
+                    300 ms — and the old Appendix 3 Table 3A tripping-time criteria were deleted. A
+                    general chatbot will still quote the withdrawn test method.
                   </li>
                 </ul>
               </div>

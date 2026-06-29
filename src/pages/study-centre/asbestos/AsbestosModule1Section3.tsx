@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'Why is pipe lagging considered one of the highest-risk asbestos-containing materials?',
     options: [
       'Because it is always blue asbestos',
-      'Because it is often friable (easily crumbled) and may contain amosite or crocidolite, releasing fibres readily when disturbed',
       'Because it is the most common ACM found in buildings',
+      'Because it is often friable (easily crumbled) and may contain amosite or crocidolite, releasing fibres readily when disturbed',
       'Because it was never manufactured to any safety standard',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Pipe lagging is considered one of the highest-risk ACMs because it is often very friable — meaning it can be easily crumbled or broken by hand pressure. It frequently contains amosite (brown asbestos) or crocidolite (blue asbestos), both of which are the most dangerous fibre types. When disturbed, friable lagging releases fibres readily into the air, creating significant inhalation risk.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following is the most common location for asbestos-insulating board (AIB) in domestic properties?',
     options: [
-      'External brickwork',
       'Bath panels, airing cupboard linings, and fuse box flash guards',
+      'External brickwork',
       'Concrete foundations',
       'PVC window frames',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In domestic properties, AIB was commonly used for bath panels, airing cupboard linings, partition walls, and flash guards inside consumer units (fuse boxes). AIB is a higher-risk material because it is denser than sprayed coatings but more friable than asbestos cement, meaning it releases fibres relatively easily when disturbed.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
     question: 'Thermoplastic floor tiles containing asbestos are typically which size?',
     options: [
       '10x10cm or 15x15cm',
-      '25x25cm or 30x30cm, often dark-coloured',
       '50x50cm, always white',
       '60x60cm, usually patterned',
+      '25x25cm or 30x30cm, often dark-coloured',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Asbestos-containing thermoplastic floor tiles are typically 25x25cm (9 inch) or 30x30cm (12 inch) and are often dark-coloured (brown, dark red, or black). The black bitumen-based adhesive used to stick them down may also contain asbestos. These tiles should never be sanded, ground, or dry-swept if asbestos is suspected.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is the black adhesive beneath old floor tiles a concern for asbestos?',
     options: [
-      'It always contains crocidolite',
       'It is a bitumen-based adhesive that may contain asbestos fibres, making tile removal hazardous',
+      'It always contains crocidolite',
       'It is water-soluble and spreads asbestos when wet',
       'It is only dangerous if the building was built before 1950',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The black bitumen-based adhesive used to fix thermoplastic floor tiles often contains asbestos fibres (typically chrysotile). This means that removing old floor tiles can disturb not just the tiles themselves but also the adhesive layer, releasing fibres. The adhesive must be treated as a potential ACM and sampled or assumed to contain asbestos before any removal work is undertaken.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'An electrician discovers what appears to be a textured coating on a ceiling while preparing to install new lighting in a 1975 property. What should they do?',
     options: [
       'Proceed carefully using a dust mask',
-      'Stop work, assume the coating may contain asbestos, and arrange for it to be tested before proceeding',
       'Scrape a small area to check if it crumbles',
       'Proceed if the coating appears to be in good condition',
+      'Stop work, assume the coating may contain asbestos, and arrange for it to be tested before proceeding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The electrician must stop work and assume the textured coating may contain asbestos. Textured coatings in properties from the 1970s very commonly contain chrysotile. Drilling, cutting, or disturbing the coating would release fibres. The coating must be sampled and tested by a competent person before any work proceeds. A dust mask alone does not provide adequate protection against asbestos fibres.',
   },
@@ -169,8 +169,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Approximately how many non-domestic buildings in the UK are estimated to contain asbestos-containing materials?',
-    options: ['50,000', '100,000', 'Over 500,000', 'Over 5 million'],
-    correctAnswer: 2,
+    options: ['50,000', 'Over 500,000', '100,000', 'Over 5 million'],
+    correctAnswer: 1,
     explanation:
       "It is estimated that over 500,000 non-domestic buildings in the UK contain asbestos-containing materials. This includes offices, schools, hospitals, factories, and public buildings. The Control of Asbestos Regulations 2012 place a duty on the person responsible for managing these buildings (the 'duty holder') to identify and manage any ACMs present.",
   },

@@ -29,8 +29,8 @@ const quickCheckQuestions = [
       'A qualified electrician sets the following goal: &ldquo;Pass the City &amp; Guilds 2391-52 Inspection and Testing qualification by 31 December 2026.&rdquo; According to Locke and Latham&rsquo;s goal-setting research, what additional step would most significantly increase the likelihood of achieving this goal?',
     options: [
       'Share the goal publicly on social media to create accountability',
-      'Break the goal into implementation intentions: specific if-then plans for when and where study will occur',
-      'Reduce the difficulty of the goal to make it more achievable',
+      'Break the goal into if-then implementation intentions for when and where to study',
+      'Reduce the difficulty of the goal so that it becomes more achievable',
       'Set multiple backup goals in case the 2391-52 proves too difficult',
     ],
     correctIndex: 1,
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'An electrical contractor sets a goal: &ldquo;Increase company revenue by 40% in the next six months.&rdquo; The goal is specific, measurable, relevant, and time-bound. However, the company has historically grown at 8&ndash;12% per year. Which SMART element is most likely violated here, and what is the likely consequence?',
     options: [
-      'Measurable &mdash; percentage-based goals are harder to track than absolute figures',
-      'Achievable &mdash; the goal may be so unrealistic that it demotivates rather than motivates',
-      'Relevant &mdash; revenue growth may not be the most important metric for an electrical contractor',
-      'Time-bound &mdash; six months is too short a period to achieve meaningful revenue growth',
+      'Achievable &mdash; the goal may be so unrealistic that it demotivates',
+      'Measurable &mdash; percentage goals are harder to track than absolute figures',
+      'Relevant &mdash; revenue growth may not be the right metric for a contractor',
+      'Time-bound &mdash; six months is too short to achieve meaningful growth',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'While the goal is admirably ambitious, a 40% increase in six months when historical growth is 8&ndash;12% per year represents a roughly 400% acceleration. This violates the Achievable element of SMART. Locke and Latham&rsquo;s research shows that difficult goals drive high performance, but only when the individual believes the goal is possible. When a goal is perceived as unattainable, motivation collapses and performance often declines below baseline. The likely consequence here is either: (1) the goal is abandoned within weeks, or (2) unethical shortcuts are taken (cutting corners on quality, misrepresenting financials, overcharging clients). A more achievable stretch goal might be 15&ndash;20% growth in six months, which is still challenging but credible given the company&rsquo;s track record.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'The &ldquo;S&rdquo; in the SMART framework stands for Specific. Which of the following goals is the MOST specific for an apprentice electrician?',
     options: [
-      'Improve my understanding of BS 7671',
-      'Get better at electrical calculations',
-      'Complete all 20 questions in the BS 7671 Section 433 overcurrent protection workbook with 100% accuracy by Friday',
-      'Become a more competent electrician',
+      'Improve my overall understanding of the BS 7671 wiring regulations',
+      'Get noticeably better at carrying out electrical design calculations',
+      'Complete the 20-question BS 7671 Section 433 workbook at 100% by Friday',
+      'Become a more competent and well-rounded qualified electrician',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'The &ldquo;M&rdquo; in the SMART framework stands for Measurable. Which of the following is a measurable success criterion for a goal to improve conduit bending skills?',
     options: [
-      'Feel more confident when bending conduit',
-      'Bend a 20mm conduit 90-degree bend with less than 2mm deviation from the target angle, verified with a digital protractor',
-      'Impress my supervisor with my conduit work',
-      'Get faster at bending conduit',
+      'Feel noticeably more confident when bending conduit on site',
+      'Bend a 20mm 90-degree set within 2mm of target, checked with a protractor',
+      'Impress my site supervisor with the quality of my conduit work',
+      'Get consistently faster at bending conduit over the coming weeks',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,11 +131,11 @@ const quizQuestions = [
       'According to Locke and Latham&rsquo;s goal-setting theory, which type of goal produces the highest performance?',
     options: [
       'Easy goals that are certain to be achieved, providing consistent success',
-      'Moderate &ldquo;do your best&rdquo; goals that reduce pressure',
-      'Difficult but achievable goals that require significant effort and stretch current capability',
-      'Extremely difficult goals that may be impossible, creating maximum motivation',
+      'Moderate &ldquo;do your best&rdquo; goals that reduce the pressure to perform',
+      'Extremely difficult goals that may be impossible, creating maximum drive',
+      'Difficult but achievable goals that stretch current capability',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Locke and Latham&rsquo;s four decades of research consistently shows that difficult, specific goals produce higher performance than easy goals, &ldquo;do your best&rdquo; goals, or no goals at all. The key qualifier is that the goal must be believable &mdash; the individual must accept the goal as achievable, even if difficult. When goals cross the line into impossible, motivation collapses. The optimal goal difficulty is at the edge of current capability: hard enough to require full effort and focus, but not so hard that success seems impossible. For an apprentice electrician, an optimal goal might be: &ldquo;Score 90%+ on the AM2 assessment&rdquo; (difficult but achieved by many apprentices annually). A demotivating goal would be: &ldquo;Score 100% on the AM2 assessment with zero errors&rdquo; (extremely rare, bordering on impossible).',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'Peter Gollwitzer&rsquo;s research on implementation intentions found that creating if-then plans significantly increases goal achievement. Which of the following is the best example of an implementation intention for a goal to study BS 7671 regulations?',
     options: [
-      '&ldquo;I will study BS 7671 more often.&rdquo;',
-      '&ldquo;I will try to study BS 7671 whenever I have free time.&rdquo;',
-      '&ldquo;If it is 7pm on Monday, Wednesday, and Friday, then I will study BS 7671 Section 433 for 30 minutes at my kitchen table.&rdquo;',
-      '&ldquo;I want to become an expert in BS 7671.&rdquo;',
+      '&ldquo;I will study BS 7671 much more often than I currently do.&rdquo;',
+      '&ldquo;I will try to study BS 7671 whenever I happen to have some free time.&rdquo;',
+      '&ldquo;If it is 7pm on Monday, then I will study BS 7671 for 30 minutes.&rdquo;',
+      '&ldquo;I want to become a genuine expert in the BS 7671 regulations.&rdquo;',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'An apprentice sets the goal: &ldquo;Improve my cable calculation skills.&rdquo; What is the primary problem with this goal from a SMART perspective?',
     options: [
-      'It is not relevant to an apprentice electrician',
-      'It is not achievable within a reasonable timeframe',
-      'It lacks both measurable success criteria and a deadline',
-      'It is too specific and should be broader',
+      'It lacks both measurable success criteria and a clear deadline',
+      'It is not relevant to the work of an apprentice electrician',
+      'It is not achievable within any reasonable timeframe',
+      'It is far too specific and ought to be made much broader',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The goal lacks two critical SMART elements: Measurable (how will you know you have improved?) and Time-bound (by when?). A SMART revision might be: &ldquo;Complete 50 cable calculation exercises covering BS 7671:2018+A2:2022 Appendix 4 methods with 95% accuracy by the end of this month.&rdquo; This version is measurable (50 exercises, 95% accuracy) and time-bound (end of month). Cable calculation skills are absolutely relevant to apprentices and achievable with practice, so those elements are not the issue. The original goal is an aspiration, not a goal. SMART goals force you to define what success looks like in concrete, verifiable terms.',
   },
@@ -172,10 +172,10 @@ const quizQuestions = [
     question:
       'A self-employed electrician sets the goal: &ldquo;Earn &pound;60,000 in the next 12 months.&rdquo; This goal is specific, measurable, and time-bound. To make it fully SMART, what additional element must be considered?',
     options: [
-      'Whether &pound;60,000 is achievable given current client base, pricing, and capacity',
-      'Whether the goal is written down in a specific format',
-      'Whether the goal has been shared with family and friends',
-      'Whether the electrician has set similar goals in the past',
+      'Whether &pound;60,000 is achievable given the current client base and capacity',
+      'Whether the goal has been written down in a specific format',
+      'Whether the goal has been shared with close family and friends',
+      'Whether the electrician has set similar earnings goals in the past',
     ],
     correctAnswer: 0,
     explanation:
@@ -187,11 +187,11 @@ const quizQuestions = [
       'Which of the following represents the best balance between activity goals and achievement goals for an apprentice preparing for the AM2 assessment?',
     options: [
       'Activity only: &ldquo;Practice conduit bending for two hours every Saturday.&rdquo;',
-      'Achievement only: &ldquo;Pass the AM2 assessment with a score of 85%+.&rdquo;',
-      'Both: &ldquo;Practice conduit bending for two hours every Saturday (activity), in order to pass the AM2 conduit task with no major defects (achievement).&rdquo;',
-      'Neither activity nor achievement goals are useful for practical skills',
+      'Achievement only: &ldquo;Pass the AM2 assessment with a score of 85% or more.&rdquo;',
+      'Neither activity nor achievement goals are useful for practical trade skills',
+      'Both: pair a weekly conduit-bending practice goal with passing the AM2 task',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The most effective goal structure combines both activity goals (behaviours you control) and achievement goals (outcomes you want). Activity goals provide daily direction and are entirely within your control &mdash; you can decide to practice conduit bending for two hours, regardless of external factors. Achievement goals provide the ultimate target and meaning &mdash; you are not practicing conduit bending for its own sake, but to pass the AM2 assessment. When you combine both, you get the benefits of controllable daily action and meaningful long-term direction. If you focus only on activity, you may practice ineffectively without progressing. If you focus only on achievement, you may become paralysed by the magnitude of the goal without a clear action plan. The best goals answer two questions: What will I do? (activity) and Why am I doing it? (achievement).',
   },

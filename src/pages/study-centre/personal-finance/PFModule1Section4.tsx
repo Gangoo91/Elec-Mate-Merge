@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     question:
       'An electrician owns a van worth &pound;15,000 and has &pound;3,000 in savings, but owes &pound;8,000 on a van finance agreement and &pound;2,500 on a credit card. What is their net worth?',
     options: [
-      '&pound;18,000 &mdash; the total of their assets',
-      '&pound;10,500 &mdash; the total of their debts',
-      '&pound;7,500 &mdash; assets (&pound;18,000) minus liabilities (&pound;10,500)',
-      '&pound;15,000 &mdash; the value of their most expensive asset',
+      '&pound;18,000 &mdash; their assets added together',
+      '&pound;10,500 &mdash; their liabilities added together',
+      '&pound;7,500 &mdash; assets minus liabilities',
+      '&pound;15,000 &mdash; their single most valuable asset',
     ],
     correctIndex: 2,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician earns &pound;280/day and spends every penny each month without setting aside money for tax, holidays, or emergencies. Which common trade financial mistake does this best illustrate?',
     options: [
-      'Not registering for CIS',
-      'Living to the day rate &mdash; spending as if gross income equals disposable income',
-      'Charging too little for their work',
-      'Not investing in test equipment',
+      'Living to the day rate &mdash; spending gross income as if it were disposable',
+      'Failing to register for the Construction Industry Scheme',
+      'Charging too little per day relative to their costs',
+      'Not reinvesting profit into modern test equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Living to the day rate is the most common and most damaging financial mistake made by self-employed tradespeople. It involves treating your gross income (the day rate multiplied by working days) as if it were disposable income, without setting aside money for: Income Tax and National Insurance (typically 20&ndash;30% of profit), holiday periods (approximately 28 days of lost income), sick days, pension contributions, or an emergency fund. The result is predictable: a shock tax bill in January, no savings to cover quiet periods or illness, and a perpetual cycle of financial stress. The fix is equally predictable but requires discipline: set aside 25&ndash;30% of every payment for tax, budget based on net income after all provisions, and build an emergency fund.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'The CIPD/MaPS Financial Wellbeing model identifies four pillars of financial wellbeing. Which of the following is NOT one of the four pillars?',
     options: [
-      'Control &mdash; feeling in control of your day-to-day finances',
-      'Resilience &mdash; having the ability to cope with a financial shock',
-      'Accumulation &mdash; having the highest possible income',
-      'Freedom &mdash; having the financial freedom to make choices that allow you to enjoy life',
+      'Control &mdash; feeling on top of your day-to-day finances',
+      'Resilience &mdash; being able to absorb a financial shock',
+      'Freedom &mdash; having the means to make the choices you want',
+      'Accumulation &mdash; pushing your income as high as possible',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The CIPD/MaPS Financial Wellbeing model identifies four pillars: Control (feeling in control of your day-to-day finances and meeting commitments), Resilience (having the ability to cope with a financial shock such as job loss or unexpected expense), Security (being on track for a financially secure future, including pension planning), and Freedom (having the financial freedom to make choices that allow you to enjoy life). "Accumulation" is not one of the pillars &mdash; the model deliberately focuses on subjective wellbeing and financial behaviours rather than simply maximising income or wealth. This is an important distinction: financial wellbeing is about how your finances make you feel and whether they support the life you want, not just about how much money you have.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'Net worth is calculated as:',
     options: [
-      'Total annual income minus total annual expenses',
       'Total assets minus total liabilities',
+      'Total annual income minus total annual expenses',
       'Total savings divided by total debt',
       'Monthly income multiplied by twelve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Net worth is the difference between what you own (assets) and what you owe (liabilities). Assets include: the current market value of your home, savings accounts, pension funds, investments, the value of your van and tools, and any other items of significant value. Liabilities include: your mortgage balance, van finance, credit card balances, personal loans, overdrafts, and any other debts. Net worth is a snapshot of your overall financial position at a point in time. Tracking it regularly (for example, quarterly) allows you to see whether you are building wealth or losing it. It is a more meaningful measure of financial health than income alone, because a high earner with large debts may have a lower net worth than a modest earner with no debts and consistent savings.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'CITB research on financial wellbeing in the construction industry has found that:',
     options: [
-      'Construction workers are generally better off financially than workers in other industries',
-      'Financial stress is a leading contributor to poor mental health in construction, which has a suicide rate significantly higher than the national average',
-      'Self-employed tradespeople never experience financial stress because they earn high day rates',
-      'Financial wellbeing has no measurable impact on work performance',
+      'Construction workers are generally better off financially than other industries',
+      'Financial stress is a leading driver of the industry&rsquo;s high suicide rate',
+      'High day rates mean self-employed tradespeople rarely feel financial stress',
+      'Financial wellbeing has no measurable bearing on work performance',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'The "feast or famine" psychology in the trades refers to:',
     options: [
-      'The fact that construction workers eat a lot during busy periods',
-      'The cyclical pattern of busy periods (feast) and quiet periods (famine), and the tendency to spend more during busy periods without saving for quiet ones',
-      'The seasonal variation in daylight hours that affects working patterns',
-      'The competition between different trades on a construction site',
+      'The large amount construction workers eat during busy periods',
+      'The seasonal swing in daylight hours that shapes working patterns',
+      'Spending freely in busy periods without saving for the quiet ones',
+      'The competition between different trades on a single site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The feast-or-famine cycle is a deeply embedded pattern in the construction trades. During busy periods ("feast"), work is plentiful, income is high, and there is a psychological tendency to spend freely &mdash; upgrading tools, taking holidays, improving the house. During quiet periods ("famine"), work dries up, income drops, and the money spent during the feast period is gone. The pattern repeats endlessly unless deliberately broken. The solution is counter-intuitive: during feast periods, you should be saving aggressively, not spending freely. Build your emergency fund, overpay your tax provision, make additional pension contributions, and pay down debt. This way, when the famine comes (and it always does), you have financial reserves to maintain your standard of living without stress or debt.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'Which of the following is the MOST common financial mistake made by self-employed electricians?',
     options: [
-      'Charging too much for their work',
-      'Having too many savings accounts',
-      'Not setting aside money for tax, spending gross income as if it were net income',
-      'Investing too heavily in their pension',
+      'Charging customers too much for the work they do',
+      'Spreading savings across too many separate accounts',
+      'Over-contributing to their pension each month',
+      'Spending gross income without setting aside money for tax',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Not setting aside money for tax &mdash; commonly called "living to the day rate" &mdash; is by far the most prevalent financial mistake among self-employed tradespeople. The pattern is consistent: the electrician receives a &pound;2,800 payment for a week&rsquo;s work and spends it as if the entire amount is disposable income. When the Self Assessment tax bill arrives in January (which may include payments on account), they do not have the funds to pay it. This leads to HMRC payment plans, interest charges, late payment penalties, and significant financial stress. The fix is simple in principle but requires discipline: set aside 25&ndash;30% of every payment into a separate account the day it arrives, and do not touch that money for anything other than tax.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'The CIPD/MaPS Financial Wellbeing model consists of four pillars. "Resilience" refers to:',
     options: [
-      'The ability to work long hours without becoming tired',
-      'The ability to cope with a financial shock such as job loss, illness, or an unexpected major expense',
-      'Having a high credit score',
-      'The ability to negotiate higher day rates',
+      'Being able to absorb a financial shock such as job loss or illness',
+      'Being able to work long hours without becoming tired',
+      'Holding a consistently high personal credit score',
+      'Being able to negotiate consistently higher day rates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Financial resilience is the ability to absorb a financial shock without it causing lasting damage to your finances or wellbeing. Shocks include: losing a major client or contract, a period of illness that prevents work, an unexpected major expense (van breakdown, home repair), or a change in personal circumstances (relationship breakdown, bereavement). Financial resilience is built through: maintaining an emergency fund (three to six months of essential expenses), having appropriate insurance (income protection, business insurance, life insurance if you have dependents), diversifying your client base (not relying on a single source of work), and having manageable debt levels. An electrician with &pound;10,000 in savings, income protection insurance, and five regular clients is far more financially resilient than one with no savings, no insurance, and a single main contractor providing all their work.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
     question: 'A financial health check baseline should include all of the following EXCEPT:',
     options: [
       'Total assets and total liabilities (net worth calculation)',
-      'Monthly income and monthly essential expenses',
       'Your neighbour&rsquo;s income and spending habits',
+      'Monthly income and monthly essential expenses',
       'Outstanding debts with interest rates and minimum payments',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A financial health check baseline is a personal exercise that focuses on YOUR financial position, not anyone else&rsquo;s. Comparing yourself to others is not only unhelpful but can actively harm your financial wellbeing by encouraging either complacency ("I&rsquo;m doing better than Dave, so I&rsquo;m fine") or despair ("I&rsquo;ll never be as well-off as the site foreman"). Your baseline should include: a net worth calculation (all assets minus all liabilities), a monthly income and expenditure summary, a complete list of debts with balances, interest rates, and monthly payments, your pension provision (how much you are saving and whether it is on track), your insurance coverage (what risks are and are not covered), and your emergency fund balance. This baseline gives you a factual starting point from which to set goals and track progress.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'An electrician has no emergency fund, no pension, &pound;5,000 of credit card debt at 22% APR, and is not setting aside money for tax. In what order should they prioritise these issues?',
     options: [
       'Pension first, then emergency fund, then credit card, then tax savings',
-      'Tax savings first, then credit card debt, then emergency fund, then pension',
       'Emergency fund first, then pension, then credit card, then tax savings',
+      'Tax savings first, then credit card debt, then emergency fund, then pension',
       'Credit card first, then pension, then emergency fund, then tax savings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The recommended priority order is: (1) Tax savings first &mdash; failing to pay tax results in penalties, interest, and potential HMRC enforcement action. Set aside 25&ndash;30% of every payment immediately. (2) High-interest debt &mdash; at 22% APR, the credit card is costing approximately &pound;1,100/year in interest alone. Pay more than the minimum to clear this as quickly as possible. (3) Emergency fund &mdash; build a buffer of at least one month&rsquo;s essential expenses, then extend to three months. (4) Pension &mdash; once the tax is provisioned, the debt is reducing, and a basic emergency fund exists, begin regular pension contributions. This is the order recommended by most financial advisers: address the most urgent and most costly issues first, then build long-term financial security.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'The concept of "money scripts" in financial psychology refers to:',
     options: [
-      'The written terms and conditions of a bank account',
-      'Unconscious beliefs about money that are formed early in life and drive financial behaviour in adulthood',
-      'The instructions printed on banknotes',
-      'A budgeting template used by financial advisers',
+      'The written terms and conditions attached to a bank account',
+      'The security instructions printed on the back of banknotes',
+      'A budgeting template handed out by financial advisers',
+      'Unconscious early-life beliefs that drive financial behaviour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Money scripts are deeply held, often unconscious beliefs about money that develop during childhood and adolescence, typically influenced by family attitudes, cultural norms, and early experiences. Common money scripts in the trades include: "money comes and goes, there&rsquo;s no point saving" (money avoidance), "I deserve to spend what I earn because I work hard" (money status), "talking about money is embarrassing or rude" (money worship/avoidance), and "financially successful people got lucky or took shortcuts" (money vigilance taken to an extreme). These scripts drive financial behaviour without conscious awareness. Identifying your own money scripts is the first step towards changing unhelpful financial habits, because you cannot change a behaviour you are not aware of. The field of financial therapy explores these concepts in depth.',
   },

@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of using a stair-climbing sack truck over a standard sack truck?',
     options: [
-      'It can carry heavier loads on flat ground',
-      'It has a built-in mechanism (rotating wheels or tracks) that allows loads to be moved up and down stairs',
-      'It is lighter and easier to store',
-      'It eliminates the need for a risk assessment',
+      'A tri-wheel or tracked mechanism lets loads be moved up and down stairs',
+      'It can carry considerably heavier loads when used on flat ground',
+      'It is much lighter and easier to store in a works van',
+      'It removes the need to carry out a manual handling risk assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Stair-climbing sack trucks have a tri-wheel or tracked mechanism specifically designed to allow loads to be moved up and down stairs. This eliminates the need to manually lift heavy items between floors, significantly reducing the risk of back injury on stairways. A risk assessment is still required even when using mechanical aids.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'mh-equipment-inspection',
     question: 'How often should mechanical handling aids be inspected for damage and defects?',
     options: [
-      'Only when they break down',
-      'Once a year during the annual service',
-      'Before each use (pre-use check) and at regular planned intervals',
-      'Only when the manufacturer recommends it',
+      'Only when they break down or stop working',
+      'Once a year, during the scheduled annual service',
+      'Only on the dates the manufacturer specifically recommends',
+      'Before each use and at regular planned inspection intervals',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Mechanical handling aids should receive a pre-use visual check before each use (looking for obvious damage, wear, or defects) AND regular planned inspections at intervals determined by the risk assessment, manufacturer's guidance, and patterns of use. This two-tier approach catches both sudden damage and gradual deterioration.",
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of a powered pallet truck over a manual hydraulic pallet truck?',
     options: [
-      'It is lighter and more portable',
-      'It provides powered drive and lifting, eliminating the physical effort of pumping and pushing/pulling heavy pallets',
-      'It does not require any training to operate',
-      'It can fit through narrower spaces',
+      'Powered drive and lifting remove the effort of pumping and pushing heavy pallets',
+      'It is noticeably lighter and more portable around site',
+      'It can be operated safely without any prior training',
+      'It can fit through narrower doorways and spaces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Powered pallet trucks provide electric drive (moving the pallet) and electric lifting (raising the forks), eliminating the physical effort of hand-pumping and pushing/pulling. This significantly reduces the manual handling risk, especially with heavy pallets or long transport distances. Training is still required, and powered trucks are typically larger than manual ones.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       'When selecting a mechanical aid for a particular task, which of the following is the MOST important consideration?',
     options: [
-      'The colour and appearance of the equipment',
-      'Whether the aid matches the actual working conditions (load type, weight, route, space, floor surface)',
-      'Whether it is the cheapest option available',
-      'Whether it was manufactured in the UK',
+      'The colour and general appearance of the equipment',
+      'Whether it happens to be the cheapest option available',
+      'Whether the aid matches the real working conditions, load, route and surface',
+      'Whether it was designed and manufactured in the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The most important consideration when selecting a mechanical aid is whether it actually matches the real working conditions. This includes the type and weight of load, the route (stairs, slopes, tight corners, door widths), the available space, the floor surface, and the frequency of use. An aid that does not suit the actual conditions will not be used by workers.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       'Which piece of equipment would you use to dispense cable from a large drum while pulling it through a building?',
     options: [
-      'A sack truck',
+      'A standard two-wheeled sack truck',
+      'A flat platform trolley with no sides',
+      'An overhead chain-block hoist',
       'A cable drum jack or stand with a free-spinning spindle',
-      'A platform trolley',
-      'An overhead hoist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A cable drum jack or stand lifts the drum off the ground and supports it on a spindle that allows the drum to rotate freely. This enables cable to be pulled off the drum smoothly without the drum rolling away or the cable tangling. It is the standard equipment for dispensing cable on site.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'An overhead hoist is typically used in which type of electrical installation scenario?',
     options: [
-      'Moving cable drums from a delivery vehicle to a storage area',
-      'Lifting heavy transformers, switchgear, or generators into position in plant rooms or substations',
-      'Carrying hand tools between floors',
-      'Moving lightweight cable trays along a corridor',
+      'Moving cable drums from a delivery vehicle across to a storage area',
+      'Lifting heavy transformers or switchgear into position in plant rooms',
+      'Carrying hand tools and small fittings between floors of a building',
+      'Moving lightweight cable trays along a level corridor',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Before using any mechanical handling aid, you should always:',
     options: [
-      'Paint it in a high-visibility colour',
       'Carry out a pre-use visual inspection to check for damage, wear, and correct function',
+      'Paint it in a high-visibility colour',
       'Weigh it to check it has not become heavier',
       'Test it by lifting a load heavier than the rated capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A pre-use visual inspection should be carried out every time before using a mechanical handling aid. Check for visible damage, worn or flat tyres, stiff or damaged wheels, cracks or bends in the frame, correct operation of lifting mechanisms and brakes, and any missing or illegible capacity labels. Never use equipment that shows signs of damage or defect.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'A spring-loaded cable reel dispenser is beneficial because:',
     options: [
-      'It automatically cuts the cable to the correct length',
-      'It holds the cable reel at a comfortable working height and provides controlled dispensing with tension',
-      'It replaces the need for cable drum jacks entirely',
-      'It can only be used outdoors',
+      'It automatically measures and cuts the cable to the correct length',
+      'It removes the need for cable drum jacks on every job',
+      'It can only be used safely in outdoor environments',
+      'It holds the reel at a comfortable height and dispenses cable under controlled tension',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Spring-loaded cable reel dispensers hold smaller cable reels at a comfortable working height and provide controlled tension during dispensing. This prevents cable from uncoiling too quickly (creating tangles and trip hazards) and holds the reel at a height that avoids stooping. They are suitable for smaller reels used in second-fix and containment work.',
   },

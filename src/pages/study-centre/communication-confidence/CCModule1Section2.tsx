@@ -20,12 +20,11 @@ const quickCheckQuestions = [
     id: 'mehrabian-scope',
     question: 'Mehrabian\u2019s 7-38-55 rule applies to which specific type of communication?',
     options: [
-      'All verbal communication',
-      'Technical briefings and instructions',
       'Communication of feelings and attitudes when the message is incongruent',
-      'Written communication only',
-    ],
-    correctIndex: 2,
+      'Technical briefings and instructions',
+      'All verbal communication',
+      'Written communication only'],
+    correctIndex: 0,
     explanation:
       'Mehrabian\u2019s research specifically studied the communication of feelings and attitudes (like/dislike) when the verbal message contradicted the nonverbal signals. It was never intended to describe all communication. Stating that \u201c93% of communication is nonverbal\u201d is a widely circulated misquotation.',
   },
@@ -47,11 +46,10 @@ const quickCheckQuestions = [
     question: 'When should you choose written communication over verbal on a construction site?',
     options: [
       'When you want a quick, informal chat',
-      'When the information needs a permanent, traceable record',
       'When discussing someone\u2019s personal problems',
-      'When giving immediate safety warnings',
-    ],
-    correctIndex: 1,
+      'When the information needs a permanent, traceable record',
+      'When giving immediate safety warnings'],
+    correctIndex: 2,
     explanation:
       'Written communication should be used when you need a permanent, traceable record \u2014 such as variation orders, method statements, safety inspection reports, or instructions that must be followed precisely. Verbal communication is better for immediate safety warnings, sensitive conversations, and quick coordination.',
   },
@@ -102,10 +100,9 @@ const quizQuestions = [
     options: [
       '93% of all communication is nonverbal',
       'Words do not matter in face-to-face communication',
-      'The research only applies to communication of feelings and attitudes with incongruent signals',
       'Body language is always more important than words in every situation',
-    ],
-    correctAnswer: 2,
+      'The research only applies to communication of feelings and attitudes with incongruent signals'],
+    correctAnswer: 3,
     explanation:
       'Mehrabian\u2019s research specifically studied the communication of feelings and attitudes when verbal and nonverbal signals contradicted each other. It was never intended to describe all communication. The claim that \u201c93% of communication is nonverbal\u201d is a widespread misquotation that Mehrabian himself has corrected.',
   },
@@ -113,12 +110,11 @@ const quizQuestions = [
     id: 3,
     question: 'What does the \u201cS\u201d in Egan\u2019s SOLER model stand for?',
     options: [
-      'Speak clearly',
       'Sit squarely (face the person)',
+      'Speak clearly',
       'Stay silent until they finish',
-      'Show empathy through words',
-    ],
-    correctAnswer: 1,
+      'Show empathy through words'],
+    correctAnswer: 0,
     explanation:
       'The \u201cS\u201d in SOLER stands for \u201cSit squarely\u201d \u2014 positioning yourself to face the other person directly. This communicates that you are giving them your full attention. On a construction site, this means turning your whole body towards the person speaking rather than continuing to work while they talk.',
   },
@@ -127,11 +123,10 @@ const quizQuestions = [
     question: 'Which paralinguistic element is MOST important during a site safety briefing?',
     options: [
       'Speaking as quickly as possible to save time',
-      'Using a monotone voice to sound professional',
       'Varying tone, pace, and volume to emphasise critical safety points',
-      'Speaking as quietly as possible so only those nearby can hear',
-    ],
-    correctAnswer: 2,
+      'Using a monotone voice to sound professional',
+      'Speaking as quietly as possible so only those nearby can hear'],
+    correctAnswer: 1,
     explanation:
       'During a safety briefing, varying your tone, pace, and volume helps emphasise critical points and keeps the audience engaged. Slowing down for important warnings, raising your volume for key hazards, and pausing after critical information gives workers time to absorb the message. A monotone delivery causes people to tune out \u2014 dangerous when lives are at stake.',
   },
@@ -141,11 +136,10 @@ const quizQuestions = [
       'An electrician tells a client \u201cYes, the job is going fine\u201d while avoiding eye contact, crossing their arms, and speaking in a flat tone. According to Mehrabian\u2019s research, the client is most likely to:',
     options: [
       'Believe the words because they are reassuring',
-      'Trust the nonverbal signals and suspect something is wrong',
       'Ignore both and form their own opinion based on the work quality',
-      'Ask for written confirmation',
-    ],
-    correctAnswer: 1,
+      'Trust the nonverbal signals and suspect something is wrong',
+      'Ask for written confirmation'],
+    correctAnswer: 2,
     explanation:
       'This is exactly the type of incongruent communication Mehrabian studied. When words say one thing but body language and tone say another, listeners trust the nonverbal signals. The client will pick up on the avoidance, closed posture, and flat tone and suspect the job is not going as well as the electrician claims.',
   },
@@ -156,10 +150,9 @@ const quizQuestions = [
     options: [
       'It is faster than speaking face to face',
       'It avoids the need for body language',
-      'It creates a permanent, traceable record that can be referenced later',
       'It is less likely to be misunderstood than speech',
-    ],
-    correctAnswer: 2,
+      'It creates a permanent, traceable record that can be referenced later'],
+    correctAnswer: 3,
     explanation:
       'The primary advantage of written communication on a construction site is that it creates a permanent, traceable record. This is essential for variation orders, safety instructions, inspection reports, and any information that may need to be referenced later or used as evidence. Written communication is not necessarily faster or less prone to misunderstanding \u2014 but its traceability is invaluable.',
   },
@@ -167,12 +160,11 @@ const quizQuestions = [
     id: 7,
     question: 'In the SOLER model, why is \u201cRelax\u201d included as the final element?',
     options: [
-      'Because relaxed people speak more quietly',
       'Because tension in your body is visible and can make the other person feel uncomfortable or guarded',
+      'Because relaxed people speak more quietly',
       'Because relaxation improves your technical knowledge',
-      'Because you should always be casual in professional settings',
-    ],
-    correctAnswer: 1,
+      'Because you should always be casual in professional settings'],
+    correctAnswer: 0,
     explanation:
       'Tension in your body is visible to others and can create a sense of unease. If you are rigid, fidgeting, or visibly tense, the other person may feel uncomfortable or guarded, which undermines the rapport you are trying to build. Relaxing does not mean being casual \u2014 it means being naturally at ease so the other person feels safe to communicate openly.',
   },
@@ -182,11 +174,10 @@ const quizQuestions = [
       'A site supervisor needs to instruct a team about a change to the isolation procedure. Which communication approach is MOST appropriate?',
     options: [
       'Send a text message to the group chat',
-      'Mention it casually in passing to whoever is nearby',
       'Deliver a verbal briefing to the full team and follow up with a written method statement amendment',
-      'Pin a note to the site notice board and assume everyone will read it',
-    ],
-    correctAnswer: 2,
+      'Mention it casually in passing to whoever is nearby',
+      'Pin a note to the site notice board and assume everyone will read it'],
+    correctAnswer: 1,
     explanation:
       'Safety-critical changes like isolation procedure amendments require both verbal and written communication. A face-to-face briefing ensures everyone hears the information, allows questions, and lets the supervisor use tone and emphasis to stress critical points. The written follow-up creates a traceable record and a reference document. Neither channel alone is sufficient for safety-critical information.',
   },

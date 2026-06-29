@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'thermocouple-principle',
     question: 'What is the operating principle of a thermocouple?',
     options: [
-      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
-      'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
-      'To reduce building CO2 emissions through improved energy performance beyond Building Regulations',
+      'A platinum element changes its electrical resistance with temperature',
+      'A semiconductor junction changes resistance exponentially with temperature',
+      'A bimetallic strip bends to drive a mechanical pointer with temperature',
       'Two dissimilar metals joined at a junction generate a voltage proportional to the temperature difference (Seebeck effect)',
     ],
     correctIndex: 3,
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of a Pt100 RTD over a thermocouple for temperature measurement?',
     options: [
-      'Falls from height (due to collapse, overturning, or falling from an unprotected platform)',
+      'RTDs cover a much wider temperature range, up to 1800 degrees C',
       'RTDs offer higher accuracy, better stability and more linear output over their range',
-      '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
-      'Validation means acknowledging someone\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
+      'RTDs are self-generating and need no excitation current or power supply',
+      'RTDs respond far faster to sudden changes in process temperature',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'gauge-vs-absolute',
     question: 'What is the difference between gauge pressure and absolute pressure?',
     options: [
-      'No — under 5 employees the SIGNIFICANT FINDINGS don’t have to be recorded by law (but are still expected as good practice)',
-      'A tripod or davit with man-riding winch system, with the casualty secured in a rescue harness or stretcher',
+      'Gauge pressure is measured in bar; absolute pressure is measured in pascals',
+      'Gauge pressure is always higher than the equivalent absolute pressure',
       'Gauge pressure is measured relative to atmospheric pressure; absolute pressure is measured relative to a perfect vacuum',
-      'Documented with variation description, reason, cost implication and written agreement before work is carried out',
+      'Gauge pressure is for liquids only; absolute pressure is for gases only',
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: '3-wire-rtd',
     question: 'Why are Pt100 RTDs commonly wired in a 3-wire configuration rather than 2-wire?',
     options: [
-      'To plan, manage, monitor and coordinate health and safety in the pre-construction phase, including identifying and eliminating foreseeable risks',
-      'Set out who can work alone, what risk assessment applies, communication/check-in arrangements, and high-risk activities that need a buddy',
-      'Continuity of CPCs and ring conductors, insulation resistance, polarity, earth electrode resistance (TT) — completed BEFORE energising',
+      'The third wire provides a backup signal path if one conductor fails',
+      'The third wire supplies the excitation current that powers the element',
+      'The third wire carries the cold junction compensation signal',
       'To allow the measuring instrument to compensate for the resistance of the connecting cable, which would otherwise add error to the temperature reading',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A Type K thermocouple uses which pair of metals?',
     options: [
-      'Current lags voltage by 36.87° (inductive load)',
+      'Iron and constantan (iron / copper-nickel)',
       'Chromel and alumel (nickel-chromium / nickel-aluminium)',
-      'The module\\\\\\\'s communication address and point configuration',
-      'Power supplied to field devices through communication cables',
+      'Copper and constantan (copper / copper-nickel)',
+      'Platinum and platinum-rhodium',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     question:
       'Cold junction compensation in a thermocouple measurement system is necessary because:',
     options: [
-      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
-      'The apprentice\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
+      'The thermocouple output drifts with the age of the measuring instrument and must be re-zeroed',
+      'The connecting cable adds resistance that must be subtracted from the reading',
+      'The cold junction must be physically cooled to 0 degrees C for the sensor to work',
       'The thermocouple voltage is proportional to the temperature DIFFERENCE between the hot and cold junctions, so the cold junction temperature must be known to calculate the actual measurement temperature',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'A thermistor differs from a Pt100 RTD in that:',
     options: [
       'A thermistor has a highly non-linear resistance-temperature characteristic and a much larger change in resistance per degree, making it very sensitive but over a narrow range',
-      'Map ECS renewal dates, BS 7671 amendment cycles, tax registration milestones, insurance renewals, and qualification targets onto a single timeline with 90-day execution sprints',
-      'Bond the armour to the gland, terminate the gland into the enclosure with banjo washer for earth continuity, strip and ferrule the conductors, terminate per the device terminal arrangement, torque to manufacturer spec.',
-      'Atmospheric conditions can change rapidly during work — continuous monitoring provides real-time warning of deteriorating conditions so workers can evacuate before reaching dangerous levels',
+      'A thermistor uses a platinum element while a Pt100 uses a semiconductor',
+      'A thermistor generates its own voltage and needs no excitation current',
+      'A thermistor has a perfectly linear output across the full -200 to +850 degrees C range',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'Which pressure sensing element is most commonly used in modern industrial pressure transmitters?',
     options: [
-      'Internal staircases at a comfortable angle',
-      'To automatically remove combustion residue from the grate',
+      'A Bourdon tube driving a mechanical pointer',
+      'A mercury column in a glass manometer',
       'Piezoresistive silicon strain gauge on a diaphragm',
-      'Identify safety-critical issues requiring immediate attention',
+      'A bimetallic strip linked to a pressure dial',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: 'Differential pressure measurement is used in industrial processes to:',
     options: [
       'Measure flow rate (using an orifice plate), level in sealed vessels, and filter condition',
-      'To evaluate risks by likelihood and impact to prioritise responses',
-      'Combined distance and angle measurement for precise positioning',
-      'To allow the outer pair to be removed during decontamination while maintaining hand protection with the inner pair',
+      'Measure absolute pressure referenced to a perfect vacuum',
+      'Measure the surface temperature of pipework without contact',
+      'Measure the rotational speed of a pump or fan shaft',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'Thermocouple compensating cable is necessary because:',
     options: [
-      'It keeps the client informed, manages expectations about the next day\\\\\\\\\\\\\\\'s work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication',
+      'It carries a higher current than copper cable to boost the millivolt signal',
       'The cable must have the same thermoelectric properties as the thermocouple to avoid introducing additional junctions that would create measurement errors',
-      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
-      'Final circuits supplying socket-outlets in higher-risk residential buildings (HRRBs), care homes, student accommodation, etc. (recommendation, not absolute requirement, in non-HRRB)',
+      'It provides the screened protection needed to reject electrical interference on the loop',
+      'It supplies the excitation voltage required to energise the thermocouple junction',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: 'An infrared (non-contact) temperature sensor measures temperature by:',
     options: [
-      'To ensure that a clear procedure is in place to rescue a person who is stranded or injured on the tower, minimising the time they are at risk',
-      'It is never acceptable; the tower must only be built to the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual configurations',
+      'Touching a probe to the surface and reading the change in resistance',
+      'Emitting an infrared beam and timing how long the reflection takes to return',
       'Detecting the infrared radiation naturally emitted by the target surface, which is proportional to its temperature',
-      'Install the missing gland and inspect all other conduit entries for similar omissions',
+      'Measuring the change in air pressure close to the heated surface',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     question:
       'A process requires pressure measurement in a system that operates under vacuum (below atmospheric pressure). Which pressure measurement type is needed?',
     options: [
-      'A splice using alignment fixtures and index-matching gel',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
-      'The resistance of the earth electrode to general mass of earth',
+      'A standard gauge pressure transmitter reading positive pressure only',
+      'A differential pressure transmitter across an orifice plate',
+      'A sealed gauge transmitter referenced to one bar at sea level',
       'Absolute pressure or compound gauge (vacuum to positive range)',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
     question: 'When calibrating a temperature transmitter, the reference standard should be:',
     options: [
       'A calibrated reference thermometer or dry-block calibrator traceable to national standards',
-      'Intentionally or recklessly interfere with anything provided for health and safety',
-      'Real-time monitoring, simulation, optimisation, and predictive maintenance',
-      'Skipping isolation feels harmless once and gets normalised — and a single live touch is enough',
+      'Another uncalibrated transmitter of the same model on the same process',
+      'The transmitter\'s own displayed reading taken as the true value',
+      'A handheld infrared thermometer pointed at the sensor housing',
     ],
     correctAnswer: 0,
     explanation:

@@ -19,8 +19,8 @@ const quickCheckQuestions = [
   {
     id: 'burn-cooling-time',
     question: 'For how long should a burn be cooled with running water as a minimum?',
-    options: ['5 minutes', '10 minutes', '20 minutes', '30 minutes'],
-    correctIndex: 2,
+    options: ['20 minutes', '5 minutes', '10 minutes', '30 minutes'],
+    correctIndex: 0,
     explanation:
       'A burn should be cooled under cool running water for a minimum of 20 minutes. Cooling should ideally begin within the first 3 hours of the injury. This reduces tissue damage, pain, and swelling. The water should be cool but not ice cold, as iced water causes vasoconstriction and can worsen the injury.',
   },
@@ -108,8 +108,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Using the Rule of Nines, what percentage of total body surface area does the front of the torso represent in an adult?',
-    options: ['9%', '18%', '27%', '36%'],
-    correctAnswer: 1,
+    options: ['9%', '27%', '36%', '18%'],
+    correctAnswer: 3,
     explanation:
       'Under the Rule of Nines, the front of the torso (chest and abdomen) represents 18% of total body surface area. The back of the torso is another 18%. The head and neck are 9%, each arm is 9%, each leg is 18%, and the perineum is 1%, totalling 100%.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'A casualty has been splashed with a strong alkali chemical on their arm. What is the FIRST action?',
     options: [
+      'Flush immediately with copious running water for at least 20 minutes',
       'Apply a neutralising acid to counteract the alkali',
       'Wipe the chemical off with a dry cloth, then apply a dressing',
-      'Flush immediately with copious running water for at least 20 minutes',
       'Apply burn cream and cover with cling film',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The first action for a chemical burn is to flush the affected area immediately with copious running water for at least 20 minutes (longer for alkalis, which penetrate deeper than acids). You must NEVER attempt to neutralise a chemical with another chemical, as this can cause an exothermic reaction and worsen the injury. Remove contaminated clothing carefully while flushing, protecting yourself from exposure.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'An electrician suffers an arc flash burn at work. The entry wound on the hand is approximately 2 cm across. The casualty says they feel fine. What should you do?',
     options: [
       'Cool the burn, apply cling film, and allow the casualty to continue working',
-      'Cool the burn and send the casualty to hospital for cardiac monitoring — electrical burns always require hospital assessment',
       'Apply burn cream and monitor the casualty on site for 30 minutes',
       'Cool the burn and cover with a sterile dressing — hospital is only needed if the wound is larger than the palm',
+      'Cool the burn and send the casualty to hospital for cardiac monitoring — electrical burns always require hospital assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'ALL electrical burns must be assessed in hospital, regardless of the size of the visible wound. Electrical current passes through the body and can cause extensive internal tissue damage that is not visible on the surface. There is also a significant risk of cardiac arrhythmia (abnormal heart rhythm), which may not develop immediately. The casualty requires cardiac monitoring even if they currently feel well.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'Wet concrete has a pH of approximately 12 to 13. What type of chemical burn does it cause?',
     options: [
+      'Alkali burn — flush with copious water, and note that it penetrates deeper than acid burns',
       'Acid burn — treat with sodium bicarbonate solution',
       'Thermal burn — treat with cool water for 10 minutes',
-      'Alkali burn — flush with copious water, and note that it penetrates deeper than acid burns',
       'Radiation burn — protect the area from further UV exposure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Wet cement and concrete are highly alkaline (pH 12–13) and cause alkali chemical burns. Alkali burns are particularly dangerous because they penetrate deeper into the tissue than acid burns — alkalis saponify (dissolve) fats and proteins, allowing the chemical to continue burning into deeper layers. Treatment is thorough flushing with copious water. Seek medical attention even if the burn does not initially appear serious.',
   },

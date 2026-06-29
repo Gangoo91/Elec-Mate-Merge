@@ -24,11 +24,11 @@ const quickCheckQuestions = [
       'Which piece of legislation places a duty on employers to provide adequate first aid provision in the workplace?',
     options: [
       'The Management of Health and Safety at Work Regulations 1999',
-      'The Health and Safety (First-Aid) Regulations 1981',
       'The Health and Safety at Work etc. Act 1974',
       'The Workplace (Health, Safety and Welfare) Regulations 1992',
+      'The Health and Safety (First-Aid) Regulations 1981',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Health and Safety (First-Aid) Regulations 1981 are the specific regulations that require employers to provide adequate and appropriate first aid equipment, facilities, and personnel. HSWA 1974 is the overarching Act, but the 1981 Regulations deal specifically with first aid provision.',
   },
@@ -115,8 +115,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'How long is a First Aid at Work (FAW) certificate valid?',
-    options: ['1 year', '2 years', '3 years', '5 years'],
-    correctAnswer: 2,
+    options: ['3 years', '2 years', '1 year', '5 years'],
+    correctAnswer: 0,
     explanation:
       'Both FAW and EFAW certificates are valid for 3 years from the date of issue. Certificate holders must requalify before their certificate expires to maintain their status as a qualified first aider.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
       'What is the duration of the requalification course for FAW, and within what period must it be taken?',
     options: [
       '1 day, within 6 months of expiry',
-      '2 days, within 28 days of certificate expiry',
       '3 days, within 3 months of expiry',
       '2 days, within 6 months of expiry',
+      '2 days, within 28 days of certificate expiry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The FAW requalification course is 2 days and must be completed within 28 days of the certificate expiry date. If more than 28 days have elapsed, the full 3-day FAW course must be taken.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the role of an appointed person in workplace first aid?',
     options: [
-      'To administer all first aid treatment on site',
       'To take charge of first aid arrangements and call emergency services when needed',
+      'To administer all first aid treatment on site',
       'To carry out the employer&rsquo;s risk assessment',
       'To inspect and certify first aid training providers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An appointed person takes charge of first aid arrangements, ensures equipment is maintained, and calls the emergency services when required. They do not need a first aid qualification but should not attempt treatment beyond their competence.',
   },

@@ -97,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: 'In an AC circuit, impedance (Z) is defined as:',
     options: [
-      'An entry wound where current entered and an exit wound where it left the body',
-      'Assessment against UK standards and possible bridging requirements',
-      'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
+      'The opposition to current flow caused by resistance alone, ignoring reactance',
+      'The arithmetic sum of resistance and reactance (Z = R + X)',
+      'The rate at which a capacitor stores and releases charge each cycle',
       'The total opposition to current flow, combining resistance and reactance vectorially',
     ],
     correctAnswer: 3,
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'The power factor of a circuit is defined as:',
     options: [
       'The cosine of the phase angle between voltage and current (cos φ)',
-      'Inductive loads (motors, transformers, solenoids)',
-      'A power quality analyser or power factor meter',
-      'Real power (kW), reactive power (kVAr) and apparent power (kVA)',
+      'The ratio of reactive power to real power (kVAr/kW)',
+      'The product of voltage and current divided by the supply frequency',
+      'The sine of the phase angle between voltage and current (sin φ)',
     ],
     correctAnswer: 0,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'The three components of the power triangle are:',
     options: [
-      'A power quality analyser or power factor meter',
-      'Impedance equals the resistance only (XL and XC cancel)',
-      'Inductive loads (motors, transformers, solenoids)',
+      'Voltage (V), current (A) and resistance (Ω)',
+      'Real power (kW), power factor (cos φ) and frequency (Hz)',
+      'Resistance (R), inductive reactance (XL) and capacitive reactance (XC)',
       'Real power (kW), reactive power (kVAr) and apparent power (kVA)',
     ],
     correctAnswer: 3,
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'A UK electricity supplier typically applies financial penalties when the power factor falls below:',
     options: [
-      'Follow drawings and specifications exactly',
+      '1.0 (any value less than perfect unity)',
       '0.90 or 0.85 (varies by supplier)',
-      'Work in potentially explosive atmospheres',
-      'Safety monitoring and control',
+      '0.50 (only severely reactive loads are charged)',
+      '0.20 (only when the load is almost entirely reactive)',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'At resonance in a series RLC circuit, what happens to the impedance?',
     options: [
-      'A power quality analyser or power factor meter',
-      'Inductive loads (motors, transformers, solenoids)',
+      'Impedance rises to a maximum as XL and XC add together',
+      'Impedance becomes purely capacitive and the current leads the voltage',
       'Impedance equals the resistance only (XL and XC cancel)',
-      'The cosine of the phase angle between voltage and current (cos φ)',
+      'Impedance falls to zero and the current becomes infinite',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'Which instrument is used to measure power factor on site?',
     options: [
-      'Inductive loads (motors, transformers, solenoids)',
-      'Impedance equals the resistance only (XL and XC cancel)',
-      '0.90 or 0.85 (varies by supplier)',
+      'A continuity tester set to the lowest resistance range',
+      'An insulation resistance tester at 500 V DC',
+      'A standard analogue multimeter on its AC voltage range',
       'A power quality analyser or power factor meter',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
     question: 'The reactive power (Q) in an AC circuit is measured in:',
     options: [
       'Volt-amperes reactive (VAr)',
-      'Running cables diagonally',
-      'Two phases have been transposed',
-      'Set time targets for each stage',
+      'Watts (W)',
+      'Volt-amperes (VA)',
+      'Joules per second (J/s)',
     ],
     correctAnswer: 0,
     explanation:

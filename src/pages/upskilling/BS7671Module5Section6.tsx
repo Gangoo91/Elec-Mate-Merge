@@ -142,8 +142,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Which BS 7671 regulation is the head reference for selecting equipment based on the external influences present at the location of the installation?',
-    options: ['Reg 411.3.1', 'Reg 522.1', 'Reg 543.1.1', 'Reg 643.3'],
-    correctAnswer: 1,
+    options: ['Reg 522.1', 'Reg 411.3.1', 'Reg 543.1.1', 'Reg 643.3'],
+    correctAnswer: 0,
     explanation:
       'Reg 522.1 is the headline external-influences regulation in Chapter 52. It requires that the wiring system be selected and erected having regard to the external influences to which it may be subjected, and references Appendix 5 for the AD / AE / AG codes (water, dust, mechanical impact). 411.3.1 is shock protection; 543.1.1 is CPC sizing; 643.3 is initial verification.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'When must fire-resistant cables (e.g. FP200, FP400, MICC) be used in preference to standard cables?',
     options: [
-      'On every domestic circuit',
-      'On safety services and circuits with a fire-resistant function — emergency lighting (BS 5266), fire alarms (BS 5839), fire-fighter lifts, smoke control — sized per Reg 527.1 to maintain circuit integrity for the duration the service must operate',
-      'Only when the cable is buried in plaster',
-      'Only on three-phase circuits',
+      'On every domestic final circuit as standard installation practice',
+      'Only where the cable is buried directly in wall plaster',
+      'Only on three-phase distribution and sub-main circuits',
+      'On safety services with a fire-resistant function, per Reg 527.1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 527.1.1 requires safety services and other circuits with a fire-resistant function to be wired in cable that maintains circuit integrity in fire. The integrity duration (PH 30, PH 60, PH 120 per BS EN 50200) is determined by the safety service standard — BS 5266-1 for emergency lighting, BS 5839-1 for fire alarms, the relevant lift standard for fire-fighter lifts. Standard PVC, even LSF, is not equivalent.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'A standard grey PVC cable is installed externally on a south-facing wall and discoloured / cracked within 18 months. Which BS 7671 regulation has been breached?',
     options: [
-      'Reg 411.3.4 — luminaire RCD',
       'Reg 522.11.1 — solar radiation external influence (AN)',
-      'Reg 543.2 — protective conductor types',
-      'Reg 643.7.2 — insulation resistance',
+      'Reg 411.3.4 — luminaire RCD additional protection',
+      'Reg 543.2 — selection of protective conductor types',
+      'Reg 643.7.2 — insulation resistance testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 522.11.1 covers external influence AN (solar radiation): the wiring system must be selected and erected so that no damage is caused by solar radiation or other relevant radiation. UV-induced sheath crazing is exactly this failure mode. The fix is a UV-stable sheath compound, mechanical protection (conduit, SWA armour), or relocation away from direct sunlight. Reg 522.10 covers corrosive substances — different external influence.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'A specification states "all cables in escape routes shall be LSZH". What is the engineering justification for this selection?',
     options: [
-      'LSZH is cheaper than PVC',
-      'LSZH cables produce minimal smoke and emit no halogen acid gases when burning, preserving visibility and breathability on escape routes; PVC contains chlorine and produces hydrogen chloride in fire, which is corrosive and toxic',
-      'LSZH cables are inherently fire-resistant (FP-equivalent)',
-      'LSZH is a regulatory requirement on all UK installations',
+      'LSZH cable is cheaper to buy and install than equivalent PVC cable',
+      'LSZH cable is inherently fire-resistant, equivalent to an FP-rated cable',
+      'LSZH gives minimal smoke and no halogen acid gas, preserving escape-route visibility',
+      'LSZH cable is a mandatory regulatory requirement on every UK installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LSZH (Low Smoke Zero Halogen) is a sheath / insulation specification, not a fire-resistance specification. It addresses smoke obscuration and toxic / corrosive gas emission in fire — both critical on escape routes. PVC contains chlorine; when it burns it releases HCl gas which forms hydrochloric acid on contact with moisture (lungs, eyes, electronics). LSZH is required on Tube stations, tunnels, ships, hospitals, data centres. It is NOT a substitute for FP-equivalent cables where Reg 527.1 demands circuit integrity.',
   },

@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why does a Level 2 electrician need to know basic electronics?',
     options: [
-      'Personalisation (it is all my fault), pervasiveness (it will affect everything), and permanence (it will last forever)',
+      'Because the colour code is examined in every written and practical assessment from now on.',
       'Because every modern board, smart switch, RCD, AFDD and EV charger has electronics inside that you’ll have to fault-find or replace.',
-      'The employer, self-employed person, or person in control of the premises where work is carried out',
-      'Energise the install in a controlled manner — main switch on, RCBOs on one at a time — then proceed to live testing (Ze, Zs, RCD operation, prospective fault current).',
+      'Because electronic kit is exempt from BS 7671 inspection and testing requirements.',
+      'Because all electronic devices run on extra-low voltage and cannot give an electric shock.',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does a resistor do in a circuit?',
     options: [
-      'Any person who may need assistance to evacuate the building',
-      'Swap conductors into correct terminals',
+      'Stores electrical charge and releases it when the circuit needs a surge.',
+      'Allows current to flow in one direction only and blocks it in the other.',
       'Limits current and drops voltage in a controlled way.',
-      'Light levels, control functionality, and energy consumption',
+      'Steps the voltage up or down between two coupled windings.',
     ],
     correctAnswer: 2,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why are most resistors specified with a power rating (e.g. 0.25 W, 0.5 W, 1 W)?',
     options: [
-      'Dim lights, especially at the end of the circuit',
-      'To record what was visually inspected and the outcome',
+      'To set the maximum voltage that can be applied across them.',
+      'To define how tightly the marked resistance value is held.',
       'To stop them overheating and going open-circuit when current flows.',
-      'Reporting of Injuries, Deaths and Dangerous Occurrences Regulations',
+      'To indicate how fast they respond to a change in signal.',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,9 +156,9 @@ const quizQuestions = [
     id: 7,
     question: 'What does “tolerance” mean on a resistor?',
     options: [
-      'A hard-wired communication system or intrinsically safe radio',
-      'Generic Emergency Evacuation Plan — a template plan for visitors or occasional users',
-      'Only use reply-all when your response is genuinely relevant to everyone on the thread',
+      'The maximum current it can carry before it overheats.',
+      'The highest temperature at which it will still function.',
+      'The amount of power it can safely dissipate as heat.',
       'How much the actual value can vary either side of the marked value.',
     ],
     correctAnswer: 3,
@@ -170,9 +170,9 @@ const quizQuestions = [
     question: 'On a smart RCBO PCB, you see a resistor with a burnt mark. What’s the right next step?',
     options: [
       'Quarantine the device, order a replacement RCBO, and treat it as a failed component (not a repair).',
-      'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
-      'The tower must be immediately taken out of use and reduced to a compliant configuration or dismantled entirely',
-      'Allowing multiple people to apply their own padlocks to one isolation point',
+      'Desolder the burnt resistor and fit a replacement of the same colour-code value.',
+      'Scrape off the burn mark, retest the device, and refit it if it now passes.',
+      'Leave it in place — a single charred resistor does not affect the trip mechanism.',
     ],
     correctAnswer: 0,
     explanation:

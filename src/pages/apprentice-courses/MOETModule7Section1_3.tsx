@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'wrong-answer-value',
     question: 'Why is reviewing wrong answers more valuable than simply noting your score?',
     options: [
-      'Excessive heat at connections, warm cable insulation, or hot components',
-      'The specific way in which a component or system can fail to perform its required function',
-      'A log of maintenance activities, inspections and any defects found — as required by Regulation 5(2)',
+      'A score tells you exactly which topics to revise next',
+      'Reviewing wrong answers is only useful if you scored below the pass mark',
+      'Noting your score is enough to plan an effective revision schedule',
       'Wrong answers reveal specific knowledge gaps and misconceptions that can be targeted with revision',
     ],
     correctIndex: 3,
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'correct-answer-review',
     question: 'Why should you review explanations for questions you answered correctly?',
     options: [
-      'Phone for urgent/complex/sensitive; email for formal records; text for brief time-sensitive coordination',
+      'A correct answer always proves you fully understand the topic',
       'You may have chosen the right answer for the wrong reason, which will not help in similar future questions',
-      '30% may not cover higher-rate tax (40%), Class 4 NI, and VAT if pricing doesn\\\\\\\'t add VAT on top',
-      'Design calculations, layout drawings, certificates, and maintenance records',
+      'Correct answers never need reviewing, only wrong ones do',
+      'Reviewing correct answers wastes time that should go on weak topics',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'After completing a practice test, the most effective review strategy is to:',
     options: [
-      'That there are no gaps where a person could fall between the scaffold and the building face',
+      'Note your overall score and move straight on to the next test',
       'Review explanations for every question — both correct and incorrect answers',
-      'As close as practicable to the point of entry to the building',
-      'The type of earthing system and circuit characteristics',
+      'Review only the questions you answered incorrectly',
+      'Re-read the whole module before looking at any explanations',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     question:
       'You notice you have answered three consecutive motor control questions incorrectly. What does this suggest?',
     options: [
-      'Switching, dimming (if applicable), and correct operation of controls',
-      'Circuit cannot complete and lamp will not illuminate',
+      'The motor control questions are unfairly difficult and can be ignored',
+      'You simply had three unlucky guesses in a row',
       'You have a knowledge gap in motor control that needs targeted revision',
-      'It must be face-fit tested to the individual wearer and properly maintained',
+      'You should avoid motor control questions in the real EPA',
     ],
     correctAnswer: 2,
     explanation:
@@ -85,9 +85,9 @@ const quizQuestions = [
     question:
       'When reviewing a wrong answer, you discover you chose a distractor based on a common misconception. What should you do?',
     options: [
-      'At least every 7 days by a competent person, and after any event likely to have affected its stability',
-      'A maintenance team isolated the wrong breaker, cutting power to critical hospital equipment',
-      'Two-pole approved voltage indicator complying with GS38 (e.g. Martindale VI-13800, Drummond MTL10)',
+      'Memorise the correct answer to that specific question and move on',
+      'Ignore it, as the same question is unlikely to come up again',
+      'Note the topic but not the reason you got it wrong',
       'Understand the misconception, learn why it is wrong, and study the correct principle so you can apply it to any related question',
     ],
     correctAnswer: 3,
@@ -99,9 +99,9 @@ const quizQuestions = [
     question: "A 'near miss' in practice test review is when you:",
     options: [
       'Selected the correct answer but your reasoning was flawed or based on a guess',
-      'Impedance equals the resistance only (XL and XC cancel)',
-      'Identify circuit, isolate, secure, test voltage indicator, prove dead, re-test indicator',
-      'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
+      'Selected a wrong answer that was very close to the correct one',
+      'Ran out of time before reaching the final question',
+      'Scored just below the pass mark on the overall test',
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 5,
     question: 'When tracking your practice test scores, the most useful data to record is:',
     options: [
-      'Noise radiating through duct walls into surrounding spaces',
+      'Only your overall percentage score for each test',
       'Score broken down by topic/module, plus notes on common error types',
-      'Comprehensive approach including prevention, detection, suppression, evacuation',
-      'A spot or short-term measurement giving an approximate indication of gas concentration',
+      'Only the time taken to complete each test',
+      'Only whether you passed or failed each attempt',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'You got a question right, but the explanation reveals a concept you did not know. What should you do?',
     options: [
-      'Lost income from unbilled work, late filing penalties, inability to defend disputes',
-      'It receives signals from detection devices and controls the alarm outputs',
+      'Ignore it, since you already got the question right',
+      'Assume the concept will not appear in the real EPA',
       'Note the concept and include it in your revision, as a related question may test it more directly',
-      'Separation distances, shared containment planning, and interference prevention',
+      'Remove the question from your practice set so it does not recur',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,9 +138,9 @@ const quizQuestions = [
     id: 7,
     question: 'The purpose of reading the explanation for why each distractor is wrong is to:',
     options: [
-      'Presence of livestock, dust, moisture, and corrosive atmospheres',
-      'L -> fault -> cpc -> MET -> earth electrode -> earth (soil) -> DNO supply electrode -> back to transformer',
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
+      'Confirm which option the examiner intended as the correct answer',
+      'Memorise the wrong options so you can rule them out by sight next time',
+      'Check whether the question was worded fairly',
       'Understand common misconceptions and traps so you can recognise and avoid them in future',
     ],
     correctAnswer: 3,
@@ -152,9 +152,9 @@ const quizQuestions = [
     question: 'After reviewing a practice test, you should update your revision plan to:',
     options: [
       'Focus on the topics and concepts where your review identified gaps or weak understanding',
-      'Complete earthing system layout with conductor sizes and connection details',
-      'Photo ID, a pen (if paper-based), permitted calculator, and water',
-      'Stairwells are key escape routes requiring continuous illumination',
+      'Spend more time on the topics you already score highly on',
+      'Keep the plan exactly the same regardless of your results',
+      'Drop any topic you got wrong, as it is clearly too hard',
     ],
     correctAnswer: 0,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     question:
       'If you consistently misread negative-stem questions (those containing NOT or EXCEPT), the best corrective action is to:',
     options: [
-      'A serious incident or near-miss — work stops, the workforce is briefed on what happened and what changes',
+      'Answer negative-stem questions last, after all the others',
       'Practise highlighting or underlining key words like NOT and EXCEPT, and develop a habit of checking for them',
-      'Setting reference with single test cord, excluding one link connector from measurement',
-      'Stop work, assess the changed conditions, and update the method statement (and risk assessment if necessary) before proceeding',
+      'Skip any question that contains NOT or EXCEPT',
+      'Always pick the option that sounds most like a correct statement',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'How should you use explanations from practice tests when studying the MOET course material?',
     options: [
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
-      'Get off the roof immediately, take shelter inside the building or in a vehicle, wait until 30 minutes after the last thunder',
+      'Treat the explanation as the complete content and ignore the module',
+      'Only read explanations for the questions you got wrong',
       'Cross-reference explanations with the relevant MOET module sections to deepen understanding of the topic in context',
-      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
+      'Memorise each explanation word for word without reading the module',
     ],
     correctAnswer: 2,
     explanation:

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'DC cable thermal sizing on the PV side. What\'s the binding inequality, and why?',
     options: [
-      'I_z is irrelevant',
-      'I_z ≥ I_sc_max — the cable\'s current-carrying capacity at the installed conditions (after grouping, ambient temperature, route reference method corrections) must be at least equal to the string max short-circuit current. Conventional MCB / RCBO protection at the start of the cable doesn\'t cap the string fault current — PV strings can deliver their I_sc_max continuously without "tripping", so the cable must be rated for that current indefinitely',
-      'Use any cable — modules limit',
-      'I_z = inverter rated current',
+      'I_z ≥ I_n of the upstream MCB, exactly as for any conventional AC final circuit',
+      'I_z ≥ I_sc_max — the cable\'s current-carrying capacity at installed conditions must meet the string max short-circuit current',
+      'I_z ≥ the inverter rated DC input current, since that caps the current the cable can ever carry',
+      'I_z ≥ I_mp at STC, the maximum-power-point current under standard test conditions',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'PV DC cables — what\'s the standard per Reg 712.521.1041?',
     options: [
-      'Standard T&E (twin and earth)',
-      'Reg 712.521.1041 permits: (a) single-core cables with non-metallic sheath, for example H1Z2Z2-K cables to BS EN 50618; or (b) insulated single-core conductors in individually insulated conduit or trunking. Additionally: "Cable(s) shall not be placed directly on the surface of the roof". Standard T&E is unsuitable — wrong voltage class, no UV resistance, no double-insulation',
-      'Bell wire',
-      'Mains cable',
+      'Standard 6242Y twin-and-earth, the same PVC cable used for ring final circuits',
+      'Single-core non-metallic-sheath cable such as H1Z2Z2-K to BS EN 50618, not laid directly on the roof',
+      'SWA armoured cable to BS 5467, relying on the steel armour for double insulation',
+      'Standard 6491X single-core 450/750 V building wire, run loose across the roof tiles',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'PV DC cable voltage drop. Industry typical practice limits VD on the DC side to:',
     options: [
-      '20% of nominal',
-      'Typically 1-3% of V_mp at STC. Lower than AC-side VD limits because PV is in continuous operation and even small VD percentages compound to material yield loss over the install life. The MCS MIS 3002 design pack records the VD calculation; the cable is upsized if the route length pushes VD above the design limit',
-      '50% of nominal',
-      '0%',
+      'The same 3-5% of nominal applied to AC final circuits under BS 7671 Appendix 4',
+      'Typically 1-3% of V_mp at STC, tighter than AC because PV runs continuously and losses compound',
+      'Up to 10% of V_mp, since DC voltage drop has no bearing on the inverter MPPT window',
+      'Whatever value keeps the cable at the minimum 2.5 mm² regardless of route length',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Where DC-side overcurrent protective devices are required per Reg 712.431.101, what device types are permitted by Reg 712.432.103?',
     options: [
-      'Only standard BS 88 fuses',
-      'Reg 712.432.103 permits two categories: (a) gPV fuses per BS EN 60269-6 or fuse-combination units per BS EN 60947-3; OR (b) circuit-breakers per BS EN 60947-2, BS EN 60898-2, or BS IEC 60898-3. The choice depends on the install design — gPV fuses are most common at the combiner box; DC-rated MCBs are used where switching capability is wanted at the device. Both polarities (+ and −) shall be protected per Reg 712.432.101',
-      'Just MCBs',
-      'No device',
+      'Only standard BS 88 gG fuses, rated for AC fault clearance at the combiner box',
+      'gPV fuses per BS EN 60269-6, or DC-rated circuit-breakers per BS EN 60947-2 / 60898-2 / IEC 60898-3',
+      'Only standard Type B AC MCBs to BS EN 60898-1, single-pole on the positive conductor',
+      'BS 88 fuses on the positive and a blocking diode on the negative as the second pole',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.421 covers what specific risk on the PV DC side?',
     options: [
-      'Customer satisfaction',
-      'Protection against fire caused by electrical equipment. PV-specific concerns: DC arc faults (which don\'t self-extinguish like AC arcs at zero-crossing), connector failures (MC4 connectors corroding or poorly seated), and cable insulation breakdown in continuous high-irradiance operation. Mitigation includes cable specification, connector torque, isolator placement, and where applicable rapid-shutdown devices',
-      'AC fire only',
-      'Battery fire only',
+      'Protection against electric shock from indirect contact on the DC side only',
+      'Protection against fire caused by electrical equipment — DC arc faults, connector and insulation failures',
+      'Protection against fire on the AC side of the inverter, downstream of the grid connection',
+      'Protection against lithium battery thermal runaway in the BESS enclosure only',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'MC4 / MC4-compatible connectors — what\'s the BS 7671 requirement per Reg 712.526.1 and Reg 712.526.101?',
     options: [
-      'Hand-tight is fine',
-      'Per Reg 712.526.1: each pair of connectors shall be electrically and mechanically compatible and suitable for the environment — "It is recommended to check with each manufacturer that each pair of connectors be compatible". Per Reg 712.526.101: connectors shall be selected per BS EN 62852:2015+A1:2020. In practice this means using matched-brand pairs (the simplest way to guarantee compatibility), or pairs explicitly certified compatible by both manufacturers. Use manufacturer-specified crimping tool; manufacturer-torque; mechanical test before commissioning',
-      'No connector — just bare wire',
-      'Solder them',
+      'Any two MC4-compatible plugs mate safely, so mixing brands across a pair is acceptable',
+      'Each pair shall be compatible per Reg 712.526.1 and selected to BS EN 62852 — matched brand is simplest',
+      'Connectors are optional on short runs; bare conductors into a terminal block are permitted',
+      'Plug-and-socket pairs may be soldered together to guarantee a permanent low-resistance joint',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'BS 7671 requires a DC isolator on the PV side. Where is it located, and what\'s its purpose?',
     options: [
-      'Doesn\'t need one',
-      'Between the array DC output and the inverter — typically immediately before the inverter on the inverter\'s DC input side. Purpose: provides electrical isolation between the array (live during daylight, can\'t be de-energised at source) and the inverter for maintenance, fault-finding, and emergency shutdown. The isolator must be rated for the array V_oc_max and I_sc_max, suitable for DC switching under load',
-      'On the AC side only',
-      'Anywhere',
+      'No DC isolator is required where the inverter has an internal AC contactor',
+      'Between the array and the inverter, rated for V_oc_max / I_sc_max and DC switching under load',
+      'On the AC side only, between the inverter output and the consumer unit',
+      'At any convenient point, since an AC-rated isolator will break the DC circuit safely',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.421.101.1 requires an Insulation Monitoring Device (IMD) on the DC side. What does it do, and what standard does it comply with?',
     options: [
-      'No IMD required',
-      'An IMD continuously monitors the insulation status on the DC side throughout the PV array life cycle, detecting insulation faults that could otherwise go unnoticed (DC arcs don\'t self-extinguish per Reg 712.421). Reg 712.421.101.1 + Reg 712.538.101 specify the IMD shall comply with BS EN 61557-8. The IMD function may be provided by an inverter with integrated insulation monitoring per BS EN 62109-2',
-      'AC only',
-      'Customer\'s choice',
+      'No IMD is required where a Type B RCD protects the AC side of the inverter',
+      'It continuously monitors DC-side insulation and complies with BS EN 61557-8 (or inverter-integrated)',
+      'It monitors AC-side earth-fault loop impedance only, to BS EN 61557-3',
+      'It is an optional extra the customer may decline to save cost on the design',
     ],
     correctIndex: 1,
     explanation:
@@ -138,114 +138,114 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'A PV string has I_sc_stc = 12.5 A. Two strings in parallel (Ns=2). What\'s I_sc_max at the combiner output, used for cable sizing per Reg 712.433.101.1 conservative default?',
+      'A PV string has I_sc_stc = 12.5 A. Two strings are in parallel (Ns = 2). What is I_sc_max at the combiner output, used for cable sizing per the Reg 712.433.101.1 conservative default?',
     options: [
-      '12.5 A',
-      'I_sc_max per string = 1.25 × 12.5 = 15.625 A. Combiner output (Ns=2 strings parallel) = 2 × 15.625 = 31.25 A. Cable from combiner to inverter sized for I_z ≥ 31.25 A at installed conditions (after grouping / ambient / reference method corrections). The 1.25 multiplier captures conditions exceeding STC (high irradiance, reflective surroundings, low-temperature high-V cells operating at high I_sc)',
-      '5 A',
-      '500 A',
+      '15.6 A — apply the 1.25 multiplier once but do not multiply by the number of parallel strings',
+      '25 A — multiply the two string currents (2 × 12.5 A) without the 1.25 conditions multiplier',
+      '31.25 A — 1.25 × 12.5 A = 15.625 A per string, then × 2 parallel strings at the combiner output',
+      '12.5 A — the combiner output current equals a single string current regardless of parallel strings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Per Reg 712.433.101.1 conservative default: I_sc_max = 1.25 × I_sc_stc per string. For 2 parallel strings on the same combiner output, the combiner output current = 2 × 15.625 = 31.25 A. The cable from combiner to inverter must have I_z ≥ 31.25 A at installed conditions (after BS 7671 Appendix 4 correction factors for grouping, ambient temperature, and reference method). The 1.25 multiplier is the conservative default — calculated values using manufacturer temperature coefficient + site irradiance extremes also acceptable.',
+      'The conservative default is I_sc_max = 1.25 × I_sc_stc per string = 15.625 A. For two parallel strings on one combiner output, the output current is 2 × 15.625 = 31.25 A. The cable from combiner to inverter must have I_z ≥ 31.25 A at installed conditions after BS 7671 Appendix 4 corrections.',
   },
   {
     id: 2,
     question:
-      '4 mm² PV DC cable. CCC at 70°C cable operating temperature for reference method E (clipped to surface) = 50 A. Cable installed in conduit in roof void; grouping factor 0.85; ambient temperature 40°C (correction 0.96). What\'s the effective I_z?',
+      'A 4 mm² PV DC cable has a reference CCC of 50 A (method E, clipped). Installed in conduit in a roof void; grouping factor 0.85; ambient correction 0.96. What is the effective I_z?',
     options: [
-      'Same 50 A',
-      'I_z = 50 × 0.85 × 0.96 = 40.8 A. After grouping (0.85, multiple cables in same conduit) and ambient (0.96 for 40°C vs reference 30°C), the cable\'s effective current-carrying capacity at the installed conditions is 40.8 A. Compare against I_sc_max of the string set to verify Iz ≥ Isc_max',
-      '200 A',
-      '5 A',
+      '40.8 A — 50 × 0.85 × 0.96, the reference CCC reduced by the grouping and ambient corrections',
+      '50 A — correction factors do not apply to PV DC cables because they carry a fixed short-circuit current',
+      '47.5 A — apply only the ambient correction, since grouping does not affect single-core PV cables',
+      '42.5 A — apply only the grouping factor and ignore the ambient temperature correction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 7671 Appendix 4 corrections: I_z (installed) = I_z (reference) × C_g × C_a × C_i (grouping × ambient × insulation correction). For 4 mm² PV DC cable: CCC reference 50 A; grouping 0.85; ambient 0.96 → I_z effective = 50 × 0.85 × 0.96 = 40.8 A. If the string set delivers I_sc_max of 31.25 A (from Q1), I_z 40.8 A > 31.25 A — adequate. If I_sc_max exceeded 40.8 A, the cable would need to be upsized to 6 mm² or larger.',
+      'Appendix 4: I_z (installed) = I_z (reference) × C_g × C_a = 50 × 0.85 × 0.96 = 40.8 A. Against an I_sc_max of 31.25 A the cable is adequate; if I_sc_max exceeded 40.8 A the cable would need upsizing to 6 mm² or larger.',
   },
   {
     id: 3,
     question:
-      'Single string of 14 modules. V_mp at STC = 34 V per module. I_mp at STC = 11.8 A. DC cable route length = 25 m (one-way). 4 mm² cable, conductor resistance 4.61 mΩ/m. Voltage drop?',
+      'A single string of 14 modules: V_mp = 34 V/module, I_mp = 11.8 A. Route length 25 m one-way, 4 mm² cable, R = 4.61 mΩ/m. What is the voltage drop as a percentage of V_mp?',
     options: [
-      '50 V',
-      'VD = 2 × L × R × I = 2 × 25 × 0.00461 × 11.8 = 2.72 V. String V_mp = 14 × 34 = 476 V. VD as percentage = 2.72 / 476 = 0.57%. Within typical 1-3% PV DC limit. Cable size adequate from VD perspective',
-      '0 V',
-      '500 V',
+      '2.7% — divide the 2.72 V drop by a single module voltage rather than the full string V_mp',
+      '0.57% — VD = 2 × 25 × 0.00461 × 11.8 = 2.72 V, against a string V_mp of 14 × 34 = 476 V',
+      '1.14% — use the one-way route length without the factor of 2 for both polarity conductors',
+      '0.29% — halve the result by omitting the return conductor from the calculation',
     ],
     correctAnswer: 1,
     explanation:
-      'VD on a PV string = 2 × L × R × I (where L is one-way route length, R is conductor resistance in Ω/m, I is the operating current at the worst case — typically I_mp at STC). For this string: 2 × 25 × 0.00461 × 11.8 = 2.72 V. String V_mp = 14 × 34 = 476 V. VD percentage = 2.72 / 476 = 0.57% — within the typical 1-3% PV DC VD limit. The MCS MIS 3002 design pack records the VD calculation; cable adequate.',
+      'VD = 2 × L × R × I = 2 × 25 × 0.00461 × 11.8 = 2.72 V (the ×2 accounts for both polarity conductors). String V_mp = 14 × 34 = 476 V, so VD = 2.72 / 476 = 0.57% — within the typical 1-3% PV DC limit.',
   },
   {
     id: 4,
     question:
-      'String fuse selection per Reg 712.431.102. String I_sc_stc = 12.5 A. What fuse rating is appropriate?',
+      'String overcurrent device sizing per Reg 712.432: I_sc_stc = 12.5 A, module I_mod_max_ocer = 25 A. What rating is appropriate?',
     options: [
-      'Same as I_sc = 12.5 A',
-      'Per Reg 712.432 rating formula 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer: I_sc_max = 1.25 × 12.5 = 15.625 A; lower bound = 1.1 × 15.625 = 17.2 A; upper bound = module I_mod_max_ocer (typically 15-25 A from datasheet). Practical fuse rating: 20 A gPV per BS EN 60269-6 — sits above the lower bound and at or below the module rating. Devices per Reg 712.432.103 (gPV per BS EN 60269-6, fuse-combination BS EN 60947-3, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3); both polarities protected per Reg 712.432.101',
-      '0.1 A',
-      '500 A',
+      '12.5 A — match the device rating to the string short-circuit current at STC',
+      '32 A — exceed the module reverse-current rating to guarantee the device never operates nuisance',
+      '15 A — set the device just above I_sc_stc but below the 1.1 × I_sc_max lower bound',
+      '20 A gPV — above the 17.2 A lower bound (1.1 × 1.25 × 12.5) and at or below the 25 A module rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'String-fuse sizing per Reg 712.432 formula: 1.1 × I_sc_max of the string < I_n ≤ I_mod_max_ocer. For I_sc_stc = 12.5 A: I_sc_max = 1.25 × 12.5 = 15.625 A; lower bound = 1.1 × 15.625 = 17.2 A; module I_mod_max_ocer typically 15-25 A from datasheet; practical fuse 20 A gPV per BS EN 60269-6 (Reg 712.432.103). The 1.1 coefficient is a safety margin against untimely operation under normal stress conditions per the reg NOTE; adjusted for special conditions like reflections or specific module technologies. Both polarities protected per Reg 712.432.101.',
+      'Reg 712.432: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer. I_sc_max = 1.25 × 12.5 = 15.625 A, lower bound = 1.1 × 15.625 = 17.2 A, upper bound = 25 A. A 20 A gPV fuse (BS EN 60269-6) sits in the band. Both polarities are protected per Reg 712.432.101.',
   },
   {
     id: 5,
     question:
-      'PV install commissioning. The installer notes a slight burning smell from one MC4-compatible connector on the array. Action?',
+      'During commissioning the installer notices a slight burning smell from one MC4-compatible connector on the array. What is the correct action?',
     options: [
-      'Ignore it',
-      'IMMEDIATELY isolate. The burning smell indicates connector overheating — typically caused by (a) mixed-brand connectors creating a micro-arc; (b) improper crimping (loose contact); (c) contamination or corrosion. The connector must be replaced before re-energising — failing this risks fire (Reg 712.421). Investigation: identify the affected connector pair, replace both sides with matched-brand correctly-crimped connectors, mechanically test, re-energise and monitor',
-      'Tighten harder',
-      'Spray water on it',
+      'Re-torque the connector body harder to close the contact gap and continue commissioning',
+      'Note it for the next service visit and continue, since the array is still generating normally',
+      'Isolate immediately, then replace both sides with matched-brand, correctly-crimped connectors before re-energising',
+      'Apply additional sealant around the connector to exclude moisture and leave it in service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A burning smell from an MC4-compatible connector is a fire-risk symptom — Reg 712.421 mandates protection against fire caused by electrical equipment on the DC side. The connector is overheating, likely due to mixed-brand or improperly-crimped connection. Replace both sides with matched-brand correctly-crimped connectors using the manufacturer-specified crimping tool. The cert evidence bundle records the rectification.',
+      'A burning smell signals connector overheating — a fire risk under Reg 712.421. The fault is usually a mixed-brand or improperly-crimped joint; the connector must be isolated and both sides replaced with matched-brand connectors crimped with the manufacturer tool, with the rectification recorded in the cert evidence bundle.',
   },
   {
     id: 6,
     question:
-      'PV DC cable runs from the roof through the loft to the inverter location. The cable runs alongside existing AC mains cables. Any concerns?',
+      'PV DC cable runs from the roof through the loft alongside existing AC mains cables. What is the correct view under BS 7671?',
     options: [
-      'No concerns',
-      'PV DC cable should be segregated from AC mains where reasonably practicable, but BS 7671 doesn\'t prohibit common containment. Practical concerns: (a) thermal interaction — AC cables under load heat the conduit, reducing PV cable CCC (factor in the grouping factor); (b) electromagnetic interference — PV inverter switching can couple into AC cables and vice versa, particularly relevant for low-signal AC circuits (alarm, IT); (c) inspection / maintenance — sharing routes complicates fault-finding. The competent install separates where practicable, applies appropriate grouping factors where common containment used',
-      'PV DC must touch AC cables',
-      'Cables explode if near each other',
+      'Common containment is prohibited; PV DC and AC mains must always be in fully separate enclosures',
+      'Common containment is allowed, but apply grouping factors and consider thermal interaction and EMI; segregate where practicable',
+      'No concern arises — DC and AC cables share containment freely with no derating or EMI considerations',
+      'The PV DC cable must be bonded directly to the AC mains cable sheath to equalise potential',
     ],
     correctAnswer: 1,
     explanation:
-      'PV DC and AC mains routing — BS 7671 allows common containment but with practical considerations. Thermal interaction reduces effective CCC for the PV cable (factor in the grouping correction). EMI: PV inverter switching can couple into AC cables — typically not an issue for power circuits but can disturb low-signal AC (alarm, IT, comms). Maintenance: shared routes complicate fault-finding. The competent install separates where practicable; where common containment used, the design pack records the applied grouping factor and the calculation.',
+      'BS 7671 does not prohibit common containment but practical issues arise: AC cables under load reduce the PV cable CCC (apply the grouping factor), inverter switching can couple into low-signal AC circuits, and shared routes complicate fault-finding. The competent install segregates where practicable and records the applied grouping factor.',
   },
   {
     id: 7,
     question:
-      'PV DC isolator failure during commissioning — the isolator can\'t be closed under load (DC arc when attempting). Diagnosis?',
+      'During commissioning a PV DC isolator cannot be closed under load — a sustained arc forms when attempting to close it. What is the most likely diagnosis?',
     options: [
-      'Use a hammer',
-      'Most likely (a) isolator not rated for the array V_oc_max or I_sc_max — wrong-spec isolator; (b) isolator manufactured for AC use, not DC (DC switching capability missing or inadequate); (c) isolator contacts pitted from prior fault clearing. The honest response: STOP, identify the correct DC isolator rating (V_oc_max + I_sc_max + DC switching capability), substitute, retest. The cert evidence bundle records the isolator brand, model, and ratings',
-      'Force it closed',
-      'Skip the isolator',
+      'The array voltage is too low for the isolator and the contacts need cleaning before re-use',
+      'The isolator is correctly rated but the array polarity has been reversed at the combiner',
+      'A wrong-spec isolator — AC-only or under-rated for V_oc_max / I_sc_max — lacking DC switching capability',
+      'The isolator is faulty from the factory and any like-for-like replacement will behave identically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'PV DC isolator failure is most commonly the wrong-spec isolator. Required: rated for the array V_oc_max (typically 1.5 kV DC), I_sc_max (typically 30+ A), and explicit DC switching capability under load (BS EN 60947-3 utilisation category DC-21 or equivalent). AC-only isolators are NOT interchangeable — DC arcs don\'t self-extinguish at zero-crossing. The cert evidence bundle records the isolator brand, model, V_oc_max rating, I_sc_max rating, and utilisation category.',
+      'This is most commonly the wrong-spec isolator. A PV DC isolator must be rated for the array V_oc_max and I_sc_max with explicit DC switching capability (e.g. BS EN 60947-3 DC-21). AC-only isolators cannot break DC, where the arc does not self-extinguish at zero-crossing; substitute a correctly-rated DC isolator and retest.',
   },
   {
     id: 8,
     question:
-      'The PWI common-mistakes list flags four high-frequency DC-side faults on UK PV installs. What are they?',
+      'Which set of DC-side faults are the high-frequency findings on UK PV installs and Reg 712.421 fire-risk concerns?',
     options: [
-      'None',
-      '(1) Mixing MC4 connector brands creating micro-arc / fire risk; (2) Improper crimping (wrong tool, loose contact, overheating); (3) Under-sized DC cable not meeting I_z ≥ I_sc_max with installed-conditions corrections; (4) AC-only isolator substituted for DC isolator without DC switching capability. Each is a high-frequency MCS audit finding and a Reg 712.421 fire-risk concern',
-      'Customer satisfaction',
-      'Module colour',
+      'Mixed MC4 brands, improper crimping, under-sized DC cable, and an AC-only isolator without DC switching',
+      'Module colour mismatch, panel orientation, inverter brand choice, and customer documentation gaps',
+      'Over-sized DC cable, excessive isolator rating, surplus string fuses, and duplicated earth bonds',
+      'Roof tile damage, scaffold positioning, working-at-height paperwork, and module cleaning schedules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'PWI common-mistakes on UK PV DC side: (1) Mixing MC4 brands — micro-arc / fire; (2) Improper crimping — overheating connector / fire; (3) Under-sized DC cable — thermal overload, insulation breakdown, fire; (4) AC-only isolator — can\'t break DC under load, fault-finding hazard. Each is a Reg 712.421 fire-risk concern and a high-frequency MCS audit finding. The competent install avoids all four by following BS EN 50618 / 62930 + BS EN 60269-6 + manufacturer-specified tools.',
+      'The recurring DC-side faults are: mixing MC4 connector brands (micro-arc/fire), improper crimping (overheating), under-sized DC cable not meeting I_z ≥ I_sc_max, and substituting an AC-only isolator that cannot break DC under load. Each is a Reg 712.421 fire-risk concern and a frequent MCS audit finding.',
   },
 ];
 

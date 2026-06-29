@@ -24,15 +24,15 @@ const checks = [
     '0.1 V',
   ], correctIndex: 2, explanation: 'Si diode V_F ≈ 0.6-0.7 V at rated current. Schottky ~ 0.3 V; LED 1.8-3.4 V depending on colour.' },
   { id: 'l3-m3-6-3-bridge', question: 'A bridge rectifier converts:', options: [
-    'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
-    'To establish the true extent of work executed',
+    'DC to AC using four switching transistors',
+    'AC to DC using only the positive half-cycle via one diode',
     'AC to DC using both half-cycles via four diodes',
-    'To verify quantities, quality and condition against the order',
+    'One AC voltage to another using a tapped winding',
   ], correctIndex: 2, explanation: 'Bridge rectifier (4 diodes) inverts the negative half-cycle so output is always positive — full-wave DC, double the average voltage of half-wave.' },
   { id: 'l3-m3-6-3-zener', question: 'A Zener diode is used:', options: [
-    'EIC is for new installations, EICR is for existing installations',
-    'First fault does not cause disconnection - monitoring required',
-    'To distribute circuits and provide overcurrent and RCD protection',
+    'Forward biased to emit light at a fixed wavelength',
+    'Forward biased as a low-loss rectifier in switching supplies',
+    'Reverse biased to block all current up to its full rating',
     'Reverse biased to provide a stable reference voltage at the Zener voltage',
   ], correctIndex: 3, explanation: 'Zener breaks down at a precise reverse voltage (e.g. 5.1 V) and clamps to that. Used for voltage references, simple regulators, over-voltage protection.' },
 ];
@@ -45,10 +45,10 @@ const quizQuestions = [
     'AC excitation',
   ], correctAnswer: 1, explanation: 'Forward bias: + on anode, − on cathode. Diode conducts after the small forward voltage drop. Reverse: blocks until breakdown.' },
   { id: 2, question: 'A NPN transistor base-emitter junction acts like:', options: [
-    'Coupling different simulation tools to model interacting systems',
-    'Emergency Lighting Completion Certificate',
+    'A capacitor that blocks DC and passes AC',
+    'A pure resistor of fixed value',
     'A diode (must be forward biased to turn the transistor on)',
-    'Approximately mid-height of the ventilated space',
+    'An open switch that never conducts',
   ], correctAnswer: 2, explanation: 'Base-emitter is a forward-biased PN junction. Apply ~0.7 V B-E and the transistor turns on; collector current flows, controlled by base current × β.' },
   { id: 3, question: 'A MOSFET is controlled by:', options: [
     'Current at the drain',
@@ -75,16 +75,16 @@ const quizQuestions = [
     'Depends on temperature only',
   ], correctAnswer: 2, explanation: 'LDR = Light Dependent Resistor (cadmium sulphide). Light frees more carriers → resistance falls. Used in dusk-till-dawn switches.' },
   { id: 7, question: 'A thyristor (SCR) conducts when:', options: [
-    'Purchase, energy, maintenance, lamp replacement, and disposal costs',
-    'Multi-core cables clipped direct to a non-metallic surface in still air.',
-    'The amount of time an activity can be delayed without affecting the critical path',
+    'A voltage is held continuously on the gate to keep it on',
+    'Reverse biased above its breakdown voltage',
+    'The anode and cathode are simply connected across the supply',
     'Triggered at the gate, then continues until current falls below holding current',
   ], correctAnswer: 3, explanation: 'Thyristor: gate pulse triggers conduction; latches on. Stops only when current drops below holding current (e.g. AC zero crossing). Used in soft starters, dimmer triacs.' },
   { id: 8, question: 'An op-amp\'s open-loop gain is:', options: [
     'Very high — 100 000 to 1 000 000',
-    'Legal protection and supports maintenance',
-    'Distance, humidity, pressure, pollution',
-    'Setting productivity targets',
+    'Fixed at exactly unity (gain of 1)',
+    'Typically around 10, set by the device',
+    'Zero until external feedback is added',
   ], correctAnswer: 0, explanation: 'Op-amp open-loop gain is enormous (10⁵-10⁶). With negative feedback, you tame it to a precise, predictable circuit gain set by external resistors.' },
 ];
 

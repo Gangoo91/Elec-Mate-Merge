@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ac-dc-direction',
     question: 'What is the fundamental difference between AC and DC?',
     options: [
-      'Daylight, thermal comfort, and energy credits',
+      'AC is always higher voltage than DC',
       'AC alternates direction; DC flows one way',
-      'To maintain IP rating and prevent ingress',
-      'Reduces current and therefore I²R losses',
+      'AC carries no current at the zero-crossing',
+      'AC can only be measured with a clamp meter',
     ],
     correctIndex: 1,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 7,
     question: 'A true-RMS meter is preferred for which measurement?',
     options: [
-      'Yes, with appropriate protection',
-      'CIBSE Commissioning Codes',
-      'Digital relay output module',
+      'Steady DC battery voltage',
+      'Pure sine wave mains voltage',
+      'Continuity of a protective conductor',
       'Non-sinusoidal AC waveforms',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'Which statement best describes AC polarity?',
     options: [
       'AC polarity alternates; equipment is marked L/N for safety and function',
-      'They ensure continuity of work, prevent missed tasks, and highlight safety issues',
-      'Suitable and sufficient information, instruction and training',
-      'To enable efficient programming and troubleshooting',
+      'AC has a fixed positive and negative terminal like DC',
+      'AC polarity only matters for three-phase supplies',
+      'AC has no live or neutral, so connections are interchangeable',
     ],
     correctAnswer: 0,
     explanation:

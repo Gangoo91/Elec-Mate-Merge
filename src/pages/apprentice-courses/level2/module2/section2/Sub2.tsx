@@ -61,10 +61,10 @@ const checks = [
     question:
       'A consumer unit is bolted to a wall. Gravity pulls it down at 200 N. The bolts hold it up at 200 N. What does Newton’s first law say?',
     options: [
-      'Fire-resistant, LSZH, or MICC cable where required',
+      'It will accelerate downward because gravity always wins',
       'It will stay at rest because the forces are balanced',
-      'To prevent parallel paths affecting readings',
-      'Without delay (immediately) and followed up within 10 days',
+      'It will slowly creep down as the bolts can only resist for a while',
+      'It will move only if a third force is added to the two',
     ],
     correctIndex: 1,
     explanation:
@@ -105,9 +105,9 @@ const quizQuestions = [
     id: 3,
     question: 'Newton’s first law (the law of inertia) says…',
     options: [
-      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
-      'Observe, take notes for their own learning, and contribute when asked — not negotiate with the client',
-      'The cable insulation is rated to function safely within this temperature range',
+      'An object always slows down and stops unless something keeps pushing it',
+      'A bigger force always produces a bigger acceleration on any object',
+      'Every force on an object is matched by an equal and opposite force',
       'An object stays at rest, or moves at constant speed in a straight line, unless a force acts on it',
     ],
     correctAnswer: 3,
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 6,
     question: 'Newton’s third law says…',
     options: [
-      'Higher temperatures typically result in lower readings',
-      'A spike upward followed by the normal trace',
+      'A force always acts in the same direction as the motion',
+      'The heavier an object is, the smaller the force it feels',
       'For every action there is an equal and opposite reaction',
-      'Provides earthing for equipment operation rather than safety',
+      'Forces only act on objects that are already moving',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,9 +157,9 @@ const quizQuestions = [
     id: 7,
     question: 'Forces on an object are balanced. What can you say?',
     options: [
-      'A competent person or supervisor with appropriate qualifications',
-      'A formal inspection must be carried out by a competent person and recorded',
-      'Are naturally motivated and can exercise self-direction when committed to objectives',
+      'It must be speeding up at a steady rate',
+      'It must be slowing down to a stop',
+      'It must be changing direction continuously',
       'It is either at rest or moving at constant velocity in a straight line',
     ],
     correctAnswer: 3,
@@ -171,9 +171,9 @@ const quizQuestions = [
     question: 'Why does a 5 kg drill kick back when you pull the trigger hard?',
     options: [
       'Newton’s third law — the drill pushes the bit one way and the bit pushes the drill the other',
-      'It allows operators to monitor and respond to building issues from anywhere',
-      'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
-      'Ensure clear vision of the steps, use handrails where possible, and take one step at a time',
+      'Newton’s first law — the drill keeps spinning even after the trigger is released',
+      'Newton’s second law — the lighter the drill, the less it can ever kick',
+      'Gravity — the weight of the drill pulls it back towards you',
     ],
     correctAnswer: 0,
     explanation:

@@ -13,22 +13,22 @@ const quickCheckQuestions = [
   {
     question: "What is a 'routine' in voice assistant terminology?",
     options: [
-      'A single voice command',
-      'A sequence of automated actions triggered by a single command or event',
-      'A speaker volume setting',
-      'A device reset procedure',
+      'A sequence of automated actions run by one command or event',
+      'A single one-off voice command to a device',
+      'A volume setting applied to the smart speaker',
+      'A reset procedure for an individual device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A routine is a sequence of multiple actions that execute automatically when triggered by a voice command, time, location, or other event. For example, 'Good night' triggering lights off, doors locked, and thermostat adjusted.",
   },
   {
     question: 'Why is it important to use logical device naming conventions?',
     options: [
-      'To match manufacturer branding',
-      'To ensure voice recognition accuracy and intuitive control',
-      'To reduce power consumption',
-      'To improve Wi-Fi signal',
+      'To match the manufacturer’s branding and naming',
+      'To ensure accurate voice recognition and intuitive control',
+      'To reduce the power consumption of the devices',
+      'To improve the strength of the Wi-Fi signal',
     ],
     correctAnswer: 1,
     explanation:
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
   {
     question: 'What should you test when verifying voice control logic?',
     options: [
-      'Only that devices turn on',
-      'Command recognition, execution timing, and correct device response',
-      'Only speaker volume',
-      'Only Wi-Fi speed',
+      'Only that the target devices switch on',
+      'Only the volume level of the speaker',
+      'Only the speed of the Wi-Fi connection',
+      'Command recognition, timing, and correct device response',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Comprehensive testing verifies that voice commands are correctly recognised, executed in reasonable time, and that the intended devices respond correctly. This catches issues with naming, grouping, or integration.',
   },
@@ -59,10 +59,10 @@ const quizQuestions = [
   {
     question: "What is a 'conditional' in automation logic?",
     options: [
-      'A device brand',
-      'An if-then rule that checks conditions before executing actions',
-      'A speaker setting',
-      'A network configuration',
+      'A particular brand of smart device',
+      'An if-then rule that checks conditions before running actions',
+      'A configuration setting on the speaker',
+      'A configuration option for the network',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,34 +71,34 @@ const quizQuestions = [
   {
     question: 'Why should complex automations be documented?',
     options: [
-      'Legal requirement',
+      'It is a legal requirement for installers',
+      'To increase the overall speed of the system',
+      'To reduce the power used by the devices',
       'To enable troubleshooting and handover to customers',
-      'To increase system speed',
-      'To reduce power usage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Documentation enables troubleshooting when issues arise and helps customers understand their system. It also aids future electricians who may service the installation.',
   },
   {
     question: "What is a 'scene' in smart home terminology?",
     options: [
-      'A camera view',
-      'A pre-set combination of device states activated together',
-      'A troubleshooting mode',
-      'A network scan',
+      'A preset combination of device states activated together',
+      'A particular camera view in the app',
+      'A diagnostic troubleshooting mode',
+      'A scan of devices on the network',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A scene is a pre-configured combination of device states that can be activated with a single command. 'Movie mode' might dim lights, close blinds, and turn on the TV.",
   },
   {
     question: 'What should be considered when creating voice command phrases?',
     options: [
-      'Using the longest possible phrases',
-      'Natural, memorable phrases that are distinct from other commands',
-      'Using only single words',
-      'Matching manufacturer default phrases',
+      'Using the longest possible phrases for each command',
+      'Natural, memorable phrases that are distinct from each other',
+      'Using only single words for every command',
+      'Matching the manufacturer’s default command phrases',
     ],
     correctAnswer: 1,
     explanation:

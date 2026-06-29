@@ -35,12 +35,12 @@ const AM2Module1Section4 = () => {
       id: 1,
       question: "What's the most common single reason for AM2 failure?",
       options: [
-        'Poor workmanship',
         'Safe isolation errors',
+        'Poor workmanship',
         'Time management issues',
         'Wrong cable selection',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Safe isolation errors are highlighted by NET as the single biggest cause of AM2 failure.',
     },
@@ -84,11 +84,11 @@ const AM2Module1Section4 = () => {
       question: 'In fault diagnosis, what three things must you identify for each fault?',
       options: [
         'Circuit, voltage, and current',
+        'Cause, effect, and prevention',
         'Location, type, and rectification method',
         'Test, measure, and record',
-        'Cause, effect, and prevention',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'You must identify the precise location, type of fault, and how to rectify it for full marks.',
     },

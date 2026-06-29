@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'snagging-definition',
     question: 'What is the primary purpose of a snagging walkthrough?',
     options: [
-      'Commissioning engineers and controls specialists',
-      'A glare discomfort rating; maximum UGR 19',
-      'Labels, handover notes, and record books/logs',
+      'To agree the value of variations added during construction',
+      'To commission and prove the mechanical and electrical systems',
+      'To compile the operation and maintenance manuals for handover',
       'To identify incomplete or defective work before handover',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'snag-responsibility',
     question: 'Who typically leads the snagging walkthrough on a building services project?',
     options: [
-      'All connections secure, covers replaced, no tools left, all tests complete',
+      'The Health and Safety Executive inspector for the site',
       'A joint team including client, contractor, and M&E representatives',
-      'The ratio of the sum of harmonic powers to the fundamental power',
-      'To give practical guidance on complying with legal duties',
+      'The building control officer acting alone',
+      'The equipment manufacturer’s service engineer',
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What distinguishes a defect from a variation in building services work?',
     options: [
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
+      'Defects are found before handover; variations are only found afterwards',
       'Defects are work not complying with specification; variations are authorised changes',
-      'To ensure they meet specifications and haven\\\\\\\'t been damaged',
-      'The ability for different devices to work together regardless of manufacturer',
+      'Defects apply to electrical work; variations apply to mechanical work',
+      'Defects are always cosmetic; variations always affect safety',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'When should the first snagging walkthrough typically occur?',
     options: [
-      'Is not discoverable through reasonable inspection at handover',
+      'On the day practical completion is granted',
       '2-4 weeks before anticipated practical completion',
-      'Unique defect numbering and audit trail',
-      'The defect, its location context, and any reference markers',
+      'At the end of the defects liability period',
+      'Six months after the building is occupied',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which software feature is most critical in a defect tracking system?',
     options: [
-      'Estimated rectification cost',
-      'Defect sign-off certificate or close-out report',
+      'Automatic estimation of rectification cost',
+      'A built-in messaging app for the project team',
       'Unique defect numbering and audit trail',
-      '2-4 weeks before anticipated practical completion',
+      'Integration with the company payroll system',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'A latent defect is one that:',
     options: [
-      'Identify, Categorise, Assign, Track, Rectify, Verify, Close',
-      '2-4 weeks before anticipated practical completion',
-      'A certificate confirming all DLP defects have been satisfactorily rectified',
+      'Is obvious on the surface and easily spotted during snagging',
+      'Is caused by the client misusing the installation after handover',
+      'Is recorded on the snag list but not yet rectified',
       'Is not discoverable through reasonable inspection at handover',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'What document formally closes out a defect after rectification?',
     options: [
       'Defect sign-off certificate or close-out report',
-      'Is not discoverable through reasonable inspection at handover',
-      '2-4 weeks before anticipated practical completion',
-      'Identify, Categorise, Assign, Track, Rectify, Verify, Close',
+      'The original snagging list issued at first inspection',
+      'The practical completion certificate',
+      'The contractor’s internal QA inspection record',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'During the defects liability period, the contractor must:',
     options: [
-      '2-4 weeks before anticipated practical completion',
+      'Charge the client for any return visits to site',
       'Return to rectify defects notified by the client at no additional cost',
-      'Is not discoverable through reasonable inspection at handover',
-      'Identify, Categorise, Assign, Track, Rectify, Verify, Close',
+      'Hand all rectification work to a third-party contractor',
+      'Carry out routine planned maintenance of the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'Which is the correct sequence for defect management?',
     options: [
-      'Return to rectify defects notified by the client at no additional cost',
-      '2-4 weeks before anticipated practical completion',
+      'Rectify, Identify, Close, Categorise, Assign, Track, Verify',
+      'Assign, Rectify, Identify, Close, Track, Categorise, Verify',
       'Identify, Categorise, Assign, Track, Rectify, Verify, Close',
-      'Defect sign-off certificate or close-out report',
+      'Identify, Rectify, Close, Categorise, Assign, Verify, Track',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'Photographic evidence in snagging should include:',
     options: [
-      '2-4 weeks before anticipated practical completion',
-      'A certificate confirming all DLP defects have been satisfactorily rectified',
-      'Is not discoverable through reasonable inspection at handover',
+      'Only a close-up of the defect with no surrounding context',
+      'The names of the operatives who carried out the work',
+      'An estimate of the cost to rectify the defect',
       'The defect, its location context, and any reference markers',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'What is the Making Good Defects Certificate?',
     options: [
       'A certificate confirming all DLP defects have been satisfactorily rectified',
-      'Is not discoverable through reasonable inspection at handover',
-      'Identify, Categorise, Assign, Track, Rectify, Verify, Close',
-      'Return to rectify defects notified by the client at no additional cost',
+      'The certificate that marks the start of the defects liability period',
+      'A certificate issued by building control approving the works',
+      'The document recording the initial snagging list at handover',
     ],
     correctAnswer: 0,
     explanation:

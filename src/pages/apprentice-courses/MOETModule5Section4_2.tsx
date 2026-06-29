@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'If a control loop is oscillating with increasing amplitude, what is the most likely cause?',
     options: [
-      'It must match system response requirements for proper control',
-      'Live earth loop impedance testing or calculation from Ze and R1+R2',
+      'The integral time is set far too long, slowing the response',
+      'The derivative term has been disabled on a noisy signal',
       'The controller gain is too high, causing the loop to become unstable',
-      'Electrical insulation properties and arc flash protection',
+      'The setpoint has been left exactly equal to the process variable',
     ],
     correctIndex: 2,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     question:
       'A PI controller is controlling temperature. The process variable has been stable at 1.5 degrees C below setpoint for several minutes. What will the integral action do?',
     options: [
-      'The current intended to flow under normal conditions',
-      'Cutting consistent corner notches in trunking so right-angle and tee joints fit cleanly',
-      'To prevent damage to cables and maintain proper cable pulling',
+      'Hold the output constant, leaving the 1.5 degree offset in place',
+      'Reduce the output because the error is small and steady',
+      'Switch the controller into manual mode automatically',
       'Gradually increase the controller output until the offset is eliminated',
     ],
     correctAnswer: 3,
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'Integral wind-up occurs when:',
     options: [
       'The controller output saturates at its limit while the integral term continues to accumulate',
-      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
-      'Gradually increase the controller output until the offset is eliminated',
-      'The integral action becomes too aggressive, causing oscillation and overshoot',
+      'The derivative term amplifies high-frequency measurement noise',
+      'The proportional band is set so narrow the loop oscillates continuously',
+      'The setpoint is changed faster than the sensor can update',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,7 +127,7 @@ const quizQuestions = [
     options: [
       'Set P first to achieve acceptable response, then add I to eliminate offset, then add D if needed for faster response',
       'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
-      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'Reducing the integral time in small steps until the offset disappears completely',
       'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
     ],
     correctAnswer: 1,
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: 'In a PID controller, what happens if the integral time (Ti) is set too short?',
     options: [
-      'The controller output increases when the process variable increases above setpoint',
-      'Gradually increase the controller output until the offset is eliminated',
-      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'A permanent steady-state offset is left uncorrected',
+      'The controller stops responding to setpoint changes entirely',
+      'The proportional action is automatically disabled',
       'The integral action becomes too aggressive, causing oscillation and overshoot',
     ],
     correctAnswer: 3,
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'controller output' in a PID loop is typically expressed as:",
     options: [
-      'Testing insulation effectiveness',
+      'A temperature in degrees Celsius',
       'A percentage from 0% to 100%',
-      'It doesn\\\\\\\\\\\\\\\'t cause supply interruption',
-      '8 m³/(h·m²) @ 50 Pa or better',
+      'A resistance in ohms',
+      'A frequency in hertz',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,8 +190,8 @@ const quizQuestions = [
     id: 10,
     question: 'When manually tuning a PID loop, the recommended sequence is:',
     options: [
-      'The controller output increases when the process variable increases above setpoint',
-      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'Set D first for fast response, then P, then remove I entirely',
+      'Set all three terms to maximum, then reduce them together',
       'Set P first to achieve acceptable response, then add I to eliminate offset, then add D if needed for faster response',
       'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
     ],
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: "What does 'auto-tuning' mean in the context of a PID controller?",
     options: [
-      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
-      'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
-      'The integral action becomes too aggressive, causing oscillation and overshoot',
+      'The operator manually adjusts each term by trial and error',
+      'The controller automatically switches between manual and automatic mode',
+      'The controller continuously changes its setpoint to track the load',
       'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
     question: 'Under ST1426, an electrical maintenance technician should be able to:',
     options: [
       'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
-      'The integral action becomes too aggressive, causing oscillation and overshoot',
-      'Gradually increase the controller output until the offset is eliminated',
-      'The controller output increases when the process variable increases above setpoint',
+      'Design new control loops and specify the control philosophy for a plant',
+      'Write the embedded firmware for the PID controller hardware',
+      'Replace the instrumentation engineer on all complex tuning tasks',
     ],
     correctAnswer: 0,
     explanation:

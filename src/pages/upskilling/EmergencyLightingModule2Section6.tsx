@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'What is the BS EN 50172:2024 / BS 5266-1:2025 monthly functional test requirement for emergency lighting luminaires?',
     options: [
-      'No monthly test required.',
-      'A monthly functional test of EVERY emergency luminaire and every emergency exit sign — simulating mains failure (typically by operating a test key switch or by interrupting the supply at the local DB) and confirming each luminaire energises correctly. Test duration is short (5 minutes is the typical figure used to confirm switchover and battery drive-up) and the test is recorded in the logbook for every luminaire. The monthly test is the load-bearing routine maintenance task and is the responsibility of the responsible person under the Regulatory Reform (Fire Safety) Order 2005 article 17.',
-      'Annual test only — monthly is excessive.',
-      'One luminaire per floor per month is sufficient.',
+      'No monthly test is required for self-contained luminaires.',
+      'A simulated-mains-failure functional test of every luminaire and exit sign, typically 5 minutes, recorded in the logbook.',
+      'An annual test only — monthly testing is excessive for most premises.',
+      'A test of one representative luminaire per floor each month is sufficient.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 50172:2024 §7.2 + BS 5266-1:2025 §12 — monthly functional test of every luminaire and every sign. Short duration (typically 5 min) confirms switchover, battery drive-up, lamp / LED operation. Recorded in the logbook by luminaire reference. The monthly cadence is mandatory — not "best practice" but the standard\'s minimum.',
+      'BS EN 50172:2024 §7.2 + BS 5266-1:2025 §12 — monthly functional test of every luminaire and every sign. Mains failure is simulated by a test key switch or by interrupting the supply at the local DB; the short duration (typically 5 min) confirms switchover, battery drive-up and lamp / LED operation. Recorded in the logbook by luminaire reference. The monthly cadence is mandatory — the standard\'s minimum, not "best practice".',
   },
   {
     id: 'elm2-s6-annual',
     question:
       'What is the BS 5266-1:2025 annual full-duration test requirement?',
     options: [
-      'Optional.',
-      'A full-duration discharge test of EVERY emergency luminaire — battery is exercised for the full rated duration (1 h or 3 h depending on the system). At the end of the duration, illuminance / luminance must remain at least 50 % of the rated value. After the discharge, the system must recharge fully within 24 h. The annual test is the most aggressive battery test in the regime and is the primary mechanism for catching ageing batteries before they fail in service. Recorded in the logbook with start time, end time, and end-of-duration illuminance reading.',
-      'Annual visual check only.',
-      '15-minute test only.',
+      'The annual test is optional where monthly tests are passing.',
+      'A full-duration discharge test of every luminaire, holding ≥ 50 % illuminance at the end and recharging within 24 h.',
+      'An annual visual check of every luminaire and sign, with no battery discharge.',
+      'A 15-minute partial-duration discharge test of every luminaire.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 50172:2024 §7.3 + BS 5266-1:2025 §12 — annual full-duration test. 1 h or 3 h discharge, 50 % illuminance retained at the end, 24 h recharge confirmation. The annual test catches battery ageing; many failures appear only in the last 30 minutes of a 3 h discharge and are invisible to the monthly 5-minute test.',
+      'BS EN 50172:2024 §7.3 + BS 5266-1:2025 §12 — annual full-duration test. Each battery is exercised for the full rated duration (1 h or 3 h depending on the system); 50 % illuminance retained at the end; 24 h recharge confirmation. The annual test catches battery ageing — many failures appear only in the last 30 minutes of a 3 h discharge and are invisible to the monthly 5-minute test.',
   },
   {
     id: 'elm2-s6-responsible',
     question:
       'Under the Regulatory Reform (Fire Safety) Order 2005 article 17, who is responsible for emergency lighting maintenance?',
     options: [
-      'The original installer.',
-      'The "responsible person" — typically the building owner or operator. Article 17 imposes a duty on the responsible person to ensure that the emergency lighting (along with other fire safety provisions) is subject to a "suitable system of maintenance" and is "maintained in an efficient state, in efficient working order and in good repair". This is a non-delegable duty; the responsible person can subcontract the testing work to a competent person but retains the legal duty for the outcome. Failures are enforced by the Fire and Rescue Service through audit, prohibition notice, or prosecution.',
-      'The Fire and Rescue Service.',
-      'No specific person.',
+      'The original installer, for the life of the installation.',
+      'The "responsible person" — typically the building owner or operator — under a non-delegable duty.',
+      'The Fire and Rescue Service, as the enforcing authority.',
+      'No specific person is named; the duty falls on whoever last tested the system.',
     ],
     correctIndex: 1,
     explanation:
-      'RRFSO 2005 article 17 — duty on the responsible person to maintain fire safety provisions, including emergency lighting. Non-delegable; the responsible person can hire a competent person for the testing but the legal duty for the outcome stays with them. Enforced by the Fire and Rescue Service (failure → audit, improvement notice, prohibition notice, or prosecution).',
+      'RRFSO 2005 article 17 — duty on the responsible person to ensure the emergency lighting (with other fire safety provisions) is subject to a "suitable system of maintenance" and "maintained in an efficient state, in efficient working order and in good repair". Non-delegable; the responsible person can hire a competent person for the testing but the legal duty for the outcome stays with them. Enforced by the Fire and Rescue Service through audit, improvement notice, prohibition notice or prosecution.',
   },
   {
     id: 'elm2-s6-self-test',
     question:
       'What does BS EN 62034 self-test technology offer in terms of routine maintenance?',
     options: [
-      'It eliminates the need for any maintenance.',
-      'Automatic self-test luminaires perform the monthly functional test and the annual full-duration test internally (without manual intervention) and report status via an LED indicator on the luminaire face or via an addressable network back to a central monitor. The responsible person still retains the article 17 duty and still needs to record the test results in the logbook, but the labour cost of physically performing the tests is virtually eliminated. Self-test is particularly valuable in large premises with many hundreds of luminaires where manual monthly testing of every luminaire is a significant labour burden.',
-      'It removes the need for batteries.',
-      'It is prohibited under BS 5266-1:2025.',
+      'It eliminates the need for any routine maintenance or record-keeping.',
+      'Luminaires run the monthly and annual tests internally and report status via LED or addressable network, cutting test labour.',
+      'It removes the need for batteries by powering luminaires from a central inverter.',
+      'It is prohibited under BS 5266-1:2025 as an unverifiable test method.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 62034 self-test technology automates the test cycle. The luminaire performs the monthly functional test and the annual full-duration test on schedule, without manual operation. Results report via an LED indicator (red / green / amber) or via an addressable network. Logbook entries can be auto-populated from network data. The responsible person\'s legal duty under RRFSO article 17 is unchanged.',
+      'BS EN 62034 self-test technology automates the test cycle. The luminaire performs the monthly functional test and the annual full-duration test on schedule, without manual operation; results report via an LED indicator (red / green / amber) or via an addressable network, and logbook entries can be auto-populated from network data. The labour of physically testing every luminaire is virtually eliminated, but the responsible person\'s legal duty under RRFSO article 17 is unchanged.',
   },
 ];
 
@@ -82,140 +82,140 @@ const quizQuestions = [
     question:
       'BS EN 50172:2024 specifies the monthly emergency lighting test. What does the monthly test involve?',
     options: [
-      'A check that no luminaire has been removed from the fitting.',
-      'A functional test of EVERY emergency luminaire and exit sign — simulating mains failure and confirming each luminaire energises correctly. Typically 5 minutes\' duration to confirm switchover, battery drive-up, and lamp / LED operation. Performed monthly without exception. Recorded in the logbook by luminaire reference. The monthly test is the routine maintenance backbone of the emergency lighting regime.',
-      'Annual replacement of all batteries.',
-      'Visual check from the doorway.',
+      'A simulated-mains-failure functional test of every luminaire and exit sign, typically 5 minutes, logged by reference.',
+      'A physical check that no luminaire has been removed from its mounting since the last visit.',
+      'Annual replacement of all luminaire batteries on a fixed twelve-month cycle.',
+      'A visual check of each luminaire from the doorway, without operating any test switch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 50172:2024 §7.2 + BS 5266-1:2025 §12 — monthly functional test of every luminaire and sign. Simulated mains failure (test key switch or DB isolation) for typically 5 minutes. Logbook entry per luminaire. The monthly cadence is mandatory.',
+      'BS EN 50172:2024 §7.2 + BS 5266-1:2025 §12 — monthly functional test of every luminaire and sign. Simulated mains failure (test key switch or DB isolation) for typically 5 minutes confirms switchover, battery drive-up and lamp / LED operation. Logbook entry per luminaire. The monthly cadence is mandatory.',
   },
   {
     id: 2,
     question:
       'What is the BS 5266-1:2025 annual test requirement?',
     options: [
-      '15-minute test only.',
-      'Full-duration discharge test of every luminaire — 1 h or 3 h depending on system rating. Illuminance must remain at least 50 % of rated value at the end of the duration. Recharge confirmed within 24 h. The annual test is the primary mechanism for catching ageing batteries — many battery failures appear only in the last 30 minutes of a 3 h discharge and are invisible to the monthly 5-minute test.',
-      'Visual inspection only.',
-      'Optional.',
+      'A 15-minute partial discharge test of every luminaire, repeated annually.',
+      'A visual inspection of every luminaire only, with no battery discharge.',
+      'A full-duration discharge of every luminaire (1 h or 3 h), holding ≥ 50 % illuminance and recharging within 24 h.',
+      'No annual test where the monthly functional tests are passing.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BS 5266-1:2025 §12 + BS EN 50172:2024 §7.3 — annual full-duration test. 1 h or 3 h. 50 % illuminance retention at end. 24 h recharge. Catches battery end-of-life that the monthly short-duration test misses.',
+      'BS 5266-1:2025 §12 + BS EN 50172:2024 §7.3 — annual full-duration test. 1 h or 3 h depending on system rating; 50 % illuminance retention at the end; 24 h recharge. It is the primary mechanism for catching ageing batteries, many of which fail only in the last 30 minutes of a 3 h discharge and are invisible to the monthly 5-minute test.',
   },
   {
     id: 3,
     question:
       'BS 5266-1:2025 §13 specifies the contents of the emergency lighting logbook. Which of the following is NOT part of the logbook?',
     options: [
-      'Date and time of every test, with results.',
-      'Personal medical records of staff. The logbook is a technical fire safety document containing: dates and times of all tests, results, identity of the person performing the test, identity and competence of the person responsible, list of luminaires by reference / location, list of replaceable components (batteries, lamps, drivers) with installation dates, list of any faults found and remedial actions taken, copies of commissioning records, copies of design and installation record. Personal medical records, HR records, and unrelated facilities records do not belong in the emergency lighting logbook.',
-      'List of all luminaires by reference number.',
-      'Battery replacement dates.',
+      'The date, time and result of every functional and full-duration test carried out.',
+      'A schedule of all luminaires and signs by reference number and location.',
+      'Battery and replaceable-component replacement dates with installation dates.',
+      'Personal medical records of building staff.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5266-1:2025 §13 — logbook contents: test records, fault records, commissioning records, design and installation record, luminaire schedule, battery replacement dates, competence declarations. The logbook is fire-safety-focused and does not include unrelated personal or HR data.',
+      'BS 5266-1:2025 §13 — the logbook is a technical fire safety document: test dates and results, identity and competence of the tester and responsible person, luminaire schedule, replaceable-component installation/replacement dates, fault records and remedial actions, commissioning records and the design and installation record. Personal medical records, HR records and unrelated facilities data do not belong in the emergency lighting logbook.',
   },
   {
     id: 4,
     question:
       'How long must emergency lighting test records typically be retained?',
     options: [
-      '1 year.',
-      '6 years (typical, aligned with the Regulatory Reform (Fire Safety) Order 2005 article 17 enforcement window). Some premises retain records for the lifetime of the installation. Higher-Risk Buildings under the Building Safety Act 2022 retain golden-thread fire safety information for the lifetime of the building. The logbook is part of the building\'s permanent fire safety record and should be transferred with the building on sale or change of management. Loss of the logbook is treated as evidence of failed maintenance.',
-      '1 month.',
-      'No retention required.',
+      '6 years typical, aligned with the RRFSO 2005 article 17 enforcement window (longer for Higher-Risk Buildings).',
+      '1 year, after which the previous year\'s records may be discarded.',
+      '1 month, retaining only the most recent functional test result.',
+      'No retention is required once a failure has been remediated.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      '6 years is the typical retention period aligned with RRFSO 2005 article 17 enforcement window. Higher-Risk Buildings under the Building Safety Act 2022 retain for building lifetime. Logbook is permanent fire safety record; transfers with the building on sale or operational handover.',
+      '6 years is the typical retention period, aligned with the RRFSO 2005 article 17 enforcement window; many premises keep records for the life of the installation. Higher-Risk Buildings under the Building Safety Act 2022 retain golden-thread fire safety information for the life of the building. The logbook is a permanent fire safety record; it transfers with the building on sale or operational handover, and its loss is treated as evidence of failed maintenance.',
   },
   {
     id: 5,
     question:
       'Under the Regulatory Reform (Fire Safety) Order 2005, what enforcement actions can the Fire and Rescue Service take where emergency lighting maintenance has failed?',
     options: [
-      'No enforcement.',
-      'Range of escalating actions: alteration notice (requiring works to be done before any change), enforcement notice (requiring identified deficiencies to be remediated), prohibition notice (immediate prohibition of use of the premises pending remediation), and prosecution under the Order. Penalties on conviction can include unlimited fines and up to 2 years\' imprisonment for corporate officers. Insurers may also void cover where the responsible person is found to have failed in the article 17 maintenance duty. The escalation depends on the severity of the failure and the responsible person\'s history of compliance.',
-      'A polite reminder only.',
-      'Tax penalty.',
+      'No enforcement action — emergency lighting falls outside the FRS remit.',
+      'A written reminder advising the responsible person to improve at the next audit.',
+      'Escalating action: alteration, enforcement and prohibition notices, and prosecution under the Order.',
+      'A financial penalty recovered through the responsible person\'s business rates.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'RRFSO 2005 + Fire and Rescue Services Act 2004 — enforcement: alteration notice, enforcement notice, prohibition notice, prosecution. Unlimited fines and up to 2 years\' imprisonment on conviction. Insurance implications layered on top. Maintenance failure is taken seriously by enforcement authorities, particularly post-Grenfell.',
+      'RRFSO 2005 + Fire and Rescue Services Act 2004 — escalating enforcement: alteration notice (works before any change), enforcement notice (remediate identified deficiencies), prohibition notice (immediate prohibition of use pending remediation) and prosecution. Penalties on conviction include unlimited fines and up to 2 years\' imprisonment for corporate officers, with insurance cover potentially voided on top. Escalation depends on the severity of the failure and the responsible person\'s compliance history.',
   },
   {
     id: 6,
     question:
       'BS 5266-1:2025 introduced a new requirement for the person carrying out emergency lighting design and major remedial work. What is it?',
     options: [
-      'No requirement.',
-      'The person must be a "competent person" — defined as a person with the training, qualifications, and experience to undertake the work. The competence requirement applies both to the original designer (Module 2 §4) and to anyone undertaking subsequent material modifications or major repairs. Acceptable evidence includes IEng / CEng with relevant emergency lighting experience, ICEL qualifications, manufacturer-specific design certification, or documented experience under a chartered engineer. The 2025 edition makes this explicit; previously it was implied by general industry practice.',
-      'Anyone may carry out the work.',
-      'Only the original installer.',
+      'No specific requirement beyond general electrical competence.',
+      'Anyone may carry out the work provided it is recorded in the logbook.',
+      'Only the original installer of the system may carry out the work.',
+      'A "competent person" with the training, qualifications and experience to undertake the work.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5266-1:2025 §5.2 — competent person requirement for design and major remedial work. Documented competence; signed declaration as part of the design and installation record. The 2025 edition makes the requirement explicit; pre-2025 it was implied by general industry practice.',
+      'BS 5266-1:2025 §5.2 — competent-person requirement for design and major remedial work, applying both to the original designer and to anyone making material modifications or major repairs. Acceptable evidence: IEng / CEng with relevant emergency lighting experience, ICEL qualifications, manufacturer-specific design certification, or documented experience under a chartered engineer. The competence is declared in the design and installation record. The 2025 edition makes the requirement explicit; pre-2025 it was implied by general industry practice.',
   },
   {
     id: 7,
     question:
       'What is the most common cause of emergency luminaire failure detected at routine testing?',
     options: [
-      'Bulb removal by occupants.',
-      'Battery end-of-life. Sealed lead-acid (SLA) and nickel-cadmium (NiCd) emergency lighting batteries have typical service life of 4 to 5 years; lithium iron phosphate (LiFePO4) extends to 8 to 10 years. Battery failure typically appears as inability to hold charge for the full rated duration — the luminaire passes the monthly 5-minute test but fails the annual full-duration discharge. Common at end-of-life: reduced terminal voltage under load, internal cell shorting, electrolyte loss. Other common failures (lamp / LED end-of-life, charger fault, supply fault) are less frequent and easier to detect at the monthly test.',
-      'Dust accumulation.',
-      'Cosmic rays.',
+      'Battery end-of-life — failure to hold charge for the full rated duration.',
+      'Removal of lamps or LED modules by building occupants.',
+      'Dust accumulation reducing the light output of the luminaire diffuser.',
+      'Charger module overheating during the daily charge cycle.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Battery end-of-life is the most common failure mode. Detected at the annual full-duration test (the 5-minute monthly test is too short to expose end-of-life batteries). Plan a battery replacement programme aligned with battery service life (4 to 5 years SLA / NiCd; 8 to 10 years LiFePO4) to pre-empt failures.',
+      'Battery end-of-life is the most common failure mode. SLA and NiCd batteries last typically 4 to 5 years, LiFePO4 8 to 10 years; at end-of-life the luminaire passes the monthly 5-minute test but fails the annual full-duration discharge (reduced terminal voltage under load, cell shorting, electrolyte loss). The 5-minute monthly test is too short to expose it. Plan a battery replacement programme aligned with service life to pre-empt failures.',
   },
   {
     id: 8,
     question:
       'BS EN 62034 self-test luminaires automate routine testing. What article 17 RRFSO duty remains with the responsible person?',
     options: [
-      'None — self-test removes all duty.',
-      'The responsible person retains the legal duty under RRFSO 2005 article 17 to ensure the emergency lighting is in efficient working order. Self-test luminaires perform the tests and record results, but the duty to ensure that the test results are reviewed, that any failures are remediated, that records are retained, and that the system as a whole is maintained — that duty is non-delegable. The responsible person can outsource the work to a competent person but cannot outsource the legal responsibility. Self-test reduces labour cost; it does not reduce legal exposure.',
-      'Only signage duty.',
-      'Only initial purchase duty.',
+      'None — self-test luminaires remove the article 17 duty entirely.',
+      'Only the duty to keep emergency exit signage clean and visible.',
+      'The full duty to keep the system in efficient working order — review results, remediate faults, retain records.',
+      'Only the duty to specify and purchase compliant luminaires at installation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'RRFSO 2005 article 17 imposes a non-delegable duty on the responsible person. Self-test luminaires reduce labour, not legal exposure. Self-test results must be reviewed, faults remediated, records retained — all by or for the responsible person.',
+      'RRFSO 2005 article 17 imposes a non-delegable duty on the responsible person. Self-test luminaires perform the tests and record results, but the duty to ensure results are reviewed, failures remediated, records retained and the system maintained stays with the responsible person. Self-test reduces labour, not legal exposure.',
   },
   {
     id: 9,
     question:
       'A facilities manager notices that 15 of 200 emergency luminaires fail the annual full-duration test in 2026. What is the appropriate action?',
     options: [
-      'Ignore — the building is mostly compliant.',
-      'Document the failure in the logbook, isolate the failed luminaires from the system if necessary, source replacement batteries / luminaires from a competent supplier, schedule the remediation work, retest after replacement, update the logbook with the resolution, and review the maintenance regime to identify why so many failed simultaneously (likely a batch of batteries reaching end-of-life together). Notify the responsible person of the findings and the remediation plan. Failures of more than about 5 % of the system in a single test cycle suggest a systemic issue — possibly a co-installed battery batch — and warrant a comprehensive battery replacement programme rather than a one-by-one fix.',
-      'Buy any cheap replacement batteries.',
-      'Wait until next year\'s test.',
+      'Ignore the failures, since the building is mostly still compliant.',
+      'Fit the cheapest available replacement batteries without retesting.',
+      'Wait until next year\'s scheduled test before taking any action.',
+      'Document, remediate and retest the failures, then plan a batch battery-replacement programme.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Document → isolate (if needed) → source replacements → schedule remediation → retest → update logbook → review regime. 7.5 % failure rate suggests systemic issue (batch ageing). Plan comprehensive replacement; do not fix one-by-one and discover the rest fail next year.',
+      'Document the failures → isolate if needed → source replacements from a competent supplier → schedule remediation → retest → update the logbook → review the regime. A 7.5 % failure rate suggests a systemic issue (a co-installed battery batch reaching end-of-life together); plan a comprehensive replacement programme rather than fixing one-by-one and finding the rest fail next year. Notify the responsible person of the findings and plan.',
   },
   {
     id: 10,
     question:
       'BS 5266-1:2025 §13 requires the design and installation record to be retained. Where does this fit within the Building Safety Act 2022 regime?',
     options: [
-      'It is unrelated to the Building Safety Act.',
-      'It forms part of the "golden thread" of fire safety information for Higher-Risk Buildings under the Building Safety Act 2022. The golden thread is the building\'s permanent record of fire safety design, construction, and maintenance — required to be retained for the lifetime of the building, transferred with ownership / management changes, and accessible to the Building Safety Regulator on demand. The emergency lighting design and installation record, plus the ongoing logbook of test results, sits within the golden thread alongside fire risk assessments, fire engineering reports, and other fire safety documentation. For non-Higher-Risk Buildings, the same documents are required by BS 5266-1:2025 but the golden thread terminology does not formally apply — best practice is to retain to the same standard regardless.',
-      'Only for residential buildings.',
-      'Only for hotels.',
+      'It forms part of the "golden thread" of fire safety information for Higher-Risk Buildings.',
+      'It is unrelated to the Building Safety Act and sits only under BS 5266-1:2025.',
+      'It is part of the golden thread only for residential buildings of any height.',
+      'It is part of the golden thread only for hotels and other sleeping-risk premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5266-1:2025 + Building Safety Act 2022 — emergency lighting records form part of the golden thread for Higher-Risk Buildings. Lifetime retention; transferred with ownership; accessible to the Building Safety Regulator. For non-HRB premises the documents are still required by BS 5266-1:2025 but the formal golden-thread regime does not apply (although best practice is to follow the same retention standard).',
+      'BS 5266-1:2025 + Building Safety Act 2022 — for Higher-Risk Buildings, the emergency lighting design and installation record plus the ongoing logbook sit within the golden thread alongside fire risk assessments and fire engineering reports. Lifetime retention; transferred with ownership / management; accessible to the Building Safety Regulator on demand. For non-HRB premises the same documents are still required by BS 5266-1:2025, but the formal golden-thread regime does not apply (best practice is to follow the same retention standard regardless).',
   },
 ];
 

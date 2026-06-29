@@ -41,37 +41,37 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     question: 'Which sensor would be most useful for detecting potential mould conditions?',
-    options: ['CO2 sensor', 'Humidity sensor', 'PM2.5 sensor', 'Temperature sensor only'],
-    correctAnswer: 1,
+    options: ['Humidity sensor', 'CO2 sensor', 'PM2.5 sensor', 'Temperature sensor only'],
+    correctAnswer: 0,
     explanation:
       'Humidity sensors detect conditions conducive to mould growth. Sustained humidity above 60-70% creates ideal conditions for mould, so monitoring humidity helps prevent problems before they develop.',
   },
   {
     question: 'What automation would be appropriate when CO2 levels rise above 1000 ppm?',
     options: [
-      'Turn on heating',
+      'Turn on the heating',
+      'Reduce the lighting level',
       'Increase ventilation or open windows',
-      'Reduce lighting',
       'Turn off all appliances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High CO2 indicates inadequate ventilation. The appropriate response is to increase fresh air supply through mechanical ventilation, MVHR boost mode, or automated window actuators.',
   },
   {
     question: 'PM2.5 sensors measure particles of what approximate size?',
-    options: ['2.5 millimetres', '2.5 micrometres (microns)', '2.5 centimetres', '2.5 nanometres'],
-    correctAnswer: 1,
+    options: ['2.5 millimetres', '2.5 centimetres', '2.5 nanometres', '2.5 micrometres (microns)'],
+    correctAnswer: 3,
     explanation:
       'PM2.5 refers to particulate matter 2.5 micrometres or smaller - fine particles that can penetrate deep into the lungs and even enter the bloodstream, making them a key health concern.',
   },
   {
     question: 'Which smart home integration makes best use of humidity sensor data?',
     options: [
-      'Security system',
+      'Outdoor security lighting',
       'Bathroom extractor fan control',
-      'Outdoor lighting',
-      'Door locks',
+      'Smart door lock control',
+      'Intruder alarm system',
     ],
     correctAnswer: 1,
     explanation:
@@ -80,12 +80,12 @@ const quizQuestions = [
   {
     question: 'Why might a CO2 sensor give high readings in a bedroom overnight?',
     options: [
-      'Electrical interference',
       'Human respiration with poor ventilation',
-      'Sensor malfunction',
-      'Temperature changes',
+      'Electrical interference from nearby cabling',
+      'A malfunctioning or drifting sensor',
+      'Overnight temperature changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sleeping occupants continuously exhale CO2. Without adequate ventilation, bedroom CO2 levels can rise significantly overnight, sometimes exceeding 2000 ppm, affecting sleep quality.',
   },

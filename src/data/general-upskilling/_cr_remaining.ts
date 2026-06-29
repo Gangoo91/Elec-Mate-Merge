@@ -27,10 +27,10 @@ export const crRemainingQuestions = [
     question:
       'Under the Late Payment Act, what are the fixed compensation amounts for debt recovery, based on the size of the debt?',
     options: [
-      'What has changed, why it changed, the cost, and the client\\\'s signature',
-      'Reasonable care and skill, at a reasonable price',
+      '£25 (up to £499.99), £50 (£500-£4,999.99), £75 (£5,000+)',
+      '£50 (up to £1,999.99), £80 (£2,000-£19,999.99), £120 (£20,000+)',
       '£40 (up to £999.99), £70 (£1,000-£9,999.99), £100 (£10,000+)',
-      'A price reduction, which may be up to 100% of the cost (a full refund)',
+      'A flat £100 regardless of the size of the debt',
     ],
     correctAnswer: 2,
     explanation:
@@ -61,10 +61,10 @@ export const crRemainingQuestions = [
     id: 84,
     question: 'What is "scope creep" in a construction project context?',
     options: [
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
-      'Show the client the signed plan, empathise with their frustration, and offer to move the sockets as priced additional work',
-      'Friendly reminder, formal written reminder, phone call, letter before action, small claims',
+      'The gradual expansion of work beyond the original agreement through small additions',
+      'A formal written change to the contract price, agreed and signed before extra work begins',
+      'The client deliberately delaying payment until all outstanding snags are resolved',
+      'The risk of underpricing a fixed quote before the property has been fully surveyed',
     ],
     correctAnswer: 0,
     explanation:
@@ -78,10 +78,10 @@ export const crRemainingQuestions = [
     id: 85,
     question: 'The "while you\'re here" syndrome refers to:',
     options: [
-      'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
+      'A client withholding final payment over a single minor defect',
       'Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing',
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'Clearly defining what is included in the agreed work, your working hours, communication expectations, and payment terms',
+      'A client taking ownership of resolving an issue without admitting fault',
+      'Clearly defining the agreed work, working hours, and payment terms upfront',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ export const crRemainingQuestions = [
     id: 86,
     question: 'A variation order should include which essential elements?',
     options: [
-      "A price reduction, which may be up to 100% of the cost (a full refund)",
-      "The right to require the trader to repeat or fix the service at no additional cost",
+      "Only the new total price, with no breakdown of the change",
+      "A verbal agreement is sufficient provided both parties remember it",
       "What has changed, why it changed, the cost, and the client's signature",
-      "Friendly reminder, formal written reminder, phone call, letter before action, small claims",
+      "The client's signature alone, without any description of the change",
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ export const crRemainingQuestions = [
     id: 87,
     question: 'What is the key legal distinction between a quote and an estimate?',
     options: [
-      'Clearly defining what is included in the agreed work, your working hours, communication expectations, and payment terms',
-      'Friendly reminder, formal written reminder, phone call, letter before action, small claims',
-      'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
+      'A quote is verbal only, whereas an estimate must always be in writing',
+      'An estimate is legally binding, whereas a quote is only a rough guide',
+      'There is no legal difference; the two terms are interchangeable',
       'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
     ],
     correctAnswer: 3,
@@ -148,10 +148,10 @@ export const crRemainingQuestions = [
     question:
       "Under the Consumer Rights Act 2015, what is the consumer's primary remedy if a service is not performed with reasonable care and skill?",
     options: [
-      'Regular updates prevent anxiety, build trust, and reduce the likelihood of complaints and disputes',
+      'An automatic full refund with no opportunity for the trader to put it right',
       'The right to require the trader to repeat or fix the service at no additional cost',
-      '£40 (up to £999.99), £70 (£1,000-£9,999.99), £100 (£10,000+)',
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+      'Statutory interest at 8% above base rate on the disputed amount',
+      'The right to demand a brand-new installation regardless of the defect',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,10 +183,10 @@ export const crRemainingQuestions = [
     question:
       'What is the "under-promise, over-deliver" principle in managing client expectations?',
     options: [
-      'The right to require the trader to repeat or fix the service at no additional cost',
-      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service',
+      'Promising an ambitious timeline to win the work, then explaining the delays later on',
+      'Quoting the lowest possible price up front and adding extras as the job progresses',
+      'Telling the client only what they want to hear so as to avoid difficult conversations',
+      'Setting realistic or slightly conservative expectations and then exceeding them on delivery',
     ],
     correctAnswer: 3,
     explanation:
@@ -200,10 +200,10 @@ export const crRemainingQuestions = [
     id: 92,
     question: 'Why is proactive communication with clients important during a project?',
     options: [
-      'Regular updates prevent anxiety, build trust, and reduce the likelihood of complaints and disputes',
-      'Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service',
-      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
+      'Regular updates prevent anxiety, build trust and reduce complaints and disputes',
+      'It lets the electrician charge for the additional time spent communicating',
+      'It is a legal requirement imposed under the Consumer Rights Act 2015',
+      'It removes the need for any written contract or signed variation orders',
     ],
     correctAnswer: 0,
     explanation:
@@ -218,10 +218,10 @@ export const crRemainingQuestions = [
     question:
       'What is the difference between a legitimate complaint and an unreasonable complaint?',
     options: [
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
-      'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
-      'Explain the legal requirement for licensed removal, present it as a variation with clear costs, and document the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s refusal if they still decline — then pause work on that element until resolved',
+      'A legitimate complaint is always made in writing; an unreasonable one is always verbal',
+      'A legitimate complaint names a real failure to meet agreed standards; an unreasonable one seeks more than was agreed',
+      'A legitimate complaint comes from a paying client; an unreasonable one comes from a third party',
+      'A legitimate complaint must be acted on within 24 hours; an unreasonable one can be ignored',
     ],
     correctAnswer: 1,
     explanation:
@@ -236,10 +236,10 @@ export const crRemainingQuestions = [
     question:
       'What does "taking responsibility without accepting liability" mean in a client dispute?',
     options: [
-      "Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty",
-      "Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service",
-      "Acknowledging the client's experience and taking ownership of resolving the issue, without making legal admissions of fault",
-      "Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing",
+      "Admitting full fault to the client immediately so that they feel reassured",
+      "Refusing to discuss the issue at all until liability has been legally determined",
+      "Owning the client's experience and committing to resolve it, without admitting legal fault",
+      "Passing responsibility to your insurer and stepping back from the client entirely",
     ],
     correctAnswer: 2,
     explanation:
@@ -253,10 +253,10 @@ export const crRemainingQuestions = [
     id: 95,
     question: 'What is the correct order for staged payment chasing?',
     options: [
-      'Letter before action, small claims, phone call, friendly reminder',
-      'Small claims, letter before action, phone call, friendly reminder',
-      'Phone call, friendly reminder, small claims, letter before action',
-      'Friendly reminder, formal written reminder, phone call, letter before action, small claims',
+      'Letter before action, then small claims, then a phone call, then a friendly reminder',
+      'Small claims, then letter before action, then a phone call, then a friendly reminder',
+      'Phone call, then a friendly reminder, then small claims, then a letter before action',
+      'Friendly reminder, formal reminder, phone call, letter before action, then small claims',
     ],
     correctAnswer: 3,
     explanation:
@@ -270,10 +270,10 @@ export const crRemainingQuestions = [
     id: 96,
     question: 'Setting professional boundaries with clients means:',
     options: [
-      'Clearly defining what is included in the agreed work, your working hours, communication expectations, and payment terms',
-      'Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing',
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
+      'Clearly defining the agreed work, your working hours, communication and payment terms',
+      'Refusing to take on any client who asks detailed questions about the work',
+      'Always agreeing to extra requests, no matter the cost, to keep the client happy',
+      'Avoiding any written terms so the working relationship stays informal and friendly',
     ],
     correctAnswer: 0,
     explanation:
@@ -287,10 +287,10 @@ export const crRemainingQuestions = [
     id: 97,
     question: 'What is the service recovery paradox, as identified by Tax and Brown in 1998?',
     options: [
-      'Friendly reminder, formal written reminder, phone call, letter before action, small claims',
-      'A customer who has a problem resolved exceptionally well may become more loyal than one who never experienced a problem',
-      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
+      'Customers who never complain at all are always the most loyal in the long run',
+      'A customer whose problem is resolved exceptionally well may become more loyal than one with no problem',
+      'Resolving a complaint quickly always costs more than the goodwill it ends up generating',
+      'A customer who complains once will inevitably complain again on the very next job',
     ],
     correctAnswer: 1,
     explanation:
@@ -323,10 +323,10 @@ export const crRemainingQuestions = [
     question:
       'What information must a letter before action contain under the Pre-Action Protocol for Debt Claims?',
     options: [
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'Regular updates prevent anxiety, build trust, and reduce the likelihood of complaints and disputes',
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
+      'Only the total amount owed, with no breakdown or further information required',
+      'A threat of immediate court action and the name of the judge who will hear it',
+      'The debtor\'s credit score and a demand for full payment within 48 hours',
+      'The amount owed and its calculation, interest and charges, free-debt-advice details and a deadline',
     ],
     correctAnswer: 3,
     explanation:
@@ -341,9 +341,9 @@ export const crRemainingQuestions = [
     question: 'What are the court fees for making a small claim through Money Claims Online?',
     options: [
       '£35 to £455, depending on the claim value',
-      'Hear, Empathise, Apologise, Resolve, Do follow up',
-      'Reasonable care and skill, at a reasonable price',
-      '8% above Bank of England base rate',
+      'A flat £100 fee for any claim up to £10,000',
+      'There are no court fees for claims made online',
+      '£500 to £1,200, depending on the claim value',
     ],
     correctAnswer: 0,
     explanation:
@@ -358,10 +358,10 @@ export const crRemainingQuestions = [
     question:
       'An electrician completed a bathroom rewire. The client now claims the socket positions are wrong, but the positions match the agreed plan that the client signed. How should the electrician handle this?',
     options: [
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
-      'Show the client the signed plan, empathise with their frustration, and offer to move the sockets as priced additional work',
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
+      'Move the sockets free of charge to avoid any confrontation with the unhappy client',
+      'Show the signed plan, empathise with their frustration and offer to move them as priced work',
+      'Refuse to discuss it and tell the client the work is finished and already signed off',
+      'Threaten to take the client to the Small Claims Court for the full outstanding invoice',
     ],
     correctAnswer: 1,
     explanation:
@@ -375,10 +375,10 @@ export const crRemainingQuestions = [
     id: 102,
     question: 'How should an electrician manage the "while you\'re here" syndrome assertively?',
     options: [
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'Show the client the signed plan, empathise with their frustration, and offer to move the sockets as priced additional work',
-      'Acknowledge the request positively, explain it falls outside the original scope, and offer to price it as additional work',
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+      'Refuse the request firmly and simply remind the client of the agreed scope of work',
+      'Quietly do the extra work and add an unexplained charge to the final invoice later',
+      'Acknowledge it positively, explain it is outside the original scope and offer to price it',
+      'Agree to do it for free, since small extras help to secure future referral work',
     ],
     correctAnswer: 2,
     explanation:
@@ -392,10 +392,10 @@ export const crRemainingQuestions = [
     id: 103,
     question: 'In the HEARD framework, why is the "Do follow up" step important?',
     options: [
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
-      'Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service',
-      'Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty',
+      'It gives the client a final chance to raise new complaints in order to avoid paying',
+      'It is a strict legal requirement under the Pre-Action Protocol for Debt Claims',
+      'It lets the electrician upsell further additional work during the follow-up call',
+      'Following up shows genuine care, confirms satisfaction and can build lasting loyalty',
     ],
     correctAnswer: 3,
     explanation:
@@ -410,10 +410,10 @@ export const crRemainingQuestions = [
     question:
       'When a client claims work is substandard but the electrician believes it meets all relevant standards, the best first step is to:',
     options: [
-      'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
-      'A quote is a fixed price that cannot change; an estimate is an approximate cost that may vary',
-      'Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service',
-      'Clearly defining what is included in the agreed work, your working hours, communication expectations, and payment terms',
+      'Listen fully to understand the concern, then offer an independent inspection if needed',
+      'Insist the work is fully compliant and refuse to discuss the matter any further',
+      'Immediately offer a full refund to head off the risk of a negative review',
+      'Redo the entire installation at your own cost without first investigating it',
     ],
     correctAnswer: 0,
     explanation:
@@ -427,10 +427,10 @@ export const crRemainingQuestions = [
     id: 105,
     question: 'What is the purpose of managing client expectations at each stage of a project?',
     options: [
-      'Acknowledging the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s experience and taking ownership of resolving the issue, without making legal admissions of fault',
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
+      'To create grounds for later charging the client more than the original quote',
+      'To set realistic expectations on progress, disruption, timeline and finish, closing the gap that causes complaints',
+      'To satisfy a specific legal duty imposed by the Consumer Rights Act 2015',
+      'To discourage the client from asking awkward questions during the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -445,10 +445,10 @@ export const crRemainingQuestions = [
     question:
       'Under the Consumer Rights Act 2015, if a service cannot be re-performed or is not re-performed within a reasonable time, the consumer is entitled to:',
     options: [
-      'Hear, Empathise, Apologise, Resolve, Do follow up',
-      'What has changed, why it changed, the cost, and the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature',
+      'Statutory interest of 8% above base rate on the price paid',
+      'An automatic right to cancel the contract with no payment due',
       'A price reduction, which may be up to 100% of the cost (a full refund)',
-      '£40 (up to £999.99), £70 (£1,000-£9,999.99), £100 (£10,000+)',
+      'Fixed compensation of £40, £70 or £100 depending on the value',
     ],
     correctAnswer: 2,
     explanation:
@@ -463,10 +463,10 @@ export const crRemainingQuestions = [
     question:
       'Why should an electrician give an estimate rather than a quote for a rewire in a property they have not fully surveyed?',
     options: [
-      'For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional',
-      'Include the statutory interest entitlement in your terms and conditions, reference it in friendly reminders as a factual statement rather than a threat, and only formally claim it after the letter before action stage',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'An estimate allows flexibility for unforeseen work (hidden junction boxes, asbestos, damaged existing wiring), while a quote locks in a fixed price regardless of what is discovered',
+      'An estimate is legally binding, whereas a quote can always be revised later on',
+      'A quote protects the client better because the price can never increase at all',
+      'There is no practical difference once the work has been agreed verbally on site',
+      'An estimate flexes for unforeseen work, while a fixed quote holds regardless of what is found',
     ],
     correctAnswer: 3,
     explanation:
@@ -481,10 +481,10 @@ export const crRemainingQuestions = [
     question:
       'A domestic client wants to withhold the final payment because they are unhappy with the position of one light fitting, even though all other work is completed to a high standard. What are their rights under the Consumer Rights Act 2015?',
     options: [
-      'They can request the light fitting be repositioned (right to repair) but cannot withhold a disproportionate amount relative to the defect',
-      'A customer who has a problem resolved exceptionally well may become more loyal than one who never experienced a problem',
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
-      'Setting realistic or slightly conservative expectations and then exceeding them through quality, speed, or service',
+      'They can require the fitting be repositioned but cannot withhold a sum out of proportion to the defect',
+      'They are entitled to withhold the entire final payment until every last item is perfect',
+      'They have no rights at all here because the work is essentially complete already',
+      'They can demand that the whole installation be redone for them free of charge',
     ],
     correctAnswer: 0,
     explanation:
@@ -499,10 +499,10 @@ export const crRemainingQuestions = [
     question:
       'An electrician discovers mid-project that the existing consumer unit contains asbestos. The client refuses to pay for the additional cost of licensed asbestos removal. How should this be handled?',
     options: [
-      "An estimate allows flexibility for unforeseen work (hidden junction boxes, asbestos, damaged existing wiring), while a quote locks in a fixed price regardless of what is discovered",
-      "Explain the legal requirement for licensed removal, present it as a variation with clear costs, and document the client's refusal if they still decline — then pause work on that element until resolved",
-      "Include the statutory interest entitlement in your terms and conditions, reference it in friendly reminders as a factual statement rather than a threat, and only formally claim it after the letter before action stage",
-      "To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints",
+      "Remove the asbestos yourself quickly to keep the job on its original schedule",
+      "Explain the legal need for licensed removal, raise it as a costed variation, document any refusal and pause that element",
+      "Absorb the cost of licensed removal yourself to avoid upsetting the paying client",
+      "Work carefully around the asbestos and complete the job as it was originally quoted",
     ],
     correctAnswer: 1,
     explanation:
@@ -517,10 +517,10 @@ export const crRemainingQuestions = [
     question:
       'How does the service recovery paradox apply specifically to electrical contracting, and what are its limits?',
     options: [
-      'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
-      'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
-      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
+      'It applies universally, so deliberately creating problems and fixing them builds loyalty',
+      'It works only for commercial clients and never for ordinary domestic customers',
+      'It works when the failure was not negligent and recovery is swift and genuine, but not for repeat failures or safety issues',
+      'It guarantees a positive online review regardless of how the complaint is handled',
     ],
     correctAnswer: 2,
     explanation:
@@ -535,10 +535,10 @@ export const crRemainingQuestions = [
     question:
       'A client has not paid a £4,500 invoice that is now 60 days overdue. The electrician has sent a friendly reminder and a formal reminder with no response. What should the next step be before issuing a letter before action?',
     options: [
-      'The amount owed, how it was calculated, details of interest/charges, information about free debt advice, and a response deadline',
-      'Acknowledge the request positively, explain it falls outside the original scope, and offer to price it as additional work',
-      'Regular updates prevent anxiety, build trust, and reduce the likelihood of complaints and disputes',
-      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
+      'Issue the letter before action immediately to save time and force the issue',
+      'Begin small claims proceedings straight away without any further client contact',
+      'Write off the debt as a bad lesson in credit control and move on from it',
+      'Phone the client to discuss it, check for any dispute and try to agree a payment plan',
     ],
     correctAnswer: 3,
     explanation:
@@ -553,10 +553,10 @@ export const crRemainingQuestions = [
     question:
       'A client claims the Consumer Rights Act 2015 entitles them to a full refund because they changed their mind about the colour of the sockets after installation. Is this claim valid?',
     options: [
-      'No — the Consumer Rights Act covers failure to perform with reasonable care and skill, not change of mind; the sockets were installed as agreed and meet the required standard',
-      'An estimate allows flexibility for unforeseen work (hidden junction boxes, asbestos, damaged existing wiring), while a quote locks in a fixed price regardless of what is discovered',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional',
+      'No — the Act covers failure to use reasonable care and skill, not change of mind; the sockets were fitted as agreed',
+      'Yes — the Act gives an automatic 14-day right to change your mind on any installed goods',
+      'Yes — any dissatisfaction with the finished work entitles the consumer to a full refund',
+      'Partly — the client is entitled to a 50% refund for a change of mind after installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -571,10 +571,10 @@ export const crRemainingQuestions = [
     question:
       'What strategic considerations should an electrician weigh before pursuing a £2,000 debt through the Small Claims Court?',
     options: [
-      'It keeps the client informed, manages expectations about the next day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction',
-      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
+      'Only the size of the debt matters; all of the other factors are irrelevant here',
+      'Court fees, time, enforcement difficulty, relationship damage and the debtor\'s means to pay',
+      'Whether the client left a positive review and is likely to recommend you to others',
+      'Solely whether you can recover the statutory interest under the Late Payment Act',
     ],
     correctAnswer: 1,
     explanation:
@@ -589,10 +589,10 @@ export const crRemainingQuestions = [
     question:
       'How should an electrician respond to a client who makes a legitimate complaint about a genuine defect?',
     options: [
-      'Include the statutory interest entitlement in your terms and conditions, reference it in friendly reminders as a factual statement rather than a threat, and only formally claim it after the letter before action stage',
-      'Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty',
-      'Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction',
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
+      'Deny the defect exists and ask the client to provide independent proof of it',
+      'Offer a partial refund straight away rather than returning to fix the work properly',
+      'Apply the HEARD framework: hear, empathise, apologise, resolve the defect, then follow up',
+      'Refer the client straight to your insurer and avoid any further contact yourself',
     ],
     correctAnswer: 2,
     explanation:
@@ -607,10 +607,10 @@ export const crRemainingQuestions = [
     question:
       'An electrician quotes £3,200 for a kitchen rewire. During the work, they discover the existing ring final circuit is in far worse condition than visible during the survey, requiring an additional £800 of work. The client says "A quote is a quote — you should honour it." Who is correct?',
     options: [
-      'Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty',
-      'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
+      'The client is entirely correct — a quote can never be increased for any reason at all',
+      'The electrician is entirely correct — any extra work always justifies extra charges',
+      'Neither is correct — the contract becomes void as soon as unforeseen work is found',
+      'Both have a point — a quote is generally fixed, but genuinely unforeseeable work can be a documented, agreed variation',
     ],
     correctAnswer: 3,
     explanation:
@@ -625,10 +625,10 @@ export const crRemainingQuestions = [
     question:
       'How can the Late Payment of Commercial Debts Act 1998 be used strategically without damaging commercial relationships?',
     options: [
-      'Include the statutory interest entitlement in your terms and conditions, reference it in friendly reminders as a factual statement rather than a threat, and only formally claim it after the letter before action stage',
-      'The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
+      'State the interest entitlement in your terms, mention it factually in reminders and claim it only after the letter before action',
+      'Apply the maximum interest from day one of every invoice to discourage any late payment',
+      'Never mention the interest entitlement at all so the client is not put off working with you',
+      'Charge the interest only on genuinely disputed invoices, never on simple late payments',
     ],
     correctAnswer: 0,
     explanation:
@@ -643,10 +643,10 @@ export const crRemainingQuestions = [
     question:
       'A client makes an unreasonable complaint and threatens to leave a negative online review unless the electrician provides free additional work. How should this be handled?',
     options: [
-      "It keeps the client informed, manages expectations about the next day's work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication",
-      "Acknowledge the client's concern, explain clearly what was agreed and delivered, maintain professional boundaries, and document the conversation — reviews based on genuine experience are fair, but threats to extort free work should not be rewarded",
-      "Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible",
-      "Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction",
+      "Immediately carry out the free work to prevent the negative review being posted online",
+      "Acknowledge the concern, explain what was agreed and delivered, hold your boundaries and document the threat",
+      "Ignore the client entirely and block their number to avoid any further confrontation",
+      "Threaten the client with a defamation claim before they have even posted anything yet",
     ],
     correctAnswer: 1,
     explanation:
@@ -661,10 +661,10 @@ export const crRemainingQuestions = [
     question:
       'What is the key difference between applying the HEARD framework to a legitimate complaint versus an unreasonable one?',
     options: [
-      'No — the Consumer Rights Act covers failure to perform with reasonable care and skill, not change of mind; the sockets were installed as agreed and meet the required standard',
-      'The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first',
-      'For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional',
-      'It keeps the client informed, manages expectations about the next day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication',
+      'There is no difference at all; the same five steps are applied identically to both',
+      'The framework is abandoned entirely once a complaint is judged unreasonable',
+      'All five steps apply to legitimate ones; for unreasonable ones the later steps are adapted to hold boundaries',
+      'Only the Hear step is used for legitimate complaints; all five are used for unreasonable ones',
     ],
     correctAnswer: 2,
     explanation:
@@ -679,10 +679,10 @@ export const crRemainingQuestions = [
     question:
       "An electrician completed work six months ago. The client now reports a fault and demands free repair, claiming it is a warranty issue. The fault is caused by water damage from a leaking pipe above. What is the electrician's position?",
     options: [
-      'Explain the legal requirement for licensed removal, present it as a variation with clear costs, and document the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s refusal if they still decline — then pause work on that element until resolved',
-      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
-      'For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional',
-      'The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first',
+      'Carry out the repair free of charge, as any fault within a year is a warranty claim',
+      'Refuse to attend at all, since the work is out of any guarantee period after six months',
+      'Tell the client to claim on their own home insurance and then take no further action',
+      'Investigate, identify the water damage as the cause, document it and offer a paid repair after the plumbing is fixed',
     ],
     correctAnswer: 3,
     explanation:
@@ -697,10 +697,10 @@ export const crRemainingQuestions = [
     question:
       'What are the benefits of providing proactive updates at the end of each day during a domestic rewire?',
     options: [
-      "It keeps the client informed, manages expectations about the next day's work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication",
-      "No — the Consumer Rights Act covers failure to perform with reasonable care and skill, not change of mind; the sockets were installed as agreed and meet the required standard",
-      "For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional",
-      "Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding",
+      "It keeps the client informed, sets expectations for the next day, builds trust and records the communication",
+      "It allows the electrician to justify charging for the extra time spent on site",
+      "It is a mandatory legal requirement imposed under the Consumer Rights Act 2015",
+      "It removes the need to agree any written variation orders during the course of the job",
     ],
     correctAnswer: 0,
     explanation:

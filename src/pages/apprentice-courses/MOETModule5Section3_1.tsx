@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'estop-colour',
     question: 'What colour and shape must an emergency stop actuator be?',
     options: [
-      'Add capacitors to offset inductive effects',
-      'Insulation monitoring device verification',
-      'Estimating annual energy consumption',
-      'Red mushroom-head on yellow background',
+      'Green flush push-button on a black background',
+      'Yellow flat-faced button on a red background',
+      'Black mushroom-head on a grey background',
+      'Red mushroom-head on a yellow background',
     ],
     correctIndex: 3,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'Why must E-stop circuits use normally closed (NC) contacts?',
     options: [
       'NC contacts provide fail-safe operation — a broken wire or contact failure causes the circuit to open and stop the machine',
-      'Make the relevant information available to anyone who is liable to disturb the asbestos-containing materials, including contractors and maintenance workers',
-      'Reg 411.3.2.2 — for TN systems, a fault of negligible impedance shall be disconnected within the times stated in Table 41.1.',
-      'Listen carefully without interrupting, giving the client space to express their frustration',
+      'NC contacts draw less current than NO contacts, reducing heat in the control panel',
+      'NC contacts switch faster than NO contacts, giving a quicker stop time',
+      'NC contacts are colour-coded to match the red actuator for easy identification',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'estop-cat',
     question: 'Under IEC 60204-1, a Category 0 stop is:',
     options: [
-      'Filtering hazardous dusts including asbestos fibres using a HEPA filter',
+      'A controlled deceleration with power maintained until the machine halts',
       'An uncontrolled stop by immediately removing power to machine actuators',
-      'DC isolation, thermal runaway risk and gas ventilation',
-      'Previous suicide attempts, mental health conditions, substance misuse, and social isolation',
+      'A controlled stop with power retained on the actuators after halting',
+      'A programmed soft stop sequenced by the standard PLC',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'estop-reset',
     question: 'What must happen when an E-stop button is reset?',
     options: [
-      'Protective conductors, including protective bonding conductors; and in the case of ring final circuits, live conductors.',
-      'Principal Accountable Person, with golden-thread information duties through the Building Safety Regulator',
+      'The machine restarts automatically as soon as the button is released',
+      'All other E-stops on the machine reset at the same time',
       'The safety circuit is re-enabled but a separate start command is needed to restart the machine',
-      'So employees know who they can approach for support and how to reach them',
+      'The safety relay clears its fault log and resumes the interrupted cycle',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS EN ISO 13850 specifies that an E-stop must:',
     options: [
-      'Outdoor temperatures are very low or high-temperature DHW is needed',
+      'Complete the current machine cycle before stopping',
       'Override all other functions and halt the machine immediately',
-      'Minimum annual hours of recorded development',
-      'To restore system readiness for emergencies',
+      'Operate only when the guard interlock is also opened',
+      'Be reset automatically once the hazard has cleared',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'An E-stop actuator must be:',
     options: [
-      'Provision and Use of Work Equipment Regulations 1998 (PUWER) Reg 5',
-      'Have it professionally repaired and recalibrated',
+      'Spring-return — it releases automatically when let go',
+      'Key-operated so only authorised staff can use it',
       'Self-latching — it stays engaged until manually reset',
-      'A contactor (the first contactor in the circuit)',
+      'Recessed behind a guard to prevent accidental operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'E-stop circuits in series (daisy-chained) means:',
     options: [
-      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
-      'Test, maintain and verify the correct operation of E-stop circuits and document results',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
+      'Only the last E-stop in the chain can stop the machine',
+      'Each E-stop must be reset in turn before the machine can restart',
+      'The machine stops only when every E-stop is pressed together',
       'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'The reset of an E-stop must:',
     options: [
       'Only re-enable the safety circuit — a separate start command is needed to restart the machine',
-      'Along extended machinery where an E-stop button cannot be reached quickly',
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
+      'Immediately restart the machine from where it stopped',
+      'Be possible from the HMI screen without touching the button',
+      'Clear all stored alarms and resume the production cycle',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where should E-stops be positioned?',
     options: [
-      'Test, maintain and verify the correct operation of E-stop circuits and document results',
+      'Only inside the main control panel, away from operators',
       'At every operator position and at points of access/egress to danger zones',
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
+      'At a single central location for the whole production line',
+      'At least three metres from any moving part of the machine',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'IEC 60204-1 requires E-stop wiring to be:',
     options: [
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
-      'Only re-enable the safety circuit — a separate start command is needed to restart the machine',
+      'Run alongside the power cables to save on containment',
+      'Routed entirely through the standard PLC inputs and outputs',
       'Separate from control wiring and clearly identified, with no possibility of being bypassed',
-      'Test, maintain and verify the correct operation of E-stop circuits and document results',
+      'Colour-coded green to match the start circuit conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'A dual-channel E-stop circuit provides:',
     options: [
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
-      'Monitors the E-stop circuit, provides force-guided contacts, and prevents restart if a fault is detected',
+      'A faster stop time by switching twice the current',
+      'A backup supply so the machine keeps running during a fault',
+      'A second start button for convenience at remote positions',
       'Redundancy — two independent channels monitor the E-stop, detecting single faults',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'Testing an E-stop circuit should be performed:',
     options: [
       'At regular intervals as specified in the maintenance schedule, verifying both the stop function and the reset/restart sequence',
-      'Only re-enable the safety circuit — a separate start command is needed to restart the machine',
-      'Monitors the E-stop circuit, provides force-guided contacts, and prevents restart if a fault is detected',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
+      'Only once at initial commissioning of the machine',
+      'Only after a reported fault or an actual emergency stop',
+      'Annually by the DNO during the periodic supply inspection',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'A cable-pull (rope-pull) emergency stop is used:',
     options: [
-      'At every operator position and at points of access/egress to danger zones',
+      'Only on overhead cranes and lifting equipment',
       'Along extended machinery where an E-stop button cannot be reached quickly',
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
-      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
+      'As a replacement for guarding on rotating machinery',
+      'Where the machine has no mains supply to monitor',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'The safety relay in an E-stop circuit:',
     options: [
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
-      'At regular intervals as specified in the maintenance schedule, verifying both the stop function and the reset/restart sequence',
+      'Steps the control voltage down from 230 V to 24 V DC',
+      'Provides the start signal once the operator presses reset',
       'Monitors the E-stop circuit, provides force-guided contacts, and prevents restart if a fault is detected',
-      'Test, maintain and verify the correct operation of E-stop circuits and document results',
+      'Limits the motor current during start-up to prevent nuisance trips',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under the Machinery Directive 2006/42/EC, E-stop provision is:',
     options: [
-      'Test, maintain and verify the correct operation of E-stop circuits and document results',
-      'Along extended machinery where an E-stop button cannot be reached quickly',
-      'Any E-stop in the chain can stop the machine — pressing any one opens the circuit',
+      'Required only on machinery rated above 11 kW',
+      'Optional where the machine has a guard interlock fitted',
+      'Required only on machinery sold before 2006',
       'Mandatory for all machinery unless the E-stop would not reduce risk',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'Under ST1426, a maintenance technician must be able to:',
     options: [
       'Test, maintain and verify the correct operation of E-stop circuits and document results',
-      'Separate from control wiring and clearly identified, with no possibility of being bypassed',
-      'Mandatory for all machinery unless the E-stop would not reduce risk',
-      'Along extended machinery where an E-stop button cannot be reached quickly',
+      'Design new safety circuits from first principles for any machine',
+      'Bypass a safety circuit temporarily to keep production running',
+      'Certify machinery as CE-marked on behalf of the manufacturer',
     ],
     correctAnswer: 0,
     explanation:

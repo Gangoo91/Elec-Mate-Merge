@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the sequence of operation in electrical fault diagnosis?',
     options: [
-      'Supporting development of less experienced colleagues',
+      'The order in which circuits are wired at the consumer unit',
       'The normal operational flow of the circuit',
-      'Through inhalation of airborne fibres into the lungs',
-      'BSRIA and Usable Buildings Trust',
+      'The list of test instruments used during inspection',
+      'The schedule for replacing protective devices',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is understanding normal operation important for fault finding?',
     options: [
-      'It provides quick wins by clearing small debts first',
-      'To ensure they point in the correct direction towards actual exits',
+      'It removes the need to isolate the circuit before work',
+      'It guarantees the fault is in the protective device',
       'It helps identify where the normal sequence breaks down',
-      'Circuit diagrams, control schematics, and operational manuals',
+      'It allows testing to be carried out while the circuit is live',
     ],
     correctIndex: 2,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'In a motor control circuit, what should happen before the motor starts?',
     options: [
-      'An industry body promoting sustainable building practices and policy',
-      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
-      'To understand cost, reliability, and transition challenges',
+      'The overload relay must trip to reset the circuit',
+      'The main contactor must close before the control circuit',
+      'The motor must reach full speed before energising',
       'Safety interlocks must be satisfied and control signals activated',
     ],
     correctIndex: 3,
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'How does sequence analysis help with complex systems?',
     options: [
       'It breaks them into logical, testable stages',
-      'Strip cores to different lengths for neat termination',
-      'It is lighter and cheaper per metre',
-      'Chest compressions without rescue breaths',
+      'It removes the need for circuit diagrams',
+      'It reduces the number of components in the system',
+      'It allows faults to be repaired without isolation',
     ],
     correctIndex: 0,
     explanation:
@@ -72,10 +72,10 @@ const Module7Section4_2 = () => {
       id: 1,
       question: "What does 'sequence of operation' mean in electrical systems?",
       options: [
-        'A socket shown as single in one place but double in another',
+        'The order in which cables are colour-coded',
         'The normal operational flow and timing of circuit functions',
-        'Voltage drop due to overloading or poor connections',
-        'That systems must be safe and maintained in a safe condition',
+        'The maximum demand calculated for the installation',
+        'The rated breaking capacity of the protective devices',
       ],
       correctAnswer: 1,
       explanation:
@@ -85,10 +85,10 @@ const Module7Section4_2 = () => {
       id: 2,
       question: 'How does understanding sequence help in fault diagnosis?',
       options: [
-        'That the requirements of BS 7671 have been met by inspection AND testing',
-        'Reducing heating/cooling setpoints during unoccupied periods',
+        'It confirms the circuit complies with BS 7671 without testing',
+        'It removes the need to use test instruments',
         'It helps identify where the normal operational flow is interrupted',
-        'Motor circuits and equipment with moderate inrush current',
+        'It guarantees the fault lies in the supply cable',
       ],
       correctAnswer: 2,
       explanation:
@@ -98,9 +98,9 @@ const Module7Section4_2 = () => {
       id: 3,
       question: 'In a lighting circuit, what is the normal sequence of operation?',
       options: [
-        'To prevent further injury, reduce pain, and minimise blood loss',
-        'Providing networking, influence, and development opportunities',
-        'Ensure operators are trained and equipment is inspected',
+        'Lamp → Switch → Neutral return → Supply → Protection',
+        'Switch → Supply → Protection → Neutral return → Lamp',
+        'Neutral return → Lamp → Protection → Switch → Supply',
         'Supply → Protection → Switch → Lamp → Neutral return',
       ],
       correctAnswer: 3,
@@ -112,9 +112,9 @@ const Module7Section4_2 = () => {
       question: 'What happens if the neutral connection fails in this sequence?',
       options: [
         'Circuit cannot complete and lamp will not illuminate',
-        'DC isolation and dual energy source considerations',
-        'Lines of constant moisture content (humidity ratio)',
-        'Minor Works Certificate or EIC as appropriate, plus fault report',
+        'The lamp glows brighter than normal',
+        'The protective device trips immediately',
+        'The lamp continues to operate at reduced output',
       ],
       correctAnswer: 0,
       explanation:
@@ -137,10 +137,10 @@ const Module7Section4_2 = () => {
       id: 6,
       question: 'Why should fault finding follow the operational sequence?',
       options: [
-        'Retracted or removed before the tower is moved',
-        'Unified control with voice commands executing hub automations',
+        'It avoids the need to isolate the supply',
+        'It always locates the fault at the first test point',
         'It provides logical progression and prevents missing faults',
-        'Material verification, tool checks, safety equipment, and drawing reviews',
+        'It removes the need to consult circuit diagrams',
       ],
       correctAnswer: 2,
       explanation:
@@ -150,9 +150,9 @@ const Module7Section4_2 = () => {
       id: 7,
       question: 'What should you do if a circuit deviates from expected sequence?',
       options: [
-        '£36 million (Modern Slavery Act 2015 s.54)',
-        'Do not energise until fault is found and rectified',
-        'Complex, skilled tasks requiring creativity and problem-solving',
+        'Ignore it if the circuit still appears to work',
+        'Replace the protective device as a first step',
+        'Re-energise repeatedly until the fault clears itself',
         'Investigate the deviation point as potential fault location',
       ],
       correctAnswer: 3,
@@ -176,10 +176,10 @@ const Module7Section4_2 = () => {
       id: 9,
       question: 'What documentation helps understand circuit sequences?',
       options: [
-        'Adaptive comfort model allowing higher temperatures in summer',
+        'Material delivery notes and purchase orders',
         'Circuit diagrams, control schematics, and operational manuals',
-        'Form a neat hook and ensure full contact with terminal',
-        'To confirm the supply has correct phase and neutral identification',
+        'The installation’s electricity supply contract',
+        'Manufacturer warranty and guarantee certificates',
       ],
       correctAnswer: 1,
       explanation:
@@ -189,10 +189,10 @@ const Module7Section4_2 = () => {
       id: 10,
       question: 'When should sequence analysis be performed?',
       options: [
-        'Between 450mm and 1200mm from finished floor level',
-        'To test all insulation and wiring in the circuit',
+        'Only after the faulty component has been replaced',
+        'Only when the circuit has completely failed',
         'Before starting any fault diagnosis work',
-        'Dust, moisture and corrosive substances',
+        'Only during the final verification stage',
       ],
       correctAnswer: 2,
       explanation:

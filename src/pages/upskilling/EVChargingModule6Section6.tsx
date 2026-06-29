@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m6s6-check2',
     question: 'What are the main sections of an Electrical Installation Certificate (EIC)?',
     options: [
-      'Customer details and payment information',
       'Installation details, design/construction, inspection/testing, declarations',
-      'Product specifications and warranty terms',
-      'Site survey and quotation',
+      'Customer details, deposit paid, balance due and payment method',
+      'Equipment make, model, serial number and warranty period',
+      'Site survey notes, quotation and agreed completion date',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An EIC has four main sections: 1) Installation Details, 2) Design and Construction compliance, 3) Inspection and Testing results, and 4) Declarations and Signatures.',
   },
@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       'Which regulations make installation certificates mandatory for EV charging installations?',
     options: [
-      'Health and Safety at Work Act only',
+      'Local authority planning permission and building notice',
+      'The Health and Safety at Work etc. Act 1974 alone',
       'Building Regulations Part P and BS 7671',
-      'OZEV grant requirements only',
-      'Local authority planning permission',
+      'OZEV grant terms and DNO connection approval',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Installation certificates are legally required by Building Regulations Part P (notifiable electrical work) and BS 7671 (Wiring Regulations) for new electrical installations including EV charging.',
   },
@@ -72,12 +72,12 @@ const quizQuestions = [
     question:
       'A customer reports they sold their house but the buyer is querying the EV charger installation from 3 years ago. What documentation should exist?',
     options: [
-      'Just the original invoice',
-      'Nothing is required after installation',
+      'Just the original sales invoice and receipt',
+      'Only the manufacturer’s product warranty card',
+      'Nothing formal — EV chargers are exempt once commissioned',
       'Installation certificate, test results, and notification records',
-      "Only the manufacturer's warranty",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Complete records should exist: Electrical Installation Certificate, Schedule of Test Results, Building Regulations notification (or competent person scheme certificate), and ideally a copy retained by the installer. These documents transfer with the property and prove compliance.',
   },

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'access-bms-integration',
     question: 'What is one key benefit of integrating access control with a BMS?',
     options: [
-      'Reduced door hardware costs',
       'Automatic energy management based on occupancy',
-      'Elimination of key management',
-      'Faster door opening speeds',
+      'Lower cost of the door lock hardware',
+      'Removal of any need for keys on site',
+      'Faster physical opening of the doors',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'When access control integrates with BMS, badge events can trigger automatic energy management - lighting, HVAC, and equipment activation based on actual occupancy, achieving significant energy savings while maintaining comfort.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: "What does 'fail-safe' mean for an electromagnetic lock?",
     options: [
       'The lock engages more firmly when power fails',
-      'The lock releases and door unlocks when power is removed',
-      'The lock has a backup battery',
-      'The lock cannot be bypassed',
+      'The lock holds its last state when power is removed',
+      'The lock releases and the door unlocks when power is removed',
+      'The lock relies on a backup battery to stay locked',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A fail-safe lock releases when power is removed, allowing the door to open. This is critical for fire exits and escape routes where people must be able to evacuate during power failures.',
   },
@@ -37,19 +37,19 @@ const quickCheckQuestions = [
     id: 'fire-alarm-integration',
     question: 'Why must access-controlled fire exits integrate with the fire alarm system?',
     options: [
-      'To prevent false alarms',
-      'To automatically unlock during fire evacuation',
-      'To reduce power consumption',
-      'To simplify installation',
+      'To prevent false alarms on the access system',
+      'To reduce the standby power consumption',
+      'To simplify the cabling installation',
+      'To automatically unlock the doors during fire evacuation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Fire exits with access control must integrate with fire alarm panels to automatically unlock during emergencies, ensuring clear evacuation routes. This is a legal requirement under BS 7273-4.',
   },
   {
     id: 'maglock-power',
     question: 'What typical power supply do electromagnetic locks require?',
-    options: ['230V AC mains supply', '12V or 24V DC', '48V DC PoE', '5V USB'],
+    options: ['230V AC mains supply', '12V or 24V DC', '48V DC supply', '110V AC supply'],
     correctIndex: 1,
     explanation:
       'Electromagnetic locks typically operate on 12V or 24V DC, supplied from dedicated access control power supplies with battery backup. This low voltage ensures safety and allows integration with standard access control systems.',

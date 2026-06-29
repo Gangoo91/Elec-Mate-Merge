@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What is the difference between State of Charge (SoC) and State of Health (SoH) on a BESS?',
     options: [
-      'Identical',
-      'SoC = how much energy is in the battery right now as a percentage of CURRENT capacity (0-100%, dynamic, changes minute-by-minute as battery charges / discharges). SoH = how much CAPACITY remains relative to original at install (typically 100% new, drops 0.5-2% per year, 70-80% end-of-warranty threshold). SoC tells you operational state; SoH tells you lifecycle health',
-      'SoC is health',
-      'Random',
+      'They are the same metric reported under two different names by the BMS',
+      'SoC is the present charge as a percentage of current capacity; SoH is lifecycle capacity vs new',
+      'SoC is the lifecycle health metric and SoH is the moment-to-moment charge level',
+      'SoC measures temperature and SoH measures voltage; neither relates to capacity',
     ],
     correctIndex: 1,
     explanation:
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What does a modern BMS continuously monitor + report?',
     options: [
-      'Just SoC',
-      'Modern BMS reports comprehensively: per-cell voltage (typically tens-hundreds of cells in a residential BESS), per-cell or per-module temperature, pack-level SoC + SoH, DC bus voltage + current, charge / discharge cycle count, fault states (over-voltage, under-voltage, over-temp, over-current, isolation fault), communications health, firmware version, alarm history. The data is logged + accessible via the customer monitoring portal + installer cloud + integrated into cert evidence bundle for periodic review',
-      'Random',
-      'Only voltage',
+      'Only the pack state of charge, which is the single value the customer needs to see',
+      'Only the overall pack voltage, since cell-level data is not available to the BMS at all',
+      'Per-cell voltage and temperature, pack SoC/SoH, DC bus, cycle count, faults, comms and firmware',
+      'Nothing in real time; the BMS only stores a single snapshot taken at commissioning',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Modern BMS comprehensive monitoring: (1) Per-cell voltage — typically every cell (LFP residential BESS has 16-32+ cells per module; large commercial may have hundreds). Cell-balance is critical for safe operation + capacity. (2) Per-cell or per-module temperature — thermal management is safety-critical for lithium chemistry. Multiple temperature sensors. (3) Pack-level metrics — SoC, SoH, DC bus voltage, DC bus current, instantaneous power. (4) Cycle counting — charge / discharge cycle accumulator; full-equivalent-cycles vs partial cycles tracked separately; influences SoH calculation. (5) Fault states — over-voltage, under-voltage, over-temperature, over-current, isolation fault (insulation degradation), communication fault, BMS internal fault. (6) Communications — BMS to inverter to cloud / portal; comms health monitored. (7) Firmware version — track for security + capability updates. (8) Alarm history — events logged with timestamp + severity for troubleshooting + warranty claims. (9) Accessibility — manufacturer-installer portal + customer-facing portal (often simplified); installer cloud for fleet monitoring + bulk EICR-equivalent reporting. (10) Cert evidence bundle integration — commissioning baseline (SoH 100% + per-cell voltages all in spec) + ongoing review at EICR cycles.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What is an "EICR-equivalent" for BESS + how does it differ from standard AC EICR?',
     options: [
-      'Same as AC EICR',
-      'EICR-equivalent for BESS = periodic condition report adapted to the storage technology. Differences: (1) BMS data review — pull SoH trend + per-cell balance + fault history + cycle count from the BMS portal; (2) DC bus IR re-test per manufacturer + Table 64; (3) thermal imaging of connections + cells where possible (Reg 651.4); (4) functional verification of alarms + anti-islanding; (5) firmware check (security + capability); (6) manufacturer warranty review (most BESS have 10-yr SoH warranty); (7) AC-side EICR per standard. Frequency: aligned with AC EICR cycle (5-10 yr typical) + BMS continuous + manufacturer-recommended periodic',
-      'No EICR',
-      'Random',
+      'It is exactly the same as a standard AC periodic report with no storage-specific additions',
+      'No periodic report is needed at all because the BMS monitors the battery continuously',
+      'A periodic report adapted to storage: BMS review, DC bus IR re-test, thermal imaging and warranty',
+      'It is chosen ad hoc on the day, as no defined procedure exists for battery storage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'EICR-equivalent for BESS extends standard AC EICR with storage-specific elements: (1) BMS data review (the key BESS-specific input) — extract SoH trend over the period, per-cell voltage balance, fault history, cycle count, thermal events, comms health. The BMS-reported metrics are the lifecycle picture. (2) DC bus IR re-test — per manufacturer + Table 64; trend against commissioning baseline. (3) Thermal imaging — Reg 651.4 photographic + thermographic images can be appended to the report; thermal imager on connections + cells / modules where access permits identifies hot spots + degraded connections. (4) Functional verification — alarms triggered + verified + clearable; anti-islanding self-test per manufacturer; emergency shutdown functional. (5) Firmware check — BMS + inverter firmware up-to-date; security patches applied. (6) Manufacturer warranty review — most BESS have 10-yr warranty with SoH threshold (≥ 70% or 80%); document warranty status + alert customer if approaching. (7) AC-side EICR — standard Chapter 65 + Reg 651-653 review of the AC connections + protective devices. (8) Frequency — Reg 652.1 considers type of installation, equipment, use, maintenance, external influences; typical residential aligned to 5-10 yr cycle + BMS continuous between. (9) Documentation — EICR report + BMS data export + thermal images + manufacturer warranty status + cert evidence bundle updated.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'How does BMS data integrate into the cert evidence bundle over the BESS lifecycle?',
     options: [
-      'It doesn\'t',
-      'BMS data integrates at three stages: (1) Commissioning baseline — SoH 100% + per-cell voltages + initial cycle count = 0 + fault history empty + firmware version; recorded in initial cert evidence bundle. (2) Periodic snapshot — at EICR-equivalent (5-10 yr) extract BMS data: current SoH, cycle count, fault history summary, firmware updates applied; compare with baseline + previous periodic. (3) End-of-life / warranty event — extract BMS data + manufacturer warranty claim documentation. The BMS data is the lifecycle audit trail',
-      'Only at install',
-      'Random',
+      'At three stages — a commissioning baseline, a periodic snapshot, and an end-of-life export',
+      'BMS data is not part of the certification record and is held only by the manufacturer',
+      'It is captured once at install and never revisited at any point over the system’s life',
+      'It is recorded informally on the day and then discarded after each periodic review',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BMS data lifecycle integration with cert evidence bundle: (1) Commissioning baseline — at IV (M12.1-12.2), the manufacturer commissioning engineer + electrician extract initial BMS data: SoH = 100%, per-cell voltage balance (within manufacturer spec, typically all cells within 20-50 mV at given SoC), cycle count = 0, fault history empty, firmware version, alarm thresholds. This baseline is the lifecycle reference. (2) Periodic EICR-equivalent — at 5-10 yr cycle (Reg 652.1), extract current BMS data: SoH now (typical 80-90% after 5 yr cycling), per-cell balance (any cells drifting indicates issues), cycle count (cumulative), fault history summary (logged events + clearance), firmware updates applied + current version. Compare with baseline + previous periodic. (3) Warranty / replacement event — if BESS underperforms warranty SoH threshold OR develops persistent fault, extract BMS data for manufacturer claim. (4) End-of-life — when BESS retired (lifecycle 10-20 yr), extract BMS data for recycling documentation + customer record. (5) Customer-facing — simplified customer portal shows current SoC + SoH + yield; full BMS data goes to installer + manufacturer. (6) Documentation flow — every interaction with the BESS feeds the cert evidence bundle; comprehensive lifecycle record supports warranty + safety + customer transparency.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       '5-year EICR-equivalent on a 10 kWh BESS. BMS reports SoH = 85%, no faults, 1200 full-equivalent cycles. What is the verifier\'s read?',
     options: [
-      'Replace immediately',
-      'Healthy at 5 yr. SoH = 85% is within typical LFP degradation curve (0.5-1.5%/yr × 5 yr = 7.5-15% degradation; 85% is mid-range). 1200 cycles in 5 yr = ~240 cycles/yr = ~0.66 cycles/day = reasonable for daily PV-paired self-consumption. No faults = BMS reports clean. Verifier records: SoH baseline → current trend, cycle count, confirm warranty status (most BESS warranties guarantee 70-80% SoH at 10 yr — on track), perform DC bus IR + functional verification + AC EICR. Report as satisfactory continued service',
-      'No assessment possible',
-      'Random',
+      'Replace the battery immediately, since any SoH reading below 90% indicates the cells have failed',
+      'Treat the warranty as automatically void, because 1200 cycles already exceeds the permitted limit',
+      'No assessment is possible from BMS data alone; only the manufacturer can judge the battery condition',
+      'Healthy for 5 years of daily self-consumption — record the trend and report satisfactory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BESS condition assessment at 5 yr: SoH = 85% + no faults + 1200 cycles is a healthy lifecycle position for typical LFP BESS. (1) SoH interpretation: LFP degradation typically 0.5-1.5% per year depending on usage pattern; 5 yr × 1% average = 5% loss; 85% SoH means 15% lost — slightly above average but within normal range. (2) Cycle count interpretation: 1200 cycles / 5 yr = ~240 cycles/yr = ~0.66 cycles/day — typical for daily PV self-consumption (one PV+discharge cycle per day). LFP cells typically rated for 4000-6000 cycles at 100% DoD, so 1200 of 4000+ available = ~30% cycle life used — well within capacity. (3) Fault history clean = good. (4) Verifier actions: extract BMS data + trend chart (SoH from 100% at commissioning to 85% now); confirm cycle count vs manufacturer rated cycles; review alarm history (none); per-cell voltage balance review; DC bus IR re-test per manufacturer; thermal imaging connections + visible cells; AC-side EICR; firmware check; manufacturer warranty status (warranty typically 10 yr, ~70-80% SoH threshold; at 85% with 5 yr remaining at ~1%/yr trajectory = ~80% at 10 yr = meets warranty). (5) Report — satisfactory for continued service; customer informed of expected lifecycle trajectory; next EICR-equivalent in 5 yr.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'BMS reports SoH = 65% at 3-year EICR-equivalent on a 10 kWh BESS. What is the trigger for action?',
     options: [
-      'Acceptable',
-      'Investigate + warranty claim. 65% SoH at 3 yr is significantly below expected curve (typical 95-97% at 3 yr). Triggers: (1) extract BMS data — review cycle count (excessive cycling? deep DoD on every cycle?), fault history (recurring over-temp? cell imbalance?), per-cell voltage (any cells drifted out of pack?); (2) thermal imaging of cells + connections; (3) manufacturer warranty engagement — most BESS warranties guarantee SoH not below 70-80% within warranty period; 65% at 3 yr is a warranty event; (4) customer informed + manufacturer claim initiated; (5) interim operational decision — may continue limited use or take offline pending replacement',
-      'Random',
-      'No action',
+      'A warranty event — investigate the BMS data and engage the manufacturer warranty',
+      'Acceptable, since batteries are expected to lose roughly a third of their capacity within three years',
+      'No action unless the customer specifically complains about noticeably reduced runtime',
+      'Safely ignored, because SoH readings are inherently unreliable below 70%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Premature SoH degradation at 3-year EICR-equivalent: 65% SoH is FAR below expected curve. Expected at 3 yr: 95-97% (typical LFP 1%/yr loss). 65% = 35% loss = ~5x faster than expected. Triggers: (1) BMS data deep-dive — cycle count (excessive cycling indicates usage pattern issue or BMS misreport); fault history (recurring over-temp events accelerate degradation; cell imbalance suggests cell or module failure); per-cell voltage (cells drifting out of pack indicate cell failure); thermal events (over-temp accelerates capacity loss). (2) Physical inspection — thermal imager on cells + connections; visible inspection for swelling / damage / electrolyte leakage on cells where access permits. (3) Manufacturer engagement — warranty event. Most BESS warranties (Tesla Powerwall, GivEnergy, Sonnen, etc) guarantee SoH not below threshold (usually 70-80% at 10 yr); 65% at 3 yr is firmly within warranty + investigation territory. (4) Customer engagement — operating impact (battery now holds 6.5 kWh not 10 kWh); explain warranty position + manufacturer claim process; interim usage decision (may continue limited use with reduced expectations OR take offline pending resolution). (5) Documentation — comprehensive BMS data export + thermal images + verifier report + manufacturer claim correspondence; cert evidence bundle updated. (6) Root cause — installer reviews install conditions (over-temperature exposure, oversized cycling demand) + manufacturer reviews cell batch + BMS calibration. UK 2025-26 reality: warranty claims happen + manufacturer support typically engaged within 1-3 months for resolution.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'What is "cell balancing" + why does it matter for BESS condition reporting?',
     options: [
-      'Cosmetic',
-      'Cell balancing = the BMS function that equalises voltage across cells in series. As cells charge / discharge, slight differences cause voltage drift; without balancing the highest-voltage cell hits over-voltage cut-off + lowest-voltage cell hits under-voltage cut-off long before pack reaches full SoC range. BMS uses passive (dissipate excess from high cell via resistor) or active (transfer charge between cells) balancing. Imbalanced cells = reduced usable capacity + accelerated degradation of the weak cell + lifecycle reduction. Condition reporting: per-cell voltage review identifies imbalance; growing imbalance = cell or BMS problem',
-      'Optional',
-      'Random',
+      'A cosmetic display feature that simply tidies up the cell-voltage graph shown in the portal',
+      'An optional setting the customer can disable to make the battery charge noticeably faster',
+      'The BMS function equalising voltage across series cells, so per-cell spread reveals imbalance',
+      'A manual recalibration the installer must perform at every site visit using a multimeter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cell balancing fundamentals: (1) Why needed — lithium cells in series have slight manufacturing variation + drift over cycles; without balancing the strongest cell hits its over-voltage cut-off first (and weakest cell hits under-voltage first) — limiting the usable pack capacity to the weakest cell. (2) Passive balancing — most common in residential BESS — high-voltage cell\'s excess charge dissipated through resistor (slow + simple + reliable). (3) Active balancing — higher-end commercial BESS — charge transferred between cells via DC-DC converter (faster + more efficient but more complex + costly). (4) Balance check at commissioning — BMS reports per-cell voltages all within manufacturer spec (typically all cells within 20-50 mV at given SoC). Initial check is structural — bad balance at commissioning indicates manufacturing defect or install fault. (5) Periodic check — at EICR-equivalent (5-10 yr) review per-cell voltage spread; growing spread (e.g. one cell consistently 100+ mV below others) indicates that cell is failing — likely warranty event. (6) Operational impact — imbalanced pack = reduced usable capacity (BMS clamps at the weakest cell\'s limits) + accelerated degradation of the weak cell + cycle life reduction. (7) Documentation — BMS data export includes per-cell voltage table; condition report identifies any anomalies; trending over EICR cycles shows degradation pattern. (8) Cert evidence bundle: commissioning baseline + periodic per-cell voltage records + any manufacturer interventions.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'BESS thermal management — what role does it play in condition reporting?',
     options: [
-      'None',
-      'Thermal management = the BMS + physical thermal system (heatsinks, vents, fans, sometimes liquid cooling) that keeps cells in optimum temperature range. Cells operated outside ~15-35°C accelerate degradation (cold cells = high internal resistance + capacity loss; hot cells = chemical degradation + safety risk). Condition reporting: (1) review BMS temperature logs for excursions outside range; (2) thermal imaging at EICR-equivalent identifies hot spots in cells / connections; (3) physical inspection of vents / fans / cooling; (4) any over-temp events logged indicate root cause to investigate',
-      'Random',
-      'Cooling only',
+      'No role at all; cell temperature has no bearing on battery health or on condition reporting',
+      'A pure cooling function carrying no monitoring or condition-reporting value whatsoever',
+      'The customer alone is responsible for managing the battery’s operating temperature after handover',
+      'It keeps cells in their optimum 15–35°C range; reporting reviews temperature logs and thermal images',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BESS thermal management + condition reporting: (1) Optimal temperature range — typically 15-35°C for cell operation; some chemistries tolerate -10 to 50°C with reduced performance. (2) Cold cell issues — high internal resistance + reduced charge / discharge rate + reduced capacity available + accelerated SEI layer growth = capacity loss. (3) Hot cell issues — chemical degradation accelerates exponentially with temperature; safety risk (thermal runaway at extreme temperatures); fire / explosion risk for damaged cells. (4) Thermal management system — passive (heatsinks + enclosure + spacing for natural convection — typical residential BESS); active (fans for forced air — mid-range residential); liquid cooling (some high-end residential + most commercial). (5) BMS monitoring — multiple temperature sensors logged continuously; thresholds for warning + alarm + shutdown. (6) Condition reporting elements: (a) extract BMS temperature logs over the period — look for excursions (was the BESS ever above 40°C? below 0°C? for how long?); (b) thermal imaging during EICR-equivalent — Reg 651.4 thermographic images appended; identifies hot spots in cell modules + DC busbar connections + AC terminations; (c) physical inspection — vents clear of debris / spider webs; fans rotating freely; liquid cooling levels (if applicable); enclosure ventilation per manufacturer spec; (d) install location review — has the install location heating profile changed (e.g. new boiler installed nearby; loft conversion changes garage thermal envelope)? (7) Documentation — temperature log summary + thermal images + physical inspection notes; cert evidence bundle updated.',
   },
@@ -135,27 +135,27 @@ const quizQuestions = [
     question:
       'Customer education on BESS condition reporting — what should the installer cover?',
     options: [
-      'Nothing',
-      'At handover + ongoing: (1) Operating portal access — show the customer-facing portal: SoC, SoH, yield, alerts. (2) Expected lifecycle — SoH degradation curve (~1%/yr typical), warranty terms (10 yr SoH ≥ 70-80%), end-of-life trajectory. (3) Alert response — what alerts mean + when to call installer. (4) Periodic schedule — annual quick check + 5-10 yr EICR-equivalent. (5) Fault response — emergency shutdown location + procedure; never open BESS enclosure; call installer / manufacturer. (6) Records — handover pack + EICR-equivalent reports kept; warranty registration confirmed. Avoiding "silent failure" requires customer knowing what to look for',
-      'Only at install',
-      'Random',
+      'Portal access, expected degradation, warranty terms, fault response and periodic schedule',
+      'Nothing at all; condition reporting is purely an installer matter the customer never needs to understand',
+      'Only a single one-off explanation at install, with no ongoing engagement or follow-up expected',
+      'Only the warranty paperwork, since the portal and lifecycle detail would only confuse the customer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Customer education + ongoing engagement on BESS: (1) Operating portal — show the customer how to access the manufacturer\'s customer-facing portal (web + mobile app); explain SoC (today\'s charge level), SoH (lifecycle health), yield contribution, alert indicators. Walk through a real-time view + a daily / weekly summary. (2) Expected lifecycle — SoH typically degrades ~1%/yr for LFP; 10-year warranty floor 70-80%; system functional for 15-20 yr typically with reduced capacity in later years. Manage expectations: a 10 kWh nominal BESS at 80% SoH still has 8 kWh available — useful but reduced. (3) Warranty terms — what is + isn\'t covered + the SoH threshold + the cycle count threshold + the claim process; copy of warranty in handover pack. (4) Alert response — common alert types (fault state, comms fail, low SoH warning) + customer action (note alert + call installer for non-emergency; emergency = shutdown procedure if displayed). (5) Periodic schedule — annual customer self-check (portal review, visible inspection of vents, listening for unusual fan noise); 5-10 yr professional EICR-equivalent. (6) Fault response — emergency shutdown location + procedure; categorical "do not open the enclosure" message (lithium fires non-trivial); fault → call installer or manufacturer first. (7) Records — copy of EIC + manufacturer commissioning + warranty registration + future EICR-equivalent reports kept with property documents. (8) Annual touchpoint — installer + manufacturer typically offer annual review + monitoring; signed-up customers get earlier intervention on degradation. (9) §12.7 covers customer education + handover delivery in full.',
   },
   {
     question:
-      'How does Reg 651.4 photographic + thermographic image inclusion apply to BESS condition reporting?',
+      'How does the Reg 653.2 photographic + thermographic image NOTE apply to BESS condition reporting?',
     options: [
-      'Cosmetic only',
-      'Reg 653.2 NOTE specifies photographic + thermographic images can be appended to the report. For BESS condition reporting this is valuable: (1) baseline photos at commissioning — visible inspection of installation; (2) periodic photos showing condition + any change; (3) thermal images of cells + DC busbar + AC terminations identifying hot spots; (4) physical inspection record where BMS data alone doesn\'t tell the full story (e.g. enclosure damaged, vents blocked, signs of moisture ingress). Images provide audit trail + customer transparency + warranty evidence',
-      'Mandatory',
-      'Random',
+      'Images are purely cosmetic and add nothing of value to a formal condition report',
+      'Photographs are mandatory on every single report, and a report without them is invalid',
+      'Photographic and thermographic images can be appended, giving evidence BMS data cannot',
+      'Thermal imaging is needed only where the BMS has already logged an over-temperature alarm event',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Reg 653.2 NOTE: photographic + thermographic images can be appended to the report. For BESS condition reporting: (1) Baseline photos at commissioning — front + side view of BESS in installed position; close-ups of nameplate + warning labels + isolators; serial numbers + manufacturer DoC references visible; cable routing + termination quality. (2) Periodic photos at EICR-equivalent — same angles as baseline; identifies physical change (damage, soiling, modification, signs of moisture). (3) Thermal images — Reg 651.4: measuring instruments + monitoring methods chosen per BS EN 61557 — thermal imager. Key target areas: cell modules (any hot spots indicate internal cell issue); DC busbar connections (loose / corroded = high resistance = heat); AC terminations; fuse + breaker contact points; cooling system performance. (4) Image storage — digital + paper copies; integrated into cert evidence bundle. (5) Customer-facing — selected images included in customer report for transparency + warranty evidence. (6) Warranty + audit value — images are evidence in warranty claims + dispute resolution + audit trail for future verifiers. (7) Privacy + security — BMS data + photos may include identifying information; handle per GDPR / customer privacy expectations. (8) Integration with BMS data — thermal images + BMS temperature logs together tell a richer story than either alone (e.g. BMS logs no over-temp but thermal image shows hot DC busbar connection — caught only by physical inspection).',
+      'Reg 653.2 NOTE: photographic + thermographic images can be appended to the report. For BESS condition reporting: (1) Baseline photos at commissioning — front + side view of BESS in installed position; close-ups of nameplate + warning labels + isolators; serial numbers + manufacturer DoC references visible; cable routing + termination quality. (2) Periodic photos at EICR-equivalent — same angles as baseline; identifies physical change (damage, soiling, modification, signs of moisture). (3) Thermal images — thermal imager per BS EN 61557 instrument family; defects identified are recorded in the report per Reg 651.4. Key target areas: cell modules (any hot spots indicate internal cell issue); DC busbar connections (loose / corroded = high resistance = heat); AC terminations; fuse + breaker contact points; cooling system performance. (4) Image storage — digital + paper copies; integrated into cert evidence bundle. (5) Customer-facing — selected images included in customer report for transparency + warranty evidence. (6) Warranty + audit value — images are evidence in warranty claims + dispute resolution + audit trail for future verifiers. (7) Privacy + security — BMS data + photos may include identifying information; handle per GDPR / customer privacy expectations. (8) Integration with BMS data — thermal images + BMS temperature logs together tell a richer story than either alone (e.g. BMS logs no over-temp but thermal image shows hot DC busbar connection — caught only by physical inspection).',
   },
 ];
 

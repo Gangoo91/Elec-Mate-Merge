@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       "An AED analyses a casualty's heart rhythm and displays 'No shock advised'. What should you do?",
     options: [
-      'Turn off the AED and check for a pulse',
       'Immediately resume CPR for 2 minutes',
+      'Turn off the AED and check for a pulse',
       'Remove the pads and reposition them',
       'Wait for the AED to re-analyse before doing anything',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "'No shock advised' means the AED has detected a non-shockable rhythm (asystole or PEA). You must immediately resume CPR — 30 compressions to 2 rescue breaths. The AED will automatically re-analyse after 2 minutes. Do NOT remove the pads or turn off the AED.",
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does an AED stand for?',
     options: [
-      'Automatic Emergency Defibrillator',
       'Automated External Defibrillator',
+      'Automatic Emergency Defibrillator',
       'Advanced Electrical Device',
       'Automated Electronic Defibrillator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "AED stands for Automated External Defibrillator. It is a portable device that analyses the heart's rhythm and, if necessary, delivers an electric shock (defibrillation) to attempt to restore a normal heart rhythm.",
   },
@@ -119,10 +119,10 @@ const quizQuestions = [
     options: [
       'Check for a pulse before doing anything else',
       'Wait for the AED to re-analyse',
-      'Immediately resume CPR for 2 minutes',
       'Remove the pads and check for breathing',
+      'Immediately resume CPR for 2 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Immediately resume CPR (30 compressions to 2 rescue breaths) for 2 minutes after the shock is delivered. Do NOT stop to check for a pulse. The AED will automatically prompt you to stop for re-analysis after 2 minutes. Every second without compressions reduces the chance of survival.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       "You find a medication patch (e.g. GTN patch) on a casualty's chest where you need to place an AED pad. What should you do?",
     options: [
+      'Remove the patch, wipe the area clean, then apply the AED pad',
       'Place the pad directly over the medication patch',
       'Do not use the AED — medication patches are a contraindication',
-      'Remove the patch, wipe the area clean, then apply the AED pad',
       'Place both pads on the opposite side of the chest',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Remove the medication patch and wipe the area clean before placing the AED pad. Medication patches (GTN, nicotine, HRT) can block the electrical current, cause burns to the casualty's skin, and reduce the effectiveness of the shock.",
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     options: [
       'Health and Safety at Work Act 1974',
       'First Aid at Work Regulations 1981',
-      'Social Action, Responsibility and Heroism Act 2015 (SARAH Act)',
       'Automated External Defibrillators (Public Access) Act 2013',
+      'Social Action, Responsibility and Heroism Act 2015 (SARAH Act)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Social Action, Responsibility and Heroism Act 2015 (SARAH Act) requires courts to consider whether a person was acting heroically, for the benefit of society, or in a generally responsible way when determining negligence claims. No one in the UK has ever been successfully sued for using an AED in good faith.',
   },

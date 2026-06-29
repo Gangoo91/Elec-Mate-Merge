@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does the volt (V) measure?',
     options: [
-      'Any machinery, appliance, apparatus, tool or installation used at work',
+      'The rate at which charge flows through a conductor',
       'The potential difference (electrical pressure) between two points',
-      'The proportion of light emitted in different directions',
-      'An engineering control because it physically prevents the hazard',
+      'The opposition a conductor offers to current flow',
+      'The rate at which a circuit transfers energy',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "On an insulation resistance test, the result is shown as 'OL' or '>200 MΩ'. What does that mean?",
     options: [
-      "Both civil and criminal proceedings can run independently",
+      "The insulation has failed and the circuit is short to earth",
       "The insulation is so good the meter can't measure it",
-      "By providing 24/7 remote monitoring and quick response to issues",
-      "The ratio of true power to apparent power (cos φ)",
+      "The test leads are open-circuit and not connected",
+      "The circuit is still live and the test must be abandoned",
     ],
     correctAnswer: 1,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which is more dangerous to a person — voltage or current?',
     options: [
-      'The employer who provides the work equipment',
-      'Competent persons including supervisors, safety representatives, managers',
-      'Adjusting environmental settings based on security system status',
+      'Voltage — the higher the voltage, the more certain the fatality',
+      'Neither — only the duration of contact matters, not voltage or current',
+      'Resistance — high body resistance is what causes the harm',
       'Current — even small currents through the heart can be fatal',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'What does a typical UK ring final circuit cable need to be sized for?',
     options: [
       'The total connected load, with diversity, up to the 32 A MCB rating',
-      'Mandatory for all machinery unless the E-stop would not reduce risk',
-      'Reduce emotional intensity so productive conversation can occur',
-      'Likelihood: almost certain (5), Severity: catastrophic (5) — Score 25',
+      'The full prospective fault current at the consumer unit',
+      'Exactly half the MCB rating, to leave a safety margin',
+      'The combined rating of every socket on the ring added together',
     ],
     correctAnswer: 0,
     explanation:

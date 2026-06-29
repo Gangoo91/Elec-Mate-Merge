@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is node analysis particularly useful for distribution board calculations?',
     options: [
-      'Excessive heat at connections, warm cable insulation, or hot components',
+      'It removes the need to apply diversity factors',
       'It allows tracking of current flow through multiple outgoing circuits',
-      'To communicate safety information, work updates, and coordinate activities',
-      'Multiple discipline models combined for coordination',
+      'It guarantees the neutral current is always zero',
+      'It fixes the voltage drop on every final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     id: 7,
     question: 'When applying KVL to an earth fault loop, which voltages must be considered?',
     options: [
-      'To improve commutation and reduce brush sparking',
-      'To operate systems under load to identify early failures',
-      'Every switching combination and lamp operation',
+      'Only the voltage drop across the protective device',
+      'Only the supply voltage at the origin',
+      'Only the voltage drop in the line conductor',
       'Supply voltage and all voltage drops in the complete loop',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
     question: 'In a parallel circuit, why is the voltage the same across each branch?',
     options: [
       'Because each branch forms a loop with the source, and KVL applies',
-      'Provides an asbestos register and a refurbishment/demolition survey identifying ACMs',
-      'Report it and do not use until repaired/replaced',
-      'Check internal diameter and remove any restrictions',
+      'Because the current is the same through every branch',
+      'Because the total resistance equals the sum of the branches',
+      'Because KCL forces equal voltage across each branch',
     ],
     correctAnswer: 0,
     explanation:

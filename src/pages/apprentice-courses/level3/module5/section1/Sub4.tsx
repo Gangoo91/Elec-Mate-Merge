@@ -40,10 +40,10 @@ const checks = [
     id: 'm5-s1-sub4-part-p',
     question: 'Under Building Regulations Part P (England), notifiable electrical work in dwellings can be certified via:',
     options: [
-      'Listing every KSB from the official ST1426 assessment plan so you have a complete framework to populate as you gather evidence throughout the apprenticeship',
-      'All construction work including alteration and refurbishment. No monetary threshold. F10 notification only required for projects &gt;30 days/20 workers OR &gt;500 person-days. CDM duties apply regardless of notifiability.',
-      'Either (a) a registered competent person (member of an approved scheme like NICEIC, NAPIT, Stroma) self-certifying via their scheme, or (b) prior building control notification with a third-party inspection.',
-      'The DNO declared 0.35 ohm — design uses the worst-case declared figure (lower Ze means higher Zs at fault, which the design must still satisfy). The measured figure is for verification, not design.',
+      'Only a chartered electrical engineer signing off the work in person on each visit.',
+      'Self-certification by any electrician, with no scheme membership or notification needed.',
+      'A registered competent person self-certifying via their scheme, or prior building control notification with third-party inspection.',
+      'A verbal confirmation to the client that the work meets BS 7671 before energising.',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     id: 'm5-s1-sub4-duty-cascade',
     question: 'The certificate hand-over completes a duty cascade. Which best describes it?',
     options: [
-      'A temporary support bracket, mechanical lifter, or proprietary mounting aid should be used to take the weight while fixings are secured',
-      'The client/occupier becomes the EAWR Reg 4(2) duty holder for ongoing maintenance, while the installer retains a continuing duty for any defects in their work that come to light later.',
-      'Building Information Modelling — a coordinated digital model of the building containing geometry plus structured information that all disciplines contribute to and read from.',
-      'They must take all reasonable steps to check the carrier\\\\\\\\\\\\\\\'s registration, and if they knowingly or carelessly transfer waste to an unauthorised person, they commit an offence under the duty of care',
+      'All responsibility ends for everyone once the certificate is signed and handed over.',
+      'The client becomes EAWR Reg 4(2) duty holder for maintenance; the installer keeps a duty for later defects.',
+      'The scheme provider takes on full liability for the installation from the moment of hand-over.',
+      'The client takes on the installer\'s original design responsibility for the completed work.',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'A new circuit installed in a dwelling kitchen is notifiable under Part P. The contractor is a NICEIC-registered domestic installer. The compliance route is:',
     options: [
-      'Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation',
-      'Self-certify via the NICEIC scheme — issue an EIC, log on the NICEIC portal, NICEIC notifies building control on behalf of the contractor and a Building Regulations Compliance Certificate is issued.',
-      'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
-      'Multiple parties: scaffolder personal s.7; scaffolder employer s.2/s.3; principal contractor (CDM Reg 13 coordination); site manager / responsible person (RRFSO if relevant); you (s.7 if you tacitly approve). HASAWA stacks.',
+      'Notify building control directly and pay for a separate third-party inspection of the new circuit.',
+      'Self-certify via the NICEIC scheme, which then notifies building control and issues the compliance certificate.',
+      'Issue a Minor Works Certificate, as a new circuit added in a kitchen is not notifiable.',
+      'No certification is required because the contractor is already scheme-registered with NICEIC.',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a new build of a 12-flat block, the design has been done by a consulting engineer, the construction by Contractor A, and the inspection and testing by Contractor B. On the EIC, the signature blocks should be:',
     options: [
-      'Refuse to operate the MEWP, as they have a legal duty not to work when unfit and operating while impaired could endanger themselves and others',
-      'Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened',
-      'Design by the consulting engineer, Construction by Contractor A, Inspection & Testing by Contractor B — three separate signatories each taking responsibility for their part.',
-      'Situation modification — actively changing aspects of the situation to alter its emotional impact before the full emotional response develops',
+      'A single signature from Contractor B covering the design, construction and testing roles.',
+      'Only the consulting engineer signs, as the designer carries overall project responsibility.',
+      'Three signatories — the engineer for Design, Contractor A for Construction, Contractor B for I&T.',
+      'The client signs all three blocks as the party commissioning and paying for the work.',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'A client requests an EIC be back-dated to before the installation actually started. You should:',
     options: [
-      'Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable',
-      'A 10-digit reference number issued by HMRC when you register for Self Assessment as a self-employed individual or when you register a limited company. You need it for tax returns and HMRC correspondence; partners and directors each have their own.',
-      'Tell him you\\\\\\\\\\\\\\\'ve noticed changes and you\\\\\\\\\\\\\\\'re worried, ask directly if he\\\\\\\\\\\\\\\'s having thoughts of suicide, offer to help him make a safety plan, and call professional support if needed',
-      'Refuse. Date the EIC for the actual date of completion of inspection and testing. Back-dating a certificate is fraud and could be a criminal offence under EAWR plus a scheme suspension matter.',
+      'Agree, as the certificate date is only an administrative detail with no legal weight.',
+      'Back-date it on the certificate but note the real date separately in your own records.',
+      'Use the date the contract was signed rather than the date the testing was completed.',
+      'Refuse, and date the EIC for the day the inspection and testing was actually completed.',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'Scheme audit visits typically include:',
     options: [
-      'On-site inspection of recent installations chosen by the scheme assessor, review of certification produced by the contractor, verification of test instrument calibration, and verification that the contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competent person remains competent.',
-      'The Construction (Design and Management) Regulations 2015 require that fire safety is considered during the design and construction phases of building projects, including safe means of escape from construction sites',
-      'Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.',
-      'Shift focus from the outcome (&ldquo;I failed&rdquo;) to identity (&ldquo;I am someone who persists&rdquo;), analyse specific skill gaps with lead measures, and use deliberate practice on weak areas',
+      'On-site inspection of recent jobs, certification review, calibration checks and competence confirmation.',
+      'A written multiple-choice exam taken at the scheme provider\'s head office on a fixed annual date.',
+      'A desktop review of the contractor\'s VAT returns and annual company accounts by the assessor.',
+      'An inspection of the contractor\'s vehicle insurance and portable tool insurance certificates.',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'When you hand over the EIC pack to the client, best practice includes:',
     options: [
-      'Domestic loft spaces and cellars can be confined spaces if they are substantially enclosed with foreseeable risks such as poor ventilation and gas accumulation',
-      'A brief walkthrough explaining what the certificate covers, where the consumer unit is, how to test the RCDs (using the test buttons), the recommended retest date, and where to find the documentation if they sell the property.',
-      'That you have completed sufficient workplace experience, demonstrated the required knowledge, skills and behaviours in practice, and in their judgement are ready to be assessed against the standard',
-      'You forgot to disconnect the CPC from the earth bar — your meter is reading the parallel path through the earth bar and main bonding rather than the circuit CPC alone, masking a possible break in the circuit CPC.',
+      'Posting the certificate to building control and handing the client nothing at all.',
+      'A brief walkthrough of what the certificate covers, how to test the RCDs, and the retest date.',
+      'Leaving the documents inside the consumer unit without any explanation to the client.',
+      'Telling the client the certificate is only needed if a future fault ever develops.',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'A client moves into a property and contacts you for an EICR. They have no historical EIC for the installation. Your approach:',
     options: [
-      'Reviewing your portfolio evidence thoroughly, practising explaining each piece in your own words, preparing examples for likely questions, and rehearsing with a colleague, mentor or training provider',
-      'Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear',
-      'Carry out the EICR based on what is on site. The EICR stands on its own — measurements and inspection findings against current BS 7671 standards. Note the absence of historical documentation as an observation in the report.',
-      'The apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
+      'Refuse the EICR until the original EIC for the installation can be located.',
+      'Carry out only a visual inspection, as the testing needs the original design data first.',
+      'Carry out the EICR on what is on site, noting the missing history as an observation.',
+      'Issue an EIC instead of an EICR, since there is no previous certificate on record.',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 7,
     question: 'Scheme membership benefits include:',
     options: [
-      'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
-      'It accounts for the additional forces generated when loads are applied suddenly or during movement (e.g. a person jumping on the platform creates a force greater than their static weight)',
-      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
-      'Self-certification under Part P, professional indemnity options, scheme audit/QA, technical helpline access, customer-facing trust mark, and access to scheme portals for digital certification.',
+      'Exemption from BS 7671 requirements on small domestic jobs under a notification threshold.',
+      'A legal right to carry out and energise work without any inspection or testing first.',
+      'Automatic recognition and qualification as a chartered electrical engineer with the IET.',
+      'Part P self-certification, insurance options, audit, helpline, a trust mark and portal access.',
     ],
     correctAnswer: 3,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 8,
     question: 'On the EIC the "next inspection recommended" date is set by:',
     options: [
-      'The inspector, based on installation type, environment, intensity of use, and the GN3 frequency table — recorded as the inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "reasonable and informed decision" with the rationale documented.',
-      'Every person who is or may be affected by the risk and who needs the information to manage it — this typically includes the principal designer, principal contractor, other designers, contractors, and ultimately the end users via the health and safety file',
-      'A person with sufficient training, experience, and knowledge or other qualities to properly assist the responsible person in undertaking fire safety measures',
-      'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
+      'The inspector, as a reasonable and informed decision using the GN3 frequency table.',
+      'A fixed 5-year interval set down in law for every installation type without exception.',
+      'The client, according to their available budget for any future periodic inspections.',
+      'The scheme provider, set automatically when the certificate is uploaded to the portal.',
     ],
     correctAnswer: 0,
     explanation:
@@ -719,10 +719,10 @@ export default function Sub4() {
             id="m5-s1-sub4-init-verif-sequence"
             question="A new domestic kitchen rewire is finished. The customer pushes for the appliances to be plugged in straight away. What does Regulation 642.1 require?"
             options={[
-              "Plug everything in and run the tests around it — the customer wants their kettle.",
-              "Inspection precedes testing, and inspection shall normally be done with the relevant part of the installation disconnected from the supply. Visual inspection first, dead tests next, then energise and complete the live tests. Only when verification is satisfactory does the installation get put into service.",
-              "Skip inspection and go straight to live tests because it&apos;s a kitchen.",
-              "Testing and inspection can happen in any order.",
+              "Plug everything in and run the tests around the live appliances to save the customer time.",
+              "Inspection first with the part disconnected, then dead tests, then energise for the live tests.",
+              "Skip the inspection and go straight to the live tests because it is only a domestic kitchen.",
+              "Testing and inspection can happen in any order the inspector finds convenient on the day.",
             ]}
             correctIndex={1}
             explanation="Regulation 642.1 specifies that inspection precedes testing, and the inspection is normally done with the part of the installation disconnected. Doing it the other way round risks missing defects (loose terminations, wrong polarity, missing barriers) that should have been caught visually first. The customer&apos;s kettle waits until verification is complete."

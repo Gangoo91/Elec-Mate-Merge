@@ -43,24 +43,24 @@ const checks = [
     question:
       "You're on a domestic kitchen install. You need to drill a 25 mm hole through a softwood joist for a length of T+E. The senior electrician asks which drill you'll use. SDS or combi?",
     options: [
-      "Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme",
-      "The Health and Safety Executive (HSE). Construction sites are higher-risk premises under the Health and Safety (Enforcing Authority) Regulations 1998, so HSE inspectors take the lead. They enforce HASAWA, EAWR, CDM 2015, MHSWR, COSHH, RIDDOR and the rest of the workplace H&S regime on site.",
-      "LFP has a more stable thermal runaway threshold (around 270 °C) and tends to vent rather than ignite, while NMC has a lower runaway threshold (around 200 °C) and a higher risk of self-sustaining fire. LFP is typically heavier per kWh but is the safer chemistry for in-home storage.",
-      "Combi drill with a 25 mm flat bit (or auger) — the joist is timber, not masonry. The combi spins fast and cuts cleanly through wood. SDS is rotary-hammer action designed for masonry; using it on timber wastes the tool's capability and the chuck doesn't take standard wood bits anyway. Right tool for the substrate.",
+      "Combi drill with a 25 mm flat bit or auger — timber is the substrate here, not masonry.",
+      "SDS with a 25 mm masonry bit — the hammer action clears the hole faster than a combi on any material.",
+      "SDS on rotary-only with a wood auger — hammer off makes the SDS behave like a combi with a stronger grip.",
+      "Either drill is fine — pick whichever is charged, as both spin a 25 mm bit through softwood at the same speed.",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
-      "Substrate decides the tool. Timber and most plasterboard work = combi or cordless drill/driver. Brick, block, concrete or stone = SDS or dedicated hammer drill. Putting an SDS on a wood joist is overkill and the chuck (SDS-Plus shank) won't take an auger or flat bit anyway. A cordless combi with a 25 mm spade bit goes through a softwood joist in 3–4 seconds.",
+      "Substrate decides the tool. Timber and most plasterboard work = combi or cordless drill/driver. Brick, block, concrete or stone = SDS or dedicated hammer drill. The combi spins fast and cuts cleanly through wood; putting an SDS on a wood joist is overkill and the SDS-Plus shank won't take an auger or flat bit anyway. A cordless combi with a 25 mm spade bit goes through a softwood joist in 3–4 seconds.",
   },
   {
     id: 'mod4-s1-sub2-110v-site',
     question:
       "You arrive on a commercial fit-out site and plug your 230 V SDS into a wall socket. The site agent tells you to 'sort that out' before he sees you again. Why?",
     options: [
-      "Not directly. BS 7671 is a British Standard published by BSI and the IET — it's not an Act of Parliament. But for a domestic install in England, the Building Regulations 2010 Approved Document P treats compliance with BS 7671 as the way to meet the statutory requirement for electrical safety, so in practice the courts will expect the standard to have been followed. It's voluntary in name and effectively mandatory in court.",
-      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
-      "Construction site practice (HSE INDG291 and CDM-driven site rules) requires reduced low-voltage 110 V CTE (centre-tapped earthed) supplies for portable tools — fed by a site transformer. The voltage to earth is 55 V on each leg, which dramatically reduces shock energy if a tool fault develops. 230 V tools are not banned by statute but are considered the wrong tool for the construction environment under PUWER Reg 4 — and most principal contractors enforce 110 V as a site rule.",
-      "Customer name and address; installer name and MCS certification number; install date; technology and rating (e.g. 5 kWp PV with 10 kWh battery); manufacturer and model details for the major components; performance estimate (annual generation kWh, SCOP, etc.); MCS Installation Standard reference (e.g. MIS 3002 v6.0); Workmanship Warranty period and what it covers; aftercare contact details. The certificate is the customer's proof of MCS-certified installation, used for BUS grant, SEG enrolment, manufacturer warranty registration and future house sale.",
+      "A 230 V tool draws more current than the site's reduced-voltage sockets can supply, so it will trip the supply repeatedly and won't run properly off a site transformer feed.",
+      "230 V tools aren't insured for use on commercial premises — the site's liability cover only extends to double-insulated 110 V equipment, so plugging one in breaches the site's policy conditions.",
+      "Construction sites require reduced low-voltage 110 V CTE supplies for portable tools, fed by a site transformer — 230 V is the wrong tool for that environment.",
+      "230 V tools run too fast for fine work — the lower 110 V voltage halves the motor speed, giving better control on delicate cuts and protecting finishes.",
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "You're glanding a 16 mm² SWA into the bottom of an industrial DB. The armour needs to be cropped square so it lands cleanly in the gland. What power tool best does that?",
     options: [
-      "Assessment of the risks from substances hazardous to health (Reg 6); prevention or control of exposure (Reg 7) using the hierarchy of control (eliminate, substitute, engineer, system of work, PPE); use and maintenance of control measures (Reg 8–9); monitoring of exposure (Reg 10); health surveillance where appropriate (Reg 11); information, instruction and training (Reg 12); arrangements for accidents, incidents and emergencies (Reg 13).",
-      "A 3-step test: (1) end-to-end r1 (line), rn (neutral), r2 (CPC) with the ring open at the CU; (2) L-N cross-connection — link L of one leg to N of the other and read at every socket; (3) L-CPC cross-connection — link L of one leg to CPC of the other and read at every socket. Constant cross-connection readings prove an intact ring.",
-      "C3 — improvement recommended. Reg 421.1.7 uses the language of recommendation, not requirement, for the relevant categories. The absence of an AFDD on an existing circuit is not in itself a defect requiring urgent action — but it is an improvement that brings the installation closer to current best practice. Higher-Risk Residential Buildings under the Building Safety Act 2022 are a separate matter where AFDDs may be a hard requirement.",
-      "A 115 mm angle grinder with a thin metal-cutting disc (or SWA shears for a hand-tool option). The grinder gives a fast square cut through the armour without crushing it; SWA shears (Knipex 95 31 250 or similar) are the hand-tool alternative for smaller cables. Reciprocating saws can also work for larger SWA where the disc won't fit cleanly. Wear eye protection AND a face shield — armour spits hot fragments.",
+      "A cordless combi drill fitted with an abrasive flap wheel — spin the wheel against the armour to grind the wires flush.",
+      "A jigsaw with a fine metal blade — clamp the cable and run the blade through, for a cleaner square crop than a grinder.",
+      "A heat gun played along the cut line to soften the armour, then snap the wires by hand once they glow, avoiding sparks.",
+      "A 115 mm angle grinder with a thin metal-cutting disc, with eye and face protection — a fast square cut without crushing.",
     ],
     correctIndex: 3,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "PUWER 1998 has three regulations that bear directly on power-tool use — Reg 4 (suitability), Reg 5 (maintenance) and Reg 9 (training). Which of these requires that every operative is given adequate information and training BEFORE they use a piece of work equipment?",
     options: [
-      "The reading is the resistance of your test leads — copper conductor, croc clip terminations, instrument internal contact resistance. You must \\\\\\\"null\\\\\\\" or \\\\\\\"zero\\\\\\\" the leads using the instrument\\\\\\\\'s null/relative function so subsequent readings exclude the lead resistance.",
-      "Reg 9 — 'every employer shall ensure that all persons who use work equipment have received adequate training for purposes of health and safety, including training in the methods which may be adopted when using the work equipment, any risks which such use may entail and precautions to be taken'. The supervisor handing you an SDS without an induction is a Reg 9 breach by the firm.",
-      "One unfused spur per outlet on the ring is permitted, with the spur cable matching the ring conductor size. Detected in Part 3 testing as a single socket reading higher than the rest of the constant set — the extra resistance is the round-trip length of the spur cable.",
-      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
+      "Reg 4 — the suitability duty. It requires the employer to confirm a tool is the right type and condition before it is issued.",
+      "Reg 9 — the training duty. An operative must be trained before use, so handing over an SDS without an induction breaches it.",
+      "Reg 5 — the maintenance duty. A tool must be kept in working order, so the pre-use training requirement sits within it.",
+      "Reg 8 — the information duty. Once the operative has read the written instructions, the training obligation is satisfied.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "On a construction site you're issued with a 110 V SDS hammer drill and a yellow plug. What's the technical reason 110 V is preferred to 230 V for site portable tools?",
     options: [
-      "The circuit is just compliant on the worst-case hot-cable basis. The disconnection time will be met but with very little margin — investigate whether the run is unusually long, the CPC csa is undersized, or the connections are slack before signing it off",
-      "(a) To take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work; and (b) to co-operate with the employer or any other person to enable that person to comply with their statutory duty.",
-      "The 110 V supply on site is centre-tapped earthed (CTE), so the voltage between either leg and earth is only 55 V. A faulty tool that ends up with the case live to one leg only puts 55 V between the casing and the operative, not 230 V. Combined with a 30 mA RCD at the transformer this dramatically reduces shock energy and survivability if something goes wrong.",
-      "Find a private moment and use open, non-judgemental inquiry: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I have noticed your work has not been at its usual standard recently. I am asking because I am concerned about you, not criticising. Is everything all right?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — using empathy to understand the root cause before deciding on a response",
+      "110 V tools draw half the current of a 230 V tool for the same power, so lighter leads and a smaller transformer cut cost.",
+      "At 110 V the motor runs at half speed, making the tool safer to hold and easier to control — the reason it was adopted.",
+      "The site supply is centre-tapped earthed, so the voltage to earth is only 55 V — a faulted case shocks at 55 V, not 230 V.",
+      "110 V is a DC supply rather than AC, and DC cannot give the sustained 'can't let go' shock that mains AC does on a fault.",
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       "You're given the choice between corded and cordless for a long second-fix shift on a domestic refurb. What does the realistic decision come down to?",
     options: [
-      "Different but parallel. The formal JIB grading ladder (Apprentice / Adult Trainee / Electrician / Approved / Technician) is the trade-collective competence framework recognised in JIB-graded employment contracts — note 'Improver' is colloquial industry shorthand and NOT a formal JIB grade. Engineering Council registration (EngTech / IEng / CEng) is the wider engineering profession's competence framework recognised across the engineering sector. Many electrical practitioners hold both — JIB Approved AND EngTech is common.",
-      "Around 15-20 years for a well-maintained domestic ASHP, comparable to a high-quality gas boiler. The compressor is the wear part; secondary wear includes the fan motor, expansion valve, controls electronics. Annual servicing including refrigerant leak check, wet-system maintenance, electrical inspection and performance verification keeps the unit at design SCOP for as long as possible. Skipped service typically halves the working life and voids the warranty.",
-      "Use the scheme's documented appeals process first — every CPS publishes a complaints / appeals procedure that members must exhaust before any external challenge. Decisions are typically reviewed by an independent panel within the scheme. After that, if the suspension is alleged to be unfair / wrongful, civil action can theoretically follow but is rarely successful — scheme membership is contractual, the rules were signed up to on enrolment, and courts are reluctant to second-guess scheme decisions on technical compliance. Better strategy: remediate, demonstrate corrective action and re-apply for membership.",
-      "Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.",
+      "Cordless always wins on a refurb — battery tools now out-power corded, so a lead only matters if you forgot to charge.",
+      "Corded always wins indoors — cordless isn't allowed on occupied premises because charging packs are a fire risk.",
+      "It comes down to noise — cordless motors run quieter, so you pick cordless purely to keep the customer happy.",
+      "Run time, tool weight and the site supply — most end up mixed: cordless for general work, corded for heavy-duty.",
     ],
     correctAnswer: 3,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       "Which power tool is the standard answer for cutting through plasterboard between a small access hole to fit a recessed downlight?",
     options: [
-      "A hole saw of the correct diameter on a cordless combi drill — cuts a clean circular hole sized exactly to the downlight aperture (typically 65 mm or 75 mm). For the rough access cut where you need a square hole or are running cable through, a multi-tool (oscillating multi-cutter, Bosch GOP / Fein MultiMaster) gives a controlled plunge cut without dust kicking up half the room.",
-      "Multiple sources accepted by CPS schemes: scheme-organised events (NICEIC Connect, NAPIT events, ELECSA training), accredited training providers (JTL, NET, IET Academy, Elec-Mate), trade events (ECA Live, Electric Vehicles Show), online platforms (IET Academy, scheme portals), manufacturer training (sometimes counts), reading and self-study (some schemes accept evidence). Keep a CPD log with date, topic, time, source.",
-      "The minimum hourly/weekly rate of pay, the holiday entitlement, the travel/lodging allowances, the categorisation (Adult Trainee → Labourer → Apprentice → Electrician → Approved Electrician → Technician), and the H&S handbook obligations. Grading is verified by JIB card.",
-      "The Construction Phase Plan is the Principal Contractor's plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.",
+      "A hole saw of the correct diameter on a cordless combi drill — cuts a clean circular hole sized to the downlight aperture.",
+      "An angle grinder with a stone disc — the abrasive disc cuts plasterboard quickly and the round disc forms the aperture.",
+      "A reciprocating saw with a long wood blade — plunge it through and swing it in a circle to clear the hole fastest.",
+      "A masonry SDS on hammer action with a 65 mm core bit — the core bit is sized for downlights and punches through in one.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "You need to cut a 100 mm diameter hole through an external cavity wall (brick + 100 mm cavity + block) for a soil-pipe vent that will share its route with an outgoing data cable. What power tool combination is realistic?",
     options: [
-      "Reportable diseases (Reg 8 + Schedule 3) are work-related ill-health diagnoses — carpal tunnel syndrome from repetitive work, occupational asthma, hand-arm vibration syndrome, certain cancers attributable to a known carcinogen at work. Reportable dangerous occurrences (Reg 7 + Schedule 2) are events that COULD have caused injury — collapse of lifting equipment, escape of dangerous substances, electrical short circuit causing 24+ hours plant stoppage, structural collapse, certain hazardous-area incidents.",
-      "An SDS-Max or larger SDS with a 100 mm core bit (sometimes called a diamond core drill) for the through-wall hole. Smaller SDS-Plus tools struggle with cores above 50 mm; SDS-Max is the bigger chuck system designed for it. Wet-coring (water flood) is preferred for diamond cores because it controls dust and stops the bit overheating, but dry-coring with intermittent withdrawal is acceptable for short single holes.",
-      "SELV / PELV barriers, basic protection (insulation, barriers, enclosures, obstacles, placing out of reach), fault protection (ADS via overcurrent device or RCD, double or reinforced insulation, electrical separation, earth-free local equipotential bonding), additional protection (RCD ≤ 30 mA, supplementary equipotential bonding).",
-      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"somatic marker hypothesis\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
+      "A standard SDS-Plus with a 100 mm flat masonry bit — the hammer action and wide bit clear the full diameter in one pass.",
+      "An SDS-Max with a 100 mm diamond core bit — the bigger chuck handles cores above 50 mm that an SDS-Plus cannot manage.",
+      "A 115 mm angle grinder plunged through brick and block — score a 100 mm circle, then knock out the centre, faster than coring.",
+      "A cordless combi on hammer with a long 100 mm auger bit — the screw thread pulls itself through, lighter than an SDS-Max.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       "PUWER Reg 5 requires work equipment to be 'maintained in an efficient state, in efficient working order and in good repair'. For a power tool on site what does that practically mean?",
     options: [
-      "The casualty has autonomy on their own treatment but the supervisor has duties to the firm, the regulator and the wider workplace. Refusing medical assessment is the casualty's right but doesn't discharge the supervisor's HASAWA s.2 / s.7 duty. Supervisor should: strongly recommend assessment, document the conversation, escalate to a more senior manager, decline to release the casualty back to safety-critical work without clearance.",
-      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\"good enough\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
-      "Three layers — pre-use visual inspection by the operative every shift (cable, plug, casing, guard, switch, brushes for corded tools); periodic in-service inspection (formal visual check by a competent person); and PAT (Portable Appliance Testing) on the documented site interval. Sub 1.3 covers this in detail. The point: PUWER Reg 5 isn't 'PAT once a year'. It's an ongoing duty with multiple layers.",
-      "Section 826 of BS 7671 covers Electrical Energy Storage Systems (EESS) and was added at the 18th Edition. It applies in addition to the rest of BS 7671 and to any product-specific standards (such as the IEC 62619 cell standard). The IET Code of Practice for Electrical Energy Storage Systems supplements Section 826 with practical guidance on siting, ventilation, fire separation, signage and emergency isolation. A4:2026 has refined parts of this framework as the technology has matured.",
+      "A single annual PAT test by a competent person — once the tool carries an in-date PAT sticker it is deemed maintained.",
+      "Keeping the manufacturer's service schedule — send each tool back at the recommended interval for a full strip-down.",
+      "Three layers — pre-use visual every shift, periodic in-service inspection, and PAT on the documented site interval.",
+      "Replacing each tool at the end of its rated life — buying new rather than maintaining keeps the kit in good repair.",
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       "When using an angle grinder to cut SWA armour, which combination of PPE and tool setup is correct?",
     options: [
-      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The DNO emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). Required by BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. The signage protects future maintainers who may not realise there's a generator on the property.",
-      "Account-for personnel from the firm; ensure customers / visitors in your care have evacuated; liaise with the building's responsible person and fire-marshal at the muster point; provide accurate information to fire service if asked; prevent re-entry; preserve the scene afterwards if relevant to your firm's work.",
-      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
-      "Eye protection (safety specs to BS EN 166) AND a face shield, hearing protection (the disc is well above 85 dB), gloves, the grinder's guard properly fitted and oriented to deflect sparks AWAY from the operative and any combustibles, the correct disc type (thin metal-cutting, not stone or wood), the disc rated for at least the grinder's free speed, and a clear cutting area with a fire watch if the sparks could reach combustibles.",
+      "Safety specs alone are enough provided the guard is removed first for a clear view, with a stone disc on the steel armour.",
+      "Gloves and a dust mask, with a slower wood-cutting disc fitted as it is safer on metal; hearing protection is optional.",
+      "A full-face respirator with the guard rotated to throw sparks toward the operative, using whichever disc is already fitted.",
+      "Eye and face protection, hearing protection, gloves, the guard fitted to deflect sparks away, and the correct thin metal disc.",
     ],
     correctAnswer: 3,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "You're 18 months into your apprenticeship and the firm has standardised on Milwaukee M18 cordless. The senior electrician hands you a Makita 18 V drill instead. What's the practical issue?",
     options: [
-      "Battery platforms are not interchangeable — Milwaukee M18 batteries don't fit Makita LXT tools and vice versa. If the firm runs Milwaukee, that's the platform whose chargers and spare packs are on every van and in every site box. A loose Makita drill is an outlier — one tool with no spare batteries when you need them, and no compatible charger nearby. Either ask for the matching Milwaukee tool, or accept you're working with one battery on the clock.",
-      "Unlimited fine, and / or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline for Health and Safety Offences sets the tariff using a culpability-and-harm matrix — even medium-culpability mid-harm cases against an individual can attract a custodial sentence, particularly where someone has been seriously injured or killed. Companies face fines that scale with turnover; individuals face fines + prison.",
-      "The diary is your detailed contemporaneous record of what you did, who you worked with, what materials you used, what variations came up, what unusual events occurred. The time sheet records the hours; the diary records the substance. The diary is your evidence in any later dispute (pay, customer, NVQ portfolio, employer review) and is the source from which NVQ portfolio entries are written up.",
-      "Requires the 'responsible person' (employer / building owner / occupier) to undertake a fire risk assessment, implement and maintain general fire precautions, provide adequate means of escape, fire detection and alarm, fire fighting equipment, and information / instruction / training to relevant persons. Enforced by the Fire and Rescue Service.",
+      "Platforms aren't interchangeable — Milwaukee packs won't fit Makita, so the Makita drill is an outlier with no spares nearby.",
+      "No issue at all — all 18 V tool batteries share a common fitting under a British Standard, so the Milwaukee packs fit.",
+      "The Makita is 18 V where Milwaukee M18 is a different voltage, so it will be underpowered and struggle on larger fixings.",
+      "The only problem is warranty — a Makita on a Milwaukee site voids cover, but the batteries and chargers cross-fit fine.",
     ],
     correctAnswer: 0,
     explanation:

@@ -71,9 +71,9 @@ const Level2Module6Section6_4 = () => {
       question: 'What documentation is required when corrective action has been taken?',
       options: [
         'Record details of fault found and action taken',
-        'The person in control of the electrical work',
-        'Further investigate and correct the underlying cause',
-        'To prove the correction was effective',
+        'Only a note of the date the work finished',
+        'A verbal report to the client is sufficient',
+        'No documentation is needed once retesting passes',
       ],
       correctAnswer: 0,
       explanation:
@@ -83,10 +83,10 @@ const Level2Module6Section6_4 = () => {
       id: 5,
       question: 'Who is responsible for ensuring corrective action is completed before energising?',
       options: [
-        'Further investigate and correct the underlying cause',
+        'The client who commissioned the work',
         'The person in control of the electrical work',
-        'Record details of fault found and action taken',
-        'Yes, if protective devices are fitted',
+        'The manufacturer of the consumer unit',
+        'The supplier of the test instruments',
       ],
       correctAnswer: 1,
       explanation:
@@ -96,10 +96,10 @@ const Level2Module6Section6_4 = () => {
       id: 6,
       question: 'If a retest still shows failure after corrective action, what should you do?',
       options: [
-        'Record new readings with date and signature',
-        'Yes, if protective devices are fitted',
+        'Energise the circuit and monitor it closely',
+        'Record the failure and issue the certificate',
         'Further investigate and correct the underlying cause',
-        'The person in control of the electrical work',
+        'Lower the pass criteria to allow it through',
       ],
       correctAnswer: 2,
       explanation:
@@ -124,9 +124,9 @@ const Level2Module6Section6_4 = () => {
       question: 'How should test results be updated after successful corrective action?',
       options: [
         'Record new readings with date and signature',
-        'The person in control of the electrical work',
-        'Further investigate and correct the underlying cause',
-        'Potential danger and legal liability',
+        'Overwrite the old readings with correction fluid',
+        'Keep the original failed readings unchanged',
+        'Record the results only if the client asks',
       ],
       correctAnswer: 0,
       explanation:
@@ -136,10 +136,10 @@ const Level2Module6Section6_4 = () => {
       id: 9,
       question: 'What is the main purpose of retesting after corrective action?',
       options: [
-        'Never until all tests pass',
+        'To use up the remaining time on site',
         'To prove the correction was effective',
-        'Investigate the root cause',
-        'Potential danger and legal liability',
+        'To justify a higher charge to the client',
+        'To avoid having to document the fault',
       ],
       correctAnswer: 1,
       explanation:

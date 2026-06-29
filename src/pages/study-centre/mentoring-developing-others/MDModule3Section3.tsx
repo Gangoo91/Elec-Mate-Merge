@@ -19,10 +19,10 @@ const quickCheckQuestions = [
     question:
       'A domestic rewire project is coming up next week. How many NVQ units could a well-planned domestic rewire potentially provide evidence for?',
     options: [
-      '1 unit only — installation',
-      '2 units — installation and testing',
-      '4 or more units — safe isolation, installation, inspection and testing, health and safety, and documentation',
-      'NVQ evidence can only be gathered at college, not on site',
+      '1 unit only — installation, as the rest is just repetition',
+      '2 units — installation and testing, but nothing further than that',
+      '4 or more units — isolation, installation, I&T, health and safety, documentation',
+      'No units — NVQ evidence can only be gathered at college, not on site',
     ],
     correctIndex: 2,
     explanation:
@@ -34,9 +34,9 @@ const quickCheckQuestions = [
       'What is the primary purpose of conducting a training needs analysis (TNA) for an apprentice?',
     options: [
       'To justify sending the apprentice on expensive external training courses',
-      "To identify the gap between the apprentice's current competence and the competence required by their NVQ and role",
-      'To create documentation that satisfies Ofsted inspectors',
-      'To benchmark the apprentice against other apprentices in the company',
+      "To identify the gap between their current competence and what the NVQ and role require",
+      'To create documentation that keeps Ofsted inspectors satisfied at audit',
+      'To benchmark the apprentice against other apprentices across the company',
     ],
     correctIndex: 1,
     explanation:
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'An employer says there is no time for apprentice learning because the job must be finished by Friday. What is the best response from the mentor?',
     options: [
-      'Agree and focus entirely on productivity — learning can wait',
-      'Explain that learning is embedded in productive work and show how the apprentice can develop skills while contributing to the job',
-      'Tell the employer that apprentices are not supposed to do productive work',
-      'Refuse to work on the job until learning time is guaranteed',
+      'Show that learning is embedded in the work and develops skills while the job progresses',
+      'Agree and focus entirely on productivity, since learning can always wait for now',
+      'Tell the employer that apprentices are not supposed to do productive work at all',
+      'Refuse to work on the job at all until dedicated learning time is guaranteed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The best approach is to demonstrate that learning and productivity are not mutually exclusive. With good planning, an apprentice can develop new skills while contributing to the productive output of the job. For example, letting the apprentice wire accessories (learning opportunity) while the mentor runs cables (productive output) means the job progresses while the apprentice develops. The mentor's skill is in identifying these embedded learning opportunities rather than treating learning as something separate from work.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'What is the most effective way to identify learning opportunities on a construction site?',
     options: [
-      'Wait for the college to tell you what the apprentice needs to learn',
-      "Review upcoming jobs against the apprentice's NVQ requirements and plan evidence capture in advance",
-      'Let the apprentice choose which tasks they want to learn',
-      'Focus only on tasks that are quick and easy to teach',
+      'Wait for the college to tell you what the apprentice still needs to learn',
+      "Review upcoming jobs against their NVQ requirements and plan evidence in advance",
+      'Let the apprentice freely choose whichever tasks they feel like learning',
+      'Focus only on the tasks that are quick and easy for you to teach',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'A domestic rewire project can potentially provide NVQ evidence for how many different units?',
     options: [
-      '1 unit only — it is just installation work',
-      '2 units — installation and testing',
-      '4 or more units — including safe isolation, installation, I&T, health and safety, and documentation',
-      'Domestic work cannot be used for NVQ evidence',
+      '1 unit only — it counts purely as installation work',
+      '2 units — installation and testing, but nothing beyond that',
+      '4 or more — isolation, installation, I&T, health and safety, documentation',
+      'None — domestic work cannot be used for NVQ evidence at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is a task-to-NVQ mapping matrix used for?',
     options: [
-      "To track the apprentice's attendance at college",
-      'To match job activities to NVQ units and assessment criteria so that evidence opportunities can be planned',
-      "To calculate the apprentice's wages based on tasks completed",
-      "To compare the apprentice's performance against industry benchmarks",
+      "To track the apprentice's attendance and punctuality at college each week",
+      "To calculate the apprentice's weekly wages based on the tasks they completed",
+      "To compare the apprentice's performance against published industry benchmarks",
+      'To match job activities to NVQ units so evidence opportunities can be planned',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A task-to-NVQ mapping matrix cross-references the types of work the company undertakes with the NVQ units and assessment criteria that each job type can evidence. This allows the mentor to match upcoming jobs to outstanding NVQ requirements, ensuring that evidence opportunities are not missed and that the portfolio is built systematically across all required units.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Which of the following is the best example of embedding learning within productive work?',
     options: [
-      'Telling the apprentice to watch a training video during lunch break',
-      "Having the apprentice wire the accessories on a domestic job while the mentor runs cables, then reviewing the apprentice's work together",
-      'Sending the apprentice to a separate room to practice terminations on scrap cable',
-      'Having the apprentice sweep up and tidy the van while the mentor does the electrical work',
+      "Having the apprentice wire the accessories while the mentor runs cables, then reviewing it together",
+      'Telling the apprentice to watch an unrelated training video on their lunch break',
+      'Sending the apprentice to a separate room to practise terminations on scrap cable',
+      'Having the apprentice sweep up and tidy the van while the mentor does all the wiring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Embedding learning within productive work means the apprentice develops skills while contributing to the job output. Having the apprentice wire accessories (a learning opportunity) while the mentor runs cables (maintaining productivity) allows both to happen simultaneously. The review afterwards reinforces learning and provides feedback.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of a logbook sign-off process?',
     options: [
-      'To prove the apprentice turned up for work each day',
-      "To record and verify the apprentice's competence development, track progress against the training plan, and provide evidence of structured learning",
-      'To calculate overtime payments for the apprentice',
-      'To replace the need for NVQ portfolio evidence',
+      'To prove that the apprentice turned up for work on each and every day',
+      'To calculate the overtime and bonus payments owed to the apprentice',
+      'To replace the need for a separate NVQ portfolio of evidence entirely',
+      "To record and verify competence development and progress against the training plan",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The logbook sign-off process records and verifies the apprentice's competence development over time. The mentor signs off tasks and competencies as the apprentice demonstrates them, creating a progressive record of development. This supports the NVQ portfolio (but does not replace it), provides evidence for progress reviews, and helps identify areas where the apprentice is progressing well or needs additional support.",
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'An apprentice has strong domestic installation skills but no commercial experience. What should the mentor do?',
     options: [
-      'Accept that the portfolio will only contain domestic evidence and hope the assessor does not notice',
-      'Proactively arrange commercial experience through placements, subcontract work, or college workshops to ensure the portfolio demonstrates range',
-      'Ask the apprentice to write fictional accounts of commercial work they have not done',
-      'Wait until a commercial job comes along naturally — it will happen eventually',
+      'Accept a domestic-only portfolio and hope the assessor does not notice the gap',
+      'Proactively arrange commercial experience via placements, subcontract work, or college',
+      'Ask the apprentice to write up fictional accounts of commercial work not actually done',
+      'Wait until a commercial job comes along naturally, as it will happen eventually',
     ],
     correctAnswer: 1,
     explanation:

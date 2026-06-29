@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'You are running a 4-cable Cat6A bundle alongside a 240 V single-phase final circuit on a 50-cable basket tray. Annex A444 of BS 7671 sets the minimum separation. What is the headline 200 / 150 / 0 mm hierarchy and what determines which one applies?',
     options: [
-      'A single 50 mm rule applies regardless of containment.',
-      'Annex A444 Table A444.1: 200 mm in free air with no containment or open metallic containment type A; 150 mm with perforated open metallic containment type B (e.g. steel tray with up to 20 percent perforation, 1.0 mm wall); 0 mm physical separation with solid metallic containment type C (fully enclosed steel containment, 1.5 mm minimum wall) — Note 4 says no physical separation other than the containment itself is required.',
-      'Always 1 metre regardless of containment.',
-      'No separation required for ELV vs LV.',
+      'A single 50 mm rule applies regardless of the containment type used for the run.',
+      '200 mm in free air, 150 mm with perforated containment, 0 mm with solid enclosed steel — more containment, less air gap.',
+      'A fixed 1 metre separation applies regardless of the containment type used.',
+      'No separation is required between ELV data and LV power on a shared tray.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A Cat6A solid horizontal cable has an outer diameter of 7.5 mm. What is the minimum bend radius during installation, and what is the more demanding rule at terminations?',
     options: [
-      'No bend radius rule applies — Cat6A is flexible.',
-      'BS EN 50174-2 / TIA-568.0-E rule of thumb: 4× cable outer diameter during installation (~30 mm radius for a 7.5 mm cable), 8× outer diameter at terminations and behind faceplates (~60 mm radius). Tighter bends compromise the twisted-pair geometry permanently — insertion loss and NEXT degrade and the cable does not recover even after the bend is straightened.',
-      '2× outer diameter at all times.',
-      '20× outer diameter — same as fibre.',
+      'No bend-radius rule applies because Cat6A is flexible enough to take any bend.',
+      '4× outer diameter during installation and 8× at terminations and behind faceplates.',
+      '2× outer diameter at all times, both during the pull and at terminations.',
+      '20× outer diameter at all times — the same rule as for optical fibre.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'You are checking the segregation rules for Band I (ELV / data) and Band II (LV power) cables sharing a single cable management system. BS 7671 §444.6.1 references which clause for the detailed segregation rule, and what is the practical position?',
     options: [
-      '§444.6.1 references §528.1, §528.2 and §528.3. The verbatim text of §528.1 (the headline shared-containment rule) is not reproduced here — refer to the printed copy of BS 7671:2018+A4:2026 for the verbatim Band I / Band II segregation rule. The summary position is: cables must either be insulated for the highest voltage present, or be installed in separate compartments / partitioned trays / equivalent.',
-      '§444.6.1 references §700 — special locations only.',
-      'No segregation is required between Band I and Band II.',
-      '§444.6.1 stands alone — no other clauses apply.',
+      'It references Regulations 528.1, 528.2 and 528.3 — insulate for the highest voltage or partition the cables.',
+      'It references Part 7 (special locations) and applies only in bathrooms, pools and similar areas.',
+      'No segregation is required at all between Band I and Band II cables sharing a route.',
+      'Regulation 444.6.1 stands alone — no other clauses apply to shared containment.',
     ],
     correctIndex: 0,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A run of Cat6A horizontal cable passes within 80 mm of a recessed CFL ceiling lamp. What does BS 7671 §444.6.2 require?',
     options: [
-      'No issue — CFL is not regulated as a discharge lamp.',
-      '§444.6.2 verbatim: "The minimum distance between information and communications technology cables and discharge, neon and mercury vapour (or other high-intensity discharge) lamps shall be 130 mm. In this regard, low energy lamps (CFL) are to be considered as gas discharge sources. Data wiring racks and electrical equipment shall always be separated." 80 mm fails this rule — the cable route must move to clear 130 mm or the lamp position must change.',
-      '§444.6.2 only applies to fluorescent tubes, not CFL.',
-      'A 50 mm separation is sufficient.',
+      'No issue — CFL lamps are not regulated as discharge sources under this clause.',
+      'A 130 mm minimum applies and CFL counts as a discharge source, so 80 mm fails — move the route or the lamp.',
+      'Regulation 444.6.2 applies only to fluorescent tubes, so CFL proximity is unrestricted.',
+      'A 50 mm separation from the CFL lamp is sufficient for the cable run.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What is the BS 7671 Annex A444 Table A444.1 minimum separation between Band I (ELV / data) and Band II (LV power) cables for the "no containment" or "open metallic containment A" case?',
     options: [
-      '50 mm.',
-      '200 mm in free air. The clause: "Where the specification and/or intended application of the information technology cable is not available, then the cable separation distance between the power and information technology cables should be a minimum of 200 mm in free air. This distance can be reduced if a screened power cable, a metallic barrier, or containment system is used as described in Table A444.1."',
-      '500 mm.',
-      'No separation required.',
+      '200 mm in free air, reducible with a screened power cable, metallic barrier or containment.',
+      '50 mm in free air, reducing to 0 mm where any metallic containment is present.',
+      '500 mm in free air for any shared route carrying Band II power.',
+      '100 mm in free air, matching the welded-mesh grid pitch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Annex A444.4 verbatim: 200 mm minimum in free air where no containment is provided. The same clause says this can be reduced if a screened power cable, metallic barrier, or containment system is used per Table A444.1 — 150 mm with perforated open metallic containment type B, 0 mm with solid metallic containment type C.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'BS 7671 Annex A444 Table A444.2 gives a voltage / current scaling on top of the containment hierarchy. At 240 V supply, what is the minimum separation between power and signal cables given by Table A444.2?',
     options: [
-      '0.20 m.',
-      '0.45 m at 240 V (per Table A444.2: 115 V → 0.25 m, 240 V → 0.45 m, 415 V → 0.58 m, 3.3 kV → 1 m, 6.6 kV → 1.25 m, 11 kV → 1.4 m). The table is read alongside Table A444.1 (containment type) and the higher of the two figures — voltage band scaling and containment scaling — applies.',
-      '0.10 m.',
-      '1.00 m.',
+      '0.20 m at 240 V, falling linearly to zero at 115 V.',
+      '0.25 m at 240 V, the same figure given for a 115 V supply.',
+      '0.45 m at 240 V, read alongside Table A444.1 with the higher figure binding.',
+      '1.00 m at 240 V, matching the figure used at 3.3 kV.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Table A444.2 sets a voltage / current scaling on the segregation distance — 0.45 m at 240 V, rising to 1.4 m at 11 kV. It is read alongside Table A444.1 (containment hierarchy). The standards practice is to apply the higher of the two figures as the binding minimum. For most commercial work at 240 / 415 V, Table A444.2 dominates open-air separation; Table A444.1 dominates inside containment.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'What is the BS 7671 §444.6.2 minimum separation between information and communications technology cables and discharge / neon / mercury vapour / HID / CFL lamps?',
     options: [
-      '50 mm.',
-      '130 mm — verbatim per §444.6.2. CFL is explicitly called out as a gas discharge source. Data wiring racks and electrical equipment must always be separated.',
-      '200 mm.',
-      '500 mm.',
+      '50 mm, with CFL lamps excluded from the discharge-lamp rule.',
+      '200 mm, matching the free-air Band I / Band II baseline.',
+      '500 mm, the same figure used for HV discharge signage.',
+      '130 mm, with CFL treated as a gas-discharge source per Reg 444.6.2.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§444.6.2 fixes a 130 mm minimum from ICT cables to discharge / neon / mercury vapour / HID lamps, including CFL. Plan basket / tray routes around recessed lamp positions; flag any encroachment in the as-built record.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Cat6A solid horizontal cable: what is the minimum bend radius during installation, and what is the rule at terminations?',
     options: [
-      '2× cable OD throughout.',
-      '4× cable outer diameter during installation; 8× cable outer diameter at terminations, behind faceplates, and at any final dressed bend. Tighter bends permanently deform the pair-twist geometry, raising insertion loss, degrading return loss, and increasing NEXT. The cable does NOT recover when the bend is straightened.',
-      '20× cable OD — same as multimode fibre.',
-      'No bend radius rule applies to Cat6A.',
+      '4× outer diameter during installation; 8× at terminations and behind faceplates.',
+      '2× cable outer diameter throughout, both during the pull and at terminations.',
+      '20× cable outer diameter, the same as the rule for multimode fibre.',
+      '8× outer diameter during installation; 4× at terminations, where the cable is dressed tighter.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50174-2 / TIA-568.0-E install practice: 4× OD during installation, 8× OD at terminations. The rule exists because Cat6A performance depends on the precise twist lay of each pair — a tight bend deforms the pairs permanently. Insertion loss, return loss and NEXT all degrade and stay degraded. The minimum bend radius is therefore a lifelong cable performance requirement.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'BS 7671 §444.6.1 covers shared cable management between Band I and Band II. Which clauses does it reference for the detailed segregation rule, and which one is NOT reproduced verbatim in our RAG?',
     options: [
-      '§444.6.1 references §411 — protective earthing.',
-      '§444.6.1 references §528.1, §528.2 and §528.3. §528.1 is referenced by number — the verbatim text is not reproduced here. Refer to the printed copy of BS 7671:2018+A4:2026 for the verbatim Band I / Band II segregation rule. §528.2 and §528.3.x are reproduced verbatim and apply alongside.',
-      '§444.6.1 references §716 only.',
-      '§444.6.1 references §444.5.3.1.',
+      'It references Regulation 411 (protective earthing), with 411.3 not reproduced here.',
+      'It references Regulation 716 (extra-low-voltage lighting installations) only.',
+      'It references Regulations 528.1, 528.2 and 528.3; 528.1 is cited by number, not reproduced verbatim.',
+      'It references Regulation 543 (protective conductors), with 543.1 not reproduced here.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§444.6.1 verbatim: "Cables that are used at voltage Band II (low voltage) and cables that are used at voltage Band I (extra-low voltage) which share the same cable management system or the same route, shall be installed according to the requirements of Regulations [528.1, 528.2, 528.3]." §528.1 is referenced by number in this course material. See the printed copy of BS 7671:2018+A4:2026 for the verbatim §528.1 text. The summary position: insulate for the highest voltage present, or partition / separate compartments. §528.2 (verbatim available) adds that same-band circuits might still need segregation.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'BS 7671 §528.2 — what does it add to the segregation rules?',
     options: [
-      '§528.2 prohibits all shared containment.',
-      'Verbatim: "Circuits of the same voltage band might also require segregation or separation. Electrical safety and electromagnetic compatibility might produce different segregation or separation requirements. The design shall meet both requirements." Same-band circuits — for example two ELV circuits with different EMC characteristics — might still need segregation.',
-      '§528.2 only applies to special locations.',
-      '§528.2 covers only fire-rated cables.',
+      'It prohibits all shared containment between any two circuits.',
+      'It applies only inside special locations such as bathrooms and pools.',
+      'It covers only the segregation of fire-rated cables from general wiring.',
+      'It notes same-band circuits may still need segregation, and the design must meet both safety and EMC needs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§528.2 verbatim. Practical reading: same-voltage-band circuits can still need segregation if their EMC characteristics differ — e.g. PoE++ data cables alongside fire-alarm signal cables (both ELV, different EMC sensitivity profiles). The clause requires the design to meet BOTH electrical-safety AND EMC segregation needs — whichever is more onerous wins.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'What is the WHY of the 4× / 8× bend radius rule for Cat6A — what physically happens when you exceed it?',
     options: [
-      'The cable jacket cracks.',
-      'The precise twist-lay geometry of each balanced pair deforms permanently. That deformation raises insertion loss, degrades return loss (more reflections at the bend), and increases NEXT (near-end crosstalk between pairs). The damage is cumulative and persistent — the cable does not recover when the bend is straightened. A Class EA channel can fail certification on a single tight bend.',
-      'Nothing happens — the rule is a guideline.',
-      'The conductor breaks immediately.',
+      'The pair-twist geometry deforms permanently, raising insertion loss and NEXT even after straightening.',
+      'The outer jacket cracks, exposing the pairs to moisture ingress over time.',
+      'The solid copper conductor work-hardens and fractures within the bend.',
+      'The shielding foil tears, raising the cable impedance above 100 Ω permanently.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Balanced twisted-pair performance is defined by the twist lay. The conductors have to maintain the precise pitch they were extruded with — the EMC rejection (NEXT, ELFEXT) and impedance match depend on it. A tight bend deforms the pairs faster than the jacket; the cable looks fine externally but tests poorly. This is why the 4× / 8× rule is non-negotiable on Cat6A and above.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'BS 7671 §528.3.1 covers proximity to services that produce heat / smoke / fumes. What does it require for a wiring system installed near such services?',
     options: [
-      'No requirements — as long as cables are insulated.',
-      'Verbatim: "A wiring system shall not be installed in the vicinity of services which produce heat, smoke or fumes likely to be detrimental to the wiring, unless it is protected from harmful effects by shielding arranged so as not to affect the dissipation of heat from the wiring." In service shafts and cavities, cables shall be laid so they are not exposed to harmful influence by adjacent installations (gas, water, steam).',
-      'Cables must be re-routed at least 5 m away.',
-      'Only fire-rated cables are permitted.',
+      'No requirements apply provided the cables are insulated for the system voltage.',
+      'A fixed clearance of at least 5 m must be maintained from any such service.',
+      'Keep the wiring clear of heat / smoke / fume sources unless shielded so as not to trap cable heat.',
+      'Only fire-rated cables may be installed anywhere near such services.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§528.3.1 verbatim. Practical reading: route data cables clear of hot pipework, exhaust ducts, condensate-prone surfaces. Where proximity is unavoidable, provide shielding that does not impede heat dissipation from the cabling itself (i.e. do not insulate the cable bundle to "protect" it — that traps cable heat instead).',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'A specifier asks "if my power cables are inside fully enclosed steel trunking and my data cables are on a basket tray running parallel above, do I still need 200 mm separation?"',
     options: [
-      'Yes, always 200 mm.',
-      'No. Per Annex A444 Table A444.1, fully enclosed solid metallic containment type C provides "no physical separation other than that provided by the containment" (Note 4) for the power cabling. The data cabling is in containment type A (basket / no enclosure), so the rule is read on the side of the more screened of the two — the 0 mm (Note 4) applies. Table A444.2 still applies for the voltage / current scaling.',
-      'Yes — 1 m always for parallel runs.',
-      'Only if the trunking is bonded.',
+      'Yes — the full 200 mm baseline always applies to parallel runs.',
+      'Yes — parallel runs require 1 m separation regardless of containment.',
+      'Only if the steel trunking is bonded to the main earthing terminal.',
+      'No — enclosed steel (type C) needs no physical separation per Note 4, though Table A444.2 voltage scaling still applies.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Annex A444 Table A444.1 hierarchy: more containment of EITHER side reduces the required separation. Solid steel trunking around the power cables is type C — Note 4 says no physical separation other than the containment is required. The basket-tray data is then free-air-equivalent on the data side, but the power containment dominates. Table A444.2 still constrains the voltage / current dimension. Always read both tables together.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'During termination, you have a 90 m Cat6A horizontal run. The installer pulls the cable through with a kink at one ceiling crossover that exceeded 4× OD bend radius for about 2 minutes during the pull. Should this concern you?',
     options: [
-      'No — temporary bends are fine.',
-      'Yes. Bend-radius damage to the pair-twist geometry is cumulative — even a temporary tight bend during the pull can deform the pairs. The BS EN 50174-2 / TIA-568.0-E install practice rule is 4× OD during installation, NOT just at the final dressed position. Channel-test the link to TIA-1152-A / BS EN 50346 at end-of-job; if it fails, replace the cable. There is no "fix" once the geometry is deformed.',
-      'Only if the bend is permanent.',
-      'Only if the cable is screened.',
+      'Yes — a tight bend during the pull can deform the pairs; channel-test at end-of-job and replace if it fails.',
+      'No — bends only matter once the cable is dressed into its final position.',
+      'Only if the bend was left in place permanently after the pull.',
+      'Only if the cable is screened (F/FTP); unscreened U/UTP tolerates tight pull bends.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 4× OD installation rule applies during the pull, not just at the final dressed bend. Pair-twist geometry damage is cumulative and persistent. The mitigation is end-of-job channel testing — Class EA pass / fail to TIA-1152-A / BS EN 50346 — and replacement of any link that does not meet the test. Document the test result for the link; if it passes, the cable is fine. If it fails, replace.',
   },

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'Under CDM 2015, who has primary responsibility for providing welfare facilities on a construction site with more than one contractor?',
     options: [
-      'Each individual contractor for their own workers',
       'The principal contractor',
+      'Each individual contractor for their own workers',
       'The client directly',
       'The Health and Safety Executive',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The principal contractor has the primary duty to ensure adequate welfare facilities are provided and maintained for all workers on site, as required by CDM 2015 Schedule 2. The client must ensure a principal contractor is appointed to fulfil this duty.',
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'Hand-arm vibration syndrome (HAVS)',
       'Occupational asthma',
-      'Contact dermatitis',
       'Noise-induced hearing loss',
+      'Contact dermatitis',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Contact dermatitis is an inflammatory skin condition caused by direct contact with irritants (like cement, solvents, or cutting oils) or allergens. Symptoms include redness, itching, cracking, blistering, and white patches. Electricians are particularly at risk from cement, PVC solvent weld, flux, and cable-pulling compounds.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'Under CDM 2015 Schedule 2, which of the following is NOT a mandatory welfare facility requirement for construction sites?',
     options: [
-      'Drinking water supply',
-      'Heated drying room for wet clothing',
       'On-site canteen with hot food',
+      'Heated drying room for wet clothing',
+      'Drinking water supply',
       'Washing facilities with hot and cold water',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'CDM 2015 Schedule 2 requires drinking water, washing facilities (with hot and cold water), toilets, changing rooms, rest areas, and facilities for drying wet clothing. A canteen with hot food is not a legal requirement — rest areas with the means to heat food and boil water are sufficient.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'What must a site induction cover as a minimum?',
     options: [
-      'Emergency procedures, first aid locations, welfare facilities, site rules, and PPE requirements',
       'Only the location of the site office and car park',
+      'Emergency procedures, first aid locations, welfare facilities, site rules, and PPE requirements',
       'A general overview of the construction industry',
       "The client's business strategy and project budget",
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'A site induction must cover emergency procedures, first aid arrangements, welfare facility locations, site-specific rules, PPE requirements, hazard locations, reporting procedures, and the identity of key personnel such as the site manager and safety officer.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     options: [
       'To make the site look more organised for client visits',
       'To reduce noise levels for workers on foot',
-      'To prevent struck-by incidents, which are a leading cause of construction fatalities',
       'To comply with local council parking regulations',
+      'To prevent struck-by incidents, which are a leading cause of construction fatalities',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Being struck by a moving vehicle is one of the most common causes of fatal accidents on construction sites. Traffic management plans separate vehicle routes from pedestrian walkways, reducing the risk of workers being struck. This includes designated crossing points, barriers, and high-visibility requirements.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Which of the following is an example of good housekeeping practice on a construction site?',
     options: [
-      'Stacking materials against fire exits to save space',
-      'Leaving cable offcuts on the floor for the cleaner to collect',
       'Clearing work areas at the end of each task and storing materials properly',
+      'Leaving cable offcuts on the floor for the cleaner to collect',
+      'Stacking materials against fire exits to save space',
       'Keeping all walkways locked to prevent unauthorised access',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Good housekeeping means keeping work areas tidy as you go, clearing waste and offcuts promptly, storing materials safely, maintaining clear access routes, and ensuring walkways and emergency exits remain unobstructed. Poor housekeeping is one of the most common causes of slips, trips, and falls on construction sites.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'What is hand-arm vibration syndrome (HAVS)?',
     options: [
       'A skin condition caused by contact with solvents',
-      'A respiratory disease from inhaling dust',
       'A condition affecting blood vessels, nerves, muscles and joints in the hand and arm caused by regular use of vibrating tools',
+      'A respiratory disease from inhaling dust',
       'A hearing condition caused by loud machinery',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'HAVS is caused by regular and prolonged use of vibrating hand-held tools such as hammer drills, breakers, grinders, and chasing machines. Symptoms include tingling, numbness, pain, loss of grip strength, and whitening of the fingers (white finger). It is irreversible once established and is particularly relevant to electricians who regularly use rotary hammer drills and chasing equipment.',
   },
@@ -181,10 +181,10 @@ const quizQuestions = [
     options: [
       'Collect your personal belongings and tools',
       'Phone your employer to let them know',
-      'Follow the site emergency procedure — stop work, raise the alarm, and proceed to the assembly point',
       'Continue working until told to stop by the site manager',
+      'Follow the site emergency procedure — stop work, raise the alarm, and proceed to the assembly point',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'In any site emergency, the immediate priority is to follow the site emergency procedure: stop work, raise the alarm (or respond to it), and proceed to the designated assembly point by the safest route. Do not stop to collect belongings. Report to the roll-call marshal so you can be accounted for. Only return to work when authorised by the site manager or emergency services.',
   },

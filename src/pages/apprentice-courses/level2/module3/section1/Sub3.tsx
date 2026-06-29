@@ -43,10 +43,10 @@ const checks = [
     question:
       "You're an apprentice on a fit-out. Your supervisor tells you to remove an MCB lock-off because the customer needs the circuit re-energised for a demonstration, even though the temporary lighting is still on a tail dropping into a wet floor area. You do as you're told and someone gets a shock. Under HASAWA, where does YOUR personal liability sit?",
     options: [
-      "Because the earthing arrangement governs Zs at every final circuit, governs the main earthing conductor and bonding sizes (Reg 544), and triggers the A4:2026 PNB / TN-C-S notes around BS 7430 conditions and metal water service interaction. The TN type is the single most consequential supply parameter on the schedule.",
-      "HASAWA s.7 — every employee has a personal duty to take reasonable care for themselves and anyone affected by their acts or omissions, AND to co-operate with the employer's safety arrangements (including not breaking a lock-off they've put in place). Following an unsafe instruction does NOT discharge that personal duty.",
-      "An improvement notice — issued under s.21 of HASAWA, requiring the breach to be remedied within a stated period (minimum 21 days). Work can continue in the meantime. Failure to comply by the deadline is itself a criminal offence.",
-      "Collapses to a single role with three signed declarations on the EIC — designer, constructor and inspector all signed by the same person — but the documentation links remain (design notes / Zs calculations, as-built schedule on the CU door, Schedule of Test Results, signed EIC, customer pack). The chain is shorter but every link is still present.",
+      "Nowhere — you acted on a direct instruction from your supervisor, so the legal duty for the unsafe re-energisation transfers entirely to them under HASAWA s.2, and an apprentice carries no personal liability for following orders.",
+      "HASAWA s.7 — every employee has a personal duty to take reasonable care and co-operate with safety arrangements, and following an unsafe instruction does not discharge it.",
+      "Only under HASAWA s.3 — because the person who got the shock was a member of the public rather than a colleague, your liability is limited to the duty owed to non-employees, not a personal employee duty.",
+      "Nowhere under HASAWA — the breach is purely an EAWR Reg 14 matter for the firm, so as an apprentice you have no separate personal duty under the parent Act for this incident.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       "You're working on a domestic CU change. The customer's neighbour pops round to borrow a screwdriver and walks past the open consumer unit while you're at the van. Which HASAWA section gives them legal protection from your work, even though they're nothing to do with your firm?",
     options: [
-      "HASAWA s.3 — duty of every employer (and self-employed person) to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that persons NOT in their employment who may be affected are not exposed to risks to their health or safety. Visitors, neighbours, members of the public — all caught.",
-      "Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news",
-      "The building is a higher-risk residential building (HRRB). Design competence floor is higher (typically HNC/HND or degree, demonstrable CPD, scheme membership), the design must form part of the golden thread of building safety information that survives the building lifetime, and AFDDs are likely to harden from recommended to required for final circuits.",
-      "True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance",
+      "HASAWA s.3 — the duty of every employer and self-employed person towards persons NOT in their employment who may be affected by the work. Visitors, neighbours and the public are all caught.",
+      "HASAWA s.2 — the employer's general duty to ensure the health, safety and welfare of employees, which is taken to extend to anyone present on the work site including visitors.",
+      "HASAWA s.7 — the personal duty on every individual at work, which the neighbour relies on because the electrician must take reasonable care for anyone who enters the property.",
+      "HASAWA s.6 — the duty on suppliers of articles for use at work, which protects the neighbour because the open consumer unit counts as an article supplied for use in the dwelling.",
     ],
     correctIndex: 0,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "An HSE inspector visits a fit-out where you're working. He decides the temporary distribution board has insufficient RCD protection. He doesn't think the risk is imminent but it needs fixing. Which formal notice is he most likely to issue?",
     options: [
-      "An improvement notice — issued under s.21 of HASAWA, requiring the breach to be remedied within a stated period (minimum 21 days). Work can continue in the meantime. Failure to comply by the deadline is itself a criminal offence.",
-      "Yes — 850 Ω is below the 1667 Ω threshold, so the part can introduce a potential and must be bonded to the MET via a main protective bonding conductor sized per Reg 544.1 (typically 10 mm² Cu on a domestic).",
-      "A management survey locates ACMs that could be disturbed during normal occupancy; a refurbishment/demolition survey is fully intrusive to find all ACMs before major works",
-      "Most witnesses are unfamiliar with apprenticeship evidence requirements, so prompts help them produce specific, structured statements that cover the information the assessor needs",
+      "An improvement notice under s.21 — requiring the breach to be remedied within a stated period, with work allowed to continue in the meantime.",
+      "A prohibition notice under s.22 — stopping the activity immediately because the insufficient RCD protection creates a risk of serious personal injury.",
+      "An enforcement notice — issued under s.33 of HASAWA, formally charging the firm with the breach and requiring it to appear before the magistrates' court to answer the offence.",
+      "A remedial notice — issued under s.20 of HASAWA, giving the inspector power to dismantle the distribution board on the spot and bill the firm for the corrective work.",
     ],
     correctIndex: 0,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "HASAWA s.2(2)(a) requires the employer to provide and maintain 'plant and systems of work that are, so far as is reasonably practicable, safe and without risks to health'. For an electrical contractor, what does 'systems of work' practically include?",
     options: [
-      "Roughly £15-20/month for full Unite membership for a working electrician, with reduced rates for apprentices, students and the unemployed. Cost is tax-deductible against income tax for trade union subscriptions. In return members get representation in disputes, legal advice, training discounts, member-only insurance products and the Unite member benefits programme.",
-      "The written safe-isolation procedure, the risk assessments and method statements (RAMS), the toolbox-talk regime, the documented test sequences, the supervisor sign-off on apprentice work, the calibration regime for test instruments — the whole organisational system that produces safe outcomes, not just the kit itself.",
-      "Mode 1 (domestic socket, no protection), Mode 2 (domestic socket with in-cable control device — ICCD), Mode 3 (dedicated EVSE with control pilot — the standard for home and workplace charging), and Mode 4 (DC rapid charging with the charger converting AC to DC externally)",
-      "Employers, self-employed, employees and managers — Reg 3 places duties on each. Some duties are absolute, some are SFAIRP. The employee duty (Reg 3(2)) is to co-operate with the employer's compliance and to comply with EAWR personally so far as it relates to matters within their control.",
+      "Only the physical tools and equipment the firm provides — the hand tools, the test instruments, the vans and the access kit — since 'systems of work' refers to the plant itself rather than any paperwork around it.",
+      "The whole organisational system that produces safe outcomes — RAMS, the safe-isolation procedure, toolbox talks, supervisor sign-off and instrument calibration — not just the kit itself.",
+      "The wiring system itself — the cables, containment and protective devices — because BS 7671 defines an electrical 'system' and that is what s.2(2)(a) is referring to when it says systems of work.",
+      "The contractual chain of who instructs whom on site — the order in which the client, principal contractor and sub-contractors issue work — since 'systems of work' describes the management structure rather than the safety procedures.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "HASAWA s.6 places duties on designers, manufacturers, importers and suppliers of articles for use at work. When does an electrician trigger s.6?",
     options: [
-      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
-      "Section 722 'Electric vehicle charging installations' is the special-installations chapter of BS 7671 covering electrical requirements for EV charging points. Topics include circuit design for the charging point, RCD selection (Type B or RDC-DD with DC fault detection), protection against the PEN-fault risk on PME supplies, isolation, and EV-specific inspection and test. Section 722 was significantly amended in BS 7671:2018+A4:2026 to reflect updated requirements for modern charging hardware and the smart-charging regulatory landscape.",
-      "Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.",
-      "On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.",
+      "Whenever they install standard accessories bought from a wholesaler — fitting a socket-outlet or a light switch supplied by a manufacturer makes the electrician a supplier of that article under s.6 for the rest of its life in the installation.",
+      "Whenever they carry out an EICR on an existing installation — by inspecting and reporting on the equipment the electrician adopts the s.6 designer duty for everything they have assessed and signed off.",
+      "Whenever they design, supply or commission an article for use at work — such as a one-off control panel or bespoke board — they must ensure it is safe and supply adequate information about safe use.",
+      "Whenever they work on a domestic dwelling — because a home becomes a workplace while the electrician is in it, s.6 is triggered for every domestic job regardless of what is being installed.",
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       "HASAWA s.37 — 'where an offence under any of the relevant statutory provisions committed by a body corporate is proved to have been committed with the consent or connivance of, or to have been attributable to any neglect on the part of, any director, manager, secretary or other similar officer of the body corporate' — what does this make legally possible?",
     options: [
-      "Describe your specific role and contributions within the team, the communication and coordination involved, and how the team activity demonstrates professional behaviours such as teamwork, communication and responsibility",
-      "An abstraction licence from the Environment Agency (or Natural Resources Wales/SEPA in Scotland), planning permission, and DNO connection approval under G98 or G99 — plus Fish and Environmental Impact assessments for the watercourse",
-      "Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.",
-      "Personal prosecution of the named individual director/manager/officer alongside (not instead of) the company. Same conviction, same fines, and on indictment up to two years' custody. s.37 is the legal mechanism for piercing the corporate veil in H&S prosecutions.",
+      "Automatic dissolution of the company — once a director is shown to have consented to or neglected a breach, the company is struck off the register and barred from trading, transferring all its liabilities to the individual.",
+      "A defence for the company — if the breach can be pinned on a named director's personal neglect, the body corporate itself escapes prosecution because liability has been attributed to the individual instead.",
+      "A civil claim against the director — s.37 allows the injured party to sue the director personally for damages in the county court, separately from any action against the company.",
+      "Personal prosecution of the named director or officer alongside the company — same conviction and fines, with up to two years' custody on indictment. It pierces the corporate veil.",
     ],
     correctAnswer: 3,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       "Which phrase qualifies most HASAWA duties and what does it mean in practice?",
     options: [
-      "'So far as is reasonably practicable' (SFAIRP) — the duty-holder weighs the risk against the cost, time and effort of further precautions. The bar is set by what a competent person would have done. Established in Edwards v National Coal Board (1949). Trivially expensive controls against serious risk = required. Disproportionately expensive controls against trivial residual risk = not required.",
-      "Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.",
-      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
-      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work.",
+      "'So far as is reasonably practicable' (SFAIRP) — the duty-holder weighs the risk against the cost, time and effort of further precautions, judged by what a competent person would have done.",
+      "'So far as is technically possible' — the duty-holder must apply every control that current technology allows, regardless of cost, so a precaution can never be ruled out on the grounds that it is expensive or disproportionate.",
+      "'So far as is commercially reasonable' — the duty-holder balances the cost of a precaution against the profit margin on the job, so a control that would make the work unprofitable need not be applied.",
+      "'Absolute duty' — the duty-holder must guarantee that no harm occurs whatever the circumstances, with no balancing test, so any injury is automatically a breach regardless of the precautions taken.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "Following the Health and Safety (Offences) Act 2008 and subsequent updates, what is the maximum sentence for an individual convicted on indictment of a serious HASAWA breach (e.g. s.7 or s.37)?",
     options: [
-      "(a) To take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work; and (b) to co-operate with the employer or any other person to enable that person to comply with their statutory duty.",
-      "Unlimited fine and/or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline (2016) sets the sentencing bands by reference to culpability and harm. For individuals, custodial sentences are real — particularly under s.37 director-liability cases and s.7 personal-duty cases following a fatality.",
-      "(1) Verify CPP exists and reflects the work. (2) Verify client awareness conversation. (3) Brief operatives on the CPP. (4) Identify hazards via dynamic risk assessment. (5) Manage and monitor work in practice. (6) Document the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety actions. (7) Escalate issues. (8) Close out at end of project — lessons, records, cleanup.",
-      "JTL (Joint Training Limited) is one of the UK's largest training providers for electrical and plumbing apprentices and CPD. Industry-owned (originally formed by JIB and others); not-for-profit. Delivers apprenticeships, AM2 assessments, post-AM2 qualifications (2391-52, 2396), and CPD courses. Major training provider for the UK electrical sector.",
+      "A fixed fine of £20,000 with no power of imprisonment, since individual H&S offences are treated as regulatory penalties rather than offences that can attract a custodial sentence.",
+      "Unlimited fine and/or up to 2 years' imprisonment, with the sentencing bands set by the Sentencing Council Definitive Guideline (2016). Custodial sentences for individuals are real.",
+      "Up to 6 months' imprisonment and a £5,000 fine — the magistrates' court limits apply even on indictment, because serious H&S breaches cannot be sent to the Crown Court.",
+      "An unlimited fine only, with imprisonment reserved exclusively for corporate manslaughter, so an individual convicted of a HASAWA breach can never receive a custodial sentence.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       "An HSE inspector arrives unannounced on your site. What powers does HASAWA give them under sections 20 and 21?",
     options: [
-      "Accessible WC cubicle with: door switch reachable from wheelchair, light switch within reach, mirror at appropriate height, occupancy indicator, emergency pull-cord (red, reaching the floor, with a visible-from-corridor strobe and audible alarm at reception), and slow-acting timer on lights to avoid trapping users in darkness.",
-      "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
-      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
-      "Report it via your own chain (your Foreman in the first instance, escalating to the main contractor's Site Manager if it's site-wide). You don't approach the HSE inspector direct — that's not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.",
+      "Limited powers only — the inspector must give 24 hours' written notice before entering, can look but not photograph, and may only request documents through a formal court order rather than on the spot.",
+      "Power to enter and observe but nothing more — an inspector may walk the site and note concerns, but has no authority to take samples, interview workers or stop work without first obtaining a magistrate's warrant.",
+      "Wide statutory powers under s.20 — enter without notice, photograph, sample, question anyone, demand documents and seize articles — plus s.21/s.22 notices on the spot. Obstruction is a s.33 offence.",
+      "Power to arrest and detain — an HSE inspector has the same powers as a police constable, including the power to caution and arrest any worker found in breach and hold them pending charge.",
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       "BS 7671 is referenced in HSR25 (the HSE's Memorandum of Guidance on EAWR) as a means of demonstrating compliance with EAWR Reg 4. Through that chain, what does following BS 7671 also help demonstrate under HASAWA?",
     options: [
-      "The mentor must act regardless of whether a formal complaint is made \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 challenge the behaviour, support the apprentice, and report it as the Equality Act 2010 places a duty on employers to prevent harassment",
-      "It is made in accordance with Regulation 526.3 — for example, a compression joint to a manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions, a brazed/welded joint, or a connection forming part of equipment that complies with its product standard",
-      "Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14",
-      "Compliance with HASAWA s.2(2)(a) — 'safe systems of work' for an electrical installation. Because EAWR is a regulation made under HASAWA, demonstrating EAWR compliance through BS 7671 also demonstrates discharge of the underlying HASAWA s.2 / s.3 duties for the electrical-system part of the work.",
+      "Compliance with HASAWA s.6 — the duty on suppliers of articles, because following BS 7671 proves that every accessory installed was supplied safe and fit for use.",
+      "Compliance with HASAWA s.37 — director liability, because a firm that works to BS 7671 shows its directors have not consented to or neglected any breach.",
+      "Compliance with HASAWA s.7 only — the personal duty on the individual operative, because BS 7671 is followed by the person doing the work rather than the employer.",
+      "Compliance with HASAWA s.2(2)(a) — 'safe systems of work'. Because EAWR is made under HASAWA, BS 7671 compliance also helps discharge the underlying s.2 / s.3 duties for the electrical work.",
     ],
     correctAnswer: 3,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "Under the Sentencing Council Definitive Guideline (2016), what are the four 'culpability' categories the court uses for an organisation convicted of a HASAWA / EAWR breach?",
     options: [
-      "Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation's annual turnover band (micro / small / medium / large). A 'very high culpability + Category 1 harm + large organisation' combination has produced fines well into seven figures.",
-      "Adopt a proactive, informal approach by making yourself visible and available on-site, normalising conversations about mental health, and providing information about support in a way that does not require workers to publicly identify as needing help",
-      "Defined serious injuries including fractures (other than fingers, thumbs, toes), amputations, loss of sight, crush injury to head/torso, serious burns, scalpings, loss of consciousness from head injury or asphyxia, and any injury requiring resuscitation",
-      "The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time",
+      "Very high, high, medium, low — with starting-point fines that scale with the culpability finding, the harm category (1–4) and the organisation's annual turnover band.",
+      "Deliberate, reckless, negligent, accidental — the four states of mind borrowed from general criminal law, with accidental breaches attracting no fine because there was no intent to cause harm.",
+      "Minor, serious, major, fatal — categories based purely on the actual injury that occurred, so a breach that happened to cause no injury falls outside the guideline altogether.",
+      "Category 1 to Category 4 only — the guideline uses a single harm scale with no separate culpability assessment, so the fine is set entirely by how serious the harm risked was.",
     ],
     correctAnswer: 0,
     explanation:

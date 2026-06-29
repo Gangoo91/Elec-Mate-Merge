@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     question: 'The primary purpose of insulation in electrical cables is to:',
     options: [
       'Prevent current leakage and provide safety',
-      'To ensure broken circuits still generate alarm signals',
-      'Section 9 — identification and warning notices.',
-      'Adequate immersion depth and good thermal contact',
+      'Increase the conductor cross-sectional area',
+      'Lower the resistivity of the conductor',
+      'Improve the cable bending radius',
     ],
     correctIndex: 0,
     explanation:
@@ -102,9 +102,9 @@ const quizQuestions = [
     question: 'For metals like copper, how does resistance change with temperature?',
     options: [
       'Increases as temperature rises',
-      'Completing detailed M&E specifications',
-      'Visual and noise impact on communities',
-      'Continuity test from armouring to MET',
+      'Decreases as temperature rises',
+      'Stays constant regardless of temperature',
+      'Falls to zero at high temperature',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,9 +138,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is high insulation resistance important?',
     options: [
-      'Current readings are always zero or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
-      'Forces increase significantly',
-      'Separated Extra Low Voltage',
+      'It increases the current-carrying capacity',
+      'It lowers the conductor resistivity',
+      'It reduces the cable cross-sectional area',
       'It reduces leakage and shock risk',
     ],
     correctAnswer: 3,
@@ -149,11 +149,11 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Which BS 7671 area is most relevant to choosing suitable materials?',
+    question: 'Which BS 7671 part is most relevant to choosing suitable cable materials?',
     options: [
-      'Part 5 – Selection and erection',
-      "Part 8 – Prosumer's installations only",
-      'Part 1 – Scope only',
+      'Part 5 – Selection and erection of equipment',
+      'Part 6 – Inspection and testing',
+      'Part 1 – Scope, object and fundamental principles',
       'Part 2 – Definitions',
     ],
     correctAnswer: 0,
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'The formula R = ρL/A shows that resistance:',
     options: [
-      'Ensure all metalwork is at same potential',
+      'Is proportional to cross-sectional area',
       'Is proportional to resistivity and length',
-      'They allow analysis of complex circuits',
-      '31st January (online), 31st October (paper)',
+      'Is independent of conductor length',
+      'Decreases as resistivity increases',
     ],
     correctAnswer: 1,
     explanation:

@@ -94,10 +94,10 @@ const AM2Module5Section5 = () => {
       id: 1,
       question: 'Why is re-testing mandatory after rectification?',
       options: [
-        'Using presence detection and scheduling',
+        'To reduce the time spent on the assessment',
         'To prove the circuit is now safe and compliant',
-        'Test date, next test date, and tester ID',
-        'To prevent premature collapse during fires',
+        'To avoid recording the original fault',
+        'To allow the circuit to be left energised',
       ],
       correctAnswer: 1,
       explanation:
@@ -134,9 +134,9 @@ const AM2Module5Section5 = () => {
       question: 'What re-test proves a short circuit has been cleared?',
       options: [
         'Insulation resistance between conductors',
-        'To anticipate future error based on rate of change',
-        'Detailed records with locations',
-        'Conductor resistance and current',
+        'Continuity of the protective conductor',
+        'Earth fault loop impedance (Zs)',
+        'Polarity test at the accessory',
       ],
       correctAnswer: 0,
       explanation:
@@ -146,10 +146,10 @@ const AM2Module5Section5 = () => {
       id: 5,
       question: 'What test confirms that polarity is now correct?',
       options: [
-        'Residual Current Device (RCD)',
+        'Insulation resistance test at 500 V DC',
         'Polarity test at outlets/switches',
-        'Secure connections and accessibility',
-        'Materials to be used (e.g., cable type)',
+        'Earth fault loop impedance (Zs) test',
+        'RCD operation test at five times IΔn',
       ],
       correctAnswer: 1,
       explanation:
@@ -159,10 +159,10 @@ const AM2Module5Section5 = () => {
       id: 6,
       question: 'Which test confirms a high resistance fault is rectified?',
       options: [
-        'Communication conflicts occur',
-        'Use rollers and apply lubricant',
+        'Insulation resistance between conductors',
+        'Polarity test at the socket outlet',
         'Earth fault loop impedance (Zs)',
-        '25-30 years with degradation',
+        'RCD operation test at one times IΔn',
       ],
       correctAnswer: 2,
       explanation:
@@ -181,9 +181,9 @@ const AM2Module5Section5 = () => {
       question: 'What happens if you forget to state a re-test in AM2?',
       options: [
         'You lose marks even if fault diagnosis was correct',
-        'Cables are in prescribed zones or have RCD protection',
-        'To prevent signal reflections that cause communication errors',
-        'Flexible connections and movement accommodation',
+        'You automatically pass once the fault is found',
+        'The assessor performs the re-test on your behalf',
+        'No marks are affected as long as the fix is correct',
       ],
       correctAnswer: 0,
       explanation:
@@ -193,10 +193,10 @@ const AM2Module5Section5 = () => {
       id: 9,
       question: 'Why should you include measurement units in recorded results?',
       options: [
-        'Higher complexity and material use',
+        'To make the test take less time',
         'To meet professional documentation standards',
-        'A guard rail around an open edge',
-        'File or ream to remove sharp edges',
+        'To avoid having to record actual values',
+        'To allow the assessor to skip checking',
       ],
       correctAnswer: 1,
       explanation:
@@ -206,10 +206,10 @@ const AM2Module5Section5 = () => {
       id: 10,
       question: "What's the golden rule for rectification and re-testing answers?",
       options: [
-        'To subtract lead resistance from readings',
-        'Redundant Ethernet ring or dual-star topology',
+        'Always energise the circuit before stating a re-test',
+        'Always record the fault type without the location',
         'Always link rectification with appropriate re-test',
-        'Outriggers extending the effective base to at least 3m',
+        'Always re-test every circuit on the installation',
       ],
       correctAnswer: 2,
       explanation:
@@ -244,7 +244,7 @@ const AM2Module5Section5 = () => {
     {
       question: 'Why does an earth fault need both IR and RCD re-test?',
       answer:
-        'IR proves the unintended L-E or N-E path is gone after your repair. The RCD test proves the protective device still works correctly — earth fault current can affect RCD components, and BS 7671 643.10 requires post-repair RCD verification. Both checks, both required.',
+        'IR proves the unintended L-E or N-E path is gone after your repair. The RCD test proves the protective device still works correctly — earth fault current can affect RCD components, and BS 7671 643.8 requires post-repair RCD verification. Both checks, both required.',
     },
     {
       question: 'What if my re-test would still show a problem?',
@@ -462,8 +462,8 @@ const AM2Module5Section5 = () => {
                   State a TWO-test sequence:{' '}
                   <em>
                     "1. IR test L-E and N-E at 500 V DC, expecting &gt; 1 MΩ minimum, ideally &gt; 2
-                    MΩ. 2. RCD operation test at ×1 IΔn, expecting trip within 300 ms for
-                    general-purpose 30 mA RCD per BS 7671 Table 3A."
+                    MΩ. 2. RCD operation test at ×1 IΔn, expecting trip within 300 ms for a
+                    general-purpose 30 mA RCD per BS 7671 Reg 643.8."
                   </em>{' '}
                   Earth faults need both — IR proves the fault path is gone, RCD test proves the
                   protective device still works correctly after the test current. Just IR isn't
@@ -474,25 +474,26 @@ const AM2Module5Section5 = () => {
                 <>
                   On AM2 day this is exactly the kind of question that distinguishes pass from full
                   marks. Single-test re-tests for earth faults miss the RCD verification that BS
-                  7671 642.x and 643.10 require. Two tests, named values, named maximums — that's
+                  7671 642.x and 643.8 require. Two tests, named values, named maximums — that's
                   the level of detail that earns full marks under Reg 643 verification requirements.
                 </>
               }
             />
 
             <RegsCallout
-              source="BS 7671 — Regulation 643.10 (RCD operation)"
-              clause="Where an RCD is required to provide automatic disconnection of supply or additional protection, the effectiveness of automatic disconnection of supply afforded by the RCD shall be verified using suitable test equipment."
+              source="BS 7671 — Regulation 643.8 (RCD verification)"
+              clause="The effectiveness of automatic disconnection of supply by RCDs shall be verified using suitable test equipment according to BS EN 61557-6 to confirm that the relevant requirements of Chapter 41 are met, taking into account the operating characteristic of the device."
               meaning={
                 <>
-                  After ANY earth fault rectification, the RCD must be re-tested. Current standard:
-                  30 mA general-purpose RCD must trip within 300 ms at <strong>×1 IΔn</strong> (i.e.
-                  at 30 mA test current). For "additional protection" RCDs (sockets &le; 32 A in
-                  most situations), the ×5 IΔn test must trip within 40 ms. Both are mandatory after
-                  any earth fault repair.
+                  After ANY earth fault rectification, the RCD must be re-tested. Under A4:2026,
+                  effectiveness is verified by a <strong>single test at ×1 IΔn</strong> (i.e. at the
+                  rated 30 mA test current): a general non-delay RCD must disconnect within{' '}
+                  <strong>300 ms</strong> maximum (a delay 'S' type, between 130 ms and 500 ms). The
+                  old Table 3A and the ×5 IΔn / 40 ms test were deleted in A4:2026, so the single
+                  ×1 IΔn test is now the requirement after any earth fault repair.
                 </>
               }
-              cite="Reference: BS 7671 Part 6 — Reg 643.10 / Table 3A; A4:2026 update"
+              cite="Reference: BS 7671 Part 6 — Reg 643.8 (Table 3A deleted in A4:2026)"
             />
 
             {/* What Assessors Look For */}
@@ -576,7 +577,7 @@ const AM2Module5Section5 = () => {
                 <>
                   You state "Re-test IR L-E to confirm fault cleared" and stop there. The assessor
                   marks you partial — your IR test is correct but you've forgotten the RCD
-                  operational test. After any earth fault, BS 7671 Reg 643.10 requires verifying the
+                  operational test. After any earth fault, BS 7671 Reg 643.8 requires verifying the
                   RCD still trips within its rated time.
                 </>
               }
@@ -585,9 +586,9 @@ const AM2Module5Section5 = () => {
                   For earth faults, ALWAYS pair the tests:{' '}
                   <em>
                     "Re-test IR L-E and N-E at 500 V DC, expecting &gt; 1 MΩ. Re-test RCD operation
-                    at ×1 IΔn, expecting trip within 300 ms per Table 3A."
+                    at ×1 IΔn, expecting trip within 300 ms per Reg 643.8."
                   </em>{' '}
-                  Two tests, two named values. That's full marks under Reg 643.10.
+                  Two tests, two named values. That's full marks under Reg 643.8.
                 </>
               }
             />
@@ -755,7 +756,7 @@ const AM2Module5Section5 = () => {
               points={[
                 "Re-test isn't optional — BS 7671 Reg 643.1 requires verification after any alteration. AM2 marks reflect that.",
                 'Match the test to the fault: open → continuity. Short → IR. Earth fault → IR + RCD ×1 IΔn. High-resistance → Zs. Polarity → polarity at accessory.',
-                'Earth faults always need TWO re-tests: IR confirms the fault path is gone, RCD operation test confirms the protective device still works (Reg 643.10).',
+                'Earth faults always need TWO re-tests: IR confirms the fault path is gone, RCD operation test confirms the protective device still works (Reg 643.8).',
                 "Cite specific values: '> 1 MΩ minimum', 'within 1.37 Ω for 32A Type B', 'trip within 300 ms at ×1 IΔn'. Real numbers prove real understanding.",
                 "Use real measured values, not idealised book numbers. Real readings have noise — 0.18 Ω, 199 MΩ, 0.42 Ω. That's what verification looks like.",
               ]}

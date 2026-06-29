@@ -72,12 +72,12 @@ const quizQuestions = [
     question:
       "You're installing earth electrodes for an EV charging installation in sandy soil. Initial testing of a single 2.4m rod shows 180Ω resistance. What is the most appropriate solution?",
     options: [
-      'Accept the result as it meets the 200Ω requirement',
       'Install additional parallel rods spaced 6m apart',
-      'Replace the rod with a longer single rod',
-      'Add salt to the soil around the electrode',
+      'Accept the result as it already meets the requirement',
+      'Replace the rod with a single longer rod',
+      'Pour salt into the soil around the electrode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Installing additional parallel rods is the most appropriate solution. While 180Ω technically meets requirements, it has no margin for seasonal variation or degradation. Multiple rods properly spaced will reduce resistance significantly and provide long-term reliability. Salt is not recommended due to environmental concerns and limited duration.',
   },

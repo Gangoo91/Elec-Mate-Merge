@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     id: 'appendix-4-purpose',
     question: 'What is the primary purpose of BS 7671 Appendix 4 tables?',
     options: [
-      'An unlimited fine and/or up to two years\\\\\\\\\\\\\\\' imprisonment',
-      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
+      'To list the maximum earth fault loop impedance for each device',
+      'To set the minimum insulation resistance values for circuits',
       'To provide current-carrying capacities for different installation conditions',
-      'Ask the listener to summarise back the key message in their own words to confirm understanding',
+      'To specify the disconnection times required for fault protection',
     ],
     correctIndex: 2,
     explanation:
@@ -60,10 +60,10 @@ const quickCheckQuestions = [
     id: 'it-meaning',
     question: "What does 'It' represent in cable sizing calculations?",
     options: [
-      'To subtract lead resistance from readings',
-      'Loose or poorly tightened connections',
+      'The design current the circuit will actually carry',
+      'The rating of the protective device protecting the circuit',
       'Tabulated current-carrying capacity',
-      'Power increases (more total current drawn)',
+      'The effective capacity after correction factors are applied',
     ],
     correctIndex: 2,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'For a circuit with Ib = 25A, the protective device In must be:',
     options: [
-      'Maximum Power Point Tracking',
+      'Exactly equal to 25A in every case',
       'Greater than or equal to 25A',
-      'Overfilling and creating sharp bends',
-      '60 seconds to discharge to <50V',
+      'Less than 25A to ensure early disconnection',
+      'Twice the design current, so 50A',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'A 6mm² twin and earth cable clipped direct (Method C) has It = 47A. What does this mean?',
     options: [
-      'Building services engineer or ventilation specialist',
-      'To reduce the drive current to dim the LED output',
-      'Two of the three phase connections being transposed (swapped)',
+      'The cable must be protected by a 47A protective device',
+      'The cable will carry 47A regardless of installation conditions',
+      'The design current of the circuit is fixed at 47A',
       'The cable can continuously carry 47A under standard conditions',
     ],
     correctAnswer: 3,
@@ -208,10 +208,10 @@ const quizQuestions = [
     question:
       'Why is it important to select the correct reference method before consulting Appendix 4?',
     options: [
-      'Installing sensors, relays, and control circuits for system integration',
-      'The value should be consistent with cable length and cross-sectional area',
+      'It fixes the voltage drop figure used for the circuit',
+      'It sets the disconnection time required for the circuit',
       'It determines which table to use and the tabulated capacity',
-      'Network security and data privacy protection',
+      'It determines the rated residual current of any RCD',
     ],
     correctAnswer: 2,
     explanation:

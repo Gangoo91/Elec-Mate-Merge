@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pasma-towersure-what',
     question: 'What is TowerSure?',
     options: [
-      'A type of stabiliser used on mobile scaffold towers',
       "PASMA's digital inspection app for recording tower inspections",
+      'A type of stabiliser used on mobile scaffold towers',
       'A brand of mobile scaffold tower manufactured in the UK',
       'An HSE database of all scaffold inspection records',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "TowerSure is PASMA's digital inspection app, available on iOS and Android. It replaces paper inspection forms and provides time-stamped, cloud-stored inspection records for mobile scaffold towers.",
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       "What is the primary advantage of TowerSure's time-stamped records over paper records?",
     options: [
       'They are printed in colour',
-      'They cannot be backdated, providing a tamper-resistant audit trail',
       'They cost more to produce, showing investment in safety',
+      'They cannot be backdated, providing a tamper-resistant audit trail',
       'They can only be read by PASMA-trained operatives',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The key advantage of digital time-stamped records is that they cannot be backdated. Each record is automatically stamped with the exact date, time, and location when it is created, providing a tamper-resistant audit trail that paper records cannot match.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'pasma-towersure-future',
     question: 'Which emerging technology could enhance tower inspection in the future?',
     options: [
-      'Typewriters for clearer documentation',
+      'Barcode scanners for faster manual data entry',
+      'Cloud spreadsheets shared by email between sites',
+      'Two-way radios for reporting results verbally',
       'IoT sensors that monitor tower condition in real time',
-      'Carrier pigeons for delivering inspection records',
-      'Fax machines for sharing records between sites',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Internet of Things (IoT) sensors are an emerging technology that could monitor tower conditions in real time — detecting movement, tilt, wind loading, and component stress without requiring a human inspector to be present.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a key advantage of TowerSure over paper inspection forms?',
     options: [
-      'Paper forms are more searchable',
       'TowerSure records are automatically time-stamped and cannot be backdated',
+      'Paper forms are more searchable',
       'Paper forms provide better photographic evidence',
-      'TowerSure requires no training to use',
+      'TowerSure requires no training at all to use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Automatic time-stamping is one of TowerSure's most significant advantages. Unlike paper records, which can be completed or altered after the fact, TowerSure records are stamped with the exact date, time, and GPS location at the moment of creation.",
   },
@@ -125,11 +125,11 @@ const quizQuestions = [
     question: 'How are individual towers identified within the TowerSure system?',
     options: [
       "By the inspector's name",
-      'By QR code labels attached to each tower',
       "By the tower's paint colour",
       'By the site postcode only',
+      'By QR code labels attached to each tower',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Each tower is registered in TowerSure and given a unique QR code label. When the inspector scans this QR code, the app automatically links the inspection to the correct tower record, building up a complete inspection history for that specific tower.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of the following can TowerSure notifications help prevent?',
     options: [
+      'Overdue inspections being missed',
       'Tower components from rusting',
       'Wind speed from increasing',
-      'Overdue inspections being missed',
       'Operatives from climbing the tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'TowerSure can be configured to send notifications when inspections are due, helping to prevent the 7-day interval from being exceeded. This is one of the key benefits of a digital system — automated reminders that paper systems cannot provide.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'How can TowerSure records be shared with a client or principal contractor?',
     options: [
-      'They cannot be shared — records are private',
+      'They cannot be shared — records are kept private',
       'Only by printing them out and posting them by mail',
+      'Only by handing the client your phone to view them',
       'Via export options such as email, PDF, or integration with construction management software',
-      'Only by giving the client your phone',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'TowerSure provides multiple sharing options including email, PDF export, and integration with construction management software. This makes it easy to demonstrate compliance to clients, principal contractors, and HSE inspectors.',
   },

@@ -52,36 +52,36 @@ const quizQuestions = [
   {
     question: 'What feature allows AI thermostats to heat the home before you arrive?',
     options: [
-      'Weather forecasting',
+      'A simple manual pre-heat button',
+      'A fixed timer boost period',
       'Geofencing combined with learning',
-      'Timer boost',
-      'Manual pre-heat',
+      'Outdoor weather forecasting alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'AI thermostats combine geofencing (smartphone location tracking) with learned heating times to begin heating when you are heading home, so the property reaches temperature as you arrive.',
   },
   {
     question: "What is 'optimum start' in smart heating systems?",
     options: [
-      'Starting heating at the cheapest electricity time',
       'Calculating when to start heating to reach temperature at the desired time',
-      'Running heating at maximum for faster warmup',
-      'Starting all zones simultaneously',
+      'Starting heating at the cheapest electricity tariff time',
+      'Running heating at maximum output for the fastest warm-up',
+      'Starting every heating zone simultaneously',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Optimum start calculates how long the property takes to heat up based on indoor/outdoor temperatures and starts heating early enough to reach the target temperature at the scheduled time.',
   },
   {
-    question: 'What might cause an AI learning thermostat to heat an empty home?',
+    question: 'What is the most likely cause of an AI learning thermostat heating an empty home?',
     options: [
-      'Sensor malfunction',
-      'Still learning during the training period',
-      'Power outage',
-      'Low battery',
+      'A flat or failing battery',
+      'A recent power outage',
+      'A faulty occupancy sensor',
+      'It is still learning during the training period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AI thermostats need time to learn patterns (typically 1-2 weeks). During this period, they may heat unnecessarily until they have enough data to predict occupancy accurately.',
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'For a household with highly irregular routines, which approach is most energy efficient?',
     options: [
-      'Fixed daily schedule',
+      'A fixed daily heating schedule',
       'AI learning with geofencing',
       'Manual control only',
-      'Continuous heating at low temperature',
+      'Continuous heating at a low temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,8 +100,8 @@ const quizQuestions = [
   },
   {
     question: 'What is the typical learning period for AI-based thermostats?',
-    options: ['1-2 hours', '1-2 weeks', '6-12 months', 'They learn instantly'],
-    correctAnswer: 1,
+    options: ['1-2 hours', '6-12 months', '1-2 weeks', 'They learn instantly'],
+    correctAnswer: 2,
     explanation:
       'Most AI thermostats need 1-2 weeks to observe patterns and optimise heating schedules. During this period, they may behave less efficiently until learning is complete.',
   },

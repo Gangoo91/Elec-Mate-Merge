@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Under BS 5839-1:2025, an L1 system requires automatic detection in which areas of the protected building?',
     options: [
-      'Escape routes only.',
-      'Escape routes plus rooms opening onto them.',
-      'All areas of the protected building, with the limited exceptions for areas of low fire risk listed in Annex D (typical exceptions: small bathrooms, small unoccupied toilet cubicles, sanitary accommodation, certain small voids). The L1 starting position is "everywhere"; exceptions must be justified room by room.',
-      'High-risk rooms only.',
+      'All areas of the building, with only the limited Annex D low-fire-risk exceptions.',
+      'Escape routes plus rooms opening onto them, but not other accommodation.',
+      'Escape routes only, with manual call points provided elsewhere.',
+      'High-risk rooms only, as identified by the fire risk assessment.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
-      'L1 is the highest life-safety category and starts from "automatic detection in every area". BS 5839-1:2025 Annex D (previously Annex E in 2017) lists the limited exceptions where detection is not required. The designer must justify each excluded area; "low fire risk" is the test, not "convenient to leave out".',
+      'L1 is the highest life-safety category and starts from "automatic detection in every area". BS 5839-1:2025 Annex D (previously Annex E in 2017) lists the limited low-fire-risk exceptions where detection is not required — typically small bathrooms, small unoccupied toilet cubicles, sanitary accommodation and certain small voids. The designer must justify each excluded area room by room; "low fire risk" is the test, not "convenient to leave out".',
   },
   {
     id: 'fam1-s1-l2sleep',
     question:
       'A new four-storey care home is being designed. The fire strategy specifies a Category L2 system. Where must automatic fire detection be provided?',
     options: [
-      'Escape routes only.',
-      'Escape routes only — sleeping rooms remain optional under L2.',
-      'Escape routes, rooms opening onto escape routes AND rooms in which people sleep — because the BS 5839-1:2025 revision now defines sleeping rooms as high-risk rooms and brings them within the L2 protection envelope. Heat detectors are no longer permitted in those sleeping rooms; smoke or multi-sensor detection must be used.',
-      'Throughout — L2 always means full coverage.',
+      'Escape routes only, with sleeping rooms left outside the L2 envelope.',
+      'Escape routes plus rooms opening onto them, but not the sleeping rooms.',
+      'Escape routes, rooms opening onto them, and the rooms in which people sleep.',
+      'Throughout the whole building, since L2 in a care home means full coverage.',
     ],
     correctIndex: 2,
     explanation:
-      'BS 5839-1:2025 reclassifies rooms in which people sleep as high-risk rooms requiring automatic detection within an L2 system. This is a substantive change from the 2017 edition. Heat detectors are no longer acceptable in those sleeping rooms (smoke or multi-sensor required). The change is not retrospective — existing systems remain compliant until material works trigger an upgrade.',
+      'BS 5839-1:2025 reclassifies rooms in which people sleep as high-risk rooms requiring automatic detection within an L2 system — so L2 here covers escape routes, rooms opening onto them, and the sleeping rooms. This is a substantive change from the 2017 edition. Heat detectors are no longer acceptable in those sleeping rooms (smoke or multi-sensor required). The change is not retrospective — existing systems remain compliant until material works trigger an upgrade.',
   },
   {
     id: 'fam1-s1-l3void',
     question:
       'BS 5839-1:2025 changed the wording for the wall separating a Category L3 ceiling void from the escape route. What is the new requirement?',
     options: [
-      'The wall must achieve a 60-minute fire-resisting rating.',
-      'The wall must be of solid construction with no holes in it. The 2017 wording "fire-resisting construction" was found to be unhelpful (designers and inspectors could not agree what counted, or how to verify it on site). The 2025 wording focuses on the actual fire-safety objective: stopping smoke from the void crossing the boundary into the escape route.',
-      'The wall must be a 30-minute partition with intumescent seals.',
-      'No separation is required.',
+      'The wall must achieve a 60-minute fire-resisting rating to BS 476 / EN 1364.',
+      'No separation between the void and the escape route is required at all.',
+      'The wall must be a 30-minute partition with intumescent seals around it.',
+      'The wall must be of solid construction with no holes in it.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'The 2025 change is a clarification, not a relaxation. The objective — preventing smoke from a void compromising the escape route — is unchanged. The wording shifts from a construction descriptor (fire-resisting) that proved hard to apply, to a performance descriptor (solid, no holes) that any inspector can verify visually.',
+      'The 2025 change is a clarification, not a relaxation. The 2017 wording "fire-resisting construction" proved unhelpful — designers and inspectors could not agree what counted or how to verify it on site. The 2025 wording focuses on the actual objective: stopping smoke from the void crossing into the escape route. It shifts from a construction descriptor (fire-resisting) to a performance descriptor (solid, no holes) that any inspector can verify visually.',
   },
   {
     id: 'fam1-s1-l4flue',
     question:
       'BS 5839-1:2025 introduces a new requirement for Category L4 systems where flue-like structures are present. What does the standard now recommend?',
     options: [
-      'Detection at every floor level within the flue.',
-      'A detector at the top of the flue-like structure (and only at the top — unlike L1, L2, L3 and P1, the standard does NOT recommend a detector within ~1.5 m of the penetration on every floor for L4). The recognition is that smoke rises rapidly in a flue and the top is the early-warning point; floor-by-floor detection is reserved for the higher categories.',
-      'No detection inside flue-like structures.',
-      'Heat detection only.',
+      'A detector at the top of the flue-like structure, and only at the top.',
+      'A detector at every floor level where the flue penetrates the building.',
+      'No detection inside flue-like structures, since the route detectors suffice.',
+      'Heat detection only within the flue, because of the rising hot-gas column.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'The 2025 change adds top-of-flue detection to L4 because flue-like structures (atria, lift shafts open to corridors, large service shafts) have historically been an L4 blind spot. The "top only" approach is the L4-grade response — proportionate to L4\'s "escape routes only" remit, not as exhaustive as L1/L2/L3/P1 which require both top and per-floor detection.',
+      'The 2025 change adds top-of-flue detection to L4 because flue-like structures (atria, lift shafts open to corridors, large service shafts) have historically been an L4 blind spot. Unlike L1, L2, L3 and P1, the standard does not also recommend a detector within ~1.5 m of the penetration on every floor for L4. The "top only" approach is proportionate to L4\'s "escape routes only" remit; floor-by-floor detection is reserved for the higher categories.',
   },
 ];
 
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does the "L" prefix denote in BS 5839-1:2025 system categorisation?',
     options: [
-      'Limited coverage.',
-      'Life safety — the system is designed primarily to protect the lives of building occupants by providing early warning of fire so that they can escape. Property protection is, at most, a secondary outcome. Contrast with "P" (property) and "M" (manual only).',
-      'Loop — addressable system.',
-      'Local — a single-zone system.',
+      'Limited coverage — a reduced-scope detection system.',
+      'Life safety — protection of occupants by early warning for escape.',
+      'Loop — an addressable, soft-addressed detection circuit.',
+      'Local — a single-zone, self-contained alarm panel.',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,8 +93,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which BS 5839-1:2025 category provides automatic detection throughout the building?',
-    options: ['L2', 'L1', 'L3', 'L4'],
-    correctAnswer: 1,
+    options: ['L2', 'L4', 'L3', 'L1'],
+    correctAnswer: 3,
     explanation:
       'L1 is the highest life-safety category — automatic detection in every area, with the limited exceptions justified through Annex D. L2 covers escape routes plus rooms opening onto them plus high-risk rooms (including, from 2025, sleeping rooms). L3 covers escape routes plus rooms opening onto them. L4 covers escape routes only.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'A 2025-designed Category L2 system protects a small hotel. In which of the following areas is automatic detection now mandatory under the 2025 revision that was NOT mandatory under the 2017 edition?',
     options: [
-      'Reception.',
-      'Bedrooms in which guests sleep — BS 5839-1:2025 reclassifies sleeping rooms as high-risk rooms, bringing them within L2 protection. Heat detectors are no longer permitted in those rooms; smoke or multi-sensor detection must be specified.',
-      'Kitchen.',
-      'Plant room.',
+      'The reception area opening onto the main escape route.',
+      'The commercial kitchen serving the hotel restaurant.',
+      'The bedrooms in which guests sleep overnight.',
+      'The plant room housing the boiler and air-handling unit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 2025 revision treats sleeping rooms as high-risk rooms within L2 (and L3 in respect of detector type — heat detectors banned). The change reflects evidence that sleeping occupants are uniquely vulnerable to delayed detection and need early warning even where the L category does not otherwise demand whole-building cover.',
   },
@@ -117,26 +117,26 @@ const quizQuestions = [
     question:
       'What detector type is NOT permitted in sleeping rooms in a 2025-designed L2 or L3 system?',
     options: [
-      'Multi-sensor.',
-      'Heat — BS 5839-1:2025 explicitly prohibits heat detectors in rooms where people sleep (within new L2 or L3 designs). Smoke or multi-sensor detection must be used. The change is not retrospective — existing systems with heat detectors in sleeping rooms remain compliant until material works (e.g. a system upgrade) trigger the new requirement.',
-      'Optical smoke.',
-      'Aspirating smoke.',
+      'Heat detectors, whether fixed-temperature or rate-of-rise.',
+      'Multi-sensor (combined smoke and heat) detectors.',
+      'Optical (photoelectric) smoke detectors.',
+      'Aspirating smoke detection sampling the room air.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Heat detectors respond too late for sleeping occupants — by the time the room reaches the heat-detector threshold, escape via smoke-filled routes is already compromised. The 2025 prohibition removes a long-standing design pattern; specifiers must change to smoke or multi-sensor in those rooms going forward.',
+      'BS 5839-1:2025 prohibits heat detectors in rooms where people sleep within new L2 or L3 designs — smoke or multi-sensor detection must be used instead. Heat detectors respond too late for sleeping occupants: by the time the room reaches the heat-detector threshold, escape via smoke-filled routes is already compromised. The change is not retrospective; existing systems with heat detectors in sleeping rooms remain compliant until material works such as a system upgrade trigger the new requirement.',
   },
   {
     id: 5,
     question:
       'In a 2025 Category L3 system, BS 5839-1 changed the wording for the wall between an adjacent ceiling void and the escape route. What does the new wording require?',
     options: [
-      '60-minute fire resistance.',
-      'Solid construction with no holes — the 2025 wording replaces "fire-resisting construction" (vague, hard to verify on site) with a performance-based description focused on the actual safety objective: stopping smoke from the void crossing the boundary into the escape route.',
-      '30-minute fire resistance.',
-      'No separation needed.',
+      '60-minute fire resistance to a recognised test standard.',
+      'No separation between the void and the escape route is needed.',
+      '30-minute fire resistance with sealed service penetrations.',
+      'Solid construction with no holes in it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The change is a clarification, not a relaxation. The fire-safety objective (smoke must not cross from the void to the escape route) is preserved; the wording is now expressed in terms that an installer or surveyor can actually verify — the wall is solid and has no penetrations.',
   },
@@ -144,26 +144,26 @@ const quizQuestions = [
     id: 6,
     question: 'What new L4 requirement does BS 5839-1:2025 introduce for flue-like structures?',
     options: [
-      'Detection at every floor.',
-      'A detector at the TOP of the flue-like structure. Unlike L1, L2, L3 and P1, the L4 wording does NOT additionally require a detector within ~1.5 m of the penetration on every floor. L4\'s "escape routes only" remit means the top-of-flue detector is the proportionate L4-grade response.',
-      'Heat detection only.',
-      'Beam detection across the flue.',
+      'A detector at every floor where the flue penetrates the structure.',
+      'A single detector at the top of the flue-like structure.',
+      'Heat detection only within the body of the flue.',
+      'Optical beam detection projected across the flue opening.',
     ],
     correctAnswer: 1,
     explanation:
-      'The 2025 change recognises that flue-like structures (atria, large service shafts, lift shafts open to corridors) draw smoke upward rapidly. The top of the flue is the earliest, most reliable detection point. L4 gets the top detector; the higher categories get top-plus-per-floor.',
+      'The 2025 change adds a top-of-flue detector at L4. Flue-like structures (atria, large service shafts, lift shafts open to corridors) draw smoke upward rapidly, so the top is the earliest, most reliable detection point. Unlike L1, L2, L3 and P1, the L4 wording does not also require a detector within ~1.5 m of the penetration on every floor — the top detector alone is the proportionate L4-grade response. The higher categories get top-plus-per-floor.',
   },
   {
     id: 7,
     question:
       'BS 5839-1:2025 introduces a change for stairway lobbies. What is the new requirement?',
     options: [
-      'No detection required.',
-      'Stairway lobbies now require automatic fire detection. The 2017 edition allowed lobbies to be excluded from automatic detection on the basis that they were classed as areas of low fire risk. The 2025 revision withdraws that exclusion — lobbies must now have automatic detection.',
-      'Heat detection only.',
-      'Manual call point only.',
+      'No detection is required, continuing the 2017 low-risk exclusion.',
+      'Heat detection only, to avoid nuisance alarms from circulation traffic.',
+      'Automatic fire detection is now required in stairway lobbies.',
+      'A manual call point only, sited at the lobby entrance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Stairway lobbies are the buffer between fire-protected stair cores and the accommodation they serve. A fire that enters a lobby threatens the stair core. The 2025 revision recognises that historic exclusion of lobbies as "low fire risk" was inconsistent with their critical role in evacuation — they must now have automatic detection.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 21.2.4 sets out distances of point detectors from the ceiling. What are the figures?',
     options: [
-      '50 mm to 800 mm for both smoke and heat.',
-      '25 mm to 600 mm for smoke detectors and 25 mm to 150 mm for heat detectors. The same figures applied in the 2017 edition (then numbered 22.3); the 2025 revision changed the clause numbering but retained the technical content.',
-      '0 mm to 300 mm for both.',
+      '25 mm to 600 mm for smoke detectors; 25 mm to 150 mm for heat detectors.',
+      '50 mm to 800 mm for both smoke and heat detectors.',
+      '0 mm to 300 mm for both smoke and heat detectors.',
       '100 mm to 500 mm for smoke; 25 mm to 150 mm for heat.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '21.2.4 (2025) = 22.3 (2017) for the technical recommendation. The smoke-detector range allows for the smoke layer to develop below the ceiling without losing early-detection sensitivity; the much tighter heat-detector range reflects the ceiling-jet behaviour of hot gases.',
   },
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'A specifier is choosing between L1 and L2 for a small two-storey day-care nursery (no overnight sleeping). Which factor most strongly drives the choice?',
     options: [
-      'Cost.',
-      'The fire risk assessment. The Regulatory Reform (Fire Safety) Order 2005 puts the duty on the responsible person to conduct a suitable and sufficient fire risk assessment; the fire-detection category follows from that. For a non-sleeping nursery the FRA may justify L2 (escape routes plus high-risk rooms); a more onerous evacuation profile (very young children, restricted mobility) may push the FRA towards L1. Building Regs Approved Document B and insurer requirements feed into the same decision.',
-      'The colour scheme.',
-      'The brand of detectors.',
+      'The installed cost difference between the two categories.',
+      'The findings of the fire risk assessment for the building.',
+      'The interior colour scheme and finishes of the nursery.',
+      'The preferred manufacturer brand of the detectors.',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 specifies that all manual call points should be sited so that no person needs to travel more than what straight-line and actual-travel distances to reach one?',
     options: [
-      '20 m straight line / 30 m travel.',
-      '30 m straight line and 45 m actual travel distance — these are the maximum distances; designers may specify shorter distances if the risk assessment requires it. The 2025 revision simplified the previous wording; the figures themselves are unchanged from custom and practice.',
-      '50 m straight line / 75 m travel.',
-      '10 m straight line / 15 m travel.',
+      '20 m straight line / 30 m actual travel.',
+      '10 m straight line / 15 m actual travel.',
+      '50 m straight line / 75 m actual travel.',
+      '30 m straight line / 45 m actual travel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5839-1:2025 simplified the call-point distance rules to a clear pair: 30 m straight line, 45 m actual travel. These are limits — specifiers can be more demanding in higher-risk areas (kitchens, plant rooms, processes with elevated ignition risk) and routinely should be.',
   },

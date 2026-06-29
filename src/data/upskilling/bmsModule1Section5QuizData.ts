@@ -24,10 +24,10 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 2,
     question: 'How does ISO 16484 improve BMS compatibility?',
     options: [
-      "They ensure safe, efficient, and future-proof installations",
-      "Efficiency levels achieved with automation (A to D)",
+      "By mandating a single approved manufacturer per installation",
+      "By setting fixed energy consumption limits for each building type",
       "By ensuring interoperability between different manufacturers' systems",
-      "By showing how BMS improves compliance and efficiency",
+      "By requiring all controllers to be replaced every five years",
     ],
     correctAnswer: 2,
     explanation:
@@ -37,9 +37,9 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is the focus of EN 15232?',
     options: [
-      'Efficiency levels achieved with automation (A to D)',
-      'To provide international guidance for BMS design and operation',
-      'It defines system architecture and data exchange protocols',
+      'Fire detection and alarm system wiring requirements',
+      'The mechanical installation of HVAC ductwork',
+      'Cyber-security standards for networked controllers',
       'Energy performance of buildings through automation',
     ],
     correctAnswer: 3,
@@ -51,9 +51,9 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     question: 'What do energy classes in EN 15232 represent?',
     options: [
       'Efficiency levels achieved with automation (A to D)',
-      'To provide international guidance for BMS design and operation',
-      'By promoting automation for lighting, HVAC, and shading systems',
-      'Energy performance of buildings through automation',
+      'The fire resistance rating of the control panel enclosure',
+      'The maximum number of devices allowed on a network',
+      'The voltage rating of the building automation bus',
     ],
     correctAnswer: 0,
     explanation:
@@ -89,9 +89,9 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Give one way ISO 16484 affects system design.',
     options: [
-      'By ensuring interoperability between different manufacturers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' systems',
-      'To provide international guidance for BMS design and operation',
-      'By showing how BMS improves compliance and efficiency',
+      'It fixes the installed cost per point for every project',
+      'It bans the use of wireless sensors in commercial buildings',
+      'It specifies the brand of cable that must be installed',
       'It defines system architecture and data exchange protocols',
     ],
     correctAnswer: 3,
@@ -103,9 +103,9 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     question: 'Give one way EN 15232 encourages energy savings.',
     options: [
       'By promoting automation for lighting, HVAC, and shading systems',
-      'They ensure safe, efficient, and future-proof installations',
-      'Energy performance of buildings through automation',
-      'Efficiency levels achieved with automation (A to D)',
+      'By requiring thicker insulation in external walls',
+      'By limiting the number of occupants permitted per floor',
+      'By increasing the supply voltage to reduce cable losses',
     ],
     correctAnswer: 0,
     explanation:

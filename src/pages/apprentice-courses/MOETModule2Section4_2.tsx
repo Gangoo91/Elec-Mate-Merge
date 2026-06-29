@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'rcd-operating-principle',
     question: 'What physical principle does an RCD use to detect earth fault current?',
     options: [
-      'Risk assessment identifies risks, method statement describes control measures',
+      'It measures the absolute current in the line conductor against a fixed threshold',
       'It detects the imbalance between line and neutral currents using a current transformer',
-      'Listen non-judgementally and let them know you care, without insisting they stop',
-      'Designing and specifying low-carbon MEP systems that minimise operational emissions',
+      'It compares the supply voltage with the voltage on the earth terminal',
+      'It senses the temperature rise in the protected conductor under fault',
     ],
     correctIndex: 1,
     explanation:
@@ -27,9 +27,9 @@ const quickCheckQuestions = [
     id: 'rcd-30ma-purpose',
     question: 'A 30 mA RCD is primarily intended to provide protection against:',
     options: [
-      'Sakichi Toyoda as part of the Toyota Production System',
-      'Circuit designation, cable details, and protection characteristics',
-      'To identify actual handling techniques and conditions in real time',
+      'Overload current in the protected final circuit',
+      'Short-circuit fault current between line and neutral',
+      'Voltage surges caused by lightning or switching transients',
       'Electric shock by contact with live parts (additional protection)',
     ],
     correctIndex: 3,
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
   },
   {
     id: 'rcbo-advantage',
-    question: 'What is the key advantage of an RCBO over a separate MCB and RCD combination?',
+    question: 'What is the key advantage of an RCBO over a shared RCD protecting several circuits?',
     options: [
-      'Uniquely identify every wire so it can be traced between its origin and destination terminals',
+      'An RCBO has a faster disconnection time than any RCD can achieve',
       'An RCBO combines overcurrent and earth fault protection in a single device, allowing individual circuit protection',
-      'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
-      'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
+      'An RCBO does not require periodic testing once installed',
+      'An RCBO can be reset remotely without access to the consumer unit',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'Under BS 7671 Regulation 411.3.3, additional protection by means of a 30 mA RCD is required for:',
     options: [
-      'A pulsating DC earth fault current from a rectifier circuit',
-      'Excessive standing earth leakage current from multiple items of equipment on the same RCD',
+      'Fixed appliances rated above 32 A in commercial premises only',
+      'Three-phase distribution circuits feeding sub-main boards',
       'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
-      'Provide a deliberate time delay to achieve discrimination with downstream instantaneous RCDs',
+      'Lighting circuits in commercial buildings but not in dwellings',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'A Type AC RCD will NOT reliably detect:',
     options: [
-      'Because they happen far more frequently and complacency is common',
-      'Check correct phase sequence in three-phase systems',
-      'The individual\\\\\\\\\\\\\\\'s perception of the event and their perceived ability to cope',
+      'A sinusoidal AC residual current at 50 Hz',
+      'An earth fault on a purely resistive heating load',
+      'A residual current caused by deteriorated cable insulation',
       'A pulsating DC earth fault current from a rectifier circuit',
     ],
     correctAnswer: 3,
@@ -107,12 +107,12 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'An RCD must be tested by pressing its integral test button:',
+    question: 'How often should the user press the integral test button of an RCD?',
     options: [
       'At intervals not exceeding 6 months (quarterly recommended for domestic)',
-      'Excessive standing earth leakage current from multiple items of equipment on the same RCD',
-      '300 ms at rated residual current and 40 ms at 5 x I Delta n (for Type AC/A general purpose)',
-      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
+      'Only once, immediately after the device is first installed',
+      'Every day before the installation is energised',
+      'Only when a fault is suspected on the protected circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: "A 'time-delayed' or 'S-type' RCD is used to:",
     options: [
-      'Excessive standing earth leakage current from multiple items of equipment on the same RCD',
+      'Increase the sensitivity of the device to below 30 mA',
       'Provide a deliberate time delay to achieve discrimination with downstream instantaneous RCDs',
-      'At intervals not exceeding 6 months (quarterly recommended for domestic)',
-      'Type A minimum, with Type B or Type A + Type B RDC-DD where smooth DC fault currents may occur',
+      'Detect smooth DC residual currents that a Type A cannot',
+      'Allow the device to carry a higher continuous load current',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     question:
       'When testing an RCD with an instrument during periodic inspection, the device must trip within:',
     options: [
-      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
-      'Provide a deliberate time delay to achieve discrimination with downstream instantaneous RCDs',
+      '100 ms at rated residual current and 10 ms at 5 x I Delta n',
+      '5 seconds at rated residual current and 200 ms at 5 x I Delta n',
       '300 ms at rated residual current and 40 ms at 5 x I Delta n (for Type AC/A general purpose)',
-      'Equipment with single-phase variable-frequency drives that produce mixed-frequency residual currents',
+      '1 second at rated residual current and 300 ms at 5 x I Delta n',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     question:
       'Which type of RCD is required by BS 7671 for circuits supplying EV charging equipment?',
     options: [
-      'Equipment with single-phase variable-frequency drives that produce mixed-frequency residual currents',
-      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
-      '300 ms at rated residual current and 40 ms at 5 x I Delta n (for Type AC/A general purpose)',
+      'Type AC only, as EV chargers produce purely sinusoidal faults',
+      'Any RCD rated at 100 mA or above for fire protection',
+      'A time-delayed S-type RCD to achieve discrimination',
       'Type A minimum, with Type B or Type A + Type B RDC-DD where smooth DC fault currents may occur',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'Nuisance tripping of an RCD may be caused by:',
     options: [
       'Excessive standing earth leakage current from multiple items of equipment on the same RCD',
-      'Provide a deliberate time delay to achieve discrimination with downstream instantaneous RCDs',
-      '300 ms at rated residual current and 40 ms at 5 x I Delta n (for Type AC/A general purpose)',
-      'Equipment with single-phase variable-frequency drives that produce mixed-frequency residual currents',
+      'An overload on the protected circuit exceeding the rated current',
+      'A short-circuit between the line and neutral conductors',
+      'The supply voltage falling below the minimum rated value',
     ],
     correctAnswer: 0,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'A Type F RCD is specifically designed for circuits supplying:',
     options: [
-      'Provide a deliberate time delay to achieve discrimination with downstream instantaneous RCDs',
-      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
-      '300 ms at rated residual current and 40 ms at 5 x I Delta n (for Type AC/A general purpose)',
+      'Purely resistive loads such as immersion heaters',
+      'Three-phase rectifier loads producing smooth DC fault currents',
+      'Standard lighting circuits with no electronic equipment',
       'Equipment with single-phase variable-frequency drives that produce mixed-frequency residual currents',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
     question: 'If an RCD trips and cannot be successfully reset, the most likely cause is:',
     options: [
       'A persistent earth fault exists on the protected circuit',
-      'A circuit containing both series and parallel combinations',
-      'To control high-risk activities with formal procedures',
-      'Areas of heat transfer that bypass insulation',
+      'The integral test button has been left in the pressed position',
+      'The supply voltage is slightly higher than the rated value',
+      'The device has simply reached the end of its working life',
     ],
     correctAnswer: 0,
     explanation:

@@ -31,9 +31,9 @@ export const bmsModule4Section1QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Why is DALI considered more flexible than traditional on/off control?',
     options: [
-      'A current-carrying conductor in a magnetic field experiences a force',
-      'To ensure their personal safety - no one else can remove it',
-      'Manufacturing plants, factories, and heavy industry',
+      'It uses a higher supply voltage to drive each luminaire',
+      'It requires a separate switched live to every fitting',
+      'It transmits power over the data bus, removing mains wiring',
       'It allows individual addressing and dimming of fittings',
     ],
     correctAnswer: 3,
@@ -57,10 +57,10 @@ export const bmsModule4Section1QuizData: QuizQuestion[] = [
     id: 5,
     question: "Why can't 1–10V systems report lamp failures?",
     options: [
-      'Overheating, interference, equipment malfunction',
+      'They only operate at full brightness or fully off',
       'They use analog signals without digital feedback capability',
-      'When an immediate safety hazard needs to be addressed without delay',
-      'It allows operators to monitor and respond to building issues from anywhere',
+      'They lack a neutral conductor in the control circuit',
+      'They poll each fitting too slowly to detect a fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,14 +70,14 @@ export const bmsModule4Section1QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Give one example of a wireless protocol used in smart lighting.',
     options: [
-      'Modbus',
-      'Ethernet',
+      'DALI',
+      'KNX TP',
       'Zigbee',
-      'RS485',
+      'DMX512',
     ],
     correctAnswer: 2,
     explanation:
-      'Zigbee is a common wireless protocol used in smart lighting systems, along with Bluetooth, Wi-Fi, and other wireless mesh technologies.',
+      'Zigbee is a common wireless mesh protocol used in smart lighting, alongside Bluetooth and Wi-Fi. DALI, KNX TP and DMX512 are all wired control protocols.',
   },
   {
     id: 7,
@@ -97,9 +97,9 @@ export const bmsModule4Section1QuizData: QuizQuestion[] = [
     question: 'What is one potential drawback of smart lighting systems?',
     options: [
       'Dependence on IT infrastructure and potential security vulnerabilities',
-      'Smaller, lighter, cheaper, and more efficient for small voltage changes',
-      'Ground temperatures are more stable and higher in winter',
-      'Part S (Infrastructure for electric vehicles) and Part P (Electrical Safety)',
+      'Inability to dim individual fittings or set scenes',
+      'A hard limit of 64 devices per installation',
+      'Incompatibility with LED light sources',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule4Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians separate control and mains wiring in 1–10V systems?',
     options: [
-      'Issue corrected certificates',
-      'To avoid electromagnetic interference',
-      'Internal staircases at a comfortable angle',
-      'To maintain light output and performance',
+      'To allow the control cable to use a smaller conductor size',
+      'To avoid electromagnetic interference corrupting the control signal',
+      'To keep the two circuits on the same protective device',
+      'To reduce the total length of mains cable required',
     ],
     correctAnswer: 1,
     explanation:

@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'You arrive at a scaffold and see a yellow (amber) tag displayed at the access point. What does this mean and what should you do?',
     options: [
-      'The scaffold is fully complete and safe to use without restriction',
       'The scaffold has restrictions in place — read the tag carefully before use, do not access restricted areas',
+      'The scaffold is fully complete and safe to use without restriction',
       'The scaffold is unsafe and must not be used under any circumstances',
       'The scaffold is being dismantled and you should wait until a green tag is displayed',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A yellow (amber) scaffold tag indicates that the scaffold is partially complete or has specific restrictions that apply. This does not mean the scaffold is unsafe in its entirety — it means that certain areas, levels, or bays may not be used. The tag will specify which areas are restricted and the nature of the restrictions. Before accessing a scaffold with a yellow tag, you must read the tag information carefully to confirm which areas are available for use and which are off limits. You must never access any area identified as restricted on the tag. If you are unsure about the restrictions, do not use the scaffold and speak to the scaffolding contractor, site supervisor, or the person responsible for scaffold management on site. Using a restricted area of a yellow-tagged scaffold is a serious safety breach that could result in a fall from height or structural collapse.',
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     question: 'Which of the following pieces of information must be recorded on a scaffold tag?',
     options: [
       'The name of the scaffold hire company and the rental cost per week',
-      'The date of inspection, the name of the inspector, the next inspection date, and any restrictions',
       'Only the colour status (green, yellow, or red) — no other information is required',
       'The names of all workers who are permitted to use the scaffold',
+      'The date of inspection, the name of the inspector, the next inspection date, and any restrictions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "A scaffold tag must contain sufficient information for anyone accessing the scaffold to understand its status, who inspected it, when the inspection took place, when the next inspection is due, and whether any restrictions apply. At minimum, the tag must include: the date of the most recent inspection, the name (and often the signature and CISRS card number) of the competent person who carried out the inspection, the date the next inspection is due (scaffolds must be inspected at least every seven days), a clear statement of any restrictions or limitations on use, the scaffold location or identification reference, and the status colour (green, yellow, or red). Some tag systems, particularly the NASC/CISRS Scafftag system, also include fields for the scaffolding contractor's name, the scaffold design reference, the maximum permitted loading, and a unique tag serial number for traceability. The tag must be legible, weather-resistant, and securely attached at every access point.",
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does a GREEN scaffold tag indicate?',
     options: [
-      'The scaffold is partially erected and has restricted access',
       'The scaffold has been inspected, is complete, and is safe to use without restriction',
+      'The scaffold is partially erected and has restricted access',
       'The scaffold is being dismantled and must not be accessed',
       'The scaffold requires further inspection before use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A green scaffold tag indicates that the scaffold has been inspected by a competent person, has been found to comply with the design specification and relevant regulations, is complete in all respects (including guardrails, toe boards, full boarding, access, and bracing), and is safe to use without restriction. The green tag is effectively a certificate of fitness confirming that the scaffold meets the required standards at the time of inspection. However, users must still carry out a basic visual check before each use, as conditions can change between inspections.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'Use the scaffold briefly if the task is urgent and there is no alternative',
       'Use the scaffold if you are wearing a harness',
-      'Do NOT use the scaffold under any circumstances — it is unsafe',
       'Use only the lower levels of the scaffold, as they are likely complete',
+      'Do NOT use the scaffold under any circumstances — it is unsafe',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A red scaffold tag means the scaffold is unsafe and must NOT be used under any circumstances, by any person, for any reason. A red tag is displayed when the scaffold is in the process of being erected or dismantled, when a significant defect has been identified that renders the scaffold unsafe, when the scaffold has been damaged (for example, by vehicle impact, wind, or overloading), or when the scaffold has been condemned following an inspection. No exceptions apply — even if the task is urgent, even if you are wearing a harness, and even if only a small part of the scaffold appears affected. Access to a red-tagged scaffold must be physically prevented where reasonably practicable (for example, by removing ladders or installing barriers), and clear signage must be displayed warning that the scaffold must not be used.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 4,
     question: 'Where must scaffold tags be placed?',
     options: [
+      'At every access point to the scaffold',
       'At the top level of the scaffold only',
       'In the site office for safekeeping',
-      'At every access point to the scaffold',
       'Only at the main entrance to the construction site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Scaffold tags must be placed at every access point to the scaffold. This is critical because scaffolds often have multiple access points — for example, ground-level ladder access, intermediate access from an adjacent building, access from an adjoining scaffold, or access from a loading bay. If a tag is only placed at one access point, workers entering through other points will not see the tag and will have no information about the scaffold's status. Every person approaching a scaffold must be able to see and read the tag before they step onto the scaffold. Tags must be positioned at a height and location where they are clearly visible and easily readable — typically at or near eye level adjacent to the access ladder or entrance. Tags must be securely attached so they cannot be blown away or accidentally dislodged, and they must be protected from weather damage to remain legible.",
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
     question: 'What must be recorded on a scaffold tag at minimum?',
     options: [
       'Only the colour of the tag (green, yellow, or red)',
-      "The date of inspection, inspector's name, next inspection date, and any restrictions",
       'The name of the building owner and the insurance policy number',
+      "The date of inspection, inspector's name, next inspection date, and any restrictions",
       'The total weight of materials stored on the scaffold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A scaffold tag must record at minimum: the date of the most recent inspection, the name (and usually the signature and CISRS card number) of the competent person who carried out the inspection, the date the next inspection is due, and a clear statement of any restrictions or limitations on use. Additional information commonly recorded includes the scaffold location or identification reference, the scaffolding contractor's name, the maximum permitted loading class, the scaffold design reference, and a unique tag serial number. The tag must provide enough information for any worker to determine at a glance whether the scaffold is safe to use, when it was last checked, when it will be checked next, and whether any restrictions apply. Without this information, the tag serves no useful purpose and the scaffold should be treated as untagged.",
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'What does the NASC/CISRS Scafftag system provide that a handwritten sign does not?',
     options: [
       'Legal permission to exceed the seven-day inspection interval',
-      'A standardised, industry-recognised format with colour-coded inserts, weather-resistant holders, and traceability through unique serial numbers',
       'An automatic alarm system that warns workers if the scaffold becomes unsafe',
       'A guarantee that the scaffold will never require re-inspection',
+      'A standardised, industry-recognised format with colour-coded inserts, weather-resistant holders, and traceability through unique serial numbers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The NASC/CISRS Scafftag system is a standardised, industry-recognised scaffold tagging system developed jointly by the National Access and Scaffolding Confederation (NASC) and the Construction Industry Scaffolders Record Scheme (CISRS). It provides durable, weather-resistant tag holders with interchangeable colour-coded inserts (green, yellow/amber, red), a structured format for recording all required inspection information in a consistent manner, unique serial numbers on each tag for traceability and audit purposes, and a universally recognised appearance that all construction workers can identify regardless of which site they are working on. A handwritten sign, while better than nothing, offers no standardisation, no weather resistance, no traceability, and no assurance that all required information has been recorded. Handwritten signs can also be easily forged, damaged, or rendered illegible by weather.',
   },
@@ -177,11 +177,11 @@ const quizQuestions = [
       'Under the advanced scaffolding inspection scheme, who can carry out a detailed scaffold inspection?',
     options: [
       'Any labourer who has worked on construction sites for more than five years',
-      'Only the site manager, regardless of their qualifications',
       'A competent person with appropriate training, knowledge, and experience — typically CISRS-qualified',
+      'Only the site manager, regardless of their qualifications',
       'Any person who holds a valid CSCS card of any type',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Under the Work at Height Regulations 2005, scaffold inspections must be carried out by a competent person — defined as someone with sufficient training, experience, knowledge, and other qualities to carry out the inspection properly. In practice, for tube and fitting and system scaffolds, this means a person who holds a relevant CISRS qualification such as a CISRS Scaffolding Inspector card, a CISRS Advanced Scaffolder card, or an equivalent qualification recognised by the industry. The advanced scaffolding inspection scheme requires the inspector to have detailed knowledge of scaffold design, structural principles, loading calculations, and the specific requirements of the Work at Height Regulations and the relevant British and European Standards (BS EN 12811, BS 5975). A general CSCS card or a long period of site experience alone is not sufficient — the inspector must have specific scaffolding competence.',
   },
@@ -191,11 +191,11 @@ const quizQuestions = [
       'A scaffold was inspected and tagged green on Monday. On Wednesday evening, the site experiences winds exceeding 50 mph. What should happen on Thursday morning?',
     options: [
       'Nothing — the scaffold still has a valid green tag and the next inspection is not due until the following Monday',
-      'Workers should visually check the scaffold before use but the green tag remains valid',
       'The scaffold must be re-inspected by a competent person before use, and the tag updated to reflect the new inspection',
+      'Workers should visually check the scaffold before use but the green tag remains valid',
       'The scaffold should be dismantled immediately as it will certainly be damaged',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Scaffolds must be re-inspected after any event that could have affected their stability, strength, or rigidity — and high winds (typically defined as sustained winds exceeding approximately 30 mph or gusts exceeding 50 mph, although specific thresholds may vary by scaffold type and site conditions) are one of the most common triggering events. The existing green tag is no longer valid because conditions have changed since the inspection was carried out. The scaffold must be inspected by a competent person before anyone is permitted to use it on Thursday morning. The inspector will check for wind damage including displaced or missing components, loosened ties, displaced base plates, twisted or buckled standards, dislodged toe boards and guardrails, and sheeting or debris damage. If the scaffold passes the post-weather inspection, a new green tag is issued with Thursday's date. If defects are found, a yellow or red tag is issued as appropriate. Until the inspection is complete, the scaffold must not be used.",
   },

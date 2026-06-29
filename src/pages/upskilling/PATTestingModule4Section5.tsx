@@ -23,25 +23,25 @@ const inlineChecks = [
     question:
       'Which BS EN standard governs the design and accuracy of multifunction PAT testers — specifically the low-resistance ohmmeter and insulation resistance functions?',
     options: [
-      'BS EN 61010 only',
-      'BS EN 61557 series — Part 1 (general / safety umbrella for the series), Part 2 (insulation resistance), Part 4 (low-resistance ohmmeter / earth continuity). BS EN 61010 is a separate standard covering the safety of test equipment itself, not the measurement performance',
-      'BS 7671 only',
-      'BS EN 60335',
+      'BS EN 61010 alone, the standard printed on the instrument rating plate',
+      'BS 7671 alone, since the wiring regulations define the test methods',
+      'BS EN 60335, the safety standard for the household appliances under test',
+      'BS EN 61557 series — Parts 1, 2 and 4',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'BS EN 61557 series sets measurement performance for safety test instruments. Each part covers a specific test type. BS EN 61010 covers the safety (overvoltage category, insulation, mechanical) of the test instrument as a piece of electrical equipment in its own right.',
+      'The BS EN 61557 series sets measurement performance for safety test instruments, with each part covering a specific test type — Part 1 general, Part 2 insulation resistance, Part 4 low-resistance ohmmeter / earth continuity. BS EN 61010 separately covers the safety (overvoltage category, insulation, mechanical) of the test instrument as a piece of electrical equipment in its own right, not its measurement performance.',
   },
   {
     id: 'patm4-s5-calibration',
     question: 'What does IET CoP recommend for PAT tester calibration interval?',
     options: [
-      'Every five years',
-      'Annual recalibration is the IET CoP recommended interval, with a sensible site-check (verifying against a known reference such as a calibration test box or known-good appliance) more frequently — typically monthly. Annual is the formal calibration; monthly site-checks catch drift between the formal calibrations',
-      'Once a decade',
-      'Only when the meter fails',
+      'Annual formal calibration, plus monthly site-checks against a known reference box',
+      'Every five years, since modern electronic instruments are stable enough not to drift',
+      'Once a decade, aligned with the typical service life of the instrument before replacement',
+      'Only when the meter visibly fails or gives an obviously wrong reading, with no fixed interval',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "IET CoP recommends annual formal calibration of PAT testers. Many test-equipment hire firms align this with their hire cycle. Site-checks against a calibration box (a known-resistance and known-IR reference unit) every month or so detect drift between formal calibrations and catch problems before a whole month's test results are called into question.",
   },
@@ -49,28 +49,28 @@ const inlineChecks = [
     id: 'patm4-s5-gs38',
     question: 'What does GS38 require of the test leads supplied with a PAT tester?',
     options: [
-      'Just that they fit the meter',
-      'Finger-barriers (a moulded shroud preventing operator fingers reaching the conductive probe tip), minimal exposed metal at the tip (typically ≤ 4 mm or ≤ 2 mm for higher overvoltage categories), insulation rated to the test voltage, and where appropriate fused leads to limit short-circuit current. PAT lead sets fall under GS38 because they are used for measurement on / near energised equipment',
-      'Colour code matching the meter',
-      'Length under 1 m',
+      'That the leads physically fit the meter sockets and reach the appliance comfortably',
+      'That the leads carry a colour code matching the meter casing to avoid mix-ups',
+      'Finger-barriers, minimal exposed tip metal, voltage-rated insulation and fused leads where appropriate',
+      'That each lead is kept under 1 m in length to limit the resistance it adds to readings',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      "GS38 is HSE's guidance on test probes and leads. The headline requirements: finger-barriers, minimum exposed tip metal, voltage-rated insulation, and fused leads where the application calls for it. PAT lead sets typically meet GS38 by design but the operator should still inspect leads for damage / shroud integrity at the start of each test session.",
+      "GS38 is HSE's guidance on test probes and leads. The headline requirements are finger-barriers (a moulded shroud stopping fingers reaching the tip), minimum exposed tip metal (typically ≤ 4 mm, or ≤ 2 mm for higher overvoltage categories), insulation rated to the test voltage, and fused leads where the application calls for it. PAT lead sets fall under GS38 as they are used on or near energised equipment; the operator should still inspect leads for damage / shroud integrity at the start of each test session.",
   },
   {
     id: 'patm4-s5-tester-choice',
     question:
       'You are setting up a PAT regime for a small electrical contractor with a fleet of about 50 portable appliances (mostly hand tools and office kit). Which class of PAT tester is most appropriate?',
     options: [
-      'Manual single-test workflow only — cheaper and forces inspection',
-      'An automatic mid-range tester that runs the IET CoP test sequence (earth continuity → IR → polarity → leakage) automatically against pre-configured pass/fail thresholds, with on-board storage and pass/fail label printing. This balances throughput with audit-quality records for a small fleet, and integrates with most asset-management software for the duty-holder records',
-      'A high-end specialist medical / industrial tester',
-      'A multimeter and an ohmmeter',
+      'A manual single-test tester only, cheaper but forcing a separate operator step per test',
+      'A high-end specialist medical / industrial tester, future-proofed against any added equipment',
+      'A general multimeter plus a separate low-resistance ohmmeter, used together for the individual tests',
+      'An automatic mid-range tester running the IET CoP sequence with on-board storage and label printing',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'For a 50-appliance fleet, an automatic tester is the right cost-quality balance. Manual testers slow the workflow and increase the risk of operator errors at scale; high-end specialist kit is overkill. Automatic testers with sequence enforcement, BLE / USB transfer and label printers are the standard choice for SMB-level PAT work.',
+      'For a 50-appliance fleet, a mid-range automatic tester is the right cost-quality balance — it runs the IET CoP sequence (earth continuity → IR → polarity → leakage) against pre-configured thresholds, stores results and prints labels, integrating with most asset-management software. Manual testers slow the workflow and increase operator errors at scale; high-end specialist kit is overkill. A multimeter cannot produce the required test currents and voltages.',
   },
 ];
 
@@ -80,53 +80,53 @@ const quizQuestions = [
     question:
       'What is the headline difference between a manual PAT tester and an automatic PAT tester?',
     options: [
-      'Manual is cheaper, automatic is more accurate',
-      'A manual tester runs each test (earth continuity, IR, polarity, leakage) as a separate operator-initiated step; the operator selects each test and judges pass/fail manually against the IET CoP limits. An automatic tester runs the IET CoP sequence as one button-press, with pre-configured pass/fail logic and on-board storage. Manual is slower but less reliant on tester programming; automatic is faster, more consistent, and produces audit-quality records by default',
-      'Automatic only does Class I',
-      'Manual is for fixed installations',
+      'Manual testers are cheaper, but automatic testers are inherently more accurate at the same measurement',
+      'Automatic testers can only test Class I appliances, while manual testers handle both Class I and Class II',
+      'Manual testers are for fixed-installation work, while automatic testers are only for portable appliances',
+      'Manual runs each test as a separate operator step; automatic runs the whole IET CoP sequence on one button-press with on-board storage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The functional split is workflow-level. Manual testers expose the test sequence to the operator step-by-step; automatic testers package the IET CoP sequence as a single workflow with pre-configured limits and on-board recording. Modern PAT practice typically uses automatic testers; manual testers remain useful for diagnosis and edge cases but are not the workflow tool of choice for routine PAT.',
+      'The functional split is workflow-level. A manual tester exposes the test sequence to the operator step-by-step with manual pass/fail judgement; an automatic tester packages the IET CoP sequence as a single workflow with pre-configured limits and on-board recording — faster, more consistent, and audit-quality by default. Modern PAT practice typically uses automatic testers; manual testers remain useful for diagnosis and edge cases but are not the workflow tool of choice for routine PAT. Accuracy is set by BS EN 61557 compliance, not by manual versus automatic operation.',
   },
   {
     id: 2,
     question: 'What does BS EN 61557 Part 4 specifically govern?',
     options: [
-      'Insulation resistance instruments',
-      'Low-resistance ohmmeters used for protective conductor / earth continuity measurement — including required test current, no-load voltage range, and the lead-resistance compensation requirement',
-      'Earth-loop impedance testers',
-      'RCD testers',
+      'Low-resistance ohmmeters used for protective-conductor / earth-continuity measurement',
+      'Insulation-resistance test instruments and their minimum applied voltage and accuracy',
+      'Earth fault loop impedance testers used to verify disconnection times within BS 7671 limits',
+      'RCD testers and the trip-time / trip-current ranges they must accurately measure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 61557 Part 4 specifies performance requirements for low-resistance ohmmeters. Part 2 covers insulation resistance instruments, Part 3 covers earth fault loop impedance, Part 6 covers RCD testers. Each part of BS EN 61557 governs a specific test instrument type within the safety-test family.',
+      'BS EN 61557 Part 4 specifies performance requirements for low-resistance ohmmeters — including the required test current, no-load voltage range and lead-resistance compensation. Part 2 covers insulation resistance instruments, Part 3 covers earth fault loop impedance, Part 6 covers RCD testers. Each part of BS EN 61557 governs a specific test instrument type within the safety-test family.',
   },
   {
     id: 3,
     question:
       'What is the IET CoP-recommended calibration interval for PAT test equipment, and why?',
     options: [
-      'Every five years — instruments are stable',
-      'Annual — recommended because PAT testers contain components (high-voltage IR generation, low-current shunt resistors, electronic switching) whose accuracy can drift over a year of routine use. Annual calibration provides a formal traceable check; site-checks against a calibration box more frequently (typically monthly) catch drift between annuals',
-      'Whenever the operator wants',
-      'Only after impact damage',
+      'Every five years — modern instruments are stable enough not to need more frequent formal calibration',
+      'Whenever the operator chooses, since calibration intervals are a matter of individual judgement',
+      'Annual formal calibration, with monthly site-checks against a calibration box to catch drift between annuals',
+      'Only after the instrument suffers impact damage or an obvious fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'IET CoP recommends annual formal calibration. The instrument industry standard for safety test equipment is also annual — UKAS-accredited calibration laboratories typically issue 12-month calibration certificates. Monthly site-checks against a portable calibration reference catch drift early.',
+      'IET CoP recommends annual formal calibration. PAT testers contain components (high-voltage IR generation, low-current shunts, electronic switching) whose accuracy can drift over a year of use; the annual gives a formal traceable check. UKAS-accredited calibration laboratories typically issue 12-month certificates, and monthly site-checks against a portable calibration reference catch drift between annuals.',
   },
   {
     id: 4,
     question:
       'GS38 requires test probes to have what feature to prevent operator fingers reaching the conductive tip?',
     options: [
-      'A warning sticker',
-      "A finger-barrier — a moulded shroud on the probe handle, set back from the tip, that physically prevents the operator's finger from sliding forward onto the conductive tip during a measurement. The tip itself should have minimal exposed metal (typically ≤ 4 mm)",
-      'A red colour',
-      'Only insulation',
+      'A prominent warning sticker on the probe handle reminding the operator not to touch the tip',
+      'A red colour applied to the probe body so the live test lead is easily identified by the operator',
+      'Insulation along the lead only, the tip being left fully bare so it can make a reliable contact',
+      'A finger-barrier — a moulded shroud, set back from the tip, that stops the finger reaching the conductive tip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "GS38 finger-barriers are the headline safety feature. Combined with minimal exposed tip metal (≤ 4 mm general; ≤ 2 mm for higher overvoltage categories), they prevent the most common test-probe accident — the operator's finger slipping onto the conductive tip while making a measurement on energised equipment.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What standard covers the SAFETY (overvoltage category, mechanical safety, insulation) of the PAT tester itself, distinct from BS EN 61557 which covers measurement performance?',
     options: [
-      'BS 7671',
       'BS EN 61010 — Safety requirements for electrical equipment for measurement, control and laboratory use',
-      'GS38',
-      'BS EN 60335',
+      'BS 7671, the wiring regulations governing the fixed installation the tester plugs into',
+      'GS38, the HSE guidance covering test probes and leads rather than the instrument body',
+      'BS EN 60335, the safety standard for the household appliances being tested',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 61010 is the umbrella safety standard for laboratory and field test instruments. PAT testers fit within Part 1 (general requirements) and Part 2-030 (handheld and hand-manipulated test instruments). BS EN 61557 governs the measurement performance; BS EN 61010 governs the equipment safety.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'A high-end PAT tester offers Bluetooth (BLE) transfer of results to a tablet, on-board barcode reading for appliance ID, integrated label printing and a built-in calibration check function. Which use case is this configuration most appropriate for?',
     options: [
-      'A single small office',
-      'A specialist PAT contractor handling several thousand appliances per year across multiple sites — the throughput, asset-tracking integration and field-record requirements of that work justify the additional cost and feature set; the calibration-check function lets the operator confirm the tester is in spec at the start of each session, reducing the risk of finding mid-day that a whole morning of tests need to be repeated',
-      'Hobbyist domestic use',
-      'Medical electrical equipment only',
+      'A single small office with a handful of appliances tested once a year by the office manager',
+      'Hobbyist domestic use where the owner wants to check their own household appliances occasionally',
+      'A specialist PAT contractor handling several thousand appliances a year across multiple client sites',
+      'Medical electrical equipment only, since BLE and barcode features are specific to BS EN 62353 work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High-end automatic testers with BLE / USB / barcode / label printing are aimed at high-throughput contractor work. The features pay back in operator time saved per appliance and in audit-quality records that integrate directly with asset management software. For a small fleet (< 100 appliances) the mid-range automatic tester is sufficient.',
   },
@@ -163,26 +163,26 @@ const quizQuestions = [
     question:
       'A manual single-test PAT tester (low-cost, basic) is being considered for a workshop. What are the trade-offs IET CoP and good practice would highlight?',
     options: [
-      'No trade-offs — they are equivalent to automatic testers',
-      'Trade-offs: (1) the operator runs each test individually, increasing the risk of forgetting a step or reading a meter incorrectly; (2) no on-board recording — results must be hand-transcribed onto an appliance record, which is slower and error-prone; (3) less helpful for trend analysis because results are not stored against an asset ID. Manual testers remain useful for diagnosis (chasing down a fault by isolating individual tests) but not as a workflow tool for routine PAT at scale',
-      'Manual is more accurate',
-      'Manual is preferred for medical equipment',
+      'Each test is a separate operator action (steps can be skipped or misread), no on-board recording, and no asset-linked storage — fine for diagnosis but not routine PAT at scale',
+      'No real trade-offs — a manual tester is functionally equivalent to an automatic one for high-volume routine work',
+      'A manual tester is inherently more accurate, since the operator controls and judges each measurement individually',
+      'A manual tester is the preferred choice for medical electrical equipment because of its step-by-step operator control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Manual testers have specific use cases (diagnosis, training, edge-case work) but are not the workflow tool of choice for routine PAT. Automatic testers reduce operator workload, enforce the IET CoP test sequence, and produce structured records that integrate with asset management. Manual testers are appropriate where the operator is doing one-off work or specifically wants step-by-step control.',
+      'Manual testers have specific use cases (diagnosis, training, edge-case work) but are not the workflow tool of choice for routine PAT. The operator runs each test individually (risk of skipping or misreading a step), there is no on-board recording so results must be hand-transcribed, and there is no asset-linked storage for trend analysis. Automatic testers reduce operator workload, enforce the IET CoP test sequence, and produce structured records that integrate with asset management. Manual testers are appropriate where the operator is doing one-off work or specifically wants step-by-step control.',
   },
   {
     id: 8,
     question:
       'IET CoP recommends competent-person training for PAT operators. What is the legal underpinning?',
     options: [
-      'No legal requirement — training is voluntary',
-      'Electricity at Work Regulations 1989 Reg 16 — "no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work". PAT testing requires technical knowledge of test methods, acceptance values, and equipment under test — the duty-holder must ensure operators meet that standard',
-      'Only HSG107 mentions training',
-      'Trade union agreements',
+      'There is no legal requirement; PAT operator training is entirely voluntary and a matter of industry best practice',
+      'It is underpinned only by HSG107, which is HSE guidance rather than a statutory legal requirement',
+      'It rests on trade-union competence agreements covering electrical workers rather than on any legislation',
+      'Electricity at Work Regulations 1989 Reg 16 — the competent-person duty requiring technical knowledge or supervision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EAW Regulation 16 is the primary legal underpinning for "competent person" requirements across electrical work — including PAT. The duty-holder is legally responsible for ensuring the PAT operator has the technical knowledge or appropriate supervision to do the work safely. Industry-recognised training and assessment (such as the City &amp; Guilds 2377 and equivalents) provide one route to demonstrating competence.',
   },
@@ -191,25 +191,25 @@ const quizQuestions = [
     question:
       'Your PAT tester fails its calibration check (a known 0.10 Ω reference reads 0.27 Ω). What is the correct procedural response?',
     options: [
-      'Continue testing and recalibrate next year',
-      "Stop using the tester immediately. Investigate: damaged test leads (most common cause), failed nulling, or genuine calibration drift. Replace the leads / re-null and re-check. If the tester still fails, take it out of service for formal calibration. Tests performed since the last known-good calibration check may need to be repeated, depending on the duty-holder's procedures and the fail margin",
-      'Apply a correction factor manually',
-      'Use it for non-critical work only',
+      'Continue testing for now and send the instrument away for recalibration at the next scheduled annual',
+      'Apply a manual correction factor to each subsequent reading to compensate for the measured offset',
+      'Stop using the tester immediately; investigate leads / nulling / drift, and review tests since the last known-good check',
+      'Restrict the tester to non-critical or low-risk appliances only until the next calibration falls due',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A failed calibration check invalidates results since the last known-good check. The first action is always to stop and investigate — many calibration-check fails turn out to be damaged leads, which is a quick fix. If the tester itself is at fault, formal recalibration is required and the question of repeated tests sits with the duty-holder. The procedural answer is to stop, not to push through.',
+      "A failed calibration check invalidates results since the last known-good check. Stop using the tester immediately and investigate likely causes in order: damaged leads (the most common cause), failed nulling, or genuine drift — replace leads / re-null and re-check. If it still fails, take it out of service for formal calibration. Tests since the last known-good check may need repeating, per the duty-holder's procedures and the size of the fail margin. The procedural answer is to stop, not to push through.",
   },
   {
     id: 10,
     question: 'What is the role of "competent person" in PAT testing per HSG107?',
     options: [
-      'Anyone can perform PAT',
-      'HSG107 sets out a tiered competence framework: (a) the user (does daily visual checks), (b) the formal-visual inspector (does a more thorough visual at intervals, no testing), (c) the combined-inspection-and-testing operator (does the full PAT including instrument-based tests). Each tier requires a different level of training and competence; the duty-holder under EAW 1989 Reg 16 is responsible for ensuring the right tier of competence is in place for each task',
-      'HSG107 is irrelevant to PAT',
-      'Only electrical engineers can PAT',
+      'HSG107 sets out a tiered competence framework: (a) the user doing daily visual checks, (b) the formal-visual inspector doing a thorough visual at intervals with no testing, (c) the combined inspection-and-testing operator doing the full instrument-based PAT. Each tier needs a different level of competence; the duty-holder under EAW 1989 Reg 16 must put the right tier in place per task',
+      'It states that anyone may perform PAT regardless of training, as the test is straightforward',
+      'HSG107 is concerned only with fixed installations and is irrelevant to portable appliance testing',
+      'It restricts PAT to qualified electrical engineers only, excluding trained technicians',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HSG107 frames PAT as a tiered system: user checks (no training requirement), formal visual inspection (basic training), and combined inspection-and-testing (formal training to a recognised standard). The duty-holder allocates the appropriate tier per the equipment risk and the legal duty under EAW 1989. The tester instrument is one part of the system; the operator competence is the other.',
   },

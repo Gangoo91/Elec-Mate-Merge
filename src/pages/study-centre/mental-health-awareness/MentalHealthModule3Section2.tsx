@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'mh3s2-algee-stands-for',
     question: 'What does the ALGEE acronym stand for in Mental Health First Aid?',
     options: [
-      'Assess, Listen, Guide, Encourage, Evaluate',
-      'Approach/Assess/Assist, Listen non-judgementally, Give reassurance and information, Encourage professional help, Encourage other supports',
-      'Ask, Learn, Gather, Educate, Empower',
+      'Approach/Assess, Listen, Give reassurance, Encourage help, Encourage supports',
+      'Assess, Listen, Guide, Encourage, Evaluate the outcome',
+      'Ask, Learn, Gather, Educate, Empower the person',
       'Acknowledge, Locate, Get help, Engage, Exit safely',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'ALGEE stands for: Approach, Assess and Assist with any crisis; Listen non-judgementally; Give reassurance and information; Encourage appropriate professional help; and Encourage other supports. Developed by Betty Kitchener and Tony Jorm as part of the Mental Health First Aid programme, ALGEE provides a structured, evidence-based framework for supporting someone experiencing a mental health problem or crisis.',
   },
@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     question:
       'What is the MOST important element of non-judgemental listening in the ALGEE framework?',
     options: [
-      'Giving the person detailed advice on how to solve their problem',
-      'Telling the person about a time when you experienced something similar',
-      'Suspending your own opinions and reactions to create a safe space where the person feels heard without being evaluated or criticised',
-      'Maintaining complete silence and never speaking throughout the entire conversation',
+      'Giving the person detailed, structured advice on how to fix their problem',
+      'Telling the person about a time when you went through something similar',
+      'Suspending your own opinions so the person feels heard without being judged',
+      'Staying completely silent and never speaking throughout the whole conversation',
     ],
     correctIndex: 2,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     question:
       "When encouraging someone to seek professional help (the 'E' in ALGEE), what is the BEST approach?",
     options: [
-      'Tell them firmly that they need to see a doctor immediately or you will report them',
-      'Gently explain what professional help options look like, address their fears, and support them in making their own choice about next steps',
-      'Book a GP appointment for them without their knowledge to make sure they attend',
-      'Tell them that professional help is unnecessary because talking to you is sufficient',
+      'Tell them firmly to see a doctor immediately or you will report them to HR',
+      'Book a GP appointment for them without telling them, to make sure they attend',
+      'Reassure them that professional help is unnecessary as talking to you is enough',
+      'Gently explain the options, address their fears, and support their own choice',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Encouraging professional help should always be done gently and with respect for the person's autonomy. This means explaining what options are available (GP, counselling, therapy, helplines), addressing common fears (it is not a sign of weakness, GP conversations are confidential, treatment works), and supporting them in making their own informed choice. Forcing, threatening, or making decisions for someone undermines their sense of control — which is often already compromised by their mental health problem.",
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'The ALGEE action plan was developed as part of which internationally recognised programme?',
     options: [
+      'Mental Health First Aid (MHFA)',
       'The NHS Mental Health Strategy',
-      'Mental Health First Aid (MHFA), developed by Betty Kitchener and Tony Jorm',
-      "The World Health Organisation's Mental Health Action Plan",
-      "The Construction Industry Training Board's Wellbeing Programme",
+      "The World Health Organisation's Action Plan",
+      "The Construction Industry Wellbeing Programme",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The ALGEE action plan was developed by Betty Kitchener and Professor Tony Jorm as the core framework of the Mental Health First Aid (MHFA) programme, which originated in Australia in 2000 and has since been adopted in over 25 countries worldwide, including the UK. It is recognised as an international gold standard for providing initial support to someone experiencing a mental health problem.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
       "The first 'A' in ALGEE stands for 'Approach, Assess and Assist.' When approaching someone you are concerned about, which of the following is MOST important?",
     options: [
       'Approaching them during a busy team meeting so others can provide support too',
-      'Choosing an appropriate time and private place where the person feels safe and not exposed',
       'Sending a formal email to arrange a scheduled meeting to discuss their mental health',
+      'Choosing an appropriate time and private place where the person feels safe and not exposed',
       'Approaching them immediately regardless of the situation because time is critical',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When approaching someone you are concerned about, choosing the right time and place is crucial. A private, quiet setting where the person will not feel exposed or embarrassed is essential. On a construction site, this might mean catching them during a quiet moment, walking to the van together, or having a chat away from the rest of the team. A public approach in front of colleagues can feel confrontational and is likely to trigger a defensive reaction.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       "When assessing the situation (part of the first 'A'), what is the FIRST thing you should determine?",
     options: [
-      'Whether the person has a diagnosed mental health condition',
-      'Whether there is an immediate danger or crisis that requires emergency intervention',
-      "Whether the person's work performance has been affected",
-      "Whether the person's supervisor has already been informed",
+      'Whether the person already has a diagnosed mental health condition',
+      "Whether the person's recent work performance has been noticeably affected",
+      "Whether the person's supervisor or manager has already been informed",
+      'Whether there is an immediate danger or crisis needing emergency help',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The first priority when assessing a situation is always safety: is there an immediate danger or crisis? This means determining whether the person is at risk of harming themselves or others, whether they are in a state of extreme distress that requires immediate intervention, or whether there is any other safety concern. If there is immediate danger, you move to 'Assist with any crisis' — which may mean calling emergency services, staying with the person, or removing means of harm. Only once safety is established do you move to the listening and support phases.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       "What does 'Listen non-judgementally' (the L in ALGEE) specifically require you to do?",
     options: [
-      'Listen quietly and then tell the person what they should do to fix their problem',
-      'Listen while forming your own opinion about whether their concerns are valid',
-      'Set aside your own opinions and reactions, use open questions, reflect back what you hear, and create a safe space where the person feels heard without being evaluated',
-      'Listen for specific keywords that indicate a diagnosable mental health condition',
+      'Listen quietly, then tell the person exactly what to do to fix their problem',
+      'Set aside your opinions, use open questions, and reflect back what you hear',
+      'Listen while quietly forming your own view on whether their concerns are valid',
+      'Listen out for specific keywords that point to a diagnosable mental health condition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Non-judgemental listening is an active skill that involves: suspending your own opinions, beliefs, and urge to advise; using open-ended questions ('How are you feeling about that?') rather than closed ones ('Are you depressed?'); reflecting back what you hear ('It sounds like you are feeling overwhelmed'); being comfortable with silence; and creating a safe emotional space where the person feels they can share without being judged, evaluated, or told what to do. This is often the most powerful and healing part of the ALGEE process.",
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       "When 'Giving reassurance and information' (the G in ALGEE), which of the following is MOST appropriate?",
     options: [
-      "Telling the person 'Everyone goes through tough times — you will be fine' to make them feel better",
-      "Normalising their experience while providing factual information: 'What you are going through is more common than you might think, and effective help is available'",
-      'Diagnosing their condition and recommending specific medication',
+      'Normalising their experience and reassuring them that effective help is available',
+      "Telling them 'everyone goes through tough times — you will be fine' to reassure them",
+      'Diagnosing their condition and recommending a specific medication to try',
       'Comparing their situation to someone worse off to help them gain perspective',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Giving reassurance and information means normalising the person's experience ('What you are going through is more common than you think — around 1 in 4 people experience mental health problems'), reassuring them that help is available and effective, and providing factual information. It does NOT mean minimising ('You will be fine'), making false promises ('Everything will be OK'), comparing them to others ('Some people have it worse'), or diagnosing. The goal is to reduce shame and isolation while providing hope.",
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       "The two E's in ALGEE stand for 'Encourage professional help' and 'Encourage other supports.' Which of the following is an example of 'other supports'?",
     options: [
-      'Prescribing medication to the person based on your understanding of their symptoms',
-      'Encouraging social connections, self-help strategies, physical activity, faith communities, hobbies, and other sources of support beyond professional treatment',
-      'Encouraging the person to keep their problems to themselves to avoid burdening others',
-      'Encouraging the person to change jobs as the primary solution to their mental health problems',
+      'Prescribing medication based on your own understanding of their symptoms',
+      'Encouraging them to keep their problems to themselves to avoid burdening others',
+      'Encouraging social connections, self-help, activity, and other non-clinical supports',
+      'Encouraging them to change jobs as the main solution to their mental health problems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The second 'E' recognises that professional help is not the only source of support. 'Other supports' include: social connections (friends, family, community), self-help strategies (exercise, mindfulness, journaling, routine), faith or spiritual communities, hobbies and activities that bring joy, peer support groups, and workplace support programmes. Recovery is rarely achieved through professional help alone — it involves building a network of support across multiple areas of life.",
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following statements about the ALGEE framework is CORRECT?',
     options: [
-      'ALGEE is a replacement for professional mental health treatment',
-      'ALGEE can only be used by trained mental health professionals',
-      'ALGEE is an evidence-based framework for providing initial support — a bridge to professional help, not a replacement for it',
+      'ALGEE is intended as a full replacement for professional mental health treatment',
+      'ALGEE may only be used by formally trained mental health professionals',
       'ALGEE is only effective for people with mild mental health problems',
+      'ALGEE is an evidence-based bridge to professional help, not a replacement for it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'ALGEE is explicitly designed as a bridge between the onset of a mental health problem and the point at which the person receives professional help. It is not a replacement for professional treatment — just as physical first aid is not a replacement for a doctor. ALGEE can be used by anyone, not just professionals, and is effective across the full spectrum of mental health situations, from mild distress to acute crisis.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     question:
       'On a construction site, a colleague confides that they have been feeling very low for several weeks and have been drinking more than usual. Using the ALGEE framework, what is the MOST appropriate immediate response?',
     options: [
-      'Tell them to stop drinking and see their GP first thing tomorrow morning',
-      'Listen non-judgementally, validate their courage in opening up, provide reassurance that what they are experiencing is common and treatable, and gently explore whether they would be open to speaking with their GP or a helpline',
-      'Report the drinking to their supervisor as it is a safety concern that overrides confidentiality',
-      'Share your own experiences with drinking to show that you understand what they are going through',
+      'Tell them firmly to stop drinking and to see their GP first thing tomorrow',
+      'Listen non-judgementally, reassure them it is treatable, and gently encourage their GP',
+      'Report the drinking to their supervisor, treating it as a safety concern over confidentiality',
+      'Share your own experiences with drinking to show that you really understand them',
     ],
     correctAnswer: 1,
     explanation:

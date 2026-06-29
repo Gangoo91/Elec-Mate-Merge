@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     id: 'coincident-demand',
     question: 'Coincident demand refers to:',
     options: [
-      'Standby generator capacity',
-      'Loads that never operate together',
-      'Emergency backup loads',
       'Loads that occur at the same time',
+      'Loads that never operate together',
+      'Emergency backup loads only',
+      'The total connected load of the installation',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Coincident demand is the portion of loads that operate simultaneously. Understanding coincidence is essential for accurate maximum demand assessment.',
   },
@@ -74,11 +74,11 @@ const quickCheckQuestions = [
     question: 'What integration period is typically used for maximum demand measurement?',
     options: [
       '15 minutes',
+      '30 minutes',
       '1 minute',
       '1 hour',
-      '30 minutes',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'DNOs typically measure maximum demand over 30-minute integration periods. This smooths out short transient peaks while capturing sustained high loads.',
   },
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: 'Under ESQCR Regulation 25, the maximum demand assessment must:',
     options: [
       'Be agreed with the DNO before connection',
-      'Confirming the design works as intended in practice',
-      'Discharge circuit and reconnect equipment',
-      '50% of rated residual current',
+      'Always equal the total connected load',
+      'Be based on lighting loads only',
+      'Be reassessed every working day',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a load profile?',
     options: [
-      'Damper position/setting and measured air flow rate',
+      'A list of all connected equipment nameplate ratings',
       'A graph showing demand variation over time',
-      'Network security, encryption, and access controls',
-      'Before any person enters or works in a confined space',
+      'The maximum current a single circuit can carry',
+      'The agreed supply capacity from the DNO',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Peak demand for an office building typically occurs:',
     options: [
-      'Unsafe isolation procedure',
-      'The total path length (out and back)',
+      'Late evening after occupants have left',
+      'Early hours of the morning before opening',
       'Mid-morning to early afternoon',
-      'The perimeter-to-area ratio',
+      'At weekends when the building is empty',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is the 30-minute integration period used for maximum demand?',
     options: [
-      'Electricity at Work Regulations 1989, Reg 14',
-      'Identify hazards and implement control measures',
-      'Nonviolent Communication (NVC) in practice',
+      'It matches the half-hourly billing meter exactly',
+      'It is the longest period permitted by the DNO',
+      'It captures every motor-starting transient peak',
       'It filters short transients while capturing sustained loads',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What information must be provided to the DNO when requesting a supply?',
     options: [
-      'Ensure circuit is isolated and discharged',
+      'The total connected load in kW only',
       'Maximum demand (kVA), power factor, and connection point',
-      'Promoting rapid clot formation through agents such as kaolin or chitosan',
-      'Connected to an isolated cable with other end disconnected',
+      'The make and model of every appliance to be installed',
+      'The expected number of occupants in the building',
     ],
     correctAnswer: 1,
     explanation:

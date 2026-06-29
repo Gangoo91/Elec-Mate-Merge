@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'mh5s3-policy-purpose',
     question: 'What is the PRIMARY purpose of a workplace mental health policy?',
     options: [
-      'To satisfy HSE inspectors during site audits',
       "To provide a clear framework that demonstrates the organisation's commitment to mental health and outlines support available",
+      'To satisfy HSE inspectors during site audits',
       'To allow the company to discipline employees who take time off for mental health',
       'To transfer responsibility for mental health from the employer to the employee',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "A mental health policy provides a clear, documented framework that demonstrates the organisation's commitment to supporting mental health, outlines the support available, defines roles and responsibilities, and sets expectations for how mental health will be addressed. It is not about compliance or discipline — it is about creating a foundation for a supportive culture. A good policy is developed collaboratively, reviewed annually, and genuinely embedded in how the company operates.",
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       "The HSE's Management Standards approach identifies six key areas of work design that affect mental health. Which of the following is NOT one of the six areas?",
     options: [
       'Demands — workload, work patterns, and the work environment',
-      'Salary — pay rates, bonuses, and financial incentives',
       'Support — encouragement, sponsorship, and resources provided by the organisation and colleagues',
       'Relationships — promoting positive working and avoiding conflict and unacceptable behaviour',
+      'Salary — pay rates, bonuses, and financial incentives',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The HSE's six Management Standards are: Demands, Control, Support, Relationships, Role, and Change. While salary and financial concerns can certainly contribute to stress, 'Salary' is not one of the six Management Standards. The six areas focus on how work is designed, organised, and managed — factors that are within the employer's control and that, if not properly managed, are associated with poor health, lower productivity, and increased sickness absence.",
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: "Under the HSE's approach, stress is classified as:",
     options: [
       'A personal weakness that employees should manage themselves',
-      'A recognised workplace hazard that must be included in risk assessments',
       'A medical condition that only doctors can address',
       'An unavoidable consequence of working in construction',
+      'A recognised workplace hazard that must be included in risk assessments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The HSE is clear that work-related stress is a recognised workplace hazard. Just like any other hazard (working at height, manual handling, electrical risk), it must be included in risk assessments and managed through appropriate control measures. Employers who fail to assess and manage psychosocial hazards are in breach of the Management of Health and Safety at Work Regulations 1999. Stress is not a personal weakness or an inevitable consequence of construction work — it is a hazard that can and must be managed.',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
     question: 'A Wellbeing Action Plan typically includes:',
     options: [
       'A diagnosis from a doctor and a prescribed medication list',
-      'Triggers, early warning signs, support that helps, and what the manager and employee can each do',
       'A performance improvement plan with targets and deadlines',
       'A referral to occupational health and a phased return-to-work timetable',
+      'Triggers, early warning signs, support that helps, and what the manager and employee can each do',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Wellbeing Action Plan is a personalised document co-created by the employee and their manager. It typically includes: known triggers that can affect their mental health, early warning signs that they might be struggling, support that helps them (both self-help strategies and workplace adjustments), what the manager can do to support them, and what the employee will do to look after their own wellbeing. It is not a clinical document (no diagnosis or medication) and not a performance tool. It is best created proactively, when the person is well.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'When conducting a stress risk assessment, the FIRST step should be to:',
     options: [
-      "Implement control measures immediately based on management's best guess",
       'Identify the hazards — the aspects of work that could cause stress — using the six Management Standards as a framework',
+      "Implement control measures immediately based on management's best guess",
       'Send all employees to a stress management training course',
       'Hire an external consultant to conduct the entire assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Like any risk assessment, a stress risk assessment starts with identifying the hazards. Using the HSE's six Management Standards (Demands, Control, Support, Relationships, Role, Change) as a framework, you identify which aspects of work could cause stress. This is done through staff surveys, focus groups, one-to-one conversations, and observation. Only once you understand the hazards can you assess who is at risk, what the current controls are, and what additional measures are needed. Jumping straight to control measures without understanding the hazards is like treating symptoms without diagnosing the illness.",
   },

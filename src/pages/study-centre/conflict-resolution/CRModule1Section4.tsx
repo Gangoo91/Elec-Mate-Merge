@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician receives an aggressive text message from a client accusing them of overcharging. Their immediate reaction is a racing heart, clenched jaw, and an urge to fire back an equally aggressive reply. Which part of the brain is driving this response?',
     options: [
-      'The prefrontal cortex — the rational decision-making centre',
-      "The amygdala — the brain's threat detection centre, which triggers the fight, flight, or freeze response before the rational brain has time to engage",
-      'The hippocampus — the memory centre',
-      'The cerebellum — the motor control centre',
+      'The amygdala — the threat detection centre that triggers fight, flight or freeze',
+      'The prefrontal cortex — the rational, considered decision-making centre',
+      'The hippocampus — the centre responsible for forming and storing memory',
+      'The cerebellum — the centre that coordinates balance and motor control',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The amygdala is a small, almond-shaped structure in the brain's limbic system that functions as the body's threat detection centre. When it perceives a threat — including social threats like aggressive messages — it triggers the sympathetic nervous system response (fight, flight, or freeze) before the prefrontal cortex (the rational, decision-making part of the brain) has time to engage. This is why you feel the physical symptoms (racing heart, muscle tension, adrenaline) before you have consciously decided how to respond. Understanding this mechanism is crucial because it explains why your first impulse in a conflict is almost always wrong for professional situations — it is a survival response, not a professional response.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'An electrician arrives at a client\'s property and notices the client is not making eye contact and seems distant. The electrician immediately thinks: "They are going to complain about my work. They are probably planning to withhold payment." According to Argyris\'s ladder of inference, at which rung has the electrician made their critical error?',
     options: [
-      "Observation — they should not have noticed the client's behaviour at all",
-      'The interpretation and assumption rungs — they have moved from observable data (no eye contact) to an interpretation (client is unhappy) to an assumption (about work complaints and payment) without checking',
-      'The action rung — they should act immediately rather than thinking',
-      'There is no error — the electrician is being professionally cautious',
+      "Observation — they should not have noticed the client's body language at all",
+      'The action rung — they should have acted immediately rather than stopping to think',
+      'There is no error here — the electrician is simply being professionally cautious',
+      'The interpretation and assumption rungs — they jumped from no eye contact to unhappy to withholding payment',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The electrician\'s error occurs at the interpretation and assumption rungs of the ladder of inference. The observable data is limited: the client is not making eye contact and seems distant. There are dozens of possible explanations for this behaviour — the client might be tired, distracted by a personal problem, feeling unwell, on the phone, or simply not a naturally outgoing person. The electrician has jumped from this limited observation to a specific interpretation (the client is unhappy with their work) and then to a specific assumption (they are planning to withhold payment). These are not supported by the data. The professional response is to test the interpretation by asking a neutral question: "Is everything okay?" or "Shall we have a quick chat about how the job is going?"',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'An electrician is catastrophising about a snagging list: "This client is going to destroy my reputation. I will never work in this area again. My business is finished." Which cognitive distortion technique would be most helpful for challenging these thoughts?',
     options: [
-      'Ignoring the thoughts completely and suppressing the anxiety',
-      'Accepting the catastrophic predictions as likely outcomes and planning accordingly',
-      'Reality testing — asking "What is the actual evidence? What is the most likely outcome? How many similar situations have I handled before without these consequences?"',
-      'Agreeing with the client immediately to prevent any negative outcome',
+      'Ignoring the thoughts completely and trying to suppress the underlying anxiety',
+      'Accepting the catastrophic predictions as likely and planning around those outcomes',
+      'Reality testing — asking what the actual evidence is and what is genuinely most likely',
+      'Agreeing with everything the client says immediately to head off any negative outcome',
     ],
     correctIndex: 2,
     explanation:
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'The amygdala hijack, a term coined by Daniel Goleman, describes:',
     options: [
-      'A deliberate strategy for winning arguments',
-      "The process by which the brain's threat detection centre (the amygdala) triggers a fight, flight, or freeze response before the rational brain (prefrontal cortex) can engage",
-      'A negotiation technique used in mediation',
-      'A type of cognitive bias that affects memory',
+      "The amygdala triggering a fight, flight or freeze response before the rational brain engages",
+      'A deliberate strategy for winning arguments and confrontations at work',
+      'A structured negotiation technique used by mediators to resolve disputes',
+      'A type of cognitive bias that distorts how we recall past events',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Daniel Goleman, author of "Emotional Intelligence" (1995), coined the term "amygdala hijack" to describe what happens when the amygdala — the brain\'s primitive threat detection centre — triggers an immediate emotional and physiological response to a perceived threat before the prefrontal cortex (the rational, executive function part of the brain) has time to process the situation and formulate a considered response. This is why you feel your heart racing, your muscles tensing, and your emotions surging before you have consciously decided how to respond. The response evolved to protect us from physical threats but is triggered equally by social threats such as conflict, criticism, and confrontation.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'The three primary responses triggered by the amygdala in a conflict situation are:',
     options: [
-      'Think, plan, and execute',
-      'Fight (aggressive confrontation), flight (withdrawal and avoidance), and freeze (paralysis and inaction)',
-      'Listen, reflect, and respond',
-      'Observe, interpret, and act',
+      'Think, plan, and then execute a considered course of action',
+      'Fight (confrontation), flight (withdrawal), and freeze (inaction)',
+      'Listen carefully, reflect on the situation, and then respond',
+      'Observe the data, interpret its meaning, and then act on it',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     question:
       'Chris Argyris developed the ladder of inference in 1990. The correct sequence of rungs, from bottom to top, is:',
     options: [
-      'Belief → Action → Conclusion → Assumption → Interpretation → Data → Observation',
-      'Action → Belief → Data → Interpretation → Conclusion',
+      'Belief → Action → Conclusion → Assumption → Interpretation → Selected data → Observation',
+      'Action → Belief → Conclusion → Interpretation → Selected data → Observable data',
       'Observable data → Selected data → Interpretation → Assumption → Conclusion → Belief → Action',
-      'Feeling → Thinking → Acting → Reviewing',
+      'Feeling → Thinking → Deciding → Acting → Reviewing → Adjusting → Repeating',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'An electrician thinks: "The client did not reply to my message within 2 hours. They are obviously unhappy with my work and are going to leave a bad review." This is an example of which cognitive distortion?',
     options: [
-      'Catastrophising — jumping to the worst possible outcome',
-      'Mind-reading — assuming you know what another person is thinking without evidence',
-      'Personalising — assuming a neutral event is specifically about you',
-      'All of the above — this thought contains elements of mind-reading, catastrophising, and personalising',
+      'Catastrophising only — jumping to the worst possible outcome with no other distortion present',
+      'Mind-reading only — assuming you know what another person is thinking, with no other distortion present',
+      'Personalising only — assuming a neutral event is specifically about you, with no other distortion present',
+      'A combination of mind-reading, catastrophising, and personalising — all three distortions are present in this single thought',
     ],
     correctAnswer: 3,
     explanation:
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'Viktor Frankl wrote: "Between stimulus and response there is a space. In that space is our freedom and our power to choose our response." In the context of conflict resolution, "the space" refers to:',
     options: [
-      'The physical distance between you and the other person',
-      'The time gap between receiving a complaint and responding to it',
-      'The pause between your emotional reaction to a conflict trigger and your chosen behavioural response — the moment where you can engage your rational brain rather than reacting on autopilot',
-      'The gap between the quoted price and the actual price',
+      'The pause between your emotional reaction and your chosen response, where reason can re-engage',
+      'The physical distance you keep between yourself and the other person during a dispute',
+      'The administrative time gap between receiving a complaint and formally responding to it',
+      'The financial gap between the price you quoted and the actual price you end up charging',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Frankl\'s insight — developed through his experiences as a psychiatrist and Holocaust survivor — is that human beings have the unique capacity to choose their response to any situation, no matter how difficult. "The space" is the psychological pause between stimulus (the conflict trigger — the aggressive message, the unpaid invoice, the snagging list) and response (your behaviour — what you actually say and do). In practice, this space may be only a few seconds, but it is the most important few seconds in any conflict interaction. During this pause, you can shift from amygdala-driven reaction (fight, flight, or freeze) to prefrontal cortex-driven response (considered, professional, strategic). Developing the ability to widen this space — through awareness, breathing, and deliberate cognitive engagement — is the foundation of emotional self-regulation in conflict.',
   },
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'An electrician who always responds to conflict by immediately backing down, agreeing with the other person, and abandoning their own position is most likely defaulting to which response?',
     options: [
-      'Fight — aggressive confrontation',
-      'Flight — escape and avoidance, manifesting as immediate capitulation to end the uncomfortable interaction',
-      'Freeze — paralysis and inability to act',
-      'A healthy, balanced conflict response',
+      'Fight — meeting the conflict head-on with aggressive confrontation',
+      'Flight — escaping the discomfort by capitulating to end the interaction',
+      'Freeze — becoming paralysed and unable to act or speak at all',
+      'A healthy, balanced conflict response that holds its position calmly',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'The "reflexive loop" in the ladder of inference describes:',
     options: [
-      'The physical reflex response to danger',
-      'The process by which our existing beliefs influence which data we select and how we interpret it, creating a self-reinforcing cycle that confirms our existing views',
-      'The loop of communication between two people in conflict',
-      'The habit of reflecting on past conflicts',
+      'The instinctive physical reflex the body makes in response to danger',
+      'The back-and-forth loop of communication between two people in conflict',
+      'How existing beliefs shape which data we select and interpret, reinforcing those beliefs',
+      'The deliberate habit of reflecting back on conflicts you have had in the past',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The reflexive loop is one of the most important aspects of the ladder of inference. It describes how the beliefs we form at the top of the ladder feed back down to influence which data we select at the bottom. If you already believe that a particular client is difficult, you will unconsciously notice and select data that confirms this belief (a delayed reply, a slightly curt tone) whilst ignoring data that contradicts it (their timely payments, their positive comments to neighbours). This creates a self-reinforcing cycle: your beliefs shape what you notice, what you notice confirms your beliefs. Breaking the reflexive loop requires deliberately seeking out data that contradicts your existing beliefs — a practice that psychologists call "disconfirmation seeking."',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'An electrician wants to improve their conflict response. The most effective first step is:',
     options: [
-      'Reading as many books about conflict as possible',
-      'Avoiding all conflict situations to prevent negative outcomes',
-      'Reflecting on their last three conflicts — identifying their emotional reaction, their default behavioural response, and whether a different approach would have produced a better outcome',
-      'Attending an assertiveness training course immediately',
+      'Reading as many books about conflict and negotiation as they possibly can',
+      'Avoiding all conflict situations in future to prevent any negative outcomes',
+      'Booking onto and attending a formal assertiveness training course immediately',
+      'Reflecting on their last three conflicts: their reaction, default response and what might have worked better',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Self-reflection on recent, real conflicts is the most effective starting point because it provides concrete, personal data rather than abstract theory. By reviewing three recent conflicts, the electrician can identify patterns: Do I consistently fight, flee, or freeze? Do I climb the ladder of inference and act on assumptions? Do I catastrophise, mind-read, or personalise? What were the actual outcomes, and would a different response have produced a better result? This reflection converts theory into personal insight — which is far more motivating and actionable than reading about someone else's experience. Books, courses, and training are all valuable, but they are most effective when built on a foundation of honest self-assessment.",
   },

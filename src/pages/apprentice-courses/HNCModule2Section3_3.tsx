@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'The psychrometric chart is valid for a specific:',
     options: [
-      'Before construction begins, based on developed design',
+      'Building occupancy level',
       'Atmospheric pressure (typically 101.325 kPa)',
-      'To confirm the design meets BS EN 61439',
-      'Record new readings with date and signature',
+      'Type of air handling unit',
+      'Time of day and season',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a psychrometric chart, lines of constant relative humidity are:',
     options: [
-      'Horizontally to the left until hitting the saturation curve',
-      'Enthalpy remains approximately constant',
+      'Vertical straight lines parallel to the dry bulb axis',
+      'Horizontal straight lines parallel to the moisture content axis',
       'Curved lines following the saturation curve shape',
-      'It visualises processes and relationships between properties',
+      'Diagonal straight lines sloping steeply upward',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'Wet bulb temperature lines on a psychrometric chart slope:',
     options: [
-      'The point moves horizontally to the right',
-      'Near-vertical lines sloping slightly',
-      'Enthalpy remains approximately constant',
+      'Vertically straight up from the dry bulb axis',
+      'Horizontally across the chart at constant moisture content',
+      'Steeply upward from left to right',
       'Diagonally downward from left to right',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
     question: 'To find dew point from a chart, starting from the air state point, move:',
     options: [
       'Horizontally to the left until hitting the saturation curve',
-      'Directing light downward and using appropriate timing',
-      'In control panels or equipment rooms, close to the systems they link',
-      'Reduces trips, falls, fire risks and improves working conditions',
+      'Vertically upward until reaching the top of the chart',
+      'Diagonally along the nearest wet bulb line to the right',
+      'Horizontally to the right until the dry bulb maximum',
     ],
     correctAnswer: 0,
     explanation:
@@ -236,9 +236,9 @@ const quizQuestions = [
     question: 'Why is the psychrometric chart preferred over calculations for HVAC design?',
     options: [
       'It visualises processes and relationships between properties',
-      'They should be visually inspected for damage, distortion and missing parts',
-      'To verify wiring matches programming and test physical responses',
-      'The associated input is OFF (de-energised)',
+      'It removes the need to know any of the air properties',
+      'It is always more accurate than psychrometric equations',
+      'It automatically sizes the cooling and heating coils',
     ],
     correctAnswer: 0,
     explanation:

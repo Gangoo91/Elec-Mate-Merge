@@ -34,8 +34,8 @@ const quickCheckQuestions = [
   {
     id: 'cscs-wah-guardrail',
     question: 'What is the minimum height for a top guard rail on a working platform?',
-    options: ['750 mm', '900 mm', '950 mm', '1100 mm'],
-    correctIndex: 2,
+    options: ['950 mm', '750 mm', '900 mm', '1100 mm'],
+    correctIndex: 0,
     explanation:
       'The Work at Height Regulations specify that a guard rail must have a top rail at a minimum height of 950 mm above the working platform. The system must also include an intermediate (mid) rail to prevent a person falling through the gap, and a toe board of at least 150 mm in height to prevent tools and materials falling from the platform edge. These dimensions are critical for the CSCS HS&E test.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Under the Work at Height Regulations 2005, what is the definition of "work at height"?',
     options: [
-      'Any work carried out more than 2 metres above ground level',
       'Any work at a place where a person could fall a distance liable to cause personal injury',
+      'Any work carried out more than 2 metres above ground level',
       'Any work carried out on a scaffold or ladder',
       'Any work carried out more than 3 metres above ground level on a construction site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Work at Height Regulations 2005 define work at height as work at any place where a person could fall a distance liable to cause personal injury. There is no minimum height threshold. This includes working on ladders, roofs, loading bays, near excavation edges, on vehicles, and even at ground level beside an open void.',
   },
@@ -118,8 +118,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'How often must scaffolding be inspected while it remains erected on site?',
-    options: ['Every 3 days', 'Every 7 days', 'Every 14 days', 'Every 28 days'],
-    correctAnswer: 1,
+    options: ['Every 3 days', 'Every 14 days', 'Every 28 days', 'Every 7 days'],
+    correctAnswer: 3,
     explanation:
       'The Work at Height Regulations require scaffolding to be inspected by a competent person at intervals not exceeding 7 days, as well as before first use and after any event likely to have affected its stability (such as severe weather, alteration, or impact from plant). Inspection results must be recorded and kept on site.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'Before using a personal fall arrest system (harness), what must already be in place?',
     options: [
-      'A fire escape plan',
       'A rescue plan that details how the fallen person will be recovered',
+      'A fire escape plan',
       'Written permission from the site manager only',
       'An insurance certificate covering the worker',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A rescue plan must always be in place before any work involving personal fall arrest equipment begins. If a worker falls and is left suspended in a harness, they can suffer suspension trauma (positional asphyxia) within minutes, which can be fatal. The rescue plan must detail how the person will be recovered quickly, what equipment is needed, and who is trained to carry out the rescue.',
   },
@@ -168,8 +168,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Under LOLER 1998, personal fall arrest equipment such as harnesses must have a thorough examination at least every:',
-    options: ['3 months', '6 months', '12 months', '24 months'],
-    correctAnswer: 1,
+    options: ['3 months', '12 months', '24 months', '6 months'],
+    correctAnswer: 3,
     explanation:
       'Under the Lifting Operations and Lifting Equipment Regulations (LOLER) 1998, equipment used to arrest falls — including harnesses, lanyards, and retractable fall arresters — must undergo a thorough examination by a competent person at intervals not exceeding 6 months. This is in addition to pre-use visual checks carried out by the user before every use. Records of thorough examinations must be kept and made available for inspection.',
   },

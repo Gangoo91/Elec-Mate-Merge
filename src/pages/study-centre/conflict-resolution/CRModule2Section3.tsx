@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'cr-2-3-check1',
     question: 'According to Patterson et al., what three conditions make a conversation "crucial"?',
     options: [
-      'It involves money, it takes more than an hour, and it requires a written record',
       'High stakes, opposing opinions, and strong emotions',
+      'It involves money, it takes more than an hour, and it requires a written record',
       'It involves more than two people, it happens on site, and it concerns safety',
       'The conversation is with a client, it is face-to-face, and it is about a complaint',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Patterson, Grenny, McMillan, and Switzler defined a crucial conversation as one where three conditions are present simultaneously: the stakes are high (the outcome significantly affects the people involved), the opinions are opposing (the parties see things differently), and the emotions are strong (people feel strongly about the issue). When all three conditions are present, the conversation is likely to go badly unless it is handled skilfully, because strong emotions impair rational thinking and opposing opinions combined with high stakes create pressure to win rather than understand.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'cr-2-3-check2',
     question: 'What is the "Pool of Shared Meaning" and why is it important?',
     options: [
-      'A database where meeting notes are stored so everyone can access them',
-      'A metaphor for the total amount of relevant information that all participants openly share during a dialogue — better decisions come from a larger pool',
-      'A technique for avoiding emotional conversations by focusing only on facts',
-      'A method of voting to determine which opinion is correct',
+      'A shared database where all the meeting notes are stored so that everyone can access them',
+      'A technique for avoiding emotional conversations by sticking strictly to the facts and nothing else',
+      'A method of voting on opinions to formally determine which one is the correct one to follow',
+      'A metaphor for the relevant information all participants openly share — a larger pool means better decisions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The Pool of Shared Meaning is Patterson et al.'s metaphor for the collective information, opinions, feelings, and experiences that all participants contribute to a conversation. When people feel safe, they add their unique information to the pool, which means better decisions because more relevant data is available. When people feel unsafe, they withhold information (silence) or force it in aggressively (violence), which shrinks the pool and leads to worse decisions. The goal of a crucial conversation is to make it safe for everyone to add their meaning to the pool.",
   },
@@ -51,10 +51,10 @@ const quickCheckQuestions = [
     id: 'cr-2-3-check3',
     question: 'In the STATE model, what does "Talk tentatively" mean?',
     options: [
-      'Speak very quietly so the other person has to lean in to hear you',
-      'Avoid stating your opinion at all — only ask questions',
-      'Present your story as your interpretation rather than as absolute fact, using phrases like "I\'m beginning to wonder whether..." or "From my perspective..."',
-      'Only talk about topics that are not controversial or emotional',
+      'Speak very quietly so that the other person has to lean in close in order to hear you',
+      'Avoid stating any opinion of your own at all, and instead only ever ask the other person questions',
+      'Present your story as your own interpretation rather than as fact, using phrases like "From my perspective..."',
+      'Stick only to topics that are not controversial or emotional, and steer well clear of the rest',
     ],
     correctIndex: 2,
     explanation:
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 3,
     question: 'What are the two conditions for psychological safety in a crucial conversation?',
     options: [
-      'Mutual Profit and Mutual Control',
       'Mutual Purpose and Mutual Respect',
+      'Mutual Profit and Mutual Control',
       'Mutual Agreement and Mutual Silence',
       'Mutual Power and Mutual Authority',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Patterson et al. identified two conditions that must be present for people to feel safe enough to share their views openly. Mutual Purpose means the other person believes you care about their goals and interests, not just your own — you are working towards a shared outcome. Mutual Respect means the other person believes you value them as a human being, even if you disagree with their position. When either condition is violated, safety breaks down and people retreat to silence or violence.',
   },
@@ -137,11 +137,11 @@ const quizQuestions = [
     question: 'What does the "S" in the STATE model stand for?',
     options: [
       'Start with assumptions',
-      'Share your facts',
       'Speak your mind forcefully',
       'Stay silent until asked',
+      'Share your facts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "S" in STATE stands for "Share your facts." Patterson et al. emphasised that facts are the least controversial part of your story — they are what anyone watching would have observed. Starting with facts creates a foundation of shared reality before you move to your interpretation. For example, "In the last three months, I have issued three invoices and received payment for one" is a fact that is hard to argue with. Leading with your conclusion ("You don\'t take paying your subcontractors seriously") is much more likely to provoke defensiveness.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is "Contrasting" and when should you use it?',
     options: [
-      "Comparing your situation with someone else's to show you have it worse",
-      'A technique that uses a "don\'t/do" statement to address misunderstandings about your intent — "I don\'t want X, what I do want is Y"',
-      "A way of highlighting the differences between your position and the other person's",
-      'A method of presenting two options and asking the other person to choose',
+      "Comparing your own situation with someone else's to demonstrate that you have it far worse",
+      'A "don\'t/do" statement that addresses misunderstandings about your intent — "I don\'t want X, I do want Y"',
+      "A way of highlighting the differences between your own position and that of the other person",
+      'A method of presenting two clear options and then asking the other person to pick one of them',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,23 +179,23 @@ const quizQuestions = [
     options: [
       '"I think you\'ve been overcharging us for years."',
       '"I need to be honest — your prices are out of line with the market. We\'ve benchmarked your rates against three other firms and found a 15% difference on average."',
-      '"Your invoices have increased by 15% over the past twelve months, while comparable firms have held their rates steady."',
       '"Some of your colleagues have been complaining about your prices."',
+      '"Your invoices have increased by 15% over the past twelve months, while comparable firms have held their rates steady."',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'The third option leads with facts — the "S" (Share your facts) in STATE. It presents verifiable, non-judgemental data: invoices have increased by 15%, comparable firms have not increased. This creates a foundation for dialogue without triggering defensiveness. The first option leads with a judgement ("overcharging"), the second mixes facts with evaluations ("out of line"), and the fourth uses anonymous hearsay. By starting with facts, the site manager invites the subcontractor to share their perspective on why prices have increased, which may reveal legitimate reasons the manager was not aware of.',
+      'The option citing the 15% invoice increase leads with facts — the "S" (Share your facts) in STATE. It presents verifiable, non-judgemental data: invoices have increased by 15%, comparable firms have not increased. This creates a foundation for dialogue without triggering defensiveness. Opening with "overcharging" leads with a judgement, the market "out of line" wording mixes facts with evaluations, and citing colleagues uses anonymous hearsay. By starting with facts, the site manager invites the subcontractor to share their perspective on why prices have increased, which may reveal legitimate reasons the manager was not aware of.',
   },
   {
     id: 8,
     question: 'Which of the following best describes the "Pool of Shared Meaning"?',
     options: [
-      'A physical whiteboard where all meeting notes are recorded',
-      'The collective information, feelings, opinions, and experiences that all participants openly contribute to a conversation, leading to better-informed decisions',
-      "A technique for averaging everyone's opinions to find a compromise",
-      'A database of previous conflicts and their resolutions',
+      'The information, feelings, and experiences all participants openly contribute, leading to better decisions',
+      'A physical whiteboard in the site office where all of the meeting notes are written down and recorded',
+      "A technique for averaging out everyone's opinions in order to arrive at a workable compromise",
+      'A searchable database of previous conflicts on the project and the resolutions that were agreed for each',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Pool of Shared Meaning is Patterson et al.'s central metaphor. It represents the total information available to the group when everyone feels safe enough to share openly. Each person brings unique knowledge, perspectives, and feelings. When all of this flows into the shared pool, the group has the best possible information for making decisions. When people withhold information (through silence) or force it in destructively (through violence), the pool is impoverished and decisions are worse. The entire Crucial Conversations framework is designed to make it safe for people to contribute to the pool.",
   },

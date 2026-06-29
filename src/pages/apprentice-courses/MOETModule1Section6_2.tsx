@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question:
       'When using an AED on a casualty who has suffered cardiac arrest from electric shock, what should you ensure first?',
     options: [
-      'Current-carrying conductor in a magnetic field experiences a force',
-      'Accuracy requirements, satellite availability, and local coordinate systems',
-      'A description of the fault, the investigation process, findings, and recommended actions',
+      'That you hold a recognised medical qualification before using the device',
+      'That the casualty has a detectable pulse before applying the pads',
+      'That you give at least five rescue breaths before switching the AED on',
       'That the casualty is not in contact with the electrical source and their chest is dry and bare',
     ],
     correctIndex: 3,
@@ -56,9 +56,9 @@ const quickCheckQuestions = [
     question: 'Why are electrical burns particularly dangerous compared to thermal burns?',
     options: [
       'The current causes deep internal tissue damage that may not be visible externally',
-      'Your most important priorities that must be scheduled first',
-      'A fire extinguisher, first aid kit, and the machine\\\\\\\\\\\\\\\'s operating manual with emergency procedures',
-      'Make proper use of control measures and PPE provided by the employer, and report defects',
+      'They always heal more slowly than an equivalent thermal burn',
+      'They are only ever caused by high voltage and never by low voltage',
+      'They cannot be cooled with water like an ordinary thermal burn',
     ],
     correctIndex: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'An AED (automated external defibrillator) is used to:',
     options: [
-      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
+      'Measure the casualty’s blood pressure and oxygen levels continuously',
       'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Is responsible for calling the emergency services and maintaining the first aid kit when a trained first aider is absent',
-      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
+      'Provide oxygen to a casualty who is breathing but unconscious',
+      'Warm a casualty who is suffering from shock and hypothermia',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'When treating electrical burns, you should:',
     options: [
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
+      'Apply butter or a greasy cream to soothe the burn before dressing it',
+      'Burst any blisters and cover the burn with a tight adhesive dressing',
       'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
-      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
+      'Pack the burn with ice to bring the temperature down as quickly as possible',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     question:
       'The difference between a low voltage electric shock and a high voltage shock is that HV shock:',
     options: [
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
-      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
+      'Is always harmless because the current passes too quickly to injure',
+      'Never causes burns, only a brief tingling sensation',
+      'Can only occur through direct contact, never by arcing across a gap',
       'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'Arc flash injuries can include:',
     options: [
       'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
-      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
+      'Only a mild reddening of the skin that needs no treatment',
+      'Frostbite and hypothermia from the rapid cooling of the arc',
+      'Purely psychological effects with no physical injury',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: "An 'appointed person' for first aid is someone who:",
     options: [
-      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
+      'Holds a three-day First Aid at Work certificate and treats all injuries',
       'Is responsible for calling the emergency services and maintaining the first aid kit when a trained first aider is absent',
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
+      'Is a qualified paramedic employed permanently on the site',
+      'Is the only person legally allowed to perform CPR in the workplace',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'After an electric shock incident on site, the casualty says they feel fine and wants to continue working. You should:',
     options: [
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
+      'Allow them to continue working as long as they have no visible burns',
+      'Send them home to rest and review them at the start of the next shift',
       'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
-      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
+      'Give them a hot drink and let them decide for themselves whether to carry on',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'Under the Health and Safety (First-Aid) Regulations 1981, employers must:',
     options: [
       'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
-      'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
-      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
-      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
+      'Employ a full-time qualified nurse at every workplace regardless of size',
+      'Send every employee on a three-day First Aid at Work course each year',
+      'Provide first aid only for premises with more than fifty employees',
     ],
     correctAnswer: 0,
     explanation:

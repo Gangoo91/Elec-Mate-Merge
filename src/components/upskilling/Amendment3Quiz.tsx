@@ -10,54 +10,59 @@ import { useToast } from '@/hooks/use-toast';
 const quizQuestions = [
   {
     id: 1,
-    question: 'When did Amendment 3 to BS 7671 become mandatory for new electrical installations?',
-    options: ['1st January 2024', '31st July 2024', '1st September 2024', '31st December 2024'],
-    correctAnswer: 1,
+    question: 'When did Amendment 3 (BS 7671:2018+A3) become mandatory for new electrical installations?',
+    options: ['1st January 2024', '1st September 2024', '31st July 2024', '31st December 2024'],
+    correctAnswer: 2,
     explanation:
-      'Amendment 3 to BS 7671 became mandatory on 31st July 2024. All new installations from this date must comply with the Amendment 3 requirements.',
+      'BS 7671:2018+A3 was published on 31st July 2024 and was intended for immediate implementation on new installations from that date. (Amendment 3 has since been superseded by Amendment 4:2026.)',
   },
   {
     id: 2,
-    question: 'Which scenario REQUIRES bidirectional protection devices according to Amendment 3?',
+    question: 'Which scenario most clearly creates the bidirectional energy flow that requires a suitable protective device?',
     options: [
-      'Standard domestic lighting circuits',
-      'Solar PV system with battery storage',
-      'Electric shower installation',
-      'Garage socket outlets',
+      'A solar PV system with battery storage',
+      'A standard domestic lighting circuit',
+      'A single electric shower installation',
+      'A run of garage socket outlets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Solar PV systems with battery storage require bidirectional protection because energy can flow in both directions - from the grid to charge batteries and from batteries back to the grid during discharge.',
+      'A PV system with battery storage can export as well as import, so energy flow is bidirectional and a suitable protective device is required.',
   },
   {
     id: 3,
     question:
-      'What is the maximum time allowed for anti-islanding protection to disconnect a system after grid loss detection?',
-    options: ['1 second', '3 seconds', '5 seconds', '10 seconds'],
-    correctAnswer: 2,
+      'What is the purpose of anti-islanding (loss-of-mains) protection on a grid-connected generator?',
+    options: [
+      'To increase the system’s export capacity to the grid',
+      'To disconnect generation when the grid supply is lost',
+      'To boost the local voltage during a grid outage',
+      'To keep the installation energised when the grid fails',
+    ],
+    correctAnswer: 1,
     explanation:
-      'Anti-islanding protection must disconnect the system within 5 seconds of detecting grid loss to prevent dangerous islanding conditions where the local generation continues to energise the local grid.',
+      'Anti-islanding (loss-of-mains) protection disconnects local generation when the grid supply is lost, preventing it from energising a network that should be dead.',
   },
   {
     id: 4,
     question:
-      'Which consumer unit component must remain effective under reverse current conditions according to Amendment 3?',
-    options: ['Main switch only', 'MCBs only', 'RCD protection', 'Meter tails'],
+      'Which consumer unit protection must remain effective under reverse current conditions in a system with embedded generation?',
+    options: ['The main switch only', 'The MCBs only', 'The RCD protection', 'The meter tails'],
     correctAnswer: 2,
     explanation:
-      'RCD protection must remain effective under reverse current conditions. Standard RCDs may not operate correctly when current flows in the reverse direction, requiring bidirectional RCD protection in renewable energy installations.',
+      'RCD protection must still operate correctly under reverse current, as standard RCDs may not function as intended when current flows in the reverse direction.',
   },
   {
     id: 5,
     question:
-      'What must be included when testing bidirectional protection devices during commissioning?',
+      'What must be included when commissioning bidirectional protection devices?',
     options: [
-      'Testing in the forward direction only',
-      'Visual inspection only',
-      'Testing operation in both current directions',
-      'Insulation resistance testing only',
+      'Testing in the forward (import) direction only',
+      'A visual inspection of the device only',
+      'An insulation resistance test of the device only',
+      'Confirming operation in both current directions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Bidirectional protection devices must be tested for operation in both current directions to ensure they provide adequate protection whether current flows from the grid to the installation or from the installation back to the grid.',
   },

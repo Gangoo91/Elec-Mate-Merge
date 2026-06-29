@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'mewp-vehicle-mounted',
     question: 'A van-mounted platform (Category 1B) requires outriggers before use. Why?',
     options: [
-      "Because the van's suspension is too soft for elevated work",
-      'Because it is a Type 1 (static) machine — it must not travel with the platform elevated',
-      'Because outriggers are required by the Highway Code',
-      'Because all MEWPs need outriggers regardless of type',
+      "Because the van's suspension is too soft to support elevated working",
+      'Because the Highway Code mandates outriggers for all roadside lifting',
+      'Because it is a Type 1 (static) machine that cannot travel elevated',
+      'Because every MEWP requires outriggers regardless of its IPAF type',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Vehicle-mounted platforms are IPAF Category 1B (Static Boom). Type 1 machines cannot be driven whilst the platform is elevated, so outriggers must be deployed to provide a stable base before the boom is extended. This prevents the vehicle from tipping.',
   },
@@ -86,9 +86,9 @@ const quizQuestions = [
     question: 'What defines a MEWP?',
     options: [
       'Any platform used at height, including ladders and scaffolding',
-      'A machine designed to lift persons to a working position, with a work platform, extending structure, and chassis',
-      'A vehicle with a crane mounted on the back',
-      'A fixed platform permanently installed on a building',
+      'A machine with a work platform, an extending structure, and a chassis',
+      'A vehicle with a crane mounted on its rear loading bed',
+      'A fixed access platform built permanently into a structure',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does IPAF Category 1A refer to?',
     options: [
-      'Mobile Vertical — can drive elevated',
       'Static Vertical — cannot drive elevated, uses outriggers',
+      'Mobile Vertical — can drive elevated',
       'Static Boom — truck-mounted with outriggers',
       'Mobile Boom — self-propelled articulating boom',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Category 1A is Static Vertical. These are vertical-lift machines (Group A) that cannot be driven with the platform elevated. They are typically used on outriggers in a fixed position. Examples include static scissor lifts on outriggers.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'Which type of boom lift is best for navigating around obstacles to reach a work position?',
     options: [
-      'Telescopic boom — straight extending arm',
       'Articulating boom — multiple jointed sections with up-and-over capability',
+      'Telescopic boom — straight extending arm',
       'Scissor lift — pantograph vertical lift',
       'Trailer-mounted platform — towed to site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An articulating (knuckle) boom has multiple jointed sections allowing 'up-and-over' capability. This means it can reach over parapets, around building edges, and past obstacles that would block a straight telescopic boom. It is the best choice when the work position is not in a direct line from the machine.",
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'When choosing a MEWP, which factor determines whether you need Group B rather than Group A?',
     options: [
-      'The weight of tools and materials on the platform',
-      'Whether the work position is directly above or offset from where the machine can be positioned',
-      'Whether the job is indoors or outdoors',
-      'The number of operatives required on the platform',
+      'The combined weight of tools and materials carried on the platform',
+      'Whether the work is being carried out indoors or outdoors',
+      'The number of operatives that must stand on the platform',
+      'Whether the work position is directly above or offset from the machine',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The critical factor is horizontal outreach. If the work position is directly above the base, Group A (vertical-only) is sufficient. If the work position is offset — requiring the platform to extend beyond the base footprint — you need Group B (boom) to reach it.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
       'What is the main advantage of a vehicle-mounted platform (Category 1B) over a self-propelled boom?',
     options: [
       'It can drive with the platform elevated',
-      'It is road-legal and can travel between sites under its own power',
       'It does not require outriggers',
+      'It is road-legal and can travel between sites under its own power',
       'It has a larger platform area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Vehicle-mounted platforms (on vans, trucks, or lorries) are road-legal and can drive between sites via public roads. Self-propelled booms must be transported on a low-loader. This makes vehicle-mounted platforms ideal for utility work, street lighting, and telecoms where multiple locations must be visited in a single shift.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'A PAV (Push Around Vertical) is manually pushed between positions. Why is it still classified as a MEWP?',
     options: [
-      'Because it has wheels',
-      'Because it has a work platform, an extending structure (mast), and a chassis',
-      'Because it requires an IPAF licence',
-      'Because it can be used outdoors',
+      'Because it runs on wheels and can be moved around',
+      'Because it has a work platform, an extending mast, and a chassis',
+      'Because operating it requires a valid IPAF licence',
+      'Because it can be used outdoors as well as indoors',
     ],
     correctAnswer: 1,
     explanation:

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'demand-control-principles',
     question: 'How does demand-based control reduce unnecessary energy use?',
     options: [
-      'By running all equipment at maximum capacity for reliability',
       'By monitoring actual conditions and supplying only what is needed in real time',
-      'By turning off all non-essential systems during the day',
-      'By using more sensors throughout the building',
+      'By running all equipment at maximum capacity for reliability',
+      'By switching off all non-essential systems for the whole day',
+      'By installing additional sensors throughout the building',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Demand-based control monitors actual conditions (occupancy, temperature, load) in real time and adjusts system output to supply only what is needed, avoiding waste from over-supply while maintaining comfort and performance.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'labelling-importance',
     question: 'Why is accurate labelling critical when setting up load shedding circuits?',
     options: [
-      'It makes the installation look more professional',
+      'It makes the finished installation look more professional',
+      'It reduces the overall cost of the installation',
       'It prevents the BMS from shedding the wrong loads, which could cause safety risks or complaints',
-      'It reduces the cost of installation',
-      'It helps identify which cables are the most expensive',
+      'It helps identify which cables carry the highest current',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Accurate labelling is critical because it prevents the BMS from shedding the wrong loads. Mistakenly shedding critical circuits could cause safety risks, equipment damage, or serious complaints, while poor labelling makes troubleshooting and maintenance extremely difficult.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
     question: 'What commissioning step should be taken to test load shedding strategies?',
     options: [
       'Test only during normal working hours',
-      'Simulate high load conditions to verify automatic shedding triggers work correctly',
       'Skip testing and rely on manufacturer specifications',
-      'Only test manual controls, not automatic functions',
+      'Test only the manual controls, not the automatic functions',
+      'Simulate high load conditions to verify automatic shedding triggers work correctly',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commissioning must include simulating high load conditions to verify that automatic shedding triggers work at the correct thresholds, loads shed in proper priority order, and the system responds within acceptable time limits.',
   },

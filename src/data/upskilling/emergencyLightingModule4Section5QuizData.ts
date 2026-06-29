@@ -5,10 +5,10 @@ export const remoteTestingQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main advantage of remote testing systems over manual testing?',
     options: [
-      'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
+      'They remove the legal requirement to keep an emergency lighting logbook',
       'They automate monthly and annual tests, reducing labour whilst improving compliance',
-      'Networked systems provide real-time centralised monitoring with instant alerts',
-      'BS 5266-8 (EN 50172) (Emergency lighting testing and monitoring)',
+      'They extend the battery autonomy of each luminaire beyond three hours',
+      'They allow a lower lux level on escape routes than BS 5266-1 normally requires',
     ],
     correctAnswer: 1,
     explanation:
@@ -46,9 +46,9 @@ export const remoteTestingQuizData: QuizQuestion[] = [
       'What is the key feature of a networked emergency lighting system compared to self-test fittings?',
     options: [
       'Networked systems provide real-time centralised monitoring with instant alerts',
-      'BS 5266-8 (EN 50172) (Emergency lighting testing and monitoring)',
-      'They avoid the need for data cabling, which can be impractical or expensive in existing buildings',
-      'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
+      'Networked systems remove the need for any standby battery in each fitting',
+      'Networked systems run entirely on radio signals with no central controller',
+      'Networked systems carry out tests only when manually triggered on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -59,10 +59,10 @@ export const remoteTestingQuizData: QuizQuestion[] = [
     question:
       'Why are wireless remote testing systems particularly useful in refurbishment projects?',
     options: [
-      'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
+      'They do not require any battery maintenance during the building’s life',
       'They avoid the need for data cabling, which can be impractical or expensive in existing buildings',
-      'Networked systems provide real-time centralised monitoring with instant alerts',
-      'Testing time reduced by 62.5%, saving £9,000/year with a 7.6-year payback period',
+      'They are exempt from the monthly and annual testing requirements',
+      'They can be powered directly from each luminaire’s existing lighting circuit only',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,13 +114,13 @@ export const remoteTestingQuizData: QuizQuestion[] = [
     question: 'Why do remote testing systems NOT remove the need for visual inspections?',
     options: [
       'Remote systems cannot detect physical damage, obstructions, dirt, or mounting issues',
-      'All of the above',
-      'BS 5266-1 requires routine visual checks in addition to functional testing',
-      'Visual inspections are required by law regardless of testing method',
+      'Remote systems give false test results unless verified by eye each month',
+      'Remote systems only test half of the luminaires on any given cycle',
+      'Remote systems lose their data if the building loses mains power',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'All statements are correct. Remote systems automate functional and duration testing but cannot detect physical problems such as damage, obstructions blocking light output, dirt accumulation, loose mounting, or changes to building layout. BS 5266-1 requires regular visual inspections regardless of testing method used.',
+      'Remote systems automate functional and duration testing but cannot detect physical problems such as damage, obstructions blocking light output, dirt accumulation, loose mounting, or changes to building layout. BS 5266-1 therefore still requires regular visual inspections regardless of the testing method used.',
   },
   {
     id: 10,

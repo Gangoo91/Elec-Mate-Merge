@@ -38,24 +38,24 @@ const checks = [
     question:
       'Where, in relation to the gas meter on a domestic install, should the main protective bonding clamp be fitted?',
     options: [
-      'A proving unit generates a test voltage electronically and is self-contained, while a known live source is an actual energised supply that you use to verify your indicator reads correctly',
-      'On the consumer side of the meter, on the consumer\\\\\\\\\\\\\\\'s hard metal pipework, before any branch pipework, and where practicable within 600 mm of the meter outlet union (or the point of entry to the building if the meter is external) — per Reg 544.1.2.',
-      'A notice shall be fixed in a prominent position at or near the origin of the installation indicating: the date of the next inspection, the name of the contractor or scheme, and contact details. The notice survives between EICs as a continuity record.',
-      'Avoid the work at height; if unavoidable, use work equipment that prevents falls; if not possible, use work equipment that minimises distance and consequences of falls — fall arrest is last',
+      'On the supply side of the meter, on the incoming service pipe, as close to the street as possible.',
+      'On the consumer side, on hard metal pipework before any branch, within 600 mm of the meter outlet.',
+      'Directly onto the brass body of the gas meter itself, the most accessible metal point available.',
+      'On the first appliance feed downstream of the meter, just after the consumer isolation valve.',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 544.1.2 — connection on the consumer side of the meter, on consumer\'s hard metal pipework, before any branch, within 600 mm of the meter outlet union where practicable. The 600 mm limit makes the bond find-able on inspection and ensures the bond connection is on installation pipework rather than DNO/supplier equipment.',
+      'Reg 544.1.2 — connection on the consumer side of the meter, on consumer\'s hard metal pipework, before any branch, within 600 mm of the meter outlet union (or the point of entry to the building if the meter is external) where practicable. The 600 mm limit makes the bond find-able on inspection and ensures the bond connection is on installation pipework rather than DNO/supplier equipment.',
   },
   {
     id: 'm4-s4-sub3-gas-clamp',
     question:
       'You are connecting a main bonding clamp to a steel gas pipe in a meter cabinet. Which type of BS 951 clamp do you fit?',
     options: [
-      'Response time too slow. Asphyxiation can cause unconsciousness in 30 seconds and death in minutes. Pre-positioned rescue plan with standby person + equipment is essential. Fire and Rescue may attend but cannot be the primary rescue route.',
-      'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
-      'A BS 951 clamp with insulating insert/sleeve at the contact face — keeps the clamp body electrically isolated from the gas pipe outside the bond connection point and prevents the clamp acting as a sparking point in a DSEAR atmosphere.',
-      'It connects to the metal casing of the heater. The casing is an exposed-conductive-part — Class I equipment requires CPC connection so a fault from the heating element to the casing causes fault current to flow back through the CPC and trip the protective device.',
+      'Any standard brass BS 951 clamp — clamp type makes no difference on gas pipework.',
+      'A plastic-bodied clamp, because metal clamps are not permitted on gas services.',
+      'A gas-rated BS 951 clamp with an insulating insert at the contact face, for DSEAR compliance.',
+      'A galvanised steel clamp, matched to the steel gas pipe to avoid galvanic action.',
     ],
     correctIndex: 2,
     explanation:
@@ -83,38 +83,38 @@ const quizQuestions = [
     question:
       'A standard BS 951 earth clamp is rated for what minimum cross-sectional area of conductor termination?',
     options: [
-      'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
-      'It depends on the model — common BS 951 clamps come in ratings to suit 6 mm², 10 mm², 16 mm² and 25 mm² conductors. Always select a clamp rated to match (or exceed) the bonding conductor CSA.',
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
-      'The employer must investigate the grievance promptly, take the allegations seriously, follow the ACAS Code of Practice on grievance procedures, protect the apprentice from victimisation, and take appropriate action based on the findings',
+      'A single fixed rating of 6 mm², the same for every BS 951 clamp model under the standard.',
+      'It depends on the model — clamps come in ratings to suit 6, 10, 16 and 25 mm² conductors.',
+      'A single fixed rating of 25 mm², which all BS 951 clamps must meet under the standard.',
+      'BS 951 clamps are not rated by conductor size — any conductor fits any clamp regardless.',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 951 covers earth clamps for service pipes. Different ratings for different conductor sizes. Pick a clamp with a screw aperture that suits the conductor or the lug you have terminated. Typical domestic bonding uses a 10-16 mm² rated clamp.',
+      'BS 951 covers earth clamps for service pipes, with different ratings for different conductor sizes. Always select a clamp rated to match (or exceed) the bonding conductor CSA. Pick a clamp with a screw aperture that suits the conductor or the lug you have terminated. Typical domestic bonding uses a 10-16 mm² rated clamp.',
   },
   {
     id: 2,
     question:
       'Why must the pipe be cleaned to bright bare metal before the BS 951 clamp is tightened on?',
     options: [
-      'Specified in the assessment plan — usually 2-4 weeks, allowing time for the EPAO to assign an assessor, for the assessor to review your portfolio, and for final preparation',
-      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
-      'To remove paint, oxide, scale and any non-conductive surface coating that would create a high-resistance joint between the clamp jaw and the pipe — Reg 526.1 requires durable electrical continuity.',
-      'The apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
+      'To give the jointing paste a smoother surface to adhere to before the clamp is fitted.',
+      'To make the pipe look tidy and professional for the customer and any future inspector.',
+      'To remove paint, oxide, scale and coatings that would create a high-resistance joint at the clamp.',
+      'To thin the pipe wall slightly so the clamp grips more tightly when the screws are tightened.',
     ],
     correctAnswer: 2,
     explanation:
-      'Bond clamp to pipe is a metal-to-metal contact joint. Anything between (paint, copper oxide film, mineral scale, tape residue) is a resistance and a Reg 526.1 failure. File or wire-wool the pipe to bright bare metal in a band slightly wider than the clamp jaw width before fitting.',
+      'Bond clamp to pipe is a metal-to-metal contact joint, and Reg 526.1 requires durable electrical continuity. Anything between (paint, copper oxide film, mineral scale, tape residue) is a resistance and a failure. File or wire-wool the pipe to bright bare metal in a band slightly wider than the clamp jaw width before fitting.',
   },
   {
     id: 3,
     question:
       'After cleaning the pipe and fitting the BS 951 clamp, what is the role of jointing paste (e.g. CuPro, Penetrox, conductive grease)?',
     options: [
-      'Model inclusive language; identify and accommodate reasonable adjustments where colleagues need them; ensure PEEPs are in place where required; intervene against discriminatory behaviour; document; escalate persistent issues.',
-      'Treating all colleagues with dignity and respect, valuing different perspectives and experiences, being inclusive in communication and teamwork, and challenging discrimination or harassment appropriately',
-      'The TN type — TN-S, TN-C-S (PME), TT — because earthing arrangement, main earthing conductor sizing, main bonding sizing, EV protection method, and Zs at every final circuit all depend on it.',
-      'Fills micro-voids between the clamp jaw and the pipe surface, displaces moisture and air, and prevents corrosion at the joint over years of service. Particularly important on dissimilar metals (e.g. brass clamp on copper pipe).',
+      'Acts as an adhesive to hold the clamp permanently in position so it cannot work loose over time.',
+      'Lubricates the clamp threads so the pipe-clamping screw can be tightened to a higher torque.',
+      'Insulates the joint to prevent stray current flowing between the clamp and the pipe surface.',
+      'Fills micro-voids at the clamp-to-pipe contact, displaces moisture and air, and inhibits corrosion.',
     ],
     correctAnswer: 3,
     explanation:
@@ -125,24 +125,24 @@ const quizQuestions = [
     question:
       'You are bonding a galvanised steel water pipe entering a 1970s commercial building. The pipe is heavily corroded at the planned bond location. What do you do?',
     options: [
-      'Move the bond connection to a clean section of the same pipe (still consumer side, still before any branch, within 600 mm of point of entry where practicable per Reg 544.1.2). Clean to bare metal, apply paste, fit clamp.',
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
-      'Raise a Request for Information (RFI), record the conflict in the design log, propose a resolution that maintains BS 7671 and CDM safety, and only proceed once the resolution is recorded by the Principal Designer.',
-      'Body scanning first (immediate physical awareness) → ABC model (identifying triggering beliefs) → Gibbs\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' Reflective Cycle (structured reflection on the full incident) → Johari Window (seeking external feedback to identify blind spots)',
+      'Move the bond to a clean section of the same consumer-side pipe before any branch, then clean, paste and clamp.',
+      'Fit the clamp straight over the corroded section — the clamp screw will bite through the corrosion to clean metal.',
+      'Skip the bond on this pipe and rely on the bonding fitted to the adjacent gas service pipe instead.',
+      'Wrap the corroded section in self-amalgamating tape, then fit the clamp over the protective tape.',
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 544.1.2 says "as near as practicable" — the regulation acknowledges site reality. If the pipe at the meter outlet is unfit for a bond connection (corroded, wet, painted), find the next clean section of consumer-side pipework before the first branch. Clean it, paste it, clamp it. Document the position deviation in the EIC.',
+      'Reg 544.1.2 says "as near as practicable" — the regulation acknowledges site reality. If the pipe at the meter outlet is unfit for a bond connection (corroded, wet, painted), find the next clean section of consumer-side pipework before the first branch — still within 600 mm of the point of entry where practicable. Clean it, paste it, clamp it. Document the position deviation in the EIC.',
   },
   {
     id: 5,
     question:
       'On a modern domestic install where the gas service pipe is plastic (PE) up to the meter and only the consumer-side outlet is metal, where does main bonding go?',
     options: [
-      'Around 0.36 Ω. 1.5 mm² Cu = approximately 12.10 mΩ/m at 20 °C. 30 × 0.01210 = 0.363 Ω. The R1+R2 for a 2.5/1.5 T&E 30 m circuit would be approximately 0.21 (R1) + 0.36 (R2) = 0.57 Ω at 20 °C, before the 0.8 correction for service temperature.',
-      'On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2. The plastic supply pipe is not an extraneous-conductive-part (it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t introduce a potential) so doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding — but the metal consumer pipework downstream of the meter does.',
-      'Three prongs of director liability. Consent — director knew and agreed. Connivance — director knew and turned a blind eye. Neglect — director should have known but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t take reasonable steps to find out / address. All three give personal liability for the corporate offence.',
-      'Initial verification confirms a NEW installation (or addition/alteration) complies with current BS 7671 before service. Periodic inspection assesses an EXISTING installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ongoing safety.',
+      'No bonding is needed at all, because the plastic supply pipe breaks the path to earth.',
+      'On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2.',
+      'On the plastic supply pipe itself, using a clamp designed to grip and bite plastic pipework.',
+      'Bond both the plastic supply pipe and the metal consumer pipe with separate dedicated clamps.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'You are doing an EICR and find a BS 951 clamp on a water pipe with no warning label. What do you do?',
     options: [
-      'A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation',
-      'Acknowledge the person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s wish for confidentiality, explore the immediacy of risk, explain the limits of confidentiality where there is risk to life, and collaboratively agree next steps including whether crisis services are needed before the GP appointment',
-      'Code as an observation. Reg 514.13.1 mandates the "Safety Electrical Connection — Do Not Remove" warning notice. Missing label is a Code C3 (improvement recommended) since the bond is still functional but a future homeowner may inadvertently remove the conductor without realising its purpose.',
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
+      'Code C1 (danger present) and recommend the supply be isolated immediately until a label is fitted.',
+      'Ignore it — a warning label is good practice but is not a BS 7671 requirement at all.',
+      'Code C3 (improvement recommended) — the bond is functional but the Reg 514.13.1 label is missing.',
+      'Code C2 (potentially dangerous) — a missing label means the bond cannot be relied upon electrically.',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'What is the function of the "as near as practicable" qualifier in Reg 544.1.2?',
     options: [
-      'During fault diagnosis you discover the agreed scope must change (additional cabling required, asbestos found, hidden defects) — written variation captures cost, time and consent before extra work proceeds',
-      'No — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s shifted. At L2 the limits were tighter (most things needed supervisor sign-off). At L3 you can do more without immediate supervision, but the limits still exist (EIC sign-off, complex three-phase, hazardous areas, F-Gas, gas, asbestos licensed work). Honestly knowing where YOUR current limit sits is the L3 judgement skill.',
-      'Carry out the remedial works within 28 days of receiving the report (or within a shorter period specified on the report), obtain written confirmation from a competent person that the works have been completed and the installation is now safe, and provide that confirmation to existing tenants within 28 days and to the local authority on request.',
-      'Acknowledges that real meter cabinets and consumer-side pipework don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t always allow a connection within 600 mm of the meter outlet union — the regulation requires you to get as close as the site allows, document any deviation, and never bond on the supply side of the meter.',
+      'It allows the bond to be fitted on the supply side of the meter if no consumer pipework is reachable.',
+      'It allows the 600 mm figure to be ignored entirely, so the bond can go anywhere on the pipework.',
+      'It allows the bond to be omitted altogether if fitting one within 600 mm proves impractical.',
+      'It lets you bond at the nearest accessible consumer-side point where the strict 600 mm cannot be met.',
     ],
     correctAnswer: 3,
     explanation:
@@ -181,14 +181,14 @@ const quizQuestions = [
     question:
       'You have fitted a BS 951 clamp on the gas service and are about to leave site. What is the final visual check?',
     options: [
-      'Confirm: (1) clamp is on consumer side of the meter and on hard metal pipework before any branch; (2) within 600 mm of the meter outlet union where practicable; (3) pipe cleaned to bare metal under the clamp jaw; (4) jointing paste applied; (5) clamp screw torqued to manufacturer spec; (6) "Safety Electrical Connection — Do Not Remove" warning label fitted on the clamp body or conductor; (7) bonding conductor secure and labelled at the MET end.',
-      'Yes — EIC provides hardship grants to anyone working in the UK electrical / energy industry including apprentices. Application process via electricalcharity.org. Grants typically cover specific need (rent arrears, urgent medical equipment, transport during illness, childcare during family crisis). Grant amount varies by need; typically £200-2,500 range. Confidential.',
-      'Buildings of 18 m or more in height (typically 7 storeys or more) containing two or more residential units. The HRRB regime came in after the Grenfell Tower fire and brings additional fire-safety requirements including (depending on the specific building regulations) recommended AFDDs (Reg 421.1.7) on socket circuits, mandatory linked smoke detection, and enhanced fire compartmentation. The regime is administered by the Health and Safety Executive (Building Safety Regulator) for the highest-risk buildings.',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.',
+      'Confirm the full set: correct position, clean pasted bare metal, torqued screws, label, secure labelled conductor.',
+      'Confirm only that the clamp screw is tight — every other detail is checked at the next EICR, not now.',
+      'Confirm only that the warning label is fitted — the label is the sole regulatory requirement for the bond.',
+      'Confirm only that the conductor is the correct green/yellow colour and leave the rest to the inspector.',
     ],
     correctAnswer: 0,
     explanation:
-      'A complete bond install has every one of those steps demonstrably satisfied. On a real job, take a photograph of the finished bond from two angles (overall position relative to the meter, close-up of the clamp/label) for the EIC record. The photograph evidences the install five years later when an EICR engineer checks for compliance.',
+      'A complete bond install has every step demonstrably satisfied: (1) clamp on consumer side, on hard metal pipework before any branch; (2) within 600 mm of the meter outlet union where practicable; (3) pipe cleaned to bare metal under the clamp jaw; (4) jointing paste applied; (5) clamp screw torqued to manufacturer spec; (6) "Safety Electrical Connection — Do Not Remove" label fitted; (7) conductor secure and labelled at the MET end. On a real job, photograph the finished bond from two angles for the EIC record — it evidences the install five years later when an EICR engineer checks for compliance.',
   },
 ];
 

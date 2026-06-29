@@ -86,57 +86,69 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
         'According to IEC 60617, what does a circle with a diagonal line through it represent in a control circuit diagram?',
       options: ['A lamp or indicator', 'A contactor coil', 'A fuse', 'A thermal overload relay'],
       correctAnswer: 'A lamp or indicator',
+      explanation:
+        'A circle with a diagonal cross (or single line) is the IEC 60617 symbol for a signal lamp or indicator. A contactor coil is a plain rectangle, a fuse a rectangle on the conductor, and a thermal overload a resistive heater symbol.',
     },
     {
       question: 'A contactor rated AC-3 at 30A can safely switch which of the following?',
       options: [
-        'A 30A resistive heating load',
+        'A 30A motor during repeated jogging operations',
         'A 30A squirrel cage motor during normal starting',
-        'A 30A motor during jogging operations',
-        'A 30A capacitor bank',
+        'A 30A capacitor bank with high inrush',
+        'A 30A slip-ring motor during rotor switching',
       ],
       correctAnswer: 'A 30A squirrel cage motor during normal starting',
+      explanation:
+        'AC-3 covers starting and switching off squirrel cage motors during running. Jogging (AC-4) and capacitor or slip-ring duties impose far higher make/break stresses and need a different category or derating.',
     },
     {
       question: 'What is the primary advantage of using 24V AC control voltage instead of 230V AC?',
       options: [
-        'Lower cost of control transformers',
-        'Reduced contact wear on push buttons',
+        'Lower cost because no control transformer is needed',
+        'Faster contactor pickup due to higher coil current',
         'Enhanced safety for maintenance personnel',
-        'Faster contactor response time',
+        'Reduced volt drop over long control cable runs',
       ],
       correctAnswer: 'Enhanced safety for maintenance personnel',
+      explanation:
+        '24V AC sits well below the 50V AC shock threshold, greatly reducing risk to maintenance staff. It actually adds transformer cost and increases volt drop because of higher current, so safety is the genuine benefit.',
     },
     {
-      question: 'In IEC notation, what do the numbers 13-14 typically indicate on a contactor?',
+      question: 'In IEC notation, what do the terminal numbers 13-14 typically indicate on a contactor?',
       options: [
-        'Main power contacts',
-        'Normally open auxiliary contact',
-        'Normally closed auxiliary contact',
         'Coil terminals',
+        'Main power contacts',
+        'Normally closed auxiliary contact',
+        'Normally open auxiliary contact',
       ],
       correctAnswer: 'Normally open auxiliary contact',
+      explanation:
+        'Auxiliary contacts ending in 3-4 (13-14, 23-24) are normally open; those ending in 1-2 (11-12, 21-22) are normally closed. Coil terminals are A1/A2 and main contacts use single digits.',
     },
     {
       question:
         'When sizing a control transformer, what factor must be considered for contactor coil inrush?',
       options: [
-        'Coil inrush can be 6-10 times the sealed current',
+        'Coil inrush can be 6-10 times the sealed VA',
         'Coil current remains constant during pickup',
         'Only the sealed VA rating matters',
         'Transformer size equals total coil VA rating',
       ],
-      correctAnswer: 'Coil inrush can be 6-10 times the sealed current',
+      correctAnswer: 'Coil inrush can be 6-10 times the sealed VA',
+      explanation:
+        'During pickup an AC coil draws a large inrush (typically 6-10x its sealed VA) because the armature is open and impedance is low. The transformer must supply this surge or contactors will fail to pull in.',
     },
     {
       question: 'What is the function of an economiser circuit in a contactor?',
       options: [
-        'To reduce main contact wear',
-        'To provide soft starting',
+        'To reduce main contact wear during switching',
+        'To provide soft starting of the connected motor',
         'To reduce coil holding power after pickup',
-        'To enable reverse operation',
+        'To enable reversing without a second contactor',
       ],
       correctAnswer: 'To reduce coil holding power after pickup',
+      explanation:
+        'An economiser (often on DC or large AC coils) switches the coil to a lower holding current once the armature has sealed in, cutting heat and energy use while still keeping the contactor closed.',
     },
     {
       question:
@@ -144,42 +156,50 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
       options: [
         'NO contacts from each contactor in series with its own coil',
         'NC contacts from each contactor in series with the other coil',
-        'NO contacts from each contactor in parallel',
+        'NO contacts from each contactor wired in parallel',
         'NC contacts in series with the main power supply',
       ],
       correctAnswer: 'NC contacts from each contactor in series with the other coil',
+      explanation:
+        'An electrical interlock wires each contactor’s NC auxiliary in series with the opposing coil, so when one is energised it opens that NC contact and prevents the other from picking up (essential for reversing starters).',
     },
     {
-      question: 'What does AC-4 utilisation category specifically cover?',
+      question: 'What does the AC-4 utilisation category specifically cover?',
       options: [
-        'Switching non-inductive loads',
-        'Starting slip-ring motors',
-        'Inching and plugging of squirrel cage motors',
+        'Switching non-inductive resistive loads',
+        'Starting slip-ring induction motors',
         'Switching transformer primary circuits',
+        'Inching and plugging of squirrel cage motors',
       ],
       correctAnswer: 'Inching and plugging of squirrel cage motors',
+      explanation:
+        'AC-4 is the most severe motor category, covering inching (jogging), plugging and rapid reversing where the contactor breaks heavy locked-rotor currents at near full recovery voltage.',
     },
     {
       question:
-        'When troubleshooting a control circuit, you measure 230V across a contactor coil but it does not pick up. The most likely cause is:',
+        'When troubleshooting a control circuit, you measure rated voltage across a contactor coil but it does not pick up. The most likely cause is:',
       options: [
-        'Open circuit in the control wiring',
-        'Open coil or mechanical jam',
-        'Faulty stop button',
-        'Blown control fuse',
+        'An open circuit in the control wiring',
+        'An open coil winding or mechanical jam',
+        'A faulty stop button in the rung',
+        'A blown control fuse upstream',
       ],
-      correctAnswer: 'Open coil or mechanical jam',
+      correctAnswer: 'An open coil winding or mechanical jam',
+      explanation:
+        'If full rated voltage is present at the coil terminals, the supply path is intact, so the fault lies in the coil itself (open winding) or a mechanically jammed armature. Open wiring, a faulty stop button or blown fuse would all remove the voltage.',
     },
     {
       question:
-        'In a maintained start/stop circuit, what distinguishes it from a momentary circuit?',
+        'In a maintained start/stop circuit, what distinguishes it from a momentary push-button circuit?',
       options: [
-        'It uses larger contactors',
-        'The start switch remains closed to keep the contactor energised',
-        'It requires a seal-in contact',
+        'It uses physically larger contactors',
+        'It requires an auxiliary seal-in contact',
+        'The switch stays closed to keep the contactor energised',
         'It only works with DC control voltage',
       ],
-      correctAnswer: 'The start switch remains closed to keep the contactor energised',
+      correctAnswer: 'The switch stays closed to keep the contactor energised',
+      explanation:
+        'A maintained circuit uses a selector or toggle that physically holds its position, so no seal-in contact is needed. Momentary circuits need an auxiliary NO contact to latch the contactor after the button is released.',
     },
   ];
 

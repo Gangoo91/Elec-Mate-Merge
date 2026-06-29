@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'nnlw-notification',
     question: 'What notification is required before starting notifiable non-licensed work (NNLW)?',
     options: [
-      'An ASB5 form submitted online to the HSE before work begins',
       'A 14-day written notification to the local council',
       'No notification is required for non-licensed work',
+      'An ASB5 form submitted online to the HSE before work begins',
       'A verbal notification to the building owner is sufficient',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Notifiable non-licensed work requires an ASB5 online notification to the HSE before work begins. This is different from licensed work, which requires a 14-day written notification. Non-licensed work (the lowest category) does not require any notification. The ASB5 form captures details of the work, the contractor, the location, and the type of ACM involved.',
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       'A contractor plans to remove asbestos-containing textured coatings using power tools. Which work category does this fall into?',
     options: [
-      'Notifiable non-licensed work (NNLW)',
       'Non-licensed work',
+      'Notifiable non-licensed work (NNLW)',
       'Licensed work',
       'It depends on the age of the building',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Removing textured coatings containing asbestos using power tools is classified as notifiable non-licensed work (NNLW). This is because power tools generate more dust and fibre release than hand methods. If the same textured coating were removed by hand using wet methods (steam/wet scraping), it would typically fall into the lower non-licensed category. The method of work is a key factor in determining the category.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following types of work ALWAYS requires an HSE asbestos licence?',
     options: [
-      'Removing intact asbestos cement sheets by hand',
       'Work with sprayed asbestos coatings (limpet asbestos)',
+      'Removing intact asbestos cement sheets by hand',
       'Removing asbestos-containing floor tiles by hand',
       'Removing textured coatings using wet scraping methods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Work with sprayed asbestos coatings (limpet asbestos) always requires an HSE licence because it is one of the highest-risk ACMs. Sprayed coatings have a very high asbestos content and are extremely friable, releasing large quantities of fibres when disturbed. The other options describe work that can typically be carried out as non-licensed or NNLW.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
       'Which of the following is a criterion for work to be classified as notifiable non-licensed work (NNLW)?',
     options: [
       'The work involves sprayed asbestos coatings',
-      'The work is sporadic and low intensity with short duration tasks',
       'The work requires a full enclosure to be constructed',
+      'The work is sporadic and low intensity with short duration tasks',
       'Worker exposure is expected to exceed the control limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For work to qualify as NNLW, it must be sporadic and low intensity, involve short-duration tasks, and worker exposure must not exceed the control limit. If any of these criteria are not met — for example, if exposure is expected to exceed the control limit or if the work involves sprayed coatings — the work must be treated as licensed work.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
     question: 'What is the minimum level of RPE recommended for non-licensed asbestos work?',
     options: [
       'A standard dust mask',
-      'FFP3 disposable respirator',
       'Full-face powered air respirator',
       'No RPE is required for non-licensed work',
+      'FFP3 disposable respirator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An FFP3 disposable respirator is the recommended minimum for non-licensed asbestos work. Standard dust masks do not provide adequate protection against asbestos fibres. While full-face powered air respirators provide higher protection, they are typically required for licensed work. Even for the lowest-risk category, FFP3 protection is recommended as good practice.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
     question: 'What is one of the most common mistakes when categorising asbestos work?',
     options: [
       'Assuming all asbestos work requires a licence',
-      'Treating licensed work as non-licensed work',
       'Notifying the HSE too early before starting work',
       'Providing too much training for non-licensed work',
+      'Treating licensed work as non-licensed work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Treating licensed work as non-licensed work is one of the most serious and common mistakes. This means workers are exposed to high-risk ACMs without adequate controls, training, or medical surveillance. It is a criminal offence that can lead to prosecution and imprisonment. Other common mistakes include not notifying NNLW to the HSE and assuming 'non-licensed' means 'no controls needed'.",
   },
@@ -171,8 +171,8 @@ const quizQuestions = [
     id: 8,
     question:
       'How often must medical surveillance be carried out for workers performing licensed asbestos work?',
-    options: ['Every year', 'Every 2 years', 'Every 3 years', 'Every 5 years'],
-    correctAnswer: 1,
+    options: ['Every 2 years', 'Every year', 'Every 3 years', 'Every 5 years'],
+    correctAnswer: 0,
     explanation:
       'Medical surveillance for workers carrying out licensed asbestos work must be carried out every 2 years. This includes a medical examination by an HSE-appointed doctor (EMAS). Records of medical surveillance must be kept for 40 years. For NNLW, health records must also be kept for 40 years, though the medical surveillance requirements are slightly different.',
   },

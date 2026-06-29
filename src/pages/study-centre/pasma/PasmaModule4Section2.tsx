@@ -18,10 +18,10 @@ const quickCheckQuestions = [
     id: 'pasma-move-persons-onboard',
     question: 'Can a mobile scaffold tower ever be moved with a person on the platform?',
     options: [
-      'Yes, if they hold on tightly to the guardrails',
-      'Yes, if the tower is below 4 metres in height',
+      'Yes, provided they hold tightly to the guardrails throughout',
+      'Yes, provided the tower is below 4 metres in overall height',
       'No — this is a zero-tolerance offence and must never happen',
-      'Yes, if the move is less than 2 metres',
+      'Yes, provided the move is less than 2 metres in distance',
     ],
     correctIndex: 2,
     explanation:
@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'pasma-move-height-limit',
     question: 'What is the typical maximum height a tower can be when being moved?',
     options: [
-      '2 metres',
       "4 metres (or the manufacturer's specified limit)",
+      '2 metres',
       '6 metres',
       'There is no height limit for moving',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The general maximum height for moving a mobile tower is 4 metres, though the manufacturer's instruction manual may specify a different limit. Towers become increasingly unstable at height when subjected to the forces involved in moving.",
   },
@@ -45,11 +45,11 @@ const quickCheckQuestions = [
     question: 'What is the FIRST thing to do after repositioning a tower in its new location?',
     options: [
       'Start work immediately to avoid delays',
-      'Lock all four castors and verify the tower is level',
       'Add extra height to reach the new work area',
       'Remove the stabilisers to make room',
+      'Lock all four castors and verify the tower is level',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'After repositioning, the immediate priority is to lock all four castors and verify that the tower is level. An unlocked or unlevel tower can overturn when loaded. No one should access the tower until all castors are locked and stability is confirmed.',
   },
@@ -83,26 +83,26 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following conditions must ALL be met before a tower can be moved?',
     options: [
-      'Tower below 4m, one person available, castors locked',
+      'Tower below 4m, one person available, route clear, castors locked',
       'No persons on tower, wind below F4, height within limit, route clear, materials removed',
-      'Supervisor present, tower empty, weather dry',
-      'Daylight hours, ground wet, one castor unlocked',
+      'Supervisor present, tower empty, weather dry, stabilisers extended',
+      'Daylight hours, ground level, materials secured, one castor unlocked',
     ],
     correctAnswer: 1,
     explanation:
-      'Before moving, ALL of the following must be confirmed: no persons on the tower, wind below Beaufort Force 4, tower height within the moving limit, route clear and firm, and all tools and materials removed from the platform.',
+      'Before moving, ALL of the following must be confirmed: no persons on the tower, wind below Beaufort Force 4, tower height within the moving limit, route clear and firm, and all tools and materials removed from the platform. A single person, stabilisers left extended, or an unlocked castor would each make the move unsafe.',
   },
   {
     id: 2,
     question:
       'Why must all tools and materials be removed from the platform before moving a tower?',
     options: [
-      'To prevent theft during the move',
       'To reduce weight and prevent items falling from height during movement',
+      'To prevent theft during the move',
       'Because tools must be cleaned before they are moved',
       'To allow the platform to be folded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Loose tools and materials on the platform can fall from height during movement, striking people below. They also raise the tower's centre of gravity and can shift during transit, affecting stability.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the role of the spotter during a tower move?',
     options: [
-      'To stand on the platform and direct the push',
+      'To stand on the platform and direct the push from height',
+      'To carry the tools and materials separately during the move',
+      'To record the time and distance of the move in the site diary',
       'To watch for overhead hazards, obstructions, and other workers in the route',
-      'To carry the tools separately',
-      'To record the move in the site diary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The spotter walks alongside or ahead of the moving tower, watching for overhead hazards such as cables and beams, ground-level obstructions, other workers, and any changes in ground surface that could affect the move.',
   },
@@ -137,14 +137,14 @@ const quizQuestions = [
     question:
       'After repositioning a tower, which of the following must be checked BEFORE anyone climbs it?',
     options: [
-      'Only that the castors are locked',
+      'That the castors are locked, ignoring level and components',
       'Castors locked, tower level, no overhead hazards, all components secure',
-      'Only that the platform is in place',
-      'Only that the ground is dry',
+      'That the platform is in place, ignoring castors and braces',
+      'That the ground is dry, ignoring stability and overhead hazards',
     ],
     correctAnswer: 1,
     explanation:
-      'A full post-move check is required: all castors must be locked, the tower must be level, new overhead hazards must be checked, and all components must be verified as secure. Moving can loosen connections, so a thorough check is essential.',
+      'A full post-move check is required: all castors must be locked, the tower must be level, new overhead hazards must be checked, and all components must be verified as secure. Checking only one of these leaves the others unverified. Moving can loosen connections, so a thorough check is essential.',
   },
   {
     id: 6,
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should the route be surveyed BEFORE moving a tower?',
     options: [
-      'To check if there is a shorter route',
       'To identify floor transitions, door widths, overhead hazards, and obstructions',
-      'To count the number of workers in the area',
-      'To determine if a permit is needed',
+      'To check whether a shorter route to the destination exists',
+      'To count the number of other workers in the surrounding area',
+      'To determine whether a hot-work permit is needed for the move',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Route surveys identify potential hazards such as floor transitions (thresholds, ramps), narrow door widths that the tower cannot pass through, overhead cables or low beams, and obstructions that need to be removed before the move.',
   },
@@ -177,14 +177,14 @@ const quizQuestions = [
     id: 8,
     question: 'What documentation should be completed after relocating a tower?',
     options: [
-      'No documentation is needed for a simple move',
-      'Only a text message to the site manager',
+      'A verbal note to the next shift, with no written record kept',
+      'A text message to the site manager confirming the move only',
+      'A fresh PASMA card application for the operative who moved it',
       'Update the inspection log, inform site management, update the risk assessment, and re-inspect',
-      'A new PASMA card application',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'After relocation, the inspection log must be updated to record the move, site management must be informed of the new position, the risk assessment must be reviewed for the new location, and a full re-inspection must be completed.',
+      'After relocation, the inspection log must be updated to record the move, site management must be informed of the new position, the risk assessment must be reviewed for the new location, and a full re-inspection must be completed. A verbal note, a single text, or a card application does not satisfy the inspection regime.',
   },
 ];
 

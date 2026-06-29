@@ -44,12 +44,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does SWA stand for in industrial cable terminology?',
     options: [
-      'Steel Wire Armoured',
       'Single Wire Assembly',
+      'Steel Wire Armoured',
       'Shielded Wire Armoured',
       'Steel Wrapped Aluminium',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'SWA stands for Steel Wire Armoured, describing cables with steel wire armouring for mechanical protection.',
   },
@@ -57,8 +57,8 @@ const quizQuestions = [
     id: 2,
     question:
       'According to BS 7671, what is the maximum ambient temperature assumption for standard cable ratings?',
-    options: ['20 degrees C', '25 degrees C', '30 degrees C', '35 degrees C'],
-    correctAnswer: 2,
+    options: ['20 degrees C', '30 degrees C', '25 degrees C', '35 degrees C'],
+    correctAnswer: 1,
     explanation:
       'BS 7671 assumes a standard ambient temperature of 30 degrees C for cable current ratings.',
   },
@@ -66,16 +66,16 @@ const quizQuestions = [
     id: 3,
     question:
       'What fire barrier rating is typically required for cables passing through compartment floors in risers?',
-    options: ['30 minutes', '60 minutes', 'Same as the floor rating', '240 minutes'],
-    correctAnswer: 2,
+    options: ['Same as the floor rating', '30 minutes', '60 minutes', '240 minutes'],
+    correctAnswer: 0,
     explanation:
       'Fire barriers must match the fire rating of the floor they penetrate, maintaining compartmentation integrity.',
   },
   {
     id: 4,
     question: 'MICC cable uses which material for its sheath?',
-    options: ['PVC', 'XLPE', 'Copper', 'Steel'],
-    correctAnswer: 2,
+    options: ['PVC', 'XLPE', 'Steel', 'Copper'],
+    correctAnswer: 3,
     explanation:
       'MICC (Mineral Insulated Copper Clad) cable uses a seamless copper sheath providing excellent fire resistance.',
   },
@@ -83,20 +83,20 @@ const quizQuestions = [
     id: 5,
     question: 'What is the minimum bending radius for SWA cable as a general rule?',
     options: [
-      '4 times cable diameter',
       '6 times cable diameter',
+      '4 times cable diameter',
       '8 times cable diameter',
       '12 times cable diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SWA cables require a minimum bending radius of 6 times the overall cable diameter to prevent damage.',
   },
   {
     id: 6,
     question: 'Which cable containment system provides the best ventilation for heat dissipation?',
-    options: ['Cable trunking', 'Cable ladder', 'Conduit', 'Cable basket'],
-    correctAnswer: 1,
+    options: ['Cable trunking', 'Steel conduit', 'Cable ladder', 'Plastic basket'],
+    correctAnswer: 2,
     explanation:
       'Cable ladder provides maximum ventilation due to its open rung construction, ideal for heat dissipation.',
   },
@@ -104,16 +104,16 @@ const quizQuestions = [
     id: 7,
     question:
       'What spacing is required between power cables and data/signal cables for EMC compliance?',
-    options: ['50mm minimum', '150mm minimum', '300mm minimum', 'No spacing required'],
-    correctAnswer: 2,
+    options: ['50mm minimum', '300mm minimum', '150mm minimum', 'No spacing is required'],
+    correctAnswer: 1,
     explanation:
       'A minimum of 300mm separation is required between unscreened power and data cables for EMC compliance.',
   },
   {
     id: 8,
     question: 'Busbar trunking rated at 3200A would typically be classified as:',
-    options: ['Lighting busbar', 'Distribution busbar', 'Feeder busbar', 'Earth busbar'],
-    correctAnswer: 2,
+    options: ['Lighting busbar', 'Distribution busbar', 'Earth busbar', 'Feeder busbar'],
+    correctAnswer: 3,
     explanation:
       'Feeder busbars typically range from 800A to 6300A for main distribution from transformers.',
   },
@@ -121,8 +121,8 @@ const quizQuestions = [
     id: 9,
     question:
       'What correction factor applies when ambient temperature is 40 degrees C for thermoplastic (PVC) insulated cables?',
-    options: ['0.87', '0.91', '0.94', '1.00'],
-    correctAnswer: 0,
+    options: ['0.91', '0.94', '0.87', '1.00'],
+    correctAnswer: 2,
     explanation:
       'At 40 degrees C ambient temperature, PVC insulated cables require a derating factor of 0.87.',
   },
@@ -130,8 +130,8 @@ const quizQuestions = [
     id: 10,
     question:
       'When installing cables in vertical risers, at what intervals should cables be supported to prevent mechanical stress?',
-    options: ['Every 0.5m', 'Every 1m', 'Every 3m', 'Every 5m'],
-    correctAnswer: 2,
+    options: ['Every 0.5m', 'Every 1m', 'Every 5m', 'Every 3m'],
+    correctAnswer: 3,
     explanation:
       'Cables in vertical risers should be supported every 3m maximum to prevent mechanical stress.',
   },

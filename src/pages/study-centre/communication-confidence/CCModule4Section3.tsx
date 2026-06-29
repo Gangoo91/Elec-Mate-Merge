@@ -19,12 +19,11 @@ const quickCheckQuestions = [
     question:
       'A customer contacts you about a quote you issued six weeks ago. The quote did not include a validity period. They want to accept it at the original price, but material costs have risen 12% since you issued it. What is the best approach?',
     options: [
-      'Honour the original price to maintain the relationship',
-      'Refuse the work entirely',
-      'Explain that without a stated validity period the quote is subject to current pricing, and issue a revised quote',
-      'Add a surcharge without telling the customer',
-    ],
-    correctIndex: 2,
+      'Explain that with no stated validity period current pricing applies, and reissue',
+      'Refuse the work entirely and decline to provide a revised quotation',
+      'Honour the original price and absorb the 12% rise to keep the relationship',
+      'Quietly add a surcharge to the final invoice without telling the customer'],
+    correctIndex: 0,
     explanation:
       'Without a stated validity period, there is no contractual obligation to hold the price indefinitely. The professional approach is to explain that costs have changed, issue a revised quote with the current price, and include a clear validity period (e.g. 30 days) this time. This protects your margin whilst being transparent with the customer.',
   },
@@ -33,10 +32,10 @@ const quickCheckQuestions = [
     question:
       'Your quote for a domestic rewire states "rewire of property." The customer expects you to replaster all chased walls and redecorate. You did not intend to include this. What went wrong?',
     options: [
-      'The customer is being unreasonable',
-      'The scope of works was too vague and did not clearly state what was included and excluded',
-      'Nothing &mdash; replastering is always a separate trade',
-      'You should have charged more to cover replastering',
+      'The customer is being unreasonable about what a rewire should cover',
+      'The scope was too vague and never stated what was included or excluded',
+      'Nothing went wrong &mdash; replastering is always a separate trade',
+      'You should simply have charged more upfront to cover the replastering',
     ],
     correctIndex: 1,
     explanation:
@@ -47,12 +46,11 @@ const quickCheckQuestions = [
     question:
       'Which of the following is the most professional way to describe additional work that falls outside the original quote?',
     options: [
-      '"That&rsquo;s extra, mate"',
-      '"Any work not listed above will be charged at our day rate of &pound;350 + VAT"',
-      '"We&rsquo;ll sort the price out later"',
-      '"Extras will cost more"',
-    ],
-    correctIndex: 1,
+      '"Anything beyond this is extra, mate &mdash; we&rsquo;ll see how it goes"',
+      '"We&rsquo;ll just sort the price out between us later on once we know"',
+      '"Work not listed above will be charged at our day rate of &pound;350 + VAT"',
+      '"Any extras on top of this will obviously end up costing you more"'],
+    correctIndex: 2,
     explanation:
       'Professional quotes clearly state how additional work will be priced. Specifying a day rate (or hourly rate) for variations gives the customer certainty and protects you from scope creep. Vague language like "extras will cost more" invites disputes because neither party has agreed what "more" means.',
   },
@@ -87,12 +85,11 @@ const quizQuestions = [
     question:
       'Which of the following is an essential element that MUST be included in every professional quote?',
     options: [
-      'A photograph of your van',
+      'A guaranteed completion date regardless of access or material delays',
+      'Your full National Insurance number printed on the quotation',
       'A clear scope of works describing exactly what is included',
-      'Your National Insurance number',
-      'The customer&rsquo;s date of birth',
-    ],
-    correctAnswer: 1,
+      'A non-refundable booking fee taken before the quote is even read'],
+    correctAnswer: 2,
     explanation:
       'A clear scope of works is the most critical element of any quote. It defines exactly what you will do, preventing misunderstandings and disputes. Without a clear scope, neither party can be certain what has been agreed.',
   },
@@ -100,12 +97,11 @@ const quizQuestions = [
     id: 2,
     question: 'A quote states: "Full rewire &mdash; &pound;4,500." Why is this problematic?',
     options: [
-      'The price is too low',
-      'It does not specify the property address',
-      'It lacks detail &mdash; there is no scope of works, no exclusions, no validity period, and no payment terms',
-      'It should be handwritten, not typed',
-    ],
-    correctAnswer: 2,
+      'The price of &pound;4,500 is far too low for a full domestic rewire',
+      'It fails to specify the full property address and postcode',
+      'It should have been handwritten and signed rather than typed',
+      'It lacks detail &mdash; no scope, exclusions, validity period or payment terms'],
+    correctAnswer: 3,
     explanation:
       'A one-line quote with no detail is a recipe for disputes. "Full rewire" could mean different things to different people. The quote should specify what is included (circuits, accessories, testing, certification), what is excluded (plastering, decorating, building work), the validity period, and the payment terms.',
   },
@@ -113,12 +109,11 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of listing exclusions on a quote?',
     options: [
-      'To make the quote look longer and more professional',
-      'To clearly define work that is NOT included, preventing scope disputes',
-      'To discourage the customer from asking for extra work',
-      'Exclusions are optional and serve no real purpose',
-    ],
-    correctAnswer: 1,
+      'To define clearly what work is NOT included, preventing scope disputes',
+      'To make the quote look longer and more professional to the customer',
+      'To discourage the customer from ever asking for any extra work',
+      'Exclusions are optional padding and serve no real practical purpose'],
+    correctAnswer: 0,
     explanation:
       'Exclusions are just as important as inclusions. They set a clear boundary around your scope of work. Common exclusions on electrical quotes include plastering/making good, decorating, building/carpentry work, asbestos removal, and any work to other services (plumbing, gas, drainage). Listing exclusions prevents the customer from assuming these items are included in the price.',
   },
@@ -127,10 +122,10 @@ const quizQuestions = [
     question:
       'A commercial tender requires you to submit a "schedule of rates." What does this mean?',
     options: [
-      'A list of how quickly you can complete each task',
-      'A breakdown of your hourly and daily labour rates, plus rates for common items of work',
-      'A list of your favourite suppliers',
-      'A timetable showing when each phase of work will be completed',
+      'A list showing how quickly you can complete each individual task on site',
+      'A breakdown of labour rates plus fixed rates for common items of work',
+      'A list of the suppliers and wholesalers you intend to buy materials from',
+      'A timetable showing when each phase of the work will be completed',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,11 +136,10 @@ const quizQuestions = [
     question: 'Which phrase is ambiguous and should be avoided in a professional quote?',
     options: [
       '"Supply and install 12 No. double switched socket outlets to positions marked on drawing E-101"',
-      '"Supply and install sockets as needed"',
       '"Labour rate for additional works: &pound;45/hour + VAT"',
-      '"This quotation is valid for 30 days from the date of issue"',
-    ],
-    correctAnswer: 1,
+      '"Supply and install sockets as needed"',
+      '"This quotation is valid for 30 days from the date of issue"'],
+    correctAnswer: 2,
     explanation:
       '"As needed" is dangerously vague. Who decides what is needed? How many sockets? Where? At what specification? The customer may interpret "as needed" as 20 sockets whilst you intended 8. Always specify quantities, locations (referencing drawings where available), and specifications.',
   },
@@ -154,12 +148,11 @@ const quizQuestions = [
     question:
       'Your domestic rewire quote includes "making good to chased walls with bonding coat only." The customer later complains that the walls are not ready for painting. Is this a valid complaint?',
     options: [
-      'Yes &mdash; you should have finished the walls to a paintable standard',
-      'No &mdash; the quote clearly states "bonding coat only," which means skim plastering and decoration are excluded',
-      'It depends on the weather',
-      'Yes &mdash; all electrical work must include full decoration',
-    ],
-    correctAnswer: 1,
+      'Yes &mdash; you should have finished the chased walls to a paintable standard',
+      'Yes &mdash; all electrical rewire work must include full skim and decoration',
+      'Yes &mdash; the customer can reasonably assume a finished, ready surface',
+      'No &mdash; "bonding coat only" clearly excludes skim plastering and decoration'],
+    correctAnswer: 3,
     explanation:
       'Because the quote clearly specified "bonding coat only," the customer was informed that skim plastering was not included. This is an example of how precise language in a quote protects you from disputes. If the quote had simply said "making good," the customer could reasonably argue that this means a finished, paintable surface.',
   },
@@ -167,12 +160,11 @@ const quizQuestions = [
     id: 7,
     question: 'What is a "variation" in the context of a quoted project?',
     options: [
-      'A mistake in the original quote',
-      'A change to the agreed scope of work, typically resulting in an additional cost or credit',
-      'A different type of cable',
-      'A discount offered to a returning customer',
-    ],
-    correctAnswer: 1,
+      'A change to the agreed scope, typically adding a cost or a credit',
+      'A mistake in the original quote that has to be corrected free of charge',
+      'A different type of cable substituted for the one originally specified',
+      'A goodwill discount offered to a returning or long-standing customer'],
+    correctAnswer: 0,
     explanation:
       'A variation (also called a "variation order" or "VO" on commercial projects) is any change to the originally agreed scope of work. Variations should be agreed in writing before the additional work is carried out, with a clear description of the change and the associated cost. Never carry out variations based on verbal instructions alone &mdash; always confirm in writing.',
   },
@@ -181,12 +173,11 @@ const quizQuestions = [
     question:
       'Which of the following payment term structures is most professional for a domestic rewire?',
     options: [
-      '"Pay me when you can"',
-      '"Cash on completion, no invoice"',
-      '"30% deposit on acceptance, 40% at first fix completion, 30% on completion and certification"',
-      '"Full payment upfront before any work begins"',
-    ],
-    correctAnswer: 2,
+      '"Pay me whatever you can manage, whenever it happens to suit you"',
+      '"30% deposit, 40% at first fix completion, 30% on completion and certification"',
+      '"Cash in hand on completion, with no invoice or paper record issued"',
+      '"Full payment of the entire amount upfront before any work begins"'],
+    correctAnswer: 1,
     explanation:
       'Staged payments tied to project milestones are the most professional and fair approach for larger domestic jobs. They protect you (you are never too far ahead on costs) and the customer (they only pay for completed stages). Each payment stage should be clearly defined and tied to a measurable milestone. For smaller jobs, "payment on completion" is acceptable.',
   },

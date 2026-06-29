@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       "Under the Health & Safety at Work Act 1974 (Section 2), what is the employer's general duty regarding employees' mental health?",
     options: [
-      'Employers have no legal duty regarding mental health, only physical safety',
       'Employers must ensure, so far as is reasonably practicable, the health, safety and welfare of all employees — including mental health',
+      'Employers have no legal duty regarding mental health, only physical safety',
       'Employers must provide counselling services to all employees',
       'Employers are only responsible for mental health if an employee has a diagnosed condition',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Section 2 of HASAWA 1974 places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees. The courts have consistently interpreted 'health' to include mental health. This means employers must assess and manage psychological hazards alongside physical ones.",
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which of the following is NOT one of the six HSE Management Standards for work-related stress?',
-    options: ['Demands', 'Control', 'Pay', 'Relationships'],
-    correctAnswer: 2,
+    options: ['Pay', 'Demands', 'Control', 'Relationships'],
+    correctAnswer: 0,
     explanation:
       "The six HSE Management Standards are: Demands, Control, Support, Relationships, Role, and Change. Pay is not one of the six standards, though financial concerns can contribute to stress. The Standards focus on organisational and management factors that are within the employer's control.",
   },
@@ -133,8 +133,8 @@ const quizQuestions = [
     id: 4,
     question:
       "The Stevenson/Farmer 'Thriving at Work' review (2017) recommended how many core standards for ALL employers?",
-    options: ['4 core standards', '6 core standards', '8 core standards', '10 core standards'],
-    correctAnswer: 1,
+    options: ['4 core standards', '8 core standards', '10 core standards', '6 core standards'],
+    correctAnswer: 3,
     explanation:
       'The Thriving at Work review set out 6 core standards that all employers, regardless of size or sector, should implement. These are: (1) produce a mental health at work plan, (2) develop mental health awareness, (3) encourage open conversations, (4) provide good working conditions, (5) promote effective people management, and (6) routinely monitor employee mental health.',
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which HSE Management Standard is concerned with whether employees understand their role and whether the organisation ensures they do not have conflicting roles?',
-    options: ['Demands', 'Control', 'Role', 'Change'],
-    correctAnswer: 2,
+    options: ['Demands', 'Control', 'Change', 'Role'],
+    correctAnswer: 3,
     explanation:
       "The 'Role' standard addresses whether people understand their role within the organisation and whether the organisation ensures that they do not have conflicting roles. Good practice means employees have a clear job description, understand how their work contributes to the organisation, and do not receive contradictory instructions from different managers.",
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'The Management of Health and Safety at Work Regulations 1999 require employers to carry out what specific activity?',
     options: [
-      'Provide free counselling to all staff',
       'Carry out a suitable and sufficient risk assessment, including psychological hazards',
+      'Provide free counselling to all staff',
       'Appoint a Mental Health First Aider for every 50 employees',
       'Provide annual mental health screening for all workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires employers to carry out a suitable and sufficient assessment of risks to the health and safety of employees. This includes psychological hazards and stress risks. The risk assessment must be reviewed regularly and whenever there is reason to believe it is no longer valid.',
   },

@@ -65,12 +65,12 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
       id: 'qc3',
       question: 'What type of cable is required for PROFIBUS DP networks?',
       options: [
-        'Standard Ethernet CAT5',
         'Purple shielded twisted pair',
+        'Standard Ethernet CAT5',
         'Coaxial cable',
         'Fibre optic only',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'PROFIBUS DP requires special purple-jacketed shielded twisted pair cable with specific impedance characteristics (150 ohms). Standard Ethernet cable cannot be used.',
     },
@@ -81,67 +81,87 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
       question: 'What is the function code for "Read Holding Registers" in Modbus protocol?',
       options: ['01', '02', '03', '04'],
       correctAnswer: '03',
+      explanation:
+        'Modbus function code 03 reads holding registers (read/write 16-bit words); FC01 reads coils, FC02 reads discrete inputs and FC04 reads input registers.',
     },
     {
       question: 'Which protocol operates at the highest speed?',
       options: [
         'Modbus RTU (115.2 kbps)',
+        'Modbus TCP (10 Mbps)',
         'PROFIBUS DP (12 Mbps)',
         'EtherCAT (100 Mbps)',
-        'Modbus TCP (10 Mbps)',
       ],
       correctAnswer: 'EtherCAT (100 Mbps)',
+      explanation:
+        'EtherCAT runs on 100 Mbps industrial Ethernet, far faster than PROFIBUS DP (12 Mbps) or the serial Modbus variants, which is why it suits high-speed motion control.',
     },
     {
       question: 'What is the maximum number of devices on a single PROFIBUS DP segment?',
-      options: ['32', '64', '126', '247'],
+      options: ['126', '32', '64', '247'],
       correctAnswer: '126',
+      explanation:
+        'PROFIBUS DP allows up to 126 addressable stations (0-125) across the network, though repeaters are needed because a single segment is limited to 32 devices.',
     },
     {
       question: 'Which termination resistor value is required for Modbus RTU networks?',
       options: ['75 ohms', '100 ohms', '120 ohms', '150 ohms'],
       correctAnswer: '120 ohms',
+      explanation:
+        'RS-485 / Modbus RTU buses are terminated with 120-ohm resistors at each end to match the cable impedance and prevent signal reflections that corrupt data.',
     },
     {
       question: 'What port number does Modbus TCP use by default?',
       options: ['Port 44818', 'Port 502', 'Port 2222', 'Port 102'],
       correctAnswer: 'Port 502',
+      explanation:
+        'Modbus TCP listens on TCP port 502 by default; port 44818 is EtherNet/IP, 2222 its implicit messaging, and 102 is used by Siemens S7/PROFINET.',
     },
     {
       question: 'PROFINET IO uses which Ethernet frame type for cyclic real-time data?',
-      options: ['Standard TCP/IP', 'UDP/IP', 'Raw Ethernet frames', 'HTTP'],
+      options: ['Raw Ethernet frames', 'Standard TCP/IP', 'UDP/IP', 'HTTP'],
       correctAnswer: 'Raw Ethernet frames',
+      explanation:
+        'PROFINET RT bypasses the TCP/IP stack and sends cyclic real-time data in raw Layer 2 Ethernet frames (with a dedicated EtherType) to minimise latency and jitter.',
     },
     {
       question: 'What addressing scheme does EtherNet/IP use for device identification?',
       options: [
         'Node address (1-247)',
         'MAC address only',
-        'IP address with CIP identity',
         'Slot/Rack addressing',
+        'IP address with CIP identity',
       ],
       correctAnswer: 'IP address with CIP identity',
+      explanation:
+        'EtherNet/IP identifies devices by IP address combined with the CIP (Common Industrial Protocol) identity object, rather than a serial node number or fixed rack/slot scheme.',
     },
     {
       question: 'Which topology is NOT supported by EtherCAT?',
       options: ['Line/Daisy-chain', 'Star', 'Tree', 'Ring'],
       correctAnswer: 'Star',
+      explanation:
+        'EtherCAT processes frames on-the-fly along a logical ring, supporting line, tree and (with cable redundancy) ring layouts; a classic switched star is not its native topology.',
     },
     {
       question: 'What tool is commonly used for PROFIBUS network diagnostics?',
       options: [
         'Wireshark only',
         'PROFIBUS tester/analyser',
-        'Standard multimeter',
-        'Oscilloscope only',
+        'A standard multimeter',
+        'An oscilloscope only',
       ],
       correctAnswer: 'PROFIBUS tester/analyser',
+      explanation:
+        'A dedicated PROFIBUS tester/analyser decodes telegram traffic and checks the physical layer (levels, reflections), which a multimeter or general Ethernet capture tool cannot do for this fieldbus.',
     },
     {
       question:
         'Which industrial protocol was specifically designed for motion control applications?',
       options: ['Modbus RTU', 'PROFIBUS PA', 'EtherCAT', 'Modbus TCP'],
       correctAnswer: 'EtherCAT',
+      explanation:
+        'EtherCAT was designed for high-speed, tightly synchronised motion control, with very low cycle times and distributed clocks; PROFIBUS PA by contrast targets slow process-instrumentation loops.',
     },
   ];
 

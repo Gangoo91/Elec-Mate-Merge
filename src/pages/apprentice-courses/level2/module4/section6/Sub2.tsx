@@ -43,9 +43,9 @@ const checks = [
     id: 'm4-s6-sub2-three-parts',
     question: 'The three-part ring final test verifies, in order:',
     options: [
-      'A two-pole GS38-compliant voltage indicator (e.g. Martindale VI-13800, Kewtech KEWPROVE) — purpose-designed for safe isolation.',
-      'Honestly communicate genuine constraints: "My next available start is 6 weeks out, but I could fit you in sooner if we confirm by Friday"',
-      'It should include the organisation\\\\\\\\\\\\\\\'s position, rules, support available, testing procedures (if applicable), and consequences of policy breaches',
+      '(1) Insulation resistance L-N. (2) Insulation resistance L-CPC. (3) Polarity at every socket.',
+      '(1) Earth-loop impedance at the CU. (2) RCD trip time at the furthest socket. (3) Prospective fault current.',
+      '(1) Continuity of the CPC only. (2) Insulation resistance of the ring. (3) A single end-to-end resistance reading like a radial.',
       '(1) End-to-end continuity of L, N and CPC with the ring open. (2) L-N cross-connection reading at every socket. (3) L-CPC cross-connection reading at every socket.',
     ],
     correctIndex: 3,
@@ -57,12 +57,12 @@ const checks = [
     question:
       'On a kitchen ring final you have measured r1 = 0.62 Ω end-to-end. With the cross-connection set up correctly (outgoing L of one leg to incoming N of the other), what L-N reading should you expect at every socket if the ring is intact?',
     options: [
-      'It minimises diagnostic time by eliminating possible causes logically rather than randomly',
-      'Provide clear, written task lists with visual instructions, give advance notice of any changes, and maintain consistent routines where possible',
+      'Approximately r1 + rn — i.e. roughly 1.24 Ω — and constant at every socket, because the meter sees both conductors in series.',
       'Approximately (r1 + rn) ÷ 4 — i.e. roughly 0.31 Ω if r1 ≈ rn — and constant at every socket within a few percent.',
-      'Asbestos fibres may be released into the surrounding air, creating an inhalation hazard',
+      'Approximately r1 ÷ 2 — i.e. roughly 0.31 Ω — and rising steadily as you move further from the consumer unit.',
+      'Approximately (r1 + rn) ÷ 2 — i.e. roughly 0.62 Ω — and highest at the socket furthest from the consumer unit.',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'In a properly connected ring, with the cross-connection as described, the L-N reading at any socket is the parallel combination of the two paths from CU outgoing L1 around to that socket and back via the cross-connected N. The loop length is the same regardless of where you stop on the ring — every socket is electrically equidistant. The reading is approximately (r1+rn) ÷ 4 (the divide-by-four comes from two parallel halves each made of two series quarters). Variation between sockets means a broken ring, a spur, or a wiring error.',
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       'During Part 3 (L-CPC cross-connection) you take readings at every socket on a ring. Eleven sockets read between 0.18 and 0.20 Ω — constant. The twelfth socket reads 0.34 Ω. What does that tell you?',
     options: [
-      'Yes — touch voltage = 250 × 0.1 = 25 V, comfortably below the 50 V limit. The install passes Reg 411.5. However, RA = 250 Ω is high; consider improving the electrode (longer rod, multiple rods, deeper install) for resilience to soil drying.',
-      'The operative must stop work, descend the tower and report the defect — the mechanism must be repaired or replaced before assembly continues',
+      'Socket 12 has reversed polarity — the L and CPC have been swapped, which always reads higher than the rest of the ring.',
+      'Socket 12 has a broken ring on the CPC — one half of the loop is open, so the meter reads the long way round and gives a higher figure.',
       'Socket 12 is on a spur off the ring (or someone has bridged the ring into a radial), and you are reading the additional length of the spur cable in series with the ring midpoint reading.',
-      'Systematic monitoring of workers\\\' health through questionnaires, physical checks, or clinical examinations to detect early signs of MSDs, required where the risk assessment identifies a residual risk of MSDs',
+      'Socket 12 has a high-resistance neutral connection, which raises the L-CPC reading at that point only.',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is the ring final test split into three parts rather than just measured end-to-end like a radial?',
     options: [
-      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
+      'Because a ring final carries twice the current of a radial, so the test has to be repeated three times to confirm the cable does not overheat under sustained load.',
       'Because a ring final has parallel paths for current — a single end-to-end reading at the CU would not detect a broken ring (current would still flow via the unbroken half) and would not give you the per-socket R1+R2 needed for Zs verification.',
-      'Part S (Infrastructure for charging electric vehicles) requires new non-residential buildings with 10+ parking spaces to provide 1 EV charge point and cable routes for 1 in 5 spaces',
-      'Contact the EPAO and training provider immediately — most EPAOs allow rescheduling within reasonable timeframes for legitimate reasons, but the gateway does not need to be re-opened',
+      'Because a ring uses three separate conductors and each one must be insulation-tested individually before continuity can be confirmed.',
+      'Because the three parts each test a different socket position — the nearest, the middle and the furthest — to map the voltage drop along the ring.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Setting up Part 2 (L-N cross-connection) on a ring with both legs landed at the CU:',
     options: [
-      'On-site inspection of recent installations chosen by the scheme assessor, review of certification produced by the contractor, verification of test instrument calibration, and verification that the contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competent person remains competent.',
-      'A state of well-being in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community',
+      'Connect L of leg 1 to L of leg 2, joining the two line ends together so the meter reads the full line loop at every socket.',
+      'Connect N of leg 1 to CPC of leg 2, so the cross-connection runs through the neutral and earth halves of the ring.',
       'Connect L of leg 1 (outgoing) to N of leg 2 (incoming) at the CU. Equivalently: cross-connect the line from one end of the ring to the neutral from the other end. The cross-connection forces current around the full loop in both directions when measured at any socket.',
-      'The rated breaking capacity (Icn for MCBs, Icu for MCCBs) shall be at least equal to the prospective fault current at the device, unless backup protection by an upstream device limits the let-through energy to within the device\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rating (cascade protection).',
+      'Connect both line legs and both neutral legs together at the CU, then measure L-N at the furthest socket only.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'A 32 A Type B ring final has been tested. Part 1: r1 = 0.60 Ω, rn = 0.62 Ω, r2 = 1.05 Ω end-to-end. Part 3 cross-connection reading at the furthest socket = 0.41 Ω. Ze = 0.30 Ω. Compute Zs and decide pass/fail against A4:2026 Table 41.3.',
     options: [
-      'In controlled document systems with version control and access records',
-      'Any defect that prevents a circuit from functioning safely or correctly',
-      'When a solar system continues to power a circuit that has been disconnected from the grid',
+      'Zs = 1.65 Ω. Fail — add Ze to the full end-to-end r1 + r2 (0.30 + 0.60 + 1.05) and it exceeds the 1.10 Ω limit.',
+      'Zs = 0.41 Ω. Pass — the cross-connection reading is Zs directly, with no need to add Ze.',
+      'Zs = 1.01 Ω. Borderline — add Ze and the full end-to-end r2 (0.30 + 0.41 + 0.30 lead), giving a value close to the limit.',
       'Zs = 0.71 Ω. Pass — comfortably below the corrected limit of 1.37 × 0.8 = 1.10 Ω for Type B 32 A.',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'Why is r2 (CPC end-to-end) higher than r1 (line end-to-end) in a 2.5/1.5 mm² T&E ring?',
     options: [
       'Because the CPC in 2.5/1.5 T&E is 1.5 mm² while the line is 2.5 mm². Smaller cross-section means higher resistance per metre. Typical: 2.5 mm² ≈ 7.41 mΩ/m, 1.5 mm² ≈ 12.10 mΩ/m. So r2 is roughly r1 × 1.63.',
-      'Use assessment evidence to demonstrate the gap \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 set a task that reveals the limit of their competence, and have a factual conversation about the specific risks',
-      'All work equipment (including power tools) is suitable for its intended use, maintained in a safe condition, inspected at suitable intervals, and used only by trained and competent persons',
-      'Ensure the modification complies with the original design verification, update documentation, and verify that thermal management and short-circuit ratings are not compromised',
+      'Because the CPC carries fault current only, the standard requires it to be made of a higher-resistance alloy than the line conductor, which raises r2.',
+      'Because the CPC is routed the long way round the ring while the line takes the direct path, so its conductor length and therefore its resistance is greater.',
+      'Because r2 includes both the CPC and the earth bar resistance, whereas r1 is the line conductor alone, so r2 is always higher by the bar resistance.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'During Part 1 you measure the end-to-end r1 of a ring. The reading is OL (open circuit). Most likely cause:',
     options: [
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
+      'A perfectly healthy ring — OL is the correct reading on an intact ring because the two halves cancel out and the meter sees infinite resistance end-to-end.',
       'A break somewhere in the line conductor of the ring — a loose terminal in a back-box, a damaged cable inside a void, or a cable not actually returned to the CU. Investigate before going any further.',
-      'Trips within the required time when a fault current of the rated sensitivity (e.g., 30 mA) is applied — tests at 50%, 100% and 500% (5x) of the rated residual current, plus ramp tests',
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
+      'The leads were not nulled — null them and the OL will resolve to a normal reading of a few tenths of an ohm.',
+      'A short between line and neutral somewhere on the ring, which forces the meter to read open circuit on the line conductor.',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Are unfused spurs allowed off a ring final, and how do you detect them in testing?',
     options: [
-      'Operating manuals, maintenance instructions, inspection and testing schedule, schematic diagrams, manufacturer instructions for installed equipment, and the means to identify circuits — sufficient to enable safe operation, maintenance, and future inspection.',
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
+      'No — unfused spurs are never permitted off a ring; every spur must be taken from a fused connection unit, so any high outlying reading means a wiring fault to correct.',
+      'Yes — any number of unfused spurs is allowed provided the total load is within 32 A, and they are invisible in testing because the spur reading matches the ring.',
       'One unfused spur per outlet on the ring is permitted, with the spur cable matching the ring conductor size. Detected in Part 3 testing as a single socket reading higher than the rest of the constant set — the extra resistance is the round-trip length of the spur cable.',
-      'Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.',
+      'Unfused spurs are allowed only in 1.5 mm² cable and only on lighting rings; on a socket ring they show up as a socket reading lower than the rest of the set.',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'You have set up Part 3 (L-CPC cross-connection) and at one socket the reading is roughly half of what every other socket reads. What does that suggest?',
     options: [
-      'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      'The total number of outstanding (uncompleted) maintenance work orders, which indicates whether the maintenance team has sufficient resources to keep up with demand',
-      'To plan, manage, and coordinate health and safety during the pre-construction phase, including identifying and eliminating or controlling foreseeable risks',
+      'That socket is the electrical midpoint of the ring, so it is normal for it to read half — every ring has one socket that reads half the others.',
+      'A spur has been added at that socket — spurs always halve the reading because the spur cable runs in parallel with the ring.',
+      'The cross-connection at the CU has come loose, so only that one socket is reading correctly and all the others are doubled.',
       'A bridged ring — the socket is connected on the L side via one path and on the CPC side via the other path, but the wiring of L and CPC at that socket has been swapped.',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'You have completed all three parts of the ring test successfully. Final step before energising:',
     options: [
       'Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.',
-      'Plan (analyse data, identify improvements, define actions), Do (implement the improvement), Check (measure the results — did MTBF improve? Did failures reduce?), Act (standardise successful improvements and address any remaining gaps) — then repeat',
-      'Legal, never sensible — selling a non-MCS install means the customer can never claim SEG, can’t sell the house with a renewables certificate, and may invalidate their building insurance. The DNO G98/G99 paperwork is still mandatory regardless of MCS status.',
-      'Evidence in your portfolio of planned approaches, prioritisation decisions, deadline management, and professional communication about timescales — demonstrated through activity logs, reflective accounts and witness statements',
+      'Energise the ring immediately to take the live Zs reading while the cross-connection is still in place, then remove the link afterwards.',
+      'Leave the cross-connection in place permanently — it improves the ring by giving every socket an equal loop length, so it should stay connected in service.',
+      'Re-land only the line conductor and leave the neutral on the cross-connection link, then energise and check for trips.',
     ],
     correctAnswer: 0,
     explanation:

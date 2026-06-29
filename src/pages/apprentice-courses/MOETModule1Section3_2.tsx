@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'risk-matrix-purpose',
     question: 'What is the purpose of a 5x5 risk matrix in risk assessment?',
     options: [
-      'Standardised symbols, multi-language documentation, and cultural awareness',
-      'Thermal imaging, smell of burning, discoloration, or voltage drop testing',
-      'Are naturally motivated and can exercise self-direction when committed to objectives',
+      'To record the names of everyone who could be harmed by a hazard',
+      'To calculate the exact statistical probability of an accident occurring',
+      'To list the control measures that must be applied to every hazard',
       'To provide a structured method for combining likelihood and severity to produce a risk rating',
     ],
     correctIndex: 3,
@@ -29,9 +29,9 @@ const quickCheckQuestions = [
       "Under Regulation 3 of the Management of Health and Safety at Work Regulations 1999, what is the employer's duty?",
     options: [
       'To carry out a suitable and sufficient assessment of the risks to employees and others affected by the undertaking',
-      'Noticing your frustration about a programme delay, taking a moment to breathe, then calmly discussing the issue and possible solutions with the team',
-      'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
-      'A digital meter that records energy use and communicates with the supplier remotely',
+      'To eliminate every single risk from the workplace before any work may begin',
+      'To appoint an external health and safety consultant for all risk assessments',
+      'To assess only the risks to employees, with no duty towards members of the public',
     ],
     correctIndex: 0,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'The ALARP principle requires that risk should be reduced:',
     options: [
       'As low as reasonably practicable — meaning the cost of further reduction is grossly disproportionate to the benefit gained',
-      'A supervisor, qualified colleague or mentor who directly observed you performing the work activity being evidenced',
-      'Establish the root cause, gather evidence, interview witnesses, implement corrective actions, and take steps to prevent recurrence',
-      'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
+      'To zero, so that no residual risk of any kind remains before work begins',
+      'To whatever level the employer can achieve within the project budget',
+      'To the lowest level the workforce is willing to accept by agreement',
     ],
     correctIndex: 0,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'review-triggers',
     question: 'Which of the following should trigger a review of an existing risk assessment?',
     options: [
-      'Simple, immediately implementable changes that significantly reduce conflict risk — such as always sending a confirmation text after phone agreements',
+      'The completion of the task, after which the assessment can be archived',
       'A significant change in work activity, equipment, personnel, legislation, or a near-miss/incident related to the assessed activity',
-      'Describes performance, materials, finishes, standards and quality requirements in words; the drawing shows geometry and arrangement',
-      'It allows you to understand the intended sequence of operation and identify where the control logic is not progressing, narrowing the fault location',
+      'A change of shift pattern that does not alter the work being carried out',
+      'A request from a worker who simply disagrees with the assessed rating',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: "In a 5x5 risk matrix, a risk rated as 'substantial' (score 15-20) requires:",
     options: [
-      'Only if the casualty\\\\\\\\\\\\\\\'s airway is compromised or they are in immediate life-threatening danger',
+      'No action, provided the work is supervised by a competent person',
       'Work should not proceed until the risk has been reduced; significant resources may need to be allocated',
-      'Hazard identification, exposure controls, toxicological information, and first-aid measures',
-      'The tower will lean to one side, reducing its stability and increasing the risk of overturning in that direction',
+      'The hazard to be recorded for review, while work continues as normal',
+      'The likelihood and severity scores to be averaged rather than multiplied',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: "Which of the following best describes 'qualitative' risk assessment?",
     options: [
-      'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
-      'There is reason to suspect it is no longer valid, or when significant changes have occurred',
+      'Assessment based on measured failure rates and calculated probabilities',
+      'Assessment that produces a single numerical risk figure for each hazard',
       'Assessment based on professional judgement, experience and descriptive categories rather than numerical data',
-      'Identify the significant hazards, evaluate the risks, and determine whether existing controls are adequate or additional measures are needed',
+      'Assessment carried out only by an external specialist consultant',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     question:
       'Under the Management of Health and Safety at Work Regulations 1999, a risk assessment must be reviewed when:',
     options: [
-      'Likelihood: almost certain (5), Severity: catastrophic (5) — Score 25',
-      'The significant hazards identified, the people at risk, and the control measures in place or required',
-      'Any person with sufficient training, experience, knowledge and other qualities to carry out the assessment competently',
+      'Only once every five years, regardless of any changes',
+      'Only after an accident has actually resulted in injury',
+      'Only when requested in writing by an HSE inspector',
       'There is reason to suspect it is no longer valid, or when significant changes have occurred',
     ],
     correctAnswer: 3,
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: "The term 'significant findings' in risk assessment refers to:",
     options: [
-      'Uses numerical data, statistical analysis and calculated probabilities rather than descriptive categories',
+      'Every conceivable hazard, including the most trivial, that could ever arise',
       'The significant hazards identified, the people at risk, and the control measures in place or required',
-      'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
-      'There is reason to suspect it is no longer valid, or when significant changes have occurred',
+      'Only those hazards that have already caused a reportable injury',
+      'The numerical risk scores, recorded without any supporting description',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'Who is legally competent to carry out a risk assessment under the Management of Health and Safety at Work Regulations 1999?',
     options: [
-      'There is reason to suspect it is no longer valid, or when significant changes have occurred',
-      'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
+      'Only a chartered safety practitioner registered with IOSH or NEBOSH',
+      'Only the most senior manager present on the site that day',
       'Any person with sufficient training, experience, knowledge and other qualities to carry out the assessment competently',
-      'Assessment based on professional judgement, experience and descriptive categories rather than numerical data',
+      'Any employee, as the law places no competence requirement on the assessor',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: 'The ALARP principle is best illustrated by which statement?',
     options: [
-      'Assessment based on professional judgement, experience and descriptive categories rather than numerical data',
-      'The significant hazards identified, the people at risk, and the control measures in place or required',
-      'Any person with sufficient training, experience, knowledge and other qualities to carry out the assessment competently',
+      'Risk must always be reduced to zero before any work can be permitted',
+      'Risk reduction can stop as soon as it starts to cost the employer money',
+      'Risk only needs reducing where an accident has already occurred',
       'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
     ],
     correctAnswer: 3,
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'A quantitative risk assessment differs from a qualitative one because it:',
     options: [
-      'There is reason to suspect it is no longer valid, or when significant changes have occurred',
+      'Relies entirely on the personal opinion of a single assessor',
       'Uses numerical data, statistical analysis and calculated probabilities rather than descriptive categories',
-      'The significant hazards identified, the people at risk, and the control measures in place or required',
-      'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
+      'Uses descriptive word-based categories such as low, medium and high',
+      'Does not need to be recorded even where five or more people are employed',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: "For a risk assessment to be considered 'suitable and sufficient', it must:",
     options: [
-      'Knowledge of risk assessment principles, the ability to contribute to risk assessments, and compliance with safe systems of work derived from them',
-      'Risk must be reduced to the point where the cost of further reduction is grossly disproportionate to the benefit',
+      'Cover every trivial hazard in exhaustive written detail',
+      'Be carried out only by an external health and safety consultant',
       'Identify the significant hazards, evaluate the risks, and determine whether existing controls are adequate or additional measures are needed',
-      'The significant hazards identified, the people at risk, and the control measures in place or required',
+      'Guarantee that no accident can ever occur during the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     question:
       'An electrical maintenance technician identifies that a 30-year-old distribution board has deteriorated insulation, missing labels and evidence of previous overheating. The risk assessment should:',
     options: [
-      'Stop, raise an RFI / Technical Query in writing, install nothing until the designer or specifier confirms the substitution in writing',
-      'The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources',
-      'They need to navigate operator displays, interpret alarms, understand loop configurations, and communicate with control engineers during fault-finding',
+      'Treat the board as low risk because it has operated for 30 years without an incident',
+      'Rate the risk as moderate and allow work to continue with extra PPE only',
+      'Disregard the overheating evidence, as it relates to a past fault now resolved',
       'Recognise the combination of hazards as significant, evaluate the risk as substantial, and recommend the board be de-energised for inspection and remedial work before maintenance proceeds',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
       'Under ST1426, maintenance technicians are expected to demonstrate which of the following in relation to risk evaluation?',
     options: [
       'Knowledge of risk assessment principles, the ability to contribute to risk assessments, and compliance with safe systems of work derived from them',
-      'Recognise the combination of hazards as significant, evaluate the risk as substantial, and recommend the board be de-energised for inspection and remedial work before maintenance proceeds',
-      'Uses numerical data, statistical analysis and calculated probabilities rather than descriptive categories',
-      'Any person with sufficient training, experience, knowledge and other qualities to carry out the assessment competently',
+      'The ability to write all of the company\'s risk assessments without any support',
+      'Authority to overrule the safe systems of work set by the employer',
+      'A requirement to carry out quantitative fault-tree analysis for every task',
     ],
     correctAnswer: 0,
     explanation:

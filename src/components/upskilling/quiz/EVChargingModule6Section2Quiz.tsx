@@ -18,12 +18,12 @@ const quizQuestions: QuizQuestion[] = [
     question:
       'What is the maximum voltage drop allowed for a 32A EV charging circuit according to BS 7671?',
     options: [
-      '3% of nominal voltage',
       '5% of nominal voltage',
+      '3% of nominal voltage',
       '7% of nominal voltage',
       '10% of nominal voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 allows maximum 5% voltage drop for circuits supplying fixed equipment like EV charging points.',
   },
@@ -44,12 +44,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'When terminating SWA cable, what must be done with the steel wire armour?',
     options: [
-      'Cut it back and ignore',
-      'Connect to earth via CW gland',
+      'Connect it to earth via a CW gland',
+      'Cut it back and disregard it',
       'Tape over the cut ends',
       'Leave it unconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Steel wire armour must be properly earthed using a CW (Cable Wire) gland to maintain the earthing integrity and provide fault protection.',
   },
@@ -59,39 +59,39 @@ const quizQuestions: QuizQuestion[] = [
     options: [
       '6 times the cable diameter',
       '8 times the cable diameter',
-      '12 times the cable diameter',
       '15 times the cable diameter',
+      '12 times the cable diameter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'The minimum bending radius for SWA cable is 12 times the overall cable diameter to prevent damage to conductors and armour.',
+      'For multicore steel-wire-armoured cable with an overall diameter above 10mm (a 6mm² SWA falls into this band), the minimum bending radius is 8 times the overall diameter; smaller armoured cables up to 10mm use a factor of 6. This protects the conductors and armour from damage.',
   },
   {
     id: 5,
-    question: 'How should cable joints be made in EV charging installations?',
+    question: 'What is the recommended approach to cable joints in EV charging installations?',
     options: [
       'Electrical tape only',
-      'Proper junction boxes with IP65 rating',
+      'Buried directly in the wall plaster',
       'Heat shrink tubing',
       'Joints should be avoided where possible',
     ],
     correctAnswer: 3,
     explanation:
-      'Cable joints should be avoided where possible. When necessary, use proper junction boxes with appropriate IP rating and maintenance access.',
+      'The recommended approach is to avoid joints where possible by running unbroken cable. Where a joint is unavoidable, it must be accessible for inspection and maintenance (BS 7671 Reg 526.3) in a suitably enclosed and rated junction box - never buried inaccessibly or relying on tape alone.',
   },
   {
     id: 6,
     question: 'What size earth conductor is required for a 6mm² EV charging circuit?',
-    options: ['2.5mm²', '4mm²', '6mm²', '10mm²'],
-    correctAnswer: 2,
+    options: ['6mm²', '2.5mm²', '4mm²', '10mm²'],
+    correctAnswer: 0,
     explanation:
       'For a 6mm² line conductor, a 6mm² earth conductor is required as the CSA is ≤16mm² (same size as line conductor).',
   },
   {
     id: 7,
     question: 'What is the correct torque setting for 6mm² terminations in most consumer units?',
-    options: ['1.2 Nm', '2.5 Nm', '3.5 Nm', '5.0 Nm'],
-    correctAnswer: 1,
+    options: ['1.2 Nm', '3.5 Nm', '5.0 Nm', '2.5 Nm'],
+    correctAnswer: 3,
     explanation:
       'Most consumer unit terminals require 2.5 Nm torque for 6mm² conductors. Always check manufacturer specifications.',
   },
@@ -112,12 +112,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What identification should be provided for EV charging circuits?',
     options: [
-      'No special identification required',
-      'Standard circuit number only',
+      'No special identification is required',
       "Clear labelling including 'EV CHARGING CIRCUIT'",
-      'Colour coding only',
+      'A standard circuit number only',
+      'Colour coding of the cores only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "EV charging circuits must be clearly identified with appropriate labelling including 'EV CHARGING CIRCUIT' for easy identification during maintenance.",
   },

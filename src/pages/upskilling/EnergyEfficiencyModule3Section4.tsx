@@ -41,12 +41,12 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
       question:
         'What temperature difference in a thermal image typically indicates a potential electrical fault requiring immediate attention?',
       options: [
+        '15°C or more above ambient or an identical component',
         '1-5°C above ambient',
         '5-10°C above ambient',
-        '15°C or more above ambient',
-        'Any temperature difference',
+        'Any measurable temperature difference at all',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'A temperature rise of 15°C or more above ambient or compared to similar components typically indicates a serious issue requiring immediate attention. This could signify loose connections, overloaded circuits, or failing components that pose fire risks.',
     },
@@ -81,61 +81,82 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
         'What is the typical price range for an entry-level professional thermal imaging camera suitable for electrical audits in the UK?',
       options: ['£100-£300', '£500-£1,500', '£3,000-£5,000', '£10,000+'],
       correctAnswer: '£500-£1,500',
+      explanation:
+        'Entry-level professional thermal cameras for electrical work typically sit in the £500-£1,500 band; below this the resolution and sensitivity are usually too low for reliable hot-spot detection.',
     },
     {
       question:
-        'Which thermal imaging feature is essential for detecting hot spots in electrical panels?',
+        'Which thermal imaging specification is most important for detecting subtle hot spots in electrical panels?',
       options: [
-        'GPS tagging',
+        'GPS image tagging',
+        'Bluetooth connectivity to a phone',
         'Thermal sensitivity (NETD) of 50mK or better',
-        'Bluetooth connectivity',
-        'Voice recording',
+        'A wide-angle visible-light lens',
       ],
       correctAnswer: 'Thermal sensitivity (NETD) of 50mK or better',
+      explanation:
+        'NETD (thermal sensitivity) of 50mK or better lets the camera resolve small temperature differences between similar components - the key to spotting a developing fault early.',
     },
     {
       question: 'What does a power quality analyser measure that a standard multimeter cannot?',
       options: [
-        'Basic voltage',
-        'Resistance',
-        'Harmonics, power factor, and transients',
-        'Continuity',
+        'Insulation resistance',
+        'Harmonics, power factor and transients',
+        'DC continuity of a conductor',
+        'Earth electrode resistance',
       ],
-      correctAnswer: 'Harmonics, power factor, and transients',
+      correctAnswer: 'Harmonics, power factor and transients',
+      explanation:
+        'A power quality analyser captures dynamic parameters such as harmonics, power factor, sags/swells and transients over time, which a basic multimeter cannot record.',
     },
     {
       question:
         'Which software platform is commonly used in the UK for professional energy audit reporting?',
-      options: ['Microsoft Paint', 'Energy Elephant or ECON Energy', 'Notepad', 'Calculator'],
+      options: [
+        'A generic word processor only',
+        'Energy Elephant or ECON Energy',
+        'A spreadsheet with no templates',
+        'A basic note-taking app',
+      ],
       correctAnswer: 'Energy Elephant or ECON Energy',
+      explanation:
+        'UK-developed platforms such as Energy Elephant and ECON Energy provide utility-bill analysis, benchmarking and professional report templates aimed specifically at energy auditing.',
     },
     {
       question: 'What sampling interval is recommended for detailed energy data logging?',
-      options: ['Once per day', 'Every hour', 'Every 15 minutes or less', 'Once per week'],
+      options: ['Once per day', 'Once per hour', 'Every 15 minutes or less', 'Once per week'],
       correctAnswer: 'Every 15 minutes or less',
+      explanation:
+        'Half-hourly or, better, 15-minute (or shorter) intervals capture demand peaks and operational patterns that coarser logging would smooth over and hide.',
     },
     {
       question:
         'Which mobile app feature is most valuable for field data collection during audits?',
       options: [
-        'Gaming capabilities',
+        'Offline music playback',
         'Photo capture with annotation and GPS tagging',
-        'Social media sharing',
-        'Music playback',
+        'A built-in compass',
+        'A torch with strobe modes',
       ],
       correctAnswer: 'Photo capture with annotation and GPS tagging',
+      explanation:
+        'Annotated, location-tagged photos tie observations to specific equipment and locations, which is invaluable when writing up the report later.',
     },
     {
       question:
         'What colour typically represents the hottest areas in a thermal image using the iron palette?',
       options: ['Blue', 'Green', 'White/Yellow', 'Black'],
       correctAnswer: 'White/Yellow',
+      explanation:
+        'On the common iron palette, cool areas are dark/blue/purple and the hottest areas appear bright white through yellow, making hot spots stand out clearly.',
     },
     {
       question:
-        'Which Excel function is most useful for calculating energy costs from interval data?',
-      options: ['AVERAGE', 'SUMPRODUCT with time-of-use rates', 'COUNT', 'MAX'],
-      correctAnswer: 'SUMPRODUCT with time-of-use rates',
+        'Which Excel function is most useful for calculating energy costs from interval data with time-of-use rates?',
+      options: ['AVERAGE', 'SUMPRODUCT', 'COUNTIF', 'MAX'],
+      correctAnswer: 'SUMPRODUCT',
+      explanation:
+        'SUMPRODUCT multiplies each interval consumption by its matching tariff rate and sums the result in one step, giving the total cost from time-of-use data.',
     },
     {
       question:
@@ -147,12 +168,16 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
         '640x480 pixels minimum',
       ],
       correctAnswer: '320x240 pixels or higher',
+      explanation:
+        '320x240 (or higher) gives enough detector pixels to resolve individual terminals and connections at a safe working distance; lower resolutions blur small hot spots.',
     },
     {
       question:
-        'Which standard governs the requirements for portable electrical test equipment in the UK?',
+        'Which standard governs the safety requirements for portable electrical test and measurement equipment used in the UK?',
       options: ['BS 7671', 'BS EN 61010', 'BS 1363', 'BS 5839'],
       correctAnswer: 'BS EN 61010',
+      explanation:
+        'BS EN 61010 covers safety requirements for electrical measurement, control and laboratory equipment, including the CAT ratings for test instruments. BS 7671 is the wiring regulations, BS 1363 plugs/sockets, BS 5839 fire alarms.',
     },
   ];
 

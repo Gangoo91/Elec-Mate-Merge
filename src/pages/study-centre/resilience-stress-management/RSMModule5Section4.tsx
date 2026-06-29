@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'What does the "M" in SMART stand for, and why is it important in a resilience action plan?',
     options: [
-      'Meaningful — it reminds you why the action matters to you personally',
       'Measurable — it allows you to track whether you are actually doing what you committed to',
+      'Meaningful — it reminds you why the action matters to you personally',
       'Motivational — it ensures the goal makes you feel inspired',
       'Manageable — it ensures the goal is not too difficult to achieve',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The "M" in SMART stands for Measurable. This is critical in a resilience action plan because vague commitments like "I will take more breaks" are easy to forget or reinterpret. A measurable commitment — "I will take a 15-minute tea break at 9:00 and 14:30 every working day" — is concrete and trackable. At the end of each week, you can honestly assess whether you followed through. Measurement creates accountability.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Why is it recommended to identify three people in your support network rather than just one?',
     options: [
-      'Because three is a lucky number',
-      'Because different people serve different support functions — practical, emotional, and professional — and relying on a single person creates an unfair burden',
-      'Because you need three witnesses for legal purposes',
-      'Because having more contacts looks better on a CV',
+      'Because three is widely regarded as a lucky number to plan around',
+      'Because you need at least three witnesses to satisfy legal requirements',
+      'Because having more named contacts simply looks better on your CV',
+      'Because practical, emotional and professional support each need a different person',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Having three people in your support network provides resilience through diversity. One person might be excellent for practical support (helping with a job, lending tools), another for emotional support (listening without judgement when you are struggling), and a third for professional support (career advice, technical guidance). Relying on a single person for all your support needs creates an unfair burden on them and leaves you vulnerable if they are unavailable when you need help.',
   },
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'How often should you review your personal resilience action plan, and what should a review involve?',
     options: [
-      'Once a year during your annual appraisal',
-      'Only when you feel burnt out',
-      'Monthly — a 10-minute self-check reviewing whether you have kept your commitments and whether your early warning signs have been present',
-      'Daily — a detailed 30-minute journalling session',
+      'Once a year, carried out during your annual appraisal or review',
+      'Only when you already feel burnt out and unable to cope',
+      'Monthly — a 10-minute check of your commitments and warning signs',
+      'Daily — a detailed 30-minute journalling session every evening',
     ],
     correctIndex: 2,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does "SMART" stand for in the context of action planning?',
     options: [
-      'Simple, Meaningful, Achievable, Relevant, Timely',
       'Specific, Measurable, Achievable, Relevant, Time-bound',
+      'Simple, Meaningful, Achievable, Relevant, Timely',
       'Strategic, Motivating, Adaptable, Realistic, Trackable',
       'Structured, Manageable, Actionable, Results-focused, Tested',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SMART stands for Specific (clearly defined), Measurable (you can track whether you are doing it), Achievable (realistically within your capacity), Relevant (connected to your actual resilience needs), and Time-bound (has a defined timeframe or frequency). This framework turns vague intentions into concrete, trackable commitments.',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why is it important to define "non-negotiables" in your resilience action plan?',
     options: [
-      'Because your employer requires it for your performance review',
-      'Because having commitments you maintain regardless of workload pressure creates a baseline of self-care that protects against burnout even during the busiest periods',
-      'Because it gives you an excuse to leave work early',
-      'Non-negotiables are not important — flexibility is more valuable',
+      'Because your employer requires it as part of your annual performance review',
+      'Because a self-care baseline you keep regardless of workload protects against burnout',
+      'Because it gives you a convenient excuse to leave work early each day',
+      'They are not important — total flexibility is always more valuable than fixed rules',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 3,
     question: 'How many people should be in your personal support network, and why?',
     options: [
-      'One — you should have one trusted person you tell everything to',
-      'Three — different people serve different support functions (practical, emotional, professional)',
-      'Ten — the more people the better',
-      'None — resilience means handling everything yourself',
+      'One — a single trusted person you tell absolutely everything to',
+      'Ten or more — the larger the network of contacts, the better',
+      'Three — covering practical, emotional and professional support needs',
+      'None — true resilience means handling everything entirely yourself',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The recommended number is three because different people serve different support functions. One might be great for practical help (lending a hand on a job), another for emotional support (listening when you need to talk), and a third for professional guidance (career advice, technical questions). Having three contacts ensures you are not over-reliant on any single person and provides a safety net if one person is unavailable.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'What is an "early warning system" in the context of a personal resilience action plan?',
     options: [
-      'A fire alarm installed on a construction site',
-      'A list of your personal warning signs that indicate you are heading toward burnout, paired with a specific action plan for when you notice them',
-      'An app that sends you motivational quotes every morning',
+      'A fire alarm system installed across a construction site',
+      'An app that sends you motivational quotes every single morning',
       'A system where your employer monitors your stress levels remotely',
+      'Your personal warning signs paired with a set action for when you notice them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An early warning system is your personalised set of indicators that tell you your resilience is slipping — the signs that are unique to you (e.g., drinking more, sleeping badly, snapping at your partner, losing interest in hobbies). Paired with a specific action plan for when you notice these signs (e.g., book a GP appointment, call a mate, take a day off), it creates a safety mechanism that catches problems before they become crises.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 5,
     question: 'How often should you review your resilience action plan?',
     options: [
-      'Never — once it is written, it should not change',
-      'Monthly — a 10-minute self-check to review commitments and assess warning signs',
-      'Only when you feel burnt out',
-      'Every five years, aligned with your re-certification',
+      'Monthly — a 10-minute check of your commitments and warning signs',
+      'Never — once it is written down, it should not change at all',
+      'Only when you already feel burnt out and struggling to cope',
+      'Every five years, aligned with your trade re-certification cycle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A monthly 10-minute self-check is the recommended review frequency. This is frequent enough to detect early warning signs and course-correct before small problems become large ones, but not so frequent that it becomes burdensome. The review should assess: Am I keeping my non-negotiable commitments? Have any warning signs appeared? Is my support network active? Do I need to adjust anything?',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'Which organisation provides free, 24/7 support specifically for the construction industry?',
     options: [
       'Alcoholics Anonymous',
-      'The Lighthouse Club (0345 605 1956)',
       'The Citizens Advice Bureau',
+      'The Lighthouse Club (0345 605 1956)',
       'The National Trust',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Lighthouse Club is the construction industry's dedicated charity for wellbeing support. Their helpline (0345 605 1956) operates 24/7 and provides free, confidential emotional, physical, and financial support specifically for people working in construction and their families.",
   },
@@ -195,11 +195,11 @@ const quizQuestions = [
     question: 'What is the purpose of the monthly resilience self-check?',
     options: [
       'To create additional stress by adding another task to your to-do list',
-      'To catch early warning signs, review whether commitments are being maintained, and adjust the plan as circumstances change',
-      'To prepare a report for your employer',
+      'To prepare a formal wellbeing report to hand to your employer',
       'To calculate how many hours of annual leave you have remaining',
+      'To catch warning signs, check your commitments and adjust the plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The monthly self-check turns resilience from a one-off exercise into an ongoing practice. By regularly reviewing your warning signs, commitments, and support network, you create a continuous feedback loop that catches problems early and allows you to adjust your plan as your work and life circumstances change. It takes 10 minutes and can prevent months of suffering.',
   },

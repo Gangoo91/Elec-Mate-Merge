@@ -74,16 +74,16 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Ladder systems provide extremely high load capacity for long spans and heavy power cables, typically 150-500 kg/m.',
+      'Ladder systems provide the highest load capacity for long spans and heavy power cables, typically 150-500 kg/m.',
   },
   {
     id: 2,
     question: 'Why are cable baskets popular for data installations?',
     options: [
-      'Can be buried underground',
-      'Provide better EMC shielding',
-      'Low cost and easy to cut',
-      'Highest load capacity',
+      'They can be buried directly underground',
+      'They provide built-in EMC shielding',
+      'They are lightweight and easy to cut on site',
+      'They offer the highest load capacity available',
     ],
     correctAnswer: 2,
     explanation:
@@ -91,20 +91,25 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: Ladder systems are ideal for small, lightweight cable runs.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'Which application is a cable ladder system best suited to?',
+    options: [
+      'Heavy power cables on long spans',
+      'A few lightweight data cables',
+      'Single cables behind plasterboard',
+      'Flush runs inside a dry-lined wall',
+    ],
+    correctAnswer: 0,
     explanation:
-      'False. Ladder systems are designed for heavy-duty applications and are not cost-effective for small, lightweight cables.',
+      'Ladder systems are designed for heavy-duty applications and long spans; they are not cost-effective for small, lightweight cable runs.',
   },
   {
     id: 4,
     question: 'Name one advantage of perforated cable trays over solid trays.',
     options: [
       'Improved airflow and easier fixing options',
-      'NAPIT, NICEIC, ELECSA, or Stroma',
-      'IT earthing systems and supplementary bonding',
-      'Earth fault return path for each circuit',
+      'Complete protection from falling water',
+      'A higher maximum load capacity',
+      'A built-in circuit protective conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -114,10 +119,10 @@ const quizQuestions = [
     id: 5,
     question: 'What must be done at sharp edges where cables exit metal containment?',
     options: [
-      'An open circuit or break in the conductor',
+      'Leave the edge as cut to aid ventilation',
       'File smooth or fit protective grommets',
-      'Extensive experience and specialist knowledge',
-      'Unacceptable - exceeds breaking capacity',
+      'Apply additional earth bonding at the edge',
+      'Wrap the cable in extra PVC tape only',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,23 +132,23 @@ const quizQuestions = [
     id: 6,
     question: 'What is the typical support spacing for heavy-duty cable ladders?',
     options: [
-      'Accurately price work for profitability',
-      'Missed alerts due to system misconfiguration',
+      'Every 0.3-0.5 metres regardless of load',
+      'Only at each end of the run',
       'Every 1.5-3 metres depending on load',
-      'Protection against indirect contact',
+      'Every 8-10 metres for any load',
     ],
     correctAnswer: 2,
     explanation:
-      'Support spacing for cable ladders typically ranges from 1.5-3 metres depending on the load and cable ladder specification.',
+      'Support spacing for cable ladders typically ranges from 1.5-3 metres depending on the load and ladder specification.',
   },
   {
     id: 7,
     question:
       'According to BS EN 61537, what is required for cable management systems in fire escape routes?',
     options: [
-      'Ignoring — making no effort to listen at all',
-      'It requires preparation and deepens understanding',
-      'True - false values can cause section failure',
+      'They may be omitted to save space',
+      'They must be made only from PVC',
+      'They need no special fire considerations',
       'Enhanced fire performance requirements',
     ],
     correctAnswer: 3,
@@ -155,9 +160,9 @@ const quizQuestions = [
     question: 'What earthing requirement applies to metallic cable management systems?',
     options: [
       'All metallic sections must be earthed to maintain continuity',
-      'Automated control sequences and emergency override function',
-      'Breaking capacity ≥ Ipf at installation point',
-      'Look for creative solutions where both parties get something they value',
+      'Only the first and last sections need earthing',
+      'Earthing is required only on outdoor runs',
+      'Metallic systems do not require earthing',
     ],
     correctAnswer: 0,
     explanation:

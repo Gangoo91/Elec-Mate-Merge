@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'hydraulic-advantage',
     question: 'What is the main advantage of hydraulic systems over pneumatic systems?',
     options: [
-      'Experience as a resource (acknowledge their skills) and self-direction (involve them in planning their learning)',
-      'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
+      'They respond faster because air accelerates more quickly than oil through pipework',
+      'They are intrinsically safe and need no special precautions in hazardous areas',
       'Hydraulic systems can generate much higher forces in a compact space because liquids are virtually incompressible',
-      'Understanding others — sensing others\\\\\\\\\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
+      'They never require filtration because oil cannot carry contaminants',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'pneumatic-safety',
     question: 'Why is compressed air considered a hazard in industrial environments?',
     options: [
-      'Additional loads and forces not accounted for in the tower\\\\\\\\\\\\\\\'s design can cause structural failure or overturning',
-      'A virtual model of a physical asset continuously updated with real-time sensor data, enabling simulation and optimisation',
+      'It is highly flammable and can ignite from a single spark',
+      'It corrodes most metals on contact, weakening pipework rapidly',
       'Compressed air stores significant energy; sudden release can cause impact injuries, hearing damage from noise, and eye injuries from debris',
-      'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
+      'It conducts electricity, creating a shock risk when used near live equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'In a pneumatic control system, instrument air supply is typically provided at:',
     options: [
-      'Daily or weekly for key metrics',
+      '0.5 bar (7 psi) regulated supply',
       '1.4 bar (20 psi) regulated supply',
-      'For representative assessment',
-      '"EICR_2024_Thompson_42-High-Street.pdf"',
+      '7 bar (100 psi) regulated supply',
+      '15 bar (220 psi) regulated supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: "Pascal's law, which underpins hydraulic systems, states that:",
     options: [
-      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
-      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
+      'Pressure in a fluid decreases with the square of the distance from the pump',
+      'Flow rate through a pipe is inversely proportional to the applied pressure',
       'Pressure applied to a confined fluid is transmitted equally in all directions',
-      'To differentiate between a genuine zero reading and a system fault',
+      'The force on a piston is independent of the fluid pressure acting on it',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: "A pneumatic control valve with 'fail-close' action will:",
     options: [
-      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
-      'Pressure applied to a confined fluid is transmitted equally in all directions',
-      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
+      'Hold its last position indefinitely when the air supply is lost',
+      'Open fully when the air supply is lost, driven by the spring return',
+      'Oscillate between open and closed until the supply is restored',
       'Close fully when the air supply is lost, driven by the spring return',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Which of the following is a critical quality requirement for instrument air?',
     options: [
       'It must be clean, dry and oil-free to prevent instrument damage and blockages',
-      'To differentiate between a genuine zero reading and a system fault',
-      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
-      'Close fully when the air supply is lost, driven by the spring return',
+      'It must be slightly humidified to keep diaphragm seals supple',
+      'It must contain a fine oil mist to lubricate moving valve parts',
+      'It must be delivered cold to improve the accuracy of pressure readings',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a hydraulic system, what is the function of the relief valve?',
     options: [
-      'The operating principles, safety hazards, maintenance requirements and how these systems integrate with electrical control systems',
+      'To increase the flow rate to the actuators during peak demand',
       'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
-      'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
-      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
+      'To filter contaminants out of the hydraulic fluid before it reaches the pump',
+      'To maintain a constant fluid temperature by mixing hot and cold oil',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'A positioner on a pneumatic control valve is used to:',
     options: [
-      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
-      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
+      'Boost the instrument air pressure to a higher level for large actuators',
+      'Convert the pneumatic signal back into a 4-20 mA signal for the controller',
       'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
-      'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
+      'Filter moisture out of the instrument air before it reaches the diaphragm',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     question:
       'Hydraulic fluid contamination is a major cause of system failure. The most common contaminant is:',
     options: [
-      'To ensure all items are systematically checked',
-      'Issuing improvement notices to the employer',
-      'A delivery note listing contents',
+      'Dissolved nitrogen from the air above the reservoir',
+      'Excess additives deliberately blended into the oil',
+      'Refrigerant gas leaking from the system cooler',
       'Metallic particles from component wear',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'In electro-pneumatic systems, a solenoid valve is used to:',
     options: [
       'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
-      'Close fully when the air supply is lost, driven by the spring return',
-      'Pressure applied to a confined fluid is transmitted equally in all directions',
-      'To differentiate between a genuine zero reading and a system fault',
+      'Convert a 3-15 psi pneumatic signal into a proportional 4-20 mA output',
+      'Regulate the instrument air supply pressure to a constant value',
+      'Measure the position of the valve stem and report it to the controller',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "What does the term 'air-over-oil' describe in a pneumatic-hydraulic system?",
     options: [
-      'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
+      'A leak path where air becomes entrained above the oil in the reservoir',
       'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
-      'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
-      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
+      'A two-stage filter that separates air bubbles from the returning oil',
+      'A lubrication method where an oil film is carried on the instrument air',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Before carrying out maintenance on a hydraulic system, the first safety step is to:',
     options: [
-      'Close fully when the air supply is lost, driven by the spring return',
-      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
+      'Top up the reservoir to maximum so the pump does not run dry',
+      'Run the system at full pressure to check for any leaks first',
       'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
-      'Pressure applied to a confined fluid is transmitted equally in all directions',
+      'Disconnect a hydraulic hose to allow the pressure to bleed off naturally',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     question:
       "The 3-15 psi pneumatic signal standard uses a 'live zero' at 3 psi for the same reason as the 4-20 mA standard uses 4 mA, which is:",
     options: [
-      'Pressure applied to a confined fluid is transmitted equally in all directions',
-      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
-      'Close fully when the air supply is lost, driven by the spring return',
+      'To provide a small reserve of pressure to overcome valve friction',
+      'To keep the actuator slightly pressurised so it responds more quickly',
+      'To allow the signal to be measured with a simpler, cheaper gauge',
       'To differentiate between a genuine zero reading and a system fault',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
       'Under ST1426, maintenance technicians working with pneumatic and hydraulic systems should understand:',
     options: [
       'The operating principles, safety hazards, maintenance requirements and how these systems integrate with electrical control systems',
-      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
-      'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
-      'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
+      'Only the electrical control wiring, leaving fluid power to specialist fitters',
+      'Solely the manufacturer service intervals, without needing to understand operation',
+      'Just the emergency stop procedures, as routine work is always sub-contracted',
     ],
     correctAnswer: 0,
     explanation:

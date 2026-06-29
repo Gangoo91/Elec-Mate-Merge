@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main purpose of a toolbox talk?',
     options: [
-      '10% of normal lighting with a minimum of 15 lux',
+      'To plan the week’s material deliveries',
       'To provide short, focused safety updates',
-      'To ensure continued safety over time',
-      'A delivery note listing contents',
+      'To allocate tasks to each electrician',
+      'To review the project budget',
     ],
     correctIndex: 1,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should you do if instructions given in a meeting are unclear?',
     options: [
-      'Any person for whom a construction project is carried out',
-      'Line charts with historical comparison',
-      'The safety function is still performed despite the fault',
+      'Carry on and work it out as you go',
+      'Wait for someone else to ask first',
+      'Assume the safest option and proceed',
       'Ask questions or confirm with your supervisor',
     ],
     correctIndex: 3,
@@ -112,10 +112,10 @@ const Module5Section5_5 = () => {
       id: 5,
       question: 'What is a common mistake to avoid in meetings?',
       options: [
-        'Signing the EIC construction declaration.',
+        'Arriving a few minutes early',
         'Not paying attention or ignoring instructions',
-        'Reduce actual fault current by fast operation before peak',
-        'Visual, audible, electrical, and thermal symptoms',
+        'Taking notes on the key points',
+        'Asking the supervisor to clarify a task',
       ],
       correctAnswer: 1,
       explanation:
@@ -138,9 +138,9 @@ const Module5Section5_5 = () => {
       id: 7,
       question: 'What might happen if you miss a toolbox talk?',
       options: [
-        'To verify voltage at load is within acceptable limits',
-        'Storing energy as heat or cold for later use in heating or cooling systems',
-        'Reduce friction by preparing in advance and starting very small',
+        'You finish your work more quickly',
+        'You save the site time and money',
+        'You avoid unnecessary paperwork',
         'You could miss critical safety information and risk accidents',
       ],
       correctAnswer: 3,
@@ -152,9 +152,9 @@ const Module5Section5_5 = () => {
       question: 'Why are safety topics often repeated in meetings?',
       options: [
         'To reinforce safe habits and update new workers',
-        'The person who carried out inspection and testing',
-        'To ensure good air quality and prevent drowsiness',
-        'The current intended to flow under normal conditions',
+        'To make the meeting last longer',
+        'Because the supervisor has nothing else to say',
+        'To reduce the amount of actual work done',
       ],
       correctAnswer: 0,
       explanation:
@@ -164,10 +164,10 @@ const Module5Section5_5 = () => {
       id: 9,
       question: 'What should you bring to a meeting to record details?',
       options: [
-        '1.5 times the rating of protective device',
+        'A set of test instruments',
         'Notebook or phone (if permitted)',
-        'Voltage rise at the point of connection',
-        'Likelihood × Severity = Risk level',
+        'A copy of the site drawings',
+        'Your full toolkit',
       ],
       correctAnswer: 1,
       explanation:

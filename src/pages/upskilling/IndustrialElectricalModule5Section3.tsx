@@ -72,103 +72,124 @@ const quizQuestions = [
     question: 'According to BS 7671, what is the purpose of the R1+R2 continuity test?',
     options: [
       'To measure insulation resistance between conductors',
-      'To verify the earth fault loop path is continuous and of acceptable resistance',
-      'To check the voltage drop across the circuit',
-      'To test the operation of RCDs',
+      'To verify the protective conductor path is continuous and of acceptable resistance',
+      'To check the voltage drop across the circuit under load',
+      'To confirm the disconnection time of the RCD',
     ],
-    correctAnswer: 'To verify the earth fault loop path is continuous and of acceptable resistance',
+    correctAnswer: 'To verify the protective conductor path is continuous and of acceptable resistance',
+    explanation:
+      'R1+R2 confirms the line and protective conductor form a continuous, low-resistance path so earth fault loop impedance and disconnection times can be relied upon. Insulation resistance and RCD operation are separate tests.',
   },
   {
     question:
-      'When testing loop resistance in a control circuit using the three-wire method, what advantage does this provide?',
+      'When measuring low loop resistance using the four-terminal (Kelvin) method, what advantage does it provide?',
     options: [
+      'It allows the test to be carried out with the circuit energised',
       'It eliminates the resistance of the test leads from the measurement',
-      'It allows testing with the circuit energised',
       'It measures capacitance as well as resistance',
       'It provides automatic temperature compensation',
     ],
     correctAnswer: 'It eliminates the resistance of the test leads from the measurement',
+    explanation:
+      'The Kelvin (four-terminal) method uses separate current and voltage leads, so lead and contact resistance are excluded from the reading — essential when measuring values in the milliohm range.',
   },
   {
     question:
-      'What is the live-dead-live testing procedure used to verify before working on a circuit?',
+      'What is the correct live-dead-live procedure used to prove a circuit dead before work?',
     options: [
-      'Test a known live source, test the circuit, test the known live source again',
-      'Test resistance, test voltage, test resistance',
-      'Test with one meter, test with another meter, compare results',
-      'Test at supply end, test at load end, test at midpoint',
+      'Test resistance, test voltage, then test resistance again',
+      'Test with one meter, test with another meter, then compare results',
+      'Prove the tester on a known live source, test the circuit dead, then re-prove on the live source',
+      'Test at the supply end, the load end, then the midpoint',
     ],
-    correctAnswer: 'Test a known live source, test the circuit, test the known live source again',
+    correctAnswer:
+      'Prove the tester on a known live source, test the circuit dead, then re-prove on the live source',
+    explanation:
+      'Proving the instrument on a known live source before and after testing confirms it was working throughout, so a "dead" reading on the circuit can be trusted (GS38 / safe isolation practice).',
   },
   {
     question:
       'In a 4-20mA current loop, what current represents 50% of the measured variable range?',
-    options: ['8mA', '10mA', '12mA', '16mA'],
+    options: ['8mA', '12mA', '10mA', '16mA'],
     correctAnswer: '12mA',
+    explanation:
+      'The span is 16mA (4mA to 20mA), so 50% sits 8mA above the 4mA live zero: 4 + (0.5 x 16) = 12mA. 8mA is 25% and 16mA is 75%.',
   },
   {
     question: 'What is the velocity factor (VF) used for in TDR cable fault location?',
     options: [
+      'Calculating the actual distance to a fault from signal propagation speed',
       'Determining the cable insulation quality',
-      'Calculating the actual distance to a fault based on signal propagation speed',
       'Measuring the resistance per metre of cable',
       'Compensating for temperature effects on resistance',
     ],
-    correctAnswer: 'Calculating the actual distance to a fault based on signal propagation speed',
+    correctAnswer: 'Calculating the actual distance to a fault from signal propagation speed',
+    explanation:
+      'A TDR pulse travels slower in cable than in free space; the velocity factor (e.g. 0.66 for PVC) converts the measured reflection time into a true distance. An incorrect VF produces a proportional distance error.',
   },
   {
     question:
-      'When documenting continuity test results, what information must be recorded according to BS 7671?',
+      'When documenting continuity test results, what information must be recorded on a BS 7671 schedule of test results?',
     options: [
-      'Only pass or fail status',
-      'The measured value, circuit reference, date, and signature of tester',
+      'Only the pass or fail status of each circuit',
       'Just the cable size and length',
-      'Only circuits that failed the test',
+      'The measured value, circuit reference, date, and signature of the tester',
+      'Only the circuits that failed the test',
     ],
-    correctAnswer: 'The measured value, circuit reference, date, and signature of tester',
+    correctAnswer: 'The measured value, circuit reference, date, and signature of the tester',
+    explanation:
+      'BS 7671 requires actual measured values recorded against each circuit reference, dated and signed by the tester, so results provide a verifiable baseline — a bare pass/fail is not acceptable.',
   },
   {
     question:
-      'What could cause a loop resistance reading that increases over time during the test?',
+      'What would cause a loop resistance reading to increase over time during the test?',
     options: [
-      'A solid short circuit',
-      'Correct cable connections',
-      'Heating effect in a high resistance joint',
+      'A solid short circuit at the far end',
+      'Correctly torqued cable connections',
       'Properly terminated cable ends',
+      'Heating effect within a high-resistance joint',
     ],
-    correctAnswer: 'Heating effect in a high resistance joint',
+    correctAnswer: 'Heating effect within a high-resistance joint',
+    explanation:
+      'A poor joint heats up as test current flows; its resistance climbs with temperature, so a reading that drifts upward is a classic sign of a high-resistance connection that may pass when cold.',
   },
   {
     question: 'When testing a HART-enabled 4-20mA loop, what precaution is necessary?',
     options: [
-      'The loop must be completely de-energised',
-      'Only DC measurements should be taken to avoid interfering with digital signals',
-      'The transmitter must be in manual mode',
-      'Loop resistance must be above 250 ohms',
+      'The loop must be completely de-energised first',
+      'The transmitter must be switched to manual mode',
+      'Avoid loading the loop in a way that attenuates the superimposed digital signal',
+      'Loop resistance must be reduced below 250 ohms',
     ],
-    correctAnswer: 'Only DC measurements should be taken to avoid interfering with digital signals',
+    correctAnswer: 'Avoid loading the loop in a way that attenuates the superimposed digital signal',
+    explanation:
+      'HART superimposes FSK digital data on the 4-20mA current. Test connections must not load or short the AC component, and a minimum loop resistance (around 250 ohms) is actually required for reliable communication.',
   },
   {
     question: 'What is the purpose of a loop calibrator in 4-20mA circuit testing?',
     options: [
-      'To measure cable length',
+      'To measure the physical length of the cable run',
+      'To test insulation resistance to earth',
+      'To locate cable faults by reflection',
       'To simulate transmitter output and verify receiver response across the full range',
-      'To test insulation resistance',
-      'To locate cable faults',
     ],
     correctAnswer:
       'To simulate transmitter output and verify receiver response across the full range',
+    explanation:
+      'In source/simulate mode a loop calibrator injects precise 4-20mA values so the receiver (PLC, DCS or display) can be checked at 0, 25, 50, 75 and 100% without disturbing the actual transmitter.',
   },
   {
     question:
-      'When performing voltage tracing on an energised control circuit, what reading would indicate a poor connection?',
+      'When performing voltage tracing on an energised control circuit, what reading indicates a poor connection?',
     options: [
-      'Zero volts across the connection when current is flowing',
-      'A voltage drop across the connection point when current is flowing',
-      'Supply voltage at the load terminals',
-      'Equal voltage on both sides of a switch in the ON position',
+      'Zero volts across the connection while current is flowing',
+      'A measurable voltage drop across the connection while current flows',
+      'Supply voltage present at the load terminals',
+      'Equal voltage on both sides of a closed switch',
     ],
-    correctAnswer: 'A voltage drop across the connection point when current is flowing',
+    correctAnswer: 'A measurable voltage drop across the connection while current flows',
+    explanation:
+      'A sound connection has negligible resistance, so it drops almost no voltage. Any appreciable drop measured across a joint while current flows reveals high contact resistance at that point.',
   },
 ];
 

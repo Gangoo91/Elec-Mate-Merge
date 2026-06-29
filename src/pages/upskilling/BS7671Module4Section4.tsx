@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Which RCD type is appropriate for a domestic circuit feeding a modern induction hob, mixed LED lighting and conventional sockets?',
     options: [
-      'Type AC — the cheapest sensible default',
-      'Type A — covers AC and pulsating DC residuals; suits the mixed electronics typical of modern domestic loads',
-      'Type B — required only when smooth DC residuals are present (three-phase VSDs, EV without internal DC detection)',
-      'Type F — high-frequency residuals, single-phase VSD applications',
+      'Type AC — sinusoidal AC residual only, the cheapest legacy default',
+      'Type A — sinusoidal AC plus pulsating DC residual, suiting modern mixed electronics',
+      'Type B — smooth DC residual, for three-phase VSDs and EV without internal DC detection',
+      'Type F — composite high-frequency residual, for single-phase VSD applications',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Reg 411.3.3(a) mandates 30 mA RCD additional protection on socket-outlets ≤ 32 A in locations used by ordinary persons or children. What if the location is a non-domestic workspace where only skilled persons access the sockets?',
     options: [
-      'No RCD needed — only ordinary persons / BA1 / BA2 trigger the rule',
-      'Reg 411.3.3(b) extends the rule to "other locations" but allows a documented risk-assessment exception by a skilled person (electrically) — the assessment accompanies the EIC',
-      'A 100 mA RCD is sufficient instead',
-      "Reg 411.3.3 doesn't apply to commercial premises at all",
+      'No RCD needed — only ordinary-person / BA1 / BA2 locations trigger the rule at all',
+      'RCD required by default, but Reg 411.3.3(b) allows a documented risk-assessment exception',
+      'A 100 mA RCD is sufficient here in place of the usual 30 mA additional-protection device',
+      'Reg 411.3.3 does not apply to non-domestic commercial premises in any circumstances',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Reg 411.3.4 (new in BS 7671:2018+A4:2026) adds 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic (household) premises. Where does it NOT apply?',
     options: [
-      'Bathroom luminaires only',
-      'Commercial premises lighting circuits — outside the "domestic (household) premises" scope of Reg 411.3.4',
-      'Outdoor luminaires only',
-      'Emergency-lighting circuits',
+      'Bathroom luminaires within a dwelling — already covered by Section 701',
+      'Commercial premises lighting circuits — outside the domestic (household) scope',
+      'Outdoor luminaires within a dwelling — covered by the outdoor mobile rule',
+      'Emergency-lighting circuits within a dwelling — exempt as safety circuits',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       "The customer presses the test button on their RCD monthly and it always trips. Are they confirming the RCD's residual-current sensitivity?",
     options: [
-      'Yes — the test button simulates a real residual current of 30 mA',
-      'No — the test button injects an internal imbalance that exercises the trip mechanism but does NOT verify the actual sensitivity. Periodic testing with an RCD tester at IΔn and 5×IΔn is the regulatory verification (Reg 643.8 / GN3)',
-      'Yes — and it eliminates the need for any other RCD test',
-      "It's only a maintenance check on the button itself",
+      'Yes — the test button injects a real 30 mA residual current to prove sensitivity',
+      'No — the button exercises the trip mechanism but does not verify sensitivity at IΔn',
+      'Yes — and a passing button test removes the need for any instrument RCD test',
+      'No — the button only proves its own contacts work, nothing about the RCD',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You want an upstream main-switch RCD that will NOT operate when a downstream RCBO trips on a final-circuit fault. What does Reg 536.4.1.4 require?',
     options: [
-      'Both devices must be Type B',
-      'Upstream RCD must be a Type S (selective / time-delayed) AND the rated residual operating current ratio (upstream / downstream) must be at least 3:1',
-      'Both devices must have the same IΔn rating',
-      'No specific requirements — RCD selectivity is impossible',
+      'Both devices must be the same waveform type, e.g. both Type B',
+      'Upstream must be Type S (time-delayed) AND the IΔn ratio at least 3:1',
+      'Both devices must share the same IΔn rating, e.g. 30 mA over 30 mA',
+      'No specific requirement — RCD-to-RCD selectivity cannot be achieved',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'On a TT installation, can a single 100 mA Type S RCD at the consumer-unit incoming serve as the SOLE RCD for the whole installation?',
     options: [
-      'Yes — that\'s the standard "single-RCD" configuration',
-      "No — a single device can't provide both fault protection AND additional protection. The 100 mA Type S meets fault protection (Reg 411.5.3) but downstream final circuits still need 30 mA RCDs / RCBOs for additional protection per Reg 411.3.3 / 411.3.4",
-      'Yes — provided Ra is below 100 Ω',
-      'No — TT systems must use Type B RCDs',
+      'Yes — this is the standard single-RCD whole-installation configuration',
+      'No — its 100 mA IΔn cannot give the 30 mA additional protection finals still need',
+      'Yes — provided the earth-electrode resistance Ra stays below 100 Ω',
+      'No — TT systems are required to use Type B RCDs throughout',
     ],
     correctIndex: 1,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'A new build domestic install: which set of RCD-related regulatory requirements must the design simultaneously satisfy?',
     options: [
-      'Just Reg 411.3.4 (luminaires)',
-      'Reg 411.3.3 (sockets ≤ 32 A and outdoor mobile equipment), Reg 411.3.4 (domestic luminaire circuits — A4), and product compliance per Reg 531.3.4.1 / BS EN 61008 / 61009',
-      'Only the local building-control rules',
-      "There's no RCD requirement on a new domestic install",
+      'Reg 411.3.3 sockets, Reg 411.3.4 luminaires, and product compliance (Reg 531.3.4.1).',
+      'Only Reg 411.3.4, covering the AC final circuits that supply luminaires in the dwelling.',
+      'Only the local building-control rules currently in force for that particular area.',
+      'No RCD requirement applies to a new domestic installation at all under the standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New domestic build under BS 7671:2018+A4:2026 must satisfy: (i) Reg 411.3.3 — 30 mA RCD on every socket ≤ 32 A AND on outdoor mobile equipment; (ii) Reg 411.3.4 — 30 mA RCD on every AC final circuit supplying luminaires; (iii) device product compliance per Reg 531.3.4.1; (iv) RCD type appropriate for load per Reg 531.3.3.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 531.3.3 — when may a Type AC RCD still be used?',
     options: [
-      'In any domestic socket circuit',
-      'Only to serve fixed equipment where it is known that the load current contains no DC components',
-      'Only on lighting circuits',
-      'Type AC is no longer permitted in any circumstance',
+      'On any domestic socket circuit, wherever it is convenient and cheaper to fit.',
+      'On any general lighting circuit, regardless of the load type connected to it.',
+      'Only on fixed equipment whose load current is known to contain no DC components.',
+      'Type AC is no longer permitted in any installation under any circumstances whatever.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 531.3.3: Type AC RCD shall only be used to serve fixed equipment where it is known that the load current contains no DC components. This restricts Type AC to a narrow set of legacy / pure-resistive applications.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       "An RCD trips at IΔn (30 mA) in 280 ms and at 5×IΔn (150 mA) in 38 ms. What's the verdict against BS EN 61008 / 61009 limits?",
     options: [
-      'Both fail',
-      'Both pass — IΔn ≤ 300 ms ✓, 5×IΔn ≤ 40 ms ✓',
-      'IΔn passes but 5×IΔn fails',
-      'IΔn fails but 5×IΔn passes',
+      'Both tests fail the limits.',
+      'IΔn passes but 5×IΔn fails.',
+      'IΔn fails but 5×IΔn passes.',
+      'Both pass — IΔn ≤ 300 ms and 5×IΔn ≤ 40 ms.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 61008 / 61009 for ordinary-person operation: IΔn maximum operating time 300 ms general, 5×IΔn maximum 40 ms. Type S devices have longer permitted times at IΔn (up to 500 ms) but the same 40 ms at 5×IΔn. At 280 ms / 38 ms the device passes both with margin.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'A circuit feeds a single-phase EV charger that has its own internal 6 mA DC fault detection. Which RCD type is required UPSTREAM at the consumer unit?',
     options: [
-      'Type AC',
-      'Type A — sufficient because the charger handles smooth DC residual itself ("PCE with simple separation")',
-      'Type B — always required for EV charging',
-      'No RCD needed — the charger handles all detection internally',
+      'Type AC — adequate since the load is a simple AC supply',
+      'Type A — sufficient because the charger handles the smooth DC residual itself',
+      'Type B — always required upstream of any EV charge point',
+      'No RCD needed — the charger handles all fault detection internally',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'You measure RCD operating time at IΔn but the device fails to trip within 300 ms. What does Reg 643 require you to do?',
     options: [
-      "Record the result and continue with the rest of the EICR — it's an observation",
-      "Code as C2 on EICR (potentially dangerous — fault / additional protection cannot be demonstrated) and recommend replacement; on initial verification, the install can't be issued an EIC until the RCD is replaced",
-      'Press the test button to "free up" the mechanism',
-      'Lower the test current and try again',
+      'Record the result and continue the EICR as a routine non-coded observation.',
+      'Press the integral test button repeatedly to free up the tripping mechanism.',
+      'Code C2 and recommend replacement, as the protection cannot be demonstrated.',
+      'Lower the injected test current and repeat the operating-time test until it passes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "An RCD failing its operating-time test means the protection it was supposed to provide cannot be demonstrated. On EICR, that's C2 — potentially dangerous. On initial verification, the failed RCD must be replaced before the EIC can be issued. NEVER 'work the mechanism' — the device has either drifted, has internal damage, or has welded contacts; the only safe answer is replacement.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'What additional protection requirement applies to mobile equipment used OUTDOORS, regardless of where the supply socket sits?',
     options: [
-      'No specific requirement',
-      'Reg 411.3.3(c): mobile equipment with a rated current not exceeding 32 A used outdoors must have additional protection by a 30 mA RCD — and there is no risk-assessment exception for this category',
-      'Only weatherproof housing is required',
-      'Only sockets in BA1/BA2 locations are covered',
+      'Reg 411.3.3(c): 30 mA RCD additional protection, with no risk-assessment exception.',
+      'No specific additional-protection requirement applies to outdoor mobile equipment.',
+      'Only a weatherproof IP-rated housing on the equipment itself is required outdoors.',
+      'Only fixed sockets sited in BA1/BA2 locations are actually covered by the rule.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 411.3.3(c): mobile equipment ≤ 32 A used outdoors must have 30 mA RCD additional protection. Unlike (b), there is no risk-assessment exception. Practical implication: garage / outbuilding sockets used for hedge-trimmers, mowers, pressure washers must have 30 mA RCD protection.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'You are designing a small commercial unit with mixed fixed equipment, sockets, and a single 22 kW three-phase EV charger (no internal DC detection). What RCD strategy is correct?',
     options: [
-      "Single 100 mA Type AC RCD at the main switch — it'll cover everything",
-      'Type B 30 mA RCD dedicated to the EV circuit; Type A 30 mA RCBOs on each socket circuit; 100 mA Type S RCD as upstream main switch for selectivity',
-      'All circuits on a single Type B RCD',
-      'No RCD at all — three-phase circuits are exempt from 411.3.3',
+      'A single 100 mA Type AC RCD at the main switch covering every circuit on the whole board',
+      'Type B 30 mA on the EV circuit, Type A 30 mA RCBOs on sockets, 100 mA Type S upstream',
+      'All circuits grouped together behind one shared 30 mA Type B RCD on a common busbar',
+      'No RCD at all — three-phase circuits are exempt from the Reg 411.3.3 requirements here',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     id: 8,
     question: 'Reg 531.3.1.202 forbids one specific practice when installing RCDs. What is it?',
     options: [
-      'Installing an RCD with rating below 30 mA',
-      'Introducing an external connection for the purpose of intentionally creating a residual current to trip an RCD (e.g. tying neutral to earth somewhere downstream to force imbalance)',
-      'Installing an RCD on a three-phase circuit',
-      'Using an RCD to protect a motor',
+      'Installing an RCD with a rated residual operating current below 30 mA on a circuit.',
+      'Installing a single shared RCD to protect a three-phase final circuit on the board.',
+      'Using an RCD to protect an inductive motor-starter circuit prone to inrush current.',
+      'Adding an external connection to deliberately create a residual current that trips it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 531.3.1.202: 'It is not permissible to introduce an external connection for the purpose of intentionally creating a residual current to trip an RCD.' This rules out the (sometimes-suggested) trick of tying load-side neutral to earth downstream of an RCD to force imbalance. The RCD must trip in response to genuine residual currents only.",
   },

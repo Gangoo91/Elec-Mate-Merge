@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it important to test one component or section at a time?',
     options: [
-      'Stop immediately and inspect the tool',
+      'It allows several faults to be repaired at once',
       'To isolate the fault logically and avoid confusion',
-      'Very few free electrons (high resistivity)',
-      'Loose terminals or poor connections',
+      'It removes the need to record any test results',
+      'It avoids the need to safely isolate the circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'In a ring final circuit, what would continuity testing reveal?',
     options: [
-      'Permits, fire watches, cleared areas, fire extinguishers nearby',
-      'Always — before switching anything off',
-      'Where continuity is lost indicating the fault location',
-      'To provide rigidity and resist crushing/bending forces',
+      'The insulation resistance between line and earth',
+      'The prospective fault current at each socket',
+      'Where continuity is lost, indicating the fault location',
+      'The voltage drop across the whole circuit',
     ],
     correctIndex: 2,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is it risky to replace parts without testing first?',
     options: [
-      'The cosine of the phase angle between voltage and current (cos φ)',
-      'Flow reduces to 80%, head to 64%, power to 51%',
-      'Switching transients and indirect lightning effects',
+      'It can invalidate the manufacturer warranty on the part',
+      'It always requires a second electrician to be present',
+      'It uses more expensive parts than are strictly needed',
       'You may replace working components and miss the real fault',
     ],
     correctIndex: 3,
@@ -59,10 +59,10 @@ const Module7Section3_3 = () => {
       id: 1,
       question: 'Why is it important to test one component or section at a time?',
       options: [
-        'You lose marks even if fault diagnosis was correct',
+        'It allows several repairs to be made simultaneously',
         'To isolate the fault logically and avoid confusion',
-        'Criminal prosecution, including fines and imprisonment',
-        'Rejecting signals common to both input lines',
+        'It removes the need to safely isolate the circuit',
+        'It avoids the need to record any of the results',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,12 +72,12 @@ const Module7Section3_3 = () => {
       id: 2,
       question: 'How does this method help isolate faults?',
       options: [
-        'When it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s unreasonable to work dead and suitable precautions are taken',
-        'It builds trust and ensures everyone works to the same standard',
         'By gradually narrowing down possibilities until the cause is identified',
-        'Assist with evacuation, check areas are clear, liaise with fire brigade',
+        'By replacing the most expensive component first',
+        'By testing every section at the same time for speed',
+        'By relying on the occupant to describe the likely fault',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'This method systematically narrows down possibilities by confirming which sections work correctly and which contain faults.',
     },
@@ -85,9 +85,9 @@ const Module7Section3_3 = () => {
       id: 3,
       question: 'In a ring final circuit, what would continuity testing reveal?',
       options: [
-        'Systematic checking of triggers, conditions, and actions',
-        'Selecting efficient equipment and optimising circuit arrangements',
-        'Protection against overheating and mechanical damage',
+        'The insulation resistance between conductors',
+        'The prospective fault current at the origin',
+        'The voltage drop along the whole ring',
         'Exactly where continuity is lost, indicating fault location',
       ],
       correctAnswer: 3,
@@ -98,12 +98,12 @@ const Module7Section3_3 = () => {
       id: 4,
       question: 'Why is it risky to replace parts without testing first?',
       options: [
+        'It can invalidate the warranty on the replaced part',
+        'It always needs a second electrician to be present',
         'You may replace working components and miss the real fault',
-        'Too frequent creates data overload; too slow misses important events',
-        'VFD (variable speed operation beneficial)',
-        'Induction burn from proximity to high-frequency conductors',
+        'It requires the supply to be left energised throughout',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Without proper testing, you risk replacing components that are actually functioning correctly while the real fault source remains unaddressed.',
     },
@@ -111,10 +111,10 @@ const Module7Section3_3 = () => {
       id: 5,
       question: 'How can this method be applied to a simple lighting circuit?',
       options: [
-        'Guide the safe movement of vehicles, especially when reversing',
+        'Replace the lamp holder and ceiling rose first',
         'Test supply, then switch, then lamp holder in sequence',
-        'Only a competent person after resolving the hazard',
-        'Connections are secure and correctly made',
+        'Measure the voltage at the lamp before isolating',
+        'Check the earth fault loop impedance at the board only',
       ],
       correctAnswer: 1,
       explanation:
@@ -122,12 +122,12 @@ const Module7Section3_3 = () => {
     },
     {
       id: 6,
-      question: 'True or False: Testing one section at a time is only useful in small circuits.',
+      question: 'Is testing one section at a time only useful in small circuits?',
       options: [
-        'Equipment operation, safety tests pass, and cause addressed',
-        'Safe routes, adequate width, good visibility, emergency access',
-        'False - essential for both small domestic and complex industrial systems',
-        'Check internal diameter and remove any restrictions',
+        'Yes, larger circuits need every section tested together',
+        'Yes, it only suits simple domestic lighting circuits',
+        'No, it is essential for both small domestic and complex industrial systems',
+        'No, but it is only worthwhile on three-phase systems',
       ],
       correctAnswer: 2,
       explanation:
@@ -137,10 +137,10 @@ const Module7Section3_3 = () => {
       id: 7,
       question: 'How does this approach save time?',
       options: [
-        'It sets a hard limit preventing work from expanding to fill available time',
-        'Comprehensive approach including prevention, detection, suppression, evacuation',
-        'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
-        'By preventing wasted effort on replacing or repairing non-faulty components',
+        'By skipping sections that look visually undamaged',
+        'By testing the most complex section first every time',
+        'By allowing the supply to stay live during testing',
+        'By preventing wasted effort on replacing non-faulty components',
       ],
       correctAnswer: 3,
       explanation:
@@ -151,9 +151,9 @@ const Module7Section3_3 = () => {
       question: 'What should always be done after completing a test on one section?',
       options: [
         'Record results and confirm whether that section is sound',
-        '1 unit out for every 4 units up (1:4 ratio)',
-        'AC mains supply to controlled DC voltage for the motor armature',
-        'Training, written instructions, demonstrations, ongoing reinforcement',
+        'Re-energise the circuit before moving to the next section',
+        'Replace any component that was tested as a precaution',
+        'Move straight to the load without confirming the result',
       ],
       correctAnswer: 0,
       explanation:
@@ -163,12 +163,12 @@ const Module7Section3_3 = () => {
       id: 9,
       question: 'In the domestic example, what fault caused the lighting circuit to fail?',
       options: [
-        '1.2m x 1.8m or 1.8m x 1.8m',
-        'Loose line conductor at the switch',
-        'It calculates fault current: If = U₀/Zs',
-        'Vd = (mV/A/m × Ib × L) / 1000',
+        'A failed lamp in the ceiling rose',
+        'A short circuit at the consumer unit',
+        'A loose line conductor at the switch',
+        'A damaged neutral at the lamp holder',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Systematic testing revealed the loose line conductor at the switch was interrupting the circuit before reaching the lamp.',
     },
@@ -177,12 +177,12 @@ const Module7Section3_3 = () => {
       question:
         'In the factory example, what stage of testing revealed the motor windings had failed?',
       options: [
-        'Main earthing system and supply conditions',
-        'Identifying whether a contamination linkage exists that could cause harm',
         'After confirming supply and control circuits were correct',
-        'A step-by-step procedure describing how a task will be carried out safely',
+        'Before any supply or control testing was carried out',
+        'While testing the incoming supply to the panel',
+        'During the initial visual inspection of the panel',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Only after systematically confirming the supply and control circuits were functioning correctly did motor winding testing reveal the actual fault.',
     },

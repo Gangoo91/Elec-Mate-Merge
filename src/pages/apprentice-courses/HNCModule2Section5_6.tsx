@@ -34,9 +34,9 @@ const quickCheckQuestions = [
     question: 'At what condition does condensation occur on a surface?',
     options: [
       'When surface temperature falls below air dew point',
-      'RCD disconnects supply, RCM only monitors and alarms',
-      'Line voltage divided by √3 (approximately 230V)',
-      'EV chargers, solar PV, or heat pumps',
+      'When the air relative humidity falls below 40%',
+      'When the surface temperature rises above the air temperature',
+      'When the air becomes warmer than its saturation point',
     ],
     correctIndex: 0,
     explanation:
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'interstitial-location',
     question: 'Where does interstitial condensation typically occur in a wall?',
     options: [
-      'V × I (the product of RMS voltage and current)',
+      'On the internal room-facing surface of the plaster finish',
       'At the outer edge of insulation or cold side',
-      'To detect early signs of work-related ill health',
-      'A tester designed to test without tripping RCDs',
+      'Only at window reveals and door openings',
+      'Uniformly across the full thickness of the wall',
     ],
     correctIndex: 1,
     explanation:
@@ -59,27 +59,27 @@ const quickCheckQuestions = [
     id: 'vapour-barrier',
     question: 'Where should a vapour control layer (VCL) be positioned in a wall?',
     options: [
-      'On the warm (internal) side of insulation',
       'On the cold (external) side of insulation',
-      'In the middle of the wall',
-      "Position doesn't matter",
+      'In the middle of the insulation layer',
+      'On the warm (internal) side of insulation',
+      'Its position within the wall does not matter',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'VCL should be on the warm side to prevent moisture-laden internal air penetrating the insulation before reaching its dew point. Placing it on the cold side would trap moisture.',
   },
   {
     id: 'part-l-u-value',
-    question: 'What is the Part L 2021 maximum U-value for external walls in new dwellings?',
+    question: 'What is the Part L 2021 limiting (maximum) U-value for external walls in new dwellings?',
     options: [
       '0.35 W/m²K',
-      '0.26 W/m²K',
-      '0.15 W/m²K',
       '0.18 W/m²K',
+      '0.15 W/m²K',
+      '0.26 W/m²K',
     ],
     correctIndex: 3,
     explanation:
-      'Part L 2021 limits external wall U-value to 0.18 W/m²K for new dwellings. This is more stringent than previous versions (0.30 W/m²K). Notional building uses 0.18 W/m²K.',
+      'Part L 2021 sets a limiting (backstop) external wall U-value of 0.26 W/m²K for new dwellings, which must not be exceeded. The more demanding notional building value used in the overall energy target is 0.18 W/m²K.',
   },
 ];
 
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is dew point temperature?',
     options: [
-      'The input module provides (sources) current to the field device',
+      'The temperature at which water begins to boil at atmospheric pressure',
       'The temperature at which air becomes saturated with moisture',
-      'Should influence role choices and career direction',
-      'Provides accurate level reference over long distances and around obstacles',
+      'The average surface temperature of an external wall in winter',
+      'The temperature at which insulation stops conducting heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which assessment method is used for interstitial condensation risk?',
     options: [
-      'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
-      'Trips at ½×IΔn or fails to trip at 1×IΔn',
-      'PAT testing and electrical safety',
+      'The SAP energy rating procedure for whole dwellings',
+      'The blower-door air permeability test at 50 Pa',
+      'A standard thermographic survey of the external envelope',
       'Glaser method (BS EN ISO 13788)',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: "What causes 'thermal bridging' in building construction?",
     options: [
       'Areas of higher thermal conductivity creating heat flow paths',
-      'Allows vapour to escape outward while preventing water ingress',
-      'Reduced thermal performance and potential structural damage',
-      'Assessing mould growth risk at thermal bridges',
+      'Excess moisture trapped within the insulation layer',
+      'Gaps in the vapour control layer on the warm side',
+      'Solar radiation striking the external face of the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "What is the 'temperature factor' (fRsi) used for?",
     options: [
-      'Lock-off procedures and verification testing',
+      'Calculating the overall U-value of a wall build-up',
       'Assessing mould growth risk at thermal bridges',
-      'Minimum annual hours of recorded development',
-      'For legal compliance, safety tracking, and future reference',
+      'Setting the maximum air permeability of the dwelling',
+      'Determining the required thickness of external insulation',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What is the purpose of a 'breather membrane' in a wall?",
     options: [
       'Allows vapour to escape outward while preventing water ingress',
-      'Assessing mould growth risk at thermal bridges',
-      'Areas of higher thermal conductivity creating heat flow paths',
-      'Reduced thermal performance and potential structural damage',
+      'Blocks all moisture movement through the wall in both directions',
+      'Provides the main thermal insulation layer of the wall',
+      'Adds structural strength to the external leaf of the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary concern with moisture in insulation materials?',
     options: [
-      'Areas of higher thermal conductivity creating heat flow paths',
-      'Allows vapour to escape outward while preventing water ingress',
+      'It permanently increases the insulation’s thermal resistance',
+      'It improves the airtightness of the building envelope',
       'Reduced thermal performance and potential structural damage',
-      'Assessing mould growth risk at thermal bridges',
+      'It raises the dew point of the internal air',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: "What is meant by 'accredited construction details'?",
     options: [
-      'Allows vapour to escape outward while preventing water ingress',
-      'Areas of higher thermal conductivity creating heat flow paths',
-      'Reduced thermal performance and potential structural damage',
+      'Manufacturer guarantees on the durability of insulation products',
+      'Site records confirming a building has passed its air test',
+      'A register of approved building contractors for a region',
       'Pre-approved junction details that demonstrate thermal bridge compliance',
     ],
     correctAnswer: 3,

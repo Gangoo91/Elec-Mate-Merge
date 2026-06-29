@@ -29,8 +29,8 @@ const quickCheckQuestions = [
     id: 'cc-ta-ego-states',
     question:
       'In Eric Berne&rsquo;s Transactional Analysis, which ego state is characterised by rational, fact-based responses without emotional bias?',
-    options: ['Parent', 'Adult', 'Child', 'Supervisor'],
-    correctIndex: 1,
+    options: ['Parent', 'Supervisor', 'Child', 'Adult'],
+    correctIndex: 3,
     explanation:
       'The Adult ego state operates on logic, data and objective assessment. It processes information without the emotional judgement of the Parent state or the emotional reactivity of the Child state. Adult-to-Adult communication is the most effective mode for professional interactions on site.',
   },
@@ -39,12 +39,11 @@ const quickCheckQuestions = [
     question:
       'Which of the following is the best example of two-way communication on a construction site?',
     options: [
-      'A safety notice pinned to the welfare cabin wall',
       'A toolbox talk where workers ask questions and the supervisor responds',
+      'A safety notice pinned to the welfare cabin wall',
       'An email sent to all subcontractors with the weekly programme',
-      'A fire alarm sounding to signal evacuation',
-    ],
-    correctIndex: 1,
+      'A fire alarm sounding to signal evacuation'],
+    correctIndex: 0,
     explanation:
       'A toolbox talk where workers ask questions and the supervisor responds is two-way communication because there is a message, a response, and feedback flowing in both directions. The other options are all one-way communication &mdash; information flows from sender to receiver with no mechanism for immediate feedback.',
   },
@@ -95,8 +94,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Which ILM Level 2 Unit specifically covers the principles of workplace communication?',
-    options: ['Unit 8000-250', 'Unit 8000-274', 'Unit 8000-310', 'Unit 8000-412'],
-    correctAnswer: 1,
+    options: ['Unit 8000-250', 'Unit 8000-412', 'Unit 8000-310', 'Unit 8000-274'],
+    correctAnswer: 3,
     explanation:
       'ILM Level 2 Unit 8000-274 &mdash; "Developing Yourself as a Team Leader" &mdash; includes the requirement to understand and apply the principles of workplace communication. It defines effective communication as the exchange of information, ideas or feelings that results in a shared understanding between all parties.',
   },
@@ -104,12 +103,11 @@ const quizQuestions = [
     id: 4,
     question: 'In Transactional Analysis, the Critical Parent ego state is characterised by:',
     options: [
-      'Logical, fact-based responses',
-      'Playful, spontaneous reactions',
       'Judgemental, rule-enforcing language',
-      'Fearful, submissive behaviour',
-    ],
-    correctAnswer: 2,
+      'Playful, spontaneous reactions',
+      'Logical, fact-based responses',
+      'Fearful, submissive behaviour'],
+    correctAnswer: 0,
     explanation:
       'The Critical Parent ego state communicates through judgement, rules, criticism and authority. Language patterns include &ldquo;You should&rdquo;, &ldquo;You must&rdquo;, &ldquo;That&rsquo;s wrong&rdquo;, and &ldquo;How many times do I have to tell you?&rdquo; While sometimes necessary for safety-critical instructions, overuse of Critical Parent triggers defensive Child responses in the receiver.',
   },
@@ -127,11 +125,10 @@ const quizQuestions = [
     question: 'Which of the following best describes two-way communication?',
     options: [
       'A message is sent from one person to another',
-      'A message is sent and the receiver provides feedback to confirm understanding',
       'Two people send messages at the same time',
-      'A message is sent using two different channels simultaneously',
-    ],
-    correctAnswer: 1,
+      'A message is sent and the receiver provides feedback to confirm understanding',
+      'A message is sent using two different channels simultaneously'],
+    correctAnswer: 2,
     explanation:
       'Two-way communication is defined by the presence of a feedback loop &mdash; the receiver responds to the sender, confirming (or correcting) their understanding of the message. This allows the sender to verify that their message has been received and interpreted as intended, and to clarify or repeat if necessary.',
   },
@@ -141,11 +138,10 @@ const quizQuestions = [
       'A site supervisor responds to an apprentice&rsquo;s mistake by saying: &ldquo;You should know better than that by now!&rdquo; The apprentice replies: &ldquo;It wasn&rsquo;t my fault, the drawings were wrong!&rdquo; What Transactional Analysis pattern does this represent?',
     options: [
       'Adult to Adult',
-      'Parent to Child / Child to Parent',
-      'Nurturing Parent to Free Child',
       'Adult to Parent',
-    ],
-    correctAnswer: 1,
+      'Nurturing Parent to Free Child',
+      'Parent to Child / Child to Parent'],
+    correctAnswer: 3,
     explanation:
       'The supervisor is communicating from the Critical Parent ego state (judgemental, rule-enforcing), and the apprentice responds from the Adapted Child ego state (defensive, blame-shifting). This Parent-Child / Child-Parent pattern is a crossed transaction that typically escalates conflict. The productive alternative would be for either party to shift to Adult mode.',
   },
@@ -154,12 +150,11 @@ const quizQuestions = [
     question:
       'On a construction site, which of the following is the most effective way to reduce "noise" during a safety briefing?',
     options: [
-      'Speak louder to overcome background machinery',
       'Hold the briefing in a quiet area, use clear language, and ask workers to repeat key points back',
+      'Speak louder to overcome background machinery',
       'Send a written email instead of speaking in person',
-      'Use as much technical terminology as possible to sound authoritative',
-    ],
-    correctAnswer: 1,
+      'Use as much technical terminology as possible to sound authoritative'],
+    correctAnswer: 0,
     explanation:
       'Reducing noise requires addressing all forms of interference: physical (moving to a quiet area), semantic (using clear, jargon-free language), and psychological (checking understanding through feedback). Simply speaking louder only addresses physical noise. Written email removes the opportunity for immediate clarification. Technical jargon introduces semantic noise.',
   },

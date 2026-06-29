@@ -73,10 +73,10 @@ export const emergencyLightingModule4Section1QuizData: QuizQuestion[] = [
     question:
       'How long must emergency lighting circuits remain operational in most public buildings?',
     options: [
-      'Mineral Insulated Copper Cable (MICC)',
-      'It reduces toxic fumes and smoke opacity in fire conditions',
+      '20 minutes minimum in all premises',
+      '30 minutes minimum (1 hour where occupants sleep)',
       '1 hour minimum (3 hours where occupants sleep)',
-      'Central battery systems require significantly more cable',
+      '3 hours minimum in every type of premises',
     ],
     correctAnswer: 2,
     explanation:
@@ -126,10 +126,10 @@ export const emergencyLightingModule4Section1QuizData: QuizQuestion[] = [
     id: 10,
     question: 'What problem occurred in the London shopping centre case study?',
     options: [
-      'To prevent faults from spreading between systems during fire',
-      'They melt at 120-180°C causing cables to collapse',
+      'The battery room was undersized for the load',
+      'Luminaires were spaced too far apart on escape routes',
       'Standard PVC cables were used instead of fire-resistant cables',
-      'It reduces toxic fumes and smoke opacity in fire conditions',
+      'The emergency lighting used the wrong colour temperature',
     ],
     correctAnswer: 2,
     explanation:

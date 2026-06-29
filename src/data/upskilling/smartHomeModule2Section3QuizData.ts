@@ -92,7 +92,7 @@ export const smartHomeModule2Section3QuizQuestions = [
       'Apple, Google, Amazon, Samsung',
       'Only Google and Amazon',
       'Only Apple and Samsung',
-      'Only startups and small companies',
+      'Only manufacturers based in Europe',
     ],
     correct: 0,
     explanation:

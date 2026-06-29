@@ -59,9 +59,9 @@ const quizQuestions = [
     '25 %',
   ], correctAnswer: 2, explanation: '4-6 % typical for distribution units. Higher reg means more drop on load — limits LV network reach.' },
   { id: 3, question: 'Energy efficiency over a day depends on:', options: [
-    'Measuring pressure drop across a flow restriction',
-    'Anxiety, depression, stress, worry, panic, dread, terror',
-    'Offsets should only be used for residual emissions after 90%+ reduction',
+    'Only the transformer rated kVA',
+    'Only the peak demand during the day',
+    'The supply frequency staying at 50 Hz',
     'Load profile through 24 h, plus iron loss being constant',
   ], correctAnswer: 3, explanation: 'All-day efficiency factors the time spent at each load level. Iron loss runs 24 h regardless.' },
   { id: 4, question: 'A transformer running 24 h with 5 kW iron loss wastes how many kWh per year (approximate)?', options: [
@@ -83,16 +83,16 @@ const quizQuestions = [
     '50 %',
   ], correctAnswer: 2, explanation: '4-6 % is standard. Compromise between regulation (low Z preferred) and fault current limiting (high Z preferred).' },
   { id: 7, question: 'Higher Z_pu means:', options: [
-    'DC isolation and dual energy source considerations',
-    'A blue circular sign (e.g., \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Hard hats must be worn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
-    '1 unit on the drawing equals 50 units in real life',
+    'Higher fault current and lower regulation',
+    'No effect on fault current or regulation',
+    'Higher efficiency at full load',
     'Lower fault current and higher regulation',
   ], correctAnswer: 3, explanation: 'Z_pu acts as a series impedance. Higher Z = more voltage drop on load AND lower fault current downstream.' },
   { id: 8, question: 'Tap changers compensate for:', options: [
     'Variable load and supply voltage to keep secondary voltage near nominal',
-    'Adults need to understand why they are learning something before they engage with it',
-    'Your brain needs time to refocus on the new task, losing momentum',
-    'A crane, chain block, or hydraulic gantry rated for the transformer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight',
+    'Harmonic distortion from non-linear loads',
+    'Iron losses in the transformer core',
+    'Inrush current at the moment of energisation',
   ], correctAnswer: 0, explanation: 'Off-circuit tap changers select different turns to bias the ratio up or down — used when supply voltage drifts away from design.' },
 ];
 

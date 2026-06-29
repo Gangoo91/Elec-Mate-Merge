@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'max-demand-definition',
     question: 'What is maximum demand in an electrical installation?',
     options: [
-      'Discharge circuit and reconnect equipment',
-      'Ensures emergency systems work to required standards',
-      'Square root of 2 times magnitude at 45 degrees',
       'The highest current expected to flow at any time',
+      'The sum of all connected equipment ratings added together',
+      'The continuous current rating of the main protective device',
+      'The average current drawn over a 24-hour period',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Maximum demand is the highest electrical current or power expected to flow at any time in an installation. It is always less than total connected load due to diversity - not all loads operate simultaneously at full capacity.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'diversity-purpose',
     question: 'Why are diversity factors applied in load assessment?',
     options: [
-      'Higher grade exhaust heat (typically 450-550°C)',
-      'Continuous trickle charging to maintain full charge',
-      'A system that automatically tests and records emergency luminaire function',
+      'To increase the calculated demand as a safety margin',
       'To account for the fact that not all loads operate simultaneously',
+      'To convert the connected load from kW into kVA',
+      'To ensure every circuit is loaded to exactly 100% of its rating',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Diversity factors account for the reality that connected loads do not all operate at the same time at full capacity. This allows more realistic sizing of supply equipment without over-engineering the installation.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'supply-capacity',
     question: 'What determines the available supply capacity from a DNO?',
     options: [
-      'DC provides stable readings without capacitive effects',
+      'The rating of the customer\'s main switch alone',
       'The existing network infrastructure and transformer capacity',
-      'Within 15 days of the accident, using the appropriate online form',
-      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
+      'The number of final circuits in the installation',
+      'The power factor of the customer\'s connected load',
     ],
     correctIndex: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'When calculating maximum demand for motor loads, what factor accounts for starting current?',
     options: [
-      'Maximum demand, load type, power factor, and growth expectations',
+      'All motors assessed at their full load current with no allowance',
       'Largest motor at 125% or higher, others at full load',
-      'To determine overall supply requirements for a building or site',
-      'Building use, technology trends, and client expansion plans',
+      'The smallest motor at 125%, with all others ignored',
+      'Every motor assessed at six times its full load current',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'What information must be provided to the DNO when applying for a new supply?',
     options: [
-      'Largest motor at 125% or higher, others at full load',
-      'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
+      'Only the postcode of the property and the customer\'s name',
+      'The make and model of every appliance to be installed',
       'Maximum demand, load type, power factor, and growth expectations',
-      'Apply for supply upgrade, consider on-site generation, or implement load management',
+      'The insulation resistance test results for the existing installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     question:
       'In a residential development with 20 dwellings, each with a 100A supply, what diversity factor would typically apply?',
     options: [
-      'Lithium iron phosphate (LiFePO4)',
-      'Switchgear, controls, and interlocks',
-      'Visual inspection of leads and probes',
+      '100% (2000A equivalent — no diversity)',
+      'Approximately 75% (1500A equivalent)',
+      'Approximately 60% (1200A equivalent)',
       'Approximately 30-40% (600-800A equivalent)',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'What is the purpose of a block load assessment?',
     options: [
       'To determine overall supply requirements for a building or site',
-      'Largest motor at 125% or higher, others at full load',
-      'Building use, technology trends, and client expansion plans',
-      'Essential/critical loads that must always be available at full capacity',
+      'To size the protective device for a single final circuit',
+      'To measure the earth fault loop impedance at the origin',
+      'To calculate the voltage drop along one radial circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which factor most significantly affects future load growth allowance?',
     options: [
-      'Largest motor at 125% or higher, others at full load',
+      'The colour of the distribution board enclosure',
       'Building use, technology trends, and client expansion plans',
-      'Maximum demand, load type, power factor, and growth expectations',
-      'Approximately 30-40% (600-800A equivalent)',
+      'The length of the supply cable from the DNO',
+      'The number of socket outlets installed per room',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     question:
       'What is the recommended approach when calculated maximum demand exceeds available DNO supply?',
     options: [
-      'To determine overall supply requirements for a building or site',
-      'Maximum demand, load type, power factor, and growth expectations',
+      'Ignore the shortfall and rely on diversity to make up the difference',
+      'Uprate the main protective device to accept the higher current',
       'Apply for supply upgrade, consider on-site generation, or implement load management',
-      'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
+      'Reduce the cable sizes to lower the overall installed load',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     id: 11,
     question: 'How does power factor correction affect maximum demand assessment?',
     options: [
-      'Maximum demand, load type, power factor, and growth expectations',
-      'Building use, technology trends, and client expansion plans',
-      'Apply for supply upgrade, consider on-site generation, or implement load management',
+      'It increases the kVA demand for the same kW load',
+      'It has no effect on kVA demand, only on energy consumed',
+      'It reduces the kW load while leaving the kVA demand unchanged',
       'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
     ],
     correctAnswer: 3,
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'When would you NOT apply diversity to a load in maximum demand calculations?',
     options: [
       'Essential/critical loads that must always be available at full capacity',
-      'Apply for supply upgrade, consider on-site generation, or implement load management',
-      'Largest motor at 125% or higher, others at full load',
-      'Maximum demand, load type, power factor, and growth expectations',
+      'General lighting circuits in a large commercial office',
+      'Socket outlet circuits assessed on a VA/m² basis',
+      'Domestic ring final circuits supplying general use',
     ],
     correctAnswer: 0,
     explanation:

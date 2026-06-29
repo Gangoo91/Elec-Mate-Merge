@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'crimp-quality',
     question: 'What is the most reliable method of verifying a crimp termination?',
     options: [
-      'Electrical systems must be maintained so as to prevent danger, and while records are not explicitly mandated, they are the only practical way to demonstrate compliance',
-      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'A quick visual glance to confirm the lug looks fully seated on the conductor',
+      'Measuring the resistance across the crimp with a standard multimeter',
       'A pull test to confirm mechanical strength, combined with a visual inspection for correct die selection and full conductor insertion',
-      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
+      'Confirming the crimp was made with any ratchet tool that completed its cycle',
     ],
     correctIndex: 2,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What determines the correct cable gland type for an SWA cable installation?',
     options: [
       'The cable outer diameter, armour type (wire or tape), the environment (indoor/outdoor) and whether the armour is used as a CPC',
-      'Generate a known reference voltage so you can verify the voltage indicator is working — when no known live supply is conveniently available.',
-      'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
-      'When there is an identifiable disease or adverse health effect related to the exposure, and a valid technique exists to detect it',
+      'Only the colour of the cable sheath and the manufacturer brand',
+      'Only the nominal voltage of the circuit the cable is supplying',
+      'Only the number of cores in the cable, regardless of its construction',
     ],
     correctIndex: 0,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: 'Why is correct torque critical for electrical terminations?',
     options: [
       'Under-torque causes high-resistance joints leading to overheating; over-torque damages conductors and terminal components, both creating fire and failure risks',
-      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
-      'The storage container must be within a secondary containment system (bund) capable of holding 110% of the container\\\\\\\'s capacity',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
+      'Correct torque is only needed to keep the connection looking neat and professional',
+      'Torque has no effect on the joint as long as the conductor is fully inserted',
+      'Higher torque is always better because it guarantees a lower-resistance joint',
     ],
     correctIndex: 0,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question:
       'Why should ferrules be fitted to stranded conductors before terminating into spring-cage or screw-cage terminals?',
     options: [
-      'The centre of gravity shifts forward and upward as the bump grows, increasing spinal loading, reducing balance, and making lifting more awkward',
-      'Each test relies on the integrity of a previous test (e.g. IR cannot be safely interpreted without continuity of cpc; live tests require dead-test confirmation of earthing)',
-      'RA = hazards and controls; MS = the sequence of work; PTW = formal authorisation for higher-risk tasks for a specific shift',
+      'To increase the current-carrying capacity of the stranded conductor',
+      'To colour-code the conductor so it can be identified at the terminal',
+      'To insulate the bare conductor end and prevent accidental contact',
       'To prevent individual strands from splaying, ensure all strands make contact with the terminal, and provide a consistent, repeatable connection',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A compression crimp lug relies on:',
     options: [
-      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
+      'A small amount of solder flowed into the barrel to bond the conductor in place',
       'Mechanical deformation of the lug barrel onto the conductor using a calibrated crimping tool, creating a gas-tight joint',
-      'Whether ties are intact, bracing is undamaged, sheeting is secure, and the scaffold is still plumb',
-      'Push it with straight arms at the mid-point of the drum, controlling speed and direction, with a clear path ahead',
+      'A threaded grub screw clamping down onto the conductor inside the barrel',
+      'A spring inside the barrel maintaining constant pressure on the conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'When terminating MI (mineral insulated) cable, the most critical step is:',
     options: [
-      'To grip the cable inner sheath with the cone for strain relief, and to clamp the SWA armour wires between the gland body and locknut for earth continuity and mechanical retention',
-      'Including a weather seal (neoprene shroud) to protect against moisture ingress, making it suitable for outdoor installations',
+      'Stripping the copper sheath with a hacksaw to expose the conductors quickly before fitting the sealing pot',
+      'Tinning the copper sheath with solder so the sealing pot bonds permanently to the cable',
       'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
-      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
+      'Leaving the sealing pot open for several minutes so the MgO insulation can dry out before fitting the disc',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'The purpose of a cable gland cone and armour clamp in a BW-type gland is:',
     options: [
-      'Generally discouraged for power circuits due to solder creep under load, but acceptable for specific signal and electronic applications where mechanical stress is minimal',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
+      'To seal the cable outer sheath against rain and moisture, making the gland suitable for outdoor or wet locations',
+      'To insulate the armour wires from the enclosure so the armour cannot carry any fault current to earth',
+      'To clamp the bare conductor cores directly so that no separate lugs or crimps are needed at the terminals',
       'To grip the cable inner sheath with the cone for strain relief, and to clamp the SWA armour wires between the gland body and locknut for earth continuity and mechanical retention',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'A CW-type cable gland differs from a BW-type by:',
     options: [
       'Including a weather seal (neoprene shroud) to protect against moisture ingress, making it suitable for outdoor installations',
-      'Terminating into spring-cage or screw-cage terminals to prevent strand separation, ensure all strands make contact, and provide a reliable, repeatable connection',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
+      'Omitting the armour clamp entirely, so the cable armour is not used as an earth path through the gland',
+      'Using a non-metallic nylon body instead of brass, so it provides no earth continuity through the gland',
+      'Accepting only non-armoured cable, with a simple compression seal on the outer sheath and no cone',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'Spring-cage terminals (as used in modern distribution boards and control panels) offer which advantage over screw terminals?',
     options: [
-      'Hot spots indicating high-resistance connections that require immediate investigation, re-torquing or replacement before they cause failure',
+      'They carry a higher current than an equivalent screw terminal because the spring increases the conductor cross-sectional area',
       'They maintain constant contact pressure over time, are vibration-resistant and do not require periodic retorquing',
-      'Including a weather seal (neoprene shroud) to protect against moisture ingress, making it suitable for outdoor installations',
-      'A hydraulic crimping tool with the manufacturer-specified die set matched to the lug barrel size',
+      'They allow bare stranded conductors to be inserted directly without ferrules and still grip every strand reliably',
+      'They can be re-torqued to a higher value than screw terminals, giving a lower-resistance connection',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Ferrules should be used on stranded conductors when:',
     options: [
-      'Including a weather seal (neoprene shroud) to protect against moisture ingress, making it suitable for outdoor installations',
-      'Clamping the cable braid or foil screen around its full circumference to the metallic gland body, which is bonded to the panel earth via the gland plate',
+      'Only on conductors of 16 mm squared and above, as smaller stranded conductors do not benefit from ferrules',
+      'Only when the conductor is solid, to round off the cut end before it enters the terminal',
       'Terminating into spring-cage or screw-cage terminals to prevent strand separation, ensure all strands make contact, and provide a reliable, repeatable connection',
-      'They maintain constant contact pressure over time, are vibration-resistant and do not require periodic retorquing',
+      'Only outdoors, where the ferrule provides additional moisture sealing for the stripped conductor end',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'The correct tool for crimping a 50 mm squared copper compression lug is:',
     options: [
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'Risk assessment, permit systems, trained personnel, and appropriate PPE',
-      'Recording skills learned, challenges overcome, and CPD activities completed',
+      'A pair of combination pliers squeezed firmly with both hands',
+      'A hand ratchet crimper of the type used for small bootlace ferrules',
+      'A bench vice with the lug clamped between the jaws',
       'A hydraulic crimping tool with the manufacturer-specified die set matched to the lug barrel size',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'When re-terminating a cable during maintenance, the technician should:',
     options: [
       'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
-      'Hot spots indicating high-resistance connections that require immediate investigation, re-torquing or replacement before they cause failure',
-      'They maintain constant contact pressure over time, are vibration-resistant and do not require periodic retorquing',
+      'Reuse the original lug, simply re-crimping it harder to take up any slack from the previous termination',
+      'Re-tin the conductor strands with solder before refitting the existing lug to improve the contact',
+      'Twist the strands tightly together and clamp them directly under the terminal screw without a lug',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The maximum permissible temperature for a bolted busbar joint is:',
     options: [
-      'Including a weather seal (neoprene shroud) to protect against moisture ingress, making it suitable for outdoor installations',
+      'A fixed 40 degrees C regardless of ambient, as busbar joints must never run above hand-warm',
       'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
-      'Hot spots indicating high-resistance connections that require immediate investigation, re-torquing or replacement before they cause failure',
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
+      'Unlimited, provided the joint is correctly torqued, because copper does not degrade with temperature',
+      'Exactly 160 degrees C, the melting point of the tin plating used on busbar joint faces',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'An EMC cable gland achieves 360-degree screen termination by:',
     options: [
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
+      'Gathering the screen into a single pigtail wire and connecting it to the nearest earth terminal in the enclosure',
+      'Wrapping conductive copper tape around the gland body once the cable is fitted, then earthing the tape',
       'Clamping the cable braid or foil screen around its full circumference to the metallic gland body, which is bonded to the panel earth via the gland plate',
-      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
+      'Relying on the cable armour wires, clamped in the cone, to carry the screen current to the enclosure earth',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'Soldered electrical connections in maintenance work are:',
     options: [
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
-      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
-      'Terminating into spring-cage or screw-cage terminals to prevent strand separation, ensure all strands make contact, and provide a reliable, repeatable connection',
+      'The preferred method for all power terminations because solder gives the lowest possible joint resistance',
+      'Prohibited entirely by BS 7671, which does not permit any soldered electrical connection',
+      'Always acceptable on high-vibration motor terminals, as the solder fuses the strands solidly together',
       'Generally discouraged for power circuits due to solder creep under load, but acceptable for specific signal and electronic applications where mechanical stress is minimal',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'During periodic inspection, a thermographic survey of cable terminations reveals:',
     options: [
       'Hot spots indicating high-resistance connections that require immediate investigation, re-torquing or replacement before they cause failure',
-      'Ensuring the seal is moisture-tight to prevent hygroscopic MgO insulation from absorbing moisture, which would drastically reduce insulation resistance',
-      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
-      'Cut back to clean, undamaged conductor; use a new correctly sized lug; crimp with the correct tool and die; and verify with pull test and visual inspection',
+      'The exact torque value applied to each terminal, read directly from the surface temperature of the bolt',
+      'The insulation resistance of each conductor, displayed as a colour gradient along the cable length',
+      'Cold spots that confirm a terminal is carrying its full rated current without any wasted power',
     ],
     correctAnswer: 0,
     explanation:

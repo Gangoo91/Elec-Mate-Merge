@@ -41,10 +41,10 @@ const checks = [
     question:
       'On a small commercial fit-out you have produced the cable schedule and single-line drawing. The contractor installs to your spec but uses 4 mm² where you specified 6 mm². Who carries the design liability for any subsequent voltage-drop complaint?',
     options: [
-      'Citizens Advice offers free guidance on consumer and employment rights, while the FSB provides legal advice, mediation support, and business guidance for members',
+      'The installer alone, because once you hand over a design the responsibility transfers entirely to whoever builds it — the designer is discharged the moment the drawings leave their desk.',
       'Both jointly, and you must verify the as-installed cable matches your design before signing the EIC. If the installer deviated, you either re-design to suit or insist the cable is changed.',
-      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
+      'The designer alone, regardless of what was actually installed — the design declaration on the EIC makes the designer liable for the finished installation including any deviations the installer introduced.',
+      'Neither — a voltage-drop complaint is a workmanship matter not a design matter, so it falls outside both the design and construction declarations and is purely a commissioning issue.',
     ],
     correctIndex: 1,
     explanation:
@@ -55,9 +55,9 @@ const checks = [
     question:
       'Your client wants a 10 kW shower on a 6 mm² T&E run because "the previous one worked fine on that". You have run the calc and the new shower needs 10 mm². The right action is:',
     options: [
-      'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives',
-      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
-      'Clamping the cable braid or foil screen around its full circumference to the metallic gland body, which is bonded to the panel earth via the gland plate',
+      'Fit the 10 mm² but quietly install it without telling the client, since the cable is hidden in the wall and the customer will never know which size was used.',
+      'Install the 6 mm² as the client asked but add a note on the EIC disclaiming responsibility — the disclaimer transfers the liability to the client and lets you certify the work.',
+      'Down-rate the protective device to a smaller MCB so the 6 mm² is technically protected, then certify the install as compliant even though the shower will not get its rated current.',
       'Document the conflict in writing, explain the BS 7671 / thermal / Vd reason for 10 mm², offer the compliant design as your only option, and decline to certify the non-compliant install if the client overrides you.',
     ],
     correctIndex: 3,
@@ -69,10 +69,10 @@ const checks = [
     question:
       'Reg 132.13 of BS 7671 A4:2026 says the designer must produce documentation that includes which of the following at design stage?',
     options: [
-      'Create a private, safe environment, express what you have observed factually, reassure confidentiality within safety limits, and leave the door open for future conversations',
-      'Adequate and appropriate equipment, facilities, and personnel to enable first aid to be given to employees who are injured or become ill at work',
+      'Only the Electrical Installation Certificate itself — the EIC is the complete design record and no separate drawings, calculations or device specifications are required.',
+      'A signed risk assessment and method statement (RAMS) for the construction work, since the design documentation requirement is satisfied by the health-and-safety paperwork.',
       'Drawings, cable and circuit details, calculations of cable size, voltage drop and earth fault loop impedance, and any specifications for protective devices.',
-      'The nature of hazards, number of workers, location, shift patterns, history of incidents and distance from emergency services',
+      'A photographic record of the finished installation, because at design stage the only required documentation is the visual evidence that the work was completed correctly.',
     ],
     correctIndex: 2,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the structural difference between an L2 installer and an L3 designer?',
     options: [
-      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
+      'The L2 carries the design responsibility and the L3 only installs — the qualification levels reverse the usual roles, with the more senior person doing the hands-on work.',
       'The L2 installs to a specification that someone else has produced; the L3 produces the specification, and carries the design responsibility under Reg 132 of BS 7671.',
-      'Fused test leads with finger guards, a maximum tip exposure of 4 mm, and a proving unit or known supply for verification',
-      'Type B — required because the EV charger&rsquo;s onboard charger can produce smooth DC fault current that would blind a Type A or AC.',
+      'There is no structural difference — L2 and L3 are interchangeable terms for the same role, and both design and install in equal measure on every job.',
+      'The L2 works only on domestic installations and the L3 only on commercial — the difference is the type of premises, not the design-versus-install responsibility.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'BS 7671 splits responsibility into three roles. Which?',
     options: [
-      'The SPD has reached end of life and needs replacement — it is no longer providing protection',
-      'Delta primary, star secondary with 11 o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'clock phase shift',
+      'Client, contractor and Building Control — the three parties named on every Building Notice for notifiable work.',
+      'Apprentice, electrician and supervisor — the three site grades that share responsibility for an installation.',
       'Designer (Reg 132), constructor (Reg 134.1.1), and inspector/tester (Part 6).',
-      'Visibility - surface wiring is visible, concealed is hidden',
+      'Manufacturer, wholesaler and installer — the three points in the supply chain that a cable passes through before installation.',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 4,
     question: 'Coordination with other services means:',
     options: [
-      'Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.',
-      'The Electrical Contractors\' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).',
-      'MCS handles the technical certification. HIES (Home Insulation and Energy Systems Contractors Scheme) and RECC (Renewable Energy Consumer Code) handle the consumer-protection side — installer-customer contracts, deposit protection, dispute resolution, complaints handling. MCS-registered installers must also be members of one of these consumer codes. They\'re complementary regulatory layers.',
-      '75 degrees from the horizontal — the 1:4 rule. The base sits one unit out from the wall for every four units of vertical height. So for a ladder reaching 4m up the wall, the base sits 1m out. Steeper than 75 degrees and the ladder is liable to topple backwards; shallower and the feet can slip out.',
+      'Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\'s install conflicts with anyone else\'s.',
+      'Making sure every electrician on the job holds the same JIB grade so the team is consistent — coordination is about matching the skill level of the operatives.',
+      'Agreeing a single supplier for all the cable and accessories so the materials match across the project — coordination is a procurement exercise.',
+      'Synchronising the start and finish times of every trade so they all arrive on site together each morning — coordination is purely a scheduling task.',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'The L3 designer\'s first design action on any new project is to:',
     options: [
-      'Complete the appropriate certificate or report, update maintenance records, mark up any drawing changes, and inform the duty holder',
+      'Order the cable and protective devices, so the materials are on site ready before any calculations are started.',
       'Establish the supply characteristics — TN-S vs TN-C-S vs TT, declared Ze, available PSCC, three-phase or single-phase, demand limits.',
-      'All reasonable steps were taken and all due diligence exercised to avoid the commission of the offence',
-      'Non-domestic premises only (including the common areas of domestic buildings such as shared hallways and stairwells)',
+      'Draw the single-line diagram first, then work out the supply arrangement afterwards once the topology is fixed.',
+      'Choose the accessory style and finish with the client, since the aesthetic decisions drive every later technical choice.',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'Why is the design-stage Zs calculation always slightly different from the measured Zs at verification?',
     options: [
-      'Standard ring final is designed and protected at 30 A or 32 A regardless of connected appliance count, on the basis that diversity across the multiple outlets keeps simultaneous draw below the protective device rating. The ring itself is the protected entity, not each outlet.',
-      'Investigate the complaint — check harness fit and size, provide training if needed, and ensure no worker is permitted to work at height without the required PPE; escalate to the subcontractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s management if necessary',
+      'Because the design Zs is always measured with the supply disconnected while the verification Zs is measured live, so the two methods can never be compared directly.',
+      'Because the design uses the measured Ze from a previous EICR while verification uses the DNO declared Ze, so the two figures start from different supply assumptions.',
       'Because the design uses a worst-case Cmin factor (0.95 in BS 7671 A4:2026 Appendix 14, since moved to Appendix 3) to allow for declared rather than measured Ze, expected temperature rise of conductors, and manufacturing tolerance — the install is then verified at ambient with the actual cable.',
-      'A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management',
+      'Because the design Zs already includes the 0.8 rule-of-thumb correction whereas the verification reading does not, so the measured value is always higher than the design value.',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'BS 7671 Reg 132.13 requires the designer to leave behind:',
     options: [
-      'Selected and erected to provide adequate mechanical protection — by cable type (SWA, MICC), enclosure (conduit, trunking), or location (out of reach). Risk-assessed against the level of damage expected.',
-      'Evaluate whether the specialism still has future value regardless of time already invested, and pivot the knowledge to a related growing area if not',
-      'It is denser than air and accumulates at low levels, is an asphyxiant that displaces oxygen, and at higher concentrations acts as a direct toxin affecting the central nervous system',
+      'Only the consumer-unit circuit chart inside the board door — nothing else needs to be retained once the EIC is issued.',
+      'A spare length of each cable type used, so the next contractor can match the installation when extending it.',
+      'A copy of the BS 7671 edition the design was based on, which is the only document the standard requires the designer to hand over.',
       'Documentation: drawings, calculations, protective-device specs and any operating notes — sufficient that another competent person can extend, modify or maintain the installation safely.',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
       'You have completed the design for a new domestic CU upgrade with EV charger, solar PV and battery. The customer asks you to email "just the bits I need". The professional answer is:',
     options: [
       'Send everything — drawings, calcs, schedules, device specs — and explain that BS 7671 Reg 132.13 requires complete documentation and you keep the master copy on file for at least the design life of the installation.',
-      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
-      'Rescue equipment, trained rescue personnel, communication methods, first aid arrangements, and procedures for raising the alarm and coordinating with emergency services',
-      'When you take the mains off, the changeover may auto-start the generator and re-energise the bus from the other side. Isolate the generator output (and disable auto-start) before you start work',
+      'Send only the consumer-unit schedule the client asked for, since the customer owns the installation and is entitled to decide which documents they receive.',
+      'Send nothing in writing and walk the client through the install verbally, because a verbal handover avoids leaving a paper trail that could be used against you later.',
+      'Send only the EIC, because the certificate is the only legally required document and the rest of the design pack is internal working material the client has no right to.',
     ],
     correctAnswer: 0,
     explanation:

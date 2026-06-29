@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ot-cybersecurity-importance',
     question: 'Why is cybersecurity critically important for industrial control systems?',
     options: [
-      'Your supervisor (who handles the supplier dispute) and note the shortage on the signed delivery note',
+      'Because OT systems hold the most commercially sensitive corporate financial data on the network',
       'Because a cyber attack on OT systems could cause physical harm, environmental damage, production loss, and safety hazards',
-      'A structured conversation between the assessor and learner to explore underpinning knowledge and understanding',
-      'Automatically unfair dismissal — no qualifying period applies and uncapped compensation may follow',
+      'Because control systems consume the largest share of the site electrical load',
+      'Because OT equipment is more expensive to replace than office IT hardware',
     ],
     correctIndex: 1,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'iec-62443-scope',
     question: 'What does the IEC 62443 standard series cover?',
     options: [
-      'Information about the structure needed for future construction work, maintenance, and demolition',
       'A comprehensive framework for industrial automation and control system (IACS) cybersecurity',
-      'The RMS value of the AC symmetrical component at the instant of fault',
-      'No — they should report their condition to their supervisor and not work at height until they are fit to do so',
+      'Minimum insulation-resistance values for industrial fixed wiring installations',
+      'Energy efficiency labelling requirements for industrial motors and drives',
+      'The functional safety lifecycle for safety instrumented systems only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'IEC 62443 is the international standard series specifically addressing cybersecurity for industrial automation and control systems (IACS). It covers organisational security policies, system architecture and design, component security requirements, and ongoing maintenance and operations.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'dmz-purpose',
     question: 'What is a DMZ in industrial network architecture?',
     options: [
-      'To divide a building into fire-resistant compartments that contain fire and smoke to the compartment of origin, limiting fire spread and protecting escape routes',
-      'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'SF6 must be recovered by certified personnel, leaks detected and repaired, and records maintained',
-      'A demilitarised zone — a network segment between the OT and IT networks that controls and monitors all data exchange between them',
+      'A redundant backup network that mirrors the entire control system in real time',
+      'A wireless mesh zone used to connect mobile maintenance laptops directly to PLCs',
+      'A high-security physical room where the main control servers are housed',
+      'A buffer network segment between the OT and IT networks that controls all data exchange',
     ],
     correctIndex: 3,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'What is the defence in depth approach to industrial cybersecurity?',
     options: [
       'Multiple overlapping layers of security controls so that if one layer is breached, additional layers continue to provide protection',
-      '6 boxes + 4 socket plates + 2 FCU plates + ~42 m of 2.5 mm² T&E (35 m × 1.20 routing) + grommets, fixings, sleeving.',
-      'A flat or degraded battery will prevent the engine from cranking and starting during an emergency',
-      'An overload occurs in a sound circuit due to excess demand; a short-circuit results from a fault of negligible impedance',
+      'Concentrating all security investment into a single high-specification perimeter firewall',
+      'Disconnecting the control network entirely so no external access is ever possible',
+      'Relying on antivirus software installed on every device as the sole control',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the Purdue Model in industrial cybersecurity?',
     options: [
-      'To describe in detail how the work will be carried out step-by-step, identifying hazards and controls at each stage, and defining the competencies and resources required',
-      'A reference architecture defining hierarchical network zones from Level 0 (physical process) through Level 5 (enterprise) with security controls between each level',
-      'Tick (acceptable), N/A (not applicable), LIM (limitation), or appropriate code — accompanied by an overall declaration',
-      'The risks, ergonomic requirements, health of the wearer, characteristics of the workstation, and compatibility with other PPE',
+      'A penetration-testing methodology used to probe industrial firewalls for weaknesses',
+      'A reference architecture defining hierarchical network zones from the physical process up to enterprise level',
+      'A risk-scoring formula that ranks discovered vulnerabilities by likelihood and consequence',
+      'A change-management procedure governing how PLC programmes are reviewed and modified',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is network segmentation in the context of industrial systems?',
     options: [
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
-      'It demonstrated that industrial control systems (specifically PLCs) could be targeted by sophisticated cyber attacks to cause physical damage',
+      'Encrypting all traffic on the control network with a single shared key',
+      'Replacing all copper Ethernet cabling with fibre-optic links',
       'Dividing the network into separate zones using VLANs, firewalls, and access controls to limit the spread of threats and control traffic flow',
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
+      'Scheduling network maintenance into defined time windows to limit disruption',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'What type of firewall is recommended between the OT and IT networks?',
     options: [
-      'To fix known software vulnerabilities in operating systems, applications, and firmware before they can be exploited by attackers',
-      'It demonstrated that industrial control systems (specifically PLCs) could be targeted by sophisticated cyber attacks to cause physical damage',
-      'A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks',
+      'A basic packet-filter firewall that only checks source and destination IP addresses',
+      'A host-based software firewall installed on each individual PLC',
+      'A consumer-grade router with its built-in firewall feature enabled',
       'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'What is the purpose of security patch management for industrial OT systems?',
     options: [
       'To fix known software vulnerabilities in operating systems, applications, and firmware before they can be exploited by attackers',
-      'A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks',
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
-      'It demonstrated that industrial control systems (specifically PLCs) could be targeted by sophisticated cyber attacks to cause physical damage',
+      'To increase the processing speed of legacy PLCs by removing unused features',
+      'To add new functionality and HMI graphics requested by operators',
+      'To compress stored historian data so it occupies less disk space',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is role-based access control (RBAC) in OT environments?',
     options: [
-      "A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks",
+      'Assigning a single shared administrator login to all maintenance staff for convenience',
       "Restricting system access based on the user's role, ensuring each person has only the minimum permissions needed for their job function",
-      "An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet",
-      "Continuously monitoring network traffic for unusual patterns that could indicate a cyber attack, unauthorised access, or a compromised device",
+      'Granting access automatically to anyone physically present in the control room',
+      'Logging every keystroke entered at an engineering workstation for later review',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What was the significance of the Stuxnet attack for industrial cybersecurity?',
     options: [
-      'Dividing the network into separate zones using VLANs, firewalls, and access controls to limit the spread of threats and control traffic flow',
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
+      'It was the first ransomware to encrypt office documents on enterprise IT networks',
+      'It proved that strong perimeter firewalls alone make OT networks fully secure',
       'It demonstrated that industrial control systems (specifically PLCs) could be targeted by sophisticated cyber attacks to cause physical damage',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
+      'It established the legal framework for reporting cyber incidents in the UK',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 7,
     question: 'What should an OT incident response plan include?',
     options: [
-      'A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
-      'Continuously monitoring network traffic for unusual patterns that could indicate a cyber attack, unauthorised access, or a compromised device',
-      'Documented procedures for detecting, classifying, containing, investigating, and recovering from cybersecurity incidents in the OT environment, coordinated with operations and safety teams',
+      'A fixed schedule of routine firmware updates for all field instruments',
+      'A list of approved suppliers for replacement control system hardware',
+      'The marketing communications strategy for reassuring affected customers',
+      'Documented procedures for detecting, containing and recovering from OT cybersecurity incidents',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'What is the purpose of OT network monitoring and anomaly detection?',
     options: [
       'Continuously monitoring network traffic for unusual patterns that could indicate a cyber attack, unauthorised access, or a compromised device',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
-      'Dividing the network into separate zones using VLANs, firewalls, and access controls to limit the spread of threats and control traffic flow',
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
+      'Measuring the bandwidth used by each device to optimise network throughput',
+      'Recording operator actions to assess individual productivity and performance',
+      'Automatically applying software patches to every device as soon as they are released',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the Security Level (SL) concept in IEC 62443?',
     options: [
-      'OT prioritises availability and safety over confidentiality, has long equipment lifecycles with legacy systems, limited downtime windows, and must consider physical safety implications',
+      'A rating of how much electrical power a control system consumes during operation',
       'A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks',
-      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
-      'USB is a significant attack vector — controls include disabling unused ports, whitelisting approved devices, scanning all media before use, and restricting personal USB devices from OT areas',
+      'A classification of how physically robust an enclosure is against dust and water',
+      'A grade indicating how quickly a system can recover after a power failure',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'How does OT cybersecurity differ from traditional IT cybersecurity?',
     options: [
-      'Restricting system access based on the user\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s role, ensuring each person has only the minimum permissions needed for their job function',
-      'Continuously monitoring network traffic for unusual patterns that could indicate a cyber attack, unauthorised access, or a compromised device',
-      'OT prioritises availability and safety over confidentiality, has long equipment lifecycles with legacy systems, limited downtime windows, and must consider physical safety implications',
-      'Dividing the network into separate zones using VLANs, firewalls, and access controls to limit the spread of threats and control traffic flow',
+      'OT places confidentiality above all other concerns, exactly as IT systems do',
+      'OT systems are replaced every two to three years like standard office computers',
+      'OT prioritises availability and safety, has long legacy lifecycles and limited downtime windows',
+      'OT networks never connect to enterprise systems and so face no meaningful risk',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 11,
     question: 'What are the UK NIS Regulations and who do they apply to?',
     options: [
-      'Restricting system access based on the user\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s role, ensuring each person has only the minimum permissions needed for their job function',
-      'USB is a significant attack vector — controls include disabling unused ports, whitelisting approved devices, scanning all media before use, and restricting personal USB devices from OT areas',
-      'A measure of required security capability (SL 1 to SL 4) based on the threat level, from casual violations to sophisticated state-sponsored attacks',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
+      'A voluntary code of practice for software developers writing PLC firmware',
+      'A standard limiting electromagnetic interference emitted by industrial equipment',
+      'A scheme certifying the energy efficiency of data-centre cooling systems',
+      'The 2018 regulations requiring operators of essential services to manage OT cyber risk',
     ],
     correctAnswer: 3,
     explanation:
@@ -213,10 +213,10 @@ const quizQuestions = [
     question:
       'What is the role of USB devices in OT security risks and what controls should be in place?',
     options: [
-      'USB is a significant attack vector — controls include disabling unused ports, whitelisting approved devices, scanning all media before use, and restricting personal USB devices from OT areas',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
-      'Dividing the network into separate zones using VLANs, firewalls, and access controls to limit the spread of threats and control traffic flow',
-      'Restricting system access based on the user\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s role, ensuring each person has only the minimum permissions needed for their job function',
+      'A significant attack vector — disable unused ports, whitelist devices and scan all media',
+      'No risk at all, because USB devices are physically unable to carry executable malware',
+      'A minor concern — ports should stay open so any engineer can quickly transfer files',
+      'A concern only for enterprise IT systems, never relevant to the OT environment itself',
     ],
     correctAnswer: 0,
     explanation:

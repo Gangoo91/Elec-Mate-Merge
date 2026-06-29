@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'dead-testing',
     question: 'Which tests must be carried out with the supply disconnected (dead testing)?',
     options: [
-      'To maintain light output and performance',
-      'AHU shutdown and access door release',
+      'Earth fault loop impedance and RCD operation',
+      'Prospective fault current and phase rotation',
       'Continuity and insulation resistance',
-      'Variable speed drive (VSD)',
+      'RCD trip time and functional testing',
     ],
     correctIndex: 2,
     explanation:
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     id: 'eic-purpose',
     question: 'What is the purpose of an Electrical Installation Certificate (EIC)?',
     options: [
-      'Integration with mechanical ventilation and air quality systems',
-      'Reasonable care and skill, at a reasonable price',
-      'Viewing the measurement scale at an angle',
+      'To record the periodic condition of an existing installation',
+      'To confirm the supply meets the DNO contract terms',
+      'To list any departures from the design specification',
       'To certify initial verification of a new installation',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'test-sequence',
     question: 'Why is the correct sequence of testing important?',
     options: [
-      'Carry out full initial verification style testing',
+      'It allows several circuits to be tested simultaneously',
       'To ensure earlier tests validate later test results',
-      'The minimum base dimension (the shorter side)',
-      'To simulate mains failure for testing',
+      'It reduces the number of instruments required',
+      'It shortens the time the installation must stay isolated',
     ],
     correctIndex: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What must be disconnected before carrying out insulation resistance testing?',
     options: [
-      'After all other tests are satisfactory and supply is energised',
-      'To verify protection settings, interlocks and control circuits operate correctly',
+      'The main earthing conductor and bonding leads',
+      'The line and neutral conductors at the origin',
       'Electronic equipment, surge protective devices, and voltage-sensitive devices',
-      'The person responsible for the design of the installation',
+      'All circuit protective devices and RCDs',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'When testing ring final circuit continuity, what confirms the ring is complete?',
     options: [
-      'Electronic equipment, surge protective devices, and voltage-sensitive devices',
-      'The person responsible for the design of the installation',
-      'After all other tests are satisfactory and supply is energised',
+      'A reading of zero ohms at every socket outlet',
+      'Insulation resistance above 1 megohm at each point',
+      'Equal voltage measured at the first and last socket',
       'Resistance at mid-point approximately equal to end-to-end values',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'What document must accompany every new electrical installation?',
     options: [
       'Electrical Installation Certificate (EIC)',
-      'Sinusoidal AC residual current only',
-      'Mixing RCD-protected and non-protected neutrals',
-      'Electric vehicle charging and smart appliances',
+      'Electrical Installation Condition Report (EICR)',
+      'Minor Electrical Installation Works Certificate',
+      'Building Regulations completion certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'When should RCD operation be tested during commissioning?',
     options: [
-      'To verify protection settings, interlocks and control circuits operate correctly',
-      'PSCC/PFC and Ze are within design parameters',
+      'Immediately after the insulation resistance test',
+      'Before the continuity of protective conductors',
       'After all other tests are satisfactory and supply is energised',
-      'Resistance at mid-point approximately equal to end-to-end values',
+      'During the visual inspection, before any testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of functional testing during switchgear commissioning?',
     options: [
-      'To allow systematic fault identification and prevent cascading failures',
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'After all other tests are satisfactory and supply is energised',
+      'To measure the prospective short circuit current at the busbar',
+      'To confirm the insulation resistance of each outgoing way',
+      'To record the temperature rise of the busbars under load',
       'To verify protection settings, interlocks and control circuits operate correctly',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'Who must sign Schedule 1 (design) of an Electrical Installation Certificate?',
     options: [
       'The person responsible for the design of the installation',
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'PSCC/PFC and Ze are within design parameters',
-      'To allow systematic fault identification and prevent cascading failures',
+      'The person who carried out the inspection and testing',
+      'The client or person ordering the work',
+      'The DNO representative who connected the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What documentation should be provided for LV switchgear commissioning?',
     options: [
-      'To verify protection settings, interlocks and control circuits operate correctly',
+      'Only the manufacturer warranty and delivery note',
       'Test certificates, relay settings, protection coordination studies and as-built drawings',
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'To allow systematic fault identification and prevent cascading failures',
+      'A single-line diagram and the supply agreement alone',
+      'The Schedule of Inspections from the EIC only',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'Before energising a new installation, what must be verified regarding the DNO supply?',
     options: [
-      'A pre-programmed combination of lighting settings',
-      'Mathematical compensation for non-linear sensor response',
+      'The tariff and metering arrangement with the supplier',
+      'The colour coding of the supply tails at the cut-out',
       'PSCC/PFC and Ze are within design parameters',
-      'To reduce electromagnetic interference (EMI)',
+      'The position of the main earth terminal label',
     ],
     correctAnswer: 2,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'Why is phased energisation recommended for large installations?',
     options: [
       'To allow systematic fault identification and prevent cascading failures',
-      'Electronic equipment, surge protective devices, and voltage-sensitive devices',
-      'To verify protection settings, interlocks and control circuits operate correctly',
-      'The person responsible for the design of the installation',
+      'To reduce the number of test certificates required',
+      'To avoid having to verify the external loop impedance',
+      'To allow the installation to be energised without testing',
     ],
     correctAnswer: 0,
     explanation:

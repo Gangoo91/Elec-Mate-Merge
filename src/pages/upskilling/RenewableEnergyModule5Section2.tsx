@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'BMS (Battery Management System) — what is it, and what are its core safety + performance responsibilities in a UK domestic LFP BESS?',
     options: [
-      'Just a sensor',
-      'The BMS is the electronic brain inside the BESS that monitors and controls every cell. Core safety responsibilities: prevent over-charge (cell V too high), over-discharge (cell V too low), over-current (charge or discharge), over-temperature, cell imbalance, short-circuit. Performance: maintain accurate SoC (state of charge) and SoH (state of health) estimates; balance cells; communicate with PCE / customer app. For UK domestic LFP packs (GivEnergy, Tesla, Sigenergy etc.) the BMS is integrated into the battery enclosure — typically a master controller + per-module slave boards monitoring cell groups',
-      'Customer\'s decision',
-      'Replaces the inverter',
+      'A temperature sensor that switches the battery off if the enclosure gets too hot, with no role in charging or SoC/SoH',
+      'The electronic brain inside the BESS that monitors every cell and protects against over-charge, over-discharge, over-current, over-temperature and imbalance',
+      'An optional external accessory; small LFP packs run safely without one because the cells self-balance every cycle',
+      'The DC-to-AC power stage that converts the battery output to mains voltage, replacing the hybrid inverter',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Why do Li-ion cells need balancing, and what\'s the difference between passive and active cell balancing?',
     options: [
-      'Same thing',
-      'Cells in series have small manufacturing tolerances (capacity, internal resistance) — over many cycles the weakest cell finishes charging first and the strongest cell finishes discharging first. Without balancing, the pack\'s usable capacity drops to the weakest cell\'s. PASSIVE balancing: drain energy from over-V cells via resistors during charging — simple, low-cost, slight efficiency hit, the standard for UK domestic. ACTIVE balancing: shuttle charge between cells via inductors / capacitors — higher efficiency, more complex / expensive, used in premium / EV-style systems',
-      'Customer chooses',
-      'Not needed for LFP',
+      'Passive and active balancing are two names for the same resistor circuit, so the choice has no effect on efficiency',
+      'Cells drift due to tolerance, so the pack capacity falls to the weakest cell — passive balancing drains over-V cells via resistors (UK domestic standard); active balancing shuttles charge cell-to-cell',
+      'Passive balancing shuttles charge between cells via inductors and active balancing dissipates it in resistors — the two definitions swapped',
+      'Balancing is only needed for NMC; LFP cells share a flat voltage curve so they never drift and balancing stays disabled',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'SoC vs SoH — what\'s the difference and how does the BMS calculate each?',
     options: [
-      'Same thing',
-      'SoC (State of Charge) = how full the battery is RIGHT NOW (0-100%). Calculated by coulomb counting (integrating current flow over time) + voltage-curve corrections (especially at top/bottom of charge where V changes more) + temperature compensation. SoH (State of Health) = how much capacity remains compared to ORIGINAL nameplate (100% new, falling over years). Calculated by tracking actual capacity per full discharge + internal-resistance measurement + calendar age. SoC tells you how much energy you can use NOW; SoH tells you how the battery is ageing OVER TIME',
-      'Customer doesn\'t need to know',
-      'No difference',
+      'SoC and SoH report the same number — remaining capacity — derived purely from pack open-circuit voltage with no coulomb counting',
+      'SoC is how full the battery is now (coulomb counting plus voltage and temperature correction); SoH is capacity retained vs original nameplate (capacity and internal-resistance tracking)',
+      'SoH is the instantaneous fullness on the app and SoC is the long-term ageing metric — the two calculation methods swapped',
+      'SoC comes purely from calendar age and SoH from cycle count over rated cycles, so neither needs current or voltage measurement',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'How does the BMS talk to the PCE (hybrid inverter / dedicated BESS inverter), and why does this protocol matter?',
     options: [
-      'They don\'t communicate',
-      'Industry-standard protocols: CAN bus (Controller Area Network — automotive standard, common for BMS-PCE), Modbus RTU (RS-485 wired, common for industrial PCE), or manufacturer-proprietary (Tesla Gateway-Powerwall protocol, GivEnergy internal). The BMS publishes: max charge current, max discharge current, V limits, SoC, SoH, fault state. The PCE follows these limits. WITHOUT good communication, the PCE would over-charge or over-discharge the battery — risking damage or fault trips. Matching BMS + PCE protocols is the #1 compatibility check when pairing batteries with inverters',
-      'WiFi',
-      'No protocol',
+      'They share no data link; the PCE reads only pack terminal voltage and sets its own currents, so any battery pairs with any inverter',
+      'Over CAN bus, Modbus RTU or a proprietary link the BMS publishes its V/I limits and SoC/SoH, and the PCE follows them — protocol matching is the key compatibility check',
+      'The BMS streams data to the PCE over home Wi-Fi via the manufacturer cloud, so an internet outage stops all charge and discharge control',
+      'Communication runs only over the mains cabling by power-line signalling, so protocol matching is never a compatibility concern',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'What are the typical BMS fault conditions that trigger the pack contactor to open in a UK domestic LFP BESS?',
     options: [
-      'No faults',
-      'Cell-level: over-V (>3.65V/cell typical for LFP); under-V (<2.5V/cell); over-temperature (>60°C cell); under-temperature (<-10°C charge / <-20°C discharge); cell V imbalance (>50-100mV cell-to-cell delta sustained). Pack-level: over-current charge / discharge (manufacturer-specific, typically >1.0-1.5C continuous); short-circuit (instantaneous open); CAN bus / communication loss; BMS internal fault. Customer-visible via app; fault history logged. The pack contactor opens to disconnect the battery from the PCE; manual reset or auto-reset depending on fault type',
-      'Customer\'s choice',
-      'Only one fault',
+      'It opens only on a hard short-circuit; cell over-voltage, over-temperature and imbalance are logged but never trip because cells are individually fused',
+      'Cell over-V, under-V, over/under-temperature and sustained imbalance, plus pack over-current, short-circuit and communication loss',
+      'It opens only on over-temperature above 60°C; under-voltage, over-current and imbalance are handled by the PCE reducing current instead',
+      'The customer sets the over-voltage, over-temperature and over-current trip points in the app, so the same battery trips at any chosen value',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A customer\'s BESS shows reduced charge/discharge rates on cold winter mornings (sub-5°C garage). What\'s happening?',
     options: [
-      'Battery faulty',
-      'TEMPERATURE DERATING by the BMS. Below ~10°C, LFP cells accept less current (lithium plating risk during charging at low T can permanently damage cells). The BMS reduces max charge current accordingly: full rate above ~15°C, half rate around 5°C, near-zero or zero below 0°C. Discharge derating is gentler — LFP can still discharge in cold, but capacity is temporarily reduced. Customer sees lower kWh available + slower charge speed. Normal behaviour, not a fault. Mitigation: install location with stable temperature (utility room, indoor garage); some premium BESS have heated battery enclosures',
-      'Replace battery',
-      'Customer\'s fault',
+      'A permanent cell fault — once charged at sub-5°C the BMS locks out the affected cells and the rate never recovers when the garage warms',
+      'Temperature derating by the BMS — below ~10°C it cuts charge current to avoid lithium plating, recovering above ~15°C; normal, not a fault',
+      'The cells have been over-cooled below safe storage temperature and the pack must be replaced under warranty for irreversible capacity loss',
+      'The BMS is deliberately charging faster to warm the cells, so the slower app readings are a display error rather than real derating',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'BMS architectures — centralised vs distributed vs modular. What\'s typical for UK domestic LFP packs?',
     options: [
-      'All the same',
-      'CENTRALISED: one BMS board with all cell-monitoring wires routed back to it — simple, lower cost, OK for small packs but wiring complexity grows with cell count. DISTRIBUTED: per-module slave boards each monitoring their group of cells, communicating to a master controller via CAN — typical for UK domestic modular packs (GivEnergy, Pylontech, BYD Battery Box). MODULAR (per-cell or small-string): each cell or small string has its own monitoring chip — premium / EV-style. UK domestic 5-15 kWh LFP packs typically use distributed (master + 1-3 slave boards per stack)',
-      'Customer\'s choice',
-      'No architecture',
+      'Only one architecture exists — every pack from 2 kWh to grid-scale uses one centralised board, with only the cell-monitoring wire length changing',
+      'Distributed — a master controller plus per-module slave boards on CAN bus, typical for UK domestic modular packs (centralised suits small packs, per-cell modular suits premium/EV)',
+      'UK domestic 5-15 kWh packs use per-cell modular (one chip per cell) as the cheapest, with master-and-slave designs kept for premium EV use',
+      'Centralised means a master plus per-module slaves on CAN and distributed means one board, with UK packs always centralised — the terms reversed',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'A customer\'s 4-year-old BESS reports a &ldquo;BMS communication fault&rdquo; via the app. What\'s the diagnostic priority?',
     options: [
-      'Replace battery',
-      '(1) Power-cycle the BESS per manufacturer procedure — transient communication faults often clear; (2) Check CAN bus / wiring between PCE and BMS — connectors, terminator resistors, cable damage; (3) Check BMS firmware version + manufacturer release notes for known bugs; (4) Update PCE firmware to latest if pairs have drifted; (5) Read fault log via manufacturer app / portal — exact fault code identifies root cause; (6) Contact manufacturer support — most provide remote diagnostic / firmware push. Replace battery only after diagnostic confirms hardware failure. Most BMS communication faults are software / firmware / wiring — not cell failure',
-      'Customer\'s fault',
-      'Ignore the fault',
+      'Order a replacement battery straight away — a comms fault on a 4-year-old pack always means the master controller has failed and the whole battery must be swapped',
+      'Power-cycle the BESS, check the CAN bus wiring and firmware versions, read the fault log and contact manufacturer support before replacing anything',
+      'Manually deep-discharge the pack to reset every cell to 50% SoC, since a comms fault is the coulomb counter drifting and a full discharge re-anchors the BMS',
+      'Leave it uninvestigated and tell the customer to keep using it — comms faults clear themselves within months and never affect safe operation',
     ],
     correctIndex: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Customer\'s GivEnergy 9.5 kWh LFP battery app shows SoC 45%, SoH 98% after 2 years of daily cycling. Is this normal?',
     options: [
-      'Faulty',
-      'YES — entirely normal. SoC at 45% just means the battery is half full at the moment of reading. SoH at 98% after 2 years of daily cycling is excellent — typical LFP degradation is ~2-3% calendar + ~0.5-1% per 365 cycles at 80% DoD. 2 years = ~4-6% expected total degradation. 98% retention is at the better end of typical, suggesting good install conditions (stable temperature, sensible DoD discipline). Manufacturer warranty: typically &ge;70% retention at year 10 — well on track',
-      'Replace immediately',
-      'Customer error',
+      'No — a 45% reading after only 2 years means the cells are starting to fail',
+      'Yes — SoC 45% is just half-full now, and SoH 98% after 2 years is excellent against the ≥70% guaranteed at 10 years',
+      'No — the battery should be replaced under the manufacturer warranty',
+      'No — it is simply a reading error displayed in the customer app',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'A customer installer wants to pair a Pylontech US3000C battery (CAN bus) with a Solis hybrid inverter. Compatibility verified how?',
     options: [
-      'Always compatible',
-      'Check Solis\'s documented compatible-battery list. Reputable inverter manufacturers publish &ldquo;works with X battery&rdquo; tables — Solis, GivEnergy, Sigenergy, Victron, SolarEdge all maintain these. Solis Hybrid S6 series compatible with multiple LFP brands including some Pylontech models via CAN bus; specific firmware versions may be required. The inverter\'s commissioning app selects the battery model — wrong model selected = wrong protocol = battery never communicates. Cert evidence bundle records the inverter firmware + selected battery profile',
-      'Customer\'s preference',
-      'No compatibility issue',
+      'Any LFP battery works with any hybrid inverter, so no compatibility check is needed',
+      'Check the inverter\'s documented compatible-battery list and firmware, then select the correct battery profile in the commissioning app',
+      'It is purely the customer\'s preference, not a technical verification step',
+      'Matching is only needed for the cable, never for the BMS communication protocol',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A 5-year-old BESS shows cell V imbalance (cells 1-7 at 3.31V, cells 8-12 at 3.27V) on the BMS log. What\'s happening, and what\'s the action?',
     options: [
-      'Normal operation',
-      'Cell-level imbalance is developing. Two scenarios: (a) NORMAL ageing — small imbalance ~30-50 mV is within typical tolerance; the BMS will balance over coming cycles; no action needed; (b) ABNORMAL — large imbalance (>100 mV sustained) or rapid imbalance growth indicates a cell or string developing higher internal resistance; replacement or rebalancing protocol per manufacturer needed. The 40 mV gap here is borderline — monitor over next 2-4 weeks; if growing, contact manufacturer support; if stable / reducing, normal balancing in progress',
-      'Replace whole battery',
-      'Disconnect immediately',
+      'It is perfectly normal and never needs watching or any follow-up',
+      'Replace the whole battery, since any cell imbalance means a cell has failed',
+      'A ~40 mV imbalance is borderline-normal LFP ageing — monitor the trend and escalate only if it grows',
+      'Disconnect the battery immediately, as any imbalance is a serious fire risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cell V imbalance monitoring is part of the BMS\'s normal job. Acceptable cell-to-cell delta thresholds: <30 mV excellent; 30-80 mV normal LFP ageing (BMS balances over multiple cycles); 80-150 mV warning level (monitor + investigate); >150 mV sustained = fault condition (BMS may trip). LFP\'s flat V-curve means even small differences mean larger SoC differences than in NMC. The 40 mV gap described is borderline-normal — watching for trend matters more than current value. Manufacturer remote diagnostics (GivEnergy / Tesla / Sigenergy cloud portals) can flag cell-imbalance trends earlier than the customer notices. Cert evidence bundle records the manufacturer support contact for cell-balance issues + the typical thresholds for the specific battery model.',
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Customer\'s install is in an unheated garage. Winter mornings dip to 2°C ambient. How does this affect the BESS, and what should the customer expect?',
     options: [
-      'No effect',
-      'BMS will derate charge current significantly at sub-10°C — charging only at fractional rates. Discharge less affected but capacity temporarily reduced ~10-15% at 2°C. Customer sees: slower morning charge from PV when the battery is cold; reduced kWh available until ambient warms up; normal performance once ambient reaches 10°C+. Not a fault — protective behaviour to prevent lithium plating during cold-charge. PAS 63100 + manufacturer install spec require considering the installation temperature range. Mitigation: relocate to warmer space (utility room, indoor garage), insulate the enclosure, or accept the seasonal dip',
-      'Replace battery',
-      'Customer error',
+      'No effect at all — LFP performance is completely independent of temperature',
+      'The BMS derates charge current in the cold to prevent lithium plating, recovering above 10°C — not a fault',
+      'The battery must be replaced, because the cold has permanently damaged the cells',
+      'It is a customer error in the way the battery is being operated daily',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Reg 570.5.2 says PCE shall be selected for the type of battery and application, taking account of battery manufacturer\'s instructions. What does this mean in BMS-pairing practice?',
     options: [
-      'Any PCE works',
-      'The PCE must match the BMS protocol + the battery\'s V/I/T operating window + the manufacturer\'s explicit compatibility statement. Practical implementation: only pair PCEs and batteries listed as compatible in the manufacturer datasheet / compatibility matrix. The cert evidence bundle records the manufacturer compatibility statement. Mismatched PCE + BMS = silent communication failure + battery on conservative defaults (under-utilised) OR misoperation (over-current / over-V cycling) = warranty void',
-      'Customer\'s choice',
-      'No matching needed',
+      'Any PCE pairs with any battery as long as the voltages roughly match up',
+      'The pairing is the customer\'s choice and not an installer responsibility at all',
+      'The PCE must match the BMS protocol, the battery\'s V/I/T window and the manufacturer\'s compatibility statement',
+      'No matching is needed, because the BMS adapts to any inverter automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 570.5.2 (Chapter 57 NEW A4:2026): &ldquo;The type and characteristics of PCE shall be selected to be suitable for the type of battery and its application, taking account of the battery manufacturer\'s instructions.&rdquo; NOTE 1 explicitly recognises hybrid inverters; NOTE 2 explicitly recognises AC and DC coupling. The competent install verifies BMS-PCE compatibility BEFORE quoting / installing. Practical checks: (1) manufacturer compatibility matrix (both sides — inverter says battery X works; battery says inverter Y works); (2) protocol match (CAN bus baud rate / message format, or Modbus address map); (3) firmware version stack-ups (sometimes specific versions required); (4) cable / connector spec (CAN bus needs proper terminator + drain wire). Cert evidence bundle records the verified pairing + the manufacturer compatibility statement.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'A customer\'s BESS app suddenly stops showing live data — no telemetry, no SoC update. Cause hierarchy?',
     options: [
-      'Battery dead',
-      'Diagnostic hierarchy: (1) CHECK INTERNET — most BESS apps need cloud connectivity; router / WiFi outage stops telemetry without affecting battery operation; (2) CHECK BESS POWER — battery may still operate but local comms board needs power; (3) CHECK CAN bus / inter-component wiring — local communication breakdown between BMS and gateway / monitoring unit; (4) CHECK manufacturer cloud status — sometimes the cloud platform itself has outages affecting all users; (5) CHECK firmware updates pending — a stalled OTA update can break communications until completed. Battery continues normal operation locally regardless of app visibility; data resumes when comms restored',
-      'Battery faulty',
-      'Customer\'s fault',
+      'The battery is dead and must be replaced straight away',
+      'The battery has developed an internal fault that has stopped all operation',
+      'It is the customer\'s fault for having lost the app login details',
+      'Work down a comms hierarchy — internet, power/LEDs, gateway, cloud, firmware — as the battery keeps running locally',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'App / telemetry loss != battery failure. Modern UK BESS architecture: battery operates locally via BMS-PCE comms; telemetry / app sees the state via a gateway that uploads to the manufacturer cloud. Loss of any of: home internet, BESS gateway, manufacturer cloud, BESS power, internal comms — breaks the app view without affecting battery operation. Diagnostic order: (1) home internet first (most common); (2) BESS power + LED status indicators (most BESS have local status LEDs that work without cloud); (3) BESS gateway / comms unit reboot; (4) manufacturer cloud status (Twitter / status page); (5) firmware update progress. The battery continues to charge / discharge / provide EPS backup throughout. Cert evidence bundle should include manufacturer support contacts + the local-status-LED reference card.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'For Reg 570.6.1.1.1 BS EN IEC 62485 conformance, what BMS-related safety requirements does the standard cover?',
     options: [
-      'No BMS requirements',
-      'BS EN IEC 62485 series covers safety for stationary battery installs — including BMS function. Part -5 (lithium-ion specific): cell V monitoring, cell T monitoring, balancing, fault detection, contactor control on fault, communication with PCE, status indication, safe-state on fault. Part -1 (general): basic safety principles, hazard mitigation. Part -2 (lead-acid / VRLA / NiCd): traditional Pb-acid + alternatives. UK domestic LFP BMS conformance is via the manufacturer\'s product certification — the installer doesn\'t verify cell-by-cell but does verify the manufacturer compliance statement',
-      'Customer responsibility',
-      'No BMS standard',
+      'The standard sets no requirements at all relating to the BMS',
+      'It covers BMS safety — cell V/T monitoring, balancing, fault detection, contactor control and safe-state — via the manufacturer\'s conformance declaration',
+      'BMS safety is purely the customer\'s responsibility, not a standards matter',
+      'There is no recognised standard covering BMS safety functions anywhere',
     ],
-    correctIndex: 1,
+    correctAnswer: 1,
     explanation:
       'BS EN IEC 62485 series — Safety requirements for secondary batteries and battery installations. Five parts: -1 (general safety), -2 (stationary Pb-acid + VRLA + NiCd), -3 (traction batteries), -4 (small Li-ion), -5 (Li-ion stationary). For UK domestic LFP BESS: -5 is the most relevant. Covers: BMS V/I/T monitoring per cell or group; balancing function; fault detection thresholds; contactor / disconnect on fault; communication protocols; isolation between cells and external circuits; safe-state on fault. The manufacturer\'s product certification declares 62485 series conformance — installer verifies via the manufacturer compliance statement. Reg 570.6.1.1.1 references the series; cert evidence bundle records the conformance declaration.',
   },
@@ -238,12 +238,12 @@ const quizQuestions = [
     question:
       'A customer asks how often they need to &ldquo;maintain&rdquo; or &ldquo;service&rdquo; the BMS. Best answer?',
     options: [
-      'Annual service',
-      'Modern UK domestic LFP BMS is essentially maintenance-free for the customer. The BMS auto-balances, auto-diagnoses, auto-updates firmware (OTA via manufacturer cloud where supported). The customer\'s responsibility: (a) keep the install location at appropriate temperature; (b) check the app periodically for fault notifications; (c) ensure home WiFi is connected (so OTA + telemetry work). Periodic inspection (typically 5-yearly as part of EICR-style check) verifies BMS firmware is current, fault log clean, capacity baseline tracking expected curve. No internal user-serviceable parts; replacement at end of warranty / cycle / calendar life',
-      'Weekly cleaning',
-      'Daily checks',
+      'A full annual hands-on service of the BMS by a qualified engineer is required',
+      'Weekly cleaning of the battery enclosure and external terminals by the customer',
+      'Daily manual checks of every cell voltage carried out by the customer in the app',
+      'Essentially maintenance-free — the BMS auto-balances and updates OTA, with the 5-yearly inspection covering the rest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern UK LFP BESS BMS is maintenance-free for the customer in normal operation. Manufacturer-side: cloud monitoring, OTA firmware updates, remote diagnostics, fault alerts. Customer-side: appropriate install location (temperature, dryness, no obstruction), app monitoring for fault notifications, WiFi connectivity. The 5-yearly inspection (covered in Section 5.8) checks: firmware versions current; fault log review (any unresolved alerts?); SoH trending vs warranty curve; cell-balance health from the BMS log; isolators function; warning labels in place. No user-serviceable internal parts. Cert evidence bundle records the maintenance schedule + the customer information pack contents.',
   },

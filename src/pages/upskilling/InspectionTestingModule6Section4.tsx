@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A homeowner asks why they need to press the test button on their consumer-unit RCD every quarter. The site spark says "It is the only test we can do — proves the RCD works". What is the precise BS 7671 answer?',
     options: [
-      'The button proves the RCD will trip on a real residual current.',
-      'The button verifies the mechanical trip mechanism only — it injects an internal imbalance bypassing the toroid. It does NOT verify the residual-current detection circuitry, the IΔn calibration, or the disconnection time. Reg 514.12.2 + Reg 643.8 require periodic instrument testing for full verification.',
-      'The button is for cleaning the contacts.',
-      'The button is decorative on modern devices.',
+      'The button proves the RCD will trip on a real residual current at its rated IΔn.',
+      'The button verifies the mechanical trip only — not the IΔn calibration or the disconnection time.',
+      'The button is provided as a means of cleaning the device contacts periodically.',
+      'The button is decorative on modern devices and performs no real function.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'A homeowner presses the RCD test button and the device does not trip. What is the correct response?',
     options: [
-      'Press it harder, then again next quarter.',
-      'Treat as a fault. The mechanical trip mechanism has failed — even though the residual-current detection circuit may still work, the mechanism that physically opens the contacts is non-operational. Isolate the supply and replace the device.',
-      'Move on — the button is unreliable.',
-      'Reset the device by switching off and on.',
+      'Press the button harder, then try it again at the next quarterly check.',
+      'Treat it as a fault — the trip mechanism has failed; isolate and replace the device.',
+      'Move on and ignore it, since the integral test button is unreliable anyway.',
+      'Reset the device by switching it fully off and then back on again.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'How often does Reg 514.12.2 expect the user to operate the RCD test button, and is this a recommendation or a regulatory requirement?',
     options: [
-      'Annually — it is a recommendation only.',
-      'Six-monthly — it is a regulatory requirement on the installer to provide a notice telling the user. Reg 514.12.2 mandates the notice; the user is asked to test six-monthly. The notice itself is a regulatory deliverable from the installation.',
-      'Monthly — it is a building regulation requirement.',
-      'Whenever the RCD trips — no fixed interval.',
+      'Annually — and it is only a recommendation, not a requirement.',
+      'Six-monthly — Reg 514.12.2 mandates an installer notice asking the user to test.',
+      'Monthly — and it is a Building Regulations requirement on the user.',
+      'Whenever the RCD trips — there is no fixed testing interval at all.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You complete a periodic inspection and the RCD test button works on every device. The user has been pressing it monthly per the notice. What goes on the certificate?',
     options: [
-      'Nothing — button operation is implicit.',
-      'Confirmation that the test-button notice (Reg 514.12.2) is present, plus the section 6.2 instrument trip-time results — both are required. Test-button operation alone does NOT replace instrument verification of IΔn / trip-time per Reg 643.8.',
-      'Just the trip-time results — the button is informational.',
-      'Just confirmation of the notice — instrument testing is optional.',
+      'Nothing — button operation is implicit on a passing periodic.',
+      'Both the Reg 514.12.2 notice as present and the instrument trip-time results.',
+      'Just the trip-time results — the test-button check is only informational.',
+      'Just confirmation of the notice — periodic instrument testing is optional.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'Per GN3 Ch 2 Reg 2.36, what does pressing the RCD &ldquo;T&rdquo; / &ldquo;Test&rdquo; button actually verify?',
     options: [
-      'The CPC continuity from the device to the load',
-      'The disconnection time at IΔn',
-      'The internal mechanical operation of the RCD only — the trip mechanism functions when the integral test resistor injects an internal imbalance',
-      'The earth-fault loop impedance at the device',
+      'The CPC continuity from the device through to the load',
+      'The disconnection time of the device at its rated IΔn',
+      'The internal mechanical trip operation only — via the integral test resistor',
+      'The earth-fault loop impedance measured at the device terminals',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Per Reg 643.10, where does the test button fit in the verification of RCD effectiveness for additional protection?',
     options: [
-      'It replaces instrument testing entirely',
-      'It is the only test required at periodic inspection',
-      'Reg 643.10 requires verification that the test facility on the device works (functional check). Reg 643.8 / 643.7.3 separately require an instrument test at IΔn — both are needed; the test button is functional only',
-      'It is not mentioned in BS 7671',
+      'Reg 643.10 requires the test facility to be verified; the IΔn instrument test is separate — both needed.',
+      'The test button replaces the instrument test at IΔn entirely for additional protection.',
+      'The test button is the only RCD test required at a periodic inspection of the installation.',
+      'The test button has no mention anywhere in BS 7671 as a verification method.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Reg 643.10 (Functional testing) requires that &ldquo;where fault protection and/or additional protection is provided by an RCD, the effectiveness of any test facility incorporated in the device shall be verified.&rdquo; A separate Note 2 says that test does NOT replace the functional test indicated by the relevant standards. Reg 643.8 / 643.7.3 separately require the AC at IΔn instrument test. The button is one duty; the instrument test is another.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Why can a circuit with a broken CPC pass an RCD test-button check but fail an instrument test at IΔn?',
     options: [
-      'The instrument test injects more current',
-      'The test button creates an imbalance via an internal resistor between line and the load side of the toroid — it bypasses the external circuit. The instrument test injects current via line and the external CPC, so a broken CPC means no return path and the test fails',
-      'The test button does not exist on RCBOs',
-      'The two tests are equivalent — this scenario cannot happen',
+      'The instrument test simply injects a larger residual current than the button does.',
+      'RCBOs do not have an integral test button at all, so the comparison is invalid.',
+      'The two tests are equivalent, so this scenario cannot actually happen in practice.',
+      'The button bypasses the external circuit; the instrument needs the CPC, which is broken.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The integral test device per GN3 Reg 2.36 creates an internal imbalance that does not require the external CPC at all. An instrument test injects current line-to-PE through the actual circuit; if the CPC is broken, the current cannot return to the source through the protective conductor — the instrument either reports an error, an abnormally high reading, or a failure to trip. The test button cannot detect this hazardous condition; only instrument testing can.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'On a periodic inspection you press the RCD test button: the device trips. You then run an instrument test at 1×IΔn — the device does not trip within 300 ms. What is the verdict?',
     options: [
-      'Pass — the test button trip is sufficient',
-      'Fail — Reg 643.7.3 / 643.3 require AC at IΔn within 300 ms (non-delay) for the device to be deemed effective. The button only proved the trip mechanism moves; the device is mechanically functional but not within the disconnection-time band',
-      'Pass — provided the instrument is faulty',
-      'Pass — provided the test was on the right circuit',
+      'Pass — a successful test-button trip is sufficient on its own here.',
+      'Pass — provided the test instrument is later found to be faulty.',
+      'Fail — disconnection must be within 300 ms at IΔn; the button only proves movement.',
+      'Pass — provided the test was carried out on the correct final circuit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 Reg 643.3 (and 643.7.3 / 643.8) state that effectiveness is deemed verified where the device disconnects within 300 ms maximum at IΔn for general non-delay type. A button trip without that compliant time means the mechanical bits move but the device does not perform within band. That is a fail at periodic — record the actual time, code C2 if the disconnection-time exceeds the limit, and replace the device.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'Per GN3 Ch 2 Reg 2.36, can pressing the test button verify the earth electrode resistance at a TT installation?',
     options: [
-      'Yes — the button injects current through the electrode',
-      'No — operation of the &ldquo;T&rdquo; button does NOT provide a means of checking any earth electrode or other means of earthing',
-      'Yes — provided the installation is TT and not TN-S',
-      'Only on RCBOs, not RCCBs',
+      'No — operating the &ldquo;T&rdquo; button does NOT check any earth electrode or other means of earthing.',
+      'Yes — the button injects test current through the earth electrode.',
+      'Yes — but only where the installation is TT rather than TN-S.',
+      'Yes — but only on RCBOs, not on RCCBs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GN3 Reg 2.36 spells this out specifically: operation of the integral test device does not provide a means of checking any earth electrode or other means of earthing. The earth-electrode test (Reg 643.7.2 / GN3 Ch 4) is a separate procedure with separate instruments. On a TT install, the button trip means nothing about RA.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'During an EICR, you press the test button on a 30 mA RCBO. The device does not operate. What is the next step?',
     options: [
-      'Skip the test and certify the rest',
-      'First check the supply is on and the device is in the &ldquo;ON&rdquo; position. If it still fails to operate, treat as a serious defect — the device cannot be relied upon for protection. Code C2 (potentially dangerous), recommend replacement, and confirm with instrument test',
-      'Replace immediately without further investigation',
-      'Press the button five more times — it may free up',
+      'Skip the test and certify the rest of the installation.',
+      'Replace the device immediately without any further investigation.',
+      'Press the button several more times in case it frees up.',
+      'Check the supply is on and the device is ON; if it still fails, treat as a serious defect — Code C2, recommend replacement and confirm with an instrument test.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A failed test button is a defect that demands investigation, not a guess. Verify the device is energised and ON, then attempt the instrument test at IΔn. If both fail, the device is not providing the protection its rating implies — a C2 (potentially dangerous) classification on the EICR, and replacement. If the button fails but the instrument test passes, you have a faulty test-button mechanism — still a defect because Reg 643.10 requires the test facility to be effective.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'In what specific circumstance does an instrument test pass while the test button fails?',
     options: [
-      'This is impossible — they test the same circuit',
-      'When the integral test resistor (or its connection) is faulty, the button cannot inject the internal imbalance, but the device&rsquo;s main sensing path through the toroid is still working — so an external instrument test at IΔn will trip it. The device still needs replacing because Reg 643.10 requires the test facility itself to function',
-      'Only on Type B RCDs',
-      'Only on Type S RCDs',
+      'This is impossible — both tests act on exactly the same circuit.',
+      'It happens only on Type B RCDs, never on Type AC or Type A.',
+      'When the test resistor is faulty the button cannot inject, but the toroid path still trips.',
+      'It happens only on Type S (time-delayed) RCDs, never on non-delay ones.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The internal test path (resistor + button + load-side connection) is independent of the main fault-detection path (toroid + sensing electronics + trip coil). Either can fail without the other. A failed test button with a working main mechanism is still a defect — the user can no longer perform the six-monthly check Reg 514.12.2 mandates, so the device must be replaced.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'Reg 643.8 covers verification of additional protection. Which statement aligns with what the regulation actually says?',
     options: [
-      'Pressing the test button is sufficient',
-      'Where RCDs are required for additional protection, effectiveness shall be verified using suitable test equipment per BS EN 61557-6 to confirm the relevant requirements of Chapter 41 are met. Effectiveness is deemed verified where the device disconnects within 300 ms at IΔn',
-      'No instrument testing is required for additional protection',
-      'Only AFDDs need verification',
+      'Effectiveness shall be verified with test equipment to BS EN 61557-6; deemed met at 300 ms at IΔn.',
+      'Pressing the integral test button is by itself sufficient verification of effectiveness.',
+      'No instrument testing is required for additional protection on any RCD-protected circuit.',
+      'Only AFDDs, not RCDs, require this effectiveness verification under the regulation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.8 is explicit: where RCDs are required for additional protection, the effectiveness of automatic disconnection shall be verified using suitable test equipment according to BS EN 61557-6 (the standard for RCD test instruments). The test-button check sits under Reg 643.10 (functional) — it is mechanical only and does not satisfy the Reg 643.8 verification duty.',
   },

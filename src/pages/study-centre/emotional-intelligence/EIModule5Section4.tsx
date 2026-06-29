@@ -41,10 +41,10 @@ const quickCheckQuestions = [
   {
     question: 'Which of the following is a well-formed SMART goal for developing self-regulation?',
     options: [
-      'I will try to be calmer at work',
-      'I will use the STOP technique at least once per week when I feel frustrated, for the next 8 weeks, and log each use in my phone',
-      'I will never get angry again',
-      'I will read a book about emotional intelligence sometime this year',
+      'I will try my best to be a calmer, more patient person at work',
+      'I will use the STOP technique once per week when frustrated, for 8 weeks, logging each use',
+      'I will make a firm commitment to never get angry on site again',
+      'I will read at least one book about emotional intelligence at some point this year',
     ],
     correctIndex: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 1,
     question: "In Boyatzis's Intentional Change Theory, the five discoveries begin with:",
     options: [
-      'Identifying your weaknesses',
-      'Finding a mentor',
       'The ideal self — your vision of who you want to become',
+      'Identifying your weaknesses',
+      'Finding a mentor to guide you',
       'Setting SMART goals',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Intentional Change Theory begins with the ideal self — a compelling personal vision of who you want to become. This vision creates the emotional energy and motivation needed to sustain change through the difficult practice phases that follow. Without a clear picture of the ideal self, change efforts lack direction and tend to fizzle.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     id: 3,
     question: 'An EI buddy system works because:',
     options: [
-      'It creates competition between partners',
+      'It creates healthy competition and rivalry between the two partners',
       'It provides external accountability and honest feedback that self-assessment alone cannot',
-      'It transfers responsibility for your development to someone else',
-      'It replaces the need for self-reflection',
+      'It transfers responsibility for your development onto someone else entirely',
+      'It removes the need for any further self-reflection or journalling',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     options: [
       'Empathy and social skills',
       'Leadership style flexing',
-      'Self-awareness — check-ins, trigger mapping, body scanning',
       'Conflict management and de-escalation',
+      'Self-awareness — check-ins, trigger mapping, body scanning',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The first 30 days focus on self-awareness because it is the foundation of all other EI competencies. You cannot regulate emotions you do not recognise, empathise with others when you are blind to your own feelings, or lead with EI if you do not understand your own emotional patterns. Daily check-ins, trigger mapping, and body scanning build the awareness baseline.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     id: 6,
     question: 'How does EI development support other professional qualifications like NVQ or ILM?',
     options: [
-      'It does not — EI and technical qualifications are completely separate',
-      'It replaces the need for technical qualifications',
-      'It develops the communication, teamwork, and self-management skills that NVQ and ILM assessors look for alongside technical competence',
-      'It is only relevant to leadership qualifications, not technical ones',
+      'It develops the communication, teamwork, and self-management skills assessors look for',
+      'It does not — EI and technical qualifications are completely separate and unrelated areas',
+      'It removes the need to gain any underpinning technical qualifications at all',
+      'It is relevant only to leadership qualifications, never to technical or vocational ones',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'NVQ, ILM, and other professional qualifications increasingly assess behavioural and interpersonal competencies alongside technical skills. Communication, teamwork, problem-solving, and self-management — all EI competencies — are embedded in the assessment criteria. Developing your EI directly supports your ability to demonstrate these competencies in portfolios, observations, and professional discussions.',
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       'The fifth discovery in Intentional Change Theory is "trusting relationships". Why is this considered essential for sustained change?',
     options: [
-      'Because you need someone to do the work for you',
-      'Because change is difficult to sustain alone — supportive relationships provide accountability, feedback, encouragement, and a safe space to practise',
-      'Because you cannot learn anything without a formal teacher',
-      'Because trusting relationships are the goal, not the means',
+      'Because you need other people to do the difficult work of changing for you',
+      'Because change is hard to sustain alone — supportive people provide accountability and feedback',
+      'Because no genuine personal learning can ever happen without a formal teacher present',
+      'Because trusting relationships are the end goal of the process, not a means to it',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     options: [
       'Reading as many books as possible about emotional intelligence',
       'Waiting until you feel ready before starting',
-      'Starting with consistent, small daily practices rather than waiting for perfection',
       'Focusing only on your weaknesses and ignoring your strengths',
+      'Starting with consistent, small daily practices rather than waiting for perfection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The most important principle in EI development is to start — now, imperfectly, and consistently. Small daily practices (a 2-minute check-in, one use of the STOP technique, one active listening exercise) compound over time into significant change. Waiting for the perfect time, the perfect plan, or the perfect motivation means never starting. Progress, not perfection, is the goal.',
   },

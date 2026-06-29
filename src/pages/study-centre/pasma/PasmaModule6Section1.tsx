@@ -20,10 +20,10 @@ const quickCheckQuestions = [
     id: 'hazards-tower-collapse-cause',
     question: 'Which of the following is the MOST common cause of mobile tower collapse?',
     options: [
-      'Using the tower indoors rather than outdoors',
+      'Using the tower indoors rather than outdoors on a site',
       'Incorrect assembly, missing braces, or overloading the platform',
-      'Painting the tower a dark colour',
-      'Using the tower on a Monday morning',
+      'Painting the tower frames a dark colour before use',
+      'Using the tower first thing on a Monday morning',
     ],
     correctIndex: 1,
     explanation:
@@ -43,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'Which combination of measures helps prevent injuries from falling objects around a mobile tower?',
     options: [
-      'High-visibility clothing and ear defenders',
+      'High-visibility clothing, ear defenders, and safety footwear',
       'Toeboards on the platform, exclusion zones at the base, and tool tethering',
-      'Painting the ground yellow around the tower',
-      'Working only at night when fewer people are around',
+      'Painting the ground yellow around the base of the tower',
+      'Working only at night when fewer people are in the area',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'According to HSE statistics, what is the single largest cause of workplace fatalities in the UK?',
     options: [
-      'Electrocution from live electrical equipment',
       'Falls from height',
+      'Electrocution from live electrical equipment',
       'Being struck by a moving vehicle',
       'Exposure to harmful substances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Falls from height consistently remain the single largest cause of workplace fatalities in the UK. This includes falls from ladders, scaffolding, roofs, and mobile access towers. Preventing falls is therefore the highest priority in any work at height activity.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following would be MOST likely to cause a mobile tower to overturn?',
     options: [
-      'Assembling the tower in bright sunlight',
+      'Assembling the tower in bright direct sunlight on a clear day',
       'The tower being impacted by a vehicle, exposed to high winds, or set up on unstable ground',
-      'Having too few people on the platform',
-      'Using the tower for less than one hour',
+      'Having too few people standing on the working platform',
+      'Using the tower continuously for less than one full hour',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why are aluminium mobile towers particularly dangerous near overhead power lines?',
     options: [
-      'Aluminium is heavier than steel and harder to control',
-      'Aluminium is a very good conductor of electricity, creating a direct path for current to flow through the tower and the operative to earth',
-      'Aluminium is magnetic and attracts power lines',
-      'Aluminium towers are always taller than steel towers',
+      'Aluminium is heavier than steel and is much harder to control',
+      'Aluminium is magnetic and is physically attracted to power lines',
+      'Aluminium is an excellent conductor, giving current a path to earth',
+      'Aluminium towers are always built taller than steel towers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Aluminium is an excellent electrical conductor. If any part of an aluminium tower comes close to or contacts an overhead power line, current will flow through the entire tower structure to earth — through anyone touching the tower. This can cause fatal electrocution without any direct contact with the line itself.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary purpose of toeboards fitted to a tower platform?',
     options: [
-      'To give operatives something to lean against',
+      'To give operatives a raised edge to lean against while working',
+      'To increase the overall height of the main guardrail above',
+      'To make the platform edge easier to step and climb onto',
       'To prevent tools, materials, and debris from falling off the platform edge',
-      'To increase the height of the guardrail',
-      'To make the platform easier to climb onto',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Toeboards are fitted around the platform edge to prevent objects from being kicked or rolling off the platform. They form a barrier at foot level that stops tools, materials, and debris from falling to the ground below, where they could strike and injure people.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'When manually handling tower components, which of the following is the correct technique?',
     options: [
-      'Bend from the waist and lift quickly to get it over with',
-      'Keep back straight, bend knees, hold the load close to your body, and use team lifts for heavy or awkward components',
-      'Always carry components above shoulder height for better balance',
-      'Twist your body while lifting to position the component faster',
+      'Keep the back straight, bend the knees, hold the load close, and team-lift heavy items',
+      'Bend from the waist and lift the component quickly to get it over with',
+      'Always carry components above shoulder height to improve your balance',
+      'Twist the body while lifting to position the component more quickly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Correct manual handling technique requires keeping the back straight, bending the knees, holding the load close to the body, and avoiding twisting while lifting. Tower frames are heavy and awkward — team lifts should be used whenever the weight or shape makes single-person lifting unsafe.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main risk of fingers becoming trapped during tower assembly?',
     options: [
-      'Fingers may get paint on them',
-      'Fingers can be crushed or severed in frame locks, spigot connections, and brace clips during assembly',
-      'Fingers may become cold in winter',
-      'Fingers may become slippery from rain',
+      'Fingers may pick up wet paint from the tower frames',
+      'Fingers can be crushed or severed in frame locks, spigots, and brace clips',
+      'Fingers may become cold and numb in winter conditions',
+      'Fingers may become slippery from rain on the components',
     ],
     correctAnswer: 1,
     explanation:
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'At what wind speed should work on a mobile tower typically cease?',
     options: [
       'Beaufort Force 2 (7 mph)',
-      'Beaufort Force 4 (17 mph / moderate breeze)',
       'Beaufort Force 8 (40 mph)',
+      'Beaufort Force 4 (17 mph / moderate breeze)',
       'Wind speed is not relevant to tower safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Work on a mobile tower should cease at Beaufort Force 4 (approximately 17 mph), which is a moderate breeze sufficient to raise dust and move small branches. At Beaufort Force 6 (approximately 28 mph), the tower should be dismantled or secured. Wind loads increase with the square of wind speed, meaning a doubling of wind speed quadruples the force on the tower.',
   },
@@ -177,11 +177,11 @@ const quizQuestions = [
       "Which environmental factor can significantly reduce an operative's concentration and grip strength when working at height?",
     options: [
       'Cloud cover',
-      'Dehydration and heat stress',
       'The time of year',
       'Background noise from other trades',
+      'Dehydration and heat stress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dehydration and heat stress significantly reduce concentration, reaction time, and physical grip strength. Even mild dehydration (2% body mass loss) can impair cognitive function and physical performance. When working at height — where a momentary lapse can be fatal — adequate hydration and regular rest breaks are critical safety measures, not optional comforts.',
   },

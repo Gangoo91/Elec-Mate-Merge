@@ -52,10 +52,10 @@ const checks = [
     question:
       'On a TN-S supply where PME conditions do NOT apply, how is the minimum main protective bonding conductor sized under Reg 544.1.1?',
     options: [
-      'To take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions',
+      'Equal to the full cross-sectional area of the earthing conductor of the installation, with a 10 mm² minimum (in copper).',
       'Not less than half the cross-sectional area required for the earthing conductor of the installation, with a 6 mm² minimum and 25 mm² maximum (in copper).',
-      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
-      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
+      'Read directly from Table 54.8 against the supplier PEN conductor, exactly as for a PME supply.',
+      'A flat 10 mm² in all cases, regardless of the earthing conductor size or the supply arrangement.',
     ],
     correctIndex: 1,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     question:
       'Which BS 7671 table sets the minimum main protective bonding conductor size for an installation supplied under PME conditions?',
     options: [
-      'Escape route lighting plus high-risk task area lighting near switchgear',
+      'Table 54.1 — minimum size of a buried earthing conductor.',
       'Table 54.8 — main protective bonding conductor in relation to the PEN conductor of the supply.',
-      'Only the device nearest the fault operates, leaving other circuits unaffected',
-      'The changeover timer, the delta contactor, and the changeover auxiliary contacts',
+      'Table 54.7 — minimum size of a circuit protective conductor by adiabatic calculation.',
+      'Table 41.3 — maximum earth fault loop impedance for protective devices.',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'Why does BS 7671 size PME main bonding against the supplier neutral and not against the installation line conductor?',
     options: [
-      "Because in a broken-PEN fault on PME, the entire installation's neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn't melt before it is reset.",
-      "A tethered charger has the charging cable permanently attached to the EVSE unit (convenient for home use — just plug into the vehicle), while a socketed charger has a Type 2 socket on the unit and the user provides their own cable (more flexible for workplace/public use where different cable lengths and vehicle connectors may be needed)",
-      "A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure",
-      "~17 A continuous, but sized to the inverter’s manufacturer spec (typically 16 A or 20 A, often a 16 A MCB feeding 2.5 mm² T&E for short runs). Allow for the inverter’s actual continuous AC output rating, not the panel DC rating.",
+      'Because in a broken-PEN fault the bonding may carry the whole neutral return current to ground, so it must be sized to the PEN.',
+      'Because the installation line conductor is always larger than the neutral, so sizing to it would waste copper.',
+      'Because the supplier neutral is the only conductor the DNO will accept liability for sizing against.',
+      'Because the installation line conductor size is not known until every final circuit has been designed.',
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       'A protective conductor (CPC, earthing conductor or bonding conductor) up to and including 6 mm² requires what level of insulation cover under Reg 543.3.201?',
     options: [
-      'It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met',
+      'No insulation at all — protective conductors up to 6 mm² may always be run as bare strap.',
       'Covering at least equivalent to the insulation of a single-core non-sheathed cable, voltage rating at least 450/750 V — except where it forms part of a multicore cable or is run inside a metal enclosure used as the protective conductor.',
-      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
-      'It connects to the metal casing of the heater. The casing is an exposed-conductive-part — Class I equipment requires CPC connection so a fault from the heating element to the casing causes fault current to flow back through the CPC and trip the protective device.',
+      'A double-insulated sheath rated at 1000 V regardless of where the conductor is run.',
+      'A coloured oversleeve only at the terminations, with the conductor left bare along its length.',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'A first-year asks why every main bonding conductor he sees on PME jobs is 10 mm² regardless of building. What is the right answer?',
     options: [
-      'Visually inspect the tool for damage (cracked handles, worn insulation, damaged cutting edges, loose heads), check that VDE-rated tools show no insulation breaches, and confirm the tool is suitable for the task',
-      'Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.',
-      'Address each factor individually while recognising they interact: arrange ADHD-appropriate learning methods, provide language support for written work, signpost financial assistance, and coordinate with the college\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s support services',
-      'Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.',
+      'Because BS 7671 sets a flat 10 mm² minimum for all main bonding regardless of supply type or PEN size.',
+      'Because 10 mm² is the largest size that fits a standard BS 951 earth clamp, so it is fitted everywhere.',
+      'Because the gas and water undertakings require exactly 10 mm² bonding on all of their services.',
+      'Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum.',
     ],
     correctAnswer: 3,
     explanation:
@@ -177,9 +177,9 @@ const quizQuestions = [
       'Identify the standard cable colour code for a main protective bonding conductor under BS 7671 Reg 514.4.2.',
     options: [
       'Green-and-yellow combination, exclusive to protective conductors. One colour at least 30% and at most 70% of the surface, the other colour the remainder.',
-      'Both towers must be from the same manufacturer and be the same type, and must be assembled to the same height before the bridge is fitted',
-      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
-      'Connect simultaneously-accessible exposed and extraneous conductive parts AND have continuity-test resistance per Reg 415.2.2: R <= 50V/Ia',
+      'Solid green, used exclusively for earthing and bonding conductors.',
+      'Black with a green stripe, distinguishing bonding from circuit protective conductors.',
+      'Blue, the same identification colour as the neutral conductor it runs alongside.',
     ],
     correctAnswer: 0,
     explanation:

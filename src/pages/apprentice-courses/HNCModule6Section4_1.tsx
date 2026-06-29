@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'ghg-protocol',
     question: 'What is the primary purpose of the GHG Protocol?',
     options: [
-      'To set clear expectations, goals, boundaries, and review dates for the mentoring relationship',
-      'Comprehensive testing schedules and digital submission capability',
+      'To set the legally binding carbon taxes payable by UK businesses',
+      'To certify electrical installations as meeting net-zero standards',
       'To provide a standardised framework for measuring and reporting greenhouse gas emissions',
-      'Because the kilogram is the unit of mass; weight is a force, and force has its own unit',
+      'To set the annual emission factors published for grid electricity',
     ],
     correctIndex: 2,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'scope-2-definition',
     question: 'Scope 2 emissions in the GHG Protocol refer to:',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'Poor connections in protective conductor path',
+      'Direct emissions from fuel burnt in owned boilers and vehicles',
       'Indirect emissions from purchased electricity, heat, and steam',
-      'Maintained in an efficient state, in efficient working order and in good repair',
+      'Value-chain emissions from purchased goods and business travel',
+      'Embodied emissions from manufacturing building materials',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Scope 2 covers indirect emissions from the generation of purchased electricity, steam, heating, and cooling consumed by the reporting organisation. For buildings, this is typically the largest emission source.',
   },
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: 'What does CO2e (carbon dioxide equivalent) represent?',
     options: [
       'A metric converting all GHGs to equivalent CO2 impact based on global warming potential',
-      'It allows appropriate response to the unexpected while maintaining focus on priorities',
-      'To evaluate risks by likelihood and impact to prioritise responses',
-      'It can move palletised loads of much greater weight with minimal effort',
+      'The total mass of carbon dioxide only, ignoring other greenhouse gases',
+      'The carbon emitted per pound of company turnover in a financial year',
+      'The percentage of a building emissions that come from electricity',
     ],
     correctIndex: 0,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'Which organisation publishes the most widely used greenhouse gas accounting standards?',
     options: [
-      'Systems designed to fail in a safe condition',
+      'The Health and Safety Executive (HSE)',
       'World Resources Institute and WBCSD (GHG Protocol)',
-      'Only long enough to confirm operation (short duration)',
-      'Measure and check against the drawing',
+      'The Department for Energy Security and Net Zero (DESNZ)',
+      'The International Organization for Standardization (ISO)',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'An office building consumes 500,000 kWh of electricity annually. Using an emission factor of 0.207 kgCO2e/kWh, what are the Scope 2 emissions?',
     options: [
-      'Adapting to technical progress',
-      'Decreases UGR (better glare control)',
-      'Green and yellow bi-colour',
+      '10,350 kgCO2e (10.35 tCO2e)',
+      '241,546 kgCO2e (241.5 tCO2e)',
+      '1,035,000 kgCO2e (1,035 tCO2e)',
       '103,500 kgCO2e (103.5 tCO2e)',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'The UK grid carbon intensity has been decreasing primarily due to:',
     options: [
-      'Large UK companies and LLPs meeting size thresholds',
+      'A nationwide reduction in total electricity demand',
       'Growth in renewable energy and phase-out of coal',
-      'Electricity consumed in owned buildings',
-      'Grid average emission factors for the region',
+      'A switch from alternating current to direct current supply',
+      'Increased use of diesel standby generation at peak times',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: "A building's embodied carbon refers to emissions from:",
     options: [
-      'Scheduled updates with testing and rollback capability',
-      'Lights energised continuously, operating from normal and emergency supplies',
+      'The electricity and gas consumed during day-to-day occupation',
+      'The refrigerant leaking from air-conditioning systems in use',
       'Manufacturing, transport, and installation of building materials and systems',
-      'Fire panel relay outputs were wired to wrong BMS input terminals',
+      'The grid losses incurred in transmitting power to the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'Under SECR, which organisations must report energy and carbon information?',
     options: [
-      'Electricity consumed in owned buildings',
-      'Grid average emission factors for the region',
-      'Growth in renewable energy and phase-out of coal',
+      'All UK businesses regardless of size or turnover',
+      'Only companies in the energy generation sector',
+      'Sole traders and micro-businesses below the VAT threshold',
       'Large UK companies and LLPs meeting size thresholds',
     ],
     correctAnswer: 3,

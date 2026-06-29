@@ -34,12 +34,12 @@ const checks = [
     id: 'mass-weight-units-check',
     question: 'A consumer unit has a mass of 8 kg. What is its weight on Earth (g = 9.81 m/s²)?',
     options: [
-      '8 kg',
-      '8 N',
-      '0.82 N',
       '78.5 N',
+      '8 N',
+      '8 kg',
+      '0.82 N',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Weight = mass × g = 8 × 9.81 ≈ 78.5 N. Mass stays in kilograms; weight is always in newtons. Don’t mix the two — that’s the mistake the examiner is looking for.',
   },
@@ -47,12 +47,12 @@ const checks = [
     id: 'moon-vs-earth-check',
     question: 'You take a 5 kg drill to the Moon, where g ≈ 1.6 m/s². What changes?',
     options: [
-      'Mass stays 5 kg, weight drops from ≈49 N to ≈8 N',
-      'Mass drops to 0.5 kg, weight stays the same',
       'Both mass and weight drop to about a sixth',
-      'Nothing changes — kilograms are kilograms',
+      'Mass drops to 0.8 kg, weight stays the same',
+      'Mass stays 5 kg, weight drops from ≈49 N to ≈8 N',
+      'Nothing changes — the drill is 5 kg everywhere',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Mass is fixed — it’s how much stuff is in the drill. Weight depends on local gravity, so it drops on the Moon. Same drill, lighter to lift, but just as hard to start swinging because that depends on mass, not weight.',
   },
@@ -61,12 +61,12 @@ const checks = [
     question:
       'HSE guidance suggests roughly 25 kg as a sensible single-person lifting cap at waist height for a fit adult male. Why is that figure given as a mass, not a weight in newtons?',
     options: [
-      'A horizontal tube fixed to the standards running parallel to the building face',
-      'It is unreasonable to work dead, reasonable to work live, and suitable precautions are taken',
-      'The wearer must pass a qualitative or quantitative face-fit test for that specific make and model of RPE',
       'Because mass is what you can read off a label or a set of scales — weight depends on where you are',
+      'Because a newton is too small a unit to use for anything heavy',
+      'Because the regulations only allow loads to be quoted in kilograms by law',
+      'Because mass and weight are the same thing on Earth, so it makes no difference',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Bags of cement, drums of cable, consumer units — they’re all labelled in kilograms because that’s the property you can measure anywhere. Convert to weight (×9.81) when you need a force for a calculation.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is weight?',
     options: [
-      'Test voltage, temperature, humidity, and surface contamination',
-      'Washing out concrete chutes or cement mixers into a surface water drain',
       'The force gravity puts on an object — measured in newtons',
-      'Use revision clouds, updated revision table, and maintain drawing history',
+      'The amount of matter in an object — measured in kilograms',
+      'The space an object takes up — measured in cubic metres',
+      'How fast an object falls — measured in metres per second',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Weight is a force, not an amount of stuff. It’s what gravity pulls on the mass. SI unit: newton (N). On Earth, W = m × g, with g ≈ 9.81 m/s².',
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'Why is the SI unit of force (and therefore weight) the newton, not the kilogram?',
     options: [
-      'Questions shift the other person from defensive mode to thinking mode, re-engaging their rational brain',
-      'Whether the learners enjoyed the training and found it relevant',
+      'Because the newton is the older unit and the kilogram replaced it',
+      'Because the kilogram is too large a unit to measure most forces',
       'Because the kilogram is the unit of mass; weight is a force, and force has its own unit',
-      'Stop work in the affected area immediately and seek advice from a qualified ecologist',
+      'Because weight and mass are measured the same way, so either unit works',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'A site supervisor labels a heavy isolator switch "Weight: 12 kg" on the lift plan. What should you say?',
     options: [
-      'Open secondary = no secondary current = uncontrolled flux → very high voltage induced (kV) → insulation failure',
-      'To monitor and control building services for comfort and efficiency',
-      'Filtering facepieces, half/full face masks, powered respirators, breathing apparatus',
       'Strictly that’s mass (12 kg). The weight is about 118 N. Either way, plan the lift safely',
+      'Nothing — 12 kg is the correct way to write a weight on a lift plan',
+      'The label is wrong; it should read 12 N because weight is always in newtons',
+      'It should say 1.2 kg, because weight is mass divided by gravity',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Day-to-day, people say "weight" when they mean mass — and you won’t correct your supervisor on a Friday afternoon. But for an exam, a calc, or a lift plan involving force loads on brackets, get the language right.',
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'You’re estimating the weight of a 25 kg cable drum to size a hoist. Quick mental check?',
     options: [
+      'About 2.5 N (dividing the mass by 10)',
       'About 250 N (using g ≈ 10 for a quick estimate)',
-      'Chilled water for cooling systems',
-      'It provides structured data for facilities management systems',
-      'It reduces energy waste through automated control',
+      'About 25 N (the same number as the mass)',
+      'About 2,500 N (multiplying the mass by 100)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Site shortcut: g ≈ 10 m/s² for quick estimates → mass × 10. So 25 kg ≈ 250 N. The proper figure with g = 9.81 is 245 N. Close enough to size kit; not close enough for a final calculation in your portfolio.',
   },

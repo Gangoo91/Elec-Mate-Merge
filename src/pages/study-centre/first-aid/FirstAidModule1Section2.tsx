@@ -21,11 +21,11 @@ const quickCheckQuestions = [
     question: "In the DANGER acronym used for scene safety, what does the 'G' stand for?",
     options: [
       'Get help immediately',
-      'Guard against risks',
       'Go to the casualty',
       'Give first aid',
+      'Guard against risks',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "DANGER stands for: Danger, Approach with care, Note any hazards, Guard against risks, Evaluate the situation, React to the assessment. 'G' stands for Guard against risks — you must protect yourself and others before approaching a casualty.",
   },
@@ -113,16 +113,16 @@ const quizQuestions = [
   {
     id: 3,
     question: 'When checking for breathing, how long should you look, listen, and feel for?',
-    options: ['Up to 5 seconds', 'Up to 10 seconds', 'Up to 15 seconds', 'Up to 30 seconds'],
-    correctAnswer: 1,
+    options: ['Up to 10 seconds', 'Up to 5 seconds', 'Up to 15 seconds', 'Up to 30 seconds'],
+    correctAnswer: 0,
     explanation:
       'The Resuscitation Council UK guidelines state you should look, listen, and feel for up to 10 seconds. If there is any doubt about whether the casualty is breathing normally within this time, treat them as not breathing and begin CPR. Taking longer than 10 seconds delays life-saving intervention.',
   },
   {
     id: 4,
     question: 'Which airway management technique should be used when a spinal injury is suspected?',
-    options: ['Head tilt-chin lift', 'Jaw thrust', 'Recovery position', 'Finger sweep'],
-    correctAnswer: 1,
+    options: ['Head tilt-chin lift', 'Recovery position', 'Finger sweep', 'Jaw thrust'],
+    correctAnswer: 3,
     explanation:
       'The jaw thrust is the preferred technique when spinal injury is suspected, as it opens the airway without moving the cervical spine. However, if the jaw thrust fails to open the airway adequately, a careful head tilt-chin lift should be used instead — airway management always takes priority over spinal protection.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 5,
     question: 'What information should you give when calling 999/112?',
     options: [
-      "Only your name and the casualty's name",
       'Location, number of casualties, nature of injuries, and any hazards present',
+      "Only your name and the casualty's name",
       'Only the location and type of incident',
       "The casualty's NHS number and GP details",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When calling 999 or 112, provide: your location (as precisely as possible), the number of casualties, the nature of their injuries or illness, any hazards present at the scene, and your callback number. The call handler will guide you through additional questions and may provide instructions for treatment while you wait for the ambulance.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
       'A conscious adult casualty with capacity refuses your offer of first aid. What should you do?',
     options: [
       'Treat them anyway — you have a duty of care',
-      'Respect their decision, stay nearby, and call 999 if their condition deteriorates',
       'Leave the scene immediately',
       'Ask their manager to override their decision',
+      'Respect their decision, stay nearby, and call 999 if their condition deteriorates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A conscious adult with capacity has the legal right to refuse treatment, even if that refusal may result in harm. You must respect their decision. However, you should stay nearby if possible, monitor their condition, explain what might happen if they refuse treatment, and be ready to act if they lose consciousness (at which point implied consent applies). Document the refusal.',
   },

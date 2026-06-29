@@ -24,12 +24,12 @@ const inlineChecks = [
     id: 'm7s7-pcar-scope',
     question: 'PCAR 2023 — what does it cover?',
     options: [
-      'Domestic only',
-      'Public Charge Point Regulations 2023 (UK statutory regulations) — applies to PUBLIC charge points (available for use by the public). Six pillars: (1) payment (contactless card mandatory ≥8 kW; PCAR-compliant terminals); (2) reliability (>= 99% uptime target for rapid 50+ kW); (3) pricing transparency (display price per kWh + ancillary fees); (4) roaming (interoperability via OCPI hub); (5) 24/7 helpline (phone number on each charger); (6) open data (CPO publishes uptime + pricing + availability)',
-      'Workplace only',
-      'Doesn’t exist',
+      'Public charge points, via six pillars: payment, reliability, pricing transparency, roaming, a 24/7 helpline and open data',
+      'Domestic home chargepoints at private residences, covering payment, reliability and accessibility duties',
+      'Workplace chargepoints for employees and visitors, mandating contactless payment and open-data publication',
+      'A BSI publicly available specification on accessibility that supplements, rather than enforces, the regulations',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'PCAR 2023 = UK Public Charge Point Regulations 2023 (UK statutory regulations enforced by the Office of Product Safety and Standards — OPSS). Applies to chargepoints AVAILABLE TO THE PUBLIC (motorway services, supermarket car parks, urban kerbside hubs, public car parks). Six pillars: (1) PAYMENT — contactless bank card mandatory at chargers ≥8 kW (no app-only restriction); (2) RELIABILITY — rapid chargers (50+ kW) must achieve ≥99% uptime over rolling 12 months; (3) PRICING TRANSPARENCY — price per kWh + any ancillary fees displayed at the charger before session start; (4) ROAMING — interoperability via OCPI hub (e.g. Hubject); (5) 24/7 HELPLINE — phone number on each charger for issues; (6) OPEN DATA — CPO publishes uptime + pricing + availability via standardised API. Cert evidence bundle for public install records all six pillars compliance.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     id: 'm7s7-pas-1899',
     question: 'PAS 1899:2022 — what does it cover?',
     options: [
-      'Domestic install',
-      'Accessibility of public EV chargepoints for disabled users. Mounting heights, connector reach, payment terminal accessibility (height, audio assistance, contrast), bay layout (kerb cuts, level approach), signage. Applies to chargepoints in public spaces; PCAR 2023 supports via reference. Accessibility is a UK Government policy priority',
-      'Wireless charging',
-      'Battery storage',
+      'The wiring and earthing standard for domestic home EV charger installations under Section 722',
+      'The specification for wireless inductive EV charging pads and their alignment tolerances',
+      'Accessibility of public EV chargepoints for disabled users — mounting heights, connector reach, terminal access, bay layout and signage',
+      'The interoperability standard for cross-network roaming and clearing-house settlement between CPOs',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'PAS 1899:2022 — "Public charge points for electric vehicles. Specification for accessibility for disabled people". UK publicly available specification published by BSI in 2022 to address growing accessibility concerns at public charging. Covers: mounting heights of payment terminal + displays + connector socket; connector reach (cable length, holster height); payment terminal accessibility (visible from wheelchair height, audio assistance, high contrast); bay layout (kerb cuts, level approach, designated accessible bays); signage. PCAR 2023 supports PAS 1899 via reference. UK Government policy: accessibility of public charging is a key equality / consumer-rights priority. Cert evidence bundle for public install records PAS 1899 compliance evidence + designated accessible bay ratios.',
   },
@@ -50,12 +50,12 @@ const inlineChecks = [
     id: 'm7s7-ofgem-licensing',
     question: 'CPO (Charge Point Operator) licensing under Ofgem — what is the position?',
     options: [
-      'Full Ofgem licence required',
-      'CPOs in UK are NOT licensed by Ofgem as electricity suppliers under the standard licence regime — they operate as "non-supplier" customer-end energy users, reselling electricity to drivers. PCAR 2023 + consumer protection (Consumer Rights Act 2015 + Competition Markets Authority oversight) govern the CPO’s operation. PCAR 2023 OPSS is the enforcement authority. Ofgem oversight is via the supply licence of the underlying electricity supplier',
-      'No regulations at all',
-      'EU regulation',
+      'CPOs must each hold a full Ofgem electricity supply licence before they can operate a public charger',
+      'CPOs sit outside all UK regulation and answer only to their own voluntary code of conduct',
+      'CPOs are licensed and inspected directly by Ofgem under the same regime as gas and electricity suppliers',
+      'CPOs are non-supplier end users reselling electricity, not Ofgem-licensed suppliers, governed by PCAR 2023 with OPSS enforcement',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'CPOs (Charge Point Operators) — companies that operate public charge point networks — are NOT licensed by Ofgem as electricity suppliers. They’re classified as "non-supplier" end-customers reselling electricity to drivers. UK 2025-26 regulatory framework: PCAR 2023 (UK statutory regulations, OPSS enforcement) governs CPO operation. Ofgem oversight indirect via the supply licence of the underlying electricity supplier (the CPO buys wholesale + supplies retail). Consumer protection via Consumer Rights Act 2015 + Competition + Markets Authority (CMA) oversight (the CMA investigated motorway EV charging concentration in 2022-23). UK reality: separate regulatory regime from gas / electricity supply — emerging area. Cert evidence bundle for the CPO’s operational scope records PCAR + CMA + OPSS compliance evidence.',
   },
@@ -63,10 +63,10 @@ const inlineChecks = [
     id: 'm7s7-installer-vs-operator',
     question: 'Installer vs CPO responsibilities — where does the boundary lie?',
     options: [
-      'Same scope',
-      'Installer: Section 722 + BS EN IEC 61439-7 + DNO connection + commissioning per BS EN 61851 + cert evidence bundle handed over at install. CPO: ongoing operation — PCAR 2023 compliance (payment, reliability, pricing, roaming, helpline, open data) + PAS 1899 accessibility + customer service + billing + firmware updates + maintenance. Installer’s job ends at commissioning + handover; CPO assumes ongoing obligations',
-      'No boundary',
-      'Customer responsibility only',
+      'The installer also owns the ongoing 99% reliability target and 24/7 helpline after handover, with the CPO only billing drivers',
+      'The installer handles Section 722, the DNO connection and commissioning up to handover; the CPO then owns ongoing PCAR/PAS 1899 operation',
+      'The CPO carries out the Section 722 install and commissioning, leaving the installer to run the helpline and open-data feed',
+      'The end customer (site landowner) is responsible for PCAR compliance, with the CPO only supplying the hardware',
     ],
     correctIndex: 1,
     explanation:
@@ -78,22 +78,22 @@ const quizQuestions = [
   {
     question: 'A public DC fast hub install — which PCAR 2023 pillars trigger at the install stage?',
     options: [
-      'None',
-      'All six need to be designed in: (1) payment terminal at each ≥8 kW charger (PCAR mandatory); (2) reliability — design for high availability + redundancy; (3) pricing transparency — display screens at each charger; (4) roaming — OCPP + OCPI integration; (5) 24/7 helpline — phone number signage on each charger; (6) open data — CPO’s CPMS publishes via API. Installer designs + commissions; CPO operates ongoing',
-      'Only payment',
-      'Only signage',
+      'Only the payment terminal and pricing display, since reliability and open data are purely operational and added later',
+      'Only the helpline signage and contactless terminal, with roaming and open data configured by the energy supplier',
+      'All six pillars: payment terminals, reliability/redundancy, pricing displays, OCPP/OCPI roaming, helpline signage and open data',
+      'Only reliability and roaming, as pricing and open data are set by the energy supplier after handover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Public install design at install stage must integrate all six PCAR pillars: (1) PAYMENT — contactless bank card terminal at each charger ≥8 kW; PCAR-compliant payment processor (Visa / Mastercard accepted); (2) RELIABILITY — design for high availability — redundancy, robust enclosures, reliable kit selection; (3) PRICING TRANSPARENCY — display screens at each charger showing price per kWh + ancillary fees BEFORE session start (e.g. "65p/kWh + £1 connection fee"); (4) ROAMING — OCPP 1.6 / 2.0.1 charger + OCPI integration with the CPMS for cross-network roaming; (5) 24/7 HELPLINE — phone number signage on each charger pillar (typically printed sticker or LCD display); (6) OPEN DATA — CPMS configured to publish uptime + pricing + availability data via standardised API to UK government open-data feed. Installer’s job at commissioning: verify each pillar is configured. Cert evidence bundle records each pillar’s compliance evidence.',
   },
   {
     question: 'PAS 1899:2022 — bay layout requirements for accessible charging?',
     options: [
-      'No requirements',
-      'Designated accessible bays in the public charging hub (typical ratio 1 in 6 or per local authority planning); bay dimensions wider than standard (allowing wheelchair access alongside vehicle); kerb cut + level approach to bay; clear of obstructions; mounting height of payment terminal accessible from wheelchair seated position (~0.9-1.1 m); connector cable + holster reachable; audio assistance for vision-impaired users; high contrast displays + signage',
-      'Same as standard bay',
-      'No accessibility considerations',
+      'Standard-width bays at the normal 2.4 m, since the cable and terminal heights already suit any user',
+      'Wider designated bays with kerb cut and level approach, accessible terminal heights, reachable connectors, audio assistance and high-contrast signage',
+      'A single accessible bay per site marked with the wheelchair symbol, with no change to width or approach',
+      'Wider bays only, with terminal and connector heights left at the standard non-accessible mounting',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,34 +102,34 @@ const quizQuestions = [
   {
     question: 'PCAR 2023 reliability requirement — 99% uptime over rolling 12 months. Calculation?',
     options: [
-      'No calculation',
-      '99% uptime = 1% allowed downtime. Per rolling 12 months: 1% × 8,760 hours = ~88 hours total downtime allowed. CPO must monitor + report uptime via CPMS to UK Government open-data feed. Below threshold triggers OPSS enforcement (warning notice, financial penalty). Applies to rapid charge points (50+ kW)',
-      '50% uptime',
-      'No requirement',
+      '1% downtime ≈ 88 hours per year, but it applies only to chargers below 50 kW and is self-certified with no enforcement',
+      'The 99% target is measured per calendar month rather than rolling 12 months, allowing ~7 hours of downtime in any single month',
+      'The 99% figure is an availability average across the whole CPO network, so an individual rapid charger has no uptime obligation',
+      '1% downtime ≈ 88 hours per year; the CPO monitors and reports it, and breaches trigger OPSS enforcement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PCAR 2023 reliability requirement: rapid chargers (50+ kW) must achieve ≥99% uptime over rolling 12 months. Calculation: 99% uptime allows 1% downtime; 1% × 8,760 hours/year = ~88 hours allowed downtime per year (or ~7 hours per month average). CPO monitors uptime via CPMS (charger online + functional + able to deliver session); reports to UK Government open-data feed. Below threshold triggers OPSS (Office of Product Safety and Standards) enforcement: warning notice, financial penalty up to £10,000 per non-compliant chargepoint per breach. UK 2025-26 reality: most major CPOs (Gridserve, InstaVolt, IONITY, Tesla Supercharger, Octopus Electroverse, BP Pulse, MFG EV Power) actively manage uptime + publish data. Reliability target drives operator investment in monitoring + maintenance + reliable kit selection. Cert evidence bundle for CPO records ongoing uptime monitoring + reporting + breach response procedure.',
   },
   {
     question: 'Workplace install — does PCAR 2023 apply?',
     options: [
-      'Yes always',
-      'NO — PCAR 2023 applies to chargepoints AVAILABLE TO THE PUBLIC. Workplace chargers (employees / contractors / visitors only) are NOT public. Workplace install: BS 7671 Section 722 + SCP Regulations 2021 + OZEV Workplace Charging Scheme (if grant) + BS EN IEC 61439-7 (if multi-charger). PCAR doesn’t apply. Where the workplace is opened to the public (some retail with staff bays), PCAR may bite — depends on actual access',
-      'Yes for any commercial',
-      'Yes for any three-phase',
+      'Yes — any commercial chargepoint at a business premises is in PCAR scope regardless of who can use it',
+      'Yes — any three-phase or rapid chargepoint triggers PCAR, even an employee-only workplace unit',
+      'Generally no — PCAR covers public-access chargepoints, so employee-only workplace units fall under Section 722 and the SCP Regs instead',
+      'Yes — once a workplace charger is grant-funded under the Workplace Charging Scheme, PCAR applies in full',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PCAR 2023 scope is PUBLIC chargepoints — "available for use by the public". Workplace chargers used only by employees / contractors / visitors are NOT public; PCAR doesn’t apply. Workplace regulatory stack: BS 7671 Section 722 + SCP Regulations 2021 (workplace included) + OZEV Workplace Charging Scheme (if grant) + BS EN IEC 61439-7 (if multi-charger assembly). The classification depends on actual access, not nominal intent. UK 2025-26 edge cases: workplace chargers opened to the public after-hours (some retail / supermarket pattern); workplace with public visitor access during business hours (some leisure / hospitality). In those cases, PCAR may apply selectively. Cert evidence bundle records the site classification + the operator’s public-access policy.',
   },
   {
     question: 'OPSS enforcement of PCAR 2023 — what triggers an investigation?',
     options: [
-      'Random',
-      'Driver complaints to OPSS via official channels; CMA monitoring + competition concerns; published open-data feeds showing repeated reliability breaches; press / media coverage; UK Government policy reviews. OPSS investigates; can issue warning notices, financial penalties (up to £10k per non-compliant chargepoint per breach), or improvement orders. Persistent non-compliance can lead to licence revocation for the CPO',
-      'Customer reviews',
-      'No enforcement',
+      'Only a formal referral from Ofgem can open an investigation, since OPSS has no power to act on driver complaints',
+      'Driver complaints, CMA monitoring, open data showing breaches and media coverage; OPSS issues notices, penalties up to £10k per chargepoint, or licence revocation',
+      'Only the published open-data feed triggers action; driver complaints and CMA findings are outside OPSS remit',
+      'Only a court order can compel OPSS to investigate, and its only sanction is to publish the breach',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
   {
     question: 'Charge Point Roaming — what enables it?',
     options: [
-      'Customer-side magic',
-      'OCPI (Open Charge Point Interface) protocol — CPMS ↔ CPMS communication enabling drivers from one network to authorise + pay on another network. Hubject is the dominant European OCPI hub. PCAR 2023 mandates interoperability — CPOs must provide roaming via at least one OCPI hub. Customer-side: pay via home network app; behind-scenes: OCPI clearing house settles between networks',
-      'Manual contracts',
-      'Each network isolated',
+      'The OCPP protocol alone, since the charger-to-CPMS link is all that is needed for cross-network billing',
+      'A feature built into the vehicle that authorises any charger directly, with no clearing house between networks',
+      'A single shared national payment app that every CPO is required to adopt instead of their own',
+      'The OCPI protocol for CPMS-to-CPMS communication, letting a driver from one network pay on another via a hub such as Hubject',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OCPI = Open Charge Point Interface. Protocol for CPMS ↔ CPMS communication enabling cross-network roaming. Driver pays via home network app (e.g. Octopus Electroverse); behind the scenes, OCPI clearing house (Hubject is dominant European hub) settles between the home network (driver’s service provider) and the host network (CPO operating the chargepoint). UK 2025-26 reality: PCAR 2023 mandates roaming interoperability; CPOs integrate with Hubject (or similar) + offer roaming. Customer benefit: one app, many networks. CPO benefit: more sessions (drivers from other networks can use their chargepoints). Cert evidence bundle for the CPO records OCPI integration + roaming hub configuration.',
   },

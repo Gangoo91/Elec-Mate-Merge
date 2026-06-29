@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'AC-coupled vs DC-coupled hybrid PV+BESS — what are the architectural differences?',
     options: [
-      'They are the same',
-      'AC-coupled: PV inverter generates AC at the AC bus; a separate battery inverter / BMS converts AC to DC for battery charging (and DC to AC for discharge). Two conversion stages between PV and battery. DC-coupled: PV array connects DIRECTLY to the battery DC bus via a hybrid inverter that handles PV MPPT, battery charging, and AC inversion in one unit. Single conversion stage between PV and battery; AC inversion only when discharging to load',
-      'DC-coupled is faster',
-      'AC is cheaper always',
+      'The two are electrically identical, and the labels are interchangeable in practice',
+      'AC-coupled connects PV to the AC bus via its own inverter with a separate battery inverter; DC-coupled feeds PV straight to one hybrid inverter at DC level',
+      'DC-coupled is simply a faster-charging variant of the same AC-coupled architecture',
+      'AC-coupled is always the cheaper option, regardless of the type of install',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Round-trip efficiency for PV → battery → AC load: AC-coupled vs DC-coupled. Typical real-world numbers?',
     options: [
-      'Both 100%',
-      'DC-coupled typical round-trip: ~89-91% (PV → DC battery: ~99%; battery → AC load: ~90%). AC-coupled typical round-trip: ~84% (PV → AC: ~97%; AC → DC battery: ~95%; battery → AC load: ~90%). DC-coupled saves ~5-7 percentage points by skipping the AC↔DC stage between PV and battery. Over 10,000 cycles, the loss difference compounds — meaningful for high-cycling commercial installs',
-      'AC-coupled is 50% better',
-      'DC-coupled is 50% better',
+      'Both architectures achieve essentially 100% round-trip, with no measurable losses',
+      'DC-coupled ~89-91% round-trip vs AC-coupled ~84%, by saving one AC↔DC stage',
+      'AC-coupled is roughly 50% more efficient than DC-coupled on round-trip storage',
+      'DC-coupled is roughly 50% more efficient than AC-coupled on round-trip storage',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'UK 2025-2026 dominant hybrid inverter / BESS brands — name the most common categories?',
     options: [
-      'No brands',
-      'DC-coupled hybrid: GivEnergy (Hybrid + Battery, UK-designed/manufactured); Solis Hybrid; Huawei LUNA; FoxESS Hybrid; Sigenergy SigenStor; SolarEdge StorEdge / Energy Hub (uses SolarEdge optimisers + DC-coupled battery). AC-coupled retrofit: Tesla Powerwall 2/3 (AC-coupled to existing grid-tied PV); Enphase IQ Battery (microinverter ecosystem); GivEnergy AC battery (retrofit option); SolarEdge AC battery. Some Sigenergy / GivEnergy products support both coupling modes',
-      'Only Tesla',
-      'Customer chooses',
+      'There are no established UK brands operating in this PV+BESS market segment',
+      'DC-coupled hybrid: GivEnergy, Solis, Huawei, FoxESS, Sigenergy; AC-coupled retrofit: Tesla Powerwall, Enphase, SolarEdge',
+      'Tesla Powerwall is the only product currently sold for hybrid PV+BESS in the UK',
+      'The brand is irrelevant, since the customer simply chooses any inverter on offer',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 570.5.2 (Chapter 57, NEW in A4:2026) covers PCE selection for BESS. What does it say about hybrid inverters?',
     options: [
-      'Hybrid inverters not allowed',
-      'Reg 570.5.2: the type and characteristics of PCE shall be selected to be suitable for the type of battery and its application, taking account of the battery manufacturer\'s instructions. NOTE 1: PCE for stationary battery installations may be incorporated into PCE for renewable generation, for example, solar PV system inverters (sometimes termed &ldquo;bidirectional&rdquo; or &ldquo;hybrid&rdquo; inverters). NOTE 2: PCE may be used to connect batteries to AC systems (sometimes termed &ldquo;AC coupling&rdquo;) or DC systems (sometimes termed &ldquo;DC coupling&rdquo;). The reg explicitly recognises both coupling modes',
-      'Only DC-coupled',
-      'Customer choice only',
+      'It prohibits hybrid inverters entirely on stationary battery installations',
+      'PCE must suit the battery type, application and maker\'s instructions; its notes recognise both AC and DC coupling',
+      'It permits only DC-coupled architectures and bans AC coupling outright',
+      'It leaves the coupling mode entirely to customer preference, setting no criteria',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'Reg 570.6.1.1.1 (Chapter 57) requires stationary battery installations to conform to a specific standard. Which one?',
     options: [
-      'No standard',
-      'BS EN IEC 62485 series — &ldquo;Safety requirements for secondary batteries and battery installations&rdquo;. Covers battery selection, installation, ventilation, fire safety, maintenance. Reg 570.6.1.1.1 also notes: &ldquo;Where appropriate, bidirectional protective devices shall be selected&rdquo; — parallels the DC-side OCPD bidirectional requirement (Reg 712.533.101 for PV) since BESS current can flow in either direction',
-      'Customer\'s choice',
-      'BS EN 50618',
+      'No standard applies, since the manufacturer\'s instructions are sufficient alone',
+      'The BS EN IEC 62485 series, plus bidirectional protective devices where appropriate',
+      'The standard is left to the customer\'s choice of battery supplier and product',
+      'BS EN 50618, which is the standard for single-core PV DC cable, applies here',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Reg 570.6.1.2.1 (BESS DC earthing) — what does it permit, and how does it parallel Reg 712.312.2 for PV?',
     options: [
-      'Not permitted',
-      'Reg 570.6.1.2.1: &ldquo;Earthing of one of the live conductors of the DC side is permitted, if there is at least simple separation between the AC side and the DC side.&rdquo; This is the BESS equivalent of Reg 712.312.2 for PV — both permit DC live-conductor earthing under the same galvanic-isolation condition. For DC-coupled hybrid installs, the PV array and BESS share the same DC bus; the simple separation condition applies to the PCE between DC and AC sides',
-      'Forbidden',
-      'Customer\'s choice',
+      'DC live-conductor earthing is never permitted under any condition at all',
+      'It permits earthing one DC live conductor where simple separation exists, mirroring Reg 712.312.2',
+      'It forbids DC earthing unless the AC side is a TT system with its own electrode',
+      'The earthing arrangement is left entirely to the customer\'s own preference',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Customer has existing 5 kWp PV install (3 years old, Solis inverter). Wants to add 10 kWh battery. AC-coupled or DC-coupled?',
     options: [
-      'Must be DC-coupled',
-      'AC-coupled — retrofit case. The existing Solis inverter stays; an AC-coupled battery unit (Tesla Powerwall 2, GivEnergy AC battery, SolarEdge AC battery) connects to the AC bus alongside the inverter. Pros: no PV inverter replacement; existing MCS / EREC paperwork stays; install time short (1-2 days). Cons: AC-coupled efficiency penalty (~5-7 percentage points round-trip vs DC-coupled); more components on the AC side; commissioning more complex than new-build DC-coupled',
-      'Replace everything',
-      'Customer\'s preference only',
+      'DC-coupled, by tapping the existing Solis PV strings into the new battery',
+      'AC-coupled — the Solis inverter stays and an AC battery bolts on, preserving the MCS/EREC paperwork',
+      'Strip out the Solis kit and replace the whole system with a new DC-coupled hybrid',
+      'It is purely the customer\'s preference, with no real technical driver either way',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'How does Chapter 82 (Prosumer\'s Electrical Installations, NEW A4:2026) interact with the hybrid PV+BESS topology choice?',
     options: [
-      'Doesn\'t apply',
-      'Chapter 82 applies to ANY install that both consumes and generates / stores electricity — i.e. ALL hybrid PV+BESS installs are PEIs. The topology choice (AC vs DC coupled) doesn\'t change Chapter 82\'s applicability; both architectures need PEI design (Reg 826.1.1.1-826.1.4). Key PEI considerations for hybrid: multi-source isolation (Reg 826.1.1.4 — main switch suitable for isolation per source); operating modes (Reg 824.2 — direct feeding / island / etc.); bidirectional OCPDs (Reg 826.1.2.2 takes account of ALL POSSIBLE directions of current flow). Section 4.5 covers Chapter 82 in depth',
-      'Only for AC-coupled',
-      'Only for DC-coupled',
+      'Chapter 82 does not apply to domestic PV+BESS installations at all',
+      'It applies to any install that both consumes and generates/stores, so all hybrids are PEIs',
+      'It applies only to AC-coupled installs, since DC-coupled units are exempt',
+      'It applies only to DC-coupled installs, since AC-coupled units are exempt',
     ],
     correctIndex: 1,
     explanation:
@@ -140,26 +140,26 @@ const quizQuestions = [
     question:
       'New-build customer wants 6 kWp PV + 10 kWh BESS. Which coupling mode is the modern default?',
     options: [
-      'AC-coupled',
-      'DC-coupled hybrid — single hybrid inverter (GivEnergy Gen3 / Solis Hybrid / Sigenergy SigenStor / SolarEdge Energy Hub) handles both PV MPPT and BESS charging/discharging. Pros: single inverter (lower component count, lower install cost vs separate PV + battery inverters), better round-trip efficiency (~89-91% vs AC-coupled ~84%), simpler commissioning. The PCE selection per Reg 570.5.2 explicitly permits this hybrid topology',
-      'Customer chooses',
-      'Both at once',
+      'AC-coupled, with separate PV and battery inverters bolted onto a shared AC bus',
+      'DC-coupled hybrid — one inverter handles PV MPPT and BESS charge/discharge',
+      'Off-grid only, with no DNO connection and no export to the grid',
+      'Microinverter-per-module on the AC bus, treated as the new-build standard',
     ],
     correctAnswer: 1,
     explanation:
-      'DC-coupled hybrid is the modern UK new-build default for PV+BESS. Single hybrid inverter (typical 5-10 kW AC rated) replaces separate PV and battery inverters. UK brands: GivEnergy (UK-designed/manufactured, popular), Solis Hybrid, Huawei LUNA, FoxESS, Sigenergy SigenStor, SolarEdge Energy Hub. Round-trip efficiency ~89-91% vs AC-coupled ~84%. Component count lower; commissioning simpler; cost lower. Per Reg 570.5.2: PCE may be incorporated into renewable-generation PCE — i.e. hybrid inverter explicitly permitted.',
+      'DC-coupled hybrid is the modern UK new-build default for PV+BESS. A single hybrid inverter (typical 5-10 kW AC rated) replaces separate PV and battery inverters, giving a lower component count, simpler commissioning, lower cost, and higher round-trip efficiency (~89-91% vs AC-coupled ~84%). UK brands: GivEnergy (UK-designed/manufactured, popular), Solis Hybrid, Huawei LUNA, FoxESS, Sigenergy SigenStor, SolarEdge Energy Hub. Per Reg 570.5.2: PCE may be incorporated into renewable-generation PCE — i.e. the hybrid inverter is explicitly permitted.',
   },
   {
     id: 2,
     question:
       'Customer\'s existing PV (5 years old, SolarEdge HD-Wave inverter + optimisers). Wants to add 10 kWh BESS. Best coupling mode?',
     options: [
-      'AC-coupled Tesla',
-      'DC-coupled via SolarEdge Energy Hub or DC-coupled retrofit. SolarEdge supports DC-coupled retrofit with its optimisers — the existing optimiser-controlled DC bus already runs to the inverter; swap inverter to Energy Hub + add SolarEdge BESS. Higher efficiency than AC-coupled retrofit; preserves the optimiser investment. Alternative: SolarEdge AC battery (AC-coupled retrofit) — simpler install but lower efficiency. Customer\'s informed decision based on cost / efficiency trade-off',
-      'Replace all',
-      'No options',
+      'Strip out the SolarEdge kit and start again with a fresh DC-coupled hybrid system',
+      'A generic AC-coupled Tesla Powerwall, ignoring the existing SolarEdge ecosystem entirely',
+      'A microinverter retrofit on each module to convert the array to AC coupling',
+      'DC-coupled retrofit: SolarEdge Energy Hub plus SolarEdge BESS, reusing the existing optimisers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SolarEdge ecosystem supports DC-coupled retrofit elegantly: existing PV with optimisers + HD-Wave inverter → swap to Energy Hub inverter + DC-coupled SolarEdge BESS. Optimisers stay; PV array stays; just the inverter and battery added. Higher round-trip efficiency (~89-91%) than AC-coupled retrofit (~84%). Cost premium of ~£500-£1,000 vs basic AC-coupled retrofit is offset by 5+ year efficiency gain. Alternative: SolarEdge AC battery for simpler install. Cert evidence bundle records the chosen coupling mode and rationale.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'AC-coupled hybrid install: PV inverter 5 kW + battery inverter 5 kW. Customer load is 10 kW peak. Both inverters can supply concurrently — but the battery inverter is also charging during midday. What\'s the limit?',
     options: [
-      'Unlimited',
-      'Each inverter contributes its rated AC output to the load. Combined 5 + 5 = 10 kW peak achievable if both inverters at full output. However: battery inverter splits its capacity between discharging-to-load and charging-from-PV. If charging at 3 kW and load needs 7 kW, battery inverter contributes (5 − 3) = 2 kW to load; PV inverter contributes its current generation up to 5 kW; deficit (7 − 2 − 5 = 0) from grid. Hybrid inverters (DC-coupled) avoid this conflict — single unit allocates power flow internally',
-      'Inverters fight',
-      'Customer\'s fault',
+      'Both reach 10 kW combined, but the battery inverter must split its 5 kW between charge and discharge',
+      'There is no practical limit because the two inverters simply add together at all times',
+      'The PV inverter alone must cover the full 10 kW, as the battery inverter only ever charges',
+      'The grid must supply the whole 10 kW because two inverters cannot run in parallel at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AC-coupled splits responsibility between two inverters with separate power budgets. PV inverter: all generation goes to AC. Battery inverter: bidirectional, splits between discharge-to-load (forward) and charge-from-AC (reverse — uses some of PV inverter\'s generation). Conflict can occur when load is high AND PV is producing AND battery wants charging — the battery inverter must time-slice or prioritise. DC-coupled hybrid inverter handles all this internally: PV array charges DC bus; BMS sets charge limit; whatever\'s left after charging + load goes to grid (or to grid if export-allowed). Single decision point; no AC-bus conflicts.',
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Customer asks: &ldquo;What about Tesla Powerwall — is it AC or DC coupled?&rdquo;',
     options: [
-      'Always DC',
-      'Powerwall 2 is AC-coupled — it pairs with any existing PV inverter via the AC bus. Tesla\'s Gateway 2 monitors the property\'s consumption + grid + PV inverter output and decides Powerwall charge/discharge. Powerwall 3 (released 2024-2025) supports BOTH AC-coupled AND DC-coupled modes — it can accept PV DC inputs directly (DC-coupled mode, integrated MPPT) OR via AC bus (AC-coupled retrofit). Customer typically pays a premium for Powerwall 3 to get the choice',
-      'Always AC',
-      'Neither',
+      'Powerwall is always DC-coupled and must be wired directly to the PV strings',
+      'Powerwall 2 is AC-coupled; Powerwall 3 supports both AC- and DC-coupled modes with MPPT',
+      'Powerwall is always AC-coupled across every model, with no DC-coupled option at all',
+      'Powerwall is neither AC- nor DC-coupled; it operates as a standalone off-grid unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,24 +196,24 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 570.6.1.1.1 requires BS EN IEC 62485 conformance for BESS. What does that standard cover?',
     options: [
-      'Customer satisfaction',
-      'BS EN IEC 62485 series: &ldquo;Safety requirements for secondary batteries and battery installations&rdquo;. Multi-part standard covering: (-1) general safety information; (-2) stationary lead-acid; (-3) traction lead-acid; (-4) general for stationary lithium; (-5) stationary lithium-ion. Topics: ventilation (hydrogen evolution for lead-acid), enclosure ratings, thermal management, fire safety, maintenance access. Reg 570.6.1.1.1 requires conformance; Module 5 covers BS EN IEC 62485 in depth',
-      'Voltage limits only',
-      'No content',
+      'Safety requirements for stationary secondary batteries and their installations',
+      'The maximum permitted DC voltage and current limits at the battery terminals',
+      'The commercial pricing and warranty terms for stationary battery storage products',
+      'The cable colour codes and sleeving conventions used on the battery DC side',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN IEC 62485 series is the multi-part standard for stationary battery safety. Parts: -1 (general safety information); -2 (stationary lead-acid); -3 (traction); -4 (general for stationary lithium); -5 (stationary lithium-ion). Topics covered: ventilation (critical for lead-acid which evolves hydrogen during charging); enclosure ratings (IP ratings, fire resistance); thermal management; maintenance access; emergency response. Reg 570.6.1.1.1 mandates conformance — cert evidence bundle records the install\'s adherence. Module 5 covers each relevant part in depth.',
+      'BS EN IEC 62485 covers ventilation, enclosure ratings, thermal management and fire safety. It is the multi-part standard for stationary battery safety. Parts: -1 (general safety information); -2 (stationary lead-acid); -3 (traction); -4 (general for stationary lithium); -5 (stationary lithium-ion). Topics covered: ventilation (critical for lead-acid which evolves hydrogen during charging); enclosure ratings (IP ratings, fire resistance); thermal management; maintenance access; emergency response. Reg 570.6.1.1.1 mandates conformance — cert evidence bundle records the install\'s adherence. Module 5 covers each relevant part in depth.',
   },
   {
     id: 6,
     question:
       'Reg 570.6.1.1.2 says &ldquo;Voltage at the terminals of cells or monobloc batteries shall be assumed to be always present&rdquo;. What\'s the practical implication?',
     options: [
-      'No implication',
-      'BESS DC bus is ALWAYS LIVE — like the PV DC side (Reg 712.410.101). Maintenance work must isolate at the battery DC isolator + work safely assuming live cells throughout. Reg 570.6.1.1.2 also requires &ldquo;appropriate provisions for safe maintenance shall be provided in accordance with the BS EN IEC 62485 series&rdquo;. Cert evidence bundle records: battery isolator location, BS EN IEC 62485 compliance, maintenance access provisions',
-      'Voltage is zero',
-      'Customer\'s issue',
+      'The battery terminals are only live while charging, so work is safe once the PV is covered',
+      'The BESS DC bus is always live — isolate at the battery DC isolator and treat cells as energised',
+      'It means the AC side stays energised but the DC side becomes automatically dead at rest',
+      'It only applies to older lead-acid batteries, not to modern lithium chemistries at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'Customer has Enphase IQ7 microinverter PV (existing). Wants to add Enphase IQ Battery. Coupling architecture?',
     options: [
-      'DC-coupled',
-      'AC-coupled — Enphase ecosystem is inherently AC-coupled. Each PV module has its own IQ7 microinverter (module-level AC conversion), so the entire array runs at AC. The IQ Battery connects to the AC bus alongside the microinverters. Enphase IQ Gateway monitors and orchestrates the system. The architecture is consistent: PV → AC (per module) → AC bus → battery (charging via AC) → battery (discharging via AC). No DC bus on the PV side at all',
-      'Forbidden',
-      'Custom',
+      'DC-coupled, by tapping the module DC just before the IQ7 microinverters',
+      'The IQ Battery cannot be added to a microinverter array under any arrangement',
+      'A bespoke hybrid coupling unique to Enphase that is neither AC nor DC coupled',
+      'AC-coupled — the microinverters leave no PV DC bus, so the IQ Battery sits on the AC bus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Enphase microinverter ecosystem is inherently AC-coupled — each module has its own microinverter converting DC to AC at the module. There IS no DC bus to DC-couple a battery to. IQ Battery (Enphase\'s BESS) is AC-coupled by design; it sits on the AC bus alongside the microinverters. Enphase IQ Gateway provides the orchestration. Round-trip efficiency similar to other AC-coupled architectures (~84%). The Enphase ecosystem trade-off: module-level optimisation + AC simplicity vs the efficiency penalty of two-stage conversion. Cert evidence bundle records the Enphase architecture.',
   },
@@ -238,12 +238,12 @@ const quizQuestions = [
     question:
       'How does the design pack for a hybrid PV+BESS install differ between AC-coupled and DC-coupled?',
     options: [
-      'No difference',
-      'Both need the MCS MIS 3002 PV design pack + the Chapter 57 BESS design content + the Chapter 82 PEI design (covered in Section 4.5). Specific differences: AC-coupled = two PCEs (PV inverter + battery inverter), each with its own MPPT calcs, AC sizing, EREC G98 / G99 registration; DC-coupled = single hybrid PCE with combined PV MPPT + BESS sizing in one design document. AC-coupled has more cert evidence bundle artefacts; DC-coupled has fewer but tighter integration',
-      'Customer\'s choice',
-      'No design pack needed',
+      'There is no difference; one single design document covers both architectures identically',
+      'AC-coupled needs no PV design pack because the battery inverter does all the calculations',
+      'Both cover PV, BESS and PEI, but AC-coupled documents two PCEs and DC-coupled documents one',
+      'Only DC-coupled installs require a full design pack; AC-coupled installs are exempt from it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hybrid PV+BESS design pack content: (1) MCS MIS 3002 PV design pack (Module 3 content); (2) Chapter 57 BESS content per Reg 570.5.1-570.6 (battery selection, PCE selection per Reg 570.5.2, BS EN IEC 62485 compliance); (3) Chapter 82 PEI design (operating modes, multi-source isolation, bidirectional OCPDs — covered in Section 4.5); (4) coupling-specific items. AC-coupled: separate PV inverter MPPT + battery PCE sizing. DC-coupled: combined hybrid inverter MPPT + battery sizing + PV string sizing. Cert evidence bundle adapts to the architecture.',
   },

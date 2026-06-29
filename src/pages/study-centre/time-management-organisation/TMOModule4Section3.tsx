@@ -24,10 +24,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does the "S" stand for in the first step of the 5S methodology?',
     options: [
-      'Sanitise \u2014 clean everything in the workspace',
-      'Sort \u2014 separate what is needed from what is not, and remove unnecessary items',
-      'Schedule \u2014 plan when to organise the workspace',
-      'Stack \u2014 arrange items in vertical storage to save space',
+      'Sanitise \u2014 deep-clean every surface in the workspace',
+      'Sort \u2014 separate what is needed from what is not and remove the rest',
+      'Schedule \u2014 plan in advance when to organise the workspace',
+      'Stack \u2014 arrange items in vertical storage to save floor space',
     ],
     correctAnswer: 1,
     explanation:
@@ -37,12 +37,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the principle of "designated places" in van organisation?',
     options: [
-      'Tools should be stored wherever there is space available',
-      'Every tool and material should have one specific, labelled home location and always be returned there',
-      'Tools should be rotated between different storage positions weekly',
-      'Only expensive tools need designated storage locations',
+      'Tools are stored wherever there happens to be free space',
+      'Tools are rotated between different storage positions each week',
+      'Only the more expensive tools need a designated storage location',
+      'Every item has one specific labelled home and is always returned there',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The designated place principle means every item has one specific home \u2014 and only one. When you finish using a tool, it goes back to exactly the same place. When you need it, you reach for that place without thinking. This eliminates search time entirely because retrieval becomes automatic muscle memory rather than a conscious search.',
   },
@@ -50,12 +50,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the recommended approach to managing van consumable stock?',
     options: [
-      'Buy everything in bulk at the start of each month',
-      'Only buy materials as needed for each specific job',
-      'Maintain minimum stock levels for commonly used items and reorder when stock drops below the trigger point',
+      'Set a minimum level for common items and reorder when stock drops below it',
+      'Buy every material in bulk at the start of each calendar month',
+      'Only buy materials as and when they are needed for each specific job',
       'Keep the maximum possible quantity of every material in the van at all times',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A minimum-stock system ensures you always have commonly used items (cable clips, connector blocks, earth sleeving, fixing screws) without overloading the van. Set a trigger point for each item \u2014 for example, reorder 2.5mm T&E when you have less than one drum. This prevents both running out mid-job and carrying excessive weight.',
   },
@@ -63,10 +63,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is material pre-ordering important for time management?',
     options: [
-      'Because suppliers are always out of stock',
-      'Because it eliminates unplanned trips to the merchant, which waste 30\u201360 minutes each time',
-      'Because pre-ordered materials are always cheaper',
-      'Because it reduces the weight in the van',
+      'Because suppliers are nearly always out of the materials you need',
+      'Because it avoids unplanned merchant trips that waste 30\u201360 minutes each',
+      'Because pre-ordered materials are always cheaper than buying on the day',
+      'Because it noticeably reduces the carried weight in the van',
     ],
     correctAnswer: 1,
     explanation:
@@ -76,10 +76,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the "Set in Order" (Seiton) step of 5S?',
     options: [
-      'Arrange items so the most frequently used are most accessible, with clear labelling',
-      'Sort all items alphabetically',
-      'Set a schedule for cleaning the workspace',
-      'Order new supplies to replace old ones',
+      'Arrange items by frequency of use, with the most-used most accessible',
+      'Sort all items into strict alphabetical order on the shelves',
+      'Set a fixed weekly schedule for cleaning the workspace',
+      'Order new supplies in advance to replace older stock',
     ],
     correctAnswer: 0,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 7,
     question: 'How often should a systematic van maintenance check be performed?',
     options: [
-      'Only when the van breaks down',
-      'Once a year at MOT time',
-      'Weekly for a quick check (oil, tyres, lights), with a comprehensive review monthly',
-      'Every 6 months',
+      'Only when the van actually breaks down on the road',
+      'Once a year, carried out at MOT time',
+      'A quick weekly check, with a fuller review every month',
+      'Every six months, alongside the service interval',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the "Sustain" (Shitsuke) step of 5S and why is it the most challenging?',
     options: [
-      'It means sustaining high energy levels throughout the working day',
-      'It means maintaining the systems and discipline long-term through habit and routine, which is challenging because it requires ongoing effort after the initial motivation fades',
-      'It means sustaining a minimum stock level of all materials',
-      'It means making the van exterior look professional at all times',
+      'Sustaining high personal energy levels throughout the working day',
+      'Sustaining a minimum stock level of all materials in the van',
+      'Keeping the van exterior looking professional at all times',
+      'Maintaining the system through habit, which is hard once motivation fades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Sustain is about making the organised system permanent through discipline, routine, and habit. It is the hardest step because the initial organising burst is motivating, but maintaining the system daily requires consistent effort. The 5-minute end-of-day routine (returning tools, restocking consumables, clearing rubbish) is the key habit that sustains the system.',
   },
@@ -335,10 +335,10 @@ export default function TMOModule4Section3() {
             id="tmo-4-3-5s-sort"
             question="During the Sort step, you find three SDS drill bits of the same size, a broken spirit level, and a box of 16mm PVC conduit fittings you have not used in 8 months. What should you do?"
             options={[
-              'Keep everything because you might need it someday',
-              'Keep one SDS bit, discard the broken level, and relocate the conduit fittings to your workshop',
-              'Discard everything and buy new supplies',
-              'Reorganise them into a neater pile but keep them all in the van',
+              'Keep all of it in the van in case you need it someday',
+              'Keep one SDS bit, bin the broken level, relocate the fittings to the workshop',
+              'Discard all of it and buy fresh supplies to replace it',
+              'Reorganise it into a neater pile but keep it all in the van',
             ]}
             correctIndex={1}
             explanation="Keep one SDS bit (you only need one of each size in the van), discard the broken spirit level (it has no value), and relocate the conduit fittings to your workshop (still useful, but taking up van space when not used for 8 months). The Sort step is about being honest about what actually needs to be in the van daily."
@@ -428,10 +428,10 @@ export default function TMOModule4Section3() {
             id="tmo-4-3-stock"
             question="You are halfway through a first fix and discover you have run out of 2.5mm twin and earth. The nearest merchant is a 20-minute round trip. What is the true time cost, and how could this have been prevented?"
             options={[
-              'The cost is 20 minutes for the round trip. Prevention is not possible because you cannot predict exact quantities.',
-              'The cost is 30\u201345 minutes including the trip, refocusing, and context-switching. Prevention: check stock levels and pre-order materials the evening before.',
-              'The cost is only the price of the cable. Prevention: always buy double what you need.',
-              'The cost is minimal because you can send an apprentice instead.',
+              'The cost is 20 minutes for the round trip; prevention is impossible as quantities cannot be predicted.',
+              'The cost is 30\u201345 minutes with refocusing; prevention is checking stock and pre-ordering the evening before.',
+              'The cost is only the price of the cable; prevention is always buying double what you need.',
+              'The cost is minimal because an apprentice can be sent in your place instead.',
             ]}
             correctIndex={1}
             explanation="The round trip takes 20 minutes, but you also lose time finding your place in the first fix, re-establishing the workflow, and dealing with the frustration of the interruption. The true cost is typically 30\u201345 minutes. This is entirely preventable by reviewing the bill of materials the evening before and confirming stock levels in the van."
@@ -538,10 +538,10 @@ export default function TMOModule4Section3() {
             id="tmo-4-3-routine"
             question="An electrician skips the 5-minute end-of-day routine on Friday evening. On Monday morning, he discovers tools are scattered, batteries are flat, and he has run out of earth sleeving. What is the likely total cost?"
             options={[
-              'Zero cost because he can sort it out in 5 minutes on Monday',
-              'Approximately 5 minutes of lost time',
-              'Approximately 30\u201345 minutes: time searching for tools, waiting for batteries to charge, and making an emergency trip for earth sleeving',
-              'The cost is only the price of the earth sleeving',
+              'Zero cost, because he can simply sort it all out in 5 minutes on Monday',
+              'Roughly 5 minutes of lost time first thing on Monday morning',
+              'Roughly 30\u201345 minutes: searching, waiting for charge, and an emergency sleeving trip',
+              'Only the price of the earth sleeving he has to replace',
             ]}
             correctIndex={2}
             explanation="The 5-minute routine skipped on Friday now costs 30\u201345 minutes on Monday: searching for scattered tools (10 min), waiting for or working without fully charged batteries (ongoing productivity loss), and an unplanned merchant trip for earth sleeving (30 min). The 5-minute investment prevents the 30\u201345 minute cost. This is a 6:1 to 9:1 return on time invested."

@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is a dust mask important in ceiling voids?',
     options: [
-      'Providing professional counselling for mental health conditions',
-      'The tester is qualified and uses calibrated equipment to recognised standards',
+      'To keep the face warm in unheated roof spaces',
+      'To muffle noise from nearby plant and machinery',
       'To prevent respiratory irritation from insulation fibres and dust',
-      'Follow confined space entry procedures including atmosphere testing',
+      'To stop condensation forming on safety glasses',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should always be checked before entering a riser or void?',
     options: [
-      'Dangerous overvoltage on lightly loaded phases',
-      '1000V DC, minimum acceptable IR 1.0 MΩ',
-      'Basic operation verification',
+      'The make and model of the cables already installed',
+      'Whether the space has been painted recently',
+      'The ambient temperature of the surrounding rooms',
       'Hidden services and safe access routes',
     ],
     correctIndex: 3,
@@ -60,10 +60,10 @@ const Module4Section7_4 = () => {
       id: 1,
       question: 'Which regulation covers work carried out above floor level?',
       options: [
-        'Like-for-like socket replacement',
+        'Manual Handling Operations Regulations 1992',
         'Work at Height Regulations 2005',
-        'Reduce strain and leverage on the spine',
-        'Need additional security measures',
+        'PUWER 1998',
+        'Confined Spaces Regulations 1997',
       ],
       correctAnswer: 1,
       explanation:
@@ -113,10 +113,10 @@ const Module4Section7_4 = () => {
       id: 5,
       question: 'Why is it important to use a cable/pipe detector before drilling?',
       options: [
-        'Get them checked at hospital, even if they say they’re fine',
+        'To measure the thickness of the wall before fixing',
         'To prevent accidental contact with hidden services',
-        'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
-        'To verify the RCD trips within the required time',
+        'To confirm the drill bit is the correct diameter',
+        'To check the surface is level before mounting accessories',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,10 +126,10 @@ const Module4Section7_4 = () => {
       id: 6,
       question: 'What is the main risk of not replacing fire-stopping after working in risers?',
       options: [
-        'Scheduled off‑peak charging',
-        'White cross on a green background',
+        'Increased noise transfer between floors',
+        'Reduced ventilation to the riser',
         'Increased fire spread risk',
-        'BS 7671 Regulation 521.10.202',
+        'Greater risk of water ingress to the cables',
       ],
       correctAnswer: 2,
       explanation:
@@ -165,10 +165,10 @@ const Module4Section7_4 = () => {
       id: 9,
       question: 'Give one practical reason to secure tools when working in risers.',
       options: [
-        'Installation type, environment, and usage',
+        'To keep the tools clean in dusty conditions',
         'To prevent tools falling and creating hazards below',
-        'False - homemade or modified test equipment must never be used',
-        'Identify, isolate, secure, prove dead, prove tester',
+        'To stop the tools setting off the fire alarm',
+        'To make the tools easier to find at the end of the job',
       ],
       correctAnswer: 1,
       explanation:

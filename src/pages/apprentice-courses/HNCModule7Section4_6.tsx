@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'bacnet-purpose',
     question: 'BACnet is primarily used in building automation for:',
     options: [
-      "Open plan offices over 60m² and sports halls",
-      "Person with technical knowledge and experience",
-      "Leakage currents can flow, creating safety hazards",
+      'Supplying power to field devices over the data cable',
+      'Encrypting all building data to meet cybersecurity standards',
+      'Measuring the energy consumption of individual luminaires',
       "Interoperability between different manufacturers' equipment",
     ],
     correctIndex: 3,
@@ -67,9 +67,9 @@ const quickCheckQuestions = [
     question: "In Modbus protocol, what are 'registers' used for?",
     options: [
       'Storing and exchanging data values between devices',
-      'To store and recall preset lighting configurations',
-      'Suitable for hollow walls where back access is unavailable',
-      'To assist with cable pulling during installation',
+      'Providing electrical isolation between the master and slave devices',
+      'Logging an event each time a device joins or leaves the network',
+      'Setting the unique address that identifies each slave device on the bus',
     ],
     correctIndex: 0,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: "In a KNX system, what is the function of a 'coupler'?",
     options: [
       'To connect different lines or areas of the KNX network',
-      'Temporarily reducing non-essential loads during peak demand',
-      'kWh consumption, operating hours, and occupancy correlation',
-      'Recording historical data values over time for analysis',
+      'To convert KNX telegrams into the BACnet protocol for the BMS',
+      'To supply the 29 V DC bus voltage to the KNX devices',
+      'To store the lighting scenes recalled by wall switches',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the primary benefit of integrating DALI lighting with BACnet BMS?',
     options: [
-      'To alert operators to faults, failures, or abnormal conditions',
-      'Temporary manual control mode for system setup and testing',
-      'kWh consumption, operating hours, and occupancy correlation',
+      'Removing the need for a separate power supply to the luminaires',
+      'Allowing the lighting to operate without any field wiring',
+      'Eliminating the need to commission individual DALI addresses',
       'Enabling enterprise-level monitoring whilst maintaining detailed luminaire control',
     ],
     correctAnswer: 3,
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 8,
     question: "In demand response applications, what is 'load shedding'?",
     options: [
-      'Temporarily reducing non-essential loads during peak demand',
-      'Temporary manual control mode for system setup and testing',
-      'To connect different lines or areas of the KNX network',
-      'To alert operators to faults, failures, or abnormal conditions',
+      'Temporarily reducing or switching off non-essential loads during peak demand',
+      'Spreading the connected load evenly across all three phases of the supply',
+      'Shifting heating and cooling demand to off-peak tariff periods',
+      'Disconnecting a circuit automatically when an earth fault is detected',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'What data would a BMS typically collect for lighting energy analysis?',
     options: [
-      'To connect different lines or areas of the KNX network',
-      'kWh consumption, operating hours, and occupancy correlation',
-      'Recording historical data values over time for analysis',
-      'Temporary manual control mode for system setup and testing',
+      'The insulation resistance and continuity of each lighting circuit',
+      'kWh consumption, operating hours, dimming levels, and occupancy correlation',
+      'The earth fault loop impedance measured at each luminaire',
+      'The prospective fault current at each distribution board',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 10,
     question: "What is 'commissioning override' in BMS lighting control?",
     options: [
-      'Recording historical data values over time for analysis',
-      'To connect different lines or areas of the KNX network',
-      'Temporary manual control mode for system setup and testing',
-      'kWh consumption, operating hours, and occupancy correlation',
+      'A permanent setting that disables automatic control of selected circuits',
+      'A signal from the grid operator that forces lighting loads to be shed',
+      'A temporary manual control mode for system setup and testing',
+      'A schedule that switches lighting off automatically outside occupied hours',
     ],
     correctAnswer: 2,
     explanation:
@@ -228,9 +228,9 @@ const quizQuestions = [
     question: "What is the purpose of a BMS 'alarm' for lighting systems?",
     options: [
       'To alert operators to faults, failures, or abnormal conditions',
-      'Temporary manual control mode for system setup and testing',
-      'Recording historical data values over time for analysis',
-      'kWh consumption, operating hours, and occupancy correlation',
+      'To switch lighting circuits on and off according to the daily schedule',
+      'To dim luminaires automatically when sufficient daylight is available',
+      'To record the historical energy consumption of each lighting zone',
     ],
     correctAnswer: 0,
     explanation:

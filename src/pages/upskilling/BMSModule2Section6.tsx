@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'cabling-check1',
     question: 'Why are analog BMS signals more vulnerable to interference than digital signals?',
     options: [
-      'Analog signals use higher voltages than digital signals',
       'Analog signal values are directly affected by any noise, while digital signals have switching thresholds',
-      'Analog cables are longer than digital cables',
-      'Analog signals require more power to operate',
+      'Analog signals always use higher voltages than digital signals',
+      'Analog cables are inherently longer than digital cables',
+      'Analog signals require more power to transmit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Analog signals are continuous voltage/current levels where any interference directly affects the signal value. Digital signals have defined switching thresholds, so interference must be significant to cause false switching between logic levels.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: 'Why should signal cables not be run parallel with high-voltage cables?',
     options: [
       'High-voltage cables are physically larger and take up more space',
-      'Electromagnetic fields from high-voltage cables induce interference in signal cables',
       'High-voltage cables generate more heat than signal cables',
-      'Signal cables are more expensive and need protection',
+      'Electromagnetic fields from high-voltage cables induce interference in signal cables',
+      'Signal cables are more expensive and need protecting',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'High-voltage cables carrying large currents generate electromagnetic fields that can induce interference in nearby signal cables, causing noise and signal corruption. Maintaining separation prevents this electromagnetic coupling.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'Why should shields usually be earthed at one end only?',
     options: [
       'To save on earth cable and installation costs',
-      'To prevent ground loop currents that can make interference worse',
-      'To comply with electrical safety regulations',
+      'To comply with a specific electrical safety regulation',
       'To reduce the total resistance of the shielding system',
+      'To prevent ground loop currents that can make interference worse',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Earthing shields at both ends can create ground loop currents if earth potentials differ between the two points. These circulating currents can actually make interference worse and should be avoided by earthing at one end only.',
   },
@@ -52,7 +52,7 @@ const quickCheckQuestions = [
     options: [
       'Insulation resistance tester',
       'Multimeter with data logging capability',
-      'Earth loop impedance tester',
+      'Earth fault loop impedance tester',
       'Phase rotation indicator',
     ],
     correctIndex: 1,

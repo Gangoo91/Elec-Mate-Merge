@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     question:
       'An assessor tells an apprentice: "You failed your observation — you need to try harder." What TWO things are wrong with this statement?',
     options: [
-      'The word "failed" is inappropriate in competence-based assessment, and the feedback is not specific about what needs to improve',
-      'The assessor should have waited a week before giving feedback',
-      'Nothing is wrong — this is clear and direct feedback',
-      'The assessor should have used email instead of telling them face-to-face',
+      'The word "failed" is wrong for competence-based assessment, and the feedback is not specific',
+      'The assessor should have waited a full week before giving any feedback at all',
+      'Nothing is wrong with it — this is perfectly clear and direct feedback',
+      'The assessor should have sent an email rather than telling them face-to-face',
     ],
     correctIndex: 0,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     question:
       'A learner disputes an assessment decision, saying "But I always check polarity — I just forgot this time because you were watching me." The best assessor response is:',
     options: [
-      '"Well, you should have remembered — nerves are no excuse"',
-      '"I can only assess what I observed on this occasion. The criteria require you to demonstrate checking polarity during the observation. We can discuss what support would help you feel more comfortable next time"',
-      '"Fine, I will change the result to competent since you normally do it"',
-      '"I will ask another assessor to decide for you"',
+      '"Well, you should have remembered — nerves are no excuse for missing it"',
+      '"I can only assess what I observed today, and the criteria need polarity checked. Let us look at what support would help next time"',
+      '"Fine, I will change the result to competent since you say you normally do it"',
+      '"I will just ask another assessor to make the decision for you instead"',
     ],
     correctIndex: 1,
     explanation:
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 3,
     question: 'An action plan after a "not yet competent" decision should be:',
     options: [
-      'Vague and open-ended so the learner can decide their own approach',
       'Specific, measurable, and time-bound, with clear next steps',
+      'Vague and open-ended so the learner can decide their own approach',
       'Focused on punishment rather than development',
       'Written by the assessor without any input from the learner',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Effective action plans are specific (which criteria need to be met), measurable (how will the learner demonstrate competence), and time-bound (when is the next assessment opportunity). They should be developed collaboratively with the learner so that the learner takes ownership of their development.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'A learner says "But I always do it that way on site — I just forgot because I was being watched." The assessor should:',
     options: [
-      'Change the decision to competent based on the learner\u2019s claim',
-      'Acknowledge the learner\u2019s frustration, explain that assessment is based on observed evidence, and offer support for the next attempt',
-      'Argue with the learner about their claim',
-      'Report the learner for poor behaviour',
+      'Change the decision straight to competent based purely on the learner\u2019s claim',
+      'Argue with the learner about whether their claim is actually true or not',
+      'Report the learner for poor behaviour and a bad attitude during assessment',
+      'Acknowledge their frustration, explain assessment is based on observed evidence, and offer support',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The assessor should remain calm and empathetic while being clear that the assessment judgement is based on what was observed, not on what the learner claims to usually do. Acknowledging the learner\u2019s frustration validates their feelings; explaining the basis of the decision maintains fairness; offering support for the next attempt maintains the relationship and motivation.',
   },
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 6,
     question: 'Internal quality assurance (IQA) involves:',
     options: [
-      'The assessor checking their own work before submitting it',
-      'An independent person sampling assessment decisions, observing assessors, and conducting standardisation',
-      'The learner reviewing the assessor\u2019s feedback before it is finalised',
-      'The awarding body visiting the centre every month',
+      'The assessor checking over their own work carefully before submitting it',
+      'An independent person sampling decisions, observing assessors, and running standardisation',
+      'The learner reviewing the assessor\u2019s feedback before it is finalised and signed',
+      'The awarding body visiting the assessment centre once every single month',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 7,
     question: 'Pendleton\u2019s Rules differ from traditional feedback because they:',
     options: [
-      'Only focus on what went wrong',
-      'Begin with the learner\u2019s self-assessment and balance strengths before areas for development',
-      'Are delivered in writing only, never face-to-face',
-      'Require the assessor to give a grade between 1 and 10',
+      'Begin with the learner\u2019s self-assessment and balance strengths before development areas',
+      'Only ever focus on the things that went wrong during the observation',
+      'Are delivered in writing only and never given to the learner face-to-face',
+      'Require the assessor to award the learner a numerical grade between 1 and 10',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pendleton\u2019s Rules structure feedback so that the learner speaks first (identifying their own strengths and areas for development), creating a collaborative and empowering process. Strengths are discussed before areas for improvement, which maintains confidence and creates a more balanced, constructive conversation.',
   },
@@ -193,10 +193,10 @@ const quizQuestions = [
     options: [
       'Sue the assessor personally',
       'Refuse to participate in any further assessments',
-      'Escalate the appeal to the external awarding body',
       'Demand that a different assessor gives them a different result',
+      'Escalate the appeal to the external awarding body',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The appeals process has two stages: internal (reviewed by the assessment centre) and external (escalated to the awarding body such as City & Guilds or EAL). The learner has the right to escalate if they are not satisfied with the internal outcome. This two-stage process protects both the learner and the assessor.',
   },

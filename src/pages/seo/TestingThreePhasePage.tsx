@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Can I test RCDs on a three-phase system the same way as single-phase?',
     answer:
-      'Under BS 7671:2018+A4:2026 (Reg 643.3), Appendix 3 Table 3A has been deleted. The pre-A4:2026 three-multiplier protocol (1× / 2× / 5× IΔn) no longer applies. Verification now requires a single alternating-current test at the rated residual operating current (IΔn): non-Type S devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system, for a four-pole RCD routinely test on at least L1; repeat on L2 and L3 if results are inconsistent or device authenticity is in doubt. If each phase has its own RCBO, test each device individually. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
+      'Under BS 7671:2018+A4:2026 (Reg 643.8), Appendix 3 Table 3A has been deleted. The pre-A4:2026 three-multiplier protocol (1× / 2× / 5× IΔn) no longer applies. Verification now requires a single alternating-current test at the rated residual operating current (IΔn): non-Type S devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system, for a four-pole RCD routinely test on at least L1; repeat on L2 and L3 if results are inconsistent or device authenticity is in doubt. If each phase has its own RCBO, test each device individually. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
   },
   {
     question: 'What should the line-to-line and line-to-neutral voltages be?',
@@ -401,7 +401,7 @@ const sections = [
       <>
         <p>
           RCD testing on three-phase systems follows the same principles as single-phase. Under BS
-          7671:2018+A4:2026 (Reg 643.3), Appendix 3 Table 3A has been deleted; verification now
+          7671:2018+A4:2026 (Reg 643.8), Appendix 3 Table 3A has been deleted; verification now
           requires a single alternating-current test at the rated residual operating current (IΔn) —
           the pre-A4:2026 three-multiplier protocol (1× / 2× / 5× In) no longer applies. Non-Type S
           devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG

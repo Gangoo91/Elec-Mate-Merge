@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'ld-resp-vs-account',
     question: 'What is the key difference between responsibility and accountability?',
     options: [
-      'Responsibility is for managers; accountability is for the team',
       'Responsibility is who does the task; accountability is who answers for the outcome',
+      'Responsibility is for managers; accountability is for the team',
       'They mean the same thing in a workplace context',
       'Accountability can be delegated but responsibility cannot',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Responsibility refers to who performs the task — it can be delegated. Accountability refers to who answers for the outcome — it cannot be delegated. As a supervisor, you can give someone responsibility for installing a distribution board, but you remain accountable for the result. This is a fundamental principle of leadership.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'The Ladder of Inference describes how people:',
     options: [
       'Climb through the management hierarchy over their career',
-      'Move from observable data to action through mental steps, often unconsciously',
       'Escalate workplace complaints from informal to formal processes',
+      'Move from observable data to action through mental steps, often unconsciously',
       'Develop leadership skills from basic to advanced levels',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Chris Argyris's Ladder of Inference describes the unconscious mental process we go through from observing raw data to taking action: we select data, add meaning, make assumptions, draw conclusions, adopt beliefs, and finally act. The danger is the 'reflexive loop' — our beliefs influence what data we notice next, creating confirmation bias. The lesson for leaders: check your assumptions before acting.",
   },
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     options: [
       'Formal disciplinary action',
       'Consolation and support',
-      'Coaching to help the person understand and change the behaviour',
       'Immediate dismissal',
+      'Coaching to help the person understand and change the behaviour',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Just Culture distinguishes three types of behaviour: human error (unintentional mistakes — console the person), at-risk behaviour (taking shortcuts or risky actions, often normalised — coach them to understand the risk), and reckless behaviour (deliberate disregard for known risks — discipline). The key insight is that not every mistake is a disciplinary matter — the appropriate response depends on the nature of the behaviour.',
   },
@@ -78,10 +78,10 @@ const quizQuestions = [
     options: [
       'Responsibility is more important than accountability',
       'Accountability is only for senior managers',
-      'Responsibility can be delegated but accountability cannot',
       'They are interchangeable terms with the same meaning',
+      'Responsibility can be delegated but accountability cannot',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'You can delegate responsibility (who does the task) but you cannot delegate accountability (who answers for the outcome). A supervisor can assign tasks to team members but remains accountable for everything the team produces. This is a fundamental principle of leadership at every level.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     id: 2,
     question: "Chris Argyris's Ladder of Inference describes:",
     options: [
-      'The steps in a formal disciplinary process',
       'How people move from observable data to action through unconscious mental steps',
+      'The steps in a formal disciplinary process',
       'The hierarchy of leadership skills from basic to advanced',
       'The stages of team development from forming to performing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Ladder of Inference describes the unconscious mental process from observation to action: observable data, select data, add meaning, make assumptions, draw conclusions, adopt beliefs, take action. The reflexive loop means our beliefs influence what data we select, creating confirmation bias.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
       'A supervisor sees a worker sitting in the welfare cabin during working hours and assumes they are lazy. This is an example of:',
     options: [
       'Effective observation and the OODA Loop',
-      'Climbing the Ladder of Inference without checking assumptions',
       'Appropriate accountability for team performance',
+      'Climbing the Ladder of Inference without checking assumptions',
       'Using the Thomas-Kilmann Competing mode correctly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The supervisor has climbed the Ladder of Inference: observed data (person in cabin), selected it as significant, added meaning (should not be there), made an assumption (lazy), and is about to act on it — without checking. The person might be on a legitimate break, feeling unwell, completing paperwork, or taking a call from the office. The lesson: check your assumptions before acting.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
     question: "In Sidney Dekker's Just Culture model, the three categories of behaviour are:",
     options: [
       'Minor, moderate, and serious misconduct',
-      'Acceptable, borderline, and unacceptable behaviour',
       'Human error, at-risk behaviour, and reckless behaviour',
+      'Acceptable, borderline, and unacceptable behaviour',
       'Compliant, non-compliant, and negligent behaviour',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Just Culture distinguishes between human error (unintentional mistakes — console), at-risk behaviour (conscious choices where risk is not appreciated or has become normalised — coach), and reckless behaviour (conscious disregard of a known, substantial risk — discipline). Each requires a different response from the supervisor.',
   },
@@ -132,10 +132,10 @@ const quizQuestions = [
     options: [
       'Trust decreases because the team sees the leader as weak',
       'Trust is unaffected because the team does not care about mistakes',
-      'Trust increases because it demonstrates integrity and creates safety for honesty',
       'Trust decreases because the team expects leaders to be right all the time',
+      'Trust increases because it demonstrates integrity and creates safety for honesty',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Admitting mistakes quickly and honestly builds trust faster than pretending to be perfect. It demonstrates integrity, shows the team it is safe to be honest about errors, and models the accountability you want from others. 'I got that wrong, here is what I am going to do about it' is one of the most powerful things a leader can say.",
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'The worst thing a supervisor can do when holding the team accountable is:',
     options: [
+      'Holding some people accountable but letting others slide',
       'Setting clear standards before the work starts',
       'Following up to check whether standards were met',
-      'Holding some people accountable but letting others slide',
       'Addressing shortfalls promptly and directly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Inconsistent accountability — holding some people to account while letting others get away with the same behaviour — destroys team trust faster than almost anything. If the team sees that standards only apply to some people, they will lose respect for the supervisor, resent the perceived favouritism, and disengage from the standards entirely.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
     question: "Amy Edmondson's concept of psychological safety means:",
     options: [
       'The physical workspace is free from hazards',
-      'Team members feel safe to speak up, admit mistakes, and raise concerns without fear',
       'The team is protected from criticism by management',
+      'Team members feel safe to speak up, admit mistakes, and raise concerns without fear',
       'Workers are guaranteed job security regardless of performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Psychological safety means team members feel safe to take interpersonal risks — speaking up, asking questions, admitting mistakes, raising concerns — without fear of punishment, humiliation, or negative consequences. It is the foundation of learning organisations. When people hide mistakes because they fear the consequences, the same errors keep repeating.',
   },

@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A vendor specs a Type 4 PoE++ access point at 90 W PSE, drawing power across all four pairs. The contractor needs to confirm UK regulatory compliance under BS 7671:2018+A4:2026 from 15 April 2026. What is the binding cap?',
     options: [
-      '100 W per device — common industry figure.',
+      '100 W per device — the common industry "100 W PoE" figure.',
       'IEEE 802.3bt allows up to 960 mA per pair theoretically; that is the regulatory cap.',
-      '750 mA per conductor (BS 7671 §716.523.2.101) AND 750 mA per contact at the connector (§716.526.101). The IEEE 802.3bt theoretical pair maximum is academic — the BS 7671 regulatory cap of 750 mA per conductor governs UK installations from 15 April 2026, and the PSE / cable / connector chain must respect it. Type 4 PoE++ at 90 W PSE / 71.3 W PD is the IEEE Type ceiling but the design current per conductor must not exceed 750 mA.',
-      '500 mA per pair under all conditions.',
+      '750 mA per conductor (§716.523.2.101) and 750 mA per contact at the connector (§716.526.101) — the binding UK caps from 15 April 2026.',
+      '500 mA per pair under all conditions, regardless of PoE Type.',
     ],
     correctIndex: 2,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'A PoE cable run is being designed to carry power to a sensor in a bathroom Zone 1 area, fed from a regulated DC source per §716.414.1.1(b). What does §716.414.3.201 say?',
     options: [
-      'Permitted with no extra requirements.',
-      'A source for SELV or PELV described in §716.414.1.1(b) — i.e. a §414.3 source not exceeding 60 V DC dry / 15 V DC wet — shall NOT be used for power feeding of ICT cabling that passes through, or serves, special locations described in Sections 701, 702, 703, 706 and 710. Bathrooms (701), swimming pools (702), saunas (703), restrictive conductive locations (706) and medical (710) are restricted. The PSE option of §716.414.1.1(a) — IEEE 802.3 PSE — has different requirements; check the corresponding Section.',
-      'Permitted only with double insulation.',
-      'Permitted only with shielded cable.',
+      'Permitted with no extra requirements, the same as any general-area run.',
+      'The §716.414.1.1(b) source path must not feed ICT cabling that passes through or serves Sections 701, 702, 703, 706 and 710 — bathrooms, pools, saunas and medical are restricted.',
+      'Permitted only where the cable is run in double-insulated containment.',
+      'Permitted only where the cable is shielded and individually screened.',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'BS 7671 §716.521.101 lists the cable categories permitted for PoE / ELV DC distribution. Which of these categories is included?',
     options: [
-      'Cat 3 (telephone-grade only).',
-      'Cat 5, Cat 6, Cat 6A, Cat 7, Cat 7A, Cat 8.1, or Cat 8.2 — or other cables defined in BS EN 50173-1. Cat 5 (the original Cat 5, NOT Cat 5e, was de-rated in earlier amendments and is not part of the §716.521.101 list in some readings — the verbatim DB list is Cat 5, Cat 6, Cat 6A, Cat 7, Cat 7A, Cat 8.1, Cat 8.2). Cat 3 is NOT permitted.',
-      'Only Cat 6A.',
-      'Only shielded cables.',
+      'Cat 3 (telephone-grade), which the list permits for low-power runs only.',
+      'Cat 5, Cat 6, Cat 6A, Cat 7, Cat 7A, Cat 8.1 or Cat 8.2 — or other cables defined in BS EN 50173-1.',
+      'Only Cat 6A is permitted; lower categories are excluded from the list.',
+      'Only shielded cables are permitted; unshielded variants are excluded.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the BS 7671:2018+A4:2026 §716 scope cover, and from when?',
     options: [
-      'Active equipment only.',
-      'The distribution of ELV DC power using balanced, information technology cables and accessories primarily designed for data transmission, as specified in BS EN 50173-1, using power feeding sourcing equipment in accordance with BS EN IEC 62368-3. Includes design, erection, and verification. Includes Power over Ethernet systems specified by ISO/IEC/IEEE DIS 8802-3 (2024). Does NOT cover PBX. From 15 April 2026.',
-      'Fibre cabling only.',
-      'TV antenna systems only.',
+      'The distribution of ELV DC power over balanced data cabling — including Power over Ethernet — covering design, erection and verification, but not PBX, from 15 April 2026.',
+      'The selection and erection of optical-fibre cabling and its associated active transceivers, where data and power share the same balanced channel.',
+      'The wiring of private branch exchange (PBX) telephony and structured voice cabling carrying ELV DC line power, applicable from 15 April 2026.',
+      'The installation of LV mains-powered active network equipment (switches, routers, PoE injectors) and the final circuits supplying them.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§716.1 (verbatim from RAG): "The particular requirements of this section apply to the distribution of ELV DC power using balanced, information technology cables and accessories primarily designed for data transmission, as specified in BS EN 50173-1 using power feeding sourcing equipment in accordance with BS EN IEC 62368-3. Requirements are included for the design, erection, and verification of telecommunications infrastructure for the purpose of both telecommunications and distribution of ELV DC power feeding. In addition, requirements are included for use of existing telecommunications infrastructure for distribution of ELV DC power. The power delivery systems include, but are not restricted to, the Power over Ethernet systems specified by ISO/IEC/IEEE DIS 8802-3 (2024). This section does not apply to the use of cables and accessories for private branch exchange (PBX)."',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Under BS 7671:2018+A4:2026 §716.414.1.1, what are the two permitted sources of supply for PoE / ELV DC distribution?',
     options: [
-      'Any 24 V or 48 V DC source.',
-      '(a) Power sourcing equipment (PSE) conforming to BS EN IEC 62368-1 and BS EN 60950-22 in addition to the interoperability requirements of ISO/IEC/IEEE DIS 8802-3:2024; or (b) a source specified in Regulation 414.3, having a voltage not exceeding 60 V ripple-free DC in dry locations and 15 V ripple-free DC in all other locations.',
-      'Only IEEE 802.3 PSE.',
-      'Only batteries.',
+      'Either any nominal 24 V DC source, or any nominal 48 V DC source, provided the output is current-limited and double-insulated.',
+      'Only IEEE 802.3-conformant power sourcing equipment (PSE); a Regulation 414.3 SELV/PELV source is not a permitted supply for §716 distribution.',
+      '(a) IEEE 802.3-conformant power sourcing equipment (PSE); or (b) a §414.3 source not exceeding 60 V ripple-free DC dry / 15 V ripple-free DC wet.',
+      'Either a battery bank with an integral charge controller, or a centralised DC bus fed from the building UPS, both isolated from earth.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§716.414.1.1 verbatim: "One of the following sources of supply shall be used: (a) power sourcing equipment (PSE) conforming to BS EN IEC 62368-1 and BS EN 60950-22 in addition to the interoperability requirements of ISO/IEC/IEEE DIS 8802-3:2024; or (b) a source specified in Regulation 414.3, having a voltage not exceeding 60 V ripple-free DC in dry locations and 15 V ripple-free DC in all other locations." Three NOTEs follow — covering PELV mitigation in BS EN 50310 / BS IEC 61000-5-2 contexts, the screen/shielding NOT being suitable for limiting LV fault currents, and PELV being particularly appropriate for EMC mitigation across multi-PSE locations or multi-building links.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'What is the BS 7671 §716.523.2.101 hard cap for load current per conductor in a PoE installation?',
     options: [
-      '500 mA.',
-      '750 mA per conductor — verbatim: "The load current (design current) in any conductor shall not exceed 750 mA." This is the regulatory ceiling for ELV DC distribution over balanced ICT cabling under BS 7671:2018+A4:2026.',
-      '960 mA per pair.',
-      '1 A per conductor.',
+      '500 mA per conductor, matching the per-port limit of legacy Type 1 PoE equipment.',
+      '960 mA per pair, taken from the IEEE 802.3bt Type 4 theoretical pair maximum.',
+      '1 A per conductor, rounded up from the IEEE figure for design convenience.',
+      '750 mA per conductor — the design current in any conductor must not exceed it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§716.523.2.101 verbatim: "The load current (design current) in any conductor shall not exceed 750 mA." This is paired with §716.526.101 verbatim: "The connecting hardware used for data cables used to distribute DC power shall comply with BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per contact." The two together — 750 mA per conductor in the cable, 750 mA per contact at the connector — bound the entire PoE delivery chain. IEEE 802.3bt Type 4 PSE max 90 W / PD max 71.3 W is the IEEE Type ceiling; the BS 7671 cap is the UK regulatory ceiling that governs from 15 April 2026.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Which two protective measures does BS 7671 §716.410.3.3 mandate for PoE installations?',
     options: [
-      'Automatic disconnection or RCD protection.',
-      'Extra-low voltage provided by SELV OR PELV — verbatim: "The protective measure extra-low voltage provided by SELV or PELV shall be applied." Both SELV and PELV are extra-low-voltage protective measures defined in Section 414; PoE PSE equipment must be a SELV or PELV source.',
-      'Double insulation only.',
-      'Class II equipment only.',
+      'Extra-low voltage provided by SELV or PELV — the ELV protective measure must be applied throughout, and the PSE must be a SELV or PELV source.',
+      'Automatic disconnection of supply (ADS) backed by 30 mA RCD protection on the feeding circuit, as for any final circuit.',
+      'Double or reinforced insulation (Class II construction) applied throughout the data cabling and the connecting hardware.',
+      'Electrical separation of each PoE channel, with one powered device per separated circuit and an unearthed source.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§716.410.3.3 verbatim: "The protective measure extra-low voltage provided by SELV or PELV shall be applied." SELV (separated extra-low voltage) and PELV (protective extra-low voltage) are the two ELV protective measures from Section 414. SELV is fully isolated from earth; PELV is referenced to earth. PoE PSE equipment is typically PELV (the equipment chassis is earthed for EMC and safety). NOTE 3 in §716.414.1.1 makes PELV particularly appropriate for EMC mitigation in multi-PSE locations.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'Why does BS 7671 §716.523.1.101 NOTE 1 link conductor temperature to data-channel performance?',
     options: [
-      'It does not.',
-      '"Any temperature rise of the data cables due to the load current they carry, or other causes, will increase the attenuation/insertion loss of the cables. Thus the performance of information transmission channels can be degraded." PoE current heats the conductors; warmer conductors have higher attenuation; channels that pass Class EA cold may not pass under continuous PoE load.',
-      'For marketing reasons.',
-      'Because PoE is illegal at higher currents.',
+      'Because higher conductor temperature raises the dielectric breakdown voltage, allowing more PoE current before the insulation fails.',
+      'Because a warmer conductor has lower DC resistance, which reduces volt-drop and so improves the data signal-to-noise ratio.',
+      'Because PoE current heats the conductors, raising attenuation, so a channel passing Class EA cold may fail under continuous load.',
+      'Because heat causes the twist rate of the pairs to relax, increasing crosstalk rather than insertion loss.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '§716.523.1.101 NOTE 1 makes the formal regulatory link between PoE thermal management and data-cabling performance. PoE current produces I²R heating in the conductors. Warmer conductors have higher attenuation (per the temperature coefficient of copper resistance and the dielectric loss tangent of the insulation). Higher attenuation means lower insertion-loss margin. A Cat6A channel with comfortable 5 dB margins at 20 °C may have only 1 dB margins at 60 °C inside a tightly bundled, fully-loaded PoE bundle. NOTE 2 cites the bundle-thermal references — PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2, ISO/IEC TS 29125 — for management of multi-cable bundles. TIA TSB-184-A (2017) is the parallel TIA guidance.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'For a Type 4 PoE++ access point on Cat 6A cable, what is the IEEE 802.3bt PSE / PD power maximum?',
     options: [
-      '100 W PSE / 80 W PD.',
-      '90 W PSE max / 71.3 W PD max (IEEE 802.3bt Type 4, four-pair power delivery, Class 7 / Class 8). The difference is loss along the cable. Note: this is the IEEE spec; the BS 7671 regulatory cap is 750 mA per conductor (§716.523.2.101) and 750 mA per contact (§716.526.101) — which constrains the PSE / cable / connector chain in UK installations from 15 April 2026.',
-      '60 W PSE / 51 W PD.',
-      '30 W PSE / 25.5 W PD.',
+      '100 W PSE / 80 W PD, the commonly quoted "100 W PoE" marketing figure.',
+      '60 W PSE / 51 W PD, which is in fact the IEEE 802.3bt Type 3 maximum.',
+      '30 W PSE / 25.5 W PD, which is in fact the IEEE 802.3at (PoE+) Type 2 maximum.',
+      '90 W PSE / 71.3 W PD (Type 4, four-pair, Class 7-8); the difference is cable loss.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IEEE 802.3bt Type 4 (four-pair PoE++, also called 4PPoE): PSE max 90 W, PD max 71.3 W. The 18.7 W difference is cable loss across worst-case 100 m channel. Type 4 maps to Class 7 (up to 75 W PD) and Class 8 (up to 71.3 W PD) in the standard. Type 3 is 60 W PSE / 51 W PD (Class 5-6); Type 2 (PoE+) is 30 W PSE / 25.5 W PD (Class 4); Type 1 (original PoE) is 15.4 W PSE / 12.95 W PD (Class 0-3). Never cite "100 W" or "960 mA per pair" — the IEEE spec is 90 W PSE / 71.3 W PD, and the BS 7671 regulatory cap that governs UK installations is 750 mA per conductor / 750 mA per contact.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'BS 7671 §716.521.101 lists permitted cable categories. Which is the current default for new commercial PoE installations?',
     options: [
-      'Cat 3.',
-      'Cat 6A — the practical default for new commercial Cat6A office and PoE-everything builds in 2026. §716.521.101 (verbatim) permits Cat 5, Cat 6, Cat 6A, Cat 7, Cat 7A, Cat 8.1 or Cat 8.2 (or other BS EN 50173-1 cables). Cat 6A delivers Class EA performance, supports Type 4 PoE++ thermally with appropriate bundle management, and provides the headroom for 10GBASE-T services.',
-      'Cat 1.',
-      'Coaxial only.',
+      'Cat 6A — Class EA performance, 10GBASE-T headroom, and Type 4 PoE++ with proper bundle management make it the practical 2026 default.',
+      'Cat 8.1 — the highest category in the §716.521.101 list, so it is the recommended default for any new commercial installation.',
+      'Cat 5e — the most widely stocked category, sufficient for Type 4 PoE++ and 10GBASE-T over the full 100 m channel.',
+      'Cat 7A — preferred because its individually screened pairs are mandatory under §716.521.101 for any PoE distribution.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§716.521.101 verbatim: "Information and communication technology (ICT) cables used for the distribution of DC power shall comply with Category 5, Category 6, Category 6A, Category 7, Category 7A, Category 8.1 or Category 8.2 or other cables as defined in BS EN 50173-1 by reference to the specifications given in BS EN 50288 series." For new commercial installations in 2026, Cat 6A is the practical default — Class EA performance, headroom for 10GBASE-T, supports Type 4 PoE++ with proper bundle management. Cat 7 / 7A are niche (no TIA equivalent for Cat 7, ISO-only). Cat 8.1 / 8.2 are short-reach data-centre top-of-rack only.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Why is "limited-power" (LP) cable rating specifically called out for high-bundle-count PoE installations?',
     options: [
-      'Marketing.',
-      'LP-rated cable (per UL standards in North America, equivalent EN ratings in Europe) declares a maximum continuous current per conductor that the cable insulation tolerates without overheating. For PoE bundles where many conductors carry sustained current, LP-rated cable is engineered for the thermal load — typically with 23 AWG conductors (Cat6A standard) and insulation rated for the bundle temperature rise. It is the manufacturer-published declaration that the cable can sustain PoE current in bundles, complementing the regulatory caps in BS 7671 §716.523.2.101.',
-      'It is required by HMRC.',
-      'It is for fibre cables only.',
+      'LP rating declares the maximum data bandwidth a cable supports while carrying PoE, ensuring the channel still certifies to Class EA when loaded.',
+      'LP rating is a fire-performance classification (low-smoke, low-toxicity) required for cables run in escape routes carrying PoE.',
+      'LP rating is the manufacturer declaration of the maximum continuous current per conductor the cable tolerates in a bundle without overheating.',
+      'LP rating is a connector-endurance grade certifying how many live disconnections an RJ45 withstands under PoE load before contact wear.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LP rating is the manufacturer cable declaration that connects directly to PoE thermal management. PoE current at the regulatory cap (750 mA per conductor under §716.523.2.101) produces I²R heating; in a bundle of 24 cables all carrying near-cap current continuously, the bundle interior temperature rise can be substantial. LP-rated cable declares the maximum continuous current per conductor the insulation tolerates without exceeding its rated temperature. Choosing LP-rated cable for high-bundle-count PoE installations — combined with bundle-size limits per BS EN 50174-2 / TIA TSB-184-A and the BS 7671 §716.523.1.101 NOTE 2 references — is how the contractor delivers a PoE installation that does not silently degrade the data channel under sustained load.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'What does BS 7671 §716.526.101 require of the connecting hardware (RJ45 plugs, keystones, patch panels) on a PoE installation?',
     options: [
-      'No specific requirement.',
-      'Verbatim: "The connecting hardware used for data cables used to distribute DC power shall comply with BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per contact. Where connected equipment may be separated under load the connecting hardware shall meet the requirements of the endurance test specified in BS EN 60512-9-3 at the appropriate disconnection load. Also the anticipated number of separations in operation shall not exceed the value specified in the endurance test for the disconnection load."',
-      'It must be gold-plated only.',
-      'It must be rated to 1 A per contact.',
+      'It must use gold-plated contacts and be rated to at least 1 A per contact, with no specific endurance-test requirement.',
+      'It must comply with BS ISO/IEC 11801-1 and support 1 A per contact, with live disconnection prohibited under all circumstances.',
+      'It must support 500 mA per contact and pass a corrosion-resistance test, matching the legacy Type 2 PoE connector specification.',
+      'It must comply with BS ISO/IEC 11801-1, support 750 mA per contact, and meet the BS EN 60512-9-3 endurance test where it may be separated under load.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§716.526.101 verbatim: "The connecting hardware used for data cables used to distribute DC power shall comply with BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per contact. Where connected equipment may be separated under load the connecting hardware shall meet the requirements of the endurance test specified in BS EN 60512-9-3 at the appropriate disconnection load. Also the anticipated number of separations in operation shall not exceed the value specified in the endurance test for the disconnection load." This is the connector-side companion to the conductor-side 750 mA cap in §716.523.2.101. The endurance-test reference (BS EN 60512-9-3) addresses arc / contact wear under live disconnection — pulling a PoE patch cord under load draws a small DC arc that erodes the contact plating over many disconnections.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'What does BS 7671 §716.433.1.101 recognise as a suitable means of overcurrent protection for PoE / ELV DC distribution?',
     options: [
-      'A 16 A MCB.',
-      'Verbatim: "Limitation of current in accordance with BS EN IEC 62368-3:2020 Clause 5.3.1 is recognized as a suitable means of protecting against overcurrent." The PSE current-limiting function — implemented inside the IEEE 802.3 PoE PSE per BS EN IEC 62368-3 Clause 5.3.1 — is recognised as the protection against overcurrent. No separate MCB or fuse is required on the PoE cable run.',
-      'A 32 A RCBO.',
-      'A 100 mA RCD.',
+      'The PSE current-limiting function (per BS EN IEC 62368-3 Clause 5.3.1) is recognised as overcurrent protection — no separate MCB or fuse is required on the PoE run.',
+      'A dedicated 1 A inline fuse fitted at the patch panel on each PoE cable run, sized just above the 750 mA conductor cap.',
+      'A 6 A Type B miniature circuit breaker on the final circuit feeding the PSE, providing overcurrent protection to the data cabling downstream.',
+      'A 30 mA RCD on the PSE supply, since the ELV DC distribution is treated as a final circuit requiring additional protection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§716.433.1.101 verbatim: "Limitation of current in accordance with BS EN IEC 62368-3:2020 Clause 5.3.1 is recognized as a suitable means of protecting against overcurrent." The PSE has a built-in current-limiting function — it monitors per-port current and shuts down or limits if a fault occurs. BS EN IEC 62368-3:2020 Clause 5.3.1 specifies how that current limit is implemented. This is the PSE-side overcurrent protection; no separate downstream MCB or fuse is required on the PoE cable. The current-limit function combined with the §716.523.2.101 conductor cap (750 mA) bounds fault current to a level the cable insulation tolerates.',
   },

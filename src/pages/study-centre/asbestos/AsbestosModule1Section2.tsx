@@ -10,8 +10,8 @@ const quickCheckQuestions = [
     id: 'two-families',
     question:
       'Asbestos minerals are divided into two families. Which family does chrysotile belong to?',
-    options: ['Amphibole', 'Serpentine', 'Silicate', 'Ite group'],
-    correctIndex: 1,
+    options: ['Serpentine', 'Amphibole', 'Silicate', 'Ite group'],
+    correctIndex: 0,
     explanation:
       'Chrysotile (white asbestos) is the only commercially used member of the serpentine group. Its fibres are curly and layered, unlike the straight, needle-like fibres of amphibole minerals (amosite, crocidolite, tremolite, actinolite, and anthophyllite).',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
     question: 'How should you identify the type of asbestos present in a material on site?',
     options: [
       'By the colour of the material',
-      'By the age of the building',
       'By laboratory analysis using Polarised Light Microscopy (PLM)',
+      'By the age of the building',
       'By how easily the material crumbles',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'You cannot reliably identify asbestos type by visual inspection, colour, or texture alone. Colour can be misleading due to mixing, staining, paint, and weathering. The only definitive method is laboratory analysis, most commonly Polarised Light Microscopy (PLM). On site, if unsure, always presume the worst case under CAR 2012 Regulation 5.',
   },
@@ -85,8 +85,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which type of asbestos accounted for approximately 90% of all asbestos used in the UK?',
-    options: ['Amosite (brown)', 'Crocidolite (blue)', 'Chrysotile (white)', 'Tremolite'],
-    correctAnswer: 2,
+    options: ['Chrysotile (white)', 'Amosite (brown)', 'Crocidolite (blue)', 'Tremolite'],
+    correctAnswer: 0,
     explanation:
       'Chrysotile (white asbestos) accounted for approximately 90% of all asbestos used worldwide and in the UK. It was the most versatile type, used in cement products, brake linings, roof materials, floor tiles, textured coatings (Artex), and gaskets. It was the last type to be banned in the UK in 1999.',
   },
@@ -117,10 +117,10 @@ const quizQuestions = [
     options: [
       'It was the most commonly used type in UK buildings',
       'Its fibres are the thickest of all asbestos types',
-      'It has the finest, most needle-like fibres and is considered the most dangerous type',
       'It was primarily used in floor tiles and textured coatings',
+      'It has the finest, most needle-like fibres and is considered the most dangerous type',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Crocidolite (blue asbestos) has the finest, most needle-like fibres of all asbestos types, allowing them to penetrate deepest into lung tissue. It is widely considered the most dangerous type. It was used in sprayed coatings on structural steel, high-temperature pipe insulation, and some cement products. Even very short exposures are considered hazardous.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 6,
     question: 'Tremolite, actinolite, and anthophyllite are best described as:',
     options: [
+      'Amphibole minerals that occur as contaminants in other materials, not used commercially',
       'The three most commonly used commercial asbestos types',
       'Serpentine minerals used in brake linings',
-      'Amphibole minerals that occur as contaminants in other materials, not used commercially',
       'Synthetic forms of asbestos created in laboratories',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Tremolite, actinolite, and anthophyllite are amphibole asbestos minerals that were never used commercially in their own right. They occur naturally as contaminants in other minerals such as talc, vermiculite, and chrysotile deposits. All three are classified as carcinogenic and are important for surveyors and analysts to be aware of.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     options: [
       'Assume it is chrysotile, as this is the most common type',
       'Remove a sample yourself for testing',
-      'Presume the worst case and treat it as the most hazardous fibre type',
       'Ignore it if the building was constructed after 1985',
+      'Presume the worst case and treat it as the most hazardous fibre type',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under CAR 2012 Regulation 5 (the presumption approach), if you cannot confirm the type of asbestos, you must presume the worst case. This means treating the material as if it contains the most hazardous fibre type and applying the highest level of control measures. You must never attempt to sample asbestos yourself unless you are trained and licensed to do so.',
   },

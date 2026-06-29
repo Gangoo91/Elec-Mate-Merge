@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'u-value-definition',
     question: 'What does a U-value of 0.18 W/m²K mean?',
     options: [
-      'When cables pass through or are surrounded by thermal insulation',
-      'Evaluating and prioritising risks by plotting likelihood against severity',
+      '0.18 m² of wall is needed for every watt of heat lost',
+      '0.18 K of temperature difference produces 1 watt of heat flow',
       '0.18 watts pass through each m² for every 1K temperature difference',
-      'To provide a safe working environment, so far as is reasonably practicable',
+      '0.18 watts are stored in each m² of the element',
     ],
     correctIndex: 2,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'r-value-relationship',
     question: 'What is the relationship between U-value and total thermal resistance (RT)?',
     options: [
+      'U = 1/RT',
       'U = RT × 2',
       'U = RT + Rsi + Rse',
-      'U = 1/RT',
       'U = RT²',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'U-value is the reciprocal of total thermal resistance: U = 1/RT. This means higher thermal resistance gives lower U-values (better insulation). RT includes all layer resistances plus surface resistances.',
   },
@@ -60,11 +60,11 @@ const quickCheckQuestions = [
     question: 'What is the typical internal surface resistance (Rsi) for walls?',
     options: [
       '0.10 m²K/W',
-      '0.04 m²K/W',
       '0.13 m²K/W',
+      '0.04 m²K/W',
       '0.17 m²K/W',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The internal surface resistance (Rsi) for walls is 0.13 m²K/W. This accounts for the thin layer of still air at the surface and radiative heat transfer. External surface resistance (Rse) is typically 0.04 m²K/W due to wind effects.',
   },

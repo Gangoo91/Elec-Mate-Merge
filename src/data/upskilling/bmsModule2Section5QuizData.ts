@@ -57,10 +57,10 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What type of devices connect to analog output modules?',
     options: [
-      'BACnet, Modbus, and proprietary protocols',
+      'Door contacts, switches, and alarm relays',
       'Modulating valves, dampers, and variable speed drives',
-      'For easy identification, maintenance, and troubleshooting',
-      'To provide additional connection points for sensors and actuators',
+      'Temperature, humidity, and CO₂ sensors',
+      'Pump run-status and fan-fault indicators',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What communication protocols might expansion modules use?',
     options: [
-      'To reduce cable runs and installation costs',
-      'Switches, contacts, and alarm devices',
+      'HDMI, USB, and DisplayPort',
+      'HTTP, FTP, and SMTP',
       'BACnet, Modbus, and proprietary protocols',
-      'Modulating valves, dampers, and variable speed drives',
+      'Bluetooth, Zigbee, and NFC',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What must be configured so the BMS recognises an I/O module?',
     options: [
-      "Temperature, humidity, CO₂, and pressure sensors",
-      "BACnet, Modbus, and proprietary protocols",
-      "To provide additional connection points for sensors and actuators",
+      "The supply voltage and fuse rating of the module",
+      "The physical mounting orientation of the module",
+      "The ambient temperature rating of the enclosure",
       "The module's communication address and point configuration",
     ],
     correctAnswer: 3,

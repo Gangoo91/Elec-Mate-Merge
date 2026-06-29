@@ -170,9 +170,9 @@ export const section5Questions: QuizQuestion[] = [
     id: 3,
     question: 'Why is proper cable containment important in PV installations?',
     options: [
-      'Current type they can safely interrupt',
-      'Combining multiple DC string outputs',
-      'Close to the PV array and accessible',
+      'To increase the open-circuit voltage of the array',
+      'To reduce the number of panels needed per string',
+      'To allow AC and DC cables to share the same conduit',
       'To meet safety regulations and prevent damage',
     ],
     correctAnswer: 3,
@@ -265,10 +265,10 @@ export const section6Questions: QuizQuestion[] = [
     id: 5,
     question: 'What is the key difference between AC and DC isolators?',
     options: [
-      'To minimise DC cable runs and losses',
-      'Current type they can safely interrupt',
-      'Better performance in diffuse light',
-      'Combining multiple DC string outputs',
+      'The colour of the switch housing',
+      'The type of current they are rated to safely interrupt',
+      'The number of poles they must always have',
+      'The material used for their terminal screws',
     ],
     correctAnswer: 1,
     explanation:

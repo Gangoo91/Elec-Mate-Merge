@@ -44,10 +44,10 @@ const checks = [
     question:
       "A small commercial unit on a TN-C-S supply, no external lightning protection system, located in a moderate-keraunic-level area. The Section 443 risk-assessment outcome is 'protection required'. The right SPD installation is:",
     options: [
-      "Securing all isolations (locks remain in place if any work is incomplete), making all enclosures safe (covers on, doors closed), tidying tools, sweeping the work area, signing the day&rsquo;s permit / RAMS as complete, briefing the next shift / next day.",
-      "Currently £90,000 of VAT-taxable turnover in any rolling 12-month period (£85,000 was the long-standing figure, raised to £90,000 in April 2024). When you cross the threshold you must register for VAT within 30 days and start charging VAT (currently 20% standard rate) on your invoices. Quarterly VAT returns. You can reclaim VAT paid on business purchases. For a busy electrical firm crossing the threshold is a significant administrative event.",
-      "The casualty has autonomy on their own treatment but the supervisor has duties to the firm, the regulator and the wider workplace. Refusing medical assessment is the casualty's right but doesn't discharge the supervisor's HASAWA s.2 / s.7 duty. Supervisor should: strongly recommend assessment, document the conversation, escalate to a more senior manager, decline to release the casualty back to safety-critical work without clearance.",
-      "Type 2 at the origin (or main distribution board), located on the supply side of the main RCD if present, with conductor lengths kept short and earth bonding to the MET. No Type 1 unless the building has its own external lightning protection system (LPS); no Type 3 unless specific sensitive equipment is at risk after the Type 2 has dealt with bulk transient.",
+      "Type 1 at the origin as standard — every commercial unit needs a Type 1 device to handle direct lightning current regardless of whether an LPS is present.",
+      "Type 3 only, fitted at each item of sensitive equipment — point-of-use protection is sufficient on its own where no LPS exists.",
+      "No SPD is required — without an external lightning protection system there is no transient threat to protect against.",
+      "Type 2 at the origin (or main distribution board), supply-side of the main switch, with short conductors and earth bonding to the MET.",
     ],
     correctIndex: 3,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       "Per Reg 534.4.10, the SPD protective conductor (between the SPD and the main earthing terminal) for a Type 2 SPD installed at or near the origin must have a minimum cross-sectional area of:",
     options: [
-      "Use written communication (printed schedule + email), face them clearly when speaking so they can lip-read, and offer to use a BSL interpreter for complex discussions",
-      "Both are coil-operated switches, but contactors are built for higher currents (motor and load circuits) and usually have multiple ganged poles, often three.",
-      "6 mm² copper or equivalent — Reg 534.4.10(a). The protective conductor must carry the SPD's discharge current to earth without excessive impedance; an undersized PE conductor between SPD and MET defeats the SPD function.",
-      "After a stressful incident (e.g., a near-miss or heated confrontation), you should delay important decisions and conversations for at least 20 minutes where possible, allowing the physiological stress response to subside before engaging",
+      "2.5 mm² copper or equivalent — the same minimum as the live connection conductor to the SPD.",
+      "10 mm² copper or equivalent — matching the main protective bonding conductor size for a typical domestic supply.",
+      "6 mm² copper or equivalent — the minimum protective conductor CSA for a Type 2 SPD at the origin under Reg 534.4.10(a).",
+      "16 mm² copper or equivalent — the figure that applies to a Type 1 SPD, used as a conservative default for all SPD types.",
     ],
     correctIndex: 2,
     explanation:
@@ -72,10 +72,10 @@ const checks = [
     question:
       "A Type 1+2 combined SPD at the origin and a Type 2 SPD at a distant sub-distribution board feeding sensitive equipment. The cascade design intent is:",
     options: [
-      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\\\\\\\\\\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
-      "The Type 1+2 at the origin handles the bulk of the transient energy; the downstream Type 2 (or Type 3) handles the residual surge that survives the upstream device, providing further reduction of the let-through voltage at the equipment terminals. Cascade requires coordination via manufacturer tables to avoid let-through that exceeds the downstream device's rating.",
-      "Site rules on which categories of access equipment are permitted (e.g. ladders only with PC permission), the inspection / Form 91 regime for towers and MEWPs, the storage and overnight security arrangements for kit (so unauthorised use is prevented), the permit-to-work systems for any specialised access work (rope access, suspended platforms), and the chain of authorisation for hire-in equipment. CDM 2015 Reg 13 makes this part of the principal contractor's induction duty.",
-      "NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm's ability to trade collapses.",
+      "Both devices must operate simultaneously on every surge — the two SPDs share the discharge current equally, so each handles only half the transient energy.",
+      "The origin device handles the bulk transient energy; the downstream device reduces the residual surge that survives, coordinated by manufacturer cascade tables.",
+      "The downstream Type 2 takes the full surge first because it is closest to the equipment, and the origin device only acts as a backup if the downstream device fails.",
+      "The two devices must be installed within 0.5 m of each other so the cable inductance between them does not interfere with the cascade.",
     ],
     correctIndex: 1,
     explanation:
@@ -86,12 +86,12 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: "Section 443 of BS 7671 A4:2026 sets the requirement for surge protection on a:",
+    question: "Section 443 of BS 7671 A4:2026 sets the requirement for surge protection using a:",
     options: [
-      "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
-      "Consequence-based assessment — the designer assesses the consequences of an overvoltage event and provides protection where the assessment indicates it is needed. Reg 443.4.1 lists two active 'shall provide' consequences (serious injury or loss of human life; significant financial or data loss); for all other cases protection shall be provided unless the owner declares it is not required because any loss or damage is tolerable and they accept the risk.",
-      "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor\\\\'s team. For a client representative the escort is usually the Project Manager or Site Manager because they\\\\'ll want to talk through progress, snags and any commercial issues.",
-      "They allow two independent strings to run at their own MPP. A roof with both an east-facing and a west-facing slope gets one string per slope, each tracked independently — the east string MPPs in the morning, the west string MPPs in the afternoon, and the inverter combines the AC outputs. Without dual-MPPT, mixing east and west panels in one string forces a compromise MPP that wastes 10-20% of the available energy. Many domestic UK installs benefit from dual-MPPT given typical roof geometries.",
+      "Fixed mandatory rule — every installation regardless of type or consequence must be fitted with an SPD, with no risk assessment permitted.",
+      "Consequence-based assessment — the designer provides protection where the consequences of an overvoltage event indicate it is needed.",
+      "Keraunic-level-only rule — SPDs are required solely where the local lightning ground-flash density exceeds a fixed threshold, with no other factors considered.",
+      "Voltage-band rule — SPDs are required only on installations above 1000 V where transient overvoltages are more severe.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "Type 1 SPDs are characterised by:",
     options: [
-      "Describe: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"The last three invoices were paid 30+ days late.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Express: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I value our relationship, but late payment creates cash flow difficulties.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Specify: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I need invoices paid within 14-day terms.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Consequences: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"This allows me to continue prioritising your work\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "As a complete printed pack at handover plus PDF emailed for their records — they need it for any future EICR (so the inspector can compare current readings against the original), any property sale (solicitors increasingly require current EIC), any insurance claim (proof of certification at the time of an incident), any warranty claim on installed equipment.",
-      "Capability to handle the 10/350 microsecond impulse waveform — partial direct-lightning current. Required at the installation origin where the building has an external lightning protection system (LPS) per BS EN 62305-3 or where direct-strike risk to the supply exists. Higher Iimp rating, higher Up than Type 2 / 3.",
-      "For minor additions or alterations to an existing circuit (e.g. adding a single socket on an existing ring) that do NOT require a new circuit. New circuits, CU replacements and major alterations require an EIC + Schedule of Inspections + STR.",
+      "Capability to handle only the 8/20 microsecond waveform from switching transients, with the lowest Up of the three types for sensitive equipment.",
+      "Point-of-use form factors such as plug-in surge strips, intended to be fitted within a few metres of the equipment they protect.",
+      "Capability to handle the 10/350 microsecond impulse waveform — partial direct-lightning current — required at the origin where an LPS or direct-strike supply risk exists.",
+      "A residual current trip threshold of 30 mA, because Type 1 SPDs combine surge protection with RCD additional protection.",
     ],
     correctAnswer: 2,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 3,
     question: "Type 2 SPDs are characterised by:",
     options: [
-      "Internal = report within your firm to the responsible person (H&S manager, contracts manager, director). External = report to a regulator (HSE for H&S, Environment Agency for pollution, local authority for some EHO matters, scheme body like NICEIC for installation defects). Most issues need both — internal first, then the firm\\\\\\\\'s responsible person decides on external.",
-      "Avoid working at height where reasonably practicable; if unavoidable, use collective protection (scaffold, MEWP, edge protection); if collective inadequate, use personal fall protection (harness + lanyard + anchor); minimise distance and consequences of falls.",
-      "A digital, structured record of design decisions, materials, products and safety-critical information that is created at design stage, maintained through construction, and handed over to the Accountable Person for the lifetime of the building.",
-      "Capability to handle the 8/20 microsecond impulse waveform — induced surges from nearby strikes, switching transients on the supply, transients propagated from the network. Standard at the installation origin / main distribution board on most installations without LPS, characterised by an In and Imax rating in the 5-40 kA range.",
+      "Capability to handle the 10/350 microsecond direct-lightning waveform, required only where the building has an external lightning protection system.",
+      "Installation exclusively at the point of use, within 5-10 m of sensitive equipment, as the final stage of a cascade.",
+      "An Iimp rating measured in the 12.5-25 kA per pole range, the highest discharge capability of the three SPD types.",
+      "Capability to handle the 8/20 microsecond impulse waveform — induced surges and switching transients — standard at the origin / main board on installations without LPS.",
     ],
     correctAnswer: 3,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 4,
     question: "Type 3 SPDs are typically located:",
     options: [
-      "Close to specific sensitive equipment — usually within a few metres of the equipment terminals (server cabinet, medical equipment, AV / studio gear, specialised electronic plant). Provides the final stage of cascade reduction; typically combined with Type 2 upstream.",
-      "Apply SLAM: stop the current activity, look for the source of the smell, assess whether it indicates a new hazard (overheating, insulation failure), and manage by withdrawing if necessary, de-energising the panel if safe to do so, and reporting the finding",
-      "That the service is performed with 'reasonable care and skill'. This is a statutory implied term that can't be excluded by your terms and conditions. If the work falls below the standard a competent electrician would deliver, the customer has a right to repeat performance or a price reduction under s.55 and s.56.",
-      "Discarded smoking materials (cigarettes, matches, lighters) remain a fire cause, particularly in areas with poor housekeeping, near flammable materials, or where smoking policies are not enforced",
+      "Close to specific sensitive equipment — usually within a few metres of the equipment terminals — as the final cascade stage.",
+      "At the installation origin on the supply side of the main switch, as the first line of defence against direct lightning current.",
+      "On the supply network upstream of the cut-out, where the DNO fits them to protect every connected property at once.",
+      "Within the main distribution board only, never at point of use, because their high discharge capability would damage sensitive equipment if fitted nearby.",
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "Reg 443.4.1(a) requires SPD protection where transient overvoltage:",
     options: [
-      "It tells you the appliance has been double-insulated by the manufacturer to provide protection without relying on a CPC — so you don’t add an earth wire to the casing thinking you’re improving safety.",
-      "Could result in serious injury to, or loss of, human life. This is the headline mandatory case — life-safety circuits, medical premises, fire alarm and detection systems. SPD protection shall be provided regardless of installation type or location.",
-      "It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues",
-      "To provide a complete record of all maintainable assets including their location, criticality, technical specifications, maintenance history, and spare parts, enabling effective maintenance planning",
+      "Could cause interruption to commercial trading or inconvenience to occupants, regardless of any safety or financial consequence.",
+      "Could result in serious injury to, or loss of, human life — the headline mandatory case where protection shall be provided.",
+      "Could exceed the impulse withstand voltage of Category IV equipment at the supply origin, which is the only category the regulation protects.",
+      "Could occur more than once per year based on the local lightning ground-flash density figure for the postcode.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "The voltage protection level Up of an SPD describes:",
     options: [
-      "Twist the strands tightly, insert fully into the ferrule, and crimp with the correct tool using the matching die — verify the ferrule is correctly shaped with no strand visible outside the ferrule",
-      "A notice served by the fire authority requiring the responsible person to notify them before making changes to the premises or its use that could increase fire risk or affect fire safety measures",
-      "The maximum let-through voltage at the SPD terminals during a surge — the voltage that the equipment downstream actually sees through the SPD. Lower Up = better protection. Manufacturer's Up is measured at a specified test current.",
-      "It connects to the metal casing of the heater. The casing is an exposed-conductive-part — Class I equipment requires CPC connection so a fault from the heating element to the casing causes fault current to flow back through the CPC and trip the protective device.",
+      "The maximum continuous operating voltage the SPD can withstand indefinitely without conducting — the value matched to the supply earthing arrangement.",
+      "The nominal discharge current the SPD can carry repeatedly on an 8/20 waveform without degrading.",
+      "The maximum let-through voltage at the SPD terminals during a surge — the voltage the downstream equipment actually sees.",
+      "The supply voltage at which the SPD's status indicator changes from green to red to signal end of life.",
     ],
     correctAnswer: 2,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     id: 7,
     question: "Per Reg 534.4.8, the conductor length between the SPD and the live and earth busbars should be:",
     options: [
-      "Workers making a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"qualifying disclosure\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — a disclosure of information that the worker reasonably believes shows malpractice, including criminal offences, breach of legal obligations, miscarriage of justice, danger to health and safety, environmental damage. Protects from detriment and dismissal.",
-      "The immediate priority is to open the airway using a jaw thrust (rather than head tilt) to minimise spinal movement, and commence CPR if no breathing is detected — the need to resuscitate overrides the spinal precaution to avoid movement",
-      "Contact the distribution network operator to discuss options including isolation or diversion; install goal posts and physical barriers to define the safe zone; use a banks person; and restrict boom operation with a rated capacity limiter",
-      "Kept as short as practicable — typically less than 0.5 m total combined connection length (live to SPD, SPD to earth). The conductor inductance adds to the SPD's let-through voltage at the high frequencies of a transient surge; long leads can effectively bypass the SPD.",
+      "As long as the enclosure allows — extra conductor length adds resistance that limits the discharge current and protects the SPD from overload.",
+      "Exactly 1 m, looped neatly, so the inductance provides a decoupling effect between the SPD and the busbars.",
+      "At least 2 m, to keep the high-energy SPD discharge path well away from the sensitive metering equipment.",
+      "Kept as short as practicable — typically less than 0.5 m total combined (live to SPD, SPD to earth) — because conductor inductance adds to the let-through voltage.",
     ],
     correctAnswer: 3,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 8,
     question: "On a domestic CU upgrade with no LPS, no overhead supply, and no specific Section 443.4 trigger, the L3 designer's SPD position is:",
     options: [
-      "Apply the Reg 443 risk assessment. For most owner-occupied dwellings the assessment outcome is 'protection recommended' rather than mandatory. Present the case to the customer — Type 2 SPD at the consumer unit protects connected appliances against induced surges and switching transients — and let them decide. Cost is modest (typically £80-£200 for a Type 2 device including labour) and the protection benefit is real for households with sensitive electronics.",
-      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
-      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
-      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
+      "Apply the Reg 443 risk assessment, then present a Type 2 SPD at the consumer unit to the customer and let them decide.",
+      "No SPD is needed and the question need not be raised — without an LPS or overhead supply there is no transient threat to a domestic installation.",
+      "A Type 1 SPD is mandatory on every consumer unit upgrade regardless of supply arrangement, so fit one without discussion.",
+      "An SPD is prohibited on domestic work because the let-through voltage would damage standard household appliances.",
     ],
     correctAnswer: 0,
     explanation:

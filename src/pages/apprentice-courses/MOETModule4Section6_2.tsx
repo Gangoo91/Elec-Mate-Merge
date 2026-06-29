@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: '5whys-stopping',
     question: "When should you stop asking 'why' in a 5 Whys analysis?",
     options: [
-      "This cannot be determined from the ratio alone; the manufacturer's manual must be consulted",
       "When you reach a cause that is within the organisation's control to correct and that would prevent recurrence",
-      "A tool lanyard or tether should be used to prevent the power tool from falling if dropped",
-      "Withdraw your colleague, report to the supervisor and the customer, and make a record — a hate-speech matter may need police involvement",
+      "Always after exactly five questions, regardless of whether a root cause has been reached",
+      "As soon as you identify the component that physically failed",
+      "When the cause can be attributed to a specific individual who made the error",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The investigation should continue until you reach a cause that the organisation can take action on to prevent recurrence. Stopping too early results in superficial fixes; going too far can lead to causes so abstract they cannot be practically addressed. The root cause should be specific, actionable, and within the organisation's sphere of influence.",
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: '5whys-branching',
     question: "What should you do when a 'why' question has more than one valid answer?",
     options: [
-      'The incident energy level at which there is a 50% probability of a second-degree burn through the fabric',
+      'Choose the single most likely answer and discard the others to keep the chain simple',
+      'Stop the analysis, as multiple answers mean the technique cannot be applied',
       'Follow all valid branches of causation, as each may lead to a different root cause that needs addressing',
-      'A formal concern, problem or complaint that an employee raises with their employer',
-      'Thermal imaging, smell of burning, discoloration, or voltage drop testing',
+      'Pick the answer that points to an individual rather than a system',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "When a 'why' question produces multiple valid answers, each branch should be followed separately. Complex failures often have multiple causal pathways, and following only one may miss important root causes. This branching is normal and expected — it transforms the simple linear chain into a cause tree that provides a more complete picture of the failure.",
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: '5whys-verification',
     question: 'How can you verify that a 5 Whys analysis has correctly identified the root cause?',
     options: [
-      "Of non-combustible material (e.g. metal) OR enclosed in a non-combustible cabinet — to limit fire spread from the consumer unit",
+      "Confirm that exactly five 'why' questions were asked, no more and no fewer",
       "Read the causal chain in reverse — if each 'therefore' statement logically leads to the next, the chain is valid",
-      "Expected income, regular expenses, one-off costs, tax payments, and opening/closing balances",
-      "Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken",
+      "Check that the analysis identifies a single individual responsible for the failure",
+      "Ensure the analysis was completed within fifteen minutes of the failure occurring",
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'A motor fails to start. Why? The contactor does not pull in. Why? The control circuit fuse has blown. Why? The fuse was rated at 2 A but the contactor coil inrush is 3.5 A. What is the root cause?',
     options: [
-      'Following multiple causal pathways when a single \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' produces more than one valid answer',
-      'Organisational — the commissioning procedure was incomplete',
+      'The contactor coil has failed and needs replacing',
+      'The control circuit has a loose connection causing intermittent operation',
       'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
-      'Stopping at the first technical answer without exploring human and organisational factors',
+      'The motor windings have gone open-circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a common pitfall when applying the 5 Whys technique?',
     options: [
-      'Verify the logical validity of the causal chain by reading it in reverse',
-      'Following multiple causal pathways when a single \\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\' produces more than one valid answer',
-      'Answers that blame a specific individual without examining the systemic factors that allowed the error to occur',
+      'Supporting each answer with documented evidence such as test data and records',
+      'Following every valid branch of causation to its own root cause',
+      'Involving a cross-functional team with knowledge of the equipment and process',
       'Stopping at the first technical answer without exploring human and organisational factors',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: "In a 5 Whys analysis, what does 'branching' refer to?",
     options: [
       "Following multiple causal pathways when a single 'why' produces more than one valid answer",
-      "Stopping at the first technical answer without exploring human and organisational factors",
-      "Install the missing gland and inspect all other conduit entries for similar omissions",
-      "Answers that blame a specific individual without examining the systemic factors that allowed the error to occur",
+      "Skipping intermediate steps to reach the root cause more quickly",
+      "Splitting the investigation team into separate groups for each failure",
+      "Asking the same 'why' question repeatedly until the answer changes",
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'An RCD trips. Why? Earth leakage exceeds 30 mA. Why? Cable insulation has degraded in the conduit run. Why? Water has entered the conduit through a missing gland. Why? The gland was omitted during the original installation. The most effective corrective action is:',
     options: [
-      'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
+      'Replace the RCD with a higher 100 mA type so that minor earth leakage no longer causes nuisance tripping',
       'Install the missing gland and inspect all other conduit entries for similar omissions',
-      'Verify the logical validity of the causal chain by reading it in reverse',
-      'Stopping at the first technical answer without exploring human and organisational factors',
+      'Replace the degraded section of cable only and re-energise the circuit without further checks',
+      'Reset the RCD and advise the user to reset it again whenever it trips in future',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: "The 'therefore' test is used to:",
     options: [
-      'Following multiple causal pathways when a single \\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\' produces more than one valid answer',
-      'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
+      'Decide how many why questions need to be asked before stopping',
+      'Identify which individual was responsible for the failure',
       'Verify the logical validity of the causal chain by reading it in reverse',
-      'Organisational — the commissioning procedure was incomplete',
+      'Calculate the cost of the corrective actions required',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following limitations of the 5 Whys technique is most significant?',
     options: [
-      'Supporting each \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' answer with factual evidence such as test data, maintenance records, photographs or manufacturer specifications',
-      'Stopping at the first technical answer without exploring human and organisational factors',
-      'Following multiple causal pathways when a single \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' produces more than one valid answer',
+      'It requires expensive specialist software to record the causal chain',
+      'It can only be applied to mechanical failures, not electrical ones',
+      'It must always produce exactly one root cause for every failure',
       'It relies on the knowledge and experience of the participants, which may introduce bias or miss causes outside their expertise',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'A 5 Whys analysis is most effective when conducted:',
     options: [
       'By a cross-functional team including people with direct knowledge of the equipment, process and management systems',
-      'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
-      'It relies on the knowledge and experience of the participants, which may introduce bias or miss causes outside their expertise',
-      'Answers that blame a specific individual without examining the systemic factors that allowed the error to occur',
+      'By a single senior manager working alone, to keep the conclusions consistent and free of disagreement',
+      'Several weeks after the failure, once memories have settled and the equipment has been returned to service',
+      'By the individual judged most likely to have caused the failure, so they can explain their actions',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       "When applying the 5 Whys to an electrical failure, which type of 'why' answer should be avoided?",
     options: [
-      'By a cross-functional team including people with direct knowledge of the equipment, process and management systems',
+      'Answers that identify a gap in the maintenance procedure or schedule',
       'Answers that blame a specific individual without examining the systemic factors that allowed the error to occur',
-      'It relies on the knowledge and experience of the participants, which may introduce bias or miss causes outside their expertise',
-      'Supporting each \\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\' answer with factual evidence such as test data, maintenance records, photographs or manufacturer specifications',
+      'Answers that reference a design or specification deficiency',
+      'Answers that are supported by test data and maintenance records',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,9 +203,9 @@ const quizQuestions = [
     id: 11,
     question: 'How does the 5 Whys technique relate to continuous improvement under ST1426?',
     options: [
-      'A clear escalation ladder with defined trigger points for when to move from self-resolution to mediation, from mediation to formal processes, and from formal processes to walking away',
-      'PNB (Protective Neutral Bonding) — recognising the LV practice of bonding to the combined neutral/earth at the consumer cut-out',
-      'Be specific about what was observed, link to NVQ criteria, state the date, location, and context, and describe the learner\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s actions in detail',
+      'It replaces the need for any planned preventive maintenance programme',
+      'It is only relevant to the safety modules, not to maintenance improvement',
+      'It is used to allocate blame so that under-performing staff can be retrained',
       'It provides a structured method for identifying improvement opportunities arising from failures, which is a core requirement of the maintenance technician standard',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
       'Which of the following would strengthen a 5 Whys analysis of an electrical equipment failure?',
     options: [
       "Supporting each 'why' answer with factual evidence such as test data, maintenance records, photographs or manufacturer specifications",
-      "It provides a structured method for identifying improvement opportunities arising from failures, which is a core requirement of the maintenance technician standard",
-      "By a cross-functional team including people with direct knowledge of the equipment, process and management systems",
-      "Answers that blame a specific individual without examining the systemic factors that allowed the error to occur",
+      "Limiting the chain to exactly five questions so the analysis stays consistent across every investigation",
+      "Recording only the final root cause, since the intermediate 'why' answers are not needed once it is reached",
+      "Completing the analysis as quickly as possible so the equipment can be returned to service without delay",
     ],
     correctAnswer: 0,
     explanation:

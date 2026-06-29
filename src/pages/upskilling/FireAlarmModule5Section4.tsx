@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 §16 (Cabling, labelling and identification) clarifies what colour the fire alarm cable AND the LV mains supply to the panel should be. What does it say?',
     options: [
-      'Any colour, just labelled.',
-      'All fire alarm cables AND the LV mains supply to the fire alarm system should be of a single common colour, with RED preferred. The 2025 revision settles a long-running technical-helpline question — the 2017 revision required fire-resistant cable but did not specify a colour. From 2025, red is the preferred single common colour for the fire alarm wiring AND the dedicated mains feed to the CIE.',
-      'Red for fire, white for mains.',
-      'Black throughout.',
+      'Any colour at all, provided every core is individually labelled at termination.',
+      'A single common colour for the cables AND the LV mains feed, with red preferred.',
+      'Red for the fire alarm cables and white for the dedicated mains supply to the panel.',
+      'Black throughout, for both the fire alarm cables and the LV mains feed to the CIE.',
     ],
     correctIndex: 1,
     explanation:
-      'The 2025 §16 clarification: a single common colour (red preferred) for fire alarm cables AND the LV mains supply to the fire alarm system. This recognises the mains feed as part of the integrated fire installation and removes ambiguity. The "preferred" wording allows existing schemes in other colours where rip-and-replace would be disproportionate, but new work should be red.',
+      'The 2025 §16 clarification: a single common colour (red preferred) for fire alarm cables AND the LV mains supply to the fire alarm system. The 2017 revision required fire-resistant cable but did not specify a colour, prompting recurring helpline queries. This recognises the mains feed as part of the integrated fire installation. The "preferred" wording allows existing schemes in other colours where rip-and-replace would be disproportionate, but new work should be red.',
   },
   {
     id: 'fam5-s4-fe-pink',
     question:
       'Per BS 7671 A2:2022 (IEC 60445:2021) and reflected in BS 5839-1:2025 §16, what is the identification of the FUNCTIONAL EARTH (FE) conductor?',
     options: [
-      'Cream, marked "FE".',
-      'PINK in colour, or marked with the alphanumeric designation "FE". The change from cream (the previous IEC 60445 / BS 7671 designation) to pink came in BS 7671 Amendment 2:2022 and is reflected in BS 5839-1:2025. Cream caused confusion with bare-copper or beige sleeving; pink is unambiguous.',
-      'Green-and-yellow, same as protective earth.',
-      'Blue.',
+      'Cream, the previous IEC 60445 / BS 7671 designation, marked "FE" at terminations.',
+      'PINK in colour, or marked with the alphanumeric designation "FE" at terminations.',
+      'Green-and-yellow, identical to the protective earth used across the installation.',
+      'Blue, matching the neutral conductor identification used elsewhere in the panel.',
     ],
     correctIndex: 1,
     explanation:
-      'IEC 60445:2021 / BS 7671 A2:2022 changed FE identification from cream to pink. BS 5839-1:2025 §16 explicitly references this. Important on fire alarm work because addressable loop screens are typically functional earths (one-end termination), not protective earths — they need the new pink ID, not cream and not green-and-yellow.',
+      'IEC 60445:2021 / BS 7671 Amendment 2:2022 changed FE identification from cream to pink, and BS 5839-1:2025 §16 explicitly references this. Cream caused confusion with bare-copper or beige sleeving; pink is unambiguous. Important on fire alarm work because addressable loop screens are typically functional earths (one-end termination), not protective earths — they need the new pink ID, not cream and not green-and-yellow.',
   },
   {
     id: 'fam5-s4-screen-end',
     question:
       'A 2-core fire-resistant cable with overall screen runs round an addressable loop. At how many ends should the screen be terminated?',
     options: [
-      'Both ends, always.',
-      'ONE end only, typically at the panel — to drain induced noise to the panel functional earth without creating an earth loop. Terminating both ends would create a circulating current path between any potential difference between the two earth references, injecting noise rather than draining it. Manufacturer guidance is the controlling document; some panels specify a different convention. The screen termination is recorded on the as-installed drawing.',
-      'Neither end — leave floating.',
-      'Wherever convenient.',
+      'Both ends, always, to bond the screen to earth at each termination point.',
+      'ONE end only, typically at the panel, to drain induced noise without an earth loop.',
+      'Neither end — leave the screen floating and isolated at both terminations.',
+      'Wherever convenient on the run, since the termination point makes no difference.',
     ],
     correctIndex: 1,
     explanation:
-      'Single-end screen termination is the dominant convention for addressable fire alarm loops. Both-ends invites earth loops and circulating noise; floating loses the noise-drain function. The screen is terminated to the panel functional earth (PINK conductor under BS 7671 A2:2022) at one end, isolated and safely cut back at the other. Record on the as-installed drawing.',
+      'Single-end screen termination is the dominant convention for addressable fire alarm loops. Terminating both ends creates a circulating-current path between the two earth references, injecting noise rather than draining it; floating loses the noise-drain function. The screen terminates to the panel functional earth (PINK conductor under BS 7671 A2:2022) at one end, isolated and cut back at the other. Manufacturer guidance is the controlling document, and the termination is recorded on the as-installed drawing.',
   },
   {
     id: 'fam5-s4-ir-disconnect',
     question:
       'You are about to insulation-resistance test a freshly wired addressable loop before energising the panel for the first time. Devices are already fitted to the loop. What do you do?',
     options: [
-      'Run the test at 500 V dc as wired.',
-      "DISCONNECT the loop devices first, OR use the panel manufacturer's prescribed alternative method — applying 500 V dc to electronic loop devices will destroy the SLC drivers, isolators, and detector front ends. The standard pre-energisation IR test verifies cable integrity; cable integrity is tested with devices removed (or with one end of the loop disconnected from the panel, devices unplugged from bases). Some manufacturers permit a low-voltage continuity check with devices in place; consult the panel manual.",
-      'Reduce to 250 V dc and test as wired.',
-      'Skip IR — devices test it for you.',
+      'Run the IR test at 500 V dc on the loop exactly as wired, with all devices fitted.',
+      'DISCONNECT the loop devices first, or use the manufacturer’s prescribed method.',
+      'Reduce the test voltage to 250 V dc and test the loop as wired, devices in place.',
+      'Skip the IR test entirely — the loop devices effectively test the cable for you.',
     ],
     correctIndex: 1,
     explanation:
-      'A 500 V dc IR shot through electronic loop devices is a destructive test. The cable is the test subject; remove devices first, or use the manufacturer-specified method. Many panel manufacturers provide a loop "health" diagnostic that runs after energisation — that is not a substitute for the pre-energisation IR test, which proves the wiring is fit to be energised. Always check before plugging anything in.',
+      'A 500 V dc IR shot through electronic loop devices is destructive — it will destroy the SLC drivers, isolators and detector front ends. The cable is the test subject; remove devices first (or disconnect one end and unplug heads from bases), then prove cable integrity. Some manufacturers permit a low-voltage continuity check with devices in place; consult the panel manual. A post-energisation loop "health" diagnostic is not a substitute for the pre-energisation IR test.',
   },
 ];
 
@@ -82,139 +82,139 @@ const quizQuestions = [
     question:
       'Per BS 5839-1:2025 §16, what is the recommended colour convention for fire alarm cables and the LV mains supply to the panel?',
     options: [
-      'Black for both.',
-      'A single, common colour with RED preferred for both the fire alarm cables AND the LV mains supply to the fire alarm system. The 2025 revision settles the 2017 ambiguity (which specified fire-resistant cable but not colour). Red is the preferred single common colour; the mains feed to the CIE is treated as part of the fire alarm installation, not a separate general-circuit feed.',
-      'Red for fire, grey for mains.',
-      'Whatever the contractor stocks.',
+      'A single common colour, red preferred, for the cables AND the LV mains supply.',
+      'Red for the fire alarm cables and grey for the dedicated mains feed to the panel.',
+      'Black for both the fire alarm cables and the dedicated LV mains supply to the CIE.',
+      'No specific colour at all, provided every core is individually labelled at termination.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Red is now the preferred single common colour for the fire alarm cables AND the dedicated LV mains feed to the CIE under BS 5839-1:2025 §16. The 2017 revision was silent on colour; this caused recurring helpline queries. New work should be red throughout.',
+      'Red is now the preferred single common colour for the fire alarm cables AND the dedicated LV mains feed to the CIE under BS 5839-1:2025 §16. The 2017 revision specified fire-resistant cable but was silent on colour, prompting recurring helpline queries; the mains feed is now treated as part of the fire alarm installation. New work should be red throughout.',
   },
   {
     id: 2,
     question:
       'Under IEC 60445:2021 / BS 7671 A2:2022, the functional earth conductor is now identified by which colour?',
     options: [
-      'Cream.',
-      'PINK, or by the alphanumeric designation "FE". The change from cream (previous identification) to pink came with IEC 60445:2021 / BS 7671 A2:2022 and is reflected in BS 5839-1:2025 §16. Pink is unambiguous; cream was confused with bare copper, beige sleeving, and natural insulation tones.',
-      'Green-and-yellow.',
-      'Black.',
+      'Cream, the previous IEC 60445 designation, retained for functional earths.',
+      'Green-and-yellow, identical to the protective earth used across the installation.',
+      'PINK, or by the alphanumeric designation "FE" at the conductor terminations.',
+      'Black, with a pink sleeve fitted only at each termination point on the conductor.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Pink is the new FE colour under IEC 60445:2021. BS 7671 A2:2022 adopted it. BS 5839-1:2025 §16 references it. Loop screens (functional earths in fire alarm work) and any FE conductors at the panel must use pink (or "FE" mark) — not cream, not green-and-yellow.',
+      'Pink is the new FE colour under IEC 60445:2021, adopted by BS 7671 A2:2022 and referenced in BS 5839-1:2025 §16. Pink is unambiguous, whereas cream was confused with bare copper, beige sleeving and natural insulation tones. Loop screens (functional earths in fire alarm work) and any FE conductors at the panel must use pink (or the "FE" mark) — not cream, not green-and-yellow.',
   },
   {
     id: 3,
     question:
       'Class A and Class B fire alarm circuits differ in their topology and fault tolerance. What is the defining difference?',
     options: [
-      'Class A is faster; Class B is slower.',
-      'Class A circuits are wired as a CLOSED LOOP (out from the panel and back to the panel) with isolators distributed around the loop. A single open-circuit fault on a Class A loop is contained by isolators on either side; the rest of the loop continues to function via panel-end re-feed. Class B circuits are open-ended SPURS — a single open-circuit at the panel end of a spur disables every device beyond the break. Class A gives single-fault tolerance; Class B does not.',
-      'Class A is wireless; Class B is wired.',
-      'Class A is cheaper.',
+      'Class A circuits clear faults faster, while Class B circuits respond more slowly.',
+      'Class A circuits are wireless throughout, while Class B circuits are hard-wired.',
+      'Class A is a closed loop with isolators (fault-tolerant); Class B is open-ended spurs.',
+      'Class A circuits use a larger-CSA cable than Class B circuits across every run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Class A = closed-loop with isolators, single-fault tolerant. Class B = open-ended spurs, no fault tolerance. Category L1 / L2 systems and most addressable systems use Class A loops; Class B is acceptable for some smaller / less critical installations subject to design. The fault-tolerance difference is the load-bearing reason to choose Class A.',
+      'Class A is wired out from the panel and back as a closed loop with isolators distributed around it, so a single open-circuit fault is contained by the isolators on either side. Class B is open-ended spurs — a single open-circuit at the panel end disables every device beyond the break. Class A gives single-fault tolerance; Class B does not. Category L1 / L2 and most addressable systems use Class A loops.',
   },
   {
     id: 4,
     question: 'Why is screen termination on an addressable loop typically done at ONE end only?',
     options: [
-      'Saves wire.',
-      'Single-end termination drains induced noise to the panel functional earth without creating an earth loop. Both-end termination creates a circulating current path between any potential difference between the two earth references, injecting noise into the loop instead of draining it. Floating (no termination) loses the noise-drain function entirely. The single-end convention puts the screen reference at the panel.',
-      'Both ends would short the loop.',
-      'Manufacturer preference only.',
+      'It drains induced noise to the panel functional earth without creating an earth loop.',
+      'Terminating both ends would create a direct short across the two loop conductors.',
+      'It saves a small amount of screen conductor at the far end of the addressable loop.',
+      'It is purely a manufacturer preference with no underlying electrical basis at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Single-end is the noise-drain optimum. Both ends creates a ground loop and injects noise; floating gives no drain. The screen terminates at the panel FE, is cut back and isolated at the far end. Always check the panel manual — some manufacturers specify a different scheme.',
+      'Single-end is the noise-drain optimum. Terminating both ends creates a circulating-current path between the two earth references and injects noise into the loop; floating (no termination) loses the drain function entirely. The screen terminates at the panel FE and is cut back and isolated at the far end. Always check the panel manual — some manufacturers specify a different scheme.',
   },
   {
     id: 5,
     question:
       'A fire alarm cable runs vertically up a riser shaft for 9 m before turning into the ceiling void. What support interval applies on the vertical run?',
     options: [
-      'No support needed on vertical runs.',
-      'Support intervals follow the cable manufacturer instruction and the chosen containment system, with vertical runs typically requiring fixings at intervals not exceeding 1 m (cable cleats / saddles), and additional support at every floor level penetration. Vertical drops in conduit / trunking follow the containment fixing schedule. Cable supports are fire-rated where the cable is fire-rated — there is no point installing a 30-minute cable on plastic-bodied saddles that drop the cable in 5 minutes.',
-      '5 m intervals.',
-      'No fixings — gravity does the work.',
+      'No fixings are required on vertical runs because the weight is taken at the top.',
+      'A single fixing at the top and bottom of the full 9 m run is entirely sufficient.',
+      'Vertical runs may be supported at 5 m intervals regardless of the cable type used.',
+      'Fire-rated fixings at roughly 1 m intervals plus support at every floor penetration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "Vertical runs typically need ~1 m fixing intervals plus support at floor penetrations. Fixings must match the cable's fire rating; plastic saddles defeat fire-rated cable. The exact figure is from the cable manufacturer + the containment system instruction, but 1 m is a workable on-site default.",
+      "Support intervals follow the cable manufacturer instruction and the containment system; vertical runs typically need fixings at intervals not exceeding about 1 m plus support at every floor-level penetration. Fixings must be fire-rated where the cable is fire-rated — plastic saddles that drop a fire-rated cable in minutes defeat the purpose. 1 m is a workable on-site default.",
   },
   {
     id: 6,
     question:
       'A jointing junction box is unavoidable on a fire alarm loop because of an existing bulkhead. What requirements apply?',
     options: [
-      'Any plastic JB will do.',
-      'Joint boxes on fire alarm circuits should be AVOIDED where possible, and where unavoidable, must be: (a) FIRE-RATED to match the cable rating, (b) ACCESSIBLE for inspection and maintenance, (c) clearly labelled "FIRE ALARM" or with the agreed identification, (d) recorded on the as-installed drawing. A plastic JB hidden above a permanent ceiling defeats the cable rating, hides a maintenance liability, and produces a maintenance fault that is invisible until something fails.',
-      'Any junction box, anywhere.',
-      'Only metal junction boxes.',
+      'Any standard plastic junction box is acceptable, provided the cores are correctly identified.',
+      'Avoided where possible; where unavoidable, fire-rated, accessible, labelled and recorded.',
+      'Only metal junction boxes are permitted, in any accessible or concealed location chosen.',
+      'A junction box may be placed anywhere on the run, provided the joint itself is soldered.',
     ],
     correctAnswer: 1,
     explanation:
-      'JBs are a known weak point in fire alarm wiring. Avoid where possible (route the cable around the obstruction); when unavoidable, fire-rated, accessible, labelled and recorded. Hidden or under-rated JBs are a recurring service-life finding.',
+      'Joint boxes are a known weak point in fire alarm wiring. Avoid where possible (route the cable around the obstruction); when unavoidable they must be fire-rated to match the cable, accessible for inspection and maintenance, clearly labelled (e.g. "FIRE ALARM"), and recorded on the as-installed drawing. Hidden or under-rated JBs are a recurring service-life finding.',
   },
   {
     id: 7,
     question:
       'What is the correct procedure for an insulation-resistance test on an addressable loop with devices already fitted?',
     options: [
-      'Test at 500 V dc as wired.',
-      'DISCONNECT the loop devices (or one end of the loop from the panel, with bases unplugged from heads), then apply 500 V dc between the loop conductors and earth (or between conductors). Re-fit the devices ONLY after the cable IR is verified. Applying 500 V dc to electronic loop devices destroys SLC drivers, isolators and detector electronics. Some manufacturers offer a low-voltage diagnostic in lieu — consult the panel manual.',
-      'Test at 250 V dc with devices in place.',
-      'Skip the test.',
+      'Apply 500 V dc to the loop exactly as wired, with all loop devices left in place.',
+      'Reduce the test voltage to 250 V dc and test with the loop devices still connected.',
+      'Disconnect the loop devices, apply 500 V dc, then re-fit once the cable IR passes.',
+      'Omit the IR test, since the panel loop diagnostic confirms cable integrity after energising.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'IR is a cable test, not a device test. Disconnect devices first. The 500 V dc shot through electronic loop devices is destructive. Re-fit only after IR passes. Manufacturer-specified alternatives (e.g. low-voltage continuity diagnostics) may substitute, but the cable IR before energisation is the load-bearing pre-commissioning check.',
+      'IR is a cable test, not a device test. Disconnect the loop devices first (or one end of the loop from the panel, with bases unplugged from heads); a 500 V dc shot through electronic loop devices destroys SLC drivers, isolators and detector electronics. Re-fit only after the cable IR passes. Manufacturer-specified alternatives (e.g. low-voltage continuity diagnostics) may substitute, but the cable IR before energisation is the load-bearing pre-commissioning check.',
   },
   {
     id: 8,
     question:
       'BS 5839-1:2025 §19 brings the recommendations for ISOLATION of mains power to the fire alarm system into a single clause. Which best describes that requirement?',
     options: [
-      'Mains via a 13 A plug — anyone can isolate.',
-      'A dedicated, clearly labelled mains isolator for the fire alarm system, accessible to authorised persons, with the recommendations on its provision and use consolidated into a single clause in the 2025 revision (replacing split coverage in 2017 clauses 25 and 29). The isolator is for service / maintenance use under controlled conditions; it is not for routine occupant access. Lockable or tagged.',
-      'No isolator — fire alarms are always live.',
-      'Multiple isolators around the building.',
+      'The mains may be supplied via a 13 A plug and socket so any occupant can isolate it.',
+      'No isolator is required at all, because a fire alarm system stays permanently energised.',
+      'Several isolators distributed around the building so power can be cut from any floor.',
+      'A dedicated, labelled, lockable mains isolator for authorised service access only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 2025 revision consolidates the mains isolation recommendations from two 2017 clauses (25 and 29) into a single §19 clause. Dedicated, labelled, accessible to authorised persons (typically with a lock or tag), used under controlled conditions for service. Routine occupant access is explicitly NOT the design intent.',
+      'The 2025 revision consolidates the mains isolation recommendations from two 2017 clauses (25 and 29) into a single §19 clause: a dedicated, clearly labelled isolator accessible to authorised persons (typically with a lock or tag), used under controlled conditions for service and maintenance. Routine occupant access is explicitly NOT the design intent.',
   },
   {
     id: 9,
     question:
       'A fire alarm panel battery has been installed during second-fix. What labelling does BS 5839-1:2025 §16 acknowledge as long-standing custom and practice?',
     options: [
-      'No label needed.',
-      'A label fixed to the battery showing the DATE OF INSTALLATION, by permanent marker. The 2025 revision acknowledges the long-standing custom-and-practice of marking the install date directly on the battery — needed because batteries are replaced at end-of-service-life and the install date drives the replacement schedule. The label survives the service intervals; loose paperwork in the panel often does not.',
-      'Battery brand only.',
-      'Voltage rating only.',
+      'A label showing only the battery manufacturer and model, for re-ordering at end of life.',
+      'A label on the battery showing the DATE OF INSTALLATION, written in permanent marker.',
+      'A label showing only the nominal voltage and amp-hour rating of the standby battery.',
+      'No battery label at all, because the install date is recorded in the panel logbook.',
     ],
     correctAnswer: 1,
     explanation:
-      'Date-of-installation marking on the battery is now explicitly acknowledged in BS 5839-1:2025 §16. Permanent marker is sufficient. The label is there at every service visit and drives the replacement decision; service personnel do not depend on retrieving original installation paperwork.',
+      'Date-of-installation marking on the battery is now explicitly acknowledged in BS 5839-1:2025 §16. Permanent marker is sufficient. Batteries are replaced at end of service life and the install date drives the replacement schedule; the label is present at every service visit, so service personnel do not depend on retrieving original installation paperwork.',
   },
   {
     id: 10,
     question:
       'A specification calls for fire alarm cables to be run in steel conduit shared with a 230 V emergency lighting circuit. Is this acceptable?',
     options: [
-      'Yes — both fire-rated cables, no issue.',
-      'No — fire alarm cables should NOT share containment with circuits that carry conflicting voltage references or that compromise the integrity of the fire alarm wiring. The fire alarm system requires dedicated containment to keep the wiring identifiable, to prevent interference and to preserve the integrity of the protection. Sharing with even another life-safety system (emergency lighting) is not the design intent. Each life-safety system gets its own containment and its own labelling.',
-      'Yes if the conduit is metal.',
-      'Only if both circuits are RCD-protected.',
+      'Yes — both are life-safety, fire-rated cables, so sharing the conduit is no issue.',
+      'Yes, provided the shared containment conduit is steel rather than plastic throughout.',
+      'No — the fire alarm system needs its own dedicated containment and labelling.',
+      'Yes, provided both circuits in the shared conduit are protected by an RCD.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Dedicated containment for the fire alarm wiring is the design baseline. Sharing with emergency lighting (or any other circuit) blurs the identification, invites interference, and complicates fault-finding. Each life-safety system gets its own containment.',
+      'Dedicated containment for the fire alarm wiring is the design baseline — it keeps the wiring identifiable, prevents interference and preserves the integrity of the protection. Sharing with emergency lighting (or any other circuit, even another life-safety system) blurs identification, invites interference and complicates fault-finding. Each life-safety system gets its own containment.',
   },
 ];
 

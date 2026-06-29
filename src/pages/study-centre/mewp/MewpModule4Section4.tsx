@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'During a MEWP operation, the banksman spots a serious hazard and needs to signal the operator to stop immediately. The two-way radio has failed. What is the correct emergency hand signal?',
     options: [
-      'One arm raised with a closed fist',
       'Both arms waving above the head',
+      'One arm raised with a closed fist',
       'Thumbs down with both hands',
       'Pointing repeatedly at the hazard',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The universally recognised emergency stop signal is both arms waving above the head. This signal means STOP ALL OPERATIONS IMMEDIATELY. All personnel involved in MEWP operations must know this signal, and it must be agreed during the pre-operation briefing. It is deliberately exaggerated so it can be seen clearly from a distance.',
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'A MEWP operator has completed the work and lowered the platform. He begins to remove the exclusion zone barriers while the boom is still extended. What is wrong with this sequence?',
     options: [
       'Nothing — the platform is lowered so it is safe to remove barriers',
-      'The exclusion zone must only be removed after the machine is fully stowed (boom retracted, outriggers retracted)',
       'Barriers should be removed before lowering the platform',
+      'The exclusion zone must only be removed after the machine is fully stowed (boom retracted, outriggers retracted)',
       'Only the banksman is allowed to remove barriers',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The exclusion zone must remain in place until the MEWP is fully stowed — boom retracted, scissor lowered, outriggers retracted. An extended boom still poses a hazard even with the platform lowered, as sudden movement or hydraulic failure could cause the boom to swing or collapse. The safe operation checklist requires full stowage before barrier removal.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'Which document sets out the signage requirements for MEWP operations on or adjacent to public highways?',
     options: [
-      'The Highway Code',
       'Chapter 8 of the Traffic Signs Manual',
+      'The Highway Code',
       'The Construction (Design and Management) Regulations 2015',
       'The Work at Height Regulations 2005',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Chapter 8 of the Traffic Signs Manual (published by the Department for Transport) sets out the requirements for signing, lighting, and guarding at road works. It specifies the types, sizes, and placement distances of signs required for any works on or adjacent to public highways, including MEWP operations.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     options: [
       'One arm raised with a closed fist',
       'Flat palm facing the operator',
-      'Both arms waving above the head',
       'Arms crossed in an X shape',
+      'Both arms waving above the head',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The emergency stop signal is both arms waving above the head. This deliberately exaggerated signal is universally recognised and can be seen clearly from a distance. It means stop all operations immediately. The flat palm facing the operator is the normal 'stop' signal for routine positioning.",
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Before removing the exclusion zone at the end of a MEWP operation, which condition must be met?',
     options: [
+      'The machine must be fully stowed — boom retracted, platform lowered, outriggers retracted',
       'The platform must be lowered to ground level',
       'The operator must have exited the platform',
-      'The machine must be fully stowed — boom retracted, platform lowered, outriggers retracted',
       'The site supervisor must give verbal permission',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The exclusion zone must only be removed after the MEWP is fully stowed: boom retracted, scissor lowered, platform at ground level, and outriggers retracted. An extended boom or deployed outriggers still present hazards even when the platform is lowered. The safe operation checklist requires full stowage and a post-use inspection before barriers are removed.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT a duty of the banksman during MEWP operations?',
     options: [
       'Guiding the operator using agreed hand signals',
-      'Operating the MEWP ground-level controls on behalf of the platform operator',
       'Enforcing the exclusion zone and keeping the area clear',
       'Halting operations if conditions become unsafe',
+      'Operating the MEWP ground-level controls on behalf of the platform operator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The banksman's role is to guide, communicate, and enforce safety — not to operate the MEWP controls. Operating the ground-level controls is the responsibility of a trained operator or, in an emergency rescue, a person specifically trained in the rescue procedure. The banksman must remain focused on their signalling and zone enforcement duties at all times.",
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
     question: 'During loading of a MEWP onto a transport vehicle, where must no person stand?',
     options: [
       'On the transport vehicle',
-      'Behind the MEWP',
       'Between the MEWP and the transport vehicle',
+      'Behind the MEWP',
       'More than 5 metres from the loading area',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'No person must ever stand between the MEWP and the transport vehicle during loading or unloading. This is a crush zone — if the MEWP moves unexpectedly (brake failure, hydraulic fault, or operator error), anyone caught between the machine and the vehicle could suffer fatal crush injuries. All personnel must remain outside the designated exclusion zone around the loading area.',
   },

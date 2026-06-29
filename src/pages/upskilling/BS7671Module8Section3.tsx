@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 was published on 15 April 2026. From which date may you NO LONGER issue a certificate against BS 7671:2018+A3:2024?',
     options: [
-      '15 April 2026 — A4 supersedes A3 immediately on publication',
-      '15 October 2026 — A4 and A3 may both be cited during the six-month transition; A3 is fully withdrawn from this date',
-      '1 January 2027 — calendar-year transition',
-      'There is no fixed withdrawal date — the designer chooses',
+      '15 April 2026 — A4 supersedes A3 immediately on its publication date',
+      '15 October 2026 — A3 is fully withdrawn at the end of the six-month transition',
+      '1 January 2027 — a calendar-year transition applies to the amendment',
+      'There is no fixed withdrawal date — the designer chooses which to cite',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       "Which of the following is the SINGLE biggest practical change A4:2026 brings to a domestic rewire designer's day-to-day spec sheet?",
     options: [
-      'A new 50 mA limit for general-purpose RCDs',
-      'Reg 411.3.4 — every AC final circuit supplying luminaires within domestic (household) premises now requires 30 mA RCD additional protection',
-      'Mandatory Type B RCDs on every domestic circuit',
-      'A new requirement to test EFLI to 0.05 Ω',
+      'A new 50 mA residual-current limit for general-purpose RCDs',
+      'Reg 411.3.4 — every domestic luminaire final circuit now needs 30 mA RCD protection',
+      'Mandatory Type B RCDs on every final circuit in a domestic installation',
+      'A new requirement to test earth-fault loop impedance down to 0.05 Ω',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A designer presents a CRL surge-protection risk assessment using "the method in Annex A443" to justify omitting an SPD on a small commercial unit. What is the correct response under A4:2026?',
     options: [
-      'Accept it — the CRL method is the BS 7671 default',
-      'Reject it — Reg 443.5, Annex A443, Appendix 17 and Annex B443 (the CRL risk-assessment route) have all been DELETED in A4:2026; SPD selection is now driven by Reg 443.4 directly',
-      'Accept it only if the CRL value is below 1000',
-      'Accept it for non-domestic only',
+      'Accept it — the CRL method remains the BS 7671 default for SPD selection',
+      'Reject it — the CRL route is deleted in A4; SPD selection now runs via Reg 443.4',
+      'Accept it only where the calculated CRL value comes out below 1000',
+      'Accept it for non-domestic installations only, not for dwellings',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'On an old TT installation with multiple long sub-mains, the designer cannot achieve 0.4 s disconnection on every final circuit even with a 30 mA RCD. Which A4 regulation provides the framework for an alternative protective measure?',
     options: [
-      'Reg 411.3.4 — fit a 30 mA RCD on each luminaire circuit',
-      'Reg 419 group (new in A4) — defines the requirements that apply where ADS as a protective measure is not feasible, including the use of supplementary equipotential bonding, electrical separation or Class II equivalence',
-      'Reg 461.2 — switch the PEN',
-      'Reg 530.3.201 — install a bidirectional meter',
+      'Reg 411.3.4 — fit a 30 mA RCD on each luminaire final circuit',
+      'Reg 419 group (new in A4) — alternative measures where ADS is not feasible',
+      'Reg 461.2 — switch the PEN conductor to clear the earth fault',
+      'Reg 530.3.201 — install a bidirectional meter at the origin',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A4 amends Reg 411.3.3 (sockets ≤ 32 A). Which exception did A4 PRESERVE, and which categories are now explicitly UN-exceptable?',
     options: [
-      'No exceptions — A4 removed all socket exceptions',
-      'Category (b) — sockets in non-dwelling locations — remains exceptable via documented risk assessment by a skilled person (electrically); category (a) sockets used by ordinary persons / children and category (c) mobile equipment outdoors are explicitly un-exceptable',
-      'All three categories may be excepted with a risk assessment',
-      'Only mobile equipment may be excepted',
+      'No exceptions — A4 removed all of the socket-outlet RCD exceptions',
+      'Only category (b) non-dwelling sockets remain exceptable; (a) and (c) cannot be excepted',
+      'All three categories may still be excepted with a documented risk assessment',
+      'Only mobile equipment used outdoors may be excepted by risk assessment',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'On the A4:2026 EIC schedule of inspection, the system earthing arrangement options now distinguish between TN-C-S (PME) and TN-C-S (PNB). What is the difference?',
     options: [
-      'PME and PNB are the same — A4 lists them twice for clarity',
-      'PME has multiple connections of the PEN to true earth along the distribution route; PNB (Protective Neutral Bonding) has only one connection point to true earth — typically a single transformer feeding a single installation',
-      'PME is for domestic, PNB is for industrial',
-      'PNB is only used on TT systems',
+      'PME and PNB are the same — A4 simply lists them twice for clarity',
+      'PME has multiple PEN-to-earth connections along the route; PNB has only one',
+      'PME is used for domestic supplies and PNB only for industrial supplies',
+      'PNB is a TT arrangement, used only where there is no distributor earth',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A4:2026 was published 15 April 2026 with a transition until 15 October 2026. A designer signs an EIC dated 1 September 2026 citing BS 7671:2018+A3:2024. Is the cert valid?',
     options: [
-      'No — A4 is mandatory from 15 April 2026 and A3 cannot be cited',
-      'Yes — A3 and A4 may both be cited during the transition window (15 April – 15 October 2026); after 15 October the A3 citation becomes a Reg 120.3 documented departure',
-      'Only if the design pre-dates 15 April 2026',
-      'Only with insurer approval',
+      'No — A4 is mandatory from 15 April 2026 and A3 may not be cited on any new certificate',
+      'Only where the design work itself demonstrably pre-dates the 15 April 2026 publication date',
+      'Yes — both A3 and A4 may be cited during the 15 April – 15 October 2026 transition window',
+      'Only where the designer first obtains written approval from their professional indemnity insurer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BSI / IET publish each amendment with a transition window during which BOTH the outgoing and incoming amendments may be cited. For A4:2026: published 15 April 2026, A3 fully withdrawn 15 October 2026. A cert dated within the window may legitimately cite either edition, provided the design and verification evidence demonstrably meets the cited edition. Outside the window, citing the older edition becomes a documented departure under Reg 120.3 and the burden of justification falls on the designer.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Which of the following best describes the headline NEW regulations introduced by A4:2026?',
     options: [
-      'Reg 411.3.4 (luminaire RCD), Reg 419 group (ADS not feasible), Reg 530.3.201 (bidirectional consideration), Reg 722.312.2.1 (EV PEN ban)',
-      'Reg 411.3.3 only',
-      'Reg 132 — fundamental principles',
-      'Reg 700 — special locations',
+      'Reg 411.3.4 (luminaire RCD), the Reg 419 group (ADS not feasible), Reg 530.3.201 (bidirectional flow), Reg 722.312.2.1 (EV PEN ban)',
+      'Reg 411.3.3 (socket-outlet RCDs) only, with all other regulations unchanged by A4',
+      'Reg 132 (fundamental principles) and Reg 134 (good workmanship), reworded for clarity',
+      'Reg 701 (bathrooms) and Reg 702 (swimming pools), both substantially rewritten',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,25 +154,25 @@ const quizQuestions = [
     question:
       'A4 deletes the CRL surge-protection risk-assessment route. Which clauses / annexes are withdrawn?',
     options: [
-      'Reg 411.3.3, Annex A411, Appendix 6',
+      'Reg 411.3.3 (socket RCDs), Annex A411 and Appendix 6',
+      'Reg 421.1.7 (AFDDs), Section 7 and Annex A4',
+      'Reg 510 (common rules), Annex F and Appendix 6',
       'Reg 443.5 (the CRL clause) and Annex A443 (the CRL worked examples)',
-      'Reg 421.1.7, Section 7, Annex A4',
-      'Reg 510, Annex F, Appendix 6',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A4 strips out the CRL (calculated risk level) route. Reg 443.5 was the BS 7671 clause permitting the CRL calculation and the supporting Annex A443 held its worked examples — both are deleted. SPD selection in A4 follows Reg 443.4 directly: under Reg 443.4.1 protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life, or (c) significant financial or data loss (limb (b) deleted by the A2:2022 May-2023 corrigendum), and for all other cases unless the owner declares it not required and accepts the risk.',
+      'A4 strips out the CRL (calculated risk level) route: Reg 443.5 permitted the CRL calculation and Annex A443 held its worked examples — both are deleted. SPD selection then follows Reg 443.4.1 directly, which requires protection where a transient overvoltage could cause serious injury or loss of human life, failure of a safety service, or significant financial or data loss, and in other cases unless the owner declares it not required and accepts the risk.',
   },
   {
     id: 4,
     question: 'Reg 421.1.7 is amended in A4 — the AFDD requirement. How has the mandate widened?',
     options: [
-      'AFDDs are now optional everywhere',
-      'A4 widens the mandatory AFDD scope (previously only HMOs, sleeping accommodation in care homes / student accommodation / dormitories under Reg 421.1.7 of A2/A3) to a broader set of higher-risk premises while retaining "shall" wording — verify against the in-force text for your specific premises type',
-      'A4 deleted Reg 421.1.7 entirely',
-      'AFDDs are now banned in domestic',
+      'A4 widens the mandatory "shall" AFDD scope beyond HMOs and sleeping accommodation to a broader set of higher-risk premises',
+      'A4 makes AFDDs optional everywhere, downgrading the previous "shall" to a "should" recommendation',
+      'A4 deletes Reg 421.1.7 entirely, removing any AFDD requirement from the standard',
+      'A4 prohibits AFDDs in domestic premises because of nuisance-tripping concerns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4 expands the mandatory ("shall") AFDD scope under Reg 421.1.7. The previous requirement applied to AC final circuits supplying socket-outlets in HMOs, care homes, student accommodation, dormitories and other sleeping accommodation. A4 broadens the trigger conditions (and the cert form gains an AFDD column to reflect it). Always verify the exact text against the in-force edition for the specific premises type — assessors will probe whether candidates are reading the current wording rather than reciting A2.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.1 (parallel sources) is amended in A4 with new sub-clauses (c) and (d). What do they cover?',
     options: [
-      'New colour codes for solar cables',
-      'New requirements for parallel-connected sources (typical scenario: PV array + battery + grid feeding the same busbar): (c) and (d) extend the protection / coordination / labelling requirements to reflect bidirectional flow and synchronisation needs',
-      'Mandatory G99 for all systems',
-      'Removal of all parallel-source requirements',
+      'New cable colour codes for the DC and AC sides of a solar PV installation',
+      'A mandatory requirement for ENA EREC G99 on every parallel-connected system regardless of size',
+      'Extended protection, coordination and labelling for parallel sources to reflect bidirectional flow and synchronisation',
+      'Removal of all parallel-source requirements, leaving the arrangement to the designer\'s discretion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 amends Reg 551.7.1 (parallel-connected generation) with new (c) and (d) sub-clauses addressing the prosumer scenario: PV inverter + battery storage + grid feeding the same point of common coupling. The new clauses cover protection coordination, labelling of multiple sources, and the practical realities of bidirectional flow — they are paired with the new Reg 530.3.201 ("bidirectional consideration") which mandates that switchgear, isolation and protection design account for power flowing both ways, not just from grid to load.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'On an EICR carried out 12 months after the A4 transition closes, an inspector finds a 1980s domestic lighting circuit on a Type B 6 A MCB with no RCD. What observation code applies?',
     options: [
-      'C1 — danger present',
-      'C3 — improvement recommended (for a historic install otherwise sound) OR C2 (potentially dangerous) where the absence of RCD increases real-world risk (damaged accessories, extensive metal-bodied luminaires, bath/shower zone lighting, etc). Inspector judgement; departure from the in-force edition is documented either way',
-      'No code — pre-A4 installs are grandfathered',
-      'FI — further investigation',
+      'C1 (danger present) — any lighting circuit without an RCD is an immediate danger',
+      'No code — pre-A4 installations are grandfathered and reported as satisfactory',
+      'FI (further investigation) — the absence of an RCD always requires investigation before coding',
+      'C3 if the install is otherwise sound, escalating to C2 where the missing RCD increases real-world risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GN3 (Section K) requires every observation to be coded. A pre-A4 install does NOT need to be physically retrofitted to the new edition (existing compliant installations remain compliant) — but on an EICR it is reported as a deviation from the current edition. The right code is C3 for a historic install otherwise sound, escalating to C2 where the absence of RCD demonstrably increases real-world risk. C1 is reserved for "danger present, action required immediately" — usually exposed live, missing CPC where one is required, etc.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'A4 amends Reg 461.2. What does Reg 461.2 prohibit and why does A4 sharpen the language?',
     options: [
-      'Switching of any single-pole device — now banned',
-      'Isolation or switching of the PEN conductor in TN-C and TN-C-S systems — A4 sharpens the language to remove ambiguity around PNB and to align with the new Reg 722.312.2.1 EV-circuit PEN ban',
-      'Use of MCBs above 32 A — banned',
-      'Use of any RCD on EV circuits',
+      'Isolation or switching of the PEN conductor in TN-C and TN-C-S systems, sharpened to cover PNB',
+      'Switching of any single-pole device, which A4 now prohibits across all installation types',
+      'Use of MCBs rated above 32 A, which A4 now bans on final circuits in dwellings',
+      'Use of any RCD on EV charging circuits, now replaced by open-PEN detection only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 461.2 has long forbidden switching or isolating the PEN in TN-C / TN-C-S. A4 sharpens the wording to make explicit that PNB (single-point earthed TN-C-S) is included, and to dovetail with Reg 722.312.2.1 (EV-circuit PEN ban). The underlying reason is the open-PEN failure mode: with load on the system and the PEN broken, every Class I exposed metal part bonded to the MET sits at near-line voltage and a touch creates a fault path — invisible to a basic insulation-resistance test.',
   },
@@ -223,12 +223,12 @@ const quizQuestions = [
     question:
       'On the A4:2026 EIC schedule of test results, which NEW or AMENDED columns should you expect to find compared with the A2:2022 form?',
     options: [
-      'No changes — the form is identical',
-      'TN-C-S split into TN-C-S (PME) and TN-C-S (PNB); explicit AFDD column; clarified Maximum Permitted Zs column; reference method per circuit; SPD type per consumer unit / DB',
-      'Only the title block changed',
-      'A new column for cable colour',
+      'No changes at all — the A4 schedule of test results is identical to the A2:2022 form',
+      'Only the title block changed; the test-result columns themselves are unchanged from A2',
+      'TN-C-S split into PME and PNB, an AFDD column, clarified max Zs and reference method',
+      'A single new column recording the cable colour code used on each final circuit run',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 updates the model forms in Appendix 6. Headline schedule changes: (1) system earthing now offers TN-C-S (PME) and TN-C-S (PNB) as distinct options, (2) the schedule of test results gains an AFDD column to record presence and type, (3) Maximum Permitted Zs is clarified per device type, (4) Reference Method (per Appendix 4) is recorded per circuit, and (5) SPD type recorded per consumer unit / distribution board. Designers using older form templates after the transition window should regenerate from the in-force Appendix 6.',
   },

@@ -25,24 +25,24 @@ const inlineChecks = [
     id: 'bs7671-statutory',
     question: 'Is BS 7671 itself a statutory legal requirement in the UK?',
     options: [
-      'Yes — non-compliance is a criminal offence in its own right',
-      'No — it is a non-statutory standard used to demonstrate compliance with statutory duties (EAWR 1989, HSWA 1974, Building Regulations Part P)',
-      'Only in dwellings, where Part P makes it law',
-      'Only when working under a Competent Person Scheme',
+      'Yes — non-compliance is a criminal offence in its own right under the Wiring Regulations',
+      'No — it is a non-statutory standard used to demonstrate compliance with statutory duties',
+      'Only in dwellings, where Building Regulations Part P makes it directly enforceable',
+      'Only when self-certifying under a registered Competent Person Scheme',
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 is non-statutory — you cannot be prosecuted for "breaking BS 7671" the way you can be prosecuted for breaking EAWR. Its weight comes from being the accepted reasonable standard: courts, HSE and insurers treat compliance as evidence that you discharged your statutory duty under EAWR Reg 4 and HSWA s.2/3. Departures are permissible but the burden of justification shifts to you.',
+      'BS 7671 is non-statutory — you cannot be prosecuted for "breaking BS 7671" the way you can be prosecuted for breaking EAWR. It demonstrates compliance with the statutory duties under EAWR 1989, HSWA 1974 and Building Regulations Part P. Its weight comes from being the accepted reasonable standard: courts, HSE and insurers treat compliance as evidence that you discharged your statutory duty under EAWR Reg 4 and HSWA s.2/3. Departures are permissible but the burden of justification shifts to you.',
   },
   {
     id: 'eawr-relationship',
     question:
       'Where does the legal weight of a BS 7671 inspection actually sit when it ends up in court?',
     options: [
-      'BS 7671 itself — the regs name the criminal offence',
-      'EAWR 1989 (Reg 4 in particular) — BS 7671 compliance is the evidence that the statutory duty was met',
-      'The Wiring Regulations Act 2018',
-      'The IET Code of Practice',
+      'BS 7671 itself — the regs name the criminal offence and the penalty',
+      'EAWR 1989 (Reg 4 in particular) — BS 7671 compliance is the evidence the duty was met',
+      'The Wiring Regulations Act 2018 — the primary legislation behind the standard',
+      'The IET Code of Practice — the binding interpretation used by the courts',
     ],
     correctAnswer: 1,
     explanation:
@@ -67,24 +67,24 @@ const inlineChecks = [
     question:
       'You are designing a commercial fit-out and the architect insists on a non-compliant cable route to preserve a feature ceiling. Reg 120.3 permits departure from BS 7671. What does "permitted" actually mean here in practice?',
     options: [
-      'Permitted means you can ignore BS 7671 if the client signs a waiver',
-      'Permitted means the departure is lawful only if the resulting installation is at least as safe — and that justification is documented on the certification (the cert is the audit trail, not the waiver)',
-      'Permitted means the architect carries the legal exposure once they have signed the drawings',
-      'Permitted means you must obtain HSE pre-approval before deviating',
+      'It means you can ignore BS 7671 once the client signs a deviation waiver',
+      'It means the departure is lawful only if the result is at least as safe, documented on the cert',
+      'It means the architect carries the legal exposure once they sign off the drawings',
+      'It means you must obtain HSE written pre-approval before deviating on site',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 120.3 is permissive, not absolving. The departure is lawful only where the alternative measure is at least as safe as the BS 7671 route. EAWR Reg 4 (absolute duty) is the hook the courts use — and the burden of proving equivalence sits with the designer / installer. The cert (EIC) is the audit trail: the departure, the alternative, the equivalent-safety reasoning and the sign-off all land there. A client waiver does not transfer the EAWR duty.',
+      'Reg 120.3 is permissive, not absolving. The departure is lawful only where the alternative measure is at least as safe as the BS 7671 route, and that justification is documented on the certification — the cert is the audit trail, not the waiver. EAWR Reg 4 (absolute duty) is the hook the courts use, and the burden of proving equivalence sits with the designer / installer. The departure, the alternative, the equivalent-safety reasoning and the sign-off all land on the EIC. A client waiver does not transfer the EAWR duty.',
   },
   {
     id: 'm1s1-120-4-non-electrical',
     question:
       'Where in BS 7671 does the standard explicitly say it does NOT cover non-electrical hazards (e.g. trip hazards from cable routes, mechanical injury from plant)?',
     options: [
-      'Reg 110.1.1 — the scope statement',
-      'Reg 110.2 — exclusions',
-      'Reg 120.4 — only the safety of persons, livestock and property against the hazards of electric current is the object of the regulations',
-      'Reg 133.1.3 — selection of equipment',
+      'Reg 110.1.1 — the scope and voltage envelope statement',
+      'Reg 110.2 — the list of installations excluded from scope',
+      'Reg 120.4 — the object is safety against the hazards of electric current only',
+      'Reg 133.1.3 — the selection and erection of equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Which of the following installations is EXCLUDED from the scope of BS 7671 by Reg 110.1.3 / 110.2?',
     options: [
-      'Domestic dwellings (single-family)',
-      'Low-voltage commercial installations',
-      'Equipment on board ships, offshore installations and the electrical apparatus of the railway rolling stock and signalling',
-      'Photovoltaic generation systems',
+      'Single-family domestic dwellings and their final circuits',
+      'Low-voltage commercial and light-industrial installations',
+      'Equipment on ships, offshore rigs and railway rolling stock and signalling',
+      'Grid-connected photovoltaic generation systems on dwellings',
     ],
     correctIndex: 2,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A client asks you to deviate from BS 7671 to save cost. You agree to the deviation. Where does your legal exposure now sit?',
     options: [
-      'With the client — you advised them and they signed it off',
-      'Nowhere — BS 7671 is non-statutory so there is no exposure',
-      'With you — the burden of justifying the departure under EAWR Reg 4 (and proving the alternative is at least as safe) falls on the designer/installer',
-      'With the manufacturer of the substituted equipment',
+      'With you — the burden of justifying the departure under EAWR Reg 4 falls on the designer/installer',
+      'With the client — you advised them and they signed off the deviation in writing',
+      'Nowhere — BS 7671 is non-statutory so no legal exposure can arise from a departure',
+      'With the manufacturer of any substituted or alternative equipment fitted',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Reg 120.3 permits departures, but the cost of the choice is yours to defend. EAWR Reg 4 imposes an absolute duty (no "so far as reasonably practicable" qualification) so a cost-driven deviation that contributes to a fault is hard to defend. Document the alternative measures that achieve at least equivalent safety, get them signed off by a designer with PI cover, and record the departure on the certification.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'You are asked to certify work that already exists and was installed before BS 7671:2018+A4:2026 came into force. Which standard do you certify against?',
     options: [
-      'A4:2026 — only the latest edition is legally valid',
-      'The edition in force when the installation was designed; safety still assessed under EAWR',
-      'A1:2020 — the last electronic-only edition',
-      'No certification possible for retrospective work',
+      'A4:2026 — only the latest published edition is ever legally valid',
+      'A1:2020 — the last electronic-only edition before the full reprint',
+      'No certification is possible at all for retrospective existing work',
+      'The edition in force when it was designed, with safety still assessed under EAWR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 is forward-looking. Existing installations conforming to an earlier edition do not have to be brought up to A4:2026 to remain in lawful use, provided they remain safe to use under EAWR. Periodic inspection is assessed against the edition current at install (with codes applied for current safety), not against A4. EICR observations should make the basis of assessment explicit.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
       'Under A4:2026, what must now be recorded on the certification when the designer relies on Reg 133.1.3 for equipment selection?',
     options: [
       'Nothing — 133.1.3 is informative',
-      'The equipment-usage decisions specified by Part 6 — the cert is now the audit trail',
       "A separate manufacturer's declaration",
+      'The equipment-usage decisions specified by Part 6 — the cert is now the audit trail',
       'Only the BS EN reference of the equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 amended 133.1.3 so that "certain usage of equipment" is now to be recorded on the appropriate electrical certification specified in Part 6. The cert becomes the durable record of the design-side selection logic, available to a periodic inspector in five years\' time who would otherwise have no idea why a specific device was chosen.',
   },
@@ -167,8 +167,8 @@ const quizQuestions = [
     id: 4,
     question:
       'Which clause in BS 7671 explicitly states that compliance with the standard is voluntary, except where required by other regulations or contractual arrangements?',
-    options: ['Reg 110.1.1', 'Reg 120.1', 'Reg 120.3', 'Reg 133.1.3'],
-    correctAnswer: 2,
+    options: ['Reg 120.3', 'Reg 110.1.1', 'Reg 120.1', 'Reg 133.1.3'],
+    correctAnswer: 0,
     explanation:
       'Reg 120.3 is the explicit voluntariness clause. The standard names itself voluntary, then ties its enforcement to other regulations (EAWR, HSWA, Part P) and to contract. This is the textbook answer when a client asks "does the law actually require BS 7671?" — the law does not name BS 7671; the law names a duty, and BS 7671 is the accepted way to discharge it.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       "The Object of the regulations (Reg 120.4) limits BS 7671's scope to which class of hazard?",
     options: [
-      'All workplace hazards including ergonomic and chemical',
-      'Fire hazards in commercial premises only',
-      'The safety of persons, livestock and property against hazards arising from the use of electricity (electric shock, fire of electrical origin, burns, mechanical movement caused by electrical energy)',
-      'Cyber-security of building management systems',
+      'All workplace hazards, including ergonomic, chemical and slip/trip risks',
+      'Safety against hazards arising from the use of electricity — shock, fire, burns, mechanical movement',
+      'Fire hazards in commercial and high-occupancy premises only',
+      'Cyber-security and data integrity of building management systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Reg 120.4 fixes the standard to electrical hazards: shock, fire of electrical origin, burns and mechanically driven injury arising from electrical energy. Trip, fall, ergonomic, chemical, mechanical-non-electrical and asbestos hazards sit outside BS 7671 and are picked up by HSWA / CDM / Workplace Regs / RRO Fire Safety Order. This boundary matters in dispute — a claim outside Reg 120.4 cannot be argued on BS 7671 grounds alone.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'A subcontractor installs a feature lighting circuit but cannot deliver the Reg 411.3.4 30 mA RCD because the existing CU has no spare RCBO ways. They issue an EIC noting "departure from 411.3.4". Under Reg 120.3, is this defensible?',
     options: [
-      'Yes — Reg 120.3 permits any departure provided it is noted on the cert',
-      'Yes — provided the departure is also signed by the client',
-      'No on its face — Reg 120.3 requires the departure to result in a degree of safety NOT LESS THAN that obtained by compliance. A missing RCD on a luminaire circuit cannot deliver equivalent shock protection without an alternative protective measure recorded',
-      'No — Reg 120.3 was withdrawn in A4:2026',
+      'Yes — Reg 120.3 permits any departure provided it is simply noted on the certificate',
+      'Yes — provided the departure is also countersigned by the client accepting the risk',
+      'No — Reg 120.3 was withdrawn and replaced by a stricter clause in A4:2026',
+      'No — Reg 120.3 requires a degree of safety not less than compliance, and a bare missing RCD provides none',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reg 120.3 is permissive only where equivalent safety is delivered. A bare "departure from 411.3.4" with no alternative is not a Reg 120.3 departure — it is non-compliance dressed up. Defensible alternatives (e.g. a portable RCD adaptor on every plug-in maintenance task; a redesign with a new RCBO way; a CU upgrade) must be recorded with the equivalent-safety reasoning. EAWR Reg 4 does not bend to commercial constraint.',
   },
@@ -218,10 +218,10 @@ const quizQuestions = [
     question:
       'What is the practical difference between citing "BS 7671" (undated) and "BS 7671:2018+A4:2026" (dated) on a contract?',
     options: [
-      'No difference — both refer to the current edition',
-      'The undated form floats with editions: the contract obligation may move when a new amendment is published. The dated form pins the obligation to a specific text — which is what audit, dispute resolution and PI cover all expect',
-      'The undated form is illegal under the Consumer Rights Act 2015',
-      'The dated form is for export; the undated form is for UK use',
+      'No difference — both always refer to whichever edition is current at the time',
+      'The undated form floats with new amendments; the dated form pins the obligation to a fixed text',
+      'The undated form is illegal under the Consumer Rights Act 2015 for trade work',
+      'The dated form is required for export; the undated form is the UK domestic standard',
     ],
     correctAnswer: 1,
     explanation:

@@ -14,98 +14,123 @@ export const SmartHomeModule4Section5Quiz = () => {
     {
       question: 'What is HVAC integration?',
       options: [
-        'Installing multiple AC units',
-        'Connecting heating, cooling, and ventilation into coordinated control',
-        'Using only heating systems',
-        'Removing ventilation systems',
+        'Connecting heating, cooling and ventilation under coordinated control',
+        'Installing several independent air-conditioning units',
+        'Operating only the heating system in a property',
+        'Removing the ventilation system entirely',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'HVAC integration brings heating, cooling and ventilation together under coordinated control so the systems work as one rather than independently.',
     },
     {
       question: 'What is an interlock in HVAC systems?',
       options: [
-        'A type of thermostat',
-        'A feature that prevents conflicting systems from operating together',
-        'A ventilation fan',
-        'A heating element',
+        'A type of room thermostat',
+        'A control feature that stops conflicting systems running together',
+        'A ventilation extract fan',
+        'A heating element inside a unit',
       ],
       correct: 1,
+      explanation:
+        'An interlock is a control feature that prevents conflicting systems, such as heating and cooling, from operating at the same time.',
     },
     {
       question: 'Give one example of a software interlock.',
       options: [
-        'A physical wire connection',
-        'Programmed rule preventing heating and cooling simultaneously',
-        'A manual switch',
-        'A temperature sensor',
+        'A physical wire link between two units',
+        'A manual changeover switch',
+        'A programmed rule preventing heating and cooling at once',
+        'A standalone temperature sensor',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'A software interlock is a programmed rule in the controller, for example one that blocks cooling from running while heating is active.',
     },
     {
-      question: 'Why is it bad if heating and cooling run at the same time?',
+      question: 'Why is it a problem if heating and cooling run at the same time?',
       options: [
-        'It makes noise',
-        'It causes massive energy waste and system conflicts',
-        'It looks unprofessional',
-        'It requires more maintenance',
+        'It produces unwanted noise',
+        'It simply looks unprofessional',
+        'It increases routine maintenance',
+        'It wastes large amounts of energy and the systems fight each other',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Running heating and cooling together wastes large amounts of energy as each system works against the other to no overall benefit.',
     },
     {
       question: 'How can CO₂ sensors support HVAC integration?',
       options: [
-        'By measuring temperature',
+        'By measuring the room temperature',
         'By triggering ventilation when air quality drops',
-        'By controlling lighting',
+        'By controlling the room lighting',
         'By monitoring humidity only',
       ],
       correct: 1,
+      explanation:
+        'CO₂ sensors let the system increase ventilation when air quality falls, improving comfort and health without running fans needlessly.',
     },
     {
-      question: 'Name one example of linking blinds to HVAC systems.',
+      question: 'Give one example of linking blinds to an HVAC system.',
       options: [
-        'Blinds control room lighting only',
-        'Blinds close automatically to reduce cooling demand',
-        'Blinds open for decoration',
-        'Blinds have no HVAC connection',
+        'Blinds are used only to control room lighting',
+        'Blinds close automatically to reduce solar heat gain and cooling demand',
+        'Blinds open purely for decorative effect',
+        'Blinds have no useful HVAC connection',
       ],
       correct: 1,
+      explanation:
+        'Blinds can close automatically on sunny days to cut solar heat gain, reducing the cooling load the HVAC system must meet.',
     },
     {
-      question: 'What is the role of controllers in integration?',
+      question: 'What is the role of controllers in HVAC integration?',
       options: [
-        'They only display temperature',
-        'They make decisions based on sensor data and apply interlock logic',
-        'They replace all sensors',
-        'They only work with heating',
+        'They only display the current temperature',
+        'They replace the need for any sensors',
+        'They make decisions from sensor data and apply interlock logic',
+        'They work only with the heating system',
+      ],
+      correct: 2,
+      explanation:
+        'Controllers take in sensor data, make decisions and apply interlock logic, acting as the brain that coordinates the HVAC system.',
+    },
+    {
+      question: 'Which statement about HVAC interlocks is correct?',
+      options: [
+        'They are only ever found in commercial BMS systems',
+        'They are used in both domestic and commercial systems',
+        'They are prohibited in domestic installations',
+        'They only apply to ventilation, never heating',
       ],
       correct: 1,
-    },
-    {
-      question: 'True or False: Interlocks only exist in commercial BMS systems.',
-      options: ['True', 'False'],
-      correct: 1,
+      explanation:
+        'Interlocks are used in domestic systems as well as commercial BMS, wherever conflicting plant must be prevented from running together.',
     },
     {
       question: 'What should always be tested during HVAC commissioning?',
       options: [
-        'Only the heating system',
-        'All interlocks to ensure proper function',
-        'Only the cooling system',
-        'Only the ventilation',
+        'Only the heating system on its own',
+        'Only the cooling system on its own',
+        'All interlocks, to confirm they function correctly',
+        'Only the ventilation on its own',
       ],
-      correct: 1,
+      correct: 2,
+      explanation:
+        'Commissioning must verify every interlock works correctly, otherwise conflicting systems could still run together once in use.',
     },
     {
       question:
-        'A client complains that their AC and heating are running together. What solution should the installer implement?',
+        'A client complains that their air-conditioning and heating run together. What should the installer do?',
       options: [
-        'Remove the AC system',
-        'Install an interlock to prevent simultaneous operation',
+        'Remove the air-conditioning system',
         'Remove the heating system',
-        'Ignore the problem',
+        'Leave the systems as they are',
+        'Add an interlock to prevent simultaneous operation',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'The correct fix is to add an interlock so heating and cooling cannot run at the same time, rather than removing either system.',
     },
   ];
 

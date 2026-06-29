@@ -196,10 +196,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 9,
     question: "What does the 'V' stand for in the AVPU scale?",
     options: [
-      'The time of tourniquet application',
+      'Vital signs (pulse and breathing rate)',
       'Voice (responds to verbal stimulus)',
-      '30 compressions to 2 breaths',
-      'A sprained ankle requiring 5 days off work',
+      'Vomiting (airway at risk)',
+      'Vision (pupil reaction to light)',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -213,10 +213,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'A person is choking and is coughing forcefully. What should you do?',
     options: [
-      'A crushing or tight band-like pain in the centre of the chest',
-      'A fracture of the arm sustained at work',
+      'Give 5 sharp back blows between the shoulder blades immediately',
+      'Begin abdominal thrusts straight away to clear the obstruction',
       'Encourage them to keep coughing and monitor closely',
-      'Check for danger and then check for a response',
+      'Lay them down and start chest compressions',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -299,9 +299,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 15,
     question: 'Where should AED pads be placed on an adult casualty?',
     options: [
-      'Status epilepticus — call 999 immediately as this is a life-threatening emergency',
-      'Leave the object in place and build dressings around it',
-      'Raise their legs, ensure fresh air, and monitor them',
+      'Both pads side by side in the centre of the chest over the breastbone',
+      'One pad on each shoulder, just below the collarbones',
+      'One pad over the navel and one over the upper back',
       'One pad below the right collarbone, one on the left side below the armpit',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -354,10 +354,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'During a fire evacuation drill, a colleague faints. After they recover they say they felt dizzy and hot before collapsing. What most likely caused this?',
     options: [
-      'It should never be removed or loosened by the first aider',
-      'Pale, cold, clammy skin with a rapid pulse',
+      'A transient ischaemic attack triggered by the exertion of evacuating',
+      'A sudden drop in blood sugar from missing breakfast',
       'Vasovagal syncope triggered by heat and stress',
-      'Into the outer mid-thigh through clothing if necessary',
+      'The early stages of a heart attack brought on by stress',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -442,9 +442,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When performing abdominal thrusts on a conscious choking adult, where should you position your fist?',
     options: [
-      'Continuously — reassess at least every minute',
-      'Put your fingers or an object into their mouth',
-      'To prevent cross-contamination between the casualty and the first aider',
+      'Directly over the bottom tip of the breastbone (sternum)',
+      'On the centre of the chest, between the nipples',
+      'On the lower back, level with the bottom of the ribs',
       'Between the navel and the bottom of the breastbone (sternum)',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -461,9 +461,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'You arrive at a casualty who is unconscious and breathing normally. After placing them in the recovery position, how often should you check their breathing?',
     options: [
       'Continuously — reassess at least every minute',
-      'Check for danger and then check for a response',
-      'Automated External Defibrillator',
-      'Only the epidermis (outer layer of skin)',
+      'Every 10 minutes is sufficient once they are stable',
+      'Only when the ambulance crew arrives to take over',
+      'Every 30 minutes, as the position keeps the airway clear',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -495,10 +495,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'Why is it important to allow full chest recoil between compressions during CPR?',
     options: [
-      'Immobilise the joint in the position found and arrange transport to hospital',
-      'Wrap it in damp gauze, place it in a sealed plastic bag, and put the bag on ice',
+      'It prevents the rescuer from tiring as quickly during CPR',
+      'It reduces the risk of fracturing the casualty’s ribs',
       'It allows the heart to refill with blood, maximising blood flow',
-      'Lie them flat, raise their legs, keep them warm, and call 999',
+      'It keeps the compression rate steady at 100–120 per minute',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -549,10 +549,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'During CPR, you attempt to give rescue breaths but the chest does not rise. What should you do?',
     options: [
-      'A temporary disruption to the blood supply to the brain, with symptoms that resolve within 24 hours',
+      'Abandon rescue breaths entirely and continue with compressions only',
       'Recheck the head tilt–chin lift, ensure a good seal, and attempt one more breath before returning to compressions',
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
+      'Perform a blind finger sweep of the mouth to clear any obstruction',
+      'Give three further breaths in quick succession to force air in',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -566,10 +566,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What is the primary purpose of an AED?',
     options: [
-      "It allows the heart to refill with blood, maximising blood flow",
-      "Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious",
+      "To pump blood around the body in place of the rescuer's compressions",
+      "To deliver oxygen directly into the casualty's lungs",
       "To analyse the heart's rhythm and deliver a shock to correct certain abnormal rhythms",
-      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations",
+      "To restart a heart that has stopped completely (asystole)",
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -639,10 +639,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "While applying AED pads, you notice a raised lump under the skin below the casualty's left collarbone, suggesting an implanted pacemaker or ICD. How should you place the pads?",
     options: [
-      'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
+      'Do not use the AED, as the implanted device makes defibrillation dangerous',
+      'Place one pad directly over the device to target the shock effectively',
       'Place the pads in the normal position but ensure the pad is at least 8 cm (approximately 3 inches) from the device',
-      'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
+      'Use only half the normal shock energy to avoid damaging the device',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -675,9 +675,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A pregnant woman in her third trimester collapses and is in cardiac arrest. How should CPR be modified?',
     options: [
       'Perform standard CPR but manually displace the uterus to the left to relieve pressure on the inferior vena cava',
-      'The employer must review and update the first aid needs assessment to reflect the new hazard',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
-      'Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye',
+      'Place her flat on her back and perform compressions at the normal depth without any modification',
+      'Avoid using an AED, as defibrillation is unsafe during pregnancy',
+      'Compress higher up the breastbone to avoid the abdomen and unborn baby',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -692,10 +692,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider gives abdominal thrusts to a choking casualty and the obstruction is cleared. Should the casualty still be assessed at hospital?',
     options: [
-      'A possible compression of the brain, which is a life-threatening emergency',
+      'No — once the object is cleared and they are breathing normally, no further action is needed',
       'Yes — abdominal thrusts can cause internal injuries and the casualty should be assessed by a clinician',
-      'The employer must review and update the first aid needs assessment to reflect the new hazard',
-      'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
+      'No — they only need to rest at home for the remainder of the day',
+      'Yes — but only if they continue to cough after the obstruction has cleared',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -710,10 +710,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An AED is available but only has adult pads, and the casualty is a child aged 6 years. What should you do?',
     options: [
-      'At least 20 minutes continuously, ensuring water flows away from the unaffected eye',
-      'A temporary disruption to the blood supply to the brain, with symptoms that resolve within 24 hours',
+      'Do not use the AED, as adult pads must never be used on a child',
+      'Cut the adult pads down to a smaller size so they fit the chest',
       'Use the adult pads; place one on the chest and one on the back if the pads are too large to fit without overlapping',
-      'Call 999 (put phone on speaker) → begin CPR → send someone for the AED when possible',
+      'Wait for paediatric pads to arrive before attempting defibrillation',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -728,9 +728,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'During a resuscitation attempt, the AED delivers a shock but the casualty remains unresponsive with no signs of life. What is the immediate next step?',
     options: [
-      'Yes — it is an over-7-day incapacitation injury',
-      'Into the outer mid-thigh through clothing if necessary',
-      'Continuously — reassess at least every minute',
+      'Check for a pulse and rhythm before doing anything further',
+      'Wait for the AED to deliver a second shock before touching the casualty',
+      'Place the casualty in the recovery position and monitor their breathing',
       'Resume CPR immediately for 2 minutes before the AED re-analyses',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -825,9 +825,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'When applying direct pressure to a wound, which of the following is correct practice?',
     options: [
       'Apply pressure and maintain it for at least 10 minutes without lifting the dressing',
-      'Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence',
-      'The proximity of the workplace to emergency medical services',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
+      'Lift the dressing every minute to check whether the bleeding has stopped',
+      'Remove a blood-soaked dressing and replace it with a clean one',
+      'Apply pressure for 30 seconds, then release to let the wound clot',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -859,10 +859,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Why should a first aider wear disposable gloves when treating a bleeding wound?',
     options: [
-      'Between the navel and the bottom of the breastbone (sternum)',
-      'Apply direct pressure with a large pad and maintain it firmly',
+      'To keep the wound completely sterile and prevent any infection',
+      'To allow firmer pressure to be applied directly over the wound',
       'To prevent cross-contamination between the casualty and the first aider',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
+      'To stop the blood from clotting too quickly on the dressing',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -915,10 +915,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'When should a tourniquet be considered for bleeding control?',
     options: [
-      'Begin CPR immediately and call 999 — electric shock can cause cardiac arrest',
+      'As the first measure for any wound that is bleeding heavily',
       'Only when direct pressure has failed to control catastrophic limb bleeding',
-      'They should be removed and stored securely to protect personal data',
-      'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
+      'Whenever a casualty shows the early signs of hypovolaemic shock',
+      'For any deep wound to the neck, torso, or groin',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -932,10 +932,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Where should a tourniquet be placed on a limb with catastrophic bleeding?',
     options: [
-      'To maintain an open airway and allow fluids to drain',
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
+      'Directly over the wound to compress it as tightly as possible',
+      'Below the wound, on the side furthest from the heart',
       '5 to 7 centimetres above the wound, between the wound and the heart',
-      'Apply direct pressure with a large pad and maintain it firmly',
+      'Over the nearest joint, such as the elbow or knee, for the best grip',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -1023,9 +1023,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'A puncture wound is particularly dangerous because:',
     options: [
-      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s name, date, time, nature of injury or illness, treatment given, and the outcome',
-      'To prevent cross-contamination between the casualty and the first aider',
-      'Sitting upright, ideally in a comfortable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'W\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' position with knees bent',
+      'The wound edges are clean and straight, making stitching difficult',
+      'They always bleed profusely and are hard to control with pressure',
+      'They heal too quickly, trapping bacteria beneath the surface',
       'The entry wound may appear small while internal damage can be extensive, and infection risk is high',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1042,9 +1042,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'If a finger has been amputated in a workplace accident, how should the severed part be managed?',
     options: [
       'Wrap it in damp gauze, place it in a sealed plastic bag, and put the bag on ice',
-      'Ventricular fibrillation (VF) and pulseless ventricular tachycardia (pVT)',
-      'The proximity of the workplace to emergency medical services',
-      'Call 999 immediately, as the pain may indicate a heart attack',
+      'Place it directly onto ice to keep the tissue as cold as possible',
+      'Wash it thoroughly in antiseptic and wrap it in a dry bandage',
+      'Keep it warm against the casualty’s body to preserve the tissue',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1059,10 +1059,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When managing a partial amputation where the body part is still attached by a flap of tissue, the first aider should:',
     options: [
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
+      'Cut through the remaining tissue to fully separate the part for storage on ice',
       'Realign the part as best as possible, control bleeding, and support in position with dressings',
-      'Switch off the power supply at the mains or isolate the power source before approaching',
-      'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
+      'Leave the part hanging and apply a tourniquet above it without realigning',
+      'Push the part firmly back into place and bandage tightly over it',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -1114,9 +1114,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A construction worker has a severe laceration to the neck with profuse venous bleeding. A tourniquet is not appropriate. What is the best approach?',
     options: [
       'Apply direct pressure with a large pad and maintain it firmly',
-      'Apply a tourniquet around the neck loosely',
-      'Tilt the head back to stretch the wound closed',
-      'Pack the wound and apply a pressure bandage around the neck',
+      'Apply a tourniquet around the neck just tight enough to slow the flow',
+      'Tilt the head back to stretch the wound edges closed',
+      'Wrap a pressure bandage right around the neck to compress the wound',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1155,10 +1155,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'After cooling a burn, what is the recommended covering to protect the wound?',
     options: [
-      'Heat cramps → heat exhaustion → heat stroke',
-      'Put your fingers or an object into their mouth',
+      'A thick layer of cotton wool held in place with tape',
+      'A self-adhesive plaster pressed firmly over the burn',
       'Cling film applied lengthways over the burn',
-      'Check for danger and then check for a response',
+      'A damp tea towel wrapped tightly around the area',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -1294,10 +1294,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'A casualty has a burn with intact blisters. What should the first aider do?',
     options: [
-      'Carry out a risk assessment and implement appropriate control measures',
-      'Use a jaw-thrust manoeuvre instead of head-tilt chin-lift to open the airway',
+      'Burst the blisters to release the fluid and relieve pressure',
+      'Pierce each blister with a sterile needle and cover with a plaster',
       'Leave the blisters intact as they protect the underlying tissue from infection',
-      'Yes — agonal gasps are not effective breathing and CPR must continue',
+      'Apply antiseptic cream to the blisters to prevent infection',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -1311,9 +1311,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'When treating a chemical burn to the skin, the first aider should:',
     options: [
-      'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
-      'A sprain affects ligaments; a strain affects muscles or tendons',
-      'Recheck the head tilt–chin lift, ensure a good seal, and attempt one more breath before returning to compressions',
+      'Apply a neutralising agent to counteract the acid or alkali',
+      'Cover the burn immediately without flushing to avoid spreading the chemical',
+      'Flush for no more than 2 minutes, then apply a burn dressing',
       'Brush off any dry chemical, then flush with copious running water for at least 20 minutes',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1329,9 +1329,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'Electrical burns are particularly dangerous because:',
     options: [
       'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
-      'Move them to a cool place, lay them down, raise their legs, and give them plenty of water to sip',
-      'Call 999 (put phone on speaker) → begin CPR → send someone for the AED when possible',
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
+      'They are confined to the surface of the skin and rarely cause lasting harm',
+      'They never bleed, making the extent of injury easy to underestimate',
+      'They heal faster than thermal burns because the wound is cauterised',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1382,9 +1382,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty has suffered chemical burns to both eyes from an alkaline cleaning product. The first aider should:',
     options: [
-      'When the casualty has an injury to the hand, fingers, or forearm where elevation is needed to reduce swelling or control bleeding',
-      'The employer, who has a duty to ensure first aid equipment is properly maintained and in working order',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
+      'Apply a sterile eye pad to both eyes and arrange transport to hospital',
+      'Irrigate for 2 minutes, then neutralise the alkali with a mild acid such as vinegar',
+      'Encourage the casualty to keep their eyes tightly shut until help arrives',
       'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes, ensuring runoff does not enter the unaffected eye',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1438,10 +1438,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty is showing signs of severe anaphylaxis with breathing difficulty and swelling of the face and throat. They carry a prescribed adrenaline auto-injector. Where should it be administered?',
     options: [
-      'Yes — agonal gasps are not effective breathing and CPR must continue',
-      'They should be removed and stored securely to protect personal data',
+      'Into a vein in the forearm for the fastest possible effect',
+      'Into the upper outer buttock, avoiding the sciatic nerve',
       'Into the outer mid-thigh through clothing if necessary',
-      'Stand clear and not touch the casualty',
+      'Into the upper arm muscle after exposing bare skin',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -1456,9 +1456,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "If a casualty's anaphylaxis symptoms have not improved after the first adrenaline auto-injector dose, what should the first aider do?",
     options: [
-      'Move the casualty into fresh air, ensuring it is safe for you to approach',
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
+      'Give a sugary drink to help raise the casualty’s blood pressure',
+      'Lay the casualty flat and wait at least 30 minutes before acting further',
+      'Assume the first dose has failed and begin CPR immediately',
       'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1516,10 +1516,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague complains of severe chest pain that spreads to their left arm and jaw. They are sweating profusely and feel nauseous. What is the most likely cause?',
     options: [
-      'Stand clear and not touch the casualty',
-      'Section 4: First Aid Measures',
+      'A panic attack brought on by stress at work',
+      'Severe indigestion after a heavy meal',
       'A heart attack (myocardial infarction)',
-      'White cross on a green background',
+      'A pulled muscle in the chest wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -1570,10 +1570,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'In what position should you place a conscious casualty who is suspected of having a heart attack?',
     options: [
-      "To analyse the heart's rhythm and deliver a shock to correct certain abnormal rhythms",
+      "Lying completely flat on their back with their legs raised",
       "Sitting upright, ideally in a comfortable 'W' position with knees bent",
-      "Into the outer mid-thigh through clothing if necessary",
-      "The casualty's skin is hot and dry, and their body temperature is above 40°C",
+      "On their side in the recovery position",
+      "Standing up and walking slowly to keep the circulation moving",
     ],
     correctAnswer: 1,
     explanation:
@@ -1605,9 +1605,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: 'How does angina pain typically differ from a heart attack?',
     options: [
-      'Yes — abdominal thrusts can cause internal injuries and the casualty should be assessed by a clinician',
-      'The employer must review and update the first aid needs assessment to reflect the new hazard',
-      'Move the casualty into fresh air, ensuring it is safe for you to approach',
+      'Angina pain always radiates to the jaw, whereas heart attack pain never does',
+      'Angina only affects people under 40, whereas heart attacks affect older adults',
+      'Angina pain is sharp and worsens on breathing in; heart attack pain does not',
       'Angina pain is usually relieved by rest or GTN spray within a few minutes; heart attack pain is not',
     ],
     correctAnswer: 3,
@@ -1676,9 +1676,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What is a transient ischaemic attack (TIA)?',
     options: [
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
-      'The employer, who has a duty to ensure first aid equipment is properly maintained and in working order',
+      'A permanent loss of brain function caused by a bleed in the brain',
+      'A type of heart attack that briefly reduces blood flow to the brain',
+      'A seizure caused by a sudden drop in blood pressure',
       'A temporary disruption to the blood supply to the brain, with symptoms that resolve within 24 hours',
     ],
     correctAnswer: 3,
@@ -1695,9 +1695,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A colleague suddenly develops slurred speech and weakness on one side of their body. Symptoms completely resolve after 20 minutes. What is the correct course of action?',
     options: [
       'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
-      'To prevent cross-contamination between the casualty and the first aider',
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
-      'Use a jaw-thrust manoeuvre instead of head-tilt chin-lift to open the airway',
+      'Reassure them that, as the symptoms have gone, no action is needed',
+      'Advise them to book a routine GP appointment within the next week',
+      'Give them aspirin to chew and send them home to rest',
     ],
     correctAnswer: 0,
     explanation:
@@ -1749,9 +1749,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker has a tonic-clonic seizure that has lasted for 6 minutes and shows no signs of stopping. What is this condition called and what should you do?',
     options: [
-      'Leave the blisters intact as they protect the underlying tissue from infection',
-      'An entry wound where current entered and an exit wound where it left the body',
-      'Between the navel and the bottom of the breastbone (sternum)',
+      'Postictal state — let them sleep it off without calling for help',
+      'Febrile convulsion — cool the casualty and wait for it to pass',
+      'Absence seizure — reassure them and monitor without intervention',
       'Status epilepticus — call 999 immediately as this is a life-threatening emergency',
     ],
     correctAnswer: 3,
@@ -1785,10 +1785,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'In which of the following scenarios should you call 999 for a person having a seizure?',
     options: [
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
+      'Only if the casualty does not regain full consciousness within 30 seconds',
       'If it is their first seizure, the seizure lasts more than 5 minutes, they have a second seizure without regaining consciousness, or they are injured',
-      'Alcohol causes blood vessels to dilate, increasing heat loss from the skin and potentially lowering core temperature further',
-      'Implied consent applies — a first aider may treat an unconscious minor in their best interests under the principle of necessity',
+      'Only if the casualty has no known history of epilepsy whatsoever',
+      'Whenever a seizure occurs, regardless of duration or the person’s history',
     ],
     correctAnswer: 1,
     explanation:
@@ -1804,8 +1804,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A known diabetic colleague becomes shaky, confused, pale, and sweaty. What is the most likely cause?',
     options: [
-      'Face, Arms, Speech, Time',
-      'Both A and B are correct',
+      'Hyperglycaemia (high blood sugar)',
+      'A panic attack brought on by stress',
       'Hypoglycaemia (low blood sugar)',
       'A heart attack (myocardial infarction)',
     ],
@@ -1822,9 +1822,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct first aid treatment for a conscious casualty experiencing hypoglycaemia?',
     options: [
-      'Heat stroke — call 999 immediately and begin rapid cooling by any means available',
-      'Stay at least 25 metres away, call 999, and wait for the distribution network operator (DNO) to isolate the supply',
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
+      'Help them inject their insulin to bring their blood sugar under control',
+      'Encourage them to rest and avoid food until the symptoms pass',
+      'Give them a large glass of water and lay them flat with legs raised',
       'Give them a sugary drink such as non-diet cola or fruit juice, followed by a longer-acting carbohydrate snack',
     ],
     correctAnswer: 3,
@@ -1841,9 +1841,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A diabetic casualty is found unconscious. You suspect hypoglycaemia. What should you do?',
     options: [
       'Place them in the recovery position, call 999, and do NOT give anything by mouth',
-      'An open fracture involves a wound where bone may be visible or has pierced the skin',
-      'Promoting rapid clot formation through agents such as kaolin or chitosan',
-      'Move the casualty to a dry area, dry their chest, then apply the pads and use the AED',
+      'Pour a sugary drink into the side of their mouth to raise blood sugar',
+      'Rub glucose gel onto their gums and sit them upright',
+      'Inject their adrenaline auto-injector to stabilise their condition',
     ],
     correctAnswer: 0,
     explanation:
@@ -1858,10 +1858,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following signs is more indicative of hyperglycaemia than hypoglycaemia?',
     options: [
-      'Sitting upright, ideally in a comfortable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'W\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' position with knees bent',
+      'Sudden onset of trembling, sweating, and pallor within minutes',
       'Gradual onset of excessive thirst, frequent urination, and a fruity smell on the breath',
-      'Apply pressure and maintain it for at least 10 minutes without lifting the dressing',
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
+      'Rapid confusion and aggression that resolves quickly with sugar',
+      'Cold, clammy skin accompanied by a fast, weak pulse',
     ],
     correctAnswer: 1,
     explanation:
@@ -1876,10 +1876,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'You are unsure whether a conscious diabetic casualty is experiencing hypoglycaemia or hyperglycaemia. What is the safest initial action?',
     options: [
-      'Follow whichever provides the greater level of protection — in this case, irrigate for at least 20 minutes as per your training',
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
+      'Give nothing and wait to see whether the symptoms improve on their own',
+      'Help them inject insulin, as high blood sugar is the more dangerous state',
       'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
-      'Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999',
+      'Give a large glass of plain water to dilute the blood sugar either way',
     ],
     correctAnswer: 2,
     explanation:
@@ -1895,9 +1895,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the first thing you should do before approaching a casualty who has received an electric shock from a mains appliance?',
     options: [
-      'Carry out a risk assessment and implement appropriate control measures',
-      'The entry wound may appear small while internal damage can be extensive, and infection risk is high',
-      'Do not attempt to remove the object; pad around it, cover both eyes, and arrange urgent hospital transfer',
+      'Pull the casualty away from the appliance by their clothing',
+      'Begin CPR straight away, as time is critical after an electric shock',
+      'Check the casualty for entry and exit burns before doing anything else',
       'Switch off the power supply at the mains or isolate the power source before approaching',
     ],
     correctAnswer: 3,
@@ -1914,9 +1914,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'At a construction site, a worker has come into contact with a high-voltage overhead power line (>1,000V). What is the correct first aid response?',
     options: [
       'Stay at least 25 metres away, call 999, and wait for the distribution network operator (DNO) to isolate the supply',
-      'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
-      'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'Perform standard CPR but manually displace the uterus to the left to relieve pressure on the inferior vena cava',
+      'Use a dry wooden broom handle to push the casualty clear of the line',
+      'Switch off the supply at the nearest mains isolator before approaching',
+      'Approach quickly and drag the casualty clear by their dry clothing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1949,10 +1949,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Electrical burns often have a characteristic pattern. Which of the following best describes this?',
     options: [
-      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s name, date, time, nature of injury or illness, treatment given, and the outcome',
-      'Begin CPR immediately and call 999 — electric shock can cause cardiac arrest',
+      'A single large, irregular burn over the area of skin contact',
+      'Widespread superficial reddening with no deep tissue involvement',
       'Entry and exit wounds — a burn where the current entered the body and another where it left',
-      'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
+      'Blistering confined to the palms of both hands only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1967,9 +1967,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must a first aider never use water to separate a casualty from a live electrical source?',
     options: [
-      'Circumferential wrapping can act as a tourniquet if the burn swells',
-      'Early recognition and call for help → Early CPR → Early defibrillation → Post-resuscitation care',
-      'The proximity of the workplace to emergency medical services',
+      'Water cools the casualty too quickly and may trigger hypothermia',
+      'Splashing water can wash away the entry and exit burn wounds',
+      'Water makes the casualty harder to grip and pull clear of the source',
       'Water is an excellent conductor of electricity and could electrocute the rescuer',
     ],
     correctAnswer: 3,
@@ -1987,9 +1987,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Which of the following is a key sign that distinguishes heat stroke from heat exhaustion?',
     options: [
       "The casualty's skin is hot and dry, and their body temperature is above 40°C",
-      "Speak calmly and clearly, using simple language and maintaining eye contact",
-      "Apply direct pressure with a large pad and maintain it firmly",
-      "An open fracture involves a wound where bone may be visible or has pierced the skin",
+      "The casualty is sweating heavily with cool, pale, clammy skin",
+      "The casualty complains of muscle cramps in the legs and abdomen",
+      "The casualty feels dizzy and faint but quickly recovers when lying down",
     ],
     correctAnswer: 0,
     explanation:
@@ -2003,10 +2003,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'How should you treat a casualty suffering from heat exhaustion?',
     options: [
-      'Apply a tourniquet to each leg 5–7 cm above the highest wound on each limb',
+      'Wrap them in warm blankets and give them a hot, sweet drink',
       'Move them to a cool place, lay them down, raise their legs, and give them plenty of water to sip',
-      'Water is an excellent conductor of electricity and could electrocute the rescuer',
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
+      'Immerse them in an ice bath as quickly as possible to cool them',
+      'Encourage them to keep working gently to maintain their circulation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2074,10 +2074,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'Which of the following is the correct method for rewarming a hypothermic casualty?',
     options: [
-      'Ventricular fibrillation (VF) and pulseless ventricular tachycardia (pVT)',
+      'Place them in a hot bath to raise their core temperature quickly',
       'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
-      'Lower them to the ground, call 999, and begin CPR starting with compressions',
-      'Early recognition and call for help → Early CPR → Early defibrillation → Post-resuscitation care',
+      'Rub their arms and legs vigorously to restore circulation',
+      'Apply hot water bottles directly against their bare skin',
     ],
     correctAnswer: 1,
     explanation:
@@ -2091,10 +2091,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 114,
     question: 'Why should you NOT give alcohol to a hypothermic casualty?',
     options: [
-      'Do not attempt to remove the object; pad around it, cover both eyes, and arrange urgent hospital transfer',
-      'The employer, who has a duty to ensure first aid equipment is properly maintained and in working order',
+      'Alcohol causes blood vessels to constrict, trapping cold blood in the limbs',
+      'Alcohol increases shivering, which dangerously raises oxygen demand',
       'Alcohol causes blood vessels to dilate, increasing heat loss from the skin and potentially lowering core temperature further',
-      'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
+      'Alcohol thickens the blood, making the heart work harder to pump it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2109,14 +2109,14 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must direct heat sources such as hot water bottles or heaters NOT be placed directly against the skin of a hypothermic casualty?',
     options: [
-      'The casualty cannot feel pain and may suffer burns without realising',
-      'Direct heat causes the peripheral blood vessels to dilate rapidly, sending cold blood back to the heart and potentially causing cardiac arrest',
-      'Direct heat is actually recommended for severe hypothermia',
-      'Both A and B are correct',
+      'The casualty may have reduced sensation and suffer burns, and rapid peripheral rewarming can send cold blood to the heart, causing afterdrop',
+      'Direct heat causes the skin to sweat, increasing evaporative heat loss',
+      'Direct heat raises the core temperature too slowly to be of any benefit',
+      'Direct heat triggers uncontrollable shivering that exhausts the casualty',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      "Both reasons are correct. A hypothermic casualty may have reduced sensation and cannot feel burns from direct heat. Additionally, rapid peripheral rewarming causes vasodilation, which floods the core with cold blood from the extremities. This sudden drop in core temperature — called 'afterdrop' — can trigger fatal cardiac arrhythmias.",
+      "There are two reasons. A hypothermic casualty may have reduced sensation and cannot feel burns from direct heat. Additionally, rapid peripheral rewarming causes vasodilation, which floods the core with cold blood from the extremities. This sudden drop in core temperature — called 'afterdrop' — can trigger fatal cardiac arrhythmias.",
     section: 'Module 4',
     difficulty: 'advanced' as const,
     topic: 'Hypothermia Treatment',
@@ -2128,9 +2128,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A construction worker is found outdoors in freezing conditions. They are conscious but drowsy, shivering uncontrollably, and their speech is slurred. What is your priority action?',
     options: [
       'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
-      'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
-      'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
+      'Give them a hot bath to raise their core temperature as quickly as possible',
+      'Rub their arms and legs briskly to stimulate blood flow to the extremities',
+      'Give them a strong alcoholic drink to help them feel warmer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2145,10 +2145,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: 'What are the early signs of frostbite?',
     options: [
-      'Any person — AEDs are designed to be used by anyone, including untrained bystanders',
+      'Hot, red, swollen skin with a burning sensation in the affected area',
       'Pins and needles, numbness, and hard, pale or white skin in the affected area',
-      'Yes — agonal gasps are not effective breathing and CPR must continue',
-      'The proximity of the workplace to emergency medical services',
+      'Heavy sweating and itching across the fingers and toes',
+      'Deep bruising and bleeding under the nails of the affected digits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2162,10 +2162,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: 'Which of the following is the correct first aid for frostbite?',
     options: [
-      'Perform standard CPR but manually displace the uterus to the left to relieve pressure on the inferior vena cava',
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
+      'Rub the affected area briskly with snow to rewarm it gradually',
+      'Hold the affected area close to a radiator or heater until sensation returns',
       'Gently warm the affected area by placing it in warm (not hot) water at around 37–39°C, and do not rub or apply direct heat',
-      'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
+      'Burst any blisters that form and apply antiseptic cream to the area',
     ],
     correctAnswer: 2,
     explanation:
@@ -2180,9 +2180,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague working in a cold storage facility has frostbitten fingers. You have rewarmed their hand in warm water, but they now need to walk through the freezing area to reach the first aid room. What is the risk?',
     options: [
-      'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
-      'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes, ensuring runoff does not enter the unaffected eye',
-      'Provide only the requesting employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own records; another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data is protected and cannot be disclosed without their consent',
+      'Walking will improve circulation to the hand and speed up recovery',
+      'The rewarmed tissue is now fully healed and at no further risk',
+      'Cold air will help to numb the pain in the rewarmed fingers',
       'Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs',
     ],
     correctAnswer: 3,
@@ -2199,9 +2199,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A severely hypothermic casualty is found unresponsive and you cannot detect any breathing or pulse. According to first aid guidance, what should you consider before deciding they are dead?',
     options: [
       'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999, as severe hypothermia can mimic death',
-      'Yes — abdominal thrusts can cause internal injuries and the casualty should be assessed by a clinician',
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
-      'Provide only the requesting employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own records; another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data is protected and cannot be disclosed without their consent',
+      'The absence of breathing and pulse confirms death, so resuscitation should not be attempted',
+      'You should rewarm the casualty fully before deciding whether to start CPR',
+      'A casualty this cold cannot be revived, so the priority is to record the time of death',
     ],
     correctAnswer: 0,
     explanation:
@@ -2273,9 +2273,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'When should an elevated sling be used instead of a standard arm sling?',
     options: [
       'When the casualty has an injury to the hand, fingers, or forearm where elevation is needed to reduce swelling or control bleeding',
-      'A temporary disruption to the blood supply to the brain, with symptoms that resolve within 24 hours',
-      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
-      'Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs',
+      'When the casualty has a suspected fracture of the upper arm or elbow',
+      'When the casualty has injured their shoulder and cannot bend their elbow',
+      'When the casualty has a suspected spinal injury and must be kept still',
     ],
     correctAnswer: 0,
     explanation:
@@ -2374,10 +2374,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague has inhaled fumes from a chemical spill in a poorly ventilated area. What is the first priority?',
     options: [
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
-      'An entry wound where current entered and an exit wound where it left the body',
+      'Enter the area immediately and carry the casualty out as fast as possible',
+      'Give the casualty water to drink to dilute the inhaled chemical',
       'Move the casualty into fresh air, ensuring it is safe for you to approach',
-      'Yes — any single FAST sign is enough to suspect a stroke and call 999',
+      'Lay the casualty down where they are and begin rescue breaths',
     ],
     correctAnswer: 2,
     explanation:
@@ -2409,9 +2409,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'What is a concussion?',
     options: [
       'A temporary disturbance in brain function caused by a blow or jolt to the head',
-      'Apply a tourniquet to each leg 5–7 cm above the highest wound on each limb',
-      'Move the casualty to a dry area, dry their chest, then apply the pads and use the AED',
-      'Occasional, irregular gasps that should not be mistaken for normal breathing',
+      'A fracture of the skull that always causes bleeding from the ears',
+      'A permanent loss of brain function following a severe head injury',
+      'A bruise to the scalp that heals without any effect on the brain',
     ],
     correctAnswer: 0,
     explanation:
@@ -2481,9 +2481,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A worker has symptoms of carbon monoxide poisoning including headache, dizziness, and nausea. What should the first aider do first?',
     options: [
       'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
-      'Yes — abdominal thrusts can cause internal injuries and the casualty should be assessed by a clinician',
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
-      'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
+      'Open the nearest window and keep the casualty where they are',
+      'Give the casualty a sugary drink to counteract the dizziness',
+      'Lay the casualty down and raise their legs to treat for shock',
     ],
     correctAnswer: 0,
     explanation:
@@ -2500,10 +2500,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker falls from a ladder and is lying on the ground complaining of severe pain in their lower leg. You can see an obvious bend in the shin and the skin is intact. How should you manage this injury?',
     options: [
-      'Realign the part as best as possible, control bleeding, and support in position with dressings',
+      'Gently straighten the leg to realign the bone before splinting it',
       'Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999',
-      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
-      'Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs',
+      'Help the casualty stand and walk to test whether the leg is broken',
+      'Elevate the leg above heart level and apply a firm pressure bandage',
     ],
     correctAnswer: 1,
     explanation:
@@ -2518,10 +2518,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'You are treating a casualty with a suspected broken collarbone. Which sling is most appropriate?',
     options: [
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
-      'One pad below the right collarbone, one on the left side below the armpit',
+      'An elevated sling holding the hand high against the opposite shoulder',
+      'A tightly bound bandage strapping the arm flat against the chest',
       'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
-      'Angina pain is usually relieved by rest or GTN spray within a few minutes; heart attack pain is not',
+      'No sling — the arm should hang freely to keep the collarbone aligned',
     ],
     correctAnswer: 2,
     explanation:
@@ -2589,10 +2589,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A chemical has been splashed into a colleague's eyes. How long should you irrigate the affected eye(s)?",
     options: [
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
-      'Move them to a cool place, lay them down, raise their legs, and give them plenty of water to sip',
+      'For about 2 minutes, then cover the eye with a sterile pad',
+      'Only until the casualty says the pain has stopped',
       'At least 20 minutes continuously, ensuring water flows away from the unaffected eye',
-      'To analyse the heart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
+      'For 5 minutes, then apply a neutralising agent to the eye',
     ],
     correctAnswer: 2,
     explanation:
@@ -2606,9 +2606,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "An object is embedded in a casualty's eye. What is the correct first aid treatment?",
     options: [
-      'A first aid record is kept internally; a RIDDOR report is submitted to the HSE for qualifying incidents',
-      'Alcohol causes blood vessels to dilate, increasing heat loss from the skin and potentially lowering core temperature further',
-      'Gently warm the affected area by placing it in warm (not hot) water at around 37–39°C, and do not rub or apply direct heat',
+      'Gently pull the object out and irrigate the eye with clean water',
+      'Ask the casualty to blink rapidly to dislodge the object naturally',
+      'Cover only the injured eye and tell the casualty to keep it closed',
       'Do not attempt to remove the object; pad around it, cover both eyes, and arrange urgent hospital transfer',
     ],
     correctAnswer: 3,
@@ -2642,10 +2642,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty has swallowed a corrosive cleaning product. They are conscious and complaining of burning in their mouth and throat. What should you do?',
     options: [
-      'Remove them from the scene, listen without judgement, and ensure they are referred for appropriate support',
+      'Make the casualty drink plenty of water to dilute the product',
       'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
-      'Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye',
+      'Encourage the casualty to make themselves sick to bring the product back up',
+      'Give the casualty milk to neutralise the chemical and ease the burning',
     ],
     correctAnswer: 1,
     explanation:
@@ -2660,10 +2660,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When applying a splint to a suspected fracture of the lower leg, which joints should the splint immobilise?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
-      'Apply direct pressure with a large pad and maintain it firmly',
+      'The ankle only, as it is closest to the lower leg fracture',
+      'The hip and the knee, to control the whole limb from above',
       'The knee and the ankle (the joints above and below the fracture)',
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
+      'No joints — only the fracture site itself should be supported',
     ],
     correctAnswer: 2,
     explanation:
@@ -2678,9 +2678,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker reports feeling anxious, shaky, and unable to concentrate after witnessing a serious accident on site. What should you do?',
     options: [
-      'Water is an excellent conductor of electricity and could electrocute the rescuer',
-      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s skin is hot and dry, and their body temperature is above 40°C',
-      'Early recognition and call for help → Early CPR → Early defibrillation → Post-resuscitation care',
+      'Tell them to pull themselves together and get back to work',
+      'Send them home immediately without any follow-up or support',
+      'Ignore the reaction, as it will pass on its own within the hour',
       'Remove them from the scene, listen without judgement, and ensure they are referred for appropriate support',
     ],
     correctAnswer: 3,
@@ -2696,9 +2696,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'Why should both eyes be covered when an object is embedded in one eye?',
     options: [
       'Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye',
-      'Widespread urticarial rash, swollen tongue, wheezing, and rapidly falling blood pressure',
-      'Provide only the requesting employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own records; another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data is protected and cannot be disclosed without their consent',
-      'Perform standard CPR but manually displace the uterus to the left to relieve pressure on the inferior vena cava',
+      'Because covering both eyes blocks out light, which reduces pain in the injury',
+      'Because the uninjured eye will become infected if left uncovered',
+      'Because covering both eyes prevents the casualty from seeing the injury and panicking',
     ],
     correctAnswer: 0,
     explanation:
@@ -2713,10 +2713,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following symptoms is most characteristic of carbon monoxide poisoning?',
     options: [
-      'A sprain affects ligaments; a strain affects muscles or tendons',
+      'A bluish tinge to the lips and fingertips with rapid, shallow breathing',
       'Cherry-red colouration of the skin, along with headache and confusion',
-      'Give up to 5 back blows between the shoulder blades',
-      'Yes — agonal gasps are not effective breathing and CPR must continue',
+      'Profuse sweating with cold, clammy, pale skin',
+      'A widespread itchy rash spreading from the chest outwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -2731,10 +2731,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider notices a casualty with a suspected arm fracture also has numbness and tingling in their fingers. What does this indicate?',
     options: [
-      'Use the adult pads; place one on the chest and one on the back if the pads are too large to fit without overlapping',
-      'Leave the blisters intact as they protect the underlying tissue from infection',
+      'The tingling is a normal part of healing and can be safely ignored',
+      'The casualty is anxious and the numbness is purely psychological',
       'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
+      'The numbness confirms the bone is only bruised rather than broken',
     ],
     correctAnswer: 2,
     explanation:
@@ -2787,10 +2787,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty has an open fracture of the forearm with a bone end protruding through the skin. The wound is bleeding moderately. How should you manage this injury?',
     options: [
-      'Raised intracranial pressure from a developing intracranial haemorrhage — call 999 immediately, maintain the airway, and monitor for deterioration',
+      'Push the protruding bone back beneath the skin and bandage tightly over it',
       'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
-      'If it is their first seizure, the seizure lasts more than 5 minutes, they have a second seizure without regaining consciousness, or they are injured',
+      'Apply firm direct pressure over the protruding bone to stop the bleeding',
+      'Pull the forearm straight to realign the bone before dressing the wound',
     ],
     correctAnswer: 1,
     explanation:
@@ -2805,10 +2805,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty fell from height and is unresponsive. You suspect a spinal injury but their airway is obstructed by vomit. What is the correct sequence of actions?',
     options: [
-      'They should be offered professional psychological support such as trauma counselling, have their first aid duties temporarily reassigned if needed, and be assured that their reaction is a normal response to abnormal events',
-      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
+      'Leave the casualty supine and untouched to protect the spine, and wait for the ambulance',
+      'Sit the casualty fully upright to let the vomit drain out of the mouth',
       'Perform a jaw thrust without head tilt to open the airway; if the airway cannot be cleared, log roll the casualty into the recovery position with manual inline stabilisation, protecting the cervical spine',
-      'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
+      'Perform a standard head-tilt chin-lift and begin chest compressions immediately',
     ],
     correctAnswer: 2,
     explanation:
@@ -2823,9 +2823,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A colleague working in a confined space is found unresponsive. Other workers report a 'rotten eggs' smell. A carbon monoxide detector has not alarmed. What should you suspect and how should you respond?",
     options: [
-      'Perform a jaw thrust without head tilt to open the airway; if the airway cannot be cleared, log roll the casualty into the recovery position with manual inline stabilisation, protecting the cervical spine',
-      'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999, as severe hypothermia can mimic death',
-      'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
+      'Suspect carbon monoxide despite the silent detector; enter and ventilate the space',
+      'Hold your breath, enter quickly, and drag the casualty out before the gas affects you',
+      'Assume the smell is harmless drains; enter and check the casualty for injuries',
       'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
     ],
     correctAnswer: 3,
@@ -2842,9 +2842,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'During a site incident, a first aider is managing a casualty with a head injury who suddenly develops unequal pupils (one dilated, one normal), increasing drowsiness, and weakness on one side of the body. What is the most likely cause and correct action?',
     options: [
       'Raised intracranial pressure from a developing intracranial haemorrhage — call 999 immediately, maintain the airway, and monitor for deterioration',
-      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
-      'Alcohol causes blood vessels to dilate, increasing heat loss from the skin and potentially lowering core temperature further',
-      'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999, as severe hypothermia can mimic death',
+      'A simple concussion that will resolve with rest — let the casualty sleep it off',
+      'A panic attack triggered by the head injury — reassure them and monitor their breathing',
+      'A stroke unrelated to the injury — give aspirin and sit them upright',
     ],
     correctAnswer: 0,
     explanation:
@@ -2859,10 +2859,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker sustains a high-energy impact to their pelvis after being struck by a reversing vehicle. They are conscious but in severe pain and appear pale and clammy. Why is this injury particularly dangerous, and what is the priority?',
     options: [
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
+      'The pelvis is mostly bone, so a fracture there is rarely serious — help the casualty stand and walk it off',
       'The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained',
-      'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
-      'Refreezing of thawed tissue causes significantly more damage than the original frostbite, so the hand should be insulated and protected from refreezing at all costs',
+      'The danger is purely the pain; give pain relief and roll the casualty onto their side',
+      'The risk is a damaged spine; log roll the casualty and sit them upright to check sensation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2877,10 +2877,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A Safety Data Sheet (SDS) for a workplace chemical states in Section 4: 'In case of eye contact, irrigate immediately with water for at least 15 minutes. In case of ingestion, do NOT induce vomiting. Seek immediate medical advice.' However, your first aid training says to irrigate eyes for 20 minutes. Which guidance should you follow?",
     options: [
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
-      'Angina pain is usually relieved by rest or GTN spray within a few minutes; heart attack pain is not',
+      'Always follow the Safety Data Sheet exactly, as it is the legally binding instruction',
+      'Stop irrigating as soon as the casualty reports the pain has eased',
       'Follow whichever provides the greater level of protection — in this case, irrigate for at least 20 minutes as per your training',
-      'Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence',
+      'Split the difference and irrigate for around 17 minutes, then cover the eye',
     ],
     correctAnswer: 2,
     explanation:
@@ -2895,9 +2895,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider has dealt with three serious incidents in one month, including a fatality. They are struggling to sleep, experiencing intrusive thoughts, and avoiding areas of the workplace where the incidents occurred. What should happen?',
     options: [
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'Perform a jaw thrust without head tilt to open the airway; if the airway cannot be cleared, log roll the casualty into the recovery position with manual inline stabilisation, protecting the cervical spine',
-      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
+      'They should be told these feelings are weakness and to carry on as normal',
+      'They should be permanently removed from the workplace without support',
+      'They should be ignored, as the symptoms will resolve by themselves in time',
       'They should be offered professional psychological support such as trauma counselling, have their first aid duties temporarily reassigned if needed, and be assured that their reaction is a normal response to abnormal events',
     ],
     correctAnswer: 3,
@@ -2914,9 +2914,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'During a multi-casualty incident on a construction site, a first aider is managing a casualty with a suspected spinal injury when a second casualty nearby begins having a seizure. The first aider is the only trained responder. What should they do?',
     options: [
       'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives',
-      'The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained',
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
+      'Immediately leave the spinal casualty to restrain the seizing casualty and stop their movements',
+      'Roll the spinal casualty into the recovery position so both hands are free for the seizing casualty',
+      'Wait until the seizure stops on its own before doing anything for either casualty',
     ],
     correctAnswer: 0,
     explanation:
@@ -3287,10 +3287,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What additional item is recommended for inclusion in a first aid kit on a high-risk construction site, beyond standard BS 8599-1:2019 contents?',
     options: [
-      'Check for danger and then check for a response',
+      'A bottle of paracetamol and a tube of antiseptic cream',
       'Burn gel sachets and trauma dressings',
-      'Danger, Response, Airway, Breathing, Circulation',
-      'A slow ooze of blood from the wound surface',
+      'A glucose drink and a set of glucose tablets',
+      'A supply of prescription-only adrenaline auto-injectors',
     ],
     correctAnswer: 1,
     explanation:
@@ -3357,10 +3357,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the key difference between a first aid record kept by a first aider and a RIDDOR report?',
     options: [
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
+      'A first aid record is sent to the HSE; a RIDDOR report is kept by the employer',
       'A first aid record is kept internally; a RIDDOR report is submitted to the HSE for qualifying incidents',
-      'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
-      'Keep them still, apply manual inline stabilisation to the head and neck, and call 999',
+      'There is no difference; the two documents are interchangeable',
+      'A first aid record is a legal requirement; a RIDDOR report is optional',
     ],
     correctAnswer: 1,
     explanation:
@@ -3393,9 +3393,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When conducting a first aid needs assessment, which of the following workplace characteristics would most likely increase the level of first aid provision required?',
     options: [
-      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
-      'To maintain an open airway and allow fluids to drain',
-      'The proximity of the workplace to emergency medical services',
+      'A small low-risk office with fewer than five employees',
+      'A single-storey shop located next door to an A&E department',
+      'A quiet workplace where staff work only standard daytime hours',
       'A multi-storey factory using hazardous chemicals with shift workers',
     ],
     correctAnswer: 3,
@@ -3412,9 +3412,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Under the Health and Safety (First-Aid) Regulations 1981, what must an employer provide if a first aid needs assessment identifies that a first aid room is necessary?',
     options: [
       'A lockable room with a telephone, running water, a couch, and first aid equipment',
-      'Chewing allows the aspirin to be absorbed into the bloodstream more quickly',
-      'Brush off any dry chemical, then flush with copious running water for at least 20 minutes',
-      'One pad below the right collarbone, one on the left side below the armpit',
+      'A shared store cupboard containing a single first aid kit',
+      'A clearly signed area of the car park with an outdoor seat',
+      'Any spare office, provided it has a chair and a first aid poster',
     ],
     correctAnswer: 0,
     explanation:
@@ -3429,10 +3429,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An AED (Automated External Defibrillator) is provided in a workplace. Who is permitted to use it?',
     options: [
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
+      'Only a qualified doctor or paramedic may operate it',
       'Any person — AEDs are designed to be used by anyone, including untrained bystanders',
-      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s skin is hot and dry, and their body temperature is above 40°C',
-      'An open fracture involves a wound where bone may be visible or has pierced the skin',
+      'Only a current FAW certificate holder is permitted to use it',
+      'Only staff who have completed a separate AED-specific course',
     ],
     correctAnswer: 1,
     explanation:
@@ -3447,10 +3447,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following items would you expect to find in a standard BS 8599-1:2019 workplace first aid kit?',
     options: [
-      'The casualty has agonal breathing, which is not effective breathing — begin CPR immediately and call 999',
-      'Is a mineral clay that activates the intrinsic clotting cascade on contact with blood',
+      'Paracetamol tablets, antiseptic cream, and a bottle of antihistamine',
+      'A blood pressure monitor, a stethoscope, and suturing equipment',
       'Sterile dressings, disposable gloves, a foil blanket, and a resuscitation face shield',
-      'One pad below the right collarbone, one on the left side below the armpit',
+      'Prescription adrenaline auto-injectors and a bottle of aspirin',
     ],
     correctAnswer: 2,
     explanation:
@@ -3484,9 +3484,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'What information should be recorded in a first aid treatment record after attending to a casualty?',
     options: [
       "The casualty's name, date, time, nature of injury or illness, treatment given, and the outcome",
-      "Occasional, irregular gasps that should not be mistaken for normal breathing",
-      "Lower them to the ground, call 999, and begin CPR starting with compressions",
-      "Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence",
+      "Only the casualty's name and the date, to keep the record brief",
+      "The first aider's personal opinion on who was at fault for the incident",
+      "The casualty's full medical history and a list of their medications",
     ],
     correctAnswer: 0,
     explanation:
@@ -3521,10 +3521,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker suffers a serious burn and is taken to hospital, where they are admitted for observation for 26 hours. Under RIDDOR 2013, how should this be classified and when must it be reported?',
     options: [
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
+      'It is not reportable, as a burn is never classed as a specified injury',
+      'It is reportable only as an over-7-day injury, within 15 days of the accident',
       'It is reportable as a specified injury because the worker was admitted to hospital for more than 24 hours; it must be reported without delay',
-      'Follow whichever provides the greater level of protection — in this case, irrigate for at least 20 minutes as per your training',
+      'It is recordable in the accident book only and does not need reporting to the HSE',
     ],
     correctAnswer: 2,
     explanation:
@@ -3558,9 +3558,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A 15-year-old work experience student collapses at a workplace. They are unconscious and a parent is not present. What is the legal position regarding consent for first aid treatment?',
     options: [
       'Implied consent applies — a first aider may treat an unconscious minor in their best interests under the principle of necessity',
-      'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999, as severe hypothermia can mimic death',
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
-      'Only if the casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s airway is compromised or they are in immediate life-threatening danger',
+      'No treatment may be given until a parent or guardian arrives to consent',
+      'Treatment is permitted only if a manager signs a consent form on the parent’s behalf',
+      'The first aider must wait for the ambulance crew, as only they can consent for a minor',
     ],
     correctAnswer: 0,
     explanation:
@@ -3575,10 +3575,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "An employee requests access to another colleague's accident record entry under a Subject Access Request (SAR) citing GDPR. How should the employer respond?",
     options: [
-      "Place the pads in the normal position but ensure the pad is at least 8 cm (approximately 3 inches) from the device",
+      "Provide the colleague's full accident record, as workplace records are public",
       "Provide only the requesting employee's own records; another person's data is protected and cannot be disclosed without their consent",
-      "Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999",
-      "Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye",
+      "Refuse the request entirely, as no accident records can ever be disclosed",
+      "Provide the colleague's record only if the requester gives a written reason",
     ],
     correctAnswer: 1,
     explanation:
@@ -3593,10 +3593,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A workplace has an AED but the device has not been maintained. During a cardiac arrest, the AED fails to function. Who is likely to be held responsible?',
     options: [
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
-      'One pad below the right collarbone, one on the left side below the armpit',
+      'The AED manufacturer, regardless of how the device was looked after',
+      'The first aider who used the device during the cardiac arrest',
       'The employer, who has a duty to ensure first aid equipment is properly maintained and in working order',
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
+      'Nobody — AED failure is always treated as an unavoidable accident',
     ],
     correctAnswer: 2,
     explanation:
@@ -3611,9 +3611,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A scaffold collapses on a construction site but no one is injured. Under RIDDOR 2013, is this reportable?',
     options: [
-      'Occasional, irregular gasps that should not be mistaken for normal breathing',
-      'Immobilise the joint in the position found and arrange transport to hospital',
-      'An entry wound where current entered and an exit wound where it left the body',
+      'No — only incidents that injure someone are reportable under RIDDOR',
+      'No — scaffold collapses are recorded in the accident book but never reported',
+      'Yes — but only if the scaffold was being used at the time of the collapse',
       'Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence',
     ],
     correctAnswer: 3,
@@ -3630,9 +3630,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'During a primary survey, you find a casualty who is unresponsive but making occasional gasping breaths approximately every 15 seconds. What is the correct interpretation and action?',
     options: [
       'The casualty has agonal breathing, which is not effective breathing — begin CPR immediately and call 999',
-      'Provide only the requesting employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own records; another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data is protected and cannot be disclosed without their consent',
-      'Early recognition and call for help → Early CPR → Early defibrillation → Post-resuscitation care',
-      'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes, ensuring runoff does not enter the unaffected eye',
+      'The casualty is breathing normally — place them in the recovery position and monitor',
+      'The gasping shows the heart has restarted — stop and check for a pulse',
+      'The casualty is choking — give back blows and abdominal thrusts',
     ],
     correctAnswer: 0,
     explanation:

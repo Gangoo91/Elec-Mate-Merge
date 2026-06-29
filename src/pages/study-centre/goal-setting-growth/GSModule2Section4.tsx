@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Peter Gollwitzer&rsquo;s research on &ldquo;implementation intentions&rdquo; found that the most effective format for turning goals into action is:',
     options: [
-      'Writing a long, detailed plan covering every possible scenario',
       'Using the &ldquo;if-then&rdquo; format: &ldquo;If situation X arises, I will perform response Y&rdquo;',
+      'Writing a long, detailed plan covering every possible scenario',
       'Telling as many people as possible about your goals without a specific plan',
       'Setting only very large, ambitious goals that inspire maximum motivation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Peter Gollwitzer, a professor of psychology at New York University, developed the concept of implementation intentions in the 1990s. His research demonstrated that goals stated in an abstract form (&ldquo;I want to get fitter&rdquo;) are far less likely to be achieved than goals linked to specific situational cues using an if-then format (&ldquo;If it is 6:30 a.m. on a weekday, then I will put on my running shoes and go for a 20-minute jog&rdquo;). The if-then format works because it creates a mental link between a specific situation (the &ldquo;if&rdquo;) and a specific action (the &ldquo;then&rdquo;), effectively delegating the decision to act from conscious willpower to automatic situational response. A meta-analysis of 94 independent studies found that implementation intentions had a medium-to-large effect on goal attainment (d = 0.65). For electricians, this translates to practical applications: &ldquo;If it is Sunday evening, then I will study BS 7671 for 45 minutes&rdquo; or &ldquo;If I finish a job early on Friday, then I will review one chapter of the inspection and testing textbook.&rdquo;',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'Stephen Covey&rsquo;s &ldquo;personal mission statement&rdquo; concept, as outlined in The 7 Habits of Highly Effective People, primarily serves to:',
     options: [
       'Replace the need for specific goals by providing a general sense of direction',
-      'Define the core values, principles, and long-term vision that guide all subsequent goal-setting decisions',
       'Impress potential employers and clients during job applications',
       'Eliminate the need for short-term planning by focusing only on the distant future',
+      'Define the core values, principles, and long-term vision that guide all subsequent goal-setting decisions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Covey&rsquo;s personal mission statement (from Habit 2: &ldquo;Begin with the End in Mind&rdquo;) is a foundational exercise that defines who you want to be and what you want to achieve at the deepest level. It is not a replacement for specific goals &mdash; it is the compass that ensures your specific goals are pointed in the right direction. Without a personal mission statement (or something equivalent), you risk setting and achieving goals that do not actually make you happier, more fulfilled, or more aligned with your values. A domestic electrician might set a goal to earn &pound;80,000 per year, but if their personal mission statement reveals that family time and work-life balance matter more than income, they might achieve the financial goal at the cost of what truly matters to them. The personal mission statement sits above all other goals as the guiding framework. It answers the question: &ldquo;What does a successful life look like for me?&rdquo; &mdash; not according to society, social media, or colleagues, but according to your own deepest values.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       'The &ldquo;wheel of life&rdquo; assessment is a tool used in personal goal mapping to:',
     options: [
-      'Calculate the exact number of hours available for each goal per week',
       'Rate your current satisfaction (1&ndash;10) across multiple life areas to identify imbalances and prioritise where to focus',
+      'Calculate the exact number of hours available for each goal per week',
       'Rank your goals in order of financial return to maximise income',
       'Determine which career path will make you the happiest based on personality type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The wheel of life is a widely used coaching and personal development tool that asks you to rate your current satisfaction on a scale of 1&ndash;10 across multiple life areas (typically 6&ndash;8 areas such as career, finances, health, relationships, personal development, and recreation). The result is a visual &ldquo;wheel&rdquo; shape that immediately reveals where your life is in balance and where it is not. A perfectly balanced wheel (all areas rated similarly) rolls smoothly; an imbalanced wheel (some areas high, others very low) creates a bumpy ride. The purpose is not to maximise every area simultaneously &mdash; that is unrealistic &mdash; but to identify areas of significant neglect that may be undermining your overall satisfaction and to set goals that address those imbalances. For electricians, common patterns include high scores in career/skills but low scores in health, family time, or financial planning.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
       'When using the 5-step goal mapping process (5-year vision &rarr; 3-year milestones &rarr; 12-month goals &rarr; quarterly objectives &rarr; monthly actions), why is it important to start with the longest time horizon and work backwards?',
     options: [
       'Because longer-term goals are easier to set and require less thought',
-      'Because starting with the end in mind ensures that short-term actions are aligned with your long-term direction, preventing busy activity that leads nowhere',
       'Because 5-year plans are always accurate and do not need revision',
+      'Because starting with the end in mind ensures that short-term actions are aligned with your long-term direction, preventing busy activity that leads nowhere',
       'Because short-term goals are unimportant compared to long-term aspirations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Working backwards from a long-term vision is a principle known as &ldquo;backward planning&rdquo; or &ldquo;reverse engineering&rdquo; your goals, and it is grounded in Covey&rsquo;s Habit 2: Begin with the End in Mind. The reason it works is alignment. Without a clear long-term vision, your short-term actions may be productive but directionless &mdash; you stay busy but don&rsquo;t move towards anything meaningful. By defining where you want to be in 5 years first, then identifying the 3-year milestones needed to get there, then the 12-month goals, then the quarterly objectives, and finally this month&rsquo;s action list, every short-term task connects to the bigger picture. An electrician who sets a 5-year vision of &ldquo;running my own electrical contracting business specialising in commercial fit-outs&rdquo; will make very different monthly decisions (pursuing commercial experience, studying project management, saving capital, building commercial contacts) than one who has no vision and simply takes whatever work comes along. The 5-year plan will not be perfectly accurate &mdash; it will be revised &mdash; but it provides essential direction.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: 'A &ldquo;commitment device&rdquo; in the context of goal achievement is:',
     options: [
-      'A written contract with a solicitor that legally binds you to complete your goal',
-      'A strategy that increases the cost of inaction or the reward for action, such as telling others about your goal, placing a financial bet, or scheduling accountability check-ins',
-      'A specialised app that tracks every minute of your day and assigns productivity scores',
-      'A motivational poster or affirmation that you read every morning',
+      'A legally binding contract drawn up with a solicitor that compels you to complete the goal',
+      'An app that tracks every minute of your day and assigns you a daily productivity score',
+      'A motivational poster or affirmation that you read aloud every morning before work',
+      'A strategy that raises the cost of inaction or the reward for action to lock in follow-through',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A commitment device is any strategy that makes it harder to abandon a goal by raising the stakes of giving up. The concept has roots in behavioural economics (Thaler &amp; Sunstein, Schelling) and has been extensively studied in the context of health behaviour, savings, and education. Common commitment devices include: public accountability (telling friends, family, or colleagues about your goal &mdash; research by Howard Klein et al. found that public goal commitment significantly increases follow-through), financial stakes (platforms like stickK allow you to pledge money that you lose if you fail), scheduled check-ins with an accountability partner, joining a study group, or booking and paying for an exam date in advance. For electricians, effective commitment devices include: telling your employer you plan to sit the 2391 exam by a specific date, booking and paying for a training course (sunk cost creates motivation), committing to a study group, or publicly sharing your business launch timeline. The underlying principle is that humans are more likely to follow through when inaction has visible consequences.',
   },
@@ -145,25 +145,25 @@ const quizQuestions = [
     question:
       'Which of the following is the BEST example of an implementation intention as defined by Peter Gollwitzer?',
     options: [
-      '&ldquo;I will study harder for my 2391 exam this year&rdquo;',
       '&ldquo;If it is Tuesday evening after dinner, then I will study BS 7671 Chapter 41 for 45 minutes at the kitchen table&rdquo;',
+      '&ldquo;I will study harder for my 2391 exam this year&rdquo;',
       '&ldquo;I hope to read more technical books this quarter&rdquo;',
       '&ldquo;My goal is to become a better electrician by the end of the year&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Gollwitzer&rsquo;s implementation intentions follow a strict if-then format that links a specific situational cue (&ldquo;If it is Tuesday evening after dinner&rdquo;) to a specific action (&ldquo;then I will study BS 7671 Chapter 41 for 45 minutes at the kitchen table&rdquo;). Option B is the only choice that contains all four required elements: a specific time (Tuesday evening after dinner), a specific trigger (finishing dinner), a specific action (study BS 7671 Chapter 41), and specific parameters (45 minutes, at the kitchen table). Options A, C, and D are all vague goal intentions &mdash; they express desire but lack the situational specificity that makes implementation intentions so effective. The research shows that implementation intentions work because they shift the control of behaviour from conscious deliberation (&ldquo;Should I study tonight? I&rsquo;m tired, maybe tomorrow...&rdquo;) to automatic situational cueing (&ldquo;It&rsquo;s Tuesday after dinner &mdash; time to study, that&rsquo;s what I do on Tuesdays&rdquo;). This dramatically reduces the reliance on willpower, which is a limited and unreliable resource.',
+      'Gollwitzer&rsquo;s implementation intentions follow a strict if-then format that links a specific situational cue (&ldquo;If it is Tuesday evening after dinner&rdquo;) to a specific action (&ldquo;then I will study BS 7671 Chapter 41 for 45 minutes at the kitchen table&rdquo;). The Tuesday-evening statement is the only choice that contains all four required elements: a specific time (Tuesday evening after dinner), a specific trigger (finishing dinner), a specific action (study BS 7671 Chapter 41), and specific parameters (45 minutes, at the kitchen table). The other three are all vague goal intentions &mdash; they express desire but lack the situational specificity that makes implementation intentions so effective. The research shows that implementation intentions work because they shift the control of behaviour from conscious deliberation (&ldquo;Should I study tonight? I&rsquo;m tired, maybe tomorrow...&rdquo;) to automatic situational cueing (&ldquo;It&rsquo;s Tuesday after dinner &mdash; time to study, that&rsquo;s what I do on Tuesdays&rdquo;). This dramatically reduces the reliance on willpower, which is a limited and unreliable resource.',
   },
   {
     id: 6,
     question: 'Stephen Covey&rsquo;s personal mission statement is most accurately described as:',
     options: [
       'A list of all the goals you want to achieve in the next 12 months',
-      'A concise declaration of your core values, guiding principles, and long-term purpose that serves as the foundation for all other goal setting',
       'A one-sentence summary of your job title and key responsibilities',
       'A detailed business plan outlining revenue targets and growth projections',
+      'A concise declaration of your core values, guiding principles, and long-term purpose that serves as the foundation for all other goal setting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Covey&rsquo;s personal mission statement (Habit 2: Begin with the End in Mind, from The 7 Habits of Highly Effective People, 1989) is a deeply personal declaration of who you want to be and what you want to achieve that goes beyond specific goals. It defines your core values (what matters most to you), your guiding principles (how you want to conduct yourself), and your long-term purpose (what you want your life to be about). It is not a list of goals &mdash; it is the compass that ensures your goals are pointed in the right direction. Covey recommended writing your mission statement as though you were imagining what you would want people to say about you at your funeral &mdash; a deliberately provocative exercise designed to strip away superficial ambitions and reveal what truly matters. For an electrician, a personal mission statement might include elements like: &ldquo;To be a trusted, competent, and continuously improving electrical professional who provides safe, high-quality work and mentors the next generation of tradespeople, while maintaining a healthy balance between work and family life.&rdquo;',
   },
@@ -172,14 +172,14 @@ const quizQuestions = [
     question:
       'When setting goals across multiple life areas, an electrician discovers that their goal to &ldquo;work every Saturday to maximise earnings&rdquo; directly conflicts with their goal to &ldquo;spend more quality time with my children at weekends&rdquo;. The BEST approach to resolving this goal conflict is:',
     options: [
-      'Abandon the financial goal entirely, because family always comes first',
-      'Ignore the conflict and hope that both goals will somehow work out',
-      'Make the conflict explicit, return to core values and mission statement, explore creative compromises (e.g., higher rates instead of more hours), and if necessary make a conscious, values-aligned trade-off',
-      'Work Saturdays and compensate by buying more things for the children',
+      'Abandon the financial goal entirely, on the basis that family must always come first',
+      'Ignore the conflict and hope that both goals will somehow work themselves out over time',
+      'Make the conflict explicit, weigh it against your values, and seek a conscious, deliberate trade-off',
+      'Keep working Saturdays and compensate by buying more things for the children instead',
     ],
     correctAnswer: 2,
     explanation:
-      'Goal conflict is inevitable when you set goals across multiple life areas, and the worst response is to ignore it (Option B) or to make a knee-jerk decision based on guilt (Option A or D). The research-supported approach involves four steps. First, make the conflict visible by explicitly writing down both goals and stating the tension. Second, return to your personal mission statement and core values to determine which goal is more aligned with what truly matters to you. Third, explore creative solutions that partially satisfy both goals &mdash; for example, negotiating higher hourly rates (so you earn more without working more hours), specialising in higher-value work, working two Saturdays per month instead of four, or front-loading hours during the week. Fourth, if a genuine trade-off is necessary, make it consciously and with full awareness of the consequences. A conscious, values-aligned decision (&ldquo;I choose to cap Saturday work at twice a month because family time is more important to me than maximum earnings&rdquo;) is far healthier than an unconscious drift that leads to resentment and burnout.',
+      'Goal conflict is inevitable when you set goals across multiple life areas, and the worst response is to ignore it and hope it resolves itself, or to make a knee-jerk decision based on guilt (abandoning the financial goal outright or trying to buy your way out). The research-supported approach involves four steps. First, make the conflict visible by explicitly writing down both goals and stating the tension. Second, return to your personal mission statement and core values to determine which goal is more aligned with what truly matters to you. Third, explore creative solutions that partially satisfy both goals &mdash; for example, negotiating higher hourly rates (so you earn more without working more hours), specialising in higher-value work, working two Saturdays per month instead of four, or front-loading hours during the week. Fourth, if a genuine trade-off is necessary, make it consciously and with full awareness of the consequences. A conscious, values-aligned decision (&ldquo;I choose to cap Saturday work at twice a month because family time is more important to me than maximum earnings&rdquo;) is far healthier than an unconscious drift that leads to resentment and burnout.',
   },
   {
     id: 8,

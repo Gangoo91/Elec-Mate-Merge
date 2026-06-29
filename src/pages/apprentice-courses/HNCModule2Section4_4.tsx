@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What does the dB(A) weighting represent?',
     options: [
-      'The maximum settable current rating and breaking capacity range',
-      'Tabular format with columns and rows',
-      'Is not discoverable through reasonable inspection at handover',
+      'An adjustment for the speed of sound at higher altitudes',
+      'A correction applied only to peak impulsive measurements',
+      'A flat, unweighted measurement across all frequencies',
       'Frequency weighting matching human ear sensitivity',
     ],
     correctAnswer: 3,
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'What is the relationship between sound power level (Lw) and sound pressure level (Lp)?',
     options: [
-      'Achieve minimum energy efficiency standards',
+      'Lw depends on distance from source; Lp does not',
       'Lp depends on distance from source; Lw does not',
-      'Usually significantly less than 100A due to diversity',
-      'Temperature sensing accuracy and communication protocols',
+      'Both Lw and Lp reduce equally as distance increases',
+      'Lw and Lp are always numerically identical at 1 m',
     ],
     correctAnswer: 1,
     explanation:
@@ -237,9 +237,9 @@ const quizQuestions = [
     question: 'Why are low frequency sounds (bass) harder to control in buildings?',
     options: [
       'They have long wavelengths relative to construction thicknesses',
-      'RCD protection with rated residual current not exceeding 30mA',
-      'Moisture, damaged insulation, or contamination',
-      'Maintains constant head across the system, matching pump speed to demand',
+      'They travel faster than high frequencies and arrive sooner',
+      'They carry far less energy and are below the threshold of hearing',
+      'They are completely absorbed by standard acoustic ceiling tiles',
     ],
     correctAnswer: 0,
     explanation:

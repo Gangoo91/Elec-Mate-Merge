@@ -14,26 +14,26 @@ const quickCheckQuestions = [
     question:
       'An electrician realises they tend to avoid difficult conversations with clients until the problem becomes severe. They want to improve. Which single change would have the biggest impact on this pattern?',
     options: [
-      'Reading more books about conflict resolution theory',
-      'Committing to raising issues within 24 hours of noticing them, using a prepared opening phrase like "I have noticed something I would like to discuss with you"',
-      'Hiring an office manager to handle all client communication',
-      'Avoiding clients who might be difficult',
+      'Committing to raise each issue within 24 hours, using a prepared opening phrase',
+      'Reading more theory books on conflict resolution before changing any habits',
+      'Hiring an office manager to handle all client communication on their behalf',
+      'Filtering out clients who seem likely to become difficult at the enquiry stage',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'The biggest barrier to addressing conflict is usually not a lack of knowledge but a lack of a specific, actionable trigger. Having a prepared opening phrase removes the cognitive burden of figuring out how to start the conversation — which is the moment when most people default to avoidance. "I have noticed something I would like to discuss with you" is neutral, professional, and non-confrontational. Combined with a time commitment (within 24 hours), it creates a concrete behavioural rule that overrides the natural tendency to postpone. This is a classic example of an implementation intention — a specific plan that links a situation ("I notice a problem") to a behaviour ("I use my prepared phrase within 24 hours"). Research shows that implementation intentions are far more effective than general goals like "I will be better at having difficult conversations."',
+      'The biggest barrier to addressing conflict is usually not a lack of knowledge but a lack of a specific, actionable trigger. Having a prepared opening phrase removes the cognitive burden of figuring out how to start the conversation — which is the moment when most people default to avoidance. A neutral, professional opener such as "I have noticed something I would like to discuss with you", combined with a time commitment (within 24 hours), creates a concrete behavioural rule that overrides the natural tendency to postpone. This is a classic example of an implementation intention — a specific plan that links a situation ("I notice a problem") to a behaviour ("I use my prepared phrase within 24 hours"). Research shows implementation intentions are far more effective than general goals like "I will be better at having difficult conversations."',
   },
   {
     id: 'cr-5-4-check2',
     question:
       'An electrician is building their personal conflict prevention checklist. Which of the following should be on it?',
     options: [
-      'Only accept clients who have been personally recommended by existing clients',
-      'Written quote with full scope, T&Cs, variation procedure, confirmation emails for all verbal agreements, and clear payment terms with deposit requirements',
-      'Complete all work before discussing price to avoid awkward conversations',
-      'Never put anything in writing to maintain flexibility',
+      'Only accepting clients who have been personally recommended by existing clients',
+      'Completing all the work before discussing price, to avoid awkward conversations',
+      'Written quotes, T&Cs, a variation procedure, confirmation emails, and clear payment terms',
+      'Keeping everything verbal and putting nothing in writing, to maintain flexibility',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The conflict prevention checklist should contain every piece of documentation and process that prevents the most common disputes. Written quotes with full scope and exclusions prevent scope disagreements. Terms and conditions set the rules of engagement. A variation procedure ensures changes are agreed and documented. Confirmation emails convert risky verbal agreements into evidence. Clear payment terms with deposit requirements prevent the late payment and non-payment disputes that are the most financially damaging conflicts for electricians. Each of these items addresses a specific, common category of conflict. Together, they form a comprehensive prevention system that eliminates the vast majority of disputes before they can begin.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'On the escalation ladder, at what point should an electrician consider formal processes (adjudication, small claims court) rather than continuing to try informal resolution?',
     options: [
-      'Immediately at the first sign of any disagreement — formal processes are always better',
-      'Only after trying direct resolution and mediation, when the other party refuses to engage constructively, and the financial or professional stakes justify the time and cost of formal proceedings',
-      'Never — formal processes always damage relationships and should be avoided at all costs',
-      'Only when the amount in dispute exceeds £25,000',
+      'Immediately at the first sign of any disagreement, before trying anything informal',
+      'Never, because formal processes always damage relationships beyond repair',
+      'Only once the amount in dispute exceeds a fixed threshold of £25,000',
+      'After direct resolution and mediation fail and the stakes justify the cost',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The escalation ladder is designed to resolve conflicts at the lowest possible level, because each step up increases cost, time, stress, and relationship damage. Direct resolution should always be the first attempt — a calm, professional conversation between the parties involved. If that fails, mediation (a neutral third party facilitating discussion) is the next step. Only when both of these have been exhausted, and the other party is unwilling to engage constructively, should formal processes be considered. The decision to escalate should also consider the stakes: pursuing adjudication over a £150 dispute is rarely cost-effective, but it may be necessary for a £5,000 non-payment. The threshold is not purely financial — it also includes professional reputation, legal precedent, and the principle at stake.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'The purpose of a conflict resolution action plan is:',
     options: [
-      'To prepare legal documents for potential court proceedings',
-      'To translate the knowledge and skills from this course into specific, actionable behaviours that you will implement in your daily practice',
-      'To create a business plan for a conflict resolution consultancy',
-      'To document all previous conflicts you have experienced',
+      'To turn the course knowledge into specific, actionable behaviours you will use daily',
+      'To prepare the legal documents needed for potential court proceedings',
+      'To draft a business plan for setting up a conflict resolution consultancy',
+      'To compile a written record of every previous conflict you have experienced',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An action plan bridges the gap between knowing and doing. Many people complete a course, understand the principles, and then return to exactly the same behaviours because they have not translated knowledge into specific, actionable commitments. The action plan asks concrete questions: What is my default conflict style, and when does it not serve me well? Which 2-3 communication frameworks will I practice first? What documentation do I need to create or update? What will I do differently when the next conflict arises? The specificity is critical — "I will be better at conflict resolution" is not an action plan. "I will use the NVC framework when raising payment issues, starting with my next invoice" is an action plan.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'An electrician identifies that their default conflict style is "Avoiding." What is the most useful next step?',
     options: [
-      'Try to change their personality so they no longer avoid conflict',
-      'Recognise that avoidance is sometimes appropriate (genuinely trivial issues, temporary relationships) but develop the skill to choose when to engage, and create a specific plan for when they will address issues directly',
-      'Accept that avoidance is their natural style and stop trying to change it',
-      'Switch to a competing style for all conflicts to compensate',
+      'Try to change their personality entirely so they never avoid any conflict again',
+      'Keep avoidance for trivial issues but plan specific situations where they will engage',
+      'Accept avoidance as their natural style and stop trying to change it at all',
+      'Switch to a competing style for every conflict to compensate for avoiding',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'Which of the following is the correct order on the escalation ladder (from lowest to highest)?',
     options: [
-      'Formal legal proceedings, adjudication, mediation, direct resolution',
-      'Direct resolution, mediation, formal processes (adjudication/small claims), walk away',
-      'Walk away, mediation, direct resolution, adjudication',
-      'Mediation, direct resolution, formal proceedings, negotiation',
+      'Formal legal proceedings, adjudication, mediation, then direct resolution',
+      'Walk away, mediation, direct resolution, then adjudication',
+      'Direct resolution, mediation, formal processes, then walk away',
+      'Mediation, direct resolution, formal proceedings, then negotiation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The escalation ladder runs from lowest (cheapest, fastest, least damaging to relationships) to highest (most expensive, slowest, most damaging). Direct resolution — a calm, professional conversation between the parties — should always be the first attempt. If that fails, mediation introduces a neutral third party to facilitate discussion and is significantly cheaper and faster than formal proceedings. Only if mediation fails or the other party refuses to engage should formal processes (adjudication under the Construction Act, small claims court) be considered. Walking away — deciding that the cost of pursuing the dispute exceeds the potential benefit — is always an option at any stage and is sometimes the most rational choice. The key principle is to resolve at the lowest level possible, escalating only when necessary.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'A "communication toolkit" for conflict resolution should include:',
     options: [
-      'A script for every possible conflict scenario you might encounter',
-      'Selected frameworks you have practised (e.g. NVC, STATE, assertiveness formula) and specific phrases you can use as conversation starters',
-      'A collection of aggressive statements to intimidate the other party',
-      'Nothing — communication should always be spontaneous and unrehearsed',
+      'A word-for-word script for every possible conflict scenario you might ever meet',
+      'A collection of aggressive statements designed to intimidate the other party',
+      'Nothing at all, because communication should always be spontaneous and unrehearsed',
+      'A few practised frameworks (NVC, STATE, assertiveness) plus prepared opening phrases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A communication toolkit is a personal collection of frameworks and phrases that you have selected, practised, and can deploy when needed. You do not need to master every framework covered in this course — picking 2 or 3 that feel natural and practising them until they become second nature is far more effective than trying to use a different approach for every situation. Having prepared opening phrases for common situations ("I have noticed something I would like to discuss with you," "I want to make sure we are on the same page about...") removes the cognitive burden of figuring out how to start difficult conversations, which is when most people default to avoidance. The toolkit should feel authentic to you — frameworks only work when they are delivered genuinely, not recited mechanically.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       "Which of the following is the BEST example of a conflict prevention measure in a domestic electrician's daily practice?",
     options: [
-      'Refusing to take on any client who asks for a discount',
       'Sending a confirmation text after every verbal agreement about additional work, changes, or timelines',
+      'Refusing to take on any client who asks for a discount',
       'Completing all work for free to avoid any possibility of a payment dispute',
       'Never answering the phone so all communication is in writing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The confirmation text is the single most impactful daily prevention measure available to domestic electricians. It converts verbal agreements (which are legally binding but practically unenforceable) into documented evidence. It gives the client an immediate opportunity to correct any misunderstanding. It establishes a professional standard of communication. And it takes less than a minute. The reason it is more effective than any other single measure is that verbal agreements are the source of the most common domestic disputes: "I thought the extras were included," "We never agreed to that price," "You said you would be done by Friday." A simple text message sent immediately after the conversation prevents all of these disputes. It is the highest-impact, lowest-effort change any electrician can make.',
   },
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'An electrician has completed this course and wants to create a personal action plan. Which of the following approaches is most likely to result in lasting behaviour change?',
     options: [
-      'Try to implement everything covered in the course immediately',
-      'Pick 3 specific, concrete changes to implement this week, practise them consistently for a month, then add further changes gradually',
-      'Wait until the next conflict arises and then decide what to do',
-      'Read the course material again without making any changes to current practice',
+      'Try to implement everything covered in the course immediately and all at once',
+      'Pick 3 concrete changes this week, embed them for a month, then add more gradually',
+      'Wait until the next conflict arises and only then decide what to do about it',
+      'Read the course material again but make no changes to current working practice',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,8 +168,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'The ACAS helpline number is:',
-    options: ['0800 555 111', '0300 123 1100', '0845 600 9006', '111'],
-    correctAnswer: 1,
+    options: ['0800 555 111', '0845 600 9006', '0300 123 1100', '111'],
+    correctAnswer: 2,
     explanation:
       'The ACAS helpline number is 0300 123 1100, available Monday to Friday, 8am to 6pm. ACAS (Advisory, Conciliation and Arbitration Service) provides free, impartial advice on workplace relationships and employment law. It is funded by the Department for Business and Trade and is one of the most valuable resources available to anyone experiencing workplace conflict in the UK. Their advisors can explain your legal rights, suggest resolution approaches, and direct you to mediation or conciliation services. For electricians, ACAS is particularly relevant for disputes involving employment relationships (with employers or employees, including apprentices), but they can also signpost to appropriate services for commercial disputes between businesses.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'When should an electrician walk away from a dispute rather than continuing to pursue resolution?',
     options: [
-      'Never — every dispute should be pursued to a final resolution regardless of cost',
+      'Never — every dispute should be pursued to a final resolution regardless of the cost',
       'Always — disputes are never worth the stress and should be abandoned immediately',
-      'When the cost of pursuing the dispute (in time, money, stress, and relationship damage) exceeds the potential benefit of resolution, or when the other party is acting in bad faith and no resolution is possible',
-      'Only when a solicitor advises them to',
+      'Only when a solicitor formally advises them in writing that they should stop',
+      'When the cost of pursuing it exceeds the benefit, or the other party acts in bad faith',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Walking away is a legitimate and sometimes optimal strategy on the escalation ladder. The decision should be based on a rational cost-benefit analysis: What will it cost me in time, money, stress, and opportunity cost to pursue this further? What is the realistic best outcome if I succeed? Is the other party engaging in good faith, or are they stalling, obstructing, or acting dishonestly? For a £200 dispute that would require £500 in legal costs and three days of lost work to pursue, walking away and learning from the experience (updating your T&Cs, for example) may be the most rational choice. For a £5,000 non-payment by a client who is clearly acting in bad faith, pursuing formal resolution is justified. The key is making the decision consciously and strategically rather than defaulting to either pursuit or abandonment.',
   },

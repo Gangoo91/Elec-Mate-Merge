@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'energy-monitoring',
     question: 'What is the primary purpose of energy sub-metering in a building management system?',
     options: [
-      'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
-      'In a semi-seated or W-position (knees raised towards chest) initially, NOT laid flat immediately',
+      'To measure the total incoming supply for the utility billing meter',
+      'To protect circuits from overcurrent in place of a protective device',
       'To allocate energy consumption to specific systems or tenants and identify saving opportunities',
-      'Learning and productivity are not mutually exclusive \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 well-planned learning during normal work benefits both',
+      'To improve the power factor of the building’s electrical installation',
     ],
     correctIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'fdd-purpose',
     question: 'What does Fault Detection and Diagnostics (FDD) software primarily analyse?',
     options: [
-      'They present complex control systems as easy-to-read graphics and summaries',
-      'Reactive current still flows through all cables between loads and central capacitors',
+      'The structural loadings on the building fabric and roof',
+      'The insulation resistance of every final circuit in the installation',
       'BMS trend data and operational patterns to identify system faults and inefficiencies',
-      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
+      'The occupancy comfort surveys completed by building users each year',
     ],
     correctIndex: 2,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'How does continuous commissioning (CCx) differ from initial commissioning?',
     options: [
       'It is an ongoing process to maintain optimal performance throughout building life',
-      'Ib ≤ In ≤ Iz, with Vd, I²R and Zs all separately verified within their respective limits.',
-      'It prevents mistakes, improves coordination, and reduces risks of accidents',
-      'When a live conductor makes contact with earth or exposed conductive parts',
+      'It is a one-off check carried out only at practical completion of the building',
+      'It applies only to the fire alarm and emergency lighting systems',
+      'It is carried out solely by the original design engineer at handover',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'What is the recommended interval for BMS trend logging to support effective energy analysis?',
     options: [
-      'BMS, utility meters, weather data, occupancy systems, and IoT sensors',
-      'Simultaneous heating and cooling operation',
+      'Once per day at midnight, to capture the daily total',
+      'Once per week, to keep stored data volumes low',
       '15-minute intervals aligned with half-hourly utility data',
-      'Energy impact, comfort impact, and equipment risk',
+      'Continuously at one-second intervals for every monitored point',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question:
       'A BMS dashboard shows cooling energy significantly higher than predicted. The most likely FDD rule to trigger would detect:',
     options: [
-      'Scatter plot with regression line',
-      'Energy impact, comfort impact, and equipment risk',
-      'Cumulative Sum (CUSUM) analysis',
+      'A power factor below the target value on the incoming supply',
+      'A blocked grease point on a chilled water pump bearing',
+      'An incorrect IP rating on the chiller control panel',
       'Simultaneous heating and cooling operation',
     ],
     correctAnswer: 3,
@@ -125,9 +125,9 @@ const quizQuestions = [
       'Which analytics technique compares current building performance against a baseline model adjusted for weather?',
     options: [
       'Cumulative Sum (CUSUM) analysis',
-      'kWh/m²/year (energy use intensity)',
-      'Daily or weekly for key metrics',
-      'Scatter plot with regression line',
+      'Single-point spot metering at a fixed outdoor temperature',
+      'A simple year-on-year comparison of total annual kWh',
+      'A peak demand reading taken once per month',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'A building analytics platform integrates data from which sources?',
     options: [
       'BMS, utility meters, weather data, occupancy systems, and IoT sensors',
-      'Designated routes, barriers, crossing points, traffic management',
-      'To ensure optimal connection integrity and prevent overheating',
-      'A conductive part of equipment that can be touched and may become live under fault',
+      'Only the main incoming fiscal meter at the utility supply point',
+      'Only the manufacturer datasheets for the installed plant',
+      'Only the original design-stage energy model predictions',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     question:
       'The UK Display Energy Certificate uses which metric to express building energy performance?',
     options: [
-      'Scatter plot with regression line',
+      'Peak demand in kW recorded over the assessment year',
       'kWh/m²/year (energy use intensity)',
-      'Simultaneous heating and cooling operation',
-      'Cumulative Sum (CUSUM) analysis',
+      'Total annual cost of energy in pounds sterling',
+      'Carbon emissions in tonnes per occupant per year',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     question:
       'Which visualisation technique best shows how energy consumption varies with outdoor temperature?',
     options: [
-      'Daily or weekly for key metrics',
-      'Cumulative Sum (CUSUM) analysis',
+      'A pie chart of energy use split by building system',
+      'A single-line trend of daily total consumption',
       'Scatter plot with regression line',
-      'Simultaneous heating and cooling operation',
+      'A bar chart of monthly energy cost in pounds',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: 'Automated fault detection typically prioritises faults by:',
     options: [
-      'Adequate temporary lighting for safe working',
-      'Motor circuits and equipment with moderate inrush current',
-      'Both reduce touch voltages and provide fault path',
+      'The alphabetical order of the equipment names',
+      'The age of the equipment, oldest first',
+      'The order in which the faults were first detected',
       'Energy impact, comfort impact, and equipment risk',
     ],
     correctAnswer: 3,

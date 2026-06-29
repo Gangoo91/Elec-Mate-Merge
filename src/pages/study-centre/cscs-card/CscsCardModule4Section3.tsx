@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'At the upper exposure action value of 85 dB(A), what is the employer required to do regarding hearing protection?',
     options: [
-      'Make hearing protection available on request',
       'Provide hearing protection and ensure it is worn in designated hearing protection zones',
+      'Make hearing protection available on request',
       'Recommend that employees purchase their own hearing protection',
       'Only provide hearing protection if the worker has already suffered hearing loss',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'At the upper exposure action value of 85 dB(A) daily or weekly average exposure, the Control of Noise at Work Regulations 2005 require the employer to provide suitable hearing protection to every worker who is exposed at or above this level and to ensure that the hearing protection is worn. The employer must also designate hearing protection zones, mark them with appropriate signage, and enforce mandatory wearing of hearing protection within those zones. This is a significant step up from the lower action value of 80 dB(A), where the employer only needs to make hearing protection available upon request. At the upper level, it is no longer optional — the employer has a legal duty to ensure hearing protection is actually worn, not just offered.',
   },
@@ -45,11 +45,11 @@ const quickCheckQuestions = [
     question: 'What does the SNR (Single Number Rating) on hearing protection indicate?',
     options: [
       'The maximum noise level the protector can withstand before breaking',
-      'The average noise reduction in decibels the protector provides across all frequencies',
       'The number of hours the protector can be worn before replacement',
+      'The average noise reduction in decibels the protector provides across all frequencies',
       'The comfort rating assigned by the manufacturer',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The SNR (Single Number Rating) is a single-figure measure of the noise attenuation (reduction) provided by a hearing protector, expressed in decibels (dB). It represents the average noise reduction across all frequencies when the protector is worn correctly. For example, a hearing protector with an SNR of 30 dB would reduce exposure by approximately 30 dB when fitted properly. However, in practice, the actual protection achieved is typically less than the SNR because of imperfect fitting, wear and tear, and other real-world factors. The HSE recommends using the 'SNR minus 4 dB' method for a realistic estimate: subtract the SNR from the ambient noise level and add 4 dB to account for real-world performance. For instance, in a 95 dB(A) environment with SNR 30 protectors, the estimated exposure at the ear would be 95 - 30 + 4 = 69 dB(A).",
   },
@@ -120,18 +120,18 @@ const quizQuestions = [
     options: [
       'White or blanched fingers in cold conditions',
       'Numbness and tingling in the fingers',
-      'Persistent headaches and dizziness',
       'Reduced grip strength and difficulty handling small objects',
+      'Persistent headaches and dizziness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Persistent headaches and dizziness are not typical symptoms of HAVS. The classic symptoms of HAVS affect the hands, fingers, and arms and include: vascular symptoms (blanching or whitening of the fingers, known as vibration white finger, triggered by cold or damp conditions), neurological symptoms (numbness, tingling, pain, and loss of sensation in the fingers), and musculoskeletal symptoms (reduced grip strength, difficulty manipulating small objects, joint pain and stiffness in the hands and wrists). Headaches and dizziness may be associated with other occupational health conditions but are not characteristic of HAVS.',
   },
   {
     id: 4,
     question: 'What is the daily exposure action value for hand-arm vibration?',
-    options: ['1.0 m/s² A(8)', '2.5 m/s² A(8)', '5.0 m/s² A(8)', '7.5 m/s² A(8)'],
-    correctAnswer: 1,
+    options: ['2.5 m/s² A(8)', '1.0 m/s² A(8)', '5.0 m/s² A(8)', '7.5 m/s² A(8)'],
+    correctAnswer: 0,
     explanation:
       "The daily exposure action value (EAV) for hand-arm vibration is 2.5 m/s² A(8). When a worker's daily vibration exposure reaches or exceeds this value, the employer must introduce a programme of organisational and technical measures to reduce exposure, provide information and training to exposed workers, and place them under appropriate health surveillance. The EAV is the trigger for preventive action and is set well below the level at which HAVS symptoms typically first appear, to allow intervention before irreversible damage occurs.",
   },
@@ -169,10 +169,10 @@ const quizQuestions = [
     options: [
       'Annual chest X-ray',
       'Lung function testing (spirometry)',
-      'Audiometric testing (hearing tests)',
       'Blood pressure monitoring',
+      'Audiometric testing (hearing tests)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Workers who are regularly exposed to noise at or above the upper exposure action value of 85 dB(A), or who are at risk for any other reason, must be placed under appropriate health surveillance, which for noise exposure means audiometric testing (hearing tests). Audiometry measures the individual's hearing threshold at different frequencies and can detect early signs of noise-induced hearing loss before the person is aware of any change. Testing should be carried out before or soon after the start of exposure (baseline audiogram), then at regular intervals — typically annually for the first two years and then every three years if no changes are detected. If audiometric testing reveals hearing damage, the employer must review the risk assessment and control measures.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'Which of the following measures helps reduce hand-arm vibration exposure on a construction site?',
     options: [
-      'Using tools with the highest power output for faster completion',
       'Selecting tools with anti-vibration handles, limiting exposure duration, and maintaining tools regularly',
+      'Using tools with the highest power output for faster completion',
       'Wearing thermal gloves to keep hands warm, which eliminates vibration risk entirely',
       'Working in cold conditions because vibration transmission is reduced at lower temperatures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reducing hand-arm vibration exposure requires a combination of measures: selecting tools with lower vibration magnitudes and anti-vibration handles or damping systems, limiting the duration of exposure by planning job rotation and scheduling breaks, maintaining tools regularly (blunt or worn tools generate more vibration), keeping hands warm and dry (cold exacerbates the vascular symptoms of HAVS), and using the correct tool for the job (an oversized or undersized tool will typically vibrate more). Thermal gloves can help reduce the vascular effects of cold but do not eliminate vibration risk. Cold conditions actually worsen HAVS symptoms. Using high-powered tools for speed may increase vibration exposure rather than reduce it.',
   },

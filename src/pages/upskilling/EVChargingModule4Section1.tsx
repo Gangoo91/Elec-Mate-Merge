@@ -8,24 +8,24 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'evcharging-m4s1-check1',
-    question: 'Which earthing system requires an RCD for fault protection in EV charging?',
-    options: ['TN-S only', 'TN-C-S only', 'TT system', 'All earthing systems'],
-    correctIndex: 2,
+    question: 'Which earthing system relies on an RCD for fault protection in EV charging?',
+    options: ['TN-S only', 'TN-C-S only', 'All earthing systems equally', 'TT system'],
+    correctIndex: 3,
     explanation:
-      "TT systems have high earth fault loop impedance, so RCDs are mandatory for fault protection. While RCDs are recommended for all EV charging, they're essential for TT where overcurrent devices alone cannot disconnect faults fast enough.",
+      "TT systems have high earth fault loop impedance, so RCDs are essential for fault protection. While RCDs are required for all EV charging, on a TT system the overcurrent device alone cannot disconnect an earth fault fast enough, so the RCD provides that disconnection.",
   },
   {
     id: 'evcharging-m4s1-check2',
     question: 'What is the main concern with TN-C-S (PME) for outdoor EV charging?',
     options: [
-      'High electricity costs',
-      'Dangerous voltages on exposed metalwork if PEN conductor fails',
-      'Slower charging speeds',
-      'More expensive equipment required',
+      'Dangerous voltages on exposed metalwork if the PEN conductor fails',
+      'Higher electricity standing charges for the supply',
+      'Slower maximum charging speeds at the point',
+      'More expensive charging equipment is mandated',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'If the PEN conductor becomes open circuit, dangerous voltages up to 230V can appear on exposed metalwork. Regulation 722.411.4.1 restricts PME use for EV charging and requires additional protective measures.',
+      'If the PEN conductor becomes open circuit, dangerous voltages can appear on exposed metalwork. Regulation 722.411.4.1 restricts PME use for outdoor EV charging and requires additional protective measures unless a listed alternative is provided.',
   },
   {
     id: 'evcharging-m4s1-check3',
@@ -33,7 +33,7 @@ const quickCheckQuestions = [
     options: ['50Ω', '100Ω', '200Ω', '500Ω'],
     correctIndex: 2,
     explanation:
-      'For 30mA RCD protection, maximum earth resistance = 50V ÷ 0.03A = 1,667Ω theoretically. However, BS 7671 recommends maximum 200Ω (RA × IΔn ≤ 50V) to ensure reliable operation with safety margins.',
+      'The BS 7671 TT condition RA × IΔn ≤ 50V gives 50V ÷ 0.03A ≈ 1,667Ω in theory, but values that high are unstable. A practical maximum of around 200Ω is recommended to ensure a reliable, durable earth electrode.',
   },
 ];
 

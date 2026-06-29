@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the legal status of BS 7671 (the IET Wiring Regulations)?',
     options: [
       'It is a non-statutory British Standard — not law, but widely regarded as the benchmark for compliance with the EAWR',
-      'A person falling from the tower or stepping off the platform could fall through the floor opening to a lower level',
-      'In a fault condition, the maximum voltage to earth is only 55 V, reducing the risk of fatal electric shock',
-      'Consistent, objective and fair assessment against defined criteria, regardless of which assessor or EPAO conducts the assessment',
+      'It is a statutory instrument that carries the full force of law in its own right',
+      'It is an Approved Code of Practice issued by the HSE under the Health and Safety at Work Act',
+      'It is a European directive directly applicable in the UK without any national deviations',
     ],
     correctIndex: 0,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'bs7671-parts',
     question: 'How many main parts does BS 7671:2018+A3:2024 contain?',
     options: [
-      '7 parts',
       '5 parts',
       '4 parts',
+      '7 parts',
       '10 parts',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'BS 7671 is structured in 7 parts: Part 1 (Scope, object and fundamental principles), Part 2 (Definitions), Part 3 (Assessment of general characteristics), Part 4 (Protection for safety), Part 5 (Selection and erection of equipment), Part 6 (Inspection and testing), and Part 7 (Special installations or locations).',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'bs7671-amendment',
     question: "What does 'BS 7671:2018+A3:2024' mean in terms of the document's history?",
     options: [
-      'To verify the sensors respond to a known concentration of test gas',
+      'It is the third edition published in 2018 and reissued in 2024',
       'It is the 2018 edition with the third amendment (published 2024) incorporated',
-      'Helps determine prevention strategies and responsibility',
-      'Pairing a behaviour you need to do with a behaviour you want to do',
+      'It is the 2024 edition replacing the entire 2018 standard',
+      'It is the 2018 edition with three separate standards combined into one',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 is published jointly by:',
     options: [
-      'The extent and method of sampling must be clearly stated',
+      'The HSE and the Electrical Safety Council',
       'The BSI and the IET (Institution of Engineering and Technology)',
-      'High-density parallel connections for 40G/100G+',
-      '1 C = 1 A × 1 s (one ampere flowing for one second)',
+      'The IET and NICEIC',
+      'The BSI and the Health and Safety Executive',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'Part 1 of BS 7671 establishes the fundamental principles. Which of the following is a fundamental principle?',
     options: [
-      'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
-      'Common rules, wiring systems, switchgear, earthing, and other equipment',
+      'Every circuit must be protected by a 30 mA RCD regardless of the installation type',
+      'All electrical work must be carried out by a registered competent person scheme member',
       'Protection against electric shock must be provided by at least one of the specified measures',
-      'Inspection, testing and certification — including an Electrical Installation Certificate',
+      'Cables in walls must always be installed in earthed metallic conduit',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'Part 3 of BS 7671 requires assessment of:',
     options: [
-      'Locations such as bathrooms, swimming pools, construction sites, marinas and solar PV installations',
-      'Protection against electric shock must be provided by at least one of the specified measures',
-      'Systems for distribution of electricity to the public and equipment of electricity suppliers (covered by the ESQCR)',
+      'The competence and qualifications of every person carrying out the installation work',
+      'The selection of cable types and current-carrying capacities for each final circuit',
+      'The sequence of tests to be applied during initial verification of the installation',
       'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
     ],
     correctAnswer: 3,
@@ -111,9 +111,9 @@ const quizQuestions = [
       'Part 4 of BS 7671 covers protection for safety. Which of these protection measures is addressed?',
     options: [
       'Protection against electric shock, thermal effects, overcurrent, voltage disturbances and electromagnetic influences',
-      'Inspection, testing and certification — including an Electrical Installation Certificate',
-      'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
-      'Locations such as bathrooms, swimming pools, construction sites, marinas and solar PV installations',
+      'Protection against electric shock only, with other hazards covered in Part 5',
+      'Protection of the supply network from faults originating in the consumer installation',
+      'Protection of equipment against theft, vandalism and unauthorised interference',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'Part 5 of BS 7671 covers the selection and erection of equipment. This includes requirements for:',
     options: [
-      'Protection against electric shock must be provided by at least one of the specified measures',
+      'The maximum permitted earth fault loop impedance values for each protective device',
       'Common rules, wiring systems, switchgear, earthing, and other equipment',
-      'An Electrical Installation Condition Report (EICR)',
-      'Inspection, testing and certification — including an Electrical Installation Certificate',
+      'The classification of external influences such as ambient temperature and moisture',
+      'The recommended maximum intervals for periodic inspection and testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under Part 6 of BS 7671, initial verification of a new installation must include:',
     options: [
-      'Common rules, wiring systems, switchgear, earthing, and other equipment',
-      'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
+      'Periodic inspection and the issue of an Electrical Installation Condition Report',
+      'A risk assessment of the external influences before any cable is selected',
       'Inspection, testing and certification — including an Electrical Installation Certificate',
-      'Locations such as bathrooms, swimming pools, construction sites, marinas and solar PV installations',
+      'Confirmation that the installer holds current registration with a competent person scheme',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     question:
       'Part 7 of BS 7671 covers special installations or locations. Which of the following is covered by Part 7?',
     options: [
-      'Inspection, testing and certification — including an Electrical Installation Certificate',
-      'Protection against electric shock must be provided by at least one of the specified measures',
-      'Common rules, wiring systems, switchgear, earthing, and other equipment',
+      'Standard domestic dwellings with no increased risk to persons or livestock',
+      'Office buildings and retail premises supplied at standard low voltage',
+      'General industrial installations with three-phase distribution boards',
       'Locations such as bathrooms, swimming pools, construction sites, marinas and solar PV installations',
     ],
     correctAnswer: 3,
@@ -165,9 +165,9 @@ const quizQuestions = [
     question: 'The scope of BS 7671 excludes:',
     options: [
       'Systems for distribution of electricity to the public and equipment of electricity suppliers (covered by the ESQCR)',
-      'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
-      'Protection against electric shock must be provided by at least one of the specified measures',
-      'Inspection, testing and certification — including an Electrical Installation Certificate',
+      'Fixed wiring in domestic dwellings, which is instead covered by Part P alone',
+      'Temporary installations such as those on construction and demolition sites',
+      'Circuits operating at voltages below 50 V AC, which require no protective measures',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'How does BS 7671 relate to the EAWR 1989?',
     options: [
-      'Protection against electric shock, thermal effects, overcurrent, voltage disturbances and electromagnetic influences',
+      'BS 7671 legally overrides the EAWR 1989 for all low voltage installation work',
       'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
-      'Systems for distribution of electricity to the public and equipment of electricity suppliers (covered by the ESQCR)',
-      'The general characteristics of the installation including purpose, supply, arrangement and maintainability',
+      'BS 7671 and the EAWR 1989 are completely unrelated and apply to different industries',
+      'Compliance with BS 7671 is the only way to satisfy the EAWR in every circumstance',
     ],
     correctAnswer: 1,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     question: 'Under ST1426, why is knowledge of BS 7671 important for maintenance technicians?',
     options: [
       'BS 7671 defines the technical standards against which electrical systems are designed, installed, tested and maintained — a maintenance technician must understand these standards to maintain systems safely',
-      'Stop work, treat the material as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'presumed asbestos\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' until a sample has been analysed by an accredited lab or the duty holder produces a clean survey',
-      'The Information Commissioner\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Office — the UK regulator for data protection. Most businesses processing personal data (customer names, addresses, phone numbers, photos) must register and pay the annual data protection fee (£40-60 for small businesses).',
-      'RECOMMENDED for final circuits supplying socket-outlets in HRRBs, care homes, student accommodation, and similar — per Building Safety Act 2022 dutyholder duties',
+      'BS 7671 is the only legal document a maintenance technician needs, replacing the EAWR and HSWA entirely',
+      'BS 7671 applies only to new installations, so it has no relevance to maintenance of existing systems',
+      'BS 7671 sets out the apprenticeship assessment criteria that the technician must satisfy at end-point assessment',
     ],
     correctAnswer: 0,
     explanation:

@@ -28,11 +28,11 @@ const quickCheckQuestions = [
       'When must the construction phase plan (CPP) be in place under Regulation 12 of CDM 2015?',
     options: [
       'Within 14 days of the construction phase starting',
-      'Before the construction phase begins',
       'At the point of practical completion',
       'Only when the HSE requests to see it during an inspection',
+      'Before the construction phase begins',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Regulation 12(1) of CDM 2015 requires the construction phase plan to be drawn up before the construction phase begins. No construction work should commence until the CPP is in place. The plan does not need to be complete in every detail from day one — it should be proportionate to the project and developed further as design and planning progress — but the core arrangements for managing health and safety must be established before any work starts on site.',
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     options: [
       'The client',
       'The principal designer',
-      'The principal contractor',
       'The HSE inspector',
+      'The principal contractor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 12(1) of CDM 2015 requires the principal contractor to draw up a construction phase plan (CPP) before the construction phase begins. The CPP must set out the arrangements for managing health and safety during construction, including site rules, specific measures for high-risk work, and the management structure. While the principal designer provides pre-construction information that feeds into the CPP, the responsibility for preparing and maintaining the CPP rests with the principal contractor.',
   },
@@ -101,10 +101,10 @@ const quizQuestions = [
     options: [
       'A description of the project and the management structure',
       'Arrangements for controlling significant site risks',
-      "The architect's fee schedule and payment terms",
       'Site rules and emergency procedures',
+      "The architect's fee schedule and payment terms",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The construction phase plan must include a description of the project, the management structure, health and safety aims, site rules, arrangements for managing significant risks, emergency procedures, and arrangements for monitoring and review. Financial information such as fee schedules and payment terms is a commercial matter and has no place in the CPP. The CPP must be proportionate to the project — a small, simple project needs a shorter, simpler plan than a large, complex one.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'What must a site induction cover under CDM 2015?',
     options: [
       'Only the location of the site office and car park',
-      "Site rules, hazards, emergency procedures, welfare facilities, reporting arrangements, and the individual's responsibilities",
       'A brief welcome speech from the site manager with no specific content requirements',
+      "Site rules, hazards, emergency procedures, welfare, reporting, and the worker's responsibilities",
       'Only the working hours and break times',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A site induction must be comprehensive and cover all the information a worker needs to work safely on the site. This includes: site rules (PPE requirements, speed limits, exclusion zones), significant hazards on site, emergency procedures (fire evacuation, first aid, assembly points), welfare facility locations, accident and near-miss reporting procedures, the management structure, and the worker's own responsibilities. The induction must be delivered before the worker starts any construction work, and a record must be kept.",
   },

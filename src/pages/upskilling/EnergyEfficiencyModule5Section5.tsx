@@ -39,12 +39,12 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       question:
         'What is the primary difference between OT and IT systems in terms of security priorities?',
       options: [
-        'OT systems prioritise confidentiality over availability',
         'OT systems prioritise availability and safety over confidentiality',
+        'OT systems prioritise confidentiality over availability',
         'IT systems prioritise safety over data integrity',
         'There is no significant difference in priorities',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Operational Technology (OT) systems like BMS prioritise availability and safety because downtime can affect building operations, comfort, and even life safety systems. IT systems typically prioritise confidentiality first (CIA triad), while OT follows AIC - Availability, Integrity, Confidentiality.',
     },
@@ -66,11 +66,11 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       question: 'What does the UK NIS Regulations require from Operators of Essential Services?',
       options: [
         'Only annual security audits',
-        'Appropriate security measures and incident reporting within 72 hours',
         'Complete air-gapping of all systems',
+        'Appropriate security measures and incident reporting within 72 hours',
         'Monthly password changes only',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'The UK Network and Information Systems (NIS) Regulations 2018 require Operators of Essential Services to implement appropriate and proportionate security measures and report significant incidents to their competent authority within 72 hours. This applies to energy sector organisations including electricity distributors and suppliers.',
     },
@@ -86,6 +86,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Output Terminal',
       ],
       correctAnswer: 'Operational Technology',
+      explanation:
+        'OT (Operational Technology) covers the physical-process systems - BMS, SCADA, PLCs and controllers - as distinct from IT systems that handle data and business applications.',
     },
     {
       question:
@@ -97,6 +99,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Open mesh networking',
       ],
       correctAnswer: 'Network segmentation with VLANs and firewalls',
+      explanation:
+        'Segmentation using VLANs and firewalls confines an intrusion to one zone; a flat or single-subnet network lets an attacker who reaches any device reach them all.',
     },
     {
       question: 'What is a DMZ in the context of BMS network security?',
@@ -108,6 +112,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       ],
       correctAnswer:
         'A demilitarised zone - a buffer network between trusted and untrusted networks',
+      explanation:
+        'A DMZ is an intermediate, tightly controlled network sitting between the corporate IT and OT zones so data can be exchanged without exposing the OT directly.',
     },
     {
       question:
@@ -119,23 +125,29 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Building Regulations Part P',
       ],
       correctAnswer: 'Network and Information Systems (NIS) Regulations 2018',
+      explanation:
+        'The NIS Regulations 2018 place cybersecurity and incident-reporting duties on Operators of Essential Services in sectors such as energy; the other options cover data privacy, general H&S and electrical installation.',
     },
     {
       question:
         'What is the recommended approach when discovering a BMS controller accessible via its default password?',
       options: [
         'Leave it as the customer prefers convenience',
-        'Document and report to the client, recommending immediate password change',
+        'Document and report to the client, recommending an immediate password change',
         'Change it yourself without informing anyone',
         'Disconnect it from the network permanently',
       ],
-      correctAnswer: 'Document and report to the client, recommending immediate password change',
+      correctAnswer: 'Document and report to the client, recommending an immediate password change',
+      explanation:
+        'Best practice is to record the finding and report it in writing, recommending a credential change; never change credentials or disconnect equipment without the client\'s authorisation.',
     },
     {
       question:
-        'Which protocol is commonly used by BMS systems but lacks built-in security features?',
+        'Which protocol is commonly used by BMS systems but lacks built-in security features in its original specification?',
       options: ['HTTPS', 'SSH', 'BACnet (original specification)', 'TLS 1.3'],
       correctAnswer: 'BACnet (original specification)',
+      explanation:
+        'Original BACnet (like Modbus and LonWorks) was designed for isolated networks and sends data in plaintext with no authentication; BACnet/SC adds security. HTTPS, SSH and TLS are themselves secure protocols.',
     },
     {
       question: "What does the principle of 'least privilege' mean for BMS access control?",
@@ -146,6 +158,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Only IT staff can access BMS systems',
       ],
       correctAnswer: 'Users only receive the minimum access rights needed for their role',
+      explanation:
+        'Least privilege grants each user just the rights their role requires, limiting the damage a compromised or misused account can do.',
     },
     {
       question: 'Why should BMS systems avoid direct internet exposure?',
@@ -157,16 +171,20 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       ],
       correctAnswer:
         'It increases attack surface and enables remote exploitation of vulnerabilities',
+      explanation:
+        'A controller exposed directly to the internet can be found by scanners (e.g. Shodan) and remotely attacked; remote access should go through a VPN or secure gateway instead.',
     },
     {
       question:
         'What organisation provides UK-specific cybersecurity guidance for critical infrastructure?',
       options: ['FBI', 'National Cyber Security Centre (NCSC)', 'OFGEM only', 'Local councils'],
       correctAnswer: 'National Cyber Security Centre (NCSC)',
+      explanation:
+        'The NCSC publishes free UK guidance including OT and critical-infrastructure advice and the Cyber Assessment Framework; the FBI is a US body and councils have no such remit.',
     },
     {
       question:
-        'Which security measure helps ensure only authorised devices connect to a BMS network?',
+        'Which security measure helps ensure only authorised devices can connect to a BMS network?',
       options: [
         'Using longer Ethernet cables',
         'MAC address filtering and 802.1X port authentication',
@@ -174,6 +192,8 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
         'Using only wireless connections',
       ],
       correctAnswer: 'MAC address filtering and 802.1X port authentication',
+      explanation:
+        '802.1X port authentication (with MAC filtering as a supplement) requires a device to prove it is authorised before the switch port grants network access, blocking rogue devices.',
     },
   ];
 

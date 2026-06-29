@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician currently has 6 active jobs at various stages. According to cognitive load research, what is the most likely consequence of maintaining this many concurrent projects?',
     options: [
-      'They will be more efficient because they can switch between jobs when one stalls',
-      'They will experience reduced performance across all jobs — more errors, forgotten commitments, and slower progress on each individual project',
-      'There is no cognitive limit — experienced tradespeople can manage unlimited concurrent jobs',
-      'The only risk is physical exhaustion, not mental performance',
+      'More efficient, because they can switch jobs whenever one stalls',
+      'No limit at all — experienced tradespeople manage unlimited jobs',
+      'The only real risk is physical exhaustion, not mental performance',
+      'Reduced performance everywhere — more errors and slower progress',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Research on cognitive load and work-in-progress limits consistently shows that performance degrades as the number of active concurrent projects increases beyond 3-4. Miller's Law (1956) established that working memory capacity is approximately 7±2 items, but active project management requires far more cognitive bandwidth than simply remembering items. Each active job occupies mental space: client expectations, material orders, scheduling, pending decisions, follow-ups. Beyond 3-4 active projects, the overhead of context-switching, remembering status, and managing dependencies starts to exceed the productive work being done on any individual job.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A client calls to cancel a job that was scheduled for next Wednesday. The electrician had already ordered materials. What is the most professional and productive response?',
     options: [
-      'Demand full payment because the materials have been ordered',
-      'Accept the cancellation gracefully, confirm whether materials can be returned or used elsewhere, and use the freed-up time productively by contacting clients on the waiting list',
-      'Never take bookings from that client again',
-      'Ignore the cancellation and turn up on Wednesday anyway',
+      'Accept it, redeploy or return the materials, and fill the slot',
+      'Demand full payment because the materials have already been ordered',
+      'Refuse to take any future bookings from that particular client',
+      'Ignore the cancellation entirely and turn up on Wednesday anyway',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cancellations are a normal part of trade work and should be handled professionally. The productive response has three parts: (1) accept the cancellation gracefully and maintain the client relationship (they may rebook or refer others), (2) manage the material impact — check if materials can be returned to the merchant, stored for stock, or used on another job, and (3) use the freed-up schedule slot productively — contact clients on the waiting list, bring forward a delayed job, or use the time for admin, quoting, or business development. A cancellation is only a loss if you let the time go to waste.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'An electrician uses a whiteboard with columns for each pipeline stage (Enquiry, Quoted, Accepted, Scheduled, In Progress, Snagging, Invoice Sent, Paid). A job has been in the "Invoice Sent" column for 3 weeks. What should the tracking system prompt them to do?',
     options: [
-      'Nothing — 3 weeks is a normal payment period',
-      'Delete the job from the board to keep it tidy',
-      'Follow up on the unpaid invoice — the visual system has made the overdue payment immediately visible, prompting action',
-      'Move it back to "In Progress" and revisit the site',
+      'Nothing — three weeks is a perfectly normal payment period',
+      'Delete the job from the board to keep the pipeline tidy',
+      'Follow up on the unpaid invoice the board has flagged as overdue',
+      'Move it back to "In Progress" and revisit the site again',
     ],
     correctIndex: 2,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'The typical job pipeline for a sole-trader electrician includes the following stages in order:',
     options: [
-      'Quote, Accept, Do, Invoice',
-      'Enquiry, Quote, Accepted, Materials Ordered, Scheduled, In Progress, Snagging, Invoice Sent, Paid',
-      'Start, Middle, End',
-      'Monday, Tuesday, Wednesday, Thursday, Friday',
+      'Enquiry, Quote, Accepted, Ordered, Scheduled, In Progress, Snag, Invoice, Paid',
+      'Quote, Accept, Do the work, Invoice — nothing else is needed',
+      'Scheduled, In Progress, Complete — three broad stages only',
+      'Design, Install, Test, Certify — the technical stages alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A comprehensive pipeline tracks every stage from initial client contact to final payment: Enquiry (client makes contact), Quote (you provide a price), Accepted (client agrees), Materials Ordered (preparation begins), Scheduled (date confirmed in calendar), In Progress (on-site work), Snagging (final checks, making good, minor fixes), Invoice Sent (billing issued), Paid (payment received). Each stage has distinct management requirements, and tracking jobs through every stage ensures nothing falls through the cracks — particularly at the critical invoice and payment stages.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'According to cognitive load research, performance on individual projects typically begins to degrade when a sole trader is managing more than:',
     options: [
-      '1-2 active projects',
-      '3-4 active projects',
-      '7-8 active projects',
-      '10+ active projects — there is no practical limit for experienced workers',
+      '1-2 active projects at any one time',
+      '7-8 active projects at any one time',
+      '10 or more — no practical limit for experienced workers',
+      '3-4 active projects at any one time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Research on cognitive load and multitasking consistently shows that performance degrades significantly when the number of active concurrent projects exceeds 3-4. Each active project requires ongoing mental tracking: client expectations, material status, scheduling, pending decisions, quality standards, and follow-up actions. Beyond 3-4 projects, the cognitive overhead of context-switching between projects starts to consume more mental energy than the productive work itself, leading to errors, forgotten commitments, and reduced quality across all projects.',
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'A work-in-progress (WIP) limit is:',
     options: [
-      'A legal restriction on how many jobs you can undertake',
-      'The maximum number of pounds you can have outstanding in unpaid invoices',
-      'A self-imposed cap on the number of active concurrent jobs you manage, designed to protect quality and reduce cognitive overload',
-      'The number of hours you are allowed to work per week',
+      'A legal restriction on the number of jobs you may undertake',
+      'The maximum pounds you may have outstanding in unpaid invoices',
+      'A self-imposed cap on active concurrent jobs, to protect quality',
+      'The number of hours you are permitted to work in a single week',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'When a scheduled job is cancelled at short notice, the most productive response is:',
     options: [
-      'Take the day off as a bonus',
-      'Accept the cancellation, manage any material implications, and use the freed time productively — contact waiting-list clients, bring forward delayed work, or use the time for admin and business development',
-      'Charge the client a full cancellation fee regardless of circumstances',
-      'Never work with that client again',
+      'Treat it as an unexpected day off and a welcome bonus',
+      'Charge a full cancellation fee regardless of the circumstances',
+      'Accept it, handle the materials, and redeploy the freed time',
+      'Decline to work with that particular client ever again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A cancellation frees up a schedule slot that has value. The productive response is threefold: (1) handle the cancellation professionally to preserve the client relationship, (2) manage any material or subcontractor implications, and (3) redeploy the freed time — contact clients on your waiting list to see if their job can be brought forward, advance a delayed project, clear an admin backlog, or invest in business development. The freed time is only a loss if it is wasted. A well-maintained pipeline with a waiting list means cancellations can be refilled quickly.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'Managing client expectations effectively requires:',
     options: [
-      'Telling clients only what they want to hear',
-      'Clear, proactive communication about timelines, scope, and any changes — before the client has to ask',
-      'Avoiding all communication until the job is complete',
+      'Proactive updates on timelines, scope, and changes before being asked',
+      'Telling clients only the things they actually want to hear',
+      'Avoiding all communication entirely until the job is complete',
       'Promising the fastest possible timeline regardless of feasibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Client expectation management is fundamentally about proactive, honest communication. Clients are far more tolerant of delays, changes, and complications when they are informed early and clearly than when they discover problems themselves. Sending a brief update — "Day 1 went well, on track for completion Wednesday" or "We have found an unexpected issue that will add half a day — here is what it involves" — builds trust and demonstrates professionalism. The worst client experiences come from silence: no updates, no visibility, and surprises at the end.',
   },
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'A visual tracking system (whiteboard, Kanban board, or app) helps manage multiple jobs because:',
     options: [
-      'It looks professional when clients visit your office',
-      'It makes the status of every job visible at a glance, reveals bottlenecks, and prompts action on stale items',
-      'It is required by Part P of the Building Regulations',
-      'It replaces the need for a calendar or diary',
+      'It looks professional whenever clients visit your home office',
+      'It shows every job at a glance, reveals bottlenecks, and prompts action',
+      'It is required by Part P of the Building Regulations for sole traders',
+      'It removes the need to keep any separate calendar or diary',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     id: 7,
     question: 'The Kanban principle of "pull not push" applied to trade work means:',
     options: [
-      'Only start work when the client pushes you to begin',
-      'New work enters your active pipeline only when existing work exits — you "pull" new jobs in as capacity becomes available, rather than "pushing" more work onto an already full schedule',
-      'Always pull cables rather than push them through conduit',
-      'Let clients come to you rather than marketing your services',
+      'Only start work once the client actively pushes you to begin',
+      'New work enters the pipeline only as existing work exits and frees capacity',
+      'Accept every enquiry now and push the overflow into evenings',
+      'Let clients come to you rather than marketing your services at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,14 +182,14 @@ const quizQuestions = [
     question:
       'An electrician is juggling 3 domestic rewires, a commercial job, and 2 callbacks. The most effective management approach is:',
     options: [
-      'Try to remember the status of each job and trust that nothing will be forgotten',
-      'Focus entirely on one job at a time and ignore the others until it is finished',
-      'Use a tracking system with clear pipeline stages, maintain proactive communication with all clients, and set WIP limits to prevent further overload',
-      'Work 7 days a week until the backlog is cleared',
+      'Memorise the status of each job and trust nothing will be forgotten',
+      'Focus on one job only and ignore the rest until it is fully finished',
+      'Work seven days a week until the whole backlog is finally cleared',
+      'Track each job by pipeline stage, communicate proactively, set WIP limits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'With 6 concurrent jobs, a systematic approach is essential — memory alone will fail. A tracking system (whiteboard, spreadsheet, or app) shows the status of each job at a glance: which rewire is at first fix, which is at second fix, which needs testing, where the commercial job stands, and which callbacks are scheduled. Proactive client communication keeps everyone informed without you being chased. WIP limits prevent additional jobs from being added until current ones exit the pipeline. Working 7 days a week (option D) addresses the symptom (too much work) without fixing the cause (no system for managing flow).',
+      'With 6 concurrent jobs, a systematic approach is essential — memory alone will fail. A tracking system (whiteboard, spreadsheet, or app) shows the status of each job at a glance: which rewire is at first fix, which is at second fix, which needs testing, where the commercial job stands, and which callbacks are scheduled. Proactive client communication keeps everyone informed without you being chased. WIP limits prevent additional jobs from being added until current ones exit the pipeline. Simply working 7 days a week addresses the symptom (too much work) without fixing the cause (no system for managing flow).',
   },
 ];
 

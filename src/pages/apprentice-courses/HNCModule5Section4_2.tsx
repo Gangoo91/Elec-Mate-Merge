@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'itp-definition',
     question: 'What is the primary purpose of an Inspection and Test Plan (ITP)?',
     options: [
-      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
-      'Willpower is a limited resource that gets depleted through use during the day',
+      'To set out the project budget and cash-flow forecast',
+      'To list the labour rates for each trade on site',
       'To document inspection and verification stages throughout installation',
-      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
+      'To record only the final handover certificate details',
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'witness-point-def',
     question: 'How does a Witness Point differ from a Hold Point?',
     options: [
-      "1 megohm per kV of rated voltage, with a minimum of 1 megohm",
+      "Work must stop entirely until the witness signs off",
       "Work may proceed if the witness doesn't attend after notification",
-      "Potential criminal liability and civil responsibility",
-      "Dust masks or respirators appropriate to the dust type",
+      "A Witness Point only ever applies to statutory inspections",
+      "A Witness Point requires no advance notification at all",
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which document forms the foundation for developing an ITP?',
     options: [
-      'About 150-200g CO2/kWh (and falling)',
+      'The contractor\'s health and safety policy',
       'The project specification and quality requirements',
-      'All three phases L1, L2, L3 and neutral',
-      'An overhead crane collapses, even though nobody is hurt',
+      'The site induction attendance register',
+      'The manufacturer\'s product warranty terms',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'What documentation must be referenced in an ITP?',
     options: [
       'Applicable standards, specifications, and drawings',
-      'Rejecting signals common to both input lines',
-      'High stakes, opposing opinions, and strong emotions',
-      'Substantially enclosed and a foreseeable risk of serious injury',
+      'The contractor\'s annual financial accounts',
+      'The site visitor and delivery log',
+      'Staff training attendance certificates',
     ],
     correctAnswer: 0,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which of these would typically be a Hold Point for main switchboard installation?',
     options: [
-      'Selecting open standards and quality components',
-      'P = (2π × n × T) / 60 where n is RPM',
+      'Delivery of the switchboard to site',
+      'Unpacking and visual checking of components',
       'Pre-energisation inspection and testing',
-      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
+      'Positioning of the switchboard plinth',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'What information must each ITP entry include?',
     options: [
-      'To enable safe and effective identification of escape routes leading to final exits',
-      'Specificity eliminates ambiguity about what to do and when you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve succeeded',
-      'Mentally noting points to return to later rather than jumping in immediately',
+      'The cost and supplier of the materials used',
+      'The number of operatives assigned to the task',
+      'The expected weather conditions for the work',
       'Activity, inspection stage, acceptance criteria, responsibility, and reference documents',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'How should non-conformances discovered at Hold Points be handled?',
     options: [
       'Record, rectify, and re-inspect before sign-off',
-      'To advise the employer on health and safety matters',
-      'kWh consumption correlated with occupancy patterns',
-      'It becomes critical - there are now two critical paths',
+      'Note them but allow work to continue regardless',
+      'Conceal the work and address them at handover',
+      'Sign off the Hold Point and raise them later',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of linking ITPs to the project programme?',
     options: [
-      'To verify continuity and identify breaks or interconnections in the ring',
-      'Training in spill response procedures, use of spill kits, appropriate PPE, and waste disposal',
+      'To calculate the total labour cost of the project',
+      'To allocate car parking spaces for inspectors',
       'To ensure inspection requirements are built into the schedule with adequate notice periods',
-      'To prevent dark spots that could impair vision and cause disorientation',
+      'To decide which subcontractor wins the tender',
     ],
     correctAnswer: 2,
     explanation:
@@ -282,14 +282,14 @@ const HNCModule5Section4_2 = () => {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 642.1 (Initial verification)"
+            source="BS 7671:2018+A4:2026 — Regulation 641.1 (Initial verification)"
             clause="Every electrical installation shall be inspected and tested during erection and on completion, before being put into service, to verify, so far as reasonably practicable, that the requirements of this Standard have been met."
             meaning={
               <>
                 Initial verification under BS 7671 is mandatory and progressive — inspection and testing happen during erection (rough-in) AND on completion (final). The ITP is how this is planned and tracked: rough-in inspection before walls close up, continuity tests before energisation, full sequence at handover. Skipping the progressive verification means defects buried in the fabric.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 642.1."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 641.1."
           />
 
 
@@ -807,7 +807,7 @@ const HNCModule5Section4_2 = () => {
               "Issued before work; signed progressively; archived in O&M.",
               "For MEP: rough-in, pre-cover, in-service, commissioning, witness — all on the ITP.",
               "NCRs against ITP failures; root cause investigated; corrective action verified.",
-              "BS 7671 Reg 642.1 makes progressive initial verification mandatory.",
+              "BS 7671 Reg 641.1 makes progressive initial verification mandatory.",
               "ITP integrates with the WBS — every work package has its quality control points defined.",
             ]}
           />

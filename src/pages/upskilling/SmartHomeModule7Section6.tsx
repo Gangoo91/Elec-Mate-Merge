@@ -53,45 +53,45 @@ const quizQuestions = [
     question: 'What information should an as-built drawing include for a smart home installation?',
     options: [
       'Only the location of the consumer unit',
-      'Device locations, cable routes, hub position, and network infrastructure',
       'Just a floor plan with no annotations',
-      'Manufacturer logos only',
+      'Manufacturer logos and branding only',
+      'Device locations, cable routes, hub position, and network infrastructure',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'As-built drawings should show all installed components, cable routes, and infrastructure to enable future maintenance and modifications.',
   },
   {
     question: 'Why is device registration important for warranty purposes?',
     options: [
-      'It is not important',
       'It activates warranty coverage and provides proof of purchase date',
-      'Only for marketing emails',
-      'To void the warranty',
+      'It serves no real purpose for the customer',
+      'It is only useful for receiving marketing emails',
+      'It is needed to deliberately void the warranty',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Many manufacturers require product registration to activate warranties. Registration also creates a record of the purchase date for warranty claims.',
   },
   {
     question: 'What should be included in a maintenance schedule recommendation?',
     options: [
-      'Nothing - smart devices do not need maintenance',
+      'Nothing, as smart devices need no maintenance',
+      'Only surface cleaning instructions',
       'Battery replacement intervals, firmware updates, and periodic system checks',
-      'Only cleaning instructions',
-      'Daily reboot requirements',
+      'A daily device reboot requirement',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A maintenance schedule helps customers keep their system running reliably, including battery changes, software updates, and periodic checks.',
   },
   {
     question: 'How should you store customer installation records?',
     options: [
-      'Discard after job completion',
+      'Discard them once the job is complete',
       'Securely with GDPR compliance, accessible for future reference',
-      'Share publicly for marketing',
-      'Only keep paper copies',
+      'Share them publicly for marketing purposes',
+      'Keep paper copies only with no backup',
     ],
     correctIndex: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'What is the benefit of offering a maintenance agreement for smart home installations?',
     options: [
-      'No benefit - customers prefer one-time purchases',
+      'There is no benefit, as customers prefer one-off purchases',
+      'It needlessly complicates the business model',
+      'Maintenance agreements are not legally permitted',
       'Recurring revenue and proactive customer relationship management',
-      'It complicates the business model',
-      'Maintenance agreements are illegal',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Maintenance agreements provide predictable revenue, encourage ongoing customer relationships, and help identify issues before they become major problems.',
   },

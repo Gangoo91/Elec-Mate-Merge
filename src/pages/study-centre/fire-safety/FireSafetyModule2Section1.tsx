@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'rrfso-max-sentence',
     question: 'What is the maximum prison sentence for RRFSO offences?',
     options: [
-      '6 months imprisonment',
-      '12 months imprisonment',
       'Up to 2 years imprisonment',
+      '12 months imprisonment',
+      '6 months imprisonment',
       'Up to 5 years imprisonment',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Under the RRFSO, a person convicted on indictment of a fire safety offence can face up to 2 years\u2019 imprisonment and/or an unlimited fine. This applies to individuals such as the responsible person or any person who fails to comply with an enforcement notice, prohibition notice, or the general fire precaution requirements of the Order.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following premises does the RRFSO 2005 apply to?',
     options: [
-      'A single private dwelling occupied by one family',
-      'An offshore oil installation',
       'The common areas of a block of residential flats',
+      'An offshore oil installation',
+      'A single private dwelling occupied by one family',
       'A coal mine regulated under specific mining legislation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The RRFSO applies to virtually all non-domestic premises, including the common areas of residential buildings such as corridors, stairwells, and lobbies. It does not apply to single private dwellings, offshore installations, or mines (which are covered by their own specific legislation).',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     options: [
       'Issue an alteration notice',
       'Issue an informal advisory letter',
-      'Issue a prohibition notice with immediate effect',
       'Report the matter to the local authority housing team only',
+      'Issue a prohibition notice with immediate effect',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under Article 31 of the RRFSO, a fire inspector can serve a prohibition notice that takes immediate effect if there is, or is likely to be, a risk to relevant persons so serious that use of the premises ought to be prohibited or restricted. This is the most powerful enforcement tool available and can effectively close premises until the risk is remedied.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       'What is the maximum penalty for an individual convicted on indictment of an offence under the RRFSO?',
     options: [
       'A fine not exceeding \u00a35,000',
-      '6 months\u2019 imprisonment and/or a fine of \u00a320,000',
       'Up to 2 years\u2019 imprisonment and/or an unlimited fine',
+      '6 months\u2019 imprisonment and/or a fine of \u00a320,000',
       'Up to 5 years\u2019 imprisonment and a fine of \u00a3100,000',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Under the RRFSO, conviction on indictment for fire safety offences can result in up to 2 years\u2019 imprisonment and/or an unlimited fine. This applies to breaches of the general fire precaution requirements, failure to comply with enforcement or prohibition notices, and related offences. On summary conviction, the maximum penalty is a fine (unlimited since the Legal Aid, Sentencing and Punishment of Offenders Act 2012 removed the cap).',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
     question: 'What did the Fire Safety Act 2021 clarify about the scope of the RRFSO?',
     options: [
       'That the RRFSO now applies to single private dwellings',
-      'That the RRFSO covers external walls (including cladding) and flat entrance doors in multi-occupied residential buildings',
       'That the RRFSO no longer applies to commercial premises',
       'That fire risk assessments are no longer required for residential buildings',
+      'That the RRFSO covers external walls (including cladding) and flat entrance doors in multi-occupied residential buildings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Fire Safety Act 2021 amended the RRFSO to clarify that the structure, external walls (including cladding, balconies, and windows), and flat entrance doors of multi-occupied residential buildings fall within the scope of the Order. This was a direct response to the Grenfell Tower tragedy and the legal uncertainty about whether these elements were covered by the RRFSO.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Which of the following pieces of legislation does the RRFSO interact with regarding workplace health and safety?',
     options: [
-      'The Countryside and Rights of Way Act 2000',
       'The Health and Safety at Work etc. Act 1974',
+      'The Countryside and Rights of Way Act 2000',
       'The Data Protection Act 2018',
       'The Equality Act 2010',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The RRFSO interacts directly with the Health and Safety at Work etc. Act 1974 (HASAWA). While the RRFSO covers fire safety specifically, HASAWA provides the overarching framework for workplace health and safety. Article 12 of the RRFSO requires employers to eliminate or reduce risks from dangerous substances (linking to DSEAR 2002 and COSHH 2002, both made under HASAWA). The Management of Health and Safety at Work Regulations 1999 (also under HASAWA) complement the RRFSO\u2019s risk assessment requirements.',
   },

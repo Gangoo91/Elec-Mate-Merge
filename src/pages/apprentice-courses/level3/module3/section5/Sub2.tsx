@@ -42,9 +42,9 @@ const checks = [
     id: 'l3-m3-5-2-cap',
     question: 'A capacitor-start single-phase motor uses the capacitor to:',
     options: [
-      'Coil that pulls a plunger to open or close a valve when energised',
-      'Centrifugal switch on the rotor when speed reaches ~75 % of synchronous',
-      'The tower location, date, inspector details, findings, any defects and actions taken',
+      'Smooth the supply ripple before it reaches the windings',
+      'Correct the running power factor to near unity',
+      'Limit the starting inrush current to the main winding',
       'Phase-shift the start winding current to create a temporary 2-phase field for starting',
     ],
     correctIndex: 3,
@@ -55,10 +55,10 @@ const checks = [
     id: 'l3-m3-5-2-ind',
     question: 'A capacitor-start motor disconnects the start winding via:',
     options: [
-      'Domestic supply cut-out (service fuse) and old-style fused boards',
-      'To maintain constant magnetic flux and prevent motor overheating',
+      'A thermal overload relay tripping on inrush current',
+      'A timer relay set to a fixed start duration',
       'Centrifugal switch on the rotor when speed reaches ~75 % of synchronous',
-      'Damaged containment or cables caused by other trades working in the same area',
+      'A voltage-sensing relay monitoring the supply terminals',
     ],
     correctIndex: 2,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     id: 'l3-m3-5-2-univ',
     question: 'A universal motor (cooker hood, drill, vacuum) works on:',
     options: [
-      "Immediately isolate the supply and investigate safely",
+      "Three-phase AC only, via a built-in inverter",
       "Both AC and DC because it's essentially a series-DC motor",
-      "Occupational asthma (respiratory sensitiser)",
-      "Noise, dust, vibration, weather conditions, contaminated ground",
+      "DC only, because the commutator cannot handle AC",
+      "AC only, locked to the 50 Hz supply frequency",
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'Single-phase AC alone produces:',
     options: [
-      'Design to industry benchmarks with flexibility',
+      'A smoothly rotating field like three-phase',
       'Pulsating magnetic field — no inherent rotation',
-      'Both overcurrent and earth leakage',
-      '8% plus Bank of England base rate',
+      'A steady unidirectional DC magnetic field',
+      'Two counter-rotating fields of unequal size',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'Capacitor-start, capacitor-run uses:',
     options: [
-      'File or ream to remove sharp edges',
-      'Investigate further and consider remedial action',
+      'A single capacitor switched out at full speed',
+      'No capacitor, relying on a shaded-pole ring',
       'Two capacitors: large for start, small for run',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'Two run capacitors of equal value in parallel',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: 'Shaded-pole motor finds use in:',
     options: [
-      'To translate between different protocols and connect to the internet',
-      'Correct selection, proper use, good maintenance, adequate training',
-      'Provide illumination during power failures for safe evacuation',
+      'Large industrial compressors and pumps',
+      'High-torque cranes and hoists',
+      'Cordless power tools and angle grinders',
       'Cooling fans, microwave ovens, small clocks (low torque, low cost)',
     ],
     correctAnswer: 3,
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A single-phase capacitor-start motor reverses by:',
     options: [
-      'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
+      'Swapping the live and neutral supply connections',
       'Swapping the start-winding terminals OR the main-winding terminals (not both)',
-      'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
-      'Identity protection &mdash; new technologies threaten their established sense of competence',
+      'Increasing the value of the start capacitor',
+      'Reversing both the start and main winding terminals together',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'Universal motor disadvantages:',
     options: [
-      '(Full flush + Reduced flush) / 3',
-      'To protect bare conductors from damage',
+      'Locked to synchronous speed, no speed control',
+      'Cannot run on a DC supply at all',
       'Brushes wear, sparking, RFI emission',
-      '200Ω (earth electrode dependent)',
+      'Very low starting torque and slow run-up',
     ],
     correctAnswer: 2,
     explanation:

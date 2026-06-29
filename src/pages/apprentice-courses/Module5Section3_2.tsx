@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a milestone in project planning?',
     options: [
-      'Cost reduction and voltage sharing',
+      'The total cost of the materials',
       'A key checkpoint showing project progress',
-      '2000 metres (campus) / 3000 metres (building)',
-      '1 unit on paper = 50 units in real life',
+      'The number of workers on site',
+      'The longest cable run in the building',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should timescales allow extra time for delays?',
     options: [
-      'Selling price £1,190, client pays £1,071',
-      'BS 7671 and Part P requirements',
+      'To increase the overall project cost',
+      'To reduce the number of milestones',
       'To account for unexpected delays',
-      'VAr (volt-amperes reactive)',
+      'To avoid the need for site meetings',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Give one risk of setting unrealistic deadlines.',
     options: [
-      'Backward-curved or backward-inclined blades',
-      'Voltage drop and connections',
-      'Solar radiation tables based on clear sky models',
+      'Lower material costs',
+      'Improved work quality',
+      'Better team morale',
       'Mistakes and unsafe working practices',
     ],
     correctIndex: 3,
@@ -73,10 +73,10 @@ const Module5Section3_2 = () => {
       id: 2,
       question: 'What is a milestone?',
       options: [
-        'To ensure accuracy and avoid cumulative errors',
-        'Clean all contact surfaces, remake the joint properly',
+        'The cost of a single task',
+        'A type of installation drawing',
         'A key checkpoint showing project progress',
-        'Shops, offices, and business premises',
+        'A spare part kept in reserve',
       ],
       correctAnswer: 2,
       explanation:
@@ -86,9 +86,9 @@ const Module5Section3_2 = () => {
       id: 3,
       question: 'Give one example of a milestone in electrical installation.',
       options: [
-        'The lampholder or luminaire',
-        'Protected Extra Low Voltage',
-        'The construction phase begins',
+        'Ordering the cable drums',
+        'Choosing a tool supplier',
+        'Arriving on site each morning',
         'Completion of containment',
       ],
       correctAnswer: 3,
@@ -99,12 +99,12 @@ const Module5Section3_2 = () => {
       id: 4,
       question: 'Why should you allow extra time in timescales?',
       options: [
+        'To reduce the number of milestones',
+        'To increase the labour cost',
+        'To avoid the need for a programme',
         'To account for unexpected delays',
-        'Frequency rating and performance',
-        'Behavioural safety observation',
-        'Hacksaw or metal cutting saw',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         'Extra time accounts for potential delays like weather, late deliveries, or unforeseen site conditions.',
     },
@@ -158,10 +158,10 @@ const Module5Section3_2 = () => {
       id: 9,
       question: 'What should you do if you know a milestone cannot be met?',
       options: [
-        'Customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pet name and birthday.',
+        'Carry on and hope to catch up',
         'Inform the supervisor immediately',
-        'Reduce current or resistance',
-        'Multimeter with data logging capability',
+        'Skip the affected task entirely',
+        'Reduce the quality to save time',
       ],
       correctAnswer: 1,
       explanation:
@@ -171,10 +171,10 @@ const Module5Section3_2 = () => {
       id: 10,
       question: 'How do milestones help manage progress?',
       options: [
-        'Cable insulation damage leading to faults',
-        'Different qualification and competence levels',
+        'They reduce the cost of materials',
+        'They remove the need for a supervisor',
         'They provide checkpoints to track and measure progress',
-        'Maintain adequate clearance or use heat-resistant cables',
+        'They speed up cable deliveries',
       ],
       correctAnswer: 2,
       explanation:

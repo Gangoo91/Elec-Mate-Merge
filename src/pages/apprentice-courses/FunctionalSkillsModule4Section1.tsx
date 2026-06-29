@@ -24,14 +24,14 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 1,
       question: 'A 230V circuit supplies a 2.3kW load. What current does it draw?',
       options: [
-        '5A',
         '10A',
+        '5A',
         '23A',
-        '100A',
+        '13A',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'I = P / V = 2300 / 230 = 10A. This is a straightforward application of the power formula rearranged for current.',
+        'I = P / V = 2300 / 230 = 10A, applying the power formula rearranged for current. The 23A figure is the common error of forgetting to convert kilowatts to watts.',
     },
     {
       id: 2,
@@ -65,28 +65,28 @@ const FunctionalSkillsModule4Section1 = () => {
       question:
         'A domestic lighting circuit has a total connected load of 1800W at 230V. Applying 66% diversity, what current should be allowed for in the maximum demand?',
       options: [
-        '5.17A',
         '7.83A',
+        '5.17A',
         '11.88A',
         '3.42A',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
-        'Total current = 1800 / 230 = 7.83A. After 66% diversity = 7.83 × 0.66 = 5.17A. This is the figure used in the ADMD calculation.',
+        'Total current = 1800 / 230 = 7.83A; after applying 66% diversity, 7.83 × 0.66 = 5.17A. This is the figure carried into the ADMD calculation; 7.83A is the undiversified current.',
     },
     {
       id: 5,
       question:
         'Three resistors of 10Ω, 15Ω and 25Ω are connected in series across a 230V supply. What is the current?',
       options: [
-        '9.2A',
         '4.6A',
+        '9.2A',
         '2.3A',
         '23A',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'In a series circuit, total resistance = 10 + 15 + 25 = 50Ω. Current I = V / R = 230 / 50 = 4.6A.',
+        'In a series circuit, resistances add: total R = 10 + 15 + 25 = 50Ω, so I = V / R = 230 / 50 = 4.6A.',
     },
     {
       id: 6,
@@ -121,12 +121,12 @@ const FunctionalSkillsModule4Section1 = () => {
       question:
         'A TN-S supply has Ze = 0.8Ω. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05Ω. Applying the 1.20 correction factor, what is the Zs and does it comply?',
       options: [
+        'Zs = 1.85Ω — does not comply',
         'Zs = 2.06Ω — complies (max 2.19Ω)',
         'Zs = 1.26Ω — complies easily',
-        'Zs = 1.85Ω — does not comply',
         'Zs = 2.46Ω — does not comply',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Zs = Ze + (R1+R2 × 1.20) = 0.8 + (1.05 × 1.20) = 0.8 + 1.26 = 2.06Ω. Maximum Zs for a 20A Type B MCB = 2.19Ω (BS 7671:2018+A4:2026 Table 41.3). Since 2.06 < 2.19, it complies.',
     },
@@ -408,13 +408,13 @@ const FunctionalSkillsModule4Section1 = () => {
           id="calc-check-1"
           question="A 100W lamp operates on 230V. What is the current and resistance of the filament?"
           options={[
-            '0.43A and 529Ω',
             '2.3A and 100Ω',
             '0.43A and 230Ω',
+            '0.43A and 529Ω',
             '23A and 10Ω',
           ]}
-          correctIndex={0}
-          explanation="I = P/V = 100/230 = 0.43A. R = V/I = 230/0.43 = 529Ω (or R = V²/P = 230²/100 = 529Ω). Both methods give the same answer."
+          correctIndex={2}
+          explanation="I = P/V = 100/230 = 0.43A. R = V/I = 230/0.43 = 529Ω (or directly R = V²/P = 230²/100 = 529Ω). Both methods give the same answer."
         />
 
         {/* ── 03 Voltage Drop Calculations ── */}
@@ -924,11 +924,11 @@ const FunctionalSkillsModule4Section1 = () => {
           question="A TN-S supply has Ze = 0.8Ω. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05Ω. Applying the 1.20 correction factor, does the Zs comply?"
           options={[
             'Zs = 1.85Ω — does not comply',
-            'Zs = 2.06Ω — complies with max 2.19Ω',
             'Zs = 1.26Ω — complies easily',
+            'Zs = 2.06Ω — complies with max 2.19Ω',
             'Cannot be calculated without cable length',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Zs = Ze + (R1+R2 × 1.20) = 0.8 + (1.05 × 1.20) = 0.8 + 1.26 = 2.06Ω. Max Zs for 20A Type B = 2.19Ω (BS 7671:2018+A4:2026 Table 41.3). 2.06 < 2.19 so it complies."
         />
 

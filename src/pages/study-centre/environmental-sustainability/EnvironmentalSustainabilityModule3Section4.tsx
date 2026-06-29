@@ -37,8 +37,8 @@ const quickCheckQuestions = [
     id: 'recycled-steel-content',
     question:
       'Approximately what percentage of UK-produced steel is made from recycled scrap content?',
-    options: ['Around 10%', 'Around 30%', 'Around 60%', 'Around 90%'],
-    correctIndex: 1,
+    options: ['Around 10%', 'Around 60%', 'Around 30%', 'Around 90%'],
+    correctIndex: 2,
     explanation:
       'UK-produced steel contains approximately 30% recycled scrap content on average. Steel produced via the Electric Arc Furnace (EAF) route can contain significantly higher recycled content (up to 100% scrap), whilst Basic Oxygen Steelmaking (BOS) typically uses around 25% scrap. Steel is one of the most recyclable construction materials, capable of being recycled indefinitely without losing its structural properties.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a recognised criterion for classifying a material as sustainable?',
     options: [
+      'Available at the lowest possible purchase price',
       'Low embodied carbon and energy in manufacture',
       'Capable of being recycled or reused at end of life',
-      'Available at the lowest possible purchase price',
       'Sourced from responsibly managed supply chains',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Sustainability criteria include low embodied carbon, renewability, recyclability, non-toxicity, local sourcing, and responsible harvesting. Purchase price alone is not a sustainability criterion. A cheap material may have very high environmental and social costs across its lifecycle. Sustainable procurement considers whole-life cost and environmental impact, not just the initial purchase price.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'What is the primary purpose of replacing a proportion of Portland cement clinker with Ground Granulated Blast-furnace Slag (GGBS) in concrete?',
     options: [
       'To increase the early-age strength gain of the concrete',
-      'To reduce the embodied carbon of the concrete by using a waste by-product',
       'To make the concrete completely waterproof without additional admixtures',
+      'To reduce the embodied carbon of the concrete by using a waste by-product',
       'To eliminate the need for reinforcement in structural elements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Portland cement clinker production is responsible for approximately 7% of global CO\u2082 emissions. Replacing a proportion of clinker with GGBS (a waste by-product of steel manufacturing) significantly reduces the embodied carbon of concrete. GGBS concretes (CEM III) can replace up to 70% of the clinker, dramatically cutting the carbon footprint. They also offer improved durability and resistance to chemical attack, though early-age strength gain is typically slower.',
   },
@@ -136,11 +136,11 @@ const quizQuestions = [
       'Steel is described as being recyclable indefinitely. What does this mean in practical terms?',
     options: [
       'Steel can only be recycled once before it loses its structural properties',
-      'Steel can be melted down and reformed into new products repeatedly without loss of quality',
       'Steel must be mixed with virgin material each time it is recycled',
       'Steel recycling is only possible using Basic Oxygen Steelmaking (BOS)',
+      'Steel can be melted down and reformed into new products repeatedly without loss of quality',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Steel is 100% recyclable and can be melted down and reformed into new products repeatedly without any degradation of its structural properties. This makes it one of the most circular construction materials. The Electric Arc Furnace (EAF) route can produce steel from 100% scrap, and the resulting product is indistinguishable in quality from steel made from virgin ore. Designing for disassembly (using bolted connections rather than welded) makes steel recovery and reuse even more efficient.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'When comparing insulation materials, which natural option typically has the lowest embodied carbon?',
     options: [
+      'Sheep wool insulation',
       'Polyisocyanurate (PIR) rigid foam boards',
       'Expanded Polystyrene (EPS)',
-      'Sheep wool insulation',
       'Mineral wool (glass or rock)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Sheep wool insulation typically has the lowest embodied carbon of common insulation options because it requires minimal processing energy, is a renewable agricultural by-product, and sequesters carbon within the wool fibres. Other natural options such as hemp, wood fibre, and cellulose also have low embodied carbon. PIR and EPS are petroleum-derived and have significantly higher embodied carbon, though they offer superior thermal performance per unit thickness.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
       'What information does an Environmental Product Declaration (EPD) provide that a standard product datasheet does not?',
     options: [
       'The product price and availability from local merchants',
-      'Verified environmental impact data across the product lifecycle, based on EN 15804',
       'The installation method and required tools',
+      'Verified environmental impact data across the product lifecycle, based on EN 15804',
       'The manufacturer warranty period and conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An EPD provides independently verified environmental impact data for a product across its lifecycle, calculated in accordance with EN 15804. This includes Global Warming Potential (embodied carbon in kgCO\u2082e), ozone depletion potential, acidification potential, eutrophication potential, resource depletion, water usage, and waste generation across defined lifecycle stages. EPDs enable like-for-like comparison between competing products based on objective environmental data rather than marketing claims.',
   },
@@ -192,11 +192,11 @@ const quizQuestions = [
       'What is the primary benefit of designing buildings for deconstruction rather than demolition?',
     options: [
       'It eliminates the need for planning permission at end of life',
-      'It allows materials and components to be recovered, reused, or recycled rather than sent to landfill',
       'It means the building does not need to comply with structural regulations',
       'It reduces the initial construction cost by at least 20%',
+      'It allows materials and components to be recovered, reused, or recycled rather than sent to landfill',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Design for deconstruction (DfD) means designing buildings so that at end of life, materials and components can be carefully taken apart, recovered, and either reused directly or recycled into new products. This reduces waste to landfill, conserves virgin resources, and supports the circular economy. Techniques include using bolted rather than welded steel connections, mechanical fixings rather than adhesives, modular panel systems, and maintaining material passports so the composition of every element is known.',
   },

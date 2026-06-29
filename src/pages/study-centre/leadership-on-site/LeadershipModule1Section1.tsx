@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'According to John Kotter, leadership is primarily about coping with which of the following?',
     options: [
-      'Complexity — planning, budgeting, organising, and controlling',
       'Change — setting direction, aligning people, motivating, and inspiring',
+      'Complexity — planning, budgeting, organising, and controlling',
       'Efficiency — reducing costs, streamlining processes, and eliminating waste',
       'Compliance — enforcing rules, policies, and procedures on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "John Kotter's influential framework distinguishes leadership from management by stating that management is about coping with complexity (through planning, budgeting, organising, staffing, controlling, and problem-solving), while leadership is about coping with change (through setting direction, aligning people, motivating, and inspiring). Both are essential but fundamentally different.",
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Ordering materials to arrive on time for the next phase of works',
       'Scheduling subcontractors to avoid clashes in the programme',
-      'Rallying a demotivated team after a project setback to refocus on the goal',
       'Checking that installation work meets BS 7671 wiring regulations',
+      'Rallying a demotivated team after a project setback to refocus on the goal',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Rallying a demotivated team after a setback requires leadership — it involves inspiring people, communicating a vision, and motivating them to push through difficulty. The other options (ordering materials, scheduling subcontractors, checking compliance) are management activities — they involve planning, organising, controlling, and ensuring tasks are done correctly.',
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question: 'John C. Maxwell defined leadership as:',
     options: [
       'The ability to control people and ensure compliance with rules',
-      'Knowing the way, going the way, and showing the way',
       'Having the highest position of authority on a project',
       'Being the most technically skilled person on the team',
+      'Knowing the way, going the way, and showing the way',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "John C. Maxwell's widely quoted definition states: 'A leader is one who knows the way, goes the way, and shows the way.' This emphasises that leadership is about vision (knowing), personal example (going), and guiding others (showing) — not about titles, authority, or technical skill alone.",
   },
@@ -99,8 +99,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Henry Fayol identified five core functions of management. Which of the following is NOT one of them?',
-    options: ['Planning', 'Organising', 'Inspiring', 'Controlling'],
-    correctAnswer: 2,
+    options: [
+      'Inspiring',
+      'Planning',
+      'Organising',
+      'Controlling',
+    ],
+    correctAnswer: 0,
     explanation:
       "Henry Fayol's five functions of management are: planning, organising, commanding (directing), coordinating, and controlling. 'Inspiring' is not one of Fayol's management functions — it is more closely associated with leadership. This distinction highlights how management focuses on systems and processes, while leadership focuses on people and motivation.",
   },
@@ -110,11 +115,11 @@ const quizQuestions = [
       "According to John Kotter's framework, which pair of activities represents MANAGEMENT rather than leadership?",
     options: [
       'Setting direction and aligning people',
-      'Planning and budgeting, organising and staffing',
       'Motivating and inspiring the workforce',
+      'Planning and budgeting, organising and staffing',
       'Challenging the status quo and creating a vision for change',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Kotter's framework states that management is about coping with complexity through planning and budgeting, organising and staffing, controlling and problem-solving. Leadership is about coping with change through setting direction, aligning people, and motivating and inspiring. Both are needed, but they are distinct functions.",
   },
@@ -138,11 +143,11 @@ const quizQuestions = [
       'A construction site is well-managed but poorly led. Which of the following is MOST likely to be true?',
     options: [
       'The programme is behind schedule and the budget is overspent',
-      'Tasks are completed to specification but team morale is low and staff turnover is high',
       'The team is highly motivated but materials are frequently missing',
       'Safety incidents are common because nobody follows procedures',
+      'Tasks are completed to specification but team morale is low and staff turnover is high',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A well-managed but poorly led site will have good systems, controlled budgets, and compliant work — but without leadership, the team will be demotivated, there will be no sense of purpose or direction, people will not feel valued, initiative will be absent, and good workers will leave. Management keeps things running; leadership gives people a reason to care.',
   },
@@ -151,12 +156,12 @@ const quizQuestions = [
     question:
       'Which of the following best describes the relationship between leadership and management?',
     options: [
+      'They are complementary — both are needed, and the best supervisors blend both',
       'Leadership is superior to management and should replace it',
       'Management is more practical than leadership, making leadership unnecessary on site',
-      'They are complementary — both are needed, and the best supervisors blend both',
       'Leadership applies to senior roles; management applies to junior roles',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Leadership and management are complementary, not competing. Construction sites need both: management to handle complexity (planning, budgeting, organising, controlling) and leadership to handle change and people (setting direction, motivating, inspiring). The most effective site supervisors develop strength in both areas and know when to apply each.',
   },
@@ -166,11 +171,11 @@ const quizQuestions = [
       'A new site supervisor was promoted because they were the best electrician on the team. They are now struggling because:',
     options: [
       'They are not intelligent enough to be a supervisor',
-      'The technical skills that made them excellent at their trade are different from the leadership and management skills needed to run a team',
       'They should have refused the promotion and stayed as an electrician',
+      'The technical skills that made them excellent at their trade are different from the leadership and management skills needed to run a team',
       'Only people with formal management qualifications can be effective supervisors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This is one of the most common transitions in construction. Technical excellence does not automatically translate into leadership or management capability. The skills needed to install a complex electrical system (technical knowledge, precision, speed) are fundamentally different from the skills needed to lead a team (communication, motivation, delegation, conflict resolution). The good news is that leadership and management skills can be learned and developed.',
   },
@@ -179,11 +184,11 @@ const quizQuestions = [
     question: 'Which statement about leadership in construction is MOST accurate?',
     options: [
       "Leadership only matters for people with the word 'manager' in their job title",
-      'Leadership is a natural talent — you either have it or you do not',
       'Anyone at any level can demonstrate leadership through influence, initiative, and example',
+      'Leadership is a natural talent — you either have it or you do not',
       'Leadership is only needed during crises; day-to-day work only requires management',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Leadership is not tied to a job title, a natural-born trait, or limited to crisis situations. Anyone at any level — from apprentice to project director — can demonstrate leadership by taking initiative, influencing others positively, flagging concerns, helping colleagues, and setting a good example. Modern leadership research consistently shows that leadership is a set of behaviours and skills that can be learned and developed by anyone.',
   },

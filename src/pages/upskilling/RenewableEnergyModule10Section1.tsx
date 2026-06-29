@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What does Chapter 82 of BS 7671 define as a "Prosumer’s Electrical Installation" (PEI)?',
     options: [
-      'A single-source PV-only installation',
-      'An electrical installation that includes one or more local sources of supply (PV, BESS, wind, CHP, etc.) in addition to or instead of the public distribution network supply — and which may interact with the public network as a producer (export) as well as a consumer (import). Operating modes per Reg 824.2 include direct-feeding mode, island mode, and may transition between them.',
-      'Only a commercial-scale installation',
-      'Only an off-grid installation',
+      'An installation with local generation alongside or instead of the DNO supply, acting as producer and consumer',
+      'A single-source installation that only generates from PV, with no battery storage or export capability',
+      'Any installation rated above a defined commercial-scale threshold of total supply capacity',
+      'Only an off-grid installation that has no public distribution network connection at all',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 Chapter 82 introduces the Prosumer’s Electrical Installation (PEI) framework. A PEI is an electrical installation that combines local generation (PV, BESS, wind, CHP, micro-hydro) with the public DNO supply — the customer is simultaneously a producer (exporting surplus generation) and a consumer (importing when local generation is insufficient). Reg 824.2 defines the operating modes including direct-feeding mode (importing from / exporting to the public network), island mode (disconnected from public, operating on local generation + storage), and the transitions between them. Reg 826.1.1.1: "The PEI shall be able to operate in any intended operating mode as defined in Regulation 824.2... Protection of persons and properties shall be provided in all operating modes." M10 is the chapter where the single-source rules from M2-M9 are integrated under the Chapter 82 umbrella.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Which BS 7671 regulation requires that protection of persons and properties is maintained across all PEI operating modes?',
     options: [
-      'Reg 411.4',
-      'Reg 826.1.1.1: "The PEI shall be able to operate in any intended operating mode as defined in Regulation 824.2. According to needs, a PEI can change the operating mode at any time and may come back to the initial operating mode also at any time (for instance, from direct feeding mode to island mode and then back to direct feeding mode). Protection of persons and properties shall be provided in all operating modes."',
-      'Reg 311.1',
-      'Reg 643.1',
+      'Reg 411.4, which sets the disconnection times for TN system earth-fault protection',
+      'Reg 311.1, which deals with the assessment of maximum demand and applied diversity',
+      'Reg 826.1.1.1, which requires protection of persons and property in all PEI operating modes',
+      'Reg 643.1, which covers the initial verification and the inspection-and-test sequence',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 826.1.1.1 is the categorical requirement that protection of persons + property must work across EVERY operating mode the PEI might enter — direct feeding, island, transitions. This is the architectural shift from single-source design: in a single-source install, the protective architecture is designed once for one supply topology; in a PEI, the protective architecture has to work for: (a) DNO + all local sources operating in parallel; (b) DNO + some local sources; (c) DNO alone; (d) local sources alone (island); (e) every transition between these. Reg 826.1.2.1 then requires overcurrent calculation at every PEI protective-device location for ALL configurations + minimum + maximum current magnitudes. The integration challenge of M10 is not "add more sources" — it’s "design for every combination of sources operating together".',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'In island mode (PEI disconnected from DNO supply), what does Reg 826.1.1.2.2 require for the neutral conductor?',
     options: [
-      'Disconnect neutral only',
-      'Reg 826.1.1.2.2: "When in island mode, all live conductors shall be disconnected from the DNO supply. To prevent incorrect operation of RCDs the use of a neutral switch device shall connect the neutral and the earth of the PEI without overlapping with switching of the DNO neutral." — i.e. ALL live conductors (line + neutral) disconnect from DNO, then a local N–E bond is established for RCD operation.',
-      'Leave neutral connected always',
-      'No requirement',
+      'Disconnect only the neutral from the DNO and leave all the line conductors connected',
+      'Leave the DNO neutral connected at all times during island-mode operation of the PEI',
+      'There is no specific requirement for the neutral conductor while operating in island mode',
+      'Disconnect all live conductors, then establish a local N-E bond without overlapping DNO switching',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 826.1.1.2.2 verbatim: "When in island mode, all live conductors shall be disconnected from the DNO supply. To prevent incorrect operation of RCDs the use of a neutral switch device shall connect the neutral and the earth of the PEI without overlapping with switching of the DNO neutral." The sequence matters: (1) DNO line conductors disconnect; (2) DNO neutral disconnects; (3) local N–E bond establishes (creating a local TN-S architecture for the island). The non-overlap requirement prevents a momentary state where both the DNO N–E bond and the local N–E bond are in circuit — which would short-circuit through the earthing. This is the architectural foundation for ANY island-capable PEI (off-grid, microgrid, resilience) and is the reason grid-forming inverters with island capability need this neutral-handling logic. Covered in detail in §10.6 (grid forming).',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Per Reg 826.1.1.4, what isolation arrangement is required when an installation is supplied from more than one source?',
     options: [
-      'One main switch only',
-      'Reg 826.1.1.4: a main switch suitable for isolation shall be provided FOR EACH source of supply, plus EITHER a durable warning notice permanently fixed in the vicinity warning that ALL such switches must be operated to achieve isolation, OR a suitable interlock system. The PEI cannot be isolated by operating one source’s switch alone — every source must be addressed.',
-      'No isolation needed',
-      'Random',
+      'A single main switch that isolates the whole installation in one operation',
+      'A main switch for each source, plus a durable warning notice or a suitable interlock',
+      'No dedicated isolation is needed where the local sources auto-disconnect on grid loss',
+      'Only the DNO supply needs an isolating switch; the local sources do not require one',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A site has existing 6 kWp PV (Section 712) + 13 kWh BESS (Chapter 57) + a planned 7 kW EV charger (Section 722) + heat pump (M8 fixed equipment) + future V2G upgrade. What BS 7671 framework integrates all of these?',
     options: [
-      'Section 712 only',
-      'Chapter 82 PEI is the integrating framework. Section 712 (PV) + Chapter 57 (BESS) + Section 722 (EV) + Section 551 (generating sets) are the per-technology anchors; Chapter 82 + Reg 826.x family integrates them. Reg 826.1.1.1 protection across all operating modes; Reg 826.1.1.4 multi-source isolation; Reg 826.1.2.1 overcurrent at every PEI point for every configuration; Reg 826.1.4 surge protection. EREC G99 + G100 cover DNO interface.',
-      'No framework needed',
-      'Section 722 only',
+      'Section 712 alone covers the whole multi-source installation and its protection',
+      'Section 722 alone, because the EV charger dominates the design and loading',
+      'Chapter 82 (PEI) integrates the per-technology sections via the Reg 826.x family',
+      'No integrating framework is needed; each technology is certified entirely separately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This is exactly the multi-source PEI scenario Chapter 82 was added to cover. Per-technology BS 7671 anchors: Section 712 (PV) + Chapter 57 (BESS) + Section 722 (EV, including V2G when added) + Section 551 (generating set framework which covers PV inverter + BESS inverter + any future generators). The INTEGRATION framework is Chapter 82: Reg 826.1.1.1 requires protection in every operating mode (DNO+PV+BESS+EV, DNO+PV only, BESS+EV island, etc.); Reg 826.1.1.4 multi-source isolation with warning notices; Reg 826.1.2.1 overcurrent calculation at every protective-device point for every configuration; Reg 826.1.2.2 protective devices selected considering ALL possible directions of current flow + polarity; Reg 826.1.4 surge protection because switching between sources creates more transient overvoltage events. EREC G99 covers the DNO connection design; EREC G100 covers DNO export limit if applied. Cert evidence bundle: one EIC referencing all sub-systems + per-technology DoC + Section 826 PEI compliance summary + EREC correspondence.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A customer wants to add a 5 kW small wind turbine to an existing PV + BESS site. The wind inverter is grid-following. Does Chapter 82 add anything beyond Section 551 + Section 712 + Chapter 57?',
     options: [
-      'No — just use Section 551',
-      'Yes. Section 551 covers the wind generating set; Section 712 + Chapter 57 cover the existing PV + BESS individually. Chapter 82 adds: integration requirements across all sources (Reg 826.1.1.1 protection in all operating modes), multi-source isolation (Reg 826.1.1.4 four switches: DNO + PV + BESS + wind), overcurrent recalculation (Reg 826.1.2.1 considering the wind contribution at every existing protective device), bidirectional energy-flow protective devices (Reg 551.7.1(c)), surge protection upgrade (Reg 826.1.4), EMS coordination (EEMS requirements in Section 825 / Reg 825.1).',
-      'Random',
-      'No interaction',
+      'No — Section 551 alone fully covers adding the wind turbine to the existing site',
+      'No — adding a third source has no interaction with the existing PV and BESS design',
+      'It varies unpredictably from site to site and so cannot be generalised at all',
+      'Yes — it adds all-mode protection, extra isolation, overcurrent recalc and SPD/EMS uplift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-source sites are NOT the sum of single-source installs. Adding a third source to a PV+BESS site: (1) Reg 826.1.1.1 protective design must work for every combination (PV+BESS+wind, PV+wind, BESS+wind, wind-only, etc.); (2) Reg 826.1.1.4 each source needs its own isolation switch + warning notice update; (3) Reg 826.1.2.1 overcurrent at every protective device point recalculated — the wind contribution adds to fault current at any common busbar; (4) Reg 551.7.1(c) (per A4 redraft) requires suitable protective device for bidirectional energy flow at the source connection; (5) Reg 826.1.4 surge protection: more sources = more switching events = more transient overvoltages, SPD specification may need uplift; (6) EMS / EEMS (requirements in Section 825 / Reg 825.1): the wind inverter has to coexist with PV + BESS scheduling. Cert evidence: existing EIC superseded by integrated PEI EIC referencing all sources + Section 551 generating-set updates + new isolation arrangement + revised RCD architecture + EREC G99 amendment (DNO needs to know there’s a third source).',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Why does Reg 826.1.2.1 require overcurrent calculation at every PEI protective device location for ALL possible configurations + minimum AND maximum current magnitudes?',
     options: [
-      'Random',
-      'Because the operating mode dramatically influences fault-current magnitudes. In island mode (only inverters as sources), short-circuit current is much LOWER (inverters current-limit at ~1.1× rated) than in direct-feeding mode (DNO contributes 10-25 kA). A protective device sized only for direct-feeding mode may fail to clear an island-mode fault (current too low to trip overcurrent device in disconnection time). Reg 826.1.2.1 forces consideration of both extremes.',
-      'No reason',
-      'Optional',
+      'Because island-mode fault current is inverter-limited and far lower than direct-feeding current',
+      'There is no real engineering reason; the calculation is a purely administrative formality',
+      'It is an optional calculation that designers may skip whenever it is convenient to do so',
+      'Because the DNO mandates it for export billing purposes rather than for any safety reason',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 826.1.2.1: "Overload and short-circuit currents shall be determined at every point of the PEI where a protective device is installed: (a) for all possible configurations of each type of PEI; and (b) for situations corresponding to the minimum and maximum current magnitudes." The note explicitly states: "The operating mode influences greatly the overcurrent magnitude. In particular, in island mode, the short-circuit current will [be much lower]." The engineering reality: a 100 A BS EN 60898 type C MCB needs ~500-1000 A to trip in 0.4 s (per Reg 411.3.2). DNO supply gives 6-25 kA prospective — trips instantly. Pure-inverter island mode: inverter current-limits at ~1.1× rated (e.g. 5 kW single-phase inverter limits at ~25 A). A short-circuit downstream in island mode may produce only 25 A — the MCB doesn’t trip in disconnection time, ADS fails, persons at risk. Mitigation: RCDs (still work in island via N-E bond per Reg 826.1.1.2.2), inverter ride-through + automatic disconnection, designed minimum-fault verification at commissioning. Cert evidence: PEI overcurrent study covering all configurations + min/max current magnitudes per protective device.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'On a multi-source PEI, Reg 826.1.1.4 requires a warning notice for multi-source isolation. What does that notice need to say?',
     options: [
-      'No specific wording',
-      'The notice must warn that any person seeking to isolate the installation must operate ALL the source-side main switches — not just one. UK 2025-26 typical wording: "WARNING. Multiple sources of supply. This installation is fed from: [DNO supply | PV array | BESS | EV V2G | etc.]. To isolate the installation, ALL of the following must be switched off: [list of switch locations]. Risk of electric shock if all sources are not isolated."',
-      'Random text',
-      'Just "Danger"',
+      'No specific message is required as long as a notice of some kind is present nearby',
+      'Any general text placed near the source switches will satisfy the regulation',
+      'It must warn that multiple sources exist and ALL source switches must be operated to isolate',
+      'A single word such as "Danger" is sufficient on its own at the main switches',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 826.1.1.4: "A durable warning notice shall be permanently fixed in the vicinity of these main switches in such a position that any person seeking to operate any of these main switches will be warned of the need to operate all such switches to achieve isolation of the installation." BS 7671 doesn’t prescribe verbatim wording but the warning must communicate: (1) the installation has multiple sources; (2) operating any single switch does NOT isolate; (3) all source-side switches must be operated. Practical UK 2025-26 wording at the PEI main consumer unit: "WARNING. Multiple sources of supply. To isolate, switch OFF: (1) DNO main switch at MET; (2) PV DC isolator at inverter; (3) PV AC isolator at inverter; (4) BESS DC isolator; (5) BESS AC isolator; (6) EV charger isolator (if V2G). Failure to isolate ALL sources presents risk of electric shock from energised conductors fed by remaining live sources." This sits alongside the PME warning notice (Reg 514 family). Cert evidence: photograph of installed notice + verification of every switch location in the EIC.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'Reg 826.1.3 says "When the public network is not energized, prosumers shall operate their private individual PEI in island mode or automatically disconnect all local power supplies." What does this enforce?',
     options: [
-      'Optional',
-      'Either: (a) the PEI has been designed with island-mode capability (grid-forming inverter / BESS + local N-E bond per Reg 826.1.1.2.2 + island-mode switching device per Reg 826.1.1.5) AND switches to island operation when DNO fails; OR (b) the PEI must shut down ALL local sources when DNO supply fails (the default behaviour of UK 2025-26 grid-following inverters via Reg 551.7.5 anti-islanding). One or the other — not "keep exporting into a dead grid".',
-      'Random',
-      'No requirement',
+      'It is an optional recommendation that prosumers are free to ignore in practice',
+      'The PEI must enter island mode or disconnect all local sources, never feed a dead grid',
+      'It varies and depends purely on the inverter manufacturer’s default settings',
+      'There is no requirement; inverters may continue feeding the de-energised network',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'Why is Chapter 82 added to BS 7671 instead of just expanding each per-technology section (712, 722, 551, 57)?',
     options: [
-      'Random',
-      'Because the integration problem is a CATEGORICALLY NEW design challenge that doesn’t belong to any single technology section. Per-technology sections (712 PV, 722 EV, 551 generators, 57 BESS) cover the single-source rules; Chapter 82 covers the architecture for multi-source coexistence — operating modes, isolation, overcurrent across configurations, surge protection from switching, EEMS coordination, interaction with the public network. Chapter 82 is the architectural anchor for prosumer installations.',
-      'Mistake',
-      'No reason',
+      'It was added by mistake and simply duplicates the existing per-technology sections',
+      'Because multi-source coexistence is a new design challenge owned by no single section',
+      'There is no real reason for it; it could equally well sit inside Section 712 for PV',
+      'Only to renumber the existing PV and EV charging regulations into one place',
     ],
     correctAnswer: 1,
     explanation:

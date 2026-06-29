@@ -39,24 +39,24 @@ const inlineChecks = [
     question:
       'You are designing a horizontal run from a floor distributor to a work-area outlet 92 m away (cable route, not straight-line). Your patch lead at the FD is 3 m and your work-area cord is 4 m. Is this a compliant Class EA / Cat6A channel?',
     options: [
-      'Yes — total channel length is under 105 m, which is the absolute maximum.',
-      'No — the permanent link itself exceeds the 90 m maximum, so the channel is non-compliant before the cords are even counted.',
-      'Yes — as long as the equipment cord at the switch end is 0 m, the total still fits.',
-      'No — but only because the work-area cord exceeds 3 m.',
+      'Yes — total channel length stays under the 105 m Class EA absolute maximum.',
+      'No — the permanent link itself exceeds the 90 m maximum, so the channel fails.',
+      'Yes — provided the equipment cord at the switch end is kept down to 0 m.',
+      'No — but only because the combined work-area cord run exceeds 3 m.',
     ],
     correctIndex: 1,
     explanation:
-      'The 90 m limit applies to the PERMANENT LINK (outlet-to-FD), not the channel. ANSI/TIA-568.0-E and ISO/IEC 11801-1 both fix this. 92 m is non-compliant before you have even plugged a cord in. The 100 m channel total (= 90 m permanent link + up to 10 m cords combined) is the upper limit, and the permanent link cannot be traded for cord length. If you have to break the rule, you cannot — you split the run with a consolidation point or a second telecoms enclosure on the floor.',
+      'The 90 m limit applies to the PERMANENT LINK (outlet-to-FD), not the channel. ANSI/TIA-568.0-E and ISO/IEC 11801-1 both fix this. 92 m is non-compliant before you have even plugged a cord in. The 100 m channel total (= 90 m permanent link + up to 10 m cords combined) is the upper limit, and the permanent link cannot be traded for cord length. The fix is to split the run with a consolidation point or a second telecoms enclosure on the floor.',
   },
   {
     id: 'datacabling-m1s1-standards-landscape',
     question:
       'A UK contractor is specifying a Cat6A office fit-out and the architect asks "which standard governs this work?". What is the most accurate UK answer?',
     options: [
-      'TIA-568.0-E only — it is the global standard.',
-      'ISO/IEC 11801 — every other document is just a translation.',
-      'BS EN 50173-1 (the harmonised European cabling standard, applicable in the UK), with installation governed by BS EN 50174-1/-2/-3 and earthing/bonding by BS EN 50310 — alongside BS 6701 for telecoms wiring inside the premises and BS 7671:2018+A4:2026 for any LV / ELV power dependencies (notably PoE under §716).',
-      'BS 7671 alone — it covers all electrical work including data.',
+      'ANSI/TIA-568.0-E only — the North American standard is taken as the global default.',
+      'ISO/IEC 11801 alone — the European and British documents are just translations of it.',
+      'BS EN 50173-1 for performance, with BS EN 50174 install, BS EN 50310 bonding, BS 6701 telecoms, and BS 7671:2018+A4:2026 for LV / ELV power.',
+      'BS 7671 alone — the wiring regulations cover all electrical work including data.',
     ],
     correctIndex: 2,
     explanation:
@@ -67,14 +67,14 @@ const inlineChecks = [
     question:
       'The whole pitch for structured cabling is "service-independence." What does that actually mean for an installer on day one of a 20-year cabling life?',
     options: [
-      'You only need to install one cable type, regardless of services.',
-      'The infrastructure is sized to a defined performance Class (e.g. Class EA / Cat6A) and pinned to a topology, so it can carry whatever Layer-2/Layer-1 services the building needs over its life — Ethernet today, PoE++ for lighting/CCTV/access tomorrow, fibre uplinks at refresh — without having to be torn out and re-pulled when a service changes.',
-      'You can use any cable, anywhere, for anything.',
-      'It eliminates the need for telecoms rooms.',
+      'You only have to install a single cable type, regardless of the services it carries.',
+      'The cabling is certified to a defined Class and topology, so it carries whatever services the building needs over its life without re-pulling.',
+      'You can use any cable, in any pathway, for any service without restriction.',
+      'It removes the need for dedicated telecoms rooms on each floor.',
     ],
     correctIndex: 1,
     explanation:
-      "Service-independence is a SPECIFICATION discipline. You design and certify the cabling to a Class (governs frequency response, NEXT, return loss, etc.) and a topology (channel model, distance limits, connector counts). What you plug into it is the active layer's problem. Done well, the structure outlives 3-4 generations of switches, IP phones, cameras, lighting controllers and PoE devices. Done badly, the building gets re-cabled every refresh.",
+      "Service-independence is a SPECIFICATION discipline. You design and certify the cabling to a Class (governs frequency response, NEXT, return loss, etc.) and a topology (channel model, distance limits, connector counts). It carries Ethernet today and PoE++ for lighting, CCTV and access control tomorrow without re-pulling. What you plug into it is the active layer's problem. Done well, the structure outlives 3-4 generations of switches, IP phones, cameras and PoE devices. Done badly, the building gets re-cabled every refresh.",
   },
 ];
 
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'What single design rule is the spine of every horizontal run in a structured cabling system?',
     options: [
-      'Cables must always be terminated to T568B.',
-      'The 100 m channel rule: a maximum 90 m permanent link (work-area outlet to floor distributor) plus a combined 10 m of patch / equipment / work-area cords, totalling no more than 100 m.',
-      'Every run must have at least one consolidation point.',
-      'Patch panels must be black.',
+      'The 100 m channel rule: a 90 m maximum permanent link plus a combined 10 m of cords.',
+      'Every horizontal run must be terminated to the T568B pin-out at both ends.',
+      'Every horizontal run must include at least one consolidation point mid-span.',
+      'Every patch panel on the floor must be a single uniform colour throughout.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 100 m channel rule is fixed by both ANSI/TIA-568.0-E and ISO/IEC 11801-1 (and therefore BS EN 50173-1). It bounds the worst-case insertion loss and propagation delay budget that the active equipment expects. Within the 100 m, the permanent link cannot exceed 90 m because the cords are noisier (stranded conductors, more flex-cycles) and need to be allowed for. A run that exceeds 90 m on the permanent link cannot be rescued by shortening cords.',
   },
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'Which subsystem is responsible for cabling between floors / between buildings on a campus, providing the trunk that the floor distributors hang off?',
     options: [
-      'Entrance facilities.',
-      'Backbone cabling — vertical (riser) within a building, and inter-building (campus / Building Distributor to Campus Distributor) between buildings on a site.',
-      'Horizontal cabling.',
-      'Equipment room cabling.',
+      'Entrance facilities — where the external carrier service enters the building.',
+      'Backbone cabling — riser within a building and campus links between buildings.',
+      'Horizontal cabling — the last leg from floor distributor to work-area outlet.',
+      'Equipment room cabling — the patching inside the building’s core distributor.',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which UK / European standard is the primary harmonised document for the performance of generic structured cabling installed in commercial premises?',
     options: [
-      'BS 7671:2018+A4:2026.',
-      'BS EN 50173 (Information technology — Generic cabling systems). Part 1 covers general requirements; further parts cover application-specific environments (offices, industrial, residential, distributed buildings, data centres).',
-      'BS 5266-1:2025.',
-      'BS 7430.',
+      'BS 7671:2018+A4:2026 (the wiring regulations).',
+      'BS 5266-1:2025 (emergency lighting).',
+      'BS EN 50173 (Information technology — Generic cabling systems); Part 1 covers general requirements, further parts cover specific environments.',
+      'BS 7430 (code of practice for protective earthing).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50173 is the harmonised European generic-cabling standard (the ISO/IEC 11801 family at the international level). BS 7671 is the UK wiring regulation — it covers electrical safety; from A4:2026 it adds §716 for PoE and §545 for ICT functional earthing, but the cabling performance requirements live in BS EN 50173 / 50174. BS 5266-1 is emergency lighting. BS 7430 is earthing — relevant context for the bonding network but not the cabling specification.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'A new build will support voice over IP, CCTV (PoE), wireless access points (PoE++), building management sensors, and may host a small server room in 2 years. What does "service-independence" require you to do at design stage?',
     options: [
-      'Pull a different cable type for each service.',
-      'Specify a Class / Category that headrooms the most demanding service expected over the cabling life (typically Cat6A / Class EA today, or fibre to the floor for high-density APs), provide enough outlet density to handle PoE growth, design containment and pathways with capacity and bend radii compatible with the cable type, and document the design as service-independent so future services slot in without re-cabling.',
-      'Avoid PoE — it complicates the design.',
-      'Defer the decision until a tenant moves in.',
+      'Pull a different cable type for each service the building will run.',
+      'Specify a Class, outlet density and pathway capacity that absorbs the most demanding future service.',
+      'Avoid PoE entirely, since it complicates the thermal design of the bundles.',
+      'Defer the cabling decision until the first tenant moves in and states their needs.',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Which two NEW BS 7671 sections — introduced in Amendment 4 (2026) — bring data cabling concerns formally inside the wiring regulations?',
     options: [
-      'Sections 411 and 421.',
-      'Sections 545 (ICT functional earthing) and 716 (PoE and ELV DC distribution over balanced cabling). Both are entirely new in BS 7671:2018+A4:2026, published 15 April 2026, and apply to installations designed from that date.',
-      'Sections 528 and 543.',
-      'Sections 444 and 521.',
+      'Sections 411 (ADS) and 421 (protection against fire).',
+      'Sections 528 (proximity of services) and 543 (protective conductors).',
+      'Sections 444 (EMC) and 521 (wiring systems).',
+      'Sections 545 (ICT functional earthing) and 716 (PoE / ELV DC over balanced cabling).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§545 and §716 are entirely new in A4:2026. §716 covers Power over Ethernet (Type 1-4 per IEEE 802.3bt) and ELV DC distribution over the balanced cabling itself — with a hard regulatory cap of 750 mA per conductor (§716.523.2.101). §545 covers functional earthing of ICT equipment (a different concern from protective earthing under §543/544) — including the new MFET (main functional earthing terminal) concept and minimum 2.5 / 4 mm² Cu CSAs. Existing §444 (EMC), §528 (proximity to other circuits) and §521.10.202 (cables in escape routes — NOT §521.10.1) remain in force in A4:2026 and remain directly relevant to data cabling, but §545 and §716 are the brand-new additions.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'You are running 24 Cat6A cables in a single bundle to a high-density AP cluster, all carrying Type 4 PoE++ continuously. What is the relevant install-practice consideration?',
     options: [
-      'Bundle size has no effect — PoE is too small to matter.',
-      'Bundle de-rating: continuous PoE current produces heat, and bundles trap heat. TIA TSB-184-A and BS EN 50174-2 address bundle size and de-rating; large continuous-PoE bundles may need to be limited in count, separated, or upgraded to a larger conductor (23 AWG, e.g. limited-power-conductor / LP-rated cable) to keep conductor temperature within insulation rating.',
-      'You should run the bundle inside an earth-bonded steel tray.',
-      'Bundles must always be cable-tied every 100 mm.',
+      'Bundle size has no effect, because the PoE current per conductor is too small to matter.',
+      'The bundle must be run inside an earth-bonded steel tray to provide electromagnetic screening.',
+      'Bundle de-rating — continuous PoE heats the bundle, so limit the count or use 23 AWG cable.',
+      'Bundles must always be cable-tied at regular 100 mm intervals along the run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 7671:2018+A4:2026 §716.523.2.101 sets a hard regulatory cap of 750 mA per conductor for ELV DC distribution over balanced cabling, and §716.526.101 imposes the same 750 mA per contact at the connecting hardware. In a tight bundle, heat compounds — every loaded conductor adds to the bundle temperature, which raises insertion loss and stresses the insulation. TIA TSB-184-A (2017) and PD CLC/TR 50174-99-1:2015 (referenced from §716.523.1.101 NOTE 2) give the bundle-management guidance. Practical responses: limit bundle size, separate bundles physically, use 23 AWG cable, choose LP-rated cables, verify the manufacturer's PoE de-rating tables — and never exceed 750 mA per conductor under §716.",
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'Why is "documentation" listed as part of every structured-cabling design — not just as a nicety?',
     options: [
-      'It looks professional in tender submissions.',
-      'Documentation is the artefact that LETS the cabling deliver its 15-20 year service-independent life: labelling (TIA-606-D / BS EN 50174-1), as-built drawings, test results, and an administration record. Without documentation, the next contractor cannot find a circuit, a fault cannot be isolated to the right link, and re-cabling becomes the cheapest fix — destroying the whole long-life value proposition.',
-      'It is required by the warranty manufacturer only.',
-      'It is required only on government contracts.',
+      'It makes the tender submission look more professional to the client.',
+      'It is what lets the cabling stay usable and modifiable across its 15-20 year life.',
+      'It is required only to satisfy the cabling manufacturer’s warranty terms.',
+      'It is required only on government and other public-sector contracts.',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A first-fix electrician asks you "why are we putting a comms room HERE? It is awkward — the cleaners use that cupboard." How do you justify the location?',
     options: [
-      "It's where the architect drew it; we follow drawings.",
-      'The location is set by the 90 m horizontal-link constraint: every work-area outlet on the floor must be reachable within 90 m of cable run from the floor distributor, and the floor distributor lives in the comms room / telecoms enclosure. Backbone risers, cooling, power, and access also constrain it — but the 90 m radius is the first-order driver. Move it and you cannot reach all the outlets.',
-      'It minimises rent.',
-      'It is the cheapest place to install conduit.',
+      'The 90 m horizontal-link constraint sets it: every outlet on the floor must reach the floor distributor within 90 m of cable run, and that distributor lives in the comms room.',
+      "It is simply where the architect drew it, and we follow the drawings.",
+      'It is positioned to minimise the rentable floor area lost to plant.',
+      'It is the cheapest place on the floor to install the conduit run.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Telecommunications-room placement is governed first by the 90 m permanent-link rule. From the FD/TR, every horizontal cable on that floor must reach its outlet in 90 m of cable RUN — not straight-line. On large floor plates, that often forces multiple TRs per floor, or a TR somewhere central rather than tucked in a corner. BS EN 50174-2 and TIA-569-E address the room itself (size, environmental envelope 18-27 °C / 8-60 % RH per TIA-569-E-1, structural loading, power redundancy, access). The comms room is awkward because it has to be — the 90 m driver is non-negotiable.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       "Which of these IS a legitimate reason a structured-cabling system might need to be partly re-pulled within its 'design life'?",
     options: [
-      'Anything is a legitimate reason; cabling is consumable.',
-      'A genuine performance-step change that the original Class cannot meet — e.g. a building specced to Cat5e in 2008 needing 10GBASE-T at 100 m, which Cat5e cannot deliver. The original spec did its job; the building requirement changed beyond what was foreseeable. The fix is selective re-pulling to Cat6A or fibre to the affected areas, not condemnation of the whole system.',
-      'A new manager preferring a different colour of cable.',
-      'A change in the patch-panel vendor.',
+      'Any reason at all, since cabling is a consumable to be replaced freely.',
+      'A new facilities manager preferring a different colour of cable in the racks.',
+      'A decision to standardise on a different patch-panel vendor across the site.',
+      'A performance-step change the original Class physically cannot meet, such as 10GBASE-T on old Cat5e.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Service-independence has limits. A spec that was reasonable in 2008 (Cat5e for gigabit) cannot deliver 10GBASE-T at 100 m channel — the cable's frequency response is fundamentally insufficient. That is a legitimate re-cable trigger. Within a Class, however, almost any service in scope should run without re-pulling. The art of the design is choosing a Class with enough headroom that the foreseeable services are absorbed.",
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'A client says "we don\'t need structured cabling — we\'ll just run cables to the printer when the printer arrives." What is the cleanest first response?',
     options: [
-      'Agree; structured cabling is over-engineering for small buildings.',
-      'Show them the cost curve. Ad-hoc point-to-point cabling has low first-fit cost and exponentially rising maintain / extend cost; structured cabling has higher first-fit cost and near-flat lifecycle cost. Even a 4-5 year occupation crosses the break-even on most office fit-outs. Service-independence then unlocks IP voice, PoE lighting and access control without re-cabling — value the ad-hoc approach cannot deliver at all.',
-      'Refuse the job.',
-      'Tell them BS 7671 mandates it.',
+      'Agree, since structured cabling is over-engineering for a small building.',
+      'Show them the lifecycle cost curve, where structured cabling crosses break-even in 4-5 years.',
+      'Politely refuse the job rather than install ad-hoc point-to-point cabling.',
+      'Tell them BS 7671 legally mandates structured cabling in commercial premises.',
     ],
     correctAnswer: 1,
     explanation:

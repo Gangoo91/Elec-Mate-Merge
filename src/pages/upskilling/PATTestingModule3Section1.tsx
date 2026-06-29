@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'You find a 1.5 m kettle lead with a 30 mm split through the outer sheath about 200 mm from the plug. The inner cores are visible but their insulation is intact. Pass, fix, or fail?',
     options: [
+      'Fail — exposed inner cores breach the flex sheath; replace the lead.',
       'Pass — only the outer sheath is broken; the cores are still insulated.',
-      'Fail. Outer-sheath damage that exposes the inner cores breaches the mechanical and additional electrical protection of the flex. IET CoP s.15 lists this as a fail item — replace the lead, do not patch with tape.',
-      'Tape it with PVC and re-test in 3 months.',
-      'Cut back the damaged section and re-fit the original plug shorter.',
+      'Wrap the split with PVC tape and re-test the lead again in three months.',
+      'Cut back the damaged section and re-fit the original plug on the shorter lead.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'IET CoP 5th Ed Ch 15 (formal visual inspection) treats any sheath damage that exposes the inner cores as a fail. The outer sheath is the flex’s mechanical protection — once it is breached at a flex-and-bend point near the plug, taping is not a remedy. Replace the flex or replace the appliance lead.',
+      'IET CoP 5th Ed Ch 15 (formal visual inspection) treats any sheath damage that exposes the inner cores as a fail. The outer sheath is the flex’s mechanical and additional electrical protection — once it is breached at a flex-and-bend point near the plug, taping is not a remedy. Replace the flex or replace the appliance lead.',
   },
   {
     id: 'patm3-s1-pin-oxide',
     question:
       'A BS 1363 plug on a workshop drill has noticeable green-brown discolouration on the line and neutral pins, and the live pin is faintly pitted. The earth pin looks clean. The drill is used outdoors. What does this tell you?',
     options: [
-      'Cosmetic only — pin oxidation does not affect function.',
-      'It is a sign of moisture ingress and possibly a high-resistance contact at the socket. Investigate the socket too, and replace the plug. IET CoP s.15.6 calls out plug-pin discolouration / pitting as a defect.',
-      'Clean with wire wool and re-test.',
-      'Only the earth pin matters — the L and N pins are non-critical.',
+      'Cosmetic only — pin discolouration and pitting do not affect function.',
+      'Clean the pins bright with wire wool, then re-test and return to service.',
+      'A sign of moisture/arcing — replace the plug and inspect the socket too.',
+      'Only the earth pin condition matters — line and neutral are non-critical.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Pitting and discolouration on the L/N pins is the visible sign of arcing or moisture corrosion. It raises contact resistance, which heats the plug and the socket. The CoP fails the plug; the socket should be inspected as part of the wider workplace check (HSG107).',
   },
@@ -51,28 +51,28 @@ const inlineChecks = [
     question:
       'You can see the brown and blue cores inside a moulded plug because the cord grip has slipped and the outer sheath ends inside the strain-relief boot rather than past it. Test or fail?',
     options: [
-      'Test — the cores are still insulated.',
-      'Fail at visual stage. The cord grip must clamp the outer sheath, not the inner cores. IET CoP s.15.5 fails this on construction grounds because any pull on the flex transfers straight to the terminal connections.',
-      'Push the cable back in and re-grip.',
-      'Pass — moulded plugs cannot be opened anyway.',
+      'Test it — the inner cores are still individually insulated despite the slipped cord grip.',
+      'Push the cable further in and re-tighten the cord grip onto the displaced sheath.',
+      'Pass it — a moulded plug cannot be opened, so the cord grip cannot be assessed.',
+      'Fail at the visual stage — the cord grip must clamp the outer sheath, not the cores.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'BS 1363 plug construction requires the cord grip to clamp the outer sheath. If the sheath does not extend through the cord grip, mechanical strain is transferred to the conductor terminations. On a moulded plug this is an immediate fail and the lead is replaced.',
+      'BS 1363 plug construction requires the cord grip to clamp the outer sheath. If the sheath does not extend through the cord grip, mechanical strain is transferred to the conductor terminations — IET CoP s.15.5 fails this on construction grounds. On a moulded plug it is an immediate fail and the lead is replaced.',
   },
   {
     id: 'patm3-s1-iec',
     question:
       'A C13 (kettle) connector on a desktop PC lead has a slightly bent earth pin in the equipment-end socket and the appliance inlet shows brown scorching around the L pin. The lead itself is undamaged. Action?',
     options: [
-      'Replace the lead only.',
-      'Fail the appliance, not just the lead. Scorching at the appliance inlet points to a fault inside the equipment (loose internal termination, overheating PSU). Quarantine and refer for engineering inspection — IET CoP “do not test, fail it”.',
-      'Cut the IEC end off and fit a new connector.',
-      'Test electrically and decide based on the readings.',
+      'Fail the appliance, not just the lead, and refer it for engineering inspection.',
+      'Replace the C13 lead only and return the appliance straight back to service.',
+      'Cut the IEC end off the lead and fit a new C13 connector to the existing flex.',
+      'Carry out the electrical tests and decide on the basis of the measured readings.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'BS EN 60320 C13/C14 inlets show scorching when there is heat at the contact — usually from a high-resistance joint inside the equipment or a damaged inlet. The CoP rule is clear: visible heat damage means fail at the inspection stage. Replacing only the lead leaves the underlying equipment fault in service.',
+      'Scorching at the appliance inlet points to a fault inside the equipment — a loose internal termination or overheating PSU. BS EN 60320 C13/C14 inlets show this when there is heat at the contact, usually a high-resistance joint or damaged inlet. The CoP rule is "do not test, fail it": visible heat damage fails at the inspection stage. Quarantine and refer for engineering inspection — replacing only the lead leaves the underlying equipment fault in service.',
   },
 ];
 
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A BS 1363 plug has an outer sheath that ends just inside the plug body, leaving the brown and blue cores visible inside before they reach the terminals. What does the IET CoP require?',
     options: [
-      'Pass — the conductors are still insulated',
+      'Pass — the brown and blue conductors are still individually insulated',
+      'Pass, provided the appliance is Class II and therefore has no earth to disturb',
+      'Fail only if a subsequent load test shows the cores moving at the terminals',
       'Fail at inspection — the cord grip must clamp the outer sheath, not the inner cores',
-      'Pass if the appliance is Class II',
-      'Fail only if a load test shows movement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 1363 requires the cord grip to clamp the outer sheath so that mechanical pull is transferred to the sheath, not the conductors. IET CoP s.15.5 fails this construction defect at visual stage, regardless of class.',
   },
@@ -110,14 +110,14 @@ const quizQuestions = [
     question:
       'During inspection of a Class I appliance flex, you find a single broken strand visible at the brown core where it enters the L terminal of a rewireable plug. What is the correct action?',
     options: [
-      'Re-strip and re-terminate the conductor; if the remaining strands fully fill the terminal, the plug can pass',
-      'Pass — single-strand damage is cosmetic',
-      'Fail — any damage to a current-carrying conductor at a termination is a defect',
-      'Re-test electrically and accept if continuity is good',
+      'Cut back and re-terminate the conductor; pass it once the remaining strands fill the terminal',
+      'Pass it as it stands — a single damaged strand is purely cosmetic and changes nothing',
+      'Fail outright — any damage to a current-carrying conductor at a termination is a defect',
+      'Re-test electrically and accept the plug provided the continuity reading is good',
     ],
     correctAnswer: 0,
     explanation:
-      'IET CoP allows re-termination as a remedial action in formal visual inspection. The flex is cut back to undamaged conductor and re-terminated. If the remaining length is too short or the conductor is repeatedly damaged, the lead is replaced. Continuity alone does not confirm long-term mechanical integrity.',
+      'IET CoP allows re-termination as a remedial action in formal visual inspection. The flex is cut back to undamaged conductor and re-terminated; if the remaining length is too short or the conductor is repeatedly damaged, the lead is replaced. Continuity alone does not confirm long-term mechanical integrity, so an electrical test is not the deciding factor here.',
   },
   {
     id: 4,
@@ -138,68 +138,68 @@ const quizQuestions = [
     question:
       'You are inspecting a moulded BS 1363 plug. You cannot open it to inspect terminations. What does the IET CoP say you should look for instead?',
     options: [
-      'Nothing — moulded plugs cannot be inspected, only tested',
-      'External signs: pin condition, pin-to-body alignment, sheath entering the cord grip past the moulded body, no cracks, no scorching, fuse rating visible and correct',
-      'Cut the plug open to inspect termination quality',
-      'Only the rating plate of the appliance',
+      'Nothing — a moulded plug cannot be inspected at all and is assessed by electrical test only',
+      'Cut the moulded plug open to inspect the termination quality directly, then re-fit a new plug',
+      'The external signs: pin condition, body integrity, sheath into the cord grip, fuse rating visible',
+      'Only the appliance rating plate, since the plug itself reveals nothing useful on inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'IET CoP s.15.5 lists the external checks for moulded plugs: pin integrity, no cracks in the body, the sheath entering the strain relief and not the cores, no signs of heat damage, the correct fuse rating clearly visible. The inspection is external because the plug cannot be opened, but it is not skipped.',
+      'IET CoP s.15.5 lists the external checks for moulded plugs: pin integrity and pin-to-body alignment, no cracks in the body, the sheath entering the strain relief past the moulded body (not the cores), no signs of heat damage, and the correct fuse rating clearly visible. The inspection is external because the plug cannot be opened, but it is not skipped.',
   },
   {
     id: 6,
     question:
       'A 1 m IEC C13 lead is used on a benchtop power supply. The C13 connector body has a hairline crack across the L–N face. There is no visible scorching. Action?',
     options: [
-      'Pass — it is only a hairline crack',
-      'Fail. BS EN 60320 connector integrity is part of the appliance coupler safety. A cracked C13 body compromises the insulation barrier between L and N, regardless of scorching',
-      'PVC tape over the crack and accept',
-      'Test electrically and decide based on insulation resistance',
+      'Pass it — a hairline crack with no scorching has no effect on the connector at all',
+      'Wrap PVC tape around the cracked connector body and return the lead to service',
+      'Carry out an insulation-resistance test and decide on the basis of the reading alone',
+      'Fail it — the cracked C13 body compromises the L–N insulation barrier, scorching or not',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS EN 60320 specifies the construction of appliance couplers. A cracked C13 body is a fail because the moulded plastic provides the L–N insulation distance — any crack reduces creepage and clearance distances and is a defect.',
+      'BS EN 60320 specifies the construction of appliance couplers; the connector body is part of the coupler safety. A cracked C13 body is a fail because the moulded plastic provides the L–N insulation distance — any crack reduces creepage and clearance distances and is a defect regardless of whether scorching is present.',
   },
   {
     id: 7,
     question:
       'You inspect a Class I appliance flex. The cable colour is the older red/black (pre-2004 harmonisation) but the cores are intact and the sheath is undamaged. What is the correct action under the IET CoP?',
     options: [
-      'Fail — only brown/blue is permitted',
-      'Pass on inspection (the older colours are not a fail in themselves), but record the colour code on the test record so future inspectors are aware. Confirm the terminations match the colour code at both ends',
-      'Replace the lead with new harmonised colours regardless',
-      'Pass without recording anything',
+      'Pass it, but record the older colour code and confirm the terminations match at both ends',
+      'Fail it — only harmonised brown/blue flex is permitted in service, so the lead must be withdrawn',
+      'Replace the lead with new harmonised-colour flex regardless of its present condition',
+      'Pass it straight away, with no need to record the older colour code anywhere on the sheet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Older colours are not banned in service. The CoP requires the inspector to confirm correct identification at terminations. The risk is mis-identification (red is L in old code but is sometimes mistaken for E by less experienced staff) — recording the colour code on the test sheet manages that risk.',
+      'Older colours are not a fail in themselves and are not banned in service. The CoP requires the inspector to confirm correct identification at the terminations and to record the colour code so future inspectors are aware. The risk is mis-identification — red is L in the old code but is sometimes mistaken for E by less experienced staff — and recording it on the test sheet manages that risk.',
   },
   {
     id: 8,
     question:
       'During visual inspection of a heater flex you find that the outer sheath has been cut back further than the cord grip allows, and shrink-tube has been added by a previous user to “cover” the gap. What is the IET CoP position?',
     options: [
-      'Acceptable repair — shrink tube is a recognised cable-repair method',
-      'Fail. The flex is no longer to original construction; the cord grip cannot clamp the sheath properly. Shrink tube is not a CoP-permitted repair for a damaged or short-stripped flex — replace the lead',
-      'Pass if the shrink tube is heavy-wall',
-      'Pass after a successful insulation-resistance test',
+      'Acceptable repair — heat-shrink tube is a recognised method of restoring a damaged flex',
+      'Pass it, provided the heat-shrink applied is a heavy-wall adhesive-lined type of tube',
+      'Fail it — the cord grip can no longer clamp the original sheath, and shrink tube is not a CoP repair',
+      'Pass it once a successful insulation-resistance test confirms the inner cores are sound',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'IET CoP s.15 does not recognise shrink-tube as a remediation method for sheath damage or short-stripped flex. The cord grip must clamp the original outer sheath. Where the sheath is damaged or short, the lead is replaced.',
+      'IET CoP s.15 does not recognise shrink-tube as a remediation method for sheath damage or short-stripped flex. The flex is no longer to its original construction and the cord grip cannot clamp the sheath properly. Where the sheath is damaged or short, the lead is replaced.',
   },
   {
     id: 9,
     question:
       'On a 13 A rewireable plug, you find that the bare earth conductor inside is longer than the L and N — there is visible slack on the green-and-yellow before it reaches its terminal. What is this and why is it correct?',
     options: [
-      'A construction defect — all cores should be the same length',
-      'Correct construction. BS 1363 requires the earth conductor to be the longest inside the plug so that, if the cord grip ever fails and the flex pulls out, L and N disconnect first and the earth is the last to break',
-      'A repair — someone has lengthened the earth',
-      'Acceptable but not required',
+      'A construction defect — all three cores inside the plug should be cut to the same length',
+      'A previous repair — someone has deliberately lengthened the earth conductor by hand',
+      'Acceptable but not required — the slack on the earth core makes no difference to safety',
+      'Correct construction — BS 1363 makes the earth longest so it is the last to break under pull',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 1363 plug construction makes the earth the longest conductor inside the plug (and the earth pin the longest external pin) so that under any flex-pull failure the earth is the last connection to break — first to make, last to break.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'A 5 m extension lead has a 13 A plug and a single 13 A trailing socket. Visual inspection reveals the flex is 1.0 mm² 3-core. Pass or fail?',
     options: [
-      'Pass — 1.0 mm² is rated for at least 13 A in free air',
-      'Fail. The plug is fused at 13 A but 1.0 mm² flex on most BS standards is rated lower (typically ~10 A). The fuse must protect the flex (IET CoP s.15.4 fuse-and-cable rule). The lead is incorrectly assembled',
-      'Pass if used only for low-power appliances',
-      'Pass after successful continuity test',
+      'Fail it — a 13 A fuse cannot protect 1.0 mm² flex, which is rated below that (around 10 A)',
+      'Pass it — 1.0 mm² 3-core flex is rated for at least 13 A when the lead is run in free air',
+      'Pass it, provided the lead is only ever used for low-power appliances drawing under 10 A',
+      'Pass it once a successful continuity test confirms the earth path through the lead is sound',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The cable-and-fuse rule (IET CoP s.15.4 / Table 15.4) requires the BS 1362 fuse to be sized to protect the flex. 1.0 mm² flex is typically rated around 10 A; fitting a 13 A fuse leaves the flex un-protected on overload. The lead is non-compliant by construction and is failed at inspection.',
   },

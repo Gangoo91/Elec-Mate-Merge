@@ -23,8 +23,8 @@ const quickCheckQuestions = [
   {
     id: 'cdm-statutory-instrument',
     question: 'What is the statutory instrument number for the CDM Regulations 2015?',
-    options: ['SI 2007/320', 'SI 2015/51', 'SI 1999/3242', 'SI 2012/632'],
-    correctIndex: 1,
+    options: ['SI 2015/51', 'SI 2007/320', 'SI 1999/3242', 'SI 2012/632'],
+    correctIndex: 0,
     explanation:
       'The Construction (Design and Management) Regulations 2015 were enacted as Statutory Instrument 2015 No. 51 (SI 2015/51). They came into force on 6 April 2015, replacing the earlier CDM 2007 Regulations.',
   },
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     options: [
       'Demolition of a structure',
       'Installation of mechanical or electrical services',
-      'Routine office cleaning',
       'Assembly of prefabricated elements to form a structure',
+      'Routine office cleaning',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Routine office cleaning is not construction work under CDM 2015. The Regulation 2 definition covers building, civil engineering, and engineering construction work including alteration, fitting out, commissioning, repair, upkeep, maintenance, demolition, and the installation of mechanical and electrical services.',
   },
@@ -79,8 +79,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'When did the Construction (Design and Management) Regulations 2015 come into force?',
-    options: ['1 January 2015', '6 April 2015', '1 October 2015', '6 April 2007'],
-    correctAnswer: 1,
+    options: ['1 January 2015', '1 October 2015', '6 April 2007', '6 April 2015'],
+    correctAnswer: 3,
     explanation:
       'CDM 2015 came into force on 6 April 2015, replacing the Construction (Design and Management) Regulations 2007. This date was chosen to align with the start of the new tax year and give industry time to prepare following the consultation period.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is the primary purpose of the CDM Regulations?',
     options: [
-      'To regulate building materials quality',
       'To improve health and safety in construction by managing risks from design through to completion',
+      'To regulate building materials quality',
       'To set minimum wage rates for construction workers',
       'To regulate planning permission requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of CDM 2015 is to improve health and safety outcomes in the construction industry by ensuring that risks are considered and managed at every stage of a project, from initial design concept through to completion and handover. It integrates health and safety into the project management process.',
   },
@@ -126,8 +126,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'How many key duty holder roles does CDM 2015 define?',
-    options: ['Three', 'Four', 'Five', 'Six'],
-    correctAnswer: 2,
+    options: ['Three', 'Six', 'Four', 'Five'],
+    correctAnswer: 3,
     explanation:
       'CDM 2015 defines five key duty holder roles: (1) client, (2) principal designer, (3) principal contractor, (4) designers, and (5) contractors. Each role carries specific legal duties proportionate to their influence over health and safety on the project.',
   },
@@ -148,8 +148,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Approximately how many construction workers are killed each year in Great Britain?',
-    options: ['5\u201310', '30\u201340', '100\u2013150', 'Over 200'],
-    correctAnswer: 1,
+    options: ['5\u201310', '100\u2013150', '30\u201340', 'Over 200'],
+    correctAnswer: 2,
     explanation:
       'HSE statistics consistently show approximately 30\u201340 fatal injuries to construction workers per year in Great Britain. Construction accounts for roughly 25\u201330% of all workplace fatalities despite employing around 5% of the workforce, making it one of the most dangerous industries.',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: 'Which of the following is a key principle of CDM 2015?',
     options: [
       'Health and safety should only be considered during the construction phase',
-      'Only large projects need a health and safety plan',
       'Risks should be managed at the design stage before construction begins',
+      'Only large projects need a health and safety plan',
       'The contractor is solely responsible for all health and safety matters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "A key principle of CDM 2015 is that health and safety risks should be identified and managed as early as possible, ideally at the design stage. Designers have a legal duty to eliminate hazards and reduce risks through their design decisions. This 'prevention through design' approach is more effective and less costly than trying to manage risks on site after construction has begun.",
   },

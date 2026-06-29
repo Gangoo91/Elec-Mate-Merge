@@ -152,20 +152,20 @@ const quizQuestions = [
     id: 5,
     question: 'Why is it a problem if evaluation stops at Level 1?',
     options: [
-      'Because Level 1 data is always inaccurate',
       'Because enjoying training does not mean you learned anything or will change your behaviour',
+      'Because Level 1 data is always inaccurate',
       'Because Level 1 is too expensive to implement',
       'Because feedback forms are illegal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fundamental limitation of Level 1 is that reaction does not predict learning or behaviour change. Research consistently shows that people can enjoy a training session, rate it highly, and still not learn anything or change their on-site behaviour. Level 1 tells you about the training experience, not its effectiveness.',
   },
   {
     id: 6,
     question: 'Kirkpatrick\u2019s model was first published in:',
-    options: ['1979', '1959', '1999', '2010'],
-    correctAnswer: 1,
+    options: ['1979', '1999', '2010', '1959'],
+    correctAnswer: 3,
     explanation:
       'Donald Kirkpatrick first published his four-level model in 1959 as a series of articles in the US Training and Development Journal. Despite being over sixty years old, the model remains the most widely used framework for training evaluation worldwide.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
     question: 'Which of the following is the best example of a Level 3 evaluation method?',
     options: [
       'A feedback form completed immediately after training',
-      'A written test at the end of the training day',
       'A site observation four weeks after training to check if new practices are being applied',
+      'A written test at the end of the training day',
       'A review of company accident statistics for the past year',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Level 3 (Behaviour) requires observing whether learners have transferred training to their workplace practice. A site observation four weeks after training specifically checks whether the new behaviours taught in training are being applied on the job — which is the core question at Level 3.',
   },

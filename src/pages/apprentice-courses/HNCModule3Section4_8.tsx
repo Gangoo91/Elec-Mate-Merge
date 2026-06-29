@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of busbar segregation in distribution boards?',
     options: [
-      'Customer information handling and smart device data',
+      'To reduce the copper content and lower material cost',
       'To allow maintenance without total shutdown',
-      'Gather information about the fault symptoms',
-      'Incorrectly identifying existing conductors',
+      'To increase the rated current of the busbars',
+      'To eliminate the need for surge protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,16 +128,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'What is the maximum disconnection time for a Type B MCB on a 230V final circuit exceeding 32A?',
+      'In a TN system, what is the maximum disconnection time for a 230V final circuit exceeding 32A supplying fixed equipment?',
     options: [
-      '0.4s',
+      '5s',
       '0.2s',
       '0.1s',
-      '5s',
+      '0.4s',
     ],
     correctAnswer: 0,
     explanation:
-      'For TN systems with circuits exceeding 32A (but not >32A socket outlets), BS 7671 permits a maximum disconnection time of 0.4s. Final circuits ≤32A require 0.4s, and socket outlets >32A require 0.2s.',
+      'In TN systems, BS 7671 Table 41.1 requires 0.4s disconnection for final circuits up to and including 32A, but final circuits exceeding 32A (and distribution circuits) are permitted up to 5s.',
   },
   {
     id: 5,
@@ -159,21 +159,21 @@ const quizQuestions = [
     options: [
       '10%',
       '18%',
-      '14%',
+      '15%',
       '25%',
     ],
     correctAnswer: 2,
     explanation:
-      'Average load = (150+180+200)/3 = 176.7kVA. Maximum deviation = 200-176.7 = 23.3kVA. Imbalance = (23.3/176.7) × 100 = 13.2% ≈ 14%',
+      'Average load = (150+180+200)/3 = 176.7kVA. The largest deviation is on L1: 176.7-150 = 26.7kVA. Imbalance = (26.7/176.7) × 100 = 15.1% ≈ 15%.',
   },
   {
     id: 7,
-    question: 'What SPD residual current (Ires) indicates the device needs replacement?',
+    question: 'When does an SPD with a status indicator need replacing?',
     options: [
-      'Two — more than one contractor',
-      'Sleeved and properly connected',
-      'Clearly and systematically',
-      'When indicator shows fault',
+      'After every minor voltage fluctuation',
+      'Only at the next periodic inspection',
+      'Once every twelve months as routine',
+      'When the indicator shows a fault',
     ],
     correctAnswer: 3,
     explanation:
@@ -183,10 +183,10 @@ const quizQuestions = [
     id: 8,
     question: 'In Form 3b construction, what is segregated?',
     options: [
-      'Functional units, busbars, and terminals from each other',
-      'Insulation is good and preventing current leakage',
-      'Batteries require replacement every 3–5 years',
-      'Installation method, ambient temperature, and grouping with other cables',
+      'Functional units from each other and from the busbars, but terminals shared',
+      'Only the busbars, with no separation of functional units',
+      'Everything including terminals, each in its own compartment',
+      'Nothing is segregated within the assembly',
     ],
     correctAnswer: 0,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'What information must be included on a panel schedule for each circuit?',
     options: [
-      'Circuit number, description, and cable size only',
-      'Circuit number, protective device rating, cable size, and load',
-      'All of the above plus phase allocation and route',
-      'Circuit number, protective device rating, cable size, load, and design current',
+      'Circuit number and cable size only',
+      'Circuit number, protective device rating and cable size only',
+      'Circuit number, protective device, cable size, load, design current, phase allocation and route',
+      'Protective device rating and connected load only',
     ],
     correctAnswer: 2,
     explanation:

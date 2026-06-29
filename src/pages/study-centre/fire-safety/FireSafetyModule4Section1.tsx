@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     id: 'fs-marshal-ratio',
     question: 'What is the general recommended ratio of fire marshals to occupants per floor?',
     options: [
-      '1 fire marshal per 20 occupants',
       '1 fire marshal per 50 occupants',
+      '1 fire marshal per 20 occupants',
       '1 fire marshal per 100 occupants',
       '1 fire marshal per 200 occupants',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The generally accepted recommendation is a minimum of 1 fire marshal per 50 occupants per floor. This ratio may need to be increased in higher-risk premises, premises with complex layouts, or where occupants may need additional assistance during evacuation. The ratio is a starting point — the actual number required should be determined by the fire risk assessment.',
   },
@@ -48,8 +48,8 @@ const quickCheckQuestions = [
   {
     id: 'fs-refresher-frequency',
     question: 'How frequently should fire marshal refresher training be provided?',
-    options: ['Every 6 months', 'Annually', 'Every 2 years', 'Every 3 years'],
-    correctIndex: 1,
+    options: ['Every 6 months', 'Every 3 years', 'Annually', 'Every 2 years'],
+    correctIndex: 2,
     explanation:
       'Fire marshal refresher training should be provided annually as a minimum. This ensures that fire marshals maintain their knowledge, stay up to date with any changes to the premises, fire strategy, or legislation, and have the opportunity to practise evacuation procedures. RRFSO Article 21 requires that training is repeated periodically and adapted to take account of any new or changed risks.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Under the RRFSO, who retains the ultimate legal duty for fire safety in a workplace?',
     options: [
-      'The fire marshal',
       'The responsible person',
+      'The fire marshal',
       'The local fire and rescue service',
       'The building owner only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The responsible person retains the ultimate legal duty for fire safety under the RRFSO. While fire marshals act on behalf of the responsible person and assist with day-to-day fire safety management, the legal responsibility cannot be delegated. The responsible person must ensure that all fire safety duties are properly discharged, even when competent persons have been appointed to assist.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
       "During an evacuation, a fire marshal's primary duty when sweeping their designated area is to:",
     options: [
       'Fight any fires they encounter to prevent spread',
-      'Ensure all persons have left, checking rooms, toilets, and closed areas, and close doors behind them',
       'Wait at the fire panel to identify the zone before evacuating',
       'Collect valuable equipment and documents before leaving',
+      'Ensure all persons have left, checking rooms, toilets, and closed areas, and close doors behind them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The fire marshal's primary duty during an area sweep is to ensure all persons have evacuated. This means systematically checking all rooms, toilets, meeting rooms, and any areas where people could be trapped or unaware of the alarm. Doors should be closed behind them to slow the spread of fire and smoke. The fire marshal must never delay their own evacuation to fight fires or collect property.",
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'RRFSO Article 15 requires the responsible person to establish procedures for:',
     options: [
-      'Annual fire safety audits by the fire service',
       'Serious and imminent danger, including nominating competent persons for evacuation',
+      'Annual fire safety audits by the fire service',
       'Monthly fire extinguisher maintenance contracts',
       'Insurance reporting following a fire incident',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Article 15 requires the responsible person to establish appropriate procedures to be followed in the event of serious and imminent danger. This includes nominating a sufficient number of competent persons to implement those procedures, ensuring that persons in danger are informed of the hazard and the steps being taken to protect them, and ensuring that no one has access to danger areas unless they have received adequate instruction.',
   },
@@ -165,8 +165,8 @@ const quizQuestions = [
     id: 7,
     question:
       'How frequently should a fire marshal carry out routine checks of fire doors, exits, and extinguishers?',
-    options: ['Daily', 'Weekly', 'Monthly', 'Quarterly'],
-    correctAnswer: 1,
+    options: ['Daily', 'Monthly', 'Weekly', 'Quarterly'],
+    correctAnswer: 2,
     explanation:
       'Fire marshals should carry out routine visual checks of fire safety provisions on a weekly basis as a minimum. This includes checking that fire doors close properly and are not propped open, escape routes are clear, fire extinguishers are in place and have not been discharged or tampered with, manual call points are unobstructed, and fire safety signage is intact and visible. Findings must be recorded and any deficiencies reported immediately.',
   },
@@ -175,11 +175,11 @@ const quizQuestions = [
     question: 'What is the practical difference between a fire marshal and a fire warden?',
     options: [
       'A fire warden is a legally defined senior role; a fire marshal is a junior assistant',
-      'There is no legal distinction — the terms are often used interchangeably, though some organisations use "warden" for floor-level sweep duties and "marshal" for coordination roles',
       'A fire marshal can only operate during daytime hours',
       'A fire warden is appointed by the fire service; a fire marshal is appointed by the employer',
+      'There is no legal distinction — the terms are often used interchangeably, though some organisations use "warden" for floor-level sweep duties and "marshal" for coordination roles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'There is no legal distinction between the terms "fire marshal" and "fire warden" — neither term appears in the RRFSO. In practice, the terms are often used interchangeably. Some larger organisations distinguish between the two: wardens may be assigned floor-level sweep duties during evacuation, while marshals may take on a broader coordination role including routine inspections and liaison with the responsible person. The important factor is not the title but the training provided and the duties assigned.',
   },

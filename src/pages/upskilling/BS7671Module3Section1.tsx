@@ -26,10 +26,10 @@ const inlineChecks = [
     id: 'm3s1-tn-s-vs-c-s',
     question: "What's the practical difference between TN-S and TN-C-S?",
     options: [
-      'TN-S has no earth; TN-C-S does',
-      'TN-S has separate N and PE conductors throughout the supply network. TN-C-S combines N and PE as a single PEN conductor in PART of the system (typically the supply network) and splits them at or near the cut-out',
-      'TN-S is for three-phase only',
-      'TN-C-S has higher Ze',
+      'TN-S omits the protective earth conductor that TN-C-S provides at the cut-out',
+      'TN-S keeps N and PE separate throughout; TN-C-S combines them as a PEN',
+      'TN-S is restricted to three-phase supplies; TN-C-S serves single-phase domestic only',
+      'TN-C-S exhibits a higher earth-fault loop impedance Ze than the equivalent TN-S supply',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     id: 'm3s1-pnb-meaning',
     question: "BS 7671:2018+A4:2026 introduces 'PNB' as a cert-form option. What does it mean?",
     options: [
-      'Plug-Neutral-Bus',
-      "Protective Neutral Bonding — a TN-C-S supply arrangement where there is only ONE connection point between the PEN conductor and the installation's earthing system (typically at the meter / cut-out), as opposed to multiple PME earth electrodes upstream",
-      'Power Network Backup',
-      'Phase-Neutral-Bonding',
+      'Plug-Neutral-Bus — a busbar terminal block inside the consumer unit',
+      'Protective Neutral Bonding — a single-bonding-point TN-C-S variant',
+      'Power Network Backup — a DNO standby supply held in reserve',
+      'Phase-Neutral-Bonding — a deliberate line-to-neutral link at the meter',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     id: 'm3s1-tt-when',
     question: 'In which scenarios would you typically encounter a TT supply?',
     options: [
-      'All UK domestic',
-      'Caravans, agricultural buildings, properties without DNO-provided earth, some rural / remote supplies, marinas',
-      'Hospitals only',
-      'Industrial three-phase only',
+      'Every UK domestic installation regardless of supply',
+      'Caravans, agricultural buildings, marinas and properties without a DNO-provided earth',
+      'Hospital theatres and other medical Group 2 locations exclusively',
+      'Industrial three-phase distribution boards exclusively',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'IT systems have a specific characteristic that distinguishes them from TN and TT. What is it?',
     options: [
-      'IT systems are higher voltage',
-      "IT — Isolated Terra — has the supply ISOLATED from earth (or earthed via a high impedance like an isolation monitor); the first earth fault doesn't disconnect the supply, allowing operation to continue, with a second fault then triggering disconnection",
-      'IT systems have no neutral',
-      'IT systems are only single-phase',
+      'IT supplies operate at a higher nominal voltage than TN or TT',
+      'IT isolates the supply from earth, so the first fault does not disconnect',
+      'IT systems are distributed without a neutral conductor of any kind',
+      'IT systems are confined to single-phase low-power supplies',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'Reg 461.2 prohibits a specific action with the PEN conductor in TN-C and TN-C-S systems. What?',
     options: [
-      'Connecting it to anything',
-      "Isolating or switching the PEN conductor — it must remain continuous from the DNO transformer through to the consumer's MET",
-      'Sizing it below 16 mm²',
-      'Painting it green-and-yellow',
+      'Connecting the PEN to the main earthing terminal at the cut-out',
+      'Isolating or switching the PEN — it must stay continuous',
+      'Sizing the PEN conductor at less than 16 mm² copper equivalent',
+      'Identifying the PEN with green-and-yellow sleeving at terminations',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'On a TN-C-S supply, what does Reg 722.312.2.1 (A4:2026) require for EV charging circuits?',
     options: [
-      'No specific requirement',
-      'A circuit supplying EV charging equipment in a TN system shall NOT include a PEN conductor — provide TN-S configuration to the EV (split N and PE upstream of the EV) or apply alternative protective measures (open-PEN detection device)',
-      'Only Type B RCDs allowed',
-      'Cable size minimum 6 mm²',
+      'No specific PEN requirement applies to EV circuits on a TN supply',
+      'The EV circuit shall not include a PEN conductor',
+      'Only Type B RCDs are permitted on the EV final circuit',
+      'A minimum conductor cross-sectional area of 6 mm² is mandated',
     ],
     correctIndex: 1,
     explanation:
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 1,
     question: 'Standard UK suburban domestic supply: which earthing arrangement is most likely?',
     options: [
-      'TN-S (separate N + PE throughout the network)',
       'TN-C-S (PEN in supply network, split at the cut-out — also known as PME)',
+      'TN-S (separate N + PE throughout the network)',
       'TT (own earth electrode)',
       'IT (isolated source)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "TN-C-S is the dominant UK domestic arrangement. The DNO provides combined PEN in the supply cable from the transformer to the property cut-out (economical — fewer conductors). At the cut-out / consumer unit boundary, the PEN splits into separate N and PE. The customer's installation is effectively TN-S downstream of the MET. Per BS 7671 / DNO terminology, this is a TN-C-S system.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why does BS 7671 forbid isolating or switching the PEN in TN-C-S systems?',
     options: [
-      'To save cabling cost',
-      "Because an open PEN under load drives the local earth potential toward line voltage — every CPC-bonded Class I exposed metal part rises with it, creating a fatal-shock risk that doesn't show on basic IR testing",
-      'Because the regulations are arbitrary',
-      "Because PEN conductors don't carry current",
+      'To reduce the cabling cost of consumer-unit upgrades',
+      'Because the prohibition is a historical convention with no fault basis',
+      'Because an open PEN under load drives local earth potential toward line voltage, raising every bonded metal part',
+      'Because the PEN carries no current and is therefore safe to switch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 461.2 has a real safety basis. In TN-C-S the PEN carries normal load current (it's also the neutral). If the PEN opens upstream of the cut-out under load, the local earth potential isn't held at zero anymore — it rises toward line voltage as load current is forced to find a return path through earth via every bonded Class I exposed metal part. Touching two such parts simultaneously is then a fault path. The risk is invisible to a standard insulation-resistance test and only manifests under load.",
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       "The cert-form drop-down for system earthing arrangement now includes 'TN-C-S (PME)' AND 'TN-C-S (PNB)' as separate options under A4:2026. Why?",
     options: [
-      "They're the same — duplicate option",
-      "PME has multiple earth electrodes along the DNO's network (the more common arrangement). PNB has only one connection between PEN and the installation's earthing system (at the cut-out / meter). Different fault-current behaviours; A4 makes the distinction explicit on certs so inspectors record what's actually present",
-      'PME is single-phase only',
-      'PNB is for industrial only',
+      'They describe identical arrangements, so the second is a redundant entry',
+      'PME applies only to single-phase supplies and PNB only to three-phase',
+      'PNB is reserved for industrial supplies and PME for domestic supplies',
+      'PME uses multiple DNO earth electrodes; PNB has one PEN-to-earth point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PME (Protective Multiple Earthing) — the conventional UK TN-C-S — has multiple bonded earth electrodes along the DNO's distribution network (typically at every transformer, every street pillar, every property cut-out), reducing the impact of any single open-PEN failure. PNB (Protective Neutral Bonding) — newer / rural variant — has only ONE point of connection between PEN and the installation's earthing system. Fault-current behaviour differs because PNB lacks the multiple-electrode parallel paths. A4:2026 added the explicit cert option so this is recorded.",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A property has its own earth electrode (e.g. a 1.2 m long copper-clad steel rod 600 mm into the ground) because the DNO has stated they will not provide an earth. What system arrangement applies?',
     options: [
-      'TN-C-S',
-      'TT — Terra-Terra: own earth electrode, no protective conductor from supply',
-      'TN-S',
-      'IT',
+      'TT — own earth electrode, no protective conductor from the supply',
+      'TN-C-S — combined PEN in the supply, split at the cut-out',
+      'TN-S — separate neutral and earth from the supply transformer',
+      'IT — supply isolated from earth or earthed via high impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "TT is the arrangement where the installation provides its own earth via a local electrode. Common reasons the DNO doesn't / won't provide an earth: long supply runs where DNO earth integrity can't be guaranteed, agricultural buildings where stock-touch hazard with elevated earth is unacceptable, retro-fitted PV / EV installations on supplies where TN-C-S exclusion criteria apply. Design implications: RCD-led fault protection (Reg 411.5.3 — earth-electrode resistance is too high for OPD-led ADS to clear in time).",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'On a TT installation, what is the second design check Reg 411.5.3 requires alongside the disconnection-time check?',
     options: [
-      'Cable size',
-      'Ra × IΔn ≤ 50 V — limiting touch voltage during a residual fault to band I',
-      'Voltage drop',
-      'PSCC',
+      'Conductor cross-sectional area against the design current',
+      'Voltage drop against the 3% lighting / 5% power limits',
+      'Ra × IΔn ≤ 50 V — capping touch voltage during a residual fault',
+      'Prospective short-circuit current against device breaking capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 411.5.3(b): Ra × IΔn ≤ 50 V. Ra is the sum of the earth-electrode resistance plus the protective-conductor resistance back to exposed metal. Multiplying by IΔn gives the touch voltage that appears on exposed-conductive-parts during a residual fault before the RCD operates. Capping it at 50 V keeps within band I (low-shock-risk threshold). Practical implication: at higher IΔn (100 / 300 / 500 mA), the maximum permissible Ra drops sharply — high-IΔn devices on TT need a low-resistance earth electrode.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'An IT system protects against a single earth fault by NOT disconnecting the supply on that fault. What does it use to monitor for the first fault?',
     options: [
-      'An RCD',
-      'An Insulation Monitoring Device (IMD) per Reg 411.6.3 — continuously measures the insulation resistance between the system and earth and alarms when the first fault appears',
-      'Visual inspection',
-      'The MCB',
+      'A 30 mA RCD on the supply that trips on the first earth fault',
+      'Periodic visual inspection of accessible insulation by the duty holder',
+      'The upstream MCB sized to clear the first earth fault on overcurrent',
+      'An Insulation Monitoring Device (IMD) per Reg 411.6.3 that alarms on the first fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 411.6.3 lists permitted devices for IT systems: (a) IMDs, (b) RCMs (residual current monitoring devices), (c) IFLS (insulation fault location systems), (d) OPDs, (e) RCDs. The IMD is the typical primary monitor — alarms on first fault but doesn't disconnect, allowing the installation to continue while the fault is located and corrected. A second fault on a different live conductor THEN triggers normal disconnection per Reg 411.6.5. IT is used where supply continuity is more critical than fault-clearing speed (operating theatres, ICUs, certain industrial safety circuits).",
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       "A 7 kW EV charging point is to be added to an existing TN-C-S property. The existing CU has no provision for splitting PEN. What's the most common compliant solution?",
     options: [
-      'Refuse the install',
-      'Use an EV charger with INTEGRATED open-PEN protection (a built-in voltage detection circuit that disconnects the EV if the local PEN voltage rises above ~50-70 V relative to a reference). Most modern UK EV chargers (Pod Point, Wallbox, EO, Andersen, Zappi) have this built in. Confirms compliance with Reg 722.312.2.1 without rewiring the consumer unit',
-      'Only TN-S supplies are allowed',
-      'Add a second earth electrode at the EV',
+      'Fit an EV charger with integrated open-PEN protection that disconnects on PEN voltage rise',
+      'Refuse the installation as non-compliant on any TN-C-S property',
+      'Insist the DNO converts the property to a TN-S supply first',
+      'Drive a local earth electrode at the EV to make the circuit TT',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 722.312.2.1 (A4) bans PEN in TN-supply EV circuits. The most common practical solution is an EV charger with integrated open-PEN protection — the device monitors voltage between the local PEN and a reference, disconnects the EV on detected PEN failure. This is widely available in domestic chargers and obviates the need to retrofit TN-S configuration in existing CUs. Alternative: external open-PEN detection device (Matt:e, Eaton ASW) installed close to the EV. Document the compliance route on the EIC.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'A new commercial unit on TT supply uses a 100 mA Type S RCD as the main switch + 30 mA RCBOs on each final circuit. Earth electrode resistance Ra is measured at 180 Ω. Does the design satisfy Reg 411.5.3?',
     options: [
-      'No — Ra is too high',
-      'Yes — for the main switch: 180 × 0.1 = 18 V ≤ 50 V ✓ (Reg 411.5.3 limb b satisfied). Disconnection time per Reg 411.3.2.4 needs verification but with 30 mA RCBOs downstream the TT distribution time of 1 s is comfortably met. Selectivity: 100/30 = 3.33 ratio ✓',
-      'Yes but only for single-phase',
-      'Cannot be determined without PSCC',
+      'No — 180 Ω exceeds the maximum Ra permitted for a 100 mA device',
+      'Yes, but the check is valid only on a single-phase version of this supply',
+      'Yes — 180 × 0.1 = 18 V ≤ 50 V, so Reg 411.5.3(b) is satisfied with margin',
+      'It cannot be determined without the prospective short-circuit current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Standard TT design checks. (1) Reg 411.5.3 limb (b): Ra × IΔn ≤ 50 V. 180 × 0.1 = 18 V — well under 50 V ✓. (2) Disconnection time: 100 mA Type S delays operation by up to 500 ms but trips reliably at 5×IΔn = 500 mA in ≤ 150 ms — comfortably under the 1 s TT distribution requirement. (3) Selectivity: 3:1 IΔn ratio, upstream Type S — satisfied. Design works. If Ra had been over 500 Ω, the limb (b) check would have failed and the design would need either lower IΔn (which then creates selectivity issues with downstream 30 mA) or earth-electrode improvement.',
   },

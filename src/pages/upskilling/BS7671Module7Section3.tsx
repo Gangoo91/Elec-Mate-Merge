@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A new milking parlour is being wired in a rural area. The DNO has refused to provide a TN-C-S earth (PME) on the basis that livestock will be present. What earthing arrangement does Section 705 effectively force the designer towards?',
     options: [
-      'TN-C-S — the DNO must provide an earth on request',
-      'TT — install a separate earth electrode for the agricultural installation, with RCD-based ADS per Reg 411.5.3',
-      'TN-S — split the PEN at the meter',
-      'IT — required for all agricultural buildings',
+      'TN-C-S — the DNO must still provide a PME earth on request',
+      'TT — a separate earth electrode with RCD-based ADS per Reg 411.5.3',
+      'TN-S — split the combined PEN to a separate earth at the meter',
+      'IT — an unearthed supply, required for all agricultural buildings',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Why does Section 705 demand 30 mA RCD additional protection on socket-outlets and stricter touch-voltage limits than general installations?',
     options: [
-      'Because cables are longer in agricultural buildings',
-      'Because livestock have a lower body resistance and a much lower lethal current threshold than humans — voltages a human would barely feel can kill cattle',
-      'Because the buildings are unheated',
-      'Because farmers are not skilled persons',
+      'Because cable runs are longer, raising R1+R2 and the touch voltage',
+      'Because livestock have far lower body resistance and a lower lethal-current threshold than humans',
+      'Because the buildings are unheated, so condensation lowers insulation resistance',
+      'Because farmers are not skilled persons and cannot isolate the supply safely',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'You are designing a 20-pitch caravan touring site. Each pitch socket-outlet (industrial 16 A, BS EN 60309-2 blue) requires what protection arrangement under Section 708?',
     options: [
-      'Shared 100 mA upstream RCD covering all pitches',
-      'Individual 30 mA RCD protection per socket-outlet, plus 16 A overcurrent protection per outlet — and not more than three socket-outlets per circuit',
-      'A single 30 mA RCD covering up to 12 pitches',
-      'No RCD required — caravans bring their own',
+      'A shared 100 mA upstream RCD covering all pitches, with 16 A overcurrent per outlet',
+      'Individual 30 mA RCD and 16 A overcurrent per outlet, max three outlets per circuit',
+      'A single 30 mA RCD covering up to 12 pitches, with 16 A overcurrent per outlet',
+      'No RCD required at the pitch, as touring caravans bring their own protection',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A marina shore-power pedestal feeds modern boats with on-board inverters, lithium battery banks and DC-DC chargers. Under Reg 709.531, which RCD type is most likely required at the pedestal?',
     options: [
-      'Type AC — the supply is sinusoidal',
-      'Type A — sufficient for any inverter load',
-      'Type B — required where smooth DC residual currents may be produced by on-board power-electronic equipment, unless otherwise mitigated',
-      'No RCD — vessels supply their own protection',
+      'Type AC — adequate because the shore supply is sinusoidal AC',
+      'Type A — adequate for any inverter or charger load on board',
+      'Type B — needed where on-board electronics may produce smooth DC residuals',
+      'No RCD at the pedestal — vessels supply their own protection on board',
     ],
     correctIndex: 2,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A trade-show exhibition stand is being installed for a 5-day run. Which Section 711 principle applies to the temporary supply?',
     options: [
-      'Temporary installations are exempt from BS 7671',
-      'Section 711 applies the same protective measures as a permanent installation — 30 mA RCDs, ADS, IP-rated equipment — with additional periodic checks because of repeated dismantling and re-erection',
-      'Only basic insulation is required for temporary installations',
-      'A risk assessment alone is sufficient',
+      'Temporary exhibition installations are exempt from the protective-measure rules',
+      'The same protective measures apply, plus extra checks for repeated re-erection',
+      'Only basic insulation is required, as the supply is temporary and supervised',
+      'A documented risk assessment alone is sufficient in place of ADS and RCDs',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A SWA cable is being run from a house to a new outbuilding on a farm. What is the minimum recommended burial depth and what additional mechanical protection is required where the cable crosses a vehicle-trafficked route?',
     options: [
-      '150 mm with no additional protection',
-      'A typical minimum of 600 mm in cultivated ground, with marker tape above and additional protection (cable tile, duct or warning tile) where heavy plant or vehicles cross',
-      '300 mm everywhere — depth is fixed by BS 7671',
-      'Surface clipped to a fence is always acceptable',
+      '150 mm in cultivated ground, with no additional mechanical protection needed',
+      'Typically 600 mm in cultivated ground, with marker tape and tile/duct where vehicles cross',
+      'A fixed 300 mm everywhere, as the depth is prescribed by BS 7671 nationally',
+      'Surface-clipped to a fence line, which is always acceptable on agricultural land',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'A fairground operator is installing a temporary funfair for one weekend. Which Part 7 section is the primary reference for the temporary structures and rides?',
     options: [
-      'Section 705 — agricultural',
-      'Section 740 — Temporary electrical installations for structures, amusement devices and booths at fairgrounds, amusement parks and circuses',
-      'Section 711 — exhibitions only',
-      'No specific section applies',
+      'Section 705 — agricultural and horticultural premises',
+      'Section 740 — structures, amusement devices and booths at fairgrounds and circuses',
+      'Section 711 — exhibitions, shows and trade stands only',
+      'No specific Part 7 section applies to short-duration funfairs',
     ],
     correctIndex: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Reg 705.422 (fire risk in agricultural premises) drives certain extra design requirements. Which is correct?',
     options: [
-      'AFDDs are forbidden in agricultural buildings',
-      'Where fire risk is elevated (dust, fodder, livestock), Reg 705.422 imposes additional measures — 30 mA RCDs on all final circuits, AFDDs strongly recommended in many designs, and luminaires / motors selected with appropriate IP and IK ratings to limit ignition risk',
-      'Plastic enclosures are required throughout to reduce earth fault current',
-      'Only metal-clad consumer units are permitted',
+      'AFDDs are forbidden in agricultural buildings under Reg 705.422',
+      'Plastic enclosures are required throughout to reduce the earth fault current',
+      'Only metal-clad consumer units are permitted in agricultural premises',
+      'Where fire risk is elevated, extra measures apply — 30 mA RCDs on all final circuits, AFDDs considered, and correct IP/IK on luminaires and motors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 705.422 covers the elevated fire risk on farms — dust, fodder, dry bedding, livestock body-heat. The response is multi-layered: 30 mA RCD additional protection on all final circuits (not just sockets), strong consideration of AFDDs (Reg 421.1.7 makes them mandatory in some agricultural high-risk locations under A4), correct IP/IK ratings on luminaires and motors, and good cable management to prevent rodent damage.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'On a TT installation in a cattle barn, you measure Ra (earth-electrode + protective conductor back to exposed metal) = 35 ohms. The downstream circuit is on a 30 mA RCD. Does this satisfy Reg 411.5.3 for ADS in a TT system?',
     options: [
-      'No — Ra must be below 10 ohms in agricultural premises',
-      'Yes — Ra x I_dn = 35 x 0.03 = 1.05 V, well below the 50 V touch-voltage limit',
-      'No — TT systems are not allowed in agricultural premises',
-      'Yes, but only if a 100 mA RCD is added in series',
+      'No — in agricultural premises Ra must be below 10 ohms regardless of the RCD',
+      'Yes — Ra × I_dn = 35 × 0.03 = 1.05 V, well below the 50 V touch-voltage limit',
+      'No — TT systems are not permitted on agricultural premises at all',
+      'Yes, but only if a 100 mA RCD is added in series with the 30 mA device',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 4,
     question: 'Reg 708.553 governs caravan park socket-outlets. Which combination is correct?',
     options: [
-      'Standard 13 A BS 1363 sockets, surface mounted on each pitch',
-      'BS EN 60309-2 (industrial blue/yellow) sockets, IP44 minimum, 16 A or 32 A as appropriate, 30 mA RCD per outlet, max three outlets per circuit, mounted 0.5-1.5 m above ground',
-      '63 A blue commando sockets only',
-      'Any IP65 outdoor 13 A socket is acceptable',
+      'BS 1363 13 A sockets, surface-mounted, one per individual pitch, IP54 rated',
+      'BS EN 60309-2 63 A blue commando outlets, one per pitch, on a shared 100 mA RCD',
+      'BS EN 60309-2 16/32 A outlets, IP44 min, individual 30 mA RCD, max three per circuit',
+      'IP65-rated outdoor 13 A outlets, individual 30 mA RCD, max six per circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 708.553 requires industrial-style BS EN 60309-2 socket-outlets (the blue commando connectors) on caravan pitches, IP44 minimum, with a 30 mA RCD per outlet, individual overcurrent protection, no more than three outlets per circuit, and mounting between 0.5 m and 1.5 m above ground. The choice is driven by water resistance, the locking action of the connector, and the standardised plug-and-socket interface across European caravan kit.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'A marina pedestal supplies a 16 A shore-power outlet. Which combination of protection meets Reg 709.531 and Section 709 generally?',
     options: [
-      'A single Type AC 100 mA RCD covering 8 berths',
-      '30 mA RCD per outlet (Type A or Type B as required by load), individual overcurrent protection per outlet, IP44 minimum equipment, isolation transformer or RCM as additional risk-reduction where vessel power-electronics may inject smooth DC',
-      '13 A BS 1363 sockets weatherproofed',
-      'No RCD because the boat provides one',
+      '30 mA RCD per outlet (Type A or B by load), overcurrent per outlet, IP44 min',
+      'Single Type AC 100 mA RCD covering all eight berths, IP44 min, overcurrent per outlet',
+      'Weatherproofed 13 A BS 1363 outlets at each berth, individual 30 mA RCD, IP44 min',
+      'No RCD at the pedestal, overcurrent per outlet, each boat providing its own protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 709 applies the general 30 mA RCD additional-protection rules per outlet, with overcurrent protection per outlet, IP44 minimum, and Type B / RCM consideration where on-board power-electronics make smooth DC residuals plausible. Marinas also commonly use isolation transformers at the pedestal to break galvanic coupling between vessels — a corrosion mitigation that doubles as a fault-isolation benefit.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'Section 711 (exhibitions / shows / stands) requires a hand-over inspection before energisation each time the stand is erected. What is the appropriate certification?',
     options: [
-      'Permanent EIC issued once, valid for life of the design',
-      'Either an EIC for new installations or a Minor Works Certificate where minor changes are made — plus a routine inspection / functional test record before each opening, and adherence to Section 711.6 inspection requirements',
-      'No documentation required for temporary installations',
-      'Only an EICR is needed',
+      'A permanent EIC issued once, valid for the whole life of the stand design',
+      'No documentation is required because the installation is temporary',
+      'Only a periodic EICR is needed each time the stand is built',
+      'An EIC (or Minor Works for small changes), plus a functional-test record before each opening per Section 711.6',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 711 treats every fresh erection of an exhibition stand as a new installation requiring initial verification under Part 6. An EIC accompanies the first energisation each time the stand is built; minor adjustments use a Minor Works Cert. Section 711.6 also requires functional testing of RCDs and continuity of CPCs before each public opening — this is the practical safeguard against cable damage during transit and re-assembly.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'In a livestock area, supplementary bonding is required under Section 705. What does the bonding actually connect?',
     options: [
-      'Only the metal stalls together',
-      'All exposed-conductive-parts (motor frames, lighting bodies) and all extraneous-conductive-parts (metal stall railings, water troughs, structural steel, metal grids in floors) within reach of livestock — connected back to the MET via a supplementary bonding network',
-      'Only the water troughs',
-      'Just the consumer unit casing',
+      'Only the metal stall partitions, bonded to each other',
+      'Only the metal water troughs and drinkers in the stock area',
+      'All exposed- and extraneous-conductive-parts within livestock reach — motor frames, railings, troughs, steel, floor grids — tied back to the MET',
+      'Just the consumer unit casing back to the main earth terminal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 705 supplementary bonding is comprehensive: every exposed-conductive-part (Class I equipment frames) and every extraneous-conductive-part within livestock reach (railings, drinkers, structural steel, equipotential floor grids) ties together back to the MET. The aim is to ensure that if a fault drives any one of those parts above earth potential, every other part rises with it — there is no touch-voltage between two simultaneously-touchable surfaces.',
   },
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'A fairground ride installer connects a temporary 32 A three-phase TPN feed to a ride via a 25 m HO7RN-F flexible cable. Section 740 calls for which combination?',
     options: [
-      'Any flexible cable is acceptable',
-      'HO7RN-F or equivalent heavy-duty flexible (Reg 740.521), BS EN 60309-2 connectors, IP44 minimum, 30 mA RCD per circuit, and inspection / functional test of RCDs before each opening',
-      'Permanent SWA buried 600 mm',
-      'Standard PVC twin and earth surface clipped',
+      'General-purpose PVC flex, BS EN 60309-2 connectors, IP44, 30 mA RCD per circuit',
+      'HO7RN-F heavy-duty flex (Reg 740.521), BS EN 60309-2 connectors, IP44, 30 mA RCD per circuit',
+      'Permanent SWA buried at 600 mm to each ride, BS EN 60309-2 connectors, 30 mA RCD per circuit',
+      'Standard PVC twin-and-earth, surface-clipped, BS EN 60309-2 connectors, 30 mA RCD per circuit',
     ],
     correctAnswer: 1,
     explanation:

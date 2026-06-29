@@ -18,12 +18,12 @@ export const documentationBestPracticesQuizQuestions = [
     question:
       'A client asks you to downgrade a C2 observation to C3 to avoid urgent repair costs. What should you do?',
     options: [
-      'Agree to maintain good client relationships',
-      'Compromise by adding detailed explanations to justify the change',
       'Refuse and maintain your professional technical assessment',
-      'Seek a second opinion before making any changes',
+      'Agree to the change to maintain a good client relationship',
+      'Compromise by adding detailed notes to justify the lower code',
+      'Re-code it to C3 but flag the installation for an early re-inspection',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
       'Professional integrity requires maintaining your technical assessment regardless of commercial pressure. Changing observation codes for non-technical reasons compromises safety and exposes you to professional liability. Your assessment must be based on objective technical criteria.',
   },
@@ -45,12 +45,12 @@ export const documentationBestPracticesQuizQuestions = [
     question:
       "How should you handle situations where complete testing wasn't possible due to operational constraints?",
     options: [
-      'Assume the untested areas are satisfactory',
-      'Use average values from similar installations',
       'Clearly document limitations and recommend future investigation',
-      'Refuse to issue any certificate until complete testing is possible',
+      'Assume the untested areas are satisfactory and record them as a pass',
+      'Use representative average values taken from similar installations',
+      'Refuse to issue any certificate at all until complete testing is possible',
     ],
-    correct: 2,
+    correct: 0,
     explanation:
       "Clear documentation of limitations is essential for professional accountability. Explain what couldn't be tested, why, and recommend appropriate future investigation. This ensures clients understand the scope of the assessment and any associated risks.",
   },
@@ -59,12 +59,12 @@ export const documentationBestPracticesQuizQuestions = [
     question:
       'What is the recommended approach for maintaining consistency when multiple inspectors work on the same project?',
     options: [
-      'Have the most experienced inspector review all observations',
-      'Use different observation codes to identify different inspectors',
+      'Have the most experienced inspector personally review every observation',
       'Establish standardised procedures and decision-making criteria',
-      'Complete all documentation after the inspection team leaves site',
+      'Use different observation codes to identify which inspector recorded each item',
+      'Complete all documentation back at the office after the team leaves site',
     ],
-    correct: 2,
+    correct: 1,
     explanation:
       'Standardised procedures and decision-making criteria ensure consistency across team members. This includes consistent training, regular calibration exercises, peer review processes, and clear communication channels throughout the project.',
   },
@@ -86,12 +86,12 @@ export const documentationBestPracticesQuizQuestions = [
     id: 7,
     question: 'How long should electrical certificates typically be retained?',
     options: [
-      '5 years from issue date',
-      '10 years from issue date',
-      'For the life of the installation plus reasonable period for legal purposes',
-      'Until the next inspection is completed',
+      'Exactly 5 years from the issue date, then securely destroyed',
+      'For the life of the installation plus a reasonable period for legal purposes',
+      'A fixed 10 years from the issue date for all certificate types',
+      'Only until the next periodic inspection certificate is completed',
     ],
-    correct: 2,
+    correct: 1,
     explanation:
       'Certificates should be retained for the life of the installation plus a reasonable period for legal purposes (typically 6-10 years minimum). This ensures availability for future electrical work, legal requirements, and professional accountability.',
   },

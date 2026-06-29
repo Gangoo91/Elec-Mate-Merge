@@ -41,12 +41,12 @@ const quizQuestions = [
     question:
       'Why do sheeted or netted scaffolds require work to stop at lower wind speeds than open scaffolds?',
     options: [
-      'Sheeting makes the scaffold look untidy in strong wind',
-      'Sheeting and netting dramatically increase the wind load (sail area) on the scaffold, creating much higher forces on the structure and its ties',
-      'Sheeted scaffolds are always weaker than open scaffolds',
-      'Netting causes vibration that loosens fittings',
+      'Sheeting and netting add sail area, sharply raising the wind force on the structure and ties',
+      'Sheeting makes the scaffold look untidy and harder to inspect in strong wind',
+      'A sheeted scaffold is always structurally weaker than the same open scaffold',
+      'Netting sets up vibration in the tubes that gradually loosens the fittings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sheeting and debris netting act as sails, catching wind and transmitting enormous additional forces into the scaffold structure and its ties to the building. A fully sheeted scaffold can experience wind loads several times greater than an open scaffold. The scaffold design must account for this, and work may need to stop at lower wind speeds to prevent overloading or collapse.',
   },
@@ -54,24 +54,24 @@ const quizQuestions = [
     question:
       'What is the FIRST action a scaffold user should take when arriving at a scaffold on a frosty morning?',
     options: [
-      'Start work immediately — frost will melt quickly',
-      'Visually inspect platforms, ladders, and access ways for ice; do NOT use the scaffold until ice has been cleared and surfaces are safe',
-      'Pour hot water on the platforms to melt the ice',
-      'Wear trainers for better grip on icy surfaces',
+      'Start work straight away, since the morning frost will melt off quickly',
+      'Pour hot water across the platforms to melt the ice before climbing up',
+      'Inspect platforms, ladders, and access for ice and not use it until surfaces are safe',
+      'Grit only the bottom lift and rely on care when moving up the higher lifts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ice on scaffold platforms, ladder rungs, and access ways is extremely dangerous and has caused fatal falls. Before anyone climbs the scaffold, a visual inspection must confirm surfaces are clear of ice. If ice is present, it must be cleared and surfaces treated (e.g., with grit) before use. Pouring hot water can refreeze and make conditions worse.',
   },
   {
     question: 'Why must all work on scaffolding stop immediately during a lightning storm?',
     options: [
-      'Rain makes the scaffold slippery',
-      'Scaffolding is a metal structure at height — it acts as a conductor and attracts lightning strikes, putting workers at extreme risk of electrocution',
-      'Lightning is too bright to see properly',
-      'Thunder is too loud to communicate',
+      'The accompanying rain makes the scaffold platforms slippery underfoot',
+      'The lightning flashes are too bright for workers to see their footing',
+      'The thunder is too loud for workers to communicate safely with each other',
+      'It is a tall metal structure that conducts strikes, risking electrocution of workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Scaffolding is a large metal structure elevated above the surrounding area, making it an extremely effective lightning conductor. A lightning strike on or near a scaffold would deliver a lethal electrical discharge to anyone in contact with the structure. Workers must descend immediately when lightning is observed or thunder is heard, and not return until the storm has passed and the scaffold has been inspected.',
   },
@@ -79,24 +79,24 @@ const quizQuestions = [
     question:
       'After a heavy overnight snowfall, the site manager asks you to inspect a scaffold before use. What are you specifically looking for?',
     options: [
-      'Only whether the snow looks nice',
-      'Snow loading on platforms (additional weight), ice beneath the snow, obscured trip hazards, integrity of ties and bracing under the additional load, and safe access',
-      'Whether the scaffold colour has changed',
-      'Only the height of the snowdrift at the base',
+      'Snow loading, hidden ice, concealed hazards, and the strain on ties, bracing, and access',
+      'Only that the access gate at the base has not been frozen shut overnight',
+      'Only whether the platform boards have changed colour where snow has settled',
+      'Only the depth of the snowdrift that has built up against the scaffold base',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Snow adds significant weight to scaffold platforms and can overload them, especially if it has drifted or become compacted. Ice beneath the snow creates hidden slip hazards. Snow can conceal damaged boards, missing guardrails, or debris. The additional weight may have strained ties and bracing. All of these must be checked before the scaffold is cleared for use.',
+      'Snow adds significant weight to scaffold platforms and can overload them, especially if it has drifted or become compacted. Ice beneath the snow creates hidden slip hazards. Snow can conceal damaged boards, missing guardrails, or debris. The additional weight may have strained ties and bracing. All of these must be checked before the scaffold is cleared for use — not just the snow at the base.',
   },
   {
     question: 'What inspection requirement applies after any significant weather event?',
     options: [
-      'No inspection is needed — scaffolds are designed for all weather',
-      'A competent person must inspect the scaffold before it is used again, checking for structural damage, loosened ties, displaced boards, and accumulated water or debris',
-      'Only the scaffold owner needs to inspect it',
-      'An inspection is only needed if the scaffold has visibly collapsed',
+      'No inspection is needed, as scaffolds are designed to withstand all weather',
+      'Only the scaffold owner, rather than a competent person, needs to inspect it',
+      'A competent person must re-inspect it for damage, loosened ties, and displaced boards',
+      'An inspection is needed only if the scaffold has visibly collapsed or partly fallen',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Work at Height Regulations 2005 (Schedule 7) require that scaffolds are inspected after any event likely to have affected their stability — this includes high winds, heavy rain, snow, ice, flooding, and any other significant weather event. A competent person must carry out the inspection and the scaffold must not be used until it has been confirmed safe.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'During prolonged heavy rain, what structural concern should a scaffold user report immediately?',
     options: [
-      'The scaffold looks wet',
-      'Water pooling on platforms (indicating blocked drainage or sagging boards), waterlogged ground at the base potentially undermining sole plates, and any signs of the scaffold shifting or settling',
-      'The scaffold colour is darker when wet',
-      'Rain is making noise on the sheeting',
+      'That the working platforms have an even, glossy wet sheen across them',
+      'That moss or algae has been washed off the standards by the rain',
+      'That rain is drumming loudly on the debris sheeting on the outer face',
+      'Water pooling on platforms, waterlogged ground at the base, and any sign of settlement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heavy rain creates multiple structural risks: water pooling adds weight and indicates platform issues; waterlogged ground can cause subsidence under sole plates and base plates, leading to scaffold settlement or collapse; persistent rain can wash away backfill around foundations. Any signs of movement, settlement, or instability must be reported immediately and the scaffold evacuated.',
   },
@@ -133,12 +133,12 @@ const quickCheckQuestions = [
     question:
       'Wind speed on site is currently 20 mph with gusts to 28 mph. Scaffolders are erecting a new scaffold. The site supervisor says the mean wind speed is below 23 mph so work can continue. Is the supervisor correct?',
     options: [
-      'Yes — the mean wind speed is below the limit so work is safe',
-      'No — gust speeds are more dangerous than mean speeds for scaffold erection; gusts of 28 mph exceed safe limits and create sudden, unpredictable forces on components being handled',
-      'Yes — gusts do not matter, only average wind speed',
-      'No — all scaffold work must stop at 15 mph',
+      'No — the 28 mph gusts exceed safe limits and put sudden forces on the components being handled',
+      'Yes — the mean wind speed is below the guideline, so erection can safely continue',
+      'Yes — only the average wind speed matters during erection, not the gusts',
+      'No — all scaffold erection must stop once mean wind speed reaches 15 mph',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "While the 23 mph guideline refers to mean wind speed, gust speeds are critically important during erection and dismantling because scaffolders are handling loose components that act as sails. A sudden gust can wrench a tube or board from a worker's grip or throw them off balance. When gusts significantly exceed the mean, work should be reassessed and likely stopped. Professional judgement and dynamic risk assessment are essential.",
   },
@@ -146,12 +146,12 @@ const quickCheckQuestions = [
     question:
       'It rained heavily overnight but has now stopped. Scaffold platforms are wet and there are puddles on some boards. A worker says the scaffold is fine because it is not raining any more. Is this correct?',
     options: [
-      'Yes — once rain stops the scaffold is safe to use',
-      'No — wet platforms are slip hazards; puddles indicate drainage issues or sagging boards that need investigation; the scaffold must be inspected before use and any standing water removed',
-      'Yes — scaffold boards are non-slip by design',
-      'No — scaffolds cannot be used for 24 hours after rain',
+      'Yes — once the rain has stopped the scaffold is safe to use again',
+      'Yes — scaffold boards are manufactured to be non-slip even when wet',
+      'No — wet platforms are slip hazards and the puddles must be investigated and cleared first',
+      'No — scaffolds cannot be used for a full 24 hours after any rainfall',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Wet scaffold boards are significantly more slippery than dry ones, especially if contaminated with algae, moss, or construction dust. Standing water on platforms adds weight, indicates potential board sagging or blockages, and creates slip hazards. A competent person should inspect the scaffold, remove standing water, check for underlying issues, and confirm conditions are safe before allowing access.',
   },
@@ -159,12 +159,12 @@ const quickCheckQuestions = [
     question:
       'The temperature has been below freezing for three days. A scaffold has been out of use over this period. Before allowing workers back on it, what specific weather-related checks must a competent person carry out?',
     options: [
-      'No checks needed — the cold does not affect scaffolding',
-      'Check for ice on all platforms, ladders, and access points; check for frost heave or ground movement at the base; check that ties and fittings have not been displaced by thermal contraction; check that boards are not warped or split from freeze-thaw cycles',
-      'Only check if the scaffold looks different',
-      'Check that the scaffold is still standing — nothing else is needed',
+      'Check for ice, frost heave at the base, displaced fittings, and boards split by freeze-thaw',
+      'No checks are needed, since prolonged cold does not affect a steel scaffold',
+      'Only carry out checks if the scaffold visibly looks different from before',
+      'Only confirm that the scaffold is still standing before letting workers back on',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Prolonged freezing affects scaffolds in multiple ways: ice forms on all surfaces creating extreme slip hazards; ground can heave or shift beneath sole plates causing settlement; metal fittings contract and may loosen; timber boards can warp, split, or become brittle from freeze-thaw cycles. A thorough inspection by a competent person is essential before re-use after a prolonged freeze.',
   },

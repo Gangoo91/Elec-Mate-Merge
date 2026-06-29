@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why should deliveries be scheduled to match project phases?',
     options: [
-      'BRUKL (Building Regulations UK Part L)',
+      'To secure the largest possible bulk discount',
       'To prevent overcrowding, damage, and theft',
-      'Both overcurrent and earth leakage',
-      'It\\\\\\\'s converted to heat, sound, or other forms',
+      'To avoid the need for any site storage at all',
+      'To reduce the number of suppliers used on site',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What should you always check upon receiving a delivery?',
     options: [
-      'Digital contact signal (dry contact)',
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
+      'Only the total invoice value against the order',
+      'Just that the correct supplier made the delivery',
       'Quantities, specifications, and condition',
-      'Write \\\\\\\\\\\\\\\'>200 MΩ\\\\\\\\\\\\\\\' or meter limit',
+      'Whether the driver has the right paperwork only',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Name one risk of ordering materials too early.',
     options: [
-      'Less than 1° (ideally <0.5°)',
-      'During design development before construction',
-      'Controlling fresh air intake in HVAC systems',
+      'Suppliers will refuse to confirm lead times',
+      'Bulk discounts are no longer available',
+      'Delivery notes cannot be checked on arrival',
       'Theft, damage, or cluttered storage',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of scheduling phased deliveries?',
     options: [
-      'Transformer upgrade, parallel operation or on-site generation',
+      'To guarantee the cheapest possible unit price',
       'To match project phases and prevent overcrowding or damage',
-      'A safe location where evacuated personnel gather to be accounted for',
-      'At least 1.6 times the downstream fuse rating',
+      'To remove the need to inspect goods on arrival',
+      'To allow a single supplier to handle everything',
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the risk of ordering specialist items late?',
     options: [
-      'To all conductors that could become live',
+      'Increased storage and theft risk on site',
       'Project delays due to long lead times',
-      'Upgrading to LED lighting with controls',
-      'Gas and oil fault protection',
+      'Loss of bulk discounts from the supplier',
+      'Damage from prolonged outdoor storage',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,9 +130,9 @@ const quizQuestions = [
     id: 7,
     question: 'What should you do if goods arrive damaged?',
     options: [
-      'Isolate, Test, Prove dead, Lock off',
-      'Safety override functions',
-      'Building Regulations Part B and BS 7671',
+      'Accept them and sort out a claim later',
+      'Sign for them but note the damage for records',
+      'Store them separately and use them anyway',
       'Reject or return them immediately',
     ],
     correctAnswer: 3,
@@ -144,9 +144,9 @@ const quizQuestions = [
     question: 'Why should you avoid bulk deliveries too early?',
     options: [
       'Risk of damage, theft, or cluttered storage',
-      'To highlight changes and modifications',
-      'Current and the cable’s resistance',
-      'Regulations 411.3.1.1 and 411.3.1.2',
+      'Suppliers charge more for early delivery',
+      'Delivery notes become harder to verify',
+      'Lead times increase for the remaining items',
     ],
     correctAnswer: 0,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     id: 10,
     question: 'Give one benefit of building strong relationships with suppliers.',
     options: [
-      'Quickly narrows down fault location by halving the problem',
-      'Prevent fire spread through containment openings',
+      'Removing the need to inspect deliveries on arrival',
+      'Guaranteed lowest prices on every single order',
       'Better service, reliable deliveries, or priority during shortages',
-      'Inhalation, skin absorption, ingestion, and injection',
+      'No longer needing to plan for lead times',
     ],
     correctAnswer: 2,
     explanation:

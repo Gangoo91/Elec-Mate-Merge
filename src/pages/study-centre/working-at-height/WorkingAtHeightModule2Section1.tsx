@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     question:
       'When a ladder is used to access a scaffold platform or roof, how far must the ladder extend above the landing point?',
     options: [
-      'At least 1 rung above the landing point',
-      'At least 2 rungs above the landing point',
       'At least 3 rungs (approximately 1 metre) above the landing point',
+      'At least 2 rungs above the landing point',
+      'At least 1 rung above the landing point',
       'At least 5 rungs above the landing point',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The ladder must extend at least 3 rungs (approximately 1 metre) above the landing point. This gives the user a secure handhold while stepping off the ladder onto the platform. Without this extension, stepping off at the top becomes extremely hazardous.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the correct angle for a leaning ladder, as defined by the 1-in-4 rule?',
     options: [
-      'Approximately 60 degrees',
-      'Approximately 70 degrees',
       'Approximately 75 degrees',
+      'Approximately 70 degrees',
+      'Approximately 65 degrees',
       'Approximately 80 degrees',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The 1-in-4 rule produces an angle of approximately 75 degrees. This is the optimum working angle — steep enough to prevent the base sliding out, but not so steep that the ladder could fall backwards.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       'How many points of contact must a user maintain at all times when working from a ladder?',
     options: [
       '1 point of contact',
+      '4 points of contact',
       '2 points of contact',
       '3 points of contact',
-      '4 points of contact',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Three points of contact must be maintained at all times — either two hands and one foot, or two feet and one hand. This is essential to prevent loss of balance and falls.',
   },
@@ -155,11 +155,11 @@ const quizQuestions = [
     question: 'Which pre-use inspection check relates to the structural side members of a ladder?',
     options: [
       'Checking the locking mechanisms',
-      'Inspecting the stiles for cracks, bends, or corrosion',
       'Testing the anti-slip feet',
       'Verifying the tie rod tension',
+      'Inspecting the stiles for cracks, bends, or corrosion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The stiles are the two vertical side members of the ladder. During pre-use inspection, they must be checked for cracks, bends, dents, corrosion, or any other damage that could compromise the structural integrity of the ladder.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'A ladder used as access to a roof must extend above the roof edge by at least:',
     options: [
-      '1 rung',
-      '2 rungs',
       '3 rungs (approximately 1 metre)',
+      '2 rungs',
+      '1 rung',
       '5 rungs (approximately 1.5 metres)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The ladder must extend at least 3 rungs (approximately 1 metre) above the landing point. This provides a secure handhold for the person stepping on and off the ladder at the top.',
   },

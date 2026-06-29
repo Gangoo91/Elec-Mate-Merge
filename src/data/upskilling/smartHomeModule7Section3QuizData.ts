@@ -11,10 +11,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is signal strength important in smart homes?',
     options: [
-      'It makes devices look better',
+      'Stronger signals allow devices to run without a power supply',
       'Smart devices rely on constant connectivity for control and automation',
-      'It reduces installation costs',
-      'It changes device colours',
+      'It removes the need for a central hub or router',
+      'It lets devices operate outside their rated voltage range',
     ],
     correct: 1,
     explanation:
@@ -24,10 +24,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'What issues can weak Wi-Fi cause for smart devices?',
     options: [
-      'Improved security',
+      'Faster firmware updates and longer battery life',
       "Delays, missed commands, or devices appearing 'offline'",
-      'Lower electricity bills',
-      'Better device appearance',
+      'Automatic switching to a wired connection',
+      'Stronger encryption of the device traffic',
     ],
     correct: 1,
     explanation:
@@ -53,10 +53,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'How do Zigbee and Z-Wave meshes improve coverage?',
     options: [
-      'By using more electricity',
+      'By transmitting at much higher power than Wi-Fi',
       'Powered devices act as signal repeaters in a self-healing network',
-      'By making devices more expensive',
-      'By changing signal colours',
+      'By using the home’s mains wiring to carry the signal',
+      'By compressing the data so it travels further',
     ],
     correct: 1,
     explanation:
@@ -64,12 +64,12 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: 'Why should devices not be placed in metal enclosures?',
+    question: 'Why should wireless devices not be placed in metal enclosures?',
     options: [
-      'They look unprofessional',
+      'Metal causes the device to overheat and shut down',
       'Metal blocks wireless signals (Faraday cage effect)',
-      'They cost more to install',
-      'They use more power',
+      'Metal enclosures void the device’s wireless certification',
+      'Metal increases the device’s power consumption',
     ],
     correct: 1,
     explanation:
@@ -77,12 +77,12 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
   },
   {
     id: 7,
-    question: 'Give one way to improve Wi-Fi coverage in a large home.',
+    question: 'Which of these is an effective way to improve Wi-Fi coverage in a large home?',
     options: [
-      'Use more expensive devices',
+      'Lower the router’s transmit power to reduce interference',
       'Install mesh Wi-Fi systems or repeaters',
-      'Paint walls different colours',
-      'Install more light switches',
+      'Reduce the number of channels the router uses',
+      'Disable the 5GHz band to extend the 2.4GHz range',
     ],
     correct: 1,
     explanation:
@@ -92,10 +92,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'What is one common cause of intermittent connectivity?',
     options: [
-      'Using the wrong app',
+      'Using a device from a different manufacturer to the hub',
       'RF interference from appliances or neighbouring networks',
-      'Installing during winter',
-      'Device colour preferences',
+      'Setting the device name too long in the app',
+      'Connecting too few devices to the network',
     ],
     correct: 1,
     explanation:
@@ -105,10 +105,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why is it important to test wireless signals before finalising device placement?',
     options: [
-      'To meet legal requirements',
+      'To register each device with its manufacturer',
       'To ensure reliable operation and avoid future problems',
-      'To increase installation costs',
-      'To impress clients',
+      'To confirm the devices are running the latest firmware',
+      'To calculate the home’s total electrical load',
     ],
     correct: 1,
     explanation:
@@ -118,10 +118,10 @@ export const smartHomeModule7Section3QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: "In the real-world example, what solved the heating system's connection problems?",
     options: [
-      'Buying more expensive devices',
+      'Replacing the heating system’s wireless thermostat with a wired one',
       'Relocating the router centrally and adding a mesh extender',
-      'Changing the heating system brand',
-      'Installing more sensors',
+      'Switching the heating system to a different Wi-Fi band manually',
+      'Adding a second broadband line for the heating system',
     ],
     correct: 1,
     explanation:

@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       "According to James Gross's research, which emotional regulation strategy is generally most effective?",
     options: [
+      'Cognitive change / reappraisal (reframing the meaning before the emotion fully forms)',
       'Response modulation (suppressing the outward expression)',
       'Situation selection (avoiding triggering situations entirely)',
-      'Cognitive change / reappraisal (reframing the meaning before the emotion fully forms)',
       'Attentional deployment (distracting yourself from the trigger)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Cognitive change (reappraisal) is consistently found to be the most effective regulation strategy because it intervenes at the appraisal stage — before the full emotional response has formed. Gross's research shows that strategies which intervene earlier in the emotion generation process tend to be more effective and less costly than those which try to modify the response after it has already occurred.",
   },
@@ -82,8 +82,8 @@ const quizQuestions = [
   {
     id: 1,
     question: "Which of the following is NOT one of Goleman's five self-regulation competencies?",
-    options: ['Self-control', 'Empathy', 'Conscientiousness', 'Adaptability'],
-    correctAnswer: 1,
+    options: ['Empathy', 'Self-control', 'Conscientiousness', 'Adaptability'],
+    correctAnswer: 0,
     explanation:
       "Empathy is one of Goleman's five domains of emotional intelligence, but it is not one of the five self-regulation competencies. The five self-regulation competencies are: self-control, trustworthiness, conscientiousness, adaptability, and innovation.",
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     options: [
       'They experience less negative emotion over time',
       'They develop stronger relationships due to appearing calm',
-      'They experience increased physiological stress, more negative emotion, and reduced wellbeing',
       'They become better at managing emotions in the long term',
+      'They experience increased physiological stress, more negative emotion, and reduced wellbeing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Gross and John's 2003 research found that habitual suppressors actually experience more negative emotion (not less), higher physiological stress responses, poorer memory, and reduced relationship quality. Suppression is a costly strategy because it blocks the expression but not the underlying emotional experience, creating internal tension that accumulates over time.",
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
       'Why does the physiological sigh (double inhale, long exhale) reduce stress so quickly?',
     options: [
       'It increases oxygen to the brain, making you think more clearly',
-      'The extended exhale activates the parasympathetic nervous system via the vagus nerve',
       'It forces you to stop talking, which prevents conflict',
+      'The extended exhale activates the parasympathetic nervous system via the vagus nerve',
       'It reduces blood pressure by slowing the heart rate directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The physiological sigh works primarily because the extended exhale stimulates the vagus nerve, which activates the parasympathetic nervous system — the body's 'rest and digest' mode. This directly counteracts the sympathetic 'fight or flight' response. The double inhale maximises the reinflation of the lung's alveoli, and the long exhale then shifts the autonomic balance towards calm. Dr Andrew Huberman's research at Stanford confirmed this can occur within a single breath cycle.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'An electrician is shouted at by a site manager for a mistake they did not make. According to the self-regulation principles in this section, what is the most emotionally intelligent response?',
     options: [
+      'Allow the initial 90-second chemical response to pass, use a breathing technique, then address the situation calmly and factually',
       'Shout back immediately to assert dominance and defend their reputation',
       'Suppress all emotion, say nothing, and walk away without addressing it',
-      'Allow the initial 90-second chemical response to pass, use a breathing technique, then address the situation calmly and factually',
       'Report the site manager to HR immediately without any direct conversation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most emotionally intelligent response combines several self-regulation strategies: allowing the initial neurochemical cascade to pass (the 90-second rule), using a breathing technique to activate the parasympathetic response, and then addressing the situation calmly with facts. Shouting back is reactive, suppressing everything is harmful, and escalating to HR without any direct conversation avoids the situation rather than managing it.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       'Cognitive change',
       'Response modulation',
-      'Situation selection',
       'Attentional deployment',
+      'Situation selection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Situation selection is the earliest-intervening strategy in Gross's process model because it occurs before you even encounter the emotional stimulus. It involves choosing whether to enter or avoid a situation that is likely to trigger an emotional response. For example, choosing not to attend a meeting where you know a confrontational colleague will be present is situation selection. The strategies then proceed in order: situation modification, attentional deployment, cognitive change, and finally response modulation (the latest intervention).",
   },

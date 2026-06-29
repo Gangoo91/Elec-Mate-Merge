@@ -29,10 +29,10 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 1,
       question: 'What is the primary purpose of a portfolio in an apprenticeship?',
       options: [
-        'To enable safe and effective identification of escape routes leading to final exits',
+        'To keep a personal record of every job you have ever worked on',
         'To provide documented evidence that you meet the assessment criteria and are competent',
-        'The nature of the task — does it involve twisting, bending, reaching, or repetition?',
-        'To clearly indicate the location and direction of escape routes and final exits',
+        'To replace the need for an end-point assessment at the end of the course',
+        'To list all the tools and equipment you own as an apprentice',
       ],
       correctAnswer: 1,
       explanation:
@@ -69,9 +69,9 @@ const FunctionalSkillsModule5Section4 = () => {
       question: 'Which principle is most important when selecting evidence for your portfolio?',
       options: [
         'Choose quality evidence that clearly demonstrates competence, avoiding unnecessary duplication',
-        'The weight of all persons, tools, materials, and equipment on the platform',
-        'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
-        'An unplanned event that had the potential to cause injury or damage but did not',
+        'Include as much evidence as possible to make the portfolio look thorough',
+        'Use only photographic evidence, as photos are the most convincing type',
+        'Gather evidence only in the final weeks before your assessment is due',
       ],
       correctAnswer: 0,
       explanation:
@@ -81,10 +81,10 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 5,
       question: 'What makes a witness statement valid for your portfolio?',
       options: [
-        'Assess competence specifically for three-phase work and provide additional training if needed',
+        'An unsigned note from a fellow apprentice confirming you were on site that day',
         'A signed statement from a qualified supervisor describing specific tasks you performed, with their name, job title, and the date',
-        'Identify hazards, decide who might be harmed, evaluate risks, record findings, review and update',
-        'Avoids the test voltage appearing across the SPD (which is L-N or L-PE) potentially triggering or damaging it',
+        'A general written reference praising your attitude and timekeeping at work',
+        'A printed photograph of you carrying out the task, with no accompanying text',
       ],
       correctAnswer: 1,
       explanation:
@@ -95,10 +95,10 @@ const FunctionalSkillsModule5Section4 = () => {
       question:
         'When taking photographs as portfolio evidence, which of the following is most important?',
       options: [
-        'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
-        'Awareness of emergency lighting purpose, exit routes, and assembly points',
+        'Taking as many photos as possible, even if some are blurred or poorly lit',
+        'Photographing only the finished work, never the stages in between',
         'Ensuring photos are clear, well-lit, captioned with your role, and taken with permission',
-        'The union representative — confidential parallel route alongside the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own grievance procedure',
+        'Using a black-and-white filter to make the photographs look more professional',
       ],
       correctAnswer: 2,
       explanation:
@@ -108,9 +108,9 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 7,
       question: 'What is the most common reason portfolios are returned for additional work?',
       options: [
-        'Participating — share ideas and facilitate decision-making together',
-        'The design current of the cooker after applying diversity',
-        'Suitable for hollow walls where back access is unavailable',
+        'The portfolio contains too many pieces of evidence to review easily',
+        'The handwriting in the reflective accounts is difficult to read',
+        'The evidence is too recent and does not cover earlier years of training',
         'There are gaps in coverage — some assessment criteria are not evidenced',
       ],
       correctAnswer: 3,
@@ -122,9 +122,9 @@ const FunctionalSkillsModule5Section4 = () => {
       question: 'During an assessor visit, what should you be prepared to do?',
       options: [
         'Explain any piece of evidence in your portfolio, locate it quickly, and discuss your learning',
-        'A current transient (spike) occurs at the star-to-delta changeover point',
-        'At least every 7 days by a competent person, and after any event likely to have affected its stability',
-        'To prevent conflicts, ensure safety, and maintain project schedule',
+        'Hand over your portfolio and leave the assessor to review it alone',
+        'Present only your strongest evidence and set the weaker items aside',
+        'Memorise the assessment criteria word for word and recite them on request',
       ],
       correctAnswer: 0,
       explanation:

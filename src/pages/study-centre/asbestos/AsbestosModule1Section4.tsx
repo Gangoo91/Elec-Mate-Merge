@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'asb-m1s4-mesothelioma-key',
     question: 'Which of the following statements about mesothelioma is TRUE?',
     options: [
-      'It is always fatal, with no cure and a median survival of 12-18 months from diagnosis',
       'It only develops after many years of heavy, prolonged asbestos exposure',
       'It can be cured with early detection and aggressive chemotherapy',
+      'It is always fatal, with no cure and a median survival of 12-18 months from diagnosis',
       'It is most commonly caused by smoking rather than asbestos exposure',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Mesothelioma is always fatal — there is no cure, and the median survival from diagnosis is just 12-18 months. Unlike asbestosis, mesothelioma can be caused by very short, low-level exposure to asbestos. It is almost exclusively caused by asbestos exposure, not smoking. The UK has the highest mesothelioma death rate in the world, with approximately 2,700 deaths per year.',
   },
@@ -36,8 +36,8 @@ const quickCheckQuestions = [
     id: 'asb-m1s4-smoking-synergy',
     question:
       'An asbestos worker who also smokes has approximately how many times the risk of lung cancer compared to a non-exposed non-smoker?',
-    options: ['50 times the risk', '15 times the risk', '5 times the risk', '100 times the risk'],
-    correctIndex: 0,
+    options: ['15 times the risk', '50 times the risk', '5 times the risk', '100 times the risk'],
+    correctIndex: 1,
     explanation:
       'The synergistic effect of asbestos exposure and smoking is devastating. Asbestos alone increases lung cancer risk approximately 5 times, and smoking alone approximately 10 times. However, combined exposure produces a multiplicative effect of approximately 50 times the risk compared to a non-exposed non-smoker. This is why smoking cessation is critically important for anyone with a history of asbestos exposure.',
   },
@@ -92,16 +92,16 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical latency period for mesothelioma after initial asbestos exposure?',
-    options: ['1-5 years', '5-15 years', '15-60 years', 'Over 60 years only'],
-    correctAnswer: 2,
+    options: ['15-60 years', '1-5 years', '5-15 years', 'Over 60 years only'],
+    correctAnswer: 0,
     explanation:
       'The typical latency period for mesothelioma is 15-60 years, with most cases diagnosed 30-50 years after first exposure. This extremely long latency period means that people exposed to asbestos decades ago are still being diagnosed today, and the UK death toll from asbestos-related diseases will continue for many years to come. The latency period can occasionally be as short as 15 years.',
   },
   {
     id: 4,
     question: 'Which asbestos-related disease is caused specifically by heavy, prolonged exposure?',
-    options: ['Mesothelioma', 'Pleural plaques', 'Asbestosis', 'Diffuse pleural thickening'],
-    correctAnswer: 2,
+    options: ['Mesothelioma', 'Pleural plaques', 'Diffuse pleural thickening', 'Asbestosis'],
+    correctAnswer: 3,
     explanation:
       'Asbestosis is a progressive fibrosis (scarring) of the lung tissue caused by heavy, prolonged exposure to asbestos fibres. It is typically seen in workers with years of heavy exposure, such as laggers and shipyard workers. Unlike mesothelioma, which can be caused by very short, low-level exposure, asbestosis is dose-related and requires sustained high-level exposure to develop.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 6,
     question: 'The HSE control limit of 0.1 fibres per cm\u00b3 over 4 hours is best described as:',
     options: [
-      'A completely safe level of exposure verified by scientific research',
       'A legal maximum, NOT a safe level — there is no known safe level of asbestos exposure',
+      'A completely safe level of exposure verified by scientific research',
       'The level at which asbestos fibres first become visible to the naked eye',
       'The minimum level at which respiratory protective equipment must be worn',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The HSE control limit of 0.1 fibres per cm\u00b3 over 4 hours is a legal maximum — it is NOT a safe level. There is no known safe level of asbestos exposure. The 'single-fibre theory' states that, in principle, a single fibre could initiate disease. Risk increases with dose, but there is no threshold below which risk is zero. This is why the hierarchy of controls prioritises complete elimination and avoidance above all other measures.",
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     options: [
       'Office workers in modern buildings built after 2000',
       'Factory workers manufacturing asbestos products',
-      'Tradespeople who disturb ACMs during maintenance, refurbishment, or demolition',
       'Scientists working in asbestos research laboratories',
+      'Tradespeople who disturb ACMs during maintenance, refurbishment, or demolition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Tradespeople who disturb asbestos-containing materials (ACMs) during maintenance, refurbishment, or demolition work are currently the most at-risk group. This includes electricians, plumbers, joiners, roofers, painters, and heating engineers. Approximately 20 tradespeople die every week in the UK from past asbestos exposure. Asbestos manufacturing has been banned since 1999, but the material remains present in hundreds of thousands of pre-2000 buildings.',
   },

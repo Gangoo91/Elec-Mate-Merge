@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'first-priority-after-all-clear',
     question: 'What is the first priority after the fire service gives the all-clear?',
     options: [
-      'Begin cleaning up fire damage immediately',
       'Account for all persons and provide welfare support',
+      'Begin cleaning up fire damage immediately',
       'Contact the insurer to discuss claims',
       'Start reinstating the electrical system',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The first priority after the fire service gives the all-clear is to account for all persons and provide welfare support to evacuees. This means confirming that every individual has been accounted for through a thorough roll call, providing shelter from weather, arranging first aid for any injuries, and ensuring emotional support is available. No other recovery activity should take precedence over the safety and wellbeing of people. Only once all persons are confirmed safe and welfare needs are being addressed should attention turn to scene preservation, insurer notification, and reinstatement planning.',
   },
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     options: [
       'The local council planning department',
       'The Health and Safety Executive',
-      'The insurer, as per policy conditions',
       "The building's original architect",
+      'The insurer, as per policy conditions',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The insurer must be notified immediately after a fire, as per the conditions of the insurance policy. Most commercial insurance policies contain a condition requiring immediate notification of any loss or damage. Failure to notify promptly can jeopardise the claim and may even void the policy. The notification should include the date, time, and location of the fire, a brief description of the damage, the emergency services involved, and any immediate actions taken. The insurer will then appoint a loss adjuster to assess the damage and manage the claim. Early notification also allows the insurer to authorise interim measures such as emergency boarding-up, temporary weatherproofing, and salvage operations.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why is scene preservation important after a fire incident?',
     options: [
-      'To allow the building owner to begin repairs immediately',
       'To protect evidence for fire investigation and potential legal proceedings',
+      'To allow the building owner to begin repairs immediately',
       'To prevent the insurer from inspecting the premises',
       'To allow employees to collect personal belongings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scene preservation is critically important to protect evidence for fire investigation and potential legal proceedings. The fire investigation officer needs to examine the scene undisturbed to determine the cause and origin of the fire. If evidence is moved, cleaned up, or contaminated, it may be impossible to determine the cause, which can affect insurance claims, criminal prosecutions (in the case of arson), and civil liability proceedings. The scene must be cordoned off, guarded, and left undisturbed until formally released by the fire investigation officer.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'What triggers a mandatory review of the fire risk assessment?',
     options: [
       "A change in the building's insurance provider",
-      'Any fire incident on the premises',
       'The annual review date only',
       'A request from the local authority planning department',
+      'Any fire incident on the premises',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Any fire incident on the premises triggers a mandatory review of the fire risk assessment under the RRFSO. The fire risk assessment must also be reviewed if there is reason to suspect it is no longer valid, if there has been a significant change in the matters to which it relates (such as a change of use, structural alterations, or a change in the number of occupants), or at regular intervals as determined by the risk level. A fire incident is definitive evidence that the existing control measures were insufficient, and the risk assessment must be updated to address the failures identified.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the correct approach to reinstating a building after fire damage?',
     options: [
-      'Begin repairs immediately to minimise downtime',
       'Conduct a structural assessment first, then plan phased reinstatement',
+      'Begin repairs immediately to minimise downtime',
       'Allow tenants to re-occupy while repairs are in progress',
       'Focus solely on cosmetic repairs to restore appearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct approach is to conduct a structural assessment first, then plan a phased reinstatement. A structural engineer must assess the building to determine whether the structure has been compromised by the fire. Heat can weaken steel, spall concrete, and damage masonry. Only once the structure is confirmed safe can reinstatement work begin. The reinstatement process should be phased: structural repairs first, then smoke and water damage remediation, then building services reinstatement (electrical, mechanical, fire alarm, emergency lighting), and finally decoration and fitting-out. Each phase should be signed off before the next begins, and the building should not be re-occupied until all systems are fully operational and certified.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'What welfare provision should be arranged for evacuees immediately after a fire?',
     options: [
       'A formal investigation interview with each person',
-      'Shelter, first aid, emotional support, and communication',
       'A written statement from each evacuee for the insurer',
+      'Shelter, first aid, emotional support, and communication',
       'Immediate return to normal working duties',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Immediately after a fire, evacuees need shelter from the weather (especially in cold, wet, or extreme conditions), first aid for any injuries or smoke inhalation, emotional support and reassurance, and communication — both to inform them of what is happening and to allow them to contact family members. These welfare provisions are a duty of care owed by the employer and should be part of the emergency plan. Formal investigation interviews, written statements, and return to normal duties are all premature at this stage — the immediate priority is people's physical and emotional wellbeing.",
   },
@@ -177,11 +177,11 @@ const quizQuestions = [
       'What information should the responsible person provide to the fire service on arrival?',
     options: [
       "The building's commercial value and insurance details",
-      'Building plans, hazardous materials locations, and key holder access',
       "A list of employees' home addresses",
       "The architect's original design specifications",
+      'Building plans, hazardous materials locations, and key holder access',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "When the fire service arrives, the responsible person (or their deputy) should provide building plans showing the layout, fire compartments, and escape routes; the location of any hazardous materials stored on the premises; key holder access information for locked areas; the location of fire alarm panels, sprinkler controls, and other fire protection systems; information about any persons unaccounted for and their likely location; and any known details about the fire's origin and development. This information helps the fire service mount an effective response and reduces the risk to firefighters. A premises information box containing building plans and hazard information should ideally be installed at the main entrance for fire service use.",
   },

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     question:
       'An apprentice electrician writes the goal: &ldquo;I want to get better at electrical work.&rdquo; According to George T. Doran&rsquo;s SMART framework, what is the PRIMARY problem with this goal?',
     options: [
-      'It is too ambitious and should be scaled down',
-      'It lacks specificity &mdash; &ldquo;get better at electrical work&rdquo; is too vague to measure, action, or track progress against',
+      'It is too ambitious and should be scaled right down',
+      'It lacks specificity &mdash; &ldquo;get better at electrical work&rdquo; is too vague to measure',
       'It is a process goal when it should be an outcome goal',
-      'It does not include a financial target',
+      'It does not include a clear financial target to aim for',
     ],
     correctIndex: 1,
     explanation:
@@ -29,25 +29,25 @@ const quickCheckQuestions = [
       'James Clear argues that the most powerful form of behaviour change happens when you shift from outcome-based goals to identity-based goals. In the context of an electrician&rsquo;s career, which of the following best represents an identity-based goal?',
     options: [
       '&ldquo;I will pass the 2391 Inspection &amp; Testing exam by December&rdquo;',
-      '&ldquo;I will study for one hour every evening after work&rdquo;',
-      '&ldquo;I am the kind of professional who continuously invests in learning and maintains the highest technical standards&rdquo;',
-      '&ldquo;I will earn &pound;50,000 this year&rdquo;',
+      '&ldquo;I will study for one full hour every evening after work&rdquo;',
+      '&ldquo;I am the kind of professional who continuously invests in learning&rdquo;',
+      '&ldquo;I will earn &pound;50,000 in total over the coming year&rdquo;',
     ],
     correctIndex: 2,
     explanation:
-      'James Clear&rsquo;s identity-based habits concept (from Atomic Habits) proposes three layers of behaviour change: outcomes (what you get), processes (what you do), and identity (who you are). Most people start with outcome goals (&ldquo;pass the exam&rdquo;, &ldquo;earn more money&rdquo;) and try to change their behaviour to match. Clear argues this is backwards. The most lasting change starts with identity &mdash; deciding the type of person you want to be, then proving it to yourself with small actions. Option A is an outcome goal (a result you want). Option B is a process goal (a behaviour you perform). Option D is another outcome goal. Option C is an identity goal &mdash; it defines who you are as a person and professional. Once you genuinely see yourself as &ldquo;someone who continuously invests in learning&rdquo;, the studying, the exam preparation, and the CPD follow naturally because they are consistent with your identity.',
+      'James Clear&rsquo;s identity-based habits concept (from Atomic Habits) proposes three layers of behaviour change: outcomes (what you get), processes (what you do), and identity (who you are). Most people start with outcome goals (&ldquo;pass the exam&rdquo;, &ldquo;earn more money&rdquo;) and try to change their behaviour to match. Clear argues this is backwards. The most lasting change starts with identity &mdash; deciding the type of person you want to be, then proving it to yourself with small actions. Passing the 2391 exam by December is an outcome goal (a result you want). Studying for an hour every evening is a process goal (a behaviour you perform). Earning &pound;50,000 is another outcome goal. &ldquo;I am the kind of professional who continuously invests in learning&rdquo; is an identity goal &mdash; it defines who you are as a person and professional. Once you genuinely see yourself as &ldquo;someone who continuously invests in learning&rdquo;, the studying, the exam preparation, and the CPD follow naturally because they are consistent with your identity.',
   },
   {
     id: 'gs-1-3-check3',
     question:
       'Stephen Covey&rsquo;s principle &ldquo;Begin with the end in mind&rdquo; suggests that effective goal planning should start from:',
     options: [
-      'Your current situation and work outwards from there',
-      'Whatever goal is most immediately achievable',
-      'Your long-term vision of where you want to be, then work backwards to identify the milestones and daily actions needed to get there',
-      'What your employer or training provider expects of you',
+      'Your long-term vision of where you want to be, then work backwards from there',
+      'Your current situation, working outwards step by step from where you are now',
+      'Whatever goal happens to be the most immediately achievable',
+      'Whatever your employer or training provider expects you to do',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Covey&rsquo;s Habit 2 from The 7 Habits of Highly Effective People (1989) states that all things are created twice &mdash; first in the mind (mental creation) and then in reality (physical creation). &ldquo;Begin with the end in mind&rdquo; means defining your destination before you start the journey. For an electrician, this means first envisioning where you want to be in 5 or 10 years &mdash; perhaps running your own NICEIC-approved business, or becoming a senior inspection engineer, or training the next generation. From that vision, you work backwards: What qualifications do I need? What experience must I gain? What contacts should I build? What should I be doing this month, this week, today? Without this end-to-mind approach, goal setting becomes reactive and fragmented &mdash; you chase whatever seems urgent rather than building towards a coherent long-term destination.',
   },
@@ -102,14 +102,14 @@ const quizQuestions = [
     question:
       'Which of the following goals is BEST classified as a &ldquo;process goal&rdquo; rather than an outcome goal or identity goal?',
     options: [
-      '&ldquo;I want to become an NICEIC Qualified Supervisor&rdquo;',
       '&ldquo;I will practise one cable sizing calculation every evening for the next 30 days&rdquo;',
+      '&ldquo;I want to become an NICEIC Qualified Supervisor&rdquo;',
       '&ldquo;I am someone who takes their professional development seriously&rdquo;',
       '&ldquo;I want to earn &pound;60,000 per year within three years&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A process goal focuses on the specific behaviours and actions you will perform, regardless of the outcome. Option B (&ldquo;I will practise one cable sizing calculation every evening for the next 30 days&rdquo;) is a clear process goal because it defines a behaviour (practise cable sizing), a frequency (every evening), and a duration (30 days). You have full control over whether you do this or not, which makes process goals particularly powerful for building momentum and habits. Option A is an outcome goal &mdash; it describes a result you want to achieve. Option C is an identity goal &mdash; it describes who you want to be. Option D is also an outcome goal tied to a financial result. Research consistently shows that pairing outcome goals with process goals leads to better performance than setting outcome goals alone, because process goals direct daily behaviour and create a sense of progress even when the final outcome is still distant.',
+      'A process goal focuses on the specific behaviours and actions you will perform, regardless of the outcome. Practising one cable sizing calculation every evening for 30 days is a clear process goal because it defines a behaviour (practise cable sizing), a frequency (every evening), and a duration (30 days). You have full control over whether you do this or not, which makes process goals particularly powerful for building momentum and habits. Becoming an NICEIC Qualified Supervisor is an outcome goal &mdash; it describes a result you want to achieve. &ldquo;I am someone who takes their professional development seriously&rdquo; is an identity goal &mdash; it describes who you want to be. The &pound;60,000 target is also an outcome goal tied to a financial result. Research consistently shows that pairing outcome goals with process goals leads to better performance than setting outcome goals alone, because process goals direct daily behaviour and create a sense of progress even when the final outcome is still distant.',
   },
   {
     id: 3,
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       'An electrician sets the following goal: &ldquo;I will become better at my job this year.&rdquo; Which element of the SMART framework does this goal MOST clearly violate?',
     options: [
-      'Time-bound &mdash; because &ldquo;this year&rdquo; is too vague a timeframe',
+      'Time-bound &mdash; because &ldquo;this year&rdquo; is far too vague a timeframe',
       'Measurable &mdash; because there is no way to quantify &ldquo;better at my job&rdquo;',
-      'Specific &mdash; because &ldquo;better at my job&rdquo; could mean almost anything and does not identify a concrete area for improvement',
-      'Achievable &mdash; because the goal is unrealistically ambitious',
+      'Specific &mdash; because &ldquo;better at my job&rdquo; identifies no concrete area to improve',
+      'Achievable &mdash; because the goal is unrealistically ambitious for one year',
     ],
     correctAnswer: 2,
     explanation:
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'Stephen Covey&rsquo;s principle &ldquo;Begin with the end in mind&rdquo; is Habit 2 in The 7 Habits of Highly Effective People. Applied to an electrician&rsquo;s career planning, this principle means:',
     options: [
-      'Focus only on what is immediately in front of you and do not worry about the future',
-      'Define your long-term career vision first, then work backwards to identify the qualifications, experience, milestones, and daily actions needed to get there',
-      'Set your goals based on what your employer or training provider tells you to do',
-      'Wait until you have finished your apprenticeship before thinking about career goals',
+      'Focus only on what is immediately in front of you, not the future',
+      'Set your goals based on what your employer or training provider tells you',
+      'Wait until you have finished your apprenticeship before setting career goals',
+      'Define your long-term career vision first, then work backwards from it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Covey&rsquo;s &ldquo;Begin with the end in mind&rdquo; principle states that effective people start with a clear vision of their desired destination and then organise their activities to move towards it. For an electrician, this means asking: Where do I want to be in 5 or 10 years? Perhaps running a NICEIC-approved contracting business, or working as a senior inspection engineer, or lecturing at a college. From that vision, you work backwards: What qualifications will I need? What experience must I accumulate? What skills should I develop? What should I be doing this year, this month, this week? This backward-planning approach ensures that daily actions are strategically aligned with long-term objectives. Without it, electricians often spend years reacting to whatever work comes their way without building towards a coherent career destination. Covey draws from Viktor Frankl&rsquo;s insight that between stimulus and response there is a choice &mdash; and effective people choose proactively based on their values and vision.',
   },
@@ -157,9 +157,9 @@ const quizQuestions = [
     id: 6,
     question: 'Goal cascading refers to the practice of:',
     options: [
-      'Setting as many goals as possible across all areas of life simultaneously',
+      'Setting as many goals as possible across all areas of life at once',
       'Abandoning goals that become too difficult and replacing them with easier ones',
-      'Breaking a long-term goal down into medium-term milestones and short-term actions, so that daily behaviour is strategically connected to the ultimate objective',
+      'Breaking a long-term goal into medium-term milestones and short-term actions',
       'Copying the goals of a successful mentor and applying them to your own career',
     ],
     correctAnswer: 2,
@@ -171,28 +171,28 @@ const quizQuestions = [
     question:
       'Locke &amp; Latham&rsquo;s Goal Setting Theory distinguishes between performance goals and mastery goals. Which of the following best describes a mastery goal?',
     options: [
-      '&ldquo;I want to score higher than my colleagues on the end-of-module assessment&rdquo;',
-      '&ldquo;I want to deeply understand three-phase power theory so that I can confidently explain it to others and apply it in complex fault-finding scenarios&rdquo;',
-      '&ldquo;I want to complete the course as quickly as possible&rdquo;',
-      '&ldquo;I want to receive a distinction on my City &amp; Guilds assessment&rdquo;',
+      '&ldquo;I want to deeply understand three-phase power theory and how to apply it&rdquo;',
+      '&ldquo;I want to score higher than all my colleagues on the end-of-module assessment&rdquo;',
+      '&ldquo;I want to complete the whole course as quickly as I possibly can&rdquo;',
+      '&ldquo;I want to receive a distinction on my City &amp; Guilds final assessment&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A mastery goal (also called a learning goal) is focused on developing deep competence and understanding in a subject area. It is intrinsically motivated &mdash; you pursue it because you want to genuinely understand and be able to apply the knowledge, not because you want to outperform others or achieve a specific grade. Option B is a mastery goal because it focuses on deep understanding, the ability to explain to others (which requires genuine comprehension), and practical application in complex scenarios. Options A and D are performance goals &mdash; they are about demonstrating competence relative to a standard or to other people. Option C is neither &mdash; it is about speed rather than depth. Locke &amp; Latham found that mastery goals are particularly effective for complex tasks because they encourage exploration, strategy development, and deeper engagement with the material. For electricians tackling challenging topics like three-phase systems, power factor, or circuit design, a mastery orientation leads to more robust and lasting understanding than a performance orientation.',
+      'A mastery goal (also called a learning goal) is focused on developing deep competence and understanding in a subject area. It is intrinsically motivated &mdash; you pursue it because you want to genuinely understand and be able to apply the knowledge, not because you want to outperform others or achieve a specific grade. The three-phase power theory goal is a mastery goal because it focuses on deep understanding, the ability to explain to others (which requires genuine comprehension), and practical application in complex scenarios. Scoring higher than colleagues and receiving a distinction are performance goals &mdash; they are about demonstrating competence relative to a standard or to other people. Completing the course as quickly as possible is neither &mdash; it is about speed rather than depth. Locke &amp; Latham found that mastery goals are particularly effective for complex tasks because they encourage exploration, strategy development, and deeper engagement with the material. For electricians tackling challenging topics like three-phase systems, power factor, or circuit design, a mastery orientation leads to more robust and lasting understanding than a performance orientation.',
   },
   {
     id: 8,
     question:
       'Which of the following is the most common goal-setting mistake made by tradespeople, according to the patterns discussed in this section?',
     options: [
-      'Setting goals that are too small and easily achievable',
-      'Setting vague, unmeasurable goals that lack a clear action plan and timeline &mdash; such as &ldquo;I want to get ahead&rdquo; or &ldquo;I should do more training&rdquo;',
-      'Setting too many specific goals with detailed action plans',
-      'Reviewing goals too frequently and adjusting them too often',
+      'Setting goals that are too small and far too easily achievable',
+      'Setting too many specific goals, each with a detailed action plan',
+      'Reviewing goals too frequently and adjusting them far too often',
+      'Setting vague, unmeasurable goals with no clear action plan or timeline',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The most prevalent goal-setting mistake among tradespeople is vagueness. Goals like &ldquo;I want to get ahead&rdquo;, &ldquo;I should do more training&rdquo;, or &ldquo;I want to earn more money&rdquo; are wishes, not goals. They lack the specificity, measurability, and time constraints that would make them actionable. Without a clear target, there is no way to create an action plan, measure progress, or know when you have succeeded. This vagueness often stems from never having been taught structured goal-setting methods &mdash; trade apprenticeships focus heavily on technical skills but rarely include explicit training in career planning and personal development. The fix is straightforward but requires discipline: convert vague wishes into SMART goals, break them into process goals (daily and weekly actions), and build a review mechanism. Option A is rarely the problem &mdash; most tradespeople under-set rather than over-set goals. Options C and D would actually be signs of good goal-setting practice, not mistakes.',
+      'The most prevalent goal-setting mistake among tradespeople is vagueness. Goals like &ldquo;I want to get ahead&rdquo;, &ldquo;I should do more training&rdquo;, or &ldquo;I want to earn more money&rdquo; are wishes, not goals. They lack the specificity, measurability, and time constraints that would make them actionable. Without a clear target, there is no way to create an action plan, measure progress, or know when you have succeeded. This vagueness often stems from never having been taught structured goal-setting methods &mdash; trade apprenticeships focus heavily on technical skills but rarely include explicit training in career planning and personal development. The fix is straightforward but requires discipline: convert vague wishes into SMART goals, break them into process goals (daily and weekly actions), and build a review mechanism. Setting goals that are too small is rarely the problem &mdash; most tradespeople under-set rather than over-set goals. Setting many specific goals with detailed plans, and reviewing regularly, would actually be signs of good goal-setting practice, not mistakes.',
   },
 ];
 

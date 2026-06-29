@@ -107,10 +107,10 @@ const quizQuestions = [
     question:
       'Which of the following is an example of an UNDERLYING cause of an accident?',
     options: [
-      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
-      'Record the specific symptoms, time, date, conditions and any operator observations in detail',
+      'A worker tripped over a trailing extension lead on the floor',
+      'The worker wasn’t looking where they were walking at the time',
       'No site rule about cable management; supervisors don’t enforce; nowhere to coil cables off the floor',
-      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
+      'The worker had only started on the site that morning',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'What is the "Swiss cheese" model of accident causation?',
     options: [
-      'Type (rod / plate / mat), accessibility for measurement (test link), corrosion, label per Reg 514.13.1, and a measured Ra giving compliant Zs at the furthest point',
+      'A model where the most senior person present takes the blame for any incident',
       'A model showing that accidents happen when holes in multiple layers of defence (procedures, equipment, supervision, training) line up',
-      'To detect faults (short circuits, mis-wiring, low IR, missing CPC) BEFORE applying voltage that could cause shock, fire, or equipment damage',
-      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
+      'A model that ranks hazards by how likely they are to cause a fatality',
+      'A model that says only one control measure is ever needed per hazard',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'After an investigation, the action plan identifies a need for new lock-off kit and revised site induction. Who owns the implementation?',
     options: [
-      'To verify the sensors respond to a known concentration of test gas',
-      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
+      'Nobody in particular — the plan is filed and revisited if it happens again',
+      'The casualty, since the incident happened to them',
       'Named persons within the company, with target completion dates and follow-up checks',
-      'Trustworthiness — maintaining standards of honesty and integrity',
+      'The HSE inspector who reviewed the RIDDOR report',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,9 +176,9 @@ const quizQuestions = [
     question:
       'You investigated a near-miss, identified the root cause, and the company implemented a fix. Six months later a similar near-miss happens. What does this tell you?',
     options: [
-      'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
-      'Evaluating environmental impacts throughout a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life from raw materials to disposal',
-      'The risk of serious injury from hazardous substances or conditions within the space',
+      'The fix worked — a single repeat in six months proves the system is sound',
+      'The workers involved simply weren’t being careful enough that day',
+      'Near-misses can’t be prevented, so a repeat is to be expected',
       'The fix didn’t address the actual root cause, OR the lesson hasn’t reached everyone yet',
     ],
     correctAnswer: 3,

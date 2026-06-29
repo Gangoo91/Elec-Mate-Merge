@@ -45,14 +45,14 @@ const quickCheckQuestions = [
     question:
       'You are designing a training session on consumer unit installation. Which sequence correctly follows Kolb\u2019s full cycle?',
     options: [
-      'Read BS 7671 \u2192 watch a demo \u2192 attempt the task \u2192 discuss what happened',
       'Watch a demo \u2192 discuss what you observed \u2192 read the regulations \u2192 attempt it yourself',
+      'Read BS 7671 \u2192 watch a demo \u2192 attempt the task \u2192 discuss what happened',
       'Attempt the task \u2192 read BS 7671 \u2192 watch a demo \u2192 discuss what happened',
       'Discuss the theory \u2192 attempt the task \u2192 watch a demo \u2192 read BS 7671',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Kolb\u2019s cycle starts with Concrete Experience (watching a demo), then Reflective Observation (discussing what you observed), then Abstract Conceptualisation (reading the regulations to understand the theory), then Active Experimentation (attempting it yourself). Option B follows this sequence correctly.',
+      'Kolb\u2019s cycle starts with Concrete Experience (watching a demo), then Reflective Observation (discussing what you observed), then Abstract Conceptualisation (reading the regulations to understand the theory), then Active Experimentation (attempting it yourself). The demo-discuss-read-attempt sequence follows this order correctly.',
   },
 ];
 
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: 'What are the four stages of Kolb\u2019s cycle in the correct order?',
     options: [
-      'Plan, Do, Check, Act',
       'Concrete Experience, Reflective Observation, Abstract Conceptualisation, Active Experimentation',
+      'Plan, Do, Check, Act',
       'Experience, Theory, Practice, Review',
       'Watch, Think, Read, Do',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct order is: Concrete Experience (doing or observing), Reflective Observation (reviewing what happened), Abstract Conceptualisation (understanding the theory), Active Experimentation (trying it out in a new way).',
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
       'Which is the most commonly skipped stage of Kolb\u2019s cycle in construction mentoring?',
     options: [
       'Concrete Experience',
-      'Reflective Observation',
       'Abstract Conceptualisation',
       'Active Experimentation',
+      'Reflective Observation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reflective Observation is most commonly skipped. The pressure of site deadlines means apprentices are often moved from one task to the next without a debrief. A good mentor builds in time for reflection, even if it is just five minutes at the end of a task.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       'According to Kolb, what is the consequence of learning only through Abstract Conceptualisation without Concrete Experience?',
     options: [
-      'The learner becomes a strong theorist who can advise others',
       'The learner understands the principles but cannot apply them in practice',
+      'The learner becomes a strong theorist who can advise others',
       'The learner develops excellent analytical skills',
       'The learner will eventually gain experience through observation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Learning without experience is purely theoretical. The learner may be able to recite regulations and principles but will struggle to apply them on a real installation. This is a common problem for college-trained apprentices who have not yet had sufficient site experience.',
   },

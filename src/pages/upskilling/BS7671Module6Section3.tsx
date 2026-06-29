@@ -27,12 +27,12 @@ const inlineChecks = [
     question:
       'Why does Reg 643.1 fix the order of the dead tests (continuity → IR → polarity → Zs → RCD → phase rotation) rather than letting the inspector run them in any order they like?',
     options: [
-      'It is a tradition carried over from the 16th edition with no real reason behind it',
-      'Each test depends on the previous one having succeeded — running them out of order can hide a fault, damage instruments or expose the inspector to risk',
-      'The order only matters for three-phase circuits',
-      'BS 7671 lets you run them in any order as long as you record the results',
+      'Each test depends on the previous one having passed, so the order is a safety mechanism',
+      'It is a tradition carried over from the 16th edition with no engineering basis behind it',
+      'The order only matters on three-phase circuits feeding rotation-sensitive loads',
+      'BS 7671 lets you run them in any order provided every result is recorded on the schedule',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 643.1 sets the sequence because each test relies on the previous one passing. Running insulation resistance before continuity can mask an open CPC (the missing path looks like a high IR result). Running Zs before polarity can drive line voltage onto the wrong terminal. The order is engineered: each step closes off a class of fault before the next is meaningful.',
   },
@@ -41,12 +41,12 @@ const inlineChecks = [
     question:
       'You are about to verify continuity of CPCs on a final ring circuit. The R1+R2 method is most commonly used because:',
     options: [
-      'It is faster than the wander-lead method on every circuit',
-      'It links line and CPC at the consumer unit and measures end-to-end at each accessory, giving you R1+R2 directly — which feeds straight into your Zs calculation (Zs = Ze + R1+R2)',
-      'It needs no test instrument, just a continuity bell',
-      'BS 7671 only recognises R1+R2 — wander leads are not permitted',
+      'It is faster than the wander-lead method on every circuit configuration',
+      'It needs no calibrated test instrument, just a basic continuity bell',
+      'It measures R1+R2 directly, which feeds straight into the Zs = Ze + R1+R2 calculation',
+      'BS 7671 only recognises R1+R2 and prohibits the wander-lead method outright',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 643.2 requires verification of CPC continuity. The R1+R2 method (cross-link L and CPC at the origin, measure across L and CPC at each accessory) gives the value of R1+R2 in ohms — which is the figure you need for Zs = Ze + R1+R2. The wander-lead method is valid (and sometimes the only option, e.g. on a long bonding conductor without a return route), but it does not produce R1+R2 and you have to derive R1+R2 separately for Zs verification.',
   },
@@ -54,8 +54,8 @@ const inlineChecks = [
     id: 'm6s3-ir-voltage',
     question:
       'You are testing insulation resistance on a 230 V single-phase circuit during initial verification under Reg 643.3. What test voltage and minimum acceptable IR value applies?',
-    options: ['250 V DC, ≥ 0.5 MΩ', '500 V DC, ≥ 1 MΩ', '1000 V DC, ≥ 1 MΩ', '500 V AC, ≥ 2 MΩ'],
-    correctIndex: 1,
+    options: ['250 V DC, ≥ 0.5 MΩ', '1000 V DC, ≥ 1 MΩ', '500 V AC, ≥ 2 MΩ', '500 V DC, ≥ 1 MΩ'],
+    correctIndex: 3,
     explanation:
       'Reg 643.3.2 / Table 64: for nominal circuit voltages between 0 and 500 V (i.e. typical LV final and distribution circuits — including 230 V single-phase and 400 V three-phase), the test voltage is 500 V DC and the minimum IR value is 1 MΩ. 250 V DC applies only to SELV / PELV (≤ 50 V) circuits, and 1000 V DC applies to circuits above 500 V. AC test voltages are not used.',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'Reg 643.6 (polarity) is verified DEAD by continuity testing AND verified live at the end. Which of the following is NOT a polarity-related check during initial verification?',
     options: [
-      'That single-pole switching is in the line conductor only',
+      'That the prospective fault current is below the breaking capacity of the OPD',
       'That socket-outlets have line on the right facing the front (UK BS 1363)',
       'That centre-contacts of E14/E27 lampholders are connected to line',
-      'That the prospective fault current is below the breaking capacity of the OPD',
+      'That single-pole switching is in the line conductor only',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Reg 643.6 (polarity) confirms (a) single-pole switches and protective devices are in the line conductor, (b) BS 1363 socket-outlets are wired correctly (line on the right when facing the front, with the earth at the top), (c) centre-contacts of Edison-type lampholders are connected to the line conductor, and (d) all wiring is correctly identified. Prospective fault current is a separate test under Reg 643.7 — it confirms the breaking capacity of the OPD is adequate, not polarity.',
   },
@@ -79,11 +79,11 @@ const inlineChecks = [
       'A 30 mA Type A RCD is being tested under Reg 643.8. Which combination of trip-time targets does BS EN 61008 / 61009 specify for the inspector to verify?',
     options: [
       'At IΔn ≤ 200 ms, at 5×IΔn ≤ 40 ms',
-      'At IΔn ≤ 300 ms, at 5×IΔn ≤ 40 ms (and ≤ 150 ms for additional protection)',
       'At IΔn ≤ 500 ms, at 5×IΔn ≤ 50 ms',
-      'At IΔn ≤ 1 s for any RCD',
+      'At IΔn ≤ 300 ms, at 5×IΔn ≤ 40 ms',
+      'At IΔn ≤ 1 s for any RCD type',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'For a general-use RCD: at IΔn the device must trip within 300 ms; at 5×IΔn (used to demonstrate fast operation for additional protection) the device must trip within 40 ms. Where the RCD provides additional protection (the typical 30 mA case), the 5×IΔn ≤ 40 ms requirement is the headline number — well below the 150 ms general limit. Type S (selective / time-delayed) RCDs have different windows (130–500 ms at IΔn).',
   },
@@ -92,14 +92,14 @@ const inlineChecks = [
     question:
       'You measure Zs at the furthest point of a 32 A Type B MCB ring final circuit and read 1.30 Ω. The published Zs(max) at 70 °C is 1.37 Ω. Your meter measured at ambient (20 °C). Is the circuit compliant under Reg 643.7.3?',
     options: [
-      'Yes — measured Zs is below Zs(max), no further correction needed',
-      'Maybe — published Zs(max) values already assume a hot conductor, so a cold reading needs to be temperature-corrected (multiply by ~1.20 for typical PVC) before comparing; 1.30 × 1.20 ≈ 1.56 Ω — non-compliant',
-      'No — measured Zs is always too low to be valid',
-      'Yes — temperature correction does not apply to ring finals',
+      'Yes — measured Zs is below Zs(max), so no further correction is needed',
+      'No — a measured Zs reading is always too low to be treated as valid evidence',
+      'Yes — temperature correction does not apply to ring final circuits',
+      'No — the cold reading must be temperature-corrected up before comparing, which fails',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      "Reg 643.7.3: the measured Zs must be compared with the maximum permitted Zs corrected to the conductor operating temperature. Published Zs(max) values (Appendix 3 / OSG) are already at 70 °C for thermoplastic. A cold (20 °C) measurement reads lower than the hot value because copper resistance rises with temperature. Either correct the measurement up by the temperature factor (~1.20 for PVC) before comparing, or use the meter's built-in correction. The example shown crosses the limit and would fail.",
+      "Reg 643.7.3: the measured Zs must be compared with the maximum permitted Zs corrected to the conductor operating temperature. Published Zs(max) values (Appendix 3 / OSG) are already at 70 °C for thermoplastic. A cold (20 °C) measurement reads lower than the hot value because copper resistance rises with temperature. Either correct the measurement up by the temperature factor (~1.20 for PVC) before comparing, or use the meter's built-in correction. Here 1.30 × 1.20 ≈ 1.56 Ω, above the 1.37 Ω limit — the circuit fails.",
   },
 ];
 
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'What is the correct sequence of dead tests during initial verification under Reg 643.1, in the order BS 7671 specifies?',
     options: [
-      'Insulation resistance → continuity → polarity → Zs → RCD',
-      'Continuity of protective conductors → continuity of ring final conductors → insulation resistance → polarity (dead) → earth electrode resistance (where relevant) → protection by SELV/PELV/separation',
-      'Zs → polarity → IR → continuity → RCD operation',
-      'There is no required order — the inspector chooses',
+      'Continuity → insulation resistance → SELV/PELV/separation → dead polarity → earth electrode',
+      'Insulation resistance → continuity → polarity → Zs → RCD operation → continuity (ring)',
+      'Zs → dead polarity → insulation resistance → continuity → RCD operation → earth electrode',
+      'Earth electrode → Zs → continuity → polarity → insulation resistance (any order permitted)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.1 sets the standard sequence. The dead-test block is: (1) continuity of protective conductors and main + supplementary bonding (643.2), (2) continuity of ring final-circuit conductors (643.2.3), (3) insulation resistance (643.3), (4) protection by SELV/PELV/separation (643.4), (5) polarity by continuity (643.6), (6) earth electrode resistance where applicable (643.7.2). Then live tests: (7) polarity confirmation, (8) Zs (643.7.3), (9) prospective fault current (643.7.4), (10) check of phase sequence on three-phase (643.10), (11) functional testing of RCDs (643.8) and switchgear (643.9), (12) verification of voltage drop (643.11) where required.',
   },
@@ -124,11 +124,11 @@ const quizQuestions = [
       'Reg 643.3.2 specifies the test voltage and minimum IR for an LV (50 V to 500 V) circuit. Which row of Table 64 applies?',
     options: [
       '250 V DC test, 0.5 MΩ minimum',
-      '500 V DC test, 1 MΩ minimum',
       '1000 V DC test, 1 MΩ minimum',
+      '500 V DC test, 1 MΩ minimum',
       '500 V AC test, 1 MΩ minimum',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Table 64 in BS 7671:2018+A4:2026: (i) ELV ≤ 50 V (SELV/PELV) → 250 V DC, ≥ 0.5 MΩ; (ii) LV up to 500 V → 500 V DC, ≥ 1 MΩ; (iii) > 500 V → 1000 V DC, ≥ 1 MΩ. The 1 MΩ figure is a floor, not a target — a healthy new circuit reads in the hundreds of MΩ or "OL" (over-range). A circuit reading just above 1 MΩ should be investigated, not signed off.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'During an EICR you find a circuit where the line conductor is being switched but the neutral is being switched too on a single-pole switch. What does Reg 643.6 require, and what is the correct action?',
     options: [
-      'Pass — both poles being broken is safer',
-      'Fail — single-pole switching shall be in the line conductor only (Reg 643.6 / 537.1.4); the wiring is reversed and a code C2 is appropriate',
-      'Pass — polarity is only relevant on socket-outlets',
-      'Fail — but only if the circuit is a lighting circuit',
+      'Pass — breaking both poles on a single-pole switch is the safer arrangement',
+      'Pass — polarity verification is only relevant at socket-outlets, not at switches',
+      'Fail — but only where the circuit being switched is a lighting circuit',
+      'Fail — single-pole switching shall be in the line conductor only, so this is a C2',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.6 verifies that single-pole devices (switches, OPDs) are in the line conductor only. A single-pole switch in the neutral leaves the lampholder, fitting or accessory live at line voltage when the switch is off — anyone changing a lamp is exposed to a 230 V touch potential with no warning. This is a polarity defect under Reg 643.6 and typically attracts C2 on an EICR (potentially dangerous).',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'Which of these correctly describes the AFDD verification step introduced under A4:2026 on the schedule of test results?',
     options: [
-      'AFDDs do not need verifying — manufacturer test is sufficient',
-      "A new column / item on the schedule of test results requires the inspector to record that the AFDD self-test (manufacturer's test button or field-test instrument per BS EN 62606) operated correctly — sitting alongside the existing IR / Zs / RCD columns (item 4.23 / col 30 area)",
-      'AFDDs only need verifying once every five years',
-      'AFDD verification is recorded only on the EIC schedule of inspection, not the schedule of test results',
+      'A new schedule-of-test-results entry records that the in-installation AFDD self-test operated',
+      'AFDDs do not need verifying in the installation — the manufacturer test alone is sufficient',
+      'AFDDs only need verifying at the first periodic inspection, every five years thereafter',
+      'AFDD verification is recorded on the schedule of inspection, never the test results sheet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4:2026 brings AFDD requirements (Reg 421.1.7) into clearer focus on the certification forms. The model schedule of test results adds an AFDD self-test verification entry — typically a tick / pass column confirming the device responded to its built-in test or a field test per BS EN 62606. This sits in the test-results block alongside existing IR, polarity, Zs and RCD columns. Manufacturer pre-installation testing alone is not enough — Reg 643 requires the device to be verified IN THE INSTALLATION as part of initial verification.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'A multifunction tester used for initial verification on a commercial fit-out is found to be 14 months past its last calibration date. Reg 643 / BS EN 61557 implications?',
     options: [
-      "It's fine — calibration is a guideline, not mandatory",
-      'BS EN 61557 / Reg 643 / GN3 require instruments to be of an appropriate type, accuracy and within calibration; a tester out of calibration cannot be relied on for compliance evidence and certificates produced with it are open to challenge — recall, recalibrate, retest the affected jobs',
-      'Only RCD test functions need calibration; IR/continuity functions do not',
-      'Calibration is only required for industrial work',
+      'It is fine — calibration is recommended industry guidance, not a mandatory requirement',
+      'Only the RCD test functions need calibration; the IR and continuity functions do not',
+      'It cannot be relied on as compliance evidence — recall, recalibrate and retest the jobs',
+      'Calibration is only required for industrial and commercial work, not domestic',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test instruments used for compliance with BS 7671 must conform to the relevant part of BS EN 61557. GN3 makes calibration a non-negotiable: an out-of-calibration tester cannot be relied on as evidence of compliance. The standard industry practice is annual calibration with monthly user checks (battery, leads, fixed-resistor jig, IR self-check). A tester 14 months out is a procedural failure — recall affected certificates, recalibrate, retest where required.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'During three-phase commissioning of a small commercial unit, you notice that the supplied phase rotation at the origin is anti-clockwise (L3-L2-L1) instead of the expected L1-L2-L3. What does Reg 643.10 require?',
     options: [
-      'Re-energise and accept — rotation does not matter on three-phase',
-      "Verify and record the actual phase sequence (Reg 643.10) — three-phase motors and rotation-sensitive equipment depend on it; flag with the DNO if the supply rotation is reversed and correct at the origin or at each motor, never by swapping inside the consumer's installation in a way that conflicts with the supply marking",
-      'Reverse two phases anywhere downstream and continue',
-      'Only applies if a motor is connected at handover',
+      'Re-energise and accept the install — rotation direction does not matter on three-phase',
+      'Reverse any two phases at a convenient point downstream and continue commissioning',
+      'Verification only applies where a three-phase motor is connected at handover',
+      'Verify and record the actual sequence, and raise reversed supply rotation with the DNO',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 643.10 requires verification of phase sequence on three-phase circuits during initial verification. The result is recorded on the schedule of test results. If the supply rotation is reversed, the correct route is to (a) raise it with the DNO if the supply itself is wrong, or (b) correct rotation at the motor terminations during commissioning, recording the action. Don't silently swap conductors inside the installation if it leaves the conductor identification inconsistent with the cert — that creates a maintenance trap.",
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'Reg 643.4 covers protection by SELV, PELV or electrical separation. On a 24 V SELV control circuit, what does the verification specifically check?',
     options: [
-      'Only that the secondary voltage is below 50 V',
-      'That the SELV source meets Section 414 (safety isolating transformer to BS EN 61558-2-6, simple separation), that the SELV circuit has no intentional earth connection, that basic protection is in place where required (Reg 414.4.4), AND insulation resistance to other circuits is verified per Table 64 row (i) — 250 V DC, ≥ 0.5 MΩ',
-      'Only the 1 MΩ insulation resistance value',
-      'Just visual inspection of the transformer label',
+      'The source, the lack of an earth on SELV, basic protection, and IR to other circuits',
+      'Only that the measured secondary voltage of the control circuit is below 50 V AC',
+      'Only the 1 MΩ insulation resistance value taken between line and neutral',
+      'Just a visual inspection of the safety isolating transformer rating label',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.4 is broader than just measuring volts. It verifies the protective measure is correctly built: source per Section 414, no earth on SELV, basic protection where the voltage exceeds 25 V AC / 60 V DC ripple-free or where equipment is immersed (Reg 414.4.4), and IR between SELV and any other circuit is at the row-(i) value of Table 64 (250 V DC test, 0.5 MΩ minimum). Electrical separation (Reg 413) follows similar logic for the separated circuit.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'You are doing a periodic inspection (EICR) on a 30-year-old industrial unit. The site is fully loaded — production lines running. What does Reg 643 / GN3 say about insulation resistance testing in this context?',
     options: [
-      'IR test must be performed at 500 V even with the load connected',
-      'Where a full disconnection IR test is impractical without disrupting the user, IR may be omitted as a measured test and verified by other means (e.g. between live conductors and earth at low voltage on de-energised parts, plus inspection); the limitation is recorded on the EICR and the inspector justifies it — an EICR is sample-based, not exhaustive',
-      'Disconnect every load forcibly and proceed regardless',
-      'Skip IR entirely on every EICR',
+      'The IR test must still be performed at the full 500 V even with the load connected',
+      'Disconnect every load on the site forcibly and proceed with the full IR test regardless',
+      'Where direct measurement is impractical, record the limitation and verify by other means',
+      'Skip the insulation resistance test entirely on every periodic inspection as a matter of course',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 recognises that on a periodic inspection of an in-service installation, fully de-energising for IR testing is often impractical and may itself create risk (loss of refrigeration, IT systems, life-safety). The inspector samples — typically 20% of circuits, 100% of high-risk — and where IR cannot be measured directly the limitation is recorded on the EICR (Section L of the form) with the justification. Reg 643 is the design verification baseline; GN3 / IET Best Practice Guides explain the EICR adaptation in the field.',
   },

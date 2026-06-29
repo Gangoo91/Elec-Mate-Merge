@@ -30,12 +30,12 @@ const quizQuestions = [
     question:
       'Under the Health and Safety at Work etc. Act 1974, Section 20, what is the primary power granted to HSE inspectors?',
     options: [
+      'The right of entry to any workplace at any reasonable time, or at any time if a dangerous situation is suspected',
       'The power to issue fines directly without court proceedings',
-      'The right of entry to any workplace at any reasonable time, or at any time if they believe a dangerous situation exists',
       'The power to arrest individuals on site',
       'The power to close a business permanently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 20 of HASAWA 1974 grants HSE inspectors the right of entry to any workplace at any reasonable time, or at any time if the inspector has reasonable cause to believe a situation exists that may be dangerous. This right of entry is the foundation of all HSE enforcement powers and cannot be refused by the duty holder. Obstruction of an inspector is itself a criminal offence.',
   },
@@ -81,11 +81,11 @@ const quizQuestions = [
       'Under RIDDOR 2013, within what timescale must a fatal or specified injury be reported to the HSE?',
     options: [
       'Within 24 hours',
-      'Without delay — as soon as practicable, and a written report within 10 days',
       'Within 15 days',
       'Within 7 days',
+      'Without delay — as soon as practicable, and a written report within 10 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fatal injuries and specified injuries (such as fractures other than to fingers, thumbs, or toes, amputations, crush injuries, loss of consciousness, and others listed in Regulation 4) must be reported without delay. The responsible person must notify the HSE by the quickest practicable means (typically by telephone to the Incident Contact Centre), followed by a written report via the online system within 10 days. Over-7-day injuries have a longer reporting window of 15 days.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
       'What is the difference between active monitoring and reactive monitoring in the context of ongoing CDM compliance?',
     options: [
       'Active monitoring focuses on past incidents; reactive monitoring focuses on preventing future incidents',
-      'Active monitoring involves proactive inspections, audits, and observations before incidents occur; reactive monitoring involves investigating incidents, near misses, and ill health after they occur',
       'There is no difference — they are interchangeable terms',
       'Active monitoring is carried out by the HSE; reactive monitoring is carried out by the principal contractor',
+      'Active monitoring is proactive checks before incidents occur; reactive monitoring investigates incidents and ill health after they occur',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Active monitoring is proactive — it involves planned safety inspections, compliance audits, behavioural observations, and checking that control measures are working before anything goes wrong. Reactive monitoring is responsive — it involves investigating incidents, accidents, near misses, and cases of ill health after they have occurred. Both are essential: active monitoring helps prevent incidents, while reactive monitoring helps learn from them. The construction phase plan should include both types.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Under the Corporate Manslaughter and Corporate Homicide Act 2007, which of the following sanctions can a court impose on an organisation convicted of corporate manslaughter?',
     options: [
+      'An unlimited fine, a publicity order to publicise the conviction, and a remedial order to fix the failures',
       'Imprisonment of company directors for up to 14 years',
-      'An unlimited fine, a publicity order requiring the organisation to publicise its conviction, and a remedial order requiring it to address the management failures',
       'A fixed fine of \u00a3500,000 and a ban on future construction work',
       'Community service orders for senior management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Corporate Manslaughter and Corporate Homicide Act 2007 provides for three sanctions against convicted organisations: an unlimited fine (which in practice has reached tens of millions of pounds), a publicity order (requiring the organisation to publicise its conviction, the fine, and the reasons in a specified manner), and a remedial order (requiring it to take specified steps to remedy the management failure that led to the death). Notably, the Act does not provide for imprisonment of individuals — that remains available under HASAWA 1974 and other legislation for individual offenders.',
   },
@@ -138,12 +138,12 @@ const quickCheckQuestions = [
     question:
       'An HSE inspector arrives at a construction site and asks to enter. The site manager says the principal contractor is not available and asks the inspector to come back tomorrow. Can the inspector insist on entering the site?',
     options: [
+      'Yes — inspectors have right of entry under HASAWA 1974 Section 20 without appointment; obstructing one is a criminal offence',
       'No — the inspector must make an appointment and return when the PC is available',
-      'Yes — HSE inspectors have the right of entry under HASAWA 1974 Section 20 and do not need permission or an appointment. Obstructing an inspector is a criminal offence',
       'Only if the inspector has a warrant issued by a magistrate',
       'Only if there is an active investigation already underway',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'HSE inspectors have the statutory right of entry to any workplace at any reasonable time under Section 20 of HASAWA 1974. They do not need to make an appointment, and they do not need the permission of the site manager or principal contractor. Deliberately obstructing or preventing an inspector from exercising their powers is itself a criminal offence under Section 33 of HASAWA 1974. The inspector can insist on immediate entry and can exercise all their investigatory powers regardless of who is or is not available on site.',
   },
@@ -152,11 +152,11 @@ const quickCheckQuestions = [
       'A construction company receives a prohibition notice stopping work on scaffolding. The company immediately lodges an appeal with the Employment Tribunal. Can they resume the scaffolding work while the appeal is being heard?',
     options: [
       'Yes — lodging an appeal automatically suspends any enforcement notice',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically orders otherwise. The scaffolding work must remain stopped',
       'Yes — but only if the company provides a written risk assessment to the HSE',
       'No — but they can apply to the HSE for a temporary exemption',
+      'No — a prohibition notice stays in force during an appeal unless the tribunal orders otherwise; work must remain stopped',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'This is one of the most important distinctions in enforcement law. An improvement notice is suspended when an appeal is lodged — the duty holder does not have to comply during the appeal. A prohibition notice, however, is NOT suspended by an appeal. The dangerous activity must remain stopped unless and until the Employment Tribunal specifically orders that the notice be suspended (which is rare, given that prohibition notices are issued where there is a risk of serious personal injury). Resuming the prohibited activity before the appeal is determined would be a criminal offence.',
   },
@@ -165,11 +165,11 @@ const quickCheckQuestions = [
       'A worker falls from a height of 3 metres on a construction site and fractures their wrist. They are taken to hospital and are unable to work for 10 days. Under RIDDOR 2013, what reporting obligation does this trigger?',
     options: [
       'No reporting obligation — the injury is minor',
-      'The responsible person must report it as a specified injury (fracture) without delay by the fastest practicable means, followed by a written report within 10 days via the online RIDDOR system',
       'It only needs to be reported as an over-7-day injury within 15 days',
+      'Report it as a specified injury (fracture) without delay, then a written report within 10 days via the online RIDDOR system',
       'It only needs to be recorded in the site accident book — no RIDDOR report is required',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A fracture (other than to fingers, thumbs, or toes) is a specified injury under RIDDOR 2013, regardless of how long the worker is off work. Specified injuries must be reported without delay — the responsible person (usually the employer or the principal contractor) must notify the HSE by the fastest practicable means (telephone to the Incident Contact Centre), followed by a written report within 10 days. The over-7-day injury category would only apply if the injury was NOT a specified injury but resulted in the worker being incapacitated for more than 7 consecutive days. Always check the specified injuries list first.',
   },

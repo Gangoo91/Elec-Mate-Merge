@@ -17,12 +17,12 @@ const quizData = [
     question:
       'What is the recommended voltage trip setting for undervoltage protection in EV charging applications?',
     answers: [
-      '85% of nominal voltage',
       '90% of nominal voltage (207V)',
+      '85% of nominal voltage',
       '95% of nominal voltage',
       '80% of nominal voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EV charging equipment typically requires 90% of nominal voltage (207V for 230V systems) to ensure proper operation and prevent damage to charging electronics. This is more stringent than general electrical equipment requirements.',
   },
@@ -37,12 +37,12 @@ const quizData = [
   {
     question: 'What is the primary safety consideration when working with current transformers?',
     answers: [
-      'Always use the highest burden possible',
-      'Secondary circuits must never be open-circuited during operation',
+      'Always select the highest burden available',
       'Primary current should not exceed 50% of rating',
-      'CTs can be installed in any orientation',
+      'CTs may be installed in any orientation',
+      'Secondary circuits must never be open-circuited during operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CT secondary circuits must never be open-circuited during operation as this causes dangerous high voltages (potentially kV levels) to appear across the secondary terminals, creating serious shock and equipment damage risks.',
   },
@@ -51,18 +51,18 @@ const quizData = [
       'What type of arc fault detection provides the fastest response time for DC charging installations?',
     answers: [
       'Current signature analysis only',
-      'Light-based arc detection (<2ms)',
       'Voltage-based detection',
+      'Light-based arc detection (<2ms)',
       'Temperature-based detection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Light-based arc detection systems provide the fastest response time (<2ms) by detecting the characteristic light emission from electrical arcs, which is essential for the rapid disconnection required in high-power DC charging applications.',
   },
   {
     question: 'What is the typical burden rating for a CT used with a multifunction power meter?',
-    answers: ['1VA per CT', '2.5VA per CT', '5-10VA per CT', '15VA per CT'],
-    correctAnswer: 2,
+    answers: ['1VA per CT', '2.5VA per CT', '15VA per CT', '5-10VA per CT'],
+    correctAnswer: 3,
     explanation:
       "Multifunction power meters typically require 5-10VA burden per CT, depending on the meter's input characteristics and cable length. This ensures accurate measurement across the full operating range.",
   },
@@ -77,12 +77,12 @@ const quizData = [
     question:
       'Which monitoring parameter is most critical for preventing thermal damage in EV charging equipment?',
     answers: [
-      'Voltage magnitude only',
       'Current magnitude and temperature',
+      'Voltage magnitude only',
       'Power factor only',
-      'Frequency deviation',
+      'Frequency deviation only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Current magnitude and temperature monitoring are critical as high currents combined with poor cooling can cause rapid thermal damage to cables, contactors, and power electronics in EV charging systems.',
   },
@@ -91,11 +91,11 @@ const quizData = [
       'What is the recommended minimum clearance for CT installation in EV charging panels?',
     answers: [
       '50mm from adjacent conductors',
-      '100mm from adjacent conductors',
       '200mm from adjacent conductors',
+      '100mm from adjacent conductors',
       '300mm from adjacent conductors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '200mm minimum clearance prevents electromagnetic interference between CTs and ensures safe access for installation, testing, and maintenance in typical EV charging panel configurations.',
   },

@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'A 100 mA RCD upstream of 30 mA RCBOs gives selectivity. True or false, and what are the two required ingredients?',
     options: [
-      'True — the current ratio (100 mA / 30 mA = 3.3×) is enough on its own.',
-      'False alone. Both ingredients are required: a current ratio (upstream IΔn at least 3× downstream) AND a time delay on the upstream device. A non-delayed 100 mA over a non-delayed 30 mA can race to trip on the same fault and drop both.',
-      'True — provided the upstream is Type AC.',
-      'False — selectivity needs three ingredients including phase separation.',
+      'False alone — both a 3:1 IΔn ratio AND a time delay on the upstream device are required.',
+      'True — the 100 mA / 30 mA current ratio alone guarantees selectivity.',
+      'True, provided the upstream device is Type AC, which gives the discrimination.',
+      'False — selectivity needs three ingredients, including phase separation between devices.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Reg 536.4.1.4 demands both ratio and delay. A non-delayed 100 mA can open in 30-50 ms on a fault near its threshold — overlapping with the downstream 30 mA non-delayed device. Type S (time-delayed) at the origin opens the time gap that lets the downstream clear first.',
+      'Reg 536.4.1.4 demands both ratio and delay. A non-delayed 100 mA can open in 30-50 ms on a fault near its threshold — overlapping with the downstream 30 mA non-delayed device, so they race and both drop. Type S (time-delayed) at the origin opens the time gap that lets the downstream clear first.',
   },
   {
     id: 'mod6-s5-tt-system',
     question:
       'On a TT system origin, why is a time-delayed Type S RCD essentially mandatory at the supply intake?',
     options: [
-      'Because TT systems require redundancy.',
-      'A TT origin needs RCD fault-protection for the supply-side conductors (the earth-fault loop returns through the local earth electrode). A Type S 100 mA at the origin gives that supply-side protection AND lets downstream 30 mA RCBOs clear final-circuit faults first via selectivity. Without the time delay, the origin device races the downstream devices.',
-      'Because TT systems forbid TN-style RCBOs.',
-      'For aesthetic reasons only.',
+      'Because TT systems require a redundant second device at the origin as a matter of principle.',
+      'Because TT systems forbid the use of TN-style RCBOs on the outgoing ways entirely.',
+      'For aesthetic reasons only — it serves no protective function on a TT system.',
+      'A TT origin needs supply-side RCD protection; the Type S delay also lets downstream RCBOs clear first.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'TT systems rely on RCDs for fault-protection because the local earth electrode resistance is too high for overcurrent devices to clear faults within the Reg 411.3.2 disconnection time. A Type S device at the origin provides that supply-side protection while leaving final-circuit faults to be cleared by per-circuit 30 mA RCBOs.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'You inject 30 mA at the load side of a downstream RCBO with a Type S 100 mA RCD upstream. Both devices trip. What does that prove and what is the next step?',
     options: [
-      'Both tripped, so selectivity works fine — record pass.',
-      'Selectivity has failed. Both opening on a downstream fault means the upstream device is NOT acting as a backup — it is actively disconnecting the whole installation. Next step: confirm the upstream device is genuinely Type S (S marking on the label, BS EN 61008-1 / 61009-1 product standard), and verify trip times against the 130-500 ms band.',
-      'Selectivity does not need testing.',
-      'Run a higher-current test to confirm.',
+      'Both devices tripped, so selectivity is working fine — record a pass and move on.',
+      'Run a higher-current test to confirm the upstream device behaves the same way at 5×IΔn.',
+      'Selectivity has failed — both opening means no backup. Next: confirm the upstream is genuinely Type S.',
+      'Selectivity between RCDs does not need testing on site, so no further step is required.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Selectivity test pass = downstream device opens, upstream device holds. Both opening = no selectivity, the user loses the entire installation on a single final-circuit fault. The diagnostic is usually that the "upstream" device is non-delayed despite appearances (mis-marked, mis-specified, or replaced like-for-like with a non-S variant).',
   },
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You verify selectivity on a TT origin with 100 mA Type S upstream and 30 mA RCBOs downstream. Where on the schedule of test results is the selectivity arrangement recorded?',
     options: [
-      'It is implicit in the IΔn values, no extra entry needed.',
-      'In the comments column against both devices: e.g. "Type S 100 mA at origin for selectivity per Reg 536.4.1.4 over 30 mA non-delayed RCBOs — verified by injection test, downstream device cleared, origin device held."',
-      'On a separate selectivity certificate.',
-      'In the IΔn column only.',
+      'It is implicit in the IΔn values, so no extra entry is needed at all.',
+      'In the comments column against both devices, citing Reg 536.4.1.4 and the injection-test result.',
+      'On a separate standalone selectivity certificate kept with the file.',
+      'In the IΔn column only, with no narrative entry recorded.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,26 +82,26 @@ const quizQuestions = [
     question:
       'Reg 536.4.1.4(b) sets two conditions for selectivity between RCDs in series for residual currents. What are they?',
     options: [
-      'Upstream RCD is type AC; downstream is type A',
-      'Upstream RCD is selective type (type S or time-delayed with appropriate setting); ratio of upstream IΔn to downstream IΔn is at least 3:1',
-      'Both RCDs are 30 mA and the upstream has a longer test lead',
-      'Upstream is BS EN 61008; downstream is BS EN 61009',
+      'The upstream RCD is Type AC and the downstream is Type A, discriminating by sensitivity class',
+      'Both RCDs are rated 30 mA and the upstream has a longer supply lead fitted to add delay',
+      'The upstream device conforms to BS EN 61008 and the downstream conforms to BS EN 61009',
+      'The upstream RCD is a selective type, AND the IΔn ratio upstream-to-downstream is at least 3:1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Reg 536.4.1.4(b)(i) and (ii) are explicit: the upstream device must be of selective type (Type S or time-delayed with appropriate time-delay setting), AND the ratio of upstream IΔn to downstream IΔn shall be at least 3:1. Both conditions, not either-or. A 100 mA Type S over a 30 mA general-purpose downstream device satisfies both. A 30 mA over 30 mA does not.',
+      'Reg 536.4.1.4(b)(i) and (ii) are explicit: the upstream device must be of selective type (Type S or time-delayed with appropriate time-delay setting), AND the ratio of upstream IΔn to downstream IΔn shall be at least 3:1. Both conditions, not either-or. A 100 mA Type S over a 30 mA general-purpose downstream device satisfies both; a 30 mA over 30 mA satisfies neither. Device standard alone (61008/61009) or sensitivity class (AC/A) does not create discrimination.',
   },
   {
     id: 2,
     question:
       'A consumer unit is wired with a single 30 mA RCCB at the origin feeding ten 30 mA RCBOs on the outgoing ways. A bathroom shower develops an earth fault. What is the most likely outcome?',
     options: [
-      'Only the bathroom RCBO trips — the upstream sees the fault but waits',
       'Both the upstream RCCB and the bathroom RCBO race to trip; commonly the upstream wins and the entire installation goes dark',
-      'Neither trips because they cancel out',
-      'The MCB element of the RCBO trips first, then the RCCB resets automatically',
+      'Only the bathroom RCBO trips, because the upstream device sees the fault but deliberately waits',
+      'Neither device trips, because the two equal residual sensitivities cancel each other out',
+      'The MCB element of the RCBO trips first, and then the upstream RCCB resets itself automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A 30 mA over 30 mA stack has no selectivity — the upstream is not Type S, and the IΔn ratio is 1:1 not 3:1. Both devices see the same residual current at the same instant and either may operate first. In practice the upstream RCCB very often wins, blacking out the whole installation for a single-circuit fault. Reg 536.4.1.4(b) is the rule that prevents this when correctly applied.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Why is an upstream 30 mA RCD that trips on a downstream fault a black-out failure rather than a safety failure?',
     options: [
-      'Because the user got an electric shock',
-      'Because it disconnects more of the installation than necessary, removing supply from circuits that had no fault — disconnection happened, just over a wider area',
-      'Because the downstream device should have been bigger',
-      'Because the residual current was below 30 mA',
+      'Because it disconnects more of the installation than necessary, removing supply from circuits that had no fault — disconnection still happened, just over a wider area',
+      'Because the user received an electric shock before the device operated',
+      'Because the downstream device should have been rated higher than the upstream one',
+      'Because the residual current that flowed was actually below the 30 mA threshold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Disconnection still occurred within the time required by Reg 411.3.2 / 415.1, so the additional protection duty was met. The failure is operational continuity — the upstream device removed circuits that had no fault on them. Reg 536.4.1.4 exists to give continuity, not safety. Confusing the two is a common error in court explanations.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'BS EN 61008 sets different maximum trip times for general-purpose and Type S RCDs at IΔn. At rated residual current, the type S device has approximately how long to trip?',
     options: [
-      'The same as general-purpose — 300 ms maximum',
-      'A longer permitted trip time at IΔn (max ≈ 500 ms) and a non-actuating minimum (≈ 130 ms) — the delay is what makes selectivity possible',
-      'No trip time — Type S RCDs do not trip on rated residual current',
-      'Half the time of a general-purpose RCD',
+      'The same trip-time window as a general-purpose device — a 300 ms maximum at IΔn',
+      'No trip time at all, since a Type S RCD does not operate at its rated residual current',
+      'Half the trip time of an equivalent general-purpose RCD at the same residual current',
+      'A longer max (≈ 500 ms) plus a non-actuating minimum (≈ 130 ms) — the delay enables selectivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Per BS EN 61008-1 the Type S device has both a longer maximum trip time and a minimum non-actuating time at IΔn. The non-actuating window is what gives the downstream general-purpose RCD a chance to clear first. Without that window — i.e. without the [S] designation — there is no time discrimination and selectivity is not achieved.',
   },
@@ -151,26 +151,26 @@ const quizQuestions = [
     question:
       'You are testing a 100 mA Type S RCD upstream of a 30 mA RCBO on a kitchen ring. Which two tests do you carry out, and what do you record?',
     options: [
-      'Only test the downstream — upstream is irrelevant',
-      'Test trip time of each device at its own IΔn (the Type S has a longer permitted time band), AND test selectivity by injecting a residual fault below 100 mA at a downstream point and confirming the downstream RCBO clears it without operating the upstream Type S — record both trip times and the selectivity result on the schedule',
-      'Test only at 5×IΔn for additional protection',
-      'Test the IR insulation only',
+      'Trip-time each device at its own IΔn, plus a selectivity injection downstream — record both',
+      'Only test the downstream device, since the upstream Type S is irrelevant to the result here',
+      'Test only at 5×IΔn for additional protection and record that single figure on the schedule',
+      'Test the insulation resistance of the circuit only, as RCD trip times are declared by the maker',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Two distinct tests. (1) Each device against its own permitted trip-time band (Type S has a longer max and a minimum non-actuating window — both must be in spec). (2) A selectivity test: a residual fault between the two devices, sized below upstream IΔn, that the downstream device must clear alone. Both go on the Schedule of Test Results — upstream IΔn AND downstream IΔn columns, both trip times, and a comments note confirming selectivity verified.',
+      'Two distinct tests. First, each device against its own permitted trip-time band (Type S has a longer max and a minimum non-actuating window — both must be in spec). Second, a selectivity test: a residual fault between the two devices, sized below upstream IΔn, that the downstream device must clear alone. Both go on the Schedule of Test Results — upstream IΔn AND downstream IΔn columns, both trip times, and a comments note confirming selectivity verified.',
   },
   {
     id: 7,
     question:
       'Reg 536.4.1.4 NOTE 4 adds a hard limitation on selectivity for line-to-earth AND neutral-to-earth faults. What is it?',
     options: [
-      'The upstream RCD must be Type B',
-      'The downstream RCD must switch all live conductors including the neutral',
-      'The downstream RCD must be 10 mA',
-      'The upstream RCD must be in a separate enclosure',
+      'The upstream RCD must be of Type B for selectivity to extend to neutral-to-earth faults',
+      'The downstream RCD must have a rated residual operating current of 10 mA',
+      'The downstream RCD must switch all live conductors, including the neutral',
+      'The upstream RCD must be housed in a separate enclosure from the downstream devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'NOTE 4 is precise: "Selectivity can only be achieved between an upstream type S RCD and any downstream RCD, with respect to both a line to earth and a neutral to earth fault, where the downstream RCD switches all live conductors (including the neutral)." A two-pole RCBO satisfies this on a single-phase circuit. A single-pole RCBO that does not switch the neutral does not, and selectivity for a N-E fault cannot be claimed.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'What is the practical reason a Type S RCD is used at the origin of a TT installation, even when every outgoing way already has its own 30 mA RCBO?',
     options: [
-      'Cosmetic — the consumer unit looks tidier',
-      'It provides the upstream earth-fault disconnection required for fire protection / TT-system Ra coordination per Reg 531.3.5.3.2 (an Ra of 167 Ω permits up to 300 mA IΔn) — and the time delay gives selectivity to downstream 30 mA shock-protection devices below it',
-      'Type S RCDs are cheaper than RCBOs',
-      'Because BS 7671 forbids 30 mA at the origin',
+      'It is cosmetic — the consumer unit simply looks tidier with a single incoming device',
+      'Type S RCDs are cheaper than RCBOs, so they are fitted at the origin to save on cost',
+      'Because BS 7671 forbids any 30 mA device being used at the origin of a TT installation',
+      'It gives upstream TT earth-fault disconnection, and its delay grants selectivity to the 30 mA devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Two functions in one device. The upstream Type S satisfies the TT earth-fault disconnection / fire-protection role (sized against Ra per Table 53.1: at Ra = 167 Ω, max IΔn = 300 mA; at Ra = 500 Ω, max IΔn = 100 mA). The Type S characteristic gives the time delay that lets downstream 30 mA devices clear shock-protection faults first. One device, two duties.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'You arrive at an existing TN-S installation. Origin device is a 30 mA RCCB. Below it are six 30 mA RCBOs. The customer reports "the whole house keeps tripping when the fridge starts." What is the regulatory and practical issue?',
     options: [
-      'The fridge is faulty — replace it',
-      'The selectivity arrangement is non-compliant (Reg 536.4.1.4: upstream not selective type, IΔn ratio 1:1 not 3:1). On any downstream nuisance trip — including the fridge inrush — the upstream may trip first. Code C3 minimum on an EICR; recommend swap of upstream to a 100 mA Type S RCCB to give the 3:1 ratio and the time delay',
-      'The RCBOs are wired the wrong way round',
-      'The MCB inside the RCBO has no role',
+      'No selectivity (upstream not Type S, ratio 1:1) — code C3; fit a 100 mA Type S upstream',
+      'The fridge is faulty and should simply be replaced to stop the whole-house tripping',
+      'The downstream RCBOs have been wired the wrong way round and need their tails reversing',
+      'The MCB element inside each RCBO has no role here and can be ignored in the diagnosis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Classic 30/30 stack. No selectivity. Every downstream earth-leakage event — a kettle element, a fridge defrost cycle, a damp shower — risks tripping the origin device. The fix is a Type S device upstream (typical retrofit: 100 mA Type S RCCB or a 100 mA / 300 mA Type S incomer per the design and the TT/TN system arrangement), giving both the 3:1 IΔn ratio AND the time delay. EICR coding is generally C3 (improvement recommended) unless danger is present.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'A site inspector queries your Schedule of Test Results because only the downstream RCBO IΔn / trip time is filled in for an installation with stacked RCDs. What does Reg 643 / the model schedule require, and why?',
     options: [
-      'Only the device closest to the load needs recording',
-      'Both upstream and downstream RCD values must be recorded — IΔn and trip time for each, plus a comments-column note confirming selectivity has been verified by an inter-device residual injection test. Each device is a separately certified piece of protective equipment and a future inspector cannot reconstruct the safety/continuity case from one device only',
-      'The schedule is a single-row form',
-      'Selectivity does not require evidence on the certificate',
+      'Only the device closest to the load needs to be recorded on the schedule of test results',
+      'The schedule is a single-row form, so only one device can be entered per final circuit',
+      'Both upstream and downstream IΔn and trip times, plus a comments note that selectivity was verified',
+      'Selectivity is a design matter and does not require any test evidence on the certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Every protective device that operated during testing requires its own row of evidence. Both the upstream Type S and the downstream RCBO must show IΔn (mA), trip time at IΔn, and where applicable trip time at 5×IΔn (for the additional-protection device). The selectivity verification — the injected fault below upstream IΔn that cleared via the downstream device only — goes in comments. A future periodic inspector relies entirely on the prior schedule to know what was tested; missing rows are missing evidence.',
   },

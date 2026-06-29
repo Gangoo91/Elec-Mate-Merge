@@ -52,12 +52,12 @@ const quizQuestions = [
   {
     question: 'What documentation should you prepare before starting the commissioning process?',
     options: [
-      'Only the invoice for the customer',
       'Device list, network credentials, hub access details, and room assignments',
-      'Just the user manuals',
+      'Only the invoice for the customer',
+      'Just the device user manuals',
       'The electrical installation certificate only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Having the device list, network credentials, hub access, and room assignments prepared ensures efficient commissioning without delays searching for information.',
   },
@@ -65,34 +65,34 @@ const quizQuestions = [
     question:
       'When a Z-Wave device fails to pair, what is the recommended first troubleshooting step?',
     options: [
-      'Replace the device immediately',
+      'Replace the device with a new one immediately',
+      'Move the hub to a completely different location',
+      'Factory reset the entire smart home system',
       'Perform an exclusion process before attempting to pair again',
-      'Move the hub to a different location',
-      'Factory reset the entire system',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Z-Wave devices may retain previous network information. Running an exclusion process clears this data, allowing successful pairing to a new network.',
   },
   {
     question: 'What is the purpose of device naming conventions during commissioning?',
     options: [
-      'To personalise the system for the customer',
+      'To personalise the system purely for aesthetics',
+      'To satisfy a specific regulatory requirement',
       'To enable clear identification for automation and troubleshooting',
-      'To comply with regulations',
-      'To reduce app loading time',
+      'To reduce the app loading time',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Consistent naming conventions (e.g., 'Kitchen Light - Pendant') enable clear identification in automation rules and simplify troubleshooting.",
   },
   {
     question: 'After pairing a smart switch, what verification should you perform?',
     options: [
-      'Check the warranty card',
+      'Check the warranty card details',
       'Test on/off operation both locally and remotely through the app',
-      'Only verify the LED indicator',
-      'Wait 24 hours before testing',
+      'Only verify that the LED indicator lights up',
+      'Wait 24 hours before any testing',
     ],
     correctIndex: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
   {
     question: 'What is mesh network healing in the context of Z-Wave or Zigbee commissioning?',
     options: [
-      'Repairing broken devices',
+      'Physically repairing broken or faulty devices',
+      'Connecting all the devices to the internet',
+      'Updating the firmware on every device',
       'The process where devices optimise their communication routes',
-      'Connecting devices to the internet',
-      'Updating device firmware',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Mesh network healing is when devices automatically discover optimal communication routes, improving reliability. It typically occurs overnight or can be manually triggered.',
   },

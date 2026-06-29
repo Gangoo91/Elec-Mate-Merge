@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'You\u2019re pulling a 100 m run of Cat6A (outer diameter ~7.4 mm) through a tight ceiling void. What bend radii does BS EN 50174-2 require during the install vs in service?',
     options: [
-      'No bend-radius limit applies to data cable.',
-      'Typically 4× cable OD during installation (active pulling) and 8× cable OD under stress / service. For a 7.4 mm Cat6A cable that\u2019s a minimum bend radius of about 30 mm during the pull and 60 mm at any point where the cable will sit under tension or compression. Tight bends below the limit deform the pair geometry, raise return loss, raise NEXT, and erode Class EA channel margin.',
-      '50 mm regardless of cable.',
-      '90 degree bends are fine.',
+      'No minimum bend-radius limit applies to balanced twisted-pair data cable.',
+      '4× OD during the pull, 8× OD in service — about 30 mm / 60 mm on 7.4 mm Cat6A.',
+      'A flat 50 mm minimum radius regardless of the cable outer diameter.',
+      'Sharp 90-degree bends are acceptable on data cable at every install stage.',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A spec calls for 110 N maximum pulling tension on a 4-pair Cat6A run. What does that number mean and what happens if you exceed it?',
     options: [
-      "It's the recommended desk weight.",
-      '110 N (\u224811 kgf, \u224825 lbf) is the maximum pulling tension that ANSI/TIA-568.2-E and BS EN 50174-2 set for a typical 4-pair UTP. Exceeding it stretches the conductors (permanent elongation), changes the twist geometry, can crack the dielectric or jacket, and degrades every channel parameter. Use a pulling-tension dynamometer or breakaway swivel on long / awkward runs; pull from the box (not from the reel free), keep the route clean, lubricate where necessary.',
-      '110 N is the heat rating.',
-      'Pulling tension does not affect transmission.',
+      'The recommended maximum weight of equipment the installed cable can support.',
+      'The ~110 N (\u224811 kgf) maximum pulling tension \u2014 exceed it and conductors elongate.',
+      'The maximum continuous operating temperature rating of the cable jacket.',
+      'A reference figure that has no effect on transmission performance at all.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Which BS 7671:2018+A4:2026 clause requires that wiring systems be supported so they will not collapse prematurely in a fire \u2014 including data cabling?',
     options: [
-      '\u00a7521.10.1.',
-      '\u00a7521.10.202 \u2014 verbatim: "Wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire." NOTE 3 explicitly precludes the use of non-metallic cable clips or cable ties as the SOLE means of support where cables are clipped direct or suspended under tray. NOTE 4 confirms suitably-spaced steel or copper clips, saddles or ties are examples that meet the regulation. Bonded steel cable basket / tray (NOTE 2) is also deemed to meet the requirement.',
-      '\u00a7444.5.3.',
-      '\u00a7716.521.',
+      '\u00a7521.10.1 \u2014 non-sheathed cables enclosed in conduit, ducting or trunking systems.',
+      '\u00a7521.10.202 \u2014 support against premature collapse in fire; ties not the sole support.',
+      '\u00a7444.5.3 \u2014 bonding of metallic screens, cable sheaths and metallic containment.',
+      '\u00a7716.521 \u2014 the permitted cable Category list for in-scope PoE applications.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'You have to share a containment route with LV power. What does BS 7671 Annex A444 Table A444.1 say about minimum separation against containment type?',
     options: [
-      'No minimum separation \u2014 it\u2019s up to the designer.',
-      'No containment / open metallic containment A: 200 mm minimum separation in free air. Perforated open metallic containment B: 150 mm. Fully-enclosed solid metallic containment C: NOTE 4 \u2014 "no physical separation other than that provided by the containment" \u2014 i.e. the containment itself is the EMC barrier and physical separation isn\u2019t needed.',
-      '500 mm regardless.',
-      '50 mm always.',
+      'No minimum separation is set \u2014 it is left entirely to the designer to judge.',
+      'Open A: 200 mm; perforated B: 150 mm; solid C: none beyond the containment itself.',
+      'A flat 500 mm separation in every containment arrangement and voltage band.',
+      'A flat 50 mm separation regardless of the containment type or disturbing voltage.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'Which BS EN standard governs install practices for cabling inside buildings, and which BS 7671 clause references it?',
     options: [
-      'BS EN 50173-1, referenced by \u00a7716.521.101.',
-      'BS EN 50174-2 (Cabling installation \u2014 Installation planning and practices inside buildings), referenced by BS 7671 \u00a7444.410(b). Covers bend radii, pulling tensions, supports, separation from power, and identification \u2014 i.e. all the install-practice rules that protect Class certification.',
-      'BS 7671 \u00a7521.10.202.',
-      'BS EN 60825-2.',
+      'BS EN 50173-1, the cabling design standard, referenced by \u00a7716.521.101.',
+      'BS 7671 \u00a7521.10.202, the wiring-system fire-collapse cable support rule.',
+      'BS EN 60825-2, the optical-fibre communication laser-safety standard.',
+      'BS EN 50174-2, install planning inside buildings, referenced by \u00a7444.410(b).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 50174-2:2018+A2:2024 is the install-practice standard. \u00a7444.410(b) of BS 7671:2018+A4:2026 references it verbatim: "BS EN 50174-2: Information technology \u2014 Cabling installation: Installation planning and practices inside buildings". This is the standard that defines bend radii, pulling tensions, support intervals, cable-management, identification, and the practical install rules that determine whether a Class EA channel is delivered or not. Pair it with BS EN 50174-1 (specification & QA) and BS EN 50310 (bonding networks) for the full install framework.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'What are the install-time and in-service bend radii for typical 4-pair Cat6A cable?',
     options: [
-      '2\u00d7 OD install / 4\u00d7 OD service.',
-      'Typically 4\u00d7 cable outer diameter (OD) during installation when the cable is being actively pulled, and 8\u00d7 OD in service when the cable will sit under any tensile or compressive stress. For a 7.4 mm Cat6A this is ~30 mm install / ~60 mm service. Tight bends deform pair geometry, raise NEXT and return loss, and erode Class EA margin.',
-      '0.5\u00d7 OD always.',
-      'No bend radius applies.',
+      '2\u00d7 cable OD during installation and 4\u00d7 OD in long-term static service.',
+      '0.5\u00d7 cable OD at all times, install and long-term service alike.',
+      'Typically 4\u00d7 OD during the active pull and 8\u00d7 OD in static service.',
+      'No minimum bend-radius limit applies to balanced twisted-pair data cable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50174-2 / TIA-568.2-E specify minimum bend radii relative to cable OD: typically 4\u00d7 OD during install (where the cable is under active pull tension) and 8\u00d7 OD long-term in service. The two-radius rule recognises that during a controlled pull a tighter bend is acceptable; in long-term static service the cable cannot be allowed to sit in a tight bend without permanent geometric stress on the pairs. For Cat7 / Cat7A constructions (overall braid + per-pair foils) the radii are typically slightly larger \u2014 always check the manufacturer datasheet for the specific cable.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why does pulling tension matter for Cat6A and what is the typical limit?',
     options: [
-      "It doesn't \u2014 pull as hard as you like.",
-      'TIA-568.2-E and BS EN 50174-2 set a typical maximum pulling tension of 110 N (\u224811 kgf, \u224825 lbf) for 4-pair UTP. Exceed it and the conductors permanently elongate, the twist geometry deforms, dielectric and jacket can crack \u2014 and Class EA testing fails irrecoverably. Defences: breakaway swivel above the limit, pull from the box (not free reel), lubricate at corners, never pull through a sharp 90\u00b0 directly.',
-      '500 N is fine.',
-      'Pulling tension is the same as bend radius.',
+      'A typical 110 N (\u224811 kgf) cap for 4-pair UTP \u2014 exceed it and the twist deforms.',
+      'It does not matter at all \u2014 pull the 4-pair cable as hard as you physically can.',
+      'Any pulling tension up to about 500 N is perfectly safe for 4-pair UTP cable.',
+      'Pulling tension is simply another name for the cable minimum bend radius.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 110 N (\u224811 kgf / 25 lbf) typical maximum pulling tension for 4-pair UTP / Cat6A from TIA-568.2-E and BS EN 50174-2 is the threshold above which cable damage becomes likely \u2014 conductor elongation, deformed twist, cracked dielectric, peeled jacket. Damage is permanent and unrecoverable; the cable simply cannot be tested to deliver Class EA after over-tension. Practical defences: breakaway swivel calibrated below the limit, pull from the cable box (the cable feeds smoothly from the centre) rather than from a free-spinning reel, lubricate at any 90\u00b0 corner, route in slow curves, never pull through tight bends in a single direct stroke.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 clause is the fire-collapse rule for wiring systems \u2014 including data cabling \u2014 and what does it prohibit?',
     options: [
-      '\u00a7521.10.1.',
-      '\u00a7521.10.202: "Wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire." NOTE 3 prohibits non-metallic cable ties / clips / trunking as the SOLE means of support; NOTE 4 confirms steel or copper clips, saddles, ties, and steel cable containment systems are examples that meet the regulation.',
-      '\u00a7444.5.3.1.',
-      '\u00a7716.526.101.',
+      '\u00a7521.10.1, covering non-sheathed cables enclosed in conduit, ducting or trunking.',
+      '\u00a7444.5.3.1, covering bonding of metallic screens, sheaths and metallic containment.',
+      '\u00a7716.526.101, covering the connecting-hardware current rating on PoE cabling.',
+      '\u00a7521.10.202 \u2014 support against premature collapse in fire; ties not the sole support.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '\u00a7521.10.202 (verbatim, including NOTES) is the fire-collapse rule \u2014 NOT \u00a7521.10.1 which is about non-sheathed cables in conduit / trunking. Cables hanging across access / egress routes can hinder evacuation and firefighting (NOTE 1). The intent is to prevent general collapse of wiring (including data cabling) in fire \u2014 cables hanging down from melted plastic ties block escape routes and trip emergency services. NOTE 4: "Suitably spaced steel or copper clips, saddles or ties are examples that will meet the requirements of this regulation." NOTE 2: "Cables installed in or on steel cable containment systems are deemed to meet the requirements of this regulation." The clause applies to data cabling as much as to LV power.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'When sharing a containment route with LV power, what does BS 7671 Annex A444 Table A444.1 require?',
     options: [
-      'Always 1 m separation.',
-      'Open / no metallic containment A: 200 mm minimum in free air. Perforated open metallic containment B: 150 mm. Solid (fully-enclosed) metallic containment C: NOTE 4 \u2014 "no physical separation other than that provided by the containment". The containment must be bonded to the equipotential bonding network per \u00a7444.5.3.1.',
-      '50 mm always.',
-      'No separation needed.',
+      'A flat 1 m separation regardless of the containment type or disturbing voltage.',
+      'A flat 50 mm separation in every containment arrangement and voltage band.',
+      'Open A: 200 mm; perforated B: 150 mm; solid C: none beyond the containment itself.',
+      'No separation is needed in any containment arrangement at any LV voltage.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Verbatim: open / open metallic containment A = 200 mm; perforated open metallic containment B = 150 mm; solid metallic containment C = no physical separation needed beyond the containment itself (NOTE 4). Table A444.2 then scales the base separations with disturbing voltage / current \u2014 240 V \u2192 0.45 m, 415 V \u2192 0.58 m, 3.3 kV \u2192 1 m; 5 A \u2192 0.24 m, 50 A \u2192 0.5 m, 300 A \u2192 0.85 m. \u00a7444.6.2 separately requires 130 mm minimum from HID lamps. \u00a7444.5.3.1 mandates that any metallic containment is bonded to the equipotential bonding network for any of these allowances to apply.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'A 96-cable Type 4 PoE++ bundle is going up a ceiling tray. What planning / installation references should you follow?',
     options: [
-      'No standard applies.',
-      'BS EN 50174-2 for general install planning / practices; TIA TSB-184-A for PoE bundle de-rating curves; PD CLC/TR 50174-99-1:2015 for multi-cable bundle thermal model; BS ISO/IEC 14763-2 and ISO/IEC TS 29125 for cable-bundle planning under remote powering. BS 7671 \u00a7716.523.1.101 NOTE 2 references the second three explicitly.',
-      'The cable manufacturer\u2019s sales sheet.',
-      'BS EN 60825-2 (laser safety).',
+      'BS EN 50174-2, TIA TSB-184-A, PD CLC/TR 50174-99-1 and BS ISO/IEC 14763-2 together.',
+      'No published standard applies to PoE cable-bundle thermal install planning.',
+      'Only the cable manufacturer\u2019s commercial sales sheet for the chosen Cat6A product.',
+      'BS EN 60825-2, the optical-fibre communication-system laser-safety standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The bundle planning framework for sustained high-current PoE: BS EN 50174-2 (general install practice); TIA TSB-184-A (2017, PoE-specific bundle de-rating curves); PD CLC/TR 50174-99-1:2015 (multi-cable bundle thermal model \u2014 referenced from \u00a7716.523.1.101 NOTE 2); BS ISO/IEC 14763-2 (cabling planning and operation); ISO/IEC TS 29125 (telecommunications cabling requirements for remote powering). Combined, they let the designer estimate bundle centre temperature rise, bundle de-rating, and maximum compliant bundle size for a given PoE load. The hard regulatory ceiling \u2014 \u00a7716.523.2.101 = 750 mA per conductor \u2014 still applies regardless.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'How tight should you pull a cable tie around a Cat6A cable, and how often should ties be spaced?',
     options: [
-      'As tight as possible, every 10 mm.',
-      "Loose enough that the tie can be rotated freely around the cable bundle (typical guidance in BS EN 50174-2 / TIA-568.2-E). Tight ties crush the outer pairs and locally distort the twist geometry, raising NEXT and return loss. Tie spacing on horizontal runs should be wide enough that the cable doesn't sag to the floor under its own weight \u2014 typically 200\u2013300 mm intervals on tray, looser through ceiling void where the cable rests on tray surface. Use hook-and-loop straps in preference to single-use plastic ties wherever possible \u2014 they avoid over-tensioning.",
-      '50 N tension at 5 mm intervals.',
-      'Cable ties are forbidden.',
+      'As tight as the tool allows, with a single-use tie placed every 10 mm along the run.',
+      'To a fixed 50 N tension, with ties spaced at exactly 5 mm intervals throughout the run.',
+      'Cable ties are forbidden entirely on twisted-pair data cabling under all conditions.',
+      'Loose enough to rotate freely round the bundle, spaced ~200\u2013300 mm \u2014 hook-and-loop best.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The professional rule of thumb is: cable ties should be loose enough to rotate freely around the bundle (TIA-568.2-E, BS EN 50174-2). Crushing pressure from tight ties locally deforms the cable geometry and raises NEXT / return loss \u2014 a workmanship issue invisible at first-fit but visible on the field tester. Hook-and-loop ties are strongly preferred because they're impossible to over-tension. Plastic single-use ties used by trained installers, with the tail trimmed flush, are acceptable \u2014 but they should never be the sole means of fire-collapse support (NOTE 3 of \u00a7521.10.202). Tie spacing: tight enough that the cable doesn't sag (bend radius would be violated under self-weight); loose enough not to look militarised. 200\u2013300 mm on tray is typical.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'On a sustained Type 4 PoE++ bundle, why does BS 7671 \u00a7716.523.1.101 NOTE 2 reference PD CLC/TR 50174-99-1?',
     options: [
-      'It\u2019s an unrelated reference.',
-      'PD CLC/TR 50174-99-1:2015 provides the multi-cable bundle thermal model \u2014 how cable centre temperature rises with bundle size, ambient temperature, conductor count and current per conductor. \u00a7716.523.1.101 NOTE 1 spells out the link from PoE current to channel performance via temperature rise; NOTE 2 points at PD CLC/TR 50174-99-1 (thermal model), BS ISO/IEC 14763-2 (planning) and ISO/IEC TS 29125 (remote powering) for the practical bundle-design framework. The hard ceiling is still \u00a7716.523.2.101 = 750 mA per conductor.',
-      'It\u2019s about laser safety.',
-      'It\u2019s about earthing.',
+      'It is an unrelated reference included in the NOTE only for completeness.',
+      'It covers optical-fibre laser-safety classification rather than copper cabling.',
+      'It gives the multi-cable bundle thermal model \u2014 how centre temperature rises.',
+      'It deals with protective earthing and equipotential bonding network arrangements.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 \u00a7716.523.1.101 NOTE 2 (verbatim): "Guidance on the effect of the number of loaded conductors, in a multi-cable bundle, on the temperature rise of the cables is given in PD CLC/TR 50174-99-1:2015 and requirements and recommendations in relation to planning and installation of such cable bundles are provided in BS ISO/IEC 14763-2 and ISO/IEC TS 29125." Combined with NOTE 1 (temperature rise raises insertion loss and degrades channel performance) and \u00a7716.523.2.101 (= 750 mA per conductor hard cap), this is the regulatory framework for sustained-PoE bundle design. TIA TSB-184-A is the parallel North American reference.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'A bundle of Cat6A is sharing a perforated steel tray with a 415 V three-phase submains. What separation does BS 7671 Annex A444 Table A444.2 require?',
     options: [
-      '50 mm.',
-      "Approximately 0.58 m at 415 V (the voltage-scaled separation in Table A444.2). Combined with the perforated metallic containment B allowance from Table A444.1, the design separation is the LARGER of the two requirements \u2014 you can't reduce below the voltage-scaled minimum just because of containment. \u00a7444.5.3.1 also requires the tray be bonded to the equipotential bonding network.",
-      'Zero \u2014 they can run together.',
-      '5 m.',
+      'About 0.58 m at 415 V (Table A444.2) \u2014 take the larger of this and the containment value.',
+      'A flat 50 mm is sufficient at any LV submains voltage on shared perforated tray.',
+      'Zero separation \u2014 Cat6A and the 415 V submains can share the tray freely together.',
+      'A full 5 m clearance is required between the two cable groups on shared tray.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Table A444.2 voltage-scaled minimum at 415 V = 0.58 m. Table A444.1 perforated open metallic containment B = 150 mm minimum. Take the LARGER of the two \u2014 0.58 m \u2014 as the design separation. Table A444.2 also gives current-scaled values: 50 A \u2192 0.5 m, 100 A \u2192 0.6 m, 300 A \u2192 0.85 m. The designer takes the largest of all applicable rules. \u00a7444.5.3.1 still mandates the containment be bonded. \u00a7444.6.2 still requires 130 mm from HID lamps. The discipline is to apply EVERY relevant separation rule and use the largest.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'Why is documentation \u2014 labelling, as-built drawings, test reports \u2014 listed in BS EN 50174-1 as a delivered work item?',
     options: [
-      'For rosette decoration.',
-      'Because the structured-cabling system is designed to outlive 3-4 generations of active equipment and to be modified, fault-isolated and extended over a 15-20 year life. Without records (every link uniquely identified per TIA-606-D / BS EN 50174-1, every patch-panel port labelled, every channel test result retained, every as-built drawing updated), the next contractor can\u2019t find a circuit, a fault can\u2019t be isolated to the right link, and the cheapest fix becomes a re-pull \u2014 which destroys the whole long-life value proposition.',
-      'For tax compliance.',
-      'It is not in the standard.',
+      'Purely for cosmetic rosette and faceplate decoration at each work-area outlet.',
+      'Solely to satisfy the cabling contractor\u2019s tax and accounting record obligations.',
+      'It is not actually listed as a documented deliverable anywhere in the standard.',
+      'Because the cabling outlives several generations of kit \u2014 records let the next team extend it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 50174-1 (Information technology \u2014 Cabling installation: Installation specification and quality assurance) and the parallel ANSI/TIA-606-D (2021) specify a labelling and administration discipline as part of the deliverable. Every link uniquely identified, every port labelled, every channel test result retained, every as-built drawing kept current. The record discipline is what lets the cabling system survive personnel changes, tenant churns and routine moves/adds/changes for its 15-20 year life. A cabling system without records is a one-shot install that can\u2019t be safely modified \u2014 every fault is a forensic exercise and every move/add/change is a new pull.',
   },

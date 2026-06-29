@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'When should you signpost a colleague to professional mental health support rather than continuing to offer peer support alone?',
     options: [
+      'When their difficulties are persistent, worsening, or affecting their ability to function',
       'Only when they specifically ask you for a referral to a therapist or counsellor',
-      'When their difficulties are persistent, worsening, or affecting their ability to function — peer support has limitations and professional help can offer specialist treatment',
-      'You should never suggest professional help because it implies their problems are serious',
-      'Immediately after the first conversation, because you are not qualified to offer any support',
+      'Never suggest professional help, as it implies their problems must be very serious',
+      'Immediately after the first conversation, since you are not qualified to offer support',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Peer support is valuable but has clear limitations. When someone's difficulties are persistent (lasting more than a few weeks), worsening over time, or significantly affecting their ability to work, sleep, eat, or maintain relationships, professional support should be encouraged. This is not about your competence — it is about ensuring the person gets the right level of help. A GP, counsellor, or therapist can offer specialist treatments (CBT, medication, structured therapy) that peer support cannot.",
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a 24/7 construction industry-specific helpline that offers emotional support, financial assistance, and legal advice?',
     options: [
-      'CITB Technical Helpline',
-      'JIB Disputes Service',
+      'The CITB Construction Skills Technical Helpline',
+      'The JIB Grading and Disputes Resolution Service',
+      'The Building Control Regulatory Advisory Service',
       'The Lighthouse Club Construction Industry Helpline',
-      'Building Control Advisory Service',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "The Lighthouse Club is the construction industry's dedicated charity, providing a 24/7 helpline that offers emotional support, financial assistance (grants for those in financial hardship), legal advice, and wellbeing support specifically for construction workers and their families. It is free, confidential, and staffed by people who understand the unique pressures of the construction industry. Their helpline number is 0345 605 1956.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following is a key limitation of peer support compared to professional mental health services?',
     options: [
-      'Peer support is always harmful and should be avoided',
-      'Peer supporters cannot prescribe medication, deliver structured therapy (such as CBT), or provide clinical assessment',
-      'Peer support only works for people who are already fully recovered',
-      'Professional help is only available to people with a formal diagnosis',
+      'Peer supporters cannot prescribe medication, deliver CBT, or provide clinical assessment',
+      'Peer support is always harmful in practice and should generally be avoided',
+      'Peer support only works for people who have already made a full recovery',
+      'Professional help is only ever available to people with a formal diagnosis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Peer support is extremely valuable — being listened to, understood, and supported by a colleague can make an enormous difference. However, it has clear limitations: peer supporters are not trained therapists, cannot deliver structured treatments like CBT, cannot prescribe or manage medication, and cannot provide clinical assessment or diagnosis. For persistent, worsening, or severe mental health difficulties, professional help offers specialist interventions that go beyond what peer support can provide.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'An Employee Assistance Programme (EAP) typically offers how many free counselling sessions?',
     options: [
-      '1-2 sessions',
       '6-8 sessions',
+      '1-2 sessions',
       '12-16 sessions',
       'Unlimited sessions for as long as needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Most EAPs offer between 6 and 8 free counselling sessions per issue, per year. This is enough for many people to work through a specific difficulty with professional support. If more sessions are needed, the EAP counsellor can help the person access further support through the NHS or private services. EAPs also typically cover more than just mental health — most include support for debt, legal issues, relationship problems, and other life challenges.',
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       'The Lighthouse Club Construction Industry Helpline provides which of the following services?',
     options: [
-      'Only financial grants for construction workers who have been made redundant',
-      'Emotional support, financial assistance, legal advice, and wellbeing support specifically for construction workers and their families',
-      'Only telephone counselling for site managers and directors',
-      'Certification and training for mental health first aiders in construction',
+      'Only financial grants for construction workers who have recently been made redundant',
+      'Only telephone counselling reserved for senior site managers and company directors',
+      'Certification and accredited training for mental health first aiders in construction',
+      'Emotional support, financial assistance, legal advice, and wellbeing support for workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Lighthouse Club is the construction industry's dedicated charity. Their helpline (0345 605 1956) offers a comprehensive range of support: emotional support and listening, financial assistance (including emergency grants for those in hardship), legal advice, wellbeing programmes, and family support. The service is free, confidential, and available 24/7. It is specifically designed for construction workers at all levels, and their team understands the unique pressures of the industry.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'When should you direct someone to call 999 for a mental health crisis?',
     options: [
-      'Whenever someone mentions feeling stressed or anxious at work',
+      'Whenever someone mentions feeling stressed or anxious about their work',
       'Only if they have already been diagnosed with a severe mental illness',
-      'When there is immediate risk to life — for example, they are actively self-harming, have a plan to end their life and the means to do so, or are experiencing a psychotic episode that puts them in danger',
-      'Never — mental health crises should only be handled by mental health professionals, not emergency services',
+      'When there is immediate risk to life, such as active self-harm or a suicide plan with means',
+      'Never, because mental health crises should only ever be handled by specialists',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Samaritans helpline (116 123) is available:',
     options: [
-      'Monday to Friday, 9am to 5pm',
-      '24 hours a day, 7 days a week, 365 days a year — free and anonymous from any phone',
+      'Monday to Friday, 9am to 5pm, excluding bank holidays',
       'Only during evenings and weekends when GP surgeries are closed',
-      'Only to people who have been referred by their GP or a mental health professional',
+      'Only to people referred by their GP or a mental health professional',
+      '24 hours a day, every day of the year — free and anonymous from any phone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Samaritans helpline (116 123) is available 24 hours a day, 7 days a week, 365 days a year. It is free to call from any phone (including mobiles, even with no credit), and the call will not appear on phone bills. The service is completely anonymous — you do not need to give your name. Samaritans are trained volunteer listeners who provide emotional support for anyone who is struggling, not just those who are suicidal. You can also email jo@samaritans.org.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
     question: 'What is the correct way to access the crisis text service in the UK?',
     options: [
       'Call SHOUT on 0800 123 456',
-      'Text SHOUT to 85258 for free, confidential, 24/7 crisis support via text message',
       'Download the SHOUT app from the App Store and create an account',
+      'Text SHOUT to 85258 for free, confidential, 24/7 crisis support via text message',
       'Email crisis@shout.org with your details and a volunteer will call you back',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Shout crisis text service is accessed by texting the word SHOUT to 85258. It is free on all major UK networks, available 24/7, and provides confidential support via text message with trained volunteers. This service is particularly useful for people who find it difficult to speak on the phone — which is common during a crisis, and especially relevant for construction workers who may be on a noisy site or who feel more comfortable texting than talking.',
   },
@@ -181,10 +181,10 @@ const quizQuestions = [
     id: 8,
     question: "The 'stepped care model' used by NHS mental health services means:",
     options: [
-      'Patients must climb a physical set of steps to access each level of the mental health building',
-      'Treatment starts with the least intensive, evidence-based intervention appropriate for the condition, and steps up to more intensive treatment only if the initial approach is not sufficient',
-      'Each patient receives exactly the same treatment regardless of their condition',
-      'Mental health treatment is only available after completing a series of mandatory online courses',
+      'Patients climb a physical set of steps to reach each level of the mental health service',
+      'Treatment starts with the least intensive intervention and steps up only if it is not enough',
+      'Each patient receives exactly the same treatment regardless of their condition or needs',
+      'Treatment is only available after completing a series of mandatory online courses',
     ],
     correctAnswer: 1,
     explanation:

@@ -41,10 +41,10 @@ const checks = [
     id: 'method-statement-purpose-check',
     question: "What does a method statement add that a risk assessment doesn’t?",
     options: [
-      'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
-      'It identifies which specific conductor has insulation problems',
-      'It describes the sequence of work — exactly how the job will be done given the controls',
-      'When requested in writing by two or more Safety Representatives',
+      'It lists the qualifications and training records of everyone on the team',
+      'It records the priced labour and material cost estimate for the whole job',
+      'It describes the sequence of work — how the job will be done given the controls',
+      'It scores each hazard on a 5×5 likelihood-versus-severity risk matrix',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     id: 'permit-to-work-check',
     question: "When is a permit-to-work typically required on top of a method statement?",
     options: [
-      'PNB (Protective Neutral Bonding) — recognising the LV practice of bonding to the combined neutral/earth at the consumer cut-out',
-      'Non-cognitively demanding, logistical tasks often performed while distracted',
-      'The principal contractor or site operator, who coordinates first aid provision for the whole site',
-      'For higher-risk work that needs explicit authorisation each time — live work, confined spaces, work near HV',
+      'For every job, however small — it replaces the method statement entirely',
+      'Only when the client specifically requests one in writing beforehand',
+      'For any work carried out on a construction site under the CDM 2015 rules',
+      'For higher-risk work needing explicit authorisation each time — live work, confined spaces, HV',
     ],
     correctIndex: 3,
     explanation:
@@ -68,9 +68,9 @@ const checks = [
     question: "A 'safe system of work' is BEST described as:",
     options: [
       'The whole way the job is run safely — RA, MS, controls, training, supervision, communication, permits',
-      'A potentially fatal condition caused by prolonged suspension in a harness, where blood pools in the legs and reduces cardiac output',
-      'An occupational phenomenon resulting from chronic workplace stress that has not been successfully managed',
-      'Required energy efficiency upgrades when extending or renovating larger buildings',
+      'The risk assessment document on its own, before controls are added',
+      'The permit-to-work form signed at the start of each shift',
+      'The PPE issued to each worker for the specific task',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "You’re reading a method statement for a CU change. Which of these would you EXPECT to see written down?",
     options: [
-      "Schedule the motor for rewinding or replacement during the next planned shutdown, and increase monitoring frequency",
-      "Sequence of work, isolation procedure, who does what, tools and PPE required, emergency arrangements, drawings/SLD references",
-      "You have not confirmed quantity or condition — protects against signing for items you haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t verified, but limits a later claim",
-      "Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity",
+      "Just a one-line note saying 'change the consumer unit safely' and nothing more",
+      "Sequence of work, isolation steps, roles, kit and PPE, and emergency arrangements",
+      "The price of the new board and the breakdown of labour cost for the day",
+      "A full list of every regulation in BS 7671 that could possibly apply here",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: "The MS step says 'isolate at the main switch and prove dead'. The site reality: the main switch is locked behind a panel only the building manager has the key to, and they’re off today. What do you do?",
     options: [
-      "Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed",
-      "~19,000°C — far hotter than the surface of the sun. The thermal radiation alone causes severe burns at distance; the pressure wave injuries; molten metal projectiles. PPE rated by ATPV (cal/cm²).",
-      "Stop. The MS can’t be followed as written. Either get key access (call building manager), find an alternative isolation point in the MS, or pause the work until tomorrow",
-      "It provides a structured visual overview of all potential cause categories simultaneously, making it harder to overlook an entire area of investigation",
+      "Force the panel open to reach the main switch yourself and carry on",
+      "Isolate at a different local switch and treat the work as fully covered",
+      "Stop — the MS can’t be followed; get key access or pause until it can",
+      "Work live carefully since the proper isolation point is unavailable today",
     ],
     correctAnswer: 2,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 3,
     question: "Which BEST describes the relationship between a risk assessment, a method statement and a permit-to-work?",
     options: [
-      "Verify the cable selection against current BS 7671 requirements, as regulations and loading may have changed since the original installation",
-      "Stop work, log the near miss, trigger a Step 5 review of the RAMS, brief the team on the new hazard, and add the buried cable to the records",
-      "When the specific machine type differs from the categories on their card, or when site-specific familiarisation is needed",
-      "RA = hazards and controls; MS = the sequence of work; PTW = formal authorisation for higher-risk tasks for a specific shift",
+      "They are three names for the same document, used interchangeably on site",
+      "RA = the sequence of work; MS = the hazard list; PTW = the required PPE list",
+      "PTW is written first, then the MS, then the RA is written at the very end",
+      "RA = hazards and controls; MS = the sequence; PTW = shift authorisation for higher-risk tasks",
     ],
     correctAnswer: 3,
     explanation:
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: "Where does the legal duty for a 'safe system of work' actually come from?",
     options: [
       "HASAWA 1974 Section 2(2)(a) — and EAWR Reg 4 specifically for electrical work",
-      "Assisting with the debrief, recording lessons learned, and checking the area before reoccupation",
-      "To obtain an accurate average air velocity across the duct cross-section",
-      "Balance the risk against the cost and effort of reducing it",
+      "BS 7671 Regulation 132.16 — additions and alterations",
+      "RIDDOR 2013 — reporting of injuries and dangerous occurrences",
+      "PUWER 1998 — provision and use of work equipment",
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "You’re shown a method statement that’s 80 pages long for installing a single LED downlight. What’s most likely wrong?",
     options: [
-      "Eliminate foreseeable risks or reduce them so far as is reasonably practicable",
+      "Nothing — more detail always means a safer method statement",
       "It’s probably generic and not job-specific. A useful MS is proportionate to the actual work",
-      "They eliminate the need to decide what to do, preserving mental energy for important decisions",
-      "Refrigerant pipe pressure test, evacuation to below 500 Pa, and correct refrigerant charge",
+      "It’s too short — a downlight job should run to at least 150 pages",
+      "It can’t be valid because only consumer-unit jobs need a method statement",
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: "What’s the FIRST thing you should do at the start of a shift covered by a method statement?",
     options: [
-      "Lost income from unbilled work, late filing penalties, inability to defend disputes",
-      "To cooperate with their employer's safety measures and use PPE and RPE provided correctly",
+      "Start work immediately to make the most of the shift",
+      "Sign the attendance sheet and leave the document in the van",
       "Read the relevant sections, check the controls listed are in place on site, raise anything that doesn’t match",
-      "Workplace conditions: ventilation, temperature, lighting, cleanliness, welfare, traffic routes etc.",
+      "Wait for the supervisor to read it out loud to the whole team",
     ],
     correctAnswer: 2,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 7,
     question: "On a permit-to-work for live electrical testing, what should the permit specify?",
     options: [
-      "Label both the conductor and the terminal with matching unique identifiers, photograph the arrangement, and record in writing",
-      "The principal designer must plan, manage, and monitor the pre-construction phase and coordinate matters relating to health and safety to ensure designers comply with their duties",
-      "Negotiation first, then the contract\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s formal dispute resolution route (often adjudication under the Construction Act for construction contracts)",
-      "The exact work to be done, who’s authorised to do it, the duration, the precautions required, and how the permit is closed off when work is finished",
+      "Only the name of the electrician and the date of the work — nothing more",
+      "The price of the work and the expected completion time for the client",
+      "A full copy of every BS 7671 regulation that is relevant to the test",
+      "The work, who’s authorised, the duration, the precautions, and how it’s closed off",
     ],
     correctAnswer: 3,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 8,
     question: "Your RAMS bundle includes a method statement that references 'Procedure SOP-014: Safe Isolation'. The procedure isn’t attached and you’ve never seen it. What do you do?",
     options: [
-      "Ask for the procedure document before starting work — the MS isn’t complete without it",
-      "Assuming that negative events are specifically directed at you when they may not be",
-      "Disconnected from all sources of electrical energy and unable to become live unintentionally",
-      "Specific fault symptoms, diagnostic steps taken, root cause found, and the successful repair method",
+      "Ask for the procedure before starting — the MS isn’t complete without it",
+      "Assume it just means standard safe isolation and carry on with the work",
+      "Write your own version of SOP-014 from memory before you start the job",
+      "Skip that step entirely since the procedure isn’t physically attached",
     ],
     correctAnswer: 0,
     explanation:

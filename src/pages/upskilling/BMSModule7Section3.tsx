@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'modbus-conflict',
     question: 'What happens if two devices are given the same Modbus address?',
     options: [
-      'They automatically negotiate unique addresses',
       'Communication conflicts occur, causing data corruption',
-      'The BMS ignores both devices',
-      'Only the first device installed works',
+      'The devices automatically negotiate new unique addresses',
+      'The BMS quietly ignores both devices',
+      'Only the device installed first will respond',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'When two devices share the same address, communication conflicts occur. The BMS receives corrupted data or cannot communicate properly with either device.',
   },
@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     id: 'testing-stage',
     question: 'At what stage is communication testing carried out: before or after device mapping?',
     options: [
-      'Before device mapping',
+      'Before any device mapping is done',
+      'After device mapping is complete',
       'During address assignment',
-      'After device mapping',
-      'Only during commissioning',
+      'Only at final commissioning sign-off',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Communication testing is step 4 in the workflow, carried out after addressing, wiring, and mapping are complete. This confirms data appears in the BMS and outputs respond correctly.',
   },
@@ -75,11 +75,11 @@ const quizQuestion = {
     'In a commercial tower block project, why could the BMS only read one Modbus submeter during commissioning?',
   options: [
     'The meters were faulty from the factory',
-    'Network cables were incorrectly terminated',
+    'The network cables were incorrectly terminated',
+    'The BMS supervisor software was not configured correctly',
     'Multiple meters had the same default address causing conflicts',
-    'The BMS software was not configured correctly',
   ],
-  correctAnswer: 2,
+  correctAnswer: 3,
   explanation:
     "Multiple Modbus submeters were left at their factory default address of '1', causing communication conflicts. Only one meter could respond while others clashed, delaying handover by two weeks until electricians assigned unique addresses.",
 };

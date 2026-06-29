@@ -23,28 +23,28 @@ const inlineChecks = [
     question:
       'A Class I appliance reads 0.06 Ω earth continuity at 25 A — well below the 0.13 Ω calculated acceptance for its lead. The reading is suspiciously low. What is the most likely explanation and what does it imply?',
     options: [
-      'A particularly good earth bond — pass',
-      'Parallel earth path — the appliance chassis is touching another bonded item (a metal worktop, a bonded radiator, an adjacent grounded appliance) during the test, providing a second earth route in parallel with the cord-set protective conductor. The reading is the parallel combination of the cord-set and the alternate path. The "pass" hides whether the cord-set itself is sound. Re-test with the appliance isolated on an insulating surface',
-      'The lead is too short',
-      'The tester is faulty',
+      'A particularly good earth bond — record the low reading and pass',
+      'A parallel earth path is masking the cord-set — re-test with the appliance isolated',
+      'The lead is too short, so the reading reads artificially low — fit a longer lead',
+      'The tester is faulty and reading low — swap to a calibrated instrument and re-test',
     ],
     correctIndex: 1,
     explanation:
-      'A reading much lower than the calculated acceptance is a parallel-path warning, not a quality reading. The cord-set could be degraded and the alternate earth path is masking it. Repeat the test with the appliance isolated (insulating mat, away from any bonded metalwork) to see the cord-set in isolation. Same diagnostic principle as the fixed-installation R1+R2 parallel-path issue from M3.',
+      'A reading much lower than the calculated acceptance is a parallel-path warning, not a quality reading. The appliance chassis is likely touching another bonded item (metal worktop, bonded radiator, adjacent earthed appliance), giving a second earth route in parallel with the cord-set protective conductor; the meter reads the parallel combination, so a degraded cord-set can still pass. Repeat the test with the appliance isolated on an insulating mat, away from any bonded metalwork, to see the cord-set in isolation. Same diagnostic principle as the fixed-installation R1+R2 parallel-path issue from M3.',
   },
   {
     id: 'patm4-s6-salvageable-fail',
     question:
       'A Class I PC fails the 500 V IR test at 0.6 MΩ. The PC works perfectly. Visual is sound. Is this fail final, or salvageable?',
     options: [
-      'Final — discard the PC',
-      'Salvageable. Per IET CoP Ch 15, switch-mode PSUs and EMC-filtered IT equipment legitimately fail the 500 V IR because of internal Y-capacitors. The route is to perform substitute leakage in lieu of IR (M4.4) and judge against the appropriate Class I limit (≤ 0.5 mA general, or up to 3.5 mA for BS EN 62368-1 IT equipment with intact protective conductor). A pass on substitute leakage is a valid PAT pass',
-      'Re-test at 250 V instead',
-      'Always fail',
+      'Final — the IR fail stands, so discard the PC and remove it from service',
+      'Salvageable — switch to substitute leakage in lieu of IR and judge against the Class I limit',
+      'Re-test the IR at 250 V instead and pass if it clears the limit at the lower voltage',
+      'Always fail — a sub-1 MΩ IR reading is insulation breakdown regardless of equipment type',
     ],
     correctIndex: 1,
     explanation:
-      'IET CoP Ch 15 explicitly recognises this case. The IR fail is real (the meter is reading what is there) but the safety question (is the equipment safe?) is answered by leakage testing at operating voltage, not by IR at 500 V DC. A pass on substitute leakage on EMC-filtered Class I IT is a valid pass per IET CoP.',
+      'IET CoP Ch 15 explicitly recognises this case. Switch-mode PSUs and EMC-filtered IT equipment legitimately fail the 500 V IR because of internal Y-capacitors, not insulation breakdown. The route is substitute leakage in lieu of IR (M4.4), judged against the appropriate Class I limit (≤ 0.5 mA general, or up to 3.5 mA for BS EN 62368-1 IT equipment with an intact protective conductor). The IR fail is real (the meter reads what is there) but the safety question is answered by leakage at operating voltage, not IR at 500 V DC. A pass on substitute leakage is a valid PAT pass.',
   },
   {
     id: 'patm4-s6-four-modes',
@@ -64,14 +64,14 @@ const inlineChecks = [
     question:
       'You have a Class I floor heater. Earth continuity reads 0.18 Ω against a calculated acceptance of 0.16 Ω. The reading is marginal — just over the limit. What does IET CoP guidance suggest?',
     options: [
-      'Ignore it — pass',
-      'Investigate before recording. The reading is over the calculated limit but only just, and is in the range where lead-resistance error or contact resistance at the test point can shift the result. Re-null the test leads, ensure the probe contact is on clean unpainted metal, re-test. If the reading drops below the limit, the cause was test setup; if it remains over, the appliance has a real high-resistance joint somewhere in the earth path. Investigate before passing or failing',
-      'Average across three readings',
-      'Always fail at the first marginal reading',
+      'Ignore it — the reading is close enough, so record a pass',
+      'Investigate the test setup before deciding pass or fail',
+      'Average across three readings and judge the appliance against the mean',
+      'Always fail at the first marginal reading and remove the heater from service',
     ],
     correctIndex: 1,
     explanation:
-      'A marginal reading is a diagnostic outcome, not a binary fail. IET CoP guidance and good practice direct the operator to investigate test setup first (lead null, probe contact, surface preparation), then if the reading is reproducible, to investigate the appliance internal earth bond. The fail decision comes after investigation, not before.',
+      'A marginal reading is a diagnostic outcome, not a binary fail. The reading is only just over the limit and sits in the range where lead-resistance error or contact resistance can shift the result. Re-null the test leads, ensure the probe contacts clean unpainted metal, and re-test. If the reading drops below the limit, the cause was test setup; if it remains over, the appliance has a real high-resistance joint in the earth path. IET CoP guidance directs the operator to investigate test setup first, then the appliance, with the fail decision coming after investigation, not before.',
   },
 ];
 
@@ -94,39 +94,39 @@ const quizQuestions = [
     id: 2,
     question: 'When can a "pass" on earth continuity be MISLEADING?',
     options: [
-      'Never — a pass is a pass',
-      'When parallel earth paths exist between the appliance under test and another bonded item (metal worktop, adjacent earthed appliance, bonded pipe). The reading reflects the parallel combination, not the cord-set protective conductor alone. The cord-set could be degraded and still pass because the alternate path is doing the work',
-      'Only on Class II appliances',
-      'Only when the lead is over 5 m',
+      'Never — an earth-continuity pass always reflects a sound cord-set protective conductor',
+      'Only on Class II appliances, where the earth-continuity test does not apply',
+      'When a parallel earth path to another bonded item carries the test current alongside the cord-set',
+      'Only when the appliance lead exceeds 5 m, where added cable resistance skews the result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      "Parallel earth paths give artificially low readings that look like a healthy earth bond. The cord-set's actual protective conductor could be high-resistance and the test would still pass. Mitigation: test with the appliance isolated on an insulating surface, away from any other bonded metalwork.",
+      "Parallel earth paths between the appliance and another bonded item (metal worktop, adjacent earthed appliance, bonded pipe) give artificially low readings that look like a healthy earth bond — the meter reads the parallel combination, so a degraded cord-set protective conductor can still pass because the alternate path carries the test current. Mitigation: test with the appliance isolated on an insulating surface, away from any other bonded metalwork.",
   },
   {
     id: 3,
     question: 'When can a "fail" on the 500 V IR test be SALVAGEABLE?',
     options: [
-      'Never — IR fail means insulation breakdown',
-      'When the appliance contains components (switch-mode PSUs, EMC filter networks, surge arresters) whose internal Y-capacitors legitimately produce a low IR reading at 500 V DC. The IET CoP-recognised route is substitute leakage testing in lieu of IR, with acceptance ≤ 0.5 mA Class I (or higher per the relevant product standard, e.g. up to 3.5 mA for BS EN 62368-1 IT equipment)',
-      'When the appliance is new',
-      'Always — every IR fail is salvageable',
+      'Never — a low IR reading always means insulation breakdown and a final fail',
+      'Only when the appliance is brand new and the reading is assumed to settle in service',
+      'Always — every IR fail can be cleared by re-testing at a lower 250 V test voltage',
+      'When internal Y-capacitors on switch-mode or EMC-filtered kit legitimately drag the reading down',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'IR is a stress test of resistive insulation. Y-capacitors are deliberate engineering features that look like low resistance to a DC test but are not insulation breakdown. Substitute leakage at operating voltage measures the actual safety-relevant current and gives a valid pass / fail on equipment whose IR reading is misleading.',
+      'IR is a stress test of resistive insulation. Y-capacitors in switch-mode PSUs, EMC filters and surge arresters are deliberate engineering features that look like low resistance to a 500 V DC test but are not insulation breakdown. The IET CoP route is substitute leakage in lieu of IR (≤ 0.5 mA Class I, up to 3.5 mA for BS EN 62368-1 IT equipment), which measures the actual safety-relevant current at operating voltage and gives a valid pass on equipment whose IR reading is misleading.',
   },
   {
     id: 4,
     question:
       'A polarity test fails with the message "L–E reversed" on a re-wireable BS 1363 plug. What is the immediate safety action?',
     options: [
-      'Re-test',
-      'Hard fail. Mark the appliance "DO NOT USE" and remove from service immediately. L–E reversed means the line conductor is connected to the earth pin of the plug — every Class I appliance plugged into the same socket would have its chassis directly at line voltage (230 V). This is one of the most dangerous PAT failures and demands physical isolation of the appliance pending remediation, not a procedural re-test',
-      'Replace the fuse',
-      'Continue with leakage test',
+      'Hard fail — mark "DO NOT USE" and physically remove the appliance from service',
+      'Re-test once to confirm the result before taking any action on the appliance',
+      'Replace the BS 1362 fuse, re-make the plug and re-test the appliance',
+      'Continue to the leakage test and decide on the combined pass/fail result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'L–E reversed is a category of fault that puts mains directly onto the protective conductor system. The appliance chassis (and any other Class I appliance sharing the same socket through an extension lead, for example) is at 230 V. Hard fail, immediate physical removal, label and report — and check what other equipment may have come from the same source.',
   },
@@ -135,68 +135,68 @@ const quizQuestions = [
     question:
       'You PAT-test a kettle that has been operating fine for years. Earth continuity passes (0.07 Ω), IR passes (>999 MΩ), polarity passes, leakage 0.08 mA. What goes on the appliance record beyond just "Pass"?',
     options: [
-      "Just 'Pass' is sufficient",
-      'All four numeric readings, the test current / voltage used for each, the construction class (I or II), the test date, the operator ID, the appliance ID, the calculated acceptance values used, and the next-test-due date. Trend analysis over multiple cycles requires the numeric data — a kettle that drifts from 0.07 Ω to 0.11 Ω over three cycles is degrading even though all three readings pass',
-      'Only the failure modes',
-      'Only the highest reading',
+      "Just 'Pass' is sufficient on a clearly serviceable appliance",
+      'Only the failure modes, since passing tests need no further numeric detail',
+      'All four numeric readings plus test voltage/current, class, dates, IDs, limits and next-test-due',
+      'Only the highest single reading, recorded as the worst case for the appliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Numeric data is the difference between a useful PAT record and a useless one. Trend analysis catches degradation that pass/fail records cannot. The duty-holder under EAW 1989 / HSG107 needs the numeric data to demonstrate that the equipment cohort is being managed over time, not just snapshot-tested.',
+      'A full record captures the four numeric readings, the test voltage/current, the construction class, dates, operator ID, appliance ID, acceptance values and next-test-due. Numeric data is the difference between a useful PAT record and a useless one: it lets trend analysis catch a kettle drifting from 0.07 Ω to 0.11 Ω over three cycles. The duty-holder under EAW 1989 / HSG107 needs it to demonstrate the equipment cohort is being managed over time, not just snapshot-tested.',
   },
   {
     id: 6,
     question:
       'An appliance fails IR at 0.4 MΩ. The operator suspects damp insulation rather than genuine breakdown (the appliance has been stored in a damp shed). What does IET CoP-aligned good practice direct?',
     options: [
-      'Fail and discard immediately',
-      'Allow the appliance to dry (operate it briefly to warm internal insulation, or store in dry conditions for 24 hours), then re-test. If the reading recovers above 1 MΩ on the dry test, record both readings and pass with explanation. If it remains low after drying, the failure is genuine and the appliance is removed from service',
-      'Average two readings',
-      'Re-test at 250 V',
+      'Fail and discard the appliance immediately on the first low reading',
+      'Average the 0.4 MΩ reading with a second attempt and judge against the mean',
+      'Re-test at 250 V DC and pass if the lower-voltage reading clears the limit',
+      'Dry the appliance and re-test, recording both readings and deciding on the recovery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Damp-related IR drops are recoverable and are not the same as genuine insulation breakdown. The IET CoP-aligned response is to dry and re-test before deciding. Recording both readings with the explanation makes the audit trail explicit and allows the duty-holder to track equipment stored / used in damp environments.',
+      'Damp-related IR drops are recoverable and not the same as genuine insulation breakdown. The IET CoP-aligned response is to warm the appliance briefly or store it dry for 24 h, then re-test: if it recovers above 1 MΩ, record both readings and pass with explanation; otherwise the failure is genuine and it is removed from service. Recording both readings makes the audit trail explicit and lets the duty-holder track equipment stored or used in damp environments.',
   },
   {
     id: 7,
     question:
       "What is the IET CoP-recognised difference between 'remove from service immediately' and 'flag for remediation at next opportunity'?",
     options: [
-      'There is no difference',
-      'Immediate removal applies to faults that present a present and direct shock risk — categorically dangerous polarity reversals (L–E swap), broken protective conductors on Class I appliances, gross insulation breakdown that exposes live parts. Flag for remediation applies to faults that are degrading but not yet dangerous — marginal IR within passing range, marginal earth resistance, BS 1362 fuse over-rated but not posing immediate risk. The distinction sits with operator judgement informed by the duty-holder risk policy',
-      'All faults are immediate',
-      'Only insulation faults are immediate',
+      'Immediate removal is for direct shock risks; flag-for-remediation is for degrading-but-safe faults',
+      'There is no difference — both terms mean the same removal action',
+      'All faults require immediate removal regardless of their severity',
+      'Only insulation faults are treated as immediate; all other faults are flagged',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "The PAT fail spectrum is not binary at the safety level. Some faults demand stopping work and physically removing the appliance now; others are within passing range but trending in the wrong direction and warrant a note for the next cycle. The judgement is informed by IET CoP guidance, the duty-holder's HSG107-aligned risk policy, and operator competence per EAW 1989 Reg 16.",
+      "The PAT fail spectrum is not binary at the safety level. Immediate removal applies to direct shock risks — L–E polarity reversal, broken Class I protective conductors, gross insulation breakdown exposing live parts. Flag-for-remediation applies to degrading-but-not-dangerous faults like marginal IR or earth resistance still within range. The judgement is informed by IET CoP guidance, the duty-holder's HSG107-aligned risk policy, and operator competence per EAW 1989 Reg 16.",
   },
   {
     id: 8,
     question:
       'An extension reel reads 0.42 Ω earth continuity against a calculated acceptance of 0.42 Ω — exactly at the limit. The IR is fine, polarity is fine, leakage is fine. Pass or fail?',
     options: [
-      'Fail at the limit',
-      'Pass on the strict reading, but flag for closer inspection at the next cycle. The reading is at the IET CoP threshold; further degradation will push it over. The cause is investigated (loose plug terminal, slip-ring contact, socket-end contact) — a small intervention may drop the reading to 0.30 Ω, restoring headroom. The pass-with-flag approach is the IET CoP-aligned middle path between failing a compliant lead and ignoring degradation',
-      'Always fail',
-      'Average with previous tests',
+      'Fail — a reading exactly at the limit does not meet the acceptance criterion',
+      'Always fail any reading that touches the calculated threshold, without investigation',
+      'Pass on the strict reading but flag for closer inspection and investigate the cause next cycle',
+      'Average the reading with previous test cycles and judge against the resulting mean',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A reading exactly at the threshold is a pass per the strict numeric rule but a flag in operator judgement. Investigation typically finds a remediable cause that restores headroom. The duty-holder gets a compliant lead now plus an early-warning marker for the cohort.',
+      'A reading exactly at the threshold is a pass per the strict numeric rule but a flag in operator judgement — it is at the limit and will drift over. Investigate the cause (loose plug terminal, slip-ring or socket-end contact), which often restores headroom to about 0.30 Ω. The duty-holder gets a compliant lead now plus an early-warning marker for the cohort.',
   },
   {
     id: 9,
     question:
       'What is the relationship between the PAT result and BS 7671:2018+A4:2026 Reg 643.2.1 (continuity), Reg 643.3 (insulation resistance) and Reg 643.6 (polarity)?',
     options: [
-      'No relationship',
-      "PAT acceptance values come from IET CoP, not from BS 7671. BS 7671 643.x governs the fixed installation. The principles are parallel: continuity verified by resistance measurement, IR at 500 V DC against 1 MΩ, polarity verified at every single-pole device. PAT extends those principles to the appliance side with appliance-specific acceptance values. The two regimes are complementary — together they cover the supply from the meter to the user's hand",
-      'BS 7671 supersedes IET CoP for PAT',
-      'They are unrelated',
+      'There is no relationship at all between PAT and the BS 7671 643.x tests',
+      'BS 7671 supersedes the IET CoP and sets all PAT acceptance values directly',
+      'They are unrelated because PAT covers appliances and BS 7671 covers buildings only',
+      'PAT values come from the IET CoP and 643.x governs the fixed install, but the principles are parallel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 643.x sets the fixed-installation duty; IET CoP Ch 15 sets the PAT duty. Both apply the same engineering principles (resistance measurement, 500 V DC IR, polarity verification) but with different acceptance values appropriate to the system level being tested. Together they form the end-to-end electrical safety regime.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'Which combination of failure indicators most strongly suggests the appliance should be REMOVED FROM SERVICE rather than remediated?',
     options: [
-      'A small marginal reading on one test',
-      'Multiple failures (e.g. earth continuity high AND IR low AND visible damage) on a single appliance, or any single dangerous failure (polarity L–E reversed, gross insulation breakdown with exposed live parts, fundamentally damaged plug or flex), or a pattern of repeat failures over multiple test cycles indicating the appliance is at end-of-life',
-      'Only IR failures',
-      'Only polarity failures',
+      'Multiple concurrent failures, any single dangerous fault, or repeat failures indicating end-of-life',
+      'A single small marginal reading on one of the four tests',
+      'Only IR failures, regardless of their severity or cause',
+      'Only polarity failures, regardless of the reversal type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Single marginal readings often have remediable causes. The remove-from-service decision points are: (a) multiple concurrent failures suggesting systemic degradation, (b) any single dangerous fault that cannot be reliably remediated to a safe state, or (c) a trend over time suggesting the appliance is wearing out. The duty-holder's risk policy supports the operator in making the call.",
   },

@@ -23,50 +23,50 @@ const inlineChecks = [
     question:
       'Under the Regulatory Reform (Fire Safety) Order 2005, who is the "responsible person" in a workplace?',
     options: [
-      'The Fire and Rescue Service inspecting officer.',
-      'The employer, plus any other person who has control of the premises (owner, occupier, managing agent, landlord) to the extent of that control. Article 3 of the RRO names the employer first; where the premises are not a workplace or where others have control, the duty falls on whoever exercises that control. Multiple responsible persons can exist for one building, each accountable for their area of control. The duty is non-delegable in law — you can outsource the work, but not the legal accountability.',
-      'The competent person who carries out the fire risk assessment.',
-      'The local authority building control officer.',
+      'The Fire and Rescue Service inspecting officer who audits the premises under the FRSA 2004.',
+      'The employer, plus any other person with control of the premises, to the extent of that control.',
+      'The competent person who carries out the fire risk assessment under contract to the duty-holder.',
+      'The local authority building control officer who signed off the original construction works.',
     ],
     correctIndex: 1,
     explanation:
-      'RRO Art 3 defines the responsible person as the employer (workplace) or, in non-workplace cases, the person with control of the premises. Liability follows control. Hiring a fire risk assessor or fire alarm contractor does not transfer the statutory duty — it remains with the responsible person.',
+      'RRO Art 3 defines the responsible person as the employer (workplace) or, in non-workplace cases, the person with control of the premises — owner, occupier or managing agent — to the extent of that control. Liability follows control, multiple responsible persons can co-exist for one building, and the duty is non-delegable: hiring a fire risk assessor or fire alarm contractor does not transfer the statutory duty.',
   },
   {
     id: 'fam7-s1-fra-record',
     question:
       'When must the significant findings of a fire risk assessment be recorded in writing?',
     options: [
-      'Only in high-rise buildings.',
-      'In every premises where 5 or more persons are employed, OR where the premises are subject to a licence under any enactment, OR where an alterations notice is in force. Article 9(7) RRO sets the trigger. Below 5 employees in a non-licensed, non-noticed premises, written recording is not legally compelled — but it is universal industry practice and the FRS / insurer / court will expect it. The Fire Safety Act 2021 reinforced the recording duty in multi-occupied residential blocks.',
-      'Only when the FRS specifically requests it.',
-      'Only after a fire has occurred.',
+      'Only in high-rise residential buildings above the 18 m Higher Risk Building threshold.',
+      'Where 5 or more persons are employed, or the premises are licensed, or an alterations notice is in force.',
+      'Only when the Fire and Rescue Service specifically requests a copy during an audit visit.',
+      'Only after a fire or near-miss has occurred and the assessment is being reviewed.',
     ],
     correctIndex: 1,
     explanation:
-      'Art 9(7) RRO triggers compulsory recording at 5+ employees / licensed premises / alterations notice. Below the threshold, recording is not legally compelled but is professionally expected. Treat written FRA as universal best practice — the cost of an unwritten FRA in a prosecution is enormous.',
+      'Art 9(7) RRO triggers compulsory written recording of significant findings at 5+ employees, licensed premises, or where an alterations notice is in force. Below the threshold, recording is not legally compelled but is professionally expected — treat written FRA as universal best practice, since the cost of an unwritten FRA in a prosecution is enormous.',
   },
   {
     id: 'fam7-s1-maintain',
     question: 'Article 17 of the RRO requires fire safety equipment to be...?',
     options: [
-      'Tested annually only.',
-      'Subject to a suitable system of maintenance and maintained in an efficient state, in efficient working order, and in good repair. The duty is continuous, not periodic. "Efficient working order" means the equipment must do what it is designed to do, when called upon — at any moment, not only on the day of the service visit. BS 5839-1 (fire alarms), BS 5306 (extinguishers), BS 5266 (emergency lighting) are the engineering routes that satisfy this legal duty.',
-      'Inspected by the FRS every six months.',
-      'Replaced every five years.',
+      'Tested once annually by a competent person, with no other recurring duty in between.',
+      'Subject to a suitable system of maintenance and kept in an efficient state and good repair.',
+      'Inspected by the Fire and Rescue Service every six months as part of their audit cycle.',
+      'Replaced in full every five years to keep it within its manufacturer-stated design life.',
     ],
     correctIndex: 1,
     explanation:
-      'Art 17 RRO is the maintenance backbone of fire safety law. The phrase "efficient working order" is continuous — equipment must work whenever needed, not only on the service day. BS 5839-1 service intervals (approximately 6 months, 5-7 month tolerance per the 2025 revision) are the technical route to legal compliance.',
+      'Art 17 RRO is the maintenance backbone of fire safety law — equipment must be subject to a suitable system of maintenance and kept in an efficient state, in efficient working order and in good repair. "Efficient working order" is continuous: equipment must work whenever needed, not only on the service day. BS 5839-1, BS 5306 and BS 5266 are the engineering routes that satisfy it; BS 5839-1 service intervals are approximately 6 months (5-7 month tolerance per the 2025 revision).',
   },
   {
     id: 'fam7-s1-bsa',
     question: 'A "Higher Risk Building" under the Building Safety Act 2022 is...?',
     options: [
-      'Any block of flats.',
-      'A building of at least 18 metres in height OR with at least 7 storeys, AND containing at least 2 residential units. The threshold was set in the Building Safety Act 2022 and the associated Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023. The regime brought in: Accountable Persons (analogue of responsible person but for occupation-stage building safety), the golden thread of digital building information, mandatory occurrence reporting to the BSR, and a much more interventionist Building Safety Regulator.',
-      'Any building over 11 metres.',
-      'A building used as a hospital or care home.',
+      'Any block of flats, regardless of its height or the number of storeys it contains.',
+      'A building at least 18 m high or with at least 7 storeys, and containing at least 2 residential units.',
+      'Any building over 11 metres in height, irrespective of its use or occupancy type.',
+      'A building used as a hospital or care home, where occupants sleep and depend on assisted escape.',
     ],
     correctIndex: 1,
     explanation:
@@ -80,24 +80,24 @@ const quizQuestions = [
     question:
       'What is the principal piece of fire safety legislation for occupied non-domestic premises in England and Wales?',
     options: [
-      'The Building Regulations 2010.',
-      'The Regulatory Reform (Fire Safety) Order 2005 (RRO) — in force since 1 October 2006. The RRO consolidated and replaced more than 70 earlier pieces of fire safety law (the Fire Precautions Act 1971, Workplace (HSW) regs and others). It applies to virtually all non-domestic premises in England and Wales: workplaces, common parts of HMOs and blocks of flats, places of assembly, retail, healthcare, education, hospitality. Scotland has the Fire (Scotland) Act 2005 + Fire Safety (Scotland) Regulations 2006; Northern Ireland has the Fire and Rescue Services (NI) Order 2006 + Fire Safety Regulations (NI) 2010.',
-      'The Health and Safety at Work etc. Act 1974.',
-      'BS 5839-1:2025.',
+      'The Regulatory Reform (Fire Safety) Order 2005, in force since 1 October 2006 across non-domestic premises.',
+      'The Building Regulations 2010, which carry the fire safety duties through into the occupation stage.',
+      'The Health and Safety at Work etc. Act 1974, under its general duty-of-care provisions for employers.',
+      'BS 5839-1:2025, the code of practice for fire detection and fire alarm systems in buildings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The RRO is the operating-stage legal framework for fire safety. Building Regulations cover construction; the RRO covers ongoing occupation. BS 5839-1 is a code of practice — not law — but is referenced as the engineering route to RRO compliance.',
+      'The RRO is the operating-stage legal framework, consolidating and replacing more than 70 earlier instruments (including the Fire Precautions Act 1971) and applying to virtually all non-domestic premises in England and Wales. Building Regulations cover construction; the RRO covers ongoing occupation; BS 5839-1 is a code of practice (not law) referenced as the engineering route to compliance. Scotland and Northern Ireland have their own equivalents.',
   },
   {
     id: 2,
     question:
       'A "responsible person" under the RRO outsources the fire risk assessment to a fire safety consultancy. The consultancy delivers a defective FRA, missing several significant findings. A fire causes serious injury. Who carries the criminal liability?',
     options: [
-      'The consultancy alone.',
-      'The responsible person carries the primary statutory liability, because RRO duties are non-delegable. The consultancy may face civil claim and may be prosecuted separately if their work is grossly negligent (corporate manslaughter / gross negligence manslaughter), but the Art 9 duty to ensure a suitable and sufficient FRA remains with the responsible person. The defence "I hired a consultant" does not extinguish the duty — at most it mitigates penalty if the responsible person took reasonable steps to verify competence.',
-      'Only the building owner if different from the employer.',
-      'The Fire and Rescue Service for not auditing more frequently.',
+      'The consultancy alone, because the act of contracting the FRA transfers the Art 9 duty to whoever carries it out.',
+      'The responsible person carries the primary liability, because RRO duties are non-delegable and survive outsourcing.',
+      'The building owner alone, since ownership rather than control is what fixes RRO liability for a defective assessment.',
+      'The Fire and Rescue Service, whose duty to audit the premises more frequently was the real point of failure.',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under Article 9 RRO, when is a fire risk assessment "suitable and sufficient"?',
     options: [
-      'When it identifies the fire alarm category.',
-      'When it identifies the hazards present (sources of ignition, fuel, oxygen), the persons at risk (employees, visitors, vulnerable persons, sleeping risk, disabled persons), evaluates the risk and the adequacy of existing fire precautions, records significant findings (where required), and informs the action plan to reduce risk to as low as reasonably practicable. The PAS 79 series provides a recognised methodology. Article 9(3) requires the FRA to be reviewed regularly and revised if no longer valid or if there has been a significant change.',
-      'When it has been signed by a chartered fire engineer.',
-      'When it follows BS 5839-1.',
+      'When it correctly identifies the fire alarm category required for the building and specifies the detection coverage.',
+      'When it has been prepared and signed by a chartered fire engineer holding current professional registration.',
+      'When it identifies hazards and persons at risk, evaluates precautions, records significant findings and drives an action plan kept under review.',
+      'When it follows every recommendation of BS 5839-1 in full, with no departures from the code of practice.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Art 9 sets the substantive content. PAS 79-1 (non-domestic) and PAS 79-2 (housing) are the recognised methodologies — not law, but the AHJ / insurer / court will expect one of these or equivalent. A "suitable and sufficient" FRA is hazard + persons + evaluation + action plan + review — the same structure as a HSW Act risk assessment.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     id: 4,
     question: 'What did the Fire Safety Act 2021 clarify, in relation to the RRO?',
     options: [
-      'It increased the maximum fine.',
-      'It clarified that, in multi-occupied residential buildings, the RRO applies to (a) the structure and external walls of the building, including cladding, balconies and windows, AND (b) all doors between domestic premises and common parts (flat entrance doors). This was the post-Grenfell legislative response — pre-2021 there was legal ambiguity over whether the RRO captured external walls and flat entrance doors. The Act removed the ambiguity. The Fire Safety (England) Regulations 2022 added specific operational duties (PEEPs, secure information box, wayfinding signage, evacuation alert, fire door checks).',
-      'It abolished the responsible person concept.',
-      'It applied the RRO to single-family dwellings.',
+      'It raised the maximum fine for a serious RRO offence and introduced a fixed-penalty regime for minor breaches.',
+      'It confirmed the RRO captures the external walls and flat entrance doors of multi-occupied residential buildings.',
+      'It abolished the responsible person concept and replaced it with the Accountable Person under a single duty-holder.',
+      'It extended the RRO so that it now applies to single-family private dwellings as well as non-domestic premises.',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'A 22 m residential building (8 storeys, 16 flats) is occupied. Which regulatory regime captures it for ongoing safety?',
     options: [
-      'RRO only.',
-      'BOTH the RRO (operating-stage fire safety, common parts only — flats are dwellings) AND the Building Safety Act 2022 / Higher-Risk Buildings regime (because the building is ≥ 18 m AND has ≥ 2 residential units). The Accountable Person under the BSA owes the building safety duties; the responsible person under the RRO owes the fire safety duties. In most cases these are the same legal entity (managing agent / freeholder / RTM) but the duties run in parallel under separate Acts. Mandatory occurrence reporting to the BSR applies to safety occurrences in the HRB.',
-      'Building Safety Act 2022 only.',
-      'Neither — it is below the 30 m threshold.',
+      'BOTH the RRO and the Building Safety Act HRB regime, since at ≥ 18 m with ≥ 2 residential units it is an HRB.',
+      'The RRO only — the Building Safety Act HRB regime is reserved for residential buildings over 30 m in height.',
+      'The Building Safety Act 2022 only — once a building becomes an HRB, the RRO ceases to apply to its common parts.',
+      'Neither regime — at 22 m the building falls below the applicable HRB height threshold for ongoing safety duties.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '22 m / 8 storeys / 16 flats triggers BOTH regimes. RRO + BSA run in parallel. The Accountable Person (AP) and Responsible Person (RP) are usually but not always the same legal entity. Both regimes have their own enforcement bodies (FRS for RRO; BSR for BSA) and their own offence structures.',
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the maximum penalty for a serious RRO offence prosecuted on indictment?',
     options: [
-      '£20,000 fine.',
-      'Unlimited fine AND/OR up to 2 years imprisonment for the responsible person (or director / senior manager where corporate liability extends — RRO Art 32(1)). For the most serious cases involving deaths, corporate manslaughter (Corporate Manslaughter and Corporate Homicide Act 2007) is an additional charge route, with unlimited fines for the corporate body and personal prosecution for directors / senior managers under gross negligence manslaughter. Post-Grenfell, the prosecutorial appetite for serious fire safety failures has materially increased.',
-      'Maximum £100,000 fine.',
-      'A formal warning and re-inspection.',
+      'A fixed maximum fine of £20,000 per offence, with no power to impose a custodial sentence.',
+      'An unlimited fine and/or up to 2 years imprisonment under RRO Art 32.',
+      'A capped fine of £100,000 plus a 12-month directors’ disqualification, but no imprisonment.',
+      'A formal warning and mandatory re-inspection, with prosecution reserved for a repeated breach.',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,23 +161,23 @@ const quizQuestions = [
     question:
       'Article 17 RRO requires a "suitable system of maintenance" for fire safety equipment. How does BS 5839-1:2025 satisfy this duty for a fire alarm system?',
     options: [
-      'By specifying annual testing only.',
-      'By prescribing weekly user tests of one MCP per week, monthly user checks where standby supplies are used, and competent-person service / inspection visits at intervals of approximately six months — with the 2025 revision giving an explicit 5-to-7-month tolerance window. The cumulative effect of these activities is a "system of maintenance" satisfying RRO Art 17. BS 5839-1 is the technical route; RRO Art 17 is the legal duty. Failing to keep to the schedule is a BS 5839-1 non-compliance AND an RRO breach.',
-      'By requiring replacement of the panel every 10 years.',
-      'By requiring CCTV monitoring of the panel.',
+      'By specifying a single competent-person inspection visit once each year, with no interim user checks.',
+      'By requiring complete replacement of the control panel every ten years to keep it within design life.',
+      'By requiring continuous remote CCTV monitoring of the control panel indicators from a central station.',
+      'By prescribing weekly user tests, monthly standby-supply checks, and competent-person service roughly every six months.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 Cl 43.2.1 — service intervals approximately 6 months, with a 5-7 month tolerance window. Plus weekly MCP tests, monthly standby checks where applicable. Together this is the "system of maintenance" the RRO demands. The 2025 tolerance window is a clarification, not a relaxation — sliding outside 5-7 months is non-compliant.',
+      'BS 5839-1:2025 Cl 43.2.1 prescribes service intervals of approximately 6 months with a 5-7 month tolerance window, plus weekly user tests of one MCP (rotated) and monthly checks where standby supplies are used. Together these form the "system of maintenance" Art 17 demands. The 2025 tolerance window is a clarification, not a relaxation — sliding outside 5-7 months is non-compliant.',
   },
   {
     id: 8,
     question: 'How does the Fire and Rescue Services Act 2004 interact with the RRO?',
     options: [
-      'It supersedes the RRO.',
-      'The FRSA 2004 establishes the Fire and Rescue Authority (FRA) for each area and gives the FRA the power to enforce the RRO via inspections, alterations notices, enforcement notices, and prohibition notices, as well as the power to prosecute. The FRA / FRS is the principal enforcing authority for the RRO in most premises, though for a small set of premises (construction sites, certain Crown premises, ships in build) the HSE is the enforcing authority. The Building Safety Regulator is the enforcing authority for the BSA in HRBs.',
-      'It applies only to the FRS itself.',
-      'It is now repealed.',
+      'It supersedes the RRO, becoming the principal fire safety duty instrument for occupied premises.',
+      'It establishes the Fire and Rescue Authority and gives it the power to enforce the RRO.',
+      'It applies only to the internal organisation of the FRS itself and creates no enforcement powers over premises.',
+      'It is now repealed, the enforcement powers having been moved wholesale to the Building Safety Regulator.',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,28 +188,28 @@ const quizQuestions = [
     question:
       'Under the Fire Safety (England) Regulations 2022, an HRB managing agent must report which kinds of safety occurrences to the BSR?',
     options: [
-      'Only fires that cause injury.',
-      'Structural failures and fire safety failures that meet the mandatory occurrence reporting (MOR) thresholds in the regulations: fires; spread of fire / smoke beyond intended compartmentation; failures of structural components; failures of fire-stopping; significant degradation of fire doors; failures of ventilation systems. Thresholds are intentionally low — the regime is designed to surface near-misses and emerging defects, not just the catastrophic. Reports go to the BSR through the prescribed digital portal. Failure to report is itself an offence.',
-      'Annual statistics only.',
-      'Quarterly health and safety reports.',
+      'Structural and fire safety failures meeting the mandatory occurrence reporting thresholds, via the prescribed portal.',
+      'Only fires that result in injury or death to a building occupant, reported to the BSR after the event.',
+      'Annual fire safety statistics for the building, compiled and submitted to the BSR at the year end.',
+      'Quarterly general health and safety performance reports covering the whole building and its occupants.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Mandatory Occurrence Reporting (MOR) under the BSA / HRB regs is a near-miss reporting regime, deliberately low-threshold, designed to capture emerging building safety issues across the HRB stock before they become catastrophic. The Building Safety Regulator analyses the reports and feeds back into sector-wide guidance.',
+      'Mandatory Occurrence Reporting (MOR) under the BSA / HRB regs captures structural and fire safety failures — fire or smoke spread beyond compartmentation, fire-stopping failures, fire-door degradation. It is a deliberately low-threshold near-miss regime designed to surface emerging building safety issues across the HRB stock before they become catastrophic; failure to report is itself an offence. The BSR analyses the reports and feeds back into sector-wide guidance.',
   },
   {
     id: 10,
     question:
       'Why does a fire alarm contractor need a working knowledge of the RRO, the Fire Safety Act, and the Building Safety Act, even though they are "the electrician"?',
     options: [
-      'Curiosity.',
-      'Because the design, installation, commissioning and maintenance choices the contractor makes are the operational mechanism by which the responsible person discharges legal duties under those Acts. A fire alarm category mismatched to the use of the building puts the responsible person in breach of RRO Art 14 (escape routes / detection); a missed monthly test puts them in breach of Art 17; a faulty cause-and-effect handed over without explanation puts them in breach of Art 38 (information). The contractor is the technical route to legal compliance; ignorance of the legal end-state is a professional failure that can leave the contractor exposed to civil claim, regulatory action, or criminal prosecution as a contributory party.',
-      'Marketing.',
-      'It is required by BS 7671.',
+      'Because the legal duty itself transfers to the contractor the moment they take on the work, displacing the responsible person.',
+      'Because the contractor is legally required to hold a personal copy of the building fire risk assessment under RRO Art 9.',
+      'Because the contractor\'s design, install, commission and maintain decisions are how the responsible person discharges RRO duties.',
+      'Because BS 7671 makes a working knowledge of fire safety legislation a condition of competent-person scheme registration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The contractor is the legal compliance mechanism. A wrongly-specified system, a missed service visit, a botched commissioning, a defective handover — each translates into a legal breach by the client. The contractor who understands the legal architecture protects the client AND protects themselves from contributory liability.',
+      'The contractor is the legal compliance mechanism: a wrong category breaches Art 13/14, a missed service breaches Art 17, a botched handover breaches Art 38. A wrongly-specified system, missed visit, botched commissioning or defective handover each translates into a legal breach by the client, and the contractor can be drawn in as a contributory party. Understanding the legal architecture protects the client and the contractor alike.',
   },
 ];
 

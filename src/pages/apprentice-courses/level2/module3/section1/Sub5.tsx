@@ -44,42 +44,42 @@ const checks = [
     question:
       "A site question comes up about whether a 30 mA RCD is required on a domestic socket circuit. Which Part of BS 7671 do you reach for first?",
     options: [
-      "Part 4 — protection for safety. Specifically Chapter 41 (protection against electric shock), where Reg 411.3.3 (RCD on socket-outlets up to 32 A) and Reg 411.3.4 (RCD on luminaires in domestic premises) live. Part 4 is where every shock / overcurrent / thermal protection question lands.",
-      "That pressing the emergency stop immediately de-energises all hazardous motion, that the stop is maintained (latched) until manually reset, and that the machine cannot restart until the stop is released and a deliberate start action is taken",
-      "Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.",
-      "Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).",
+      "Part 7 — special installations or locations. RCDs are an environmental requirement, so the 700-series sections (701 bathrooms, 711 exhibitions and so on) are where the RCD rules for any given location are collected together.",
+      "Part 6 — inspection and testing. The RCD requirement is verified at the initial-verification stage, so Chapter 64 (and the test sequence within it) is where the rules on when an RCD is needed are set out.",
+      "Part 3 — assessment of general characteristics. The decision on additional protection follows from the assessment of external influences, so the requirement to fit a 30 mA RCD lives with the Chapter 31–36 assessment rules.",
+      "Part 4 — protection for safety. Chapter 41 (protection against electric shock) holds the additional-protection RCD rules, including Reg 411.3.3 and Reg 411.3.4.",
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
-      "Part 4 ('Protection for safety') is the chapter you'll open most often as an installer. It covers shock protection (Chapter 41), thermal effects (Chapter 42), overcurrent (Chapter 43), voltage disturbances (Chapter 44) and isolation/switching (Chapter 46 — newly expanded by A4:2026). Knowing each Part's scope means you find the reg by topic, not by remembering a four-digit number.",
+      "Part 4 ('Protection for safety') is the chapter you'll open most often as an installer. It covers shock protection (Chapter 41 — including Reg 411.3.3 on socket-outlets and 411.3.4 on luminaires), thermal effects (Chapter 42), overcurrent (Chapter 43), voltage disturbances (Chapter 44) and isolation/switching (Chapter 46 — newly expanded by A4:2026). Knowing each Part's scope means you find the reg by topic, not by remembering a four-digit number.",
   },
   {
     id: 'mod3-s1-sub5-part2-definitions',
     question:
       "An EICR comes back with a C2 against an 'extraneous-conductive-part' that wasn't bonded. The customer asks 'what's an extraneous-conductive-part?'. Where in BS 7671 do you go to read the legally precise definition?",
     options: [
-      "Part 2 — definitions. Every key term in BS 7671 has a verbatim definition in Part 2, and that definition is the legal vocabulary the inspector and the courts use. 'Extraneous-conductive-part' = 'a conductive part liable to introduce a potential, generally Earth potential, and not forming part of the electrical installation' — that exact wording is what decides whether the metal pipework needs main bonding.",
-      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
-      "The Health and Safety Executive (HSE). Construction sites are higher-risk premises under the Health and Safety (Enforcing Authority) Regulations 1998, so HSE inspectors take the lead. They enforce HASAWA, EAWR, CDM 2015, MHSWR, COSHH, RIDDOR and the rest of the workplace H&S regime on site.",
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
+      "Part 1 — scope, object and fundamental principles. The opening Part sets out what the standard covers, so the meanings of the terms it uses are stated there alongside the scope statement.",
+      "Chapter 54 — earthing arrangements and protective conductors. Since the question is about bonding, the definition of 'extraneous-conductive-part' sits with the earthing and bonding technical rules in Part 5.",
+      "Part 2 — definitions. Every key term in BS 7671 has a verbatim definition here, and it is the legal wording that decides whether the metal pipework needs main bonding.",
+      "Appendix 2 — statutory regulations and associated memoranda. The legally precise meaning of a defined term sits in the appendix dealing with the standard's statutory backing.",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
-      "Part 2 is the legal vocabulary. Definitions are verbatim, are used consistently throughout the standard, and are what scheme inspectors and the HSE quote when they're testing whether something is or isn't in scope of a particular reg. Get the Part 2 definitions discipline right and most of the rest of the standard reads cleanly. Get them wrong and you'll mis-classify circuits, mis-bond, and fail EICRs.",
+      "Part 2 is the legal vocabulary. 'Extraneous-conductive-part' is defined verbatim as 'a conductive part liable to introduce a potential, generally Earth potential, and not forming part of the electrical installation' — that exact wording is what scheme inspectors and the HSE quote when testing whether something is in scope of a reg. Get the Part 2 definitions discipline right and most of the rest reads cleanly; get them wrong and you'll mis-classify circuits, mis-bond, and fail EICRs.",
   },
   {
     id: 'mod3-s1-sub5-a4-changes',
     question:
       "Which of the following is one of the headline new regulations introduced by BS 7671:2018+A4:2026?",
     options: [
-      "(1) Verify CPP exists and reflects the work. (2) Verify client awareness conversation. (3) Brief operatives on the CPP. (4) Identify hazards via dynamic risk assessment. (5) Manage and monitor work in practice. (6) Document the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety actions. (7) Escalate issues. (8) Close out at end of project — lessons, records, cleanup.",
-      "Being proactive within your level of authority — asking questions, volunteering for learning opportunities, suggesting improvements, and taking appropriate action when you identify issues — while recognising when to seek guidance",
-      "On commercial sites, the permit names the circuit / equipment to be worked on, the precautions required (which include safe isolation per the JIB procedure), the time window, the worker and the responsible person — the JIB procedure is the practical execution of the permit&rsquo;s isolation requirement.",
-      "Regulation 411.3.4 — additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires within domestic (household) premises. This is genuinely new in A4:2026 and changes the design pattern for all new domestic lighting circuits.",
+      "Regulation 701.512.3 — a new rule prohibiting any socket-outlet within 3 m of a bath or shower. This is genuinely new in A4:2026 and reverses the previous zone-based allowance for bathroom sockets.",
+      "Regulation 433.1.204 — a new rule abolishing the ring final circuit and requiring all new domestic socket circuits to be wired as 20 A radials. This is genuinely new in A4:2026 and changes how every domestic socket circuit is designed.",
+      "Regulation 543.1.1 — a new rule raising the minimum protective conductor size to 4 mm² in all domestic installations. This is genuinely new in A4:2026 and changes the CPC sizing on every circuit.",
+      "Regulation 411.3.4 — a 30 mA RCD on AC final circuits supplying luminaires in domestic premises. This is genuinely new in A4:2026 and changes the design pattern for all new domestic lighting circuits.",
     ],
     correctIndex: 3,
     explanation:
-      "411.3.4 is one of the most consequential A4:2026 changes for domestic work. Combined with the redrafted 411.3.3 (RCD on socket-outlets up to 32 A) and the expanded AFDD scope under 421.1.7, A4:2026 substantially raises the protection floor on a typical domestic install. Knowing the new regs by number isn't the goal — knowing they EXIST and being able to find the verbatim wording in Part 4 is.",
+      "411.3.4 requires additional protection by a 30 mA RCD for AC final circuits supplying luminaires within domestic (household) premises — one of the most consequential A4:2026 changes for domestic work. Combined with the redrafted 411.3.3 (RCD on socket-outlets up to 32 A) and the expanded AFDD scope under 421.1.7, A4:2026 substantially raises the protection floor on a typical domestic install. Knowing the new regs by number isn't the goal — knowing they EXIST and being able to find the verbatim wording in Part 4 is.",
   },
 ];
 
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "BS 7671 has eight numbered Parts. Match the Part to its primary purpose.",
     options: [
-      "Sit-down with your tutor, get the per-topic mark breakdown, focus revision on the weakest areas, sit 2-3 more full mocks under exam conditions until you average 70%+, then book the re-sit. Failing one paper by 4 marks is a fixable gap, not a verdict on the qualification.",
+      "Part 1 = definitions. Part 2 = scope and object. Part 3 = protection for safety. Part 4 = assessment of general characteristics. Part 5 = inspection and testing. Part 6 = selection and erection. Part 7 = functional requirements. Part 8 = special installations or locations.",
       "Part 1 = scope, object, fundamental principles. Part 2 = definitions. Part 3 = assessment of general characteristics. Part 4 = protection for safety. Part 5 = selection and erection. Part 6 = inspection and testing. Part 7 = special installations or locations. Part 8 = functional requirements (energy efficiency, prosumer's installations).",
-      "It’s the single common connection point inside the installation where the earthing conductor (back to the source/electrode), the main protective bonding conductors (out to extraneous parts) and the installation CPCs all meet — bringing every earthed and bonded conductor to the same potential.",
-      "To plan, manage, monitor and co-ordinate matters relating to H&S during the pre-construction phase. The PD identifies, eliminates or controls foreseeable risks via the design, ensures designers comply with their Reg 9 duties, prepares the pre-construction information and liaises with the Principal Contractor for the duration of the appointment.",
+      "Part 1 = protection for safety. Part 2 = selection and erection. Part 3 = scope and object. Part 4 = definitions. Part 5 = assessment of general characteristics. Part 6 = special installations or locations. Part 7 = inspection and testing. Part 8 = functional requirements.",
+      "Part 1 = selection and erection. Part 2 = protection for safety. Part 3 = definitions. Part 4 = inspection and testing. Part 5 = scope and object. Part 6 = assessment of general characteristics. Part 7 = special installations or locations. Part 8 = functional requirements.",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,94 +105,94 @@ const quizQuestions = [
     question:
       "Under the BS 7671 reg-numbering convention, what does the regulation number 411.3.4 tell you about where the regulation lives in the standard?",
     options: [
-      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
-      "Photos of the scene as it was when evacuated; identity and contact of witnesses; written first-hand account from yourself and any colleagues; equipment positions; any recordings (CCTV near you); customer / building-manager contact information; any fault you noted that may have caused or contributed; tool and instrument condition before and after.",
-      "Part 4, Chapter 41, Section 411, sub-section 3, regulation 4. So it lives in Part 4 (protection for safety), Chapter 41 (protection against electric shock), Section 411 (protective measure: automatic disconnection of supply), sub-section 411.3 (additional protection), regulation 411.3.4 (RCD on luminaires in domestic premises). The numbering encodes the location.",
-      "Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing",
+      "Part 41, Chapter 1, Section 3, regulation 4 — the digits are read individually from right to left, so the last digit is the Part (low voltage) rather than the first.",
+      "Page 411, paragraph 3, line 4 — BS 7671 reg numbers are a page-and-line locator telling you where to turn in the printed book, not a topic address.",
+      "Part 4, Chapter 41, Section 411, sub-section 3, regulation 4 — the digits build up left to right from Part down to the individual rule, so the number itself encodes the location.",
+      "Appendix 4, table 11, row 3, column 4 — the four digits map onto the Appendix 4 cable tables, pointing you to a current-carrying-capacity value rather than a regulation.",
     ],
     correctAnswer: 2,
     explanation:
-      "The numbering is a navigation system, not a label. First digit = Part. First two digits = Chapter. First three digits = Section. The rest is sub-section and regulation within. Once you internalise this, jumping to Reg 411.3.4 in a 600-page book takes seconds without an index.",
+      "The numbering is a navigation system, not a label. First digit = Part (4, protection for safety). First two = Chapter (41, electric shock). First three = Section (411, automatic disconnection of supply). The rest is sub-section (411.3, additional protection) and the individual regulation. Once you internalise this, jumping to Reg 411.3.4 in a 600-page book takes seconds without an index.",
   },
   {
     id: 3,
     question:
       "What does the 'deemed to comply' doctrine mean for an electrician who follows BS 7671?",
     options: [
-      "Hazardous touch potentials on conductive parts during the test. The test current creates a voltage drop across the loop impedance — exposed-conductive-parts in the circuit may briefly rise toward line voltage during the test. Testers must control access to exposed conductive parts during these tests, follow safe working practices, and not allow others to touch the installation while testing.",
-      "Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required",
-      "Cable lubricant (for pulling into containment), contact cleaner / electronic cleaner (typically isopropyl-based), masonry sealant (for chase repairs), two-pack epoxy resin (for fixings and panel repairs), brick acid (for cleaning chased surfaces), dust suppressant. All have hazard ratings and all need an SDS in the firm's COSHH register.",
-      "Following BS 7671 raises a presumption that the underlying statutory duty (EAWR Reg 4) has been met. The legal logic: HSR25 (HSE's guidance to EAWR) cites BS 7671 as a means of demonstrating EAWR compliance. So evidence of BS 7671 compliance = evidence of EAWR compliance, by reference. Departing from BS 7671 is allowed but flips the burden — you have to prove your alternative method was at least as safe.",
+      "Following BS 7671 is a criminal offence in itself, so a departure from any single regulation is automatically a prosecutable breach regardless of the safety outcome.",
+      "Because BS 7671 is voluntary, following it gives no legal protection at all — compliance is purely quality assurance that the courts disregard when judging EAWR cases.",
+      "Once you follow BS 7671 you are exempt from EAWR entirely, because the Wiring Regulations replace the statutory duties for any fixed installation and become the only law that applies.",
+      "Following BS 7671 raises a presumption that the underlying statutory duty (EAWR Reg 4) has been met; departing from it flips the burden onto you to prove your method was at least as safe.",
     ],
     correctAnswer: 3,
     explanation:
-      "Deemed-to-comply is the doctrine that gives BS 7671 its legal weight despite being non-statutory. Following the standard = presumption of statutory compliance. Departing from it = burden flips onto you to prove equivalent safety. Most defendants can't carry that burden in a witness box — which is why everyone in the trade follows BS 7671 even though no statute literally orders them to.",
+      "Deemed-to-comply gives BS 7671 its legal weight despite being non-statutory. HSR25 (the HSE's guidance to EAWR) cites BS 7671 as a means of demonstrating EAWR compliance, so evidence of BS 7671 compliance = evidence of EAWR compliance by reference. Following the standard = presumption of statutory compliance; departing from it flips the burden onto you to prove equivalent safety. Most defendants can't carry that burden in a witness box — which is why everyone in the trade follows BS 7671 even though no statute literally orders them to.",
   },
   {
     id: 4,
     question:
       "Where in BS 7671 would you find the model forms for an Electrical Installation Certificate (EIC), an Electrical Installation Condition Report (EICR) and a Minor Electrical Installation Works Certificate?",
     options: [
-      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity and voltage drop tables), Appendix 15 (ring and radial final circuit arrangements) and Appendix 17 (energy efficiency). Knowing the appendices by topic is half of installer navigation.",
-      "Reg 3 puts the duty on EVERY employer, every self-employed person, and every employee — including apprentices — engaged in any work activity covered by the Regulations. The employee duty is to co-operate with the employer in complying with EAWR, AND to comply themselves with EAWR insofar as the matters relate to things within the employee's control. So an apprentice has a personal EAWR duty, not just an employer-mediated one.",
-      "It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.",
-      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\"no documentation available\\\" as a limitation against affected items on the schedule.",
+      "Appendix 6 — model forms for certification and reporting. The blank EIC, EICR and Minor Works forms are printed here for the installer to reproduce.",
+      "Part 6 — inspection and testing. The blank model forms are printed at the end of Chapter 64 alongside the verification rules they record the results of.",
+      "Appendix 3 — time/current characteristics of protective devices. The model forms sit with the device curves as the reference the inspector uses when filling in the schedule of test results.",
+      "Part 2 — definitions. The model EIC, EICR and Minor Works forms are reproduced within the definitions Part for easy reference alongside the terms they use.",
     ],
     correctAnswer: 0,
     explanation:
-      "The appendices are where the practical reference material lives — current-carrying tables, voltage drop tables, model certification forms, ring-final guidance. Appendix 6 holds the model forms (substantially redrafted under A4:2026 to introduce new schedule columns). Working knowledge of the appendices is what separates a confident installer from one who has to ask their supervisor every five minutes.",
+      "The appendices are where the practical reference material lives — current-carrying tables (Appendix 4), voltage drop tables, device curves (Appendix 3), ring-final guidance (Appendix 15). Appendix 6 holds the model forms, substantially redrafted under A4:2026 to introduce new schedule columns. Working knowledge of the appendices is what separates a confident installer from one who has to ask their supervisor every five minutes.",
   },
   {
     id: 5,
     question:
       "Why does Part 2 (Definitions) matter so much that experienced installers reach for it before reaching for the technical chapters?",
     options: [
-      "BS 7671 Chapter 46 distinguishes four switching functions: ISOLATION (Reg 462) — all live conductors disconnected, lockable in OFF position, designed to prevent re-energisation; SWITCHING OFF FOR MECHANICAL MAINTENANCE (Reg 463) — hand-operable, lockable, prevents accidental re-energisation; EMERGENCY SWITCHING (Reg 464) — fast-acting, immediately accessible, removes danger from personnel; FUNCTIONAL SWITCHING (Reg 465) — normal operation. For fault diagnosis you use ISOLATION every time. The breaker label and the actual function of the device must match — many older switches that look like isolators are actually only functional switches and don't satisfy Reg 462.",
-      "Because the standard's enforcement and interpretation hinges on the precise definitions. 'Exposed-conductive-part' (a conductive part of equipment that can be touched and which is liable to become live in fault conditions) and 'extraneous-conductive-part' (a conductive part liable to introduce a potential, generally Earth, not forming part of the electrical installation) are different categories with different bonding rules. Mis-classify one as the other and you mis-bond, you fail the EICR, you potentially leave the customer unprotected. Definitions ARE the technical content.",
-      "Plain English is writing or speaking that the intended audience can understand on first reading or hearing. Common standards include short sentences (15-20 words on average), common words rather than technical jargon, active voice rather than passive, one idea per sentence, and a reading age around 9-11 (that's not patronising — most UK adults read most comfortably at that level for safety-critical information). The Plain English Campaign provides guidance and the Crystal Mark accreditation. For safety briefings, RAMS summaries, customer-facing letters and apprentice-training material, plain English isn't 'dumbing down' — it's 'comprehensible' under MHSWR 1999 Reg 10.",
-      "Whenever the chosen EV charger doesn't include integrated open-PEN protection. Section 722 of BS 7671 (significantly amended in A4:2026) requires that the PEN-fault risk on PME supplies is managed — either by the charger's built-in open-PEN protection function, or by providing a TT earth electrode for the EV chassis at the charge point. Most modern chargers from major manufacturers include the open-PEN protection function, simplifying the install. Where they don't, the local TT electrode is the fallback. The certified installer reads the charger spec and chooses the architecture.",
+      "Because Part 2 lists every British Standard that BS 7671 references, so it is the first place to look up which BS EN a given accessory must conform to before the technical chapters can be applied.",
+      "Because enforcement and interpretation hinge on the precise definitions — 'exposed-conductive-part' and 'extraneous-conductive-part' are different categories with different bonding rules, and mis-classifying one as the other means you mis-bond and fail the EICR.",
+      "Because Part 2 contains the time/current trip curves for every protective device, which installers need to confirm disconnection times before they can size any circuit in the technical chapters.",
+      "Because Part 2 holds the cable current-carrying-capacity and voltage-drop tables, so it is the reference an installer reaches for first on any design — the chapters give the rules, the tables give the numbers.",
     ],
     correctAnswer: 1,
     explanation:
-      "BS 7671 is built on Part 2's vocabulary. Reg 411.3.1.1 says 'exposed-conductive-parts shall be connected to a protective conductor'. Reg 411.3.1.2 says 'extraneous-conductive-parts shall be connected to the main earthing terminal by means of main protective bonding'. Same regulation block, two completely different actions, decided entirely by which Part 2 category the conductive part falls into. Get that wrong and the install is wrong.",
+      "BS 7671 is built on Part 2's vocabulary. An 'exposed-conductive-part' (touchable equipment that can become live under fault) and an 'extraneous-conductive-part' (a part introducing a potential, generally Earth, not part of the installation) are different categories. Reg 411.3.1.1 connects exposed parts to a protective conductor; Reg 411.3.1.2 connects extraneous parts to the MET by main protective bonding. Same regulation block, two completely different actions, decided entirely by which Part 2 category the part falls into. Get that wrong and the install is wrong.",
   },
   {
     id: 6,
     question:
       "BS 7671 Reg 134.1.1 requires 'good workmanship by one or more skilled or instructed persons and proper materials shall be used in the erection of the electrical installation. The installation of electrical equipment shall take account of manufacturers' instructions.' What does this regulation hook to that BS 7671's other technical chapters don't directly cover?",
     options: [
-      "An SDS-Max or larger SDS with a 100 mm core bit (sometimes called a diamond core drill) for the through-wall hole. Smaller SDS-Plus tools struggle with cores above 50 mm; SDS-Max is the bigger chuck system designed for it. Wet-coring (water flood) is preferred for diamond cores because it controls dust and stops the bit overheating, but dry-coring with intermittent withdrawal is acceptable for short single holes.",
-      "OZEV requires installations to comply with the Electric Vehicles (Smart Charge Points) Regulations 2021 and to be installed by an OZEV-authorised installer. Periodic inspection follows the BS 7671 framework — typically 5-yearly EICR for domestic, plus EV-specific tests including RCD operation (Type B or RDC-DD), open-PEN protection function (where the charger has built-in open-PEN), and Zs at the charge point. Landlord properties additionally subject to the Electrical Safety Standards Regulations 2020 (5-year EICR plus change of tenancy).",
-      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
-      "Loss of the ability to self-certify domestic notifiable work under Part P of the Building Regulations. Every notifiable job must then be notified to Local Authority Building Control (LABC) and inspected separately, which is slower and more expensive. Loss of the scheme membership badge that customers actively look for when choosing a contractor. Likely loss of insurance cover that depends on scheme membership. Significant reputational damage in trade directories and customer-facing search results. Many domestic contractors don't survive a scheme withdrawal.",
+      "The minimum cross-sectional area of conductors. 134.1.1 sets the 2.5 mm² minimum for ring finals and the 1.5 mm² minimum for lighting, which the cable-sizing chapters then build on.",
+      "The maximum permitted earth fault loop impedance. 134.1.1 fixes the Zs limits that the disconnection-time tables in Chapter 41 reference, so it is the hook that makes a high-Zs reading a regs breach.",
+      "The 'workmanship' standard and the 'manufacturers' instructions' obligation. The regulation a scheme inspector quotes when calling out poor workmanship that isn't a specific technical-test failure.",
+      "The frequency of periodic inspection. 134.1.1 sets the maximum intervals between EICRs for each premises type, so it is the regulation cited when an installation is overdue for re-inspection.",
     ],
     correctAnswer: 2,
     explanation:
-      "134.1.1 sits in Part 1 (fundamental principles) precisely because workmanship isn't just one technical chapter — it's the foundation of compliance with every chapter. Combined with Reg 510.3 (selection and erection takes account of manufacturers' instructions), 134.1.1 is the legal hook for taking manufacturer literature seriously. Ignoring an SPD lead-length spec, a CU torque setting, an MCB compatibility statement — all are 134.1.1 / 510.3 breaches even if the technical test results pass.",
+      "134.1.1 sits in Part 1 (fundamental principles) precisely because workmanship isn't just one technical chapter — it's the foundation of compliance with every chapter. A faulty cable joint that's electrically OK at the moment of test but poorly executed breaches it, as does ignoring an SPD lead-length spec or a CU torque setting. Combined with Reg 510.3 (selection and erection takes account of manufacturers' instructions), 134.1.1 is the legal hook for taking manufacturer literature seriously — all breaches even if the technical test results pass.",
   },
   {
     id: 7,
     question:
       "Where in BS 7671:2018+A4:2026 would you find the new requirement for a label indicating the presence of a Surge Protective Device (SPD)?",
     options: [
-      "Specific cover for theft of tools and equipment from your van or work vehicle, typically with a per-claim limit (e.g. £5,000) and conditions about secure storage (alarmed van, specific locking systems, overnight storage location). Tool theft is a major UK trades risk — police-reported tool theft from vans runs into hundreds per week. Annual premium £100-300; high deductibles common.",
-      "Manages the power flow between the PV array, battery, household loads and the grid — deciding when to charge the battery from PV, when to discharge to loads, when to export to grid, and when to import from grid, based on tariff schedules and user preferences",
-      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"somatic marker hypothesis\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
-      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
+      "Reg 712.1 — the scope of Section 712, which sets the SPD-presence label requirement because surge protection is most commonly fitted on PV installs. Located in Part 7 (special installations), Section 712 (solar PV).",
+      "Reg 443.4 — the transient overvoltage protection rule, which carries the SPD label requirement because the label and the protection are part of the same provision. Located in Part 4 (protection for safety), Chapter 44.",
+      "Reg 537.2 — the isolation and switching rules, which require the SPD label because the device has to be identified before isolation. Located in Part 5, Chapter 53 (switching).",
+      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with a domestic exception). Located in Part 5, Chapter 51, Section 514 (identification and notices).",
     ],
     correctAnswer: 3,
     explanation:
-      "Section 514 is the home of identification and notices in BS 7671. Reg 514.16.1 was a new addition under A4:2026 to require an SPD-presence label. Knowing 'Section 514 = labels' rather than memorising the exact reg number is how working installers navigate. Same for 'Section 522 = external influences', 'Section 526 = electrical connections', 'Section 543 = protective conductors'.",
+      "Section 514 is the home of identification and notices in BS 7671. Reg 514.16.1 was a new addition under A4:2026 to require an SPD-presence label, with an exception for domestic / household premises. Knowing 'Section 514 = labels' rather than memorising the exact reg number is how working installers navigate — same for 'Section 522 = external influences', 'Section 526 = electrical connections', 'Section 543 = protective conductors'.",
   },
   {
     id: 8,
     question:
       "BS 7671 is a 'living' standard — substantially amended every few years. What's the practical implication for a job you complete today and certify under the current edition?",
     options: [
-      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
-      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\\\\\'re paired with certification software.",
-      "Report to the JIB ECS team immediately and request a replacement (small admin fee, typically £15-20). Get a temporary letter of confirmation from JIB or your employer to maintain site access while the new card is in production (typically 5-10 working days). Most sites will accept an ECS register printout temporarily; some won't, in which case you can't work until the new card arrives.",
-      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
+      "The certificate references the edition in force on the date of installation; later amendments don't make it non-compliant retrospectively, but they do govern any future addition, alteration or EICR on the same installation.",
+      "The install becomes illegal the moment the next amendment is published, so every certificate has to be reissued against the new edition or the original work is treated as a breach of EAWR.",
+      "Nothing changes ever — once a certificate is issued under any edition, that installation is permanently exempt from every future amendment, including for any later additions or alterations.",
+      "Only the model forms change between amendments; the technical requirements are frozen at the 2018 base edition, so a 2026 circuit is always re-tested against the original 2018 limits.",
     ],
     correctAnswer: 0,
     explanation:

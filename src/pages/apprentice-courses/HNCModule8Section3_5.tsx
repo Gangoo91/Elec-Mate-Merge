@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'load-calculation',
     question: 'What does CIBSE TM54 provide guidance on for cooling load calculations?',
     options: [
-      'To convert messages from one protocol to another',
+      'Selecting refrigerants to meet F-gas GWP limits',
       'Evaluating operational energy use and closing the performance gap',
-      'To translate between different protocols enabling interoperability',
-      'To ensure quality, reliability and compliance standards',
+      'Sizing cooling towers for water-cooled chiller plant',
+      'Calculating life cycle costs using net present value',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'For a building requiring precise temperature control across multiple zones, which system type is generally more suitable?',
     options: [
-      'Conduit, trunking, tray, basket',
+      'A single split system serving the whole building',
       'Chilled water systems with fan coil units',
-      'Tax, insurance, and business legal requirements',
-      'It displaces oxygen and can cause asphyxiation',
+      'A packaged rooftop unit with constant-volume air',
+      'An evaporative cooling system with no refrigerant',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     question:
       'Which factor typically represents the largest component of life cycle costs for air conditioning systems?',
     options: [
-      'It has many free electrons that can move easily',
-      'PVC or polypropylene film or splash fill',
+      'Initial capital and installation cost',
+      'Refrigerant recovery and disposal at end of life',
       'Energy consumption over the system lifetime',
-      'Ensure all RCDs are reset and circuits are energised',
+      'Planned and reactive maintenance over the lifetime',
     ],
     correctIndex: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'According to Part L of the Building Regulations, what efficiency requirement applies to comfort cooling systems?',
     options: [
-      'Chilled water systems have no refrigerant in the building',
-      'Seasonal commissioning with post-occupancy verification',
+      'Systems must use refrigerants with GWP below 150',
+      'Systems must be commissioned by a certified F-gas engineer',
       'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
-      'Higher efficiency, especially at peak ambient temperatures',
+      'Systems must include heat recovery in all cases',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'What is the primary advantage of selecting water-cooled chillers over air-cooled chillers?',
     options: [
-      'Reliability and redundancy (N+1 or greater)',
-      'Chilled water systems have no refrigerant in the building',
-      'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
+      'Lower capital cost and simpler installation',
+      'No requirement for a plant room or external condenser',
+      'Elimination of refrigerant from the system entirely',
       'Higher efficiency, especially at peak ambient temperatures',
     ],
     correctAnswer: 3,
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'For BREEAM Excellent rating, what enhanced commissioning requirement typically applies to air conditioning systems?',
     options: [
-      'Reliability and redundancy (N+1 or greater)',
-      'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
+      'A single commissioning visit at practical completion',
+      'Commissioning by the equipment manufacturer only',
       'Seasonal commissioning with post-occupancy verification',
-      'Chilled water systems have no refrigerant in the building',
+      'No commissioning, relying on factory pre-settings',
     ],
     correctAnswer: 2,
     explanation:
@@ -239,9 +239,9 @@ const quizQuestions = [
       'When selecting air conditioning for a data centre, which parameter is most critical?',
     options: [
       'Reliability and redundancy (N+1 or greater)',
-      'Systematic analysis of how and why people make mistakes',
-      'L_total = L₁ + L₂ + L₃ (arithmetic sum)',
-      'Launch condition exciting all modes uniformly',
+      'Lowest possible capital cost',
+      'Quietest operation for occupant comfort',
+      'Maximum use of natural ventilation',
     ],
     correctAnswer: 0,
     explanation:

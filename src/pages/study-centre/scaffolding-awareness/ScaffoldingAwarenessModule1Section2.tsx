@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'What is the main structural difference between independent scaffolding and putlog scaffolding?',
     options: [
-      'Independent scaffolding is made from aluminium; putlog scaffolding is made from steel',
       'Independent scaffolding has two rows of standards; putlog scaffolding has one row with putlogs into the wall',
+      'Independent scaffolding is made from aluminium; putlog scaffolding is made from steel',
       'Independent scaffolding is only used indoors; putlog scaffolding is only used outdoors',
       'There is no structural difference — the names are interchangeable',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Independent scaffolding uses two rows of standards (inner and outer) connected by transoms and ledgers, and does not rely on the building for support. Putlog scaffolding uses a single row of standards with horizontal putlogs inserted into the brickwork, relying on the wall for partial support. This makes putlog scaffolding only suitable during bricklaying or masonry work when the wall can bear the load.',
   },
@@ -50,11 +50,11 @@ const quickCheckQuestions = [
       'Suspended scaffolding platforms hung from wire ropes are subject to which specific set of UK regulations?',
     options: [
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) only',
-      'The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)',
       'The Construction (Head Protection) Regulations 1989',
       'The Electricity at Work Regulations 1989',
+      'The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Suspended scaffolding platforms are subject to the Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) because the platform and its occupants are raised and lowered by wire ropes or chains — making it lifting equipment. LOLER requires thorough examination by a competent person at specified intervals, proper planning of lifting operations, and written schemes of examination. PUWER also applies but LOLER is the specific regulation governing the lifting aspects.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Putlog scaffolding is only suitable for use during which type of construction activity?',
     options: [
+      'Bricklaying and masonry work',
       'Painting and decorating',
       'Roof work and chimney repairs',
-      'Bricklaying and masonry work',
       'Window installation on completed buildings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Putlog scaffolding uses a single row of standards with horizontal putlogs inserted into the bed joints of the brickwork being laid. It relies on the wall for support, which means it can only be used during bricklaying or masonry construction when the wall is being built up and the putlogs can be properly bedded in. It is not suitable for completed buildings or non-masonry work.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'It does not require trained erectors',
       'It is lighter and can be carried by one person',
-      'Pre-engineered modular components slot together, giving faster erection and consistent quality',
       'It can be used without a scaffold design',
+      'Pre-engineered modular components slot together, giving faster erection and consistent quality',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'System scaffolding (such as Layher Allround, HAKI, or Cuplok) uses pre-engineered modular components that slot, clip, or wedge together at fixed node points. This gives faster erection times, more consistent quality, and fewer loose components compared to traditional tube-and-fitting. However, it still requires trained and competent erectors — CISRS training covers system scaffolding, and manufacturers also provide specific product training.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 6,
     question: 'Suspended scaffolding platforms are subject to LOLER. What does LOLER stand for?',
     options: [
-      'Lifting Operations and Lifting Equipment Regulations 1998',
       'Loading, Operation, and Lowering Equipment Regulations 2005',
       'Ladder, Overhead, and Lifting Equipment Regulations 1998',
+      'Lifting Operations and Lifting Equipment Regulations 1998',
       'Local Operator Licensing and Equipment Regulations 2002',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'LOLER stands for the Lifting Operations and Lifting Equipment Regulations 1998. Suspended scaffolding — where platforms are raised and lowered by wire ropes or chains from the roof or structure above — is classified as lifting equipment under LOLER. This requires thorough examination by a competent person every 6 months (for equipment used for lifting persons), a written scheme of examination, and proper planning of every lifting operation.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following is classified as specialist scaffolding?',
     options: [
+      'A loading bay, protection fan, or temporary roof formed as part of the scaffold structure',
       'A standard independent scaffold on a new-build housing site',
       'A mobile aluminium tower used for changing light bulbs in a warehouse',
-      'A loading bay, protection fan, or temporary roof formed as part of the scaffold structure',
       'A putlog scaffold used during bricklaying on a domestic extension',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Loading bays (for receiving materials at height), protection fans (angled platforms to catch falling debris), and temporary roofs (weather protection during construction) are all classified as specialist scaffolding. They are additional structures built into or onto the main scaffold and require specific design. Other specialist types include truss-out scaffolds and scaffolding for specific industries such as offshore, industrial, and events.',
   },

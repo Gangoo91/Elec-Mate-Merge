@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'mh3s1-bystander-effect',
     question: "What is the 'bystander effect' in the context of mental health conversations?",
     options: [
-      'A medical condition that causes bystanders to feel dizzy when someone is unwell',
       'The phenomenon where everyone assumes someone else will start the conversation, so nobody does',
+      'A medical condition that causes bystanders to feel dizzy when someone is unwell',
       'A legal requirement for bystanders to provide first aid on construction sites',
       'The tendency for bystanders to overreact when they notice someone struggling',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The bystander effect is a well-documented psychological phenomenon where the presence of other people reduces each individual's sense of personal responsibility to act. In mental health, this means that when several colleagues notice someone is struggling, each person assumes someone else — a closer friend, a supervisor, a mental health first aider — will start the conversation. The result is that nobody does, and the person suffers in silence.",
   },
@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'Why is early intervention so important for mental health problems?',
     options: [
       'Because mental health conditions are only treatable if caught in the first week',
-      'Because the earlier someone receives support, the better the outcome — preventing escalation from manageable distress to crisis',
       'Because employers are legally required to intervene within 24 hours of noticing symptoms',
       'Because early intervention is cheaper for the NHS than late intervention',
+      'Because the earlier someone receives support, the better the outcome — preventing escalation from manageable distress to crisis',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Research consistently shows that early intervention leads to significantly better outcomes for mental health conditions. Most mental health problems are treatable and many are highly responsive to early support. When someone receives help early — whether that is a supportive conversation, a GP visit, or counselling — they are far more likely to recover quickly and fully. Without early support, manageable distress can escalate into crisis, requiring more intensive and longer-term treatment.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     question:
       'What is the MOST significant barrier that prevents people from starting a mental health conversation with a struggling colleague?',
     options: [
+      'Fear of saying the wrong thing or making the situation worse',
       'Lack of access to a private room on site',
       'Not having a formal qualification in mental health support',
-      'Fear of saying the wrong thing or making the situation worse',
       'Company policy prohibiting personal conversations during work hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Research consistently identifies the fear of saying the wrong thing as the single biggest barrier to starting mental health conversations. People worry that they might make things worse, use insensitive language, or not know what to do with the response. This fear is understandable but misplaced — the evidence overwhelmingly shows that a caring but imperfect conversation is far better than silence. The real harm comes from saying nothing at all.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     options: [
       'They are correct — mental health is a private matter and should never be discussed at work',
       'They should be formally disciplined for failing to support a colleague',
-      "While respecting privacy is important, showing concern for a colleague's wellbeing is not intrusion — it is basic human decency and good teamwork",
       'They should report their concerns to HR and let professionals handle it',
+      "While respecting privacy is important, showing concern for a colleague's wellbeing is not intrusion — it is basic human decency and good teamwork",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The 'it is not my business' response comes from a genuine desire to respect someone's privacy, which is admirable. However, the reframe is this: noticing that someone is struggling and expressing concern is not the same as prying into their private life. You would not walk past a colleague who had fallen off a ladder and say 'not my business.' Showing concern for someone's wellbeing is part of being a good colleague and teammate. You can respect someone's privacy while still letting them know you have noticed and you care.",
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       "Research shows that a single supportive conversation can significantly reduce someone's distress. Why is this?",
     options: [
-      'Because talking cures all mental health conditions permanently',
       'Because feeling heard and understood reduces the isolation that amplifies mental health problems, and the person realises they are not alone',
+      'Because talking cures all mental health conditions permanently',
       'Because the listener can always provide the correct medical advice',
       'Because once someone has talked about their problems, the problems automatically disappear',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "One of the most damaging aspects of mental health problems is the isolation they create. When someone is struggling, they often feel alone, abnormal, and ashamed. A single supportive conversation breaks through that isolation. It tells the person: 'You are not alone. Someone has noticed. Someone cares.' Research from the Samaritans shows that feeling heard and understood — even briefly — can significantly reduce distress and suicidal ideation. The conversation does not need to fix anything; it simply needs to make the person feel less alone.",
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'Which of the following is TRUE about starting a mental health conversation?',
     options: [
       'You need to be a trained counsellor or mental health professional to have the conversation',
-      'The conversation must take place in a formal, clinical setting to be effective',
       'You do not need to fix anything — simply showing you care and are willing to listen is what matters most',
+      'The conversation must take place in a formal, clinical setting to be effective',
       'You should avoid the conversation unless you are absolutely certain the person has a diagnosed mental health condition',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The most important thing about a mental health conversation is not your qualifications, the setting, or your ability to diagnose or fix. It is simply the act of showing genuine care and willingness to listen. Research consistently shows that people who are struggling value being heard and understood far more than receiving advice or solutions. You do not need to be a counsellor. You do not need to have all the answers. You just need to care enough to ask and listen.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     options: [
       'Wait and hope the problem resolves itself — it is probably just a bad week',
       'Report your concerns to their supervisor and let them handle it',
-      'Approach them privately and gently, acknowledging you have noticed a change and offering to listen — even if you do not have the perfect words',
       'Send them a text message with the Samaritans number and avoid face-to-face conversation',
+      'Approach them privately and gently, acknowledging you have noticed a change and offering to listen — even if you do not have the perfect words',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The best course of action is to approach the person directly, privately, and with genuine care. Waiting and hoping is the most common response, but it allows the situation to worsen. Reporting to a supervisor without speaking to the person first can feel like a betrayal. A text with a helpline number, while well-intentioned, lacks the personal connection that makes the difference. The most effective approach is a face-to-face, private conversation where you acknowledge what you have noticed, express concern, and offer to listen. Your words do not need to be perfect — your presence and care are what matter.',
   },

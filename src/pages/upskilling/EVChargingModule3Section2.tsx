@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'What is the maximum voltage drop allowed for EV charging circuits according to BS 7671?',
     options: [
-      '3% of nominal voltage',
       '5% of nominal voltage',
-      '10% of nominal voltage',
+      '3% of nominal voltage',
       '7% of nominal voltage',
+      '10% of nominal voltage',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 permits 5% voltage drop for power circuits including EV charging. For a 230V supply, this equates to 11.5V maximum voltage drop.',
   },
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m3s2-check2',
     question: 'Why might a cable need to be larger than required for current capacity alone?',
     options: [
-      'To improve cable aesthetics',
+      'To improve the appearance of the installation',
+      'To reduce the overall weight of the cable',
       'To limit voltage drop within regulatory limits',
-      'To reduce cable weight',
-      'To make installation easier',
+      'To make the cable easier to pull in',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'For longer cable runs, voltage drop becomes the limiting factor. A cable may have adequate current capacity but still cause excessive voltage drop, requiring upsizing.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m3s2-check3',
     question: 'What factors affect cable current-carrying capacity?',
     options: [
-      'Cable colour only',
+      'The colour of the cable insulation',
+      'The brand of cable manufacturer',
+      'The type of load connected to the circuit',
       'Ambient temperature, installation method, and grouping',
-      'Manufacturer brand only',
-      'The connected load type',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cable current-carrying capacity is affected by ambient temperature (derating factors), installation method (clipped, in conduit, etc.), and grouping with other cables.',
   },
@@ -78,11 +78,11 @@ const quizQuestions = [
       'A 7kW domestic EV charger has an 80m cable run. The 4mm² cable has 28V voltage drop (12.2%). What cable size should be used?',
     options: [
       "4mm² - it's fine for the current",
-      '6mm² - slightly better',
       '10mm² - to meet voltage drop limits',
-      '16mm² - for maximum safety',
+      '6mm² - a slight improvement',
+      '16mm² - for maximum headroom',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'While 4mm² has adequate current capacity for 32A, the 12.2% voltage drop exceeds the 5% limit. 10mm² reduces voltage drop to approximately 4.7%, meeting BS 7671 requirements.',
   },

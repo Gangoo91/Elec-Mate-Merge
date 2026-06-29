@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Per Reg 534.4.1.1, where does each SPD Type sit?',
     options: [
-      'No rules',
-      '(a) SPDs installed at the origin of the electrical installation shall be Type 1 or Type 2. (b) SPDs installed close to sensitive equipment to further protect against switching transients originating within the building shall be Type 2 or Type 3. NOTE: Type 1 SPDs are often referred to as equipotential bonding SPDs and are fitted at the origin of the electrical installation. Type 1 = direct lightning current; Type 2 = indirect surge; Type 3 = residual surge close to equipment',
-      'Random',
-      'All same type',
+      'Type 3 at the origin, Type 2 at sub-boards, Type 1 close to equipment — the numbers run from origin inward',
+      'Type 1 or 2 at the origin; Type 2 or 3 close to sensitive equipment',
+      'Any type may be fitted at any location; the type number only indicates the manufacturer\'s product range, not the position',
+      'Type 1 close to sensitive equipment and Type 3 at the origin, so the most robust device protects the most delicate load',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'What is voltage protection level Up vs equipment rated impulse withstand voltage Uw?',
     options: [
-      'Random',
-      'Up = the SPD\'s voltage protection level — the maximum voltage that appears across the protected equipment when the SPD operates. Uw = the equipment\'s rated impulse withstand voltage — what the equipment can survive without damage. Per Reg 534.4.4.1: Up < Uw for protection to work. Reg 443.6.1 + Table 443.2 classify equipment by Uw based on overvoltage category. SPD selection: Up must be lower than the lowest Uw of any equipment downstream',
-      'Same thing',
-      'No relationship',
+      'Up is the equipment withstand voltage and Uw is the SPD clamping level; the SPD passes if Uw is higher than Up',
+      'Up is the SPD\'s voltage protection level; Uw is the equipment\'s rated impulse withstand voltage; Up must be below Uw',
+      'Up and Uw are both the SPD\'s operating voltage measured at different test currents, so the two should be equal when coordinated',
+      'Up is the continuous operating voltage Uc of the SPD and Uw is the nominal supply voltage; they have no bearing on protection',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Per Reg 534.4.6, what must remain effective even if the SPD fails?',
     options: [
-      'Nothing',
-      'Fault protection (as defined in Chapter 41) must remain effective in the protected installation even in the event of SPD failure. Method: in TN systems, generally via the OCPD on the supply side of the SPD; in TT systems, by the installation\'s RCD or OCPD coordinated with the SPD. SPDs include internal disconnectors (thermal + short-circuit) that disconnect a failed SPD from the supply — but the upstream protective device must still provide fault protection if the disconnector fails',
-      'Random',
-      'No protection',
+      'The surge protection itself must keep working even after the SPD has failed, because the device is required to self-repair',
+      'Fault protection (Chapter 41 ADS) must remain effective even if the SPD fails — via the upstream OCPD or RCD',
+      'Nothing needs to remain effective — once an SPD fails the circuit is de-energised automatically and no further protection is needed',
+      'Only the manufacturer warranty remains effective, since a failed SPD is simply swapped under guarantee with no protective implications',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Per Reg 712.534.102.1, what determines whether a PV install needs Type 1 SPDs?',
     options: [
-      'Always Type 1',
-      'Generally Type 2 SPDs apply for PV. Type 1 SPDs are required ONLY when (a) protection against direct lightning strokes IS specified (i.e. structure has an external LPS), AND (b) separation distance s between PV + LPS is NOT kept per BS EN 62305-3. When both conditions hold, Type 1 SPDs are required typically in conjunction with Type 2 downstream. For domestic PV without LPS: Type 2 only suffices',
-      'Random',
-      'Never Type 1',
+      'Type 1 SPDs are always required on any PV install because the roof-mounted array is inherently exposed to direct strike',
+      'Type 2 generally; Type 1 only when an LPS is present and the separation distance s is not kept per BS EN 62305-3',
+      'Type 1 SPDs are required whenever the array exceeds 4 kWp, with smaller arrays needing only a Type 2 device',
+      'Type 1 SPDs are never used on PV; the DC side only ever needs a Type 3 device at the inverter input terminals',
     ],
     correctIndex: 1,
     explanation:
@@ -81,27 +81,27 @@ const inlineChecks = [
 const quizQuestions = [
   {
     question:
-      'Reg 443.4.1 (A4:2026 redraft) — when is SPD protection now required?',
+      'Reg 443.4 (A4:2026) — when is SPD protection required?',
     options: [
-      'Never',
-      'Where consequences could result in: (a) serious injury to, or loss of, human life; (c) significant financial or data loss — limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023). For all OTHER cases, protection against transient overvoltages shall be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk. A4:2026 simplified the trigger from a calculated-risk-level method (CRL) to a category test + owner opt-out. Annex A443 (CRL method) was deleted',
-      'Random',
-      'Only commercial',
+      'Only where the installation includes low carbon technology such as PV, BESS or an EV charger, regardless of the consequence of any overvoltage',
+      'Where the consequence could cause serious injury or loss of life, or significant financial or data loss; for all other cases unless the owner declares the risk tolerable',
+      'Only on commercial premises; domestic installations are wholly exempt from the transient-overvoltage requirements of the standard',
+      'Only where an external lightning protection system is already present on the structure being supplied',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 443.4.1 in A4:2026 was redrafted to simplify SPD requirement triggers. The criteria for when SPDs are required: (a) consequence of overvoltage could result in serious injury to, or loss of, human life; (c) significant financial or data loss. Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023), so there are exactly two active consequence limbs. For all OTHER cases, SPDs shall be provided UNLESS the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk. This is an opt-out model, not an opt-in. Practical effect: SPDs are the default expectation in most installs UNLESS owner explicitly opts out. (c) significant financial / data loss typically applies to LCT installs (PV inverter + BESS + EV charger + smart meter all costly + data-rich). Annex A443 (calculated risk level CRL method) was DELETED in A4:2026 — A4:2026 explicitly moved away from the formal calculation to a category-based test. BS EN 62305-2 remains the methodology where a formal risk assessment is appropriate (e.g. high-risk / heritage / commercial). Cert evidence bundle: SPD selection rationale + owner declaration if opted out + risk assessment summary where applied.',
+      'Reg 443.4 (BS 7671:2018+A4:2026) requires protection against transient overvoltages where the consequence could result in: (a) serious injury to, or loss of, human life; (b) interruption of public services and/or damage to cultural heritage; (c) interruption of commercial or industrial activity; or (d) a large number of co-located individuals being affected. For all other cases not covered by (a)-(d), a risk assessment is performed to determine if protection is required (a documented decision not to fit SPDs is permitted where the risk is tolerable). Practical effect: SPDs are the default expectation in most installs; for LCT installs criterion (c) or the risk-assessment route typically triggers the requirement. BS EN 62305-2 provides the risk methodology where a formal assessment is appropriate. Cert evidence bundle: SPD selection rationale + risk assessment / declaration where protection is omitted.',
   },
   {
     question:
       'Reg 534.4.4.4 sets the nominal discharge current (In) + impulse discharge current (Iimp). What do these mean for SPD selection?',
     options: [
-      'Random',
-      'In (nominal discharge current) = the 8/20 µs surge current the SPD can handle multiple times without degradation — Type 2 SPD selection criterion. Iimp (impulse discharge current) = the 10/350 µs partial direct lightning current the SPD can handle — Type 1 SPD selection criterion. Higher In / Iimp = more robust SPD + higher cost. Selection: match Type 2 In to expected indirect surge magnitude; match Type 1 Iimp to expected partial direct current per LPL + current sharing',
-      'Same thing',
-      'No relevance',
+      'In is the SPD\'s rated load current and Iimp is its short-circuit breaking capacity, the same two ratings used to select an MCB',
+      'In is the threshold at which the SPD trips and Iimp is the voltage it clamps to; both are set by the installer at commissioning',
+      'In is the 8/20 µs surge current (Type 2 criterion); Iimp is the 10/350 µs partial lightning current (Type 1 criterion)',
+      'Both describe the same 8/20 µs test current; In is used for AC SPDs and Iimp for DC SPDs, paired per supply phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SPD discharge ratings per Reg 534.4.4.4: (1) In (nominal discharge current) — 8/20 µs surge current that the SPD can handle multiple times without performance degradation. Type 2 SPD selection criterion. Typical Type 2 SPDs: In 5 kA, 10 kA, 20 kA, 40 kA, 65 kA. Higher In = better surge handling capability + higher cost. (2) Iimp (impulse discharge current) — 10/350 µs partial direct lightning current that the SPD can handle. Type 1 SPD selection criterion. Typical Type 1 SPDs: Iimp 12.5 kA, 25 kA, 50 kA, 100 kA per pole. Higher Iimp = better direct-strike capability. (3) Selection driven by exposure: Type 2 In matched to expected indirect surge magnitude (depends on supply system, building exposure, BS EN 62305-2 risk assessment); typical residential 5-20 kA, commercial 20-40 kA. Type 1 Iimp matched to expected partial direct current per LPL + current sharing (e.g. 4 down conductors → Iimp ~ Itotal / 4 per conductor); typical LPL III with 4 down conductors → Iimp ~25 kA per conductor. (4) Reg 534.4.4.4.2 + Table 534.4 + Appendix 16 Table 16A4 provide standard values for LPL + system. (5) Cert evidence bundle: SPD In / Iimp ratings per location + selection rationale.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'Reg 534.4.8 — what happens when distance between SPD + protected equipment exceeds 10 m?',
     options: [
-      'No effect',
-      'Per Reg 534.4.8: if distance between SPD + equipment exceeds 10 m, oscillations could lead to voltage at the equipment terminals up to TWICE the SPD\'s Up. Consideration shall be given to additional coordinated SPDs closer to the equipment. Practical effect: sub-distribution boards may need additional Type 2 / Type 3 SPDs; sensitive electronics within 10 m of a Type 2 SPD; for runs > 10 m to inverter / BESS / sensitive load, place a Type 2 / Type 3 SPD locally',
-      'Random',
-      'Move the SPD',
+      'The SPD becomes ineffective beyond 10 m and must be moved to within 10 m of the supply origin, not the equipment',
+      'Oscillations can raise the voltage at the equipment to up to twice the SPD\'s Up, so a coordinated SPD is added closer to the equipment',
+      'The voltage at the equipment falls to half the SPD\'s Up because the cable impedance absorbs the surge over the longer run',
+      'Nothing changes electrically; the 10 m figure is only a recommended maximum for the SPD\'s earthing conductor length',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Reg 534.4.2 sets two connection modes for SPDs — common mode + differential mode. What are they?',
     options: [
-      'Random',
-      '(a) Common mode: between live conductors and PE (line-to-earth, neutral-to-earth). (b) Differential mode: between live conductors (line-to-line, line-to-neutral). Most lightning + surge events drive common-mode current (everything rising vs earth); differential mode is more about local switching events. Modern SPDs typically protect both modes — manufacturer specifies whether it is common-mode, differential-mode, or combined. Reg 534.4.2 says protection shall be provided in one or both modes as appropriate',
-      'Same mode',
-      'No modes',
+      'Common mode is protection on the supply side of the meter and differential mode is on the load side; the two split the installation in half',
+      'Common mode protects against AC surges and differential mode against DC surges, so PV installs need both modes only for the DC side',
+      'Common mode is the SPD\'s normal operation and differential mode is its failure state, handled by the internal disconnector',
+      'Common mode is between live conductors and PE; differential mode is between live conductors (line-to-line, line-to-neutral)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 534.4.2 SPD connection modes — verbatim: protection against transient overvoltages shall be provided (a) between live conductors and PE (common mode protection); and/or (b) between live conductors (differential mode protection). NOTE: For further information see DD CLC/TS 61643-12. (1) Common mode — surge appears between live conductor(s) and protective earth (PE). Everything rises vs earth. Typical lightning-related surge (atmospheric origin) is largely common mode — direct or induced strike raises the local potential of all live conductors against the distant ground reference. (2) Differential mode — surge appears between live conductors (line-to-line, line-to-neutral). Typical of local switching events (motor switching, transformer energising), bench-top equipment with internal switching, harmonic-related. (3) Modern SPD products typically protect both modes (combined or coordinated). Manufacturer DoC specifies. (4) For PV / BESS / EV / heat pump LCT applications: common mode dominates (lightning + induced from grid); SPDs combining both modes recommended. (5) Cert evidence bundle: SPD modes per location + manufacturer DoC + Reg 534.4.2 compliance.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'For a typical UK 2025-26 residential PV install — what SPD selection drops out?',
     options: [
-      'No SPDs',
-      'Typical residential: (1) AC side at consumer unit — Type 2 SPD; common + differential mode; In 5-20 kA; manufacturer DoC; Up < 1.5 kV. (2) DC side near inverter (within 10 m of equipment per Reg 534.4.8) — Type 2 SPD on DC strings; Iimp / In rated for DC waveform; Up matched to inverter Uw. (3) No Type 1 needed (no LPS = no Reg 712.534.102.1 trigger). (4) Owner opt-out option per Reg 443.4.1 unlikely to be taken (LCT install = (c) significant financial loss criterion). Cert evidence: 2 × Type 2 SPDs documented + Reg 712.534.102.1 + Reg 534 compliance',
-      'Random',
-      'Type 1 only',
+      'Type 1 SPDs at the consumer unit and at the inverter, because any roof-mounted array is treated as exposed to direct lightning',
+      'Type 2 at the consumer unit and Type 2 on the DC side near the inverter; no Type 1, since there is no lightning protection system',
+      'A single Type 3 SPD at the inverter only, since the inverter is the sole surge-sensitive component on a domestic PV system',
+      'No SPDs at all, because a domestic PV array without an LPS presents no transient-overvoltage risk whatsoever',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'How does SPD selection scale for a commercial LCT site — 200 kWp PV + 500 kWh BESS + multi-source PEI + existing LPS?',
     options: [
-      'Same as domestic',
-      'Commercial scale: (1) Type 1 SPDs at origin (LPS present + commercial-scale arrays + likely bonded sections); Iimp rated per LPL + current sharing. (2) Type 2 SPDs at sub-distribution boards (multiple boards across site); In 20-40 kA typical. (3) Type 3 SPDs close to sensitive electronics (EEMS / BMS server, medical / process control). (4) DC SPDs on each string + at inverter; large arrays may have additional in-string SPDs. (5) Coordination across sources per Chapter 82 PEI. Cert evidence bundle: per-board SPD selection + Reg 712.534.102.1 + Reg 534.4 family compliance + LPS specialist sign-off',
-      'No commercial SPDs',
-      'Random',
+      'Identical to domestic — a single Type 2 SPD at the main board covers the whole commercial site regardless of scale or LPS',
+      'Only Type 3 SPDs throughout, since the commercial electronics are the sensitive equipment and upstream protection is the DNO\'s job',
+      'No SPDs needed because the existing LPS intercepts every strike and conducts it to earth before it reaches the wiring',
+      'Type 1 at the origin, Type 2 at the sub-boards and Type 3 at sensitive electronics, with DC SPDs at strings and inverters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commercial LCT site SPD selection scale: (1) Type 1 SPDs at origin — LPS present + commercial-scale arrays typically have bonded sections (s not always achievable across entire array). Iimp rated per BS EN 62305-1 LPL + current sharing across down conductors. Typical 25-50 kA per pole. (2) Type 2 SPDs at sub-distribution boards — multiple sub-boards across site; each may need its own Type 2; In 20-40 kA typical commercial. Reg 534.4.1.2 LPZ zone-boundary placement. (3) Type 3 SPDs close to sensitive electronics — EEMS / BMS server, control panels, sensitive process control, medical equipment if applicable. Within 10 m per Reg 534.4.8. (4) DC SPDs on each PV string + at inverter — large arrays typically have additional in-string SPDs for long DC runs. (5) BESS DC + AC SPDs — coordinated with PV + other sources per Chapter 82 PEI. (6) EV fleet charging — Type 2 SPDs at submain + at each charger if long runs. (7) Coordination across sources — Reg 826 PEI multi-source rules apply; SPDs selected so each source\'s contribution is protected. (8) LPS specialist sign-off — full BS EN 62305 application typically. (9) Cert evidence bundle: comprehensive — per-board SPD selection + Reg 712.534.102.1 + Reg 534.4 family compliance + LPS specialist sign-off + manufacturer DoCs.',
   },

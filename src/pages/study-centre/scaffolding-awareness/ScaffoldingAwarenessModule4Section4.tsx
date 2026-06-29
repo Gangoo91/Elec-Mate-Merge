@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       "A scaffold inspection report simply states 'Scaffold OK — no issues.' Does this meet the legal requirements of WAH Regs Schedule 7?",
     options: [
-      'Yes — it confirms the scaffold has been inspected',
-      'No — the report must include specific prescribed information such as location, date, who inspected, condition found, and any defects identified',
-      'Yes — as long as the inspector signs it',
-      'No — but only because it does not include a photograph',
+      'No — the report must carry the prescribed detail: location, date, inspector, and any defects',
+      'Yes — it confirms that the scaffold has in fact been inspected',
+      'Yes — provided the inspector adds their signature to the note',
+      'No — but only because the note does not include a dated photograph',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "A generic statement such as 'Scaffold OK' does not meet Schedule 7 requirements. The report must include specific prescribed content: the location and description of the scaffold, the date and time of the inspection, the name and position of the inspector, details of any matters identified that could affect health and safety, any actions taken, and the inspector's signature. Without this detail, the report has no evidential value.",
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       "An HSE inspector arrives on site and asks to see scaffold inspection records. The records exist but are stored at the company's head office, not on site. What is the likely outcome?",
     options: [
-      'No issue — the inspector will wait for them to be posted',
-      'The inspector will accept a verbal confirmation that inspections were carried out',
-      'The employer may face enforcement action because records must be available at or near the workplace and producible promptly on request',
-      "The inspector cannot ask for records without giving 24 hours' written notice",
+      'No issue — the inspector will simply wait for the records to be posted out',
+      'The inspector will accept a verbal confirmation that the inspections were carried out',
+      "The inspector cannot ask for the records without giving 24 hours' written notice",
+      'The employer may face enforcement, as records must be producible promptly at the workplace',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Regulation 12(6) of the WAH Regs requires that inspection reports are kept at the place where the work was carried out, or that they can be produced on demand. If records are stored off-site and cannot be retrieved quickly, the HSE may treat this as non-compliance. Best practice is to keep the current report at the scaffold and copies in a site office file that is accessible at all times.',
   },
@@ -81,11 +81,11 @@ const quizQuestions = [
       'Under WAH Regs Schedule 7, which of the following is NOT a required element of a scaffold inspection report?',
     options: [
       'The location and description of the scaffold',
-      'The purchase cost and age of the scaffold materials',
       'Details of any matter identified that could pose a risk to health or safety',
       'The name and position of the person who carried out the inspection',
+      'The purchase cost and age of the scaffold materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Schedule 7 prescribes that inspection reports must include the location and description of the equipment, the date and time of inspection, details of matters affecting safety, actions taken, further actions needed, and the identity and position of the inspector. The purchase cost and age of scaffold materials are not required fields in the statutory inspection report.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'Who must receive a copy of the scaffold inspection report under the regulations?',
     options: [
-      'Only the scaffolding contractor who erected the scaffold',
       'The person on whose behalf the inspection was carried out (the employer or principal contractor)',
+      'Only the scaffolding contractor who erected the scaffold',
       'The Health and Safety Executive within 7 days',
       'Every worker who uses the scaffold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The inspection report must be provided to the person on whose behalf the inspection was carried out — typically the employer or the principal contractor on a CDM site. The HSE does not need to receive routine inspection reports, but they can demand to see them during a site visit. The report does not need to be distributed to every scaffold user, but it should be accessible at the scaffold location.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'An HSE inspector visits a construction site and requests scaffold inspection records. The site manager says the records are kept at head office and will take two days to retrieve. What is the likely consequence?',
     options: [
-      'The inspector will accept this and arrange to return in two days',
-      'The inspector will issue a formal caution but take no further action',
-      'The employer may face enforcement action for failure to keep records accessible at or near the workplace',
-      'There is no consequence because the records exist',
+      'The inspector will accept this and arrange to return to site in two days',
+      'The inspector will issue a formal caution but otherwise take no further action',
+      'There is no consequence at all, because the records do exist off site',
+      'The employer may face enforcement for failing to keep records accessible at the workplace',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 12(6) requires that inspection reports are kept at the place where the inspection was carried out until construction work is completed, or can be produced on demand. Failure to make records available promptly during an HSE visit can result in an Improvement Notice or Prohibition Notice. The existence of records elsewhere does not satisfy the requirement for accessibility at or near the workplace.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'What information should be recorded in a scaffold register or log for each scaffold on site?',
     options: [
-      "Only the scaffold's location and the date it was erected",
-      'The scaffold location, type, design load, inspection dates, current status, and responsible person',
-      'The names of all workers who have used the scaffold',
-      'Only information about scaffolds that have failed inspection',
+      "Only the scaffold's location and the date on which it was first erected",
+      'Location, type, design load, inspection dates, current status, and responsible person',
+      'The names of every worker who has used the scaffold since erection',
+      'Only details of those scaffolds on site that have failed an inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     question:
       'A scaffold inspection identifies that three guardrail clips are missing from one bay. The inspector fits replacement clips from stock. What must the inspection report record?',
     options: [
-      'Nothing — the defect has been fixed so it does not need recording',
-      'Only that the scaffold passed the inspection',
-      'The defect found (three missing guardrail clips), the action taken (replacement clips fitted), and confirmation that the scaffold is now safe for use',
-      'Only a note to check the same bay at the next inspection',
+      'Nothing — the defect has been fixed, so it does not need to be recorded',
+      'Only the overall result that the scaffold passed the inspection on the day',
+      'The defect found, the corrective action taken, and that the scaffold is now safe for use',
+      'Only a reminder note to re-check the same bay at the next scheduled inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'Which of the following is an advantage of digital scaffold inspection records over paper-based records?',
     options: [
-      'Digital records do not need to include all the prescribed Schedule 7 information',
-      'Digital records are automatically accepted by the HSE without further checks',
-      'Digital records can be backed up automatically, support photo evidence, generate GPS-tagged entries, and be shared instantly with site management',
-      'Digital records eliminate the need for a competent person to carry out the inspection',
+      'Digital records are exempt from including all the prescribed Schedule 7 information',
+      'They back up automatically, support photo evidence, and are shared instantly with the site',
+      'Digital records are accepted by the HSE automatically, without any further checks',
+      'Digital records remove the need for a competent person to carry out the inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Digital inspection records must still contain all the information prescribed by Schedule 7 — they do not get a reduced requirement. They do not eliminate the need for a competent inspector, and the HSE will still check that the content meets the legal standard. However, digital records offer significant practical advantages: automatic cloud backup reduces the risk of loss, photo attachments provide visual evidence of conditions and defects, GPS tagging confirms location, time-stamping proves when the inspection took place, and instant sharing means site management and principal contractors receive reports without delay.',
   },

@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What does V2G (Vehicle-to-Grid) mean + how does it differ from V2H + V2L?',
     options: [
-      'All the same',
-      'V2G (Vehicle-to-Grid): bidirectional charger discharges EV battery back to the public grid + earns wholesale / grid-services revenue. V2H (Vehicle-to-Home): EV battery discharges to power the home during a power cut or peak window — no grid export. V2L (Vehicle-to-Load): EV battery powers an external load via a socket on the vehicle (camping kettle, power tools) — no charger involved. Each requires bidirectional-capable charger + bidirectional-capable vehicle + compatible protocol.',
-      'Different vehicles',
-      'Random',
+      'V2G exports to the grid; V2H powers the home with no export; V2L powers a load from a vehicle socket',
+      'They are three marketing names for the same export-to-grid function',
+      'They describe three different EV battery chemistries rather than power-flow modes',
+      'They all require the same unidirectional charger and differ only in software',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The bidirectional EV charging landscape distinguishes three modes: (1) V2G — EV battery exports back to the public DNO grid through a bidirectional charger; subject to BS 7671 Section 722 + Chapter 82 PEI + EREC G99 / G100 + commercial grid-services / SEG arrangements. The customer earns revenue (typical UK 2025-26 trial £300-700/year). (2) V2H — EV battery powers the home during a power cut (island mode) or during peak tariff windows (consumption mode); no export to grid. Subject to BS 7671 Chapter 82 island-mode requirements (Reg 826.1.1.2.2 N-E switching, Reg 826.1.1.5 island-mode switching device); EV becomes equivalent to a BESS in island mode. (3) V2L — the EV provides AC power output from a socket built into the vehicle (Hyundai IONIQ 5, Kia EV6, MG4, BYD models). Customer plugs a kettle / power tool directly into the EV. Not a charger function; no BS 7671 install scope. UK 2025-26 V2L deployment growing rapidly (most new EVs include it); V2G still limited (Wallbox Quasar, dnata DC, V2X.energy units — expensive specialist hardware); V2H limited but emerging.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What V2G hardware is actually deployed in UK 2025-26?',
     options: [
-      'Widespread',
-      'Limited but growing. The Wallbox Quasar 1 (7.4 kW CHAdeMO bidirectional) was the dominant residential V2G unit until 2023 — used in Octopus Power Pack trial. CHAdeMO restriction limits to Nissan LEAF + ageing fleet. Newer CCS bidirectional hardware (Quasar 2, Wallbox Sirius, dnata DC, V2X.energy) emerging but expensive (£7-15k vs £700-1,500 for unidirectional chargers). ISO 15118-20 + OCPP 2.0.1 maturing. OEM warranty constraints remain a significant barrier — most car manufacturers do NOT warrant batteries for V2G discharge cycles.',
-      'None',
-      'Mainstream',
+      'Widespread already — most domestic EV installs are bidirectional and earn grid revenue today',
+      'A single DNO-mandated CCS unit is the only legal V2G charger, fitted at every export site',
+      'Limited but growing: Quasar 1 (CHAdeMO) led; CCS emerging at £7-15k; OEM warranty limits remain',
+      'Fully mainstream — every new EV ships with a V2G charger fitted as standard equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'UK 2025-26 V2G hardware reality: (1) Wallbox Quasar 1 — 7.4 kW CHAdeMO bidirectional. The original residential V2G unit. Used in Octopus Power Pack trial (£400-600/year customer revenue 2020-2023). Limitation: CHAdeMO port — only Nissan LEAF + ageing Mitsubishi Outlander PHEV. CHAdeMO fleet ageing as new EVs default to CCS. (2) Quasar 2 — announced CCS-capable bidirectional residential charger; UK 2025-26 deployment limited; £7,000-10,000 unit cost. (3) dnata DC bidirectional — commercial-grade DC bidirectional unit; fleet-focused; UK 2025-26 pilot deployments. (4) V2X.energy / EVgo / others — commercial fleet DC bidirectional units; not residential. (5) ISO 15118-20 + OCPP 2.0.1 Smart Charging Profile + V2G Plug-and-Charge — protocol stack maturing 2024-2025; vehicle + charger + backend ecosystem alignment progressing. (6) OEM warranty constraints — most automakers do NOT warrant high-voltage batteries for V2G cycles. Nissan (LEAF), Hyundai, Kia, Polestar are early adopters with V2G-friendly warranties. VW Group, Tesla, BMW remain V2G-warranty-restrictive in UK 2025-26. (7) Comparison: V2L mainstream (50+ EV models in UK 2025-26 ship with V2L sockets); V2H emerging (Ford F-150 Lightning + Charge Station Pro in US; UK limited); V2G limited residential, growing commercial fleet.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'What BS 7671 sections cover a V2G install?',
     options: [
-      'Section 712 only',
-      'Section 722 EV charging install (the charger + supply circuit + Type B RCD per Reg 722.531.3 + earthing per Reg 722.411) + Section 551 generating set (the EV becomes a source when discharging, so Reg 551.7.5 anti-islanding + Reg 551.7.2.1 supply-side connection apply) + Chapter 82 PEI integration (the V2G EV is now a generating source within the multi-source PEI; Reg 826.1.1.1 protection in all modes + Reg 826.1.1.4 multi-source isolation + Reg 826.1.2.1 overcurrent across configurations). EREC G99 + G100 for DNO interface.',
-      'Random',
-      'No regs apply',
+      'Only Section 712, treating the V2G charger as a solar PV string on the DC side',
+      'Section 722 alone — a V2G charger is just an EV charging point with no generating-set rules',
+      'Section 551 only, since the discharging EV is purely a generating set and not an EV charger',
+      'Section 722 plus Section 551 (EV as generating set) and Chapter 82, with EREC G99/G100',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'V2G integration brings BS 7671 layers together: (1) Section 722 EV charging install — the existing requirements for EV charging point: Reg 722.411 (TT or TN earthing arrangements, PME considerations for residential), Reg 722.531.3 (RCD type — Type B for DC fault current capability, OR Type A + DD prevention), Reg 722.511 (BS EN 61851 standard for charger), Reg 722.55.101.0.201 (vehicle inlet standards — BS EN 62196 Type 2 for AC, CCS Type 2 + CHAdeMO for DC fast). (2) Section 551 generating set — V2G EV in discharge mode IS a generating set per Reg 551.1.1 categories (battery + power conversion). Reg 551.7.5 anti-islanding required — EV stops discharging to a dead grid. Reg 551.7.2.1 supply-side connection of the V2G charger (the EV connects through its V2G charger as a generating set). Reg 551.4.2 RCD effectiveness across source combinations. (3) Chapter 82 PEI — V2G adds another source to the multi-source PEI: Reg 826.1.1.1 protection in all modes (now PV + BESS + V2G + DNO combinations); Reg 826.1.1.4 multi-source isolation (V2G charger isolator added to switch count + warning notice update); Reg 826.1.2.1 overcurrent across configurations (V2G discharge contributes to fault current at MET). (4) EREC G99 — V2G charger is an additional generating set; G99 amendment required. (5) EREC G100 — if site has export limit, V2G discharge counts; ELS curtailment hierarchy now includes V2G. (6) Cert evidence: integrated PEI EIC + Section 722 + Section 551 + Chapter 82 + V2G charger DoC + G99 amendment + G100 recommissioning if applicable.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'What’s the UK 2025-26 economic case for residential V2G?',
     options: [
-      'No economics',
-      'Octopus Power Pack trial (2020-2023, ended) paid £300-450/year per customer with Wallbox Quasar + Nissan LEAF — dynamic tariff capturing wholesale + grid-services revenue. Octopus Power Pack 2.0 + similar emerging schemes 2025-26: £500-1,000/year if hardware + EV align with V2G-compatible OEM warranty. Vs hardware uplift £5,000-9,000 (V2G charger vs unidirectional) + battery cycle cost. UK 2025-26 reality: economic case for early adopters with compatible Nissan LEAF / Hyundai / Kia + Octopus tariff; not mainstream yet.',
-      'Negative always',
-      'Random',
+      'Trials paid ~£300-1,000/year against a £5-9k hardware uplift — viable for early adopters only',
+      'Revenue is strong enough that the £5,000-9,000 hardware uplift always pays back inside two years',
+      'It is always loss-making because no UK tariff pays for exported vehicle energy at any point',
+      'Returns depend only on mileage driven, so the charger hardware cost has no bearing on payback',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'V2G residential economic landscape UK 2025-26: (1) Octopus Power Pack (original 2020-2023) — Wallbox Quasar + Nissan LEAF customers received £300-450/year for grid-services participation (vehicle made available during DNO / National Grid demand-response events). Trial closed; commercial successor in development. (2) Octopus Intelligent Octopus Go + dynamic tariff arbitrage — not strictly V2G grid-services revenue but customer captures cheap-rate charging + (when V2G hardware allows) discharge during peak tariff window. (3) Tesla Energy Plan + Powerwall + (future V2G) — emerging at scale. (4) Hardware cost: V2G charger £7,000-15,000 vs unidirectional £700-1,500 — £5,000-9,000 uplift. (5) Battery degradation cost — each kWh discharged + recharged adds wear. Modern lithium batteries rated 3,000-5,000 cycles; V2G annual cycling adds 100-300 cycles to the vehicle’s baseline (driving) cycles. OEM warranty exclusion makes this a real customer risk. (6) Total economic case: only viable if customer’s vehicle + charger are V2G-compatible AND OEM warrants AND a paying grid-services tariff is active. UK 2025-26 reality: tens of thousands of trial users not millions; commercial roll-out still ramping; price-friendly hardware emerging. The honest customer conversation: ‘V2G is real, with limited hardware + OEM support; if you have a Nissan LEAF or compatible Hyundai/Kia + Octopus tariff, worth exploring; otherwise wait 2-3 years’.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A customer asks: "I have a Tesla Model Y. Can I do V2G with my existing Tesla Wall Connector?"',
     options: [
-      'Yes',
-      'No. Tesla vehicles + Tesla Wall Connector are NOT V2G-capable in UK 2025-26. Tesla’s Powerwall is the company’s residential storage solution; Tesla’s vehicle-side bidirectional support has been announced multiple times + repeatedly delayed. Tesla Wall Connector is unidirectional. To do V2G, customer would need: (a) a V2G-compatible vehicle (Nissan LEAF, some Hyundai / Kia models, very few CCS bidirectional models 2025-26); (b) a V2G-capable bidirectional charger (Wallbox Quasar 1 CHAdeMO or Quasar 2 CCS); (c) supporting tariff (Octopus Power Pack successor).',
-      'Sometimes',
-      'Random',
+      'No — neither the Model Y nor the Wall Connector is V2G-capable in UK 2025-26',
+      'Yes — any Tesla discharges to the grid through a standard Wall Connector once enabled in the app',
+      'Yes, provided the customer is on a time-of-use tariff; the hardware itself is irrelevant',
+      'Yes, but only the home is powered (V2H); the Wall Connector cannot export to the grid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tesla V2G status UK 2025-26: (1) Tesla vehicles — Model 3 / Y / S / X / Cybertruck — hardware capable of bidirectional charging at the battery level but Tesla has not enabled it via firmware in customer-shipping vehicles. Multiple announcements (2022, 2023, 2024) about ‘coming bidirectional support’; UK 2025-26 status: not deployed. (2) Tesla Wall Connector — unidirectional AC charger, no V2G hardware. (3) Tesla’s strategy — they sell Powerwall as the residential storage solution; have less commercial incentive to enable vehicle-to-grid. May change with Tesla Energy Plan evolution. (4) UK 2025-26 V2G-compatible vehicles — Nissan LEAF (CHAdeMO, the original V2G car); Mitsubishi Outlander PHEV (CHAdeMO, ageing); Hyundai IONIQ 5 / 6, Kia EV6 / EV9 (CCS bidirectional ready, OEM-enabled at firmware level in some markets), Polestar (announced); Volvo (announced 2024-2025). Coverage growing but limited 2025-26. (5) Customer honest answer: V2G requires V2G hardware on BOTH sides — vehicle + charger — AND OEM enables it AND a supporting tariff. Tesla customer cannot V2G with their current setup; could buy a separate Nissan LEAF + Wallbox Quasar + Octopus for V2G; or wait for Tesla’s eventual support.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'For a V2G install on a PV + BESS site, what does Chapter 82 Reg 826.1.1.4 require that wasn’t there before V2G?',
     options: [
-      'Nothing changes',
-      'V2G adds another GENERATING SOURCE to the PEI. Reg 826.1.1.4 multi-source isolation now requires: V2G charger isolator added to the per-source isolation list + warning notice updated to include V2G as a source. Previous PEI (PV + BESS + DNO) had 3 isolation points; with V2G added: 4. Multi-source isolation procedure document also updated. Plus Reg 826.1.1.1 protection in all modes (V2G+PV+BESS+DNO combinations) and Reg 826.1.2.1 overcurrent (V2G discharge contributes to MET fault current).',
-      'Random',
-      'Reverse it',
+      'Nothing — the existing PV and BESS isolators already cover the V2G charger as a load',
+      'The DNO main switch alone now isolates everything, so the per-source switches can be removed',
+      'V2G adds a generating source, so its isolator joins the list, the warning notice is updated, and protection and overcurrent are re-checked',
+      'Only the warning notice wording changes; no extra isolator or overcurrent re-check is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'V2G transforms the EV from a LOAD into an additional GENERATING SOURCE in the PEI. Chapter 82 implications: (1) Reg 826.1.1.4 multi-source isolation — V2G charger becomes another isolation point. Previous: DNO + PV + BESS = 3 main switches + warning notice. With V2G added: 4 main switches + updated warning notice listing the V2G charger as an additional source. Isolation procedure document updated. (2) Reg 826.1.1.1 protection in all modes — protective design verified for: DNO+PV+BESS+V2G, DNO+PV+BESS, DNO+PV+V2G, DNO+V2G alone, BESS+V2G island (if island-capable), etc. Permutations multiply. (3) Reg 826.1.2.1 overcurrent at every PEI point for every configuration — V2G discharge contributes to fault current at the MET busbar. Worst-case PSCC at main consumer unit recalculated to include V2G contribution (typically ≈1.1× V2G rated current). (4) Reg 826.1.2.2 direction + polarity — V2G adds bidirectional flow through the EV charging circuit; protective devices considered for both directions. (5) Reg 551.7.5 anti-islanding — V2G charger must include LoM detection + disconnect on grid loss. (6) Reg 551.4.2 RCD effectiveness across source combinations — the V2G + PV + BESS + DNO permutations must each maintain RCD effectiveness. (7) EREC G99 amendment required for new generating source. (8) G100 recommissioning if site has export limit. (9) Cert evidence: integrated PEI EIC updated to include V2G + Section 722 + Section 551 anchors + Chapter 82 multi-source updates + G99 amendment + G100 recommissioning if applicable.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'What is ISO 15118-20 and why does it matter for V2G?',
     options: [
-      'Random',
-      'ISO 15118-20 is the international standard for EV-charger high-level communication that includes Plug-and-Charge AUTHENTICATION + bidirectional power transfer (V2G) negotiation. The vehicle + charger exchange certificates over PowerLine Communication (PLC) over the CCS data channel to: authenticate the vehicle owner, negotiate the V2G session terms (max discharge power, duration, schedule), report state-of-charge limits, integrate with OCPP 2.0.1 backend for billing + grid services. UK 2025-26: ISO 15118-20 emerging; CCS vendors implementing; backend ecosystem catching up.',
-      'Mistake',
-      'Old standard',
+      'The BS 7671 regulation number governing EV charging-point RCD selection and earthing',
+      'The EV-charger communication standard that adds Plug-and-Charge and bidirectional V2G negotiation, working with an OCPP 2.0.1 backend',
+      'The ENA engineering recommendation that replaces G99 for all V2G grid connections',
+      'An older, withdrawn protocol superseded for every charging mode by ISO 15118-2',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Why does V2G require a special Type B RCD on the supply circuit?',
     options: [
-      'No special requirement',
-      'V2G charger contains bidirectional power electronics with smooth DC fault current capability — same Reg 722.531.3 reason as unidirectional DC fast chargers + similar to BESS inverters per Chapter 57. Type A RCD may saturate under smooth DC leakage; Type B detects + interrupts AC + pulsating + smooth DC. Modern V2G chargers (Wallbox Quasar) include integrated Type B RDC-DD (residual direct current detection device) per BS EN 61851-1 — may relax the need for an external Type B on the supply if the integrated device meets the standard. Manufacturer DoC confirms.',
-      'Random',
-      'Always Type AC',
+      'The bidirectional electronics can produce smooth DC fault current that Type B detects, unless an integrated RDC-DD allows a Type A instead (Reg 722.531.3)',
+      'No special RCD applies — a standard 30 mA Type A covers every EV charging circuit including bidirectional ones',
+      'The RCD type is set by the supply cable size, so a larger cable removes the Type B requirement entirely',
+      'A Type AC RCD is correct for V2G because the charger only ever passes alternating current to the grid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'V2G RCD selection follows the same principle as DC EV charging + BESS: (1) Smooth DC fault current capability — V2G charger contains a bidirectional inverter with smooth DC at the EV battery side. A residual fault current at this interface could include smooth DC components that saturate Type A RCDs (which only detect AC + pulsating DC). Type B RCDs detect smooth DC up to specified levels. (2) Reg 722.531.3 — EV charging point shall be protected by an RCD of: (a) Type B, or (b) Type A or F where additional means are provided to prevent DC fault current from exceeding 6 mA (RDC-DD = residual direct current detection device). (3) Modern V2G chargers — Wallbox Quasar + Quasar 2 + emerging CCS V2G — include INTEGRATED RDC-DD (or Type B equivalent inside the unit). Manufacturer DoC declares compliance with BS EN 61851-1 + the RCD type requirement. Where integrated RDC-DD is declared, external supply-side RCD can be Type A (Reg 722.531.3(b) exemption). Where NOT declared, external must be Type B. (4) Reg 551.4.2 RCD effectiveness in multi-source context — V2G as a source must not compromise the RCD architecture; verified at commissioning across source combinations. (5) Cert evidence: V2G charger DoC + RCD type declaration + supply-side RCD specification + commissioning test. UK 2025-26 typical: Type B 30 mA RCBO on the V2G supply circuit OR Type A + manufacturer integrated RDC-DD declaration.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'A V2G install adds a 7 kW bidirectional charger to an existing PV + BESS PEI. The site already has G100 export limit at 3.68 kW. What changes?',
     options: [
-      'Nothing',
-      'G100 ELS must be recommissioned to include V2G as a curtailable source. Multi-source curtailment hierarchy needs updating — typically V2G discharge curtailed FIRST (V2G is the most discretionary export); BESS discharge second; PV inverter third. ELS controller must communicate with the V2G charger (via OCPP or Modbus) to curtail discharge during over-export events. EMS coordination above ELS layer also updated. DNO re-acceptance required. New G100 commissioning certificate added to cert evidence bundle.',
-      'Random',
-      'G100 removed',
+      'Nothing changes — the existing G100 ELS already curtails any source it can see',
+      'The G100 export limit is lifted automatically because V2G adds demand-side flexibility',
+      'The G100 ELS is recommissioned to add V2G as a curtailable source, with new comms, DNO re-acceptance and a fresh certificate',
+      'Only the BESS curtailment priority changes; V2G sits outside the ELS hierarchy entirely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Adding V2G to a G100-limited site triggers full G100 recommissioning: (1) ELS curtailment hierarchy update — the ELS must include V2G in its curtailment priority order. Typical priority: V2G discharge first (most discretionary — customer benefits but doesn’t lose forever-PV-generation), BESS discharge second, PV third. Customer-configurable but conservative defaults common. (2) ELS ↔ V2G communication — ELS controller communicates with V2G charger via OCPP 1.6 Smart Charging Profile or OCPP 2.0.1 (preferred) or proprietary protocol. Curtailment command: ‘reduce discharge power to X kW’ or ‘stop discharge’. (3) Commissioning test — deliberately drive over-generation with V2G + PV + BESS all discharging at peak; verify ELS triggers V2G curtailment first within ENA response time. Second test: V2G alone driving over-export verified. (4) DNO process — customer / installer notifies DNO of V2G addition (G99 amendment); DNO updates connection agreement; customer + DNO confirm G100 limit unchanged (or renegotiate); G100 recommissioning cert filed. (5) EMS coordination — customer’s EMS (vendor or third-party) reads G100 limit + plans V2G + BESS + PV scheduling to minimise curtailment. (6) Cert evidence bundle update: integrated PEI EIC + Section 722 + Section 551 + Chapter 82 + EMS architecture update + G99 amendment + new G100 commissioning cert + EREC correspondence trail.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'In a V2H scenario (no grid export, EV powers home during DNO outage), what additional BS 7671 considerations apply vs grid-following V2G?',
     options: [
-      'Same as V2G',
-      'V2H = island mode for the V2G charger. Chapter 82 island-mode requirements apply: Reg 826.1.1.2.2 N-E switching with non-overlap (the V2G charger needs island-capable grid-forming mode OR a separate backup gateway handles N-E switching); Reg 826.1.1.5 island-mode switching device. Reg 551.7.5 anti-islanding becomes more nuanced — the V2G must disconnect from DNO when in V2H but maintain local operation. Currently rare hardware in UK 2025-26; most V2G chargers are grid-following only (V2G to a live grid). True V2H + V2G dual-mode emerging.',
-      'No regs',
-      'Random',
+      'It is identical to grid-following V2G; anti-islanding alone covers the home-backup case',
+      'V2H sits outside Chapter 82 because no energy is exported to the public grid',
+      'V2H only needs a manual changeover switch; no N-E switching or grid-forming capability applies',
+      'V2H is island mode, so Reg 826.1.1.2.2 N-E switching and grid-forming hardware are required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'V2G vs V2H operational + regulatory distinction: (1) V2G — EV discharges to the live grid in parallel with DNO. Grid-following bidirectional charger. Reg 551.7.5 anti-islanding ensures EV stops discharging if DNO supply lost. Standard chapter 82 PEI direct-feeding mode. (2) V2H — EV discharges to the home in island mode (DNO disconnected). Grid-forming bidirectional charger required (or grid-forming BESS inverter handles island, V2G adds to it). Reg 826.1.1.2.2 N-E switching: when DNO is lost + V2H activates, all DNO live conductors disconnect + local N-E bond establishes (non-overlap). Reg 826.1.1.5 island-mode switching device. The V2G charger must coordinate with the backup gateway: gateway opens DNO contactors + establishes island; V2G charger transitions to grid-forming mode OR follows the BESS grid-forming inverter. (3) UK 2025-26 hardware reality — most V2G chargers are grid-following only (Wallbox Quasar 1). True V2H + V2G dual-mode requires more complex hardware + integration with site backup gateway; very limited residential deployment 2025-26. Ford F-150 Lightning + Charge Station Pro is a US example. Quasar 2 + emerging CCS V2G chargers add V2H capability progressively. (4) V2L vs V2H — V2L (Vehicle-to-Load, e.g. plug a kettle directly into Hyundai IONIQ 5) is NOT V2H — no install scope; vehicle’s onboard inverter feeds a socket on the car. Useful for camping / power tools but not whole-home backup. (5) Cert evidence: V2H install includes Reg 826.1.1.2.2 N-E switching test + Reg 826.1.1.5 island-mode switching verification + V2G charger DoC for island-capable operation.',
   },

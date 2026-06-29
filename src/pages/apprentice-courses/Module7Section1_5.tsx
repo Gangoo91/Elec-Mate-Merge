@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What must you do immediately upon discovering a dangerous electrical fault?',
     options: [
-      'Creating gaps in illumination with excessive spacing',
-      'A temperature transmitter, instrument number 101',
+      'Continue working and note it on the certificate later',
+      'Wait until the end of the job to inform anyone',
       'Isolate the circuit and report immediately',
-      'The value compared to BS 7671 maximum limits',
+      'Carry on and only act if someone is injured',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Who can be held personally liable under EAWR 1989?',
     options: [
-      'Carbonised paths from surface contamination',
-      'To record tasks, progress, and responsibility',
-      'Identify the source of supply',
+      'Only the company directors, never the workers',
+      'Only the client who commissioned the work',
+      'Only the manufacturer of the faulty equipment',
       'Any employee with electrical duties',
     ],
     correctIndex: 3,
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'Why is proper documentation of electrical faults legally important?',
     options: [
       'Provides evidence of due diligence and compliance',
-      'A closed triangle, each winding between two lines',
-      'Heart palpitations and shortness of breath',
-      'Reducing starting current of large three-phase motors',
+      'It removes the need to isolate the faulty circuit',
+      'It transfers all liability to the client',
+      'It is only needed for insurance, not the law',
     ],
     correctIndex: 0,
     explanation:
@@ -86,10 +86,10 @@ const Module7Section1_5 = () => {
       id: 2,
       question: 'Under EAWR 1989, who has duties regarding electrical safety?',
       options: [
-        'Protective Multiple Earthing',
-        'Power factor is below 0.5',
+        'Only the employer, never the employees',
+        'Only self-employed electricians',
         'Both employers and employees',
-        'Circuit details and test conditions',
+        'Only the Health and Safety Executive',
       ],
       correctAnswer: 2,
       explanation:
@@ -99,9 +99,9 @@ const Module7Section1_5 = () => {
       id: 3,
       question: 'What must you do immediately upon discovering a dangerous electrical fault?',
       options: [
-        'Thermal diffusivity (α = k/ρc)',
-        'Selecting specific data to focus on',
-        'Bolted faults have solid metal-to-metal contact',
+        'Leave it for the next shift to deal with',
+        'Only record it in your personal notebook',
+        'Re-energise the circuit and monitor it',
         'Isolate the circuit and report immediately',
       ],
       correctAnswer: 3,
@@ -110,12 +110,12 @@ const Module7Section1_5 = () => {
     },
     {
       id: 4,
-      question: 'What is the maximum penalty for serious breaches of EAWR 1989?',
+      question: 'What is the maximum penalty for serious breaches of EAWR 1989 for an individual?',
       options: [
         'Unlimited fine and up to 2 years imprisonment',
-        'L101 — Safe Work in Confined Spaces',
-        'Commissioning records, O&M manuals, and as-built drawings',
-        'Graphical building blocks used to create control logic',
+        'A fixed £5,000 fine with no imprisonment',
+        'A formal written warning from the HSE',
+        'Suspension of the JIB card for 12 months',
       ],
       correctAnswer: 0,
       explanation:
@@ -125,10 +125,10 @@ const Module7Section1_5 = () => {
       id: 5,
       question: 'Who can be held personally liable under EAWR 1989?',
       options: [
-        'False - use the same tape measure',
+        'Only the company that holds the contract',
         'Any employee with electrical duties',
-        'Armoured loose-tube with PE jacket',
-        'Installation route drawing',
+        'Only the site manager or supervisor',
+        'Only those with more than five years experience',
       ],
       correctAnswer: 1,
       explanation:
@@ -138,10 +138,10 @@ const Module7Section1_5 = () => {
       id: 6,
       question: "What does 'so far as is reasonably practicable' mean in EAWR 1989?",
       options: [
-        'Air-to-open (spring-to-close) configuration',
-        'RCD protection not exceeding 30mA',
-        'Balance risk against cost and effort',
-        'Health, Safety & Environment',
+        'Whatever is cheapest for the employer to do',
+        'Every conceivable measure, regardless of cost',
+        'Balance the risk against the cost and effort to reduce it',
+        'Only the measures listed in BS 7671',
       ],
       correctAnswer: 2,
       explanation:
@@ -151,9 +151,9 @@ const Module7Section1_5 = () => {
       id: 7,
       question: 'Why is proper documentation of electrical faults legally important?',
       options: [
-        'Representing industry interests to government and regulators',
-        'To enable safe shutdown and evacuation',
-        'Inhalation, skin absorption, ingestion, and injection',
+        'It replaces the legal duty to isolate the circuit',
+        'It is only required by the client, not by law',
+        'It shifts all responsibility onto the supervisor',
         'Provides evidence of due diligence and compliance',
       ],
       correctAnswer: 3,
@@ -165,9 +165,9 @@ const Module7Section1_5 = () => {
       question: 'What must be done before working on faulty electrical equipment?',
       options: [
         'Isolate, lock off, and prove dead',
-        'Vd = I × (R cos φ + X sin φ) × L',
-        'When the employer has 5 or more employees',
-        'Stop testing and investigate',
+        'Issue a verbal warning to nearby workers',
+        'Record the fault and continue working live',
+        'Reduce the load to a safe level first',
       ],
       correctAnswer: 0,
       explanation:
@@ -177,10 +177,10 @@ const Module7Section1_5 = () => {
       id: 9,
       question: 'How do courts typically view electrical safety cases?',
       options: [
-        'Charging standards, load management, and vehicle integration',
-        'With serious concern and strict application of law',
-        'Without delay (immediately) by quickest practicable means',
-        'Trace signal paths and understand circuit operation',
+        'As minor matters resolved with a caution',
+        'With serious concern and strict application of the law',
+        'As civil disputes that rarely reach court',
+        'Leniently, provided no injury actually occurred',
       ],
       correctAnswer: 1,
       explanation:
@@ -191,10 +191,10 @@ const Module7Section1_5 = () => {
       question:
         "What happens if someone is injured due to an electrical fault that wasn't properly addressed?",
       options: [
-        'Low-level power and data distribution in offices',
-        'Correct operation between supply sources',
-        'Criminal and civil liability possible',
-        'Q_C = P × (tan φ₁ − tan φ₂)',
+        'Only a civil claim, never criminal prosecution',
+        'No liability if the work followed BS 7671',
+        'Criminal and civil liability are both possible',
+        'Liability only for the employer, never the individual',
       ],
       correctAnswer: 2,
       explanation:

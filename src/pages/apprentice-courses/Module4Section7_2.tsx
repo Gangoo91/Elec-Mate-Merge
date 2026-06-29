@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should you use insulated hand tools?',
     options: [
-      'Separated Extra Low Voltage',
-      'Current is the same everywhere',
+      'To make the tools last longer in storage',
+      'To improve grip on small components',
       'To prevent electric shock',
-      'To the phase (line) conductor',
+      'To reduce the weight you carry on site',
     ],
     correctIndex: 2,
     explanation:
@@ -98,9 +98,9 @@ const Module4Section7_2 = () => {
       id: 3,
       question: 'Why should you use insulated screwdrivers and pliers?',
       options: [
-        '200 times the sign height',
-        'Capacitors and UPS systems',
-        'Heat resistant (90°C or higher)',
+        'To improve the accuracy of measurements',
+        'To make the tools easier to clean',
+        'To extend the working life of the blades',
         'To prevent electric shock',
       ],
       correctAnswer: 3,
@@ -112,9 +112,9 @@ const Module4Section7_2 = () => {
       question: 'Name two common hazards when using power tools.',
       options: [
         'Cuts and electric shock',
-        'Good lighting and ventilation',
-        'Proper storage and maintenance',
-        'Training and supervision',
+        'Low pay and long hours',
+        'Poor lighting and clutter',
+        'Cold weather and damp',
       ],
       correctAnswer: 0,
       explanation:
@@ -150,9 +150,9 @@ const Module4Section7_2 = () => {
       id: 7,
       question: 'Give one example of PPE required when grinding metal conduit.',
       options: [
-        'Forgetting vertical drops or rises',
-        'Second — after elimination',
-        'Use appropriate PPE and procedures',
+        'A hi-vis vest',
+        'A bump cap',
+        'Knee pads',
         'Face shield or safety goggles',
       ],
       correctAnswer: 3,

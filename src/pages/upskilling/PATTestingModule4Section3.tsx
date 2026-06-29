@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A user brings you a sealed Class I kettle for testing. Should polarity testing be performed on it?',
     options: [
-      'Yes, on every appliance regardless of construction',
-      'Polarity testing under IET CoP Ch 15 specifically targets cords, IEC leads, extension leads and re-wireable plug-tops where conductor identification is exposed to the test. Sealed appliances with moulded plugs and fixed internal wiring are tested by visual inspection of the plug only — the polarity test as a measurement applies to leads and cord-sets',
-      'Only if the kettle has a metal body',
-      'Only on Class II kettles',
+      'Yes — polarity is tested on every appliance, regardless of construction',
+      'No — a sealed moulded-plug appliance is inspected visually at the plug only',
+      'Only if the kettle has a metal body that could become live',
+      'Only on Class II kettles, where there is no protective conductor',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'You strip back a UK BS 1363 plug fitted to a kettle lead. The conductor at the L pin is brown. The conductor at the N pin is blue. The conductor at the E pin is green/yellow. Is the colour code correct?',
     options: [
-      'No — should be red, black, green',
-      'Yes — modern UK BS 1363 / harmonised colour code per BS 7671: brown = line, blue = neutral, green/yellow = protective conductor. Red/black/green is the historical pre-2004 code and would be a reason to investigate cord-set vintage',
-      'Only if the plug has a fuse',
-      'No — neutral should be brown',
+      'No — the conductors should be red, black and green for the three pins',
+      'Yes — this is the modern UK harmonised code: brown L, blue N, green/yellow E',
+      'It is only correct if the plug also contains a BS 1362 fuse',
+      'No — neutral should be brown and line should be blue at the pins',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'A C13 IEC kettle lead tests as L–N reversed inside the lead. What is the safety implication and the correct action?',
     options: [
-      'Pass — IEC connectors are reversible by design',
-      'Fail. Even though the C13 connector is mechanically polarised, a reversed lead means the appliance internal switch (if it is single-pole on the line side) is now switching neutral, leaving the line conductor live to the heating element when the user thinks the appliance is off. Discard or rework the lead; do not return to service',
-      'Pass with comment',
-      'Fail only if the appliance is Class II',
+      'Pass — IEC C13 connectors are reversible by design, so polarity is moot',
+      'Fail — the reversal leaves the element live when the switch is "off"',
+      'Pass with a comment noting the internal reversal on the record',
+      'Fail only if the appliance fed by the lead is Class II construction',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You are PAT-testing an extension lead with a 13 A fused plug. After polarity passes, what does IET CoP recommend you check on the plug?',
     options: [
-      'Nothing — the polarity test covered it',
-      'Inspect the fuse rating and condition. The plug fuse should match the appliance / extension lead rating (typically 13 A for unrestricted use, 3 A for low-current appliances under 700 W where the original specification calls for it). A wrong-rated or visibly damaged fuse is a fail / replace, not a pass',
-      'Insulation resistance only',
-      'Neutral colour only',
+      'Nothing further — the polarity test already covered the plug',
+      'Inspect the BS 1362 fuse rating and condition against the load',
+      'Re-run an insulation resistance test on the lead at the plug',
+      'Confirm the neutral conductor colour only at the plug terminal',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'IET CoP Chapter 15 directs polarity testing specifically at what subset of equipment?',
     options: [
-      'Every appliance, regardless of construction',
-      'Only Class II appliances',
-      'Detachable mains cords, IEC cord-sets, extension leads, and field-fitted (re-wireable) plug-tops where conductor identification is exposed to the test — sealed appliances with moulded plugs are tested by visual inspection of the plug',
-      'Only equipment over 13 A',
+      'Every appliance on the bench, regardless of its construction',
+      'Only Class II appliances, which have no protective conductor',
+      'Cords, IEC leads, extension leads and re-wireable plug-tops',
+      'Only equipment drawing more than 13 A in normal service',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,8 +95,8 @@ const quizQuestions = [
     id: 2,
     question:
       'In the modern UK harmonised colour code (since 2004) used in BS 1363 plugs, which colour identifies the line conductor?',
-    options: ['Red', 'Brown', 'Blue', 'Green/yellow'],
-    correctAnswer: 1,
+    options: ['Red', 'Blue', 'Green/yellow', 'Brown'],
+    correctAnswer: 3,
     explanation:
       'Since the 2004 harmonisation, brown = line, blue = neutral, green/yellow = protective conductor. The pre-harmonisation code was red = line, black = neutral, green = earth.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'A customer brings in a vintage table lamp with cord coloured red, black and green. The plug is wired with red to L pin, black to N pin, green to E pin. Pass or fail per modern PAT?',
     options: [
-      'Fail — the colours are wrong',
-      'The wiring connects the right conductors to the right pins by the older convention, so the polarity is electrically correct. However, IET CoP Ch 15 flags pre-harmonised cord as a concern for any future intervention (mixing colours at a repair joint risks confusion). Best practice is to flag for cord replacement on the inspection record while passing the polarity test on its own merits',
-      'Pass — colours do not matter',
-      'Fail — only modern colours are valid',
+      'Pass on polarity, but flag the pre-2004 cord for replacement',
+      'Fail — the red/black/green colours are wrong for any modern cord',
+      'Pass without comment — conductor colours do not matter at all',
+      'Fail outright — only modern harmonised colours are ever valid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The polarity is electrically correct under either convention. The risk is at any subsequent repair where new (brown/blue/green/yellow) cord meets old (red/black/green) — a fitter joining brown to black would inadvertently swap line and neutral. IET CoP recommends flagging the lead for replacement to eliminate that future risk.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'A 13 A fused plug is fitted to a hairdryer rated at 1800 W. What fuse rating is appropriate?',
     options: [
-      '3 A — minimum is safest',
-      '13 A — at 1800 W / 230 V ≈ 7.8 A operating current, a 13 A fuse is the appropriate BS 1362 rating for the load. The 3 A fuse would be undersized and nuisance-trip. The 13 A fuse provides protection of the flex against short-circuit fault current',
-      '5 A',
-      '1 A',
+      '3 A — the lowest available fuse is always the safest choice',
+      '5 A — a mid-range fuse split between the 3 A and 13 A options',
+      '13 A — at about 7.8 A operating current, the correct BS 1362 rating',
+      '1 A — the smallest fuse, to give the tightest protection margin',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 1362 fuses come in standard ratings (1, 3, 5, 7, 10, 13 A). At a steady-state current near 8 A, 13 A is the right fuse — 3 A would nuisance-trip on legitimate operation. The fuse protects the flex from short-circuit fault current; the appliance internal protection handles overload.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'You polarity test a C13/C14 IEC kettle cord. The C13 socket end and the BS 1363 plug end agree on conductor identification. The cord passes polarity. What other check, per IET CoP, is needed on this cord-set before passing?',
     options: [
-      'No further check',
-      'Earth continuity end-to-end (already done in M4.1) and visual inspection of both connector ends for signs of overheating, damaged pins, cracked moulding, or compromised cordgrips. The IEC C13 connector is a high-failure component on kettle leads — burn marks at the L pin are the classic indicator',
-      'Insulation resistance only',
-      'Colour change to red/black/green',
+      'No further check is needed once the cord has passed polarity',
+      'An insulation resistance test on the cord, and nothing else',
+      'A colour change of the conductors to the red/black/green code',
+      'Earth continuity (M4.1) plus visual inspection of both connector ends',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Polarity is necessary but not sufficient. Earth continuity is the parallel test (M4.1). Visual inspection of both ends is critical — the C13 connector is a high-failure point because it is repeatedly disconnected and the contacts arc on disconnection under load. Burn marks at the L pin are the typical end-of-life indicator.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 Reg 643.6 covers polarity testing of the fixed installation. How does it relate to PAT polarity?',
     options: [
-      'It directly governs PAT polarity',
-      'It is the parent principle for the fixed installation: polarity verified at every single-pole device, fuse, switch and socket-outlet, ensuring all single-pole switching is in the line conductor. PAT applies the same principle to the appliance side, focused on cord-sets and re-wireable plugs where the conductor identification is exposed',
-      'It exempts PAT from polarity testing',
-      'It applies only to ring final circuits',
+      'It is the parent principle — single-pole switching must be in the line conductor',
+      'It directly governs PAT polarity and sets the cord-set acceptance',
+      'It exempts PAT-tested cord-sets from any polarity testing at all',
+      'It applies only to ring final circuits, not to single-pole switching',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.6 sets the polarity duty for the fixed installation: every single-pole device must be in the line conductor so that switching, isolation and fuse protection all act on the line side. PAT extends this to the appliance side: the cord-set and re-wireable plug must agree with the installation polarity convention end-to-end.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'A switched FCU on the wall powers a fixed extractor fan via a flex. The flex polarity-tests as L–N reversed. What is the safety consequence?',
     options: [
-      'No consequence',
-      'The FCU single-pole switch and fuse are now on the neutral side of the appliance. When the FCU is switched off, the fan motor is still connected to line through the un-switched conductor; isolation and fuse protection both fail. The fault is high-consequence: anyone working on the fan with the FCU off is at risk of shock',
-      'Only nuisance tripping',
-      'Loss of voltage at the appliance',
+      'No consequence at all — the fan still runs and switches normally',
+      'Only nuisance tripping of the upstream protective device',
+      'Loss of voltage at the appliance, so the fan simply stops running',
+      'The FCU switch and fuse now sit on neutral — isolation fails with line live',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A reversed flex defeats the entire single-pole switching scheme. The FCU switch, the fuse, and any internal single-pole switch in the appliance now interrupt the neutral, leaving line live to the appliance with no isolation. Reg 643.6 exists specifically to prevent this. The fault is a category that has caused fatalities.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'Most automatic PAT testers run polarity by which method?',
     options: [
-      'Visual inspection only',
-      'Continuity check between each pin of the BS 1363 plug and the corresponding contact at the appliance / IEC connector end of the lead, with the tester confirming pin-to-pin agreement: L pin → L contact, N pin → N contact, E pin → E contact. A reversed lead shows on the tester as a polarity fail with the swapped pair identified',
-      'Voltage measurement only',
-      'High-current injection test',
+      'Visual inspection of the plug face only, with no measurement',
+      'A live voltage measurement taken across each pin in turn',
+      'A pin-to-contact continuity check: L pin to L, N pin to N, E pin to E',
+      'A high-current injection test down each conductor of the lead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Automatic testers do an end-to-end continuity check between corresponding pins: pin → contact. A reversal in the cord shows as the meter detecting continuity between the L pin and the wrong end of the cord. The tester typically displays the failure type ("L–N reversed" / "L–E reversed") so the operator can find and remediate the fault.',
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'You discover an extension lead where the L socket pin connects to the green/yellow conductor of the cord (a green/yellow at the line!). Pass or fail and what is the action?',
     options: [
-      'Pass with comment',
-      'Hard fail and remove from service immediately. A green/yellow conductor connected to a line pin puts mains potential onto the protective conductor — every Class I appliance plugged into the extension would have its chassis at line voltage. This is a categorically dangerous fault. Fail, label "DO NOT USE", and discard or rework before any return to service',
-      'Re-test',
-      'Replace the fuse only',
+      'Hard fail — green/yellow on a line pin energises every connected chassis',
+      'Pass with a comment noting the conductor colour on the record',
+      'Re-test the lead to confirm the reading before deciding anything',
+      'Replace the BS 1362 plug fuse only and return the lead to service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Mis-wiring the protective conductor to a line pin is one of the most dangerous PAT failures possible. The chassis of any Class I appliance plugged into the extension would be at 230 V relative to true earth; touching it would deliver fault current straight through the user. Hard fail, immediate removal, no return to service until the fault is remediated.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'In the rare case where you have to verify polarity manually with a multimeter on a re-wireable plug (no automatic PAT tester), what does IET CoP and good practice direct?',
     options: [
-      'Plug into mains and probe with the multimeter',
-      'Isolate, test dead. With the cord disconnected from supply, use a low-resistance ohmmeter or multimeter on continuity to confirm: BS 1363 L pin ↔ brown conductor at the far end; N pin ↔ blue; E pin ↔ green/yellow. All three pin-to-conductor pairs must match. Never verify polarity at a live socket with a multimeter probe — GS38-compliant test leads and appropriate isolation procedures apply',
-      'Use a neon test screwdriver',
-      'Visually inspect only',
+      'Plug the cord into the mains and probe live with the multimeter',
+      'Use a neon test screwdriver to confirm which pin is the line',
+      'Visually inspect the conductor colours at each pin and accept that',
+      'Isolate and test dead — confirm each pin to its conductor on continuity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The safe method is dead testing: cord isolated, ohmmeter on continuity, pin-to-conductor verification at each end. Live testing of polarity at a working socket is a different procedure (using GS38-compliant test leads, RCD-protected supply, lone-worker controls) and is not the routine method. The IET CoP polarity test is designed for the dead-tested cord-set on the bench.',
   },

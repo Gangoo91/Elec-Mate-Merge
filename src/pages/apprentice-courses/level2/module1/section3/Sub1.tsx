@@ -39,10 +39,10 @@ const checks = [
     id: 'rams-purpose-check',
     question: "What is a risk assessment actually for?",
     options: [
-      'A closed loop that contains no other closed loops within it',
-      'Competent persons with appropriate knowledge, training and experience',
+      'Creating a paper trail to satisfy the client and the insurer',
+      'Recording the qualifications of everyone on the job',
       'Identifying what could hurt people on this job, and what to do about it',
-      'The total opposition to current flow, combining resistance and reactance vectorially',
+      'Listing every tool and material the job will need',
     ],
     correctIndex: 2,
     explanation:
@@ -53,9 +53,9 @@ const checks = [
     question: "Who has to make sure a suitable and sufficient risk assessment exists for the job?",
     options: [
       'The employer (or self-employed person doing the work)',
-      'A length of metal water-supply pipe entering the property.',
-      'Public liability, employer\\\\\\\\\\\\\\\'s liability, and professional indemnity',
-      'Specific PPE required for each stage of the work',
+      'The apprentice carrying out the task on the day',
+      'The client who commissioned and paid for the work',
+      'The Health and Safety Executive that enforces the law',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: "The site RAMS says 'isolate at the local DB before drilling'. The DB you’re drilling near isn’t labelled and the supervisor says 'just kill the lighting circuit, you’ll be fine'. What do you do?",
     options: [
-      "The instrument's internal fuse had blown but wasn't detected",
-      "Work sequences, shared resources, and safety interactions",
+      "Do exactly what the supervisor says — they outrank the paperwork",
+      "Kill the lighting circuit as suggested and get on with it",
       "Stop. The RAMS doesn’t match what’s on site. Flag it before you drill",
-      "It provides smoother operation and better comfort",
+      "Drill carefully and avoid the cables you can see",
     ],
     correctAnswer: 2,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: "What does 'suitable and sufficient' actually mean for a risk assessment?",
     options: [
       "It identifies the significant risks and helps you make sensible decisions about controls",
-      "Imbalance between line currents and neutral (sum ≠ 0 = leakage to earth)",
-      "Do not click the link. Contact the wholesaler directly using their known phone number to verify the request",
-      "Logical progression, safety requirements, and coordination with other trades",
+      "It lists every conceivable risk, however trivial, to be thorough",
+      "It is at least ten pages long and signed by a manager",
+      "It uses a standard template applied unchanged to every job",
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "A mate gets electrocuted because the RAMS missed a buried live cable. The RAMS was a copy-paste from the last job. Who can the HSE prosecute?",
     options: [
-      "A formal system ensuring high-risk work is properly planned, authorised, and controlled",
+      "Nobody — a copy-paste RAMS is an honest mistake, not a crime",
       "The employer, and potentially the individuals who knew the assessment was inadequate",
-      "Identifying whether a contamination linkage exists that could cause harm",
-      "Prolonged storage in a discharged state or chronic undercharging",
+      "Only the apprentice who was actually holding the drill",
+      "Only the client, because they chose the contractor",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: "What’s the difference between a risk assessment and a method statement?",
     options: [
-      "The starting torque required by the load, the supply capacity, and the acceptable voltage dip",
-      "They capture the waste heat from generation and use it for hot water and heating, raising overall efficiency to ~80%",
+      "There is no real difference — the two terms mean the same thing",
+      "Risk assessment is for the office; method statement is for the site",
       "Risk assessment names the hazards and controls; method statement says how the work will be done in safe order",
-      "Breach of EPA s.34 Duty of Care — you passed waste to an unauthorised person; fixed penalty up to £5,000 or unlimited fine on indictment",
+      "Method statement names the hazards; risk assessment lists the work steps",
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: "When does a risk assessment need to be reviewed?",
     options: [
-      "Two dissimilar metals, an electrolyte, and an electrical contact between them",
-      "To decouple heat production from demand, enabling longer CHP running hours",
-      "It establishes when the inspection was carried out and when the next inspection is due",
+      "Once a year, on the anniversary of the original assessment",
+      "Only at the very start of the job, then never again",
+      "Only if the HSE specifically asks to see an updated version",
       "When circumstances change, when there’s reason to believe it’s no longer valid, or after an incident",
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: "Your firm employs 4 electricians including you. Does the law require risk assessments to be written down?",
     options: [
       "No — under 5 employees the SIGNIFICANT FINDINGS don’t have to be recorded by law (but are still expected as good practice)",
-      "Attend coordination meetings, agree sequencing in advance, and communicate directly with other trades about shared work areas",
-      "A short, focused briefing delivered at the point of work covering specific hazards and controls",
-      "Chronotype-aligned work scheduling &mdash; matching task difficulty to your natural energy cycles",
+      "Yes — every employer must record significant findings regardless of size",
+      "Only if the work is notifiable under CDM 2015",
+      "Only the apprentice’s tasks need to be written down at this size",
     ],
     correctAnswer: 0,
     explanation:

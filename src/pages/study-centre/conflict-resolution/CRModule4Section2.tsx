@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'A main contractor deducts £2,000 from your payment for "making good" work they claim was defective, but they gave you no prior notice of the deduction. Is this lawful?',
     options: [
-      'Yes — the MC can deduct whatever they want as they control payment',
       'No — the Construction Act requires a valid pay-less notice before any deduction from the notified sum',
-      'Yes — contra charges do not require any notice',
-      'No — but only if the amount exceeds £5,000',
+      'Yes — the main contractor can deduct whatever they choose, because they control all the payment',
+      'Yes — a contra charge of this kind does not require any prior notice to be given at all',
+      'No — but a deduction like this is only unlawful where the amount in question exceeds £5,000',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Under the Housing Grants, Construction and Regeneration Act 1996 (as amended 2011), the paying party must issue a valid pay-less notice before deducting any amount from the notified sum. A pay-less notice must state the amount the paying party considers due and the basis on which it is calculated. Without a valid pay-less notice, the full notified sum is payable. A contra charge deducted without proper notice is not lawful, regardless of the amount involved or whether the MC believes the work was genuinely defective.',
   },
@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     question:
       'The main contractor changes the programme, pushing your second fix start date back by three weeks. They expect you to absorb the cost. What should you do first?',
     options: [
-      'Accept the change without question to maintain the relationship',
-      'Refuse to return to site until they compensate you',
-      'Document the change, calculate the impact on your costs, and write formally to the MC notifying them of the delay and your intention to claim additional costs',
-      'Post about it on social media to warn other subcontractors',
+      'Accept the programme change without question, simply to keep the relationship on good terms',
+      'Refuse to return to site at all until the main contractor agrees to compensate you in full',
+      'Document the change, cost the impact, and write formally notifying them of your intention to claim',
+      'Post about the whole thing on social media in order to warn other subcontractors off the contractor',
     ],
     correctIndex: 2,
     explanation:
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     question:
       'What is the correct escalation sequence when a dispute with a main contractor cannot be resolved at site level?',
     options: [
-      'Site manager → solicitor → court',
+      'Site manager → instruct a solicitor → issue court proceedings against the contractor',
+      'Union representative → employment tribunal claim → issue court proceedings if needed',
+      "Email to the MC's managing director → refuse to carry on working → statutory adjudication",
       'Site-level discussion → written correspondence to contracts manager → senior management → adjudication',
-      'Union representative → employment tribunal → court',
-      "Email to MC's managing director → refusal to work → adjudication",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The correct escalation sequence starts at site level with direct discussion between you (or your foreman) and the MC's site manager. If this fails, the next step is formal written correspondence to the MC's contracts manager, setting out the facts, your position, and what resolution you are seeking. If the contracts manager cannot resolve it, escalation to senior management on both sides is the next step. Only when all commercial negotiation has failed should you consider statutory adjudication under the Construction Act. Each step is more formal, more costly and more relationship-damaging than the last — exhaust the informal options before moving to formal processes.",
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Why is there typically a power imbalance between main contractors and subcontractors?',
     options: [
-      'Because main contractors are always larger companies',
       'Because main contractors control payment, programme and access — the three things subcontractors depend on',
+      'Because main contractors are always larger companies',
       'Because subcontractors are less qualified than main contractors',
       'Because the law gives main contractors more rights than subcontractors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The power imbalance exists because main contractors control the three things every subcontractor depends on: payment (they decide how much and when you get paid), programme (they set and change the schedule), and access (they control when and where you can work on site). This structural imbalance means that even legitimate disputes can feel risky for subcontractors, because challenging the MC might affect future payments, programme allocations or the commercial relationship. The Construction Act was specifically designed to address this imbalance.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is a "pay when paid" clause, and is it enforceable?',
     options: [
-      'A clause requiring the MC to pay you when they receive payment from the client — it is fully enforceable',
-      'A clause requiring payment within 30 days — it is enforceable',
-      'A clause making your payment conditional on the MC being paid by the client — it is banned by the Construction Act except in cases of upstream insolvency',
-      'A clause requiring you to pay the MC before they pay you — it is not enforceable',
+      'A clause requiring the MC to pay you once they receive payment from the client — fully enforceable',
+      'A clause making your payment conditional on the MC being paid — banned except on upstream insolvency',
+      'A clause requiring the MC to pay you within 30 days of your application — fully enforceable as written',
+      'A clause requiring you to pay the MC before they pay you on the job — not enforceable in any way',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A "pay when paid" clause makes the subcontractor\'s right to payment conditional on the main contractor receiving payment from the client (or from a party further up the payment chain). Section 113 of the Construction Act 1996 renders these clauses ineffective, with one narrow exception: the MC can rely on a "pay when paid" clause if the party from whom payment is due has become insolvent. This provision was a landmark protection for subcontractors, ending the historic practice of MCs delaying payment to subcontractors indefinitely by claiming they had not been paid themselves.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A main contractor issues a contra charge for "cleaning up after your trade." You believe the mess was not yours. What is the most effective first step?',
     options: [
-      'Refuse to pay and hope they drop it',
-      'Accept the charge to avoid conflict',
-      "Respond in writing within the contractual timeframe, challenging the charge with evidence and requesting the MC's evidence",
-      'Deduct the same amount from your next application as a counter-claim',
+      'Refuse to pay the charge and simply hope that the main contractor quietly drops it',
+      'Accept the charge in full, even though you dispute it, in order to avoid any conflict',
+      'Deduct the very same amount from your next payment application as a tit-for-tat counter-claim',
+      "Respond in writing within the contractual timeframe, challenging the charge and requesting their evidence",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The most effective response to an unfair contra charge is a prompt, written challenge within the timeframe specified in your subcontract agreement. Your response should state that you dispute the charge, explain why (with evidence such as photographs showing your area was left clean, or records showing the mess was from another trade), and request the MC's evidence supporting the charge. Many contra charges are speculative — MCs issue them knowing that many subcontractors will simply accept them rather than challenge them. A well-evidenced, professionally written challenge will often result in the charge being withdrawn or significantly reduced.",
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'The MC pushes your second fix start date back by two weeks due to programme changes. Which of the following costs might you be entitled to claim?',
     options: [
-      'Only the cost of additional materials',
-      'Standing time for labour, additional preliminaries, loss of productivity, and any additional mobilisation costs',
-      'Only the cost of additional labour hours',
-      'You are never entitled to additional costs when the programme changes',
+      'Standing time for labour, additional preliminaries, loss of productivity, and extra mobilisation costs',
+      'Only the cost of any additional materials that you are forced to buy because of the delay',
+      'Only the cost of the additional labour hours that you have to put in because of the delay',
+      'Nothing at all — you are never entitled to claim additional costs when the programme changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "When the MC changes the programme and causes delay to your work, you may be entitled to claim a range of additional costs including: standing time for labour you had booked but could not deploy, additional preliminary costs (welfare, supervision, plant hire for the extended period), loss of productivity caused by working in different conditions or sequences than planned, and additional mobilisation/demobilisation costs if you have to leave and return to site. The key to a successful claim is contemporaneous documentation — you need to demonstrate that the costs were caused by the MC's programme change, not by your own inefficiency.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'When should you consider walking away from a main contractor relationship?',
     options: [
-      'After the first disagreement about payment',
-      'Never — maintaining the relationship is always more important than payment',
-      'When the pattern of behaviour shows systematic late payment, unfair contra charges, programme abuse, or refusal to follow contractual payment procedures',
-      'Only when instructed by a solicitor',
+      'Straight after the very first disagreement you have with them about a payment',
+      'Never — keeping the relationship going is always more important than getting paid',
+      'Only when your solicitor has specifically instructed you in writing to walk away',
+      'When a pattern shows systematic late payment, unfair contra charges, and programme abuse',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Walking away from an MC relationship is a legitimate business decision when the pattern of behaviour demonstrates a systematic disregard for fair commercial practice. Individual disputes are normal and should be resolved through the escalation process. But when you see a consistent pattern — payments always late, contra charges always excessive, programme always changed at your expense, payment notices never compliant — you are dealing with a company that treats subcontractor abuse as a business model. Continuing to work for such a company is rarely commercially viable, and the stress and financial damage of doing so far outweigh the short-term income.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'What is the most important single action you can take to protect yourself in MC disputes?',
     options: [
-      'Hire an expensive solicitor at the start of every project',
-      'Maintain thorough, contemporaneous written records of everything — instructions, changes, delays, payments, conversations',
-      'Only work for main contractors you know personally',
-      'Include penalty clauses in your subcontract agreement',
+      'Hire an expensive solicitor right at the start of every single project you take on',
+      'Only ever work for those main contractors that you already know well personally',
+      'Keep thorough, contemporaneous written records — instructions, changes, delays, and payments',
+      'Make sure you include strong penalty clauses in every subcontract agreement you sign',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Contemporaneous written records are the single most powerful tool you have in any commercial dispute. "Contemporaneous" means created at or near the time of the event, not reconstructed from memory weeks or months later. A site diary entry written on the day, a confirmation email sent within hours of a verbal instruction, photographs taken at the time of a programme change — these carry far more weight than recollections produced months later for an adjudication. An adjudicator or judge will almost always prefer a contemporaneous record over later testimony, because records created in the moment are not influenced by hindsight or self-interest.',
   },

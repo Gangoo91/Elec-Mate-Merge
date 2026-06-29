@@ -27,16 +27,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'Should you use different tape measures to cross-check measurements?',
+    question: 'How should you choose which tape measure to use across a project?',
     options: [
-      'Only for long measurements',
-      'True - for better accuracy',
-      'False - use the same tape measure',
-      'Only when working with others',
+      'Swap tapes regularly to spread out wear',
+      'Use whichever tape is nearest to hand',
+      'Use the same tape measure throughout',
+      'Use a different tape for each room',
     ],
     correctAnswer: 2,
     explanation:
-      'False - you should use the same tape measure throughout a project to avoid calibration discrepancies between different tools.',
+      'Use the same tape measure throughout a project to avoid calibration discrepancies between different tools.',
   },
   {
     id: 3,
@@ -56,9 +56,9 @@ const quizQuestions = [
     question: 'Why is measuring twice important?',
     options: [
       'Reduces risk of cutting or drilling errors',
-      'For all work to maintain proper records',
-      'False - functional tests are mandatory',
-      'Missing or undersized protective conductor',
+      'It speeds up the marking process',
+      'It removes the need for a spirit level',
+      'It is required for every BS 7671 certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 6,
     question: 'How can you check if a spirit level is accurate?',
     options: [
-      'At the end of every shift',
-      'Yellow label; Class F fires',
+      'Compare its reading against a tape measure',
+      'Check the bubble is centred on any surface',
       'Reverse test on a level surface',
-      'Watts per square metre (W/m²)',
+      'Hold it against a known vertical wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -94,9 +94,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is one risk of using a damaged measuring tape?',
     options: [
-      'Consider higher rated RCDs or circuit division',
-      'Outputs 3.5× more heat than the electrical input — net efficiency 350%',
-      'To prevent further injury, reduce pain, and minimise blood loss',
+      'It reads longer than the true distance every time',
+      'It can only be used for vertical measurements',
+      'It needs recalibrating before each use',
       'Inaccurate readings leading to misaligned installations',
     ],
     correctAnswer: 3,
@@ -108,9 +108,9 @@ const quizQuestions = [
     question: 'According to BS 7671, why is accurate measurement critical?',
     options: [
       'Ensures compliance with safe zones and spacing requirements',
-      'Supporting natural human sleep-wake cycles',
-      'Lower them to the ground, call 999, and begin CPR starting with compressions',
-      'To monitor system status and faults remotely',
+      'It removes the need to test the installation',
+      'It allows smaller cables to be used safely',
+      'It reduces the number of accessories required',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should you use the same tape measure throughout a project?',
     options: [
-      'Approximately 30-40 minutes',
-      'BS 1192 / AEC (UK) layer naming',
+      'To save time finding a tape each time',
+      'Because longer tapes are always more accurate',
       'To avoid calibration discrepancies',
-      'Regulations 411.3.1.1 and 411.3.1.2',
+      'Because BS 7671 requires one tape per job',
     ],
     correctIndex: 2,
     explanation:

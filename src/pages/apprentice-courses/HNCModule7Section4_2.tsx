@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'A dual-technology sensor combines PIR with microwave detection. What is the primary benefit?',
     options: [
-      'Multiple sensors with overlapping detection zones',
-      'It provides higher energy savings by requiring manual switch-on',
+      'Detection range is doubled compared with a single-technology sensor',
+      'It removes the need for any hold-off time after the last movement',
       'Reduced false triggering - both technologies must detect movement',
-      'The sensor responds to movement throughout the intended coverage area',
+      'It can detect occupants through solid concrete walls',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     question:
       'For open-plan offices greater than 100m², which sensor arrangement is most appropriate?',
     options: [
-      'Facing a window with direct sunlight',
-      'Decrease sensitivity and consider relocating the sensor',
-      'It provides higher energy savings by requiring manual switch-on',
+      'A single high-sensitivity microwave sensor at one end of the space',
+      'A single PIR sensor mounted on the perimeter wall facing inward',
+      'One ultrasonic sensor positioned at the centre of the ceiling',
       'Multiple sensors with overlapping detection zones',
     ],
     correctAnswer: 3,
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'According to Building Regulations Part L, absence detection is preferred over presence detection because:',
     options: [
-      'The sensor responds to movement throughout the intended coverage area',
+      'It switches lights on automatically the moment anyone enters the space',
       'It provides higher energy savings by requiring manual switch-on',
-      'Multiple sensors with overlapping detection zones',
-      'Near thin partition walls where detection could extend beyond the room',
+      'It detects occupants more reliably than presence detection in every situation',
+      'It removes the need to fit any manual light switch in the room',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'When commissioning occupancy sensors, the walk test should verify:',
     options: [
-      'Near thin partition walls where detection could extend beyond the room',
-      'Reduced false triggering - both technologies must detect movement',
+      'The sensor switches the lights off within five seconds of movement stopping',
+      'The sensor draws the lowest possible standby current when unoccupied',
       'The sensor responds to movement throughout the intended coverage area',
-      'It provides higher energy savings by requiring manual switch-on',
+      'The sensor can detect occupants in the adjacent room through the wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'Microwave sensors operating at 5.8 GHz should not be installed:',
     options: [
-      'Reduced false triggering - both technologies must detect movement',
-      'Decrease sensitivity and consider relocating the sensor',
-      'The sensor responds to movement throughout the intended coverage area',
+      'Directly above a desk where occupants sit for long periods',
+      'In the centre of a large open-plan office ceiling',
+      'At the end of a long straight corridor',
       'Near thin partition walls where detection could extend beyond the room',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
       'What sensitivity adjustment should be made if a PIR sensor false triggers from HVAC airflow?',
     options: [
       'Decrease sensitivity and consider relocating the sensor',
-      'The sensor responds to movement throughout the intended coverage area',
-      'Reduced false triggering - both technologies must detect movement',
-      'Multiple sensors with overlapping detection zones',
+      'Increase the hold-off time so the lights stay on through the false triggers',
+      'Increase sensitivity so genuine occupants are always detected',
+      'Switch the sensor from absence detection to presence detection',
     ],
     correctAnswer: 0,
     explanation:

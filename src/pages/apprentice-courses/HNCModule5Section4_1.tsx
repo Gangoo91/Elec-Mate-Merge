@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'iso-9001-focus',
     question: 'What is the primary focus of ISO 9001:2015?',
     options: [
-      'The circuit with the greatest resistance to flow',
-      'At the time of work or as soon as practical afterwards',
+      'Minimising the environmental impact of operations',
+      'Reducing labour costs across the supply chain',
       'Customer satisfaction through consistent quality',
-      'Detailed system configuration records and change logs',
+      'Ensuring compliance with health and safety law',
     ],
     correctIndex: 2,
     explanation:
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of document control in a QMS?',
     options: [
       'To ensure only current, approved documents are used',
-      'To prevent total system failure from a single fault',
-      'Hot spots indicating high resistance joints or overloading',
-      'Leakage currents can flow, creating safety hazards',
+      'To reduce the cost of printing project drawings',
+      'To restrict access to confidential commercial information',
+      'To satisfy the requirements of the construction programme',
     ],
     correctIndex: 0,
     explanation:
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     id: 'ncr-purpose',
     question: 'What is the primary purpose of a Non-Conformance Report (NCR)?',
     options: [
-      'Data centre infrastructure and telecommunications standards',
-      'HSG264 — Asbestos: The Survey Guide',
-      'Shows original installation details and test baselines',
+      'To record the cost of completed works for valuation',
+      'To list the materials approved for use on the project',
+      'To schedule planned maintenance activities',
       'To record and manage deviations from requirements',
     ],
     correctIndex: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: "What does 'risk-based thinking' mean in ISO 9001:2015?",
     options: [
-      'Monitoring and measuring results against objectives',
-      'Any information the organisation determines necessary for QMS effectiveness',
-      'Ongoing effort to enhance products, services, and processes',
+      'Transferring all project risk to subcontractors by contract',
+      'Pricing a financial contingency into every project budget',
+      'Carrying out a health and safety risk assessment before work',
       'Proactively identifying and addressing risks and opportunities',
     ],
     correctAnswer: 3,
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'A controlled document must include which of the following?',
     options: [
-      'Installation not matching approved drawings',
+      'The full cost breakdown of the work it relates to',
       'Revision number, approval status, and distribution list',
-      'A document describing the QMS scope, processes, and procedures',
-      'Monitoring and measuring results against objectives',
+      'A signature from every operative who has read it',
+      'The name of the client who commissioned the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the difference between a 'corrective action' and a 'preventive action'?",
     options: [
-      'A document describing the QMS scope, processes, and procedures',
-      'Any information the organisation determines necessary for QMS effectiveness',
+      'Corrective is done on site; preventive is done in the office',
+      'Corrective is the client’s duty; preventive is the contractor’s',
       'Corrective addresses existing problems; preventive stops potential problems',
-      'Revision number, approval status, and distribution list',
+      'Corrective applies to materials; preventive applies to workmanship',
     ],
     correctAnswer: 2,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: "What is a 'Quality Manual' in a QMS?",
     options: [
       'A document describing the QMS scope, processes, and procedures',
-      'Proactively identifying and addressing risks and opportunities',
-      'Revision number, approval status, and distribution list',
-      'Monitoring and measuring results against objectives',
+      'A log of every non-conformance raised on a project',
+      'The manufacturer’s installation instructions for equipment',
+      'A record of all internal audit findings and close-outs',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: "What is 'continual improvement' in quality management?",
     options: [
-      'A document describing the QMS scope, processes, and procedures',
+      'A one-off overhaul of the QMS every few years',
       'Ongoing effort to enhance products, services, and processes',
-      'Corrective addresses existing problems; preventive stops potential problems',
-      'Any information the organisation determines necessary for QMS effectiveness',
+      'Increasing production output regardless of defect rates',
+      'Replacing operatives until quality targets are met',
     ],
     correctAnswer: 1,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'How often should a QMS be reviewed by management?',
     options: [
-      'A document describing the QMS scope, processes, and procedures',
-      'Revision number, approval status, and distribution list',
-      'Ongoing effort to enhance products, services, and processes',
+      'Only when a major non-conformance is raised',
+      'Every day as part of the site supervisor’s routine',
+      'Once at the start of each project and never again',
       'At planned intervals (typically annually minimum)',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
     question: "What is the role of 'documented information' in ISO 9001:2015?",
     options: [
       'Any information the organisation determines necessary for QMS effectiveness',
-      'Revision number, approval status, and distribution list',
-      'A document describing the QMS scope, processes, and procedures',
-      'Proactively identifying and addressing risks and opportunities',
+      'Only the records that an external auditor specifically requests',
+      'The marketing material describing the company’s capabilities',
+      'A legally required register of all staff qualifications',
     ],
     correctAnswer: 0,
     explanation:

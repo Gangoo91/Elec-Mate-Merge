@@ -41,10 +41,10 @@ const checks = [
     question:
       'A T&E cable runs 2 m through 100 mm of loft insulation, then is clipped direct to the joists for the remaining 23 m. Which Reference Method drives the sizing calculation?',
     options: [
-      'The depth of the excavation multiplied by 1.5, or as determined by a competent person',
-      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
+      'Method C (clipped direct) — it is the longest section of the run',
+      'A blended average of the two methods weighted by length',
       'Method 100 / 103 (in thermal insulation) — the worst section governs because the cable will overheat there first.',
-      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
+      'Whichever method gives the larger tabulated It, to keep cost down',
     ],
     correctIndex: 2,
     explanation:
@@ -69,9 +69,9 @@ const checks = [
     question:
       'A 25 m radial socket circuit at full design current of 32 A on 6 mm² T&E (mV/A/m = 7.3) gives what voltage drop, and is it inside the 5 % limit?',
     options: [
-      'Hearing only the parts of a message that interest you or confirm your existing views',
-      'That it is firm, level and capable of supporting the tower and its load',
-      'The measured variable and the instrument function (e.g., FT = flow transmitter, PI = pressure indicator)',
+      'Vd = 7.3 × 32 = 233.6 V — far over the 5 % limit, so the cable fails',
+      'Vd = 7.3 × 25 / 1000 = 0.18 V — that is 0.08 % of 230 V — well under 5 %',
+      'Vd = 7.3 × 32 × 25 = 5840 V — over 5 %, size up to 10 mm²',
       'Vd = 7.3 × 32 × 25 / 1000 = 5.84 V — that is 2.54 % of 230 V — comfortably under 5 %.',
     ],
     correctIndex: 3,
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'You are sizing a 25 m radial that runs through three derate environments. Which length and which derate factors set the required tabulated CCC?',
     options: [
-      'Identify previously coded defects, recommended improvements, and any limitations — to inform scope and expected condition',
+      'Use the easiest section — the clipped-direct run — and ignore the brief in-insulation portion',
       'Use the worst section — the cable can only be as good as its hottest point — and apply the dominant Ca, Cg and Ci together.',
-      'A statutory fallback scheme that implies payment and adjudication terms into construction contracts that do not already comply with the Construction Act',
-      'A two-pole GS38-compliant voltage indicator (e.g. Martindale VI-13800, Kewtech KEWPROVE) — purpose-designed for safe isolation.',
+      'Use the longest section by metres, regardless of which install method it sits in',
+      'Average the three environments and apply a single blended correction factor',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     question:
       'Why is the BS 7671 inequality Ib ≤ In ≤ Iz, and not Ib ≤ Iz ≤ In?',
     options: [
-      'The principal contractor must establish and maintain appropriate emergency procedures, including arrangements for first aid, fire, and evacuation, and ensure they are tested and understood by all site workers',
-      'Consider replacing the oversized motors with correctly sized alternatives, or fitting VSDs to match motor speed to the actual load requirement, reducing energy consumption and improving the power factor',
-      'In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site\\\\\\\\\\\\\\\'s emergency information',
+      'Because the cable is always cheaper to oversize than the protective device',
+      'Because Iz must sit between Ib and In to leave headroom for diversity',
+      'Because the device rating is fixed and the cable capacity must match it exactly',
       'In must be at or above Ib so it does not nuisance-trip; Iz must be at or above In so the cable can carry the trip current long enough for the device to operate without cooking the cable.',
     ],
     correctAnswer: 3,
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'You have sized a 6 mm² T&E to satisfy CCC and Vd, but on site the conduit drop is already full and the cable will not pull. The correct response is:',
     options: [
-      'Any addition or alteration to an existing circuit that does not extend it to a new circuit — covers most non-notifiable work in dwellings AND the equivalent in commercial.',
+      'Drop to 4 mm² so the cable pulls, and accept the slightly higher volt drop',
       'Change the conduit size or add a draw box, then re-check the spacing factor (Sub 3.6) — sizing is not just electrical, it is mechanical too.',
-      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
+      'Force the cable through with extra lubricant and a winch',
+      'Split the 6 mm² into two 2.5 mm² cables run in parallel',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,9 +185,9 @@ const quizQuestions = [
       'You design a circuit and every gate passes — CCC, Vd, thermal, Zs, mechanical. The final inequality you write on the design sheet is:',
     options: [
       'Ib ≤ In ≤ Iz, with Vd, I²R and Zs all separately verified within their respective limits.',
-      'The process of cleaning concrete from tools and equipment — the alkaline wash water can pollute watercourses',
-      'Joints and connections must be properly made to be mechanically and electrically sound',
-      'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
+      'Iz ≤ In ≤ Ib, with the cable capacity recorded as the lowest of the three.',
+      'In ≤ Ib ≤ Iz, confirming the device trips before the design load is reached.',
+      'Ib = In = Iz, all three matched exactly for the most economical design.',
     ],
     correctAnswer: 0,
     explanation:

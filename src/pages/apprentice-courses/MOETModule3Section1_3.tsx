@@ -40,16 +40,16 @@ const quickCheckQuestions = [
   },
   {
     id: 'rcd-test-freq',
-    question: 'How often does the standard RCD notice advise testing the device?',
+    question: 'How often does the current RCD notice advise the user to test the device?',
     options: [
       'Monthly',
       'Six-monthly',
       'Quarterly',
       'Annually',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      "The standard RCD notice states 'Test quarterly' (every three months). Regular testing by pressing the test button verifies the mechanical trip mechanism is functioning correctly and the device will disconnect the supply in the event of an earth fault.",
+      'Current guidance (BS 7671 Regulation 514.12 and Guidance Note 3) recommends pressing the RCD test button at least every six months. This verifies the mechanical trip mechanism operates correctly and the device will disconnect the supply in the event of an earth fault.',
   },
   {
     id: 'spd-lead-length',
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a split-load consumer unit?',
     options: [
-      'Power is the rate of energy use (kW); energy is power over time (kWh)',
+      'A unit that splits the incoming supply between two separate buildings',
       'A unit where the busbars are divided into RCD-protected and non-RCD sections',
-      'Using laminated cores with insulation between laminations',
-      'Way number, description, device type/rating, cable size, phase and area served',
+      'A unit fitted with two main switches so it can be fed from two phases',
+      'A unit in which each circuit shares a single combined RCBO for the whole board',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,16 +136,16 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'How often does the standard RCD notice advise the user to test the device?',
+    question: 'How often does the current RCD notice advise the user to test the device?',
     options: [
       'Monthly',
-      'Six-monthly',
       'Quarterly',
+      'Six-monthly',
       'Annually',
     ],
     correctAnswer: 2,
     explanation:
-      "The standard RCD notice states 'Test quarterly' (every three months) by pressing the built-in test button.",
+      'Current guidance (BS 7671 Regulation 514.12 and Guidance Note 3) recommends pressing the built-in RCD test button at least every six months.',
   },
   {
     id: 7,
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'What trend is replacing split-load consumer units in modern installations?',
     options: [
-      'Correct on/off times as programmed',
+      'A single RCD protecting every circuit in the board',
       'Full RCBO protection for each circuit',
-      'Carbonised paths from surface contamination',
-      'The British Standards Institution (BSI)',
+      'Returning to plastic enclosures to reduce cost',
+      'Removing earth fault protection from socket circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'What information must a circuit schedule include?',
     options: [
-      'High anxiety with physical symptoms such as trembling and nausea',
-      'PDF/A format, standardised file naming, and regular format migration',
+      'Only the way number and the name of the electrician who wired the board',
+      'The purchase date and price of every protective device in the board',
       'Way number, description, device type/rating, cable size, phase and area served',
-      'BMS setpoint and schedule adjustment based on actual use',
+      'The measured load current on each circuit at the time of installation only',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of blanking plates in a distribution board?',
     options: [
-      'Upsizing the neutral conductor relative to the lines',
-      'Multiples of fundamental frequency causing distortion',
-      'They consume the most energy in a building',
+      'To increase the current rating of the busbars they cover',
+      'To provide spare ways that can be wired without a protective device',
+      'To improve the appearance of the board for the customer',
       'To maintain the IP rating and prevent access to live parts',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'Where should a Type 1 SPD be installed?',
     options: [
       'At the origin of the installation (main switchboard)',
-      'By opening and closing to regulate air passage through ducts',
-      'Very low temperatures (near absolute zero)',
-      'Modern PVC window frames installed in 2020',
+      'At the final socket outlet nearest sensitive equipment',
+      'Inside the enclosure of each individual final circuit MCB',
+      'On the load side of every RCD in the consumer unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -565,7 +565,7 @@ const MOETModule3Section1_3 = () => {
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Nominal voltage and frequency of the supply</li>
                 <li className="pl-1">Identification of the origin of supply (where not obvious)</li>
-                <li className="pl-1">RCD test notice: "Test quarterly" with instructions</li>
+                <li className="pl-1">RCD test notice: advising a six-monthly test, with instructions</li>
                 <li className="pl-1">Dual supply warning where more than one source is present</li>
                 <li className="pl-1">Periodic inspection due date (recommended)</li>
               </ul>
@@ -800,7 +800,7 @@ const MOETModule3Section1_3 = () => {
                 <ul className="space-y-0.5">
                   <li>1. Circuit schedule present and accurate</li>
                   <li>2. All blanking plates fitted</li>
-                  <li>3. RCDs tested quarterly (trip time in spec)</li>
+                  <li>3. RCDs user-tested six-monthly (trip time in spec)</li>
                   <li>4. Connections torque-checked annually</li>
                   <li>5. SPD status indicators checked</li>
                 </ul>

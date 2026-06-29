@@ -54,12 +54,12 @@ const quizQuestions = [
     id: 5,
     question: 'How do self-employed electricians build qualifying years for the State Pension?',
     options: [
-      'They are automatically enrolled through their trade body',
       'By paying Class 2 National Insurance contributions',
+      'They are automatically enrolled through their trade body',
       'By paying income tax on time',
       'Self-employed people cannot qualify for the State Pension',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Self-employed workers build qualifying years through Class 2 NI contributions. Since April 2024 these are voluntary, so you must actively choose to pay them to protect your State Pension entitlement.',
   },
@@ -88,8 +88,8 @@ const quizQuestions = [
     id: 8,
     question:
       'According to the PLSA Retirement Living Standards, what annual income represents a &ldquo;moderate&rdquo; retirement for a single person?',
-    options: ['&pound;12,800', '&pound;18,500', '&pound;23,300', '&pound;37,300'],
-    correctAnswer: 2,
+    options: ['&pound;12,800', '&pound;18,500', '&pound;37,300', '&pound;23,300'],
+    correctAnswer: 3,
     explanation:
       'The PLSA &ldquo;moderate&rdquo; standard is &pound;23,300 per year for a single person. This covers a two-week European holiday, eating out a few times a month, and a reasonable standard of living.',
   },

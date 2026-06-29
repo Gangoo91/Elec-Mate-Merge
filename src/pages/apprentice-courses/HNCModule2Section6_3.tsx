@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'dynamic-vs-steady',
     question: 'What is the key advantage of dynamic simulation over steady-state calculation?',
     options: [
-      'Overheating components or insulation breakdown',
-      'An explosive release of electrical energy',
-      'To detect crossed conductors at junction boxes',
+      'It runs much faster and needs far less input data',
+      'It removes the need for weather data altogether',
+      'It only requires a single peak design temperature',
       'It accounts for thermal mass and time-varying conditions',
     ],
     correctIndex: 3,
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'timestep',
     question: 'Why do dynamic simulations typically use hourly or sub-hourly timesteps?',
     options: [
-      'The scaffold is incomplete, unsafe, or must not be used',
-      'Withdraw 4% of your pension pot annually in retirement',
+      'To keep the total run time as short as a steady-state calculation',
+      'To match the annual billing period used by energy suppliers',
       'To capture rapid changes in weather, occupancy and plant operation',
-      'Installing fibre units into pre-installed tubes using air pressure',
+      'To average out short-term variations into a single daily figure',
     ],
     correctIndex: 2,
     explanation:
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: 'What type of weather data does a dynamic simulation typically require?',
     options: [
       'Hourly data for a full design year (8,760 hours)',
-      'A registered waste carrier holding appropriate authorisation',
-      'Fire and Rescue Authorities (local Fire and Rescue Services)',
-      'Clear warning notices such as \\\\\\\'Do Not Use – Faulty Circuit\\\\\\\'',
+      'A single peak outdoor design temperature for the location',
+      'Monthly average temperatures for the previous calendar year',
+      'The long-term annual mean temperature for the region',
     ],
     correctIndex: 0,
     explanation:
@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'validation',
     question: 'Model validation is important because:',
     options: [
-      'Intrinsically safe or flameproof certification required',
-      'That batteries can sustain illumination for the full 3-hour rated period',
+      'It guarantees the building will meet its design energy target exactly',
+      'It removes all uncertainty from the simulation results',
       'It verifies that the model reasonably represents reality',
-      'Cables must run within prescribed safe zones to avoid accidental damage',
+      'It allows the simulation to run without any input weather data',
     ],
     correctIndex: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: "The 'response factor' method in simulation refers to:",
     options: [
-      'Coupling different simulation tools to model interacting systems',
-      'Adjusting model inputs to match measured data from an existing building',
+      'A factor that scales results to match the building’s actual size',
+      'The ratio of cooling load to heating load for a zone',
       'Pre-calculated transfer functions for heat flow through construction',
-      'Three adaptive comfort criteria based on operative temperature',
+      'How quickly occupants respond to changes in room temperature',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: "What does 'zoning' mean in building simulation?",
     options: [
-      'Pre-calculated transfer functions for heat flow through construction',
-      'Adjusting model inputs to match measured data from an existing building',
-      'Three adaptive comfort criteria based on operative temperature',
+      'Setting the planning use class for each part of the building',
+      'Splitting the simulation into separate annual time periods',
+      'Grouping similar buildings together for benchmarking',
       'Dividing the building into areas with similar thermal conditions',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "The 'Design Summer Year' (DSY) weather file represents:",
     options: [
-      'Regular updates, monitoring, and periodic restarts',
+      'Typical average conditions used for annual energy estimates',
       'A near-extreme summer for overheating assessment',
-      'Non-conductive material (fibreglass)',
-      'From April 2026 when they exceed £50,000',
+      'The single hottest day ever recorded at the location',
+      'A future projected climate for the 2080s scenario',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which statement about simulation uncertainty is correct?',
     options: [
-      'Annual energy consumption estimates representing typical conditions',
-      'Adjusting model inputs to match measured data from an existing building',
-      'Systematically varying inputs to understand their impact on outputs',
+      'A model that runs without errors produces certain results',
+      'Uncertainty comes only from the choice of weather file',
+      'Calibrated models remove uncertainty entirely',
       'Multiple sources contribute to uncertainty including inputs, algorithms, and assumptions',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'The CIBSE TM52 overheating criteria are assessed using:',
     options: [
       'Three adaptive comfort criteria based on operative temperature',
-      'A near-extreme summer for overheating assessment',
-      'When detailed air movement patterns matter (atria, displacement ventilation)',
-      'Annual energy consumption estimates representing typical conditions',
+      'A single fixed indoor temperature limit of 28 °C',
+      'Annual energy consumption against a benchmark target',
+      'The number of hours air conditioning is switched on',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "What is 'co-simulation' in building energy modelling?",
     options: [
-      'Annual energy consumption estimates representing typical conditions',
+      'Running the same model twice and averaging the two results',
       'Coupling different simulation tools to model interacting systems',
-      'When detailed air movement patterns matter (atria, displacement ventilation)',
-      'Pre-calculated transfer functions for heat flow through construction',
+      'Simulating two identical buildings on neighbouring sites',
+      'Sharing one model between several engineers at the same time',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'When is CFD (Computational Fluid Dynamics) simulation warranted instead of standard dynamic simulation?',
     options: [
-      'Pre-calculated transfer functions for heat flow through construction',
-      'Systematically varying inputs to understand their impact on outputs',
+      'For every Part L compliance calculation on small buildings',
+      'When only annual energy totals are required',
       'When detailed air movement patterns matter (atria, displacement ventilation)',
-      'Three adaptive comfort criteria based on operative temperature',
+      'Whenever a single thermal zone is sufficient for the space',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: "What does 'model calibration' involve?",
     options: [
-      'Multiple sources contribute to uncertainty including inputs, algorithms, and assumptions',
-      'Dividing the building into areas with similar thermal conditions',
-      'Pre-calculated transfer functions for heat flow through construction',
+      'Setting the simulation software clock to the correct time zone',
+      'Checking the geometry matches the architect’s drawings',
+      'Selecting the correct weather file for the location',
       'Adjusting model inputs to match measured data from an existing building',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: "The 'Test Reference Year' (TRY) weather file is used for:",
     options: [
       'Annual energy consumption estimates representing typical conditions',
-      'Adjusting model inputs to match measured data from an existing building',
-      'A near-extreme summer for overheating assessment',
-      'Dividing the building into areas with similar thermal conditions',
+      'Overheating assessments under TM52 and TM59 criteria',
+      'Modelling a near-extreme summer for worst-case design',
+      'Projecting future climate conditions for the 2050s',
     ],
     correctAnswer: 0,
     explanation:

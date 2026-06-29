@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'A BESS install is approaching its 5-year EICR. Under which Part / Chapter does the periodic inspection of the BESS install live?',
     options: [
-      'Part 5 / Chapter 57 alone',
-      'Part 6 / Chapter 65 (and Chapter 64 for the verification methodology), with Chapter 57 supplying the BESS-specific items being inspected — the BESS is one part of the wider installation under EICR',
-      'Part 7 / Chapter 71 only',
-      'BESS installs are exempt from EICR',
+      'Part 6 / Chapter 65 (with Chapter 64 methodology), Chapter 57 supplying the BESS-specific items',
+      'Part 5 / Chapter 57 alone, inspected separately from the rest of the installation',
+      'Part 7 / Chapter 71 only, treating the BESS as a special location',
+      'BESS installs are exempt from periodic inspection and EICR entirely',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Part 6 (Inspection and Testing) is the framework for both initial verification (Chapter 64) and periodic inspection (Chapter 65). A BESS install is part of the wider electrical installation — the EICR covers the whole installation, with Chapter 57 supplying the BESS-specific items to check (warning notices, isolators, RCD type, terminal condition, ventilation, BMS log). Cert evidence bundle from the install (Section 5.7 handover pack) is the entry point.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'An EICR inspector finds that a BESS install’s only RCD on the AC side is a Type AC on a transformerless hybrid inverter — the manufacturer does NOT have a written declaration that the inverter cannot feed DC fault current. What EICR observation code applies?',
     options: [
-      'C1 — danger present, immediate remedial action required',
-      'C2 — potential danger, urgent remedial action required',
-      'C3 — improvement recommended',
-      'No code — Type AC is always acceptable',
+      'C1 — danger present, with immediate remedial action required on site',
+      'C3 — improvement recommended only, with no urgent action needed',
+      'C2 — potential danger, urgent remedial: Type AC is blind to the smooth DC fault',
+      'No code — Type AC is always acceptable on any inverter installation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 712.411.3.2.1.2 — transformerless inverter without simple separation requires Type B (BS EN 62423). Type AC is blind to smooth DC fault current that the topology can produce; in fault conditions, the RCD may not operate and ADS fails for that fault profile. C2 (potential danger, urgent remedial) is the correct code. C1 would apply if the RCD was missing or visibly failed. C3 is for items that are not unsafe but could be improved (e.g. labelling clarity). FI (further investigation) is for findings where the inspector cannot reach a code without more information.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'A 5-year EICR capacity test on a 9.5 kWh LFP BESS returns 7.4 kWh delivered. The handover pack records a baseline (year 0) of 8.0 kWh delivered. What does this tell the inspector?',
     options: [
-      'Catastrophic failure — replace immediately',
-      'Normal LFP degradation: 7.4 / 8.0 = 92.5% of baseline — well above the 80%-of-rated replacement convention used in stationary battery industry, and consistent with typical LFP cycle-life curves over 5 years',
-      'Cannot say without thermal imaging',
-      'No conclusion possible — capacity tests are unreliable',
+      'Catastrophic failure of the pack, requiring immediate replacement of every module',
+      'Nothing can be concluded without first thermal-imaging every cell in the pack',
+      'No conclusion is possible, because capacity tests are inherently too unreliable to use',
+      'Normal LFP fade: 7.4 / 8.0 = 92.5% of baseline, well above the 80% replacement convention',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'LFP cycle life ratings (typically 6,000–10,000 cycles at 80% DoD) translate to ~3-7% capacity fade per year of daily cycling. 7.4 kWh delivered vs 8.0 kWh baseline = 7.5% fade over 5 years — well within manufacturer expectation. The 80%-of-rated industry convention for stationary battery replacement (carried over from UPS industry practice) translates to about 6.4 kWh delivered on this pack — still 1 kWh of headroom. EICR finding: pass, with the new number recorded for the next 5-year reference.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'A customer reports a thermal event on their BESS — pungent smell, BMS app showing high cell temperature alarms, then the unit shutting itself down. What is the correct response sequence?',
     options: [
-      'Open the cabinet immediately to investigate',
-      'Re-energise to see if the fault clears',
-      'Do NOT open the cabinet. Evacuate the area. Call fire and rescue (999). Inform the manufacturer’s emergency line. Wait for fire and rescue + manufacturer engineer sign-off before any re-energisation. The BMS shutdown has done its job; opening or re-energising can ignite thermal runaway',
-      'Wait 24 hours then try again',
+      'Open the cabinet immediately to investigate the source of the smell and heat',
+      'Re-energise the unit straight away to see whether the fault clears itself',
+      'Do not open or re-energise; evacuate, call 999 and the manufacturer, await sign-off',
+      'Wait 24 hours with the unit isolated, then re-energise it to test again',
     ],
     correctIndex: 2,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'An EICR inspector arrives at a UK domestic BESS site at year 5. The Section 5.7 handover pack is missing — customer doesn’t have it. How does this affect the inspection?',
     options: [
-      'The inspection is impossible — refuse to proceed',
-      'The inspection proceeds, but baseline capacity, BMS commissioning parameters, RCD type rationale and notice positions all have to be reconstructed from kit, install records and visual evidence. Findings recorded as Code C3 (improvement recommended — pack should be reproduced) or FI (further investigation) where reconstruction is incomplete',
-      'Type AC RCD is automatically acceptable when no pack is present',
-      'Visual inspection is sufficient by itself',
+      'It proceeds but is stretched: baseline, BMS parameters, RCD rationale and notices are reconstructed, with FI codes where incomplete',
+      'The inspection becomes impossible, so the inspector refuses to proceed at all',
+      'A Type AC RCD becomes automatically acceptable whenever no handover pack is present',
+      'A visual inspection on its own is sufficient, with no electrical testing required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A missing handover pack does not stop the EICR but it stretches it. The inspector reconstructs as much as possible from the kit nameplate (identity), photos of the install (positions, isolators, notices), the BMS log download (baseline capacity if BMS firmware kept it, BMS config parameters), and physical measurement. Items that can’t be reconstructed get FI codes. Recommend the customer ask the original installer for the pack copy, or commission a fresh "as-found" pack as a remedy. Cert evidence bundle for the EICR records what was reconstructible and what wasn’t.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A 5-year EICR on a hybrid + LFP install finds: (a) Reg 570.6.8.202 access notice is missing from the cabinet front; (b) Type B RCD trip-time tested at 28 ms at IΔn — passing; (c) capacity test delivers 7.1 kWh vs 8.0 kWh baseline; (d) one DC terminal shows green-blue copper corrosion. What is the most accurate combined coding?',
     options: [
-      'Everything C1 — site is dangerous',
-      '(a) C2 — missing safety notice is a potential danger to next worker; (b) pass / no code; (c) pass / no code (88.75% of baseline, well above 80% convention); (d) C2 — corroded DC connection can lead to high resistance, thermal hotspot, BMS fault and is a potential danger',
-      'Everything C3 — improvements recommended',
-      'No findings — install passes',
+      'Everything is C1 — the site is dangerous',
+      'Everything is C3 — improvements recommended only',
+      '(a) missing notice C2, (b) Type B RCD passing no code, (c) 88.75% of baseline no code, (d) corroded DC terminal C2 — so the report is unsatisfactory on the two C2 findings',
+      'No findings — the install passes outright',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Each finding is coded on its own merits per the BS 7671 EICR code definitions. Missing safety notice: C2 (next worker isn’t warned about energised live parts after isolation). Type B RCD passing: no code. Capacity at 88.75% of baseline: well above the 80% convention, no code. Corroded DC terminal: C2 (high resistance, thermal hotspot risk, BMS fault potential). Combined site outcome: unsatisfactory (any C1 or C2 makes the report unsatisfactory), with prioritised remediation against the two C2 findings. Cert evidence bundle indexes the EICR alongside the original install pack.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'A customer reports their BESS has stopped charging for 3 days. BMS app shows "communication error with PCE" and the inverter’s display shows an error code. Which diagnostic action goes FIRST?',
     options: [
-      'Open the cabinet to inspect',
-      'Replace the battery — most likely cause',
-      'Download the BMS event log via the app, look up the inverter error code in the manufacturer manual, and check the comms link (Modbus / CAN cable between battery and inverter) before any physical investigation. BMS log + inverter error log together usually pinpoint the fault without cabinet opening',
-      'Power-cycle the inverter without diagnostics',
+      'Open the cabinet immediately to inspect the cells and terminals for the fault',
+      'Replace the battery pack on the basis that it is the most likely cause',
+      'Power-cycle the inverter straight away without running any diagnostics first',
+      'Download the BMS log, look up the inverter error code and check the Modbus/CAN comms before opening the cabinet',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BMS event log is the diagnostic spine — it records every fault the BMS has seen with timestamps. Pair it with the inverter’s error log via the manufacturer manual. On a comms-error fault, the most common cause is the Modbus / CAN cable (loose, damaged or wrong termination) or a firmware version mismatch after an over-the-air update — both diagnosable without opening the cabinet. Cabinet opening is reserved for cases where the log + inverter error + comms check fail to identify the fault. Cert evidence bundle records the diagnostic sequence; this becomes the pattern for the next fault call-out.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A 10-year-old LFP BESS reaches end-of-life and the customer wants it removed. Which sequence is correct for decommissioning?',
     options: [
-      'Just disconnect, put cells in skip',
-      'Discharge to manufacturer-defined safe-state SoC via the BMS; isolate at every Reg 570.6.5.201 port; disconnect manufacturer-supplied DC interconnects in the manufacturer-specified order; remove warning notices once the BESS is gone; arrange transport to an authorised lithium-battery recycler under UK Battery Regulations 2009 / WEEE / UN 3480/3481 transport rules; record decommissioning in the cert evidence bundle',
-      'Throw all cells in the household recycling bin',
-      'Burn the cells on site to neutralise them',
+      'Discharge to safe-state via the BMS, isolate every port, disconnect in order, then route to an authorised recycler under UN 3480/3481',
+      'Just disconnect the pack and place the cells in the general-waste building skip',
+      'Separate the cells out and put them in the household recycling collection bin',
+      'Burn the cells on site in a controlled manner to neutralise them before disposal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lithium batteries are classified as hazardous waste under UK Battery Regulations 2009 and require transport under UN 3480 (lithium ion, packaged separately) or UN 3481 (lithium ion, contained in equipment) class 9 dangerous goods rules. Authorised recyclers exist (e.g. Ecobat, Recyclus); manufacturer take-back schemes are increasingly common (GivEnergy, Tesla offer them). General-waste disposal is illegal AND a fire risk. Cert evidence bundle records the decommissioning, the recycler / take-back route, the WEEE consignment note and the chain of custody.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Reg 643.1 requires that "Measuring instruments and monitoring equipment and methods shall be chosen in accordance with the relevant parts of BS EN 61557". What does this mean for an EICR on a BESS install that requires a Type B RCD trip-time test?',
     options: [
-      'Any tester will do',
-      'The trip-time tester used MUST be Type B-capable (e.g. Megger MFT1731 or equivalent). Older testers (MFT1502, MFT1721) only support Type AC / A and CANNOT correctly trip-test a Type B RCD — using them on a Type B install is a Reg 643.1 non-compliance for the inspection itself',
-      'Type B RCDs don’t need testing',
-      'Trip-time tests are no longer required',
+      'Any general-purpose RCD trip-time tester will do for the inspection',
+      'Type B RCDs do not require trip-time testing at all during an EICR',
+      'The tester must be Type B-capable; an AC/A-only instrument cannot correctly trip-test it (Reg 643.1)',
+      'Trip-time tests on RCDs are no longer required under Part 6 of BS 7671',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.1 — measuring instruments comply with BS EN 61557 (or equivalent). A Type B RCD has a specific trip profile (responds to smooth DC component) that Type AC / A-only testers don’t generate. Using a Type AC tester on a Type B RCD gives a misleading pass — the device may trip on the AC test but fail on the smooth DC fault for which it was specified. Inspectors carrying out EICRs on transformerless hybrid installs MUST carry a Type B-capable tester. Megger MFT1731, Fluke 1664 FC, Kewtech KT64DL and similar units handle Type B; older MFT1502 / MFT1721 do not.',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A customer’s old NMC pack (from a 2019 install) is being removed and replaced with a new LFP pack on the same hybrid inverter. What is the correct treatment of the removed NMC pack?',
     options: [
-      'Resell it to another customer as a "good as new" unit',
-      'Reuse it in a different domestic install',
-      'Route to manufacturer take-back, an authorised lithium-battery recycler under UK Battery Regulations 2009 (Ecobat / Recyclus etc.), or — if the pack is healthy with documented capacity — to a second-life specialist (Connected Energy E-STOR-style commercial / industrial reuse). Do NOT install the NMC pack into a new UK domestic site in 2025-26 given LFP’s safety / cycle / cost advantages',
-      'Throw it in the skip',
+      'Resell it directly to another customer as a "good as new" replacement unit',
+      'Reuse it as-is in a different UK domestic install on another hybrid inverter',
+      'Dispose of it in the general-waste skip along with the rest of the strip-out',
+      'Route it to manufacturer take-back, an authorised recycler, or a second-life specialist — never reinstall legacy NMC',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Three legitimate end-of-life routes: (1) manufacturer take-back (Tesla, GivEnergy offer them; warranty registration is a useful prerequisite); (2) authorised lithium-battery recycler under UK Battery Regulations 2009 / WEEE; (3) second-life market for the commercial / industrial space (Connected Energy E-STOR uses retired EV NMC packs for stationary applications at the 100 kWh-MWh scale). UK domestic reinstall of legacy NMC is hard to justify in 2025-26 (Section 5.1 chemistry analysis). Reselling or skip-binning are both excluded. Cert evidence bundle for the replacement install records the removed pack’s destination and the chain of custody.',
   },

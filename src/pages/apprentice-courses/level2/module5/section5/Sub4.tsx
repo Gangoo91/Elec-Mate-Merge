@@ -44,12 +44,12 @@ const checks = [
     question:
       "You're testing a sub-board you thought was isolated. Your test prods touch a phase conductor that's still live. You step back, no contact, no shock — but your heart's in your mouth. The board was supposed to have been isolated and locked off by the supervisor 30 minutes earlier. What do you do?",
     options: [
-      "Three reasons. Practical — site tools migrate; marking yours stops it disappearing into a sub-contractor's pouch. Insurance — if a tool causes an accident, the firm needs to know whose competent person was meant to be checking it. Accountability — under PUWER you're personally responsible for the tools you use; marking tells the supervisor (and the HSE if it ever gets there) that the tool was assigned to a named operative who had the duty of pre-use inspection.",
-      "Motor circuit analyser (PdMA MCEMAX, AEMC 6505, AVO Megger MIT400 series with motor-test modes) measures the motor's electrical characteristics OFF-LINE — winding resistance balance between phases, IR to ground, polarisation index, surge comparison. Identifies inter-turn shorts, ground faults, contamination, rotor cage damage. ON-LINE analysers (Baker Static Motor Analyser, SKF) measure during operation — current signature analysis, harmonic content. L3 apprentices rarely operate these but the broader principle — a motor has electrical AND mechanical fault modes, and dedicated instruments characterise them — is L3 syllabus knowledge.",
-      "Around 320 V at Vmp (8 panels × 40 V each in series), and the open-circuit voltage on a cold morning could push that toward 380-400 V due to the temperature coefficient of Voc (typically -0.3% per °C above 25°C). Strings put cells in series — voltages add. Two strings paralleled at the same MPPT contributes 20 A combined Isc but the same string voltage. The inverter's max DC input voltage spec must exceed the worst-case cold-morning Voc with margin. The DC isolator at the array must be rated for that voltage.",
-      "Stop. Make the board safe (re-isolate properly, lock-off, dead-test, prove the tester). Tell your supervisor immediately and explain exactly what happened — what you expected, what you found, what action you took. Document the near-miss in writing. The employer is required by HSE guidance to investigate near-misses; they're the leading indicator of next month's RIDDOR-reportable incident. Mgmt H&S Regs 1999 Reg 14 puts a personal duty on you as the employee to inform the employer of any matter you reasonably consider represents a serious and immediate danger — that includes a near-miss that exposed a defect in the safe system of work.",
+      "Stop, make the board safe, then tell your supervisor immediately and document the near-miss in writing so the defect gets investigated.",
+      "Say nothing — no contact was made and no one was hurt, so quietly re-isolate the board yourself and carry on without raising it.",
+      "Note it privately in your own diary in case it's ever needed, but don't tell the supervisor, since the duty to report sits with them.",
+      "Mention it casually to a fellow apprentice at break so the team is aware, but leave it there without any formal written record.",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "Mgmt H&S Regs 1999 Reg 14(2) makes it a personal duty on the employee to inform the employer of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND of any matter they reasonably consider represented a shortcoming in the employer's protection arrangements. A near-miss with a live conductor where the lock-off failed is exactly that kind of shortcoming. Reporting it allows the employer to investigate, fix the safe-isolation procedure, brief the team, and prevent the next incident. Not reporting it leaves the same defect in place for the next person — who may not be as lucky. The HSE consistently identifies failure to act on near-misses as a precursor to fatal incidents.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "Customer asks you on site to add a third light circuit to the kitchen rewire — verbally, in passing, while you're up the ladder. You agree verbally and add it. The variation isn't documented. The job overruns by half a day because of the extra work. The customer disputes the additional charge on the final invoice. What's the financial effect on the firm?",
     options: [
-      "Access to Work — a Department for Work and Pensions (DWP) scheme that can fund equipment, support workers, transport and other adjustments for disabled workers. Both the worker and the employer can apply. Funding is means-tested for self-employed workers and the scheme is non-contributory for the employee. Many employers don't know about it and pay for adjustments themselves when Access to Work would have funded them.",
-      "F-Gas commissioning — refrigerant charge weight verified per manufacturer's instructions, leak test, pressure / temperature checks across the cycle. Wet system commissioning — pressure test, fill and bleed, flow rate verification per emitter, balancing. Heat pump system commissioning — flow temperature setpoint configured, defrost cycle verified, weather compensation curve set, smart controls integration tested, hot water cylinder priority confirmed, anti-legionella cycle verified. Performance check — measure flow temperature and ambient at first run; verify against design SCOP estimate. All recorded in the MCS commissioning records as part of the install pack.",
-      "The firm probably won't recover the cost of the additional work in court because there's no documented variation, no agreed price and no signed scope change. The half-day of labour, the additional materials, and the late completion of the job all sit on the firm's profit margin. If the customer's dispute escalates to the certification scheme (NICEIC, NAPIT, ELECSA) or to the local Trading Standards office, there's also reputational and scheme-membership risk. The variation should have been written, signed, and agreed before the work commenced.",
-      "The technical lead for a project on the sub-contractor's side. The Project Engineer coordinates design (where applicable), procurement, programme, technical queries (RFIs), QA and the eventual handover. They are the sub-contractor's technical face to the main contractor and the M&E Consultant. Typically a Technician-grade or HNC-qualified electrician with several years on site, or a graduate engineer who has crossed in from design.",
+      "None — a verbal agreement is fully binding, so the firm just takes the customer to the Small Claims Court and recovers the disputed amount in full.",
+      "The cost is capped at the extra materials only — labour fell within the normal working day, so the half-day overrun isn't a real loss to the firm.",
+      "The firm probably won't recover the cost in dispute — the undocumented labour, materials and late completion all sit on its profit margin.",
+      "There's no financial effect — the customer is obliged to pay for any work actually carried out under unjust-enrichment rules, documented or not.",
     ],
     correctIndex: 2,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "You finish a kitchen first-fix and hand over to another electrician for second-fix. You don't leave any notes, photos or a redline on the layout drawing — you assume they'll work it out from the drawings. Two weeks later the second-fix electrician drills through a cable you'd routed slightly differently from the design. What's the cost picture?",
     options: [
-      "Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.",
-      "An MID-compliant generation meter measures the total electrical output of the PV array. Required by Smart Export Guarantee (the supplier needs accurate metering to pay the export tariff) and increasingly by BUS / SEG-equivalent schemes for performance monitoring. At commissioning the meter is verified to read correctly (display zero before energising, increment as the inverter delivers, accumulate accurately over the first day's run). The customer can read the meter themselves to verify ongoing performance. The smart meter at the property handles the import / export reading for the supplier.",
-      "Direct: replacement cable, replastering, redecoration, the second-fix electrician's wasted time, the first-fix electrician's wasted time being called back to identify the route. Indirect: programme delay, customer dissatisfaction, possible warranty claim. Operational: re-pull cable in a partly-finished property is much more disruptive than the original install. Reputational: customer tells the next-door neighbour the kitchen rewire 'went wrong'. The 5-minute discipline of taking phone-camera photos of every chase before plastering and adding a redline to the layout drawing prevents the entire chain.",
-      "UK statute making it a criminal offence to offer, promise, give, request, accept or agree to receive a financial or other advantage as an inducement for improper performance. Applies to any UK person/business. For electricians: gifts to suppliers/main contractors over modest value (typically £100+) raise risk; cash 'thank-yous' to procurement people are clearly bribery; small thank-you gifts (bottle of wine, biscuit tin) are typically fine. Many large firms have anti-bribery policies that ban any gifts.",
+      "Negligible — the second-fix electrician carries liability for drilling without checking the route, so the cost falls on them and their insurer alone.",
+      "Direct rework plus indirect delay, customer dissatisfaction and reputational damage — a whole chain of cost from one missing handover note.",
+      "Just the cost of the damaged cable itself — it was concealed and the drawings showed the design route, so it's a materials write-off and nothing more.",
+      "A small programme delay only — both work for the same firm, so the wasted labour cancels out internally and the real cost is a day or two added.",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Handover communication is one of the lowest-cost, highest-value disciplines on a fit-out. Photos before plastering take five minutes; a redline on the layout drawing takes ten. The cost of NOT doing it lands on the second-fix electrician, the customer, the project programme and the firm's profit margin. Modern job-management apps make the photo + redline workflow almost frictionless. Skipping it is a false economy that pays for itself many times over the first time a downstream electrician drills into a cable they didn't know was there.",
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       "What are the four broad cost categories of poor communication on an electrical project?",
     options: [
-      "As a complete printed pack at handover plus PDF emailed for their records — they need it for any future EICR (so the inspector can compare current readings against the original), any property sale (solicitors increasingly require current EIC), any insurance claim (proof of certification at the time of an incident), any warranty claim on installed equipment.",
-      "Financial (rework, variations not invoiced, fines, warranty void), safety (near-miss escalating to RIDDOR-reportable incident, live-conductor exposure, injury), reputational (scheme withdrawal, social media damage, lost referrals), legal (breach of contract, professional negligence, prosecution under HASAWA s.7).",
-      "Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust",
-      "Ensuring the guard is fitted and correctly positioned, the disc is rated for the grinder's speed (RPM), the disc is not damaged or cracked, and the operator has appropriate PPE (eye protection, gloves, hearing protection)",
+      "Financial (rework, lost variations, fines), safety (near-miss to RIDDOR incident, injury), reputational (scheme withdrawal, lost referrals) and legal (breach, negligence, prosecution).",
+      "Technical (test results), administrative (paperwork), commercial (pricing) and contractual (terms) — the four areas where a message can be misread on a job.",
+      "Spoken, written, visual and electronic — the four channels through which information travels on site, each one carrying its own distinct failure mode.",
+      "Internal (operative to operative), external (to the customer), upward (to management) and downward (to apprentices) — the four directions communication flows.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The four-category model (financial / safety / reputational / legal) is the structured way to think about communication failure cost. Each category is real, each is recoverable from someone at the end of the day, and the apprentice or operative personally is often the one in the firing line — particularly under HASAWA s.7 (employee duty) and Mgmt H&S Regs 1999 Reg 14 (employee duty to inform employer of dangers).",
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "Under HASAWA s.7, what's the personal duty on every employee?",
     options: [
-      "Annex A722 Item A722.3 gives guidance on determining the maximum resistance required for the earth electrode in route (b). The resistance must be low enough to ensure that, under a PEN open-circuit fault, the MET-to-earth voltage does not exceed 70 V RMS. That keeps the touch voltage between the car body and the surrounding ground within the safe envelope. Acceptance on site requires the calculated maximum resistance, the measured electrode resistance, and a record showing the measured value is at or below the calculated maximum.",
-      "Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.",
-      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
-      "People, environment, services, fabric. People — pedestrians, customers, children, other trades. Environment — weather, dust, asbestos suspicion in pre-2000 homes, confined spaces, working at height. Services — concealed live cables, gas pipes, water pipes, structural steel that needs bonding. Fabric — brittle masonry, joist orientation, plaster condition.",
+      "To take reasonable care for themselves and others affected by their acts or omissions, and to co-operate with the employer on health and safety duties.",
+      "To provide a safe place of work, safe systems, welfare facilities and the information, instruction, training and supervision needed for everyone on site.",
+      "To carry out a suitable and sufficient risk assessment for every activity, appoint a competent person, and arrange planning, organising and monitoring.",
+      "To report specified injuries, diseases and dangerous occurrences to the HSE, keep an accident book, and co-operate with any HSE investigation.",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "HASAWA s.7 puts a direct personal criminal duty on every employee. Communication failure that leads to injury — whether to the employee themselves or others — can result in a s.7 prosecution. Examples include not communicating a hazard to a colleague, not raising a concern about a defective lock-off, not telling a successor electrician about a route change. The s.7 duty cannot be delegated and cannot be transferred to the employer. It sits on the individual.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "What does Mgmt H&S Regs 1999 Reg 14 require of employees?",
     options: [
-      "Net 30 (payment within 30 days of invoice) is the standard UK commercial default — backed by the Late Payment of Commercial Debts Act. For domestic work, 7-14 days or 'on completion' is more common. Some sub-contracts on commercial work specify Net 60 or Net 90, which strains cash flow — push back on long terms during contract negotiation. Always state payment terms clearly on the invoice.",
-      "That the installation has more than one source of supply (mains plus PV, battery, generator, etc.), that opening the main switch does NOT isolate the entire installation, what additional isolation is needed, and where each isolation point is located. Critical for anyone working on the system because back-feed from PV/battery can energise the install with the main switch open.",
-      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
-      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "To inform the employer of any work situation representing a serious and immediate danger, and of any shortcoming in the protection arrangements.",
+      "To wear all PPE provided by the employer, use it in accordance with training, and return it to a designated store after each shift for inspection.",
+      "To attend all toolbox talks and inductions, sign the attendance record, and pass a competence assessment before working unsupervised on an install.",
+      "To stop work and evacuate on hearing the fire alarm, proceed to the assembly point, and report to the marshal so a roll call can be completed.",
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "Mgmt H&S Regs 1999 Reg 14(2) is the personal communication duty on the employee. It sits alongside HASAWA s.7 and complements it — s.7 is the duty to take reasonable care; Reg 14 is the duty to communicate concerns and shortcomings to the employer. Failing to communicate a near-miss, a defective lock-off, or a hazard you've spotted is a Reg 14 breach. The duty exists precisely because the employer can't fix what they don't know about — and most workplace incidents are preceded by near-misses or shortcomings that someone on the team had spotted but not raised.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "What's the relationship between near-misses and serious incidents?",
     options: [
-      "Near-misses are the leading indicator of serious incidents. The HSE's accident triangle (and similar industrial-safety models) consistently shows that for every serious incident there are dozens or hundreds of near-misses with similar root causes that didn't quite escalate. Investigating and acting on near-misses is the most effective way to prevent the serious incident. Failing to report a near-miss leaves the same defect in place for the next person — who may not be as lucky.",
-      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
-      "Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.",
-      "Into the customer's installation record — Electrical Installation Certificate, schedule of circuits, schedule of test results, manufacturer data for the new board, and a copy of the final RAMS for your firm's own records. The customer's pack discharges the BS 7671 Reg 132.13 duty to provide information for safe operation, inspection and maintenance. Your firm's pack is what you produce to an HSE inspector if anything is challenged later.",
+      "They are essentially unrelated — a near-miss is an event where nothing happened, so it carries no useful information about future serious incidents.",
+      "Serious incidents are the leading indicator of near-misses — a site with a serious injury then experiences a run of near-misses as a lagging consequence.",
+      "Near-misses are the leading indicator of serious incidents — the accident triangle shows many near-misses share the root cause of each serious one.",
+      "They occur at roughly equal frequency — for every serious incident there is on average one near-miss with the same underlying root cause.",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "The accident-triangle model (sometimes attributed to Heinrich) is the foundation of modern industrial safety. The numbers vary by source but the principle is consistent: serious incidents sit at the top of a pyramid of minor incidents, near-misses, and unsafe acts. Acting on near-misses removes the defects that would otherwise cause the next serious incident. Failing to act on them — whether by not reporting, not investigating, or not changing the safe system of work — leaves the same defects in place. HSE prosecutions repeatedly cite failure to act on prior near-misses as evidence of inadequate safety management.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "What financial effect does an undocumented variation have on a project?",
     options: [
-      "Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.",
-      "The firm probably won't recover the cost of the additional work in dispute. Verbal variations are binding in principle but hard to prove in practice. Courts and ombudsmen weight written contractual evidence above verbal recollection. The labour, materials and time spent on the undocumented variation sit on the firm's profit margin. Multiplied across many small variations on many jobs it's a material drag on profitability and a leading cause of bad debt.",
-      "PQ analyser (Fluke 1748, Megger PQM, Dranetz HDPQ) is a long-term monitoring instrument — connect it at the supply or DB for a few days / weeks, it logs voltage, current, harmonic spectrum, transient events, sags / swells / interruptions, frequency, power factor, flicker. The multimeter shows you NOW; the PQ analyser shows you the past 7 days. Essential for diagnosing intermittent faults on commercial installations where the symptom only appears occasionally — the PQ log captures the moment of the fault and the conditions around it.",
-      "Cable lubricant (for pulling into containment), contact cleaner / electronic cleaner (typically isopropyl-based), masonry sealant (for chase repairs), two-pack epoxy resin (for fixings and panel repairs), brick acid (for cleaning chased surfaces), dust suppressant. All have hazard ratings and all need an SDS in the firm's COSHH register.",
+      "It improves the firm's cash position — work outside the original scope is chargeable at a premium under the Late Payment Act, documented or not.",
+      "The firm probably won't recover the cost in dispute — verbal variations are hard to prove, so the labour, materials and time hit the profit margin.",
+      "There is no financial effect provided the work is sound — the customer must pay for completed work regardless of paperwork, just a slight invoice delay.",
+      "It shifts the cost onto the customer every time — once additional work is done they cannot lawfully refuse to pay, so it's the same as a documented one.",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "What's the consequence of a scheme withdrawal (NICEIC, NAPIT, ELECSA) for a domestic electrical contractor?",
     options: [
-      "Because primary copper smelting from ore is one of the most energy-intensive industrial processes globally. Recycled copper requires roughly 15-20% of the energy of primary copper to produce, which translates to a corresponding reduction in embodied carbon for the conductor portion of the cable. Cable is overwhelmingly copper by mass (or aluminium for some larger sizes), so the conductor dominates the embodied carbon calculation. A high-recycled-content conductor is therefore one of the largest single levers for reducing cable embodied carbon at specification stage.",
-      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
-      "Loss of the ability to self-certify domestic notifiable work under Part P of the Building Regulations. Every notifiable job must then be notified to Local Authority Building Control (LABC) and inspected separately, which is slower and more expensive. Loss of the scheme membership badge that customers actively look for when choosing a contractor. Likely loss of insurance cover that depends on scheme membership. Significant reputational damage in trade directories and customer-facing search results. Many domestic contractors don't survive a scheme withdrawal.",
-      "Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.",
+      "None of any substance — the contractor just joins a different Competent Person Scheme the next week, since scheme membership is fully portable.",
+      "It removes the right to issue Electrical Installation Certificates, so no work can be self-certified, but Part P notification is unaffected and handled by the customer.",
+      "It only affects commercial and industrial work where scheme membership is a tender requirement — domestic Part P self-certification comes from the LA direct.",
+      "Loss of the ability to self-certify domestic Part P work, forcing slower, costlier LABC notification — plus reputational and insurance fallout.",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Part P of the Building Regulations requires notifiable domestic electrical work to be either self-certified by a Competent Person Scheme member (NICEIC, NAPIT, ELECSA, etc.) or notified to LABC and inspected separately. Scheme withdrawal removes the self-certification route, dramatically increasing the cost and time of every notifiable job. It also damages reputation — scheme membership is a positive selection criterion for most domestic customers. Repeated communication failures (poor customer handling, complaints, missing documentation, failure to address remedial issues) are common triggers for scheme investigations and ultimately suspensions or withdrawals.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "Under the Consumer Rights Act 2015, what's the standard expected of a tradesperson providing services to a consumer?",
     options: [
-      "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",
-      "It sits in the standards / technical family alongside BS 7671 and the IET OSG. BS 7671 Reg 510.3 ties equipment selection and erection to manufacturer's instructions. Reg 526.1 ties the connection itself (torque, ferrule requirement, mechanical strength) to those instructions. The data sheet is the authoritative source for how the unit is meant to be installed. Treat it as part of the site folder, not the bin.",
-      "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
-      "Section 49 of the Consumer Rights Act 2015 implies a term in every contract for the supply of a service to a consumer that the trader must perform the service with reasonable care and skill. Failure to do so is a breach of contract and the consumer has remedies including the right to require repeat performance and the right to a price reduction. Poor communication that leads to defective work, missed scope items or a non-compliant installation can be a breach of s.49.",
+      "That the trader must guarantee the work free from any defect for at least six years, bearing the full cost of any failure including normal wear and tear.",
+      "That the trader must perform the service with reasonable care and skill (s.49) — breach gives the consumer repeat performance or a price reduction.",
+      "That the trader must complete strictly within the time and price quoted, with any overrun or cost increase borne entirely by the trader as absolute terms.",
+      "That the trader must achieve whatever result the consumer expected, judged from their point of view, so it's compliant only if the customer is satisfied.",
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       "Consumer Rights Act 2015 s.49 is the statutory standard for service quality in consumer contracts. 'Reasonable care and skill' is the test — it covers both the technical quality of the work and the communication around it (clear scope, accurate quoting, proper variation handling, comprehensive handover). Breaches of s.49 can be pursued through the small claims court without legal representation, which is why customer-facing communication failures are a meaningful financial risk for contractors.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "Under what circumstances might the failure to communicate a hazard to a colleague amount to a personal HASAWA s.7 prosecution?",
     options: [
-      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
-      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
-      "Multiple — typically one or more CT clamps on the main supply tails (live and sometimes neutral) feeding the EV charger's load management, the battery inverter's grid-export control, the HEMS's whole-property monitoring, and sometimes the heat pump's load-shifting logic. On a fully integrated install you may have 3-4 CT clamps in or near the consumer unit, each reading the same physical conductor and feeding a different consumer of that data. The apprentice's job is to install each clamp around the correct conductor in the correct orientation per the manufacturer's instructions for each consuming device.",
-      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
+      "Only where the employee was the most senior person on site — the s.7 duty passes up the chain, so a junior can't be prosecuted while a supervisor is present.",
+      "Only where the employee was formally appointed as the site's competent person for safety — an ordinary operative carries no personal duty under s.7 at all.",
+      "Where the employee knew of the hazard, could have communicated it, and the failure caused or contributed to a colleague being exposed to the risk.",
+      "Only where the employer has first been convicted under s.2 or s.3 — an individual can't be pursued under s.7 until the wider failure is established.",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "HASAWA s.7 is a direct personal criminal duty. The HSE has the power to prosecute individuals separately from their employer, and does so where the evidence supports it. Communication failures — not briefing a successor, not raising a near-miss, not telling a colleague about a hazard you've spotted — fall squarely within s.7 if they cause or contribute to harm. The penalties are significant (unlimited fine on conviction in the Crown Court, plus possible imprisonment for some safety offences). 'I was told to' or 'I assumed someone else would tell them' aren't defences.",
   },

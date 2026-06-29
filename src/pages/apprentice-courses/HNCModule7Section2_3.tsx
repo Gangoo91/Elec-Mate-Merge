@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'safety-services-definition',
     question: 'What are safety services as defined in BS 7671?',
     options: [
-      'Services essential for safety of persons in emergency conditions',
-      'Inflammation of the skin caused or made worse by substances encountered at work',
-      'The physical key transfer sequence between locks',
-      'Potentially dangerous and urgent remedial action required',
+      'Services essential for the safety of persons in emergency conditions, such as fire detection and emergency lighting',
+      'Circuits that supply general-purpose socket outlets and convenience power around a building',
+      'The routine periodic inspection and testing carried out on an existing installation',
+      'Any circuit protected by an RCD with a rated residual operating current of 30 mA',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'fire-rating-standard',
     question: 'Which standard specifies fire-resistant cable requirements for UK installations?',
     options: [
-      'Insulation resistance test between L-E and N-E',
+      'BS 7671 Appendix 4 for current-carrying capacity tables',
       'BS 7846 for fire performance classification',
-      'Excellent electrical conductivity',
-      'To keep projects on schedule and reduce conflict',
+      'BS 5266 for the design of emergency lighting layouts',
+      'BS EN 60898 for the performance of circuit breakers',
     ],
     correctIndex: 1,
     explanation:
@@ -61,7 +61,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'BS 7671 Regulation 560.6.12 requires safety services to be available within specified times - typically 5 seconds maximum for emergency lighting to ensure safe evacuation conditions.',
+      'BS 7671 Regulation 560.4.1 classifies a 5 second maximum changeover as a "normal break" supply, which is acceptable for general emergency escape lighting to ensure safe evacuation conditions.',
   },
   {
     id: 'cable-rating-duration',
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'Enhanced' classification mean for fire-resistant cables to BS 8519?",
     options: [
-      'Within steel conduit with mineral insulated cable',
-      'Evacuation time allowance for larger buildings',
-      'Circuit integrity maintained with water spray application',
-      'BS EN 60947-6-1 for transfer switching equipment',
+      'Circuit integrity maintained for at least 240 minutes under fire alone',
+      'A reduced installation cost compared with standard fire-resistant cable',
+      'Circuit integrity maintained with simultaneous fire and water spray application',
+      'A higher current-carrying capacity than an equivalent non-fire-rated cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: 'An Automatic Transfer Switch (ATS) must comply with which standard?',
     options: [
       'BS EN 60947-6-1 for transfer switching equipment',
-      'Circuit integrity maintained with water spray application',
-      'Within steel conduit with mineral insulated cable',
-      'Evacuation time allowance for larger buildings',
+      'BS EN 60898-1 for circuit breakers for overcurrent protection',
+      'BS EN 61439 for low-voltage switchgear and controlgear assemblies',
+      'BS EN 62305 for protection of structures against lightning',
     ],
     correctAnswer: 0,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the purpose of the 'two-hour rule' in BS 7671 for safety services?",
     options: [
-      'BS EN 60947-6-1 for transfer switching equipment',
-      'Uninterruptible supply (no-break)',
-      'Evacuation time allowance for larger buildings',
-      'Circuit integrity maintained with water spray application',
+      'To set the maximum permitted changeover time to the safety supply',
+      'To define the interval between routine functional tests of the generator',
+      'To allow extended evacuation and firefighting time in larger buildings',
+      'To limit the maximum voltage drop on safety service final circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 7,
     question: 'Which cable installation method provides the highest fire resistance?',
     options: [
-      'BS EN 60947-6-1 for transfer switching equipment',
-      'Circuit integrity maintained with water spray application',
-      'Evacuation time allowance for larger buildings',
-      'Within steel conduit with mineral insulated cable',
+      'Standard PVC singles drawn into plastic conduit',
+      'Twin-and-earth cable clipped direct to a plasterboard wall',
+      'LSZH cable laid on a perforated steel cable tray',
+      'Mineral insulated cable installed within steel conduit',
     ],
     correctAnswer: 3,
     explanation:
@@ -231,10 +231,10 @@ const quizQuestions = [
     id: 12,
     question: 'What documentation must be maintained for safety service installations?',
     options: [
-      'Test certificates and maintenance records throughout operational life',
-      'Complete sequences of operations and system integration',
-      'To account for all personnel and prevent re-entry',
-      'Lower level hazards including irritant, skin sensitiser, or harmful',
+      'Test certificates and maintenance records throughout the operational life of the installation',
+      'Only the original installation certificate, which can be discarded once the system is commissioned',
+      'A copy of the manufacturer’s sales brochure for the generator and transfer switch',
+      'Nothing beyond a verbal handover, since safety systems are tested automatically',
     ],
     correctAnswer: 0,
     explanation:

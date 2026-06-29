@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m1s3-check1',
     question: 'Which regulation requires competence for all electrical work?',
     options: [
+      'Electricity at Work Regulations 1989',
       'Building Regulations Part P',
       'Health and Safety at Work Act 1974',
-      'Electricity at Work Regulations 1989',
       'CDM Regulations 2015',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The Electricity at Work Regulations 1989 specifically requires competence for all electrical work, including proper construction, maintenance, and safe working practices.',
   },
@@ -67,11 +67,11 @@ const quizQuestions = [
       'An employer asks you to install EV chargers at their premises but skip the risk assessment to save time. What should you do?',
     options: [
       'Proceed without the risk assessment as they are the client',
+      'Complete a quick verbal risk assessment instead',
+      'Install now and write up the risk assessment afterwards',
       'Refuse the work and explain the legal requirement',
-      'Complete a basic verbal risk assessment',
-      'Install and do the risk assessment later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk assessment is a legal requirement under the Health and Safety at Work Act 1974 and CDM Regulations 2015. Refusing work without proper safety procedures is the professional response. Installers have a duty of care that cannot be waived by client requests.',
   },

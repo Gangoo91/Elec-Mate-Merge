@@ -4,9 +4,9 @@ export const questionsPart3 = [
     id: 251,
     question: 'What is the primary purpose of a design current (Ib) calculation?',
     options: [
-      'The agreed final value of the contract including all variations and adjustments',
-      'No specific limit, but should be appropriate for the load',
-      'A predecessor must complete before its successor can start (with FS relationship)',
+      'To determine the maximum fault current the circuit must withstand',
+      'To set the rated voltage of the protective device',
+      'To establish the earth fault loop impedance of the circuit',
       'To determine the maximum current the circuit will carry under normal conditions',
     ],
     correctAnswer: 3,
@@ -82,9 +82,9 @@ export const questionsPart3 = [
     question: "When designing a circuit, what does the symbol 'It' represent?",
     options: [
       'Tabulated current-carrying capacity of a cable',
-      'Arc Fault Detection Device (AFDD)',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
-      'Reducing project duration through crashing or fast-tracking',
+      'The total earth fault loop impedance of the circuit',
+      'The instantaneous trip current of the protective device',
+      'The corrected current-carrying capacity after applying all factors',
     ],
     correctAnswer: 0,
     explanation:
@@ -98,10 +98,10 @@ export const questionsPart3 = [
     id: 257,
     question: 'What is the purpose of applying a Ca factor in cable sizing calculations?',
     options: [
-      'The efficiency of time utilisation on the project',
+      'To account for cables grouped together in a common enclosure',
       'To account for ambient temperatures different from 30°C',
-      'It represents the conductor material and insulation type constant',
-      'Achieving the most balanced load distribution possible',
+      'To account for cables surrounded by thermal insulation',
+      'To account for cables buried in the ground',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,9 +127,9 @@ export const questionsPart3 = [
     id: 259,
     question: 'What is discrimination in electrical protection systems?',
     options: [
-      'A hierarchical decomposition of project scope into manageable work packages',
-      'A document listing all items of work with quantities for pricing',
-      'To plan, manage, and coordinate health and safety during the construction phase',
+      'The ability of a cable to withstand fault current without thermal damage',
+      'The ability of a device to limit transient overvoltages on the supply',
+      'The ability of a device to interrupt the maximum prospective fault current',
       'The ability of protective devices to operate in sequence to isolate only the faulty circuit',
     ],
     correctAnswer: 3,
@@ -145,9 +145,9 @@ export const questionsPart3 = [
     question: 'What is the formula for calculating voltage drop in a single-phase circuit?',
     options: [
       'Vd = (mV/A/m × Ib × L) / 1000',
-      '3% of nominal voltage',
-      'All of the listed verifications',
-      'Arc Fault Detection Device (AFDD)',
+      'Vd = (mV/A/m × Ib) / (L × 1000)',
+      'Vd = (mV/A/m × L) / (Ib × 1000)',
+      'Vd = (Ib × L) / (mV/A/m × 1000)',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,10 +162,10 @@ export const questionsPart3 = [
     question:
       'A circuit is protected by a 32A Type B MCB. What is the maximum prospective fault current it can safely interrupt?',
     options: [
-      'No specific limit, but should be appropriate for the load',
+      'Exactly 32A, equal to its rated current',
       'Depends on the MCB breaking capacity rating (Icn)',
-      'Pre-agreed damages payable for late completion',
-      'To account for cables surrounded by thermal insulation',
+      'Five times its rated current (the instantaneous trip threshold)',
+      'Always 6kA regardless of the device specification',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,9 +192,9 @@ export const questionsPart3 = [
     id: 263,
     question: "What does 'back-up protection' mean in circuit design?",
     options: [
-      'Prospective fault current at the origin and the need for fault withstand capability',
-      'When it lasts more than 30 working days with more than 20 workers, or exceeds 500 person days',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'A downstream device limits the let-through energy to protect the cable',
+      'Two devices in series share the load current between them equally',
+      'A device automatically resets after clearing a transient fault',
       'A downstream device is protected by an upstream device with higher breaking capacity',
     ],
     correctAnswer: 3,
@@ -296,10 +296,10 @@ export const questionsPart3 = [
     id: 270,
     question: 'What is the adiabatic equation used for in circuit design?',
     options: [
-      'The efficiency of time utilisation on the project',
-      'To record labour, materials, and plant for work done outside the contract scope',
+      'To calculate the voltage drop along a conductor under load',
+      'To determine the maximum demand after applying diversity',
       'To verify that the protective conductor can withstand fault currents',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'To establish the prospective fault current at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -314,9 +314,9 @@ export const questionsPart3 = [
     question:
       'A radial circuit is wired in 2.5mm² cable and protected by a 20A MCB. What is the maximum number of socket outlets permitted?',
     options: [
-      'A single contractor responsible for both design and construction',
-      'A list of items to be completed or corrected before final acceptance',
-      'Depends on the MCB breaking capacity rating (Icn)',
+      'A maximum of six socket outlets per circuit',
+      'A maximum of one socket outlet per 4kW of load',
+      'A maximum of ten socket outlets per 50m² of floor area',
       'No specific limit, but should be appropriate for the load',
     ],
     correctAnswer: 3,
@@ -332,9 +332,9 @@ export const questionsPart3 = [
     question: 'What is the I2t characteristic used for in protection coordination?',
     options: [
       'To compare energy let-through of protective devices for discrimination',
-      'Apply correction factor for higher ambient temperature',
-      'To set out how health and safety will be managed during pre-construction',
-      'To document final status, lessons learned, and formally close the project',
+      'To calculate the ambient temperature correction factor for a cable',
+      'To determine the rated breaking capacity of a circuit breaker',
+      'To establish the nominal voltage rating of a protective device',
     ],
     correctAnswer: 0,
     explanation:
@@ -362,10 +362,10 @@ export const questionsPart3 = [
     question:
       'When designing for diversity, what typical demand factor is applied to domestic socket outlets?',
     options: [
-      'All of the listed factors',
-      'As close as possible to the inductive load',
+      'First 5A at 100%, remainder at 75%',
+      '100% of the total connected load with no reduction',
       'First 10A at 100%, remainder at 50%',
-      'Arc Fault Detection Device (AFDD)',
+      'A flat 40% of the total connected load',
     ],
     correctAnswer: 2,
     explanation:
@@ -379,14 +379,14 @@ export const questionsPart3 = [
     id: 275,
     question: 'What is the purpose of a Type 2 surge protective device (SPD)?',
     options: [
-      'Electrical Installation Certificate and test results',
-      'Adjusting the schedule to address resource constraints or over-allocation',
-      'A document containing information for future maintenance and construction work',
+      'To protect against direct lightning strikes at the supply origin',
+      'To provide additional protection against earth fault currents',
+      'To limit prospective fault current to a safe let-through value',
       'To protect against transient overvoltages at the distribution board level',
     ],
     correctAnswer: 3,
     explanation:
-      'Type 2 SPDs are designed to protect against transient overvoltages and are typically installed at the main distribution board to protect the downstream installation.',
+      'Type 2 SPDs are designed to protect against transient overvoltages and are typically installed at the main distribution board to protect the downstream installation. Type 1 SPDs handle the higher energy of direct lightning strikes at the origin.',
     section: 'Protection Devices',
     difficulty: 'intermediate',
     topic: 'Surge Protection',
@@ -436,9 +436,9 @@ export const questionsPart3 = [
     question:
       'When designing a busbar trunking system, what must be verified regarding fault withstand capability?',
     options: [
-      'A predecessor must complete before its successor can start (with FS relationship)',
-      'To evaluate risks by likelihood and impact to prioritise responses',
-      'The process of measuring quantities from drawings for pricing',
+      'That the busbar voltage drop remains below 3% along its length',
+      'That the busbar carries the full design current with no diversity',
+      'That the busbar temperature rise stays within ambient limits at no load',
       'That the busbar can withstand prospective fault current for the disconnection time',
     ],
     correctAnswer: 3,
@@ -453,10 +453,10 @@ export const questionsPart3 = [
     id: 280,
     question:
       'A 50m cable run in conduit (method B) uses 6mm² copper conductors. The ambient temperature is 35°C and 6 circuits are grouped. Calculate the minimum required It value for a 32A circuit.',
-    options: ['43.4A', '32A', '38.1A', '52.5A'],
+    options: ['59.7A', '32A', '38.1A', '52.5A'],
     correctAnswer: 0,
     explanation:
-      'Ca (35°C) = 0.94, Cg (6 circuits) = 0.57. It = In / (Ca × Cg) = 32 / (0.94 × 0.57) = 32 / 0.536 = 59.7A minimum. Checking: 6mm² method B = 36A which is insufficient.',
+      'Ca (35°C) = 0.94, Cg (6 circuits) = 0.57. It = In / (Ca × Cg) = 32 / (0.94 × 0.57) = 32 / 0.536 = 59.7A minimum. The cable must be tabulated for at least this value before correction factors are applied.',
     section: 'Cable Sizing',
     difficulty: 'advanced',
     topic: 'Combined Factors',
@@ -466,10 +466,10 @@ export const questionsPart3 = [
     id: 281,
     question: "What is the significance of the 'k' value in the adiabatic equation?",
     options: [
-      'Regular assessment of work completed for interim payment certification',
+      'It represents the ambient temperature correction factor',
       'It represents the conductor material and insulation type constant',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
-      'To protect against transient overvoltages at the distribution board level',
+      'It represents the grouping factor for cables in a common enclosure',
+      'It represents the rated breaking capacity of the protective device',
     ],
     correctAnswer: 1,
     explanation:
@@ -543,16 +543,17 @@ export const questionsPart3 = [
   },
   {
     id: 286,
-    question: 'What factor affects the selection between radial and ring circuit arrangements?',
+    question:
+      'What is a key advantage of a ring final circuit over a radial circuit of the same protective device rating?',
     options: [
-      'Cable cost and installation method',
-      'Load distribution and diversity',
-      'All of the listed factors',
-      'Floor area served',
+      'It eliminates the need for RCD protection on socket outlets',
+      'It allows a smaller conductor CSA to carry the same design current',
+      'It removes the requirement for a circuit protective conductor',
+      'It permits an unlimited number of spurs without restriction',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Circuit arrangement selection depends on multiple factors including load distribution, diversity, cable costs, installation methods, floor area, and the need for continuity of supply.',
+      'Because current can flow to a load from both directions around the ring, each leg carries roughly half the load, allowing a smaller conductor CSA (e.g. 2.5mm²) than an equivalent radial circuit would require.',
     section: 'Circuit Design',
     difficulty: 'intermediate',
     topic: 'Circuit Arrangements',
@@ -562,14 +563,14 @@ export const questionsPart3 = [
     id: 287,
     question: 'What is the purpose of a shunt trip in circuit design?',
     options: [
-      'Achieving the most balanced load distribution possible',
-      'No specific limit, but should be appropriate for the load',
-      'First 10A at 100%, remainder at 50%',
+      'To trip the breaker automatically on loss of supply voltage',
+      'To delay tripping during high inrush currents on motor circuits',
+      'To provide residual current detection within the breaker',
       'To allow remote tripping of a circuit breaker',
     ],
     correctAnswer: 3,
     explanation:
-      'A shunt trip is an accessory that allows a circuit breaker to be tripped remotely by applying a voltage to the trip coil, useful for emergency shutdown systems.',
+      'A shunt trip is an accessory that allows a circuit breaker to be tripped remotely by applying a voltage to the trip coil, useful for emergency shutdown systems. (Tripping on loss of voltage is the function of an undervoltage release.)',
     section: 'Protection Devices',
     difficulty: 'intermediate',
     topic: 'Circuit Breaker Accessories',
@@ -581,9 +582,9 @@ export const questionsPart3 = [
       'When designing power factor correction, where is it most effective to install capacitors?',
     options: [
       'As close as possible to the inductive load',
-      'The efficiency of cost utilisation on the project',
-      '500W to 1kW per outlet for general assessment',
-      'To allow remote tripping of a circuit breaker',
+      'At the supply intake, immediately after the main switch',
+      'On the neutral conductor of the final circuit',
+      'Midway along the longest cable run in the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -597,10 +598,10 @@ export const questionsPart3 = [
     id: 289,
     question: 'What is the design consideration for cables installed in direct sunlight?',
     options: [
-      'To display project schedule showing tasks, durations, and dependencies',
+      'No derating is needed as solar heating is negligible',
       'Apply correction factor for higher ambient temperature',
-      'No fixed maximum, but must be appropriate for the application',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'Apply the thermal insulation factor Ci for enclosed cables',
+      'Increase the protective device rating to compensate',
     ],
     correctAnswer: 1,
     explanation:
@@ -627,9 +628,9 @@ export const questionsPart3 = [
     question:
       'In harmonic-rich environments, why might the neutral conductor need to be oversized?',
     options: [
-      'Apply correction factor for higher ambient temperature',
-      'To ensure all parties understand requirements before work commences',
-      'Uncontrolled expansion of project scope without corresponding adjustments',
+      'Harmonic currents cause the neutral to overheat the phase conductors',
+      'Unbalanced fundamental currents always return through the neutral',
+      'Harmonics increase the supply voltage, requiring a larger neutral',
       'Triple-N harmonics add in the neutral rather than cancelling',
     ],
     correctAnswer: 3,
@@ -645,9 +646,9 @@ export const questionsPart3 = [
     question: 'What is the purpose of RCBO devices in circuit design?',
     options: [
       'To combine overcurrent and residual current protection in one device',
-      'That the busbar can withstand prospective fault current for the disconnection time',
-      'To account for ambient temperatures different from 30°C',
-      'To define what information is communicated, to whom, how, and when',
+      'To provide overcurrent protection only, without earth fault detection',
+      'To detect arc faults and isolate the circuit to prevent fire',
+      'To limit transient overvoltages reaching sensitive equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -662,10 +663,10 @@ export const questionsPart3 = [
     question:
       'When designing for EMC compliance, what cable type is preferred for sensitive circuits?',
     options: [
-      'Arc Fault Detection Device (AFDD)',
+      'Unarmoured single-core cables run in parallel',
       'Screened/shielded cable with proper earthing',
-      'Tabulated current-carrying capacity of a cable',
-      'The maximum fault current the device can safely interrupt',
+      'Standard PVC twin and earth cable',
+      'Mineral-insulated cable with an unearthed sheath',
     ],
     correctAnswer: 1,
     explanation:
@@ -691,9 +692,9 @@ export const questionsPart3 = [
     id: 295,
     question: 'What is the purpose of a discrimination study?',
     options: [
-      'Money withheld from payments as security for defect correction',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
-      'Depends on the MCB breaking capacity rating (Icn)',
+      'To confirm every protective device has adequate breaking capacity',
+      'To verify voltage drop is within limits across the installation',
+      'To calculate the prospective fault current at each distribution board',
       'To ensure only the protective device nearest the fault operates',
     ],
     correctAnswer: 3,
@@ -710,9 +711,9 @@ export const questionsPart3 = [
       'When designing submain cables, what additional factor must be considered beyond final circuit design?',
     options: [
       'Prospective fault current at the origin and the need for fault withstand capability',
-      'To seek clarification on drawings, specifications, or contract documents',
-      'RCD protection with rated residual current not exceeding 30mA',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'The 3% voltage drop limit applied only to lighting circuits',
+      'The need for 30mA RCD protection on every submain conductor',
+      'The conventional 100m² floor area limit for ring final circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -727,10 +728,10 @@ export const questionsPart3 = [
     question:
       'What is the conventional load assumed for a 13A socket outlet in diversity calculations?',
     options: [
-      'As close as possible to the inductive load',
+      'The full 3kW rating of each outlet with no diversity',
       '500W to 1kW per outlet for general assessment',
-      'To account for ambient temperatures different from 30°C',
-      'Screened/shielded cable with proper earthing',
+      'Exactly 13A multiplied by 230V for every outlet',
+      'A fixed 100W per outlet regardless of use',
     ],
     correctAnswer: 1,
     explanation:
@@ -775,9 +776,9 @@ export const questionsPart3 = [
       'When designing a three-phase distribution board, what determines the arrangement of circuits across phases?',
     options: [
       'Achieving the most balanced load distribution possible',
-      'To describe how a task will be carried out safely',
-      'As close as possible to the inductive load',
-      'The efficiency of cost utilisation on the project',
+      'Placing all the largest loads on a single phase for simplicity',
+      'Grouping circuits by physical location regardless of phase',
+      'Connecting all socket circuits to the neutral conductor only',
     ],
     correctAnswer: 0,
     explanation:
@@ -804,10 +805,10 @@ export const questionsPart3 = [
     id: 302,
     question: 'What is the purpose of protective equipotential bonding?',
     options: [
-      'To verify the installation functions correctly and meets design requirements',
-      'When prospective fault current exceeds the breaking capacity of downstream devices',
+      'To provide a low-impedance path for fault current back to the source',
+      'To detect residual currents and disconnect the supply automatically',
       'To reduce touch voltage between simultaneously accessible conductive parts',
-      'To combine overcurrent and residual current protection in one device',
+      'To limit transient overvoltages reaching the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -840,9 +841,9 @@ export const questionsPart3 = [
     question: 'When is it necessary to consider fault current limiting in design?',
     options: [
       'When prospective fault current exceeds the breaking capacity of downstream devices',
-      'To formally start the project and align the team on objectives and approach',
-      'Triple-N harmonics add in the neutral rather than cancelling',
-      'Collaborative approach with clear plain English and proactive risk management',
+      'When the design current is lower than the protective device rating',
+      'When the voltage drop exceeds the 5% recommended limit',
+      'When the earth fault loop impedance is below the maximum value',
     ],
     correctAnswer: 0,
     explanation:
@@ -856,10 +857,10 @@ export const questionsPart3 = [
     id: 305,
     question: 'What design consideration applies to cables in vertical runs exceeding 5m?',
     options: [
-      'To provide an approved reference point for measuring project performance',
+      'A higher current rating to offset the increased run length',
       'Adequate support to prevent mechanical damage from cable weight',
-      'To administer the contract fairly between employer and contractor',
-      'To account for ambient temperatures different from 30°C',
+      'A larger CSA purely to reduce voltage drop over the height',
+      'Additional RCD protection because of the vertical orientation',
     ],
     correctAnswer: 1,
     explanation:
@@ -873,10 +874,10 @@ export const questionsPart3 = [
     id: 306,
     question: "What is the significance of 'breaking capacity' when selecting a circuit breaker?",
     options: [
-      'To compare energy let-through of protective devices for discrimination',
-      'Reducing the current-carrying capacity due to installation conditions',
+      'The maximum continuous load current the device can carry',
+      'The current at which the device trips instantaneously',
       'The maximum fault current the device can safely interrupt',
-      'Additional time granted to the contractor due to qualifying delays',
+      'The let-through energy passed during a short circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -903,9 +904,9 @@ export const questionsPart3 = [
     question: "In circuit design, what does 'derating' refer to?",
     options: [
       'Reducing the current-carrying capacity due to installation conditions',
-      'To document final status, lessons learned, and formally close the project',
-      'The longest sequence of dependent tasks determining minimum project duration',
-      'To combine overcurrent and residual current protection in one device',
+      'Increasing the protective device rating above the design current',
+      'Selecting a cable purely on the basis of voltage drop',
+      'Raising the rated breaking capacity of a circuit breaker',
     ],
     correctAnswer: 0,
     explanation:
@@ -920,10 +921,10 @@ export const questionsPart3 = [
     question:
       'What additional protection is required for socket outlets with a rated current not exceeding 32A for use by ordinary persons?',
     options: [
-      'Apply correction factor for higher ambient temperature',
+      'AFDD protection on every final circuit',
       'RCD protection with rated residual current not exceeding 30mA',
-      'Adjusting the schedule to address resource constraints or over-allocation',
-      'To protect against transient overvoltages at the distribution board level',
+      'A dedicated earth electrode for each socket outlet',
+      'Surge protection rated for the prospective fault current',
     ],
     correctAnswer: 1,
     explanation:
@@ -938,10 +939,10 @@ export const questionsPart3 = [
     question:
       'When designing for selective tripping, what characteristic curves should be compared?',
     options: [
-      'Pre-agreed damages payable for late completion',
-      'Adjusting the schedule to address resource constraints or over-allocation',
+      'Voltage drop curves of the upstream and downstream cables',
+      'Breaking capacity ratings of all devices in the installation',
       'Time-current characteristics of upstream and downstream devices',
-      'To capture knowledge from project experiences for future benefit',
+      'Ambient temperature correction factors for each circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -956,9 +957,9 @@ export const questionsPart3 = [
     question:
       'What is the maximum permitted length for a flexible cord supplying a portable appliance?',
     options: [
-      'To define what information is communicated, to whom, how, and when',
-      'Electrical Installation Certificate and test results',
-      'A list of items to be completed or corrected before final acceptance',
+      'A maximum of 3 metres for all portable appliances',
+      'A maximum of 2 metres unless RCD protected',
+      'A maximum of 5 metres for Class I appliances only',
       'No fixed maximum, but must be appropriate for the application',
     ],
     correctAnswer: 3,
@@ -971,16 +972,17 @@ export const questionsPart3 = [
   },
   {
     id: 312,
-    question: 'What design verification should be performed before energising a new installation?',
+    question:
+      'Which test is normally carried out BEFORE energising a new installation as part of initial verification?',
     options: [
-      'All of the listed verifications',
-      'Visual inspection of all components',
-      'Confirmation of protection coordination',
-      'Verification of correct circuit arrangement',
+      'Earth fault loop impedance measurement',
+      'Insulation resistance testing',
+      'Prospective fault current measurement',
+      'RCD trip-time testing',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'Before energising, the designer should verify visual inspection completion, correct circuit arrangement, protection coordination, voltage drop compliance, and earth fault loop impedances.',
+      'Insulation resistance is a dead test performed before energising to confirm the integrity of conductor insulation. Loop impedance, PFC and RCD trip-time tests require the supply to be live.',
     section: 'Design Verification',
     difficulty: 'intermediate',
     topic: 'Pre-Commissioning',
@@ -992,10 +994,10 @@ export const questionsPart3 = [
     id: 313,
     question: 'What is the primary purpose of a Gantt chart in project management?',
     options: [
-      'To define what information is communicated, to whom, how, and when',
+      'To record identified risks and their mitigation measures',
       'To display project schedule showing tasks, durations, and dependencies',
-      'To determine the maximum current the circuit will carry under normal conditions',
-      'Money withheld from payments as security for defect correction',
+      'To allocate costs across direct and indirect categories',
+      'To show the project team structure and reporting lines',
     ],
     correctAnswer: 1,
     explanation:
@@ -1009,10 +1011,10 @@ export const questionsPart3 = [
     id: 314,
     question: "What does 'critical path' mean in project scheduling?",
     options: [
-      'That the busbar can withstand prospective fault current for the disconnection time',
-      'To evaluate risks by likelihood and impact to prioritise responses',
+      'The shortest sequence of tasks needed to start the project',
+      'The sequence of tasks with the most available float',
       'The longest sequence of dependent tasks determining minimum project duration',
-      'To combine overcurrent and residual current protection in one device',
+      'The path requiring the greatest number of resources',
     ],
     correctAnswer: 2,
     explanation:
@@ -1026,9 +1028,9 @@ export const questionsPart3 = [
     id: 315,
     question: 'Under CDM 2015, who has duties when a project is notifiable?',
     options: [
-      'To administer the contract fairly between employer and contractor',
-      'To set out how health and safety will be managed during the construction phase',
-      'To verify that the protective conductor can withstand fault currents',
+      'Only the principal contractor and the HSE inspector',
+      'Only the client and the principal designer',
+      'Only the designers and the site workers',
       'Client, principal designer, principal contractor, designers, and contractors',
     ],
     correctAnswer: 3,
@@ -1044,13 +1046,13 @@ export const questionsPart3 = [
     question: "When does a project become 'notifiable' under CDM 2015?",
     options: [
       'When it lasts more than 30 working days with more than 20 workers, or exceeds 500 person days',
-      'Client, principal designer, principal contractor, designers, and contractors',
-      'The ability of protective devices to operate in sequence to isolate only the faulty circuit',
-      'To formally transfer the completed installation to the client with documentation',
+      'When the contract value exceeds £100,000 regardless of duration',
+      'When more than two contractors are appointed to the project',
+      'When any high-risk work listed in Schedule 3 is involved',
     ],
     correctAnswer: 0,
     explanation:
-      'A project is notifiable to HSE if it will last more than 30 working days and have more than 20 workers at any point, or if it will exceed 500 person days of construction work.',
+      'A project is notifiable to HSE if it will last more than 30 working days and have more than 20 workers simultaneously at any point, or if it will exceed 500 person days of construction work.',
     section: 'CDM Regulations',
     difficulty: 'intermediate',
     topic: 'CDM Notification',
@@ -1060,10 +1062,10 @@ export const questionsPart3 = [
     id: 317,
     question: 'What is the purpose of a method statement?',
     options: [
-      'The time between placing an order and receiving the goods',
+      'To list the quantities of materials needed for the task',
       'To describe how a task will be carried out safely',
-      'Tabulated current-carrying capacity of a cable',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'To record the costs incurred during the task',
+      'To schedule the sequence of trades on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -1077,10 +1079,10 @@ export const questionsPart3 = [
     id: 318,
     question: "What is 'float' or 'slack' in project scheduling?",
     options: [
-      'Regular assessment of work completed for interim payment certification',
-      'To protect against transient overvoltages at the distribution board level',
+      'The extra resources allocated to a task to speed it up',
+      'The amount of time a task is ahead of its baseline date',
       'The amount of time a task can be delayed without affecting the project end date',
-      'To provide brief on-site safety briefings on specific topics',
+      'The buffer added to the budget to cover unforeseen costs',
     ],
     correctAnswer: 2,
     explanation:
@@ -1113,13 +1115,13 @@ export const questionsPart3 = [
     question: 'What is the purpose of a pre-construction phase plan under CDM 2015?',
     options: [
       'To set out how health and safety will be managed during pre-construction',
-      'A formal instruction to change the scope, specification, or timing of works',
-      'The agreed final value of the contract including all variations and adjustments',
-      'To combine overcurrent and residual current protection in one device',
+      'To record the final account once all variations are agreed',
+      'To define the site rules and emergency procedures during construction',
+      'To document defects requiring correction before handover',
     ],
     correctAnswer: 0,
     explanation:
-      'The pre-construction phase plan sets out how health and safety risks will be managed during the design and planning stages before construction work begins.',
+      'The pre-construction phase plan sets out how health and safety risks will be managed during the design and planning stages before construction work begins. (Site rules and emergency procedures belong in the construction phase plan.)',
     section: 'CDM Regulations',
     difficulty: 'intermediate',
     topic: 'CDM Documentation',
@@ -1129,10 +1131,10 @@ export const questionsPart3 = [
     id: 321,
     question: "What is a 'deliverable' in project management terms?",
     options: [
-      'It represents the conductor material and insulation type constant',
+      'A task on the critical path with zero float',
       'A tangible or intangible output produced as a result of project work',
-      'To plan, manage, and coordinate health and safety during the construction phase',
-      'To evaluate risks by likelihood and impact to prioritise responses',
+      'A meeting held to align the team at project start',
+      'A risk recorded for monitoring during the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -1163,9 +1165,9 @@ export const questionsPart3 = [
     id: 323,
     question: 'What is the purpose of a project risk register?',
     options: [
-      'To verify the installation functions correctly and meets design requirements',
-      'To define what information is communicated, to whom, how, and when',
-      'To ensure all parties understand requirements before work commences',
+      'To record the value of work completed for interim payment',
+      'To capture lessons learned at the end of the project',
+      'To schedule the sequence of activities and their dependencies',
       'To record identified risks, their likelihood, impact, and mitigation measures',
     ],
     correctAnswer: 3,
@@ -1197,14 +1199,14 @@ export const questionsPart3 = [
     id: 325,
     question: 'Under CDM 2015, what is the principal designer responsible for?',
     options: [
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'Coordinating health and safety on site during the construction phase',
       'Planning, managing, and coordinating health and safety during pre-construction phase',
-      'To ensure only the protective device nearest the fault operates',
-      'To verify the installation functions correctly and meets design requirements',
+      'Certifying interim payments and administering the contract',
+      'Notifying the HSE and appointing the principal contractor',
     ],
     correctAnswer: 1,
     explanation:
-      'The principal designer is responsible for planning, managing, monitoring, and coordinating health and safety during the pre-construction phase, including identifying and eliminating or controlling risks.',
+      'The principal designer is responsible for planning, managing, monitoring, and coordinating health and safety during the pre-construction phase, including identifying and eliminating or controlling risks. (The construction phase is the principal contractor’s responsibility.)',
     section: 'CDM Regulations',
     difficulty: 'intermediate',
     topic: 'Principal Designer Duties',
@@ -1214,10 +1216,10 @@ export const questionsPart3 = [
     id: 326,
     question: "What is 'earned value' in project cost management?",
     options: [
-      'To account for ambient temperatures different from 30°C',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'The total budget allocated to the project at the outset',
+      'The actual cost incurred to date regardless of progress',
       'The value of work actually completed expressed in terms of the budget',
-      'A tangible or intangible output produced as a result of project work',
+      'The forecast cost to complete the remaining work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1231,9 +1233,9 @@ export const questionsPart3 = [
     id: 327,
     question: 'What is the difference between a milestone and an activity?',
     options: [
-      'Triple-N harmonics add in the neutral rather than cancelling',
-      'To set out how health and safety will be managed during the construction phase',
-      'To formally transfer the completed installation to the client with documentation',
+      'A milestone consumes resources while an activity does not',
+      'A milestone always lies on the critical path; an activity never does',
+      'A milestone has float while an activity has none',
       'A milestone marks a significant point with zero duration; an activity has duration',
     ],
     correctAnswer: 3,
@@ -1260,10 +1262,10 @@ export const questionsPart3 = [
     id: 329,
     question: "What is a 'work breakdown structure' (WBS)?",
     options: [
-      'The amount of time a task can be delayed without affecting the project end date',
+      'A timeline showing task durations and dependencies as bars',
       'A hierarchical decomposition of project scope into manageable work packages',
-      'A predecessor must complete before its successor can start (with FS relationship)',
-      'The ability of protective devices to operate in sequence to isolate only the faulty circuit',
+      'A matrix assigning responsibility for each project task',
+      'A list of all project risks ranked by likelihood and impact',
     ],
     correctAnswer: 1,
     explanation:
@@ -1277,10 +1279,10 @@ export const questionsPart3 = [
     id: 330,
     question: 'What is the purpose of a project quality plan?',
     options: [
-      'Direct costs relate specifically to project work; indirect costs support the project generally',
-      'To account for cables surrounded by thermal insulation',
+      'To allocate direct and indirect costs across the project budget',
+      'To define the communication methods and reporting frequency',
       'To define quality standards, procedures, and responsibilities for the project',
-      'A downstream device is protected by an upstream device with higher breaking capacity',
+      'To set out the health and safety arrangements for the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1294,9 +1296,9 @@ export const questionsPart3 = [
     id: 331,
     question: "What is 'scope creep' in project management?",
     options: [
-      'To make suitable arrangements for managing the project to ensure health and safety',
-      'To verify that the protective conductor can withstand fault currents',
-      'Adjusting the schedule to address resource constraints or over-allocation',
+      'A controlled reduction in scope agreed through value engineering',
+      'The gradual slippage of the project schedule beyond its baseline',
+      'The reallocation of resources to resolve over-allocation',
       'Uncontrolled expansion of project scope without corresponding adjustments',
     ],
     correctAnswer: 3,
@@ -1312,9 +1314,9 @@ export const questionsPart3 = [
     question: 'Under JCT contracts, what is the role of the contract administrator?',
     options: [
       'To administer the contract fairly between employer and contractor',
-      'To verify the installation functions correctly and meets design requirements',
-      'Time-current characteristics of upstream and downstream devices',
-      'A downstream device is protected by an upstream device with higher breaking capacity',
+      'To act solely as the employer’s commercial representative',
+      'To carry out the physical construction works on site',
+      'To prepare the bill of quantities for the tender process',
     ],
     correctAnswer: 0,
     explanation:
@@ -1328,10 +1330,10 @@ export const questionsPart3 = [
     id: 333,
     question: 'What is the purpose of a construction phase plan under CDM 2015?',
     options: [
-      'A downstream device is protected by an upstream device with higher breaking capacity',
+      'To set out how risks will be managed during the design stage',
       'To set out how health and safety will be managed during the construction phase',
-      'To provide brief on-site safety briefings on specific topics',
-      'To compare energy let-through of protective devices for discrimination',
+      'To record information for future maintenance and demolition',
+      'To brief operatives on specific hazards before each task',
     ],
     correctAnswer: 1,
     explanation:
@@ -1345,10 +1347,10 @@ export const questionsPart3 = [
     id: 334,
     question: 'What does CPI (Cost Performance Index) measure in earned value analysis?',
     options: [
-      'Responsible, Accountable, Consulted, Informed',
-      'Money withheld from payments as security for defect correction',
+      'The efficiency of schedule utilisation on the project',
+      'The total cost variance against the original budget',
       'The efficiency of cost utilisation on the project',
-      'To account for cables surrounded by thermal insulation',
+      'The forecast final cost at completion of the project',
     ],
     correctAnswer: 2,
     explanation:
@@ -1362,9 +1364,9 @@ export const questionsPart3 = [
     id: 335,
     question: "What is 'lead time' in procurement?",
     options: [
-      'Adequate support to prevent mechanical damage from cable weight',
-      'To seek clarification on drawings, specifications, or contract documents',
-      'Additional time granted to the contractor due to qualifying delays',
+      'The time a supplier allows before payment is due',
+      'The float available before an order becomes critical',
+      'The time taken to install the goods once delivered',
       'The time between placing an order and receiving the goods',
     ],
     correctAnswer: 3,
@@ -1380,9 +1382,9 @@ export const questionsPart3 = [
     question: 'What is the purpose of a project communication plan?',
     options: [
       'To define what information is communicated, to whom, how, and when',
-      'Triple-N harmonics add in the neutral rather than cancelling',
-      'A systematic method to improve value by examining function versus cost',
-      'To communicate project status, achievements, issues, and forecasts to stakeholders',
+      'To record the minutes of every project meeting held',
+      'To capture lessons learned for the benefit of future projects',
+      'To approve changes to the project scope and budget',
     ],
     correctAnswer: 0,
     explanation:
@@ -1396,10 +1398,10 @@ export const questionsPart3 = [
     id: 337,
     question: "What is a 'variation order' in construction contracts?",
     options: [
-      'Additional time granted to the contractor due to qualifying delays',
+      'A request from the contractor to clarify the drawings',
       'A formal instruction to change the scope, specification, or timing of works',
-      'To administer the contract fairly between employer and contractor',
-      'Money withheld from payments as security for defect correction',
+      'A certificate confirming work is ready for interim payment',
+      'A list of defects to be corrected before practical completion',
     ],
     correctAnswer: 1,
     explanation:
@@ -1413,10 +1415,10 @@ export const questionsPart3 = [
     id: 338,
     question: 'What is resource levelling in project scheduling?',
     options: [
-      'To administer the contract fairly between employer and contractor',
-      'To capture knowledge from project experiences for future benefit',
+      'Adding resources to critical tasks to shorten the project',
+      'Allocating costs evenly across each reporting period',
       'Adjusting the schedule to address resource constraints or over-allocation',
-      'Electrical Installation Certificate and test results',
+      'Assigning the same number of workers to every task on the programme',
     ],
     correctAnswer: 2,
     explanation:
@@ -1430,9 +1432,9 @@ export const questionsPart3 = [
     id: 339,
     question: 'Under CDM 2015, what is the health and safety file?',
     options: [
-      'Prospective fault current at the origin and the need for fault withstand capability',
-      'To account for ambient temperatures different from 30°C',
-      'It represents the conductor material and insulation type constant',
+      'A record of accidents and near misses during construction',
+      'A plan setting out how risks are managed during the build',
+      'A register of all variations and their cost implications',
       'A document containing information for future maintenance and construction work',
     ],
     correctAnswer: 3,
@@ -1448,9 +1450,9 @@ export const questionsPart3 = [
     question: 'What is the difference between predecessor and successor activities?',
     options: [
       'A predecessor must complete before its successor can start (with FS relationship)',
-      'A tangible or intangible output produced as a result of project work',
-      'It represents the conductor material and insulation type constant',
-      'Uncontrolled expansion of project scope without corresponding adjustments',
+      'A predecessor always runs in parallel with its successor',
+      'A successor must complete before its predecessor can start',
+      'A predecessor is any task that lies off the critical path',
     ],
     correctAnswer: 0,
     explanation:
@@ -1464,10 +1466,10 @@ export const questionsPart3 = [
     id: 341,
     question: "What is 'retention' in construction contracts?",
     options: [
-      'Triple-N harmonics add in the neutral rather than cancelling',
+      'Pre-agreed damages deducted for late completion',
       'Money withheld from payments as security for defect correction',
-      'The amount of time a task can be delayed without affecting the project end date',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'An advance payment made to the contractor before work begins',
+      'A deposit paid by the client to secure the contractor’s availability',
     ],
     correctAnswer: 1,
     explanation:
@@ -1481,10 +1483,10 @@ export const questionsPart3 = [
     id: 342,
     question: 'What is the purpose of a project progress report?',
     options: [
-      'Collaborative approach with clear plain English and proactive risk management',
-      'Money withheld from payments as security for defect correction',
+      'To define who receives which information and how often',
+      'To record the final account at the end of the project',
       'To communicate project status, achievements, issues, and forecasts to stakeholders',
-      'To combine overcurrent and residual current protection in one device',
+      'To set out the health and safety arrangements for the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1498,9 +1500,9 @@ export const questionsPart3 = [
     id: 343,
     question: 'What is the NEC4 Engineering and Construction Contract known for?',
     options: [
-      'To set out how health and safety will be managed during pre-construction',
-      'To determine the maximum current the circuit will carry under normal conditions',
-      'A hierarchical decomposition of project scope into manageable work packages',
+      'Fixed lump-sum pricing with no provision for variations',
+      'Mandatory use of an impartial contract administrator for all disputes',
+      'A purely adversarial approach favouring the employer',
       'Collaborative approach with clear plain English and proactive risk management',
     ],
     correctAnswer: 3,
@@ -1516,9 +1518,9 @@ export const questionsPart3 = [
     question: "What is a 'snagging list' used for?",
     options: [
       'To record defects or incomplete items requiring correction before handover',
-      'To account for ambient temperatures different from 30°C',
-      'No specific limit, but should be appropriate for the load',
-      'Prospective fault current at the origin and the need for fault withstand capability',
+      'To list the materials and quantities required for the works',
+      'To record the hazards and controls for each work activity',
+      'To schedule the sequence of trades across the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -1532,10 +1534,10 @@ export const questionsPart3 = [
     id: 345,
     question: "What is 'practical completion' in construction contracts?",
     options: [
-      'A list of items to be completed or corrected before final acceptance',
+      'When every defect has been corrected and the final account agreed',
       'When the works are substantially complete and ready for the client to occupy',
-      'RCD protection with rated residual current not exceeding 30mA',
-      'To set out how health and safety will be managed during the construction phase',
+      'When the contractor first takes possession of the site',
+      'When the design is approved and construction is authorised to begin',
     ],
     correctAnswer: 1,
     explanation:
@@ -1549,10 +1551,10 @@ export const questionsPart3 = [
     id: 346,
     question: 'What is the purpose of a pre-start meeting?',
     options: [
-      'To formally start the project and align the team on objectives and approach',
-      'To describe how a task will be carried out safely',
+      'To formally hand over the completed works to the client',
+      'To capture lessons learned at the end of the project',
       'To ensure all parties understand requirements before work commences',
-      'To set out how health and safety will be managed during the construction phase',
+      'To agree the final account and release retention monies',
     ],
     correctAnswer: 2,
     explanation:
@@ -1566,9 +1568,9 @@ export const questionsPart3 = [
     id: 347,
     question: 'What does SPI (Schedule Performance Index) indicate?',
     options: [
-      '500W to 1kW per outlet for general assessment',
-      'The process of measuring quantities from drawings for pricing',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'The efficiency of cost utilisation on the project',
+      'The total schedule variance in working days',
+      'The forecast completion date of the project',
       'The efficiency of time utilisation on the project',
     ],
     correctAnswer: 3,
@@ -1584,9 +1586,9 @@ export const questionsPart3 = [
     question: "What is 'liquidated damages' in a construction contract?",
     options: [
       'Pre-agreed damages payable for late completion',
-      'First 10A at 100%, remainder at 50%',
-      'Depends on the MCB breaking capacity rating (Icn)',
-      'Reducing project duration through crashing or fast-tracking',
+      'Money retained as security for correcting defects',
+      'Additional payment for work outside the contract scope',
+      'Compensation paid to the contractor for client-caused delays',
     ],
     correctAnswer: 0,
     explanation:
@@ -1600,14 +1602,14 @@ export const questionsPart3 = [
     id: 349,
     question: 'What is the role of the principal contractor under CDM 2015?',
     options: [
-      'No specific limit, but should be appropriate for the load',
+      'To plan and coordinate health and safety during pre-construction',
       'To plan, manage, and coordinate health and safety during the construction phase',
-      'Overlapping design and construction phases to reduce total duration',
-      'To display project schedule showing tasks, durations, and dependencies',
+      'To prepare the designs and eliminate hazards at source',
+      'To make suitable arrangements for managing the project as the client',
     ],
     correctAnswer: 1,
     explanation:
-      'The principal contractor is responsible for planning, managing, monitoring, and coordinating health and safety during the construction phase, including managing multiple contractors.',
+      'The principal contractor is responsible for planning, managing, monitoring, and coordinating health and safety during the construction phase, including managing multiple contractors. (The pre-construction phase is the principal designer’s role.)',
     section: 'CDM Regulations',
     difficulty: 'intermediate',
     topic: 'Principal Contractor Duties',
@@ -1617,10 +1619,10 @@ export const questionsPart3 = [
     id: 350,
     question: "What is a 'bill of quantities' (BOQ)?",
     options: [
-      'To compare energy let-through of protective devices for discrimination',
-      'The time between placing an order and receiving the goods',
+      'A schedule showing the durations and dependencies of all tasks',
+      'A register of risks identified during the tender stage',
       'A document listing all items of work with quantities for pricing',
-      'The amount of time a task can be delayed without affecting the project end date',
+      'A breakdown of the project scope into work packages',
     ],
     correctAnswer: 2,
     explanation:
@@ -1634,9 +1636,9 @@ export const questionsPart3 = [
     id: 351,
     question: 'What is the purpose of a project baseline?',
     options: [
-      'Achieving the most balanced load distribution possible',
-      'To record identified risks, their likelihood, impact, and mitigation measures',
-      'Uncontrolled expansion of project scope without corresponding adjustments',
+      'To list the materials and quantities required for the works',
+      'To record identified risks and their planned responses',
+      'To set out the health and safety arrangements for the site',
       'To provide an approved reference point for measuring project performance',
     ],
     correctAnswer: 3,
@@ -1652,9 +1654,9 @@ export const questionsPart3 = [
     question: "What is the 'defects liability period' or 'rectification period'?",
     options: [
       'A period after completion when the contractor must correct defects',
-      'Collaborative approach with clear plain English and proactive risk management',
-      'To set out how health and safety will be managed during pre-construction',
-      'The value of work actually completed expressed in terms of the budget',
+      'A period before completion when snagging items are listed',
+      'The time allowed for the client to inspect the works before handover',
+      'The warranty period offered by equipment manufacturers',
     ],
     correctAnswer: 0,
     explanation:
@@ -1668,14 +1670,14 @@ export const questionsPart3 = [
     id: 353,
     question: 'What is a fast-track project approach?',
     options: [
-      'To define what information is communicated, to whom, how, and when',
+      'Adding resources to critical activities to shorten their duration',
       'Overlapping design and construction phases to reduce total duration',
-      'The efficiency of cost utilisation on the project',
-      'To combine overcurrent and residual current protection in one device',
+      'Delaying non-critical tasks to smooth resource demand',
+      'Reducing project scope to bring the schedule back on track',
     ],
     correctAnswer: 1,
     explanation:
-      'Fast-tracking involves overlapping project phases (such as starting construction before design is complete) to compress the overall schedule, often increasing risk and cost.',
+      'Fast-tracking involves overlapping project phases (such as starting construction before design is complete) to compress the overall schedule, often increasing risk and cost. (Adding resources is crashing.)',
     section: 'Schedule Management',
     difficulty: 'intermediate',
     topic: 'Schedule Compression',
@@ -1685,10 +1687,10 @@ export const questionsPart3 = [
     id: 354,
     question: 'What documentation must a contractor provide for electrical installation work?',
     options: [
-      'The time between placing an order and receiving the goods',
-      'It represents the conductor material and insulation type constant',
+      'A risk assessment and method statement only',
+      'A bill of quantities and final account',
       'Electrical Installation Certificate and test results',
-      'To account for cables surrounded by thermal insulation',
+      'A construction phase plan and health and safety file',
     ],
     correctAnswer: 2,
     explanation:
@@ -1702,14 +1704,14 @@ export const questionsPart3 = [
     id: 355,
     question: "What is 'crashing' in project schedule management?",
     options: [
-      'The process of measuring quantities from drawings for pricing',
-      'The agreed final value of the contract including all variations and adjustments',
-      'A document containing information for future maintenance and construction work',
+      'Overlapping sequential phases to shorten the programme',
+      'Delaying non-critical tasks to balance resource demand',
+      'Reducing the project scope to meet the deadline',
       'Adding resources to critical tasks to reduce duration at increased cost',
     ],
     correctAnswer: 3,
     explanation:
-      'Crashing involves adding resources (overtime, additional workers, equipment) to critical path activities to reduce task duration, typically at additional cost.',
+      'Crashing involves adding resources (overtime, additional workers, equipment) to critical path activities to reduce task duration, typically at additional cost. (Overlapping phases is fast-tracking.)',
     section: 'Schedule Management',
     difficulty: 'advanced',
     topic: 'Schedule Compression',
@@ -1720,9 +1722,9 @@ export const questionsPart3 = [
     question: 'What is a punch list?',
     options: [
       'A list of items to be completed or corrected before final acceptance',
-      'To capture knowledge from project experiences for future benefit',
-      'To verify the installation functions correctly and meets design requirements',
-      'To record defects or incomplete items requiring correction before handover',
+      'A record of lessons learned for future project benefit',
+      'A schedule of commissioning tests to verify system function',
+      'A register of variations and their cost implications',
     ],
     correctAnswer: 0,
     explanation:
@@ -1736,10 +1738,10 @@ export const questionsPart3 = [
     id: 357,
     question: 'What is the purpose of commissioning in electrical projects?',
     options: [
-      'A formal instruction to change the scope, specification, or timing of works',
+      'To correct defects identified during the snagging process',
       'To verify the installation functions correctly and meets design requirements',
-      'To determine the maximum current the circuit will carry under normal conditions',
-      'When prospective fault current exceeds the breaking capacity of downstream devices',
+      'To measure quantities from drawings for final pricing',
+      'To formally transfer responsibility for site safety to the client',
     ],
     correctAnswer: 1,
     explanation:
@@ -1753,10 +1755,10 @@ export const questionsPart3 = [
     id: 358,
     question: "What is 'design and build' procurement?",
     options: [
-      'To show the project team structure and reporting relationships',
-      'Adequate support to prevent mechanical damage from cable weight',
+      'Separate designers and contractors appointed under one client',
+      'The client retaining full design responsibility throughout',
       'A single contractor responsible for both design and construction',
-      'The maximum fault current the device can safely interrupt',
+      'A framework of approved contractors for repeat call-off work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1770,9 +1772,9 @@ export const questionsPart3 = [
     id: 359,
     question: 'What is the purpose of a risk assessment matrix?',
     options: [
-      'To set out how health and safety will be managed during the construction phase',
-      'Reducing project duration through crashing or fast-tracking',
-      'A document containing information for future maintenance and construction work',
+      'To list all project risks in the order they were identified',
+      'To allocate a budget contingency to each identified risk',
+      'To assign responsibility for managing each project risk',
       'To evaluate risks by likelihood and impact to prioritise responses',
     ],
     correctAnswer: 3,
@@ -1788,9 +1790,9 @@ export const questionsPart3 = [
     question: 'What is an extension of time (EOT) in construction contracts?',
     options: [
       'Additional time granted to the contractor due to qualifying delays',
-      'To set out how health and safety will be managed during pre-construction',
-      'To ensure all parties understand requirements before work commences',
-      'To document final status, lessons learned, and formally close the project',
+      'A reduction in the contract period agreed to save cost',
+      'Extra payment granted to the contractor for accelerated work',
+      'A pause in the works while a dispute is resolved',
     ],
     correctAnswer: 0,
     explanation:
@@ -1804,10 +1806,10 @@ export const questionsPart3 = [
     id: 361,
     question: 'What is the purpose of a project closure report?',
     options: [
-      'Regular assessment of work completed for interim payment certification',
+      'To certify the final payment due to the contractor',
       'To document final status, lessons learned, and formally close the project',
-      'To provide an approved reference point for measuring project performance',
-      'A hierarchical decomposition of project scope into manageable work packages',
+      'To establish the baseline against which performance is measured',
+      'To set out the scope and objectives at the project start',
     ],
     correctAnswer: 1,
     explanation:
@@ -1821,10 +1823,10 @@ export const questionsPart3 = [
     id: 362,
     question: "What is the client's main duty under CDM 2015?",
     options: [
-      'Regular assessment of work completed for interim payment certification',
-      'Adequate support to prevent mechanical damage from cable weight',
+      'To plan and coordinate health and safety during pre-construction',
+      'To manage health and safety on site during the build',
       'To make suitable arrangements for managing the project to ensure health and safety',
-      'To determine the maximum current the circuit will carry under normal conditions',
+      'To prepare the designs and eliminate foreseeable hazards',
     ],
     correctAnswer: 2,
     explanation:
@@ -1838,9 +1840,9 @@ export const questionsPart3 = [
     id: 363,
     question: 'What is value engineering?',
     options: [
-      'To combine overcurrent and residual current protection in one device',
-      'A milestone marks a significant point with zero duration; an activity has duration',
-      'The longest sequence of dependent tasks determining minimum project duration',
+      'Selecting the cheapest available materials to reduce overall project cost',
+      'Increasing the specification of components to add value for the client',
+      'Pricing each item in the bill of quantities to reach a tender total',
       'A systematic method to improve value by examining function versus cost',
     ],
     correctAnswer: 3,
@@ -1856,9 +1858,9 @@ export const questionsPart3 = [
     question: "What is a 'take-off' in estimating?",
     options: [
       'The process of measuring quantities from drawings for pricing',
-      'The efficiency of time utilisation on the project',
-      'To evaluate risks by likelihood and impact to prioritise responses',
-      'To capture knowledge from project experiences for future benefit',
+      'The percentage profit margin added to the net cost of the works',
+      'The discount negotiated with suppliers for bulk material orders',
+      'The process of removing items from scope to reduce the tender price',
     ],
     correctAnswer: 0,
     explanation:
@@ -1872,10 +1874,10 @@ export const questionsPart3 = [
     id: 365,
     question: 'What is the purpose of a project kick-off meeting?',
     options: [
-      'Additional time granted to the contractor due to qualifying delays',
+      'To formally hand over the completed works and release retention monies',
       'To formally start the project and align the team on objectives and approach',
-      'Adjusting the schedule to address resource constraints or over-allocation',
-      'A predecessor must complete before its successor can start (with FS relationship)',
+      'To review the final account and settle any outstanding claims',
+      'To capture lessons learned once the project has been completed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1889,10 +1891,10 @@ export const questionsPart3 = [
     id: 366,
     question: 'What is interim valuation in construction contracts?',
     options: [
-      'No fixed maximum, but must be appropriate for the application',
-      'Money withheld from payments as security for defect correction',
+      'The final assessment of all work once the contract is complete',
+      'An advance payment made to the contractor before work begins',
       'Regular assessment of work completed for interim payment certification',
-      'To reduce touch voltage between simultaneously accessible conductive parts',
+      'A fixed monthly payment agreed regardless of work progress',
     ],
     correctAnswer: 2,
     explanation:
@@ -1906,9 +1908,9 @@ export const questionsPart3 = [
     id: 367,
     question: 'What is the difference between direct costs and indirect costs?',
     options: [
-      'To define what information is communicated, to whom, how, and when',
-      'To combine overcurrent and residual current protection in one device',
-      'Collaborative approach with clear plain English and proactive risk management',
+      'Direct costs are paid immediately; indirect costs are deferred to project end',
+      'Direct costs are fixed at tender; indirect costs vary with the work done',
+      'Direct costs are met by the client; indirect costs are met by the contractor',
       'Direct costs relate specifically to project work; indirect costs support the project generally',
     ],
     correctAnswer: 3,
@@ -1924,9 +1926,9 @@ export const questionsPart3 = [
     question: 'What is the purpose of a tool-box talk?',
     options: [
       'To provide brief on-site safety briefings on specific topics',
-      'A single contractor responsible for both design and construction',
-      'Screened/shielded cable with proper earthing',
-      'To combine overcurrent and residual current protection in one device',
+      'To formally induct new workers into the company over a full day',
+      'To record the tools and plant issued to each operative on site',
+      'To deliver accredited classroom training leading to a qualification',
     ],
     correctAnswer: 0,
     explanation:
@@ -1940,10 +1942,10 @@ export const questionsPart3 = [
     id: 369,
     question: 'What is a request for information (RFI) used for?',
     options: [
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'To formally instruct a change to the scope or specification of works',
       'To seek clarification on drawings, specifications, or contract documents',
-      'A predecessor must complete before its successor can start (with FS relationship)',
-      'To provide an approved reference point for measuring project performance',
+      'To submit a claim for additional payment on completed work',
+      'To record defects requiring correction before practical completion',
     ],
     correctAnswer: 1,
     explanation:
@@ -1957,8 +1959,8 @@ export const questionsPart3 = [
     id: 370,
     question: 'What is programme compression?',
     options: [
-      'Electrical Installation Certificate and test results',
-      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'Storing the project schedule in a smaller digital file format',
+      'Reducing the project scope to bring the deadline forward',
       'Reducing project duration through crashing or fast-tracking',
       'Adjusting the schedule to address resource constraints or over-allocation',
     ],
@@ -1974,9 +1976,9 @@ export const questionsPart3 = [
     id: 371,
     question: 'What is the purpose of a project organisation chart?',
     options: [
-      'No fixed maximum, but must be appropriate for the application',
-      'A single contractor responsible for both design and construction',
-      'To describe how a task will be carried out safely',
+      'To show the sequence and duration of tasks against a timeline',
+      'To list the materials and quantities required for the works',
+      'To record identified risks and their planned responses',
       'To show the project team structure and reporting relationships',
     ],
     correctAnswer: 3,
@@ -1992,9 +1994,9 @@ export const questionsPart3 = [
     question: 'What is a day work sheet used for?',
     options: [
       'To record labour, materials, and plant for work done outside the contract scope',
-      'The longest sequence of dependent tasks determining minimum project duration',
-      'To provide brief on-site safety briefings on specific topics',
-      'The value of work actually completed expressed in terms of the budget',
+      'To record the daily attendance and hours of every operative on site',
+      'To list the tasks scheduled for completion on a given working day',
+      'To certify the value of work completed for the monthly interim payment',
     ],
     correctAnswer: 0,
     explanation:
@@ -2008,10 +2010,10 @@ export const questionsPart3 = [
     id: 373,
     question: 'What is the purpose of a lessons learned register?',
     options: [
-      'To formally start the project and align the team on objectives and approach',
+      'To record the training and qualifications held by each team member',
       'To capture knowledge from project experiences for future benefit',
-      'Overlapping design and construction phases to reduce total duration',
-      'Adjusting the schedule to address resource constraints or over-allocation',
+      'To list the defects identified during the snagging inspection',
+      'To track the status and resolution of project change requests',
     ],
     correctAnswer: 1,
     explanation:
@@ -2025,10 +2027,10 @@ export const questionsPart3 = [
     id: 374,
     question: 'What is the final account in construction contracts?',
     options: [
-      'No specific limit, but should be appropriate for the load',
-      'A systematic method to improve value by examining function versus cost',
+      'The original contract sum fixed at tender with no later adjustment',
+      'The last interim payment certificate issued before practical completion',
       'The agreed final value of the contract including all variations and adjustments',
-      'A milestone marks a significant point with zero duration; an activity has duration',
+      'The retention monies released at the end of the defects period',
     ],
     correctAnswer: 2,
     explanation:
@@ -2042,9 +2044,9 @@ export const questionsPart3 = [
     id: 375,
     question: 'What is the purpose of a handover meeting?',
     options: [
-      'The ability of protective devices to operate in sequence to isolate only the faulty circuit',
-      'To combine overcurrent and residual current protection in one device',
-      'To set out how health and safety will be managed during the construction phase',
+      'To brief the team on the scope and objectives at the project start',
+      'To agree the programme and resources before construction begins',
+      'To review progress and issues partway through the construction phase',
       'To formally transfer the completed installation to the client with documentation',
     ],
     correctAnswer: 3,

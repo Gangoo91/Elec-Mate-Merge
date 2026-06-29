@@ -45,9 +45,9 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
     {
       id: 'qc1',
       question:
-        'What is the minimum acceptable insulation resistance value for a motor according to BS 7671?',
-      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
-      correctIndex: 1,
+        'For a low-voltage motor circuit (up to 500V), what is the minimum acceptable insulation resistance under BS 7671 Table 64?',
+      options: ['1 MΩ', '0.5 MΩ', '2 MΩ', '5 MΩ'],
+      correctIndex: 0,
       explanation:
         'BS 7671 specifies a minimum insulation resistance of 1 MΩ for motors. Values below this indicate potential insulation degradation and the motor should not be energised until the fault is rectified.',
     },
@@ -77,6 +77,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
         'What voltage should typically be used for insulation resistance testing on a 400V motor?',
       options: ['250V DC', '500V DC', '1000V DC', '2500V DC'],
       correctAnswer: '500V DC',
+      explanation:
+        'BS 7671 Table 64 specifies a 500V DC test for circuits up to and including 500V, with a minimum acceptable insulation resistance of 1.0 MΩ.',
     },
     {
       question:
@@ -88,6 +90,8 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
         'Short circuit the motor terminals',
       ],
       correctAnswer: 'Disconnect the motor from the VSD',
+      explanation:
+        'The high DC test voltage can destroy the VSD output stage, so the motor must be disconnected from the drive and the test taken on the motor windings alone.',
     },
     {
       question: 'What is the primary purpose of a locked rotor current test?',
@@ -98,12 +102,16 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
         'Measure bearing temperature',
       ],
       correctAnswer: 'Verify starting current and protection settings',
+      explanation:
+        'With the rotor held stationary the motor draws its starting (locked-rotor) current, allowing the protective device and overload settings to be confirmed against the inrush.',
     },
     {
       question:
         'At what bearing temperature rise above ambient should immediate investigation be triggered?',
       options: ['20°C', '30°C', '40°C', '50°C'],
       correctAnswer: '40°C',
+      explanation:
+        'A stabilised bearing temperature rise exceeding about 40°C above ambient indicates lubrication, alignment or pre-load problems and warrants investigation before continued running.',
     },
     {
       question:
@@ -115,16 +123,21 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
         'Thermal imaging',
       ],
       correctAnswer: 'Phase rotation meter before starting',
+      explanation:
+        'Checking phase sequence with a rotation meter before energising avoids running pumps or fans backwards, which can damage the driven equipment.',
     },
     {
-      question: 'What documentation must be completed as per BS 7671 Schedule of Test Results?',
+      question: 'What must a BS 7671 Schedule of Test Results record?',
       options: [
-        'Only insulation resistance values',
-        'Continuity, IR, and polarity tests only',
-        'All test results including IR, continuity, polarity, and functional tests',
-        'Manufacturer specifications only',
+        'Only the insulation resistance values',
+        'Continuity and polarity only',
+        'All required tests including continuity, IR, polarity, loop impedance and functional tests',
+        'Only the manufacturer specifications',
       ],
-      correctAnswer: 'All test results including IR, continuity, polarity, and functional tests',
+      correctAnswer:
+        'All required tests including continuity, IR, polarity, loop impedance and functional tests',
+      explanation:
+        'The Schedule of Test Results must capture the full set of prescribed tests - continuity, insulation resistance, polarity, earth fault loop impedance and functional testing - to demonstrate compliance.',
     },
     {
       question:
@@ -136,22 +149,30 @@ const IndustrialElectricalModule2Section6: React.FC = () => {
         '1 minute and 5 minutes',
       ],
       correctAnswer: '1 minute and 10 minutes',
+      explanation:
+        'PI is the ratio of the insulation resistance at 10 minutes to the value at 1 minute; a rising resistance over time indicates dry, clean insulation.',
     },
     {
       question: 'What is the acceptable Polarisation Index value for healthy motor insulation?',
       options: ['Less than 1.0', 'Between 1.0 and 2.0', 'Greater than 2.0', 'Exactly 1.5'],
       correctAnswer: 'Greater than 2.0',
+      explanation:
+        'A PI greater than 2.0 indicates good insulation; values between 1.0 and 2.0 are questionable and below 1.0 suggest dangerous moisture or contamination.',
     },
     {
       question: 'During load testing, current imbalance between phases should not exceed:',
       options: ['2%', '5%', '10%', '15%'],
       correctAnswer: '5%',
+      explanation:
+        'Phase current imbalance above about 5% causes uneven heating and reduced motor life, indicating a supply voltage imbalance or a winding fault that needs investigation.',
     },
     {
       question:
-        'When using thermal imaging during commissioning, hot spots should not exceed the motor winding temperature rise class limit plus:',
-      options: ['10°C', '20°C', '30°C', '40°C'],
-      correctAnswer: '10°C',
+        'When using thermal imaging during commissioning, hot spots should typically prompt investigation if they exceed normal operating temperature by more than:',
+      options: ['10-15°C', '30°C', '40°C', '60°C'],
+      correctAnswer: '10-15°C',
+      explanation:
+        'A localised hot spot more than about 10-15°C above the surrounding normal temperature usually signals a high-resistance joint or developing fault that should be investigated.',
     },
   ];
 

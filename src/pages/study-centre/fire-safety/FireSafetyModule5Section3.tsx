@@ -30,12 +30,12 @@ const quickCheckQuestions = [
     id: 'riddor-fatal-fire-timeframe',
     question: 'What is the timeframe for reporting a fatal fire incident to RIDDOR?',
     options: [
-      'Within 24 hours',
-      'Within 10 working days',
       'Immediately (by the quickest practicable means)',
+      'Within 10 working days',
+      'Within 24 hours',
       'Within 15 working days',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Fatal fire incidents must be reported to RIDDOR immediately by the quickest practicable means, which in practice means by telephone to the HSE Incident Contact Centre on 0345 300 9923. This is because fatalities represent the most serious category of incident and require urgent investigation. A follow-up written report (F2508) must then be submitted online within 10 days. The 'immediately' requirement applies to all fatalities and specified injuries, not just fire-related ones. Delay in reporting can constitute a criminal offence and may also compromise the investigation by allowing evidence to degrade or be disturbed.",
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'Under RIDDOR 2013, which of the following fire-related scenarios must be reported as a dangerous occurrence?',
     options: [
-      'A small fire in a waste bin that is immediately extinguished with no injuries',
       'A fire that causes suspension of normal work for more than 24 hours',
+      'A small fire in a waste bin that is immediately extinguished with no injuries',
       'A fire alarm activation caused by burnt toast with no actual fire',
       'A near-miss where a portable heater was left unattended overnight',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under RIDDOR 2013 Schedule 2, a fire is reportable as a dangerous occurrence if it causes the suspension of normal work for more than 24 hours, or if it affects or is liable to affect any occupied area or escape route. A small bin fire that is immediately dealt with would not typically meet these thresholds. A false alarm is not a fire and is not reportable under RIDDOR (though it should be recorded internally). A near-miss, while important to record internally, does not meet the RIDDOR reporting criteria unless it falls within one of the specified categories.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
       'What is the correct timeframe for submitting an online RIDDOR report for a non-fatal over-7-day injury caused by a workplace fire?',
     options: [
       'Immediately by telephone',
-      'Within 5 working days of the incident',
       'Within 15 days of the incident',
+      'Within 5 working days of the incident',
       'Within 10 days of the incident',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Non-fatal over-7-day injuries must be reported to RIDDOR within 15 days of the incident occurring. However, note the distinction: the over-7-day counting period begins from the day after the incident, but the 15-day reporting window starts from the date of the incident itself. The report is submitted online via the HSE RIDDOR website. Only fatalities and specified injuries require immediate telephone notification. This timeframe also applies to dangerous occurrences — they must be reported within 10 days. Employers should establish internal reporting procedures that ensure RIDDOR-reportable incidents are escalated quickly so that the statutory deadlines are met.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     options: [
       'Asking five different departments to provide their version of events',
       'Conducting five separate investigations over five consecutive days',
-      "Repeatedly asking 'why' a failure occurred to drill down from the immediate cause to the underlying root cause",
       'Identifying five possible causes and selecting the most likely one',
+      "Repeatedly asking 'why' a failure occurred to drill down from the immediate cause to the underlying root cause",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The 5 Whys technique is a simple but effective root cause analysis method developed by Sakichi Toyoda and used within the Toyota Production System. It involves repeatedly asking 'why' each successive answer occurred, typically around five times (though the actual number may vary), to drill down from the surface-level immediate cause to the deeper root cause. For example: Why did the fire start? (Overheated cable.) Why did the cable overheat? (It was overloaded.) Why was it overloaded? (Too many appliances on one circuit.) Why were too many appliances on one circuit? (No additional circuits were installed when the office was expanded.) Why were no circuits added? (There was no electrical review when the layout changed.) The root cause is the absence of a process to review electrical capacity when office layouts change.",
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'Which root cause analysis technique uses a diagram resembling a fish skeleton to categorise potential causes?',
     options: [
-      'Fault tree analysis',
-      '5 Whys technique',
       'Fishbone (Ishikawa) diagram',
+      '5 Whys technique',
+      'Fault tree analysis',
       'Bow-tie analysis',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The fishbone diagram, also known as the Ishikawa diagram (after its creator, Kaoru Ishikawa) or cause-and-effect diagram, uses a visual structure resembling a fish skeleton. The 'head' of the fish represents the problem (the fire), and the 'bones' represent categories of potential causes branching off from a central spine. Common categories used in fire investigation include: People (human error, training gaps), Procedures (inadequate or missing procedures), Equipment (faulty or poorly maintained), Environment (building conditions, weather), Materials (combustible materials, storage), and Management (supervision, culture, resources). Each category is then explored for specific contributing factors. The technique is particularly useful for complex incidents where multiple factors may have contributed.",
   },
@@ -184,11 +184,11 @@ const quizQuestions = [
       'Under the Fire and Rescue Services Act 2004, what powers do fire investigation officers have?',
     options: [
       "They can only enter premises with the owner's written consent",
-      'They can enter premises, examine the scene, take samples, seize evidence, and require the production of documents',
       'They can arrest suspects and charge them with arson',
+      'They can enter premises, examine the scene, take samples, seize evidence, and require the production of documents',
       'They can only observe the scene and must request police assistance for any evidence collection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under the Fire and Rescue Services Act 2004 (Sections 44-45), fire investigation officers have extensive powers to investigate the cause and origin of fires. These include: the power to enter premises where a fire has occurred or is suspected; the power to examine, search, and investigate the fire scene; the power to take measurements, photographs, and recordings; the power to take samples of any materials or substances found; the power to seize and detain any article or substance for examination or use as evidence; and the power to require the production of documents and records relevant to the investigation. They can also require persons to provide information and may be accompanied by any person they consider necessary, including scientific advisers. Obstruction of a fire investigation officer is a criminal offence.',
   },
@@ -199,10 +199,10 @@ const quizQuestions = [
     options: [
       'Only fire alarm activations and fire drill records',
       'Only incident reports and investigation findings',
-      'Fire alarm activations, false alarms, fire drills, equipment maintenance, training records, incidents, and investigation reports',
       'Only records that the fire and rescue service specifically requests',
+      'Fire alarm activations, false alarms, fire drills, equipment maintenance, training records, incidents, and investigation reports',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Comprehensive fire safety record keeping requires maintaining all of the following: fire alarm activations (including date, time, zone, and cause); false alarms (to identify patterns and reduce unwanted alarms); fire drill records (date, time, evacuation time achieved, observations, corrective actions); fire safety equipment maintenance records (extinguishers, alarm systems, emergency lighting, sprinklers, fire doors); fire safety training records (who was trained, when, and on what topics); fire incident reports (including near-misses); and fire investigation reports with findings and corrective actions. These records must be retained for a reasonable period — typically a minimum of 3 years for most records, though some organisations retain them for longer. The records must be available for inspection by fire authority enforcement officers during routine inspections or following an incident.',
   },

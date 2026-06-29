@@ -32,9 +32,9 @@ const FunctionalSkillsModule1Section3 = () => {
         'Rearrange the power formula P = IV to find the current drawn by a 3 kW immersion heater on a 230 V supply.',
       options: [
         '0.077 A',
-        '76.7 A',
+        '12.50 A',
         '13.04 A',
-        '690,000 A',
+        '1.30 A',
       ],
       correctAnswer: 2,
       explanation:

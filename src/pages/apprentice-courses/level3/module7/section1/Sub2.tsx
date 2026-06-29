@@ -70,11 +70,11 @@ const checks = [
       "What's the practical difference between an Electrician and an Approved Electrician on JIB rules?",
     options: [
       "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",
-      "Because PPE protects only the wearer (and only when worn correctly), it relies on the operative remembering, fitting and inspecting it, and it doesn't reduce the hazard itself. The hierarchy puts elimination, substitution, engineering controls and administrative controls ahead of PPE because each of those reduces the risk for everyone in the area without depending on individual behaviour.",
       "An Approved Electrician has additional time-served experience (typically 2+ years post-AM2) plus an Inspection and Testing qualification (2391-52 or equivalent), and is recognised by JIB as competent to supervise others, sign off completed work, and lead a gang. The Approved grade carries a higher hourly rate (around £21-22/hr in 2024) and is the JIB grade typically required for site Foreman, Qualified Supervisor and Senior Electrician roles.",
+      "Because PPE protects only the wearer (and only when worn correctly), it relies on the operative remembering, fitting and inspecting it, and it doesn't reduce the hazard itself. The hierarchy puts elimination, substitution, engineering controls and administrative controls ahead of PPE because each of those reduces the risk for everyone in the area without depending on individual behaviour.",
       "Creating a wellbeing programme that includes: team-building activities (Connect), active travel schemes and lunchtime walks (Be Active), mindfulness sessions and reflective practice groups (Take Notice), CPD opportunities and skills-sharing workshops (Keep Learning), and volunteering days and peer support schemes (Give)",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Approved Electrician is the JIB's recognition that you've moved beyond execution into supervision and certification. The 2391-52 (Inspection and Testing) is the typical academic anchor — it gives you the formal authority to inspect, test and certify, which is what supervision and sign-off requires. Time-served experience is the practical anchor. Together they earn the Approved grade. Most contractors require Approved status for QS (Qualified Supervisor) roles and competent-person scheme registration.",
   },
@@ -126,7 +126,7 @@ const quizQuestions = [
     options: [
       "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
       "If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.",
-      "A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.",
+      "A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn't changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.",
       "The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions",
     ],
     correctAnswer: 0,

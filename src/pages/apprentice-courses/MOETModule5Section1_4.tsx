@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'dp-flow-principle',
     question: 'An orifice plate flow meter works by measuring:',
     options: [
-      'Building Research Establishment Environmental Assessment Method - a sustainability rating',
+      'The temperature rise of the fluid as it passes through the restriction',
       'The differential pressure created as the fluid is forced through a restriction',
-      'Evacuating the fire floor first then adjacent floors sequentially; used in tall buildings',
-      'The difference between synchronous speed and actual rotor speed',
+      'The electrical conductivity of the fluid as it crosses the plate',
+      'The frequency of vortices shed downstream of the restriction',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'mag-flow-requirement',
     question: 'An electromagnetic flow meter requires the fluid to be:',
     options: [
-      'Cumulative earth leakage from multiple circuits or equipment',
+      'Free of any suspended solids or particles',
       'Electrically conductive (minimum conductivity typically 5 microS/cm)',
-      'An apprentice signed it instead of a qualified person',
-      'Fire alarm systems and emergency circuits requiring fire resistance',
+      'Maintained at a constant, known temperature',
+      'A clean, non-conductive hydrocarbon such as fuel oil',
     ],
     correctIndex: 1,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: 'An ultrasonic level sensor mounted at the top of a tank measures level by:',
     options: [
       'Measuring the time of flight for an ultrasonic pulse to travel to the liquid surface and back',
-      'Net Positive Suction Head - the pressure available at the pump inlet above the liquid\\\\\\\\\\\\\\\'s vapour pressure',
-      'US commercial aviation industry in the late 1960s and 1970s, led by engineers at United Airlines',
-      'Facility managers using BMS software to force equipment into specific states for testing',
+      'Detecting the change in capacitance between the sensor and the liquid surface',
+      'Measuring the hydrostatic pressure of the vapour above the liquid',
+      'Sensing the buoyancy force on a float suspended from the sensor head',
     ],
     correctIndex: 0,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       'A submersible pressure transmitter measuring hydrostatic level uses the principle that:',
     options: [
       'Pressure at a point in a liquid is proportional to the depth of liquid above that point (P = rho x g x h)',
-      'A short, focused briefing delivered at the point of work covering specific hazards and controls',
-      'Fused test leads with finger guards, a maximum tip exposure of 4 mm, and a proving unit or known supply for verification',
-      'Separation of terminals from busbars in addition to functional unit separation',
+      'The speed of sound through a liquid is proportional to the depth of that liquid',
+      'The electrical resistance of a liquid column falls as the depth of liquid increases',
+      'The vapour pressure above a liquid rises in direct proportion to the liquid level',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'Which flow meter technology has no moving parts, creates no pressure drop, and can measure both conductive and non-conductive liquids?',
     options: [
-      'Ensure all RCDs are reset and circuits are energised',
-      'BS 7671 Wiring Regulations requirements',
+      'Orifice plate differential pressure meter',
+      'Electromagnetic (mag) flow meter',
       'Ultrasonic (clamp-on transit time) flow meter',
-      'As close to the inductive load as possible',
+      'Turbine flow meter',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     id: 3,
     question: 'A Coriolis flow meter directly measures:',
     options: [
-      'A float that rises in a tapered tube — the float position indicates the flow rate',
-      'There is heavy vapour, foam, high temperature or pressure above the liquid surface',
-      'A frequency (pulse) signal where the pulse rate is proportional to the volumetric flow rate',
+      'Volumetric flow rate by counting the rotations of an internal turbine',
+      'The differential pressure drop across a fixed restriction in the tube',
+      'The transit time of an ultrasonic pulse across the flowing fluid',
       'Mass flow rate (and density) — independent of temperature, pressure and fluid properties',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'A variable area flow meter (rotameter) indicates flow by:',
     options: [
       'A float that rises in a tapered tube — the float position indicates the flow rate',
-      'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
-      'Mass flow rate (and density) — independent of temperature, pressure and fluid properties',
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
+      'Measuring the differential pressure across an orifice plate',
+      'Counting magnetic pulses generated by a spinning rotor',
+      'Detecting the change in capacitance as the fluid passes the probe',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'For level measurement in an open-top atmospheric tank, which method is the simplest and most cost-effective?',
     options: [
-      'A float that rises in a tapered tube — the float position indicates the flow rate',
+      'Guided wave radar transmitter with an immersed probe',
       'Hydrostatic pressure transmitter mounted at the bottom of the tank',
-      'There is heavy vapour, foam, high temperature or pressure above the liquid surface',
-      'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
+      'Coriolis mass flow meter installed in the fill line',
+      'Differential pressure transmitter with high and low pressure connections',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 6,
     question: 'A capacitance level probe in a tank measures level by detecting:',
     options: [
-      'Mass flow rate (and density) — independent of temperature, pressure and fluid properties',
-      'There is heavy vapour, foam, high temperature or pressure above the liquid surface',
+      'The time of flight of an ultrasonic pulse reflected from the surface',
+      'The hydrostatic pressure exerted by the liquid column on the probe tip',
       'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
-      'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
+      'The buoyancy force lifting a float attached to the probe',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     id: 7,
     question: 'Float switches are commonly used for:',
     options: [
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
-      'A float that rises in a tapered tube — the float position indicates the flow rate',
-      'Mass flow rate (and density) — independent of temperature, pressure and fluid properties',
+      'Continuous 4-20 mA level measurement across the full tank height',
+      'Measuring the mass flow rate of liquid entering the tank',
+      'Detecting the dielectric constant of the stored liquid',
       'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
     ],
     correctAnswer: 3,
@@ -165,9 +165,9 @@ const quizQuestions = [
     question: 'When installing an electromagnetic flow meter, it is essential that:',
     options: [
       'The meter is installed with a minimum of 5 pipe diameters of straight pipe upstream and 2 downstream to ensure a developed flow profile',
-      'Two pressure connections — one at the bottom (high side) and one at the top (low side) — to compensate for the vessel pressure above the liquid',
-      'Erosion or wear of the orifice plate bore, which has increased the bore diameter and reduced the DP for a given flow',
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
+      'The pipe is only partially filled to allow the magnetic field to develop',
+      'The fluid is non-conductive to avoid short-circuiting the electrodes',
+      'The meter is mounted at the highest point of the pipework to vent air',
     ],
     correctAnswer: 0,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'Radar level measurement is preferred over ultrasonic in applications where:',
     options: [
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
+      'The liquid is highly conductive and the tank is earthed',
       'There is heavy vapour, foam, high temperature or pressure above the liquid surface',
-      'Simple on/off level detection — high-level alarm, low-level alarm, pump control',
-      'A frequency (pulse) signal where the pulse rate is proportional to the volumetric flow rate',
+      'Only a simple on/off high-level alarm is required',
+      'The lowest possible installed cost is the overriding priority',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 10,
     question: 'A turbine flow meter generates an output signal that is:',
     options: [
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
-      'Erosion or wear of the orifice plate bore, which has increased the bore diameter and reduced the DP for a given flow',
+      'A 4-20 mA current proportional to the differential pressure across the rotor',
+      'A voltage proportional to the conductivity of the passing fluid',
       'A frequency (pulse) signal where the pulse rate is proportional to the volumetric flow rate',
-      'Mass flow rate (and density) — independent of temperature, pressure and fluid properties',
+      'A resistance change proportional to the mass of fluid passing the sensor',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     question:
       'In a closed (pressurised) vessel, level measurement using a DP transmitter requires:',
     options: [
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
-      'The meter is installed with a minimum of 5 pipe diameters of straight pipe upstream and 2 downstream to ensure a developed flow profile',
-      'Erosion or wear of the orifice plate bore, which has increased the bore diameter and reduced the DP for a given flow',
+      'A single connection at the top of the vessel, vented to atmosphere',
+      'A non-conductive lining inside the vessel to prevent signal loss',
+      'Five pipe diameters of straight run above the liquid surface',
       'Two pressure connections — one at the bottom (high side) and one at the top (low side) — to compensate for the vessel pressure above the liquid',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
       'A maintenance technician notices a flow reading that is consistently 10 % lower than expected. The orifice plate has been in service for 3 years. The most likely cause is:',
     options: [
       'Erosion or wear of the orifice plate bore, which has increased the bore diameter and reduced the DP for a given flow',
-      'A frequency (pulse) signal where the pulse rate is proportional to the volumetric flow rate',
-      'There is heavy vapour, foam, high temperature or pressure above the liquid surface',
-      'The meter is installed with a minimum of 5 pipe diameters of straight pipe upstream and 2 downstream to ensure a developed flow profile',
+      'The fluid conductivity has dropped below the meter minimum',
+      'Foam on the liquid surface is absorbing the ultrasonic echo',
+      'The straight pipe run upstream has become too long for the meter',
     ],
     correctAnswer: 0,
     explanation:

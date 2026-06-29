@@ -67,11 +67,11 @@ const quizQuestions = [
     question: 'BS EN 12811 is divided into three parts. What does Part 1 cover?',
     options: [
       'Information on materials used in scaffold construction',
-      'Performance requirements and general design for scaffolds',
       'Load testing procedures for completed scaffolds',
       'Inspection frequencies and record-keeping requirements',
+      'Performance requirements and general design for scaffolds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 12811-1 covers performance requirements and general design. It establishes the structural and safety criteria that all access and working scaffolds must satisfy, including loading, dimensions, platform requirements, and access provisions. Part 2 deals with information on materials, and Part 3 covers load testing.',
   },
@@ -93,20 +93,20 @@ const quizQuestions = [
     id: 3,
     question: 'What does the width category designation W09 indicate about a scaffold platform?',
     options: [
-      'The platform is 0.9 metres wide',
       'The platform is 9 metres long',
       'The scaffold has 9 bays',
+      'The platform is 0.9 metres wide',
       'The platform supports 9 kN per bay',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Width categories use a W prefix followed by two digits representing the minimum clear width in decimetres. W09 means 0.9 metres minimum clear width. Similarly, W06 is 0.6 m, W12 is 1.2 m, and W24 is 2.4 m. The width category is critical because it determines how workers and materials can be accommodated on the platform.',
   },
   {
     id: 4,
     question: 'Which standard specifically covers prefabricated facade scaffold systems?',
-    options: ['BS EN 12811-1', 'BS EN 12810', 'BS EN 12812', 'BS EN 74'],
-    correctAnswer: 1,
+    options: ['BS EN 12810', 'BS EN 12811-1', 'BS EN 12812', 'BS EN 74'],
+    correctAnswer: 0,
     explanation:
       'BS EN 12810 is the standard for prefabricated facade scaffold systems. These are manufactured, modular scaffold systems with pre-engineered frames and components, as opposed to traditional tube-and-fitting scaffolds. Facade scaffolds must comply with both BS EN 12810 and the relevant performance requirements of BS EN 12811.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'A scaffold is specified as Load Class 3, width category W12. What does this mean in practical terms?',
     options: [
-      'The platform is 3 metres wide and can support 12 kN per bay',
       'The platform has a minimum clear width of 1.2 m and can support a uniformly distributed service load of 2.00 kN/m\u00B2',
+      'The platform is 3 metres wide and can support 12 kN per bay',
       'The platform has 12 boards and 3 levels of loading',
       'The scaffold has 3 lifts, each 1.2 metres high',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Load Class 3 means the platform is designed for a uniformly distributed service load of 2.00 kN/m\u00B2, suitable for general construction work with some material storage. W12 indicates a minimum clear platform width of 1.2 metres. Together, these designations define the capacity and usable space of the working platform.',
   },

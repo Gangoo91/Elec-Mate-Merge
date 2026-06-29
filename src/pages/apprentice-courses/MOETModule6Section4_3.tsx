@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'When explaining a power outage to a building manager, the most effective approach is to:',
     options: [
-      'Explain in plain language what will happen, when it will happen, how long it will last, and what areas are affected — without unnecessary jargon',
-      'A site designated under the Wildlife and Countryside Act 1981 for its outstanding wildlife, geological, or physiographical features',
-      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
-      'Restricted space limits posture options, guardrails restrict movement, and platform bounce affects stability',
+      'In plain language: what will happen, when, for how long, and which areas are affected',
+      'The full technical detail, with circuit references and device ratings, as a complete record',
+      'Only that there is a fault and that you will sort it out, without giving any timescale',
+      'Refer them to your supervisor for any information, as the detail is not yours to share',
     ],
     correctIndex: 0,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'A building tenant asks when their air conditioning will be fixed. You are not sure of the timescale. The best response is:',
     options: [
-      '0.35 + (0.030 × 19.51 × 1.20) = 0.35 + 0.702 = 1.05 Ω (rounded). At 70 degrees C operating temperature, applying the 1.20 OSG correction.',
-      'Design out or reduce the need for work at height where reasonably practicable, and where it cannot be eliminated, provide information about remaining risks in the health and safety file for future duty holders',
-      'Ra <= 50V/IΔn — for a 30mA RCD this gives Ra <= 1667Ω; for 100mA <= 500Ω; in practice 200Ω is targeted as a stable upper limit',
-      'Be honest: explain what the fault is in simple terms, what needs to happen next, and give a realistic estimate — or say you will confirm after speaking with your supervisor',
+      'Give them a firm completion time so they stop asking, even though you are unsure',
+      'Tell them you have no idea and it could take days, to lower their expectations',
+      'Avoid committing to anything and suggest they raise it with the building manager',
+      'Be honest: explain the fault simply, give a realistic estimate, or confirm later',
     ],
     correctIndex: 3,
     explanation:
@@ -43,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'You need to communicate a safety restriction to office staff who want to access a corridor near your work area. How should you approach this?',
     options: [
-      'A root cause is the fundamental reason the failure occurred; a contributing factor increases the likelihood or severity but would not cause the failure alone',
-      'The ratio of actual maximum demand to the total connected load, accounting for the fact that not all loads operate simultaneously at full power',
-      'Explain the hazard in terms they understand, describe what you are doing to keep them safe, provide an alternative route, and estimate when access will be restored',
-      'Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation',
+      'Simply put up a barrier without explanation, as staff need not know the technical reason',
+      'Tell them the corridor is closed and that they must find their own way around it',
+      'Explain the hazard simply, give an alternative route, and say when access returns',
+      'Allow access if they are in a hurry, provided they keep clear of your work area',
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     question:
       'A tenant complains angrily about repeated electrical faults in their office. The most professional response is to:',
     options: [
-      'Listen actively, acknowledge their frustration, take notes, explain what you can do, and follow up with your supervisor — remaining calm and professional throughout',
-      'It separates current and potential connections (C1/P1, C2/P2), reducing measurement error from lead resistance and giving a direct reading of the electrode-plus-soil resistance.',
-      'Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation',
-      'Verify supply voltage, check start/run capacitor capacitance with multimeter capacitance range, measure motor winding resistances, inspect overload relay and check refrigerant pressure',
+      'Listen, acknowledge their frustration, note the detail, and escalate — staying calm',
+      'Defend the maintenance team and explain why the faults are not really your fault',
+      'Tell them firmly that complaints should go through the building manager, not to you',
+      'Promise the fault will never happen again to reassure them and end the conversation',
     ],
     correctIndex: 0,
     explanation:
@@ -74,10 +74,10 @@ const quizQuestions = [
     question:
       "When explaining maintenance work to non-technical staff, 'jargon-free' communication means:",
     options: [
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'Using plain, everyday language to describe the work, its impact, and timescale — replacing technical terms with simple explanations where necessary',
-      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
-      'Plan with your employer and training provider to access activities that will generate evidence for the missing KSBs, allowing sufficient time before the EPA',
+      'Avoiding all detail and giving only a one-word answer, so as not to confuse the listener',
+      'Plain, everyday language for the work, impact and timescale, replacing technical terms',
+      'Using the correct technical terms, but speaking slowly so they can follow along',
+      'Writing the explanation down rather than speaking it, to avoid being misunderstood',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "A facilities manager asks you to 'just turn it back on' after you have isolated a faulty circuit. You should:",
     options: [
-      'Be clear, concise, and focused on impact: what will happen, when, for how long, what areas are affected, and what occupants need to do',
-      'Specific questions: which lights, when did it start, is it constant or intermittent, does it happen at particular times, have any other electrical issues been noticed nearby?',
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
+      'Turn it back on, since the facilities manager outranks you and takes responsibility',
+      'Turn it on briefly to show willing, then isolate it again straight away afterwards',
+      'Explain calmly why it was isolated, the risk, and what must happen before re-energising',
+      'Refuse without any explanation and tell them to take it up with your supervisor',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'Before starting noisy or disruptive maintenance work in an occupied building, you should:',
     options: [
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Notify affected occupants in advance: explain what work is planned, when it will occur, how long it will last, what disruption to expect, and who to contact with concerns',
+      'Start as early as possible without warning, so the work finishes before most arrive',
+      'Carry on quietly and apologise to anyone who happens to complain during the work',
+      'Wait until the occupants notice the disruption, then explain what you are doing',
+      'Notify occupants in advance: the work, timing, duration, disruption and a contact',
     ],
     correctAnswer: 3,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       "When a non-technical client asks 'is my building safe?', the appropriate response is to:",
     options: [
-      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
-      'Notify affected occupants in advance: explain what work is planned, when it will occur, how long it will last, what disruption to expect, and who to contact with concerns',
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
+      'An honest, measured response from your findings, with issues and actions in plain terms',
+      'Reassure them everything is completely safe, to avoid alarming them unnecessarily',
+      'Avoid answering and tell them to wait for the formal written report instead',
+      'List every minor observation in full technical detail so they can judge for themselves',
     ],
     correctAnswer: 0,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       "A receptionist reports 'the lights are flickering'. To gather useful diagnostic information, you should ask:",
     options: [
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
-      'Specific questions: which lights, when did it start, is it constant or intermittent, does it happen at particular times, have any other electrical issues been noticed nearby?',
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
+      'Nothing — go straight to the distribution board and start testing without asking',
+      'Which lights, when it started, constant or intermittent, timing, and any other issues',
+      'Only whether the lights are LED or fluorescent, since that is all that matters here',
+      'Whether they would prefer the lights left off until the fault is fully diagnosed',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: 'Written communication to building occupants about planned maintenance should:',
     options: [
-      'Provide a brief, clear summary: what was done, what was found, what was repaired, what is outstanding, and any recommended follow-up actions — in plain language',
-      'Notify affected occupants in advance: explain what work is planned, when it will occur, how long it will last, what disruption to expect, and who to contact with concerns',
-      'Be clear, concise, and focused on impact: what will happen, when, for how long, what areas are affected, and what occupants need to do',
-      'Specific questions: which lights, when did it start, is it constant or intermittent, does it happen at particular times, have any other electrical issues been noticed nearby?',
+      'Include the full method statement and risk assessment so occupants have all the detail',
+      'Be as short as possible, giving only the date so that occupants are not overloaded',
+      'Be concise and impact-focused: what, when, how long, areas affected, and what to do',
+      'Use technical terms throughout so the notice appears authoritative and professional',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 7,
     question: 'When working in an occupied office, you should:',
     options: [
-      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
-      'Be clear, concise, and focused on impact: what will happen, when, for how long, what areas are affected, and what occupants need to do',
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Minimise disruption, keep the work area tidy, explain what you are doing if asked, and be courteous and professional at all times',
+      'Work as quickly as possible and ignore the occupants so the job is finished sooner',
+      'Ask the occupants to leave the area entirely until the work has been completed',
+      'Spread your tools and materials out widely so that everything is within easy reach',
+      'Minimise disruption, keep the area tidy, explain if asked, and stay courteous',
     ],
     correctAnswer: 3,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       "A building manager asks for a written summary of today's maintenance work. You should:",
     options: [
-      'Provide a brief, clear summary: what was done, what was found, what was repaired, what is outstanding, and any recommended follow-up actions — in plain language',
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
+      'A brief plain-language summary: done, found, repaired, outstanding and follow-ups',
+      'Hand over the raw CMMS print-out with all circuit references and codes left intact',
+      'Tell them the work is now finished and that a written summary is not necessary',
+      'Provide only a verbal account, as a written summary takes far too long to produce',
     ],
     correctAnswer: 0,
     explanation:
@@ -184,10 +184,10 @@ const quizQuestions = [
     question:
       'When a non-technical person makes a suggestion about an electrical fault, you should:',
     options: [
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Listen respectfully — they may have observed something useful — then explain your professional assessment politely',
-      'Be clear, concise, and focused on impact: what will happen, when, for how long, what areas are affected, and what occupants need to do',
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
+      'Dismiss it politely, since they cannot understand the electrical cause anyway',
+      'Listen respectfully — they may have seen something useful — then give your assessment',
+      'Act on their suggestion immediately, since they know the building better than you',
+      'Ignore it and continue your own diagnosis without acknowledging the suggestion',
     ],
     correctAnswer: 1,
     explanation:
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 10,
     question: 'If you cannot meet a promised deadline for completing work, you should:',
     options: [
-      'Provide a brief, clear summary: what was done, what was found, what was repaired, what is outstanding, and any recommended follow-up actions — in plain language',
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Inform the affected parties as early as possible, explain the reason for the delay, provide a revised estimate, and apologise for the inconvenience',
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
+      'Rush the remaining work, including safety-critical steps, to meet the original deadline',
+      'Say nothing and simply hope the delay goes unnoticed by the building occupants',
+      'Tell affected parties early, explain the reason, give a revised estimate and apologise',
+      'Wait until the deadline has passed before mentioning that the work is not finished',
     ],
     correctAnswer: 2,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     id: 11,
     question: 'Under ST1426, effective liaison with non-technical staff demonstrates:',
     options: [
-      'Provide a brief, clear summary: what was done, what was found, what was repaired, what is outstanding, and any recommended follow-up actions — in plain language',
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Specific questions: which lights, when did it start, is it constant or intermittent, does it happen at particular times, have any other electrical issues been noticed nearby?',
-      'Professional behaviour, customer service skills, and the ability to represent the maintenance function positively while maintaining safety standards',
+      'That a technician can complete jobs without ever speaking to building occupants',
+      'A purely technical skill that has no real bearing on the end-point assessment',
+      'The ability to give occupants the full technical detail of every fault encountered',
+      'Professional behaviour and customer service, representing the function while keeping safe',
     ],
     correctAnswer: 3,
     explanation:

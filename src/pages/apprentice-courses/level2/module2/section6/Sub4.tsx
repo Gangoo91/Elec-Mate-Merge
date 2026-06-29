@@ -35,10 +35,10 @@ const checks = [
     id: 'transistor-purpose',
     question: 'What is a transistor primarily used for in modern electronic kit?',
     options: [
-      'Ensures proper electrical contact and prevents overheating',
+      'Storing charge so the circuit keeps running through brief supply dips',
       'Acting as an electronic switch (or amplifier) — small signal in, big current out.',
-      'When prospective fault current exceeds the breaking capacity of downstream devices',
-      'The total volume of approved work orders that have not yet been completed',
+      'Converting AC into DC by passing current one way only',
+      'Limiting current and dropping voltage in a controlled way',
     ],
     correctIndex: 1,
     explanation:
@@ -49,9 +49,9 @@ const checks = [
     question: 'What’s the practical difference between a BJT and a MOSFET on a board?',
     options: [
       'BJTs are controlled by base current; MOSFETs are controlled by gate voltage. MOSFETs are far more common in modern power switching.',
-      'Quarantine the tower and refuse use until a competent person inspects and tags it under WAHR 2005 / PASMA — log the incident',
-      'A sudden, violent movement of the platform caused by the sudden release of a trapped boom, which is a leading cause of operator ejection',
-      'Walk through the kitchen, name the hazards (live conductors, water nearby, occupant traffic), decide controls (isolate, prove dead, RCD test), and write a short note',
+      'BJTs only switch DC, while MOSFETs only switch AC waveforms.',
+      'BJTs are voltage-controlled and MOSFETs are current-controlled — the reverse of how each is driven.',
+      'BJTs have an insulated gate, while MOSFETs need a continuous control current.',
     ],
     correctIndex: 0,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a basic NPN switch circuit, when does the transistor turn on?',
     options: [
-      'No, they only work with changing (AC) currents',
-      'Two-way communication and individual addressing',
+      'When the collector voltage exceeds the emitter voltage by any amount',
+      'Only when the supply is DC and never when it is AC',
       'When base voltage rises above ~0.7 V (so base current flows).',
-      'A tangible or intangible output produced as a result of project work',
+      'When the base is connected directly to the emitter',
     ],
     correctAnswer: 2,
     explanation:
@@ -103,9 +103,9 @@ const quizQuestions = [
     id: 3,
     question: 'A MOSFET’s gate is controlled by:',
     options: [
-      'The overhead of tracking a quick task exceeds the time to just complete it',
-      'Ongoing assessment of changing conditions during work',
-      'Reduce actual fault current by fast operation before peak',
+      'A continuous current, the same way a BJT base is driven',
+      'The temperature of the device rising above a set threshold',
+      'The frequency of the supply applied to the drain',
       'Voltage — almost no gate current is needed in steady state.',
     ],
     correctAnswer: 3,
@@ -117,9 +117,9 @@ const quizQuestions = [
     question: 'A microcontroller switches a 12 V relay coil that draws 80 mA. Why does the designer almost always put a transistor between the chip pin and the coil?',
     options: [
       'Because a chip pin can’t supply 80 mA — the transistor lets a few mA from the chip switch the much larger coil current.',
-      'All bat species and their roosts are fully protected — it is an offence to disturb, injure, or kill bats or damage their roosts',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'Discharge stored energy, protect against inadvertent re-energisation, and ensure the work area remains at earth potential',
+      'Because the transistor steps the 12 V coil supply down to the chip’s 5 V level',
+      'Because the chip can only output AC and the transistor converts it to DC for the coil',
+      'Because the transistor stores enough charge to hold the relay closed on its own',
     ],
     correctAnswer: 0,
     explanation:
@@ -129,10 +129,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is an IGBT and where will you meet one?',
     options: [
-      'EFLI — the EV charger run is on the perimeter of the house, often longer than the original oven run, so R1 + R2 is larger and Zs may exceed Table 41.3 for the new device.',
+      'An Isolated-Ground Busbar Terminal — the dedicated earth bar inside a metal consumer unit.',
       'An Insulated-Gate Bipolar Transistor — used in industrial inverters, EV chargers and VFDs to switch hundreds of volts at hundreds of amps.',
-      'A charge levied by one contractor against another (or by the main contractor) for the cost of rectifying damage or completing work that the other party was responsible for',
-      'A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated',
+      'An Internal Gain Balancing Transformer — used to match impedances in audio amplifiers.',
+      'An Intrinsically-safe Galvanic Barrier Tee — a connector used in hazardous-area wiring.',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does PWM (pulse-width modulation) mean and why do drives use it?',
     options: [
-      'A wide range of issues including debt, employment rights, benefits, tax, and consumer problems — all free and confidential',
-      'A fire door is a door assembly designed to resist fire for a specified period — FD30 resists fire for 30 minutes and FD60 for 60 minutes',
+      'Modulating the supply voltage smoothly up and down like a variable resistor',
+      'Changing the frequency of the mains from 50 Hz to a higher value to run motors faster',
       'Switching the supply on and off rapidly (kHz) at a varying duty cycle to control the average power delivered — used in dimmers, VFDs and EV chargers.',
-      'Remove them from the cold environment, remove any wet clothing, wrap them in dry blankets, call 999, and monitor their condition',
+      'Pulsing the current in short bursts to charge a smoothing capacitor before each cycle',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,9 +155,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why does a transistor used as a switch need a heatsink for higher-current applications?',
     options: [
-      'The brain can form new neural pathways and change throughout life, meaning resilience can genuinely be built',
-      'Avoid hazardous manual handling so far as reasonably practicable; if unavoidable, assess and reduce the risk',
-      'The lowest temperature at which the liquid gives off sufficient vapour to form an ignitable mixture with air near its surface',
+      'Because the heatsink stores charge to help the transistor switch faster',
+      'Because cooling the transistor raises the voltage it can switch',
+      'Because a cold transistor conducts current more readily than a warm one',
       'Because while switching (and especially when partly on) the transistor dissipates power as heat — too much heat and it fails.',
     ],
     correctAnswer: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'You’re troubleshooting a smart RCBO and find the trip relay is being driven by a small transistor on the PCB. The transistor reads short-circuit between two of its leads. Conclusion?',
     options: [
       'The transistor has failed (a common failure mode); the entire RCBO must be replaced — we don’t component-repair safety devices.',
-      'A combination of grades across all assessment components as defined in the EPA specification — you must achieve at least a pass in each component',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
-      'Assembly should have already ceased at Beaufort Force 4 — secure what has been built and evacuate the tower',
+      'The transistor is healthy — a short between two leads is the normal off-state reading.',
+      'Desolder the transistor, fit an equivalent part, and return the RCBO to service.',
+      'Leave it in place and rely on the RCBO’s mechanical trip as a backup.',
     ],
     correctAnswer: 0,
     explanation:

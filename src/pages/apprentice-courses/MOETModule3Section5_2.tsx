@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'c-rate',
     question: 'What does a battery C-rate of C/10 mean?',
     options: [
-      'Basic protection, fault protection, and additional protection',
-      'Inherent fire resistance — the copper sheath and mineral insulation maintain circuit integrity in a fire',
-      'Installation errors, environmental factors, and component failures',
       'The battery will discharge at a rate that depletes its full capacity in 10 hours',
+      'The battery has a nominal voltage of 10 volts per cell',
+      'The battery loses 10% of its capacity each month when idle',
+      'The battery must be charged at one tenth of its rated voltage',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'A C-rate of C/10 means the battery will discharge at a rate that depletes its full rated capacity in 10 hours. For a 100 Ah battery, C/10 = 10 A discharge current. C/1 would be 100 A (full discharge in 1 hour), and C/20 would be 5 A (full discharge in 20 hours). Higher C-rates (faster discharge) reduce the usable capacity due to the Peukert effect in lead-acid batteries.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'impedance-testing',
     question: 'What does an increasing trend in battery impedance readings indicate?',
     options: [
-      'At least quarterly, though more frequently is often beneficial',
-      'The competent person who carried out the inspection and testing',
+      'The battery is fully charged and being held on float correctly',
       'The battery is degrading internally and approaching end of life',
-      'Average efficiency of a heat pump over an entire heating season',
+      'The charger output voltage is set too low for the battery type',
+      'The ambient temperature in the battery room has risen above 20°C',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'An increasing trend in battery impedance readings indicates internal degradation — drying out of the electrolyte, corrosion of the plates, sulphation, or physical damage. By trending impedance values over time, maintenance technicians can predict battery failure and schedule replacement before a critical outage occurs. A single impedance reading is less useful than the trend.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'thermal-runaway',
     question: 'What is thermal runaway in a battery?',
     options: [
-      'It moves information from the Blind Spot (known to others but not to self) into the Open area',
-      'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
+      'A controlled overcharge applied periodically to equalise the cell voltages',
+      'The gradual loss of capacity caused by hardened sulphate crystals on the plates',
       'An uncontrolled exothermic reaction where increasing temperature causes increasing current, which causes further temperature rise',
-      'System overviews, operational procedures, maintenance requirements, and emergency responses',
+      'The drop in usable capacity that occurs when a battery is discharged quickly',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'A flooded lead-acid battery differs from a VRLA battery primarily because:',
     options: [
-      'Cut-resistant gloves, chemical-resistant gloves, thermal gloves, electrical gloves',
+      'It uses a lithium-based electrolyte and requires a battery management system',
       'It has liquid electrolyte that requires periodic topping up with distilled water',
-      'Move the casualty into fresh air, ensuring it is safe for you to approach',
-      'To get input from those who understand the work and risks',
+      'It recombines its gases internally and never needs ventilation',
+      'It has a nominal cell voltage of 1.2 V rather than 2.0 V',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     question:
       'Lithium iron phosphate (LiFePO4) batteries are preferred for many stationary applications because:',
     options: [
-      'Prolonged storage in a discharged state or chronic undercharging',
-      'Verify the battery can deliver its rated capacity under load conditions',
-      'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
+      'They have the highest energy density of any lithium chemistry, giving the smallest footprint',
+      'They do not require a battery management system, simplifying installation and maintenance',
+      'They operate at 3.7 V per cell, matching the cell voltage of standard NMC modules',
       'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
     ],
     correctAnswer: 3,
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What gas is produced during the charging of flooded lead-acid batteries?',
     options: [
-      'Earth fault loop impedance, RCD testing, and functional tests',
-      'Hydrogen and oxygen (potentially explosive mixture)',
-      'Calculate and record where significant',
-      'Off-peak default charging (smart functionality)',
+      'Carbon dioxide (a colourless asphyxiating gas)',
+      'Hydrogen and oxygen (a potentially explosive mixture)',
+      'Chlorine (a toxic irritant gas)',
+      'Sulphur dioxide (a corrosive acidic gas)',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'Sulphation in a lead-acid battery is caused by:',
     options: [
-      'Collected separately and recycled through an approved compliance scheme',
-      'Verify the battery can deliver its rated capacity under load conditions',
+      'Holding the battery on a continuous float charge at the correct voltage',
+      'Discharging the battery rapidly at a high C-rate on a single occasion',
       'Prolonged storage in a discharged state or chronic undercharging',
-      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
+      'Operating the battery in a cold environment below its rated temperature',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,9 +149,9 @@ const quizQuestions = [
     question:
       'A Battery Management System (BMS) in a lithium-ion battery performs which critical function?',
     options: [
-      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
-      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
-      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
+      'Tops up the electrolyte automatically as it is lost during charging',
+      'Converts the DC output of the battery into an AC supply for the load',
+      'Applies a periodic equalising overcharge to reverse sulphation',
       'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
     ],
     correctAnswer: 3,
@@ -163,9 +163,9 @@ const quizQuestions = [
     question: 'During a battery load test, the purpose is to:',
     options: [
       'Verify the battery can deliver its rated capacity under load conditions',
-      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
-      'Collected separately and recycled through an approved compliance scheme',
-      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
+      'Measure the internal impedance of each cell without discharging it',
+      'Equalise the cell voltages across the whole battery string',
+      'Confirm the charger output voltage is correctly temperature-compensated',
     ],
     correctAnswer: 0,
     explanation:
@@ -186,12 +186,12 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'Under the WEEE Regulations, batteries must be:',
+    question: 'Under the waste battery regulations, used batteries must be:',
     options: [
-      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
-      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
+      'Disposed of with general waste once the electrolyte has been drained',
+      'Stored on site indefinitely until a full pallet has accumulated',
       'Collected separately and recycled through an approved compliance scheme',
-      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
+      'Incinerated on site to recover the energy they still contain',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
       'What first-aid action should be taken if battery acid (sulphuric acid) contacts the skin?',
     options: [
       'Flush the affected area with copious amounts of clean water for at least 20 minutes',
-      'Prolonged storage in a discharged state or chronic undercharging',
-      'Collected separately and recycled through an approved compliance scheme',
-      'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
+      'Rub the area with a dry cloth to remove the acid before it soaks in',
+      'Apply a thick paste of sodium bicarbonate directly onto the skin',
+      'Cover the area with a dressing and wash it once the shift has finished',
     ],
     correctAnswer: 0,
     explanation:

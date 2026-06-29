@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'dec-requirement',
     question: 'Which buildings are required to display a DEC in England and Wales?',
     options: [
-      'I2 ≤ 1.45 × Iz is satisfied for overload protection',
+      'All commercial offices regardless of floor area',
       'Public buildings over 250m² with public access',
-      'Where access needed for maintenance',
-      'It calculates fault current: If = U₀/Zs',
+      'New dwellings at the point of sale or let',
+      'Industrial warehouses over 1,000m²',
     ],
     correctIndex: 1,
     explanation:
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: "The 'performance gap' refers to the difference between:",
     options: [
       'Predicted design energy use and actual operational energy use',
-      'Lock off with personal lock and apply warning labels',
-      'High circuit impedance that may affect device operation',
-      'The weight of all persons, tools, materials, and equipment on the platform',
+      'The asset rating and the operational rating benchmark',
+      'Regulated energy use and unregulated energy use',
+      'Summer peak demand and winter peak demand',
     ],
     correctIndex: 0,
     explanation:
@@ -71,9 +71,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of CIBSE TM54?',
     options: [
       'To predict operational energy use more accurately',
-      'Optimal operating point for efficiency',
-      'Suitable commissioning records and maintenance information',
-      'BS 5839 (fire detection) and BS 5266 (emergency lighting)',
+      'To set the benchmark values used in DEC ratings',
+      'To calculate the asset rating for an EPC',
+      'To certify F-gas refrigerant compliance',
     ],
     correctIndex: 0,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'The key difference between an EPC and a DEC is:',
     options: [
-      'Ensure buildings perform as designed through extended aftercare',
-      'All metered energy including electricity, gas, oil, and district heating',
+      'EPCs apply to public buildings, DECs apply to private buildings',
+      'EPCs are renewed annually, DECs last ten years',
       'DECs measure actual energy use, EPCs assess theoretical performance',
-      'Enables identification of energy waste and targeting of improvements',
+      'DECs assess fabric only, EPCs assess fabric and services',
     ],
     correctAnswer: 2,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'Which energy sources are typically included in DEC calculations?',
     options: [
       'All metered energy including electricity, gas, oil, and district heating',
-      'DECs measure actual energy use, EPCs assess theoretical performance',
-      'Ensure buildings perform as designed through extended aftercare',
-      'Enables identification of energy waste and targeting of improvements',
+      'Only electricity consumption from the main incomer',
+      'Only the regulated loads used in Part L compliance',
+      'Only on-site renewable generation exported to the grid',
     ],
     correctAnswer: 0,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'CIBSE TM54 recommends including which of the following in operational energy predictions?',
     options: [
-      'DECs measure actual energy use, EPCs assess theoretical performance',
-      'Enables identification of energy waste and targeting of improvements',
+      'Only the regulated loads assessed for Building Regulations',
+      'Only the heating and cooling loads, excluding lighting',
       'All energy uses including unregulated loads, actual hours, and small power',
-      'All metered energy including electricity, gas, oil, and district heating',
+      'Only the loads metered during the first year of occupation',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the main cause of performance gaps in new buildings?',
     options: [
-      'Ensure buildings perform as designed through extended aftercare',
-      'Extended operating hours and out-of-hours use',
-      'Recommendations for improving energy efficiency',
+      'Over-specification of insulation in the building fabric',
+      'Use of renewable energy systems on site',
+      'Excessive sub-metering of energy circuits',
       'Incorrect energy modelling assumptions and operational factors',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'Building energy benchmarks from CIBSE TM46 are expressed as:',
     options: [
       'kWh per m² of floor area per year',
-      'Higher ceilings require more sensitivity',
-      'Chrysotile (white asbestos)',
-      'Detect program faults and reset',
+      'kW of peak demand per building',
+      'Tonnes of CO2 per occupant per year',
+      'A single letter band from A to G',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which factor typically contributes most to the performance gap in office buildings?',
     options: [
-      'kWh per m² of floor area per year',
+      'Underuse of the building below design occupancy',
       'Extended operating hours and out-of-hours use',
-      '50% more energy than a typical building',
-      'Recommendations for improving energy efficiency',
+      'Excessive natural daylight reducing lighting loads',
+      'Lower than expected small-power loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     id: 11,
     question: 'Soft Landings is a process that aims to:',
     options: [
-      'Enables identification of energy waste and targeting of improvements',
-      'Extended operating hours and out-of-hours use',
-      'DECs measure actual energy use, EPCs assess theoretical performance',
+      'Reduce the capital cost of the building services installation',
+      'Speed up the construction programme on site',
+      'Replace the need for a Display Energy Certificate',
       'Ensure buildings perform as designed through extended aftercare',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'Sub-metering is important for improving operational ratings because it:',
     options: [
       'Enables identification of energy waste and targeting of improvements',
-      'All energy uses including unregulated loads, actual hours, and small power',
-      'DECs measure actual energy use, EPCs assess theoretical performance',
-      'All metered energy including electricity, gas, oil, and district heating',
+      'Reduces the total metered energy recorded for the DEC',
+      'Removes the need for weather corrections in the rating',
+      'Automatically improves the building fabric performance',
     ],
     correctAnswer: 0,
     explanation:

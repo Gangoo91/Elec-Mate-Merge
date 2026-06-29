@@ -12,12 +12,12 @@ const quickCheckQuestions = [
     question:
       'Why does daylight harvesting often dim only some lights instead of all lights in a space?',
     options: [
-      'To save money on dimming equipment',
       'Natural light distribution varies across the space',
-      'The BMS can only control a few fittings',
-      'Occupants prefer varied lighting',
+      'To reduce spend on dimmable drivers',
+      'The BMS can only address a few fittings at once',
+      'Occupants generally prefer deliberately uneven lighting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Natural light penetration decreases with distance from windows. Areas near windows receive abundant daylight and can have artificial lighting dimmed significantly, whilst interior areas still require full artificial illumination to maintain consistent lighting levels.',
   },
@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'pir-delay',
     question: 'Why do PIR-controlled lights have a delay before switching off?',
     options: [
-      'To save energy during the delay period',
-      'To prevent nuisance switching when occupants are still but not moving',
-      'To comply with building regulations',
-      'To extend lamp life',
+      'To save additional energy during the delay period',
+      'To satisfy a specific building regulation clause',
+      'To prevent nuisance switching when occupants are still but present',
+      'To extend the operating life of the lamps',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'PIR sensors detect movement and heat changes. When people are stationary (reading, typing, thinking), they may not trigger the sensor. A time delay prevents lights from switching off during these still periods, avoiding disruption and annoyance.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'combined-strategy',
     question: 'What is one advantage of combining daylight harvesting with PIR logic?',
     options: [
-      'Reduced sensor costs',
+      'Lower overall sensor hardware costs',
+      'Simpler wiring than either system alone',
+      'Reduced commissioning and calibration time',
       'Maximum energy savings without sacrificing user comfort',
-      'Simpler wiring requirements',
-      'Less commissioning time',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Combined systems address both when lights are needed (occupancy) and how much light is needed (daylight response). This comprehensive approach can achieve 40-60% energy savings whilst maintaining optimal lighting conditions for all scenarios.',
   },

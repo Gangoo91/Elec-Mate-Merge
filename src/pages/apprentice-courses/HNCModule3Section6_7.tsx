@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'islanding-detection',
     question: 'What is the primary safety concern that anti-islanding protection addresses?',
     options: [
-      'Installation certificate and relevant schedules',
-      'Loose connections or corroded terminals',
-      'Energising the grid during maintenance',
-      'Inform the supervisor immediately',
+      'Excessive voltage rise at the point of connection',
+      'Overloading the inverter during peak generation',
+      'Energising an isolated grid section during maintenance',
+      'Harmonic distortion injected back into the network',
     ],
     correctIndex: 2,
     explanation:
@@ -129,14 +129,14 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of export limitation in a grid-connected PV system?',
     options: [
-      'Both A and B',
-      'To comply with DNO connection agreements',
-      'To protect the inverter from damage',
-      'To maximise self-consumption',
+      'To cap power fed to the grid within DNO-agreed limits',
+      'To increase the total annual generation of the array',
+      'To protect the inverter from overheating',
+      'To remove the need for anti-islanding protection',
     ],
     correctAnswer: 0,
     explanation:
-      'Export limitation serves both purposes: it maximises self-consumption (improving financial returns) and complies with DNO requirements where network capacity is constrained. Many G98/G99 agreements include export limits.',
+      'Export limitation caps the power exported to the grid so it stays within the DNO-agreed limit, which also maximises on-site self-consumption. It is commonly required where network capacity is constrained.',
   },
   {
     id: 5,
@@ -196,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the key advantage of AC-coupled over DC-coupled battery systems?',
     options: [
-      'Men who are feeling low or suicidal — 0800 58 58 58',
+      'Higher round-trip efficiency from single conversion',
       'Flexibility - can retrofit to existing PV',
-      'Overheating components or insulation breakdown',
-      'Connecting multiple hubs to work together',
+      'No need for any inverter at the battery',
+      'Lower cost than an equivalent DC-coupled system',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'Under the Electric Vehicles (Smart Charge Points) Regulations 2021, what feature is mandatory for domestic chargepoints?',
     options: [
-      'The ratio of collector current to base current',
-      'Summarising and checking understanding',
+      'A minimum charging rate of 7kW',
+      'A dedicated three-phase supply',
       'Off-peak default charging (smart functionality)',
-      'It varies with the equation of time',
+      'A built-in energy meter for billing',
     ],
     correctAnswer: 2,
     explanation:

@@ -47,8 +47,8 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     question: 'Which feature allows smart thermostats to pre-heat a home before occupants arrive?',
-    options: ['Weather compensation', 'Geofencing', 'Load balancing', 'Demand response'],
-    correctAnswer: 1,
+    options: ['Load balancing', 'Weather compensation', 'Grid demand response', 'Geofencing'],
+    correctAnswer: 3,
     explanation:
       'Geofencing uses smartphone location to detect when occupants are heading home, allowing the thermostat to start heating in advance so the property is warm on arrival.',
   },
@@ -56,9 +56,9 @@ const quizQuestions = [
     question: 'What is weather compensation in smart heating systems?',
     options: [
       'Adjusting heating based on outdoor temperature forecasts',
-      'Compensating for wind chill factor',
-      'Balancing humidity levels',
-      'Measuring solar gain',
+      'Compensating purely for the wind chill factor',
+      'Balancing indoor humidity levels',
+      'Measuring solar gain through windows',
     ],
     correctAnswer: 0,
     explanation:
@@ -67,18 +67,18 @@ const quizQuestions = [
   {
     question: 'For underfloor heating, what is the typical method for zone control?',
     options: [
-      'Smart TRVs on each loop',
-      'Motorised zone valves on manifold',
-      'Individual boilers per zone',
-      'Manual adjustment only',
+      'Smart TRVs fitted to each loop',
+      'A separate boiler for each zone',
+      'Motorised zone valves on the manifold',
+      'Manual adjustment of each loop only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Underfloor heating systems typically use motorised zone valves fitted to the manifold, controlled by room thermostats to regulate water flow to each heating zone.',
   },
   {
     question: 'What protocol do many smart TRVs use to communicate with their hub?',
-    options: ['Ethernet', 'Zigbee or Z-Wave', 'HDMI', 'USB'],
+    options: ['Wired Ethernet', 'Zigbee or Z-Wave', 'HDMI', 'USB cable'],
     correctAnswer: 1,
     explanation:
       'Most smart TRVs communicate via Zigbee or Z-Wave wireless protocols, which are designed for low-power, reliable communication in smart home applications.',
@@ -87,12 +87,12 @@ const quizQuestions = [
     question:
       'What is a key consideration when retrofitting smart zoning to an existing heating system?',
     options: [
-      'The colour of the radiators',
+      'The colour and finish of the radiators',
+      'The age of the property itself',
+      'The thickness of the floor carpet',
       'Compatibility with existing boiler controls',
-      'The age of the property',
-      'Carpet thickness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When retrofitting smart zoning, compatibility with the existing boiler and its controls is crucial. Some systems require specific boiler relay connections or compatible OpenTherm interfaces.',
   },

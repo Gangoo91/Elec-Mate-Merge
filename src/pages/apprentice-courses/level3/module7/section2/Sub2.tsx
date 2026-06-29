@@ -41,12 +41,12 @@ const checks = [
     id: 'mod7-s2-sub2-mcs-purpose',
     question: "What is MCS and what does it certify?",
     options: [
-      "In writing, contemporaneously. Text or email to the supervisor; CC to a senior manager or H&S manager; copy retained. State what was asked, what you said, and the reason (regulation cited or risk identified). Time-stamped. The contemporaneous written record is the strongest evidence in any subsequent ERA s.44 claim or HSE prosecution.",
-      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\"no documentation available\\\" as a limitation against affected items on the schedule.",
-      "MCS (Microgeneration Certification Scheme) is the UK quality assurance scheme for small-scale low-carbon energy technologies — solar PV, solar thermal, heat pumps, biomass, wind and battery storage. MCS certifies both the products (so consumers know they meet performance standards) and the installers (so consumers know the firm is competent and accountable). MCS registration is the gateway to most UK renewables grant schemes (BUS, ECO4, SEG).",
-      "Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.",
+      "The Microgeneration Certification Scheme — certifies both the products and the installers of small-scale low-carbon technologies, and is the gateway to UK renewables grants.",
+      "The Metering and Connection Standard — the DNO specification for connecting a new domestic supply (meter type, service-head fuse, cut-out), certified before energising.",
+      "The Microgeneration Compliance Standard — a voluntary trade-association marketing badge with no link to grant funding, used only as a quality logo on quotes and vans.",
+      "The Manufacturer Conformity Scheme — certifies only the products (panels, inverters, heat pumps); installer competence is handled separately by the JIB grading scheme.",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "MCS is the consumer-facing quality scheme run by MCS Service Company. It's the practical entry condition for accessing UK Government renewables grants and incentive schemes — Boiler Upgrade Scheme (BUS) for heat pumps, Smart Export Guarantee (SEG) for PV export, ECO4 for fuel poverty grants. Without MCS registration installers can't access most of the grant-funded UK renewables market.",
   },
@@ -55,10 +55,10 @@ const checks = [
     question:
       "What's the typical qualification route for an electrician moving into MCS-registered solar PV installation?",
     options: [
-      "IQA Level 4 (Internal Quality Assurance) is the qualification for verifying assessment quality — you sample and second-mark other assessors' work to ensure consistency. Senior progression beyond TAQA L3. Typical course 5-10 days plus portfolio. Required for IQA roles at colleges and training providers, and for senior assessor positions. Can lead to EQA (External Quality Assurance) at L4 — the awarding body's own QA function.",
-      "Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures",
-      "Standard route: existing Electrician JIB grade + AM2S (Solar PV variant of AM2) OR an MCS-recognised PV installer course (typically a 5-day course covering PV system design, installation, commissioning and the MCS install standard) + employer firm registers with MCS for PV. The individual electrician holds the PV competence; the firm holds the MCS registration. Some installers also pursue the BPEC Solar PV course.",
-      "Workers making a \\\\\\\"qualifying disclosure\\\\\\\" — a disclosure of information that the worker reasonably believes shows malpractice, including criminal offences, breach of legal obligations, miscarriage of justice, danger to health and safety, environmental damage. Protects from detriment and dismissal.",
+      "There is no electrical qualification involved — PV is plumbing-led work, so the standard route is to hold a Level 3 plumbing NVQ and a Water Regulations certificate, after which the firm can register with MCS for PV without any electrical grading.",
+      "The individual electrician applies to MCS personally and is awarded a personal MCS licence number; once held, that licence is portable between firms and there is no separate firm-level registration to complete.",
+      "Existing Electrician JIB grade plus AM2S (or an MCS-recognised PV installer course), then the employer firm registers with MCS for PV — individual holds the competence, firm holds the registration.",
+      "The only requirement is C&G 2382 (the BS 7671 regs exam) — once held, an electrician can install MCS-certified PV and self-certify it for grants, because PV is treated as a standard final circuit with no additional competence needed.",
     ],
     correctIndex: 2,
     explanation:
@@ -69,14 +69,14 @@ const checks = [
     question:
       "What does a heat pump installer typically need that's different from a PV installer?",
     options: [
-      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
-      "D: \\\\\\\"Over the last two weeks, you have arrived 20-30 minutes late on four occasions.\\\\\\\" E: \\\\\\\"This means I start the prep work alone, which is frustrating and puts us behind schedule.\\\\\\\" S: \\\\\\\"I need you to arrive by the agreed start time, or let me know in advance if you will be delayed.\\\\\\\" C: \\\\\\\"If we start together, we will finish the prep in half the time and both have a smoother day.\\\\\\\"",
-      "PPE Regs Reg 7 places a duty on the employer to maintain (and replace) PPE. The corresponding duty on the employee under Reg 10 is to use the PPE in accordance with training and to report any loss of, or obvious defect in, the PPE. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service and replaced before use.",
-      "Heat pump installation combines refrigerant handling (F-Gas) with electrical install and water-system plumbing — so heat pump installers typically need: F-Gas certification (Cat 1 for the refrigerant work), plumbing knowledge (or work in a plumbing-paired team), AND electrical competence. MCS heat pump registration involves both the MCS scheme and (where applicable) F-Gas company registration. Many electrical-led heat pump installers partner with plumbers rather than self-cover plumbing.",
+      "F-Gas certification (Cat 1) for the refrigerant work, plus plumbing competence (in-house or a paired plumber) on top of the electrical install — none of which the PV route needs.",
+      "A CompEx hazardous-area certification, because the refrigerant is classed as an explosive atmosphere, whereas PV needs no such certification — the only practical difference between the routes.",
+      "A Gas Safe registration (the same one used for gas boilers), because the heat pump replaces the boiler and connects to the same flue and gas-metering arrangements the boiler used.",
+      "Nothing materially different — both hold the identical AM2S endorsement and the same MCS registration, and an installer certified for one is automatically certified for the other.",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
-      "Heat pump installation is multi-trade. Electricians can lead the install (it's electrically-driven) but the refrigerant work needs F-Gas Cat 1 certification (training course + assessment) and the water side typically needs a plumber. Many MCS heat pump installer firms pair an electrician with a plumber. F-Gas certification is required by EU/UK regulation for any work on fluorinated refrigerant gases.",
+      "Heat pump installation is multi-trade. Electricians can lead the install (it's electrically-driven) but the refrigerant work needs F-Gas Cat 1 certification (training course plus assessment) and the water side typically needs a plumber, so many MCS heat pump firms pair an electrician with a plumber. MCS heat pump registration involves both the MCS scheme and, where applicable, F-Gas company registration. F-Gas certification is required by EU/UK regulation for any work on fluorinated refrigerant gases.",
   },
 ];
 
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the Boiler Upgrade Scheme (BUS) and how does it relate to MCS?",
     options: [
-      "Main earthing terminal notice (514.13.1), bonding-clamp notices on gas and water bonds (514.13.1), RCD test notice (in the 514 series), single-line diagram or circuit list inside the CU door (514.9.1), individual circuit identification on each MCB/RCBO, isolator labelling, and a warning notice for any additional or alternative supply (PV, battery, generator) where applicable.",
-      "BUS is the UK Government grant scheme paying homeowners up to £7,500 toward installing a heat pump (or biomass boiler in some cases). To claim BUS the heat pump must be installed by an MCS-registered installer using MCS-certified products, with the MCS certificate then submitted to Ofgem. BUS is the dominant route into the heat pump market for installers — without MCS registration you can't access BUS-funded work.",
-      "Because it informs the supervisor\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s framing — \\\"the consequence cascade isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t hypothetical; it\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s structured by the Sentencing Council guideline; here\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s roughly where this incident would land\\\". Plus director liability under s.37 + Sentencing Council means the L3\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s observations to senior management land with weight.",
-      "Daily site diary, weekly time sheet, NVQ portfolio entries (evidence for the End-Point Assessment), off-the-job training log (apprenticeship standards), monthly apprentice review forms (you + employer + tutor), JIB grading entries where applicable, and any required H&S sign-on records (RAMS sign-on, toolbox talk attendance).",
+      "A scheme run by the DNOs that pays installers to upgrade a property's incoming supply from 60 A to 100 A so it can take a heat pump — no connection to MCS, payment going to the network operator not the homeowner.",
+      "A UK Government grant paying homeowners up to £7,500 toward a heat pump, claimable only when an MCS-registered installer fits MCS-certified products — making MCS the practical entry condition for heat pump work.",
+      "A manufacturer cashback offer where heat pump makers refund part of the unit cost directly to MCS-registered installers as a trade discount, with no Government funding or Ofgem involvement.",
+      "The Building Upgrade Standard — a Part L energy-efficiency target for new dwellings that requires a heat pump rather than a gas boiler, enforced by Building Control and unrelated to any installer grant.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,36 +98,36 @@ const quizQuestions = [
     id: 2,
     question: "What does MCS registration cost a small electrical firm wanting to add PV?",
     options: [
-      "CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.",
-      "When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.",
-      "First-year MCS registration cost typically £600-1,000 application fee plus the Quality Management System certification (often via NICEIC or NAPIT MCS umbrella) at £400-700. Annual ongoing MCS fees similar. Plus the underlying PV training (AM2S or equivalent, £400-600) and potentially MCS-recognised installer course (£500-1,000). Total first-year investment for a sole trader entering PV is roughly £2,000-3,500.",
-      "Coaching focuses on individual development (asking \\\\\\\"what do you want to become?\\\\\\\" and helping bridge the gap through challenging assignments and feedback), while affiliative focuses on team harmony and emotional bonds (asking \\\\\\\"how is everyone feeling?\\\\\\\" and strengthening connections). Coaching is most appropriate for developing potential; affiliative is most appropriate for healing rifts or building morale",
+      "MCS registration is free for firms already holding a competent-person scheme membership (NICEIC, NAPIT) — the only cost is the PV training itself, which the manufacturers fund as part of the panel supply contract.",
+      "A one-off £150 application fee covers MCS registration for the lifetime of the firm, with no annual renewal, no audit fee and no separate Quality Management System requirement.",
+      "Roughly £2,000-3,500 total in the first year — application fee, Quality Management System certification, PV training and the MCS-recognised installer course combined.",
+      "MCS charges a percentage of every installed system's value (typically 5%) rather than a fixed fee, so a firm doing a single £8,000 PV install pays around £400 and a firm doing none pays nothing.",
     ],
     correctAnswer: 2,
     explanation:
-      "MCS membership is meaningful business cost — but the heat pump and PV markets are large and grant-funded, so the payback is usually fast. A single PV install can carry £8,000-15,000 of revenue; a heat pump install £15,000-25,000. MCS registration pays back in a handful of jobs. For firms already in domestic electrical, adding PV or heat pump as a complementary service is often a strong commercial move.",
+      "The first-year cost breaks down as: MCS application fee £600-1,000, plus QMS certification (often via NICEIC or NAPIT MCS umbrella) £400-700, plus the underlying PV training (AM2S or equivalent £400-600), plus potentially an MCS-recognised installer course £500-1,000 — roughly £2,000-3,500 total. Annual ongoing MCS fees are similar to the application fee. But the markets are large and grant-funded: a single PV install can carry £8,000-15,000 of revenue and a heat pump £15,000-25,000, so MCS registration pays back in a handful of jobs.",
   },
   {
     id: 3,
     question: "What's the Smart Export Guarantee (SEG)?",
     options: [
-      "C&G 2382 is the BS 7671 Wiring Regulations qualification — open-book exam testing knowledge of the current edition. Each major edition triggers a new 2382 variant: 2382-15 was 17th Edition; 2382-18 was 17th Edition + A3; 2382-22 is 18th Edition; 2382-26 will cover A4:2026. Holding the latest 2382 is the standard CPD evidence for keeping current with BS 7671.",
-      "A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It's logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you'd otherwise be guessing.",
-      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
-      "SEG is the UK regulatory scheme requiring large electricity suppliers to pay solar PV exporters for surplus electricity exported to the grid (replacing the closed Feed-in Tariff). To register a PV system for SEG the install must be MCS-certified — so the homeowner needs an MCS-registered installer. Tariff rates vary by supplier (typically 4-15p/kWh in 2024).",
+      "SEG is a fixed Government tariff that pays every PV owner the same guaranteed rate per kWh exported, set centrally by Ofgem and identical across all suppliers — the modern continuation of the Feed-in Tariff under a new name.",
+      "SEG is a smart-meter upgrade scheme that obliges suppliers to fit an export meter free of charge to any home with solar, regardless of whether the install was MCS-certified or who carried it out.",
+      "SEG is a battery-storage incentive that pays homeowners to charge a battery from off-peak grid electricity and discharge it at peak — it applies only to battery systems and has nothing to do with solar export.",
+      "The UK scheme requiring large suppliers to pay PV exporters for surplus electricity sent to the grid — registration needs an MCS-certified install.",
     ],
     correctAnswer: 3,
     explanation:
-      "SEG replaced the older Feed-in Tariff (FIT), which closed to new applicants in 2019. SEG is supplier-driven (each supplier sets their own rate, regulated by Ofgem) rather than Government-fixed. MCS certification of the install is the gateway to SEG registration. For PV installers this means MCS isn't optional if your customers want to export surplus to the grid.",
+      "SEG replaced the closed Feed-in Tariff (FIT), which shut to new applicants in 2019. It is supplier-driven — each supplier sets its own rate (typically 4-15p/kWh), regulated by Ofgem, rather than Government-fixed. MCS certification of the install is the gateway to SEG registration, so the homeowner needs an MCS-registered installer. For PV installers this means MCS isn't optional if your customers want to export surplus to the grid.",
   },
   {
     id: 4,
     question: "What's the relationship between MCS and HIES / RECC?",
     options: [
-      "MCS handles the technical certification. HIES (Home Insulation and Energy Systems Contractors Scheme) and RECC (Renewable Energy Consumer Code) handle the consumer-protection side — installer-customer contracts, deposit protection, dispute resolution, complaints handling. MCS-registered installers must also be members of one of these consumer codes. They're complementary regulatory layers.",
-      "Each operative working on the isolated circuit fits their own lock to the isolation point (or to a hasp / multi-lock if multiple operatives). Tag identifies the operative, the circuit, the date / time, and the work. Lock removed only by the operative who fitted it (and only when their work is complete and safe to re-energise).",
-      "Because most electrical contractors are registered with a competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA, Certsure) which self-certifies the work to the Local Authority. The Local Authority accepts the scheme certificate without separate inspection. Building Control would only physically inspect for non-scheme work or where there's a specific concern.",
-      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
+      "MCS handles technical certification; HIES and RECC handle consumer protection — MCS installers must also belong to one of these consumer codes.",
+      "HIES and RECC are rival certification schemes to MCS — a firm chooses one of the three, and all three give equal access to BUS and SEG grant funding, so most installers pick whichever has the cheapest annual fee.",
+      "HIES and RECC are the awarding bodies that run the PV and heat pump training courses, while MCS only administers the grant payments — so an installer trains with HIES or RECC and then claims grants through MCS.",
+      "RECC replaced MCS in 2020 as the single UK renewables quality scheme; HIES is its insulation-only equivalent, and MCS is now a historical scheme no longer used for new installations.",
     ],
     correctAnswer: 0,
     explanation:
@@ -137,49 +137,49 @@ const quizQuestions = [
     id: 5,
     question: "What's involved in an MCS sample install inspection?",
     options: [
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
-      "MCS audits the firm's competence by inspecting a sample install during the application or annual reaccreditation. An MCS-approved auditor visits a recently completed install, checks against the MCS install standard (MIS 3002 for PV, MIS 3005 for heat pumps, etc.), reviews the design calculations, the certificate pack, and the quality of physical install. Pass = registration confirmed; fail = remediation required.",
-      "Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system",
-      "Digital and durable — typically PDF for the drawings and schedules, native files (DWG, RVT, IFC) where the building owner has compatible software, and a structured index. Hard-copy printout if the building owner needs one. On HRRBs, format must support the BSA 2022 golden thread requirements (accessible, structured, digital).",
+      "MCS asks the firm to submit photographs of one completed install by email; an administrator checks the photos for obvious faults and confirms registration the same day — there is no site visit and no review of design calculations.",
+      "An MCS-approved auditor visits a recently completed install and checks it against the relevant MIS standard, reviewing the design calculations, the certificate pack and the physical install quality.",
+      "The DNO sends an engineer to test the export meter and check the G98/G99 paperwork; if the export reads correctly the firm passes, since MCS registration is judged purely on whether the system exports to the grid as expected.",
+      "MCS sends a written multiple-choice exam to the firm's technical lead covering MIS standards; passing the exam alone confirms registration, with no inspection of any physical installation required.",
     ],
     correctAnswer: 1,
     explanation:
-      "Sample inspection is the substance behind MCS registration. The MCS Installation Standards (MIS series) are detailed technical standards — MIS 3002 for PV, MIS 3005 for heat pumps, MIS 3001 for solar thermal, etc. Auditor checks both design quality and installation quality. Treat the audit visit as a serious compliance event — most fails are remediable but they delay registration.",
+      "Sample inspection is the substance behind MCS registration, carried out during application and at annual reaccreditation. The MCS Installation Standards (MIS series) are detailed technical standards — MIS 3002 for PV, MIS 3005 for heat pumps, MIS 3001 for solar thermal, etc. The auditor checks both design quality and installation quality. Pass means registration confirmed; fail means remediation required. Treat the audit visit as a serious compliance event — most fails are remediable but they delay registration.",
   },
   {
     id: 6,
     question: "What's MCS battery storage certification?",
     options: [
-      "Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.",
-      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
-      "MCS now covers battery storage as a separate technology category (alongside PV, solar thermal, heat pumps, biomass, wind). Battery installation typically pairs with PV (combined PV+battery system) or as a standalone retrofit. MCS battery certification follows MIS 3012 install standard and requires installer competence in DC battery systems, BMS commissioning, and grid-tie inverter integration.",
-      "Can tell you: polarity and connection state of a 13A socket — correct, reversed polarity, missing earth, missing neutral. Some advanced models add EFLI and basic RCD trip indication. Cannot tell you: actual values of EFLI / IR / continuity (limited accuracy vs MFT), shared-neutral conditions, high-resistance joints below threshold, intermittent faults. Socket testers are first-look tools; the MFT gives the numbers for the certificate.",
+      "There is no MCS battery certification — battery storage falls outside MCS entirely and is covered only by the manufacturer's own warranty scheme, so no installer registration is needed to fit one.",
+      "Battery storage is certified under the PV registration automatically — any firm holding MCS PV registration can install batteries without a separate category, because a battery is treated as an accessory to the PV system.",
+      "A separate MCS technology category (MIS 3012), usually fitted as a combined PV+battery system or as a standalone retrofit, needing DC battery competence.",
+      "Battery storage certification is issued by the DNO rather than MCS, because the battery connects in parallel with the grid and the network operator must approve every installation against the G99 framework before it can be energised.",
     ],
     correctAnswer: 2,
     explanation:
-      "Battery storage is a fast-growing UK market. MCS introduced battery certification to give the same quality assurance framework as PV. Most PV installers now offer combined PV+battery systems; some specialise in battery retrofit to existing PV. Battery work is electrically demanding (DC systems, isolation, fault current containment) and is increasingly seen as a specialism within PV.",
+      "Battery storage is a fast-growing UK market and now sits alongside PV, solar thermal, heat pumps, biomass and wind as its own MCS category. MCS introduced battery certification to give the same quality assurance framework as PV. The MIS 3012 standard applies, and competence in DC battery systems, BMS commissioning and grid-tie inverter integration is required. Most PV installers now offer combined PV+battery systems; some specialise in battery retrofit to existing PV. Battery work is electrically demanding (DC systems, isolation, fault current containment) and is increasingly seen as a specialism within PV.",
   },
   {
     id: 7,
     question: "Can a sole trader be MCS-registered?",
     options: [
-      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\"good enough\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
-      "Servant leadership embodies advanced EI: it requires empathy (understanding team needs), self-regulation (managing ego and the desire to command), motivation (finding purpose in developing others), and social skills (creating environments where people thrive) — the leader's primary role is to remove obstacles and enable their team's success",
-      "Unlimited fine, and / or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline for Health and Safety Offences sets the tariff using a culpability-and-harm matrix — even medium-culpability mid-harm cases against an individual can attract a custodial sentence, particularly where someone has been seriously injured or killed. Companies face fines that scale with turnover; individuals face fines + prison.",
-      "Yes — sole traders can register with MCS the same as Ltd companies. The registration is at firm level, not individual level, but a sole trader is a firm of one. The QS (technical lead) for the MCS registration is normally the sole trader themselves, who must hold the relevant technical competence (AM2S for PV, F-Gas Cat 1 for heat pump, etc.). Many sole-trader electricians use MCS as the route into a niche renewables specialism.",
+      "No — MCS registration is only open to limited companies, because the scheme requires a separate named director and a registered company number that a sole trader does not have.",
+      "No — a sole trader must first employ at least two qualified electricians before MCS will accept a registration, because the scheme requires evidence of a team to cover holidays and sickness.",
+      "Only through an umbrella body — a sole trader cannot register directly with MCS and must instead trade under a larger MCS-registered firm's licence, paying that firm a fee per install.",
+      "Yes — registration is at firm level, and a sole trader is a firm of one acting as their own technical lead with the relevant competence.",
     ],
     correctAnswer: 3,
     explanation:
-      "MCS is open to sole traders, partnerships and Ltd companies. The structural requirement is a named technical lead with the relevant qualifications and at least one example install for the audit. Sole traders entering PV typically pair MCS PV registration with their existing CPS Part P registration to cover both the renewables side and the consumer-unit/distribution side of the install.",
+      "MCS is open to sole traders, partnerships and Ltd companies. Registration is at firm level, not individual level, and the sole trader is normally the technical lead — so they must hold the relevant technical competence (AM2S for PV, F-Gas Cat 1 for heat pump, etc.). The structural requirement is a named technical lead with the relevant qualifications and at least one example install for the audit. Sole traders entering PV typically pair MCS PV registration with their existing CPS Part P registration to cover both the renewables side and the consumer-unit/distribution side of the install. Many sole-trader electricians use MCS as the route into a niche renewables specialism.",
   },
   {
     id: 8,
     question: "What's the BPEC Solar PV course and how does it differ from AM2S?",
     options: [
-      "BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.",
-      "The MCS certificate, accompanied by the G98 (or G99) DNO notification copy. The customer applies to a Smart Export Guarantee licensee (typically a major electricity supplier) and uploads both. Without the MCS certificate the supplier will not register the customer for export payments. The smart export meter (the customer's existing smart meter, usually) provides the half-hourly export data that the tariff is paid against.",
-      "Design Engineer (M&E Consultant or sub-contractor design team), Senior Project Engineer, and Chartered Engineer roles. The degree-level qualification gives the design knowledge (load calcs, voltage drop, discrimination, protection coordination) and the management knowledge needed for the more senior roles. Many apprentices add an HNC or HND part-time once they've passed AM2 to open these routes.",
-      "AFDDs offered per Reg 421.1.7 advisory wording. Customer accepted on bedroom socket ring, lounge socket ring and kitchen socket ring (engineering benefit strongest on socket circuits with mixed appliance use and aged flex). Customer declined on dedicated single-load circuits (shower, EV, heat pump) and lighting (LED on fixed wiring, no flex). Documented in the design pack.",
+      "BPEC runs a course-based MCS-recognised PV installer course (design, install, commissioning); AM2S is the JIB practical assessment route. Both earn the ECS PV endorsement.",
+      "BPEC is the BS 7671 regs exam for PV installers and AM2S is the plumbing assessment for heat pumps — the two cover entirely different technologies and an installer needs both to do any renewables work at all.",
+      "BPEC is a higher qualification than AM2S that replaces it entirely — once you hold BPEC you never need AM2S, and BPEC alone is sufficient for MCS heat pump as well as PV registration.",
+      "BPEC is the firm-level MCS registration and AM2S is the individual competence — they are not training routes at all but the two halves of the registration application that every PV firm must complete.",
     ],
     correctAnswer: 0,
     explanation:

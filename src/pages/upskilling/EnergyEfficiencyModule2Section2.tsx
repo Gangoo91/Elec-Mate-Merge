@@ -49,12 +49,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of half-hourly (HH) metering in the UK?',
     options: [
-      'To provide more accurate billing for domestic customers',
       'To enable time-of-use pricing and demand management for larger consumers',
+      'To provide more accurate billing for domestic customers',
       'To reduce the cost of electricity for all users',
       'To simplify the billing process for suppliers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Half-hourly metering enables time-of-use pricing and demand management for larger consumers, providing 48 data points per day for detailed load analysis.',
   },
@@ -76,11 +76,11 @@ const quizQuestions = [
     question: "In a typical UK commercial building, when does the 'Triad' period usually occur?",
     options: [
       'Summer afternoons between 2pm-4pm',
-      'Winter weekday evenings between 4pm-7pm',
       'Spring mornings between 8am-10am',
-      'Weekend peak periods',
+      'Winter weekday evenings between 4pm-7pm',
+      'Weekend peak demand periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Triad periods occur during winter weekday evenings (typically 4pm-7pm) when national demand is at its highest, usually on cold, dark days in November-February.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'What does a low load factor typically indicate?',
     options: [
       'Efficient and consistent energy usage',
-      'High base load with minimal variation',
+      'A high base load with minimal variation',
+      'Optimal sizing of the connected equipment',
       'Peaky demand with poor capacity utilisation',
-      'Optimal equipment sizing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A low load factor indicates peaky demand with poor capacity utilisation - the infrastructure is sized for peaks but underutilised most of the time.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the typical duration of a DUoS red band period on weekdays?',
     options: [
-      '24 hours',
-      '4-5 hours during afternoon/evening peak',
-      '8 hours during business hours',
+      '4-5 hours during the afternoon/evening peak',
+      'A full 24 hours every day',
+      '8 hours across normal business hours',
       '12 hours from 6am to 6pm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DUoS red band periods typically last 4-5 hours during the afternoon/evening peak (around 4pm-7pm) when network stress is highest.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 6,
     question: "Which type of load would typically contribute most to a building's base load?",
     options: [
-      'Air conditioning during a heatwave',
+      'Air conditioning during a summer heatwave',
+      'Lighting in fully occupied offices',
       'IT server rooms and refrigeration',
-      'Lighting in occupied offices',
-      'Electric vehicle charging',
+      'Electric vehicle charging at shift change',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IT server rooms and refrigeration run 24/7 regardless of occupancy, making them primary contributors to base load.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 7,
     question: 'How is maximum demand (kVA) typically measured for commercial tariffs?',
     options: [
-      'Instantaneous peak reading',
-      'Average of the highest three readings in a month',
-      'Highest average demand in any 30-minute period',
-      'Total monthly consumption divided by hours',
+      'As an instantaneous peak current reading',
+      'As the highest average demand in any 30-minute period',
+      'As the average of the three highest readings in a month',
+      'As total monthly consumption divided by hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Maximum demand is typically the highest average demand recorded in any 30-minute (half-hourly) period during the billing cycle.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'What is the benefit of improving power factor in relation to maximum demand charges?',
     options: [
-      'It reduces the kWh consumption',
+      'It reduces the kWh consumption recorded by the meter',
+      'It removes the need for half-hourly metering',
       'It reduces the kVA demand for the same kW load',
-      'It eliminates the need for half-hourly metering',
-      'It increases the diversity factor',
+      'It increases the diversity factor of the site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Improving power factor reduces kVA demand for the same kW load, as kVA = kW / Power Factor. Better power factor means lower demand charges.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 9,
     question: 'Which strategy would most effectively reduce Triad charges?',
     options: [
-      'Running all equipment at night',
       'Reducing load specifically during predicted Triad warning periods',
-      'Increasing base load throughout the day',
-      'Installing larger circuit breakers',
+      'Running all flexible equipment overnight every day',
+      'Increasing the base load steadily throughout the day',
+      'Installing larger circuit breakers on the main board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reducing load during predicted Triad warning periods is most effective, as Triad charges are based on demand during just three specific half-hours per year.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'What information does a load duration curve provide that a standard load profile does not?',
     options: [
-      'The time of day when peaks occur',
+      'The exact time of day when peaks occur',
+      'The power factor recorded at each interval',
       'The percentage of time demand exceeds various levels',
-      'The power factor at each interval',
-      'The cost of electricity at each period',
+      'The cost of electricity charged at each period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A load duration curve shows the percentage of time demand exceeds various levels, useful for sizing generation and storage systems.',
   },

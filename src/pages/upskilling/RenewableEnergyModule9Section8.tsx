@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'What is the BS 7671 Part 6 verification scope across M9 generating-set technologies?',
     options: [
-      'No verification',
-      'Part 6 (Reg 641 inspection + Reg 643 testing + Reg 644 certification) applies to every BS 7671 electrical installation including M9 generating sets. The unifying scope: dedicated source supply circuit + AC isolator + protective devices + RCD architecture + controls wiring + earthing + functional testing under Reg 643.10. Section 551 adds the generating-set-specific tests (anti-islanding per Reg 551.7.5, multi-source RCD effectiveness per Reg 551.4.2). Outcome: EIC for the new circuit work + Section 551 supplementary evidence',
-      'Only PV',
-      'Only optional',
+      'Full Part 6 (Reg 641, 643, 644) applies, with Section 551 adding anti-islanding and RCD tests',
+      'Only the DNO commissioning witness is needed; Part 6 testing is skipped for generating sets',
+      'Part 6 applies only to PV systems, with wind, hydro and CHP exempt from any inspection',
+      'A manufacturer\'s declaration of conformity replaces the Part 6 verification entirely on site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 Part 6 = the verification framework that closes every electrical install — inspection (Reg 641), testing (Reg 643), certification (Reg 644). For M9 generating sets: the standard Part 6 sweep applies (continuity, IR, ADS Zs, RCD operating time + I∆n, polarity, EFLI, functional). On top of standard Part 6, Section 551 adds: (1) Reg 551.7.5 anti-islanding test — verify generator disconnects on simulated loss-of-mains; (2) Reg 551.4.2 multi-source RCD effectiveness — test RCD operation with every intended combination of sources running; (3) Reg 551.7.2.1 source-side connection verification (visual + isolation test). The Part 6 + Section 551 dual layer is what differentiates a generator install from a routine new circuit. Cert evidence: EIC with Section 551 supplementary test results referenced or appended.',
   },
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'How is Reg 551.7.5 anti-islanding actually tested at commissioning?',
     options: [
-      'Not tested',
-      'Two routes: (1) DNO-witnessed test — DNO engineer attends, simulates grid loss at point of supply, verifies generator disconnects within the required time per EREC G98 / G99 (typically <2 seconds). (2) Manufacturer pre-certified loss-of-mains protection — inverter / generator controller carries BS EN 50549-1/-2 type-test certification + the install commissioning verifies parameter settings + records the device type + firmware version. UK 2025-26 reality: BS EN 50549-1/-2 certified equipment is the dominant route; DNO-witnessed only for larger / non-standard',
-      'Random method',
-      'Customer chooses',
+      'An insulation-resistance test on the generator circuit confirms the anti-islanding operation',
+      'Measuring earth-fault loop impedance at the inverter verifies the loss-of-mains protection',
+      'A DNO-witnessed grid-loss test, or BS EN 50549 equipment with parameters and firmware verified',
+      'A visual check that the generator is wired correctly is enough to confirm the protection works',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 551.7.5 anti-islanding test routes in UK 2025-26: (1) DNO-witnessed test — used for larger generators (typically >50 kVA or non-standard equipment); DNO engineer attends; simulated loss of mains; verify generator disconnect time meets EREC G99 specification (<2 seconds typical); recorded on DNO witness sheet + cert evidence. (2) Manufacturer pre-certified equipment — BS EN 50549-1 (Type A, ≤16 A per phase, G98 territory) or BS EN 50549-2 (Type B/C/D, G99 territory) type-test certification covers the loss-of-mains protection. Install commissioning verifies: (a) the equipment is BS EN 50549-1/-2 certified per the DoC; (b) parameter settings match DNO requirements; (c) firmware version recorded; (d) simulated grid-loss test where commissioning toolkit supports it. Cert evidence bundle: DoC + BS EN 50549-1/-2 certificate reference + commissioning test record + DNO connection agreement reference (G98 post-install notification OR G99 completion notification).',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'What is the cert evidence bundle structure across M9 LCT installs?',
     options: [
-      'Just the EIC',
-      'Eight-layer bundle: (1) BS 7671 EIC (Reg 644.4.201 + Appendix 6 form, with schedules); (2) Section 551 supplementary test record (anti-islanding + multi-source RCD); (3) EREC G98 fast-track notification OR EREC G99 application + DNO acceptance + DNO completion notification; (4) MCS handover pack per technology (MIS 3001 / 3003 / 3004 / 3007 / 3008); (5) Manufacturer DoC + BS EN 50549-1/-2 certification + parameter settings; (6) Building Regulations Part P notification (where applicable); (7) Heat-network / fuel-system specialist sign-off (CHP, biomass); (8) Customer pack — install record, controls user guide, maintenance schedule, key contact list',
-      'Optional',
-      'Random',
+      'Just the EIC and nothing further, since a single certificate covers the whole project',
+      'The DNO connection agreement on its own, with no BS 7671 certificate being required',
+      'Only the MCS handover pack, which subsumes the EIC and all the DNO documents anyway',
+      'A multi-layer bundle: EIC, Section 551 record, DNO notice, MCS pack, DoC, Part P and customer pack',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'M9 LCT cert evidence bundle is multi-layer because the install spans BS 7671 + DNO + MCS + manufacturer + heat-network (where applicable) + building regs + customer-facing documents. (1) BS 7671 EIC — the legal Part 6 certification, Appendix 6 form per Reg 644.4.201, including circuit schedule + inspection schedule + test results schedule. (2) Section 551 supplementary — anti-islanding test result, multi-source RCD test result, source-side connection verification. (3) DNO documentation — EREC G98 fast-track post-install notification (≤16 A per phase Type A) OR EREC G99 application + DNO design acceptance + completion notification + DNO connection agreement. (4) MCS handover pack — per technology installer standard handover document, customer signature, MCS company company-cert reference, Ofgem reference. (5) Manufacturer documentation — DoC + BS EN 50549-1/-2 type-test cert + parameter settings + firmware version + serial numbers. (6) Building Regulations Part P notification — where the install triggers Part P; competent person scheme notification (NICEIC / NAPIT / ELECSA / Stroma). (7) Heat-network / fuel-system specialist sign-off — Gas Safe (CHP gas), HETAS (biomass), specialist commissioning engineer (heat-network hydraulic + control). (8) Customer pack — install record, controls user guide, maintenance schedule, emergency contact list, warranty documents. The cert evidence bundle is the project deliverable; not just the EIC.',
   },
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'What does Reg 643.10 functional testing cover for M9 generating sets?',
     options: [
-      'Random',
-      'Reg 643.10 functional testing = verification that the assembled installation operates as intended. For M9 generating sets this is substantial: (a) start / stop sequence; (b) generator-to-grid synchronisation; (c) loss-of-mains disconnection time; (d) protective device coordination under every source combination; (e) controls + safety interlocks (HETAS for biomass, anti-cycling for heat-pumps-like-CHP); (f) heat-network interface (where applicable); (g) energy meter operation; (h) export limit (if EREC G100 applies). Functional test record is a substantive document, not a single tick',
-      'Just visual',
-      'Not needed',
+      'A continuity and insulation-resistance test of the generator circuit conductors only',
+      'That the installation operates as intended — start/stop, sync, loss-of-mains, interlocks, metering',
+      'A visual inspection only, confirming the equipment is mounted but never actually operated',
+      'A check of the DNO connection paperwork rather than the operation of the installation itself',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'A 12 kW micro-CHP install completes — what cert evidence bundle does the customer receive?',
     options: [
-      'Just an EIC',
-      'EIC for the new electrical circuit work (Reg 644.4.201 + Appendix 6 form + schedules) + Section 551 supplementary test record (anti-islanding per Reg 551.7.5 + multi-source RCD effectiveness per Reg 551.4.2 + supply-side connection verification per Reg 551.7.2.1) + EREC G99 application + DNO acceptance + DNO completion notification + MCS MIS 3007 handover pack + manufacturer DoC + BS EN 50549-2 certification reference + Gas Safe gas commissioning sign-off + heat-network commissioning record + Building Regs Part L compliance + customer pack with controls user guide + maintenance schedule',
-      'Random docs',
-      'Nothing',
+      'Just an EIC, since a single certificate covers the whole multi-trade micro-CHP project',
+      'A G99 acceptance letter on its own, with no BS 7671 certificate being needed at all',
+      'EIC, Section 551 record, G99 docs, MIS 3007 handover, DoC, Gas Safe, Part L and customer pack',
+      'Only the manufacturer\'s warranty card and the user manual handed over on completion day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 12 kW micro-CHP install in UK 2025-26 generates a substantial cert evidence bundle: (1) BS 7671 EIC — for the new dedicated CHP supply circuit + isolation + protective devices + controls wiring. (2) Section 551 supplementary — anti-islanding test record (Reg 551.7.5), multi-source RCD effectiveness (Reg 551.4.2 — if existing PV / BESS on site), source-side connection verification (Reg 551.7.2.1). (3) DNO — EREC G99 formal application (12 kW above the G98 16 A per phase threshold for sustained export) + DNO design acceptance + DNO completion notification. (4) MCS — MIS 3007 micro-CHP installer handover pack + Ofgem reference. (5) Manufacturer — DoC + BS EN 50549-2 certification reference + parameter settings + serial numbers + firmware version. (6) Gas Safe — gas commissioning sign-off (CHP runs on natural gas — Gas Safe engineer scope). (7) Heat-network commissioning — hydraulic balance + flow temperature + thermostatic control + thermal store integration. (8) Building Regs — Part L compliance (improving thermal performance) + Part P notification (electrical work). (9) Customer pack — controls user guide, maintenance schedule (annual CHP service + ~7-year overhaul typical), emergency contact list, warranty docs. The cert evidence bundle is what enables the customer to: (a) claim grants / incentives, (b) prove compliance to insurer / future buyer, (c) call the right specialist for maintenance, (d) demonstrate Section 551 compliance to a periodic inspector.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'Anti-islanding fails the commissioning test — what does the installer do?',
     options: [
-      'Ignore',
-      'STOP — install cannot be commissioned. Investigate: (1) inverter / generator controller firmware version (most common — older firmware may not meet current EREC G98 / G99 requirements); (2) parameter settings (loss-of-mains detection thresholds correct for DNO area); (3) grid impedance / strength (rare — weak grid can defeat ROCOF / vector-shift detection); (4) controller fault (escalate to manufacturer). Record the fault. Do NOT energise the generator to the grid. Resolve before re-attempting test. Reg 551.7.5 is a categorical safety requirement — no workaround',
-      'Reduce output',
-      'Random',
+      'Commission the system anyway and note the failure down as a deferred remedial item',
+      'Reduce the generator output below 16 A so that G98 applies and the test can be skipped',
+      'Fit a second RCD on the supply to compensate for the failed anti-islanding device',
+      'Stop and do not energise; investigate firmware, parameters or controller, then resolve and retest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Anti-islanding failure at commissioning = STOP, do not energise the generator. Reg 551.7.5 is the categorical safety regulation preventing the generator continuing to export into a lost DNO supply — the failure scenario it prevents is fatal (DNO engineer touches an apparently-dead conductor that is actually being fed by the customer\'s generator). Diagnosis order: (1) Firmware — most common cause; older BS EN 50549-1/-2 firmware may not detect loss-of-mains within current DNO requirements; update via manufacturer toolkit + retest. (2) Parameter settings — voltage / frequency / ROCOF (rate of change of frequency) / vector-shift detection thresholds; correct per DNO area + EREC G99 specification. (3) Grid strength — very rarely, weak grid defeats certain detection methods (ROCOF / vector-shift); investigate with DNO engineer + consider alternative detection method per BS EN 50549-2. (4) Controller hardware fault — escalate to manufacturer; replace under warranty. Record the fault on the install record. Do NOT commission. Resolve + retest. Cert evidence bundle includes the SUCCESSFUL anti-islanding test result — partial / "promise to retest" is not acceptable.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'Periodic inspection (Reg 651-653 / EICR) on a site with M9 generating sets — what extra scope?',
     options: [
-      'Same as normal',
-      'Standard EICR scope (Part 6 inspection + testing of the customer-owned installation) PLUS: (1) Section 551 generating-set specific re-checks — anti-islanding device parameter verification (firmware drift over years), source-side connection still correct, multi-source RCD test where multiple sources, isolators + warning notices still present + legible; (2) MCS install record review where available; (3) Manufacturer service records review (annual CHP / biomass service + 5-year wind brake test etc); (4) Energy meter / export limit operation; (5) Heat-network controls (CHP, biomass) interlocks. EICR period typically 5 years domestic / 3-5 years commercial; same as routine but the inspection report is longer',
-      'Not allowed',
-      'Random',
+      'Standard EICR scope plus Section 551 re-checks — anti-islanding, source-side, RCD and notices',
+      'Exactly the same scope as a normal domestic EICR, with the generating sets simply ignored',
+      'Only the generating sets are inspected; the rest of the installation is left out of scope',
+      'A reduced scope that omits the RCD testing entirely because multiple sources are present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Periodic inspection (EICR) on M9 generating-set sites = standard EICR + Section 551 supplementary scope. Standard EICR per Reg 651-653 covers inspection + sample testing of the customer-owned electrical installation. M9 extras: (1) Anti-islanding device — verify parameter settings unchanged + firmware current; inverters / controllers may drift over years; record device serial + firmware + parameter snapshot. (2) Source-side connection (Reg 551.7.2.1) — verify generating set still on supply side of all protective devices; no later modifications that compromise the architecture. (3) Multi-source RCD test (Reg 551.4.2) — test RCD operation with every source combination; particularly important where customer has added sources since original install. (4) Isolators + warning notices — Reg 514 + Section 551 require specific warning notices ("DANGER MULTIPLE SOURCES OF SUPPLY" etc); inspect for presence + legibility; locking-off facility verified. (5) MCS install record review — where the original MCS handover pack is available, cross-reference parameter settings. (6) Manufacturer service records — annual servicing per MIS standard; gaps in service raise inspection flags. (7) Heat-network controls — for CHP / biomass: interlocks + over-temperature trips + boiler-CHP coordination logic. EICR period: 5 years domestic typical, 3-5 years commercial per HSE / Electrical Safety First guidance + IET Wiring Matters; not changed by Section 551 but the inspection takes longer.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'What is the difference between EREC G98 + EREC G99 from a commissioning + handover perspective?',
     options: [
-      'No difference',
-      'EREC G98: ≤16 A per phase generation, Type A, fast-track. POST-installation notification to DNO; equipment must be BS EN 50549-1 certified + on the ENA Type Test Register; installer notifies DNO within 28 days of commissioning; no DNO design / acceptance step. EREC G99: larger generation OR multi-source, Type B/C/D. PRE-installation application; DNO design acceptance required BEFORE install proceeds; DNO may witness commissioning (larger units); completion notification after commissioning; longer lead time (6-18 weeks typical); BS EN 50549-2 certified equipment',
-      'Random',
-      'Same form',
+      'Both require pre-install DNO design acceptance and a DNO-witnessed commissioning test on site',
+      'G98 is for larger generation and G99 for small Type A units — the reverse of their actual use',
+      'G98 is fast-track post-install notification; G99 needs pre-install acceptance and a longer lead time',
+      'Both are post-install notifications, with no pre-install DNO engagement required for either route',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EREC G98 vs G99 commissioning + handover: (1) G98 — Type A small-scale (≤16 A per phase per source, ≤50 kW three-phase). Equipment: BS EN 50549-1 certified + on the ENA (Energy Networks Association) Type Test Register. Process: install proceeds without prior DNO engagement; installer notifies DNO within 28 days of commissioning via standard form. No DNO design step, no DNO commissioning witness. Lead time: zero (post-install notification only). Cert evidence: G98 notification form + acknowledgement. (2) G99 — larger generation (Type B 16-50 kW three-phase, Type C 50 kW-1 MW, Type D 1 MW+) OR multi-source sites OR non-standard equipment. Equipment: BS EN 50549-2 certified. Process: pre-installation application to DNO — DNO assesses site impact + network capacity + design acceptance; install only proceeds after DNO acceptance; commissioning may be DNO-witnessed (larger units); completion notification after successful commissioning. Lead time: 6-18 weeks typical for application / acceptance; longer for capacity-constrained networks; significant project planning factor. Cert evidence: G99 application + DNO design acceptance + DNO completion notification + (where applicable) DNO commissioning witness sheet. For M9 sites — most micro-CHP, wind, hydro, commercial CHP installs are G99 territory; only the smallest end (micro-CHP ~1 kWe, micro-wind ~2-3 kW) might fit G98.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'Customer hands over the project; what makes the M9 handover competent vs the install team disappearing?',
     options: [
-      'Just leave',
-      'Competent handover: walk the customer through the controls (start / stop, error displays, what NOT to touch); demonstrate one full cycle (CHP fires + exports; biomass auger feeds + ignition; wind / hydro produces); explain the maintenance schedule + record sheet; confirm emergency contact list + out-of-hours; confirm warranty terms; confirm cert evidence bundle delivery (physical + digital); confirm DNO reference + MCS reference; confirm grant / incentive documentation submitted. Customer signature on handover document closes the project',
-      'Email docs',
-      'Random',
+      'Leave the manuals on site and depart once the system has been energised and is running',
+      'Email all the documents to the customer and treat the handover as complete on send',
+      'Hand over the EIC only and tell the customer to call the manufacturer for anything else',
+      'Walk the controls, demonstrate a full cycle, cover maintenance and warranty, and obtain a signature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Competent customer handover on an M9 LCT install is a 30-60 minute structured session, not "leave the manuals on the kitchen table". (1) Controls walkthrough — start / stop sequence on the controller; how to read normal-running displays; what error codes mean + what to do; what NOT to touch (parameter settings, safety interlocks). (2) Live demonstration — fire the system through one full cycle: CHP starts + reaches operating temperature + exports + stops cleanly; biomass auger feeds + igniter fires + reaches output; wind / hydro produces under actual conditions if possible. (3) Maintenance schedule — annual service intervals per MIS standard + manufacturer schedule; record sheet kept by customer; whose responsibility (MCS company typically covers first year + 5-year overhauls). (4) Emergency contact list — out-of-hours contact for fuel-system specialist (Gas Safe for CHP gas; HETAS for biomass), MCS installer, manufacturer support. (5) Warranty terms — what is covered + for how long + how to claim; conditions (e.g. annual service must be documented to maintain warranty). (6) Cert evidence bundle delivery — physical pack + digital copies emailed / customer portal; confirm customer has received. (7) DNO + MCS references — the customer needs these for any future works, insurance, sale of property. (8) Grants / incentives — confirm any grant / RHI / BUS / Smart Export Guarantee paperwork submitted by the MCS company; customer knows their reference. (9) Customer signature — handover document signed, project closed. UK 2025-26 reality: a structured handover dramatically reduces nuisance call-outs in year 1 + supports the customer in maintaining warranty + grant compliance.',
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       'A multi-source site has PV + BESS + wind + future hydro. How does the cert evidence bundle grow over time?',
     options: [
-      'One bundle forever',
-      'INCREMENTAL — each new source adds to the cumulative cert evidence record. (1) Original PV install: Section 712 + EIC + EREC G98/G99 + MCS MIS 3002 + manufacturer DoC. (2) BESS addition: Chapter 57 + EIC for new circuit + Section 551 anti-islanding + multi-source RCD test (PV + BESS combinations) + MCS BESS certification + DNO reference variation. (3) Wind addition: Section 551 + EIC for new circuit + multi-source RCD test (PV + BESS + wind combinations) + MCS MIS 3003 + EREC G99 variation. (4) Future hydro: same pattern. Each addition triggers fresh Section 551 multi-source RCD test + DNO connection agreement variation. Cert evidence bundle GROWS — a single integrated PEI (Chapter 82) handover pack',
-      'Replace each time',
-      'Random',
+      'One bundle is produced at the first install and is never updated as further sources are added',
+      'It grows incrementally: each source adds an EIC, a fresh RCD test, a DNO variation and MCS evidence',
+      'The whole bundle is discarded and rebuilt from scratch each time another source is added',
+      'Each source keeps its own separate standalone bundle that is never consolidated into one pack',
     ],
     correctAnswer: 1,
     explanation:

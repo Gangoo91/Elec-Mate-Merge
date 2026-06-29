@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a blame culture and an accountability culture on a construction site?',
     options: [
-      'Blame culture is more efficient because problems are identified faster',
-      'In a blame culture, the focus is on who is at fault; in an accountability culture, the focus is on what happened, why, and how to prevent recurrence',
-      'Accountability culture means nobody is ever held responsible for mistakes',
-      'There is no practical difference — both achieve the same safety outcomes',
+      'Blame culture is more efficient because problems are identified far faster',
+      'Blame culture asks who is at fault; accountability asks what happened and why',
+      'Accountability culture means nobody is ever held responsible for any mistake',
+      'There is no practical difference, as both achieve the same safety outcomes',
     ],
     correctIndex: 1,
     explanation:
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     question:
       "According to Brene Brown's research, what is the relationship between vulnerability and accountability?",
     options: [
-      'Vulnerability is a weakness that undermines accountability',
-      'Being accountable means never showing vulnerability',
-      'Vulnerability is the courage to be honest about mistakes, which is the foundation of genuine accountability',
-      'Vulnerability and accountability are unrelated concepts',
+      'Vulnerability is a weakness that quietly undermines real accountability',
+      'Being genuinely accountable means never having to show any vulnerability',
+      'Vulnerability is the courage to be honest about mistakes — the basis of accountability',
+      'Vulnerability and accountability are entirely unrelated, separate concepts',
     ],
     correctIndex: 2,
     explanation:
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 1,
     question: 'What are the four components of the Trust Equation (Maister, Green, Galford)?',
     options: [
-      'Competence, Consistency, Communication, Character',
       'Credibility, Reliability, Intimacy, Self-Orientation',
+      'Competence, Consistency, Communication, Character',
       'Honesty, Integrity, Openness, Commitment',
       'Skills, Experience, Reputation, Results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Trust Equation developed by David Maister, Charles Green, and Robert Galford consists of four components: Credibility (do they believe what you say?), Reliability (do they believe you will follow through?), Intimacy (do they feel safe sharing with you?), and Self-Orientation (do they believe you care about them, not just yourself?). Trust = (C + R + I) / S.',
   },
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'In the Trust Equation, which element has the greatest mathematical impact on trust?',
     options: [
-      'Credibility, because technical knowledge is the most important factor',
-      'Reliability, because consistent delivery matters most',
-      'Self-Orientation, because as the denominator it divides the entire numerator',
-      'Intimacy, because relationships drive all business',
+      'Credibility, because technical knowledge is the single most important factor',
+      'Reliability, because consistent delivery is what matters most to clients',
+      'Self-Orientation, because as the denominator it divides the whole numerator',
+      'Intimacy, because relationships are what drive all business in the end',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'An electrician misreads a drawing and installs a section of containment in the wrong position. The most accountable response is:',
     options: [
-      'Blame the architect for an unclear drawing',
-      'Hope nobody notices and move on to the next section',
-      'Acknowledge the error, inform the relevant parties, propose a solution, and take steps to prevent recurrence',
-      'Wait for someone else to discover the issue and deal with it then',
+      'Blame the architect for issuing an unclear and confusing drawing',
+      'Hope that nobody notices and quietly move on to the next section',
+      'Wait for someone else to discover the issue and have them deal with it',
+      'Acknowledge the error, inform the parties, propose a fix, and prevent recurrence',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'True accountability involves four elements: acknowledge (own the error without deflection), inform (tell the relevant parties promptly), solve (propose and implement a solution), and prevent (identify what caused the mistake and put measures in place to stop it happening again). This response builds trust because it demonstrates integrity, transparency, and a commitment to quality. The other options all involve some form of avoidance, deflection, or concealment.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       "According to Brene Brown's research in 'Dare to Lead', vulnerability in the workplace is best described as:",
     options: [
-      'A weakness that should be hidden to maintain professional credibility',
-      'Sharing all personal problems and emotions with colleagues',
-      'The courage to show up honestly, admit uncertainty, ask for help, and take responsibility for mistakes',
-      'Only appropriate for managers and leaders, not for tradespeople',
+      'A weakness that should be hidden away to maintain professional credibility',
+      'Sharing all of your personal problems and emotions openly with colleagues',
+      'The courage to be honest, admit uncertainty, ask for help, and own mistakes',
+      'Something only appropriate for managers and leaders, not for tradespeople',
     ],
     correctAnswer: 2,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is honest near-miss reporting important for construction safety?',
     options: [
-      'It helps management identify who to blame when accidents occur',
-      'Near-misses are early warning signals — honest reporting allows hazards to be addressed before someone is injured',
-      'It is a legal requirement with no practical safety benefit',
-      'It only matters on large commercial projects, not domestic work',
+      'It helps management identify exactly who to blame when accidents occur',
+      'Near-misses are early warnings; reporting lets hazards be fixed before injury',
+      'It is purely a legal requirement that carries no practical safety benefit',
+      'It only matters on large commercial projects and not on domestic work',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'What does consistency between words and actions mean in the context of professional trustworthiness?',
     options: [
-      'Always agreeing with what others say',
-      'Never changing your mind once you have made a decision',
-      'Ensuring that your behaviour aligns with your stated values and commitments — doing what you say you will do',
-      'Saying the same thing to every person regardless of context',
+      'Ensuring your behaviour aligns with your stated values — doing what you say',
+      'Always agreeing with whatever other people happen to say to you',
+      'Never changing your mind once you have made an initial decision',
+      'Saying exactly the same thing to every person regardless of context',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Consistency between words and actions — often called integrity — means that your behaviour matches your stated values and commitments. If you say quality matters, your work reflects it. If you promise something, you deliver it. If you set a standard, you meet it yourself before expecting it of others. This alignment is the foundation of trust because people learn to predict your behaviour based on your words, creating a sense of reliability and safety.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'Which of the following best describes the difference between blame-free reporting and negligence?',
     options: [
-      'There is no difference — blame-free reporting means nobody is ever held responsible',
-      'Blame-free reporting means honest mistakes and system failures are treated as learning opportunities, while negligence (reckless disregard for safety) still carries consequences',
-      'Blame-free reporting only applies to apprentices, not qualified electricians',
-      'Negligence is not possible if a risk assessment has been completed',
+      'There is no difference; blame-free reporting means nobody is ever held responsible',
+      'Honest mistakes are treated as learning, while reckless negligence still has consequences',
+      'Blame-free reporting only applies to apprentices, never to qualified electricians',
+      'Negligence simply is not possible once a risk assessment has been completed',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,11 +182,11 @@ const quizQuestions = [
       "Using the Trust Equation as a self-assessment tool, an electrician who consistently delivers excellent work but never remembers clients' names or personal details would score:",
     options: [
       'High on all four elements',
-      'High on Credibility and Reliability, but low on Intimacy',
       'Low on Self-Orientation, which maximises overall trust',
       'High on Self-Orientation, which would reduce overall trust',
+      'High on Credibility and Reliability, but low on Intimacy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An electrician who delivers excellent work scores high on Credibility (they know their trade) and Reliability (they consistently deliver). However, if they never remember clients' names or personal details, their Intimacy score (the degree to which clients feel known and cared about as individuals) is low. This is a common pattern for technically excellent professionals — they are trusted to do the work, but the overall trust relationship is limited because the personal connection element is underdeveloped.",
   },

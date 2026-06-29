@@ -55,10 +55,10 @@ const checks = [
     id: 'rectifier-output',
     question: 'A bridge rectifier feeds a load from a 230 V AC supply. What does the load see (before smoothing)?',
     options: [
-      'Prefabricated conductor system in protective housing',
-      'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
+      'A pure, ripple-free DC voltage identical to a battery output',
+      'The original 230 V AC, unchanged by the rectifier',
       'Pulsating DC — both halves of the AC sine wave folded above the zero line.',
-      'To record the actual installation for future reference and maintenance',
+      'Half the AC sine wave, with the other half cut away',
     ],
     correctIndex: 2,
     explanation:
@@ -68,10 +68,10 @@ const checks = [
     id: 'led-protection',
     question: 'Why does an LED almost always need a series resistor (or a current-limited driver)?',
     options: [
-      'In steady flow, an increase in velocity occurs simultaneously with a decrease in pressure or potential energy',
-      'Intentionally delaying operation to allow downstream devices to clear first',
+      'Because the resistor steps the mains voltage down to the LED’s rating',
+      'Because the LED will only emit light once a resistor is placed in series',
       'Because the LED itself doesn’t limit current — without something in series, it just self-destructs.',
-      'Direct energy trading between producers and consumers without traditional utilities',
+      'Because the resistor reverses the polarity so the LED is forward-biased',
     ],
     correctIndex: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a diode symbol, which way does the arrow point?',
     options: [
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
-      'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
+      'From cathode (negative) to anode (positive) — against conventional current flow',
+      'In whichever direction the supply happens to be connected',
       'From anode (positive) to cathode (negative) — the direction conventional current flows when forward-biased.',
-      'Sharing passwords, using company systems for unlawful or commercial private purposes, downloading unauthorised software',
+      'The arrow points both ways because a diode conducts in either direction',
     ],
     correctAnswer: 2,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a Zener diode primarily used for?',
     options: [
-      'Competing, collaborating, compromising, avoiding, accommodating',
+      'Emitting light when forward-biased, like an indicator lamp',
       'Maintaining a fixed reverse voltage — used as a simple voltage reference.',
-      'Supply characteristics, impedance of supply path, and transformer ratings',
-      'Higher efficiency and better temperature coefficient',
+      'Rectifying high-current mains supplies in a bridge arrangement',
+      'Storing charge to smooth the output of a power supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'You see “1N4007” stamped on a diode. What does that tell you?',
     options: [
-      'One or more related activities, as long as each is specifically described and the witness observed all of them',
-      'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
+      'It’s a Zener diode with a breakdown voltage of 4.007 V',
+      'It’s a Schottky diode rated for very low forward voltage drop',
       'It’s a general-purpose silicon rectifier diode rated 1000 V reverse, 1 A forward — common in mains-side circuits.',
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
+      'It’s an LED rated to draw 4007 mA at full brightness',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is the output of a bridge rectifier usually fed into a capacitor next?',
     options: [
-      'Correct connection of non-reversible plugs and socket-outlets',
-      'They automatically turn off when rooms are unoccupied to save energy',
-      'Presenting information in a way that emphasises different aspects to influence perception',
+      'To convert the DC back into a clean AC waveform for the load',
+      'To limit the current the load can draw from the supply',
+      'To step the rectified voltage up to a higher level',
       'To smooth out the pulsating DC into a near-steady DC voltage for the load.',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'A customer’s AFDD trips when they plug in their old upright vacuum. Likely cause?',
     options: [
       'A genuine series arc — worn motor brushes in the vacuum produce small arcs whose current signature is exactly what the AFDD’s electronics are looking for.',
-      'Employers have a reasonable responsibility to take steps to protect the physical and mental health of their employees',
-      'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
-      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
+      'The vacuum is faulty and drawing a current well above its rated value, overloading the circuit.',
+      'An earth fault inside the vacuum that an RCD, not an AFDD, would normally detect.',
+      'The AFDD is faulty and should be swapped out for another of the same model.',
     ],
     correctAnswer: 0,
     explanation:

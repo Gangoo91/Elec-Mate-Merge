@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An angry client is shouting at an electrician on site about a mark left on their newly painted wall. The electrician feels their own anger rising. According to de-escalation principles, what should the electrician do FIRST?',
     options: [
-      'Explain immediately that the mark was not their fault and was probably caused by the plasterer',
-      'Shout back to establish authority and show they will not be pushed around',
-      'Manage their own emotional state first — controlled breathing, lowered voice, slower speech — before attempting to respond to the client',
-      'Walk off site immediately without saying anything',
+      'Manage their own emotional state first, using controlled breathing and a lowered voice',
+      'Explain immediately that the mark was not their fault and was probably the plasterer',
+      'Shout back to establish authority and show they will not be pushed around on site',
+      'Walk straight off site without saying anything to the client or anyone else',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The first priority in any de-escalation is managing your own emotional state. If you respond while your own amygdala is activated — when your heart rate is elevated, your voice is rising, and your body is tensing — you will escalate the situation, not de-escalate it. Controlled breathing (slow inhale through the nose, slow exhale through the mouth) activates the parasympathetic nervous system and lowers your heart rate within seconds. Deliberately lowering your voice and slowing your speech sends a calming signal to both your own brain and the other person's. Only once you are in a regulated emotional state should you attempt to address the client's concerns. This sequence — self-regulation first, then engagement — is the foundation of all effective de-escalation.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       "George Thompson's LEAPS model (from Verbal Judo) stands for Listen, Empathise, Ask, Paraphrase, Summarise. Why is the order of these steps important?",
     options: [
-      'It is not important — you can use the steps in any order as long as you cover all five',
-      'The order follows the natural de-escalation sequence: first you make the other person feel heard (Listen, Empathise), then you gather information (Ask, Paraphrase), then you confirm mutual understanding (Summarise)',
-      'The order is based on alphabetical convenience and has no practical significance',
-      'The steps are designed to be used simultaneously rather than sequentially',
+      'It is not important — the steps can be used in any order as long as all five are covered',
+      'The order is just an alphabetical convenience and carries no real practical significance',
+      'The order makes the person feel heard first, then gathers information, then confirms understanding',
+      'The five steps are designed to be applied all at once, simultaneously rather than in sequence',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The LEAPS sequence is deliberately ordered to follow the natural de-escalation process. You start with listening and empathising because a person in emotional distress needs to feel heard before they can engage rationally. Trying to ask questions or gather information while someone is still emotionally flooded will be perceived as interrogation or dismissal. Once the person feels acknowledged (through listening and empathising), their emotional intensity naturally reduces, creating space for rational dialogue. Only then do you ask questions (to understand the specifics), paraphrase (to confirm your understanding), and summarise (to establish a shared view of the situation). Skipping the first two steps — which many people do because they want to jump straight to problem-solving — typically results in escalation rather than resolution.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'A site foreman becomes increasingly aggressive towards an electrician, raising his voice, standing too close, and making personal insults. The electrician has tried to de-escalate but the foreman is getting worse. What should the electrician do?',
     options: [
-      'Continue trying to de-escalate — persistence always works eventually',
-      "Match the foreman's aggression to show they are not intimidated",
-      'Remove themselves from the situation immediately, document what happened, and report the behaviour through the appropriate channels',
-      'Apologise and accept whatever the foreman is demanding to end the confrontation',
+      'Continue trying to de-escalate, because persistence will always work eventually',
+      'Remove themselves immediately, document what happened, and report it through proper channels',
+      "Match the foreman's aggression to show clearly that they are not intimidated by him",
+      'Apologise and accept whatever the foreman is demanding just to end the confrontation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "When someone becomes aggressive — raised voice, physical intimidation, personal insults — de-escalation has failed and continuing to engage carries genuine risk. The electrician's priority shifts from resolving the conflict to ensuring their own safety. Removing yourself from the situation is not weakness or avoidance — it is the only appropriate response to aggression. After leaving, the electrician should document exactly what happened (date, time, location, what was said, any witnesses), report the behaviour to the site manager or principal contractor, and if the behaviour constitutes threatening or harassing conduct, consider whether it should be reported to the police. No work dispute justifies tolerating aggressive or threatening behaviour.",
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'De-escalation is best defined as:',
     options: [
-      'Winning an argument by being calmer than the other person',
-      'Reducing emotional intensity to a level where productive conversation and problem-solving become possible',
-      'Avoiding all conflict by agreeing with whatever the other person says',
-      "Using authority or power to silence the other person's complaints",
+      'Reducing emotional intensity to a level where productive conversation becomes possible',
+      'Winning the argument by staying calmer and more composed than the other person',
+      'Avoiding all conflict by simply agreeing with whatever the other person says',
+      "Using authority or positional power to silence the other person's complaints",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'De-escalation is specifically about reducing emotional intensity — bringing the temperature down — so that both parties can engage in rational, productive dialogue. It is not about winning, avoiding, or suppressing conflict. The underlying issue still needs to be resolved, but it cannot be resolved while one or both parties are in an emotionally heightened state. De-escalation creates the conditions for resolution; it is not a substitute for resolution. This distinction is important because many people confuse de-escalation with capitulation. You can de-escalate a situation while maintaining your position entirely — the goal is to change the emotional dynamic, not the factual one.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'In George Thompson\'s LEAPS model, what does the "E" stand for, and why does it come before "Ask"?',
     options: [
-      '"Explain" — you should explain your position before asking questions',
-      '"Empathise" — acknowledging the other person\'s emotional state before gathering information, because people cannot engage rationally until they feel heard',
-      '"Evaluate" — you should evaluate the situation before taking action',
-      '"Escalate" — sometimes you need to escalate before you can de-escalate',
+      '"Explain" — you should explain your own position clearly before asking any questions',
+      '"Evaluate" — you should fully evaluate the situation before taking any action at all',
+      '"Empathise" — acknowledging the emotional state first, because people must feel heard',
+      '"Escalate" — sometimes you have to escalate a situation before you can de-escalate it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The "E" in LEAPS stands for "Empathise" — acknowledging and validating the other person\'s emotional experience. It comes before "Ask" because emotional validation must precede information gathering. When someone is upset, frustrated, or angry, they need to feel that their emotional state has been acknowledged before they can shift into a more rational, problem-solving mode. If you skip empathy and go straight to asking questions ("What happened? When did this start? What do you want me to do?"), the other person will perceive this as cold, dismissive, or interrogative. A simple empathy statement — "I can see this has been really frustrating for you" — costs nothing, takes seconds, and dramatically changes the dynamic of the conversation.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'During the amygdala hijack, the fight-or-flight response means that a person in emotional distress:',
     options: [
-      'Is thinking more clearly than usual because adrenaline sharpens focus',
-      'Is temporarily unable to engage in fully rational thought because the prefrontal cortex is partially offline',
-      'Is choosing to be irrational and could stop if they wanted to',
-      'Is in no different cognitive state than normal — the amygdala hijack is a myth',
+      'Is thinking more clearly than usual, because adrenaline sharpens their focus',
+      'Is deliberately choosing to be irrational and could stop at any time if they wanted',
+      'Is in exactly the same cognitive state as normal, since the amygdala hijack is a myth',
+      'Is temporarily unable to think fully rationally, as the prefrontal cortex is partly offline',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "During an amygdala hijack, the brain's threat response system takes priority over the rational, decision-making prefrontal cortex. This is a genuine neurological event, not a choice. The person's heart rate increases, adrenaline floods the system, muscles tense, and higher-order cognitive functions — nuanced thinking, empathy, perspective-taking, impulse control — are temporarily impaired. This is why you cannot reason with someone who is emotionally flooded: the part of their brain that processes reasoning is partially offline. Understanding this neuroscience is practically important because it changes your strategy. Instead of trying to present logical arguments to someone in fight-or-flight mode, you focus on reducing the perceived threat level so their rational brain can come back online.",
   },
@@ -129,25 +129,25 @@ const quizQuestions = [
     question:
       'An electrician is dealing with an upset client. Which of the following is the most effective de-escalation statement?',
     options: [
-      '"You need to calm down before I can help you"',
-      '"I can see you are really frustrated about this, and I want to understand what has happened so we can sort it out"',
-      '"This is not my fault — you agreed to the terms"',
-      '"Everyone has this problem, it is not a big deal"',
+      '"You need to calm down a bit before I am able to actually help you with this"',
+      '"I can see you are really frustrated, and I want to understand what has happened"',
+      '"This really is not my fault at all, because you agreed to the terms yourself"',
+      '"Honestly, everyone gets this problem, so it is really not a big deal at all"',
     ],
     correctAnswer: 1,
     explanation:
-      'Option B is effective because it combines three de-escalation elements: it acknowledges the emotion ("I can see you are really frustrated"), it expresses genuine interest ("I want to understand what has happened"), and it signals a collaborative intent ("so we can sort it out"). Option A ("You need to calm down") is one of the most counterproductive things you can say to someone who is upset — it invalidates their emotion and is almost universally perceived as dismissive or condescending. Option C is defensive and positions the conversation as adversarial. Option D minimises the client\'s concern and is likely to increase their frustration. The key principle is: acknowledge the emotion, show genuine interest, and signal collaboration.',
+      'The effective statement combines three de-escalation elements: it acknowledges the emotion ("I can see you are really frustrated"), it expresses genuine interest ("I want to understand what has happened"), and it signals a collaborative intent ("so we can sort it out"). "You need to calm down" is one of the most counterproductive things you can say to someone who is upset — it invalidates their emotion and is almost universally perceived as dismissive or condescending. "This is not my fault" is defensive and positions the conversation as adversarial. "It is not a big deal" minimises the client\'s concern and is likely to increase their frustration. The key principle is: acknowledge the emotion, show genuine interest, and signal collaboration.',
   },
   {
     id: 5,
     question: 'The 24-hour rule in de-escalation refers to:',
     options: [
-      'A legal requirement to respond to complaints within 24 hours',
-      'The practice of waiting 24 hours before responding to non-urgent conflicts, allowing emotions to subside and rational thought to return',
-      'A rule that all de-escalation attempts must be completed within 24 hours',
+      'Waiting 24 hours before responding to non-urgent conflicts, letting emotions subside',
+      'A legal requirement to respond to and resolve any client complaint within 24 hours',
+      'A rule that every de-escalation attempt must be fully completed within 24 hours',
       'The maximum time you should spend trying to de-escalate before giving up entirely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 24-hour rule is a practical de-escalation technique based on the neuroscience of emotional regulation. After an emotionally charged interaction, stress hormones (adrenaline and cortisol) take time to dissipate — the acute response lasts 20 to 30 minutes, but residual effects can persist for hours. By waiting 24 hours before responding to a non-urgent conflict, you ensure that both you and the other party have returned to a fully rational state. The response you draft at 10pm in anger will almost always be different from the response you compose at 10am the following day. This rule applies to non-urgent situations only — safety issues, time-critical problems, and situations involving immediate financial risk should be addressed promptly. But for the vast majority of construction disputes, waiting a day produces a better outcome.',
   },
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'Which of the following techniques helps change the emotional state of an angry person during a face-to-face confrontation?',
     options: [
-      'Maintaining strong eye contact and standing your ground without moving',
-      'Changing the physical environment — moving to a private area, offering a drink, sitting down — because changing the physical state changes the emotional state',
-      'Speaking louder to show confidence and authority',
-      'Folding your arms and leaning back to show you are relaxed',
+      'Maintaining strong, unbroken eye contact and standing your ground without moving an inch',
+      'Changing the physical environment — moving somewhere private, offering a drink, sitting down',
+      'Speaking noticeably louder than the other person to project confidence and authority',
+      'Folding your arms and leaning back in your chair to signal that you are completely relaxed',
     ],
     correctAnswer: 1,
     explanation:
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       'When should an electrician abandon de-escalation and remove themselves from a situation?',
     options: [
-      'When the client disagrees with them about any aspect of the work',
-      "When the client's behaviour becomes aggressive, threatening, or physically intimidating, despite attempts at de-escalation",
-      'When the client raises their voice even slightly above normal speaking volume',
-      'De-escalation should never be abandoned — persistence always works eventually',
+      'When the client disagrees with them about any aspect of the work being carried out',
+      'When the client raises their voice even slightly above a normal speaking volume',
+      'When behaviour becomes aggressive or threatening despite genuine de-escalation attempts',
+      'De-escalation should never be abandoned, because persistence always works eventually',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'De-escalation has limits, and recognising those limits is essential for personal safety. If a person becomes physically aggressive (clenched fists, invading personal space, blocking exits), verbally threatening (making threats of harm, using intimidating language), or personally abusive despite your attempts to de-escalate, the situation has moved beyond the scope of de-escalation. Your priority shifts from resolving the conflict to ensuring your own safety. Removing yourself is not failure or avoidance — it is the only appropriate response to aggression. After leaving, document the incident in detail and report it through the appropriate channels. It is important to distinguish between someone who is upset or frustrated (which can usually be de-escalated) and someone who is aggressive or threatening (which requires withdrawal).',
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'An electrician receives an angry text message from a client at 9pm about an invoice query. The electrician feels their own anger rising as they read it. According to de-escalation principles, the best response is:',
     options: [
-      'Reply immediately with a detailed defence of the invoice while the issue is fresh',
-      'Apply the 24-hour rule: acknowledge receipt briefly ("Thanks for your message, I\'ll review this and come back to you tomorrow"), then draft a considered response the following day',
-      "Block the client's number and refuse to communicate further",
-      'Forward the message to social media to get sympathy from other tradespeople',
+      'Reply immediately with a detailed, point-by-point defence of the invoice while it is fresh',
+      "Block the client's number straight away and refuse to communicate with them any further",
+      'Forward the message to social media to get sympathy and backing from other tradespeople',
+      'Apply the 24-hour rule: acknowledge briefly now, then reply properly the following day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a textbook case for the 24-hour rule. The electrician is emotionally activated (anger rising), the client is emotionally activated (angry text), and the issue is non-urgent (an invoice query, not a safety emergency). Responding immediately in this emotional state will almost certainly produce a message that escalates the conflict rather than resolving it. The professional approach is to send a brief, neutral acknowledgement — "Thanks for your message, I will review this and come back to you tomorrow morning" — which validates the client\'s communication without engaging with the substance of the dispute. The following day, with emotions settled and rational thought restored, the electrician can compose a measured, professional response that addresses the invoice query factually and constructively.',
   },

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'What are the three primary components of an external Lightning Protection System (LPS) per BS EN 62305-3?',
     options: [
-      'Only earth rod',
-      '(1) Air termination — captures the lightning strike at the top of the structure (rods, mesh, suspended catenaries). (2) Down conductor — carries lightning current safely from air termination to earth (vertical conductors along structure). (3) Earth termination — dissipates the current into the ground (electrodes, ring earth, foundation earth). All three are bonded into a coordinated system + bonded to the structure\'s general equipotential network',
-      'Only air termination',
-      'Random',
+      'Air termination, surge protective device and consumer unit — the three items that route a strike through the installation',
+      'Air termination (captures the strike), down conductor (carries it to earth) and earth termination (dissipates it) — all bonded into one coordinated system',
+      'Rolling sphere, mesh method and protection angle — the three methods used to position a single air-termination rod',
+      'Type 1, Type 2 and Type 3 SPDs — the three coordinated devices that together form the external LPS',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'When a PV array on a building with existing LPS cannot keep separation distance s, what is the bonding requirement?',
     options: [
-      'No bonding',
-      'PV frame + mounting structure + DC cable shields must be bonded to the LPS at designated points per BS EN 62305-3. The bonding accepts that partial direct lightning current will flow through PV elements — Reg 712.534.102.1 then requires Type 1 SPDs (typically with Type 2 downstream) on the PV DC + AC sides. Bonding conductor: typically 16 mm² copper minimum per BS EN 62305-3; positioned at array corners + at frame intervals; routed to nearest LPS down conductor',
-      'Random',
-      'Only AC bonding',
+      'No bonding is needed; where s cannot be kept the array is simply moved until separation is achieved or the PV is abandoned',
+      'Bond the frame and DC cable shields to the LPS (16 mm² Cu min) at array corners and intervals, accepting partial direct current; Type 1 SPDs then apply per Reg 712.534.102.1',
+      'Only the inverter AC output is bonded to the LPS; the array frame and DC side are deliberately isolated from the lightning system',
+      'A 2.5 mm² CPC from the inverter back to the consumer unit is sufficient, since lightning current returns through the main earthing terminal',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'How does LPS apply to a 12 m wind turbine mast in a rural location?',
     options: [
-      'No LPS',
-      'Tall isolated mast = high lightning attraction. BS EN 62305-3 + IEC 61400-24 apply. Air termination at top of mast (often integrated into the nacelle / blade tips with manufacturer-specified strike protection). Down conductor — the mast structure itself if continuous metallic AND meets BS EN 62305-3 cross-section requirements; otherwise dedicated copper down conductor (50 mm² min) along mast. Earth termination at base — dedicated electrode bonded to local equipotential network. SPDs at building entry for DC + control cables',
-      'Random',
-      'Indoor only',
+      'A 12 m mast is below the height at which BS EN 62305 applies, so no LPS, down conductor or building-entry SPDs are required',
+      'Full BS EN 62305-3 + IEC 61400-24: air termination at the top, the mast (or a 50 mm² conductor) as down conductor, a base earth, and building-entry SPDs',
+      'A single 6 mm² earth wire from the mast base to a rod is sufficient, as the turbine electronics handle the rest of the strike energy',
+      'The mast is treated as indoor equipment because the control panel is inside, so only Type 3 SPDs at the panel are needed',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'What earth resistance target does BS EN 62305-3 set for the LPS earth termination?',
     options: [
-      'No target',
-      'BS EN 62305-3 Annex E recommends earth termination resistance < 10 Ω measured as a low-frequency value. Lower is better. Method: ring earth around structure (Type B arrangement) OR earth rods at down conductor bases (Type A arrangement). For high-resistivity ground (rocky / sandy / dry), achieving 10 Ω may require extended electrode arrays or chemical earth enhancement. Tested at commissioning + on periodic LPS inspection cycle',
-      'Always 100 Ω',
-      'Random',
+      'The same 1667 Ω maximum used for a TT installation earth electrode, since both serve the same protective earth',
+      'A low-frequency value below 10 Ω (Annex E), via Type A rods or a Type B ring earth; high-resistivity ground may need extended arrays or enhancement',
+      'A fixed 100 Ω limit, the same value used for telecoms earthing, applies to every LPS regardless of protection level',
+      'There is no resistance target; only the continuity of the down conductors is measured at commissioning',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A wind turbine manufacturer DoC says the blade tip receptors handle direct strikes per IEC 61400-24 LPL II. What does this mean for the install design?',
     options: [
-      'Ignore it',
-      'Manufacturer\'s claim is the turbine-side strike protection scope (blade receptors + internal down conductors + hub bonding + nacelle protection). Install design must complete the LPS to ground per BS EN 62305-3: mast down conductor (mast itself if continuous metallic + adequate CSA, otherwise dedicated conductor); earth termination at base (<10 Ω target); building entry SPDs Type 1 with Type 2 for DC + control cables. Manufacturer DoC + LPS specialist + BS 7671 SPD design integrate. Cert evidence bundle: manufacturer DoC + BS EN 62305-3 mast LPS + BS 7671 records',
-      'Random',
-      'No mast needed',
+      'The blade receptors cover the whole LPS, so no mast down conductor, earth termination or building-entry SPDs are needed',
+      'LPL II means the turbine cannot be struck, so the design treats it as a non-exposed structure with standard domestic earthing only',
+      'It covers only the turbine-side protection; the install must still complete the LPS to ground — mast down conductor, base earth (<10 Ω) and building-entry SPDs',
+      'The DoC overrides BS EN 62305-3, so the installer follows the manufacturer\'s figures and disregards the standard\'s earth-resistance target',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Turbine manufacturer DoC + IEC 61400-24 cover the turbine-side strike protection: (1) Blade tip receptors — typically metal inserts at blade tips connected via internal down conductors through the blade root to the hub. (2) Hub + main shaft bonding — bonded to the nacelle structure. (3) Nacelle electromagnetic shielding + earthing. (4) Yaw + pitch bearing protection — slip rings or brush contacts to carry lightning current past rotating joints. (5) Tower-top bonding — nacelle base to mast top. The turbine DoC ends at the mast top. The install design must continue per BS EN 62305-3: (a) Mast down conductor — if mast is continuous metallic with adequate cross-section (steel typically 50 mm² minimum equivalent), the mast IS the down conductor. Otherwise dedicated copper. (b) Earth termination at base — <10 Ω target; bonded to local equipotential network + building earth. (c) Building entry SPDs — Type 1 (direct partial current possible) + Type 2 (downstream) for DC power + control cables. (d) Equipotential bonding at building entry — all cables + metallic structures to common bar. Cert evidence bundle: manufacturer DoC + BS EN 62305-3 mast LPS + BS 7671 SPD + bonding records + LPS specialist sign-off. UK 2025-26 small wind: LPS specialist input typical even for domestic-scale (5-10 kW) installs.',
   },
@@ -96,25 +96,25 @@ const quizQuestions = [
     question:
       'A roof-mounted PV array on a domestic property with NO existing LPS. The customer asks: do I need to add an LPS for the PV? How does the designer answer?',
     options: [
-      'Always yes',
-      'Usually no. BS EN 62305-2 risk assessment: residential property without LPS, typical UK lightning density (~0.4 strikes/km²/year), low occupancy, no flammable contents — calculated R1 (life) typically below tolerable 10⁻⁵/year without LPS. PV array addition does increase lightning attraction modestly (raised metallic mass on roof) but rarely tips R1 above threshold. R4 (economic — inverter + PV array value) informs SPD decision, not LPS decision. Reg 443 + 534 Type 2 SPDs suffice. Honest customer framing',
-      'Random',
-      'Always no',
+      'Always yes — any roof-mounted PV array legally requires a full external LPS to be installed alongside it',
+      'Usually no — the BS EN 62305-2 risk assessment keeps R1 below tolerable without an LPS; the array adds little attraction, and Type 2 SPDs cover the economic risk',
+      'It depends solely on the postcode — properties east of a fixed national line need an LPS and those west do not',
+      'Always no — domestic PV is categorically exempt from BS EN 62305, so neither an LPS nor SPDs are ever required',
     ],
     correctAnswer: 1,
     explanation:
-      'Domestic PV no LPS — honest customer answer is usually "no additional LPS needed". BS EN 62305-2 risk assessment per residential property: (1) R1 (life) — single dwelling, typical occupancy 2-5 people, no fuel / explosives / livestock; ground flash density UK average 0.4 strikes/km²/year (regional variance — Western Scotland higher, Eastern England lower). Calculated R1 typically 10⁻⁶ to 10⁻⁷ per year — well below tolerable 10⁻⁵. (2) Effect of PV array — raised metallic mass on roof increases lightning attraction modestly (collection area increases). Recalculate R1 with PV — typically still below tolerable (residential roof + PV is a small fraction of total UK lightning attraction). (3) R4 (economic) — PV array + inverter + BESS replacement cost £8-15k typical; PV array damage from indirect strike (induced surge) is the main risk; LPS prevents direct strike damage but doesn\'t address induced surge — that\'s SPD scope. (4) Conclusion — LPS rarely required for typical domestic PV; BS 7671 Reg 443 + 534 Type 2 SPDs cover the practical risk. Honest customer framing prevents over-spec + over-cost + maintains trust. Cert evidence bundle: BS EN 62305-2 risk summary + SPD selection rationale + customer-accepted opt-out (if applicable per Reg 443.4.1).',
+      'Domestic PV no LPS — honest customer answer is usually "no additional LPS needed". BS EN 62305-2 risk assessment per residential property: (1) R1 (life) — single dwelling, typical occupancy 2-5 people, no fuel / explosives / livestock; ground flash density UK average 0.4 strikes/km²/year (regional variance — Western Scotland higher, Eastern England lower). Calculated R1 typically 10⁻⁶ to 10⁻⁷ per year — well below tolerable 10⁻⁵. (2) Effect of PV array — raised metallic mass on roof increases lightning attraction modestly (collection area increases). Recalculate R1 with PV — typically still below tolerable (residential roof + PV is a small fraction of total UK lightning attraction). (3) R4 (economic) — PV array + inverter + BESS replacement cost £8-15k typical; PV array damage from indirect strike (induced surge) is the main risk; LPS prevents direct strike damage but doesn\'t address induced surge — that\'s SPD scope. (4) Conclusion — LPS rarely required for typical domestic PV; BS 7671 Reg 443 + 534 Type 2 SPDs cover the practical risk. Honest customer framing prevents over-spec + over-cost + maintains trust. Cert evidence bundle: BS EN 62305-2 risk summary + SPD selection rationale + risk assessment / declaration where SPD protection is omitted under Reg 443.4.',
   },
   {
     question:
       'Reg 542.2.3 NOTE references BS EN 62305-3. What is the regulation context — what is it pointing to?',
     options: [
-      'Random',
-      'Reg 542.2.3 covers earthing arrangements / earth electrodes. The NOTE references BS EN 62305-3 for earth termination design where the structure has an LPS. Practical implication: where an LPS is present, the BS 7671 earthing arrangement (Reg 542 series) must coordinate with the LPS earth termination per BS EN 62305-3 — typically bonded together as a single equipotential earth system. Earth electrode resistance, bonding, integration with foundation earth — all coordinated. Cert evidence: earth design records cross-reference both standards',
-      'Replaces 542',
-      'Different topic',
+      'It directs the reader to use BS EN 62305-3 instead of Chapter 54, so the LPS earth replaces the BS 7671 earthing arrangement entirely',
+      'It requires the LPS earth and the electrical earth to be kept completely separate so that lightning current never enters the installation earth',
+      'It covers earthing arrangements and notes that, where an LPS is present, the BS 7671 earth and the LPS earth termination are coordinated into one equipotential earth',
+      'It concerns voltage drop on the earthing conductor and is unrelated to lightning protection despite citing BS EN 62305-3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 542.2.3 covers earthing arrangements in BS 7671 + the NOTE references BS EN 62305-3 for LPS earth termination integration. Context: (1) BS 7671 Chapter 54 covers earthing + protective conductors — earth electrode selection, resistance targets, bonding, integration with Means of Earthing supplied by DNO. (2) BS EN 62305-3 covers LPS earth termination — Type A (rods/plates at down conductor bases) or Type B (ring earth around structure) — target resistance <10 Ω. (3) Where structure has LPS — both systems must be designed together. Practical implication: LPS earth termination + BS 7671 main earthing system bonded into a single equipotential earth. The structure has ONE earth system serving both lightning + electrical protection — separate systems would create dangerous potential differences during a strike. (4) Equipotential bonding — main earthing terminal of BS 7671 + LPS earth termination + structural steel + buried services all bonded at a common earth point per BS EN 62305-3 + BS 7671 Reg 411.3 + Reg 411.3.1.2. (5) Cert evidence bundle: earth electrode test (BS 7671) + LPS earth termination test (BS EN 62305-3) + bonding diagram + designer sign-off.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'On a commercial site with multiple PV strings + an LPS, how does the bonding scheme work?',
     options: [
-      'No bonding',
-      'Bonding scheme per BS EN 62305-3 + BS 7671 Chapter 54: each PV string frame bonded at corners + at intervals (~10-15 m); shielded DC cables bonded at both ends; PV mounting structure bonded to LPS at designated coordination points (where s not kept) OR isolated from LPS (where s kept); inverter chassis + AC switchgear bonded to building main earthing terminal; LPS earth termination bonded to main earthing terminal per Reg 411.3.1.2. Single equipotential earth system serving lightning + BS 7671 protection. Cert evidence: bonding diagram + earth + resistance tests',
-      'Random',
-      'Each string separate',
+      'No bonding is needed because each inverter has its own internal earth and the strings are double-insulated on the DC side',
+      'String frames bonded at corners/intervals, DC shields bonded both ends, structure bonded to (or isolated from) the LPS, all tied to the main earthing terminal as one equipotential earth',
+      'Each string is bonded to its own separate earth electrode, kept isolated from the building earth and from every other string',
+      'Only the inverter chassis is bonded; the array frames are deliberately left floating to avoid carrying lightning current into the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'What is the BS EN 62305-3 inspection cycle for an LPS, and who does it?',
     options: [
-      'Never inspect',
-      'BS EN 62305-3 Annex E recommends LPS visual + measurement inspection at regular intervals: typically 1 year (LPL I), 2 years (LPL II), 4 years (LPL III/IV) — with detailed inspection cycle proportional to LPL. Visual checks: air termination integrity, down conductor connections, earth electrode condition. Measurement: earth resistance test. Performed by a competent LPS specialist (UK ATLAS-accredited typical) or qualified electrical engineer. Inspection certificate retained with property records + insurance documentation',
-      'Random',
-      'Monthly only',
+      'An LPS is maintenance-free once installed and never needs re-inspection unless it is visibly struck by lightning',
+      'The LPS is inspected only at the same five-year interval as the electrical EICR, by the same electrician, as part of the periodic report',
+      'Inspection is required monthly by the building owner, who records a visual check of the down conductors in a logbook',
+      'Visual and measurement inspection at LPL-proportional intervals (~1/2/4 years) by a competent LPS specialist, with a certificate retained with the property records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 62305-3 LPS inspection cycle per Annex E: (1) Visual inspection — typically 1 year (LPL I), 2 years (LPL II), 4 years (LPL III/IV). Checks: air termination integrity (no missing rods / damaged mesh / corroded conductors); down conductor mechanical condition (no breaks, corrosion, vandalism); earth electrode visible condition at access points; bonding connections tight + corrosion-free; any visible damage from previous lightning strikes or environmental degradation. (2) Detailed inspection + measurement — typically same intervals or longer cycle for measurement vs visual. Includes: continuity test of LPS conductors; earth electrode resistance test (fall-of-potential or clamp method); bonding integrity test; cross-reference to design records + risk assessment update. (3) After lightning strike — if a strike to the LPS is known to have occurred, an additional out-of-cycle inspection is recommended to verify no damage. (4) Competent performer — UK 2025-26 ATLAS (Association of Technical Lightning + Access Specialists) members are the accredited body; chartered electrical engineers with LPS specialism may also perform. (5) Documentation — LPS inspection certificate retained with property records + insurance documentation + LCT install records. (6) Cert evidence bundle: inspection certificate at handover + scheduled re-inspection dates in customer\'s maintenance plan.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'A customer with a Grade II listed building wants a PV install. What LPS considerations apply?',
     options: [
-      'No considerations',
-      'Heritage building = R3 (cultural heritage) risk category typically triggers + R1 (life) for visitors / staff. BS EN 62305-2 risk assessment likely warrants LPS or specific protection measures. Visual + planning constraints — heritage typically limits visible LPS hardware. Solutions: discrete air termination (slim rods, hidden mesh); down conductor routing concealed within structure; coordination with Conservation Officer + Listed Building Consent. LPS specialist + heritage architect input + BS 7671 SPD design integrated. Cert evidence: full BS EN 62305 application + planning approval',
-      'Random',
-      'Demolish',
+      'A listed building is exempt from BS EN 62305, so the PV install proceeds with standard domestic earthing and no LPS assessment',
+      'R3 (heritage) and R1 typically warrant an LPS; heritage limits visible hardware, so discrete/concealed protection plus Listed Building Consent and specialist input apply',
+      'The only consideration is colour-matching the SPDs to the building; lightning protection itself is waived on heritage structures',
+      'Listed status forbids any external metalwork, so the PV must be fitted without frames, bonding or an air termination',
     ],
     correctAnswer: 1,
     explanation:

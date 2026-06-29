@@ -192,12 +192,12 @@ const quizQuestions = [
   },
   {
     id: 9,
-    question: 'A 7.5kW motor has high starting current. Adding a capacitor bank would:',
+    question: 'A 7.5kW motor running at lagging power factor has a capacitor bank added. This would:',
     options: [
-      'Mastery experiences — succeeding at a task yourself',
+      'Increase the phase angle, worsening power factor',
       'Reduce the phase angle, improving power factor',
-      'Installation certificate with test results and schedules',
-      'Dim lights, especially at the end of the circuit',
+      'Have no effect on the phase angle of the supply current',
+      'Reverse the direction of current flow in the motor windings',
     ],
     correctAnswer: 1,
     explanation:

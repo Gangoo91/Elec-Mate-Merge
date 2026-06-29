@@ -18,14 +18,14 @@ export const protectiveConductorQuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'Which reading indicates a healthy CPC?',
     options: [
-      'To verify end-to-end continuity of line and CPC conductors',
-      'That the earth conductor is complete from origin to final point',
-      'A low, consistent resistance (typically below 1 ohm)',
-      'False - CPC continuity must always be tested separately',
+      'A reading at the top of the meter scale (open circuit)',
+      'A reading that climbs steadily as the test continues',
+      'A low, consistent resistance, typically below 1 ohm',
+      'A reading that fluctuates between high and low values',
     ],
     correctAnswer: 2,
     explanation:
-      'A healthy CPC should show low, consistent resistance typically below 1 ohm, indicating a good continuous path.',
+      'A healthy CPC gives a low, stable resistance (typically below 1 ohm), confirming a sound continuous path; an open-circuit reading or an unstable value indicates a break or poor connection.',
   },
   {
     id: 3,
@@ -45,10 +45,10 @@ export const protectiveConductorQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: "What's the risk of not testing the bonding conductor to a gas pipe?",
     options: [
-      'Loss of earth potential equalisation, increasing shock risk',
-      'That the earth conductor is complete from origin to final point',
-      'Investigate the connection and clean/retighten as necessary',
-      'To verify end-to-end continuity of line and CPC conductors',
+      'Loss of equipotential bonding, increasing the risk of electric shock',
+      'A small increase in the circuit voltage drop under load',
+      'Nuisance tripping of the upstream RCD during normal use',
+      'Overheating of the gas pipe due to circulating currents',
     ],
     correctAnswer: 0,
     explanation:
@@ -56,12 +56,12 @@ export const protectiveConductorQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 5,
-    question: 'Why must you zero your tester leads before taking readings?',
+    question: 'Why must you null (zero) your tester leads before taking readings?',
     options: [
-      'Testing with the circuit isolated and loads disconnected',
-      'To avoid false high readings caused by lead resistance',
-      'Investigate the connection and clean/retighten as necessary',
-      'That the earth conductor is complete from origin to final point',
+      'To charge the instrument battery before the test sequence',
+      'To remove lead resistance and avoid false high readings',
+      'To select the correct test voltage for the conductor type',
+      'To confirm the circuit has been safely isolated first',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ export const protectiveConductorQuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'What should you do if a supplementary bonding conductor shows high resistance?',
     options: [
-      'Investigate the connection and clean/retighten as necessary',
-      'To avoid false high readings caused by lead resistance',
-      'A low, consistent resistance (typically below 1 ohm)',
-      'Testing with the circuit isolated and loads disconnected',
+      'Investigate the connections and clean or retighten as necessary',
+      'Record the value and move on, as supplementary bonding is non-critical',
+      'Increase the test current until the reading falls within limits',
+      'Replace the conductor with a larger cross-sectional area immediately',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,14 +110,14 @@ export const protectiveConductorQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why is the R1+R2 test important for radial circuits?',
     options: [
-      'That the earth conductor is complete from origin to final point',
-      'To verify end-to-end continuity of line and CPC conductors',
-      'Testing with the circuit isolated and loads disconnected',
-      'Stop testing and rectify the fault before proceeding',
+      'It confirms the insulation resistance between line and earth is adequate',
+      'It verifies end-to-end continuity of the line and CPC and allows Zs to be derived',
+      'It proves the RCD will trip within the required disconnection time',
+      'It measures the prospective fault current at the distribution board',
     ],
     correctAnswer: 1,
     explanation:
-      'The R1+R2 test verifies end-to-end continuity of both line and CPC conductors, ensuring a complete fault current path exists.',
+      'The R1+R2 test verifies end-to-end continuity of both the line conductor and the CPC, confirming a complete fault path and providing the value used to verify the calculated earth fault loop impedance Zs.',
   },
   {
     id: 10,

@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'What are the four points on the assertiveness spectrum, in order from least to most forceful?',
     options: [
-      'Aggressive, assertive, passive, passive-aggressive',
-      'Passive, passive-aggressive, assertive, aggressive',
-      'Assertive, passive, aggressive, passive-aggressive',
-      'Passive-aggressive, passive, aggressive, assertive',
+      'Passive, then passive-aggressive, then assertive, then aggressive',
+      'Aggressive, then assertive, then passive, then passive-aggressive',
+      'Assertive, then passive, then aggressive, then passive-aggressive',
+      'Passive-aggressive, then passive, then aggressive, then assertive',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The assertiveness spectrum runs from passive (not expressing your needs, putting others' needs above your own) through passive-aggressive (expressing needs indirectly through sarcasm, avoidance, or sabotage) to assertive (expressing needs directly, honestly, and respectfully) to aggressive (expressing needs at the expense of others, through domination, intimidation, or attack). Assertiveness sits between the two ineffective extremes and is the only sustainable approach to conflict resolution in professional settings.",
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     id: 'cr-2-4-check2',
     question: "In William Ury's Positive No, what do the three stages — Yes, No, Yes — represent?",
     options: [
-      'Yes to compromise, No to conflict, Yes to peace',
-      'Yes to your underlying interest, No as your clear boundary, Yes to an alternative that respects both parties',
-      "Yes to the other person's request, No to your own needs, Yes to accepting the outcome",
-      'Yes to meeting, No to the agenda, Yes to a follow-up',
+      'Yes to a compromise, No to the conflict itself, and finally Yes to a lasting peace',
+      "Yes to the other person's request, No to your own needs, and Yes to accepting the outcome",
+      'Yes to your underlying interest, No as your clear boundary, Yes to an alternative for both',
+      'Yes to holding the meeting, No to the proposed agenda, and Yes to arranging a follow-up',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Ury\'s Positive No has three stages. The first Yes affirms your underlying interest or value — the reason you are saying no ("I value this client relationship and I want to continue working with you"). The No is a clear, firm statement of your boundary ("However, I\'m not able to do this additional work for free"). The second Yes offers an alternative that respects both parties\' needs ("What I can do is provide a costed option so you can decide whether to proceed"). This structure allows you to set boundaries without damaging relationships.',
   },
@@ -52,12 +52,12 @@ const quickCheckQuestions = [
     id: 'cr-2-4-check3',
     question: 'What is the key difference between an I-statement and a You-statement in conflict?',
     options: [
-      'I-statements are longer; You-statements are shorter',
-      "I-statements describe your experience and feelings; You-statements make claims about the other person's character or intent",
-      'You-statements are always aggressive; I-statements are always passive',
-      'There is no meaningful difference — they are just different grammar',
+      'I-statements are always longer in form, whereas You-statements are always shorter and blunter',
+      'You-statements are always aggressive in tone, whereas I-statements are always passive and meek',
+      'There is no meaningful difference between them — they are simply two different ways of phrasing it',
+      "I-statements describe your own experience; You-statements make claims about the other person's character",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'I-statements ("I feel frustrated when invoices are late because I need reliable cash flow") describe your own experience, feelings, and needs without making claims about the other person\'s character, intent, or behaviour patterns. You-statements ("You never pay on time — you don\'t respect my business") make claims about the other person, which triggers defensiveness. The shift from You to I is not just grammatical — it fundamentally changes the dynamic of the conversation from accusation to shared problem-solving.',
   },
@@ -99,8 +99,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Which point on the assertiveness spectrum involves expressing your needs indirectly through sarcasm, avoidance, or subtle sabotage?',
-    options: ['Passive', 'Passive-aggressive', 'Assertive', 'Aggressive'],
-    correctAnswer: 1,
+    options: ['Passive-aggressive', 'Passive', 'Assertive', 'Aggressive'],
+    correctAnswer: 0,
     explanation:
       'Passive-aggressive behaviour involves indirect expression of hostility or unmet needs. Rather than addressing a concern directly (assertive) or openly attacking (aggressive), the passive-aggressive person uses indirect tactics: sarcasm, the silent treatment, deliberate delays, "forgetting" commitments, backhanded compliments, or withholding cooperation. On construction sites, this might look like a tradesperson who agrees to a timeline but consistently delivers just late enough to cause problems, or someone who says "Fine, whatever you want" in a tone that clearly communicates resentment.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'According to the assertiveness formula, what are the four components?',
     options: [
       'When, I think, because, I demand',
-      'You, always, never, should',
       'When [situation], I feel [feeling], because [reason], I would like [request]',
+      'You, always, never, should',
       'First, then, next, finally',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The assertiveness formula structures your message into four clear components: "When [specific situation]" describes the observable trigger without generalisation. "I feel [genuine feeling]" owns your emotional response. "Because [reason]" explains why this matters to you. "I would like [specific request]" offers a clear path forward. For example: "When invoices are paid more than 30 days late, I feel anxious because I need reliable cash flow to cover my material costs. I would like us to agree on 14-day payment terms." This formula is assertive because it is honest, specific, and respectful — it describes your experience without attacking the other person.',
   },
@@ -121,20 +121,20 @@ const quizQuestions = [
     id: 3,
     question: 'Why does passive behaviour often lead to worse outcomes than assertive behaviour?',
     options: [
-      'Because passive people are always wrong about the issues they raise',
-      'Because suppressing your own needs leads to resentment, exploitation, and eventually explosive outbursts that damage relationships more than honest assertiveness would have',
-      'Because passive people talk too much and waste time',
-      'Because passivity is respected in the construction industry and assertiveness is not',
+      'Because passive people are nearly always wrong about the issues they eventually raise',
+      'Because passive people end up talking far too much and wasting everyone else\'s time',
+      'Because suppressing your own needs breeds resentment, exploitation, and eventual explosive outbursts',
+      'Because passivity is widely respected on construction sites, whereas assertiveness simply is not',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Passive behaviour — consistently putting others' needs above your own, avoiding conflict, and suppressing your real opinions — leads to several negative outcomes. First, resentment builds over time because your needs are chronically unmet. Second, others learn that your boundaries are soft, which can lead to exploitation (being given the worst tasks, not being paid fairly, having your work disrespected). Third, the suppressed frustration eventually erupts in an disproportionate outburst that damages the very relationships you were trying to protect. Assertiveness, by contrast, addresses issues early and honestly, preventing the accumulation of resentment.",
   },
   {
     id: 4,
     question: 'Who developed the Positive No concept?',
-    options: ['Marshall Rosenberg', 'Stephen Covey', 'William Ury', 'Kerry Patterson'],
-    correctAnswer: 2,
+    options: ['Marshall Rosenberg', 'Stephen Covey', 'Kerry Patterson', 'William Ury'],
+    correctAnswer: 3,
     explanation:
       'William Ury, co-author of "Getting to Yes" (1981) and author of "The Power of a Positive No" (2007), developed the Yes-No-Yes framework for saying no without damaging relationships. Ury argued that most people either say yes when they want to say no (accommodating, which breeds resentment) or say no in a way that damages the relationship (rejecting, which breeds hostility). The Positive No offers a third path: affirm your interest, state your boundary, and propose an alternative.',
   },
@@ -143,23 +143,23 @@ const quizQuestions = [
     question:
       'A client asks you to do additional work for free. Using the Positive No, which response is correct?',
     options: [
-      '"No, absolutely not. That\'s taking the mick."',
-      '"Well... I suppose I could squeeze it in."',
-      '"I value our working relationship and I want to continue delivering quality work for you. However, this additional work falls outside the original scope and I\'m not able to include it for free. What I can do is provide a costed option for the extra work so you can decide whether to proceed."',
-      '"I\'ll think about it" (with no intention of following up)',
+      '"I value our relationship. However, this falls outside scope and I can\'t do it for free. I can quote it so you decide."',
+      '"No, absolutely not — that is taking the mick and you know it, so don\'t even ask me again."',
+      '"Well... I suppose I could probably squeeze it in somewhere if it really helps you out."',
+      '"I\'ll have a think about it and get back to you" (said with no intention of ever following up)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'The third option demonstrates a complete Positive No. The first Yes affirms the interest ("I value our working relationship and want to continue delivering quality work"). The No states a clear boundary ("This falls outside scope and I\'m not able to include it for free"). The second Yes offers an alternative ("I can provide a costed option so you can decide"). The first option is aggressive (attacking), the second is passive (accommodating against your own interests), and the fourth is passive-aggressive (avoiding rather than addressing). The Positive No is the only response that protects both the relationship and your boundary.',
+      'A complete Positive No has three parts. The first Yes affirms the interest ("I value our working relationship"). The No states a clear boundary ("This falls outside scope and I\'m not able to include it for free"). The second Yes offers an alternative ("I can provide a costed option so you can decide"). Replying with a blunt refusal is aggressive (attacking), agreeing to squeeze it in is passive (accommodating against your own interests), and a vague "I\'ll think about it" is passive-aggressive (avoiding rather than addressing). The Positive No is the only response that protects both the relationship and your boundary.',
   },
   {
     id: 6,
     question: 'What is the "broken record" technique?',
     options: [
-      'Playing annoying music until the other person gives in',
-      "Calmly and respectfully repeating your core message or position without being drawn into side arguments, while acknowledging the other person's points",
-      'Refusing to listen to anything the other person says',
-      'Recording conversations and playing them back as evidence',
+      'Playing deliberately annoying music at the other person until they finally give in to you',
+      "Calmly repeating your core position without being drawn into side arguments, while acknowledging their points",
+      'Refusing point-blank to listen to anything at all that the other person has to say to you',
+      'Recording your conversations on your phone and then playing them back later on as evidence',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,26 +169,26 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is an I-statement rather than a You-statement?',
     options: [
-      '"You never listen to what I say."',
-      '"You always leave your mess for me to clean up."',
-      '"I feel frustrated when the work area is left untidy because it slows down my progress the next morning."',
-      '"You obviously don\'t care about keeping a clean site."',
+      '"You never listen to a single word that I actually say to you on this job."',
+      '"You always leave all of your mess lying around for me to come and clean up."',
+      '"I feel frustrated when the work area is left untidy, because it slows my progress next morning."',
+      '"You obviously don\'t care in the slightest about keeping a clean and tidy site."',
     ],
     correctAnswer: 2,
     explanation:
-      'The third option is a genuine I-statement: it describes the speaker\'s feeling (frustrated), identifies the specific trigger (untidy work area), and explains the impact (slows down progress). It does not make any claims about the other person\'s character, intent, or behaviour patterns. The other three options are You-statements that attack character ("never listen," "always leave your mess," "obviously don\'t care"). You-statements trigger defensiveness because they feel like an attack on who the person is, whereas I-statements invite dialogue because they describe the speaker\'s experience.',
+      'A genuine I-statement describes the speaker\'s feeling (frustrated), identifies the specific trigger (untidy work area), and explains the impact (slows down progress). It does not make any claims about the other person\'s character, intent, or behaviour patterns. The You-statements all attack character ("never listen," "always leave your mess," "obviously don\'t care"). You-statements trigger defensiveness because they feel like an attack on who the person is, whereas I-statements invite dialogue because they describe the speaker\'s own experience.',
   },
   {
     id: 8,
     question:
       'Why is aggressive communication ineffective for long-term conflict resolution, even when it produces short-term compliance?',
     options: [
-      'Because aggression is illegal in all circumstances',
-      'Because aggressive communication is always quiet and therefore unnoticed',
-      'Because aggression may produce compliance through fear, but it destroys trust, damages relationships, breeds resentment, and often leads to passive-aggressive retaliation',
-      'Because aggressive people always lose arguments',
+      'Because aggression is, as a matter of fact, illegal in each and every circumstance',
+      'Because aggressive communication is always quiet and therefore tends to go completely unnoticed',
+      'Because aggressive people consistently end up losing every argument that they get into',
+      'Because aggression wins compliance through fear, but destroys trust and breeds resentment and retaliation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Aggressive communication can produce short-term compliance — people may do what you demand because they want to avoid further conflict. But the long-term costs are severe: trust is destroyed (people do not feel safe sharing information with you), relationships are damaged (people avoid working with you when they have a choice), resentment accumulates (compliance becomes minimal and grudging), and passive-aggressive retaliation often follows (deliberate delays, withheld cooperation, gossip). Assertive communication achieves the same outcomes — getting your needs met — without these costs, because it earns willing cooperation rather than coerced compliance.',
   },

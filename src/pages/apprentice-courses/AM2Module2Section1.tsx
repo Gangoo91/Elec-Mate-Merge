@@ -125,10 +125,10 @@ const AM2Module2Section1 = () => {
       id: 2,
       question: "What's the very first step in safe isolation?",
       options: [
-        'You might miss a dangerous fault condition',
-        'To prevent accidental re-energisation and ensure safety',
+        'Prove your tester on a known live source',
+        'Switch off the circuit at the isolator',
         'Identify the correct circuit using drawings/spec',
-        'To ensure it hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t failed during the test',
+        'Attach a warning notice to the device',
       ],
       correctAnswer: 2,
       explanation:
@@ -138,9 +138,9 @@ const AM2Module2Section1 = () => {
       id: 3,
       question: 'Why must you inform others before isolating?',
       options: [
-        'Identify the correct circuit using drawings/spec',
-        'When work is finished and circuit is to be re-energised',
-        'False - only proper lock-off devices are acceptable',
+        'To check the circuit drawings are up to date',
+        'To confirm the supply can be re-energised later',
+        'To satisfy the lock-off labelling requirements',
         'To prevent accidental re-energisation and ensure safety',
       ],
       correctAnswer: 3,
@@ -164,10 +164,10 @@ const AM2Module2Section1 = () => {
       id: 5,
       question: "What's the purpose of re-proving the tester?",
       options: [
-        "False - only proper lock-off devices are acceptable",
+        "To confirm the lock-off device is still secure",
         "To ensure it hasn't failed during the test",
-        "Identify the correct circuit using drawings/spec",
-        "You might miss a dangerous fault condition",
+        "To re-identify the correct circuit before working",
+        "To check the warning notice is still in place",
       ],
       correctAnswer: 1,
       explanation:
@@ -190,9 +190,9 @@ const AM2Module2Section1 = () => {
       id: 7,
       question: 'True or false: Tape can be used instead of a lock-off device.',
       options: [
-        'When work is finished and circuit is to be re-energised',
-        'Electricity at Work Regulations 1989',
-        'Identify the correct circuit using drawings/spec',
+        'True - tape clearly marks the isolator as off',
+        'True - if a warning notice is also attached',
+        'True - provided the circuit is also informed of',
         'False - only proper lock-off devices are acceptable',
       ],
       correctAnswer: 3,
@@ -216,10 +216,10 @@ const AM2Module2Section1 = () => {
       id: 9,
       question: 'When do you remove the lock-off and warning notice?',
       options: [
-        'To prevent accidental re-energisation and ensure safety',
+        'As soon as the dead test has been completed',
         'When work is finished and circuit is to be re-energised',
-        'To ensure it hasn\\\\\\\\\\\\\\\'t failed during the test',
-        'Identify the correct circuit using drawings/spec',
+        'Once the tester has been re-proved on a live source',
+        'After informing others that you have started work',
       ],
       correctAnswer: 1,
       explanation:

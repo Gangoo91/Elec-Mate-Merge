@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: "What are 'as-built drawings'?",
     options: [
-      'Minor Electrical Installation Works Certificate (MEIWC)',
+      'The original design drawings produced before work starts',
       'Updated drawings showing the completed installation',
-      'Isolated system with no intentional connection to earth',
-      'Suitable for the environment and adequately protected',
+      'Rough sketches made during the initial site survey',
+      'Manufacturer drawings supplied with the equipment',
     ],
     correctIndex: 1,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why are as-built drawings valuable for future work?',
     options: [
-      'A to G (with A being most efficient)',
-      'Enhanced protection and frequent inspection schedules',
-      'To convert millivolts (mV) into volts (V).',
+      'They show the original design intent only',
+      'They record the cost of the installation',
+      'They list the workers who completed the job',
       'They provide accurate information for modifications',
     ],
     correctIndex: 3,
@@ -61,10 +61,10 @@ export default function Module5Section7_4() {
       id: 1,
       question: "What are 'as-built drawings'?",
       options: [
-        'Because it lacks proper documentation and standards referencing',
+        'The original design drawings before work starts',
         'Updated drawings showing the completed installation',
-        'Measure of harmonic content as percentage of fundamental',
-        'Output saturation with continued error accumulation',
+        'Rough sketches made during the site survey',
+        'Manufacturer drawings supplied with equipment',
       ],
       correctAnswer: 1,
       explanation:
@@ -74,10 +74,10 @@ export default function Module5Section7_4() {
       id: 2,
       question: 'Why must as-built drawings be updated?',
       options: [
-        '1 major injury : 29 minor injuries : 300 near-misses',
-        'It prevents clashes and ensures fair use of shared resources',
+        'To reduce the cost of the installation',
+        'To make the original design look more accurate',
         'To ensure compliance, safety, and accurate records for future maintenance',
-        'Physical movement away from workspace, ideally outdoors',
+        'To remove the need for test certificates',
       ],
       correctAnswer: 2,
       explanation:
@@ -87,9 +87,9 @@ export default function Module5Section7_4() {
       id: 3,
       question: 'Name one key detail that must be updated on as-built drawings.',
       options: [
-        'Thermal transmittance - lower means better insulation',
-        'Calculate and record where significant',
-        'Without delay (immediately) by quickest practicable means',
+        'The name of the design engineer',
+        'The total cost of the materials used',
+        'The dates each worker was on site',
         'Locations of distribution boards and cable routes',
       ],
       correctAnswer: 3,
@@ -113,10 +113,10 @@ export default function Module5Section7_4() {
       id: 5,
       question: 'What is a major consequence of failing to update drawings?',
       options: [
-        'Toxic gases that can cause unconsciousness and death',
+        'Lower material costs on the next project',
         'Wrong isolations leading to safety hazards',
-        'Cables on perforated cable tray',
-        'To prevent condensation forming on the beam surfaces',
+        'Faster sign-off by building control',
+        'Reduced need for future maintenance',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,10 +126,10 @@ export default function Module5Section7_4() {
       id: 6,
       question: 'Who should receive marked-up as-built updates?',
       options: [
-        'kWh consumption correlated with occupancy patterns',
-        'Professional liability and potential prosecution',
+        'The materials supplier',
+        'The client’s insurance company',
         'The site engineer or document controller',
-        'The total path length (out and back)',
+        'Other trades working on site',
       ],
       correctAnswer: 2,
       explanation:
@@ -165,10 +165,10 @@ export default function Module5Section7_4() {
       id: 9,
       question: "In the real-world scenario, what went wrong because drawings weren't updated?",
       options: [
-        'Replacing a consumer unit, or any new circuit, or work in a bathroom',
+        'The wrong cable size was ordered for the job',
         'A maintenance team isolated the wrong breaker, cutting power to critical hospital equipment',
-        'They present complex control systems as easy-to-read graphics and summaries',
-        'To make suitable arrangements for managing the project to ensure health and safety',
+        'A circuit was tested with an out-of-calibration meter',
+        'The installation failed its insulation resistance test',
       ],
       correctAnswer: 1,
       explanation:
@@ -178,10 +178,10 @@ export default function Module5Section7_4() {
       id: 10,
       question: 'Why are as-built drawings valuable for future work?',
       options: [
-        'Multiply tabulated values by 1.20 (for 70°C operating) for thermoplastic cables',
-        'Your supervisor straight away, then quarantine the item and complete a defect report',
+        'They show only the original design intent',
+        'They record the labour hours spent on the job',
         'They provide accurate information for modifications, extensions, and maintenance',
-        'Extend from the feature with a small gap between the outline and the start of the projection line',
+        'They replace the need for test certificates',
       ],
       correctAnswer: 2,
       explanation:

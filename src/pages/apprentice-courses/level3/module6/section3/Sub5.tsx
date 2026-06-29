@@ -45,10 +45,10 @@ const checks = [
     question:
       "On the worked example, the headline consolidated MD on the heaviest phase after diversity is 78 A. The intake fuse offered by the DNO is 100 A BS 88-3. The L3 designer's next step is:",
     options: [
-      "Confirm the design ultimate column (committed plus foreseeable future loads) does not exceed the 100 A intake. If ultimate is below 100 A with reasonable headroom, proceed; if approaching or exceeding, raise with the DNO for upgrade or load-management connection now while the CU is open.",
-      "Are essential — they prevent re-energisation by another person who might assume the breaker is off because of a tripped fault. Multiple lock-offs allow each person working on the circuit to fit their own padlock.",
-      "Protecting the client's personal information, security arrangements (alarm codes, key locations, access routines) and any commercially or personally sensitive matters you become aware of during the work. Casual chat about 'they've got a nice setup' can enable theft and breach the Data Protection Act 2018 if shared further.",
-      "Regular inspection and testing to BS 7671 (every 5 years for commercial premises), avoiding overloaded circuits, maintaining PAT regimes, using correct fuse/MCB ratings, considering AFDDs in high-risk locations, and ensuring cable installation complies with current standards",
+      "Confirm the design ultimate column (committed plus foreseeable loads) sits within the 100 A intake with headroom; if it approaches 100 A, raise a DNO upgrade now while the CU is open.",
+      "Upsize every final circuit's protective device by one standard rating to share the 78 A demand more evenly across the board.",
+      "Apply a further 30 percent diversity to the 78 A figure to bring it below 55 A, freeing capacity for future circuits.",
+      "Request a 60 A intake fuse from the DNO so the supply trips before the consolidated demand can ever reach 78 A.",
     ],
     correctIndex: 0,
     explanation:
@@ -59,10 +59,10 @@ const checks = [
     question:
       "On the same worked example, the 7 kW EV charger circuit is on a TN-C-S supply. The RCD provision on the EV charger circuit must include:",
     options: [
-      "30 mA Type B RCD or Type A RCD plus DC fault current monitoring as required by Reg 722.531.3.101 — either by the charger having internal Type B equivalent monitoring, or by an external Type B RCD on the dedicated circuit. EV chargers can produce smooth DC residual current that Type AC and Type A RCDs do not see correctly.",
-      "Disconnect or isolate components that present a low resistance during the IR test — RCBOs, RCDs, AFDDs, SPDs, electronic dimmers, capacitors, pilot/indicator lamps. Test in two stages per Reg 643.3.3 if the circuit cannot be cleanly isolated from these components, then verify the components separately.",
-      "Acknowledge the request verbally, then send a short written variation by email or in your job-management app before the end of the day. Quote the additional cost, get the customer's written confirmation back before you arrive on site, and only then carry out the extra work. The verbal yes is fine for tone; the written variation is what protects payment, scope and warranty.",
-      "Ze (external earth fault loop impedance at the origin) — the impedance of the path from a fault at the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s MET back to the supply transformer star point, via the supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earth path. For TN-C-S typically 0.10-0.35 Ω; for TN-S typically 0.20-0.50 Ω; for TT essentially the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s electrode resistance Ra (since the supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s metallic earth path is absent).",
+      "30 mA Type B RCD, or Type A RCD plus DC fault current monitoring (charger RDC-DD), as required by Reg 722.531.3.101.",
+      "A 100 mA Type AC RCD — the higher threshold avoids nuisance tripping from the charger's standing leakage during a charge cycle.",
+      "A 30 mA Type AC RCD on its own — the standard additional-protection device is adequate because the charger rectifies to DC internally and presents no DC residual to the supply.",
+      "No RCD at all — the charger's own internal electronics provide all the required protection, so a plain MCB on the supply circuit is sufficient.",
     ],
     correctIndex: 0,
     explanation:
@@ -73,14 +73,14 @@ const checks = [
     question:
       "On the worked example, the heat pump is on a 40 A Type C RCBO with 30 mA Type A RCD, 35 m run of 6 mm² T&E (2.5 mm² CPC) on TN-C-S Ze 0.35 ohms. Design Zs at the heat pump compressor terminals is approximately:",
     options: [
-      "Acceptable per Table 64 (well above 1 MΩ) but worth investigating because a value of 18 MΩ on a typical T&E circuit is much lower than the >100 MΩ you would expect from healthy insulation. Look for moisture in a back-box, slightly nicked sheath at a clip or staple, or a degrading connection.",
-      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\\\\\\\\\\\\\"no documentation available\\\\\\\\\\\\\\\" as a limitation against affected items on the schedule.",
-      "Direct response to the Grenfell Tower fire (2017) and the Hackitt Review (2018), which identified a 'race to the bottom' on safety and accountability gaps in higher-risk buildings. BSA 2022 introduced the new regulatory regime, the Building Safety Regulator, the dutyholder framework, the gateways and the golden thread of information.",
-      "Zs = Ze + (R1 + R2 at 70 deg C) — R1 = 3.08 milliohm/m x 1.20 x 35 = 0.13 ohms; R2 = 7.41 milliohm/m x 1.20 x 35 = 0.31 ohms; Zs = 0.35 + 0.13 + 0.31 = 0.79 ohms. BS 7671:2018+A4:2026 Table 41.3 max Zs for Type C 40 A = 0.55 ohms — design Zs exceeds maximum, ADS via OPD does not work; rely on the 30 mA RCD for ADS, which is acceptable per Reg 411.4.205 / 411.4.4.",
+      "Zs = Ze only = 0.35 ohms, because on a TN-C-S supply the cable resistance is negligible and the declared Ze is the design figure. Within the Type C 40 A max, so ADS via OPD is verified.",
+      "Zs = Ze + (R1 + R2 at 20 deg C, no temperature factor) = 0.35 + 0.11 + 0.26 = 0.72 ohms — apply no 1.20 factor because the cable is cold at the moment of fault. Within the Type C 40 A max.",
+      "Zs = Ze - (R1 + R2) = 0.35 - 0.44 = -0.09 ohms — the cable resistance subtracts from Ze because the conductors run back toward the source. ADS via OPD comfortably verified.",
+      "Zs = Ze + (R1 + R2 at 70 deg C) = 0.35 + 0.13 + 0.31 = 0.79 ohms, exceeding the Type C 40 A max of 0.55 ohms — so ADS relies on the 30 mA RCD.",
     ],
     correctIndex: 3,
     explanation:
-      "Worked Zs: Ze 0.35 + R1+R2 at 70 deg C 0.44 = 0.79 ohms. Table 41.3 max for Type C 40 A is approximately 0.43 ohms. Design Zs exceeds the OPD-based max — so ADS via the OPD's magnetic trip alone does not satisfy the disconnection time. The 30 mA RCD provides ADS within 40 ms at residual fault currents above its threshold, which satisfies Reg 411.3.2.2 disconnection times for socket-outlet circuits up to 63 A on a 230 V system. Document on the schedule that ADS is provided by the RCD function (not the OPD's magnetic trip) and confirm the RCD's operating characteristics meet Table 41.1 / Reg 411.3.2.",
+      "Worked Zs: Ze 0.35 + R1+R2 at 70 deg C 0.44 = 0.79 ohms. Table 41.3 max for Type C 40 A is 0.55 ohms. Design Zs exceeds the OPD-based max — so ADS via the OPD's magnetic trip alone does not satisfy the disconnection time. The 30 mA RCD provides ADS within 40 ms at residual fault currents above its threshold, which satisfies Reg 411.3.2.2 disconnection times for socket-outlet circuits up to 63 A on a 230 V system. Document on the schedule that ADS is provided by the RCD function (not the OPD's magnetic trip) and confirm the RCD's operating characteristics meet Table 41.1 / Reg 411.3.2.",
   },
 ];
 
@@ -89,62 +89,62 @@ const quizQuestions = [
     id: 1,
     question: "The synthesis worked example demonstrates that good L3 design starts with:",
     options: [
-      "s.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades, visitors. On a domestic install it's s.3 that catches the customer's family. On a commercial fit-out it's s.3 that catches the trades next to you.",
-      "Reading the supply (TN type, declared Ze, PSCC, intake fuse), reading the brief (current loads, foreseeable future loads, customer constraints), then working circuit by circuit from Ib through device through Zs to a consolidated schedule.",
-      "Whether the panels are solar PV (electrical, generates power) or solar thermal (plumbing, heats water) — the two get the same name on the high street but only PV is in your scope.",
-      "For each observation: state what was observed (specific, located, factual), why it matters (the risk in plain terms), the relevant BS 7671 reference, the recommended action, and the classification code. Photos attached or referenced where available.",
+      "Selecting the consumer unit and the number of ways first, then fitting the loads around whatever board the wholesaler has in stock.",
+      "Reading the supply (TN type, Ze, PSCC, intake fuse) and the brief, then working circuit by circuit from Ib through device to Zs.",
+      "Calculating the voltage drop on the longest circuit first, because that figure sets the cable size for every other circuit on the board.",
+      "Choosing the protective devices first, then sizing the cables to whatever rating of MCB happens to be on the van.",
     ],
     correctAnswer: 1,
     explanation:
-      "The L3 design discipline is supply-first, brief-second, then per-circuit. Read the TN type because it propagates through every Zs calc and EV protection method downstream; read the PSCC because it sets the breaking capacity floor; read the intake fuse because it sets the consolidated MD ceiling. Read the brief — current loads, committed future loads, foreseeable future loads — so the schedule shows current MD plus design ultimate. Then work each circuit: Ib first, device second, RCD third, AFDD provision fourth, SPD provision at the board level, design Zs verified, voltage drop verified. Synthesis is the order of operations as much as the calc itself.",
+      "The L3 design discipline is supply-first, brief-second, then per-circuit. The TN type propagates through every Zs calc and EV protection method; the PSCC sets the breaking capacity floor; the intake fuse sets the consolidated MD ceiling. The brief — current, committed and foreseeable loads — gives current MD plus design ultimate. Then work each circuit: Ib, device, RCD, AFDD provision, SPD at board level, design Zs verified, voltage drop verified. Synthesis is the order of operations as much as the calc itself.",
   },
   {
     id: 2,
     question: "On the worked CU upgrade with EV charger, the protective device specification for the 7 kW EV circuit is:",
     options: [
-      "A dutyholder named under BSA 2022 for an occupied higher-risk residential building. The Accountable Person is responsible for the building's safety case, for managing building safety risks, and for maintaining the golden thread of information. The Principal Accountable Person is the lead AP where multiple APs exist.",
-      "Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.",
-      "BS EN 61009-1 RCBO 32 A Type B 6 kA Icn 30 mA Type B (or Type A plus charger internal RDC-DD per IEC 62752 to comply with Reg 722.531.3.101); plus Reg 722.411.4.1 O-PEN protection (charger with built-in O-PEN protection or earth-electrode arrangement); plus Reg 421.1.7 AFDD discussion with customer (typically declined on dedicated EV with fixed flex).",
-      "The employer is potentially failing in their legal duty under the Health & Safety at Work Act 1974 to protect employee welfare, and a systematic assessment using the HSE Management Standards could help identify and address the organisational factors contributing to poor mental health, potentially reducing both turnover and absence",
+      "BS EN 60898 MCB 32 A Type C behind a board-mounted 100 mA Type AC RCD shared with the other circuits — no DC-specific protection needed.",
+      "BS EN 61009-1 RCBO 40 A Type D 6 kA Icn 30 mA Type AC — the higher rating and Type D curve cover the charging in-rush.",
+      "32 A Type B RCBO with 30 mA Type B RCD (or Type A plus charger RDC-DD), O-PEN protection per Reg 722.411.4.1, and a documented AFDD decision.",
+      "BS EN 88 fuse 32 A with no RCD — the dedicated circuit and TN-C-S earthing give automatic disconnection without residual current protection.",
     ],
     correctAnswer: 2,
     explanation:
-      "The full EV charger specification on a TN-C-S supply: 32 A RCBO Type B 6 kA Icn (matched to circuit), 30 mA Type B RCD or Type A plus charger RDC-DD per Reg 722.531.3.101 (smooth DC residual handling), plus O-PEN protection per Reg 722.411.4.1 (either built-in to the charger or via earth electrode arrangement). The AFDD discussion per Reg 421.1.7 typically lands at 'declined for dedicated EV with fixed flex' because the engineering benefit is modest on a single fixed appliance. Document each decision on the schedule.",
+      "The full EV charger spec on a TN-C-S supply: BS EN 61009-1 RCBO 32 A Type B 6 kA Icn matched to the circuit; 30 mA Type B RCD or Type A plus charger RDC-DD per IEC 62752 to satisfy Reg 722.531.3.101 (smooth DC residual handling); O-PEN protection per Reg 722.411.4.1, either built into the charger or via an earth-electrode arrangement. The Reg 421.1.7 AFDD discussion typically lands at 'declined for dedicated EV with fixed flex' because the engineering benefit is modest on a single fixed appliance. Document each decision on the schedule.",
   },
   {
     id: 3,
     question: "On the worked example, the SPD specification for the new consumer unit is:",
     options: [
-      "Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.",
-      "No code — a metal consumer unit installed after the 2016 amendment satisfies the current requirement on enclosure non-combustibility, and accessibility under the stairs is not in itself a coded defect provided escape is not impeded.",
-      "Clear evidence that the CPP is being followed in practice, risk assessments are site-specific and regularly reviewed, workers are consulted and engaged, incidents and near-misses are investigated and acted upon, and continuous improvements are being made",
-      "Type 2 SPD at the consumer unit, supply-side of the main switch where possible, with 6 mm² copper PE to MET (Reg 534.4.10(a)), 2.5 mm² live connections (Reg 534.4.10(c)), conductor lengths under 0.5 m total (Reg 534.4.8), dedicated 25 A or 32 A MCB for SPD overcurrent protection, BS EN 61643 product standard.",
+      "Type 1 SPD at the consumer unit with 16 mm² copper PE to MET — every domestic CU upgrade needs Type 1 to handle direct lightning current.",
+      "Type 3 SPD at the consumer unit, with point-of-use protection at each socket-outlet, and no device at the board origin.",
+      "No SPD — without an external lightning protection system on this suburban property there is no transient threat to protect against.",
+      "Type 2 SPD at the consumer unit, supply-side of the main switch, with short Section 534 connections and a dedicated overcurrent MCB.",
     ],
     correctAnswer: 3,
     explanation:
-      "Standard answer for a domestic CU upgrade without LPS: Type 2 SPD at the consumer unit. Reg 443 risk assessment outcome 'recommended' for most informed customer installations with sensitive electronics (router, NAS, AV). Type 1 only if the building has external LPS (BS EN 62305-3) or direct-strike supply risk. Specification follows Section 534 installation rules: short conductors, correct CSA, dedicated overcurrent protection, BS EN 61643 device.",
+      "Standard answer for a domestic CU upgrade without LPS: Type 2 SPD at the consumer unit, supply-side of the main switch where possible. Section 534 installation rules apply: 6 mm² copper PE to MET (Reg 534.4.10(a)), 2.5 mm² live connections (Reg 534.4.10(c)), conductor lengths under 0.5 m total (Reg 534.4.8), a dedicated 25 A or 32 A MCB, BS EN 61643 device. Reg 443 risk-assessment outcome is 'recommended' for most installations with sensitive electronics (router, NAS, AV). Type 1 is only needed where the building has external LPS (BS EN 62305-3) or direct-strike supply risk.",
   },
   {
     id: 4,
     question: "On the worked example, the AFDD discussion with the customer concludes:",
     options: [
-      "AFDDs offered per Reg 421.1.7 advisory wording. Customer accepted on bedroom socket ring, lounge socket ring and kitchen socket ring (engineering benefit strongest on socket circuits with mixed appliance use and aged flex). Customer declined on dedicated single-load circuits (shower, EV, heat pump) and lighting (LED on fixed wiring, no flex). Documented in the design pack.",
-      "Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.",
-      "The technical lead for a project on the sub-contractor's side. The Project Engineer coordinates design (where applicable), procurement, programme, technical queries (RFIs), QA and the eventual handover. They are the sub-contractor's technical face to the main contractor and the M&E Consultant. Typically a Technician-grade or HNC-qualified electrician with several years on site, or a graduate engineer who has crossed in from design.",
-      "Required only if the sink is in a Section 701 location (bathroom). In a kitchen, the metal water pipes are bonded at the main bonding (extraneous-conductive-parts to MET). The sink is incidentally connected via the pipes — separate supplementary bonding is not required by BS 7671 in a domestic kitchen.",
+      "Offered per Reg 421.1.7; accepted on the socket rings, declined on dedicated single-load circuits and lighting, with the decision documented.",
+      "AFDDs fitted on every final circuit as mandatory — the installation cannot be certified to BS 7671 A4:2026 without full AFDD coverage on a domestic board.",
+      "AFDDs omitted entirely without discussion — since Reg 421.1.7 is advisory, the conversation adds no value and conventional RCBOs are fitted throughout.",
+      "AFDDs fitted only on the dedicated EV, shower and heat pump circuits — the high-power single-load circuits carry the greatest arc-fault fire risk.",
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 421.1.7 is advisory — 'recommending' AFDDs in AC final circuits to mitigate fire risk. The L3 designer informs the customer, presents the engineering benefit (strongest on sleeping-area socket circuits and circuits with mixed flex / appliance use), presents the cost (3-5 x equivalent RCBO per AFDD-RCBO module), and lets the customer decide. The middle-ground specification — AFDD on socket circuits, conventional RCBO on dedicated single-load circuits — is the most common informed outcome. Documentation of the conversation is the L3 designer's protection.",
+      "Reg 421.1.7 is advisory — 'recommending' AFDDs in AC final circuits to mitigate fire risk. The customer accepted AFDDs on the bedroom, lounge and kitchen socket rings (engineering benefit strongest on socket circuits with mixed appliance use and aged flex) and declined on dedicated single-load circuits (shower, EV, heat pump) and lighting (LED on fixed wiring, no flex). The L3 designer presents the benefit, the cost (3–5× an equivalent RCBO per AFDD-RCBO module) and lets the customer decide. This middle-ground outcome is the most common; documenting the conversation is the designer's protection.",
   },
   {
     id: 5,
     question: "Reg 433.1.1 (overcurrent coordination) on the worked heat pump circuit means:",
     options: [
-      "Main protective bonding equalises potential between extraneous-conductive-parts (gas, water, structure) and the MET. The earthing conductor connects the MET back to the source earth (PEN, sheath, or local electrode) so fault current can actually return to the source — without it, no current flows and no disconnection happens.",
-      "The protective device rating In must be greater than or equal to the design current Ib (8 kW heat pump on 230 V at cos φ 0.95 = 36.6 A so In greater than or equal to 40 A) AND less than or equal to the cable Iz (6 mm² T&E in Reference Method C clipped direct = 47 A typically, derated by Cg / Ca / Ci to a lower Iz that must still be greater than or equal to In). So In = 40 A; Iz must be greater than or equal to 40 A; cable selected accordingly.",
-      "Misuse depletes the kit (so it\\\\\\\\'s unavailable when needed); risks contamination (single-use items used multiple times); breaches infection control; may cause harm if used inappropriately (e.g. burn gel applied incorrectly). Restocking and proper use are both required by the 1981 Regs duty to provide ADEQUATE first aid.",
-      "TN-C-S (Terra-Neutral combined-separate) with PNB (Protective Neutral Bonding) is the most common UK earthing system — DNO supplies a combined neutral-and-earth (PEN) conductor that's split at the property into separate N and PE. The risk addressed in A4 is the open-PEN scenario — if the supply-side PEN fails, the property's exposed-conductive-parts can rise to dangerous voltage. A4 updates guidance on EV charging and risk assessment for TN-C-S systems.",
+      "The protective device rating In must equal the prospective fault current Ipf at the heat pump terminals so the device clears a short-circuit within the disconnection time.",
+      "In must be at least the design current Ib and no greater than the cable Iz — the chain Ib ≤ In ≤ Iz, giving In = 40 A with Iz at least 40 A.",
+      "The cable Iz must be at least 1.45 times the design current Ib, and the device rating In is then chosen to sit halfway between Ib and Iz.",
+      "The design current Ib must exceed the device rating In so the circuit is never artificially limited below its connected load during compressor starting.",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: "For the worked example shower circuit (9.5 kW at 230 V resistive), the L3 designer chooses:",
     options: [
-      "(1) Stop work immediately. (2) Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t disturb further. (3) Vacate the area; close off if possible. (4) Inform the dutyholder, your supervisor, the principal contractor (where appointed). (5) Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t start work again until survey confirms / licensed contractor takes over (depending on type / quantity). Document everything.",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I really value our working relationship and want to continue working with you (Yes). I can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t do this at the old price because material costs have risen 30% (No). I can offer you a phased approach to spread the cost if that helps (Yes).\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-      "RCBO 50 A Type B 6 kA Icn 30 mA Type A; 10 mm² T&E cable; Ib = 9500 / 230 = 41.3 A so In = 50 A (next standard rating); 10 mm² T&E Reference Method C tabulated It approximately 64 A so Iz greater than or equal to In comfortably; design max Zs Type B 50 A approximately 0.87 ohms per Table 41.3 A4:2026.",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — treating the setback as permanent, pervasive, and entirely personal",
+      "RCBO 40 A Type B 6 kA Icn 30 mA Type A; 6 mm² T&E cable; Ib = 9500 / 230 = 41.3 A so In = 40 A (rounding down because the cable cannot carry 50 A).",
+      "RCBO 50 A Type C 6 kA Icn 30 mA Type A; 6 mm² T&E cable; Type C chosen because a shower element has a high switch-on in-rush like a motor.",
+      "RCBO 50 A Type B 6 kA Icn 30 mA Type A on 10 mm² T&E; In = 50 A (next rating above Ib = 41.3 A) with Iz comfortably above In.",
+      "RCBO 45 A Type B 6 kA Icn 30 mA Type A; 10 mm² T&E cable; Ib = 9500 / (230 x 0.85) = 48.6 A so In = 45 A after applying a 0.85 power factor to the resistive shower.",
     ],
     correctAnswer: 2,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 7,
     question: "The design ultimate column on the worked example schedule includes:",
     options: [
-      "Outstanding qualification certificates not yet received from the awarding body, incomplete portfolio evidence, or off-the-job training hours not yet reaching the required minimum — all of which must be resolved before the gateway can proceed",
-      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
-      "Local Authority Environmental Health Officers (EHOs) for retail, offices, leisure, residential. Office of Rail and Road for railways. Marine and Coastguard Agency for shipping. Civil Aviation Authority for aviation. Office for Nuclear Regulation for nuclear sites. The HSE itself for construction, manufacturing, mines, quarries, agriculture and most other industrial settings.",
-      "Today's loads (committed and installed) plus foreseeable future loads (planned EV second charger, possible attic conversion sockets and lighting, possible workshop circuit) — sized so the supply, intake, main switchgear and consumer unit busbars are sized for the ultimate while only today's circuits are commissioned.",
+      "Only the single largest load on the board, used to size the main switch rating in isolation from the other circuits.",
+      "The sum of every connected appliance rating with no diversity applied, giving the absolute worst-case current the installation could ever draw.",
+      "The prospective fault current at each circuit, recorded so the breaking capacity of the main switchgear can be selected for the future.",
+      "Today's committed loads plus foreseeable future loads, so the supply and switchgear are sized for the ultimate while only today's circuits are commissioned.",
     ],
     correctAnswer: 3,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     id: 8,
     question: "The L3 designer's signature on the design declaration for the worked example certifies:",
     options: [
-      "That the design — every Ib, every In, every Iz, every Zs, every RCD class, every AFDD decision, every SPD specification, the consolidated MD, the cable schedule, the device specification, the test schedule and the design pack documentation — complies with BS 7671 to the best of the designer's knowledge and belief, having exercised reasonable skill and care.",
-      "Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.",
-      "Vd scales with current, so a 10 percent load uplift gives a 10 percent Vd uplift, taking 4.95 percent to ~5.45 percent — the circuit is now non-compliant and the customer needs the cable upsized. This is exactly why designers leave headroom rather than scrape the limit.",
-      "An EICR if the existing certificate is more than 5 years old at the date of the new tenancy starting. If the existing certificate is less than 5 years old, it carries forward to the new tenancy. Some local authorities or scheme providers recommend a refreshed EICR at any change of tenancy regardless of certificate age, but the statutory trigger is the 5-year maximum interval (or change of tenancy, whichever is sooner).",
+      "That the design complies with BS 7671 to the best of the designer's knowledge and belief, having exercised reasonable skill and care.",
+      "That the installation work has been carried out to a good standard of workmanship and that all connections are mechanically and electrically sound.",
+      "That every circuit has been inspected and tested on site and that the recorded Zs, IR and RCD trip-time results fall within the BS 7671 limits.",
+      "That the customer has accepted the quotation and agreed the payment terms, and that the design fee has been invoiced separately from the installation.",
     ],
     correctAnswer: 0,
     explanation:
@@ -449,7 +449,7 @@ export default function Sub5() {
               <li><strong>In</strong>: 40 A.</li>
               <li><strong>Cable</strong>: 6 mm² T&E, Reference Method C, tabulated It approximately 47 A. Iz = 47 A greater than In = 40 A. OK.</li>
               <li><strong>Device</strong>: BS EN 61009-1 RCBO 40 A Type C 6 kA Icn 30 mA Type A. Type C handles compressor inrush (typically 4-6 x FLC for several cycles on DOL start; modern heat pumps with soft-start or VSD reduce this). Type A RCD acceptable for compressor circuits without inverter drives; if heat pump uses an inverter compressor (most modern units), check whether Type F is needed for mixed-frequency residual.</li>
-              <li><strong>Zs design</strong>: 35 m run (route from CU through ground floor to outdoor unit). R1 (6 mm²) at 70 deg C = 3.08 milliohm/m x 1.20 x 35 = 0.129 ohms. R2 (2.5 mm² CPC in 6 mm² T&E) at 70 deg C = 7.41 milliohm/m x 1.20 x 35 = 0.311 ohms. Zs = 0.35 + 0.129 + 0.311 = 0.79 ohms. Table 41.3 max for Type C 40 A = approx 0.43 ohms. Zs design = 0.79 ohms — EXCEEDS Table 41.3 max for Type C 40 A. ADS via OPD does not satisfy disconnection time. Rely on 30 mA RCD for ADS — RCD operates within 40 ms at 5 x I delta n, satisfies Reg 411.3.2.2 disconnection time. Document on schedule that ADS is via RCD function not OPD magnetic trip.</li>
+              <li><strong>Zs design</strong>: 35 m run (route from CU through ground floor to outdoor unit). R1 (6 mm²) at 70 deg C = 3.08 milliohm/m x 1.20 x 35 = 0.129 ohms. R2 (2.5 mm² CPC in 6 mm² T&E) at 70 deg C = 7.41 milliohm/m x 1.20 x 35 = 0.311 ohms. Zs = 0.35 + 0.129 + 0.311 = 0.79 ohms. Table 41.3 max for Type C 40 A = 0.55 ohms. Zs design = 0.79 ohms — EXCEEDS Table 41.3 max for Type C 40 A. ADS via OPD does not satisfy disconnection time. Rely on 30 mA RCD for ADS — RCD operates within 40 ms at 5 x I delta n, satisfies Reg 411.3.2.2 disconnection time. Document on schedule that ADS is via RCD function not OPD magnetic trip.</li>
               <li><strong>AFDD</strong>: declined per customer choice (dedicated fixed-flex heat pump). Documented.</li>
               <li><strong>Voltage drop</strong>: 36.6 A through 35 m of 6 mm² T&E. Vd = 36.6 x 35 x 7.3 milliohm/m / 1000 = 9.35 V = 4.07 percent. Reg 525 limit for fixed equipment 5 percent. Within limit.</li>
             </ul>

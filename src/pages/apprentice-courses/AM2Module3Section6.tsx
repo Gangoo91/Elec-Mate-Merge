@@ -65,9 +65,9 @@ const AM2Module3Section6 = () => {
         'What does the assessor do if you run out of time and leave circuits half-finished?',
       options: [
         "Mark only what's complete - incomplete = lost marks",
-        "Discrete components or modular equipment",
-        "Ensure clean, tight connections with proper contact area",
-        "Testing in the presence of the design team or client",
+        'Award partial credit for unfinished circuits',
+        'Allow you to finish during a break',
+        'Mark the work as if it were complete',
       ],
       correctIndex: 0,
       explanation:
@@ -119,9 +119,9 @@ const AM2Module3Section6 = () => {
       id: 3,
       question: "What's the danger of spending too long on one bend?",
       options: [
-        'Anticipate future error and reduce overshoot',
-        'Lower breaking capacity, slower operation, less precise',
-        'Gather information, analyse, hypothesise, test, rectify',
+        'The conduit may become too neat',
+        'The assessor will stop watching you',
+        'You will use too little cable',
         'Running out of time for critical terminations',
       ],
       correctAnswer: 3,
@@ -133,9 +133,9 @@ const AM2Module3Section6 = () => {
       question: 'What happens if circuits are left incomplete at the end?',
       options: [
         'Marks lost for incomplete work',
-        'SWA (Steel Wire Armoured)',
-        'Legal and financial penalties',
-        '0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)',
+        'You are given extra time to finish',
+        'The whole assessment is cancelled',
+        'Partial credit is awarded automatically',
       ],
       correctAnswer: 0,
       explanation:
@@ -145,10 +145,10 @@ const AM2Module3Section6 = () => {
       id: 5,
       question: 'Name one way to set milestones for installation:',
       options: [
-        'Three-phase 400V, 32A typical',
+        'Work without checking the clock',
         'Set time targets for each stage',
-        'Equipment that could be damaged',
-        'Electricity at Work Regulations',
+        'Leave all testing to the last hour',
+        'Finish each circuit before starting the next',
       ],
       correctAnswer: 1,
       explanation:
@@ -158,10 +158,10 @@ const AM2Module3Section6 = () => {
       id: 6,
       question: 'Why should test results be recorded as you go?',
       options: [
-        'Approved voltage indicator (AVI)',
-        'Easy backup, instant access, version control',
+        'To impress the other candidates',
+        'To reduce the number of tests needed',
         'Prevents rushed paperwork at the end',
-        'Can significantly affect some measurements',
+        'To allow you to skip the final checks',
       ],
       correctAnswer: 2,
       explanation:
@@ -171,9 +171,9 @@ const AM2Module3Section6 = () => {
       id: 7,
       question: "What do assessors expect if you're running behind schedule?",
       options: [
-        'Maintained mode for constant visibility',
-        'Gather information about the fault symptoms',
-        'Dwellings (domestic premises)',
+        'That you skip the testing stage',
+        'That you rush the remaining circuits',
+        'That you ask another candidate for help',
         'Continue working methodically and safely',
       ],
       correctAnswer: 3,
@@ -192,12 +192,12 @@ const AM2Module3Section6 = () => {
       id: 9,
       question: 'Give one example of a time-related mistake candidates make:',
       options: [
-        'WBS defines what; schedule defines when',
+        'Checking progress against milestones',
+        'Documenting test results as they go',
+        'Reading the specification before starting',
         'Perfecting one detail while neglecting others',
-        'Only long enough to confirm operation (short duration)',
-        'Temperature sensors were miswired',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Spending excessive time perfecting one detail (like a perfect bend) while leaving insufficient time for other critical tasks.',
     },
@@ -205,10 +205,10 @@ const AM2Module3Section6 = () => {
       id: 10,
       question: "What's the golden rule of time management in AM2?",
       options: [
-        'High voltage competency certification',
-        'Optimise accuracy and safety',
+        'Finish as fast as possible',
+        'Always aim for perfection on every detail',
         'Plan, pace, and deliver methodically',
-        'Increases Re (more turbulent tendency)',
+        'Leave the hardest circuit until last',
       ],
       correctAnswer: 2,
       explanation:

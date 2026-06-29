@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pasma-schedule5-fields',
     question: 'Which of the following is NOT a mandatory field in a Schedule 5 inspection record?',
     options: [
-      'Name and position of the person carrying out the inspection',
       "The manufacturer's serial number of every component",
+      'Name and position of the person carrying out the inspection',
       'Date and time of the inspection',
       'Details of any matter identified that could give rise to risk',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Schedule 5 requires the inspector's name and position, date and time, location and description, matters giving rise to risk, actions taken, further actions needed, and the name/address of the person for whom the inspection was done. It does not require individual serial numbers of every component.",
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       'Are digital inspection records legally acceptable under the Work at Height Regulations?',
     options: [
       'No, only handwritten paper records are accepted by the HSE',
-      'Yes, provided they can be produced in a readable format when requested',
       'Only if they are printed out within 24 hours of the inspection',
+      'Yes, provided they can be produced in a readable format when requested',
       'Only if they are stored on a government-approved system',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Digital records are fully acceptable under the Regulations, provided they can be produced in a readable format when requested by the HSE or another enforcing authority. There is no requirement for a specific system or for records to be printed.',
   },
@@ -48,11 +48,11 @@ const quickCheckQuestions = [
       'Which of the following is the most commonly identified documentation failure on site?',
     options: [
       'Using the wrong colour ink',
-      'Missing signatures or unsigned records',
       'Records printed on A3 instead of A4 paper',
       'Records stored in a ring binder rather than a folder',
+      'Missing signatures or unsigned records',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Missing signatures are consistently the most commonly identified documentation failure. An unsigned inspection record has no legal value because it cannot be attributed to a specific competent person. All records must be signed by the inspector.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'What additional information does the PASMA inspection checklist capture beyond the Schedule 5 minimum?',
     options: [
-      'The colour of the tower components',
       'Tower-specific checks such as castor condition, stabiliser deployment, and platform latch function',
+      'The colour of the tower components',
       "The inspector's home address and telephone number",
       'The weather forecast for the following week',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The PASMA checklist is designed specifically for mobile towers and includes detailed checks for castors, stabilisers, platform latches, bracing, and other tower-specific items that a generic Schedule 5 form would not prompt the inspector to examine.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
       'When taking photographic evidence of an inspection, which of the following is most important?',
     options: [
       'Using a professional DSLR camera',
-      "Ensuring images are time-stamped and clearly show the tower's condition and location",
       'Taking at least 50 photographs per inspection',
       'Using black and white photography for clarity',
+      "Ensuring images are time-stamped and clearly show the tower's condition and location",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The key requirement for inspection photographs is that they are time-stamped (proving when they were taken) and clearly show the tower's condition and location. A smartphone camera is perfectly adequate — the content and metadata matter more than the equipment.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 5,
     question: 'Under which circumstances can the HSE request to see tower inspection records?',
     options: [
+      'At any time, without prior notice',
       'Only during a formal site audit announced 28 days in advance',
       'Only after a reportable accident has occurred',
-      'At any time, without prior notice',
       'Only with a court order',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'HSE inspectors can request to see inspection records at any time, without prior notice. They have the power to enter any workplace at any reasonable time and examine any documents relevant to health and safety. Records must be readily available.',
   },
@@ -149,11 +149,11 @@ const quizQuestions = [
     question: 'How should tower inspection records integrate with wider site safety documentation?',
     options: [
       'They should be kept completely separate from all other records',
-      'They should be cross-referenced with the construction phase plan, method statements, and risk assessments',
       'They should only be shared with the tower manufacturer',
       'They should be destroyed once the method statement is approved',
+      'They should be cross-referenced with the construction phase plan, method statements, and risk assessments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Tower inspection records should be integrated with the wider site safety documentation system, cross-referenced with the construction phase plan, method statements, and risk assessments. This creates a complete picture of how tower safety is managed on the project.',
   },

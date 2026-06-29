@@ -36,9 +36,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of emergency planning?',
     options: [
       'To minimise harm and enable rapid, effective response',
-      'Solvents used for cleaning switchgear contacts',
-      'Analog signals such as 0-10V or 4-20mA',
-      'Disconnect or isolate SPDs before testing',
+      'To satisfy the building insurer and reduce premiums',
+      'To allocate blame after an incident has occurred',
+      'To replace the need for staff first-aid training',
     ],
     correctIndex: 0,
     explanation:
@@ -49,9 +49,9 @@ const quickCheckQuestions = [
     question:
       'What is the minimum first aid provision for a low-risk workplace with 25-50 employees?',
     options: [
-      'Check individual switches and connections',
-      'An open circuit or break in the conductor',
-      'Mean Time To dangerous Failure',
+      'Two qualified first aiders plus a defibrillator',
+      'A first aid room and a full-time occupational nurse',
+      'No formal provision is required below 50 employees',
       'Appointed person plus first aid box',
     ],
     correctIndex: 3,
@@ -76,9 +76,9 @@ const quickCheckQuestions = [
     question:
       'What is the first action when finding someone receiving an electric shock from a low voltage source?',
     options: [
-      'Correct on/off times as programmed',
-      'When copper losses equal iron losses',
-      'Ring final circuit socket outlets',
+      'Pull the casualty clear by their clothing immediately',
+      'Begin chest compressions without delay',
+      'Pour water over the casualty to break the contact',
       'Isolate the supply if safe to do so',
     ],
     correctIndex: 3,
@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: "What is the role of a 'Fire Warden' or 'Fire Marshal'?",
     options: [
-      'During site induction before work begins',
-      'Evacuate, ventilate, and do not re-enter until safe',
-      'To account for all personnel and prevent re-entry',
+      'To extinguish any fire regardless of its size',
+      'To carry out the annual fire risk assessment',
+      'To maintain and test the fire alarm system',
       'To assist with evacuation and ensure areas are clear',
     ],
     correctAnswer: 3,
@@ -133,9 +133,9 @@ const quizQuestions = [
     question: "What first aid qualification is required to be a 'First Aider at Work'?",
     options: [
       'Completion of HSE approved First Aid at Work course',
-      'When the fire is too large or your escape route may be blocked',
-      '45m (or 25m if only one exit available)',
-      'Cool the burn with cool running water for at least 20 minutes',
+      'A one-day Emergency First Aid at Work certificate',
+      'A current basic life support (CPR) certificate only',
+      'Registration as an occupational health nurse',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should be included in an emergency plan?',
     options: [
-      'To assist with evacuation and ensure areas are clear',
+      'Only the fire evacuation routes and assembly point',
       'All foreseeable emergencies, roles, actions, communications, and recovery',
-      'Location, nature of incident, number of casualties, current condition, hazards present',
-      'Cool the burn with cool running water for at least 20 minutes',
+      'A register of staff first aid certificates and renewal dates',
+      'The maintenance schedule for fire extinguishers only',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the maximum travel distance to an exit in a normal-risk premises?',
     options: [
-      'About 150-200g CO2/kWh (and falling)',
-      'Recorded values on test schedule/certificate',
-      'Small-scale generation located close to consumers',
+      '100m (or 60m if only one exit available)',
+      '60m (or 30m if only one exit available)',
+      '25m (or 12m if only one exit available)',
       '45m (or 25m if only one exit available)',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
     question: 'What action should be taken if a refrigerant leak is detected in a plant room?',
     options: [
       'Evacuate, ventilate, and do not re-enter until safe',
-      '45m (or 25m if only one exit available)',
-      'Completion of HSE approved First Aid at Work course',
-      'Cool the burn with cool running water for at least 20 minutes',
+      'Seal the room to contain the refrigerant and continue work',
+      'Switch on additional electrical equipment to disperse the gas',
+      'Ignore it, as refrigerant gases are harmless in small amounts',
     ],
     correctAnswer: 0,
     explanation:
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of an emergency assembly point?',
     options: [
-      '45m (or 25m if only one exit available)',
+      'To store firefighting equipment for the fire brigade',
       'To account for all personnel and prevent re-entry',
-      'During site induction before work begins',
-      'To assist with evacuation and ensure areas are clear',
+      'To provide a location for the fire risk assessment',
+      'To act as the entry route for emergency vehicles',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     id: 10,
     question: 'For an electrical burn, after ensuring safety, what is the first aid priority?',
     options: [
-      'Completion of HSE approved First Aid at Work course',
-      'To assist with evacuation and ensure areas are clear',
+      'Apply a burn cream and a tight dressing to the wound',
+      'Burst any blisters to relieve pressure and pain',
       'Cool the burn with cool running water for at least 20 minutes',
-      'All foreseeable emergencies, roles, actions, communications, and recovery',
+      'Wrap the casualty warmly and give them a hot drink',
     ],
     correctAnswer: 2,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     id: 11,
     question: 'What information should be given when calling 999 for an electrical incident?',
     options: [
-      'Cool the burn with cool running water for at least 20 minutes',
-      'When the fire is too large or your escape route may be blocked',
-      'All foreseeable emergencies, roles, actions, communications, and recovery',
+      'Only the postcode and the name of the caller',
+      'The cause of the fault and who is to blame for it',
+      'The cost of the damage and the insurer details',
       'Location, nature of incident, number of casualties, current condition, hazards present',
     ],
     correctAnswer: 3,
@@ -238,9 +238,9 @@ const quizQuestions = [
       'How should emergency procedures be communicated to temporary workers and contractors?',
     options: [
       'During site induction before work begins',
-      'To assist with evacuation and ensure areas are clear',
-      '45m (or 25m if only one exit available)',
-      'Completion of HSE approved First Aid at Work course',
+      'By a notice posted at the site entrance only',
+      'Verbally on the first occasion the alarm sounds',
+      'Only if the contractor specifically requests it',
     ],
     correctAnswer: 0,
     explanation:

@@ -167,14 +167,14 @@ const Module2Section6_3: React.FC = () => {
       id: 8,
       question: "Why might a motor's efficiency drop when heavily loaded?",
       options: [
-        'Overheating and increased losses',
-        '4mA baseline allows fault detection',
-        'Individual panel optimization',
-        'Reduce smoke and toxic fumes in fire',
+        'Overheating raises resistance and increases losses',
+        'The supply voltage automatically rises',
+        'The power factor improves to unity',
+        'Core losses fall to zero under load',
       ],
       correctAnswer: 0,
       explanation:
-        'Overloading increases heating, resistance rises with temperature, and mechanical losses increase.',
+        'Heavy loading raises the operating temperature; conductor resistance rises with temperature and mechanical losses increase, lowering efficiency.',
     },
     {
       id: 9,

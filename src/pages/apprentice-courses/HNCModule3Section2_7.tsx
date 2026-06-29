@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'What is the main advantage of electronic ballasts over magnetic ballasts in fluorescent lighting?',
     options: [
-      'High-frequency components and specialised detection equipment',
-      'Prove it on a known live source (or proving unit) BEFORE and AFTER the dead test',
-      'Correct polarity, fuse rating, and that the switch breaks the phase',
       'Higher operating frequency eliminates flicker and improves efficacy',
+      'They are significantly heavier due to a larger iron core',
+      'They draw a lower power factor of around 0.5 lagging',
+      'They operate the lamp at the 50 Hz mains frequency',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Electronic ballasts operate at 25-40 kHz, eliminating the visible 100Hz flicker of magnetic ballasts. The high frequency also improves lamp efficacy by 10-15% and enables dimming. They include PFC for high power factor.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'What power factor would you expect from a basic LED driver without power factor correction?',
     options: [
-      '0.5-0.6 lagging',
       '0.95 lagging',
       '0.95 leading',
+      '0.5-0.6 lagging',
       'Unity',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Basic LED drivers use simple rectifier-capacitor circuits which draw current in sharp peaks, resulting in poor power factor (0.5-0.6) and high harmonic distortion. Quality LED drivers include active PFC to achieve >0.9 power factor.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'In an induction motor equivalent circuit, what does R₂/s represent?',
     options: [
-      'Notebook or phone (if permitted)',
+      'The stator winding copper losses only',
       'Mechanical load and rotor losses',
-      'No socket outlets permitted',
-      'Main earthing conductor size',
+      'The magnetising reactance of the air gap',
+      'The iron (core) losses in the stator',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,16 +156,16 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A fan motor draws 15A at 0.7 power factor lagging. What capacitive kVAr is needed to correct to 0.95?',
+      'A fan motor draws 15A at 0.7 power factor lagging on a 400V three-phase supply. What capacitive kVAr is needed to correct to 0.95?',
     options: [
-      '2.1 kVAr',
-      '4.5 kVAr',
+      '2.4 kVAr',
+      '7.4 kVAr',
       '3.2 kVAr',
-      '5.8 kVAr',
+      '5.0 kVAr',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'At 400V three-phase: S = √3 × 400 × 15 = 10.4 kVA. P = 10.4 × 0.7 = 7.28 kW. Q₁ = 7.28 × tan(cos⁻¹0.7) = 7.43 kVAr. Q₂ = 7.28 × tan(cos⁻¹0.95) = 2.39 kVAr. Correction = 7.43 - 2.39 = 5.04 kVAr ≈ 5.0 kVAr. However, considering rounding: closest answer is 3.2 kVAr for simpler calculation methods.',
+      'At 400V three-phase: S = √3 × 400 × 15 = 10.4 kVA. P = 10.4 × 0.7 = 7.28 kW. Q₁ = 7.28 × tan(cos⁻¹0.7) = 7.43 kVAr. Q₂ = 7.28 × tan(cos⁻¹0.95) = 2.39 kVAr. Correction required = Q₁ − Q₂ = 7.43 − 2.39 = 5.04 kVAr ≈ 5.0 kVAr.',
   },
   {
     id: 7,
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'When sizing cables for motor circuits, which current value determines the minimum cable size?',
     options: [
-      'Strappers connected to wrong terminals',
-      'Water, gas, oil, air conditioning and structural steelwork',
+      'The locked-rotor starting current, multiplied by 8',
+      'The no-load magnetising current of the motor',
       'Full load current with appropriate factors applied',
-      'Adding a single socket outlet to an existing circuit',
+      'The prospective short-circuit current at the motor terminals',
     ],
     correctAnswer: 2,
     explanation:
@@ -238,12 +238,12 @@ const quizQuestions = [
     id: 12,
     question: 'What effect does reducing motor load have on power factor?',
     options: [
-      'Power factor decreases significantly',
       'Power factor becomes leading',
       'Power factor increases towards unity',
       'Power factor remains constant',
+      'Power factor decreases significantly',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'At light load, the magnetising current (reactive) remains nearly constant while the load current (resistive) reduces. This increases the proportion of reactive current, reducing power factor. A motor at 25% load might have pf of 0.5 compared to 0.85 at full load.',
   },

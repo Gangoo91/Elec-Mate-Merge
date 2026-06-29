@@ -25,23 +25,28 @@ const quizQuestions: QuizQuestionType[] = [
     id: 2,
     question: 'Which of the following is a typical visual inspection fault?',
     options: [
-      'High resistance readings',
-      'Missing grommets in metal enclosure',
-      'Low insulation resistance',
-      'RCD tripping time too long',
+      'High earth fault loop resistance readings',
+      'Low insulation resistance between conductors',
+      'Missing grommets in a metal enclosure',
+      'An RCD tripping time that is too long',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Missing grommets in metal enclosures can only be detected through visual inspection and pose a safety risk by potentially damaging cables.',
   },
   {
     id: 3,
     question:
-      'True or False: If a circuit looks fine visually, you can skip the detailed visual inspection checklist.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+      'A circuit looks fine at a glance. How should the visual inspection checklist be treated?',
+    options: [
+      'Work systematically through the full checklist regardless',
+      'Skip it entirely, since nothing looks obviously wrong',
+      'Complete only the sections relating to the consumer unit',
+      'Defer it until after the electrical tests are done',
+    ],
+    correctAnswer: 0,
     explanation:
-      'Visual inspection must be systematic and thorough using a proper checklist, as many defects are not immediately obvious and require careful examination.',
+      'Visual inspection must be systematic and thorough using the full checklist, as many defects are not immediately obvious and require careful examination.',
   },
   {
     id: 4,
@@ -58,11 +63,11 @@ const quizQuestions: QuizQuestionType[] = [
   },
   {
     id: 5,
-    question: 'Which regulation in BS 7671 specifically requires visual inspection before testing?',
-    options: ['Regulation 641.1', 'Regulation 643.1', 'Regulation 514.1', 'Regulation 411.1'],
-    correctAnswer: 1,
+    question: 'Which regulation in BS 7671 states that inspection shall precede testing?',
+    options: ['Regulation 411.1', 'Regulation 514.1', 'Regulation 642.1', 'Regulation 643.1'],
+    correctAnswer: 2,
     explanation:
-      'BS 7671 Regulation 643.1 specifically requires that visual inspection must be carried out before any electrical testing begins.',
+      'BS 7671 Regulation 642.1 requires that inspection shall precede testing, so obvious defects are identified before any test is carried out.',
   },
 ];
 

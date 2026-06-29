@@ -26,12 +26,12 @@ const quizQuestions = [
   {
     question: 'What is the FIRST option in the PASMA rescue hierarchy?',
     options: [
-      'Call the fire brigade immediately',
       'Self-rescue — the user descends under their own power',
+      'Call the fire brigade immediately',
       'Lower the tower to the ground',
       'Use a crane to lift the person off',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The PASMA rescue hierarchy starts with self-rescue — the user descends the tower under their own power using the internal ladder or stairway. This is the quickest and simplest option when the person is physically able. Assisted descent and professional rescue follow as escalation options.',
   },
@@ -39,23 +39,23 @@ const quizQuestions = [
     question: 'When must a written rescue plan be in place for tower scaffold work?',
     options: [
       'Only for towers above 10 metres',
-      'Only when working near water',
       'Before any work at height begins — for every tower operation',
+      'Only when working near water',
       'Only when a risk assessment identifies a specific rescue risk',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Work at Height Regulations 2005 require that rescue procedures are planned before any work at height begins. This applies to all tower scaffold operations regardless of height. The rescue plan must be specific to the site, the tower configuration, and the personnel involved.',
   },
   {
     question: 'What is suspension trauma?',
     options: [
-      'Fear of heights',
-      'A condition where blood pools in the legs when a person is suspended in a harness, potentially causing loss of consciousness and death',
-      'Bruising from a fall arrest harness',
-      'Psychological trauma after witnessing a fall',
+      'An intense fear of working at height in an exposed position',
+      'Bruising and chafing caused by a fall arrest harness',
+      'Blood pooling in the legs when suspended motionless in a harness',
+      'Psychological trauma suffered after witnessing a colleague fall',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Suspension trauma (orthostatic intolerance) occurs when a person hangs motionless in a harness. Blood pools in the legs, reducing return to the heart and brain. Without rescue within 15-20 minutes, loss of consciousness and cardiac arrest can occur. This is why rapid rescue capability is critical whenever harnesses are used.',
   },
@@ -63,34 +63,34 @@ const quizQuestions = [
     question:
       'A colleague on a tower platform has collapsed and is unresponsive. What is the FIRST thing you should do?',
     options: [
-      'Climb up immediately to help them',
-      'Call emergency services (999) and maintain communication while following the rescue plan',
-      'Try to shake the tower to wake them',
-      'Wait 10 minutes to see if they recover',
+      'Climb up to the platform immediately to reach and help them',
+      'Try shaking the tower frame to rouse the unresponsive person',
+      'Wait around 10 minutes to see whether they recover on their own',
+      'Call 999, keep communicating, and follow the written rescue plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Do NOT climb the tower without a plan — you could create a second casualty. Call 999 immediately, describe the situation (person collapsed at height, give the exact location and tower height), and follow the written rescue plan. Maintain verbal communication with the casualty if possible. The fire service has specialist equipment for rescue at height.',
   },
   {
     question: 'What communication method should be established as part of the rescue plan?',
     options: [
-      'Social media messaging only',
-      'A combination of mobile phone, radio, and a buddy system with ground-level personnel',
-      'Written notes passed up and down the tower',
-      'Communication is not necessary — just call 999',
+      'Mobile phone, two-way radio, and a ground-level buddy system',
+      'Social media or instant messaging from the platform only',
+      'Written notes physically passed up and down the tower',
+      'No communication is needed — simply call 999 if required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The rescue plan must establish reliable communication: mobile phones (check signal strength at the location), two-way radios where phone coverage is poor, and a buddy system where ground-level personnel maintain visual and verbal contact with tower users. At least one person at ground level must be able to raise the alarm.',
   },
   {
     question: 'Who should be available at ground level to provide first aid during tower work?',
     options: [
-      'No one — first aid is only needed after an accident',
-      'A qualified first aider with access to a first aid kit, aware of the rescue plan',
-      'Anyone who has watched a first aid video',
-      'First aid is the responsibility of the emergency services only',
+      'No one — first aid is only needed once an accident has happened',
+      'A qualified first aider with a kit who knows the rescue plan',
+      'Anyone on site who has previously watched a first aid video',
+      'No one — first aid is solely the job of the emergency services',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
   {
     question: 'What is the purpose of the buddy system in tower scaffold rescue planning?',
     options: [
-      'To reduce boredom for the ground worker',
-      'To ensure someone at ground level is monitoring the tower user and can raise the alarm immediately if needed',
-      'To share the workload on the platform',
-      'The buddy system is only used in water rescue',
+      'To reduce boredom and keep the ground-level worker occupied',
+      'To share the physical workload between the two platform users',
+      'So a ground-level person monitors the user and can raise the alarm',
+      'The buddy system is only ever used during water rescue operations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The buddy system ensures a ground-level person maintains awareness of the tower user at all times. They can spot signs of distress, monitor weather changes, prevent unauthorised access to the tower, and immediately raise the alarm and initiate the rescue plan if something goes wrong.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       "A rescue plan states 'call the fire brigade.' What critical information must be included in the plan beyond this instruction?",
     options: [
-      'No additional information is needed',
-      "The fire brigade's email address",
-      'Exact site location with postcode/what3words, access route for vehicles, tower height, number of casualties, site contact name and number',
-      'The name of the local fire station',
+      'No additional information is needed beyond the instruction to call',
+      "The fire brigade's general enquiries email address for the region",
+      'The name and address of the nearest local fire station to the site',
+      'Exact location, vehicle access, tower height, casualties, and a contact',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Emergency services need precise information to respond effectively: exact location (postcode, what3words, grid reference), clear vehicle access route, specific location of the tower on site, tower height, nature of the emergency, number of casualties, and a site contact name and mobile number. Delays in providing this information cost lives.',
   },
@@ -128,12 +128,12 @@ const quickCheckQuestions = [
     question:
       "Your rescue plan says 'fire brigade response time approximately 10 minutes.' You are working on a rural site where the nearest fire station is 25 minutes away. Is the plan adequate?",
     options: [
-      'Yes — 25 minutes is close enough to 10 minutes',
-      'No — the plan must reflect actual response times for the specific site; additional on-site rescue capability may be needed',
-      'Yes — the fire brigade will hurry if it is an emergency',
-      'No — you cannot use a tower on a rural site',
+      'No — the plan must use real response times; on-site rescue may be needed',
+      'Yes — 25 minutes is close enough to the assumed 10 minute figure',
+      'Yes — the fire brigade will hurry to a genuine height emergency',
+      'No — towers can never be used on rural sites under any circumstances',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Rescue plans must be site-specific and realistic. If professional rescue response time exceeds 15-20 minutes, the risk of suspension trauma becomes critical. Additional on-site rescue capability (trained personnel with descent equipment) may be required, or the method of work at height may need to change.',
   },
@@ -141,10 +141,10 @@ const quickCheckQuestions = [
     question:
       'A lone worker is using a tower on a quiet industrial estate at the weekend. They have a mobile phone. Is this adequate rescue provision?',
     options: [
-      'Yes — a mobile phone is sufficient rescue provision',
-      'No — lone working at height is unacceptable without additional precautions; a buddy system or welfare checks must be in place',
-      'Yes — if they save 999 in their phone',
-      'No — towers cannot be used at weekends',
+      'Yes — a charged mobile phone is sufficient rescue provision on its own',
+      'No — lone working at height needs welfare checks or a buddy system',
+      'Yes — provided they have saved the 999 number in their phone first',
+      'No — mobile access towers cannot be used at weekends under any rule',
     ],
     correctIndex: 1,
     explanation:
@@ -154,12 +154,12 @@ const quickCheckQuestions = [
     question:
       "During the rescue plan briefing, an operative says 'If someone falls or collapses on the platform, I will climb straight up to help them.' Is this the correct response?",
     options: [
-      'Yes — getting to the casualty quickly is the priority',
-      'No — climbing up without a plan could create a second casualty; call 999 first, follow the rescue plan, and maintain communication from the ground',
-      'Yes — but only if they wear a harness',
-      'No — you should never attempt to help a colleague',
+      'Yes — reaching the casualty as quickly as possible is the priority',
+      'Yes — but only if the responder is wearing a fall arrest harness',
+      'No — climbing up risks a second casualty; call 999 and work the plan',
+      'No — you should never make any attempt to help a fallen colleague',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Climbing up to an unconscious person without a plan is dangerous — you may not be able to help them once you get there, the platform may already be overloaded, and if you become injured too, there are now two casualties at height. The correct sequence is: call 999, follow the rescue plan, maintain communication, and only approach the casualty if it is safe and you are trained to do so.',
   },
@@ -486,10 +486,10 @@ export default function IpafModule5Section3() {
         <InlineCheck
           question="A rescue plan for a tower on a building site states: 'In an emergency, call 999.' Is this an adequate rescue plan?"
           options={[
-            'Yes — 999 covers all emergencies',
-            'No — it lacks site-specific details, location information, communication methods, first aid provision, and named responsibilities',
-            'Yes — the fire brigade will know what to do',
-            'No — you should call 112 instead',
+            'Yes — dialling 999 covers every kind of site emergency',
+            'No — it lacks location, communication, first aid, and named roles',
+            'Yes — the fire brigade will work out what to do on arrival',
+            'No — you should dial 112 rather than 999 for this',
           ]}
           correctIndex={1}
           explanation="'Call 999' is one element of a rescue plan, not the entire plan. A compliant rescue plan must include the exact site location with postcode/what3words, what information to give the operator, how emergency vehicles will access the site, communication methods between the platform and ground, first aid provision, named responsibilities, and realistic response times."
@@ -616,10 +616,10 @@ export default function IpafModule5Section3() {
         <InlineCheck
           question="A tower user calls down that they feel dizzy and are having trouble gripping the guardrail. They are 5 metres above ground. What should the ground-level buddy do?"
           options={[
-            'Tell them to sit down on the platform and wait it out',
-            'Immediately climb the tower to help them down',
-            'Talk calmly to them, encourage them to sit or lie down on the platform, alert the first aider, and prepare to escalate to assisted descent or call 999 if they deteriorate',
-            'Ignore it — dizziness is not serious',
+            'Tell them to sit down on the platform and simply wait it out alone',
+            'Immediately climb the tower yourself to help them back down',
+            'Talk calmly, get them sitting low, alert the first aider, and be ready to escalate',
+            'Ignore it — dizziness at height is not a serious concern',
           ]}
           correctIndex={2}
           explanation="Dizziness at height is a medical emergency because the person could lose consciousness and fall. The ground-level buddy should: (1) Talk calmly to maintain communication, (2) Encourage them to sit or lie flat on the platform to reduce fall risk, (3) Alert the first aider, (4) Prepare to call 999 if the situation worsens, and (5) Follow the rescue plan escalation procedure. Do NOT send someone up without a plan."
@@ -832,10 +832,10 @@ export default function IpafModule5Section3() {
         <InlineCheck
           question="A person has been rescued from a harness after hanging motionless for 12 minutes. A colleague wants to lay them flat on the ground. Is this the correct first aid response?"
           options={[
-            'Yes — the recovery position is always correct',
-            'No — place them in a semi-recumbent position (seated with knees raised) and call for immediate medical attention',
-            'Yes — they need to lie down after the stress',
-            'No — they should be made to walk around immediately',
+            'Yes — the flat recovery position is always the correct choice',
+            'No — sit them semi-recumbent with knees raised and get medical help',
+            'Yes — they need to lie down flat to recover after the stress',
+            'No — they should be made to get up and walk around immediately',
           ]}
           correctIndex={1}
           explanation="After suspension, laying the person flat can cause a sudden rush of pooled, deoxygenated blood back to the heart, potentially causing cardiac arrest ('rescue death'). Place them in a semi-recumbent position (W-position or seated leaning back with knees raised) and get immediate medical attention. Always inform paramedics of the suspension duration."

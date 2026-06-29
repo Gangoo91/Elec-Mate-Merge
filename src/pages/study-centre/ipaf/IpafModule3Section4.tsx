@@ -14,12 +14,12 @@ const quizQuestions = [
     id: 1,
     question: 'Dismantling a mobile access tower must follow:',
     options: [
-      'Any convenient order, starting from the bottom',
       'The exact reverse of the assembly sequence',
+      'Any convenient order, starting from the bottom',
       'A random order decided on site',
       'The same order as assembly, from the bottom up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dismantling must always follow the exact reverse of the assembly sequence. The tower was designed and tested for assembly in a specific order, and reversing that order ensures structural integrity is maintained throughout the dismantling process.',
   },
@@ -28,11 +28,11 @@ const quizQuestions = [
     question: 'Components removed during dismantling must be:',
     options: [
       'Thrown down to save time',
-      'Dropped from the platform to the ground',
       'Lowered carefully — NEVER thrown',
+      'Dropped from the platform to the ground',
       'Slid down the outside of the tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Components must always be lowered carefully using hand-to-hand passing, rope and pulley, or other controlled methods. Throwing components creates a serious risk of injury to people below and can damage the components.',
   },
@@ -41,19 +41,19 @@ const quizQuestions = [
     question: 'What is the minimum number of persons required for tower dismantling?',
     options: [
       'One trained person is sufficient',
-      'Minimum two persons',
       'Minimum four persons',
+      'Minimum two persons',
       'It depends on the tower height only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A minimum of two persons is required for dismantling. One person works on the tower removing components from the upper levels, and at least one person on the ground receives components, maintains the exclusion zone, and provides emergency assistance.',
   },
   {
     id: 4,
     question: 'At each level during dismantling, which components are removed LAST?',
-    options: ['The platforms', 'The diagonal braces', 'The guardrails', 'The frame sections'],
-    correctAnswer: 2,
+    options: ['The platforms', 'The diagonal braces', 'The frame sections', 'The guardrails'],
+    correctAnswer: 3,
     explanation:
       'Guardrails are removed last at each level. Since dismantling is the reverse of assembly, and guardrails were installed before the platform in assembly, the platform is removed first, then the guardrails. The operative must be on the level below (protected by its guardrails) before removing the guardrails from the level above.',
   },
@@ -61,12 +61,12 @@ const quizQuestions = [
     id: 5,
     question: 'When using a rope and pulley to lower components, the rope must be:',
     options: [
-      'Any available rope from site',
       'Rated for the weight being lowered and in good condition',
+      'Any available rope from site',
       'At least 25mm diameter',
       'Made of natural fibre only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The rope must be rated for the weight of the heaviest component being lowered and must be in good condition with no fraying, cuts, or degradation. Use purpose-made lowering equipment wherever possible.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'When lowering components hand-to-hand, the ground person should:',
     options: [
       'Stand directly under the tower',
-      "Stand outside the tower footprint and receive components at arm's length",
       'Walk away and return when all components are on the ground',
       'Stand on a ladder next to the tower',
+      "Stand outside the tower footprint and receive components at arm's length",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The ground person should stand outside the tower footprint and receive components passed down at arm's length. Standing directly under the tower puts them at risk from dropped components. Clear communication between the tower operative and ground person is essential.",
   },
@@ -117,12 +117,12 @@ const quickCheckQuestions = [
     question:
       'A tower was assembled in the sequence: base, level 1, level 2, level 3. In what order must it be dismantled?',
     options: [
-      'Base first, then level 1, level 2, level 3',
       'Level 3 first, then level 2, level 1, base',
+      'Base first, then level 1, level 2, level 3',
       'Any order is acceptable',
       'Remove all platforms first, then all frames',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Dismantling is ALWAYS the exact reverse of the assembly sequence. If the tower was built base, 1, 2, 3, then it must be dismantled 3, 2, 1, base. This maintains structural integrity throughout the process.',
   },
@@ -131,11 +131,11 @@ const quickCheckQuestions = [
     question: 'You need to lower a frame section from level 3. Which method is acceptable?',
     options: [
       'Throw it to the ground',
-      'Drop it over the edge',
       'Lower it by rope and pulley or pass hand-to-hand',
+      'Drop it over the edge',
       'Slide it down the outside of the tower',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Components must always be lowered in a controlled manner — rope and pulley for heavier items or hand-to-hand passing between operatives. Components must NEVER be thrown, dropped, or slid down the outside of the tower.',
   },
@@ -144,11 +144,11 @@ const quickCheckQuestions = [
     question: 'Why are guardrails the last components removed at each level during dismantling?',
     options: [
       'Because they are the lightest',
-      'Because they provide fall protection — the operative must be on the level below before rails above are removed',
       'Because they are easiest to remove',
+      'Because they provide fall protection — the operative must be on the level below before rails above are removed',
       'Because the manufacturer says so without a reason',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Guardrails provide fall protection. They are removed last because the operative must climb down to the level below (which still has its guardrails) before removing the guardrails from the level above. This ensures the operative is always protected during dismantling.',
   },

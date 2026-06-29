@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'led-efficacy',
     question: 'What is luminous efficacy and how is it measured?',
     options: [
-      'Planned, appropriately supervised and carried out in a safe manner',
-      'An engineering control because it physically prevents the hazard',
-      'Suitable and sufficient, and recorded in writing where the employer has 5 or more employees',
       'The ratio of luminous flux (lumens) to power consumed (watts), measured in lm/W',
+      'The total light output of a lamp, measured in lumens',
+      'The colour accuracy of a lamp, measured on a 0-100 scale',
+      'The operating life of a lamp, measured in hours',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Luminous efficacy is the ratio of luminous flux (measured in lumens) to the electrical power consumed (measured in watts), expressed as lm/W. It is the primary measure of how efficiently a light source converts electrical energy into visible light. Modern LED lamps achieve efficacies of 100-200 lm/W, compared with approximately 15 lm/W for incandescent lamps.',
   },
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'cri',
     question: 'What does a CRI (Colour Rendering Index) of 90 indicate?',
     options: [
-      'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
-      'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
-      'Arc fault detection devices (AFDD) in certain circumstances',
+      'The lamp has a colour temperature of 9000 K (very cool white)',
+      'The lamp consumes 90 watts at full output',
+      'The lamp will retain 90% of its light output at end of life',
       'The lamp renders colours very accurately compared to a reference light source',
     ],
     correctIndex: 3,
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'mercury-disposal',
     question: 'Why must fluorescent lamps be disposed of as hazardous waste?',
     options: [
-      'To reduce starting current and starting torque',
-      'Zero transfer time - continuous power conditioning',
+      'They contain a small lithium battery that can catch fire',
+      'The glass tube is pressurised and can explode in a skip',
       'They contain mercury vapour which is toxic',
-      'Electronic equipment and equipment with low insulation',
+      'They emit ultraviolet light even when switched off',
     ],
     correctIndex: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'An LED driver performs which function?',
     options: [
-      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
-      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
-      'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
+      'Steps the 230 V mains down to 12 V AC, which the LED chip uses directly without rectification',
+      'Generates the high-voltage starting pulse needed to strike the arc in the LED chip',
+      'Provides a phosphor coating that converts the blue LED output into white light',
       'Converts the mains AC supply to the regulated DC current required by the LED',
     ],
     correctAnswer: 3,
@@ -111,9 +111,9 @@ const quizQuestions = [
       'When retrofitting LED lamps into existing fluorescent luminaires, what must be considered regarding the existing control gear?',
     options: [
       'The existing ballast must be bypassed or the LED tube must be compatible with the existing ballast type',
-      'The point at which the LED output has depreciated to 70% of its initial lumens',
-      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
-      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'The existing ballast must always be left in circuit, as every LED tube relies on it to limit current',
+      'A larger starter must be fitted to provide the higher striking voltage that LED tubes require',
+      'The supply must be uprated to a higher voltage, because LED tubes draw more current than fluorescent',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "The 'L70' rating of an LED indicates:",
     options: [
-      'The total installation cost by the annual energy cost saving',
+      'The point at which 70% of the LED chips in a batch will have failed completely',
       'The point at which the LED output has depreciated to 70% of its initial lumens',
-      'Converts the mains AC supply to the regulated DC current required by the LED',
-      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
+      'That the luminaire operates at 70% of its rated power to extend its life',
+      'That the LED achieves a colour rendering index (CRI) of 70 throughout its life',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'Which lighting control strategy typically provides the greatest energy saving in a daylit office?',
     options: [
-      'Tabulated current-carrying capacity of a cable',
-      'Conduct a detailed baseline carbon assessment',
+      'A single manual switch controlling all luminaires together',
+      'Time-clock switching that turns all lights on at a fixed start time',
       'Daylight-linked dimming with occupancy sensing',
-      'Separate neutral and earth conductors from source',
+      'Manual dimming adjusted by occupants when they feel it is needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
       'Smart lighting systems using IoT (Internet of Things) can provide which additional benefit beyond energy saving?',
     options: [
       'Space utilisation data, occupancy analytics and environmental monitoring',
-      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
-      'Converts the mains AC supply to the regulated DC current required by the LED',
-      'The point at which the LED output has depreciated to 70% of its initial lumens',
+      'A doubling of the luminaire efficacy, raising it from around 100 lm/W to over 200 lm/W',
+      'Elimination of the LED driver, allowing the luminaire to run directly on mains AC',
+      'Conversion of the luminaire to a mercury-free fluorescent source for easier disposal',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of LED technology for maintenance compared to fluorescent?',
     options: [
-      'Space utilisation data, occupancy analytics and environmental monitoring',
+      'LEDs require their starter and ballast to be replaced annually to keep light output stable',
       'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
-      'The point at which the LED output has depreciated to 70% of its initial lumens',
-      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'LEDs must be re-gassed periodically, but this can be done in place without removing the lamp',
+      'LEDs need their phosphor coating renewed every few years to maintain colour accuracy',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'Under the WEEE Regulations, which of the following lamps must be recycled through a specialist waste stream?',
     options: [
-      'Converts the mains AC supply to the regulated DC current required by the LED',
-      'The total installation cost by the annual energy cost saving',
+      'Incandescent lamps only, because the tungsten filament is a controlled hazardous metal',
+      'Halogen capsules only, because the quartz envelope is pressurised and must be vented safely',
       'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
-      'The point at which the LED output has depreciated to 70% of its initial lumens',
+      'LED panels only, because the aluminium heat sink cannot go into general waste',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     id: 11,
     question: 'Tunable white LED technology allows:',
     options: [
-      'The point at which the LED output has depreciated to 70% of its initial lumens',
-      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
-      'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
+      'The luminous efficacy to be raised on demand, switching from 100 lm/W to 200 lm/W',
+      'The colour rendering index (CRI) to be increased from 80 to 98 by the user at the switch',
+      'The luminaire to run from a DC supply only, so no driver is needed for the LED array',
       'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
     ],
     correctAnswer: 3,
@@ -220,9 +220,9 @@ const quizQuestions = [
       'When specifying LED luminaires for a retrofit project, which parameter should be matched to the existing installation to maintain visual consistency?',
     options: [
       'The colour temperature (CCT) and colour rendering index (CRI)',
-      'Daylight-linked dimming with occupancy sensing',
-      'The total installation cost by the annual energy cost saving',
-      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'The wattage of the old lamps, so the new LEDs draw exactly the same power',
+      'The L70 rated life, so all luminaires reach end of life at the same time',
+      'The driver output current, so every luminaire runs at the same milliamp rating',
     ],
     correctAnswer: 0,
     explanation:

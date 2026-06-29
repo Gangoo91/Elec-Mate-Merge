@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Under the Wildlife & Countryside Act 1981, what is the legal consequence of intentionally killing a Schedule 5 protected animal?',
     options: [
-      'A verbal warning from the local council',
-      'A fixed penalty notice of up to £500',
       "A criminal offence carrying an unlimited fine and/or up to six months' imprisonment per offence",
+      'A fixed penalty notice of up to £500',
+      'A verbal warning from the local council',
       'An administrative charge handled by the site manager',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Killing, injuring, or taking a Schedule 5 protected animal is a criminal offence under the Wildlife & Countryside Act 1981. Each offence can result in an unlimited fine and/or up to six months' imprisonment. These are strict liability offences — ignorance of the species' presence is not a defence if due diligence has not been exercised.",
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
     question: 'When are bat roosts legally protected under UK law?',
     options: [
       'Only during the summer breeding season (May to August)',
-      'Only when bats are physically present in the roost',
       'Year-round, whether bats are present or not',
+      'Only when bats are physically present in the roost',
       'Only during the winter hibernation period (November to March)',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'All bat species and their roosts are protected year-round under the Conservation of Habitats & Species Regulations 2017 and the Wildlife & Countryside Act 1981. A bat roost is protected even when bats are not physically present — it is the structure itself that is protected, not just the bats within it. Disturbing, damaging, or destroying a bat roost at any time of year is a criminal offence.',
   },
@@ -46,8 +46,8 @@ const quickCheckQuestions = [
     id: 'biodiversity-net-gain',
     question:
       'What is the minimum biodiversity net gain percentage required under the Environment Act 2021?',
-    options: ['5% net gain', '10% net gain', '15% net gain', '20% net gain'],
-    correctIndex: 1,
+    options: ['5% net gain', '15% net gain', '10% net gain', '20% net gain'],
+    correctIndex: 2,
     explanation:
       'The Environment Act 2021 requires a minimum of 10% biodiversity net gain for most new developments in England. This is measured using the DEFRA biodiversity metric and must be maintained for at least 30 years. Developers must demonstrate that the development will result in a measurable improvement in biodiversity compared to the pre-development baseline.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Which piece of legislation provides the primary framework for protecting wild animals, birds, and plants in the UK?',
     options: [
-      'The Environmental Protection Act 1990',
       'The Wildlife & Countryside Act 1981',
+      'The Environmental Protection Act 1990',
       'The Health and Safety at Work Act 1974',
       'The Town and Country Planning Act 1990',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Wildlife & Countryside Act 1981 is the principal legislation for the protection of wildlife in Great Britain. It establishes Schedules of protected species (Schedule 1 birds, Schedule 5 animals, Schedule 8 plants), creates offences related to killing, injuring, or disturbing protected species, and provides for the designation of Sites of Special Scientific Interest (SSSIs).',
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
     question: 'Which of the following statements about great crested newts is correct?',
     options: [
       'They are only protected during their breeding season in spring',
-      'Their terrestrial habitat within 500 metres of a breeding pond may also require protection',
       'A licence is only needed if more than 10 newts are present on site',
+      'Their terrestrial habitat within 500 metres of a breeding pond may also require protection',
       'They are protected under the Badger Act 1992',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Great crested newts are protected at all life stages and at all times of year under both the Wildlife & Countryside Act 1981 and the Conservation of Habitats & Species Regulations 2017. Their protection extends beyond the breeding pond to include their terrestrial habitat — the land they use for foraging, sheltering, and hibernating, which can extend up to 500 metres from a breeding pond. Development within this zone may require a licence and mitigation measures.',
   },
@@ -124,11 +124,11 @@ const quizQuestions = [
     question: 'What is a Site of Special Scientific Interest (SSSI)?',
     options: [
       'A site designated by the local council for recreational use',
-      'A site designated by Natural England for its outstanding wildlife, geological, or physiographical features',
       'A site where construction is permanently prohibited under any circumstances',
       'A voluntary conservation area with no legal protection',
+      'A site designated by Natural England for its outstanding wildlife, geological, or physiographical features',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SSSIs are designated by Natural England (in England) as sites of outstanding wildlife, geological, or physiographical interest. They carry strong legal protection — operations likely to damage the special features require consent from Natural England, and it is a criminal offence to intentionally or recklessly damage them. Development affecting a SSSI requires careful assessment and may be refused or subject to strict conditions.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'Under the Protection of Badgers Act 1992, which of the following is a criminal offence?',
     options: [
-      'Walking near a badger sett on a public footpath',
-      'Photographing a badger from a reasonable distance without disturbing it',
       'Intentionally or recklessly interfering with a badger sett, including blocking entrances',
+      'Photographing a badger from a reasonable distance without disturbing it',
+      'Walking near a badger sett on a public footpath',
       'Reporting the location of a badger sett to Natural England',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Protection of Badgers Act 1992 makes it a criminal offence to wilfully kill, injure, or take a badger, or to interfere with a badger sett. Interference includes blocking entrances, digging into the sett, or causing disturbance (such as heavy vibration from construction machinery) near an active sett. Development near a badger sett typically requires a licence from Natural England and mitigation measures to avoid disturbance.',
   },
@@ -163,8 +163,8 @@ const quizQuestions = [
     id: 7,
     question:
       'For how long must biodiversity net gain be maintained under the Environment Act 2021?',
-    options: ['5 years', '10 years', '20 years', '30 years'],
-    correctAnswer: 3,
+    options: ['5 years', '10 years', '30 years', '20 years'],
+    correctAnswer: 2,
     explanation:
       'Biodiversity net gain achieved through habitat creation or enhancement must be secured and maintained for a minimum of 30 years. This is enforced through legally binding conservation covenants or planning obligations (Section 106 agreements). A habitat management and monitoring plan must be in place for the full 30-year period, ensuring that the created habitats are properly established and maintained to deliver the intended biodiversity benefits.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       'Which enforcement body is primarily responsible for investigating wildlife offences related to protected species and habitats in England?',
     options: [
       'The Health and Safety Executive (HSE)',
-      'Natural England, supported by the police',
       'The Environment Agency exclusively',
       'Local authority building control departments',
+      'Natural England, supported by the police',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Natural England is the primary statutory body responsible for the conservation of wildlife and habitats in England. It investigates breaches of wildlife legislation, issues licences for work affecting protected species, and can take enforcement action including prosecution. The police (particularly specialist wildlife crime officers) also investigate wildlife offences and can bring criminal prosecutions. Natural England works closely with the Crown Prosecution Service and can refer cases for criminal prosecution where serious offences have been committed.',
   },

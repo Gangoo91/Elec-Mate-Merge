@@ -37,42 +37,42 @@ const inlineChecks = [
     question:
       'A 230 V hand-held power tool is to be used on a lightly-rained outdoor site. The tool is rated IP20 (drip protection only on a vertical drop). Acceptable, restrict, or fail at inspection?',
     options: [
-      'Acceptable — the user will be careful.',
-      'Restrict / fail at inspection. IP20 means dust-protected against fingers but no water rating. The tool is unsuitable for the environment; either supply an IP44+ tool, restrict use to indoors, or fail until appropriate equipment is used.',
-      'Use a damp cloth to dry the tool periodically.',
-      'Pass after a successful insulation-resistance test.',
+      'Acceptable — the user can be trusted to keep the tool out of the rain entirely.',
+      'Pass it, provided a subsequent insulation-resistance test is satisfactory.',
+      'Acceptable if the operator wipes the tool dry periodically during use.',
+      'Restrict / fail at inspection — IP20 has no water rating for this environment.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'IP rating must match the environment. IP20 has no water protection — outdoor / wet use risks ingress, insulation breakdown and shock. The CoP and HSG107 require the equipment to suit the environment; otherwise it is failed for that location regardless of electrical-test results.',
+      'IP20 is dust-protected against fingers but has no water rating, so it is unsuitable for outdoor / wet use — risking ingress, insulation breakdown and shock. The CoP and HSG107 require equipment to suit the environment; failure for the location stands regardless of electrical-test results. Remedy: supply an IP44+ tool, restrict use to indoors, or fail until appropriate equipment is provided.',
   },
   {
     id: 'patm3-s4-vibration',
     question:
       'A laminator on a printer cart has its plug body cracked across the body of the cord grip after six months of being moved between rooms multiple times daily. The flex is sound. Best diagnosis?',
     options: [
-      'Manufacturing defect',
-      'Mechanical / vibration / movement stress — the plug has been pulled, knocked and twisted in service. The environment imposes mechanical load that the moulded plug cannot withstand long term. Refit a more robust BS 1363 rewireable, route the flex to reduce strain, and shorten the inspection cycle for this item',
-      'Electrical fault',
-      'Heat damage',
+      'A manufacturing defect in the moulded plug body, present from new.',
+      'Mechanical / movement stress — the plug has been pulled, knocked and twisted in service.',
+      'An underlying electrical fault that has stressed and cracked the plug body.',
+      'Heat damage from the laminator running the plug at an elevated temperature.',
     ],
     correctIndex: 1,
     explanation:
-      'Frequent movement is mechanical stress. Moulded plug bodies tolerate it less well than rewireable plugs with strain-relief boots. The remediation is mechanical (better routing, more robust plug) and managerial (shorter cycle for high-mechanical-stress items per HSG107 Table 1).',
+      'Frequent movement is mechanical stress, and the environment imposes load the moulded plug cannot withstand long term. Moulded plug bodies tolerate it less well than rewireable plugs with strain-relief boots. Remediation is mechanical (refit a more robust BS 1363 rewireable, route the flex to reduce strain) and managerial (shorter cycle for high-mechanical-stress items per HSG107 Table 1).',
   },
   {
     id: 'patm3-s4-dust',
     question:
       'A bench grinder in a wood workshop has fine wood dust packed into the cord-grip recess and around the cooling vents. The flex shows no visible damage. Action?',
     options: [
-      'Pass — dust is a housekeeping issue.',
-      'Fail at inspection until cleaned. Combustible dust packed around the cord grip and ventilation is both a fire-spread risk and an indicator that the equipment is in an environment that warrants more frequent inspection, IP-rated equipment, or both. Clean, re-inspect, and consider a shorter cycle for this location',
-      'Test electrically and pass on insulation resistance.',
-      'Pass — wood dust is non-conductive so no risk.',
+      'Fail at inspection until cleaned — combustible dust around the cord grip and vents is a fire-spread risk.',
+      'Pass it — dust accumulation is purely a housekeeping matter, not a test failure.',
+      'Test it electrically and pass it on the strength of a good insulation-resistance reading.',
+      'Pass it — wood dust is non-conductive, so it presents no electrical risk.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'HSG107 Table 1 puts dusty / construction environments at the more-frequent end of the inspection scale. Dust packed around contacts is a contributor to overheating (insulating the cooling) and to fire spread. The CoP fails on the visual stage until cleaned, and the inspection frequency for that location is reviewed.',
+      'HSG107 Table 1 puts dusty / construction environments at the more-frequent end of the inspection scale. Dust packed around contacts contributes to overheating (insulating the cooling) and to fire spread, and signals an environment warranting more frequent inspection, IP-rated equipment, or both. The CoP fails on the visual stage until cleaned, re-inspected, and the inspection frequency for that location is reviewed.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'HSG107 categorises workplace environments to guide PAT frequency. Which of the following lists best matches the categories the HSE uses?',
     options: [
-      'Domestic / commercial / industrial',
-      'Low-risk offices, schools / colleges, public-access (hotel, shop), industrial / construction sites, equipment hire',
-      'Indoor / outdoor only',
-      'Class I / Class II / Class III',
+      'Domestic, commercial and industrial premises, split by building type',
+      'Indoor versus outdoor, based purely on the equipment location',
+      'Construction class of the equipment: Class I / Class II / Class III',
+      'Offices, schools, public-access, industrial / construction, and equipment hire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'HSG107 Table 1 distinguishes environments by the level of mechanical, environmental and user-related stress on the equipment. Offices are at one end (low frequency); construction sites and equipment hire are at the other (high frequency). Domestic / commercial / industrial is too coarse to drive a sensible inspection regime.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'A 230 V appliance carries an IP rating of IP44. The first digit (4) describes:',
     options: [
-      'Voltage rating',
       'Protection against ingress of solid foreign objects (here ≥ 1.0 mm — wires, small tools)',
-      'Current rating',
-      'Insulation class',
+      'The voltage rating the enclosure is suitable for',
+      'The maximum continuous current rating of the appliance',
+      'The insulation construction class of the appliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 60529 IP code: first digit is solids ingress (0–6). IP4 means protected against solid foreign objects ≥ 1.0 mm — typical for general industrial / outdoor equipment. The second digit (4) is water ingress — protected against splashing water from any direction.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'For a UK construction site, the IET CoP and HSG107 typically recommend more frequent formal visual inspection than for a low-risk office environment because:',
     options: [
-      'Construction sites use higher voltages',
+      'Construction sites generally operate at higher voltages than offices',
+      'Construction equipment tends to be older than office equipment',
       'Mechanical damage, environmental contamination (dust, water) and frequent movement of equipment all mean defects appear sooner',
-      'Construction equipment is usually older',
-      'Construction workers are less competent',
+      'Construction workers are assumed to be less competent than office staff',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HSG107 Table 1 reflects the rate at which defects develop. On construction sites, the same lead is dragged through dust, dropped, pulled tight against sharp edges, and used outdoors — so defects develop faster than in an office. Frequency is set to catch them early.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'A piece of 110 V site equipment is being used outdoors in light rain. Which IP rating is the minimum the equipment should hold for the environment per common UK construction practice?',
     options: [
-      'IP20 — dust-protected only',
+      'IP00 — no ingress protection is required for this use',
+      'IP20 — protection against solid objects but none against water',
+      'IP65 — dust-tight and protected against low-pressure water jets',
       'IP44 — protection against splashing water from any direction',
-      'IP65 — dust-tight, low-pressure water jets',
-      'IP00 — no protection required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IP44 (or higher) is the typical minimum for outdoor / damp construction use. IP20 has no water protection and is unsuitable. IP65 is appropriate for harsher exposures. The choice is driven by the environment, with HSG107 referring back to BS EN 60529 for the IP code definitions.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'A “low-risk” HSG107 environment is one in which:',
     options: [
-      'There is no electrical equipment',
       'Equipment is in a clean, dry, occupied location, is not subject to frequent movement, and has minimal exposure to mechanical or environmental stress — typical of an office',
-      'Only Class II equipment is used',
-      'Equipment is less than 12 months old',
+      'There is no mains electrical equipment present at all',
+      'Only Class II (double-insulated) equipment is in use',
+      'All the equipment present is less than 12 months old',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HSG107 Table 1 defines low-risk by the conditions the equipment is exposed to: clean, dry, low movement, low mechanical stress, supervised use. Offices, classrooms (with adult use), and similar environments meet this. Frequency is at the longest end of the scale.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'On a hire-out or rental floor (event hire, tool hire), the IET CoP and HSG107 expect inspection:',
     options: [
-      'Only once a year',
+      'Only once a year, in line with a fixed annual cycle',
+      'Never — the hire customer is responsible for the equipment they hire',
       'Before and after each hire — equipment status changes with each user, and damage from one hire must be detected before the next',
-      'Never — hire customers are responsible',
-      'Only on Class I equipment',
+      'Only on Class I equipment, since Class II items are exempt',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hire equipment passes through many users with no continuity of supervision. HSG107 Table 1 puts hire kit at the most frequent end — often before-and-after each hire — with formal visual inspection as the principal tool. The duty falls on the hire company.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'IP65 means the equipment is:',
     options: [
-      'Dust-protected, splash-proof',
-      'Dust-tight, protected against low-pressure water jets from any direction',
-      'Water-immersible to 1 m',
-      'Dustproof, resistant to high-pressure jets',
+      'Dust-protected (not dust-tight) and splash-proof',
+      'Dust-tight and water-immersible to a depth of 1 m',
+      'Dust-tight and resistant to high-pressure water jets',
+      'Dust-tight and protected against low-pressure water jets from any direction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 60529: IP6 = dust-tight (no ingress at all); IP_5 = protected against low-pressure water jets (12.5 mm nozzle, 30 kPa) from any direction. So IP65 is dust-tight and water-jet-resistant. IP67/IP68 cover immersion.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'A workshop produces fine metallic dust during use of grinders and lathes. Equipment in this environment requires:',
     options: [
-      'No additional consideration — metal dust is non-conductive',
-      'IP-rated equipment suited to dust exposure (IP5x or IP6x), regular cleaning, and shorter inspection intervals than a similar location with no dust. Metallic dust is conductive and can bridge contacts internally',
-      'Only Class III equipment',
-      'No PAT regime at all — the dust will fail the test',
+      'IP5x / IP6x equipment, regular cleaning, and shorter inspection intervals',
+      'No additional consideration, because metallic dust is non-conductive',
+      'Only Class III (SELV) equipment, run at a longer inspection interval',
+      'No PAT regime at all, since the dust would simply cause the test to fail',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Metallic dust is conductive; it can settle inside equipment and bridge live parts to earth or to each other. Dust-rated IP enclosures (IP5x or IP6x) and shorter inspection cycles are the controls. HSG107 explicitly considers dust contamination as an environmental risk factor.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'A 13 A extension lead is being used to power a portable wash-station outside on a construction site. The lead is rated IP20. CoP and HSG107 position?',
     options: [
-      'Acceptable if the lead is dry when plugged in',
-      'Fail / unsuitable. IP20 has no water protection; for an outdoor wet location the lead should be IP44 or higher (and ideally site-grade with rubber sheath). The duty-holder should provide appropriate equipment',
-      'Acceptable on Class II appliances',
-      'Acceptable if used for less than 1 hour',
+      'Acceptable, as long as the lead is dry at the moment it is plugged in',
+      'Acceptable, provided the equipment supplied through it is Class II',
+      'Fail / unsuitable — IP20 has no water protection for an outdoor wet location',
+      'Acceptable, provided the lead is used outdoors for less than one hour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IP20 is not suitable for an outdoor wet location. The CoP and HSG107 require the equipment to be appropriate for the environment — failed at inspection for that location, and the duty-holder needs to supply IP44+ leads / site-grade rubber-sheathed flex.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'In an environment with high vibration (e.g. a workshop floor with reciprocating machinery), additional inspection focus should be on:',
     options: [
-      'Insulation resistance only',
-      'Strain-relief / cord-grip integrity, plug-pin retention, terminations inside the plug, and cable-routing to avoid pinching against vibrating surfaces. Vibration loosens connections and accelerates mechanical wear',
-      'Fuse rating',
-      'Class of equipment',
+      'The insulation resistance reading, taken in place of a visual check',
+      'The fuse rating fitted in the plug top, against the appliance load',
+      'The construction class of the equipment, confirmed at the rating plate',
+      'Strain-relief, plug-pin retention, plug terminations, and cable routing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Vibration is a mechanical fatigue load. It loosens terminal screws, accelerates flex damage at strain reliefs, and can crack moulded plug bodies over time. The inspection emphasis follows the failure mode — terminations and mechanical retention rather than electrical-only tests.',
   },

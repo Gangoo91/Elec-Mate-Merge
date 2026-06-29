@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'In a loop-in lighting circuit, where are the connections between the supply, switch and luminaire made?',
     options: [
-      'Optimised for SWDM (multiple wavelengths 850-953nm)',
-      'It remains constant during sensible heating/cooling',
+      'At a separate junction box in the ceiling void above each light',
+      'Inside the consumer unit at the origin of the circuit',
       'At the ceiling rose or luminaire terminal',
-      'Both operation and evacuation',
+      'At the light switch behind the faceplate',
     ],
     correctIndex: 2,
     explanation:
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'How many conductors (excluding earth) are required between the two switches in a two-way switching arrangement?',
     options: [
+      'Three conductors',
       'Two conductors',
       'Four conductors',
-      'Three conductors',
       'Five conductors',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A two-way switching arrangement requires three conductors between the two switches: one common terminal wire and two strappers (travellers). The common terminal on one switch receives the supply, and the common terminal on the other connects to the luminaire. The two strappers connect L1 to L1 and L2 to L2 between the switches.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'pir-sensor',
     question: 'What does a PIR sensor detect in order to trigger a lighting circuit?',
     options: [
-      'Walk them through it in person, explaining scope, timeline and price',
+      'The ambient light level measured in lux across the room',
       'Changes in infrared radiation caused by movement of warm bodies',
-      'Date, time, and GPS location data (if enabled)',
-      'The client or their representative observing key tests and signing off results',
+      'Ultrasonic sound waves reflected from moving objects',
+      'The Doppler shift of an emitted microwave signal',
     ],
     correctIndex: 1,
     explanation:
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     question:
       'According to CIBSE guidelines, what is the recommended maintained illuminance for a general office area?',
     options: [
-      '300 lux',
       '100 lux',
-      '500 lux',
       '200 lux',
+      '300 lux',
+      '500 lux',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'CIBSE (Chartered Institution of Building Services Engineers) recommends a maintained illuminance of 500 lux for general office areas. This is the minimum illuminance on the working plane that should be maintained throughout the life of the installation, accounting for lamp depreciation and luminaire dirt accumulation.',
   },

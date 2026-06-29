@@ -24,23 +24,23 @@ const inlineChecks = [
       'Stage A complete except IR. The shower-circuit IR fails L–E. You rectify a pinched cable. Per Reg 643.7.2, what must you re-run before continuing?',
     options: [
       'Just the failed IR test on the shower circuit.',
-      'The failed IR PLUS any preceding test the result of which may have been influenced by the fault — at minimum, continuity (R1+R2) on the shower circuit, since a pinched cable can degrade the CPC as well as the line. Re-run, both pass cleanly, only then continue to polarity and Stage B.',
-      'Every test from 643.2 on every circuit.',
-      'Issue an EICR with a C2 and move on.',
+      'The failed IR plus continuity (R1+R2) on the shower circuit.',
+      'Every test from 643.2 on every circuit again.',
+      'Issue an EICR with a C2 observation and move on.',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 643.7.2 is precise: failed test plus any preceding test that the fault could have skewed. A pinched cable can damage L AND CPC; the continuity reading taken before the rectification was on a damaged conductor and is therefore unreferenced. Re-test both, document both, then continue.',
+      'Reg 643.7.2 is precise: the failed test plus any preceding test the result of which the fault could have skewed. A pinched cable can damage the line AND the CPC, so the continuity reading taken before rectification was on a damaged conductor and is unreferenced. Re-run both, both pass cleanly, then continue to polarity and Stage B.',
   },
   {
     id: 'mod1-s5-643-7-3-1-precondition',
     question:
       'You skip the continuity step on a circuit and go straight to a Zs measurement at the furthest point. The Zs reads 0.95 Ω against a 1.37 Ω limit. Defensible?',
     options: [
-      'Yes — the Zs is below the limit.',
-      'No. Reg 643.7.3.1 requires an electrical continuity test per Reg 643.2 BEFORE the Zs measurement. Without it, a high-resistance CPC joint may be hidden by parallel earth paths through metalwork — the Zs is reading the wrong loop. The reading on the schedule is unreferenced.',
-      'Yes — provided you record the device Type alongside.',
-      'Yes — Zs supersedes continuity once it passes.',
+      'Yes — the Zs is below the limit, so the circuit passes.',
+      'No — Reg 643.7.3.1 requires the continuity test before the Zs measurement.',
+      'Yes — provided you record the protective device Type alongside.',
+      'Yes — a passing Zs supersedes the continuity requirement.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,24 +51,24 @@ const inlineChecks = [
     question:
       'A4:2026 changed how RCD effectiveness is verified. Which of these correctly describes the post-A4 position?',
     options: [
-      'Each RCD Type (AC / A / F / B) requires a different test current per a Type-specific table in Appendix 3.',
-      'Table 3A in Appendix 3 has been deleted. Regardless of RCD Type, an AC test at rated residual operating current (IΔn) verifies effectiveness. Reg 643.7.3 NOTE retains the time limits — ≤300 ms for general non-delay, 130–500 ms for S-type.',
-      'RCDs no longer require functional testing; the manufacturer self-test suffices.',
-      'AC test at IΔn applies only to Type AC devices.',
+      'Each RCD Type (AC / A / F / B) needs a different test current from a table in Appendix 3.',
+      'Table 3A is deleted; one AC test at IΔn verifies any Type, against the Reg 643.8 limits.',
+      'RCDs no longer require functional testing; the manufacturer self-test now suffices.',
+      'The AC test at IΔn applies only to Type AC devices, not to A, F or B.',
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 deleted the Type-conditional Table 3A and harmonised verification: one AC test at IΔn for any Type. Record the device Type alongside (still useful for context and any defect report) but the acceptance number is now a single AC trip-time against the time limits in Reg 643.7.3 NOTE.',
+      'A4:2026 deleted the Type-conditional Table 3A and harmonised verification: one AC test at IΔn for any Type. Reg 643.8 NOTE retains the time limits (≤300 ms for general non-delay, 130–500 ms for S-type). Record the device Type alongside (still useful for context and any defect report), but the acceptance number is now a single AC trip-time.',
   },
   {
     id: 'mod1-s5-cert-choice',
     question:
       'You add a single new socket to an existing kitchen ring final circuit. No new circuit is introduced. Which certificate is appropriate?',
     options: [
-      'Full EIC — anything less is non-compliant.',
-      'Minor Electrical Installation Works Certificate (Reg 644.4.201 / Appendix 6), recording the relevant tests from 643.2–643.10 at the affected circuit: continuity (R1+R2 at the new outlet, ring continuity), polarity, IR on the affected circuit, Zs at the new outlet, and an RCD trip-time check where the circuit is RCD-protected.',
-      'EICR — the work changes the condition of the installation.',
-      'No certificate — this is a like-for-like replacement.',
+      'Full EIC — anything less is non-compliant for added accessories.',
+      'Minor Electrical Installation Works Certificate (Reg 644.4.201 / Appendix 6).',
+      'EICR — adding a socket changes the condition of the installation.',
+      'No certificate — this counts as a like-for-like replacement.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 643.1 sets a hard rule about the order of the pre-energisation tests. What does it actually require?',
     options: [
-      'The tests in 643.2 to 643.6 may be done in any sensible order',
-      'The tests in 643.2 to 643.6, where relevant, shall be carried out in that order before the installation is energised',
-      'Only the dead tests in 643.2 and 643.3 are mandatory in sequence',
-      'The order is recommended, not mandatory',
+      'The tests in 643.2 to 643.6, where relevant, shall be carried out in that order before energisation',
+      'The tests in 643.2 to 643.6 may be done in any sensible order the inspector prefers',
+      'Only the dead tests in 643.2 and 643.3 have to be done in a mandatory sequence',
+      'The stated order is a recommended workflow but not a mandatory requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.1 is explicit. The tests in 643.2 to 643.6, where relevant to the installation, shall be carried out in that order and shall be completed prior to energisation. The sequence is normative, not advisory — that is what makes it defensible in a defects investigation or a court hearing.',
   },
@@ -97,11 +97,11 @@ const quizQuestions = [
       'You complete continuity (643.2.1) and move to insulation resistance (643.3). The IR test fails on a circuit. What does Reg 643.7.2 require you to do once the fault has been rectified?',
     options: [
       'Re-run the failed test only',
-      'Re-run the failed test plus any preceding test whose result may have been influenced by the fault',
-      'Re-run every test from 643.2',
+      'Re-run every test from 643.2 onwards as a precaution',
       'Issue an EICR with a C2 observation and move on',
+      'Re-run the failed test plus any preceding test whose result may have been influenced by the fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.7.2 is the defects clause. If a test indicates a failure to comply, that test and any preceding test the result of which may have been influenced by the fault shall be repeated after the fault has been rectified. A failed IR can mask a continuity reading taken at the same point — both have to be redone.',
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'Reg 643.3 has been redrafted in A4:2026. What is the new requirement after equipment has been reconnected for the insulation resistance test?',
     options: [
-      'No further test — the disconnection-only test is sufficient',
-      'A 500 V DC test between live conductors only',
-      'A test at 250 V DC between live conductors and the protective conductor connected to the earthing arrangement, with the IR not less than 1 MΩ',
-      'A 1000 V DC test on equipment circuits',
+      'No further test — the earlier disconnection-only IR test is sufficient',
+      'A 500 V DC test between live conductors only, repeating the original test',
+      'A 250 V DC test between live conductors and the protective conductor, IR not less than 1 MΩ',
+      'A 1000 V DC test on the equipment circuits that were reconnected',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,26 +124,26 @@ const quizQuestions = [
     question:
       'Reg 643.3 also changed how RCD effectiveness is verified. What does the A4:2026 redraft say?',
     options: [
-      'Each RCD Type requires a different test current per Table 3A',
-      'Regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, and Table 3A in Appendix 3 has been deleted',
-      'Only Type AC RCDs need to be tested',
-      'Effectiveness is verified by visual inspection alone',
+      'Regardless of Type, an AC test at IΔn verifies effectiveness, and Table 3A has been deleted',
+      'Each RCD Type requires a different test current taken from Table 3A in Appendix 3',
+      'Only Type AC RCDs now need to be tested for effectiveness at IΔn',
+      'Effectiveness is verified by visual inspection of the device markings alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A4:2026 deletes Table 3A from Appendix 3 and harmonises RCD verification: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness. Reg 643.7.3 keeps the 300 ms / 130–500 ms time limits for general non-delay and S-type RCDs respectively.',
+      'A4:2026 deletes Table 3A from Appendix 3 and harmonises RCD verification: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness. Reg 643.8 keeps the 300 ms / 130–500 ms time limits for general non-delay and S-type RCDs respectively.',
   },
   {
     id: 5,
     question:
       'Reg 643.10 functional testing has been extended in A4:2026 to cover AFDDs. What does it require?',
     options: [
-      'AFDDs are exempt from functional testing',
-      'Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturer’s recommendations',
-      'AFDDs require an external trip-current injector',
-      'The AFDD test button can be ignored if the device has automatic self-test',
+      'AFDDs are exempt from functional testing under the revised regulation',
+      'AFDDs require an external trip-current injector to verify their operation',
+      'The effectiveness of any manually operated AFDD test facility shall be verified per the manufacturer',
+      'The AFDD test button can be ignored where the device has an automatic self-test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.10 now states: where an AFDD is installed, the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers’ recommendations. The model forms have been amended to include AFDD recording fields (Appendix 6) so the verification has somewhere to land on the certificate.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'You are testing a TN-C-S installation. Reg 643.7.1(a) requires verification of compliance with Reg 411.4. What is the verification method?',
     options: [
-      'Measurement of earth electrode resistance only',
-      'Visual inspection of the PEN conductor at the cut-out',
-      'Measurement of the earth fault loop impedance and verification of the characteristics and/or effectiveness of the associated protective device',
-      'A 2 kV AC RMS dielectric test on the main bonding',
+      'Measurement of the earth electrode resistance at the installation electrode only',
+      'Visual inspection of the PEN conductor at the supplier cut-out and meter tails',
+      'Measurement of earth fault loop impedance plus verification of the protective device',
+      'A 2 kV AC RMS dielectric test applied across the main protective bonding',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Reg 643.7.3.1 sets a precondition for the Zs measurement. What is it, and why?',
     options: [
-      'A polarity check first — Zs cannot be measured on a circuit with reversed polarity',
-      'An electrical continuity test in accordance with Reg 643.2 shall be carried out before the earth fault loop impedance measurement, because the loop reading depends on a continuous CPC',
-      'The supply must be disconnected — Zs is a dead test',
-      'A phase-sequence check first — Zs is only valid on a confirmed L1-L2-L3 sequence',
+      'A continuity test per Reg 643.2 first, because the loop reading depends on a continuous CPC',
+      'A polarity check first, because Zs cannot be measured on a circuit with reversed polarity',
+      'The supply disconnected first, because Zs is a dead test carried out with the circuit isolated',
+      'A phase-sequence check first, because Zs is only valid on a confirmed L1-L2-L3 sequence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.7.3.1 requires that an electrical continuity test be carried out per Reg 643.2 before the earth fault loop impedance measurement. The Zs reading is meaningless if the CPC is open or has a high-resistance joint — the continuity test guards the validity of the live test that follows.',
   },
@@ -179,40 +179,40 @@ const quizQuestions = [
     question:
       'A4:2026 amended Appendix 6 model forms. Which fields were added that an electrician must now record where applicable?',
     options: [
-      'Customer phone number and email',
-      'SPD (surge protective device) details and AFDD details on certification forms; AFDD test verification on the schedule of test results',
-      'GPS coordinates of the consumer unit',
-      'Photograph hash for tamper-evidence',
+      'Customer phone number and email address against each certificate issued',
+      'GPS coordinates of the consumer unit for location-tracking purposes',
+      'A photograph hash recorded for tamper-evidence on the certificate',
+      'SPD and AFDD details on the forms, plus AFDD test verification on the schedule of results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Appendix 6 model forms were amended in A4:2026 to include fields for SPDs and AFDDs. Where an SPD or AFDD is installed, the details (Type, location, manufacturer, manual/automatic test facility outcome) shall be recorded on the appropriate certificate so the next inspector can see what is fitted and what was verified.',
   },
   {
     id: 9,
     question:
-      'On an EICR, you find an installed circuit where the disconnection time relies on an RCD whose IΔn test trip is 380 ms. Reg 643.7.3 NOTE gives the time limits regardless of RCD Type. What does this reading mean?',
+      'On an EICR, you find an installed circuit where the disconnection time relies on an RCD whose IΔn test trip is 380 ms. Reg 643.8 NOTE gives the time limits regardless of RCD Type. What does this reading mean?',
     options: [
-      'Pass — any reading under 500 ms is acceptable',
-      'Fail for a general non-delay type (limit 300 ms maximum); a typical observation code would reflect the disconnection-time non-compliance',
-      'Pass — the limit is only advisory in periodic inspection',
-      'Pass if it is an S-type RCD; record on schedule and move on',
+      'Fail for a general non-delay type, whose limit is 300 ms maximum at IΔn',
+      'Pass — any reading under 500 ms is acceptable for an RCD of any kind',
+      'Pass — the disconnection-time limit is only advisory in periodic inspection',
+      'Pass if it is an S-type RCD; record it on the schedule and move on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 643.7.3 NOTE: a general non-delay type RCD shall disconnect within 300 ms maximum at IΔn. 380 ms is a fail for a non-delay device. For an S-type the window is 130–500 ms, so 380 ms would pass — the answer depends on which device is fitted, and the schedule of test results must record the device type alongside the trip time so the verification is unambiguous.',
+      'Reg 643.8 NOTE: a general non-delay type RCD shall disconnect within 300 ms maximum at IΔn. 380 ms is a fail for a non-delay device. For an S-type the window is 130–500 ms, so 380 ms would pass — the answer depends on which device is fitted, and the schedule of test results must record the device type alongside the trip time so the verification is unambiguous.',
   },
   {
     id: 10,
     question:
       'You are issuing a Minor Works Certificate after adding a single socket to an existing ring final circuit. Which model form applies and what tests must you record?',
     options: [
-      'Full EIC with Schedule of Inspections — anything less is non-compliant',
-      'The Minor Electrical Installation Works Certificate per Appendix 6 model (Reg 644.4.201), recording the relevant tests from Reg 643.2 to 643.10 (continuity, IR, polarity, Zs, RCD operation where present) — the form is for minor work not involving a new circuit',
-      'No certificate — minor works are exempt',
-      'EICR — a Minor Works Certificate is for periodic inspection only',
+      'Full EIC with Schedule of Inspections, as for any added accessory',
+      'No certificate at all — minor works are exempt from certification',
+      'The Minor Electrical Installation Works Certificate per Appendix 6 (Reg 644.4.201)',
+      'An EICR — a Minor Works Certificate is for periodic inspection only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 644.4.201 / Appendix 6 specify the Minor Electrical Installation Works Certificate for minor work that does not involve a new circuit. The relevant tests from Reg 643 still apply — continuity (R1+R2 at the new outlet), polarity, IR on the affected circuit, Zs at the new outlet, and an RCD trip-time check where the circuit is RCD-protected. The form has fields for each.',
   },
@@ -379,7 +379,7 @@ const InspectionTestingModule1Section5 = () => {
                 breaking capacity of the protective devices.
               </li>
               <li>
-                <strong>643.7.3 RCD effectiveness (where ADS by RCD)</strong> — AC test at IΔn,
+                <strong>643.8 RCD effectiveness (where ADS by RCD)</strong> — AC test at IΔn,
                 regardless of RCD Type (A4 redraft of 643.3 deleted Table 3A). 300&nbsp;ms maximum
                 for general non-delay; 130–500&nbsp;ms for S-type.
               </li>
@@ -1127,7 +1127,7 @@ const InspectionTestingModule1Section5 = () => {
               <li>
                 <strong>Single AC test at IΔn.</strong> Reg 643.3 explicitly states that regardless
                 of RCD Type, an AC test at rated residual operating current is used to verify
-                effectiveness. Reg 643.7.3 NOTE keeps the time limits: 300&nbsp;ms maximum for
+                effectiveness. Reg 643.8 NOTE keeps the time limits: 300&nbsp;ms maximum for
                 general non-delay; 130–500&nbsp;ms for S-type RCDs.
               </li>
               <li>
@@ -1404,7 +1404,7 @@ const InspectionTestingModule1Section5 = () => {
               {
                 question: 'What changed about RCD testing in A4:2026 — and what do I record now?',
                 answer:
-                  'Three things. (1) Table 3A in Appendix 3 was deleted. (2) Reg 643.3 redraft makes the verification a single AC test at IΔn, regardless of RCD Type. (3) The time limits in Reg 643.7.3 NOTE remain: ≤300 ms for general non-delay; 130–500 ms for S-type. You record the AC IΔn trip time in ms, plus the RCD Type alongside (still useful for context and for distributor reports), but the acceptance number is the single AC test. The schedule columns reflect this.',
+                  'Three things. (1) Table 3A in Appendix 3 was deleted. (2) Reg 643.3 redraft makes the verification a single AC test at IΔn, regardless of RCD Type. (3) The time limits in Reg 643.8 NOTE remain: ≤300 ms for general non-delay; 130–500 ms for S-type. You record the AC IΔn trip time in ms, plus the RCD Type alongside (still useful for context and for distributor reports), but the acceptance number is the single AC test. The schedule columns reflect this.',
               },
               {
                 question: 'Why does Reg 643.10 now mention AFDDs explicitly?',

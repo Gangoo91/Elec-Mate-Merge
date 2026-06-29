@@ -10,111 +10,131 @@ const quizQuestions = [
     id: 1,
     question: 'Why are written instructions important in electrical work?',
     options: [
-      'Work completed, outstanding work, issues/hazards, required materials/tools',
+      'They remove the need to test the installation',
       'They provide a permanent record, reduce reliance on memory, and ensure consistency',
-      'Use a label or note such as \\\\\\\\\\\\\\\'DO NOT ENERGISE – STILL UNDER TEST\\\\\\\\\\\\\\\'',
-      'Miscommunication, duplication of work, or dangerous mistakes',
+      'They allow work to be carried out without supervision',
+      'They replace the need for any verbal communication',
     ],
     correctAnswer: 1,
+    explanation:
+      'Written instructions create a permanent record that can be referred back to, reduce reliance on memory under pressure, and ensure consistent information across shifts and teams.',
   },
   {
     id: 2,
     question: 'Give three common forms of written communication on site.',
     options: [
-      'Drawings, specifications, invoices',
-      'Emails, texts, phone calls',
+      'Verbal briefings, phone calls, and hand signals',
+      'Personal text messages between colleagues',
       'Labels, handover notes, and record books/logs',
-      'Reports, certificates, warranties',
+      'Social media posts and casual conversations',
     ],
     correctAnswer: 2,
+    explanation:
+      'Labels, handover notes and record books/logs are all written, traceable forms of communication used routinely on electrical sites.',
   },
   {
     id: 3,
     question: 'What are the three key qualities of effective written communication?',
     options: [
-      'Complexity, detail, length',
-      'Speed, brevity, formality',
-      'Creativity, style, colour',
-      'Clarity, accuracy, legibility',
+      'Complexity, detail, and length',
+      'Speed, brevity, and formality',
+      'Creativity, style, and colour',
+      'Clarity, accuracy, and legibility',
     ],
     correctAnswer: 3,
+    explanation:
+      'Effective written communication must be clear, accurate and legible so that anyone reading it can act on it correctly and safely.',
   },
   {
     id: 4,
     question: 'What should always be included on a written note?',
     options: [
       'Date, time, and name of the person writing it',
-      'BS 7671 and site-specific requirements',
-      'Labels, handover notes, and record books/logs',
-      'It may be unclear, inconsistent, and less durable',
+      'The cost of the materials used',
+      'The full company health and safety policy',
+      'A sketch of the building layout',
     ],
     correctAnswer: 0,
+    explanation:
+      'Every written note should carry the date, time and name of the author so the information can be traced back and acted on with confidence.',
   },
   {
     id: 5,
     question: 'Why are handover sheets necessary?',
     options: [
-      'Use a label or note such as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'DO NOT ENERGISE – STILL UNDER TEST\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'They remove the need for any labelling on site',
       'They ensure continuity of work, prevent missed tasks, and highlight safety issues',
-      'Miscommunication, duplication of work, or dangerous mistakes',
-      'Work completed, outstanding work, issues/hazards, required materials/tools',
+      'They record the wages owed to each worker',
+      'They are only needed for the final project handover',
     ],
     correctAnswer: 1,
+    explanation:
+      'Handover sheets pass on the state of the work to the next shift, preventing duplicated or missed tasks and flagging any safety issues.',
   },
   {
     id: 6,
     question: 'What four items should a handover include?',
     options: [
-      'Miscommunication, duplication of work, or dangerous mistakes',
-      'They provide a permanent record and reduce reliance on memory',
+      'Material costs, supplier names, delivery dates, and prices',
+      'Weather, traffic, parking, and lunch arrangements',
       'Work completed, outstanding work, issues/hazards, required materials/tools',
-      'Use a label or note such as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'DO NOT ENERGISE – STILL UNDER TEST\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Tool brands, cable colours, room sizes, and floor numbers',
     ],
     correctAnswer: 2,
+    explanation:
+      'A complete handover covers what has been done, what is still outstanding, any issues or hazards, and the materials or tools needed to continue.',
   },
   {
     id: 7,
     question: 'What standard covers labelling requirements?',
     options: [
-      'Date, time, and name of the person writing it',
-      'It may be unclear, inconsistent, and less durable',
-      'Clarity, accuracy, legibility',
+      'BS 5839 fire detection',
+      'BS 6701 telecommunications cabling',
+      'BS 5266 emergency lighting',
       'BS 7671 and site-specific requirements',
     ],
     correctAnswer: 3,
+    explanation:
+      'BS 7671 (the IET Wiring Regulations), together with any site-specific requirements, sets out the labelling expected on electrical installations.',
   },
   {
     id: 8,
     question: 'Why is handwritten labelling often discouraged?',
     options: [
       'It may be unclear, inconsistent, and less durable',
-      'Miscommunication, duplication of work, or dangerous mistakes',
-      'Labels, handover notes, and record books/logs',
-      'They provide a permanent record and reduce reliance on memory',
+      'It is faster to produce than printed labels',
+      'It cannot be read by an inspector',
+      'It is forbidden by BS 7671',
     ],
     correctAnswer: 0,
+    explanation:
+      'Handwriting can be unclear and inconsistent and tends to fade or rub off, so printed labels are preferred for durability and legibility.',
   },
   {
     id: 9,
     question: "What's a professional way to mark a circuit that should not be used?",
     options: [
-      "They ensure continuity of work, prevent missed tasks, and highlight safety issues",
+      'Leave it unmarked and tell colleagues verbally',
       "Use a label or note such as 'DO NOT ENERGISE – STILL UNDER TEST'",
-      "Labels, handover notes, and record books/logs",
-      "Work completed, outstanding work, issues/hazards, required materials/tools",
+      'Cover the circuit with tape and say nothing',
+      'Remove the circuit breaker and keep it in your pocket',
     ],
     correctAnswer: 1,
+    explanation:
+      "A clear durable label such as 'DO NOT ENERGISE – STILL UNDER TEST' warns anyone approaching the circuit, which a verbal message or unmarked circuit cannot.",
   },
   {
     id: 10,
     question: 'What is the risk of not leaving a written handover?',
     options: [
-      'Work completed, outstanding work, issues/hazards, required materials/tools',
-      'They provide a permanent record and reduce reliance on memory',
+      'The installation becomes safer over time',
+      'Materials are delivered earlier than planned',
       'Miscommunication, duplication of work, or dangerous mistakes',
-      'Labels, handover notes, and record books/logs',
+      'The next shift finishes the job faster',
     ],
     correctAnswer: 2,
+    explanation:
+      'Without a written handover the next team lacks accurate information, leading to miscommunication, duplicated work and potentially dangerous mistakes.',
   },
 ];
 
@@ -136,10 +156,10 @@ const quickCheckQuestions = [
     id: 'written2',
     question: 'What should be included in a proper handover sheet?',
     options: [
-      'A BS 1361 (or HRC) fuse, sealed by the DNO, sized at typically 60 A, 80 A or 100 A',
-      'By a dedicated earth conductor within the busbar and bonded enclosure sections',
+      'Only the names of the workers on the next shift',
+      'Only the cost of the materials used so far',
       'Work completed, outstanding work, issues/hazards, and required materials',
-      '10% of luminaires will have failed completely by L80 hours',
+      'Only the date the project is due to finish',
     ],
     correctIndex: 2,
     explanation:

@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What does the angle φ (phi) represent in the power triangle?',
     options: [
-      'Photons knocking electrons free',
-      'To keep demand below a preset maximum threshold',
-      'Multi-factor authentication (biometrics + PIN/card)',
+      'The angle of the cable run around the building',
+      'The ratio of iron losses to copper losses',
+      'The temperature rise of the conductor under load',
       'The phase angle between voltage and current',
     ],
     correctAnswer: 3,
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'At what load condition does a transformer typically achieve maximum efficiency?',
     options: [
-      'Maximum power required at any given time',
+      'At full rated load on the secondary',
       'When copper losses equal iron losses',
-      'Three phases and a neutral',
-      '1.5 kN applied over a 100 mm x 100 mm area',
+      'When the load is purely resistive',
+      'At no load with the secondary open-circuit',
     ],
     correctAnswer: 1,
     explanation:

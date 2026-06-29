@@ -23,40 +23,40 @@ const inlineChecks = [
     question:
       'You are testing a desktop PC chassis (Class I) that contains a switch-mode PSU and an SSD. Which earth-continuity test current should you select?',
     options: [
-      'High-current 25 A — only a hard test proves a real earth path',
-      'Soft test current 100 mA (or "no-trip" / "low-current" mode). High test currents on IT and electronic equipment can damage internal components — IET CoP recommends the soft test for sensitive kit, with the appliance-current option (1.5 × rated) only where the equipment can tolerate it',
-      'Either is fine — pick whichever is faster on your tester',
-      'A mains-frequency leakage test instead — earth continuity does not apply to IT',
+      'The low-current 100 mA "soft" / "no-trip" test',
+      'The high-current 25 A "hard" test for a definitive earth path',
+      'Whichever test current is faster on the tester being used',
+      'A mains-frequency leakage test in place of earth continuity',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'IET Code of Practice 5th Edition Chapter 15 lists three earth-continuity options: low-current 100 mA (soft), high-current 25 A, and 1.5× appliance current. The soft test is preferred for IT and electronics because the high test current can pass through internal components and stress them. The hard test stays for robust Class I equipment.',
+      'IET Code of Practice 5th Edition Chapter 15 lists three earth-continuity options: low-current 100 mA (soft), high-current 25 A, and 1.5× appliance current. The soft test is preferred for IT and electronic kit because the high 25 A test current can pass through internal components — capacitors, EMC parts, signal grounds — and stress or damage them. The hard test stays for robust Class I equipment.',
   },
   {
     id: 'patm4-s1-acceptance',
     question:
       'A Class I extension reel has a 12 m supply lead. Calculated acceptance from the IET CoP rule (≤0.1 Ω + 0.1 × R per metre beyond 5 m) is what?',
     options: [
-      '0.1 Ω flat',
-      "≤ 0.1 Ω + 0.1 Ω/m × 12 m — but the 0.1 Ω/m only applies beyond the first 5 m, so effective acceptance ≈ 0.1 Ω + the cable's actual R. Use the manufacturer's cable resistance per metre and add to the 0.1 Ω allowance, then judge against the meter reading",
-      '1.0 Ω flat — the universal PAT limit',
-      '0.6 Ω because 0.1 + (5 × 0.1) = 0.6',
+      '0.1 Ω flat, regardless of the 12 m lead length',
+      '1.0 Ω flat — the universal PAT limit for every lead',
+      '0.1 Ω plus the actual resistance of the 12 m supply cable',
+      '0.6 Ω, from 0.1 + (5 × 0.1) for the first five metres',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'IET CoP Chapter 15 sets the acceptance as 0.1 Ω plus the resistance contribution of the supply cable. The cable contribution is calculated from its actual resistance per metre. The "0.1 Ω per metre beyond 5 m" rule of thumb is shorthand and is conservative — the underlying rule is 0.1 Ω + R(cable). Long leads (over 5 m) require the cable resistance to be added explicitly.',
+      'IET CoP Chapter 15 sets the acceptance as 0.1 Ω plus the resistance contribution of the supply cable, calculated from its actual resistance per metre. The "0.1 Ω per metre beyond 5 m" rule of thumb is shorthand and is conservative — the underlying rule is 0.1 Ω + R(cable). Long leads (over 5 m) require the cable resistance to be added explicitly, not a flat limit.',
   },
   {
     id: 'patm4-s1-null',
     question:
       'You forgot to null the test leads on your PAT tester. Lead resistance is 0.06 Ω. The display reads 0.14 Ω on a 2 m kettle lead. What is the actual earth-continuity resistance?',
     options: [
-      '0.14 Ω — that is what the meter says',
-      '0.08 Ω (0.14 − 0.06). Lead resistance is in series with the conductor under test and BS EN 61557-4 instruments include a null/zero function for this exact reason. Without nulling, every reading is inflated by the lead resistance',
-      '0.20 Ω (0.14 + 0.06)',
-      '0.06 Ω',
+      '0.14 Ω — that is what the meter displays, so record it',
+      '0.06 Ω — the lead resistance is the conductor reading',
+      '0.20 Ω — add the lead resistance to the display (0.14 + 0.06)',
+      '0.08 Ω — subtract the lead resistance from the display (0.14 − 0.06)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Lead resistance is in series with the earth path. BS EN 61557-4 (low-resistance ohmmeter) instruments must include lead-resistance compensation, and IET CoP requires it to be nulled or measured-and-subtracted before recording. 0.14 − 0.06 = 0.08 Ω.',
   },
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'You connect a Class II hairdryer to the PAT tester and run earth continuity. The meter shows open circuit (∞). What does this mean?',
     options: [
-      'Fail — the earth conductor is broken',
-      'Pass — Class II equipment has no earth conductor by design (double or reinforced insulation per the construction symbol). Earth-continuity does not apply. Skip the test, document "Class II — earth continuity N/A" and proceed to insulation resistance',
-      'Re-test on a different range',
-      'Fail — every appliance must show a closed earth path',
+      'Pass — Class II equipment has no earth conductor by design, so the test is N/A',
+      'Fail — the earth conductor inside the appliance has gone open-circuit',
+      'Re-test on a different range, as the reading is out of the meter span',
+      'Fail — every appliance must show a closed earth path to pass',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'IET CoP is clear: earth continuity is only required for Class I equipment. Class II appliances rely on double / reinforced insulation and have no protective conductor — so an open-circuit reading is the expected and correct result, not a fault. Apply the right test for the construction class.',
+      'IET CoP is clear: earth continuity is only required for Class I equipment. Class II appliances rely on double / reinforced insulation (per the construction symbol) and have no protective conductor — so an open-circuit reading is the expected and correct result, not a fault. Skip the test, document "Class II — earth continuity N/A", and proceed to insulation resistance.',
   },
 ];
 
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Why does IET CoP recommend the low-current (100 mA "soft") test in preference to 25 A for IT and electronic equipment?',
     options: [
-      'It is faster',
-      'High test currents can pass through internal components — capacitors, electronic protective devices, signal grounds — and stress or damage them. The soft test confirms a low-resistance earth path without subjecting electronics to fault-level current',
-      'The 25 A test gives false fails',
-      'There is no difference',
+      'It is faster, so more appliances can be tested per session',
+      'There is no real difference; either current gives the same outcome',
+      'The 25 A test tends to give false fails on sound earth paths',
+      'A 25 A current can pass through and damage internal components',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern IT, audio and laboratory kit often has earth bonded internally to PCB ground planes, EMC components, or sensitive boards. A 25 A test can flow through those parts and damage them. The 100 mA soft test confirms continuity without that risk — IET CoP is explicit about this for sensitive equipment.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'IET CoP earth-continuity acceptance is "≤ 0.1 Ω + the resistance of the supply cable". What does that mean for a typical 1.5 m kettle lead?',
     options: [
-      '0.1 Ω flat',
-      'Approximately 0.1 Ω plus a small contribution from the lead — for 1.5 m of typical 1.0 mm² flex (≈18 mΩ/m × 1.5 m ≈ 27 mΩ), acceptance ≈ 0.13 Ω. Most modern testers display "Pass" against this calculated limit automatically once the lead length / csa is entered',
-      '1.0 Ω because that is the PAT standard',
-      '0.6 Ω because the cable is under 5 m',
+      '0.1 Ω flat, regardless of the lead length or cross-section',
+      '1.0 Ω, because that is the universal PAT standard limit',
+      'About 0.13 Ω — 0.1 Ω plus the small resistance of the 1.5 m flex',
+      '0.6 Ω, because the cable is under 5 m and gets the short-lead allowance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The acceptance value scales with lead length and cross-section. A short 1.5 m kettle lead adds only a few tens of milliohms; a 12 m extension reel adds significantly more. The IET CoP method is to take 0.1 Ω as the joint / termination allowance and add the cable's actual resistance.",
   },
@@ -124,38 +124,38 @@ const quizQuestions = [
     question:
       'What standard governs the design and accuracy of a low-resistance ohmmeter used for PAT earth-continuity testing?',
     options: [
-      'BS EN 61557-1 only',
-      'BS EN 61557-4 — the part of the BS EN 61557 series that covers low-resistance ohmmeters specifically; BS EN 61557-1 sets general requirements for the whole series',
-      'BS EN 61010 — that is for safety',
-      'BS 7671',
+      'BS EN 61557-4 — the part covering low-resistance ohmmeters specifically',
+      'BS EN 61557-1 — the general requirements part, on its own',
+      'BS EN 61010 — the test-equipment safety standard',
+      'BS 7671 — the Wiring Regulations for the fixed installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 61557-4 specifies performance requirements for low-resistance ohmmeters (the instrument used for the soft earth-continuity test). BS EN 61557-1 is the general / safety umbrella for the whole series. BS EN 61010 covers test-equipment safety more broadly.',
+      'BS EN 61557-4 specifies performance requirements for low-resistance ohmmeters (the instrument used for the soft earth-continuity test). BS EN 61557-1 sets general requirements for the whole series. BS EN 61010 covers test-equipment safety more broadly.',
   },
   {
     id: 5,
     question:
       'A Class I floor-standing photocopier reads 0.34 Ω earth continuity at the body, against an acceptance of about 0.20 Ω for its lead and joint allowance. What is the most likely cause and correct next step?',
     options: [
-      'Pass — anything under 1 Ω is fine',
-      'Investigate. The reading is above acceptance for that lead length. Likely causes: a loose earth pin connection in the plug, a corroded internal earth bond, or paint trapped under an earth screw onto the chassis. Open the plug, inspect, and re-test before passing',
-      'Repeat with the high-current test and accept whichever is lower',
-      'It is normal for large equipment',
+      'Pass — anything under 1 Ω is fine for a floor-standing machine',
+      'It is normal for large equipment with a long internal earth path',
+      'Repeat with the high-current test and accept whichever reads lower',
+      'Investigate — the reading is above acceptance for that lead length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A reading above the calculated acceptance is a fault to investigate, not to average away. Common causes are a loose plug terminal, a corroded internal joint, or paint under an earth screw. The procedure is: identify the cause, remediate, re-test, then record.',
+      'A reading above the calculated acceptance is a fault to investigate, not to average away. Likely causes are a loose earth pin connection in the plug, a corroded internal earth bond, or paint trapped under an earth screw onto the chassis. The procedure is: open the plug, identify the cause, remediate, re-test, then record.',
   },
   {
     id: 6,
     question:
       "Why does IET CoP allow the option of a test current at 1.5 × the appliance's rated current?",
     options: [
-      'It is the cheapest option',
-      'For some Class I equipment (notably motors and heaters with substantial earth connections), a current scaled to the actual operating current proves the earth path can carry realistic fault current without damaging electronics; it is an option for robust appliances where the 25 A high-current test would be overkill or the 100 mA soft test under-tests',
-      'It tests insulation resistance at the same time',
-      'It is a mandatory test for every appliance',
+      'It is the cheapest of the three test options to run',
+      'It proves the earth path at a current realistic for that appliance',
+      'It tests insulation resistance at the same time as continuity',
+      'It is a mandatory test that must be run on every appliance',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'You are about to PAT a fixed/built-in extractor fan that is supplied via a fused connection unit (FCU). What does IET CoP say?',
     options: [
-      'Disconnect it and PAT it on the bench',
-      'Fixed equipment connected via an FCU and not relying on a plug is treated as part of the fixed installation — earth continuity is verified via the fixed-installation R1+R2 / Zs measurements under BS 7671 (Reg 643.2.1), not by PAT testing. PAT testing applies to portable, movable, hand-held, stationary and IT equipment connected via a flexible cord and plug, or fixed equipment specifically scoped in by the duty-holder',
-      'Refuse to test it',
-      'Use the high-current test only',
+      'Disconnect it from the FCU and PAT-test it on the bench',
+      'Refuse to test it and leave it off the inspection record',
+      'Treat it as part of the fixed installation, verified by R1+R2 / Zs',
+      'Use the high-current 25 A test only, applied at the FCU',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "IET CoP draws the boundary clearly: PAT covers equipment connected by flex and plug, not the fixed installation. An FCU-supplied extractor fan's earth path is verified by R1+R2 and Zs at periodic inspection of the installation, not by PAT.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 Reg 643.2.1 is referenced for protective-conductor continuity. Why is it relevant to PAT testing?',
     options: [
-      'It directly governs PAT — Reg 643.2.1 sets the PAT acceptance value',
-      'It governs the fixed installation, not PAT — but it is the parent principle: protective conductor continuity must be verified by measurement of resistance with a low-resistance ohmmeter. PAT applies the same principle to the appliance side of the plug, with acceptance set by IET CoP rather than BS 7671',
-      'It exempts PAT from continuity testing',
-      'It only applies to ring final circuits',
+      'It is the parent principle — continuity verified by resistance measurement',
+      'It directly governs PAT, setting the PAT earth-continuity acceptance value',
+      'It exempts PAT-tested equipment from any continuity testing at all',
+      'It applies only to ring final circuits, not to protective conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.2.1 is the BS 7671 duty for the fixed installation. PAT picks up where the fixed installation stops — at the socket-outlet — and tests the equipment side, but with the same principle: continuity verified by resistance measurement, not by buzzer or visual.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'On an extension reel you measure earth continuity end-to-end as 0.42 Ω. The cable is 25 m. What does the IET CoP "soft / robust" rule say?',
     options: [
-      'Fail — anything over 0.1 Ω fails',
-      'Apply the rule 0.1 Ω + 0.1 Ω per metre beyond the first 5 m: 0.1 + (25 − 5) × 0.1 = 0.1 + 2.0 = 2.1 Ω. The 0.42 Ω reading is well within that. Pass',
-      'Pass automatically — extension reels are exempt',
-      'Always fail extension reels over 10 m',
+      'Fail — anything over a flat 0.1 Ω limit fails the test',
+      'Pass — the calculated limit works out at about 2.1 Ω for a 25 m reel',
+      'Pass automatically — extension reels are exempt from this rule',
+      'Fail — extension reels over 10 m always fail earth continuity',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'GS38 (HSE Guidance Note GS38) is sometimes cited alongside PAT testing. What does it actually require?',
     options: [
-      'It sets PAT testing intervals',
-      'It specifies the safety requirements for test probes, leads and clips used by electricians — finger-barriers, minimal exposed metal (typically ≤ 4 mm or ≤ 2 mm), fused leads where appropriate. PAT lead sets must comply with GS38 because they are used for live-side instrument tests',
-      'It governs insulation resistance values',
-      'It is the BS for plug top wiring',
+      'It sets the PAT testing intervals for different environments',
+      'It is the British Standard for plug-top wiring and fusing',
+      'It governs the insulation resistance pass / fail values',
+      'It sets the safety requirements for test probes, leads and clips',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "GS38 is HSE's guidance on safe test leads and probes. It applies to any instrument-lead set used in electrical testing — including the live test leads of a PAT tester used for substitute leakage / touch-current tests. Finger-barriers and limited probe-tip exposure are the headline requirements.",
   },

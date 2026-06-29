@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'early-engagement',
     question: 'Why is early MEP engagement critical for sustainable building design?',
     options: [
+      'It allows the mechanical plant to be oversized as a safety margin',
       'It enables passive design strategies to be maximised before active systems are specified',
-      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
-      'The wearer must pass a qualitative or quantitative face-fit test for that specific make and model of RPE',
-      'LED lighting systems powered and controlled through Ethernet cables',
+      'It removes the need for the architect to consider building orientation',
+      'It defers all energy decisions until the construction stage',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Early MEP engagement allows engineers to influence building form, orientation, and fabric design to maximise passive strategies (natural ventilation, daylighting, thermal mass), reducing reliance on active mechanical and electrical systems.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'soft-landings',
     question: 'What is the purpose of a soft landings approach?',
     options: [
+      'To reduce the capital cost of the building by cutting commissioning',
+      'To transfer all responsibility to the facilities team at handover',
+      'To speed up construction by skipping the design review stage',
       'To ensure smooth transition to operation and achieve design performance',
-      '5 to 7 centimetres above the wound, between the wound and the heart',
-      'A known voltage source to test that test equipment is working',
-      'BS 7671 requirements for test certificates and inspection schedules',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Soft landings ensures buildings perform as designed in operation by maintaining design team involvement through commissioning, handover, and early occupation, addressing the performance gap between design intent and actual outcomes.',
   },
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary benefit of design charrettes for sustainable building projects?',
     options: [
-      "Challenging design decisions while protecting defined sustainability outcomes",
-      "The gap between predicted and actual energy performance in operation",
+      "They remove the need for any later design coordination meetings",
+      "They allow each discipline to design in isolation more efficiently",
       "They compress multiple disciplines' input into intensive collaborative sessions",
-      "A dedicated sustainability consultant or the lead designer",
+      "They defer all major decisions until the construction stage",
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: "In BIM Level 2 projects, what does the term 'clash detection' primarily refer to?",
     options: [
-      'It encourages design for disassembly, material reuse, and waste minimisation',
-      'The gap between predicted and actual energy performance in operation',
-      'Challenging design decisions while protecting defined sustainability outcomes',
+      'Identifying disagreements between design team members',
+      'Resolving scheduling conflicts in the construction programme',
+      'Detecting errors in the project cost plan and budget',
       'Finding geometric conflicts between building elements and services',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'What is the purpose of the Government Soft Landings (GSL) Gateway 2?',
     options: [
       'To review design proposals against sustainability targets',
-      'The gap between predicted and actual energy performance in operation',
-      'A defined point when changes become significantly more costly',
-      'Finding geometric conflicts between building elements and services',
+      'To sign off the building for occupation at handover',
+      'To define the operational requirements during the briefing stage',
+      'To carry out the post-occupancy evaluation after one year',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     question:
       'In an integrated design team, who typically leads coordination of sustainability targets?',
     options: [
-      'To review design proposals against sustainability targets',
+      'The main contractor appointed at the construction stage',
       'A dedicated sustainability consultant or the lead designer',
-      'The gap between predicted and actual energy performance in operation',
-      'A defined point when changes become significantly more costly',
+      'The facilities management team after handover',
+      'The client representative with no design involvement',
     ],
     correctAnswer: 1,
     explanation:
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: 'What is the key difference between a design workshop and a design review?',
     options: [
       'Workshops generate solutions collaboratively; reviews assess existing proposals',
-      'It provides feedback to improve future designs and identify performance issues',
-      'A dedicated sustainability consultant or the lead designer',
-      'To review design proposals against sustainability targets',
+      'Workshops involve only the client; reviews involve only the design team',
+      'Workshops happen after handover; reviews happen before construction',
+      'Workshops are informal chats; reviews are the same as clash detection',
     ],
     correctAnswer: 0,
     explanation:

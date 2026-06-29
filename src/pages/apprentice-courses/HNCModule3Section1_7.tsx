@@ -100,16 +100,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'An emergency luminaire draws 6W. What battery capacity is needed for 3 hours?',
+    question: 'An emergency luminaire draws 6W. What battery capacity is needed at 6V for 3 hours?',
     options: [
-      '6Ah at 3V',
+      '1Ah at 6V',
       '2Ah at 6V',
-      'All would work',
-      '3Ah at 6V',
+      'At least 3Ah at 6V',
+      '18Ah at 6V',
     ],
     correctAnswer: 2,
     explanation:
-      'Energy required = 6W × 3h = 18Wh. This could be 2Ah×6V=12Wh (not enough), 3Ah×6V=18Wh (minimum), or 6Ah×3V=18Wh. Allow 20% margin.',
+      'Energy required = 6W × 3h = 18Wh. At 6V the capacity needed is 18Wh ÷ 6V = 3Ah minimum, so at least 3Ah (allow a 20-25% margin for ageing).',
   },
   {
     id: 3,

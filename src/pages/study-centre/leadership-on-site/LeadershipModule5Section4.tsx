@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'lead-apprentice-kolb',
     question: "In Kolb's Learning Cycle, what are the four stages of learning?",
     options: [
-      'Read, Write, Test, Pass',
       'Concrete Experience, Reflective Observation, Abstract Conceptualisation, Active Experimentation',
+      'Read, Write, Test, Pass',
       'Watching, Listening, Reading, Doing',
       'Planning, Doing, Checking, Acting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Kolb's Learning Cycle has four stages: (1) Concrete Experience — doing the task, (2) Reflective Observation — thinking about what happened, (3) Abstract Conceptualisation — understanding the theory, and (4) Active Experimentation — trying a new approach. Effective mentors guide apprentices through all four stages rather than focusing on just one.",
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'The pay is too low compared to other careers',
       'The college work is too difficult to complete',
-      'A poor relationship with their supervisor or mentor',
       'They do not enjoy working outdoors in bad weather',
+      'A poor relationship with their supervisor or mentor',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Research consistently shows that the number one reason apprentices leave the trade is a poor relationship with their supervisor or mentor. The supervisor has more influence on apprentice retention than the college, the employer, or the pay. Being a supportive, patient, and encouraging mentor is one of the most impactful things a supervisor can do.',
   },
@@ -88,11 +88,11 @@ const quizQuestions = [
       'The UK construction industry faces a skills shortage in electrical installation because:',
     options: [
       'Electricity is being phased out in favour of renewable alternatives',
-      'Thousands of electricians will retire in the next decade and recruitment is not keeping pace',
       'Apprenticeships have been banned by the government',
       'There are too many qualified electricians and not enough work',
+      'Thousands of electricians will retire in the next decade and recruitment is not keeping pace',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "JIB and CITB data shows thousands of electricians will retire in the next decade while recruitment is not keeping pace. This makes developing apprentices critically important for the future of the industry. Every apprentice a supervisor develops is an investment in the industry's future capacity.",
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "Kolb's Learning Cycle suggests that effective learning involves:",
     options: [
-      'Only reading textbooks and passing written exams',
       'Cycling through experience, reflection, understanding theory, and experimentation',
+      'Only reading textbooks and passing written exams',
       'Watching YouTube videos about electrical installation',
       'Attending a one-day training course and receiving a certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Kolb's Learning Cycle involves four stages: Concrete Experience (doing), Reflective Observation (thinking about what happened), Abstract Conceptualisation (understanding the theory), and Active Experimentation (trying a new approach). Effective mentors guide apprentices through all four stages to embed deep learning.",
   },
@@ -142,11 +142,11 @@ const quizQuestions = [
       'The GROW model (from Module 2) can be used in mentoring conversations. GROW stands for:',
     options: [
       'Get Ready, Observe, Work, Learn',
-      'Goal, Reality, Options, Will (or Way Forward)',
       'Grade, Review, Observe, Write',
       'Guidance, Reflection, Outcome, Willingness',
+      'Goal, Reality, Options, Will (or Way Forward)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GROW stands for Goal (what do you want to achieve?), Reality (where are you now?), Options (what could you do?), and Will/Way Forward (what will you do?). It provides a structured framework for mentoring conversations that helps the apprentice develop their own thinking and problem-solving skills.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'SMART development goals should be:',
     options: [
+      'Specific, Measurable, Achievable, Relevant, Time-bound',
       'Secret, Measured, Attractive, Radical, Temporary',
       'Simple, Modern, Achievable, Rapid, Technological',
-      'Specific, Measurable, Achievable, Relevant, Time-bound',
       'Strict, Mandatory, Assessed, Required, Tested',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "SMART goals are Specific (clearly defined), Measurable (you can track progress), Achievable (challenging but realistic), Relevant (connected to the apprentice's development needs), and Time-bound (with a clear deadline). Setting SMART goals helps apprentices understand exactly what they are working towards and when.",
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
     question: 'When setting development goals for an apprentice, goals should cover:',
     options: [
       'Only the technical skills needed to pass the NVQ',
-      'Only health and safety topics as required by law',
       'Technical skills, professional skills, personal skills, and qualifications',
+      'Only health and safety topics as required by law',
       'Only the topics covered in their college course',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Development goals should cover four areas: technical skills (install a consumer unit independently), professional skills (lead a toolbox talk, communicate with clients), personal skills (manage time effectively, work as part of a team), and qualifications (AM2, 18th Edition). A well-rounded development plan produces a well-rounded electrician.',
   },

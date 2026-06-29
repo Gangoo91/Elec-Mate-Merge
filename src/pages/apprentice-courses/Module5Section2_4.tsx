@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Which cable type is most suitable for underground installations?',
     options: [
-      'P = √3 × VL × IL × cos(φ)',
-      '1:4 ratio (1 out for every 4 up)',
-      'Hand tight plus a quarter turn',
+      'Twin and Earth (T&E) 6242Y',
+      'Flexible cord (H05VV-F)',
+      'Low Smoke Zero Halogen (LSZH)',
       'Steel Wire Armoured (SWA)',
     ],
     correctIndex: 3,
@@ -98,9 +98,9 @@ const Module5Section2_4 = () => {
       question: 'Which type of cable is most suitable for underground installations?',
       options: [
         'Steel Wire Armoured (SWA)',
-        'May require modified procedures',
-        'Force per unit area (P = F/A)',
-        'System with earthing electrode',
+        'Twin and Earth (T&E) 6242Y',
+        'Flexible cord (H05VV-F)',
+        'Low Smoke Zero Halogen (LSZH)',
       ],
       correctAnswer: 0,
       explanation:
@@ -110,10 +110,10 @@ const Module5Section2_4 = () => {
       id: 5,
       question: 'What is the main risk of grouping too many cables together?',
       options: [
-        'Rotational force produced by the motor, measured in Nm',
+        'Increased voltage drop along each cable',
         'Overheating due to reduced current-carrying capacity',
-        'Increased loss around 1383nm due to hydroxyl ions',
-        'Potentially dangerous - urgent remedial action required',
+        'Higher insulation resistance readings',
+        'Reversed polarity at the final accessory',
       ],
       correctAnswer: 1,
       explanation:
@@ -123,10 +123,10 @@ const Module5Section2_4 = () => {
       id: 6,
       question: 'What type of sheath is recommended where chemical exposure is likely?',
       options: [
-        'Burn marks or discolouration',
-        'Polychlorinated biphenyls (PCBs)',
+        'Standard PVC sheath',
+        'Bare unsheathed conductor',
         'Chemically resistant sheath',
-        'They are inversely proportional',
+        'Paper-insulated sheath',
       ],
       correctAnswer: 2,
       explanation:
@@ -149,9 +149,9 @@ const Module5Section2_4 = () => {
       question: 'Why are LSZH cables used in schools or hospitals?',
       options: [
         'They limit toxic smoke in the event of a fire',
-        'Technical competence plus management and leadership skills',
-        'Use the larger cable that meets both requirements',
-        'A rescue plan for retrieving a fallen worker',
+        'They have a higher current-carrying capacity',
+        'They are cheaper than standard PVC cable',
+        'They do not require any mechanical protection',
       ],
       correctAnswer: 0,
       explanation:

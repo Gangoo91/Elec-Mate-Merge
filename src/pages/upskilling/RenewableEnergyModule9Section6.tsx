@@ -23,10 +23,10 @@ const inlineChecks = [
     id: 'm9s6-commercial-chp-scale',
     question: 'Commercial CHP — what scale + UK 2025-26 deployment?',
     options: [
-      'Same as micro',
-      'Commercial CHP: 10 kWe - 5 MWe electrical output. Natural gas dominant fuel; biogas (anaerobic digestion), biofuel, blended-hydrogen variants emerging. UK 2025-26 widespread in: hospitals, leisure centres, hotels, large commercial buildings, district heating schemes, food processing, breweries, large agricultural sites. Substantial heat + electrical demand sites where combined efficiency 80-90% creates strong business case',
-      'No commercial CHP',
-      'Random',
+      'The same sub-50 kWe scale as micro-CHP, just sited in commercial rather than domestic buildings',
+      'Roughly 10 kWe to 5 MWe, mostly natural gas, common in hospitals, leisure centres and hotels',
+      'A niche technology rarely deployed commercially in the UK because the business case never stacks up',
+      'Output above 5 MWe only, since smaller plant cannot be economically connected to the grid',
     ],
     correctIndex: 1,
     explanation:
@@ -36,12 +36,12 @@ const inlineChecks = [
     id: 'm9s6-erec-g99-commercial',
     question: 'Why does commercial CHP virtually always trigger EREC G99 formal application?',
     options: [
-      'Random',
-      'Commercial CHP electrical output 10 kWe+ — far above G98 Type A ≤16 A per phase threshold. G99 formal pre-installation application + DNO design assessment + connection offer + customer acceptance + commissioning + DNO-witnessed anti-islanding test + completion notification. Lead time 12-26 weeks typical UK 2025-26. Substantial commercial-CHP project planning + Section 551 + heat-network coordination',
-      'No notification',
-      'G98 always',
+      'Because the gas supply, rather than the electrical output, sets which connection standard applies',
+      'It does not — commercial CHP is notified after the event under the fast-track G98 route like small inverters',
+      'No grid notification is needed, since on-site generation that displaces import never affects the network',
+      'Its output exceeds the G98 16 A per phase threshold, so it needs the formal pre-installation G99 route',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commercial CHP triggers EREC G99 formal application. Reasons: (1) Output threshold — G98 Type A ≤16 A per phase = ~3.7 kWe single-phase OR ~11 kWe three-phase. Commercial CHP at 10 kWe + (most installs much larger) far exceeds. (2) Sustained export — commercial CHP often operates 6,000-8,000 hours / year (vs domestic micro-CHP 3,000-5,000 hours); higher grid impact. (3) Multi-source likely — site may co-locate PV + BESS + CHP; G99 covers aggregate. (4) Grid services revenue — commercial CHP often provides Firm Frequency Response (FFR) + Capacity Market services to National Grid (requires DNO + ESO awareness). G99 process: (a) customer + installer joint application to DNO via portal; (b) DNO design assessment (network capacity check, connection scheme, protection settings, anti-islanding spec); (c) DNO connection offer + price (may include reinforcement costs); (d) customer acceptance + payment where applicable; (e) outage scheduling for connection; (f) install per connection offer; (g) commissioning + DNO-witnessed anti-islanding test (Reg 551.7.5); (h) completion notification to DNO + meter operator visit. UK 2025-26 typical lead time: 12-26 weeks (longer for reinforcement-needed sites). Cost: £5-50k+ for the connection (varies hugely with capacity + site location). Cert evidence bundle: G99 reference + connection offer + DNO-witnessed test result + completion confirmation.',
   },
@@ -49,12 +49,12 @@ const inlineChecks = [
     id: 'm9s6-biogas-anaerobic-digestion',
     question: 'Biogas-CHP from anaerobic digestion — what is the fuel + customer base?',
     options: [
-      'Pure hydrogen',
-      'Biogas = methane-rich gas produced by anaerobic digestion of organic waste (agricultural manure, sewage sludge, food waste, energy crops). Typical 50-65% methane + 35-50% CO2 + traces. UK 2025-26 customer base: large farms (cattle + crop waste), sewage works (water companies), landfill (methane capture), food processing (food waste). CHP burns biogas in IC engine driving generator. Section 551 applies fully; Reg 551.7.5 anti-islanding mandatory; EREC G99 formal',
-      'Random',
-      'No biogas',
+      'Pure hydrogen produced by electrolysis, supplied mainly to industrial chemical plants',
+      'Liquefied natural gas delivered by tanker, used at sites with no mains gas connection',
+      'Methane-rich gas from anaerobic digestion of organic waste, burned in an IC engine',
+      'Bottled propane blended with air, used only as a backup fuel when the mains gas fails',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Biogas-CHP: anaerobic digestion (AD) → biogas → IC engine → generator + heat. Anaerobic digestion: organic waste (agricultural manure + crop residues, sewage sludge, food waste, dedicated energy crops like maize silage) digested by bacteria in oxygen-free environment → produces biogas (50-65% methane + 35-50% CO2 + small amounts of H2S + water vapour). Biogas typically used in two ways: (1) Direct combustion in IC engine driving generator (biogas-CHP); (2) Upgraded to biomethane (CO2 + impurities removed; methane content >95%) → injected to gas grid. UK 2025-26 biogas-CHP customer base: (1) Large farms — cattle + pig + crop waste; cooperative ventures common; typical install 100 kWe - 1 MWe. (2) Water utility sewage works — sewage sludge anaerobic digestion + biogas-CHP; Thames Water, Severn Trent, Anglian Water all have such sites; typical 500 kWe - 5 MWe. (3) Landfill sites — methane capture from decomposing waste + biogas-CHP; Viridor, Biffa, FCC Environment all operate such sites. (4) Food processing + brewing — food waste anaerobic digestion + biogas-CHP at large food sites. (5) Dedicated AD plants — purpose-built; farm-based or community-based. Section 551 applies fully: Reg 551.1.1(a) combustion engine; Reg 551.7.5 anti-islanding; Reg 551.7.2.1 supply-side connection; Reg 551.4.2 RCD multi-source. EREC G99 formal application typical. Cert evidence bundle: same Section 551 framework as natural-gas commercial CHP + biogas fuel handling considerations (Gas Safe / specialist competence for the gas side).',
   },
@@ -62,12 +62,12 @@ const inlineChecks = [
     id: 'm9s6-grid-services',
     question: 'Commercial CHP grid-services revenue — what does it mean?',
     options: [
-      'Random',
-      'Beyond Smart Export Guarantee (SEG) for exported energy, commercial CHP can provide grid-balancing services to National Grid ESO: Firm Frequency Response (FFR — milliseconds-to-seconds frequency control), Dynamic Containment, Capacity Market (multi-year availability payments). Substantial additional revenue (£10-50k+ per MWe per year). Requires aggregator partnership + Section 551 + Reg 551.7.4 voltage/frequency response capability',
-      'No revenue',
-      'Same as SEG',
+      'Beyond export payments, the CHP provides grid-balancing services (Firm Frequency Response, Dynamic Containment, Capacity Market) via an aggregator — a substantial extra revenue stream',
+      'It refers to the energy retailer’s standing-charge rebate for sites that generate their own electricity',
+      'There is no additional revenue; commercial CHP earns only the per-kWh export tariff like any small generator',
+      'It is simply another name for the Smart Export Guarantee, with no separate balancing-services element',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Commercial CHP grid-services revenue: substantial additional revenue stream beyond SEG (Smart Export Guarantee for exported energy). National Grid Electricity System Operator (NESO, formerly ESO) procures grid-balancing services from grid-connected generators including CHP: (1) Firm Frequency Response (FFR) — milliseconds-to-seconds frequency control; generator increases / decreases output rapidly to balance grid frequency variations; revenue £10-30k per MWe per year typical. (2) Dynamic Containment / Dynamic Moderation / Dynamic Regulation — newer faster-response frequency products; revenue per MW per hour. (3) Capacity Market — multi-year availability payments for generators committing to be available during system stress; auction-based; revenue £5-20k per MWe per year. (4) Balancing Mechanism — short-term operation adjustments procured by NESO; revenue per dispatched MWh. CHP suitable because: rapid response capability (IC engines start + ramp in seconds); existing grid connection; reliable operation. UK 2025-26 reality: commercial CHP grid-services revenue often 20-40% of total project revenue alongside heat + electrical generation. Aggregator partnership typical — third-party aggregator (e.g. Flexitricity, Limejump, KiWi Power, Open Energi) packages multiple CHPs to bid into NESO services. Requires Section 551 compliance + Reg 551.7.4 voltage/frequency capability + DNO + ESO coordination + sophisticated controls. Cert evidence bundle: aggregator contract + grid-services compliance documentation + Section 551.',
   },
@@ -77,22 +77,22 @@ const quizQuestions = [
   {
     question: 'Hospital install — 500 kWe natural gas CHP for combined heat + electrical demand. What scope?',
     options: [
-      'Just install',
-      'Major commercial project. Multi-trade: commercial CHP specialist (engine + generator + controls), heating engineer (heat-network integration with hospital LTHW + DHW), BS 7671 electrical installer (Section 551 + protective devices + cable), DNO liaison (EREC G99 + connection upgrade typical), aggregator (grid-services revenue), Gas Safe (natural gas supply), maintenance contractor (annual + spare-part). 12-26 month project; £500k-£1.5m typical install cost; £500-800k electrical scope. Section 551 + Reg 551.7.5 DNO-witnessed test',
-      'Random',
-      'No engineering',
+      'A single-trade electrical job that one installer can complete and energise within a few days',
+      'A purely mechanical project where the electrical work is limited to a final connection by others',
+      'A simple plant swap needing no DNO involvement, since the existing 500 kVA supply already exists',
+      'A major multi-trade project spanning CHP, heating, BS 7671, G99 liaison, Gas Safe and aggregator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hospital 500 kWe natural gas CHP is a major commercial project. Multi-trade delivery: (1) Commercial CHP specialist (Clarke Energy, Centrica Business Solutions, ENGIE, BHKW etc.) supplies + commissions engine + generator + controls. (2) Heating engineer integrates heat output with hospital LTHW (Low Temperature Hot Water) heating + DHW system; thermal store + heat exchangers; hydraulic balancing. (3) BS 7671 electrical installer scope: dedicated 500 kVA+ three-phase supply infrastructure; CHP electrical output to dedicated supply-side switchboard; Section 551 protective architecture; cable per Appendix 4 (three-phase 500 kWe at 400 V ≈ 720 A per phase — major cable + busbar infrastructure); HV / LV transformer if grid connection at higher voltage. (4) DNO liaison: EREC G99 formal application + connection upgrade typical (existing hospital LV supply may need uprating; HV connection alternative for larger installs); 12-26 month DNO process; £20-100k+ connection cost. (5) Aggregator partnership for grid-services revenue (FFR + Capacity Market + Balancing Mechanism). (6) Gas Safe + commercial gas supply (natural gas pipework + meter upgrade typical). (7) Maintenance contractor (annual service + spare parts; engine overhaul every 30-60,000 operating hours). Total project: £500k - £1.5m + 12-26 months. Electrical scope: £100-300k typical. Cert evidence bundle: Section 551 compliance + Reg 551.7.5 DNO-witnessed test + EREC G99 connection agreement + commercial CHP specialist commissioning + heat-network integration + Gas Safe + aggregator contract + grid-services compliance + BS 7671 EIC.',
   },
   {
     question: 'Reg 551.7.5 anti-islanding for commercial CHP — how is the DNO-witnessed test conducted?',
     options: [
-      'Customer test',
-      'DNO engineer attends commissioning; coordinates with installer; performs or witnesses: (1) simulated grid-loss (open main supply or upstream isolator); (2) observes CHP disconnects from grid within manufacturer-specified time (per DNO + G99 requirements); (3) verifies CHP stops generating (no continued export); (4) restores grid + verifies reconnect delay; (5) signs off DNO acceptance form. Result attached to G99 connection completion notification. Some DNOs use third-party testing companies',
-      'Random',
-      'Inverter automatic',
+      'The customer carries out the test themselves and emails the result to the DNO for filing',
+      'A DNO engineer attends, simulates grid-loss and confirms the CHP disconnects within the limit',
+      'It is performed automatically by the inverter at first energisation with no DNO attendance required',
+      'The manufacturer’s factory test alone satisfies the requirement, so no on-site witnessing is needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,34 +101,34 @@ const quizQuestions = [
   {
     question: 'Heat-network integration for commercial CHP — what does it mean?',
     options: [
-      'No integration',
-      'CHP heat output (typical 60-90 °C primary flow) integrated with the customer\'s heat distribution system. Variants: (1) buffer thermal store smooths CHP output vs demand; (2) heat exchanger interface to LTHW central heating; (3) heat-network feed for district heating across multiple buildings; (4) coordination with existing gas / oil boilers as supplementary. Hydraulic + control complexity. Heating engineer specialist scope; electrical installer integrates the control signals',
-      'Random',
-      'No heat',
+      'There is no heat integration; commercial CHP generates electricity only and the heat is simply vented',
+      'The electrician designs and commissions the entire heat distribution system as part of the BS 7671 scope',
+      'Tying the CHP heat output into the building heating via buffer store, heat exchanger and boilers',
+      'Heat is only used to warm the engine room and plays no part in the building’s heating system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat-network integration is a major part of commercial CHP install — heating engineer specialist scope, not BS 7671 electrician, but the electrical installer integrates the control signals. CHP heat output: typical 60-90 °C primary flow (lower for low-temperature CHP, higher for steam-cycle systems). Integration variants: (1) Buffer thermal store (typical 5,000 - 50,000 L for commercial; 100,000+ L for district heating) smooths CHP output vs demand; allows CHP to run at optimal capacity + bank heat for peak demand. (2) Heat exchanger interface to LTHW (Low Temperature Hot Water) central heating — separates CHP primary loop from building secondary loop; allows different temperature regimes + simpler maintenance. (3) Heat-network feed for district heating (multiple buildings sharing a single CHP) — substantial pipework infrastructure + customer-side substations; UK 2025-26 examples include large university campuses, hospital sites, urban regeneration projects. (4) Coordination with existing gas / oil boilers — CHP as primary; boilers supplement during peak demand OR backup during CHP outage. Electrical installer\'s role on heat-network: control signal wiring between CHP controller + heating-system controller + (often) building management system (BMS); typically Modbus / BACnet / similar field-bus protocols; low-current LV cabling. Cert evidence bundle: heat-network integration commissioning record (heating engineer\'s scope) + control signal wiring (electrical scope) + BMS integration verified.',
   },
   {
     question: 'Hydrogen-blend CHP — UK 2025-26 reality?',
     options: [
-      'Mainstream',
-      'Predominantly trial scale. HyDeploy programme (Keele University, Winlaton) — 20% hydrogen blend in natural gas at limited sites; verifies that existing gas appliances (including CHP IC engines) operate safely on the blend. Hydrogen heating village trials (Whitby, Redcar) cancelled / scaled back. UK strategic decision on hydrogen for heating deferred. CHP manufacturers marketing "hydrogen-ready" engines — verify actual hydrogen supply available at customer site (typically not)',
-      'Random',
-      'Never deployed',
+      'Predominantly trial scale — 20% blend tested via HyDeploy, but customer-site supply is rarely available',
+      'Mainstream, with most new commercial CHP already running on a 20% hydrogen blend from the gas grid',
+      'Mandatory from 2025, with all new natural-gas CHP required by law to be 100% hydrogen-capable',
+      'Never deployed or tested anywhere in the UK; hydrogen for CHP remains purely a theoretical concept',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hydrogen-blend CHP UK 2025-26 reality: predominantly trial scale + manufacturer marketing direction. (1) HyDeploy programme — UK industry consortium trial at Keele University (since 2019) + Winlaton near Gateshead (since 2021); 20% hydrogen blend in natural gas supplied to limited number of properties + verified safety + interoperability with existing gas appliances including CHP IC engines + boilers + cookers. Outcomes: 20% blend works safely with existing infrastructure + appliances; supports policy decision on hydrogen-blend rollout. (2) Hydrogen heating village trials — full hydrogen (100%) heating for full villages was proposed at Whitby (Cheshire) + Redcar; both cancelled / scaled back over public concerns + technical difficulties. (3) UK strategic decision on hydrogen for heating — deferred from original 2026 target; now later or possibly no widespread deployment for heating. Hydrogen direction stronger for industrial decarbonisation + transport + electricity grid balancing than for heating. (4) Commercial CHP manufacturers marketing hydrogen-ready capability: Clarke Energy + Centrica Business + ENGIE all offer engines tested for 20% blend; some tested for 100% hydrogen. Customer position: hydrogen-ready is future-proofing value; actual hydrogen supply at customer\'s site unlikely in current planning horizon. Cert evidence bundle documents hydrogen-ready capability + upgrade path + customer expectations.',
   },
   {
     question: 'Multi-source commercial site (PV + BESS + CHP + grid) — Section 551 + Chapter 82 implications?',
     options: [
-      'No implications',
-      'Full Section 551 + Chapter 82 PEI integration. Reg 551.4.2 RCD effectiveness across all combinations; Reg 551.7.5 anti-islanding per source; Reg 551.7.2.1 each source on supply side. Chapter 82 Reg 826.x covers PEI integration. EMS (Energy Management System) coordinates sources for site optimisation: PV peak shaving, BESS time-shifting, CHP base-load + grid-services. Substantial controls + protection coordination + multi-source RCD verification at commissioning',
-      'Random',
-      'Only Section 551',
+      'No real implications; each source is wired independently and BS 7671 treats them as unrelated circuits',
+      'Full Section 551 plus Chapter 82 prosumer integration, with RCD, anti-islanding and EMS all verified',
+      'Only Chapter 82 applies, because the prosumer rules supersede Section 551 once a battery is present',
+      'Only Section 551 applies, since Chapter 82 is reserved for utility-scale generation above 5 MWe',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
   {
     question: 'Biogas-CHP at a sewage works — what makes it different?',
     options: [
-      'Same as gas',
-      'Biogas fuel is methane-rich BUT also contains H2S (hydrogen sulphide, corrosive + toxic at trace levels — typically 50-500 ppm), water vapour, siloxanes (silica deposits in engine). Pre-treatment required: H2S scrubbing, drying, siloxane removal. Engine spec must be biogas-rated. Section 551 + EREC G99 + heat-network integration + Environmental Permit (Industrial Emissions Directive). UK examples: Thames Water Crossness, Severn Trent Minworth, Anglian Water Cotton Valley',
-      'Random',
-      'No fuel concerns',
+      'Nothing of substance — sewage biogas behaves identically to mains natural gas at the engine',
+      'It needs no fuel treatment, but the electrical scope is larger because of the wet environment',
+      'Corrosive H2S, water and siloxanes mean fuel pre-treatment, a biogas-rated engine and a permit',
+      'The only difference is that a sewage-works CHP exports to the grid rather than being used on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Biogas-CHP at sewage works has fuel-quality + permitting considerations beyond natural-gas CHP. (1) Biogas composition: 50-65% methane (combustible) + 35-50% CO2 (inert) + trace H2S (hydrogen sulphide — 50-500 ppm depending on feedstock; very corrosive + toxic at high concentrations) + trace water vapour + siloxanes (volatile silicon compounds from personal care products in sewage — combust into silica deposits damaging engine internals). (2) Fuel pre-treatment required: H2S scrubbing (iron oxide or activated carbon scrubbers); drying (water removal via cooling or adsorbent); siloxane removal (activated carbon specifically targeted). (3) Engine spec — biogas-rated IC engine (modified Otto cycle); higher-grade materials in combustion chamber + valve train to handle residual H2S + corrosion; oil change intervals tighter than natural gas; siloxane impacts engine life (typical 50% of natural-gas CHP engine lifetime — 30-50,000 hours vs 60,000+ hours). (4) Section 551 framework applies identically — Reg 551.1.1(a) combustion engine, Reg 551.7.5 anti-islanding, Reg 551.7.2.1 supply-side, Reg 551.4.2 multi-source RCD. (5) EREC G99 formal application (sewage works CHPs typically 500 kWe - 5 MWe). (6) Heat-network integration — heat output used on-site for anaerobic digester heating (digester operates at 35-40 °C mesophilic OR 50-55 °C thermophilic) + facility heating. (7) Environmental Permit — Industrial Emissions Directive (IED) compliance for emissions monitoring + reporting; Environment Agency permit. (8) UK examples: Thames Water Crossness sewage works (multiple MWe biogas-CHP); Severn Trent Minworth; Anglian Water Cotton Valley; many others. Cert evidence bundle: Section 551 + EREC G99 + Environment Agency permit + biogas-specific fuel handling commissioning + Industrial Emissions Directive compliance.',
   },

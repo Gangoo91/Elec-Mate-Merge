@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'riddor-time-limit',
     question: 'Within how many days must most reportable injuries be reported under RIDDOR?',
-    options: ['7 days', '10 days', '14 days', '28 days'],
-    correctIndex: 1,
+    options: ['10 days', '7 days', '14 days', '28 days'],
+    correctIndex: 0,
     explanation:
       'Most reportable injuries under RIDDOR must be reported within 10 days. Deaths and specified injuries must be reported immediately by the quickest practicable means (usually telephone), then followed up with a written report within 10 days. Over-7-day incapacitation injuries have a 15-day reporting window.',
   },
@@ -67,11 +67,11 @@ const quizQuestions = [
     question: 'What is the primary purpose of accident reporting on construction sites?',
     options: [
       'To assign blame to the person responsible',
-      'To learn from incidents and prevent recurrence',
       "To reduce the employer's insurance premiums",
       'To satisfy union requirements',
+      'To learn from incidents and prevent recurrence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The primary purpose of accident reporting is to learn from incidents and prevent recurrence. While accident data may affect insurance and is a legal requirement, the fundamental reason for reporting is to identify what went wrong, why it went wrong, and what changes are needed to prevent similar incidents in the future. Reporting should never be about assigning blame.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'An electrician breaks their ankle falling from a stepladder on site and cannot work for 10 days. How should this be reported under RIDDOR?',
     options: [
-      'It does not need to be reported',
       'It must be reported as a specified injury (fracture) within 10 days',
       'It must be reported as an over-7-day incapacitation within 15 days',
+      'It does not need to be reported',
       'It only needs to be recorded in the accident book',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A broken ankle is a fracture other than to fingers, toes, or nose, which makes it a specified injury under RIDDOR. Specified injuries must be reported within 10 days of the incident. The fact that the worker was incapacitated for more than 7 days is also relevant, but the specified injury classification takes precedence because it requires reporting regardless of the incapacitation period.',
   },
@@ -134,11 +134,11 @@ const quizQuestions = [
     question: "What is the significance of Heinrich's triangle (the 1:29:300 ratio)?",
     options: [
       'It shows that 300 workers are needed for every safety officer',
-      'It demonstrates the relationship between near-misses, minor injuries, and major incidents',
       'It sets the legal limit for the number of accidents per year',
+      'It demonstrates the relationship between near-misses, minor injuries, and major incidents',
       'It determines how many first aiders are required on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Heinrich's triangle demonstrates the statistical relationship between near-misses (300), minor injuries (29), and major/fatal injuries (1). The key insight is that near-misses and minor injuries are leading indicators of major incidents — by investigating and addressing near-misses, organisations can prevent the more serious incidents that sit at the top of the triangle.",
   },
@@ -147,11 +147,11 @@ const quizQuestions = [
     question: "During an accident investigation, what is the purpose of the '5 Whys' technique?",
     options: [
       'To interview exactly five witnesses',
-      "To identify the root cause by asking 'why' repeatedly until the underlying cause is found",
       'To complete five separate investigation reports',
       'To ensure the investigation takes no more than five days',
+      "To identify the root cause by asking 'why' repeatedly until the underlying cause is found",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The '5 Whys' technique is a root cause analysis method. You start with the incident and ask 'why did this happen?' — then take the answer and ask 'why?' again, repeating the process (typically around five times, though it may be more or fewer) until you reach the underlying root cause. This prevents investigators from stopping at the immediate cause and ensures that systemic issues are identified and addressed.",
   },

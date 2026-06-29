@@ -23,12 +23,16 @@ const InstrumentCalibrationQuiz = () => {
     },
     {
       id: 2,
-      question:
-        "True or False: You can rely on your tester's 'self-test' instead of proper calibration.",
-      options: ['True', 'False'],
+      question: "How should a tester's built-in 'self-test' function be regarded?",
+      options: [
+        'It fully replaces periodic laboratory calibration',
+        'It is a quick check that does not replace formal calibration',
+        'It recalibrates the instrument automatically each day',
+        'It removes the need to inspect the test leads',
+      ],
       correctAnswer: 1,
       explanation:
-        'False. Self-test functions are useful for basic checks, but they cannot replace proper calibration against known reference standards.',
+        'Self-test functions confirm basic operation but cannot replace formal calibration against traceable reference standards.',
     },
     {
       id: 3,
@@ -36,31 +40,31 @@ const InstrumentCalibrationQuiz = () => {
       options: ['BS 7671', 'BS EN 61557', 'ISO 9001', 'EAWR 2005'],
       correctAnswer: 1,
       explanation:
-        'BS EN 61557 specifically covers the requirements for electrical safety in low voltage distribution systems, including instrument accuracy.',
+        'BS EN 61557 sets the requirements for the test equipment used to verify electrical safety in low-voltage distribution systems, including measuring accuracy.',
     },
     {
       id: 4,
       question: 'What should you do if your test leads are cracked or damaged?',
       options: [
-        'Use them gently',
-        'Tape them up',
-        'Replace them immediately',
-        'Calibrate the tester again',
+        'Replace them immediately before further use',
+        'Carry on but handle them gently',
+        'Wrap the damage with insulating tape',
+        'Recalibrate the tester to compensate',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Damaged test leads pose a serious safety risk and can affect measurement accuracy. They must be replaced immediately.',
     },
     {
       id: 5,
-      question: 'Why is calibration important in court or compliance checks?',
+      question: 'Why does calibration matter for legal or compliance disputes?',
       options: [
-        "It's good practice",
-        'It ensures speed',
-        'It proves your readings are trustworthy',
-        'It boosts your marketing',
+        'It speeds up the testing process',
+        'It is simply considered good housekeeping',
+        'It is a useful marketing point for clients',
+        'It proves the recorded readings are trustworthy',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Calibration provides documented proof that your instrument readings are accurate and reliable, which is essential for legal and compliance purposes.',
     },

@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     question:
       'According to BS 7671 guidance, what diversity applies to socket outlets in an office?',
     options: [
-      '1 metre above highest point within 10m',
-      'Predictive analytics and AI capabilities',
+      '100% of every socket with no reduction',
+      '25% of the total connected socket load',
       '100% of first 10 sockets + 50% remainder',
-      'To adjust consumption data for weather variations',
+      '50% of the largest socket only',
     ],
     correctIndex: 2,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is diversity applied to electrical load calculations?',
     options: [
-      'Workers who have passed the HS&E test but not yet achieved their full qualification',
+      'To increase the calculated demand as a safety margin',
       'To account for loads not operating simultaneously at full capacity',
-      'Cross-check with different methods where possible',
-      'A certificate showing actual energy use in public buildings over 250m²',
+      'To meet the minimum cable size required by BS 7671',
+      'To ensure every circuit is protected by an RCD',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'BS 7671 Appendix 1 Table 1A provides guidance on:',
     options: [
       'Diversity allowances for domestic installations',
-      'Ensures proper electrical contact and prevents overheating',
-      'Behind the screen relative to the user',
-      'Only a competent person responsible for the work',
+      'Maximum earth fault loop impedance values',
+      'Cable current-carrying capacities for SWA',
+      'Disconnection times for protective devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'When calculating ADMD for a block of 50 flats, the diversity factor between dwellings is:',
     options: [
-      'Daylight-linked dimming with occupancy sensing',
-      'To protect cable insulation from sharp edges',
+      'Ignored - total equals 50 × individual ADMD',
+      'Increased - total exceeds 50 × individual ADMD',
       'Applied - total is less than 50 × individual ADMD',
-      'A contactor (the first contactor in the circuit)',
+      'Fixed at exactly 1.0 regardless of dwelling count',
     ],
     correctAnswer: 2,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'When should diversity NOT be applied?',
     options: [
-      'The risk of surface condensation at a thermal bridge',
-      'Investment-grade audit (Level III)',
+      'For office small-power socket circuits',
+      'For domestic lighting final circuits',
       'For emergency systems and life safety equipment',
-      'Pricing early activities higher to improve cash flow',
+      'For large blocks of residential flats',
     ],
     correctAnswer: 2,
     explanation:

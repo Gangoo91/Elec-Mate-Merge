@@ -39,10 +39,10 @@ const checks = [
     question:
       'You’re terminating a 70 mm² SWA tail onto a copper crimp lug. The right tool is:',
     options: [
-      'Daylight control should only operate when occupancy is detected',
-      'Total loss from transmitter to receiver including all components',
+      'A ratchet hand crimper with a general-purpose die',
+      'Pliers and a heat-shrink sleeve over a twisted joint',
       'Hydraulic crimp tool with the matching die for 70 mm²',
-      'Protect themselves and deliver what\\\\\\\'s agreed',
+      'A torque screwdriver set to the lug manufacturer’s figure',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       'Rod-and-draw kit is used for:',
     options: [
-      'Areas of higher thermal conductivity creating heat flow paths',
-      'Labels, handover notes, and record books/logs',
+      'Bending steel conduit to a clean radius without kinks',
+      'Crimping large cable lugs onto sub-main tails',
       'Drawing cable through long runs of conduit or trunking',
-      'Approved Authorised Treatment Facility',
+      'Cutting consistent corner notches in trunking',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     question:
       'A clean 90° bend in 25 mm steel conduit is best made using:',
     options: [
-      'By scheduling operation based on occupancy and weather conditions',
+      'Heating the conduit with a blowtorch and bending it over your knee',
       'A hand-operated conduit bender (Hickey or stand bender) sized for 25 mm conduit',
-      'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
-      'Enabling enterprise-level monitoring whilst maintaining detailed luminaire control',
+      'A pipe vice and a hacksaw to cut and mitre two straight lengths together',
+      'A hydraulic crimp tool fitted with a 25 mm forming die',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'A "draw rope" or "draw line" left in a conduit during first fix is for:',
     options: [
-      'Without delay — by the quickest practicable means',
+      'Earthing the metal conduit back to the consumer unit',
       'Pulling cables through later when the second fix begins',
-      'A large university campus with 850 luminaires across multiple buildings',
-      'Every 250-500 hours or annually, whichever comes first',
+      'Marking the conduit route for the building inspector',
+      'Measuring the run length for the cable take-off',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'Cable rollers (mounted at intervals along a long route) are used to:',
     options: [
-      'Making changes to the learning or assessment process to remove barriers, without lowering the competence standard',
-      'No — training must include assessment of competence to ensure workers can actually apply the techniques in their real workplace tasks',
+      'Hold the cable above wet ground to keep the sheath clean',
+      'Maintain a fixed bend radius around every corner of the route',
       'Reduce friction so the cable can be pulled without scuffing the sheath or exceeding the maximum permitted pulling tension',
-      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
+      'Insulate the cable from the metal tray to prevent galvanic corrosion',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     question:
       'Cable lubrication (specialist water-based gel) is applied:',
     options: [
-      'Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and Reg 643.7.3 verification)',
-      'Do a brief review of key topics, prepare materials for the morning, then get a full night\\\\\\\\\\\\\\\'s sleep',
-      'Specified injuries, over-7-day absences, occupational diseases and dangerous occurrences to the HSE',
+      'Inside the conduit before any cables are installed, to seal against moisture',
+      'To the conductor strands to improve the electrical contact at terminations',
+      'To the inside of the gland to lock the cable mechanically in place',
       'To the outside of the cable to reduce friction during pulling through conduit or duct, especially on long bends',
     ],
     correctAnswer: 3,
@@ -127,9 +127,9 @@ const quizQuestions = [
       'A trunking "fish tape" (steel coiled tape) is preferred over rod-and-draw for:',
     options: [
       'Stiff cable through wall cavities, voids and short trunking sections where rods don’t fit',
-      'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
-      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
-      'When there are significant changes, after incidents, or if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid',
+      'Long straight conduit runs over 20 m where rods would be too slow',
+      'Pulling several large SWA cables through underground ducting at once',
+      'Bending steel conduit around tight corners without kinking it',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Hydraulic crimping tools are typically used for cable CSAs:',
     options: [
-      'MCS-specific qualifications and general electrical competence',
+      'Below 1 mm² — only the very finest control conductors',
       'Above 25 mm² — anything where hand crimps cannot deliver the required compression',
-      'Locations with specific risks requiring additional protection measures',
-      'Consistency in capturing everything and reviewing regularly',
+      'Any CSA, since hand crimps are never permitted by BS 7671',
+      'Only solid (single-strand) conductors regardless of size',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'The "manufacturer’s instructions" for a crimp lug typically specify:',
     options: [
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
-      'To collect a physical sample of material for laboratory identification of asbestos type and content',
+      'Only the maximum torque for the busbar bolt, nothing about the crimp itself',
+      'The ambient temperature range the finished joint may operate within',
       'The die index, the crimp position and the number of crimps per joint — and these must be followed for the joint to be compliant with 526.1',
-      'It’s a general-purpose silicon rectifier diode rated 1000 V reverse, 1 A forward — common in mains-side circuits.',
+      'The colour code to apply to the lug so the phase can be identified',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'A "saddle" or "pipe vice" set up on a tripod is used by an electrician to:',
     options: [
-      'Duration of the installation plus reasonable period',
-      'Section 443 (with installation rules in 534)',
-      'At the start of work and when conditions change',
+      'Support a cable drum so it free-spins during a pull',
+      'Clamp cable lugs while the hydraulic crimp is applied',
+      'Mount a roller at each bend along a long cable route',
       'Hold conduit firmly while threading or bending',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
       'A "trunking notcher" or trunking jig speeds up:',
     options: [
       'Cutting consistent corner notches in trunking so right-angle and tee joints fit cleanly',
-      'Poor connections, oxidation, incorrect termination, or mechanical damage',
-      'Risk assessment names the hazards and controls; method statement says how the work will be done in safe order',
-      'Cross-sectional area, insulation type, installation method, ambient temperature',
+      'Stripping the outer sheath from SWA before fitting a gland',
+      'Threading the ends of steel conduit before a coupler is fitted',
+      'Drilling fixing holes through the back of metal trunking at set centres',
     ],
     correctAnswer: 0,
     explanation:

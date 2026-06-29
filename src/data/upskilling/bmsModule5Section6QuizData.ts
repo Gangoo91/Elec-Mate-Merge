@@ -5,10 +5,10 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is network planning essential in BMS?',
     options: [
-      'The delay between sending a message and receiving a response',
+      'To guarantee every device can run on a single power supply',
       'To ensure all devices can communicate efficiently and prevent data clashes',
-      'Reduces traffic congestion and improves response times',
-      'Breaking a large network into smaller, manageable sections',
+      'To remove the need for any cable terminations',
+      'To allow any topology to be used without restrictions',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'What is the maximum recommended cable length for RS-485?',
     options: [
-      '500m',
-      '2000m',
+      '600m',
+      '900m',
       '1200m',
-      '100m',
+      '1500m',
     ],
     correctAnswer: 2,
     explanation:
@@ -32,22 +32,22 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     question: 'How many devices can typically be on a Modbus RTU segment?',
     options: [
       'Up to 16 devices',
-      'Up to 127 devices',
-      'Up to 64 devices',
+      'Up to 24 devices',
+      'Up to 48 devices',
       'Up to 32 devices',
     ],
     correctAnswer: 3,
     explanation:
-      'Modbus RTU typically supports up to 32 devices per segment. This limit ensures reliable communication and manageable response times across the network.',
+      'Modbus RTU over RS-485 typically supports up to 32 unit loads (devices) per segment. Repeaters are needed to extend beyond this limit while maintaining reliable communication.',
   },
   {
     id: 4,
     question: 'Why should RS-485 be daisy-chained rather than star-wired?',
     options: [
       'To prevent signal reflections and maintain proper impedance',
-      'Keep communications cables separate from mains power cables',
-      'Splitting the single loop into five properly terminated segments',
-      'To ensure all devices can communicate efficiently and prevent data clashes',
+      'To reduce the total length of cable used on the installation',
+      'To allow each device to have its own dedicated home run',
+      'To make fault finding easier by isolating each device',
     ],
     correctAnswer: 0,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'Give one benefit of segmentation in large networks.',
     options: [
-      'Removes termination requirements',
-      'Eliminates the need for protocol conversion',
-      'Reduces traffic congestion and improves response times',
-      'Allows unlimited cable lengths',
+      'It removes the need for cable termination resistors',
+      'It eliminates the need for any protocol conversion',
+      'It reduces traffic congestion and improves response times',
+      'It allows cable runs of unlimited length',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What is latency in a BMS network?',
     options: [
-      'Breaking a large network into smaller, manageable sections',
-      'Keep communications cables separate from mains power cables',
-      'Splitting the single loop into five properly terminated segments',
+      'The total number of devices connected to a single bus',
+      'The voltage drop measured along the communications cable',
+      'The data transfer rate expressed in bits per second',
       'The delay between sending a message and receiving a response',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     question: 'Give one cause of high latency.',
     options: [
       'Too many devices on a single bus segment',
-      'To provide earth fault protection',
-      'Serpentine and amphibole groups',
-      'Use rollers and apply lubricant',
+      'Using shielded twisted-pair communications cable',
+      'Fitting termination resistors at both ends of the bus',
+      'Setting all devices to the same baud rate',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'How can electricians reduce interference on comms cabling?',
     options: [
-      'Splitting the single loop into five properly terminated segments',
+      'Run comms cables tightly bundled with mains power cables',
       'Keep communications cables separate from mains power cables',
-      'Reduces traffic congestion and improves response times',
-      'Breaking a large network into smaller, manageable sections',
+      'Use the longest possible cable runs between devices',
+      'Remove the cable screen to reduce capacitance',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule5Section6QuizQuestions: QuizQuestion[] = [
     question:
       'In the real-world example, what change reduced latency from 20–30 seconds to under 1 second?',
     options: [
-      'The delay between sending a message and receiving a response',
-      'To ensure all devices can communicate efficiently and prevent data clashes',
+      'Replacing all the field controllers with newer models',
+      'Increasing the baud rate on the single overloaded loop',
       'Splitting the single loop into five properly terminated segments',
-      'Keep communications cables separate from mains power cables',
+      'Moving the head-end server closer to the field devices',
     ],
     correctAnswer: 2,
     explanation:

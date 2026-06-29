@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'What is the correct order of the duty hierarchy under the Manual Handling Operations Regulations 1992?',
     options: [
-      'Reduce risk, then assess, then avoid, then provide information',
       'Avoid hazardous manual handling, then assess, then reduce risk, then provide information',
+      'Reduce risk, then assess, then avoid, then provide information',
       'Assess first, then avoid, then reduce, then inform',
       'Provide information, then assess, then avoid, then reduce',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The MHOR 1992 establishes a clear hierarchy: (1) Avoid hazardous manual handling operations so far as is reasonably practicable (Reg. 4(1)(a)); (2) Assess any hazardous manual handling that cannot be avoided (Reg. 4(1)(b)(i)); (3) Reduce the risk of injury so far as is reasonably practicable (Reg. 4(1)(b)(ii)); (4) Provide information on the weight and heaviest side of loads (Reg. 4(1)(b)(iii)).',
   },
@@ -35,11 +35,11 @@ const quickCheckQuestions = [
       'Under Section 7 of the Health and Safety at Work Act 1974, what is the general duty of an employee?',
     options: [
       'To carry out risk assessments for every task',
-      'To take reasonable care for their own health and safety and that of others, and to cooperate with their employer',
       'To refuse all manual handling tasks',
       'To provide personal protective equipment at their own expense',
+      'To take reasonable care for their own health and safety and that of others, and to cooperate with their employer',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Section 7 of HASAWA 1974 places a duty on every employee to take reasonable care for their own health and safety and that of other persons who may be affected by their acts or omissions at work. They must also cooperate with their employer so far as is necessary to enable the employer to comply with health and safety duties.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Under Section 2 of the Health and Safety at Work Act 1974, what is the general duty of an employer?',
     options: [
-      'To eliminate all workplace risks completely',
       'To ensure, so far as is reasonably practicable, the health, safety, and welfare of employees',
+      'To eliminate all workplace risks completely',
       'To carry out a risk assessment once a year',
       'To provide personal protective equipment for every task',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 2(1) of HASAWA 1974 places a general duty on every employer to ensure, so far as is reasonably practicable, the health, safety, and welfare at work of all their employees. This overarching duty encompasses all workplace hazards, including manual handling.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: 'The Management of Health and Safety at Work Regulations 1999 require employers to:',
     options: [
       'Only assess risks when a manual handling injury occurs',
-      'Carry out a suitable and sufficient assessment of all workplace risks',
       'Only assess manual handling risks for loads over 25 kg',
       'Delegate all risk assessment to employees',
+      'Carry out a suitable and sufficient assessment of all workplace risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires every employer to carry out a suitable and sufficient assessment of the risks to the health and safety of their employees, and of any other person who may be affected. This includes all manual handling risks, regardless of load weight.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'Under Regulation 4(1)(b)(iii) of the MHOR 1992, employers must provide employees with:',
     options: [
       'Free gym membership to improve fitness',
-      'General indications and, where reasonably practicable, precise information on the weight of loads and the heaviest side of loads with an off-centre centre of gravity',
       'A written guarantee that no manual handling will be required',
       'Mechanical aids for every manual handling task',
+      'General indications and, where reasonably practicable, precise information on the weight of loads and the heaviest side of loads with an off-centre centre of gravity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 4(1)(b)(iii) requires employers to provide employees with general indications and, where it is reasonably practicable to do so, precise information on the weight of each load and the heaviest side of any load whose centre of gravity is not positioned centrally. This enables workers to plan lifts and use appropriate techniques.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Section 7 of the Health and Safety at Work Act 1974 places a duty on:',
     options: [
+      'Every employee at work',
       'Employers only',
       'The Health and Safety Executive',
-      'Every employee at work',
       'Building designers and architects',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Section 7 of HASAWA 1974 places a duty on every employee at work. They must (a) take reasonable care for their own health and safety and that of others who may be affected by their acts or omissions, and (b) cooperate with their employer or any other person so far as is necessary to enable compliance with health and safety requirements.',
   },

@@ -41,10 +41,10 @@ const checks = [
     question:
       "What does RAMS stand for and what's the difference between the two halves?",
     options: [
-      "Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens",
-      "Risk Assessment + Method Statement. The risk assessment identifies hazards, evaluates the risk and lists the controls (required by Management of Health & Safety at Work Regs 1999 Reg 3). The method statement sets out HOW the work will be done safely, step by step. Together they're the working H&S document for a job — the inspector after an incident asks for both.",
-      "At the start — Reg 132.13 is the design-side documentation requirement that establishes what must be provided for every installation. The design pack flowing from designer to installer is the implementation of Reg 132.13 at the project's start. The same documentation flows through to the customer's O&M pack at handover.",
-      "A written quote that fully scopes the work (number of circuits, accessories, run routes, what's included, what's excluded), a contract setting payment terms and variations, and a customer signature confirming both. Without those you've got a vague verbal agreement that the Consumer Rights Act 2015 will treat as enforceable on the customer's terms — meaning if they later say 'I assumed downlights were included' you'll struggle to prove otherwise.",
+      "Risk And Maintenance Schedule — the risk half lists the job's hazards and the maintenance half sets the planned inspection intervals for the completed installation.",
+      "Risk Assessment + Method Statement — the assessment identifies hazards and controls (MHSWR 1999 Reg 3); the method statement sets out HOW the work is done safely, step by step.",
+      "Risk Analysis And Mitigation Strategy — the analysis half scores hazards on a likelihood matrix and the strategy half lists the insurance and contingency arrangements.",
+      "Required Access And Materials Sheet — the access half lists the equipment to reach the work and the materials half lists the cable and accessories the office procures.",
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const checks = [
     question:
       "What's a toolbox talk and what's it FOR?",
     options: [
-      "You should have kept a copy in the firm's records (paper or digital). Most contractor schemes (NICEIC, NAPIT, ELECSA) require record retention of 6 years minimum, and the Limitation Act 1980 sets the same window for civil claims arising from negligence. Re-issuing a copy is straightforward if you have the records, embarrassing if you don't.",
-      "Three reasons. (1) Input impedance — multimeters at 10 MΩ read induced/phantom voltages as if they were real sources; two-pole at a few kΩ loads them to zero. (2) Probe geometry — multimeter probes typically have longer exposed tips and weaker finger barriers, failing GS38. (3) Indication — a multimeter shows a digit on a screen which can be misread; the two-pole's lamp + LED + audible is unambiguous. The instruments are complementary; the multimeter measures, the two-pole proves dead.",
-      "Stop, raise the conflict politely, and ask for the change in writing. The method statement is the documented safe system of work. A verbal instruction to depart from it needs a documented reason, ideally a revised method statement signed off by whoever owns the original. If the supervisor refuses to put it in writing, that itself is a red flag — escalate via your employer's safety route. HASAWA s.7 makes you personally responsible for following the safe system; 'I was told to' is not a defence to a prosecution.",
-      "A short pre-shift safety briefing on a single topic — typically 5-10 minutes, delivered by the supervisor or a senior operative to the on-site team. The point is to refresh awareness of one specific hazard or control before the shift starts (e.g. 'today we're working at height — here's the WAHR hierarchy and what it means for our setup'). Toolbox talks are recorded — names of attendees, topic covered, date.",
+      "A formal certificated training course covering a topic in depth — typically half or full day, delivered externally, ending in an assessment and a card such as PASMA or asbestos awareness.",
+      "A written hazard log where each operative records the risks they meet during the shift, reviewed weekly by the supervisor so recurring hazards can be designed out of future jobs.",
+      "An end-of-shift debrief where the team reviews what went wrong and agrees corrective actions, signed off by the supervisor as a record that lessons were captured before the next shift.",
+      "A short pre-shift safety briefing on a single topic — typically 5-10 minutes, delivered to the team to refresh awareness of one hazard or control, recorded with attendees, topic and date.",
     ],
     correctIndex: 3,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     question:
       "Under EAWR 1989, what's the formal process required before any live electrical work can be carried out?",
     options: [
-      "Most electrical firms apply 15-30% markup on materials — covers handling, ordering admin, storage, working capital tied up in stock, and the value-added service of selecting the right materials. Some firms quote materials at trade price + markup; others at retail price (which already builds in markup vs trade price). Always be transparent with customers about which model you're using; they understand markup as the standard model.",
-      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
-      "Explaining the situation in person, leading with the safety reason (\\\\\\\"I have found a section of wiring that does not meet current safety standards\\\\\\\"), showing the specific issue where possible, expressing empathy for the inconvenience (\\\\\\\"I understand this is not what you were expecting\\\\\\\"), presenting options rather than a single demand, and giving the client time to process before requiring a decision",
-      "Reg 14 prohibits live work UNLESS three conditions are all met: (a) it's unreasonable to do the work dead, (b) it's reasonable to do it live, AND (c) suitable precautions are in place. The standard mechanism for proving all three is a permit-to-work — a formal document that authorises the specific live activity, identifies the operatives, lists the precautions, and is signed by the issuing authority before work starts and again at completion.",
+      "Reg 14 allows live work freely provided the operative wears Class 0 insulating gloves and VDE-rated tools — the PPE is the legal requirement and no further authorisation is needed.",
+      "Reg 14 requires the operative to notify the HSE in advance and wait for written consent — live work cannot proceed until the regulator has approved the specific activity in writing.",
+      "Reg 14 requires the supply to be isolated and proved dead first, then re-energised under control — 'safe live working' is really a controlled re-energisation, not work on live conductors.",
+      "Reg 14 prohibits live work unless three conditions are all met — unreasonable to do dead, reasonable to do live, and suitable precautions — proven via a permit-to-work.",
     ],
     correctIndex: 3,
     explanation:
@@ -88,24 +88,24 @@ const quizQuestions = [
     question:
       "What's the role of the RAMS document on a typical electrical install?",
     options: [
-      "A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance",
-      "To set out the assessed hazards, the chosen control measures and the step-by-step method for doing the work safely. RAMS is the working H&S document for the job — referenced in induction, in toolbox talks, in permit-to-work, and re-read at start of each phase. After an incident it's the first document the HSE inspector asks for.",
-      "ISOLATE the supply at the nearest accessible point — the local switch, the breaker, the supplier's main fuse if necessary. Do NOT touch the casualty until isolation is confirmed. If isolation isn't immediately achievable, use a non-conductive item (dry wood, plastic chair) to break the contact, but isolation is always the first preference. Once free of the source, casualty assessment (DR ABC) and 999.",
-      "Three years from the date of the incident under RIDDOR Reg 12. Records held in any format that allows retrieval. The HSE may request retrospective access during investigations or sector reviews. Many firms retain longer for PI insurance / Defective Premises Act purposes.",
+      "To record the test results and certification for the completed installation, holding the EIC, schedule of test results and any minor-works certificate together in one job file.",
+      "To set out the assessed hazards, the chosen controls and the step-by-step method for doing the work safely — the working H&S document the inspector asks for first after an incident.",
+      "To define the commercial scope and price of the work, listing circuits, accessories and labour so the customer knows exactly what is included before they sign the contract.",
+      "To provide the operation and maintenance information the customer needs after handover — how to use the installation, the inspection intervals and who to call for faults.",
     ],
     correctAnswer: 1,
     explanation:
-      "RAMS is the bridge between the regulation (MHSWR Reg 3 requires assessment) and the actual work on site. Done well, it's a practical working document; done badly, it's a generic template that gets ignored. The HSE inspector is trained to spot the difference instantly — a job-specific RAMS that reflects the actual site conditions is evidence of a competent firm; a copy-paste template is evidence the assessment wasn't suitable and sufficient under Reg 3.",
+      "RAMS is the working H&S document for the job — referenced in induction, toolbox talks and permits, and re-read at the start of each phase. It bridges the regulation (MHSWR Reg 3 requires assessment) and the actual work on site. Done well it's a practical document; done badly it's a generic template that gets ignored. A job-specific RAMS that reflects the actual site conditions is evidence of a competent firm; a copy-paste template is evidence the assessment wasn't suitable and sufficient under Reg 3.",
   },
   {
     id: 2,
     question:
       "What's the 'template trap' that auditors and inspectors look for in poorly written RAMS?",
     options: [
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
-      "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
-      "A RAMS that uses the same generic wording for every job ('standard electrical install — usual precautions') without reflecting the specific hazards and conditions of THIS site. The inspector spots it instantly because the wording doesn't match what's actually present on the job. It's evidence that the assessment wasn't 'suitable and sufficient' under MHSWR 1999 Reg 3 even though the document exists.",
-      "Independent verification. The dead-test calculation depends on Ze (one measurement) plus R1+R2 (one or many readings, depending on circuit). The live Zs measurement is one direct reading. Comparing the two catches errors in either method, gives confidence in the result, and provides a single value to compare against Table 41.3 with the 0.8 multiplier applied.",
+      "A RAMS so long and detailed that nobody on site reads it — pages of generic boilerplate bury the few site-specific controls that matter, so the operatives skip straight to the sign-off page without absorbing the actual hazards.",
+      "A RAMS that names the wrong regulations — citing superseded or irrelevant legislation makes the document look authoritative but means the controls aren't actually grounded in the duties that apply, which an inspector treats as a competence failure.",
+      "A RAMS that reuses the same generic wording for every job ('standard electrical install — usual precautions') without reflecting the specific hazards and conditions of THIS site.",
+      "A RAMS signed only by the office author and not by the operatives — without the workers' signatures there is no evidence the controls were communicated, the gap an inspector looks for first.",
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       "How is a toolbox talk different from a formal training course?",
     options: [
-      "Where equipment was disconnected to allow the standard 500 V DC test, after the equipment is reconnected a 250 V DC test must be applied between live conductors and the protective conductor — minimum 1 MΩ. Confirms the equipment itself does not present an unacceptable insulation defect.",
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
-      "UK statute making it a criminal offence to offer, promise, give, request, accept or agree to receive a financial or other advantage as an inducement for improper performance. Applies to any UK person/business. For electricians: gifts to suppliers/main contractors over modest value (typically £100+) raise risk; cash 'thank-yous' to procurement people are clearly bribery; small thank-you gifts (bottle of wine, biscuit tin) are typically fine. Many large firms have anti-bribery policies that ban any gifts.",
-      "A toolbox talk is short (5-10 min), focused on a single topic, delivered on site by a supervisor or senior operative, often at the start of a shift. It's a refresh / awareness tool, not initial training. Formal training (e.g. PASMA, IPAF, asbestos awareness) is longer, structured, certificated and provides the underlying competence. Toolbox talks reinforce that competence in the day-to-day work.",
+      "There is no real difference — a toolbox talk is simply the on-site name for a training course, and attending a few toolbox talks can replace a formal certificated course such as PASMA or asbestos awareness.",
+      "A toolbox talk is the longer of the two — a full structured course delivered over a day — while a formal training session is the short five-minute pre-shift briefing that refreshes it.",
+      "A toolbox talk results in a recognised qualification and card, whereas a formal training course is only an informal awareness session with no certificate or assessment at the end.",
+      "A toolbox talk is short (5-10 min), single-topic and delivered on site at shift start — a refresh tool, not initial training; formal training is longer, certificated and builds the competence.",
     ],
     correctAnswer: 3,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       "Which of these activities typically requires a permit-to-work in addition to RAMS?",
     options: [
-      "Hot work (gas torch, grinding sparks, welding) on commercial premises, confined-space entry (ducts, voids, lift shafts), live electrical work under EAWR Reg 14, and high-energy switching on industrial / healthcare sites. The permit is a formal document authorising the specific activity within a specific time window, listing the precautions, and signed by the issuing authority and the operative.",
-      "Common parts (landlord supply, intake, distribution, common-area lighting, lift supplies, cleaner sockets) inspected fully. Flats sampled — typical 10-20% sample with the agreement of the freeholder and ideally the tenants — and the limitation clearly recorded that the EICR covers common parts in full and a defined sample of flats; individual flats not sampled retain their own EICR responsibility under the PRS Regulations or the leaseholder's responsibility.",
-      "Quicker than 3-lead, used when access to the neutral is impractical (e.g. testing at a fixed appliance with only L and E accessible). The instrument measures the L-E loop only; result is Zs directly without the auxiliary L-N measurement. Slightly less accurate than 3-lead but acceptable for routine Zs verification.",
-      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
+      "Hot work (gas torch, grinding, welding), confined-space entry, live electrical work under EAWR Reg 14, and high-energy switching on industrial / healthcare sites.",
+      "Routine first-fix cabling in a new-build, second-fixing accessories, and dead testing of a completed circuit — any hands-on installation task carries enough risk to need a permit.",
+      "Working at height on a tower scaffold, manual handling of cable drums, and using a 110V chop saw — tasks involving physical equipment all need a permit beyond the RAMS.",
+      "Any work in an occupied domestic property, because the presence of the public means a permit is needed under the householder's duty of care alongside the RAMS.",
     ],
     correctAnswer: 0,
     explanation:
@@ -144,38 +144,38 @@ const quizQuestions = [
     question:
       "What's typically on a hot-work permit?",
     options: [
-      "The dead test proves the wiring is correct between conductor identification at the CU and conductor identification at the accessory. The live test (using an approved voltage indicator at the accessory after first energising) confirms that the assumed L conductor at the CU actually carries the supply line — the dead test cannot detect a labelling error or a reversed connection at the meter tails.",
-      "The location, the specific activity (gas torch, grinding, welding), the operative names, the permit validity window (start time, end time), the precautions in place (combustibles cleared, fire blanket / extinguisher to hand, fire watch arranged for after work), the cool-down / fire-watch requirement (typically 30-60 minutes after work ceases), and signatures from issuer, operative and (on completion) the fire-watch confirming no smouldering.",
-      "You don't have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.",
-      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
+      "The cable types and sizes, the protective device ratings, the expected test results and the BS 7671 regulations to satisfy — essentially the technical specification for the job.",
+      "The location, activity, operative names, validity window, precautions, and the fire-watch and sign-off requirements before and after the work.",
+      "The customer's contact details, the agreed price, the payment milestones and a signature confirming acceptance — the permit doubling as the contract for the hot-work element.",
+      "The atmospheric monitoring readings, oxygen and flammable-gas levels, rescue plan and standby person's name — the same content as a confined-space entry permit.",
     ],
     correctAnswer: 1,
     explanation:
-      "Hot-work permits are strict because the fire risk persists after the visible work has stopped. The fire watch — typically a competent person remaining in the area for 30-60 minutes after work ceases — is the control that catches a smouldering ignition before it becomes a fire. Skipping the fire watch is a common cause of avoidable building fires linked to maintenance work.",
+      "A hot-work permit records the location, the specific activity (gas torch, grinding, welding), operative names, the validity window, the precautions (combustibles cleared, fire blanket and extinguisher to hand), the fire-watch requirement (typically 30-60 minutes after work ceases) and sign-off from issuer, operative and fire watch. The permit is strict because the fire risk persists after the visible work has stopped — the fire watch catches a smouldering ignition before it becomes a fire, and skipping it is a common cause of avoidable building fires.",
   },
   {
     id: 6,
     question:
       "Under the Confined Spaces Regulations 1997, what's a 'confined space' and what's the headline rule?",
     options: [
-      "Application fee around £200-300 plus annual subscription around £30-50. Some institutions (IET, EngineeringUK) offer reduced rates for new registrants. Cost is tax-deductible if you're self-employed or HMRC has the body on its approved professional fees list. Compared to the credential value (recognised national engineering registration) the cost is modest.",
-      "Sole trader: 5 years from the 31 January Self Assessment deadline for that tax year — so effectively 5 years and 10 months from the end of the tax year. Ltd company: 6 years from the end of the company's accounting period. VAT registered: 6 years for VAT records. Practical advice: keep all records 7+ years. Cloud accounting (Xero, QuickBooks, FreeAgent) makes this easier — records stored indefinitely.",
-      "A space substantially enclosed (whether or not entirely) and where a 'specified risk' could arise — fire/explosion (gas, vapour, dust), loss of consciousness from fumes or lack of oxygen, drowning, asphyxiation from free-flowing solid, or trapping/heat-related illness. Reg 4 prohibits entry unless reasonably practicable to do the work without entering. Reg 5 requires a safe system of work (entry permit, atmospheric monitoring, rescue arrangements) where entry is necessary.",
-      "SEG is the UK regulatory scheme requiring large electricity suppliers to pay solar PV exporters for surplus electricity exported to the grid (replacing the closed Feed-in Tariff). To register a PV system for SEG the install must be MCS-certified — so the homeowner needs an MCS-registered installer. Tariff rates vary by supplier (typically 4-15p/kWh in 2024).",
+      "Any space too small to stand upright in — defined purely by dimensions. The rule is that the operative must wear a harness tethered to an anchor outside the space.",
+      "Any room without natural daylight or mechanical ventilation — lofts, cellars and plant rooms. The rule is that temporary lighting and a forced-air fan must be installed before entry.",
+      "A space substantially enclosed where a 'specified risk' could arise (fire/explosion, loss of consciousness, drowning, asphyxiation), with entry controlled under Reg 4 and Reg 5.",
+      "Any space with a single point of access and no second escape route — the rule is that two exits must always be provided and single-opening entry is prohibited outright.",
     ],
     correctAnswer: 2,
     explanation:
-      "The Confined Spaces Regulations 1997 are precise. A space is 'confined' if it's enclosed AND has a specified risk. A loft isn't necessarily confined; a lift shaft is; an under-floor void with poor ventilation might be. The 'don't enter if you can avoid it' rule (Reg 4) is the strongest control, and the entry permit + atmospheric monitoring + rescue plan (Reg 5) is required where entry can't be avoided. Entry without those controls has caused multiple electrician fatalities.",
+      "The Confined Spaces Regulations 1997 are precise. A space is 'confined' if it's substantially enclosed AND a specified risk could arise — fire/explosion (gas, vapour, dust), loss of consciousness from fumes or lack of oxygen, drowning, asphyxiation from free-flowing solid, or trapping/heat illness. A loft isn't necessarily confined; a lift shaft is. Reg 4 ('don't enter if you can avoid it') is the strongest control, and Reg 5 requires a safe system of work — entry permit, atmospheric monitoring, rescue — where entry can't be avoided. Entry without those controls has caused multiple electrician fatalities.",
   },
   {
     id: 7,
     question:
       "What's the documentation chain from pre-construction to permit?",
     options: [
-      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
-      "Set the meter to INRUSH mode. Clamp around one phase (or the L of a single-phase motor). Press start to arm the capture. Operate the load (start the motor). The meter captures the peak current in the first 100 ms after the rising edge of current — typically 6–10× the running current for an induction motor, higher for HVAC compressors. Useful for diagnosing nuisance trips on an undersized breaker (the inrush exceeds the magnetic trip threshold on a Type B breaker; replace with Type C or D for high-inrush loads).",
-      "In writing, contemporaneously. Text or email to the supervisor; CC to a senior manager or H&S manager; copy retained. State what was asked, what you said, and the reason (regulation cited or risk identified). Time-stamped. The contemporaneous written record is the strongest evidence in any subsequent ERA s.44 claim or HSE prosecution.",
-      "Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.",
+      "EIC → schedule of inspections → schedule of test results → minor works certificate → EICR — the certification chain that records the electrical work, which is the documentation an inspector follows after a fault.",
+      "Quotation → contract → variation order → invoice → final account — the commercial chain that records what was agreed and paid, which is the paperwork traced back if there is a dispute over scope.",
+      "Method statement → toolbox talk → permit-to-work → pre-construction information → construction phase plan — the same documents but assembled by the operative upwards from their own task to the site organisation above them.",
+      "Pre-construction information → construction phase plan → RAMS per work package → toolbox talks each shift → permit-to-work for high-risk activities, each layer referencing the one above.",
     ],
     correctAnswer: 3,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       "As an apprentice, what's your role in the RAMS / toolbox / permit chain?",
     options: [
-      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
-      "Politely correct them. The five-year payback figure is from the Feed-in Tariff (FIT) era which closed in 2019 — under the current Smart Export Guarantee (SEG) and current electricity prices, realistic payback is 9–12 years. Quote real numbers, not historic ones, so the customer makes an informed decision.",
-      "Coded as FI with a recommended investigation route, recorded under Limitations on the EICR, and brought to the duty holder's attention in the handover so they can commission the investigation as a separate work item. The EICR cannot certify what cannot be inspected.",
-      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
+      "Read the RAMS, attend and sign the toolbox-talk register, work within any permit's scope, and flag anything on site that doesn't match — HASAWA s.7 making all of this a personal duty.",
+      "Write the RAMS for your own work package and issue your own permit-to-work — as the person doing the task you are best placed to assess its risks and author the documentation.",
+      "Sign the permit-to-work as the issuing authority once you have read the RAMS — the apprentice authorises the higher-risk activities for the team as the person doing the work.",
+      "Keep out of the documentation chain entirely until qualified — RAMS, toolbox talks and permits are the supervisor's job and an apprentice has no duties under any of them yet.",
     ],
     correctAnswer: 0,
     explanation:

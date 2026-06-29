@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A colleague falls from a stepladder and hits their head. Ten minutes later, you notice clear fluid draining from their ear. What does this suggest and what should you do?',
     options: [
-      'Ear wax has been dislodged — clean the ear and monitor',
       'This may be cerebrospinal fluid (CSF), indicating a skull fracture — call 999 immediately and do NOT plug the ear',
+      'Ear wax has been dislodged — clean the ear and monitor',
       'Water from a nearby spill has entered the ear — dry it and continue monitoring',
       'This is a normal stress response — reassure the casualty and offer water',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Clear fluid draining from the ear or nose after a head injury may be cerebrospinal fluid (CSF), which surrounds and protects the brain. A CSF leak indicates a skull fracture and is a medical emergency. Call 999 immediately. Do NOT plug the ear or attempt to stop the flow — allow it to drain freely. Cover the ear loosely with a sterile pad to absorb the fluid, and position the casualty with the leaking ear downwards if possible.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is a late sign of a skull base fracture?',
     options: [
-      'A headache that improves with paracetamol',
       "Bruising behind the ears (Battle's sign) or around both eyes (raccoon/panda eyes)",
+      'A headache that improves with paracetamol',
       'A small bump on the forehead that is tender to touch',
       'Temporary dizziness that resolves within two minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Battle's sign (bruising behind the ears) and raccoon eyes/panda eyes (bilateral periorbital bruising — bruising around both eyes) are late signs of a skull base fracture. They typically develop hours after the injury as blood tracks along tissue planes from the fracture site. Other signs of a skull base fracture include: clear fluid (CSF) from the ear or nose, and blood from the ear. These signs indicate a serious injury requiring emergency hospital treatment.",
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'A casualty has a piece of metal embedded in their eye after an angle grinder incident. What is the correct first aid?',
     options: [
       'Remove the metal fragment carefully with clean tweezers and flush the eye with water',
-      'Do NOT remove the object, pad around it with a ring pad, bandage BOTH eyes, and call 999',
       'Cover the affected eye only with a sterile pad and transport to the nearest walk-in centre',
       'Flush the eye vigorously with water to dislodge the metal fragment',
+      'Do NOT remove the object, pad around it with a ring pad, bandage BOTH eyes, and call 999',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Never attempt to remove an embedded object from the eye. Doing so can cause catastrophic further damage to the delicate structures within the eye. Instead: do NOT press on the object, build up padding around it using a ring pad (donut-shaped pad) to prevent anything from pressing on the object, bandage BOTH eyes to prevent sympathetic eye movement, and call 999. Reassure the casualty and explain why both eyes must be covered.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'When should you move a casualty with a suspected spinal injury?',
     options: [
-      'Never — spinal injury casualties must never be moved under any circumstances',
       'Only if their airway is compromised or they are in immediate danger (such as fire or structural collapse)',
+      'Never — spinal injury casualties must never be moved under any circumstances',
       'Whenever you need to make them more comfortable',
       'Only if you have a spinal board and cervical collar available',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A casualty with a suspected spinal injury should only be moved if their airway is compromised (airway takes priority over spinal immobilisation) or they are in immediate danger — such as fire, flooding, structural collapse, or exposure to hazardous substances. If the casualty must be moved, use a log roll with as many rescuers as possible to maintain spinal alignment. The principle is: the risk of NOT moving the casualty must outweigh the risk of moving them.',
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
       'A colleague gets a small metal filing in their eye from drilling. The object is visible on the white of the eye. What should you try first?',
     options: [
       'Remove it with the corner of a clean, damp cloth',
-      'Try to float it off by irrigating with clean water from the inner corner outwards',
       'Leave it in place, pad both eyes, and call 999',
+      'Try to float it off by irrigating with clean water from the inner corner outwards',
       'Ask the casualty to rub their eye vigorously to dislodge it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For a foreign object (such as a metal filing, dust, or grit) resting on the surface of the eye (not embedded), try to flush it out by irrigating with clean water or sterile eyewash from the inner corner outwards. If the object is on the white of the eye and will not flush out, you may try to lift it off gently with the corner of a damp, clean cloth or cotton bud. Never rub the eye, as this can scratch the cornea. If the object is embedded, on the coloured part of the eye (iris), or will not come out with gentle irrigation, seek medical attention.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'Which of the following is NOT a red flag sign that requires calling 999 after a head injury?',
     options: [
       'Clear fluid leaking from the ear',
-      'A brief headache that resolves with paracetamol within 30 minutes',
       'Repeated vomiting',
       'Seizures following the injury',
+      'A brief headache that resolves with paracetamol within 30 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A brief, mild headache that resolves quickly with paracetamol is not in itself a red flag. However, a persistent headache that worsens over time IS a red flag. The other options are all serious warning signs: clear fluid from the ear (possible CSF leak indicating skull fracture), repeated vomiting (sign of raised intracranial pressure), and seizures (indicate significant brain injury). Any casualty with one or more red flag signs needs emergency assessment — call 999.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "When irrigating a chemical splash from the right eye, which way should you tilt the casualty's head?",
     options: [
-      'Tilt the head back (face up) so water pools in the eye socket',
       'Tilt the head to the right so the affected eye is lower — preventing contaminated water from flowing into the left eye',
+      'Tilt the head back (face up) so water pools in the eye socket',
       'Tilt the head to the left so the unaffected eye is lower',
       'Keep the head level — the direction does not matter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When irrigating a chemical splash from the right eye, tilt the head to the right so that the affected (right) eye is lower than the unaffected (left) eye. This ensures that contaminated water drains away from the good eye, preventing the chemical from being washed across into it. Hold the eyelids open during irrigation to ensure thorough flushing. Continue for at least 20 minutes with clean running water.',
   },

@@ -50,14 +50,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 6,
     question: 'What test must be completed before applying insulation resistance testing?',
     options: [
-      'EIC for new work, MEIWC for minor alterations',
-      'AC and pulsating DC residual currents',
+      'Earth fault loop impedance measurement',
+      'RCD operating-time verification',
       'Continuity of protective conductors',
-      'Equipment to be suitable and maintained',
+      'Prospective fault current measurement',
     ],
     correctAnswer: 2,
     explanation:
-      'Continuity testing must be completed first to ensure a complete circuit exists before insulation testing.',
+      'Continuity of protective conductors is a dead test carried out before insulation resistance; loop impedance, RCD and PFC tests are all live tests performed later in the sequence.',
   },
   {
     id: 7,
@@ -94,16 +94,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 10,
-    question: 'How do you verify that test instruments are functioning correctly?',
+    question: 'How do you verify that a voltage indicator is functioning correctly?',
     options: [
-      'C1, C2, or FI observations are found',
-      'Prospective Fault Current - confirms equipment rating',
+      'Check the calibration certificate is in date',
+      'Compare its reading against a second meter',
       'Use a proving unit before and after testing',
-      'Supply characteristics and earthing system',
+      'Confirm the battery indicator shows full charge',
     ],
     correctAnswer: 2,
     explanation:
-      'Proving units should be used before and after testing to confirm instrument functionality.',
+      'A dedicated proving unit should be used to prove a voltage indicator immediately before and after testing, confirming it works on a known source (GS38).',
   },
 
   // Inspection Sequencing
@@ -119,9 +119,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When should dead testing be performed?',
     options: [
       'After visual inspection but before live testing',
-      'High-frequency components and specialised detection equipment',
-      'Like-for-like accessory replacement',
-      'Different sensitivities and/or time delays',
+      'Only after the installation has been energised',
+      'Before any visual inspection is carried out',
+      'At the same time as functional testing',
     ],
     correctAnswer: 0,
     explanation:
@@ -131,55 +131,55 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 13,
     question: 'What is the purpose of verifying polarity on final circuits?',
     options: [
-      'Before initial energisation and periodically thereafter',
-      'To ensure switches operate only on line conductor',
-      'Disconnect sensitive equipment before insulation testing',
-      'EIC for new work, MEIWC for minor alterations',
+      'To confirm the earth fault loop impedance is low enough',
+      'To ensure switches and fuses are in the line conductor only',
+      'To prove the insulation resistance meets the minimum value',
+      'To measure the prospective fault current at the origin',
     ],
     correctAnswer: 1,
     explanation:
-      'Polarity verification ensures switches and protective devices are correctly connected to the line conductor.',
+      'Polarity verification ensures single-pole switches, fuses and protective devices are connected in the line conductor, not the neutral.',
   },
   {
     id: 14,
     question: 'During inspection, cables should be checked for:',
     options: [
-      'Protection against finger contact',
-      '50% of rated residual current',
+      'Correct phase rotation at the terminals',
+      'Compliance with the manufacturer batch number',
       'Damage, routing and support',
-      'Before and after use',
+      'Insulation resistance above 2 MΩ',
     ],
     correctAnswer: 2,
     explanation:
-      'Cables must be inspected for physical damage, correct routing, and adequate support.',
+      'Visual inspection of cables checks for physical damage, correct routing and adequate support; insulation resistance is a separate dead test, not a visual check.',
   },
   {
     id: 15,
     question: 'When inspecting a consumer unit, what should be verified first?',
     options: [
-      'Dust, moisture and corrosive substances',
-      'C1 or C2 observations recorded',
-      'High temperature and humidity',
+      'The measured Zs of each final circuit',
+      'The RCD trip times at 1x and 5x IΔn',
+      'The continuity of every protective conductor',
       'IP rating and general condition',
     ],
     correctAnswer: 3,
     explanation:
-      'The general condition and IP rating establish basic safety before detailed inspection.',
+      'Visual inspection of the enclosure (IP rating, signs of overheating, general condition) precedes the detailed dead and live testing of individual circuits.',
   },
 
   // Safe Isolation
   {
     id: 16,
-    question: 'Why is it important to perform testing with the installation isolated?',
+    question: 'Why must dead tests be carried out with the installation isolated?',
     options: [
       'To prevent electric shock and equipment damage',
-      'Thermal expansion causing loose connections',
-      'Investigate the cause before resetting',
-      'Rotation direction check and phase sequence testing',
+      'To allow the cables to cool to ambient temperature',
+      'To reduce the prospective fault current at the board',
+      'To ensure the RCD does not trip during the test',
     ],
     correctAnswer: 0,
     explanation:
-      'Isolation prevents electric shock to personnel and protects test equipment from damage.',
+      'Isolation prevents electric shock to personnel and protects test instruments, which apply their own test voltage, from damage by the supply.',
   },
   {
     id: 17,
@@ -203,29 +203,29 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 19,
-    question: 'What PPE is essential when carrying out electrical testing?',
+    question: 'What PPE is essential when carrying out live electrical testing?',
     options: [
-      'Continuity of protective conductors',
-      'Detection sensitivity and alarm functionality',
-      'Further Investigation required',
+      'A hard hat and steel toe-cap boots',
+      'Hi-vis vest and ear defenders',
+      'A dust mask and knee pads',
       'Safety glasses and insulated gloves',
     ],
     correctAnswer: 3,
     explanation:
-      'Safety glasses and insulated gloves provide essential protection during electrical testing.',
+      'Safety glasses and insulated gloves protect against arc flash and contact during live work; the other items address unrelated hazards.',
   },
   {
     id: 20,
     question: 'Before commencing work, what must be established about the installation?',
     options: [
       'Supply characteristics and earthing system',
-      'In failure mode to verify operation',
-      'Complex or high-risk electrical work',
-      'Protection against finger contact',
+      'The exact age of every cable installed',
+      'The original installer of the consumer unit',
+      'The energy supplier and tariff in use',
     ],
     correctAnswer: 0,
     explanation:
-      'Understanding supply characteristics and earthing system is fundamental for safe working.',
+      'Knowing the supply characteristics (Uo, frequency) and earthing arrangement (TN-S, TN-C-S, TT) is fundamental to designing protection and working safely.',
   },
 
   // Fault Recognition
@@ -233,27 +233,27 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 21,
     question: 'What does a high Zs reading typically indicate?',
     options: [
-      'Distribution network operators',
-      'High resistance in earth path',
-      'RCD and overcurrent protection',
-      'Complex or high-risk electrical work',
+      'Excessive prospective fault current',
+      'High resistance in the earth fault path',
+      'A neutral-to-earth fault on the circuit',
+      'An oversized protective conductor',
     ],
     correctAnswer: 1,
     explanation:
-      'High Zs readings indicate high resistance in the earth fault path, often due to loose connections.',
+      'A high Zs indicates high resistance in the earth fault loop, often from loose connections or an undersized/poorly connected CPC, which may prevent timely disconnection.',
   },
   {
     id: 22,
     question: 'What might cause insulation resistance values to read abnormally low?',
     options: [
-      'High voltage competency certification',
-      '1-minute to 30-second reading ratio',
+      'Using too high a test voltage',
+      'A protective conductor of large cross-section',
       'Damp conditions or connected loads not removed',
-      'Load testing and autonomy time verification',
+      'Testing a very short cable run',
     ],
     correctAnswer: 2,
     explanation:
-      'Low insulation resistance can result from damp conditions, connected equipment, or insulation breakdown.',
+      'Low insulation resistance commonly results from moisture, connected equipment giving a parallel path, or genuine insulation breakdown.',
   },
   {
     id: 23,
@@ -284,14 +284,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 25,
     question: 'You discover a protective conductor is not continuous. What action should you take?',
     options: [
-      'Fall of potential method using test electrodes',
-      'Record C2 and inform responsible person',
-      'Use a proving unit before and after testing',
-      'Fails to trip at test current',
+      'Increase the protective device rating to compensate',
+      'Record the defect and inform the responsible person',
+      'Continue testing and note it on the next inspection',
+      'Replace the conductor with a larger line conductor',
     ],
     correctAnswer: 1,
     explanation:
-      'A discontinuous protective conductor is potentially dangerous and requires immediate attention.',
+      'A discontinuous protective conductor is potentially dangerous; it must be recorded as a defect and the responsible person informed so it can be remedied.',
   },
 
   // Certificate Completion
@@ -299,67 +299,67 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 26,
     question: 'What certificate is required after a new consumer unit is installed?',
     options: [
-      'Most installations unless specifically exempted',
-      'Account for not all loads operating simultaneously',
+      'Minor Electrical Installation Works Certificate',
+      'Electrical Installation Condition Report (EICR)',
       'Electrical Installation Certificate (EIC)',
-      'Voltage variations during fault conditions',
+      'PAT testing certificate',
     ],
     correctAnswer: 2,
     explanation:
-      'A new consumer unit installation requires an Electrical Installation Certificate.',
+      'Replacing a consumer unit is new work requiring an EIC; a MEIWC covers only minor additions/alterations not involving a new circuit, and an EICR assesses existing installations.',
   },
   {
     id: 27,
     question: 'What is the difference between an EIC and a MEIWC?',
     options: [
-      'Knowledge, skills and safety understanding',
-      'Regular updating of knowledge and skills',
-      'High fault currents and electromagnetic interference',
-      'EIC for new work, MEIWC for minor alterations',
+      'An EIC is for domestic work, a MEIWC for commercial',
+      'An EIC is issued annually, a MEIWC only once',
+      'An EIC needs no testing, a MEIWC requires full testing',
+      'An EIC is for new work, a MEIWC for minor alterations',
     ],
     correctAnswer: 3,
     explanation:
-      'EIC is used for new installations or major work; MEIWC is for minor alterations like adding a socket.',
+      'An EIC covers new installations and additions of new circuits; a MEIWC covers minor alterations such as adding a socket to an existing circuit.',
   },
   {
     id: 28,
-    question: 'Who is responsible for signing the inspection section of an EIC?',
+    question: 'Who is responsible for signing the inspection and testing section of an EIC?',
     options: [
-      'The person who carried out inspection and testing',
-      'Electrical Installation Certificate (EIC)',
-      'Reduced oxygen levels and restricted escape routes',
-      'Approximately equal with slight variations',
+      'The person who carried out the inspection and testing',
+      'The client who ordered the work',
+      'The building control body',
+      'The distribution network operator',
     ],
     correctAnswer: 0,
     explanation:
-      'The person who actually performed the inspection and testing must sign that section.',
+      'The person who actually performed the inspection and testing must sign that section, confirming the results are their own.',
   },
   {
     id: 29,
     question:
       "What information is required in the 'extent of installation covered' section of an EICR?",
     options: [
-      'Alternative protection provided and risk assessment completed',
-      'Specific areas or circuits inspected and tested',
-      'New circuits, consumer unit changes and bathroom/kitchen work',
-      'Patient safety, life support systems and infection control',
+      'The estimated value of the installation',
+      'The specific areas and circuits inspected and tested',
+      'The names of all previous occupiers',
+      'The original date of installation only',
     ],
     correctAnswer: 1,
     explanation:
-      'This section must specify exactly what areas or circuits were included in the inspection.',
+      'The extent section must specify exactly which areas and circuits were included in the inspection, so the report scope is unambiguous.',
   },
   {
     id: 30,
     question: 'In what circumstances should a Limitation be recorded on a certificate?',
     options: [
-      'State limitations and their potential impact on safety',
-      'Investigate the cause before resetting',
-      'When areas could not be accessed as agreed with client',
-      'Damp conditions or connected loads not removed',
+      'When the installation is fully accessible and tested',
+      'When all test results are within acceptable limits',
+      'When areas could not be accessed as agreed with the client',
+      'When the client requests a discount on the work',
     ],
     correctAnswer: 2,
     explanation:
-      'Limitations must be recorded when agreed restrictions prevent full inspection or testing.',
+      'Limitations are recorded when agreed restrictions, such as inaccessible areas or occupied premises, prevent full inspection or testing.',
   },
 
   // Observation Coding
@@ -376,13 +376,13 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: "What does the observation code 'FI' mean?",
     options: [
       'Further Investigation required',
-      'Disconnected where practicable',
-      'Equipment to be suitable and maintained',
-      'Installation type, use, and condition',
+      'Fault Indicated on the supply',
+      'Fully Insulated equipment',
+      'Final Inspection completed',
     ],
     correctAnswer: 0,
     explanation:
-      'FI indicates that Further Investigation is required to determine the full extent of an issue.',
+      'FI indicates that Further Investigation is required without delay to determine the full extent of a potential safety issue.',
   },
   {
     id: 33,
@@ -395,14 +395,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 34,
     question: 'What would warrant a C1 classification?',
     options: [
-      'Step-by-step procedures and risk controls',
-      'Reduced oxygen levels and restricted escape routes',
+      'An improvement that is recommended but not essential',
+      'A defect that is potentially dangerous over time',
       'Danger present - immediate action required',
-      'Additional consideration for backup power sources',
+      'A non-compliance with no safety implication',
     ],
     correctAnswer: 2,
     explanation:
-      'C1 indicates immediate danger requiring urgent remedial action before continued use.',
+      'C1 means danger is present and immediate remedial action is required; C2 is potentially dangerous and C3 is improvement recommended.',
   },
   {
     id: 35,
@@ -465,14 +465,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 40,
     question: 'How is a ring final circuit tested for continuity?',
     options: [
-      'Test each conductor individually then cross-connect and test',
-      'Reduced oxygen levels and restricted escape routes',
-      'Improve earthing arrangements or reduce cable length',
-      'Duration of the installation plus reasonable period',
+      'Measure each leg end-to-end, then cross-connect and test',
+      'Apply 500V DC between line and the protective conductor',
+      'Measure the loop impedance at the furthest socket only',
+      'Inject 1.5x the device rating and time the disconnection',
     ],
     correctAnswer: 0,
     explanation:
-      'Each conductor is tested individually, then cross-connected to verify ring integrity and identify spurs.',
+      'Each conductor leg (r1, rn, r2) is measured end-to-end, then line and CPC are cross-connected so every socket reads about (r1+r2)/4, confirming ring integrity and revealing spurs.',
   },
 
   // Advanced Regulatory Knowledge
@@ -488,9 +488,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 42,
     question: 'RCD protection is required for all socket outlets up to what rating?',
     options: ['13A', '32A', '20A', '16A'],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'BS 7671 requires RCD protection for socket outlets not exceeding 20A in domestic installations.',
+      'Regulation 411.3.3 (BS 7671:2018+A4) requires additional RCD protection (≤30mA) for socket-outlets with a rated current not exceeding 32A; for dwellings there is no risk-assessment exemption.',
   },
   {
     id: 43,
@@ -554,13 +554,13 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 49,
     question: 'When measuring insulation resistance, connected equipment should be:',
     options: [
-      'Double or reinforced insulation',
+      'Left switched on to load the circuit',
       'Disconnected where practicable',
-      'All circuits have RCD protection',
-      'High resistance in earth path',
+      'Tested at the same time at 1000V DC',
+      'Earthed to the consumer unit',
     ],
     correctAnswer: 1,
-    explanation: 'Equipment should be disconnected where practicable to avoid false low readings.',
+    explanation: 'Connected equipment should be disconnected where practicable, as parallel paths through it can give misleadingly low readings or be damaged by the test voltage.',
   },
   {
     id: 50,
@@ -576,14 +576,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 51,
     question: 'What are the consequences of failing to document test results?',
     options: [
-      'Earth fault loop impedance and RCD operation',
-      'Allow discharge time before testing',
-      'Main earthing conductor size',
+      'Faster completion with no real drawbacks',
+      'Reduced calibration intervals for instruments',
+      'Lower prospective fault current at the board',
       'Legal liability and non-compliance',
     ],
     correctAnswer: 3,
     explanation:
-      'Failure to document results can lead to legal liability, regulatory non-compliance, and work rejection.',
+      'Failure to document results can lead to legal liability, regulatory non-compliance and rejection of the work, since the certificate is the formal record of safety.',
   },
   {
     id: 52,
@@ -596,13 +596,13 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 53,
     question: 'Who should receive copies of the Electrical Installation Certificate?',
     options: [
-      'High voltage competency certification',
-      'Client and relevant authorities',
-      'Three-phase motor circuits',
-      'Improvement recommended',
+      'Only the electrician who carried out the work',
+      'The person ordering the work and relevant authorities',
+      'The distribution network operator only',
+      'The manufacturer of the consumer unit',
     ],
     correctAnswer: 1,
-    explanation: 'Copies should be provided to the client and any relevant regulatory authorities.',
+    explanation: 'A copy must be given to the person ordering the work, with notification to building control or the competent person scheme as relevant authorities.',
   },
   {
     id: 54,
@@ -620,14 +620,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 55,
     question: 'What information must be included on an EICR front page?',
     options: [
-      'Record actual values with deviation noted',
-      'Use a proving unit before and after testing',
-      'Both overcurrent and earth leakage',
+      'The cost breakdown of any remedial works',
+      'The calibration dates of all test instruments',
+      'A full schedule of every cable length measured',
       'Overall assessment and recommendations',
     ],
     correctAnswer: 3,
     explanation:
-      'The EICR front page must include the overall assessment and next inspection recommendations.',
+      'The EICR front page must state the overall assessment (satisfactory/unsatisfactory) and the recommended date or interval for the next inspection.',
   },
 
   // Specific Testing Scenarios
@@ -635,66 +635,66 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 56,
     question: 'When testing a two-way lighting circuit, what should be verified?',
     options: [
-      'Correct connections at both switches and intermediate positions',
-      'Equipment not to cause or be susceptible to interference',
-      'Additional consideration for backup power sources',
-      'Automated control sequences and emergency override function',
+      'Correct operation from both switch positions',
+      'That the line and neutral are interchangeable',
+      'That both switches share a single strapper wire',
+      'That the lamp stays on regardless of switch state',
     ],
     correctAnswer: 0,
     explanation:
-      'Two-way circuits require verification of correct switching arrangements at all positions.',
+      'A two-way circuit must switch the lamp correctly from either switch position, confirming the strappers and common connections are wired correctly.',
   },
   {
     id: 57,
     question: 'For testing solar PV installations, special consideration must be given to:',
     options: [
-      'Resistance measurement between bonded parts',
-      'DC isolation and specific safety procedures',
-      'Regular check-in procedures and emergency contacts',
-      'Duration of the installation plus reasonable period',
+      'The absence of any earth connection on the DC side',
+      'DC isolation and continued generation in daylight',
+      'The need to test only at night for accuracy',
+      'Phase rotation on the single-phase output',
     ],
     correctAnswer: 1,
     explanation:
-      'Solar PV requires special DC isolation procedures and awareness of continued generation during daylight.',
+      'PV arrays generate DC whenever there is light, so DC isolation procedures and awareness that the array cannot be made fully dead in daylight are essential.',
   },
   {
     id: 58,
-    question: 'When testing IT systems, what additional test is required?',
+    question: 'When testing an IT system, what additional test is required?',
     options: [
-      'Consider higher rated RCDs or circuit division',
-      'Regular updating of knowledge and skills',
-      'Insulation monitoring device verification',
-      'Approximately equal with slight variations',
+      'A second earth electrode resistance measurement',
+      'A higher insulation resistance test voltage of 1000V',
+      'Insulation monitoring device functional verification',
+      'A repeat of the ring final continuity test',
     ],
     correctAnswer: 2,
     explanation:
-      'IT systems require verification of the insulation monitoring device functionality.',
+      'In an IT system the first fault does not cause disconnection, so the insulation monitoring device that signals that first fault must be verified.',
   },
   {
     id: 59,
     question: 'What is the purpose of functional testing?',
     options: [
-      'Accumulated earth leakage from multiple sources',
-      'C1 or C2 observations recorded',
-      'Load testing and autonomy time verification',
-      'Verify operation of switches and controls',
+      'To measure the insulation resistance of each circuit',
+      'To record the prospective fault current at the origin',
+      'To confirm the earth fault loop impedance is low enough',
+      'To verify operation of switches, isolators and controls',
     ],
     correctAnswer: 3,
     explanation:
-      'Functional testing verifies that all switches, isolators, and control devices operate correctly.',
+      'Functional testing confirms that switchgear, isolators, controls and interlocks operate correctly and as intended in service.',
   },
   {
     id: 60,
     question: 'Emergency lighting systems should be tested:',
     options: [
-      'In failure mode to verify operation',
-      'Test each electrode separately',
-      'Further Investigation required',
-      'Supply characteristics and earthing system',
+      'By simulating mains failure to verify operation',
+      'Only with the normal supply fully energised',
+      'At 500V DC insulation resistance only',
+      'By measuring phase rotation at the luminaire',
     ],
     correctAnswer: 0,
     explanation:
-      'Emergency lighting must be tested in failure mode to ensure it operates when mains supply fails.',
+      'Emergency lighting must be tested by simulating loss of the normal supply, confirming the luminaires illuminate and run for their rated duration (BS 5266).',
   },
 
   // Advanced Fault Finding
@@ -729,38 +729,38 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 63,
     question: 'What could cause low insulation resistance between live conductors?',
     options: [
-      'Regular updating of knowledge and skills',
-      '50% of rated residual current',
-      'Disconnect or short out neon indicators',
+      'An oversized circuit protective conductor',
+      'A test voltage that is set too high',
+      'A loose earth connection at the consumer unit',
       'Moisture ingress or cable damage',
     ],
     correctAnswer: 3,
     explanation:
-      'Low insulation between live conductors typically results from moisture or physical damage.',
+      'Low insulation resistance between line and neutral typically results from moisture ingress, physical cable damage or deteriorated insulation.',
   },
   {
     id: 64,
     question: 'A lighting circuit with high Zs readings might have:',
     options: [
       'Loose or missing CPC connections',
-      'RCD protection for all socket outlets',
-      'Locking off or removing fuses/links',
-      'High resistance in earth path',
+      'An oversized protective device',
+      'Too low a prospective fault current',
+      'Excessive insulation resistance',
     ],
     correctAnswer: 0,
-    explanation: 'High Zs in lighting circuits often indicates poor or missing CPC connections.',
+    explanation: 'High Zs on a lighting circuit often indicates loose, broken or missing CPC connections increasing the earth fault loop resistance.',
   },
   {
     id: 65,
     question: 'What indicates a spur on a ring final circuit during testing?',
     options: [
-      'Loose or missing CPC connections',
-      'One socket with higher resistance reading',
-      'Anti-islanding protection and grid synchronisation',
-      'Legal liability and non-compliance',
+      'Identical readings at every socket on the ring',
+      'One socket with a higher resistance reading',
+      'An infinite reading at the consumer unit',
+      'A zero reading between line and neutral',
     ],
     correctAnswer: 1,
-    explanation: 'A spur will show higher resistance readings due to the additional cable length.',
+    explanation: 'Sockets on the ring read approximately equal; a spur shows a noticeably higher reading because of the extra non-ring cable length to it.',
   },
 
   // Additional Regulatory and Safety
@@ -768,27 +768,27 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 66,
     question: 'The purpose of main protective bonding is to:',
     options: [
-      'Immediately advise the person ordering the report',
-      'Client and relevant authorities',
-      'Ensure metalwork is at earth potential',
-      'Different sensitivities and/or time delays',
+      'Limit the prospective fault current at the origin',
+      'Provide a return path for normal load current',
+      'Connect extraneous-conductive-parts to the main earth terminal',
+      'Reduce the insulation resistance of the installation',
     ],
     correctAnswer: 2,
     explanation:
-      'Main protective bonding ensures all exposed and extraneous metalwork is at earth potential.',
+      'Main protective bonding connects extraneous-conductive-parts (water, gas, structural metalwork) to the main earthing terminal, limiting touch voltages during a fault.',
   },
   {
     id: 67,
-    question: 'RCBO devices provide protection against:',
+    question: 'An RCBO provides protection against:',
     options: [
-      'Ensure all metalwork is at same potential',
-      'Limit voltage to safe levels',
-      'Further Investigation required',
+      'Earth leakage only, like a standalone RCD',
+      'Overcurrent only, like a standalone MCB',
+      'Transient overvoltages, like an SPD',
       'Both overcurrent and earth leakage',
     ],
     correctAnswer: 3,
     explanation:
-      'RCBOs combine both overcurrent protection and residual current (earth leakage) protection.',
+      'An RCBO combines the functions of an MCB (overload and short-circuit protection) and an RCD (residual/earth leakage protection) in a single device.',
   },
   {
     id: 68,
@@ -810,14 +810,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 70,
     question: 'What is meant by prospective short circuit current?',
     options: [
-      'Phase rotation, starting current and defrost cycle operation',
-      'AC and pulsating DC residual currents',
-      'Maximum current between live conductors during fault',
-      'DC isolation at multiple points and energy discharge verification',
+      'The normal full-load current of the circuit',
+      'The leakage current that operates the RCD',
+      'Maximum current between live conductors during a fault',
+      'The current measured during functional testing',
     ],
     correctAnswer: 2,
     explanation:
-      'PSCC is the maximum current that could flow during a fault between live conductors.',
+      'PSCC is the maximum current that would flow during a short circuit between live conductors, and determines the breaking capacity required of protective devices.',
   },
 
   // Final 30 Questions - Mixed Topics
@@ -884,27 +884,27 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 78,
     question: 'The purpose of SELV is to:',
     options: [
-      'Safety glasses and insulated gloves',
-      'Both employers and employees',
-      'Limit voltage to safe levels',
-      'Ze + (R1 + R2) × 1.67',
+      'Increase fault current for faster disconnection',
+      'Provide a functional earth for sensitive equipment',
+      'Limit voltage to a safe level (≤50V AC)',
+      'Allow circuits to operate without any protective device',
     ],
     correctAnswer: 2,
     explanation:
-      'SELV (Safety Extra Low Voltage) limits voltage to levels considered safe for direct contact.',
+      'SELV (Separated Extra-Low Voltage) limits the voltage to a level considered safe for contact (≤50V AC), using electrical separation from earth and from higher voltages.',
   },
   {
     id: 79,
     question: 'What test is used to check polarity at a light switch?',
     options: [
-      'All incidents, near misses and safety observations',
-      'Grid code compliance and export limitation',
-      'Rotation direction check and phase sequence testing',
-      'Continuity testing through switch to lamp',
+      'Insulation resistance test at 500V DC',
+      'Earth fault loop impedance measurement',
+      'RCD trip-time test at 5x rated current',
+      'Continuity testing through the switch to the lamp',
     ],
     correctAnswer: 3,
     explanation:
-      'Polarity at switches is verified by checking continuity through the switch to the controlled point.',
+      'Polarity at a switch is verified by continuity testing, confirming the switch is connected in the line conductor and not the neutral.',
   },
   {
     id: 80,
@@ -917,10 +917,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 81,
     question: 'Class II equipment is characterized by:',
     options: [
-      'Gradual voltage increase to test voltage',
+      'A protective conductor connected to its metal casing',
       'Double or reinforced insulation',
-      'All circuits have RCD protection',
-      'Safety glasses and insulated gloves',
+      'A dedicated earth electrode at the appliance',
+      'A reliance on supplementary bonding for safety',
     ],
     correctAnswer: 1,
     explanation:
@@ -928,29 +928,29 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 82,
-    question: 'The recommended test current for testing continuity of ring final circuits is:',
+    question: 'Continuity of a ring final circuit is tested using:',
     options: [
-      'One socket with higher resistance reading',
-      'Anti-islanding protection and grid synchronisation',
-      '1.5 times the rating of protective device',
-      'In failure mode to verify operation',
+      'A loop impedance tester on the live supply',
+      'A 500V DC insulation resistance tester',
+      'A low-resistance ohmmeter (≥200mA, ≤24V)',
+      'An RCD tester at the rated residual current',
     ],
     correctAnswer: 2,
     explanation:
-      'Ring final circuit testing should use 1.5 times the protective device rating as test current.',
+      'Continuity tests use a low-resistance ohmmeter delivering at least 200mA at no more than 24V open-circuit, with the circuit dead.',
   },
   {
     id: 83,
-    question: 'What additional protection is required for socket outlets in commercial premises?',
+    question: 'What additional protection is generally required for socket outlets rated up to 32A?',
     options: [
-      'IT earthing systems and supplementary bonding',
-      'Use a proving unit before and after testing',
-      'Insulation monitoring device verification',
-      'RCD protection for all socket outlets',
+      'Arc fault detection on every circuit',
+      'Surge protection at each outlet',
+      'Supplementary equipotential bonding',
+      'RCD protection not exceeding 30mA',
     ],
     correctAnswer: 3,
     explanation:
-      'Commercial socket outlets generally require RCD protection for additional safety.',
+      'Regulation 411.3.3 requires additional protection by a 30mA RCD for socket-outlets rated up to 32A unless a documented exception applies.',
   },
   {
     id: 84,
@@ -961,16 +961,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 85,
-    question: 'What is the purpose of diversity in electrical design?',
+    question: 'What is the purpose of applying diversity in electrical design?',
     options: [
-      'Disconnect or short out neon indicators',
-      'Account for not all loads operating simultaneously',
-      'Export limitation and grid protection settings verification',
-      'Equipotential bonding of all conductive parts within zones',
+      'To ensure every circuit is rated for full load at once',
+      'To account for not all loads operating simultaneously',
+      'To increase the prospective fault current for fast tripping',
+      'To provide a second independent supply to the installation',
     ],
     correctAnswer: 1,
     explanation:
-      'Diversity accounts for the fact that not all electrical loads will operate simultaneously.',
+      'Diversity recognises that not all connected loads operate at full demand simultaneously, allowing economic sizing of the supply and main cables.',
   },
   {
     id: 86,
@@ -982,55 +982,55 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 87,
-    question: 'What type of cable should be used for underground installation?',
+    question: 'What type of cable should be used for an underground installation?',
     options: [
-      'High resistance in earth path',
-      'Grid code compliance and export limitation',
-      'Tamper detection and backup power systems',
-      'Armoured cable or cable in conduit',
+      'Standard flat twin-and-earth PVC cable',
+      'Single-insulated tri-rated panel wire',
+      'Unsheathed mineral-insulated conductors',
+      'Armoured cable or cable in suitable conduit',
     ],
     correctAnswer: 3,
     explanation:
-      'Underground installations require armoured cable or cable in suitable conduit for protection.',
+      'Underground runs need mechanical protection against penetration and ground movement, met by SWA armoured cable or cable drawn into suitable buried conduit/ducting.',
   },
   {
     id: 88,
     question: 'The purpose of an equipotential bonding system is to:',
     options: [
-      'Ensure all metalwork is at same potential',
-      'Attempt to replicate the conditions during testing',
-      'RCD protection or mechanical protection',
-      'The person who carried out inspection and testing',
+      'Ensure simultaneously accessible metalwork is at the same potential',
+      'Carry the normal load current back to the supply',
+      'Reduce the prospective fault current at the origin',
+      'Raise the insulation resistance of the installation',
     ],
     correctAnswer: 0,
     explanation:
-      'Equipotential bonding ensures all metalwork is at the same electrical potential to prevent dangerous differences.',
+      'Equipotential bonding keeps simultaneously accessible conductive parts at substantially the same potential, preventing a dangerous voltage difference during a fault.',
   },
   {
     id: 89,
-    question: 'What happens to the rating of cables when grouped together?',
+    question: 'What happens to the current-carrying capacity of cables when grouped together?',
     options: [
-      'All circuits have RCD protection',
-      'Rating decreases due to heating effects',
-      'Continuity testing through switch to lamp',
-      'Accessible heights for switches and controls',
+      'It is unaffected by grouping',
+      'It decreases due to mutual heating effects',
+      'It increases because heat is shared',
+      'It must be doubled to allow for grouping',
     ],
     correctAnswer: 1,
     explanation:
-      'Cable ratings must be reduced when grouped together due to mutual heating effects.',
+      'Grouped cables cannot dissipate heat as freely, so a grouping rating factor (Cg) is applied to reduce their current-carrying capacity.',
   },
   {
     id: 90,
-    question: 'The discrimination between protective devices means:',
+    question: 'Discrimination (selectivity) between protective devices means:',
     options: [
-      'Areas inspected, limitations, and percentage of installation sampled',
-      'Natural leakage currents and electromagnetic interference',
-      'Ensuring only the nearest device operates during fault',
-      'To prevent electric shock and equipment damage',
+      'All upstream and downstream devices trip together',
+      'Only the device nearest the fault operates',
+      'The main switch always trips first',
+      'No device operates until the fault clears itself',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Discrimination ensures only the protective device nearest to a fault operates, maintaining supply elsewhere.',
+      'Discrimination ensures only the protective device immediately upstream of a fault operates, leaving the rest of the installation supplied.',
   },
   {
     id: 91,
@@ -1043,29 +1043,29 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 92,
-    question: 'The purpose of protective multiple earthing (PME) is to:',
+    question: 'In a PME (TN-C-S) supply, the installation earth is derived from:',
     options: [
-      'All of the above',
-      'Reduce costs',
-      'Reduce earth loop impedance',
-      'Increase supply reliability',
+      'The combined neutral and earth (PEN) conductor',
+      'A local earth electrode at the installation',
+      'A separate earth conductor run by the DNO',
+      'The metallic water service pipe',
     ],
     correctAnswer: 0,
     explanation:
-      'PME provides multiple earth connections to reduce impedance, improve reliability, and reduce costs.',
+      'With PME the earthing terminal is connected to the supply PEN conductor, giving a low earth fault loop impedance; the trade-off is the open-PEN hazard.',
   },
   {
     id: 93,
     question: 'What should be done if an RCBO repeatedly trips?',
     options: [
-      'Moisture ingress or cable damage',
+      'Fit a higher-rated RCBO to stop the tripping',
       'Investigate the cause before resetting',
-      'Test while flexing the cable',
-      'Both employers and employees',
+      'Bridge out the residual-current element',
+      'Reset it several times until it holds in',
     ],
     correctAnswer: 1,
     explanation:
-      'Repeated tripping indicates a fault condition that must be investigated before resetting.',
+      'Repeated tripping indicates a genuine fault or excessive leakage that must be found and corrected; uprating or bypassing the device is dangerous.',
   },
   {
     id: 94,
@@ -1093,14 +1093,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 96,
     question: 'The purpose of an isolation device is to:',
     options: [
-      'Completely disconnect supply for maintenance',
-      'Duration test and battery condition',
-      'Record C2 and inform responsible person',
-      '1-minute to 30-second reading ratio',
+      'Completely cut off the supply for safe maintenance',
+      'Limit the fault current to a safe level',
+      'Switch the circuit on and off in normal use',
+      'Detect earth leakage and trip automatically',
     ],
     correctAnswer: 0,
     explanation:
-      'Isolation devices provide complete disconnection of supply to allow safe maintenance work.',
+      'An isolator provides secure disconnection of the supply to allow safe working; it is not designed for routine on-load switching.',
   },
   {
     id: 97,
@@ -1119,16 +1119,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 99,
-    question: 'What does IP2X rating indicate?',
+    question: 'What does an IP2X rating indicate?',
     options: [
-      'Overall assessment and recommendations',
-      'IP rating and general condition',
-      'High voltage competency certification',
+      'Protection against low-pressure water jets',
+      'Protection against total immersion in water',
+      'Protection against dust ingress only',
       'Protection against finger contact',
     ],
     correctAnswer: 3,
     explanation:
-      'IP2X indicates protection against finger contact (objects larger than 12mm diameter).',
+      'The first characteristic numeral 2 means protection against solid objects ≥12.5mm, i.e. finger contact with hazardous live parts.',
   },
   {
     id: 100,
@@ -1200,14 +1200,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 107,
     question: 'The Health and Safety at Work Act 1974 places duties on:',
     options: [
-      'No protective conductor connection',
-      'Improvement recommended',
-      'All circuits have RCD protection',
+      'Employers only, not the workforce',
+      'Employees only, not the employer',
+      'The Health and Safety Executive alone',
       'Both employers and employees',
     ],
     correctAnswer: 3,
     explanation:
-      'HSWA 1974 places duties on both employers (to provide safe systems) and employees (to cooperate and not endanger others).',
+      'HSWA 1974 places duties on employers (to provide safe systems of work) and on employees (to take reasonable care and to cooperate).',
   },
   {
     id: 108,
@@ -1258,14 +1258,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 113,
     question: 'The Provision and Use of Work Equipment Regulations 1998 require:',
     options: [
-      '1.5 times the rating of protective device',
-      'Equipment to be suitable and maintained',
-      'Disconnect or short out neon indicators',
-      'Normal operation within tolerance',
+      'All equipment to be replaced every five years',
+      'Work equipment to be suitable and maintained',
+      'Only PAT-tested equipment to be purchased',
+      'Equipment to be insured against theft',
     ],
     correctAnswer: 1,
     explanation:
-      'PUWER requires work equipment to be suitable for its purpose and maintained in a safe condition.',
+      'PUWER requires work equipment to be suitable for its purpose, maintained in a safe condition, inspected and used only by trained persons.',
   },
   {
     id: 114,
@@ -1277,16 +1277,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 115,
-    question: 'According to BS 7671, isolation must be secured by:',
+    question: 'According to BS 7671, secure isolation is best achieved by:',
     options: [
-      'Earth fault loop impedance and RCD operation',
-      'Ensure metalwork is at earth potential',
-      'Continuity of protective conductors',
-      'Locking off or removing fuses/links',
+      'Switching off and posting a warning notice only',
+      'Verbally informing others not to re-energise',
+      'Relying on the RCD to prevent re-energisation',
+      'Locking off the device or removing fuses/links',
     ],
     correctAnswer: 3,
     explanation:
-      'Effective isolation requires physical securing by locking off or removing fuses/links to prevent unauthorised re-energisation.',
+      'Effective isolation requires physically securing the means of isolation by locking off or removing fuses/links so it cannot be inadvertently re-energised.',
   },
 
   // Advanced Testing Procedures (Questions 116-130)
@@ -1306,16 +1306,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 117,
-    question: 'The test for insulation resistance should be applied between:',
+    question: 'Insulation resistance should be tested between:',
     options: [
-      'Natural leakage currents and electromagnetic interference',
+      'The line conductor and the protective device only',
       'Each live conductor and earth, then between live conductors',
-      'Load testing and autonomy time verification',
-      'Temperature and humidity control maintenance',
+      'The neutral and the main earthing terminal only',
+      'Two adjacent socket-outlets on the same circuit',
     ],
     correctAnswer: 1,
     explanation:
-      'Insulation resistance must be tested between each live conductor and earth, then between all live conductors.',
+      'Insulation resistance is measured between all live conductors connected together and earth, and between live conductors, to prove the insulation throughout.',
   },
   {
     id: 118,
@@ -1332,82 +1332,82 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 119,
-    question: 'For circuits with electronic equipment, insulation resistance testing should be:',
+    question: 'For circuits with vulnerable electronic equipment, insulation resistance testing should be:',
     options: [
-      'Continuity of protective conductors',
-      'New circuits, consumer unit changes and bathroom/kitchen work',
-      'High resistance connections or inadequate cable sizing',
-      'Carried out at 250V with equipment disconnected',
+      'Carried out at 1000V to ensure a thorough test',
+      'Skipped entirely to avoid any risk of damage',
+      'Performed with all the equipment left connected',
+      'Carried out at 250V with the equipment disconnected',
     ],
     correctAnswer: 3,
     explanation:
-      'Electronic equipment should be disconnected and testing carried out at 250V to prevent damage.',
+      'Where equipment may be damaged by the standard 500V test, it should be disconnected and the test carried out at a reduced 250V (BS 7671 643.3.2).',
   },
   {
     id: 120,
     question: 'When measuring prospective fault current, the test should be applied:',
     options: [
       'Between live conductors and between each live conductor and earth',
-      'First fault does not cause disconnection - monitoring required',
-      'Most installations unless specifically exempted',
-      'Hazard identification, risk assessment and control measures',
+      'Between the line conductor and the protective device casing',
+      'Only at the furthest point of each final circuit',
+      'Between two separate earth electrodes',
     ],
     correctAnswer: 0,
     explanation:
-      'PFC must be measured between live conductors and between each live conductor and earth to determine maximum fault current.',
+      'PFC is determined from the greater of the short-circuit value (between live conductors) and the earth fault value (live conductor to earth) at the relevant point.',
   },
   {
     id: 121,
-    question: 'The earth electrode resistance test requires:',
+    question: 'The fall-of-potential earth electrode resistance test requires:',
     options: [
-      'Correct connections at both switches and intermediate positions',
-      'Specialist earth electrode tester with auxiliary electrodes',
-      'Loose connections or poor earth continuity',
-      'Dividing circuits to reduce cumulative leakage',
+      'A 500V DC insulation resistance tester',
+      'A specialist tester with auxiliary current and potential electrodes',
+      'A low-resistance ohmmeter connected across the electrode',
+      'An RCD tester applied at the main earthing terminal',
     ],
     correctAnswer: 1,
     explanation:
-      'Earth electrode resistance requires a specialist tester using auxiliary current and potential electrodes.',
+      'The fall-of-potential method uses a dedicated earth electrode tester with auxiliary current (C) and potential (P) spikes positioned away from the electrode under test.',
   },
   {
     id: 122,
     question:
       'When testing installations with photovoltaic systems, additional safety measures include:',
     options: [
-      'Comprehensive testing schedules and digital submission capability',
-      'Related to line conductor resistance by cross-sectional area ratio',
-      'DC and AC isolation with appropriate test equipment',
-      'Damp conditions or connected loads not removed',
+      'Testing only the AC side, as the DC side is always safe',
+      'Using AC-only rated instruments on the array',
+      'DC and AC isolation with appropriately rated test equipment',
+      'Disconnecting the array earth before any test',
     ],
     correctAnswer: 2,
     explanation:
-      'PV systems require both DC and AC isolation and appropriate test equipment rated for DC voltages.',
+      'PV systems require isolation and instruments rated for the array DC voltage as well as the AC side, since the DC side stays live in daylight.',
   },
   {
     id: 123,
     question: 'Functional testing of safety services must include:',
     options: [
-      'Before initial energisation and periodically thereafter',
-      'Knowledge, training, experience, and understanding of hazards',
-      'Duration of the installation plus reasonable period',
-      'Operation under normal and emergency conditions',
+      'Insulation resistance testing only',
+      'A single test under normal supply conditions',
+      'Visual inspection without any operation',
+      'Operation under both normal and emergency conditions',
     ],
     correctAnswer: 3,
     explanation:
-      'Safety services must be tested under both normal supply and emergency conditions to verify correct operation.',
+      'Safety services must be proven to operate correctly under normal supply and on changeover to the emergency/standby source.',
   },
   {
     id: 124,
     question: 'When testing installations with inverters or UPS systems:',
     options: [
-      'Additional consideration for backup power sources',
-      'AC and pulsating DC residual currents',
-      'Phase rotation, starting current and defrost cycle operation',
-      'Alternative protection provided and risk assessment completed',
+      'They may keep circuits live after mains isolation',
+      'The DC side never needs to be considered',
+      'No isolation is required as output is low voltage',
+      'Phase rotation is irrelevant on any output',
     ],
     correctAnswer: 0,
     explanation:
-      'Inverters and UPS systems may maintain power even when mains is isolated, requiring additional safety measures.',
+      'Inverters and UPS units can back-feed and keep circuits live even when the mains is isolated, so all energy sources must be isolated before dead working.',
   },
   {
     id: 125,
@@ -1464,16 +1464,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 129,
-    question: 'The verification of automatic disconnection requires measurement of:',
+    question: 'Verification of automatic disconnection of supply (ADS) requires measurement of:',
     options: [
-      'Perfect insulation is indicated',
+      'Insulation resistance between live conductors',
       'Earth fault loop impedance and RCD operation',
-      'Achieve discrimination with downstream RCDs',
-      'Damp conditions or connected loads not removed',
+      'Polarity at every accessory on the circuit',
+      'Voltage drop under full design load',
     ],
     correctAnswer: 1,
     explanation:
-      'Automatic disconnection verification requires measuring Zs and confirming protective device operation times.',
+      'ADS is verified by measuring Zs (to confirm the device will operate within the required time) and, where fitted, the RCD operating time.',
   },
   {
     id: 130,
@@ -1520,109 +1520,109 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 133,
     question: 'RCD discrimination (selectivity) is achieved by:',
     options: [
-      'All incidents, near misses and safety observations',
-      'Different sensitivities and/or time delays',
-      'Record C2 and inform responsible person',
-      'Verify operation of switches and controls',
+      'Fitting identical RCDs in series throughout',
+      'Using different sensitivities and/or time delays',
+      'Connecting all RCDs to a common neutral bar',
+      'Increasing the prospective fault current upstream',
     ],
     correctAnswer: 1,
     explanation:
-      'Discrimination requires upstream RCDs to have lower sensitivity (higher trip current) and/or time delay.',
+      'Discrimination requires the upstream RCD to have a higher rating and/or a time delay (S-type) so the downstream device clears the fault first.',
   },
   {
     id: 134,
     question: 'The cause of nuisance tripping in RCD-protected circuits is often:',
     options: [
-      'Phase rotation, starting current and defrost cycle operation',
-      'Carried out at 250V with equipment disconnected',
-      'Natural leakage currents and electromagnetic interference',
-      'Earthing arrangements, supply characteristics, and main protective devices',
+      'An oversized circuit protective conductor',
+      'Too high an insulation resistance reading',
+      'Cumulative standing leakage current and EMI',
+      'A low prospective fault current at the board',
     ],
     correctAnswer: 2,
     explanation:
-      'Cumulative leakage currents from normal operation and EMI can cause RCDs to trip unexpectedly.',
+      'Standing leakage from many connected appliances can accumulate towards the RCD threshold; EMI and filters add to it, causing unexpected tripping.',
   },
   {
     id: 135,
     question: 'When should a Type B RCD be specified?',
     options: [
-      'Reduced insulation test voltage and driver protection',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'High resistance connections or inadequate cable sizing',
-      'Installations with variable speed drives and switched mode power supplies',
+      'On any standard domestic lighting circuit',
+      'Where only sinusoidal AC residual current can occur',
+      'On all circuits to save on device cost',
+      'Where smooth DC residual current may occur (e.g. VSDs, EV chargers)',
     ],
     correctAnswer: 3,
     explanation:
-      'Type B RCDs are required where smooth DC residual currents may occur, such as with VFDs and SMPS.',
+      'A Type B RCD is needed where smooth DC residual currents may occur, such as with variable speed drives, some EV chargers and certain switched-mode supplies.',
   },
   {
     id: 136,
     question: 'The unwanted tripping of RCDs can be reduced by:',
     options: [
-      'Dividing circuits to reduce cumulative leakage',
-      'Enhanced protection and frequent inspection schedules',
-      'One socket with higher resistance reading',
-      'Operation under normal and emergency conditions',
+      'Dividing circuits across multiple RCDs to reduce cumulative leakage',
+      'Fitting a single 30mA RCD to protect the whole board',
+      'Increasing the rating of the main switch',
+      'Removing the protective conductor from sensitive loads',
     ],
     correctAnswer: 0,
     explanation:
-      'Dividing circuits across multiple RCDs reduces the cumulative leakage current affecting each RCD.',
+      'Splitting loads across several RCDs (or using RCBOs per circuit) reduces the standing leakage seen by each device, limiting unwanted tripping.',
   },
   {
     id: 137,
-    question: 'RCD protection may be omitted for fixed equipment if:',
+    question: 'RCD protection for socket-outlets may be omitted (other than in a dwelling) if:',
     options: [
-      'Enhanced protection and more frequent inspection',
-      'Alternative protection provided and risk assessment completed',
-      'The person who carried out inspection and testing',
-      'Maximum current between live conductors during fault',
+      'The circuit is rated above 16A',
+      'A documented risk assessment justifies omission',
+      'The premises are occupied during the day only',
+      'A standalone MCB is fitted instead',
     ],
     correctAnswer: 1,
     explanation:
-      'RCD protection may be omitted if alternative protection is provided and documented risk assessment justifies omission.',
+      'Regulation 411.3.3 allows omission only in non-dwellings where a documented risk assessment determines RCD protection is not necessary.',
   },
   {
     id: 138,
-    question: 'The test button on an RCD should be operated:',
+    question: 'How often does the BS 7671 RCD notice advise the user to operate the test button?',
     options: [
       'Annually only',
       'Only during professional testing',
-      'Monthly by the user',
-      'When faults occur',
+      'Six-monthly by the user',
+      'Only when a fault is suspected',
     ],
     correctAnswer: 2,
     explanation:
-      'RCD test buttons should be operated monthly by users to verify mechanical operation of the device.',
+      'Regulation 514.12.2 requires the RCD notice to advise the user to test six-monthly by pressing the test button, then to switch the device back on.',
   },
   {
     id: 139,
     question: 'When testing RCDs in IT systems:',
     options: [
-      'After visual inspection but before live testing',
-      'Maximum current between live conductors during fault',
-      'To ensure switches operate only on line conductor',
-      'Special test procedures required due to earthing arrangement',
+      'No RCD test is ever required',
+      'The same TN test method always applies directly',
+      'The RCD must be tested at 500% only',
+      'Special procedures apply due to the earthing arrangement',
     ],
     correctAnswer: 3,
     explanation:
-      'IT systems require special RCD testing procedures due to the unearthed neutral and different fault current paths.',
+      'IT systems have a high-impedance or unearthed source, so fault current paths differ and RCD verification must account for the earthing arrangement.',
   },
   {
     id: 140,
     question: 'An S-type (time-delayed) RCD is used to:',
     options: [
       'Achieve discrimination with downstream RCDs',
-      'Functional testing of detection and alarm systems',
-      'Insulated rescue hooks and first aid equipment',
-      'Requiring health and safety planning and coordination',
+      'Provide faster tripping than a standard RCD',
+      'Detect smooth DC residual currents',
+      'Eliminate the need for overcurrent protection',
     ],
     correctAnswer: 0,
     explanation:
-      'S-type RCDs incorporate time delay to ensure downstream RCDs operate first, providing discrimination.',
+      'An S-type RCD has a built-in time delay so a downstream instantaneous RCD clears a fault first, giving discrimination and keeping other circuits supplied.',
   },
   {
     id: 141,
-    question: 'The minimum test current for RCD operation testing is:',
+    question: 'At what test current should a 30mA RCD NOT trip, confirming it is not over-sensitive?',
     options: [
       '100% of rated residual current',
       '50% of rated residual current',
@@ -1631,7 +1631,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'RCDs must be tested at 50% (half-rated current) where they should not trip, confirming proper sensitivity.',
+      'At 50% of IΔn (half-rated current) the RCD should not trip; it must then trip within the stated times at 100% and 500%.',
   },
   {
     id: 142,
@@ -1644,16 +1644,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 143,
-    question: 'When installing RCDs in circuits with high leakage currents:',
+    question: 'When installing RCDs in circuits with high standing leakage currents:',
     options: [
-      '1.5 times the rating of protective device',
-      'Operation under normal and emergency conditions',
-      'Investigate the cause before resetting',
-      'Consider higher rated RCDs or circuit division',
+      'Remove the RCD and rely on the MCB',
+      'Connect several circuits to one 30mA RCD',
+      'Reduce the protective conductor size',
+      'Consider higher-rated RCDs or division into more circuits',
     ],
     correctAnswer: 3,
     explanation:
-      'High leakage circuits may require higher rated RCDs (100mA) or division into multiple circuits for stability.',
+      'High-leakage circuits may need a higher-rated RCD (e.g. 100mA) where additional protection is not required, or splitting the load across more RCDs to maintain stability.',
   },
   {
     id: 144,
@@ -1665,16 +1665,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 145,
-    question: 'RCBO devices combine the functions of:',
+    question: 'An RCBO combines the functions of:',
     options: [
-      'Test while flexing the cable',
-      'RCD and overcurrent protection',
-      'Isolate, Test, Prove dead, Lock off',
-      'RCD protection or mechanical protection',
+      'An isolator and a surge protective device',
+      'An RCD and overcurrent (MCB) protection',
+      'A contactor and a time switch',
+      'A main switch and an insulation monitor',
     ],
     correctAnswer: 1,
     explanation:
-      'RCBOs (Residual Current Circuit Breakers with Overcurrent protection) combine RCD and MCB functions in one device.',
+      'An RCBO (Residual Current Breaker with Overcurrent) provides residual current protection and overload/short-circuit protection in one device.',
   },
 
   // Earth Fault Loop Impedance Advanced (Questions 146-155)
@@ -1703,62 +1703,62 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 148,
     question: 'When Zs exceeds the maximum permitted value, the preferred solution is:',
     options: [
-      'Improve earthing arrangements or reduce cable length',
-      'Different sensitivities and/or time delays',
-      'Gathering information and visual inspection',
-      'Arc fault detection devices (AFDD) in certain circumstances',
+      'Improve the earth fault path or reduce cable length',
+      'Increase the rating of the protective device',
+      'Remove the RCD from the circuit',
+      'Raise the supply voltage at the origin',
     ],
     correctAnswer: 0,
     explanation:
-      'High Zs should be addressed by improving the earth fault path through better earthing or shorter cable runs.',
+      'Excessive Zs should be reduced by improving the CPC/earthing or shortening the run; fitting an RCD that meets the disconnection time is the recognised alternative measure.',
   },
   {
     id: 149,
-    question: 'The 80% rule for Zs calculations accounts for:',
+    question: 'The 0.8 (80%) rule-of-thumb applied to measured Zs accounts for:',
     options: [
-      'Record C2 and inform responsible person',
-      'Voltage variations during fault conditions',
-      'Identify hazards and implement control measures',
-      'Thermal expansion causing loose connections',
+      'A safety margin for instrument calibration drift',
+      'The rise in conductor resistance at operating temperature',
+      'The reduction in earth electrode resistance over time',
+      'The tolerance band of the protective device',
     ],
     correctAnswer: 1,
     explanation:
-      'The 0.8 factor accounts for the reduction in supply voltage during fault conditions, which affects disconnection times.',
+      'Conductors are warmer in service than when tested cold, so a measured cold Zs is compared against 0.8 of the tabulated maximum to allow for the increase in resistance with temperature.',
   },
   {
     id: 150,
-    question: 'In a TT system, the earth fault loop impedance comprises:',
+    question: 'In a TT system, the earth fault loop impedance comprises mainly:',
     options: [
-      'Automated control sequences and emergency override function',
-      'Protective conductor continuity and earth fault path',
-      'Installation earthing + electrode resistance + supply earth return',
-      'Critical life support equipment that cannot be isolated',
+      'The supply PEN conductor back to the transformer',
+      'The line conductor and the neutral return only',
+      'The installation electrode, the mass of earth and the supply electrode',
+      'The protective device internal resistance',
     ],
     correctAnswer: 2,
     explanation:
-      "TT system Zs includes the installation earth electrode, its resistance, and the supply authority's earth return path.",
+      'In TT the earth return is through the installation electrode, the general mass of earth and the supply earth electrode, giving a comparatively high Ze that usually demands RCD protection.',
   },
   {
     id: 151,
-    question: 'The no-trip loop test method is preferred because:',
+    question: 'The no-trip loop impedance test method is preferred because:',
     options: [
-      'Moisture ingress or cable damage',
-      'Double or reinforced insulation',
-      'Earth leakage or N-E fault',
-      "It doesn't cause supply interruption",
+      'It gives a more accurate reading than a standard test',
+      'It can be carried out on a dead circuit',
+      'It also verifies insulation resistance at the same time',
+      'It does not trip the RCD or interrupt the supply',
     ],
     correctAnswer: 3,
     explanation:
-      'No-trip testing avoids supply interruption that could affect other users or critical equipment.',
+      'A no-trip loop test injects a low current so it measures Zs without operating the RCD, avoiding supply interruption to other users or critical equipment.',
   },
   {
     id: 152,
     question: 'External earth fault loop impedance (Ze) should be measured:',
     options: [
       'At the origin of the installation',
-      'Duration test and battery condition',
-      'Gradual voltage increase to test voltage',
-      'Regular updating of knowledge and skills',
+      'At the furthest socket-outlet on each final circuit',
+      'At the midpoint of every ring final circuit',
+      'At the load terminals of the largest appliance',
     ],
     correctAnswer: 0,
     explanation:
@@ -1766,37 +1766,37 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 153,
-    question: "When using the 'rule of thumb' for voltage drop calculations, Zs is approximately:",
-    options: ['Ze + R1', 'Ze + (R1 + R2) × 1.67', '1.67 × (R1 + R2)', 'R1 + R2'],
+    question: 'Zs at a point in a circuit can be calculated from the measured external loop impedance as:',
+    options: ['Ze − (R1 + R2)', 'Ze + (R1 + R2)', 'Ze × (R1 + R2)', '(R1 + R2) ÷ Ze'],
     correctAnswer: 1,
     explanation:
-      'The rule of thumb: Zs ≈ Ze + (R1 + R2) × 1.67, where 1.67 accounts for the relationship between line and earth impedance.',
+      'Zs = Ze + (R1 + R2), the external loop impedance plus the resistance of the line and protective conductors of the circuit up to that point.',
   },
   {
     id: 154,
     question: 'High earth fault loop impedance readings may indicate:',
     options: [
-      'Specific areas or circuits inspected and tested',
-      'Locking off or removing fuses/links',
+      'An oversized line conductor',
+      'Excessive prospective fault current',
       'Loose connections or poor earth continuity',
-      'RCD protection for all socket outlets',
+      'Too sensitive an RCD',
     ],
     correctAnswer: 2,
     explanation:
-      'High Zs readings typically indicate poor connections, damaged conductors, or inadequate earthing arrangements.',
+      'High Zs typically indicates loose connections, damaged conductors or an inadequate/poorly connected earth path.',
   },
   {
     id: 155,
     question: 'The earth fault loop impedance test effectively verifies:',
     options: [
-      'Ensure metalwork is at earth potential',
-      'DC isolation and dual energy source considerations',
-      'Design liability and consequential losses',
-      'Protective conductor continuity and earth fault path',
+      'The insulation resistance of the final circuit',
+      'The polarity of every accessory',
+      'The voltage drop under full load',
+      'The complete earth fault path and CPC continuity',
     ],
     correctAnswer: 3,
     explanation:
-      'Zs testing verifies the complete earth fault current path and protective conductor continuity in one measurement.',
+      'A Zs measurement confirms the whole earth fault loop, including CPC continuity, has a low enough impedance for the protective device to operate in time.',
   },
 
   // Insulation Resistance Advanced (Questions 156-165)
@@ -1824,10 +1824,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 158,
     question: 'Polarisation index testing involves:',
     options: [
-      'Overall assessment and recommendations',
-      'Isolate, Test, Prove dead, Lock off',
+      'Ratio of the 1-minute to the 30-second reading',
+      'The difference between the 10-minute and 1-minute readings',
       'Ratio of 10-minute to 1-minute resistance readings',
-      'Different sensitivities and/or time delays',
+      'The average of three successive 1-minute readings',
     ],
     correctAnswer: 2,
     explanation:
@@ -1851,13 +1851,13 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing insulation resistance between live conductors:',
     options: [
       'All switches and control devices should be closed',
-      'Different sensitivities and/or time delays',
-      'Operation under normal and emergency conditions',
-      'Identify hazards and implement control measures',
+      'The protective conductor must be disconnected first',
+      'The test voltage should be raised to 1500V DC',
+      'The circuit must remain energised from the supply',
     ],
     correctAnswer: 0,
     explanation:
-      'Switches and control devices should be closed to test the complete circuit insulation, including all connected equipment.',
+      'Switches and control devices should be closed (or links fitted) so the whole circuit insulation is tested; vulnerable electronic items are disconnected separately.',
   },
   {
     id: 161,
@@ -1885,14 +1885,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 163,
     question: 'Insulation resistance testing should be performed:',
     options: [
-      'Rating decreases due to heating effects',
-      'Enhanced protection and load management systems',
-      'Equipment to be suitable and maintained',
+      'Only after the installation has been in use for a year',
+      'Only when a fault has already been reported',
+      'Continuously while the installation is energised',
       'Before initial energisation and periodically thereafter',
     ],
     correctAnswer: 3,
     explanation:
-      'Insulation testing is required before initial energisation and should be repeated during periodic inspections.',
+      'IR testing is carried out (dead) before energisation as part of initial verification and is repeated at periodic inspections.',
   },
   {
     id: 164,
@@ -1966,10 +1966,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 169,
     question: 'Supplementary bonding effectiveness can be verified by:',
     options: [
-      'Thermal expansion causing loose connections',
+      'A 500V insulation resistance test between the parts',
       'Resistance measurement between bonded parts',
-      'IP rating and general condition',
-      'The person who carried out inspection and testing',
+      'An earth fault loop impedance test at each part',
+      'A visual check of the bonding label colour only',
     ],
     correctAnswer: 1,
     explanation:
@@ -1980,14 +1980,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing the continuity of ring circuit protective conductors, readings should be:',
     options: [
-      'Supply characteristics and earthing system',
-      'Disconnected where practicable',
-      'Approximately equal with slight variations',
-      'Test each electrode separately',
+      'Progressively higher towards the furthest point',
+      'Infinite at every socket on the ring',
+      'Approximately equal at each point with slight variation',
+      'Exactly zero at every accessory',
     ],
     correctAnswer: 2,
     explanation:
-      'Ring circuit CPC readings should be approximately equal with slight variations due to measurement accuracy and connections.',
+      'After cross-connecting the ring, the CPC (R2) reading should be substantially the same at every socket, with only small variation; a marked rise indicates a spur.',
   },
   {
     id: 171,
@@ -2032,10 +2032,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 174,
     question: 'The protective conductor resistance in a radial circuit should be:',
     options: [
-      'Account for not all loads operating simultaneously',
-      'Enhanced protection and frequent inspection schedules',
+      'Always exactly equal to the line conductor resistance',
+      'Always half the line conductor resistance regardless of size',
       'Related to line conductor resistance by cross-sectional area ratio',
-      'Moisture and salt corrosion effects on connections',
+      'Independent of the conductor cross-sectional areas',
     ],
     correctAnswer: 2,
     explanation:
@@ -2045,14 +2045,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 175,
     question: 'Functional earth conductors should be tested for:',
     options: [
-      'IT earthing systems and supplementary bonding',
-      'Moisture and salt corrosion effects on connections',
-      'Knowledge, training, experience, and understanding of hazards',
-      'Continuity and isolation from protective conductors',
+      'Their ability to carry full fault current',
+      'Insulation resistance above 100 MΩ',
+      'Correct phase rotation at the terminal',
+      'Continuity and correct separation from protective conductors',
     ],
     correctAnswer: 3,
     explanation:
-      'Functional earth conductors require continuity testing and verification of isolation from protective earth systems.',
+      'A functional earth provides correct operation of equipment, not shock protection, so it is checked for continuity and for being kept distinct from the protective earthing system.',
   },
 
   // Certification and Documentation Advanced (Questions 176-190)
@@ -2073,10 +2073,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 177,
     question: 'When limitations prevent full inspection, the EICR must:',
     options: [
-      'Identify hazards and implement control measures',
+      'Omit any mention of the limitation from the report',
       'State limitations and their potential impact on safety',
-      'Reduced insulation test voltage and driver protection',
-      'Electronic equipment protection and harmonic considerations',
+      'Automatically classify the installation as satisfactory',
+      'Record the limited areas as if they had been tested',
     ],
     correctAnswer: 1,
     explanation:
@@ -2086,10 +2086,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 178,
     question: "The 'extent and limitations' section of an EICR should specify:",
     options: [
-      'Special test procedures required due to earthing arrangement',
-      'Enhanced protection and frequent inspection schedules',
+      'The estimated cost of any remedial works needed',
+      'Only the overall satisfactory or unsatisfactory result',
       'Areas inspected, limitations, and percentage of installation sampled',
-      'Communication protocols, sensor calibration and system response',
+      'The names of all previous owners of the property',
     ],
     correctAnswer: 2,
     explanation:
@@ -2110,16 +2110,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 180,
-    question: 'The person ordering an EICR should be advised when:',
+    question: 'The person ordering an EICR should be advised without delay when:',
     options: [
-      'C1, C2, or FI observations are found',
-      'Legal liability and non-compliance',
-      'AC and pulsating DC residual currents',
-      'Three-phase motor circuits',
+      'A C1, C2 or FI observation is found',
+      'Only C3 improvements are recommended',
+      'All test results are within limits',
+      'The next inspection date has passed',
     ],
     correctAnswer: 0,
     explanation:
-      'Urgent consultation is required when immediate danger (C1), potential danger (C2), or further investigation (FI) is identified.',
+      'C1 (danger present), C2 (potentially dangerous) and FI (further investigation) findings require the person ordering the report to be advised without delay.',
   },
   {
     id: 181,
@@ -2133,36 +2133,36 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 182,
     question: "The 'Summary of the Installation' section must include:",
     options: [
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Test each conductor individually then cross-connect and test',
-      'Earthing arrangements, supply characteristics, and main protective devices',
-      'High fault currents and electromagnetic interference',
+      'The full schedule of every test result obtained',
+      'The cost of any recommended remedial works',
+      'Earthing arrangements, supply characteristics and main protective devices',
+      'The names of all previous owners of the property',
     ],
     correctAnswer: 2,
     explanation:
-      'Summary must include earthing system type, supply characteristics, and details of main protective devices.',
+      'The supply characteristics and earthing summary records the earthing system type, supply parameters and details of the main switch/protective devices.',
   },
   {
     id: 183,
     question: 'Distribution circuit details in Schedule of Test Results should show:',
     options: [
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Arc fault detection devices (AFDD) in certain circumstances',
-      'Reduced oxygen levels and restricted escape routes',
-      'Circuit designation, cable details, and protection characteristics',
+      'Only a pass or fail result for each circuit',
+      'The name of the manufacturer of each cable',
+      'The estimated remaining life of each circuit',
+      'Circuit designation, cable details and protection characteristics',
     ],
     correctAnswer: 3,
     explanation:
-      'Distribution circuits require circuit designation, cable type/size, method of protection, and protective device details.',
+      'Each distribution circuit entry records its designation, cable type/size, method of protection and the protective device characteristics.',
   },
   {
     id: 184,
     question: 'When test results fall outside acceptable limits:',
     options: [
       'Record actual values with deviation noted',
-      'Gradual voltage increase to test voltage',
-      'Design liability and consequential losses',
-      'Use a proving unit before and after testing',
+      'Round the values up so they fall within limits',
+      'Leave the result blank and energise the circuit',
+      'Record only a pass with no measured value',
     ],
     correctAnswer: 0,
     explanation:
@@ -2172,53 +2172,53 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 185,
     question: 'The duty holder for electrical safety in commercial premises is typically:',
     options: [
-      'Disconnect or short out neon indicators',
-      'The building owner or person in control',
-      'Loose connections or poor earth continuity',
-      'All switches and control devices should be closed',
+      'The distribution network operator',
+      'The building owner or person in control of the premises',
+      'The original installing contractor indefinitely',
+      'The manufacturer of the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
-      'The person in control of the premises (owner, lessee, or occupier) has the primary duty for electrical safety.',
+      'Under the Electricity at Work Regulations the duty holder is the person in control of the premises (owner, lessee or occupier).',
   },
   {
     id: 186,
     question: 'Competency for inspection and testing is demonstrated by:',
     options: [
-      'Earthing arrangements, supply characteristics, and main protective devices',
-      'Reproducing fault conditions and systematic monitoring',
-      'Knowledge, training, experience, and understanding of hazards',
-      'DC isolation, thermal runaway risk and gas ventilation',
+      'Owning a calibrated multifunction tester',
+      'Length of time served in the trade alone',
+      'Knowledge, training, experience and understanding of hazards',
+      'Membership of any trade body',
     ],
     correctAnswer: 2,
     explanation:
-      'Competency requires appropriate knowledge, training, experience, and understanding of the risks involved.',
+      'Competency combines relevant knowledge, training, practical experience and an understanding of the hazards and how to avoid them.',
   },
   {
     id: 187,
     question: 'Records of electrical maintenance should be kept for:',
     options: [
-      'Functional testing of detection and alarm systems',
-      'C1, C2, or FI observations are found',
-      'To prevent electric shock and equipment damage',
-      'Duration of the installation plus reasonable period',
+      'A maximum of twelve months',
+      'Until the next inspection only',
+      'No longer than is convenient',
+      'The life of the installation plus a reasonable period',
     ],
     correctAnswer: 3,
     explanation:
-      "Maintenance records should be retained for the installation's life plus a reasonable period for liability purposes.",
+      "Maintenance records should be retained for the installation's life plus a reasonable period afterwards to support safety and liability evidence.",
   },
   {
     id: 188,
-    question: 'When an EICR identifies immediate danger, the inspector should:',
+    question: 'When an EICR identifies immediate danger (C1), the inspector should:',
     options: [
-      'Immediately advise the person ordering the report',
-      'Earth fault loop impedance and RCD operation',
-      'Voltage imbalance and potential equipment damage',
-      'Installation type, use, and condition',
+      'Advise the person ordering the report without delay',
+      'Wait until the report is formally issued',
+      'Note it for the next periodic inspection',
+      'Leave the decision entirely to the client',
     ],
     correctAnswer: 0,
     explanation:
-      'Immediate danger requires urgent communication to allow prompt remedial action to ensure safety.',
+      'A C1 (danger present) finding must be communicated to the duty holder without delay so prompt action can remove the danger.',
   },
   {
     id: 189,
@@ -2230,16 +2230,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 190,
-    question: 'An inspector must refuse to issue a certificate when:',
+    question: 'An inspector must decline to issue a satisfactory certificate when:',
     options: [
-      'Allow discharge time before testing',
-      'Safety glasses and insulated gloves',
+      'A C3 improvement has been recommended',
+      'Only minor cosmetic defects are present',
       'They cannot verify compliance due to limitations',
-      'Regularly based on competency assessment',
+      'The client disputes the inspection fee',
     ],
     correctAnswer: 2,
     explanation:
-      'Certificates cannot be issued when the inspector cannot adequately verify safety and compliance due to limitations.',
+      'Where limitations prevent the inspector verifying safety and compliance, a satisfactory certificate cannot be issued and the limitation must be recorded.',
   },
 
   // Fault Finding and Troubleshooting (Questions 191-200)
@@ -2247,79 +2247,79 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 191,
     question: 'A circuit that tests satisfactory when cold but fails when loaded indicates:',
     options: [
-      'Isolate, Test, Prove dead, Lock off',
-      'Ensure all metalwork is at same potential',
-      'Electromagnetic field limits and cookware compatibility',
-      'Thermal expansion causing loose connections',
+      'An oversized protective device',
+      'Perfect insulation throughout the circuit',
+      'A correctly terminated connection',
+      'A high-resistance joint expanding under heat',
     ],
     correctAnswer: 3,
     explanation:
-      'Temperature-dependent faults often indicate loose connections that separate under thermal expansion when loaded.',
+      'A connection that works cold but fails under load points to a high-resistance joint that heats and expands, breaking contact as the circuit warms.',
   },
   {
     id: 192,
-    question: 'Intermittent RCD tripping without obvious cause may be due to:',
+    question: 'Intermittent RCD tripping without an obvious cause may be due to:',
     options: [
-      'Accumulated earth leakage from multiple sources',
-      'Reduced oxygen levels and restricted escape routes',
-      'Requiring health and safety planning and coordination',
-      'Communication protocols and electronic component protection',
+      'Accumulated earth leakage from multiple appliances',
+      'An oversized circuit protective conductor',
+      'Too low a prospective fault current',
+      'Excessively high insulation resistance',
     ],
     correctAnswer: 0,
     explanation:
-      'Multiple small leakage currents can accumulate to exceed RCD sensitivity, especially with deteriorating insulation.',
+      'Many small standing leakage currents can sum towards the RCD threshold, so a transient appliance switching on can tip it over and trip the device.',
   },
   {
     id: 193,
     question: 'A systematic approach to fault finding should begin with:',
     options: [
-      'DC isolation and specific safety procedures',
-      'Gathering information and visual inspection',
-      'Communication functionality and load profile accuracy',
-      "It doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t cause supply interruption",
+      'Immediately replacing the protective device',
+      'Gathering information and a visual inspection',
+      'Energising the circuit to recreate the fault',
+      'Dismantling the consumer unit completely',
     ],
     correctAnswer: 1,
     explanation:
-      'Effective fault finding starts with gathering information about symptoms and thorough visual inspection.',
+      'Effective fault finding starts by gathering information about the symptoms and carrying out a thorough visual inspection before any testing.',
   },
   {
     id: 194,
     question: 'When earth fault loop impedance tests show inconsistent results:',
     options: [
-      'Circuit designation, cable details, and protection characteristics',
-      'Duration of the installation plus reasonable period',
+      'Accept the lowest reading as correct',
+      'Average the readings and record the mean',
       'Investigate for variable connections or parallel paths',
-      'Thermal expansion causing loose connections',
+      'Repeat the test at a higher voltage',
     ],
     correctAnswer: 2,
     explanation:
-      'Inconsistent Zs readings suggest variable connections, parallel earth paths, or measurement issues requiring investigation.',
+      'Inconsistent Zs readings point to intermittent connections or parallel earth paths and should be investigated rather than averaged away.',
   },
   {
     id: 195,
-    question: 'A circuit showing normal insulation resistance but operating RCD indicates:',
+    question: 'A circuit showing normal insulation resistance but a tripping RCD indicates:',
     options: [
-      'Fire performance classification and CE marking',
-      'Temperature sensing accuracy and communication protocols',
-      'Electronic equipment protection and harmonic considerations',
-      'Earth leakage current below test instrument sensitivity',
+      'A short circuit between line and neutral',
+      'An open-circuit protective conductor',
+      'An oversized line conductor',
+      'Earth leakage below the IR tester sensitivity',
     ],
     correctAnswer: 3,
     explanation:
-      'Small earth leakage currents may be below insulation tester sensitivity but sufficient to operate sensitive RCDs.',
+      'A small leakage current can be too low to show on an insulation resistance test yet still enough to operate a sensitive 30mA RCD.',
   },
   {
     id: 196,
-    question: 'Voltage readings that vary significantly under load suggest:',
+    question: 'Voltage readings that fall significantly under load suggest:',
     options: [
-      'High resistance connections or inadequate cable sizing',
-      'Anti-islanding protection and grid synchronisation',
-      'Identify hazards and implement control measures',
-      'Fall of potential method using test electrodes',
+      'High-resistance connections or undersized conductors',
+      'An oversized protective device',
+      'Excellent insulation resistance',
+      'A correctly sized supply cable',
     ],
     correctAnswer: 0,
     explanation:
-      'Significant voltage drop under load indicates high resistance connections or undersized conductors.',
+      'A large voltage drop appearing only under load points to high-resistance joints or conductors too small for the current drawn.',
   },
   {
     id: 197,
@@ -2336,42 +2336,42 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 198,
-    question: 'Neutral conductor faults in three-phase systems may cause:',
+    question: 'A lost neutral in a three-phase system may cause:',
     options: [
-      'To ensure switches operate only on line conductor',
-      'Reproducing fault conditions and systematic monitoring',
-      'Voltage imbalance and potential equipment damage',
-      'Safety glasses and insulated gloves',
+      'A reduction in all phase voltages equally',
+      'No effect because phases are balanced',
+      'Voltage imbalance and damage to single-phase loads',
+      'An immediate short circuit between phases',
     ],
     correctAnswer: 2,
     explanation:
-      'Neutral faults in three-phase systems create voltage imbalance that can damage single-phase loads.',
+      'Losing the neutral allows the star-point voltage to float, so single-phase loads see over- or under-voltage depending on phase loading, risking equipment damage.',
   },
   {
     id: 199,
-    question: 'Arc fault detection requires consideration of:',
+    question: 'Detecting a series arc fault requires consideration of:',
     options: [
-      'Protective conductor continuity and earth fault path',
-      'Use a proving unit before and after testing',
-      'Requiring health and safety planning and coordination',
-      'High-frequency components and specialised detection equipment',
+      'The earth fault loop impedance only',
+      'The insulation resistance between live conductors',
+      'The prospective fault current at the origin',
+      'High-frequency current signatures and AFDD technology',
     ],
     correctAnswer: 3,
     explanation:
-      'Arc faults generate high-frequency signatures requiring specialised arc fault detection equipment for reliable identification.',
+      'Series arcs do not raise current enough to trip an MCB, so AFDDs detect their characteristic high-frequency current signatures instead.',
   },
   {
     id: 200,
     question: 'When fault symptoms appear only under specific operating conditions:',
     options: [
-      'Attempt to replicate the conditions during testing',
-      'High-frequency components and specialised detection equipment',
-      'Operation under normal and emergency conditions',
-      'Special test procedures required due to earthing arrangement',
+      'Attempt to replicate those conditions during testing',
+      'Ignore them as they cannot be diagnosed',
+      'Replace the consumer unit as a precaution',
+      'Test only when the circuit is cold and unloaded',
     ],
     correctAnswer: 0,
     explanation:
-      'Condition-specific faults require testing under the same conditions to accurately identify and resolve the problem.',
+      'Condition-specific faults must be diagnosed by reproducing the same operating conditions (load, temperature, time) under which they occur.',
   },
 
   // Advanced Testing Scenarios (Questions 201-225)
@@ -2380,10 +2380,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing a 3-phase motor installation, what additional safety considerations apply?',
     options: [
-      'Phase rotation, starting current and defrost cycle operation',
+      'Only single-pole isolation of the line conductor is needed',
       'Rotation direction check and phase sequence testing',
-      'Regularly based on competency assessment',
-      'The person who carried out inspection and testing',
+      'No isolation is required because each phase is only 230V',
+      'The neutral may be left connected during isolation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2394,10 +2394,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'In a swimming pool installation, what special earthing requirements must be verified?',
     options: [
-      'Waste electrical equipment disposal and energy efficiency',
-      'Comprehensive testing schedules and digital submission capability',
+      'A separate earth electrode dedicated to the pool pump only',
+      'Removal of all bonding to avoid stray currents in the water',
       'Equipotential bonding of all conductive parts within zones',
-      'Reduced oxygen levels and restricted escape routes',
+      'A functional earth connection to the lighting transformer',
     ],
     correctAnswer: 2,
     explanation:
@@ -2408,9 +2408,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing circuits in a marina installation, what environmental factor must be considered?',
     options: [
-      'Rotation direction check and phase sequence testing',
-      'Attempt to replicate the conditions during testing',
-      'Regular check-in procedures and emergency contacts',
+      'The absence of any need for RCD protection on pontoons',
+      'A consistently dry environment with negligible humidity',
+      'A reduced earth fault loop impedance from the seawater path',
       'Moisture and salt corrosion effects on connections',
     ],
     correctAnswer: 3,
@@ -2423,9 +2423,9 @@ export const mockExamQuestions: QuizQuestion[] = [
       'During fault finding on a complex distribution board, what systematic approach should be used?',
     options: [
       'Work from supply to load, isolating sections systematically',
-      'DC isolation and dual energy source considerations',
-      'Critical life support equipment that cannot be isolated',
-      'Improve earthing arrangements or reduce cable length',
+      'Replace every protective device on the board at once',
+      'Energise all circuits together and watch for the first to trip',
+      'Start at a random outlet and work outwards from there',
     ],
     correctAnswer: 0,
     explanation:
@@ -2435,10 +2435,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 205,
     question: 'What limitation might prevent full testing of a hospital installation?',
     options: [
-      'Requiring health and safety planning and coordination',
+      'An unusually low prospective fault current at the origin',
       'Critical life support equipment that cannot be isolated',
-      'Ratio of 10-minute to 1-minute resistance readings',
-      'Record actual values with deviation noted',
+      'The absence of any earthing arrangement to test against',
+      'A requirement to test only at 250V on every circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2448,10 +2448,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 206,
     question: 'In a fire alarm system installation, what additional testing is required?',
     options: [
-      'First fault does not cause disconnection - monitoring required',
-      'Rotation direction check and phase sequence testing',
+      'A 1000V insulation resistance test on the detection wiring',
+      'Phase rotation testing of the single-phase sounder circuit',
       'Functional testing of detection and alarm systems',
-      'Work from supply to load, isolating sections systematically',
+      'A higher earth fault loop impedance limit than normal',
     ],
     correctAnswer: 2,
     explanation:
@@ -2462,9 +2462,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing an installation with electronic equipment, what precaution is essential?',
     options: [
-      'Phase rotation, starting current and defrost cycle operation',
-      'Testing must not compromise life safety during occupied periods',
-      'Reproducing fault conditions and systematic monitoring',
+      'Raise the insulation test voltage to 1000V for accuracy',
+      'Leave all equipment connected to load the test circuit',
+      'Earth every electronic device to the consumer unit first',
       'Disconnect sensitive equipment before insulation testing',
     ],
     correctAnswer: 3,
@@ -2476,9 +2476,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What is the preferred method for testing earth electrode resistance?',
     options: [
       'Fall of potential method using test electrodes',
-      'Allow discharge time before testing',
-      'EIC for new work, MEIWC for minor alterations',
-      '1.5 times the rating of protective device',
+      'A 500V DC insulation resistance test on the electrode',
+      'An RCD trip-time test applied at the electrode',
+      'A continuity test between line and the electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -2489,10 +2489,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'During testing of a theatre installation, what special consideration applies to dimmers?',
     options: [
-      'Damp conditions or connected loads not removed',
+      'They draw no current and therefore need no protection',
       'Electronic equipment protection and harmonic considerations',
-      'Protective conductor continuity and earth fault path',
-      'Resistance measurement between bonded parts',
+      'They must be tested only at 1000V insulation voltage',
+      'Their neutral may be shared freely with other circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2502,10 +2502,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 210,
     question: 'What testing challenge is presented by smart lighting systems?',
     options: [
-      'High resistance connections or inadequate cable sizing',
-      'Only when dead working is not practicable and properly risk assessed',
+      'They cannot be tested with any standard instrument',
+      'They require a dedicated three-phase supply to operate',
       'Communication protocols and electronic component protection',
-      'Working on live low voltage equipment with high fault current',
+      'They are exempt from insulation resistance testing entirely',
     ],
     correctAnswer: 2,
     explanation:
@@ -2515,9 +2515,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 211,
     question: 'In an agricultural installation, what environmental factor affects testing?',
     options: [
-      'They cannot verify compliance due to limitations',
-      'After visual inspection but before live testing',
-      'Continuity testing through switch to lamp',
+      'A consistently clean and dry indoor environment',
+      'The complete absence of any livestock or machinery',
+      'A reduced need for RCD protection on outbuildings',
       'Dust, moisture and corrosive substances',
     ],
     correctAnswer: 3,
@@ -2529,9 +2529,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing IT earthing systems, what key difference applies?',
     options: [
       'First fault does not cause disconnection - monitoring required',
-      'Dividing circuits to reduce cumulative leakage',
-      'DC isolation at multiple points and energy discharge verification',
-      'To prevent electric shock and equipment damage',
+      'The supply neutral is solidly earthed at the origin',
+      'No earth fault loop impedance test is ever needed',
+      'Disconnection times are always faster than in a TN system',
     ],
     correctAnswer: 0,
     explanation:
@@ -2541,10 +2541,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 213,
     question: 'What is the significance of testing at different load conditions?',
     options: [
-      'Achieve discrimination with downstream RCDs',
+      'Insulation resistance changes greatly with the load current',
       'Temperature and voltage drop effects vary with load',
-      'Installation earthing + electrode resistance + supply earth return',
-      'Gradual voltage increase to test voltage',
+      'Polarity reverses when the circuit is fully loaded',
+      'Earth electrode resistance falls as load increases',
     ],
     correctAnswer: 1,
     explanation:
@@ -2554,10 +2554,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 214,
     question: 'During testing of a lift installation, what safety protocol is essential?',
     options: [
-      'DC isolation at multiple points and energy discharge verification',
-      'Access restrictions and conservation requirements',
+      'Testing the car while it is in normal passenger service',
+      'Relying solely on the landing call buttons for isolation',
       'Coordination with lift engineer and mechanical isolation',
-      'Fall of potential method using test electrodes',
+      'Leaving the motor room energised throughout the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -2567,9 +2567,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 215,
     question: 'What testing consideration applies to installations with solar PV systems?',
     options: [
-      'Natural leakage currents and electromagnetic interference',
-      'RCD protection for all socket outlets',
-      'To ensure switches operate only on line conductor',
+      'The array can always be made fully dead at any time',
+      'Only the AC output side needs to be considered',
+      'A single AC isolation point makes the whole array safe',
       'DC isolation and dual energy source considerations',
     ],
     correctAnswer: 3,
@@ -2582,9 +2582,9 @@ export const mockExamQuestions: QuizQuestion[] = [
       'In a computer server room, what environmental monitoring is critical during testing?',
     options: [
       'Temperature and humidity control maintenance',
-      'Loose or missing CPC connections',
-      'To ensure switches operate only on line conductor',
-      'Pilot wire integrity and in-cable control box function',
+      'Phase rotation of the single-phase rack supplies',
+      'Earth electrode resistance of the building lightning system',
+      'The colour coding of the structured cabling only',
     ],
     correctAnswer: 0,
     explanation:
@@ -2594,10 +2594,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 217,
     question: 'What is the main challenge when testing emergency lighting systems?',
     options: [
-      'Specific areas or circuits inspected and tested',
+      'The luminaires cannot be tested without the normal supply',
       'Testing must not compromise life safety during occupied periods',
-      'Comprehensive testing schedules and digital submission capability',
-      'After visual inspection but before live testing',
+      'The batteries must be fully discharged before any test',
+      'Only a visual inspection of the fittings is permitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -2607,10 +2607,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 218,
     question: 'During testing of a welding shop installation, what hazard must be considered?',
     options: [
-      'Equipment not to cause or be susceptible to interference',
-      'Patient safety, life support systems and infection control',
+      'A negligible load that needs no special consideration',
+      'A purely resistive load with no transient effects',
       'High fault currents and electromagnetic interference',
-      'Communications testing and consumer protection',
+      'A requirement to test only at extra-low voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -2620,9 +2620,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 219,
     question: 'What limitation might apply when testing heritage buildings?',
     options: [
-      'Safety sensors, obstruction detection and emergency release',
-      'Additional consideration for backup power sources',
-      'Duration of the installation plus reasonable period',
+      'A requirement to rewire the whole building before testing',
+      'Unlimited access to all concealed wiring at all times',
+      'An exemption from issuing any certificate at all',
       'Access restrictions and conservation requirements',
     ],
     correctAnswer: 3,
@@ -2634,9 +2634,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'In a chemical plant installation, what additional safety consideration applies?',
     options: [
       'Explosion risk and chemical compatibility of equipment',
-      'Continuity testing through switch to lamp',
-      'Carried out at 250V with equipment disconnected',
-      'Patient safety, life support systems and infection control',
+      'A reduced need for earthing because of the dry process',
+      'A standard domestic IP rating is sufficient throughout',
+      'No isolation is needed where equipment is sealed',
     ],
     correctAnswer: 0,
     explanation:
@@ -2646,10 +2646,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 221,
     question: 'What challenge does testing flexible cables in moving machinery present?',
     options: [
-      'Overall assessment and recommendations',
+      'They never require any continuity testing once installed',
       'Mechanical stress and flexing damage assessment',
-      'Duration of the installation plus reasonable period',
-      'Safe isolation, first aid and evacuation procedures',
+      'They can only be tested at 1000V insulation voltage',
+      'Their CPC may be omitted because they are flexible',
     ],
     correctAnswer: 1,
     explanation:
@@ -2659,10 +2659,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 222,
     question: 'During testing of a data centre UPS system, what coordination is required?',
     options: [
-      'Account for not all loads operating simultaneously',
-      'Natural leakage currents and electromagnetic interference',
+      'The UPS may simply be switched off without notice',
+      'No coordination is needed as the output is low voltage',
       'UPS engineer present and backup power arrangements',
-      'All switches and control devices should be closed',
+      'Only the incoming mains supply requires isolation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2672,9 +2672,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 223,
     question: 'What testing consideration applies to temporary installations?',
     options: [
-      'Disconnect sensitive equipment before insulation testing',
-      'Locking off or removing fuses/links',
-      'Earth fault loop impedance and RCD operation',
+      'They are exempt from inspection and testing entirely',
+      'They need less protection than permanent installations',
+      'They never require RCD protection on socket-outlets',
       'Enhanced protection and more frequent inspection',
     ],
     correctAnswer: 3,
@@ -2686,9 +2686,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'In a school installation, what timing consideration affects testing?',
     options: [
       'Testing scheduled to avoid disrupting education',
-      'Regular breaks to maintain concentration and safety',
-      'Approximately equal with slight variations',
-      'Carried out at 250V with equipment disconnected',
+      'Testing must always be done during occupied lesson times',
+      'Testing can only be carried out at night under floodlight',
+      'Testing must be completed within a single hour by law',
     ],
     correctAnswer: 0,
     explanation:
@@ -2698,10 +2698,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 225,
     question: 'What is the key challenge when fault-finding intermittent problems?',
     options: [
-      'Improve earthing arrangements or reduce cable length',
+      'The fault is always present and easy to measure',
       'Reproducing fault conditions and systematic monitoring',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Ensure all metalwork is at same potential',
+      'A single insulation resistance test always locates it',
+      'The protective device will always indicate the cause',
     ],
     correctAnswer: 1,
     explanation:
@@ -2713,10 +2713,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 226,
     question: 'What additional testing is required for EV charging point installations?',
     options: [
-      'Carried out at 250V with equipment disconnected',
-      'Phase rotation, starting current and defrost cycle operation',
+      'A 250V insulation test with the charger left connected',
+      'Phase rotation testing of the single-phase charge point',
       'DC leakage testing and protective conductor current verification',
-      'Installations with variable speed drives and switched mode power supplies',
+      'A reduced earth fault loop impedance limit of 0.1 ohms',
     ],
     correctAnswer: 2,
     explanation:
@@ -2726,9 +2726,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 227,
     question: 'When testing smart home systems, what protocol compatibility must be verified?',
     options: [
-      'Coordination with lift engineer and mechanical isolation',
-      'Total earth fault loop impedance - ensures disconnection times',
-      'Explosion risk and chemical compatibility of equipment',
+      'The cable colour code used for the data wiring',
+      'The earth electrode resistance of the building',
+      'The prospective fault current at every smart device',
       'Communication protocols (WiFi, Zigbee, Z-Wave) and interference',
     ],
     correctAnswer: 3,
@@ -2740,9 +2740,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What safety consideration applies to battery storage system testing?',
     options: [
       'DC isolation, thermal runaway risk and gas ventilation',
-      'Account for not all loads operating simultaneously',
-      'To prevent electric shock and equipment damage',
-      'Cable resistance increases with temperature',
+      'No isolation is needed because the voltage is low',
+      'Only the AC inverter output presents any hazard',
+      'The battery can be short-circuited safely to discharge it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2752,10 +2752,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 229,
     question: 'For heat pump installations, what electrical verification is essential?',
     options: [
-      'DC isolation and dual energy source considerations',
+      'A reduced insulation test voltage of 100V DC',
       'Phase rotation, starting current and defrost cycle operation',
-      'Operation under normal and emergency conditions',
-      'Carried out at 250V with equipment disconnected',
+      'Removal of all RCD protection from the supply',
+      'A functional earth in place of a protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -2765,10 +2765,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 230,
     question: 'What testing consideration applies to LED lighting installations?',
     options: [
-      'Arc-rated clothing and face protection',
-      'Integration with mechanical ventilation and air quality systems',
+      'They must be tested at an increased 1000V to be thorough',
+      'They draw no current so need no protective device',
       'Reduced insulation test voltage and driver protection',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
+      'Their drivers are immune to any insulation test voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -2778,9 +2778,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 231,
     question: 'When testing solar PV installations, what measurement is critical?',
     options: [
-      'Armoured cable or cable in conduit',
-      'Immediately advise the person ordering the report',
-      'Grid code compliance and export limitation',
+      'Only the AC frequency at the inverter output',
+      'The phase rotation of the single-phase supply',
+      'The earth electrode resistance of the array frame',
       'DC voltage, current and insulation resistance',
     ],
     correctAnswer: 3,
@@ -2792,9 +2792,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What verification is required for smart meter installations?',
     options: [
       'Communication functionality and load profile accuracy',
-      'Carried out at 250V with equipment disconnected',
-      'Enhanced protection and load management systems',
-      'Resistance measurement between bonded parts',
+      'A 500V insulation test across the meter terminals',
+      'Phase rotation of the single-phase tails',
+      'The earth electrode resistance of the meter board',
     ],
     correctAnswer: 0,
     explanation:
@@ -2804,10 +2804,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 233,
     question: 'For building management system (BMS) integration, what testing is needed?',
     options: [
-      'Elimination, substitution, engineering controls, administrative, PPE',
+      'Only a standard insulation resistance test on the wiring',
       'Communication protocols, sensor calibration and system response',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Circuit designation, cable details, and protection characteristics',
+      'Phase rotation testing of every control output',
+      'A reduced earth fault loop impedance on the data bus',
     ],
     correctAnswer: 1,
     explanation:
@@ -2817,10 +2817,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 234,
     question: 'What safety feature must be verified in EV charging installations?',
     options: [
-      'Electromagnetic field measurement and shielding verification',
-      'Step-by-step procedures and risk controls',
+      'A single-pole isolator on the line conductor only',
+      'A functional earth in place of the protective conductor',
       'PEN fault detection and automatic disconnection',
-      'Use a proving unit before and after testing',
+      'A surge protective device fitted at the vehicle inlet',
     ],
     correctAnswer: 2,
     explanation: 'EV charging requires PEN fault detection to prevent dangerous touch voltages.',
@@ -2829,9 +2829,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 235,
     question: 'When testing energy storage systems, what isolation procedure is critical?',
     options: [
-      'Temperature control accuracy and timer function verification',
-      'Damp conditions or connected loads not removed',
-      'When areas could not be accessed as agreed with client',
+      'Isolating the AC side alone makes the battery safe',
+      'No isolation is required because the cells self-discharge',
+      'A single line-conductor switch isolates the whole system',
       'DC isolation at multiple points and energy discharge verification',
     ],
     correctAnswer: 3,
@@ -2843,9 +2843,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What testing challenge is presented by wireless charging systems?',
     options: [
       'Electromagnetic field measurement and shielding verification',
-      'Ratio of 10-minute to 1-minute resistance readings',
-      'EIC for new work, MEIWC for minor alterations',
-      'Automated control sequences and emergency override function',
+      'A higher earth fault loop impedance limit than normal',
+      'Phase rotation testing of the single-phase primary coil',
+      'A 1000V insulation test across the air gap',
     ],
     correctAnswer: 0,
     explanation: 'Wireless charging requires EMF measurement and verification of safety shielding.',
@@ -2854,10 +2854,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 237,
     question: 'For smart thermostats, what functionality verification is required?',
     options: [
-      'Supply characteristics and earthing system',
+      'The prospective fault current at the thermostat terminals',
       'Temperature sensing accuracy and communication protocols',
-      'To ensure switches operate only on line conductor',
-      '1.5 times the rating of protective device',
+      'The earth electrode resistance of the heating system',
+      'Phase rotation of the single-phase boiler supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -2867,10 +2867,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 238,
     question: 'What consideration applies to testing micro-generation systems?',
     options: [
-      'Different sensitivities and/or time delays',
-      'Continuity and isolation from protective conductors',
+      'No connection agreement with the DNO is ever needed',
+      'The generator may be left connected during isolation',
       'Export limitation and grid protection settings verification',
-      'Pilot wire integrity and in-cable control box function',
+      'Only insulation resistance of the AC output matters',
     ],
     correctAnswer: 2,
     explanation:
@@ -2880,9 +2880,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 239,
     question: 'When testing smart switches and dimmers, what protection is needed?',
     options: [
-      'Regular updating of knowledge and skills',
-      'Temperature and humidity control maintenance',
-      'Functional testing of detection and alarm systems',
+      'A higher 1000V insulation test to stress the electronics',
+      'Removal of the protective conductor from the switch',
+      'Phase rotation testing of the single-phase switch wire',
       'Electronic component protection and communication testing',
     ],
     correctAnswer: 3,
@@ -2894,9 +2894,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What verification is required for home automation lighting systems?',
     options: [
       'Automated control sequences and emergency override function',
-      'Reduced insulation test voltage and driver protection',
-      'Related to line conductor resistance by cross-sectional area ratio',
-      'To ensure switches operate only on line conductor',
+      'A 250V insulation test on the data control wiring',
+      'Phase rotation of the single-phase lighting supply',
+      'The earth electrode resistance of the lighting circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2906,10 +2906,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 241,
     question: 'For electric vehicle supply equipment (EVSE), what current monitoring is required?',
     options: [
-      'Each live conductor and earth, then between live conductors',
+      'Only the AC frequency at the supply terminals',
       'Pilot signal integrity and protective conductor current measurement',
-      'Reduced insulation test voltage and driver protection',
-      'Anti-islanding protection and grid synchronisation',
+      'The earth electrode resistance of the charge point',
+      'Phase rotation of the single-phase vehicle inlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -2919,10 +2919,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 242,
     question: 'What testing consideration applies to power over Ethernet (PoE) systems?',
     options: [
-      'Regular check-in procedures and emergency contacts',
-      'Enhanced protection and more frequent inspection',
+      'A 500V insulation test between every data pair',
+      'RCD protection at 30mA on the data cabling',
       'Power delivery limits and equipment protection verification',
-      'Communication protocols (WiFi, Zigbee, Z-Wave) and interference',
+      'An earth electrode dedicated to the network switch',
     ],
     correctAnswer: 2,
     explanation:
@@ -2932,9 +2932,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 243,
     question: 'When testing battery backup systems, what capacity verification is needed?',
     options: [
-      'Fall of potential method using test electrodes',
-      'Rating decreases due to heating effects',
-      'Cable resistance increases with temperature',
+      'A 500V insulation test across the battery terminals',
+      'Reading the rated capacity from the nameplate alone',
+      'Measuring the open-circuit voltage with no load applied',
       'Load testing and autonomy time verification',
     ],
     correctAnswer: 3,
@@ -2946,9 +2946,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What safety verification is required for induction hob installations?',
     options: [
       'Electromagnetic field limits and cookware compatibility',
-      'Ensure all metalwork is at same potential',
-      'Dividing circuits to reduce cumulative leakage',
-      'When areas could not be accessed as agreed with client',
+      'A reduced earth fault loop impedance of 0.1 ohms',
+      'Phase rotation testing of the single-phase hob supply',
+      'A 1000V insulation test on the induction coils',
     ],
     correctAnswer: 0,
     explanation:
@@ -2958,10 +2958,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 245,
     question: 'For smart security systems, what functional testing is essential?',
     options: [
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
+      'A 1000V insulation test on the detector wiring only',
       'Alarm activation sequences and communication backup systems',
-      'First fault does not cause disconnection - monitoring required',
-      'Investigate for variable connections or parallel paths',
+      'Phase rotation testing of the single-phase control panel',
+      'The earth electrode resistance of the alarm bell box',
     ],
     correctAnswer: 1,
     explanation:
@@ -2972,10 +2972,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'What consideration applies to testing electric underfloor heating with smart controls?',
     options: [
-      'Customer information handling and smart device data',
-      'Complete testing sequence and safety system verification',
+      'The earth electrode resistance of the floor mat',
+      'A reduced insulation test voltage of 100V DC',
       'Temperature sensor calibration and zone control verification',
-      'Prospective Fault Current - confirms equipment rating',
+      'Phase rotation of the single-phase heating supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -2985,9 +2985,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 247,
     question: 'When testing renewable energy inverters, what protection verification is needed?',
     options: [
-      'Clear coordination between team members and other trades',
-      'DC and AC isolation with appropriate test equipment',
-      'Verify operation of switches and controls',
+      'Only the AC output insulation resistance needs checking',
+      'A reduced earth fault loop impedance on the DC side',
+      'A functional earth in place of the protective conductor',
       'Anti-islanding protection and grid synchronisation',
     ],
     correctAnswer: 3,
@@ -2999,9 +2999,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What testing challenge is presented by electric towel rails with smart controls?',
     options: [
       'Temperature control accuracy and timer function verification',
-      'Protective conductor continuity and earth fault path',
-      'New circuits, consumer unit changes and bathroom/kitchen work',
-      'Ratio of 10-minute to 1-minute resistance readings',
+      'A reduced earth fault loop impedance of 0.1 ohms',
+      'A 1000V insulation test on the heating element',
+      'Phase rotation of the single-phase rail supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -3011,10 +3011,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 249,
     question: 'For electric car charging cables, what additional testing is required?',
     options: [
-      'Fire performance classification and CE marking',
+      'Only a visual inspection of the connector housing',
       'Pilot wire integrity and in-cable control box function',
-      'Enhanced protection and load management systems',
-      'Design liability and consequential losses',
+      'Phase rotation testing of the single-phase lead',
+      'The earth electrode resistance at the vehicle inlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -3024,10 +3024,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 250,
     question: 'What verification is needed for smart garage door systems?',
     options: [
-      'All switches and control devices should be closed',
-      'Attempt to replicate the conditions during testing',
+      'A 1000V insulation test on the motor windings only',
+      'Phase rotation testing of the single-phase door motor',
       'Safety sensors, obstruction detection and emergency release',
-      'Areas inspected, limitations, and percentage of installation sampled',
+      'The earth electrode resistance of the garage structure',
     ],
     correctAnswer: 2,
     explanation:
@@ -3039,14 +3039,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 251,
     question: 'What is the primary purpose of a risk assessment before electrical testing?',
     options: [
-      'C1, C2, or FI observations are found',
-      '1.5 times the rating of protective device',
-      'DC isolation and specific safety procedures',
-      'Identify hazards and implement control measures',
+      'To estimate the cost of the testing work',
+      'To select which certificate to issue',
+      'To schedule the work around the client',
+      'To identify hazards and implement control measures',
     ],
     correctAnswer: 3,
     explanation:
-      'Risk assessment identifies potential hazards and establishes appropriate control measures for safe working.',
+      'A risk assessment identifies the hazards of the task and sets the control measures needed to work safely.',
   },
   {
     id: 252,
@@ -3072,40 +3072,40 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 254,
     question: 'Arc flash risk is highest when:',
     options: [
-      'Natural leakage currents and electromagnetic interference',
-      'Reproducing fault conditions and systematic monitoring',
-      'Working on live low voltage equipment with high fault current',
-      'Comprehensive testing schedules and digital submission capability',
+      'Working on an isolated and proved-dead circuit',
+      'Carrying out insulation resistance testing',
+      'Working live on equipment with high available fault current',
+      'Measuring earth electrode resistance outdoors',
     ],
     correctAnswer: 2,
     explanation:
-      'Arc flash risk increases with available fault current and is highest on live high-energy systems.',
+      'Arc flash energy rises with the available fault current, so the greatest risk is live work on high-energy equipment near the supply.',
   },
   {
     id: 255,
     question: 'What PPE is specifically required for arc flash protection?',
     options: [
-      'Locking off or removing fuses/links',
-      'Voltage imbalance and potential equipment damage',
-      'Electric vehicle charging and smart appliances',
-      'Arc-rated clothing and face protection',
+      'A standard hi-vis vest and hard hat',
+      'Ordinary cotton overalls and safety boots',
+      'A dust mask and disposable gloves',
+      'Arc-rated clothing and a face shield',
     ],
     correctAnswer: 3,
     explanation:
-      'Arc flash protection requires specifically rated clothing and face protection based on energy calculations.',
+      'Arc flash protection requires clothing and a face shield with an arc rating selected to exceed the calculated incident energy.',
   },
   {
     id: 256,
-    question: 'When must a permit to work system be used?',
+    question: 'When should a permit-to-work system be used?',
     options: [
-      'Complex or high-risk electrical work',
-      'Duration test and battery condition',
-      'At the origin of the installation',
-      'Electrical Installation Certificate (EIC)',
+      'For complex or high-risk electrical work',
+      'For replacing a single light fitting',
+      'For any work in a domestic dwelling',
+      'For routine insulation resistance testing',
     ],
     correctAnswer: 0,
     explanation:
-      'Permit to work systems are required for complex or high-risk electrical work to ensure safety coordination.',
+      'A permit-to-work formally controls complex or high-risk tasks, ensuring isolation and coordination before work begins.',
   },
   {
     id: 257,
@@ -3120,10 +3120,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 258,
     question: 'When working alone on electrical installations, what safety measure is essential?',
     options: [
-      'Continuity of protective conductors',
-      'Tamper detection and backup power systems',
+      'Working faster to reduce the time spent on site',
+      'Relying on a mobile phone with no agreed call schedule',
       'Regular check-in procedures and emergency contacts',
-      'Moisture and salt corrosion effects on connections',
+      'Leaving the area unsecured so help can reach you',
     ],
     correctAnswer: 2,
     explanation:
@@ -3139,15 +3139,15 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 260,
-    question: 'Method statements for electrical work must include:',
+    question: 'A method statement for electrical work must include:',
     options: [
-      'Step-by-step procedures and risk controls',
-      'C1 or C2 observations recorded',
-      'Load testing and autonomy time verification',
-      'Attempt to replicate the conditions during testing',
+      'Step-by-step procedures and the associated risk controls',
+      'Only the names of the operatives involved',
+      'A list of every test instrument owned',
+      'The client billing and payment terms',
     ],
     correctAnswer: 0,
-    explanation: 'Method statements detail procedures and risk controls for safe work execution.',
+    explanation: 'A method statement sets out the sequence of work and the risk control measures so the task is carried out safely.',
   },
   {
     id: 261,
@@ -3166,14 +3166,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 262,
     question: 'When is it acceptable to work live on electrical equipment?',
     options: [
-      'Special test procedures required due to earthing arrangement',
-      'Communication protocols and electronic component protection',
-      'Only when dead working is not practicable and properly risk assessed',
-      'Equipment not to cause or be susceptible to interference',
+      'Whenever it is quicker than isolating',
+      'On any circuit below 230V',
+      'Only when dead working is not practicable and it is properly risk assessed',
+      'When the client requests it to avoid downtime',
     ],
     correctAnswer: 2,
     explanation:
-      'Live working is only permitted when dead working is impracticable and proper risk assessment is completed.',
+      'Under the Electricity at Work Regulations live working is only justified where it is unreasonable to work dead and suitable precautions are in place.',
   },
   {
     id: 263,
@@ -3193,9 +3193,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Electrical safety training must be updated:',
     options: [
       'Regularly based on competency assessment',
-      'High resistance in earth path',
-      'Armoured cable or cable in conduit',
-      'EIC for new work, MEIWC for minor alterations',
+      'Only once when first entering the trade',
+      'Never, as the regulations do not change',
+      'Only after a serious accident has occurred',
     ],
     correctAnswer: 0,
     explanation:
@@ -3205,10 +3205,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 265,
     question: 'What information must be included in electrical safety documentation?',
     options: [
-      'PEN fault detection and automatic disconnection',
+      'Only the names of the operatives on site',
       'Hazard identification, risk assessment and control measures',
-      'Alternative protection provided and risk assessment completed',
-      'Knowledge, training, experience, and understanding of hazards',
+      'Just the calibration dates of the test instruments',
+      'A list of every cable installed on the job',
     ],
     correctAnswer: 1,
     explanation:
@@ -3219,10 +3219,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When working in confined spaces with electrical equipment, what additional risk applies?',
     options: [
-      'Tamper detection and backup power systems',
-      'Alarm activation sequences and communication backup systems',
+      'Improved natural ventilation and easy escape',
+      'A lower risk of electric shock than open areas',
       'Reduced oxygen levels and restricted escape routes',
-      'DC isolation and dual energy source considerations',
+      'No need for any additional risk assessment',
     ],
     correctAnswer: 2,
     explanation:
@@ -3232,9 +3232,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 267,
     question: 'What is the recommended maximum working time for detailed electrical work?',
     options: [
-      'One socket with higher resistance reading',
-      'When areas could not be accessed as agreed with client',
-      'Dividing circuits to reduce cumulative leakage',
+      'Work continuously until the task is fully complete',
+      'No limit, provided enough coffee is available',
+      'Twelve hours without a break to keep momentum',
       'Regular breaks to maintain concentration and safety',
     ],
     correctAnswer: 3,
@@ -3245,23 +3245,23 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 268,
     question: 'Emergency procedures for electrical incidents must include:',
     options: [
-      'Safe isolation, first aid and evacuation procedures',
-      'Dividing circuits to reduce cumulative leakage',
-      'Ensure metalwork is at earth potential',
-      'Testing scheduled to avoid disrupting education',
+      'Safe isolation, first aid and evacuation arrangements',
+      'A schedule of future inspection dates',
+      'The calibration records of test instruments',
+      'A full inventory of installed cables',
     ],
     correctAnswer: 0,
     explanation:
-      'Emergency procedures must address immediate safety including isolation, first aid and evacuation.',
+      'Emergency procedures must cover making the area safe by isolation, summoning first aid and evacuating people as needed.',
   },
   {
     id: 269,
     question: 'What weather conditions require suspension of outdoor electrical work?',
     options: [
-      'CE marking and declaration of conformity',
+      'Light cloud cover and a gentle breeze',
       'Lightning risk and heavy precipitation',
-      'Test each electrode separately',
-      'Loose connections or poor earth continuity',
+      'Dry, mild and settled conditions',
+      'Cool temperatures with good visibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -3271,10 +3271,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 270,
     question: 'Competency assessment for electrical workers must evaluate:',
     options: [
-      'Distribution network operators',
-      'Design liability and consequential losses',
+      'Only the number of years in the trade',
+      'Membership of a trade body alone',
       'Knowledge, skills and safety understanding',
-      'Each line and earth separately',
+      'Ownership of a calibrated test instrument',
     ],
     correctAnswer: 2,
     explanation:
@@ -3284,9 +3284,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 271,
     question: 'What communication is essential during complex electrical testing?',
     options: [
-      'Special test procedures required due to earthing arrangement',
-      'Safe isolation, first aid and evacuation procedures',
-      'Communication protocols and electronic component protection',
+      'No communication, so each person works independently',
+      'Only written notes left for the next shift',
+      'Verbal instructions given once at the start of the day',
       'Clear coordination between team members and other trades',
     ],
     correctAnswer: 3,
@@ -3298,9 +3298,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Incident reporting in electrical work must include:',
     options: [
       'All incidents, near misses and safety observations',
-      'DC voltage, current and insulation resistance',
-      'Enhanced protection and more frequent inspection',
-      'Insulated rescue hooks and first aid equipment',
+      'Only incidents that resulted in a serious injury',
+      'Only events the client specifically asks about',
+      'Nothing, unless an enforcement notice is issued',
     ],
     correctAnswer: 0,
     explanation:
@@ -3310,10 +3310,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 273,
     question: 'What verification is required before recommissioning electrical systems?',
     options: [
-      'Special test procedures required due to earthing arrangement',
+      'Only a quick visual glance at the consumer unit',
       'Complete testing sequence and safety system verification',
-      'Specific areas or circuits inspected and tested',
-      'State limitations and their potential impact on safety',
+      'No verification, as the system worked before',
+      'Just confirming the supply voltage is present',
     ],
     correctAnswer: 1,
     explanation:
@@ -3323,10 +3323,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 274,
     question: 'Safety barriers during electrical testing must:',
     options: [
-      'Improve earthing arrangements or reduce cable length',
-      'Before initial energisation and periodically thereafter',
+      'Be removed as soon as the first test is taken',
+      'Only be used on three-phase installations',
       'Prevent unauthorised access and clearly indicate hazards',
-      'Supply characteristics and earthing system',
+      'Carry the fault current during a short circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3336,9 +3336,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 275,
     question: 'What consideration applies to electrical work in healthcare facilities?',
     options: [
-      'Verify operation of switches and controls',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Voltage variations during fault conditions',
+      'No special consideration beyond a domestic install',
+      'Only the reception and office areas need attention',
+      'A reduced standard of earthing in clinical areas',
       'Patient safety, life support systems and infection control',
     ],
     correctAnswer: 3,
@@ -3352,9 +3352,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The 18th Edition of BS 7671 introduced new requirements for:',
     options: [
       'Arc fault detection devices (AFDD) in certain circumstances',
-      'Detection sensitivity and alarm functionality',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'Use a proving unit before and after testing',
+      'Mandatory rewireable fuses on all final circuits',
+      'A reduction in the minimum insulation resistance value',
+      'Removal of RCD protection from socket-outlets',
     ],
     correctAnswer: 0,
     explanation:
@@ -3364,10 +3364,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 277,
     question: 'Amendment 2 to BS 7671:2018 updated requirements for:',
     options: [
-      'Waste electrical equipment disposal and energy efficiency',
+      'The abolition of the ring final circuit entirely',
       'Electric vehicle charging and smart appliances',
-      'Damp conditions or connected loads not removed',
-      'RCD protection or mechanical protection',
+      'A return to the 16th Edition cable colour codes',
+      'The removal of all RCD requirements from dwellings',
     ],
     correctAnswer: 1,
     explanation:
@@ -3377,10 +3377,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 278,
     question: 'Building Regulations Part P requires notification for:',
     options: [
-      'Correct connections at both switches and intermediate positions',
-      'PEN fault detection and automatic disconnection',
+      'Like-for-like replacement of a damaged socket front',
+      'Replacing a single blown lamp in a light fitting',
       'New circuits, consumer unit changes and bathroom/kitchen work',
-      'Duration of the installation plus reasonable period',
+      'Resetting a tripped circuit breaker after a fault',
     ],
     correctAnswer: 2,
     explanation:
@@ -3391,9 +3391,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'The Construction (Design and Management) Regulations affect electrical contractors by:',
     options: [
-      'Functional testing of detection and alarm systems',
-      'Specific areas or circuits inspected and tested',
-      'Alternative protection provided and risk assessment completed',
+      'Setting the minimum cable sizes for final circuits',
+      'Specifying the test sequence for initial verification',
+      'Defining the maximum earth fault loop impedance values',
       'Requiring health and safety planning and coordination',
     ],
     correctAnswer: 3,
@@ -3405,9 +3405,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Competent person scheme registration requires:',
     options: [
       'Demonstrated competency, insurance and quality procedures',
-      'Different sensitivities and/or time delays',
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
-      'High-frequency components and specialised detection equipment',
+      'Only a one-off payment of a registration fee',
+      'Membership of any single trade union',
+      'A minimum of twenty years served in the trade',
     ],
     correctAnswer: 0,
     explanation:
@@ -3417,10 +3417,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 281,
     question: 'The latest surge protection requirements in BS 7671 apply to:',
     options: [
-      'Reduced oxygen levels and restricted escape routes',
+      'Only installations fed from an overhead supply',
       'Most installations unless specifically exempted',
-      'Isolate, Test, Prove dead, Lock off',
-      '1.5 times the rating of protective device',
+      'Only three-phase commercial installations',
+      'Only installations with a TT earthing system',
     ],
     correctAnswer: 1,
     explanation:
@@ -3430,10 +3430,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 282,
     question: 'Professional indemnity insurance for electrical contractors must cover:',
     options: [
-      'High temperature and humidity',
-      'Earth fault loop impedance and RCD operation',
+      'Only theft of tools and equipment from the van',
+      'Only damage to the contractor\'s own premises',
       'Design liability and consequential losses',
-      'Damp conditions or connected loads not removed',
+      'Only the cost of replacing failed test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -3443,9 +3443,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 283,
     question: 'Continuing professional development (CPD) for electrical engineers requires:',
     options: [
-      'Reduced oxygen levels and restricted escape routes',
-      'To ensure switches operate only on line conductor',
-      'Test while flexing the cable',
+      'A one-off qualification that never needs renewing',
+      'Only attending a course after a serious incident',
+      'Simply holding membership of a professional body',
       'Regular updating of knowledge and skills',
     ],
     correctAnswer: 3,
@@ -3457,9 +3457,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The latest requirements for electric vehicle charging installations include:',
     options: [
       'Enhanced protection and load management systems',
-      'Temperature sensor calibration and zone control verification',
-      'When areas could not be accessed as agreed with client',
-      'One socket with higher resistance reading',
+      'A standard 13A socket with no additional protection',
+      'A functional earth in place of a protective conductor',
+      'Removal of RCD protection to avoid nuisance tripping',
     ],
     correctAnswer: 0,
     explanation:
@@ -3469,10 +3469,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 285,
     question: 'Energy efficiency regulations affect electrical installations by requiring:',
     options: [
-      'Loose connections or poor earth continuity',
+      'Oversized cables to reduce voltage drop on every circuit',
       'Efficient lighting and control systems',
-      'Consider higher rated RCDs or circuit division',
-      'Design liability and consequential losses',
+      'A second independent supply to every dwelling',
+      'Higher-rated protective devices throughout',
     ],
     correctAnswer: 1,
     explanation:
@@ -3482,10 +3482,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 286,
     question: 'The Product Construction Regulation (CPR) affects electrical cables by:',
     options: [
-      'Locking off or removing fuses/links',
-      'Before initial energisation and periodically thereafter',
+      'Setting the minimum cross-sectional area of cables',
+      'Specifying the colour code of cable cores',
       'Fire performance classification and CE marking',
-      'Communications testing and consumer protection',
+      'Defining the maximum current rating of cables',
     ],
     correctAnswer: 2,
     explanation:
@@ -3495,9 +3495,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 287,
     question: 'Smart meter installation regulations require:',
     options: [
-      'Loose connections or poor earth continuity',
-      'Arc fault detection devices (AFDD) in certain circumstances',
-      'Record C2 and inform responsible person',
+      'A dedicated earth electrode for every smart meter',
+      'Mandatory arc fault detection on the meter tails',
+      'A 1000V insulation test on the supply tails',
       'Communications testing and consumer protection',
     ],
     correctAnswer: 3,
@@ -3509,9 +3509,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The latest accessibility requirements for electrical installations include:',
     options: [
       'Accessible heights for switches and controls',
-      'Protective conductor continuity and earth fault path',
-      'When areas could not be accessed as agreed with client',
-      'Ensure metalwork is at earth potential',
+      'Larger cable sizes for every final circuit',
+      'A second consumer unit in every dwelling',
+      'Higher insulation resistance on all circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -3521,10 +3521,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 289,
     question: 'Environmental regulations affecting electrical work include:',
     options: [
-      'Record actual values with deviation noted',
+      'The minimum earth fault loop impedance permitted',
       'Waste electrical equipment disposal and energy efficiency',
-      'Damp conditions or connected loads not removed',
-      'Reduced oxygen levels and restricted escape routes',
+      'The colour coding used for protective conductors',
+      'The test sequence for initial verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -3534,10 +3534,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 290,
     question: 'Data protection regulations affect electrical contractors through:',
     options: [
-      'Pilot wire integrity and in-cable control box function',
-      'Account for not all loads operating simultaneously',
+      'The earthing arrangement used at the customer\'s premises',
+      'The cable colour codes recorded on the certificate',
       'Customer information handling and smart device data',
-      'Alternative protection provided and risk assessment completed',
+      'The calibration records of the test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -3547,9 +3547,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 291,
     question: 'The latest fire safety regulations affect electrical installations by:',
     options: [
-      'Patient safety, life support systems and infection control',
-      'Safety sensors, obstruction detection and emergency release',
-      'Prospective Fault Current - confirms equipment rating',
+      'Removing all fire barriers to ease cable installation',
+      'Reducing the number of emergency luminaires required',
+      'A relaxation of cable support requirements in escape routes',
       'Enhanced fire stopping and emergency lighting requirements',
     ],
     correctAnswer: 3,
@@ -3561,9 +3561,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Electromagnetic compatibility (EMC) regulations require:',
     options: [
       'Equipment not to cause or be susceptible to interference',
-      'Damp conditions or connected loads not removed',
-      'Identify hazards and implement control measures',
-      'Supply characteristics and earthing system',
+      'Equipment to draw the same current on every phase',
+      'Equipment to be earthed through a functional earth only',
+      'Equipment to be tested at 1000V insulation voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -3573,10 +3573,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 293,
     question: 'The current requirements for electrical installation certificates include:',
     options: [
-      'All switches and control devices should be closed',
+      'Only a pass or fail box with no measured values',
       'Comprehensive testing schedules and digital submission capability',
-      'Duration of the installation plus reasonable period',
-      'Critical life support equipment that cannot be isolated',
+      'No signature from the person carrying out the testing',
+      'Only the client\'s name and the date of issue',
     ],
     correctAnswer: 1,
     explanation:
@@ -3586,10 +3586,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 294,
     question: 'Low voltage directive compliance requires:',
     options: [
-      'Regular check-in procedures and emergency contacts',
-      'Supply characteristics and earthing system',
+      'A dedicated earth electrode for each appliance',
+      'A 1000V insulation test before sale',
       'CE marking and declaration of conformity',
-      'Customer information handling and smart device data',
+      'Registration with the local distribution operator',
     ],
     correctAnswer: 2,
     explanation: "LVD compliance requires CE marking and manufacturer's declaration of conformity.",
@@ -3598,9 +3598,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 295,
     question: 'The latest ventilation requirements affect electrical installations by:',
     options: [
-      'Moisture and salt corrosion effects on connections',
-      'Communication protocols and electronic component protection',
-      'Areas inspected, limitations, and percentage of installation sampled',
+      'A reduction in the cable sizes used for fan circuits',
+      'The removal of RCD protection from extract fans',
+      'A higher earth fault loop impedance limit for fans',
       'Integration with mechanical ventilation and air quality systems',
     ],
     correctAnswer: 3,
@@ -3612,9 +3612,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Security system regulations require electrical installations to:',
     options: [
       'Tamper detection and backup power systems',
-      'Complex or high-risk electrical work',
-      'To prevent electric shock and equipment damage',
-      'DC and AC isolation with appropriate test equipment',
+      'A three-phase supply to every detection device',
+      'A dedicated earth electrode for the control panel',
+      'A 1000V insulation test on all detector wiring',
     ],
     correctAnswer: 0,
     explanation:
@@ -3624,10 +3624,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 297,
     question: 'The latest requirements for temporary electrical installations include:',
     options: [
-      'Electromagnetic field measurement and shielding verification',
+      'Exemption from RCD protection on all socket-outlets',
       'Enhanced protection and frequent inspection schedules',
-      'Design liability and consequential losses',
-      'Reproducing fault conditions and systematic monitoring',
+      'Less protection than a permanent installation needs',
+      'A single inspection at the end of the project only',
     ],
     correctAnswer: 1,
     explanation:
@@ -3637,10 +3637,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 298,
     question: 'Medical electrical equipment installation requires:',
     options: [
-      'Electromagnetic field limits and cookware compatibility',
-      'Accumulated earth leakage from multiple sources',
+      'A standard TN-C-S supply with no special bonding',
+      'Removal of all RCD protection from patient areas',
       'IT earthing systems and supplementary bonding',
-      'Temperature and voltage drop effects vary with load',
+      'A single earth electrode shared with the lighting',
     ],
     correctAnswer: 2,
     explanation:
@@ -3650,9 +3650,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 299,
     question: 'The current renewable energy regulations require:',
     options: [
-      'IP rating and general condition',
-      'Ensure all metalwork is at same potential',
-      'Insulation monitoring device verification',
+      'A standard 13A plug-in connection to the supply',
+      'No notification to the distribution operator',
+      'A functional earth in place of grid protection',
       'Grid code compliance and export limitation',
     ],
     correctAnswer: 3,
@@ -3664,9 +3664,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Electrical safety management systems must include:',
     options: [
       'Risk assessment, competency management and performance monitoring',
-      'Integration with mechanical ventilation and air quality systems',
-      'Testing must not compromise life safety during occupied periods',
-      'Alternative protection provided and risk assessment completed',
+      'Only a record of the test instruments used',
+      'Just a single annual inspection of the installation',
+      'Only the names of the operatives on site',
     ],
     correctAnswer: 0,
     explanation:

@@ -76,10 +76,10 @@ const AM2Module3Section5 = () => {
       id: 'bare-copper-safety',
       question: 'If the assessor sees bare copper at a socket terminal, what happens?',
       options: [
-        'At the furthest point from the distribution board',
-        'Combining multiple DC string outputs',
+        'It is acceptable if the connection is tight',
+        'Only a small note is made on the report',
         'Work marked unsafe - significant marks lost',
-        'Prove tester, test dead, prove tester',
+        'It is overlooked if the circuit tests pass',
       ],
       correctIndex: 2,
       explanation:
@@ -119,9 +119,9 @@ const AM2Module3Section5 = () => {
       id: 3,
       question: 'Why must CPCs always be sleeved?',
       options: [
-        'Setting productivity targets',
-        'Ask directly about suicide',
-        'Prospective short-circuit current (Ipsc)',
+        'To increase the current-carrying capacity',
+        'To improve the mechanical strength of the joint',
+        'To reduce the resistance of the earth path',
         'BS 7671 identification requirement',
       ],
       correctAnswer: 3,
@@ -172,9 +172,9 @@ const AM2Module3Section5 = () => {
       id: 7,
       question: 'How should cables be presented inside a DB?',
       options: [
-        'No — only their weight has changed',
-        'A cantilever configuration',
-        'Outdoor or damp environments',
+        'Coiled to leave plenty of spare length',
+        'Crossed over to save space in the enclosure',
+        'Left loose to allow easy future changes',
         'Dressed neatly with no tangles',
       ],
       correctAnswer: 3,
@@ -183,11 +183,16 @@ const AM2Module3Section5 = () => {
     },
     {
       id: 8,
-      question: "True or false: Neatness doesn't matter if installation is electrically safe.",
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'How does neatness affect your AM2 result if the installation is electrically safe?',
+      options: [
+        'Poor workmanship still loses marks even when safe',
+        'Neatness is not assessed at all',
+        'Marks are only lost if the circuit fails a test',
+        'Neatness only matters on the practical wiring task',
+      ],
+      correctAnswer: 0,
       explanation:
-        'False - neatness is critical for passing AM2. Poor workmanship loses marks even if installation is safe.',
+        'Neatness is critical for passing AM2. Poor workmanship loses marks even if the installation is electrically safe.',
     },
     {
       id: 9,
@@ -206,10 +211,10 @@ const AM2Module3Section5 = () => {
       id: 10,
       question: "What's the golden rule for self-inspection in AM2?",
       options: [
-        'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
-        'Reactive effects may need to be considered',
+        'Would this be quick enough to finish on time?',
+        'Would this use the least amount of cable?',
         'Would this pass customer handover/NICEIC inspection?',
-        'Regular check-in procedures and emergency contacts',
+        'Would this look acceptable from a distance?',
       ],
       correctAnswer: 2,
       explanation:

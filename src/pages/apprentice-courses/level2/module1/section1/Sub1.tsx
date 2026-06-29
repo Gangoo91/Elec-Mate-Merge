@@ -37,10 +37,10 @@ const checks = [
     id: 'hasawa-purpose-check',
     question: 'What is HASAWA 1974 actually for?',
     options: [
-      'General duties for health, safety and welfare at work',
-      'Telling you which cable to use',
-      'Setting electrical testing standards',
-      'Sorting out electricity prices',
+      'Setting general duties for health, safety and welfare at work',
+      'Specifying which cable sizes to use for each circuit',
+      'Setting the technical standards for electrical testing',
+      'Regulating the price the DNO charges for electricity',
     ],
     correctIndex: 0,
     explanation:
@@ -63,10 +63,10 @@ const checks = [
     id: 'employee-duties-check',
     question: "What’s YOUR main duty under HASAWA?",
     options: [
-      'Sum of voltages around a closed loop equals zero',
-      'Take reasonable care and cooperate with the system',
-      'Gap between design predictions and actual operational energy use',
-      'Installation certificate and schedule of test results',
+      'Carry out a written risk assessment for every task you do',
+      'Take reasonable care and cooperate with the safety system',
+      'Provide the safe systems of work and welfare facilities',
+      'Report every workplace injury directly to the HSE yourself',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of the Health and Safety at Work Act 1974?',
     options: [
-      'To ensure articles are safe, tested, and accompanied by adequate information',
+      'To set the technical standard for fixed electrical installations',
       'To set general duties for the safety, health and welfare of people at work',
-      'Provide illumination during power failures for safe evacuation',
-      'To prevent controller damage and ensure reliable operation',
+      'To list the specific PPE an electrician must wear on every job',
+      'To register and licence electrical contractors operating in the UK',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of these is an employer’s duty under HASAWA s.2?',
     options: [
-      'Voice control and automated assistance features',
-      'Duty to keep workplace safe and without risks to health',
+      'Report directly to the HSE before starting any electrical work',
+      'Take reasonable care of their own personal health and safety',
       'Provide a safe place to work and safe systems of work',
-      'Explosive release of energy from arc fault',
+      'Hold a current 18th Edition qualification themselves',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'What does s.7 of HASAWA put on YOU?',
     options: [
-      'Employer liability for acts of employees in the course of employment',
-      'Quantify the number and size distribution of solid contaminant particles in the oil',
-      'Ratio of optical power in \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' state to power in \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' state',
+      'Liability for the acts of any apprentice working below you',
+      'A duty to provide and maintain the welfare facilities on site',
+      'A duty to design every circuit you install to BS 7671',
       'Take reasonable care for yourself and others, and cooperate with the system',
     ],
     correctAnswer: 3,
@@ -121,9 +121,9 @@ const quizQuestions = [
     question: 'Who actually enforces HASAWA?',
     options: [
       'The HSE (and local authorities)',
-      'Insufficient cable rating for load',
-      '1.5 to 2.5 times the window head height',
-      'Acceptable - within 300ms limit',
+      'The IET, who publish the Wiring Regulations',
+      'The DNO who owns the supply to the premises',
+      'The customer’s buildings insurer',
     ],
     correctAnswer: 0,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: 'How does HASAWA relate to BS 7671?',
     options: [
-      'Emergency lighting, fire alarm components, and electrical isolation points',
+      'BS 7671 is the law; HASAWA is the technical standard underneath it',
       'HASAWA is the law; BS 7671 tells you how to do electrical work safely',
-      '"The installation includes lighting, power, and heating circuits."',
-      'A frequency where insulation drops due to panel resonance',
+      'They are the same document published under two different names',
+      'HASAWA replaced BS 7671 when it came into force in 1974',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does "so far as is reasonably practicable" mean?',
     options: [
-      'They provide timestamped, tamper-evident proof that both parties agreed to the terms',
-      'To indicate the conductor is being used as a line despite its core colour',
+      'Every conceivable risk must be removed whatever the cost',
+      'You only have to act on a risk once someone has been hurt by it',
       'Balance the risk against the time, money and trouble of fixing it',
-      'Regular inspections, staged testing, compliance checks, and documented reviews',
+      'The cheapest option is always the legally acceptable one',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question: 'Where do safe systems of work usually live on site?',
     options: [
       'Risk Assessments and Method Statements (RAMS)',
-      'Internally illuminated and externally illuminated',
-      'Legal liability and non-compliance',
-      'Completed BREEAM water calculator with specified fittings',
+      'The Electrical Installation Certificate for the job',
+      'The schedule of test results at the back of the cert',
+      'The manufacturer’s instructions for each accessory',
     ],
     correctAnswer: 0,
     explanation:

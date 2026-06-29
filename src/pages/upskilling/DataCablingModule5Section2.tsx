@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'You are running an end-of-job test on a Cat6A horizontal run. Should you use the permanent-link adapter or the channel adapter, and why?',
     options: [
-      'Channel adapter — it tests the longer signal path so it must be more thorough.',
       'Permanent-link adapter — the contractor warrants the installed (semi-permanent) cabling from the work-area outlet to the patch panel; the cords are not part of the contractor scope. The channel adapter is for end-user verification of a fully-patched run including the cords. Both are valid in TIA-1152-A; the choice depends on what is being warranted.',
+      'Channel adapter — it tests the longer signal path so it must be more thorough.',
       'Either, they are interchangeable.',
       'Always channel — the standards require it.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Permanent-link testing certifies the contractor scope: the solid-conductor cable from the work-area outlet to the patch panel, terminated at both ends. Channel testing additionally includes the patch cord at each end, so it certifies the end-user scope. Both are TIA-1152-A / BS EN 50346 valid, and good contractors do both — permanent-link at install for the warranty record, channel at user request for end-to-end verification before equipment connection. The adapters are different physical objects: the permanent-link adapter terminates at the patch panel and the keystone, including their connectors, in the test result; the channel adapter starts and ends at the patch-cord plug, so the patch cords are included.',
   },
@@ -39,11 +39,11 @@ const inlineChecks = [
       'A specification calls for "Cat6A certified to TIA-1152-A". The contractor offers a Level III certifier. The manufacturer warranty paperwork requires Level V. Which prevails?',
     options: [
       'Level III — TIA-1152-A only requires Level III for Cat6A.',
-      'Level V — manufacturer warranty terms are part of the contract once the contractor selected the warranty path. Level V provides the accuracy headroom required at 500 MHz to deliver a clean Class EA pass and is what the warranty manufacturer uses to sign off the cabling. If the contractor cannot produce Level V output, the warranty does not apply, regardless of the spec wording.',
       'Whichever the contractor prefers.',
+      'Level V — manufacturer warranty terms are part of the contract once the contractor selected the warranty path. Level V provides the accuracy headroom required at 500 MHz to deliver a clean Class EA pass and is what the warranty manufacturer uses to sign off the cabling. If the contractor cannot produce Level V output, the warranty does not apply, regardless of the spec wording.',
       'Level III on copper, Level V on fibre.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'TIA-1152-A defines field-test instrument accuracy levels: III, IIIe, IV and V — V being the most accurate (current top tier). For Cat6A / Class EA, Level III is the minimum mandated for the certification report itself, but most major manufacturers (Panduit, CommScope, Leviton, Belden) require Level V instrument output to honour their 25-year warranty programmes. The reason is headroom: at 500 MHz, the difference between a Level III pass and a Level V pass on identical cable can be enough to flip a marginal result. The contractor who specified the warranty path is contractually bound to the warranty terms — including the Level V requirement.',
   },
@@ -53,11 +53,11 @@ const inlineChecks = [
       'On a Cat6A test certificate you see "DC resistance unbalance" listed as a measured parameter. What does it mean, and why does it matter for PoE?',
     options: [
       'A general electrical-safety check that has nothing to do with PoE.',
-      'The difference in DC resistance between the two conductors of a pair (or pair-to-pair). For PoE — which uses balanced cabling to deliver DC current — significant unbalance causes uneven current sharing across the conductors, which produces uneven heating, accelerated insulation ageing, and ultimately degraded data performance under continuous load. Modern certifiers measure it; manufacturer warranties and BS 7671 §716 (via BS EN 50173-1 / TIA TSB-184-A) treat it as critical.',
       'A test only used on shielded cables.',
       'Something only required on Cat8 installations.',
+      'The difference in DC resistance between the two conductors of a pair (or pair-to-pair). For PoE — which uses balanced cabling to deliver DC current — significant unbalance causes uneven current sharing across the conductors, which produces uneven heating, accelerated insulation ageing, and ultimately degraded data performance under continuous load. Modern certifiers measure it; manufacturer warranties and BS 7671 §716 (via BS EN 50173-1 / TIA TSB-184-A) treat it as critical.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'DC resistance unbalance is the parameter that links pure data-cabling testing to PoE power delivery. PoE works because the two conductors of each pair share the supply current symmetrically; if one conductor has higher DC resistance than the other (poor termination, kinked cable, partial conductor break), the lower-resistance conductor carries more current, heats more, ages faster — and the imbalance compounds. TIA TSB-184-A (2017) — referenced indirectly via BS 7671 §716.523.1.101 NOTE 2 (which cites PD CLC/TR 50174-99-1, BS ISO/IEC 14763-2, and ISO/IEC TS 29125 for bundle thermal management) — treats DC resistance unbalance as a pass/fail PoE parameter. Every modern certifier measures it. The maximum tolerance is typically 3 % within a pair and 7 % between pairs for Class EA, but follow the manufacturer warranty figures.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Which TIA standard governs the field-test instrument accuracy levels (III, IIIe, IV, V) used to certify balanced twisted-pair cabling installations?',
     options: [
-      'ANSI/TIA-568.0-E.',
-      'ANSI/TIA-1152-A — Requirements for Field Test Instruments and Measurements for Balanced Twisted-Pair Cabling. Defines accuracy levels III, IIIe, IV and V (V is current top tier), the parameter set the certifier must measure, the calibration regime, and the pass/fail mechanics. The EN equivalent is BS EN 50346.',
-      'ANSI/TIA-606-D.',
-      'ANSI/TIA-942-C.',
+      'ANSI/TIA-1152-A, the field-test-instrument standard defining accuracy levels III to V.',
+      'ANSI/TIA-568.0-E, the generic telecommunications cabling for customer premises standard.',
+      'ANSI/TIA-606-D, the administration standard for labelling and identifier records.',
+      'ANSI/TIA-942-C, the data-centre infrastructure standard with redundancy classes 1-4.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TIA-1152-A (2016, current) is the field-test-instrument standard. It bounds the accuracy of the certifier itself across the parameter set — insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, DC resistance unbalance — and defines the instrument-accuracy levels III, IIIe, IV and V. BS EN 50346 is the EN-aligned equivalent and governs UK-side test methodology. Level V instruments (Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert top tier) are the modern Cat6A and Cat8 default; manufacturer 25-year warranties usually require Level V output.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'What is the difference between a permanent-link test and a channel test on a balanced twisted-pair installation?',
     options: [
-      'They are the same test with different names.',
-      'A permanent-link test certifies the semi-permanent installed cabling — solid-conductor cable from the work-area outlet to the patch panel, including both connectors at each end. A channel test additionally includes the patch cord at the FD and the work-area cord — the full path the active equipment will see. Permanent-link is what the contractor warrants; channel is what the end user actually uses.',
-      'Channel testing is for fibre, permanent-link is for copper.',
-      'Permanent-link is for new installs, channel is for retests.',
+      'They are the same test with different names, used interchangeably at handover.',
+      'Channel testing applies to fibre links, while permanent-link testing applies to copper.',
+      'Permanent-link tests the installed cabling and connectors; channel adds the patch cords too.',
+      'Permanent-link is used for new installs, while channel is used only for later retests.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The two test models are formally defined in TIA-1152-A and BS EN 50346. Permanent-link adapters at each end of the certifier mimic the cross-connect / outlet connections, so the test result includes both connectors and the solid-conductor cable in between, but excludes the cords. Channel adapters mimic the active-equipment-side plug, so the test result includes everything the active equipment sees — including the cords. Contractors typically certify to permanent-link at handover (the cords are end-user kit) and offer channel testing as an additional service when the user wants end-to-end confidence with their specific cords in place.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
       'Which of the following is NOT one of the parameters typically reported by a TIA-1152-A field certifier on a Cat6A test?',
     options: [
       'Insertion loss.',
-      'Mechanical bend radius.',
       'NEXT (near-end crosstalk).',
       'DC resistance unbalance.',
+      'Mechanical bend radius.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Field certifiers measure electrical parameters on the cable channel: insertion loss, NEXT (pair-to-pair near-end crosstalk), PSNEXT (power sum NEXT), ACR-F (attenuation-to-crosstalk ratio, far-end), return loss, propagation delay, delay skew, DC resistance, and DC resistance unbalance. They also report wire map (continuity / pinout), length and effective electrical length. Mechanical bend radius is an install-time discipline (BS EN 50174-2) that you check by eye and by measurement during the install — the certifier does not measure it directly. A bend that has gone too tight will show up as a return-loss bump or inflated effective length, but not as a "bend radius" parameter.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'For a Cat6A horizontal run with two patch cords (one at the FD, one at the work area), which test result does the contractor typically deliver as part of handover, and which does the end user request?',
     options: [
-      'Both are channel tests; the contractor and the user both want the same result.',
-      'Permanent-link is the contractor handover deliverable — it certifies the installed cabling that the contractor warrants. Channel is the end-user deliverable when the user wants to verify their specific cord choice end-to-end before equipment connection. Both are valid TIA-1152-A measurements.',
-      'Only channel; permanent-link is obsolete.',
-      'Only permanent-link; channel is obsolete.',
+      'Both deliverables are channel tests; the contractor and the user want the same result.',
+      'Permanent-link is the contractor handover; channel is the user check with their own cords.',
+      'Only channel testing is used at handover, since the permanent-link model is now obsolete.',
+      'Only permanent-link testing is used, since the channel model has been withdrawn entirely.',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'What is "DC resistance unbalance" and why is it the PoE-specific parameter every modern Cat6A certifier supports?',
     options: [
-      'A general electrical-safety check.',
-      'The difference in DC resistance between the two conductors of a pair (intra-pair) or between pairs (inter-pair). PoE uses balanced cabling to deliver DC current — both conductors of each pair carry equal current. If one conductor has higher resistance, it carries less current, the other carries more, the high-current conductor heats more, the imbalance compounds under continuous load, the cable degrades. Modern certifiers measure it; manufacturer PoE warranties treat it as a hard pass/fail.',
-      'A test only relevant to fibre.',
-      'A wire-map shortcut.',
+      'The DC resistance difference within a pair or between pairs, which causes uneven PoE heating.',
+      'A general electrical-safety check confirming the link is safe to connect to active equipment.',
+      'A test parameter only relevant to optical-fibre links, not to balanced twisted-pair cabling.',
+      'A wire-map shortcut that confirms pin continuity without a full transmission-parameter sweep.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DC resistance unbalance is the bridge between data-cabling testing and PoE power testing. The data-channel parameters (insertion loss, NEXT, return loss) describe how the cabling carries a balanced AC signal. DC resistance unbalance describes how the cabling shares balanced DC power. For PoE — which delivers up to 750 mA per conductor under BS 7671 §716.523.2.101 — the conductors of a pair must share current evenly, or the heavier-loaded conductor heats faster, ages faster, and may eventually fail. Tolerances are typically 3 % intra-pair, 7 % inter-pair for Class EA; follow the manufacturer warranty figures. TIA TSB-184-A (2017) is the supporting guidance.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'Which BS EN standard is the EN-aligned equivalent of TIA-1152-A for testing installed cabling?',
     options: [
-      'BS EN 50173-1.',
-      'BS EN 50346 — Information technology — Cabling installation — Testing of installed cabling. Companion to BS EN 50173-1 (performance) and BS EN 50174 (installation practice). UK installations are typically tested to BS EN 50346 or TIA-1152-A (or both, for international warranty programmes).',
-      'BS EN 50310.',
-      'BS EN 60825-2.',
+      'BS EN 50173-1, the generic cabling performance and Class-definition standard.',
+      'BS EN 50310, the bonding and earthing network standard for ICT installations.',
+      'BS EN 50346, the testing-of-installed-cabling methodology standard.',
+      'BS EN 60825-2, the optical-fibre communication-system laser-safety standard.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 50346 is the EN-aligned testing standard. BS EN 50173-1 is the performance / Class definition; BS EN 50174 is the install practice; BS EN 50346 is the testing methodology. TIA-1152-A is the ANSI/TIA equivalent of BS EN 50346. UK installations may be tested to either or both — many international manufacturer warranty programmes accept either. The certifier output reports against the chosen standard; the parameter set and pass/fail mechanics are aligned.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'A Cat6A certified link shows a 1.8 dB NEXT margin and a 4.2 dB return-loss margin. Best practice for handover: accept, retest, or re-terminate?',
     options: [
-      'Accept — both margins are positive.',
-      'Re-terminate — the 1.8 dB NEXT margin is in the marginal-pass zone (typically 1-3 dB). Most major manufacturer warranty programmes require 3-5 dB or better on NEXT for full warranty cover. The most common cause of marginal NEXT is excess pair untwist at one or both terminations; re-terminating to the manufacturer untwist limit (13 mm) typically lifts the margin to 5-8 dB.',
-      'Retest with a different certifier.',
-      'Accept on Cat6A but re-terminate on Cat6.',
+      'Accept — both margins are positive, so the link passes Class EA and needs no further work.',
+      'Retest with a different certifier, since a second instrument may report a wider NEXT margin.',
+      'Accept the result on Cat6A, but re-terminate the same link if it were specified as Cat6.',
+      'Re-terminate — 1.8 dB NEXT is a marginal pass below the warranty zone; re-terminating lifts it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A 1.8 dB margin is a marginal pass. The link technically passes Class EA per the standard, but it sits inside the warranty-rejection zone for most major manufacturers (Panduit, CommScope, Leviton, Belden typically require 3-5 dB on NEXT for full 25-year warranty cover). It also drifts under thermal cycling — PoE current heats the conductors, the cable warms during the day and cools overnight, the IDC contacts move microscopically — and a 1.8 dB margin can degrade to a fail in months. Re-terminate at handover. The dominant cause is excess pair untwist; the fix is 5-10 minutes per termination.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'What is the practical purpose of recording propagation delay and delay skew on a certified Cat6A link?',
     options: [
-      'Marketing.',
-      'Propagation delay is the signal travel time end-to-end (related to length); delay skew is the maximum difference in propagation delay between the four pairs. 10GBASE-T uses all four pairs in parallel; if one pair arrives much later than the others, the receiver cannot reassemble the signal correctly. TIA-568.2-E and ISO/IEC 11801-1 cap delay skew (typically 50 ns max for Class EA), and the certifier reports it. Excessive skew indicates a mixed-cable run or damaged pair.',
-      'A regulatory disclosure.',
-      'Only meaningful for fibre.',
+      'Delay is end-to-end travel time; skew is the pair-to-pair difference 10GBASE-T must keep small.',
+      'They confirm the cable jacket colour and print legend match the project bill of materials.',
+      'They are a regulatory disclosure recorded for building control rather than a performance check.',
+      'They are only meaningful for optical-fibre links, not for balanced twisted-pair channels.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '10GBASE-T (and 25GBASE-T, 40GBASE-T on Cat8) parallelises the data stream across all four pairs. The receiver re-aligns and recombines the four streams — but only if they arrive within a tight delay window. Delay skew is the worst-case pair-to-pair delay difference. For Class EA the cap is typically 50 ns; for Class I/II (Cat8) it is tighter. Excessive skew most commonly indicates a mixed-cable run (two reels of slightly different cable joined together), a damaged pair, or a manufacturing fault. The certifier flags it; the fix is usually re-pulling the affected segment.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'Why does a competent contract specify "TIA-1152-A Level V" certifier output rather than just "TIA-1152-A"?',
     options: [
-      'Marketing only.',
-      'Because TIA-1152-A defines four accuracy levels (III, IIIe, IV, V), each appropriate for different Categories / Classes. Level V is the modern top tier, required for Class EA / Cat6A and above to deliver pass results inside manufacturer warranty programmes. Specifying just "TIA-1152-A" without a level allows the contractor to use a lower-tier instrument, which may produce different (often more generous) pass results that the warranty manufacturer rejects.',
-      'Because Level V is mandated by BS 7671.',
-      'Because Level III is illegal.',
+      'Because Level V instruments are explicitly mandated for data cabling by BS 7671.',
+      'Because Level III instruments are no longer manufactured and cannot be hired anywhere.',
+      'Because the standard defines several accuracy levels, and Cat6A warranties need Level V.',
+      'Because a specification must always name the most expensive certifier option available.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TIA-1152-A is a layered standard: it defines the test parameters AND the instrument accuracy levels. A specification that says "TIA-1152-A" without a level is incomplete — different levels produce different effective margins on the same cable. Level V instruments have the lowest residual measurement noise and the tightest calibration tolerances, which is why manufacturer warranty programmes for Cat6A and Cat8 typically require Level V. The competent specification is "TIA-1152-A Level V certifier output, archived per link, supplied as part of handover documentation". That binds the contractor to the same accuracy regime the warranty manufacturer will audit against.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'Why is "documented certification" — the archived certifier file from every link — listed as part of handover, not as a nicety?',
     options: [
-      'It looks professional.',
-      'It is the objective record of what the building actually has at handover — the only evidence that converts "we installed Cat6A" into "this cabling is independently certified to Class EA, archived per link, with traceable test parameters and margins". Without it, the warranty does not apply, future fault-finding has no baseline, and a re-cabling dispute is unwinnable. With it, every parameter on every link is recorded for the cabling life.',
-      'It is required only for government contracts.',
-      'It is a tax requirement.',
+      'It looks professional on the as-built records handed to the client at completion.',
+      'It is required only for government and other public-sector cabling contracts.',
+      'It is a tax-record requirement retained for the contractor accounts, not for the client.',
+      'It is the objective record that proves Class EA, secures warranty and baselines faults.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Certifier output is the evidence record. TIA-606-D (2021) and BS EN 50174-1 require it for administration. Manufacturer warranty programmes require it for warranty cover. The end user requires it for handover acceptance. The archived per-link certifier file (typically Fluke .lncx, ideal Sample.flw, Softing .test) is human-readable and machine-readable, with every measured parameter, margin, instrument calibration record, and link identification stamped against the date. Two years later when a fault appears, you compare the original certification against a re-test and instantly see what changed. Without the archive, every fault is forensic; with it, fault-finding is targeted.',
   },

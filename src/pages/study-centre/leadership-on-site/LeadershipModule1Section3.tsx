@@ -10,8 +10,13 @@ const quickCheckQuestions = [
     id: 'self-awareness-johari',
     question:
       'In the Johari Window, information that is known to others but NOT known to yourself is in which quadrant?',
-    options: ['Open / Arena', 'Blind Spot', 'Hidden / Facade', 'Unknown'],
-    correctIndex: 1,
+    options: [
+      'Blind Spot',
+      'Open / Arena',
+      'Hidden / Facade',
+      'Unknown',
+    ],
+    correctIndex: 0,
     explanation:
       'The Blind Spot quadrant contains information that others can see about you but you cannot see in yourself. For example, your team might notice that you become short-tempered when you are under pressure, but you are not aware of this pattern. The goal is to reduce this quadrant by actively seeking honest feedback from trusted colleagues.',
   },
@@ -19,8 +24,13 @@ const quickCheckQuestions = [
     id: 'self-awareness-belbin',
     question:
       "In Belbin's Team Roles framework, which category does the 'Coordinator' role belong to?",
-    options: ['Action-Oriented', 'People-Oriented', 'Thinking-Oriented', 'Technical-Oriented'],
-    correctIndex: 1,
+    options: [
+      'Action-Oriented',
+      'Thinking-Oriented',
+      'People-Oriented',
+      'Technical-Oriented',
+    ],
+    correctIndex: 2,
     explanation:
       "The Coordinator is a People-Oriented role. Coordinators are confident, good chairpeople who clarify goals, delegate effectively, and ensure that the team's talent is being used to best effect. The three People-Oriented roles are Coordinator, Teamworker, and Resource Investigator. On a construction site, a Coordinator might naturally take charge of planning meetings, ensuring everyone has their say and tasks are allocated to the right people.",
   },
@@ -31,10 +41,10 @@ const quickCheckQuestions = [
     options: [
       '2 times more likely',
       '4 times more likely',
-      '6 times more likely',
       '10 times more likely',
+      '6 times more likely',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Gallup's global research found that people who use their strengths every day are 6 times more likely to be engaged at work. This is one of the strongest findings in workplace psychology. It does not mean ignoring weaknesses — it means understanding where you naturally excel and building your work life around those strengths as much as possible, while creating systems and support structures to manage areas of weakness.",
   },
@@ -69,11 +79,11 @@ const quizQuestions = [
     question: 'The Johari Window was created by:',
     options: [
       'Daniel Goleman and Richard Boyatzis',
-      'Joseph Luft and Harrington Ingham',
       'Paul Hersey and Ken Blanchard',
       'Meredith Belbin and Raymond Cattell',
+      'Joseph Luft and Harrington Ingham',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Johari Window was created by American psychologists Joseph Luft and Harrington Ingham in 1955. The name 'Johari' is a combination of their first names: Jo(seph) and Hari(ngton). It was developed as a tool for understanding interpersonal relationships and improving self-awareness in group settings.",
   },
@@ -81,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: "In the Johari Window, the 'Open/Arena' quadrant represents information that is:",
     options: [
+      'Known to both self and others',
       'Known to self but hidden from others',
       'Unknown to both self and others',
       'Known to others but not to self',
-      'Known to both self and others',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'The Open/Arena quadrant contains information that is known to you AND known to others. This includes things like your visible skills, your known behaviours, and your publicly shared experiences. Effective leadership aims to expand this quadrant — the larger it is, the better the communication, trust, and working relationships within the team.',
   },
@@ -95,11 +105,11 @@ const quizQuestions = [
     question: "To reduce the 'Blind Spot' quadrant in the Johari Window, a leader should:",
     options: [
       'Share more personal information with the team',
-      'Actively seek honest feedback from trusted colleagues',
       'Spend more time working alone to reflect on their behaviour',
+      'Actively seek honest feedback from trusted colleagues',
       'Avoid situations that might reveal weaknesses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Blind Spot contains things others see about you that you cannot see yourself. The ONLY way to reduce this quadrant is by seeking feedback from others — asking trusted colleagues, requesting 360-degree feedback, and creating a culture where people feel safe to give you honest input. Sharing personal information (disclosure) reduces the Hidden quadrant, not the Blind Spot.',
   },
@@ -108,11 +118,11 @@ const quizQuestions = [
     question: "In Belbin's Team Roles, how many roles are there and how are they categorised?",
     options: [
       '6 roles in 2 categories',
-      '8 roles in 4 categories',
       '9 roles in 3 categories',
+      '8 roles in 4 categories',
       '12 roles in 4 categories',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Belbin identified 9 team roles in 3 categories: Action-Oriented (Shaper, Implementer, Completer Finisher), People-Oriented (Coordinator, Teamworker, Resource Investigator), and Thinking-Oriented (Plant, Monitor Evaluator, Specialist). Each role brings specific strengths to a team, and the most effective teams have a balance of all three categories.',
   },
@@ -120,8 +130,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Which Belbin role is described as someone who generates creative ideas and solves difficult problems in unconventional ways?',
-    options: ['Coordinator', 'Implementer', 'Plant', 'Resource Investigator'],
-    correctAnswer: 2,
+    options: [
+      'Coordinator',
+      'Implementer',
+      'Resource Investigator',
+      'Plant',
+    ],
+    correctAnswer: 3,
     explanation:
       "The Plant is the creative, innovative thinker who generates original ideas and finds novel solutions to difficult problems. They are called 'Plant' because Belbin found that 'planting' one in a struggling team could transform its performance. On a construction site, a Plant might be the person who comes up with a creative workaround when a standard approach will not work due to site constraints.",
   },
@@ -129,12 +144,12 @@ const quizQuestions = [
     id: 6,
     question: 'A common blind spot for new leaders on a construction site is:',
     options: [
-      'Being too technically skilled at their trade',
       "Not realising that their mood and behaviour affect the whole team's atmosphere",
+      'Being too technically skilled at their trade',
       'Having too much experience in the construction industry',
       'Being too well-liked by their colleagues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "One of the most common blind spots for new leaders is underestimating the impact of their own mood and behaviour on the team. When a supervisor arrives on site stressed and irritable, it can set a negative tone for the entire day. When they arrive positive and energised, it lifts everyone. This 'emotional contagion' effect is well-documented in leadership research but is often invisible to the leader themselves.",
   },
@@ -155,8 +170,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Research by Tasha Eurich found that while 95% of people believe they are self-aware, the actual percentage who meet objective criteria for self-awareness is approximately:',
-    options: ['50-60%', '30-40%', '10-15%', '75-80%'],
-    correctAnswer: 2,
+    options: [
+      '50-60%',
+      '10-15%',
+      '30-40%',
+      '75-80%',
+    ],
+    correctAnswer: 1,
     explanation:
       "Eurich's research found that only 10-15% of people actually meet objective criteria for self-awareness, despite 95% believing they are self-aware. This enormous gap — known as the 'self-awareness gap' — demonstrates why deliberate effort is needed to develop genuine self-awareness. Simply believing you are self-aware is not enough; it requires active feedback-seeking, reflection, and honest self-examination.",
   },

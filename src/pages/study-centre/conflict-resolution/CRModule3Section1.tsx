@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'Under the Late Payment of Commercial Debts (Interest) Act 1998, what is the statutory interest rate you can charge on overdue commercial invoices?',
     options: [
-      '4% above BoE base rate',
       '8% above BoE base rate',
+      '4% above BoE base rate',
       '12% above BoE base rate',
       'Whatever rate you specify in the contract',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Late Payment of Commercial Debts (Interest) Act 1998 gives businesses the statutory right to charge interest at 8% above the Bank of England base rate on overdue commercial invoices. This applies automatically to business-to-business transactions even if the contract does not mention interest. It is important to note that this Act applies only to commercial (B2B) debts, not to consumer transactions where a homeowner has hired you directly.',
   },
@@ -47,8 +47,8 @@ const quickCheckQuestions = [
   {
     id: 'cr-3-1-check3',
     question: 'What is the maximum claim value for the Small Claims Court in England and Wales?',
-    options: ['£5,000', '£10,000', '£25,000', '£50,000'],
-    correctIndex: 1,
+    options: ['£5,000', '£25,000', '£50,000', '£10,000'],
+    correctIndex: 3,
     explanation:
       'The Small Claims Court in England and Wales handles claims up to £10,000. This track is specifically designed to be accessible without legal representation, meaning you do not need a solicitor. The hearing is informal, costs are limited, and you can file online through Money Claims Online (MCOL). For claims between £10,000 and £25,000, the fast track applies, and above £25,000 the multi-track applies, both of which are significantly more complex and costly.',
   },
@@ -82,8 +82,8 @@ const quizQuestions = [
     id: 1,
     question:
       'According to the Federation of Small Businesses (FSB), approximately how much does late payment cost UK SMEs each year?',
-    options: ['£5 billion', '£12 billion', '£22 billion', '£50 billion'],
-    correctAnswer: 2,
+    options: ['£22 billion', '£5 billion', '£12 billion', '£50 billion'],
+    correctAnswer: 0,
     explanation:
       'FSB research consistently shows that late payment costs UK small and medium enterprises approximately £22 billion per year. This staggering figure accounts for the time spent chasing debts, the cash flow disruption, the cost of bridging finance, and in some cases the failure of otherwise viable businesses. For sole trader electricians, the impact is even more acute because a single non-paying client can represent a significant proportion of monthly turnover.',
   },
@@ -113,8 +113,8 @@ const quizQuestions = [
     id: 4,
     question:
       'How long must you give a debtor to respond to a letter before action under the Pre-Action Protocol for Debt Claims?',
-    options: ['7 days', '14 days', '30 days', '60 days'],
-    correctAnswer: 2,
+    options: ['7 days', '14 days', '60 days', '30 days'],
+    correctAnswer: 3,
     explanation:
       'The Pre-Action Protocol for Debt Claims requires that you give the debtor at least 30 days to respond to a letter before action before issuing court proceedings. This is a mandatory requirement, and courts take a dim view of claimants who issue proceedings without following the protocol. The 30-day period allows the debtor to pay, propose a payment plan, or dispute the debt. Your letter must include the amount owed, how the interest has been calculated, details of how to pay, and information about how to dispute the debt if they disagree.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is the most effective prevention strategy for non-payment?',
     options: [
-      'Always demanding full payment upfront before starting any work',
       'Clear written terms, a deposit, and agreed stage payments',
+      'Always demanding full payment upfront before starting any work',
       'Threatening legal action in the original quote',
       'Only working for clients referred by other tradespeople',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Clear written terms, a deposit, and agreed stage payments is the most effective prevention strategy because it establishes a professional framework from the outset. Demanding full payment upfront is unrealistic for most electrical work and will lose you clients. Threatening legal action in quotes is unprofessional and off-putting. While referrals can help, they do not guarantee payment. A structured approach with written terms, a reasonable deposit (typically 10-30% for larger jobs), and stage payments tied to milestones protects both parties and ensures you are never too far ahead of payment.',
   },
@@ -135,8 +135,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the maximum court fee for filing a Small Claims Court claim in England and Wales?',
-    options: ['£35', '£115', '£300', '£455'],
-    correctAnswer: 3,
+    options: ['£35', '£455', '£115', '£300'],
+    correctAnswer: 1,
     explanation:
       'The maximum court fee for a Small Claims Court claim (for claims between £5,001 and £10,000) is £455. The fees are scaled: £35 for claims up to £300, £50 for claims between £300.01 and £500, £70 for claims between £500.01 and £1,000, £105 for claims between £1,000.01 and £1,500, £185 for claims between £1,500.01 and £3,000, £335 for claims between £3,000.01 and £5,000, and £455 for claims between £5,000.01 and £10,000. These fees can be added to your claim, so if you win, the defendant pays your court fees as well.',
   },
@@ -146,11 +146,11 @@ const quizQuestions = [
       'The Late Payment of Commercial Debts (Interest) Act 1998 applies to which type of transactions?',
     options: [
       'All transactions including domestic consumers',
-      'Business-to-business (B2B) transactions only',
       'Only transactions over £10,000',
+      'Business-to-business (B2B) transactions only',
       'Only transactions where a written contract exists',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Late Payment Act applies exclusively to business-to-business (B2B) transactions. It does not cover transactions where the client is a domestic consumer (a homeowner hiring you for work at their home). This is a critical distinction for electricians, who often work for both commercial clients and domestic customers. For domestic clients, you need to rely on contractual late payment clauses in your terms and conditions, or the statutory interest available through the County Courts Act 1984 if the matter goes to court.',
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
       'An electrician is owed £1,800 by a commercial client. The invoice has been overdue for 45 days. Which of the following is the most appropriate course of action?',
     options: [
       'Immediately file a claim at Small Claims Court without further contact',
-      'Send a letter before action giving 30 days to respond, including the amount owed, interest calculation, how to pay, and how to dispute',
       'Turn up at the client premises and refuse to leave until paid',
       'Post a negative review on social media to pressure the client into paying',
+      'Send a letter before action giving 30 days to respond, including the amount owed, interest calculation, how to pay, and how to dispute',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'After 45 days of non-payment, and assuming earlier reminder stages have been followed, a letter before action is the appropriate next step. This letter must include the amount owed, how interest has been calculated (8% above BoE base rate under the Late Payment Act, plus £70 fixed compensation), details of how to pay, and information on how to dispute the debt. The debtor must be given 30 days to respond. Filing at court without following the Pre-Action Protocol could result in costs penalties. Attending premises or posting on social media are unprofessional and potentially actionable as harassment or defamation.',
   },

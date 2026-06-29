@@ -14,42 +14,42 @@ const quickCheckQuestions = [
     question:
       'James Clear&rsquo;s habit stacking formula states: &ldquo;After [CURRENT HABIT], I will [NEW HABIT].&rdquo; An electrician wants to build the habit of photographing every installation before starting work. Which of the following is the BEST habit stack?',
     options: [
-      '&ldquo;I will photograph every installation at some point during the day&rdquo;',
       '&ldquo;After parking my van on site, I will photograph the existing installation before touching anything&rdquo;',
+      '&ldquo;I will photograph every installation at some point during the day&rdquo;',
       '&ldquo;I need to remember to take photos &mdash; I will set a reminder on my phone&rdquo;',
       '&ldquo;I will try to photograph installations when I remember to do so&rdquo;',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Option B follows the exact habit stacking formula: it identifies a specific current habit (parking the van on site) and attaches the new desired habit (photographing the existing installation) directly to it. The current habit acts as an automatic trigger &mdash; you always park when you arrive, so the cue is reliable and consistent. Option A is vague (&ldquo;at some point&rdquo;) and lacks a specific cue. Option C relies on a phone reminder rather than an existing behavioural anchor, which is less reliable because it can be snoozed or ignored. Option D uses intention language (&ldquo;try&rdquo;, &ldquo;when I remember&rdquo;) rather than linking to a concrete anchor. James Clear emphasises that the power of habit stacking is its specificity: by linking new behaviours to existing ones, you leverage the brain&rsquo;s existing neural pathways rather than trying to create entirely new cues from scratch.',
+      'The best stack follows the exact habit stacking formula: it identifies a specific current habit (parking the van on site) and attaches the new desired habit (photographing the existing installation) directly to it. The current habit acts as an automatic trigger &mdash; you always park when you arrive, so the cue is reliable and consistent. &ldquo;At some point during the day&rdquo; is vague and lacks a specific cue. A phone reminder relies on a notification rather than an existing behavioural anchor, which is less reliable because it can be snoozed or ignored. Intention language (&ldquo;try&rdquo;, &ldquo;when I remember&rdquo;) does not link to a concrete anchor. James Clear emphasises that the power of habit stacking is its specificity: by linking new behaviours to existing ones, you leverage the brain&rsquo;s existing neural pathways rather than trying to create entirely new cues from scratch.',
   },
   {
     id: 'gs-3-4-check2',
     question:
       'Shawn Achor&rsquo;s &ldquo;20-second rule&rdquo; states that reducing the activation energy for a desired behaviour by just 20 seconds dramatically increases the likelihood of doing it. Which of the following is the BEST application of this principle for an electrician who wants to study for 20 minutes each evening?',
     options: [
-      'Telling yourself firmly that you will study every evening, no matter what',
-      'Leaving your study materials, notebook, and a pen open on the kitchen table so they are ready when you sit down after dinner',
-      'Buying a more expensive textbook so you feel obligated to use it',
-      'Asking your partner to remind you to study every evening',
+      'Telling yourself firmly that you will study every single evening, no matter what happens',
+      'Leaving your study materials open and ready on the kitchen table for after dinner',
+      'Buying a much more expensive textbook so that you feel obligated to actually use it',
+      'Asking your partner to remind you to sit down and study every evening after dinner',
     ],
     correctIndex: 1,
     explanation:
-      'Option B directly applies the 20-second rule by reducing the activation energy required to start studying. When your materials are already out, open, and visible, the barrier to beginning is almost zero &mdash; you simply sit down and start. Compare this to having to find your textbook, locate your notebook, find a pen, clear space on the table, and open to the right page &mdash; each step adds friction and provides an opportunity to decide &ldquo;I&rsquo;ll do it tomorrow&rdquo;. Shawn Achor&rsquo;s research (published in The Happiness Advantage) showed that even tiny reductions in friction &mdash; as small as 20 seconds &mdash; significantly increase follow-through on desired behaviours. Option A relies on willpower, which is unreliable. Option C uses financial guilt, which is a weak motivator. Option D outsources the cue to another person, which creates dependency and potential conflict.',
+      'Leaving your materials out and open directly applies the 20-second rule by reducing the activation energy required to start studying. When your materials are already out, open, and visible, the barrier to beginning is almost zero &mdash; you simply sit down and start. Compare this to having to find your textbook, locate your notebook, find a pen, clear space on the table, and open to the right page &mdash; each step adds friction and provides an opportunity to decide &ldquo;I&rsquo;ll do it tomorrow&rdquo;. Shawn Achor&rsquo;s research (published in The Happiness Advantage) showed that even tiny reductions in friction &mdash; as small as 20 seconds &mdash; significantly increase follow-through on desired behaviours. Telling yourself firmly relies on willpower, which is unreliable. Buying an expensive textbook uses financial guilt, which is a weak motivator. Asking a partner to remind you outsources the cue to another person, which creates dependency and potential conflict.',
   },
   {
     id: 'gs-3-4-check3',
     question:
       'Charles Duhigg defines a &ldquo;keystone habit&rdquo; as a single habit that triggers positive changes across multiple areas of life. For a tradesperson, which of the following is the BEST example of a keystone habit?',
     options: [
-      'Buying a new tool every month',
-      'Regular physical exercise &mdash; which research shows improves sleep, energy, mood, focus, and decision-making',
-      'Watching electrical training videos on social media',
-      'Arriving exactly on time for every job',
+      'Buying a brand-new tool for the van at the start of every month',
+      'Watching electrical training videos on social media during breaks',
+      'Regular physical exercise, which cascades into sleep, energy, mood and focus',
+      'Arriving exactly on time, to the minute, for every single job',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'Regular physical exercise is the classic example of a keystone habit identified by Charles Duhigg in The Power of Habit. Research consistently shows that when people start exercising regularly, positive changes cascade into other areas: they sleep better, eat more healthily, feel more energetic, have improved mood and reduced stress, concentrate more effectively, and make better decisions. For tradespeople who do physically demanding work, regular exercise also reduces injury risk, improves recovery, and extends career longevity. Option A (buying tools) is a purchasing habit, not a behavioural keystone. Option C (watching videos) is passive consumption without the cascading benefits of a true keystone habit. Option D (punctuality) is a good professional habit but does not typically trigger the wide-ranging positive changes that define a keystone habit.',
+      'Regular physical exercise is the classic example of a keystone habit identified by Charles Duhigg in The Power of Habit. Research consistently shows that when people start exercising regularly, positive changes cascade into other areas: they sleep better, eat more healthily, feel more energetic, have improved mood and reduced stress, concentrate more effectively, and make better decisions. For tradespeople who do physically demanding work, regular exercise also reduces injury risk, improves recovery, and extends career longevity. Buying tools is a purchasing habit, not a behavioural keystone. Watching videos is passive consumption without the cascading benefits of a true keystone habit. Punctuality is a good professional habit but does not typically trigger the wide-ranging positive changes that define a keystone habit.',
   },
 ];
 
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'James Clear&rsquo;s habit stacking formula is based on a psychological principle called &ldquo;implementation intention&rdquo;, first researched by Peter Gollwitzer. What is the core mechanism that makes implementation intentions effective?',
     options: [
-      'They increase motivation by making goals feel more exciting',
       'They create a specific if-then plan that pre-loads a decision, reducing reliance on willpower and memory',
+      'They increase motivation by making goals feel more exciting',
       'They require a written contract that creates social accountability',
       'They work by making the habit itself more enjoyable through positive association',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Implementation intentions work by creating a specific if-then plan (&ldquo;If situation X occurs, I will perform behaviour Y&rdquo;) that pre-loads the decision about when, where, and how to act. Peter Gollwitzer&rsquo;s research at New York University demonstrated that when people form implementation intentions, they are significantly more likely to follow through on their goals because the decision has already been made in advance &mdash; the situation itself becomes the trigger, bypassing the need for conscious deliberation, motivation, or willpower in the moment. James Clear adapted this principle into the habit stacking formula by using an existing habit as the &ldquo;if&rdquo; condition: &ldquo;After [CURRENT HABIT], I will [NEW HABIT]&rdquo;. This is more reliable than time-based intentions (&ldquo;At 7am, I will...&rdquo;) because existing habits are deeply encoded neurological patterns that fire automatically, providing a consistent and reliable cue.',
   },
@@ -110,17 +110,17 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BJ Fogg, founder of the Behaviour Design Lab at Stanford University, developed the Tiny Habits method based on the principle that behaviour happens when three elements converge: Motivation, Ability, and a Prompt (his Behaviour Model: B = MAP). The key insight is that by making the habit tiny (extremely easy), you remove the need for high motivation. Reading one paragraph is so small that it requires almost no willpower or motivation &mdash; anyone can do it, even on their worst day. The &ldquo;celebrate&rdquo; step is critical: Fogg&rsquo;s research shows that positive emotion (even a brief internal &ldquo;yes!&rdquo;) immediately after the behaviour is what wires the habit into the brain. Once the tiny version is automatic, natural expansion occurs &mdash; you find yourself reading two paragraphs, then a page, then ten minutes, then twenty. The habit grows organically because the neural pathway has been established. Starting with an hour (Option A) or thirty minutes (Option D) requires high motivation, which is unreliable.',
+      'BJ Fogg, founder of the Behaviour Design Lab at Stanford University, developed the Tiny Habits method based on the principle that behaviour happens when three elements converge: Motivation, Ability, and a Prompt (his Behaviour Model: B = MAP). The key insight is that by making the habit tiny (extremely easy), you remove the need for high motivation. Reading one paragraph is so small that it requires almost no willpower or motivation &mdash; anyone can do it, even on their worst day. The &ldquo;celebrate&rdquo; step is critical: Fogg&rsquo;s research shows that positive emotion (even a brief internal &ldquo;yes!&rdquo;) immediately after the behaviour is what wires the habit into the brain. Once the tiny version is automatic, natural expansion occurs &mdash; you find yourself reading two paragraphs, then a page, then ten minutes, then twenty. The habit grows organically because the neural pathway has been established. Starting with a full hour or a thirty-minute video requires high motivation, which is unreliable.',
   },
   {
     id: 3,
     question:
       'An electrician creates the following habit stack for arriving on site: &ldquo;After parking the van &rarr; put on PPE &rarr; photograph the existing installation &rarr; brief the customer on today&rsquo;s work.&rdquo; After two weeks, the electrician finds that they consistently put on PPE but skip the photograph and customer brief. According to habit stacking principles, what is the MOST likely cause?',
     options: [
-      'The electrician lacks motivation to take photographs',
-      'The stack is too long &mdash; the chain breaks because the later items are not yet automated and require conscious effort',
-      'Photographing installations is not a useful habit for electricians',
-      'The stack should be performed in a different order',
+      'The electrician simply lacks the motivation needed to take the photographs each time',
+      'The stack is too long, so the chain breaks at the later items that are not yet automated',
+      'Photographing every installation is not actually a useful habit for working electricians',
+      'The stack should be performed in a different order to make the later steps stick better',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,23 +132,23 @@ const quizQuestions = [
       'Shawn Achor&rsquo;s &ldquo;20-second rule&rdquo; is based on reducing activation energy for desired behaviours. Which of the following scenarios BEST demonstrates this principle for an electrician who wants to complete certificates immediately after each job?',
     options: [
       'Setting a phone alarm that says &ldquo;Complete certificate now&rdquo; at the end of each job',
-      'Promising the customer that the certificate will be emailed within 24 hours',
-      'Keeping the certification app open on a tablet that is always in the van cab, with the customer&rsquo;s details pre-loaded from the job booking',
+      'Promising the customer that the finished certificate will be emailed over within 24 hours',
       'Writing &ldquo;COMPLETE CERTIFICATES&rdquo; in large letters on a sticky note on the dashboard',
+      'Keeping the certification app open on a cab-mounted tablet with the customer details pre-loaded',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Option C best demonstrates the 20-second rule because it reduces the activation energy to near zero: the app is already open, the device is immediately accessible (in the cab, not buried in a toolbox), and the customer details are pre-loaded. The electrician simply picks up the tablet and starts filling in the certificate. Every step that has been eliminated &mdash; finding the device, opening the app, searching for the customer, entering basic details &mdash; is a friction point that could derail the behaviour. Shawn Achor&rsquo;s research showed that even tiny amounts of friction (as small as 20 seconds) can be enough to prevent a behaviour from occurring, because in that moment of friction, the brain has time to generate reasons not to do it (&ldquo;I&rsquo;ll do it later&rdquo;, &ldquo;I need to get to the next job&rdquo;). By pre-loading the environment, you bypass this decision point entirely.',
+      'Keeping the app open on a cab-mounted tablet best demonstrates the 20-second rule because it reduces the activation energy to near zero: the app is already open, the device is immediately accessible (in the cab, not buried in a toolbox), and the customer details are pre-loaded. The electrician simply picks up the tablet and starts filling in the certificate. Every step that has been eliminated &mdash; finding the device, opening the app, searching for the customer, entering basic details &mdash; is a friction point that could derail the behaviour. Shawn Achor&rsquo;s research showed that even tiny amounts of friction (as small as 20 seconds) can be enough to prevent a behaviour from occurring, because in that moment of friction, the brain has time to generate reasons not to do it (&ldquo;I&rsquo;ll do it later&rdquo;, &ldquo;I need to get to the next job&rdquo;). By pre-loading the environment, you bypass this decision point entirely.',
   },
   {
     id: 5,
     question:
       'Charles Duhigg describes &ldquo;keystone habits&rdquo; as habits that trigger a cascade of positive changes across multiple areas. Research consistently identifies regular exercise as a keystone habit. Why does exercise trigger changes in seemingly unrelated areas such as productivity, eating, and financial discipline?',
     options: [
-      'Exercise is so time-consuming that it forces people to be more organised with the rest of their day',
-      'Exercise releases endorphins that make people permanently happier, which automatically improves all other behaviours',
-      'Exercise builds self-regulatory capacity (willpower), creates a sense of identity shift (&ldquo;I am someone who takes care of myself&rdquo;), and the discipline transfers to other domains',
-      'Exercise is only a keystone habit for people who are naturally athletic and disciplined',
+      'Exercise is so time-consuming that it forces people to organise the rest of their day better',
+      'Exercise releases endorphins that make people permanently happier and so improve everything',
+      'Exercise builds self-regulatory capacity and shifts identity, and that discipline transfers across',
+      'Exercise is only ever a keystone habit for people who are naturally athletic and disciplined',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,40 +159,40 @@ const quizQuestions = [
     question:
       'James Clear describes &ldquo;environment design&rdquo; as one of the most effective strategies for behaviour change. His first law of behaviour change is &ldquo;Make it obvious&rdquo;. Which of the following BEST applies this principle to an electrician&rsquo;s work environment?',
     options: [
-      'Telling yourself every morning that you will be more organised today',
-      'Placing a laminated daily checklist on the van dashboard (PPE &rarr; photos &rarr; test &rarr; certify &rarr; photos &rarr; update records) so the sequence is visually prominent every time you enter the van',
-      'Relying on memory to recall the correct sequence of tasks for each job',
-      'Asking your supervisor to check your work at the end of each day',
+      'Placing a laminated daily checklist on the van dashboard so the sequence is always visible',
+      'Telling yourself firmly every single morning that you will be more organised today',
+      'Relying on your memory to recall the correct sequence of tasks for each different job',
+      'Asking your supervisor to check over your finished work at the end of each working day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Option B directly applies Clear&rsquo;s first law (&ldquo;Make it obvious&rdquo;) by placing a visual cue in a location you cannot miss &mdash; the van dashboard, which is directly in your line of sight every time you enter the vehicle. The checklist serves as an environmental cue that prompts the desired sequence of behaviours without requiring you to remember them. This is far more reliable than memory (Option C) or self-talk (Option A), both of which fail under pressure, fatigue, or distraction &mdash; all common on busy job sites. Clear emphasises that the most effective cues are visual, prominent, and positioned at the point of decision. A dashboard checklist meets all three criteria. Over time, the behaviours on the checklist become automatic habits, but the visual cue continues to serve as a safety net against omission, particularly when you are tired or rushing between jobs.',
+      'The laminated dashboard checklist directly applies Clear&rsquo;s first law (&ldquo;Make it obvious&rdquo;) by placing a visual cue in a location you cannot miss &mdash; the van dashboard, which is directly in your line of sight every time you enter the vehicle. The checklist serves as an environmental cue that prompts the desired sequence of behaviours without requiring you to remember them. This is far more reliable than relying on memory or self-talk, both of which fail under pressure, fatigue, or distraction &mdash; all common on busy job sites. Clear emphasises that the most effective cues are visual, prominent, and positioned at the point of decision. A dashboard checklist meets all three criteria. Over time, the behaviours on the checklist become automatic habits, but the visual cue continues to serve as a safety net against omission, particularly when you are tired or rushing between jobs.',
   },
   {
     id: 7,
     question:
       'Context-dependent memory research shows that people tend to behave differently in different environments. An electrician who studies effectively at the library but cannot focus at home is experiencing:',
     options: [
-      'A character flaw indicating lack of discipline',
-      'Context-dependent behaviour &mdash; the library environment contains cues for focus and study, while the home environment contains cues for relaxation and leisure',
-      'Evidence that they should only study at the library and never attempt to study at home',
-      'A sign that their home environment is too comfortable for productive work',
+      'A character flaw on their part, clearly indicating a basic lack of personal discipline',
+      'Evidence that they should only ever study at the library and never attempt it at home',
+      'A sign that their whole home environment is simply too comfortable for productive work',
+      'Context-dependent behaviour, where each environment carries its own cues and triggers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Context-dependent behaviour is a well-established psychological phenomenon. Research by Godden and Baddeley (1975) and many subsequent studies have shown that memory, mood, and behaviour are strongly influenced by the environment in which they occur. Each environment contains a unique set of cues &mdash; visual, auditory, spatial, social &mdash; that activate particular mental states and behavioural patterns. The library contains cues associated with concentration, quiet work, and academic effort. The home contains cues associated with relaxation, entertainment, and domestic activities. When the electrician enters each environment, the associated mental state and behavioural patterns are automatically activated. The solution is not to avoid studying at home (Option C) but to design a specific area at home that contains study cues: a dedicated desk, study materials visible and ready, the chair positioned facing away from the television, and leisure distractions removed. Over time, this area develops its own context-dependent associations with focused study.',
+      'Context-dependent behaviour is a well-established psychological phenomenon. Research by Godden and Baddeley (1975) and many subsequent studies have shown that memory, mood, and behaviour are strongly influenced by the environment in which they occur. Each environment contains a unique set of cues &mdash; visual, auditory, spatial, social &mdash; that activate particular mental states and behavioural patterns. The library contains cues associated with concentration, quiet work, and academic effort. The home contains cues associated with relaxation, entertainment, and domestic activities. When the electrician enters each environment, the associated mental state and behavioural patterns are automatically activated. The solution is not to avoid studying at home but to design a specific area at home that contains study cues: a dedicated desk, study materials visible and ready, the chair positioned facing away from the television, and leisure distractions removed. Over time, this area develops its own context-dependent associations with focused study.',
   },
   {
     id: 8,
     question:
       'The &ldquo;compound effect&rdquo; of small daily habits suggests that 20 minutes of study per day for one year totals approximately 120 hours of learning. Over a 10-year career, this compounds to approximately 1,200 hours. According to expertise research, what is the significance of this number?',
     options: [
-      'It is too few hours to make any meaningful difference to skill level',
-      'It represents roughly half the &ldquo;10,000-hour rule&rdquo; threshold, but even 1,200 hours of deliberate practice produces significant expertise gains in a specific domain',
-      'It exactly matches the required CPD hours for maintaining an ECS card over 10 years',
-      'It is the minimum number of hours required to qualify as an electrician in the UK',
+      'It is far too few hours to make any meaningful difference to your overall skill level',
+      'It exactly matches the CPD hours required for maintaining an ECS card across 10 years',
+      'It is well short of the 10,000-hour rule, yet still produces significant expertise gains',
+      'It is the minimum number of hours required to qualify as an electrician here in the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'While Anders Ericsson&rsquo;s research (often simplified as the &ldquo;10,000-hour rule&rdquo; by Malcolm Gladwell) suggests that world-class expertise in complex domains may require approximately 10,000 hours of deliberate practice, Ericsson&rsquo;s own work makes clear that significant expertise gains occur well before that threshold. Research shows that the learning curve is steepest in the early and middle stages &mdash; the first 100, 500, and 1,000 hours of deliberate practice in a specific domain produce substantial improvements in competence. An electrician who studies for 20 minutes per day over 10 years accumulates approximately 1,200 hours of additional learning beyond their day-to-day work. This is a transformative amount of knowledge when applied to a specific area: inspection and testing, design, a particular technology such as EV charging or renewable energy, or business management. The key word is &ldquo;deliberate&rdquo; &mdash; passive reading or unfocused study counts for far less than targeted, effortful practice with feedback. The compound effect demonstrates that small, consistent daily habits produce extraordinary results over time &mdash; far more than sporadic bursts of intensive study.',
   },

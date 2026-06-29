@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is NOT one of the three core principles of the circular economy as defined by the Ellen MacArthur Foundation?',
     options: [
-      'Maximise extraction of virgin raw materials',
       'Design out waste and pollution',
       'Keep products and materials in use',
+      'Maximise extraction of virgin raw materials',
       'Regenerate natural systems',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "The Ellen MacArthur Foundation's circular economy model is built on three principles: design out waste and pollution, keep products and materials in use, and regenerate natural systems. Maximising extraction of virgin raw materials is the opposite of circular thinking — it describes the traditional linear 'take-make-dispose' model that the circular economy seeks to replace.",
   },
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     id: 'env-sus-m1s4-whole-life-carbon',
     question: 'Whole life carbon in construction comprises which two main components?',
     options: [
-      'Embodied carbon and operational carbon',
       'Transport carbon and demolition carbon',
+      'Embodied carbon and operational carbon',
       'Design carbon and commissioning carbon',
       'Manufacturing carbon and recycling carbon',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Whole life carbon is the total carbon emissions associated with a building across its entire lifecycle. It comprises embodied carbon (emissions from extracting, manufacturing, transporting, installing, maintaining, and disposing of building materials) and operational carbon (emissions from energy used to heat, cool, light, and power the building during its occupied life). Both must be addressed to achieve genuine carbon reduction in the built environment.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       "The three pillars of sustainability are environmental, social, and economic. In the context of the 'triple bottom line,' what does this framework require organisations to consider?",
     options: [
-      'People, planet, and profit — measuring success across social, environmental, and financial performance equally',
       'Only financial profit, since economic viability funds all other sustainability measures',
+      'People, planet, and profit — measuring success across social, environmental, and financial performance equally',
       'Environmental impact alone, as social and economic factors are secondary to climate change',
       'Government compliance, public relations, and shareholder returns',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'The triple bottom line framework, coined by John Elkington in 1994, requires organisations to measure their performance across three dimensions: people (social impact), planet (environmental impact), and profit (economic viability). In construction, this means considering the wellbeing of workers and communities, minimising environmental harm, and maintaining financial sustainability — rather than prioritising any single dimension at the expense of the others.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       "Which of the following UN Sustainable Development Goals is MOST directly relevant to the construction industry's energy practices?",
     options: [
-      'SDG 7: Affordable and Clean Energy',
       'SDG 1: No Poverty',
       'SDG 4: Quality Education',
+      'SDG 7: Affordable and Clean Energy',
       'SDG 14: Life Below Water',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'SDG 7 (Affordable and Clean Energy) is directly relevant to the construction industry because buildings account for approximately 40% of UK energy consumption. Construction professionals have a direct role in delivering energy-efficient buildings, integrating renewable energy systems, and reducing energy demand through improved design and specification. Other construction-relevant SDGs include SDG 9 (Industry, Innovation and Infrastructure), SDG 11 (Sustainable Cities and Communities), SDG 12 (Responsible Consumption and Production), and SDG 13 (Climate Action).',
   },
@@ -147,8 +147,8 @@ const quizQuestions = [
     id: 4,
     question:
       'The UK Climate Change Act 2008 (as amended in 2019) sets a legally binding target to reach net zero greenhouse gas emissions by what year?',
-    options: ['2050', '2030', '2035', '2040'],
-    correctAnswer: 0,
+    options: ['2030', '2035', '2040', '2050'],
+    correctAnswer: 3,
     explanation:
       'The Climate Change Act 2008, amended in June 2019, commits the UK to achieving net zero greenhouse gas emissions by 2050. This is a legally binding target, making the UK the first major economy to legislate for net zero. The construction sector, responsible for approximately 25% of UK carbon emissions (including embodied and operational carbon from buildings), has a critical role in meeting this target. The sixth carbon budget (2033–2037) sets interim milestones that require significant near-term action.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       "Life cycle assessment (LCA) follows the ISO 14040 and ISO 14044 standards. What does a 'cradle-to-grave' LCA boundary encompass?",
     options: [
-      'All stages from raw material extraction through manufacturing, transport, use, and end-of-life disposal',
       'Only the manufacturing stage of a product',
+      'All stages from raw material extraction through manufacturing, transport, use, and end-of-life disposal',
       'Only the operational energy use of a building over its design life',
       'Only the transport of materials from factory to construction site',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "A cradle-to-grave LCA covers the complete lifecycle of a product or building: raw material extraction (cradle), manufacturing and processing, transport to site, installation, operational use and maintenance, and finally end-of-life disposal or demolition (grave). ISO 14040 provides the principles and framework, while ISO 14044 specifies requirements and guidelines for conducting an LCA. A 'cradle-to-cradle' assessment goes further by also considering the recycling or reuse of materials after end of life.",
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       'What does Corporate Social Responsibility (CSR) mean in the context of a UK construction company?',
     options: [
-      "A voluntary commitment to managing the company's social, environmental, and economic impacts beyond minimum legal compliance",
       'A legal requirement under the Building Regulations to publish annual sustainability reports',
       'A government-imposed tax on construction companies that do not meet carbon targets',
+      "A voluntary commitment to managing the company's social, environmental, and economic impacts beyond minimum legal compliance",
       'A mandatory certification scheme administered by the HSE for construction firms',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "CSR in construction refers to a company's voluntary commitment to managing its broader social, environmental, and economic impacts beyond what is legally required. This includes community engagement (such as local employment, apprenticeships, and neighbourhood liaison), supply chain ethics (fair payment, modern slavery prevention), environmental stewardship (waste reduction, biodiversity), and social value creation. While CSR is largely voluntary, it is increasingly expected by clients, particularly in public sector procurement where the Social Value Act 2012 requires social value to be considered in contract awards.",
   },
@@ -199,12 +199,12 @@ const quizQuestions = [
     question:
       'Which of the following is a recognised business benefit of adopting sustainable practices in construction?',
     options: [
-      'Reduced operating costs through lower energy, water, and waste expenditure, plus improved competitiveness for contracts requiring ESG credentials',
       'Guaranteed exemption from all planning regulations and building control inspections',
       'Automatic qualification for all government construction framework agreements',
       'Complete elimination of construction project risk and liability',
+      'Reduced operating costs through lower energy, water, and waste expenditure, plus improved competitiveness for contracts requiring ESG credentials',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Sustainable construction practices deliver measurable business benefits including reduced operating costs (lower energy bills, reduced waste disposal charges, lower water consumption), competitive advantage in tendering (particularly for public sector contracts requiring ESG — Environmental, Social, and Governance — credentials), enhanced reputation with clients and communities, reduced regulatory risk, and improved ability to attract and retain skilled workers. While sustainability does not eliminate risk or guarantee contract awards, it increasingly differentiates successful construction businesses from their competitors.',
   },

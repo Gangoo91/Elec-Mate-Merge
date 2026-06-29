@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'A colleague who is normally reliable and sociable has become withdrawn, is arriving late, and seems irritable over small things. Which condition does this pattern MOST commonly suggest?',
     options: [
-      'A personality change that is not related to mental health',
-      'Depression — withdrawal, irritability, and loss of motivation are key warning signs on site',
-      'A physical health problem that has nothing to do with mental wellbeing',
-      'Normal behaviour variation that does not require any concern',
+      'Depression — withdrawal, irritability and lost motivation',
+      'A personality change that is unrelated to mental health',
+      'A physical health problem with no link to mental wellbeing',
+      'Normal behaviour variation that does not warrant any concern',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Withdrawal from colleagues, increased irritability (especially over small things), arriving late or increased absence, and loss of motivation are all common signs of depression as they present on a construction site. Depression in men often manifests as irritability and anger rather than the stereotypical 'sadness' — which is why it frequently goes unrecognised. These changes from someone's normal behaviour pattern are important warning signs.",
   },
@@ -34,8 +34,8 @@ const quickCheckQuestions = [
     options: [
       'There is no difference — pressure and stress are the same thing',
       'Pressure is what you feel at work; stress is what you feel at home',
-      'Pressure is a normal part of work that can be motivating; stress occurs when pressure exceeds your ability to cope and becomes harmful',
-      'Stress only affects people who are not resilient enough to handle pressure',
+      'Pressure can motivate; stress is when it exceeds your ability to cope',
+      'Stress only affects people who are not resilient enough to cope',
     ],
     correctIndex: 2,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     question:
       'A worker on your site is clearly using alcohol to cope with stress and it is affecting their work. What is the MOST appropriate way to view this situation?',
     options: [
-      'It is purely a disciplinary matter — they should be dismissed for misconduct',
-      'It is none of your business — everyone has a right to drink as they please',
-      'It should be understood as a mental health issue where the person is self-medicating, while also recognising the safety implications',
-      'You should ignore it unless they arrive on site visibly intoxicated',
+      'A purely disciplinary matter — they should be dismissed for misconduct',
+      'None of your business — everyone has a right to drink as they please',
+      'Something to ignore unless they arrive on site visibly intoxicated',
+      'A mental health issue (self-medicating) with safety implications too',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Substance misuse in construction is frequently a symptom of underlying mental health problems — people use alcohol or drugs to cope with stress, anxiety, depression, or trauma. The most effective approach recognises it as both a mental health issue AND a safety concern. Purely disciplinary approaches drive the behaviour underground and fail to address the root cause. The person needs support and, potentially, professional help — not just punishment.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'Generalised Anxiety Disorder (GAD) is BEST described as:',
     options: [
-      'Feeling nervous before a job interview or exam',
-      'Persistent, excessive worry about multiple areas of life that the person finds difficult to control, lasting at least six months',
-      'Having a specific fear of one particular thing, such as heights or spiders',
-      'Experiencing panic attacks in crowded places',
+      'Persistent, hard-to-control worry across many areas, for six months or more',
+      'Feeling nervous in the period before a job interview or exam',
+      'Having a specific, intense fear of one thing, such as heights or spiders',
+      'Experiencing sudden panic attacks when in crowded public places',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GAD is characterised by persistent, excessive, and difficult-to-control worry about multiple areas of life (work, health, family, finances, everyday matters) for at least six months. It is not the same as normal worry — people with GAD often know their worry is disproportionate but cannot stop it. Physical symptoms include restlessness, muscle tension, difficulty sleeping, irritability, and difficulty concentrating. It differs from specific phobias (which focus on one thing) and panic disorder (which involves discrete panic attacks).',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'On a construction site, anxiety often presents as:',
     options: [
-      'A worker talking openly about feeling anxious to everyone on site',
-      'Avoidance of certain tasks, over-checking work, difficulty concentrating, and reluctance to take on responsibilities',
-      'A worker taking excessive sick leave with no explanation',
-      'Aggressive behaviour towards management and supervisors',
+      'A worker talking openly to everyone on site about feeling anxious',
+      'A worker taking excessive sick leave with no explanation given',
+      'Aggressive, confrontational behaviour towards managers and supervisors',
+      'Task avoidance, over-checking work, and reluctance to take on jobs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On site, anxiety commonly manifests as avoidance behaviours (not wanting to do certain tasks, especially at height or in confined spaces), over-checking work (checking installations repeatedly, seeking excessive reassurance), difficulty concentrating (making uncharacteristic errors), and reluctance to take on new responsibilities or make decisions. It may also show as physical symptoms — sweating, shaking, nausea, needing frequent toilet breaks. Workers rarely announce that they feel anxious; instead, these behavioural changes are the visible signs.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'According to the Maslach model, burnout has three key dimensions. Which of the following is one of them?',
     options: [
-      'Physical injury from overwork',
       'Emotional exhaustion',
+      'Physical injury from overwork',
       'Financial difficulties',
       'Relationship breakdown',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Maslach Burnout Inventory identifies three key dimensions of burnout: emotional exhaustion (feeling emotionally drained, overwhelmed, and unable to give any more), depersonalisation (developing a cynical, detached attitude towards work and colleagues), and reduced personal accomplishment (feeling ineffective, doubting the value of your work). While financial difficulties and relationship breakdown can contribute to burnout, they are not part of the Maslach model's definition of burnout itself.",
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     options: [
       'Normal stress that will pass on its own with time',
       'Generalised Anxiety Disorder',
-      'Post-Traumatic Stress Disorder (PTSD)',
       'Depression',
+      'Post-Traumatic Stress Disorder (PTSD)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'This pattern — flashbacks to the traumatic event, avoidance of reminders (the area where it happened), and hypervigilance/exaggerated startle response (startling at loud noises) — is characteristic of PTSD. The symptoms have persisted for three months following a clearly traumatic event (witnessing a serious accident). While some stress responses after a traumatic event are normal and resolve within a few weeks, symptoms that persist beyond one month and cause significant distress or impairment indicate PTSD and warrant professional assessment.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'Which statement about the relationship between mental health conditions is MOST accurate?',
     options: [
-      'Mental health conditions always occur in isolation — you can only have one at a time',
-      'If you have anxiety, you are immune to depression because they are opposite conditions',
-      'Comorbidity is common — anxiety and depression frequently occur together, and substance misuse often co-exists with other conditions',
-      'Having one mental health condition means you will inevitably develop every other condition',
+      'Mental health conditions always occur in isolation, one at a time',
+      'Comorbidity is common — anxiety, depression and substance misuse co-occur',
+      'Having anxiety makes you immune to depression, as they are opposites',
+      'Having one condition means you will inevitably develop every other one',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Comorbidity (having more than one condition at the same time) is very common in mental health. Research shows that up to 60% of people with depression also experience anxiety, and vice versa. Substance misuse frequently co-occurs with depression, anxiety, and PTSD. In construction, it is common to see workers experiencing multiple interconnected conditions — for example, chronic work stress leading to depression, leading to increased alcohol use. This is why holistic, person-centred support is so important.',
   },

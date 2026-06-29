@@ -40,10 +40,10 @@ const checks = [
     id: 'mod7-s5-sub3-utr',
     question: 'What is the UTR and when do you need it?',
     options: [
-      "A safe system of work — including risk assessment, isolation procedure, voltage proving (dead-test), lock-off, and a written method statement where appropriate. Reg 4(3) is the legal hook for everything you'd recognise as 'site safety procedure'.",
+      "A VAT registration number issued by HMRC when your turnover crosses the threshold. You need it to charge VAT on your invoices and to reclaim VAT on purchases; it has no role until you are VAT-registered.",
       "A 10-digit Unique Taxpayer Reference issued by HMRC when you register for Self Assessment as a self-employed individual. You need it to file your annual tax return and for all HMRC correspondence. Apply within 3 months of starting trade.",
-      "Realistically 9–12 years for a typical UK domestic install at current SEG rates and electricity prices, longer if the customer doesn’t self-consume much of the generation. The five-year payback figure that gets quoted in sales brochures is mostly outdated FIT-era marketing.",
-      "Install within the M Volume 2 range (typically 750-1200 mm), explain that the Equality Act 2010 requires reasonable provision for disabled users and visitors regardless of current staff, and document the decision in writing.",
+      "A National Insurance number issued by the Department for Work and Pensions when you first start work. You need it once at the start of your career and it never changes thereafter.",
+      "A company registration number issued by Companies House when you incorporate a limited company. A sole trader does not have one; it is only needed once you form a company.",
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     id: 'mod7-s5-sub3-self-assessment-deadline',
     question: 'When must you register for Self Assessment with HMRC?',
     options: [
-      "The older learner may resist taking direction from someone younger, and the younger mentor may feel uncomfortable asserting authority over someone with more life experience",
-      "It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future",
+      "Before you carry out any paid work at all — you must hold an active Self Assessment record on the day you issue your first invoice or the income cannot legally be received.",
+      "Within 7 days of starting to trade — HMRC sets a one-week window from your first day of self-employment, after which late-registration penalties begin to accrue daily.",
       "Within 3 months of starting to trade — formally, by 5 October following the end of the tax year in which you started self-employment. Failure to register on time can attract penalties of up to 100% of the tax due.",
-      "Thermal images with corresponding visual photographs, ambient temperature, load conditions, emissivity settings, ΔT values, severity classification and recommended actions",
+      "Only after your first full year of trading, once you know whether your profit exceeded the personal allowance — there is no need to register if you earn below the tax-free threshold.",
     ],
     correctIndex: 2,
     explanation:
@@ -66,10 +66,10 @@ const checks = [
     id: 'mod7-s5-sub3-pl-minimum',
     question: 'What is the typical minimum Public Liability insurance cover for an electrical contractor?',
     options: [
-      'Unique to the person working, with their key held securely',
+      '£50,000 (with most working contractors carrying £100,000).',
       '£2 million (with most working contractors carrying £5 million).',
-      'Meet specific requirements for hazardous area classification',
-      'Regular inspection for corrosion and weathering',
+      '£250,000 (with most working contractors carrying £500,000).',
+      '£25 million (with most working contractors carrying £50 million).',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'What information do you need to register for Self Assessment with HMRC?',
     options: [
-      "Energy efficiency targets and Future Homes Standard direction make heat pumps standard for new builds. Heat pumps require electrical infrastructure (single-phase 32A+ or three-phase), F-Gas certified refrigerant work, controls integration. Significant trade work.",
+      "A copy of your AM2 certificate and ECS card, plus a reference from your most recent employer confirming you are competent to work unsupervised.",
       "National Insurance number, personal details, business start date, business activity description, expected annual turnover, and business contact details. Register at gov.uk; UTR issued by post within 1-3 weeks.",
-      "Stop the motor immediately, investigate the cause (which could be mechanical overload, incorrect supply voltage, winding fault, or incorrect motor specification), and do not restart until the cause is identified and rectified",
-      "Phase rotation/sequence (L1-L2-L3 = positive/clockwise rotation) using a phase-rotation indicator, especially before energising motors and rotating machinery",
+      "Your CPS scheme registration number and a copy of your public liability insurance certificate, since HMRC verifies these before issuing a tax record.",
+      "A completed business plan and projected three-year accounts, which HMRC reviews before approving you to trade as self-employed.",
     ],
     correctAnswer: 1,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which insurance is legally compulsory for self-employed electricians who employ anyone?',
     options: [
-      "Recommended (the regulation uses recommending language; it strengthens to a requirement only in Higher-Risk Residential Buildings under the Building Safety Act 2022 framework).",
-      "The impedance of the earth fault loop external to the installation — measured at the origin with the main switch open. For TN-S, typical values 0.1 to 0.8 ohm. Confirmed at initial verification.",
+      "Public Liability insurance — legally compulsory the moment you employ anyone, because staff increase the risk of injury to the public. £5m minimum statutory cover.",
+      "Tools-in-Transit insurance — legally compulsory once you have employees because they use the firm's tools, with a statutory minimum cover of £10,000.",
       "Employers' Liability insurance — required by the Employers' Liability (Compulsory Insurance) Act 1969. £5m minimum statutory cover; £10m typically supplied. Penalty for trading without: up to £2,500 per day.",
-      "PME conditions don’t apply on petrol forecourts because of the explosive-atmosphere risk — a PEN fault could cause sparks at the metalwork. Industry practice (and the energy networks’ guidance) is to derive a TT zone for the hazardous-area equipment.",
+      "Professional Indemnity insurance — legally compulsory once you employ anyone because staff may give advice on your behalf, with a £1m statutory minimum.",
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is Class 4 National Insurance?',
     options: [
-      "Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification — for example, omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning and accepted by the duty-holder.",
-      "Citation in the design pack — DNO Form 1 reference number, manufacturer datasheet name and revision, IET Guidance Note edition and section, BS 7671 reg or table number. Each input traceable to its source on a single page.",
-      "A fixed appliance is contributing leakage. Disconnect the dishwasher at its connection unit, retest. If IR rises above 1 MΩ the dishwasher was the cause. Disconnect the LED driver at the downlights, retest. The reading should now reflect the cable insulation alone — typically tens or hundreds of MΩ.",
+      "A flat weekly amount paid by every self-employed person regardless of profit, currently a few pounds a week, that secures State Pension qualifying years.",
+      "The National Insurance paid by employees through PAYE on their wages, deducted at source by the employer before the salary is paid.",
+      "A voluntary contribution self-employed people can pay to fill gaps in their National Insurance record where their profits were too low to count.",
       "Self-employed NI calculated as a percentage of profits over a threshold; paid alongside income tax via Self Assessment. Currently 9% on profits between the lower and upper limits, 2% above. (Rates and thresholds adjust annually — check current HMRC figures.)",
     ],
     correctAnswer: 3,
@@ -122,9 +122,9 @@ const quizQuestions = [
     question: 'When is the most common practical recommendation to apply for CPS scheme registration?',
     options: [
       "As early as practical — initial scheme assessment typically takes 4-8 weeks from application. Apply 6-8 weeks before you need to do your first Part P notifiable domestic work; pre-apply during the 6-week pre-launch period if going self-employed.",
-      "It separates current and potential connections (C1/P1, C2/P2), reducing measurement error from lead resistance and giving a direct reading of the electrode-plus-soil resistance.",
-      "A simplified representation of the power distribution system showing transformers, switchgear, cables, and protection devices using single lines to represent three-phase circuits",
-      "Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable",
+      "Only after you have completed your first notifiable job — schemes will not assess you until you have already carried out and notified the work to building control yourself.",
+      "Not until you have been trading for at least two years — schemes require a track record of accounts before they will consider an application from a new business.",
+      "Only once you have employed at least one other electrician — CPS schemes are not open to sole traders working alone, so registration waits until the firm has staff.",
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is Professional Indemnity insurance and when do electricians typically need it?',
     options: [
-      "Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring",
+      "Insurance covering injury to members of the public or damage to their property caused by your physical work on site. Every electrician needs it from day one because all site work carries this risk.",
       "Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.",
-      "Reporting the finding to your supervisor or the person in charge, so they can decide on the appropriate response, especially if the hazard is beyond your authority or competence to control",
-      "Whenever the situation exceeds your competence, when an unsafe instruction is given, when an inspector arrives, when a serious near-miss occurs, when documents you need don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t exist, when a customer requests work outside your scope.",
+      "Insurance covering your tools and materials against theft or damage while in your van. Electricians need it because tool theft from vans is common and a stolen kit can stop work for weeks.",
+      "Insurance covering your own loss of income if illness or injury keeps you off work. Self-employed electricians need it because there is no sick pay when you cannot work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 6,
     question: 'What records must you keep as a self-employed electrician?',
     options: [
-      "They are independent. ADS asks \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"does the device clear in time to limit shock voltage?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" The adiabatic asks \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"given the device’s actual clearing time at the actual fault current, will the CPC survive the energy let-through?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Both must pass.",
-      "The completed work order, risk assessment, method statement, safe isolation certificate, motor test results (insulation resistance, rotation check), commissioning record, and a reflective account of the task with lessons learnt",
+      "Only the certificates you issue (EICs, EICRs, Minor Works) — HMRC requires the technical paperwork but not the financial records, which are the accountant's responsibility.",
+      "Only invoices over £100 — small transactions and cash jobs below that figure do not need to be recorded, as HMRC only audits larger amounts.",
       "All business income (invoices issued, payments received), all business expenses (receipts, invoices), bank statements, mileage records if claiming vehicle expenses, capital purchases (tools, equipment, vehicle). Keep for at least 5 years after the 31 January filing deadline.",
-      "Frequency starts to dip slightly. NESO automatically calls on reserve generation (gas peakers, pumped storage, interconnector imports) to balance demand. If unbalanced for too long, frequency excursions trigger automatic load shedding.",
+      "Only your bank statements — because every transaction passes through the account, the statements alone are sufficient and individual receipts can be thrown away.",
     ],
     correctAnswer: 2,
     explanation:
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: 'When must you register for VAT?',
     options: [
-      "A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour",
-      "Maintaining eye contact, nodding, waiting until they finish, paraphrasing what you heard (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"So you are saying the RCD keeps tripping after the load test?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), and asking clarifying questions — while resisting the urge to jump in with solutions",
-      "Circuit ID, conductor csa (live + cpc), reference method, OCPD type/rating, R1+R2 (or R2), insulation resistance, polarity, Zs, RCD operating current and trip time, plus AFDD where fitted",
+      "On your first day of trading — every self-employed electrician must be VAT-registered from the outset regardless of turnover.",
+      "When you take on your first apprentice or employee — VAT registration is triggered by employing staff rather than by turnover.",
+      "Only if you choose to charge VAT — registration is entirely optional for trades and there is no turnover figure that makes it compulsory.",
       "When your VAT-taxable turnover crosses the HMRC threshold over the previous rolling 12 months (currently £90,000; check the live figure) — or when you reasonably expect to cross it in the next 30 days.",
     ],
     correctAnswer: 3,
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'What is the ICO and why do most self-employed electricians need to register with it?',
     options: [
       "The Information Commissioner's Office — the UK regulator for data protection. Most businesses processing personal data (customer names, addresses, phone numbers, photos) must register and pay the annual data protection fee (£40-60 for small businesses).",
-      "The employer must carry out a specific risk assessment addressing the young person's inexperience, lack of awareness of risks, and physical/psychological immaturity, and ensure enhanced supervision",
-      "Limited short-duration low-exposure work by trained operatives - typically small handling of asbestos cement, small encapsulation, observation. Follows CAR 2012 controls (assessment, training, PPE, hygiene). Below NNLW threshold.",
-      "The Construction (Design and Management) Regulations 2015 require that fire safety is considered during the design and construction phases of building projects, including safe means of escape from construction sites",
+      "The Independent Contractors' Organisation — a trade body that self-employed electricians must join to be allowed to bid for commercial work, with an annual membership fee.",
+      "The Insurance Compliance Office — the regulator that checks every contractor holds valid public liability cover, requiring annual registration of your policy details.",
+      "The Industry Certification Operator — the body that issues the ECS card and verifies an electrician's qualifications before they can work on site.",
     ],
     correctAnswer: 0,
     explanation:

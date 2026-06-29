@@ -93,9 +93,9 @@ const Module5Section7_2 = () => {
       id: 3,
       question: 'What is used to identify conductors and cables?',
       options: [
-        'To prevent the spread of asbestos fibres to other areas',
-        'Motor power (W) ÷ airflow (l/s)',
-        'MRI machines, particle accelerators, power cables',
+        'Spray paint along the cable run',
+        'A note in the installation certificate only',
+        'The position of the cable on the tray',
         'Heat-shrink, clip-on tags, or printed labels',
       ],
       correctAnswer: 3,
@@ -119,10 +119,10 @@ const Module5Section7_2 = () => {
       id: 5,
       question: 'Why should labels be durable and heat resistant?',
       options: [
-        'Intrinsically safe (Ex-rated) lighting equipment',
+        'To make the installation look more professional',
         'To withstand environmental conditions and remain legible',
-        'To prevent misreading what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually asked',
-        'A worldwide standard for home and building automation',
+        'To reduce the cost of the labelling materials',
+        'To match the colour of the distribution board',
       ],
       correctAnswer: 1,
       explanation:
@@ -132,10 +132,10 @@ const Module5Section7_2 = () => {
       id: 6,
       question: 'What is a common risk of poor labelling?',
       options: [
-        'Circulating currents in conductors causing power loss',
-        'To avoid disputes and ensure compliance',
+        'Higher energy bills for the client',
+        'Slower cable delivery to site',
         'Isolating the wrong circuit, leading to safety hazards',
-        'All cables radiate from a central point',
+        'Increased voltage drop across the circuit',
       ],
       correctAnswer: 2,
       explanation:
@@ -171,10 +171,10 @@ const Module5Section7_2 = () => {
       id: 9,
       question: 'In the real-world scenario, what problem occurred due to poor labelling?',
       options: [
-        '"The earth fault loop impedence was within acceptable limits."',
+        'A cable was installed in the wrong colour',
         'The wrong circuit was isolated, causing costly downtime',
-        'Check and follow coordinated site drawings',
-        'Have a private, non-judgemental conversation expressing genuine concern',
+        'A distribution board overheated and failed',
+        'The wrong cable size was used throughout',
       ],
       correctAnswer: 1,
       explanation:
@@ -184,8 +184,8 @@ const Module5Section7_2 = () => {
       id: 10,
       question: 'Why should labels and charts always be cross-checked?',
       options: [
-        'Diagnostic capabilities and precise positioning',
-        'Directly above or below in vertical zones',
+        'To reduce the number of labels needed',
+        'To speed up the installation work',
         'To ensure they match the correct circuit details',
         'To provide additional protection against electric shock',
       ],

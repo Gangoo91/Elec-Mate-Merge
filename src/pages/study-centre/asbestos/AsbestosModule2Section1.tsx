@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     question:
       'What is the single control limit for airborne asbestos fibre concentration under CAR 2012?',
     options: [
-      '0.1 fibres per cm\u00B3 averaged over a continuous 4-hour period',
       '0.3 fibres per cm\u00B3 averaged over a continuous 8-hour period',
       '0.05 fibres per cm\u00B3 averaged over a continuous 2-hour period',
+      '0.1 fibres per cm\u00B3 averaged over a continuous 4-hour period',
       '1.0 fibres per cm\u00B3 averaged over a continuous 1-hour period',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'CAR 2012 introduced a single control limit of 0.1 fibres per cm\u00B3 of air averaged over a continuous 4-hour period for all types of asbestos. Previously there were different limits for amphibole asbestos (0.1 f/cm\u00B3) and chrysotile (0.3 f/cm\u00B3). The unified limit recognises that chrysotile is also a serious health hazard.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which EU Directive does CAR 2012 implement in the UK?',
     options: [
-      'Directive 89/391/EEC on health and safety at work',
       'Directive 2009/148/EC on asbestos exposure at work',
+      'Directive 89/391/EEC on health and safety at work',
       'Directive 2003/18/EC on chemical agents',
       'Directive 98/24/EC on hazardous substances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CAR 2012 implements EU Directive 2009/148/EC on the protection of workers from the risks related to exposure to asbestos at work. Although the UK has left the EU, the regulations remain in force under retained law.',
   },
@@ -115,10 +115,10 @@ const quizQuestions = [
     options: [
       'Removing sprayed asbestos coating from steel beams',
       'Removing asbestos pipe lagging from a heating system',
-      'Removing textured coatings containing asbestos',
       'Removing loose-fill asbestos insulation from a loft',
+      'Removing textured coatings containing asbestos',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Removing textured coatings (e.g. Artex) containing asbestos is classified as notifiable non-licensed work (NNLW) provided it meets the criteria for brief, sporadic, low-intensity work. Work with sprayed coatings and pipe lagging requires a full HSE licence, and loose-fill insulation is also licensed work due to the extremely high fibre release potential.',
   },
@@ -162,8 +162,8 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the maximum prison sentence an individual can receive for serious breaches of the asbestos regulations?',
-    options: ['6 months', '1 year', '2 years', '5 years'],
-    correctAnswer: 2,
+    options: ['2 years', '6 months', '1 year', '5 years'],
+    correctAnswer: 0,
     explanation:
       'Individuals convicted of serious breaches of the Health and Safety at Work etc. Act 1974 (under which CAR 2012 is made) can face imprisonment for up to 2 years. Organisations face unlimited fines. The HSE can also issue immediate prohibition notices to stop dangerous work.',
   },

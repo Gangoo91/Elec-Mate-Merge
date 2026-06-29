@@ -43,14 +43,14 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the main risk of making assumptions about unclear drawings?',
     options: [
-      'Delays',
-      'Material waste',
-      'Unsafe installations',
-      'All of the above',
+      'Slightly higher material costs',
+      'A longer paperwork trail',
+      'Unsafe, non-compliant installations',
+      'Reduced site tidiness',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
-      'Making assumptions can lead to all these issues: unsafe installations, delays, and material waste, plus failed inspections.',
+      'Making assumptions about unclear drawings can lead to unsafe, non-compliant installations, as well as delays, material waste, and failed inspections.',
   },
 ];
 
@@ -63,10 +63,10 @@ const Module5Section1_6 = () => {
       id: 1,
       question: 'What is a common sign of conflicting information in drawings?',
       options: [
-        'To trade some motor speed for more torque (turning force) at the chuck',
+        'A drawing that includes a clear title block',
         'A socket shown as single in one place but double in another',
-        'They vary with the square of the load current (I squared R)',
-        'Openings are on opposite or adjacent walls',
+        'A drawing issued with the latest revision number',
+        'A specification that matches the cable schedule',
       ],
       correctAnswer: 1,
       explanation:
@@ -99,9 +99,9 @@ const Module5Section1_6 = () => {
       question: 'If drawings and specifications disagree, what should you do?',
       options: [
         'Escalate the issue to the supervisor or project manager',
-        'Negative stress that overwhelms coping ability and impairs functioning',
-        'A short fibre length with a connector on one end for fusion splicing',
-        'Transmitter output power (dBm) - Receiver sensitivity (dBm)',
+        'Always follow the drawing, as it is the more detailed document',
+        'Always follow the specification, as it overrides any drawing',
+        'Use your best judgement and correct it later if needed',
       ],
       correctAnswer: 0,
       explanation:
@@ -124,10 +124,10 @@ const Module5Section1_6 = () => {
       id: 6,
       question: 'Why should clarifications always be documented?',
       options: [
-        'Hydraulic benders or specialised forming equipment',
-        'Can cause insulation to dry out, crack, and break down',
+        'To reduce the amount of cable needed for the job',
+        'To speed up the delivery of materials to site',
         'To protect yourself and ensure consistent team understanding',
-        'Clients increasingly ask for systems that integrate with BMS',
+        'To avoid having to attend site coordination meetings',
       ],
       correctAnswer: 2,
       explanation:
@@ -137,10 +137,10 @@ const Module5Section1_6 = () => {
       id: 7,
       question: 'What is one risk of ignoring incomplete documentation?',
       options: [
-        'Nothing happens',
-        'Cost savings',
-        'Improved efficiency',
-        'Failed inspection',
+        'Faster handover to the next trade',
+        'Lower material costs overall',
+        'A tidier site at completion',
+        'A failed inspection requiring rework',
       ],
       correctAnswer: 3,
       explanation:
@@ -171,10 +171,10 @@ const Module5Section1_6 = () => {
       id: 10,
       question: 'What happened in the real-world hospital project example?',
       options: [
-        'To ensure measured values are accurate and traceable so certificates are valid and safe',
-        'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
+        'The wrong cable size was installed throughout the wards',
+        'A revision number was missed, so old drawings were used',
         'Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation',
-        'Immediately by the quickest practicable means (usually telephone), followed by written notification within 10 days',
+        'A socket was wired with reversed polarity and failed testing',
       ],
       correctAnswer: 2,
       explanation:

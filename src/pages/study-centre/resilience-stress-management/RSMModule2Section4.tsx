@@ -17,12 +17,12 @@ const quickCheckQuestions = [
     id: 'stress-triggers',
     question: 'Why is identifying your personal stress triggers important for building resilience?',
     options: [
-      'So you can avoid every situation that causes stress and live a completely stress-free life',
       'So you can recognise early warning signs and intervene before stress escalates to crisis point',
+      'So you can avoid every situation that causes stress and live a completely stress-free life',
       'So you can blame external factors for all your stress instead of taking responsibility',
       'So you can prove to others that your job is more stressful than theirs',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Identifying personal stress triggers is not about avoidance — it is about early recognition and intervention. When you know what your specific triggers are, you can spot the early warning signs of stress building up and take action (such as using a coping strategy, seeking support, or adjusting your schedule) before the stress escalates to a point where it overwhelms your coping capacity. Prevention and early intervention are always more effective than crisis management.',
   },
@@ -31,11 +31,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of keeping a stress diary for two weeks?',
     options: [
       'To create a legal record in case you need to make a workplace complaint',
-      'To identify patterns in your stress triggers, reactions, and coping responses over time',
       'To prove to your GP that you are genuinely stressed so they will prescribe medication',
+      'To identify patterns in your stress triggers, reactions, and coping responses over time',
       'To compare your stress levels with colleagues and determine who has the hardest job',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A stress diary is a self-awareness tool. By recording stress events, your emotional and physical reactions, and the coping strategies you used over a two-week period, you can identify patterns that are invisible in the moment. You might discover that your stress peaks at specific times, is triggered by specific types of work, or is worsened by specific behaviours (such as skipping meals or checking emails late at night). These patterns become the basis for targeted resilience-building strategies.',
   },
@@ -44,11 +44,11 @@ const quickCheckQuestions = [
     question: 'An energy audit involves identifying which of the following?',
     options: [
       'The electrical energy consumption of your workplace',
-      'Activities, people, and situations that drain your energy vs those that energise you',
       'How many hours of sleep you need based on your age and weight',
       'The number of calories you should consume to maintain peak physical performance',
+      'Activities, people, and situations that drain your energy vs those that energise you',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An energy audit is a personal assessment tool where you identify the activities, people, and situations that drain your energy versus those that restore or boost it. By mapping your energy drains and sources, you can make informed decisions about how to structure your day, which activities to prioritise, and where to set boundaries. This directly supports resilience by ensuring you are not constantly running on empty.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is a stress trigger?',
     options: [
-      'A rare, catastrophic event that causes permanent psychological damage',
       'A specific situation, person, task, or thought that consistently activates your stress response',
+      'A rare, catastrophic event that causes permanent psychological damage',
       'A medical condition that makes you more susceptible to stress than the average person',
       'A workplace hazard that should be reported under RIDDOR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A stress trigger is any specific situation, person, task, thought, or condition that consistently activates your stress response. Triggers are personal — what is stressful for one person may not be stressful for another. Common triggers for electricians include specific types of paperwork, certain client personalities, financial uncertainty, time pressure, and particular types of work environments.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'Why is body awareness important for resilience?',
     options: [
       'Because physical fitness is the only factor that determines resilience',
-      'Because the body stores stress physically, and recognising physical tension allows you to intervene early',
       'Because you need to maintain a specific body weight to be resilient',
+      'Because the body stores stress physically, and recognising physical tension allows you to intervene early',
       'Because body awareness is required for the AM2 practical assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The body and mind are interconnected — chronic stress manifests physically through muscle tension, headaches, digestive issues, elevated heart rate, and other symptoms. By developing body awareness (learning to notice where you hold tension), you gain an early warning system for stress. Physical symptoms often appear before you consciously recognise that you are stressed, making them valuable signals for early intervention.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
     question: 'An energy audit is a tool for identifying:',
     options: [
       'How many hours you should work per week based on your age',
-      'Activities, people, and situations that drain your energy versus those that energise you',
       'The electrical energy rating of your workplace tools and equipment',
       'How much caffeine you should consume to maintain alertness throughout the working day',
+      'Activities, people, and situations that drain your energy versus those that energise you',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An energy audit maps the activities, people, and situations in your life according to whether they drain or restore your energy. This information allows you to make strategic decisions about your daily schedule, boundary-setting, and priorities. For example, if paperwork drains you but hands-on installation energises you, you might schedule paperwork first thing in the morning when your energy is freshest, rather than leaving it until the end of the day when you are already depleted.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'An electrician notices they feel most stressed when completing EICR paperwork. Which self-assessment strategy would be most useful?',
     options: [
-      'Avoiding all EICR work entirely and only accepting new installation jobs',
       'Recording specific aspects of EICR paperwork that cause stress, when the stress peaks, and which strategies help manage it',
+      'Avoiding all EICR work entirely and only accepting new installation jobs',
       'Completing all EICR paperwork as quickly as possible without breaks to minimise exposure to the stressor',
       'Asking a colleague to complete all EICR paperwork on their behalf permanently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The most effective approach is to analyse the trigger in detail. Not all aspects of EICR paperwork may be equally stressful — perhaps the observations coding causes anxiety, or the limitation recording feels overwhelming. By identifying the specific sub-triggers and experimenting with different coping strategies, the electrician can develop targeted approaches rather than avoidance (which is not sustainable in a real career).',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
     question: 'What is a personal resilience baseline?',
     options: [
       'A medical diagnosis of your current stress levels provided by a GP',
-      'An honest self-assessment of your current resilience level — your typical stress responses, coping capacity, and available resources',
       'A legal requirement under the Health and Safety at Work Act 1974',
+      'An honest self-assessment of your current resilience level — your typical stress responses, coping capacity, and available resources',
       'A score on a standardised psychological test that can only be administered by a clinical psychologist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A personal resilience baseline is your honest self-assessment of where you currently stand in terms of resilience. It includes your typical stress responses, your current coping capacity, your protective factors and risk factors, your known triggers, and your overall sense of how well you are managing. This baseline is not a judgement — it is a starting point for improvement. You can revisit it periodically to measure your progress.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'An electrician realises through self-assessment that their biggest stressor is financial uncertainty. What is the most resilient response?',
     options: [
       'Accept that financial uncertainty is part of the trade and try not to think about it',
-      'Use the self-awareness to take practical steps: build an emergency fund, review pricing, diversify income streams, and seek financial advice',
       'Leave the electrical trade for a more stable job',
       'Take on as much work as possible regardless of price to maximise short-term income',
+      'Use the self-awareness to take practical steps: build an emergency fund, review pricing, diversify income streams, and seek financial advice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most resilient response uses self-awareness as a springboard for practical action. Rather than avoidance (not thinking about it), escape (leaving the trade), or unsustainable overwork (accepting any job at any price), the electrician takes targeted steps to address the root cause of their stress. Building an emergency fund, reviewing pricing to ensure fair rates, diversifying income, and seeking professional financial advice are all concrete actions that reduce the stressor over time.',
   },

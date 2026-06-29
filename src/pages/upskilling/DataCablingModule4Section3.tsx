@@ -84,26 +84,26 @@ const quizQuestions = [
     question:
       'A fire-rated compartment wall has a 60-minute rating. After cable penetration, what fire rating must the restored seal achieve?',
     options: [
-      '30 minutes minimum.',
-      "The same rating as the wall element penetrated — here, 60 minutes — evidenced by a classification report to BS EN 13501-2 based on testing to BS EN 1366-3 (penetration seals), with the tested system installed exactly per the manufacturer's detail. Restoring at a lower rating breaches the compartmentation duty.",
-      '120 minutes regardless.',
-      'No fire rating is required.',
+      'The same 60-minute rating as the wall element penetrated, evidenced by a classification report.',
+      '30 minutes minimum, as a relaxed baseline for any small cable penetration.',
+      '120 minutes, always doubled relative to the wall rating for cable seals.',
+      'No fire rating is required at the seal, provided the cables are non-combustible.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A penetration through a 60-minute fire-rated wall must be sealed to the same 60-minute rating. The seal is part of the compartment, not separate from it. The rating is evidenced by a classification report to BS EN 13501-2 (based on testing to BS EN 1366-3 — penetration seals). The tested system has to match the actual install — cable type, cable count, hole size, seal depth all matter and substituting changes the rating.',
+      'A penetration through a 60-minute fire-rated wall must be sealed to the same 60-minute rating — the seal is part of the compartment, not separate from it. The rating is evidenced by a classification report to BS EN 13501-2 (based on testing to BS EN 1366-3 — penetration seals). The tested system has to match the actual install — cable type, cable count, hole size, seal depth all matter and substituting changes the rating.',
   },
   {
     id: 2,
     question:
       'Which UK statutory instrument places the LEGAL duty on the "responsible person" to maintain fire compartmentation in a workplace, and which UK design / inspection framework backs it?',
     options: [
-      'Building Regulations 2010 + BS 7430.',
-      'The Regulatory Reform (Fire Safety) Order 2005 (RRO 2005) places the legal duty on the responsible person — typically the building owner / occupier / employer. Approved Document B Vol 2 (Buildings other than dwellings) provides the design and inspection framework in England (Wales / Scotland / NI have parallel documents). The cabling contractor carries the contractual / professional duty to restore the compartmentation and document the work.',
-      'Health & Safety at Work Act 1974 alone.',
-      'EMC Regulations 2016.',
+      'The Building Regulations 2010, backed by BS 7430 (earthing) as the inspection framework.',
+      'The Health and Safety at Work etc. Act 1974 alone, under its general duty of care.',
+      'The Regulatory Reform (Fire Safety) Order 2005, backed by Approved Document B Vol 2 in England.',
+      'The Electromagnetic Compatibility Regulations 2016, backed by BS EN 50174 cabling guidance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "RRO 2005 is the UK statutory instrument that places the fire-safety duty on the responsible person. Approved Document B Vol 2 is the England commercial design framework (parallel documents in Wales / Scotland / NI). BS 9999 (fire safety in design / management) provides further professional guidance. The cabling contractor creates the penetration and carries the contractual / professional duty to restore the rating; the responsible person carries the legal duty under RRO 2005 — and depends on the contractor's handover documentation to evidence compliance.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which CE / UKCA-marked product is typically used to seal a small annular gap around 4 Cat6A cables passing through a core-drilled hole in a 60-minute compartment wall?',
     options: [
-      'Polyurethane expanding foam.',
-      "An intumescent acrylic / silicone sealant or putty, applied at the manufacturer's tested depth (typically 25-50 mm), with the cables sleeved as required, evidenced by a classification report to BS EN 13501-2 / BS EN 1366-3. Installed strictly per the manufacturer's tested detail — substituting product OR cable count OR depth invalidates the rating.",
-      'Standard mortar.',
-      'Plasterboard infill.',
+      "General-purpose polyurethane expanding foam from a builder's merchant.",
+      'Standard sand-and-cement mortar packed around the cable bundle.',
+      'Plasterboard offcuts wedged into the annular gap and skimmed flush.',
+      'A CE / UKCA-marked intumescent acrylic, silicone or putty sealant at the tested depth.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Intumescent sealants / putties are the standard product for small annular gaps around cables. Application depth is set by the manufacturer's tested detail — typically 25-50 mm. The product is CE / UKCA-marked with a classification report. Polyurethane foam is NOT a fire-stopping product (unless specifically intumescent / fire-rated and tested as a system). Substituting products or changing the install detail invalidates the rating.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'What is the practical difference between intumescent pillows / bags and intumescent collars at cable penetrations?',
     options: [
-      'No difference — they are interchangeable.',
-      'Intumescent pillows / bags are the re-enterable choice for cable tray and basket penetrations — they can be removed and replaced when cables are added or changed; they expand under heat to seal the void. Intumescent collars / wraps are fitted around individual plastic-clad cable bundles where the plastic burns away under fire — the collar swells inwards to seal the resulting hole. Different products for different penetration types; both are tested as systems to BS EN 1366-3.',
-      'Pillows are for power; collars are for data.',
-      'Collars are deprecated; only pillows are now used.',
+      'Pillows / bags are re-enterable for tray penetrations; collars seal the void as a plastic jacket burns away.',
+      'There is no practical difference between them — the two products are fully interchangeable on any job.',
+      'Pillows are rated only for power circuits, while collars are rated solely for data circuits.',
+      'Collars have been deprecated under BS EN 1366-3, so only intumescent pillows are now permitted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pillows / bags are re-enterable seals for tray / basket penetrations — they pack into the void and expand under heat. Useful where cables will be added / removed during the building life. Collars / wraps are clamped around plastic-jacketed cables to address the void created when the jacket burns away; the collar contains intumescent material that swells inward to seal the hole. Both are CE / UKCA-marked and both have classification reports under BS EN 1366-3 / BS EN 13501-2.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Why is "documentation" listed as a contractor\'s duty for fire-stopping work, alongside the physical installation?',
     options: [
-      'Documentation is a nicety; the install is the only thing that matters.',
-      "The responsible person under RRO 2005 has to evidence compliance during fire risk assessment, FRA renewal, building inspection and insurance review. The contractor's documentation — photos of every penetration before / during / after, product datasheets, classification reports, installation records linked to cable IDs — is the evidence that lets the responsible person discharge their duty. No documentation = no defensible compliance, and the responsible person carries criminal liability for that gap.",
-      'Documentation is required only for government buildings.',
-      'Documentation is a manufacturer warranty issue only.',
+      'It is a nicety only; the physical install is the one thing that actually matters in practice.',
+      'It is required only for government, defence and other public-sector building contracts.',
+      'It is the evidence the responsible person needs to prove compartmentation was maintained.',
+      'It is purely a manufacturer warranty matter, kept on file but not a fire-compliance one.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fire-stopping documentation is a critical compliance artefact. Photos before, during and after the seal install. Product datasheets and classification reports. Installation records. Cable IDs linked to the penetration. Without this, the responsible person cannot evidence that compartmentation has been correctly maintained — and they carry the criminal liability under RRO 2005, not the contractor. A fire-risk assessor finding undocumented penetrations on a 2030 inspection treats them as failed by default.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'The standard reference for the test method for fire-stopping penetration seals (which a CE / UKCA classification report draws on) is:',
     options: [
-      'BS 7671.',
-      'BS EN 1366-3 — Fire resistance tests for service installations: Part 3 — Penetration seals. The classification report under BS EN 13501-2 is then issued for a tested system at a specific rating (E, EI or EI with integrity / insulation classes plus duration in minutes).',
-      'BS EN 50173.',
-      'BS EN 50310.',
+      'BS 7671 Section 527, which sets the penetration-seal test method directly.',
+      'BS EN 50173, the generic cabling system performance and link-budget standard.',
+      'BS EN 50310, the bonding and earthing standard for ICT installations.',
+      'BS EN 1366-3 — fire resistance tests for service installations: penetration seals.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 1366-3 is the European fire-resistance test method for penetration seals. BS EN 13501-2 is the classification standard that translates the test result into a usable rating (e.g. EI60 = integrity AND insulation, 60 minutes). A tested SYSTEM (specific seal product, specific cable type, specific hole size, specific install detail) gets a classification report. Substituting any element invalidates the rating. The cable contractor reads the classification report to confirm the install detail matches.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       "BS 7671 §521.10.202 (cable support against premature collapse in fire) and §527 (sealing of wiring system penetrations through fire-rated building elements) — what is the contractor's combined duty under both?",
     options: [
-      'Only one applies — the design picks which.',
-      'Both apply on every cable run that passes through a fire-rated building element. §521.10.202 ensures cables are supported by steel containment / steel clips so they do not collapse into escape routes during fire (Note 2 — steel containment deemed compliant). §527 ensures the openings AROUND the cables, where they pass through fire-rated walls / floors, are sealed to restore the same fire resistance as the element penetrated. Different aspects of the same compartmentation duty — both required.',
-      '§521.10.202 only.',
-      '§527 only.',
+      'Both apply: §521.10.202 supports the cable against collapse, §527 seals the opening around it.',
+      'Only one applies on a given penetration, and the designer is free to select which of the two.',
+      '§521.10.202 only — the seal around the cable falls entirely outside the scope of BS 7671.',
+      '§527 only — cable support against fire collapse is governed entirely by manufacturer instructions.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Both regulations apply on every penetration of a fire-rated element. §521.10.202 governs the SUPPORT system (steel containment / clips so the cable does not fall into an escape route during fire). §527 governs the SEAL around the penetration (so the fire compartment is restored). On every penetration: steel containment + tested fire seal + documentation. Module 4 Section 1 covers the support side; this section covers the seal side.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A retrofit cabling job adds 12 Cat6A cables to an existing tested-system penetration that was originally certified for 8 cables only. What is the correct response?',
     options: [
-      'Add the cables — the seal will adapt.',
-      'STOP. The certified system was tested for 8 cables; adding 4 more changes the configuration outside the tested envelope, invalidating the classification report and breaching compartmentation. Options: (a) re-enter the seal with intumescent pillows / bags rated for the new cable count; (b) replace the seal entirely with a tested system rated for the new cable count; (c) route the additional cables through a separate, separately-sealed penetration. Document the new arrangement with fresh photos and a new classification reference.',
-      'Caulk around the new cables with silicone.',
-      'Stuff with mineral wool.',
+      'Add the cables as planned, since the intumescent seal will expand to accommodate the extra four.',
+      'Run a bead of general-purpose silicone around the four new cables to close the resulting gap.',
+      'Stop: the new count is outside the tested envelope, so re-seal with a system rated for it.',
+      'Pack loose, uncoated mineral wool around the four new cables to fill the void left around them.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A tested fire-stopping system is certified for a specific cable count and configuration. Adding cables outside the tested envelope invalidates the rating — and therefore breaches compartmentation. The responsible person's RRO 2005 compliance is broken. The fix: re-enter the seal with re-enterable products (pillows / bags) rated for the new count, or replace the seal with a new tested system, or use a separate penetration. Always document the change with new photos and a fresh classification reference. NEVER add cables without re-evaluating the seal.",
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A cable run passes through a service riser shared with a hot-water pipe and a metallic gas pipe. Which BS 7671 regulations apply alongside §527?',
     options: [
-      'None — service risers are exempt.',
-      '§528.3.1 — wiring shall not be installed near services producing heat / smoke / fumes likely to be detrimental, unless shielded; in service shafts, cables shall be laid so as not to be exposed to harmful influence by adjacent installations (gas, water, steam). §528.3.2 — below condensation services, precautions shall be taken. §528.3.3 / .3.4 — proximity to non-electrical services. Plus §527 for any penetration through compartment walls / floors.',
-      '§411 only.',
-      '§444 only.',
+      'None — shared service risers are specifically exempt from the BS 7671 proximity rules.',
+      'Only §411 (protective measures against electric shock) applies to cabling within a riser.',
+      'Only §444 (measures against electromagnetic disturbances) applies to cabling within a riser.',
+      '§528.3 (proximity to non-electrical services) applies, alongside §527 for any penetrations.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§528.3.1 verbatim: "A wiring system shall not be installed in the vicinity of services which produce heat, smoke or fumes likely to be detrimental to the wiring, unless it is protected from harmful effects by shielding arranged so as not to affect the dissipation of heat from the wiring." §528.3.2 covers condensation. §528.3.3 / .3.4 cover proximity. All apply to data cabling in a shared service riser, alongside §527 for any compartment penetrations on the route.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'A cable run passes through a building lift shaft. What is the position under BS 7671?',
     options: [
-      'Permitted — lift shafts are vertical risers.',
-      '§528.3.5 verbatim: "No cable shall be run in a lift or hoist well unless it forms part of the lift installation as defined in BS EN 81 series." Data cabling for general building services is NEVER permitted in a lift / hoist well — re-route via a separate vertical riser. The rule is absolute. Only cables that are PART of the lift installation per BS EN 81 are permitted.',
-      'Permitted if mechanically protected.',
-      'Permitted only above the lift car.',
+      'Prohibited under §528.3.5 unless the cable forms part of the lift installation itself.',
+      'Permitted, because a lift shaft counts as a vertical riser for general cabling purposes.',
+      'Permitted, provided the cabling is mechanically protected throughout in steel conduit.',
+      'Permitted only in the section of the well above the highest position of the lift car.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§528.3.5 is one of the cleanest cites in BS 7671. Lift / hoist wells are reserved for the lift installation itself (BS EN 81 series). General data cabling — even building services data — is prohibited. The rationale is fire-spread risk, lift mechanism interference, and access for fire-fighting. Always route data cabling via a separate vertical riser. No exceptions.',
   },

@@ -36,10 +36,10 @@ const checks = [
     id: 'm5-s3-sub6-when-required',
     question: 'Earth electrode resistance testing is required for:',
     options: [
-      'TT installations (where the consumer provides the earth electrode), TN-S/TN-C-S installations that include an additional consumer earth electrode (e.g. for parallel paths or specific equipment), and any installation containing generators or static converters per BS 7430.',
-      'A notice served by the fire authority prohibiting or restricting the use of all or part of the premises because the use involves a risk of death or serious injury to relevant persons that is so serious that the use should be prohibited or restricted',
-      'Type 2 SPD at the consumer unit, supply-side of the main switch where possible, with 6 mm² copper PE to MET (Reg 534.4.10(a)), 2.5 mm² live connections (Reg 534.4.10(c)), conductor lengths under 0.5 m total (Reg 534.4.8), dedicated 25 A or 32 A MCB for SPD overcurrent protection, BS EN 61643 product standard.',
-      'A factory-fitted (or field-installed) loop / ring at the end of large cable that the pulling rope attaches to — distributing the pulling force across the cable&rsquo;s mechanical termination, never the conductor directly.',
+      'TT installations, TN systems with an additional consumer electrode, and installations with generators or static converters.',
+      'TN-C-S installations only, where the combined PEN conductor relies on a low consumer-end electrode resistance to keep Ze within limits.',
+      'Every domestic installation, because main protective bonding always terminates at an earth electrode that must be verified.',
+      'Only installations rated above 100 A, since smaller supplies use the supplier earth and never need a consumer electrode.',
     ],
     correctIndex: 0,
     explanation:
@@ -49,12 +49,12 @@ const checks = [
     id: 'm5-s3-sub6-method-e1',
     question: 'Test method E1 (three-stake / fall-of-potential) per GN3:',
     options: [
-      'The most accurate method per GN3. Drives a current stake (C2) at least 30-50 m from the electrode under test, and a potential stake (P2) at varying distances along the line. Measures voltage at P2 for current injected at C2. Plot voltage versus distance — the flat plateau gives true electrode resistance. Best for installation commissioning where you can disconnect and have access to ground.',
-      'Other trades create falling-object risk, slip risk, dust and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round and the toolbox talks need to take account of who else is working in or above your area, not just your own activity. CDM 2015 Reg 13 puts a co-ordination duty on the Principal Contractor; HASAWA s.7(b) puts a co-operation duty on every operative.',
-      'Creates a corporate offence where an organisation\\\\\\\'s activities cause a person\\\\\\\'s death and amount to a gross breach of a relevant duty of care, where the breach is the result of the way in which senior management organised or managed activities. Triable on indictment only; unlimited fines. Allows publicity orders and remedial orders. Sits alongside HASAWA prosecutions, not as a replacement.',
-      'PASMA (for mobile aluminium tower scaffolds) and IPAF (for mobile elevating work platforms / MEWPs / cherry pickers and scissor lifts). PASMA covers tower assembly and use; IPAF covers powered access. Both are industry-recognised competence schemes accepted on most CDM sites. Many plant operators also hold CPCS (for construction plant — excavators, dumpers, telehandlers) or NPORS.',
+      'Clamps around the earthing conductor and reads resistance via induced current, with no stakes driven, testing the electrode in service.',
+      'Uses a loop impedance tester between line and the electrode, reading the loop which on TT approximates electrode resistance.',
+      'Drives a current stake (C2) 30-50 m away and a movable potential stake (P2), plotting voltage against distance to find the plateau.',
+      'Measures the resistance between two electrodes driven 1 m apart, then halves it to give a single electrode\'s resistance to earth.',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Method E1 — the three-stake fall-of-potential method — is the gold standard. Inject test current between the electrode under test and a remote current stake (C2). Measure voltage at a movable potential stake (P2) along the line. Plot voltage against distance — for a sufficiently distant C2, the plot has a flat zone in the middle. The voltage at the flat zone divided by the injected current = the true electrode resistance. GN3 explicitly: "the most accurate of these is test method E1."',
   },
@@ -62,10 +62,10 @@ const checks = [
     id: 'm5-s3-sub6-rcd-criterion',
     question: 'Per BS 7671 Reg 411.5.3(b), for an RCD-based TT installation the maximum acceptable earth electrode resistance Ra is determined by:',
     options: [
-      'C2 — potentially dangerous. The RCD provides additional protection but the high electrode resistance compromises the disconnection-of-supply protection. The combination is unreliable in fault conditions.',
-      'Ra × IΔn ≤ 50 V — the product of electrode resistance and the RCD\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s rated residual operating current must not exceed 50 V. So for a 30 mA RCD: Ra × 0.030 ≤ 50, giving Ra ≤ 1667 Ω. For a 100 mA RCD: Ra ≤ 500 Ω. The 50 V is the touch-voltage limit.',
-      'EN 397 (industrial helmets, general purpose) or EN 12492 (mountaineering / rope access — sometimes used for working at height with chinstrap). Date of manufacture marked underneath; typical service life 5 years from manufacture or 3 years from first use, whichever shorter (per manufacturer).',
-      'No mechanical protection (vulnerable to chasing in masonry without capping); standard PVC sheath fails in fire within minutes; not fire-resistant for emergency / escape route circuits.',
+      'Ra ≤ Ze − R1 − R2 — the electrode resistance must leave enough loop headroom for the device to operate in its disconnection time.',
+      'Ra × IΔn ≤ 50 V — the product of electrode resistance and the RCD rated residual operating current must not exceed 50 V.',
+      'Ra ≤ 200 Ω as a fixed maximum for all TT installations regardless of RCD rating, beyond which the electrode is ineffective.',
+      'Ra × IΔn ≤ 230 V — the product must stay below the nominal supply voltage so a fault cannot raise the electrode above line voltage.',
     ],
     correctIndex: 1,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'A TT installation has a single earth electrode for the whole consumer side. The protective device is a 30 mA RCD on the incoming supply. The electrode is freshly installed and you measure Ra = 85 Ω. Is this compliant?',
     options: [
-      'Both parties must confirm that you have completed all required on-programme learning, achieved the required standards of competence, and are ready to proceed to end-point assessment — this protects you from being assessed before you are prepared',
-      'Pass on Ra × IΔn ≤ 50 V. 85 × 0.030 = 2.55 V — well below 50 V. The electrode passes Reg 411.5.3(b). Note: GN3 recommends keeping TT electrode resistance below 200 Ω for stability across seasonal soil moisture variations.',
-      'Voltage between the hand touching an energised object and the feet on the ground. Drives current through the body if the object is energised by fault. Reason for equipotential bonding and protective conductor sizing.',
-      'Each test relies on the integrity of a previous test (e.g. IR cannot be safely interpreted without continuity of cpc; live tests require dead-test confirmation of earthing)',
+      'Fail. 85 Ω exceeds the 50 Ω maximum electrode resistance BS 7671 allows for a TT installation, so the electrode must be improved.',
+      'Pass. Ra × IΔn = 85 × 0.030 = 2.55 V, well below 50 V, so the electrode satisfies Reg 411.5.3(b).',
+      'Fail. Ra × IΔn = 85 × 30 = 2550, which exceeds the 50 V limit by a wide margin, so the electrode is non-compliant.',
+      'Pass, but only because the supply is freshly installed; once the soil settles the reading will rise above the 1667 Ω limit.',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: 'Test method E2 (stakeless / clamp) per GN3:',
     options: [
-      'Stop. Either fetch the hi-vis from the van, borrow a spare from the site office (most large sites keep loaners), or step off site until properly equipped. Working without required PPE is a breach of HASAWA s.7 (failure to co-operate with the employer\\\\\\\'s safety arrangements) AND a breach of CDM 2015 Reg 15 (worker\\\\\\\'s duties). It\\\\\\\'s also a fast way to get sent home by the principal contractor and recorded against the firm\\\\\\\'s safety performance.',
-      'Report it via your own chain (your Foreman in the first instance, escalating to the main contractor\\\\\\\'s Site Manager if it\\\\\\\'s site-wide). You don\\\\\\\'t approach the HSE inspector direct — that\\\\\\\'s not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.',
-      'A dedicated earth electrode tester that is stakeless or clamp-type. Clamps around the earthing conductor and measures resistance via induced current — no need to drive auxiliary stakes into the soil. Quick and convenient for in-service testing where ground access is limited (e.g. urban TT installations on paved areas), but accuracy depends on the electrode being part of a multi-electrode system or having a parallel earth path.',
-      'On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property\\\\\\\'s earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.',
+      'Drives a current stake and a potential stake and plots voltage against distance to find the plateau, needing space for the stakes.',
+      'Disconnects the earthing conductor and connects an EFLI tester between line and the electrode, reading loop impedance as the resistance.',
+      'A stakeless / clamp-type tester that clamps the earthing conductor and reads resistance via induced current, needing a parallel earth path.',
+      'Measures soil resistivity with four equally spaced stakes (Wenner array) and derives electrode resistance from resistivity and electrode size.',
     ],
     correctAnswer: 2,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 3,
     question: 'EFLI (earth fault loop impedance) method for measuring TT electrode resistance:',
     options: [
-      'People, environment, services, fabric. People — pedestrians, customers, children, other trades. Environment — weather, dust, asbestos suspicion in pre-2000 homes, confined spaces, working at height. Services — concealed live cables, gas pipes, water pipes, structural steel that needs bonding. Fabric — brittle masonry, joist orientation, plaster condition.',
-      'A UK charity focused on improving mental health and wellbeing in the construction industry. Mates in Mind partners with construction firms to deliver mental health awareness training, supports the development of mental health strategies, and provides freely-accessible resources (toolbox-talk templates, signposting cards, manager guidance). Mates in Mind works closely with Mind, the Samaritans and the Health in Construction Leadership Group. The charity does not provide a helpline directly — it signposts to existing helplines including Samaritans (116 123) and the Lighthouse Club (0345 605 1956).',
-      'Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced \\\\\\\'apprentice rate\\\\\\\' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they\\\\\\\'re not yet members.',
-      'Uses an EFLI tester to measure the loop impedance from the supply, with the installation\\\\\\\\\\\\\\\'s earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.',
+      'Clamps two transformer cores around the earthing conductor and induces current to read resistance, needing no disconnection and no isolation.',
+      'Drives a remote current stake 30-50 m away and a movable potential stake, plotting voltage against distance to find the plateau.',
+      'Injects a DC test current between the electrode and a buried plate, measuring the voltage rise independently of the supply network.',
+      'Uses an EFLI tester to read the loop from the supply, with the earthing conductor disconnected from the electrode and wired to the tester.',
     ],
     correctAnswer: 3,
     explanation:
@@ -117,10 +117,10 @@ const quizQuestions = [
     id: 4,
     question: 'Per BS 7671, the agricultural / horticultural location touch-voltage limit (Section 705) reduces the Ra × IΔn product to:',
     options: [
-      '≤ 25 V. Agricultural locations have higher shock risk because livestock and humans are often in conductive contact with wet ground, reducing body resistance and increasing the perceived voltage. The Ra × IΔn ≤ 25 V criterion halves the allowable electrode resistance for the same RCD rating.',
-      'Verify provision is adequate for the work; inspect kits before/during work; restock after use; ensure trained persons available; brief team on emergency procedures (location of kit, AED, trained persons, nearest A&E); maintain inspection records.',
-      'The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults',
-      'Actively seeking learning opportunities, reading industry publications, attending voluntary training, researching topics beyond the minimum requirement, reflecting on your development, and setting personal improvement goals',
+      '≤ 25 V. Wet ground and livestock contact reduce body resistance, so the criterion halves the allowable electrode resistance.',
+      '≤ 12 V. Livestock buildings are treated as wet locations on a par with SELV, dropping the threshold to the SELV ceiling of 12 V.',
+      '≤ 50 V. Section 705 keeps the ordinary touch-voltage limit but requires a 30 mA RCD on every final circuit serving the premises.',
+      '≤ 30 V. The limit is reduced in proportion to the higher conductivity of farm soil, sitting between the standard 50 V and SELV.',
     ],
     correctAnswer: 0,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     id: 5,
     question: 'Before disconnecting the earthing conductor for an electrode test, you must:',
     options: [
-      "Trust is significantly reduced because self-orientation is the denominator — it divides the total. The self-regulation skill needed is managing self-serving impulses and genuinely shifting attention to others' needs, which requires ongoing emotional regulation of ego and need for recognition",
-      "Safely isolate the installation from the supply. The earthing conductor is the protective earth path — while the supply is live, removing it could leave exposed-conductive-parts undefined relative to earth, and any earth-fault current would have nowhere to go. GN3 explicit: 'For safety reasons, the installation shall be isolated from the supply before disconnecting the earthing conductor.'",
-      "Witnesses fade fast — by the next day they've reconstructed events differently, by the next week they've forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm's defence team will all want this evidence later.",
-      "BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.",
+      "Energise the installation first to confirm the earthing conductor carries no current before removing it — a clamp meter reading of zero proves it safe.",
+      "Safely isolate the installation from the supply before disconnecting the earthing conductor, so no exposed-conductive-part is left undefined relative to earth.",
+      "Fit a temporary bonding link between the electrode and the metal water pipe to keep an earth reference while you disconnect the main earthing conductor.",
+      "Switch off only the RCD protecting the test circuit, leaving the main switch closed, so the rest of the installation stays in service during the test.",
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: 'BS 7430 is the British Standard for:',
     options: [
-      'Report it via your own chain (your Foreman in the first instance, escalating to the main contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Site Manager if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s site-wide). You don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t approach the HSE inspector direct — that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.',
-      'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
-      'Earth electrodes — design, materials, installation, and target resistance values. Referenced from BS 7671 for TT installations and for installations containing generators or static converters (inverters). Provides the engineering background for sizing, depth, conductor material, soil conditioning to achieve a target electrode resistance.',
-      'Planned maintenance compliance (percentage of scheduled PMs completed on time), reactive-to-planned work ratio, mean time between failures (MTBF), mean time to repair (MTTR), and maintenance cost as a percentage of asset replacement value',
+      'Surge protection devices — selection, installation and co-ordination of SPDs at the origin and distribution boards, per BS 7671 Section 534.',
+      'Electrical installations in caravans and motor caravans — site-supply connection, RCD protection and earthing arrangements for the special location.',
+      'Protective earthing of electrical installations — earth electrode design, materials, installation and target resistance values.',
+      'Periodic inspection and testing reporting — the model forms, classification codes (C1, C2, C3, FI) and recommended inspection intervals for an EICR.',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 7,
     question: 'GN3 EFLI method critical step at completion of test:',
     options: [
-      'To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.',
-      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
-      'Required only if the sink is in a Section 701 location (bathroom). In a kitchen, the metal water pipes are bonded at the main bonding (extraneous-conductive-parts to MET). The sink is incidentally connected via the pipes — separate supplementary bonding is not required by BS 7671 in a domestic kitchen.',
-      'Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.',
+      'Record the loop impedance and subtract a standard 0.35 Ω supply-network allowance before entering Ra, so the figure reflects the electrode alone.',
+      'Leave the earthing conductor disconnected until the RCD trip-time test is complete, so test current cannot leak to earth and distort the result.',
+      'Re-null the EFLI tester leads against the electrode, repeat the reading three times, and record the average as the definitive electrode resistance.',
+      'Reconnect the earthing conductor BEFORE re-energising the supply, so the installation never operates without its protective earth path restored.',
     ],
     correctAnswer: 3,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     id: 8,
     question: 'For a TT installation, the typical target electrode resistance for design (not the absolute maximum) is:',
     options: [
-      'Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.',
-      'Standard markings present and appropriate; condition (no damage, no expiry); fit (especially RPE); training (operative knows correct use); pre-use inspection done; replacement schedule current. Documented in the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s PPE register and on RAMS.',
-      'Document required by CDM Reg 12 (single contractor) or Reg 16 (multi-contractor / PC writes it). Sets out the H&S arrangements for the construction phase. Must be in place BEFORE construction starts. HSE CIS80 template suitable for small projects.',
-      'Lawfulness, fairness and transparency — personal data must be processed lawfully (one of the six bases), fairly (in a way the data subject would reasonably expect), and transparently (the data subject knows what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s happening with their data via a privacy notice).',
+      'Below 200 Ω for general installations, with below 100 Ω preferred, giving compliance margin year-round as soil dries out in summer.',
+      'Below 1 Ω, matching the Ze expected on a TN-C-S supply, so the same MCB disconnection times can be relied on without an RCD.',
+      'Exactly the 1667 Ω maximum for a 30 mA RCD, since designing to the limit makes the most economical use of a single short rod.',
+      'Below 23 Ω, the long-standing maximum stated in BS 7671 for any earth electrode regardless of the protective device fitted.',
     ],
     correctAnswer: 0,
     explanation:

@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'compound-layout',
     question: 'What is the primary consideration when planning site compound layout?',
     options: [
-      'Periodic synchronization signals from coordinators',
+      'Positioning the offices closest to the site canteen',
       'Maintaining safe traffic and pedestrian segregation',
-      'CDM 2007 replaced it with the CDM Co-ordinator',
-      'AC to DC using both half-cycles via four diodes',
+      'Locating storage areas furthest from the site entrance',
+      'Minimising the visible footprint of the welfare cabins',
     ],
     correctIndex: 1,
     explanation:
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     id: 'access-control',
     question: 'An induction is required before site access primarily to:',
     options: [
-      'To prevent delays, clashes, and rework',
-      'An impulse line filled with fill fluid',
-      'Insulation resistance test between L-E and N-E',
+      'Record the worker’s qualifications for the final account',
+      'Confirm the worker has the correct tools for the task',
+      'Allocate the worker to a specific area of the site',
       'Communicate site-specific hazards and rules',
     ],
     correctIndex: 3,
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'According to CDM 2015, welfare facilities must include which minimum provisions?',
     options: [
-      'The Contractor loses their right to additional time and money',
+      'A first aid room, fire extinguishers and an assembly point',
       'Toilets, washing facilities, drinking water, rest area, changing rooms',
-      'The ground may collapse under the weight of the MEWP, causing it to overturn',
-      'Issue records, training records, inspection records, maintenance records',
+      'Secure tool stores, lockers and a materials compound',
+      'Site offices, meeting rooms and document storage',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,16 +97,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'How many sanitary conveniences are required for up to 25 workers under CDM 2015?',
+    question: 'Under HSE welfare guidance, how many toilets are recommended where there are 6 to 25 workers on site?',
     options: [
-      '3',
       '4',
-      '1',
+      '3',
       '2',
+      '1',
     ],
     correctAnswer: 2,
     explanation:
-      'CDM 2015 guidance recommends minimum 1 toilet per 7 males or 1 per 25 if urinals also provided, and 1 per 7 females. For mixed sites up to 25, minimum 1 is required.',
+      'HSE welfare guidance recommends a minimum of 2 toilets and 2 washing stations where there are between 6 and 25 workers on site, increasing with the size of the workforce.',
   },
   {
     id: 3,
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Temporary water supplies on construction sites typically require:',
     options: [
-      'When they have a mortgage or dependants who rely on their income',
-      'Higher operating frequency eliminates flicker and improves efficacy',
+      'A dedicated borehole drilled on site for every project',
+      'Bottled water only, as mains connections are not permitted',
       'Either mains connection or bowser with appropriate treatment',
-      'The internal test resistor has failed but the RCD mechanism works',
+      'A rainwater harvesting system for all potable supplies',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'Material storage areas should be positioned:',
     options: [
-      'IP44 rated minimum and 30mA RCD protected',
-      'Either mains connection or bowser with appropriate treatment',
+      'Directly beneath the tower crane jib for fast lifting',
+      'As far as possible from any vehicle access route',
       'Adjacent to delivery access with good ground conditions',
-      'At a safe distance from the compound with clear access',
+      'Inside the welfare compound to keep materials secure',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,9 +219,9 @@ const quizQuestions = [
     question:
       'The Construction Logistics and Community Safety (CLOCS) standard primarily addresses:',
     options: [
-      'A load with unequal current draw on each phase',
-      'All lids are in place and secured',
-      'Equivalent CO2 impact per kg released',
+      'Minimum welfare provisions for the site workforce',
+      'Temporary electrical distribution on construction sites',
+      'Segregation and recycling of construction waste streams',
       'Safe vehicle movements and driver competence',
     ],
     correctAnswer: 3,

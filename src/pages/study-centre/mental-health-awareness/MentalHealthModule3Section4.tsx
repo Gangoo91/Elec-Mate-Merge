@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       "A colleague has been withdrawn and made comments about 'not being around much longer'. You are concerned they may be suicidal. What is the best way to approach the conversation?",
     options: [
+      "Ask directly and calmly: 'Are you thinking about suicide?' — research shows direct questions save lives and do not increase risk",
       "Avoid mentioning suicide directly — use phrases like 'doing something silly' so you don't upset them",
       'Wait until they bring it up themselves, as asking might plant the idea in their head',
-      "Ask directly and calmly: 'Are you thinking about suicide?' — research shows direct questions save lives and do not increase risk",
       'Tell them to cheer up and remind them things could be worse',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Research consistently shows that asking someone directly about suicide does NOT increase the risk of suicidal behaviour. In fact, asking directly gives the person permission to talk openly about what they are experiencing. Using euphemisms like 'doing something silly' minimises the seriousness of their feelings and can make it harder for them to be honest. Direct, compassionate questioning is a cornerstone of suicide first aid.",
   },
@@ -38,10 +38,10 @@ const quickCheckQuestions = [
     options: [
       'Call 999 immediately',
       'Leave them alone to process their feelings',
-      'Help them create a safety plan — identifying warning signs, coping strategies, and people they can contact',
       'Tell their manager so the company can take action',
+      'Help them create a safety plan — identifying warning signs, coping strategies, and people they can contact',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The TASC model follows the sequence: Tell (express your concern), Ask (ask directly about suicide), Safety plan (help them create a safety plan), Call (call for professional support if needed). After asking and confirming suicidal thoughts, the next step is to collaborate with the person on a safety plan. This empowers them to identify their own warning signs, coping strategies, and support contacts. Calling for professional help is the final step, not the immediate next one — unless they are in immediate danger.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'Which of the following is the correct way to ask someone if they are thinking about suicide?',
     options: [
-      "'You're not thinking of doing anything silly, are you?'",
       "'Are you thinking about suicide?'",
+      "'You're not thinking of doing anything silly, are you?'",
       "'You wouldn't do anything stupid, would you?'",
       "'You don't want to hurt yourself, do you?'",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The correct approach is to use direct, clear language: 'Are you thinking about suicide?' or 'Are you having thoughts of ending your life?' Using euphemisms like 'doing something silly' or 'doing anything stupid' minimises the person's experience, implies judgement, and makes it harder for them to respond honestly. Phrasing the question as a negative ('You wouldn't...', 'You don't...') leads the person toward saying 'no' even when the answer is 'yes'. Direct language shows you take them seriously and gives them permission to be honest.",
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
     question: "What does the 'T' stand for in the TASC model of suicide first aid?",
     options: [
       'Time — take time to assess the situation',
-      'Tell — tell the person you are concerned about them',
       'Talk — talk to a professional before approaching the person',
+      'Tell — tell the person you are concerned about them',
       'Triage — determine the level of risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "In the TASC model, 'T' stands for Tell — tell the person you are concerned about them. This is the first step: expressing your genuine concern in a non-judgemental way. For example: 'I've noticed you've been very quiet lately and I'm worried about you.' This opens the door to a conversation and shows the person that someone has noticed and cares. The full model is: Tell, Ask, Safety plan, Call.",
   },
@@ -125,11 +125,11 @@ const quizQuestions = [
       'A safety plan typically includes six key components. Which of the following is NOT one of them?',
     options: [
       'Warning signs that a crisis may be developing',
-      'A written promise not to attempt suicide',
       'Internal coping strategies the person can use alone',
       'Professional contacts who can help in a crisis',
+      'A written promise not to attempt suicide',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A written promise not to attempt suicide (a 'no-suicide contract') is NOT a component of an evidence-based safety plan. Research shows that no-suicide contracts do not reduce risk and can actually discourage people from being honest about their feelings. The six components of a safety plan are: (1) warning signs, (2) internal coping strategies, (3) people and social settings that provide distraction, (4) people to contact for help, (5) professionals and agencies to contact in crisis, and (6) making the environment safe (reducing access to means).",
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 5,
     question: "What is the Samaritans' phone number and when are they available?",
     options: [
-      '0800 58 58 58 — available 5pm to midnight',
       '116 123 — available 24 hours a day, 7 days a week, free to call',
+      '0800 58 58 58 — available 5pm to midnight',
       '0345 605 1956 — available Monday to Friday, 9am to 5pm',
       '0800 068 4141 — available 9am to midnight',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Samaritans can be reached on 116 123. The line is free to call from any phone and is available 24 hours a day, 7 days a week, 365 days a year. Samaritans provide confidential emotional support for anyone experiencing feelings of distress, despair, or suicidal thoughts. You do not have to be suicidal to call — they are there for anyone who needs to talk. The other numbers listed are: CALM (0800 58 58 58, 5pm–midnight), Lighthouse Club (0345 605 1956), and Papyrus HOPELINEUK (0800 068 4141).',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'When calling 999 for a person who is suicidal, what key information should you provide to the operator?',
     options: [
       "Only the person's name — they will find the rest",
-      'Your location, the nature of the emergency, whether the person has made an attempt, whether they have access to means, and whether they are conscious and breathing',
       "The person's full medical history and GP details",
+      'Your location, the nature of the emergency, whether the person has made an attempt, whether they have access to means, and whether they are conscious and breathing',
       'Only the location — the operator will ask no further questions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "When calling 999, you should provide: your exact location (including postcode if possible), the nature of the emergency (a person is suicidal or has made a suicide attempt), whether an attempt has been made and what method was used, whether the person has access to means of harm, and the person's current state (conscious, breathing, responsive). This information helps the ambulance service prioritise the call and send the right resources. Stay on the line — the operator will guide you through what to do while help is on the way.",
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     options: [
       'Samaritans (116 123)',
       'CALM — Campaign Against Living Miserably (0800 58 58 58)',
-      'Papyrus HOPELINEUK (0800 068 4141)',
       'SHOUT (text 85258)',
+      'Papyrus HOPELINEUK (0800 068 4141)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Papyrus HOPELINEUK (0800 068 4141) is specifically designed for people under 35 who are experiencing thoughts of suicide, and for anyone concerned about a young person. They provide practical advice, support, and information. They can be contacted by phone, text (07860 039967), or email (pat@papyrus-uk.org). While all the helplines listed provide valuable crisis support, Papyrus is the only one with a specific focus on young people.',
   },
@@ -193,11 +193,11 @@ const quizQuestions = [
       'After supporting a colleague through a suicidal crisis, which of the following is the most important thing for the first aider to do?',
     options: [
       'Immediately return to normal duties and try not to think about it',
-      'Post about the experience on social media to raise awareness',
       'Seek debriefing or supervision, talk to someone they trust, and actively look after their own wellbeing',
+      'Post about the experience on social media to raise awareness',
       'Avoid the colleague in future to prevent re-traumatising them',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Supporting someone through a suicidal crisis is emotionally demanding, and the first aider must actively look after their own wellbeing afterwards. This includes seeking debriefing or supervision from a manager, mental health lead, or professional; talking to someone they trust about how they feel (without breaching the person's confidentiality); and practising self-care. Trying to suppress or ignore the experience can lead to burnout, compassion fatigue, or secondary traumatic stress. Posting on social media would breach confidentiality, and avoiding the colleague could damage the relationship and leave them feeling abandoned.",
   },

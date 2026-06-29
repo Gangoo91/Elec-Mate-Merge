@@ -92,8 +92,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The gel-like centre of an intervertebral disc is called the:',
-    options: ['Annulus fibrosus', 'Nucleus pulposus', 'Vertebral endplate', 'Ligamentum flavum'],
-    correctAnswer: 1,
+    options: ['Nucleus pulposus', 'Annulus fibrosus', 'Vertebral endplate', 'Ligamentum flavum'],
+    correctAnswer: 0,
     explanation:
       'The nucleus pulposus is the soft, gel-like centre of the intervertebral disc. It is approximately 80% water and acts as a hydraulic shock absorber, distributing compressive forces across the disc. The annulus fibrosus is the tough outer ring that contains and protects it.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'C5/C6 and C6/C7 (cervical)',
       'T6/T7 and T7/T8 (thoracic)',
-      'L4/L5 and L5/S1 (lumbar)',
       'S1/S2 and S2/S3 (sacral)',
+      'L4/L5 and L5/S1 (lumbar)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The L4/L5 and L5/S1 segments are the most commonly affected by disc herniation from manual handling. These are the lowest mobile segments of the spine, bearing the greatest load. The transition from the flexible lumbar spine to the rigid sacrum at L5/S1 creates a concentration of stress that makes this segment particularly vulnerable.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'Sciatica is caused by:',
     options: [
-      'A fracture of the femur (thigh bone)',
       'Compression or irritation of the sciatic nerve, often by a herniated lumbar disc',
+      'A fracture of the femur (thigh bone)',
       'A torn muscle in the calf',
       'Arthritis in the hip joint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sciatica is pain that radiates along the path of the sciatic nerve — from the lower back through the buttock and down the back of the leg. It is most commonly caused by a herniated disc in the lumbar spine (usually L4/L5 or L5/S1) pressing on the nerve roots that form the sciatic nerve. Symptoms include sharp, burning pain, numbness, tingling, and weakness in the affected leg.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
       'Why is maintaining the natural S-curve of the spine important during manual handling?',
     options: [
       'It makes the load feel lighter',
-      'It distributes compressive forces evenly across the disc surfaces and reduces stress on the annulus fibrosus',
       'It prevents the muscles from being used during lifting',
       'It is only important for people over the age of 50',
+      'It distributes compressive forces evenly across the disc surfaces and reduces stress on the annulus fibrosus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Maintaining the natural S-curve distributes compressive forces evenly across the entire disc surface, reduces stress on the posterior annulus fibrosus, and allows the spinal muscles and ligaments to work at their most efficient length. When the spine is flexed (bent forward), compressive force concentrates on the anterior disc and tensile force on the posterior annulus — creating the conditions for disc herniation.',
   },

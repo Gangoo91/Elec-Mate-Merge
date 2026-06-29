@@ -12,101 +12,101 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'm7s4-qc1',
-    question: 'According to IEC standards, what colour is used for protective earth conductors?',
-    options: ['Blue', 'Brown', 'Green/Yellow stripes', 'Black'],
-    correctIndex: 2,
+    question: 'According to IEC colour conventions, what identifies a protective earth conductor?',
+    options: ['Green/Yellow stripes', 'Solid blue', 'Solid brown', 'Solid black'],
+    correctIndex: 0,
     explanation:
-      'Green/Yellow stripes is the mandatory colour for protective earth (PE) conductors according to IEC 60757 and BS 7671.',
+      'Green/Yellow striping is the mandatory identification for protective earth (PE) conductors under IEC 60757 and BS 7671.',
   },
   {
     id: 'm7s4-qc2',
     question:
-      'In ISA-5.1 standards, what colour is typically used for the positive 4-20mA signal wire?',
+      'In ISA-5.1 practice, what colour is typically used for the positive 4-20mA signal wire?',
     options: ['Black', 'Blue', 'Red', 'White'],
     correctIndex: 2,
     explanation:
-      'Red is typically used for the positive 4-20mA signal wire according to ISA-5.1 instrumentation standards.',
+      'Red is typically used for the positive 4-20mA signal wire, with black used for the negative return.',
   },
   {
     id: 'm7s4-qc3',
-    question: 'Why is LSZH (Low Smoke Zero Halogen) cable essential for enclosed spaces?',
+    question: 'Why is LSZH (Low Smoke Zero Halogen) cable preferred for enclosed spaces?',
     options: [
-      "It's cheaper",
-      'It provides better signal quality',
-      'It minimises toxic smoke in case of fire',
-      'It has higher current capacity',
+      'It is the cheapest cable type available',
+      'It improves the quality of the transmitted signal',
+      'It carries more current than equivalent PVC cable',
+      'It minimises toxic smoke and halogen gas in a fire',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
-      'LSZH cable minimises toxic smoke and halogen gas emissions during fire, making it essential for enclosed spaces where personnel evacuation may be required.',
+      'LSZH cable produces little smoke and no corrosive halogen gas when it burns, which protects people during evacuation from enclosed spaces.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'What colour is typically used for 24V DC positive signal wires in instrumentation?',
+    question: 'Under ISA-5.1 practice, what colour is typically used for 24V DC positive supply wires in instrumentation?',
     options: [
       'Black',
-      'Red for positive signal wires and blue for 24VDC positive supply',
+      'Blue',
       'Green',
       'Yellow',
     ],
     correctAnswer: 1,
     explanation:
-      'According to ISA-5.1 standards, red is used for positive 4-20mA signal wires, while blue is used for 24VDC positive supply wires in instrumentation applications.',
+      'Blue is typically used for the 24V DC positive supply, while red is reserved for the positive 4-20mA signal wire.',
   },
   {
     id: 2,
-    question: 'Why is consistent wire labelling important?',
+    question: 'What is the primary reason consistent wire labelling is important on instrumentation panels?',
     options: [
-      'It looks professional',
-      'It enables rapid fault identification, prevents connection errors, ensures safety during maintenance, and facilitates troubleshooting',
-      "It's required by insurance companies",
-      'It reduces cable costs',
+      'It gives the panel a tidier, more professional appearance',
+      'It enables rapid fault identification and prevents dangerous connection errors',
+      'It is a mandatory condition of most insurance policies',
+      'It allows thinner, cheaper cable to be specified',
     ],
     correctAnswer: 1,
     explanation:
-      'Consistent wire labelling is critical for safety and efficiency - it enables rapid fault identification, prevents dangerous connection errors, ensures safe maintenance practices, and significantly reduces troubleshooting time.',
+      'Clear, consistent labelling lets technicians trace circuits quickly and avoid wiring mistakes, which is critical for both safety and efficient maintenance.',
   },
   {
     id: 3,
-    question: 'Name one international standard related to instrumentation wiring.',
+    question: 'Which of these is an international standard directly relevant to instrumentation wiring?',
     options: [
-      'ISA-5.1 (Instrumentation Symbols and Identification) or IEC 60757 (Code for designation of colours)',
-      'ISO 9001',
-      'ANSI Z87.1',
-      'NEMA 4X',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'ISA-5.1 provides guidelines for instrumentation symbols and identification including wire colour coding, while IEC 60757 specifies the international standard for conductor colour designation.',
-  },
-  {
-    id: 4,
-    question: 'What hazard can incorrect colour coding cause?',
-    options: [
-      'Higher installation costs',
-      'Electrical shock, equipment damage, wrong connections leading to process safety incidents, and delayed emergency response',
-      'Reduced signal quality',
-      'Increased cable length requirements',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Incorrect colour coding can cause serious safety hazards including electrical shock from touching live conductors, equipment damage from wrong connections, process safety incidents from faulty signals, and delayed emergency response due to misidentification.',
-  },
-  {
-    id: 5,
-    question: 'How does wire sizing affect signal transmission?',
-    options: [
-      "Wire size doesn't affect signals",
-      'Larger wires increase resistance',
-      'Wire cross-sectional area affects resistance - larger wires have lower resistance, reducing voltage drop and improving signal integrity',
-      'Wire size only affects current capacity',
+      'ISO 9001 (quality management systems)',
+      'ANSI Z87.1 (eye and face protection)',
+      'IEC 60757 (code for designation of colours)',
+      'NEMA 4X (enclosure ingress ratings)',
     ],
     correctAnswer: 2,
     explanation:
-      'Wire sizing directly affects signal transmission through resistance. Larger cross-sectional areas have lower resistance, which reduces voltage drop along the cable run and improves signal integrity, especially important for long cable runs in 4-20mA loops.',
+      'IEC 60757 specifies the international code for conductor colour designation; ISA-5.1 also covers instrumentation symbols and identification. The other standards relate to quality, PPE and enclosures.',
+  },
+  {
+    id: 4,
+    question: 'What is the most serious hazard that incorrect signal colour coding can cause?',
+    options: [
+      'Slightly higher installation labour costs',
+      'A reduction in 4-20mA signal quality',
+      'Wrong connections leading to a process safety incident',
+      'A requirement for longer cable runs',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Misidentified conductors can be wired to the wrong terminals, causing faulty signals, equipment damage or a process safety incident, as well as delaying emergency response.',
+  },
+  {
+    id: 5,
+    question: 'How does conductor cross-sectional area affect signal transmission in a long 4-20mA loop?',
+    options: [
+      'Cross-sectional area has no effect on the signal',
+      'A larger area increases resistance and worsens the signal',
+      'A larger area only affects current-carrying capacity, not signals',
+      'A larger area lowers resistance, reducing voltage drop and improving integrity',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A larger cross-sectional area has lower resistance, so it reduces voltage drop along the cable and improves signal integrity, which matters most on long loop runs.',
   },
   {
     id: 6,
@@ -119,41 +119,46 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What is the purpose of individual screening (IS) in multi-pair cables?',
+    question: 'What is the main purpose of individual screening (IS) in a multi-pair instrument cable?',
     options: [
-      'Reduce cable weight',
-      'Provide best noise immunity between pairs carrying different signals',
-      'Make termination easier',
-      'Reduce cable costs',
+      'To reduce the overall weight of the cable',
+      'To make termination of the pairs quicker',
+      'To give the best noise immunity between pairs carrying different signals',
+      'To lower the unit cost of the cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Individual screening (IS) provides a shield around each pair separately, offering the best noise immunity when different signal types are carried in the same cable.',
+      'Individual screening places a separate shield around each pair, giving the best noise immunity when different signal types share the same multi-pair cable.',
   },
   {
     id: 8,
-    question: 'What percentage of spare terminals should be included in terminal strip design?',
+    question: 'What level of spare capacity is recommended as good practice in terminal strip design?',
     options: ['5%', '10%', '20%', '50%'],
     correctAnswer: 2,
     explanation:
-      'Good engineering practice recommends 20% spare capacity in terminal strips to allow for future modifications, additions, and maintenance flexibility.',
+      'Around 20% spare terminal capacity is recommended to allow for future modifications, additions and maintenance flexibility.',
   },
   {
     id: 9,
-    question: 'What fire performance standard covers circuit integrity for emergency systems?',
-    options: ['IEC 60332-1', 'IEC 61034', 'BS 6387 CWZ', 'IEC 60757'],
-    correctAnswer: 2,
+    question: 'Which standard specifies circuit integrity for cables that must keep working during a fire?',
+    options: ['IEC 60757', 'IEC 60332-1', 'IEC 61034', 'BS 6387 CWZ'],
+    correctAnswer: 3,
     explanation:
-      'BS 6387 CWZ specifies circuit integrity requirements for cables in fire conditions, essential for emergency systems that must continue operating during a fire.',
+      'BS 6387 CWZ defines circuit integrity under fire conditions, essential for emergency systems that must keep operating during a fire. IEC 60332-1 is a flame-propagation test and IEC 61034 is a smoke-density test.',
   },
   {
     id: 10,
     question:
-      'What is the estimated reduction in troubleshooting time from implementing standardised colour coding?',
-    options: ['10-20%', '30-40%', '50-70%', '80-90%'],
-    correctAnswer: 2,
+      'Why does standardised colour coding reduce troubleshooting time on instrumentation systems?',
+    options: [
+      'It allows immediate signal recognition and faster fault location',
+      'It removes the need to ever isolate the circuit',
+      'It increases the current-carrying capacity of each conductor',
+      'It eliminates the need for any cable labelling',
+    ],
+    correctAnswer: 0,
     explanation:
-      'Standardised colour coding can reduce troubleshooting time by 50-70% through immediate signal recognition, faster fault location, and prevention of connection mistakes.',
+      'Consistent colours let technicians recognise signal types at a glance and locate faults faster, which cuts troubleshooting time and prevents connection mistakes.',
   },
 ];
 

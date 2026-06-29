@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ir-test-purpose',
     question: 'What is the primary purpose of insulation resistance testing?',
     options: [
-      'Making changes to the learning or assessment process to remove barriers, without lowering the competence standard',
-      'The formation and collapse of vapour bubbles when local pressure drops below the vapour pressure of the liquid',
+      'To confirm the continuity of the circuit protective conductor end to end',
+      'To measure the earth fault loop impedance of the circuit under test',
       'To verify that the insulation between live conductors and between live conductors and earth is adequate to prevent leakage current and short circuits',
-      'Notify affected occupants in advance: explain what work is planned, when it will occur, how long it will last, what disruption to expect, and who to contact with concerns',
+      'To check that the protective device will disconnect within the required time',
     ],
     correctIndex: 2,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'Before conducting an insulation resistance test, which of the following must be disconnected from the circuit?',
     options: [
-      'The constant (σ = 5.67 × 10⁻⁸ W/m²K⁴) used to calculate radiant heat transfer from a surface',
+      'Only the lamps in the lighting circuits, leaving all other equipment connected',
       'All electronic equipment, surge protective devices (SPDs), and any equipment that could be damaged by the test voltage',
-      'Low-resistance ohmmeter (continuity range of an MFT — typically resolution down to 0.01 Ω, with leads nulled).',
-      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
+      'Only the main switch, while leaving the final circuits energised',
+      'Nothing — the test can safely be carried out with all equipment connected',
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'Why is trending of insulation resistance values over time more valuable than a single test reading?',
     options: [
-      'It captures data continuously, enabling detection of rapidly developing faults and providing real-time alarm capability',
+      'Because a single reading is always inaccurate and cannot be trusted on its own',
       'Because trending reveals the rate of insulation degradation, allowing deterioration to be identified and addressed before values fall below the minimum acceptable level',
-      'A bump test verifies that the sensors respond to gas, while a calibration adjusts the sensor readings to match known reference concentrations',
-      'A system where rescue team members always enter the space in pairs so they can monitor each other and provide mutual assistance',
+      'Because BS 7671 requires at least three readings to be averaged for every circuit',
+      'Because trending removes the need to disconnect sensitive equipment before testing',
     ],
     correctIndex: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
       'Before conducting an insulation resistance test on a motor circuit, the maintenance technician should:',
     options: [
       'Isolate the circuit, lock off, prove dead, disconnect the motor and any electronic drive equipment, then conduct the test',
-      'Discharge any stored capacitive charge by shorting the conductors together before reconnecting equipment or touching conductors',
-      'Testing with leads open-circuited (should read infinity/overrange) and short-circuited (should read approximately zero), and checking the battery condition',
-      'Unsatisfactory — it is below the minimum acceptable value of 1 MΩ and requires investigation',
+      'Leave the motor connected to its variable speed drive so the windings and drive can be tested as a single assembly',
+      'Run the motor on load for ten minutes first so the windings reach operating temperature before the test is applied',
+      'Apply 1000 V d.c. regardless of the motor voltage, as a higher test voltage always gives a more reliable result',
     ],
     correctAnswer: 0,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     question:
       'A circuit that reads 0.5 MΩ during an insulation resistance test at 500 V d.c. should be classified as:',
     options: [
-      'The total heat content of a system, equal to internal energy plus the product of pressure and volume (H = U + PV)',
+      'Satisfactory — it comfortably exceeds the minimum value for this circuit type',
       'Unsatisfactory — it is below the minimum acceptable value of 1 MΩ and requires investigation',
-      'The fraction of air that passes through the coil unchanged, without contacting the coil surface',
-      'Environmental, Social, and Governance - criteria for assessing corporate sustainability',
+      'Satisfactory — any reading above zero confirms the insulation is intact',
+      'Unsatisfactory — it is below the 2 MΩ minimum that BS 7671 requires for all circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 6,
     question: 'What effect does temperature have on insulation resistance readings?',
     options: [
-      'Testing with leads open-circuited (should read infinity/overrange) and short-circuited (should read approximately zero), and checking the battery condition',
-      'Discharge any stored capacitive charge by shorting the conductors together before reconnecting equipment or touching conductors',
+      'Temperature has no measurable effect on insulation resistance, so readings can be compared directly regardless of when they were taken',
+      'Higher temperatures generally cause higher insulation resistance readings, so warm circuits tend to read more favourably than cold ones',
       'Higher temperatures generally cause lower insulation resistance readings, and this must be considered when comparing readings taken at different times',
-      'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
+      'Temperature affects only a.c. measurements, so the d.c. test used for insulation resistance is completely unaffected by it',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,9 +154,9 @@ const quizQuestions = [
     question:
       'The three standard insulation resistance test configurations for a single-phase circuit are:',
     options: [
-      'Dim lights, especially at the end of the circuit',
-      '50-100 metres depending on drive and cable type',
-      'A test to verify equipment operates as intended when energised',
+      'Line to neutral, line to earth, line to line',
+      'Line to earth only, repeated three times to confirm the reading is consistent',
+      'Neutral to earth, neutral to line, earth to the bonding conductor',
       'Line to neutral, line to earth, neutral to earth',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
     question: 'After completing an insulation resistance test, the technician should:',
     options: [
       'Discharge any stored capacitive charge by shorting the conductors together before reconnecting equipment or touching conductors',
-      'Unsatisfactory — it is below the minimum acceptable value of 1 MΩ and requires investigation',
-      'Testing with leads open-circuited (should read infinity/overrange) and short-circuited (should read approximately zero), and checking the battery condition',
-      'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
+      'Immediately reconnect all disconnected equipment so the installation can be re-energised without delay',
+      'Leave the conductors open so the cable capacitance can self-discharge gradually over the next few minutes',
+      'Re-apply the test voltage a second time to confirm the reading before recording it on the schedule',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'Which environmental condition most commonly causes reduced insulation resistance in an otherwise healthy installation?',
     options: [
-      'High voltage can damage sensitive equipment',
+      'A small rise in the ambient temperature on the day of testing',
       'Moisture — from condensation, water ingress, or high humidity',
-      'Schedule of Inspections and Schedule of Test Results',
-      'The designer, installer, and verifier/commissioning engineer',
+      'A slightly low battery in the test instrument during the measurement',
+      'Vibration from nearby machinery during the test sequence',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'An insulation resistance test instrument must be verified before use. The standard method is:',
     options: [
-      'Isolate the circuit, lock off, prove dead, disconnect the motor and any electronic drive equipment, then conduct the test',
-      'Higher temperatures generally cause lower insulation resistance readings, and this must be considered when comparing readings taken at different times',
+      'Connecting the leads across a known live 230 V supply to confirm the instrument reads the voltage correctly',
+      'Measuring the resistance of a 1 MΩ resistor and confirming the reading is exactly at the minimum pass value',
       'Testing with leads open-circuited (should read infinity/overrange) and short-circuited (should read approximately zero), and checking the battery condition',
-      'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
+      'Applying the test to a damp surface to confirm the instrument can detect a low insulation resistance',
     ],
     correctAnswer: 2,
     explanation:
@@ -224,9 +224,9 @@ const quizQuestions = [
       'When testing a large installation with many circuits, an initial test of all circuits together reads 0.8 MΩ. The correct next step is:',
     options: [
       'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
-      'Higher temperatures generally cause lower insulation resistance readings, and this must be considered when comparing readings taken at different times',
-      'Discharge any stored capacitive charge by shorting the conductors together before reconnecting equipment or touching conductors',
-      'Isolate the circuit, lock off, prove dead, disconnect the motor and any electronic drive equipment, then conduct the test',
+      'Accept the reading as satisfactory, since the combined value of many circuits is always expected to be below 1 MΩ',
+      'Re-test using a lower 250 V d.c. range so that the combined reading rises above the 1 MΩ minimum',
+      'Average the reading with the previous year\'s figure and record the mean value on the schedule',
     ],
     correctAnswer: 0,
     explanation:

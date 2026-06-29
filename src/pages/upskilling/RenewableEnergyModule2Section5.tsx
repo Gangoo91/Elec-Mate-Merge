@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'The string inverter topology — what is it?',
     options: [
-      'An inverter per cell',
-      'A single central inverter for a whole PV string (or multiple parallel strings via the inverter\'s MPPT inputs). The DC string runs from the modules to the inverter input; the inverter performs MPPT, DC-AC conversion, and grid synchronisation. The dominant topology on UK residential PV by volume',
-      'A passive transformer',
-      'A mechanical sun-tracking device',
+      'A separate inverter dedicated to each individual PV cell',
+      'A single central inverter doing MPPT, DC-AC conversion and grid sync for the whole string',
+      'A passive transformer that steps the DC string voltage up for export',
+      'A mechanical device that tracks the sun and re-aims the array',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'The microinverter topology — what is it?',
     options: [
-      'A miniature string inverter',
-      'One inverter per PV module — each module has its own AC-output microinverter attached to the rear, performing MPPT and DC-AC conversion at the module level. The AC outputs daisy-chain along the array; no central inverter required. Module-level MPPT eliminates string mismatch entirely',
-      'A spare inverter in case the main fails',
-      'A controller for the bypass diode',
+      'A miniature central string inverter serving the whole array',
+      'One AC-output inverter per module, doing MPPT and DC-AC conversion at module level',
+      'A spare backup inverter that takes over if the main inverter fails',
+      'A small controller that switches the module\'s bypass diode under shade',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'The power optimiser topology — what is it?',
     options: [
-      'Identical to microinverter',
-      'A DC-DC power optimiser per module (attached to the rear, like a microinverter) — performing module-level MPPT but outputting DC, which then runs as a fixed-voltage string to a central optimised-string inverter for DC-AC conversion. Hybrid between string inverter (one central inverter) and microinverter (module-level MPPT)',
-      'A current source',
-      'An MPPT controller for off-grid',
+      'Functionally identical to a microinverter, outputting AC per module',
+      'A DC-DC optimiser per module doing MPPT, feeding a fixed-voltage DC string to a central inverter',
+      'A constant-current source that regulates the array output current',
+      'A standalone MPPT charge controller for off-grid battery systems',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'The hybrid inverter topology — what does it integrate?',
     options: [
-      'Two PV strings only',
-      'PV input(s), battery input(s) and grid connection in one product — performing PV-side MPPT, battery charge / discharge control, and grid synchronisation. The dominant topology for residential PV+BESS installs from 2022 onwards, combining what would otherwise be a string inverter + separate battery inverter into a single unit',
-      'PV and EV charging in one box',
-      'PV and heat pump in one box',
+      'Two independent PV strings combined into one inverter input',
+      'PV input, battery input and grid connection in one unit, with PV MPPT and battery control',
+      'PV generation and EV charging combined into a single enclosure',
+      'PV generation and heat-pump control combined into a single enclosure',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'BS 7671 references a specific product standard for inverters. Which?',
     options: [
-      'BS 7671 Section 712 only',
-      'BS EN 62109-1 (general safety requirements) and BS EN 62109-2 (particular requirements for inverters). Inverters used in BS 7671 installations shall conform to the relevant clauses of these standards — evidenced by manufacturer declarations of conformity, test reports, or certification',
-      'BS EN 50549-1 only',
-      'No specific product standard',
+      'BS 7671 Section 712, which is itself the inverter product standard',
+      'BS EN 62109-1 (general safety) and BS EN 62109-2 (particular requirements for inverters)',
+      'BS EN 50549-1 alone, which defines the inverter product safety requirements',
+      'No specific product standard applies to grid-tied PV inverters',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Reg 531.3.3 sets a rule on RCD type for circuits with DC-component sources. For a PV inverter, what is the actual selection logic?',
     options: [
-      'Type AC RCD is always acceptable',
-      'Type AC is NOT appropriate. Type B RCD (in accordance with BS EN 62423 or BS EN 60947-2) shall be selected UNLESS one of three exceptions applies: (a) the PCE provides at least simple separation between AC and DC sides internally; (b) a transformer with separate windings provides the simple separation externally; (c) the PCE manufacturer states Type B is not required (with documentation retained as evidence)',
-      'No RCD required',
-      'Type AC only',
+      'Type AC RCD is always acceptable for a PV inverter circuit',
+      'Type AC is ruled out; Type B is required unless one of three documented exceptions applies',
+      'No RCD is required on a circuit fed by a PV inverter',
+      'Type AC only, because the inverter output is purely sinusoidal AC',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'A customer with a south-facing single-pitch roof, no shading, 12 matched modules, and a £6,000 budget. Which inverter topology is most cost-effective?',
     options: [
-      'Microinverters at £100 each — £1,200 of microinverter hardware',
-      'String inverter with single MPPT — single £900–1,100 inverter, total install cost lower than module-level topologies, no mismatch losses to recover (single orientation, no shade, matched modules). Module-level optimisation costs would not pay back in this scenario',
-      'Power optimisers — £50 each plus central inverter — only useful if mismatch matters',
-      'Hybrid inverter even without battery — over-specified for PV-only install',
+      'Microinverters on every module, paying ~£1,200 for module-level hardware',
+      'String inverter with a single MPPT — no mismatch to recover, so module-level cost would not pay back',
+      'Power optimisers on every module plus a central inverter, useful only where mismatch exists',
+      'A hybrid inverter without a battery, over-specified for a PV-only install',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A 5 kWp PV install on a multi-pitch roof (south and east) with two parallel strings of mismatched module count (10 south + 4 east). Which inverter topology is best matched?',
     options: [
-      'Single-MPPT string inverter',
-      'Dual-MPPT hybrid inverter (or dual-MPPT string inverter if no battery) — each string into its own MPPT, eliminating orientation mismatch. If the customer also wants BESS now or in future, hybrid inverter is the natural choice',
-      'Microinverters on all modules',
-      'Power optimisers on the east string only',
+      'Dual-MPPT inverter — one MPPT per orientation removes the mismatch; choose the hybrid variant if BESS is wanted now or later',
+      'Single-MPPT string inverter feeding both orientations from one combined input',
+      'Microinverters on every module across both the south and east banks',
+      'Power optimisers fitted to the east-facing string only, with the south string direct',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The two-orientation geometry needs two independent MPPTs. Dual-MPPT inverter is the standard answer. Whether to choose a PV-only dual-MPPT string inverter or a dual-MPPT hybrid inverter depends on the BESS plan — if battery is on the install now or planned in the next few years, hybrid is the natural choice (you avoid having to add a separate battery inverter later). Microinverters or power optimisers per module would also work but at higher cost than necessary for this geometry — the dual-MPPT inverter alone resolves the mismatch.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A complex roof with heavy partial shading from a neighbouring tree and a chimney — multiple modules will be partially shaded for different portions of the day. Which inverter topology is best matched?',
     options: [
-      'Single-MPPT string inverter',
-      'Module-level optimisation — microinverters OR power optimisers + central inverter. Each module operates at its own MPP regardless of conditions on other modules. The cost premium pays back through the recovered yield that would otherwise be lost to string-level mismatch from the shading',
-      'Just remove the shading sources',
-      'Smaller array to avoid shaded modules',
+      'A single-MPPT string inverter feeding all modules from one input',
+      'Fell the tree and remove the chimney so the shading sources no longer affect the array',
+      'A smaller array placed only on the unshaded portion of the roof to avoid the shaded modules',
+      'Module-level optimisation — microinverters or power optimisers, so each module runs at its own MPP and recovers the shading loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heavy partial shading is the strongest case for module-level optimisation. String-level architectures (single or multi-MPPT) cannot recover from shading-driven sub-string bypasses without losing the bypassed sub-string\'s power entirely. Module-level MPPT (microinverters or power optimisers) operates each module at its own MPP, capturing what each module can generate independent of shade conditions on other modules. The per-module hardware cost is paid back through the recovered yield. On heavily-shaded arrays, the difference can be 20–40% annual yield.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'BS 7671 references BS EN 62109-1 and BS EN 62109-2 as the relevant electrical equipment standards for inverters. What does this mean for the installer?',
     options: [
-      'Nothing — standards are for designers',
-      'The installer verifies inverter conformity before connection — checking manufacturer documentation, markings, and certification. The cert evidence bundle includes evidence of conformity (manufacturer declarations of conformity, test reports, or certification). Specifying an inverter without BS EN 62109-1/-2 conformity is a BS 7671 contravention',
-      'Only the customer needs to know',
-      'Only DNO concerns the standards',
+      'Nothing — product standards are a matter for the designer, not the installer on site',
+      'Only the customer needs to be told the inverter conforms, as part of the handover pack',
+      'The installer verifies conformity before connection via manufacturer declarations, markings or certification, retained in the cert evidence bundle',
+      'Only the DNO is concerned with these standards, as part of the G98 or G99 process',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 makes the installer responsible for verifying inverter conformity to BS EN 62109-1 and BS EN 62109-2 (and any other relevant product standards) before connection. The verification is documentary — manufacturer declarations of conformity, test reports, certification marks. The cert evidence bundle retains the verification record. For an MCS-registered installer, the MCS Product List also requires BS EN 62109 conformity as part of the inverter product approval.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A PV inverter on a TT-earthed installation needs RCD protection. What RCD type is specified?',
     options: [
-      'Type AC',
-      'Type A as a minimum (or Type F where higher-frequency components present); Type B is required where the inverter can produce smooth DC residual currents. The inverter datasheet specifies the required RCD type. Type AC is NOT appropriate because it does not detect DC residual components',
-      'No RCD needed',
-      'Type B always',
+      'Type AC — the sinusoidal-only device that detects no DC residual component',
+      'Type A minimum (Type F where higher-frequency present); Type B where smooth DC residual can occur — per the inverter datasheet',
+      'No RCD is needed because the TT earth electrode provides the protection',
+      'Type B in every case, irrespective of the inverter datasheet or internal monitoring',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Reg 551.7.1(d) (added in A4:2026) sets a prohibition relevant to inverter connection. What is it?',
     options: [
-      'No connection to mains',
-      'Prohibition on connecting a source to the load side of an RCD under certain conditions. The practical implication: the PV inverter output should typically connect upstream of the consumer unit\'s main RCD (or with dedicated compatible protection), NOT downstream where it shares the RCD with general load circuits',
-      'No connection to TT supplies',
-      'No three-phase connection',
+      'A prohibition on connecting any inverter to the public mains supply network',
+      'A prohibition on connecting an inverter to a TT-earthed installation supply',
+      'A prohibition on connecting a source to the load side of an RCD — so the inverter feeds a dedicated way, not a shared general-load RCD',
+      'A prohibition on connecting any single-phase inverter to a three-phase supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 added Reg 551.7.1(d) — prohibiting connection of a source to the load side of an RCD under certain conditions. The motivation: when an inverter is downstream of an RCD shared with general loads, the inverter\'s leakage current contribution can cause nuisance tripping AND the RCD may not provide the intended protection on a fault upstream of the inverter. The standard arrangement: connect the inverter output to a dedicated circuit at the consumer unit, with appropriate RCD type per Reg 531.3.3. The cert evidence bundle records the connection arrangement.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A customer install requires no battery now but the customer indicates BESS may be added within 3 years. What inverter specification choice matters most?',
     options: [
-      'Whatever is cheapest',
-      'Specify a hybrid-capable inverter now (even though battery isn\'t installed yet) OR specify the PV-only inverter knowing a separate battery inverter will be added later for an AC-coupled configuration. Both are valid; the hybrid-capable choice avoids the cost of replacing the PV inverter when the battery is added',
-      'Pick the smallest inverter',
-      'Pick the largest available',
+      'Specify a hybrid-capable inverter now, or a PV-only inverter and AC-couple the battery later — hybrid-now avoids replacing the inverter at battery time',
+      'Specify whichever inverter is cheapest at the day-one PV-only stage',
+      'Specify the smallest inverter that meets the present PV-only array rating',
+      'Specify the largest inverter available to leave the most headroom for future loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The hybrid-now-vs-later decision affects total cost and architecture. A hybrid inverter installed now (even without battery initially) lets the customer add a DC-coupled BESS later by connecting to the battery port — no PV inverter replacement, lower overall labour, the system architecture is consistent. The alternative — install a PV-only string inverter now, add an AC-coupled BESS with separate battery inverter later — also works (Section 2.7 covers AC coupling). The choice affects long-term economics and is a survey-stage conversation, not an install-stage decision.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'Microinverters vs power optimisers — both deliver module-level MPPT. What\'s the key architectural difference between them?',
     options: [
-      'No difference',
-      'Microinverters output AC at each module (no central inverter; modules daisy-chain on AC trunk cable). Power optimisers output DC at each module (string runs as fixed-voltage DC to a central inverter for DC-AC conversion). Microinverters eliminate the central inverter as a single point of failure; power optimisers retain it but simplify the per-module hardware',
-      'Microinverters are larger',
-      'Power optimisers only work on commercial systems',
+      'There is no real architectural difference between the two products',
+      'Microinverters are physically larger units than power optimisers of the same rating',
+      'Power optimisers function only on commercial-scale systems, not on residential roofs',
+      'Microinverters output AC per module (AC trunk, no central inverter); power optimisers output DC to a central inverter — so only microinverters remove the central-inverter SPOF',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The architectural distinction: microinverters take MPPT + DC-AC conversion to module level (the AC trunk daisy-chains the modules\' AC outputs); power optimisers take MPPT to module level but retain the central inverter for DC-AC conversion (the string runs DC at a fixed optimised voltage). Microinverters eliminate the central-inverter single-point-of-failure but multiply the hardware count (300+ microinverters on a commercial install). Power optimisers retain the single inverter (which can fail) but simplify the per-module hardware and the install (DC string is the familiar architecture). Both achieve module-level MPPT; the choice depends on cost, fault-tolerance and install preference.',
   },
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'An installer specifies a transformerless PV inverter (the dominant residential type in 2026). What additional design check is triggered?',
     options: [
-      'No additional check',
-      'RCD type selection — transformerless inverters can produce smooth DC residual currents requiring Type B RCD protection (per Reg 531.3.3). The inverter datasheet specifies the required RCD type. Type B RCDs are materially more expensive than Type A, and the cost differential affects the BoM',
-      'Higher cable size',
-      'Manual switching',
+      'No additional design check is triggered by a transformerless topology',
+      'RCD type selection — smooth DC residual can occur, so Type B may be required (Reg 531.3.3) per the datasheet, affecting the BoM cost',
+      'A larger AC output cable size to handle the transformerless inverter current',
+      'A manual changeover switch on the AC output of the transformerless inverter',
     ],
     correctAnswer: 1,
     explanation:

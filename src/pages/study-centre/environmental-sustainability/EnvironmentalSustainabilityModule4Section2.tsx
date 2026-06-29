@@ -76,12 +76,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a common source of water pollution from construction sites?',
     options: [
+      'Treated and filtered rainwater from site roof drainage',
       'Silt and sediment from earthworks and exposed ground',
       'Cement and concrete washout water entering surface drains',
-      'Treated and filtered rainwater from site roof drainage',
       'Oil and fuel leaks from plant and machinery',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Common sources of water pollution from construction sites include silt/sediment runoff, cement/concrete washout (highly alkaline), oils and fuels, chemicals, sewage from welfare facilities, and dewatering discharge. Treated and filtered rainwater from roof drainage is not a typical pollutant — in fact, managing clean rainwater separately is good practice.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
     question: 'What does GPP5 provide guidance on?',
     options: [
       'Electrical installations in wet environments',
-      'Works and maintenance in or near water',
       'Fire safety procedures on construction sites',
+      'Works and maintenance in or near water',
       'Noise pollution limits for construction plant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GPP5 (Guidance for Pollution Prevention 5) is Environment Agency guidance covering works and maintenance in or near water. It provides practical advice on planning works near watercourses, seasonal restrictions to protect aquatic life, protected species considerations, and pollution prevention measures for activities that could affect water quality.',
   },
@@ -118,11 +118,11 @@ const quizQuestions = [
       'Which silt control measure works by allowing suspended particles to settle out of water before it is discharged?',
     options: [
       'A silt fence installed across the slope',
-      'A settlement lagoon or settlement tank',
       'A geotextile wrap around a drainage outlet',
       'A straw bale barrier across a ditch',
+      'A settlement lagoon or settlement tank',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A settlement lagoon or settlement tank works by slowing water flow sufficiently to allow suspended silt and sediment particles to settle out under gravity before the clarified water is discharged. The settled material (sludge) is periodically removed. Settlement lagoons must be sized correctly for the expected flow rate — undersized lagoons are ineffective because the water passes through too quickly for settlement to occur.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'Under the Oil Storage Regulations 2001, if you have multiple containers in a single bund, what is the minimum bund capacity?',
     options: [
-      '110% of the smallest container or 10% of total capacity',
       '110% of the largest container or 25% of total capacity, whichever is greater',
+      '110% of the smallest container or 10% of total capacity',
       '50% of the total combined storage capacity',
       'Equal to the total combined capacity of all containers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Oil Storage Regulations 2001 require bunding capable of holding 110% of the largest container OR 25% of the total storage capacity — whichever is GREATER. This ensures that even in a worst-case scenario (complete failure of the largest container, plus rainwater accumulation), the bund can contain the spill without overflowing into the environment.',
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
       'A fuel spill occurs on site near a watercourse. After containing the spill, what is the FIRST reporting action you should take?',
     options: [
       'Wait until the end of the shift and include it in the daily site report',
-      'Call the Environment Agency incident hotline on 0800 80 70 60 immediately',
       'Post a notice on the site safety board and inform colleagues at the next toolbox talk',
+      'Call the Environment Agency incident hotline on 0800 80 70 60 immediately',
       'Contact the fuel supplier to arrange replacement of the spilled fuel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'After containing a spill near a watercourse, you must call the Environment Agency incident hotline on 0800 80 70 60 immediately. This is a 24-hour service. Prompt reporting allows the EA to assess the risk, advise on further action, and deploy resources if needed. Failure to report a pollution incident is itself an offence. Do not wait — minutes matter when pollutants are near or entering water.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     options: [
       'Using a single large detention basin to store all surface water',
       'Pumping all surface water directly to the nearest watercourse',
-      'Managing water quality and quantity through a series of progressive treatment stages',
       'Diverting all rainfall into the foul sewer system for treatment at a sewage works',
+      'Managing water quality and quantity through a series of progressive treatment stages',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The treatment train is a fundamental SuDS principle where surface water passes through a series of progressive treatment stages — from source control (e.g. permeable paving), through local management (e.g. swales and filter strips), to regional management (e.g. detention basins and wetlands). Each stage removes more pollutants and reduces flow rates, so that by the time water reaches a watercourse it is cleaner and flows at a more natural rate.',
   },

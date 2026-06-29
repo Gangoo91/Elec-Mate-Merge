@@ -29,10 +29,10 @@ const Level2Module6Section6_5 = () => {
       id: 1,
       question: 'What information MUST be recorded on test sheets before any testing begins?',
       options: [
-        'The person responsible for the testing',
+        'The next inspection date for the installation',
         'Client details and installation description',
-        'Start fresh and transfer legible information carefully',
-        'Cross out neatly and initial the correction',
+        'The final pass or fail outcome of the job',
+        'The retention period for the records',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,10 +42,10 @@ const Level2Module6Section6_5 = () => {
       id: 2,
       question: 'If you make an error when recording test results, what is the correct procedure?',
       options: [
-        'Start fresh and transfer legible information carefully',
-        'May invalidate insurance and create legal liability',
+        'Use correction fluid over the mistake',
+        'Erase the entry and rewrite it',
         'Cross out neatly and initial the correction',
-        'Indefinitely for insurance and legal purposes',
+        'Leave the error and add a note below',
       ],
       correctAnswer: 2,
       explanation:
@@ -55,9 +55,9 @@ const Level2Module6Section6_5 = () => {
       id: 3,
       question: 'How long must electrical test records be retained?',
       options: [
-        'For traceability and calibration verification',
-        'May invalidate insurance and create legal liability',
-        'Cross out neatly and initial the correction',
+        'For 12 months only',
+        'Until the next inspection is due',
+        'Until the client confirms receipt',
         'Indefinitely for insurance and legal purposes',
       ],
       correctAnswer: 3,
@@ -69,9 +69,9 @@ const Level2Module6Section6_5 = () => {
       question: 'What happens if test documentation is incomplete or missing?',
       options: [
         'May invalidate insurance and create legal liability',
-        'Start fresh and transfer legible information carefully',
-        'Cross out neatly and initial the correction',
-        'Client details and installation description',
+        'The work is automatically considered safe',
+        'A verbal confirmation can replace it',
+        'It only delays issuing the invoice',
       ],
       correctAnswer: 0,
       explanation:
@@ -81,10 +81,10 @@ const Level2Module6Section6_5 = () => {
       id: 5,
       question: 'Who should sign and date completed test sheets?',
       options: [
-        'Indefinitely for insurance and legal purposes',
+        'The client who ordered the work',
         'The person responsible for the testing',
-        'No, permanent ink is required',
-        'Client details and installation description',
+        'The supplier of the test equipment',
+        'Any electrician present on site',
       ],
       correctAnswer: 1,
       explanation:
@@ -94,10 +94,10 @@ const Level2Module6Section6_5 = () => {
       id: 6,
       question: 'What is the purpose of recording test instrument details on documentation?',
       options: [
-        'May invalidate insurance and create legal liability',
-        'Client details and installation description',
+        'To prove the instrument was the most expensive available',
+        'To advertise the brand of equipment used',
         'For traceability and calibration verification',
-        'Cross out neatly and initial the correction',
+        'To record how long the testing took',
       ],
       correctAnswer: 2,
       explanation:
@@ -122,9 +122,9 @@ const Level2Module6Section6_5 = () => {
         'What should be done if a test sheet becomes damaged or illegible during site work?',
       options: [
         'Start fresh and transfer legible information carefully',
-        'Client details and installation description',
-        'May invalidate insurance and create legal liability',
-        'The person responsible for the testing',
+        'Photocopy the damaged sheet and continue',
+        'Carry on writing over the damaged areas',
+        'Discard it and rely on memory later',
       ],
       correctAnswer: 0,
       explanation:
@@ -134,10 +134,10 @@ const Level2Module6Section6_5 = () => {
       id: 9,
       question: 'Can test results be recorded in pencil for ease of correction?',
       options: [
-        'Re-prove dead when you return',
+        'Yes, as long as it is neat',
         'No, permanent ink is required',
-        'Intermittent earth leakage',
-        '200 times the sign height',
+        'Yes, if the client agrees',
+        'Yes, for draft readings only',
       ],
       correctAnswer: 1,
       explanation:
@@ -147,10 +147,10 @@ const Level2Module6Section6_5 = () => {
       id: 10,
       question: 'In the real-world example, what was the consequence of poor record-keeping?',
       options: [
-        'Start fresh and transfer legible information carefully',
-        'Cross out neatly and initial the correction',
+        'The job took longer than scheduled',
+        'The client refused to pay the invoice',
         'Difficulty proving insurance compliance after electrical fire',
-        'Client details and installation description',
+        'The test instruments needed recalibration',
       ],
       correctAnswer: 2,
       explanation:

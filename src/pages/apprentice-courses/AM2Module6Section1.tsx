@@ -63,9 +63,9 @@ const AM2Module6Section1 = () => {
       id: 'unsure-strategy',
       question: "What should you do if you're unsure of a question?",
       options: [
-        'Analyzing network topology and optimizing device placement',
-        'Only if directly supervised by a qualified person',
-        'Fire-resistant, LSZH, or MICC cable where required',
+        'Leave it blank and never return to it',
+        'Spend as long as needed until you are certain',
+        'Pick the longest answer option every time',
         'Flag it and move on - come back later if time allows',
       ],
       correctIndex: 3,
@@ -74,12 +74,12 @@ const AM2Module6Section1 = () => {
     },
     {
       id: 'question-navigation',
-      question: "True or false: You can't go back once you've answered a question.",
+      question: 'Can you go back to a question after answering it?',
       options: [
-        'High contact resistance, localised I²R heating and possible fire',
-        'Leveraging each protocol\\\\\\\\\\\\\\\'s strengths for specific applications',
-        'False - you can move backwards and forwards through the paper',
-        'To ensure articles are safe, tested, and accompanied by adequate information',
+        'No — answers are locked once submitted',
+        'Only if the invigilator unlocks the question',
+        'Yes - you can move backwards and forwards through the paper',
+        'Only within the first ten minutes of the test',
       ],
       correctIndex: 2,
       explanation:
@@ -131,9 +131,9 @@ const AM2Module6Section1 = () => {
       question: 'What types of questions are included?',
       options: [
         'Regulations, science, safety, and scenario-based questions',
-        'FTP cables include an overall foil shield around all pairs',
-        'False sensor readings and system malfunction',
-        'Testing notifications with trial alerts to all recipients',
+        'Only multiple-choice questions on BS 7671 regulations',
+        'Only practical wiring and termination tasks',
+        'Only health and safety legislation questions',
       ],
       correctAnswer: 0,
       explanation:
@@ -143,10 +143,10 @@ const AM2Module6Section1 = () => {
       id: 5,
       question: "What's the best strategy if you don't know an answer straight away?",
       options: [
-        'Overall assessment and recommendations',
+        'Guess immediately and never look at it again',
         'Flag it and move on to return later',
-        'Requirements for test probes and leads',
-        'Circuit Protective Conductor (earth)',
+        'Spend several minutes working it out now',
+        'Leave it blank to save time overall',
       ],
       correctAnswer: 1,
       explanation:
@@ -169,9 +169,9 @@ const AM2Module6Section1 = () => {
       id: 7,
       question: 'Why do many candidates fail this section even if they know the material?',
       options: [
-        'When significant changes occur, after incidents, or periodically',
-        'Live parts are not accessible during normal use',
-        'Document conditions found and repairs made',
+        'The pass mark is set unrealistically high',
+        'The questions are not based on BS 7671',
+        'Calculators are not allowed in the test',
         'Time mismanagement and not attempting all questions',
       ],
       correctAnswer: 3,
@@ -183,9 +183,9 @@ const AM2Module6Section1 = () => {
       question: "What's the advantage of eliminating wrong options first?",
       options: [
         'It narrows down choices and improves accuracy',
-        'Carry out a suitable and sufficient fire risk assessment',
-        'At the beginning and at intervals during work',
-        'The Regulatory Reform (Fire Safety) Order 2005 (RRFSO)',
+        'It automatically reveals the correct answer',
+        'It saves the answer for later review',
+        'It removes the time limit on that question',
       ],
       correctAnswer: 0,
       explanation:

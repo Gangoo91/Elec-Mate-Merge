@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       "According to the Work at Height Regulations 2005, what is the definition of 'working at height'?",
     options: [
-      'Working above 2 metres from the ground',
       'Any place where a person could fall a distance liable to cause personal injury',
-      'Working from scaffolding or ladders only',
+      'Any work carried out above 2 metres from the ground',
+      'Work performed from scaffolding or ladders only',
       'Any work carried out above head height',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The WAH Regulations 2005 define working at height as any place where a person could fall a distance liable to cause personal injury. This includes working at ground level near an opening, an excavation, or a loading bay — not just elevated positions.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'Which of the following is NOT typically considered working at height for an electrician?',
     options: [
       'Installing cable tray on a ceiling at 3 metres',
-      'Working at a distribution board mounted at chest height on a wall',
       'Replacing a luminaire from a mobile tower scaffold',
+      'Working at a distribution board mounted at chest height on a wall',
       'Accessing a rooftop plant room via a fixed ladder',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Working at a distribution board mounted at chest height on a wall, where there is a solid floor beneath you and no risk of falling, is not working at height. The other three scenarios all involve a risk of falling a distance liable to cause personal injury.',
   },
@@ -80,20 +80,20 @@ const quizQuestions = [
     id: 1,
     question: 'The Work at Height Regulations 2005 define working at height as:',
     options: [
-      'Any work carried out above 2 metres from ground level',
       'Any place where a person could fall a distance liable to cause personal injury',
-      'Working from ladders, scaffolds, or roofs only',
+      'Any work carried out above 2 metres from ground level',
+      'Work performed from ladders, scaffolds, or roofs only',
       'Any work above head height that requires access equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The regulations define working at height as any place where a person could fall a distance liable to cause personal injury. There is no minimum height threshold — even work at ground level near an unprotected edge or opening is included.',
   },
   {
     id: 2,
     question: 'Approximately how many workers die from falls at height in the UK each year?',
-    options: ['Around 10', 'Around 40', 'Around 150', 'Around 500'],
-    correctAnswer: 1,
+    options: ['Around 10', 'Around 150', 'Around 40', 'Around 500'],
+    correctAnswer: 2,
     explanation:
       'Approximately 40 workers die from falls at height in the UK each year, making it the single largest cause of workplace fatality in the construction industry. In addition, over 5,000 major injuries result from falls at height annually.',
   },
@@ -101,8 +101,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Falls at height are the largest single cause of workplace fatality in which UK industry?',
-    options: ['Manufacturing', 'Agriculture', 'Construction', 'Transport and logistics'],
-    correctAnswer: 2,
+    options: ['Manufacturing', 'Agriculture', 'Transport and logistics', 'Construction'],
+    correctAnswer: 3,
     explanation:
       'Falls from height are the single largest cause of workplace death in the UK construction industry, accounting for approximately 50% of all construction fatalities in a typical year.',
   },
@@ -111,20 +111,20 @@ const quizQuestions = [
     question:
       'Which of the following scenarios is NOT covered by the Work at Height Regulations 2005?',
     options: [
-      'Working on a flat roof with no edge protection',
       'Walking on a permanent, level floor with no openings',
+      'Working on a flat roof with no edge protection',
       'Working from a mobile elevating work platform (MEWP)',
       'Working near an unguarded excavation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Walking on a permanent, level floor with no openings, edges, or fragile surfaces does not constitute working at height because there is no risk of falling a distance liable to cause personal injury. All the other scenarios involve a fall risk.',
   },
   {
     id: 5,
     question: 'From which height range do the most fatal falls occur?',
-    options: ['Above 10 metres', '5 to 10 metres', '2 to 5 metres', 'Below 2 metres'],
-    correctAnswer: 3,
+    options: ['Above 10 metres', 'Below 2 metres', '2 to 5 metres', '5 to 10 metres'],
+    correctAnswer: 1,
     explanation:
       'The majority of fatal falls at work occur from below 2 metres. This statistic is critical because it challenges the common misconception that only high-level work is dangerous. Low-level falls onto hard surfaces frequently cause fatal head injuries.',
   },

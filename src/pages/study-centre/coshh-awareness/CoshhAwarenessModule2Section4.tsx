@@ -69,16 +69,16 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the 8-hour TWA WEL for inhalable dust (not otherwise specified)?',
-    options: ['4 mg/m\u00B3', '10 mg/m\u00B3', '20 mg/m\u00B3', '1 mg/m\u00B3'],
-    correctAnswer: 1,
+    options: ['10 mg/m\u00B3', '4 mg/m\u00B3', '20 mg/m\u00B3', '1 mg/m\u00B3'],
+    correctAnswer: 0,
     explanation:
       'The 8-hour TWA WEL for inhalable dust (particles not otherwise specified \u2014 PNOS) is 10 mg/m\u00B3. This applies to nuisance dusts without a specific WEL. Respirable dust has a lower limit of 4 mg/m\u00B3 because finer particles penetrate deeper into the lungs.',
   },
   {
     id: 2,
     question: 'What is the 8-hour TWA WEL for respirable crystalline silica (RCS)?',
-    options: ['1 mg/m\u00B3', '0.5 mg/m\u00B3', '0.1 mg/m\u00B3', '0.01 mg/m\u00B3'],
-    correctAnswer: 2,
+    options: ['1 mg/m\u00B3', '0.1 mg/m\u00B3', '0.5 mg/m\u00B3', '0.01 mg/m\u00B3'],
+    correctAnswer: 1,
     explanation:
       'The WEL for RCS is 0.1 mg/m\u00B3 (8-hour TWA). RCS is generated when cutting, drilling, or grinding concrete, brick, stone, mortar, and similar materials. It causes silicosis and is classified as a lung carcinogen. Even at this low WEL, the principle of good practice requires exposure to be reduced as far as reasonably practicable.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
       'What should you do FIRST if air monitoring shows that the WEL for a substance has been exceeded?',
     options: [
       'Wait until the end of the shift and then report it',
-      'Stop the work activity immediately and remove workers from the affected area',
       'Increase the working hours to dilute the average',
       'Issue additional RPE and continue working at the same rate',
+      'Stop the work activity immediately and remove workers from the affected area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If monitoring shows the WEL has been exceeded, the immediate priority is to stop the exposure. Workers must be removed from the affected area, the source of exposure must be identified, and the work activity must not resume until additional controls are in place to bring exposure below the WEL. Simply issuing RPE without investigating the root cause is not an adequate response.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 5,
     question: 'What type of monitoring involves taking urine or blood samples from workers?',
     options: [
-      'Personal air sampling',
-      'Static air monitoring',
       'Biological monitoring',
+      'Static air monitoring',
+      'Personal air sampling',
       'Environmental impact assessment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Biological monitoring involves analysing urine, blood, or exhaled breath samples from workers to measure the actual amount of a substance (or its metabolites) that has been absorbed into the body. It accounts for all routes of exposure \u2014 inhalation, skin absorption, and ingestion \u2014 and provides a more complete picture than air monitoring alone.',
   },
@@ -126,8 +126,8 @@ const quizQuestions = [
     id: 6,
     question:
       'The WEL for welding fume (inhalable) was reduced in 2020. What is the current 8-hour TWA limit?',
-    options: ['5 mg/m\u00B3', '3 mg/m\u00B3', '1 mg/m\u00B3', '0.5 mg/m\u00B3'],
-    correctAnswer: 2,
+    options: ['5 mg/m\u00B3', '1 mg/m\u00B3', '3 mg/m\u00B3', '0.5 mg/m\u00B3'],
+    correctAnswer: 1,
     explanation:
       'The WEL for welding fume (inhalable fraction) was reduced to 1 mg/m\u00B3 (8-hour TWA) in 2020 following the reclassification of all welding fume as a human carcinogen. This also means that all welding in enclosed or confined spaces now requires local exhaust ventilation (LEV) as a minimum, regardless of the duration of the task.',
   },
@@ -136,11 +136,11 @@ const quizQuestions = [
     question: 'Which HSE publication provides guidance on air monitoring methods and strategies?',
     options: [
       'EH40/2005',
-      "HSG173 'Monitoring Strategies for Toxic Substances'",
       'L8 Legionella ACOP',
+      "HSG173 'Monitoring Strategies for Toxic Substances'",
       'HSG47 Avoiding Danger from Underground Services',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "HSG173 'Monitoring Strategies for Toxic Substances' provides detailed guidance on how to plan and carry out air monitoring, including when monitoring is needed, how to select the right method, how to interpret results, and how to use monitoring data in COSHH assessments. EH40 lists the WELs themselves but does not cover monitoring methodology in detail.",
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
       "COSHH requires employers to apply the 'principle of good practice'. What does this mean?",
     options: [
       'Employers only need to act if the WEL is exceeded',
-      'Employers must keep exposure as low as reasonably practicable, even if already below the WEL',
       'Employers must eliminate all hazardous substances from the workplace',
       'Employers must carry out air monitoring every day',
+      'Employers must keep exposure as low as reasonably practicable, even if already below the WEL',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The principle of good practice (Schedule 2A of COSHH) requires employers to minimise exposure by designing processes, using controls, and maintaining equipment so that exposure is kept as low as is reasonably practicable. Being below the WEL is a legal minimum, not a target. Good occupational hygiene means continually looking for ways to reduce exposure further.',
   },

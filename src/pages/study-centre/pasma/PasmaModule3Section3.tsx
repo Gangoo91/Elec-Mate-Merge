@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does AGR stand for?',
     options: [
-      'Automatic Guard Release',
       'Advance Guard Rail',
+      'Automatic Guard Release',
       'Assisted Ground Rail',
       'Adjustable Guard Rung',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AGR stands for Advance Guard Rail. The system deploys guardrails in advance of the operative reaching the next level, providing continuous protection during assembly.',
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
     question: 'How are AGR guardrails deployed during assembly?',
     options: [
       'They are fitted manually from outside the tower',
-      'They drop down automatically when the platform is installed',
       'They are pushed upward from below and locked into position before climbing',
+      'They drop down automatically when the platform is installed',
       'They are lowered from above using a crane',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'AGR guardrail sections are hinged to the frame and pushed upward from below by the operative. Once extended to full height, they lock into position, providing guardrail protection before the operative climbs to that level.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'When working indoors only',
       'When the tower is less than 2 metres high',
-      'For regular tower use, higher towers, and sites with strict safety requirements',
       'Only when required by the manufacturer',
+      'For regular tower use, higher towers, and sites with strict safety requirements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'AGR is preferred for regular tower use, higher towers, less experienced teams, and sites with strict safety requirements because it provides guardrail protection before the operative reaches each new level, reducing the risk of exposure to unguarded edges.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'During AGR dismantling, when can the guardrails be lowered?',
     options: [
-      'As soon as dismantling begins',
       'Only after the operative has descended to the level below',
+      'As soon as dismantling begins',
       'Before the operative starts descending',
       'At any point during the process',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Guardrails must remain in position until the operative has safely descended to the lower level. Only from the lower level can the guardrails be unlocked, lowered, and folded. This maintains continuous edge protection throughout dismantling.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     options: [
       'AGR towers do not need a base',
       'The base assembly is different — AGR uses a special base frame',
-      'The base assembly is the same as for a 3T tower',
       'AGR towers are built from the top down',
+      'The base assembly is the same as for a 3T tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The base assembly is identical for both methods: position castors or base plates, fit end frames, install plan and horizontal braces, level, and lock castors. The difference begins at the upper levels where AGR frames replace standard frames.',
   },

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Before applying the IR test you must put the circuit into the right state. Which is the correct pre-test posture?',
     options: [
-      'Energise the circuit and test live to confirm worst case',
-      'Isolate the circuit, prove dead at the point of work, lock off the source, disconnect current-using equipment per Reg 643.3.2 and disconnect any device the manufacturer specifies (typically SPDs)',
-      'Leave loads connected — the meter is microamp-level',
-      'Test only the cable, with everything still connected',
+      'Energise the circuit and test live to confirm the worst case',
+      'Isolate, prove dead, lock off, then disconnect loads and sensitive equipment',
+      'Leave loads connected — the test current is only microamp-level',
+      'Test only the cable, with all accessories still connected',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'On a single-phase circuit, the L–N IR test reads 0.6 MΩ at 500 V DC. Equipment is disconnected. The L–E and N–E readings are above 200 MΩ. What is the most likely explanation?',
     options: [
-      'Healthy cable — record and move on',
-      'A line-to-neutral insulation defect (mechanical damage between cores, water tracking inside an accessory, or a borrowed neutral picking up an out-of-circuit load via a shared earth-neutral path) — investigate before recording',
-      'The cable is wired wrong — re-pull',
-      'The meter is faulty',
+      'Healthy cable — record the reading and move on',
+      'A line-to-neutral insulation defect — investigate before recording',
+      'The cable is wired the wrong way round — re-pull it',
+      'The meter is faulty and needs recalibration',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'On a circuit where L and N cannot be separated for the L–N test (RCD prevents it, or equipment connection demands them linked), what variant does GN3 recognise?',
     options: [
-      'Skip the L–E and N–E tests entirely',
-      'Link L and N together at the origin and test L+N (linked lives) to E. Record the result and note in comments that the L–N test was performed in linked-lives mode',
-      'Switch to AC test',
-      'Use only continuity in place of IR',
+      'Skip the L–E and N–E tests entirely for that circuit',
+      'Link L and N together and test L+N (linked lives) to E, noting the variant',
+      'Switch the meter to an AC test instead of DC',
+      'Use a continuity test in place of the IR test',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'You finish testing a 100 m run of T&E at 500 V DC. The reading drops as you remove the probe. What is the cable doing, and what is the procedural risk?',
     options: [
-      'Nothing of consequence — the reading drift is meter noise',
-      "The cable is holding the test voltage as a stored capacitive charge that is now bleeding through the meter's discharge resistor. If you disconnect probes before discharge completes, the conductor at the far end remains live to earth — touching it gives a noticeable shock. Wait for the meter to confirm discharge before unclipping",
-      'The cable insulation is failing',
-      'Always discard the reading and re-test',
+      'Nothing of consequence — the reading drift is just meter noise',
+      'The cable is discharging stored capacitive charge — wait before unclipping',
+      'The cable insulation is failing under the applied test voltage',
+      'Always discard the reading and re-test the run from scratch',
     ],
     correctIndex: 1,
     explanation:
@@ -86,7 +86,7 @@ const quizQuestions = [
     options: [
       'Line-to-neutral only',
       'Live conductors to earth only',
-      '(a) Live conductors, and (b) live conductors and the protective conductor connected to the earthing arrangement',
+      'Between live conductors, and between live conductors and the earthed CPC',
       'Line-to-line and line-to-neutral only',
     ],
     correctAnswer: 2,
@@ -98,24 +98,24 @@ const quizQuestions = [
     question:
       'On a single-phase 230 V final circuit, what is the standard pre-test posture before pressing the 500 V DC button on the meter?',
     options: [
-      'All MCBs closed, all switches open, current-using equipment connected',
-      'Circuit isolated and locked off, MCB or switch-disconnector for the circuit closed (so the circuit is fed by the meter, not the supply), all final switches and accessories closed (i.e. switched on), current-using equipment disconnected, sensitive equipment per Reg 643.3.3 disconnected',
-      'Circuit live, switches open, neutrals lifted at the bar',
-      'Supply on, MCB off, all sockets unplugged',
+      'Isolated and locked off, circuit MCB closed, all switches closed, current-using and sensitive equipment disconnected',
+      'All MCBs closed, all final switches open, current-using equipment left connected to the supply',
+      'Circuit live at the supply, switches open, the circuit neutrals lifted at the bar',
+      'Supply on, the circuit MCB open, all sockets and appliances unplugged at the outlet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The standard posture: circuit isolated and locked at the source, MCB closed (so the test current passes through the breaker into the circuit), all switches and switching accessories closed so the test path reaches every conductor, current-using equipment disconnected per Reg 643.3.2, and Reg 643.3.3 disconnections done. Live testing is never the answer.',
+      'The standard posture: circuit isolated and locked at the source, MCB closed (so the test current passes through the breaker into the circuit), all switches and switching accessories closed so the test path reaches every conductor, current-using equipment disconnected per Reg 643.3.2, and Reg 643.3.3 sensitive-equipment disconnections done. Live testing is never the answer.',
   },
   {
     id: 3,
     question:
       'Why is it good practice to lift the neutral at the neutral bar before an L-E IR test?',
     options: [
-      'To ensure the meter reads zero when the test starts',
-      'Because Reg 643.3.1 requires it',
-      'To prevent the test current finding a path back through the neutrals of other circuits via the neutral bar — which would give a misleadingly low reading that reflects the parallel paths, not the cable under test',
-      'To check the neutral conductor is the right colour',
+      'To ensure the meter reads zero before the test current is applied',
+      'Because Reg 643.3.1 explicitly mandates a neutral lift on every circuit',
+      'To stop test current returning through other circuits&rsquo; neutrals at the bar and dragging the reading low',
+      'To verify the neutral conductor is the correct blue colour for the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'You apply 500 V DC across a connected SPD. What happens?',
     options: [
-      'Nothing — modern SPDs are rated for 500 V DC test stress',
-      'The MOV inside the SPD starts to conduct as the test voltage approaches its clamping voltage. The meter reads a low value (the MOV&rsquo;s leakage path in parallel with the cable insulation), and the SPD may be permanently damaged because the test current flow heats and degrades the MOV',
-      'The SPD trips and isolates the circuit',
-      'The reading is unaffected because the SPD is a passive device',
+      'Nothing — modern SPDs are rated to withstand the 500 V DC test stress indefinitely',
+      'The SPD trips and isolates the circuit under test from the meter',
+      'The reading is unaffected because an SPD is a purely passive series device',
+      'The MOV conducts and reads low, and the test current can permanently degrade it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SPDs are built around metal-oxide varistors (MOVs) whose clamping voltage is typically a few hundred volts — below the 500 V DC test stress. The test current conducts through the MOV, which (a) gives a misleading reading dominated by the MOV not the cable, and (b) heats and degrades the device. Reg 643.3.3 is specifically there to make you disconnect SPDs before the Table 64 test.',
   },
@@ -139,24 +139,24 @@ const quizQuestions = [
     question:
       'For the L-to-E test on a single-phase circuit, the reg permits L and N to be linked. What is the practical procedure at the consumer unit?',
     options: [
-      'Twist the L and N tails together at the meter — anywhere on the circuit will do',
-      'At the distribution board, fit a temporary link between the L (downstream of the MCB) and the N (downstream of the neutral bar lift point) so the meter sees both lives as one node when probing the CPC. The link is removed before the next test or before re-energising',
-      'Connect the meter&rsquo;s L lead to N and the N lead to L',
-      'Use a 4 mm² link between the busbar and the earth bar',
+      'Twist the L and N tails together at the meter, anywhere on the circuit will serve as the link',
+      'Fit a temporary link between L (below the MCB) and N (below the lift), then probe to the CPC',
+      'Connect the meter&rsquo;s L lead to N and the N lead to L to reverse the test polarity',
+      'Fit a 4 mm² link between the line busbar and the earth bar at the distribution board',
     ],
     correctAnswer: 1,
     explanation:
-      'The L–N link goes downstream of the MCB and downstream of the lifted neutral, so the meter is seeing the circuit&rsquo;s own L and N joined to a single node. One probe of the meter goes on this combined live node, the other on the CPC. The link is a temporary lead, brightly coloured, removed before the next test step.',
+      'The L–N link goes downstream of the MCB and downstream of the lifted neutral, so the meter sees the circuit&rsquo;s own L and N joined to a single node. One probe goes on this combined live node, the other on the CPC. The link is a temporary, brightly coloured lead, removed before the next test or before re-energising.',
   },
   {
     id: 6,
     question:
       'You are testing a domestic circuit at 500 V DC. The reading climbs from 0.6 MΩ at first press, through 1.5 MΩ at five seconds, to 2.4 MΩ steady at twelve seconds. What do you record?',
     options: [
-      '0.6 MΩ — the lowest reading is the safest figure',
-      '1.5 MΩ — the mid-range reading',
-      '2.4 MΩ — the steady-state reading once the cable capacitance has finished charging and the polarisation current has decayed',
-      'Average of the three: 1.5 MΩ',
+      '0.6 MΩ — the lowest reading is the safest figure to record',
+      '1.5 MΩ — the mid-range reading at the five-second mark',
+      '2.4 MΩ — the steady-state reading once the cable has settled',
+      'The average of the three readings, 1.5 MΩ',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'On a 400 V three-phase distribution circuit, what test combinations should appear in your records to satisfy Reg 643.3.1(a)?',
     options: [
-      'L1-N only',
-      'L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N — six readings (or the worst-case from a multifunction tester&rsquo;s automated sequence)',
-      'L1-E only',
-      'L1-L2 and L3-N only',
+      'L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N — the full six combinations',
+      'L1-N only, taken as a representative reading for the whole circuit',
+      'L1-E only, since earth is the common reference for all three lines',
+      'L1-L2 and L3-N only, sampling two combinations to save test time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.1(a) is between live conductors. On three-phase that is six combinations (L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N). Multifunction testers run the full set automatically and report the worst-case; the worst case is what gets recorded against the L-L column on the schedule.',
   },
@@ -181,42 +181,42 @@ const quizQuestions = [
     question:
       'During a periodic inspection you find a circuit with no SPD and no electronic equipment, but the L-E reading at 500 V DC is 0.7 MΩ. What is the most likely cause and what should you do?',
     options: [
-      'Acceptable — record the reading and move on',
-      'Damp ingress at a junction box, JB, or buried cable, OR a degraded section of cable with insulation breakdown. Investigate by progressively isolating sections (split the circuit at junctions) and re-testing each leg — the offending section drops the reading; the clean section reads high',
-      'Re-test at 250 V — if it passes, the circuit is fine',
-      'A 0.7 MΩ reading on an installed circuit is a sign the cable is brand new',
+      'Acceptable per Table 64 — record the reading and move on to the next circuit',
+      'Damp ingress or a degraded cable section — split the circuit and re-test to locate it',
+      'Re-test at 250 V instead, and treat a pass at the lower voltage as confirming the circuit',
+      'A 0.7 MΩ reading on an installed circuit indicates brand-new, undamaged cable insulation',
     ],
     correctAnswer: 1,
     explanation:
-      '0.7 MΩ on a circuit with no electronics in circuit is below the 1 MΩ Reg 643.3.2 minimum and is a real fail. Damp ingress at junctions is the most common cause in older installations; cable damage at a buried point is the next most common. The diagnostic technique is to split the circuit progressively and re-test — the section that brings the reading back up is the clean section, and the one that does not is where the defect lives.',
+      '0.7 MΩ on a circuit with no electronics in circuit is below the 1 MΩ Reg 643.3.2 minimum and is a real fail. Damp ingress at junctions is the most common cause in older installations; cable damage at a buried point is the next most common. The diagnostic technique is to split the circuit progressively and re-test — the section that brings the reading back up is clean, and the one that does not is where the defect lives.',
   },
   {
     id: 9,
     question:
       'Why must final-circuit switches and accessories be in the closed (on) position during the IR test?',
     options: [
-      'It is the customer&rsquo;s preference',
-      'So that the test current path reaches every conductor in the circuit, including those downstream of switches that would otherwise be open. A switch left open isolates a section of cable from the test loop and produces a falsely high reading on that section',
-      'So that the test current returns via the lighting',
-      'It does not matter',
+      'It is simply the customer&rsquo;s preference for how the installation is left after testing',
+      'So that the test current returns to the meter through the connected lighting load',
+      'It makes no difference to the result what position the final switches are left in',
+      'So test current reaches conductors downstream of switches that would otherwise be hidden',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The test only proves what is in its loop. A switched-on switch puts the cable downstream of it into the test path; a switched-off switch hides that section. To verify the whole circuit, every accessory has to be set so the conductor under test is electrically connected — switches closed, dimmers (after Reg 643.3.3 disconnection) bypassed or removed, two-way circuits set so both legs are in the loop.',
+      'The test only proves what is in its loop. A switched-on switch puts the cable downstream of it into the test path; a switched-off switch hides that section and produces a falsely high reading on it. To verify the whole circuit, every accessory must be set so the conductor under test is electrically connected — switches closed, dimmers (after Reg 643.3.3 disconnection) bypassed or removed, two-way circuits set so both legs are in the loop.',
   },
   {
     id: 10,
     question:
       'A 230 V circuit has a smoke alarm and an SPD wired in. After the Reg 643.3.3 disconnect-test sequence, what do you check before recording the test as complete?',
     options: [
-      'That the meter battery is full',
-      'That every disconnected device is reconnected, the 250 V DC re-test was performed and recorded ≥ 1 MΩ, the L–N link and any neutral-lift links are removed, the CPC is intact (continuity-tested earlier in Reg 643.2 sequence), the circuit MCB / RCD is in the position you found it, and the comments column on the Schedule of Test Results captures what was disconnected',
-      'That the customer is happy with the visible result',
-      'That the meter has been calibrated this year',
+      'That the meter battery is full and the leads are seated before the next circuit',
+      'That all devices are reconnected, the 250 V re-test recorded, and every test link removed',
+      'That the customer is satisfied with the visible state of the consumer unit',
+      'That the meter has been calibrated within the last twelve months by a UKAS lab',
     ],
     correctAnswer: 1,
     explanation:
-      'The closeout is a checklist, not a feeling. Every Reg 643.3.3 disconnection has to be reversed and the 250 V re-test recorded. Every test link (L–N, neutral lift) has to come off. The schedule has to capture both readings and the disconnection note. Re-energisation only happens after that checklist is clean — the same discipline as Method 1 continuity test link removal.',
+      'The closeout is a checklist, not a feeling. Every Reg 643.3.3 disconnection has to be reversed and the 250 V re-test recorded as ≥ 1 MΩ. Every test link (L–N, neutral lift) has to come off, the CPC continuity confirmed earlier in the Reg 643.2 sequence, the MCB / RCD returned to the position found, and the Schedule of Test Results comments must capture what was disconnected. Re-energisation only happens after that checklist is clean — the same discipline as Method 1 continuity test link removal.',
   },
 ];
 

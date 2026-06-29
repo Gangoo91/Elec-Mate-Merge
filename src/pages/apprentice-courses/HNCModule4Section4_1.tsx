@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'What does the Unified Glare Rating (UGR) measure?',
     options: [
       'The psychological discomfort caused by bright luminaires in the field of view',
-      'To adjust the output voltage by altering the number of turns in use',
-      'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
-      'Record results accurately and legibly at the time of testing',
+      'The accuracy with which a light source reveals true colours',
+      'The total light output of a luminaire in lumens',
+      'The evenness of illuminance across the working plane',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'What correlated colour temperature (CCT) range is typically recommended for office environments?',
     options: [
-      'Excessive ambient temperature',
-      'Constructed and maintained to prevent danger',
+      '2200K-2700K (very warm white)',
+      '6500K-8000K (cool daylight)',
       '4000K-5000K (neutral to cool white)',
-      'A measure of the sharpness of resonance',
+      '1900K-2200K (candlelight warm)',
     ],
     correctAnswer: 2,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'How does room surface reflectance affect lighting design?',
     options: [
-      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
+      'It changes the colour temperature of the luminaires',
       'Higher reflectances increase utilisation factor and reduce luminaire quantity',
-      'Income shows significant volatility and seasonal variation',
-      'Clear description, safety implications, recommended actions, and timeframes',
+      'It has no effect on the number of luminaires required',
+      'Lower reflectances improve uniformity across the room',
     ],
     correctAnswer: 1,
     explanation:

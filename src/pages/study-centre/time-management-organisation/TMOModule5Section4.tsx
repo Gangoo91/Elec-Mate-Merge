@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'An electrician writes the following action plan commitment: "I will be more organised." According to the SMART framework, what is wrong with this goal?',
     options: [
-      'Nothing — it is a clear and motivating goal',
-      'It lacks specificity, measurability, and a time frame — it is an aspiration, not an actionable commitment',
-      'It is too specific — goals should be kept vague to allow flexibility',
-      'It should be written as a question rather than a statement',
+      'It lacks specificity, measurability, and a time frame',
+      'Nothing — it is a clear and motivating goal as written',
+      'It is too specific — goals should be kept deliberately vague',
+      'It should be phrased as a question rather than a statement',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '"I will be more organised" fails three of the five SMART criteria. It is not Specific (organised in what way? which area of your work?), not Measurable (how will you know when you are "more organised"?), and not Time-bound (by when?). A SMART version might be: "I will implement a 10-minute end-of-day planning routine every working day for the next 8 weeks, starting Monday." This is specific (end-of-day planning), measurable (did you do it or not?), achievable (10 minutes), relevant (directly improves organisation), and time-bound (8 weeks).',
   },
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'Why should your "non-negotiable routines" be limited to 3 habits rather than 10?',
     options: [
       'Because 3 is a lucky number in productivity research',
-      'Because implementing too many habits simultaneously overwhelms the behaviour-change system — willpower is finite and habit formation requires sustained repetition over weeks',
+      'Because too many simultaneous habits overwhelm finite willpower',
       'Because tradespeople do not have time for more than 3 habits',
-      'Because the number 3 is easier to remember',
+      'Because the number 3 is the easiest figure to remember',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'tmo-5-4-review',
     question: 'A monthly 10-minute productivity self-check is recommended because:',
     options: [
-      'It satisfies CPD requirements for electrical registration',
-      'Without regular review, habits drift, routines erode, and you gradually revert to old patterns without noticing',
+      'It satisfies the CPD requirements for electrical registration',
       'Monthly reviews are required by law for self-employed tradespeople',
-      'It replaces the need for daily and weekly routines',
+      'Without regular review, habits drift and routines quietly erode',
+      'It removes the need for any daily and weekly routines',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Habits and routines are not permanent once established — they require maintenance. Without periodic review, small deviations accumulate: the morning routine gets skipped occasionally, the Friday invoicing block gets pushed to next week, the end-of-day plan gets abandoned when you are tired. A monthly 10-minute self-check catches these drifts early and course-corrects before the erosion becomes significant. The review asks simple questions: "Am I still doing my 3 non-negotiables? What slipped this month? What worked well? What needs adjusting?"',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 1,
     question: 'A personal productivity action plan should be based primarily on:',
     options: [
-      'General productivity advice from books and podcasts',
-      'What other tradespeople say works for them',
-      'Your own time audit data, identifying your specific areas of greatest waste and highest opportunity',
-      'The recommendations of your employer or supervisor',
+      'Your own time audit data and your specific areas of greatest waste',
+      'What other tradespeople say has worked well for them',
+      'General productivity advice drawn from books and podcasts',
+      'The recommendations of your employer or immediate supervisor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "While general advice and others' experiences have value, the most effective action plan is rooted in your own data. A time audit reveals your specific patterns, waste areas, and habits — which may be very different from someone else's. An electrician who wastes 90 minutes a day on social media needs a different plan from one who wastes 90 minutes on unnecessary merchant trips. The action plan must be personalised to be effective, and personalisation requires data.",
   },
@@ -99,23 +99,23 @@ const quizQuestions = [
     question:
       'According to the SMART framework, which of the following is a well-formed action plan commitment?',
     options: [
-      '"I will be more productive this year"',
-      '"I will implement a 10-minute end-of-day planning routine every working day for the next 8 weeks, starting Monday"',
-      '"I will try to do my invoicing more regularly"',
-      '"I want to stop wasting time on my phone"',
+      '"I will try to be a lot more productive at work over the coming year"',
+      '"I will try to get round to doing my invoicing a bit more regularly"',
+      '"I will do 10 minutes of end-of-day planning every working day for 8 weeks"',
+      '"I really want to stop wasting so much of my time on my phone"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Option B is Specific (10-minute end-of-day planning routine), Measurable (did you do it today or not?), Achievable (10 minutes is realistic), Relevant (directly improves organisation and planning), and Time-bound (8 weeks starting Monday). The other options fail multiple criteria: "be more productive" is vague, "try to do invoicing" lacks specificity and measurement, and "want to stop" is a wish, not a commitment. SMART goals convert aspirations into actionable commitments.',
+      'The 10-minute end-of-day planning commitment is Specific (a defined planning routine), Measurable (did you do it today or not?), Achievable (10 minutes is realistic), Relevant (directly improves organisation and planning), and Time-bound (8 weeks starting Monday). The other options fail multiple criteria: "be more productive" is vague, "try to do invoicing" lacks specificity and measurement, and "want to stop" is a wish, not a commitment. SMART goals convert aspirations into actionable commitments.',
   },
   {
     id: 3,
     question:
       'The Eisenhower Matrix, when applied to a personal productivity action plan, helps you:',
     options: [
-      'Eliminate all tasks that are not urgent',
-      'Distinguish between urgent and important tasks, ensuring that important-but-not-urgent work (Quadrant 2) receives scheduled time rather than being perpetually deferred',
-      'Complete all tasks in order of urgency, from most urgent to least urgent',
+      'Eliminate all tasks that are not urgent from your week',
+      'Schedule important-but-not-urgent work so it is not perpetually deferred',
+      'Complete all tasks in order of urgency, most urgent first',
       'Delegate all tasks that you find boring or unpleasant',
     ],
     correctAnswer: 1,
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why should the action plan limit "non-negotiable routines" to 3 habits initially?',
     options: [
-      'Because 3 habits take exactly 21 days to form, fitting neatly into a monthly cycle',
-      'Because attempting too many simultaneous behaviour changes overwhelms willpower and increases the risk of failing at all of them',
-      'Because research shows that tradespeople can only remember 3 things at a time',
-      'Because 3 is the maximum number of habits any person can maintain long-term',
+      'Because 3 habits take exactly 21 days to form, fitting a monthly cycle',
+      'Because research shows tradespeople can only remember 3 things at once',
+      'Because 3 is the maximum number any person can maintain long-term',
+      'Because too many simultaneous changes overwhelm willpower and all fail',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Behaviour change research is clear: the probability of successfully forming a new habit decreases as the number of simultaneous new habits increases. Each habit in the formation phase requires conscious effort, willpower, and repetition. Attempting 10 new habits simultaneously divides limited willpower resources across too many fronts. Starting with 3 allows focused investment in a small number of high-impact changes. Once those 3 are automatic (typically after 8 to 10 weeks), you free up willpower capacity to add more. This is strategic, not limiting.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: '"Quick wins" in the action plan serve the purpose of:',
     options: [
-      'Replacing long-term goals with short-term ones that are easier to achieve',
-      'Providing immediate, visible progress that builds momentum and confidence for tackling the harder commitments',
-      'Distracting from the more important but more difficult changes',
-      'Filling time while waiting for the bigger habits to form',
+      'Providing immediate, visible progress that builds momentum and confidence',
+      'Replacing long-term goals with easier-to-achieve short-term ones',
+      'Distracting you from the more important but more difficult changes',
+      'Filling time while you wait for the bigger habits to form',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Quick wins are not substitutes for deep change — they are catalysts for it. By identifying 3 things you can change this week (putting the phone on silent during testing, sending quotes same-day, batching material orders to Sunday evenings), you create immediate visible progress. This progress builds confidence ("I can actually change my behaviour"), provides evidence for identity change ("I am someone who sends quotes promptly"), and generates momentum that makes the harder, longer-term commitments feel more achievable.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'A monthly 10-minute productivity self-check should include:',
     options: [
-      'A complete re-design of all daily and weekly routines',
-      'An honest assessment of which habits are sticking, which have slipped, what worked well, and what needs adjusting',
-      'A financial audit of all income and expenditure',
-      'A comparison of your productivity to other tradespeople in your area',
+      'A complete re-design of all your daily and weekly routines',
+      'An honest assessment of which habits are sticking and which have slipped',
+      'A full financial audit of all your income and expenditure',
+      'A comparison of your productivity against other local tradespeople',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,11 +167,11 @@ const quizQuestions = [
       'The recommended tools and resources for implementing a personal productivity action plan include:',
     options: [
       'Only digital apps — paper-based systems are outdated and ineffective',
-      'A combination of whatever works for you: digital calendars, physical notebooks, apps, or simple checklists — the best system is the one you will actually use consistently',
-      'Only expensive professional project management software',
-      'No tools — productivity should come from willpower and discipline alone',
+      'Only professional, paid project-management software designed for trades',
+      'No tools at all — productivity should come from willpower and discipline',
+      'Whatever you will use consistently — app, notebook, or simple checklist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most effective productivity system is the one you will actually use. For some people, that is a sophisticated digital app with notifications and integrations. For others, it is a physical notebook and a pen. For many tradespeople, it is a simple laminated checklist on the van dashboard. The tool matters far less than the consistency. A perfect app that you stop using after 2 weeks is worth nothing. A basic notepad that you check every morning for 5 years is priceless. Choose the simplest system that covers your needs, and commit to using it.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'Bringing together all 5 modules of this course, the single most important principle of time management and organisation for tradespeople is:',
     options: [
-      'Using the most advanced digital tools and apps available',
-      'Working longer hours to compensate for inefficiency',
-      'Building consistent daily systems and habits that automate good decisions, freeing mental energy for the work that matters most',
-      'Eliminating all non-billable activities from the working day',
+      'Using the most advanced digital tools and apps available on the market',
+      'Working longer hours each day to compensate for inefficiency',
+      'Building consistent daily systems and habits that automate good decisions',
+      'Eliminating every non-billable activity from the working day',
     ],
     correctAnswer: 2,
     explanation:

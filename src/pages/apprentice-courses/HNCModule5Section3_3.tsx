@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'spi-schedule',
     question: 'What does Schedule Performance Index (SPI) measure?',
     options: [
-      'Wash-down areas or external locations',
+      'The total profit margin earned on the project to date',
       'Efficiency of schedule performance',
-      'Recording key details and instructions',
-      '850-1,100 kWh/m² per year',
+      'The actual cost of work performed against the budget',
+      'The forecast final cost when the project completes',
     ],
     correctIndex: 1,
     explanation:
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     id: 'eac-purpose',
     question: 'Estimate at Completion (EAC) is used to:',
     options: [
-      'To demonstrate compliance and enable verification',
-      'Water proximity, floating equipment, and maritime conditions',
-      'Gather information, analyse, hypothesise, test, rectify',
+      'Measure the value of work completed at the current reporting date',
+      'Record the costs already invoiced and paid to suppliers',
+      'Calculate the schedule efficiency of the remaining work',
       'Forecast the total cost when the project finishes',
     ],
     correctIndex: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: "What is 'variance analysis' in cost control?",
     options: [
       'Investigating differences between planned and actual performance',
-      'Cherry-red colouration of the skin, along with headache and confusion',
-      'Industrial settings or retrofit installations',
-      'Item description, location, inspector name, date, result, and any defects noted',
+      'Allocating contingency reserves across the remaining work packages',
+      'Splitting the project budget proportionally between trades',
+      'Reconciling supplier invoices against the purchase order ledger',
     ],
     correctAnswer: 0,
     explanation:
@@ -219,12 +219,12 @@ const quizQuestions = [
     question:
       'Which cost category would typically show the highest variance on a building services project?',
     options: [
-      'Management costs',
+      'Labour',
       'Plant hire',
       'Preliminaries',
-      'Labour',
+      'Management costs',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "Labour typically shows the highest variance due to productivity variations, rework, weather delays, and skill mix changes. It's often 40-50% of project cost and hardest to control precisely.",
   },

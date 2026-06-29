@@ -5,10 +5,10 @@ export const emergencyAntiPanicQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main function of anti-panic lighting?',
     options: [
-      'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
+      'To clearly mark the position of fire exit doors and final exits',
       'To reduce confusion and allow safe movement towards escape routes when mains lighting fails',
-      'To prevent large dark patches that could cause trips, falls, or disorientation',
-      'The centre of the space is left in darkness, creating trip hazards and panic',
+      'To illuminate fire-fighting equipment and call points along escape routes',
+      'To maintain normal task lighting levels until the mains supply is restored',
     ],
     correctAnswer: 1,
     explanation:
@@ -57,10 +57,10 @@ export const emergencyAntiPanicQuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why is uniformity important in anti-panic lighting design?',
     options: [
-      'To reduce confusion and allow safe movement towards escape routes when mains lighting fails',
+      'To reduce the total number of luminaires needed to cover the area',
       'To prevent large dark patches that could cause trips, falls, or disorientation',
-      'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
-      'The centre of the space is left in darkness, creating trip hazards and panic',
+      'To keep the battery drain identical across every luminaire in the circuit',
+      'To allow the use of lower-output fittings throughout the space',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const emergencyAntiPanicQuizData: QuizQuestion[] = [
     id: 7,
     question: 'How long must anti-panic lighting remain operational during a power failure?',
     options: [
-      'Regulation 526.1 and 526.5',
-      'Approximately half a million or more',
-      'Brushes wear, sparking, RFI emission',
+      '10 minutes minimum, 30 minutes typical',
+      '30 minutes minimum, 1 hour typical',
+      '2 hours minimum, 4 hours typical',
       '1 hour minimum, 3 hours typical',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const emergencyAntiPanicQuizData: QuizQuestion[] = [
     question: 'What is the risk of placing luminaires only around the perimeter of a space?',
     options: [
       'The centre of the space is left in darkness, creating trip hazards and panic',
-      'To prevent large dark patches that could cause trips, falls, or disorientation',
-      'To reduce confusion and allow safe movement towards escape routes when mains lighting fails',
-      'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
+      'The perimeter fittings will overheat and drain their batteries too quickly',
+      'The escape route signs become over-illuminated and cause glare',
+      'The walls reflect too much light, raising the central illuminance above limits',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ export const emergencyAntiPanicQuizData: QuizQuestion[] = [
     question:
       "Why should electricians use manufacturer's spacing tables when installing luminaires?",
     options: [
-      'The centre of the space is left in darkness, creating trip hazards and panic',
-      'To reduce confusion and allow safe movement towards escape routes when mains lighting fails',
+      'To guarantee the lowest possible installation cost for the client',
+      'To make sure every luminaire draws an equal current from the battery',
       'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
-      'To prevent large dark patches that could cause trips, falls, or disorientation',
+      'To comply with the maximum cable length permitted for the circuit',
     ],
     correctAnswer: 2,
     explanation:

@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of the work-based portfolio in the EPA?',
     options: [
       'To provide structured evidence of your workplace learning and competence, supporting the professional discussion',
-      'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
-      'A pre-use inspection sheet kept with the equipment — checks structural integrity, controls, fluids, signage; defects taken out of service',
-      'It cuts equipment output, makes motors struggle to start, dims lights and wastes energy as cable heat',
+      'To replace the need for any practical observation or knowledge test in the assessment',
+      'To record the hours you have worked so your employer can calculate your wages',
+      'To serve as a personal diary that the assessor is not permitted to read',
     ],
     correctIndex: 0,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'evidence-quality',
     question: "What makes a piece of portfolio evidence 'good quality'?",
     options: [
+      "It covers as many activities as possible in the shortest possible description",
       "It is specific, relevant to the standard's KSBs, clearly described, and demonstrates genuine competence through real workplace activities",
-      "Answers that blame a specific individual without examining the systemic factors that allowed the error to occur",
-      "LGSF reduces manual handling risks as components are lighter, reduces wet trade hazards, and can be assembled more quickly, reducing time spent on site",
-      "A security method requiring two forms of verification (e.g. password plus a code sent to your phone) to access an account",
+      "It is written by your supervisor rather than by you, to ensure objectivity",
+      "It consists mainly of attendance certificates from training courses you have completed",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Quality evidence is specific (describes a real activity), relevant (links to specific KSBs in the standard), clearly described (the assessor can understand what you did and why), and authentic (genuinely your own work). A single well-described maintenance activity can provide evidence for multiple KSBs.',
   },
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'organisation-method',
     question: 'How should portfolio evidence be organised for maximum effectiveness?',
     options: [
-      'That all rungs are present, undamaged, free from grease or debris, and that the access route is clear of obstructions',
-      'Select 2-3 SMART resilience non-negotiables, build them into daily routines, regularly review and adjust them, and know who to contact if they need support',
-      'A prioritised approach: eliminate, substitute, engineering controls, administrative controls, PPE',
+      'In strict chronological order of when each activity was carried out',
+      'Grouped by the type of document, such as all photographs together',
+      'Alphabetically by the name of the supervisor who witnessed each activity',
       'Mapped to the KSBs of the apprenticeship standard, with clear cross-references showing which evidence supports which requirement',
     ],
     correctIndex: 3,
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'What is the most important element that elevates a reflective account above a simple activity description?',
     options: [
-      'It is not law itself, but failure to follow it can be used as evidence of non-compliance with the associated regulation',
-      'To confirm the indicator was working immediately before AND immediately after the dead test, eliminating the risk of a faulty indicator giving a false dead reading',
+      'Including as much technical detail about the equipment as possible',
+      'Listing every tool and instrument that was used during the task',
       'Including analysis of why you made specific decisions, what you learned, and how the experience links to your professional development',
-      'Insert the correct size bending spring into the conduit and apply steady, gradual pressure to form the bend',
+      'Describing the activity in the third person to sound more professional',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The work-based portfolio for the MOET EPA should contain:',
     options: [
-      'A serious risk of injury arising from conditions in or associated with a confined space, such as flammable atmospheres, toxic gases, or engulfment',
+      'A single detailed report on the most complex job you completed during the apprenticeship',
       'A range of evidence from real workplace activities demonstrating knowledge, skills and behaviours mapped to the apprenticeship standard',
-      'The pre-construction information obtained under Regulation 4(4) and any information obtained from designers under Regulation 9(3)',
-      'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
+      'Copies of all the theory test papers you sat at college during the programme',
+      'A written statement from your employer confirming you have completed your hours',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'A KSB mapping matrix in your portfolio is used to:',
     options: [
-      'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
-      'Progressively throughout the apprenticeship, with evidence gathered as activities occur',
+      'Record the dates and times you worked so your employer can verify your attendance',
+      'Rank your pieces of evidence from strongest to weakest for the assessor to read in order',
       'Show which evidence demonstrates which knowledge, skills and behaviour requirements of the standard',
-      'Defined by the EPAO in the EPA specification — check the specific requirements for your assessment organisation',
+      'List the qualifications you must complete before you are allowed to sit the EPA',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'When writing a reflective account for your portfolio, you should include:',
     options: [
-      'Show which evidence demonstrates which knowledge, skills and behaviour requirements of the standard',
-      'Progressively throughout the apprenticeship, with evidence gathered as activities occur',
-      'Defined by the EPAO in the EPA specification — check the specific requirements for your assessment organisation',
+      'Only a brief one-line summary, as assessors prefer the shortest possible accounts',
+      'A list of every regulation number relevant to the task, without describing what you did',
+      'The opinions of your colleagues about the task rather than your own actions and reasoning',
       'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Witness statements in the portfolio provide:',
     options: [
       'Third-party confirmation of your competence from someone who observed your work, such as a supervisor or qualified colleague',
-      'Cross-reference it to all relevant KSBs in your mapping matrix, maximising the value of each piece of evidence',
-      'Redacting or anonymising sensitive information while retaining the evidence value — client names, addresses and commercially sensitive data should be removed',
-      'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
+      'A guarantee of a distinction grade, since a witnessed task cannot be questioned by the assessor',
+      'A substitute for the professional discussion, removing the need to explain your evidence',
+      'Written confirmation from a family member that you attended work on the stated dates',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Photographs included in the portfolio should:',
     options: [
-      'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
+      'Be included in large numbers without captions, since quantity is what the assessor counts',
       'Be annotated to explain what they show, be clearly dated, and demonstrate specific competences such as workmanship quality, safe working practices or completed installations',
-      'Third-party confirmation of your competence from someone who observed your work, such as a supervisor or qualified colleague',
-      'A distinction portfolio demonstrates deeper reflection, broader range of evidence, clearer KSB mapping, and evidence of going beyond minimum requirements with initiative and professional growth',
+      'Show only the finished installation, never the stages of work or the safe isolation steps',
+      'Be sourced from manufacturer brochures so the equipment appears in the best possible condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'The minimum portfolio evidence requirement is typically:',
     options: [
-      'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
-      'Ask probing questions about your evidence, exploring your understanding, reasoning and ability to apply your learning to different situations',
+      'A single piece of evidence, provided it covers the most complex task you completed',
+      'Set by your workplace supervisor, who decides how much evidence is enough for the EPA',
       'Defined by the EPAO in the EPA specification — check the specific requirements for your assessment organisation',
-      'Third-party confirmation of your competence from someone who observed your work, such as a supervisor or qualified colleague',
+      'The same fixed number for every apprenticeship standard, regardless of the occupation',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'Evidence of safe working practices in the portfolio could include:',
     options: [
-      'Be annotated to explain what they show, be clearly dated, and demonstrate specific competences such as workmanship quality, safe working practices or completed installations',
-      'Cross-reference it to all relevant KSBs in your mapping matrix, maximising the value of each piece of evidence',
-      'Defined by the EPAO in the EPA specification — check the specific requirements for your assessment organisation',
+      'A signed declaration that you have never had an accident, with no supporting records',
+      'A copy of the Electricity at Work Regulations 1989 printed out and filed in the portfolio',
+      'A photograph of the site welfare facilities, since these prove the work was carried out safely',
       'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'If a piece of evidence demonstrates multiple KSBs, you should:',
     options: [
       'Cross-reference it to all relevant KSBs in your mapping matrix, maximising the value of each piece of evidence',
-      'Show which evidence demonstrates which knowledge, skills and behaviour requirements of the standard',
-      'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
-      'Ask probing questions about your evidence, exploring your understanding, reasoning and ability to apply your learning to different situations',
+      'Map it to only one KSB to keep the matrix simple, even though it covers several',
+      'Duplicate the evidence and submit a separate copy for each KSB it demonstrates',
+      'Discard it, because evidence covering more than one KSB is considered unfocused',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'The portfolio should be completed:',
     options: [
-      'Show which evidence demonstrates which knowledge, skills and behaviour requirements of the standard',
+      'In a single concentrated effort during the final week before the end-point assessment',
       'Progressively throughout the apprenticeship, with evidence gathered as activities occur',
-      'What the situation was, what you did, why you did it, what you learned, and how it links to the standard',
-      'Cross-reference it to all relevant KSBs in your mapping matrix, maximising the value of each piece of evidence',
+      'Only after the knowledge test has been passed, as evidence before then does not count',
+      'By your training provider on your behalf, using records of the courses you attended',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'During the professional discussion, the assessor will use your portfolio to:',
     options: [
-      'Be annotated to explain what they show, be clearly dated, and demonstrate specific competences such as workmanship quality, safe working practices or completed installations',
-      'Redacting or anonymising sensitive information while retaining the evidence value — client names, addresses and commercially sensitive data should be removed',
+      'Award the grade directly from the documents, without asking you to discuss any of it',
+      'Count the number of pages and pieces of evidence to decide the overall grade',
       'Ask probing questions about your evidence, exploring your understanding, reasoning and ability to apply your learning to different situations',
-      'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
+      'Check your spelling and presentation, as the written quality determines the grade',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'Confidential information in portfolio evidence should be handled by:',
     options: [
-      'Be annotated to explain what they show, be clearly dated, and demonstrate specific competences such as workmanship quality, safe working practices or completed installations',
-      'Ask probing questions about your evidence, exploring your understanding, reasoning and ability to apply your learning to different situations',
-      'Third-party confirmation of your competence from someone who observed your work, such as a supervisor or qualified colleague',
+      'Leaving all client names and addresses in place, as the assessor needs them to verify the work',
+      'Excluding any job that involved a client entirely, even if it is your strongest evidence',
+      'Asking the client to sign a release form so their full details can be published in the portfolio',
       'Redacting or anonymising sensitive information while retaining the evidence value — client names, addresses and commercially sensitive data should be removed',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
       'The difference between a portfolio that supports a pass and one that supports a distinction is:',
     options: [
       'A distinction portfolio demonstrates deeper reflection, broader range of evidence, clearer KSB mapping, and evidence of going beyond minimum requirements with initiative and professional growth',
-      'Redacting or anonymising sensitive information while retaining the evidence value — client names, addresses and commercially sensitive data should be removed',
-      'Be annotated to explain what they show, be clearly dated, and demonstrate specific competences such as workmanship quality, safe working practices or completed installations',
-      'Completed risk assessments, safe isolation records, permit to work documents, toolbox talk records, near-miss reports, and photographs showing PPE use',
+      'A distinction portfolio is simply longer, containing far more pages than a pass portfolio',
+      'A distinction portfolio uses more colourful presentation and professional binding than a pass one',
+      'A distinction portfolio is the one submitted earliest, ahead of the EPA deadline',
     ],
     correctAnswer: 0,
     explanation:

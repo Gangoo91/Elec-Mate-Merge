@@ -26,8 +26,8 @@ const quickCheckQuestions = [
     id: 'suicide-highest-rate-group',
     question:
       'According to ONS data, which demographic group has the highest suicide rate in the UK?',
-    options: ['Women aged 20-24', 'Men aged 45-49', 'Men aged 18-24', 'Women aged 50-54'],
-    correctIndex: 1,
+    options: ['Men aged 45-49', 'Women aged 20-24', 'Men aged 18-24', 'Women aged 50-54'],
+    correctIndex: 0,
     explanation:
       'ONS data consistently shows that men aged 45-49 have the highest suicide rate of any demographic group in the UK. Male suicides account for approximately three-quarters of all suicides. This age group may face a combination of risk factors including relationship breakdown, financial stress, job insecurity, social isolation, and a reluctance to seek help.',
   },
@@ -50,11 +50,11 @@ const quickCheckQuestions = [
       "A colleague tells you they are worried about a mate on site who has been making comments about 'not being around much longer.' They say they do not want to ask him about suicide because 'talking about it might put the idea in his head.' How should you respond?",
     options: [
       'Agree — it is safer not to mention suicide directly in case it encourages it',
-      'Explain that this is a common myth — research consistently shows that asking someone directly about suicide does NOT increase risk and can actually save lives',
-      'Suggest they wait and see if the comments continue before doing anything',
-      'Tell them to report it to HR and let professionals handle it',
+      'Suggest they wait and see whether the comments continue before doing anything',
+      'Tell them to report it straight to HR and let the professionals handle it',
+      'Explain it is a myth — asking directly does NOT raise risk and can save lives',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The belief that talking about suicide encourages it is one of the most dangerous and persistent myths. Decades of research consistently show that asking someone directly about suicidal thoughts does NOT increase risk — in fact, it can reduce distress by showing the person that someone cares and is willing to listen. The right response is to ask directly, listen without judgement, and help them access support. Waiting or avoiding the conversation can allow the situation to escalate.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 1,
     question: 'Approximately how many suicides occur each year in the UK, according to ONS data?',
     options: [
+      'Approximately 6,000',
       'Approximately 1,000',
       'Approximately 3,000',
-      'Approximately 6,000',
       'Approximately 12,000',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "ONS data records approximately 6,000 suicides per year in the UK. Male suicides account for approximately three-quarters of this figure. The actual number may be higher, as some deaths recorded as 'undetermined intent' or 'accidental' may in fact be suicides.",
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     options: [
       '1.5 times the national average',
       '2.0 times the national average',
-      '3.7 times the national average',
       '5.0 times the national average',
+      '3.7 times the national average',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Construction has the highest suicide rate of any UK industry, at approximately 3.7 times the national average for men. This is driven by a combination of factors: a predominantly male workforce, a culture of stoicism, physically demanding and often precarious work, social isolation from family, higher rates of substance misuse, and access to means (heights, tools, substances).',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Which of the following is a common warning sign that someone may be considering suicide?',
     options: [
-      'Starting a new hobby',
       'Talking about wanting to die or being a burden to others',
+      'Starting a new hobby',
       'Taking on extra responsibilities at work',
       'Becoming more sociable than usual',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Talking about wanting to die or being a burden to others is one of the most direct and important warning signs of suicidal intent. Other warning signs include withdrawal from friends and activities, giving away possessions, increased substance use, dramatic mood changes, recklessness, putting affairs in order, hopelessness, and saying goodbye to people. Any of these signs should be taken seriously.',
   },
@@ -150,10 +150,10 @@ const quizQuestions = [
     options: [
       "True — discussing suicide can plant the idea in someone's mind",
       "Partially true — it depends on the person's mental state",
-      'FALSE — research consistently shows that asking about suicide does NOT increase risk and can reduce distress',
       'True for young people, but false for adults',
+      'FALSE — research consistently shows that asking about suicide does NOT increase risk and can reduce distress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "This is one of the most dangerous myths about suicide. Decades of research consistently show that asking someone directly and compassionately about suicidal thoughts does NOT increase risk, does NOT 'plant the idea,' and can actually reduce distress by showing the person that someone cares. Avoiding the conversation leaves the person isolated with their thoughts and can allow the crisis to escalate.",
   },
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 6,
     question: "What is 'means restriction' in the context of suicide prevention?",
     options: [
-      'Restricting someone from leaving their workplace during a crisis',
-      'Reducing access to the methods by which people take their own lives, as an evidence-based prevention strategy',
-      'Preventing people from talking about suicide at work',
-      'Locking away all personal belongings on construction sites',
+      'Restricting someone from leaving their workplace during a mental health crisis',
+      'Reducing access to the methods by which people take their own lives',
+      'Preventing people from talking openly about suicide while at work',
+      'Locking away all of the personal belongings on a construction site',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       "A colleague gives away his favourite tools to other workers on site, says 'you lot will be better off without me,' and has been withdrawing from the group for several weeks. What should you do?",
     options: [
-      'Respect his privacy and assume he is just having a bad day',
-      'Wait to see if his behaviour improves over the next few weeks',
-      'Take these warning signs seriously — find a quiet moment to ask directly if he is thinking about suicide, listen without judgement, and help him access support',
-      'Report him to the site manager for behaving unusually',
+      'Respect his privacy and assume that he is just having a bad day',
+      'Wait to see whether his behaviour improves over the next few weeks',
+      'Take it seriously — ask him directly about suicide and help him get support',
+      'Report him to the site manager for behaving unusually on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -189,9 +189,9 @@ const quizQuestions = [
     question:
       'On a construction site, which of the following is an example of means restriction as a suicide prevention measure?',
     options: [
-      'Requiring all workers to attend mental health awareness training',
-      'Installing barriers at height, ensuring edge protection is in place, and safely storing hazardous substances and medications',
-      'Displaying helpline numbers in the welfare facilities',
+      'Requiring all workers on site to attend mental health awareness training',
+      'Installing edge protection at height and safely storing hazardous substances',
+      'Displaying crisis helpline numbers prominently in the welfare facilities',
       'Encouraging workers to talk about their feelings during toolbox talks',
     ],
     correctAnswer: 1,

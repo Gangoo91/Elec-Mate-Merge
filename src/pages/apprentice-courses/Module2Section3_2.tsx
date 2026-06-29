@@ -17,12 +17,12 @@ const quickCheckQuestions = [
     id: 'series-current-rule',
     question: 'In a series circuit, what is the key rule about current?',
     options: [
-      'Overload — the circuit is carrying too much current',
       'Current is the same through all components',
-      'Height, type, protection, and suitability for location',
-      'Write \\\\\\\\\\\\\\\'CPC not connected at socket outlet\\\\\\\\\\\\\\\'',
+      'Current divides between the components',
+      'Current is highest at the first component',
+      'Current is zero until the circuit is loaded',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "In series circuits, there's only one path for current, so it must be identical through every component.",
   },
@@ -30,10 +30,10 @@ const quickCheckQuestions = [
     id: 'voltage-divider',
     question: 'How does voltage behave in a series circuit?',
     options: [
-      'To verify safety and compliance of installations',
-      'Divides according to resistance values',
-      'Unlimited fine and/or imprisonment',
-      'Adverse Childhood Experience',
+      'It is the same across every component',
+      'It divides according to resistance values',
+      'It is zero across every component',
+      'It is highest across the smallest resistor',
     ],
     correctIndex: 1,
     explanation:
@@ -92,12 +92,12 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Which statement matches BS 7671 practice?',
+    question: 'Which statement matches good BS 7671 design practice?',
     options: [
-      'Always design series lighting on site',
+      'Wire final-circuit lighting points in series',
       'Use manufacturer data and verify voltage drop',
-      'Parallel branches never used',
-      'Ignore fault current values',
+      'Size all conductors for the supply fault current',
+      'Disregard disconnection times for short cable runs',
     ],
     correctAnswer: 1,
     explanation: 'Design/verification must use correct data to BS 7671.',
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 10,
     question: 'The voltage divider rule is most useful for…',
     options: [
-      'Remove or control any element of the fire triangle',
-      'No protective conductor connection',
+      'Finding the total current drawn from the supply',
+      'Calculating the total resistance of the circuit',
       'Finding voltage across individual components',
-      'kWh, kVAh, kVArh, power factor, and demand',
+      'Measuring the insulation resistance of a cable',
     ],
     correctAnswer: 2,
     explanation:

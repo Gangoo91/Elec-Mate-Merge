@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'qc3',
     question: 'What is the purpose of a DCS historian?',
     options: [
-      'To prevent energy waste and ensure safety functions aren\\\\\\\\\\\\\\\'t permanently disabled',
-      'Stop work, inform a colleague, and descend to ground level carefully using the proper access route',
+      'To execute the PID control loops for the assigned plant area',
+      'To provide redundant switchover when the primary controller fails',
       'Long-term storage of process data for trending, analysis, reporting, and compliance',
-      'Heating using organic materials like wood pellets, chips, or logs',
+      'To convert field signals between analogue and digital form',
     ],
     correctIndex: 2,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which network topology is typical in a DCS?',
     options: [
-      'Testing at the midpoint to eliminate half the circuit',
-      'Increases by the highest of earnings, inflation, or 2.5%',
+      'A single daisy-chained serial bus with no redundancy',
+      'A point-to-point link between each instrument and the historian',
       'Redundant Ethernet ring or dual-star topology',
-      'Affects economics of electricity supply',
+      'A wireless mesh network between field transmitters',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the role of the engineering workstation in a DCS?',
     options: [
-      'Incorrect polarity can damage components or prevent proper operation',
-      'When work is finished and circuit is to be re-energised',
-      'Secure fixing, adequate support, and bonding if required',
+      'Monitoring and operating the plant during normal production',
+      'Storing long-term historical process data for reporting',
+      'Terminating field wiring before it reaches the I/O modules',
       'Configuring control strategies, I/O assignments, graphics, and alarm settings',
     ],
     correctAnswer: 3,
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a marshalling cabinet in a DCS installation?',
     options: [
-      'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
+      'A cabinet housing the redundant controller pairs and their power supplies',
       'A cabinet where field wiring terminates and is cross-connected to the DCS I/O modules',
-      'Two controllers running the same program, with automatic switchover if one fails',
-      'Configuring control strategies, I/O assignments, graphics, and alarm settings',
+      'A cabinet containing the operator HMI stations and monitors',
+      'A cabinet that stores the historian server and network switches',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the advantage of remote I/O in a DCS?',
     options: [
-      'A cabinet where field wiring terminates and is cross-connected to the DCS I/O modules',
-      'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
+      'It removes the need for controllers in the control room',
+      'It allows the plant to run without any field wiring',
       'It reduces cable runs by placing I/O modules close to the field instruments, communicating over digital networks',
-      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
+      'It eliminates the need for redundant network paths',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'What is alarm management in a DCS?',
     options: [
       'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
-      'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
-      'A cabinet where field wiring terminates and is cross-connected to the DCS I/O modules',
-      'They need to navigate operator displays, interpret alarms, understand loop configurations, and communicate with control engineers during fault-finding',
+      'The practice of disabling all alarms during planned maintenance',
+      'A method of routing every alarm directly to the plant manager',
+      'The automatic shutdown of the plant whenever an alarm occurs',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'How does a DCS differ from SCADA?',
     options: [
-      'They need to navigate operator displays, interpret alarms, understand loop configurations, and communicate with control engineers during fault-finding',
+      'A DCS uses wireless links while SCADA always uses fibre optic cable',
       'DCS provides tightly integrated, high-speed control for a single plant; SCADA provides supervisory monitoring and control over geographically dispersed assets',
-      'It reduces cable runs by placing I/O modules close to the field instruments, communicating over digital networks',
-      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
+      'A DCS cannot store historical data whereas SCADA always can',
+      'A DCS is only used in water treatment, SCADA only in chemical plants',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is virtualisation in the context of DCS?',
     options: [
-      'Two controllers running the same program, with automatic switchover if one fails',
-      'Configuring control strategies, I/O assignments, graphics, and alarm settings',
+      'Displaying the plant as a 3D model on the operator screens',
+      'Replacing physical controllers with cloud-based control loops',
       'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
-      'It reduces cable runs by placing I/O modules close to the field instruments, communicating over digital networks',
+      'Simulating the process offline to train new operators',
     ],
     correctAnswer: 2,
     explanation:
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'Under ST1426, why must maintenance technicians understand DCS systems?',
     options: [
       'They need to navigate operator displays, interpret alarms, understand loop configurations, and communicate with control engineers during fault-finding',
-      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
-      'It reduces cable runs by placing I/O modules close to the field instruments, communicating over digital networks',
-      'DCS provides tightly integrated, high-speed control for a single plant; SCADA provides supervisory monitoring and control over geographically dispersed assets',
+      'They are required to design and write the control strategies themselves',
+      'They must replace the DCS controllers during every routine inspection',
+      'They are responsible for setting the protection relay coordination',
     ],
     correctAnswer: 0,
     explanation:

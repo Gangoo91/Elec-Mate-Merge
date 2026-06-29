@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A customer asks you to add a single new spur from an existing socket-outlet on a 32 A ring final circuit. The new spur is one additional socket-outlet, with no new circuit. Which certificate is correct?',
     options: [
-      'Electrical Installation Certificate (EIC) — every alteration is a new install',
-      'Minor Electrical Installation Works Certificate (MEIWC) — addition of an accessory to an existing circuit, no new circuit created',
-      'Electrical Installation Condition Report (EICR) — used for any change',
-      'No certificate — fused spur is not notifiable',
+      'Electrical Installation Certificate (EIC) — treat every alteration as a new install',
+      'Minor Electrical Installation Works Certificate (MEIWC) — accessory added, no new circuit',
+      'Electrical Installation Condition Report (EICR) — used for any change to a circuit',
+      'No certificate at all — a single fused spur is not a notifiable alteration',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You designed, installed and tested the works yourself. How many signatures appear on the EIC?',
     options: [
-      'One — Designer only, the others are not required',
-      'Three — the EIC carries Designer, Installer and Inspector signature blocks; the same competent person may sign all three but each declaration is separate',
-      'Two — Designer and Installer; Inspector is for EICRs only',
-      'Four — adding Witness',
+      'One — the Designer block only; the other declarations are not required',
+      'Three — Designer, Installer and Inspector blocks, each signed separately',
+      'Two — Designer and Installer only; the Inspector block is for EICRs',
+      'Four — Designer, Installer, Inspector plus an independent witness',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'On an EICR you find a 13 A socket-outlet face cracked open with live conductors visible to the touch. Which observation code applies?',
     options: [
-      'C3 — improvement recommended only',
-      'FI — further investigation required',
-      'C1 — danger present, risk of injury, immediate action required',
-      'C2 — potentially dangerous',
+      'C3 — improvement recommended, no immediate risk',
+      'FI — further investigation required without delay',
+      'C1 — danger present, immediate action required',
+      'C2 — potentially dangerous, urgent remedial action',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'You complete an EICR. You record three C3 observations and one C2. What is the overall assessment box?',
     options: [
-      'Satisfactory — only one C2 is below the threshold',
-      'Satisfactory with observations — C3s are advisory',
-      'Unsatisfactory — any C1 or C2 makes the overall assessment unsatisfactory',
-      'Pending — awaits client approval',
+      'Satisfactory — a single C2 sits below the failure threshold',
+      'Satisfactory with observations — the C3 items are advisory only',
+      'Unsatisfactory — any C1, C2 or FI makes the result unsatisfactory',
+      'Pending — the result awaits the client\'s written approval first',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'You discover a cert in your van marked "BS 7671:2018+A3:2024". Today is 16 April 2026. Can you issue this for new works?',
     options: [
-      'Yes — the cert form is generic',
-      'Yes — until your existing pad is used up',
-      'No — A4:2026 is in force from 15 April 2026 and the certificate must reference the in-force edition; using an A3 form for new works after that date is non-compliant with App 6',
-      'Only if you handwrite the date',
+      'Yes — the certificate form is generic across editions',
+      'Yes — you may use the existing A3 pad until it is finished',
+      'No — A4:2026 is in force, so the cert must reference the current edition',
+      'Only if you handwrite the in-force edition date on the form',
     ],
     correctIndex: 2,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'You issue an EICR on a privately rented domestic dwelling. What is the maximum statutory period to next inspection that applies regardless of your engineering judgement?',
     options: [
-      '10 years',
-      '5 years or change of occupancy, whichever is sooner — set by the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
-      '3 years',
-      '1 year',
+      '10 years, matching owner-occupied domestic guidance',
+      '5 years or change of occupancy, whichever is sooner',
+      '3 years, in line with places of public entertainment',
+      '1 year, as for caravan parks and similar locations',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Under BS 7671:2018+A4:2026 Appendix 6, which combination of certificate is correct for: (a) new dwelling rewire, (b) addition of one new fused spur to an existing ring, (c) periodic inspection of a 1980s commercial unit?',
     options: [
-      '(a) MEIWC, (b) EIC, (c) EICR',
       '(a) EIC, (b) MEIWC, (c) EICR',
+      '(a) MEIWC, (b) EIC, (c) EICR',
       '(a) EICR, (b) EIC, (c) MEIWC',
       '(a) EIC, (b) EIC, (c) EIC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 644.1 / Appendix 6: a complete rewire is a new installation = EIC. The fused spur is an addition of an accessory to an existing circuit (no new circuit) = MEIWC. Periodic inspection of an existing in-service installation = EICR (Reg 651.1). The three documents are not interchangeable — using the wrong form makes the cert non-compliant on its face.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Reg 644.1 requires the EIC to be signed by three competent persons. Who are they and what do they each declare?',
     options: [
-      'Owner, occupier and tester — confirming the property exists',
-      'Designer (declares the design complies with BS 7671), Installer/Constructor (declares the construction complies with BS 7671 and the design), Inspector/Tester (declares inspection and testing has been carried out and the results comply with BS 7671)',
+      'Owner, occupier and tester — confirming the property and its ownership',
       'Designer, surveyor and Building Control — declaring statutory compliance',
-      'Manufacturer, distributor and end user',
+      'Designer, Installer/Constructor and Inspector/Tester — each declaring their part complies',
+      'Manufacturer, distributor and end user — declaring product conformity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Appendix 6 model form has three declarations: Designer (responsibility for the safety of the design — Reg 132 / 134.1), Constructor or Installer (responsibility for construction in accordance with BS 7671 — Reg 134.1), and Inspector/Tester (responsibility for the inspection and testing — Chapter 64). Where one person did all three, they sign each block separately. Reg 132 places these duties expressly on the persons named.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 3,
     question: 'The Schedule of Inspection forms part of which certificate(s)?',
     options: [
-      'EIC only',
-      'EICR only',
-      'EIC and EICR — both certificates require the Schedule of Inspection alongside the Schedule of Test Results',
-      'MEIWC only',
+      'EIC only — periodic reports use a different schedule',
+      'EICR only — initial verification needs no inspection schedule',
+      'MEIWC only — full certificates condense it into the body',
+      'EIC and EICR — both carry a Schedule of Inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Appendix 6: the Schedule of Inspection forms part of both the EIC (initial verification per Chapter 64) and the EICR (periodic inspection per Reg 651.1). MEIWC does NOT require a Schedule of Inspection as a separate document — the inspection items are condensed into the body of the MEIWC itself. The Schedule of Test Results is similarly issued with EIC and EICR but not with MEIWC (MEIWC has its own test result entries).',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'A4:2026 introduces a new TN-C-S (PNB) option on the cert form. What does PNB stand for and why does it matter?',
     options: [
-      'Public National Bonding — describes DNO bonding policy',
-      'Protective Neutral Bonding — a TN-C-S configuration where there is a single connection to true earth, typically for one consumer (e.g. a private supply transformer); recording it correctly is essential because the fault behaviour and disconnection-time analysis differ from public PME',
-      'Private Network Boundary — defines DNO/customer demarcation',
-      'Phase Neutral Balance — power-quality term',
+      'Protective Neutral Bonding — a single connection to true earth; its fault model differs from PME',
+      'Public National Bonding — describes the DNO bonding policy across the network',
+      'Private Network Boundary — defines the DNO/customer demarcation point on site',
+      'Phase Neutral Balance — a power-quality term describing load distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PNB = Protective Neutral Bonding. A TN-C-S installation where the only connection to true earth is at the consumer's neutral, rather than at multiple points along the distributor's network (which is PME). Common on installations fed from a private transformer or where the property is the only consumer on a section. A4 makes PNB an explicit cert option because conflating it with PME hides the true fault model. The new TN-C-S (PNB) drop-down matters for inspector judgement on Ze, open-PEN risk and supplementary protective measures.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'Which observation code is correct for an installation found to lack 30 mA RCD additional protection on a domestic socket-outlet circuit on a 2008-installed CU, where the sockets feed a kitchen used by ordinary persons?',
     options: [
-      'C1 — danger present',
-      'C2 — potentially dangerous; the absence of 30 mA RCD on a domestic socket circuit accessible to ordinary persons is a recognised increased shock-injury risk and Best Practice Guide 4 lists it as C2 in most domestic scenarios',
-      'C3 — improvement recommended only',
-      'No code — historic compliance',
+      'C1 — danger present, immediate action required before leaving site',
+      'No code — the circuit complied with the edition it was installed under',
+      'C2 — potentially dangerous, a recognised increased shock-injury risk',
+      'C3 — improvement recommended only, with no urgency attached',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BPG4 (Best Practice Guide 4 — Electrical Safety First) is the industry consensus on coding. Absence of 30 mA RCD additional protection where it would now be required by Reg 411.3.3 (sockets up to 32 A used by ordinary persons) is C2 in most cases — the risk is elevated by foreseeable use (kitchens, gardens, children). C3 may be appropriate where the use is restricted and the risk demonstrably low. Pure "historic compliance" is not a justification under GN3 Section K — every observation is coded against current safety implications, not the edition the install was completed under.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       "On an EIC Schedule of Test Results under A4:2026, you find a new column labelled 'Max permitted Zs (Ω)'. What is its purpose and how do you use it?",
     options: [
-      "Record the manufacturer's nameplate impedance",
-      "Record the maximum permitted Zs for the protective device on that circuit (from BS 7671 Appendix 3 / OSG Table at corrected temperature), so the measured Zs can be directly compared to the limit on the cert face — A4 makes this an explicit column rather than a calculation in the inspector's head",
-      'Record the supply earth-loop impedance Ze only',
-      'Record the test instrument Zint',
+      "Record the manufacturer's nameplate impedance for the protective device fitted",
+      'Record the supply earth-fault loop impedance Ze, measured at the origin only',
+      "Record the test instrument's internal lead impedance used for the measurement",
+      "Record the maximum permitted Zs for that device, so measured Zs can be compared",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4:2026 adds an explicit Max permitted Zs column on the Schedule of Test Results so the cert face shows: device + rating → max permitted Zs (looked up from App 3 / OSG, corrected for conductor temperature) → measured Zs → pass/fail. Previously the inspector held the limit in their head or in a separate sheet. The new column makes the disconnection-time evidence transparent to anyone reading the cert and removes a class of "looks fine" passes where the limit was never actually checked.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       "You issue an EICR with the overall result 'Unsatisfactory' due to two C2 observations. The customer asks: 'Does the installation need to be switched off?'",
     options: [
-      'Yes — every unsatisfactory EICR requires immediate isolation',
-      'No — C2 means urgent remedial action is required (typically within 28 days, though BPG4 sets context-specific guidance), but does not require immediate isolation. C1 alone triggers immediate isolation / make-safe duties. Explain the C2 actions in writing and book the remedial visit',
-      "It depends on the inspector's mood",
-      'Only if the customer has insurance',
+      'No — C2 needs urgent remedial action but not immediate isolation; explain it in writing',
+      'Yes — every unsatisfactory EICR requires the installation to be isolated at once',
+      'Yes — any installation with two or more C2 observations must be switched off',
+      'No — a C2 only requires action at the next periodic inspection, not before',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'C1 = danger present → make safe before leaving site / immediate isolation. C2 = potentially dangerous → urgent remedial action, but not the same as C1. BPG4 and GN3 frame the remedial response as "as soon as reasonably practicable" — many landlords and managing agents use a 28-day target. The duty on the inspector is to record the C2 clearly, explain the implication in writing to the customer/duty-holder, and not to leave site with the impression that nothing needs doing.',
   },
@@ -224,8 +224,8 @@ const quizQuestions = [
       'Reg 653.1 sets out what an EICR is for. Which of the following is NOT a stated purpose of an EICR?',
     options: [
       'Recording the result of inspection and testing of an existing installation',
-      'Identifying departures from BS 7671 that may give rise to danger',
-      "Recording the new installation's design parameters for the purpose of certifying compliance with the design responsibility under Reg 132",
+      'Identifying departures from BS 7671 that may give rise to danger to persons',
+      "Certifying the design parameters of new work under the Reg 132 design duty",
       'Providing recommendations on the actions required to remedy unsafe conditions',
     ],
     correctAnswer: 2,
@@ -577,7 +577,7 @@ const BS7671Module6Section4 = () => {
           <ConceptBlock
             title="Who must receive copies"
             plainEnglish="The person ordering the work is the primary recipient. Tenants of PRS dwellings (England) must receive a copy within 28 days of inspection. Building Control receive a copy where the works are notifiable under Building Regulations Part P. The contractor keeps their own copy."
-            onSite="Standard distribution: customer (the person ordering the work) gets the original; contractor keeps a copy for at least 6 years (Limitation Act 1980); for PRS England, landlord must give tenant a copy within 28 days; for notifiable Part P works (England and Wales), Building Control receive a copy via the competent-person scheme registration. Best practice is digital storage with multi-site backup. Paper-only retention is the source of every \\'we lost the cert\\' dispute."
+            onSite="Standard distribution: customer (the person ordering the work) gets the original; contractor keeps a copy for at least 6 years (Limitation Act 1980); for PRS England, landlord must give tenant a copy within 28 days; for notifiable Part P works (England and Wales), Building Control receive a copy via the competent-person scheme registration. Best practice is digital storage with multi-site backup. Paper-only retention is the source of every 'we lost the cert' dispute."
           >
             <p>
               Reg 644.5 / 644.6 (EIC) and Reg 653.4 (EICR) place the copy-distribution duty on the

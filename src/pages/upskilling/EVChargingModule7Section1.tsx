@@ -9,27 +9,27 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m7s1-check1',
     question: 'What is the maximum grant amount per socket under the Workplace Charging Scheme?',
-    options: ['£250', '£350', '£500', '£750'],
-    correctIndex: 1,
+    options: ['£250', '£500', '£750', '£350'],
+    correctIndex: 3,
     explanation:
-      'The WCS provides up to £350 per socket, covering up to 75% of total costs. The maximum number of sockets per applicant is 40.',
+      'The WCS provides up to £350 per socket, covering up to 75% of the total purchase and installation cost. The maximum number of sockets per applicant is 40.',
   },
   {
     id: 'evcharging-m7s1-check2',
     question: 'What is the minimum charging power required for WCS-eligible equipment?',
-    options: ['2.3kW', '3.6kW', '7kW', '11kW'],
-    correctIndex: 1,
+    options: ['2.3kW', '7kW', '3.5kW', '11kW'],
+    correctIndex: 2,
     explanation:
-      'WCS-eligible charging equipment must have a minimum 3.6kW output power, be Mode 3 (Type 1 or Type 2), and have smart charging capability.',
+      'WCS-eligible charging equipment must provide a minimum of around 3.5kW output, be Mode 3 (Type 1 or Type 2), and have smart charging capability.',
   },
   {
     id: 'evcharging-m7s1-check3',
     question: 'Who must install chargers funded under OZEV schemes?',
     options: [
-      'Any qualified electrician',
-      'OZEV approved installer',
-      'Manufacturer representative',
-      'Building control officer',
+      'Any qualified electrician on the register',
+      'An OZEV approved installer',
+      'A manufacturer representative',
+      'A building control officer',
     ],
     correctIndex: 1,
     explanation:

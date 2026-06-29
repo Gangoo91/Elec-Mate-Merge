@@ -3,16 +3,17 @@ import { QuizQuestion } from '@/components/quiz/types';
 export const eicrQuizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What is the maximum validity period for an EICR from the inspection date?',
+    question:
+      'What is the typical maximum recommended interval between EICRs for a domestic installation?',
     options: [
       '10 years',
       '5 years',
       '2 years',
-      '3 years',
+      '1 year',
     ],
     correctAnswer: 1,
     explanation:
-      'EICRs are valid for a maximum of 5 years from the inspection date, though some high-risk premises may require more frequent inspection.',
+      'For most domestic installations the recommended maximum interval is 5 years (or change of occupancy); higher-risk premises such as swimming pools, caravan parks and commercial properties require more frequent inspection.',
   },
   {
     id: 2,
@@ -30,42 +31,43 @@ export const eicrQuizQuestions: QuizQuestion[] = [
   {
     id: 3,
     question:
-      'What is the minimum insulation resistance requirement for circuits ≤500V during EICR testing?',
+      'What is the minimum insulation resistance value for a circuit rated up to 500V (tested at 500V DC)?',
     options: [
-      'Limitations and extent of inspection performed',
-      'Every 5 years or at change of tenancy',
-      'Continuity of protective conductors',
-      '≥0.5MΩ where electronic equipment is present',
+      '0.25MΩ',
+      '0.5MΩ',
+      '1.0MΩ',
+      '2.0MΩ',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'While the standard requirement is ≥1MΩ for circuits ≤500V, ≥0.5MΩ is acceptable where electronic equipment is permanently connected and cannot be disconnected.',
+      'BS 7671 Table 61 requires a minimum insulation resistance of 1.0MΩ for circuits up to 500V, tested at 500V DC (SELV/PELV at 250V DC require 0.5MΩ).',
   },
   {
     id: 4,
     question: 'How frequently must EICRs be conducted in private rental properties in England?',
     options: [
-      'Every 5 years or at change of tenancy',
-      'Healthcare and care facilities',
-      'Continuity of protective conductors',
-      'Further investigation required',
+      'At least every 5 years, or sooner if specified on the report',
+      'Only once at the start of the very first tenancy',
+      'Every 12 months without exception',
+      'Only when a tenant reports an electrical fault',
     ],
     correctAnswer: 0,
     explanation:
-      'Since July 2020, private landlords in England must ensure electrical installations are inspected every 5 years or at change of tenancy by a qualified electrician.',
+      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, landlords must have the installation inspected and tested at least every 5 years (or sooner if the report specifies) by a qualified person.',
   },
   {
     id: 5,
-    question: 'Which test should be performed FIRST during EICR testing sequence?',
+    question:
+      'Which test is normally performed FIRST in the sequence of dead tests during an EICR?',
     options: [
-      'Every 5 years or at change of tenancy',
+      'Earth fault loop impedance (Zs)',
       'Continuity of protective conductors',
-      'Further investigation required',
-      '≥0.5MΩ where electronic equipment is present',
+      'RCD operation at 5×IΔn',
+      'Polarity at the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
-      'Continuity of protective conductors should be tested first to ensure safety systems are in place before proceeding with other tests that may stress the installation.',
+      'Continuity of protective conductors is the first dead test, confirming the earthing and bonding are sound before insulation resistance, polarity and the subsequent live tests are carried out.',
   },
   {
     id: 6,
@@ -95,16 +97,17 @@ export const eicrQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: 'Which premises type typically requires annual EICR inspection?',
+    question:
+      'Which of these premises typically requires a more frequent (e.g. annual) periodic inspection interval?',
     options: [
-      'Healthcare and care facilities',
-      'Every 5 years or at change of tenancy',
-      'Continuity of protective conductors',
-      'Further investigation required',
+      'Caravan parks and swimming pool installations',
+      'An owner-occupied detached house',
+      'A general office let on a 5-year lease',
+      'A domestic garage with a single circuit',
     ],
     correctAnswer: 0,
     explanation:
-      'Healthcare and care facilities typically require annual EICR inspection due to enhanced safety requirements for vulnerable occupants and critical equipment.',
+      'Higher-risk locations such as caravan parks (1 year) and swimming pools (1 year) are given shorter recommended intervals in BS 7671 Table 3.2 of the IET guidance than ordinary domestic premises.',
   },
   {
     id: 9,
@@ -126,7 +129,7 @@ export const eicrQuizQuestions: QuizQuestion[] = [
       'C1',
       'C2',
       'C3',
-      'IR',
+      'FI',
     ],
     correctAnswer: 2,
     explanation:

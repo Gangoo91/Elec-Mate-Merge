@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'Why does a 500 V DC IR test damage modern electronic loads if applied with the equipment connected?',
     options: [
-      'It heats the windings until insulation cooks',
       'Switched-mode PSUs, LED drivers and dimmers contain Y-capacitors and clamping diodes that begin to conduct or break down at voltages well below 500 V DC, and SPDs by design clamp at much lower voltages — the 500 V DC pulse exceeds their internal voltage ratings',
+      'It heats the windings until insulation cooks',
       'The DC charges the cable into the GHz range',
       'It is purely a regulatory limit, not a physical effect',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The damage mechanism is voltage stress on internal components rated for the operating voltage of the device. SPDs clamp at hundreds of volts AC peak and conduct heavily on a 500 V DC pulse. LED driver input filters use Y-caps that can puncture. Dimmer triacs can avalanche. The 250 V DC step in Reg 643.3.3 exists to provide a controlled stress these devices can survive while still revealing gross insulation breakdown.',
   },
@@ -38,11 +38,11 @@ const inlineChecks = [
       'Per the Reg 643.3.3 NOTE, what does the manufacturer typically require you to do with SPDs during an IR test?',
     options: [
       'Leave them connected — they are passive',
-      'Disconnect them at the consumer-unit terminals before the test, complete both Table 64 and 250 V DC steps, then reconnect; record the disconnection in the schedule comments',
       'Replace them with new units after every test',
+      'Disconnect them at the consumer-unit terminals before the test, complete both Table 64 and 250 V DC steps, then reconnect; record the disconnection in the schedule comments',
       'Test them at 1000 V to verify clamping voltage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Most SPD data sheets specify disconnection during IR testing because MOVs and gas-discharge tubes start to conduct at voltages below the typical IR test voltages — even at 250 V DC certain types show measurable leakage. Disconnect, perform both test steps, reconnect, and document the disconnection in comments so the next inspector knows the SPD was removed from the test path.',
   },
@@ -52,11 +52,11 @@ const inlineChecks = [
       'A circuit feeds 24 LED drivers and an SPD. You want to verify the cable insulation independently of the connected loads. What is the right mental model?',
     options: [
       'Test once with everything connected and record the lowest reading',
-      'Two-stage approach: first the cable alone at the Table 64 voltage (500 V DC) with vulnerable equipment disconnected; then the equipment-connected post-connection test at 250 V DC. Each step verifies a different scope and the schedule records both',
-      'Insulation testing is optional on circuits with electronic loads',
       'Use AC at 230 V to mimic operating conditions',
+      'Insulation testing is optional on circuits with electronic loads',
+      'Two-stage approach: first the cable alone at the Table 64 voltage (500 V DC) with vulnerable equipment disconnected; then the equipment-connected post-connection test at 250 V DC. Each step verifies a different scope and the schedule records both',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The all-or-nothing mental model — test everything at once — masks insulation defects in the cable behind the leakage of connected equipment. The two-stage approach the A4 redraft codifies is precisely to separate cable insulation health (Table 64 voltage on cable alone) from system-level health (post-connection 250 V DC).',
   },
@@ -65,12 +65,12 @@ const inlineChecks = [
     question:
       'After the equipment is reconnected, the 250 V DC test reads 0.8 MΩ between L+N and the protective conductor. What does Reg 643.3.3 say?',
     options: [
-      'Pass — anything above 0.5 MΩ is acceptable',
       'Fail. Reg 643.3.3 sets 1 MΩ as the minimum at 250 V DC. Investigate which connected device is responsible (typically by progressive disconnection) before re-testing and recording',
+      'Pass — anything above 0.5 MΩ is acceptable',
       'Pass with note in comments',
       'Re-test at 500 V DC and use that value',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The post-connection acceptance is explicit: 1 MΩ minimum at 250 V DC. 0.8 MΩ is below the floor. Reg 643.3.3 NOTE acknowledges that the manufacturer instructions may require certain devices to be disconnected even at 250 V DC — start there before condemning the cable. Re-test after each disconnection until the responsible device is isolated, then decide whether to remediate the device or accept its leakage and document the variance.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 (A4:2026) sets out the procedure where connected equipment is likely to influence the test or be damaged. What does the regulation actually require?',
     options: [
-      'Skip the insulation test on those circuits and note "N/A" on the schedule',
-      'Apply Table 64 (typically 500 V DC) before the equipment is connected, and after connection apply a 250 V DC test between live conductors and the protective conductor with a minimum of 1 MΩ',
-      'Test only at 250 V DC for the whole installation',
-      'Disconnect the consumer unit and test the meter tails only',
+      'Skip the insulation test on those circuits entirely and note "N/A" on the schedule',
+      'Table 64 (500 V DC) before connection, then 250 V DC lives-to-CPC after, minimum 1 MΩ',
+      'Test the whole installation at 250 V DC only, with all equipment left connected',
+      'Disconnect the consumer unit from the supply and insulation-test the meter tails only',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,26 +96,26 @@ const quizQuestions = [
     question:
       'A 500 V DC insulation test pulse is applied to a Type 2 SPD on a sub-main. What is the most likely outcome and why?',
     options: [
-      'No effect — SPDs are designed for any DC voltage',
-      'The MOV inside the SPD clamps somewhere between 350–470 V DC and either fails permanently or appears as a short to the tester, giving a false-low reading and likely destroying or weakening the SPD',
-      'The SPD trips a downstream RCD',
-      'The reading will be valid but slow to settle',
+      'No effect — Type 2 SPDs are rated to withstand any DC test voltage applied to them',
+      'The reading will be valid but unusually slow to settle to its steady value',
+      'The SPD passes the test cleanly but trips the downstream RCD as a side effect',
+      'The MOV clamps below 500 V, reads as a false-low short, and is degraded by the pulse',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Type 2 SPDs use metal-oxide varistors with a clamping voltage typically below the 500 V DC test voltage. The test pulse drives the MOV into conduction, producing a near-zero IR reading and degrading the device. Either disconnect or bridge the SPD per the manufacturer instructions before the 500 V test, then retest at 250 V DC after reconnection.',
+      'Type 2 SPDs use metal-oxide varistors with a clamping voltage typically between 350 and 470 V DC, below the 500 V test voltage. The test pulse drives the MOV into conduction, producing a near-zero IR reading and degrading or destroying the device. Either disconnect or bridge the SPD per the manufacturer instructions before the 500 V test, then retest at 250 V DC after reconnection.',
   },
   {
     id: 3,
     question:
       'You are about to insulation-test a domestic lighting circuit that includes electronic dimmers and an LED driver. The "all-or-nothing" mental model says you should:',
     options: [
-      'Test it at 500 V regardless and replace anything that fails',
-      'Disconnect every sensitive electronic load on that circuit before applying the Table 64 test, then reconnect and apply a single 250 V DC verification test — there is no halfway',
-      'Test at 250 V DC only and skip the Table 64 test',
-      'Test live conductors to earth only, not L–N',
+      'Test the circuit at 500 V regardless and replace any electronic load that fails',
+      'Test at 250 V DC only and skip the Table 64 test on cabling altogether',
+      'Disconnect every sensitive load for the Table 64 test, then reconnect and verify at 250 V',
+      'Test the live conductors to earth only, never the line-to-neutral combination',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The "all-or-nothing" model: either every sensitive load is out of the test path (Table 64 test on cabling and accessories), or every load is connected and you apply only the 250 V DC verification with a 1 MΩ floor. A partial disconnect — one dimmer out, one in — is the worst of both worlds: you risk damage AND the result is meaningless because the in-circuit electronics dominate the leakage.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Why is bridging line and neutral together a sensible practice on the live-to-earth limb of an insulation test where electronic loads are present?',
     options: [
-      'It speeds up the test',
-      'Reg 643.3.1 explicitly permits L and N to be linked when measuring live conductors to the protective conductor; this avoids stressing electronic loads with full L–N test voltage and gives a single representative reading to earth',
-      'It is required by Building Regulations',
-      'It bypasses the SPD',
+      'Reg 643.3.1 permits it, and it avoids L–N stress across electronic loads while reading to earth',
+      'It significantly speeds up the test by halving the number of readings needed',
+      'It is a specific requirement of the Building Regulations for electronic circuits',
+      'It bypasses the SPD so the device need not be disconnected before testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.1(b) says "during this measurement, line and neutral conductors may be connected together" — i.e., when measuring lives-to-CPC. Linking L and N puts the same potential on both sides of any electronic load (dimmer, driver, switch-mode supply), so there is no L–N stress across the load while you measure leakage to earth.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'An RCD or RCBO with an electronic test button — what specifically should you do with it before applying a 500 V DC insulation test on the circuits it protects?',
     options: [
-      'Nothing — RCDs are fine with 500 V DC',
-      'Open the RCD/RCBO so the test pulse is upstream of it, or test downstream side only with the device open. The internal electronics (toroidal sense circuit, electronic test button driver) can be damaged by repeated 500 V DC pulses across them',
-      'Press the test button before testing',
-      'Increase the test voltage to 1000 V DC',
+      'Nothing — RCDs and RCBOs are fine with repeated 500 V DC pulses across them',
+      'Increase the test voltage to 1000 V DC to overcome the device&rsquo;s electronics',
+      'Press the device test button immediately before applying the insulation test',
+      'Open the device and test the downstream side only, keeping the pulse off its electronics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern RCDs and RCBOs increasingly use electronic detection (Type A, F, B). The 500 V DC test stresses the sense circuitry. Best practice: open the device for the test, apply the test downstream, and treat the supply side as a separate test stage. This avoids cumulative degradation of the residual-current detection.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'AFDDs are now mandated for many circuit types in A4:2026. Why does the AFDD complicate insulation testing in particular?',
     options: [
-      'It does not — AFDDs are passive',
-      'AFDDs contain HF arc-detection electronics referenced between L, N and CPC. A 500 V DC test pulse can corrupt the detection circuitry or trigger nuisance device-internal faults; manufacturers typically require AFDDs to be open or removed for the Table 64 test',
-      'AFDDs short L to E during the test',
-      'AFDDs trip whenever a meter is connected',
+      'It does not — AFDDs are passive devices with no sensitive internal electronics',
+      'Their HF arc-detection electronics can be corrupted by the pulse, so they come out for Table 64',
+      'AFDDs internally short line to earth for the duration of any insulation test',
+      'AFDDs trip automatically whenever any test meter is connected to the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'You are insulation-testing the final circuits on an EV charge point installation. The charge point is a Mode 3 unit with internal RDC-DD (residual DC detecting). You apply 500 V DC to its supply circuit with the unit connected. What is the most realistic risk?',
     options: [
-      'No risk — Mode 3 chargers are sealed against test voltages',
-      'The RDC-DD electronics, the internal type-A RCD sense and the contactor coil control board can all be stressed; manufacturers commonly state the charger must be isolated and disconnected at its terminals before any 500 V DC test, and re-tested at 250 V DC after reconnection',
-      'The Type 2 socket pins will arc',
-      'The vehicle CCID will trip',
+      'No risk — Mode 3 chargers are internally sealed against insulation test voltages',
+      'The Type 2 socket pins will arc over to earth under the 500 V DC test pulse',
+      'Its RDC-DD, internal RCD sense and contactor board are stressed, so the unit must be disconnected',
+      'The vehicle&rsquo;s in-cable control and protection device (CCID) will trip the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EV charge points are dense with electronics: pilot-signal logic, RDC-DD detection, internal RCD sense, contactor drivers, sometimes communications boards. Manufacturer manuals universally require the unit to be electrically isolated and disconnected from the cable under test for any IR test above 250 V DC. After reconnection, a 250 V DC test covering the whole circuit completes the verification — and the charger is treated as connected equipment under Reg 643.3.3.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'A capacitive load (filter capacitors at the head of an LED driver) was bridged out for the 500 V DC test, then re-connected. You apply the 250 V DC follow-up test and the reading slowly climbs from 0.6 MΩ to 4 MΩ over 30 seconds. What is happening, and what do you record?',
     options: [
-      'Faulty insulation — record 0.6 MΩ as a fail',
-      'Capacitance settling: the capacitor is charging through the test voltage, making the apparent leakage drop over time. Wait for the reading to stabilise (typically 15–60 s), then record the steady value. If the steady value is ≥ 1 MΩ, the test passes per Reg 643.3.3',
-      'The meter is faulty — replace it',
-      'The CPC is open — disconnect everything',
+      'Capacitance charging — wait for the reading to settle, then record the steady value (≥ 1 MΩ passes)',
+      'Faulty insulation breaking down — record the initial 0.6 MΩ as a definite fail',
+      'A faulty meter producing a drifting reading — replace it and test again',
+      'An open CPC giving an unstable reading — disconnect everything and re-terminate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Insulation-test current charges any in-circuit capacitance. While charging, the apparent IR is low; once the capacitor is fully charged, the residual leakage is the genuine insulation reading. Always allow settling time on circuits that include filter capacitors, electronic ballasts, drivers or PSUs. Record the stabilised reading.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'On a building with shared-neutral lighting circuits and battery-backed smoke alarms interconnected on the same neutral, what is the safe test procedure?',
     options: [
-      'Test each line to its own neutral and ignore the interconnection',
-      'Identify every shared-neutral group, isolate the WHOLE group, disconnect or remove the smoke alarm bases (per manufacturer guidance), then test as one block at the appropriate Table 64 voltage. Do not test one circuit while another in the group is energised',
-      'Disconnect the battery only',
-      'Test at 250 V DC with everything left in place',
+      'Test each line to its own neutral and ignore the shared-neutral interconnection',
+      'Isolate the whole shared-neutral group, remove the alarm bases, then test it as one block',
+      'Disconnect only the smoke alarm backup battery and leave the rest in place',
+      'Test at 250 V DC with all circuits and alarm heads left connected in situ',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'A 250 V DC post-connection test on a circuit including a Type 3 SPD at a final socket reads 0.7 MΩ between L+N (linked) and CPC. The cabling-only Table 64 test before connection was 198 MΩ. What is the correct conclusion?',
     options: [
-      'Pass — both readings are above zero',
-      'Fail — Reg 643.3.3 requires at least 1 MΩ following connection of equipment. 0.7 MΩ is below the regulatory floor and the circuit has not satisfied 643.3.3. Investigate: confirm the SPD is the source of the leakage, decide whether the SPD is faulty, end-of-life or simply doing its job at high humidity; replace as needed',
-      'Pass — the cabling reading was high',
-      'Pass — 250 V DC tests have no minimum',
+      'Pass — both the cabling and post-connection readings are comfortably above zero',
+      'Pass — the 250 V DC post-connection test has no defined minimum value',
+      'Pass — the cabling-only Table 64 reading of 198 MΩ was high enough to carry the circuit',
+      'Fail — 643.3.3 needs ≥ 1 MΩ after connection; investigate the SPD as the leakage source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.3.3 sets a hard floor: ≥ 1 MΩ at 250 V DC after connection. 0.7 MΩ is non-compliant and the certificate cannot be issued for that circuit until the cause is resolved. Most often the cause is an end-of-life MOV in the SPD; less often it is genuine cable degradation that the high-voltage test missed because the leakage path is via the SPD electronics, not the cable insulation.',
   },

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pasma-competence-vs-qualification',
     question: 'What is the key difference between competence and qualification?',
     options: [
-      'They mean exactly the same thing',
-      'Qualification is a certificate; competence is the practical ability to do the job safely',
-      'Competence is only needed for supervisors, not operatives',
-      'Qualification is more important than competence',
+      'A qualification is a certificate; competence is the practical ability to work safely',
+      'They mean exactly the same thing in health and safety law',
+      'Competence is only needed by supervisors, not by operatives',
+      'A qualification always outranks competence on a construction site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A qualification (e.g. a PASMA certificate) proves you completed a training course. Competence is broader \u2014 it combines training, knowledge, experience, and practical ability. You can hold a certificate but not be competent if you lack recent practical experience.',
   },
@@ -40,8 +40,8 @@ const quickCheckQuestions = [
   {
     id: 'pasma-employer-duty',
     question: 'Who is responsible for ensuring that tower users are competent?',
-    options: ['PASMA', 'The HSE', 'The employer', 'The individual worker'],
-    correctIndex: 2,
+    options: ['PASMA', 'The HSE', 'The individual worker', 'The employer'],
+    correctIndex: 3,
     explanation:
       'Under the Work at Height Regulations 2005, the employer has a duty to ensure that work at height is carried out by competent persons. This means employers must provide training, verify competence, and ensure ongoing development \u2014 not just check for a card.',
   },
@@ -75,12 +75,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does PASMA stand for?',
     options: [
-      'Professional Association of Safety Management Advisors',
       "Prefabricated Access Suppliers' and Manufacturers' Association",
+      'Professional Association of Safety Management Advisors',
       'Platform Access Safety and Maintenance Authority',
       "Portable Access Scaffold Manufacturers' Alliance",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PASMA is the Prefabricated Access Suppliers' and Manufacturers' Association. It is the recognised trade body for the mobile access tower industry in the UK.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'What type of PASMA course is designed for supervisors who will not physically assemble towers?',
     options: [
-      'Towers for Users',
       'Towers for Managers',
+      'Towers for Users',
       'Advanced Tower Assembly',
       'Scaffold Inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Towers for Managers is a classroom-based course designed for supervisors, managers, and safety professionals who need to understand tower safety and oversee tower work without physically assembling or dismantling towers themselves.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       "An employer sends a worker on a PASMA course. Is the employer's duty regarding competence now fully discharged?",
     options: [
-      'Yes, the PASMA card proves the worker is competent',
-      'No, the employer must also ensure ongoing experience, supervision, and refresher training as needed',
-      'Yes, provided the worker passes the course assessment',
-      'No, the employer must also obtain a separate HSE licence',
+      'Yes, the PASMA card on its own proves the worker is competent',
+      'Yes, provided the worker passed the course practical assessment',
+      'No, the employer must also obtain a separate HSE tower licence',
+      'No, the employer must also ensure ongoing experience, supervision, and refresher training',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Training alone does not make someone competent. Employers must ensure ongoing competence through practical experience, appropriate supervision, refresher training, and regular assessment. A PASMA card is evidence of training, not a guarantee of continuing competence.',
   },
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 7,
     question: 'What records should an employer maintain regarding tower training?',
     options: [
-      'No records are needed once a PASMA card is issued',
-      'Only the PASMA card number',
-      'Training records including course dates, expiry dates, course type, and any additional competence assessments',
-      'Only records for employees over 25',
+      'No records are required once a PASMA card has been issued',
+      'Only the worker name and the PASMA card number on file',
+      'Course dates, expiry dates, course type, and competence assessments',
+      'Only the training records for employees over the age of 25',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the PASMA card verification system?',
     options: [
-      'A database only accessible to PASMA members',
-      "An online system where anyone can verify a cardholder's training and card validity",
-      'A paper-based register held by the HSE',
-      'A system only available to employers',
+      'A members-only database accessible only to PASMA-approved centres',
+      'A paper-based register of cardholders held centrally by the HSE',
+      'A verification service made available only to registered employers',
+      "An online system where anyone can verify a cardholder's training and validity",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PASMA operates an online card verification system where anyone can check whether a PASMA card is valid by entering the card number. This allows site managers and employers to quickly verify a worker's training status.",
   },

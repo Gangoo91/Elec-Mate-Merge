@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       "A colleague tells you that eating disorders are 'just a phase' and 'not that serious'. Which of the following statements is factually correct?",
     options: [
+      'Eating disorders have the highest mortality rate of any mental health condition and are serious mental illnesses',
       'Eating disorders are a lifestyle choice and people can simply decide to eat normally again',
       'Eating disorders only affect teenage girls and young women',
-      'Eating disorders have the highest mortality rate of any mental health condition and are serious mental illnesses',
       'Eating disorders are caused by vanity and a desire to look thin',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Eating disorders have the highest mortality rate of any mental health condition. They are serious mental illnesses with complex biological, psychological, and social causes. They are NOT a lifestyle choice, a phase, or caused by vanity. They affect people of all ages, genders, and backgrounds. An estimated 1.25 million people in the UK have an eating disorder (BEAT), and around 25% of those affected are male.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'You are concerned that a colleague on site may be struggling with an eating disorder. Which of the following is the MOST appropriate way to approach them?',
     options: [
       'Comment on how much weight they have lost and ask if they are eating properly',
-      'Tell them they look unwell and need to see a doctor immediately',
       'Express concern about their general wellbeing in a private, non-judgemental conversation without commenting on their weight or appearance',
+      'Tell them they look unwell and need to see a doctor immediately',
       'Confront them in front of others so they cannot deny the problem',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "The correct approach is to have a private, non-judgemental conversation expressing concern about their general wellbeing. You should NEVER comment on someone's weight, appearance, or eating habits directly. Comments about weight loss or looking unwell can be deeply triggering and counterproductive. Confronting someone publicly is inappropriate and may cause shame and withdrawal. Focus on expressing care for them as a person, saying something like 'I've noticed you seem a bit down lately, and I wanted to check in with you.'",
   },
@@ -98,16 +98,16 @@ const quizQuestions = [
     id: 1,
     question:
       'Which eating disorder has the highest mortality rate of any mental health condition?',
-    options: ['Binge Eating Disorder', 'Bulimia Nervosa', 'Anorexia Nervosa', 'OSFED'],
-    correctAnswer: 2,
+    options: ['Anorexia Nervosa', 'Binge Eating Disorder', 'Bulimia Nervosa', 'OSFED'],
+    correctAnswer: 0,
     explanation:
       'Anorexia Nervosa has the highest mortality rate of any mental health condition. Deaths may result from the direct physical effects of starvation (cardiac arrest due to electrolyte imbalances, organ failure) or from suicide, as people with Anorexia Nervosa have a significantly elevated suicide risk. However, it is important to note that all eating disorders can be life-threatening and carry serious medical risks.',
   },
   {
     id: 2,
     question: 'Which of the following is the MOST common eating disorder in the UK?',
-    options: ['Anorexia Nervosa', 'Bulimia Nervosa', 'Binge Eating Disorder', 'ARFID'],
-    correctAnswer: 2,
+    options: ['Anorexia Nervosa', 'Bulimia Nervosa', 'ARFID', 'Binge Eating Disorder'],
+    correctAnswer: 3,
     explanation:
       'Binge Eating Disorder (BED) is the most common eating disorder in the UK and worldwide. It is characterised by recurrent episodes of eating large quantities of food in a short period, often very quickly and to the point of discomfort, accompanied by a sense of loss of control during the binge and feelings of shame, distress, or guilt afterwards. Unlike Bulimia Nervosa, people with BED do not regularly use compensatory behaviours such as purging.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'Expressing concern about their general wellbeing',
       'Having the conversation in a private setting',
-      'Commenting on how much weight they have lost or how thin they look',
       'Letting them know about the BEAT helpline',
+      'Commenting on how much weight they have lost or how thin they look',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "You should NEVER comment on someone's weight or appearance when approaching them about a suspected eating disorder. Comments like 'you've lost so much weight' or 'you look so thin' can actually reinforce the eating disorder behaviour, as the person may interpret this as confirmation that their restriction or purging is 'working'. Instead, focus on their general wellbeing: 'I've noticed you seem stressed/tired/down lately, and I wanted to check if you're OK.' Express care about them as a person, not about their body.",
   },
@@ -179,11 +179,11 @@ const quizQuestions = [
     question: 'What does OSFED stand for and why is it clinically significant?',
     options: [
       'Obsessive Specific Food Elimination Disorder — a rare condition affecting only children',
-      'Other Specified Feeding or Eating Disorder — it is as serious as other eating disorders and includes presentations that do not meet full criteria for Anorexia, Bulimia, or BED',
       'Occasional Sporadic Food Exclusion Disorder — a mild form of dieting behaviour',
+      'Other Specified Feeding or Eating Disorder — it is as serious as other eating disorders and includes presentations that do not meet full criteria for Anorexia, Bulimia, or BED',
       'Overweight Specific Feeding and Eating Dysfunction — a condition only affecting people who are overweight',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'OSFED stands for Other Specified Feeding or Eating Disorder. It was previously known as EDNOS (Eating Disorder Not Otherwise Specified). OSFED is clinically significant because it is just as serious and potentially life-threatening as Anorexia Nervosa, Bulimia Nervosa, or Binge Eating Disorder. It includes presentations where the person has significant eating disorder symptoms that cause distress and impairment but does not meet the full diagnostic criteria for one of the other specific disorders. OSFED is actually one of the most commonly diagnosed eating disorders.',
   },

@@ -23,55 +23,55 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 simplified the manual call point distance rules in clause 12. What are the maximum distances now, and what was simplified?',
     options: [
-      'No change.',
-      'Two maxima: 30 m STRAIGHT-LINE distance to the nearest MCP, AND 45 m ACTUAL TRAVEL distance (along the route a person would walk, around obstructions and through doorways). Both maxima are CEILINGS — the designer can specify shorter distances if the risk demands. The simplification: the 2017 edition had multiple distance categories depending on premises type and risk; the 2025 edition collapses these to the single 30 m / 45 m pair as the maximum permissible. Tighter distances are still allowed and still required where, for example, the fire risk assessment identifies higher-risk areas. The change reduces ambiguity at design and audit.',
-      '15 m maximum.',
-      '60 m maximum.',
+      'No change — the multiple premises-type distance categories from 2017 are retained.',
+      'Two maxima — 30 m straight-line and 45 m actual-travel — replacing the old risk categories.',
+      'A single 15 m maximum applied uniformly to every premises type.',
+      'A single 60 m maximum travel distance with no straight-line limit.',
     ],
     correctIndex: 1,
     explanation:
-      'The 30 m / 45 m pair is the load-bearing distance rule for MCP siting. Straight-line is geometric (across the room); actual travel is along the walking route. A typical office corridor with side rooms easily satisfies the 30 m straight-line test but may exceed the 45 m travel test if the route winds — both must be checked.',
+      'The 2025 edition collapses the previous premises-type distance categories into a single pair: 30 m straight-line distance to the nearest MCP AND 45 m actual-travel distance (along the route a person would walk, around obstructions and through doorways). Both are ceilings — the designer can specify shorter where the risk assessment demands. A typical office corridor with side rooms easily passes the 30 m straight-line test but may exceed the 45 m travel test if the route winds, so both must be checked. The change reduces ambiguity at design and audit.',
   },
   {
     id: 'fam2-s3-height',
     question:
       'Per BS 5839-1:2025 clause 12 (clarified mounting height rule), what is the permitted mounting height range for an MCP?',
     options: [
-      'Exactly 1.4 m.',
-      '1.4 m nominal, with a tolerance of +200 mm and -300 mm — giving an absolute permitted range of 1.1 m to 1.6 m above floor level. The 2025 edition CLARIFIED the previous wording (which gave the nominal 1.4 m without a clear tolerance). The asymmetric tolerance (+200/-300) reflects accessibility considerations: a slightly lower mounting (1.1-1.4 m) is more inclusive for shorter users and wheelchair users than a higher mounting. The 1.4 m nominal is calibrated to the standing-arm reach of an average adult; the +200 mm upper cap prevents excessively high mountings that exclude shorter users.',
-      '1 m to 2 m.',
-      '0.5 m to 1.5 m.',
+      'Exactly 1.4 m with no tolerance permitted in either direction.',
+      '1.4 m nominal, +200/-300 mm tolerance, giving an absolute range of 1.1 m to 1.6 m.',
+      'Any height between 1 m and 2 m above finished floor level.',
+      'Any height between 0.5 m and 1.5 m above finished floor level.',
     ],
     correctIndex: 1,
     explanation:
-      'Memorise 1.4 m nominal, +200/-300 tolerance, 1.1-1.6 m absolute range. Architects often want MCPs higher (cleaner sight lines); clause 12 caps that at 1.6 m. Accessibility advocates want them lower; clause 12 floors at 1.1 m to ensure the visible signal-strip is in a normal eye-level scan range.',
+      'The 2025 edition clarified the previous wording (which gave 1.4 m without a clear tolerance) to 1.4 m nominal with +200/-300 mm, an absolute range of 1.1 m to 1.6 m. The asymmetric tolerance reflects accessibility: a slightly lower mounting (1.1-1.4 m) is more inclusive for shorter and wheelchair users. The 1.4 m nominal matches average-adult standing-arm reach; the +200 mm cap prevents excessively high mountings that exclude shorter users. Architects often want them higher for sight lines — clause 12 caps that at 1.6 m.',
   },
   {
     id: 'fam2-s3-types',
     question: 'What is the difference between a Type A and a Type B manual call point?',
     options: [
-      'There is no difference.',
-      'Type A — SINGLE-action operation: pressing the frangible element directly initiates the alarm. Most common type in UK installations. Type B — DOUBLE-action operation: lift cover, then press. Two distinct actions required to initiate the alarm. Both are standardised in BS EN 54-11. Type B is sometimes specified where there is elevated risk of malicious activation (e.g. schools, public-access areas, premises with a history of false alarms) — the cover slows the casual or accidental press without preventing intentional use. The 2025 edition is consistent with the 2017 edition on Types A/B; the only Type-related change is the protective-cover specification (now recommended TRANSPARENT — see next question).',
-      'Type A is for indoor use only.',
-      'Type B is wireless.',
+      'There is no functional difference; the letters are arbitrary catalogue codes.',
+      'Type A is single-action (press the element); Type B is double-action (lift cover, then press).',
+      'Type A is for indoor use only; Type B is rated for external installation.',
+      'Type A is hard-wired; Type B is a wireless radio device.',
     ],
     correctIndex: 1,
     explanation:
-      'Type A is the default; Type B is the malicious-activation mitigation. The double-action requirement — cover plus press — does not delay legitimate use because a person aware of fire intent can lift and press in less than a second. The barrier is meaningful for accidental or playful contact only.',
+      'Type A (single-action: press the frangible element) is the most common UK type. Type B (double-action: lift cover, then press) needs two distinct actions to operate. Both are standardised in BS EN 54-11. Type B suits elevated malicious-activation risk (schools, public-access areas, premises with FA history) — the cover slows casual or accidental presses without delaying intentional use, since a person aware of fire can lift and press in under a second. The 2025 edition is consistent with 2017 on Types A/B; the only change is the now-transparent protective-cover recommendation.',
   },
   {
     id: 'fam2-s3-stairway',
     question:
       'A 5-storey office has manual call points on each stairway landing. Per the BS 5839-1:2025 clause 12.1a clarification, how should each stairway MCP be zoned?',
     options: [
-      'All on one stairway zone.',
-      "Each stairway MCP — except those at final-exit level — should be incorporated into the ZONE THAT SERVES THE ADJACENT ACCOMMODATION on that level. NOT into a separate stairway zone. The reasoning: when an MCP on the third-floor stairway landing operates, the alarm display should point the FRS to the third floor, not to a generic 'stairway' that gives no useful location information. The 2025 edition removed the previous reference to 'enclosed stairway' (which had created interpretive confusion) and now simply states the rule. The MCP on the FINAL-EXIT level may be zoned with the stairway or with the ground-floor accommodation depending on the design intent.",
-      'All on a single building-wide zone.',
-      'Each one on its own zone.',
+      'All stairway MCPs grouped into a single dedicated stairway zone.',
+      'Each landing MCP (except final-exit level) zoned with the accommodation it serves on that floor.',
+      'All stairway MCPs grouped into one building-wide zone covering every floor.',
+      'Each stairway MCP placed on its own individual single-device zone.',
     ],
     correctIndex: 1,
     explanation:
-      'Stairway zoning is one of the historically muddier areas of BS 5839-1 design. The 2025 clarification removes the "enclosed stairway" phrase that was sometimes interpreted as requiring a single stairway zone. The new wording is clear: each landing MCP zones with its accommodation level. Only the final-exit MCP may be treated differently.',
+      'Each stairway MCP — except those at final-exit level — should be incorporated into the zone serving the adjacent accommodation on that level, not a separate stairway zone. When a third-floor landing MCP operates, the panel should point the FRS to the third floor, not a generic "stairway" with no useful location. The 2025 edition removed the confusing "enclosed stairway" reference and states the rule plainly. The final-exit-level MCP may be zoned with the stairway or the ground-floor accommodation depending on design intent.',
   },
 ];
 
@@ -81,53 +81,53 @@ const quizQuestions = [
     question:
       'What are the two maximum distances to the nearest manual call point per BS 5839-1:2025 clause 12?',
     options: [
-      'Just 30 m.',
-      '30 m STRAIGHT-LINE distance AND 45 m ACTUAL TRAVEL distance. BOTH are maxima — both must be satisfied at every point in the protected area. Straight-line is the as-the-crow-flies distance from any point to the nearest MCP, ignoring obstructions. Actual travel is the distance along the route a person would actually walk to reach the MCP, around walls, doorways and obstructions. Travel distance is typically longer than straight-line because of the building geometry. Both numbers are CEILINGS — designers may specify shorter distances where the risk assessment demands.',
-      '60 m only.',
-      '15 m only.',
+      'A single 30 m straight-line distance applied everywhere.',
+      'A single 45 m actual-travel distance applied everywhere.',
+      '30 m straight-line AND 45 m actual-travel distance.',
+      'A 60 m travel distance with no straight-line limit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The 2025 simplification replaced multiple risk-category distances with a single 30 m / 45 m pair as the universal maximum. Tighter distances may still be specified by the designer; this just sets the worst-case ceiling.',
+      'Both are maxima and both must be satisfied at every point in the protected area: 30 m straight-line and 45 m actual travel. The 2025 simplification replaced multiple risk-category distances with this single pair as the universal maximum. Tighter distances may still be specified by the designer; this just sets the worst-case ceiling.',
   },
   {
     id: 2,
     question:
       'Per clause 12, what is the nominal mounting height for an MCP and what tolerance applies?',
     options: [
-      'Any height.',
-      '1.4 m above floor level, with tolerance +200 mm / -300 mm. Absolute permitted range: 1.1 m to 1.6 m. The 1.4 m nominal is calibrated to the comfortable arm-reach height of an average adult; the asymmetric tolerance (+200/-300) reflects accessibility considerations — slightly lower mountings are more inclusive for shorter users and wheelchair users than higher mountings. The 2025 edition CLARIFIED this tolerance — the previous edition stated 1.4 m nominal but with less clear tolerance language.',
-      '2 m exactly.',
-      '0.8 m to 1 m.',
+      '1.4 m above floor level, tolerance +200 / -300 mm (range 1.1 m to 1.6 m).',
+      '2.0 m above floor level, fixed, to keep the device out of casual reach.',
+      '0.8 m to 1.0 m above floor level, at low wheelchair-user height.',
+      'Any convenient height, provided the device is clearly visible.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Memorise: 1.4 m nominal, +200/-300 tolerance, 1.1-1.6 m absolute range. Mountings above 1.6 m exclude shorter users; mountings below 1.1 m put the device below normal eye-level scan and reduce visibility.',
+      'The 1.4 m nominal is calibrated to comfortable adult arm-reach. Memorise: 1.4 m nominal, +200/-300 tolerance, 1.1-1.6 m absolute range. Mountings above 1.6 m exclude shorter users; mountings below 1.1 m put the device below normal eye-level scan and reduce visibility.',
   },
   {
     id: 3,
     question: 'BS EN 54-11 Type A and Type B manual call points differ in what way?',
     options: [
-      'Colour.',
-      'Number of actions to initiate the alarm. Type A — single-action: press the frangible element directly. Type B — double-action: lift cover, then press. Both are EN 54-11 compliant. Type B is sometimes used where malicious or accidental activation is a known risk (schools, public-access areas, premises with FA history) — the cover slows casual contact without delaying intentional use.',
-      'Voltage.',
-      'Wired vs wireless.',
+      'Their case colour — Type A is red and Type B is yellow.',
+      'Their operating voltage on the detection loop.',
+      'Whether they are hard-wired or wireless devices.',
+      'The number of actions — Type A single-action, Type B double-action.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Type A is the UK default; Type B is the malicious-activation hedge. The cover does not delay legitimate use materially (under one second to lift and press) but it eliminates almost all casual or accidental triggers.',
+      'Type A is single-action (press the frangible element); Type B is double-action (lift the cover, then press). Type A is the UK default; Type B is the malicious-activation hedge. The cover does not delay legitimate use materially (under one second to lift and press) but it eliminates almost all casual or accidental triggers.',
   },
   {
     id: 4,
     question:
       'BS 5839-1:2025 clarified the protective cover recommendation for MCPs. What is now recommended?',
     options: [
-      'Opaque covers.',
-      "TRANSPARENT covers. Previous editions recommended that MCPs be fitted with protective covers (to reduce malicious operation) but did not specify the cover material in detail. The 2025 edition clarifies that where covers are fitted, they should be TRANSPARENT — so that the visible 'fire alarm' label and the frangible element remain identifiable through the cover. Opaque covers obscure the device, defeating its purpose as a visible alarm-trigger; transparent covers slow casual contact while preserving visibility.",
-      'Metal covers.',
-      'No covers.',
+      'Transparent covers, keeping the device identifiable while slowing casual contact.',
+      'Opaque covers, to disguise the device from casual passers-by.',
+      'Metal covers, to protect the device from physical impact damage.',
+      'No covers at all, to keep the device fully and immediately accessible.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Transparent covers preserve the visual signal of the MCP — its red colour, its label, its frangible element — while preventing accidental brushes against the trigger. The 2025 clarification settles a small but practically important detail.',
   },
@@ -135,26 +135,26 @@ const quizQuestions = [
     id: 5,
     question: 'Where should an MCP on a stairway landing be zoned per BS 5839-1:2025 clause 12.1a?',
     options: [
-      'On a separate stairway zone.',
-      'In the ZONE that serves the ADJACENT ACCOMMODATION on that level. So for a 5-storey building with stairway MCPs on each landing, the third-floor stairway MCP zones with the third-floor accommodation (offices, residential rooms, whatever serves that level). NOT in a generic "stairway" zone. The exception is the final-exit-level MCP, which may be treated differently. The 2025 edition removed the "enclosed stairway" wording from the 2017 edition that created interpretive confusion.',
-      'On the ground-floor zone only.',
-      'On the topmost floor zone.',
+      'In a single separate "stairway" zone covering all of the landings.',
+      'In the ground-floor zone only, regardless of which landing it serves.',
+      'In the zone serving the adjacent accommodation on that level.',
+      'In the topmost floor zone, as that is the head of the stairway.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Zoning the stairway MCP with its adjacent accommodation gives the FRS useful location information when the MCP operates ("third floor") rather than the unhelpful generic ("stairway"). Final-exit-level MCPs are a designer choice based on the building design.',
+      'Each landing MCP (except at final-exit level) is zoned with the adjacent accommodation on that level, so the panel directs the FRS to the affected floor. This gives the FRS useful location information when the MCP operates ("third floor") rather than the unhelpful generic ("stairway"). Final-exit-level MCPs are a designer choice based on the building design.',
   },
   {
     id: 6,
     question:
       'A 60 m corridor has MCPs at each end. Is this compliant with the 30 m straight-line distance rule?',
     options: [
-      'No.',
-      'YES — exactly. Two MCPs 60 m apart means the centre of the corridor is 30 m from each, satisfying the 30 m straight-line maximum. Anyone in the middle of the corridor reaches an MCP within 30 m geometric distance. (The actual travel distance test, 45 m, is also satisfied as the corridor is straight.) However, this is a TIGHT design — there is no margin for changes in occupancy, room layout, or door positions that might extend travel routes. Good practice would specify intermediate MCPs at e.g. 20 m intervals to leave margin.',
-      'Yes only with covers.',
-      'Only if the corridor is L1.',
+      'No — 60 m apart exceeds the rule at the centre of the corridor.',
+      'Only if the MCPs are fitted with transparent protective covers.',
+      'Only if the corridor forms part of an L1-category system.',
+      'Yes — the centre is exactly 30 m from each MCP, meeting the maximum.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Compliant but not generous. The 30 m / 45 m maxima are ceilings; tighter spacings are best practice and required where the risk assessment indicates. For high-occupancy corridors with moving people, MCPs every 20 m is a defensible specification.',
   },
@@ -163,24 +163,24 @@ const quizQuestions = [
     question:
       'Why does BS 5839-1:2025 specify a 45 m ACTUAL TRAVEL distance in addition to the 30 m straight-line distance?',
     options: [
-      'For accessibility.',
-      'Because the 30 m straight-line distance can be misleading in real building geometry. A point in a corner office may be 25 m straight-line from an MCP in the adjacent corridor, but the actual walking route (out of the office, along the corridor, around a service core, to the MCP) may be 50 m. Without the travel-distance test, the design would pass the geometric test but fail the operational one — a person in that office would have a long walk to raise the alarm. The 45 m actual-travel maximum closes the geometric/operational gap. BOTH tests must be satisfied.',
-      'It is just historical.',
-      'For OS purposes.',
+      'Because straight-line distance can mislead in real building geometry.',
+      'Because the travel distance improves accessibility for wheelchair users.',
+      'Because it is a historical figure carried over from older editions.',
+      'Because it is needed for Ordnance Survey plan and mapping purposes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Real building geometry rarely matches the simple geometric test. Walls, columns, service cores, locked doors and stairwells all extend the actual travel distance. The 45 m travel test forces the designer to consider the route a person would actually walk.',
+      'A point 25 m straight-line from an MCP may be 50 m to walk, so the 45 m travel test closes the gap. Real building geometry rarely matches the simple geometric test. Walls, columns, service cores, locked doors and stairwells all extend the actual travel distance. The 45 m travel test forces the designer to consider the route a person would actually walk.',
   },
   {
     id: 8,
     question:
       'A school is fitting MCPs in corridors with high pupil traffic. Which combination of features should be specified?',
     options: [
-      'Default Type A, no covers.',
-      'Type A or B with TRANSPARENT protective covers (clause 12 / BS EN 54-11 cover recommendation). The transparent cover preserves visibility of the device while reducing malicious activation by pupils — a documented FA-source pattern in schools. Type B (double-action) provides additional barrier; some authorities prefer Type B in schools, others prefer Type A with a transparent cover (functional equivalent in practice). The 2025 edition explicitly lists schools as an example of premises where MCP covers are recommended.',
-      'No MCPs at all.',
-      'Hidden MCPs.',
+      'Default Type A with no protective covers fitted to any device.',
+      'Type A or B fitted with transparent protective covers.',
+      'No MCPs in the corridors at all, to remove the temptation entirely.',
+      'Hidden MCPs concealed behind lockable access panels.',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 9,
     question: 'Where on the wall should an MCP be sited for maximum visibility and accessibility?',
     options: [
-      'In a recess.',
-      'On a CONSPICUOUS surface, at 1.4 m mounting height (with the +200/-300 tolerance), on the route to a final exit, and clear of obstructions. Typical good positions: adjacent to escape doors, on stairway landings, at corridor junctions, on the route past major occupied areas. Avoid: behind doors, in alcoves, in poor lighting, behind columns. The MCP must be IDENTIFIABLE at first glance from a moving person — a person fleeing fire will not pause to look for the device, so its position must place it directly in their line of sight on the natural escape route.',
-      'On the ceiling.',
-      'On the floor.',
+      'Recessed into the wall, to protect it from accidental impact.',
+      'On the ceiling, mounted above the line of escape travel.',
+      'On a conspicuous surface at 1.4 m, on the route to a final exit.',
+      'At floor level, where it is least likely to be knocked.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Conspicuousness is as important as distance. An MCP that is technically within 30 m straight-line but tucked behind a column or in an alcove provides little operational value. Always position on the natural escape route, in normal lighting, at standing-arm-reach height.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'A new build has stairway MCPs labelled "STAIRWAY ZONE 99" on the panel. Is this compliant with the 2025 clause 12.1a rule?',
     options: [
-      'Yes always.',
-      "Generally NO — the stairway-MCP-on-its-own-zone configuration was the pattern that the 2025 clarification specifically addresses. Each stairway MCP (except final-exit-level) should be zoned with the adjacent accommodation on that level, so when the MCP operates the panel directs the FRS to the affected floor. Lumping all stairway MCPs onto a 'STAIRWAY ZONE 99' gives the FRS no useful location information when one operates. Re-zone at next system modification: third-floor landing MCP into Zone 3 (third floor accommodation), fourth-floor landing into Zone 4, etc. Final-exit-level MCP can stay on a separate zone if the design intent calls for it.",
-      'It is acceptable for L4.',
-      'Yes if the building is small.',
+      'Yes, in all cases — a dedicated stairway zone is always acceptable.',
+      'Yes, provided the system is only an L4-category installation.',
+      'Yes, provided the building is small enough to search quickly.',
+      'Generally no — each landing MCP should zone with its adjacent accommodation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Existing systems with stairway-only zones are not necessarily non-compliant against the edition under which they were installed, but at next modification (which triggers a fresh certificate against the current edition) the zoning should be revised to align with clause 12.1a. The change improves the location-of-fire information delivered to the FRS at attendance.',
   },

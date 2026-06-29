@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'hazard-vs-risk',
     question: 'What is the key difference between a hazard and a risk?',
     options: [
-      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
       'A hazard is a potential source of harm; risk is the likelihood and severity of harm occurring',
-      'Workers know the practical requirements and comfort needed for effective use',
-      'Pedestrians, other workers, and members of the public in the vicinity',
+      'A hazard is a minor issue; a risk is a major one that has already caused injury',
+      'A hazard applies to equipment; a risk applies only to people',
+      'A hazard is the legal duty; a risk is the control measure put in place',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A hazard is anything with the potential to cause harm (e.g., exposed live conductors). Risk is the combination of how likely the harm is to occur and how severe it would be. Identifying hazards is the first step; assessing risk comes next.',
   },
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'How often should formal workplace inspections be conducted in building services environments?',
     options: [
+      'Only once a year as part of the annual safety audit',
       'Regularly - typically weekly, monthly, or quarterly depending on risk level',
-      'Channel includes equipment cords; permanent link tests only installed cabling',
-      'Calculated loss based on core alignment - verify with OTDR',
-      'Multi-fibre Termination Push-on (trademarked MPO variant)',
+      'Only after an accident or near miss has been reported',
+      'Whenever a new member of staff joins the team',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Regular scheduled inspections are essential for proactive hazard identification. Higher-risk environments require more frequent inspections. Daily informal checks complement formal scheduled inspections.',
   },
@@ -62,10 +62,10 @@ const quickCheckQuestions = [
     id: 'jsa-purpose',
     question: 'What is the primary purpose of a Job Safety Analysis (JSA)?',
     options: [
-      'Flow coefficient - gallons per minute at 1 psi pressure drop',
-      'Mechanical support preventing cable pull from reaching the fibre',
+      'To record the cost and labour hours of a job for invoicing',
+      'To schedule the order in which trades attend the site',
       'To break down tasks into steps and identify hazards at each stage',
-      'AC polarity alternates; equipment is marked L/N for safety and function',
+      'To confirm the qualifications held by each worker on site',
     ],
     correctIndex: 2,
     explanation:
@@ -75,12 +75,12 @@ const quickCheckQuestions = [
     id: 'near-miss',
     question: 'Why is reporting near misses important for hazard identification?',
     options: [
-      "It's not important - only actual injuries need reporting",
-      "It's only required for RIDDOR purposes",
+      'They are needed to support insurance claims after the event',
+      'They are a legal requirement under RIDDOR for every incident',
+      'They allow blame to be assigned to the worker involved',
       'Near misses reveal hazards before they cause actual harm',
-      'Near miss reports are only for insurance claims',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Near misses are 'free lessons' - they reveal hazards and system failures without injury occurring. Research shows for every serious injury, there are hundreds of near misses. Capturing this data helps prevent future incidents.",
   },
@@ -105,10 +105,10 @@ const quizQuestions = [
     question:
       'During a workplace inspection, which area should receive PARTICULAR attention in a building services environment?',
     options: [
-      'Buildings to be net zero carbon ready with no fossil fuel heating',
-      'Have a slower operating characteristic or time-delay function',
+      'Reception areas and visitor waiting rooms',
+      'Car parks and external landscaped areas',
       'Distribution boards, switch rooms, and plant areas',
-      'The resistance of the earth electrode to general mass of earth',
+      'Stationery stores and document archive rooms',
     ],
     correctAnswer: 2,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which document would you consult to determine if an incident is RIDDOR reportable?',
     options: [
-      'Submittal number, description, date submitted, and approval status',
+      'The Health and Safety at Work etc. Act 1974',
       'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'To prevent signal reflections and communication errors',
-      'Adequate support to prevent mechanical damage from cable weight',
+      'The Management of Health and Safety at Work Regulations 1999',
+      'The Construction (Design and Management) Regulations 2015',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the recommended frequency for reviewing and updating Job Safety Analyses?',
     options: [
-      'Continuous monitoring and recreating fault conditions',
-      'An approved body for electrical contractor registration',
+      'Only once, when the JSA is first written',
+      'Every five years to align with card renewal',
       'When work methods, equipment, or conditions change, or after incidents',
-      'EAWR 1989 Regulation 4(2) — "as may be necessary to prevent danger"',
+      'Only when a new supervisor takes over the site',
     ],
     correctAnswer: 2,
     explanation:

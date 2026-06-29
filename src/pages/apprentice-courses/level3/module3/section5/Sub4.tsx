@@ -42,9 +42,9 @@ const checks = [
     question: 'A synchronous motor:',
     options: [
       'Locks exactly to N_s — no slip',
-      'XLPE has a higher temperature rating',
-      'A hazardous waste consignment note',
-      'Lithium Iron Phosphate (LiFePO4)',
+      'Runs at 4-5 % slip below synchronous speed',
+      'Always runs faster than synchronous speed',
+      'Has a slip that varies widely with load',
     ],
     correctIndex: 0,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     id: 'l3-m3-5-4-vfd',
     question: 'A VFD changes motor speed by:',
     options: [
-      'Lead measures track inputs you can control; lag measures track outcomes that follow',
+      'Inserting variable resistance into the rotor circuit',
       'Varying the supply frequency (and voltage proportionally to keep V/f constant)',
-      'To ensure all team members understand hazards and safety procedures',
-      'Helps in heavyweight construction by reducing peak temperatures',
+      'Switching the windings between star and delta',
+      'Adjusting the number of stator pole pairs',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Synchronous motors are commonly used as:',
     options: [
-      'Locking facility and visible gap or positive indication',
+      'Small domestic fans and extractor units',
       'Large grid generators (alternators) and PFC compensators',
-      'The frequency range between -3dB points (f2 - f1)',
-      'Pre-heats building to reach setpoint exactly at occupancy time',
+      'Cordless power tools and hand drills',
+      'Cheap shaded-pole microwave turntable drives',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'VFD output is:',
     options: [
-      'A competent person with appropriate knowledge, training and experience',
-      'Planning, coordinating, and delivering electrical projects',
+      'A pure smoothed DC voltage to the motor',
+      'A fixed 50 Hz sine wave at reduced amplitude',
       'PWM (chopped) approximating a sine wave at variable frequency',
-      'The contractor who employs the injured worker',
+      'A square-wave AC locked to the supply frequency',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'V/f control means:',
     options: [
-      'Visual, audible, electrical, and thermal symptoms',
-      'Increased resistance, breaking the CPC path',
-      'Delta primary, star secondary with 11 o\\\\\\\\\\\\\\\'clock phase shift',
+      'Voltage is held fixed while frequency varies freely',
+      'Frequency is fixed while only voltage is varied',
+      'Voltage and frequency are varied in opposite directions',
       'V scales linearly with f to keep magnetic flux constant',
     ],
     correctAnswer: 3,
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'Soft-starter operation:',
     options: [
       'Phases-on the supply gradually with thyristors, ramping voltage from 0 to full over a few seconds',
-      'A step-by-step description of how the work will be carried out safely',
-      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
-      'To prevent unnecessary battery discharge and avoid 24-hour recharge periods',
+      'Varies the supply frequency continuously like a VFD',
+      'Switches the windings from star to delta at full speed',
+      'Inserts resistance in the rotor circuit during start-up',
     ],
     correctAnswer: 0,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'A motor contactor (AC-3 rated):',
     options: [
-      "Identify the root cause by repeatedly asking 'why' until the fundamental cause is found",
-      "Apply direct pressure with a large pad and maintain it firmly",
-      "Collapse or overturning of lifting equipment, or electrical short circuit causing fire",
+      "Is suitable only for resistive heating loads",
+      "Switches DC motor armature circuits exclusively",
+      "Provides overcurrent protection in place of a fuse",
       "Switches motor inrush AND load currents reliably for the contactor's rated life cycles",
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'Direct-on-line (DOL) starting requires:',
     options: [
       'Contactor + overload + supply rated for inrush',
-      'Record as failed, investigate cause, rectify, and re-test',
-      'Static friction preventing smooth valve movement',
-      'Integrated security and monitoring systems',
+      'Three contactors and a star-delta timer relay',
+      'A thyristor bridge to ramp the voltage up',
+      'A rectifier and DC bus to feed the motor',
     ],
     correctAnswer: 0,
     explanation:

@@ -15,14 +15,14 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main purpose of a polarity test?',
     options: [
-      'Take reasonable care and cooperate with the system',
-      'To check correct connection of live, neutral, and earth',
-      'The call point tested, date, time, and any faults',
-      'Retake and pass the HS&E test before applying for renewal',
+      'To measure the insulation resistance of the cable',
+      'To check correct connection of live, neutral and earth',
+      'To measure the earth fault loop impedance',
+      'To confirm the protective device operating current',
     ],
     correctIndex: 1,
     explanation:
-      'Polarity testing ensures that live, neutral, and earth conductors are connected to their correct terminals, preventing dangerous cross-connections.',
+      'Polarity testing ensures that live, neutral and earth conductors are connected to their correct terminals, preventing dangerous cross-connections.',
   },
   {
     id: 2,
@@ -30,20 +30,20 @@ const quickCheckQuestions = [
     options: [
       'RCD tester and PAT tester',
       'Clamp meter and oscilloscope',
-      'Low resistance ohmmeter and multimeter',
-      'Multimeter and insulation tester',
+      'Low-resistance ohmmeter and multimeter',
+      'Insulation tester and voltage indicator',
     ],
     correctIndex: 2,
     explanation:
-      'Low resistance ohmmeters and multimeters (set to resistance range) are the standard instruments for accurate continuity testing.',
+      'Low-resistance ohmmeters and multimeters (set to a resistance range) are the standard instruments for accurate continuity testing.',
   },
   {
     id: 3,
     question: 'Why should you always verify isolation before testing?',
     options: [
-      'Regular configuration backups with tested restore procedures',
-      'The step-by-step process for carrying out the work safely',
-      'Balancing technical, practical, and business factors',
+      'To increase the accuracy of the reading',
+      'To remove lead resistance from the measurement',
+      'To record the circuit on the certificate',
       'To ensure safety and prevent damage to test equipment',
     ],
     correctIndex: 3,
@@ -57,49 +57,49 @@ const quizQuestions = [
     id: 1,
     question: 'What does a polarity test check for?',
     options: [
-      'Only if approved by manufacturer for switching duty',
-      'Correct connection of live, neutral, and earth',
-      'They may retain dangerous voltage even after isolation',
-      '3% lighting and 5% other circuits',
+      'The insulation resistance of the cable',
+      'Correct connection of live, neutral and earth',
+      'The earth fault loop impedance of the circuit',
+      'The operating current of the protective device',
     ],
     correctAnswer: 1,
     explanation:
-      'Polarity testing verifies that live, neutral, and earth conductors are connected to their correct terminals.',
+      'Polarity testing verifies that live, neutral and earth conductors are connected to their correct terminals.',
   },
   {
     id: 2,
-    question: 'True or False: Continuity testing can be done on a live circuit.',
+    question: 'Can continuity testing be carried out on a live circuit?',
     options: [
-      'Only with special equipment',
-      'True',
-      'False',
-      'Only on low voltage circuits',
+      'Yes, with special equipment',
+      'Yes, on low-voltage circuits only',
+      'No, the circuit must be isolated first',
+      'Yes, provided gloves are worn',
     ],
     correctAnswer: 2,
     explanation:
-      'False - Continuity testing must always be performed with the circuit isolated for safety and accuracy.',
+      'Continuity testing must always be performed with the circuit isolated for safety and accuracy.',
   },
   {
     id: 3,
-    question: 'Name one tool used for continuity testing.',
+    question: 'Which instrument is suitable for continuity testing?',
     options: [
-      'Continuity tester',
-      'Low resistance ohmmeter',
-      'Multimeter',
-      'All of the above',
+      'An insulation resistance tester',
+      'An RCD tester',
+      'A clamp meter set to AC current',
+      'A low-resistance ohmmeter',
     ],
     correctAnswer: 3,
     explanation:
-      'Low resistance ohmmeters, multimeters, and dedicated continuity testers are all suitable for continuity testing.',
+      'Low-resistance ohmmeters (and multimeters on a resistance range) are the standard instruments for continuity testing.',
   },
   {
     id: 4,
     question: 'Why is a proving unit used before and after testing?',
     options: [
-      'To ensure the tester is functioning correctly',
-      '1.5 kN applied over a 100 mm x 100 mm area',
-      'Continuing Professional Development',
-      'Actuator wired to wrong digital output',
+      'To verify the test instrument is functioning correctly',
+      'To record the test results automatically',
+      'To increase the test current applied to the circuit',
+      'To label the circuit once testing is complete',
     ],
     correctAnswer: 0,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Which regulation covers verification during installation?',
+    question: 'Which standard covers initial verification during installation?',
     options: [
-      'BS 5839',
-      'BS 7671',
-      'BS 5266',
-      'BS EN 61439',
+      'BS 5839 (fire detection and alarm systems)',
+      'BS 7671 (requirements for electrical installations)',
+      'BS 5266 (emergency lighting)',
+      'BS EN 61439 (low-voltage switchgear assemblies)',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 6,
     question: 'What should be done if continuity readings are unusually high?',
     options: [
-      'Competing, collaborating, compromising, avoiding, accommodating',
-      'A building that generates more energy than it consumes over a year',
+      'Record the value and energise the circuit',
+      'Ignore it if the circuit is short',
       'Investigate for loose connections or damaged cables',
-      'Excellent insulation, flexible, and durable',
+      'Increase the test current and retest only',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,9 +135,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to label a circuit after testing?',
     options: [
-      'Record of all isolations and their status',
-      'Missed alerts due to system misconfiguration',
-      'To remove lead resistance from measurement',
+      'To record the insulation resistance value',
+      'To remove the lead resistance from the measurement',
+      'To increase the rating of the protective device',
       'To avoid retesting and ensure correct identification',
     ],
     correctAnswer: 3,
@@ -147,16 +147,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'When testing polarity at a socket, which two pins should you measure between for phase and neutral verification?',
+      'When testing polarity at a socket, between which two terminals do you verify phase and neutral?',
     options: [
-      'Live pin and neutral pin',
-      'Neutral pin and earth pin',
-      'Live pin and earth pin',
-      'All pins together',
+      'The live terminal and the neutral terminal',
+      'The neutral terminal and the earth terminal',
+      'The live terminal and the earth terminal',
+      'The two earth terminals on a twin socket',
     ],
     correctAnswer: 0,
     explanation:
-      'Phase and neutral polarity verification requires testing between the live pin and neutral pin of the socket.',
+      'Phase and neutral polarity verification requires testing between the live terminal and the neutral terminal of the socket.',
   },
 ];
 

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'In the Skill-Will Matrix, an experienced electrician who has the technical ability but seems disengaged and unmotivated falls into which quadrant?',
     options: [
+      'Low Will, High Skill — needs exciting and motivating',
       'High Will, Low Skill — needs guiding and coaching',
       'High Will, High Skill — can be fully delegated to',
-      'Low Will, High Skill — needs exciting and motivating',
       'Low Will, Low Skill — needs directing and close supervision',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'An experienced but disengaged worker has high skill but low will — they know HOW to do the work but have lost the motivation. The correct approach is to EXCITE them: find out what has caused the disengagement, reconnect them with meaningful work, give them ownership, and reignite their interest. Giving them more instruction (which they do not need) will only increase frustration.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     question:
       "A supervisor tells an apprentice 'Sort out area B when you get a chance.' What SMART delegation principle is most obviously missing?",
     options: [
-      "Specific — 'sort out' is vague and could mean anything",
       'Achievable — the task is impossible for an apprentice',
       'Relevant — area B has nothing to do with the project',
       "Time-bound — 'when you get a chance' has no deadline",
+      "Specific — 'sort out' is vague and could mean anything",
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "While 'when you get a chance' also lacks a deadline (Time-bound), the most obviously missing element is Specific. 'Sort out area B' could mean tidy up, complete the first fix, do the testing, move materials — it is completely vague. Good delegation would specify exactly what needs doing: 'Complete the first fix wiring in area B, connecting all socket outlets to the distribution board per the drawing.'",
   },
@@ -88,11 +88,11 @@ const quizQuestions = [
     question: 'The biggest mistake new supervisors typically make with delegation is:',
     options: [
       'Delegating too many tasks to their team',
-      'Trying to do everything themselves instead of delegating',
       'Delegating only to the most experienced team members',
       'Asking for too much feedback on delegated tasks',
+      'Trying to do everything themselves instead of delegating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most common mistake is trying to do the work themselves rather than leading through others. New supervisors often feel they can do tasks faster and better, but this creates a bottleneck, leads to burnout, and prevents the team from developing.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'In the Skill-Will Matrix, a new apprentice who is enthusiastic but lacks technical skills should be:',
     options: [
+      'Guided — given coaching, support, and gradually increasing responsibility',
       'Delegated to — given full autonomy with no supervision',
       'Excited — given motivational talks and recognition',
-      'Guided — given coaching, support, and gradually increasing responsibility',
       'Directed — given strict instructions with no explanation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A new apprentice with high will but low skill falls into the GUIDE quadrant. They need coaching, clear instruction, and supported practice — not full autonomy (they lack skills) and not just motivation (they already have that). Guiding combines teaching with encouragement.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     options: [
       'Delegating boring tasks as well as interesting ones',
       'Following up on delegated tasks regularly',
-      'Micromanaging after you have delegated — not letting go',
       'Explaining why the task matters to the project',
+      'Micromanaging after you have delegated — not letting go',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Micromanaging after delegating is widely regarded as the worst delegation mistake. It undermines trust, signals that you do not believe in the person's ability, removes their sense of ownership, and defeats the purpose of delegating in the first place. If you cannot let go, you have not truly delegated.",
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "The 'monkey on the back' concept (Harvard Business Review) describes:",
     options: [
-      'The weight of responsibility that supervisors carry',
       'How delegated tasks jump back to the supervisor when they take problems back',
+      'The weight of responsibility that supervisors carry',
       'The natural progression of career development in management',
       'How stress accumulates during busy project phases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'monkey' is the next action on a task. When a supervisor takes back a problem from someone they delegated to ('Leave it with me'), the monkey jumps from the team member's back onto the supervisor's. Effective leaders help people solve problems rather than taking the problems back.",
   },
@@ -183,11 +183,11 @@ const quizQuestions = [
       'When you delegate without giving the person the authority to make decisions about the task, this is called:',
     options: [
       'SMART delegation',
-      'Servant leadership',
       'Delegating without authority',
+      'Servant leadership',
       'The skill-will approach',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Delegating without authority means giving someone responsibility for a task but not the power to make decisions about how to complete it. For example, asking someone to coordinate a task but requiring them to check every decision with you first. This creates frustration and bottlenecks — if you delegate the task, delegate the authority to complete it.',
   },

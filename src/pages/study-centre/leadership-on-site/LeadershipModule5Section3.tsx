@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'Under CDM 2015, which of the following is a specific duty of a supervisor on a construction site?',
     options: [
+      'Ensuring safe systems of work are followed and that workers are competent for the tasks they carry out',
       'Writing the pre-construction information document for the client',
       'Appointing the principal designer for the project',
-      'Ensuring safe systems of work are followed and that workers are competent for the tasks they carry out',
       'Setting the overall project budget and agreeing contract terms',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Under CDM 2015, supervisors have a duty to ensure safe systems of work are followed, risk assessments are communicated and understood, PPE is worn, and competent workers carry out the tasks. Supervisors can be personally liable for safety failures within their area of responsibility.',
   },
@@ -33,11 +33,11 @@ const quickCheckQuestions = [
     question: 'What is the key difference between safety compliance and safety culture?',
     options: [
       'Compliance costs more money than culture',
-      'Compliance is following rules because you have to; culture is following rules because you believe in them',
       'Culture only applies to large construction companies, not small teams',
+      'Compliance is following rules because you have to; culture is following rules because you believe in them',
       'There is no difference — they are the same thing',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Safety compliance means following the rules because you have to (fear of punishment). Safety culture means following the rules because you believe in them (intrinsic commitment to safety). Research shows that transformational leadership drives safety participation (going beyond the minimum), while transactional leadership drives only compliance (meeting the minimum).',
   },
@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     options: [
       'Only when instructed to do so by the site manager',
       'Only when a member of their own team is at risk',
-      'Whenever they believe work is unsafe — including their own team, other trades, and even people senior to them',
       'Only after completing a formal risk assessment and getting it signed off',
+      'Whenever they believe work is unsafe — including their own team, other trades, and even people senior to them',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'A supervisor has the legal right AND the moral duty to stop any work they believe is unsafe. This includes their own team, other trades, and even people who are more senior. Programme pressure must never override safety. If pressured to compromise on safety, escalate immediately.',
   },
@@ -86,11 +86,11 @@ const quizQuestions = [
     question: 'Under which legislation can a supervisor be personally liable for safety failures?',
     options: [
       'The Building Regulations 2010 only',
-      'The Health and Safety at Work Act 1974 and CDM 2015',
       'The Electricity at Work Regulations 1989 only',
       'The Employment Rights Act 1996 only',
+      'The Health and Safety at Work Act 1974 and CDM 2015',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Supervisors can be personally liable under the Health and Safety at Work Act 1974 (Section 7 — employee duties, Section 37 — individual liability) and CDM 2015 (duties on those carrying out construction work). Both pieces of legislation place specific responsibilities on individuals, not just organisations.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: 'The single most powerful influence on whether workers take safety shortcuts is:',
     options: [
+      'What they see their supervisor do — leading by example',
       'The amount of safety signage displayed on site',
       'Whether there are CCTV cameras monitoring the work area',
-      'What they see their supervisor do — leading by example',
       'The length of the site induction they received',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Research consistently shows that what workers see their supervisor do is the single most powerful influence on their own safety behaviour. If a supervisor walks past hazards without acting, does not wear PPE, or cuts corners under pressure, the team learns that these behaviours are acceptable. The reverse is equally true.',
   },
@@ -138,11 +138,11 @@ const quizQuestions = [
     question: 'A site induction should be updated when:',
     options: [
       "It is only updated annually as part of the company's management review",
-      'Conditions change, new hazards are introduced, or emergency procedures are modified',
       'A new apprentice starts on site — only for them',
       'The client requests it during a site visit',
+      'Conditions change, new hazards are introduced, or emergency procedures are modified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Site inductions must be reviewed and updated whenever conditions change significantly — new phases of work, new hazards, changes to emergency procedures or access routes, and after incidents that reveal gaps. An induction that does not reflect current site conditions gives a false sense of security.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'When stopping unsafe work, a supervisor should:',
     options: [
+      'Intervene immediately — explain what was observed, why it is unsafe, and not restart until the hazard is controlled',
       'Wait until the end of the shift to avoid disrupting productivity',
       'Only stop work if the site manager gives permission first',
-      'Intervene immediately — explain what was observed, why it is unsafe, and not restart until the hazard is controlled',
       'Take photographs but allow work to continue while writing a report',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'When unsafe work is identified, the supervisor must intervene immediately. Stop the work, explain calmly and firmly what was observed and why it is unsafe, and do not allow the work to restart until the hazard is controlled. Waiting until later risks serious injury or death in the intervening period.',
   },

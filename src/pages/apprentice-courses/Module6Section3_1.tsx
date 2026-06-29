@@ -108,9 +108,9 @@ const Module6Section3_1 = () => {
       question: 'What happens if you fail to zero a continuity tester?',
       options: [
         'Results will include lead resistance',
-        'Disconnect and isolate circuit',
-        'Insulation resistance tester',
-        'To protect the meter and get accurate readings',
+        'The instrument will refuse to take a reading',
+        'The test voltage will rise dangerously',
+        'The circuit will trip its protective device',
       ],
       correctAnswer: 0,
       explanation:
@@ -120,10 +120,10 @@ const Module6Section3_1 = () => {
       id: 9,
       question: 'Which test instrument applies high DC voltage to a circuit?',
       options: [
-        'External Device Monitoring',
+        'Continuity tester',
         'Insulation resistance tester',
-        'Hot spots indicating problems',
-        'High resistance connections',
+        'Earth fault loop impedance tester',
+        'Socket tester',
       ],
       correctAnswer: 1,
       explanation:
@@ -133,10 +133,10 @@ const Module6Section3_1 = () => {
       id: 10,
       question: 'Why is it important to use the correct range on a multimeter?',
       options: [
-        'Smooth operation throughout range',
-        'Maximum 50% fill for cable management and future additions',
+        'To extend the life of the test leads',
+        'To remove the need for calibration',
         'To protect the meter and get accurate readings',
-        'Common and can provide different benefits',
+        'To allow testing without isolation',
       ],
       correctAnswer: 2,
       explanation:

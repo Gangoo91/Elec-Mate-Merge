@@ -13,34 +13,34 @@ const quickCheckQuestions = [
   {
     question: 'What is the first step when troubleshooting a device that has stopped responding?',
     options: [
-      'Replace the device immediately',
       'Check if the device is online and powered, then verify hub connectivity',
-      'Reset all devices to factory settings',
-      'Contact the manufacturer',
+      'Replace the unresponsive device with a new unit immediately',
+      'Reset every device in the system to factory settings',
+      'Contact the device manufacturer for support straight away',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Start with the basics: verify the device has power, check if it shows as online in its app, and confirm the hub or bridge is connected. Most issues are resolved at this stage.',
   },
   {
     question: 'What might cause automation routines to stop working across multiple devices?',
     options: [
-      'Individual device battery depletion',
+      'Battery depletion in one individual end device',
+      'A firmware update applied to a single device',
+      'Changes in the ambient room temperature',
       'Hub or cloud service outage affecting the automation engine',
-      'Device firmware updates',
-      'Room temperature changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When multiple devices are affected simultaneously, the issue is likely at the hub or cloud level. Check hub status, internet connectivity, and manufacturer service status pages.',
   },
   {
     question: 'Why is it important to keep manufacturer apps updated?',
     options: [
-      'To change app colours',
+      'To change the colour scheme of the app interface',
       'Updates often fix bugs and improve compatibility with other systems',
-      'To reduce battery usage',
-      'To unlock paid features',
+      'To lower the battery usage of connected devices',
+      'To unlock paid premium features within the app',
     ],
     correctAnswer: 1,
     explanation:
@@ -52,34 +52,34 @@ const quizQuestions = [
   {
     question: 'What should you check if a Zigbee device is intermittently unresponsive?',
     options: [
-      'Internet connection speed',
       'Zigbee mesh strength and router device placement',
-      'Cloud subscription status',
-      'Voice assistant settings',
+      'The download speed of the broadband connection',
+      'The status of the cloud account subscription',
+      'The configuration of the voice assistant settings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Zigbee devices rely on mesh networking. Intermittent issues often indicate weak mesh coverage. Check that router devices (mains-powered) are positioned to provide good coverage to end devices.',
   },
   {
     question: 'What is a common cause of voice commands working but app control failing?',
     options: [
-      'Speaker volume too low',
-      'Voice assistant using different cloud path than app',
-      'Device firmware outdated',
-      'Room too cold',
+      'The smart speaker volume is set too low to hear',
+      'The device firmware version is out of date',
+      'The room is too cold for the device to operate',
+      'Voice assistant using a different cloud path than the app',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Voice assistants may communicate with devices via different routes than manufacturer apps. If one works and not the other, investigate each communication path independently.',
   },
   {
     question: 'How can you isolate whether an issue is with a device or the hub?',
     options: [
-      'Replace both simultaneously',
+      'Replace both the device and the hub at the same time',
       'Test the device via its native app, bypassing the hub',
-      'Wait 24 hours',
-      'Contact the manufacturer',
+      'Wait 24 hours to see if the fault clears itself',
+      'Contact the manufacturer support line for advice',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,22 +88,22 @@ const quizQuestions = [
   {
     question: 'What might cause two routines to conflict with each other?',
     options: [
-      'Using different voice assistants',
+      'Using two different voice assistants in the home',
+      'Mixing devices from several different brands',
       'Overlapping triggers or contradictory actions on the same device',
-      'Different device brands',
-      'Using Wi-Fi instead of Ethernet',
+      'Connecting the hub over Wi-Fi instead of Ethernet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Routines can conflict if they have overlapping triggers (same time or event) with contradictory actions. For example, one turning lights on whilst another turns them off at the same time.',
   },
   {
     question: 'What is the best approach when a customer reports intermittent issues?',
     options: [
-      "Tell them it's normal",
+      'Reassure them that occasional dropouts are entirely normal',
       'Document patterns, check logs, and identify common factors',
-      'Replace all equipment',
-      'Disable all automations',
+      'Replace all of the installed equipment as a precaution',
+      'Disable every automation routine in the system',
     ],
     correctAnswer: 1,
     explanation:

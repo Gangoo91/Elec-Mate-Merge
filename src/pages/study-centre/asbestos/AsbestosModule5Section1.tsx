@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'Why should you NOT rush out of an area where asbestos has been accidentally disturbed?',
     options: [
-      'Rushing creates air currents that spread fibres further',
       'You might slip and injure yourself',
+      'Rushing creates air currents that spread fibres further',
       'It causes panic among other workers',
       'The HSE requires you to walk at all times on site',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Rushing out of a contaminated area creates air currents and turbulence that can spread asbestos fibres much further than they would otherwise travel. You should leave the area calmly and close the door behind you. The priority is to contain the fibres within the smallest possible area.',
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       'Under which regulations might an accidental asbestos disturbance need to be reported?',
     options: [
-      'RIDDOR — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
       'COSHH — Control of Substances Hazardous to Health',
       'CDM — Construction (Design and Management) Regulations',
+      'RIDDOR — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
       'The Building Regulations Part P',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'An accidental disturbance of asbestos may need to be reported under RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations) if it constitutes a dangerous occurrence — specifically, the accidental release of a biological agent or substance that could cause harm to health. COSHH and CAR 2012 are also relevant regulations, but the reporting duty for incidents falls under RIDDOR.',
   },
@@ -80,12 +80,12 @@ const quizQuestions = [
     question:
       'What is the FIRST thing you should do if you accidentally disturb asbestos-containing material?',
     options: [
-      'Call the HSE immediately',
       'Stop work immediately and do not continue to disturb the material',
+      'Call the HSE immediately',
       'Try to clean up the debris quickly to limit exposure',
       'Put on RPE and continue working carefully',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The very first action is to STOP work immediately. Do not continue to disturb the material, do not try to clean up the debris, and do not continue working even with RPE. Stopping immediately limits the amount of fibre released into the air. The 4-S procedure begins with STOP.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'The HSE enforcement officer',
       'An asbestos removal contractor',
-      'Your immediate supervisor or site manager',
       'Your GP',
+      'Your immediate supervisor or site manager',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Your immediate supervisor or site manager should be the first person you contact. They will then take responsibility for contacting the building dutyholder, arranging for a competent person to assess the situation, and escalating to the HSE if necessary. The chain of communication starts with your direct line management.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'A plumber breaks a section of pipe lagging while accessing a valve. What makes this scenario particularly high-risk?',
     options: [
-      'Pipe lagging is very expensive to replace',
       'Pipe lagging typically contains amosite/crocidolite and is highly friable — the highest-risk ACM',
+      'Pipe lagging is very expensive to replace',
       'The valve may have been damaged',
       'Pipe lagging is always blue in colour, which indicates crocidolite',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pipe lagging is one of the highest-risk ACMs because it typically contains amosite (brown asbestos) and/or crocidolite (blue asbestos) and is highly friable — meaning it crumbles easily and releases large quantities of dangerous fibres when disturbed. Breaking even a small section can create a significant fibre release requiring specialist clean-up.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     options: [
       'Wearing RPE at all times in every building',
       'Only working in buildings built after 2010',
-      'Always checking the asbestos register before starting any work in a pre-2000 building',
       'Using hand tools instead of power tools',
+      'Always checking the asbestos register before starting any work in a pre-2000 building',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The single most effective prevention measure is always checking the asbestos register BEFORE starting any work in a pre-2000 building. The register identifies the location, type, and condition of known ACMs, allowing you to plan your work to avoid disturbing them. A few minutes checking the register can prevent an accidental disturbance and a lifetime of worry about asbestos exposure.',
   },

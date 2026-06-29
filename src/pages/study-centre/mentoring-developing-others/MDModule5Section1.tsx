@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice consistently does the bare minimum, arrives on the dot and leaves on the dot, and shows no interest in learning beyond what is strictly required. Before taking disciplinary action, what should a mentor do first?',
     options: [
+      'Have a private one-to-one conversation to explore the root cause of their disengagement',
       'Issue a formal warning for poor engagement',
       'Assign more challenging work to force them to engage',
-      'Have a private one-to-one conversation to explore the root cause of their disengagement',
       'Report them to their college tutor for lack of motivation',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The most effective first step is always to explore the root cause. Disengagement can stem from many sources: wrong career choice, personal problems, poor previous learning experiences, feeling undervalued, or even undiagnosed learning difficulties. A private, non-judgemental conversation often reveals the real issue, which then allows you to address it appropriately. Jumping straight to disciplinary action or reporting addresses symptoms, not causes.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'An apprentice rushes through safe isolation without proving dead. They say "I have done this loads of times, I do not need to check." This learner is at which stage of the conscious competence model?',
     options: [
-      'Unconscious competence — they can do it without thinking',
-      'Conscious competence — they know what they are doing and do it deliberately',
       'Unconscious incompetence — they do not know what they do not know',
+      'Conscious competence — they know what they are doing and do it deliberately',
+      'Unconscious competence — they can do it without thinking',
       'Conscious incompetence — they know they cannot do it yet',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'This is unconscious incompetence — the most dangerous stage. The apprentice believes they are competent (hence "I have done this loads of times") but is actually performing the task unsafely by skipping critical steps. They do not recognise their own incompetence. This is why overconfident learners pose a serious safety risk, particularly in the electrical trade where mistakes can be fatal.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     options: [
       '"Have you been paying attention?"',
       '"Do you want to be an electrician or not?"',
-      '"If your life depended on getting this right, could you do it?"',
       '"Shall I show you a fourth time?"',
+      '"If your life depended on getting this right, could you do it?"',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The diagnostic question "If their life depended on it, could they do it?" is the key to distinguishing between skill and motivation deficits. If they could do it under extreme motivation, then the knowledge and skill are present but the motivation or attention is lacking — that is a motivational deficit requiring a conversation about attitude and consequences. If they genuinely could not do it even with maximum motivation, then it is a skill deficit requiring reteaching with a different approach.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'An older, experienced mentor finds it difficult to relate to a 17-year-old apprentice who communicates primarily through their phone. What approach is most likely to bridge this generational gap?',
     options: [
+      'Find common ground through shared trade identity and adapt communication methods where possible',
       'Ban the apprentice from using their phone on site',
       'Insist the apprentice communicates the same way the mentor does',
-      'Find common ground through shared trade identity and adapt communication methods where possible',
       'Request a younger mentor who will understand the apprentice better',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Finding common ground through shared trade identity is the most constructive approach. Despite generational differences in communication preferences, both mentor and apprentice share a commitment to the electrical trade, a desire to do good work, and pride in their skills. The mentor might adapt by using WhatsApp for sending quick reference photos, while the apprentice adapts by giving full attention during face-to-face demonstrations. Meeting in the middle builds mutual respect.',
   },
@@ -183,11 +183,11 @@ const quizQuestions = [
       'A mentor discovers that an apprentice is being bullied by another tradesperson on site. What should the mentor do?',
     options: [
       'Tell the apprentice to toughen up — construction sites are rough environments',
-      'Confront the tradesperson directly and sort it out themselves',
       'Take the apprentice seriously, document the situation, and escalate through proper channels (site management, HR, or their employer)',
+      'Confront the tradesperson directly and sort it out themselves',
       'Advise the apprentice to avoid the tradesperson and hope it resolves itself',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The mentor has a duty of care to take the situation seriously, document what is happening, and escalate through proper channels. Telling an apprentice to "toughen up" normalises bullying and damages trust. Confronting the tradesperson directly could escalate the situation or put the mentor in a difficult position. Avoidance allows the behaviour to continue and may worsen. The correct approach protects the apprentice, creates a formal record, and involves people with the authority to address the situation.',
   },
@@ -197,11 +197,11 @@ const quizQuestions = [
       'When temporarily adjusting expectations for an apprentice going through personal difficulties, what is the most important principle?',
     options: [
       'Remove all deadlines until they feel better',
-      'Set a defined period for adjusted expectations and agree a clear plan to return to normal standards',
       'Treat them exactly the same as always — personal problems should not affect work',
       'Take over their work so they have nothing to worry about',
+      'Set a defined period for adjusted expectations and agree a clear plan to return to normal standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The key principle is that adjustments should be temporary, defined, and agreed. Set a specific period (perhaps two to four weeks), agree what adjusted expectations look like, and schedule a review date. This shows compassion while maintaining professional standards. It also teaches an important life lesson: employers will support you through difficult times, but professional responsibilities continue. Open-ended removal of expectations, ignoring the situation, or taking over their work all prevent the apprentice from developing resilience.',
   },

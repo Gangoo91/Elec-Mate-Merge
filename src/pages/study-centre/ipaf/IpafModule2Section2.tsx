@@ -24,20 +24,20 @@ const quizQuestions = [
     id: 2,
     question: 'At what height should mid-rails be fitted on a mobile access tower?',
     options: [
-      'Exactly 470mm above the platform',
       'Exactly 475mm above the platform',
       'Approximately halfway between the platform and the guardrail — around 470mm',
+      'Exactly 250mm above the platform',
       'There is no specific requirement for mid-rail height',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Mid-rails should be positioned approximately 470mm above the platform, roughly halfway between the toeboard and the guardrail. This prevents a person falling or sliding through the gap between the guardrail and the platform.',
   },
   {
     id: 3,
     question: 'What is the minimum height for toeboards on a mobile access tower?',
-    options: ['50mm', '100mm', '150mm', '200mm'],
-    correctAnswer: 2,
+    options: ['150mm', '100mm', '50mm', '200mm'],
+    correctAnswer: 0,
     explanation:
       'Toeboards must be at least 150mm high. They prevent tools, materials, and debris from being kicked or falling off the platform edge, protecting anyone below the tower.',
   },
@@ -46,11 +46,11 @@ const quizQuestions = [
     question: 'What is the primary function of diagonal braces on a mobile access tower?',
     options: [
       'To provide a climbing route to the platform',
-      'To prevent the tower from racking (swaying sideways)',
       'To support the weight of the platform',
       'To connect the stabilisers to the frames',
+      'To prevent the tower from racking (swaying sideways)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Diagonal braces (also called cross-braces) triangulate the tower structure, preventing it from racking — the sideways swaying motion that could cause the tower to collapse. Without diagonal braces, the tower has no lateral rigidity.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     options: [
       'To allow ventilation inside the tower',
       'To reduce the weight of the platform',
-      'To provide safe access through the platform whilst maintaining guardrail protection',
       'To allow tools to be passed up from below',
+      'To provide safe access through the platform whilst maintaining guardrail protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Trapdoors allow the operative to climb up through the platform from inside the tower. Once on the platform, the trapdoor is closed, maintaining a complete working surface and uninterrupted edge protection from the guardrails.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the difference between stabilisers and outriggers?',
     options: [
-      'There is no difference — the terms are interchangeable',
-      'Stabilisers attach to the base; outriggers attach higher up the tower',
       'Stabilisers increase the effective base area; outriggers provide diagonal support',
+      'Stabilisers attach to the base; outriggers attach higher up the tower',
+      'There is no difference — the terms are interchangeable',
       'Stabilisers are used outdoors; outriggers are used indoors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Stabilisers are devices that increase the effective base area of the tower, extending outward from the base on all four sides. Outriggers serve a similar purpose but may attach at different points. Both increase stability and prevent overturning.',
   },
@@ -113,8 +113,8 @@ const quickCheckQuestions = [
     id: 'guardrail-height',
     question:
       'A site supervisor asks you what the minimum guardrail height should be on your tower. What do you tell them?',
-    options: ['750mm', '850mm', '950mm', '1100mm'],
-    correctIndex: 2,
+    options: ['950mm', '850mm', '750mm', '1100mm'],
+    correctIndex: 0,
     explanation:
       'The minimum guardrail height is 950mm above the platform surface, as specified in BS EN 1004. This is a non-negotiable safety requirement — if the guardrails do not reach this height, the tower must not be used.',
   },
@@ -138,11 +138,11 @@ const quickCheckQuestions = [
       'Why are toeboards required on every working platform, even at relatively low heights?',
     options: [
       'To provide a footrest for the operative',
-      'To prevent tools and materials falling off the platform edge',
       'To add structural strength to the platform',
+      'To prevent tools and materials falling off the platform edge',
       'To mark the edge of the platform visually',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Toeboards at a minimum of 150mm high prevent tools, materials, and debris from being kicked or sliding off the platform edge. Falling objects are a serious hazard to anyone below the tower, even from relatively modest heights.',
   },

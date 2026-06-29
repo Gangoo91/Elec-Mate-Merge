@@ -14,11 +14,11 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     question:
-      'What accuracy class is recommended as minimum for Dynamic Load Management applications?',
-    options: ['Class 3 (±3%)', 'Class 1 (±1%)', 'Class 0.5 (±0.5%)', 'Class 0.2 (±0.2%)'],
-    correctAnswer: 1,
+      'What measurement accuracy class is recommended as a minimum for Dynamic Load Management?',
+    options: ['Class 1 (±1%)', 'Class 3 (±3%)', 'Class 0.5 (±0.5%)', 'Class 0.2 (±0.2%)'],
+    correctAnswer: 0,
     explanation:
-      'Class 1 (±1%) accuracy is the minimum recommendation for DLM applications, providing sufficient accuracy for load management whilst being cost-effective.',
+      'Class 1 (±1%) is the usual minimum for dynamic load management, giving sufficient accuracy for control while remaining cost-effective.',
   },
   {
     question: 'What is the primary advantage of split-core CT clamps over solid-core types?',
@@ -34,25 +34,25 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     question:
-      'Which communication protocol is specifically designed for utility meter integration?',
-    options: ['OCPP', 'Modbus RTU', 'M-Bus', 'CAN Bus'],
-    correctAnswer: 2,
-    explanation:
-      'M-Bus (Meter Bus) is the European standard specifically designed for utility meter reading and control applications.',
-  },
-  {
-    question: 'What is the typical temperature stability coefficient for high-quality CT clamps?',
-    options: ['<0.1%/°C', '<0.5%/°C', '<1.0%/°C', '<2.0%/°C'],
+      'Which communication protocol is designed specifically for utility meter integration?',
+    options: ['M-Bus', 'OCPP', 'Modbus RTU', 'CAN Bus'],
     correctAnswer: 0,
     explanation:
-      'High-quality CT clamps should have temperature stability better than 0.1%/°C for consistent performance across varying environmental conditions.',
+      'M-Bus (Meter-Bus) is the European standard designed specifically for reading and controlling utility meters.',
   },
   {
-    question: 'What is the maximum recommended distance for analogue CT signal transmission?',
-    options: ['50m', '100m', '200m', '500m'],
-    correctAnswer: 1,
+    question: 'What temperature stability coefficient is typical for a high-quality CT clamp?',
+    options: ['<2.0%/°C', '<1.0%/°C', '<0.5%/°C', '<0.1%/°C'],
+    correctAnswer: 3,
     explanation:
-      'Analogue CT signals should be limited to 100m maximum distance with appropriate cable sizing to maintain signal integrity and accuracy.',
+      'A high-quality CT clamp should have a temperature stability better than 0.1%/°C, giving consistent readings across a range of conditions.',
+  },
+  {
+    question: 'What is the recommended maximum distance for analogue CT signal transmission?',
+    options: ['50m', '200m', '100m', '500m'],
+    correctAnswer: 2,
+    explanation:
+      'Analogue CT signals should generally be kept within about 100m, using appropriately sized cable, to preserve signal integrity and accuracy.',
   },
   {
     question: 'Which type of CT is most suitable for measuring DC currents?',
@@ -62,47 +62,47 @@ const quizQuestions: QuizQuestion[] = [
       'Hall effect sensors can measure both DC and AC currents, unlike traditional CTs which only work with AC due to electromagnetic induction principles.',
   },
   {
-    question: 'What is the recommended sampling rate for load management applications?',
-    options: ['0.1Hz', '1Hz minimum', '10Hz minimum', '100Hz minimum'],
-    correctAnswer: 1,
+    question: 'What is the recommended minimum sampling rate for load management?',
+    options: ['0.1Hz', '10Hz', '1Hz', '100Hz'],
+    correctAnswer: 2,
     explanation:
-      'A minimum sampling rate of 1Hz is required for effective load management, with higher rates preferred for power quality analysis.',
+      'A minimum sampling rate of around 1Hz supports effective load management, with higher rates preferred where power-quality analysis is also needed.',
   },
   {
     question: 'What is the most critical safety consideration when working with CT circuits?',
     options: [
-      'Proper earthing connections',
-      'Never open-circuit secondary under load',
-      'Use appropriate PPE',
-      'Check insulation resistance',
+      'Ensuring proper earthing connections',
+      'Wearing appropriate PPE at all times',
+      'Checking the insulation resistance first',
+      'Never open-circuiting the secondary while under load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Never open-circuit CT secondary connections under load as this can create dangerous high voltages and damage equipment.',
+      'A current transformer secondary must never be open-circuited under load, as this can generate dangerously high voltages and damage equipment.',
   },
   {
     question: 'Which algorithm type is most suitable for complex optimisation in load management?',
     options: [
+      'Genetic algorithms',
       'Linear programming',
       'Fuzzy logic',
-      'Genetic algorithms',
       'Simple proportional control',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Genetic algorithms are well suited to the complex, multi-variable optimisation problems found in advanced load management systems.',
+  },
+  {
+    question: 'What dynamic range is typically required for effective load monitoring?',
+    options: [
+      '10% to 100% of rated current',
+      '5% to 110% of rated current',
+      '1% to 120% of rated current',
+      '20% to 150% of rated current',
     ],
     correctAnswer: 2,
     explanation:
-      'Genetic algorithms excel at solving complex multi-variable optimisation problems common in advanced load management systems.',
-  },
-  {
-    question: 'What is the typical dynamic range requirement for effective load monitoring?',
-    options: [
-      '10% to 100% of rated current',
-      '1% to 120% of rated current',
-      '5% to 110% of rated current',
-      '20% to 150% of rated current',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Effective load monitoring requires accurate measurement from 1% to 120% of rated current to cover full operational range and overload conditions.',
+      'Effective load monitoring needs accurate measurement from roughly 1% to 120% of rated current to cover light loads through to overload conditions.',
   },
 ];
 

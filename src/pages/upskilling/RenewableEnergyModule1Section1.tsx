@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'The Heat Pump Investment Plan targets 600,000 installations per year by 2028. Actual run-rate is roughly 60,000. For a qualified electrician moving into heat pumps, what does that 10× gap most accurately represent?',
     options: [
-      'A demand-side problem — customers have not yet been persuaded',
-      'A supply-side constraint that translates directly into pricing power for MCS-certified installers',
-      'Evidence that the target will be quietly dropped',
-      'A signal that grant funding will be cut',
+      'A demand-side problem — customers have not yet been persuaded to buy',
+      'A supply-side constraint that hands pricing power to MCS-certified installers',
+      'Evidence that the policy target will quietly be dropped before 2028',
+      'A signal that the grant funding behind the demand is about to be cut',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A4:2026 deleted the "reasonably practicable" exception in Reg 722.411.4.1 (PME supply to EV charging). What does that tell you about how BS 7671 is now being revised?',
     options: [
-      'A4 is a tidy-up — minor editorial change',
-      'A4 closed an exception that was being used as a cost-defence; the revision was driven by incident data on open-PEN faults at PME-supplied chargepoints',
-      'A4 was harmonising with a European Norm',
-      'The deletion was a drafting accident now being re-litigated',
+      'A4 is an editorial tidy-up with no change to the underlying requirement',
+      'A4 closed a cost-defence exception, driven by open-PEN incident data at chargepoints',
+      'A4 was harmonising the EV-charging rules with a European Norm',
+      'The deletion was a drafting accident that is now being re-litigated',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'The British Energy Security Strategy targets 70 GW of solar capacity in the UK by 2035 (from ~15 GW in 2023). For the domestic rooftop PV installer, what does that headline number actually imply?',
     options: [
-      '70 GW is all rooftop — domestic installers should expect their market to grow ~4.7×',
-      '70 GW is mostly utility-scale ground-mount and large commercial — domestic rooftop is a smaller, slower-growing share',
-      '70 GW is all in Scotland',
-      '70 GW is the cumulative total since 1990',
+      '70 GW is all rooftop — domestic installers should expect a ~4.7× market',
+      '70 GW is mostly utility-scale and commercial — domestic rooftop is a smaller share',
+      '70 GW is concentrated in Scotland, where most of the connection headroom sits',
+      '70 GW is the cumulative total installed since 1990, not new-build capacity',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'MCS registration is voluntary at statute. SEG, BUS and ECO4 funding all require an MCS-certified installer on the cert. Which framing is most useful to the installer business?',
     options: [
-      'MCS is compliance overhead that limits margin',
-      'MCS is a market-segmentation gate — the exclusion of non-MCS competitors from the funded market is the commercial feature, not the bureaucratic bug',
-      'MCS is interchangeable with TrustMark',
-      'MCS is being phased out',
+      'MCS is compliance overhead that mainly limits the installer\'s margin',
+      'MCS is a segmentation gate — excluding non-MCS rivals from the funded market is the feature',
+      'MCS is interchangeable with TrustMark for funded LCT installations',
+      'MCS is being phased out and will not gate funding for much longer',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A customer in a capacity-bound DNO region wants a heat pump install requiring a single-phase to three-phase conversion. What is most likely to be the binding constraint on the project timeline?',
     options: [
-      'Sourcing the heat pump unit',
-      'Installer availability',
-      'DNO G99 connection queue and supply-upgrade lead time (commonly 12+ months in capacity-bound regions)',
-      'Building Control notification turnaround',
+      'Sourcing the heat pump unit itself from the manufacturer',
+      'Installer availability and scheduling a qualified MCS team',
+      'The DNO G99 connection queue and supply-upgrade lead time, often 12+ months',
+      'Building Control notification turnaround for the completed work',
     ],
     correctIndex: 2,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A4:2026 introduced Appendix 17 (energy efficiency) into BS 7671 — explicitly framed as the precursor to a future Part 8. What is the strategic significance?',
     options: [
-      'It is a relabelling exercise with no design impact',
-      'It is regulatory convergence — BS 7671 is colonising territory that previously belonged to Building Regulations Part L, embedding energy-efficient design choices in the Part 6 cert',
-      'It makes BS 7671 a Building Regulation',
-      'It deletes Part L',
+      'It is a relabelling exercise with no real impact on day-to-day design',
+      'It is convergence — BS 7671 takes on Part L energy-efficiency design in the Part 6 cert',
+      'It legally reclassifies BS 7671 as a statutory Building Regulation',
+      'It deletes Building Regulations Part L for electrical installations',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'A4:2026 is the fourth and final amendment to the 18th Edition of BS 7671. What is the next major revision step?',
     options: [
-      'A5:2028 — a fifth amendment',
-      'The 19th Edition of BS 7671 — a new edition, currently in IET / BSI joint committee, expected 2028–2030',
-      'Withdrawal of BS 7671 in favour of BS EN 60364',
-      'The IET will hand the standard to HSE',
+      'A5:2028 — a fifth amendment extending the 18th Edition cycle',
+      'The 19th Edition — a new edition in IET / BSI committee, expected 2028–2030',
+      'Withdrawal of BS 7671 in favour of the international BS EN 60364 series',
+      'Transfer of the standard from the IET to the HSE for future revision',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Section 1.1 frames the LCT installer market as supply-constrained. Which single project decision is most defensible against the supply-constraint analysis?',
     options: [
-      'Compete on price against established installers',
-      'Invest in MIS training (3002 PV, 3003 heat pumps, 3008 heat batteries) to enter the funded market at higher unit margin',
-      'Wait for the market to mature before entering',
-      'Focus exclusively on non-MCS cash jobs',
+      'Compete on price by undercutting established installers on every domestic quote',
+      'Wait for the market to mature and prices to settle before entering at all',
+      'Invest in MCS MIS training (3002 PV, 3003 heat pumps, 3008 heat batteries) to enter the funded market at higher margin',
+      'Focus exclusively on non-MCS cash jobs to avoid the cost of scheme membership',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Supply constraint produces pricing power. Pricing power accrues to qualified entrants, not undercut entrants. MCS MIS training opens the funded market — the segment where the customer is grant-supported and the installer can hold margin. The cash-only segment competes on price; the funded segment competes on competence and capacity.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A4:2026\'s 551.7.1(c) requirement for a protective device where energy flow is bidirectional is best read as which kind of regulatory move?',
     options: [
-      'A tidy-up of pre-existing practice',
-      'The regulatory acknowledgement that the grid model itself is now bidirectional in operation — protection design must catch up',
-      'A defensive insurance-driven change',
-      'A harmonisation with US NEC',
+      'The regulatory acknowledgement that the grid model is now bidirectional in operation — protection design must catch up',
+      'A purely editorial tidy-up of practice that competent installers already followed',
+      'A defensive change driven mainly by insurers seeking to limit their PV-related exposure',
+      'A harmonisation exercise aligning BS 7671 with the United States National Electrical Code',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 historically assumed unidirectional flow (DNO supply down to consumer load). PV export, BESS charge / discharge, and V2G EV charging make that assumption wrong on millions of installations. 551.7.1(c) is the standard catching up to operational reality.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'The "reasonably practicable" exception in Reg 722.411.4.1 was deleted in A4:2026. The most accurate diagnosis of why is:',
     options: [
-      'The phrase was grammatically awkward',
-      'The qualifier had drifted from a genuine practicability test into a cost-based defence; the incident record of open-PEN faults made the qualifier indefensible',
-      'It was a typo',
-      'It was deleted to align with the US NEC',
+      'The phrase was grammatically awkward and was reworded for clarity without changing the intent',
+      'It was an editorial typo carried over from an earlier amendment and quietly corrected',
+      'The qualifier had drifted into a cost-based defence; the open-PEN incident record made it indefensible',
+      'It was removed solely to align the EV charging rules with the United States National Electrical Code',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4\'s revisions are increasingly evidence-driven. The qualifier had become routinely cited as cost-justification rather than as a genuine impossibility argument, leaving open-PEN failure modes latent in PME-supplied EV installs. The corollary for the LCT installer: track HSE / IET incident reporting on PV DC arc, BESS thermal events and V2G — those incident streams predict the next set of revisions.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'A homeowner in a capacity-bound DNO region wants three EV chargepoints (one home, two for tenants). The supply is single-phase, 100 A. The most honest first answer to the customer is:',
     options: [
       '"We can install next week — three 7.4 kW chargers on a single-phase supply is straightforward"',
-      '"The DNO conversation determines the timeline before the install conversation does — we may need a supply upgrade, possibly to three-phase, and the queue for that is currently 12+ months in this region"',
-      '"BS 7671 forbids more than one chargepoint per dwelling"',
-      '"We need MCS approval before we can quote"',
+      '"BS 7671 forbids more than one chargepoint per dwelling, so two of these are non-compliant"',
+      '"The DNO conversation sets the timeline first — you may need a supply upgrade, and the queue here is 12+ months"',
+      '"We will need MCS approval before we can quote, which usually adds several weeks to the start date"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Three 7.4 kW chargepoints simultaneously on a single-phase 100 A supply is 96 A diversified load just on the EV side. Feasible only with load management, and even then constrained. The honest answer is the one that puts the binding constraint up front in the survey conversation — not after the deposit is taken.',
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Appendix 17 (energy efficiency) in A4:2026 lands certain design decisions on Part 6 certification. Which framing is most useful to the LCT designer?',
     options: [
-      'Appendix 17 is informational only',
-      'Appendix 17 is BS 7671 colonising territory that previously belonged to Building Regulations Part L — energy-efficient design choices become recordable on the cert, planned to be promoted to a full Part 8 in a future amendment',
-      'Appendix 17 only applies to motors above 7.5 kW',
-      'Appendix 17 replaces Part L',
+      'It is informational only and has no bearing on the Part 6 certification of a design',
+      'It overlaps Building Regulations Part L — efficiency choices become cert-recordable, slated to become a Part 8',
+      'It applies only to fixed motor loads rated above 7.5 kW and not to general installation design',
+      'It directly replaces Building Regulations Part L for all new electrical installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'A homeowner shows you a 2024 EICR coded C3 for "no PEN-fault protective device on existing PME-supplied EV chargepoint". Under A4:2026, the same observation on a 2026 installation would most likely be:',
     options: [
-      'Still C3 — informational',
-      'A C2 against the current standard, because the "reasonably practicable" exception is no longer available to justify the omission',
-      'A non-issue',
-      'A C1',
+      'A C2 against the current standard, because the "reasonably practicable" exception is no longer available',
+      'Still a C3 informational note, since the omission is acceptable on an existing PME supply',
+      'A non-issue, as PEN-fault protection has never been required on domestic chargepoints',
+      'A C1 immediate danger, because the absence of the device is dangerous in all conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2024 EICR coded the observation as informational because the exception was available. A4 removes the exception. From 15 October 2026 a new install lacking a recognised PEN-fault protective measure on a PME-supplied chargepoint is non-compliance. C2 is the appropriate code where the omission would constitute a contravention with potential danger.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'A4:2026 modified Reg 133.1.3 — certain usage of equipment must now be recorded on the appropriate Part 6 certificate. The strategic significance for LCT installs is:',
     options: [
-      'A burdensome paperwork addition',
-      'The continuation of a multi-year traceability trajectory — design-time decisions become cert-recorded, supporting future periodic inspection, EAWR investigation and PI insurance audit',
-      'A change that affects only commercial installations',
-      'A reversal of A3:2024 changes',
+      'A burdensome paperwork addition with no practical benefit to the installer or customer',
+      'A change that affects only large commercial installations and not domestic LCT work',
+      'Part of a traceability trajectory — design decisions become cert-recorded for future inspection, EAWR and PI audit',
+      'A reversal of the changes introduced by the earlier A3:2024 amendment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 is part of a trajectory. Reg 133.1.3 (equipment usage), Reg 551.7.1(c) (bidirectional device — a recordable design choice), Appendix 17 (energy-efficiency design — recordable on cert) all push the same way: the cert is the durable audit trail. The 19th Edition is expected to push further.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'The next major revision of BS 7671 after A4:2026 will be:',
     options: [
-      'A5 — a fifth amendment to the 18th Edition',
-      'The 19th Edition — a new edition, currently in IET / BSI joint committee',
-      'Adoption of BS EN 60364 in place of BS 7671',
-      'A withdrawal of BS 7671 by IET',
+      'A fifth amendment (A5) extending the 18th Edition amendment cycle further',
+      'The wholesale adoption of BS EN 60364 in place of BS 7671 across the UK',
+      'The 19th Edition — a new edition, currently in the IET / BSI joint committee',
+      'A formal withdrawal of BS 7671 by the IET with no replacement standard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4 closes the 18th Edition amendment cycle. The 19th Edition is in the joint committee with an expected publication window of 2028–2030. Calling the next revision "A5" is a common error and an immediate giveaway of stale CPD.',
   },

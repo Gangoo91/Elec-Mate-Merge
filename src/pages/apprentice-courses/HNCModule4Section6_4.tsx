@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'calc-purpose',
     question: 'What is the primary purpose of documented design calculations?',
     options: [
-      'Zero emissions and quieter operation, suitable for indoor use',
-      'To distinguish between a zero reading and a fault condition',
-      'Match the phasing of building occupation',
+      'To reduce the amount of cable used on a project',
+      'To replace the need for on-site testing entirely',
+      'To set the labour rates charged to the client',
       'To demonstrate compliance and enable verification',
     ],
     correctIndex: 3,
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'verification',
     question: "What is 'verification' in the context of design calculations?",
     options: [
-      'A maximum of 150 mm or 4 times the board thickness, whichever is less',
-      'The smaller of the two CPCs connected to those exposed-conductive-parts',
+      'Repeating the original calculation using the same method',
+      'Submitting the calculation to the client for approval',
       'Confirming calculations are correct through independent review',
-      'Fixed losses become a larger proportion of reduced output',
+      'Archiving the calculation for the life of the installation',
     ],
     correctIndex: 2,
     explanation:
@@ -59,9 +59,9 @@ const quickCheckQuestions = [
     id: 'assumptions',
     question: 'Why must calculation assumptions be documented?',
     options: [
-      'Clearly identify amendments using project-specific text',
-      'Cable temperature - cables become brittle below rated temperature',
-      'As the first step before any electrical testing',
+      'To increase the length of the calculation report',
+      'To remove the need for a checker to review the work',
+      'To allow the assumptions to be ignored during construction',
       'To enable review and identify if conditions change',
     ],
     correctIndex: 3,
@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'approval',
     question: 'Who typically approves design calculations in a building services project?',
     options: [
-      'To verify systems perform as designed',
-      'All incidents, near misses and safety observations',
+      'The site labourer who installs the cable',
+      'The client’s administrative or finance team',
       'A competent engineer at appropriate level',
-      'Use work equipment or other measures to prevent falls',
+      'The cable manufacturer’s sales representative',
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What should be included in a calculation report cover sheet?',
     options: [
-      'In steady flow, an increase in velocity occurs simultaneously with a decrease in pressure or potential energy',
+      'Only the final cable size selected for the circuit',
       'Project details, calculation reference, revision status, prepared/checked/approved names and dates',
-      'To cooperate with their employer\\\\\\\'s safety measures and use PPE and RPE provided correctly',
-      'ISO 50001 focuses on energy while ISO 14001 covers broader environmental management, but they share common structure',
+      'A complete copy of the BS 7671 regulations used',
+      'The contractor’s pricing and labour breakdown',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "What is the difference between 'checking' and 'verification'?",
     options: [
-      'For high-risk work, especially on HV systems or in industrial environments',
-      'Reported the damaged probes and got compliant replacements',
+      'Checking is done by the client; verification is done by the contractor',
+      'Checking happens after construction; verification happens before',
       'Checking is arithmetic review; verification confirms methodology and compliance',
-      'For easy identification, maintenance, and troubleshooting',
+      'Checking applies to drawings; verification applies only to schedules',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which calculations are mandatory for BS 7671 compliance?',
     options: [
-      'Hot work, confined space entry, electrical isolation, working at height on roofs',
-      'A competent person with knowledge of the plant and authority to issue permits',
-      'To ensure accurate horizontal and vertical alignment over long distances',
+      'Lighting illuminance, glare rating, uniformity ratio, daylight factor',
+      'Heat loss, U-values, ventilation rate, carbon emissions',
+      'Material cost, labour hours, programme duration, profit margin',
       'Prospective fault current, earth fault loop impedance, cable sizing, voltage drop',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'What software is commonly used for electrical design calculations?',
     options: [
-      'The fibre core being off-centre from the cladding',
+      'Microsoft Outlook, Teams and SharePoint',
       'Amtech, Trimble, DIALux, spreadsheet templates',
-      'The type of electrical system the equipment is rated for',
-      'One socket showing half the expected value',
+      'AutoCAD, Revit and SketchUp only',
+      'Sage, QuickBooks and Xero accounting tools',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'How should calculation software outputs be documented?',
     options: [
-      'The weight of the load and, if the centre of gravity is not central, the location of the heaviest side',
-      'Poor connections, oxidation, incorrect termination, or mechanical damage',
+      'Save only the final result and discard the input data',
+      'Record the result by hand without keeping the printout',
       'Print outputs with input data visible, version noted, and include in calc package',
-      'The fraction of airborne particles that is inhaled through the nose and mouth during breathing',
+      'Keep the output on the designer’s computer only, not in the pack',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: "What is 'design validation' as opposed to verification?",
     options: [
-      'Hydraulic benders or specialised forming equipment',
-      'Lower conductivity and connection issues',
-      'Regularly, after incidents, when changes occur',
+      'Checking the arithmetic of each calculation step',
+      'Confirming the correct BS 7671 tables were applied',
+      'Signing the prepared, checked and approved boxes',
       'Confirming the design works as intended in practice',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'At what project stage should calculations be complete?',
     options: [
       'Before construction information is issued',
-      'To ensure switches operate only on line conductor',
-      'Nonviolent Communication (NVC) in practice',
-      'Finding voltage across individual components',
+      'After the installation has been energised',
+      'During the defects liability period',
+      'Only once snagging has been completed',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What calculation documentation is typically required for O&M manuals?',
     options: [
-      'Linking physical I/O signals to software representations',
+      'The contractor’s tender pricing for the electrical works',
       'Key design calculations, assumptions, and any as-built revisions',
-      'Possible intermittent fault or deteriorating insulation',
-      'Automatic scheduling based on time of day and occupancy',
+      'The site induction and toolbox-talk records',
+      'A full copy of the project programme and Gantt chart',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'How should calculation errors discovered during checking be handled?',
     options: [
-      'All earthing and bonding conductors to the means of earthing',
-      'Joints and connections must be properly made to be mechanically and electrically sound',
+      'Ignore minor errors if the final answer looks reasonable',
+      'Correct the calculation quietly without recording the change',
       'Document the error, correct the calculation, re-check and update revision',
-      'Use fire resistant cables and follow BS 5839 requirements',
+      'Leave the error for the contractor to resolve on site',
     ],
     correctAnswer: 2,
     explanation:

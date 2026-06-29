@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     id: 'lod-meaning',
     question: 'What does LOD (Level of Development) define?',
     options: [
-      'Equipment doesn\\\\\\\\\\\\\\\'t cause or suffer from electromagnetic interference',
-      'That the tower is vertical (plumb) and not leaning to any side',
+      'The number of disciplines working on the model',
+      'The file format used to exchange the model',
       'The completeness and reliability of model element information',
-      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
+      'The security access level for each project member',
     ],
     correctIndex: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What information does COBie capture for electrical equipment?',
     options: [
-      'Diversity factors based on simultaneous use probability',
-      'Those awaiting full card while meeting requirements',
-      'Credit for relevant previous learning and experience',
+      'Only the 3D geometry of each component',
+      'Only the clash detection results from coordination',
+      'Only the design-stage cost estimate per item',
       'Equipment attributes, maintenance requirements, warranty information',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: "What is a 'federated model' in BIM?",
     options: [
       'Multiple discipline models combined for coordination',
-      'Installed lighting power per unit floor area (W/m²)',
-      'It provides logical progression and prevents missing faults',
-      'Photo ID, a pen (if paper-based), permitted calculator, and water',
+      'A model owned and edited by a single discipline',
+      'A simplified concept model with no embedded data',
+      'A model that only contains the structural elements',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of clash detection in BIM?',
     options: [
-      'Authorised staff can view and control BMS functions off-site',
-      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'To verify the electrical load calculations are correct',
+      'To check the model data matches the COBie spreadsheet',
       'To identify spatial conflicts between building elements before construction',
-      'To accommodate thermal expansion of water and maintain system pressure',
+      'To confirm the drawings use the correct graphical symbols',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: "What does 'Work in Progress' (WIP) mean in CDE terminology?",
     options: [
-      'An element violating required clearance or access zones',
-      'To prevent the scaffold twisting when viewed from above',
-      'A near-extreme summer for overheating assessment',
+      'Information approved and published for construction',
+      'Information shared with the team for coordination',
+      'Information archived as a historical record',
       'Information being developed, not ready for sharing',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What electrical data might be embedded in a BIM luminaire object?',
     options: [
       'Wattage, lumen output, IP rating, emergency duration, manufacturer data',
-      'Disconnected from all sources of electrical energy and unable to become live unintentionally',
-      'To avoid confusion and ensure each repair is verified',
-      'Protecting internal components from environment and handling',
+      'Only the geometric size and weight of the fitting',
+      'Only the room reference where it is located',
+      'Only the colour of the luminaire trim',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "What is an Employer's Information Requirements (EIR)?",
     options: [
-      "To reduce overwhelm and focus on the next step",
+      "The contractor's method statement for the works",
       "The client's BIM requirements for the project",
-      "With supervision, PPE, GS38 leads, and controlled area",
-      "Adjusting activity timing to avoid resource overallocation",
+      "The schedule of test results at handover",
+      "The health and safety file for the building",
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is digital handover important for building operations?',
     options: [
-      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
-      'Routes, assembly points, responsibilities, special needs, communication methods',
+      'It removes the need for any paper O&M documentation',
+      'It allows the design team to retain ownership of the model',
       'It provides structured data for facilities management systems',
-      'Actual energy output vs theoretical maximum',
+      'It reduces the construction programme by several weeks',
     ],
     correctAnswer: 2,
     explanation:

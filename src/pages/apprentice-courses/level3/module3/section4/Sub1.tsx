@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'The magnetic equivalent of EMF in a magnetic circuit is:',
     options: [
-      'Meets European safety standards',
-      'Calculate performance ratio',
-      'Cg improves to a higher value',
+      'Reluctance (R_m)',
+      'Flux density (B)',
+      'Permeability (μ)',
       'Magnetomotive force (mmf)',
     ],
     correctAnswer: 3,
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'Saturation in a transformer core means:',
     options: [
-      'Overloading, loose connections, or high resistance contacts',
+      'The core has reached its lowest permeability at zero current',
       'Adding more current produces little extra flux',
-      'Identifying what was learned and how to apply it',
-      'To confirm safety interlocks prevent dangerous situations',
+      'Flux density falls as magnetising current rises',
+      'The hysteresis loop collapses to a straight line',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'Hysteresis loss in an AC magnetic core is caused by:',
     options: [
-      'Provides valuable supporting evidence',
-      'Responding to changing technology and market conditions',
+      'Circulating eddy currents induced in the core iron',
+      'I²R heating in the copper windings under load',
       'Energy lost reorienting magnetic domains each cycle',
-      'Communication protocols, sensor calibration and system response',
+      'Air-gap leakage flux escaping the magnetic circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,9 +158,9 @@ const quizQuestions = [
     id: 7,
     question: 'Eddy currents in a solid iron core can be reduced by:',
     options: [
-      'Photocell, time scheduling, and dimming after hours',
-      'To simulate mains failure for testing',
-      'Mathematical compensation for non-linear sensor response',
+      'Increasing the supply frequency to the winding',
+      'Using a solid one-piece core of softer iron',
+      'Adding more turns to the primary winding',
       'Laminating the core into thin insulated sheets',
     ],
     correctAnswer: 3,

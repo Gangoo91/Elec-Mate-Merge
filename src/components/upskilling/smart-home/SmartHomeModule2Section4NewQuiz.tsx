@@ -12,32 +12,40 @@ export const SmartHomeModule2Section4NewQuiz = () => {
     {
       question: 'What is wireless interference in smart home networks?',
       options: [
-        'When devices use too much bandwidth',
         'When multiple signals compete for the same frequency space',
-        'When devices are too far from the router',
-        'When batteries run low in wireless devices',
+        'When devices use too much internet bandwidth',
+        'When devices are simply too far from the router',
+        'When the batteries run low in wireless devices',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Interference occurs when overlapping signals share the same radio frequencies, corrupting each other and reducing reliability.',
     },
     {
       question: 'Which frequency band is most crowded in typical homes?',
       options: ['5 GHz', '900 MHz', '2.4 GHz', '868 MHz'],
       correct: 2,
+      explanation:
+        'The 2.4 GHz band is shared by Wi-Fi, Zigbee, Bluetooth, microwaves and more, making it the most congested band in most homes.',
     },
     {
       question: 'Why can Zigbee and Wi-Fi interfere with each other?',
       options: [
         'They use different security protocols',
-        'They both operate in the 2.4 GHz frequency band',
-        'They have different power requirements',
+        'They have very different power requirements',
         'They use incompatible mesh topologies',
+        'They both operate in the 2.4 GHz frequency band',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Zigbee and 2.4 GHz Wi-Fi share the same band, so their channels can overlap and degrade each other’s signals.',
     },
     {
-      question: 'What is the recommended minimum distance between a Wi-Fi router and Zigbee hub?',
-      options: ['30 cm (1 foot)', '60 cm (2 feet)', '1 metre (3 feet)', '2 metres (6 feet)'],
-      correct: 2,
+      question: 'What is the recommended minimum distance between a Wi-Fi router and a Zigbee hub?',
+      options: ['1 metre (about 3 feet)', '30 cm (about 1 foot)', '60 cm (about 2 feet)', '2 metres (about 6 feet)'],
+      correct: 0,
+      explanation:
+        'Keeping roughly a metre between the Wi-Fi router and the Zigbee hub reduces near-field interference between the two radios.',
     },
     {
       question: 'Which devices typically require high bandwidth in smart homes?',
@@ -48,46 +56,58 @@ export const SmartHomeModule2Section4NewQuiz = () => {
         'Motion sensors and smart locks',
       ],
       correct: 1,
+      explanation:
+        'Streaming video from cameras and doorbells needs far more bandwidth than the tiny status messages from sensors and switches.',
     },
     {
-      question: 'What are the best Wi-Fi channels to avoid 2.4 GHz interference?',
+      question: 'Which Wi-Fi channels are best chosen to avoid 2.4 GHz interference?',
       options: [
-        'Channels 1, 6, and 11',
         'Channels 3, 8, and 13',
+        'Channels 1, 6, and 11',
         'Channels 2, 7, and 12',
-        'Any channels work equally well',
+        'Any channel works equally well',
       ],
-      correct: 0,
+      correct: 1,
+      explanation:
+        'Channels 1, 6 and 11 are the only three non-overlapping 2.4 GHz Wi-Fi channels, so using them minimises mutual interference.',
     },
     {
-      question: 'If Wi-Fi is on channel 6, which Zigbee channel should you choose?',
-      options: ['Channel 11', 'Channel 15', 'Channel 20', 'Channel 25'],
+      question: 'If Wi-Fi is on channel 6, which Zigbee channel is a sensible choice?',
+      options: ['Channel 11', 'Channel 15', 'Channel 20', 'Channel 1'],
       correct: 2,
+      explanation:
+        'Zigbee channels 15, 20, 25 and 26 sit in the gaps between Wi-Fi channels 1, 6 and 11, so channel 20 avoids a Wi-Fi channel-6 network.',
     },
     {
-      question: 'What household appliance commonly interferes with 2.4 GHz devices?',
+      question: 'Which common household appliance interferes with 2.4 GHz devices?',
       options: ['Electric kettle', 'Microwave oven', 'Washing machine', 'Air conditioning unit'],
       correct: 1,
+      explanation:
+        'Microwave ovens emit strong 2.4 GHz radiation while running, which can disrupt Wi-Fi and Zigbee devices nearby.',
     },
     {
-      question: 'Why might smart devices work during the day but fail at night?',
+      question: 'Why might smart devices work during the day but struggle at night?',
       options: [
-        'Lower temperatures affect signal strength',
-        'Devices automatically update firmware at night',
-        'Higher network usage from streaming and calls',
-        'Wi-Fi automatically switches to different channels',
+        'Higher evening network use from streaming and calls',
+        'Lower temperatures weaken the wireless signal',
+        'Devices automatically update their firmware overnight',
+        'Wi-Fi automatically switches channels after dark',
       ],
-      correct: 2,
+      correct: 0,
+      explanation:
+        'Evening streaming, video calls and gaming load the network and the 2.4 GHz band, so devices can become unreliable at peak times.',
     },
     {
       question: 'What advantage does Z-Wave have over Wi-Fi and Zigbee regarding interference?',
       options: [
-        'It uses higher power transmission',
-        'It operates in the sub-1 GHz band, avoiding 2.4 GHz congestion',
-        'It has better encryption',
+        'It transmits at much higher power',
+        'It uses stronger encryption',
         'It supports more devices per network',
+        'It operates in the sub-1 GHz band, avoiding 2.4 GHz congestion',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Z-Wave works in the sub-1 GHz band (around 868 MHz in the UK), so it sidesteps the crowded 2.4 GHz spectrum entirely.',
     },
   ];
 

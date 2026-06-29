@@ -14,11 +14,11 @@ const quickCheckQuestions = [
     question: 'What is the main advantage of grouping lights into zones?',
     options: [
       'Reduces electricity bills',
-      'Allows multiple lights to be controlled with a single command',
       'Increases bulb lifespan',
       'Improves Wi-Fi signal strength',
+      'Allows multiple lights to be controlled with a single command',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Grouping lights into zones allows you to control multiple lights simultaneously with a single command, scene, or automation, simplifying operation for the user.',
   },
@@ -68,10 +68,10 @@ const quizQuestions = [
     options: [
       'Security alarm integration',
       'Heating system integration',
-      'AV system integration for movie scenes',
       'Door lock integration',
+      'AV system integration for movie scenes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'AV system integration allows lighting to automatically adjust when watching movies - dimming when content plays and brightening when paused, creating an optimal viewing experience.',
   },
@@ -91,22 +91,22 @@ const quizQuestions = [
     question:
       'A client complains that bathroom lights turn off while they are in the bath. What adjustment would help?',
     options: [
-      'Increase motion sensor sensitivity',
       'Extend the timeout period',
+      'Increase motion sensor sensitivity',
       'Add more motion sensors',
       'Reduce brightness levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Extending the timeout period allows lights to stay on longer after the last detected motion, accommodating situations where the occupant is stationary for extended periods.',
   },
   {
     question: 'What is the benefit of linking outdoor lighting to sunrise/sunset data?',
     options: [
-      'Lights automatically adjust throughout the year',
-      'Reduces the need for timers',
-      'Both A and B',
-      'Neither, this is not possible',
+      'It reduces the wattage each fixture consumes',
+      'It allows lights to be dimmed remotely',
+      'Lights automatically adjust their timing as daylight hours change through the year',
+      'It removes the need for a neutral wire at the switch',
     ],
     correctAnswer: 2,
     explanation:

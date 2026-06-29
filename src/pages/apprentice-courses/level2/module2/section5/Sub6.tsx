@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does RMS represent for an AC waveform?',
     options: [
-      'Reduced toxic gas emission in fire conditions',
+      'The highest instantaneous value the waveform reaches',
       'The DC voltage that gives the same heating effect',
-      'To test on both halves of the AC waveform',
-      'Sum of all equipment ratings connected to the circuit',
+      'The average value taken over one half-cycle',
+      'The sum of the positive and negative peak values',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       'When MUST you use a true-RMS meter rather than an average-responding one?',
     options: [
-      'Avoid working at height altogether where possible',
-      'A motor designed to run on single-phase supply using starting mechanisms',
+      'On any circuit protected by an RCD',
+      'Only when measuring DC battery circuits',
       'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
-      'Show sizes, support spacing, and load capacity information',
+      'Whenever the supply voltage exceeds 230 V',
     ],
     correctAnswer: 2,
     explanation:
@@ -174,9 +174,9 @@ const quizQuestions = [
     question: 'Your meter shows 49.8 Hz on a domestic socket. What should you do?',
     options: [
       'Nothing — variation within ±1% of 50 Hz is normal under ESQCR 2002',
-      'When inductive reactance equals capacitive reactance',
-      'Translating between different communication protocols',
-      'Record all test results with locations and conditions',
+      'Report a supply fault to the DNO immediately',
+      'Reset the main switch to restore the declared 50 Hz',
+      'Replace the meter, as it is clearly reading incorrectly',
     ],
     correctAnswer: 0,
     explanation:

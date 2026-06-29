@@ -43,10 +43,10 @@ const checks = [
     question:
       "An HSE inspector turns up unannounced on your commercial fit-out. They walk over to where you're working and ask you to explain the lock-off you've got on the panel you're testing. Your supervisor isn't in sight. What do you do?",
     options: [
-      "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor's team. For a client representative the escort is usually the Project Manager or Site Manager because they'll want to talk through progress, snags and any commercial issues.",
-      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
-      "Politely answer their direct factual questions about your work (yes I locked off, here's the test cert, here's the RAMS in my pocket), do not speculate or guess, do not lie under any circumstances, and ask them to give you a moment to fetch your supervisor. HSE inspectors have legal powers under HASAWA s.20 to question anyone on site — refusing to answer is an offence — but you're not expected to speak for the company.",
-      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
+      "Refuse to answer anything until your supervisor is present — an apprentice working alone has no obligation to speak to an inspector.",
+      "Tell the inspector what you think they want to hear, embellishing the detail you're unsure of so the visit goes smoothly.",
+      "Answer their direct factual questions politely, never speculate or lie, and ask to fetch your supervisor for anything substantive.",
+      "Down tools and leave the area immediately so the inspector can examine your work undisturbed without you present.",
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       "A Building Inspector from the Local Authority Building Control turns up to inspect the consumer unit installation on a domestic rewire you've just finished. What's the inspector actually checking?",
     options: [
-      "Local Authority — Environmental Health Officers from the local council. The Health and Safety (Enforcing Authority) Regulations 1998 split enforcement based on the main activity of the premises. Retail (shops, offices, hotels, restaurants, leisure) goes to the Local Authority. Higher-risk premises (factories, construction sites, hospitals, schools, mines) go to the HSE.",
-      "Safety Data Sheet — 16-section document supplied by the manufacturer / supplier covering identification, hazard ID, composition, first aid, fire fighting, accidental release, handling and storage, exposure controls and PPE, physical and chemical properties, stability and reactivity, toxicology, ecology, disposal, transport, regulation, other. The label gives headlines; the SDS gives the operational detail.",
-      "Compliance with the Building Regulations 2010 — specifically Approved Document P (Electrical Safety — Dwellings) which references BS 7671. The inspector is checking that the work was carried out by a competent person (or has been inspected and certified by a third party) and that it complies with BS 7671. They'll also check related Approved Documents (B for fire, M for accessibility, L for energy where relevant).",
-      "Potentially yes. CDM 2015 Reg 2 defines a 'contractor' as any person (including a company) who in the course or furtherance of a business carries out, manages or controls construction work. If your firm is the only one carrying out construction work for the client, your firm is the contractor. As the operative on site you carry the Reg 8 (general worker) and Reg 15 (cooperation) duties, plus your firm carries Reg 9 (contractor duties — plan, manage, monitor). Contractor status is a function of the role, not the title.",
+      "Whether the price charged to the customer was fair and whether the contracted completion date was met.",
+      "Whether the electrician holds a current ECS card and is a paid-up member of a recognised trade union.",
+      "Compliance with the Building Regulations 2010 — chiefly Approved Document P for electrical safety in dwellings.",
+      "Whether the firm's public liability insurance is in date and a copy is displayed at the property.",
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "Your firm is having its annual NICEIC assessment. An NICEIC assessor turns up to spend a day reviewing your firm's work. What does the assessor actually do?",
     options: [
-      "Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.",
-      "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
-      "You'll forget the detail. By Friday you can roughly remember Monday's hours but not which circuits you worked on, who you were with, what materials you used, or what variations came up. The diary is a contemporaneous record — its evidential value depends on it being written close to the event. Write daily; the five minutes at the end of each shift saves the Friday panic and produces a record that's actually useful in dispute.",
-      "They spend the day reviewing the firm's quality management system (procedures, calibration records, complaint handling), they sample-inspect a number of recently completed jobs (looking at the install AND the certificates AND the site documentation), and they witness a Qualified Supervisor doing some live testing. The assessment is a competence audit of the firm and a sample-check of the work.",
+      "They prosecute the firm in the Magistrates' Court if any installation is found to fall short of BS 7671.",
+      "They issue Improvement and Prohibition Notices under HASAWA, with the same statutory powers as an HSE inspector.",
+      "They retest every installation the firm has completed in the past year and re-issue all the affected certificates.",
+      "They review the firm's quality management system, sample-inspect recent jobs and certificates, and witness the Qualified Supervisor testing.",
     ],
     correctIndex: 3,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "What's the difference between a Local Authority Building Inspector (LABC) and an Approved Inspector?",
     options: [
-      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
-      "Both check Building Regulations compliance, but LABC inspectors work for the Local Authority and follow the public-sector route; Approved Inspectors are private-sector firms registered with CICAIR (Construction Industry Council Approved Inspectors Register) who can be appointed in place of LABC. The choice is the client's. Both have the same statutory authority and the same Building Regulations to enforce.",
-      "Single-line diagrams, panel schedules, circuit calculations (cable sizing, voltage drop, Zs calculations), specification of OCPDs (type, rating, IΔn for RCBOs, AFDD where required), specification of the earthing arrangement, list of departures from BS 7671 (with reasoning), interface details with adjacent disciplines (HVAC, fire alarm, BMS).",
-      "Empathic anticipation (imagining how the reader will interpret the message without tone of voice or body language), deliberate tone management (choosing words that convey respect and warmth that would normally come through voice), emotional impulse control (never sending when angry), and the pause-and-review habit (re-reading every message from the recipient\\\\'s perspective before sending)",
+      "LABC inspectors check the full Building Regulations while Approved Inspectors check only electrical safety and nothing else.",
+      "Both check Building Regulations compliance; LABC is the public-sector route while Approved Inspectors are private CICAIR-registered firms.",
+      "An Approved Inspector is the more senior role and can overrule an LABC inspector's decisions on any project.",
+      "LABC inspectors enforce health and safety law while Approved Inspectors enforce the Building Regulations side.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "Under HASAWA s.21 what is an Improvement Notice?",
     options: [
-      "Batteries can respond to frequency deviations within milliseconds (compared to seconds or minutes for conventional generators), injecting or absorbing power almost instantaneously to stabilise the grid frequency at 50 Hz — this fast response is increasingly critical as intermittent renewables replace conventional synchronous generators that provided inherent inertia",
-      "At L2 you were always 'under supervision' — that was the second limb of Reg 16. At L3 you're moving towards being able to satisfy the first limb (possess the technical knowledge). You also start being looked to by L2 mates as a quasi-supervisor. Knowing where the Reg 16 line sits — for yourself and for the people who ask you to sign things — is the L3 competence judgement.",
-      "A formal legal notice issued by an HSE inspector requiring a person to remedy a contravention of statutory provisions within a specified period (minimum 21 days). It's appealable to an Employment Tribunal but it's binding unless overturned. Failure to comply is a criminal offence under HASAWA.",
-      "The responsible person must establish appropriate procedures to be followed in the event of serious and imminent danger, nominate competent persons, and ensure persons are able to stop work and go to a place of safety",
+      "A notice that immediately stops a dangerous activity until the underlying risk has been removed.",
+      "A notice issued by Building Control requiring an installation to be brought up to current BS 7671.",
+      "A formal HSE notice requiring a contravention to be remedied within a specified period of at least 21 days.",
+      "A notice warning a firm it may be removed from its competent-person scheme unless standards improve.",
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       "Under HASAWA s.22 what is a Prohibition Notice?",
     options: [
-      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
-      "Ask what they're comparing against — often cheap quotes exclude things your quote includes (testing, certification, branded materials, insured workmanship, scheme guarantee). Walk through your quotation explaining each element. If the gap remains large, the cheap quote is probably non-compliant — wish them well and let them go. Never undercut your true cost to win work.",
-      "The inverter must detect the loss of mains supply and disconnect itself within roughly 200 ms — it must not keep generating into a section of the network the DNO has switched off, otherwise the linesman repairing a fault on the street can be electrocuted.",
-      "A formal legal notice issued by an HSE inspector when the inspector is of the opinion that activities are being carried out involving (or likely to involve) a risk of serious personal injury. The notice prohibits the activity until the matters specified in it are remedied. Can take immediate effect — the work stops the moment the notice is served.",
+      "A notice giving a firm 21 days to correct a paperwork failure such as missing risk assessments.",
+      "A notice from Building Control preventing a building from being occupied until it is formally signed off.",
+      "A notice from a competent-person scheme suspending a firm's right to self-certify Part P work.",
+      "A formal HSE notice that prohibits an activity involving risk of serious personal injury, taking immediate effect.",
     ],
     correctAnswer: 3,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     question:
       "Why does the CDM Principal Designer (PD) sometimes visit site during the construction phase?",
     options: [
-      "Although the PD's primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.",
-      "First, the customer cannot register the system for the Smart Export Guarantee (SEG), so they get no payment from the supplier for any electricity they export. Second, the install is still notifiable to the DNO under G98 / G99 and to building control under Part P — those obligations do not go away just because MCS is skipped.",
-      "An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer's claim that the installation wasn't maintained to current standards is hard to refute.",
-      "Apprentice (graded by year of apprenticeship) → on completion of Level 3 + AM2/E + 18th Ed → Electrician → with additional experience and competence demonstration → Approved Electrician → with further design / fault-finding competence → Technician. Each grade unlocks higher pay (set by the JIB National Working Rules) and a wider scope of work the operative can carry out unsupervised on JIB-affiliated sites.",
+      "To verify that design assumptions held up and that the pre-construction H&S information is being used.",
+      "Because the PD takes over the day-to-day running of the site if the Principal Contractor is unavailable.",
+      "Because the PD is responsible for inspecting and signing off the finished electrical installation.",
+      "Because the PD must personally supervise every high-risk activity that is carried out on site.",
     ],
     correctAnswer: 0,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "What's the SOP for ANY visitor arriving on a CDM site?",
     options: [
-      "Safely isolate. At the CU, identify the line and CPC of the circuit under test. Disconnect the line from the protective device and the CPC from the earth bar. Link the disconnected L and CPC together at the CU end with a low-resistance jumper. Test between L and CPC (or L and earth at the accessory) at the furthest accessory — the reading is R1+R2 for the circuit.",
-      "Sign in at the gate or welfare cabin, present ECS / CSCS / industry card if relevant, attend a visitor induction (shorter than the full operative induction), wear correct PPE for the area, and be escorted by a competent person from the site team. Visitors are not permitted to walk the site unaccompanied. CDM 2015 Reg 13(4)(b) requires the PC to take steps to prevent unauthorised access.",
-      "Map the issue: Personal injury / illness → RIDDOR + internal; equipment defect → internal + product reporting; environmental hazard → EA/SEPA/NRW + internal; safeguarding → local authority + internal; installation defect → EICR + customer + internal; near-miss → internal log; HSE notice → firm\\\\\\\\'s legal/H&S team. Multiple routes can apply simultaneously.",
-      "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
+      "Walk straight to the relevant work area, since signing in is only required for operatives working on site.",
+      "Sign in, attend a brief visitor induction, wear correct PPE and be escorted by a competent person.",
+      "Provide proof of relevant insurance and a copy of their own risk assessment before entering the gate.",
+      "Pass an AM2 or equivalent competence test before being allowed anywhere on the construction site.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     question:
       "A customer / client representative wants to walk the site to see how the works are progressing. What's the correct route?",
     options: [
-      "Requires the 'responsible person' (employer / building owner / occupier) to undertake a fire risk assessment, implement and maintain general fire precautions, provide adequate means of escape, fire detection and alarm, fire fighting equipment, and information / instruction / training to relevant persons. Enforced by the Fire and Rescue Service.",
-      "Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system",
-      "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor's team. For a client representative the escort is usually the Project Manager or Site Manager because they'll want to talk through progress, snags and any commercial issues.",
-      "Actively ensuring your portfolio is complete, your evidence is well-organised, any required qualifications are completed, and you honestly assess your own readiness — raising any concerns you have about specific areas",
+      "They may walk the site freely without signing in, because the client owns the project and has automatic access.",
+      "They must wait at the gate until the works are complete, as clients are never allowed on a live site.",
+      "Sign in, get a brief visitor induction, wear correct PPE and be escorted — usually by the Project or Site Manager.",
+      "They must be supervised by an HSE inspector at all times while they are on the construction site.",
     ],
     correctAnswer: 2,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       "On a domestic Part P notifiable job (consumer unit change), why doesn't a Building Control inspector usually turn up?",
     options: [
-      "Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner",
-      "Find a private moment and use open, non-judgemental inquiry: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I have noticed your work has not been at its usual standard recently. I am asking because I am concerned about you, not criticising. Is everything all right?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — using empathy to understand the root cause before deciding on a response",
-      "Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals",
-      "Because most electrical contractors are registered with a competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA, Certsure) which self-certifies the work to the Local Authority. The Local Authority accepts the scheme certificate without separate inspection. Building Control would only physically inspect for non-scheme work or where there's a specific concern.",
+      "Because consumer unit changes are not notifiable work and so Building Control has no interest in them.",
+      "Because the HSE, not Building Control, is the body that inspects all domestic electrical work in dwellings.",
+      "Because the client must arrange their own inspection and Building Control never attends domestic jobs at all.",
+      "Because the contractor's competent-person scheme self-certifies, and the Local Authority accepts that certificate.",
     ],
     correctAnswer: 3,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "If you spot what looks like a serious safety issue on a visit by an HSE inspector to a different part of the site, what should you do?",
     options: [
-      "Report it via your own chain (your Foreman in the first instance, escalating to the main contractor's Site Manager if it's site-wide). You don't approach the HSE inspector direct — that's not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.",
-      "A formal interview with two professional reviewers (qualified at IEng or CEng) who assess your portfolio of evidence against UK-SPEC. Typically 60-90 minutes. The reviewers ask probing questions on specific projects you cite, your decision-making process, your professional commitment evidence. Most applications pass; reviewers want to confirm you've evidenced the competences. Failed applications get specific feedback on what to strengthen.",
-      "Collective bargaining is the process where worker representatives (Unite + GMB) and employer representatives (ECA) sit down each year to negotiate the JIB Working Rule Agreement — pay rates, hours, holidays, sick pay, pension, overtime, allowances. The agreed rates apply across all JIB-graded contracts. The mechanism is voluntary (no statute compels it) but the outcomes set the industry-standard floor.",
-      "Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork",
+      "Report it via your own chain — your Foreman first, escalating to the Site Manager if it's site-wide.",
+      "Walk straight over to the HSE inspector and report it directly to them, bypassing your own management.",
+      "Say nothing — it's in a different part of the site, so it's not really your responsibility to report it.",
+      "Fix the hazard yourself immediately, even though it's outside your own work area and competence.",
     ],
     correctAnswer: 0,
     explanation:

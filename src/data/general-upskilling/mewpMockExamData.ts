@@ -339,10 +339,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Under LOLER 1998, who is responsible for ensuring that a thorough examination of a MEWP is carried out?',
     options: [
-      'It cuts all machine functions immediately when pressed',
+      'The MEWP manufacturer for the lifetime of the machine',
       'The employer or person who controls the equipment',
-      'Tyres, hydraulic hoses, controls, guardrails, and labels',
-      'A bi-energy machine that can switch between electric and diesel',
+      'The individual operator using the machine that day',
+      'The Health and Safety Executive as the enforcing authority',
     ],
     correctAnswer: 1,
     explanation:
@@ -425,10 +425,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'What is a spider lift?',
     options: [
-      'To allow a controlled release of hydraulic pressure so the platform lowers under gravity',
-      'That it is suitable for its intended purpose and properly maintained',
+      'A scissor lift fitted with eight wheels for rough terrain use',
+      'A vertical mast platform that is pushed manually into position',
       'A compact boom lift with stabilising legs that can be set up on uneven ground',
-      'A bi-energy machine that can switch between electric and diesel',
+      'A trailer-mounted platform towed behind a vehicle to each work site',
     ],
     correctAnswer: 2,
     explanation:
@@ -461,9 +461,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'What is the key difference between a telescopic boom lift and an articulating boom lift?',
     options: [
       'Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles',
-      'They override the platform controls and are used for emergency recovery or when the platform operator is incapacitated',
-      'To guide the operator, watch for hazards, and communicate using hand signals or radio',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
+      'Telescopic booms are battery powered, while articulating booms are always diesel powered',
+      'Telescopic booms can only be used indoors, while articulating booms are for outdoor use only',
+      'Telescopic booms lift loads only, while articulating booms are the only type rated to carry persons',
     ],
     correctAnswer: 0,
     explanation:
@@ -477,10 +477,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'When must an operator receive familiarisation on a MEWP?',
     options: [
-      'A competent person with sufficient training, experience, and knowledge',
+      'Only once, when they first complete their IPAF training course',
       'Every time they are required to operate a type of MEWP they have not used before',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
-      'Access, Capacity, Terrain, Obstructions, Reach, Services',
+      'Only when their PAL card is within six months of its expiry date',
+      'Only if they are operating a boom lift rather than a scissor lift',
     ],
     correctAnswer: 1,
     explanation:
@@ -494,10 +494,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'Which of the following best describes a vehicle-mounted platform?',
     options: [
-      'Category 3A and 3B mobile boom lifts, within manufacturer-specified limits',
-      'A step-by-step procedure describing how a task will be carried out safely',
+      'A scissor lift carried on the back of a flatbed for transport only',
+      'A platform that folds into a trailer and is towed between sites',
       'A MEWP permanently mounted on a road-going vehicle such as a lorry or van',
-      'To identify hazards such as overhead obstructions, ground conditions, and access routes',
+      'A self-propelled boom lift driven on its own wheels along public roads',
     ],
     correctAnswer: 2,
     explanation:
@@ -512,9 +512,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main advantage of an electric scissor lift compared to a diesel scissor lift?',
     options: [
-      'Being under the influence of alcohol or drugs',
-      'All four outriggers must be fully extended and set on firm level ground',
-      'The weight of all persons, tools, materials, and equipment on the platform',
+      'Greater ground clearance for crossing rough construction terrain',
+      'A higher maximum working height than any diesel equivalent',
+      'A larger fuel tank giving longer continuous run times outdoors',
       'Zero emissions and quieter operation, suitable for indoor use',
     ],
     correctAnswer: 3,
@@ -547,10 +547,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'What type of MEWP would typically be classified under IPAF Category 3B?',
     options: [
-      'A MEWP permanently mounted on a road-going vehicle such as a lorry or van',
+      'A static trailer-mounted boom set up on outriggers',
       'A self-propelled boom lift that can be driven with the platform raised',
-      'Every time they are required to operate a type of MEWP they have not used before',
-      'Whether the work can be done without working at height at all',
+      'A push-around vertical mast platform moved by hand',
+      'A self-propelled scissor lift providing vertical movement only',
     ],
     correctAnswer: 1,
     explanation:
@@ -619,10 +619,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A contractor is hired to carry out façade cleaning at 18 metres on a building adjacent to a live 11kV overhead power line. The site has soft ground conditions and restricted access. Which combination of regulations must the contractor specifically address in their planning?',
     options: [
-      'The collapse, overturning, or failure of load-bearing parts of a lifting machine such as a MEWP',
+      'WAHR 2005 and the Electricity at Work Regulations 1989 only',
       'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
-      'Attempt the manual lowering valve or hand pump as the next emergency lowering method',
-      'Before work begins, so that all personnel are familiar with the rescue procedure',
+      'LOLER 1998 and PUWER 1998 only, as the power line is the utility\'s concern',
+      'CDM 2015 alone, since it covers all other regulations on a construction site',
     ],
     correctAnswer: 1,
     explanation:
@@ -691,10 +691,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, at which stage of a construction project should the need for MEWP access and the associated risks first be considered?',
     options: [
-      'A MEWP permanently mounted on a road-going vehicle such as a lorry or van',
+      'Only once the contractor takes possession of the site',
       'During the design and planning stage, before construction begins',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'That it is suitable for its intended purpose and properly maintained',
+      'At the first toolbox talk on the morning work commences',
+      'When the MEWP is delivered and handed over on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -709,10 +709,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An operator reports feeling dizzy and nauseous at the start of their shift. They hold a valid PAL card and have been familiarised on the MEWP. Their supervisor asks them to continue working. What should the operator do?',
     options: [
-      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
-      'To confirm the routes are wide enough, strong enough, and clear of obstructions for the MEWP to travel safely',
+      'Continue working but stay at ground level until the symptoms pass',
+      'Operate the MEWP as instructed because the supervisor has authority',
       'Refuse to operate the MEWP, as they have a legal duty not to work when unfit and operating while impaired could endanger themselves and others',
-      'The APU provides powered hydraulic control, while the manual lowering valve releases hydraulic pressure for a controlled gravity descent',
+      'Take a painkiller and start work once the platform has been checked',
     ],
     correctAnswer: 2,
     explanation:
@@ -727,9 +727,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A competent person carries out a thorough examination of a MEWP under LOLER 1998 and identifies a defect that poses an immediate risk. What must happen before the machine can be used again?',
     options: [
-      'A restraint system prevents the wearer from reaching the platform edge; a fall arrest system stops a fall after it has begun',
-      'The APU provides powered hydraulic control, while the manual lowering valve releases hydraulic pressure for a controlled gravity descent',
-      'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
+      'The machine may continue in use until the end of the current shift',
+      'The defect can be noted on the report and repaired at the next service',
+      'The operator may use the machine if they avoid the affected function',
       'The machine must be taken out of service immediately; the defect must be rectified and the machine re-examined before it can return to use',
     ],
     correctAnswer: 3,
@@ -785,10 +785,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: 'What is the primary purpose of a site survey before a MEWP is delivered?',
     options: [
-      'Hydraulic oil, engine oil, coolant, and fuel levels, plus checks for any leaks',
-      'Familiarisation is machine-specific; training is the IPAF operator course',
+      'To agree the hire rate and delivery charges with the rental company',
+      'To confirm how many operators will be needed on the platform',
       'To identify hazards such as overhead obstructions, ground conditions, and access routes',
-      'The MEWP categories the holder is qualified to operate and the card expiry date',
+      'To decide which colour of high-visibility clothing the crew will wear',
     ],
     correctAnswer: 2,
     explanation:
@@ -854,10 +854,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What is a method statement?',
     options: [
-      'To guide the operator, watch for hazards, and communicate using hand signals or radio',
-      'Barriers, cones, a banksman, high-visibility clothing, and appropriate lighting',
+      'A certificate confirming the MEWP has passed its thorough examination',
+      'A list of the tools and materials needed to complete the job',
       'A step-by-step procedure describing how a task will be carried out safely',
-      'Platform controls, ground controls, auxiliary controls, and emergency lowering',
+      'A register recording the names of everyone who has used the machine',
     ],
     correctAnswer: 2,
     explanation:
@@ -871,9 +871,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'Why must ground conditions be assessed before operating a MEWP?',
     options: [
-      'Before work begins, so that all personnel are familiar with the rescue procedure',
-      'Adequate task and area lighting, increased use of high-visibility clothing, and an additional banksman where necessary',
-      'An unplanned event that had the potential to cause injury or damage but did not',
+      'To ensure the surface is level enough for the operator to stand comfortably',
+      'To confirm the ground is clean so the tyres do not pick up debris',
+      'To check the area drains well so the machine does not get wet',
       'To ensure the ground can support the weight of the MEWP without sinking, shifting, or collapsing',
     ],
     correctAnswer: 3,
@@ -974,10 +974,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What does the safe working load (SWL) of a MEWP platform include?',
     options: [
-      'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
+      'The unladen weight of the MEWP chassis and boom only',
       'The weight of the operator, tools, and all materials on the platform',
-      'Report the defect immediately, do not use the machine, and tag it out of service',
-      'Platform controls, ground controls, auxiliary controls, and emergency lowering',
+      'The maximum height the platform can reach when fully extended',
+      'The combined weight of the machine plus its transport trailer',
     ],
     correctAnswer: 1,
     explanation:
@@ -1064,10 +1064,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'When conducting a risk assessment for MEWP operations, who might be harmed in addition to the operator?',
     options: [
-      'Category 3A and 3B mobile boom lifts, within manufacturer-specified limits',
-      'A self-propelled boom lift that can be driven with the platform raised',
+      'Only the operator, as they are the only person on the platform',
+      'Only other trained MEWP operators working on the same site',
       'Pedestrians, other workers, and members of the public in the vicinity',
-      'In the site accident book and reported to the supervisor or safety officer',
+      'Only the site manager who authorised the lifting operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -1081,9 +1081,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'What is the purpose of bearing capacity assessment when planning MEWP operations?',
     options: [
-      'After the walk-around inspection but before elevating to work height, as part of the control testing sequence',
-      'To guide the operator, watch for hazards, and communicate using hand signals or radio',
-      'Attempt the manual lowering valve or hand pump as the next emergency lowering method',
+      'To calculate the maximum working height the boom can safely reach',
+      'To determine how many spreader pads the machine will require',
+      'To measure the gradient of the slope the machine will travel across',
       'To calculate whether the ground can support the weight and forces exerted by the MEWP',
     ],
     correctAnswer: 3,
@@ -1116,10 +1116,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What information should a method statement for MEWP operations include?',
     options: [
-      'Report the defect immediately, do not use the machine, and tag it out of service',
+      'Only the name and PAL card number of the nominated operator',
       'The step-by-step work procedure, risk controls, emergency plans, and responsibilities',
-      'Every time they are required to operate a type of MEWP they have not used before',
-      'It detects when the machine exceeds its safe operating angle and triggers an alarm or cuts functions',
+      'Only the make, model, and serial number of the MEWP to be used',
+      'Only the hire start and end dates agreed with the rental company',
     ],
     correctAnswer: 1,
     explanation:
@@ -1133,10 +1133,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'When should a risk assessment for MEWP operations be reviewed and updated?',
     options: [
-      'It detects when the machine exceeds its safe operating angle and triggers an alarm or cuts functions',
-      'Hydraulic oil, engine oil, coolant, and fuel levels, plus checks for any leaks',
+      'Only once, when it is first written before work begins',
+      'Only at the annual safety audit carried out by the employer',
       'When site conditions change, after an incident, or when the work method changes',
-      'To prevent the operator from being able to reach beyond the guardrails and risk ejection',
+      'Only when a new operator takes over the machine mid-project',
     ],
     correctAnswer: 2,
     explanation:
@@ -1151,9 +1151,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main risk if a MEWP operates on ground with underground voids or recently backfilled trenches?',
     options: [
-      'The location, height of the platform, number of casualties, and nature of the emergency',
-      'Zero emissions and quieter operation, suitable for indoor use',
-      'Underground and overhead services such as power lines and gas mains',
+      'The tyres may sink slightly, slowing the machine when driving',
+      'The outriggers may become difficult to retract after the work',
+      'Buried services beneath the void may interfere with the controls',
       'The ground may collapse under the weight of the MEWP, causing it to overturn',
     ],
     correctAnswer: 3,
@@ -1169,9 +1169,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: "What type of hazard does the 'S' in the ACTORS method refer to?",
     options: [
       'Underground and overhead services such as power lines and gas mains',
-      'Conduct a walk-around inspection of the machine',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'A bi-energy machine that can switch between electric and diesel',
+      'Slopes and gradients that could affect machine stability',
+      'Spreader pads required beneath the outrigger feet',
+      'Storage space needed for tools and materials on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1186,10 +1186,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What control measure helps protect pedestrians and other workers from MEWP operations?',
     options: [
-      'To distribute the outrigger load over a wider area of ground',
+      'Asking the public to keep clear by displaying a notice on the machine',
       'Establishing exclusion zones with barriers, signage, and a banksman where necessary',
-      'Do NOT touch the casualty, isolate the power supply if safe to do so, and call 999 immediately',
-      'All four outriggers must be fully extended and set on firm level ground',
+      'Issuing high-visibility clothing to nearby pedestrians and visitors',
+      'Lowering the platform whenever someone walks close to the machine',
     ],
     correctAnswer: 1,
     explanation:
@@ -1203,10 +1203,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'Why is it important to assess access routes to the work area during a site survey?',
     options: [
-      'Adequate task and area lighting, increased use of high-visibility clothing, and an additional banksman where necessary',
-      'To verify that all functions operate correctly and safely before the operator is at height',
+      'To confirm the shortest possible distance to reduce travel time',
+      'To decide which gate the delivery lorry should use on arrival',
       'To confirm the routes are wide enough, strong enough, and clear of obstructions for the MEWP to travel safely',
-      'After the walk-around inspection but before elevating to work height, as part of the control testing sequence',
+      'To identify where operators can park their own vehicles on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1220,9 +1220,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'What is the primary purpose of using spreader pads under MEWP outriggers?',
     options: [
-      "To prevent the operator from being able to reach beyond the guardrails and risk ejection",
-      "Report the defect immediately, do not use the machine, and tag it out of service",
-      "Use the auxiliary power unit or the manual lowering valve to lower the platform",
+      "To raise the outrigger feet clear of any standing surface water",
+      "To level the machine when it is set up on a gentle slope",
+      "To stop the outriggers from being scratched by rough ground",
       "To increase the area over which the MEWP's weight is distributed, reducing ground pressure",
     ],
     correctAnswer: 3,
@@ -1239,9 +1239,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'Which weather conditions other than high wind should be monitored during MEWP operations?',
     options: [
       'Rain, ice, lightning, fog, and extreme temperatures',
-      'Tyres, hydraulic hoses, controls, guardrails, and labels',
-      'Being under the influence of alcohol or drugs',
-      'The boom, chassis, turntable, platform floor, and guardrails',
+      'Humidity, air pressure, pollen count, and UV index',
+      'Cloud cover, sunrise time, moon phase, and tide times',
+      'Dust levels, background noise, vibration, and odour',
     ],
     correctAnswer: 0,
     explanation:
@@ -1258,10 +1258,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A site survey reveals that a 45-tonne articulating boom lift must be positioned on a suspended concrete car park deck to reach the underside of a bridge structure above. The deck has a posted weight limit of 30 tonnes. What should you do?',
     options: [
-      'Plan revised safety measures based on investigation findings, Do (implement) the changes, Check their effectiveness through monitoring, and Act to make further adjustments',
+      'Position the machine on the deck but use large spreader pads to stay within the 30-tonne limit',
       'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
-      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
-      'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
+      'Remove the counterweights to reduce the machine weight below 30 tonnes before driving on',
+      'Drive onto the deck quickly so the load is only applied briefly to each point',
     ],
     correctAnswer: 1,
     explanation:
@@ -1276,10 +1276,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'You are planning work using a MEWP near an 11kV overhead power line. What minimum safe exclusion distance must be maintained, and what additional measures should be in place?',
     options: [
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
-      'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
+      '1 metre clearance from the line, with a warning sign on the MEWP and the operator instructed to take care',
+      'No clearance is needed provided the operator wears insulating rubber gloves while at height',
       '9 metres clearance from the line, plus goal posts or physical barriers to define the exclusion zone, a banksman, and consultation with the power company',
-      'To confirm the routes are wide enough, strong enough, and clear of obstructions for the MEWP to travel safely',
+      '3 metres clearance from the line, which is always sufficient for plant of any height',
     ],
     correctAnswer: 2,
     explanation:
@@ -1294,9 +1294,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An operator is using a 20-metre telescopic boom lift on a construction site. During operations, the anemometer reads 11 m/s with gusts forecast to increase. The task is expected to take another 45 minutes to complete. What is the correct course of action?',
     options: [
-      'The collapse, overturning, or failure of load-bearing parts of a lifting machine such as a MEWP',
-      'Load-sensing or proximity detection systems that prevent or warn of potential entrapment between the platform and surrounding structures',
-      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
+      'Continue working at the same height, as 11 m/s is within the safe limit',
+      'Increase to maximum height quickly to finish before the wind rises',
+      'Carry on but ask a banksman to watch the platform for excessive sway',
       'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
     ],
     correctAnswer: 3,
@@ -1313,9 +1313,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'A task requires a MEWP to carry two operators, a 110V transformer, hand tools, and fixing materials to a working height of 14 metres. The available machine has an SWL of 230 kg. Operator A weighs 90 kg and Operator B weighs 85 kg. The equipment weighs a total of 60 kg. Can this operation proceed safely?',
     options: [
       "No, the total load of 235 kg exceeds the machine's SWL of 230 kg; a machine with a higher SWL is required",
-      "Whether there are underground voids, buried services, slopes, or soft ground that could cause instability",
-      "Use the auxiliary power unit or the manual lowering valve to lower the platform",
-      "Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates",
+      "Yes, the total load of 235 kg is within the machine's 230 kg SWL once rounded down",
+      "Yes, because the SWL applies only to materials and not to the operators' body weight",
+      "Yes, provided one operator removes their tool belt to bring the load under the limit",
     ],
     correctAnswer: 0,
     explanation:
@@ -1330,10 +1330,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'You are writing a method statement for MEWP operations in a busy pedestrianised town centre. Which of the following should be included as a specific control measure for managing the interaction between the MEWP and the public?',
     options: [
-      'Refuse to operate the MEWP, as they have a legal duty not to work when unfit and operating while impaired could endanger themselves and others',
+      'A printed notice on the platform asking the public to keep a safe distance',
       'Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority',
-      'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
-      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
+      'Issuing high-visibility tabards to passing pedestrians near the machine',
+      'Relying on the operator to stop work each time a member of the public approaches',
     ],
     correctAnswer: 1,
     explanation:
@@ -1348,10 +1348,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'During a site survey using the ACTORS method, you identify the following: narrow access through a 2.5-metre gate, a maximum SWL requirement of 350 kg for three workers and tools, soft clay ground with recent rainfall, overhead telephone cables at 8 metres, a required working height of 12 metres with 3 metres of horizontal outreach, and a gas main running beneath the planned work area. Which factor presents the greatest constraint on machine selection?',
     options: [
-      'Secure the scene, administer first aid, report to the supervisor, preserve evidence, and complete an accident report',
-      'Use smooth, progressive control inputs, avoiding sudden starts and stops that could cause the platform to jerk or whip',
+      'The 2.5-metre gate, as no MEWP can ever pass through an opening that narrow',
+      'The overhead telephone cables, as work must always stop within 8 metres of any cable',
       'The soft clay ground, as it directly affects stability and may require extensive ground preparation or an alternative position',
-      'They need familiarisation on the telescopic boom only, as they have not used that type before',
+      'The 350 kg SWL requirement, as no platform is rated to carry three workers',
     ],
     correctAnswer: 2,
     explanation:
@@ -1407,10 +1407,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Lifting Operations and Lifting Equipment Regulations (LOLER), how frequently must a MEWP receive a thorough examination?',
     options: [
-      'Hard hat, high-visibility clothing, safety boots, and gloves',
+      'Every 12 months or in accordance with an examination scheme',
       'Every 6 months or in accordance with an examination scheme',
-      'During the design and planning stage, before construction begins',
-      'Pedestrians, other workers, and members of the public in the vicinity',
+      'Every 3 months without exception',
+      'Only before the machine is hired out to a new user',
     ],
     correctAnswer: 1,
     explanation:
@@ -1424,10 +1424,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'Who is legally permitted to carry out a LOLER thorough examination on a MEWP?',
     options: [
-      'The boom, chassis, turntable, platform floor, and guardrails',
-      'Attempt the manual lowering valve or hand pump as the next emergency lowering method',
+      'Any operator who holds a valid IPAF PAL card for the machine',
+      'The site supervisor who is responsible for the work',
       'A competent person with sufficient training, experience, and knowledge',
-      'Category 3A and 3B mobile boom lifts, within manufacturer-specified limits',
+      'The machine owner, regardless of their technical knowledge',
     ],
     correctAnswer: 2,
     explanation:
@@ -1461,9 +1461,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'What type of personal protective equipment is specifically required when working in a boom-type MEWP?',
     options: [
       'A full body harness and short lanyard attached to the designated anchor point',
-      'To identify hazards such as overhead obstructions, ground conditions, and access routes',
-      'To calculate whether the ground can support the weight and forces exerted by the MEWP',
-      'They need familiarisation on the telescopic boom only, as they have not used that type before',
+      'Ear defenders and a dust mask to protect against engine noise and fumes',
+      'A high-visibility tabard and a hard hat, with no harness required',
+      'Cut-resistant gloves and safety goggles attached to the platform rail',
     ],
     correctAnswer: 0,
     explanation:
@@ -1495,10 +1495,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'When deploying outriggers on a vehicle-mounted MEWP, how many must be fully extended?',
     options: [
-      '1 major injury : 29 minor injuries : 300 near-misses',
-      'During the design and planning stage, before construction begins',
+      'Only the two outriggers on the uphill side of the machine',
+      'Three of the four, leaving one retracted for access',
       'All four outriggers must be fully extended and set on firm level ground',
-      'A MEWP permanently mounted on a road-going vehicle such as a lorry or van',
+      'Only the front pair, as the rear axle provides enough support',
     ],
     correctAnswer: 2,
     explanation:
@@ -1513,9 +1513,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the difference between a restraint harness system and a fall arrest harness system?',
     options: [
-      'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
-      'To increase the area over which the MEWP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight is distributed, reducing ground pressure',
-      'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
+      'A restraint system is for scissor lifts; a fall arrest system is for boom lifts only',
+      'A restraint system uses a longer lanyard, while a fall arrest system uses a shorter one',
+      'A restraint system is worn over clothing; a fall arrest system is worn underneath',
       'A restraint system prevents the wearer from reaching the platform edge; a fall arrest system stops a fall after it has begun',
     ],
     correctAnswer: 3,
@@ -1621,10 +1621,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A MEWP has been involved in a collision with a site vehicle but appears undamaged. What action is required under LOLER?',
     options: [
-      'A battery or generator backup that powers the hydraulic system when the main engine fails',
+      'The machine may continue in use as no visible damage was caused',
       'A thorough examination must be carried out before the machine is used again, as this constitutes an exceptional circumstance',
-      'Secure the scene, administer first aid, report to the supervisor, preserve evidence, and complete an accident report',
-      'A fire extinguisher, first aid kit, and the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s operating manual with emergency procedures',
+      'Only a pre-use visual inspection by the operator is required before further use',
+      'The machine can be used until its next scheduled six-monthly examination',
     ],
     correctAnswer: 1,
     explanation:
@@ -1638,10 +1638,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'Before deploying outriggers, what ground conditions must the operator assess?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'To increase the area over which the MEWP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight is distributed, reducing ground pressure',
+      'Only the colour of the ground surface to judge how dry it is',
+      'Only whether the surface is paved, as any paved area is always safe',
       'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
-      'Stitching integrity, webbing for cuts or abrasion, buckle operation, D-ring condition, and label legibility',
+      'Only the distance to the nearest building or boundary fence',
     ],
     correctAnswer: 2,
     explanation:
@@ -1709,10 +1709,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'When inspecting a harness before use, which of the following should the operator check?',
     options: [
-      'To ensure the ground can support the weight of the MEWP without sinking, shifting, or collapsing',
-      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
+      'Only the colour of the webbing to confirm it matches the lanyard',
+      'Only the manufacturer\'s name printed on the chest strap label',
       'Stitching integrity, webbing for cuts or abrasion, buckle operation, D-ring condition, and label legibility',
-      'Employees must take reasonable care for their own health and safety and that of others affected by their actions',
+      'Only whether the harness is the correct size for the operator',
     ],
     correctAnswer: 2,
     explanation:
@@ -1726,9 +1726,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: 'Why must the lanyard in a boom lift be kept as short as possible?',
     options: [
-      'The step-by-step work procedure, risk controls, emergency plans, and responsibilities',
-      'To calculate whether the ground can support the weight and forces exerted by the MEWP',
-      'That overhead clearances are adequate and there are no obstructions above',
+      'To make the harness more comfortable for the operator to wear',
+      'To reduce the weight the operator has to carry while working',
+      'To allow the operator to move freely around the whole platform',
       'To prevent the operator from being able to reach beyond the guardrails and risk ejection',
     ],
     correctAnswer: 3,
@@ -1797,9 +1797,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An operator notices that one outrigger pad is sinking into soft ground after the MEWP has been set up. What should they do?',
     options: [
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
-      'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
-      'Refuse to operate the MEWP, as they have a legal duty not to work when unfit and operating while impaired could endanger themselves and others',
+      'Continue working but keep an eye on the outrigger until the task is finished',
+      'Pack more spreader pads under the sinking outrigger while the platform stays elevated',
+      'Extend the boom in the opposite direction to counterbalance the sinking side',
       'Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates',
     ],
     correctAnswer: 3,
@@ -1833,10 +1833,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What additional PPE, beyond a harness, is typically required when operating a MEWP on a construction site?',
     options: [
-      'Platform controls, ground controls, auxiliary controls, and emergency lowering',
+      'Waterproof overalls, knee pads, a dust mask, and ear plugs',
       'Hard hat, high-visibility clothing, safety boots, and gloves',
-      '1 major injury : 29 minor injuries : 300 near-misses',
-      'A step-by-step procedure describing how a task will be carried out safely',
+      'A face shield, chemical apron, rubber boots, and barrier cream',
+      'Welding gauntlets, a respirator, sun cream, and a back support belt',
     ],
     correctAnswer: 1,
     explanation:
@@ -1871,9 +1871,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "An operator arrives on site to find a MEWP with an expired thorough examination certificate. The site supervisor insists the work is urgent and the machine 'looks fine'. What is the correct course of action?",
     options: [
-      'Do not set up in this location; the slope exceeds the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated limit and the machine cannot be safely operated here without engineering controls to level the ground',
-      'The machine must be taken out of service immediately; the defect must be rectified and the machine re-examined before it can return to use',
-      'The method of rescue, trained personnel, equipment needed, communication plan, and emergency services contact details',
+      'Use the machine, as a visual check by the operator can replace the examination',
+      'Use the machine for the urgent task only, then arrange the examination afterwards',
+      'Carry out a quick pre-use inspection and proceed if no faults are found',
       'Refuse to use the machine; it is a legal requirement under LOLER that the thorough examination is current before the machine can be used to lift persons',
     ],
     correctAnswer: 3,
@@ -1890,9 +1890,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'A MEWP must be set up on a pavement above a basement car park. The ground bearing capacity information is unavailable. What steps should be taken before deploying the outriggers?',
     options: [
       'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
-      'Maintain continuous two-way communication using the pre-agreed method, confirm each action before proceeding, and relay information to emergency services if called',
-      'Plan revised safety measures based on investigation findings, Do (implement) the changes, Check their effectiveness through monitoring, and Act to make further adjustments',
+      'Deploy the outriggers and elevate slowly, watching for any sign of the surface cracking',
+      'Use the largest available spreader pads, as these guarantee the basement roof will hold',
+      'Position the machine over the strongest-looking part of the pavement and proceed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1907,10 +1907,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'During a pre-use inspection, an operator discovers that the harness inspection tag shows the last formal inspection was 8 months ago. The harness appears to be in good visual condition. What should the operator do?',
     options: [
-      'The soft clay ground, as it directly affects stability and may require extensive ground preparation or an alternative position',
+      'Use the harness as it looks fine, since the visual condition is what matters most',
       'Withdraw the harness from service as it has exceeded the 6-month formal inspection interval, obtain a currently inspected harness, and report the overdue inspection',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
+      'Carry out the formal inspection yourself before using the harness for the shift',
+      'Use the harness for light tasks only until the next formal inspection is due',
     ],
     correctAnswer: 1,
     explanation:
@@ -1925,10 +1925,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A competent person conducting a thorough examination identifies a cracked weld on a boom section but considers the machine safe to operate for a further two weeks until a repair can be scheduled. What should happen according to LOLER?',
     options: [
-      'Plan revised safety measures based on investigation findings, Do (implement) the changes, Check their effectiveness through monitoring, and Act to make further adjustments',
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
+      'The defect may be noted and the machine used for two more weeks as the competent person advised',
+      'The defect should be monitored daily and the machine kept in use until the repair is scheduled',
       'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
-      '9 metres clearance from the line, plus goal posts or physical barriers to define the exclusion zone, a banksman, and consultation with the power company',
+      'The competent person can issue a temporary permit allowing reduced-load use until repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -1943,9 +1943,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "An operator is setting up a 45-metre truck-mounted MEWP on a sloping road with a 3-degree gradient. The manufacturer's data plate states a maximum ground slope of 1 degree for outrigger deployment. What is the correct approach?",
     options: [
-      "Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance",
-      "Maintain continuous two-way communication using the pre-agreed method, confirm each action before proceeding, and relay information to emergency services if called",
-      "Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority",
+      "Set up as planned, since a 3-degree slope is gentle enough for any truck-mounted MEWP",
+      "Deploy the outriggers further on the downhill side to compensate for the 3-degree slope",
+      "Set up but restrict the platform to half its maximum height to offset the extra slope",
       "Do not set up in this location; the slope exceeds the manufacturer's stated limit and the machine cannot be safely operated here without engineering controls to level the ground",
     ],
     correctAnswer: 3,
@@ -1962,9 +1962,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       "A fall arrest lanyard with an energy absorber is being used in a boom lift with a platform height of 9 metres. The total fall distance including lanyard length, energy absorber deployment, harness stretch, and the operator's height below the D-ring is calculated at 6.5 metres. Is this arrangement safe, and why?",
     options: [
       'No, because fall arrest lanyards should never be used in boom lifts; only restraint lanyards should be used to prevent the operator from reaching the edge in the first place',
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Withdraw the harness from service as it has exceeded the 6-month formal inspection interval, obtain a currently inspected harness, and report the overdue inspection',
-      'Load-sensing or proximity detection systems that prevent or warn of potential entrapment between the platform and surrounding structures',
+      'Yes, because the 6.5-metre fall distance is comfortably less than the 9-metre platform height',
+      'Yes, because the energy absorber will limit the arrest force to a safe level on deployment',
+      'No, because the lanyard is too long and a shorter fall arrest lanyard should be fitted instead',
     ],
     correctAnswer: 0,
     explanation:
@@ -2037,9 +2037,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of the ground controls on a MEWP?',
     options: [
       'They override the platform controls and are used for emergency recovery or when the platform operator is incapacitated',
-      'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
-      'It detects when the machine exceeds its safe operating angle and triggers an alarm or cuts functions',
-      'A short, topic-specific safety briefing delivered to workers before or during work, often at the work location',
+      'They are the normal everyday controls used to drive the machine between tasks',
+      'They allow a second operator to share control of the platform while at height',
+      'They automatically level the platform whenever the boom is moved',
     ],
     correctAnswer: 0,
     explanation:
@@ -2088,9 +2088,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should all MEWP movements be tested at low speed before elevating to work height?',
     options: [
-      'To identify hazards such as overhead obstructions, ground conditions, and access routes',
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
-      'Report the defect immediately, do not use the machine, and tag it out of service',
+      'To warm the hydraulic fluid up to its operating temperature before lifting',
+      'To use less fuel during the pre-start checks and extend the machine\'s run time',
+      'To reduce wear on the tyres by avoiding sudden movements at the start of a shift',
       'To verify that all functions operate correctly and safely before the operator is at height',
     ],
     correctAnswer: 3,
@@ -2113,7 +2113,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'A minimum exclusion zone of 10 metres should be maintained around the base of an operating MEWP to prevent unauthorised persons from entering the area beneath or around the elevated platform. This protects against falling objects and the risk of being struck by the machine or its counterweights. The zone should be marked with barriers, cones, or tape.',
+      'There is no single fixed regulatory distance: IPAF/HSE guidance requires the exclusion zone to be set by the machine’s reach, the fall/drop zone and the task risk assessment. Of the options here, a generous standing zone of around 10 metres is the most appropriate working minimum to keep unauthorised persons clear of falling objects and the risk of being struck by the machine or its counterweights. The zone must be marked with barriers, cones or tape and adjusted to suit the actual machine and task.',
     section: 'Module 4',
     difficulty: 'basic',
     topic: 'Exclusion zones',
@@ -2157,9 +2157,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: "Which standardised hand signal means 'stop all operations immediately'?",
     options: [
-      'Zero emissions and quieter operation, suitable for indoor use',
-      'At least three times the area of the outrigger foot',
-      'Before every shift the machine is used',
+      'Both arms held straight out horizontally to the sides',
+      'One arm pointing down towards the ground repeatedly',
+      'Both hands rotating in circles above the head',
       'One arm raised with an open palm facing the operator',
     ],
     correctAnswer: 3,
@@ -2176,9 +2176,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'What traffic management measures should be in place when operating a MEWP near a public road?',
     options: [
       'Barriers, cones, a banksman, high-visibility clothing, and appropriate lighting',
-      'To prevent the operator from being able to reach beyond the guardrails and risk ejection',
-      'Familiarisation is machine-specific; training is the IPAF operator course',
-      'It detects when the machine exceeds its safe operating angle and triggers an alarm or cuts functions',
+      'A single warning sign placed at the entrance to the site',
+      'A verbal warning to drivers given by the operator from the platform',
+      'Reducing the speed of the MEWP while it travels along the road',
     ],
     correctAnswer: 0,
     explanation:
@@ -2192,10 +2192,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 121,
     question: 'What is the auxiliary lowering system on a MEWP used for?',
     options: [
-      'To identify hazards such as overhead obstructions, ground conditions, and access routes',
+      'To raise the platform faster when the main engine is running normally',
       'To provide a secondary means of lowering the platform if the primary controls fail',
-      'The boom, chassis, turntable, platform floor, and guardrails',
-      'A bi-energy machine that can switch between electric and diesel',
+      'To lock the platform at height so it cannot drift down on its own',
+      'To power the machine\'s lights and horn when the engine is switched off',
     ],
     correctAnswer: 1,
     explanation:
@@ -2209,10 +2209,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Why must a rescue plan be confirmed before beginning work in a MEWP?',
     options: [
-      'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
+      'Because the hire company requires a rescue plan before releasing the machine',
+      'Because the emergency services will not attend a site without a rescue plan on file',
       'Because if the operator becomes incapacitated or the machine fails at height, a pre-planned rescue ensures a prompt and safe recovery',
-      'A restraint system prevents the wearer from reaching the platform edge; a fall arrest system stops a fall after it has begun',
+      'Because a rescue plan reduces the insurance premium payable on the equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -2230,9 +2230,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Which categories of MEWP are designed to be driven with the platform in the elevated position?',
     options: [
-      'One arm raised with an open palm facing the operator',
-      'That overhead clearances are adequate and there are no obstructions above',
-      'Use the ground controls to reverse the movement that caused the entrapment',
+      'Category 1A static vertical platforms only',
+      'All scissor lifts, regardless of their IPAF category',
+      'Push-around vertical platforms when fitted with outriggers',
       'Category 3A and 3B mobile boom lifts, within manufacturer-specified limits',
     ],
     correctAnswer: 3,
@@ -2284,10 +2284,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'When managing the safe working load of a MEWP platform, what must be included in the total weight calculation?',
     options: [
-      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
-      'Every time they are required to operate a type of MEWP they have not used before',
+      'Only the weight of the operators, as tools are excluded from the SWL',
+      'Only the heaviest single item being lifted onto the platform',
       'The weight of all persons, tools, materials, and equipment on the platform',
-      'The step-by-step work procedure, risk controls, emergency plans, and responsibilities',
+      'The weight of the materials only, since the platform is rated for two people',
     ],
     correctAnswer: 2,
     explanation:
@@ -2301,9 +2301,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'What is entrapment, and how should it be prevented when operating a MEWP?',
     options: [
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Establish the root cause, gather evidence, interview witnesses, implement corrective actions, and take steps to prevent recurrence',
-      'Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates',
+      'Entrapment is the boom seizing in position; it is prevented by regular hydraulic servicing',
+      'Entrapment is the operator being locked out of the controls; it is prevented by carrying a spare key',
+      'Entrapment is the platform sticking at height; it is prevented by testing the descent before work',
       'Entrapment is when the operator or platform is crushed between the MEWP and a fixed structure; it is prevented by maintaining safe distances and awareness of surroundings',
     ],
     correctAnswer: 3,
@@ -2318,14 +2318,14 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 128,
     question: 'What precautions are required when operating a MEWP in a public area?',
     options: [
-      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
-      'Secure the scene, administer first aid, report to the supervisor, preserve evidence, and complete an accident report',
-      'It is a continuous improvement cycle used to plan safety measures, implement them, monitor their effectiveness, and make improvements based on findings',
-      'They need familiarisation on the telescopic boom only, as they have not used that type before',
+      'A full exclusion zone with barriers set by the fall zone and risk assessment, warning signs, and a banksman to manage public access',
+      'A single line of cones placed around the machine with no banksman needed',
+      'A verbal request to passers-by to keep clear while the platform is raised',
+      'Working only during quiet periods, with no physical barriers required',
     ],
     correctAnswer: 0,
     explanation:
-      'Working in public areas requires enhanced precautions including a full exclusion zone with barriers positioned a minimum of 6 metres from the machine base, clearly visible warning signs, and a dedicated banksman to manage public access and prevent entry into the danger zone. The public cannot be expected to understand MEWP hazards, so physical barriers are essential.',
+      'Working in public areas requires enhanced precautions including a full exclusion zone with barriers positioned to cover the machine’s fall/drop zone and reach (the distance set by the risk assessment, not a single fixed figure), clearly visible warning signs, and a dedicated banksman to manage public access and prevent entry into the danger zone. The public cannot be expected to understand MEWP hazards, so physical barriers are essential.',
     section: 'Module 4',
     difficulty: 'intermediate',
     topic: 'Public areas',
@@ -2335,10 +2335,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What additional measures are required when operating a MEWP during night working?',
     options: [
-      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
+      'No additional measures, as the machine\'s own headlights are sufficient',
       'Adequate task and area lighting, increased use of high-visibility clothing, and an additional banksman where necessary',
-      'Stitching integrity, webbing for cuts or abrasion, buckle operation, D-ring condition, and label legibility',
-      'Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles',
+      'A reduced exclusion zone, since fewer people are about at night',
+      'Working at a lower height only, to make the platform easier to see',
     ],
     correctAnswer: 1,
     explanation:
@@ -2352,10 +2352,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'What is the correct procedure for loading a MEWP onto a transport vehicle?',
     options: [
-      "Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue",
-      "Refuse to operate the MEWP, as they have a legal duty not to work when unfit and operating while impaired could endanger themselves and others",
+      "Load on any available slope, as the machine's brakes will hold it in place",
+      "Reverse on at speed so the machine clears the ramp angle quickly",
       "Ensure level ground, apply the trailer's parking brake, use wheel chocks, and follow the manufacturer's loading procedure",
-      "Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles",
+      "Elevate the platform during loading to improve the operator's view of the ramp",
     ],
     correctAnswer: 2,
     explanation:
@@ -2370,9 +2370,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'During the 11-step pre-start procedure, at what point should the emergency stop be tested?',
     options: [
-      'Employees must take reasonable care for their own health and safety and that of others affected by their actions',
-      'To increase the area over which the MEWP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight is distributed, reducing ground pressure',
-      'A restraint system prevents the wearer from reaching the platform edge; a fall arrest system stops a fall after it has begun',
+      'Only at the end of the shift once all work has been completed',
+      'Only if the operator suspects a fault with the controls',
+      'After the platform has been raised to its full working height',
       'After the walk-around inspection but before elevating to work height, as part of the control testing sequence',
     ],
     correctAnswer: 3,
@@ -2389,9 +2389,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'Why should the operator position the MEWP before elevating rather than driving to the work position while elevated?',
     options: [
       'Because driving with the platform elevated increases the risk of overturning due to a higher centre of gravity, and most MEWP categories are not rated for elevated travel',
-      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
-      'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
-      'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
+      'Because elevated travel uses more fuel than positioning the machine first',
+      'Because the operator gets a better view of the route from ground level',
+      'Because the manufacturer\'s warranty is void if the machine is driven while elevated',
     ],
     correctAnswer: 0,
     explanation:
@@ -2423,10 +2423,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What controls smoothness technique should operators use when operating MEWP boom functions?',
     options: [
-      'Remove or reposition the scaffolding to ensure unobstructed access to the ground controls, or reposition the MEWP, and update the rescue plan accordingly',
-      'Everyone taking responsibility for safety, reporting hazards without fear, challenging unsafe behaviour, and leading by example',
+      'Operate each function at maximum speed to complete movements quickly',
+      'Make short, sharp control movements to keep precise control of the boom',
       'Use smooth, progressive control inputs, avoiding sudden starts and stops that could cause the platform to jerk or whip',
-      'Brief the team on the rescue plan, confirm a ground operative is trained on ground controls, and ensure communication methods are agreed',
+      'Move two functions at once at full speed to save time positioning the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -2441,9 +2441,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Before beginning elevated work, who should the MEWP operator brief and what should be confirmed?',
     options: [
-      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
-      'Blood pooling in the legs when a person is suspended in a harness, which can cause death within 15 to 30 minutes',
-      'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
+      'Brief only the site manager, and confirm the hire paperwork is complete',
+      'Brief the public near the work area, and confirm they will keep clear',
+      'Brief the next shift\'s operator, and confirm the fuel tank is full',
       'Brief the team on the rescue plan, confirm a ground operative is trained on ground controls, and ensure communication methods are agreed',
     ],
     correctAnswer: 3,
@@ -2460,9 +2460,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'What maximum speed restrictions typically apply when driving a category 3B MEWP with the platform elevated?',
     options: [
       'The manufacturer specifies maximum elevated travel speeds, which are significantly lower than stowed travel speed, typically limited by a restrictor system',
-      'Remove or reposition the scaffolding to ensure unobstructed access to the ground controls, or reposition the MEWP, and update the rescue plan accordingly',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
-      'The soft clay ground, as it directly affects stability and may require extensive ground preparation or an alternative position',
+      'There are no speed limits when elevated, as the operator controls the speed directly',
+      'Elevated travel is permitted at the same speed as stowed travel on level ground',
+      'The machine may travel at half its road speed once the platform is fully raised',
     ],
     correctAnswer: 0,
     explanation:
@@ -2480,10 +2480,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An operator is working in a boom lift near structural steelwork when the boom begins to slew unexpectedly due to a control malfunction. The platform is moving towards a steel beam that could trap the operator. What is the correct immediate action?',
     options: [
-      'Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates',
+      'Brace against the steel beam with your hands to stop the platform moving',
       'Hit the emergency stop immediately to halt all machine movement before the platform reaches the steelwork',
-      'The collapse, overturning, or failure of load-bearing parts of a lifting machine such as a MEWP',
-      'Ensure level ground, apply the trailer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s parking brake, use wheel chocks, and follow the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s loading procedure',
+      'Climb over the guardrail onto the steelwork to escape the platform',
+      'Continue the slew in the same direction to push the platform clear of the beam',
     ],
     correctAnswer: 1,
     explanation:
@@ -2498,10 +2498,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A MEWP operator needs to carry out work alongside a dual carriageway with overhead power lines rated at 33kV running parallel to the road at a horizontal distance of 8 metres from the kerb. The boom lift has a maximum outreach of 18 metres. What control measures are required?',
     options: [
-      'Entrapment is when the operator or platform is crushed between the MEWP and a fixed structure; it is prevented by maintaining safe distances and awareness of surroundings',
-      'Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance',
+      'Maintain a 3-metre barrier from the lines, as 33kV is a relatively low voltage for plant',
+      'Position the machine so the operator can see the lines and rely on their judgement to stay clear',
       'Use an exclusion barrier at 9 metres from the power lines, limit boom functions to prevent any part of the MEWP reaching within 9 metres of the lines, appoint a banksman to monitor, and implement a traffic management plan for the road',
-      'No, because fall arrest lanyards should never be used in boom lifts; only restraint lanyards should be used to prevent the operator from reaching the edge in the first place',
+      'Work only when the lines are visibly not sparking, with no physical barriers needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -2516,9 +2516,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'During elevated work, a category 3B boom lift operator notices the ground conditions ahead are deteriorating — there is standing water and the ground appears soft and rutted. The operator needs to reposition 15 metres forward. What is the safest approach?',
     options: [
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
-      'Entrapment is when the operator or platform is crushed between the MEWP and a fixed structure; it is prevented by maintaining safe distances and awareness of surroundings',
+      'Drive forward at elevated height, keeping the speed low to maintain control over the soft ground',
+      'Extend the boom the full 15 metres to reach the new position without moving the chassis',
+      'Reverse away quickly to avoid the soft ground, then approach from a different angle while elevated',
       'Lower the platform to stowed position, assess the ground conditions at close range on foot if safe to do so, and if the ground is unsuitable, arrange for temporary roadway panels or select an alternative position on firm ground',
     ],
     correctAnswer: 3,
@@ -2535,9 +2535,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'An operator is working at 12 metres in a boom lift when the hydraulic system fails completely. The platform will not respond to any controls and the engine has stalled. The auxiliary lowering system is not responding. A rescue plan is in place. What is the correct sequence of actions?',
     options: [
       'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
+      'Climb down the boom structure to the ground as quickly as possible before the platform drops',
+      'Wait quietly in the platform for a repair engineer to arrive the following morning',
+      'Tie a rope to the guardrail and abseil down to the ground without specialist equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -2552,10 +2552,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A site requires a MEWP to operate at night in a pedestrianised town centre with shops and restaurants. The work involves replacing street lights at 10 metres height. What comprehensive set of control measures should be in place?',
     options: [
-      'Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle',
-      'Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility',
-      'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
-      'Mandate secondary guarding devices on all boom-type MEWPs, deliver targeted toolbox talks on entrapment risks, ensure trained ground rescue persons are always present, update risk assessments to include entrapment scenarios, and establish a reporting system to track entrapment near-misses',
+      'Rely on the machine\'s headlights for illumination, place a few cones around the base, and proceed as the streets are quiet at night',
+      'Establish a full exclusion zone with barriers sized to the fall zone and reach by risk assessment, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility',
+      'Work without barriers but post a sign asking the public to keep clear, since most people will be indoors at night',
+      'Use a single banksman with a torch and no formal traffic management plan, as the work is only at 10 metres',
     ],
     correctAnswer: 1,
     explanation:
@@ -2570,10 +2570,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A MEWP platform has a rated SWL of 230 kg. Two operatives weighing 85 kg and 95 kg respectively need to access the platform with a battery-powered impact wrench (8 kg), a toolbox (12 kg), and a replacement component (25 kg). Should this load be permitted?',
     options: [
-      'Lower the platform to stowed position, assess the ground conditions at close range on foot if safe to do so, and if the ground is unsuitable, arrange for temporary roadway panels or select an alternative position on firm ground',
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
+      'Yes, permit the load without question, as 225 kg is below the 230 kg SWL with room to spare',
+      'No, refuse outright, as two operatives may never share a platform regardless of the total load',
       'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
-      'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
+      'Yes, but only if the heavier operative removes their harness to save weight on the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -2647,10 +2647,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What is an auxiliary power unit (APU) on a MEWP?',
     options: [
-      'To the designated anchor point provided inside the MEWP platform',
-      'When site conditions change, after an incident, or when the work method changes',
+      'A device that boosts engine power for faster boom movement at height',
+      'A spare fuel tank that extends the running time of the main engine',
       'A battery or generator backup that powers the hydraulic system when the main engine fails',
-      'A compact boom lift with stabilising legs that can be set up on uneven ground',
+      'A cooling system that prevents the hydraulic fluid from overheating in use',
     ],
     correctAnswer: 2,
     explanation:
@@ -2665,9 +2665,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'When should calling 999 for the emergency services be considered as part of a MEWP rescue plan?',
     options: [
-      'After the walk-around inspection but before elevating to work height, as part of the control testing sequence',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
-      'To guide the operator, watch for hazards, and communicate using hand signals or radio',
+      'As the very first action, before attempting any on-site rescue method',
+      'Only after the casualty has been suspended for more than one hour',
+      'Only if the platform is more than 10 metres above the ground',
       'As a last resort when all other rescue options have been exhausted or are unsuitable',
     ],
     correctAnswer: 3,
@@ -2683,9 +2683,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'What information should be provided when calling 999 for a MEWP emergency?',
     options: [
       'The location, height of the platform, number of casualties, and nature of the emergency',
-      'Every time they are required to operate a type of MEWP they have not used before',
-      'To identify hazards such as overhead obstructions, ground conditions, and access routes',
-      'That it is suitable for its intended purpose and properly maintained',
+      'The make, model, and serial number of the MEWP involved',
+      'The name of the hire company and the date the machine was delivered',
+      'The operator\'s PAL card number and the expiry date of their training',
     ],
     correctAnswer: 0,
     explanation:
@@ -2699,10 +2699,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What is suspension trauma and why is it dangerous?',
     options: [
-      'The location, height of the platform, number of casualties, and nature of the emergency',
+      'A sudden loss of grip strength caused by fatigue while working at height',
       'Blood pooling in the legs when a person is suspended in a harness, which can cause death within 15 to 30 minutes',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
-      'Ensure level ground, apply the trailer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s parking brake, use wheel chocks, and follow the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s loading procedure',
+      'Disorientation caused by the platform swaying in high winds at height',
+      'Muscle cramp brought on by standing in a confined platform for long periods',
     ],
     correctAnswer: 1,
     explanation:
@@ -2716,10 +2716,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What is the purpose of a manual lowering valve on a MEWP?',
     options: [
-      'Every time they are required to operate a type of MEWP they have not used before',
-      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
+      'To bleed air out of the hydraulic system during routine servicing',
+      'To lock the boom in position so it cannot move during transport',
       'To allow a controlled release of hydraulic pressure so the platform lowers under gravity',
-      'The weight of the operator, tools, and all materials on the platform',
+      'To increase the lifting speed of the platform during normal operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2733,9 +2733,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'What is the role of the designated ground rescue person when a MEWP is in use?',
     options: [
-      'A thorough examination must be carried out before the machine is used again, as this constitutes an exceptional circumstance',
-      'To allow a controlled release of hydraulic pressure so the platform lowers under gravity',
-      'The soft clay ground, as it directly affects stability and may require extensive ground preparation or an alternative position',
+      'To carry out the pre-use inspection and complete the machine\'s logbook',
+      'To manage the exclusion zone and direct pedestrians away from the machine',
+      'To refuel the machine and check fluid levels during breaks in the work',
       'To remain near the machine, maintain communication with the operator, and be trained to operate the ground controls',
     ],
     correctAnswer: 3,
@@ -2752,9 +2752,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'Which of the following is a key component that must be included in a MEWP rescue plan?',
     options: [
       'The method of rescue, trained personnel, equipment needed, communication plan, and emergency services contact details',
-      'A battery or generator backup that powers the hydraulic system when the main engine fails',
-      'The APU provides powered hydraulic control, while the manual lowering valve releases hydraulic pressure for a controlled gravity descent',
-      'Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue',
+      'The serial number of the machine and the date of its last thorough examination',
+      'The names of every person who has operated the machine in the past month',
+      'The hire rate, delivery dates, and insurance details for the machine',
     ],
     correctAnswer: 0,
     explanation:
@@ -2768,10 +2768,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'When should rescue drills for MEWP operations be practised?',
     options: [
-      'Familiarisation is machine-specific; training is the IPAF operator course',
+      'Only after a real incident has occurred on the site',
       'Before work begins, so that all personnel are familiar with the rescue procedure',
-      'To the designated anchor point provided inside the MEWP platform',
-      'The Provision and Use of Work Equipment Regulations 1998 (PUWER)',
+      'Only during the operator\'s initial IPAF training course',
+      'Once a year as part of the machine\'s thorough examination',
     ],
     correctAnswer: 1,
     explanation:
@@ -2786,10 +2786,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Which communication methods should be established between the MEWP platform and the ground as part of the rescue plan?',
     options: [
-      'The weight of all persons, tools, materials, and equipment on the platform',
-      'A battery or generator backup that powers the hydraulic system when the main engine fails',
+      'Email and written notes passed between the platform and the ground',
+      'A single pre-agreed shout used only when the work has finished',
       'Radio, mobile phone, visual signals, and audible signals such as a whistle or horn',
-      'That overhead clearances are adequate and there are no obstructions above',
+      'Reliance on the operator descending to speak with the ground crew',
     ],
     correctAnswer: 2,
     explanation:
@@ -2826,9 +2826,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'A hand pump is fitted to a MEWP as an emergency lowering device. In what circumstances would it be used?',
     options: [
       'When all power sources have failed, allowing manual hydraulic operation to lower the platform',
-      'To calculate whether the ground can support the weight and forces exerted by the MEWP',
-      'Adequate task and area lighting, increased use of high-visibility clothing, and an additional banksman where necessary',
-      'A step-by-step procedure describing how a task will be carried out safely',
+      'During routine operation, to raise the platform more quickly than the main controls allow',
+      'To top up the hydraulic fluid reservoir before the start of each shift',
+      'To increase the platform speed when the operator needs to reposition while elevated',
     ],
     correctAnswer: 0,
     explanation:
@@ -2843,14 +2843,14 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct first aid response if a person is rescued from suspension in a harness after hanging for more than 10 minutes?',
     options: [
-      'Lay them flat on their back immediately and elevate their legs',
-      'Place them in the recovery position (on their side with knees bent) and do not lay them flat',
       'Sit them upright in a chair and give them hot drinks',
+      'Lay them flat, keep them still, and treat as a medical emergency (call 999)',
+      'Keep them suspended upright until the ambulance arrives',
       'Have them walk around immediately to restore circulation',
     ],
     correctAnswer: 1,
     explanation:
-      'After prolonged suspension in a harness, the casualty must be placed in the recovery position and must NOT be laid flat. Laying a suspension trauma casualty flat can cause a sudden rush of pooled, toxin-laden blood from the legs back to the heart and kidneys, potentially causing cardiac arrest or renal failure. Medical assistance should be sought immediately.',
+      'Current guidance (Resuscitation Council UK / HSE) is to lay a rescued suspension-trauma casualty flat, keep them still and treat as a medical emergency, calling 999. The older advice to keep the casualty upright or semi-recumbent (to avoid a sudden "reflow" of pooled blood) is no longer recommended, as it is not supported by the evidence and can delay treatment of shock. If unresponsive and not breathing normally, start CPR.',
     section: 'Module 5',
     difficulty: 'intermediate',
     topic: 'Suspension trauma',
@@ -2915,10 +2915,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it critical that the ground rescue person remains stationed near the MEWP at all times during operation?',
     options: [
-      'Barriers, cones, a banksman, high-visibility clothing, and appropriate lighting',
+      'Because the hire agreement requires a second person to be present on site',
       'Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue',
-      'Use the auxiliary power unit or the manual lowering valve to lower the platform',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
+      'Because the ground controls must be operated continuously while the platform is raised',
+      'Because the machine cannot legally be started unless two people are present',
     ],
     correctAnswer: 1,
     explanation:
@@ -2933,10 +2933,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What rescue equipment should be readily available at the base of a MEWP during operation?',
     options: [
-      "A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access",
-      "A competent person with sufficient training, experience, and knowledge",
+      "Spare hydraulic fluid, a funnel, and a set of replacement filters",
+      "A spare harness, a coil of rope, and a ladder long enough to reach the platform",
       "A fire extinguisher, first aid kit, and the machine's operating manual with emergency procedures",
-      "That they are trained on the specific ground-level controls of the MEWP in use and have practised the rescue procedure",
+      "A wheel brace, jack, and tyre pump in case the machine suffers a puncture",
     ],
     correctAnswer: 2,
     explanation:
@@ -2951,9 +2951,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'How does using the manual lowering valve differ from using the auxiliary power unit during an emergency?',
     options: [
-      'Blood pooling in the legs when a person is suspended in a harness, which can cause death within 15 to 30 minutes',
-      'Secure the scene, administer first aid, report to the supervisor, preserve evidence, and complete an accident report',
-      'It is a continuous improvement cycle used to plan safety measures, implement them, monitor their effectiveness, and make improvements based on findings',
+      'The manual lowering valve raises the platform, while the APU lowers it under power',
+      'The APU is operated from the platform, while the manual lowering valve is operated from the cab',
+      'Both methods require the main engine to be running to function correctly',
       'The APU provides powered hydraulic control, while the manual lowering valve releases hydraulic pressure for a controlled gravity descent',
     ],
     correctAnswer: 3,
@@ -2970,9 +2970,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'What should the rescue plan specify regarding the training of the ground rescue person?',
     options: [
       'That they are trained on the specific ground-level controls of the MEWP in use and have practised the rescue procedure',
-      'The APU provides powered hydraulic control, while the manual lowering valve releases hydraulic pressure for a controlled gravity descent',
-      'The location, height of the platform, number of casualties, and nature of the emergency',
-      'They need familiarisation on the telescopic boom only, as they have not used that type before',
+      'That they hold a current first aid at work certificate as their only requirement',
+      'That they have operated any MEWP at some point in the past two years',
+      'That they have read the operating manual once before the work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -2987,10 +2987,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'If a MEWP suffers a complete hydraulic failure while the platform is elevated, what sequence of actions should be followed?',
     options: [
-      'Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue',
+      'Restart the engine repeatedly until the hydraulics begin working again',
       'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
-      'The collapse, overturning, or failure of load-bearing parts of a lifting machine such as a MEWP',
-      'Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles',
+      'Wait at height for the hire company to send a replacement machine',
+      'Disconnect the hydraulic hoses to release the trapped pressure manually',
     ],
     correctAnswer: 1,
     explanation:
@@ -3005,10 +3005,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the correct communication protocol during a MEWP rescue?',
     options: [
-      'Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
+      'Stop all communication so the rescuer can concentrate on the controls',
+      'Communicate only once the casualty has reached the ground safely',
       'Maintain continuous two-way communication using the pre-agreed method, confirm each action before proceeding, and relay information to emergency services if called',
-      'To remain near the machine, maintain communication with the operator, and be trained to operate the ground controls',
+      'Rely solely on the casualty to shout instructions down to the ground',
     ],
     correctAnswer: 2,
     explanation:
@@ -3026,9 +3026,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A boom-type MEWP operator has collapsed in the platform at a height of 22 metres. The ground controls have been tried but the boom will not respond. The APU activates but produces insufficient pressure to move the boom. What is the most appropriate next action?',
     options: [
-      'A thorough examination must be carried out before the machine is used again, as this constitutes an exceptional circumstance',
-      'Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance',
-      'They override the platform controls and are used for emergency recovery or when the platform operator is incapacitated',
+      'Climb the boom to reach the collapsed operator and carry them down',
+      'Keep retrying the APU repeatedly until it eventually builds enough pressure',
+      'Call 999 first and wait for the fire brigade before trying anything else',
       'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
     ],
     correctAnswer: 3,
@@ -3045,13 +3045,13 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'An operator has fallen from the platform but is caught by their harness and lanyard. They are hanging motionless and unresponsive 18 metres above the ground. It has been approximately 5 minutes since the fall. Which factors must the rescue team prioritise?',
     options: [
       'Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance',
-      '9 metres clearance from the line, plus goal posts or physical barriers to define the exclusion zone, a banksman, and consultation with the power company',
-      'Refuse to use the machine; it is a legal requirement under LOLER that the thorough examination is current before the machine can be used to lift persons',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
+      'Securing the scene and photographing the position of the casualty before any rescue begins',
+      'Waiting for the fire brigade before any attempt is made to lower the casualty to the ground',
+      'Identifying which lanyard anchor point failed so it can be replaced before the next use',
     ],
     correctAnswer: 0,
     explanation:
-      'With an unresponsive operator suspended in a harness, the priority is speed — suspension trauma can cause death within 15 to 30 minutes. The rescue team must lower the casualty to the ground as quickly as possible using ground controls or emergency lowering, place them in the recovery position (NOT flat on their back), and call for immediate medical assistance. Evidence gathering is secondary to saving life.',
+      'With an unresponsive operator suspended in a harness, the priority is speed — suspension trauma is a recognised risk if rescue is delayed. The rescue team must lower the casualty to the ground as quickly as possible using ground controls or emergency lowering and call for immediate medical assistance (999). Once down, lay the casualty flat and treat as a medical emergency; if unresponsive but breathing normally, use the recovery position, and if not breathing normally start CPR. (Current Resuscitation Council UK / HSE guidance no longer recommends keeping the casualty upright.) Evidence gathering is secondary to saving life.',
     section: 'Module 5',
     difficulty: 'advanced',
     topic: 'Suspension trauma',
@@ -3062,10 +3062,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "During a site-specific rescue drill, it is discovered that the MEWP's ground controls are obstructed by scaffolding erected after the MEWP was positioned. What action should be taken before work at height resumes?",
     options: [
-      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
+      'Continue work as planned, as the platform controls are unaffected by the scaffolding',
       'Remove or reposition the scaffolding to ensure unobstructed access to the ground controls, or reposition the MEWP, and update the rescue plan accordingly',
-      'No, because fall arrest lanyards should never be used in boom lifts; only restraint lanyards should be used to prevent the operator from reaching the edge in the first place',
-      'Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates',
+      'Mark the obstruction with tape and brief the operator to work more carefully',
+      'Appoint a second person to climb over the scaffolding if a rescue is needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3080,10 +3080,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A MEWP is operating near 33kV overhead power lines when a gust of wind causes the boom to contact a cable. The operator appears to be unconscious. Describe the correct rescue response.',
     options: [
-      'Analyse the near-misses to identify the root cause, plan improvements such as ground condition assessments and ground protection measures, implement them, monitor their effectiveness, and act on any further findings',
-      'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
+      'Climb onto the machine quickly to reach the operator and pull them clear of the cable',
+      'Use the ground controls to lower the platform straight away while the boom is still touching the cable',
       'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
-      'A failure in the management system — inadequate supervision, lack of ongoing ground assessment procedures, and insufficient pre-use checks allowing multiple safety barriers to be breached simultaneously',
+      'Throw a rope to the operator and pull them off the platform to break the contact',
     ],
     correctAnswer: 2,
     explanation:
@@ -3098,9 +3098,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An operator is trapped between the MEWP platform guardrail and a steel beam. The ground rescue person has reversed the boom movement using the ground controls, but the operator remains partially trapped and is in severe pain. What should the ground rescue person do next?',
     options: [
-      'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
+      'Continue moving the boom in different directions until the operator comes free',
+      'Lower the platform fully and drive the machine away from the steel beam',
+      'Leave the controls and climb up to the platform to free the operator by hand',
       'Activate the emergency stop to prevent any further uncontrolled movement, call 999 for emergency services, maintain communication with the casualty, administer reassurance, and do not attempt to move them further without professional guidance',
     ],
     correctAnswer: 3,
@@ -3117,9 +3117,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'A rescue plan for a complex project involves MEWPs operating at different heights across multiple work zones, each with different hazards. What must the rescue plan address to comply with the Work at Height Regulations 2005?',
     options: [
       'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
-      'Report the death immediately to the HSE by telephone, follow up with a written report within 10 days, secure and preserve the scene, conduct a thorough investigation to establish root cause, and implement corrective actions to prevent recurrence',
-      'Do not set up in this location; the slope exceeds the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated limit and the machine cannot be safely operated here without engineering controls to level the ground',
-      'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
+      'A single generic rescue procedure applied identically to every zone regardless of its hazards',
+      'A note stating that the emergency services will deal with any rescue across all zones',
+      'A rescue plan covering only the highest-risk zone, since the others are lower priority',
     ],
     correctAnswer: 0,
     explanation:
@@ -3158,10 +3158,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Under RIDDOR, how quickly must a death resulting from a workplace accident be reported?',
     options: [
-      'Rain, ice, lightning, fog, and extreme temperatures',
-      'Three times the outrigger foot area',
+      'Within 15 days of the accident',
+      'Within 10 days of the accident',
       'Immediately, by the quickest practicable means',
-      'The Work at Height Regulations 2005',
+      'Within 24 hours of the accident',
     ],
     correctAnswer: 2,
     explanation:
@@ -3175,9 +3175,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What is a near-miss in the context of workplace safety?',
     options: [
-      'A compact boom lift with stabilising legs that can be set up on uneven ground',
-      'Establishing exclusion zones with barriers, signage, and a banksman where necessary',
-      'When all power sources have failed, allowing manual hydraulic operation to lower the platform',
+      'An accident that resulted in a minor injury requiring first aid only',
+      'A planned safety drill carried out to test the site emergency procedures',
+      'A defect found during a thorough examination of the machine',
       'An unplanned event that had the potential to cause injury or damage but did not',
     ],
     correctAnswer: 3,
@@ -3193,9 +3193,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'Why is near-miss reporting considered vital for workplace safety?',
     options: [
       'It helps identify hazards and unsafe conditions before a serious accident occurs, enabling preventive action',
-      'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
-      'The ground may collapse under the weight of the MEWP, causing it to overturn',
-      'A compact boom lift with stabilising legs that can be set up on uneven ground',
+      'It allows the employer to identify and discipline the worker who caused the near-miss',
+      'It is required so the hire company can recover the cost of any machine damage',
+      'It provides statistics that reduce the cost of the site insurance premium',
     ],
     correctAnswer: 0,
     explanation:
@@ -3227,10 +3227,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is a toolbox talk?',
     options: [
-      'Establish the root cause, gather evidence, interview witnesses, implement corrective actions, and take steps to prevent recurrence',
-      'The machine must be taken out of service immediately; the defect must be rectified and the machine re-examined before it can return to use',
+      'A formal classroom course leading to a recognised qualification certificate',
+      'A written method statement issued to workers at the start of a project',
       'A short, topic-specific safety briefing delivered to workers before or during work, often at the work location',
-      'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
+      'An annual review of the site risk assessments carried out by management',
     ],
     correctAnswer: 2,
     explanation:
@@ -3280,10 +3280,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What is the catapult effect in relation to MEWP operations?',
     options: [
-      'Ensure level ground, apply the trailer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s parking brake, use wheel chocks, and follow the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s loading procedure',
+      'A gradual sinking of the platform caused by a slow leak in the hydraulic system',
       'A sudden, violent movement of the platform caused by the sudden release of a trapped boom, which is a leading cause of operator ejection',
-      'Refuse to use the machine; it is a legal requirement under LOLER that the thorough examination is current before the machine can be used to lift persons',
-      'A fire extinguisher, first aid kit, and the machine\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s operating manual with emergency procedures',
+      'The tendency of a scissor lift to tip sideways when driven across a slope',
+      'The bouncing of the platform caused by driving over rough ground at speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3297,10 +3297,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'What are secondary guarding devices on a MEWP?',
     options: [
-      'Immediately lower the platform, retract the outriggers, and reposition the MEWP on firmer ground with adequate spreader plates',
-      'Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles',
+      'Backup hydraulic pumps that lower the platform if the main system fails',
+      'Additional guardrails fitted to the platform to increase the working area',
       'Load-sensing or proximity detection systems that prevent or warn of potential entrapment between the platform and surrounding structures',
-      'Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority',
+      'Reflective markings on the boom that make the machine more visible at night',
     ],
     correctAnswer: 2,
     explanation:
@@ -3314,9 +3314,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What is the purpose of the Plan-Do-Check-Act (PDCA) cycle in safety management?',
     options: [
-      'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
-      'The machine must be taken out of service immediately; the defect must be rectified and the machine re-examined before it can return to use',
-      'Speed of rescue due to the risk of suspension trauma, lowering the casualty to the ground as quickly as possible, placing them in the recovery position, and calling for medical assistance',
+      'A one-off checklist completed before a machine is first put into service',
+      'A legal reporting procedure for notifying the HSE of serious accidents',
+      'A method of calculating the safe working load of a platform before use',
       'It is a continuous improvement cycle used to plan safety measures, implement them, monitor their effectiveness, and make improvements based on findings',
     ],
     correctAnswer: 3,
@@ -3336,9 +3336,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       "Under RIDDOR 2013, which of the following is classified as a 'specified injury' that must be reported immediately?",
     options: [
       'A fracture (other than to fingers, thumbs, or toes)',
-      'International Powered Access Federation',
-      'Rain, ice, lightning, fog, and extreme temperatures',
-      'It cuts all machine functions immediately when pressed',
+      'A minor cut requiring a plaster from the first aid kit',
+      'A bruise sustained when knocking against the platform rail',
+      'A sprained wrist that heals within three days off work',
     ],
     correctAnswer: 0,
     explanation:
@@ -3407,9 +3407,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'What are the key steps in conducting an effective accident investigation?',
     options: [
       'Establish the root cause, gather evidence, interview witnesses, implement corrective actions, and take steps to prevent recurrence',
-      'Blood pooling in the legs when a person is suspended in a harness, which can cause death within 15 to 30 minutes',
-      'They override the platform controls and are used for emergency recovery or when the platform operator is incapacitated',
-      'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
+      'Identify who was at fault, record their name, and arrange disciplinary action against them',
+      'Repair the damaged machine, return it to service, and reopen the work area quickly',
+      'Notify the insurer, calculate the cost of the damage, and submit a claim form',
     ],
     correctAnswer: 0,
     explanation:
@@ -3424,10 +3424,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of a 'lessons learnt' review following an incident or near-miss?",
     options: [
-      'Because if the operator becomes incapacitated or the machine fails at height, a pre-planned rescue ensures a prompt and safe recovery',
+      'To identify the individual responsible so they can be held accountable',
       'To review what happened, share findings with relevant personnel, update procedures where needed, and prevent recurrence',
-      'Refuse to use the machine; it is a legal requirement under LOLER that the thorough examination is current before the machine can be used to lift persons',
-      'Stitching integrity, webbing for cuts or abrasion, buckle operation, D-ring condition, and label legibility',
+      'To calculate the financial cost of the incident for the insurance claim',
+      'To satisfy the hire company that the machine was not at fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -3442,10 +3442,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What actions should be taken immediately after a serious incident involving a MEWP on site?',
     options: [
-      'It detects when the machine exceeds its safe operating angle and triggers an alarm or cuts functions',
-      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
+      'Move the machine clear of the work area so production can continue',
+      'Clean up the scene and dispose of any damaged components before reporting',
       'Secure the scene, administer first aid, report to the supervisor, preserve evidence, and complete an accident report',
-      'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
+      'Send all workers home and reopen the area the following morning',
     ],
     correctAnswer: 2,
     explanation:
@@ -3460,9 +3460,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "Under RIDDOR 2013, which of the following must be reported as a 'dangerous occurrence' even if no one is injured?",
     options: [
-      'Category 3A and 3B mobile boom lifts, within manufacturer-specified limits',
-      'A full body harness and short lanyard attached to the designated anchor point',
-      'Familiarisation is machine-specific; training is the IPAF operator course',
+      'A flat tyre discovered during the pre-use inspection of the machine',
+      'A minor hydraulic oil leak found and repaired before the machine was used',
+      'An operator forgetting to wear their harness on a scissor lift',
       'The collapse, overturning, or failure of load-bearing parts of a lifting machine such as a MEWP',
     ],
     correctAnswer: 3,
@@ -3478,9 +3478,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'What does a positive safety culture on a construction site look like in practice?',
     options: [
       'Everyone taking responsibility for safety, reporting hazards without fear, challenging unsafe behaviour, and leading by example',
-      'Ensure level ground, apply the trailer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s parking brake, use wheel chocks, and follow the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s loading procedure',
-      'Telescopic booms extend in a straight line; articulating booms have jointed sections to reach up and over obstacles',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
+      'Workers following safety rules only when a supervisor is present to observe them',
+      'Hazards being recorded but acted on only at the next scheduled safety audit',
+      'Safety responsibilities resting entirely with the appointed site safety officer',
     ],
     correctAnswer: 0,
     explanation:
@@ -3495,10 +3495,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the continuous improvement cycle (PDCA) apply to MEWP safety after an incident has occurred?',
     options: [
-      'Do not set up in this location; the slope exceeds the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated limit and the machine cannot be safely operated here without engineering controls to level the ground',
+      'Record the incident in the accident book and take no further action once reported',
       'Plan revised safety measures based on investigation findings, Do (implement) the changes, Check their effectiveness through monitoring, and Act to make further adjustments',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
-      'A thorough examination must be carried out before the machine is used again, as this constitutes an exceptional circumstance',
+      'Replace the machine with a newer model and assume the problem is resolved',
+      'Retrain only the operator involved and consider the matter closed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3512,10 +3512,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: 'Where should a near-miss involving a MEWP be recorded on site?',
     options: [
-      'Access, Capacity, Terrain, Obstructions, Reach, Services',
-      'Radio, mobile phone, visual signals, and audible signals such as a whistle or horn',
+      'Only in the operator\'s personal diary for their own records',
+      'Nowhere, as near-misses do not need to be recorded if no one was hurt',
       'In the site accident book and reported to the supervisor or safety officer',
-      'To increase the area over which the MEWP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight is distributed, reducing ground pressure',
+      'Only in the machine\'s logbook held by the hire company',
     ],
     correctAnswer: 2,
     explanation:
@@ -3533,9 +3533,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       "A site has experienced three near-misses involving MEWP overturns in the past month, all on different areas of soft ground after rainfall. Using Heinrich's triangle and the PDCA cycle, what approach should the site safety manager take?",
     options: [
-      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
-      'The manufacturer specifies maximum elevated travel speeds, which are significantly lower than stowed travel speed, typically limited by a restrictor system',
-      'Do not position the machine on the deck; reassess and select alternative equipment or a different approach that does not exceed the structural capacity',
+      'Take no action yet, as near-misses by definition caused no harm and may not recur',
+      'Ban all MEWP use on site permanently to remove the overturn risk entirely',
+      'Wait until a fourth near-miss occurs before deciding whether action is justified',
       'Analyse the near-misses to identify the root cause, plan improvements such as ground condition assessments and ground protection measures, implement them, monitor their effectiveness, and act on any further findings',
     ],
     correctAnswer: 3,
@@ -3552,9 +3552,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'A MEWP operator is ejected from the platform due to the catapult effect and suffers fatal injuries. Under RIDDOR 2013, what are the reporting obligations, and what additional investigation steps should the duty holder take?',
     options: [
       'Report the death immediately to the HSE by telephone, follow up with a written report within 10 days, secure and preserve the scene, conduct a thorough investigation to establish root cause, and implement corrective actions to prevent recurrence',
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
-      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
+      'Report the death to the HSE within 15 days in writing only, then return the machine to service once cleaned',
+      'Notify only the hire company and the insurer, as the HSE is informed by the coroner in fatal cases',
+      'Clear the scene promptly to reopen the site, and report the death at the next monthly safety meeting',
     ],
     correctAnswer: 0,
     explanation:
@@ -3569,10 +3569,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'Following a series of entrapment incidents across multiple sites, the safety director asks you to develop a company-wide prevention strategy. Which combination of measures would be most effective?',
     options: [
-      'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
+      'Issue a single company memo reminding operators to be careful near structures',
       'Mandate secondary guarding devices on all boom-type MEWPs, deliver targeted toolbox talks on entrapment risks, ensure trained ground rescue persons are always present, update risk assessments to include entrapment scenarios, and establish a reporting system to track entrapment near-misses',
-      'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
-      'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
+      'Rely solely on operators holding valid PAL cards, as training alone prevents entrapment',
+      'Fit secondary guarding to new machines only, leaving the existing fleet unchanged',
     ],
     correctAnswer: 1,
     explanation:
@@ -3587,10 +3587,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'An accident investigation reveals that a MEWP overturn was caused by a combination of factors: the ground had not been reassessed after heavy rain, the outriggers were not fully extended, and the operator exceeded the rated capacity. Applying the principles of root cause analysis, what is the most likely underlying root cause?',
     options: [
-      'Obtain ground bearing capacity information, consult a structural engineer if necessary, check for underground voids and services, and use load-spreading measures appropriate to the confirmed capacity',
-      'Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority',
+      'Operator error alone, as the operator exceeded the rated capacity of the platform',
+      'Bad weather alone, since the heavy rain was an unforeseeable act of nature',
       'A failure in the management system — inadequate supervision, lack of ongoing ground assessment procedures, and insufficient pre-use checks allowing multiple safety barriers to be breached simultaneously',
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
+      'A mechanical fault alone, as the outriggers should have deployed automatically',
     ],
     correctAnswer: 2,
     explanation:
@@ -3605,9 +3605,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A site is implementing a new safety culture programme. During a toolbox talk, a worker reports that they have been pressured by their supervisor to skip pre-use inspections to save time. How should this be handled to support a positive safety culture?',
     options: [
-      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
-      'Report the death immediately to the HSE by telephone, follow up with a written report within 10 days, secure and preserve the scene, conduct a thorough investigation to establish root cause, and implement corrective actions to prevent recurrence',
-      'Zone-specific rescue procedures detailing the method of rescue, trained personnel and their locations, equipment required, communication arrangements, and emergency services access routes for each work zone',
+      'Tell the worker to follow the supervisor\'s instructions, as the supervisor is in charge',
+      'Take no action unless the worker is prepared to put the complaint in writing first',
+      'Discipline the worker for questioning a supervisor in front of the rest of the team',
       'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
     ],
     correctAnswer: 3,
@@ -3624,9 +3624,9 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'The IPAF 2024 global safety report showed a 26% overall decrease in MEWP fatalities but a 75% increase in entrapment incidents. As a safety manager, how would you use these statistics in your lessons learnt programme to drive improvement across your organisation?',
     options: [
       'Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle',
-      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
-      'Mandate secondary guarding devices on all boom-type MEWPs, deliver targeted toolbox talks on entrapment risks, ensure trained ground rescue persons are always present, update risk assessments to include entrapment scenarios, and establish a reporting system to track entrapment near-misses',
-      'Activate the emergency stop, attempt to restart the engine and retry the auxiliary lowering system, communicate the situation to the ground operative, and if all machine-based recovery fails, initiate the rescue plan which may involve the emergency services',
+      'Share only the 26% fatality decrease with the workforce, as positive news improves morale',
+      'Take no action, since the figures are global and may not reflect your own sites',
+      'Wait for an entrapment incident on one of your sites before reviewing any controls',
     ],
     correctAnswer: 0,
     explanation:

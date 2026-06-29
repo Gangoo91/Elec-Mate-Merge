@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 'pv-cell-principle',
     question: 'What is the fundamental operating principle of a photovoltaic cell?',
     options: [
-      'The 5 s operating current of the device — the current that causes the device to operate within 5 seconds (typically the current at the magnetic-trip threshold for an MCB, or the BS 88 fuse 5 s curve current).',
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'A cognitive bias where people with limited knowledge or competence in a domain significantly overestimate their ability, while experts tend to underestimate theirs',
-      'The photovoltaic effect — semiconductor materials (typically crystalline silicon) generate a direct current (DC) when exposed to sunlight, as photons transfer energy to electrons in the material',
+      'The thermoelectric effect — a temperature difference across the cell drives a current through the semiconductor',
+      'The piezoelectric effect — pressure from sunlight on the cell surface generates a small voltage',
+      'Electromagnetic induction — sunlight induces an alternating current in the cell windings',
+      'The photovoltaic effect — a semiconductor generates DC when sunlight transfers energy to its electrons',
     ],
     correctIndex: 3,
     explanation:
@@ -30,12 +30,12 @@ const quickCheckQuestions = [
     id: 'inverter-function',
     question: 'What is the primary function of a solar inverter in a grid-connected PV system?',
     options: [
-      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
-      'To convert the DC output from the PV array into AC at the correct voltage, frequency and phase to synchronise with the grid supply, and to provide anti-islanding protection',
-      'Employees must make full and proper use of systems of work provided, cooperate with their employer on health and safety, and report any hazards or concerns',
-      'Acknowledge what the learner usually does, but explain the assessment is based on what was observed during this specific assessment',
+      'To convert the array DC into grid-synchronised AC and provide anti-islanding protection',
+      'To step up the DC voltage from the array so that it can be stored in a battery bank',
+      'To track the position of the sun and adjust the angle of the PV modules for maximum output',
+      'To rectify the incoming AC grid supply into DC for charging the PV array overnight',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The inverter is the critical interface between the DC PV array and the AC grid supply. It converts DC to AC using power electronics (typically IGBT or MOSFET switching), synchronises the output with the grid (matching voltage, frequency and phase), and includes anti-islanding protection that disconnects the PV system if the grid supply fails — preventing exported power from endangering DNO network operatives working on what they believe is a dead circuit.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     question:
       'Which section of BS 7671 specifically covers the requirements for solar PV installations?',
     options: [
-      'Improvement notice gives time to remedy a breach; prohibition notice immediately stops an activity that involves a risk of serious personal injury',
-      'Section 712 — Solar Photovoltaic (PV) Power Supply Systems, which covers additional requirements for PV installations including DC wiring, isolation, labelling, and protection against electric shock',
-      'The energy supplier, via the Data Communications Company (DCC) WAN. Remote disconnection is a contractual capability of the smart-meter system.',
-      'It causes people to selectively notice and remember information that confirms their existing emotional beliefs while ignoring contradictory evidence, creating a distorted self-picture',
+      'Section 705 — Agricultural and Horticultural Premises, which covers outdoor generation equipment',
+      'Section 722 — Electric Vehicle Charging Installations, which covers all renewable generation',
+      'Section 712 — Solar Photovoltaic (PV) Power Supply Systems, covering DC wiring, isolation and labelling',
+      'Section 701 — Locations Containing a Bath or Shower, which covers all low-voltage DC systems',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 7671 Section 712 contains the specific requirements for PV installations. Key requirements include: DC circuit protection and isolation (Regulation 712.411), PV DC isolator adjacent to the inverter (Regulation 712.537.2), fire-resistant DC wiring within buildings (Regulation 712.522), labelling at the main distribution board and meter position warning of dual supply (Regulation 712.514), and overcurrent protection for both DC and AC circuits.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'anti-islanding',
     question: 'Why is anti-islanding protection mandatory for grid-connected PV systems?',
     options: [
-      'Stop work immediately, prevent access to the area, isolate the suspect material from disturbance, and report it to the client and duty holder',
-      'A sudden, violent movement of the platform caused by the sudden release of a trapped boom, which is a leading cause of operator ejection',
-      'The employer must carry out a return-to-work assessment, consider workplace adjustments, and update the risk assessment to reflect the worker\\\\\\\'s changed capability',
-      'To prevent the PV system from continuing to export power into a section of the grid that has been disconnected for maintenance, which could electrocute DNO network operatives',
+      'To stop the PV array from drawing power from the grid when irradiance is too low to generate',
+      'To protect the inverter from damage caused by voltage spikes on the grid supply',
+      'To limit the amount of power the system can export so the DNO meter is not overloaded',
+      'To stop the PV system energising a grid section disconnected for maintenance, protecting DNO operatives',
     ],
     correctIndex: 3,
     explanation:
@@ -76,10 +76,10 @@ const quizQuestions = [
     id: 1,
     question: 'The two main types of crystalline silicon PV cell are:',
     options: [
-      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
-      'Monocrystalline (single crystal, higher efficiency 20-22%, more expensive) and polycrystalline (multiple crystals, lower efficiency 15-17%, lower cost)',
-      'Battery condition, lead/probe integrity (no cracks, exposed metal), zero/null function (continuity), calibration date, and against a known reference where applicable',
-      'Identifying your personal early signs of stress (such as disturbed sleep, irritability, or appetite changes) so you can take action before reaching crisis point',
+      'Amorphous (flexible film, highest efficiency) and crystalline (rigid glass, lower efficiency)',
+      'Monocrystalline (single crystal, ~20-22%) and polycrystalline (multiple crystals, ~15-17%)',
+      'Cadmium telluride (thin-film) and copper indium gallium selenide (thin-film)',
+      'Single-junction (low voltage) and multi-junction (high voltage) gallium arsenide cells',
     ],
     correctAnswer: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 2,
     question: 'A string inverter differs from a microinverter in that:',
     options: [
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'Located adjacent to the inverter and be capable of being operated by a person standing at floor level, to allow safe isolation of the DC supply from the PV array before any work on the inverter or AC circuits',
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
-      'The total generation capacity exceeds 3.68 kW per phase (16 A per phase), requiring formal application to the DNO for connection approval before installation',
+      'A string inverter is fitted to each individual module, while a microinverter handles the combined output of a whole series string of modules',
+      'A string inverter only works with monocrystalline modules, while a microinverter is required for any polycrystalline array',
+      'A string inverter converts a whole series string, while a microinverter converts each module independently',
+      'A string inverter outputs DC to the consumer unit, while a microinverter outputs high-voltage DC that is converted to AC at the distribution board',
     ],
     correctAnswer: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 3,
     question: 'Under BS 7671 Regulation 712.537.2, the PV DC isolator must be:',
     options: [
-      'It is the quality assurance scheme for PV installations in the UK — only MCS-certified installers can register installations for Smart Export Guarantee (SEG) payments and access certain warranty provisions',
-      'Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity',
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'Located adjacent to the inverter and be capable of being operated by a person standing at floor level, to allow safe isolation of the DC supply from the PV array before any work on the inverter or AC circuits',
+      'Mounted at the highest accessible point of the array on the roof, so that the modules can be isolated as close to the source of generation as possible',
+      'Fitted with an AC-rated switch-disconnector, since the inverter output is the most hazardous part of the circuit to interrupt under load',
+      'Lockable in the closed (on) position only, to prevent unauthorised persons disconnecting the supply and interrupting export to the grid',
+      'Located adjacent to the inverter and operable from floor level, to isolate the DC supply before work',
     ],
     correctAnswer: 3,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 4,
     question: 'The maximum power point tracker (MPPT) in a solar inverter:',
     options: [
-      'Continuously adjusts the operating voltage and current of the PV array to extract maximum power under varying irradiance and temperature conditions',
-      'To set out the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commitment to environmental protection, compliance with legislation, and continual improvement',
-      'Used lubricants are classified as hazardous waste and must be collected, stored and disposed of through a licensed waste carrier',
-      'Long conductors add inductance which increases the effective voltage protection level during fast transients',
+      'Adjusts the array operating point to extract maximum power as irradiance and temperature change',
+      'Holds the array at a fixed voltage to keep the inverter output frequency stable',
+      'Disconnects the array when the maximum rated power of the inverter is exceeded',
+      'Tracks the position of the sun to mechanically orientate the PV modules on the roof',
     ],
     correctAnswer: 0,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 5,
     question: 'G99 (formerly G59) applies to PV installations where:',
     options: [
-      'Continuously adjusts the operating voltage and current of the PV array to extract maximum power under varying irradiance and temperature conditions',
-      'The total generation capacity exceeds 3.68 kW per phase (16 A per phase), requiring formal application to the DNO for connection approval before installation',
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
+      'The installation uses microinverters rather than a single string inverter, regardless of the total generation capacity',
+      'The total generation exceeds 3.68 kW per phase (16 A), requiring DNO approval before connection',
+      'The system includes any battery storage, irrespective of the inverter rating or the export capacity to the grid',
+      'The DC string voltage exceeds 600 V, requiring the DNO to assess the additional electric shock risk before connection',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 6,
     question: 'When testing a PV system, the DC string voltage will typically be:',
     options: [
-      'Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity',
-      'BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'The total generation capacity exceeds 3.68 kW per phase (16 A per phase), requiring formal application to the DNO for connection approval before installation',
+      'Below 50 V DC at all times, so the string is classed as SELV and can be worked on without isolation',
+      'A fixed 230 V DC regardless of the number of modules, because the inverter regulates the string voltage to match the AC supply',
+      '300-600 V DC in normal operation, a shock hazard that cannot be switched off while daylight is present',
+      'Zero whenever the DC isolator at the inverter is open, because this disconnects the modules from their source of generation',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 7,
     question: 'Fire-resistant DC cabling is required within buildings for PV systems because:',
     options: [
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present',
+      'DC carries a higher risk of overload than AC, so the cable insulation must be uprated to survive the continuous heating effect of the array',
+      'Fire-resistant cable produces less smoke when installed near the inverter, reducing the risk of the inverter electronics being contaminated',
+      'Fire-resistant cable has a lower resistance than standard cable, reducing voltage drop on the long DC runs typical of rooftop arrays',
+      'Reg 712.522 requires fire-resistant cable or enclosure, as DC cables stay energised in daylight',
     ],
     correctAnswer: 3,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 8,
     question: 'A common fault indication on a PV system showing lower-than-expected output is:',
     options: [
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'Is a phenomenon where high voltage difference between the PV cells and the earthed frame causes leakage currents through the encapsulant, degrading cell performance over time — particularly in high-humidity environments',
+      'A bypass diode has activated from shading or cell failure, cutting that module while the string runs on',
+      'The anti-islanding protection has tripped, which always reduces the array output by exactly one third while the grid remains connected',
+      'The MPPT has locked the array at its open-circuit voltage, which increases the voltage but lowers the current and therefore the power',
+      'The modules are operating in monocrystalline mode rather than polycrystalline mode, which temporarily reduces their rated efficiency',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'The MCS (Microgeneration Certification Scheme) is relevant to PV installations because:',
     options: [
-      'One or more bypass diodes have activated due to cell shading or cell failure within a module, causing the affected module to produce reduced output while allowing the string to continue operating',
-      'It is the quality assurance scheme for PV installations in the UK — only MCS-certified installers can register installations for Smart Export Guarantee (SEG) payments and access certain warranty provisions',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'The total generation capacity exceeds 3.68 kW per phase (16 A per phase), requiring formal application to the DNO for connection approval before installation',
+      'It is the legal authority that issues the licence allowing a PV system to export power to the grid, replacing the need for any DNO notification',
+      'It is the UK quality assurance scheme; only MCS-certified installs qualify for SEG export payments',
+      'It is the BS 7671 section that replaced Section 712 and now governs all DC isolation and labelling requirements for PV',
+      'It is the manufacturer testing body that certifies inverters for anti-islanding compliance under G98 and G99',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 10,
     question: 'When maintaining a PV system, the maintenance technician should:',
     options: [
-      'A source of electrical energy that must be treated as live whenever daylight is present, requiring safe systems of work, competent persons, and appropriate isolation procedures — the duty holder has the same obligations as for any other electrical system',
-      'It is the quality assurance scheme for PV installations in the UK — only MCS-certified installers can register installations for Smart Export Guarantee (SEG) payments and access certain warranty provisions',
-      'Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity',
-      'A string inverter converts the DC output from a series-connected string of multiple PV modules, while a microinverter is fitted to each individual module and converts its output independently',
+      'Restrict all work to night-time only, when the array produces no voltage, so that isolation procedures and DC-rated equipment are unnecessary',
+      'Inspect only the AC side of the installation, since the DC array is sealed for life and cannot develop any maintainable faults',
+      'Inspect the whole system — modules, frame, DC cabling, isolators, inverter data and earthing continuity',
+      'Wash the modules with a high-pressure jet on every visit, as removing all soiling is the single most important maintenance task',
     ],
     correctAnswer: 2,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 11,
     question: 'Potential Induced Degradation (PID) in PV modules:',
     options: [
-      'Located adjacent to the inverter and be capable of being operated by a person standing at floor level, to allow safe isolation of the DC supply from the PV array before any work on the inverter or AC circuits',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
-      'Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity',
-      'Is a phenomenon where high voltage difference between the PV cells and the earthed frame causes leakage currents through the encapsulant, degrading cell performance over time — particularly in high-humidity environments',
+      'Is the initial 1-3% drop in output that occurs in the first few hours of sunlight exposure and then stabilises permanently',
+      'Is mechanical cracking of the cells caused by people walking on the modules during installation or maintenance',
+      'Is the gradual fading of the anti-reflective coating on the front glass, which reduces light transmission into the cells',
+      'Is cell-to-frame voltage driving leakage currents through the encapsulant, degrading output over time',
     ],
     correctAnswer: 3,
     explanation:
@@ -220,10 +220,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Electricity at Work Regulations 1989, a PV system is classified as:',
     options: [
-      'A source of electrical energy that must be treated as live whenever daylight is present, requiring safe systems of work, competent persons, and appropriate isolation procedures — the duty holder has the same obligations as for any other electrical system',
-      'Is a phenomenon where high voltage difference between the PV cells and the earthed frame causes leakage currents through the encapsulant, degrading cell performance over time — particularly in high-humidity environments',
-      'BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present',
-      '300-600 V DC under normal operating conditions (depending on the number of modules in series and irradiance level), presenting a serious electric shock hazard that cannot be switched off while daylight is present',
+      'An electrical system, live whenever daylight is present, with the same duty-holder obligations as any other',
+      'Exempt from the Regulations because it is a renewable, low-carbon source rather than a conventional mains supply',
+      'Covered only while it is exporting to the grid; once the grid is disconnected the array falls outside the scope of the Regulations',
+      'A non-electrical mechanical system, so that only the Provision and Use of Work Equipment Regulations rather than the Electricity at Work Regulations apply',
     ],
     correctAnswer: 0,
     explanation:

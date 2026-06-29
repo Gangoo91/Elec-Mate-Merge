@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       'What is the current legal status of the Site Waste Management Plans Regulations 2008?',
     options: [
-      'They remain fully mandatory for all construction projects over £300,000',
       'They were revoked in 2013 but SWMPs remain best practice and are often required by BREEAM, CEEQUAL, and clients',
+      'They remain fully mandatory for all construction projects over £300,000',
       'They were replaced by the Environment Act 2021 which mandates SWMPs for all projects',
       'They only apply in Scotland and Wales; England has no SWMP requirement',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Site Waste Management Plans Regulations 2008 were revoked in December 2013 as part of the Red Tape Challenge. However, SWMPs remain widely recognised as best practice for construction waste management. They are frequently required as prerequisites for BREEAM and CEEQUAL assessments, demanded by clients in contract conditions, and specified as planning conditions by local authorities. The construction industry continues to use SWMPs voluntarily because they deliver genuine cost savings, improve resource efficiency, and demonstrate environmental responsibility.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of waste forecasting within a SWMP?',
     options: [
       'To calculate the exact cost of skip hire for the entire project duration',
-      'To estimate waste types and quantities by trade or element so that appropriate management actions can be planned in advance',
       'To determine the number of operatives needed on site each week',
+      'To estimate waste types and quantities by trade or element so that appropriate management actions can be planned in advance',
       "To satisfy the Environment Agency's annual waste reporting requirement",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Waste forecasting is the process of estimating the types and quantities of waste that will be generated during construction, broken down by trade, work package, or building element. This enables the project team to plan appropriate waste management actions in advance — including segregation arrangements, skip and container provision, recycling and recovery routes, and disposal destinations. Accurate forecasting also supports designing out waste at the planning stage, setting realistic diversion targets, and benchmarking performance against WRAP data. Without forecasting, waste management becomes reactive rather than proactive.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is NOT typically included in a SWMP?',
     options: [
+      "Details of the structural engineer's design calculations",
       'Project details (client, contractor, site address, project description)',
       'Waste forecasting by type and estimated quantity',
-      "Details of the structural engineer's design calculations",
       'Waste management actions aligned to the waste hierarchy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A SWMP typically includes project details, waste forecasting (types and quantities), waste management actions (how each waste stream will be managed in accordance with the waste hierarchy), responsible persons, waste carrier and destination details, and a record of actual waste arisings. Structural engineering design calculations are not part of a SWMP — they belong in the structural design package. However, the SWMP may reference design decisions that reduce waste (such as standardised dimensions or off-site manufacture), which is an example of designing out waste at the planning stage.',
   },
@@ -116,10 +116,10 @@ const quizQuestions = [
     options: [
       'Cost per tonne of waste produced',
       'Number of skips per week of construction activity',
-      'Tonnes of waste per £100,000 of project value or per 100 m² of floor area',
       'Percentage of materials purchased that become waste',
+      'Tonnes of waste per £100,000 of project value or per 100 m² of floor area',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'WRAP benchmarks are typically expressed as tonnes of waste per £100,000 of project value or per 100 m² of floor area, broken down by building type and waste stream. This standardised format allows meaningful comparison between projects of different sizes and types. For example, a new-build residential project might benchmark at around 10-15 tonnes of waste per £100,000 of project value, while a refurbishment project might be significantly higher due to strip-out waste. These benchmarks enable project teams to set targets, forecast waste quantities, and measure performance against industry norms.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'When implementing a SWMP on site, which of the following is the MOST effective way to ensure subcontractors comply with waste segregation requirements?',
     options: [
       'Including a penalty clause in the subcontract for non-compliance',
-      'A combination of clear signage, induction training, toolbox talks, regular monitoring, and a named waste champion',
       'Relying on the waste carrier to sort mixed waste at the transfer station',
+      'A combination of clear signage, induction training, toolbox talks, regular monitoring, and a named waste champion',
       'Issuing a written memo to all subcontractors at project commencement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Effective waste segregation on construction sites requires a multi-faceted approach: clear and consistent signage at every waste container and skip; waste management content in the site induction for all operatives; regular toolbox talks reinforcing correct segregation practices; a named waste champion who monitors compliance and addresses issues promptly; and regular audits of skip and container contents. While contractual obligations and financial incentives have a role, behavioural change is best achieved through visible leadership, clear communication, practical arrangements, and consistent enforcement. Relying on downstream sorting at a transfer station is less effective and more costly than source segregation on site.',
   },
@@ -143,11 +143,11 @@ const quizQuestions = [
       'How can Building Information Modelling (BIM) support waste management on construction projects?',
     options: [
       'BIM automatically disposes of waste through robotic systems',
-      'BIM enables accurate material quantification, off-site manufacture coordination, and clash detection — all of which help reduce waste generation',
       'BIM replaces the need for a SWMP entirely',
       'BIM is only useful for demolition waste, not new-build waste',
+      'BIM enables accurate material quantification, off-site manufacture coordination, and clash detection — all of which help reduce waste generation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BIM supports waste management in several important ways. Accurate material quantification from the model reduces over-ordering, which is a major source of construction waste. Coordination between disciplines through clash detection reduces abortive work and rework. BIM facilitates the use of standardised components and off-site manufacture (such as pre-fabricated elements and modular construction), which generates significantly less waste than traditional site-based construction. Design optimisation within BIM can identify opportunities to use standard material sizes, reducing cutting waste. While BIM does not replace a SWMP, it provides much better data to inform waste forecasting and supports the principle of designing out waste at the earliest project stage.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of monitoring actual waste data against SWMP forecasts during a construction project?',
     options: [
-      'To calculate the exact landfill tax liability for the project',
       'To identify variances, take corrective action where waste is exceeding forecasts, and continuously improve waste management performance',
+      'To calculate the exact landfill tax liability for the project',
       'To satisfy the requirements of the Waste Electrical and Electronic Equipment (WEEE) Regulations',
       'To determine the structural integrity of the completed building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Monitoring actual waste data against SWMP forecasts serves several critical purposes: it identifies variances early so that corrective action can be taken (for example, if timber waste is significantly exceeding the forecast, the team can investigate the cause — over-ordering, poor storage, design changes — and address it); it enables the project to track progress towards waste diversion targets; it provides evidence for BREEAM and CEEQUAL assessments; it generates data for benchmarking against WRAP norms and for informing future project forecasts; and it demonstrates to clients, regulators, and the public that waste is being managed responsibly. Without monitoring, the SWMP is simply a paper exercise with no mechanism for improvement.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'How should a SWMP integrate with a Construction Environmental Management Plan (CEMP)?',
     options: [
+      'The SWMP is typically incorporated as a dedicated section or appendix within the CEMP, with cross-references to other environmental controls',
       'The SWMP and CEMP are entirely separate documents with no connection',
       'The SWMP should replace the CEMP as it covers all environmental aspects',
-      'The SWMP is typically incorporated as a dedicated section or appendix within the CEMP, with cross-references to other environmental controls',
       'The CEMP should be attached as an appendix to the SWMP',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The SWMP is typically incorporated as a dedicated section or appendix within the wider CEMP, with cross-references to related environmental controls. For example, the CEMP may contain sections on dust management (which links to waste handling and skip management), water pollution prevention (which links to the storage and disposal of liquid wastes), and contaminated land (which links to the management of hazardous waste). The SWMP provides the detailed waste-specific planning, while the CEMP provides the overarching environmental management framework. Both documents should be aligned with the project's health and safety plan (particularly for hazardous waste handling) and with contractor obligations under the project contract.",
   },

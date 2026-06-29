@@ -80,28 +80,28 @@ const FunctionalSkillsModule4Section2 = () => {
     {
       id: 5,
       question:
-        'A cable passes through 150mm of thermal insulation in a ceiling. What Ci factor applies from Table 52.2?',
+        'A cable is totally surrounded by 150mm of thermal insulation in a ceiling. What Ci derating factor should be applied (BS 7671 Appendix 4, Section 2.6)?',
       options: [
-        '0.89',
-        '0.81',
-        '0.55',
+        '0.78',
+        '0.51',
+        '0.63',
         '1.0',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
-        'For cable enclosed in thermal insulation between 100mm and 200mm, Ci = 0.81 from BS 7671 Table 52.2. This significantly reduces the cable’s current-carrying capacity.',
+        'BS 7671 Appendix 4, Section 2.6 tabulates Ci by length in insulation: 50mm = 0.88, 100mm = 0.78, 200mm = 0.63, 400mm = 0.51, ≥500mm = 0.50. 150mm lies between the 100mm and 200mm entries, so the conservative tabulated value (200mm = 0.63) is applied. This markedly reduces the cable’s current-carrying capacity.',
     },
     {
       id: 6,
       question:
         'Installation Method B (enclosed in conduit on a wall) gives a lower current rating than Method C (clipped direct). Why?',
       options: [
-        'Method B cables are cheaper quality',
-        'Conduit provides additional short-circuit protection',
+        'Method C cables are manufactured to a higher temperature rating',
+        'The conduit provides additional short-circuit protection',
+        'Method C allows a larger conductor to be used',
         'The conduit restricts heat dissipation from the cable',
-        'Method C cables have thicker insulation',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'When a cable is enclosed in conduit, the conduit acts as a thermal barrier, restricting the cable’s ability to dissipate heat to the surrounding air. This means the cable heats up more for the same current, so its rated capacity must be reduced.',
     },
@@ -110,28 +110,28 @@ const FunctionalSkillsModule4Section2 = () => {
       question:
         'A 6.0mm² T&E cable (Method C) has a tabulated rating of 47A. Ca = 0.94, Cg = 0.80, Ci = 1.0. What is the effective current-carrying capacity?',
       options: [
-        '47.0A',
+        '35.3A',
         '39.5A',
         '44.2A',
-        '35.3A',
+        '47.0A',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
-        'Effective capacity = It × Ca × Cg × Ci = 47 × 0.94 × 0.80 × 1.0 = 47 × 0.752 = 35.3A. The cable can safely carry up to 35.3A under these installed conditions.',
+        'Effective capacity = It × Ca × Cg × Ci = 47 × 0.94 × 0.80 × 1.0 = 47 × 0.752 = 35.3A. The cable can safely carry up to 35.3A under these installed conditions; 47A is the uncorrected tabulated value.',
     },
     {
       id: 8,
       question:
         'You are sizing cable for a 45A shower on a 15m run. After applying correction factors, you need It ≥ 56A. Which cable size from Table 4D2A (Method C) would you select?',
       options: [
+        '6.0mm² (47A)',
         '10.0mm² (64A)',
         '16.0mm² (85A)',
-        '6.0mm² (47A)',
         '4.0mm² (36A)',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
-        'The cable must have a tabulated rating ≥ 56A. 6.0mm² (47A) is too low. 10.0mm² (64A) exceeds 56A, so this is the minimum acceptable size. You would then check voltage drop to confirm suitability.',
+        'The cable must have a tabulated rating ≥ 56A. 6.0mm² (47A) is too low; 10.0mm² (64A) is the smallest size that exceeds 56A, so it is the minimum acceptable. You would then check voltage drop to confirm suitability.',
     },
   ];
 
@@ -369,12 +369,12 @@ const FunctionalSkillsModule4Section2 = () => {
           id="cable-check-1"
           question="A 4.0mm² T&E cable is installed in conduit on a wall (Method B, rated 32A). The circuit has In = 32A MCB. Can you use Method B without correction factors?"
           options={[
+            'No — Iz must be strictly greater than In',
             'Yes — 32A rating equals the 32A MCB exactly, and Ib ≤ In ≤ Iz is satisfied',
-            'No — It must be strictly greater than In',
             'Only if the cable run is less than 10m',
             'Only if additional ventilation is provided',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="The rule is Ib ≤ In ≤ Iz. If the cable rating Iz = 32A and In = 32A, then In ≤ Iz is satisfied (they can be equal). However, if any correction factors apply (temperature, grouping, insulation), Iz will drop below 32A and the cable would no longer be suitable."
         />
 
@@ -585,8 +585,8 @@ const FunctionalSkillsModule4Section2 = () => {
         <InlineCheck
           id="cable-check-2"
           question="Six 2.5mm² T&E cables are bunched together (Method C, It = 27A). Cg for 6 circuits = 0.57. What is the effective current rating of each cable?"
-          options={['15.39A', '27.0A', '47.4A', '6.0A']}
-          correctIndex={0}
+          options={['27.0A', '47.4A', '15.39A', '6.0A']}
+          correctIndex={2}
           explanation="Effective rating = 27 × 0.57 = 15.39A. Since a standard 16A MCB exceeds 15.39A, you would need to upgrade to 4.0mm² (36 × 0.57 = 20.5A) for 16A circuits or reduce the number of grouped circuits."
         />
 
@@ -605,38 +605,40 @@ const FunctionalSkillsModule4Section2 = () => {
           </div>
           <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
-              When cables pass through or are surrounded by thermal insulation (loft insulation,
-              wall cavity insulation), their ability to dissipate heat is severely restricted. BS
-              7671 Table 52.2 provides the Ci values based on the depth of insulation the cable
-              passes through.
+              When cables are totally surrounded by thermal insulation (loft insulation,
+              wall cavity insulation) over a length of less than 0.5m, their ability to dissipate
+              heat is restricted. BS 7671 Appendix 4 (Section 2.6) tabulates the Ci derating factor
+              by the length of cable in insulation. Where a cable is totally surrounded for 0.5m or
+              more, Regulation 523.9 requires Ci = 0.5 (Reference Method C) unless more precise
+              information is available.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-3">Table 52.2 &mdash; Ci Values</h4>
+              <h4 className="font-medium text-green-400 mb-3">Appendix 4, Section 2.6 &mdash; Ci Values</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white">Cable touching insulation on one side only</span>
-                  <span className="text-green-400 font-medium">0.75</span>
+                  <span className="text-white">Length in insulation 50mm</span>
+                  <span className="text-green-400 font-medium">0.88</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white">Cable enclosed in insulation &lt; 100mm</span>
-                  <span className="text-green-400 font-medium">0.89</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white">
-                    Cable enclosed in insulation 100&ndash;200mm
-                  </span>
-                  <span className="text-green-400 font-medium">0.81</span>
+                  <span className="text-white">Length in insulation 100mm</span>
+                  <span className="text-green-400 font-medium">0.78</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
                   <span className="text-white">
-                    Cable enclosed in insulation 200&ndash;400mm
+                    Length in insulation 200mm
                   </span>
-                  <span className="text-green-400 font-medium">0.68</span>
+                  <span className="text-green-400 font-medium">0.63</span>
+                </div>
+                <div className="flex justify-between border-b border-white/10 pb-1">
+                  <span className="text-white">
+                    Length in insulation 400mm
+                  </span>
+                  <span className="text-green-400 font-medium">0.51</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white">Cable enclosed in insulation &gt; 400mm</span>
-                  <span className="text-green-400 font-medium">0.55</span>
+                  <span className="text-white">Length in insulation &ge; 500mm (Reg 523.9)</span>
+                  <span className="text-green-400 font-medium">0.50</span>
                 </div>
               </div>
             </div>
@@ -656,11 +658,11 @@ const FunctionalSkillsModule4Section2 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Ci for 100&ndash;200mm insulation = 0.81</span>
+                  <span>Ci for 150mm in insulation (use 200mm band) = 0.63</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Derated capacity = 20 &times; 0.81 = 16.2A</span>
+                  <span>Derated capacity = 20 &times; 0.63 = 12.6A</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -672,8 +674,9 @@ const FunctionalSkillsModule4Section2 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white">
-                With modern UK loft insulation depths of 270mm or more, Ci can be as low as 0.55 for
-                cables buried in insulation. Where possible, run cables above the insulation or use
+                With modern UK loft insulation depths of 270mm or more, Ci can be as low as 0.50 for
+                cables buried in insulation (and Reg 523.9 fixes Ci = 0.5 where a cable is totally
+                surrounded for 0.5m or more). Where possible, run cables above the insulation or use
                 raised cable clips to keep the cable clear. This avoids the need for the Ci derating
                 entirely and is the preferred approach in modern domestic installations.
               </p>
@@ -792,12 +795,12 @@ const FunctionalSkillsModule4Section2 = () => {
           id="cable-check-3"
           question="A 4.0mm² cable (mV/A/m = 11) supplies a 32A load over 25m. What is the voltage drop and does it pass for a power circuit?"
           options={[
-            '8.8V — passes (limit 11.5V for power circuits)',
             '8.8V — fails (limit 6.9V for lighting)',
             '11.0V — passes just within limit',
             '11.0V — fails the 11.5V limit',
+            '8.8V — passes (limit 11.5V for power circuits)',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="VD = 11 × 32 × 25 / 1000 = 8.8V. For a power circuit, the limit is 5% of 230V = 11.5V. Since 8.8V < 11.5V, it passes. If this were a lighting circuit (limit 6.9V), it would fail."
         />
 
@@ -908,11 +911,12 @@ const FunctionalSkillsModule4Section2 = () => {
                     Step 3 &mdash; Worst-Case Correction Factors
                   </p>
                   <p className="text-sm text-white">
-                    Ca = 0.94 (35&deg;C), Cg = 0.80 (2 circuits), Ci = 0.68 (200mm insulation)
+                    Ca = 0.94 (35&deg;C), Cg = 0.80 (2 circuits), Ci = 0.50 (totally surrounded for
+                    1m &ge; 0.5m, Reg 523.9)
                     <br />
-                    Combined = 0.94 &times; 0.80 &times; 0.68 = 0.511
+                    Combined = 0.94 &times; 0.80 &times; 0.50 = 0.376
                     <br />
-                    Required It &ge; 60 / 0.511 = 117.4A
+                    Required It &ge; 60 / 0.376 = 159.6A
                   </p>
                 </div>
                 <div>

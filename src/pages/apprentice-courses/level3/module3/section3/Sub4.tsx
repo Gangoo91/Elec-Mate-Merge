@@ -70,9 +70,9 @@ const checks = [
       "An office with 50 kW load varying from 10 kW to 50 kW through the day. Best PFC method?",
     options: [
       'Automatic capacitor bank with multiple stages',
-      'The resistance of the phase conductor',
-      'RCD protection not exceeding 30mA',
-      'Use a proving unit before and after testing',
+      'A single fixed capacitor sized for 50 kW',
+      'A detuned reactor with no capacitors fitted',
+      'A series capacitor in each line conductor',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "Power factor correction reduces:",
     options: [
-      'Maximum input power before receiver saturates or is damaged',
+      'The real power (kW) drawn by the load',
       'Apparent power and line current for the same real power',
-      'DMPs do not write off any debt and creditors can withdraw at any time',
-      'Essential loads maximum demand plus starting currents',
+      'The supply voltage delivered to the load',
+      'The frequency of the supply at the connection point',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: "PFC capacitors are connected:",
     options: [
-      'Internal staircases at a comfortable angle',
-      'Brushes wear, sparking, RFI emission',
+      'In series with each line conductor',
+      'Between neutral and earth at the origin',
       'In parallel across the load (or supply)',
-      'Marks lost for incomplete work',
+      'In series with the protective device',
     ],
     correctAnswer: 2,
     explanation:
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: "Detuned reactors are added to PFC banks to:",
     options: [
       'Avoid resonance with supply harmonics that would amplify them',
-      'Appropriate connection means and protective measures',
-      'To evaluate fire safety measures including emergency lighting',
-      'Cross-linked polyethylene - high-temperature insulation',
+      'Increase the kVAr output of each capacitor stage',
+      'Provide overcurrent protection for the capacitor bank',
+      'Convert the capacitors from leading to lagging operation',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'Active harmonic filters work by:',
     options: [
-      'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
+      'Adding fixed capacitance to raise the power factor only',
       'Injecting opposite-phase harmonic currents to cancel the load harmonics',
-      'Discrimination is achieved up to a specific fault level only',
-      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
+      'Blocking all current above the fundamental with a series choke',
+      'Switching the supply off whenever harmonics exceed a set limit',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'Over-correcting with too much capacitance causes:',
     options: [
-      'PE-X (cross-linked polyethylene)',
-      'Continuity of ring final circuit conductors',
+      'A further drop in supply voltage at the busbar',
+      'A reduction in the real power consumed',
       'Leading pf and possible voltage rise',
-      'True - false values can cause section failure',
+      'Lagging pf and increased line current',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     id: 7,
     question: 'Static PFC (single fixed capacitor) is best for:',
     options: [
-      'To verify the area is safe for reoccupation',
-      'Move to a clean area away from the contamination',
-      'Identify hazards and implement control measures',
+      'Loads that vary widely throughout the day',
+      'Installations with high harmonic distortion',
+      'Sites needing precise pf held at exactly 0.95',
       'Constant-load motors that run continuously',
     ],
     correctAnswer: 3,

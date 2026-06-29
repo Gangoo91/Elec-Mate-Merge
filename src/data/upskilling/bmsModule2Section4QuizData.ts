@@ -5,10 +5,10 @@ export const bmsModule2Section4QuizData: QuizQuestion[] = [
     id: 1,
     question: 'Why is correct sensor placement important in BMS installations?',
     options: [
-      'Fresh air from grilles can cause false low CO₂ readings',
+      'To reduce the amount of cable needed for the installation',
       'To ensure sensors provide accurate readings for proper system control',
-      'Solar gain and draughts cause false temperature readings',
-      'To understand how the space is used and identify potential interference sources',
+      'To make the sensors easier to access for cleaning',
+      'To allow more devices to share a single network address',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,9 +97,9 @@ export const bmsModule2Section4QuizData: QuizQuestion[] = [
     question: 'Why is it important to walk the space before installing sensors?',
     options: [
       'To understand how the space is used and identify potential interference sources',
-      'To ensure sensors provide accurate readings for proper system control',
-      'Solar gain and draughts cause false temperature readings',
-      'CO₂ sensors near windows gave false low readings when windows opened',
+      'To confirm the correct mounting brackets have been ordered',
+      'To check the ceiling height matches the drawings',
+      'To verify the network cabling is already in place',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule2Section4QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why should sensor locations be labelled and documented?',
     options: [
-      'To understand how the space is used and identify potential interference sources',
+      'To prove the installation was completed on time',
       'For future maintenance, troubleshooting, and system modifications',
-      'To ensure sensors provide accurate readings for proper system control',
-      'CO₂ sensors near windows gave false low readings when windows opened',
+      'To reduce the calibration drift of the sensors',
+      'To allow the sensors to share a common address',
     ],
     correctAnswer: 1,
     explanation:

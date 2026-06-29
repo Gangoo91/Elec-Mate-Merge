@@ -59,12 +59,12 @@ const checks = [
     question:
       "A circuit diagram and a wiring diagram differ in one fundamental way. Which is it?",
     options: [
+      "Circuit diagrams show the wiring colours; wiring diagrams show the cable manufacturer's part numbers",
       "Circuit diagrams show function (the logic of how it works); wiring diagrams show physical connection (every conductor between every terminal)",
-      "Improvement recommended — does not represent immediate or potential danger but improvement would contribute to safety",
-      "They need a starting buffer, as early months may earn less than £3,000 before later months compensate",
-      "The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals",
+      "Circuit diagrams are always to scale; wiring diagrams are never drawn to scale",
+      "Circuit diagrams are used only for three-phase work; wiring diagrams only for single-phase",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Function vs physical. A circuit diagram shows the logic — how the components interact electrically, drawn for clarity (e.g. a 2-way lighting circuit with the strappers crossed for understanding). A wiring diagram shows the actual physical wiring — every cable, every terminal, the way the install is really laid out. You read circuit diagrams to understand; you wire from wiring diagrams.",
   },
@@ -74,7 +74,7 @@ const checks = [
       "What's the difference between an 'as-designed' drawing and an 'as-built' drawing?",
     options: [
       'Before any testing — Reg 642 places visual inspection ahead of Reg 643 testing in Part 6 sequence.',
-      'A don\\\\\\\\\\\\\\\'t/do statement that addresses concerns about your intentions and confirms your actual purpose',
+      'A don\'t/do statement that addresses concerns about your intentions and confirms your actual purpose',
       'As-designed = before the job. As-built = updated to show what was actually installed (including any deviations)',
       'How well and how often the contractor communicates progress, problems and costs — the technical work is assumed to be competent',
     ],

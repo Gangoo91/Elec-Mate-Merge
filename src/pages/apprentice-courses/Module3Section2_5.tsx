@@ -27,11 +27,11 @@ const quickCheckQuestions = [
   {
     id: 'segregation-distance',
     question:
-      'According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?',
+      'What separation between power and data cables in trunking is commonly applied in practice?',
     options: ['25mm', '50mm', '100mm'],
     correctIndex: 1,
     explanation:
-      'BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.',
+      'BS 7671 (Reg 528.1) requires segregation between Band I and Band II circuits; 50mm between power and data cables is the figure commonly applied to limit electromagnetic interference.',
   },
   {
     id: 'fill-factor',
@@ -68,7 +68,7 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?',
+      'What is the commonly applied minimum separation between power and data cables sharing trunking?',
     options: [
       '100mm',
       '25mm',
@@ -77,7 +77,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.',
+      'BS 7671 (Reg 528.1) requires segregation between voltage Band I and Band II circuits; a 50mm separation between power and data cables is the figure commonly applied in practice to limit electromagnetic interference.',
   },
   {
     id: 3,
@@ -134,16 +134,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'For a 200m² office with 25 workstations at 300W each, what is the design load with 0.8 diversity factor?',
+      'For a 200m² office with 25 workstations at 300W each, what is the design load with a 0.8 diversity factor?',
     options: [
-      '6kW',
+      '4.8kW',
       '7.5kW',
       '9kW',
       '6kW',
     ],
     correctAnswer: 3,
     explanation:
-      'Total load = 25 x 300W = 7.5kW. Design load = 7.5kW x 0.8 = 6kW with diversity factor applied.',
+      'Total connected load = 25 x 300W = 7.5kW. Applying the 0.8 diversity factor: 7.5kW x 0.8 = 6kW design load.',
   },
   {
     id: 8,

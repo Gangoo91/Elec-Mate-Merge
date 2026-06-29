@@ -70,9 +70,9 @@ const FunctionalSkillsModule5Section3 = () => {
         'When using past papers for revision, what should you do after marking your answers?',
       options: [
         'Review every wrong answer, understand the mistake, and revise that topic before trying again',
-        'By choosing which specialisms to pursue, which clients to work with, and how to structure their working week',
-        'Outcome goals provide direction while process goals provide daily actionable steps',
-        'Cycles of binge eating followed by compensatory behaviours such as purging',
+        'File the paper away and move straight on to the next past paper',
+        'Only count your score and ignore which questions you got wrong',
+        'Repeat the whole paper immediately without revising any topics first',
       ],
       correctAnswer: 0,
       explanation:
@@ -95,10 +95,10 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 6,
       question: "What is 'active recall' as a study technique?",
       options: [
-        'They provide guidance based on real experience, helping you avoid common mistakes',
-        'To ensure secure mechanical grip and good electrical contact',
+        'Re-reading your notes several times until they feel familiar',
+        'Highlighting the most important points in your textbook',
         'Testing yourself by trying to remember information without looking at your notes',
-        'Consulting, training, inspection, or reduced-hours roles',
+        'Listening to a recording of the topic while doing other tasks',
       ],
       correctAnswer: 2,
       explanation:
@@ -108,9 +108,9 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 7,
       question: 'Why should you create a study timetable that includes rest days?',
       options: [
-        'The spacing and resolution of illuminance calculations across a surface',
-        'Pre-functional tests basic wiring and power; functional tests complete sequences',
-        '110% of the largest container or 25% of the total capacity, whichever is greater',
+        'Because awarding bodies require a fixed number of rest days to be recorded',
+        'Because studying every single day guarantees you will pass the exam',
+        'Because rest days are when you should catch up on missed coursework',
         'Because your brain consolidates memories during rest, preventing burnout and maintaining motivation',
       ],
       correctAnswer: 3,
@@ -122,9 +122,9 @@ const FunctionalSkillsModule5Section3 = () => {
       question: 'What is the most effective way to use the last 10 minutes of an exam?',
       options: [
         'Check your answers, correct obvious errors, and ensure you have not left any questions blank',
-        'Ensuring the intended message is received, understood, and acted upon correctly',
-        'Each connection must be fully engaged, secure and locked in its correct position',
-        'A step-by-step procedure describing how a task will be carried out safely',
+        'Start an entirely new question that you had not planned to attempt',
+        'Put your pen down early to stay calm and rest before the end',
+        'Rewrite all your answers neatly to improve your handwriting',
       ],
       correctAnswer: 0,
       explanation:

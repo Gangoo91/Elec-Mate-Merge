@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'single-line-purpose',
     question: 'What is the primary purpose of a single-line diagram?',
     options: [
-      'Occupational asthma (respiratory sensitiser)',
+      'Show the physical position of equipment on a plan',
       'Represent the power distribution hierarchy',
-      'Construction Design and Management',
-      'A multifunction tester or continuity tester',
+      'Detail the terminal-by-terminal wiring connections',
+      'List the lighting calculation results for each room',
     ],
     correctIndex: 1,
     explanation:
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'bs-en-61082',
     question: 'What does BS EN 61082 cover?',
     options: [
-      'Insulation resistance between all circuits and earth',
-      '\\\\\\\\\\\\\\\'Danger\\\\\\\\\\\\\\\' or \\\\\\\\\\\\\\\'Warning\\\\\\\\\\\\\\\' indicating the severity of hazard',
+      'Graphical symbols for electrical diagrams',
+      'CAD layer naming conventions for the UK',
       'Preparation of documents in electrotechnology',
-      'A loose or broken neutral — extremely dangerous',
+      'Reference designation systems for equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -73,9 +73,9 @@ const quickCheckQuestions = [
     question: 'Why is layer management important in CAD electrical drawings?',
     options: [
       'It organises information for coordination and output control',
-      'Correct colour coding or marking as per BS 7671',
-      'Yes, if they result from work activity and require hospital treatment',
-      'To improve contact resistance at joints and protect against oxidation',
+      'It reduces the file size of the drawing significantly',
+      'It is required to print the drawing in colour',
+      'It automatically calculates cable lengths from the model',
     ],
     correctIndex: 0,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What information is typically shown on a single-line diagram?',
     options: [
-      'Supply separation, battery autonomy, testing provisions, and maintenance access',
+      'Room dimensions, furniture layout and finishes',
       'Protective device ratings, cable sizes and distribution hierarchy',
-      'Touching exposed metalwork that has become live due to a fault',
-      'Flow increases but less than doubles at the operating point',
+      'Luminaire mounting heights and ceiling grid positions',
+      'Terminal numbers and individual wire colours',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a layout drawing?',
     options: [
-      'Open circuit — a break in the circuit path',
-      'Format the cells as "Text" before entering the data',
-      'Understanding the customer\\\\\\\\\\\\\\\'s lifestyle and needs',
+      'Show the distribution hierarchy from intake to circuits',
+      'Explain the control logic of a motor starter',
+      'Tabulate the cable sizes and protective devices',
       'Show the physical location of equipment on floor plans',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does a wiring diagram show that a schematic does not?',
     options: [
-      'Selecting a fan operating at its best efficiency point',
+      'The overall distribution hierarchy of the building',
       'Terminal numbers and actual wire connections',
-      'In steel conduit with proper earthing',
-      'Even profitable businesses can fail without cash',
+      'The control logic and sequence of operation',
+      'The physical location of equipment on the floor',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of the drawing title block?',
     options: [
-      'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
-      'To prevent energy waste and ensure safety functions aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t permanently disabled',
-      'Avoid working at height, prevent falls, mitigate falls',
+      'To show the legend of all graphical symbols used',
+      'To list the bill of quantities for the project',
+      'To provide a key to the CAD layer naming scheme',
       'Provide project, drawing identification, revision and approval information',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'How should revisions be managed on electrical drawings?',
     options: [
       'Use revision clouds, updated revision table, and maintain drawing history',
-      'Yes — Regulation 5(1) requires both to be appointed in writing',
-      'Focus on the topics and concepts where your review identified gaps or weak understanding',
-      'Oxygen depletion from SF₆ gas leaks, electrical arc flash, and restricted egress',
+      'Overwrite the previous issue and keep the same revision letter',
+      'Record changes only on the contractor copy on site',
+      'Delete superseded drawings to avoid confusion',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a reflected ceiling plan (RCP)?',
     options: [
-      'False triggering from heat sources or incorrect positioning',
+      'A plan showing the floor finishes and skirting details',
       'A plan showing ceiling-mounted items as if looking up',
-      'Properly installed, mounted, and adjusted',
-      'The design current of the cooker after applying diversity',
+      'A section view through the ceiling void services',
+      'A schedule of all luminaires used in the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why should electrical drawings reference the specification?',
     options: [
-      'Use alternative measuring methods and reference points',
-      'Poor housekeeping, uneven surfaces, inadequate lighting, unsuitable footwear',
+      'To reduce the number of drawings needed for the project',
+      'To allow the drawings to be printed at a smaller scale',
       'To link graphical information to quality and performance requirements',
-      'One person at each end, both on the same side, communicating clearly',
+      'To remove the need for a separate schedule of equipment',
     ],
     correctAnswer: 2,
     explanation:

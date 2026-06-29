@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one hazard caused by leaving waste in the work area.',
     options: [
-      'The employer (or self-employed person)',
-      'System with earthing electrode',
+      'Improved access for other trades',
+      'Faster completion of the installation',
       'Fire hazards from flammable materials',
-      'Appropriate cable type, depth, and route marking',
+      'Better organisation of tools and materials',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should heavy items be stored at waist height where possible?',
     options: [
-      'Deemed-to-satisfy guidance',
-      'Horizontally or vertically only',
-      'Self-declaration without evidence',
+      'To keep them out of reach of unauthorised people',
+      'To make better use of high storage shelving',
+      'To protect them from damp at floor level',
       'To reduce manual handling risks',
     ],
     correctIndex: 3,
@@ -101,9 +101,9 @@ const Module4Section7_5 = () => {
       question: 'Why should cable reels be stored off the floor?',
       options: [
         'To prevent damage and trip hazards',
-        'Conduit bending machine or former',
-        'Simultaneous heating and cooling operation',
-        'C_total = C₁ + C₂ + C₃ (arithmetic sum)',
+        'To make the cable easier to cut to length',
+        'To keep the reels out of direct sunlight',
+        'To allow the cable to cool after installation',
       ],
       correctAnswer: 0,
       explanation:
@@ -154,9 +154,9 @@ const Module4Section7_5 = () => {
         "Give one reason why 'clear as you go' is better than tidying up at the end of the day only.",
       options: [
         'Reduces hazards during work, not just at the end',
-        'To prove safety and compliance with regulations',
-        'To verify battery capacity and autonomy',
-        'One socket with higher resistance reading',
+        'It means less work needs to be done at the end of the day',
+        'It impresses the client more than a single tidy-up',
+        'It allows waste to be stored in the work area until later',
       ],
       correctAnswer: 0,
       explanation:
@@ -167,10 +167,10 @@ const Module4Section7_5 = () => {
       question:
         'Name one legal duty under the Health and Safety at Work Act related to the work area.',
       options: [
-        'The client failed an audit and the project was delayed',
+        'Duty to complete all work within the agreed programme',
         'Duty to keep workplace safe and without risks to health',
-        'Single insulation providing equivalent protection to double',
-        'To maintain circuit integrity during fire conditions',
+        'Duty to provide tools and materials to all employees',
+        'Duty to recycle all waste generated on site',
       ],
       correctAnswer: 1,
       explanation:
@@ -180,10 +180,10 @@ const Module4Section7_5 = () => {
       id: 10,
       question: 'Why should all access and escape routes be kept clear?',
       options: [
-        'Translating between different communication protocols',
-        'The conductor material and insulation type',
+        'To give the client a better impression of the site',
+        'To allow materials to be delivered more easily',
         'To meet fire safety and emergency requirements',
-        'Multi-factor authentication (biometrics + PIN/card)',
+        'To reduce the amount of cleaning needed at the end',
       ],
       correctAnswer: 2,
       explanation:

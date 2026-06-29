@@ -36,10 +36,10 @@ const Module6Section5_4 = () => {
       id: 2,
       question: 'What does a reading significantly below 1 MΩ indicate?',
       options: [
-        'Make the reading artificially lower',
-        'Do not energise until fault is found and rectified',
+        'Excellent, newly installed insulation',
+        'A correctly nulled test instrument',
         'Possible insulation breakdown or contamination',
-        'Investigate and rectify before energising',
+        'A circuit that is safe to energise',
       ],
       correctAnswer: 2,
       explanation:
@@ -49,9 +49,9 @@ const Module6Section5_4 = () => {
       id: 3,
       question: 'If you get a reading of 0.3 MΩ, what should you do?',
       options: [
-        'Do not energise until fault is found and rectified',
-        'Make the reading artificially lower',
-        'Possible insulation breakdown or contamination',
+        'Record it as a pass and energise',
+        'Re-test at a lower voltage to raise the reading',
+        'Average it with a previous higher reading',
         'Investigate and rectify before energising',
       ],
       correctAnswer: 3,
@@ -60,17 +60,16 @@ const Module6Section5_4 = () => {
     },
     {
       id: 4,
-      question:
-        'True or False: Environmental conditions can affect insulation resistance readings.',
+      question: 'How do environmental conditions affect insulation resistance readings?',
       options: [
-        'True',
-        'False',
-        'Only in winter',
-        'Only outdoors',
+        'Temperature, humidity and moisture can all reduce the readings',
+        'They have no measurable effect on the readings',
+        'They only affect readings on outdoor circuits',
+        'They only affect readings during winter months',
       ],
       correctAnswer: 0,
       explanation:
-        'True. Temperature, humidity, moisture, and contamination can all significantly affect insulation resistance readings.',
+        'Temperature, humidity, moisture and contamination can all significantly affect insulation resistance readings.',
     },
     {
       id: 5,
@@ -89,23 +88,23 @@ const Module6Section5_4 = () => {
       id: 6,
       question: 'If parallel paths exist during testing, how might this affect the reading?',
       options: [
-        'Immediately after testing',
-        'Investigate and rectify before energising',
+        'Make the reading artificially higher',
+        'Have no effect on the reading',
         'Make the reading artificially lower',
-        'Moisture in the installation',
+        'Cause the test instrument to read open circuit',
       ],
       correctAnswer: 2,
       explanation:
-        'Parallel paths can make insulation resistance readings artificially lower, which is why proper isolation is crucial.',
+        'Parallel paths provide an additional route for current, making the measured insulation resistance artificially lower, which is why proper isolation is crucial.',
     },
     {
       id: 7,
       question: 'What action should be taken if a circuit fails the insulation resistance test?',
       options: [
-        'Possible insulation breakdown or contamination',
-        'Investigate and rectify before energising',
-        'Make the reading artificially lower',
-        'Do not energise until fault is found and rectified',
+        'Energise it briefly to confirm the fault',
+        'Pass it provided the reading is steady',
+        'Record it and move on to the next circuit',
+        'Do not energise until the fault is found and rectified',
       ],
       correctAnswer: 3,
       explanation:
@@ -128,23 +127,23 @@ const Module6Section5_4 = () => {
       id: 9,
       question: 'When should insulation resistance results be recorded?',
       options: [
-        'The inverter can be damaged',
-        'Immediately after testing',
-        'Isolate and lock off the supply',
-        'Outdoor temperature sensors',
+        'Only if the circuit fails the test',
+        'Immediately after each test is taken',
+        'At the end of the following working day',
+        'Only on the final certificate, from memory',
       ],
       correctAnswer: 1,
       explanation:
-        'Results should be recorded immediately after testing to ensure accuracy and prevent confusion with other readings.',
+        'Results should be recorded immediately after each test to ensure accuracy and prevent confusion with other readings.',
     },
     {
       id: 10,
       question: 'In the real-world example, what caused the apparent insulation fault?',
       options: [
-        'Make the reading artificially lower',
-        'Immediately after testing',
+        'A faulty test instrument',
+        'Damaged cable insulation',
         'Moisture in the installation',
-        'Several MΩ or higher',
+        'Incorrect test voltage selected',
       ],
       correctAnswer: 2,
       explanation:

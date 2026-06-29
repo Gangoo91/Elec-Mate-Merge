@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     question:
       "Under CDM 2015, when does a domestic client's duties transfer to another duty holder?",
     options: [
-      'Qualitative uses subjective ratings, quantitative uses numerical data',
-      'To prevent fire spreading through cable penetrations',
+      'Only after the local authority has been formally notified',
+      'When the client signs a written waiver of their duties',
       'Automatically to the contractor in control of the construction phase',
-      'To verify protective devices have adequate breaking capacity',
+      'They never transfer; the domestic client keeps all duties',
     ],
     correctIndex: 2,
     explanation:
@@ -50,10 +50,10 @@ const quickCheckQuestions = [
     id: 'cdm-f10-trigger',
     question: 'An F10 notification to HSE is required when a project exceeds which threshold?',
     options: [
-      'Heat-shrink, clip-on tags, or printed labels',
-      'Mechanical fasteners and plug-in connections',
+      '10 working days with more than 5 workers at any one time',
+      'Any project with a contract value above £100,000',
       '30 working days with more than 20 workers OR 500 person-days',
-      'Correct cut-in and cut-out pressure settings',
+      '90 working days regardless of the number of workers',
     ],
     correctIndex: 2,
     explanation:
@@ -64,9 +64,9 @@ const quickCheckQuestions = [
     question: 'What is the PRIMARY duty of the Principal Designer under CDM 2015?',
     options: [
       'Planning, managing and coordinating health and safety during the pre-construction phase',
-      'To account for unexpected site conditions, part delays, and client changes',
-      'The longest sequence of dependent activities determining minimum duration',
-      'Current rating, voltage rating, type (HRC, rewireable, cartridge), breaking capacity, and category of duty',
+      'Drawing up the Construction Phase Plan before work starts on site',
+      'Providing welfare facilities for all workers from the first day',
+      'Supervising the construction work and enforcing site rules daily',
     ],
     correctIndex: 0,
     explanation:
@@ -137,9 +137,9 @@ const quizQuestions = [
       'An M&E consultancy is designing HVAC systems for a new hospital. Under CDM 2015, what is their PRIMARY duty as a Designer?',
     options: [
       'Eliminate foreseeable risks or reduce them so far as is reasonably practicable',
-      'As soon as practicable and before the construction phase begins',
-      'Regulation 14 - Principal Contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties to consult',
-      'No - does not meet the 30 days with 20+ workers threshold',
+      'Draw up and maintain the Construction Phase Plan for the project',
+      'Submit the F10 notification to the HSE on behalf of the client',
+      'Provide and maintain welfare facilities for the workforce on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'The Principal Contractor must ensure which of the following regarding welfare facilities?',
     options: [
-      'Facilities meet minimum standards in Schedule 2',
-      'Both A and B',
-      "Facilities are the Client's responsibility",
-      'Facilities are available from day one of construction',
+      'Facilities are provided only once 20 or more workers are on site',
+      'Facilities are available from day one and meet Schedule 2 standards',
+      "Facilities remain the Client's sole responsibility throughout",
+      'Facilities are required only on projects notifiable to the HSE',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,14 +177,14 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following must be included in a Construction Phase Plan?',
     options: [
-      'Arrangements for managing health and safety risks',
-      'The health and safety aims of the project',
-      'Site rules and emergency procedures',
-      'All of the above',
+      'The detailed financial budget and cost plan for the project',
+      'The arrangements for managing risks, site rules and emergency procedures',
+      'The marketing and tender strategy used to win the contract',
+      'The full list of the client’s shareholders and directors',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'The Construction Phase Plan must include all of these elements plus arrangements for coordination, site induction, welfare facilities, and any project-specific requirements. It is the key document for managing H&S during construction.',
+      'The Construction Phase Plan must set out the arrangements for managing health and safety risks, the project H&S aims, site rules, emergency procedures, induction and welfare arrangements. It is the key document for managing H&S during construction.',
   },
   {
     id: 8,
@@ -192,9 +192,9 @@ const quizQuestions = [
       'Under CDM 2015, at what point must a Principal Designer be appointed on a notifiable project?',
     options: [
       'As soon as practicable and before the construction phase begins',
-      'No - does not meet the 30 days with 20+ workers threshold',
-      'Designer duty to eliminate or reduce foreseeable risks',
-      'The electrical contractor controlling the work',
+      'Only once the construction phase is already under way',
+      'At practical completion, ready to prepare the Health and Safety File',
+      'Within 30 working days of the project first being notified',
     ],
     correctAnswer: 0,
     explanation:
@@ -219,10 +219,10 @@ const quizQuestions = [
     question:
       'Which regulation requires the Principal Contractor to consult and engage with workers on health and safety matters?',
     options: [
-      "The electrical contractor controlling the work",
-      "Designer duty to eliminate or reduce foreseeable risks",
+      "Regulation 4 - Client's duty to make suitable arrangements",
+      "Regulation 9 - Designer's duty to eliminate or reduce risks",
       "Regulation 14 - Principal Contractor's duties to consult",
-      "No - does not meet the 30 days with 20+ workers threshold",
+      "Regulation 7 - transfer of duties on domestic projects",
     ],
     correctAnswer: 2,
     explanation:
@@ -232,12 +232,12 @@ const quizQuestions = [
     id: 11,
     question: 'The Health and Safety File should contain information about which of the following?',
     options: [
-      'As-built drawings showing service routes and isolation points',
-      'Hazardous materials used or encountered',
-      'Information needed for future construction work',
-      'All of the above',
+      'The day-to-day labour timesheets recorded during the build',
+      'The tender prices submitted by each competing contractor',
+      'As-built drawings, hazardous materials and residual risks for future work',
+      'The personal contact details of every operative on the project',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'The H&S File must contain all information useful for future construction work including as-built drawings, hazardous materials, structural information, and any residual risks. For building services, this includes cable routes, isolation points, and asbestos surveys.',
   },
@@ -246,12 +246,12 @@ const quizQuestions = [
     question:
       'A contractor on a multi-contractor site must cooperate with the Principal Contractor by:',
     options: [
-      'All of the above',
-      'Complying with reasonable directions',
-      'Following site rules',
-      'Providing information for the Construction Phase Plan',
+      'Working entirely to their own method statements, ignoring site rules',
+      'Setting the overall construction programme for the whole site',
+      'Appointing the Principal Designer for the project',
+      'Following site rules, providing CPP information and complying with directions',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Contractors must cooperate with the Principal Contractor by following site rules, providing information for the CPP, reporting incidents, and complying with reasonable directions. This duty under Regulation 15 enables effective coordination.',
   },

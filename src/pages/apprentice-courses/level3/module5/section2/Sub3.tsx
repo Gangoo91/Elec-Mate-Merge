@@ -41,7 +41,7 @@ const checks = [
     options: [
       'When the work will last longer than 30 working days with more than 20 workers at any one time, or exceeds 500 person-days',
       'Type A as a minimum (or Type B where DC fault current can occur, e.g. some EVSE) — Type AC is not suitable for circuits with DC components or pulsating DC fault currents.',
-      'A yellow warning triangle with the text \\\\\\\\\\\\\\\'Danger — 400 V\\\\\\\\\\\\\\\' (or the actual voltage) in accordance with the Health and Safety (Safety Signs and Signals) Regulations 1996',
+      'A yellow warning triangle with the text \'Danger — 400 V\' (or the actual voltage) in accordance with the Health and Safety (Safety Signs and Signals) Regulations 1996',
       'Do NOT touch the tower; warn others to stay clear; call the network operator and emergency services; do not approach until confirmed safe',
     ],
     correctIndex: 1,
@@ -65,12 +65,12 @@ const checks = [
     id: 'm5-s2-sub3-afdd-reg',
     question: 'Per A4:2026 Reg 421.1.7, AFDDs are:',
     options: [
-      'Recommended for all AC final circuits as a means of additional protection against fire from arc faults — and required for higher-risk residential buildings (HRRBs) under the Building Safety Act 2022. Visual inspection confirms presence on circuits where design specifies them.',
       '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
       'Both basic protection (insulation, barriers/enclosures, obstacles, placing out of reach) AND fault protection (ADS, double or reinforced insulation, electrical separation, ELV) — confirming both layers per Section 41.',
       'An Electrical Installation Certificate (EIC) signed by the responsible competent persons for design, construction and inspection/testing, accompanied by a Schedule of Inspections and a Schedule of Test Results, plus the documentation required by Regulation 132.13',
+      'Recommended for all AC final circuits as a means of additional protection against fire from arc faults — and required for higher-risk residential buildings (HRRBs) under the Building Safety Act 2022. Visual inspection confirms presence on circuits where design specifies them.',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "Reg 421.1.7 (A4:2026) — AFDDs conforming to BS EN 62606 are recommended for AC final circuits to provide additional protection against fire from arc faults. The wording is 'recommended', not mandated in general use. HRRBs (per Building Safety Act 2022 — typically 18 m or 7 storeys with multiple residential units) require them through the building safety regime. Visual inspection confirms AFDD presence where the design has fitted them.",
   },

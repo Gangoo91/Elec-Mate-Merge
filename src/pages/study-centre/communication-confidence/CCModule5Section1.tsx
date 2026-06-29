@@ -26,23 +26,23 @@ const quickCheckQuestions = [
       'In principled negotiation, why is it important to "separate people from the problem"?',
     options: [
       'Because people are never part of the problem on construction sites',
-      'Because personal emotions and relationship issues can derail productive discussions about the actual issue',
       'Because you should ignore the other person entirely and focus on your own interests',
       'Because the problem is always more important than the people involved',
+      'Because personal emotions and relationship issues can derail productive discussions about the actual issue',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Separating people from the problem means addressing the substantive issue without letting personal emotions, ego, or relationship tensions interfere. On a construction site, a dispute about a variation price is a commercial problem &mdash; it is not a personal attack. When you separate the two, you can be firm on the issue while remaining respectful to the person, which preserves the working relationship and leads to better outcomes for both parties.',
   },
   {
     question: 'What is a BATNA, and why should you calculate it before entering a negotiation?',
     options: [
-      'It is your opening offer, and it sets the tone for the discussion',
       'It is your Best Alternative to a Negotiated Agreement &mdash; the best outcome you can achieve if the negotiation fails',
+      'It is your opening offer, and it sets the tone for the discussion',
       'It is the maximum price the other party is willing to pay',
       'It is a technique for ending negotiations quickly when they stall',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BATNA stands for Best Alternative to a Negotiated Agreement, a concept developed by Fisher, Ury &amp; Patton at the Harvard Negotiation Project. It is the best outcome you can achieve if the current negotiation fails entirely. Knowing your BATNA gives you real power: if the deal on the table is worse than your BATNA, you can walk away confidently. If your BATNA is weak, you know you need to negotiate harder or improve your alternatives before the meeting.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       "Which of the following is NOT one of Fisher, Ury & Patton's four principles of negotiation?",
     options: [
+      'Always make the first offer to anchor the discussion',
       'Separate people from the problem',
       'Focus on interests, not positions',
-      'Always make the first offer to anchor the discussion',
       'Insist on objective criteria',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The four principles from "Getting to Yes" are: (1) Separate people from the problem, (2) Focus on interests, not positions, (3) Invent options for mutual gain, and (4) Insist on objective criteria. "Always making the first offer" is a tactical technique, not one of the four core principles of principled negotiation.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
     question: 'What does BATNA stand for?',
     options: [
       'Best Approach to Negotiation Analysis',
-      'Best Alternative to a Negotiated Agreement',
       'Basic Agreement Terms for New Arrangements',
       'Bilateral Agreement on Trade Negotiation Aspects',
+      'Best Alternative to a Negotiated Agreement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BATNA stands for Best Alternative to a Negotiated Agreement. It was developed by Roger Fisher, William Ury, and Bruce Patton at the Harvard Negotiation Project. Your BATNA is the best outcome you can achieve if the current negotiation fails entirely &mdash; it is your walk-away option and the source of your real negotiating power.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       '"What if we adjusted the specification on the containment to save material costs, and used the saving to cover the additional labour on the rewire?" This is an example of:',
     options: [
+      'Inventing options for mutual gain',
       'Separating people from the problem',
       'Focusing on interests, not positions',
-      'Inventing options for mutual gain',
       'Insisting on objective criteria',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'This is inventing options for mutual gain &mdash; finding creative solutions that expand the pie rather than simply dividing it. By looking at the broader picture and trading across different elements of the project, both parties can get more of what they need. This is one of the most powerful techniques in principled negotiation and is especially valuable in construction where multiple cost elements can be traded against each other.',
   },

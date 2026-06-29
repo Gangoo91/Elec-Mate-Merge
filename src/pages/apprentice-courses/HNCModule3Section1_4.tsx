@@ -74,9 +74,9 @@ const quickCheckQuestions = [
     id: 'lighting-circuit',
     question: 'Why are lighting circuits wired in parallel rather than series?',
     options: [
-      'Growing opportunities in building automation',
-      'Mastery experiences &mdash; successfully completing a task yourself',
-      'To provide accountability and traceability',
+      'To reduce the total current drawn from the supply',
+      'So the lamps share the supply voltage equally between them',
+      'To allow a single switch to control every lamp at once',
       'Each lamp gets full voltage and operates independently',
     ],
     correctIndex: 3,
@@ -186,9 +186,9 @@ const quizQuestions = [
       'In a distribution board, why are final circuits connected in parallel rather than series?',
     options: [
       'To ensure each circuit gets full voltage and can be individually protected',
-      'Be honest about the situation, explain what is achievable, and discuss any obstacles',
-      'Contract rates where applicable, or fair rates where not',
-      'Rapid voltage fluctuations causing visible light variation',
+      'To make the total resistance equal the sum of all circuits',
+      'To force the same current through every final circuit',
+      'To allow one fault to disconnect the whole installation',
     ],
     correctAnswer: 0,
     explanation:

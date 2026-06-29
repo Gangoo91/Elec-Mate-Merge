@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'An electrician says yes to every small job that comes in, even when their schedule is already full. What is the most likely long-term consequence?',
     options: [
+      'They will become overcommitted, deliver lower quality, miss deadlines, and eventually burn out',
       'They will earn more money because they never turn down work',
       'They will build a reputation for reliability because they always say yes',
-      'They will become overcommitted, deliver lower quality, miss deadlines, and eventually burn out',
       'They will naturally become more efficient because of the pressure',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Saying yes to everything is one of the most common time traps in construction. In the short term, it feels productive and client-friendly. In the long term, it leads to overcommitment: jobs get rushed, quality drops, deadlines are missed, stress increases, and the electrician\'s reputation suffers — the exact opposite of the intended effect. The ability to say no (or "not right now") is a critical time management skill. It protects the quality of your existing commitments and preserves your capacity for the work that matters most.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
     question: 'Sophie Leroy\'s concept of "attention residue" describes:',
     options: [
       'The physical fatigue that accumulates after a long day of focused work',
-      "The tendency to forget details from the previous day's work",
       'The cognitive carry-over where part of your attention remains on a previous task even after you switch to a new one',
+      "The tendency to forget details from the previous day's work",
       'The improvement in attention that comes from taking regular breaks',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Sophie Leroy, in her 2009 research paper "Why is it so hard to do my work?", coined the term "attention residue" to describe the phenomenon where part of your cognitive attention remains stuck on a previous task when you switch to a new one. If you were working on a first fix, get interrupted by a phone call about a quote, and then return to the first fix, part of your mind is still processing the quote conversation. This residue reduces your performance on the task you are supposed to be doing. The effect is cumulative: the more you switch, the more residue builds up, and the worse your performance becomes on each task.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'Cal Newport\'s concept of "Deep Work" refers to:',
     options: [
-      'Working overtime to complete tasks faster',
       'Professional activities performed in a state of distraction-free concentration that push your cognitive abilities to their limit',
+      'Working overtime to complete tasks faster',
       'Physical labour that requires significant muscular effort',
       'Working on multiple tasks simultaneously to maximise output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In his 2016 book "Deep Work: Rules for Focused Success in a Distracted World," Cal Newport defines deep work as "professional activities performed in a state of distraction-free concentration that push your cognitive capabilities to their limit." This is the focused, uninterrupted work that produces the highest quality and value. For an electrician, deep work includes complex fault-finding, detailed testing, design calculations, and meticulous installation work — all of which require sustained concentration.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'The "yes to everything" trap is problematic because:',
     options: [
       'It means you never have to turn down a paying job',
-      'It leads to overcommitment, reduced quality, missed deadlines, and eventual burnout',
       'It builds your reputation as the most reliable tradesperson in the area',
       'It ensures you always have a full pipeline of work',
+      'It leads to overcommitment, reduced quality, missed deadlines, and eventual burnout',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Saying yes to everything creates a cycle of overcommitment. Your schedule becomes overpacked, forcing you to rush jobs, cut corners, or work excessive hours. Quality drops, deadlines slip, and stress increases. Clients start experiencing late arrivals, delayed completions, and lower-quality work — which damages the reputation you were trying to build by never saying no. The most respected tradespeople are those who deliver excellent work on time, which requires the discipline to manage capacity honestly.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'Sophie Leroy\'s "attention residue" means:',
     options: [
-      'Your ability to pay attention decreases throughout the day',
       'Part of your cognitive attention stays on a previous task even after you switch to a new one',
+      'Your ability to pay attention decreases throughout the day',
       'You remember interrupted tasks better than completed ones',
       'Physical fatigue makes it harder to concentrate in the afternoon',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Attention residue (Leroy, 2009) is the phenomenon where part of your mental processing power remains attached to a previous task when you switch to a new one. If you are doing a first fix, check a WhatsApp message about a quote, and then return to the first fix, part of your brain is still processing the quote. This residue reduces performance on your current task. The effect is stronger when the previous task was unfinished or unresolved.',
   },
@@ -149,11 +149,11 @@ const quizQuestions = [
     question: 'Context switching is particularly costly because:',
     options: [
       'It requires physically moving between different job sites',
-      'Each switch incurs a cognitive penalty — you lose focus, accumulate attention residue, and take time to re-engage with the new task',
       'It means you can only work on one type of job per day',
       'It is only a problem for office workers, not tradespeople',
+      'Each switch incurs a cognitive penalty — you lose focus, accumulate attention residue, and take time to re-engage with the new task',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Context switching imposes a cognitive tax that goes far beyond the time of the switch itself. When you move from one task to another — especially if the tasks are different in nature (switching from installation work to answering a pricing query, for example) — your brain must disengage from one set of mental models and engage a new one. This takes time and energy, and it leaves attention residue. Research shows that people who frequently switch between tasks perform worse on all of them, not just the interrupted one.',
   },

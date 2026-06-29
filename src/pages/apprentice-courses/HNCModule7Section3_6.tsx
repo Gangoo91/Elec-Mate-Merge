@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of the maintenance factor (MF) in lighting design?',
     options: [
-      "When hazardous manual handling cannot be avoided",
-      "A safe distance where accidental contact is not possible",
-      "Prove the tester works on a known live source",
+      "To increase the initial illuminance above the level the occupants actually need",
+      "To convert luminous flux in lumens into illuminance in lux on the working plane",
+      "To rate how easily a luminaire can be accessed and cleaned by maintenance staff",
       "To account for light loss over the installation's service life",
     ],
     correctAnswer: 3,
@@ -121,9 +121,9 @@ const quizQuestions = [
     question: "CIBSE LG3 'The Visual Environment' primarily addresses:",
     options: [
       'Fundamental principles of how light affects human vision and comfort',
-      'Additional consideration for backup power sources',
-      'Working out meaning from clues in the text that are not directly stated',
-      'Duties that must be complied with regardless of cost or practicability',
+      'Detailed lighting layouts for sports halls and outdoor pitches',
+      'The wiring and protection requirements for emergency lighting circuits',
+      'Energy-metering and reporting requirements for commercial lighting',
     ],
     correctAnswer: 0,
     explanation:

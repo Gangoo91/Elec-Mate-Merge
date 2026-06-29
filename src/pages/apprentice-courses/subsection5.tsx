@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a proving unit used for?',
     options: [
-      'Record, rectify, and re-inspect before sign-off',
+      'To record test results during the isolation procedure',
       'To check that your voltage indicator is working',
-      'Earthing connection for the armour',
-      'Before any person enters the confined space',
+      'To discharge stored energy from a capacitor',
+      'To measure the resistance of a protective conductor',
     ],
     correctIndex: 1,
     explanation:
@@ -45,10 +45,10 @@ const quickCheckQuestions = [
     id: 2,
     question: "Why shouldn't you use a multimeter to prove dead?",
     options: [
-      "It's too complicated to use",
-      "It doesn't work properly",
-      "It's not safe for isolation work",
-      "It's too expensive",
+      "It cannot measure AC voltage accurately",
+      "It only reads resistance, not voltage",
+      "It's not designed or rated for safe isolation work",
+      "It takes too long to give a reading",
     ],
     correctIndex: 2,
     explanation:
@@ -77,10 +77,10 @@ const Section1_4 = () => {
       id: 1,
       question: 'What is a proving unit used for?',
       options: [
-        'DC does not produce a changing magnetic flux',
+        'To measure the insulation resistance of a circuit',
         'To check that your voltage indicator is working',
-        'Loose connections, overloaded circuits, or supply problems',
-        'Chrysotile, amosite, and crocidolite',
+        'To detect loose connections in a distribution board',
+        'To record the readings taken during a test',
       ],
       correctAnswer: 1,
       explanation:
@@ -103,10 +103,10 @@ const Section1_4 = () => {
       id: 3,
       question: "Why shouldn't you use a multimeter to prove dead?",
       options: [
-        "It doesn't work properly",
-        "It's too expensive",
-        "It's too complicated to use",
-        "It's not safe for isolation work",
+        "It cannot display a reading quickly enough",
+        "It only works on AC circuits, not DC",
+        "It needs recalibrating before every use",
+        "It's not designed or rated for safe isolation work",
       ],
       correctAnswer: 3,
       explanation:
@@ -128,20 +128,25 @@ const Section1_4 = () => {
     {
       id: 5,
       question:
-        'True or False: You should always check your tester on a known source before and after testing.',
-      options: ['True', 'False'],
-      correctAnswer: 0,
+        'When should you check your voltage indicator on a known source?',
+      options: [
+        'Only once, at the start of the working day',
+        'Both before and after proving the circuit dead',
+        'Only if the indicator fails to light during the test',
+        'Only after the circuit has been re-energised',
+      ],
+      correctAnswer: 1,
       explanation:
-        "True. Always check your tester with a proving unit before and after testing to ensure it's working correctly - this is a critical safety procedure.",
+        "Always check your tester on a known source (proving unit) both before and after testing, so you know it was working when you relied on it - this is a critical safety procedure.",
     },
     {
       id: 6,
       question: 'Which instrument is specifically designed for proving dead?',
       options: [
-        'Upsize the cable to the next CSA',
-        'Isolate the circuit from supply',
-        'Two-pole voltage indicator',
-        'Insulation resistance test',
+        'A clamp meter on the AC current range',
+        'An insulation resistance tester',
+        'A two-pole voltage indicator',
+        'A plug-in socket tester',
       ],
       correctAnswer: 2,
       explanation:
@@ -151,9 +156,9 @@ const Section1_4 = () => {
       id: 7,
       question: 'What does CPC continuity testing verify?',
       options: [
-        'To prevent electric shock and equipment damage',
-        'A competent person who carried out or supervised the work',
-        'Using a lux meter to set light levels to industry standards',
+        'That the supply voltage is within statutory limits',
+        'That the correct cable size has been installed',
+        'That insulation between live conductors is sound',
         'Circuit protective conductor connection integrity',
       ],
       correctAnswer: 3,
@@ -162,7 +167,7 @@ const Section1_4 = () => {
     },
     {
       id: 8,
-      question: 'Which safety standard applies to electrical test probes?',
+      question: 'Which HSE guidance applies to electrical test probes and leads?',
       options: [
         'GS38',
         'BS EN 60204',
@@ -171,7 +176,7 @@ const Section1_4 = () => {
       ],
       correctAnswer: 0,
       explanation:
-        'GS38 specifies safety requirements for electrical test equipment, including finger guards, fused leads, and insulated probes.',
+        'HSE Guidance Note GS38 sets out safety requirements for electrical test equipment, including finger barriers, fused leads, and a maximum exposed probe tip.',
     },
   ];
 

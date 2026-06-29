@@ -49,10 +49,10 @@ const checks = [
     question:
       'You’ve cooled an electrical burn under cool running water for 5 minutes — the casualty says it feels better, can you stop?',
     options: [
-      'Unified control with voice commands executing hub automations',
-      'Increases with length and decreases with cross-sectional area',
+      'Yes — once the pain has eased the deeper tissue has stopped being damaged',
+      'Yes — but only if you then smear on a layer of burn cream to seal it',
       'No — cool burns under running water for at least 20 minutes, even if it feels better',
-      'Training, written instructions, demonstrations, ongoing reinforcement',
+      'No — but switch to ice once the first five minutes are up',
     ],
     correctIndex: 2,
     explanation:
@@ -76,10 +76,10 @@ const checks = [
     question:
       'You scrape your hand on a piece of trunking — there’s a small graze, no bleed. The first aid box is on the wall. What’s the right call?',
     options: [
-      'Workers cannot see hazards, trip risks, or the edges of the platform, significantly increasing the risk of falls',
-      'Your BATNA sets your walkaway point, the other party BATNA sets theirs, and the ZOPA is the range between where agreement is possible',
+      'Take a couple of plasters and a dressing for the van in case you need them later',
+      'Leave it — only a trained first aider is allowed to open the kit at all',
       'Wash the graze under the tap, dry it, use ONE plaster, and tell the first aider you used one so it gets replaced',
-      'Implementing corrective actions, updating the risk assessment and safe system of work, and sharing the lessons learned across the organisation',
+      'Smear some antiseptic cream from the kit on it and carry on working',
     ],
     correctIndex: 2,
     explanation:
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 1,
     question: 'How should you cool a fresh electrical burn?',
     options: [
-      'Testing scheduled to avoid disrupting education',
+      'Pack it with ice for five minutes to numb the pain quickly',
       'Cool running water for at least 20 minutes, then cover loosely',
-      'To prevent accidents during critical shutdown procedures',
-      'Site-specific hazards, emergency procedures, and PPE requirements',
+      'Smother it with burn cream and wrap it tightly to seal it',
+      'Dab it with antiseptic and cover with a cotton-wool pad',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       'What is "arc eye" and how does it present?',
     options: [
-      'At least 200 mA short-circuit test current with a no-load voltage in the range 4 V to 24 V AC or DC',
-      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
+      'A retinal burn from the infrared flash that causes instant permanent blindness',
+      'A chemical burn to the eye from electrolyte splashing out of a battery',
       'Inflammation of the cornea from UV exposure during an arc flash, with symptoms appearing 4–12 hours later',
-      'Automated systems that identify operational faults and their likely causes in building systems',
+      'A bruise to the eye socket caused by the blast wave of an arc flash',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,9 +122,9 @@ const quizQuestions = [
     question:
       'A casualty had a 230 V shock, jumped clear, says they feel fine. The next day they collapse. What likely killed them?',
     options: [
-      'May require modified procedures and criteria',
-      'To maintain a strong grip and prevent slipping',
-      'The Management of Health and Safety at Work Regulations 1999',
+      'A deep internal burn that became infected overnight',
+      'Delayed concussion from hitting their head as they jumped clear',
+      'Slow blood loss from an entry wound that looked minor',
       'Cardiac arrhythmia developing hours after the shock',
     ],
     correctAnswer: 3,
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'You used the eyewash bottle on Tuesday for a small splash. What should happen next?',
     options: [
-      'When it burns it doesn’t give off thick smoke or toxic halogen gas — keeps the escape route survivable',
+      'Top the same bottle back up from the tap and put it back on the wall',
       'Tell the appointed first aider so the bottle is replaced before the next person needs it',
-      'Validation means acknowledging someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
-      'To make the wearer visible in poor light or near moving vehicles',
+      'Nothing — eyewash bottles are refilled automatically at the monthly audit',
+      'Reseal the cap and keep it for the next splash since most of it is left',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,9 +176,9 @@ const quizQuestions = [
     question:
       'You’re trained in EFAW. Your supervisor asks you to give a colleague a paracetamol from the first aid box. What do you do?',
     options: [
-      'Annually, with interim accuracy checks (e.g. against a calibration check box) before each use',
-      'A SINGLE AC test at 1×IΔn (the 5×IΔn test was DELETED in A4:2026; functional check via test button still required)',
-      'Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing',
+      'Give it — you hold a current EFAW certificate so you are covered',
+      'Give it, but only one tablet and note it in the accident book',
+      'Give it if the colleague confirms they have taken paracetamol before',
       'Refuse — paracetamol is not in a workplace first aid kit, and you’re not trained to administer medication',
     ],
     correctAnswer: 3,
@@ -191,9 +191,9 @@ const quizQuestions = [
       'How often should the workplace first aid kit be checked, by whom?',
     options: [
       'Weekly visual check by the appointed first aider, monthly full audit, plus immediate top-up after any use',
-      'To enable safe shutdown of critical systems and safe evacuation during power failures',
-      'The whole programme — successor trades cannot start, scaffold may be retained, plant hire is extended; the cumulative cost grows fast',
-      'Logical progression, safety requirements, and coordination with other trades',
+      'Once a year by an external first-aid contractor, with no checks in between',
+      'Only when someone notices an item is missing during an emergency',
+      'Daily by every worker before they start, signed off on the job sheet',
     ],
     correctAnswer: 0,
     explanation:

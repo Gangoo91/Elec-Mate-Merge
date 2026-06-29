@@ -63,110 +63,130 @@ const quizQuestions = [
     question:
       'A motor fails to start. The overload is not tripped, and the start button gives no response. Using logical fault-finding, what should you check first?',
     options: [
-      'Motor winding resistance',
-      'Control circuit supply voltage',
-      'Contactor coil resistance',
-      'Cable insulation resistance',
+      'The motor winding resistance',
+      'The control circuit supply voltage',
+      'The contactor coil resistance',
+      'The cable insulation resistance',
     ],
-    correctAnswer: 'Control circuit supply voltage',
+    correctAnswer: 'The control circuit supply voltage',
+    explanation:
+      'Confirm the control circuit is actually powered before testing components. If there is no control voltage, nothing downstream can operate — checking coil or winding resistance first wastes time.',
   },
   {
     question:
       'When applying the half-split technique to a series control circuit with 8 components, where should you take your first measurement?',
     options: [
-      'At component 1 (start)',
-      'At component 8 (end)',
-      'At component 4 (middle)',
+      'At component 1 (the start)',
+      'At component 8 (the end)',
       'At the control transformer',
+      'At component 4 (the middle)',
     ],
-    correctAnswer: 'At component 4 (middle)',
+    correctAnswer: 'At component 4 (the middle)',
+    explanation:
+      'Half-split is a binary search: testing at the midpoint immediately tells you which half holds the fault, so an 8-component circuit needs only about 3 tests instead of up to 8.',
   },
   {
     question:
-      'A PLC output shows "ON" on the HMI, but the connected solenoid valve does not operate. What does this indicate?',
+      'A PLC output shows "ON" on the HMI, but the connected solenoid valve does not operate. What does this most likely indicate?',
     options: [
-      'PLC program fault',
-      'Input sensor failure',
-      'Fault between PLC output and solenoid',
-      'Power supply failure',
+      'A fault between the PLC output and the solenoid',
+      'A fault in the PLC program logic',
+      'A failure of the input sensor',
+      'A complete power supply failure',
     ],
-    correctAnswer: 'Fault between PLC output and solenoid',
+    correctAnswer: 'A fault between the PLC output and the solenoid',
+    explanation:
+      'If the logic commands the output ON but the field device does nothing, the program ran correctly — the break lies in the output card, wiring or solenoid itself, downstream of the PLC.',
   },
   {
     question:
-      'According to safe isolation procedures, after locking off and proving dead, what additional step is required before working on equipment?',
+      'According to safe isolation procedures, after proving dead with your tester, what additional step is required before work begins?',
     options: [
-      'Inform the supervisor',
+      'Re-prove the tester on a known live source',
+      'Inform the supervisor verbally',
       'Apply a caution notice only',
       'Attempt to restart the equipment',
-      'Check the proving unit on a known live source',
     ],
-    correctAnswer: 'Check the proving unit on a known live source',
+    correctAnswer: 'Re-prove the tester on a known live source',
+    explanation:
+      'The tester must be proven on a known live source both before and after testing the circuit, confirming it did not fail mid-test — only then can the "dead" reading be relied upon (GS38).',
   },
   {
     question:
       'An intermittent fault occurs on a conveyor system only during production. What is the most effective diagnostic approach?',
     options: [
       'Replace all contactors preventatively',
-      'Wait for the fault to become permanent',
       'Monitor with data logging during operation',
-      'Megger test all cables immediately',
+      'Wait for the fault to become permanent',
+      'Insulation-resistance test all cables immediately',
     ],
     correctAnswer: 'Monitor with data logging during operation',
+    explanation:
+      'Intermittent faults vanish on inspection, so capturing the event with a data logger during live operation reveals the conditions and location, rather than blindly replacing parts.',
   },
   {
     question:
       'When reading a control circuit diagram under time pressure, which element should you identify first?',
     options: [
-      'All auxiliary contacts',
+      'Every auxiliary contact in the circuit',
+      'Every component label on the page',
       'The power supply rails and their voltage',
-      'Every component label',
-      'Cable sizes',
+      'The cable sizes used',
     ],
     correctAnswer: 'The power supply rails and their voltage',
+    explanation:
+      'Locating the supply rails and noting the control voltage tells you what readings to expect and gives a reference frame for tracing the rest of the circuit efficiently.',
   },
   {
     question:
-      'A three-phase motor runs but trips on overload within 30 seconds. Single-phasing is suspected. What quick test confirms this?',
+      'A three-phase motor runs but trips on overload within 30 seconds, and single-phasing is suspected. What quick test confirms this?',
     options: [
-      'Measure insulation resistance',
-      'Check current draw on all three phases',
-      'Measure motor temperature',
-      'Check earth continuity',
+      'Measuring the insulation resistance',
+      'Measuring the motor surface temperature',
+      'Checking the current draw on all three phases',
+      'Checking the earth continuity',
     ],
-    correctAnswer: 'Check current draw on all three phases',
+    correctAnswer: 'Checking the current draw on all three phases',
+    explanation:
+      'With a lost phase the remaining two phases carry excessive, unbalanced current. A clamp meter on each phase quickly shows the imbalance (or a phase reading zero) that confirms single-phasing.',
   },
   {
-    question: 'GS38 compliant test leads should include which safety feature?',
+    question: 'Which safety feature should GS38-compliant test leads include?',
     options: [
       'Extra-long probe tips for deep access',
-      'Unfused leads for maximum sensitivity',
       'Fused leads with shrouded connectors',
+      'Unfused leads for maximum sensitivity',
       'Bare metal probe shanks',
     ],
     correctAnswer: 'Fused leads with shrouded connectors',
+    explanation:
+      'GS38 calls for fused leads, shrouded connectors and minimal exposed probe tips to limit arc-flash and short-circuit risk. Unfused or bare-metal probes are exactly what it warns against.',
   },
   {
     question:
-      'In a star-delta starter, the motor starts but fails to transition to delta. The timer has timed out. What is the most likely fault?',
+      'In a star-delta starter, the motor starts but fails to transition to delta even though the timer has timed out. What is the most likely fault?',
     options: [
-      'Main contactor failure',
-      'Star contactor welded closed',
-      'Motor winding fault',
-      'Overload setting too low',
+      'A failure of the main contactor',
+      'A motor winding fault',
+      'The star contactor welded closed',
+      'The overload set too low',
     ],
-    correctAnswer: 'Star contactor welded closed',
+    correctAnswer: 'The star contactor welded closed',
+    explanation:
+      'A welded star contactor keeps its NC interlock open, preventing the delta contactor from energising even after the timer changes state — so the motor stays stuck in the star configuration.',
   },
   {
     question:
       'When documenting a fault repair, which information is MOST valuable for preventing future occurrences?',
     options: [
-      'Time taken to repair',
-      'Root cause analysis and corrective action',
-      'Parts cost',
-      'Names of personnel involved',
+      'The time taken to complete the repair',
+      'The cost of the replacement parts',
+      'The names of personnel involved',
+      'The root cause and the corrective action taken',
     ],
-    correctAnswer: 'Root cause analysis and corrective action',
+    correctAnswer: 'The root cause and the corrective action taken',
+    explanation:
+      'Recording the underlying cause and the fix lets the team spot recurring failures and apply lasting corrective measures. Repair time, cost and names are useful admin but do not prevent recurrence.',
   },
 ];
 

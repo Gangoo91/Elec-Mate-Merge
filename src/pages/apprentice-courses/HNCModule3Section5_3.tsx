@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'What happens if transformers with different vector groups are paralleled?',
     options: [
       'Excessive circulating currents and possible damage',
-      'Very small diameter tubing for blown fibre installation',
-      'Using compressed air to clean dust from surfaces',
-      'As part of routine maintenance records',
+      'The load shares perfectly between the two units',
+      'The combined output voltage doubles',
+      'The supply frequency shifts to 100Hz',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the primary function of a neutral earthing transformer (NET)?',
     options: [
-      'Planning, coordinating, and delivering electrical projects',
-      'Prove the circuit would be safe after rectification',
-      'Actuator wired to wrong digital output',
+      'To step the supply voltage up for transmission',
+      'To correct the power factor of inductive loads',
+      'To convert a three-phase supply to single-phase',
       'To provide an earth reference for unearthed systems',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
     question: 'In a shell-type three-phase transformer, how are the phase windings arranged?',
     options: [
       'Each phase surrounded by its own magnetic circuit',
-      'Check status indicator shows device is functional',
-      'High task direction, low relationship support',
-      'To ensure only the protective device nearest the fault operates',
+      'All three phases share a single common limb',
+      'The windings are connected only in delta',
+      'The phases are wound on the yoke rather than the limbs',
     ],
     correctAnswer: 0,
     explanation:
@@ -197,10 +197,10 @@ const quizQuestions = [
     question:
       'What happens to the neutral current in a Dyn transformer supplying unbalanced single-phase loads?',
     options: [
-      'The employer (or self-employed person)',
+      'It flows back into the delta primary line conductors',
       'It returns through the neutral conductor',
-      '24 hours maximum as per BS 5266-1',
-      'Cloud-based collaboration with real-time syncing',
+      'It is blocked entirely by the delta winding',
+      'It circulates between the three secondary phases',
     ],
     correctAnswer: 1,
     explanation:

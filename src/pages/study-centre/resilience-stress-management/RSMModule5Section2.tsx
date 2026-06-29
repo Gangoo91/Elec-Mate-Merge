@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'rsm-5-2-qc1',
     question: 'What is the primary purpose of a transition ritual at the end of the working day?',
     options: [
-      'To waste time before driving home',
       'To signal to the brain that work mode is ending and recovery mode is beginning',
-      'To impress colleagues with your self-care routine',
-      'To avoid having to talk to family members when you arrive home',
+      'To squeeze in extra job admin once the working day is officially over',
+      'To delay sleep so the body stays alert for any late client calls',
+      'To rehearse and replay the day&rsquo;s problems so they are not forgotten',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A transition ritual serves as a psychological boundary marker. It signals to the brain that the demands of the working day are over and the recovery period has begun. This is important because the brain does not automatically switch off work-related vigilance — it needs a deliberate cue. The ritual can be as simple as changing clothes, listening to music on the drive home, or taking a short walk before entering the house.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'What is rumination, and why is it particularly problematic for construction workers?',
     options: [
-      'Rumination is a form of productive problem-solving that helps resolve workplace issues',
-      'Rumination is repetitive, uncontrollable negative thinking about work problems that prevents recovery and increases stress',
-      'Rumination only affects office workers who sit in front of screens all day',
-      'Rumination is the same as planning the next day and is a healthy habit',
+      'It is structured problem-solving that reaches a clear decision and then stops',
+      'It is a hazard unique to desk-based trades and does not affect site workers',
+      'It is simply planning tomorrow, and is a healthy way to wind down before bed',
+      'It is repetitive, uncontrollable negative thinking that prevents recovery',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Rumination is repetitive, uncontrollable negative thinking — going over the same work problems, worries, or conflicts again and again without reaching a resolution. It is particularly problematic for construction workers because the safety-critical nature of the work creates genuine anxiety ("Did I tighten that earth connection properly?"), and the physical demands mean that mental rest in the evenings is essential for the body to recover as well as the mind.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a transition ritual?',
     options: [
-      'A religious practice performed before starting work',
-      'A deliberate routine that signals to the brain the shift from work mode to recovery mode',
+      'A safety briefing run at the start of each working day',
+      'A deliberate routine that signals the brain to shift from work to recovery',
       'A formal handover procedure between shifts on a construction site',
-      'A stretching routine performed exclusively at the gym',
+      'A warm-up stretching routine done before heavy manual handling',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,10 +114,10 @@ const quizQuestions = [
     question:
       'Which of the following is the BEST example of a digital detox strategy for an electrician?',
     options: [
-      'Deleting all social media accounts permanently',
-      'Never owning a mobile phone',
+      'Deleting all social media accounts so there is nothing to scroll',
+      'Replying to every client message instantly so the inbox is always clear',
       'Putting the work phone in a drawer after 7pm and turning off work email notifications',
-      'Only using the phone for emergency calls at all times',
+      'Keeping the work phone on the bedside table on loud in case of an emergency',
     ],
     correctAnswer: 2,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is rumination?',
     options: [
-      'Productive problem-solving that resolves workplace issues',
-      'A relaxation technique used before bed',
       'Repetitive, uncontrollable negative thinking about problems without reaching a resolution',
-      'A type of meditation practised in construction welfare cabins',
+      'Productive problem-solving that works through an issue and then reaches a decision',
+      'A breathing-based relaxation technique used to wind down before bed',
+      'The deliberate planning of tomorrow&rsquo;s tasks to clear the mind',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Rumination is the repetitive, often uncontrollable cycle of negative thinking about problems, worries, or conflicts. Unlike productive problem-solving (which leads to a resolution and then stops), rumination goes around in circles without ever reaching a conclusion. It keeps the brain in a state of alertness and prevents genuine recovery, making it one of the biggest obstacles to switching off after work.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 4,
     question: 'How does the "scheduled worry time" technique work?',
     options: [
-      'You worry about everything constantly so there is nothing left to worry about at night',
-      'You designate a 15- to 20-minute window to write down all work worries, and postpone worry outside that window',
-      'You schedule a meeting with your manager to discuss all your concerns',
-      'You set an alarm to remind you to stop worrying at a specific time',
+      'You allow worry to run freely all evening so it is fully exhausted before bed',
+      'You set a 15- to 20-minute window to write down worries, and postpone them outside it',
+      'You book a meeting with your manager to clear every concern before going home',
+      'You set a bedtime alarm that is your cue to simply stop worrying on command',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the "5-4-3-2-1 grounding technique" used for?',
     options: [
-      'Counting electrical circuits on a distribution board',
-      'Breaking the rumination cycle by anchoring attention in the present moment through the five senses',
+      'Counting circuits on a board to keep the mind occupied at bedtime',
       'A method for prioritising the five most important tasks for tomorrow',
-      'A breathing exercise involving 5 seconds in and 4 seconds out',
+      'A breathing pattern of five seconds in, four seconds out, repeated to relax',
+      'Anchoring attention in the present moment through the five senses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 5-4-3-2-1 grounding technique breaks the rumination cycle by forcing the brain to engage with present-moment sensory experience rather than abstract worrying. You identify 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, and 1 thing you can taste. This overwhelms the ruminating mind with concrete sensory data and pulls attention back to the here and now.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the "mental commute" and who benefits from it?',
     options: [
-      'A virtual reality simulation of driving to work, used by office workers',
-      'A deliberate end-of-day ritual for people who work from home or whose van is their office, replacing the natural transition a physical commute would provide',
-      'A mindfulness app designed exclusively for construction workers',
-      'The time spent thinking about work while physically commuting',
+      'A deliberate end-of-day ritual that replaces the transition a physical commute gives',
+      'A guided meditation that mentally rehearses the drive into work each morning',
+      'A scheduling method for batching all admin into the journey between jobs',
+      'The work thinking that fills the mind during an actual physical commute',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "mental commute" is a concept for anyone who lacks a natural physical transition between work and home — including self-employed electricians whose van is their office, or those who do admin from a home office. It involves creating a deliberate end-of-day ritual (e.g., a 10-minute walk, closing the laptop and leaving the room, changing clothes) that replaces the psychological transition a physical commute would naturally provide.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is changing out of work clothes an effective transition ritual?',
     options: [
-      'Because work clothes are uncomfortable and sweaty',
-      'Because the physical act of changing clothes creates a tangible sensory signal that the working day is over, helping the brain shift to recovery mode',
-      'Because it impresses your partner when you look clean',
-      'Because hi-vis clothing is illegal to wear off-site',
+      'Because work clothes are uncomfortable and need washing after a shift',
+      'Because looking smart in the evening makes a better impression on family',
+      'Because the physical act of changing gives the brain a sensory cue that work is over',
+      'Because wearing site clothing at home invalidates your employer&rsquo;s insurance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Changing out of work clothes works as a transition ritual because it engages multiple senses — the physical sensation of removing dirty or dusty clothes, the feeling of fresh clothing on the skin, and the visual change in appearance. These sensory cues create a tangible boundary marker that the brain can use to shift from work mode to recovery mode. It is one of the simplest and most effective transition rituals available.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     options: [
       'Writing down your worries to externalise them',
       'Using the 5-4-3-2-1 grounding technique',
-      'Lying in bed replaying the conversation with the difficult client over and over until you feel better',
       'Scheduling a designated worry time window',
+      'Lying in bed replaying the conversation with the difficult client over and over until you feel better',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Lying in bed replaying a difficult conversation is the definition of rumination — it is the problem, not the solution. Rumination feels productive because your brain is working hard, but it never reaches a resolution and actually intensifies the emotional distress. The recommended strategies (writing worries down, grounding techniques, scheduled worry time) all work by breaking the cycle and redirecting attention away from the repetitive loop.',
   },

@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'Mass and weight are:',
     options: [
-      'Electronic switching via Hall sensors or sensorless control',
-      'To provide fault current path and stabilise phase voltages',
+      'Both measured in kilograms and identical everywhere',
+      'Mass is the force in newtons; weight is the matter in kilograms',
       'Mass is in kilograms (constant), weight is the force in newtons due to gravity',
-      'Assessing operational performance of existing buildings',
+      'Both forces in newtons that vary only with altitude',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     id: 7,
     question: 'A pulley with mechanical advantage 4 means:',
     options: [
-      'Inflammation of the skin caused or made worse by substances encountered at work',
-      'Reduced insulation test voltage and driver protection',
-      'The tower must not be used until the defect is rectified by a competent person',
+      'The effort needs to be 4× the load force, moving ¼ of the distance',
+      'The effort equals the load force, but moves 4× the distance',
+      'The load is lifted 4× faster than the effort is applied',
       'The effort needs to be only ¼ of the load force, but moves 4× the distance',
     ],
     correctAnswer: 3,

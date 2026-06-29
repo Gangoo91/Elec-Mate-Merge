@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'A maintenance technician measures 230 V across a motor but only 0.5 A of current. The motor nameplate states 4.5 A. What does this suggest?',
     options: [
-      'The body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
+      'The supply voltage is too high for the motor to operate correctly',
       'There may be a high-resistance fault in the circuit or motor windings',
-      'Approximately the same (should be r1+rn)/4 or (r1+r2)/4',
-      'Degree-level qualification plus professional development review',
+      'The motor is operating normally and drawing its rated current',
+      'There is a short circuit between two of the motor windings',
     ],
     correctAnswer: 1,
     explanation:

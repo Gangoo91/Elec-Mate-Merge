@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'part-l-purpose',
     question: 'What is the primary purpose of Part L of the Building Regulations?',
     options: [
-      'Safe identification and isolation',
-      '+/- 10% of design flow rate',
+      'Fire safety and means of escape',
+      'Ventilation and indoor air quality',
       'Conservation of fuel and power',
-      'Check for proper sealing and protection',
+      'Access to and use of buildings',
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'Part L 2021 introduced which significant change for new buildings?',
     options: [
-      'Ongoing learning is needed as standards and technology change',
+      'A complete ban on gas boilers in all new dwellings',
       '30-31% reduction in carbon emissions compared to Part L 2013',
-      'Easy to read, auto-ranging, and can capture transients',
-      'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
+      'Mandatory solar PV on every new non-domestic roof',
+      'A switch from carbon targets to a fabric-only assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'NABERS UK is primarily used for:',
     options: [
       'Rating operational energy performance of existing offices',
-      'Building Research Establishment Environmental Assessment Method',
-      'Performance 20% worse than the TM46 benchmark',
-      'Buildings to be net zero carbon ready with no fossil fuel heating',
+      'Certifying the embodied carbon of construction materials',
+      'Setting minimum fabric U-values for new dwellings',
+      'Assessing flood risk and surface water drainage',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'A building has a DEC rating of 120. This indicates:',
     options: [
-      'Rating operational energy performance of existing offices',
+      'Performance exactly matching the TM46 benchmark',
       'Performance 20% worse than the TM46 benchmark',
-      'BRE (Building Research Establishment)',
-      'BSRIA and Usable Buildings Trust',
+      'Performance 20% better than the TM46 benchmark',
+      'A top-band A rating well below the benchmark',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which organisation administers BREEAM?',
     options: [
-      'Vertical line upward (nearly)',
-      'Enhanced protection and load management systems',
+      'CIBSE (Chartered Institution of Building Services Engineers)',
+      'BSI (British Standards Institution)',
       'BRE (Building Research Establishment)',
-      'A contactor (the first contactor in the circuit)',
+      'UKGBC (UK Green Building Council)',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'Post-Occupancy Evaluation (POE) typically includes:',
     options: [
-      'Rating operational energy performance of existing offices',
-      'Buildings to be net zero carbon ready with no fossil fuel heating',
-      'Assessing operational performance of existing buildings',
+      'Design-stage SBEM modelling before construction starts',
       'Building user surveys, energy analysis, and environmental monitoring',
+      'Only the air-permeability test at practical completion',
+      'A one-off snagging walkthrough on handover day',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'POE includes: energy consumption analysis; environmental monitoring (temperature, CO2, lighting); building user surveys (satisfaction, comfort); and comparison against design predictions.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 8,
     question: 'The Soft Landings framework was developed by:',
     options: [
-      'BSRIA and Usable Buildings Trust',
-      'Increases as temperature rises',
-      'SBEM (Simplified Building Energy Model)',
-      'Earthing connection for the armour',
+      'BSRIA and the Usable Buildings Trust',
+      'BRE Global and the UK Green Building Council',
+      'CIBSE and the Building Regulations Advisory Committee',
+      'The Carbon Trust and the Energy Saving Trust',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'EPCs are required for buildings when:',
     options: [
-      '0.6 air changes per hour @ 50Pa',
-      'Building is sold, rented, or constructed',
-      'Waste Transfer Note or Consignment Note',
-      'BS 1192 / AEC (UK) layer naming',
+      'The building exceeds 1,000 m² floor area only',
+      'The building is sold, rented, or constructed',
+      'A BREEAM assessment has been commissioned',
+      'The building changes its registered use class',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: "BREEAM 'In-Use' is designed for:",
     options: [
-      'Building Research Establishment Environmental Assessment Method',
-      'Buildings to be net zero carbon ready with no fossil fuel heating',
+      'New-build offices at the design stage',
+      'Domestic dwellings seeking planning approval',
       'Assessing operational performance of existing buildings',
-      'Rating operational energy performance of existing offices',
+      'Major refurbishments before works commence',
     ],
     correctAnswer: 2,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: "The 'Future Buildings Standard' is expected to require:",
     options: [
       'Buildings to be net zero carbon ready with no fossil fuel heating',
-      'Linking physical I/O signals to software representations',
-      'Installation details, test results, and competent person signatures',
-      'Safety data sheets with hazard information and control measures',
+      'A return to the less stringent Part L 2013 carbon targets',
+      'BREEAM Outstanding certification on every commercial scheme',
+      'Mandatory triple glazing on all habitable rooms',
     ],
     correctAnswer: 0,
     explanation:

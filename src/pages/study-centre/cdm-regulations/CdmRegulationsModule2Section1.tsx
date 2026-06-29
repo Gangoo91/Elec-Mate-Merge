@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     question:
       "Under Regulation 4 of the CDM Regulations 2015, what is the commercial client's overarching duty regarding project management?",
     options: [
-      'To make suitable arrangements for managing the project, including the allocation of sufficient time and other resources',
       'To personally supervise all construction work on site every day',
+      'To make suitable arrangements for managing the project, including the allocation of sufficient time and other resources',
       'To appoint a health and safety consultant for every project regardless of size',
       'To ensure all workers hold a CSCS card before starting work',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Regulation 4(1) requires the client to make suitable arrangements for managing a project, including the allocation of sufficient time and other resources. These arrangements must be maintained and reviewed throughout the project. This is the client's overarching duty — it sets the framework within which the principal designer, principal contractor, and all other duty holders operate. The arrangements must be proportionate to the risks and complexity of the project.",
   },
@@ -39,12 +39,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 4(4) of the CDM Regulations 2015, what must the client provide before the construction phase begins?',
     options: [
-      'Pre-construction information relevant to the project',
       'A complete health and safety file for the finished structure',
       'An approved building control certificate',
+      'Pre-construction information relevant to the project',
       'Insurance cover for every contractor on site',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Regulation 4(4) requires the client to provide pre-construction information as soon as is practicable to every designer and contractor appointed, or being considered for appointment, to the project. This information must be relevant to the work and include everything the client knows (or could reasonably find out) that is needed to plan, manage, and coordinate the work safely. This includes existing health and safety information, surveys, the asbestos register, and any previous health and safety file.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     question:
       "Under the CDM Regulations 2015, what happens to a domestic client's duties when only a single contractor is appointed?",
     options: [
-      'The duties transfer automatically to the contractor',
       'The domestic client retains all duties in full',
       'The duties transfer to the local authority',
       'A principal designer must be appointed to take them on',
+      'The duties transfer automatically to the contractor',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "Under Regulation 7(1), where a domestic client has not appointed a principal designer, and only one contractor is working on the project, the client duties under Regulations 4(1)–(7) and Regulations 6 transfer automatically to the contractor. This means the contractor takes on the client's responsibilities for managing the project, providing pre-construction information, and ensuring welfare facilities. If more than one contractor is involved, the duties transfer to the principal contractor instead. Alternatively, a domestic client may appoint a designer or principal designer in writing to take on their duties.",
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 1,
     question: "Under the CDM Regulations 2015, who is defined as 'the client'?",
     options: [
-      'Only registered construction companies',
       'Any person for whom a construction project is carried out',
+      'Only registered construction companies',
       'Only public bodies and local authorities',
       'The principal contractor on the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 2(1) defines the client as any person for whom a construction project is carried out. This is a broad definition that includes individuals, companies, partnerships, public bodies, developers, housing associations, and any other legal entity. The key question is: who is commissioning the construction work? That person (or organisation) is the client, regardless of whether they have any construction experience or expertise.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'What must pre-construction information (PCI) provided by the client include?',
     options: [
       'Only the project budget and timeline',
-      'Relevant health and safety information including existing surveys, the asbestos register, and any previous health and safety file',
       'Only the names of proposed contractors',
       'A complete construction phase plan',
+      'Relevant health and safety information including existing surveys, the asbestos register, and any previous health and safety file',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Regulation 4(4) requires the client to provide pre-construction information that is relevant to the project. This must include all information the client holds (or could reasonably obtain) about the existing site or structure, including structural surveys, asbestos surveys and the asbestos register, contamination reports, underground services records, previous health and safety files, information about existing structures and hazards, and anything else relevant to planning the work safely. The construction phase plan is the principal contractor's responsibility, not the client's.",
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'What must the client ensure before construction work begins on site?',
     options: [
       'That all workers have completed a university degree in construction',
-      'That welfare facilities including toilets, washing facilities, and rest areas are provided',
       'That the project has been approved by the local MP',
       'That a CDM coordinator has been appointed',
+      'That welfare facilities including toilets, washing facilities, and rest areas are provided',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 4(8) requires the client to ensure that welfare facilities are provided before any construction work begins. Schedule 2 of the regulations sets out the minimum standards, including toilets, washing facilities (with hot and cold running water), changing facilities, rest areas with seating and the means to heat food and boil water, and drinking water. These must be in place from day one — it is not acceptable to start construction and then arrange welfare facilities later. The role of CDM coordinator was abolished under CDM 2015 and replaced by the principal designer.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'What skills must the client be satisfied that a principal designer or principal contractor possesses before appointing them?',
     options: [
-      'Only formal academic qualifications in construction management',
       'Skills, knowledge, experience, and organisational capability for the role',
+      'Only formal academic qualifications in construction management',
       "Only a minimum of 20 years' industry experience",
       'A licence issued by the HSE specifically for CDM appointments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 8(1) requires anyone appointing a designer or contractor to be satisfied that the appointee has the skills, knowledge, experience, and (where relevant) the organisational capability necessary to fulfil their role. The CDM 2015 Regulations moved away from the old competence assessment approach (which often relied on accreditation schemes) and instead require a practical assessment of whether the appointee can actually do the job. This includes their track record, the resources they can deploy, their health and safety management systems, and their understanding of the specific risks on the project.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       "Under the CDM Regulations 2015, how do a domestic client's duties transfer when more than one contractor is involved?",
     options: [
       'The duties remain with the domestic client at all times',
-      'The duties transfer automatically to the principal contractor',
       'The duties transfer to the local building control officer',
+      'The duties transfer automatically to the principal contractor',
       'The duties are cancelled — domestic projects are exempt from CDM',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under Regulation 7(1), where a domestic client has not made their own appointment of a principal designer, and the project involves more than one contractor, the client duties transfer automatically to the principal contractor. If only one contractor is involved, the duties transfer to that contractor. Domestic projects are not exempt from CDM 2015 — the regulations apply in full, but the mechanism for domestic clients ensures that a competent construction professional always holds the client duties, rather than leaving them with a homeowner who may have no construction knowledge.',
   },
@@ -195,11 +195,11 @@ const quizQuestions = [
     question: 'What can happen to a client who fails to comply with their CDM duties?',
     options: [
       'Nothing — client duties are purely advisory',
-      'They may receive a verbal warning but no formal action',
       'The HSE can serve enforcement notices, prosecute, and seek unlimited fines; directors may face personal liability',
+      'They may receive a verbal warning but no formal action',
       'Only the principal contractor can be held liable, never the client',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Client duties under the CDM Regulations are legally enforceable. The HSE can serve improvement notices and prohibition notices, and can prosecute clients who fail to comply. Penalties on conviction include unlimited fines for organisations and up to 2 years' imprisonment for individuals. Under the Sentencing Council guidelines for health and safety offences, fines are linked to turnover and culpability, meaning large clients can face very substantial penalties. Individual directors, partners, and officers can be personally prosecuted where a breach is attributable to their consent, connivance, or neglect. The HSE has successfully prosecuted clients in high-profile cases, making clear that ignorance of CDM duties is not a defence.",
   },

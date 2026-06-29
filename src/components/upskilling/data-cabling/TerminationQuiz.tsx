@@ -15,62 +15,62 @@ const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
     question:
-      'What is the maximum insertion force required for a properly made RJ45 termination according to TIA-568 standards?',
-    options: [
-      '20 Newtons (4.5 lbf)',
-      '40 Newtons (9 lbf)',
-      '60 Newtons (13.5 lbf)',
-      '80 Newtons (18 lbf)',
-    ],
-    correctAnswer: 1,
+      'What is the nominal characteristic impedance that a Cat 6A twisted-pair channel is designed to maintain through a termination?',
+    options: ['50 ohms', '75 ohms', '100 ohms', '120 ohms'],
+    correctAnswer: 2,
     explanation:
-      'TIA-568 specifies that a properly terminated RJ45 connector should require no more than 40 Newtons (approximately 9 lbf) of insertion force to mate with its corresponding jack.',
+      'Balanced twisted-pair structured cabling (Cat 5e through Cat 8) is specified at a nominal 100 ohm impedance. Keeping the termination close to 100 ohms minimises reflections and return loss. 50 and 75 ohms are coaxial values.',
   },
   {
     id: 2,
     question:
-      'Which termination method provides the most reliable connection for Cat 6A cables in high-vibration environments?',
+      'Why is an insulation-displacement (IDC) punch-down regarded as a reliable termination method for twisted-pair data cable?',
     options: [
-      'Standard crimp termination',
-      'IDC punch-down termination',
-      'Compression termination with strain relief',
-      'Solder termination',
+      'It forms a gas-tight connection that resists corrosion and movement',
+      'It removes the need to maintain pair twists at the termination',
+      'It allows the cable to be soldered for extra strength',
+      'It lets any conductor size be terminated without a tool',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Compression termination with proper strain relief provides the most reliable connection for Cat 6A in high-vibration environments as it creates a gas-tight connection and better mechanical stability.',
+      'The IDC blade slices through the insulation and grips the copper under constant spring pressure, forming a gas-tight contact that resists corrosion and vibration without needing solder or stripping each conductor.',
   },
   {
     id: 3,
     question:
-      'What is the correct untwist length for Cat 6A cables when terminating to RJ45 connectors?',
-    options: ['6mm (0.25 inches)', '13mm (0.5 inches)', '19mm (0.75 inches)', '25mm (1 inch)'],
-    correctAnswer: 1,
+      'What is the recommended maximum amount of pair untwist when terminating Cat 6A cable, to control crosstalk?',
+    options: ['25mm (1 inch)', '19mm (0.75 inches)', '38mm (1.5 inches)', '13mm (0.5 inches)'],
+    correctAnswer: 3,
     explanation:
-      'For Cat 6A cables, the untwist length should not exceed 13mm (0.5 inches) to maintain proper impedance and minimise crosstalk at the termination point.',
+      'Best practice keeps untwisting to no more than 13mm (0.5 inches). The tighter the twists are kept up to the contact, the lower the near-end crosstalk and the better the impedance match.',
   },
   {
     id: 4,
     question:
-      'According to BS 7671, what is the minimum contact resistance for a properly terminated copper connection?',
+      'On a standard T568B-terminated RJ45, which colour pair occupies pins 1 and 2?',
     options: [
-      'Less than 1 milliohm',
-      'Less than 5 milliohms',
-      'Less than 10 milliohms',
-      'Less than 20 milliohms',
+      'The brown pair',
+      'The orange pair',
+      'The blue pair',
+      'The green pair',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'BS 7671 and related standards specify that properly terminated copper connections should have a contact resistance of less than 10 milliohms to ensure reliable signal transmission and minimal power loss.',
+      'Under T568B, pin 1 is white/orange and pin 2 is orange, so the orange pair sits on pins 1 and 2. The green pair is split across pins 3 and 6, blue is on 4 and 5, and brown is on 7 and 8.',
   },
   {
     id: 5,
     question:
-      'Which tool calibration frequency is recommended for professional crimp tools used in Cat 6A installations?',
-    options: ['Monthly', 'Quarterly', 'Annually', 'Every two years'],
-    correctAnswer: 1,
+      'After terminating a permanent link, which field test result confirms the wiring map and pair assignments are correct end-to-end?',
+    options: [
+      'A wiremap test showing each pin connected pin-to-pin with no split pairs',
+      'An insertion-loss reading at the highest frequency only',
+      'A return-loss sweep across the full frequency band',
+      'A propagation-delay measurement on the longest pair',
+    ],
+    correctAnswer: 0,
     explanation:
-      'Professional crimp tools should be calibrated quarterly (every 3 months) to maintain consistent termination quality and ensure compliance with performance standards, especially for high-category cables like Cat 6A.',
+      'The wiremap test verifies continuity, correct pin-to-pin pairing and the absence of opens, shorts, reversals, transpositions and split pairs. Insertion loss, return loss and delay measure performance but do not by themselves confirm the map.',
   },
 ];
 

@@ -15,24 +15,24 @@ const quickCheckQuestions = [
     question:
       "What does the 'like-for-like' principle mean when replacing an electrical component?",
     options: [
-      "The replacement must match the original component's electrical ratings, physical dimensions and functional characteristics",
-      "Sharing passwords, using company systems for unlawful or commercial private purposes, downloading unauthorised software",
-      "Excavating contaminated soil and treating it off-site or in a separate treatment area on site",
-      "It provides a practical balance between generator size, transformer efficiency and transmission characteristics",
+      "The replacement matches the original's electrical ratings, dimensions and function",
+      "The replacement must come from the same manufacturer as the original component",
+      "The replacement must always be rated higher than the original for added safety",
+      "The replacement must be the cheapest functionally equivalent part held in stock",
     ],
     correctIndex: 0,
     explanation:
-      'Like-for-like replacement means the new component must match the original in all critical parameters: voltage rating, current rating, breaking capacity, operational characteristics (e.g., trip curve for MCBs), physical dimensions, mounting arrangement and functional specification. The brand may differ provided all technical parameters are equivalent or superior.',
+      'Like-for-like replacement means the new component must match the original in all critical parameters: voltage rating, current rating, breaking capacity, operational characteristics (e.g., trip curve for MCBs), physical dimensions, mounting arrangement and functional specification. The brand may differ provided all technical parameters are equivalent or superior; it need not be the same manufacturer, the cheapest, or a higher rating.',
   },
   {
     id: 'contactor-replacement',
     question:
       'When replacing a contactor, which parameter is critical to check in addition to the voltage and current ratings?',
     options: [
-      'A large university campus with 850 luminaires across multiple buildings',
-      'It may not fully reflect the pressures and conditions of real workplace situations',
-      'To reduce the release of fibres into the air during removal',
-      'The coil voltage and the AC utilisation category (e.g., AC-3 for motor starting)',
+      'The colour and surface finish of the contactor housing moulding',
+      'The serial number printed on the side of the old contactor',
+      'The country of origin where the contactor was manufactured',
+      'The coil voltage and the AC utilisation category (e.g., AC-3)',
     ],
     correctIndex: 3,
     explanation:
@@ -43,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'Why is the breaking capacity (kA rating) of an MCB critical when selecting a replacement?',
     options: [
-      'A basement room where solvent-based coatings are being applied, causing a build-up of vapours',
+      'It determines how many circuits the MCB can supply at once',
       'It determines the maximum fault current the MCB can safely interrupt without damage or danger',
-      'List each item, quantity, unit cost, and total cost in a spreadsheet',
-      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
+      'It determines the maximum ambient temperature the MCB can tolerate',
+      'It determines the minimum cable size that can be connected to the MCB',
     ],
     correctIndex: 1,
     explanation:
@@ -59,37 +59,37 @@ const quizQuestions = [
     id: 1,
     question: 'Before removing a contactor from a motor control centre, the first step should be:',
     options: [
-      'Assets add value; liabilities create obligations or debt',
+      'Photograph and label all of the connections to the contactor',
       'Carry out safe isolation, proving dead at the point of work',
-      'To identify voltage disturbances, harmonics and other quality issues',
-      'A fracture of any bone other than a finger, thumb, or toe',
+      'Loosen the line and load terminals to release the conductors',
+      'Order a like-for-like replacement contactor from the stores',
     ],
     correctAnswer: 1,
     explanation:
-      'Safe isolation must always be the first step before any component removal. The circuit must be isolated, locked off, and proved dead at the point of work using the prove-test-prove procedure before any physical work begins. Photographs and labelling of connections should follow immediately after proving dead.',
+      'Safe isolation must always be the first step before any component removal. The circuit must be isolated, locked off, and proved dead at the point of work using the prove-test-prove procedure before any physical work begins. Photographing and labelling connections and removing conductors are valid steps, but only after the circuit is proved dead.',
   },
   {
     id: 2,
     question:
       'When replacing an MCB, which of the following must match the original specification?',
     options: [
-      'Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements',
-      'Excessive noise, vibration, heat, or play (radial/axial movement beyond manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tolerances)',
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
-      'The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements',
+      'Only the current rating, provided the physical size is broadly similar',
+      'Only the breaking capacity, since the trip curve is not safety-critical',
+      'Current rating, trip curve, breaking capacity, poles and board compatibility',
+      'Only the number of poles and the colour of the operating toggle switch',
     ],
     correctAnswer: 2,
     explanation:
-      'All critical parameters must match: current rating (In), trip curve (B for general, C for motor/transformer inrush, D for high inrush), breaking capacity (kA), number of poles, and physical compatibility with the distribution board busbar system. Additionally, the MCB must be from a manufacturer approved for use with that specific distribution board — mixing brands can compromise safety.',
+      'All critical parameters must match: current rating (In), trip curve (B for general, C for motor/transformer inrush, D for high inrush), breaking capacity (kA), number of poles, and physical compatibility with the distribution board busbar system. The MCB must also be from a manufacturer approved for use with that specific board — mixing brands can compromise safety.',
   },
   {
     id: 3,
     question: 'Motor bearings typically need replacement when they exhibit:',
     options: [
-      "That they are at least 150mm high, fitted on all open sides and free from gaps that would allow materials to fall through",
-      "Healthy headroom — 22 A margin for transients, future creep, and seasonal swings. Good design target.",
-      "A horizontal tube fixed to the standards running parallel to the building face",
-      "Excessive noise, vibration, heat, or play (radial/axial movement beyond manufacturer's tolerances)",
+      "A slight discolouration of the grease with no other change in behaviour",
+      "A small reduction in motor running current below the rated full-load value",
+      "An increase in the insulation resistance of the motor stator windings",
+      "Excessive noise, vibration, heat, or play beyond the maker's tolerances",
     ],
     correctAnswer: 3,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     question:
       'When replacing a protection relay (e.g., an overcurrent relay), what must be verified after installation?',
     options: [
-      'That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set',
-      'Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat',
-      'Label both the conductor and the terminal with matching unique identifiers, photograph the arrangement, and record in writing',
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
+      'That the settings match the coordination study, confirmed by secondary injection',
+      'That the relay coil is warm to the touch a few minutes after energising',
+      'That the relay casing is the same colour and style as the one it replaced',
+      'That the relay has a higher current rating than the original for more margin',
     ],
     correctAnswer: 0,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'de-rating' in the context of component replacement?",
     options: [
-      'That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set',
-      'Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat',
-      'Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements',
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
+      'Increasing a component rating to provide a larger safety margin in service',
+      'Reducing the usable rating for ambient, altitude or enclosure heat effects',
+      'Removing a component from service because it has reached its end of life',
+      'Recalibrating a protection relay back to its original factory default settings',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     question:
       'When replacing a variable speed drive (VSD), which additional consideration applies compared to replacing a simple contactor?',
     options: [
-      'Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat',
-      'Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements',
-      'The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements',
-      'Label both the conductor and the terminal with matching unique identifiers, photograph the arrangement, and record in writing',
+      'A contactor needs far more frequent lubrication than a drive does',
+      'A drive can be fitted live, whereas a contactor must be isolated',
+      'The drive parameters must be programmed to match the application',
+      'A drive does not require safe isolation before it is removed',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'What precaution should be taken when labelling connections before removing a component?',
     options: [
-      'Excessive noise, vibration, heat, or play (radial/axial movement beyond manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tolerances)',
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
-      'Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat',
-      'Label both the conductor and the terminal with matching unique identifiers, photograph the arrangement, and record in writing',
+      'Label only the live conductors, since neutral and earth are obvious',
+      'Rely on the conductor colours alone, as they are always unique per terminal',
+      'Label the terminals only, leaving the conductors themselves unmarked',
+      'Label both conductor and terminal, photograph it, and record in writing',
     ],
     correctAnswer: 3,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 8,
     question: 'MCCB replacement differs from MCB replacement primarily because:',
     options: [
-      'MCCBs typically have adjustable trip settings (Ir, Isd, Ii) that must be correctly configured for the specific application, and their higher breaking capacities require careful verification against prospective fault current',
-      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended equivalent, verify all critical parameters meet or exceed the original specification, and document the substitution including any design change implications',
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors',
-      'Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements',
+      'MCCBs have adjustable trip settings that must be configured for the application',
+      'MCCBs cannot provide short-circuit protection and need a separate backup fuse',
+      'MCCBs do not need to be matched to the prospective fault current at the board',
+      'MCCBs are always fixed-setting devices with no trip adjustment available at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 9,
     question: 'When pressing out and pressing in motor bearings, the correct technique is to:',
     options: [
-      'The manufacturer\\\\\\\\\\\\\\\'s specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors',
-      'Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements',
-      'The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements',
-      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
+      'Apply the pressing force through the rolling elements to seat it evenly',
+      'Press only on the ring being fitted, never through the rolling elements',
+      'Drive the bearing on with a hammer directly onto the outer race ring',
+      'Heat the shaft rather than the bearing to create the interference fit',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'After replacing a relay in a control circuit, the control sequence should be verified by:',
     options: [
-      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended equivalent, verify all critical parameters meet or exceed the original specification, and document the substitution including any design change implications',
-      'The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements',
-      'Systematically testing each function of the relay — pickup, dropout, timing, contact configuration — and verifying the complete control sequence operates correctly before applying power to the final load',
-      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors',
+      'Applying full power to the load straight away and watching for faults',
+      'Checking only that the relay coil energises when it is commanded to',
+      'Testing each relay function, then proving the full sequence before loading',
+      'Confirming the relay is the same brand as the rest of the panel devices',
     ],
     correctAnswer: 2,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'If an exact like-for-like replacement component is no longer available due to obsolescence, the maintenance technician should:',
     options: [
-      "The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements",
-      "The manufacturer's specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors",
-      "That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set",
-      "Consult the manufacturer's recommended equivalent, verify all critical parameters meet or exceed the original specification, and document the substitution including any design change implications",
+      "Fit the closest component on the shelf without checking its ratings",
+      "Leave the circuit out of service until the exact original part is sourced",
+      "Modify the original failed component so it physically fits back in the space",
+      "Use the maker's recommended equivalent, verify all parameters, and document it",
     ],
     correctAnswer: 3,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 12,
     question: 'What is the recommended torque for electrical connections, and why does it matter?',
     options: [
-      "The manufacturer's specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors",
-      "Systematically testing each function of the relay — pickup, dropout, timing, contact configuration — and verifying the complete control sequence operates correctly before applying power to the final load",
-      "The drive parameters (motor data, ramp times, speed limits, protection settings, PID configuration) must be programmed to match the application requirements",
-      "Reducing the performance rating of a component due to environmental conditions (temperature, altitude, enclosure) that reduce its ability to dissipate heat",
+      "The maker's specified value — too little overheats, too much damages the terminal",
+      "As tight as possible by hand, since torque figures are only a rough guideline",
+      "A single standard torque of 5 Nm that applies to every electrical terminal type",
+      "Torque does not matter, provided the conductor cannot be pulled out by hand",
     ],
     correctAnswer: 0,
     explanation:

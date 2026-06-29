@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'witness-testing',
     question: 'Who typically witnesses commissioning tests on major building projects?',
     options: [
-      "It allows KNX-controlled devices to appear as BACnet objects for central monitoring",
+      "The installing operatives who carried out the original first-fix work",
       "The client's representative, commissioning manager, or independent commissioning specialist",
-      "The employer must identify and implement additional control measures immediately to reduce exposure below the WEL",
-      "To set out how health and safety will be managed during the construction phase",
+      "The building control officer responsible for structural sign-off",
+      "The equipment manufacturer's sales account manager",
     ],
     correctIndex: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does the commissioning specification typically include?',
     options: [
-      'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
-      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
+      'Only the manufacturer warranty terms and spare parts schedules',
+      'The structural calculations and load paths for plant supports',
       'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
-      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
+      'The contractor day rates and labour allocation for each trade',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a commissioning programme?',
     options: [
-      'A record of defects, incomplete items and remedial works required before handover',
-      'Demonstrating that systems achieve their design intent under actual operating conditions',
-      'Test procedures, blank test sheets, calibration certificates for instruments, and method statements',
+      'To list every test instrument and its current calibration certificate',
+      'To set the acceptance tolerances for air and water flow rates',
+      'To record the measured performance results for each plant item',
       'To schedule commissioning activities in logical sequence, coordinated with construction programme',
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
       'During static commissioning of an air handling unit, which checks would be performed?',
     options: [
       'Verifying fan rotational direction, belt tension, damper operation and filter installation',
-      'A record of defects, incomplete items and remedial works required before handover',
-      'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
-      'The commissioning manager or commissioning management contractor',
+      'Measuring supply air flow rates and balancing terminal devices to design',
+      'Verifying heating and cooling coil capacity under full operating load',
+      'Tuning the BMS control loops and testing the alarm sequences',
     ],
     correctAnswer: 0,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'What documentation should be prepared for witness testing?',
     options: [
-      'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
-      'A record of defects, incomplete items and remedial works required before handover',
+      'Only the completed O&M manual and as-installed record drawings',
+      'The construction programme and trade labour allocation sheets',
       'Test procedures, blank test sheets, calibration certificates for instruments, and method statements',
-      'To capture system performance data over time for analysis and verification',
+      'The manufacturer warranty certificates and spare parts schedules',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     id: 7,
     question: "What is a 'snagging list' in the context of commissioning?",
     options: [
-      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
-      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
-      'The commissioning manager or commissioning management contractor',
+      'A list of approved test instruments and their calibration dates',
+      'A schedule of the witness hold points agreed with the client',
+      'A summary of the design criteria and acceptance tolerances',
       'A record of defects, incomplete items and remedial works required before handover',
     ],
     correctAnswer: 3,
@@ -177,9 +177,9 @@ const quizQuestions = [
     question: 'What is the purpose of trend logging during commissioning?',
     options: [
       'To capture system performance data over time for analysis and verification',
-      'A record of defects, incomplete items and remedial works required before handover',
-      'The commissioning manager or commissioning management contractor',
-      'Demonstrating that systems achieve their design intent under actual operating conditions',
+      'To set the final damper and valve positions for each terminal',
+      'To schedule the witness testing hold points with the client',
+      'To record operator alarm acknowledgements at the head-end',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'During seasonal commissioning in cooling mode, what key parameters should be verified?',
     options: [
-      'Demonstrating that systems achieve their design intent under actual operating conditions',
+      'Boiler firing sequence, flow temperatures, heat output and frost protection',
       'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
-      'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
-      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
+      'Ductwork air tightness, valve accessibility and motor rotation direction',
+      'Fan belt tension, filter installation and damper full-travel operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is performance verification in the context of building services?',
     options: [
-      'A record of defects, incomplete items and remedial works required before handover',
-      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
+      'Confirming that all test instruments hold current calibration certificates',
+      'Checking that the installation matches the as-built record drawings',
       'Demonstrating that systems achieve their design intent under actual operating conditions',
-      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
+      'Recording the final damper and valve settings on the commissioning sheets',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the recommended duration for extended performance monitoring?',
     options: [
-      'IT equipment density and personal devices',
-      'Lower magnitude 5th and 7th harmonics',
-      'Promptly, before the modifications are put into use',
+      'Typically 1 month, ending at practical completion',
+      'Typically 3 months, ending with the defects liability period',
+      'Typically 6 months, covering a single heating season',
       'Typically 12 months to capture seasonal variations',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
       'Who is responsible for coordinating commissioning activities across different trades?',
     options: [
       'The commissioning manager or commissioning management contractor',
-      'Typically 12 months to capture seasonal variations',
-      'A record of defects, incomplete items and remedial works required before handover',
-      'To capture system performance data over time for analysis and verification',
+      'The client’s independent witness appointed for hold-point tests',
+      'The equipment manufacturer’s technical support engineer',
+      'The building control officer responsible for the project',
     ],
     correctAnswer: 0,
     explanation:

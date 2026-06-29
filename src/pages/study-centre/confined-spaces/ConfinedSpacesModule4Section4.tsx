@@ -70,12 +70,12 @@ const quizQuestions = [
     question:
       'Why does electrical work in confined spaces carry additional risk compared to general electrical work?',
     options: [
-      'Because confined spaces are always underground',
       'Because wet/damp conditions, conductive surroundings, and restricted escape routes combine to increase shock and arc flash danger',
+      'Because confined spaces are always underground',
       'Because confined spaces never have any ventilation',
       'Because electrical regulations do not apply in confined spaces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Confined spaces carry additional electrical risk because multiple hazard factors combine: wet or damp conditions reduce body resistance (increasing shock severity), conductive surroundings such as metal tanks and vessels provide easy fault current paths, restricted movement limits the ability to escape from an arc flash or shock, and the enclosed nature of the space amplifies arc flash energy — the pressure wave and thermal effects are concentrated rather than dissipating into open air. These factors together make electrical incidents in confined spaces far more likely to be fatal.',
   },
@@ -93,11 +93,11 @@ const quizQuestions = [
     question: 'What does BS 7671 Chapter 70 series cover?',
     options: [
       'Standard domestic wiring regulations only',
-      'Special installations and locations including confined and conductive locations',
       'Testing procedures for new installations only',
+      'Special installations and locations including confined and conductive locations',
       'Emergency lighting requirements for commercial buildings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Chapter 70 series covers special installations and locations — environments where the standard regulations need additional or modified requirements to ensure safety. This includes Section 706 (conducting locations with restricted movement — essentially confined conductive spaces), which specifies the voltage limitations, isolation requirements, and additional protection measures needed when electrical work is carried out in confined and conductive locations. Other sections in the 700 series cover bathrooms, swimming pools, construction sites, agricultural premises, and other special locations.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary advantage of battery-powered tools for confined space work?',
     options: [
-      'They are cheaper than mains-powered tools',
       'They eliminate the risk of mains electrical shock entirely',
+      'They are cheaper than mains-powered tools',
       'They are always more powerful than mains tools',
       'They do not require any risk assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Battery-powered (cordless) tools are the preferred option for confined space work because they completely eliminate the risk of mains electrical shock. There is no trailing cable connected to a mains supply, no risk of cable damage creating a live fault, and no need for reduced-voltage transformers or RCD protection for the tool supply. However, battery tools have limitations — they may not deliver sufficient power for heavy-duty tasks, battery duration is finite (particularly problematic in extended confined space work), and the batteries themselves must be managed safely. Despite these limitations, battery tools should always be the first choice where their capabilities are sufficient for the task.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
     question: 'What must be included in the safe isolation procedure for confined space entry?',
     options: [
       'Switching off at the isolator and placing a warning notice only',
-      'Lock off supplies, prove dead with an approved voltage indicator (prove-test-prove), fit personal padlock, and complete the isolation register',
       'Asking the duty holder to confirm the supply is off',
+      'Lock off supplies, prove dead with an approved voltage indicator (prove-test-prove), fit personal padlock, and complete the isolation register',
       'Checking the circuit diagram to identify which circuits are live',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safe isolation for confined space entry follows a rigorous procedure: (1) Identify all sources of supply to the confined space and the equipment within it. (2) Switch off and lock off each supply with a personal padlock — each person entering the space must fit their own lock. (3) Prove dead at the point of work using an approved voltage indicator, following the prove-test-prove method (prove the instrument works on a known live source, test the isolated circuit, prove the instrument still works). (4) Fit caution notices at each isolation point. (5) Complete the isolation register with details of all isolation points, lock numbers, and the name of each person who has locked on. Only when all steps are completed may entry to the confined space begin.',
   },
@@ -147,11 +147,11 @@ const quizQuestions = [
       'An electrician needs to carry out insulation resistance testing inside a metal storage tank. Which additional precaution is essential?',
     options: [
       'No additional precautions are needed for testing',
-      'The test instrument must be battery-powered, and the tank must be isolated from all supplies before testing begins',
       'Testing can be done with the supply still live if gloves are worn',
       'Only apprentices should carry out testing in confined spaces',
+      'The test instrument must be battery-powered, and the tank must be isolated from all supplies before testing begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electrical testing in confined spaces requires specific additional precautions. Test instruments must be battery-powered and in calibration. The installation being tested must be fully isolated and proved dead before insulation resistance testing begins — IR testing applies a high test voltage (typically 500V DC) which could cause a dangerous shock in a conductive confined space. All other circuits within the confined space must also be isolated. A standby person must be present outside the space, and the permit to work must specifically authorise the testing activity. The test equipment itself must be approved, in date for calibration, and appropriate for the environment.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'Where must the emergency shutdown arrangements for electrical supplies to a confined space be located?',
     options: [
       'Inside the confined space for quick access by the worker',
-      'At the nearest distribution board regardless of location',
       'Clearly identified and accessible from OUTSIDE the confined space',
+      'At the nearest distribution board regardless of location',
       'Emergency shutdown is not required if RCDs are fitted',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Emergency shutdown arrangements for electrical supplies to a confined space must be clearly identified and accessible from OUTSIDE the confined space. If a person inside the space receives an electric shock, they may be unable to operate a shutdown switch themselves. The standby person or rescue team must be able to immediately disconnect ALL electrical supplies to the space from a clearly marked external point without needing to enter the space. The location of the emergency shutdown must be briefed to the standby person and all members of the rescue team as part of the confined space entry procedure.',
   },

@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 1,
     question: 'The COSHH Regulations 2002 were made under which parent Act?',
     options: [
-      'The Environmental Protection Act 1990',
       'The Health and Safety at Work etc. Act 1974',
+      'The Environmental Protection Act 1990',
       'The Factories Act 1961',
       'The Management of Health and Safety at Work Act 1999',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The COSHH Regulations 2002 (SI 2002/2677) are made under the Health and Safety at Work etc. Act 1974 (HASAWA). This is the parent or 'enabling' Act that gives the Secretary of State the power to make health and safety regulations. HASAWA provides the overarching framework of general duties, and COSHH sits beneath it as a set of specific regulations dealing with hazardous substances.",
   },
@@ -119,8 +119,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Which COSHH regulation specifically requires employers to prevent or, where that is not reasonably practicable, adequately control exposure to hazardous substances?',
-    options: ['Regulation 6', 'Regulation 7', 'Regulation 9', 'Regulation 12'],
-    correctAnswer: 1,
+    options: ['Regulation 6', 'Regulation 9', 'Regulation 7', 'Regulation 12'],
+    correctAnswer: 2,
     explanation:
       'Regulation 7 deals with the prevention and control of exposure. It requires employers to prevent exposure to substances hazardous to health, or where prevention is not reasonably practicable, to adequately control exposure. The regulation establishes the hierarchy of control measures, with prevention at the top and PPE as a last resort.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
       "What does the defence of 'so far as is reasonably practicable' (SFAIRP) require a duty holder to demonstrate?",
     options: [
       'That they followed every piece of HSE guidance to the letter',
-      'That the cost and effort of further risk reduction would be grossly disproportionate to the benefit gained',
       'That they had unlimited budget for health and safety measures',
       'That no employees were ever exposed to any hazardous substance',
+      'That the cost and effort of further risk reduction would be grossly disproportionate to the benefit gained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The SFAIRP defence requires the duty holder to show that the cost, time, and trouble of taking further measures to reduce risk would be grossly disproportionate to the risk itself. The burden of proof rests on the duty holder — they must demonstrate that they weighed the risk against the sacrifice (in money, time, or trouble) needed to avert it, and that the sacrifice would have been unreasonable given the level of risk. This does not mean 'as cheap as possible' — it means a genuine balancing exercise.",
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'Regulation 11 of the COSHH Regulations deals with which duty?',
     options: [
-      'Risk assessment',
       'Health surveillance',
+      'Risk assessment',
       'Maintenance of control measures',
       'Information, instruction, and training',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 11 requires employers to provide appropriate health surveillance for employees who are exposed to substances hazardous to health where there is an identifiable disease or adverse health effect related to the exposure, where there is a reasonable likelihood that the disease or effect may occur, and where valid techniques exist to detect it. Health surveillance helps to detect early signs of ill health caused by workplace exposure.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'Which Approved Code of Practice provides practical guidance on complying with the COSHH Regulations 2002?',
     options: [
       "L8 — Legionnaires' disease",
-      'L143 — Managing and working with asbestos',
       'L5 — Control of substances hazardous to health',
+      'L143 — Managing and working with asbestos',
       'L21 — Management of health and safety at work',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "L5 is the HSE's Approved Code of Practice for the COSHH Regulations 2002. Its full title is 'Workplace exposure limits: Containing the list of workplace exposure limits for use with the Control of Substances Hazardous to Health Regulations 2002 (as amended)'. In practice, L5 is used alongside EH40 (the table of workplace exposure limits). Together they provide the practical framework for compliance with COSHH.",
   },
@@ -185,11 +185,11 @@ const quizQuestions = [
       'Under COSHH Regulation 9, how often must local exhaust ventilation (LEV) systems be thoroughly examined and tested?',
     options: [
       'Every 6 months',
-      'At least every 14 months',
       'Every 2 years',
       'Only when a defect is reported',
+      'At least every 14 months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 9 requires that local exhaust ventilation (LEV) used as a control measure under COSHH must be thoroughly examined and tested at least every 14 months. For certain processes involving specific hazardous substances, more frequent testing may be required. Records of examinations and tests must be kept for at least 5 years and made available on request.',
   },

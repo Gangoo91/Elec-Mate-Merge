@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     question:
       'A tutor gives an apprentice a mock practical test halfway through their first fix training and uses the results to adjust the next two weeks of teaching. Is this formative or summative assessment?',
     options: [
-      'Summative — because it involves a practical test',
       'Formative — because it is used to shape ongoing learning',
+      'Summative — because it involves a practical test',
       'Neither — it is diagnostic assessment only',
       'Both formative and summative simultaneously',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This is formative assessment — "assessment for learning". The purpose is developmental: the tutor uses the results to adjust future teaching and close gaps. Even though it involves a practical test, the intent determines whether assessment is formative or summative.',
   },
@@ -99,8 +99,8 @@ const quizQuestions = [
     id: 2,
     question:
       'An assessor checks that a portfolio contains the learner\u2019s own work, not someone else\u2019s. Which VACSR principle is the assessor applying?',
-    options: ['Valid', 'Authentic', 'Current', 'Sufficient'],
-    correctAnswer: 1,
+    options: ['Authentic', 'Valid', 'Current', 'Sufficient'],
+    correctAnswer: 0,
     explanation:
       'The assessor is checking authenticity — ensuring the evidence genuinely belongs to and was produced by the learner. Authenticity prevents plagiarism and ensures the learner can personally demonstrate the competence claimed.',
   },
@@ -109,11 +109,11 @@ const quizQuestions = [
     question: 'Which of the following best describes formative assessment?',
     options: [
       'A final examination at the end of a course',
-      'Ongoing assessment used to identify gaps and shape future learning',
       'A one-off judgement of overall competence',
       'An assessment that results in a formal certificate',
+      'Ongoing assessment used to identify gaps and shape future learning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Formative assessment is ongoing, developmental assessment — "assessment for learning". Its purpose is to identify strengths and gaps during the learning process so that teaching and learning can be adjusted. It does not result in a final grade or certificate.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'Which assessment method is most valid for assessing whether a learner can safely isolate a supply?',
     options: [
+      'Direct observation of the learner performing safe isolation',
       'A written multiple-choice test',
       'A professional discussion',
-      'Direct observation of the learner performing safe isolation',
       'A portfolio of written evidence',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Direct observation is the most valid method because it directly measures what it claims to assess — the learner\u2019s ability to perform safe isolation in practice. Written tests and discussions can assess underpinning knowledge but cannot confirm practical competence.',
   },

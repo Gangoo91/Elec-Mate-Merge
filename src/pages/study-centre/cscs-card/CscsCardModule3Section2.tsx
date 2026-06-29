@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     id: 'access-scaffold-tag',
     question: 'What does a GREEN scaffold tag indicate on site?',
     options: [
-      'The scaffold is being erected and must not be used',
       'The scaffold has been inspected and is safe for use',
+      'The scaffold is being erected and must not be used',
       'The scaffold requires urgent repair work',
       'The scaffold is due for its 7-day inspection',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A green scaffold tag means the scaffold has been inspected by a competent person and is safe for use. A yellow tag means alterations are in progress, and a red tag means the scaffold must not be used.',
   },
@@ -82,8 +82,8 @@ const quizQuestions = [
     id: 1,
     question:
       'According to HSE guidance INDG401, what is the maximum recommended duration for working from a ladder?',
-    options: ['15 minutes', '30 minutes', '1 hour', '2 hours'],
-    correctAnswer: 1,
+    options: ['30 minutes', '15 minutes', '1 hour', '2 hours'],
+    correctAnswer: 0,
     explanation:
       'HSE guidance recommends that ladders should only be used for short-duration work, generally no longer than 30 minutes. For longer tasks, more stable access equipment such as a tower scaffold, podium step, or MEWP should be used.',
   },
@@ -112,8 +112,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What colour scaffold tag indicates the scaffold is NOT safe to use?',
-    options: ['Green', 'Yellow', 'Red', 'Blue'],
-    correctAnswer: 2,
+    options: ['Green', 'Yellow', 'Blue', 'Red'],
+    correctAnswer: 3,
     explanation:
       'A red scaffold tag means the scaffold must NOT be used. It indicates that the scaffold is incomplete, has failed inspection, has been damaged, or is otherwise unsafe. Only a green tag confirms the scaffold has been inspected and is safe for use.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 6,
     question: 'Before using a MEWP, which of the following checks must be completed?',
     options: [
-      'Only a visual check of the platform',
       'Pre-use checks including controls, safety devices, tyres, and structural condition',
+      'Only a visual check of the platform',
       'A check by the HSE inspector',
       'Only a check that the fuel tank is full',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comprehensive pre-use checks must be completed before operating a MEWP. These include checking all controls function correctly, safety devices are operational, tyres and wheels are in good condition, hydraulic systems show no leaks, and the structural components are undamaged.',
   },

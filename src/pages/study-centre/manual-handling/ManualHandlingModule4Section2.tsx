@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'When carrying a heavy load across uneven ground on a construction site, what is the single most important precaution?',
     options: [
-      'Walk as fast as possible to minimise exposure time',
-      'Assess the route first, clear obstacles, and take shorter steps to maintain balance',
-      'Lean backwards to counterbalance the uneven terrain',
-      'Close your eyes to improve your sense of balance',
+      'Assess and clear the route first, then take shorter steps to keep balance',
+      'Walk across as fast as possible to minimise your exposure time',
+      'Lean your body backwards to counterbalance the uneven terrain',
+      'Close your eyes briefly to sharpen your sense of balance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'On uneven ground, the risk of tripping, slipping, or losing balance while carrying a load is significantly increased. The correct approach is to assess and clear the route before lifting, then walk with shorter steps to keep your centre of gravity over your feet. Rushing increases the risk, leaning backwards shifts your centre of gravity dangerously, and you must always watch where you are stepping.',
   },
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     id: 'mh-m4s2-housekeeping',
     question: 'Why is site tidiness (housekeeping) considered a manual handling control measure?',
     options: [
-      'Because tidy sites look better in photographs for the client',
-      'Because clear walkways and organised storage reduce trip hazards, allow safe carrying routes, and prevent obstructions that force awkward postures',
-      'Because the HSE only inspects tidy sites',
-      'Because mess attracts vermin that may bite workers',
+      'Because tidy sites simply look better in photographs for the client',
+      'Because the HSE only ever inspects sites that are visibly tidy',
+      'Because site mess attracts vermin that may bite passing workers',
+      'Because clear walkways and tidy storage cut trip hazards and awkward carrying postures',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Good housekeeping directly reduces manual handling risk. Clear walkways allow workers to carry loads along the safest route without deviation. Organised storage means items are at accessible heights rather than on the floor or above head height. Removing trip hazards (offcuts, trailing cables, packaging) prevents falls while carrying. A cluttered site forces workers into awkward postures as they navigate around obstructions whilst carrying loads.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary manual handling risk when working on uneven ground?',
     options: [
-      'The load becomes heavier on uneven ground',
-      'Loss of balance and stability, leading to trips, falls, or uncontrolled load release',
-      'The ground absorbs the weight of the load, making it lighter',
-      'Uneven ground causes the load to change colour',
+      'Loss of balance and stability, leading to trips, falls, or dropped loads',
+      'The load itself becomes physically heavier on uneven ground',
+      'The ground absorbs some of the load weight, making it feel lighter',
+      'Uneven ground causes the load to change colour as you carry it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Uneven ground destabilises the person carrying the load. Stepping onto a higher or lower surface unexpectedly shifts the centre of gravity, potentially causing a stumble or fall. If the person falls while holding a load, the risk of musculoskeletal injury is compounded by the weight of the load landing on or being thrown by the body.',
   },
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       'Why does wearing a hard hat create a manual handling risk when lifting above shoulder height?',
     options: [
-      'Hard hats are extremely heavy and add to the load',
-      'The brim of a hard hat restricts upward vision, making it harder to see overhead obstructions and the placement point',
-      'Hard hats reflect sunlight into the eyes',
-      'Hard hats are not required on construction sites',
+      'Hard hats are extremely heavy and add significantly to the load',
+      'The brim restricts upward vision, hiding overhead obstructions and the placement point',
+      'Hard hats reflect bright sunlight back into the wearer&rsquo;s eyes',
+      'Hard hats are not actually required on most construction sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 4,
     question: 'How do safety boots affect manual handling?',
     options: [
-      'Safety boots make manual handling easier because they are heavier',
-      'Safety boots have reinforced toe caps that improve kicking power',
-      'Safety boots have stiffer soles and ankle supports that reduce ankle flexibility, affecting balance and making it harder to adopt correct lifting postures',
-      'Safety boots have no effect on manual handling',
+      'Their extra weight actually makes lifting and carrying easier',
+      'Their reinforced toe caps improve your kicking and bracing power',
+      'Stiffer soles and ankle support cut flexibility, hurting balance and squat posture',
+      'They have no measurable effect on manual handling at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -144,12 +144,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of delivery coordination as a manual handling control?',
     options: [
-      'To ensure materials arrive in the correct colour',
-      'To minimise the distance materials need to be carried by arranging delivery as close to the point of use as possible',
-      'To ensure the delivery driver receives a tip',
-      "To make the site manager's schedule look organised",
+      'To make sure materials arrive in the correct colour and finish',
+      'To make sure the delivery driver receives a tip on arrival',
+      "To make the site manager's daily schedule look better organised",
+      'To shorten carrying distance by delivering as close to the point of use as possible',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Delivery coordination is a key manual handling control. By arranging for materials to be delivered as close to the point of use as possible (e.g., to the correct floor, room, or work area), the distance they need to be carried manually is minimised. This reduces cumulative handling, exposure to carrying routes with hazards, and the overall physical demand on workers. It requires planning with the supplier, the site logistics team, and the receiving trade.',
   },
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main hazard of manual handling in areas congested with other trades?',
     options: [
-      'Other trades may criticise your lifting technique',
-      'Limited space forces awkward postures, blocked routes, and risk of collision between workers carrying loads',
-      'Other trades use louder tools that affect concentration only',
-      'Congestion makes the site warmer due to body heat',
+      'Other trades may openly criticise your lifting technique',
+      'Limited space forces awkward postures, blocked routes, and worker-to-worker collisions',
+      'Other trades use louder tools that only affect your concentration',
+      'Congestion makes the working area noticeably warmer from body heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -170,12 +170,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should materials not be carried up scaffold ladders?',
     options: [
-      'Because scaffolds are only for painting work',
-      'Because climbing a ladder requires both hands for three-point contact, making it impossible to safely carry a load at the same time',
-      'Because scaffold ladders are too narrow for materials',
-      'Because scaffold ladders face the wrong direction',
+      'Because scaffolds are only ever intended for painting work',
+      'Because scaffold ladders are far too narrow for any materials',
+      'Because scaffold ladders are fixed facing the wrong direction',
+      'Because three-point contact needs both hands, so you cannot safely carry a load too',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Safe ladder use requires three points of contact at all times (two hands and one foot, or two feet and one hand). Carrying a load up a ladder means sacrificing one or more contact points, which dramatically increases the risk of falling. Materials should be lifted to scaffold level using a gin wheel (pulley), material hoist, or crane, and the worker should climb the ladder with hands free.',
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'What is the most effective housekeeping measure for reducing manual handling risk on site?',
     options: [
-      'Painting all floors a bright colour',
-      'Keeping walkways clear of obstructions, removing waste immediately, and storing materials at accessible heights in designated areas',
-      'Hiring a cleaning company to visit once a week',
-      'Covering all surfaces with non-slip mats',
+      'Painting all the floor areas in a bright, visible colour',
+      'Hiring a cleaning company to visit the site once a week',
+      'Clearing walkways, removing waste at once, and storing materials at accessible heights',
+      'Covering every walking surface with non-slip rubber mats',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Continuous housekeeping — keeping walkways clear, removing waste as it is generated, and storing materials at accessible heights in designated zones — is the most effective single control for manual handling risk on construction sites. It removes trip hazards, provides clear carrying routes, and ensures materials can be accessed without bending to the floor or reaching above head height.',
   },

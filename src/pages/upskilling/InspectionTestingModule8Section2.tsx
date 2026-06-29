@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A 12-way domestic consumer unit has every MCB labelled “Circuit 1”, “Circuit 2”, “Circuit 3” through to “Circuit 12”, with no description of what each circuit serves. Does this satisfy Reg 514.1.1?',
     options: [
-      'Yes — every device has a unique label',
-      'No — Reg 514.1.1 requires a label to indicate the purpose of each item, not just a unique identifier. Generic numbering without a description of what the device controls is non-compliant',
-      'Only if the householder has the original schedule',
-      'Yes, provided the labels are durable',
+      'Yes, because every device carries its own unique identifying label',
+      'No, because the label must indicate purpose, not just a circuit number',
+      'Only if the householder retains a copy of the original circuit schedule',
+      'Yes, provided the numbered labels are durable and remain legible',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'You issue an EIC for a new domestic installation. You record SPDs on the certificate but do not issue the Appendix 6 Guidance for Recipients pack. Has the Reg 514.16.1 domestic exception been engaged?',
     options: [
-      'Yes — recording the SPD on the certificate is enough',
-      'No — the exception applies only where the certificate is “complete with the guidance for recipients as detailed in Appendix 6, and issued to the person ordering the work”. Without the complete Guidance for Recipients, the physical SPD presence notice on the board is still required',
-      'Only if the customer asks for it',
-      'The exception is automatic for all domestic premises',
+      'Yes, because recording the SPD on the certificate is enough on its own',
+      'No, because the exception needs the complete Appendix 6 guidance issued too',
+      'Only if the customer specifically asks for the Guidance for Recipients pack',
+      'Yes, because the exception applies automatically to all domestic premises',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'You have just installed a BS 951 bonding clamp on the gas service pipe at the meter. The clamp ships with the prescribed warning label embossed on it. Is a separate Reg 514.13.1 notice required?',
     options: [
-      'Yes — you must always fix a separate label alongside',
-      'No — Reg 514.13.1 explicitly permits the warning notice to be provided on the BS 951 clamp itself, provided it is clearly and durably marked with “Safety Electrical Connection — Do Not Remove”',
-      'Only on TT installations',
-      'Tape-and-pen is also acceptable as a fallback',
+      'Yes, because a separate label must always be fixed alongside the clamp',
+      'No, because Reg 514.13.1 permits the notice to be on the BS 951 clamp itself',
+      'Only on TT installations, where the earth electrode connection is involved',
+      'No, because tape-and-pen marking is also acceptable here as a fallback',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You want to use green-and-yellow heat-shrink as a “do not touch” marker on a non-protective cable. Does Reg 514.4.2 permit this?',
     options: [
-      'Yes — colour usage is at the installer’s discretion',
-      'No — the bi-colour combination green-and-yellow shall be used exclusively for identification of a protective conductor and shall not be used for any other purpose. A future inspector will assume the conductor is a CPC',
-      'Only if the marker is less than 30 mm long',
-      'Yes, provided the cable is also labelled',
+      'Yes, because the choice of marker colour is at the installer’s discretion',
+      'No, because green-and-yellow is reserved exclusively for protective conductors',
+      'Only if the heat-shrink marker is less than 30 mm long on the conductor',
+      'Yes, provided the cable is also clearly labelled at each accessible point',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 514.1.1 requires what to be provided at every item of switchgear and controlgear, except where there is no possibility of confusion?',
     options: [
-      'A coloured paint band',
-      'A label or other suitable means of identification to indicate the purpose of each item',
-      'A barcode for asset tracking',
-      'A QR code linked to the manufacturer datasheet',
+      'A label or other means of identification indicating the purpose of each item',
+      'A coloured paint band identifying the phase supplying each item',
+      'A printed barcode allowing each item to be tracked as an asset',
+      'A QR code linking each item to the manufacturer’s datasheet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 514.1.1 reads: "Except where there is no possibility of confusion, a label or other suitable means of identification shall be provided to indicate the purpose of each item of switchgear and controlgear." Where confusion is genuinely impossible (e.g. a single isolator on a single circuit at the equipment), labelling can be omitted; in any board with multiple devices, every device gets a label.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'A4:2026 introduced an exception to Reg 514.9.1 for which type of premises?',
     options: [
-      'Commercial premises only',
-      'Domestic (household) premises where certification for initial verification or an EICR complete with the guidance for recipients in Appendix 6 has been issued',
-      'Listed buildings only',
-      'Premises with no permanent occupants',
+      'Commercial premises where a maintenance contract is in place',
+      'Listed buildings where fixing a notice would damage the fabric',
+      'Domestic premises where the certificate plus Appendix 6 guidance has been issued',
+      'Premises with no permanent occupants or no regular maintenance regime',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 514.9.1 (A4:2026) need not be applied for domestic (household) premises or similar installations where certification for initial verification, or an Electrical Installation Condition Report, complete with the guidance for recipients as detailed in Appendix 6, has been issued to the person ordering the work. The same exception pattern appears in 514.12.1, 514.12.2 and 514.16.1.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'Reg 514.12.1 requires a periodic inspection notice fixed at or near the relevant distribution board(s). The notice must contain three key fields. Which set is correct?',
     options: [
-      'Date of last inspection, recommended date of next inspection, name of inspector',
-      'Date of last inspection and recommended date of next inspection (and the prescribed wording reading "Important — This installation should be periodically inspected and tested…")',
-      'RCD test date, RCD trip time, RCD make and model',
-      'Property address, postcode, customer signature',
+      'Date of last inspection, recommended date of next inspection, and the inspector’s name',
+      'Date of last inspection, recommended date of next inspection, and the prescribed wording',
+      'RCD test date, measured RCD trip time, and the RCD make and model number',
+      'Property address, postcode of the installation, and the customer’s signature',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,8 +135,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Reg 514.12.2 prescribes a notice for which type of device?',
-    options: ['AFDD', 'RCD', 'SPD', 'Isolator'],
-    correctAnswer: 1,
+    options: ['AFDD', 'SPD', 'Isolator', 'RCD'],
+    correctAnswer: 3,
     explanation:
       'Reg 514.12.2: "Where an installation incorporates an RCD an instruction notice shall be fixed in a prominent position at or near each RCD in the installation." The wording "Test six-monthly by pressing the relevant test button(s)…" is prescribed. A4:2026 added an exception for domestic premises where the information is recorded on the certificate / EICR with Appendix 6 guidance for recipients.',
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
       'Reg 514.13.1 prescribes the wording on the bonding / earthing warning notice. What is the wording?',
     options: [
       '"Earth bond — do not disconnect"',
-      '"Safety Electrical Connection — Do Not Remove"',
       '"Equipotential bonding — high voltage"',
       '"Main earthing terminal — authorised access only"',
+      '"Safety Electrical Connection — Do Not Remove"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 514.13.1: a warning notice clearly and durably marked with the words "Safety Electrical Connection — Do Not Remove" shall be securely fixed in a visible position at or near (a) the point of connection of every earthing conductor to an earth electrode, (b) the point of connection of every bonding conductor to an extraneous-conductive-part, and (c) the main earthing terminal where separate from main switchgear. The notice may be provided on the BS 951 clamp itself.',
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       'Reg 514.16.1 (A4:2026 — new regulation) requires a notice for which device, with an exception for domestic premises?',
     options: [
-      'Each MCB',
-      'Each RCD',
-      'Surge Protective Devices (SPDs) — at or near the relevant distribution board(s)',
-      'Each AFDD',
+      'Each MCB — fixed adjacent to the protective device',
+      'Each RCD — fixed at or near the protective device',
+      'Surge Protective Devices — at or near the distribution board',
+      'Each AFDD — fixed at or near the protective device',
     ],
     correctAnswer: 2,
     explanation:
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       'Reg 514.4.2 requires the green-and-yellow combination to be used exclusively for what, and forbids reuse for any other purpose?',
     options: [
-      'Functional earthing only',
       'Identification of a protective conductor',
+      'Functional earthing only',
       'Identification of switched-line conductors',
       'PEN conductors only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 514.4.2: "The bi-colour combination green-and-yellow shall be used exclusively for identification of a protective conductor and this combination shall not be used for any other purpose." Each colour shall cover at least 30 % and at most 70 % of the surface. PEN conductors have a separate identification rule (514.4.3): green-and-yellow with blue terminations, or blue with green-and-yellow terminations.',
   },
@@ -201,12 +201,12 @@ const quizQuestions = [
     question:
       'You issue an EIC for a new domestic installation in 2026. The consumer unit has SPDs fitted. You record the SPDs on the certificate per Reg 514.16.1 exception. What does the customer also need from you for the exception to apply?',
     options: [
-      'Nothing further — the certificate alone satisfies the regulation',
-      'The Guidance for Recipients as detailed in Appendix 6, complete and issued to the person ordering the work',
-      'A sticker on the consumer unit door listing the SPDs',
-      'A signed agreement that they will not modify the installation',
+      'Nothing further, as the certificate on its own satisfies the regulation',
+      'A separate sticker on the consumer unit door listing the SPDs fitted',
+      'The Appendix 6 Guidance for Recipients, complete and issued to them',
+      'A signed agreement that they will not modify the installation later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The exception in Reg 514.16.1 (and 514.9.1 / 514.12.1 / 514.12.2 in the same pattern) applies only where the certificate or EICR is "complete with the guidance for recipients as detailed in Appendix 6, and issued to the person ordering the work". Incomplete Guidance for Recipients documentation does not satisfy the condition — the physical notice on the board is then still required.',
   },

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A homeowner has a 1700 mm long rectangular bath against a wall. You are designing the lighting. Where does Zone 1 end and Zone 2 begin in BS 7671 terms?',
     options: [
-      'Zone 1 is the inside of the bath; Zone 2 starts immediately above the rim and extends 1.2 m horizontally',
-      'Zone 1 extends from the rim of the bath upwards to a height of 2.25 m above the finished floor level (and across the full footprint of the bath); Zone 2 then extends a further 0.6 m horizontally outwards from Zone 1, up to the same 2.25 m height',
-      'Zone 1 is 0.6 m around the bath at floor level; Zone 2 sits above it',
-      'There are no zones in domestic bathrooms — only in commercial pools',
+      'Zone 1 is the inside of the bath; Zone 2 starts at the rim and extends 1.2 m horizontally',
+      'Zone 1 ends at 2.25 m above floor level; Zone 2 is a further 0.6 m horizontal band beyond it',
+      'Zone 1 is a 0.6 m band around the bath at floor level; Zone 2 sits in the volume above it',
+      'There are no defined zones in domestic bathrooms — zones apply only to commercial pools',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'You are testing an existing domestic bathroom. There is no supplementary bonding strap between the radiator and the bath taps. Under what conditions can supplementary bonding be omitted, per Reg 701.415.2?',
     options: [
-      'Whenever the bathroom has been built since the 17th edition',
-      'When ALL THREE of the following are true: every circuit in the bathroom meets its disconnection time per Reg 411.3.2; every circuit has 30 mA RCD additional protection; and all extraneous-conductive-parts in the location are bonded back to the MET via main protective bonding',
-      'When the bathroom has at least one 30 mA RCD',
-      'When the bath is plastic',
+      'Whenever the bathroom was first built or rewired since the 17th edition came into force',
+      'When all three hold: disconnection times met, 30 mA RCDs on every circuit, all parts bonded to the MET',
+      'When the bathroom has at least one 30 mA RCD protecting the lighting or shower circuit',
+      'When the bath itself is a plastic (non-conductive) unit rather than a metal one',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'You are installing four IP65 LED downlights in a domestic bathroom ceiling, all clearly outside Zone 2. Under BS 7671:2018+A4:2026, do they need 30 mA RCD additional protection?',
     options: [
-      "No — they're outside the bathroom zones, so Section 701 doesn't apply",
-      'Yes — Reg 411.3.4 (new in A4) mandates 30 mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises, and that overrides the zone argument',
-      'Only if the homeowner has small children',
-      'Only if the supply is TT',
+      "No — they sit outside the bathroom zones, so Section 701 no longer applies to them",
+      'Yes — Reg 411.3.4 (A4) mandates 30 mA RCD cover on every domestic luminaire circuit',
+      'Only where the homeowner has small children regularly using the bathroom',
+      'Only where the installation is supplied as a TT system rather than TN-C-S',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You are designing underwater lighting for a private swimming pool. The luminaires sit inside the pool, fully submerged. What voltage and source requirements apply per Section 702?',
     options: [
-      '230 V AC with a 30 mA RCD',
-      'SELV at 12 V AC RMS or 30 V DC ripple-free maximum, with the safety isolating source located OUTSIDE zones 0 and 1',
-      'PELV at 50 V AC',
-      'FELV at any voltage as long as the casing is metal',
+      '230 V AC with a 30 mA RCD providing additional protection on the luminaire circuit',
+      'SELV at 12 V AC RMS / 30 V DC ripple-free max, with the source outside zones 0 and 1',
+      'PELV at 50 V AC with the isolating transformer mounted within the pool plant room',
+      'FELV at any nominal voltage provided the luminaire casing is earthed metal',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A hotel is fitting a small electric sauna heater in a treatment room. Which Section of BS 7671 applies, and what additional-protection requirement is mandatory on every sauna circuit?',
     options: [
-      'Section 701 — IPX4 throughout',
-      'Section 702 — SELV at 12 V',
-      'Section 703 — sauna and sauna-heater locations: every low-voltage circuit serving the sauna location must have 30 mA RCD additional protection (Reg 703.411.3.3), and equipment must be selected for the temperatures of each sauna zone (zones 1, 2, 3)',
-      'Section 704 — construction sites',
+      'Section 701 — bath and shower locations, with IPX4 required throughout the room',
+      'Section 702 — swimming pools and basins, with SELV limited to 12 V at the heater',
+      'Section 703 — sauna heater rooms, with 30 mA RCD on every circuit in the location',
+      'Section 704 — construction and demolition site installations, with reduced low voltage',
     ],
     correctIndex: 2,
     explanation:
@@ -113,11 +113,11 @@ const quizQuestions = [
       'Which option correctly maps the IP rating to each bathroom zone under Section 701 of BS 7671?',
     options: [
       'Zone 0: IPX4. Zone 1: IPX4. Zone 2: IPX2.',
-      'Zone 0: IPX7. Zone 1: IPX4. Zone 2: IPX4.',
       'Zone 0: IP65. Zone 1: IP44. Zone 2: IP20.',
       'Zone 0: IPX5. Zone 1: IPX5. Zone 2: IPX5.',
+      'Zone 0: IPX7. Zone 1: IPX4. Zone 2: IPX4.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 701 minimums: Zone 0 IPX7 (immersion, because it is inside the bath / shower basin), Zone 1 IPX4 (splashing), Zone 2 IPX4 (splashing). Where water jets are used for cleaning, the requirement uplifts to IPX5 throughout zones 1 and 2. The rating is a floor — higher IP is always permitted.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Reg 701.415.2 allows supplementary equipotential bonding to be omitted from a bathroom only when three conditions are met. Which option lists them correctly?',
     options: [
-      'A 30 mA RCD on the bathroom lighting circuit, a Type B MCB and a CPC of 1.5 mm squared',
-      'All circuits in the location meet their Reg 411.3.2 disconnection times; all circuits have 30 mA RCD additional protection; all extraneous-conductive-parts are connected by main protective bonding to the MET',
-      'The bath is plastic, the floor is tiled and the walls are painted',
-      'The dwelling is post-2018, has a metal CU and a Type AC RCD',
+      'Disconnection times met, 30 mA RCD on all circuits, all parts bonded to the MET',
+      'A 30 mA RCD on the lighting circuit, a Type B MCB and a 1.5 mm squared CPC throughout',
+      'The bath is plastic, the floor is tiled, and the walls are painted rather than panelled',
+      'The dwelling is post-2018, fitted with a metal consumer unit and a Type AC RCD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 701.415.2 sets out three cumulative conditions. All three must be true; missing any one means supplementary bonding stays in the design. Even with bonding omitted, main protective bonding to the MET (Reg 411.3.1.2) is unaffected — supplementary bonding is the layer that may be removed, not the main bonding layer.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A 1980s flat is being modernised. The bathroom currently has a non-RCD-protected lighting circuit and a non-RCD-protected immersion-heater circuit. Both share the same dwelling consumer unit. Under BS 7671:2018+A4:2026, what is the minimum design change required to comply with Section 701 and Reg 411.3.4?',
     options: [
-      'Add a single 100 mA time-delayed RCD at the origin and leave the circuits as-is',
-      'Provide 30 mA RCD additional protection (RCBO or RCD) on every circuit serving the bathroom, including lighting; under Reg 411.3.4 the lighting circuit additionally needs 30 mA cover wherever it runs in the dwelling, and Reg 701.411.3.3 requires 30 mA on every circuit in the location',
-      'Move all circuits to a separate sub-board fed via Type AC RCD',
-      'Replace the bath with a shower and the rules no longer apply',
+      'Add a single 100 mA time-delayed RCD at the origin and leave the bathroom circuits as-is',
+      'Move all the bathroom circuits to a separate sub-board fed via a single Type AC RCD',
+      'Provide 30 mA RCD additional protection on every circuit serving the bathroom',
+      'Replace the bath with a shower cubicle, after which the Section 701 rules no longer apply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 701.411.3.3 requires 30 mA RCD additional protection on every low-voltage circuit serving a location containing a bath or shower — that includes the immersion-heater circuit. Reg 411.3.4 (A4) independently mandates 30 mA cover on every AC final circuit supplying luminaires in domestic premises. The cleanest way to deliver both is per-circuit RCBOs at the consumer unit. A single 100 mA time-delayed RCD at the origin is selectivity / discrimination, not additional protection — 30 mA is the threshold.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 4,
     question: 'Which item of equipment is permitted directly within Zone 1 of a domestic bathroom?',
     options: [
-      'A standard 13 A BS 1363 socket-outlet',
-      'A general-purpose 230 V double socket-outlet',
-      'A fixed water heater, a fixed luminaire or a fixed ventilation fan, where IP rated to at least IPX4 and protected by 30 mA RCD additional protection — provided the equipment is suitable for use in the zone per Section 701',
-      'Anything plug-in, as long as the lead is at least 2 m long',
+      'A standard 13 A BS 1363 socket-outlet positioned at high level above the bath',
+      'A general-purpose 230 V double socket-outlet on a 30 mA RCD-protected radial',
+      'A fixed water heater, luminaire or fan, IPX4 minimum and on a 30 mA RCD',
+      'Any plug-in appliance, provided the flexible lead supplying it is at least 2 m long',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'Section 702 (swimming pools) defines its own zones — these are NOT identical to Section 701. Which option correctly summarises Section 702 Zone 0 and Zone 1?',
     options: [
-      'Zone 0 is 0.6 m around the pool; Zone 1 is anywhere in the pool building',
-      'Zone 0 is the volume containing the water (the basin); Zone 1 extends 2 m horizontally outwards from the rim, and 2.5 m vertically upwards from any walkable surface within Zone 1',
-      'Zone 0 is the changing rooms; Zone 1 is the spectator gallery',
-      'Section 702 has no zones — it just requires IPX4 throughout',
+      'Zone 0 is a 0.6 m band around the pool; Zone 1 is anywhere within the pool building',
+      'Zone 0 is the changing rooms and Zone 1 is the spectator gallery overlooking the pool',
+      'Section 702 defines no zones — it simply requires IPX4 enclosures throughout the hall',
+      'Zone 0 is the basin (the water volume); Zone 1 extends 2 m out and 2.5 m up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 702.32 defines the swimming-pool zones. Zone 0 is the interior of the basin, including any niches and steps in the pool wall. Zone 1 extends 2 m horizontally from the rim of the pool and 2.5 m vertically upwards from any walkable surface within that zone. Zone 2 then extends a further 1.5 m horizontally beyond Zone 1. The geometry is genuinely different from a bathroom — do NOT apply Section 701 numbers to a pool job.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'A new bathroom installation is being certified on EIC. Which combination of cert entries demonstrates Section 701 compliance?',
     options: [
-      'Tick "supplementary bonding present" only and move on',
-      'Tick "supplementary bonding present" OR record its omission against Reg 701.415.2 conditions; record IP rating per zone for each item of equipment; record 30 mA RCD operating times for every circuit serving the location; record main protective bonding continuity to the MET',
-      'Record the bathroom postcode and floor area only',
-      'A note in the EIC comments box is sufficient — schedule entries are optional',
+      'Bonding status, per-zone IP ratings, 30 mA RCD times, and main bonding continuity',
+      'Tick the "supplementary bonding present" box only and then move on to the next location',
+      'Record the bathroom postcode and floor area, and leave the test schedule otherwise blank',
+      'A free-text note in the EIC comments box, treating the schedule entries as optional',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The EIC schedule of inspection and schedule of test results both have to reflect the Section 701 design. If supplementary bonding is omitted, the omission needs an explicit note tied to Reg 701.415.2 (with the three conditions evidenced). RCD operating times at IΔn and 5IΔn evidence Reg 701.411.3.3 (and Reg 411.3.4 for luminaire circuits). IP ratings are recorded per item of equipment. Main protective bonding continuity is the third leg under Reg 411.3.1.2.',
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'A holiday cottage has a freestanding bath in the middle of a 4 m by 3 m bathroom — no wall against any of the long sides. How does this affect the zones?',
     options: [
-      'There are no zones because the bath is freestanding',
-      'Zone 1 is the volume above the bath up to 2.25 m; Zone 2 wraps around the WHOLE bath as a 0.6 m horizontal band — every accessible side of the bath gets its own Zone 2',
-      'Only the side facing the door is zoned',
-      'The room is treated as one big Zone 1',
+      'There are no zones at all because the bath is freestanding rather than against a wall',
+      'Only the single side of the bath that faces the bathroom door is treated as zoned',
+      'The whole room is treated as one large Zone 1 up to 2.25 m above floor level',
+      'Zone 2 wraps the whole bath as a 0.6 m horizontal band on every accessible side',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 701 zones are defined by the bath / shower geometry, not by walls. A freestanding bath has Zone 2 wrapping all the way around its perimeter — every side that an occupant could splash water from. This catches more equipment than the wall-against-bath case, and is the typical reason a luxury bathroom design needs to push sockets, switches and decorative wall lights further from the bath than the customer expects.',
   },
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'Which one of the following installations would be coded C2 (potentially dangerous) on an EICR of a domestic bathroom?',
     options: [
-      'A 13 A BS 1363 socket-outlet inside Zone 2 — there is no permitted exception for a standard socket within a bathroom zone, and the absence of zone-appropriate protection is a real shock-risk',
-      'A pendant luminaire mounted at 2.6 m above floor level, well outside any zone',
-      'A shaver supply unit BS EN 61558-2-5 fitted at 1.0 m from the bath',
-      'A surface-mounted IPX5 ventilation fan in Zone 2',
+      'A standard 13 A BS 1363 socket-outlet installed inside Zone 2 of the bathroom',
+      'A pendant luminaire mounted at 2.6 m above floor level, well outside any defined zone',
+      'A shaver supply unit to BS EN 61558-2-5 fitted at 1.0 m horizontally from the bath',
+      'A surface-mounted IPX5 ventilation fan installed within Zone 2 of the bathroom',
     ],
     correctAnswer: 0,
     explanation:

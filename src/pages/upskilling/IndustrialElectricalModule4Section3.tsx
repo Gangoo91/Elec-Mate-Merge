@@ -37,8 +37,8 @@ const IndustrialElectricalModule4Section3: React.FC = () => {
     {
       id: 'qc-sensor-1',
       question: 'A PT100 RTD sensor has what resistance at 0°C?',
-      options: ['50 ohms', '100 ohms', '138.5 ohms', '1000 ohms'],
-      correctIndex: 1,
+      options: ['100 ohms', '50 ohms', '138.5 ohms', '1000 ohms'],
+      correctIndex: 0,
       explanation:
         'PT100 stands for Platinum 100 ohms - the sensor has exactly 100 ohms resistance at 0°C. At 100°C, the resistance increases to approximately 138.5 ohms following a predictable temperature coefficient.',
     },
@@ -77,6 +77,8 @@ const IndustrialElectricalModule4Section3: React.FC = () => {
         'Hall effect sensor',
       ],
       correctAnswer: 'Capacitive proximity sensor',
+      explanation:
+        'Capacitive sensors detect any material that changes the capacitance at the sensing face, including plastics, glass, liquids and powders, whereas inductive and magnetic sensors only respond to metals.',
     },
     {
       question:
@@ -88,6 +90,8 @@ const IndustrialElectricalModule4Section3: React.FC = () => {
         'Non-ferrous metals cannot be detected',
       ],
       correctAnswer: 'Non-ferrous metals have reduced sensing range (correction factor required)',
+      explanation:
+        'Non-ferrous metals such as aluminium and copper produce weaker eddy currents, so the effective range is reduced - a correction factor (e.g. ~0.4 for aluminium) must be applied to the rated steel range.',
     },
     {
       question: 'A thermocouple generates voltage based on which principle?',
@@ -98,67 +102,83 @@ const IndustrialElectricalModule4Section3: React.FC = () => {
         'Inductance change',
       ],
       correctAnswer: 'Seebeck effect (junction of dissimilar metals)',
+      explanation:
+        'A thermocouple uses the Seebeck effect: a junction of two dissimilar metals produces a small voltage proportional to the temperature difference between the measuring and reference junctions.',
     },
     {
       question: 'What does NPN output configuration mean for a proximity sensor?',
       options: [
         'Output sources current when active',
         'Output sinks current to ground when active',
-        'Output provides analog voltage',
-        'Output is floating when active',
+        'Output provides an analogue voltage when active',
+        'Output is left floating when active',
       ],
       correctAnswer: 'Output sinks current to ground when active',
+      explanation:
+        'An NPN (sinking) output pulls its signal line down to 0V/ground when active, so it connects to a sourcing PLC input. A PNP (sourcing) output supplies positive voltage instead.',
     },
     {
       question: 'Which temperature sensor type provides the fastest response time?',
-      options: ['RTD (PT100)', 'Thermocouple', 'Bimetallic strip', 'Infrared pyrometer'],
+      options: ['RTD (PT100)', 'Thermocouple', 'Bimetallic strip', 'Filled-bulb thermometer'],
       correctAnswer: 'Thermocouple',
+      explanation:
+        'A thermocouple has a tiny, low-mass measuring junction so it responds to temperature changes faster than the larger RTD element or a mechanical bimetallic/filled sensor.',
     },
     {
-      question: 'What is the purpose of a 4-20mA current loop signal for sensors?',
+      question: 'What is the main advantage of a 4-20mA current loop signal for sensors?',
       options: [
-        'To reduce wiring costs',
-        'To provide noise immunity and allow long cable runs with fault detection',
-        'To increase sensor accuracy',
-        'To power the sensor only',
+        'It removes the need for any power supply',
+        'It provides noise immunity and lets a wire-break be detected (0mA = fault)',
+        'It increases the inherent accuracy of the sensing element',
+        'It allows the sensor to run at mains voltage',
       ],
-      correctAnswer: 'To provide noise immunity and allow long cable runs with fault detection',
+      correctAnswer: 'It provides noise immunity and lets a wire-break be detected (0mA = fault)',
+      explanation:
+        'A current loop is immune to voltage drop and electrical noise over long runs, and because the live zero is 4mA, a reading of 0mA clearly signals a broken wire or fault.',
     },
     {
-      question: 'A solenoid valve rated for "normally closed" (NC) operation will:',
+      question: 'A solenoid valve rated as "normally closed" (NC) will:',
       options: [
-        'Be open when de-energized',
-        'Be closed when de-energized',
-        'Remain in last position when de-energized',
-        'Require continuous power to stay closed',
+        'Be open when de-energised',
+        'Be closed when de-energised',
+        'Stay in its last position when de-energised',
+        'Need continuous power to stay closed',
       ],
-      correctAnswer: 'Be closed when de-energized',
+      correctAnswer: 'Be closed when de-energised',
+      explanation:
+        'A normally closed solenoid valve is held shut by its spring when no power is applied and opens only when the coil is energised.',
     },
     {
       question:
         'What is the primary purpose of shielded cable for sensor wiring in industrial environments?',
       options: [
-        'To reduce cable weight',
-        'To protect against electromagnetic interference (EMI)',
-        'To increase current capacity',
-        'To reduce installation cost',
+        'To reduce the cable weight',
+        'To protect signals against electromagnetic interference (EMI)',
+        'To increase the current-carrying capacity',
+        'To reduce the installation cost',
       ],
-      correctAnswer: 'To protect against electromagnetic interference (EMI)',
+      correctAnswer: 'To protect signals against electromagnetic interference (EMI)',
+      explanation:
+        'The shield drains induced noise to earth (grounded at one end), protecting low-level sensor signals from EMI generated by VFDs, motors and switching loads.',
     },
     {
       question: 'An absolute encoder differs from an incremental encoder in that it:',
       options: [
-        'Provides higher resolution',
-        'Retains position information after power loss',
-        'Is less expensive',
+        'Always provides higher resolution',
+        'Retains absolute position information after a power loss',
+        'Is always cheaper to buy',
         'Only works with DC motors',
       ],
-      correctAnswer: 'Retains position information after power loss',
+      correctAnswer: 'Retains absolute position information after a power loss',
+      explanation:
+        'An absolute encoder outputs a unique code for every position, so it knows its exact position immediately on power-up; an incremental encoder only counts pulses and must be homed after power loss.',
     },
     {
       question: 'What resistance would a PT100 RTD sensor measure at 100°C?',
       options: ['100 ohms', '138.5 ohms', '200 ohms', '385 ohms'],
       correctAnswer: '138.5 ohms',
+      explanation:
+        'Following the IEC 60751 curve (alpha = 0.00385), a PT100 reads 100 ohms at 0°C and approximately 138.5 ohms at 100°C.',
     },
   ];
 

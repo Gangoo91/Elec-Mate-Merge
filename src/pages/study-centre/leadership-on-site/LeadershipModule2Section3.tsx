@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       "According to Maslow's Hierarchy of Needs applied to tradespeople, which needs must be met FIRST before higher-level motivation can work?",
     options: [
+      'Physiological and safety needs — decent welfare, fair pay, safe working conditions',
       'Recognition and achievement — people need to feel valued above all else',
       'Social belonging — being part of a crew is the most important thing',
-      'Physiological and safety needs — decent welfare, fair pay, safe working conditions',
       'Self-actualisation — people need a sense of purpose in their work',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Maslow's hierarchy states that lower-level needs must be met before higher-level needs can motivate. For tradespeople, this means decent welfare facilities, fair pay, and safe working conditions (Levels 1-2) are the BASELINE. Trying to motivate with recognition or purpose when someone is worried about paying their mortgage or working in unsafe conditions will not work. Fix the basics first.",
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       "According to Herzberg's Two-Factor Theory, fair pay and decent working conditions are:",
     options: [
       'Motivators — they create genuine job satisfaction and drive performance',
-      'Hygiene factors — they prevent dissatisfaction but do not create motivation',
       'Self-actualisation needs — they help people reach their full potential',
+      'Hygiene factors — they prevent dissatisfaction but do not create motivation',
       'Theory Y assumptions — they reflect a belief that workers are self-motivated',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Herzberg distinguishes between hygiene factors (which prevent dissatisfaction) and motivators (which create genuine satisfaction). Pay, conditions, job security, and supervision quality are hygiene factors — fixing them brings people to 'not unhappy' but does not actively motivate. True motivation comes from achievement, recognition, meaningful work, responsibility, and growth opportunities.",
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Are the most effective motivators available to managers',
       'Work well for short periods but lose effectiveness over time',
-      'Can actually DAMAGE performance and reduce creativity',
       'Have no measurable effect on worker output or quality',
+      'Can actually DAMAGE performance and reduce creativity',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Pink's research shows that for anything beyond simple, mechanical tasks, traditional carrots and sticks can actually DAMAGE performance. External rewards narrow focus, reduce creativity, diminish intrinsic motivation, and encourage shortcuts. Instead, complex work (which describes most electrical work) is best motivated by autonomy, mastery, and purpose — the three intrinsic motivators.",
   },
@@ -88,11 +88,11 @@ const quizQuestions = [
       "Maslow's Hierarchy of Needs has five levels. The correct order from bottom to top is:",
     options: [
       'Safety, Physiological, Belonging, Esteem, Self-Actualisation',
-      'Physiological, Safety, Belonging, Esteem, Self-Actualisation',
       'Physiological, Belonging, Safety, Self-Actualisation, Esteem',
       'Esteem, Safety, Physiological, Belonging, Self-Actualisation',
+      'Physiological, Safety, Belonging, Esteem, Self-Actualisation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct order from bottom to top is: Physiological (food, water, shelter), Safety (physical safety, job security), Love/Belonging (social connection, team identity), Esteem (recognition, achievement), Self-Actualisation (reaching full potential). Lower levels must generally be satisfied before higher levels can motivate.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'According to Herzberg, which of the following is a MOTIVATOR (creates genuine satisfaction), not a hygiene factor?',
     options: [
+      'Achievement and recognition for quality workmanship',
       'Fair pay and regular overtime opportunities',
       'Clean, well-maintained welfare facilities on site',
-      'Achievement and recognition for quality workmanship',
       'Job security and a permanent contract',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Achievement and recognition are motivators in Herzberg's model — they create genuine job satisfaction and drive performance. Pay, welfare facilities, and job security are hygiene factors — important for preventing dissatisfaction, but they do not create active motivation. The distinction is critical for leaders.",
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: "McGregor's Theory X assumes that workers are:",
     options: [
       'Self-motivated professionals who seek responsibility and take pride in their work',
-      'Inherently lazy, need controlling, and are primarily motivated by fear of consequences',
       'Most productive when given autonomy, mastery opportunities, and a sense of purpose',
+      'Inherently lazy, need controlling, and are primarily motivated by fear of consequences',
       'Best motivated through a combination of financial incentives and social recognition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Theory X assumes workers are inherently lazy, avoid responsibility, dislike work, and must be coerced or controlled to produce results. McGregor argued this becomes a self-fulfilling prophecy — if you treat people as lazy and untrustworthy, they will behave that way. Theory Y assumes the opposite and generally produces better outcomes.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     options: [
       'Dramatically increase team motivation and productivity',
       'Have no effect because welfare is not related to motivation',
-      'Prevent dissatisfaction and meet basic needs, but will not actively motivate',
       'Only matter to Theory X workers who focus on conditions rather than the work',
+      'Prevent dissatisfaction and meet basic needs, but will not actively motivate',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Decent welfare meets basic physiological/safety needs (Maslow Levels 1-2) and addresses hygiene factors (Herzberg). Fixing poor welfare will prevent dissatisfaction and remove a significant source of resentment, but it will not, on its own, create active motivation. That requires the motivators: achievement, recognition, meaningful work, and growth. However, you MUST fix the basics before the motivators can work.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'McGregor argued that Theory X management creates:',
     options: [
-      'High-performing teams through clear accountability',
       'A self-fulfilling prophecy where workers behave exactly as expected',
+      'High-performing teams through clear accountability',
       'Better safety outcomes through tighter supervision',
       'Short-term results that are sustainable over the long term',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "McGregor's key insight is that Theory X becomes a self-fulfilling prophecy. If you treat workers as lazy and untrustworthy (constant surveillance, no autonomy, punishment-focused), they respond by doing the minimum, hiding problems, and disengaging. The manager then sees this as confirmation that workers are indeed lazy — not realising their management approach caused the very behaviour they expected.",
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'Which motivation approach would work BEST for an experienced electrician who has become disengaged and is doing the bare minimum?',
     options: [
       'Threaten disciplinary action if performance does not improve (Theory X)',
+      'Give them ownership of a meaningful project and autonomy over how they deliver it (Autonomy + Purpose)',
       'Increase their pay and improve their working conditions (Hygiene factors)',
       'Give them more detailed instructions and closer supervision (Direct)',
-      'Give them ownership of a meaningful project and autonomy over how they deliver it (Autonomy + Purpose)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'An experienced but disengaged electrician likely has their hygiene factors met and does not lack skill. They lack motivation. Threats (Theory X) will make it worse. More instruction is insulting to their experience. The most effective approach combines autonomy (trust them with how) and purpose (give them something meaningful). This could be ownership of a section, mentoring apprentices, or leading on a technically challenging aspect of the project.',
   },

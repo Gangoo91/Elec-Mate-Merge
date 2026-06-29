@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'A site spark says "I do the trip-time test, that gives me everything I need — ramp is just extra work". What is wrong with that view?',
     options: [
-      'Nothing — trip-time at IΔn is the only test required.',
-      'Ramp testing reveals the actual current at which the device operates (e.g. 24 mA on a 30 mA device — within the 50-100 % BS EN 61008/61009 window). Trip-time only confirms a device trips at fixed test currents — it cannot show drift, marginal sensitivity, or partial desensitisation.',
-      'Ramp is only needed on Type B devices.',
-      'Ramp tests are deprecated in A4:2026.',
+      'Nothing — the trip-time test at IΔn is the only test that is ever required.',
+      'Ramp reveals the actual operating current and exposes drift that fixed-current trip-time misses.',
+      'Ramp is only needed on Type B devices, never on Type AC or Type A.',
+      'Ramp tests are deprecated in A4:2026 and no longer carried out.',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     id: 'mod6-s3-acceptance',
     question: 'A 30 mA Type A RCBO ramps at 8 mA. Pass or fail under BS EN 61008-1 / 61009-1?',
     options: [
-      'Pass — any reading below IΔn is acceptable.',
-      'Pass — the device is over-protective so cannot cause harm.',
-      'Fail — 8 mA is below the 50 % minimum (15 mA for a 30 mA device). The device is over-sensitive and will nuisance-trip on healthy load. BS EN 61008-1 / 61009-1 fix the operating window at 50-100 % of IΔn.',
-      'Pass — 8 mA is within the additional-protection threshold.',
+      'Pass — any ramp reading below the rated IΔn is acceptable.',
+      'Pass — the device is over-protective, so it cannot cause harm.',
+      'Fail — 8 mA is below the 15 mA (50 %) floor, so the device is over-sensitive.',
+      'Pass — 8 mA is within the additional-protection threshold of the device.',
     ],
     correctIndex: 2,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'You ramp a 30 mA Type B RCBO with the meter set to "AC ramp" and read 24 mA. Is the result valid for a Type B device?',
     options: [
-      'Yes — 24 mA is within the 50-100 % window.',
-      'No. AC ramp injects only sinusoidal AC. Type B detection paths for smooth DC, AC up to 1 kHz and rectified DC from multiple phases are never exercised. Ramp Type B at the meter\'s "B ramp" or DC-ramp setting to verify all three detection paths.',
-      'Yes — Type B is a superset of Type A so a Type A test is conservative.',
-      'Only if the device IΔn is above 100 mA.',
+      'Yes — 24 mA sits within the 50-100 % operating window for the device.',
+      'No — an AC ramp leaves the smooth-DC and high-frequency Type B paths unexercised.',
+      'Yes — Type B is a superset of Type A, so a Type A test is conservative here.',
+      'Only if the device IΔn happens to be above 100 mA on this circuit.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'On the Schedule of Test Results, where does the ramp result go for a 30 mA Type A RCBO that ramps at 22 mA?',
     options: [
-      'In the IΔn column — overwrite 30 mA with 22 mA.',
-      'In the trip-time column at IΔn × 1.',
-      'In the comments column — ramp is not a structured field. Record "Ramp at 22 mA (within 15-30 mA BS EN 61009-1 window)" against the device.',
-      'It does not need recording.',
+      'In the IΔn column — overwrite the 30 mA rating with the 22 mA reading.',
+      'In the trip-time column at IΔn × 1, alongside the timing result.',
+      'In the comments column — ramp has no structured field, so note 22 mA against the device.',
+      'It does not need recording anywhere once the trip-time test has passed.',
     ],
     correctIndex: 2,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'What does an RCD ramp test actually measure, and how does it differ from a 1×IΔn trip-time test?',
     options: [
-      'Both tests measure the same thing — operating time at rated current',
       'Ramp finds the residual current at which the device trips; trip-time finds how long it takes to operate at rated current',
-      'Ramp measures earth fault loop impedance, trip-time measures Zs',
-      'Ramp tests AFDDs, trip-time tests RCDs',
+      'Both tests measure the same thing — the operating time of the device at its rated residual current',
+      'Ramp measures the earth fault loop impedance of the circuit; trip-time measures the prospective fault current',
+      'Ramp confirms the RCD test button operates; trip-time confirms the instrument injection circuit is calibrated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Per GN3 Ch 4 Reg 4.6, the ramp test injects a slowly rising residual current from below 50 % up to 110 % of IΔn and records the current at which the device operates — that is the tripping-current threshold. The 1×IΔn test (GN3 Reg 2.31) applies a fixed current at IΔn and records the operating time. Different tests, different answers, both required for a complete picture on a problem device.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     id: 3,
     question: 'Per GN3 Ch 4 Reg 4.6, where does the ramp current start and where does it end?',
     options: [
-      '0 mA up to IΔn',
+      '0 mA, ramping up to exactly IΔn',
+      '50 % of IΔn, ramping up to 5×IΔn',
+      'IΔn, ramping up to 110 % of IΔn',
       'Less than 50 % of IΔn, ramping up to 110 % of IΔn',
-      '50 % of IΔn up to 5×IΔn',
-      'IΔn up to 110 % of IΔn',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "GN3 Reg 4.6 is explicit: the ramp commences from a value less than 50 % of the RCD's operational rating and increases to 110 % of the rating. Starting below 50 % proves the non-trip lower bound; ending at 110 % captures any device that is sluggish at the 100 % threshold.",
   },
@@ -136,40 +136,40 @@ const quizQuestions = [
     question:
       'A 30 mA RCD trips at 14 mA on the ramp test. The clamp meter shows 8 mA of standing earth-leakage on the circuit. What is the actual tripping threshold and is the device compliant?',
     options: [
-      '14 mA — non-compliant, below 15 mA',
       '14 mA + 8 mA = 22 mA — compliant, within the 15–30 mA band',
-      '8 mA — non-compliant',
-      '6 mA — non-compliant',
+      '14 mA — non-compliant, because the meter reading alone is below the 15 mA floor',
+      '8 mA (the standing leakage) — non-compliant, the device is over-sensitive',
+      '14 mA − 8 mA = 6 mA — non-compliant, the leakage subtracts from the trip current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standing leakage current is in the same circuit and adds to the test current actually being seen at the toroid. Apparent trip = 14 mA from the tester, but real residual current at the moment of trip = 14 + 8 = 22 mA. 22 mA is within 15–30 mA → compliant. Always either disconnect leaky loads for the ramp test, or measure standing leakage and add it to the meter reading.',
   },
   {
     id: 6,
     question:
-      'Why does Reg 643.3 of A4:2026 mandate an alternating-current test at IΔn regardless of RCD Type, but ramp testing is still kept on the agenda?',
+      'Why does Reg 643.8 of A4:2026 mandate an alternating-current test at IΔn regardless of RCD Type, but ramp testing is still kept on the agenda?',
     options: [
-      'Ramp testing has been deleted from BS 7671',
-      'Reg 643.3 sets the minimum compliance test (AC at IΔn). Ramp testing is supplementary — it gives the actual sensitivity, useful for diagnosing nuisance trips, verifying discrimination, and benchmarking against a previous inspection',
-      'They are the same test',
-      'Ramp is now mandatory for Type B only',
+      'Ramp testing has been deleted from BS 7671 and may no longer be carried out during verification',
+      'Ramp testing is now the mandatory effectiveness test, with the AC test at IΔn made supplementary',
+      'The AC test at IΔn and the ramp test are the same test described under two different names',
+      'Reg 643.8 is the minimum test (AC at IΔn); ramp stays supplementary for sensitivity and drift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A4:2026 changed Reg 643.3 so the only mandatory verification is an AC test at IΔn (Table 3A was removed). Ramp testing is not required for compliance, but GN3 Ch 4 Reg 4.6 still describes it because it is the only practical way to read the actual trip threshold — invaluable for selectivity, fault-finding, and detecting drift on periodic inspection.',
+      'A4:2026 changed Reg 643.8 so the only mandatory verification is an AC test at IΔn (Table 3A was removed). Ramp testing is not required for compliance, but GN3 Ch 4 Reg 4.6 still describes it because it is the only practical way to read the actual trip threshold — invaluable for selectivity, fault-finding, and detecting drift on periodic inspection.',
   },
   {
     id: 7,
     question:
       'For a Type S (selective / time-delayed) 100 mA RCD upstream of a 30 mA RCD, what does GN3 expect to see at 1×IΔn timing?',
     options: [
-      'It should trip in less than 40 ms',
       'Operate time shall be no faster than 130 ms (and not more than 500 ms) per Reg 643.7.3 / OSG Ch 11 Reg 11.3',
-      'It shall not trip at all',
-      'It should match the downstream device',
+      'It should trip in less than 40 ms, matching the additional-protection limit at 5×IΔn',
+      'It shall not trip at all at 1×IΔn, only operating at 5×IΔn to guarantee discrimination',
+      'It should operate in the same time as the downstream 30 mA device so the two clear together',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OSG Ch 11 Reg 11.3 and BS 7671 Reg 643.7.3 set the Type S band: at 100 % IΔn, operate time ≥ 130 ms minimum (the deliberate delay that gives a downstream 30 mA device the chance to clear) and ≤ 500 ms maximum. Trip-time on Type S, therefore, has BOTH a floor and a ceiling — unlike a non-delay device which has only a ceiling.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'During a ramp test on a 30 mA Type B RCD on an EV charger, the device trips at 18 mA on the AC ramp. Is that the only test you record?',
     options: [
-      'Yes — pass at 18 mA, sign it off',
-      'No — Type B devices have to be exercised on smooth DC residual current as well, per BS EN 62423; the 18 mA AC ramp only proves the AC-detection function',
-      'No — Type B RCDs cannot be ramp-tested',
-      'Yes, but only if the meter is in DC mode',
+      'Yes — 18 mA is a comfortable pass on the AC ramp, so the device can be signed off',
+      'Yes — once the meter is switched to DC mode the AC reading covers all detection paths',
+      'No — Type B RCDs cannot be ramp-tested at all and must rely on the test-button check',
+      'No — a Type B device must also be exercised on smooth DC per BS EN 62423, not AC alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Type B (BS EN 62423) is required because the protected load can produce smooth DC residual current that a Type AC or A device cannot see. A pass on the AC ramp does not prove the smooth-DC sensing path. Modern Type B-capable testers run the ramp on AC, pulsed-DC and smooth-DC waveforms; record each. A pass on AC only would leave the DC fault path unverified.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'During an EICR you record a 30 mA RCD trip at 28 mA on the ramp; on the previous EICR five years ago it tripped at 19 mA. Both are inside the band. What does this tell you?',
     options: [
-      'Nothing — both pass, move on',
-      'The RCD is drifting upward toward the 30 mA ceiling. It still complies, but the trend is the warning. Note it on the report, recommend a re-test sooner than the next nominal interval, and consider replacement if the next reading is above 30 mA',
-      'The original test was wrong',
-      'The RCD is over-sensitive now',
+      'Nothing — both readings pass the band, so there is no finding to record at all',
+      'The earlier 19 mA result must have been a measurement error, since a device cannot drift',
+      'The device is drifting up toward the 30 mA ceiling — still compliant, but note it and re-test sooner',
+      'The RCD has become over-sensitive, since the trip current has changed between inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Recording the actual ramp trip current (not just pass/fail) creates a baseline. Drift from 19 mA toward 28 mA is the diagnostic — both readings comply, but the trajectory is the story. A device drifting toward the ceiling is on its way to non-compliance; the inspector who recorded it is the one who catches it before someone gets a shock.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'A 30 mA RCD trips at 11 mA on the ramp. Standing leakage measures 1 mA. Compliant?',
     options: [
-      'Yes — anything below 30 mA passes',
-      'No — actual trip current is 12 mA (11 + 1), which is below the 15 mA (50 %) lower limit. The device is over-sensitive and outside the BS EN 61008 band — investigate or replace',
-      'Yes, ramp testing has no lower limit',
-      'Cannot determine without a 5×IΔn test',
+      'Yes — any trip current below the 30 mA rating passes, regardless of how low it is',
+      'Yes — ramp testing has only an upper limit, so a low reading is always acceptable',
+      'Cannot determine without first running a 5×IΔn trip-time test on the device',
+      'No — actual trip is 12 mA (11 + 1), below the 15 mA floor, so over-sensitive: replace',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GN3 Reg 4.6 acceptance is explicit: the device shall not trip below 50 % of IΔn. 12 mA is below 15 mA. Over-sensitive RCDs cause nuisance tripping, often blamed on "leaky appliances" when the device itself is the fault. The 50 % floor is a real compliance limit, not just a manufacturing tolerance.',
   },
@@ -222,7 +222,7 @@ const InspectionTestingModule6Section3 = () => {
   useSEO({
     title: 'RCD ramp testing | I&T Module 6.3 | Elec-Mate',
     description:
-      'GN3 Ch 4 Reg 4.6 + BS EN 61008 / 61009: ramp testing finds the actual residual trip current. The 50–100 % IΔn acceptance band, half-cycle (0°/180°) tests, standing leakage correction, Type A / F / B multiplied currents, and how A4:2026 Reg 643.3 sits alongside the ramp.',
+      'GN3 Ch 4 Reg 4.6 + BS EN 61008 / 61009: ramp testing finds the actual residual trip current. The 50–100 % IΔn acceptance band, half-cycle (0°/180°) tests, standing leakage correction, Type A / F / B multiplied currents, and how A4:2026 Reg 643.8 sits alongside the ramp.',
   });
 
   return (
@@ -248,7 +248,7 @@ const InspectionTestingModule6Section3 = () => {
             points={[
               'Ramp testing slowly raises injected residual current from below 50 % of IΔn up to 110 % of IΔn (GN3 Ch 4 Reg 4.6). The current at which the RCD trips is recorded as the actual tripping-current threshold.',
               'Acceptance band per BS EN 61008 / 61009 and the GN3 / OSG criteria: the device shall NOT trip below 50 % of IΔn, AND shall trip at or before 100 % of IΔn. For a 30 mA RCD that is 15–30 mA. Outside that band → fail.',
-              'Reg 643.3 (A4:2026) makes the AC test at IΔn the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination checks, drift tracking, and Type B verification on power-electronic loads.',
+              'Reg 643.8 (A4:2026) makes the AC test at IΔn the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination checks, drift tracking, and Type B verification on power-electronic loads.',
               'Run the ramp on both half-cycles (0° / 180°, GN3 Reg 2.31) and record the worst reading. On Type A / F / B, the ramp is also run with the appropriate pulsed / smooth DC waveforms — the device standard (BS EN 61008-1 / 61009-1 / 62423) sets the multipliers.',
               'Standing earth-leakage current adds to the test current at the toroid. Either disconnect leaky loads, or measure standing leakage with a clamp and add it to the displayed trip current to get the real value.',
             ]}
@@ -268,8 +268,8 @@ const InspectionTestingModule6Section3 = () => {
           <ContentEyebrow>What the regulation actually says</ContentEyebrow>
 
           <ConceptBlock
-            title="Reg 643.3 changed in A4:2026 — and where ramp testing now sits"
-            plainEnglish="A4:2026 redrafted Reg 643.3. Table 3A (the old time/current performance table) has been deleted. The single mandatory test for any RCD Type is now an alternating-current test at the rated residual operating current (IΔn). Ramp testing is not mandatory for compliance — but GN3 Ch 4 Reg 4.6 keeps it on the testing menu because it is the only test that gives you the actual trip threshold."
+            title="Reg 643.8 changed in A4:2026 — and where ramp testing now sits"
+            plainEnglish="A4:2026 redrafted Reg 643.8. Table 3A (the old time/current performance table) has been deleted. The single mandatory test for any RCD Type is now an alternating-current test at the rated residual operating current (IΔn). Ramp testing is not mandatory for compliance — but GN3 Ch 4 Reg 4.6 keeps it on the testing menu because it is the only test that gives you the actual trip threshold."
             onSite="Compliance test = AC at IΔn within the published trip times (300 ms for non-delay, 130–500 ms for Type S). Diagnostic test = ramp. Both have a place; only one is required to certify."
           >
             <p>
@@ -658,7 +658,7 @@ const InspectionTestingModule6Section3 = () => {
                   <tr className="border-b border-white/[0.06]">
                     <td className="py-2 font-semibold text-elec-yellow">Source</td>
                     <td className="py-2">GN3 Ch 4 Reg 4.6 (supplementary)</td>
-                    <td className="py-2">BS 7671 Reg 643.3 / 643.7.3 (mandatory)</td>
+                    <td className="py-2">BS 7671 Reg 643.8 / 643.7.3 (mandatory)</td>
                   </tr>
                   <tr className="border-b border-white/[0.06]">
                     <td className="py-2 font-semibold text-elec-yellow">Test current</td>
@@ -686,7 +686,7 @@ const InspectionTestingModule6Section3 = () => {
             <p>
               On a routine EICR you may run trip-time only; on a problem device, on a Type B
               installation, or on a periodic inspection where you have a previous ramp value to
-              trend, you run both. Reg 643.3 of A4:2026 made the AC at IΔn test the only mandatory
+              trend, you run both. Reg 643.8 of A4:2026 made the AC at IΔn test the only mandatory
               one, so a quiet, well-behaved board can be certified on trip-time alone.
             </p>
           </ConceptBlock>
@@ -860,7 +860,7 @@ const InspectionTestingModule6Section3 = () => {
               </li>
               <li>
                 <strong>RCD 1×IΔn time:</strong> the value (in ms) measured under the AC at IΔn test
-                required by Reg 643.3.
+                required by Reg 643.8.
               </li>
               <li>
                 <strong>RCD 5×IΔn time:</strong> on instruments that take it (mostly retained for
@@ -883,7 +883,7 @@ const InspectionTestingModule6Section3 = () => {
             points={[
               'Ramp test starts below 50 % of IΔn, ramps to 110 % of IΔn, records the trip current. Source: GN3 Ch 4 Reg 4.6.',
               'Acceptance band per BS EN 61008-1 / 61009-1: trip shall NOT happen below 50 % AND SHALL happen at or before 100 %. For 30 mA → 15–30 mA.',
-              'Reg 643.3 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test — Table 3A is gone. Ramp is supplementary, not mandatory.',
+              'Reg 643.8 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test — Table 3A is gone. Ramp is supplementary, not mandatory.',
               'Half-cycle test (0° / 180°) per GN3 Reg 2.31. Record the worst reading.',
               'Standing earth-leakage adds to the test current at the toroid. Either disconnect leaky loads or measure leakage with a clamp and add it to the displayed value.',
               'Type A / F / B — run the ramp on all the waveforms the device is rated for. AC pass alone does not prove the DC sensing path.',
@@ -897,7 +897,7 @@ const InspectionTestingModule6Section3 = () => {
               {
                 question: 'Is ramp testing mandatory on every RCD during an EICR?',
                 answer:
-                  'No. Reg 643.3 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination verification, drift tracking, and Type B verification on power-electronic loads. That said, it is good practice on any periodic inspection because it gives you a numeric baseline; without it you only have pass/fail history.',
+                  'No. Reg 643.8 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination verification, drift tracking, and Type B verification on power-electronic loads. That said, it is good practice on any periodic inspection because it gives you a numeric baseline; without it you only have pass/fail history.',
               },
               {
                 question: 'Why does the acceptance band start at 50 % and not 0 %?',

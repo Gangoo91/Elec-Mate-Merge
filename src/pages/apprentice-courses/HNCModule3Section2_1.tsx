@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     question: 'What is the unit of inductance?',
     options: [
       'Weber',
-      'Ohm',
       'Henry',
+      'Ohm',
       'Farad',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Inductance is measured in Henrys (H), named after Joseph Henry. 1 Henry means that a current change of 1 A/s induces an EMF of 1 Volt in the coil.',
   },
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'capacitance-increase',
     question: 'How can the capacitance of a parallel plate capacitor be increased?',
     options: [
-      'Use a higher permittivity dielectric',
-      'Daily task allocation and quality checks',
-      'Responsible, Accountable, Consulted, Informed',
-      'A sprained ankle requiring 5 days off work',
+      'Use a higher permittivity dielectric between the plates',
+      'Increase the separation between the two plates',
+      'Reduce the surface area of the plates',
+      'Apply a higher voltage across the plates',
     ],
     correctIndex: 0,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the function of a capacitor in power factor correction?',
     options: [
-      'By visually checking core colours at terminations',
-      'Hear, Empathise, Apologise, Resolve, Do follow up',
-      'Preventive maintenance based on usage patterns and manufacturer recommendations',
+      'To increase the real power (kW) delivered to the motor',
+      'To smooth the supply voltage by absorbing harmonic currents',
+      'To limit the starting current drawn by the motor windings',
       'To supply leading reactive current to offset lagging motor current',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'In a fluorescent lighting ballast, the inductor serves to:',
     options: [
-      'Type D MCB (trips at 10-20 times rated current)',
-      'Limit current and provide starting voltage',
-      'Back, neck, shoulders, arms, and legs',
-      '.pdf (Portable Document Format)',
+      'Convert the supply to a higher frequency for the lamp',
+      'Limit the lamp current and provide a starting voltage kick',
+      'Correct the lagging power factor of the lamp circuit',
+      'Rectify the AC supply into DC for the discharge tube',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,16 +206,16 @@ const quizQuestions = [
   {
     id: 10,
     question:
-      'An HVAC motor draws 50A at 0.7 power factor lagging. What capacitor kVAr is needed to improve to 0.95?',
+      'An HVAC motor draws 50A at 0.7 power factor lagging on a 400V 3-phase supply. What capacitor kVAr is needed to improve to 0.95?',
     options: [
-      '8.2 kVAr',
+      '8.0 kVAr',
       '12.4 kVAr',
-      '15.8 kVAr',
-      '20.1 kVAr',
+      '16.8 kVAr',
+      '24.7 kVAr',
     ],
     correctAnswer: 2,
     explanation:
-      'At 400V 3-phase: kVA = root 3 x 400 x 50 / 1000 = 34.6 kVA. kW = 34.6 x 0.7 = 24.2 kW. At pf 0.7: kVAr1 = 24.7 kVAr. At pf 0.95: kVAr2 = 8.0 kVAr. Required = 24.7 - 8.0 = approximately 16.7 kVAr (closest answer 15.8 kVAr accounting for rounding).',
+      'At 400V 3-phase: kVA = root 3 x 400 x 50 / 1000 = 34.6 kVA. kW = 34.6 x 0.7 = 24.2 kW. Qc = P x (tan(cos-1 0.7) - tan(cos-1 0.95)) = 24.2 x (1.020 - 0.329) = approximately 16.8 kVAr.',
   },
   {
     id: 11,
@@ -235,9 +235,9 @@ const quizQuestions = [
     question: 'Why do motors cause a lagging power factor?',
     options: [
       'Their windings are inductive, causing current to lag voltage',
-      'Limit current and provide starting voltage',
-      'The coupling between two magnetically linked coils',
-      'To supply leading reactive current to offset lagging motor current',
+      'Their windings are capacitive, causing current to lead voltage',
+      'Their resistance increases as the windings heat up under load',
+      'They draw a large in-rush current each time they are started',
     ],
     correctAnswer: 0,
     explanation:

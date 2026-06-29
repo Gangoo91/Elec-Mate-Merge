@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'conduit-capacity',
     question: 'What determines the maximum number of cables that can be drawn into a conduit?',
     options: [
-      'The space factor — cables must not occupy more than 40% of the conduit internal cross-sectional area to allow adequate heat dissipation and cable pulling',
-      'They must receive medical assessment and clearance before returning to work, as H₂S can cause delayed pulmonary oedema and other latent effects',
-      'To build the habit of noticing and naming your current emotional state, catching unhelpful patterns early, and making conscious choices about how to proceed',
-      'Consistent professional competence — safe working practices, systematic approaches, clear communication, sound technical knowledge, and the ability to explain your reasoning and reflect on your work',
+      'The colour coding of the cable insulation within the conduit',
+      'The number of bends in the conduit run only, regardless of cable size',
+      'The space factor — cables must not occupy more than 40% of the conduit internal cross-sectional area',
+      'The length of the conduit run, with longer runs allowing more cables',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The space factor (also called fill factor) limits cable occupancy to 40% of the conduit internal cross-sectional area (BS 7671 and IET On-Site Guide). This ensures adequate air circulation for heat dissipation, prevents cable damage during installation (excessive friction), and allows future cables to be added or replaced. Overfilling conduit causes cable overheating, insulation damage and makes future maintenance extremely difficult.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'trunking-segregation',
     question: 'Why must power and data cables be segregated in trunking systems?',
     options: [
-      'To prevent electromagnetic interference from power cables inducing noise in data and signal cables, and to comply with BS 7671 Regulation 528.1',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
-      'The rotational force around a joint, calculated as force multiplied by the perpendicular distance from the joint',
-      'Because they generate extreme heat, sparks, and molten metal that can travel significant distances and ignite combustible materials',
+      'To prevent electromagnetic interference from power cables inducing noise in data and signal cables (BS 7671 Reg 528.1)',
+      'Because data cables carry a higher voltage than power cables and need isolation',
+      'To make the trunking easier to fill to its full cross-sectional capacity',
+      'Because mixing cable types causes the trunking to lose its earth continuity',
     ],
     correctIndex: 0,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between heavy gauge (HG) and light gauge (LG) steel conduit?',
     options: [
-      'HG conduit has a thicker wall allowing it to be threaded and used as a CPC, while LG conduit is thinner and joined with slip couplings requiring a separate CPC',
-      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s register/survey, and verify it before allowing the subcontractor on site',
-      'It helps workers recognise emotional states like stress, fatigue, and frustration that impair judgement and increase accident risk',
-      'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
+      'LG conduit is threaded and used as a CPC, while HG conduit uses slip couplings and a separate CPC',
+      'HG conduit has a thicker wall, can be threaded and used as a CPC; LG is thinner, slip-jointed and needs a separate CPC',
+      'HG conduit is made from aluminium while LG conduit is made from galvanised steel',
+      'LG conduit has a larger internal diameter than HG conduit of the same nominal size',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Heavy gauge (HG) steel conduit (typically 1.6 mm wall thickness for 20 mm) has sufficient wall thickness to be threaded for screwed fittings and can serve as a circuit protective conductor (CPC) if the joints maintain reliable continuity. Light gauge (LG) conduit has thinner walls (typically 1.0 mm), uses slip-type (push-fit) couplings, and cannot reliably serve as a CPC — a separate earth conductor must be installed within it. HG is standard for industrial installations; LG is used in less demanding domestic and commercial work.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'cable-tray',
     question: 'What maintenance consideration is most important for cable tray installations?',
     options: [
-      'Tactile signing (deafblind manual or block alphabet), with the help of a communicator-guide — every situation is individual',
-      'Ensuring cables are properly supported, clipped at regular intervals, and that the tray is not overloaded beyond its rated capacity, with adequate spacing for heat dissipation',
-      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
-      'FAIL — exceeds max. Investigation: increase cpc csa, reduce length, fit RCD additional protection, or replace with Type B at higher rating that accepts Zs',
+      'Ensuring the tray is painted to match the surrounding decor of the room',
+      'Filling the tray to its maximum capacity to make best use of the space',
+      'Removing all clips so cables can be repositioned freely along the tray',
+      'Ensuring cables are supported and clipped, the tray is not overloaded, and spacing allows heat dissipation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cable tray maintenance requires: verifying cables are correctly supported and clipped (unsupported cables sag and can be damaged); checking the tray is not overloaded (new cables added during modifications); ensuring cable spacing allows heat dissipation; verifying earth continuity of metallic trays; checking for physical damage to trays and cables; and confirming fire barriers are maintained where trays pass through fire compartment walls.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The 40% space factor for conduit means:',
     options: [
-      'Isolation arrangements to prevent parallel operation with supply',
+      'At least 40% of the cables must be of the same cross-sectional area',
       'Cables must not occupy more than 40% of the conduit internal cross-sectional area',
-      'Information required to be controlled and maintained by the organisation',
-      'The life of the installation — available for inspection at all times',
+      'The conduit must be derated to 40% of its rated current capacity',
+      'Only 40% of conduit runs need an inspection fitting along their length',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'PVC conduit is preferred over steel conduit when:',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
+      'The conduit must serve as the circuit protective conductor for the circuit',
+      'High mechanical impact resistance is the primary requirement for the location',
       'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
+      'The installation is in a high-temperature area near furnaces or boilers',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'When installing trunking through a fire-rated wall or floor, you must:',
     options: [
-      'Segregated compartments for power, data and telecommunications services at desk height, allowing flexible reconfiguration of workstations',
-      'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
+      'Increase the trunking size at the penetration to allow more cable capacity',
+      'Remove the trunking lid at the penetration so cables can move freely',
+      'Leave a deliberate air gap around the trunking to allow ventilation',
+      'Install a proprietary fire barrier within the trunking to restore the fire rating of the compartment',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'Cable basket (wire mesh) containment is increasingly used because:',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'Verify the existing cable fill does not already exceed the space factor, confirm the new cables will not breach it, and check that the additional heat load from new cables does not require derating of existing cables',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
+      'It ventilates cables well, installs quickly, takes added cables easily, and is visible for inspection',
+      'It offers the highest mechanical protection of all containment systems',
+      'It can serve as the circuit protective conductor without a separate earth conductor',
+      'It fully seals cables against water, dust and rodent ingress in all environments',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     question:
       'The maximum distance between fixings for 20 mm heavy gauge steel conduit on a horizontal run is:',
     options: [
-      'Suitable for the purpose for which it is provided, having regard to the working conditions and health and safety risks',
+      '500 mm (0.5 m), with additional fixings within 100 mm of each accessory box',
       '1,750 mm (approximately 1.75 m), with additional fixings within 300 mm of each accessory box',
-      'A new installation OR an addition/alteration that introduces a new circuit',
-      'Stop work, isolate yourself from the area, notify your supervisor and update the risk assessment before continuing',
+      '3,000 mm (3 m), with additional fixings within 600 mm of each accessory box',
+      '5,000 mm (5 m), with no requirement for fixings near accessory boxes',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Dado trunking in commercial offices typically provides:',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
+      'A high-current busbar distribution route running at ceiling level',
+      'Mechanical protection for heavy SWA cables across open plant rooms',
       'Segregated compartments for power, data and telecommunications services at desk height, allowing flexible reconfiguration of workstations',
-      'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
+      'A corrosion-resistant route for cables in swimming pools and food plants',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'When adding new cables to existing conduit, the maintenance technician must:',
     options: [
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
-      'Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
-      'Verify the existing cable fill does not already exceed the space factor, confirm the new cables will not breach it, and check that the additional heat load from new cables does not require derating of existing cables',
+      'Add the cables without any checks, as conduit has no fill limit',
+      'Remove an existing cable for every new cable added to keep the count equal',
+      'Increase the rating of the protective device to allow for the extra cables',
+      'Check the existing fill against the space factor and the added heat load against grouping derating',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'Galvanised cable ladder is used instead of cable tray when:',
     options: [
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
-      'Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables',
+      'Heavy cables must be supported over long spans, where ladder beats tray on load and span',
+      'A small number of light data cables need a quick, visible route across an open office',
+      'Cables must be fully enclosed to protect them from dust, liquids and falling objects',
+      'A neat, paintable surface route is needed for a single added socket-outlet circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Flexible conduit is used in maintenance applications for:',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
-      'Segregated compartments for power, data and telecommunications services at desk height, allowing flexible reconfiguration of workstations',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
+      'Long straight main cable routes across open plant rooms and vertical risers',
+      'Final connections to vibrating or moving equipment, where rigid conduit would crack',
+      'Surface-mounted lighting circuit additions in occupied commercial offices',
+      'High-current power distribution between main switchboards and the sub-mains',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'The earth continuity of a steel conduit system is verified by:',
     options: [
-      'It provides good ventilation for cables (aiding heat dissipation), is quick to install, allows easy cable addition, and is visible for inspection without opening covers',
-      'Physical damage, corrosion, loose or missing fixings, overloading, maintained fire barriers at penetrations, earth continuity of metallic systems, and presence of unauthorised cables or modifications',
-      'A low-resistance ohmmeter (continuity tester) measuring the resistance of the conduit between the distribution board earth terminal and the furthest accessory on each circuit, confirming it meets the R2 value used in cable calculations',
-      'Final connections to equipment subject to vibration or movement (motors, compressors, machines), where rigid conduit would crack or transmit vibration forces to the containment system',
+      'An insulation resistance tester applied between line and the conduit at 500 V',
+      'A visual inspection of the conduit joints and couplings, with no measurement',
+      'A low-resistance ohmmeter measuring R2 from the board earth terminal to the furthest accessory',
+      'An earth fault loop impedance test taken only at the incoming supply position',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'Mini-trunking is commonly used for:',
     options: [
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
-      'A low-resistance ohmmeter (continuity tester) measuring the resistance of the conduit between the distribution board earth terminal and the furthest accessory on each circuit, confirming it meets the R2 value used in cable calculations',
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
-      'Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables',
+      'Main cable distribution between switchboards carrying many large cables',
+      'Supporting heavy SWA cables over long spans in industrial plant rooms',
+      'High-current busbar distribution to multiple sub-distribution boards',
+      'Neat surface-mounted additions of a few cables where chasing or lifting floors is impractical',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'During periodic inspection, cable containment systems should be checked for:',
     options: [
-      'Physical damage, corrosion, loose or missing fixings, overloading, maintained fire barriers at penetrations, earth continuity of metallic systems, and presence of unauthorised cables or modifications',
-      'Heavy or large-diameter cables need to be supported over long spans, as ladder provides greater load-bearing capacity and longer support spacings than perforated tray',
-      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
-      'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
+      'Damage, corrosion, fixings, overloading, fire barriers, earth continuity and unauthorised additions',
+      'The manufacturer and purchase date of each section of containment only',
+      'Whether the containment colour matches the original architectural scheme',
+      'The resale value of the metallic containment as recyclable scrap metal',
     ],
     correctAnswer: 0,
     explanation:

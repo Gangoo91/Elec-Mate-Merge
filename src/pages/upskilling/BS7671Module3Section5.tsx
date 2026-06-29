@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A customer asks why their consumer-unit installer fitted a separate brass strip with several green-and-yellow conductors landed on it, mounted next to the main switch. What is it and what is its job?',
     options: [
-      'A neutral bar — every neutral has to terminate there before the main switch',
-      'The Main Earthing Terminal (MET) — Reg 542.4.1 — every protective conductor in the installation lands here so MET, MET bonding and earthing conductor share a single equipotential reference point',
-      'A spare DIN-rail accessory — purely cosmetic',
-      'A bonding conductor splice block, optional under BS 7671',
+      'A neutral bar — every neutral terminates there before the main switch',
+      'The Main Earthing Terminal (MET) — the single equipotential reference point',
+      'A spare DIN-rail accessory left over from the installation, purely cosmetic',
+      'A bonding conductor splice block, optional under BS 7671 rules',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You are wiring a 32 A radial in 6 mm² T&E (twin and earth). Without using the adiabatic equation, what minimum CPC cross-sectional area does Table 54.7 give you?',
     options: [
-      '1.5 mm² — half the line conductor up to 16 mm²',
-      '2.5 mm² — line conductor of 6 mm² gives a CPC of 2.5 mm² by Table 54.7',
-      '6 mm² — CPC must always equal the line conductor',
-      '4 mm² — adiabatic minimum',
+      '1.5 mm² — half the line conductor for sizes up to 16 mm²',
+      '2.5 mm² — Table 54.7 gives a 6 mm² line a 2.5 mm² CPC',
+      '6 mm² — the CPC must always equal the line conductor',
+      '4 mm² — the adiabatic equation minimum for this circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const inlineChecks = [
     question:
       'You are upgrading the main protective bonding on a domestic property fed from a TN-C-S (PME) supply. The line conductor at the cut-out is 25 mm². What is the minimum cross-sectional area for the bonding to gas and water?',
     options: [
-      '6 mm² — domestic minimum',
-      '10 mm² — Reg 544.1.1 / Table 54.8: PME minimum 10 mm² where line is up to and including 35 mm²',
-      '16 mm² — always 16 mm² for PME regardless of line size',
+      '6 mm² — the general domestic bonding minimum',
+      '10 mm² — Table 54.8 PME minimum where the neutral is up to 35 mm²',
+      '16 mm² — always 16 mm² for PME, regardless of line size',
       '4 mm² — only the earthing conductor is upsized for PME',
     ],
     correctIndex: 1,
@@ -68,9 +68,9 @@ const inlineChecks = [
       'A new agricultural building is on a TT supply. The DNO has confirmed no PE is provided. Which earth electrode arrangement is most appropriate for a low and stable Ra?',
     options: [
       'A single 1.2 m driven copper-clad steel rod inside the building',
-      'A network: two or more 1.5–2.4 m copper-clad steel rods spaced at least their length apart, connected with insulated bonding cable, plus seasonal Ra retest',
+      'A network of two or more rods spaced their length apart, with seasonal retest',
       'A buried solid copper plate of at least 0.5 m² inside the building',
-      'A connection to the rebar of the concrete floor only',
+      'A connection to the rebar of the concrete floor slab only',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'You are inspecting a domestic bathroom. Every circuit in the location has 30 mA RCD protection, all circuits meet their disconnection time, and the main protective bonding to the gas and water at the MET is sound. What does Reg 701.415.2 / Reg 415.2 tell you about supplementary bonding inside the bathroom?',
     options: [
-      'Always required — bathroom = supplementary bonding, no exceptions',
-      'May be omitted if all three conditions are met (disconnection times satisfied, 30 mA RCD on every circuit in the location, all extraneous-conductive-parts effectively connected to the MET by main bonding)',
-      'Required only on the bath taps',
-      'Optional regardless — supplementary bonding is now obsolete',
+      'Always required — a bathroom always needs supplementary bonding, no exceptions',
+      'May be omitted where all three Reg 701.415.2 conditions are met',
+      'Required only on the metallic bath taps within the location',
+      'Optional in every case — supplementary bonding is now obsolete',
     ],
     correctIndex: 1,
     explanation:
@@ -96,9 +96,9 @@ const inlineChecks = [
       'How do you decide whether a metal pipe inside a property is an extraneous-conductive-part that needs main bonding under Reg 411.3.1.2 / 544.1.1?',
     options: [
       'Bond every metal pipe in the building — better safe than sorry',
-      'Measure its insulation resistance to true earth: if ≥ 22 kΩ on a 500 V test, it is NOT an extraneous-conductive-part and bonding is unnecessary; below that threshold it is, and main bonding applies',
-      'Visually inspect — if it looks like steel, bond it',
-      'Test for continuity to the consumer unit only',
+      'Measure resistance to true earth: ≥ 22 kΩ means not extraneous, no bond',
+      'Visually inspect — if it looks like steel pipe, bond it anyway',
+      'Test only for continuity back to the consumer unit earth bar',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'What is the minimum cross-sectional area for the earthing conductor on a TN-C-S (PME) installation with an 80 A 25 mm² supply neutral, where the conductor IS protected against mechanical damage but NOT against corrosion?',
     options: [
-      '4 mm² — copper minimum where unprotected against corrosion only',
-      '16 mm² — Reg 542.3.1 / Table 54.1 + Reg 544.1.2 PME rule: 16 mm² copper where supply neutral is 35–50 mm², 10 mm² where neutral is up to 35 mm²',
-      '10 mm² — Reg 542.3.1 / Table 54.1 + the PME rule in Reg 544.1.2 sizing the earthing conductor against the supply neutral, floor 10 mm² where neutral is up to 35 mm²',
-      '25 mm² — always equal to the line conductor',
+      '4 mm² — the copper minimum where unprotected against corrosion only',
+      '16 mm² — the PME floor where the supply neutral is 35–50 mm²',
+      '10 mm² — the PME floor where the supply neutral is up to 35 mm²',
+      '25 mm² — the earthing conductor always equals the line conductor',
     ],
     correctIndex: 2,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A circuit is wired in 4 mm² line / 4 mm² CPC singles. Fault current at the fault point = 2.3 kA. Pre-arc let-through (k²t) of the upstream BS EN 60898 Type B 32 A MCB = 13 000 A²s. The cable k value (XLPE/copper) is 143. By the adiabatic equation S ≥ √(I²t)/k, is the 4 mm² CPC adequate?',
     options: [
-      'Yes — by inspection, 4 mm² is always adequate up to 32 A',
-      'Yes — calculated minimum is √13000 / 143 ≈ 0.80 mm², well below 4 mm²',
-      'No — calculation says 4 mm² is undersized; uplift to 6 mm²',
-      'Cannot determine without Zs',
+      'Yes — calculated minimum √13000 / 143 ≈ 0.80 mm², well below 4 mm²',
+      'Yes — by inspection, 4 mm² is always adequate on any circuit up to 32 A',
+      'No — the calculation shows 4 mm² is undersized; uplift to 6 mm²',
+      'Cannot be determined without first knowing the circuit Zs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 543.1.3 / Reg 543.1.4 gives the adiabatic equation S = √(I²t) / k, where I²t is the let-through energy of the protective device for the prospective fault current and k is the conductor material constant from Table 54.2 / 54.3 / 54.4. Plug in: √13000 / 143 = 113.6 / 143 ≈ 0.79 mm². The selected 4 mm² is a long way clear of the calculated minimum. The adiabatic test is mandatory whenever you are NOT using Table 54.7 selection.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'An installer fits a separate 100 A consumer-unit MET on a domestic property fed from a TN-C-S (PME) supply with a 25 mm² supply neutral. They run a 6 mm² main bonding conductor to gas and a 6 mm² main bonding conductor to water. What is the BS 7671 issue?',
     options: [
-      'No issue — 6 mm² is the bonding minimum domestically',
-      'Reg 544.1.2 (PME): minimum 10 mm² where supply neutral is up to 35 mm² — 6 mm² is undersized — observation typically C2 (potentially dangerous) on an EICR',
-      '6 mm² is fine to gas but 10 mm² is required to water only',
-      'Bonding is not required where main switching is provided',
+      'No issue — 6 mm² is the accepted domestic bonding minimum',
+      'Reg 544.1.2 (PME): 10 mm² minimum here — 6 mm² is undersized, typically C2',
+      '6 mm² is fine to the gas but 10 mm² is required to the water only',
+      'Bonding is not required at all where main switching is provided',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Which of these test results would tell you to install main protective bonding to a steel structural pillar inside a workshop?',
     options: [
-      'Insulation resistance from pillar to MET = 50 kΩ at 500 V',
-      'Insulation resistance from pillar to MET = 8 kΩ at 500 V — below the GN8 22 kΩ threshold so the pillar is an extraneous-conductive-part and Reg 411.3.1.2 / 544.1.1 require main bonding',
-      'Continuity from pillar to nearest socket-outlet earth = 0.05 Ω',
-      'Visible weld to a CPC, no measurement needed',
+      'Insulation resistance from pillar to MET = 50 kΩ at 500 V (above threshold)',
+      'Continuity from pillar to the nearest socket-outlet earth = 0.05 Ω',
+      'A visible weld to a CPC, with no measurement taken at all',
+      'Insulation resistance from pillar to MET = 8 kΩ at 500 V (below 22 kΩ)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GN8 (Guidance Note 8 — Earthing & Bonding, IET) makes this objective: a metal part is extraneous if its resistance to true earth (or to the MET) is below approximately 22 kΩ at 500 V. Above that threshold the part cannot introduce a dangerous potential; below it, it can — and Reg 411.3.1.2 + Reg 544.1.1 require main protective bonding sized per Table 54.8 (PME) or 6 mm² minimum on TN-S. Continuity to a socket earth tells you nothing about whether the part is extraneous.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'A 32 A TT final circuit feeds a metal-enclosed pump motor. The earth-electrode resistance is measured Ra = 80 Ω. Which device choice satisfies Reg 411.5.3 (Ra × IΔn ≤ 50 V) for ADS within 0.4 s?',
     options: [
-      'A 100 mA general-type RCD: 80 × 0.1 = 8 V ≤ 50 V — passes the bonding limit AND is general-type S/G',
-      'A 30 mA RCD: 80 × 0.03 = 2.4 V ≤ 50 V — passes the formula AND meets 0.4 s on a TT final circuit',
-      'A 300 mA RCD only: 80 × 0.3 = 24 V ≤ 50 V — passes',
-      'A 32 A Type B MCB on its own: at Ra = 80 Ω, fault current is too low to clear in 0.4 s, so an OPD alone cannot deliver ADS on TT',
+      'A 100 mA general-type RCD: 80 × 0.1 = 8 V ≤ 50 V — passes the formula',
+      'A 30 mA RCD: 80 × 0.03 = 2.4 V ≤ 50 V — passes and meets 0.4 s',
+      'A 300 mA RCD only: 80 × 0.3 = 24 V ≤ 50 V — passes the formula',
+      'A 32 A Type B MCB alone: at Ra = 80 Ω cannot clear within 0.4 s',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'For supplementary equipotential bonding (Reg 415.2.1) connecting two exposed-conductive-parts together, what is the minimum cross-sectional area where the conductor is NOT mechanically protected and is sheathed copper?',
     options: [
-      '1.5 mm² — domestic minimum',
-      '2.5 mm² protected against mechanical damage; 4 mm² where unprotected — Reg 544.2',
-      '6 mm² — equal to main bonding',
-      '10 mm² — equal to PME bonding',
+      '4 mm² where unprotected (2.5 mm² where protected) — Reg 544.2',
+      '1.5 mm² — the general domestic minimum for bonding',
+      '6 mm² — always equal to the main bonding conductor',
+      '10 mm² — always equal to the PME main bonding size',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 415.2.1 directs you to Reg 544.2 for the supplementary bonding cross-sectional area. The floor is 2.5 mm² copper where mechanical protection is provided, 4 mm² copper where it is not. The conductor must connect either two exposed-conductive-parts, two extraneous-conductive-parts, or an exposed-conductive-part to an extraneous-conductive-part. Continuity to the MET is verified post-install: R must be such that R ≤ 50 V / Ia.',
   },
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'An EICR identifies that the existing earthing conductor on a 1980s domestic TN-C-S property is 6 mm² copper, the supply neutral is 25 mm². Reg 544.1.2 requires 10 mm² minimum for bonding on PME, and Reg 542.3.1 + Reg 544.1.2 likewise size the earthing conductor. What is the correct EICR observation?',
     options: [
-      'No code — historical compliance is fine',
-      'C3 (improvement recommended) — under-sized earthing conductor on PME is a deviation from current edition, recommended uplift to 10 mm²',
-      'C2 (potentially dangerous) — under-sized earthing conductor on PME means the conductor may not survive a PEN fault current, warranting urgent remedial',
-      'C1 (danger present) — disconnect immediately',
+      'No code — historical compliance at time of install is fine',
+      'C3 (improvement recommended) — a deviation, recommend uplift to 10 mm²',
+      'C2 (potentially dangerous) — may not survive a PEN fault current',
+      'C1 (danger present) — disconnect the installation immediately',
     ],
     correctAnswer: 2,
     explanation:

@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'push-vs-pull',
     question: 'Why is pushing generally safer than pulling when moving a load?',
     options: [
-      'Pushing uses less energy than pulling',
       'Pushing gives better visibility, allows use of body weight, and keeps the load ahead of you',
+      'Pushing uses less energy than pulling',
       'Pulling is only dangerous if the load weighs more than 20 kg',
       'There is no difference &mdash; pushing and pulling carry the same risk',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Pushing is generally safer than pulling for several reasons: you can see where you are going, you can use your body weight to help move the load, the load is ahead of you (reducing the risk of it running over your feet), and the forces on your lower back are typically lower. The HSE recommends pushing over pulling wherever possible.',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       'According to HSE guidance, what is the approximate maximum sustained pushing force for men?',
     options: [
       'Approximately 5 kg of force',
-      'Approximately 10 kg of force',
       'Approximately 20 kg of force',
       'Approximately 30 kg of force',
+      'Approximately 10 kg of force',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'HSE guidance indicates that a sustained (keeping-going) force for pushing or pulling should not exceed approximately 10 kg of force for men and 7 kg for women. The initial (starting) force can be higher &mdash; approximately 20 kg for men and 15 kg for women &mdash; because more force is needed to overcome static friction and get the load moving.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is an advantage of pushing over pulling?',
     options: [
-      'Pulling uses more energy than pushing',
       'You can see where you are going and use your body weight to assist',
+      'Pulling uses more energy than pushing',
       'Pushing allows you to move faster',
       'There is no advantage &mdash; both are equally safe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pushing offers several safety advantages: better forward visibility, the ability to use body weight to help move the load, lower forces on the lumbar spine, and the load being ahead of you rather than behind. The HSE recommends pushing over pulling wherever the task allows.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: 'Why does a seized or poorly maintained castor increase manual handling risk?',
     options: [
       'It makes the load look unprofessional',
-      'It dramatically increases the force needed to move the load, increasing strain on the handler',
       'It only matters if the load weighs more than 50 kg',
       'It causes the load to make excessive noise',
+      'It dramatically increases the force needed to move the load, increasing strain on the handler',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A seized or poorly maintained castor can double or triple the force required to move a load on wheels. This increased force is transferred directly to the handler&rsquo;s arms, shoulders, and lower back. Regular maintenance of wheels, castors, and bearings is a simple but highly effective way to reduce manual handling risk. Always report faulty equipment.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
       'Which of the following best reduces friction when moving a heavy load across a smooth floor?',
     options: [
       'Wetting the floor to make it slippery',
-      'Using rollers, trolleys, or furniture slides under the load',
       'Dragging the load as quickly as possible',
       'Tilting the load onto one edge and sliding it',
+      'Using rollers, trolleys, or furniture slides under the load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rollers, trolleys, and furniture slides reduce the friction between the load and the floor by replacing sliding friction with rolling friction, which requires far less force. Wetting the floor creates a slip hazard. Tilting the load concentrates all the weight on a small area, which can damage both the floor and the load, and creates instability. Always use appropriate mechanical aids.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'When using a sack truck or hand truck, what technique reduces the effort needed to tilt the load back?',
     options: [
-      'Jerk the handle backwards as hard as possible',
       'Use a foot brace &mdash; place your foot against the base plate and pull the handle towards you smoothly',
+      'Jerk the handle backwards as hard as possible',
       'Lift the entire truck and load off the ground',
       'Ask a colleague to push the bottom of the load while you pull the handle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Using the foot brace technique (placing your foot against the base plate of the sack truck) provides leverage that significantly reduces the effort needed to tilt the load back onto the wheels. The base plate acts as a fulcrum, and your foot prevents it from sliding. Always tilt the load smoothly and steadily &mdash; never jerk the handle, as this can cause the load to shift or the truck to tip sideways.',
   },

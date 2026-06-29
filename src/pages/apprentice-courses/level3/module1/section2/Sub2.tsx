@@ -43,10 +43,10 @@ const checks = [
     question:
       "The fire alarm sounds during your work in a commercial unit. Your tools are in the work area, the customer is asking you 'is this real?', and your van keys are at the muster point. What do you do?",
     options: [
-      "Disposable filtering facepiece masks rely on a tight face seal to filter the air. Facial hair (stubble or beard) inside the seal area allows leakage past the seal — typically 10-20% of inhaled air bypasses the filter. The mask is no longer providing the rated protection. INDG479 (HSE guidance on RPE fit testing) is explicit that disposable masks are not suitable for bearded workers — they need a powered air-purifying respirator (PAPR) with a loose-fitting hood.",
-      "The manufacturer's instructions — BS 7671 Reg 510.3 explicitly requires equipment to be selected and erected taking account of those instructions. 'How it's always been done' isn't a defence under BS 7671 or in a warranty claim. If you genuinely think the instructions are wrong (rare), the right response is to contact the manufacturer in writing and seek written clarification before deviating.",
-      "Microgeneration Certification Scheme — a UK-government-backed certification scheme for installers and products of micro-generation. MCS is required to access most consumer financial schemes (including the Smart Export Guarantee) and is in practice mandatory for any commercial domestic install.",
-      "Treat every fire alarm as real until proven otherwise. Stop work, leave tools where they are, ensure the customer evacuates with you, walk the planned escape route to the muster point, and await account-for. Re-entry only when the fire-marshal / building manager declares the all-clear. Tools and van keys can be retrieved later; the alarm response cannot be re-done.",
+      "Carry on working but stay alert — most alarms are false, so wait until you can smell smoke or see flames yourself before you stop work and decide whether to leave the area.",
+      "Pack up and secure your tools, then collect your van keys from the muster point on the way out, so nothing of value is lost or damaged during the evacuation.",
+      "Reassure the customer it is probably a test or false alarm to keep them calm, then finish the task you are part-way through so you don't have to re-do it before you both leave together.",
+      "Treat every alarm as real. Stop, leave tools, bring the customer with you, walk the planned route to the muster point and await account-for. Re-enter only on the fire-marshal's all-clear; tools can be retrieved later.",
     ],
     correctIndex: 3,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       "A small fire breaks out in a customer's CU during your work. You can see flames inside the consumer unit. What's the L3-grade sequence?",
     options: [
-      "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
-      "(1) Isolate the supply at the meter or cut-out if safely accessible (NOT by reaching into the burning CU). (2) Evacuate the area — yourself and any non-employees. (3) Use a CO2 or dry powder extinguisher ONLY if trained, the fire is small, the route to a safe exit is behind you, and you can do so without putting yourself at risk. (4) 999. (5) Stay outside; await fire service. Don't restore power. Preserve the scene.",
-      "Politely answer their direct factual questions about your work (yes I locked off, here's the test cert, here's the RAMS in my pocket), do not speculate or guess, do not lie under any circumstances, and ask them to give you a moment to fetch your supervisor. HSE inspectors have legal powers under HASAWA s.20 to question anyone on site — refusing to answer is an offence — but you're not expected to speak for the company.",
-      "Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone",
+      "Throw a bucket of water over the consumer unit straight away to knock the flames down before they can spread to the surrounding fabric and the timber behind the board.",
+      "Isolate at the meter/cut-out if safely accessible (not in the burning CU), evacuate, use a CO2 or dry-powder extinguisher only if trained with a small fire and the exit behind you, call 999, stay out and preserve the scene.",
+      "Reach into the consumer unit and pull the burning RCBOs and tails out by hand to remove the fuel from the fire, then dampen the area down once the burning parts are clear of the board.",
+      "Leave the supply switched on so the protective devices keep working, and aim a foam extinguisher directly into the consumer unit to smother the flames at their source.",
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "Fire service arrives at the building you've evacuated from. As the senior person from your firm on site, what's the L3 expectation when they ask 'is anyone still inside?'",
     options: [
-      "Typical route: TAQA L3 (assessor qualification) — start doing some assessor work to test fit. Then L3 Award in Education and Training (introductory teaching qualification). College hires you part-time as a sessional lecturer; you teach evening classes. Convert to DET (L5 Diploma) over 1-2 years to become full lecturer. Many colleges fund the conversion if you commit to a permanent role.",
-      "To take reasonable care for the health and safety of self and others, and to co-operate with the employer's safety arrangements. In RAMS terms that means reading the document, following the written method, raising defects in the document, and not working outside the documented controls. 'Following orders' is no defence to an s.7 prosecution.",
-      "Reg 644.1.1 — 'Upon completion of inspection and testing of an installation or an addition or alteration to an installation, an Electrical Installation Certificate based on the model in Appendix 6, together with a Schedule of Inspections (or Schedule of Items Inspected) and a Schedule of Test Results, shall be given to the person ordering the work.'",
-      "Provide what you actually KNOW. From the muster account-for: who arrived at the muster, who didn't, last known location of any missing persons. Don't speculate. If you can identify a specific person who's unaccounted for and approximately where they were last seen, say so clearly. The fire service will not enter on speculation but they will use accurate information to direct rescue.",
+      "Tell them everyone is out so they don't waste time searching the building — it is better to give a reassuring answer quickly than to risk delaying their entry with uncertainty.",
+      "Say you're not sure and refer them entirely to the building manager, since giving the fire service any information yourself is not your place and could confuse their search.",
+      "Offer to go back inside yourself for a quick sweep before the crew commit, so they have confirmed information about who is still in the building and where.",
+      "Provide only what you actually know from the muster account-for: who arrived, who didn't, and the last known location of anyone missing. Don't speculate — accurate information directs rescue; a guess sends them into danger for no one.",
     ],
     correctIndex: 3,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the appropriate response to a fire alarm in a building you don't know well?",
     options: [
-      "Circuit ID, conductor csa (live + cpc), reference method, OCPD type/rating, R1+R2 (or R2), insulation resistance, polarity, Zs, RCD operating current and trip time, plus AFDD where fitted",
-      "Stop work, leave tools, follow the planned escape route (identified during your dynamic risk assessment on arrival) to the muster point, ensure non-employees evacuate with you, await account-for and the all-clear from the responsible person.",
-      "When the risk assessment identifies that employees are exposed to a substance linked to an identifiable disease or adverse health effect, and there is a reasonable likelihood of it occurring",
-      "Graphical symbols for diagrams — the recognised symbol set for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, lamps, instruments and most building-services components used on UK electrical drawings.",
+      "Carry on working until someone in authority comes to confirm it is a genuine fire rather than a test, so you don't lose time stopping for what is probably a false alarm.",
+      "Stop, leave tools, follow the planned escape route to the muster point, bring any non-employees with you, and await account-for and the all-clear from the responsible person.",
+      "Find the alarm panel first and silence it so you can investigate where the signal came from and decide for yourself whether the building genuinely needs to be cleared.",
+      "Gather your tools and materials together so nothing is lost or damaged, then make your way out of the building at your own pace once everything is packed away.",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: "What are the 5 fire-extinguisher classes and their colour codes (UK BS EN 3)?",
     options: [
-      "Brings the installed systems to life — energising, testing, setting parameters, demonstrating compliance, and signing the system over to the client. On a commercial project commissioning is a distinct phase after the install: the Commissioning Engineer runs the test sequence, configures the BMS, programmes the panels, sets the protection settings and produces the commissioning records that go in the O&M manual.",
-      "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
-      "Class A (solids — wood, paper, fabric) — Water (red label, all-red body legacy / red with white panel modern); Class B (flammable liquids) — Foam (cream label) or CO2 (black label); Class C (flammable gases) — Dry powder (blue label); Class D (metals) — specialist dry powder; Class F (cooking oils) — wet chemical (yellow label). Plus electrical fires (no class letter — addressed by CO2 or dry powder, never water).",
-      "Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news",
+      "Class A (solids) — CO2 (black); Class B (liquids) — water (red); Class C (gases) — foam (cream); Class D (metals) — water (red); Class F (cooking oils) — dry powder (blue).",
+      "Class A (solids) — wet chemical (yellow); Class B (liquids) — water (red); Class C (electrical) — foam (cream); Class D (gases) — CO2 (black); Class F (metals) — dry powder (blue).",
+      "Class A (solids) — water (red); Class B (flammable liquids) — foam (cream) or CO2 (black); Class C (flammable gases) — dry powder (blue); Class D (metals) — specialist dry powder; Class F (cooking oils) — wet chemical (yellow). Electrical fires have no class letter — CO2 or dry powder, never water.",
+      "Class A (solids) — foam (cream); Class B (liquids) — dry powder (blue); Class C (electrical) — water (red); Class D (cooking oils) — CO2 (black); Class F (metals) — wet chemical (yellow).",
     ],
     correctAnswer: 2,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 3,
     question: "What's the responsible person's duty during a fire-alarm evacuation?",
     options: [
-      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
-      "The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from 'occurrence' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.",
-      "The MSCEIT measures actual ability through performance-based tasks with consensus or expert scoring, while self-report measures assess perceived competence — meaning someone could score high on self-report but low on ability, revealing a self-awareness gap",
-      "Lead or coordinate the evacuation per the building's fire-safety strategy, ensure everyone exits via planned routes, account for personnel at the muster point, liaise with the fire service when they arrive, prevent re-entry until all-clear given. Defined under the Regulatory Reform (Fire Safety) Order 2005.",
+      "Stay at their desk to keep the business running and protect equipment and records, since most alarms are false and a full evacuation each time would be hugely disruptive to the organisation.",
+      "Wait for the fire service to arrive and take charge of the situation before anyone is asked to leave, because the decision to evacuate a whole building rests with the attending crew.",
+      "Personally search every room for the source of the fire to confirm it is genuine before deciding whether an evacuation of the building is actually necessary.",
+      "Lead or coordinate the evacuation per the building's fire strategy, ensure everyone exits by planned routes, account for personnel at the muster, liaise with the fire service and prevent re-entry until the all-clear (RRFSO 2005).",
     ],
     correctAnswer: 3,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: "When can you safely use an extinguisher on a small fire?",
     options: [
-      "Only when (a) you're trained in extinguisher use; (b) the fire is small (waste-bin sized); (c) you can identify the correct extinguisher class for the fire; (d) the route to a safe exit is behind you (you don't have to pass the fire to escape); (e) you can do so without risking yourself; (f) someone else has called 999 or is doing so. Otherwise EVACUATE.",
-      "Knowing where the emergency gas isolation valve sits before work starts means you (or any trade in the property) can shut the gas down quickly if there is a leak — including a leak you might cause by chasing into a concealed pipe. It is part of the 'services' family of hazards and forms part of a defensible safe-system-of-work record.",
-      "Most electricians take a 1-day refresher course within 3-6 months of an amendment, then sit the updated 2382 within 12 months. CPS schemes typically expect QS-named individuals to be current within 12 months. Working without updated knowledge means signing certificates against outdated standards — both a competence concern and a scheme compliance risk.",
-      "Accessible WC cubicle with: door switch reachable from wheelchair, light switch within reach, mirror at appropriate height, occupancy indicator, emergency pull-cord (red, reaching the floor, with a visible-from-corridor strobe and audible alarm at reception), and slow-acting timer on lights to avoid trapping users in darkness.",
+      "Only when you're trained, the fire is small (waste-bin sized), you have the correct extinguisher class, the exit is behind you, you're not at risk, and 999 is being called. Otherwise evacuate.",
+      "Whenever an extinguisher is within reach, because tackling any fire in its first minute is always safer than waiting for the fire service to arrive and deal with it.",
+      "Only after the building has been fully evacuated and the attending fire service has given you explicit permission to re-enter and help them tackle the remaining fire.",
+      "As long as you grab the nearest extinguisher and act quickly, since the class of extinguisher does not matter much for a small fire that has been caught early.",
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "What's a 'PEEP' (Personal Emergency Evacuation Plan)?",
     options: [
-      "Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.",
-      "A bespoke evacuation plan for a person with a disability or specific need who cannot use the standard evacuation route unaided. Required under the Equality Act 2010 and embedded in fire safety arrangements under RRFSO 2005. Covers refuge points (typically protected lobbies for wheelchair users), designated buddies, communication aids and re-entry sequence.",
-      "Read it, follow it, sign on, work to the controls and steps as written, and flag anything on site that doesn't match what the document describes. Writing RAMS is a Level 3 / 4 / supervisor competency — at Level 2 you're a reader and follower of RAMS, and a flagger when reality doesn't match.",
-      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
+      "A pre-task safety briefing given to every operative before they start a high-risk activity such as work at height or entry into a confined space, covering the hazards and controls.",
+      "A bespoke evacuation plan for a person who cannot use the standard route unaided. Required under the Equality Act 2010 and RRFSO 2005; covers refuge points, designated buddies, communication aids and re-entry.",
+      "A personal record an apprentice keeps of the site-specific emergency procedures they have been inducted into, signed off by the supervisor at each new site they work on.",
+      "A plan showing the location of every extinguisher, fire-alarm call point and emergency exit throughout a commercial building, used to brief new staff during their induction.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "What does the Regulatory Reform (Fire Safety) Order 2005 require?",
     options: [
-      "Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour",
-      "Although the PD's primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.",
-      "Requires the 'responsible person' (employer / building owner / occupier) to undertake a fire risk assessment, implement and maintain general fire precautions, provide adequate means of escape, fire detection and alarm, fire fighting equipment, and information / instruction / training to relevant persons. Enforced by the Fire and Rescue Service.",
-      "Yes — Building Regulations Part P. New circuits and CU replacements in dwellings are notifiable. The handyman should have either been on a competent person scheme (self-certifying) or notified Local Authority Building Control before starting. Safe work doesn't excuse the notification breach.",
+      "It requires every electrical installation to be inspected and tested to BS 7671 at least once every five years in all workplaces and rented premises, enforced by the local authority.",
+      "It places a duty on every worker to report fire hazards they notice to the principal contractor, sitting alongside the worker co-operation duties set out in CDM 2015.",
+      "It requires the 'responsible person' to carry out a fire risk assessment and provide and maintain means of escape, detection, alarm and fire-fighting equipment plus information and training. Enforced by the Fire and Rescue Service.",
+      "It sets the design and installation standards for emergency lighting and fire-alarm systems in non-domestic buildings, consolidating and replacing BS 5266 and BS 5839.",
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: "What's the L3 supervisor's role during a building evacuation?",
     options: [
-      "Employer to provide PPE where risks cannot be adequately controlled by other means; PPE must be suitable, properly maintained, properly used, with information / instruction / training. 2022 amendment extended duties to cover limb (b) workers (workers under arrangements that aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t employment contracts).",
-      "A brief walkthrough explaining what the certificate covers, where the consumer unit is, how to test the RCDs (using the test buttons), the recommended retest date, and where to find the documentation if they sell the property.",
-      "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
-      "Account-for personnel from the firm; ensure customers / visitors in your care have evacuated; liaise with the building's responsible person and fire-marshal at the muster point; provide accurate information to fire service if asked; prevent re-entry; preserve the scene afterwards if relevant to your firm's work.",
+      "Take charge of the whole building's evacuation, overriding the building's responsible person where necessary and directing all occupants — staff, visitors and other trades — to the nearest exits.",
+      "Return to the work area to isolate and make the electrical installation safe first, then join the rest of the team at the muster point once the equipment has been left in a safe state.",
+      "Wait by the van for the fire service to arrive and leave the muster-point account entirely to the building's own staff, since they know the occupants and the building far better than you do.",
+      "Account for your firm's personnel, ensure customers/visitors in your care have evacuated, liaise with the responsible person and fire-marshal, give the fire service accurate information if asked, and prevent re-entry.",
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: "After an emergency event, what evidence should the L3 supervisor preserve?",
     options: [
-      "Photos of the scene as it was when evacuated; identity and contact of witnesses; written first-hand account from yourself and any colleagues; equipment positions; any recordings (CCTV near you); customer / building-manager contact information; any fault you noted that may have caused or contributed; tool and instrument condition before and after.",
-      "Within 15 days of the incident — Reg 4(2). The over-7-day injury is one where the worker is incapacitated for more than 7 consecutive days (excluding the day of the accident) and unable to perform their normal duties. The day-of-incident counting trips firms up — the count starts the day AFTER.",
-      "Conditionally yes — but only after the installer verifies and documents that the heating unit complies with Regulation 412.2.1.1 (Class II equipment type-tested and marked). Only when compliance with 412.2.1.1 is demonstrated may the mesh specified in Reg 753.411.3.2 be omitted. Verbal assurance is not acceptance — the documentary evidence of 412.2.1.1 conformity must be in the install file.",
-      "Sanitary conveniences and washing facilities with hot and cold running water, drinking water, rest areas with seating and facilities for preparing hot drinks, and changing and storage facilities — all maintained in a clean and orderly condition",
+      "Photos of the scene as evacuated, witness identities and contacts, a written first-hand account, equipment positions, any nearby CCTV, building-manager contacts, and any fault that may have contributed.",
+      "Nothing beyond getting the team back to productive work — once the fire service has given the all-clear the event is closed and preserving evidence is the building owner's job, not the firm's.",
+      "Only the customer's signature confirming the work is complete and that they are happy for the firm to leave site, since that signed sign-off is the single document the firm needs to close the job after an event.",
+      "Just a verbal report to the office at the end of the day is enough; written records and photographs are only worth taking for fatal incidents or where the HSE has already announced it will investigate.",
     ],
     correctAnswer: 0,
     explanation:

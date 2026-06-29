@@ -21,12 +21,12 @@ const quizQuestions: QuizQuestionType[] = [
     id: 2,
     question: 'When must initial verification be carried out on a new electrical installation?',
     options: [
-      'Within 6 months of completion',
       'Before the installation is put into service',
+      'Within 6 months of completion',
       'After the first year of operation',
       'Only if requested by the client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Initial verification must be carried out before an installation is put into service to ensure it complies with BS 7671 and is safe for use.',
   },
@@ -50,11 +50,11 @@ const quizQuestions: QuizQuestionType[] = [
       'What triggers the requirement for an Electrical Installation Condition Report (EICR)?',
     options: [
       'Only when selling a property',
-      'Change of occupancy, insurance requirements, or landlord obligations',
       'Every 10 years regardless of circumstances',
       'Only when electrical faults are evident',
+      'Change of occupancy, insurance requirements, or landlord obligations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EICRs may be required for various reasons including change of occupancy, insurance requirements, landlord legal obligations, or as part of due diligence processes.',
   },
@@ -71,8 +71,8 @@ const quizQuestions: QuizQuestionType[] = [
     id: 6,
     question:
       'For agricultural installations, what is the recommended maximum inspection interval?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 1,
+    options: ['3 years', '1 year', '5 years', '10 years'],
+    correctAnswer: 0,
     explanation:
       'Agricultural installations are recommended for inspection every 3 years due to the harsh environmental conditions including dust, moisture, and corrosive atmospheres from livestock.',
   },
@@ -81,11 +81,11 @@ const quizQuestions: QuizQuestionType[] = [
     question: 'Which circumstance would require immediate inspection and testing?',
     options: [
       'Change of property ownership',
-      'Installation of new appliances',
       'Visible damage to electrical equipment after flooding',
+      'Installation of new appliances',
       'Routine maintenance schedule',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Visible damage to electrical equipment, especially after events like flooding, requires immediate inspection and testing before the installation can be safely re-energised.',
   },
@@ -93,8 +93,8 @@ const quizQuestions: QuizQuestionType[] = [
     id: 8,
     question:
       'For rental properties in England, landlords must ensure electrical inspections are carried out at least every:',
-    options: ['3 years', '5 years', '7 years', '10 years'],
-    correctAnswer: 1,
+    options: ['3 years', '7 years', '5 years', '10 years'],
+    correctAnswer: 2,
     explanation:
       'Since July 2020, landlords in England must ensure electrical installations in residential rental properties are inspected and tested at least every 5 years.',
   },
@@ -103,12 +103,12 @@ const quizQuestions: QuizQuestionType[] = [
     question:
       'What factor would typically reduce the inspection interval from the standard recommendation?',
     options: [
-      'Low usage of the installation',
-      'Indoor installation only',
       'High humidity or corrosive atmosphere',
+      'Indoor installation only',
+      'Low usage of the installation',
       'Modern wiring systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Environmental factors such as high humidity, corrosive atmospheres, extreme temperatures, or mechanical stress typically require more frequent inspection intervals.',
   },
@@ -118,11 +118,11 @@ const quizQuestions: QuizQuestionType[] = [
       'Following electrical installation work that requires Building Regulations notification, when should inspection and testing occur?',
     options: [
       'Within 30 days of completion',
-      'Before the work is put into service and before notification to Building Control',
       'Only if specifically requested',
       'After Building Control approval',
+      'Before the work is put into service and before notification to Building Control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inspection and testing must be completed before the installation is put into service and the results must be available before notification to Building Control, ensuring the work complies with BS 7671.',
   },

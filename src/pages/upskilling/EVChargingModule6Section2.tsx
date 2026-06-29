@@ -16,17 +16,17 @@ const quickCheckQuestions = [
   },
   {
     id: 'evcharging-m6s2-check2',
-    question: 'What is the maximum voltage drop allowed for EV charging circuits?',
-    options: ['3%', '4%', '5%', '6%'],
-    correctIndex: 2,
+    question: 'What is the maximum permitted voltage drop for an EV charging circuit (a power circuit) from the origin of the installation?',
+    options: ['5%', '3%', '4%', '6%'],
+    correctIndex: 0,
     explanation:
-      'BS 7671 allows a maximum 5% voltage drop from the origin of the installation. For a 230V supply, this is 11.5V maximum.',
+      'BS 7671 (Appendix 4 guidance to Reg 525) sets 5% for power circuits and 3% for lighting. An EV charger is a power circuit, so 5% (11.5V at 230V) applies.',
   },
   {
     id: 'evcharging-m6s2-check3',
     question: 'What torque setting is typically required for a 6mm² conductor in a terminal block?',
-    options: ['1.2 Nm', '2.5 Nm', '4.0 Nm', '6.0 Nm'],
-    correctIndex: 1,
+    options: ['1.2 Nm', '4.0 Nm', '6.0 Nm', '2.5 Nm'],
+    correctIndex: 3,
     explanation:
       "6mm² conductors typically require 2.5 Nm torque in standard terminal blocks. Always verify with the manufacturer's specifications.",
   },
@@ -61,12 +61,12 @@ const quizQuestions = [
     question:
       'A 22kW three-phase EV charger requires a 40m cable run in underground ducting. Which cable selection is most appropriate?',
     options: [
-      '6mm² 4-core Twin & Earth in conduit',
       '10mm² 4-core SWA with CW glands',
-      '4mm² flexible cable in trunking',
-      '16mm² single-core cables in separate ducts',
+      '6mm² 4-core Twin & Earth clipped in conduit',
+      '4mm² 5-core flexible cable run in trunking',
+      '16mm² single-core cables drawn into separate ducts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '10mm² 4-core SWA provides adequate current capacity (57A > 32A per phase), mechanical protection for underground installation, and proper earth continuity via the steel wire armour.',
   },

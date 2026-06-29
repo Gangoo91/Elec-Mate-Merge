@@ -39,10 +39,10 @@ const checks = [
     question:
       'On site, what visual clue most reliably says “this is a series circuit”?',
     options: [
-      'A standardised document reporting verified environmental impacts of a product',
-      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
+      'Several junction boxes splitting the supply to different loads',
+      'Two conductors landing on each terminal at the protective device',
       'A single chain — one cable in, one cable out at each component, no branching',
-      'Preventive maintenance based on usage patterns and manufacturer recommendations',
+      'Each load wired straight across the line and neutral rails',
     ],
     correctIndex: 2,
     explanation:
@@ -67,9 +67,9 @@ const checks = [
     question:
       'You meet a network with R₁ in series with [R₂ parallel R₃]. What’s the FIRST step in finding the total resistance?',
     options: [
-      'Significantly increases temperature requiring derating',
-      'At the lowest recommended level as specified by the manufacturer',
-      '"Do as I do" is more powerful than "do as I say"',
+      'Add R₁ to R₂ first, then deal with R₃ separately',
+      'Add all three resistances together as if they were in series',
+      'Work out the total current before touching any resistance',
       'Reduce R₂ parallel R₃ to a single equivalent resistor first',
     ],
     correctIndex: 3,
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'You can recognise a parallel circuit by…',
     options: [
-      'Circulating currents induced in the iron core',
-      'Correct direction change and mechanical/electrical interlock',
+      'The same current flowing through every component',
+      'One open circuit switching off every load at once',
       'Each load operating independently of the others',
-      'Consider test conditions and environment',
+      'A single conductor in and out of each component',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'Before opening accessories to trace circuit branches, the FIRST thing you do is…',
     options: [
-      'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
-      'A tangible or intangible output produced as a result of project work',
+      'Open every accessory first to see how it is wired',
+      'Measure the voltage at each terminal while still live',
       'Carry out safe isolation — prove the tester on a known live source, isolate, lock-off, test dead',
-      'Hazard identification, risk evaluation, control measures, review processes',
+      'Switch off only the lighting circuit and leave the rest live',
     ],
     correctAnswer: 2,
     explanation:

@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'lagging-current',
     question: 'In which type of circuit does current lag behind voltage?',
     options: [
-      'Inductive',
       'Open circuit',
       'Purely resistive',
+      'Inductive',
       'Purely capacitive',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "In inductive circuits (motors, transformers, fluorescent ballasts), current lags voltage because the inductor opposes changes in current flow. This is remembered by 'ELI' - voltage (E) leads current (I) in inductors (L).",
   },
@@ -60,11 +60,11 @@ const quickCheckQuestions = [
     question: 'What does the length of a phasor represent?',
     options: [
       'Phase angle',
+      'RMS magnitude',
       'Frequency',
       'Time period',
-      'RMS magnitude',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'The length (magnitude) of a phasor represents the RMS value of the quantity (voltage or current). The angle represents the phase relationship, and the phasor rotates at the supply frequency.',
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'power-factor-angle',
     question: 'If power factor is 0.8 lagging, what is the phase angle?',
     options: [
-      '36.87 degrees',
       '53.13 degrees',
       '45 degrees',
       '60 degrees',
+      '36.87 degrees',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       "Power factor = cos(phi), so phi = arccos(0.8) = 36.87 degrees. 'Lagging' indicates current lags voltage, typical of inductive loads like motors.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is phase difference in an AC circuit?',
     options: [
-      'To protect cable insulation from sharp edges',
+      'The difference in peak values between voltage and current',
       'The angular displacement between voltage and current waveforms',
-      '1 major injury : 29 minor injuries : 300 near-misses',
-      'You could miss critical safety information and risk accidents',
+      'The ratio of reactance to resistance in the circuit',
+      'The difference in frequency between voltage and current',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What happens to a three-phase motor if two phases are swapped?',
     options: [
-      'The contract (e.g., JCT or NEC)',
-      'AC, pulsating DC, and smooth DC',
+      'It draws double its normal full load current',
+      'It fails to start and stalls at standstill',
       'It runs in reverse direction',
-      'Family history of depression',
+      'It runs at half its rated speed',
     ],
     correctAnswer: 2,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What is the resultant of two equal phasors at 90 degrees to each other?',
     options: [
       'Square root of 2 times magnitude at 45 degrees',
-      'Until the reading stabilises (typically 1 minute)',
-      'Because natural light distribution varies across the space',
-      'Keep communications cables separate from mains power cables',
+      'Twice the magnitude at 90 degrees',
+      'Zero, because they cancel each other out',
+      'Equal to one phasor magnitude at 0 degrees',
     ],
     correctAnswer: 0,
     explanation:

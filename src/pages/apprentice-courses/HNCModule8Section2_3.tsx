@@ -81,10 +81,10 @@ const quizQuestions = [
     question:
       'Which blade configuration on a centrifugal fan provides the highest efficiency for clean air applications?',
     options: [
-      'Volt-free contacts or BACnet/Modbus',
+      'Forward-curved blades',
       'Backward-curved or backward-inclined blades',
-      'No F-gas qualified installer required for installation',
-      'During the design stage (RIBA Stage 2)',
+      'Radial (paddle) blades',
+      'Straight propeller blades',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     id: 3,
     question: "What does the term 'stall' mean in relation to axial fans?",
     options: [
-      'Parabolic - pressure proportional to flow squared',
-      'Higher efficiency across the speed range, especially at part load',
-      'Reduced mass flow rate due to lower air density',
+      'The fan reaching its maximum possible flow rate',
+      'The motor overheating and tripping its overload protection',
+      'A loss of drive belt tension causing the impeller to slow',
       'Airflow separation from the blades causing unstable operation',
     ],
     correctAnswer: 3,
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of EC (electronically commutated) motors over AC induction motors for fans?',
     options: [
-      'Airflow separation from the blades causing unstable operation',
+      'They require no electrical supply to operate',
       'Higher efficiency across the speed range, especially at part load',
-      'Parabolic - pressure proportional to flow squared',
-      'They combine characteristics of axial and centrifugal fans',
+      'They produce far higher pressure than any AC motor',
+      'They eliminate the need for any fan blades',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'Under ErP (Energy-related Products) Lot 6, which component efficiency is regulated for fans?',
     options: [
-      'Flow increases but less than double due to system curve',
-      'Motor power (W) ÷ airflow (l/s)',
+      'Only the bare impeller efficiency in isolation',
+      'Only the electric motor efficiency in isolation',
       'Complete fan unit efficiency including motor',
-      'Reduced mass flow rate due to lower air density',
+      'Only the drive belt and bearing losses',
     ],
     correctAnswer: 2,
     explanation:
@@ -242,10 +242,10 @@ const quizQuestions = [
     question:
       'In a twin-fan arrangement operating in parallel, what happens to the system duty point compared to single fan operation?',
     options: [
-      'Systems with varying resistance (damper control)',
+      'Flow exactly doubles with no change in pressure',
       'Flow increases but less than double due to system curve',
-      'Higher efficiency across the speed range, especially at part load',
-      'Airflow separation from the blades causing unstable operation',
+      'Flow remains the same but pressure doubles',
+      'Flow halves because the fans oppose each other',
     ],
     correctAnswer: 1,
     explanation:
@@ -255,10 +255,10 @@ const quizQuestions = [
     id: 14,
     question: 'The purpose of inlet guide vanes on a centrifugal fan is to:',
     options: [
-      'Higher efficiency across the speed range, especially at part load',
-      'They combine characteristics of axial and centrifugal fans',
+      'Filter particulates out of the air before the impeller',
+      'Silence the fan by absorbing sound at the inlet',
       'Provide pre-rotation to regulate airflow and improve part-load efficiency',
-      'Airflow separation from the blades causing unstable operation',
+      'Increase the maximum pressure the fan can ever produce',
     ],
     correctAnswer: 2,
     explanation:

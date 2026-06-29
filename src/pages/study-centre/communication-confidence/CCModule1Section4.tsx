@@ -37,11 +37,10 @@ const quickCheckQuestions = [
       'Under CDM 2015, who has a specific duty to ensure information is provided in a form that can be understood by those who need it?',
     options: [
       'The site labourer',
-      'The principal designer and principal contractor',
       'The HSE inspector',
-      'The client&rsquo;s solicitor',
-    ],
-    correctIndex: 1,
+      'The principal designer and principal contractor',
+      'The client&rsquo;s solicitor'],
+    correctIndex: 2,
     explanation:
       'CDM 2015 places specific duties on the principal designer (Regulation 11) and the principal contractor (Regulation 13) to ensure that information necessary for health and safety is provided, shared, and communicated in a form that can be understood by everyone who needs it. This includes considering language barriers, literacy levels, and the use of visual aids where necessary.',
   },
@@ -52,10 +51,9 @@ const quickCheckQuestions = [
     options: [
       'Speaking more loudly so everyone can hear',
       'Sending all instructions by email in English only',
-      'Using visual aids, diagrams, and pictograms alongside clear verbal instructions',
       'Assuming everyone understands because they nodded',
-    ],
-    correctIndex: 2,
+      'Using visual aids, diagrams, and pictograms alongside clear verbal instructions'],
+    correctIndex: 3,
     explanation:
       'Visual aids, diagrams, and pictograms are the most effective single strategy because they transcend language differences, reinforce verbal messages, and provide a permanent reference. HSE guidance specifically recommends combining visual communication methods with simple, clear verbal instructions on multilingual sites. Speaking more loudly does not overcome a language barrier, and assuming understanding from a nod is a dangerous perceptual error.',
   },
@@ -104,11 +102,10 @@ const quizQuestions = [
     question: 'In Shannon and Weaver&rsquo;s communication model, what does "noise" refer to?',
     options: [
       'Only loud sounds on a construction site',
-      'Any interference that distorts or prevents the message from being received as intended',
       'The tone of voice used by the sender',
-      'Background music in a meeting room',
-    ],
-    correctAnswer: 1,
+      'Any interference that distorts or prevents the message from being received as intended',
+      'Background music in a meeting room'],
+    correctAnswer: 2,
     explanation:
       'In the Shannon-Weaver model, "noise" is defined broadly as any interference that distorts or prevents the message from being accurately received. This includes physical noise (sounds, environmental interference), semantic noise (jargon, ambiguous language), and psychological noise (stress, preconceptions). It is not limited to audible sound &mdash; it encompasses anything that disrupts the communication process at any stage.',
   },
@@ -119,10 +116,9 @@ const quizQuestions = [
     options: [
       'Physical barrier',
       'Perceptual barrier',
-      'Semantic and cultural barrier',
       'Psychological barrier',
-    ],
-    correctAnswer: 2,
+      'Semantic and cultural barrier'],
+    correctAnswer: 3,
     explanation:
       'This is both a semantic barrier (the language itself prevents full understanding of the words) and a cultural barrier (different linguistic backgrounds create different frames of reference). The ILM framework recognises that language differences on multilingual sites combine semantic and cultural elements. CDM 2015 requires the principal contractor to ensure information is provided in a form workers can understand, which may include translated materials, interpreters, or visual aids.',
   },
@@ -131,12 +127,11 @@ const quizQuestions = [
     question:
       'Which of the following is an example of a perceptual barrier on a construction site?',
     options: [
-      'A fire alarm that is too quiet to hear in the workshop',
       'A supervisor who assumes a young apprentice has nothing useful to contribute to a safety discussion',
+      'A fire alarm that is too quiet to hear in the workshop',
       'A method statement written in technical jargon',
-      'Dust in the air making it hard to see hand signals',
-    ],
-    correctAnswer: 1,
+      'Dust in the air making it hard to see hand signals'],
+    correctAnswer: 0,
     explanation:
       'A perceptual barrier occurs when preconceptions, biases, or assumptions filter how someone sends or receives a message. The supervisor assuming the apprentice has nothing to contribute is a perceptual barrier based on age bias &mdash; it prevents the apprentice&rsquo;s message from being received fairly. The quiet alarm is physical, the jargon is semantic, and the dust is physical. Perceptual barriers are particularly dangerous because the person holding the bias is often unaware of it.',
   },
@@ -160,11 +155,10 @@ const quizQuestions = [
       'How does wearing ear defenders create a communication barrier, and what is the recommended mitigation?',
     options: [
       'They create a psychological barrier; the solution is to remove them during conversations',
-      'They create a physical barrier by reducing speech intelligibility; the solution is to use hand signals, visual aids, or move to a quieter area for important instructions',
       'They create a semantic barrier; the solution is to write everything down',
-      'They do not create a barrier because modern ear defenders allow normal conversation',
-    ],
-    correctAnswer: 1,
+      'They create a physical barrier by reducing speech intelligibility; the solution is to use hand signals, visual aids, or move to a quieter area for important instructions',
+      'They do not create a barrier because modern ear defenders allow normal conversation'],
+    correctAnswer: 2,
     explanation:
       'Ear defenders create a physical barrier by attenuating sound, which reduces speech intelligibility by 20&ndash;50%. The recommended mitigation is never to remove PPE, but to adapt communication methods: use pre-agreed hand signals for common instructions, use visual message boards, use two-way radio systems with ear-defender-compatible headsets, or move to a designated quiet area for detailed briefings. Some modern electronic ear defenders can amplify speech while attenuating harmful noise, but these are not yet standard on all sites.',
   },
@@ -175,10 +169,9 @@ const quizQuestions = [
     options: [
       'Physical barrier',
       'Cultural barrier',
-      'Semantic barrier (trade-specific jargon)',
       'Psychological barrier',
-    ],
-    correctAnswer: 2,
+      'Semantic barrier (trade-specific jargon)'],
+    correctAnswer: 3,
     explanation:
       'This is a semantic barrier caused by trade-specific jargon. "CPC" (circuit protective conductor) and "MET" (main earthing terminal) are standard electrical terms but are meaningless to most plumbers. Semantic barriers occur when the sender uses words, acronyms, or technical language that the receiver does not understand. The solution is to use plain language, explain technical terms when speaking to other trades, and use diagrams where possible.',
   },
@@ -187,12 +180,11 @@ const quizQuestions = [
     question:
       'Which regulation within CDM 2015 specifically requires the principal contractor to ensure welfare and communication arrangements are in place for all workers?',
     options: [
-      'Regulation 4 (Client duties)',
-      'Regulation 8 (Principal designer duties)',
       'Regulation 13 (Principal contractor duties)',
-      'Regulation 22 (Welfare facilities)',
-    ],
-    correctAnswer: 2,
+      'Regulation 8 (Principal designer duties)',
+      'Regulation 4 (Client duties)',
+      'Regulation 22 (Welfare facilities)'],
+    correctAnswer: 0,
     explanation:
       'Regulation 13 of CDM 2015 sets out the duties of the principal contractor, which include ensuring that information is provided to every worker on site in a comprehensible form, that arrangements are in place for cooperation and coordination, and that workers are consulted on health and safety matters. While Regulation 4 covers client duties, Regulation 8 covers the principal designer, and Regulation 22 covers welfare facilities, it is Regulation 13 that specifically addresses the principal contractor&rsquo;s duty to ensure communication reaches all workers.',
   },

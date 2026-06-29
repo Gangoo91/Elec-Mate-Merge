@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'compression-rate',
     question: 'What is the correct compression rate for adult CPR?',
     options: [
+      '100&ndash;120 per minute',
       '60&ndash;80 per minute',
       '80&ndash;100 per minute',
-      '100&ndash;120 per minute',
       '120&ndash;140 per minute',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The Resuscitation Council UK 2021 guidelines (updated 2025) recommend a compression rate of 100&ndash;120 per minute for adult CPR. A useful aid is to push to the beat of &ldquo;Stayin&rsquo; Alive&rdquo; by the Bee Gees, which has a tempo of approximately 104 beats per minute.',
   },
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
     question: 'What should you do if you see agonal breathing in an unresponsive person?',
     options: [
       'Place them in the recovery position and monitor',
-      'Wait to see if their breathing improves',
       'Start CPR immediately &mdash; agonal breathing is not normal breathing',
+      'Wait to see if their breathing improves',
       'Give rescue breaths only, without compressions',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Agonal breathing (irregular, infrequent gasps that may sound like snoring or groaning) is present in up to 40% of cardiac arrests. It is NOT normal breathing. An unresponsive person with agonal breathing should be treated as being in cardiac arrest &mdash; start CPR immediately and call 999.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 1,
     question: 'What are the four links in the Chain of Survival?',
     options: [
-      'Call 999, CPR, defibrillation, hospital transfer',
       'Early recognition and call for help, early CPR, early defibrillation, post-resuscitation care',
+      'Call 999, CPR, defibrillation, hospital transfer',
       'Danger assessment, airway management, rescue breaths, chest compressions',
       'Scene safety, primary survey, secondary survey, handover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Chain of Survival consists of four links: (1) Early recognition and call for help, (2) Early CPR to buy time, (3) Early defibrillation to restart the heart, and (4) Post-resuscitation care to improve outcomes. Each link must be strong for the best chance of survival.',
   },
@@ -119,11 +119,11 @@ const quizQuestions = [
     question: 'Where should you place your hands for adult chest compressions?',
     options: [
       'On the upper half of the breastbone, near the collarbones',
-      'On the lower half of the breastbone, in the centre of the chest',
       'On the left side of the chest, directly over the heart',
       'On the abdomen, just below the ribcage',
+      'On the lower half of the breastbone, in the centre of the chest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Place the heel of one hand on the centre of the chest, on the lower half of the breastbone (sternum). Place your other hand on top and interlock your fingers. Keep your arms straight and push down vertically using your body weight.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is agonal breathing?',
     options: [
+      'Irregular, infrequent gasps that may sound like snoring or groaning',
       'Rapid, shallow breathing that occurs during a panic attack',
       'Slow, deep breathing that occurs during sleep',
-      'Irregular, infrequent gasps that may sound like snoring or groaning',
       'Wheezing caused by a narrowed airway',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Agonal breathing consists of irregular, infrequent gasps that may sound like snoring, groaning, or gasping. It is present in up to 40% of cardiac arrests and is NOT normal breathing. It is caused by the brainstem&rsquo;s dying reflex. An unresponsive person with agonal breathing should be treated as being in cardiac arrest.',
   },
@@ -146,11 +146,11 @@ const quizQuestions = [
       'According to UK statistics, approximately what is the survival rate for out-of-hospital cardiac arrest without bystander CPR?',
     options: [
       'Approximately 1&ndash;2%',
-      'Approximately 8&ndash;10%',
       'Approximately 25&ndash;30%',
       'Approximately 50%',
+      'Approximately 8&ndash;10%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The overall survival rate for out-of-hospital cardiac arrest in the UK is approximately 8&ndash;10%. However, bystander CPR can double or triple survival chances, and the use of an AED within 3&ndash;5 minutes can increase survival to 50&ndash;70%. Without any intervention, survival drops by approximately 10% for every minute that passes.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
     question: 'When performing CPR on a pregnant woman, what modification should you consider?',
     options: [
       'Do not perform CPR on pregnant women &mdash; wait for paramedics',
-      'Use a hand position slightly higher on the breastbone and apply a left lateral tilt if possible',
       'Perform compressions on the abdomen instead of the chest',
+      'Use a hand position slightly higher on the breastbone and apply a left lateral tilt if possible',
       'Give rescue breaths only, without chest compressions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CPR should always be performed on a pregnant woman in cardiac arrest. The hand position may need to be slightly higher on the breastbone to account for the displaced diaphragm. If possible, manually tilt the casualty to the left (left lateral tilt) to relieve pressure on the inferior vena cava from the uterus, which improves blood return to the heart.',
   },

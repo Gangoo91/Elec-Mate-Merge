@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 722.55 — what does it require for an EV charging point’s supply circuit?',
     options: [
-      'Share circuit with garage lighting',
-      'A dedicated final circuit. The wallbox does NOT share its circuit with other loads (no socket-outlets, no lighting, no other appliances on the same circuit). One way in the consumer unit, one cable to the wallbox, one RCBO',
-      'Multiple loads acceptable if under 32 A',
-      'No dedicated circuit needed',
+      'The charge point may share a circuit with the garage lighting if a 30 mA RCD protects the combined circuit',
+      'A dedicated final circuit — one way, one cable, one RCBO, with no other loads on the circuit',
+      'Any arrangement is acceptable as long as the total connected load on the shared circuit stays below 32 A',
+      'No dedicated circuit below 7.4 kW; the charge point may be spurred from a ring final circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'A 7.4 kW single-phase Mode 3 wallbox draws 32 A continuous. Reg 311.1 max demand sized; Reg 433 overload protection. What cable size is typical for a ~10 m run in conduit / trunking?',
     options: [
-      '1.5 mm² T+E',
-      '6 mm² T+E (or 4 mm² SWA in some routes) — 32 A continuous load needs adequate cable cross-section. 6 mm² in conduit with reasonable bunching gives ~32-41 A current-carrying capacity (table 4D5 / Method C); voltage drop on a ~10 m run at 32 A stays comfortably under 5%. Some installs use 4 mm² SWA outdoor; some 10 mm² for long runs',
-      '2.5 mm² always',
-      '25 mm² SWA',
+      '1.5 mm² T+E — sufficient because the wallbox limits its draw and the cable only carries current intermittently',
+      '6 mm² T+E (or 4 mm² SWA on some routes) — adequate cross-section for 32 A continuous with voltage drop under 5%',
+      '2.5 mm² T+E in all cases — the standard 32 A size, regardless of run length or installation method',
+      '25 mm² SWA — sized to match the meter tails so the wallbox circuit shares the main supply rating',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Reg 722.311.201 — what does it permit?',
     options: [
-      'Nothing',
-      'Load curtailment — automatic OR manual disconnection of loads — may be taken into account when determining the maximum demand of the installation or part thereof. This lets the designer recognise that a smart wallbox will throttle its draw down when the rest of the house is at peak load, reducing the effective max demand on the supply',
-      'Diversity factors only',
-      'Only for commercial',
+      'It permits a fixed 0.4 diversity factor to be applied to the EV charger when calculating maximum demand',
+      'Load curtailment — automatic or manual disconnection of loads — may be considered in determining maximum demand',
+      'It allows the EV circuit to be omitted from the maximum demand calculation where a smart meter is fitted',
+      'It applies only to commercial premises with multiple charge points, not to a single domestic wallbox',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Isolation discipline at the consumer unit for an EV circuit — what should be in place?',
     options: [
-      'Customer’s call',
-      'A readily-accessible, clearly-identified means of isolation for the EV circuit, typically the dedicated RCBO in the consumer unit OR a separate isolator. Cert evidence bundle records the isolation point location, current rating, and labelling',
-      'No isolator',
-      'Only emergency switching',
+      'It is left to the customer to decide whether an isolation point is provided for the EV circuit',
+      'A readily-accessible, clearly-identified means of isolation — the dedicated RCBO or a separate isolator',
+      'No separate isolation is needed because the main switch at the consumer unit covers the EV circuit',
+      'Only emergency switching is required at the wallbox; a dedicated means of isolation is not part of the install',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A 7.4 kW wallbox is being installed on a customer’s consumer unit that currently has 95 A peak draw measured over 7 days (electric shower, kettle, oven, lighting). DNO main supply is 100 A. Will the wallbox push the install over capacity?',
     options: [
-      'Yes — refuse the install',
-      'Naively: 95 A + 32 A = 127 A — would exceed the 100 A supply. But Reg 722.311.201 permits load curtailment (manual or automatic) to be considered. Solution: install the wallbox with DLM (dynamic load management) that throttles EV charge rate when household draw is high — the DLM-enabled max demand becomes 95 A peak (EV throttled to fit). Cert evidence bundle records the DLM configuration and Reg 722.311.201 rationale',
-      'Just upgrade to a 3-phase supply',
-      'Install the wallbox at 22 kW for more capacity',
+      'Yes — 95 A + 32 A exceeds 100 A, so refuse the job unless the customer first pays for a DNO supply upgrade',
+      'Apply a 0.4 diversity factor to the charger, dropping its contribution to ~13 A to bring the total within 100 A',
+      'Install with DLM, throttling the EV charge rate when household draw is high so the max demand stays in budget',
+      'Fit the wallbox at 22 kW three-phase, spreading the load across phases to avoid the single-phase limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Common UK 2025-26 install scenario: 100 A single-phase supply with high household peak load + wanting to add a 32 A EV charger. Reg 722.311.201 is the regulatory route — DLM (dynamic load management) hardware reads the main-supply current and throttles the EV charge rate down when household demand is high. The EV charges at full 32 A overnight when household is low; throttled to perhaps 6-13 A during evening peak. Cert evidence bundle records the DLM configuration, the calculated max demand under DLM, and the Reg 722.311.201 reference. Standard wallbox brands with DLM: MyEnergi Zappi, Wallbox Pulsar Plus, Hypervolt Home 3 Pro.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'A customer wants a 7 kW wallbox installed on the same circuit as their existing garage lighting and one socket-outlet. The customer argues this saves cable cost. What does the installer say?',
     options: [
-      'OK if customer signs a waiver',
-      'No — Reg 722.55 requires a dedicated final circuit. The wallbox cannot share its circuit with lighting or socket-outlets. The 32 A continuous EV charge cycle would: (1) stress the shared circuit with prolonged sustained current; (2) the Type A/B + RDC-DD protective architecture is specified for the wallbox alone; (3) isolation discipline gets confused when the customer expects to be able to use the socket while the EV is charging. Quote the dedicated circuit; explain the regulatory requirement',
-      'Yes — saves cable',
-      'Yes if under 16 A total',
+      'Acceptable if the shared circuit stays under 16 A, since the EV rarely draws full current with the lights on',
+      'No — Reg 722.55 requires a dedicated final circuit; the wallbox cannot share with lighting or socket-outlets',
+      'Acceptable if the customer signs a waiver accepting the shared circuit and the departure from BS 7671',
+      'Acceptable as long as the shared circuit is protected by a 30 mA RCD covering the added EV load on the same way',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'For a 7.4 kW Mode 3 wallbox at ~15 m cable run from the CU to the wallbox, what is the typical cable size and method?',
     options: [
-      '1 mm² in cavity',
-      '6 mm² or 10 mm² T+E (depending on installation method and grouping). 32 A continuous + voltage-drop limit (< 5% on the final circuit) + the installation method per Appendix 4. 6 mm² typical for ~10 m clipped direct; 10 mm² for longer runs or where the cable shares conduit with other circuits. SWA (4 mm² or 6 mm²) common for outdoor sections',
-      '25 mm² always',
-      '0.75 mm² flex',
+      '2.5 mm² T+E — the size used for a 32 A ring final circuit, which already carries 32 A so it suits the wallbox',
+      '4 mm² flex on a plug-and-socket connection, since flex handles the cable strain at the wallbox better than T+E',
+      '16 mm² T+E in every case, matching the meter tails so the wallbox circuit is never the supply’s weak point',
+      '6 mm² or 10 mm² T+E, chosen for 32 A continuous and voltage drop by installation method and grouping per Appendix 4',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '32 A continuous load + voltage-drop limit drives the cable size. 6 mm² T+E clipped direct (Method C in Appendix 4 Table 4D5) gives ~41 A current carrying capacity — adequate for 32 A with margin. Voltage drop on 6 mm² over 15 m at 32 A: ~2.2% on T+E — well within the 5% final-circuit limit. Longer runs (20-30 m) often upsize to 10 mm² for headroom; runs through cavity insulation derate per Appendix 4. Outdoor section frequently uses 6 mm² SWA for mechanical protection + UV resistance. Cert evidence bundle records the cable calculation including installation method, grouping, ambient, and voltage drop.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'A customer’s consumer unit has no spare ways and no space for a sub-distribution board. They want a 7 kW wallbox. What is the install approach?',
     options: [
-      'Refuse — impossible',
-      'Replace or upgrade the consumer unit to one with spare ways, OR install a sub-board fed from a Henley block on the meter tails. The new way then provides the dedicated EV final circuit per Reg 722.55. Cert evidence bundle records the CU upgrade or sub-board addition + the EV circuit assignment',
-      'Share an existing way',
-      'Run from the meter directly',
+      'Refuse the job — a full consumer unit means no EV charger without rewiring the whole property',
+      'Upgrade the consumer unit, or fit a sub-board from a Henley block, to provide the dedicated EV final circuit',
+      'Free up a way by combining two existing lighting circuits onto one RCBO, then use the spare way for the wallbox',
+      'Connect the wallbox to the meter tails ahead of the consumer unit, with an in-line fuse as the only protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'Reg 722.311.201 vs Reg 311.1 — what is the relationship for EV circuit sizing?',
     options: [
-      'Same thing',
-      'Reg 311.1 generally requires max demand to be determined and forbids using diversity as a means of load curtailment. Reg 722.311.201 is a specific EV-circuit carve-out that permits load curtailment (automatic OR manual disconnection) to be considered in max demand for the installation or part thereof. The carve-out recognises that DLM hardware actively engineers the curtailment — it’s not a paper diversity assumption',
-      'Reg 311.1 only for industrial',
-      '722.311.201 replaces 311.1',
+      'Reg 311.1 sets whole-installation max demand and the EV carve-out just applies a larger diversity factor to the charger',
+      'The EV carve-out replaces Reg 311.1 entirely once a charge point is present, so general max-demand rules drop away',
+      'Reg 311.1 forbids diversity as curtailment; the EV carve-out permits actively engineered load curtailment in max demand',
+      'Reg 311.1 applies only to industrial installs, so for domestic EV circuits the designer works from the wallbox rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 311.1 is the general max-demand regulation. It permits diversity as a calculation aid but explicitly forbids using diversity as a means of load curtailment. Reg 722.311.201 is the EV-specific carve-out — permits load curtailment (manual or automatic disconnection) to be considered in max demand. The distinction: diversity = paper assumption about peak coincidence; load curtailment = active hardware enforcement of non-coincidence. DLM hardware (in the wallbox or as a separate clamp meter + contactor) is the actuator that makes Reg 722.311.201 honest. Cert evidence bundle records the DLM configuration as the regulatory underpinning.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'A 7 kW Mode 3 wallbox cable runs grouped in shared trunking with five other final circuits to the kitchen / utility area. What does the cable sizing need to account for?',
     options: [
-      'Nothing — bunching is already in the table',
-      'Cable grouping derating per Appendix 4 Table 4C1 — 6 grouped cables derates the current-carrying capacity (factor ~0.57). 6 mm² T+E Method 102 baseline ~32-34 A × 0.57 = ~18-19 A — INADEQUATE for 32 A continuous. Upsize to 10 mm² (~46 A × 0.57 = ~26 A — still tight) or route the EV cable on its own (clipped direct / separate conduit) to avoid the grouping derating. Cert evidence bundle records the grouping calculation',
-      'Use 1.5 mm²',
-      'Ignore the other circuits',
+      'Nothing extra — the Appendix 4 tabulated capacity already allows for cables run together in trunking',
+      'Grouping derating per Appendix 4 Table 4C1 — six grouped cables (~0.57) push the EV cable to upsize or be routed separately',
+      'Only ambient temperature, since grouping affects voltage drop but not the cable’s current-carrying capacity',
+      'Apply the grouping factor to the other five circuits but not the EV cable, since a continuous load is exempt',
     ],
     correctAnswer: 1,
     explanation:

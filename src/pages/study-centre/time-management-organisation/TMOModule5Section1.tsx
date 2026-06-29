@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'According to James Clear, identity-based habits focus on "I am someone who..." rather than "I want to..." Why is this distinction important?',
     options: [
       'It sounds more professional when speaking to clients',
-      'Identity-based habits are easier to remember because they are shorter sentences',
       'When a behaviour becomes part of your identity, you are motivated by who you are rather than by external outcomes — making the habit more resilient',
+      'Identity-based habits are easier to remember because they are shorter sentences',
       'There is no meaningful difference; both approaches produce identical results',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Clear argues that the most durable habits are those tied to identity rather than outcomes. "I want to be more organised" is an outcome-based goal that depends on willpower. "I am someone who plans tomorrow before leaving site" is an identity statement — every time you do it, you reinforce your self-image as an organised professional. Identity-based habits survive bad days, setbacks, and low motivation because they are about who you are, not just what you want.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       "James Clear's four-step habit loop, as described in Atomic Habits (2018), consists of:",
     options: [
-      'Trigger, action, outcome, reflection',
       'Cue, craving, response, reward',
+      'Trigger, action, outcome, reflection',
       'Stimulus, behaviour, reinforcement, repetition',
       'Awareness, intention, execution, evaluation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Clear's model expands Charles Duhigg's three-step loop (cue, routine, reward) into four stages: cue (the trigger that initiates the behaviour), craving (the motivational force behind it), response (the actual habit you perform), and reward (the benefit you gain). Each stage maps to one of the 4 Laws of Behaviour Change, giving you a specific lever to pull when building or breaking any habit.",
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
       'The 4 Laws of Behaviour Change, which map to the four stages of the habit loop, are:',
     options: [
       'Make it visible, make it desirable, make it simple, make it rewarding',
-      'Make it obvious, make it attractive, make it easy, make it satisfying',
       'Make it clear, make it fun, make it quick, make it profitable',
+      'Make it obvious, make it attractive, make it easy, make it satisfying',
       'Make it memorable, make it exciting, make it habitual, make it measurable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 4 Laws map directly to the habit loop: (1) Make it obvious = improve the cue, (2) Make it attractive = enhance the craving, (3) Make it easy = simplify the response, (4) Make it satisfying = increase the reward. To break a bad habit, you invert each law: make it invisible, unattractive, difficult, and unsatisfying. This framework gives you a systematic approach to engineering any behaviour change.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
       'An electrician uses habit stacking to build a new routine: "After I park the van at home, I spend 10 minutes planning tomorrow." This technique works because:',
     options: [
       'Parking the van is the most relaxing part of the day, so the electrician is in a good mood',
-      'It links the new behaviour to an existing, reliable habit, leveraging the neural pathways already established for the anchor behaviour',
       'It forces the electrician to stay in the van, reducing distractions',
       'Habit stacking only works in the evening, not at other times of the day',
+      'It links the new behaviour to an existing, reliable habit, leveraging the neural pathways already established for the anchor behaviour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Habit stacking, a concept popularised by BJ Fogg and refined by James Clear, works by pairing a new desired behaviour with an existing automatic behaviour. The existing behaviour (parking the van) acts as a reliable cue because it already has strong neural pathways. The new behaviour (planning tomorrow) piggybacks on those pathways rather than requiring a brand new trigger. The key is choosing an anchor habit that is 100% reliable and occurs at a natural transition point in the day.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'The 1% rule demonstrates the power of compound improvement. If you improve by 1% every day for a year, you will be approximately:',
     options: [
-      '3.65 times better (1% multiplied by 365 days)',
-      '12 times better',
       '37 times better (1.01 to the power of 365)',
+      '12 times better',
+      '3.65 times better (1% multiplied by 365 days)',
       '365 times better',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The mathematical formula is 1.01 raised to the power of 365, which equals approximately 37.78. This is not addition (which would give 4.65); it is compounding. Each 1% improvement builds on the previous day's improved baseline, creating exponential growth. The inverse is equally powerful: 0.99 to the power of 365 equals approximately 0.03 — getting 1% worse each day effectively reduces you to near-zero. This is why James Clear argues that habits are the compound interest of self-improvement.",
   },
@@ -187,11 +187,11 @@ const quizQuestions = [
       'BJ Fogg\'s concept of "Tiny Habits" suggests that when starting a new habit, you should:',
     options: [
       'Set ambitious targets to maximise motivation and push yourself',
-      'Make the initial version of the habit so small it takes less than 2 minutes, then scale up gradually',
       'Only practise the habit on days when you feel motivated',
       'Wait until you have a full week free to dedicate to building the habit properly',
+      'Make the initial version of the habit so small it takes less than 2 minutes, then scale up gradually',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BJ Fogg, a behaviour scientist at Stanford University, argues that the biggest mistake people make is starting too big. His "Tiny Habits" method prescribes making the initial version of any new habit absurdly small — so small that it is almost impossible to fail. Want to plan your day? Start by writing one task on a sticky note. Want to photograph every job? Start by taking one photo of the final result. The tiny version establishes the neural pathway and the identity ("I am someone who..."). Once the habit is automatic, you naturally expand it. Motivation is unreliable; making it tiny removes the need for motivation.',
   },

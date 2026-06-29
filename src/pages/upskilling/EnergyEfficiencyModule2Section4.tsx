@@ -64,47 +64,57 @@ const EnergyEfficiencyModule2Section4 = () => {
   const quizQuestions = [
     {
       question:
-        'What does a true RMS clamp meter measure that a standard clamp meter cannot accurately measure?',
+        'What does a true RMS clamp meter measure accurately that an average-responding meter cannot?',
       options: [
-        'DC current only',
         'Non-sinusoidal waveforms from VFDs and LED drivers',
+        'DC current only',
         'Very low currents below 1A',
-        'Voltage measurements',
+        'Voltage as well as current',
       ],
       correctAnswer: 'Non-sinusoidal waveforms from VFDs and LED drivers',
+      explanation:
+        'Average-responding meters assume a pure sine wave and under-read distorted currents. True RMS instruments measure the actual heating value, so they read VFD, LED-driver and SMPS waveforms correctly.',
     },
     {
       question:
-        'Which UK standard covers the performance requirements for electricity metering equipment?',
-      options: ['BS 7671', 'BS EN 62053 series', 'BS 5839', 'BS EN 61010'],
+        'Which standard covers the performance requirements for electricity metering equipment in the UK?',
+      options: ['BS 7671', 'BS EN 61010', 'BS EN 62053 series', 'BS 5839'],
       correctAnswer: 'BS EN 62053 series',
+      explanation:
+        'BS EN 62053 sets accuracy classes and performance for electricity meters. BS 7671 is the wiring regulations, BS EN 61010 covers test instrument safety, and BS 5839 is fire detection.',
     },
     {
       question:
         'What is the typical cost range for a professional-grade portable power analyser in the UK?',
       options: ['£50-£150', '£200-£500', '£800-£3,000', '£5,000-£10,000'],
       correctAnswer: '£800-£3,000',
+      explanation:
+        'Professional three-phase portable power/energy analysers from brands such as Fluke, Chauvin Arnoux and Hioki generally fall in the £800-£3,000 band. Below that you find basic clamps; far above it sits enterprise fixed equipment.',
     },
     {
-      question: 'What parameter does Power Factor (PF) measurement help identify?',
+      question: 'What does Power Factor (PF) measurement help identify?',
       options: [
-        'Earth fault current',
-        'Reactive power and potential for power factor correction',
+        'Earth fault current in the supply',
+        'Reactive power and the potential for power factor correction',
         'Maximum demand only',
-        'Cable temperature',
+        'Cable operating temperature',
       ],
-      correctAnswer: 'Reactive power and potential for power factor correction',
+      correctAnswer: 'Reactive power and the potential for power factor correction',
+      explanation:
+        'A low power factor reveals significant reactive power drawn by inductive loads. Identifying it lets you specify PFC capacitors to cut apparent power, demand charges and losses.',
     },
     {
       question:
-        'When installing CTs on a three-phase system, why is correct orientation (K-L marking) important?',
+        'When installing CTs on a three-phase system, why is correct orientation (P1-P2 / K-L marking) important?',
       options: [
-        'It affects the CT lifespan',
-        'It ensures correct polarity for accurate power and energy measurements',
-        'It is only important for safety',
-        'It determines the CT ratio',
+        'It affects how long the CT will last',
+        'It is purely a safety requirement',
+        'It determines the CT turns ratio',
+        'It sets the polarity needed for accurate power and energy readings',
       ],
-      correctAnswer: 'It ensures correct polarity for accurate power and energy measurements',
+      correctAnswer: 'It sets the polarity needed for accurate power and energy readings',
+      explanation:
+        'CT polarity (primary P1-P2 with secondary S1-S2) fixes the phase relationship between current and voltage. Reversed CTs give wrong sign or magnitude for real power, corrupting power-factor and energy measurements.',
     },
   ];
 

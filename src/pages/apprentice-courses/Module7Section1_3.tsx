@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the most serious direct safety risk from electrical faults?',
     options: [
-      'Red to line conductor, black to earth/CPC',
+      'A small increase in the electricity bill',
       'Electric shock and electrocution',
-      'Self-certify notifiable electrical work',
-      'They must unlock to allow free evacuation',
+      'Reduced lifespan of connected appliances',
+      'Temporary loss of supply to the circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What legal framework governs electrical safety in UK workplaces?',
     options: [
-      'Gather information about the fault symptoms',
-      'Electric vehicle charging and smart appliances',
+      'Building Regulations Part P only',
+      'BS 7671 alone, which is a legal requirement',
       'Electricity at Work Regulations 1989',
-      'No discrimination possible',
+      'Consumer Protection Act 1987',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'How can electrical faults impact business operations?',
     options: [
-      'A framework for gradual handover and extended aftercare',
-      'To identify conflicts between services before installation',
-      'Line to neutral fault (short circuit)',
+      'They reduce insurance premiums over time',
+      'They improve staff awareness of safety',
+      'They have no measurable effect on a business',
       'Cause production downtime and reputation damage',
     ],
     correctIndex: 3,
@@ -61,10 +61,10 @@ const Module7Section1_3 = () => {
       id: 1,
       question: 'What is the most serious direct safety risk from electrical faults?',
       options: [
-        'It has four terminals instead of three',
+        'Slightly higher running costs for the installation',
         'Electric shock and electrocution',
-        'Percentage of reading plus/minus digits',
-        'Red to line conductor, black to earth/CPC',
+        'Reduced brightness of connected lighting',
+        'Nuisance tripping of protective devices',
       ],
       correctAnswer: 1,
       explanation:
@@ -88,9 +88,9 @@ const Module7Section1_3 = () => {
       id: 3,
       question: 'What legal framework governs electrical safety in UK workplaces?',
       options: [
-        'Installation type, environment, and usage',
-        'Before each testing session',
-        'Repair or replace promptly',
+        'Building Regulations Part P only',
+        'BS 7671 alone, which is enforceable as law',
+        'Consumer Protection Act 1987',
         'Electricity at Work Regulations 1989',
       ],
       correctAnswer: 3,
@@ -127,10 +127,10 @@ const Module7Section1_3 = () => {
       id: 6,
       question: 'How can electrical faults impact business operations?',
       options: [
-        'To prevent disorientation and ensure safe evacuation',
-        'Leave installation in a safe state',
+        'They generally lower long-term running costs',
+        'They have no impact if the building is insured',
         'Cause production downtime and reputation damage',
-        'Ratio of 10-minute to 1-minute resistance readings',
+        'They only affect domestic, not commercial, premises',
       ],
       correctAnswer: 2,
       explanation:
@@ -140,9 +140,9 @@ const Module7Section1_3 = () => {
       id: 7,
       question: 'What is arc flash and why is it dangerous?',
       options: [
-        'You lose marks even if fault diagnosis was correct',
-        'Electromagnetic interference from nearby mains cables',
-        'Self-clearing after a short time',
+        'A brief flicker of lighting caused by voltage drop',
+        'A harmless static discharge between conductors',
+        'A slow build-up of heat in an overloaded cable',
         'An explosive release of electrical energy',
       ],
       correctAnswer: 3,
@@ -154,9 +154,9 @@ const Module7Section1_3 = () => {
       question: 'Who can be held personally liable for electrical safety breaches?',
       options: [
         'Any employee with electrical responsibilities',
-        'That there is no breakdown between conductors or to earth',
-        'Temperature sensors were miswired',
-        'Higher efficiency and temperature coefficient',
+        'Only the company directors, never individual workers',
+        'Only the client who commissioned the work',
+        'Only the manufacturer of the faulty equipment',
       ],
       correctAnswer: 0,
       explanation:
@@ -166,10 +166,10 @@ const Module7Section1_3 = () => {
       id: 9,
       question: 'What should be the immediate response to discovering a serious electrical fault?',
       options: [
-        'Lunch service, dinner service, cleaning, and closed',
+        'Leave it until the next scheduled inspection',
         'Isolate the circuit and report immediately',
-        'A pre-programmed combination of lighting settings',
-        'Regulation 8 — Use of control measures',
+        'Continue working and monitor the fault',
+        'Reset the protective device and carry on',
       ],
       correctAnswer: 1,
       explanation:
@@ -179,10 +179,10 @@ const Module7Section1_3 = () => {
       id: 10,
       question: 'How do insurance companies typically respond to electrical fault-related claims?',
       options: [
-        "Isolate the circuit and implement temporary safety measures",
-        "The overhead of tracking a quick task exceeds the time to just complete it",
+        "They always pay claims in full, regardless of maintenance",
+        "They increase the premium but never refuse a claim",
         "May reduce or refuse claims if proper maintenance wasn't carried out",
-        "In controlled document systems with version control and access records",
+        "They are not permitted to consider maintenance records",
       ],
       correctAnswer: 2,
       explanation:

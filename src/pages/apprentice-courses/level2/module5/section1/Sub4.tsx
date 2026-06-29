@@ -42,10 +42,10 @@ const checks = [
     question:
       "Under CDM 2015, who appoints the Principal Designer (PD) and the Principal Contractor (PC)?",
     options: [
-      "On multi-contractor projects, the client appoints a PC who coordinates the construction phase. Responsible for the construction phase plan, site induction (Reg 13), cooperation with other contractors, prevention of unauthorised access, welfare facilities.",
-      "The Client appoints both — under CDM 2015 Reg 5(1) the Client must appoint a Principal Designer and a Principal Contractor in writing on any project involving more than one contractor. If the Client fails to make the appointments, the Client takes on those duties themselves under Reg 5(3) and (4).",
-      "Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing",
-      "No — both the metal back-box AND the metal socket faceplate are exposed-conductive-parts. Each must be connected to the CPC, normally via a fly-lead or via the fixing screws securing a metal faceplate to a metal back-box (provided that connection is verified by continuity test).",
+      "The Principal Contractor appoints the Principal Designer, and in turn the HSE appoints the Principal Contractor.",
+      "The Client appoints both in writing, on any project with more than one contractor (CDM 2015 Reg 5).",
+      "The design team appoints the Principal Designer, and the main contractor appoints the Principal Contractor.",
+      "The HSE appoints both as a condition of accepting the F10 notification submitted for the project.",
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     question:
       "Your Foreman tells you the Construction Phase Plan (CPP) for the site is 'just paperwork the boss has to write — don't worry about it'. Under CDM 2015 Reg 15 what's actually expected of you?",
     options: [
-      "Annual service is the standard, with weekly to monthly customer-side tasks. Annual: full strip-down clean, ash compartment service, auger inspection, igniter check, fan check, flue inspection, controls firmware update, performance check. Monthly customer task: empty ash pan. Weekly customer task: top up pellet hopper, check fuel feed, visual check for blockages. Pellet quality matters — high-ash or wet pellets shorten component life. Some boilers need flue cleaning more frequently than annual; chimney sweep is a specialist trade.",
-      "No. PAT (Portable Appliance Testing) is one layer of inspection — typically annual for offices, every 3 months for harsh construction-site use. PUWER Reg 5 ALSO requires user pre-use visual checks every shift AND periodic competent-person in-service inspections between PATs. A tool can pass PAT in January and develop a damaged cable in February — the user check is what catches it.",
-      "Induced voltage from a parallel cable run. Your dead lighting cable runs through the same ceiling void as the live ring final and the live shower circuit. Capacitive coupling and electromagnetic induction will leak a small voltage onto the dead conductor — it's not enough to kill on its own but it's enough to remind you the cable is in a live environment, and it can rise sharply if there's a fault on the parallel circuit.",
-      "The CPP is the Principal Contractor's plan for managing H&S during construction (CDM 2015 Reg 12). Reg 15(1)(c) puts a duty on every worker to co-operate with anyone whose duties under CDM you're affecting — that includes the PC's duty to deliver the CPP. In practice you don't have to read the whole CPP but you do have to understand the parts that affect your work (your method, your hazards, your interfaces with other trades), and you do that by attending the site induction and the toolbox talks where the CPP is briefed down to operatives.",
+      "Nothing — the Foreman is right, the CPP is purely the boss's paperwork and has no bearing on you.",
+      "You must read the entire CPP cover to cover yourself before you are allowed to start any work.",
+      "You must write your own personal version of the CPP for the specific tasks you are assigned each day.",
+      "Reg 15(1)(c) requires you to co-operate with the CPP — learn the parts affecting your work via induction and toolbox talks.",
     ],
     correctIndex: 3,
     explanation:
@@ -70,10 +70,10 @@ const checks = [
     question:
       "It's day one of a commercial fit-out. You arrive on site, sign in, and the Site Manager runs the CDM induction. What should the induction cover?",
     options: [
-      "Site rules, welfare arrangements, fire muster point, first-aid arrangements, accident and near-miss reporting routes, the Construction Phase Plan headlines, the specific hazards on this site, the PPE policy, the no-go areas, your duties as a worker under Reg 15, and any project-specific risks (asbestos survey results, live services, traffic management). The induction is the formal mechanism for transferring CDM information from the Principal Contractor to operatives joining the site.",
-      "EPR is the umbrella permitting framework for waste activities, water discharges, radioactive substances and certain installations in England and Wales. Anyone carrying, brokering, treating, transferring or disposing of waste needs the appropriate authorisation under EPR — typically a waste carrier registration (lower tier), a broker / dealer registration, or a full environmental permit for a treatment site. As an electrical contractor you most likely need a lower-tier waste carrier registration to lawfully transport your own controlled waste. Anyone you transfer waste to must hold their own appropriate authorisation.",
-      "A voltage indicator that complies with HSE Guidance Note GS38 — purpose-built for proving dead, not a multimeter. Features: physically robust, non-current-limiting fuse, finger barriers, suitable probes, low loop impedance through the indicator. A multimeter on the wrong setting can give a false dead reading; GS38 indicators are designed to fail safe.",
-      "(1) Symptoms — customer's words in quotes, timeline, conditions, what they've tried. (2) Hypothesis — what you think is wrong and why. (3) Test plan — which tests, in which order, what each will distinguish. (4) Test results — readings, with timestamps and instrument IDs. (5) Analysis — what the results confirm or refute, updated hypothesis if needed. (6) Fix plan — repair / replace decision, materials needed, expected duration. (7) Fix execution — what was done, post-fix retest readings, customer hand-back. The documentation creates the diagnostic narrative on the job sheet — defensible record of what was found and done.",
+      "Site rules, welfare, fire muster, first-aid, PPE, no-go areas, your Reg 15 duties and the project-specific hazards.",
+      "Only the fire muster point and the welfare cabin location, with everything else left for later toolbox talks.",
+      "A detailed walk-through of the cable calculations and protective device settings for the whole project.",
+      "The pay rates, holiday entitlement and grievance procedure that apply to everyone working on the site.",
     ],
     correctIndex: 0,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "What does CDM stand for and what regulations apply currently?",
     options: [
-      "A duty that all systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger. The duty applies to design, installation, modification, maintenance and use — and the scope of \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"system\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" extends to all electrical equipment, conductors and apparatus in workplaces.",
-      "Construction (Design and Management) Regulations 2015 (SI 2015/51), in force from 6 April 2015. They replaced the previous CDM Regulations 2007 and consolidated H&S responsibilities across the construction lifecycle — design, planning, construction and operation — with named duties on Client, Principal Designer, Designer, Principal Contractor, Contractor and Worker.",
-      "Shock / direct contact → EAWR Reg 4 / 13 + BS 7671. Arc-flash → EAWR Reg 4 + 14 + COSHH (combustion products) + EN 61482 PPE. Fire → EAWR + RRFSO 2005 + Approved Doc B. Secondary injury → MHSWR Reg 3 (assessment of consequence chain). Each hazard has its regulatory home.",
-      "Politely answer their direct factual questions about your work (yes I locked off, here's the test cert, here's the RAMS in my pocket), do not speculate or guess, do not lie under any circumstances, and ask them to give you a moment to fetch your supervisor. HSE inspectors have legal powers under HASAWA s.20 to question anyone on site — refusing to answer is an offence — but you're not expected to speak for the company.",
+      "Control of Dangerous Materials Regulations 2015 — the framework for storing and handling hazardous substances on site.",
+      "Construction (Design and Management) Regulations 2015, in force from 6 April 2015, replacing CDM 2007.",
+      "Construction Design and Maintenance Rules 2007 — the older regulations still in force for domestic projects only.",
+      "Certified Design and Management Standards 2015 — a voluntary industry scheme rather than a legal requirement.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       "When is a project notifiable to the HSE under CDM 2015?",
     options: [
-      "A highly sensitive system that continuously draws air samples through a pipe network to a central laser detection chamber, providing very early warning of smoke — used in data centres, clean rooms, heritage buildings, and high-value environments",
-      "Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork",
-      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
-      "Primary emotions are the initial, automatic response (e.g., fear), while secondary emotions are reactions to primary emotions (e.g., anger about feeling afraid), and understanding this distinction helps identify the true source of emotional responses",
+      "Whenever any electrical work at all is carried out, regardless of the size or duration of the project.",
+      "Only when the project value exceeds £100,000, regardless of how long it lasts or how many people work on it.",
+      "When it lasts over 30 working days with more than 20 workers at once, or exceeds 500 person-days (Reg 6).",
+      "Only when the HSE specifically requests notification after an incident has already occurred on the site.",
     ],
     correctAnswer: 2,
     explanation:
@@ -117,10 +117,10 @@ const quizQuestions = [
     question:
       "What's the Principal Designer's primary duty under CDM 2015 Reg 11?",
     options: [
-      "At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there's a clear, justifiable reason for the retention period.",
-      "That every employer appoint one or more competent persons to assist them in undertaking the measures needed to comply with the requirements and prohibitions imposed on them by the relevant statutory provisions. Often this is a designated H&S manager or external consultant.",
-      "Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation's annual turnover band (micro / small / medium / large). A 'very high culpability + Category 1 harm + large organisation' combination has produced fines well into seven figures.",
-      "To plan, manage, monitor and co-ordinate matters relating to H&S during the pre-construction phase. The PD identifies, eliminates or controls foreseeable risks via the design, ensures designers comply with their Reg 9 duties, prepares the pre-construction information and liaises with the Principal Contractor for the duration of the appointment.",
+      "To run the construction phase day to day and to write and maintain the Construction Phase Plan.",
+      "To inspect and sign off the finished installation before the building is handed over to the client.",
+      "To notify the HSE of the project on the F10 and to provide the welfare facilities on site.",
+      "To plan, manage, monitor and co-ordinate H&S during pre-construction, and prepare the pre-construction information.",
     ],
     correctAnswer: 3,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     question:
       "What's the Principal Contractor's primary duty under CDM 2015 Reg 12?",
     options: [
-      "To plan, manage and monitor the construction phase and co-ordinate matters relating to it to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety. The PC produces the Construction Phase Plan and updates it as the project evolves.",
-      "Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply",
-      "The contractor (employer) for failing to provide adequate training under HSWA s.2 and WAH Regs; the supervisor for directing untrained persons; and potentially the principal contractor for failing to monitor under CDM 2015",
-      "Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology",
+      "To plan, manage, monitor and co-ordinate the construction phase, producing and updating the Construction Phase Plan.",
+      "To co-ordinate H&S in the design and to prepare the pre-construction information before any work starts.",
+      "To appoint the Principal Designer and the Client representative on behalf of the project team.",
+      "To notify the HSE on the F10 form and to arrange the building's final inspection and sign-off.",
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "Under CDM 2015 Reg 15, what are the three named duties on a Worker?",
     options: [
-      "Installation in accordance with the manufacturer's instructions, including torque values, conductor preparation, environmental conditions and any product registration the manufacturer requires. Deviation gives the manufacturer grounds to void the warranty. Some manufacturers (especially EV charger and solar manufacturers) require product registration within a specified period after install.",
-      "(a) Don't carry out construction work unless you have the skills, knowledge, training and experience to do it safely (or are in the process of obtaining them); (b) report to the person in control anything you're aware of that's likely to endanger H&S; (c) co-operate with any other person working on or in connection with the project to enable that person to comply with their duties.",
-      "The Electrical Contractors' Association — the largest trade association for electrical contractors in England, Wales and Northern Ireland. Membership signals quality, access to ECA technical guidance, ECA insurance products, ECA Apprentice scheme (for member firms taking on apprentices), and joint co-running of the JIB. ECA is not a CPS — you still need separate CPS membership for Part P self-certification.",
-      "Cooperate fully with your employer's investigation. Provide a calm, factual account of what happened — what you did, when, with what materials, against what specification, with what test results, with what documentation. Don't speculate about the customer's motives. Don't post about it on social media. Don't approach the customer directly. The employer will manage the customer relationship; your job is to give your employer the evidence base they need to respond.",
+      "Provide your own PPE, hold a current ECS card, and insure yourself against any harm you cause on site.",
+      "Only work within your competence, report hazards to the person in control, and co-operate with others.",
+      "Attend every toolbox talk, sign the register each day, and report all near-misses within ten working days.",
+      "Write your own risk assessment, keep a daily site diary, and maintain your own personal CPD records.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       "What's the Construction Phase Plan (CPP) and who writes it?",
     options: [
-      "Hazardous waste - double-bagged (red inner with asbestos label, clear outer with hazardous waste label), accompanied by Hazardous Waste Consignment Note, transported by licensed asbestos waste carrier, disposed of at permitted asbestos waste facility.",
-      "Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding",
-      "The Construction Phase Plan is the Principal Contractor's plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.",
-      "The battery and the PV strings both connect to the DC side of one inverter. PV power can charge the battery without first being inverted to AC and back, giving roughly 3–5 % higher round-trip efficiency than AC-coupling. Best for new PV plus battery installs that go in together.",
+      "It is the design team's plan for the electrical and mechanical layout, written by the Principal Designer.",
+      "It is the client's record of the project budget and the programme, written and owned by the Project Manager.",
+      "It is the Principal Contractor's plan for managing H&S throughout construction (Reg 12), updated as the job evolves.",
+      "It is the legacy document handed to the building owner at completion, compiled by the Principal Designer.",
     ],
     correctAnswer: 2,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       "What's the Pre-Construction Information (PCI) and who writes it?",
     options: [
-      "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
-      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
-      "Safety Data Sheet — a 16-section document required for all hazardous substances by the CLP Regulation (EU 1272/2008, retained as UK law after Brexit). The SDS is the manufacturer's authoritative source of hazard, handling, exposure and first-aid information for the product. Required by COSHH 2002 Reg 12 to be available to anyone handling the substance.",
-      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
+      "It is the Principal Contractor's day-to-day H&S management plan, written once construction has started.",
+      "It is the set of as-built drawings handed to the client at the end of the project by the design team.",
+      "It is the apprentice's own running record of hazards spotted on site, written up at the end of each shift.",
+      "It is the H&S information the Client, with the PD's help, gives designers and contractors before they start.",
     ],
     correctAnswer: 3,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     question:
       "Apprentice = Worker under CDM 2015. Does that mean apprentices have the same Reg 15 duties as a fully-qualified electrician?",
     options: [
-      "Yes — apprentices are workers and Reg 15 applies in full. The competence duty in Reg 15(1)(a) is satisfied because apprentices are 'in the process of obtaining' the competence (which is why they're always supervised). The report-hazards duty (Reg 15(1)(b)) and the co-operation duty (Reg 15(1)(c)) apply identically to apprentices and to fully-qualified electricians.",
-      "Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready",
-      "Annual calibration to a UKAS-traceable standard, with a calibration certificate kept in the firm's instrument register. Test instruments drift over time — a multimeter that reads 235 V on a 230 V supply, or an insulation tester that reads 200 MΩ on a 100 MΩ test, will produce wrong test results that fail BS 7671 612.x. Most certification schemes (NICEIC, NAPIT) require evidence of in-date calibration as part of audit. Sub 1.5 covers test instruments in detail.",
-      "Per Reg 643.7.2 (paraphrased): \\\\\\\"If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified.\\\\\\\" So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.",
+      "Yes — Reg 15 applies in full, with the competence duty met by being 'in the process of obtaining' competence.",
+      "No — Reg 15 only applies once an apprentice has passed AM2 and become a fully qualified electrician.",
+      "No — apprentices are exempt from Reg 15 because they always work under an Approved Electrician's supervision.",
+      "Only partly — apprentices owe the competence duty but not the report-hazards or the co-operation duties.",
     ],
     correctAnswer: 0,
     explanation:

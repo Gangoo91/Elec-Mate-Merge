@@ -17,12 +17,12 @@ const quizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the primary risk of certification errors in electrical installations?',
     options: [
-      'Increased project costs',
       'Legal liability and safety compromise',
-      'Client dissatisfaction only',
-      'Delayed project completion',
+      'A modest increase in project costs',
+      'Client dissatisfaction with the paperwork',
+      'A short delay to project completion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Certification errors can create legal liability for electricians, compromise safety, invalidate insurance coverage, and potentially lead to accidents if defects are not properly documented.',
   },
@@ -57,12 +57,12 @@ const quizData: QuizQuestion[] = [
     question:
       'Which quality control measure is most effective for preventing certification errors?',
     options: [
-      'Using expensive test equipment',
+      'Using more expensive test equipment',
+      'Working faster to reduce the chance of mistakes',
+      'Relying on the inspector’s experience alone',
       'Peer review and systematic verification procedures',
-      'Working faster to reduce mistakes',
-      'Relying on experience alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Peer review and systematic verification procedures are the most effective prevention measures, providing independent checking of critical measurements, calculations, and documentation.',
   },
@@ -70,12 +70,12 @@ const quizData: QuizQuestion[] = [
     id: 5,
     question: 'What information must be included when recording test result errors?',
     options: [
-      'Just the correct value',
+      'Just the corrected value',
+      'Only the date the correction was made',
       'Original reading, correct value, reason for error, and corrective action',
-      'Only the date of correction',
-      'The test equipment serial number',
+      'Only the serial number of the test instrument used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Complete error correction documentation includes original reading, correct value, reason for error, corrective action taken, and verification of correction to maintain traceability.',
   },
@@ -109,12 +109,12 @@ const quizData: QuizQuestion[] = [
     id: 8,
     question: 'Which administrative error most commonly invalidates electrical certificates?',
     options: [
-      'Using blue ink instead of black',
       'Missing signatures, dates, or incorrect certificate types',
-      'Slight spelling mistakes in addresses',
+      'Using blue ink instead of black ink',
+      'Minor spelling mistakes in the property address',
       'Using abbreviated circuit descriptions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Missing signatures, incorrect dates, or using wrong certificate types are critical administrative errors that can completely invalidate certificates and create legal problems.',
   },
@@ -122,12 +122,12 @@ const quizData: QuizQuestion[] = [
     id: 9,
     question: 'How should circuit description errors be prevented during inspection?',
     options: [
-      'Copy descriptions from old certificates',
-      'Use generic descriptions for all circuits',
+      'Copy the descriptions from previous certificates',
+      'Use a single generic description for all circuits',
+      'Ask the client to describe what each circuit does',
       'Verify each circuit individually and use precise descriptions',
-      'Ask the client what each circuit does',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Each circuit must be individually verified and described precisely based on actual inspection findings, not assumptions or previous documentation which may be incorrect.',
   },

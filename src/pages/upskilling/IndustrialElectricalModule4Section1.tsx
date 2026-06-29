@@ -46,12 +46,12 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
       question:
         'During the PLC scan cycle, when are the physical inputs read into the input image table?',
       options: [
-        'Continuously throughout the entire scan',
         'At the beginning of each scan cycle',
+        'Continuously throughout the entire scan',
         'Only when the program references them',
         'At the end of each scan cycle',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'The PLC reads all physical inputs into the input image table at the START of each scan cycle. The program then works with this snapshot throughout the scan, and outputs are updated at the end. This ensures consistent data during program execution.',
     },
@@ -72,12 +72,12 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
       id: 'qc3-live-zero',
       question: 'Why do industrial analogue signals use 4-20mA instead of 0-20mA?',
       options: [
-        'To reduce power consumption',
-        'To distinguish between 0% signal and a broken wire/fault',
-        'Because sensors cannot output below 4mA',
-        'To comply with safety regulations only',
+        'To reduce power consumption on the loop',
+        'Because sensors physically cannot output below 4mA',
+        'To distinguish between a true 0% signal and a broken wire/fault',
+        'Purely to comply with safety regulations',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'The "live zero" of 4mA allows the system to distinguish between a true 0% process value (4mA) and a fault condition like a broken wire (0mA). This is critical for safety and diagnostics in industrial environments.',
     },
@@ -93,54 +93,70 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
         'Software, hardware, and firmware',
       ],
       correctAnswer: 'CPU, memory, and I/O modules',
+      explanation:
+        'A PLC is built around the CPU (which runs the program), memory (storing program and data) and I/O modules (interfacing to field devices); the other options describe peripherals or generic categories.',
     },
     {
       question: 'In Allen-Bradley addressing, what does the address I:1/5 represent?',
       options: [
-        'Output module 1, terminal 5',
         'Input module 1, bit 5',
+        'Output module 1, terminal 5',
         'Internal relay 1, contact 5',
         'Input slot 5, module 1',
       ],
       correctAnswer: 'Input module 1, bit 5',
+      explanation:
+        'In Allen-Bradley addressing I:1/5 reads as Input file, slot/module 1, bit 5 — the "I" denotes input and the number after the slash is the bit within the word.',
     },
     {
       question:
         'Which output type is best suited for switching AC loads and offers solid-state reliability?',
       options: ['Relay output', 'Transistor output (DC)', 'Triac output', 'Analogue output'],
       correctAnswer: 'Triac output',
+      explanation:
+        'A triac output switches AC loads with no moving contacts, giving solid-state reliability; transistor outputs are for DC and relays, though versatile, wear mechanically.',
     },
     {
       question: 'An NPN sensor is also known as:',
-      options: ['Sourcing sensor', 'Sinking sensor', 'Relay sensor', 'Analogue sensor'],
+      options: ['Sourcing sensor', 'Relay sensor', 'Analogue sensor', 'Sinking sensor'],
       correctAnswer: 'Sinking sensor',
+      explanation:
+        'An NPN sensor switches the load to the negative/0V rail, providing the current path, which makes it a sinking sensor (a PNP device is the sourcing equivalent).',
     },
     {
       question: 'What is the typical scan time for a modern PLC with a moderate-sized program?',
       options: ['1-5 seconds', '100-500 milliseconds', '1-50 milliseconds', '1-5 minutes'],
       correctAnswer: '1-50 milliseconds',
+      explanation:
+        'A modern PLC completes a full scan of a moderate program in the order of 1-50 milliseconds, fast enough for most control while still being a fixed cyclic delay to account for.',
     },
     {
       question:
         'For a 4-20mA analogue signal representing 0-100 degrees C, what current represents 50 degrees C?',
       options: ['10mA', '12mA', '8mA', '16mA'],
       correctAnswer: '12mA',
+      explanation:
+        'The 16mA span (4-20mA) maps to 0-100°C, so 50% of range is 4mA + (0.5 × 16mA) = 12mA.',
     },
     {
       question:
         'Which PLC type is most suitable for a large-scale application requiring future expansion?',
-      options: ['Compact/fixed PLC', 'Micro PLC', 'Modular/rack-based PLC', 'Smart relay'],
+      options: ['Compact/fixed PLC', 'Micro PLC', 'Smart relay', 'Modular/rack-based PLC'],
       correctAnswer: 'Modular/rack-based PLC',
+      explanation:
+        'A modular/rack-based PLC lets you add or swap I/O and function modules as needs grow, making it the right choice for large applications that must expand later.',
     },
     {
       question: 'What is the primary advantage of relay outputs over solid-state outputs?',
       options: [
-        'Faster switching speed',
-        'Longer lifespan',
         'Can switch AC or DC, and provides electrical isolation',
-        'Lower cost per point',
+        'Faster switching speed than solid-state',
+        'A longer operational lifespan',
+        'A lower cost per output point',
       ],
       correctAnswer: 'Can switch AC or DC, and provides electrical isolation',
+      explanation:
+        'Relay outputs use volt-free contacts, so they can switch either AC or DC loads and give galvanic isolation; solid-state outputs are faster and longer-lived but tied to one supply type.',
     },
     {
       question: 'In Siemens S7 addressing, what does %IW64 represent?',
@@ -151,12 +167,16 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
         'Timer word 64',
       ],
       correctAnswer: 'Input word at address 64',
+      explanation:
+        'In Siemens S7 syntax %IW64 means Input Word at byte address 64; "I" is input, "W" is a 16-bit word (%QW would be an output word, %MW a memory word).',
     },
     {
       question:
         'Which wire colour convention is typically used for 24VDC positive in industrial control?',
       options: ['Black', 'Blue', 'Red or Brown', 'Green'],
       correctAnswer: 'Red or Brown',
+      explanation:
+        'In industrial control panels 24VDC positive is commonly run in red or brown, with blue for the 0V/DC negative; green (or green/yellow) is reserved for protective earth.',
     },
   ];
 

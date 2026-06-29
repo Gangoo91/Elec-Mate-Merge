@@ -5,10 +5,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of emergency lighting certification?',
     options: [
-      'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
+      'To record the purchase cost of every luminaire for the client',
       'To provide legal documentation that the system meets recognised standards and establish professional accountability',
-      'Battery capacity verified (3-hour test), system labelling verified, and professional sign-off obtained',
-      'The system is considered non-compliant and non-verified, potentially preventing building occupation and invalidating insurance',
+      'To set the routine testing intervals for the building manager',
+      'To confirm the warranty period offered by the luminaire manufacturer',
     ],
     correctAnswer: 1,
     explanation:
@@ -46,9 +46,9 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     question: 'When should a Minor Works Certificate be used?',
     options: [
       'For small modifications, repairs, or additions to existing systems',
-      '110% of the largest container or 25% of the total capacity, whichever is greater',
-      'It confirms the circuit will disconnect within required time under fault',
-      'As a last resort when other controls are not reasonably practicable',
+      'For the first installation of a complete new emergency lighting scheme',
+      'For the periodic three-hour duration test of the whole system',
+      'For any work that involves adding a new distribution board',
     ],
     correctAnswer: 0,
     explanation:
@@ -84,9 +84,9 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Who must sign the commissioning certificate?',
     options: [
-      'To ensure they can support the load safely',
-      'Loop-in wiring with fault at failed light position',
-      'Clear responsibility boundaries between disciplines',
+      'The building owner and their insurance broker',
+      'The local fire authority inspecting officer alone',
+      'Only the electrician who carried out the final test',
       'The designer, installer, and verifier/commissioning engineer',
     ],
     correctAnswer: 3,
@@ -98,9 +98,9 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     question: 'Why is certification still required even if all tests have been completed?',
     options: [
       'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
-      'AGR uses a temporary guardrail system that is raised to the next level before the operative climbs up, eliminating the need for a trapdoor',
-      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
-      'The consolidated after-diversity per-phase MD plus a clearly labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'design ultimate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' figure that includes foreseeable future loads, with the staging plan attached.',
+      'Because tests are only valid if witnessed by a building control officer on the day',
+      'Because certification replaces the need for any future periodic testing',
+      'Because the manufacturer warranty is void until certificates are lodged',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What can happen if certification documents are missing?',
     options: [
-      'Battery capacity verified (3-hour test), system labelling verified, and professional sign-off obtained',
+      'The routine monthly flick test can no longer be carried out',
       'The system is considered non-compliant and non-verified, potentially preventing building occupation and invalidating insurance',
-      'To provide legal documentation that the system meets recognised standards and establish professional accountability',
-      'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
+      'The luminaires automatically revert to maintained operation',
+      'Only the battery duration needs to be re-verified before handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the Birmingham school case study, why was the system considered non-compliant?',
     options: [
-      'To provide legal documentation that the system meets recognised standards and establish professional accountability',
-      'Battery capacity verified (3-hour test), system labelling verified, and professional sign-off obtained',
+      'Because the battery duration test failed to reach the required three hours',
+      'Because several exit signs did not meet the ISO 7010 pictogram standard',
       'Because no formal commissioning certificate had been issued, despite the system being physically operational',
-      'The system is considered non-compliant and non-verified, potentially preventing building occupation and invalidating insurance',
+      'Because the wiring had not been protected by fire-rated cabling throughout',
     ],
     correctAnswer: 2,
     explanation:

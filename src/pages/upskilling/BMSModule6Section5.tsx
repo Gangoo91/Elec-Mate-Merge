@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bms6-5-qc1',
     question: 'Why must AHUs and fans be shut down during a fire alarm event?',
     options: [
-      'To save energy during emergencies',
       'To prevent the ventilation system from circulating smoke throughout the building',
+      'To save energy during emergencies',
       'To reduce noise levels for evacuation announcements',
       'To protect the equipment from damage',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'AHUs and fans must be shut down to prevent the ventilation system from circulating smoke throughout the building, which could make evacuation routes impassable and spread fire/smoke to unaffected areas.',
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What type of signal is typically used by a fire panel to trigger BMS responses?',
     options: [
       'Analogue voltage signals (0-10V)',
-      'Digital contact signals (dry contacts)',
       'Wireless radio frequency signals',
+      'Digital contact signals (dry contacts)',
       'Infrared signals',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Digital contact signals (dry contacts) are typically used. These are simple volt-free contacts that open or close to indicate alarm activation, providing a reliable and fail-safe interface.',
   },
@@ -56,12 +56,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why must BMS integrate with fire panels?',
     options: [
-      'To improve energy efficiency during normal operation',
       'To perform critical shutdowns and actions that protect life safety',
+      'To improve energy efficiency during normal operation',
       'To reduce the cost of separate fire alarm systems',
       'To simplify building maintenance schedules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BMS must integrate with fire panels to perform critical shutdowns including AHU shutdown, smoke extract activation, and access door release that protect occupants during emergencies.',
   },
@@ -83,11 +83,11 @@ const quizQuestions = [
     question: 'What is the purpose of fail-safe wiring design?',
     options: [
       'To reduce installation costs',
-      'To ensure broken circuits still generate a fire signal rather than failing silently',
       'To simplify troubleshooting',
       'To allow remote testing',
+      'To ensure broken circuits still generate a fire signal rather than failing silently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fail-safe (normally-closed) wiring ensures that if a wire breaks or connection fails, the system assumes an alarm condition rather than failing silently, maintaining safety integrity.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 5,
     question: 'What type of cables should be used for critical fire system connections?',
     options: [
-      'Standard PVC cables',
       'Fire-rated cables (PH30, PH60, or PH120)',
+      'Standard PVC cables',
       'Armoured data cables',
       'Flexible mains cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fire-rated cables (PH30, PH60, or PH120 rated) must be used for critical fire system connections to maintain circuit integrity during emergency situations.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     options: [
       'Only the BMS contractor',
       'Only the building owner',
-      'Fire safety authorities, building control, and end users',
       'Only the electrical contractor',
+      'Fire safety authorities, building control, and end users',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Joint testing should always be carried out with fire safety authorities, building control, and end users, with all tests documented with witnessed signatures.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 9,
     question: 'How often should fire-BMS integration be tested?',
     options: [
-      'Only during initial commissioning',
-      'Every five years',
       'Annually and after any modifications to either system',
+      'Every five years',
+      'Only during initial commissioning',
       'Only when problems occur',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Fire-BMS integration should be tested during initial commissioning, annually as part of fire system maintenance, after any modifications to either system, and following any building alterations.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
     question: 'What should fire panel relay contacts be rated for?',
     options: [
       'The minimum expected load',
-      'The full load current plus appropriate safety margins',
       'Standard domestic loads only',
+      'The full load current plus appropriate safety margins',
       'The same rating as lighting circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Relay contacts must be properly rated to handle the full load current of controlled equipment plus appropriate safety margins to prevent failure during emergency conditions.',
   },

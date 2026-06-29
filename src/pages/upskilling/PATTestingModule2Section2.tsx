@@ -23,35 +23,35 @@ const inlineChecks = [
     question:
       'A Class I appliance has basic insulation that has degraded — a live conductor is now in contact with the metal casing. The CPC is intact and the supply has a 16 A B-curve MCB. What happens?',
     options: [
-      'Nothing — the casing remains safe.',
-      'Fault current flows from the live conductor through the casing, through the CPC, back to earth at the MET. The fault current is high (typically hundreds of amps for a low-impedance loop), the MCB operates magnetically (instantaneous trip), and the supply is disconnected within tens of milliseconds. The user touching the casing during the fault is exposed to a momentary touch voltage limited by the CPC impedance — typically below the safe-touch threshold of 50 V ac.',
-      'The user receives a sustained shock at 230 V.',
-      'The MCB does not operate because the fault is at the equipment.',
+      'Nothing happens — the casing remains at a safe potential and the appliance keeps working.',
+      'Fault current flows through the CPC to earth, the MCB trips magnetically, supply is cut in milliseconds.',
+      'The user receives a sustained 230 V shock for as long as they remain in contact with the casing.',
+      'The MCB does not operate, because a fault inside the equipment is outside its detection range.',
     ],
     correctIndex: 1,
     explanation:
-      'This is the Class I architecture working as designed. Basic insulation fails, CPC carries the fault current, protective device disconnects within Reg 411.3.2 limits. The PE-continuity test exists specifically to verify the CPC path is intact and low-resistance — without that, the architecture silently fails.',
+      'This is the Class I architecture working as designed: basic insulation fails, the CPC carries a high fault current (typically hundreds of amps), the MCB trips instantaneously, and the supply disconnects within tens of milliseconds. Any touch voltage during the fault is limited by the CPC impedance, typically below the 50 V ac safe-touch threshold. The PE-continuity test exists to verify that CPC path is intact and low-resistance — without it, the architecture silently fails.',
   },
   {
     id: 'patm2-s2-cpcfail',
     question:
       'The same Class I appliance, but the CPC has become open-circuit at the plug terminal (loose strands not engaged). Same insulation failure occurs. What happens?',
     options: [
-      'The MCB still operates normally.',
-      'No fault current flows because the CPC is broken. The casing rises to live potential (230 V ac) and STAYS there until something else happens. The first user to touch the casing simultaneously with any earthed object is the path the fault current takes — through the user.',
-      'The RCD always saves the user.',
-      'The basic insulation provides protection on its own.',
+      'The MCB still operates normally and disconnects the supply as it would with an intact CPC.',
+      'No fault current flows; the casing rises to 230 V and stays live until a user becomes the path.',
+      'The RCD always saves the user, regardless of whether the CPC is intact or broken.',
+      'The basic insulation provides adequate protection on its own once the CPC is broken.',
     ],
     correctIndex: 1,
     explanation:
-      'CPC discontinuity is the silent killer of Class I protection. The equipment continues to function (no fuse blows, no light goes out), so the user has no warning. Only an RCD on the supply circuit, sensitive enough to detect the user becoming the fault path, would interrupt the shock. The PE-continuity test is the first line of defence against exactly this failure mode.',
+      'With the CPC open-circuit no fault current can flow, so the casing rises to live potential (230 V ac) and stays there; the first user to touch it while also in contact with an earthed object becomes the fault path. CPC discontinuity is the silent killer of Class I protection — the equipment keeps working (no fuse blows, no light goes out) with no warning. Only a sensitive supply-side RCD would interrupt the shock, and the PE-continuity test is the first line of defence against exactly this failure mode.',
   },
   {
     id: 'patm2-s2-acceptance',
     question:
       'IET CoP §15.4 acceptance for Class I PE continuity is 0.1 Ω + 1 mΩ/m of flex. For a 5 m flex, what is the maximum acceptable reading?',
-    options: ['0.1 Ω.', '0.105 Ω (0.1 + 5 × 0.001).', '0.5 Ω.', '1.0 Ω.'],
-    correctIndex: 1,
+    options: ['0.105 Ω (0.1 + 5 × 0.001).', '0.1 Ω.', '0.5 Ω.', '1.0 Ω.'],
+    correctIndex: 0,
     explanation:
       'The acceptance is 0.1 Ω contact / connection allowance + 1 mΩ/m × cable length. For 5 m: 0.1 + 5 × 0.001 = 0.105 Ω. Most practical PAT instruments display readings to 0.01 Ω resolution, and a fail at this level is a real defect — typically a loose terminal at the plug or at the equipment internal earth point.',
   },
@@ -60,14 +60,14 @@ const inlineChecks = [
     question:
       'Most modern multifunction PAT testers offer "high current" (typically 25 A) and "low current" (typically 200 mA or less) options for the PE-continuity test. When is high-current testing needed, and when is it inappropriate?',
     options: [
-      'Always use high-current.',
-      'High-current (≥ 1.5 × the equipment rating, or 25 A typical) is recommended for general Class I equipment to verify the CPC under realistic fault conditions. Low-current (200 mA typical) is appropriate for items with sensitive electronics in the CPC path (some IT equipment, some medical equipment) where 25 A could damage internal components. The IET CoP §15.4 / instrument manufacturer guidance covers when to use which.',
-      'Always use low-current.',
-      'Current does not affect the result.',
+      'Always use high-current testing, since it is the more rigorous test in every situation.',
+      'High-current verifies general Class I CPCs; low-current suits sensitive electronics in the earth path.',
+      'Always use low-current testing, as it is gentler and avoids any risk of equipment damage.',
+      'Test current makes no difference to the continuity reading, so either mode is interchangeable.',
     ],
     correctIndex: 1,
     explanation:
-      'High-current testing simulates fault conditions and reveals high-resistance joints that low-current testing might miss (a partial connection that conducts at 200 mA but heats and opens at 25 A). For most general Class I equipment, high-current is the better test. For sensitive electronics in the earth path, low-current avoids equipment damage. The instrument manual is the reference for which to use.',
+      'High-current (≥ 1.5 × the equipment rating, or 25 A typical) verifies the CPC under realistic fault conditions and reveals high-resistance joints that conduct at 200 mA but heat and open at 25 A. Low-current (200 mA typical) suits items with sensitive electronics in the CPC path (some IT and medical equipment) where 25 A could damage internal components. IET CoP §15.4 and the instrument manual are the reference for which to use.',
   },
 ];
 
@@ -76,139 +76,139 @@ const quizQuestions = [
     id: 1,
     question: 'What is the protective architecture of a Class I appliance per BS EN 61140?',
     options: [
-      'Double insulation throughout.',
-      'Basic insulation between live conductors and accessible parts, PLUS connection of every accessible conductive part to a protective conductor (CPC). Fault protection relies on rapid disconnection by the protective device when an earth fault occurs — the CPC carries the fault current, the device operates within the Reg 411.3.2 disconnection time, and the user is protected by the brief duration of the fault.',
-      'SELV supply.',
-      'Battery operation.',
+      'Basic insulation plus CPC bonding, with fault protection by automatic disconnection.',
+      'Double or reinforced insulation throughout, with no protective earth to the appliance.',
+      'A separated extra-low voltage (SELV) supply from a safety isolating transformer.',
+      'Internal battery operation, isolating the user from the mains supply entirely.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Class I uses basic insulation + CPC bonding + automatic disconnection. The three elements are interdependent: basic insulation is the first line; CPC + protective device is the second; remove either of the second-line elements and Class I protection has effectively reverted to Class 0 in fault response.',
+      'Class I uses basic insulation + CPC bonding + automatic disconnection. The three elements are interdependent: basic insulation is the first line; CPC + protective device is the second; remove either second-line element and Class I has effectively reverted to Class 0 in fault response.',
   },
   {
     id: 2,
     question: 'The PE-continuity test on a Class I appliance verifies what, specifically?',
     options: [
-      'The basic insulation is intact.',
-      "The protective conductor path from the earth pin of the plug, along the green-and-yellow conductor in the flex, through the equipment's internal earth termination, to every accessible conductive part of the equipment — is electrically continuous and of low resistance. The verification is the prerequisite for Class I fault protection to function.",
-      'The protective device is functioning.',
-      'The voltage is correct.',
+      'That the basic insulation between live conductors and accessible parts is intact.',
+      'That the protective device feeding the appliance will operate within its rated time.',
+      'That the protective conductor path to every accessible part is continuous and low-resistance.',
+      'That supply polarity at the appliance is correct and the neutral is not floating.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The PE-continuity test verifies the CPC path. The reading is the resistance of that path. A reading above the acceptance value means the path has a high-resistance link somewhere — disconnection time may extend beyond Reg 411.3.2 limits, defeating the protection.',
+      'The PE-continuity test verifies the whole CPC path — earth pin, flex CPC, internal earth termination, through to every accessible conductive part; the reading is the resistance of that path. A reading above the acceptance value means a high-resistance link exists — disconnection time may exceed Reg 411.3.2 limits, defeating the protection.',
   },
   {
     id: 3,
     question:
       'Why does the IET CoP §15.4 acceptance value for Class I PE continuity scale with cable length?',
     options: [
-      'Convention.',
-      'Because the conductor itself has a non-zero resistance per metre. The cable is part of the protective path, and longer cables contribute more resistance. The acceptance value adds a per-metre allowance (~ 1 mΩ/m for typical flex) on top of the 0.1 Ω contact allowance, so a 1 m flex passes at ≤ 0.101 Ω while a 10 m flex passes at ≤ 0.110 Ω.',
-      'Insulation resistance scales similarly.',
-      'Manufacturer preference.',
+      'Because the insulation resistance limit scales with length in the same way.',
+      'Because the flex conductor has a non-zero resistance per metre and is part of the protective path, so longer cables contribute more resistance.',
+      'Because manufacturers prefer a per-metre figure for record-keeping.',
+      'Because longer cables are more likely to suffer mechanical damage in service.',
     ],
     correctAnswer: 1,
     explanation:
-      'The cable contribution must be allowed for in the acceptance value. The 1 mΩ/m allowance is approximate and reflects typical 0.75-1.5 mm² flex; thicker conductors give less per metre and thinner give more. Modern PAT instruments calculate the acceptance value from the user-entered cable length.',
+      'The acceptance adds ~1 mΩ/m for the cable on top of the 0.1 Ω contact allowance, so a 1 m flex passes at ≤ 0.101 Ω and a 10 m flex at ≤ 0.110 Ω. Modern PAT instruments compute this from the entered cable length.',
   },
   {
     id: 4,
     question:
       'A Class I appliance has its CPC opened (broken) at the equipment internal earth point. The IR test passes, the appliance functions normally. What is the actual safety state?',
     options: [
-      'Safe — IR passed.',
-      'Unsafe. The CPC is the second line of defence (after basic insulation). With the CPC broken, the equipment has reverted to Class 0 in fault response — basic insulation alone, no protective bonding. The first failure of the basic insulation will leave the casing live with no path to disconnect. The PE-continuity test exists specifically to detect this defect; the IR test cannot.',
-      'Safe — basic insulation is sufficient.',
-      'Safe — the RCD will protect the user.',
+      'Safe — the passing IR test confirms the insulation will contain any fault.',
+      'Safe — basic insulation alone is sufficient for this portable equipment.',
+      'Safe — a supply-side RCD will always disconnect before the user is harmed.',
+      'Unsafe — with the CPC broken it has effectively reverted to Class 0.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Class I depends on a working CPC. Without it, basic insulation is the only protection — which is the Class 0 architecture, not accepted in UK practice. The PE-continuity test is the only PAT test that detects this specific defect. Skipping it on Class I equipment is a critical methodology gap.',
+      'Class I depends on a working CPC. Without it, basic insulation is the only protection — the Class 0 architecture, not accepted in UK practice. The PE-continuity test is the only PAT test that detects this specific defect; IR cannot.',
   },
   {
     id: 5,
     question:
       'A modern multifunction PAT tester typically offers high-current (~ 25 A) and low-current (~ 200 mA) PE-continuity test modes. Why offer both?',
     options: [
-      'Battery saving.',
-      'High current verifies the CPC path under simulated fault conditions, revealing high-resistance joints that low-current testing might miss (partial connections that conduct at low current but fail at high current). Low current is gentler for equipment with sensitive electronics in the earth path. Use high-current as default for general Class I; use low-current where equipment-specific guidance or visible electronics dictate.',
-      'Different mains frequencies.',
-      'Different cable types.',
+      'High current reveals high-resistance joints; low current is gentler on earth-path electronics.',
+      'High current is for three-phase appliances and low current is for single-phase appliances.',
+      'The two modes correspond to 50 Hz and 60 Hz mains supplies respectively.',
+      'High current is used for flexible flexes and low current for fixed cables.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The high-current test is the more rigorous test of CPC integrity. The low-current test is sometimes called the "gentle test" and is used to avoid damaging EMC filters, surge suppressors, or sensitive electronic components that may sit in the protective bonding path of some equipment.',
+      'High current is the more rigorous test of CPC integrity — it reveals partial connections that conduct at low current but fail at high current. Low current (the "gentle test") avoids damaging EMC filters or surge suppressors that may sit in the bonding path.',
   },
   {
     id: 6,
     question:
       'For Class I IR testing, the test probe is applied to the EARTH PIN of the plug. Why?',
     options: [
-      'Convenience.',
-      'Because in Class I equipment, every accessible conductive part is bonded to the CPC, and the CPC terminates at the earth pin of the plug. Probing the earth pin is electrically equivalent to probing every accessible conductive part of the equipment, with a single connection. The IR test then measures the basic insulation between the live conductors and the entire bonded earth network.',
-      'Convention only.',
-      'It is a Class II method.',
+      'Because the earth pin is the most convenient pin to reach on a BS 1363 plug.',
+      'Because it is the conventional Class II IR test point, applied to Class I as well.',
+      'Because every accessible part is bonded to the CPC, so the earth pin tests them all.',
+      'Because the earth pin is the only pin not energised during the IR test.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The earth pin is a single accessible test point for the entire bonded network. This is one of the practical economies of Class I — the CPC bonding ensures that every accessible conductive part is at the same potential, so testing one is testing all.',
+      'The earth pin is a single accessible test point for the entire bonded network. The CPC bonding holds every accessible conductive part at the same potential, so testing one tests all.',
   },
   {
     id: 7,
     question:
       'A 110 V CTE site transformer is itself a Class I device. The primary side is 230 V; the secondary is 110 V centre-tapped. How is its PE-continuity tested?',
     options: [
-      'Same as any Class I.',
-      "PE-continuity is measured from the earth pin of the 230 V supply plug (or from the supply-side earth terminal if hard-wired) to the metal casing of the transformer. The 110 V secondary side is centre-tapped and earthed separately at the transformer; the secondary earth is the reference for any 110 V hand tools but is not the test point for the transformer's OWN Class I CPC verification.",
-      'Test both primary and secondary together.',
-      'Skip the test on transformers.',
+      'PE-continuity is measured from the earth pin of the 230 V supply plug (or supply-side earth terminal) to the metal casing of the transformer.',
+      'PE-continuity is measured across the primary and secondary windings together in a single test.',
+      'PE-continuity is taken from the centre-tap of the 110 V secondary to the casing.',
+      'PE-continuity testing is omitted on transformers as they are double-wound.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "A 110 V CTE transformer is Class I on the supply side. Its CPC verification is on the primary side — earth pin to metal casing. The secondary-side earthing (centre-tap) is a separate function and is verified by the supply-side test of any 110 V tool plugged into the transformer outlet, with the transformer's own earth terminal as the reference.",
+      'A 110 V CTE transformer is Class I on the supply side, so its CPC verification is on the primary side — earth pin to metal casing. The secondary centre-tap earthing is a separate function verified when 110 V tools plugged into it are tested.',
   },
   {
     id: 8,
     question:
       "A Class I kettle's flex has been replaced — it had a 0.75 mm² 3-core flex, now a 1.0 mm² 3-core flex of the same length. What does this change about the PE-continuity acceptance value?",
     options: [
-      'Nothing.',
-      'The acceptance value reduces slightly because 1.0 mm² has lower resistance per metre than 0.75 mm² — but the IET CoP §15.4 acceptance allowance of 1 mΩ/m is a simplified figure that covers typical flex sizes. For PAT acceptance purposes, the 1 mΩ/m figure remains. The replacement is a positive change (lower CPC resistance), not a fail.',
-      'The kettle is now Class II.',
-      'The acceptance doubles.',
+      'The acceptance value doubles to reflect the heavier conductor cross-section.',
+      'The kettle is reclassified as Class II once the heavier flex is fitted.',
+      'The acceptance allowance is unchanged; the heavier flex simply gives a lower reading.',
+      'Nothing at all changes, because flex size has no effect on conductor resistance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Conductor csa affects resistance per metre but the IET CoP simplified acceptance allowance covers the practical range of flex sizes. The replacement to a heavier flex is improvement; the inspector verifies the replacement was correctly terminated (cord grip, all three cores fully engaged, correct fuse rating in the plug) and tests the resulting CPC path.',
+      'Conductor csa affects resistance per metre, but the simplified acceptance allowance covers the practical range of flex sizes. The heavier flex is an improvement; the inspector verifies correct termination (cord grip, cores engaged, correct fuse) and tests the resulting CPC path.',
   },
   {
     id: 9,
     question:
       'The IET CoP §15.4 acceptance value applies to "any accessible conductive part of the equipment". What if the equipment has multiple accessible conductive parts (e.g. a Class I tool with metal casing AND metal handle AND metal trim)?',
     options: [
-      'Test only one.',
-      'Each accessible conductive part should be checked. In well-designed Class I equipment all accessible conductive parts are bonded to the same internal earth point, so the readings should be similar. Significant variation between parts indicates a bonding defect — typically a part has been replaced or modified and lost its bond. The IET CoP §15.4 expects every accessible conductive part to be at low PE-resistance.',
-      'Test only the casing.',
-      'Average the readings.',
+      'Test only the main casing, as the other parts are bonded to it by design.',
+      'Average the readings taken from each accessible conductive part together.',
+      'Test only the single most accessible part, to keep the record simple.',
+      'Check each accessible part and record the worst reading.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Multiple accessible conductive parts is a checklist item, not a single test. Each part is its own test point. A reading on the casing of 0.05 Ω and a reading on the handle of 1.2 Ω indicates the handle has lost its bond — even though the casing reading on its own would pass.',
+      'Multiple accessible conductive parts means multiple test points. A casing reading of 0.05 Ω with a handle reading of 1.2 Ω shows the handle has lost its bond — even though the casing alone would pass.',
   },
   {
     id: 10,
     question:
       'Why does the IET CoP framework consider PE-continuity the SINGLE most important PAT test for Class I equipment?',
     options: [
-      'It is the easiest.',
-      'Because a CPC failure is invisible — the equipment continues to function, no fuse blows, no user warning. The only detection mechanism is an instrument test of the CPC integrity. An IR test passes regardless of CPC state. A functional test passes regardless of CPC state. Without the PE-continuity test, a degraded CPC remains undetected until it fails to disconnect a fault — at which point the failure mode is a shock injury.',
-      'It uses the most current.',
-      'It is the longest.',
+      'Because a CPC failure is invisible — only an instrument test of CPC integrity detects it.',
+      'Because it is the quickest test to perform on a modern multifunction instrument.',
+      'Because it draws the most test current and therefore stresses the appliance most.',
+      'Because it is the test most clearly documented in the appliance manufacturer manual.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The CPC is the silent backbone of Class I protection. Visible defects can be caught by user check or formal visual; CPC degradation can only be caught by the instrument test. The PE-continuity test is the load-bearing test in the Class I PAT regime.',
+      'The CPC is the silent backbone of Class I protection. IR and functional tests pass regardless of CPC state; only the PE-continuity test catches a degraded CPC before it fails to disconnect a fault. It is the load-bearing test in the Class I regime.',
   },
 ];
 

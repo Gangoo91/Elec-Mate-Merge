@@ -10,12 +10,12 @@ const quizQuestions = [
     id: 1,
     question: 'According to Cal Newport, what is the defining characteristic of deep work?',
     options: [
-      'Working for long hours without any breaks',
       'Distraction-free concentration that pushes cognitive abilities to their limit',
+      'Working for long hours without any breaks',
       'Completing as many tasks as possible in a single day',
       'Working on multiple projects simultaneously to maximise output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Newport defines deep work as professional activities performed in a state of distraction-free concentration that push your cognitive abilities to their limit. It is about the quality and depth of focus, not the quantity of hours worked.',
   },
@@ -47,10 +47,10 @@ const quizQuestions = [
     options: [
       'Completing a complex EICR report requiring sustained analysis',
       'Designing a three-phase distribution board layout',
-      'Replying to routine WhatsApp messages about job scheduling',
       'Performing insulation resistance testing across 40 circuits',
+      'Replying to routine WhatsApp messages about job scheduling',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Shallow work is logistically necessary but not cognitively demanding. Replying to routine messages, scheduling, and basic admin are shallow tasks. Complex testing, design work, and report writing all require deep concentration.',
   },
@@ -58,12 +58,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the concept of "flow state" as described by Mihaly Csikszentmihalyi?',
     options: [
-      'A state of complete mental exhaustion after prolonged work',
       'A state of optimal experience where a person is fully immersed and energised by an activity',
+      'A state of complete mental exhaustion after prolonged work',
       'A technique for scheduling tasks in chronological order',
       'A method for delegating low-priority tasks to others',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Csikszentmihalyi described flow as a state of complete immersion in an activity, where the challenge level matches the person's skill level. In flow, people experience heightened focus, lose track of time, and produce their best work.",
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
       'What is the most effective strategy for creating deep work conditions on a construction site?',
     options: [
       'Working in complete isolation with no communication for the entire day',
-      'Scheduling predetermined call-back windows and blocking focused time for complex tasks',
       'Answering every call immediately to keep clients happy',
+      'Scheduling predetermined call-back windows and blocking focused time for complex tasks',
       'Only performing deep work tasks at home after hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The most practical approach is to schedule specific windows for returning calls and messages, while blocking uninterrupted time for complex tasks. This balances responsiveness with the need for sustained focus, rather than being either completely unavailable or constantly interrupted.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
     question: 'What is the primary difference between deep work and shallow work?',
     options: [
       'Deep work takes longer; shallow work is quick',
-      'Deep work requires distraction-free cognitive effort; shallow work is logistically necessary but not mentally demanding',
       'Deep work is more important; shallow work is unnecessary',
       'Deep work can only be done in the morning; shallow work is for afternoons',
+      'Deep work requires distraction-free cognitive effort; shallow work is logistically necessary but not mentally demanding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The distinction is about cognitive demand, not time or importance. Deep work requires sustained, distraction-free concentration on cognitively challenging tasks. Shallow work is necessary (emails, scheduling, basic admin) but does not push your mental capabilities. Both are needed, but they should be separated rather than mixed.',
   },

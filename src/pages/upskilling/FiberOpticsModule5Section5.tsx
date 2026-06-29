@@ -41,16 +41,16 @@ const quizQuestions = [
     id: 1,
     question:
       'Which standard series specifically addresses premises cabling requirements including fibre?',
-    options: ['ISO 9001', 'TIA-568', 'IEEE 802.3', 'ITU-T G.652'],
-    correctAnswer: 1,
+    options: ['ISO 9001', 'ITU-T G.652', 'IEEE 802.3', 'TIA-568'],
+    correctAnswer: 3,
     explanation:
       'TIA-568 is the structured cabling standard that defines premises cabling requirements including fibre optic components.',
   },
   {
     id: 2,
     question: 'What is the maximum splice loss allowance per TIA-568 for fusion splices?',
-    options: ['0.1 dB', '0.3 dB', '0.5 dB', '0.75 dB'],
-    correctAnswer: 1,
+    options: ['0.3 dB', '0.1 dB', '0.5 dB', '0.75 dB'],
+    correctAnswer: 0,
     explanation:
       'TIA-568 specifies 0.3 dB maximum loss for fusion splices. Quality splices typically achieve 0.02-0.1 dB.',
   },
@@ -64,14 +64,14 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'How do you calculate total link loss budget?',
+    question: 'How do you calculate the total link loss budget?',
     options: [
-      'Cable loss only',
+      'Cable attenuation only',
+      'The connector losses on their own',
+      'The equipment transmit power figure',
       'Cable loss + connector losses + splice losses + margin',
-      'Just connector losses',
-      'Equipment transmit power',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Total link budget includes all loss components: cable attenuation, connector losses, splice losses, plus recommended margin.',
   },
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does ISO 11801 Class EA require for connector grades?',
     options: [
-      'Any grade connector',
+      'Any grade of connector is acceptable',
       'Grade B or better connectors (0.25 dB typical)',
-      'Only fusion spliced connections',
-      'Grade D connectors',
+      'Only fusion-spliced connections',
+      'Grade D connectors throughout',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,7 +92,7 @@ const quizQuestions = [
     id: 6,
     question:
       'A 500m OS2 link with 4 connectors and 1 splice has a measured loss of 2.1 dB. Using TIA limits, what is the verdict?',
-    options: ['Pass (within budget)', 'Fail (exceeds budget)', 'Cannot determine', 'Marginal'],
+    options: ['Pass (within budget)', 'Fail (exceeds budget)', 'Marginal', 'Cannot determine'],
     correctAnswer: 0,
     explanation:
       'Budget: 0.5km x 0.4dB/km + 4 x 0.75dB + 1 x 0.3dB = 0.2 + 3.0 + 0.3 = 3.5 dB max. Measured 2.1 dB is well within budget - Pass.',
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 7,
     question: 'Why is 1550nm testing often required in addition to 1310nm for singlemode?',
     options: [
-      "It's faster",
+      'It completes the test more quickly',
       'Bending losses are more apparent at 1550nm',
-      'Equipment requires it',
-      "It's optional",
+      'The OTDR cannot operate at 1310nm alone',
+      'It is purely an optional extra check',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,18 +114,18 @@ const quizQuestions = [
     id: 8,
     question: 'What safety factor should be included for future repairs and degradation?',
     options: [
-      '0 dB - standards cover everything',
-      '1.5-3.0 dB margin recommended',
-      '10 dB minimum',
-      '50% of total budget',
+      'No margin, as standards already cover everything',
+      'A fixed 10 dB minimum on every link',
+      'A 1.5-3.0 dB margin recommended',
+      'Half of the total calculated budget',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A 1.5-3.0 dB margin allows for future repairs, connector ageing, and additional splices over the link's lifetime.",
   },
   {
     id: 9,
-    question: 'Per ISO 11801, what is a Grade A connector maximum insertion loss?',
+    question: 'Per ISO 11801, what is the maximum insertion loss for a Grade A connector?',
     options: ['0.10 dB', '0.15 dB', '0.25 dB', '0.50 dB'],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 10,
     question: 'If measured loss exceeds budget but equipment still functions, what should you do?',
     options: [
-      'Accept as pass',
-      'Document as marginal pass, recommend remediation',
-      'Ignore the measurement',
-      'Retest until it passes',
+      'Record it as a clean pass',
+      'Ignore the measurement entirely',
+      'Retest repeatedly until it passes',
+      'Document it as a marginal pass and recommend remediation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Document the actual values, note it as marginal/conditional pass, and recommend remediation of high-loss points.',
   },

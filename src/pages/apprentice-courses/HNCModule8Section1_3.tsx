@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     id: 'manifold-purpose',
     question: 'What is the primary purpose of the UFH manifold?',
     options: [
-      'Level 3 - System or end-use level',
-      'Certsure / NICEIC Certification Portal',
+      'Heating the water before it enters the circuits',
+      'Storing hot water for periods of peak demand',
       'Flow distribution and zone control',
-      'Core losses (iron losses)',
+      'Filtering debris from the circulating water',
     ],
     correctIndex: 2,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a mixing valve in a UFH system fed from a boiler?',
     options: [
-      'Calmly repeating your key message or boundary without being drawn into side arguments',
-      'They set standards for integration and safety requirements',
+      'To increase the boiler flow temperature for faster heat-up',
+      'To remove dissolved air from the circulating water',
       'To reduce flow temperature from boiler temperature to UFH temperature',
-      'Removing asbestos insulation (lagging) from pipes',
+      'To balance the flow rates between individual circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,9 +157,9 @@ const quizQuestions = [
     id: 7,
     question: 'How should UFH circuits be balanced during commissioning?',
     options: [
-      'Switch off, isolate, lock off, test, prove dead',
-      'Digital with appropriate safety rating',
-      'To ensure protective device breaking capacity is adequate',
+      'By shortening the longest circuits to match the shortest',
+      'By setting all actuators to the fully open position permanently',
+      'By raising the boiler temperature until all rooms reach setpoint',
       'Using flow meters to achieve design flow rates',
     ],
     correctAnswer: 3,
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 10,
     question: 'What pipe material is most commonly used for wet UFH systems?',
     options: [
-      'Using presence detection and scheduling',
-      'Correct mounting and secure connections',
+      'Rigid copper tube with soldered joints',
+      'Galvanised steel pipe',
       'PE-X (cross-linked polyethylene)',
-      'Energy lost in charge/discharge cycle',
+      'Unplasticised PVC (uPVC) waste pipe',
     ],
     correctAnswer: 2,
     explanation:

@@ -48,8 +48,8 @@ const RightsQuiz = () => {
     },
     {
       question: 'What is the apprentice minimum wage from April 2026?',
-      options: ['£6.40', '£7.55', '£8.00', '£10.85'],
-      correct: 2,
+      options: ['£8.00', '£7.55', '£6.40', '£10.85'],
+      correct: 0,
       explanation:
         'The apprentice minimum wage rises to £8.00 per hour from 1 April 2026 (up from £7.55). After the first year, if aged 19+, the National Living Wage of £12.71 applies.',
     },
@@ -58,10 +58,10 @@ const RightsQuiz = () => {
       options: [
         'Yes, if they pay for the training',
         'Only if you agree in writing',
-        'No, this is never allowed for apprenticeships',
         'Only after you qualify',
+        'No, this is never allowed for apprenticeships',
       ],
-      correct: 2,
+      correct: 3,
       explanation:
         'Employers cannot deduct apprenticeship training costs from your wages. Your training is funded through the apprenticeship levy or government co-investment.',
     },
@@ -79,27 +79,27 @@ const RightsQuiz = () => {
     },
     {
       question: 'How much Statutory Sick Pay (SSP) are you entitled to per week (2025/26)?',
-      options: ['£96.35', '£109.40', '£118.75', '£130.00'],
-      correct: 2,
+      options: ['£96.35', '£109.40', '£130.00', '£118.75'],
+      correct: 3,
       explanation:
         'SSP is £118.75 per week in 2025/26, rising to £123.25 from April 2026. You are eligible after 3 consecutive days of sickness (paid from day 4).',
     },
     {
       question: 'Who should you report apprenticeship quality or funding concerns to?',
       options: [
-        'Ofsted',
-        'Your local council',
         'Education & Skills Funding Agency (ESFA)',
+        'Your local council',
+        'Ofsted',
         'The Department for Education directly',
       ],
-      correct: 2,
+      correct: 0,
       explanation:
         'The ESFA oversees apprenticeship quality and funding. They handle complaints about training providers and employers. Contact them at 0370 267 0001 or through GOV.UK.',
     },
     {
       question: 'After your first year as an apprentice aged 19+, what is the minimum wage you should receive from April 2026?',
-      options: ['£8.00', '£10.85', '£12.71', '£15.00'],
-      correct: 2,
+      options: ['£8.00', '£12.71', '£10.85', '£15.00'],
+      correct: 1,
       explanation:
         'After the first year of your apprenticeship, if you are aged 19 or over, you are entitled to the National Living Wage — £12.71 per hour from April 2026. Many employers pay more than this.',
     },
@@ -118,19 +118,19 @@ const RightsQuiz = () => {
     {
       question: 'Can your employer end your apprenticeship without following proper procedures?',
       options: [
-        'Yes, apprentices have no protection',
-        'Only during the first 3 months',
         'No — apprentices have the same employment rights as other employees',
+        'Only during the first 3 months',
+        'Yes, apprentices have no protection',
         'Only if you fail an assessment',
       ],
-      correct: 2,
+      correct: 0,
       explanation:
         'Apprentices have the same employment rights as other workers. Your employer must follow proper dismissal procedures. Contact your training provider and ACAS immediately if your employer tries to end your apprenticeship unfairly.',
     },
     {
       question: 'What is the CITB completion bonus for finishing your electrical apprenticeship?',
-      options: ['£1,000', '£2,500', '£3,500', '£5,000'],
-      correct: 2,
+      options: ['£1,000', '£2,500', '£5,000', '£3,500'],
+      correct: 3,
       explanation:
         'CITB pays employers a £3,500 completion bonus when you finish your apprenticeship, plus £2,500 per year during training (paid quarterly). The total over 4 years is £13,500.',
     },

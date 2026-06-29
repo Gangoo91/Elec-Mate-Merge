@@ -29,11 +29,11 @@ const quickCheckQuestions = [
     id: 'battery-removal',
     question: 'Why should power tool batteries be removed before transport?',
     options: [
-      'To reduce weight',
       'To prevent accidental operation and damage',
-      'To save battery charge',
+      'To extend the overall life of the battery cells',
+      'To comply with vehicle weight loading limits',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Removing batteries prevents accidental activation during transport, which could cause injury or damage to the tool or surrounding items.',
   },
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 'height-safety',
     question: 'Name one method of preventing tools from falling when working at height.',
     options: [
-      'Work faster to finish quickly',
-      'Use tool lanyards or belts',
-      'Only use lightweight tools',
+      'Limit work to only lightweight hand tools',
+      'Use tool lanyards or tethering belts',
+      'Position the access platform directly below',
     ],
     correctIndex: 1,
     explanation:
@@ -52,15 +52,23 @@ const quickCheckQuestions = [
   {
     id: 'insulated-storage',
     question: 'Give one reason why insulated tools should be stored separately.',
-    options: ['They cost more money', 'To prevent confusion and misuse', 'They take up more space'],
-    correctIndex: 1,
+    options: [
+      'They are heavier and need reinforced racking',
+      'They corrode faster than standard steel tools',
+      'To prevent confusion and misuse on live work',
+    ],
+    correctIndex: 2,
     explanation:
       'Separate storage prevents confusion between insulated and non-insulated tools, ensuring the right tool is used for electrical work.',
   },
   {
     id: 'transport-inspection',
     question: 'What should be done before using tools after transport?',
-    options: ['Polish them clean', 'Inspect for transport-related damage', 'Test the weight'],
+    options: [
+      'Recharge every battery to full capacity',
+      'Inspect for transport-related damage',
+      'Re-calibrate them against a reference tool',
+    ],
     correctIndex: 1,
     explanation:
       'Tools should be inspected after transport to identify any damage that may have occurred during movement before use.',
@@ -72,12 +80,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why is it important to choose the right tool for the job?',
     options: [
-      'It makes the job look more professional',
       'It reduces wear on the tool and prevents accidents',
-      'It speeds up the job every time',
-      'It avoids having to read instructions',
+      'It removes the need to wear PPE for the task',
+      'It guarantees the job is completed more quickly',
+      'It avoids having to follow the manufacturer instructions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Using the right tool reduces wear, prevents damage, and significantly reduces the risk of accidents caused by tool misuse.',
   },
@@ -85,34 +93,38 @@ const quizQuestions = [
     id: 2,
     question: 'Which PPE might be required when using power tools?',
     options: [
-      'Household, industrial, and commercial waste as defined by the Environmental Protection Act 1990',
-      'Leptospirosis (Weil\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s disease) from contact with water or surfaces contaminated with rat urine',
-      'Safety glasses, gloves, hearing protection, dust mask (depending on the tool)',
-      'Persons not in their employment (e.g. members of the public)',
+      'A high-visibility vest and steel toe-cap boots only',
+      'Safety glasses, gloves, hearing protection and a dust mask',
+      'A hard hat and fall-arrest harness in all situations',
+      'Insulated rubber gloves rated to 1,000V at all times',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'PPE requirements vary by tool and task, but commonly include safety glasses, gloves, hearing protection, and dust masks depending on the specific tool and application.',
   },
   {
     id: 3,
-    question:
-      "True or False: It's safe to carry a screwdriver in your pocket with the point exposed.",
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'How should a screwdriver with an exposed point be carried around site?',
+    options: [
+      'Loose in a trouser or jacket pocket for quick access',
+      'Tucked into a waistband with the point facing down',
+      'In a tool pouch, holster or with a tip protector fitted',
+      'Held in the hand by the blade while climbing a ladder',
+    ],
+    correctAnswer: 2,
     explanation:
-      'False. Sharp tools should never be carried loose in pockets as they can cause injury. Always use protective covers or proper tool storage.',
+      'Sharp tools should never be carried loose in pockets as they can cause injury. Always use protective covers, a holster or proper tool storage.',
   },
   {
     id: 4,
     question: 'Give one method of securing tools during vehicle transport.',
     options: [
+      'Stack them loosely behind the front seats',
+      'Place them across the vehicle dashboard',
+      'Wedge them into the spare-wheel well',
       'Use toolboxes or tie-down straps',
-      'Leave them loose in the vehicle',
-      'Put them on the dashboard',
-      'Hold them while driving',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Toolboxes, tie-down straps, or secure storage compartments prevent tools from moving during transport, avoiding damage and injury.',
   },
@@ -120,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why should insulated tools be stored separately from non-insulated tools?',
     options: [
-      'Up to 90% or higher heat recovery',
-      'To prevent confusion and misuse',
-      'Capture light from both sides',
-      'Insertion loss and length testing',
+      'To prevent confusion that could lead to misuse on live work',
+      'Because insulated tools must be kept at a fixed temperature',
+      'Because insulated handles react badly with steel surfaces',
+      'To allow the insulation to recharge between uses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Separate storage prevents accidental use of non-insulated tools for electrical work, which could result in electric shock.',
   },
@@ -133,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: "What's the main reason for using tool lanyards when working at height?",
     options: [
-      'Overheating due to loose or faulty connections',
-      'Basic insulation plus earth connection',
-      'To prevent tools from falling and injuring people',
-      'Clearly state the danger and urgency of repair',
+      'To reduce the weight a worker has to carry up a ladder',
+      'To stop tools being mixed up with another trade',
+      'To prevent tools from falling and injuring people below',
+      'To keep the insulated handles free of dust and dirt',
     ],
     correctAnswer: 2,
     explanation:
@@ -146,10 +158,10 @@ const quizQuestions = [
     id: 7,
     question: 'Name one risk of improper tool storage.',
     options: [
-      'Tools become more expensive',
-      'Tools change colour',
-      'Tools become heavier',
-      'Corrosion, theft, or tool damage',
+      'Tools are automatically removed from the asset register',
+      'Tools lose their manufacturer warranty immediately',
+      'Tools must be PAT tested before every single use',
+      'Corrosion, theft, or damage from tools knocking together',
     ],
     correctAnswer: 3,
     explanation:
@@ -160,9 +172,9 @@ const quizQuestions = [
     question: 'What should be done before using tools after transport?',
     options: [
       'Inspect them for any transport-related damage',
-      'Materials compatibility and fire safety',
-      'Check and follow coordinated site drawings',
-      'Prioritise by safety risk, then operational impact',
+      'Send each tool away for a full service',
+      'Sharpen every cutting edge as a precaution',
+      'Re-read the original purchase receipt',
     ],
     correctAnswer: 0,
     explanation:

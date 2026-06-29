@@ -16,16 +16,16 @@ export const observationCodesQuizQuestions = [
   {
     id: 2,
     question:
-      'An RCD protecting bathroom circuits is found to have a test time of 45ms at 5×IΔn (requirement ≤40ms). What code is most appropriate?',
+      'A 30mA RCD providing additional protection to bathroom circuits fails to operate when tested at its rated residual current (IΔn) within 300ms. What code is most appropriate?',
     options: [
       'C1 - Danger present',
       'C2 - Potentially dangerous',
       'C3 - Improvement recommended',
-      "No observation required as it's close to the limit",
+      "No observation required as RCDs sometimes need re-testing",
     ],
     correct: 1,
     explanation:
-      'C2 is appropriate because the RCD is not operating within required parameters, creating potential danger if a fault occurs. While marginally outside limits, it represents urgent remedial requirement for proper protection.',
+      'C2 is appropriate because an RCD that fails to trip at IΔn is not providing the intended disconnection, leaving no additional protection if an earth fault occurs. It is potentially dangerous and requires urgent remedial action.',
   },
   {
     id: 3,
@@ -49,7 +49,7 @@ export const observationCodesQuizQuestions = [
       'C3 - Improvement recommended',
       'C2 - Potentially dangerous',
       'FI - Further investigation required',
-      'No observation needed',
+      'C1 - Danger present',
     ],
     correct: 2,
     explanation:
@@ -67,7 +67,7 @@ export const observationCodesQuizQuestions = [
     ],
     correct: 1,
     explanation:
-      'C2 is correct because inadequate main earthing creates potential danger in fault conditions. While not immediately dangerous in normal operation, it represents urgent requirement for proper fault protection.',
+      'C2 is correct because an undersized main earthing conductor may not carry the prospective earth fault current safely, compromising automatic disconnection. It is not dangerous in normal use but is potentially dangerous under fault conditions.',
   },
   {
     id: 6,
@@ -77,21 +77,21 @@ export const observationCodesQuizQuestions = [
       'C1 - Danger present',
       'C2 - Potentially dangerous',
       'C3 - Improvement recommended',
-      'No observation required',
+      'FI - Further investigation required',
     ],
     correct: 1,
     explanation:
-      'C2 is correct. Installations after 2008 require RCD protection for socket outlets, and kitchen locations have enhanced risk. This represents non-compliance with regulations requiring urgent remedial action.',
+      'C2 is correct. Since the 17th Edition (BS 7671:2008), socket outlets that may supply equipment outdoors or in higher-risk locations require 30mA RCD protection; absence on a 2010 kitchen install is potentially dangerous and warrants urgent remedial action.',
   },
   {
     id: 7,
     question:
       "An inspection reveals unusual test results that don't clearly indicate compliance or non-compliance. Further specialist analysis is needed. What code applies?",
     options: [
-      'C2 - Potentially dangerous until proven otherwise',
-      'C3 - Improvement recommended based on uncertainty',
+      'C2 - Potentially dangerous',
+      'C3 - Improvement recommended',
       'FI - Further investigation required',
-      'No observation until results are clear',
+      'C1 - Danger present',
     ],
     correct: 2,
     explanation:
@@ -114,11 +114,11 @@ export const observationCodesQuizQuestions = [
   {
     id: 9,
     question:
-      'A defect could be classified as either C1 or C2 depending on interpretation. What approach should you take?',
+      'A defect at first glance could be C1 or C2. What is the correct way to reach the classification?',
     options: [
-      'Always choose the higher classification to be safe',
+      'Default to the higher code without assessing the actual danger present',
       'Choose C2 to avoid unnecessary alarm',
-      'Apply systematic decision criteria consistently',
+      'Apply the systematic C1/C2 criteria to the specific defect to decide which applies',
       'Use FI to avoid the decision',
     ],
     correct: 2,

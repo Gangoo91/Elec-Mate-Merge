@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'Which statement most accurately reflects the legal position on PAT testing frequency?',
     options: [
-      'Annual testing is mandatory under EAWR.',
-      'There is no statutory frequency. HSG107 §10 and IET CoP §7 / Table 7.1 require frequency to be set by risk assessment, taking into account equipment type, environment, user, and history.',
-      'Quarterly testing is mandatory on construction sites under PUWER.',
-      'Frequency is set by the manufacturer of the equipment.',
+      'There is no statutory frequency; it is set by risk assessment of type, environment, user and history.',
+      'Annual combined inspection-and-test is mandatory for all equipment under EAWR Reg 4(2).',
+      'Quarterly testing is mandatory on construction sites under PUWER Reg 6(1)(b).',
+      'Frequency is fixed by the equipment manufacturer and stated on the rating plate.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'HSG107 §10 is unambiguous: there is no statutory frequency. IET CoP Table 7.1 publishes initial starting frequencies which the duty-holder revises based on inspection/test history. Selling fixed annual cycles as the law is one of the most common compliance misrepresentations.',
+      'HSG107 §10 is unambiguous: there is no statutory frequency. IET CoP §7 / Table 7.1 publish initial starting frequencies which the duty-holder revises based on inspection/test history. Selling fixed annual cycles as the law is one of the most common compliance misrepresentations.',
   },
   {
     id: 'patm1-s4-tablefactors',
     question:
       'IET CoP §7 lists the four primary inputs to a PAT frequency decision. Which set is correct?',
     options: [
-      'Cost, customer preference, manufacturer recommendation, label colour.',
-      'Equipment type and class; environment / location; type of user (skill, behaviour); historical record of test failures and defects.',
-      'Voltage, current, frequency, IP rating.',
-      'Geographic region, building age, building height, fire-rating.',
+      'Acquisition cost, customer preference, manufacturer recommendation and test-label colour.',
+      'Operating voltage, rated current, supply frequency and the enclosure IP rating.',
+      'Equipment type and class; environment / location; type of user; history of failures and defects.',
+      'Geographic region, building age, building height and the structure’s fire-resistance rating.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'IET CoP §7 names these four factors. They are the inputs that must drive frequency. Cost is a constraint; customer preference is irrelevant to the legal duty; manufacturer recommendation is a starting input but not the determinant.',
   },
@@ -51,28 +51,28 @@ const inlineChecks = [
     question:
       'A PAT regime ran for 24 months at quarterly frequency on construction-site hand tools. Defect rate is consistently 1-2 % per cycle, and failed items show wear consistent with the 3-month interval. What does HSG107 / IET CoP say about the frequency?',
     options: [
-      'It must remain quarterly indefinitely.',
-      'The duty-holder reviews the frequency. A consistently low and stable defect rate is evidence the interval is appropriate or could potentially be extended; a rising defect rate would justify shortening it. The review is the active duty — sticking with the original frequency without review is itself a defect in the programme.',
-      'The frequency should automatically halve.',
-      'Frequency reviews are advisory only.',
+      'It must remain quarterly indefinitely once the original interval has been set.',
+      'Frequency reviews are advisory only and carry no weight in a prosecution.',
+      'The frequency should automatically halve after two years of stable results.',
+      'The duty-holder reviews the frequency against the data; the review itself is the active duty.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'HSG107 §11 and IET CoP §7.4 frame frequency-setting as iterative. The first cycle uses Table 7.1 starting points; subsequent cycles revise based on data. A duty-holder who has not reviewed frequencies in 24 months has not run the programme HSG107 describes — they have run a calendar.',
+      'A consistently low and stable defect rate is evidence the interval is appropriate or could be extended; a rising rate would justify shortening it. HSG107 §11 and IET CoP §7.4 frame frequency-setting as iterative — the first cycle uses Table 7.1 starting points, subsequent cycles revise on the data. A duty-holder who has not reviewed in 24 months has run a calendar, not the programme HSG107 describes.',
   },
   {
     id: 'patm1-s4-event',
     question:
       'A workplace flood damages stock and equipment on the ground floor. The cleanup takes a week. What does PUWER Reg 6 require for the affected portable equipment?',
     options: [
-      'Continue the existing schedule.',
-      'PUWER Reg 6 specifies inspection "each time exceptional circumstances which are liable to jeopardise the safety of the work equipment have occurred". The flood is exactly such a circumstance — the affected equipment requires a triggered formal visual + combined inspection-and-test before being returned to service, regardless of the calendar interval.',
-      'Wait until the next quarterly inspection.',
-      'Test only equipment that visibly got wet.',
+      'A triggered formal visual and combined inspection-and-test before the equipment returns to service.',
+      'Continue the existing schedule — the flood is a premises matter, not an equipment one.',
+      'Wait until the next quarterly inspection and treat the affected items as normal.',
+      'Test only the equipment that visibly got wet; dry-looking items can stay in service.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Reg 6 is event-driven as well as interval-driven. Floods, fires, mechanical incidents (forklift crush), thermal events, near-misses — all trigger out-of-cycle inspection. The fact that an item "looks dry" is not a substitute for the test, because dry-looking insulation can have absorbed moisture that lowers IR.',
+      'PUWER Reg 6 specifies inspection "each time exceptional circumstances which are liable to jeopardise the safety of the work equipment have occurred", and the flood is exactly such a circumstance — affected equipment must be re-inspected before return to service, regardless of the calendar. Reg 6 is event-driven as well as interval-driven. An item that "looks dry" is no substitute for the test, because dry-looking insulation can have absorbed moisture that lowers IR.',
   },
 ];
 
@@ -82,138 +82,138 @@ const quizQuestions = [
     question:
       'IET CoP Table 7.1 publishes starting frequencies for inspection and testing. Which is the most accurate description of how Table 7.1 should be used?',
     options: [
-      'It is a mandatory minimum schedule.',
-      'It is a starting suggestion for the first cycle of a new programme. The duty-holder reviews and revises based on the inspection/test history (defects found, near-misses, environment changes). Table 7.1 is explicitly framed as initial guidance, not a fixed rule.',
-      'It applies only to public-sector duty-holders.',
-      'It overrides any risk assessment.',
+      'It is a mandatory minimum schedule that must be met for every category of equipment.',
+      'It is a starting suggestion for the first cycle, then revised on the inspection/test history.',
+      'It applies only to public-sector duty-holders, not to private employers or landlords.',
+      'It overrides any site risk assessment that arrives at a different interval.',
     ],
     correctAnswer: 1,
     explanation:
-      'IET CoP §7.1-7.4 frames Table 7.1 as initial starting frequencies. The duty-holder is required to review and revise. Treating Table 7.1 as a fixed rule misses the active-management requirement of HSG107 §11.',
+      'The duty-holder reviews and revises based on the inspection/test history (defects found, near-misses, environment changes); IET CoP §7.1-7.4 frames Table 7.1 as initial guidance, not a fixed rule. Treating it as a fixed rule misses the active-management requirement of HSG107 §11.',
   },
   {
     id: 2,
     question:
       'Which environment does IET CoP Table 7.1 typically suggest the SHORTEST starting frequencies for hand-held equipment?',
     options: [
-      'Office (low-risk, indoor, dry).',
-      'Construction site, outdoors, wet/dirty environments — typically 1-3 months for hand-held equipment combined inspection-and-test, with formal visual at shorter intervals.',
-      'Hospital wards.',
-      'Educational settings.',
+      'Office environments — low-risk, indoor, dry, with stable handling conditions.',
+      'Educational settings such as classrooms and lecture theatres in routine use.',
+      'Hospital wards, where equipment is cleaned regularly and handled by trained staff.',
+      'Construction sites and outdoor wet/dirty environments — typically 1-3 months for hand-held tools.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Construction and similar harsh environments have the highest defect rates and the shortest starting frequencies. The IET CoP recognises this with substantially shorter intervals than the office environment. The frequency reflects the risk-of-deterioration profile.',
+      'Construction and similar harsh environments have the highest defect rates and the shortest starting frequencies (with formal visual at shorter intervals still). The IET CoP recognises this with substantially shorter intervals than the office environment, reflecting the risk-of-deterioration profile.',
   },
   {
     id: 3,
     question:
       'A duty-holder argues for ANNUAL testing of hand-held tools on construction sites. What is the legal exposure?',
     options: [
-      'No exposure — annual testing is industry norm.',
-      'Significant. IET CoP Table 7.1 starting frequencies for hand-held tools on construction are typically much shorter than annual. A duty-holder applying annual frequencies to a higher-risk environment must be able to evidence the risk-assessment reasoning that justifies the longer interval — and absent that, the position is indefensible against HSG107 §10-11 and the Edwards balancing test.',
-      'Annual testing on construction sites is mandatory.',
-      'Frequency is irrelevant if visual checks are done.',
+      'No exposure — annual testing is the established industry norm for site hand tools.',
+      'No exposure — annual combined inspection-and-test on construction sites is mandatory.',
+      'Significant — site starting frequencies are far shorter, so a longer interval needs strong evidence.',
+      'No exposure — frequency is irrelevant provided daily user visual checks are carried out.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The construction environment is one of the highest-defect-rate categories in HSE incident data. Long intervals require substantially stronger justification than the IET CoP starting points. A flat annual regime applied to mixed environments fails the equipment-environment-matching test that HSE inspections look for.',
+      'IET CoP Table 7.1 starting frequencies for hand-held tools on construction are typically much shorter than annual. A duty-holder stretching to annual must evidence the risk-assessment reasoning for the longer interval; absent that, the position is indefensible against HSG107 §10-11 and the Edwards balancing test. Construction is one of the highest-defect-rate categories in HSE data, and a flat regime fails the equipment-environment matching that inspections look for.',
   },
   {
     id: 4,
     question:
       'PUWER 1998 Reg 6(1)(b) requires inspection of work equipment "exposed to conditions causing deterioration which is liable to result in dangerous situations". Independent of any IET CoP guidance, what does Reg 6(1)(b) impose?',
     options: [
-      'Nothing additional — IET CoP frequencies are sufficient.',
-      'A statutory duty to inspect at suitable intervals, where "suitable" is judged against the specific deteriorating conditions. Reg 6 frequencies must be defendable on the facts of the work equipment and its environment, separately from any guidance frequency.',
-      'Annual inspection only.',
-      'Reg 6 does not apply to electrical equipment.',
+      'A statutory duty to inspect at suitable intervals, judged against the specific deteriorating conditions.',
+      'Nothing additional — applying the published IET CoP frequencies discharges Reg 6 in full.',
+      'A fixed duty to inspect annually, regardless of how harsh the conditions actually are.',
+      'No duty — Reg 6 governs mechanical work equipment and does not reach electrical items.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'PUWER Reg 6 is a statutory duty in its own right. The IET CoP starting frequencies are useful but they are not the legal test — the legal test is "suitable intervals" judged on the conditions. A frequency that satisfies IET CoP but fails Reg 6(1)(b) on the facts of the case can still be a contravention.',
+      'Reg 6 frequencies must be defendable on the facts of the work equipment and its environment, separately from any guidance frequency. PUWER Reg 6 is a statutory duty in its own right — the IET CoP starting frequencies are useful but are not the legal test, which is "suitable intervals" judged on the conditions. A frequency that satisfies the IET CoP but fails Reg 6(1)(b) on the facts can still be a contravention.',
   },
   {
     id: 5,
     question:
       'A duty-holder reviews 18 months of PAT data. The defect rate on extension leads is 8 %, while on hand-held tools in the same environment it is 1 %. What does the data suggest about frequency?',
     options: [
-      'Both should be tested together.',
-      'The extension-lead frequency is too long — they are deteriorating faster than the inspection interval catches. Either shorten the lead test cycle or replace the worst-affected leads with a more robust spec. The hand-tool frequency is appropriate or could potentially be extended.',
-      'Defect rate is irrelevant to frequency.',
-      'Increase the hand-tool frequency to match.',
+      'Both categories should be tested together on a single shared interval for simplicity.',
+      'Increase the hand-tool frequency to match the extension-lead cycle for consistency.',
+      'Defect rate is irrelevant to frequency, which should follow Table 7.1 unchanged.',
+      'The extension-lead frequency is too long — shorten the lead cycle or replace the worst leads.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'IET CoP §7.4 and HSG107 §11 use defect rate as one of the primary signals for frequency adjustment. Different categories within the same environment can warrant different frequencies — and the data is the defendable basis for the difference.',
+      'The leads are deteriorating faster than the inspection interval catches, so either shorten the lead test cycle or replace the worst-affected leads with a more robust spec; the hand-tool frequency looks appropriate or could be extended. IET CoP §7.4 and HSG107 §11 use defect rate as a primary signal — different categories in the same environment can warrant different frequencies, and the data is the defendable basis for the difference.',
   },
   {
     id: 6,
     question:
       'IET CoP §7 distinguishes between "formal visual inspection" frequency and "combined inspection-and-test" frequency. How are they typically related?',
     options: [
-      'They are the same.',
-      'Formal visual frequency is typically MORE FREQUENT than combined inspection-and-test frequency. The visual is faster, cheaper, catches the bulk of defects (flex damage, plug damage), and serves as an early warning between full electrical tests.',
-      'Formal visual is less frequent.',
-      'Combined test is monthly; formal visual is annual.',
+      'They are set at the same interval, since both look at the same equipment.',
+      'Formal visual is the more frequent of the two, acting as early warning between full tests.',
+      'Formal visual is the less frequent of the two, with the electrical test done more often.',
+      'The combined test runs monthly while the formal visual runs only once a year.',
     ],
     correctAnswer: 1,
     explanation:
-      'The economy of the four-pillar HSG107 model rests on stratification: user checks daily, formal visual at shorter intervals, combined inspection-and-test at the longer (and more expensive) interval. This catches the high-prevalence defects without over-testing.',
+      'The formal visual is faster and cheaper, catches the bulk of defects (flex damage, plug damage) and serves as early warning between full electrical tests. The economy of the four-pillar HSG107 model rests on stratification: user checks daily, formal visual at shorter intervals, combined inspection-and-test at the longer and more expensive interval — catching high-prevalence defects without over-testing.',
   },
   {
     id: 7,
     question:
       'A workplace had a previous PAT history of consistent 100 % pass rates over 3 years on annual cycles for office equipment. Should the frequency be reduced to 18-month or 24-month?',
     options: [
-      'Yes, mechanically.',
-      'Possibly, but the decision must be deliberate, recorded, and supported. HSG107 §11 and IET CoP §7.4 explicitly contemplate extending intervals where the data supports it — but a 100 % pass rate may also indicate the test methodology is not catching defects (the "false confidence" risk). Consider tightening the formal visual depth before extending the combined-test cycle.',
-      'No — all frequencies must be permanent.',
-      'Yes, automatically — duty-holders cannot test more often than necessary.',
+      'Yes, mechanically — three clean years automatically justifies a longer interval.',
+      'No — once an interval is set, all frequencies must be kept permanent and unchanged.',
+      'Possibly, but only as a deliberate, recorded, evidence-based decision, not a mechanical one.',
+      'Yes, automatically — duty-holders are barred from testing more often than strictly necessary.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Extending frequencies is permitted by guidance but must be evidence-based. A 100 % pass rate over three years is one signal. Verifying that the visual inspection is rigorous and the test sequence is being applied correctly is the prerequisite — extending intervals on the back of insufficient testing would fail the Edwards balancing test if a defect later emerged.',
+      'HSG107 §11 and IET CoP §7.4 contemplate extending intervals where the data supports it, but a 100 % pass rate may also mean the methodology is not catching defects (the "false confidence" risk), so tighten the formal-visual depth before extending the combined-test cycle. Verifying the visual is rigorous and the test sequence correctly applied is the prerequisite; extending on insufficient testing would fail the Edwards balancing test if a defect later emerged.',
   },
   {
     id: 8,
     question:
       'Equipment is moved from one site to another during a refurbishment. What does PUWER Reg 6(1)(a) say about its inspection?',
     options: [
-      'No additional inspection needed.',
-      'PUWER Reg 6(1)(a) requires inspection of work equipment after assembly at a new site or in a new location, before being put into service, where its safety depends on installation conditions. Equipment relocated during refurb falls under this trigger and should be formal-visual inspected at minimum before re-energisation.',
-      'Only equipment that is bolted down is in scope.',
-      'The receiving site is automatically responsible.',
+      'Inspection after assembly at the new location, before service, where safety depends on installation.',
+      'No additional inspection is needed — relocation does not trigger any fresh duty.',
+      'Only equipment that is bolted or fixed down on installation falls within the trigger.',
+      'The receiving site is automatically responsible for any defect, regardless of inspection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 6(1)(a) is event-triggered. Relocation is an opportunity for damage and an installation-condition change. The IET CoP §10 advice on triggered formal visual at relocation aligns with the Reg 6(1)(a) statutory duty.',
+      'PUWER Reg 6(1)(a) requires inspection of work equipment after assembly at a new site or location, before being put into service, where its safety depends on installation conditions; relocated equipment should be formal-visual inspected at minimum before re-energisation. Reg 6(1)(a) is event-triggered — relocation is an opportunity for damage and an installation-condition change, and IET CoP §10 advice on triggered formal visual at relocation aligns with it.',
   },
   {
     id: 9,
     question: 'How does the IET CoP treat newly-purchased equipment in respect of frequency?',
     options: [
-      'New equipment is exempt for the first 12 months.',
-      'IET CoP §7.5 advises a formal visual inspection upon entry to service to confirm the item is undamaged and the markings match the procurement spec. The first combined inspection-and-test follows the Table 7.1 starting frequency for the equipment category and environment. New equipment is NOT exempt.',
-      'New equipment requires immediate combined inspection-and-test.',
-      'Frequency starts only after the warranty expires.',
+      'New equipment is exempt from inspection and testing for its first 12 months in service.',
+      'A formal visual on entry to service, then the first combined test on the Table 7.1 cycle.',
+      'New equipment requires an immediate combined inspection-and-test before any use at all.',
+      'The testing frequency clock starts only once the manufacturer’s warranty has expired.',
     ],
     correctAnswer: 1,
     explanation:
-      'A formal visual at entry-to-service catches damage in transit, mis-shipped items, or counterfeit goods — and starts the asset register entry. The first combined test follows the standard cycle. The "exempt for 12 months" position is a sales argument, not a CoP position.',
+      'IET CoP §7.5 advises a formal visual on entry to service to confirm the item is undamaged and the markings match the procurement spec; the first combined inspection-and-test then follows the Table 7.1 starting frequency for the category and environment, and new equipment is not exempt. The entry visual catches transit damage, mis-shipped or counterfeit goods and starts the asset register entry. The "exempt for 12 months" position is a sales argument, not a CoP one.',
   },
   {
     id: 10,
     question: 'Why does HSG107 §10 explicitly warn against unnecessarily frequent testing?',
     options: [
-      'Cost.',
-      'Excessive disconnect/reconnect cycles introduce wear at plug terminations and accessories; mechanical handling damages flexes; and routine over-testing produces a volume of data that obscures the defects that matter. The result is that an over-frequent regime can paradoxically reduce safety while increasing cost.',
-      'Carbon footprint.',
-      'Insurance reasons.',
+      'Purely cost — over-testing wastes the duty-holder’s money for no added safety benefit.',
+      'Insurance reasons — insurers penalise duty-holders who test more often than the policy requires.',
+      'Carbon footprint — frequent testing increases travel and energy use across the estate.',
+      'Excessive disconnect/reconnect cycles and handling cause wear, and the data noise hides real defects.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'HSG107 §10 is one of the rare HSE guidance points that argues against doing more. The Edwards balancing test cuts both ways: in this niche, the cost-of-precaution side includes the additional risks the precaution itself introduces. Selling more-frequent-than-necessary testing is not just expensive; it is contrary to HSE guidance.',
+      'Repeated disconnect/reconnect introduces wear at plug terminations and accessories, mechanical handling damages flexes, and routine over-testing produces a volume of data that obscures the defects that matter — so an over-frequent regime can paradoxically reduce safety while increasing cost. HSG107 §10 is a rare HSE point arguing against doing more: the Edwards balance cuts both ways here, and selling more-frequent-than-necessary testing is contrary to HSE guidance.',
   },
 ];
 

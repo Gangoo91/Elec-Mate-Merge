@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'gateway-purpose',
     question: 'What is the primary function of a protocol gateway in a BMS installation?',
     options: [
-      'Rate of heat transfer through a building element (thermal transmittance)',
-      'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
+      'To boost the signal voltage on a long RS-485 cable run',
+      'To provide a firewall between the BMS and the corporate IT network',
       'To translate between different protocols enabling interoperability',
-      'Central point connecting all earthing and bonding conductors',
+      'To store historical trend data for energy reporting',
     ],
     correctIndex: 2,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which organisation developed and maintains the BACnet standard?',
     options: [
-      'The sum of EMFs equals the sum of voltage drops (algebraic sum = 0)',
+      'IEEE (Institute of Electrical and Electronics Engineers)',
       'ASHRAE (American Society of Heating, Refrigerating and Air-Conditioning Engineers)',
-      'Identify the terminal with the lowest percentage of design flow',
-      'Stop, Take a breath, Observe what you are feeling, Proceed with awareness',
+      'Modicon (now Schneider Electric)',
+      'KNX Association',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What physical medium does standard KNX TP (Twisted Pair) use?',
     options: [
       'Dedicated green KNX bus cable (twisted pair)',
-      'Identify all hazards and required isolation points',
-      'Mechanical stress and flexing damage assessment',
-      'The scheduled maintenance date being overdue',
+      'Standard Cat 6 Ethernet cable with RJ45 connectors',
+      'Coaxial cable shared with the building CCTV system',
+      'Fibre-optic cable for immunity to electrical interference',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'In a LonWorks network, what is the function of a router?',
     options: [
       'To connect subnets and manage message routing between domains',
-      'Open protocols enable competitive procurement and reduce vendor lock-in',
-      'Protocol Implementation Conformance Statement',
-      'Dedicated green KNX bus cable (twisted pair)',
+      'To translate LonWorks messages into the BACnet protocol',
+      'To supply 30 V DC bus power to every connected device',
+      'To store the network configuration database for the whole system',
     ],
     correctAnswer: 0,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is BACnet Broadcast Management Device (BBMD) used for?',
     options: [
-      'To connect subnets and manage message routing between domains',
-      'Points list, protocol details, and communication parameters',
+      'Converting BACnet MS/TP devices to BACnet/IP on the backbone',
+      'Encrypting BACnet traffic for secure cloud connectivity',
       'Routing BACnet/IP messages across different IP subnets',
-      'Dedicated green KNX bus cable (twisted pair)',
+      'Logging historical trend data from field controllers',
     ],
     correctAnswer: 2,
     explanation:
@@ -229,9 +229,9 @@ const quizQuestions = [
       'When integrating a third-party chiller with a BMS, what information is essential from the chiller manufacturer?',
     options: [
       'Points list, protocol details, and communication parameters',
-      'To connect subnets and manage message routing between domains',
-      'Protocol Implementation Conformance Statement',
-      'Routing BACnet/IP messages across different IP subnets',
+      'The refrigerant charge and compressor oil specification',
+      'The structural loading the chiller imposes on the plant room floor',
+      'The acoustic data sheet for noise breakout calculations',
     ],
     correctAnswer: 0,
     explanation:

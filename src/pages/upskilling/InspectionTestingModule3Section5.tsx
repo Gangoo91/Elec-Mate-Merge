@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'Why does BS EN 61557-4 require a low-resistance ohmmeter to push at least 200 mA into a 0.5 Ω load, rather than the few mA a typical multimeter applies?',
     options: [
-      'To trip the upstream RCD during the test.',
-      '200 mA penetrates oxide films and partial-contact joints — a degraded joint can read OK at 1 mA but reads its true (much higher) resistance at 200 mA. The high test current is what makes the measurement diagnostic of joint quality, not just connectedness.',
-      'To match the rated current of the protective device.',
-      'To raise the test voltage above 25 V.',
+      '200 mA penetrates oxide and partial-contact joints that read OK at 1 mA.',
+      'To deliberately trip the upstream RCD during the test and confirm its operation.',
+      'To match the device rated current so the conductor is tested at its design load.',
+      'To raise the open-circuit test voltage above 25 V for realistic shock conditions.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A multimeter at 1 mA cannot break through corrosion, oxide or a single-strand pinch — the reading looks low because the small current cannot reveal the contact-resistance fingerprint. 200 mA does. This is exactly why Reg 643.2.1 requires a measurement of resistance and not a buzzer beep, and why a multimeter is not a Reg 643.1 compliant alternative for continuity.',
   },
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'Your meter has no null function. You touch the leads together and read 0.16 Ω. You then measure across a supplementary bond and read 0.49 Ω. Per GN3 Reg 2.13, what do you record on the schedule?',
     options: [
-      '0.49 Ω as measured.',
-      '0.16 Ω.',
-      'Measured value 0.49 Ω, lead resistance 0.16 Ω, corrected bond resistance 0.33 Ω — both raw and corrected values, plus a comment noting the manual subtraction. GN3 Reg 2.13 explicitly permits the measure-and-subtract method when nulling is not available.',
-      'Average of 0.49 and 0.16 = 0.325 Ω.',
+      '0.49 Ω exactly as measured, since lead resistance cannot be deducted without a null.',
+      '0.16 Ω, the lead resistance, because the leads dominate a reading this low.',
+      'Raw 0.49 Ω and corrected 0.33 Ω, with a comment noting the manual subtraction.',
+      'The average of the two readings, 0.325 Ω, to split the difference between lead and bond.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'A 25 m radial in 2.5/1.5 mm² T&E. Calculated R_bulk at 20 °C ≈ 0.49 Ω (25 × 19.51 mΩ/m). You measure R1+R2 at the far end and read 0.78 Ω. What does the excess of 0.29 Ω over calculated tell you?',
     options: [
-      'Cable temperature has risen — apply ×1.20 correction.',
-      'The excess (0.29 Ω) is the cumulative contact resistance — the sum of all the joint and termination resistances along the test path. A degraded joint is hiding somewhere in the run; use Method 2 along the circuit to localise it.',
-      'The meter is faulty.',
-      'The R1+R2 column accepts any reading within ±50 % of calculated.',
+      'The cable temperature has risen above 20 °C — apply a ×1.20 correction to reconcile.',
+      'The meter is reading high; re-null and repeat before drawing any conclusion.',
+      'The R1+R2 column accepts ±50% of the calculated value, so 0.78 Ω is in tolerance.',
+      'The 0.29 Ω excess is cumulative contact resistance — a joint is degrading in the run.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'R_measured = R_bulk + Σ R_contact. The excess over calculated bulk is the cumulative contact-resistance fingerprint. Method 1 gives a single number that hides which joint is bad; Method 2 (wandering lead) walks the run and shows where the contact resistance jumps — that is the diagnostic value of switching methods on a high reading.',
   },
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'You are doing an EICR on a 1970s house with no design records. Cable lengths are unknown. Upstairs lighting reads 0.41 Ω end-to-end; downstairs lighting reads 0.76 Ω. Both circuits are 1.0/1.0 mm² T&E feeding similar numbers of points. What is the right interpretation?',
     options: [
-      'Both circuits fail — readings are too high.',
-      'No way to judge without lengths.',
-      'The comparative method applies. The two circuits should be similar and they are not (downstairs is roughly 1.85× upstairs). Investigate the downstairs circuit for a high-resistance joint or excessive run length. Document the methodology — comparative method used in absence of design data.',
-      'Average the readings and accept.',
+      'Both circuits fail — readings of this magnitude are too high for a lighting final circuit.',
+      'There is no way to judge either circuit without first establishing the cable lengths.',
+      'Comparative method: downstairs is ~1.85× upstairs, so investigate it for a high-resistance joint.',
+      'Average the two readings and accept the mean as representative of both circuits.',
     ],
     correctIndex: 2,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     id: 1,
     question: 'Reg 643.1 specifies how measuring instruments must be chosen. What is the rule?',
     options: [
-      'Any electrical multimeter is acceptable',
-      'Measuring instruments and monitoring equipment and methods shall be chosen in accordance with the relevant parts of BS EN 61557. If other measuring equipment is used, it shall provide no lesser degree of performance and safety',
-      'Only IET-branded equipment is permitted',
-      'Instruments must be calibrated annually by a UKAS lab',
+      'Any electrical multimeter is acceptable provided it can read down to fractions of an ohm',
+      'Instruments must be calibrated annually by a UKAS-accredited laboratory before they may be used',
+      'Only test instruments carrying a recognised UK certification mark for installation testing are permitted',
+      'Instruments and methods shall comply with BS EN 61557; other equipment must be no less safe or capable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643.1 is the gateway: BS EN 61557 (and its sub-parts) is the specification for installation testing instruments. The "no lesser degree of performance and safety" clause permits non-61557 equipment only if it can be demonstrated to be at least as good — a high bar in practice. For continuity, the relevant sub-part is BS EN 61557-4.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'BS EN 61557-4 is the standard for low-resistance ohmmeters used in installation testing. What does it specify about test current and open-circuit voltage?',
     options: [
-      'Test current ≥ 200 mA at all times',
-      'Open-circuit voltage between 4 V and 24 V (DC or AC), test current capable of delivering at least 200 mA into a 0.5 Ω load — earlier editions specified the 200 mA minimum, current editions describe it as "capable of low-resistance measurement" with the 200 mA characteristic retained as the practical benchmark',
-      'Open-circuit voltage of 230 V',
-      'Test current of 30 mA RMS',
+      'Open-circuit voltage of 4–24 V and a current able to deliver at least 200 mA into 0.5 Ω',
+      'A fixed test current of exactly 200 mA, maintained at all times throughout the measurement',
+      'An open-circuit voltage of 230 V, matching the nominal supply so the test reflects service',
+      'A test current of 30 mA RMS, aligned with the rating of a typical final-circuit RCD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 61557-4 specifies the instrument is capable of measuring resistance values down to fractions of an ohm. The classic spec — open-circuit voltage 4–24 V, current ≥ 200 mA into 0.5 Ω — comes from earlier editions; the current edition reads more functionally ("capable of low-resistance measurement") but the 200 mA test current remains the practical benchmark for instruments sold to UK electricians.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Why does BS EN 61557-4 demand a relatively high test current (≥ 200 mA) rather than a few mA like a multimeter?',
     options: [
-      'To trip an RCD during the test',
-      'High test current penetrates surface contamination and partial joints — a partially failed connection that reads "OK" at 1 mA can read very differently at 200 mA, exposing high-resistance contact that would otherwise be missed',
-      'To match the rated current of the protective device',
-      'It is an arbitrary historical figure',
+      'To deliberately trip an upstream RCD and confirm it operates during the continuity test',
+      'To match the rated current of the circuit protective device that is being tested',
+      'High test current penetrates oxide and partial joints that read "OK" at 1 mA',
+      'It is an arbitrary historical figure carried over from earlier instrument designs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A multimeter at 1 mA gives a deceptively low reading on a partial joint because the small current cannot break through corrosion, oxidation, or a thin pinch on a single strand. The 200 mA test current reveals the true joint resistance under realistic conditions. This is why a buzzer continuity tester (which typically pushes only a few mA) cannot be used for compliance testing under Reg 643.2.1.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'You have just changed the test leads on your low-resistance ohmmeter. What is the procedural consequence?',
     options: [
-      'No action — leads do not affect readings',
-      'Re-null (or re-measure) the lead resistance immediately. Different leads have different resistance — typically 0.05 to 0.30 Ω. A null performed on the previous leads is invalid and every subsequent reading inherits the error',
-      'Wait 24 hours for the meter to recalibrate',
-      'Reduce all readings by 10%',
+      'No action is needed — the test leads do not contribute to the measured resistance',
+      'Wait 24 hours for the meter to recalibrate itself to the new leads before testing',
+      'Reduce every subsequent reading by a nominal 10% to allow for the new lead resistance',
+      'Re-null the leads immediately — the previous null is invalid and every reading inherits the error',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lead resistance is in the same numeric ballpark as a real R1+R2 reading. Changing leads — even to a nominally identical pair — invalidates the previous null. Re-null at the start of every session, after any lead swap, and ideally between every few readings on a long job to catch lead-end wear that increases resistance over time.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'You are continuity-testing a long supplementary bond and your meter does not have a zeroing function. The leads measure 0.18 Ω against each other. The reading at the bond end is 0.42 Ω. What is the actual bond resistance and what should you record?',
     options: [
-      '0.42 Ω — record as measured',
-      'Actual bond resistance = 0.42 - 0.18 = 0.24 Ω. Record both the measured value AND the deducted value, with a comment noting lead resistance was subtracted manually. GN3 Reg 2.13 explicitly permits the measure-and-subtract method',
-      'Record 0.18 Ω',
-      'Cannot be calculated',
+      'Bond = 0.42 − 0.18 = 0.24 Ω; record both the raw and the deducted value with a comment',
+      'Record 0.42 Ω exactly as measured, since manual subtraction is not permitted without a null',
+      'Record 0.18 Ω, the lead resistance, as the bond reading because the leads dominate it',
+      'The bond resistance cannot be determined without a meter that provides an automatic null',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "measure-and-subtract" method is the explicit alternative to nulling. Lead resistance is 0.18 Ω; measured reading is 0.42 Ω; actual bond resistance is 0.24 Ω. Best practice is to record the measured raw value AND the corrected value with a comment, so a future reader can audit your arithmetic.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'What is the difference between contact resistance and conductor resistance in a low-resistance measurement?',
     options: [
-      'They are the same thing',
-      'Conductor resistance is the bulk resistance of the cable itself (mΩ/m × length, e.g. 12.10 mΩ/m × 18 m = 0.218 Ω). Contact resistance is the resistance at each termination — the joint between the conductor and the terminal block, clamp, or splice. A measurement gives you the SUM; a degraded joint shows up as contact resistance much higher than expected',
-      'Contact resistance only matters for buzz-testing',
-      'Conductor resistance is always zero',
+      'They are two names for the same quantity and always read identically on the meter',
+      'Contact resistance matters only when buzz-testing and has no bearing on a measured value',
+      'Conductor resistance is the cable bulk (mΩ/m × length); contact resistance is each joint — the meter reads the sum',
+      'Conductor resistance is always near zero, so any reading above zero is pure contact resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Total measured resistance = bulk conductor + sum of contact resistances at every joint in the path. The bulk part is calculable from cable data. When the measured value exceeds the calculated bulk by a meaningful margin, the difference IS the cumulative contact resistance — which localises to one or more degraded joints. Method 2 (wandering lead) along the run is the diagnostic technique because it shows where the contact resistance jumps.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'Polarised vs non-polarised low-resistance ohmmeters — when does the distinction matter in installation testing?',
     options: [
-      'Always — polarised meters are mandatory',
-      'Rarely in pure copper conductor testing. The distinction matters where junction effects, oxide layers or any semiconductor-like behaviour can rectify the test current. For routine R1+R2, R2 and bonding measurements on copper conductors, a non-polarised meter is fine; for testing through devices with rectifying behaviour, take readings in both polarities and use the larger',
-      'Only on TT systems',
-      'Only when the meter has a CAT IV rating',
+      'Always — a polarised meter is mandatory for every installation continuity measurement',
+      'Only on TT systems, where the earth path runs through the general mass of earth',
+      'Only when the meter carries a CAT IV overvoltage rating for use at the origin',
+      'Rarely on copper — it matters only where oxide or junction effects can rectify the current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most modern multifunction testers use a low-frequency AC test current (or alternating-polarity DC) that auto-handles polarisation effects. The textbook concern — that a corroded copper-aluminium joint can act as a partial rectifier — is real but uncommon in modern UK installations. Where you do encounter mixed metals or a suspected semiconductor effect (e.g. zinc oxide on galvanised steel), take the reading in both polarities and record the larger value.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'When should you use the "comparative" method versus the "absolute" method in low-resistance measurement?',
     options: [
-      'They are interchangeable',
-      'Absolute method = measure resistance directly and compare to a calculated value (R1+R2 calculated from cable data). Used when you have cable size and length and can do the maths. Comparative method = measure two similar paths and compare them to each other (e.g. r1 vs r2 on a ring final, or two CPCs in parallel). Used when you cannot calculate but a known-good reference exists',
-      'Comparative is for new work, absolute is for periodic',
-      'Absolute uses an analogue meter, comparative uses digital',
+      'Absolute = compare a reading to the calculated R1+R2; comparative = compare two similar paths',
+      'They are interchangeable and the choice between them is purely a matter of preference',
+      'The comparative method is reserved for new work and the absolute method for periodic inspection',
+      'The absolute method requires an analogue meter while the comparative method requires a digital one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Absolute: you have the GN3 Table BI value, you know the length, you calculate the expected resistance and compare to your reading. Comparative: you have two parallel or symmetrical conductors in the same circuit and you compare them — if they should be similar but differ by 50%, one is degraded. The ring final continuity test (r1, r2, rn) is implicitly comparative when you check that r1 ≈ rn ≈ r2/1.67.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'You are using a multifunction tester with a "auto-null" feature. The user manual says auto-null reads lead resistance once at power-on. What is the procedural risk?',
     options: [
-      'No risk — auto-null is fool-proof',
-      'Auto-null at power-on captures the lead resistance at that moment. If you then change leads, swap a probe, or one of the lead-end fuses ages, the captured null becomes invalid silently. Best practice is to manually trigger a re-null at every test session start AND after any lead change — never rely on a power-on null for a multi-hour job',
-      'Auto-null permanently locks at the factory value',
-      'Auto-null adds 0.10 Ω to every reading',
+      'There is no risk — an auto-null feature is fool-proof and needs no further attention',
+      'Auto-null permanently locks to a factory-set value and ignores the leads actually fitted',
+      'It captures the lead resistance only at power-on, so a later lead change invalidates it silently',
+      'Auto-null deliberately adds a fixed 0.10 Ω margin to every reading as a safety allowance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Auto-null at power-on is convenient but treats lead resistance as a constant for the whole session. Real lead resistance drifts with temperature, contact wear and connector oxidation. The professional habit is to re-null on demand at the start of every test, after any lead change, and again at the end of the job to confirm nothing has drifted. The manual null button on the front of every quality MFT is there for this reason.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Reg 643.11 (and the surrounding apparatus regulations) — what does the safety obligation require of you when selecting test instruments?',
     options: [
-      'Buy the most expensive instrument',
-      'The instrument and its leads, probes and connectors shall have an overvoltage category (CAT) rating appropriate for the location at which they are connected. The equivalent overvoltage category for a test arrangement is the LOWEST category of any element in the chain. Particular attention shall be paid to safety where tests generate >25 V AC or >60 V DC in wet/damp conditions',
-      'Only meters with a built-in printer are compliant',
-      'Lead resistance must be marked on the meter housing',
+      'Always select the most expensive instrument available, as cost correlates directly with safety',
+      'Only instruments with a built-in results printer satisfy the apparatus safety requirements',
+      'The measured lead resistance must be permanently marked on the meter housing before use',
+      'Instrument, leads and probes must carry a CAT rating suited to the location — the chain takes the lowest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 61010 governs CAT ratings. CAT IV = origin of supply; CAT III = distribution; CAT II = single-phase loads. The chain rule is critical: a CAT IV meter with a CAT III lead becomes CAT III overall. The wet/damp conditions warning is in Reg 643.11 territory — the test current itself becomes a shock hazard above 25 V AC / 60 V DC in wet locations, so use a meter with a "wet test" mode or a tongue-tester that limits open-circuit voltage.',
   },

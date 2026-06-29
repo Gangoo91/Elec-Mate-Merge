@@ -10,11 +10,11 @@ const quickCheckQuestions = [
     id: 'io-list-critical',
     question: 'Why is an IO list critical before installation begins?',
     options: [
-      'It looks professional in documentation',
-      'It ensures all required signals are identified, prevents missing devices, and supports commissioning',
-      "It's only needed for large projects",
+      'It identifies every required signal and underpins commissioning',
+      'It mainly makes the project documentation look more professional',
+      'It is only worth producing on large or complex commercial projects',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The IO list ensures all required signals are identified, prevents missing devices, guides cable routing and panel design, supports procurement decisions, and provides the foundation for commissioning. Without it, costly site changes are inevitable.',
   },
@@ -22,18 +22,18 @@ const quickCheckQuestions = [
     id: 'schematic-vs-io',
     question: 'What do schematics provide that IO lists do not?',
     options: [
-      'More detailed device descriptions',
-      'Physical and logical connections between devices, control sequences, and wiring methods',
-      'Alarm setpoints and priorities',
+      'More detailed descriptions of each individual field device',
+      'Alarm setpoints, deadbands and their assigned priorities',
+      'Physical and logical connections, control sequences and wiring methods',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Schematics show the physical and logical connections between devices, control sequences, wiring methods, and spatial relationships. While IO lists identify what signals exist, schematics show how they're connected.",
   },
   {
     id: 'bacnet-ip-topology',
     question: 'Which topology is typically used for BACnet/IP networks?',
-    options: ['Bus topology', 'Star topology', 'Ring topology'],
+    options: ['Bus topology', 'Star topology', 'Daisy-chain topology'],
     correctIndex: 1,
     explanation:
       'Star topology is used for BACnet/IP networks because they run over Ethernet infrastructure, where devices connect to a central switch. This provides better reliability and easier fault isolation compared to bus topologies.',
@@ -67,12 +67,12 @@ const quizQuestion = {
   question:
     'CO2 sensors in a building gave unstable readings. Investigation found their 0-10V cables were run in the same trunking as 230V fan power supplies. What caused the problem?',
   options: [
-    'Faulty sensors',
-    'Incorrect power supply voltage',
-    'Electromagnetic interference from nearby mains cables',
-    'Poor network connectivity',
+    'Faulty sensors supplied from the factory',
+    'Incorrect sensor supply voltage',
+    'Poor network connectivity between controllers',
+    'Electromagnetic interference from the nearby mains cables',
   ],
-  correctAnswer: 2,
+  correctAnswer: 3,
   explanation:
     'The electromagnetic interference from mains cables caused noise in the analog signals. This is why communications and analog signal cables must be segregated from power cables in separate containment systems.',
 };

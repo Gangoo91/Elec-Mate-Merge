@@ -9,10 +9,10 @@ const quickCheckQuestions = [
     id: 'measurement-vs-indication',
     question: 'What is the difference between measurement and indication?',
     options: [
-      'There is no difference',
+      'Measurement applies to analogue signals and indication to digital',
       'Measurement captures data; indication displays or signals the value',
-      'Indication is always digital',
-      'Measurement is only for temperature',
+      'Measurement is always remote and indication is always local',
+      'Measurement applies only to temperature variables',
     ],
     correctIndex: 1,
     explanation:
@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     id: 'control-action',
     question: 'Give an example of a control action triggered by instrumentation.',
     options: [
-      'Manually turning a valve',
+      'An operator manually adjusting a valve by hand',
       'Automatic boiler shutdown when pressure limits are exceeded',
-      'Reading a gauge visually',
-      'Painting equipment',
+      'A technician reading a gauge during inspection',
+      'Logging a temperature value to the historian',
     ],
     correctIndex: 1,
     explanation:
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'closed-loop',
     question: 'What is a closed-loop system?',
     options: [
-      'A system with no outputs',
+      'A system that runs to a fixed timed sequence',
       'A system where output affects the input through feedback',
-      'A broken system',
-      'A system that never changes',
+      'A system with no final control element',
+      'A system that operates without a setpoint',
     ],
     correctIndex: 1,
     explanation:
@@ -51,12 +51,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the difference between measurement and indication?',
     options: [
-      'There is no difference',
       'Measurement captures data; indication displays or signals the value',
-      'Indication is always digital',
-      'Measurement is only for temperature',
+      'Measurement applies to analogue signals and indication to digital',
+      'Measurement is always remote and indication is always local',
+      'Measurement applies only to temperature variables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Measurement is the process of capturing and quantifying data, while indication is the display or signalling of that measured value to operators or systems.',
   },
@@ -64,12 +64,12 @@ const quizQuestions = [
     id: 2,
     question: 'Give an example of a control action triggered by instrumentation.',
     options: [
-      'Manually turning a valve',
+      'An operator manually adjusting a valve by hand',
+      'A technician reading a gauge during inspection',
       'Automatic boiler shutdown when pressure limits are exceeded',
-      'Reading a gauge visually',
-      'Painting equipment',
+      'Logging a temperature value to the historian',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A control action is an automatic response based on measured values, such as shutting down equipment when safety limits are exceeded.',
   },
@@ -77,10 +77,10 @@ const quizQuestions = [
     id: 3,
     question: 'What is a closed-loop system?',
     options: [
-      'A system with no outputs',
+      'A system that runs to a fixed timed sequence',
       'A system where output affects the input through feedback',
-      'A broken system',
-      'A system that never changes',
+      'A system with no final control element',
+      'A system that operates without a setpoint',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,20 +88,20 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'Name a device that performs control functions.',
-    options: ['Thermometer only', 'PID controller', 'Light bulb', 'Wire'],
-    correctAnswer: 1,
+    question: 'Which device performs the control function in a loop?',
+    options: ['A thermocouple', 'A pressure gauge', 'An isolating valve', 'A PID controller'],
+    correctAnswer: 3,
     explanation:
-      'A PID controller is a device that performs control functions by calculating the required output based on the difference between setpoint and measured values.',
+      'A PID controller performs the control function by calculating the required output based on the difference between the setpoint and the measured value.',
   },
   {
     id: 5,
     question: 'Why is indication still important in automated systems?',
     options: [
-      "It's not important in automated systems",
+      'It removes the need for any control logic',
       'For operator awareness, troubleshooting, and system monitoring',
-      'Only for decoration',
-      'To increase costs',
+      'It replaces the requirement for measurement',
+      'It allows the controller to run without feedback',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary purpose of measurement in instrumentation?',
     options: [
-      'To display values',
+      'To present readings on an operator display',
+      'To trigger an alarm when limits are reached',
       'To determine the magnitude of a physical quantity',
-      'To control equipment',
-      'To generate alarms',
+      'To drive the final control element directly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The primary purpose of measurement is to determine the magnitude of a physical quantity accurately and reliably for further processing or decision-making.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 8,
     question: 'What distinguishes open-loop from closed-loop control?',
     options: [
-      'Open-loop is more expensive',
       'Closed-loop uses feedback from output to adjust input',
-      'Open-loop is always digital',
+      'Open-loop always costs more to install',
+      'Open-loop can only use digital signals',
       'Closed-loop cannot be automated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Closed-loop control uses feedback from the output to adjust the input, while open-loop control operates independently of the output without feedback.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     options: [
       'To measure the process variable',
       'To display values to operators',
+      'To store historical trend data',
       'To implement the control action',
-      'To store historical data',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The final control element (such as a valve, motor, or heater) implements the control action determined by the controller to affect the process.',
   },

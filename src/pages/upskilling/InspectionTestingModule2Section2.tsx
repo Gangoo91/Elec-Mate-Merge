@@ -22,10 +22,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS EN 61243-3 is the product standard for which piece of safe-isolation equipment?',
     options: [
-      'Insulation resistance testers',
-      'Two-pole voltage detectors (the proprietary &ldquo;test lamp&rdquo; type — the device you use to prove dead)',
-      'MCB lock-off devices',
-      'Padlocks',
+      'Insulation resistance testers used for the 500 V DC dead test',
+      'Two-pole voltage detectors — the proprietary device used to prove dead',
+      'MCB lock-off devices fitted over the breaker toggle',
+      'Padlocks used for securing isolators in the open position',
     ],
     correctAnswer: 1,
     explanation:
@@ -36,12 +36,12 @@ const quizQuestions = [
     question:
       'A multimeter on the V AC range can read voltage. Why is it not the appropriate instrument for proving dead in safe isolation?',
     options: [
-      'It is too accurate',
-      'A multimeter is a measuring instrument, not a voltage detector. It typically lacks shrouded GS38-compliant probes, has a high input impedance that can show induced phantom voltages on dead conductors, and has no integral test-loaded indication. BS EN 61243-3 voltage detectors are purpose-designed with low impedance to clear phantom voltages and shrouded probes for the prove-dead duty',
-      'A multimeter cannot read above 230 V',
-      'A multimeter requires calibration every six months',
+      'Its high input impedance can show phantom voltages and it lacks shrouded GS38 probes and a loaded indication',
+      'Its measuring circuit is too accurate for the rough conditions found during safe isolation',
+      'It is physically unable to read voltages above the nominal 230 V supply value',
+      'It needs laboratory calibration every six months, whereas a two-pole detector does not',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The high input impedance of a multimeter is the killer: an induced or capacitively-coupled phantom voltage on a dead conductor can read 100 V or more on a multimeter and cause the operative to wrongly conclude the conductor is live, or — far worse — to conclude that the multimeter is faulty and the conductor is dead when in fact it is genuinely live but loaded by something. A two-pole detector to BS EN 61243-3 is designed for the prove-dead duty: shrouded probes, low impedance, integral indication.',
   },
@@ -50,10 +50,10 @@ const quizQuestions = [
     question:
       'Reg 537.2.3 sets the overvoltage category requirement for isolation devices. What does it require, and why does the same logic apply to your test leads?',
     options: [
-      'Devices for isolation shall be designed for overvoltage category III or IV. The same requirement applies to test leads / probes used in safe isolation: GS38 and BS EN 61010 require CAT III or CAT IV rating depending on where in the installation you are working',
-      'CAT II is sufficient everywhere',
-      'CAT I for any test under 50 V',
-      'Overvoltage category does not apply to test equipment',
+      'Isolation devices shall be CAT III or IV; the same CAT rating applies to the test leads and probes',
+      'CAT II rated equipment is sufficient everywhere in a low-voltage installation',
+      'CAT I rated equipment is adequate for any test carried out below 50 V',
+      'Overvoltage category applies to fixed wiring but not to portable test equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 5,
     question: 'A proving unit is best described as:',
     options: [
-      'A small mains-powered transformer that outputs 230 V to test indicators',
-      'A purpose-built, battery-powered or self-contained device that produces a known voltage to drive the indicator&apos;s detection circuit, used to prove the indicator works immediately before and after the dead-test',
-      'A live socket on a known circuit',
-      'A multimeter on continuity range',
+      'A small mains-powered transformer that outputs 230 V to test the indicator on demand.',
+      'A live socket-outlet on a nearby circuit that is known to be energised at the time.',
+      'A self-contained device producing a known voltage to prove the indicator before and after the dead-test.',
+      'A multimeter switched to its continuity range and applied across the indicator probes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A proving unit is a self-contained device — typically battery-powered with an internal step-up — that produces a known test voltage at the indicator&apos;s rating. It is the trusted live source for the bracketing prove-test-prove. Crucially, it is not connected to the installation under test, which removes the ambiguity that proving on a nearby socket introduces. GN3 Reg 10.1 (c) names the proving unit alongside leads and probes as something to inspect before each use.',
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       'Why is a screwed-in MCB lock-off device preferred over a tie-wrap or tape across the toggle?',
     options: [
-      'It looks more professional on photos',
-      'It mechanically prevents the toggle from being moved to the closed position. A tie-wrap or tape is easily defeated by accident or intent and provides no positive mechanical lock against accidental closure — failing Reg 462.3 / 537.2.4&apos;s &ldquo;prevent unintentional closure&rdquo; requirement',
-      'It is required by BS 7671',
-      'It is the only method permitted by the manufacturer',
+      'It simply looks more professional in the safe-isolation evidence photographs.',
+      'It mechanically prevents the toggle closing, where tape or a tie-wrap gives no positive lock per Reg 462.3 / 537.2.4.',
+      'It is the only lock-off method named explicitly anywhere in BS 7671.',
+      'It is the only lock-off method permitted by the breaker manufacturer.',
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'On a multi-operative job, three operatives need to apply lock-off to the same isolator. What is the correct device?',
     options: [
-      'One padlock with three keys, distributed',
-      'A multi-hasp (lockable bar with multiple holes) onto which each operative applies their own personal padlock with their own single key. The isolator remains locked until the last operative removes their lock',
-      'A combination lock',
-      'A single padlock with the supervisor as keyholder',
+      'One padlock fitted to the isolator with its three keys shared out among the operatives.',
+      'A single combination padlock with the entry code shared between all three operatives.',
+      'A single padlock fitted by the supervisor, who keeps the only key for the whole team.',
+      'A multi-hasp onto which each operative fits their own padlock and key, removed last lock last.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The multi-hasp is the textbook solution. Each operative carries personal accountability for their own work — they apply their own lock and tag, and they remove it only when their part of the work is complete. The chain of custody is preserved, and the isolation cannot be undone until every individual operative has signed off. One key per padlock, one operative per padlock, on their person at all times.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'When does PPE for safe isolation typically need to include arc-rated clothing, insulated gloves to a defined class, and a face shield?',
     options: [
-      'Whenever working on any electrical installation',
-      'When working on switchgear with significant prospective fault current — typically distribution boards and switchboards above defined breaking-capacity / fault-current thresholds, where the energy released by an arc-flash event would exceed unprotected-skin tolerance. Risk-assess against the prospective fault current at the point of work',
-      'Only on three-phase systems',
-      'Only when proving dead on a busbar',
+      'Whenever working on any electrical installation, regardless of the prospective fault level.',
+      'Only when the installation is a three-phase system rather than a single-phase one.',
+      'When the prospective fault current at the point of work could drive an arc-flash beyond skin tolerance.',
+      'Only at the precise moment of proving dead directly on an exposed live busbar.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Arc-rated PPE is risk-driven, not blanket. The key inputs are prospective fault current (Ipf), upstream protection clearing time, and gap distance. On a domestic CU with a 16 kA breaking-capacity main switch and a fast-clearing upstream fuse, the arc energy at the operative is below the threshold where AR clothing materially helps. On a 400 V industrial switchboard with 35 kA Ipf and a 250 ms clearing time, an unprotected operative is at risk of severe burns from a fault. The competent person carries out the assessment and selects PPE accordingly, with insulating gloves to the appropriate class (BS EN 60903) for the system voltage.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'The proving unit is a separate, dedicated device. Why not use the &ldquo;test on a known live socket&rdquo; method as a proving step?',
     options: [
-      'Because BS 7671 prohibits it',
-      'Because the &ldquo;known&rdquo; live source is rarely as known as it sounds: it could be on the same circuit you have just isolated (proving via a backfeed), it could share a borrowed neutral with the work circuit, it could trip an upstream RCD and isolate something you did not intend, and the source is at 230 V which is unnecessarily energetic for the prove. A dedicated proving unit removes every one of those failure modes',
-      'Because GS38 explicitly prohibits proving on sockets',
-      'Because it would void instrument calibration',
+      'Because BS 7671 explicitly prohibits proving on any live socket-outlet whatsoever.',
+      'Because GS38 names the live-socket method as a forbidden practice in safe isolation.',
+      'Because proving on a socket would void the voltage indicator&apos;s factory calibration.',
+      'Because the &ldquo;known&rdquo; source may backfeed, share a borrowed neutral or trip an RCD — a proving unit avoids all that.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Every safe-isolation course teaches the proving unit because it removes the ambiguity. A proving unit produces a known voltage on demand from a battery, with no connection to the installation under investigation. The &ldquo;test on a nearby socket&rdquo; shortcut introduces unknowns at exactly the moment you need certainty. GN3 Reg 10.1 names the proving unit specifically.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'EaWR 1989 reg 16 sets the competence floor. For routine safe isolation on a domestic final circuit, who is allowed to perform the procedure as the named operative?',
     options: [
-      'Anyone with safety training',
-      'Only a person with the technical knowledge or experience to prevent danger, or who is under appropriate supervision. In practice, a qualified electrician (e.g. 2365 / 2356 with 18th Edition certification, or an inspector with a recognised inspection-and-testing qualification). An apprentice can perform parts of the procedure under direct supervision but cannot be the named operative for the work',
-      'Only Approved Electricians registered with NICEIC',
-      'Anyone over the age of 18 with PPE',
+      'A person with the technical knowledge or experience to prevent danger, or supervised — a qualified electrician.',
+      'Anyone who has completed a general workplace health-and-safety training course.',
+      'Only Approved Electricians who are registered with the NICEIC competent-person scheme.',
+      'Anyone over the age of 18 who is wearing the correct PPE for the work.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 16 of EaWR is competence-based, not certification-based. The court asks: did this person have the knowledge or experience to prevent danger? GN3 Reg 1.2 sets the practical floor: a recognised qualification, current 18th Edition, and relevant experience for the installation type. Apprentice work under direct supervision is permitted; an apprentice acting solo as the named operative on safe isolation is a reg 16 failure.',
   },
@@ -164,10 +164,10 @@ const inlineChecks = [
     question:
       'A long dead T&E run sits in the same trunking as a parallel live circuit. Your multimeter reads 75 V on the L conductor. Your BS EN 61243-3 detector reads 0 V. Which is correct, and why?',
     options: [
-      'The multimeter — the conductor is live and the detector is faulty.',
-      "The detector — the 75 V is a capacitively-coupled phantom voltage. The detector's lower input impedance and small internal load burn off the phantom; the multimeter's 10 MΩ input impedance lets the phantom show. Treat the conductor as dead.",
-      'Both — average them, the conductor is at 37.5 V.',
-      'Neither — re-isolate and start over.',
+      'The multimeter — the conductor is genuinely live and the two-pole detector is faulty.',
+      "The detector — the 75 V is a capacitively-coupled phantom that its load burns off; treat the conductor as dead.",
+      'Both — average the two readings, so the conductor is sitting at about 37.5 V.',
+      'Neither reading can be trusted — re-isolate the circuit and start the procedure over.',
     ],
     correctIndex: 1,
     explanation:
@@ -178,10 +178,10 @@ const inlineChecks = [
     question:
       'You are about to investigate a fault at the meter tails of a domestic intake. Your instrument is marked CAT III 1000 V / CAT IV 600 V. Your leads are marked CAT III 1000 V. Are you compliant for this point of work?',
     options: [
-      'Yes — the instrument is CAT IV, that is the controlling rating.',
-      'Yes — meter tails are CAT III work.',
-      'No. The system rating is the lowest CAT in the chain — your CAT III leads downgrade the whole arrangement to CAT III. Meter tails are CAT IV territory (between the building entrance and the primary distribution board, per GN3 Table 1.1). You need CAT IV-rated leads.',
-      'No — CAT II leads are required at the origin.',
+      'Yes — the instrument is CAT IV rated, and that is the controlling rating for the chain.',
+      'Yes — meter tails count as CAT III work, which the CAT III leads cover adequately.',
+      'No — the chain rates at its lowest link, so CAT III leads make this CAT IV work non-compliant.',
+      'No — CAT II rated leads are the ones specifically required at the supply origin.',
     ],
     correctIndex: 2,
     explanation:
@@ -192,10 +192,10 @@ const inlineChecks = [
     question:
       'You arrive at a board where the previous electrician has wrapped insulation tape around the MCB toggle and stuck a "DO NOT SWITCH" label on the cover. The MCB is in the off position. Which BS 7671 reg(s) does this fail and what do you do?',
     options: [
-      'It complies — the label satisfies Reg 514.',
-      'It fails Reg 462.3 and Reg 537.2.4 — both require devices to be designed or installed to prevent unintentional or inadvertent closure. Tape and a label are deterrents, not mechanical lock-off. Replace with a brand-matched MCB lock-off device + personal padlock before relying on the isolation.',
-      'It fails only Reg 537.2.7 (identification).',
-      'It complies in domestic premises only.',
+      'It complies — the warning label is enough to satisfy Reg 514 identification.',
+      'It fails Reg 462.3 and 537.2.4 — tape and a label deter, but only a lock-off device and padlock comply.',
+      'It fails only Reg 537.2.7, which is the requirement for durable device identification.',
+      'It complies in domestic premises, where lock-off devices are not mandatory.',
     ],
     correctIndex: 1,
     explanation:
@@ -206,10 +206,10 @@ const inlineChecks = [
     question:
       'You are quoting safe isolation across two boards in one day: a 6 kA domestic CU on TN-C-S, and a 35 kA industrial 400 V switchboard with 250 ms upstream clearing. You only own one set of arc-rated coveralls. Where do you wear them, and what duty justifies the call?',
     options: [
-      'Wear them on both jobs — better safe than sorry.',
-      'Wear them on the domestic CU; the industrial switchboard has a slow-clearing fuse that limits arc energy.',
-      'Wear them on the industrial switchboard only. Arc-rated PPE is risk-driven against prospective fault current and clearing time — 35 kA × 250 ms is in the energy band where unprotected skin is at risk; 6 kA on a fast-clearing service fuse is not. EaWR reg 14(c) requires precautions to be "suitable" — proportionate to the risk.',
-      'Wear them on neither; arc-rated PPE is only for arc-flash specialists.',
+      'Wear them on both jobs — better to be safe than sorry on any electrical work.',
+      'Wear them on the domestic CU, since the industrial board has a slow fuse that limits arc energy.',
+      'Wear them on the industrial board — 35 kA at 250 ms risks skin, where 6 kA on a fast fuse does not.',
+      'Wear them on neither job, as arc-rated PPE is only for dedicated arc-flash specialists.',
     ],
     correctIndex: 2,
     explanation:

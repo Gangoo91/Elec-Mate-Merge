@@ -41,9 +41,9 @@ const checks = [
     question:
       "A 70 °C T&E radial is clipped direct to the joists in a ceiling void with the joists on edge. Which Reference Method applies?",
     options: [
-      'The equivalent DC voltage that would produce the same heating effect',
-      'Likelihood of harm occurring and the severity of consequences',
-      'To prevent further injury, reduce pain, and minimise blood loss',
+      'Method A — single insulated conductor enclosed in conduit in a thermally insulated wall.',
+      'Method B — multi-core cable enclosed in conduit or trunking on a wall.',
+      'Method 102 — cable embedded in thermal insulation on more than one face.',
       'Method C — clipped direct to a non-metallic surface in still air.',
     ],
     correctIndex: 3,
@@ -69,10 +69,10 @@ const checks = [
     question:
       'A 25 m circuit has 22 m clipped direct (Method C, It ≈ 47 A at 6 mm²) and 3 m totally buried in loft insulation (Method 103, It ≈ 29 A at 6 mm²). The required tabulated It for the cable selection comes from which method?',
     options: [
-      'Provides a single dashboard for all building systems enabling quick issue identification',
-      'That the worker has appropriate supervision, instructions and information to carry out the work safely',
+      'Method C — the longest section governs, so the 22 m clipped-direct portion sets the tabulated It.',
+      'An average of the two methods weighted by length — (22 × 47 + 3 × 29) / 25 ≈ 44.8 A.',
       'Method 103 — the worst section governs because the cable will reach its temperature limit there first.',
-      'Additional loads and forces not accounted for in the tower\\\\\\\'s design can cause structural failure or overturning',
+      'Whichever method gives the lower derate factor when Ca and Cg are also applied along each section.',
     ],
     correctIndex: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "How many Reference Methods does BS 7671 Appendix 4 actually publish in everyday use, and what is the structural division between A–G and 100–103?",
     options: [
-      "Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation",
+      "A through G are for single-phase circuits and 100–103 are for three-phase circuits, reflecting the different heat each produces.",
       "A through G cover non-insulation install methods (clipped, in conduit, in trunking, in cable tray, buried, free air); 100–103 cover the cases where the cable is in thermal insulation. The two families exist because in-insulation derating is built into the tabulated value rather than applied as a separate Ci.",
-      "Explicit consent, given freely, in writing, in advance — separate from the consent to do the work. The customer must be able to refuse without it affecting the work, and to withdraw consent later. Legitimate interest is sometimes used but is harder to defend for marketing because the customer's reasonable expectation is that you photograph for the job, not for advertising.",
-      "Restock immediately. Notify the firm\\\\\\\\'s person responsible for kit maintenance. Do not continue to use the kit until restocked. Update the kit\\\\\\\\'s contents log. The kit must be ready for the NEXT incident, which could happen this afternoon.",
+      "A through G are for thermoplastic cables and 100–103 are for thermosetting cables, because the two insulation types dissipate heat differently.",
+      "A through G are the everyday domestic methods and 100–103 are the industrial high-current methods for cables above 35 mm².",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: "Method A in BS 7671 Appendix 4 describes which install configuration?",
     options: [
-      "To ensure equipment neither emits nor is affected by electromagnetic interference",
-      "To indicate which protocols are being converted and ensure proper maintenance",
+      "Multi-core cable clipped direct to a non-metallic surface in still air.",
+      "Multi-core cable on a perforated cable tray with free air circulation on all sides.",
       "A single insulated conductor in conduit in a thermally insulated wall.",
-      "Tripping before prospective fault current reaches peak",
+      "Cable direct-buried in the ground in contact with the surrounding soil.",
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: "Method C describes which install?",
     options: [
-      'The evidence is relevant to the specific NVQ unit and criteria being assessed',
-      'It can create shadows and hot spots affecting uniformity',
-      'Widespread urticarial rash, swollen tongue, wheezing, and rapidly falling blood pressure',
+      'A single insulated conductor enclosed in conduit in a thermally insulated wall.',
+      'Multi-core cable totally enclosed in thermal insulation for the full run.',
+      'Cable installed in a duct buried in the ground with soil-resistivity correction.',
       'Multi-core cables clipped direct to a non-metallic surface in still air.',
     ],
     correctAnswer: 3,
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       "A cable runs through three different environments along its length. The CCC calc must use:",
     options: [
-      'It causes delays, false readings, and requires extensive fault-finding',
-      'A device suitable for the motor starting current characteristics',
+      'The Reference Method of the longest section, weighting the others by their length.',
+      'The Reference Method of the section nearest the protective device, where fault current is highest.',
       'The Reference Method of the worst section — the section with the lowest tabulated CCC.',
-      'BS 5266-8 (EN 50172) (Emergency lighting testing and monitoring)',
+      'An average of all three Reference Methods, since the cable shares heat along its whole length.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       "A 6 mm² T&E with tabulated It = 47 A in Method C drops to It ≈ 29 A in Method 103. The percentage reduction tells you what about cables in thermal insulation?",
     options: [
-      "A duty to cooperate with their employer and other persons so far as is necessary to enable compliance with health and safety requirements",
-      "That all rungs are present, undamaged, free from grease or debris, and that the access route is clear of obstructions",
-      "Flaming combustion is no longer supported, though smouldering may continue and hot, unburned pyrolysis gases accumulate",
+      "Thermal insulation actually improves CCC by protecting the cable from ambient temperature swings — the reduction is a rounding artefact in the tables.",
+      "The reduction applies only to the short section in insulation, so the rest of the cable still carries the full 47 A.",
+      "Burying a cable in insulation roughly doubles its CCC because the surrounding material spreads the heat over a larger area.",
       "Burying a cable in insulation removes about 38 percent of its CCC because heat cannot escape — the same conductor with the same insulation cooks at much lower current.",
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
       "When sizing a sub-main on SWA (Steel Wire Armoured) cable buried in the ground, which Reference Method and which additional correction factor apply?",
     options: [
       "Method D (direct buried) or method C if in a duct, plus a soil-thermal-resistivity correction factor from Table 4B3.",
-      "To provide a low-reluctance path for magnetic flux, enabling efficient energy transfer between windings",
-      "Vague terms like \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"approximately\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"if required\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"as necessary\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" without further definition",
-      "Filtering facepieces, half/full face masks, powered respirators, breathing apparatus",
+      "Method E (free air), because the armour dissipates heat as effectively as open air regardless of burial.",
+      "Method C (clipped direct), with no additional correction because the soil keeps the cable cool.",
+      "Method 103 (in thermal insulation), because buried soil behaves thermally like loft insulation.",
     ],
     correctAnswer: 0,
     explanation:

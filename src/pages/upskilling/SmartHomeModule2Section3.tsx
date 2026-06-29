@@ -45,14 +45,14 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     question: 'Which protocol is best suited for streaming video from a smart doorbell?',
-    options: ['Zigbee', 'Z-Wave', 'Wi-Fi', 'Thread'],
-    correctIndex: 2,
+    options: ['Zigbee', 'Z-Wave', 'Thread', 'Wi-Fi'],
+    correctIndex: 3,
     explanation:
       'Wi-Fi provides the high bandwidth needed for video streaming, which low-power protocols like Zigbee, Z-Wave, and Thread cannot match.',
   },
   {
     question: 'What technology does Thread use as its foundation?',
-    options: ['Bluetooth', 'IPv6 over 802.15.4', 'Z-Wave mesh', 'Wi-Fi Direct'],
+    options: ['Bluetooth Low Energy', 'IPv6 over 802.15.4', 'Z-Wave mesh', 'Wi-Fi Direct'],
     correctIndex: 1,
     explanation:
       'Thread uses IPv6 over IEEE 802.15.4, giving each device a unique IP address and enabling internet-style routing.',
@@ -60,7 +60,7 @@ const quizQuestions = [
   {
     question: 'Which companies are founding members of the Matter standard?',
     options: [
-      'Apple only',
+      'Apple and Apple ecosystem partners only',
       'Google and Amazon only',
       'Apple, Google, Amazon, and Samsung',
       'Microsoft and Intel',
@@ -71,20 +71,20 @@ const quizQuestions = [
   },
   {
     question: 'What transport layers can Matter operate over?',
-    options: ['Only Wi-Fi', 'Only Thread', 'Wi-Fi, Thread, and Ethernet', 'Zigbee and Z-Wave'],
-    correctIndex: 2,
+    options: ['Wi-Fi, Thread, and Ethernet', 'Only Wi-Fi', 'Only Thread', 'Zigbee and Z-Wave'],
+    correctIndex: 0,
     explanation:
       'Matter can operate over Wi-Fi, Thread, and Ethernet, providing flexibility in how devices connect to the network.',
   },
   {
     question: 'What is a Border Router in a Thread network?',
     options: [
-      'A device that blocks external traffic',
+      'A firewall device that blocks external traffic',
+      'A simple wireless range extender',
       'A device connecting Thread to IP networks',
-      'A range extender',
-      'The primary controller',
+      'The primary system controller',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A Thread Border Router connects the Thread mesh network to IP-based networks like Wi-Fi or Ethernet, enabling internet connectivity and control.',
   },

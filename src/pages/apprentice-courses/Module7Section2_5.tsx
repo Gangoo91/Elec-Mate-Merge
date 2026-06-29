@@ -16,10 +16,10 @@ const Module7Section2_5 = () => {
       id: 1,
       question: 'What does incorrect polarity mean in an electrical installation?',
       options: [
-        'Monthly for at least 30 minutes at a minimum of 50% rated load',
+        'The supply voltage is higher than the equipment rating',
         'Line and neutral conductors are reversed or devices connected in wrong conductor',
-        'There isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t one; CDM still applies but with simplified duties',
-        'Damaged containment or cables caused by other trades working in the same area',
+        'The earth conductor has a higher resistance than expected',
+        'The circuit is drawing more current than its protective device rating',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section2_5 = () => {
       id: 2,
       question: 'What is a common example of incorrect polarity in lighting circuits?',
       options: [
-        'The likelihood that a hazard will cause harm and the severity of that harm',
-        'Their windings are inductive, causing current to lag voltage',
+        'A lighting circuit protected by an oversized MCB',
+        'Two-way switching wired with the wrong strapper cable',
         'A light switch wired into the neutral conductor instead of the line',
-        'Highly friable and can release large quantities of fibres when disturbed',
+        'A lampholder with the earth conductor left disconnected',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,9 +42,9 @@ const Module7Section2_5 = () => {
       id: 3,
       question: 'Give two causes of polarity faults.',
       options: [
-        'Safety glasses, face shield, gloves, and hearing protection',
-        'At least three: emergency fund, tax provision, and general savings',
-        'Ensure metalwork is at earth potential',
+        'High ambient temperature and excessive cable length',
+        'Undersized conductors and a loose earth connection',
+        'Voltage drop and poor power factor on the circuit',
         'Misidentification of conductors and careless wiring',
       ],
       correctAnswer: 3,
@@ -56,9 +56,9 @@ const Module7Section2_5 = () => {
       question: 'Why is incorrect polarity dangerous even if equipment appears to work?',
       options: [
         'Equipment may remain live when switched off, creating shock risks',
-        'To clearly communicate the current safety status of the scaffold to all users',
-        'Between line, neutral and earth at the point of test',
-        'Version control, backup procedures, access control, and format standards',
+        'It causes the equipment to draw far more current than normal',
+        'It makes the protective device trip every time the load is switched on',
+        'It reduces the brightness of lamps and the speed of motors',
       ],
       correctAnswer: 0,
       explanation:
@@ -104,9 +104,9 @@ const Module7Section2_5 = () => {
       question: 'What should be done if a polarity fault is discovered?',
       options: [
         'Correct the wiring immediately and retest before energising',
-        'The electrical pressure or force that pushes current',
-        'Raise the concern through appropriate channels, internally first',
-        'Internal damage may be extensive despite limited external signs',
+        'Leave it energised but warn the customer to be careful',
+        'Note it on the certificate and fix it at the next inspection',
+        'Fit an RCD to the circuit to make it safe instead',
       ],
       correctAnswer: 0,
       explanation:
@@ -116,10 +116,10 @@ const Module7Section2_5 = () => {
       id: 9,
       question: 'Who is responsible for ensuring polarity is correct before energising?',
       options: [
-        'Direct loss and expense caused by relevant matters',
+        'The customer who commissioned the work',
         'The qualified electrician carrying out the work',
-        'Electricity consumed in owned buildings',
-        'Distribution boards, switch rooms, and plant areas',
+        'The manufacturer of the consumer unit',
+        'The distribution network operator (DNO)',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,10 +129,10 @@ const Module7Section2_5 = () => {
       id: 10,
       question: 'In the real-world example, what mistake caused the homeowner to receive a shock?',
       options: [
-        'Increased mobility and reduced trip hazards',
-        'Career goals, skill gaps, and industry developments',
+        'The earth conductor had been left disconnected at the rose',
+        'The lighting circuit was protected by an oversized MCB',
         'The switch was wired into the neutral conductor',
-        'They provide a permanent record and reduce reliance on memory',
+        'The lampholder centre contact was connected to neutral',
       ],
       correctAnswer: 2,
       explanation:

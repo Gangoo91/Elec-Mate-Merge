@@ -4,16 +4,16 @@ const SmartHomeModule7Section5Quiz = () => {
   const questions = [
     {
       id: 1,
-      question: 'What is the main purpose of a customer handover?',
+      question: 'What is the main purpose of a customer handover on a smart home installation?',
       options: [
-        'To get final payment from the client',
         'To build client confidence and reduce call-backs',
-        'To demonstrate expensive equipment',
-        'To complete legal requirements',
+        'To trigger the final stage payment from the client',
+        'To showcase the highest-specification equipment installed',
+        'To satisfy the manufacturer warranty registration',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
-        'The main purpose is to build client confidence in using their system and prevent unnecessary support calls.',
+        'A good handover teaches the client to use their system confidently, which is what actually reduces avoidable support calls and call-backs. Payment and warranty steps are administrative, not the purpose of the handover.',
     },
   ];
 

@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'life-cycle-cost',
     question: 'Which costs are included in life cycle costing for MEP systems?',
     options: [
-      'The design meets BS 7671 requirements',
-      '28 days, extendable to 42 days with the referring party\\\\\\\'s consent',
+      'Only the initial purchase price of the equipment',
+      'Capital cost plus the contractor’s installation profit only',
       'Capital, operating, maintenance, and disposal costs',
-      'The total power (combination of real and reactive power)',
+      'Energy running costs alone, excluding maintenance',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 've-workshop',
     question: 'When should a value engineering workshop ideally take place?',
     options: [
-      'The resistance of the earth electrode to general mass of earth',
-      'Mental health problems are a sign of personal weakness',
+      'On site during the construction phase',
+      'After practical completion at handover',
       'At RIBA Stage 2-3 (Concept/Spatial Coordination)',
-      'Monthly function test, annual full duration test',
+      'Once the final account has been agreed',
     ],
     correctIndex: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'When comparing LED lighting against fluorescent, which factors should be included in the life cycle cost analysis?',
     options: [
-      'It establishes when the inspection was carried out and when the next inspection is due',
-      'Optimised for 1550nm with larger effective area for submarine/long-haul',
-      'Clear walkways, proper storage, regular cleaning, waste removal',
+      'Only the purchase price of the luminaires',
+      'Purchase price and installation labour alone',
+      'Energy consumption and purchase price, excluding maintenance',
       'Purchase, energy, maintenance, lamp replacement, and disposal costs',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'The maintenance cost projection for a building services system should consider:',
     options: [
       'PPM, reactive repairs, component replacement cycles, and eventual major refurbishment',
-      'Coordinating between employer, college, and apprentice to ensure learning progresses',
-      'Nothing — variation within ±1% of 50 Hz is normal under ESQCR 2002',
-      'Restricted space limits posture options, guardrails restrict movement, and platform bounce affects stability',
+      'Planned preventive maintenance only, excluding any breakdowns',
+      'Reactive breakdown repairs only, as planned maintenance is optional',
+      'The original installation cost, which sets the maintenance budget',
     ],
     correctAnswer: 0,
     explanation:

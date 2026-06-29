@@ -38,12 +38,12 @@ const checks = [
     question:
       "You are sitting the Unit 304 (Inspection, Testing and Commissioning) paper — 60 questions in 90 minutes, closed-book. What is the right baseline minutes-per-question target to plan around?",
     options: [
-      "Identification of the space, hazards, controls, atmospheric readings, entrant names, time limits, communication, and rescue arrangements",
-      "\\\\\\\"New domestic single-phase installation comprising consumer unit, 6 lighting circuits, 4 ring final circuits, cooker circuit, and shower circuit\\\\\\\"",
-      "To detect and measure a wide range of volatile organic compounds (VOCs) and other ionisable gases at very low concentrations",
       "1 minute 15 seconds per question, leaving roughly 15 minutes of buffer at the end for review, flagged questions and the longer EICR-coding scenarios.",
+      "Exactly 1 minute 30 seconds per question, using every available second so that the paper finishes precisely as the clock runs out.",
+      "2 minutes per question, accepting that you will only reach about 45 of the 60 questions but answer those thoroughly.",
+      "45 seconds per question on the first pass, racing through the whole paper twice before the halfway point.",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "60Q in 90min is exactly 1.5 min per question if you use every second — but that leaves no buffer for review, no margin for the calculation items, and no recovery time if you stall. Aim for ~75 seconds per question on the first pass, which banks ~15 minutes for review and for the harder items. This is the same pacing logic as the L2 paper, just applied to a stricter L3 question set.",
   },
@@ -52,10 +52,10 @@ const checks = [
     question:
       "You are 22 minutes into the Unit 305 (Electrical Systems Design) paper, on question 12 (a multi-step voltage-drop calculation), and you have already spent 4 minutes without converging on an answer. What should you do?",
     options: [
-      "To prove the cpc has a low-resistance path so that under fault the disconnection device operates within the required time (and to prove main and supplementary bonding continuity)",
-      "You want to highlight transferable skills, have gaps in employment, are changing speciality, or have varied experience that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fit a straightforward chronology.",
+      "Keep working the calculation — you have already invested 4 minutes, so giving up now would waste that effort entirely.",
+      "Leave the question blank and move on, since a wrong guess looks worse than an unanswered question.",
       "Flag the question, pick the best of the remaining options on instinct (never leave it blank — there is no negative marking), and move on. Come back in the review window with fresh eyes.",
-      "Maximise £4,000 Lifetime ISA (if under 40 and saving for first home), contribute £10,000 to pension (gaining higher-rate tax relief), keep £1,000 accessible",
+      "Restart the whole paper from question 1, as falling behind on a calculation means your earlier pacing was wrong.",
     ],
     correctIndex: 2,
     explanation:
@@ -66,10 +66,10 @@ const checks = [
     question:
       "How does the Unit 308 (Career Awareness) paper differ in timing from the other L3 unit papers, and how should that change your pacing?",
     options: [
-      "Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity",
+      "Unit 308 is much longer — 80 questions in 120 minutes — so you need to almost double your usual pace to finish in time.",
       "Unit 308 is shorter — 40 questions in 60 minutes — which is exactly the same 1.5 min per question rate. Pacing logic is unchanged: aim for ~75 seconds per question on the first pass and bank ~10 minutes of review buffer, scaled to the shorter paper.",
-      "To provide a low-impedance earth reference for the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation on TN-C-S or TN-S supplies — connected back through the service cable PEN (or PE) to the secondary substation earth.",
-      "Carry out a full PAT test (visual inspection, earth continuity for Class I, insulation resistance, and functional test), verify the repair was effective, and update the maintenance/PAT records",
+      "Unit 308 has no time limit, so pacing does not matter and you can take as long as you need on each question.",
+      "Unit 308 gives twice as long per question, so you can afford roughly 3 minutes on each one without any review buffer.",
     ],
     correctIndex: 1,
     explanation:

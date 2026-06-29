@@ -6,10 +6,10 @@ export const section1Questions: QuizQuestion[] = [
     id: 1,
     question: 'Name one environmental benefit of renewables',
     options: [
-      'Storage systems located on the customer side of the meter',
+      'Higher fuel transport requirements to remote sites',
       'Reduced carbon emissions and greenhouse gases',
-      'To match supply with demand timing',
-      'Variable output causing grid balancing issues',
+      'Increased reliance on imported coal and gas',
+      'Greater air pollution from combustion exhaust',
     ],
     correctAnswer: 1,
     explanation:
@@ -58,10 +58,10 @@ export const section1Questions: QuizQuestion[] = [
     id: 5,
     question: 'Why are fossil fuel comparisons still relevant?',
     options: [
-      'Storage systems located on the customer side of the meter',
+      'Because fossil fuels produce no carbon emissions',
       'To understand cost, reliability, and transition challenges',
-      'Small-scale generation located close to consumers',
-      'Consistent water flow provides steady generation',
+      'Because renewables cannot yet generate any electricity',
+      'To prove fossil fuels are cheaper in every scenario',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,9 +88,9 @@ export const section2Questions: QuizQuestion[] = [
     id: 7,
     question: 'What makes hydro more stable than wind?',
     options: [
-      'Small-scale generation located close to consumers',
-      'Reduced carbon emissions and greenhouse gases',
-      'Waste disposal and recycling organic materials',
+      'It depends on strong winds being present at all times',
+      'It produces electricity only during daylight hours',
+      'Its output rises and falls minute to minute with the weather',
       'Consistent water flow provides steady generation',
     ],
     correctAnswer: 3,
@@ -102,9 +102,9 @@ export const section2Questions: QuizQuestion[] = [
     question: 'Name a benefit of biomass beyond power generation',
     options: [
       'Waste disposal and recycling organic materials',
-      'To understand cost, reliability, and transition challenges',
-      'Visual and noise impact on communities',
-      'Variable output causing grid balancing issues',
+      'Completely silent operation in all conditions',
+      'Zero requirement for any fuel handling or storage',
+      'Generation that is fully independent of weather and season',
     ],
     correctAnswer: 0,
     explanation:
@@ -170,10 +170,10 @@ export const section3Questions: QuizQuestion[] = [
     id: 13,
     question: 'How does storage support frequency control?',
     options: [
-      'Variable output causing grid balancing issues',
+      'By slowly storing energy over many days for seasonal use',
       'By providing rapid response to balance supply and demand',
-      'Waste disposal and recycling organic materials',
-      'They set standards for integration and safety requirements',
+      'By disconnecting generators whenever frequency drifts',
+      'By increasing the total demand placed on the grid',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,10 +183,10 @@ export const section3Questions: QuizQuestion[] = [
     id: 14,
     question: "What's the difference between base load and peak demand?",
     options: [
-      'Variable output causing grid balancing issues',
-      'By diversifying energy sources and reducing import dependence',
+      'Base load is the maximum demand; peak is the average demand',
+      'Base load applies only to industry; peak applies only to homes',
       'Base load is minimum continuous demand; peak is maximum demand',
-      'Waste disposal and recycling organic materials',
+      'Base load is daytime demand; peak is night-time demand',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,9 +196,9 @@ export const section3Questions: QuizQuestion[] = [
     id: 15,
     question: 'What does "behind-the-meter" refer to?',
     options: [
-      'Small-scale generation located close to consumers',
-      'Variable output causing grid balancing issues',
-      'Waste disposal and recycling organic materials',
+      'Generation connected directly to the transmission network',
+      'Equipment owned and operated by the grid operator',
+      'Meters installed at the substation rather than the property',
       'Storage systems located on the customer side of the meter',
     ],
     correctAnswer: 3,
@@ -226,10 +226,10 @@ export const section4Questions: QuizQuestion[] = [
     id: 17,
     question: 'Name a policy tool that guarantees renewable pricing',
     options: [
-      'To match supply with demand timing',
+      'Renewables Obligation Certificates being phased out',
       'Contracts for Difference (CfD)',
-      'Solar PV with no moving parts',
-      'Visual and noise impact on communities',
+      'A standard wholesale spot-market price',
+      'The domestic energy price cap set by Ofgem',
     ],
     correctAnswer: 1,
     explanation:

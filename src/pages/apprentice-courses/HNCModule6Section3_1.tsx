@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'breeam-mandatory',
     question: 'What happens if a BREEAM project fails to achieve mandatory credits?',
     options: [
-      'The rating is reduced by one level',
-      'The project receives a conditional pass',
-      'Additional points are required elsewhere',
-      'The project cannot achieve certification',
+      'The project cannot achieve certification at the target rating',
+      'The rating is reduced by exactly one level',
+      'The project receives a conditional pass pending review',
+      'Additional innovation points are awarded to compensate',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Mandatory credits (also called minimum standards) must be achieved for any rating level. If a project fails to meet the mandatory requirements for its target rating, it cannot achieve certification at that level regardless of overall score.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'How are innovation credits used in BREEAM?',
     options: [
-      'To verify assessor submissions and maintain assessment consistency',
-      'To identify achievable credits and inform design decisions early',
+      'They replace any mandatory credits a project has failed to meet',
+      'They are deducted from the score if standard criteria are exceeded',
       'They provide additional percentage points above the standard 100%',
-      'Energy modelling results from approved software (e.g., IES, TAS)',
+      'They are only available for BREEAM In-Use assessments',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'At which project stage is the Design Stage assessment typically completed?',
     options: [
-      'The number of poles and rotational speed',
-      'Energy let-through during fault clearance',
-      'They are unpredictable and likely to be drilled into',
+      'RIBA Stage 0 (Strategic Definition)',
+      'RIBA Stage 6 (Handover and Close Out)',
+      'RIBA Stage 7 (In Use)',
       'End of RIBA Stage 3/4 (Technical Design)',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
       'What evidence would an assessor require for the Ene 01 (Reduction of energy use and carbon emissions) credit?',
     options: [
       'Energy modelling results from approved software (e.g., IES, TAS)',
-      'To identify achievable credits and inform design decisions early',
-      'They provide additional percentage points above the standard 100%',
-      'To verify assessor submissions and maintain assessment consistency',
+      'A signed declaration from the building owner of expected energy use',
+      'The manufacturer warranty documents for the HVAC plant',
+      'A summary of the construction waste management plan',
     ],
     correctAnswer: 0,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the role of the BREEAM Quality Assurance (QA) process?',
     options: [
-      'To identify achievable credits and inform design decisions early',
-      'Energy modelling results from approved software (e.g., IES, TAS)',
+      'To set the category weightings used for each building type',
+      'To award the innovation credits at the end of the assessment',
       'To verify assessor submissions and maintain assessment consistency',
-      'They provide additional percentage points above the standard 100%',
+      'To train the design team in BREEAM requirements before registration',
     ],
     correctAnswer: 2,
     explanation:

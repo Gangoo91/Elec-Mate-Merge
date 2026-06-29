@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'busbar-advantage',
     question: 'What is the primary advantage of busbar trunking over traditional cable systems?',
     options: [
-      'Atmospheric pressure (typically 101.325 kPa)',
-      'Voltage induced in the armature that opposes the supply voltage',
+      'It is always cheaper than cable for low-current circuits',
+      'It requires no overcurrent protection at the origin',
       'Flexibility for future modifications and tap-off connections',
-      'Upstream devices to wait for downstream to clear faults',
+      'It eliminates the need for any earthing or bonding',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a rising main in a multi-storey building?',
     options: [
       'To distribute power vertically through the building floors',
-      'Dividing the building into areas with similar thermal conditions',
-      'Prevents cumulative errors and maintains accuracy',
-      'By visually checking core colours at terminations',
+      'To carry the building’s data and communications cabling',
+      'To provide a fire escape route between floors',
+      'To supply water to the upper floors of the building',
     ],
     correctIndex: 0,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'tap-off-function',
     question: 'What is the function of a tap-off unit in a busbar system?',
     options: [
-      'Implement standard protocols and data normalisation',
+      'To join two lengths of busbar trunking together end to end',
       'To provide a connection point for drawing power from the busbar',
-      'Adequate separation or protection from non-electrical services',
-      'Stop work and discuss solutions with relevant parties',
+      'To accommodate thermal expansion along a long busbar run',
+      'To maintain the fire rating where the busbar crosses a floor',
     ],
     correctIndex: 1,
     explanation:
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'fire-barrier-requirement',
     question: 'When a busbar rises through a fire compartment floor, what is required?',
     options: [
-      'False - apprentices must hand over responsibility to competent persons',
+      'The busbar must be derated to half its normal current rating',
+      'A tap-off unit must be fitted at every floor penetration',
+      'An expansion joint must be fitted at the floor level',
       'Fire barriers must be installed to maintain compartmentation',
-      'One or more competent persons to assist with health and safety compliance',
-      'Lined duct sections (splitter attenuators)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'When busbar trunking penetrates fire compartment boundaries (floors or walls), fire barriers must be installed around the busbar to maintain the fire resistance of the building element, typically matching the fire rating of the floor/wall being penetrated.',
   },
@@ -110,9 +110,9 @@ const quizQuestions = [
     question:
       'According to BS 7671, what must be considered when selecting busbar trunking current ratings?',
     options: [
-      'At the basement/ground floor intake position',
-      'To accommodate thermal expansion and contraction',
-      'Lower impedance and better short-circuit performance',
+      'Only the rated current marked on the busbar by the manufacturer',
+      'The colour of the busbar enclosure and its mounting height',
+      'Solely the prospective fault current at the origin of the run',
       'Ambient temperature, grouping, and installation method',
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'What is the purpose of an expansion joint in a long busbar run?',
     options: [
       'To accommodate thermal expansion and contraction',
-      'At the basement/ground floor intake position',
-      'Ambient temperature, grouping, and installation method',
-      'Lower impedance and better short-circuit performance',
+      'To provide a tap-off connection point for distribution boards',
+      'To maintain fire compartmentation where the busbar crosses a floor',
+      'To increase the short-circuit withstand rating of the busbars',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'What type of tap-off unit allows connection without isolating the busbar?',
     options: [
-      'Decreasing values over time',
+      'A bolted tap-off requiring the busbar to be de-energised',
       'Live tap-off (plug-in) unit',
-      '(Full flush + Reduced flush) / 3',
-      '5th, 7th, 11th, 13th harmonics',
+      'A fixed end-feed unit at the origin of the run',
+      'A blanking unit fitted to an unused tap-off window',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'For a rising main serving 10 floors, where should the main protective device be located?',
     options: [
-      'Ambient temperature, grouping, and installation method',
-      'To accommodate thermal expansion and contraction',
+      'At the top floor where the busbar run terminates',
+      'At the midpoint of the rising main, around the fifth floor',
       'At the basement/ground floor intake position',
-      '600mm as per manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements',
+      'At each individual floor distribution board',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,9 +163,9 @@ const quizQuestions = [
     id: 7,
     question: 'What documentation must be provided with busbar trunking installation?',
     options: [
-      "Ambient temperature, grouping, and installation method",
-      "Support brackets at specified intervals and thermal expansion allowance",
-      "By a dedicated earth conductor within the busbar and bonded enclosure sections",
+      "The original purchase invoice and delivery note only",
+      "A verbal handover from the installer to the client",
+      "Only the manufacturer's catalogue page for the product",
       "Type test certificates, installation certificates, and manufacturer's data",
     ],
     correctAnswer: 3,
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What advantage does sandwich-type busbar construction offer?',
     options: [
-      '600mm as per manufacturer\\\\\\\\\\\\\\\'s requirements',
+      'It removes the need for fire barriers at floor penetrations',
       'Lower impedance and better short-circuit performance',
-      'To accommodate thermal expansion and contraction',
-      'Ambient temperature, grouping, and installation method',
+      'It allows tap-off units to be added while the busbar is live',
+      'It eliminates the need for thermal expansion joints',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'When installing busbar trunking vertically, what additional consideration is required?',
     options: [
-      'By a dedicated earth conductor within the busbar and bonded enclosure sections',
-      'Lower impedance and better short-circuit performance',
+      'The busbar must be filled with insulating oil to aid cooling',
+      'The phase conductors must be transposed at every floor',
       'Support brackets at specified intervals and thermal expansion allowance',
-      'Type test certificates, installation certificates, and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data',
+      'A separate earth electrode must be installed at each floor',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     question:
       'What is the minimum clearance typically required around busbar trunking for maintenance access?',
     options: [
-      "To accommodate thermal expansion and contraction",
-      "At the basement/ground floor intake position",
-      "Lower impedance and better short-circuit performance",
+      "50mm as per manufacturer's requirements",
+      "No clearance is required where tap-offs are plug-in type",
+      "2 metres as per manufacturer's requirements",
       "600mm as per manufacturer's requirements",
     ],
     correctAnswer: 3,
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: 'How is earth continuity maintained throughout a busbar trunking system?',
     options: [
       'By a dedicated earth conductor within the busbar and bonded enclosure sections',
-      'Only if trained, it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
-      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
-      'The vertical distance between two consecutive ledger levels',
+      'By relying on the building structural steelwork as the earth path',
+      'By a separate earth cable run alongside the outside of the trunking',
+      'By the neutral conductor, which doubles as the protective conductor',
     ],
     correctAnswer: 0,
     explanation:

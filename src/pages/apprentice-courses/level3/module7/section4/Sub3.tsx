@@ -39,42 +39,42 @@ const checks = [
     id: 'mod7-s4-sub3-providers',
     question: "What are the main UK CPD providers for working electricians?",
     options: [
-      "Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.",
-      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
-      "ASHP source is outdoor air, which in the UK varies from -10°C in cold spells to 25°C+ in summer. The cold-day source temperature drops the COP because the unit has a bigger temperature lift to make. GSHP source is the ground at 1-2 m depth (horizontal slinky) or at 50-150 m depth (borehole), which sits at a stable 8-12°C year-round. So GSHP doesn't suffer the cold-day SCOP penalty — typical SCOP 4.0-5.0 vs ASHP 2.8-3.8. The trade-off is GSHP capital cost (£20-35k vs £10-15k for ASHP) and constructability (boreholes / trenching).",
-      "Several: scheme-affiliated (NICEIC Connect, NAPIT One-Day Updates, ELECSA training), training providers (JTL, NET, SECTT in Scotland), professional bodies (IET Academy), manufacturers (Schneider, Siemens, Hager, Wago, etc.), Elec-Mate, plus FE colleges. Each has different formats — short courses, online modules, conferences, manufacturer events. CPS schemes typically accept evidence from any reputable source.",
+      "Only City & Guilds — all recognised CPD for electricians must run through City & Guilds because it is the awarding body for the trade. Courses from any other provider do not count toward scheme requirements.",
+      "Only the HSE — the Health and Safety Executive is the sole approved CPD provider for the electrical trade, and CPS schemes only accept attendance at HSE-run events as evidence.",
+      "Only the electrician's own CPS scheme — CPD must be delivered by whichever scheme you are registered with (NICEIC members use NICEIC, NAPIT members use NAPIT), and cross-provider training is not accepted.",
+      "Several — scheme-affiliated (NICEIC Connect, NAPIT, ELECSA), training providers (JTL, NET, SECTT), professional bodies (IET Academy), manufacturers, Elec-Mate and FE colleges.",
     ],
     correctIndex: 3,
     explanation:
-      "UK CPD landscape is rich and varied. Plan a mix: scheme-affiliated for scheme-specific updates, IET for broader professional content, manufacturer for product-specific training, Elec-Mate or similar for ongoing structured learning. CPS schemes typically don't dictate which provider — they want evidence of substantive CPD. Variety keeps your knowledge fresh across topics.",
+      "UK CPD landscape is rich and varied — scheme-affiliated providers, training providers, professional bodies, manufacturers, online platforms and FE colleges, in many formats (short courses, online modules, conferences, manufacturer events). Plan a mix: scheme-affiliated for scheme-specific updates, IET for broader professional content, manufacturer for product-specific training, Elec-Mate or similar for ongoing structured learning. CPS schemes typically accept evidence from any reputable source — they want substantive CPD, not a particular provider. Variety keeps your knowledge fresh across topics.",
   },
   {
     id: 'mod7-s4-sub3-calendar',
     question:
       "What's a sensible structured annual CPD calendar for an Approved Electrician QS?",
     options: [
-      "Ze is a LIVE test — it requires the supply to be energised and the measurement is taken at the MET with the installation isolated. It is part of the live test sequence after first energisation, but its value is needed for the dead-test sequence Zs calculations (Zs = Ze + R1+R2). On a new install, Ze is typically measured early in the live-test phase but estimated from DNO published values during dead-test design verification.",
-      "Plan at year-start: (1) BS 7671 amendment refresher if amendment landed; (2) annual scheme update event (NICEIC Connect or NAPIT equivalent); (3) one specialist training event per active specialism (PV, EV, BAFE, CompEx); (4) quarterly online learning hours (IET Academy, Elec-Mate, scheme portal); (5) at least one trade event for networking and tech updates (ECA Live, etc.). Total: 30-50 CPD hours/year with mix of formal and informal.",
-      "The mechanical operation of the device — the test button injects a small simulated residual current through an internal resistor that bypasses the load side, exercising the trip mechanism. It does NOT verify trip time or trip current accuracy. The instrument test (single AC at 1 x I delta n) is the verification of trip current and time. Both are part of the test set: instrument test for performance verification, manufacturer test button as a periodic functional check that the customer can perform between professional inspections.",
-      "Eye protection (impact-rated, EN 166 F minimum — chop saws produce hot metal sparks at speed), hearing protection (chop saws regularly exceed 100 dB), cut-resistant gloves (sharp edges on the cut tray), respiratory protection if cutting indoors with no extraction (galvanised steel coating produces zinc oxide fume at cutting temperature — the cause of metal-fume fever, sometimes called 'zinc shakes'), and sturdy boots with toe protection. Long sleeves to protect arms from sparks.",
+      "Do everything in the final week before assessment — block the week, attend back-to-back courses and read intensively, then submit the whole year's log at once.",
+      "Plan at year-start: amendment refresher if one landed, annual scheme update event, one specialist event per specialism, quarterly online hours, and a trade event — 30-50 hours, formal and informal.",
+      "Repeat the same 18th Edition course every year — re-sitting one familiar course annually is the simplest way to evidence CPD and stay current.",
+      "Wait until an amendment lands and do nothing between — CPD only matters when the regs change, so non-amendment years need no recorded activity.",
     ],
     correctIndex: 1,
     explanation:
-      "Most CPS schemes look for 30+ hours of structured CPD per year for QS-named individuals. Plan deliberately at year-start — write down the events you'll attend, the courses you'll take, the online learning hours you'll commit to. Calendar each one. Don't scramble at audit time. The audit-passing CPD log is also the career-developing CPD calendar.",
+      "Most CPS schemes look for 30+ hours of structured CPD per year for QS-named individuals. A sensible calendar covers: a BS 7671 amendment refresher if an amendment landed; the annual scheme update event (NICEIC Connect or NAPIT equivalent); one specialist training event per active specialism (PV, EV, BAFE, CompEx); quarterly online learning hours (IET Academy, Elec-Mate, scheme portal); and at least one trade event (ECA Live, etc.). Plan deliberately at year-start and calendar each one — don't scramble at audit time. The audit-passing CPD log is also the career-developing CPD calendar.",
   },
   {
     id: 'mod7-s4-sub3-evidence',
     question:
       "What format does CPD evidence take for CPS scheme audits?",
     options: [
-      "That the installation has more than one source of supply (mains plus PV, battery, generator, etc.), that opening the main switch does NOT isolate the entire installation, what additional isolation is needed, and where each isolation point is located. Critical for anyone working on the system because back-feed from PV/battery can energise the install with the main switch open.",
-      "Per Reg 643.7.2 (paraphrased): \\\\\\\"If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified.\\\\\\\" So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.",
-      "Most CPS schemes accept a CPD log (Excel, paper, or digital platform) with: date, topic, source/provider, time spent, key learning summary, supporting evidence (course completion certificate, attendance email, screenshot of online module completion). Some platforms (Elec-Mate's CPD tracker, NICEIC Connect, IET Academy) provide automated tracking. Keep it tidy throughout the year, not just before audit.",
-      "Reg 644.1.1 requires defects and omissions revealed during inspection and testing to be corrected before the Certificate is issued. A design pack that disagrees with the install is a defect for the purposes of this regulation; the documentation must match reality before the EIC can issue.",
+      "A signed witness statement from your employer confirming competence — schemes don't accept self-kept logs, so only a director's letter vouching for you is valid.",
+      "Nothing in writing — CPD is verified by the assessor questioning you verbally at audit, so no record is needed; you just demonstrate current knowledge on the day.",
+      "A CPD log (Excel, paper or digital) with date, topic, source, time and key learning, plus supporting evidence — some platforms track it automatically.",
+      "A single annual certificate from your CPS scheme — issued at renewal to confirm your CPD is complete, with no personal log or evidence required.",
     ],
     correctIndex: 2,
     explanation:
-      "CPD log format varies by scheme but the core elements are consistent. Automated tracking via platforms saves time but a manual Excel log works fine if disciplined. Bring the log to annual scheme assessment. Auditor wants to see structured year-round CPD, not last-minute cramming. Plan to log events the day you attend; chasing certificates 6 months later is painful.",
+      "CPD log format varies by scheme but the core elements are consistent: date, topic, source/provider, time spent, key learning summary and supporting evidence (course completion certificate, attendance email, screenshot of online module completion). Some platforms (Elec-Mate's CPD tracker, NICEIC Connect, IET Academy) provide automated tracking, but a disciplined manual Excel log works fine. Bring the log to annual scheme assessment — the auditor wants structured year-round CPD, not last-minute cramming. Log events the day you attend; chasing certificates 6 months later is painful.",
   },
 ];
 
@@ -83,23 +83,23 @@ const quizQuestions = [
     id: 1,
     question: "What's NICEIC Connect?",
     options: [
-      "Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment",
-      "NICEIC's online member platform combining CPD content, technical updates, scheme communications, certification tools and training booking. Member-only access for NICEIC-registered firms. Provides bite-sized BS 7671 updates, technical briefings, regulatory news, and structured CPD content. Integrates with the scheme's annual assessment process.",
-      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
-      "Customer / occupier may be a dutyholder under various capacities: HASAWA s.4 (controller of non-domestic premises); CAR 2012 Reg 4 (asbestos register); CDM 2015 Reg 4 (client). Domestic-customer client duties largely cascade to contractor under CDM.",
+      "A networking cable standard from NICEIC for connecting test instruments to the cloud, letting electricians upload EICR results straight from their MFT.",
+      "NICEIC's online member platform combining CPD content, technical updates, scheme communications, certification tools and training booking.",
+      "A NICEIC scheme linking registered firms with domestic customers — a lead-generation directory rather than a learning or technical resource.",
+      "A NICEIC-branded broadband and phone package offered to member firms at a discount, unrelated to training or technical content.",
     ],
     correctAnswer: 1,
     explanation:
-      "NICEIC Connect is the scheme's primary engagement platform for members. Free for registered firms; content updates regularly. Strong CPD resource for QS-named individuals — content directly aligned with what NICEIC assessors expect to see at annual assessment. Similar platforms exist for NAPIT (NAPIT Direct) and ELECSA. Use the scheme's own platform as your baseline CPD source.",
+      "NICEIC Connect is the scheme's primary engagement platform for members — member-only access for registered firms, providing bite-sized BS 7671 updates, technical briefings, regulatory news and structured CPD content, and integrating with the annual assessment process. Free for registered firms and updated regularly. Content is directly aligned with what NICEIC assessors expect to see at assessment. Similar platforms exist for NAPIT (NAPIT Direct) and ELECSA. Use the scheme's own platform as your baseline CPD source.",
   },
   {
     id: 2,
     question: "What's the IET Academy and how does it differ from IET Online?",
     options: [
-      "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
-      "Sign in at the gate or welfare cabin, present ECS / CSCS / industry card if relevant, attend a visitor induction (shorter than the full operative induction), wear correct PPE for the area, and be escorted by a competent person from the site team. Visitors are not permitted to walk the site unaccompanied. CDM 2015 Reg 13(4)(b) requires the PC to take steps to prevent unauthorised access.",
+      "IET Academy is the in-person classroom arm and IET Online is the e-learning arm — both deliver the same courses, the only difference being whether you attend physically or remotely.",
+      "IET Online is the free public website and IET Academy is the paid members' area — they hold identical content, with Academy simply removing the adverts and paywalling the same material.",
       "IET Online = large technical document archive (standards, journals, conference papers) for searching and reference. IET Academy = structured online learning platform with bite-sized courses on technical topics (BS 7671, PV, EV, motor control, power quality, etc.). Both included with MIET membership. Online for reference; Academy for structured learning.",
-      "Personal prosecution of the named individual director/manager/officer alongside (not instead of) the company. Same conviction, same fines, and on indictment up to two years' custody. s.37 is the legal mechanism for piercing the corporate veil in H&S prosecutions.",
+      "IET Academy handles membership administration (renewals, registration applications) and IET Online is the technical learning platform — the names are essentially the reverse of what they sound like.",
     ],
     correctAnswer: 2,
     explanation:
@@ -109,36 +109,36 @@ const quizQuestions = [
     id: 3,
     question: "What's manufacturer training and does it count for CPD?",
     options: [
-      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
-      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
-      "Treat the DC side as live until proven dead with a meter rated for the voltage. The DC isolator at the array end and the DC isolator at the inverter end must both be operated and locked-off, then verify dead with a meter at both ends of the string. Even with the inverter AC-side isolated and switched off, the array continues to generate as long as light hits the panels. Covering the panels reduces but does not eliminate the DC output. Inverter manufacturer's instructions usually require a dwell time after isolation to allow internal capacitors to discharge.",
-      "Yes — manufacturer training (Schneider Electric, Siemens, Hager, Wago, ABB, etc.) typically counts as CPD with most CPS schemes provided it's substantive (not a sales pitch). Manufacturer events often free or low-cost; cover product-specific install, design, troubleshooting. Strong source of practical CPD especially for specialist equipment (PLCs, smart switchgear, EV chargers, PV inverters). Count attendance toward annual CPD hours.",
+      "It is training run by a manufacturer's sales team, and because its purpose is to sell product it is explicitly barred from counting as CPD by every CPS scheme. Attendance must be left off your CPD log.",
+      "It is the warranty-registration session a manufacturer requires before you may fit their products. It is purely administrative, confers no learning, and cannot be claimed as CPD.",
+      "It is training only available to manufacturer-employed engineers, not independent installers, so a self-employed electrician has no access to it and it is irrelevant to their CPD planning.",
+      "Yes — manufacturer training (Schneider, Siemens, Hager, ABB, etc.) typically counts with most schemes if it's substantive, and is often free or low-cost.",
     ],
     correctAnswer: 3,
     explanation:
-      "Manufacturer training is a meaningful and often free CPD source. Major manufacturers run regional roadshows, online webinars and structured training programmes for installers. Content is often very practical (how to size, install, commission specific products). Most CPS schemes accept manufacturer training as CPD evidence; bring the attendance certificate to scheme assessment. Build relationships with key suppliers; their training is often surprisingly good.",
+      "Manufacturer training is a meaningful and often free CPD source. Major manufacturers run regional roadshows, online webinars and structured programmes covering product-specific install, design and troubleshooting — a strong source of practical CPD especially for specialist equipment (PLCs, smart switchgear, EV chargers, PV inverters). Most CPS schemes accept it as CPD evidence provided it's substantive and not a sales pitch; bring the attendance certificate to assessment and count it toward annual hours. Build relationships with key suppliers; their training is often surprisingly good.",
   },
   {
     id: 4,
     question: "What's JTL?",
     options: [
-      "JTL (Joint Training Limited) is one of the UK's largest training providers for electrical and plumbing apprentices and CPD. Industry-owned (originally formed by JIB and others); not-for-profit. Delivers apprenticeships, AM2 assessments, post-AM2 qualifications (2391-52, 2396), and CPD courses. Major training provider for the UK electrical sector.",
-      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
-      "Right not to suffer detriment for raising a H&S concern, refusing dangerous work, leaving the workplace in serious and imminent danger, or being a designated H&S representative. Detriment = sacking, demotion, removal from job, disciplinary, victimisation, harassment.",
-      "Tailored to the specific installation, agreed in writing in advance, signed by both parties (or evidenced via written quote acceptance), reproduced on the front of the EICR, and specific enough that anyone reading the report can understand exactly what was inspected and what was not.",
+      "Joint Training Limited — a major industry-owned, not-for-profit training provider delivering electrical apprenticeships, AM2 assessments, post-AM2 qualifications and CPD.",
+      "Joint Trade Licensing — the body that issues the licence an electrician needs to trade in the UK, renewed every three years, without which no work may be done.",
+      "Junction Terminal Labelling — a BS 7671 labelling standard for marking junction boxes and terminal blocks in commercial installations, setting required colours and text.",
+      "Joint Test Laboratory — the UKAS-accredited lab that calibrates test instruments; an MFT needs a current JTL calibration certificate to be valid for certification.",
     ],
     correctAnswer: 0,
     explanation:
-      "JTL is a major industry-owned training provider — particularly known for delivering apprenticeships and AM2 assessments. Strong post-AM2 CPD provision including 2391-52, 2396, specialist endorsements. Many UK FE colleges work in partnership with JTL for apprenticeship delivery. Free / employer-funded for in-firm staff in many cases.",
+      "JTL (Joint Training Limited) is a major industry-owned, not-for-profit training provider — originally formed by JIB and others — particularly known for delivering apprenticeships and AM2 assessments. Strong post-AM2 CPD provision including 2391-52, 2396 and specialist endorsements. Many UK FE colleges work in partnership with JTL for apprenticeship delivery. Free or employer-funded for in-firm staff in many cases.",
   },
   {
     id: 5,
     question: "What's NET?",
     options: [
-      "No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.",
+      "National Electrical Testing — an online portal where electricians log their EICR and EIC results to a central register. NET is the platform schemes use to monitor the volume and quality of certificates a firm issues.",
       "National Electrotechnical Training (NET) — the body that administers AM2 assessments at approved centres around the UK. Owned by JIB. NET also delivers other practical assessments (AM2E for renewables, AM2S for solar). The 'NET centre' you sit your AM2 at is a NET-approved facility.",
-      "The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate",
-      "Risk assessment identifies the hazards; hierarchy of control reduces them; PPE addresses residual risk. Match the standard to the specific hazard (electrical, mechanical, thermal, chemical, biological, ionising). Consider compatibility (multiple PPE items must work together — e.g. helmet + hearing defenders + safety glasses).",
+      "National Energy Trust — a charity that funds heat-pump and solar PV installations for low-income households, using accredited installers. NET grants are a major source of work for renewables-qualified electricians.",
+      "New Electrician Toolkit — a starter pack of test equipment and PPE issued to apprentices on completion of their first year, funded jointly by the JIB and the manufacturers.",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,40 +148,40 @@ const quizQuestions = [
     id: 6,
     question: "What about online webinars — do they count?",
     options: [
-      "Three layers — pre-use visual inspection by the operative every shift (cable, plug, casing, guard, switch, brushes for corded tools); periodic in-service inspection (formal visual check by a competent person); and PAT (Portable Appliance Testing) on the documented site interval. Sub 1.3 covers this in detail. The point: PUWER Reg 5 isn't 'PAT once a year'. It's an ongoing duty with multiple layers.",
-      "With safe isolation confirmed and the circuit\\\\\\\\'s L disconnected from the protective device, link L to CPC at the CU end. At each accessory, measure continuity between L and CPC at the accessory — a low reading confirms the local \\\\\\\"line\\\\\\\" terminal really is the same conductor as the CU\\\\\\\\'s line. Confirms polarity at every accessory.",
-      "Yes if substantive. Most CPS schemes accept structured online learning as CPD evidence: live webinars (manufacturer-hosted, scheme-hosted, IET-hosted), recorded courses (IET Academy, scheme portals, Elec-Mate), MOOCs from established providers. Keep evidence of completion (certificate, screenshot, email confirmation). Online learning is increasingly the dominant CPD format because of flexibility.",
-      "The right not to suffer detriment for raising health and safety concerns. An employee who is dismissed, demoted, denied promotion, harassed or otherwise penalised for raising a genuine health and safety concern (or for refusing to work in conditions of serious and imminent danger) has a claim under s.44. The right is automatic and doesn't require a qualifying period of employment.",
+      "No — schemes only accept face-to-face CPD because online attendance can't be verified, so a webinar is background reading but never loggable hours.",
+      "Only if the webinar ends with an invigilated exam — without a formal test, online learning is informal interest and carries no CPD value.",
+      "Yes if substantive — most schemes accept structured online learning (live webinars, recorded courses, MOOCs) as CPD with evidence of completion kept.",
+      "Only live webinars count — recorded or on-demand content is excluded because schemes require you present at a scheduled time, so later viewing can't be logged.",
     ],
     correctAnswer: 2,
     explanation:
-      "Online learning has transformed CPD accessibility — fit it around work and family. Live webinars often free; recorded structured courses typically modest cost or included in subscription. Mix of formats works best — some online for flexibility, some in-person for networking. Document completion of every online learning event the day you do it; small habit, big effect at scheme audit.",
+      "Most CPS schemes accept structured online learning as CPD evidence — live webinars (manufacturer-, scheme- or IET-hosted), recorded courses (IET Academy, scheme portals, Elec-Mate) and MOOCs from established providers — provided you keep evidence of completion (certificate, screenshot, email confirmation). Online learning has transformed CPD accessibility and is increasingly the dominant format because of flexibility; fit it around work and family. A mix works best — some online, some in-person for networking. Document completion the day you do it.",
   },
   {
     id: 7,
     question: "How much should you spend on CPD per year?",
     options: [
-      "Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity (design, specification, recommendation). PL covers physical damage / injury from the contractor's activities; PI covers economic loss caused by bad advice or design. Increasingly relevant as installers move into design-and-build, EV charging design, solar PV design and prosumer's installations under BS 7671 Part 8.",
-      "Arc Fault Detection Device — protective device that detects arc faults (intermittent low-energy faults that don't always trigger overcurrent or RCD protection but can cause fires). Combine MCB and RCD functions with arc-detection electronics. Previously recommended for specific circuits; A4:2026 expands the recommendation under Reg 421.1.7 to AC final circuits generally (note: 'recommending' wording — not a BS 7671 mandate; HRRBs are made mandatory via the Building Safety Act 2022 framework). Cost typically £30-60 per AFDD.",
-      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three must be satisfied. The bar is deliberately high — the HSE prosecutes Reg 14 breaches harshly because the consequences are usually fatal.",
-      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
+      "Nothing — all CPD that counts toward scheme requirements is free, so a disciplined electrician can meet every requirement at zero cost.",
+      "A fixed statutory £5,000 per year set by the HSE — every QS-named individual must spend exactly this on training annually or be fined.",
+      "Around £50/year — CPD is almost entirely covered by your scheme membership fee, so a token £50 for the odd magazine is all that's needed.",
+      "Typically £1,000-2,500/year for an active QS — across scheme events, an amendment-year refresher, specialist training, online learning and trade events.",
     ],
     correctAnswer: 3,
     explanation:
-      "CPD is a meaningful business cost but a meaningful business investment. Self-employed practitioners can deduct CPD spend against tax. Most career-focused electricians budget £1,000-2,500/year for CPD across courses, events, subscriptions and qualifications. Treat as a fixed annual line item, not ad-hoc spending.",
+      "A realistic annual CPD budget: scheme membership and update events typically £400-800/year (NICEIC, NAPIT include some CPD); one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy or scheme online learning usually included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total typically £1,000-2,500/year. CPD is a meaningful business cost but a meaningful investment; self-employed practitioners can deduct it against tax. Treat it as a fixed annual line item, not ad-hoc spending.",
   },
   {
     id: 8,
     question: "What's Skills for the Future?",
     options: [
-      "Industry initiatives funded by Government and industry bodies to support CPD and re-skilling — typical examples include the Electrical Skills Partnership, Energy Skills Partnership (Scotland), Construction Skills Fund and others. Provides funded or subsidised training in priority skills areas (renewables, EV, decarbonisation). Eligibility varies; check current programmes via your scheme or trade association.",
-      "Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).",
-      "As a complete printed pack at handover plus PDF emailed for their records — they need it for any future EICR (so the inspector can compare current readings against the original), any property sale (solicitors increasingly require current EIC), any insurance claim (proof of certification at the time of an incident), any warranty claim on installed equipment.",
-      "Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate's warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.",
+      "Government- and industry-funded initiatives supporting CPD and re-skilling, providing subsidised training in priority areas like renewables, EV and decarbonisation.",
+      "A compulsory turnover-based levy on every electrical firm to fund apprenticeships, collected with the firm's tax and mandatory for all employers.",
+      "A pension scheme run by the JIB for electricians, branded 'Skills for the Future' to encourage younger workers to save early. Unrelated to training.",
+      "A government register of skills shortages used to set immigration visa thresholds for overseas electricians — a policy document, not training or funding.",
     ],
     correctAnswer: 0,
     explanation:
-      "Skills funding programmes change periodically as Government priorities shift. Worth checking current eligibility via your CPS scheme, trade association (ECA, SELECT) or local FE college. Renewables-related skills (PV, heat pumps, EV) have been particularly well-funded in recent years given UK net-zero policy. Free or subsidised training for in-demand skills is available if you know where to look.",
+      "Skills for the Future covers industry initiatives funded by Government and industry bodies — examples include the Electrical Skills Partnership, Energy Skills Partnership (Scotland) and Construction Skills Fund — offering funded or subsidised training in priority skills areas. Programmes change periodically as Government priorities shift; check current eligibility via your CPS scheme, trade association (ECA, SELECT) or local FE college. Renewables-related skills (PV, heat pumps, EV) have been particularly well-funded in recent years given UK net-zero policy.",
   },
 ];
 

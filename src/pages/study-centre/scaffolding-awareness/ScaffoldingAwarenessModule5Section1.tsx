@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'scaffold-3-points-contact',
     question: 'What does maintaining 3 points of contact on a ladder mean?',
     options: [
-      'Both feet and one hand, or both hands and one foot, must be in contact with the ladder at all times',
       'Three different people must be in contact with the ladder at the same time',
+      'Both feet and one hand, or both hands and one foot, must be in contact with the ladder at all times',
       'You must touch three rungs before stepping onto the platform',
       'You must pause for three seconds at the top of the ladder before stepping off',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Three points of contact means that at any time while climbing or descending a ladder, you must have either both feet and one hand or both hands and one foot in firm contact with the ladder. This ensures you always have a secure grip and reduces the risk of slipping or falling. It also means you must never carry tools or materials in your hands while climbing.',
   },
@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     id: 'scaffold-tool-lanyard',
     question: 'Why must you use a tool lanyard when working on a scaffold platform?',
     options: [
-      'To prevent tools from falling and striking people below',
       'To keep your tools organised and easy to find',
       'Tool lanyards are only required above 10 metres',
+      'To prevent tools from falling and striking people below',
       'To comply with the manufacturer\u2019s warranty conditions',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'A dropped tool can accelerate to lethal speed within a very short fall distance. A 1 kg spanner dropped from just 6 metres hits the ground at approximately 39 km/h with enough force to cause fatal head injuries. Tool lanyards prevent tools from falling off the platform and striking workers, members of the public, or anyone else below. They are a simple, inexpensive control measure that saves lives.',
   },
@@ -77,8 +77,8 @@ const quizQuestions = [
     id: 1,
     question:
       'What colour scaffold tag indicates that the scaffold is safe to use without restrictions?',
-    options: ['Red', 'Green', 'Yellow', 'Blue'],
-    correctAnswer: 1,
+    options: ['Green', 'Red', 'Yellow', 'Blue'],
+    correctAnswer: 0,
     explanation:
       'A green scaffold tag indicates the scaffold has been inspected by a competent person and is safe to use without restrictions. A yellow tag means the scaffold has restrictions (such as limited loading or incomplete sections). A red tag means the scaffold must not be used. Always check the tag and read any written restrictions before stepping onto the scaffold.',
   },
@@ -88,11 +88,11 @@ const quizQuestions = [
       'Which of the following is NOT part of the three pre-use checks before working on a scaffold?',
     options: [
       'Checking the scaffold tag',
-      'Carrying out a visual inspection of the platform and guardrails',
       'Photographing the scaffold and emailing it to the client',
+      'Carrying out a visual inspection of the platform and guardrails',
       'Confirming safe access and egress is available',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The three pre-use checks are: (1) check the scaffold tag to confirm it is green and in date, (2) carry out your own visual inspection of the platform, guardrails, toe boards, and overall condition, and (3) confirm that safe access and egress (such as internal ladders or stairways) is available and unobstructed. Photographing the scaffold is not one of the required pre-use checks.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
       'What is the primary purpose of maintaining three points of contact when climbing a scaffold ladder?',
     options: [
       'To climb faster and more efficiently',
-      'To ensure you always have a secure grip and reduce the risk of falling',
       'To meet the scaffold manufacturer\u2019s loading requirements',
+      'To ensure you always have a secure grip and reduce the risk of falling',
       'To signal to other workers that you are ascending',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Three points of contact (two hands and one foot, or two feet and one hand) ensures you always have a secure grip on the ladder. If one point of contact slips, the other two still support you and give you time to recover. This simple technique is one of the most effective ways to prevent falls during access and egress on scaffolds.',
   },
@@ -117,10 +117,10 @@ const quizQuestions = [
     options: [
       'Work around the debris \u2014 tidying up is not your responsibility',
       'Push the debris to the edge of the platform so it is out of your way',
-      'Clear the platform before starting work, disposing of waste properly and keeping the working area tidy',
       'Report it to the scaffold company and wait for them to clean it',
+      'Clear the platform before starting work, disposing of waste properly and keeping the working area tidy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'You have a duty to keep your working platform clean and tidy. Debris creates trip hazards, can obstruct access points, may overload the platform, and can fall from height and injure people below. Clear the platform before starting work, dispose of waste in proper waste receptacles, and maintain good housekeeping throughout the working day. Never push waste to the edge \u2014 it can fall off the scaffold.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why is overreaching from a scaffold platform dangerous?',
     options: [
-      'It causes back strain, which is a common musculoskeletal injury',
       'It shifts your centre of gravity beyond the platform edge, increasing the risk of a fall from height',
+      'It causes back strain, which is a common musculoskeletal injury',
       'Overreaching is only dangerous if you are not wearing a harness',
       'It damages the guardrail system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Overreaching shifts your centre of gravity towards or beyond the edge of the platform. If your centre of gravity moves past the guardrail, you are at serious risk of toppling over it and falling. The correct action is to reposition yourself so that your work is directly in front of you and within easy, comfortable reach. If you cannot reach the work safely, the scaffold must be moved or extended.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the minimum height above the working platform at which a main guardrail must be fitted?',
-    options: ['700 mm', '800 mm', '950 mm', '1200 mm'],
-    correctAnswer: 2,
+    options: ['700 mm', '950 mm', '800 mm', '1200 mm'],
+    correctAnswer: 1,
     explanation:
       'The Work at Height Regulations 2005 and TG20 guidance require the main guardrail (top rail) to be at a minimum height of 950 mm above the working platform. This height is designed to prevent a person from toppling over the rail. An intermediate guardrail (or brick guard) must also be fitted so that the unprotected gap does not exceed 470 mm. Toe boards must be at least 150 mm high.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
       'Two teams are working on the same scaffold \u2014 one on level 3 and one on level 5. What is the primary coordination requirement?',
     options: [
       'Both teams must wear different coloured hard hats',
-      'The team on the higher level must ensure tools and materials cannot fall onto the lower team',
       'Only one team may work at a time \u2014 the other must leave the scaffold',
+      'The team on the higher level must ensure tools and materials cannot fall onto the lower team',
       'A banksman must be stationed on every level between the two teams',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When multiple teams work on the same scaffold at different levels, the primary risk is falling objects striking workers below. The upper team must use tool lanyards, toe boards, brick guards, and netting or fans where required. Materials must be secured, and debris must not be allowed to accumulate on any platform edge. Communication between the teams is essential \u2014 if heavy materials are being moved on the upper level, the lower team should be warned or temporarily excluded from the area directly below.',
   },
@@ -167,10 +167,10 @@ const quizQuestions = [
     options: [
       'Use an external ladder leaning against the scaffold instead',
       'Climb the scaffold standards using the ledgers as foot holds',
-      'Do not use the scaffold \u2014 report the missing ladder to your supervisor immediately',
       'Jump from the ground to the first lift and pull yourself up',
+      'Do not use the scaffold \u2014 report the missing ladder to your supervisor immediately',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If the designated access (internal ladder, stair tower, or similar) has been removed or is missing, the scaffold must not be used. Improvised access such as climbing the standards, using an unsecured external ladder, or jumping up to a lift is extremely dangerous and is a leading cause of scaffold-related falls. Report the issue to your supervisor immediately so that the correct access can be reinstated by a competent scaffolder before anyone uses the scaffold.',
   },

@@ -13,8 +13,8 @@ const quickCheckQuestions = [
     id: 'gs-3-1-check1',
     question:
       'An electrician wants to develop the habit of checking their test instruments at the start of every job. According to research by Phillippa Lally at University College London, how many days on average does it take for a new behaviour to become automatic?',
-    options: ['21 days', '30 days', '66 days', '90 days'],
-    correctIndex: 2,
+    options: ['66 days', '21 days', '30 days', '90 days'],
+    correctIndex: 0,
     explanation:
       'Phillippa Lally&rsquo;s 2009 UCL study, published in the European Journal of Social Psychology, found that it takes an average of 66 days for a new behaviour to become automatic &mdash; not the widely cited but scientifically unsupported &ldquo;21 days&rdquo;. The study tracked 96 participants and found a range from 18 to 254 days depending on the complexity of the habit and the individual. For electricians building professional habits like daily tool checks or end-of-day admin, this means committing to consistency for at least two months before the behaviour feels effortless. Missing a single day had no significant impact on long-term habit formation, which is reassuring for tradespeople working unpredictable schedules.',
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       'James Clear&rsquo;s book Atomic Habits describes the &ldquo;compound effect&rdquo; of small improvements. If you improve by just 1% every day for a year, by how much will you have improved by the end of the year?',
     options: [
       '3.65 times better (365%)',
-      '37 times better (3,700%)',
       '100 times better (10,000%)',
       'There is no compounding effect &mdash; you improve by exactly 365%',
+      '37 times better (3,700%)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The mathematics of compounding mean that 1.01^365 = 37.78. A 1% daily improvement compounds to make you 37 times better over a year, while a 1% daily decline (0.99^365) reduces you to nearly zero (0.03). This is not literal for most real-world skills, but the principle is powerful: small, consistent improvements in professional habits &mdash; spending an extra two minutes organising your van, adding one line to your job notes, reading one page of BS 7671 &mdash; accumulate into transformational results over months and years. For electricians, this reframes habit formation away from dramatic overnight changes towards sustainable micro-improvements in daily systems.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'According to Charles Duhigg&rsquo;s habit loop model, every habit consists of three components. Which of the following correctly describes these three components?',
     options: [
-      'Intention &rarr; Action &rarr; Reflection',
       'Cue &rarr; Routine &rarr; Reward',
+      'Intention &rarr; Action &rarr; Reflection',
       'Motivation &rarr; Ability &rarr; Prompt',
       'Desire &rarr; Execution &rarr; Satisfaction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Charles Duhigg&rsquo;s habit loop model, described in his book The Power of Habit, identifies three components: the Cue (the trigger that initiates the behaviour), the Routine (the behaviour itself), and the Reward (the benefit you gain from the behaviour). Understanding this loop is essential for both building new habits and breaking old ones. For electricians, a professional habit might look like: Cue (parking the van at the end of the day) &rarr; Routine (spending five minutes updating job notes and filing receipts) &rarr; Reward (the satisfaction of a tidy admin system and avoiding a weekend catch-up session). The reward reinforces the loop, making the behaviour more likely to repeat.',
   },
@@ -108,8 +108,8 @@ const quizQuestions = [
     id: 3,
     question:
       'James Clear&rsquo;s &ldquo;Four Laws of Behavior Change&rdquo; provide a framework for building good habits. Which of the following is NOT one of the Four Laws?',
-    options: ['Make it obvious', 'Make it attractive', 'Make it expensive', 'Make it easy'],
-    correctAnswer: 2,
+    options: ['Make it obvious', 'Make it attractive', 'Make it easy', 'Make it expensive'],
+    correctAnswer: 3,
     explanation:
       'The Four Laws are: (1) Make it obvious, (2) Make it attractive, (3) Make it easy, and (4) Make it satisfying. &ldquo;Make it expensive&rdquo; is not part of the framework. Each law addresses a different stage of the habit loop. For electricians building a habit of daily tool calibration checks: (1) Make it obvious &mdash; leave your test instruments on the passenger seat overnight so you see them first thing; (2) Make it attractive &mdash; pair the check with your morning coffee; (3) Make it easy &mdash; create a one-page checklist rather than consulting the full manual; (4) Make it satisfying &mdash; tick off the check on a visible chart and feel the dopamine hit of progress. These laws are also inverted to break bad habits: make it invisible, unattractive, difficult, and unsatisfying.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'Roy Baumeister&rsquo;s research on willpower and self-control introduced the concept of &ldquo;ego depletion&rdquo;. What does this concept suggest?',
     options: [
-      'Willpower is unlimited and can be strengthened through practice alone',
       'Willpower is a finite resource that depletes throughout the day as you make decisions and resist temptations',
+      'Willpower is unlimited and can be strengthened through practice alone',
       'Willpower is genetically determined and cannot be improved',
       'Willpower is entirely dependent on motivation and has no physical component',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Roy Baumeister&rsquo;s ego depletion theory suggests that willpower is a limited resource that gets used up throughout the day. Every decision you make, every temptation you resist, and every act of self-control draws from the same reservoir. This is why it&rsquo;s harder to resist the pub on Friday evening than it is to wake up early on Monday morning &mdash; you&rsquo;ve spent the entire week depleting your willpower. For electricians, this has practical implications: don&rsquo;t rely on willpower to maintain professional habits. Instead, design systems that make good behaviours the default option. For example, if you struggle to file invoices at the end of the day when you&rsquo;re tired, do it first thing in the morning when your willpower tank is full, or automate the process entirely so willpower isn&rsquo;t required.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
       'BJ Fogg&rsquo;s Behavior Model (B=MAP) suggests that if a desired behaviour is not occurring, you should focus on which element first?',
     options: [
       'Increase motivation, because people usually know what to do but lack the drive to do it',
-      'Increase ability by making the behaviour easier, because motivation is unreliable and ability is the most controllable factor',
       'Add more prompts, because people usually forget to perform the behaviour',
+      'Increase ability by making the behaviour easier, because motivation is unreliable and ability is the most controllable factor',
       'All three elements are equally important and should be addressed simultaneously',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BJ Fogg recommends focusing on ability (making the behaviour easier) first, because motivation is unreliable and fluctuates throughout the day and week, while ability is directly within your control. His mantra is &ldquo;make it tiny&rdquo; &mdash; if a behaviour isn&rsquo;t happening, make it so easy that you can do it even when motivation is low. For electricians, this might mean: instead of &ldquo;I will update my job records every evening&rdquo; (high motivation required), try &ldquo;I will write one sentence about today&rsquo;s job before I start the van to go home&rdquo; (tiny, easy, requires almost no motivation). Once the tiny behaviour is consistent, you can gradually expand it. This approach is far more effective than trying to psych yourself up with motivational speeches.',
   },
@@ -147,11 +147,11 @@ const quizQuestions = [
       'According to habit formation research, which of the following statements about missing a day of a new habit is most accurate?',
     options: [
       'Missing a single day completely resets the habit formation process and you must start again from day one',
-      'Missing a single day has no significant impact on long-term habit formation as long as you resume the behaviour',
       'Missing a single day is beneficial because it prevents the habit from becoming too rigid',
       'Missing a single day doubles the time required for the habit to become automatic',
+      'Missing a single day has no significant impact on long-term habit formation as long as you resume the behaviour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Phillippa Lally&rsquo;s UCL research found that missing a single occurrence of a behaviour had no detectable impact on the long-term automaticity curve. The habit formation process is resilient to occasional misses, which is good news for electricians whose schedules can be unpredictable. However, James Clear&rsquo;s &ldquo;never miss twice&rdquo; rule is still important: missing once is an accident or exception, but missing twice begins to establish a new pattern of not doing the behaviour. The practical takeaway is that you should not feel guilty or defeated if you miss your new habit due to an emergency job or illness &mdash; just resume it the next day without self-criticism. Perfectionism is the enemy of habit formation.',
   },
@@ -175,11 +175,11 @@ const quizQuestions = [
       'What does James Clear mean by the &ldquo;plateau of latent potential&rdquo; in habit formation?',
     options: [
       'Habits become easier to maintain after you reach a certain skill level',
-      'There is often a frustrating gap between the effort you put in and the results you see, until you cross a critical threshold',
       'Habits should be practised on a plateau (flat surface) to ensure stability',
+      'There is often a frustrating gap between the effort you put in and the results you see, until you cross a critical threshold',
       'You can only form one new habit at a time before reaching a plateau',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The plateau of latent potential (also called the &ldquo;valley of disappointment&rdquo;) describes the frustrating period where you are putting in consistent effort but not yet seeing significant results. Imagine an ice cube sitting in a room at -1&deg;C. You heat the room to 0&deg;C &mdash; nothing happens. You heat it to 1&deg;C, 2&deg;C, 3&deg;C &mdash; still nothing. Then at 4&deg;C the ice suddenly melts. All the heat from 0&deg;C to 3&deg;C wasn&rsquo;t wasted &mdash; it was accumulating latent potential. For electricians building professional habits, this explains why it might feel like daily study isn&rsquo;t working, until suddenly you pass your 2391 exam with ease. The key is to maintain consistency through the plateau, trusting that the results will appear once you cross the threshold.',
   },

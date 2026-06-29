@@ -15,11 +15,11 @@ const quickCheckQuestions = [
       'An electrician starts each day by checking social media in the van for 20 minutes, then drives to the first job without confirming the appointment or checking materials. Which principle does this violate?',
     options: [
       'The end-of-day routine principle — they should have planned the night before',
-      'The morning routine principle — the first 30 to 60 minutes set the tone for the entire day and should be used deliberately',
-      'The weekly routine principle — social media should only be used on Fridays',
-      'No principle is violated — checking social media is a valid way to start the day',
+      'The weekly routine principle — social media should be confined to Fridays',
+      'The morning routine principle — the first 30-60 minutes set the day\'s tone',
+      'No principle is violated — social media is a fine way to start the day',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The morning routine principle states that the first 30 to 60 minutes of the working day set the tone for everything that follows. Using this time for social media rather than a structured routine (schedule review, appointment confirmation, materials check) means the day starts reactively rather than proactively. The electrician risks arriving at a job that has been cancelled, arriving without the correct materials, or spending the drive feeling unfocused. A 10-minute morning routine would eliminate all three risks.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A self-employed electrician does their invoicing, material ordering, and admin whenever they find spare moments during the week. What is the primary risk of this approach?',
     options: [
-      'They will complete too much admin and not enough on-site work',
-      'Tasks that lack a scheduled time tend to be perpetually delayed, creating end-of-month crises and cash flow problems',
-      'Invoicing should only be done by an accountant, not by the electrician',
-      'There is no risk — flexible admin scheduling is more productive than rigid blocks',
+      'Unscheduled tasks get perpetually delayed, creating end-of-month crises',
+      'They will end up doing too much admin and not enough on-site work',
+      'Invoicing should only ever be done by an accountant, not the electrician',
+      'There is no risk — flexible admin beats rigid scheduled blocks',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Without a dedicated time block, admin tasks like invoicing compete with the urgency of on-site work and consistently lose. The result is delayed invoices (hurting cash flow), forgotten material orders (causing mid-job merchant trips), and paperwork backlogs that become stressful end-of-month crises. A weekly routine — for example, Friday afternoon for invoicing and certificate completion — ensures these essential tasks happen reliably. The routine removes the need for willpower by making the time non-negotiable.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'Having a structured routine means you must follow it rigidly, even when unexpected urgent work arises. True or false?',
     options: [
-      'True — the whole point of a routine is that it never changes',
-      'False — a good routine provides structure with built-in flexibility, and knowing your default plan makes it easier to make deliberate exceptions rather than chaotic reactions',
-      'True — any deviation from the routine resets your habits to zero',
-      'False — routines are only useful for office workers, not tradespeople',
+      'True — the whole point of a routine is that it never changes at all',
+      'False — a routine gives structure with flexibility for deliberate exceptions',
+      'True — any deviation from the routine resets your habits back to zero',
+      'False — routines suit office workers only, never busy tradespeople',
     ],
     correctIndex: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'The primary purpose of a morning routine for a tradesperson is to:',
     options: [
-      'Delay starting work so that rush-hour traffic clears',
-      'Set the tone for the day by ensuring the schedule, appointments, and materials are confirmed before leaving home',
-      'Complete all admin tasks before any on-site work begins',
-      'Practise mindfulness and meditation for improved focus',
+      'Set the day\'s tone by confirming schedule, appointments and materials',
+      'Delay starting work so that the rush-hour traffic has time to clear',
+      'Complete all of the day\'s admin tasks before any on-site work begins',
+      'Practise mindfulness and meditation in the van for improved focus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The morning routine is not about relaxation or admin — it is about preparation. The first 30 to 60 minutes set the trajectory for the entire day. A structured morning routine ensures you know where you are going, that the client is expecting you, and that you have the materials you need. This eliminates the three most common time wasters for tradespeople: arriving at cancelled jobs, arriving without materials, and spending the morning drive trying to remember what is scheduled.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: 'The end-of-day routine concept of "closing the loop" refers to:',
     options: [
       'Physically locking the van and tool storage at the end of each day',
-      'Ensuring that every job started during the day has its documentation, photographs, and notes completed before finishing work',
-      'Sending a summary email to every client visited that day',
-      'Completing a full tool inventory every evening',
+      'Sending a written summary email to every client visited that day',
+      'Finishing every job\'s documentation, photos and notes before knocking off',
+      'Completing a full tool inventory of the van every single evening',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '"Closing the loop" means ensuring that no job from today carries forward as incomplete documentation into tomorrow. When you leave a job without photographing the work, noting observations, or updating the job file, you create an open loop — a piece of unfinished business that occupies mental bandwidth and becomes harder to complete accurately as memory fades. The end-of-day routine closes every loop: photographs taken, notes written, job files updated, tomorrow planned.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Routines reduce "decision fatigue" because:',
     options: [
-      'They eliminate all decisions from the working day, creating a fully automated schedule',
-      'They handle recurring low-value decisions automatically, preserving mental energy for the high-value decisions that require genuine thought',
-      'They prevent tradespeople from needing to think about anything other than technical work',
-      'Decision fatigue is a myth — humans can make unlimited decisions without quality degradation',
+      'They automate low-value decisions, saving energy for the ones that matter',
+      'They remove every decision from the day, fully automating the schedule',
+      'They stop tradespeople needing to think about anything but technical work',
+      'Decision fatigue is a myth — people can decide endlessly without decline',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Decision fatigue is a well-documented psychological phenomenon: the quality of decisions deteriorates after a long session of decision-making. Research by Roy Baumeister and others has demonstrated that willpower and decision-making capacity draw from the same limited pool of mental energy. Routines automate recurring decisions (when to do admin, what order to check things, how to start the day) so that your finite decision-making capacity is preserved for the complex, high-stakes decisions that genuinely require it — like diagnosing a fault or pricing a complex job.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'A recommended weekly routine for a self-employed electrician would include:',
     options: [
-      'A full van deep clean, financial audit, and business plan review every Friday',
-      'A planning session, invoicing block, material ordering session, and dedicated admin time at consistent weekly intervals',
-      'No weekly routine — daily routines are sufficient for all administrative needs',
-      'A full day off every week with no work-related tasks permitted',
+      'A full van deep clean, financial audit and business plan review each Friday',
+      'A planning session, invoicing block, ordering and admin at set weekly times',
+      'No weekly routine — daily routines cover every administrative need fine',
+      'A guaranteed full day off each week with no work tasks permitted at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'The monthly routine for a tradesperson should include:',
     options: [
       'Only financial tasks — monthly routines are about money management',
-      'A financial review, pipeline check, CPD planning, and van deep clean — addressing tasks that compound if neglected',
-      'A complete overhaul of all daily and weekly routines',
-      'Monthly routines are unnecessary if daily and weekly routines are functioning well',
+      'A complete overhaul and rebuild of all daily and weekly routines',
+      'Nothing — monthly routines are needless if daily and weekly ones work',
+      'A financial review, pipeline check, CPD planning and van deep clean',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Monthly routines catch the tasks that slip through daily and weekly nets. A financial review (checking income vs expenditure, chasing overdue invoices) prevents cash flow surprises. A pipeline check (reviewing upcoming work, identifying quiet periods) enables proactive marketing. CPD planning (booking courses, reading regulations updates) ensures professional development does not stall. A van deep clean (clearing accumulated waste, restocking, checking tools) maintains the mobile workshop. These tasks compound if neglected — a quarter without a financial review can mean a serious cash flow crisis.',
   },
@@ -167,9 +167,9 @@ const quizQuestions = [
     question: 'Building flexibility into a routine means:',
     options: [
       'Having no fixed schedule and responding entirely to whatever comes up',
-      'Following the routine only on days when you feel motivated',
-      'Having a clear default plan while accepting that some days will require deliberate, conscious deviations',
-      'Changing the entire routine every week to prevent boredom',
+      'Following the routine only on the days when you happen to feel motivated',
+      'Keeping a clear default plan while allowing deliberate, conscious deviations',
+      'Changing the whole routine every single week to keep things from getting dull',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'The concept of a "Friday afternoon routine" for a self-employed electrician would typically include:',
     options: [
-      'Finishing early and starting the weekend',
-      "Completing and sending all outstanding invoices, finishing certificates, and planning the following week's schedule",
-      'Deep cleaning the van and reorganising all tools',
-      'Making sales calls and marketing the business',
+      'Finishing up early and getting the weekend started ahead of time',
+      'Sending outstanding invoices, finishing certificates, planning next week',
+      'Deep cleaning the van and fully reorganising all of the tools',
+      'Making cold sales calls and marketing the business to new clients',
     ],
     correctAnswer: 1,
     explanation:

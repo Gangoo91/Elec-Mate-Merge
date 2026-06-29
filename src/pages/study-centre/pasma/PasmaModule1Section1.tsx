@@ -46,8 +46,8 @@ const quickCheckQuestions = [
     id: 'pasma-schedule5-interval',
     question:
       'How often must a mobile tower be inspected under Schedule 5 if it remains erected on site?',
-    options: ['Every 3 days', 'Every 5 days', 'Every 7 days', 'Every 14 days'],
-    correctIndex: 2,
+    options: ['Every 3 days', 'Every 7 days', 'Every 5 days', 'Every 14 days'],
+    correctIndex: 1,
     explanation:
       'Schedule 5 of the Work at Height Regulations 2005 requires that scaffolding, including mobile towers, must be inspected at intervals not exceeding 7 days if it remains erected on site.',
   },
@@ -102,8 +102,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Which HSWA 1974 section places a duty on employees to take reasonable care of themselves and others?',
-    options: ['Section 2', 'Section 3', 'Section 7', 'Section 8'],
-    correctAnswer: 2,
+    options: ['Section 7', 'Section 2', 'Section 3', 'Section 8'],
+    correctAnswer: 0,
     explanation:
       'Section 7 of HSWA 1974 requires every employee to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work.',
   },
@@ -123,8 +123,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What type of notice can an HSE inspector serve to stop work immediately?',
-    options: ['Improvement notice', 'Prohibition notice', 'Warning notice', 'Advisory notice'],
-    correctAnswer: 1,
+    options: ['Improvement notice', 'Warning notice', 'Advisory notice', 'Prohibition notice'],
+    correctAnswer: 3,
     explanation:
       'A prohibition notice requires that the activity is stopped immediately (or not started) because the inspector believes there is a risk of serious personal injury. An improvement notice allows time to remedy a breach.',
   },
@@ -148,18 +148,18 @@ const quizQuestions = [
     options: [
       'You must eliminate every risk regardless of cost',
       'You only need to act when the HSE tells you to',
-      'You must balance the level of risk against the cost of reducing it',
       'You must follow the most expensive control measure available',
+      'You must balance the level of risk against the cost of reducing it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reasonably practicable requires you to weigh the degree of risk against the sacrifice needed to avert it. If the risk is significant, the cost of prevention must be grossly disproportionate before inaction is justified.',
   },
   {
     id: 8,
     question: 'Falls from height are the number one cause of what in UK workplaces?',
-    options: ['Minor injuries', 'Workplace fatalities', 'RIDDOR reports', 'Insurance claims'],
-    correctAnswer: 1,
+    options: ['Workplace fatalities', 'Minor injuries', 'RIDDOR reports', 'Insurance claims'],
+    correctAnswer: 0,
     explanation:
       'Falls from height remain the single largest cause of workplace fatalities in the United Kingdom, which is why the Work at Height Regulations impose strict duties on all parties involved.',
   },

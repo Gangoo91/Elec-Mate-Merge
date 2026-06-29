@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'Why does industry norm + MCS / MIS 3005-I:2025 install standard put each heat pump on a dedicated final circuit?',
     options: [
-      'No reason',
-      'Reg 314 division of installation drives fault isolation + safe maintenance + per-circuit verification + EICR clarity. A dedicated circuit means: heat pump fault doesn’t take out cooker / lighting; service engineer can isolate the heat pump independently; protective device + cable matched to the heat pump load; Part 6 verification produces per-circuit EIC. Mirrors M6 / M7 dedicated-circuit-per-EV pattern',
-      'Aesthetic',
-      'Random rule',
+      'Reg 314 division of installation: a heat pump fault then spares other circuits, the unit isolates independently, device and cable are matched, and Part 6 verifies per circuit',
+      'Purely an aesthetic preference, to keep the consumer unit ways grouped and the labelling tidy',
+      'A grid-connection condition imposed by the DNO, which refuses supply to any shared heat pump circuit',
+      'A requirement only to keep the manufacturer warranty valid, with no BS 7671 basis behind it',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 314 division of installation is the underlying BS 7671 framework that drives the dedicated-circuit-per-heat-pump topology. Industry norm + MCS / MIS 3005-I:2025 install standard capture the practice. Benefits: (1) fault isolation — heat pump RCBO trip on insulation fault doesn’t take out cooker / lighting / sockets; (2) safe maintenance — service engineer / refrigerant Cat 1 person can isolate the heat pump electrically without affecting other circuits; (3) protective device + cable matched to the heat pump load with appropriate curve + cross-section; (4) Part 6 verification per Reg 643 produces per-circuit EIC + Schedule of Inspections + Schedule of Test Results; (5) EICR clarity 5-10 years later — clear per-circuit results. Mirrors the M6 / M7 dedicated-circuit-per-EV pattern. Cert evidence bundle records the dedicated circuit + protective device + cable + verification.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'What protective device curve is suitable for a heat pump compressor inrush?',
     options: [
-      'B curve always',
-      'C or D curve — compressor start-up inrush 3-8× running current for 100-500 ms. B curve trips at 3-5× rated current → nuisance trip on every start. C curve trips at 5-10× → typically adequate for compressor inrush. D curve 10-20× → for particularly hard-starting compressors / sites with low Zs. Manufacturer install manual specifies the recommended curve',
-      'No curve needed',
-      'B curve only',
+      'A B curve is always correct, since a sealed compressor behaves as a resistive load with no inrush',
+      'Only a B curve is permitted on a motor circuit, because higher curves fail the disconnection-time check',
+      'C or D curve: inrush is 3-8× running current, so B (3-5×) nuisance-trips, C (5-10×) usually suits, D (10-20×) covers hard-starting or low-Zs sites',
+      'Any MCB rated just above the running current will do, as compressor inrush is too brief to trip a device',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Compressor start-up inrush is a classic motor-starting characteristic: 3-8× running current for 100-500 ms while the motor accelerates. B curve protective devices (BS EN 60898 type B) trip at 3-5× rated current within 0.1 s — nuisance trip on every compressor start. C curve (5-10× rated trip) is the typical UK 2025-26 default for heat pump dedicated circuits — handles the inrush without nuisance trip. D curve (10-20× rated trip) for particularly hard-starting compressors / sites with low Zs / large units. Manufacturer install manual specifies recommended curve per model. Verify Zs is within Table 41.3 limits for the chosen curve + protective device rating. Cert evidence bundle records: protective device type + curve + rating + manufacturer-recommended curve + Zs verification.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Single-phase 32 A heat pump circuit, ~15 m total run (5 m indoor T+E + 10 m outdoor SWA). What cable sizing?',
     options: [
-      '1.5 mm² T+E',
-      'Per Appendix 4: indoor 6 mm² T+E (Method C clipped direct, 41 A capacity at standard ambient) provides 28% headroom; outdoor 10 mm² 3-core SWA (Method E free in air, ~55 A capacity at standard ambient) — chosen for sustained current carrying capacity + voltage drop margin over the run. Voltage drop calc: 15 m × 32 A × per-mV/A/m → typically &lt;3% (within Reg 525.202 5% limit). Designer applies Ca / Cg correction factors if applicable',
-      '95 mm² SWA',
-      'No sizing',
+      '1.5 mm² T+E throughout, treating it the same as a lightly loaded domestic lighting circuit',
+      '95 mm² SWA throughout, sizing it as though it were a sub-main distribution circuit to the building',
+      'No sizing calc needed, because the 32 A RCBO automatically dictates the matching cable size',
+      'Per Appendix 4: 6 mm² T+E indoor (Method C, ~41 A) + 10 mm² 3-core SWA outdoor (Method E, ~55 A), with voltage drop within the Reg 525.202 5% limit',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cable sizing per Appendix 4. Indoor 6 mm² T+E (twin + earth) Method C clipped direct = ~41 A capacity at standard ambient (single-phase). 32 A circuit on 6 mm² T+E = 78% utilisation; adequate. Outdoor 10 mm² 3-core SWA Method E free in air = ~55 A capacity; chosen for sustained current + voltage drop + thermal margin in outdoor exposure. Voltage drop calc per Reg 525.202 + Appendix 4 Section 6.4: 15 m × 32 A × cable per-mV/A/m. For 6 mm² T+E: ~7.3 mV/A/m → 15 × 32 × 7.3 / 1000 = 3.5 V → 1.5% of 230 V (well within Reg 525.202 5% limit). Designer applies correction factors: Ca (ambient temp), Cg (grouping), Cs (soil thermal resistivity for buried), Ci (insulated). Cert evidence bundle records the Appendix 4 calc + chosen cable + voltage drop result.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Where does the Zs measurement happen on a heat pump circuit?',
     options: [
-      'CU only',
-      'At the FURTHEST point of the circuit (the outdoor unit terminals). Zs measured = Ze (external impedance from supply transformer to consumer’s main earthing terminal) + R1 (line conductor impedance) + R2 (CPC impedance) along the full cable run. Must be ≤ Table 41.3 value for the protective device type + rating. Account for cable temperature rise correction (Ca factor at operating temp ~70 °C vs measurement at ambient)',
-      'Customer measures',
-      'No measurement',
+      'At the consumer unit only, where Ze at the origin already represents the whole circuit loop impedance',
+      'At the furthest point — the outdoor unit terminals — where Zs = Ze + R1 + R2, verified ≤ the Table 41.3 limit with temperature correction',
+      'At the outdoor isolator only, since the cable beyond it adds no measurable R1 + R2',
+      'No Zs measurement is needed, because the 30 mA RCD alone guarantees disconnection on a fault',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'A 32 A single-phase heat pump circuit on 100 A TN-C-S supply. Protective device + cable + verification sequence?',
     options: [
-      'No design',
-      'Protective device: 32 A Type A RCBO C-curve (BS EN 61009 + BS EN 62423 — Type A covers AC + pulsating DC; C curve handles compressor inrush) + 30 mA additional protection per Reg 415.1. Cable: 6 mm² T+E indoor + 10 mm² 3-core SWA outdoor sized per Appendix 4 + Zs verified at outdoor unit ≤ Table 41.3 value. Reg 643 testing: continuity + IR + ADS + RCD trip-time + functional test. Schedule of Inspections + Schedule of Test Results + EIC',
-      'No protection',
-      'Random',
+      '32 A Type A RCBO C-curve + 30 mA per Reg 415.1, 6 mm² T+E indoor + 10 mm² SWA outdoor per Appendix 4, Zs ≤ Table 41.3, then Reg 643 testing + EIC',
+      'No protective device at the board, relying on the heat pump internal electronics to clear any fault',
+      'A 6 A B-curve MCB with no RCD, on the basis that a sealed compressor presents no shock risk',
+      'A 32 A BS 3036 rewirable fuse with no RCD, matched to the cable by its fusing factor alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard 32 A single-phase heat pump dedicated circuit design: Type A RCBO (BS EN 61009 + BS EN 62423) covers AC + pulsating DC fault currents; C-curve handles compressor inrush; rated 32 A matching the heat pump circuit. 30 mA additional protection per Reg 415.1 (RCBO integrates this). Cable indoor 6 mm² T+E Method C; outdoor 10 mm² 3-core SWA Method E free in air. Zs verified at outdoor unit terminals ≤ Table 41.3 value for 32 A C-curve (~0.68 Ω at 0.4 s for 230 V TN-C-S). Reg 643 testing sequence: continuity (R1+R2), insulation resistance (IR ≥1 MΩ at 500 V DC), automatic disconnection (ADS Zs verification), RCD trip-time (≤300 ms at IΔn, ≤40 ms at 5 × IΔn), polarity, functional test of the heat pump + isolator. Cert evidence bundle: EIC + Schedule of Inspections + Schedule of Test Results.',
   },
@@ -96,10 +96,10 @@ const quizQuestions = [
     question:
       'Three-phase 16 kW thermal ASHP — what changes vs single-phase 7 kW?',
     options: [
-      'Same',
-      'Three-phase: 4-pole 32 A Type A RCBO C-curve switching all 3 phases + N together; 5-core SWA cable (3L + N + PE); per-phase Zs verification (L1-PE, L2-PE, L3-PE each ≤ Table 41.3); phase rotation verified L1→L2→L3 with phase-sequence tester before energisation; 3-phase functional test of compressor. Per-phase running current 8-9 A vs single-phase 11-18 A — smaller per-phase cable possible but typically 6 mm² 5-core minimum for outdoor SWA',
-      'Single-phase same',
-      'No change',
+      'Only the supply changes; the existing single-phase RCBO and 3-core cable are reused for the three-phase unit',
+      '4-pole 32 A Type A RCBO switching 3 phases + N, 5-core SWA, per-phase Zs (L1/L2/L3-PE each ≤ Table 41.3), phase rotation checked before energising',
+      'A 3-pole RCBO with no neutral switching, since a three-phase compressor draws no neutral current at all',
+      'Three single-phase RCBOs on separate ways, one per phase, with no common 4-pole device or phase-rotation check',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,34 +109,34 @@ const quizQuestions = [
     question:
       'Heat pump start-up inrush — what happens electrically + how to protect?',
     options: [
-      'No inrush',
-      'Compressor motor draws 3-8× rated running current for 100-500 ms during start (motor acceleration). For an 11 A running current heat pump: inrush 35-90 A peak briefly. B curve protective device trips at 3-5× = nuisance trip. C curve (5-10×) typical default — handles inrush. D curve (10-20×) for hard-starting. Soft-start / VSD inverter compressors reduce inrush significantly; modern inverter-driven heat pumps typically only ~1.5-2× running current inrush',
-      'No protection',
-      'Always B curve',
+      'There is no inrush at all, so a basic B curve is always adequate for any compressor',
+      'A B curve must always be used regardless of inrush, because higher curves fail the 0.4 s disconnection test',
+      'The motor draws 3-8× running current for 100-500 ms, so a B curve nuisance-trips; a C curve (or D for hard-starting) suits, while VSD compressors cut inrush to ~1.5-2×',
+      'No overcurrent protection is needed at the board, since the compressor overload relay clears any fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Compressor start-up inrush: classic motor-starting characteristic — 3-8× rated running current for 100-500 ms while the motor accelerates + the refrigerant circuit pressurises. Direct-on-line start (no soft-start, no VSD) sees the full 3-8× inrush. B curve protective device (BS EN 60898 type B, 3-5× rated current trip) nuisance-trips on this. C curve (5-10×) is the UK 2025-26 default for heat pump dedicated circuits — handles typical inrush. D curve (10-20×) for hard-starting compressors / commercial / industrial / low-Zs sites. Modern inverter-driven heat pumps (VSD compressors — see §8.5 for RCD architecture implications) significantly reduce inrush: typically 1.5-2× running current ramp over a few seconds rather than instantaneous 3-8× spike. Manufacturer install manual specifies recommended curve per model. Cert evidence bundle records: protective device curve + rating + manufacturer recommendation.',
   },
   {
     question: 'Cable Reg 543 protective conductor selection — armour as CPC or separate?',
     options: [
-      'No CPC needed',
-      'Armour as CPC permitted per Reg 543 IF: (1) armour cross-section ≥ minimum CPC per Table 54.7 (or adiabatic calc); (2) armour electrically continuous at both ends (gland + earth tag + terminal connection); (3) cable manufacturer DoC confirms armour-as-CPC. Alternative: separate green-yellow CPC conductor in the cable (4-core for single-phase, 5-core for three-phase). Most UK 2025-26 SWA heat pump cables use armour-as-CPC',
-      'Bare wire',
-      'No earth',
+      'No CPC is needed on an SWA cable, because the steel armour serves only as mechanical protection',
+      'A bare copper wire wrapped around the outer sheath is sufficient as the protective conductor',
+      'No earth is required at the outdoor unit, since the metal casing is bonded through the refrigerant pipework',
+      'Armour-as-CPC is permitted per Reg 543 where its cross-section meets Table 54.7, it is continuous at both ends and the DoC confirms it; otherwise a separate CPC is used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 543 protective conductor selection. Armour as CPC permitted IF: (1) armour cross-section meets the minimum CPC requirement per Table 54.7 (or adiabatic equation S² × t = k² for fault current + duration); (2) armour electrically continuous at both ends — gland + earth tag at outdoor isolator + outdoor unit, terminal-block earth connection at indoor termination + CU; (3) cable manufacturer DoC confirms armour-as-CPC is acceptable for the cross-section + application. For typical 10 mm² 3-core SWA: armour effective cross-section ≈ 70-100 mm² for steel armour — well above the Table 54.7 minimum for protective conductor on 10 mm² circuit. Alternative: cable with separate green-yellow CPC conductor (4-core for single-phase L+N+PE+armour-as-functional-earth-only; 5-core for three-phase). UK 2025-26 mature install practice: most heat pump SWA installs use armour-as-CPC. Cert evidence bundle records: armour vs separate CPC choice + manufacturer DoC + continuity verified at commissioning.',
   },
   {
     question: 'Voltage drop calc for the heat pump dedicated circuit — what is the limit?',
     options: [
-      'No limit',
-      'Reg 525.202 voltage drop limits: 5% between supply origin + final circuit terminals (for non-lighting circuits). For heat pump: indoor cable + outdoor SWA combined drop calculated per Appendix 4 using cable per-mV/A/m × length × current. Typical 15 m total run at 32 A on 6 mm² + 10 mm² SWA: ~3-4 V drop = 1.3-1.7% — well within 5%. Long runs (>30 m) may require oversize cable; cert evidence bundle records the calc',
-      '0.1% only',
-      '50% drop',
+      'There is no voltage-drop limit for a heat pump, since the inverter compressor tolerates any supply voltage',
+      'Reg 525.202 sets 5% (non-lighting) origin to final terminals; a typical 15 m run at 32 A drops ~1.3-1.7%, with cable oversized for runs over 30 m',
+      'The limit is 3%, the lighting-circuit figure, applied because the controls electronics are sensitive',
+      'A 10% drop is acceptable provided the compressor still starts and the customer reports adequate heating',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'ADS verification at outdoor unit — what is the Zs limit for 32 A C-curve RCBO on 230 V TN-C-S?',
     options: [
-      '10 Ω',
-      'Table 41.3: 32 A Type C protective device + 0.4 s disconnection time → Zs ≤ 0.68 Ω at U0 = 230 V. Cmin factor 0.95 (TN system) applied. Measure Zs at outdoor unit terminals; verify ≤ 0.68 Ω. Practical typical: 0.3-0.5 Ω achieved with 100 A TN-C-S supply + 15 m cable + adequate cross-section',
-      '50 Ω',
-      'No limit',
+      'Table 41.3: Zs ≤ 0.68 Ω at 230 V (Cmin 0.95) at the outdoor unit terminals; ~0.3-0.5 Ω is typical on a 100 A TN-C-S supply with 15 m of adequate cable',
+      '10 Ω, taken from the TT earth-electrode maximum and applied because the unit sits outdoors',
+      '1.44 Ω, the Table 41.3 figure for a 32 A B-curve device, used regardless of the actual C curve fitted',
+      'No Zs limit applies once a 30 mA RCD is fitted, since the RCD provides disconnection on any earth fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ADS verification per Reg 411.4 + Reg 643.7 + Table 41.3. For 32 A C-curve protective device (BS EN 60898) on 230 V TN-C-S with 0.4 s disconnection time: Zs ≤ 0.68 Ω. Calculation behind the table: Zs × Ia ≤ U0 × Cmin, where Ia = 10 × In = 10 × 32 = 320 A for C-curve at 0.4 s, U0 = 230 V, Cmin = 0.95 (TN system) → Zs ≤ 230 × 0.95 / 320 = 0.68 Ω at the maximum manufacturer Ia case; Table 41.3 gives 0.68 Ω for the 32 A Type C row at 0.4 s. Practical Zs at outdoor unit terminals with typical 100 A TN-C-S supply + 15 m cable + 6 mm² indoor + 10 mm² SWA outdoor: 0.3-0.5 Ω typically achieved. Cable temperature rise correction (Ca factor for measurement at ambient vs operating temp ~70 °C) increases effective Zs by ~20% — designer applies correction. Cert evidence bundle records: measured Zs + Ze + R1 + R2 + temperature correction + Table 41.3 limit + margin.',
   },

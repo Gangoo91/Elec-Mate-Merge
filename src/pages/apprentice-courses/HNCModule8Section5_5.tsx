@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'cascade-benefit',
     question: 'What is the primary benefit of cascade control over single-loop control?',
     options: [
-      'Ratio of 10-minute to 1-minute resistance readings',
-      'Electrical isolation and safe working practices',
-      'Converting sound energy to heat in porous material',
       'Faster response to secondary disturbances',
+      'It removes the need for any feedback sensor',
+      'It eliminates steady-state offset without integral action',
+      'It reduces the number of control loops required',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Cascade control places a secondary (inner) loop around disturbances, correcting them before they affect the primary (outer) loop. This significantly improves response time.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What data does an optimum start algorithm typically use to calculate pre-heat time?',
     options: [
-      'Short circuit causing flashover and burns',
-      'Apply the hierarchy of control when assessing risks',
-      'Voltage equals current multiplied by resistance',
+      'Indoor CO2 concentration and occupancy count',
       'Building thermal mass and outside temperature',
+      'Electricity tariff rates and time of day only',
+      'Chilled water supply temperature and humidity',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Optimum start algorithms use outside air temperature, building thermal characteristics (thermal mass, insulation), and sometimes historical data to calculate the minimum pre-conditioning time required.',
   },
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'What is the primary energy-saving mechanism of supply air temperature reset?',
     options: [
       'Reducing reheat energy and improving chiller efficiency',
-      'To anticipate future error based on rate of change',
-      'Widens the temperature deadband to reduce plant operation',
-      'Limiting integral accumulation when output is saturated',
+      'Increasing fan speed to deliver more cooling per unit of air',
+      'Lowering the supply air temperature to dehumidify continuously',
+      'Switching the air handling unit off during partial occupancy',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Night setback control typically:',
     options: [
-      'Limiting integral accumulation when output is saturated',
+      'Switches all plant fully off until occupancy resumes',
       'Widens the temperature deadband to reduce plant operation',
-      'Reducing reheat energy and improving chiller efficiency',
-      'To anticipate future error based on rate of change',
+      'Raises supply air temperature to improve chiller efficiency',
+      'Increases ventilation rates to purge the building overnight',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'Which tuning method involves deliberately inducing oscillations in a control loop?',
     options: [
-      'Use appropriate PPE and procedures',
-      'Connect shield at both ends',
+      'Lambda tuning method',
+      'Ziegler-Nichols step response method',
       'Ziegler-Nichols ultimate gain method',
-      'Pressing the test button (if fitted)',
+      'Manufacturer default settings method',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,9 +217,9 @@ const quizQuestions = [
     question:
       'In a variable air volume (VAV) system, what parameter is typically reset based on zone demand?',
     options: [
-      'Oscillation and overshoot',
-      'Building thermal decay rate',
-      'Ziegler-Nichols ultimate gain method',
+      'Chilled water flow rate',
+      'Outdoor air CO2 setpoint',
+      'Boiler firing rate',
       'Supply air static pressure setpoint',
     ],
     correctAnswer: 3,
@@ -231,9 +231,9 @@ const quizQuestions = [
     question: "What is 'anti-windup' in PID control?",
     options: [
       'Limiting integral accumulation when output is saturated',
-      'Widens the temperature deadband to reduce plant operation',
-      'Reducing reheat energy and improving chiller efficiency',
-      'To anticipate future error based on rate of change',
+      'Filtering measurement noise from the derivative term',
+      'Preventing the proportional gain from exceeding a set maximum',
+      'Reversing controller action when the process gain changes sign',
     ],
     correctAnswer: 0,
     explanation:

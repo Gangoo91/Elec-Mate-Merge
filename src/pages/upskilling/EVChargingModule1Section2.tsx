@@ -8,32 +8,32 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'evcharging-m1s2-check1',
-    question: 'What is the typical power rating for a domestic EV charger?',
-    options: ['3.7kW', '7kW', '22kW', '50kW'],
+    question: 'What is the most common power rating for a domestic EV charger on a UK single-phase supply?',
+    options: ['3.7kW', '7kW', '11kW', '22kW'],
     correctIndex: 1,
     explanation:
-      '7kW is the most common domestic charger rating in the UK, providing a good balance between charging speed (4-6 hours for a typical EV) and installation cost on a single-phase supply.',
+      '7kW (single-phase, 32A) is the most common UK domestic rating, balancing charge speed against cost. 11kW and 22kW need a three-phase supply, which most homes do not have.',
   },
   {
     id: 'evcharging-m1s2-check2',
-    question: 'Which of these is NOT typically required for commercial EV charging installations?',
+    question: 'Which of these is NOT typically required for a public commercial EV charging installation?',
     options: [
+      'Battery swap and replacement facilities',
       'Load management systems',
       'Payment processing',
       'User authentication',
-      'Battery replacement facilities',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
-      'Battery replacement facilities are separate from charging infrastructure. Commercial installations typically require load management, payment systems, and user authentication for public access.',
+      'Battery swapping is a separate vehicle service, not part of charging infrastructure. Public commercial installations do require load management, payment processing and user authentication for billing and access control.',
   },
   {
     id: 'evcharging-m1s2-check3',
-    question: 'What is the typical payback period for commercial EV charging installations?',
-    options: ['6-12 months', '1-2 years', '3-7 years', '10-15 years'],
+    question: 'What is the typical payback period for a commercial EV charging installation?',
+    options: ['6-12 months', '1-2 years', '3-7 years', '15-20 years'],
     correctIndex: 2,
     explanation:
-      'Commercial EV charging typically has a payback period of 3-7 years depending on utilisation rates, tariffs, and installation costs. Higher utilisation locations may achieve faster payback.',
+      'Commercial EV charging typically pays back over 3-7 years, depending on utilisation rates, tariffs and installation costs. High-utilisation locations recover the capital outlay faster.',
   },
 ];
 
@@ -64,11 +64,11 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'A workplace wants to install 10 × 7kW charging points. Using a diversity factor of 0.5, what maximum demand should be calculated?',
-    options: ['35kW', '50kW', '70kW', '140kW'],
-    correctAnswer: 0,
+      'A workplace installs 10 × 7kW charging points and applies a diversity factor of 0.5. What maximum demand should be used for the design?',
+    options: ['17.5kW', '35kW', '70kW', '140kW'],
+    correctAnswer: 1,
     explanation:
-      'Maximum demand = 10 × 7kW × 0.5 diversity = 35kW. A diversity factor accounts for the fact that not all chargers operate at full power simultaneously. The IET Code of Practice provides guidance on appropriate diversity factors.',
+      'Maximum demand = 10 × 7kW × 0.5 = 35kW. The diversity factor reflects that not all points draw full power at once; 70kW is the connected load with no diversity applied. The IET Code of Practice gives guidance on appropriate diversity for EV charging.',
   },
 ];
 

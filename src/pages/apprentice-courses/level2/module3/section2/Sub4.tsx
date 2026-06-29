@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       "A drawing's scale is shown as 1:50 in the title block. The site engineer hands you a printed-out copy and you notice the title block warns 'DO NOT SCALE FROM DRAWING — use named dimensions only'. Why?",
     options: [
-      "An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet",
-      "A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated",
+      "The scale rule has been calibrated for a different paper size than the one in your hand",
+      "Scaling from any drawing is forbidden by BS 7671 regardless of how it was printed",
       "The print may have been resized (photocopy reduction or 'fit-to-page'), so scale measurements are unreliable. Use the dimension lines and figures instead",
-      "Additional loads and forces not accounted for in the tower's design can cause structural failure or overturning",
+      "The title block scale always refers to the original CAD file, never the print",
     ],
     correctAnswer: 2,
     explanation:

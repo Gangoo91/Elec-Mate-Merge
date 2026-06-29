@@ -66,10 +66,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of conduit or trunking in a singles installation?',
     options: [
-      'Three-phase mV/A/m values from tables',
+      'Reduce the voltage drop along the circuit',
       'Provide mechanical protection and routing',
-      'Mechanical stress and vibration',
-      '+/-5mm tolerance for exact positioning',
+      'Increase the current rating of the conductors',
+      'Remove the need for circuit protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,9 +102,9 @@ const quizQuestions = [
     question: 'Which of the following is a limitation of steel conduit systems?',
     options: [
       'Requires skilled installation',
-      'Gateway or protocol converter',
-      'Any voltage that could cause injury',
-      'Investigate and rectify fault',
+      'Cannot provide mechanical protection',
+      'Cannot be used in industrial environments',
+      'Offers no fire resistance',
     ],
     correctAnswer: 0,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why must you avoid overfilling trunking with cables?',
     options: [
-      'The sum of voltages around any closed loop equals zero',
-      'Sustained overcurrent or poor terminations',
+      'It reduces the mechanical protection of the trunking',
+      'It prevents the lid from being painted',
       'Causes excessive heating and difficulty pulling cables',
-      'Dampen pressure pulsations and protect gauge',
+      'It increases the earth fault loop impedance',
     ],
     correctAnswer: 2,
     explanation:

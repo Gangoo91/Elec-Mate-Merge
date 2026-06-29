@@ -7,50 +7,50 @@ import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 const quizData = [
   {
     question:
-      'What is the minimum depth requirement for earth rod installation in typical soil conditions?',
+      'What is the typical minimum driven depth for an earth rod in average soil conditions?',
     answers: [
+      '2.4 metres below ground level',
       '1.2 metres below ground level',
       '1.8 metres below ground level',
-      '2.4 metres below ground level',
       '3.0 metres below ground level',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Earth rods should penetrate to a minimum depth of 2.4m in most soil types to reach stable moisture levels and provide effective earth contact below the frost line.',
+      'Earth rods are typically driven to at least 2.4m in average soil to reach stable, moist ground below the frost line and achieve effective earth contact.',
   },
   {
     question:
       'What is the recommended minimum spacing between multiple earth rods for optimal effectiveness?',
     answers: [
       'Equal to the rod length',
-      '1.5 times the rod length',
       '2.5 times the rod length',
+      '1.5 times the rod length',
       '5 times the rod length',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Earth rods should be spaced at least 2.5 times their length apart to avoid mutual interference effects and achieve additive resistance reduction.',
+      'Earth rods should be spaced at least 2.5 times their driven length apart to avoid overlapping resistance areas and achieve a genuine reduction in combined resistance.',
   },
   {
     question:
       'Which earth resistance testing method provides the most accurate results for new installations?',
     answers: [
-      'Clamp-on earth resistance testing',
-      'Fall-of-potential method',
+      'Clamp-on (stakeless) earth resistance testing',
+      'Fall-of-potential method using auxiliary probes',
       'Two-wire resistance measurement',
-      'Stakeless earth testing',
+      'Continuity test with a low-ohm meter',
     ],
     correctAnswer: 1,
     explanation:
-      'The fall-of-potential method using current and potential probes provides the most accurate earth resistance measurements for new installations and verification testing.',
+      'The fall-of-potential method using current and potential probes gives the most accurate earth electrode resistance, suitable for new installations and verification.',
   },
   {
     question:
-      'What is the maximum earth resistance typically required for a TT system with 30mA RCD protection?',
-    answers: ['50 ohms', '100 ohms', '200 ohms', '1667 ohms'],
-    correctAnswer: 1,
+      'What is the maximum earth electrode resistance usually aimed for in a TT system with 30mA RCD protection?',
+    answers: ['100 ohms', '50 ohms', '200 ohms', '1667 ohms'],
+    correctAnswer: 0,
     explanation:
-      'While theoretically 1667Ω is acceptable (50V ÷ 0.03A), practically aim for less than 100Ω to ensure reliable RCD operation and allow for electrode deterioration.',
+      'Although 1667Ω is the theoretical limit (50V ÷ 0.03A), an electrode resistance below 100Ω is targeted in practice for reliable RCD operation and to allow for deterioration.',
   },
   {
     question:
@@ -58,62 +58,62 @@ const quizData = [
     answers: ['100 microns', '200 microns', '250 microns', '350 microns'],
     correctAnswer: 2,
     explanation:
-      'Copper-bonded steel earth rods must have a minimum copper coating thickness of 250 microns to provide adequate corrosion protection and conductivity.',
+      'Copper-bonded steel earth rods require a minimum 250 micron copper coating to provide adequate corrosion resistance and surface conductivity over their service life.',
   },
   {
     question:
-      'During fall-of-potential testing, at what distances should the potential probe be positioned for verification?',
+      'During a fall-of-potential test, at what spacings is the potential probe positioned to verify a valid result?',
     answers: [
-      '0.5D, 0.6D, and 0.7D from the earth electrode',
-      '0.52D, 0.62D, and 0.72D from the earth electrode',
-      '0.4D, 0.5D, and 0.6D from the earth electrode',
-      '0.3D, 0.4D, and 0.5D from the earth electrode',
+      '0.5D, 0.6D and 0.7D from the earth electrode',
+      '0.4D, 0.5D and 0.6D from the earth electrode',
+      '0.52D, 0.62D and 0.72D from the earth electrode',
+      '0.3D, 0.4D and 0.5D from the earth electrode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The potential probe should be positioned at 0.52D, 0.62D, and 0.72D from the earth electrode to verify test validity, with readings within ±5%.',
+      'Readings taken with the potential probe at 0.52D, 0.62D and 0.72D should agree within about ±5%, confirming the probe sits in the flat (true resistance) region.',
   },
   {
     question:
-      'What type of earth electrode is most suitable for chemically contaminated soil conditions?',
+      'Which earth electrode type is most suitable for chemically contaminated or aggressive soil?',
     answers: [
       'Galvanised steel rods',
       'Copper-bonded steel rods',
-      'Stainless steel electrodes',
       'Cast iron earth plates',
+      'Stainless steel (316L) electrodes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Stainless steel electrodes (preferably 316L grade) offer the best corrosion resistance in chemically contaminated or aggressive soil conditions.',
+      'Stainless steel electrodes, ideally 316L grade, offer the best corrosion resistance in chemically contaminated or aggressive soils where coated steel would degrade.',
   },
   {
     question:
-      'How often should earth electrode resistance be tested for ongoing compliance verification?',
-    answers: ['Annually', 'Every 2 years', 'Every 5 years', 'Every 10 years'],
-    correctAnswer: 2,
+      'How often should earth electrode resistance typically be re-tested for ongoing verification?',
+    answers: ['Every 5 years', 'Annually', 'Every 2 years', 'Every 10 years'],
+    correctAnswer: 0,
     explanation:
-      'Earth electrode resistance should be tested every 5 years or when changes occur to the installation, with annual visual inspections of connections.',
+      'Earth electrode resistance is typically re-tested at around 5-year intervals, or sooner if the installation changes, supported by routine visual checks of the connections.',
   },
   {
     question:
-      'What is the recommended minimum cross-sectional area for earth electrode connections?',
+      'What is the recommended minimum cross-sectional area for an earth electrode connection conductor?',
     answers: ['2.5mm²', '4mm²', '6mm²', '10mm²'],
     correctAnswer: 2,
     explanation:
-      'Earth electrode connections should use a minimum 6mm² conductor, with larger sizes required for higher fault currents or longer cable runs.',
+      'A minimum 6mm² conductor is recommended for earth electrode connections, with larger sizes used where fault currents are higher or the run is long.',
   },
   {
     question:
-      'When using bentonite clay to enhance earth electrode performance, what is the primary benefit?',
+      'When bentonite is used around an earth electrode, what is its primary benefit?',
     answers: [
-      'Increases mechanical strength of the electrode',
-      'Provides corrosion protection',
-      'Reduces earth resistance in high resistivity soil',
-      'Prevents electrode movement',
+      'It increases the mechanical strength of the electrode',
+      'It reduces earth resistance in high-resistivity soil',
+      'It provides additional corrosion protection',
+      'It prevents the electrode from moving in the ground',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Bentonite clay absorbs moisture and provides a low-resistance path around the earth electrode, particularly effective in reducing earth resistance in high resistivity soils.',
+      'Bentonite retains moisture and forms a low-resistance, conductive surround to the electrode, which is particularly effective at reducing resistance in high-resistivity soils.',
   },
 ];
 

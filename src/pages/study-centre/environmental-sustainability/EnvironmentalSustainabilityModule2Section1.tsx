@@ -28,11 +28,11 @@ const quickCheckQuestions = [
       'Why is on-site segregation of waste materials essential for effective recycling on construction sites?',
     options: [
       'It reduces the number of skips needed on site',
-      'It prevents cross-contamination, ensures materials retain value, and increases recycling rates',
       'It is only necessary for hazardous waste streams',
+      'It prevents cross-contamination, ensures materials retain value, and increases recycling rates',
       'It allows all waste to be sent to landfill more efficiently',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'On-site segregation prevents cross-contamination between different waste streams (e.g. plasterboard contaminating timber, or food waste contaminating recyclable plastics). When materials are properly separated, they retain their value for recyclers and reprocessors. Mixed skips are far harder and more expensive to sort, and contaminated loads may be rejected entirely, resulting in the whole skip going to landfill or energy-from-waste instead of being recycled.',
   },
@@ -97,8 +97,8 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which level of the waste hierarchy is considered the most preferred option?',
-    options: ['Recycling', 'Preparing for Reuse', 'Prevention', 'Other Recovery'],
-    correctAnswer: 2,
+    options: ['Recycling', 'Prevention', 'Preparing for Reuse', 'Other Recovery'],
+    correctAnswer: 1,
     explanation:
       'Prevention sits at the top of the waste hierarchy as the most preferred option. It means avoiding the creation of waste in the first place through better design, accurate ordering, procurement strategies, and construction methods that minimise off-cuts and surplus. Prevention delivers the greatest environmental benefit because no waste is generated, no energy is used in reprocessing, and no residual material requires management.',
   },
@@ -106,31 +106,31 @@ const quizQuestions = [
     id: 3,
     question:
       'A construction site has a large quantity of clean reclaimed bricks from a demolition phase. Under the waste hierarchy, which level does using these bricks in new construction represent?',
-    options: ['Prevention', 'Preparing for Reuse', 'Recycling', 'Other Recovery'],
-    correctAnswer: 1,
+    options: ['Prevention', 'Recycling', 'Preparing for Reuse', 'Other Recovery'],
+    correctAnswer: 2,
     explanation:
       'Using reclaimed bricks from demolition is an example of Preparing for Reuse — the second level of the hierarchy. The bricks are checked, cleaned, and prepared so they can fulfil the same function (building a wall) without being reprocessed into a different material. This is distinct from recycling, which would involve crushing the bricks to make aggregate — a lower-value use of the material.',
   },
   {
     id: 4,
     question:
-      'What is the approximate standard rate of UK landfill tax per tonne (as of the most recent published rate)?',
-    options: ['£50.00 per tonne', '£75.50 per tonne', '£103.70 per tonne', '£150.00 per tonne'],
-    correctAnswer: 2,
+      'For the 2023-24 financial year, what was the approximate standard rate of UK landfill tax per tonne?',
+    options: ['£50.00 per tonne', '£75.50 per tonne', '£150.00 per tonne', '£103.70 per tonne'],
+    correctAnswer: 3,
     explanation:
-      'The standard rate of UK landfill tax is approximately £103.70 per tonne. This rate applies to all waste that is not classified as inert (such as soil and stone from excavation, which attracts the lower rate). The landfill tax escalator has progressively increased this rate year on year, making landfill disposal significantly more expensive than alternative waste management routes and driving the construction industry towards higher levels of the waste hierarchy.',
+      'The standard rate of UK landfill tax for 2023-24 was approximately £103.70 per tonne. This rate applies to all waste that is not classified as inert (such as soil and stone from excavation, which attracts the lower rate). The landfill tax escalator increases the standard rate each year above inflation, making landfill disposal progressively more expensive than alternative waste management routes and driving the construction industry towards higher levels of the waste hierarchy.',
   },
   {
     id: 5,
     question:
       'On a construction site, plasterboard must be segregated from general waste. What is the primary reason?',
     options: [
-      'Plasterboard is classified as hazardous waste under all circumstances',
       'Plasterboard produces hydrogen sulphide gas when landfilled with biodegradable waste, creating a toxic and explosive hazard',
+      'Plasterboard is classified as hazardous waste under all circumstances',
       'Plasterboard cannot be recycled under any circumstances',
       'Plasterboard is too heavy to be placed in general waste skips',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Plasterboard (gypsum board) must be segregated because when it decomposes in landfill in the presence of biodegradable waste, it produces hydrogen sulphide (H₂S) gas. H₂S is toxic (it can be fatal at high concentrations) and is also flammable/explosive. For this reason, the Environmental Permitting (England and Wales) Regulations prohibit the co-disposal of gypsum waste with biodegradable waste in landfill. On site, this means plasterboard must go into dedicated plasterboard-only skips and be sent to a specialist recycler.',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
     question: "Which of the following is an example of 'Other Recovery' in the waste hierarchy?",
     options: [
       'Crushing concrete to produce recycled aggregate',
-      'Reclaiming roof slates for use on another building',
       'Incinerating waste to generate electricity at an energy-from-waste plant',
+      'Reclaiming roof slates for use on another building',
       'Ordering materials in exact quantities to avoid surplus',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Energy-from-waste incineration is the most common form of Other Recovery. The waste is burned at high temperatures and the heat generated is used to produce electricity or provide district heating. While this diverts waste from landfill and captures energy value, it destroys the material permanently and produces residual ash that may still require landfilling. Crushing concrete is recycling (material is reprocessed into a new product), reclaiming slates is preparing for reuse, and accurate ordering is prevention.',
   },
@@ -153,11 +153,11 @@ const quizQuestions = [
       'A site manager wants to measure waste performance using a KPI. Which of the following is a recognised construction waste KPI?',
     options: [
       'Number of skips removed per week',
-      'Cubic metres of waste per £100,000 of project value',
       'Weight of waste per number of workers on site',
+      'Cubic metres of waste per £100,000 of project value',
       'Total skip hire cost as a percentage of turnover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cubic metres of waste per £100,000 of project value (m³/£100k) is one of the standard construction waste KPIs recommended by WRAP and used in BREEAM assessments. Another common KPI is tonnes of waste per 100 m² of gross internal floor area. These normalised metrics allow meaningful benchmarking between projects of different sizes and types. Simply counting skips or measuring cost does not account for project scale and does not indicate whether waste management is improving.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     options: [
       'Providing colour-coded skips for waste segregation',
       'Sending mixed waste to an energy-from-waste facility',
-      'Using just-in-time delivery and BIM-based quantity take-offs to order precise material quantities',
       'Conducting a waste audit at project completion',
+      'Using just-in-time delivery and BIM-based quantity take-offs to order precise material quantities',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Just-in-time delivery and BIM-based quantity take-offs are Prevention measures — they stop waste from being created in the first place by ensuring only the materials actually needed are delivered to site. Colour-coded skips support recycling (the third level), energy-from-waste is other recovery (the fourth level), and a post-completion waste audit is a measurement and benchmarking activity rather than a prevention measure in itself.',
   },

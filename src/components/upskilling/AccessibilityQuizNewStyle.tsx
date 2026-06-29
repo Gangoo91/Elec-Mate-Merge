@@ -17,11 +17,11 @@ const questions: Question[] = [
     question: 'Why must electrical equipment be readily accessible?',
     options: [
       'To make the installation look professional',
-      'To ensure safe and complete inspection, testing, and maintenance',
       'To comply with insurance requirements only',
+      'To ensure safe and complete inspection, testing, and maintenance',
       'To reduce installation costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Equipment must be readily accessible to ensure safe and complete inspection, testing, and maintenance as required by BS 7671.',
   },
@@ -29,12 +29,12 @@ const questions: Question[] = [
     id: 2,
     question: 'Which of the following must be clearly labelled on a distribution board?',
     options: [
-      'Only the main switch',
       'Circuit purpose, protective device, and isolation point',
+      'Only the main switch',
       'Just the RCD devices',
       'Only emergency circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Circuit purpose, protective device, and isolation point must all be clearly labelled to ensure proper identification and safety.',
   },
@@ -57,10 +57,10 @@ const questions: Question[] = [
     options: [
       'Force access by removing the obstruction',
       'Skip that test and continue with others',
-      'Record it as a limitation and do not proceed until access is made safe',
       'Estimate the values based on similar circuits',
+      'Record it as a limitation and do not proceed until access is made safe',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Record it as a limitation and do not proceed until access is made safe. Never force access or make assumptions.',
   },
@@ -69,11 +69,11 @@ const questions: Question[] = [
     question: 'Which notice is required when an RCD is installed?',
     options: [
       'A maintenance schedule only',
-      'A test notice showing how and when to test the RCD',
       'An installation certificate reference',
       'A warranty information sheet',
+      'A test notice showing how and when to test the RCD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A test notice showing how and when to test the RCD is required to ensure proper ongoing maintenance and safety.',
   },
@@ -82,11 +82,11 @@ const questions: Question[] = [
     question: 'What is the minimum height requirement for consumer units in domestic properties?',
     options: [
       '1.0m from floor level',
-      '1.35m from floor level',
       '1.8m from floor level',
+      '1.35m from floor level',
       'No specific height requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Consumer units in domestic properties must be mounted at least 1.35m from floor level for accessibility and safety reasons.',
   },
@@ -107,12 +107,12 @@ const questions: Question[] = [
     id: 8,
     question: 'What should you do if cable identification labels are illegible?',
     options: [
-      'Make your best guess',
       'Use a circuit tracer to verify and re-label',
+      'Make your best guess',
       'Skip testing that circuit',
       'Assume standard layout',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If cable identification labels are illegible, use a circuit tracer to verify the circuit and create new, clear labels.',
   },
@@ -121,11 +121,11 @@ const questions: Question[] = [
     question: 'How should isolation points be marked in industrial installations?',
     options: [
       'With electrical warning signs only',
-      'Clear, durable labels stating the circuit controlled',
       'Just with the isolation point symbol',
+      'Clear, durable labels stating the circuit controlled',
       'No marking required if obvious',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Isolation points must be clearly marked with durable labels stating exactly what circuit or equipment they control.',
   },
@@ -133,12 +133,12 @@ const questions: Question[] = [
     id: 10,
     question: 'What minimum clearance is required around distribution boards?',
     options: [
-      '500mm all around',
       '700mm in front, 500mm sides',
+      '500mm all around',
       '1000mm in front',
       'As much as practically possible',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Distribution boards require 700mm clearance in front for safe operation and 500mm clearance on sides for proper access.',
   },

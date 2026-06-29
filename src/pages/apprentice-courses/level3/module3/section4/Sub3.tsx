@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'Why are CT secondaries always rated 1 A or 5 A?',
     options: [
-      'The overvoltage withstand capability appropriate to the measurement location in the installation',
+      'To keep the secondary voltage below the touch-voltage limit',
       'Match standard switchboard ammeters and protective relays designed for 1 A or 5 A inputs',
-      'All electrical systems are constructed, maintained and worked on so as to prevent danger',
-      'Safety data sheets with hazard information and control measures',
+      'Because the primary current can never exceed 5 A',
+      'To allow the secondary to be left permanently open-circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'NEVER open a CT secondary with primary energised because:',
     options: [
-      'Test type, results, instruments used, environmental conditions, and acceptance criteria',
-      'The total required delay exceeds the maximum value of a single timer instruction',
+      'The primary current will instantly drop to zero',
+      'The connected ammeter will read a falsely high current',
       'Open secondary = no secondary current = uncontrolled flux → very high voltage induced (kV) → insulation failure',
-      'Ensure cables don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t compromise fire barriers and coordinate emergency supplies',
+      'The CT will reverse polarity and feed power back to the line',
     ],
     correctAnswer: 2,
     explanation:

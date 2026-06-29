@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: 'When finding Thévenin resistance, what must be done to all independent sources?',
     options: [
-      'Liquidated damages become payable by the contractor',
-      'Test results, circuit details, and any departures from standards',
+      'All sources are left active at their rated values',
+      'Voltage sources are opened and current sources shorted',
       'All sources are deactivated (voltage→short, current→open)',
-      'Circuits with moderate inrush currents like motors',
+      'Only the largest source is deactivated, others remain',
     ],
     correctAnswer: 2,
     explanation:

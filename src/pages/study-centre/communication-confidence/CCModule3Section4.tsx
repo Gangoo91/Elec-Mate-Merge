@@ -37,26 +37,25 @@ const quickCheckQuestions = [
     question:
       'Why is storytelling more effective than listing facts when presenting technical information to clients?',
     options: [
-      'Stories are shorter and take less time to deliver',
-      'Clients prefer entertainment over information',
-      'Stories activate more areas of the brain, create emotional engagement, and are remembered far longer than isolated facts',
-      'Storytelling avoids the need for technical accuracy',
+      'Stories are shorter and take far less time to deliver to a busy client',
+      'Clients prefer light entertainment over dry technical information',
+      'Stories engage more of the brain and are remembered far longer than isolated facts',
+      'Storytelling removes the need for precise technical accuracy in the detail',
     ],
     correctIndex: 2,
     explanation:
-      "Neuroscience research (Paul Zak, Princeton University) demonstrates that stories trigger the release of oxytocin and cortisol, activating multiple brain regions simultaneously — not just the language processing centres that facts alone engage. This means stories create emotional engagement, build empathy, and are encoded into long-term memory far more effectively than isolated data points. In a construction context, explaining why a consumer unit upgrade matters through a real scenario ('Last month a family in Bristol had a fire because...') is dramatically more persuasive than listing regulation numbers.",
+      "Neuroscience research (Paul Zak, Claremont Graduate University) demonstrates that stories trigger the release of oxytocin and cortisol, activating multiple brain regions simultaneously — not just the language processing centres that facts alone engage. This means stories create emotional engagement, build empathy, and are encoded into long-term memory far more effectively than isolated data points. In a construction context, explaining why a consumer unit upgrade matters through a real scenario ('Last month a family in Bristol had a fire because...') is dramatically more persuasive than listing regulation numbers.",
   },
   {
     id: 'reading-the-room',
     question:
       'What is the most important non-verbal signal to watch for when presenting to a client or group?',
     options: [
-      'Whether they are wearing formal or casual clothing',
-      'Eye contact, body orientation, and facial micro-expressions — signs of engagement or disengagement',
-      'How many questions they ask during the first five minutes',
-      'Whether they arrived on time to the meeting',
-    ],
-    correctIndex: 1,
+      'Whether they are dressed formally or casually for the meeting',
+      'Whether they arrived on time or kept you waiting at the start',
+      'How many questions they ask you during the first five minutes',
+      'Eye contact, body orientation and facial micro-expressions showing engagement'],
+    correctIndex: 3,
     explanation:
       "Reading the room means continuously monitoring your audience's non-verbal signals: sustained eye contact indicates engagement; looking away, checking phones, or shifting posture indicates disengagement; furrowed brows suggest confusion; nodding suggests agreement. These cues tell you whether to speed up, slow down, add more detail, simplify your language, or pause and invite questions. Effective presenters adjust in real time based on what they observe, rather than ploughing through a prepared script regardless of audience response.",
   },
@@ -93,12 +92,11 @@ const quizQuestions = [
     question:
       'What is the recommended structure from Toastmasters Pathways for a clear, memorable presentation?',
     options: [
-      'Start with a joke, deliver the content, end with a question',
       'Tell them what you will tell them, tell them, tell them what you told them',
+      'Start with a joke, deliver the content, end with a question',
       'Open with a statistic, present five key points, close with a call to action',
-      'Ask the audience what they want to hear, then improvise the content',
-    ],
-    correctAnswer: 1,
+      'Ask the audience what they want to hear, then improvise the content'],
+    correctAnswer: 0,
     explanation:
       "The three-part structure — preview, deliver, summarise — is the backbone of effective presentation. 'Tell them what you will tell them' sets expectations and reduces cognitive load. 'Tell them' delivers the substance. 'Tell them what you told them' reinforces key messages and leverages the recency effect. This structure has been taught in Toastmasters for decades because it consistently produces clear, memorable presentations regardless of topic or audience.",
   },
@@ -107,10 +105,10 @@ const quizQuestions = [
     question:
       'According to neuroscience research, why are stories more effective than facts alone when communicating with clients?',
     options: [
-      'Stories are always shorter and more concise than factual explanations',
-      'Stories activate multiple brain regions, trigger emotional engagement, and are retained in long-term memory more effectively',
-      'Clients cannot understand technical facts without a narrative wrapper',
-      'Stories allow the presenter to avoid needing accurate technical knowledge',
+      'Stories are always shorter and more concise than a factual explanation',
+      'Stories engage multiple brain regions and are retained in memory far better',
+      'Clients cannot grasp technical facts at all without a narrative wrapped around them',
+      'Stories let the presenter avoid needing any accurate technical knowledge',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +119,11 @@ const quizQuestions = [
     question:
       'An electrician is presenting a quote for a consumer unit upgrade to a homeowner. Which approach is most effective?',
     options: [
-      'Present the total price and ask for a decision immediately',
-      'Walk through each line item transparently, explain what it covers and why it is necessary, and present options at different price points',
+      'Present only the total price and ask the homeowner for a decision immediately',
       'Focus entirely on the technical specifications of the new consumer unit',
-      'Offer the lowest possible price to win the job, then add extras later',
-    ],
-    correctAnswer: 1,
+      'Walk through each line item, explain what it covers, and offer priced options',
+      'Offer the lowest possible price to win the job, then add extra charges later'],
+    correctAnswer: 2,
     explanation:
       "Transparent, educational quote presentation builds trust and reduces price resistance. Walking through each line item shows the client what they are paying for and why. Presenting options at different price points gives the client agency and demonstrates that you are focused on their needs, not just maximising your fee. This approach reduces the client's self-orientation perception (they see you are working for them, not yourself) and increases their confidence in the value of the work.",
   },
@@ -135,12 +132,11 @@ const quizQuestions = [
     question:
       'During a site walkthrough with a client, you notice they are checking their phone and not engaging. The best response is to:',
     options: [
-      'Continue with your prepared walkthrough and ignore the disengagement',
-      'Stop speaking and wait silently until they put their phone away',
-      'Pause, re-engage by asking a question relevant to their priorities, and adjust your approach based on what matters to them',
-      'Speed up to finish the walkthrough as quickly as possible',
-    ],
-    correctAnswer: 2,
+      'Continue with your prepared walkthrough and ignore the obvious disengagement',
+      'Stop speaking and wait in silence until they put their phone away',
+      'Speed up and finish the walkthrough as quickly as you possibly can',
+      'Pause, ask a question relevant to their priorities, and adjust your approach'],
+    correctAnswer: 3,
     explanation:
       "Disengagement signals that your current approach is not meeting the client's needs. Pausing and asking a targeted question — 'What is most important to you about this project?' or 'Is there a specific area you would like me to focus on?' — re-establishes engagement and gives you critical information about their priorities. This demonstrates reading the room in real time and adapting your delivery, which is a hallmark of confident, client-centred communication.",
   },
@@ -149,12 +145,11 @@ const quizQuestions = [
     question:
       'What is the most effective way to handle a question you cannot answer during a client presentation?',
     options: [
-      'Guess an answer to maintain confidence and credibility',
-      'Deflect by changing the subject to something you know about',
-      'Be honest that you do not have the answer, commit to finding out, and follow up within a specific timeframe',
-      'Tell the client the question is not relevant to the current discussion',
-    ],
-    correctAnswer: 2,
+      'Be honest you lack the answer, commit to finding out, and follow up by a set time',
+      'Deflect by smoothly changing the subject to something you do know about',
+      'Guess a plausible answer to maintain your confidence and credibility',
+      'Tell the client the question is not relevant to the current discussion'],
+    correctAnswer: 0,
     explanation:
       "Honesty about the limits of your knowledge builds more trust than bluffing. Saying 'I do not have that information to hand, but I will find out and get back to you by tomorrow afternoon' demonstrates integrity, reliability (if you follow through), and low self-orientation (you prioritise accuracy over appearing omniscient). Guessing risks providing incorrect information, which destroys credibility — the most difficult Trust Equation component to rebuild once lost.",
   },
@@ -162,10 +157,10 @@ const quizQuestions = [
     id: 6,
     question: 'When presenting design options to a client, the ideal approach is to:',
     options: [
-      'Present only the option you prefer and explain why it is the best choice',
-      'Present all viable options with honest pros, cons, and cost implications for each, and let the client make an informed decision',
-      'Present the most expensive option first to anchor the price high',
-      'Avoid presenting options and just tell the client what they need',
+      'Present only the option you prefer and explain why it is the best single choice',
+      'Present all viable options with honest pros, cons and costs, then let them decide',
+      'Present the most expensive option first to anchor the client at a high price',
+      'Avoid presenting any options and simply tell the client what they need',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,12 +170,11 @@ const quizQuestions = [
     id: 7,
     question: 'A key principle of "reading the room" during a presentation is:',
     options: [
-      'Deciding in advance how the audience will react and preparing responses',
-      'Continuously monitoring non-verbal cues and adjusting your delivery, pace, and level of detail in real time',
-      'Asking the audience to rate your performance on a scale of 1 to 10',
-      'Maintaining the exact same pace and tone regardless of audience reaction',
-    ],
-    correctAnswer: 1,
+      'Deciding in advance how the audience will react and preparing fixed responses',
+      'Asking the audience to rate your performance on a scale of one to ten',
+      'Continuously monitoring non-verbal cues and adjusting your delivery in real time',
+      'Maintaining the exact same pace and tone regardless of any audience reaction'],
+    correctAnswer: 2,
     explanation:
       'Reading the room is a dynamic, real-time skill. It involves continuously observing non-verbal signals — eye contact (engagement vs disengagement), body language (leaning in vs crossing arms), facial expressions (nodding vs furrowed brows) — and adjusting accordingly. If you see confusion, slow down and simplify. If you see boredom, speed up or ask an engaging question. If you see interest, provide more depth. The best presenters treat every presentation as a conversation, not a monologue, and adapt to what the audience needs in the moment.',
   },
@@ -189,12 +183,11 @@ const quizQuestions = [
     question:
       'When telling a story to illustrate a technical point in a client conversation, the most important element is:',
     options: [
-      'Making the story as long and detailed as possible to fill time',
-      'Using complex technical terminology to demonstrate expertise',
-      "Ensuring the story has a clear, relevant point that connects directly to the client's situation and reinforces your key message",
-      'Including humour to keep the conversation light-hearted',
-    ],
-    correctAnswer: 2,
+      'Making the story as long and detailed as possible to fill the available time',
+      'Using complex technical terminology throughout to demonstrate your expertise',
+      'Including plenty of humour to keep the whole conversation light-hearted',
+      "Ensuring the story has a clear, relevant point connected to the client's situation"],
+    correctAnswer: 3,
     explanation:
       "The power of a story lies in its relevance and clarity of purpose. Every story you tell in a professional context should have a clear point that connects directly to the client's situation. A concise story about a similar project, a safety incident that illustrates why a particular measure matters, or a real example of the difference between two design options is far more effective than a long, unfocused narrative. The story serves the message — the message does not serve the story. Ask yourself: 'What do I want the client to understand or feel after hearing this?' and build the story around that single purpose.",
   },

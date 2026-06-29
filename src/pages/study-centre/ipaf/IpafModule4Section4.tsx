@@ -23,12 +23,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following must be recorded on a formal Tower Inspection Record?',
     options: [
-      'The purchase price and age of the tower',
-      'The name and address of the person for whom the inspection was carried out, plus findings and inspector details',
-      'Only the date and a pass/fail result',
-      'The names of all workers who have used the tower',
+      'Client details, location, findings, actions taken, and inspector details',
+      'The purchase price, supplier, and age of the tower components',
+      'Only the date of inspection and a simple pass or fail result',
+      'The names of every worker who has used the tower that week',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The prescribed content includes: name and address of the person for whom the inspection was carried out, location and description of equipment, date and time, details of any matters affecting safety, actions taken, further actions needed, and inspector details.',
   },
@@ -36,12 +36,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is PASMA TowerSure?',
     options: [
-      'A type of mobile access tower',
-      'A digital inspection record app for recording and managing tower inspections',
-      'A PASMA training course for tower inspectors',
-      'A government database of tower accidents',
+      'A heavy-duty type of mobile access tower for outdoor use',
+      'A PASMA classroom training course for tower inspectors',
+      'A government-run national database of tower accidents',
+      'A digital app for recording and managing tower inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PASMA TowerSure is a digital inspection app that allows competent persons to create, store, and share Tower Inspection Records electronically. It produces reports that meet the prescribed legal requirements.',
   },
@@ -49,10 +49,10 @@ const quizQuestions = [
     id: 4,
     question: 'During a shift handover, what information about the tower must be communicated?',
     options: [
-      'Only whether the tower is in use or not',
-      "The tower's condition, any defects noted, last inspection date, and any limitations on use",
-      'The purchase order number and hire company details',
-      'Only information about the work being done from the tower',
+      'Only whether the tower is currently in use or standing idle',
+      "The tower's condition, defects noted, last inspection, and use limits",
+      'The purchase order number and the hire company contact details',
+      'Only the details of the work being carried out from the tower',
     ],
     correctAnswer: 1,
     explanation:
@@ -63,12 +63,12 @@ const quizQuestions = [
     question:
       'A worker falls from a tower and breaks their arm. Under RIDDOR, who must report this?',
     options: [
-      'The injured worker',
-      'The hospital that treats the injury',
-      'The responsible person (employer, self-employed person, or person in control of the premises)',
-      'PASMA',
+      'The responsible person — usually the employer or person in control',
+      'The hospital or A&E department that treats the injured worker',
+      'The injured worker themselves, once they have recovered',
+      'PASMA, as the recognised tower industry trade body',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013), the responsible person must report the incident. This is typically the employer, self-employed person, or person in control of the premises where the work was taking place.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a site-specific tower register?',
     options: [
-      'To record the names of all PASMA-trained workers on site',
-      'To maintain a list of every tower on site with its location, configuration, inspection status, and responsible person',
-      'To record the cost of tower hire',
-      'To plan future tower purchases',
+      'To record the names of all PASMA-trained workers across the site',
+      'To record the cost of tower hire for the project accounts',
+      'To plan future tower purchases for the company fleet',
+      'To list every tower with its location, configuration, and inspection status',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A tower register provides a complete record of every tower on site — its location, type, configuration, current inspection status, next inspection due date, and responsible person. This enables effective management of inspection schedules and compliance.',
   },
@@ -119,12 +119,12 @@ const quickCheckQuestions = [
     question:
       'An inspector carries out a formal tower inspection on 15 March. What is the earliest date the inspection record can legally be destroyed?',
     options: [
-      '16 March (the day after)',
-      '15 April (one month later)',
       '15 June (three months later)',
+      '15 April (one month later)',
+      '16 March (the day after)',
       '15 September (six months later)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The minimum retention period is 3 months from the date of the inspection. A record dated 15 March cannot be destroyed before 15 June. Many employers retain records for longer as best practice.',
   },
@@ -133,12 +133,12 @@ const quickCheckQuestions = [
     question:
       'You are finishing a shift and a new team is taking over work from the same tower. What is the correct handover procedure?',
     options: [
-      'Leave the tower standing — the next team will check it themselves',
-      'Send a text message to the incoming supervisor',
-      "Provide a verbal and written handover covering the tower's condition, last inspection, and any defects or limitations",
-      'Only hand over if the tower has defects',
+      'Leave the tower standing — let the next team check it for themselves',
+      'Give a verbal and written handover of condition, inspection, and limits',
+      'Send a quick text message to the incoming shift supervisor',
+      'Only hand over information if the tower currently has defects',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Every shift handover involving a tower should include both a verbal and written briefing. The incoming team needs to know the tower's current condition, when it was last inspected, whether any defects have been noted, and any restrictions on use.",
   },
@@ -147,10 +147,10 @@ const quickCheckQuestions = [
     question:
       'A mobile access tower overturns on site during high winds overnight. No one was on or near the tower. Does this need to be reported under RIDDOR?',
     options: [
-      'No — no one was injured so there is nothing to report',
-      'No — it happened outside working hours',
-      'Yes — the collapse or overturning of scaffolding is a dangerous occurrence reportable under RIDDOR',
-      'Only if the tower was damaged beyond repair',
+      'No — no one was injured, so there is nothing that needs reporting',
+      'No — it happened overnight, outside of normal working hours',
+      'Yes — overturning of scaffolding is a RIDDOR dangerous occurrence',
+      'Only if the tower itself was damaged beyond economical repair',
     ],
     correctIndex: 2,
     explanation:

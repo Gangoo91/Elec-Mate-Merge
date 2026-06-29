@@ -37,11 +37,11 @@ const quizQuestions = [
     question: 'When must an additional formal inspection be carried out outside the 7-day cycle?',
     options: [
       'Whenever a new worker starts using the tower',
-      'After any event liable to have affected the stability or structural integrity of the tower',
       'Only if the tower is moved to a different part of the site',
       'At the request of the client only',
+      'After any event liable to have affected the stability or structural integrity of the tower',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An additional inspection is required after any event likely to have affected the tower's stability or structural integrity — for example, high winds, collision, ground settlement, or adverse weather conditions.",
   },
@@ -62,12 +62,12 @@ const quizQuestions = [
     id: 5,
     question: 'Within what time frame must a written report of a formal inspection be produced?',
     options: [
-      'Immediately at the time of inspection',
       'Within 24 hours of the inspection',
+      'Immediately at the time of inspection',
       'Within 7 days',
       'Within 28 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Work at Height Regulations require that a written report of the inspection is prepared within 24 hours of its completion. The report should be kept on site or readily available.',
   },
@@ -105,10 +105,10 @@ const quizQuestions = [
     options: [
       'Name and address of the person for whom the inspection was carried out',
       'Location and description of the work equipment inspected',
-      'The purchase price of the tower',
       'Details of any matters identified that could give rise to a risk to safety',
+      'The purchase price of the tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The purchase price of the tower is not relevant to the inspection report. The report must include identification details, location, date, findings, matters giving rise to risk, and the inspector's details.",
   },

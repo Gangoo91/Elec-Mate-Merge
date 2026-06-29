@@ -18,10 +18,10 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Why must mains and low-voltage cables be kept separate in BMS installations?',
     options: [
-      'Commissioning engineers and controls specialists',
-      'Manufacturer datasheets and wiring specifications',
+      'To make the installation quicker to complete',
+      'To reduce the total length of cable required',
       'To prevent electromagnetic interference and ensure safety',
-      'It causes delays, false readings, and requires extensive fault-finding',
+      'To allow both cable types to share the same containment',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is the primary purpose of containment in BMS wiring?',
     options: [
-      'Manufacturer datasheets and wiring specifications',
-      'To prevent electromagnetic interference and ensure safety',
-      'False sensor readings and system malfunction',
+      'To increase the current-carrying capacity of the cables',
+      'To reduce the cost of the cabling installation',
+      'To provide a return path for fault current',
       'To protect delicate BMS cabling and maintain signal integrity',
     ],
     correctAnswer: 3,
@@ -46,9 +46,9 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
       'Who is typically responsible for programming and fine-tuning BMS after electrical installation?',
     options: [
       'Commissioning engineers and controls specialists',
-      'Manufacturer datasheets and wiring specifications',
-      'To prevent electromagnetic interference and ensure safety',
-      'To protect delicate BMS cabling and maintain signal integrity',
+      'The installing electricians themselves',
+      'The building occupants or facilities staff',
+      'The HVAC mechanical fitters',
     ],
     correctAnswer: 0,
     explanation:
@@ -58,10 +58,10 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why do HVAC engineers rely heavily on electricians during BMS projects?',
     options: [
-      'It significantly reduces troubleshooting time and prevents errors during maintenance',
+      'Electricians approve the mechanical design of the HVAC plant',
       'Electricians install the wiring that connects HVAC equipment to the BMS controllers',
-      'To protect delicate BMS cabling and maintain signal integrity',
-      'It causes delays, false readings, and requires extensive fault-finding',
+      'Electricians specify the control algorithms used by the BMS',
+      'Electricians select the refrigerant used in the chillers',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,9 +84,9 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is proper cable labelling crucial in BMS installations?',
     options: [
-      'Electricians install the wiring that connects HVAC equipment to the BMS controllers',
-      'It causes delays, false readings, and requires extensive fault-finding',
-      'To protect delicate BMS cabling and maintain signal integrity',
+      'It increases the current rating of each labelled cable',
+      'It removes the need to follow manufacturer datasheets',
+      'It allows mains and data cables to share containment',
       'It significantly reduces troubleshooting time and prevents errors during maintenance',
     ],
     correctAnswer: 3,
@@ -98,9 +98,9 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     question: 'How does poor electrical workmanship affect the commissioning process?',
     options: [
       'It causes delays, false readings, and requires extensive fault-finding',
-      'Electricians install the wiring that connects HVAC equipment to the BMS controllers',
-      'It significantly reduces troubleshooting time and prevents errors during maintenance',
-      'To prevent electromagnetic interference and ensure safety',
+      'It speeds up commissioning by simplifying the wiring',
+      'It has no effect because commissioning is purely software',
+      'It improves signal integrity by reducing cable runs',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What should electricians always check before wiring BMS devices?',
     options: [
-      'Commissioning engineers and controls specialists',
+      'The colour of the containment trunking',
       'Manufacturer datasheets and wiring specifications',
-      'To prevent electromagnetic interference and ensure safety',
-      'To protect delicate BMS cabling and maintain signal integrity',
+      'The current weather conditions on site',
+      'The brand of the building occupants’ thermostats',
     ],
     correctAnswer: 1,
     explanation:

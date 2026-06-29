@@ -13,8 +13,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the outside diameter (OD) of standard steel scaffold tube to EN 39?',
-    options: ['42.4 mm', '48.3 mm', '50.8 mm', '60.3 mm'],
-    correctAnswer: 1,
+    options: ['48.3 mm', '42.4 mm', '50.8 mm', '60.3 mm'],
+    correctAnswer: 0,
     explanation:
       'Standard steel scaffold tube manufactured to BS EN 39 has an outside diameter of 48.3 mm with a 4 mm wall thickness, giving an internal bore of approximately 40.3 mm. This dimension is universal across the UK scaffolding industry.',
   },
@@ -41,11 +41,11 @@ const quizQuestions = [
     question: 'A swivel coupler differs from a right-angle coupler in that it:',
     options: [
       'Has a higher safe working load',
-      'Allows the two tubes to be connected at any angle',
       'Does not require a bolt',
       'Is only used on aluminium tube',
+      'Allows the two tubes to be connected at any angle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A swivel coupler has a centre pivot that allows the two tubes to be connected at any angle relative to one another. Its safe working load in the slip direction is 6.25 kN, the same as a right-angle coupler, but it is used where a 90-degree connection is not required — typically for raking braces.',
   },
@@ -53,12 +53,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary purpose of a putlog coupler?',
     options: [
-      'Joining two standards together end to end',
       'Connecting a transom or putlog blade to a ledger',
+      'Joining two standards together end to end',
       'Securing a scaffold to the building face',
       'Attaching toe boards to guardrails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A putlog coupler connects a single tube (the transom or putlog) to another tube (the ledger). It has only one fitting half that grips a tube, with the other side being a blade or flat plate that sits in or on the brickwork. Its safe working load is lower than a right-angle or swivel coupler at 0.56 kN.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     question:
       'A scaffold tube is found to have a visible bend. At what deflection should the tube be rejected?',
     options: [
-      'Any visible bend — reject immediately',
       'More than 5 mm over any 1 metre length',
       'More than 10 mm over any 3 metre length',
+      'Any visible bend — reject immediately',
       'More than 25 mm over the full tube length',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Any scaffold tube with a visible bend, bow, or kink should be rejected and removed from service immediately. Bent tubes cannot carry their rated load, may not fit correctly into couplers, and create eccentric loading that can lead to structural failure. TG20 guidance is clear: if you can see it, reject it.',
   },
@@ -89,8 +89,8 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the safe working load of a sleeve coupler when used to join two tubes end to end?',
-    options: ['0.56 kN', '3.13 kN', '6.25 kN', '9.10 kN'],
-    correctAnswer: 2,
+    options: ['0.56 kN', '3.13 kN', '9.10 kN', '6.25 kN'],
+    correctAnswer: 3,
     explanation:
       'A sleeve coupler (also called a joint pin or expanding spigot when internal, or an external sleeve coupler when external) has a safe working load of 6.25 kN. Sleeve joints must be positioned close to a node point — never at mid-span — and staggered so that adjacent tubes are not jointed at the same bay.',
   },
@@ -102,12 +102,12 @@ const quickCheckQuestions = [
     question:
       'You pick up a scaffold tube and notice it feels lighter than usual. The markings show it is aluminium rather than steel. Can you use it in the same scaffold as the steel tubes?',
     options: [
-      'Yes — aluminium and steel are interchangeable',
       'No — you must never mix steel and aluminium tubes in the same scaffold',
+      'Yes — aluminium and steel are interchangeable',
       'Yes, but only for ledgers',
       'Only if the scaffold designer approves in writing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Steel and aluminium tubes must never be mixed in the same scaffold. They have different strengths, stiffnesses (Young's modulus), and thermal expansion rates. Mixing them creates unpredictable load paths and can cause galvanic corrosion at contact points. If aluminium tubes are required, the entire scaffold must be designed for aluminium.",
   },
@@ -117,11 +117,11 @@ const quickCheckQuestions = [
       "A colleague is tightening coupler bolts by hand without a torque spanner, saying they are 'tight enough'. Is this acceptable?",
     options: [
       'Yes — hand-tight is sufficient for scaffold couplers',
-      'Yes, if the scaffold is below 4 metres',
       'No — coupler bolts must be tightened to 50 Nm using a calibrated torque spanner',
+      'Yes, if the scaffold is below 4 metres',
       'No — they should use a standard ratchet instead',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "All coupler bolts must be tightened to 50 Nm (37 lbf·ft). Hand-tightening produces inconsistent torque and typically falls well below the required value, reducing the coupler's safe working load. A calibrated torque spanner is the correct tool. This applies to every coupler on every scaffold.",
   },

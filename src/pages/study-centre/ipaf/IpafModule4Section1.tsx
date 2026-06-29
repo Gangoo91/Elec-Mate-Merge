@@ -23,12 +23,12 @@ const quizQuestions = [
     id: 2,
     question: 'What should you do if you discover a bent frame member during a pre-use check?',
     options: [
-      'Continue using the tower if it seems stable',
-      'Straighten the frame with a mallet',
       'Take the tower out of service immediately and report the defect',
+      'Straighten the frame with a mallet',
+      'Continue using the tower if it seems stable',
       'Only replace it at the next formal inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Any bent, damaged, or deformed frame member means the tower must be taken out of service immediately. Bent frames compromise structural integrity and cannot be safely straightened on site.',
   },
@@ -38,10 +38,10 @@ const quizQuestions = [
     options: [
       'It looks unprofessional on site',
       'Paint can make components slippery',
-      'Graffiti and paint can mask underlying cracks, dents, or corrosion',
       'It adds extra weight to the tower',
+      'Graffiti and paint can mask underlying cracks, dents, or corrosion',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Graffiti, paint, stickers, or any coating can mask underlying defects such as cracks, dents, corrosion, or weld failures. All components should be clean enough that their surface condition can be fully assessed.',
   },
@@ -75,12 +75,12 @@ const quizQuestions = [
     id: 6,
     question: 'What ground condition change might make a tower unsafe since its last use?',
     options: [
-      'The grass has grown slightly longer',
       'Overnight rain has softened the ground beneath the base plates',
+      'The grass has grown slightly longer',
       'The temperature has dropped by 2 degrees',
       'A nearby skip has been emptied',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rain, flooding, or thawing can soften the ground, causing the tower to sink unevenly and become unstable. Ground conditions must be reassessed at the start of each shift, especially after adverse weather.',
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     options: [
       'There is no difference; they are the same thing',
       'A pre-use check is more detailed than a formal inspection',
-      'A pre-use check is a quick visual assessment; a formal inspection is a thorough documented examination',
       'A formal inspection is done by the tower user; a pre-use check by a manager',
+      'A pre-use check is a quick visual assessment; a formal inspection is a thorough documented examination',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A pre-use check is a quick visual assessment carried out by the user before climbing. A formal inspection is a more thorough, documented examination carried out by a competent person at defined intervals under the Work at Height Regulations.',
   },
@@ -117,12 +117,12 @@ const quickCheckQuestions = [
     id: 'pre-use-frequency',
     question: 'How often should a pre-use visual check be carried out on a mobile access tower?',
     options: [
-      'Once a week',
       'Before every use or at the start of each shift',
+      'Once a week',
       'Only after the tower has been assembled',
       'Every 7 days',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Pre-use checks must be carried out before every use or at the start of each working shift. This is separate from — and additional to — the formal 7-day inspection requirement.',
   },
@@ -145,11 +145,11 @@ const quickCheckQuestions = [
       'You notice that someone has tied a scaffold board to the outside of the tower to create an extra platform. What should you do?',
     options: [
       'Check it is tied securely and then use the tower',
-      'Remove the modification, report it, and carry out a full pre-use check before use',
       'Ignore it as long as it does not affect stability',
       'Add more ties to make it safer',
+      'Remove the modification, report it, and carry out a full pre-use check before use',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Any unauthorised modification must be removed immediately. The tower should then be fully checked before use. Unauthorised modifications can compromise stability and may exceed the tower's safe working load.",
   },

@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why should you test one component at a time instead of testing everything together?',
     options: [
-      'Star wiring instead of daisy-chain topology',
+      'It uses fewer test instruments and so reduces the cost of the work',
       'It prevents confusion and helps isolate faults logically',
-      'Preventing relapse in recurrent depression',
-      'Names and addresses of all sub-contractors who worked on the project',
+      'It allows the circuit to remain energised throughout the test',
+      'It is the only method permitted by BS 7671 for fault diagnosis',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'In a socket ring final circuit, how should you test for continuity faults?',
     options: [
-      'Splitting large jobs into smaller, manageable tasks',
-      'Voltage magnitude, frequency, phase sequence, and phase angle',
+      'Test only the final socket on the ring, as it carries the whole circuit',
+      'Disconnect every accessory first, then test the cable in one continuous run',
       'Start at consumer unit and test individual accessories sequentially',
-      'The maximum differential pressure against which the actuator can fully close the valve',
+      'Test only at the consumer unit, as a ring cannot develop a mid-circuit fault',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the correct sequence for testing an industrial control system?',
     options: [
-      'To ensure visibility and operability during power failure',
-      'Reactive power charges or maximum demand charges on kVA instead of kW',
-      'Verify isolation, have correct parts and tools ready',
+      'Motor windings → Contactors → Control switches → Supply',
+      'Contactors → Supply → Motor windings → Control switches',
+      'Test all stages at once and compare the readings afterwards',
       'Supply → Control switches → Contactors → Motor windings',
     ],
     correctIndex: 3,
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question: 'What should you always do after completing each test?',
     options: [
       'Record results and build a clear picture',
-      'To demonstrate compliance and enable verification',
-      'Rating is appropriate for the circuit and cable',
-      'BS 7671 Regulation 521.10.202',
+      'Re-energise the whole circuit to confirm the test was valid',
+      'Replace the component you have just tested as a precaution',
+      'Move straight to the next component without noting the result',
     ],
     correctIndex: 0,
     explanation:
@@ -73,10 +73,10 @@ const Module7Section4_3 = () => {
       id: 1,
       question: 'Why is it important to test one component or section at a time?',
       options: [
-        'Current spike at changeover and reduced starting torque',
+        'To complete the diagnosis without ever isolating the supply',
         'To isolate the fault logically and avoid confusion',
-        'The duty holder (employer or person controlling the work)',
-        'They are directly proportional (Gay-Lussac\\\\\\\'s Law)',
+        'To make the test results harder for others to dispute',
+        'To use up the full time allocated to the maintenance task',
       ],
       correctAnswer: 1,
       explanation:
@@ -86,10 +86,10 @@ const Module7Section4_3 = () => {
       id: 2,
       question: 'How does this method help isolate faults?',
       options: [
-        'The physical key transfer sequence between locks',
-        'Hear, Empathise, Apologise, Resolve, Do follow up',
+        'By testing every component simultaneously to save time',
+        'By replacing each component in turn until the fault clears',
         'By confirming which sections work and which contain faults',
-        'Flexible access to training at convenient times',
+        'By relying on the most likely cause from past experience',
       ],
       correctAnswer: 2,
       explanation:
@@ -99,9 +99,9 @@ const Module7Section4_3 = () => {
       id: 3,
       question: 'In a ring final circuit, what would continuity testing reveal?',
       options: [
-        'To continuously reassess risks as conditions change during the work',
-        'Shoulder-width apart with one foot slightly forward',
-        'EN 374 (protection against chemicals and micro-organisms)',
+        'The insulation resistance between the line and earth conductors',
+        'The prospective fault current available at each socket outlet',
+        'The voltage drop across the whole length of the ring',
         'The location where continuity is lost, indicating fault position',
       ],
       correctAnswer: 3,
@@ -113,9 +113,9 @@ const Module7Section4_3 = () => {
       question: 'Why is it risky to replace parts without testing first?',
       options: [
         'It may waste time replacing components that are not faulty',
-        'False — contactors are not reliable isolation devices',
-        'A power drill running while a colleague explains a task',
-        'Poor connections in protective conductor path',
+        'It always voids the manufacturer warranty on the new part',
+        'It is prohibited under the Electricity at Work Regulations',
+        'It will always damage the replacement component on first use',
       ],
       correctAnswer: 0,
       explanation:
@@ -125,10 +125,10 @@ const Module7Section4_3 = () => {
       id: 5,
       question: 'How can this method be applied to a simple lighting circuit?',
       options: [
-        'Heart palpitations and shortness of breath',
+        'Replace the lamp first, as it is the most common cause of failure',
         'Test supply → switch → lamp holder in sequence',
-        'By showing equipment running outside of scheduled hours',
-        'Stop immediately and investigate the cause',
+        'Test the lamp holder first, then work back towards the supply',
+        'Test all three points at once and compare the readings',
       ],
       correctAnswer: 1,
       explanation:
@@ -151,9 +151,9 @@ const Module7Section4_3 = () => {
       id: 7,
       question: 'How does this approach save time?',
       options: [
-        'Each person applies their own lock (multi-lock hasp) and keeps their own key',
-        'A DP/PA coupler or link device that converts between the two physical layers',
-        'Equipment details, location, and test history',
+        'By allowing the work to be carried out without isolating the supply',
+        'By replacing several components at once to cover all possibilities',
+        'By skipping the recording step so the job moves along faster',
         'By preventing wasted effort on components that are not faulty',
       ],
       correctAnswer: 3,
@@ -165,9 +165,9 @@ const Module7Section4_3 = () => {
       question: 'What should always be done after completing a test on one section?',
       options: [
         'Record results and confirm whether that section is sound',
-        'Flexible connections and vibration-resistant supports',
-        'Due to cable length, connections, or temperature differences',
-        'Regular skin inspections and skin condition questionnaires',
+        'Replace that section before moving on to the next one',
+        'Re-energise the whole circuit to check nothing else has failed',
+        'Move on quickly without noting the result to save time',
       ],
       correctAnswer: 0,
       explanation:
@@ -177,10 +177,10 @@ const Module7Section4_3 = () => {
       id: 9,
       question: 'In the domestic example, what fault caused the lighting circuit to fail?',
       options: [
-        'Gather information about the fault symptoms',
+        'A blown lamp in the ceiling rose',
         'Line conductor loose at the switch',
-        '0.6 air changes per hour @ 50Pa',
-        'Resistance values add together',
+        'A tripped MCB at the consumer unit',
+        'A broken neutral at the lamp holder',
       ],
       correctAnswer: 1,
       explanation:

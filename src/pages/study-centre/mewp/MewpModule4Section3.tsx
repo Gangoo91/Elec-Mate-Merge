@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'Your team is asked to carry out MEWP work under temporary lighting at night. Which additional risk factor is MOST significantly increased compared to daytime operations?',
     options: [
-      'The MEWP is more likely to suffer a mechanical failure at night',
       'Reduced visibility increases the risk of entrapment, collision, and falls',
+      'The MEWP is more likely to suffer a mechanical failure at night',
       'The MEWP cannot be operated at all during the hours of darkness',
       'Insurance policies do not cover night-time MEWP operations',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reduced visibility at night significantly increases the risk of entrapment (operator cannot see overhead structures), collision (ground vehicles and pedestrians cannot see the MEWP clearly), and falls (operator misjudges platform position). Adequate lighting, enhanced hi-vis clothing, flashing beacons, and additional banksmen/spotters are all required to mitigate these increased risks.',
   },
@@ -103,10 +103,10 @@ const quizQuestions = [
     options: [
       '3 metres (10 feet)',
       '9 metres (30 feet)',
-      '15 metres (50 feet)',
       '25 metres (82 feet)',
+      '15 metres (50 feet)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'IPAF guidance requires a minimum distance of 15 metres (50 feet) plus the fully extended boom length from electrical pylons carrying high-voltage transmission lines. This greater distance is required because high-voltage electricity can arc across larger air gaps, potentially causing fatal electrocution without any direct contact.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'Which additional measure is essential for MEWP night working to address reduced visibility?',
     options: [
       "Using the MEWP's headlights only, with no additional lighting",
-      'Amber flashing beacons on the machine and enhanced retroreflective hi-vis clothing',
       'Working faster to finish before it gets too dark',
       "Turning off the MEWP's lights to avoid blinding passing drivers",
+      'Amber flashing beacons on the machine and enhanced retroreflective hi-vis clothing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Night working requires amber flashing beacons (rotating or LED) on the MEWP, enhanced retroreflective hi-vis clothing for all personnel, adequate lighting of the work area, and additional banksmen/spotters. Simply relying on the machine's headlights is not sufficient — the work area, the exclusion zone, and all personnel must be clearly visible.",
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why must a standard MEWP NOT be used in a potentially explosive atmosphere?',
     options: [
-      "Because the MEWP's tyres may generate static electricity",
       "Because the machine's electrical systems, motors, and hydraulics can generate sparks or hot surfaces",
+      "Because the MEWP's tyres may generate static electricity",
       "Because the MEWP's paint may react with explosive gases",
       'Because explosive atmospheres always have low oxygen levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard MEWPs contain electrical systems, motors, relays, switches, and hydraulic components that can generate sparks or hot surfaces during normal operation. In an ATEX zone (potentially explosive atmosphere), these ignition sources could ignite flammable gases, vapours, or dusts. Only specialist ATEX-rated (explosion-proof) MEWPs with sealed electrical systems and spark-free components may be used in such environments.',
   },

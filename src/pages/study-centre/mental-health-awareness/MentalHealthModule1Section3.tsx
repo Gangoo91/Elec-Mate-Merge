@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     options: [
       '4 areas: Demands, Control, Support, Relationships',
       '5 areas: Demands, Control, Support, Role, Change',
-      '6 areas: Demands, Control, Support, Relationships, Role, Change',
       '8 areas: Demands, Control, Support, Relationships, Role, Change, Pay, Hours',
+      '6 areas: Demands, Control, Support, Relationships, Role, Change',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The HSE Management Standards cover 6 key areas that, if not properly managed, are associated with poor health, lower productivity, and increased sickness absence. These are: Demands, Control, Support, Relationships, Role, and Change. Each standard describes what good management practice looks like in that area.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'Under the Equality Act 2010, when is a mental health condition considered a disability?',
     options: [
+      "When it has a substantial and long-term adverse effect on the person's normal day-to-day activities",
       'Only when the person is unable to work at all',
-      "When it has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities",
       'Only if the person has been formally sectioned under the Mental Health Act',
       'When a GP provides a fit note for more than 4 weeks',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The Equality Act 2010 defines disability as a physical or mental impairment that has a substantial and long-term adverse effect on a person's ability to carry out normal day-to-day activities. 'Long-term' means lasting or likely to last 12 months or more. Conditions such as depression, anxiety, bipolar disorder, and PTSD can all qualify.",
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       "Which section of the Health & Safety at Work Act 1974 sets out the employer's general duty to employees?",
     options: [
-      'Section 1 — General purposes of the Act',
       'Section 2 — General duties of employers to employees',
+      'Section 1 — General purposes of the Act',
       'Section 7 — General duties of employees',
       'Section 37 — Offences by bodies corporate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 2 of HASAWA 1974 sets out the general duty of employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. This includes mental health, and requires risk assessment of psychological hazards.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     options: [
       'Lasting more than 4 weeks',
       'Lasting more than 6 months',
-      'Lasting or likely to last 12 months or more',
       'Lasting or likely to last 24 months or more',
+      'Lasting or likely to last 12 months or more',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Under the Equality Act 2010, 'long-term' means the condition has lasted or is likely to last 12 months or more, or is likely to last for the rest of the person's life. A recurring condition (such as depression that comes and goes) can still be considered long-term if it is likely to recur.",
   },
@@ -156,8 +156,8 @@ const quizQuestions = [
     id: 6,
     question:
       'Which HSE Management Standard is concerned with whether employees understand their role and whether the organisation ensures they do not have conflicting roles?',
-    options: ['Demands', 'Control', 'Role', 'Change'],
-    correctAnswer: 2,
+    options: ['Role', 'Demands', 'Control', 'Change'],
+    correctAnswer: 0,
     explanation:
       "The 'Role' standard addresses whether people understand their role within the organisation and whether the organisation ensures that they do not have conflicting roles. Good practice means employees have a clear job description, understand how their work contributes to the organisation, and do not receive contradictory instructions from different managers.",
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'The Management of Health and Safety at Work Regulations 1999 require employers to carry out what specific activity?',
     options: [
       'Provide free counselling to all staff',
-      'Carry out a suitable and sufficient risk assessment, including psychological hazards',
       'Appoint a Mental Health First Aider for every 50 employees',
       'Provide annual mental health screening for all workers',
+      'Carry out a suitable and sufficient risk assessment, including psychological hazards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires employers to carry out a suitable and sufficient assessment of risks to the health and safety of employees. This includes psychological hazards and stress risks. The risk assessment must be reviewed regularly and whenever there is reason to believe it is no longer valid.',
   },

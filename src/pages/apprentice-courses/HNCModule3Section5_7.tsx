@@ -91,25 +91,25 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Which starting method provides reduced starting current but maintains full starting torque?',
+      'For a standard induction motor, what is the relationship between a reduced-voltage start and starting torque?',
     options: [
-      'CAT III or higher depending on application',
-      'None - reduced current always means reduced torque',
-      'They are more reliable and don\\\\\\\\\\\\\\\'t depend on human behaviour',
-      'When hazardous manual handling cannot be avoided',
+      'Torque is unaffected because it depends only on frequency',
+      'Reduced voltage cuts torque in proportion to voltage squared',
+      'Torque increases as the starting voltage is reduced',
+      'Torque falls in direct proportion to the voltage reduction',
     ],
     correctAnswer: 1,
     explanation:
-      'For standard induction motors, torque is proportional to voltage squared. Any method that reduces voltage (and hence current) will also reduce starting torque. Star-delta reduces both to 1/3, soft starters reduce both proportionally.',
+      'For standard induction motors, torque is proportional to voltage squared. Any method that reduces voltage (and hence current) also reduces starting torque - star-delta reduces both to 1/3, soft starters reduce both proportionally.',
   },
   {
     id: 2,
     question: 'What is the main advantage of a soft starter over star-delta starting?',
     options: [
-      'Plasterboard fixings or back boxes with adjustable lugs',
-      'The proportion of glazed area to total window area',
+      'It allows full variable-speed control after starting',
+      'It requires only a three-terminal motor connection',
       'Smooth, adjustable acceleration without current transients',
-      'Incompatible dimmer switch or loose connection',
+      'It draws no harmonic current during the start ramp',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main disadvantage of star-delta starting?',
     options: [
-      'They provide free, independent dispute resolution with financial firms',
-      'Put your fingers or an object into their mouth',
+      'It cannot be used on any three-phase motor',
+      'It draws a higher inrush current than DOL starting',
       'Current spike at changeover and reduced starting torque',
-      'Predictive analytics and AI capabilities',
+      'It provides no overload protection for the motor',
     ],
     correctAnswer: 2,
     explanation:

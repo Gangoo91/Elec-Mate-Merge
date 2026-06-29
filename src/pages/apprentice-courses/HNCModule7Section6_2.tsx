@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'let-through-energy',
     question: 'Why is let-through energy (I²t) important when selecting protective devices?',
     options: [
-      "Details of injured person, accident circumstances, location, date/time, nature of injury",
+      "It determines the maximum continuous current the device can carry",
       "It must be less than the cable's withstand capability to prevent damage",
-      "Uniform illumination with 40:1 maximum ratio prevents dark areas appearing as barriers",
-      "To assign unique short addresses (0-63) to each control gear",
+      "It sets the minimum earth fault loop impedance for the circuit",
+      "It defines the rated voltage at which the device can operate",
     ],
     correctIndex: 1,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of discrimination (selectivity) between protective devices?',
     options: [
       'To ensure only the device nearest the fault operates',
-      'A closed triangle, each winding between two lines',
-      'Daily visual check, monthly brief test, annual full duration test',
-      'The manufacturer\\\\\\\\\\\\\\\'s instruction manual for the specific tower model',
+      'To make all devices trip together so the whole board is de-energised',
+      'To increase the breaking capacity of the downstream device',
+      'To reduce the let-through energy of the upstream device to zero',
     ],
     correctIndex: 0,
     explanation:
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     options: [
       'Pure DC residual currents only',
       'High-frequency residual currents only',
-      'AC residual currents only',
       'AC and pulsating DC residual currents',
+      'AC residual currents only',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'Type A RCDs can detect sinusoidal AC residual currents and pulsating DC residual currents. They are commonly required where electronic equipment with rectifiers may produce DC components in fault currents.',
   },
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: 'What distinguishes an MCCB from an MCB?',
     options: [
       'MCCBs have adjustable trip settings and higher current ratings',
-      'For circuits with three-phase rectifiers producing smooth DC components',
-      'The percentage of Icu at which the device can operate and remain functional',
-      'Composite residual currents including high-frequency components up to 1kHz',
+      'MCCBs provide residual current protection that MCBs lack',
+      'MCCBs can only be used on DC circuits, MCBs only on AC',
+      'MCCBs have a fixed thermal-only trip with no magnetic element',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,10 +138,10 @@ const quizQuestions = [
     question:
       'For time-based discrimination between an upstream and downstream MCB, the upstream device should:',
     options: [
-      'The percentage of Icu at which the device can operate and remain functional',
+      'Have a lower breaking capacity than the downstream device',
       'Have a slower operating characteristic or time-delay function',
-      'Composite residual currents including high-frequency components up to 1kHz',
-      'For circuits with three-phase rectifiers producing smooth DC components',
+      'Have a lower rated current than the downstream device',
+      'Operate faster so it clears the fault before the downstream device',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'A Type F RCD is specifically designed to detect:',
     options: [
-      'For circuits with three-phase rectifiers producing smooth DC components',
-      'MCCBs have adjustable trip settings and higher current ratings',
+      'Smooth DC residual currents from three-phase rectifiers only',
+      'Sinusoidal AC residual currents only, as in a Type AC device',
       'Composite residual currents including high-frequency components up to 1kHz',
-      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\'s pre-arcing I²t',
+      'Pure DC residual currents above 6 mA only, as required for EV charging',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of back-up protection coordination?',
     options: [
-      'Acknowledge promptly, investigate fairly, respond in writing within a stated timescale, signpost to ADR (e.g. scheme provider) if unresolved',
-      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
-      'Detect if the scan cycle takes longer than expected, indicating a program or hardware fault',
+      'To ensure every device on the board trips simultaneously during a fault',
+      'To increase the rated current of the downstream device beyond its marking',
+      'To remove the need to declare prospective fault current at the origin',
       'To allow a device with lower breaking capacity to be used where a higher-rated upstream device provides protection',
     ],
     correctAnswer: 3,
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the service short-circuit breaking capacity (Ics) of an MCCB?',
     options: [
-      'Have a slower operating characteristic or time-delay function',
+      'The maximum continuous current the device can carry indefinitely',
       'The percentage of Icu at which the device can operate and remain functional',
-      'For circuits with three-phase rectifiers producing smooth DC components',
-      'MCCBs have adjustable trip settings and higher current ratings',
+      'The fault current at which the device is destroyed but still opens',
+      'The minimum fault current needed for instantaneous magnetic tripping',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'When is a Type B RCD required according to BS 7671?',
     options: [
-      'MCCBs have adjustable trip settings and higher current ratings',
-      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pre-arcing I²t',
+      'For any standard socket outlet circuit in a domestic dwelling',
+      'For lighting circuits supplying LED drivers with passive power factor correction',
       'For circuits with three-phase rectifiers producing smooth DC components',
-      'Have a slower operating characteristic or time-delay function',
+      'For final circuits supplying only resistive heating loads',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     question:
       'For energy-based discrimination (let-through energy coordination), what condition must be met?',
     options: [
-      "Composite residual currents including high-frequency components up to 1kHz",
-      "Have a slower operating characteristic or time-delay function",
-      "MCCBs have adjustable trip settings and higher current ratings",
+      "The upstream device must have a lower let-through energy than the downstream device",
+      "Both devices must have identical I²t let-through characteristics",
+      "The downstream device's pre-arcing I²t must exceed the upstream device's total I²t",
       "The downstream device must limit I²t to less than the upstream device's pre-arcing I²t",
     ],
     correctAnswer: 3,

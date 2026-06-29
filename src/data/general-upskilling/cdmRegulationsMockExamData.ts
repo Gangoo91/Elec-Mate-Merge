@@ -81,9 +81,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'Which parent Act provides the legal authority for the CDM 2015 Regulations?',
     options: [
-      'So Far As Reasonably Practicable',
-      'CDM 2007 replaced it with the CDM Co-ordinator',
-      'True — CDM 2015 applies to every construction project',
+      'The Building Act 1984',
+      'The Management of Health and Safety at Work Regulations 1999',
+      'The Construction Act 1996 (Housing Grants, Construction and Regeneration Act)',
       'The Health and Safety at Work etc. Act 1974',
     ],
     correctAnswer: 3,
@@ -117,10 +117,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'CDM 2015 applies to construction work carried out in which part of the United Kingdom?',
     options: [
-      'Maximising profit margins on construction projects',
+      'England and Wales only',
       'Great Britain (England, Wales and Scotland)',
-      'Electronically via the HSE website or by post',
-      'Surveying a building with no physical intervention',
+      'The whole of the United Kingdom including Northern Ireland',
+      'England, Wales, Scotland and the Channel Islands',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: "What is the definition of a 'structure' under CDM 2015?",
     options: [
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
+      'Only a permanent building that has received building control approval',
+      'Any load-bearing element of a completed and occupied building',
+      'A building under construction, but excluding civil engineering works such as roads or sewers',
+      'Any building, railway, road, earthworks, pipe, sewer or similar work, whether temporary or permanent',
     ],
     correctAnswer: 3,
     explanation:
@@ -172,9 +172,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question: 'Which set of regulations did CDM 2015 directly replace?',
     options: [
       'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
-      'A designer with control over the pre-construction phase of the project',
-      'A day on which one person carries out construction work — two people working on the same day count as two person-days',
-      'All duty holders must work together and cooperate with each other to ensure health and safety',
+      'The CDM Regulations 1994 and the Work at Height Regulations 2005',
+      'The Construction (General Provisions) Regulations 1961 only',
+      'The Management of Health and Safety at Work Regulations 1999',
     ],
     correctAnswer: 0,
     explanation:
@@ -189,10 +189,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, at what threshold must a construction project be notified to the HSE?',
     options: [
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'Projects lasting longer than 30 working days with more than 20 workers at any one time, or exceeding 500 person-days',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'The extent to which a design allows the structure to be safely maintained, cleaned, and repaired throughout its life',
+      'Longer than 15 working days, regardless of the number of workers on site',
+      'Longer than 30 working days with more than 20 workers at once, or over 500 person-days',
+      'Any project with a construction value exceeding £100,000, regardless of duration',
+      'Longer than 60 working days, or with more than 50 workers at any one time',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'What is the purpose of the F10 notification form under CDM 2015?',
     options: [
-      'Names and addresses of all sub-contractors who worked on the project',
-      'Ensure a construction phase plan has been drawn up by the contractor or principal contractor',
-      'To notify the HSE of a notifiable construction project before the construction phase begins',
-      'As soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'To apply for building control approval before construction work starts',
+      'To register the principal contractor with the Construction Industry Training Board',
+      'To notify the HSE of a notifiable construction project before work begins',
+      'To record the construction phase plan and lodge it with the local authority',
     ],
     correctAnswer: 2,
     explanation:
@@ -242,10 +242,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'How are domestic clients treated differently under CDM 2015 compared to commercial clients?',
     options: [
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
-      'Contractors must provide workers with appropriate directions, instructions and information, and consult them in good time on health and safety matters',
-      'That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access',
-      'When hazards cannot be eliminated or sufficiently reduced through design — the designer must provide information about remaining risks to those who need it',
+      'Their duties transfer to the contractor, or the principal contractor on multi-contractor projects',
+      'They are completely exempt from CDM 2015 and carry no client duties of any kind',
+      'They retain all client duties personally but are given a longer period in which to comply',
+      'Their duties transfer only to the principal designer and never to a contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -260,14 +260,14 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Which Part of CDM 2015 contains the duties relating to health, safety and welfare on construction sites?',
     options: [
-      'A fracture of any bone other than a finger, thumb, or toe',
+      'Part 1 — Commencement, interpretation and application',
       'Part 4 — General requirements for all construction sites',
-      'The client must fulfil the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties themselves',
-      'The Health and Safety at Work etc. Act 1974',
+      'Part 2 — Client duties',
+      'Part 3 — Health and safety duties and roles',
     ],
     correctAnswer: 1,
     explanation:
-      'Part 4 of CDM 2015 (Regulations 25–33) sets out the general requirements for all construction sites relating to safety, stability, demolition, dismantling, explosives, excavations, cofferdams and caissons, reports of inspections, energy distribution installations, prevention of drowning, traffic routes, and fire detection and prevention. These provisions were carried over from the former CHSW 1996 Regulations.',
+      'Part 4 of CDM 2015 (Regulations 16–35) sets out the general requirements for all construction sites relating to safety, stability, demolition, dismantling, explosives, excavations, cofferdams and caissons, reports of inspections, energy distribution installations, prevention of drowning, traffic routes, and fire detection and prevention. These provisions were carried over from the former CHSW 1996 Regulations.',
     section: 'cdm-regulations',
     difficulty: 'intermediate',
     topic: 'Structure of CDM 2015',
@@ -277,10 +277,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: "Under CDM 2015, what does 'construction phase' mean?",
     options: [
-      'They must assist the client in providing pre-construction information and ensure it is provided to every designer and contractor',
-      'The ease and safety with which panels can be installed, including manual handling risks and the need for lifting equipment',
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
+      'The period from the client first appointing a designer until planning permission is granted',
+      'The period during which the construction phase plan is drafted, before any work starts on site',
+      'The period starting when construction work begins and ending when it is completed',
+      'The period from practical completion until the health and safety file is handed to the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -351,10 +351,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Schedule 1 of CDM 2015 lists the general principles of prevention. Which of the following correctly lists THREE of these principles in order?',
     options: [
-      'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
+      'Provide personal protective equipment; supervise the workforce; record all incidents',
+      'Identify the hazard; transfer the risk; accept the residual risk',
       'Avoid risks; evaluate risks that cannot be avoided; combat risks at source',
-      'A designer with control over the pre-construction phase of the project',
+      'Assess the cost; weigh the benefit; proceed if affordable',
     ],
     correctAnswer: 2,
     explanation:
@@ -367,7 +367,7 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 19,
     question:
-      'Under Regulation 6(2), the F10 notification must contain certain particulars set out in which Schedule of CDM 2015?',
+      'Under Regulation 6, the F10 notification must contain the particulars set out in which Schedule of CDM 2015?',
     options: [
       'Schedule 4',
       'Schedule 2',
@@ -376,7 +376,7 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'This is a common misconception. Regulation 6(2) states the notice must contain the particulars specified in Schedule 1 only if it relates to projects where more than one contractor will be involved. However, more precisely, the particulars for notification are set out within Regulation 6 itself and reference Schedule 1 for multi-contractor projects. Note: CDM 2015 actually only has two schedules — Schedule 1 (particulars to be notified) and Schedule 2 (minimum welfare facilities). The correct answer is Schedule 1.',
+      'Schedule 1 of CDM 2015 is titled "Particulars to be notified under regulation 6" and lists the information the F10 must contain. CDM 2015 has five schedules in total: Schedule 1 (notification particulars), Schedule 2 (minimum welfare facilities), Schedule 3 (work involving particular risks), Schedule 4 (transitional and saving provisions) and Schedule 5 (amendments).',
     section: 'cdm-regulations',
     difficulty: 'advanced',
     topic: 'F10 Schedule reference',
@@ -442,9 +442,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: "What is a 'domestic client' under CDM 2015?",
     options: [
-      'The extent to which a design allows the structure to be safely maintained, cleaned, and repaired throughout its life',
-      'Details of the structure\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s design, construction, materials used, and residual hazards',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
+      'Any private individual who pays a deposit before construction work begins',
+      'A client who lives within five miles of the construction site',
+      'A small business that carries out construction work only on its own premises',
       'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
     ],
     correctAnswer: 3,
@@ -494,10 +494,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the minimum number of contractors required on a project before a principal designer and principal contractor must be appointed?',
     options: [
-      'So far as is reasonably practicable',
-      'Preparing the construction phase plan',
+      'Five — five or more contractors',
+      'Three — three or more contractors',
       'Two — more than one contractor',
-      'Eliminate, reduce, inform',
+      'It is only required once the project becomes notifiable to the HSE',
     ],
     correctAnswer: 2,
     explanation:
@@ -531,10 +531,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 28,
     question: "Under CDM 2015, what is meant by the term 'pre-construction phase'?",
     options: [
-      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
-      'They must report anything they are aware of that is likely to endanger their own health or safety or that of others to the person responsible',
-      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
+      'Any period during which design or preparatory work is carried out, which may continue into the construction phase',
+      'The period that ends the moment any physical work begins on the construction site',
+      'Only the period during which planning permission and building control approval are obtained',
+      'The 28-day period immediately before the construction phase plan must be finalised',
     ],
     correctAnswer: 0,
     explanation:
@@ -549,10 +549,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the legal status of the Approved Code of Practice (ACoP) sections within HSE publication L153?',
     options: [
-      'By verifying that they have the skills, knowledge, training, experience, and organisational capability to carry out the work safely',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
-      'Eliminate foreseeable risks so far as is reasonably practicable → reduce risks that remain → provide information about remaining risks to assist other duty holders',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
+      'They are legally binding in full, and any deviation from them is automatically a criminal offence',
+      'Not compulsory, but a deviation can be used in court unless an equivalent standard is shown',
+      'They are purely advisory and carry no weight whatsoever in any legal proceedings',
+      'They apply only to notifiable projects and have no status at all on smaller projects',
     ],
     correctAnswer: 1,
     explanation:
@@ -585,10 +585,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "In the context of CDM 2015, what does a 'person-day' mean for the purposes of notification?",
     options: [
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'It is a criminal offence that can result in prosecution, an unlimited fine, and/or imprisonment',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
-      'A day on which one person carries out construction work — two people working on the same day count as two person-days',
+      'A calendar day on which any construction work takes place, however many workers are present',
+      'An eight-hour working shift completed by any individual member of the construction workforce',
+      'A day on which the whole workforce happens to be present on the site at the same time',
+      'One day of work by one person, so ten workers on one day count as ten person-days',
     ],
     correctAnswer: 3,
     explanation:
@@ -602,10 +602,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 32,
     question: "Under CDM 2015, which of the following correctly describes a 'designer'?",
     options: [
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
+      'Any person who, in the course of business, prepares or modifies a design, or instructs others to',
+      'Only a registered architect or chartered engineer formally appointed to the project',
+      'Any person who physically draws the construction drawings, but not those who specify materials',
+      'The principal designer alone, with no other party on the project classed as a designer',
     ],
     correctAnswer: 0,
     explanation:
@@ -619,10 +619,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question: "What does CDM 2015 Regulation 2 define as a 'project'?",
     options: [
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
+      'Only the physical construction work itself, excluding any planning or design activity',
+      'Work that includes construction work plus all related planning, design and management to the end of the construction phase',
+      'Any scheme of work that has been formally notified to the HSE using Form F10',
+      'Construction work that involves more than one contractor working on a single site',
     ],
     correctAnswer: 1,
     explanation:
@@ -654,10 +654,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'Under CDM 2015, when must the F10 notification be displayed on a construction site?',
     options: [
-      'Yes — workers must cooperate with their employer and others, report anything that endangers health and safety, and use any protective equipment provided',
-      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
+      'Posted to every worker at their home address before they first start work on site',
+      'Submitted to the local authority, with a copy retained in the client head office',
+      'Kept on file by the principal designer and produced only when requested by the HSE',
+      'Displayed in the site office in a form readable by any worker on the construction site',
     ],
     correctAnswer: 3,
     explanation:
@@ -673,9 +673,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under CDM 2015, if a project starts with one contractor but later a second contractor is engaged, what must the client do?',
     options: [
       'Appoint a principal designer and principal contractor in writing as soon as practicable',
-      'A document setting out the health and safety arrangements and site rules for the construction phase',
-      'Within 15 days of the accident, using the appropriate online form',
-      'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
+      'Nothing — the original single-contractor arrangements continue to apply unchanged',
+      'Submit a fresh F10 notification but leave the existing appointments as they are',
+      'Wait until the project becomes notifiable before making any new appointments',
     ],
     correctAnswer: 0,
     explanation:
@@ -708,7 +708,7 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 38,
     question:
-      'Under CDM 2015 Regulation 3(4), what happens if the client fails to make the required appointments of principal designer and principal contractor?',
+      'Under CDM 2015 Regulation 5(4), what happens if the client fails to make the required appointments of principal designer and principal contractor?',
     options: [
       'The project is automatically halted by the HSE',
       'The contractor with the largest share of work assumes both roles',
@@ -717,7 +717,7 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'Regulation 5(4) of CDM 2015 (not 3(4) — this is a deliberate test of precise knowledge) states that where a client fails to appoint a principal designer or principal contractor, the client must fulfil the duties of those roles themselves. This is a significant provision because it means the client cannot escape CDM duties by simply failing to make appointments.',
+      'Regulation 5(4) of CDM 2015 states that where a client fails to appoint a principal designer or principal contractor, the client must fulfil the duties of those roles themselves. This is a significant provision because it means the client cannot escape CDM duties by simply failing to make appointments.',
     section: 'cdm-regulations',
     difficulty: 'advanced',
     topic: 'Client default duties',
@@ -727,10 +727,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: 'Regulation 8 of CDM 2015 sets out a general duty concerning which of the following?',
     options: [
-      'To notify the HSE of a notifiable construction project before the construction phase begins',
-      'The extent to which a design facilitates safe and efficient construction, minimising foreseeable risks to workers during the build process',
-      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
-      'The general duty to ensure skills, knowledge, training and experience, and organisational capability of those appointed or engaged',
+      'The thresholds at which a project becomes notifiable to the HSE under Regulation 6',
+      'The minimum welfare facilities that must be provided on every construction site',
+      'The procedure for transferring client duties on a project with a domestic client',
+      'The general duty to ensure the skills, knowledge, experience and organisational capability of those engaged',
     ],
     correctAnswer: 3,
     explanation:
@@ -804,10 +804,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the primary role of the principal contractor under CDM 2015?',
     options: [
-      'At the end of the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s appointment on the project, and at the end of the project',
-      'The client must fulfil the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties themselves',
-      'Installing a new electrical distribution board in an existing factory',
-      'To plan, manage, monitor and coordinate health and safety during the construction phase',
+      'To prepare the pre-construction information and coordinate the project design team',
+      'To notify the project to the HSE and obtain building control approval before work',
+      'To prepare and maintain the health and safety file throughout the whole project',
+      'To plan, manage, monitor and coordinate health and safety in the construction phase',
     ],
     correctAnswer: 3,
     explanation:
@@ -822,9 +822,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question: 'Under CDM 2015, who must the principal designer be?',
     options: [
       'A designer with control over the pre-construction phase of the project',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
-      'The client must fulfil the duties of any duty holder they fail to appoint',
-      'A construction phase plan for the new build project',
+      'Any contractor who holds a current CSCS card and relevant insurance',
+      'An independent health and safety consultant with no design involvement',
+      'The quantity surveyor responsible for the bill of quantities',
     ],
     correctAnswer: 0,
     explanation:
@@ -838,10 +838,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: "Under CDM 2015, who is a 'contractor'?",
     options: [
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
-      'The directions of the principal designer and relevant requirements of the construction phase plan',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
+      'Only a main contractor who holds the head construction contract with the client',
+      'Any person who, as a business, carries out, manages or controls construction work',
+      'Only a business that directly employs more than five construction workers itself',
+      'A person who supplies materials to a construction site but does no physical work',
     ],
     correctAnswer: 1,
     explanation:
@@ -855,10 +855,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Under CDM 2015, are workers on a construction site considered to have any duties?',
     options: [
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'Yes — Regulation 12(4) requires the construction phase plan to be reviewed, updated and revised as necessary throughout the project',
-      'Yes — workers must cooperate with their employer and others, report anything that endangers health and safety, and use any protective equipment provided',
-      'How the glass will be safely installed, how it will be cleaned and maintained, and how it could be safely replaced in the future',
+      'No — only duty holders such as the client and contractors carry duties, not workers',
+      'Yes — but only those workers who hold a recognised CSCS card carry any duties',
+      'Yes — they must cooperate, report dangers and use any protective measures provided',
+      'No — workers are protected by CDM but the Regulations place no duties upon them',
     ],
     correctAnswer: 2,
     explanation:
@@ -929,10 +929,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under Regulation 12, what is the principal contractor's duty regarding the construction phase plan?",
     options: [
-      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'To ensure the design does not give rise to foreseeable risks to health and safety, and to eliminate hazards where reasonably practicable',
+      'To approve a construction phase plan drawn up by the principal designer before work starts',
+      'To submit the construction phase plan to the HSE for formal sign-off before work begins',
+      'To draw up the construction phase plan, or arrange for it, before the construction phase begins',
+      'To pass the construction phase plan to the client for them to finalise and then issue',
     ],
     correctAnswer: 2,
     explanation:
@@ -965,10 +965,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, what are the client's duties regarding the provision of pre-construction information?",
     options: [
-      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
-      'To systematically identify hazards in the design, evaluate the associated risks, and record the measures taken to eliminate, reduce, or communicate those risks',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
-      'Any person who prepares or modifies a design, or arranges for or instructs someone else to do so, in relation to a structure',
+      'It must be provided as soon as practicable to every designer and contractor being considered',
+      'It need only be provided to the principal contractor once work has started on the site',
+      'The client has no duty regarding it, as this rests solely with the principal designer',
+      'It must be provided only on projects that are notifiable to the HSE under Regulation 6',
     ],
     correctAnswer: 0,
     explanation:
@@ -982,10 +982,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'Under Regulation 9(1), what general duty does CDM 2015 place on all designers?',
     options: [
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
+      'To draw up the construction phase plan and the site rules before work begins',
       'To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable',
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
+      'To supervise the construction work on site and enforce the use of protective equipment',
+      'To notify the project to the HSE and display the F10 notice on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -1000,10 +1000,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015 Regulation 15, what duty is placed on contractors regarding cooperation and consultation with workers?',
     options: [
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
+      'Contractors must provide every worker with personal protective equipment but need not consult them',
+      'Contractors must consult only those workers who are members of a recognised trade union',
       'Contractors must provide workers with appropriate directions, instructions and information, and consult them in good time on health and safety matters',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
+      'Contractors have no consultation duty — this rests entirely with the principal contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -1018,9 +1018,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, can the client also be the principal designer or principal contractor?',
     options: [
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'To ensure the design does not give rise to foreseeable risks to health and safety, and to eliminate hazards where reasonably practicable',
+      'No — the client is always prohibited from holding any other duty holder role',
+      'Yes — but only on projects that are not notifiable to the HSE',
+      'No — a single organisation may never hold more than one CDM duty holder role',
       'Yes — a client can fulfil these roles provided they have the necessary skills, knowledge, experience and organisational capability',
     ],
     correctAnswer: 3,
@@ -1037,13 +1037,13 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under Regulation 13(4), the principal contractor must ensure which of the following regarding the health and safety file?',
     options: [
       'That the principal designer is provided with any information relevant to the health and safety file',
-      'The client must fulfil the duties of any duty holder they fail to appoint',
-      'To plan, manage, monitor and coordinate health and safety during the construction phase',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
+      'That the health and safety file is submitted to the HSE at the end of the project',
+      'That the client approves the contents of the health and safety file before handover',
+      'That the health and safety file is destroyed once the structure is occupied',
     ],
     correctAnswer: 0,
     explanation:
-      "Regulation 13(4) of CDM 2015 requires the principal contractor to provide the principal designer with any information in the principal contractor's possession relevant to the health and safety file. The principal designer is responsible for preparing, reviewing, updating and revising the health and safety file — but the principal contractor must feed relevant information into it.",
+      "Regulation 12(7) of CDM 2015 requires the principal contractor to provide the principal designer with any information in the principal contractor's possession relevant to the health and safety file. The principal designer is responsible for preparing, reviewing, updating and revising the health and safety file — but the principal contractor must feed relevant information into it.",
     section: 'cdm-regulations',
     difficulty: 'intermediate',
     topic: 'PC health and safety file duty',
@@ -1054,16 +1054,16 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 57,
     question:
-      "Under Regulation 12(5), in what circumstances does the principal contractor's duty extend to ensuring adequate welfare facilities are provided throughout the construction phase?",
+      "Under Regulation 13, in what circumstances does the principal contractor's duty extend to ensuring adequate welfare facilities are provided throughout the construction phase?",
     options: [
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
+      'Only on projects that are notifiable to the HSE under Regulation 6 of CDM 2015',
+      'On every project — welfare facilities must be provided throughout in line with Schedule 2',
+      'Only where the construction phase is expected to last longer than 30 working days',
+      'Only where more than 20 workers will be present on the site at any one time',
     ],
     correctAnswer: 1,
     explanation:
-      'Regulation 13(6) (welfare duties are covered through Regulation 13 and Schedule 2) requires the principal contractor to ensure welfare facilities complying with Schedule 2 are provided from the start of the construction phase and maintained throughout. This duty applies on every project where a principal contractor is appointed, regardless of project size or duration.',
+      'Regulation 13(4)(c) requires the principal contractor to ensure welfare facilities complying with Schedule 2 are provided from the start of the construction phase and maintained throughout. This duty applies on every project where a principal contractor is appointed, regardless of project size or duration.',
     section: 'cdm-regulations',
     difficulty: 'advanced',
     topic: 'PC welfare facilities duty',
@@ -1072,16 +1072,16 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 58,
     question:
-      'Regulation 11(6) requires the principal designer to ensure the health and safety file is passed to the client at which point?',
+      'Under Regulation 12, the principal designer must hand over the health and safety file. To whom, and at what points, must the file be passed?',
     options: [
-      "That the worker has appropriate supervision, instructions and information to carry out the work safely",
-      "The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design",
-      "At the end of the principal designer's appointment on the project, and at the end of the project",
-      "The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment",
+      "To the HSE, as soon as the construction phase begins",
+      "To the principal contractor only, and never directly to the client",
+      "To the principal contractor if the principal designer's appointment ends early, and otherwise to the client at the end of the project",
+      "To the local authority building control department once the structure is occupied",
     ],
     correctAnswer: 2,
     explanation:
-      "Regulation 11(6) of CDM 2015 requires the principal designer to ensure the health and safety file is appropriately reviewed, updated and revised to take account of the work as it progresses, and passed to the principal contractor if the principal designer's appointment concludes before the end of the project. Under Regulation 12(8), the principal contractor must then pass the file to the client at the end of the project.",
+      "Under Regulation 12(8), if the principal designer's appointment concludes before the end of the project, they must pass the health and safety file to the principal contractor, who then maintains it (12(9)). Under Regulation 12(10), at the end of the project the principal designer (or the principal contractor where there is no principal designer) must pass the file to the client.",
     section: 'cdm-regulations',
     difficulty: 'advanced',
     topic: 'H&S file handover timing',
@@ -1090,16 +1090,16 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 59,
     question:
-      "Under CDM 2015, if the principal designer's appointment ends before the construction phase is complete, what happens to the principal designer's duties regarding the health and safety file?",
+      "Under CDM 2015, if the principal designer's appointment ends before the project is complete, what happens to the duties regarding the health and safety file?",
     options: [
       'The duties cease — no one is responsible for the file until a new principal designer is appointed',
       'The duties transfer to the client automatically',
       'The client must immediately appoint a new principal designer',
-      'The duties transfer to the principal contractor under Regulation 12(6)',
+      'The duties transfer to the principal contractor under Regulation 12',
     ],
     correctAnswer: 3,
     explanation:
-      "Regulation 12(6) of CDM 2015 provides that where the principal designer's appointment finishes before the end of the project, the principal contractor must ensure the health and safety file is appropriately reviewed, updated and revised, and must deliver it to the client at the end of the project. The duties regarding the file effectively transfer from the principal designer to the principal contractor.",
+      "Under Regulations 12(8) and 12(9) of CDM 2015, where the principal designer's appointment finishes before the end of the project, the file is passed to the principal contractor, who must then ensure the health and safety file is appropriately reviewed, updated and revised, and deliver it to the client at the end of the project. The duties regarding the file effectively transfer from the principal designer to the principal contractor.",
     section: 'cdm-regulations',
     difficulty: 'advanced',
     topic: 'H&S file duty transfer',
@@ -1110,10 +1110,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Regulation 8(4) states that a designer or contractor must not accept an appointment unless they fulfil which condition?',
     options: [
-      'They are satisfied that they have, or will obtain through the engagement, the skills, knowledge, experience and (for an organisation) the organisational capability necessary to fulfil the role',
-      'There is no prescribed format — the information must be proportionate, project-specific, and presented in a way that is clear and helpful to those who need it',
-      'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
+      'They are satisfied they have, or will obtain, the skills, knowledge, experience and capability for the role',
+      'They have obtained professional indemnity insurance to the value specified by the client',
+      'They have been formally vetted and approved in advance by the Health and Safety Executive',
+      'They hold a current CSCS card and are registered with a recognised industry trade body',
     ],
     correctAnswer: 0,
     explanation:
@@ -1168,9 +1168,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what must the client do before allowing the construction phase to begin?',
     options: [
-      'The client must fulfil the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties themselves',
-      'A simple file containing as-built drawings, details of hidden services, and any residual hazards',
-      'A designer with control over the pre-construction phase of the project',
+      'Personally write the construction phase plan and issue it to the appointed contractor',
+      'Obtain written confirmation from the HSE that the construction project may proceed',
+      'Complete and sign off the health and safety file in advance of any work starting',
       'Ensure a construction phase plan has been drawn up by the contractor or principal contractor',
     ],
     correctAnswer: 3,
@@ -1203,10 +1203,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, who is responsible for ensuring there is cooperation between all persons working on a project?',
     options: [
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
-      'All duty holders — Regulation 8(3) requires cooperation between all persons concerned with the project',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'Information about risks that have not been eliminated and the design principles or assumptions behind the design',
+      'The principal contractor alone, as the only party present during the construction phase',
+      'All duty holders, who must cooperate with everyone concerned with the project',
+      'The client alone, who must direct all the other parties on the project to cooperate',
+      'The HSE, which coordinates cooperation between the duty holders on each project',
     ],
     correctAnswer: 1,
     explanation:
@@ -1260,9 +1260,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under Regulation 15(5), what must a contractor do if they identify that any work is being carried out that puts any person at risk of injury?',
     options: [
       'Take appropriate steps to prevent that work or activity from continuing, including by stopping work if necessary',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
-      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
+      'Record the matter in the site diary and raise it at the next scheduled progress meeting',
+      'Report the matter to the HSE and await their instruction before taking any action',
+      'Continue the work but issue additional personal protective equipment to those at risk',
     ],
     correctAnswer: 0,
     explanation:
@@ -1277,10 +1277,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 15(2), what must every contractor ensure before allowing a worker to carry out construction work?',
     options: [
-      'As soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'That the worker holds a current and valid CSCS card for their trade',
       'That the worker has appropriate supervision, instructions and information to carry out the work safely',
-      'To notify the HSE of a notifiable construction project before the construction phase begins',
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
+      'That the worker has signed a copy of the construction phase plan',
+      'That the worker is directly employed rather than self-employed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1295,10 +1295,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015 Regulation 9(3)(b), what must a designer provide with their design to assist other duty holders?',
     options: [
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
+      'A full priced bill of quantities for every element of the structure',
+      'Confirmation that the design has been approved by building control',
       'Information about risks that have not been eliminated and the design principles or assumptions behind the design',
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
+      'A signed statement that the design contains no residual health and safety risks',
     ],
     correctAnswer: 2,
     explanation:
@@ -1311,16 +1311,16 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
   {
     id: 71,
     question:
-      'Under Regulation 13(1), the principal contractor must consult and engage with workers and their representatives. Which specific mechanism does CDM 2015 require?',
+      'Under Regulation 14, the principal contractor must consult and engage with workers and their representatives. Which specific mechanism does CDM 2015 require?',
     options: [
-      'LGSF reduces manual handling risks as components are lighter, reduces wet trade hazards, and can be assembled more quickly, reducing time spent on site',
-      'Yes — workers must cooperate with their employer and others, report anything that endangers health and safety, and use any protective equipment provided',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
+      'A statutory works council elected by secret ballot of the entire workforce',
+      'A weekly written report from each worker confirming compliance with the site rules',
+      'A trade union safety representative appointed for every ten workers on site',
       'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
     ],
     correctAnswer: 3,
     explanation:
-      'Regulation 13(1) requires the principal contractor to make and maintain arrangements which will enable the principal contractor and workers engaged in construction work to cooperate effectively in developing, promoting and checking the effectiveness of measures to ensure the health, safety and welfare of the workers. CDM does not prescribe the specific mechanism — it could be toolbox talks, safety forums, notice boards or other appropriate methods.',
+      'Regulation 14 requires the principal contractor to make and maintain arrangements which will enable the principal contractor and workers engaged in construction work to cooperate effectively in developing, promoting and checking the effectiveness of measures to ensure the health, safety and welfare of the workers. CDM does not prescribe the specific mechanism — it could be toolbox talks, safety forums, notice boards or other appropriate methods.',
     section: 'cdm-regulations',
     difficulty: 'intermediate',
     topic: 'PC worker engagement',
@@ -1332,9 +1332,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under Regulation 15(8), what must a contractor not begin work on a construction site unless they have been provided with?',
     options: [
       'Access to the relevant parts of the construction phase plan',
-      'In a conspicuous position on the site accessible to any worker',
-      'The client must fulfil the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties themselves',
-      'Names and addresses of all sub-contractors who worked on the project',
+      'A copy of the completed health and safety file for the project',
+      'Written confirmation from the HSE that the project has been notified',
+      'A signed copy of the client contract for the works',
     ],
     correctAnswer: 0,
     explanation:
@@ -1349,10 +1349,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 13(3)(a), what must the principal contractor ensure regarding the boundary of a construction site?',
     options: [
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
-      'That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access',
-      'Ensure that temporary works (such as formwork, falsework, and temporary propping) are designed, erected, and dismantled safely, with appropriate checks and supervision',
-      'Part 4 duties (general requirements for all construction sites) apply to the contractor, plus the contractor assumes the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties under Regulation 7, but the domestic client is not themselves a duty holder',
+      'That the perimeter is left open so emergency services can gain rapid access at all times',
+      'That the perimeter is identified by suitable signs and secured from unauthorised access',
+      'That the boundary is marked only by temporary tape, removed at the end of each working day',
+      'That a security guard is stationed at the perimeter on every project, regardless of size',
     ],
     correctAnswer: 1,
     explanation:
@@ -1367,10 +1367,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'If a design is changed during the construction phase, whose CDM duty is it to take account of health and safety implications of that change?',
     options: [
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
-      'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
-      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
+      'The principal contractor alone, because the change occurs during the construction phase',
+      'The client, because they instructed the change and ultimately own the project',
+      'The designer who modifies it, as Regulation 9 applies whenever a design is changed',
+      'No one, because designer duties cease once the construction phase has started',
     ],
     correctAnswer: 2,
     explanation:
@@ -1385,9 +1385,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Regulation 15(9) requires every contractor to comply with which specific provisions?',
     options: [
-      'A document setting out the health and safety arrangements and site rules for the construction phase of a project',
-      'Projects lasting longer than 30 working days with more than 20 workers at any one time, or exceeding 500 person-days',
-      'To plan, manage, monitor and coordinate health and safety during the construction phase',
+      'The instructions of the client and the requirements of the building contract',
+      'The terms of the F10 notification submitted to the HSE',
+      'The recommendations made in the most recent HSE inspection report',
       'The directions of the principal designer and relevant requirements of the construction phase plan',
     ],
     correctAnswer: 3,
@@ -1403,10 +1403,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, an electrician who decides the route for cable containment through a building is acting as which type of duty holder when making that decision?',
     options: [
-      'A designer — because choosing the cable route is a design decision that could affect health and safety',
-      'Drawings, design details, specifications, calculations, and bills of quantities relating to a structure, including any modifications',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
-      'A document setting out the health and safety arrangements and site rules for the construction phase of a project',
+      'A designer, because choosing the cable route is a design decision affecting health and safety',
+      'A worker only, because routing decisions made on site never count as design under CDM',
+      'A principal contractor, because the routing decision is made during the construction phase',
+      'Neither a designer nor a contractor, as installation choices fall outside CDM entirely',
     ],
     correctAnswer: 0,
     explanation:
@@ -1423,10 +1423,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 5(3), if the client does not appoint a principal designer on a project with more than one contractor, who fulfils the principal designer duties?',
     options: [
-      "Within 15 days of the accident, using the appropriate online form",
+      "The HSE appoints a principal designer at the client's expense",
       "The client must fulfil the principal designer's duties themselves",
-      "Access to the relevant parts of the construction phase plan",
-      "Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive",
+      "The principal contractor automatically assumes the principal designer role",
+      "The project must be halted until a principal designer is appointed",
     ],
     correctAnswer: 1,
     explanation:
@@ -1441,10 +1441,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, Regulation 10 applies to designers on projects involving only one contractor. What specific additional duty does it place on the contractor?',
     options: [
-      'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
-      'A document setting out the health and safety arrangements and site rules for the construction phase',
+      'The contractor must notify the HSE before any design work is carried out',
+      'The contractor must appoint a separate principal designer for the project',
       'The contractor must ensure a construction phase plan is drawn up before setting up a construction site',
-      'A small, simple project requires a simpler plan than a large, complex project with significant risks',
+      'The contractor must obtain the client written approval of every design decision',
     ],
     correctAnswer: 2,
     explanation:
@@ -1459,10 +1459,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, Regulation 12(3) states the construction phase plan must be appropriate to the nature and size of the project and the risks involved. Which of the following does the Regulation specifically require it to set out?',
     options: [
-      'There is no prescribed format — the information must be proportionate, project-specific, and presented in a way that is clear and helpful to those who need it',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
+      'A complete list of every worker and sub-contractor expected on the project',
+      'A priced bill of quantities together with the full project programme of works',
+      'Copies of all designers risk assessments and the full pre-construction information',
+      'The health and safety arrangements, site rules, and specific measures for Schedule 3 work',
     ],
     correctAnswer: 3,
     explanation:
@@ -1477,10 +1477,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Regulation 9(2) of CDM 2015 sets out a design hierarchy for managing risks. What is the correct order of this hierarchy?',
     options: [
-      'Eliminate foreseeable risks so far as is reasonably practicable → reduce risks that remain → provide information about remaining risks to assist other duty holders',
-      'They must be taken into account by designers when preparing or modifying a design, and by all duty holders when planning and managing construction work',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
+      'Eliminate foreseeable risks where practicable → reduce those that remain → inform others',
+      'Provide information about the risks → reduce the risks → eliminate them where practicable',
+      'Transfer the risk to the contractor → insure against the risk → accept the residual risk',
+      'Assess the risk → record the risk → review the risk at the very end of the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -1532,10 +1532,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'What is a Construction Phase Plan (CPP)?',
     options: [
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'They must assist the client in providing pre-construction information and ensure it is provided to every designer and contractor',
-      'A small, simple project requires a simpler plan than a large, complex project with significant risks',
-      'A document setting out the health and safety arrangements and site rules for the construction phase of a project',
+      'A record of all accidents and near-misses that occur during the construction phase',
+      'The information needed for future maintenance and demolition of the completed structure',
+      'A schedule of the prices and quantities for each element of the construction work',
+      'A document setting out the health and safety arrangements and site rules for the build',
     ],
     correctAnswer: 3,
     explanation:
@@ -1549,10 +1549,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 84,
     question: 'Under CDM 2015, what is the health and safety file?',
     options: [
-      'A file containing information about the completed structure that will be needed for future construction work, including cleaning, maintenance, alteration or demolition',
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
-      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
+      'A file of information needed for future work on the structure, such as maintenance or demolition',
+      'A file containing the daily site records, timesheets and delivery notes for the construction phase',
+      'A file holding all the risk assessments and method statements used during the build',
+      'A file recording every health and safety training certificate held by the workforce',
     ],
     correctAnswer: 0,
     explanation:
@@ -1622,10 +1622,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following would typically be included in pre-construction information provided by the client?',
     options: [
-      'Information about the existing site, including ground conditions, existing structures, hazardous substances (such as asbestos), and any relevant survey results',
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
-      'To ensure the design does not give rise to foreseeable risks to health and safety, and to eliminate hazards where reasonably practicable',
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
+      'Existing site information such as ground conditions, structures, asbestos and survey results',
+      'A complete record of all accidents and near-misses from the contractor previous projects',
+      'The detailed construction phase plan and the method statements for each individual trade',
+      'The names and qualifications of every worker expected to attend the construction site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1640,10 +1640,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, the construction phase plan must be 'proportionate to the risks involved'. What does this mean in practice?",
     options: [
-      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
+      'Every plan must follow the same standard template regardless of the project',
       'A small, simple project requires a simpler plan than a large, complex project with significant risks',
-      'Sanitary conveniences, washing facilities, drinking water, changing rooms, rest facilities, and facilities for eating meals',
-      'As soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'The plan must always be at least fifty pages long to be considered adequate',
+      'The level of detail is set by the HSE according to the value of the contract',
     ],
     correctAnswer: 1,
     explanation:
@@ -1657,10 +1657,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'Which of the following is typically included in a construction phase plan?',
     options: [
-      'Any person who prepares or modifies a design, or arranges for or instructs someone else to do so, in relation to a structure',
-      'An improvement notice gives a specified time period to remedy a contravention, while a prohibition notice requires the immediate or near-immediate cessation of an activity that poses a risk of serious personal injury',
-      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
-      'They are satisfied that they have, or will obtain through the engagement, the skills, knowledge, experience and (for an organisation) the organisational capability necessary to fulfil the role',
+      'As-built drawings, details of hidden services, and a register of residual hazards for future work',
+      'A priced tender, the building contract, and the programme of payments to the contractor',
+      'Project description, management structure, site rules, monitoring and emergency procedures',
+      'The maintenance manuals, warranties, and operating instructions for installed equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -1675,10 +1675,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what role does the principal designer play in relation to pre-construction information?',
     options: [
-      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'Both sets of duties apply simultaneously — the person must comply with designer duties when carrying out design work and contractor duties when carrying out construction work',
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
+      'They have no role in pre-construction information, as it is solely a duty of the client',
+      'They must keep the pre-construction information confidential from all the contractors',
+      'They simply forward the pre-construction information on to the principal contractor',
+      'They manage the pre-construction phase and ensure PCI is compiled and provided to those who need it',
     ],
     correctAnswer: 3,
     explanation:
@@ -1693,10 +1693,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, the health and safety file must be kept available for inspection by which parties?',
     options: [
-      'Anyone who may need it for future construction work on the structure, including future clients, designers and contractors',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
-      'They must report anything they are aware of that is likely to endanger their own health or safety or that of others to the person responsible',
+      'Anyone who may need it for future work on the structure, including later designers and contractors',
+      'Only the original principal designer who prepared the file during the project',
+      'Only the HSE, which retains the file as a statutory record after the handover',
+      'Only the original client, who must not share it with any future owner at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1711,10 +1711,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, must the construction phase plan be a 'living document' that is updated during the project?",
     options: [
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'Yes — Regulation 12(4) requires the construction phase plan to be reviewed, updated and revised as necessary throughout the project',
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
+      'No — once it is approved before the construction phase, the plan must not be altered',
+      'Yes — it must be reviewed, updated and revised as necessary throughout the project',
+      'No — the plan is fixed by the client and only the HSE may authorise any changes',
+      'Yes — but only if a serious accident occurs that requires the plan to be rewritten',
     ],
     correctAnswer: 1,
     explanation:
@@ -1729,10 +1729,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 4(4), what specific timing is required for the provision of pre-construction information by the client?',
     options: [
-      'All duty holders must work together and cooperate with each other to ensure health and safety',
-      'Appoint a principal designer and principal contractor in writing as soon as practicable',
+      'Within 28 days of the construction phase beginning on site',
+      'Only after the principal contractor has been formally appointed in writing',
       'As soon as is practicable to every designer and contractor appointed or being considered for appointment',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
+      'No later than the date the F10 notification is submitted to the HSE',
     ],
     correctAnswer: 2,
     explanation:
@@ -1747,10 +1747,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is an example of information that should be included in the health and safety file?',
     options: [
-      "To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable",
-      "A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions",
-      "Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed",
-      "As-built drawings, details of residual hazards (such as asbestos locations), information about the structure's design, and details of utilities and services",
+      "Daily timesheets and the attendance records for every worker on the project",
+      "The signed building contract together with the agreed schedule of payments",
+      "Toolbox talk attendance sheets and copies of all the site inductions delivered",
+      "As-built drawings, residual hazards such as asbestos, and details of services and utilities",
     ],
     correctAnswer: 3,
     explanation:
@@ -1766,9 +1766,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under CDM 2015, what must the client do with the health and safety file if the structure is sold or disposed of?',
     options: [
       'Provide the file to the new owner or occupier to ensure it remains available',
-      'As soon as practicable before the construction phase begins',
-      'A designer with control over the pre-construction phase of the project',
-      'L153 — Managing health and safety in construction (CDM 2015)',
+      'Destroy the file, since it relates only to the completed project',
+      'Return the file to the principal designer for safekeeping',
+      'Lodge the file with the HSE before completing the sale',
     ],
     correctAnswer: 0,
     explanation:
@@ -1785,10 +1785,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, Schedule 3 lists work which is considered to involve particular risks. Which of the following is listed in Schedule 3?',
     options: [
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'Work near high-voltage power lines, work involving the risk of falling from a height, and work which puts workers at risk of burial under earthfalls',
-      'The ease and safety with which panels can be installed, including manual handling risks and the need for lifting equipment',
-      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'Routine painting and decorating of the internal walls in an occupied building',
+      'Work near high-voltage lines, work at height, and work risking burial under earthfalls',
+      'General site clearance and the removal of non-hazardous waste materials from site',
+      'The installation of standard domestic electrical sockets and light fittings throughout',
     ],
     correctAnswer: 1,
     explanation:
@@ -1803,10 +1803,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, if a project involves multiple structures (for example, several new houses on a single development), how many health and safety files are required?',
     options: [
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
-      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
-      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
+      'Exactly one file per project, regardless of how many separate structures it contains',
+      'One file per contractor engaged on the project, held individually by each contractor',
+      'It depends — a separate file may suit structures with different owners, or one file for a single owner',
+      'No file is required at all where a development consists of more than one structure',
     ],
     correctAnswer: 2,
     explanation:
@@ -1821,10 +1821,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 12(2), the principal contractor must arrange for the construction phase plan to take account of which specific information provided by the principal designer?',
     options: [
-      'LGSF reduces manual handling risks as components are lighter, reduces wet trade hazards, and can be assembled more quickly, reducing time spent on site',
-      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'The pre-construction information obtained under Regulation 4(4) and any information obtained from designers under Regulation 9(3)',
+      'The agreed contract price and the full programme of payments to each contractor',
+      'The completed health and safety file from the previous owner of the project site',
+      'The minutes of every site progress meeting held throughout the whole project',
+      'The pre-construction information and any design risk information from the designers',
     ],
     correctAnswer: 3,
     explanation:
@@ -1839,10 +1839,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what is the legal consequence of the client failing to provide adequate pre-construction information in accordance with Regulation 4(4)?',
     options: [
-      'The client is in breach of Regulation 4(4) and may be prosecuted by the HSE; additionally, designers and contractors may be unable to plan their work safely, leading to further foreseeable risks',
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
-      'The architect must consider how the glazing will be safely cleaned throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries',
+      'The client breaches Regulation 4(4) and may be prosecuted, and others cannot plan work safely',
+      'There is no consequence, as providing pre-construction information is optional for the client',
+      'Only the principal designer can be prosecuted, since they compile the information pack',
+      'The project simply cannot be notified to the HSE until the information has been provided',
     ],
     correctAnswer: 0,
     explanation:
@@ -1892,9 +1892,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'An F10 notification must be sent to the HSE before construction work begins on notifiable projects. What is the minimum notice period?',
     options: [
-      'A fracture of any bone other than a finger, thumb, or toe',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
-      'Names and addresses of all sub-contractors who worked on the project',
+      'At least 28 days before the construction phase begins',
+      'At least 14 days before the construction phase begins',
+      'Within 7 days of the construction phase beginning',
       'As soon as practicable before the construction phase begins',
     ],
     correctAnswer: 3,
@@ -1910,9 +1910,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question: 'Where must the F10 notification be displayed on a construction site?',
     options: [
       'In a conspicuous position on the site accessible to any worker',
-      'Part 4 — General requirements for all construction sites',
-      'CDM 2007 replaced it with the CDM Co-ordinator',
-      'Any person for whom a construction project is carried out',
+      'In the offices of the local authority building control department',
+      'On the HSE public register of notified projects only',
+      'In a sealed file kept by the principal contractor for inspection on request',
     ],
     correctAnswer: 0,
     explanation:
@@ -1944,10 +1944,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'Which of the following is a notifiable project under CDM 2015?',
     options: [
-      'Ensure that temporary works (such as formwork, falsework, and temporary propping) are designed, erected, and dismantled safely, with appropriate checks and supervision',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
+      'Any project where more than one contractor is engaged, regardless of its duration',
+      'Any project with a total construction value above £150,000, regardless of duration',
+      'One over 30 working days with more than 20 workers at once, or over 500 person-days',
+      'Any project involving work at height or work near to underground buried services',
     ],
     correctAnswer: 2,
     explanation:
@@ -1962,10 +1962,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'What must the client do with the health and safety file once it has been handed over?',
     options: [
-      'Sanitary conveniences, washing facilities, drinking water, changing rooms, rest facilities, and facilities for eating meals',
-      'Avoid risks; evaluate risks that cannot be avoided; combat risks at source',
-      'At the end of the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s appointment on the project, and at the end of the project',
-      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
+      'Forward it to the HSE to be held as a permanent statutory record of the project',
+      'Archive it and then destroy it after a fixed retention period of three years',
+      'Return it to the principal designer once the completed structure is occupied',
+      'Keep it available for inspection by anyone needing it for future work on the structure',
     ],
     correctAnswer: 3,
     explanation:
@@ -1983,9 +1983,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Which of the following types of information should be included in the health and safety file?',
     options: [
       "Details of the structure's design, construction, materials used, and residual hazards",
-      "The directions of the principal designer and relevant requirements of the construction phase plan",
-      "A simple file containing as-built drawings, details of hidden services, and any residual hazards",
-      "The original F10 should be updated and the HSE notified of the changes as soon as practicable",
+      "The daily site diary and the attendance register for every worker",
+      "The priced bill of quantities and the final account for the works",
+      "Copies of every method statement and permit-to-work issued on site",
     ],
     correctAnswer: 0,
     explanation:
@@ -2036,10 +2036,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'The F10 notification form requires certain details to be provided. Which of the following must be included?',
     options: [
-      'Eliminate foreseeable risks so far as is reasonably practicable → reduce risks that remain → provide information about remaining risks to assist other duty holders',
-      'The directions of the principal designer and relevant requirements of the construction phase plan',
-      'A document setting out the health and safety arrangements and site rules for the construction phase of a project',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
+      'A full copy of the construction phase plan and all the project method statements',
+      'The completed health and safety file for the structure being constructed',
+      'A detailed written risk assessment for every trade working on the whole project',
+      'The names of the client, principal designer and contractor, the site address and a brief description',
     ],
     correctAnswer: 3,
     explanation:
@@ -2055,9 +2055,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'Under CDM 2015, what must happen if there is a significant change to the project after the F10 has been submitted?',
     options: [
       'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
-      'That the worker has appropriate supervision, instructions and information to carry out the work safely',
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'A completely new project must be registered and the original F10 cancelled',
+      'No action is needed once the original F10 has been submitted',
+      'The change must be reported to the local authority building control rather than the HSE',
     ],
     correctAnswer: 0,
     explanation:
@@ -2072,10 +2072,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the role of the principal designer in relation to pre-construction information?',
     options: [
-      'They must produce all pre-construction information from scratch without client input',
-      'They must assist the client in providing pre-construction information and ensure it is provided to every designer and contractor',
-      'They need only provide pre-construction information to the principal contractor',
-      'They are responsible for keeping pre-construction information confidential from designers',
+      'They must produce all pre-construction information from scratch without any client input',
+      'They assist the client with the PCI and ensure it reaches every designer and contractor',
+      'They need only provide the pre-construction information on to the principal contractor',
+      'They are responsible for keeping the pre-construction information confidential from designers',
     ],
     correctAnswer: 1,
     explanation:
@@ -2108,14 +2108,14 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'The health and safety file should be proportionate to the complexity of the project. For a straightforward domestic extension, what approach is most appropriate?',
     options: [
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
-      'At the end of the principal designer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s appointment on the project, and at the end of the project',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
-      'A simple file containing as-built drawings, details of hidden services, and any residual hazards',
+      'The same comprehensive file format that is used for a major infrastructure project',
+      'No file at all, since domestic extensions are wholly exempt from CDM 2015 duties',
+      'A file consisting solely of the contractor public liability insurance certificate',
+      'A simple file with as-built drawings, hidden services, and any residual hazards',
     ],
     correctAnswer: 3,
     explanation:
-      'The health and safety file must be proportionate to the risks involved. For a simple domestic extension, a concise file covering as-built drawings, locations of hidden services, and any residual hazards would be appropriate. It need not be as extensive as for a major project, but must still be prepared.',
+      'The health and safety file must be proportionate to the risks involved. Where a file is needed, a simple domestic extension would warrant only a concise one covering as-built drawings, locations of hidden services and any residual hazards, rather than the comprehensive format used on a major project. Note that under CDM 2015 Regulation 12(5) (HSE L153, para 45) a health and safety file is only required for projects involving more than one contractor; on a genuine single-contractor job a file may not be strictly required, though preparing a concise one remains good practice.',
     section: 'cdm-regulations',
     difficulty: 'intermediate',
     topic: 'Proportionate H&S file',
@@ -2145,10 +2145,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A principal designer is preparing the health and safety file for a complex refurbishment of a listed building. The building contains asbestos-containing materials, concealed structural steelwork, and a legacy heating system using unusual pipework. Which approach best meets CDM 2015 requirements?',
     options: [
-      'To ensure that construction work is planned, managed, and monitored so that it is carried out without risks to the health or safety of any person, so far as is reasonably practicable',
-      'Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
+      'Omit the asbestos and concealed steelwork details to keep the file concise and easy to read',
+      'Compile a proportionate file covering the asbestos data, concealed steelwork, pipework and residual risks',
+      'Defer compiling the file until the very end of the project and rely on memory for the detail',
+      'Include only the original architect drawings, since residual hazards are the contractor concern',
     ],
     correctAnswer: 1,
     explanation:
@@ -2163,10 +2163,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A client sells a property after construction is complete. What is the legal position regarding the health and safety file?',
     options: [
-      'A document setting out the health and safety arrangements and site rules for the construction phase of a project',
-      'Addressing the hazard at its origin through design changes rather than relying on downstream measures',
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
-      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
+      'The client may retain the file and is not required to share it with the new owner at all',
+      'The file must be surrendered to the HSE before the sale of the structure can complete',
+      'The client must pass the file to the new owner and keep it available for future work',
+      'The file is no longer required at all once the structure changes hands to a new owner',
     ],
     correctAnswer: 2,
     explanation:
@@ -2181,10 +2181,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A project originally estimated at 400 person days increases to 600 person days due to scope changes. The project was not initially notifiable. What action is required?',
     options: [
-      'To check that the arrangements set out in the construction phase plan are being implemented, that risks are being controlled, and to identify areas for improvement',
-      'Any person who prepares or modifies a design, or arranges for or instructs someone else to do so, in relation to a structure',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'The client must now notify the HSE by submitting an F10 as the project has become notifiable, and appoint a principal designer and principal contractor if not already done',
+      'No action is needed, because notifiability is fixed at the original project estimate',
+      'The project must be stopped and then re-tendered as a new and separate project',
+      'Only the construction phase plan needs updating, and the HSE need not be told at all',
+      'The client must now submit an F10 and appoint a principal designer and contractor if not already done',
     ],
     correctAnswer: 3,
     explanation:
@@ -2199,10 +2199,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "On a large-scale infrastructure project, the principal designer's contract ends six months before practical completion. The principal contractor takes over the H&S file duties. Which of the following represents best practice for managing this transition?",
     options: [
-      'The principal designer hands over the partially complete file and all source information, and the principal contractor continues to develop it, ensuring continuity and no loss of information',
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
-      'Contractors must provide workers with appropriate directions, instructions and information, and consult them in good time on health and safety matters',
-      'Provide them with relevant parts of the construction phase plan, ensure they receive a site induction, verify their skills, knowledge, training and experience, and coordinate their work with other contractors',
+      'A documented handover of the partial file and sources, which the PC then continues to develop',
+      'The principal designer destroys the partial file so the principal contractor can start afresh',
+      'The principal contractor waits until the end of the project before starting the file from scratch',
+      'The client takes over the file personally and prevents the principal contractor from amending it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2222,10 +2222,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 121,
     question: 'Under CDM 2015 Regulation 9, what is the primary duty of a designer?',
     options: [
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
-      'To ensure the design does not give rise to foreseeable risks to health and safety, and to eliminate hazards where reasonably practicable',
-      'Anyone who may need it for future construction work on the structure, including future clients, designers and contractors',
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
+      'To draw up and then maintain the construction phase plan for the whole project',
+      'To eliminate foreseeable design risks to health and safety where reasonably practicable',
+      'To supervise the construction work on site and enforce the site rules on the workforce',
+      'To notify the project to the HSE and provide the welfare facilities for the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2292,10 +2292,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: "Under CDM 2015, who qualifies as a 'designer'?",
     options: [
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
-      'Any person who prepares or modifies a design, or arranges for or instructs someone else to do so, in relation to a structure',
-      'Information about the existing site, including ground conditions, existing structures, hazardous substances (such as asbestos), and any relevant survey results',
-      'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
+      'Only the architect who is formally engaged as the lead consultant on the project',
+      'Any person who prepares or modifies a design, or instructs someone else to do so',
+      'Only a person who holds a recognised design qualification and professional membership',
+      'Any person who physically builds the structure to another person drawings on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2309,10 +2309,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is a design risk register?',
     options: [
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'They must assist the client in providing pre-construction information and ensure it is provided to every designer and contractor',
+      'A document listing the qualifications of every designer working on the project',
+      'A schedule of the design fees and the payment milestones for the design team',
+      'A record of design hazards, their risk level, and measures to eliminate or reduce them',
+      'A record of design revisions and the dates on which each drawing was issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -2326,9 +2326,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'Under CDM 2015 Regulation 8, what does the duty of cooperation require?',
     options: [
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
-      'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
-      'To notify the HSE of a notifiable construction project before the construction phase begins',
+      'Only the client and the principal contractor are required to cooperate with each other',
+      'Cooperation is required only on projects that have been notified to the HSE',
+      'Each duty holder works independently and cooperation is encouraged but not required',
       'All duty holders must work together and cooperate with each other to ensure health and safety',
     ],
     correctAnswer: 3,
@@ -2347,9 +2347,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       'A structural engineer designs a roof with a complex geometry that would require workers to operate near an unprotected edge during construction. Under CDM 2015, what should the engineer do first?',
     options: [
       'Consider whether the design can be modified to eliminate or reduce the need for workers to be near unprotected edges',
-      'Work near high-voltage power lines, work involving the risk of falling from a height, and work which puts workers at risk of burial under earthfalls',
-      'Information about risks that have not been eliminated and the design principles or assumptions behind the design',
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
+      'Specify that workers must wear a safety harness and leave the design unchanged',
+      'Note the hazard in the health and safety file and proceed with the original design',
+      'Leave the matter entirely to the principal contractor to manage during construction',
     ],
     correctAnswer: 0,
     explanation:
@@ -2364,10 +2364,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following best describes the concept of 'buildability' in the context of CDM 2015?",
     options: [
-      'LGSF reduces manual handling risks as components are lighter, reduces wet trade hazards, and can be assembled more quickly, reducing time spent on site',
-      'The extent to which a design facilitates safe and efficient construction, minimising foreseeable risks to workers during the build process',
-      'By verifying that they have the skills, knowledge, training, experience, and organisational capability to carry out the work safely',
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
+      'The extent to which a design keeps the construction costs within the client budget',
+      'The extent to which a design enables safe, efficient construction with fewer risks to workers',
+      'The extent to which a design meets the aesthetic preferences of the paying client',
+      'The extent to which a design complies with the latest planning policy guidance',
     ],
     correctAnswer: 1,
     explanation:
@@ -2382,10 +2382,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer specifies a heavy precast concrete cladding panel system. What CDM-related consideration should influence the choice of fixing method?',
     options: [
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
-      'The ease and safety with which panels can be installed, including manual handling risks and the need for lifting equipment',
-      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
+      'The cheapest fixing available, since cost is the primary CDM consideration here',
+      'The fixing that the client happens to have specified in the building contract',
+      'The ease and safety of installing the panels, including handling and lifting needs',
+      'The fixing giving fastest installation, regardless of the working position required',
     ],
     correctAnswer: 2,
     explanation:
@@ -2399,10 +2399,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: "What does 'maintainability' mean in the context of CDM design duties?",
     options: [
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'The extent to which a design allows the structure to be safely maintained, cleaned, and repaired throughout its life',
+      'The extent to which a design can be completed within the agreed construction programme',
+      'The extent to which a design uses materials that are readily available from suppliers',
+      'The extent to which a design reduces the overall capital cost of the finished structure',
+      'The extent to which a design lets the structure be safely maintained throughout its life',
     ],
     correctAnswer: 3,
     explanation:
@@ -2417,10 +2417,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Modern Methods of Construction (MMC) such as off-site prefabrication can contribute to CDM compliance. Which of the following is a primary health and safety benefit?',
     options: [
-      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
-      'That the worker has appropriate supervision, instructions and information to carry out the work safely',
+      'They cut work at height and on-site hazards by moving work into a controlled factory',
+      'They remove the need for the project to be notified to the HSE under Regulation 6',
+      'They eliminate the requirement to appoint a principal designer for the whole project',
+      'They transfer all the CDM duties from the designer to the off-site manufacturer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2435,10 +2435,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, when must a designer provide information about residual risks in their design?',
     options: [
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'When hazards cannot be eliminated or sufficiently reduced through design — the designer must provide information about remaining risks to those who need it',
-      'Anyone who may need it for future construction work on the structure, including future clients, designers and contractors',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
+      'Only at the very end of the whole project, once the structure has been completed',
+      'When risks cannot be designed out — they must inform those who need to know',
+      'Only when the principal contractor specifically requests the information in writing',
+      'Only on notifiable projects where an F10 has already been submitted to the HSE',
     ],
     correctAnswer: 1,
     explanation:
@@ -2453,10 +2453,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer is coordinating with other designers on a multi-disciplinary project. Under CDM 2015, what is the role of the principal designer in this coordination?',
     options: [
-      'To ensure that construction work is planned, managed, and monitored so that it is carried out without risks to the health or safety of any person, so far as is reasonably practicable',
-      'A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management',
-      'The principal designer must plan, manage, and monitor the pre-construction phase and coordinate matters relating to health and safety to ensure designers comply with their duties',
-      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'They have no coordination role at all, as each designer works entirely independently',
+      'They only coordinate the designers once the construction phase has actually begun',
+      'They manage the pre-construction phase and coordinate health and safety across designers',
+      'They simply collect the designers drawings and then forward them on to the contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -2471,9 +2471,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Schedule 1 of CDM 2015 includes the principle of 'combating risks at source'. What does this mean in a design context?",
     options: [
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
-      'The extent to which a design allows the structure to be safely maintained, cleaned, and repaired throughout its life',
+      'Providing personal protective equipment to workers exposed to the hazard',
+      'Transferring responsibility for the hazard to the principal contractor',
+      'Recording the hazard so the workforce can be warned about it during induction',
       'Addressing the hazard at its origin through design changes rather than relying on downstream measures',
     ],
     correctAnswer: 3,
@@ -2489,10 +2489,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'An architect designs a glass atrium roof. Under CDM 2015, which of the following should the architect consider?',
     options: [
-      'How the glass will be safely installed, how it will be cleaned and maintained, and how it could be safely replaced in the future',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
-      'Information about risks that have not been eliminated and the design principles or assumptions behind the design',
-      'Yes — a client can fulfil these roles provided they have the necessary skills, knowledge, experience and organisational capability',
+      'How the glass will be safely installed, cleaned, maintained and replaced in future',
+      'Only the appearance of the atrium and how well it meets the client design brief',
+      'Only the structural loading of the glass, as safety in use is the building owner concern',
+      'Only the cost of the glazing system and its delivery lead time to the project site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2509,10 +2509,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A building services engineer is designing a mechanical ventilation system. The ductwork route passes through a confined space that will be extremely difficult to access for future maintenance. Applying the CDM 2015 hierarchy, which is the best course of action?',
     options: [
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
-      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed',
+      'Leave the route unchanged and rely on a permit-to-work system during future maintenance',
+      'Reroute to avoid the confined space, or if not practicable, minimise entry and inform of the risk',
+      'Specify breathing apparatus for the maintenance workers and make no change to the design',
+      'Note the confined space in the health and safety file and proceed with the original route',
     ],
     correctAnswer: 1,
     explanation:
@@ -2527,10 +2527,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Two designers on a project have conflicting design solutions that each introduce different risks. The structural engineer wants to use in-situ concrete (requiring formwork at height), while the architect prefers a steel frame (requiring extensive hot works). Under CDM 2015, how should this conflict be resolved?',
     options: [
-      'They must be taken into account by designers when preparing or modifying a design, and by all duty holders when planning and managing construction work',
-      'When hazards cannot be eliminated or sufficiently reduced through design — the designer must provide information about remaining risks to those who need it',
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
+      'The cheaper of the two design solutions should always be chosen to control project cost',
+      'Each designer should proceed with their own preferred solution and resolve the clash on site',
+      'The principal designer coordinates a risk comparison and agrees the solution managing overall risk best',
+      'The principal contractor should decide between the two solutions during the construction phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -2545,10 +2545,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer is applying the SFARP test to determine whether an alternative design is required. The original design presents a moderate risk of musculoskeletal injury to workers, while the alternative design eliminates this risk but costs 15% more. What is the correct legal position?',
     options: [
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed',
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
+      'The designer may keep the original design, as any cost increase justifies retaining the risk',
+      'The designer must always choose the cheapest option, regardless of the risk involved',
+      'The designer must adopt the alternative only if the client agrees to fund the extra cost',
+      'The designer must adopt it, as a 15% rise is unlikely to be grossly disproportionate',
     ],
     correctAnswer: 3,
     explanation:
@@ -2563,10 +2563,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A design review reveals that a proposed curtain wall system requires workers to lean out from the building to install external brackets at the 15th floor. The designer argues that a safety harness specification is sufficient. Under CDM 2015, is this approach acceptable?',
     options: [
-      'No — the designer has jumped to the bottom of the hierarchy by specifying PPE without first considering whether the design could eliminate or reduce the risk, such as using brackets that can be installed from inside the building or using prefabricated unitised panels',
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
-      'The principal designer hands over the partially complete file and all source information, and the principal contractor continues to develop it, ensuring continuity and no loss of information',
-      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
+      'No — PPE is the last resort; the design should first try to eliminate or reduce the risk',
+      'Yes — specifying a safety harness fully discharges the designer duties under Regulation 9',
+      'Yes — the risk passes to the principal contractor once the design is issued for construction',
+      'Yes — provided the harness specification is recorded in the project health and safety file',
     ],
     correctAnswer: 0,
     explanation:
@@ -2581,10 +2581,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'When a designer provides information about residual risks under Regulation 9(3)(b), in what format should this information be communicated?',
     options: [
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'There is no prescribed format — the information must be proportionate, project-specific, and presented in a way that is clear and helpful to those who need it',
-      'Information about the existing site, including ground conditions, existing structures, hazardous substances (such as asbestos), and any relevant survey results',
-      'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
+      'It must always be presented on the official HSE residual-risk template document',
+      'There is no set format — it must be proportionate, project-specific and clear to users',
+      'It must be recorded only as a note on the construction drawings, and nowhere else',
+      'It must be set out in a legally worded disclaimer signed by the appointed contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -2599,10 +2599,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer specifies a green roof system. Which CDM-related risks should be considered?',
     options: [
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'The construction phase plan should be developed using the pre-construction information as a key input, building on the hazard and risk information it contains to set out how the construction phase will be managed safely',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
-      'That the perimeter of the site or that part of the site on which construction work is carried out is identified by suitable signs and the site is so far as is reasonably practicable secured from unauthorised access',
+      'Only the drainage performance of the roof, since safety is the installer own concern',
+      'Only the cost of the planting and the long-term irrigation system running costs',
+      'Risks during installation, maintenance access, and any future removal or replacement',
+      'Only the visual appearance of the green roof when seen from neighbouring buildings',
     ],
     correctAnswer: 2,
     explanation:
@@ -2635,10 +2635,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer is considering whether to specify a bolted steel connection or a welded connection for a structural joint. From a CDM perspective, which factor is most relevant?',
     options: [
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
+      'The relative risks of each method — bolting avoids hot works, fire and welding fume risks',
+      'Only which method gives the lowest material cost for the particular structural joint',
+      'Only which method the steelwork supplier is able to deliver to the site soonest',
+      'Only the appearance of the finished joint once the whole structure is complete',
     ],
     correctAnswer: 0,
     explanation:
@@ -2652,10 +2652,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: "What is the purpose of a designer's risk assessment under CDM 2015?",
     options: [
-      'Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed',
-      'To systematically identify hazards in the design, evaluate the associated risks, and record the measures taken to eliminate, reduce, or communicate those risks',
-      'On all projects — the principal contractor must ensure that welfare facilities are provided throughout the construction phase in accordance with Schedule 2',
-      'Any building, timber or metal structure, railway line, sewer, road, earthworks, or similar, whether temporary or permanent',
+      'To transfer all the design-related risks to the principal contractor for the build phase',
+      'To identify design hazards, evaluate the risks, and record how they are managed',
+      'To provide the client with an estimate of the cost of managing the project risks',
+      'To list the qualifications and experience of each member of the design team',
     ],
     correctAnswer: 1,
     explanation:
@@ -2670,10 +2670,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, a designer must not commence work on a design for a project unless satisfied that the client is aware of their duties. What are the client's duties that the designer should check?",
     options: [
-      'To systematically identify hazards in the design, evaluate the associated risks, and record the measures taken to eliminate, reduce, or communicate those risks',
-      'As-built drawings, details of residual hazards (such as asbestos locations), information about the structure\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s design, and details of utilities and services',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
-      'To check that the arrangements set out in the construction phase plan are being implemented, that risks are being controlled, and to identify areas for improvement',
+      'To draw up the construction phase plan and the site rules before work begins on site',
+      'To prepare the health and safety file and then pass it on to all future owners',
+      'The Regulation 4 duties — managing the project, providing PCI and ensuring welfare',
+      'To supervise the construction work on site and enforce the use of protective equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -2688,10 +2688,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "On a multi-storey office development, the architect designs floor-to-ceiling glazing with no openable sections for window cleaning access. Under CDM 2015, what is the designer's responsibility regarding future cleaning?",
     options: [
-      "The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities",
-      "The client must now notify the HSE by submitting an F10 as the project has become notifiable, and appoint a principal designer and principal contractor if not already done",
-      "Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying",
-      "The architect must consider how the glazing will be safely cleaned throughout the building's life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries",
+      "The architect has no cleaning duty at all, as this is solely the building owner concern",
+      "The architect need only note in the design drawings that the windows cannot be opened",
+      "The architect should leave all the access arrangements for the contractor to resolve on site",
+      "The architect must design in safe cleaning access, such as davits, walkways or gantries",
     ],
     correctAnswer: 3,
     explanation:
@@ -2706,10 +2706,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer decides to specify a proprietary raised access floor system instead of a traditional screed floor. This decision reduces the need for on-site wet trades and associated slip hazards. Under CDM 2015, how should this design decision be recorded?',
     options: [
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'That the principal designer is provided with any information relevant to the health and safety file',
-      'To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable',
+      'It should be noted in the design risk register as a risk-reduction measure under Regulation 9',
+      'It need not be recorded at all, as choosing a floor system is a routine commercial decision',
+      'It should be recorded only in the building contract as a variation to the specification',
+      'It should be kept confidential from the contractors to avoid disputes over the change',
     ],
     correctAnswer: 0,
     explanation:
@@ -2724,10 +2724,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what obligation does Regulation 8(4) place on a person working on a project who becomes aware of a design that does not comply with the Regulations?',
     options: [
-      'To provide short, focused briefings on specific health and safety topics relevant to the current work activities, reinforcing safe practices and raising awareness of specific hazards',
+      'They may only raise concerns about a design if they are themselves a qualified designer',
       'They must report anything they are aware of that is likely to endanger their own health or safety or that of others to the person responsible',
-      'Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so',
-      'The principal designer must plan, manage, monitor and coordinate the pre-construction phase, including ensuring PCI is compiled and provided to those who need it',
+      'They have no duty to act, as design compliance is solely the principal designer responsibility',
+      'They must report the matter directly to the HSE before telling anyone on the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -2742,10 +2742,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "A mechanical engineer designs a plant room layout. Under CDM 2015, which of the following design features would best demonstrate compliance with the designer's duties?",
     options: [
-      'By verifying that they have the skills, knowledge, training, experience, and organisational capability to carry out the work safely',
-      'The names of the client, principal designer, and principal contractor, plus the address of the site and a brief description of the work',
-      'Providing adequate access space around all equipment for safe installation, maintenance, and replacement, with isolation points clearly accessible and sufficient headroom for working',
-      'Yes — Regulation 12(4) requires the construction phase plan to be reviewed, updated and revised as necessary throughout the project',
+      'Packing the equipment as tightly as possible to minimise the plant room floor area',
+      'Locating all the isolation points in a single locked cabinet accessible only to the client',
+      'Providing safe access space, accessible isolation points and adequate working headroom',
+      'Specifying the lowest-cost equipment available to keep the plant room within budget',
     ],
     correctAnswer: 2,
     explanation:
@@ -2760,9 +2760,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following statements about the general principles of prevention in Schedule 1 is correct?',
     options: [
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
-      'How the glass will be safely installed, how it will be cleaned and maintained, and how it could be safely replaced in the future',
-      'Contractors must provide workers with appropriate directions, instructions and information, and consult them in good time on health and safety matters',
+      'They apply only to the principal designer and to no other duty holder',
+      'They apply only to projects that are notifiable to the HSE under Regulation 6',
+      'They are advisory guidance that duty holders may choose to disregard',
       'They must be taken into account by designers when preparing or modifying a design, and by all duty holders when planning and managing construction work',
     ],
     correctAnswer: 3,
@@ -2778,10 +2778,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer specifies a lightweight steel framing system (LGSF) instead of traditional blockwork for internal walls. From a CDM perspective, what is the primary benefit?',
     options: [
-      'LGSF reduces manual handling risks as components are lighter, reduces wet trade hazards, and can be assembled more quickly, reducing time spent on site',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
-      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
+      'Lighter components cut handling and wet-trade risks and speed up assembly on site',
+      'It removes the need to appoint a principal designer for the whole project at all',
+      'It means the construction project no longer has to be notified to the HSE at all',
+      'It transfers all the designer CDM duties across to the steel-frame manufacturer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2796,10 +2796,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what is the relationship between Regulation 9 (duties of designers) and Regulation 11 (duties of the principal designer)?',
     options: [
-      'They are satisfied that they have, or will obtain through the engagement, the skills, knowledge, experience and (for an organisation) the organisational capability necessary to fulfil the role',
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
+      'Regulation 11 replaces Regulation 9 for any designer who is appointed principal designer',
+      'Reg 9 applies to every designer; Reg 11 adds coordination duties for the principal designer',
+      'Regulation 9 applies only in the pre-construction phase and Regulation 11 only in construction',
+      'Regulation 11 applies to every designer while Regulation 9 applies only to the principal designer',
     ],
     correctAnswer: 1,
     explanation:
@@ -2814,10 +2814,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A client requests a design change that the designer believes will increase construction risk. What should the designer do?',
     options: [
-      "By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures",
-      "The period of time starting when construction work in a project begins and ending when construction work in that project is completed",
-      "Advise the client of the additional risks, propose alternatives that achieve the client's objectives with reduced risk, and record the discussion and outcome",
-      "The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design",
+      "Implement the change exactly as instructed, as the client has the final say on the design",
+      "Refuse the change outright and then resign from the project without further discussion",
+      "Advise the client of the risks, propose safer alternatives, and record the discussion",
+      "Make the change but pass responsibility for the added risk to the principal contractor",
     ],
     correctAnswer: 2,
     explanation:
@@ -2850,10 +2850,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "A designer is specifying a fall arrest system for workers who will need to access a building's facade for maintenance. Under CDM 2015 and the hierarchy of control, when is it appropriate to specify a fall arrest system?",
     options: [
-      'Only after it has been established that designing out the need for access, or providing permanent collective protection such as walkways and guardrails, is not reasonably practicable',
-      'Without delay — the responsible person must notify the HSE by the quickest practicable means, and follow up with a written report within 10 days',
-      'The principal designer hands over the partially complete file and all source information, and the principal contractor continues to develop it, ensuring continuity and no loss of information',
-      'The pre-construction information obtained under Regulation 4(4) and any information obtained from designers under Regulation 9(3)',
+      'Only once designing out access, or permanent collective protection, is not practicable',
+      'As the very first choice, because fall arrest is the most reliable protection available',
+      'Whenever the facade is above two storeys, regardless of the other available measures',
+      'Only if the client specifically requests a fall arrest system within the project brief',
     ],
     correctAnswer: 0,
     explanation:
@@ -2867,10 +2867,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: "Under CDM 2015, what is meant by 'design' in relation to a structure?",
     options: [
-      'To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable',
-      'Drawings, design details, specifications, calculations, and bills of quantities relating to a structure, including any modifications',
-      'The notice given to the HSE must be displayed in the construction site office in a comprehensible form where it can be read by any worker on the site',
-      'A small, simple project requires a simpler plan than a large, complex project with significant risks',
+      'Only the architect detailed drawings, excluding any specifications and calculations',
+      'Drawings, details, specifications, calculations and bills of quantities, plus any changes',
+      'Only the final issued-for-construction drawings, not any earlier or modified versions',
+      'Only the structural and architectural design, excluding all building services design',
     ],
     correctAnswer: 1,
     explanation:
@@ -2885,10 +2885,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrical designer specifies a cable route through an area that will later become a confined space due to other design decisions. What should the electrical designer do?',
     options: [
-      'To ensure the design does not give rise to foreseeable risks to health and safety, and to eliminate hazards where reasonably practicable',
-      'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
+      'Proceed with the original route, as the confined space is created by other designers, not the cable',
+      'Specify breathing apparatus for future maintenance and leave the cable route unchanged',
+      'Coordinate via the principal designer for an alternative route, or record and communicate the risk',
+      'Leave the issue entirely to the principal contractor to resolve during the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2903,10 +2903,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer includes significant residual risks in their design that cannot be eliminated. Under CDM 2015, who must receive the information about these residual risks?',
     options: [
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'No — the designer has jumped to the bottom of the hierarchy by specifying PPE without first considering whether the design could eliminate or reduce the risk, such as using brackets that can be installed from inside the building or using prefabricated unitised panels',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
-      'Every person who is or may be affected by the risk and who needs the information to manage it — this typically includes the principal designer, principal contractor, other designers, contractors, and ultimately the end users via the health and safety file',
+      'Only the principal designer, who decides whether to pass the information on to others',
+      'Only the client, who is responsible for managing all of the project risks themselves',
+      'Only the HSE, which records all such residual risks on a central national register',
+      'Everyone who needs it to manage the risk — designers, contractors and future users via the file',
     ],
     correctAnswer: 3,
     explanation:
@@ -2921,10 +2921,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, a designer who also acts as a contractor on a project has duties under both Regulation 9 (designer) and Regulation 15 (contractor). How do these duties interact?',
     options: [
-      'Both sets of duties apply simultaneously — the person must comply with designer duties when carrying out design work and contractor duties when carrying out construction work',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
-      'The pre-construction information obtained under Regulation 4(4) and any information obtained from designers under Regulation 9(3)',
-      'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
+      'Both apply at once — designer duties when designing, contractor duties when building',
+      'Only the contractor duties apply, because construction work overrides the design duties',
+      'Only the designer duties apply, because the design is carried out first in the project',
+      'The person may choose which single set of duties to comply with for the whole project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2945,10 +2945,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015 Regulation 13, what must the principal contractor ensure regarding site inductions?',
     options: [
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
+      'Only visitors and members of the public need a site induction, not the workforce',
       'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
+      'Only workers without a CSCS card need to receive a site induction',
+      'A site induction is required only on projects notified to the HSE',
     ],
     correctAnswer: 1,
     explanation:
@@ -2962,10 +2962,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'What is the construction phase plan (CPP) under CDM 2015?',
     options: [
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
-      'Any person who in the course or furtherance of a business carries out, manages or controls construction work',
+      'A record of the information needed for future maintenance and demolition of the structure',
+      'A priced programme showing the sequence and duration of the construction works',
       'A document setting out the health and safety arrangements and site rules for the construction phase',
-      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
+      'A register of all accidents and near-misses occurring during the construction phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -2986,7 +2986,7 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'Under Regulation 12A and 13, the principal contractor has the overall responsibility for planning, managing, monitoring, and coordinating the construction phase. This includes ensuring that the construction phase plan is followed, welfare facilities are provided, and the site is managed safely.',
+      'Under Regulation 13, the principal contractor has the overall responsibility for planning, managing, monitoring, and coordinating the construction phase. This includes ensuring that the construction phase plan is followed, welfare facilities are provided, and the site is managed safely.',
     section: 'cdm-regulations',
     difficulty: 'basic',
     topic: 'PC managing construction phase',
@@ -2996,10 +2996,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 164,
     question: 'What are welfare facilities under CDM 2015 Schedule 2?',
     options: [
-      'Sanitary conveniences, washing facilities, drinking water, changing rooms, rest facilities, and facilities for eating meals',
-      'Work near high-voltage power lines, work involving the risk of falling from a height, and work which puts workers at risk of burial under earthfalls',
-      'All duty holders must work together and cooperate with each other to ensure health and safety',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
+      'Toilets, washing facilities, drinking water, changing rooms, rest and eating facilities',
+      'Personal protective equipment, hand tools and access equipment for every worker',
+      'First-aid kits, defibrillators and a fully staffed on-site medical treatment centre',
+      'Secure storage for plant and materials, plus a fitted-out site office for the contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -3030,10 +3030,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'What is a prohibition notice issued by an HSE inspector?',
     options: [
-      'A document setting out the health and safety arrangements and site rules for the construction phase',
-      'Projects lasting longer than 30 working days with more than 20 workers at any one time, or exceeding 500 person-days',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
+      'A notice giving the duty holder a fixed period to remedy a breach of health and safety law',
+      'A notice requiring the project to be notified to the HSE within a set number of days',
+      'A notice requiring an activity to stop where it risks serious personal injury',
+      'A formal warning that no further action will be taken if site conditions improve',
     ],
     correctAnswer: 2,
     explanation:
@@ -3047,10 +3047,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'What is the difference between an improvement notice and a prohibition notice?',
     options: [
-      'Issue a formal written instruction to comply, increase monitoring of the sub-contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s activities, consider stopping their work until compliance is achieved, and if necessary remove them from site — documenting all actions taken',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'An improvement notice gives a specified time period to remedy a contravention, while a prohibition notice requires the immediate or near-immediate cessation of an activity that poses a risk of serious personal injury',
+      'An improvement notice stops work at once, while a prohibition notice gives time to remedy',
+      'Both notices stop work immediately, and the only difference is which inspector issues them',
+      'An improvement notice applies to designers, while a prohibition notice applies to contractors',
+      'An improvement notice gives time to remedy, while a prohibition notice stops serious-risk work',
     ],
     correctAnswer: 3,
     explanation:
@@ -3068,9 +3068,9 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
       "The construction phase plan is often described as a 'living document'. What does this mean in practice?",
     options: [
       'It must be continuously reviewed, updated, and revised as the project progresses and circumstances change',
-      'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
-      'A small, simple project requires a simpler plan than a large, complex project with significant risks',
-      'The period of time starting when construction work in a project begins and ending when construction work in that project is completed',
+      'It must be rewritten in full at the start of each new week of the construction phase',
+      'It must be displayed on the site notice board but cannot be amended once issued',
+      'It must be signed by every worker before it can take effect on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3085,10 +3085,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, how should the principal contractor assess the competence of workers and sub-contractors?',
     options: [
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
-      'By verifying that they have the skills, knowledge, training, experience, and organisational capability to carry out the work safely',
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
-      'They must be taken into account by designers when preparing or modifying a design, and by all duty holders when planning and managing construction work',
+      'By checking only that each worker holds valid public liability insurance cover',
+      'By verifying their skills, knowledge, training, experience and organisational capability',
+      'By relying solely on the lowest tender price as the evidence of their capability',
+      'By assuming all the workers are competent unless an accident later proves otherwise',
     ],
     correctAnswer: 1,
     explanation:
@@ -3102,10 +3102,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is a permit-to-work system on a construction site?',
     options: [
-      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
-      'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
+      'A permit issued by the local authority allowing construction work to start on the site',
+      'A document recording the number of hours each worker is permitted to work each week',
+      'A formal documented procedure authorising specific high-risk work under controls',
+      'A licence allowing a contractor to operate plant and machinery on the public highway',
     ],
     correctAnswer: 2,
     explanation:
@@ -3119,10 +3119,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'Under CDM 2015, what must the principal contractor do regarding temporary works?',
     options: [
-      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
-      'Providing adequate access space around all equipment for safe installation, maintenance, and replacement, with isolation points clearly accessible and sufficient headroom for working',
-      'A notice that requires the immediate cessation of an activity that the inspector believes involves a risk of serious personal injury',
-      'Ensure that temporary works (such as formwork, falsework, and temporary propping) are designed, erected, and dismantled safely, with appropriate checks and supervision',
+      'Leave temporary works entirely to each sub-contractor, with no central oversight at all',
+      'Treat all temporary works as permanent and include them in the health and safety file',
+      'Remove all of the temporary works before any permanent work begins on the site',
+      'Ensure formwork, falsework and propping are designed, erected and dismantled safely',
     ],
     correctAnswer: 3,
     explanation:
@@ -3154,10 +3154,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'An HSE inspector arrives on a construction site to carry out an inspection. What powers do they have under the Health and Safety at Work etc. Act 1974?',
     options: [
-      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
-      'They have the power to enter premises, inspect and investigate, take samples and photographs, require information, and seize articles or substances',
-      'To ensure that construction work is planned, managed, and monitored so that it is carried out without risks to the health or safety of any person, so far as is reasonably practicable',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
+      'They may only observe the site and must request permission for any action they take',
+      'They may enter and investigate, take samples and photographs, and seize articles',
+      'They may issue advice but have no power to enter the site without a court order first',
+      'They may inspect documents only and cannot enter the working areas of the actual site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3171,10 +3171,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is the purpose of monitoring and auditing under CDM 2015?',
     options: [
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'Contractors must provide workers with appropriate directions, instructions and information, and consult them in good time on health and safety matters',
-      'To check that the arrangements set out in the construction phase plan are being implemented, that risks are being controlled, and to identify areas for improvement',
-      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
+      'To allocate blame to individual workers following any accident occurring on site',
+      'To verify the project will be completed within the agreed programme and budget',
+      'To check the construction phase plan is being followed and risks are controlled',
+      'To satisfy the client that the appointed contractor is providing good value for money',
     ],
     correctAnswer: 2,
     explanation:
@@ -3189,10 +3189,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what must the principal contractor do when a new sub-contractor arrives on site?',
     options: [
-      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
-      'A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management',
-      'Provide them with relevant parts of the construction phase plan, ensure they receive a site induction, verify their skills, knowledge, training and experience, and coordinate their work with other contractors',
+      'Allow them to start work immediately and induct them only if an accident later occurs',
+      'Require them to sign a waiver accepting full responsibility for their own site safety',
+      'Leave the sub-contractor to brief their own workers, with no principal contractor involvement',
+      'Give them the relevant plan, induct them, verify their SKTE, and coordinate their work',
     ],
     correctAnswer: 3,
     explanation:
@@ -3207,14 +3207,14 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the principal contractor's duty regarding consultation with workers under CDM 2015?",
     options: [
-      'The principal contractor must make and maintain arrangements that will enable the principal contractor and workers engaged in construction work to cooperate effectively, and must consult workers or their representatives on health and safety matters',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
-      'Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks',
+      'They must enable effective cooperation with workers and consult them on health and safety',
+      'They need only consult the sub-contractor managers, and not the workers themselves',
+      'They have no consultation duty at all, as this rests entirely with each worker own employer',
+      'They must consult the workers only after an accident has actually occurred on the site',
     ],
     correctAnswer: 0,
     explanation:
-      'Under Regulation 13(4), the principal contractor must make arrangements for cooperation with workers. Combined with the general duties under the Safety Representatives and Safety Committees Regulations 1977 and the Health and Safety (Consultation with Employees) Regulations 1996, the PC must consult workers on health and safety matters throughout the construction phase.',
+      'Under Regulation 14, the principal contractor must make arrangements for cooperation with workers. Combined with the general duties under the Safety Representatives and Safety Committees Regulations 1977 and the Health and Safety (Consultation with Employees) Regulations 1996, the PC must consult workers on health and safety matters throughout the construction phase.',
     section: 'cdm-regulations',
     difficulty: 'intermediate',
     topic: 'Worker consultation',
@@ -3227,10 +3227,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "A principal contractor discovers that a sub-contractor is repeatedly failing to follow the construction phase plan despite verbal warnings. The sub-contractor's workers are not wearing the required PPE and are ignoring exclusion zones. What steps should the principal contractor take?",
     options: [
-      "Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed",
-      "Issue a formal written instruction to comply, increase monitoring of the sub-contractor's activities, consider stopping their work until compliance is achieved, and if necessary remove them from site — documenting all actions taken",
-      "A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase",
-      "Implement regular safety inspections, formal audits of the CPP and risk controls, near-miss reporting, toolbox talks, lessons-learned reviews, worker consultation forums, trend analysis of incidents, and regular CPP updates based on findings",
+      "Ignore the breaches, since the sub-contractor is responsible for its own workers safety",
+      "Instruct compliance in writing, increase monitoring, stop the work and if needed remove them",
+      "Report the sub-contractor straight to the HSE and take no action on site in the meantime",
+      "Deduct money from the sub-contractor payment but allow the unsafe work to continue",
     ],
     correctAnswer: 1,
     explanation:
@@ -3245,10 +3245,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker suffers a serious injury and is incapacitated for more than 7 consecutive days (not counting the day of the accident). Under RIDDOR, within what timeframe must this be reported to the HSE?',
     options: [
-      'A fracture of any bone other than a finger, thumb, or toe',
-      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
+      'Within 10 days of the accident, by the quickest practicable means',
+      'Within 24 hours of the accident, by telephone to the HSE',
       'Within 15 days of the accident, using the appropriate online form',
-      'Yes — Regulation 5(1) requires both to be appointed in writing',
+      'Within 28 days of the accident, using the appropriate online form',
     ],
     correctAnswer: 2,
     explanation:
@@ -3263,10 +3263,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'On a complex multi-phase project, the principal contractor must coordinate several high-risk activities occurring simultaneously: a deep excavation, crane operations, and live electrical work. Which management approach best demonstrates CDM 2015 compliance?',
     options: [
-      'The principal designer hands over the partially complete file and all source information, and the principal contractor continues to develop it, ensuring continuity and no loss of information',
-      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
-      'The construction phase plan should be developed using the pre-construction information as a key input, building on the hazard and risk information it contains to set out how the construction phase will be managed safely',
-      'Implement a formal coordination system with permit-to-work procedures for each high-risk activity, task-specific risk assessments, method statements, exclusion zones, appointed supervisors, and a communication protocol to manage interfaces between the activities',
+      'Carry out the three activities one after another so they never overlap, even if it doubles time',
+      'Allow each activity to run independently and rely on workers to keep clear of one another',
+      'Brief the workforce verbally each morning, but keep no written coordination records at all',
+      'Use permits, task risk assessments, exclusion zones, supervisors and interface communication',
     ],
     correctAnswer: 3,
     explanation:
@@ -3281,10 +3281,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A principal contractor wishes to implement a continuous improvement approach to health and safety on a large project. Which combination of measures would best achieve this under CDM 2015?',
     options: [
-      'Implement regular safety inspections, formal audits of the CPP and risk controls, near-miss reporting, toolbox talks, lessons-learned reviews, worker consultation forums, trend analysis of incidents, and regular CPP updates based on findings',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'The architect must consider how the glazing will be safely cleaned throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
+      'Use inspections, audits, near-miss reporting, toolbox talks, consultation and CPP updates',
+      'Rely solely on the annual HSE inspection visit to identify any improvements needed',
+      'Update the construction phase plan only when a reportable accident occurs on the site',
+      'Record incidents but take no further action, as the plan was approved at the very outset',
     ],
     correctAnswer: 0,
     explanation:
@@ -3299,10 +3299,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what minimum welfare provisions must be made available from the start of the construction phase?',
     options: [
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
-      'Sanitary conveniences and washing facilities with hot and cold running water, drinking water, rest areas with seating and facilities for preparing hot drinks, and changing and storage facilities — all maintained in a clean and orderly condition',
-      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
-      'Coordinate with the other designers through the principal designer to find an alternative route, or if not possible, ensure the confined space risk is recorded and communicated',
+      'Toilets only — washing and rest facilities may be added later once the site is established',
+      'Toilets, washing with running water, drinking water, heated rest areas and changing facilities',
+      'A first-aid room, a canteen serving hot meals, and a fully fitted site office for the workforce',
+      'Drinking water only — other welfare facilities are required solely on notifiable projects',
     ],
     correctAnswer: 1,
     explanation:
@@ -3317,10 +3317,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker on a construction site observes what they believe is an unsafe practice by another worker. Under CDM 2015, what should they do?',
     options: [
-      'To notify the HSE of a notifiable construction project before the construction phase begins',
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
+      'Ignore it, since reporting other workers is not part of their job',
+      'Wait until the end of the project and raise it in the lessons-learned review',
       'Report the matter to the site supervisor, safety representative, or principal contractor as required by Regulation 8(4)',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
+      'Report it directly to the HSE without telling anyone on site first',
     ],
     correctAnswer: 2,
     explanation:
@@ -3334,10 +3334,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What is the legal consequence of failing to comply with a prohibition notice?',
     options: [
-      'Sanitary conveniences, washing facilities, drinking water, changing rooms, rest facilities, and facilities for eating meals',
-      'Anyone who may need it for future construction work on the structure, including future clients, designers and contractors',
-      'Avoid risks; evaluate risks that cannot be avoided; combat risks at source',
-      'It is a criminal offence that can result in prosecution, an unlimited fine, and/or imprisonment',
+      'A fixed penalty notice of £100, after which the prohibited activity may resume',
+      'A written warning only, with no further consequence on a first occasion at all',
+      'A requirement to retrain the whole workforce before the activity may continue',
+      'A criminal offence carrying prosecution, an unlimited fine and/or imprisonment',
     ],
     correctAnswer: 3,
     explanation:
@@ -3352,10 +3352,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'The principal contractor must ensure that no unauthorised persons access the construction site. Under CDM 2015, how should this be achieved?',
     options: [
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'As-built drawings, details of residual hazards (such as asbestos locations), information about the structure\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s design, and details of utilities and services',
-      'Any person who prepares or modifies a design, or arranges for or instructs someone else to do so, in relation to a structure',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
+      'By using reasonable steps such as fencing, hoarding, signage and controlled access points',
+      'By relying on a single warning sign at the site entrance, with no physical barriers at all',
+      'By posting a security guard only during nights and weekends when the work has stopped',
+      'By taking out insurance against injury to any members of the public who enter the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3370,10 +3370,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under RIDDOR, which of the following is a 'dangerous occurrence' that must be reported?",
     options: [
-      'To provide information needed for future construction work, maintenance, repair, or demolition',
+      'A worker taking a single day off after a minor sprain on site',
       'The collapse, overturning, or failure of load-bearing parts of lifts and lifting equipment',
-      'It must be continuously reviewed, updated, and revised as the project progresses and circumstances change',
-      'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
+      'A delivery vehicle arriving late and delaying the day work programme',
+      'A worker receiving a verbal warning for not wearing a hard hat',
     ],
     correctAnswer: 1,
     explanation:
@@ -3388,10 +3388,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A principal contractor uses toolbox talks as part of their site safety communication. What is the purpose of toolbox talks?',
     options: [
-      'Drawings, design details, specifications, calculations, and bills of quantities relating to a structure, including any modifications',
-      'It should be noted in the design risk register as a hazard elimination or reduction measure, demonstrating compliance with Regulation 9',
-      'To provide short, focused briefings on specific health and safety topics relevant to the current work activities, reinforcing safe practices and raising awareness of specific hazards',
-      'A file containing information about the completed structure that will be needed for future construction work, including cleaning, maintenance, alteration or demolition',
+      'To record the tools and equipment issued to each worker at the start of the shift',
+      'To deliver formal classroom training leading to a nationally recognised qualification',
+      'To give short, focused safety briefings on hazards relevant to the current work',
+      'To brief the client on the commercial progress of the construction works to date',
     ],
     correctAnswer: 2,
     explanation:
@@ -3405,10 +3405,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question: 'Under CDM 2015, what happens if a project has only one contractor?',
     options: [
-      'Regulation 9 applies to all designers individually, while Regulation 11 gives the principal designer additional coordination, planning, and management duties across the design team',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'A file containing information about the completed structure that will be needed for future construction work, including cleaning, maintenance, alteration or demolition',
-      'The contractor must fulfil the duties of both the contractor and the principal contractor, and the client need not appoint a separate principal designer or principal contractor',
+      'CDM 2015 does not apply at all to construction projects with only one contractor',
+      'The client must still formally appoint a principal designer and principal contractor in writing',
+      'The HSE appoints a principal contractor on the client behalf for single-contractor projects',
+      'The contractor fulfils the principal contractor duties, with no separate appointments needed',
     ],
     correctAnswer: 3,
     explanation:
@@ -3422,10 +3422,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 188,
     question: 'What is the role of a temporary works coordinator (TWC) on a construction site?',
     options: [
-      'To ensure that all temporary works are properly designed, checked, installed, maintained, and removed safely, acting as the focal point for temporary works management',
-      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
-      'Both sets of duties apply simultaneously — the person must comply with designer duties when carrying out design work and contractor duties when carrying out construction work',
-      'A day on which one person carries out construction work — two people working on the same day count as two person-days',
+      'To act as the focal point ensuring temporary works are designed, checked and removed safely',
+      'To coordinate the welfare facilities and the site canteen provision for the workforce',
+      'To manage the temporary electrical and water supplies serving the project site offices',
+      'To schedule the temporary employment of agency labour during the site peak periods',
     ],
     correctAnswer: 0,
     explanation:
@@ -3440,10 +3440,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A specified injury occurs on a construction site on a Friday afternoon. Under RIDDOR, when must the HSE be notified?',
     options: [
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
-      'Without delay — the responsible person must notify the HSE by the quickest practicable means, and follow up with a written report within 10 days',
-      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
-      'To draw up a construction phase plan, or make arrangements for it to be drawn up, before the construction phase begins',
+      'Only on the next working day, once the weekend has passed and the office reopens',
+      'Without delay by the quickest means, with a written report following within 10 days',
+      'Within 15 days of the accident, using the online reporting form and nothing sooner',
+      'Within 28 days of the accident, with no requirement for any immediate notification',
     ],
     correctAnswer: 1,
     explanation:
@@ -3458,10 +3458,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what is the relationship between the construction phase plan and the pre-construction information?',
     options: [
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'The construction phase plan should be developed using the pre-construction information as a key input, building on the hazard and risk information it contains to set out how the construction phase will be managed safely',
-      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
+      'The two documents are unrelated and serve entirely separate purposes on the project',
+      'The pre-construction information is written after the construction phase plan is finalised',
+      'The plan is built using the PCI as a key input on how to manage the phase safely',
+      'The construction phase plan replaces the pre-construction information once work starts',
     ],
     correctAnswer: 2,
     explanation:
@@ -3476,10 +3476,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "A principal contractor identifies that a scaffolding sub-contractor's workers lack the necessary skills and training to erect a complex scaffold. What action must the principal contractor take?",
     options: [
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
-      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
-      'They must report anything they are aware of that is likely to endanger their own health or safety or that of others to the person responsible',
-      'Prevent the workers from carrying out the scaffolding work until they have the necessary skills, knowledge, training, and experience, and ensure only suitably qualified scaffolders are deployed',
+      'Allow the work to proceed but increase the level of supervision during the erection',
+      'Permit the work, provided the sub-contractor signs a disclaimer accepting the risk',
+      'Allow the erection to continue and arrange training for the workers afterwards',
+      'Stop the work until they have the required SKTE and only deploy qualified scaffolders',
     ],
     correctAnswer: 3,
     explanation:
@@ -3493,10 +3493,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     id: 192,
     question: 'What is a near-miss and why is near-miss reporting important under CDM 2015?',
     options: [
-      'A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management',
-      'The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation',
-      'The duties under Regulation 4, including making suitable arrangements for managing the project, providing pre-construction information, and ensuring adequate welfare facilities',
-      'The principal contractor must establish and maintain appropriate emergency procedures, including arrangements for first aid, fire, and evacuation, and ensure they are tested and understood by all site workers',
+      'An event causing no harm but with the potential to, reported to catch hazards early',
+      'Any minor injury treated on site with a plaster, recorded but not reported to the HSE',
+      'A delay to the construction programme caused by adverse weather conditions on site',
+      'A worker arriving late for their shift, which must be logged in the site daily diary',
     ],
     correctAnswer: 0,
     explanation:
@@ -3511,10 +3511,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015 Regulation 13(3), what must the construction phase plan include as a minimum?',
     options: [
-      'They are satisfied that they have, or will obtain through the engagement, the skills, knowledge, experience and (for an organisation) the organisational capability necessary to fulfil the role',
-      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
-      'Clear evidence that the CPP is being followed in practice, risk assessments are site-specific and regularly reviewed, workers are consulted and engaged, incidents and near-misses are investigated and acted upon, and continuous improvements are being made',
-      'No — the designer has jumped to the bottom of the hierarchy by specifying PPE without first considering whether the design could eliminate or reduce the risk, such as using brackets that can be installed from inside the building or using prefabricated unitised panels',
+      'The priced bill of quantities and the agreed programme of payments to the contractors',
+      'The welfare arrangements, the site rules, and any specific measures for Schedule 3 work',
+      'The names and qualifications of every single worker expected to attend the site',
+      'The as-built drawings and the information needed for future maintenance of the structure',
     ],
     correctAnswer: 1,
     explanation:
@@ -3529,10 +3529,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A client on a domestic project hires a single contractor to build a conservatory extension. Which CDM 2015 duties apply?',
     options: [
-      "Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown",
-      "The architect must consider how the glazing will be safely cleaned throughout the building's life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries",
-      "Part 4 duties (general requirements for all construction sites) apply to the contractor, plus the contractor assumes the client's duties under Regulation 7, but the domestic client is not themselves a duty holder",
-      "Any person who in the course or furtherance of a business prepares or modifies a design, or arranges for or instructs any person under their control to do so",
+      "CDM 2015 does not apply at all here, because the work is for a private homeowner",
+      "The domestic client must personally fulfil every single client duty under Regulation 4",
+      "Part 4 applies and the contractor takes the client duties; the client is not a duty holder",
+      "Only the welfare provisions of Schedule 2 apply, and no other CDM duties are engaged",
     ],
     correctAnswer: 2,
     explanation:
@@ -3547,10 +3547,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of site safety inspections carried out by the principal contractor?',
     options: [
-      'They are satisfied that they have, or will obtain through the engagement, the skills, knowledge, experience and (for an organisation) the organisational capability necessary to fulfil the role',
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
-      'There is no prescribed format — the information must be proportionate, project-specific, and presented in a way that is clear and helpful to those who need it',
-      'To proactively identify hazards, check that risk controls are in place and effective, verify compliance with the construction phase plan and site rules, and identify areas for corrective action',
+      'To measure the progress of the works against the agreed construction programme',
+      'To check that the materials on site match the quantities in the bill of quantities',
+      'To allocate blame to individual workers after an accident has occurred on the site',
+      'To find hazards, check controls work, verify CPP compliance and identify corrective action',
     ],
     correctAnswer: 3,
     explanation:
@@ -3565,10 +3565,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what obligation does the principal contractor have regarding emergency procedures?',
     options: [
-      'The principal contractor must establish and maintain appropriate emergency procedures, including arrangements for first aid, fire, and evacuation, and ensure they are tested and understood by all site workers',
-      'Sanitary conveniences and washing facilities with hot and cold running water, drinking water, rest areas with seating and facilities for preparing hot drinks, and changing and storage facilities — all maintained in a clean and orderly condition',
-      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
-      'A file containing information about the completed structure that will be needed for future construction work, including cleaning, maintenance, alteration or demolition',
+      'They must maintain first-aid, fire and evacuation procedures, tested and understood by all',
+      'They need only display the local emergency telephone numbers on the site notice board',
+      'They may leave the emergency arrangements to each sub-contractor for its own workers',
+      'They must produce emergency procedures only on projects notifiable to the HSE',
     ],
     correctAnswer: 0,
     explanation:
@@ -3583,10 +3583,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A principal contractor is auditing their health and safety management system on a large construction project. Which of the following would indicate an effective system?',
     options: [
-      'No — the designer has jumped to the bottom of the hierarchy by specifying PPE without first considering whether the design could eliminate or reduce the risk, such as using brackets that can be installed from inside the building or using prefabricated unitised panels',
-      'Clear evidence that the CPP is being followed in practice, risk assessments are site-specific and regularly reviewed, workers are consulted and engaged, incidents and near-misses are investigated and acted upon, and continuous improvements are being made',
-      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
-      'A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management',
+      'A construction phase plan that is fully written up and filed, even if not followed on site',
+      'Evidence the CPP is followed, risk assessments are reviewed, and incidents drive improvement',
+      'A complete absence of reported incidents, regardless of whether near-misses are logged',
+      'A single generic risk assessment used for every project the contractor ever undertakes',
     ],
     correctAnswer: 1,
     explanation:
@@ -3601,10 +3601,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'Schedule 2 of CDM 2015 requires washing facilities on construction sites. What specific requirements apply?',
     options: [
-      'The pre-construction information obtained under Regulation 4(4) and any information obtained from designers under Regulation 9(3)',
-      'Every worker on the site receives a suitable site induction, providing information on the risks and the measures in place to manage them',
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'Eliminate foreseeable risks so far as is reasonably practicable → reduce risks that remain → provide information about remaining risks to assist other duty holders',
+      'Cold running water only is required; hot water is needed solely where chemicals are handled',
+      'A single shared bucket of water is acceptable, provided it is refreshed at least each day',
+      'Hot and cold (or warm) running water, soap or cleaning agents, and means of drying',
+      'Hand sanitiser gel alone is sufficient, and running water need not be provided at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -3619,10 +3619,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker appeals against a prohibition notice served by an HSE inspector. Does the appeal suspend the prohibition notice?',
     options: [
-      'Yes — workers must cooperate with their employer and others, report anything that endangers health and safety, and use any protective equipment provided',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
-      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
+      'Yes — lodging an appeal automatically suspends the notice until the tribunal decides',
+      'Yes — the activity may resume as soon as the appeal paperwork has been submitted',
+      'Yes — but only if the employer pays a bond to cover the whole period of the appeal',
+      'No — it stays in force during appeal unless the tribunal directs otherwise',
     ],
     correctAnswer: 3,
     explanation:
@@ -3637,10 +3637,10 @@ export const cdmRegulationsQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, what is the overarching objective of the principal contractor's management of the construction phase?",
     options: [
-      'To ensure that construction work is planned, managed, and monitored so that it is carried out without risks to the health or safety of any person, so far as is reasonably practicable',
-      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
-      'Advise the client of the additional risks, propose alternatives that achieve the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s objectives with reduced risk, and record the discussion and outcome',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
+      'To plan, manage and monitor construction work so it is done without risk, where practicable',
+      'To deliver the construction works within the client agreed programme and budget',
+      'To maximise productivity on site so that the project finishes ahead of schedule',
+      'To minimise the volume of paperwork generated during the construction phase',
     ],
     correctAnswer: 0,
     explanation:

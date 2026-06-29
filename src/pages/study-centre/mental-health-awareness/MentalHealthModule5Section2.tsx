@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is the MOST important characteristic of a mentally healthy workplace culture?',
     options: [
-      'Having a written mental health policy displayed in the site office',
       'People feeling safe to talk about their mental health without fear of negative consequences',
+      'Having a written mental health policy displayed in the site office',
       'Providing free gym memberships and fruit bowls in the canteen',
       'Having a dedicated mental health budget of at least £10,000 per year',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'While policies, budgets, and perks all have their place, the single most important characteristic of a mentally healthy workplace is psychological safety — people feeling safe to talk about their mental health without fear of judgement, ridicule, or negative career consequences. Without this foundation, policies go unused, training is forgotten, and resources sit untouched. Creating this safety requires consistent action from leaders at every level, not just written commitments.',
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     options: [
       'Publicly confronting and shaming anyone who makes stigmatising comments',
       'Ignoring stigmatising behaviour because challenging it causes conflict',
-      'Educating people firmly but respectfully, creating allies rather than enforcers',
       'Only addressing stigma during formal training sessions, not on the job',
+      'Educating people firmly but respectfully, creating allies rather than enforcers',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The most effective approach to challenging stigma is to be firm but respectful — calling out harmful behaviour without humiliating the person. The goal is to create allies, not enemies. Publicly shaming people creates resentment and resistance. Ignoring stigma allows it to flourish. Limiting challenges to formal training sessions misses the daily moments where culture is actually shaped. The best approach is to address it in the moment, calmly and consistently, explaining why the behaviour is harmful and offering a better alternative.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following BEST describes a mentally healthy workplace culture?',
     options: [
-      'A workplace where nobody ever experiences stress or mental health difficulties',
       'A workplace where mental health is treated with the same importance as physical health and people feel safe to seek support',
+      'A workplace where nobody ever experiences stress or mental health difficulties',
       'A workplace that has a written mental health policy and displays helpline posters',
       'A workplace where managers are trained to identify and diagnose mental health conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A mentally healthy workplace is NOT one where nobody ever struggles — that is unrealistic. It is a workplace where mental health is treated with the same importance as physical health, where people feel safe to talk about their struggles without fear of judgement or negative consequences, where support is visible and accessible, and where leaders actively model openness. Policies and posters are good starting points, but culture is about what actually happens day to day.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
       "Which of the following is an example of 'normalising the conversation' about mental health on a construction site?",
     options: [
       'Putting up a poster about the Samaritans helpline in the site office',
-      'Including mental health as a regular topic in toolbox talks, not just during awareness weeks',
       'Sending an email about mental health during World Mental Health Day',
       'Adding a question about mental health to the annual staff survey',
+      'Including mental health as a regular topic in toolbox talks, not just during awareness weeks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Normalising the conversation means making mental health a regular, everyday topic — not something that only gets mentioned during awareness weeks or in response to incidents. Including it in toolbox talks is a powerful way to do this because it puts mental health alongside safety, quality, and other topics that are discussed routinely. Posters, emails, and surveys are all useful tools, but they are one-off or periodic actions. Normalising means consistent, ongoing integration into daily site life.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'What is the PRIMARY difference between a Mental Health Champion and a Mental Health First Aider?',
     options: [
-      'Champions receive more extensive training than First Aiders',
       'Champions focus on awareness raising and signposting, while First Aiders are trained to provide initial support in a mental health crisis',
+      'Champions receive more extensive training than First Aiders',
       'Champions are always managers, while First Aiders can be anyone',
       'Champions work at company level, while First Aiders work at site level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The key difference is in the depth of training and the role itself. Mental Health Champions typically receive a half-day or one-day awareness course and focus on raising awareness, reducing stigma, and signposting people to support resources. Mental Health First Aiders receive a more intensive two-day training course from MHFA England and are trained to recognise signs of mental health issues, provide initial support in a crisis, and guide people towards professional help. Both roles are valuable, and many organisations have both.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'Peer support programmes in construction are effective because:',
     options: [
       'Peers can provide professional therapy and clinical interventions',
-      'Workers are more likely to open up to someone who understands their world — same industry, same pressures, same language',
       'Peer supporters are cheaper than professional counsellors',
       'Peer support is a legal requirement under the Health and Safety at Work Act 1974',
+      'Workers are more likely to open up to someone who understands their world — same industry, same pressures, same language',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Peer support works because of relatability and trust. Construction workers are more likely to open up to someone who understands the realities of their work — the early starts, the time away from home, the physical demands, the job insecurity, the culture. A peer supporter who has been through similar experiences can connect on a level that a professional from outside the industry may not. Peer support does not replace professional help — it complements it by creating a bridge that makes people more willing to seek help in the first place.',
   },

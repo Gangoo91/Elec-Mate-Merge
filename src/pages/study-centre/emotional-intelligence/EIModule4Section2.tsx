@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'In Seligman\u2019s model, a pessimist explains bad events as permanent, pervasive and personal. How does an optimist explain bad events?',
     options: [
-      'Permanent, specific, external',
       'Temporary, specific, external',
+      'Permanent, specific, external',
       'Temporary, pervasive, personal',
       'Permanent, pervasive, external',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Optimists explain bad events as temporary (\u201cit will pass\u201d), specific (\u201cit\u2019s just this one situation\u201d), and external (\u201ccircumstances contributed\u201d). This explanatory style prevents setbacks from becoming catastrophic and maintains motivation.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: 'What is toxic positivity?',
     options: [
       'Being optimistic about genuinely positive situations',
-      'Dismissing real problems by insisting everything is fine',
       'Having too much energy and enthusiasm at work',
       'Being positive in a way that inspires others',
+      'Dismissing real problems by insisting everything is fine',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Toxic positivity is the excessive and ineffective overgeneralisation of a happy, optimistic state that results in the denial, minimisation and invalidation of genuine human emotional experience. It dismisses real problems with phrases like \u201cjust stay positive\u201d or \u201cit could be worse\u201d, which prevents people from processing their actual feelings and addressing real issues.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'According to Seligman\u2019s MetLife study, optimistic salespeople:',
     options: [
-      'Performed the same as pessimistic salespeople',
       'Outsold pessimistic salespeople by 37% and were less likely to quit',
+      'Performed the same as pessimistic salespeople',
       'Were less reliable but more creative',
       'Sold more initially but burned out faster',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In one of the most cited studies in positive psychology, Seligman tested the explanatory styles of MetLife insurance salespeople and found that optimists outsold pessimists by 37%. More importantly, pessimists were twice as likely to quit in their first year. This study was pivotal in demonstrating the real-world performance impact of explanatory style.',
   },
@@ -181,11 +181,11 @@ const quizQuestions = [
       'An electrician fails an inspection and thinks: \u201cThis job was unusually complex and the new regulation caught me out. I\u2019ll study the update and get it right on the re-inspection.\u201d This explanatory style is:',
     options: [
       'Pessimistic \u2014 they are making excuses',
-      'Optimistic \u2014 temporary, specific, and includes external factors',
       'Unrealistic \u2014 they should blame themselves more',
       'Neither optimistic nor pessimistic',
+      'Optimistic \u2014 temporary, specific, and includes external factors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a textbook optimistic explanatory style: the failure is treated as temporary (\u201cthis time\u201d, not \u201calways\u201d), specific (\u201cthis particular regulation\u201d, not \u201cI\u2019m a terrible electrician\u201d), and includes external factors (\u201cthe new regulation\u201d rather than \u201cI\u2019m incompetent\u201d). Crucially, it also includes a constructive action plan, which is a hallmark of optimistic thinking.',
   },

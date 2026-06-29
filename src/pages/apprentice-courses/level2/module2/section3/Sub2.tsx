@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the main advantage of LSF/LSZH cable in escape routes?",
     options: [
-      'Ensures switches and fuses interrupt the line conductor',
+      'It carries more current than standard PVC cable',
       'It produces less smoke and no halogen gases when burned',
-      'An interconnection point in the horizontal pathway for flexibility',
-      'Continuity, insulation resistance, and polarity',
+      'It costs less than standard PVC sheathed cable',
+      'It needs no mechanical protection when buried',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,8 +155,8 @@ const quizQuestions = [
     id: 6,
     question: 'A conductor is described as "extraneous-conductive-part". This means:',
     options: [
-      'Selected the correct answer but your reasoning was flawed or based on a guess',
-      'The total heat content per unit mass of dry air, typically kJ/kg dry air',
+      'The line conductor carrying current to the load',
+      'A spare conductor left for future circuits',
       'Conductive metalwork not part of the circuit, capable of introducing a potential',
       'Metal part of electrical equipment that can become live under fault',
     ],
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Damaged insulation on a fixed cable should be:',
     options: [
-      'Immediate isolation and urgent investigation',
-      'Cables run close to or parallel with live conductors',
-      'To control motor speed and reduce energy consumption',
+      'Left in place if the cable still tests clean today',
+      'Wrapped in insulating tape as a permanent fix',
+      'Painted over to seal the exposed conductor',
       'Reported and the cable replaced or properly repaired',
     ],
     correctAnswer: 3,

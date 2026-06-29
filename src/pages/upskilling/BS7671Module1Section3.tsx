@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You are doing the periodic inspection on a hospital theatre. Which Parts are in play?',
     options: [
-      'Part 6 only — periodic inspection is Part 6',
+      'Part 6 only — periodic inspection lives entirely within Part 6',
       'Parts 1–6 generally, plus Section 710 (Medical locations) under Part 7',
-      'Part 7 only — special locations override everything',
-      'Part 4 only — protection for safety',
+      'Part 7 only — special-location sections override all other Parts',
+      'Part 4 only — protection for safety is the whole assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     id: 'bs7671-appendix-1-vs-app-2',
     question: 'When is Appendix 1 (Normative) different from Appendix 2 (Informative)?',
     options: [
-      'Appendix 1 is mandatory referenced standards; Appendix 2 is statutory regulations and associated memoranda — for context, not normative',
-      'They are interchangeable',
-      'Appendix 1 covers cables; Appendix 2 covers earthing',
-      'Only Appendix 2 has legal force',
+      'Appendix 1 is normative referenced standards; Appendix 2 is informative statutory context',
+      'They are interchangeable and carry identical normative weight',
+      'Appendix 1 covers cable data; Appendix 2 covers earthing arrangements',
+      'Only Appendix 2 has any binding legal force on the installer',
     ],
     correctIndex: 0,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'A customer fits a battery storage unit, a 4 kW PV array and a tethered EV charger to a domestic property. Which Part of BS 7671 sets the high-level functional framework for managing the local generation, storage and consumption together?',
     options: [
-      'Part 4 — protection for safety covers everything',
-      'Part 7 — Section 712 (Solar PV) is the only relevant requirement',
-      'Part 8 — Functional requirements (the prosumer Part), supplemented by Section 712, Chapter 57 (stationary batteries) and Section 722 (EV charging)',
-      'Part 5 only — equipment selection',
+      'Part 4 — protection for safety covers the whole generation-and-storage system',
+      'Part 7 — Section 712 (Solar PV) is the only relevant functional requirement',
+      'Part 8 — Functional requirements (the prosumer Part), with detail from Parts 5 and 7',
+      'Part 5 only — equipment selection and erection governs the whole arrangement',
     ],
     correctIndex: 2,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671:2018+A4:2026 includes a NEW chapter that did not exist pre-A4. Which one?',
     options: [
-      'Chapter 41 — Protection against electric shock',
       'Chapter 57 — Stationary secondary batteries',
+      'Chapter 41 — Protection against electric shock',
       'Chapter 64 — Initial verification',
       'Chapter 36 — Continuity of service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4 introduced Chapter 57 — Stationary secondary batteries. It covers requirements for stationary battery installations whose designed purpose is storage and supply of electrical installations (BESS, PV+battery, off-grid hybrid). Excludes batteries inside product-safety-standard equipment such as UPSs and central emergency-lighting power supplies. A4 also introduced Chapter 81 (Energy efficiency) and Section 716 (PoE).',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
       'Which Appendix contains the cable current-carrying capacity tables (4D / 4E / 4H / 4J series)?',
     options: [
       'Appendix 3 — Time/current characteristics',
-      'Appendix 4 — Current-carrying capacity and voltage drop for cables',
       'Appendix 8 — Busbar trunking and powertrack',
       'Appendix 14 — Prospective fault current',
+      'Appendix 4 — Current-carrying capacity and voltage drop for cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Appendix 4 holds the cable rating tables. A4:2026 revised Tables 4A2, 4D4A, 4E4A, 4H4A and 4J4A to introduce distinct buried-cable methods for cables in direct soil contact vs cables in a conduit or duct — a substantive correction of long-standing thermal modelling. Appendix 3 has the device time-current curves; Appendix 8 covers busbar trunking; Appendix 14 covers PSCC.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'A regulation under Section 722 (EV charging) conflicts with a regulation in Chapter 41. Which applies?',
     options: [
-      'Chapter 41 — it is the general regulation, always wins',
-      'Section 722 — Part 7 supplements or modifies Parts 1–6 (Reg 110.1.3); the special-location requirement applies',
-      'Whichever the certifying body chooses',
-      'They never conflict — Part 7 always extends Part 4',
+      'Chapter 41 — as the general regulation it always takes precedence',
+      'Whichever the certifying body or scheme provider chooses to apply',
+      'Section 722 — Part 7 supplements or modifies Parts 1–6 (Reg 110.1.3)',
+      'Neither — Part 7 and Part 4 can never give conflicting requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 110.1.3 explicitly says Part 7 supplements or modifies Parts 1–6. Where a Part 7 section gives a more stringent or different requirement (e.g. 722 requires specific PME Open-PEN protection for EV chargers — a modification of standard ADS thinking), the Part 7 requirement applies on the special location. Chapter 41 still applies everywhere it is not modified.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'Reg 110.1.1 sets the scope of BS 7671. Which best summarises what 110.1.1 actually says?',
     options: [
-      'BS 7671 applies to every electrical installation in the UK without exception',
-      'BS 7671 applies to the design, erection and verification of electrical installations operating at low voltage and below — listed installation types are explicitly within scope',
-      'BS 7671 applies only to domestic premises',
-      'BS 7671 applies only to new installations — it has no role in periodic inspection',
+      'BS 7671 applies to every electrical installation in the UK without any exception',
+      'It applies to design, erection and verification of LV installations, with listed types in scope',
+      'BS 7671 applies only to domestic premises and their final circuits',
+      'BS 7671 applies only to new installations and has no role in periodic inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'Under A4:2026 the standard introduces a new section on functional earthing for ICT equipment. Which section?',
     options: [
-      'Section 444 — Measures against electromagnetic disturbances',
       'Section 545 — Functional earthing for ICT equipment (new under A4)',
+      'Section 444 — Measures against electromagnetic disturbances',
       'Section 716 — Power over Ethernet',
       'Section 559 — Luminaires and lighting installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 545 (Functional earthing for ICT equipment) was added under A4:2026 inside Chapter 54 (Earthing arrangements and protective conductors). It distinguishes functional earthing (used for the proper operation of ICT equipment, e.g. low-noise reference) from protective earthing (for safety), and sets requirements for the conductors and connection arrangements where both functions are present. Sits alongside the existing 543 / 544 protective-conductor requirements.',
   },

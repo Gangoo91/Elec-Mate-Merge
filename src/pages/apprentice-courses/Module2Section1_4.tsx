@@ -63,22 +63,27 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'True or False: 1 MΩ is equal to 1,000 kΩ.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
+    question: 'How many kilohms (kΩ) are equal to 1 MΩ?',
+    options: [
+      '100 kΩ',
+      '10,000 kΩ',
+      '1,000 kΩ',
+      '1,000,000 kΩ',
+    ],
+    correctAnswer: 2,
     explanation:
-      'True. 1 MΩ = 1,000,000 Ω, and 1,000 kΩ = 1,000 × 1,000 = 1,000,000 Ω. They are exactly equal.',
+      '1 MΩ = 1,000,000 Ω, and 1,000 kΩ = 1,000 × 1,000 = 1,000,000 Ω, so 1 MΩ = 1,000 kΩ.',
   },
   {
     id: 6,
     question: 'Convert 0.025 A to milliamps:',
     options: [
       '2.5 mA',
-      '250 mA',
       '25 mA',
+      '250 mA',
       '0.25 mA',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '0.025 A = 0.025 × 1,000 = 25 mA. To convert from base units to milli, multiply by 1,000.',
   },
@@ -111,25 +116,25 @@ const quizQuestions = [
     id: 9,
     question: 'Which is larger: 2,200 µF or 2.2 mF?',
     options: [
-      '2,200 µF',
-      'They are equal',
-      '2.2 mF',
-      'Cannot determine',
+      '2,200 µF is larger',
+      '2.2 mF is larger',
+      'They are exactly equal',
+      '2.2 mF is exactly ten times larger',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      '2.2 mF = 2.2 × 1,000 µF = 2,200 µF, but mF means milli (÷1,000), so 2.2 mF = 0.0022 F, whilst 2,200 µF = 0.0022 F. They are equal!',
+      '2.2 mF = 2.2 ÷ 1,000 = 0.0022 F, and 2,200 µF = 2,200 ÷ 1,000,000 = 0.0022 F. Both equal 0.0022 F, so they are exactly equal.',
   },
   {
     id: 10,
     question: 'A cable has a resistance of 0.5 Ω per 100m. What is this in milliohms per metre?',
     options: [
       '500 mΩ/m',
-      '50 mΩ/m',
       '5 mΩ/m',
+      '50 mΩ/m',
       '0.5 mΩ/m',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '0.5 Ω per 100m = 0.5 ÷ 100 = 0.005 Ω/m. Converting to mΩ: 0.005 × 1,000 = 5 mΩ/m.',
   },

@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'What are the three stages of the Three-Minute Breathing Space, in the correct order?',
     options: [
-      'Relax, Focus, Expand',
       'Awareness, Gathering, Expanding',
+      'Relax, Focus, Expand',
       'Inhale, Hold, Exhale',
       'Notice, Accept, Release',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Three-Minute Breathing Space has three stages: Awareness (noticing what is present in your experience right now — thoughts, feelings, sensations), Gathering (narrowing your focus to the breath as a single anchor point), and Expanding (broadening your awareness back out to include the whole body, the space around you, and the task ahead). Each stage lasts approximately one minute.',
   },
@@ -48,11 +48,11 @@ const quickCheckQuestions = [
     question: 'In the 5-4-3-2-1 Grounding technique, what is the correct sequence of senses used?',
     options: [
       '5 touch, 4 taste, 3 smell, 2 hear, 1 see',
-      '5 see, 4 hear, 3 touch, 2 smell, 1 taste',
       '5 hear, 4 see, 3 smell, 2 touch, 1 taste',
       '5 see, 4 touch, 3 hear, 2 smell, 1 taste',
+      '5 see, 4 hear, 3 touch, 2 smell, 1 taste',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The 5-4-3-2-1 Grounding technique follows this sequence: 5 things you can SEE, 4 things you can HEAR, 3 things you can TOUCH, 2 things you can SMELL, and 1 thing you can TASTE. The descending count creates a structured pathway from the most dominant sense (vision) to the least often consciously noticed (taste), progressively anchoring you in the present moment through your physical senses.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'Box Breathing is also known by which of the following names?',
     options: [
-      'The physiological sigh',
       'Square breathing or tactical breathing',
+      'The physiological sigh',
       'Pranayama breathing',
       'Diaphragmatic breathing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Box Breathing is also called square breathing (because of the four equal sides of the breathing pattern) and tactical breathing (because it is widely used by military and emergency services for managing stress in high-pressure situations). The physiological sigh is a different technique (double inhale, long exhale, developed by Huberman). Pranayama is the general yogic term for breath control, not a specific name for box breathing.',
   },
@@ -110,11 +110,11 @@ const quizQuestions = [
       'Why does the 5-4-3-2-1 Grounding technique work so effectively for acute stress and panic?',
     options: [
       'It distracts you from the stressor by giving you a task to complete',
-      'It anchors your attention in the present moment through physical senses, interrupting the cognitive loop of worry and rumination',
       'It reduces blood pressure through controlled breathing',
+      'It anchors your attention in the present moment through physical senses, interrupting the cognitive loop of worry and rumination',
       'It activates the vagus nerve through sensory stimulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 5-4-3-2-1 technique works primarily by anchoring your attention in the present moment through your physical senses. When you are stressed or anxious, your mind is typically caught in a cognitive loop — replaying past events or worrying about future ones. By systematically engaging each of your five senses with the present environment, you interrupt this loop and ground yourself in what is actually happening right now. This is not mere distraction; it is a deliberate shift from abstract, threat-focused thinking to concrete, present-moment sensory awareness.',
   },
@@ -123,11 +123,11 @@ const quizQuestions = [
     question: 'During a Body Scan, in which direction do you typically move your attention?',
     options: [
       'From the head down to the feet',
-      'From the feet up to the top of the head',
       'From the centre of the body outwards to the extremities',
       'In random order, wherever tension is felt',
+      'From the feet up to the top of the head',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The standard Body Scan moves attention systematically from the feet up to the top of the head. This upward progression was chosen by Kabat-Zinn because it encourages a thorough, methodical sweep of the entire body, and because starting at the feet (which are far from the head where most people carry their stress awareness) helps develop sensitivity to parts of the body that are often ignored. The systematic approach ensures no area is skipped.',
   },
@@ -165,10 +165,10 @@ const quizQuestions = [
     options: [
       'A full 45-minute sitting meditation',
       'A 10-minute Body Scan lying down',
-      'The 5-4-3-2-1 Grounding technique to anchor themselves in the present moment',
       'The mindful commute technique',
+      'The 5-4-3-2-1 Grounding technique to anchor themselves in the present moment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'After a near-miss, the immediate priority is to ground yourself in the present moment and interrupt the acute stress response. The 5-4-3-2-1 Grounding technique is specifically designed for this: it anchors you in your current sensory experience, breaks the loop of replaying what just happened or catastrophising about what could have happened, and brings you back to the present reality (you are safe, the danger has passed). A full meditation or body scan would be impractical and inappropriate immediately after a safety incident on site.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'What is the key difference between Box Breathing and the Three-Minute Breathing Space?',
     options: [
-      'Box Breathing is longer and more complex than the Breathing Space',
       'Box Breathing focuses purely on the breathing pattern, while the Breathing Space includes awareness, gathering, and expanding stages',
+      'Box Breathing is longer and more complex than the Breathing Space',
       'The Breathing Space can only be used by trained meditation practitioners',
       'Box Breathing is only effective for physical symptoms, while the Breathing Space works on psychological symptoms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Box Breathing is a focused breathing pattern (4-4-4-4) that works by activating the parasympathetic nervous system through controlled breathing. The Three-Minute Breathing Space is a broader mindfulness practice with three distinct stages (Awareness, Gathering, Expanding) that includes but goes beyond breathing. Box Breathing is best for immediate physiological calming; the Breathing Space is best for stepping back from automatic pilot and reconnecting with present-moment awareness. Both are effective, but they serve different purposes.',
   },

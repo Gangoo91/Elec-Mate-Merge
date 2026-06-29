@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'inductive-principle',
     question: 'What is the operating principle of an inductive proximity sensor?',
     options: [
-      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
+      'It emits a beam of infrared light and detects when the beam is interrupted by a target',
       'It generates a high-frequency electromagnetic field and detects the eddy current losses when a metallic target enters the field',
-      'To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached',
-      'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
+      'It measures the change in capacitance as any material approaches the sensing face',
+      'It detects the magnetic field of a permanent magnet embedded in the target',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'npn-pnp-output',
     question: 'What is the difference between an NPN and PNP proximity sensor output?',
     options: [
-      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
-      'It uses the large quadriceps and gluteal muscles while reducing the moment arm on the lumbar spine',
+      'NPN sensors run on AC supplies; PNP sensors run on DC supplies',
+      'NPN sensors are normally open; PNP sensors are normally closed',
       'NPN switches the load to the negative rail (sinking); PNP switches the load to the positive rail (sourcing)',
-      'The sender\\\\\\\\\\\\\\\'s email address has a slightly misspelt domain name (e.g. @edff-energy.co.uk instead of @edfenergy.com)',
+      'NPN sensors detect metals; PNP sensors detect non-metals',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'In a through-beam photoelectric sensor arrangement, where are the emitter and receiver positioned?',
     options: [
-      'A notice that immediately stops a dangerous work activity until the risk is adequately controlled',
+      'The emitter and receiver are in the same housing, with light bounced off a reflector',
       'The emitter and receiver face each other across the detection zone, and the target breaks the beam',
-      'Emergency contacts, site plans, hazard information, evacuation procedures',
-      'An RCBO combines overcurrent and earth fault protection in a single device, allowing individual circuit protection',
+      'The emitter and receiver are in one housing, detecting light scattered back from the target',
+      'The emitter and receiver are mounted side by side and detect a magnetic field',
     ],
     correctIndex: 1,
     explanation:
@@ -99,9 +99,9 @@ const quizQuestions = [
     question:
       'A capacitive proximity sensor is installed to detect the level of a liquid inside a plastic tank. What does the sensor actually measure?',
     options: [
-      "Magnetic reed switch or Hall effect sensor detecting the piston's permanent magnet",
-      "The difference between the switch-on point and the switch-off point as the target approaches and then retreats",
-      "The environment contains dust, mist or steam that would block light",
+      "The weight of liquid pressing against the sensing face",
+      "The temperature difference between the liquid and the air above it",
+      "The electrical conductivity of the liquid flowing past the sensor",
       "The change in capacitance caused by the liquid's dielectric constant being higher than air",
     ],
     correctAnswer: 3,
@@ -114,9 +114,9 @@ const quizQuestions = [
       'A PNP (sourcing) proximity sensor is connected to a PLC digital input. Which statement is correct?',
     options: [
       'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
-      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
-      'Whether the sensor face is level with the mounting surface or protrudes from it',
-      'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
+      'The PLC input must be configured for sourcing to work with a PNP sensor',
+      'A PNP sensor cannot be connected directly to a PLC input',
+      'The PNP sensor must be powered from the PLC output rather than the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'An ultrasonic proximity sensor is preferred over an optical sensor when:',
     options: [
-      'Only one cable run is needed — both emitter and receiver are in the same housing',
-      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
+      'The fastest possible switching speed is required',
+      'The target is a small, shiny metallic component',
       'The environment contains dust, mist or steam that would block light',
-      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\'s permanent magnet',
+      'The sensor must be mounted flush with a metal surface',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,9 +153,9 @@ const quizQuestions = [
     question:
       'A maintenance technician finds that an inductive proximity sensor is not detecting a target that is within the rated sensing distance. The first check should be:',
     options: [
-      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
-      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
-      'Only one cable run is needed — both emitter and receiver are in the same housing',
+      'Replace the sensor immediately, as it has clearly failed',
+      'Increase the sensor sensitivity to maximum using the potentiometer',
+      'Move the target closer than the rated sensing distance',
       'Verify the supply voltage at the sensor terminals and check the LED indicator status',
     ],
     correctAnswer: 3,
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'A retro-reflective photoelectric sensor uses a reflector on the opposite side of the detection zone. The advantage over a through-beam arrangement is:',
     options: [
-      'Whether the sensor face is level with the mounting surface or protrudes from it',
+      'It provides a longer sensing range than a through-beam arrangement',
       'Only one cable run is needed — both emitter and receiver are in the same housing',
-      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
-      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
+      'It can detect transparent targets that a through-beam sensor misses',
+      'It does not require any optical alignment during installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 10,
     question: 'An encoder mounted on a motor shaft provides:',
     options: [
-      'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
-      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
+      'A measurement of the motor winding temperature',
+      'A measurement of the current drawn by the motor',
       'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
-      'The difference between the switch-on point and the switch-off point as the target approaches and then retreats',
+      'Protection against overload by interrupting the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     id: 11,
     question: "The 'flush' and 'non-flush' mounting styles of an inductive sensor refer to:",
     options: [
-      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
-      'The environment contains dust, mist or steam that would block light',
-      'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
+      'Whether the sensor uses an NPN or a PNP output configuration',
+      'Whether the sensor detects ferrous or non-ferrous metals',
+      'Whether the sensor output is normally open or normally closed',
       'Whether the sensor face is level with the mounting surface or protrudes from it',
     ],
     correctAnswer: 3,
@@ -221,9 +221,9 @@ const quizQuestions = [
       'Which proximity sensor technology would be most suitable for detecting the position of a pneumatic cylinder piston through a non-magnetic aluminium cylinder barrel?',
     options: [
       "Magnetic reed switch or Hall effect sensor detecting the piston's permanent magnet",
-      "The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor",
-      "Verify the supply voltage at the sensor terminals and check the LED indicator status",
-      "The change in capacitance caused by the liquid's dielectric constant being higher than air",
+      "Inductive proximity sensor mounted on the cylinder barrel",
+      "Capacitive proximity sensor mounted on the cylinder barrel",
+      "Through-beam photoelectric sensor across the cylinder stroke",
     ],
     correctAnswer: 0,
     explanation:

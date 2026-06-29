@@ -73,9 +73,9 @@ const quickCheckQuestions = [
     question:
       'Under TM52, what is the threshold temperature above which hours are counted for overheating?',
     options: [
-      'Personal protection against electric shock',
-      'Output saturation with continued error accumulation',
-      'All entrants must immediately evacuate the confined space',
+      'A fixed 26°C for all occupied spaces',
+      'A fixed 28°C regardless of outdoor conditions',
+      'Whatever the building services engineer specifies',
       'Varies with running mean outdoor temperature',
     ],
     correctIndex: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the adaptive comfort principle based on?',
     options: [
-      'In the direction of escape (outwards)',
+      'A single fixed comfort temperature applied all year round',
       'Occupants adapting to seasonal and local conditions',
-      'Test equipment failure or incorrect connections',
-      'Reduced false triggering - both technologies must detect movement',
+      'The mechanical cooling system maintaining a constant setpoint',
+      'Comfort being determined solely by relative humidity',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'What is the effect of increasing air velocity on thermal sensation in warm conditions?',
     options: [
-      'Temperature difference between different directions from occupant',
-      'Occupants adapting to seasonal and local conditions',
-      'Hours of exceedance, daily weighted exceedance, maximum temperature',
+      'Feels warmer because moving air carries more heat to the skin',
+      'Has no measurable effect on perceived thermal sensation',
+      'Increases relative humidity and therefore feels more humid',
       'Feels cooler due to increased convective and evaporative heat loss',
     ],
     correctAnswer: 3,
@@ -182,22 +182,22 @@ const quizQuestions = [
     question: 'In TM52 overheating assessment, what are the three criteria?',
     options: [
       'Hours of exceedance, daily weighted exceedance, maximum temperature',
-      'Occupants adapting to seasonal and local conditions',
-      'Temperature difference between different directions from occupant',
-      'Feels cooler due to increased convective and evaporative heat loss',
+      'Air temperature, mean radiant temperature, relative humidity',
+      'Solar gain, internal gain, ventilation rate',
+      'Clothing insulation, metabolic rate, air velocity',
     ],
     correctAnswer: 0,
     explanation:
-      'TM52 Criterion 1: Hours where ΔT > 1K (max 3% occupied hours). Criterion 2: Daily weighted exceedance (max 6). Criterion 3: Absolute maximum ΔT ≤ 4K. Fail any = overheating.',
+      'TM52 Criterion 1: Hours where ΔT > 1K (max 3% occupied hours). Criterion 2: Daily weighted exceedance (max 6). Criterion 3: Absolute maximum ΔT ≤ 4K. A space is deemed to overheat if it fails any two of the three criteria.',
   },
   {
     id: 9,
     question: "What is 'asymmetric radiant temperature' and why does it matter?",
     options: [
-      'Hours of exceedance, daily weighted exceedance, maximum temperature',
+      'The difference between summer and winter design temperatures',
       'Temperature difference between different directions from occupant',
-      'Feels cooler due to increased convective and evaporative heat loss',
-      'Occupants adapting to seasonal and local conditions',
+      'The variation in air temperature over a 24-hour period',
+      'The gap between the supply and return air temperatures',
     ],
     correctAnswer: 1,
     explanation:
@@ -221,9 +221,9 @@ const quizQuestions = [
     id: 11,
     question: 'What running mean outdoor temperature is used in adaptive comfort calculations?',
     options: [
-      'To ensure only vapour enters the compressor',
-      '50% more energy than a typical building',
-      'RCD test gives inconsistent results',
+      'A simple arithmetic mean of the past seven days',
+      'The single highest temperature recorded that day',
+      'The annual average outdoor temperature for the location',
       'Exponentially weighted running mean',
     ],
     correctAnswer: 3,

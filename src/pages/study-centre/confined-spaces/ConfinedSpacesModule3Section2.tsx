@@ -22,11 +22,11 @@ const quickCheckQuestions = [
       'What is the primary danger when working with free-flowing solids such as grain or sand in a confined space?',
     options: [
       'The material may catch fire spontaneously',
-      'Engulfment — the worker can be buried and suffocated within seconds',
       'The material produces toxic fumes when disturbed',
+      'Engulfment — the worker can be buried and suffocated within seconds',
       'Free-flowing solids are only dangerous in wet conditions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Free-flowing solids such as grain, sand, cement powder, and coal can behave like quicksand when disturbed. A worker standing on or near the surface can sink rapidly and become engulfed in seconds. Once buried to chest depth, the pressure on the torso prevents breathing and rescue becomes extremely difficult. Engulfment is one of the leading causes of fatality in confined spaces involving stored materials.',
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
     question: "How is Weil's disease (leptospirosis) typically contracted in confined spaces?",
     options: [
       'By inhaling dust from old brickwork',
-      'Through contact with water or surfaces contaminated by rat urine',
       'By touching corroded metal pipework',
       'Through skin contact with sewage gases',
+      'Through contact with water or surfaces contaminated by rat urine',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Weil's disease (severe leptospirosis) is caused by the bacterium Leptospira, which is present in the urine of infected rats and other rodents. Workers can contract it through contact with contaminated water or damp surfaces — the bacteria enter through cuts, abrasions, or mucous membranes (eyes, nose, mouth). Sewers, drains, culverts, and waterways are high-risk locations. Weil's disease can cause organ failure and death if untreated, making it a serious biological hazard in confined space work.",
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is an example of engulfment by a free-flowing solid?',
     options: [
-      'A worker trapped by a jammed door in a storage room',
       'A worker buried in grain after the surface collapses in a silo',
+      'A worker trapped by a jammed door in a storage room',
       'A worker overcome by carbon monoxide in a boiler room',
       'A worker falling from a ladder inside a water tank',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Engulfment by free-flowing solids occurs when materials such as grain, sand, cement powder, or coal collapse or flow around a worker, burying them. A worker sinking into grain after the surface collapses in a silo is a classic engulfment scenario. The other options describe entrapment, atmospheric hazard, and falls from height respectively — all confined space hazards, but not engulfment by solids.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
       'What is the primary risk of complex internal structures (baffles, agitators) in confined spaces?',
     options: [
       'They generate toxic fumes when heated',
-      'They create entrapment hazards — workers can become stuck or caught',
       'They always contain asbestos insulation',
       'They increase the risk of flooding',
+      'They create entrapment hazards — workers can become stuck or caught',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Complex internal structures such as baffles, agitators, mixing blades, and cross-bracing create entrapment hazards. Workers can become wedged in narrow gaps, caught on protruding components, or trapped in areas that are difficult to access for rescue. These structures also complicate rescue operations because standard stretchers and retrieval equipment may not fit through the obstructions.',
   },
@@ -135,8 +135,8 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the recommended maximum voltage for portable hand lamps in wet confined spaces?',
-    options: ['230V', '110V', '55V', '25V or 12V'],
-    correctAnswer: 3,
+    options: ['25V or 12V', '55V', '110V', '230V'],
+    correctAnswer: 0,
     explanation:
       'In wet or highly conductive confined spaces, portable hand lamps should operate at 25V or even 12V to minimise electrical shock risk. While 110V CTE (centre-tapped to earth) is the standard for portable power tools on construction sites, giving a maximum of 55V to earth, hand lamps in particularly hazardous wet environments require further voltage reduction. Battery-powered lighting is an excellent alternative that eliminates mains supply risks entirely.',
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT a non-atmospheric hazard in confined spaces?',
     options: [
       'Engulfment by free-flowing grain',
-      'Oxygen depletion from rusting steelwork',
       'Entrapment in narrowing passages',
+      'Oxygen depletion from rusting steelwork',
       'Structural collapse of deteriorated access shafts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Oxygen depletion from rusting steelwork is an ATMOSPHERIC hazard (the rusting process consumes oxygen, reducing the concentration below safe levels). Engulfment by grain, entrapment in narrowing passages, and structural collapse are all non-atmospheric hazards — physical dangers that exist regardless of the air quality. This section focuses specifically on non-atmospheric hazards, though in practice both categories must be assessed together.',
   },

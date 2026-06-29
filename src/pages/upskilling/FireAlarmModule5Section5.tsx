@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'What is the correct order for the commissioning sequence on a new fire alarm system?',
     options: [
-      'Power-up, then test devices.',
-      'Visual inspection → continuity tests → insulation resistance (devices removed) → polarity / address verification → first power-up → cause-and-effect verification → device-by-device functional tests → sound level survey → battery autonomy / mains-fail simulation → ARC / interface tests → false-alarm-investigation procedure handover. Each step verifies a specific aspect; each later step depends on earlier steps having passed. Skipping or re-ordering produces unverified gaps in the safety case.',
-      'Just press the test button on every device.',
-      'Whatever order is convenient.',
+      'Power up the panel first, then test the devices once everything is energised.',
+      'Visual and continuity, then IR, polarity / address, power-up, cause-and-effect, functional, surveys.',
+      'Just press the test button on every device in turn and watch for the panel response.',
+      'Whatever order is convenient on the day, since the steps are independent of each other.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'Under BS 5839-1:2025, what does the commissioning engineer have to verify about the cause-and-effect matrix?',
     options: [
-      'Just that the panel sounds when an MCP is pressed.',
-      'That every CAUSE in the design cause-and-effect matrix produces the documented EFFECT — every detector activation, MCP operation, interface input, etc. produces the designed alarm response, sounder operation, ARC signal, plant shutdown, door release, etc. The 2025 revision makes the cause-and-effect matrix or text description part of the mandatory documentation handover (NEW per the documentation clause), so the matrix must exist before commissioning, must be verified at commissioning, and must be handed over with the system.',
-      'Only the panel-internal cause and effect.',
-      'Only on the bigger systems.',
+      'Just that the panel sounds the alarm when any one MCP is pressed and held.',
+      'That every cause in the design matrix produces its documented effect, in the right zones.',
+      'Only the panel-internal cause and effect, ignoring any external interface outputs.',
+      'Only on the bigger systems where many interfaces and outputs are involved.',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'What sound levels does BS 5839-1:2025 require for fire alarm sounders at all accessible points and at bed-head positions?',
     options: [
-      '50 dB(A) general / 60 dB(A) bed-head.',
-      '65 dB(A) at all accessible points / 75 dB(A) at bed-head positions / at least 5 dB above any sustained background noise of 30 seconds or more. The 65 / 75 / +5 figures are unchanged from 2017. The bed-head 75 dB(A) reflects that someone asleep needs a higher level to be woken; the +5 dB above sustained background means sounders must be louder than any equivalent-noise environment they share. All measured at commissioning with a calibrated sound level meter, recorded in the commissioning record.',
-      '90 dB(A) everywhere.',
-      'Whatever the sounders produce.',
+      '50 dB(A) at accessible points and 60 dB(A) at the bed-head in sleeping rooms.',
+      '65 dB(A) at accessible points, 75 dB(A) at the bed-head, and 5 dB above background.',
+      '90 dB(A) everywhere in the building, including unoccupied plant rooms and risers.',
+      'Whatever the chosen sounders produce, with no separate bed-head requirement set.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Under BS 5839-1:2025 clauses 14.17 and 14.18, what are the maximum allowed alarm transmission times to the ARC for Category L and Category P systems?',
     options: [
-      '30 s for both.',
-      'Category L: indication received at the ARC within a maximum of 90 s; catastrophic failure indicated at ARC and CIE within 3 min. Category P: indication received at the ARC within a maximum of 120 s; catastrophic failure indicated at ARC and CIE within 31 min. NEW in 2025 — the 2017 revision did not provide these explicit transmission timings. The figures recognise that Category L (Life) requires faster signalling than Category P (Property) because life is at greater immediate risk.',
-      '5 min for both.',
-      'No limit.',
+      '30 s alarm transmission for both Category L and Category P systems alike.',
+      'Category L: 90 s alarm / 3 min catastrophic. Category P: 120 s alarm / 31 min catastrophic.',
+      '5 min alarm transmission for both Category L and Category P systems alike.',
+      'No transmission-time limit is set for either Category L or Category P systems.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,138 +82,138 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 introduced explicit alarm-transmission timings to the ARC. What are the figures for a Category L system?',
     options: [
-      '30 s alarm / 30 min catastrophic.',
-      'Indication received at the ARC within a maximum of 90 s; catastrophic failure indicated at ARC and CIE within 3 min. Set out in clause 14.17. NEW for 2025; the 2017 revision recognised the use of I&HAS transmission equipment but did not set explicit timings.',
-      '120 s alarm / 31 min catastrophic.',
-      'No limit.',
+      'Alarm received at the ARC within 90 s; catastrophic failure indicated within 3 min.',
+      '30 s alarm to the ARC / 30 min catastrophic-failure indication at ARC and CIE.',
+      '120 s alarm to the ARC / 31 min catastrophic-failure indication at ARC and CIE.',
+      'No transmission-time limit at all for a Category L life-safety system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Category L (Life): 90 s alarm to ARC, 3 min catastrophic failure indication at ARC and CIE per clause 14.17. The 90 s figure recognises that life-safety systems need rapid signalling. The 3 min catastrophic-failure indication ensures users know quickly when the transmission path is compromised.',
+      'Category L (Life): 90 s alarm to ARC, 3 min catastrophic-failure indication at ARC and CIE per clause 14.17 (NEW for 2025; the 2017 revision recognised I&HAS transmission equipment but did not set explicit timings). The 90 s figure recognises that life-safety systems need rapid signalling; the 3 min catastrophic-failure indication ensures users know quickly when the transmission path is compromised.',
   },
   {
     id: 2,
     question:
       'BS 5839-1:2025 introduced explicit alarm-transmission timings to the ARC. What are the figures for a Category P system?',
     options: [
-      '60 s alarm / 5 min catastrophic.',
-      'Indication received at the ARC within a maximum of 120 s; catastrophic failure indicated at ARC and CIE within 31 min. Set out in clause 14.18. NEW for 2025. Category P (Property) timings are more relaxed than Category L (Life) because property protection has lower immediacy than life safety.',
-      '90 s alarm / 3 min catastrophic.',
-      'No limit.',
+      '60 s alarm to the ARC / 5 min catastrophic-failure indication at ARC and CIE.',
+      '90 s alarm to the ARC / 3 min catastrophic-failure indication at ARC and CIE.',
+      'Alarm received at the ARC within 120 s; catastrophic failure indicated within 31 min.',
+      'No transmission-time limit at all for a Category P property-protection system.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Category P (Property): 120 s alarm to ARC, 31 min catastrophic failure indication at ARC and CIE per clause 14.18. The longer catastrophic-failure window (31 min vs 3 min for L) recognises that property-only protection has more time to tolerate a transmission compromise without endangering life.',
+      'Category P (Property): 120 s alarm to ARC, 31 min catastrophic-failure indication at ARC and CIE per clause 14.18 (NEW for 2025). The longer catastrophic-failure window (31 min vs 3 min for L) recognises that property-only protection has more time to tolerate a transmission compromise without endangering life.',
   },
   {
     id: 3,
     question: 'What sound levels does BS 5839-1:2025 require for fire alarm sounders?',
     options: [
-      '50 dB(A) anywhere.',
-      '65 dB(A) at all accessible points / 75 dB(A) at bed-head positions / at least 5 dB above any sustained background noise of 30 seconds or more. Targets verified at commissioning with a calibrated sound level meter, walked through every accessible point and recorded. Failure at any point triggers re-positioning, additional sounders, or higher-output devices.',
-      '120 dB(A) — louder is better.',
-      'Whatever the sounders produce.',
+      '50 dB(A) anywhere in the building, with no separate sleeping-room requirement.',
+      'A flat 120 dB(A) everywhere on the basis that louder is always better for evacuation.',
+      'Whatever the chosen sounders happen to produce, with no measured target at handover.',
+      '65 dB(A) at accessible points, 75 dB(A) at the bed-head, and 5 dB above background.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The 65 / 75 / +5 dB figures are the audibility benchmarks. 65 at all accessible points = the floor; 75 at bed-head = louder for sleeping occupants; +5 above 30s+ background = ensure sounders are heard over equivalent-noise environments.',
+      'The 65 / 75 / +5 dB figures are the audibility benchmarks: 65 at all accessible points is the floor; 75 at the bed-head is louder for sleeping occupants; +5 above any background lasting 30 seconds or more ensures sounders are heard over equivalent-noise environments. Verified at commissioning with a calibrated sound level meter at every accessible point; failure triggers re-positioning, additional or higher-output devices.',
   },
   {
     id: 4,
     question: 'What does BS EN 54-23 govern, and when does it apply at commissioning?',
     options: [
-      'Smoke detector test.',
-      'BS EN 54-23 covers VISUAL ALARM DEVICES (VADs) — specifies coverage volume (defined as cubic shape based on light intensity) and luminous flux requirements. Applies at commissioning when a VAD is the PRIMARY evacuation signal (e.g. for hearing-impaired occupants, or in noise-exempt areas where audible alarms are inappropriate). Verified by manufacturer table or calculation showing the VAD covers the design volume, light intensity meets the BS EN 54-23 category for the application.',
-      'Battery autonomy.',
-      'Cable colour.',
+      'Visual alarm devices (VADs); it applies where a VAD is the primary evacuation signal.',
+      'Point smoke detector testing; it applies during the per-device functional test stage.',
+      'Standby battery autonomy; it applies during the mains-fail simulation at commissioning.',
+      'Fire alarm cable colour identification; it applies at the wiring and termination stage.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS EN 54-23 is the product / coverage standard for VADs. Categories C-3-15 (ceiling 3 m, 15 cd) etc. specify the device performance. Where VAD is the primary evacuation signal, BS EN 54-23 verification at commissioning is mandatory. Where VAD supplements an audible signal, audible verification is the primary check and VAD verification is supplementary.',
+      'BS EN 54-23 is the product / coverage standard for VADs — it specifies coverage volume (a cubic shape based on light intensity) and luminous flux, with categories like C-3-15 (ceiling, 3 m, 15 cd). Where a VAD is the primary evacuation signal (e.g. for hearing-impaired occupants or noise-exempt areas), verification at commissioning is mandatory, by manufacturer table or calculation. Where the VAD supplements an audible signal, audible verification is the primary check.',
   },
   {
     id: 5,
     question:
       'During commissioning, the cause-and-effect matrix is verified. Which best describes that verification process?',
     options: [
-      'Test only the panel buttons.',
-      'For every CAUSE in the design matrix (every detector, every MCP, every interface input, every test condition), trigger the cause and verify that ALL designed EFFECTS occur (alarm sound, sounder operation, ARC signal, plant shutdown, lift recall, door release, smoke vent open, etc.) in the correct timing, in the correct zones. Failures are documented on the cause-and-effect verification record and rectified before sign-off. The matrix is a contractual document handed over with the system.',
-      'Just verify the alarm sounds.',
-      'Cause-and-effect is optional.',
+      'Test only the panel buttons and confirm the internal indicators respond correctly.',
+      'Just verify the alarm sounds somewhere when a single detector or MCP is triggered.',
+      'Trigger every cause in the matrix and verify all designed effects, in the right zones.',
+      'Cause-and-effect verification is optional and can be deferred to the first service visit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Cause-and-effect verification is the load-bearing design-intent check at commissioning. Every cause activated; every effect observed and recorded; failures rectified. Under BS 5839-1:2025 the matrix or text description is mandatory documentation handed over with the system — the engineer cannot sign off without verifying every row.',
+      'Cause-and-effect verification is the load-bearing design-intent check. For every cause in the design matrix (every detector, MCP, interface input, test condition) the engineer triggers it and verifies all designed effects (alarm sound, sounder operation, ARC signal, plant shutdown, lift recall, door release, smoke vent) in the correct timing and zones. Failures are documented and rectified before sign-off. Under BS 5839-1:2025 the matrix or text description is mandatory handover documentation.',
   },
   {
     id: 6,
     question:
       'What is the purpose of the battery autonomy / mains-fail simulation test at commissioning?',
     options: [
-      'Just check the batteries are connected.',
-      'Verify the standby batteries can support the system in quiescent state for the full design autonomy period (typically 24 h or 72 h) followed by a defined alarm period at the end (typically 30 min). Procedure: (a) verify battery is fully charged, (b) isolate the mains, (c) panel runs on batteries, (d) at end of autonomy period, trigger alarm and verify sounders run for full alarm period at full output, (e) restore mains, (f) record results. Often abbreviated for commissioning by calculation + load test rather than full-duration; full-duration test annually thereafter.',
-      'Optional test.',
-      'Only on big systems.',
+      'Just to check the standby batteries are connected and reading the correct voltage.',
+      'It is an optional test that may be omitted where the battery is new from the supplier.',
+      'It applies only on big systems with many sounders and a long quiescent load profile.',
+      'To prove the batteries support quiescent autonomy then an end-of-autonomy alarm period.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The battery autonomy test proves the system survives a mains failure. At commissioning, often abbreviated by calculation + load test (battery impedance + projected runtime); full-duration test confirms the calculation. Annual service repeats the autonomy test. The test must verify both quiescent autonomy and end-of-autonomy alarm capability.',
+      'The battery autonomy test proves the system survives a mains failure: the standby batteries support the quiescent load for the full design period (typically 24 h or 72 h) followed by a defined alarm period (typically 30 min) at full output. Isolate the mains, run on batteries, then trigger the alarm at the end of the period. At commissioning it is often abbreviated by calculation plus load test; the full-duration test repeats annually.',
   },
   {
     id: 7,
     question:
       'BS 5839-1:2025 clause 29.6 introduces a new requirement for the commissioning organisation. What is it?',
     options: [
-      'No new requirement.',
-      'The commissioning organisation should advise the user to arrange for suitable INVESTIGATION and, if appropriate, action to be taken on every occasion that a false alarm occurs. NEW in 2025 — recognises that false alarms are a major industry problem (call-challenge policies, FRS attendance pressures) and that user investigation is the primary mitigation. The commissioning engineer briefs the user on the investigation procedure at handover, and the procedure is documented in the O&M manual.',
-      'Only false alarms in residential property.',
-      'Only when ARC requests it.',
+      'Advise the user to investigate and, if appropriate, act on every false alarm that occurs.',
+      'No new requirement is placed on the commissioning organisation by clause 29.6.',
+      'Investigate only false alarms that occur in residential and sleeping-risk property.',
+      'Investigate a false alarm only on the occasions when the ARC specifically requests it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 clause 29.6 is a new responsibility on the commissioning / handover organisation — to advise the user on false-alarm investigation. The recommendation reflects that false alarms are a chronic problem, that FRS now operate call-challenge policies, and that user-side investigation (managerial change, system modification, or engaged separate investigation) is the primary mitigation.',
+      'BS 5839-1:2025 clause 29.6 is a new responsibility on the commissioning / handover organisation — to advise the user to arrange suitable investigation and, if appropriate, action on every false alarm. It reflects that false alarms are a chronic problem, that the FRS now operate call-challenge policies, and that user-side investigation (managerial change, system modification, or engaged investigation) is the primary mitigation. The procedure is briefed at handover and documented in the O&M manual.',
   },
   {
     id: 8,
     question:
       'During commissioning of an addressable Class A loop, the cause-and-effect verification reports that one detector triggers an alarm at the panel — but the recorded ZONE is wrong: detector "Floor 3 — Office 12" triggers as if it were in "Floor 2 — Office 12". What is the most likely cause?',
     options: [
-      'Detector hardware fault.',
-      'Address mismatch — the device is correctly wired and communicating with the panel, but the address-to-text mapping in the panel programming is wrong (the detector address is associated with the wrong text descriptor). Either the detector is set to the wrong address (DIP switch error or auto-address error), OR the panel programming has the address mapped to the wrong text. Resolution: verify the device address against the design schedule, verify the panel programming, correct whichever is wrong, re-test cause-and-effect from that detector.',
-      'Wiring open-circuit.',
-      'Detector contaminated.',
+      'A detector hardware fault that produces the alarm but corrupts the reported location.',
+      'A wiring open-circuit that has shifted the detector onto the adjacent zone’s loop.',
+      'An address mismatch — the device works, but the address-to-text mapping is wrong.',
+      'Detector contamination that triggers the alarm and falsifies the reported zone.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The classic addressable misconfiguration. Hardware works, communication works, but the address-to-location mapping is wrong. Resolved by verifying device address against schedule, verifying panel text descriptor against schedule, and correcting whichever does not match. Common at commissioning of large systems; caught by cause-and-effect verification.',
+      'The classic addressable misconfiguration: the device is correctly wired and communicating, but the address-to-text mapping is wrong — either the detector is set to the wrong address (DIP switch or auto-address error) or the panel programming maps the address to the wrong text descriptor. Resolve by verifying the device address and the panel text against the design schedule and correcting whichever does not match, then re-testing cause-and-effect. Common on large systems; caught by cause-and-effect verification.',
   },
   {
     id: 9,
     question:
       'A sound level survey at commissioning reveals 60 dB(A) at one accessible point on a corridor where a 65 dB(A) target applies. What is the appropriate response?',
     options: [
-      'Sign off and move on.',
-      'Investigate and rectify. Options: (a) reposition the nearest sounder closer to the deficient point, (b) add a supplementary sounder, (c) change the existing sounder for a higher-output device, (d) re-survey to confirm the rectification meets the 65 dB(A) target with margin. The deficient point is recorded on the commissioning record before rectification; the rectified result is recorded after. The system cannot be signed off as compliant with 60 dB(A) at an accessible point.',
-      'Adjust the meter.',
-      'Lower the target.',
+      'Sign the system off and move on, since 60 dB(A) is close enough to the 65 dB(A) target.',
+      'Adjust the sound level meter calibration so the reading meets the 65 dB(A) target.',
+      'Lower the documented design target for that corridor to 60 dB(A) to match the reading.',
+      'Investigate and rectify — reposition, add or upsize the sounder, then re-survey.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Sound level deficiencies are rectified, not waved through. Reposition / add / upsize sounders. Re-survey. Record the rectification. The target is in the standard; the system is signed off only when the target is met at every accessible point.',
+      'Sound level deficiencies are rectified, not waved through. Reposition the nearest sounder, add a supplementary sounder, or fit a higher-output device, then re-survey to confirm the 65 dB(A) target is met with margin. The deficient point is recorded before rectification and the rectified result after. The system cannot be signed off as compliant with 60 dB(A) at an accessible point.',
   },
   {
     id: 10,
     question:
       'At first power-up of a newly wired addressable system, the panel reports "loop fault — earth fault detected". What is the engineer\'s first response?',
     options: [
-      'Ignore — addressable systems are always grumpy.',
-      'DIAGNOSE before continuing. The panel has detected a fault — typically a screen incorrectly terminated to PE rather than FE, a damaged conductor leaking to earth, or a moisture-ingress at a recently installed JB / penetration. Procedure: (a) check screen termination at panel (should be on FE, not PE), (b) check screen termination at far end (should be cut back, not earthed), (c) section the loop using isolators to localise, (d) IR-test the localised section after disconnecting devices, (e) rectify and re-test. Continuing past a reported earth fault is a service-life liability — the fault is real even if the panel is still functional.',
-      'Reset the panel until it stops.',
-      'Disconnect the screen entirely.',
+      'Diagnose before continuing — check screen terminations, then section and IR-test the loop.',
+      'Ignore the indication, since new addressable systems routinely report nuisance faults.',
+      'Reset the panel repeatedly until the earth-fault indication clears and stays clear.',
+      'Disconnect the loop screen entirely so the earth-fault indication can no longer appear.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Earth fault on a new addressable loop is a real fault, not a panel quirk. Diagnose: screen termination at both ends, conductor IR, JB / penetration condition. Section using isolators, localise, IR-test, rectify. Reset is not a fix; it merely silences the indication until the next monitoring cycle.',
+      'Earth fault on a new addressable loop is a real fault, not a panel quirk — typically a screen incorrectly terminated to PE rather than FE, a damaged conductor leaking to earth, or moisture ingress at a recent JB or penetration. Check the screen termination at the panel (FE, not PE) and at the far end (cut back, not earthed), section the loop using isolators, IR-test the localised section with devices disconnected, then rectify and re-test. Reset merely silences the indication until the next monitoring cycle.',
   },
 ];
 

@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m2s5-check1',
     question: 'What charging speed can a Tesla Model 3 achieve on a European Supercharger V3?',
-    options: ['7kW AC only', 'Up to 150kW DC', 'Up to 250kW DC', '350kW DC'],
-    correctIndex: 2,
+    options: ['Up to 250kW DC', 'Up to 150kW DC', '7kW AC only', '350kW DC'],
+    correctIndex: 0,
     explanation:
       'Tesla Model 3 can achieve up to 250kW on Supercharger V3 stations in Europe (using CCS2 connector). Peak rates depend on battery temperature, state of charge, and station capability.',
   },
@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m2s5-check2',
     question: 'Why might a BMW iX achieve faster home charging than a Nissan Leaf?',
     options: [
-      'Larger battery capacity',
+      'It has a larger usable battery capacity',
+      'It uses more advanced battery thermal management',
+      'It has a more efficient drive motor',
       'Three-phase 22kW AC capability vs single-phase 6.6kW',
-      'Better thermal management',
-      'More efficient motor',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The BMW iX supports 22kW three-phase AC charging, while the Nissan Leaf is typically limited to 6.6kW single-phase. This means the iX can charge over 3× faster on a suitable AC supply.',
   },

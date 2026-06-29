@@ -178,12 +178,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'For voltage drop calculations in three-phase cables, which voltage is used?',
+    question: 'For percentage voltage drop in three-phase circuits, which nominal voltage is used as the base?',
     options: [
-      'Both, depending on the load connection',
-      'Reduced electromagnetic interference',
-      'Solvents used for cleaning switchgear contacts',
-      'Competent persons with appropriate qualifications',
+      'The relevant nominal voltage for the load connection (230V or 400V)',
+      'Always 230V regardless of the load connection',
+      'Always 400V regardless of the load connection',
+      'The measured supply voltage at the time of testing',
     ],
     correctAnswer: 0,
     explanation:

@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'riddor-category',
     question: 'What is the most common RIDDOR reportable category for manual handling injuries?',
     options: [
-      'Fatal injuries',
       'Over-7-day incapacitation injuries',
+      'Fatal injuries',
       'Dangerous occurrences',
       'Occupational diseases reported within 24 hours',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Over-7-day incapacitation is the most common RIDDOR reportable category for manual handling injuries. This applies when a worker is incapacitated from their normal work for more than seven consecutive days (not counting the day of the injury). The employer must report this to the HSE within 15 days using form F2508.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'During a manual handling injury investigation, which of the following is most likely to be identified as a root cause rather than an immediate cause?',
     options: [
-      "The worker's back gave way while lifting",
-      'A systematic failure to provide mechanical aids for tasks that had been assessed as requiring them',
-      'The load was heavier than expected',
-      'The worker was in a hurry',
+      "The worker's back gave way while lifting the load",
+      'The load was heavier than the worker expected',
+      'A systematic failure to provide assessed mechanical aids',
+      'The worker was in a hurry to finish the task',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A root cause is a systemic or organisational failure that allowed the conditions for the injury to exist. A systematic failure to provide mechanical aids — despite assessments identifying the need for them — is a root cause because it represents a management failure. The worker's back giving way, the load being heavier than expected, and the worker being in a hurry are immediate or contributing causes, not root causes.",
   },
@@ -55,11 +55,11 @@ const quickCheckQuestions = [
     question: 'Why is reporting near misses so valuable for preventing manual handling injuries?',
     options: [
       'Near misses are legally required to be reported under RIDDOR',
-      'Near misses identify hazards and unsafe conditions before they result in actual injuries — they are free lessons',
-      'Near misses always result in prosecution by the HSE',
-      'Near misses are only relevant if a worker was physically injured',
+      'Near misses always result in prosecution by the HSE inspector',
+      'Near misses only matter when a worker has been physically injured',
+      'Near misses flag hazards before they cause injury — free lessons',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Near misses are invaluable because they highlight hazards, unsafe practices, and system failures BEFORE anyone is hurt. For every serious injury, there are typically hundreds of near misses. Each near miss is an opportunity to identify and fix a problem before it causes real harm. A strong near-miss reporting culture is one of the most effective injury prevention tools available.',
   },
@@ -95,8 +95,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under RIDDOR 2013, an over-7-day incapacitation injury must be reported to the HSE within how many days?',
-    options: ['Immediately (within 24 hours)', 'Within 7 days', 'Within 15 days', 'Within 30 days'],
-    correctAnswer: 2,
+    options: ['Immediately (within 24 hours)', 'Within 7 days', 'Within 30 days', 'Within 15 days'],
+    correctAnswer: 3,
     explanation:
       'Over-7-day incapacitation injuries must be reported within 15 days of the incident. The 7 days refers to the duration of incapacitation, not the reporting deadline. Specified injuries and fatal injuries must be reported immediately (within 24 hours).',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     question:
       "Which of the following manual handling injuries would be classified as a 'specified injury' under RIDDOR?",
     options: [
-      "Back strain causing 10 days' absence",
-      'Bruised knee from dropping a load',
-      'Fractured vertebra from a heavy load falling on the worker',
-      'Muscle stiffness lasting 3 days',
+      'A fractured vertebra from a heavy load falling on the worker',
+      "A back strain causing ten days' absence from normal work",
+      'A bruised knee from dropping a load while carrying it',
+      'Muscle stiffness lasting three days after a heavy lift',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "A fractured vertebra is a specified injury under RIDDOR because it is a fracture (other than to fingers, thumbs, or toes). Specified injuries are the most serious reportable category and must be reported immediately. A back strain causing 10 days' absence would be an over-7-day incapacitation injury. Bruised knee and muscle stiffness would not meet the RIDDOR reporting threshold.",
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: 'What is the PRIMARY purpose of a manual handling injury investigation?',
     options: [
-      'To find someone to blame and discipline them',
-      'To identify what happened, why it happened, and what changes will prevent it from happening again',
-      'To complete the insurance claim paperwork',
-      'To satisfy the HSE inspector during their visit',
+      'To find someone to blame and discipline them for it',
+      'To establish what happened, why, and how to prevent recurrence',
+      'To complete the insurance claim paperwork on time',
+      'To satisfy the HSE inspector during their next site visit',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Which of the following is a common ROOT cause of manual handling injuries, rather than an immediate cause?',
     options: [
-      'The worker lifted with a bent spine',
-      'The load was heavier than the worker expected',
-      'Inadequate risk assessment that failed to identify the need for mechanical aids',
-      'The worker slipped while carrying the load',
+      'The worker lifted the load with a bent, twisted spine',
+      'The load turned out heavier than the worker expected',
+      'The worker slipped on the floor while carrying the load',
+      'An inadequate assessment that missed the need for mechanical aids',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "An inadequate risk assessment is a root cause — it is a systemic management failure that created the conditions for the injury. The worker lifting with a bent spine, the load being unexpectedly heavy, and slipping while carrying are all immediate or contributing causes. Root cause analysis asks 'why?' repeatedly until the underlying management system failure is identified.",
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'What must an employer record in the accident book after a manual handling injury?',
     options: [
-      "Only the worker's name and the date",
-      'Details of the injured person, date, time, location, nature of the injury, how it happened, and first aid given',
-      'Only injuries that require hospital treatment',
-      'Nothing — the accident book is optional for manual handling injuries',
+      "Only the worker's name and the date of the incident",
+      'The person, date, location, injury, how it happened, and treatment',
+      'Only those injuries that require hospital treatment afterwards',
+      'Nothing — the accident book is optional for these injuries',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,8 +166,8 @@ const quizQuestions = [
     id: 7,
     question: 'What is trend analysis in the context of manual handling incidents?',
     options: [
-      'Analysing fashion trends among construction workers',
-      'Reviewing incident data over time to identify patterns — repeat tasks, locations, times, or worker groups with higher injury rates',
+      'Analysing fashion and clothing trends among site workers',
+      'Reviewing incident data over time to find recurring patterns',
       'Tracking the cost of workplace injuries for budgeting purposes',
       'Monitoring weather patterns that might affect manual handling',
     ],
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'For the most serious RIDDOR-reportable incidents (fatalities and specified injuries), how should the initial report be made?',
     options: [
-      'By email to the HSE within 7 days',
+      'By telephone, then a written F2508 within 24 hours',
+      'By email to the HSE within seven days of the incident',
       'By letter to the local HSE office within 30 days',
-      'By telephone to the HSE, followed by a written F2508 within 24 hours',
-      'By posting on the HSE website forum',
+      'By posting the details on the HSE website forum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'For the most serious incidents — fatalities and specified injuries — the initial report must be made by telephone to the HSE Incident Contact Centre immediately. This must be followed by a written report on form F2508 within 24 hours. Less serious reportable incidents (over-7-day incapacitation) can be reported online within 15 days.',
   },

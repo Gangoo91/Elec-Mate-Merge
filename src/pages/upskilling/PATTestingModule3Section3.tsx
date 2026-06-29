@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'You inspect the plug body of a desktop heater. The plastic around the L pin shows a brown ring of discolouration about 5 mm wide; the body is otherwise intact and the pins look clean. Pass, fail, or test?',
     options: [
-      'Pass — discolouration is cosmetic.',
-      'Fail at inspection. Brown discolouration around a pin is heat damage to the moulded body — it indicates that the L contact has been dissipating heat from a high-resistance joint. IET CoP “do not test, fail it” applies; replace the lead and inspect the matching socket.',
-      'Test electrically and pass on insulation resistance.',
-      'Pass after a load test under nameplate current.',
+      'Pass it — discolouration of the moulded body is purely cosmetic and changes nothing.',
+      'Fail at inspection — a brown ring is heat damage; replace the lead and check the socket.',
+      'Test it electrically and pass it on the basis of the insulation-resistance reading.',
+      'Pass it after a load test under nameplate current confirms the appliance draws normally.',
     ],
     correctIndex: 1,
     explanation:
-      'IET CoP Ch 15 fails visible heat damage at the inspection stage. A discolour ring around a pin shows the body has been heated repeatedly — the pin contact resistance is the source. The plug fails; the matching socket (often heated equally) is also flagged for inspection.',
+      'IET CoP Ch 15 fails visible heat damage at the inspection stage. A brown discolouration ring around a pin shows the moulded body has been heated repeatedly — the L contact has been dissipating heat from a high-resistance joint. "Do not test, fail it" applies: the plug fails, the lead is replaced, and the matching socket (often heated equally) is flagged for inspection.',
   },
   {
     id: 'patm3-s3-mod',
     question:
       'A 10 m extension reel has been modified by the user — the reel’s 10 A overload cut-out has been bypassed by a wire link. The flex is otherwise undamaged. Action?',
     options: [
-      'Pass if the reel is fully unwound during use.',
-      'Fail and quarantine. Bypassing a manufacturer-fitted overload device is unauthorised modification (IET CoP s.15) and removes a safety function the equipment was certified with. The reel is removed from service permanently or repaired by the manufacturer / authorised agent.',
-      'Replace the link with a heavier-rated fuse.',
-      'Pass — the reel will be protected by the supply MCB.',
+      'Pass it, provided the reel is always fully unwound during use to avoid coil heating.',
+      'Fail and quarantine — bypassing a fitted overload device is unauthorised modification.',
+      'Replace the wire link with a heavier-rated fuse and return the reel to service.',
+      'Pass it — the reel will still be protected by the upstream supply MCB on overload.',
     ],
     correctIndex: 1,
     explanation:
-      'Cable reels must have an integral overload cut-out to manage the de-rated current of the partially-unwound coil. Bypassing it is unauthorised modification and the reel is failed permanently — a manufacturer-supplied safety feature has been defeated.',
+      'Cable reels must have an integral overload cut-out to manage the de-rated current of the partially-unwound coil. Bypassing it (IET CoP s.15) removes a safety function the equipment was certified with, so the reel is failed permanently — removed from service or repaired only by the manufacturer / authorised agent.',
   },
   {
     id: 'patm3-s3-melted',
     question:
       'A C13 connector body shows a softened / slightly melted area on the L side of the connector face. The pins look straight but mildly oxidised. The lead and appliance are otherwise sound. What does this tell you?',
     options: [
-      'Cosmetic — moulded plastic always softens slightly with age.',
-      'The L contact has been dissipating heat. The connector body has been hot enough to deform. Fail the lead; inspect the appliance inlet (matching male side) — if it shows the same softening, the appliance fails too because the heat source may be internal.',
-      'PAT-test it and decide based on insulation resistance.',
-      'Replace the C13 cable with a higher-rated one.',
+      'Cosmetic only — moulded connector plastic always softens slightly with age and use.',
+      'The L contact has been overheating; fail the lead and inspect the matching appliance inlet.',
+      'PAT-test the lead and decide on the basis of the insulation-resistance reading alone.',
+      'Replace the C13 cable with a higher-current-rated one and return it to service.',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 60320 connectors are made of moulded plastic with a defined operating temperature. A softened body means the contact temperature has exceeded that envelope. The lead fails; the matching inlet is inspected because, with IEC connectors, both ends share the heat — and a hot inlet can mean internal trouble in the appliance.',
+      'BS EN 60320 connectors are moulded plastic with a defined operating temperature; a softened body means the contact temperature has exceeded that envelope. The lead fails. The matching appliance inlet (the male side) is inspected because both ends of an IEC connection share the heat — and if it shows the same softening, the appliance fails too, since the heat source may be internal.',
   },
   {
     id: 'patm3-s3-dnt',
     question:
       'You arrive at an appliance and notice a hand-written note taped to it: “fuse keeps blowing — replaced with foil”. The plug carries a folded strip of aluminium foil where the BS 1362 fuse should be. Inspect or fail?',
     options: [
-      'Open the plug and see if the foil is making good contact before deciding.',
-      'Fail at inspection — “do not test, fail it”. A foil-substituted fuse is unauthorised modification and removes overload protection from the flex. Quarantine the appliance, label as failed, and report the substitution to the duty-holder.',
-      'Replace the foil with a 13 A BS 1362 and test.',
-      'Pass — foil has higher current capacity than a fuse.',
+      'Open the plug and check whether the foil is making good contact before deciding.',
+      'Fail at inspection — a foil-substituted fuse is unauthorised modification; quarantine and report it.',
+      'Replace the foil with a 13 A BS 1362 fuse and carry on with the electrical tests.',
+      'Pass it — the foil carries more current than a fuse, so overload is not a concern.',
     ],
     correctIndex: 1,
     explanation:
-      'Foil-substituted fuses are one of the textbook examples of dangerous unauthorised modification. The fuse is defeated, the flex is unprotected, and the underlying overload that was blowing the original fuse is still there. CoP fails on sight.',
+      'Foil-substituted fuses are a textbook example of dangerous unauthorised modification. "Do not test, fail it" applies: the fuse is defeated, the flex is left unprotected, and the underlying overload that was blowing the original fuse is still present. Quarantine the appliance, label it failed, and report the substitution to the duty-holder.',
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Which of the following is an indicator of overheating that the IET CoP requires you to flag at the visual inspection stage?',
     options: [
-      'A cool plug body with normal pin colour',
       'Brown / black discolouration on the plug body around a pin',
-      'A plug body with a sticker on it',
-      'A flex slightly curled from being coiled in storage',
+      'A cool plug body showing its normal manufactured pin colour',
+      'A manufacturer identification sticker applied to the side of the plug body',
+      'A flex slightly curled from having been coiled in storage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Discolouration of the moulded plug body around a pin is heat damage — the pin has been hot and the heat has migrated into the body. IET CoP s.15.6 lists this as an inspection fail. The other options are not heat damage.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'You find a cable junction made by twisting two 1.5 mm² 3-core flexes together inside a layer of insulation tape, between the appliance and the plug. Per IET CoP, what is this?',
     options: [
-      'An acceptable repair if executed properly',
-      'Unauthorised modification — flex must be continuous from plug to appliance, or use an approved coupler. Failed at inspection',
-      'A construction technique used by some manufacturers',
-      'Acceptable on Class II equipment',
+      'An acceptable repair, provided the twisted join is properly insulated and staggered',
+      'A recognised construction technique used by some flexible-cable manufacturers',
+      'Acceptable on Class II equipment, where the earth conductor is not in use',
+      'Unauthorised modification — flex must be continuous or use an approved coupler',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IET CoP Ch 15 does not permit twisted-and-taped cable joints in flexes. Flex must be a single continuous run, or use approved couplers. Twisted joins are unauthorised modification and a definite fail at the visual stage.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'A workshop tool has had its earth pin broken off the moulded plug, and the user has filed the L and N pins narrower so the plug fits a foreign socket pattern. The flex is otherwise sound. CoP position?',
     options: [
-      'Replace the plug only',
-      'Fail and quarantine. Defeating the earth on a Class I appliance is a serious unauthorised modification — the protective measure has been removed. The appliance is removed from service until a competent person investigates and refits a compliant BS 1363 plug',
-      'PAT-test electrically and decide on insulation resistance',
-      'Pass if the appliance is double-insulated',
+      'Fit a new compliant plug only, since replacing the plug restores the earth connection',
+      'Carry out the electrical test sequence and decide on the insulation-resistance result',
+      'Fail and quarantine — defeating the earth on a Class I appliance removes its protective measure',
+      'Pass, since the appliance can be reclassified as double-insulated with the earth pin removed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Removing the earth pin from a Class I appliance defeats the fault-protection method the appliance was designed and certified with. This is the most serious category of unauthorised modification. The appliance is failed and quarantined. The CoP allows refitting a compliant BS 1363 plug as the remediation.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'IET CoP “do not test, fail it” means:',
     options: [
-      'Skip the visual inspection if the equipment looks new',
       'Where visible damage compromises safety, the equipment is failed at the visual stage and not subjected to electrical testing',
-      'Test electrically first, decide visually second',
-      'Always test before failing',
+      'The visual inspection may be skipped entirely if the equipment looks new and undamaged',
+      'Carry out the electrical tests first and reach the visual judgement afterwards',
+      'Always complete the full electrical test sequence before an item can be failed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IET CoP and HSG107 are explicit: visible safety-compromising defects are failed at the visual stage. Electrical testing is for verifying a passable item. Connecting a known-failed item to the tester risks the tester, the inspector, and gives no useful information.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A heater flex is hardened, brittle and crumbles at the touch near the appliance entry. The outer sheath is intact. What does this indicate, and what is the action?',
     options: [
-      'Normal age-hardening — pass',
-      'Heat damage from prolonged exposure to elevated temperature near a heat source. The PVC has degraded; the flex is no longer reliable. Fail and replace with appropriate heat-resisting flex',
-      'Cosmetic — the inner cores are still insulated',
-      'Pass after a successful insulation-resistance test',
+      'Normal age-hardening of any flex over time — record it and pass the lead',
+      'A cosmetic surface change only, because the inner cores are still insulated',
+      'A pass, provided the flex subsequently passes an insulation-resistance test',
+      'Heat damage near a heat source — the PVC has degraded; fail and replace with heat-resisting flex',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PVC flex degrades when held above its rated continuous operating temperature for long periods. The flex becoming brittle is the visible sign. The lead is failed and replaced with the correct heat-resisting flex (1.25 mm² or 1.5 mm² HR for heating appliances).',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A C13 (kettle) inlet on a server power supply shows a clearly scorched L contact area and a faint smell of melted plastic. The lead is undamaged. CoP action?',
     options: [
-      'Replace the lead and re-test',
-      'Fail the appliance, not just the lead. Scorching at the appliance inlet means heat is being generated at the L contact inside the equipment — internal fault. Refer for engineering inspection; do not return to service on a new lead alone',
-      'Test the lead in isolation and pass it',
-      'Pass — server PSUs run hot',
+      'Replace the lead and re-test, since the scorching is on the lead-side contact',
+      'Test the lead in isolation and pass it once its insulation resistance is acceptable',
+      'Fail the appliance, not just the lead — inlet scorching points to an internal fault',
+      'Pass — server power supplies run hot, so inlet scorching is expected in service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Scorching at the inlet points to a high-resistance internal joint or a damaged inlet inside the appliance. Replacing only the lead leaves the underlying fault. The appliance is failed at the visual stage and referred for engineering inspection.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'A user has wrapped a section of damaged outer sheath in PVC tape “to protect it”. The tape covers about 80 mm of flex. CoP position?',
     options: [
-      'Acceptable temporary fix; re-inspect at next cycle',
       'Fail. Tape is not a CoP-recognised remediation for sheath damage. The flex is no longer to original construction; replace the lead',
-      'Pass after a successful insulation-resistance test',
-      'Pass if the appliance is Class II',
+      'An acceptable temporary fix; note it and re-inspect at the next test cycle',
+      'A pass, provided the taped section subsequently passes an insulation-resistance test',
+      'A pass if the appliance is Class II, since the sheath is not part of the protective measure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outer-sheath damage means the flex is no longer to original construction. Tape does not restore the mechanical or electrical protection of the sheath. IET CoP fails the lead at inspection and the lead is replaced.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'A flex coupler used to extend an appliance lead consists of a chocolate-block / strip-connector inside a piece of clear shrink-tube. CoP position?',
     options: [
-      'Acceptable — the connection is enclosed',
-      'Fail. Strip-connectors are not approved couplers for flexible cables in service. Use a proper inline coupler or a BS 1363 plug-and-trailing-socket pair. The connection is unauthorised modification',
-      'Pass if the conductors are individually shrink-sleeved',
-      'Pass on a Class II appliance',
+      'Acceptable — the connection is fully enclosed inside the shrink-tube',
+      'A pass, provided each conductor is individually shrink-sleeved before the outer tube',
+      'A pass on a Class II appliance, where there is no earth conductor in the coupler',
+      'Fail — strip-connectors are not approved couplers for in-service flexible cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Strip-connectors (often called chocolate blocks) are designed for fixed-wiring termination, not for in-service flex couplings that may be moved or pulled. The CoP does not recognise this as a coupler — it is failed at inspection.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'Inspecting a kettle, you find that the user has filed down the C15/C16 latching tab on the connector to make the lead easier to insert / remove. The latching is now disabled. CoP?',
     options: [
-      'Pass — the latch is convenience',
+      'Pass — the latch is only a convenience feature with no safety function',
+      'Carry out the electrical test sequence and pass on the insulation-resistance result',
       'Fail. The latch on C15/C16 is part of BS EN 60320 construction; defeating it is unauthorised modification. The lead is replaced',
-      'PAT-test and pass on insulation resistance',
-      'Pass after the user signs a disclaimer',
+      'Pass, provided the user signs a disclaimer accepting the modification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 60320 specifies latching where applicable. A user filing the latch off is unauthorised modification of a manufacturer-supplied safety / retention feature. The lead is failed and replaced.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Which of the following is the correct sequence for a PAT inspector who finds visible heat damage at the formal visual inspection stage?',
     options: [
-      'Test electrically; if it passes, return to service',
       'Quarantine the equipment; record the defect on the PAT register; report to the duty-holder; do not subject to electrical testing',
-      'Carry out the rewire; re-test; return to service',
-      'Send the equipment for fixed-wiring inspection',
+      'Carry out the electrical tests first; if the item passes, return it to service',
+      'Carry out the rewire immediately, re-test, and return the item to service',
+      'Send the equipment for fixed-wiring (EICR) inspection instead of failing it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Visible heat damage triggers “do not test, fail it”. The equipment is removed from service immediately, the defect is recorded on the register, and the duty-holder is informed. Electrical testing is not used to rescue a known-failed item.',
   },

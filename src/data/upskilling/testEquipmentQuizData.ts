@@ -5,10 +5,10 @@ export const testEquipmentQuizData: QuizQuestion[] = [
     id: 1,
     question: 'How often should test equipment typically be calibrated?',
     options: [
-      'Temperature and humidity extremes',
+      'Only when a reading looks suspect',
       'Annually to traceable standards',
-      'Adequate daylight for most office tasks',
-      'Voltage drop calculations',
+      'Every five years at the manufacturer',
+      'Once on purchase, then never again',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,10 +111,10 @@ export const testEquipmentQuizData: QuizQuestion[] = [
     question:
       'What is the primary advantage of modern multifunction testers over separate instruments?',
     options: [
-      'Equipment and method (EM) sheets and task guidance sheets organised by material type and task',
+      'They are always more accurate than dedicated single-function instruments',
       'They provide multiple test functions in one unit with consistent operation',
-      'Ensures only the closest protective device to the fault operates',
-      'Using machine learning to optimise building operations, predict faults, and improve efficiency',
+      'They remove the need for periodic calibration of the instrument',
+      'They allow live testing without observing GS38 safety precautions',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ export const testEquipmentQuizData: QuizQuestion[] = [
     id: 10,
     question: 'When testing in high EMI environments, what precaution should be taken?',
     options: [
-      'It prevents the RCD from operating during testing',
-      'Withdraw it from service immediately',
+      'Switch the tester to its highest measurement range',
+      'Disconnect the earth lead to reduce interference',
       'Shield test leads and verify readings are stable',
-      'Testing against a known reference standard',
+      'Increase the test current to override the interference',
     ],
     correctAnswer: 2,
     explanation:

@@ -40,12 +40,12 @@ export const batterySizingQuizData = [
   {
     question: 'Why must designers add extra capacity beyond calculated loads?',
     answers: [
-      'To increase profit margins',
       'To account for battery ageing and degradation over time',
-      'Because regulations require oversizing by law',
-      'To allow for future expansion only',
+      'To shorten the required recharge time after a discharge',
+      'To allow the same battery to drive a higher luminaire load',
+      'To permit future expansion of the system without recalculation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Extra capacity (typically 25-30%) is added to account for battery ageing and degradation. Batteries lose capacity over their service life, and the system must still meet minimum requirements at end-of-life.',
   },

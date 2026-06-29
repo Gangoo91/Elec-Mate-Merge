@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'artex-risk',
     question: 'When does textured decorative coating (Artex) become a risk?',
     options: [
-      'When it is sanded, scraped, drilled into, or removed dry',
       'Only when it is more than 50 years old',
+      'When it is sanded, scraped, drilled into, or removed dry',
       'It is always dangerous, even when undisturbed',
       'Only when it contains more than 10% asbestos',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Textured decorative coatings like Artex typically contain only 1-5% chrysotile asbestos. When intact and undisturbed, the fibres are bound within the coating matrix and pose low risk. However, any activity that breaks the matrix — sanding, scraping, drilling, or dry removal — releases asbestos fibres into the air. Wet scraping or steaming may be non-licensed work, but power tool removal is notifiable non-licensed work (NNLW).',
   },
@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     id: 'visual-identification',
     question: 'How should you confirm whether an insulation material contains asbestos?',
     options: [
-      'By laboratory analysis — visual inspection alone cannot confirm asbestos',
       'By its colour — asbestos insulation is always grey or brown',
       'By touching it — asbestos feels different to modern insulation',
+      'By laboratory analysis — visual inspection alone cannot confirm asbestos',
       'By checking the product label on the material',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'You CANNOT identify asbestos by visual inspection alone. Colour, texture, and appearance are unreliable indicators because asbestos materials can look identical to non-asbestos alternatives. The only definitive method is laboratory analysis using Polarised Light Microscopy (PLM). Any insulation in a pre-2000 building should be presumed to contain asbestos until proven otherwise by lab testing.',
   },
@@ -75,12 +75,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which type(s) of asbestos are typically found in pipe lagging?',
     options: [
-      'Chrysotile only',
       'Amosite and/or crocidolite',
+      'Chrysotile only',
       'Tremolite and actinolite',
       'Anthophyllite only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Asbestos pipe lagging typically contains amosite (brown asbestos) and/or crocidolite (blue asbestos). These amphibole fibres were used because of their excellent thermal insulation properties. Pipe lagging is one of the highest-risk ACMs due to the dangerous fibre types and its highly friable nature.',
   },
@@ -97,8 +97,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Textured decorative coatings (Artex) typically contain what percentage of chrysotile asbestos?',
-    options: ['1-5%', '10-20%', '30-50%', 'Over 50%'],
-    correctAnswer: 0,
+    options: ['10-20%', '1-5%', '30-50%', 'Over 50%'],
+    correctAnswer: 1,
     explanation:
       'Textured decorative coatings like Artex typically contain 1-5% chrysotile (white asbestos). Although this is a low concentration, it still poses a risk when the coating is disturbed — particularly by sanding, scraping, drilling, or dry removal. The fibres are bound within the coating matrix when intact, which is why undisturbed Artex is considered low risk.',
   },
@@ -132,8 +132,8 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the black bitumen-based adhesive used under floor tiles commonly known to contain?',
-    options: ['No hazardous materials', 'Lead only', 'Asbestos', 'Mercury'],
-    correctAnswer: 2,
+    options: ['Asbestos', 'No hazardous materials', 'Lead only', 'Mercury'],
+    correctAnswer: 0,
     explanation:
       'Black bitumen-based floor tile adhesive (sometimes called black mastic) commonly contains asbestos. It is one of the most frequently overlooked ACMs during surveys because it is hidden beneath the floor tiles. When removing old floor tiles in pre-2000 buildings, always consider the possibility that the adhesive contains asbestos and have it tested before disturbing it.',
   },

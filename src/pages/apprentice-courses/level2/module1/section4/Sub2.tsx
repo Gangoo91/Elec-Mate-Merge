@@ -68,9 +68,9 @@ const checks = [
     id: 'arc-flash-rating-check',
     question: 'Your RAMS calls for arc-rated kit at "8 cal/cm² minimum". What does that number actually mean?',
     options: [
-      'The cable can continuously carry 47A under standard conditions',
-      'It keeps the airway clear and lets fluids drain so they don’t choke',
-      'The air streams maintain maximum temperature difference throughout',
+      'The maximum voltage the fabric is insulated against',
+      'The number of layers of flame-resistant material in the garment',
+      'The temperature in degrees Celsius the fabric can survive',
       'The incident energy the fabric is tested to withstand without breaking open / igniting',
     ],
     correctIndex: 3,
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does "Category 2 / 8 cal/cm²" describe in arc-flash PPE?',
     options: [
-      'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
+      'The voltage class of the insulating gloves to be worn',
       'The minimum incident energy rating of the fabric (ATPV ≥ 8 cal/cm²)',
-      'Suitable first aid facilities and arrangements, including trained first aiders',
-      'Device ID (and possibly IP addresses or node IDs)',
+      'The number of arc-flash incidents the garment has survived',
+      'The maximum fault current the switchboard can deliver',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the minimum safety footwear standard for general electrical site work?',
     options: [
-      'The success rate rises to approximately 95%',
-      'The difference between entering and leaving water temperatures',
+      'EN 50321-1 dielectric footwear for all general site work',
+      'BS EN 166 — the same standard as eye protection',
       'EN ISO 20345 SB (basic safety footwear with toe protection)',
-      'They can fall and strike people below, causing injury or death',
+      'IEC 60903 — the insulating glove standard applied to boots',
     ],
     correctAnswer: 2,
     explanation:
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'You inflate the cuff of your IEC 60903 glove and feel a slow hiss of escaping air on the back of the index finger. What do you do?',
     options: [
       'Bin it and get a new pair — it’s failed the in-use check',
-      'High fault currents and electromagnetic interference',
-      'That the switch operates and makes/breaks the circuit',
-      '1×IΔn only — the 5×IΔn AC test was deleted in Amendment 4:2026',
+      'Tape over the leak and carry on for the rest of the day',
+      'Use it anyway — 230 V is low enough for a small leak',
+      'Wear it under a leather over-glove to seal the hole',
     ],
     correctAnswer: 0,
     explanation:

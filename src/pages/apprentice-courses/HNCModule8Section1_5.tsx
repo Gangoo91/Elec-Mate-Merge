@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What is the primary purpose of optimum start control?',
     options: [
-      'Achieve discrimination with downstream RCDs',
-      'Efficiency levels achieved with automation (A to D)',
-      'Different power factors affecting total current',
+      'To run the boiler at full output throughout the night',
+      'To hold the building at full temperature when unoccupied',
+      'To switch off heating as soon as occupancy begins',
       'To ensure the building reaches setpoint at occupancy time',
     ],
     correctIndex: 3,
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a requirement of the Boiler Plus legislation for combi boilers?',
     options: [
-      'Without slip, there would be no relative motion between rotor and field, so no induced current',
-      'To allow safe isolation for maintenance and emergencies',
-      'VOC content below specified limits or certified low-emission products',
+      'A minimum boiler output rating of at least 40 kW',
+      'A separate hot water cylinder of at least 180 litres',
+      'A three-phase electrical supply to the boiler',
       'Weather compensation OR load compensation OR smart thermostat with automation',
     ],
     correctIndex: 3,
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'opentherm',
     question: 'What advantage does OpenTherm communication provide over on/off control?',
     options: [
-      'A visible bend, crack, dent or missing locking mechanism',
+      'Wireless control requiring no wiring to the boiler',
       'Modulating control allowing variable boiler output',
-      'Reassess escape route lighting coverage',
-      'Insulation damage and conductor contact',
+      'A built-in battery backup during power cuts',
+      'Automatic detection of gas leaks at the boiler',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'A heating curve relates outdoor temperature to:',
     options: [
-      'Open loop control without feedback',
+      'Hot water cylinder storage temperature',
       'Boiler flow temperature setpoint',
-      'The MEP coordinator or BIM manager',
-      'Terminal loosening and overheating',
+      'Room thermostat occupancy schedule',
+      'Circulating pump rotational speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What factors does an optimum start controller typically consider?',
     options: [
-      'To prevent the boiler from firing when there is no demand',
-      'Learning occupant behaviour and adjusting schedules automatically',
+      'Mains gas pressure and the boiler modulation ratio',
+      'Hot water demand and cylinder recovery rate only',
       'Indoor temperature, outdoor temperature, and historical data',
-      '5-10 degrees Celsius below occupied setpoint',
+      'Electricity tariff prices throughout the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     question:
       'According to Building Regulations Part L, what is required for new heating systems in dwellings?',
     options: [
-      'One cable in, one out, no branches',
-      'Fixed equipment with exposed metalwork',
-      'Building Energy Management System',
+      'A single thermostat controlling the whole dwelling',
+      'A full Building Energy Management System in every home',
+      'Manual radiator valves on every radiator only',
       'Zone control with at least 2 zones',
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'What is load compensation in heating controls?',
     options: [
       'Adjusting flow temperature based on difference between room and setpoint temperature',
-      'Indoor temperature, outdoor temperature, and historical data',
-      'Learning occupant behaviour and adjusting schedules automatically',
-      'The controller adapts its algorithms based on building response history',
+      'Adjusting flow temperature based on the outdoor temperature only',
+      'Adjusting the boiler start time to match the occupancy period',
+      'Adjusting the cylinder temperature to control Legionella risk',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'Smart heating controls with automation and optimisation must be capable of:',
     options: [
-      'That zone\\\\\\\\\\\\\\\'s valve closes but other zones continue',
+      'Operating only as a simple on/off time clock',
       'Learning occupant behaviour and adjusting schedules automatically',
-      'Indoor temperature, outdoor temperature, and historical data',
-      'To prevent the boiler from firing when there is no demand',
+      'Running the boiler at a fixed flow temperature at all times',
+      'Controlling hot water cylinder temperature exclusively',
     ],
     correctAnswer: 1,
     explanation:
@@ -253,10 +253,10 @@ const quizQuestions = [
     id: 14,
     question: 'Under Part L, what minimum control is required for hot water systems?',
     options: [
-      'Learning occupant behaviour and adjusting schedules automatically',
-      'Indoor temperature, outdoor temperature, and historical data',
+      'A manual on/off switch on the immersion heater only',
+      'Weather compensation linked to the outdoor sensor',
       'Cylinder thermostat and programmer with independent timing',
-      'To prevent the boiler from firing when there is no demand',
+      'A thermostatic mixing valve at every hot tap',
     ],
     correctAnswer: 2,
     explanation:

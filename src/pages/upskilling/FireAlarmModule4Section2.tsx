@@ -22,10 +22,10 @@ const inlineChecks = [
     id: 'fam4-s2-formula',
     question: 'Write out the BS 5839-1:2025 standby battery sizing formula in plain terms.',
     options: [
-      'Cmin equals standby current times standby hours.',
-      'Cmin = 1.25 × (T1·I1 + D·I2·T2). The 1.25 is the four-year ageing factor — batteries lose capacity over service life, the design rule books in 25% loss. T1 is the standby duration in hours (typically 24 h, or 6 h where automatic standby generation gives a justified reduction). I1 is the standby current. T2 is the alarm duration (typically 0.5 h). I2 is the alarm current. D is a de-rating factor of 1.75 applied to the alarm portion to account for high-discharge capacity loss at high currents. The result Cmin is the minimum required nominal capacity in Ah.',
-      'Cmin = standby current divided by 24.',
-      'Cmin = alarm current times 1.75.',
+      'Cmin = T1·I1 only — standby current times standby hours, with no alarm term at all.',
+      'Cmin = 1.25 × (T1·I1 + D·I2·T2), with 1.25 the ageing factor and D = 1.75 the alarm de-rating.',
+      'Cmin = (T1·I1) ÷ 24 — standby capacity divided by the standby duration in hours.',
+      'Cmin = D·I2 — the alarm current times the 1.75 de-rating factor only, with no duration.',
     ],
     correctIndex: 1,
     explanation:
@@ -36,10 +36,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 specifies the standby duration T1 as how many hours, and under what condition can it be reduced?',
     options: [
-      'Always 12 hours.',
-      "Default 24 hours of standby capacity. The 24-hour figure may be reduced to 6 hours where AUTOMATIC starting standby generation is provided AND the generation arrangement itself meets the standard's recommendations for reliability and fuel reserves. The reduction is conditional, not unconditional: a building with no standby generator must use 24 h; a building with a manual-start generator does not qualify for the reduction; only fully automatic, reliable standby generation justifies the 6 h figure.",
-      'Default 6 hours, reduced to 24 hours where an alarm signal is received at an ARC.',
-      'Default 72 hours.',
+      'Always 12 hours, with no permitted reduction under any condition.',
+      'Default 24 hours, reduced to 6 hours only with reliable automatic-start standby generation.',
+      'Default 6 hours, increased to 24 hours where an alarm signal is received at an ARC.',
+      'Default 72 hours, reduced to 24 hours where the building is staffed continuously.',
     ],
     correctIndex: 1,
     explanation:
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 references which power supply equipment standards as acceptable for fire alarm primary / secondary power equipment?',
     options: [
-      'BS EN 60204-1 only.',
-      'BS EN 54-4 (Power supply equipment for fire detection and fire alarm systems) is the primary standard. NEW IN 2025: BS EN 50131-6 Grade 4 is now an explicitly acceptable alternative for the alarm-transmission power supply. The 2025 alignment recognises that intruder-alarm-grade power supplies can meet the reliability bar for fire alarm transmission equipment when the BS EN 50131-6 grading is high enough.',
-      'BS EN 50525 only.',
-      'BS 7671 Section 560 only.',
+      'BS EN 60204-1 only, the machinery electrical-equipment safety standard.',
+      'BS EN 54-4 as the primary standard, plus BS EN 50131-6 Grade 4 (new in 2025) for transmission PSUs.',
+      'BS EN 50525 only, the low-voltage energy cable construction standard.',
+      'BS 7671 Section 560 only, the BS 7671 safety-services wiring rules.',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 has formalised a long-standing custom regarding battery installation. What is now expected on every installed battery?',
     options: [
-      'A serial number etched into the casing.',
-      'A LABEL fixed to the battery showing the date of installation. The 2025 standard has acknowledged the custom-and-practice of marking installed batteries with their installation date — typically with a permanent marker on the casing — and now formalises it as a recommendation. The date is the datum for end-of-life calculations: a sealed lead-acid battery typically has a 4-year design life, and the installation date is what tells the maintainer when replacement is due.',
-      'A safety data sheet attached to the battery.',
-      'No label is required.',
+      'A serial number etched into the casing for warranty tracking.',
+      'A label fixed to the battery showing its date of installation — the datum for the 4-year end-of-life replacement.',
+      'A safety data sheet attached to the battery for COSHH purposes.',
+      'No label is required; battery age is taken from the CIE commissioning record.',
     ],
     correctIndex: 1,
     explanation:
@@ -80,12 +80,12 @@ const quizQuestions = [
     id: 1,
     question: 'Write out the BS 5839-1:2025 standby battery sizing formula and identify each term.',
     options: [
-      'Cmin = T1·I1 only.',
-      'Cmin = 1.25 × (T1·I1 + D·I2·T2). Where: 1.25 = ageing factor (four-year design life, 25% capacity loss budgeted); T1 = standby duration in hours (24 h default, 6 h with auto-start standby generation); I1 = standby current; T2 = alarm duration in hours (0.5 h); I2 = alarm current; D = de-rating factor (1.75) applied to the alarm portion to account for high-discharge capacity loss. Cmin is the minimum required nominal battery capacity in Ah.',
-      'Cmin = I2·T2.',
-      'Cmin = I1·24.',
+      'Cmin = 1.25 × (T1·I1 + D·I2·T2), with 1.25 the ageing factor and D = 1.75 the alarm de-rating.',
+      'Cmin = T1·I1 + I2·T2, summing standby and alarm capacity with no ageing factor or alarm de-rating.',
+      'Cmin = 1.25 × T1·I1 + I2·T2, applying ageing to the standby term only and omitting the alarm de-rating.',
+      'Cmin = (T1·I1 + I2·T2) × 1.75, applying a single 1.75 factor across both standby and alarm capacity.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The formula has four engineering reasons for being structured the way it is: ageing (1.25), standby duration (T1), alarm duration (T2), and alarm de-rating (D = 1.75). Each term is independently necessary; missing any of them produces an undersized battery.',
   },
@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 2,
     question: 'The 1.25 factor in the standby battery sizing formula represents what?',
     options: [
-      'A safety margin.',
-      'The four-year ageing factor — sealed lead-acid (SLA) batteries lose capacity over their service life, and the design rule books in 25% capacity loss across the four-year design replacement cycle. A new battery with nominal 7 Ah delivers 7 Ah; the same battery at four years delivers approximately 5.6 Ah. The 1.25 multiplier in the formula sizes the battery so that the END-OF-LIFE capacity, not the new capacity, meets the standby + alarm requirement.',
-      'Voltage tolerance.',
-      'Temperature compensation.',
+      'A temperature-compensation factor correcting charge-voltage variation between cold and warm operation.',
+      'A voltage-tolerance allowance for the spread between a fully charged and a partly discharged SLA cell.',
+      'The four-year ageing factor that sizes the battery to meet the requirement at end-of-life, not when new.',
+      'A general safety margin added to the calculated capacity to give the design extra design headroom.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sizing for end-of-life is the architectural principle. A battery that just meets the requirement when new will fail to meet it long before its replacement date. The 1.25 factor accepts the ageing reality and sizes for the worst-case (end-of-life) point.',
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'The 1.75 de-rating factor (D) applied to the alarm portion of the formula represents what?',
     options: [
-      'A safety margin.',
-      'The high-discharge capacity loss — sealed lead-acid batteries deliver substantially less than their nominal capacity when discharged at high current. A battery rated 7 Ah at the standard 20-hour discharge rate may deliver only around 4 Ah at the much higher current required for sounder operation in alarm. The 1.75 factor in the alarm portion of the formula sizes the battery so that even at high alarm-discharge current, the required Ah are delivered.',
-      'Cable voltage drop.',
-      'Charger inefficiency.',
+      'The high-discharge capacity loss of an SLA battery at the high sounder-load alarm current.',
+      'The cable voltage drop between the battery and the most remote sounder on the alarm circuit.',
+      'The charger inefficiency that must be made up when the battery recharges after an alarm event.',
+      'A general safety margin added specifically to the alarm portion of the capacity calculation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High-current discharge characteristic is one of the SLA chemistry quirks the formula has to accommodate. The standard 20 h capacity rating does not predict the half-hour alarm discharge accurately; the 1.75 de-rating bridges the gap.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'For a typical Category L2 system with standby current 200 mA and alarm current 1.6 A, calculate Cmin assuming T1 = 24 h, T2 = 0.5 h. Show the working.',
     options: [
-      'Cmin = 4.8 Ah.',
-      'Cmin = 1.25 × (T1·I1 + D·I2·T2) = 1.25 × (24 × 0.2 + 1.75 × 1.6 × 0.5) = 1.25 × (4.8 + 1.4) = 1.25 × 6.2 = 7.75 Ah. Round up to next available battery size — typically 12 Ah for an SLA pair (2 × 6 Ah cells in series for 24 V, or 2 × 12 V batteries in parallel depending on CIE topology). Selecting smaller would leave no margin against the formula.',
-      'Cmin = 6.2 Ah.',
-      'Cmin = 1.6 Ah.',
+      'Cmin = 24 × 0.2 = 4.8 Ah — standby capacity only, omitting the alarm portion and the ageing factor.',
+      'Cmin = 24 × 0.2 + 1.6 × 0.5 = 5.6 Ah — standby plus alarm, with no de-rating or ageing applied.',
+      'Cmin = 1.25 × (24 × 0.2 + 1.75 × 1.6 × 0.5) = 1.25 × 6.2 = 7.75 Ah, rounded up to 12 Ah.',
+      'Cmin = (4.8 + 1.4) = 6.2 Ah — the bracket sum, but with the 1.25 ageing multiplier left off.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The worked example demonstrates the practical application: write down each term, plug in the numbers, sum, multiply by 1.25, round up. Selecting the next available battery size above the calculated minimum is the correct rounding direction; rounding down breaks the formula.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 has relocated the detailed battery requirements to a different part of the standard. Where do they now sit?',
     options: [
-      'In Section 1.',
-      'In Annexe E (the 2025 standard moved detailed battery sizing recommendations into an annexe). The main clauses retain the principles; the annexe holds the worked details, the sizing tables, and the calculation methodology. Inspectors and designers should be aware that what was in the main body of the 2017 edition is now an annexe in the 2025 — same engineering, different location.',
-      'In Annexe A.',
-      'Removed entirely.',
+      'In Annexe E, where the 2025 revision relocated the detailed sizing tables and methodology.',
+      'In Annexe A, alongside the recommendations on system categories and detection area coverage.',
+      'In the main body Section 1, merged with the scope, definitions and general principles clauses.',
+      'Removed entirely — the 2025 revision deleted the sizing method and defers to the CIE manufacturer.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Standards re-organisation rarely changes the engineering, but it does change where you look. The 2025 annexe placement reflects the standard's broader re-organisation; designers used to the 2017 numbering must update their reference habits.",
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 references which power supply equipment standards as acceptable for fire alarm transmission equipment?',
     options: [
-      'BS EN 60950 only.',
-      'BS EN 54-4 (the long-standing fire-alarm-specific power supply standard) OR — NEW IN 2025 — BS EN 50131-6 Grade 4 (intruder alarm power supplies, Grade 4 reliability). The 2025 widening of acceptable standards recognises that the high-grade intruder power supplies can match BS EN 54-4 reliability and offers practical alternatives where supply chain or system integration drives the choice. Note: the BS EN 50131-6 alternative applies specifically to the alarm transmission equipment power supply, not necessarily the main CIE power supply.',
-      'IEC 62133 only.',
-      'BS 7671 Section 560 only.',
+      'IEC 62133 — the safety standard for secondary lithium cells used in portable equipment.',
+      'BS 7671 Section 560 — the requirements for safety services, applied to the transmission PSU.',
+      'BS EN 60950 — the legacy IT-equipment safety standard, applied to the transmission power supply.',
+      'BS EN 54-4, or — new in 2025 — BS EN 50131-6 Grade 4, for the alarm transmission equipment PSU.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 2025 dual-standard recognition (BS EN 54-4 OR BS EN 50131-6 Grade 4 for transmission PSU) is one of the practical industry-friendly changes in the new standard.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'A maintainer arrives at a site for the annual service and finds the SLA batteries unmarked — no installation date, no service record matching the batteries to a date. The batteries appear physically in good condition. What is the correct response?',
     options: [
-      'Leave them in place.',
-      'Treat the batteries as of UNKNOWN AGE — and therefore replace them. Without a date, end-of-life cannot be determined; the design-life calculation depends on knowing the install date. The batteries may be 6 months old or 6 years old; the inspection cannot tell. Replace them, fit new batteries with installation-date labels per BS 5839-1:2025, and update the system logbook with the new install date and the four-year replacement target.',
-      'Run a 30-minute alarm test on them and decide.',
-      'Leave them and re-inspect in 12 months.',
+      'Treat them as of unknown age and replace them with new dated batteries, updating the logbook.',
+      'Run a 30-minute alarm discharge test; if they hold up, leave them and record it as proof of life.',
+      'Leave them in place — physically sound batteries are serviceable until the next annual service.',
+      'Leave them and re-inspect in 12 months, noting the missing date label as an observation only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 2025 date-label recommendation exists precisely to prevent this situation. Where no date label exists on legacy batteries, the cautious response is replacement plus correct labelling on the new batteries. A standby capacity test can confirm degradation but not age; replacement removes the uncertainty.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'Why does the formula apply the 1.25 ageing factor to BOTH the standby and the alarm portions, not just the standby portion?',
     options: [
-      'Convention.',
-      'Because the ageing-related capacity loss affects the WHOLE battery — standby and alarm performance both decline together as the battery ages. A battery at four years cannot deliver four-year-aged 24 h of standby AND four-year-aged 30 minutes of alarm; both portions must be calculated against the aged capacity. The 1.25 multiplier is applied across the bracket, not just to the T1·I1 term.',
-      'It only applies to standby.',
-      'The 1.25 only applies to alarm.',
+      'Because the alarm event is short, the ageing factor is in practice only significant on the standby term.',
+      'Because the standby term dominates, the 1.25 is effectively a standby-only correction outside the bracket.',
+      'Because ageing-related capacity loss affects the whole battery — both standby and alarm performance decline.',
+      'Because the alarm portion already carries the 1.75 de-rating, the 1.25 applies only to the alarm term.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A common error is to apply the 1.25 only to the standby term, reasoning that the alarm event is short and ageing matters less. Wrong — at end-of-life the battery is aged for both purposes simultaneously. The bracket structure of the formula is intentional.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'A Category L2 design has standby current 350 mA and alarm current 2.4 A. The CIE specifies a 24 h standby duration and the standard 0.5 h alarm duration. What is the correct Cmin and what is the next standard battery size to fit?',
     options: [
-      'Cmin = 8 Ah, fit 7 Ah.',
-      'Cmin = 1.25 × (24 × 0.35 + 1.75 × 2.4 × 0.5) = 1.25 × (8.4 + 2.1) = 1.25 × 10.5 = 13.125 Ah. Next standard SLA size up is typically 17 Ah (a 2 × 17 Ah pair on a 24 V system). Selecting 12 Ah would breach the formula; selecting 17 Ah meets it with modest end-of-life margin. The correct selection is 17 Ah.',
-      'Cmin = 10.5 Ah, fit 7 Ah.',
-      'Cmin = 12 Ah, fit 12 Ah.',
+      'Cmin = 24 × 0.35 = 8.4 Ah, fit 12 Ah — sizing on the standby term alone, no alarm or ageing.',
+      'Cmin = 8.4 + 2.1 = 10.5 Ah, fit 12 Ah — the bracket sum without the 1.25 ageing factor.',
+      'Cmin = 13.1 Ah, fit 12 Ah — rounding the full result down to the nearest standard battery size.',
+      'Cmin = 1.25 × (24 × 0.35 + 1.75 × 2.4 × 0.5) = 1.25 × 10.5 = 13.125 Ah, fit 17 Ah.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A larger system shows the formula more visibly: I1 of 350 mA produces 8.4 Ah of standby alone, before the alarm portion or the ageing factor are added. End-of-life sizing is a meaningful constraint at this scale; 17 Ah is correct.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'Why is the BS 5839-1:2025 formula calibrated to a 4-year design replacement cycle rather than a longer one (say 7-10 years)?',
     options: [
-      'Manufacturer pressure.',
-      "Sealed lead-acid (SLA) chemistry has a limited float-charge service life. After approximately 4 years on continuous float charge in typical fire-alarm operating conditions (temperature, charge regime), capacity has degraded to around 75-80% of nominal even on a battery that has not been alarm-discharged. Pushing beyond 4 years means the formula's 1.25 ageing factor no longer represents real capacity; the battery may fail to deliver the required standby + alarm without warning. The 4-year cycle is calibrated to the real chemistry, not to a maintenance-business preference.",
-      'Cost savings for installers.',
-      'Arbitrary choice.',
+      'Because SLA float-charge life is limited — by about 4 years capacity has fallen to roughly 75-80% of nominal.',
+      'Because the 4-year figure delivers a useful cost saving by triggering planned replacement on a predictable cycle.',
+      'Because battery manufacturers lobbied for a shorter cycle to increase replacement sales of SLA units.',
+      'Because 4 years is an arbitrary round figure chosen for ease of maintenance scheduling, not for chemistry.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The four-year cycle is rooted in SLA chemistry behaviour under float charge in fire-alarm typical conditions. Different chemistries (LiFePO4, for example) would have different cycle lengths and the formula would not necessarily apply unchanged. The 1.25 factor and the 4-year cycle are paired engineering assumptions; if you change the chemistry, you have to change the calculation, ideally with manufacturer engineering support.',
   },

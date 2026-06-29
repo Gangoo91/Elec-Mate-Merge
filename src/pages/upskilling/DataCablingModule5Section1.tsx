@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'You are terminating Cat6A onto a punchdown keystone. How much pair untwist is permitted at the termination, and why?',
     options: [
-      'Up to 50 mm — the cable is robust enough to absorb it.',
-      'Up to 25 mm — anything inside the keystone footprint is irrelevant.',
+      'Up to 50 mm per pair — the cable construction is robust enough that the certifier will not register the untwisted length.',
+      'Up to 25 mm per pair — any untwist that sits inside the keystone footprint has no effect on the measured channel.',
       'A maximum of 13 mm of untwist per pair — beyond that, NEXT (near-end crosstalk) and return loss degrade and the link will fail Class EA testing even with otherwise perfect cable and connectors.',
-      'Untwist does not matter as long as the colour code is correct.',
+      'Untwist length is irrelevant provided the colour code is correct and every conductor is fully seated.',
     ],
     correctIndex: 2,
     explanation:
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'A site has half its outlets terminated to T568A and half to T568B because two crews worked different floors. Is this an acceptable handover?',
     options: [
-      'Yes — both schemes are valid and Ethernet does not care which is used.',
-      'No — the schemes are functionally equivalent end-to-end, but a site MUST be consistent. A patch cord made T568A-to-T568B becomes a crossover and will not work for switch-to-device traffic in the way intended.',
-      'No — T568A is illegal in the UK.',
-      'Yes — auto-MDI/MDI-X on modern switches makes it irrelevant.',
+      'No — the schemes are functionally equivalent end-to-end, but a site MUST be consistent. A channel made T568A-to-T568B becomes a crossover and will not work reliably for switch-to-device traffic across all device types.',
+      'Yes — both schemes are valid and Ethernet treats them identically, so a mixed site needs no remedial work.',
+      'No — T568A is not permitted on UK installations, so every T568A outlet must be re-terminated to T568B.',
+      'Yes — auto-MDI/MDI-X on modern switches negotiates any crossover, so a mixed site is fully acceptable at handover.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'T568A and T568B are both valid pin-out schemes. The pairs are the same; only the colour assignments to pins 1-2 and 3-6 are swapped. End-to-end, a T568A link and a T568B link are electrically identical and work the same way. The problem is when one outlet is T568A and the patch cord is T568B (or vice versa) — the resulting end-to-end channel is wired as a crossover, which on auto-MDI/MDI-X switches usually still links but on dumb-end devices (some IP cameras, legacy hubs, some PoE injectors) does not. The site discipline is: pick ONE scheme on day one, document it in the spec, and terminate every outlet, every patch panel and every cord to that scheme. T568B is the more common UK default; T568A is the US federal default. Either is fine — but pick one.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'You are terminating 23 AWG Cat6A solid-core cable into a 110-style punchdown keystone. The manufacturer specifies a 25 mm jacket strip length. The installer routinely strips 60 mm because "it makes the colours easier to fan out". What is the consequence?',
     options: [
-      'No consequence — strip length is purely cosmetic.',
+      'No consequence — strip length is purely cosmetic provided the conductors reach their slots.',
+      'The over-stripped cable simply will not physically fit into the keystone hood and the cap will not close.',
+      'Only the accuracy of the colour code matters; the length of jacket removed has no electrical effect.',
       'The over-stripped jacket exposes the pairs to longer untwist and removes the pair-binding the jacket provides against bend-induced impedance changes — NEXT and return loss both degrade. On Cat6A, a 60 mm strip is a near-guaranteed Class EA fail.',
-      'The cable will not fit in the keystone.',
-      'Only the colour-code accuracy matters.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The cable jacket is part of the electrical design of the cable — it holds the pairs at a consistent geometry and provides the pair-to-pair separation the Category was certified at. Strip too much jacket and the pairs splay, untwist further than the 13 mm limit, and lose their characteristic impedance. The Cat6A certifier sees this as elevated NEXT and a return-loss bump near the connector. Manufacturer instructions typically specify a 20-30 mm strip for keystones — follow that exactly. Strip-length discipline is one of the cheapest, most-skipped install practices on a Cat6A job. It makes or breaks the channel.',
   },
@@ -66,12 +66,12 @@ const inlineChecks = [
     question:
       'A modern tool-less keystone uses an internal IDC mechanism that pierces the conductor when the closing cap is pressed. The contractor claims this is "as good as a punchdown — no tool needed". For a Cat6A install, is this a sound choice?',
     options: [
-      'No — tool-less keystones are not allowed by the standards.',
       'Yes, IF the keystone is rated to the Class being installed (Class EA for Cat6A), terminated to manufacturer instructions (strip length, lacing, untwist limit), and the channel is certified to TIA-1152-A / BS EN 50346 with documented results. Tool-less mechanisms are common on Cat6A keystones; what matters is the Class certification of the COMPONENT and the installed CHANNEL, not the presence or absence of a punchdown tool.',
-      'No — only 110 punchdowns can deliver Class EA.',
-      'Only if the keystone is shielded.',
+      'No — tool-less keystones sit outside the cabling standards and a channel using them cannot be certified.',
+      'No — only a 110 punchdown termination can deliver a genuine Class EA result on Cat6A.',
+      'Only if the keystone is a shielded type, because tool-less mechanisms are unreliable on unshielded Cat6A.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Tool-less keystones are entirely standards-conformant, provided the keystone itself is rated to the Class you are installing and the install practice (strip length, lacing, untwist limit) follows the manufacturer instructions. The certifier does not care which IDC mechanism cut into the conductor — it cares about the resulting electrical channel. The two real risks with tool-less keystones are (1) cheap, unrated parts dressed up as Cat6A — verify the component certification, and (2) installer shortcuts because no tool is felt to be needed — which is when strip length and untwist discipline collapse. Use rated components, follow the instructions, and certify the channel.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'What does the term "IDC" mean in the context of copper data terminations, and why does it matter?',
     options: [
-      'Insulation Detection Circuit — a tester function.',
-      'Insulation Displacement Connection — the IDC blade pierces the conductor insulation as it pushes the conductor into the slot, making a gas-tight metal-to-metal contact without requiring stripping of the conductor itself. Used in 110-style, Krone/LSA-PLUS, 66-block and modern tool-less keystones. The slot geometry is matched to the conductor gauge — using the wrong gauge cable in an IDC sized for a different gauge produces a poor or intermittent contact.',
-      'Internal Data Cable — a cable type.',
-      'Industrial Data Connector — a connector form.',
+      'Insulation Displacement Connection — the blade pierces the insulation to make a gas-tight contact.',
+      'Insulation Detection Circuit — a certifier function that flags conductors stripped past their length.',
+      'Internal Data Cable — the solid-core cable run between a patch panel and active comms-room gear.',
+      'Industrial Data Connector — a ruggedised connector used where cabling enters harsh environments.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IDC (Insulation Displacement Connection) is the universal copper-data termination mechanism. The blade displaces the insulation and bites into the copper conductor in a single press, forming a gas-tight contact that is as good or better than a screw terminal for low-current data signals. 110-style is the modern default for keystones and patch panels. Krone/LSA-PLUS is the European-origin telecoms standard, common on legacy voice frames. 66-block is the older US telecoms format, mostly on retrofits now. Tool-less keystones use a hidden IDC engaged by the closing cap. Every modern Cat5e/6/6A keystone is some form of IDC. Match the IDC slot gauge to the cable gauge — 22 AWG and 23 AWG are common Cat6A sizes; using a 24 AWG IDC slot with 22 AWG cable cracks the slot.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'What is the maximum permitted pair untwist at the termination for a Cat6A keystone, and what happens if it is exceeded?',
     options: [
-      'Up to 25 mm — anything below the keystone hood is fine.',
-      '13 mm maximum (per BS EN 50173-1 / ISO/IEC 11801-1 / ANSI/TIA-568.2-E and most manufacturer instructions). Beyond 13 mm, NEXT and return loss degrade rapidly: the twist provides the pair-to-pair coupling cancellation; when it is removed, the cancellation collapses, and the impedance discontinuity at the untwisted segment shows as a return-loss spike. The certifier flags it immediately.',
-      'There is no limit — only colour code matters.',
-      '50 mm — the jacket protects the pairs.',
+      'Up to 25 mm — untwist hidden below the keystone hood has no measurable effect on the channel.',
+      'No fixed limit — provided the colour code is correct the link certifies regardless of untwist.',
+      '13 mm maximum — beyond it, NEXT and return loss degrade and the certifier flags the link.',
+      'Up to 50 mm — the cable jacket keeps binding the pairs once they are inside the keystone.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 13 mm pair-untwist limit is one of the fundamental Cat6A install rules. The twist is the electrical cancellation mechanism. Untwist beyond 13 mm and the link will fail or marginally pass Class EA — and marginal passes fail under load (PoE heat, temperature swings, cable movement). Strip the jacket only to the manufacturer-specified strip length (typically 20-30 mm), fan the pairs to their keystone positions, untwist the last few millimetres only, and seat them into the IDC. Trim flush. Done.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'A patch panel port has been terminated, the cable tested, and shows a Class EA marginal pass at 99.5 m of effective electrical length on a 28 m physical run. What is the most likely root cause?',
     options: [
-      'The cable is too long.',
-      'Excessive pair untwist at the termination, plus possibly an over-stripped jacket — both lengthen the effective electrical path because of impedance mismatches reflecting energy. The certifier reports propagation delay and length, and inflated effective length almost always indicates a termination defect (or kinked / damaged cable somewhere in the run).',
-      'The certifier is broken.',
-      'The wall outlet box is metal.',
+      'The physical run genuinely exceeds the 90 m permanent-link limit and must be shortened.',
+      'The certifier is set to the wrong cable standard and is mis-calculating the propagation delay.',
+      'The metal back-box behind the outlet is coupling to the pairs and inflating the measured length.',
+      'Excessive untwist (and likely over-stripped jacket) reflecting energy and inflating the length.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Effective electrical length on a certifier is calculated from propagation delay. A 28 m physical run that reads as 99.5 m electrically has reflections — energy is bouncing back and forth between impedance discontinuities, lengthening the apparent path. The most common causes are (1) excessive pair untwist at one or both terminations, (2) over-stripped jacket leaving the pairs splayed, (3) a kinked cable somewhere in the run, or (4) a damaged conductor. Re-terminate both ends to the manufacturer strip length and untwist limit, retest. If the length still reads inflated, the cable is damaged and must be re-pulled.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'Which colour-code scheme is being terminated when the pin assignment is: pin 1 white-orange, pin 2 orange, pin 3 white-green, pin 4 blue, pin 5 white-blue, pin 6 green, pin 7 white-brown, pin 8 brown?',
     options: [
-      'T568A.',
-      'T568B — pins 1-2 carry the orange pair; pins 3-6 carry the green pair (split across pin 4-5 blue pair). Both T568A and T568B use the same four pairs in the same way electrically; only the colour-to-pin mapping on pins 1-2 and 3-6 swaps between the two. T568B is the more common UK / commercial default.',
-      'A crossover.',
-      'A telephony pinout.',
+      'T568B — orange pair on pins 1-2, green on 3-6; the common UK commercial default.',
+      'T568A — recognisable because the green pair lands on pins 1-2 and orange on pins 3-6.',
+      'A crossover pinout — one end is wired so transmit and receive pairs are deliberately swapped.',
+      'A two-pair telephony pinout where only the blue and orange pairs carry the voice channel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'T568B: orange pair on pins 1-2, green pair on pins 3-6, blue pair on pins 4-5, brown pair on pins 7-8. T568A swaps orange and green: green pair on pins 1-2, orange pair on pins 3-6, blue pair on pins 4-5, brown pair on pins 7-8. End-to-end, a T568A channel and a T568B channel are electrically identical — Ethernet uses the same pairs the same way regardless of colour. The site discipline is: pick ONE scheme, document it, terminate everything to it. Mixing the two on a single channel produces an unintended crossover.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'You are using a Krone/LSA-PLUS impact tool on a legacy voice frame and find the conductors are not seating fully. What is the first thing to check?',
     options: [
-      'The cable Category.',
-      'The impact-tool blade orientation — Krone/LSA-PLUS blades have a specific orientation (cut side towards the cable end) and a specific spring-loaded depth setting. A 110 blade does not fit in a Krone slot and will damage it. The right blade, in the right orientation, with the spring set so it cuts and seats in one stroke, is the fix. After that, check that the conductor gauge matches the IDC slot rating.',
-      'The tester battery.',
-      'The cable jacket colour.',
+      'The Category of the cable, since a Cat6A conductor will not seat in a voice-rated IDC slot.',
+      'The charge level of the continuity tester, as a low battery can give a false not-seated reading.',
+      'The blade — a Krone blade in the right orientation and spring depth, not a 110 blade.',
+      'The jacket colour of the cable, which on legacy voice frames indicates the correct slot.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Punchdown tool blades are not interchangeable across IDC families. 110-style, Krone/LSA-PLUS, and 66-block each have their own blade geometry. A 110 blade in a Krone slot will not seat the conductor and will damage the slot. Krone blades have a "cut" side and a "no-cut" side — orient the cut side towards the cable end so the excess conductor is trimmed. Check the spring tension; under-set, it will not seat the conductor; over-set, it can crack the IDC body. After mechanical setup, the next thing to check is conductor gauge versus slot rating — using 26 AWG telephony wire in a slot rated for 22-24 AWG produces poor contact.',
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       'What practical effect does using a tool-less keystone (where the closing cap engages an internal IDC) have on the certified Class of an installed channel?',
     options: [
-      'It always degrades the channel by one Class.',
-      'None — provided the keystone is rated to the Class being installed (e.g. Class EA for Cat6A) and is terminated to manufacturer instructions. The certifier judges the resulting electrical channel; the IDC mechanism is invisible to it. The risks of tool-less are (1) installer shortcuts because no tool feels needed, and (2) cheap unrated components masquerading as Cat6A — both eliminated by component certification + install discipline.',
-      'It always improves the channel by one Class.',
-      'Tool-less keystones are not standards-conformant.',
+      'It reliably degrades the channel by one Class, as a cap-engaged IDC contacts worse than a punch.',
+      'None, provided the keystone is rated to the Class and terminated to manufacturer instructions.',
+      'It tends to improve the channel by one Class, as the cap applies more consistent contact force.',
+      'Tool-less keystones fall outside the standards, so a channel using them cannot be certified.',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'Why does ANSI/TIA-568.2-E (and BS EN 50173-1) treat "consistent end-to-end pinout" as a binding rule rather than a recommendation?',
     options: [
-      'For aesthetics.',
-      'Because mixing T568A and T568B in a single channel produces a wired crossover, which Ethernet auto-MDI/MDI-X may or may not negotiate around — and many non-Ethernet ICT devices (some IP cameras, PoE injectors, legacy hubs, building-automation gateways) do not have auto-MDI/MDI-X and will simply fail to communicate. The rule binds the installer to a single scheme so every link in the building behaves identically.',
-      'Because T568A is illegal in the UK.',
-      'Because shielded cables require T568A.',
+      'Because mixing the two schemes makes a crossover that non-auto-MDI/MDI-X devices cannot handle.',
+      'Because a mixed-scheme site looks unprofessional on the records even though every link works.',
+      'Because T568A is not permitted on UK commercial work, so a mixed site breaches the standard.',
+      'Because shielded Cat6A can only terminate to T568A, so any T568B shielded outlet will fail.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The pinout-consistency rule exists because real-world devices are not all auto-MDI/MDI-X. A modern managed switch usually negotiates around a crossover; a $30 IP camera, a legacy unmanaged hub, a small-business PoE injector or a BMS controller often does not. A site that mixes T568A and T568B may work for the office Ethernet on day one and fail when the access-control system, the IP camera fleet, or the BMS rolls out three months later. Pick one scheme, document it in the spec, write it on every patch panel label, and terminate every outlet and cord to it.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'A new Cat6A installation passes Class EA at handover. Six months later, several links have degraded to Class E and a few are intermittent. What is the most likely root cause?',
     options: [
-      'The cable has aged.',
-      'Termination drift under thermal cycling and PoE load — over-stripped jackets and excessive untwist that just barely passed at handover degrade further as the cable warms under PoE current and cools each night. Marginal passes are time-bombs. The fix is to re-terminate the failing links to manufacturer specification (strip length, untwist limit) and re-certify. Class EA on Cat6A is delivered by install discipline at the termination, not by the cable.',
-      'The patch cords have failed.',
-      'The certifier was wrong on day one.',
+      'The bulk cable has aged in service and lost transmission performance across the installation.',
+      'The patch cords have worn out and should be swapped before any link is re-terminated at all.',
+      'Marginal terminations drifting under PoE heat and thermal cycling — re-terminate and re-certify.',
+      'The certifier gave false passes on day one and the links were never genuinely Class EA at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Marginal pass terminations are unstable under thermal cycling. PoE current produces heat in the conductors; the cable warms during the day and cools overnight; the IDC contacts move microscopically; under-tightened or over-stripped terminations slowly degrade. A link that just-passed Class EA on day one because of generous untwist drifts to Class E in months. The lesson: do not accept marginal Class EA passes — re-terminate them at handover, before the contractor leaves site. Class EA at handover with comfortable margins is a 15-year link; Class EA marginal-pass at handover is a six-month link.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'What is the practical difference between a 110-block / 110 keystone and a 66-block, and where would you still encounter each in 2026?',
     options: [
-      'They are identical.',
-      '110-style is the modern data-cabling default — used on every modern keystone, patch panel and IDC strip; the spacing and slot geometry are sized for Cat5e/6/6A conductor gauges. 66-blocks are an older US telecoms format with looser geometry — fine for analogue voice and low-speed data but not rated for Cat5e or above. In 2026 you encounter 110 everywhere on data jobs; 66-blocks on legacy voice frames in older buildings, and only for patch / extension of the existing voice service — never as a new data termination point.',
-      '110 is for fibre, 66 is for copper.',
-      'Only 66-block can carry PoE.',
+      'They are electrically identical and can be used interchangeably for Cat6A data terminations.',
+      '110-style is the modern data default; 66-block is older voice-only, found on legacy frames.',
+      '110-style is used for fibre breakout while 66-block is the copper data format — never overlapping.',
+      'Only 66-block can carry Power over Ethernet, so any PoE device must terminate on a 66 frame.',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: 'Conductor preparation is described as "where Class is decided" — why?',
     options: [
-      'It is a marketing slogan only.',
-      'Because the cable, the keystone and the patch panel all carry their certified Category rating from the factory; what determines whether the installed CHANNEL meets the Class is the last few millimetres at each termination — strip length, jacket integrity, pair-untwist length, IDC seating. Get those wrong and a Cat6A run delivers a Class E or worse channel from Cat6A components. Get them right and Cat6A delivers Class EA with comfortable margins. The components are bought; the Class is built — at the termination.',
-      'Because the standards mandate a specific brand of keystone.',
-      'Because all faults occur in the cable, never the termination.',
+      'Because components come rated; the channel Class is decided by the last few millimetres at each end.',
+      'Because it is a manufacturer marketing slogan with no real bearing on whether a channel certifies.',
+      'Because the standards require a single named brand of keystone, decided at the procurement stage.',
+      'Because virtually all data-cabling faults originate in the bulk cable run, not at the terminations.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Field experience on certified Cat6A jobs is overwhelming: the dominant failure modes are at the termination, not in the cable run. Strip length, untwist, IDC seating and consistent end-to-end pinout decide whether the installed channel passes Class EA. The cable comes from the factory rated; the keystone comes rated; the patch panel comes rated; whether the link delivers the rating is decided in the last 13 mm at each end. That is why competent contractors invest in installer training and torque-controlled / factory-prepared terminations, and why TIA-1152-A / BS EN 50346 channel certification at handover is non-negotiable.',
   },

@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     id: 'mh-spectrum-definition',
     question: 'According to the World Health Organisation, mental health is best described as:',
     options: [
-      'The absence of any mental illness or disorder',
       'A state of wellbeing in which a person can cope with normal stresses, work productively, and contribute to their community',
+      'The absence of any mental illness or disorder',
       'Feeling happy and positive most of the time',
       'Being free from stress and anxiety at work',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The WHO defines mental health as a state of wellbeing in which every individual realises their own potential, can cope with the normal stresses of life, can work productively and fruitfully, and is able to make a contribution to their community. It is far more than the absence of illness.',
   },
@@ -44,8 +44,8 @@ const quickCheckQuestions = [
     id: 'mh-stigma-type',
     question:
       'Which type of stigma occurs when a person with a mental health condition internalises negative beliefs about themselves?',
-    options: ['Public stigma', 'Structural stigma', 'Self-stigma', 'Institutional stigma'],
-    correctIndex: 2,
+    options: ['Public stigma', 'Self-stigma', 'Structural stigma', 'Institutional stigma'],
+    correctIndex: 1,
     explanation:
       'Self-stigma (also called internalised stigma) happens when someone with a mental health condition absorbs the negative stereotypes and prejudice from society, leading them to feel shame, low self-worth, and reluctance to seek help.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following best describes the Mental Health Continuum?',
     options: [
-      'A binary state: you either have mental health problems or you do not',
       'A spectrum ranging from thriving to in crisis that everyone moves along',
+      'A binary state: you either have mental health problems or you do not',
       'A medical diagnosis tool used only by psychiatrists',
       'A government policy document on workplace wellbeing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Mental Health Continuum represents mental health as a spectrum that everyone moves along throughout their life, ranging from thriving through surviving and struggling to in crisis. It is not binary.',
   },
@@ -105,8 +105,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which UK industry has the highest suicide rate?',
-    options: ['Healthcare', 'Financial services', 'Construction', 'Agriculture'],
-    correctAnswer: 2,
+    options: ['Healthcare', 'Financial services', 'Agriculture', 'Construction'],
+    correctAnswer: 3,
     explanation:
       'The Office for National Statistics consistently identifies construction as having one of the highest suicide rates of any UK industry. Male construction workers are approximately three times more likely to die by suicide than the national male average.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is a myth about mental health?',
     options: [
-      "Mental health fluctuates throughout a person's life",
       'Mental health problems only affect certain types of people',
+      "Mental health fluctuates throughout a person's life",
       'Early intervention improves outcomes significantly',
       'Everyone has mental health, just as everyone has physical health',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The belief that mental health problems only affect certain types of people is a harmful myth. Mental health conditions can affect anyone regardless of age, gender, ethnicity, income, or occupation. 1 in 4 adults will experience a mental health problem in any given year.',
   },

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bms-definition',
     question: 'What is a Building Management System (BMS)?',
     options: [
-      'A security camera system',
       'A computer-based control system for monitoring and controlling building equipment',
-      'A type of electrical panel',
-      'A fire alarm system',
+      'A dedicated CCTV and intruder detection system',
+      'A distribution board that supplies a building',
+      'A standalone fire detection and alarm system',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A BMS is a computer-based control system that monitors and controls mechanical and electrical equipment in buildings, including HVAC, lighting, power, fire, and security systems.',
   },
@@ -27,22 +27,22 @@ const quickCheckQuestions = [
     id: 'bms-benefit',
     question: 'What is a primary benefit of implementing a BMS?',
     options: [
-      'Reduced building size',
-      'Lower construction costs',
+      'Reduced floor area required for plant rooms',
+      'Lower initial construction costs in every case',
+      'Elimination of the need for periodic maintenance',
       '10-30% energy savings through intelligent control',
-      'Faster internet speeds',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Energy management is one of the primary drivers for BMS implementation, with systems typically achieving 10-30% energy savings through intelligent control and monitoring.',
   },
   {
     id: 'bms-protocol',
-    question: 'Which of these is a common BMS communication protocol?',
-    options: ['HTTP', 'BACnet', 'HDMI', 'USB'],
-    correctIndex: 1,
+    question: 'Which of these is a communication protocol designed specifically for building automation and a BMS?',
+    options: ['HDMI', 'Power over Ethernet (PoE)', 'BACnet', 'DMX512'],
+    correctIndex: 2,
     explanation:
-      'BACnet is an international standard (ISO 16484-5) widely used in commercial buildings for BMS communication.',
+      'BACnet is an international standard (ISO 16484-5) developed specifically for building automation and widely used in commercial BMS. PoE is a power-delivery method, HDMI is for video, and DMX512 is for stage lighting.',
   },
 ];
 

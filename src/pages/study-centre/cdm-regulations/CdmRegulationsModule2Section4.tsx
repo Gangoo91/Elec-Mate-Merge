@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'designer-definition',
     question: "Under CDM 2015, which of the following would be classed as a 'designer'?",
     options: [
+      'A labourer who carries materials and tools to the work area as directed',
       'An electrician who specifies a cable route and selects the distribution board layout',
-      'A labourer who carries materials to the work area',
-      'A client who commissions a new office fit-out',
-      'A building occupant who reports a fault',
+      'A client who commissions a new office fit-out from a contractor',
+      'A building occupant who reports a fault to the facilities team',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Under CDM 2015, a designer is anyone who prepares or modifies a design — including drawings, specifications, and layouts. An electrician who specifies cable routes and selects distribution board layouts is making design decisions that affect health and safety, making them a designer under the regulations.',
   },
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 15, what must a contractor ensure BEFORE beginning work in the construction phase?',
     options: [
+      'That every worker on the project holds a valid CSCS card for site access',
+      'That the principal designer has visited and signed off the site beforehand',
       'That the client is aware of their duties and a construction phase plan is in place',
-      'That all workers hold a CSCS card',
-      'That the principal designer has visited the site',
-      'That a CDM co-ordinator has been appointed',
+      'That a CDM co-ordinator has been formally appointed for the project',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Regulation 15(2) states that a contractor must not carry out construction work on a project unless satisfied that the client is aware of their duties under the regulations and that there is a construction phase plan (CPP) for the project. CSCS cards are not a legal requirement under CDM, and the role of CDM co-ordinator was replaced under CDM 2015.',
   },
@@ -37,12 +37,12 @@ const quickCheckQuestions = [
     id: 'worker-duties',
     question: 'Under Regulation 14(2), which of the following is NOT a duty placed on workers?',
     options: [
-      'Appointing a principal contractor for the project',
       'Reporting anything they believe is likely to endanger health or safety',
       'Cooperating with any person working on the project',
       'Not misusing anything provided for health, safety, or welfare',
+      'Appointing a principal contractor for the project',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Appointing a principal contractor is a client duty under Regulation 5, not a worker duty. Workers must report dangerous conditions, cooperate with duty holders, not misuse anything provided for health and safety, and take reasonable care of their own safety and that of others who may be affected by their actions.',
   },
@@ -76,12 +76,12 @@ const quizQuestions = [
     id: 1,
     question: "Under CDM 2015, which of the following activities would make a person a 'designer'?",
     options: [
-      'Preparing a specification for cable types and containment routes',
       'Sweeping the workshop floor',
+      'Preparing a specification for cable types and containment routes',
       "Ordering materials from a supplier's catalogue without specifying anything",
       'Driving a delivery van to site',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'A designer is anyone who prepares or modifies a design relating to a structure, including drawings, design details, specifications, and bills of quantities. Preparing a specification for cable types and containment routes is a design activity because the decisions made affect health and safety during construction and maintenance.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       'Regulation 9 requires designers to follow a hierarchy when preparing or modifying a design. What is the correct order?',
     options: [
-      'Eliminate foreseeable risks → reduce remaining risks → provide information about residual risks',
       'Provide information about all risks → then try to reduce them → then eliminate what is left',
       'Reduce risks first → eliminate what cannot be reduced → ignore residual risks',
+      'Eliminate foreseeable risks → reduce remaining risks → provide information about residual risks',
       'Report all risks to the HSE → wait for guidance → proceed with the original design',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Regulation 9 sets out a clear hierarchy: first eliminate foreseeable risks so far as is reasonably practicable, then reduce remaining risks that cannot be eliminated, and finally provide information about any residual risks so that other duty holders can manage them. This mirrors the general principles of prevention.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'An electrician designs a cable route that passes through a confined space requiring crawling access. Under Regulation 9, what should the electrician consider FIRST?',
     options: [
-      'Whether the cable route can be redesigned to avoid the confined space entirely',
       'What PPE the installer should wear in the confined space',
       'How to provide ventilation in the confined space',
       'Whether a confined space permit is available',
+      'Whether the cable route can be redesigned to avoid the confined space entirely',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "The first step in the designer's hierarchy is to eliminate the risk. If the cable route can be redesigned to avoid the confined space entirely — for example by routing through an accessible void, trunking, or alternative pathway — that eliminates the confined space hazard. PPE, ventilation, and permits are all risk reduction or management measures, which come later in the hierarchy if elimination is not reasonably practicable.",
   },
@@ -118,10 +118,10 @@ const quizQuestions = [
     question:
       'Which of the following statements about contractor duties under CDM 2015 is correct?',
     options: [
-      'A contractor must plan, manage, and monitor their own work to ensure it is carried out without risks to health and safety',
-      "A contractor's duties only apply to the main contractor, not to sub-contractors",
-      'Contractors are only responsible for the safety of their own employees, not other workers on site',
-      'Contractor duties under CDM apply only to projects with more than five workers',
+      'A contractor must plan, manage, and monitor their own work so it is carried out without risk',
+      'A contractor’s duties apply only to the main contractor, never to any sub-contractors below them',
+      'Contractors are responsible only for the safety of their own employees, not other workers on site',
+      'Contractor duties under CDM apply only to projects involving more than five workers at any one time',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'Under Regulation 14(2), workers on a construction project must do all of the following EXCEPT:',
     options: [
-      'Prepare the construction phase plan for the project',
       "Report anything they believe is likely to endanger their own or others' health and safety",
+      'Prepare the construction phase plan for the project',
       'Cooperate with any person working on the project to enable compliance with CDM',
       'Not misuse anything provided in the interests of health, safety, or welfare',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Preparing the construction phase plan is a duty of the principal contractor (Regulation 12), not an individual worker. Workers must report dangerous conditions, cooperate with duty holders, not interfere with or misuse H&S provisions, and take reasonable care of their own safety and the safety of others affected by their work.',
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'A design-and-build contractor takes on a project where they are also appointed as principal contractor. Which duties must they fulfil?',
     options: [
-      'Designer duties under Regulation 9, contractor duties under Regulation 15, AND principal contractor duties under Regulation 13',
       'Only the principal contractor duties, because these override the other roles',
       'Only the designer duties, because design comes first in the project timeline',
+      'Designer duties under Regulation 9, contractor duties under Regulation 15, AND principal contractor duties under Regulation 13',
       "They can choose which set of duties to follow based on their company's risk assessment",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'CDM 2015 is clear that duties stack — they do not merge or override each other. A design-and-build contractor who is also the principal contractor must fulfil ALL the duties attached to EACH role: designer duties (Regulation 9), contractor duties (Regulation 15), and principal contractor duties (Regulation 13). There is no option to pick and choose.',
   },
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "CDM 2015 requires that people carrying out construction work are competent. What does 'competent' mean in this context?",
     options: [
-      'Having the necessary skills, knowledge, experience, and (for organisations) organisational capability for the work',
-      'Holding a valid CSCS or ECS card',
-      'Having completed a CDM awareness course in the last twelve months',
-      'Being registered with the Health and Safety Executive',
+      'Holding a valid CSCS or ECS card for the relevant trade and site',
+      'Having completed an accredited CDM awareness course within the last twelve months',
+      'Being formally registered with the Health and Safety Executive as a competent person',
+      'Having the skills, knowledge, experience and (for organisations) organisational capability for the work',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'CDM 2015 defines competence in terms of skills, knowledge, experience, and — for organisations — the organisational capability to carry out the work safely. There is no requirement for a specific qualification or card. CSCS/ECS cards are widely used as evidence of competence, but they are not mandatory under the regulations themselves.',
   },
@@ -174,10 +174,10 @@ const quizQuestions = [
     question:
       'A contractor must appoint workers in writing under CDM 2015. Which of the following is also required when appointing a contractor?',
     options: [
-      'The appointment must be in writing and the person appointing must be satisfied the contractor has the skills, knowledge, experience, and organisational capability for the work',
-      'The contractor must hold professional indemnity insurance of at least one million pounds',
-      'The appointment must be registered with the local authority building control department',
-      'The contractor must provide a copy of their CSCS card to the principal designer',
+      'In writing, with the appointer satisfied the contractor has the skills, knowledge, experience and capability',
+      'In writing, with proof of professional indemnity insurance of at least one million pounds attached',
+      'In writing, registered with the local authority building control department before work starts',
+      'In writing, with a copy of the contractor’s CSCS card provided to the principal designer',
     ],
     correctAnswer: 0,
     explanation:

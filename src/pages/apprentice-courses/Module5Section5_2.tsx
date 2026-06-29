@@ -36,10 +36,10 @@ const quickCheckQuestions = [
     id: '2',
     question: 'What is the best way to avoid miscommunication with your supervisor?',
     options: [
-      'Fire resistant cable (FP200)',
-      'Stop immediately and investigate the cause',
+      'Assume you understood and start work',
+      'Write the instruction down without checking',
       'Repeat back instructions to confirm',
-      'Use appropriate PPE and procedures',
+      'Ask another apprentice what was meant',
     ],
     correctIndex: 2,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main role of a foreman on a construction site?',
     options: [
-      'Approved contractors can receive payments with 0% CIS deduction',
-      'Make safe immediately and inform the person in control',
+      'To order and deliver materials to site',
+      'To prepare and issue the design drawings',
       'To allocate tasks, oversee work quality, and enforce safety',
-      'Analysing circuits with multiple sources by considering one source at a time',
+      'To carry out the final certification of the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,9 +106,9 @@ const quizQuestions = [
     question: "What should you do if you don't understand an instruction?",
     options: [
       'Ask questions and repeat back to confirm',
-      'To prevent parallel paths affecting readings',
-      'Concept design (RIBA Stage 2)',
-      'Cannot determine - need split data',
+      'Start the task and adjust as you go',
+      'Wait quietly until someone else asks',
+      'Do what you think is most likely meant',
     ],
     correctAnswer: 0,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of toolbox talks?',
     options: [
-      'To improve commutation and reduce brush sparking',
-      'Clearly state the danger and urgency of repair',
+      'To allocate tools to each trade for the day',
+      'To carry out a formal inspection of the works',
       'To share safety information and site updates',
-      'Combining channels for increased bandwidth',
+      'To record the hours worked by each operative',
     ],
     correctAnswer: 2,
     explanation:

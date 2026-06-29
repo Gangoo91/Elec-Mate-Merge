@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'When is respiratory protective equipment (RPE) with filters suitable for use in a confined space?',
     options: [
-      'Whenever the space has been ventilated with a fan for at least 10 minutes',
       'Only when the atmosphere is confirmed breathable (O₂ ≥19.5%) and the contaminant is within filter capability',
+      'Whenever the space has been ventilated with a fan for at least 10 minutes',
       'Whenever the entrant has been face-fit tested for the specific mask',
       'Only when the space is classified as low risk on the entry permit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Filtering RPE (FFP3, half-mask, full-face, PAPR) is ONLY suitable when the atmosphere contains sufficient oxygen (at least 19.5%) and the contaminant has been identified and is within the filter's rated capability. Filters do not supply oxygen — they remove contaminants from air that is already breathable. If oxygen is below 19.5%, or the atmosphere is or may become IDLH, breathing apparatus must be used regardless of other factors.",
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
       'What is the primary advantage of airline breathing apparatus over self-contained breathing apparatus (SCBA)?',
     options: [
       'It does not require any training to use',
-      'It provides unlimited air supply with no duration limit',
       'It provides a much longer working duration because the air supply is not carried by the wearer',
+      'It provides unlimited air supply with no duration limit',
       'It is lighter and therefore always more comfortable than SCBA',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The primary advantage of airline BA is duration — the air supply comes from a compressor or cylinder bank outside the confined space via a hose, so the wearer is not limited by the volume of a cylinder on their back. This allows much longer working durations compared to SCBA (which typically lasts 20-45 minutes). However, airline BA has its own limitations: the hose length restricts how far the wearer can travel, the hose can become kinked or snagged, and the wearer must carry an escape set in case the supply fails.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'Why must ALL electrical equipment be ATEX-rated when working in a confined space with a potentially explosive atmosphere?',
     options: [
       'ATEX-rated equipment is waterproof and confined spaces are often damp',
-      'ATEX-rated equipment is designed not to become an ignition source in explosive atmospheres',
       'ATEX-rated equipment is required by the Electricity at Work Regulations regardless of atmosphere',
       'ATEX-rated equipment has longer battery life for extended confined space entries',
+      'ATEX-rated equipment is designed not to become an ignition source in explosive atmospheres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "ATEX-rated (or 'intrinsically safe') equipment is certified under the ATEX Directive (2014/34/EU) to prevent it from becoming a source of ignition. This means it is designed so that any sparks, arcs, or hot surfaces it produces cannot ignite flammable gases, vapours, mists, or dusts. In a confined space where an explosive atmosphere exists or could develop, even a tiny spark from a non-ATEX torch or radio could cause a catastrophic explosion.",
   },
@@ -134,8 +134,8 @@ const quizQuestions = [
     id: 5,
     question:
       'An escape set carried by an airline BA user typically provides how many minutes of emergency breathing air?',
-    options: ['2 to 5 minutes', '10 to 15 minutes', '30 to 45 minutes', '60 minutes or more'],
-    correctAnswer: 1,
+    options: ['10 to 15 minutes', '2 to 5 minutes', '30 to 45 minutes', '60 minutes or more'],
+    correctAnswer: 0,
     explanation:
       'Escape sets typically provide 10 to 15 minutes of emergency breathing air. This is intended to give the wearer enough time to exit the confined space in the event of an airline failure — it is not designed for working. The entrant must be trained in activating and using the escape set, and the set must be checked before every entry to ensure the cylinder is fully charged and the regulator functions correctly.',
   },
@@ -145,11 +145,11 @@ const quizQuestions = [
       'Which of the following is the correct purpose of a tripod and winch system at a confined space entry point?',
     options: [
       'To provide a stable platform for the atmospheric monitoring equipment',
-      'To act as a barrier preventing unauthorised persons from entering the space',
       'To provide a mechanical advantage for raising and lowering entrants, and for emergency rescue retrieval',
+      'To act as a barrier preventing unauthorised persons from entering the space',
       'To support the airline hose and prevent it from being kinked during entry',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "A tripod and winch system is positioned over the entry point (typically a manhole or hatch) to provide a mechanical advantage for lowering the entrant into the space and, critically, for emergency rescue retrieval — pulling an incapacitated entrant out without requiring another person to enter. The winch connects to the entrant's harness via the rescue attachment point. The system must be rated for the expected load (entrant's weight plus equipment) and must be inspected before each use.",
   },
@@ -158,11 +158,11 @@ const quizQuestions = [
     question: 'Before each use, what must the user check on a full body harness?',
     options: [
       'Only that the harness is the correct size and the buckles click shut',
-      'Webbing for cuts, abrasion, and chemical damage; stitching for broken threads; buckles and D-rings for distortion or corrosion; and that all adjustment straps are present',
       'Only the expiry date printed on the label — if it has not expired, no further check is needed',
+      'Webbing for cuts, abrasion, and chemical damage; stitching for broken threads; buckles and D-rings for distortion or corrosion; and that all adjustment straps are present',
       'Only the dorsal D-ring, as this is the main attachment point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The pre-use inspection must cover ALL components: webbing (check for cuts, fraying, abrasion, chemical damage, UV degradation, and stiffness), stitching (check for pulled, broken, or missing threads), buckles and D-rings (check for distortion, corrosion, cracks, and smooth operation), labels (check the harness is within its service life), and all adjustment straps (check they are present and functioning). Any defect means the harness must be withdrawn from service immediately.',
   },
@@ -173,10 +173,10 @@ const quizQuestions = [
     options: [
       'Mobile phone with a hands-free headset',
       'Shouting through the entry point opening',
-      'A hardwired (cabled) communication system between entrant and top person',
       'Hand signals observed through a CCTV camera',
+      'A hardwired (cabled) communication system between entrant and top person',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Hardwired communication systems use a physical cable to connect headsets worn by the entrant and the top person, providing reliable two-way voice communication that is not affected by the metal or concrete structure of the confined space. Radio signals (including mobile phone signals) can be severely attenuated or completely blocked by metal tanks, underground chambers, and thick concrete structures. Shouting is unreliable, especially when the entrant is wearing BA. CCTV may supplement communication but cannot replace two-way voice contact.',
   },

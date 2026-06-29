@@ -97,10 +97,10 @@ export const smartHomeSection3QuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'Name one common integration challenge.',
     options: [
-      'Too many sensors available',
+      'All smart devices share a single universal protocol',
       'Compatibility issues between different brands and protocols',
-      'Sensors are too accurate',
-      'Controllers work too quickly',
+      'A shortage of available wireless frequency bands',
+      'Sensors and actuators using identical wiring colours',
     ],
     correct: 1,
     explanation:
@@ -110,10 +110,10 @@ export const smartHomeSection3QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What role could AI play in future controllers?',
     options: [
-      'Replace all sensors',
-      'Eliminate the need for actuators',
+      'Convert sensors into actuators automatically',
+      'Remove the need for any network connection',
       'Predict user needs and optimise energy usage automatically',
-      'Make systems more expensive',
+      'Operate devices without any electrical supply',
     ],
     correct: 2,
     explanation:

@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       "What does 'competent person' mean in the context of scaffold inspection under the Work at Height Regulations 2005?",
     options: [
       'Any person who has worked on a construction site for more than 12 months',
-      'A person with sufficient training, knowledge, and practical experience to identify defects and assess whether the scaffold is safe for use',
       'Only a person who holds a CISRS Advanced Scaffolder card',
+      'A person with sufficient training, knowledge, and practical experience to identify defects and assess whether the scaffold is safe for use',
       'A person appointed in writing by the Health and Safety Executive',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The Work at Height Regulations 2005 define a competent person as someone with 'such practical and theoretical knowledge and experience of the equipment to be inspected as will enable them to detect defects or weaknesses and to assess their importance in relation to the safety of the equipment.' This means they must have sufficient training, knowledge, and practical experience to carry out the inspection properly. While a CISRS scaffold inspection training scheme (SITS) card is widely recognised as evidence of competence, the regulations do not mandate a specific qualification \u2014 the person must simply demonstrate the required combination of training, knowledge, and experience.",
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when must a scaffold be inspected before first use?',
     options: [
-      'Only when the scaffold is higher than 4 metres',
       'After erection or after any substantial alteration, before any person uses it for work',
+      'Only when the scaffold is higher than 4 metres',
       'Only if the scaffold will be in use for more than 7 days',
       'Only if the client specifically requests an inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 12 of the Work at Height Regulations 2005 requires that a scaffold must be inspected by a competent person after erection in any position in which it is intended to be used (i.e. before first use) and after any substantial alteration. This requirement applies to all scaffolds regardless of height and is not dependent on the duration of use or a client request. The inspection must confirm that the scaffold has been erected in accordance with the design and is safe for the intended use before any person is permitted to work from it.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     options: [
       'A change in the trade using the scaffold (e.g. from bricklayers to electricians)',
       'The arrival of new materials to be stored on the scaffold platform',
-      'Exposure to conditions likely to have affected its strength or stability, such as strong winds',
       'The scaffold having been unused over a weekend',
+      'Exposure to conditions likely to have affected its strength or stability, such as strong winds',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 12(4) of the Work at Height Regulations 2005 requires an inspection after any event likely to have affected the strength or stability of the scaffold. This includes adverse weather conditions (strong winds, heavy rain, frost, snow), any impact from vehicles, plant or falling objects, any subsidence or movement of the ground, and any other occurrence that could compromise the scaffold\u2019s structural integrity. A change of trade using the scaffold or the arrival of new materials does not in itself trigger an inspection (though a change in the intended load may require a reassessment of the scaffold design). Being unused over a weekend does not trigger an inspection unless an adverse event occurred during that period.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'Only the date of the inspection and the name of the inspector',
       'The scaffold design drawings and calculations only',
-      'Details including location, date and time, description of the scaffold, results of the inspection, any defects found, action taken, and the name and position of the inspector',
       'Only a pass or fail result with the inspector\u2019s signature',
+      'Details including location, date and time, description of the scaffold, results of the inspection, any defects found, action taken, and the name and position of the inspector',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Schedule 7 of the Work at Height Regulations 2005 sets out detailed requirements for the content of inspection reports. The report must include: the name and address of the person for whom the inspection was carried out; the location and description of the workplace or equipment; the date and time of the inspection; details of any matters identified that could give rise to a risk to health or safety; details of any action taken as a result; details of any further action considered necessary; and the name and position of the person who carried out the inspection. A simple pass/fail result is not sufficient \u2014 the report must provide enough detail to demonstrate that a thorough inspection was carried out.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'The CISRS Scaffold Inspection Training Scheme (SITS) is primarily designed for which group of people?',
     options: [
+      'Non-scaffolders who need to inspect scaffolds, such as site managers, supervisors, and safety officers',
       'Only qualified CISRS Advanced Scaffolders',
       'Only HSE inspectors and enforcement officers',
-      'Non-scaffolders who need to inspect scaffolds, such as site managers, supervisors, and safety officers',
       'Only scaffold design engineers and structural engineers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The CISRS Scaffold Inspection Training Scheme (SITS) is specifically designed for non-scaffolders who need to carry out scaffold inspections as part of their role. This includes site managers, site supervisors, project managers, safety officers, and other construction professionals who are responsible for managing scaffold safety on site but who are not themselves qualified scaffolders. The course covers the legal requirements for scaffold inspection, how to identify common defects and hazards, how to assess whether a scaffold is safe for use, and how to complete inspection reports correctly. CISRS scaffolders receive inspection training as part of their core scaffolder training programme, so SITS is designed to bridge the knowledge gap for non-scaffolders.',
   },

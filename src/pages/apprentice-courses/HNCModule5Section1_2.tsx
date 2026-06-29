@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'gantt-purpose',
     question: 'What is the primary purpose of a Gantt chart in MEP project management?',
     options: [
-      'Phone for calling 999, but nothing that delays you',
-      'Stepping down high voltage for measurement and protection circuits',
+      'To record snagging items raised during second fix inspections',
+      'To list the materials and quantities required for each work package',
       'To visualise task durations and dependencies over time',
-      'Power stored and returned by inductors and capacitors',
+      'To set the contract sum and stage payment values for each trade',
     ],
     correctIndex: 2,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'milestone-definition',
     question: 'In construction programming, a milestone represents:',
     options: [
-      'The voltage at which an insulator fails and becomes conductive',
+      'A long-duration activity that consumes the most labour resource',
       'A significant achievement point with zero duration',
-      '24 V DC or 110/240 V AC depending on the module type',
-      'To ensure accuracy and avoid dangerous errors',
+      'The total spare time available across all non-critical activities',
+      'A fixed date constraint that overrides the programme logic',
     ],
     correctIndex: 1,
     explanation:
@@ -58,9 +58,9 @@ const quickCheckQuestions = [
     question: 'A Finish-to-Start (FS) dependency means:',
     options: [
       'The successor cannot start until the predecessor finishes',
-      'Stairwells are key escape routes requiring continuous illumination',
-      'It accurately models the statistical distribution of wind speeds',
-      'The sequence and interaction of multiple bend angles',
+      'The successor must finish at the same time as the predecessor',
+      'Both activities must start on exactly the same day',
+      'The successor can start as soon as the predecessor starts',
     ],
     correctIndex: 0,
     explanation:
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'critical-path',
     question: 'The critical path in a construction programme is:',
     options: [
+      'The path with the most spare time and lowest management priority',
+      'The sequence of activities with the highest combined labour cost',
       'The longest sequence of dependent activities determining minimum duration',
-      'At the approximate midpoint of the circuit or system',
-      'Allocating different time slots to different users for upstream transmission',
-      'The time an activity can be delayed without affecting project completion',
+      'The shortest route through the network of linked activities',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The critical path is the longest sequence of dependent activities that determines the minimum project duration. Any delay on the critical path delays the entire project.',
   },
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is float (or slack) in programme logic?',
     options: [
-      'The successor waits 2 days after the predecessor finishes before starting',
-      'Adjusting activity timing to avoid resource overallocation',
-      'Provide detailed short-term planning from the master programme',
+      'The waiting time deliberately added between two linked activities',
+      'The extra resource added to shorten an activity duration',
+      'The number of days an activity has been delayed against baseline',
       'The time an activity can be delayed without affecting project completion',
     ],
     correctAnswer: 3,
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "A 'two-week look-ahead programme' is used to:",
     options: [
-      'Adjusting activity timing to avoid resource overallocation',
+      'Smooth resource demand by adjusting activity timing within float',
       'Provide detailed short-term planning from the master programme',
-      'The time an activity can be delayed without affecting project completion',
-      'To show the original approved programme for comparison',
+      'Calculate the total float available across the whole network',
+      'Show the original approved programme for variance comparison',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'levelling' resources in a programme mean?",
     options: [
-      'Provide detailed short-term planning from the master programme',
-      'The time an activity can be delayed without affecting project completion',
+      'Setting every activity to the same fixed duration for consistency',
+      'Extending the project end date to absorb any reported delays',
       'Adjusting activity timing to avoid resource overallocation',
-      'To show the original approved programme for comparison',
+      'Removing all dependencies so activities can run in parallel',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'MEP coordination in programme development primarily addresses:',
     options: [
-      'The successor waits 2 days after the predecessor finishes before starting',
-      'The time an activity can be delayed without affecting project completion',
-      'Provide detailed short-term planning from the master programme',
+      'Setting the contract value for each mechanical and electrical package',
+      'Recording the snagging defects found at practical completion',
+      'Calculating the labour rates charged by each specialist trade',
       'Sequencing between mechanical, electrical, and plumbing trades to avoid clashes',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'A lag of 2 days on a Finish-to-Start dependency means:',
     options: [
       'The successor waits 2 days after the predecessor finishes before starting',
-      'Sequencing between mechanical, electrical, and plumbing trades to avoid clashes',
-      'Provide detailed short-term planning from the master programme',
-      'The time an activity can be delayed without affecting project completion',
+      'The successor can start 2 days before the predecessor finishes',
+      'The predecessor duration is automatically extended by 2 days',
+      'The successor has 2 days of float before it becomes critical',
     ],
     correctAnswer: 0,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which MEP activity typically appears on the critical path of a commercial building?',
     options: [
-      'Adjusting activity timing to avoid resource overallocation',
+      'Installation of final socket-outlet face plates',
       'Main switchboard installation and energisation',
-      'Primavera P6 or Microsoft Project',
-      'To show the original approved programme for comparison',
+      'Labelling of distribution boards and circuits',
+      'Fitting of emergency luminaire test keys',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a programme baseline?',
     options: [
-      'Main switchboard installation and energisation',
-      'Provide detailed short-term planning from the master programme',
-      'To show the original approved programme for comparison',
-      'Adjusting activity timing to avoid resource overallocation',
+      'To list every material and quantity required for the works',
+      'To set the daily look-ahead for the next two weeks of work',
+      'To capture the original approved programme for variance comparison',
+      'To smooth resource demand by adjusting activity timing within float',
     ],
     correctAnswer: 2,
     explanation:

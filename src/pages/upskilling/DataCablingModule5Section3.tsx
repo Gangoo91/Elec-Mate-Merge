@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'Why is a patch cord made from stranded conductor cable, and a permanent link from solid conductor cable?',
     options: [
-      'They are interchangeable; the choice is arbitrary.',
-      'Stranded conductors flex without breaking, which a patch cord needs because it is moved every time a device is plugged or unplugged. Solid conductors are stiffer, slightly lower in attenuation per metre, and tolerate the higher pulling tension of a long horizontal run, which a permanent link needs because it is pulled once through containment and then never moved.',
-      'Stranded is for shielded, solid is for unshielded.',
-      'Stranded carries PoE; solid does not.',
+      'They are interchangeable; the stranded-versus-solid choice is arbitrary and made on cost alone.',
+      'Stranded cable is used wherever shielding is required and solid wherever it is not, so the choice follows the screening type.',
+      'Stranded conductors flex without breaking, which a frequently-moved patch cord needs; solid conductors give lower attenuation per metre and IDC compatibility, which a pulled-once permanent link needs.',
+      'Stranded cable is required for any run carrying Power over Ethernet, while solid cable is for data-only links.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A patch cord is a short flexible cable that gets moved frequently — plugged, unplugged, re-routed across the patch field — and needs to survive thousands of flex cycles without conductor breakage. Stranded conductor (typically 7 strands of 32 AWG making up 24 AWG total) is designed for that flex cycle life. Solid conductor (single wire, typically 23 AWG for Cat6A) is designed for the permanent link: pulled once through containment under controlled tension, terminated at both ends, and then never moved. Solid conductor has slightly lower attenuation per metre and is what the IDC slot in a patch panel or keystone is sized for. The two cable types are not interchangeable — using stranded in a permanent link increases attenuation and may not seat properly in the IDC; using solid in a patch cord cracks at the first sharp bend.',
   },
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'A patch cord at 5 m has measurably higher attenuation per metre than the solid-conductor cable in the permanent link of the same Class EA channel. Why is this still acceptable?',
     options: [
-      'It is not acceptable; the patch cord should be replaced.',
-      'The 100 m channel rule already accounts for it. The 90 m permanent-link / 10 m cord allowance is set deliberately so that the cord allowance — 10 m of higher-attenuation stranded cable — fits inside the channel insertion-loss budget. Stranded cord cable is rated to a slightly different (more generous) per-metre attenuation than solid permanent-link cable; the budget accommodates this.',
-      'Patch cords do not need to meet Class EA.',
-      'Cord attenuation does not affect the channel.',
+      'The 90 m solid / 10 m stranded channel split deliberately sizes the cord allowance so the higher-attenuation stranded cable still fits inside the channel insertion-loss budget.',
+      'It is not acceptable; a cord with higher per-metre attenuation than the permanent link should always be replaced before the channel can pass.',
+      'Patch cords are exempt from the Class EA insertion-loss limits, so their attenuation is never assessed at all.',
+      'Cord attenuation is too small a fraction of the channel to register on the certifier, so it can be safely ignored.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The 100 m channel model is engineered around two distinct cable populations: the solid-conductor permanent link and the stranded-conductor cords. Stranded cable is rated to a higher per-metre attenuation because its electrical properties are slightly worse at the same gauge. The standards (TIA-568.2-E / ISO/IEC 11801-1 / BS EN 50173-1) account for this by allocating just 10 m to stranded and 90 m to solid, sized so the worst-case channel insertion loss fits inside Ethernet equipment expectations. As long as the patch cord is rated to the Category and the total cord allowance is ≤ 10 m, the channel passes Class EA. Using non-rated cord cable, or cord cable at the wrong gauge, breaks the budget.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'A new building specification calls for "flex-rated patch cords with locking RJ45 plugs and snagless boots". What is the practical reason for each of those three features?',
     options: [
-      'Marketing.',
-      'Flex-rated stranded cord cable survives the thousands of plug / unplug cycles a patch field actually sees. Locking RJ45 plugs prevent the cord being pulled out of the panel if the cable bundle shifts, which on a high-density patch panel at 1U-per-24-port is a real failure mode. Snagless boots prevent the locking tab catching on adjacent cords when withdrawing a cord — protecting the tab from breakage and the adjacent cords from being dragged out.',
-      'Branding.',
-      'Compliance with BS 7671.',
+      'They are branding terms with no functional difference from a standard moulded patch cord.',
+      'They are specified purely to meet BS 7671 requirements for flexible cords in a comms room.',
+      'They allow the cords to carry a higher PoE current without overheating in a packed loom.',
+      'Flex rating survives thousands of plug / unplug cycles; locking plugs stop bundle weight pulling cords out; snagless boots stop the tab catching adjacent cords.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The three features address the three dominant patch-field failure modes. (1) Flex rating — repeated plug / unplug cycles, plus the cable being shifted within the looms above the patch panel, fatigue stranded conductors. Cheap cord cable that is not flex-rated cracks within months. (2) Locking plugs — on dense patch panels, technicians work in the loom above the panel; a non-locking plug can be pulled out by the weight of the bundle or by accidental snag, and the resulting service outage looks like a switch fault. Locking plugs (the small plastic guard over the tab, plus a positive latching mechanism) prevent this. (3) Snagless boots — when a technician withdraws a cord from the middle of a packed panel, the tab on adjacent cords catches on the cord being moved; snagless boots cover the tab so it cannot snag. Without them, a single cord change can drag two or three adjacent cords out of their ports.',
   },
@@ -66,12 +66,12 @@ const inlineChecks = [
     question:
       'In the channel model, a "work-area cord" connects the user device to the wall outlet. An "equipment cord" connects the active equipment (typically a switch) to the patch panel. Are these the same kind of cord?',
     options: [
-      'Yes — interchangeable.',
-      'They are constructed from the same cord cable family, but their use case is different. The work-area cord moves with the user (laptops, desk re-arrangements) and is exposed to bend, footfall, accidental yanks; flex-rating and snagless boots matter most. The equipment cord lives inside the rack, packed in the loom above a patch panel; locking plugs and bend-resilience at the panel face matter most. Both are stranded cord cable rated to the same Category.',
-      'Equipment cords are solid-conductor.',
-      'Work-area cords are not part of the channel.',
+      'Same stranded cord cable family and Category, different mechanical environment: work-area cords prioritise flex-rating and snagless boots, equipment cords prioritise locking plugs and bend support at the panel.',
+      'Yes — they are fully interchangeable and many installers stock a single cord type for both roles.',
+      'No — equipment cords are made from solid-conductor cable because they are seldom moved once installed.',
+      'No — the work-area cord sits outside the certified channel, so it is built to a lower specification.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Same cord cable family — stranded, rated to the Category — different mechanical environment. The work-area cord lives on the desk side: bent over the edge of a desk, stepped on by chair wheels, dragged when laptops move. Flex-cycle life matters most; snagless boots matter for plug-tab survival. The equipment cord lives in the comms rack: dressed into looms above the patch panel, occasionally re-routed when a port assignment changes, exposed to weight from the bundle above. Locking plugs matter most (so the bundle weight does not pull cords out); bend-radius support at the panel face matters (panels are often 1U so the 90-degree bend is sharp). The contractor delivering a job should specify both — typically as separate SKUs — and order quantities for each.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'What is the constructional difference between patch cord cable and permanent-link cable?',
     options: [
-      'They are identical.',
-      'Patch cord cable uses stranded conductors (typically 7 strands forming 24 AWG) for flex tolerance; permanent-link cable uses solid conductors (typically 23 AWG single wire) for low attenuation per metre and IDC compatibility. Both are rated to the same Category but have different mechanical and electrical specifications.',
-      'Patch cords are unshielded; permanent links are shielded.',
-      'Patch cords are fibre; permanent links are copper.',
+      'Patch cords use stranded conductors for flex tolerance; permanent links use solid conductors for low attenuation per metre and IDC compatibility — both rated to the same Category.',
+      'They are constructed identically; "patch cord" and "permanent link" describe only where the cable is used, not how it is made.',
+      'Patch cords are always unshielded while permanent links are always shielded, because the wall run needs the extra screening.',
+      'Patch cords use a higher conductor gauge than permanent links so they can carry more Power over Ethernet current.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Stranded vs solid is the headline difference. Stranded — multiple thin wires twisted to form the conductor — flexes thousands of times without conductor breakage; tolerates sharp bends; is the right cable for short, frequently-moved runs. Solid — one wire per conductor — has lower attenuation per metre, is what IDC slots are sized for, and is the right cable for long, pulled-once permanent links. Both are rated to the Category (Cat5e / 6 / 6A) but at slightly different per-metre attenuation figures: the standards (TIA-568.2-E / ISO/IEC 11801-1) allow stranded a more generous attenuation budget per metre, and the 90 m solid + 10 m stranded channel split is sized so the total worst-case insertion loss fits inside Ethernet expectations.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'Which of these is the design rationale for the 10 m cord allowance in the 100 m channel rule?',
     options: [
-      'It is arbitrary.',
-      'Stranded patch cord cable has higher per-metre attenuation than solid permanent-link cable, so the channel insertion-loss budget allocates 90 m of solid + 10 m of stranded — engineered so the total worst-case insertion loss fits inside Ethernet equipment expectations across all standardised variants from 100BASE-TX through 25GBASE-T.',
-      'Cords are charged by the metre and 10 m is the price point.',
-      'Cords cannot be longer than 10 m for safety reasons.',
+      'The 10 m figure is an arbitrary round number with no electrical basis, retained only for historical continuity.',
+      'A 10 m cord is the longest length that can be moulded with a factory plug, so the allowance reflects a manufacturing limit.',
+      'Higher-attenuation stranded cord gets 10 m and lower-attenuation solid gets 90 m, sized so total worst-case insertion loss fits Ethernet equipment expectations.',
+      'Cords longer than 10 m present a trip hazard, so the standard caps them at 10 m for safety rather than performance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 90 m solid + 10 m stranded split is electrical engineering. Solid cable has the lower attenuation per metre and accordingly gets the larger allowance — it absorbs most of the channel length. Stranded cable has higher attenuation per metre but flexes; it gets a smaller allowance (10 m combined across all three cords — patch cord, equipment cord, work-area cord). The combined channel insertion loss fits inside the worst-case Ethernet receiver expectation for every standardised variant from 100BASE-TX (1995) through 25GBASE-T (2016) — preserving service-independence over the cabling life.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'A patch field is laid out in 1U-per-24-port density and the cords are tightly packed in the loom above. The contractor offers cords with snagless boots, locking plugs, and 28 AWG flex-rated cord cable. Are these appropriate for high-density Cat6A?',
     options: [
-      'Yes, in all respects.',
-      'Snagless boots and locking plugs are appropriate for high-density patching. 28 AWG cord cable is NOT appropriate for general Cat6A patching — it has higher attenuation than the standard 24 AWG and may not pass Class EA at the upper end of the cord allowance. 28 AWG slim cords are sometimes specified deliberately for short (≤ 1.5 m) cross-connects to gain space in dense panels, but the channel must be re-tested with the slim cords in place to confirm Class EA, and many manufacturer warranty programmes restrict their use.',
-      'Yes — 28 AWG is the standard.',
-      'No — only solid-conductor cords are allowed.',
+      'Yes in all respects — snagless boots, locking plugs and 28 AWG cord cable are all standard choices for high-density Cat6A.',
+      'Yes — 28 AWG is the default gauge for Cat6A patch cords, so it is the right specification for any panel.',
+      'Snagless boots and locking plugs are fine, but 28 AWG is not a general default — its higher attenuation suits only short slim cross-connects that require channel re-testing.',
+      'No — only solid-conductor cords may be used on a Cat6A patch panel, regardless of boots or plug type.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '28 AWG slim cord cable is a real product, designed for high-density patching where cable bulk is the limiting factor. It is allowed by some standards in restricted lengths and accepted by some manufacturer warranty programmes — but not all. The general-purpose Cat6A patch cord is 24 AWG stranded, which sits inside the 10 m cord-allowance attenuation budget. 28 AWG cord exceeds the per-metre attenuation budget on long cords; it is only used on short cross-connects (typically ≤ 1.5 m) and even then the channel must be re-certified with the slim cords in place. Specifying 28 AWG by default is a misapplication; specifying 24 AWG flex-rated cords with snagless boots and locking plugs is the safe high-density default.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'What is a "locking RJ45 plug" and why does a high-density Cat6A patch panel typically need them?',
     options: [
-      'A plug with extra screws.',
-      'A plug with a positive latching mechanism (often a small plastic guard over the standard tab plus a secondary locking action) that prevents the plug being pulled out of the panel by accidental tug or by the weight of the cable bundle above. On 1U-per-24-port panels with dense looms above, an unlocking plug can pull out under bundle weight or technician movement — producing an outage that looks like a switch fault. Locking plugs eliminate this failure mode.',
-      'A plug with an integrated key.',
-      'A plug with a built-in surge protector.',
+      'A plug with a positive latching mechanism that stops bundle weight or an accidental tug pulling it out of a dense panel — an outage that otherwise looks like a switch fault.',
+      'A plug fixed to the port by two small retaining screws, in the manner of a serial or VGA connector, to stop it working loose.',
+      'A plug with an integrated physical key so that only authorised staff can unplug it from the patch panel.',
+      'A plug with a built-in surge-protection module to shield the active equipment from transients carried in on the cord.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Locking plugs solve a real high-density-panel problem. On a 1U-per-24-port Cat6A panel, the cords above the panel are typically dressed into a heavy loom — sometimes with cable management arms, sometimes free-hanging. The bundle weight is non-trivial; a single non-locking plug with a fatigued tab can pull out under that weight, especially when a technician is working in the loom and inadvertently shifts it. A locking plug — typically a small plastic guard that traps the tab plus a secondary push-to-release action — prevents this. Major manufacturers (Panduit, Belden, CommScope, Hellermann Tyton) offer locking plug variants on their Cat6A cord ranges; specify them on dense panels by default.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'A snagless boot on an RJ45 plug — what failure mode does it prevent, and why is it important on a packed patch field?',
     options: [
-      'It improves crosstalk.',
-      'It covers the locking tab so the tab cannot snag on adjacent cords when the cord is being moved or withdrawn from a packed panel. Without snagless boots, withdrawing one cord from a packed panel commonly drags the tabs of adjacent cords, which can either snap a tab (failing the cord) or pull adjacent cords partially out of their ports (causing intermittent link failures). On a high-density patch field with frequent moves / adds / changes, this is a daily problem.',
-      'It seals against water ingress.',
-      'It improves PoE current rating.',
+      'It improves crosstalk performance by adding shielding around the plug body at the panel face.',
+      'It seals the back of the plug against dust and water ingress in the comms room environment.',
+      'It covers the locking tab so it cannot catch on adjacent cords during withdrawal — preventing snapped tabs and unseated neighbouring plugs.',
+      'It increases the PoE current rating of the cord by improving heat dissipation at the connector.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Snagless boots — the moulded sleeve over the back of the RJ45 plug that covers the locking tab — solve the same-density problem from a different angle. When a technician removes one cord from the middle of a packed panel, the cord has to be drawn through the bundle and past adjacent cords. The standard locking tab on a non-snagless plug catches on adjacent tabs, and the technician either has to manually clear each one or pull harder — which can snap a tab or unseat adjacent plugs. Snagless boots cover the tab so it slides past adjacent cords without catching. On a panel that sees daily moves / adds / changes, snagless boots eliminate a major source of failed cords and accidental outages.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'Why are equipment cords (switch-to-patch-panel) typically a different SKU from work-area cords (outlet-to-device), even though they are made from the same cord cable family?',
     options: [
-      'Marketing.',
-      'Different mechanical use case. Equipment cords live in the rack — packed in looms above the patch panel, exposed to bundle weight and 90-degree bends at the panel face — and benefit from locking plugs, snagless boots and rack-friendly lengths (0.5 / 1 / 1.5 / 2 / 3 m). Work-area cords live on the desk — bent over edges, stepped on, dragged when laptops move — and benefit from flex-rated cable, snagless boots and user-friendly lengths (1 / 2 / 3 / 5 m). Same cable family, different SKUs.',
-      'Equipment cords are solid-conductor.',
-      'Work-area cords cannot carry PoE.',
+      'Because equipment cords are made from solid-conductor cable while work-area cords are stranded, requiring separate part numbers.',
+      'Because work-area cords are deliberately built to a lower Category than equipment cords to save cost on the desk side.',
+      'Because only equipment cords are rated to carry Power over Ethernet, so the two cannot share a SKU.',
+      'Different mechanical use: rack-side cords favour locking plugs and short rack lengths, desk-side cords favour flex-rated cable and longer lengths — same family, different SKUs.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Same cord cable family (stranded, Category-rated), different mechanical environment, different optimisations. Equipment cords live in the comms rack: dressed into looms above the patch panel, exposed to the weight of the bundle above, exposed to a sharp 90-degree bend at the panel face if the panel is 1U. Locking plugs and snagless boots matter most; bend-radius support at the panel face matters; rack-friendly short lengths matter. Work-area cords live on the desk side: bent over the edge of the desk, stepped on by chair wheels, dragged when laptops move. Flex-cycle life matters most; user-friendly longer lengths matter. Specifying both as separate SKUs and ordering the right quantities of each is part of competent project planning.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'A site uses 28 AWG slim patch cords throughout to gain space in a dense patch panel. The Cat6A horizontal certified to Class EA at install. What additional verification is required?',
     options: [
-      'None.',
-      'Channel re-certification with the slim cords in place — TIA-1152-A / BS EN 50346 with channel adapters at each end, every channel re-tested. 28 AWG cord cable has higher per-metre attenuation than the 24 AWG default, and the 10 m cord allowance budget is tighter at 28 AWG. The original permanent-link certification is unaffected; what changes is the channel certification, because the cord cable is different. Many manufacturer warranty programmes also require explicit registration of slim-cord variants.',
-      'Re-pull the horizontal cable.',
-      'Replace the patch panel.',
+      'Channel re-certification with the slim cords in place — the permanent link is unchanged, but the higher-attenuation 28 AWG cords change the channel result, and warranty registration may also be required.',
+      'None — once the horizontal permanent link is certified to Class EA, the choice of cord cannot affect the result.',
+      'The horizontal cable must be re-pulled in a heavier gauge to compensate for the thinner slim cords.',
+      'The patch panel must be replaced with a slim-cord-rated model before the channel can be used.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Slim 28 AWG cords are a deliberate trade-off — bulk reduction at the cost of higher per-metre attenuation. The trade is acceptable in many high-density data-centre and dense office environments, but it changes the channel insertion-loss math. The permanent link does not change; the channel does. Re-certify channel testing with the slim cords in place to confirm Class EA across the full installed channel. Many warranty programmes require explicit slim-cord registration. Document the slim-cord choice in the BS EN 50174-1 / TIA-606-D administration record so the next contractor on site knows what is in use.',
   },
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'Why does the standards channel model count three cords (FD patch, equipment, work-area) but allow them to total only 10 m combined, rather than 10 m each?',
     options: [
-      'Marketing.',
-      'Stranded cord cable has higher per-metre attenuation than solid permanent-link cable. The 10 m total is the channel insertion-loss budget for ALL stranded cable in the path. Allowing 10 m per cord (30 m total) would push the channel insertion loss above the Ethernet equipment expectation, and active equipment would fail to link or auto-negotiate down. The 10 m combined cap is engineered against the worst-case Ethernet receiver tolerance.',
-      'For neatness.',
-      'For compliance with BS 7671.',
+      'Because allowing 10 m per cord would make patch fields untidy, so the standard caps the total for neatness rather than performance.',
+      'The 10 m total is the insertion-loss budget for all higher-attenuation stranded cable; 10 m per cord (30 m) would push the channel past Ethernet equipment tolerance.',
+      'Because BS 7671 limits the total length of flexible cord in any data installation to 10 m on fire-safety grounds.',
+      'Because each cord adds a connector pair, and the 10 m total caps the number of connectors rather than the cable length.',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       'What is the practical reason a patch cord is specified to fail the cable Category rather than the connector rating?',
     options: [
-      'Marketing.',
-      'It is the OPPOSITE — the patch cord is specified to MEET the cable Category rating, end to end, including the moulded plugs at each end. A "Cat6A patch cord" is rated to deliver Class EA performance from plug to plug, including the cord cable AND both moulded plugs. Buying a "Cat6A keystone" with a "Cat5e patch cord" downgrades the channel to Class D performance. The rating chain is: cable, cord, connectors — all rated to the same Category, and a channel rated to that Class.',
-      'Cords are not rated.',
-      'Connectors do not affect the channel.',
+      'Because patch cords are not assigned a Category rating at all, only the fixed cabling is rated.',
+      'Because the moulded plugs are tested separately from the cable, so the cord rating reflects only the connectors.',
+      'It is the opposite — the cord is rated to MEET the Category from plug to plug, cable and both plugs; a Cat5e cord on Cat6A components downgrades the channel.',
+      'Because the moulded plugs have no measurable effect on the channel, so only the cable Category is quoted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The chain of evidence in a Class EA channel is: solid permanent-link cable rated to Cat6A, keystone rated to Cat6A, patch panel rated to Cat6A, patch cord (cable + moulded plugs) rated to Cat6A. Drop any one of these to Cat5e and the whole channel drops to Class D performance — because the channel result is bounded by the worst component in the chain. A common misapplication is buying expensive Cat6A panels and outlets and saving money on cheap Cat5e patch cords; the result is a Class D channel. The cord cable AND the moulded plugs both have to be rated to the Category, and the cord is tested as a complete object by the manufacturer.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'Why is patch cord choice often described as the "easy lever" for protecting a Cat6A channel investment?',
     options: [
-      'Marketing.',
-      'Because the cord is the smallest investment in the channel and the easiest to upgrade or replace mid-life. The horizontal cable is pulled once and lives in the wall for 15-20 years; the keystone and patch panel are semi-permanent; the cord is replaced every time someone unplugs and plugs in. Specifying a Cat6A flex-rated cord with locking plugs and snagless boots is a small per-cord cost and protects the much larger investment in the permanent link by ensuring the channel actually delivers Class EA in service.',
-      'Cords are not part of the channel.',
-      'Cords last forever.',
+      'Because the cord is the smallest, cheapest, most-replaceable element, so a good Cat6A cord is small money that protects the much larger fixed permanent-link investment.',
+      'Because the cord sits outside the certified channel, so upgrading it carries no risk of disturbing the tested permanent link.',
+      'Because a quality cord never wears out, so it is a one-time purchase that protects the channel indefinitely.',
+      'Because the cord is the single most expensive component in the channel, so spending more on it gives the largest return.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Patch cords are the cheapest mechanical element in the channel and the most replaceable. The permanent link is the largest investment and is hardest to change once installed. Specifying high-quality cords — Cat6A rated, flex-rated, locking plugs, snagless boots — is the easy lever to make sure the permanent-link investment delivers Class EA across the cabling life. Pairing a Cat6A permanent link with cheap Cat5e cords is a textbook misapplication that the contractor sees often and that costs the user the difference between a 15-year channel and a six-month one. Cords are also an easy mid-life upgrade — specify a 10G channel with Cat6A cords today, swap to slim 28 AWG variants in five years if rack density needs it, replace failing cords without touching the permanent link.',
   },

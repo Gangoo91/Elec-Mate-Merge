@@ -16,9 +16,9 @@ const quickCheckQuestions = [
       'What standard must insulated hand tools comply with for live working or working near live parts?',
     options: [
       'BS EN 60900 — rated to 1,000 V AC / 1,500 V DC and individually tested',
-      'Outputs 3.5× more heat than the electrical input — net efficiency 350%',
-      'Building Information Modelling - digital representation with data about building elements',
-      'To verify that the protective conductor can withstand fault currents',
+      'BS EN 61010 — rated to 600 V AC and batch tested',
+      'BS 7671 — rated to 230 V AC for domestic work only',
+      'BS EN 60898 — rated to 400 V AC and type tested',
     ],
     correctIndex: 0,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'When stripping cable insulation, why should you use a proper cable stripping tool rather than a knife?',
     options: [
-      'Issue a notice of adjudication to the other party identifying the dispute and the redress sought, then refer the dispute to the nominated adjudicator within 7 days, providing all supporting documentation',
-      'A stripping tool prevents nicking or scoring the conductor, which would reduce its cross-sectional area and create a weak point prone to overheating or breakage',
-      'It is generally prohibited under the Housing Grants, Construction and Regeneration Act 1996 (as amended), except in cases of upstream insolvency',
-      'Each trade selects data confirming their existing beliefs about the other, creating mutually reinforcing negative perceptions that become self-fulfilling prophecies',
+      'A stripping tool removes the insulation faster, saving time on large jobs',
+      'It avoids nicking the conductor, which reduces its area and weakens the joint',
+      'A knife cannot cut through modern double-insulated cable sheaths at all',
+      'A stripping tool fits a bootlace ferrule automatically as it removes insulation',
     ],
     correctIndex: 1,
     explanation:
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Why are torque-controlled screwdrivers and torque wrenches important for electrical connections?',
     options: [
-      "They ensure terminals are tightened to the manufacturer's specified torque, preventing both loose connections (high resistance, overheating) and over-tightened connections (damaged threads, cracked terminals)",
-      "Redacting or anonymising sensitive information while retaining the evidence value — client names, addresses and commercially sensitive data should be removed",
-      "Stop. Call the supervisor / contractor coordinator. Agree a remedial sequence — usually: wait for plaster to dry, cut neat access channels, install, and bring the plasterer back for a small make-good. Document the additional work.",
-      "Schedule 1 = list of severe injuries triggering immediate phone + F2508 within 10 days. Over-7-day = injury causing 8+ days off normal duties triggering F2508A within 15 days. Different categories, different timescales, different forms.",
+      "They allow terminals to be tightened much faster than a conventional screwdriver",
+      "They remove the need to refer to the manufacturer's installation instructions",
+      "They tighten terminals to the specified torque, avoiding loose or over-tight joints",
+      "They provide insulation protection equivalent to a VDE-rated tool",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'BS 7671 Regulation 526.1 requires that connections be mechanically sound and electrically reliable. Manufacturers specify torque values for their terminals, and both under-tightening and over-tightening cause problems. Under-tightening leads to high-resistance connections that overheat and may cause fires. Over-tightening can crack terminal housings, strip threads, damage conductors, or deform terminal components. Torque screwdrivers and wrenches ensure consistent, correct tightening to the specified value.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     question:
       'What is the consequence of using the wrong size crimp die or an unratcheted crimping tool?',
     options: [
-      'When the specific machine type differs from the categories on their card, or when site-specific familiarisation is needed',
-      'Prove the voltage indicator on a known source, test the circuit, prove the indicator again on the known source',
-      'Adequate and appropriate equipment, facilities, and personnel to enable first aid to be given to employees who are injured or become ill at work',
-      'An incorrect or incomplete crimp creates a high-resistance joint that may overheat, or a mechanically weak joint that may pull apart under load or vibration',
+      'The crimp will be over-compressed and the terminal insulation will melt',
+      'The connection will be perfectly sound provided the conductor is the right size',
+      'The crimp tool will jam on the terminal and be permanently damaged',
+      'A high-resistance or mechanically weak joint that may overheat or pull apart',
     ],
     correctIndex: 3,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: "The double-triangle symbol marked '1000V' on a hand tool indicates:",
     options: [
-      'Temporarily reducing or switching off non-critical loads when demand is high',
-      'The tool complies with BS EN 60900 and is rated for use on circuits up to 1,000 V AC / 1,500 V DC',
-      'Because induced voltages could appear, or a fault between phases could make the isolated phase live',
-      'To prevent the unexpected release of hazardous energy during maintenance or servicing',
+      'The tool has a guaranteed maximum cutting capacity of 1,000 mm² copper',
+      'The tool meets BS EN 60900 and is rated for circuits up to 1,000 V AC / 1,500 V DC',
+      'The tool may only be used after the circuit has been proven dead at the board',
+      'The tool insulation has been tested just once at 1,000 V during manufacture',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'HSE Guidance Note GS38 recommends that test probes used by electricians should have:',
     options: [
-      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure',
+      'Bare metal tips at least 20 mm long so that good contact is always made',
+      'Unfused leads so the meter reading is never affected by an inline fuse',
+      'Finger guards, tips exposing no more than 2-4 mm of metal, and fused leads',
+      'A minimum lead length of 3 metres to keep the operator clear of the board',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 3,
     question: 'A side-cutting plier is used in electrical work primarily for:',
     options: [
-      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
-      'Drawing cables through conduit, trunking and other enclosed cable routes where the cable cannot simply be pushed through',
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
+      'Tightening cable gland locknuts and conduit fittings to a set torque',
+      'Drawing cables through conduit and trunking where they cannot be pushed',
+      'Cutting hardened steel wire armour (SWA) cleanly on large armoured cables',
+      'Cutting conductors cleanly and stripping small cables when no stripper is to hand',
     ],
     correctAnswer: 3,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     id: 4,
     question: 'When using a junior hacksaw to cut conduit, the blade teeth should point:',
     options: [
-      'Away from the handle (cutting on the push stroke), with the conduit held firmly in a vice and the cut made squarely',
-      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
-      'Drawing cables through conduit, trunking and other enclosed cable routes where the cable cannot simply be pushed through',
+      'Away from the handle, so the blade cuts on the push stroke, conduit held in a vice',
+      'Towards the handle, so the blade cuts on the pull stroke for better control',
+      'Sideways at 45 degrees to the frame to reduce blade snagging on the conduit',
+      'In either direction, as a junior hacksaw blade cuts equally on both strokes',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'A cable stripping tool set to the wrong depth may:',
     options: [
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
-      'Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure',
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
+      'Increase the cross-sectional area of the conductor at the stripped point',
+      'Nick the conductor, reducing its area and creating a hot spot or weak point',
+      'Anneal the copper conductor, making it more flexible and easier to terminate',
+      'Improve the gas-tight seal of the connection by work-hardening the strands',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'A wiring inspection mirror is used for:',
     options: [
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
+      'Reflecting a laser beam to measure long cable runs accurately',
+      'Magnifying small terminal markings that are difficult to read by eye',
+      'Inspecting connections in confined spaces where direct line of sight is obstructed',
+      'Checking that an enclosure is mounted level and plumb on the wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 7,
     question: 'The correct tool for cutting steel wire armour (SWA) on an armoured cable is:',
     options: [
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure',
-      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
+      'A pair of VDE-rated side cutters used on each armour wire in turn',
+      'A standard automatic cable stripper set to its deepest cutting setting',
+      'A sharp electrician\'s cable knife drawn firmly around the armour',
+      'An SWA stripping tool or rotary cutter that cuts the armour without nicking insulation',
     ],
     correctAnswer: 3,
     explanation:
@@ -166,10 +166,10 @@ const quizQuestions = [
     question:
       'When choosing a screwdriver for electrical terminal work, the most important consideration is:',
     options: [
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
-      'Drawing cables through conduit, trunking and other enclosed cable routes where the cable cannot simply be pushed through',
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
+      'The correct tip size and type to match the screw, plus VDE rating near live parts',
+      'The longest possible blade so that deeply recessed terminals can be reached',
+      'A magnetic tip on every driver so that screws cannot be dropped into the board',
+      'The brightest handle colour so that the tool is easy to find in the tool bag',
     ],
     correctAnswer: 0,
     explanation:
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'A fish tape (draw tape) is used for:',
     options: [
-      'Finger barriers (guards), spring-loaded retractable tips exposing no more than 2-4 mm of metal, and fused test leads',
-      'Drawing cables through conduit, trunking and other enclosed cable routes where the cable cannot simply be pushed through',
-      'Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure',
-      'Cutting cables and conductors cleanly, and stripping insulation from small cables when cable strippers are not available',
+      'Measuring the exact length of a conduit run before cutting cable to size',
+      'Drawing cables through conduit and trunking where they cannot be pushed by hand',
+      'Sealing the ends of a conduit to keep dust out during construction',
+      'Tightening cable ties to a consistent tension along a tray run',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 10,
     question: 'Before using any hand tool, a maintenance technician should:',
     options: [
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
-      'Visually inspect the tool for damage (cracked handles, worn insulation, damaged cutting edges, loose heads), check that VDE-rated tools show no insulation breaches, and confirm the tool is suitable for the task',
-      'They consolidate the individual strands into a solid cylindrical end, preventing strand escape, ensuring all strands make contact in the terminal, and preventing strand damage from screw pressure',
+      'Wipe the tool with a damp cloth so that the insulation remains conductive',
+      'Confirm the tool was used in the last 24 hours so it is known to work',
+      'Inspect it for cracked handles, worn insulation and damaged edges before use',
+      'Test the tool insulation by briefly touching a live terminal to check for shock',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 11,
     question: 'Bootlace ferrules are used when terminating fine-stranded flexible cables because:',
     options: [
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
-      'Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure',
-      'They consolidate the individual strands into a solid cylindrical end, preventing strand escape, ensuring all strands make contact in the terminal, and preventing strand damage from screw pressure',
+      'They increase the current-carrying capacity of the conductor by adding copper',
+      'They colour-code the conductor so that polarity can be identified at a glance',
+      'They add insulation that lets the cable be used at a higher working voltage',
+      'They compress all the strands into a solid end, preventing escape and screw damage',
     ],
     correctAnswer: 3,
     explanation:
@@ -218,10 +218,10 @@ const quizQuestions = [
     id: 12,
     question: 'A spirit level is used in electrical installation work for:',
     options: [
-      'Ensuring that consumer units, distribution boards, socket outlets, switches, trunking runs and conduit are installed level and plumb for a professional finish and correct operation',
-      'They consolidate the individual strands into a solid cylindrical end, preventing strand escape, ensuring all strands make contact in the terminal, and preventing strand damage from screw pressure',
-      'The correct tip size and type (flat, Pozi, Phillips) to match the terminal screw precisely, plus VDE rating if there is any risk of contact with live parts',
-      'Inspecting connections and wiring in confined spaces, behind consumer units, inside distribution boards and other areas where direct line of sight is obstructed',
+      'Ensuring boards, accessories and containment are installed level and plumb',
+      'Checking the earth fault loop impedance of a final circuit at the socket',
+      'Measuring the depth of insulation removed from a stripped conductor',
+      'Confirming that a circuit is dead before terminations are made',
     ],
     correctAnswer: 0,
     explanation:

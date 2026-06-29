@@ -23,54 +23,54 @@ const inlineChecks = [
     question:
       'BS EN 61140 defines four classes of equipment by protective measure against electric shock. Which set is correct?',
     options: [
-      'Class 1, Class 2, Class 3, Class 4 — by voltage band.',
-      'Class 0 (basic insulation only, no provision for protective conductor — not permitted in UK general use), Class I (basic insulation + protective bonding via CPC), Class II (double or reinforced insulation, no CPC), Class III (SELV — supply is the protection).',
-      'Class A, B, C, D — by IP rating.',
-      'Class 1, 2, 3 — by current rating.',
+      'Class 0 (basic insulation, no CPC), Class I (basic insulation + CPC), Class II (double / reinforced insulation), Class III (SELV).',
+      'Class 1, Class 2, Class 3, Class 4 — graded by the voltage band the equipment operates within.',
+      'Class A, B, C, D — graded by the IP rating of the enclosure against dust and water ingress.',
+      'Class 1, 2, 3 — graded by the rated current in amperes the equipment is designed to draw.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'BS EN 61140 ("Protection against electric shock — Common aspects for installation and equipment") sets the four-class framework. Class 0 is the historic legacy; Class I, II, and III are the operational classes you see in service. The class is the FUNDAMENTAL safety architecture of the equipment — every PAT test method follows from it.',
+      'Class 0 has basic insulation only and no provision for a protective conductor (not permitted in UK general use); Class I uses basic insulation plus protective bonding via the CPC; Class II uses double or reinforced insulation with no CPC; Class III relies on SELV as the protection. BS EN 61140 sets this four-class framework, and every PAT test method follows from the equipment’s class.',
   },
   {
     id: 'patm2-s1-class0',
     question: 'A piece of imported equipment marked "Class 0" arrives. What is the PAT response?',
     options: [
-      'Treat it as Class I.',
-      'Class 0 equipment is NOT permitted in UK general use under BS 7671 / IET CoP — it provides only basic insulation and no provision for a protective conductor. Withdraw, refer to procurement, refuse to put into service. The response is rejection, not testing.',
-      'Test as Class II.',
-      'Apply earth bonding and use it.',
+      'Treat it as Class I and add an earth connection at the plug before carrying out the test.',
+      'Test it as Class II, since it has no protective conductor for a PE-continuity test.',
+      'Withdraw it and refer to procurement — Class 0 is not permitted in UK general use.',
+      'Apply supplementary earth bonding to the casing and return the item to service.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
-      'Class 0 is the historic class with basic insulation only and no protective bonding. UK practice (and IET CoP) does not accept Class 0 equipment in service. The defendable response when one appears is to refuse to commission and to refer back to procurement.',
+      'Class 0 provides only basic insulation and no provision for a protective conductor, and is not accepted in service under BS 7671 / IET CoP, so the response is rejection, not testing. The defendable action when one appears is to refuse to commission it and refer it back to procurement.',
   },
   {
     id: 'patm2-s1-classsignals',
     question: 'How do you confirm a piece of equipment is Class II?',
     options: [
-      'It has no earth pin.',
-      'Look for the BS EN 61140 Class II mark (the "double-square" symbol — a square within a square) on the rating plate, AND verify the equipment has no provision for a protective conductor (no CPC connection at the supply, the live parts are accessible only through double or reinforced insulation). Both signals must be present and consistent.',
-      'It is plastic.',
-      'It is small.',
+      'Confirm that the plug fitted to the equipment has no earth pin present.',
+      'Confirm that the outer casing of the equipment is moulded from plastic.',
+      'Confirm that the equipment is physically small and light enough to be hand-held.',
+      'Find the double-square Class II mark on the rating plate AND confirm no CPC provision in the construction.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'The double-square symbol is the canonical Class II marking. But the marking alone is not sufficient — the equipment construction must match. A plastic-cased item with an earth wire is still Class I. A metal-cased item with the Class II mark requires verification (the casing might be a non-conductive coating over a conductive substrate). Construction and marking together.',
+      'Look for the BS EN 61140 Class II "double-square" symbol on the rating plate and verify the construction has no protective-conductor provision (no CPC at the supply; live parts reachable only through double or reinforced insulation) — both signals must be present and consistent. The marking alone is not enough: a plastic-cased item with an earth wire is still Class I, and a metal-cased item bearing the mark needs verification.',
   },
   {
     id: 'patm2-s1-IT',
     question:
       'A laptop power supply (the "brick") shows the Class II symbol on the rating plate. The detachable IEC mains lead has a 3-pin BS 1363 plug. What is the correct interpretation?',
     options: [
-      'The system is Class I overall.',
-      'The PSU brick is Class II (no CPC needed at the LV output to the laptop). The IEC mains lead is a separate item. The third pin on the plug is for connection to the EARTH PIN of the socket-outlet, but the lead itself does not carry a CPC into the brick — the third pin is connected to a "decorative" / shutter-defeat function. The brick is genuinely Class II.',
-      'Use the third pin as protective earth on the brick.',
-      'Wire-test to confirm the third pin is earthed at the brick.',
+      'The brick is genuinely Class II; the IEC lead is a separate item and the third pin is not protective earth.',
+      'The whole system is Class I overall, simply because the BS 1363 plug has three pins.',
+      'The third pin must be relied upon as the protective earth path for the brick in service.',
+      'A wire-by-wire test is needed to confirm the third pin is earthed inside the brick before use.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'IT power supplies that are Class II often use a 3-pin plug (a UK requirement to operate the socket shutters) but route only L and N into the brick. The third pin is sometimes terminated and connected to internal earth for filtering, sometimes left unconnected. The class is determined by the construction of the unit, not the pin count of the plug. PE-continuity test is therefore not applied to a true Class II PSU.',
+      'The PSU brick is Class II (no CPC needed at the LV output to the laptop), and the IEC mains lead is a separate item; the third pin operates the socket shutters but does not necessarily carry a protective CPC into the brick — it may be left unconnected or terminated to internal earth for filtering. Class is determined by the construction of the unit, not the pin count of the plug, so a PE-continuity test does not apply to a true Class II PSU.',
   },
 ];
 
@@ -80,137 +80,137 @@ const quizQuestions = [
     question:
       'BS EN 61140 defines protective measures against electric shock by class. What is the underlying logic of the class system?',
     options: [
-      'Classes are arbitrary.',
-      'Each class is a complete protective architecture. Class I uses basic insulation PLUS a connection of exposed-conductive-parts to a protective conductor — fault current flows to earth and the protective device disconnects. Class II uses DOUBLE or REINFORCED insulation as the sole protective measure — there is no CPC because there is nothing for it to connect to. Class III uses SELV as the protective measure — the supply itself cannot deliver dangerous voltage.',
-      'Higher class numbers are safer.',
-      'Class is determined by the inspector.',
+      'Each class is a complete protective architecture: Class I bonds to a CPC, Class II uses insulation, Class III uses SELV.',
+      'A higher class number always indicates safer construction, so Class III is inherently safer than Class I.',
+      'The classes rank insulation thickness, from thinnest in Class I to thickest in Class III.',
+      'Class is assigned on site by the inspector based on the actual test readings obtained.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Each class is a complete, self-contained protective measure. The PAT test methods follow from the architecture: Class I = test the CPC; Class II = test the insulation; Class III = test the supply. Confusing the test methods between classes is a defect in the test, not in the equipment.',
+      'Class I uses basic insulation plus a CPC connection of exposed-conductive-parts so fault current flows to earth and the protective device disconnects; Class II uses double or reinforced insulation as the sole measure (no CPC, because there is nothing for it to connect to); Class III uses SELV so the supply itself cannot deliver dangerous voltage. The test methods follow the architecture: test the CPC, the insulation, or the supply respectively.',
   },
   {
     id: 2,
     question: 'Which IET CoP test is INAPPROPRIATE for genuinely Class II equipment?',
     options: [
-      'Insulation resistance test.',
-      'Protective-conductor (PE) continuity test. Class II equipment has no protective conductor by design — there is nothing to test. Applying a PE-continuity test gives a meaningless reading (or an "open" result that an untrained inspector might mistakenly fail).',
-      'Substitute leakage test.',
-      'Functional test.',
+      'Insulation resistance test between the live parts and the accessible casing of the unit.',
+      'Substitute (alternative) leakage current test carried out on the whole appliance.',
+      'Protective-conductor (PE) continuity test — Class II has no CPC, so there is nothing to test.',
+      'Functional check confirming the appliance operates as the manufacturer intended.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The PE-continuity test exists specifically to verify Class I protection. Class II has no CPC; the test does not apply. The IET CoP §15 sets out class-specific test sequences; mis-applying tests across classes is one of the most common errors in inexperienced PAT testing.',
+      'Class II equipment has no protective conductor by design, so a PE-continuity test gives a meaningless reading (or an "open" result an untrained inspector might mistakenly fail). The PE-continuity test exists to verify Class I protection; IET CoP §15 sets out class-specific sequences, and mis-applying tests across classes is one of the most common errors in inexperienced PAT testing.',
   },
   {
     id: 3,
     question:
       'The BS EN 61140 class symbol is found on the equipment rating plate. What does the absence of a class symbol typically indicate?',
     options: [
-      'The equipment is Class I by default.',
-      'The equipment may be Class I (Class I marking is not always shown — many manufacturers only mark Class II and Class III explicitly), OR the equipment is unmarked and its class needs to be determined by construction. Unmarked equipment requires investigation, not assumption.',
-      'The equipment is exempt.',
-      'The equipment is Class 0.',
+      'The equipment is automatically Class I, because Class I items never carry any class symbol.',
+      'The equipment is exempt from formal inspection and testing until a class symbol is applied.',
+      'The equipment must be the historic Class 0, since only Class 0 omits a class marking.',
+      'It may be Class I (often unmarked) or simply unmarked — class is then determined by construction.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Class I is sometimes (but not always) marked. When markings are absent, the class is determined by the construction — does the equipment have a CPC connection at the supply? Are the exposed conductive parts bonded to it? An unmarked item with a CPC connection is Class I. An unmarked item without a CPC connection requires escalation — it could be Class II without proper marking, or it could be the unaccepted Class 0.',
+      'Class I marking is not always shown — many manufacturers mark only Class II and Class III explicitly — so an absent symbol means the class must be determined by construction, with investigation rather than assumption. An unmarked item with a CPC connection is Class I; an unmarked item without a CPC connection requires escalation, as it could be Class II without proper marking or the unaccepted Class 0.',
   },
   {
     id: 4,
     question:
       'IET CoP §15 prescribes different test sequences for Class I, Class II, and Class III equipment. Why do the sequences differ?',
     options: [
-      'Different test instruments.',
-      'Each class has a different protective architecture, and the test verifies the architecture is intact. Class I: test the CPC continuity (the earth path) and the IR (the basic insulation). Class II: test the IR between live parts and any accessible conductive part — there is no CPC to test. Class III: verify the supply is genuinely SELV and the conductors are safely separated — no IR or PE test on the equipment itself.',
-      'Different acceptance values for the same test.',
-      'Tradition.',
+      'Each class has a different protective architecture, and the sequence verifies that architecture is intact.',
+      'Each class requires a completely different make of test instrument to obtain a valid reading.',
+      'The same tests are used throughout, but each class applies a different pass/fail acceptance value.',
+      'The sequences differ purely by convention; technically any class can be tested the same way.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The class IS the protection. The test verifies the class. Class I, II, and III need different test methods because their protective measures are fundamentally different. Applying Class I tests to Class II equipment (or vice versa) does not verify safety — it tests something the equipment was not designed to provide.',
+      'Class I: test the CPC continuity (earth path) and the IR (basic insulation). Class II: test the IR between live parts and accessible conductive parts — there is no CPC to test. Class III: verify the supply is genuinely SELV and the conductors are safely separated — no IR or PE test on the equipment itself. The class is the protection, and the test verifies the class; applying Class I tests to Class II (or vice versa) verifies something the equipment was never designed to provide.',
   },
   {
     id: 5,
     question:
       'A piece of equipment carries the symbol of a square within a square. What does this indicate?',
     options: [
-      'It is fragile.',
-      'It is Class II (BS EN 61140) — protection against electric shock is provided by double or reinforced insulation, not by a protective conductor. The double-square symbol is the canonical Class II marking, mandated for visible application on the rating plate.',
-      'It is IP-rated.',
-      'It is Class 0.',
+      'It indicates the item is fragile and must be handled with care during transport and use.',
+      'It is the symbol showing the item has been IP-rated against dust and water ingress.',
+      'It is the Class II mark (BS EN 61140) — protection is by double or reinforced insulation.',
+      'It is the marking for historic Class 0 equipment with basic insulation only and no CPC.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      "The double-square (square within a square) is one of the most visually distinctive symbols in electrical safety marking. It is mandatory for Class II equipment and is the inspector's primary cue to apply Class II test methods.",
+      "Class II protection against electric shock is provided by double or reinforced insulation, not by a protective conductor; the double-square (square within a square) is the canonical Class II marking, mandated for visible application on the rating plate. It is one of the most distinctive symbols in electrical safety marking and is the inspector's primary cue to apply Class II test methods.",
   },
   {
     id: 6,
     question: 'A handheld torch operates from 4 x AA batteries (6 V dc). What is its class?',
     options: [
-      'Class I.',
-      'Class III (SELV / battery operation, voltage well below 50 V ac / 120 V dc thresholds). PAT scope is generally limited to formal visual under PUWER Reg 6 — there is no mains energy to test.',
-      'Class II.',
-      'Class 0.',
+      'Class I — the metal reflector inside counts as an earthed exposed-conductive-part.',
+      'Class II — the plastic body provides the double insulation that defines the class.',
+      'Class 0 — battery items have only basic insulation and no protective conductor.',
+      'Class III — SELV / battery operation, well below the shock-voltage thresholds.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'SELV / battery equipment falls under Class III. Mains-side PAT does not apply to battery-only equipment in battery use. Where a charger / dock is involved, the charger is Class I or Class II (mains side) and is tested under that class.',
+      'At 6 V dc the torch is SELV / battery-operated, well below the 50 V ac / 120 V dc thresholds, so it is Class III and PAT scope is generally limited to formal visual under PUWER Reg 6 — there is no mains energy to test. Where a charger or dock is involved, that charger is Class I or Class II on the mains side and is tested under that class.',
   },
   {
     id: 7,
     question:
       'A factory-supplied equipment marking is illegible due to wear. The construction is consistent with Class I (metal casing, CPC connection at supply). What is the correct class assignment?',
     options: [
-      'Reject the equipment.',
-      'Treat as Class I based on construction, document the illegible marking as a defect to be remediated (manufacturer-supplied replacement plate or referenced documentation), and apply Class I test methods. Equipment whose class cannot be established at all (no construction signals, no markings) escalates to investigation; established class with degraded marking is a recordable defect.',
-      'Treat as Class II until marking is restored.',
-      'Apply both Class I and Class II tests and use whichever passes.',
+      'Treat as Class I on construction, log the illegible marking as a defect, and apply Class I test methods.',
+      'Reject the equipment outright, because any illegible marking makes it permanently unfit for use.',
+      'Treat it as Class II until the rating plate is restored, since the safer assumption is no CPC.',
+      'Apply both Class I and Class II test sequences and record whichever set of results passes.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Class is determined by construction; markings are confirmation. An illegible marking on equipment whose construction clearly indicates Class I is treated as Class I, with the marking defect logged and remediated. The principle is that class is intrinsic to the equipment, not to its label.',
+      'The defect is remediated via a manufacturer-supplied replacement plate or referenced documentation; equipment whose class cannot be established at all (no construction signals, no markings) escalates to investigation, but an established class with degraded marking is simply a recordable defect. Class is determined by construction and markings are confirmation — class is intrinsic to the equipment, not to its label.',
   },
   {
     id: 8,
     question: 'What is the practical hazard of mis-classifying equipment at the test stage?',
     options: [
-      'Only paperwork issues.',
-      'Wrong tests are applied. Class I equipment treated as Class II does not have its CPC integrity verified — a degraded CPC is invisible to Class II test methods. Class II equipment treated as Class I produces a meaningless PE-continuity result that is either failed mistakenly or read as some artefact of the meter. Either way, the test does not verify the actual protective architecture, and a defect in the architecture is undetectable.',
-      'Cosmetic only.',
-      'Affects only frequency.',
+      'It causes only paperwork issues that are corrected at the next administrative review.',
+      'It is a purely cosmetic concern with no effect on the safety of the equipment.',
+      'The wrong tests are applied, so the actual protective architecture is never verified.',
+      'It affects only the retest frequency, not the validity of the tests carried out.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The test verifies the class. Mis-classification means testing the wrong thing. The protective architecture intended by the manufacturer is not what is being verified, and the actual safety case of the equipment is not what is being checked. The mis-classification appears benign at the test stage and becomes load-bearing at the defect stage.',
+      'Class I equipment treated as Class II does not have its CPC integrity verified — a degraded CPC is invisible to Class II methods; Class II treated as Class I produces a meaningless PE-continuity result that is failed mistakenly or read as a meter artefact. Either way a defect in the architecture is undetectable. The mis-classification looks benign at the test stage and becomes load-bearing at the defect stage.',
   },
   {
     id: 9,
     question:
       'An item shows the Class II double-square symbol but ALSO has a CPC connection in its plug. What does this typically indicate?',
     options: [
-      'The marking is wrong.',
-      'It is likely "Class II equipment with functional earth" or has a 3-pin plug for UK socket-shutter operation only. The CPC may be (a) used for filtering / EMC purposes (not a protective conductor in the safety sense), (b) terminated to internal earth for noise reasons, or (c) left unconnected at the equipment. The class is Class II if the construction is double / reinforced insulated; the CPC conductor in the plug is functional, not protective.',
-      'Apply Class I tests.',
-      'Reject the equipment.',
+      'The marking is wrong and the item should be re-labelled as Class I before any testing.',
+      'The item must be rejected, as a class symbol and an earth connection can never coexist.',
+      'The earth connection overrides the symbol, so Class I test methods should be applied.',
+      'It is likely "Class II with functional earth" — the plug conductor is functional, not protective.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The "Class II with functional earth" pattern is common in IT equipment, AV equipment, and any device with EMC requirements. The class symbol overrides the plug pin-count. The PAT response is Class II testing — the functional earth is not a safety conductor and a PE-continuity test on it is not meaningful in the BS EN 61140 sense.',
+      'The 3-pin plug may be for UK socket-shutter operation only; the CPC may be used for filtering / EMC, terminated to internal earth for noise, or left unconnected at the equipment. The class is Class II where the construction is double / reinforced insulated, so the plug conductor is functional, not protective. The "Class II with functional earth" pattern is common in IT and AV equipment, and the PAT response is Class II testing — a PE-continuity test on a functional earth is not meaningful in the BS EN 61140 sense.',
   },
   {
     id: 10,
     question:
       'Module 2 is about appliance classes. Why does class drive every test method in subsequent modules?',
     options: [
-      'It does not — it is academic.',
-      'Because each class is a distinct protective architecture and the test verifies the architecture is intact. The acceptance values, the test sequence, the instrument settings, the pass/fail interpretation — all derive from class. Without correct class identification, the rest of the test programme is mis-aimed. Class identification is therefore the very first step of every formal inspection.',
-      'Because the IET CoP demands it.',
-      'Because the manufacturer demands it.',
+      'Because each class is a distinct protective architecture from which every test parameter derives.',
+      'It does not really — class is an academic label that has little bearing on the test method.',
+      'Only because the IET Code of Practice demands it as a procedural box-ticking step.',
+      'Only because individual equipment manufacturers insist on it in their own documentation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The class is the foundation. Module 3 (test methods), Module 4 (acceptance values, frequencies, special cases), Module 5 (records, certification) all rest on correct class identification. Get class wrong and everything that follows is wrong, even if the readings look right.',
+      'The acceptance values, test sequence, instrument settings and pass/fail interpretation all derive from class, so without correct class identification the rest of the programme is mis-aimed — class identification is the very first step of every formal inspection. Module 3 (test methods), Module 4 (acceptance values, special cases) and Module 5 (records) all rest on it: get class wrong and everything that follows is wrong, even if the readings look right.',
   },
 ];
 

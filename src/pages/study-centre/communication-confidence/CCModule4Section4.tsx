@@ -23,11 +23,10 @@ const quickCheckQuestions = [
       'A customer texts you: "When are you actually coming?" You read it as aggressive. Your colleague reads the same message and thinks the customer is simply asking for an update. What is the most likely explanation?',
     options: [
       'The customer is definitely being rude',
-      'Your colleague is too relaxed about customer service',
       'Text strips tone &mdash; the reader fills in the emotion based on their own mood and assumptions',
-      'The customer meant it as a joke',
-    ],
-    correctIndex: 2,
+      'Your colleague is too relaxed about customer service',
+      'The customer meant it as a joke'],
+    correctIndex: 1,
     explanation:
       'This is negativity bias in text communication. Without vocal tone, facial expression, or body language, the reader projects their own emotional state onto the words. Research shows people consistently interpret ambiguous text messages more negatively than intended. The safest approach is to assume neutral intent and, if unsure, pick up the phone.',
   },
@@ -37,11 +36,10 @@ const quickCheckQuestions = [
       'You have taken progress photos on a domestic rewire. The photos show the customer\u2019s hallway, including family photos on the wall and post on the side table with visible names and addresses. You want to share the photos in your company WhatsApp group to show the team the distribution board layout. What should you do?',
     options: [
       'Share them immediately \u2014 it\u2019s just your work group',
-      'Crop or blur the photos to remove any identifiable personal information before sharing',
       'Ask the customer\u2019s permission to share the photos publicly on social media',
-      'Delete the photos \u2014 you should never take site photos',
-    ],
-    correctIndex: 1,
+      'Crop or blur the photos to remove any identifiable personal information before sharing',
+      'Delete the photos \u2014 you should never take site photos'],
+    correctIndex: 2,
     explanation:
       'Under GDPR, images containing personal data (names, addresses, recognisable faces, vehicle registration plates) must be handled carefully. Before sharing any site photos \u2014 even internally \u2014 you should crop or blur any identifiable information. You do not need to avoid taking site photos entirely, but you must ensure personal data is protected before sharing.',
   },
@@ -52,10 +50,9 @@ const quickCheckQuestions = [
     options: [
       'Send a longer, more detailed text explaining everything again',
       'Stop replying until they calm down',
-      'Pick up the phone and call them \u2014 voice carries tone and empathy that text cannot',
       'Forward the messages to your manager and let them deal with it',
-    ],
-    correctIndex: 2,
+      'Pick up the phone and call them \u2014 voice carries tone and empathy that text cannot'],
+    correctIndex: 3,
     explanation:
       'When a text conversation is escalating, switching to a phone call is almost always the right decision. Voice communication carries tone, pace, and empathy that text simply cannot convey. A two-minute phone call can often resolve what ten text messages cannot. The decision framework is clear: if it\u2019s emotional, complex, or escalating \u2014 call.',
   },
@@ -119,10 +116,9 @@ const quizQuestions = [
     options: [
       'Text message \u2014 it creates a written record',
       'Email \u2014 it is the most formal option',
-      'Phone call or face-to-face \u2014 voice carries tone and empathy',
       'WhatsApp voice note \u2014 it combines voice with convenience',
-    ],
-    correctAnswer: 2,
+      'Phone call or face-to-face \u2014 voice carries tone and empathy'],
+    correctAnswer: 3,
     explanation:
       'Disputes and complaints should always be handled by phone or face-to-face wherever possible. Voice communication carries the tone, empathy, and nuance needed to de-escalate emotional situations. Text and email lack these qualities and can easily make a tense situation worse. After the call, you can follow up with a written summary by email to create the record.',
   },
@@ -131,12 +127,11 @@ const quizQuestions = [
     question:
       'You are the admin of a site WhatsApp group with 14 members. What is the most effective way to keep the group focused and professional?',
     options: [
-      'Remove anyone who posts anything off-topic',
       'Set clear group rules from the start and pin them at the top of the chat',
+      'Remove anyone who posts anything off-topic',
       'Allow anything \u2014 it builds team morale',
-      'Create a separate group for every topic to avoid clutter',
-    ],
-    correctAnswer: 1,
+      'Create a separate group for every topic to avoid clutter'],
+    correctAnswer: 0,
     explanation:
       'The most effective approach is to set clear group rules from the outset and pin them as the first message. Good rules typically include: work-related content only, no forwarded memes or chain messages, no discriminatory material, no sharing of customer personal details, and a clear statement of the group\u2019s purpose. Prevention through clear expectations is always more effective than correction after problems arise.',
   },
@@ -146,11 +141,10 @@ const quizQuestions = [
       'A customer sends you a WhatsApp message at 10:45 PM asking about the start time tomorrow. What is the best response?',
     options: [
       'Reply immediately to show good customer service',
-      'Ignore it until the morning \u2014 they should not message that late',
       'Reply the next morning at a professional hour with a clear, helpful answer',
-      'Send a voice note at midnight when you remember',
-    ],
-    correctAnswer: 2,
+      'Ignore it until the morning \u2014 they should not message that late',
+      'Send a voice note at midnight when you remember'],
+    correctAnswer: 1,
     explanation:
       'Replying at a professional hour the next morning is the correct approach. Responding to non-urgent messages late at night blurs professional boundaries and sets an unsustainable precedent. Ignoring the message entirely risks the customer feeling disrespected. The balanced approach is to reply promptly the next working morning with a clear, helpful response.',
   },
@@ -160,11 +154,10 @@ const quizQuestions = [
       'You need to share progress photos of a bathroom rewire with the main contractor. The photos show the customer\u2019s bathroom, including prescription medication on a shelf. What should you do before sharing?',
     options: [
       'Share them as they are \u2014 the contractor needs to see the full picture',
-      'Crop or blur the photos to remove the medication (which is sensitive personal data) before sending',
       'Only share the photos in person on site, never digitally',
-      'Ask the customer to remove all personal items before you take photos',
-    ],
-    correctAnswer: 1,
+      'Crop or blur the photos to remove the medication (which is sensitive personal data) before sending',
+      'Ask the customer to remove all personal items before you take photos'],
+    correctAnswer: 2,
     explanation:
       'Medical information (including visible prescription medication) is classified as special category data under GDPR \u2014 it has even stricter protections than standard personal data. Before sharing site photos, you must check for and remove any identifiable personal information, and health-related information requires particular care. Cropping or blurring the sensitive content is the practical solution.',
   },
@@ -174,11 +167,10 @@ const quizQuestions = [
       'Which of the following is the best example of a professional WhatsApp message to a customer?',
     options: [
       'ill be there 2moro around 10ish',
-      'Hi Mrs Taylor \u2014 I\u2019ll be with you tomorrow (Thursday) at approximately 10:00 AM. Please let me know if that still works for you.',
-      'COMING TOMORROW 10AM.',
       'hey! coming tmrw, c u then!! \ud83d\udc4d\ud83d\udc4d\ud83d\udc4d',
-    ],
-    correctAnswer: 1,
+      'COMING TOMORROW 10AM.',
+      'Hi Mrs Taylor \u2014 I\u2019ll be with you tomorrow (Thursday) at approximately 10:00 AM. Please let me know if that still works for you.'],
+    correctAnswer: 3,
     explanation:
       'A professional WhatsApp message uses the customer\u2019s name, includes the day and date for clarity, gives a specific time, and invites confirmation. It avoids text-speak, excessive punctuation, all caps (which reads as shouting), and excessive emojis. The goal is to be warm but clear \u2014 professional does not mean cold, it means precise and respectful.',
   },
@@ -186,12 +178,11 @@ const quizQuestions = [
     id: 8,
     question: 'When should you escalate from text to a phone call?',
     options: [
-      'Only when the customer explicitly asks you to call',
       'When the subject is emotional, complex, or the text exchange is escalating',
+      'Only when the customer explicitly asks you to call',
       'Never \u2014 text always creates a better record',
-      'Only for emergencies',
-    ],
-    correctAnswer: 1,
+      'Only for emergencies'],
+    correctAnswer: 0,
     explanation:
       'The decision framework is clear: escalate to a phone call whenever the subject is emotional (complaints, disputes, bad news), complex (multiple issues, technical explanations), or the text exchange is visibly escalating (longer messages, more frequent messages, frustrated tone). Voice carries empathy, nuance, and the ability to de-escalate \u2014 none of which text can reliably deliver.',
   },

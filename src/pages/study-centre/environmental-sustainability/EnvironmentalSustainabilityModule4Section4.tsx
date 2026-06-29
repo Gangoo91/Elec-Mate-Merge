@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'clea-framework',
     question: 'What does the CLEA framework provide for contaminated land risk assessment?',
     options: [
-      'Generic assessment criteria (GAC) that set threshold concentrations for common contaminants based on standard land-use scenarios',
-      'A list of all contaminated sites in England and Wales',
-      'Mandatory remediation methods for all types of contamination',
-      'Insurance cover for developers working on brownfield sites',
+      'A statutory register listing all contaminated sites in England and Wales',
+      'Mandatory remediation methods prescribed for every type of contamination',
+      'Generic assessment criteria setting threshold concentrations per land use',
+      'Insurance cover for developers working on brownfield remediation sites',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'The Contaminated Land Exposure Assessment (CLEA) framework, published by the Environment Agency and Defra, provides generic assessment criteria (GAC) — also known as soil guideline values — for common contaminants. These are threshold concentrations based on standard land-use scenarios (residential with gardens, residential without gardens, allotments, and commercial/industrial). If a contaminant exceeds its GAC for the proposed land use, a site-specific detailed quantitative risk assessment (DQRA) is required. CLEA is a screening tool, not a mandatory remediation standard.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of the CL:AIRE Definition of Waste: Development Industry Code of Practice?',
     options: [
-      'To enable the re-use of excavated materials on the development site or between sites without classifying them as waste, saving landfill tax and disposal costs',
-      'To classify all excavated soil as hazardous waste requiring licensed disposal',
-      'To set maximum contaminant concentrations in drinking water',
-      'To require all brownfield sites to be remediated to greenfield standards',
+      'To classify all excavated soil as hazardous waste needing licensed disposal',
+      'To enable re-use of excavated materials on or between sites without classifying them as waste',
+      'To set the maximum permitted contaminant concentrations in public drinking water',
+      'To require every brownfield site to be remediated to full greenfield standards',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The CL:AIRE Definition of Waste: Development Industry Code of Practice (DoW CoP) provides a framework that allows excavated materials to be re-used on the development site (or moved between sites) without being classified as waste — provided they are demonstrated to be suitable for their intended use. This avoids the materials entering the waste management regime, saving significant landfill tax (currently over £100 per tonne) and disposal costs. A qualified person must prepare a materials management plan (MMP) and a declaration confirming the materials are suitable for use.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       "Under Part IIA of the Environmental Protection Act 1990, what must be present for land to be formally determined as 'contaminated land'?",
     options: [
-      'Any detectable level of a contaminant in the soil',
       'A significant pollutant linkage comprising source, pathway, and receptor',
+      'Any detectable level of a contaminant in the soil',
       'Evidence of historical industrial use on the site',
       'A failed Phase 2 site investigation result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part IIA defines contaminated land as land where substances are causing or could cause significant harm to a receptor, or significant pollution of controlled waters. For this determination, a significant pollutant linkage must exist — a source (the contaminant), a pathway (the route by which it reaches a target), and a receptor (a person, ecosystem, property, or controlled water that could suffer significant harm). The mere presence of a contaminant is not sufficient; all three elements must be connected.',
   },
@@ -92,8 +92,8 @@ const quizQuestions = [
     id: 2,
     question:
       'Which of the following is classified as a common heavy metal contaminant found on former industrial land?',
-    options: ['Methane', 'Total petroleum hydrocarbons (TPH)', 'Lead', 'Radon'],
-    correctAnswer: 2,
+    options: ['Methane', 'Lead', 'Total petroleum hydrocarbons (TPH)', 'Radon'],
+    correctAnswer: 1,
     explanation:
       'Lead is one of the most common heavy metal contaminants found on former industrial sites, particularly those with a history of paint manufacture, smelting, battery production, or leaded petrol storage. Other common heavy metals include arsenic, cadmium, chromium, mercury, and nickel. Methane and radon are gases, while TPH (total petroleum hydrocarbons) is an organic contaminant rather than a heavy metal.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'What is the purpose of a conceptual site model (CSM) in a contaminated land investigation?',
     options: [
-      'To provide a 3D computer model of the underground geology',
-      'To identify and illustrate all potential pollutant linkages between sources, pathways, and receptors on the site',
-      'To calculate the exact cost of remediation',
-      'To satisfy building regulations for foundation design',
+      'To provide a 3D computer model of the underground geology and strata',
+      'To calculate the exact cost of remediating the contaminated ground',
+      'To identify all potential pollutant linkages between sources, pathways, and receptors',
+      'To satisfy the building regulations requirements for foundation design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A conceptual site model (CSM) is a written and/or diagrammatic representation of the site that identifies all potential sources of contamination, all possible pathways by which contaminants could migrate, and all receptors that could be affected. It is developed during the Phase 1 desk study and refined during the Phase 2 intrusive investigation. The CSM is the foundation of the risk assessment — it determines which pollutant linkages exist and which require further investigation or remediation.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does a generic assessment criterion (GAC) under the CLEA framework represent?',
     options: [
-      'The maximum concentration of a contaminant permitted in drinking water',
-      'A screening value — the soil concentration below which the risk to human health is considered acceptable for a standard land-use scenario',
-      'The cost per tonne of remediating a specific contaminant',
-      'The depth at which a contaminant is no longer dangerous',
+      'The maximum concentration of a contaminant permitted in public drinking water',
+      'The typical cost per tonne of remediating a specific soil contaminant',
+      'The ground depth below which a contaminant is no longer considered dangerous',
+      'A screening value — the soil concentration below which the health risk is acceptable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Generic assessment criteria (GAC) are screening values published under the CLEA framework. They represent the soil concentration of a contaminant below which the risk to human health is considered acceptable for a standard land-use scenario (residential with gardens, residential without gardens, allotments, or commercial/industrial). If a site's contaminant concentrations are below the relevant GAC, no further assessment or remediation is typically required for human health. If concentrations exceed the GAC, a site-specific detailed quantitative risk assessment (DQRA) is needed.",
   },
@@ -128,8 +128,8 @@ const quizQuestions = [
     id: 5,
     question:
       'Which remediation technique involves using naturally occurring or introduced micro-organisms to break down organic contaminants in the ground?',
-    options: ['Soil washing', 'Bioremediation', 'Chemical oxidation', 'Capping and containment'],
-    correctAnswer: 1,
+    options: ['Bioremediation', 'Soil washing', 'Chemical oxidation', 'Capping and containment'],
+    correctAnswer: 0,
     explanation:
       'Bioremediation uses micro-organisms (bacteria, fungi) — either those naturally present in the soil or introduced cultures — to biologically break down organic contaminants such as petroleum hydrocarbons, solvents, and some pesticides. It can be carried out in-situ (treating the soil in place) or ex-situ (excavating the soil and treating it in biopiles or windrows). Bioremediation is considered a sustainable technique because it destroys contaminants rather than simply moving or containing them, and it typically has lower energy requirements and carbon emissions than other methods.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of a groundwater monitoring well on a contaminated site?',
     options: [
-      'To provide drinking water for site workers during construction',
-      'To sample and monitor groundwater quality, track contaminant plume movement, and verify remediation effectiveness',
-      'To lower the water table so foundations can be constructed',
-      'To inject chemicals directly into the aquifer',
+      'To provide a potable drinking water supply for site workers during construction',
+      'To lower the local water table so the building foundations can be constructed',
+      'To sample groundwater quality, track plume movement, and verify remediation',
+      'To inject treatment chemicals directly into the contaminated aquifer below',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Groundwater monitoring wells are installed during site investigation and remediation to allow regular sampling of groundwater quality beneath and around the site. They enable consultants to track the movement and concentration of contaminant plumes over time, assess whether contamination is migrating off-site, and verify the effectiveness of remediation measures. Monitoring wells are typically small-diameter boreholes with slotted screen sections at the depth of the water table, fitted with protective covers at ground level.',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'What document must typically be submitted to the local planning authority to demonstrate that a contaminated site has been successfully remediated?',
     options: [
       'A Phase 1 desk study report',
-      'A remediation verification report (also known as a validation report)',
       'A building control completion certificate',
       "A waste carrier's licence",
+      'A remediation verification report (also known as a validation report)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A remediation verification report (historically called a validation report) must be submitted to the local planning authority to demonstrate that the approved remediation strategy has been successfully implemented and the site is now suitable for its intended use. It includes records of all remediation works carried out, verification sampling and testing results, comparison against agreed remediation targets, and confirmation that all planning conditions relating to contamination have been discharged. This is typically required before occupation of the development is permitted.',
   },

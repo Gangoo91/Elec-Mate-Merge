@@ -14,11 +14,16 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What is the maximum file size allowed for individual uploads on the OZEV portal?',
-    options: ['5MB', '10MB', '15MB', '20MB'],
-    correctAnswer: 1,
+    question: 'Why is it good practice to compress large evidence files before uploading to the OZEV portal?',
+    options: [
+      'Compressed files always upload at a higher quality',
+      'The portal rejects any file in PDF format',
+      'Smaller files upload reliably and avoid hitting size limits',
+      'Compression is required to encrypt the documents',
+    ],
+    correctAnswer: 2,
     explanation:
-      'The OZEV portal has a maximum file size limit of 10MB for individual document uploads to ensure efficient processing.',
+      'Keeping individual uploads within the portal’s size limit (commonly around 10MB) means files transfer reliably and are not rejected.',
   },
   {
     id: 2,
@@ -30,72 +35,82 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 3,
-    question: 'What is the recommended resolution for photographic evidence?',
+    question: 'What is the key requirement for photographic evidence of an installation?',
     options: [
-      'At least 1920x1080 pixels',
-      'At least 2592x1944 pixels',
-      'At least 1024x768 pixels',
-      'Any resolution is acceptable',
+      'It can be any resolution provided the file is small',
+      'It must be a low resolution to keep uploads fast',
+      'It should be high resolution so detail is clearly legible',
+      'It must be supplied as a printed photograph only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'OZEV recommends a minimum resolution of 2592x1944 pixels (5MP) for clear photographic evidence that can be properly assessed.',
+      'Photographic evidence must be sharp and high enough resolution (a modern smartphone camera is ample) so serial numbers and installation detail can be assessed.',
   },
   {
     id: 4,
     question:
-      'True or False: You can submit multiple grant claims simultaneously through the OZEV portal.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
+      'How are grant claims handled when an installer has several jobs ready to submit on the OZEV portal?',
+    options: [
+      'Only one claim may be open at any time per installer',
+      'Multiple claims can be submitted, supporting high-volume installers',
+      'Claims must be batched and submitted once per calendar month',
+      'A separate installer login is required for each claim',
+    ],
+    correctAnswer: 1,
     explanation:
-      'True. The OZEV portal allows installers to submit multiple grant claims simultaneously, improving efficiency for high-volume installers.',
+      'The OZEV portal lets installers progress multiple grant claims, which is essential for businesses completing many installations.',
   },
   {
     id: 5,
-    question: 'What should you do if document upload fails repeatedly?',
+    question: 'What should you do if a document upload fails repeatedly?',
     options: [
-      'Keep trying with the same file',
-      'Check file size, format, and try during off-peak hours',
-      'Contact customer immediately',
-      'Abandon the application',
+      'Check the file size and format, then retry during off-peak hours',
+      'Keep retrying the identical file until it eventually uploads',
+      'Telephone the customer to report the portal is broken',
+      'Abandon the application and start a fresh claim',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If uploads fail, check file size (under 10MB), ensure correct format (PDF/JPEG/PNG), and try during off-peak hours when server load is lower.',
   },
   {
     id: 6,
-    question: 'Which photograph angle provides the best evidence of charger installation?',
+    question: 'Which approach provides the strongest photographic evidence of a charger installation?',
     options: [
-      'Front view only',
-      'Side view only',
-      'Multiple angles showing context and detail',
-      'Top-down view only',
+      'Multiple angles showing both context and close-up detail',
+      'A single front-on photograph of the unit',
+      'One wide shot taken from across the room',
+      'A top-down photograph of the charger only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Multiple angles showing both the overall installation context and detailed views provide the most comprehensive evidence for OZEV assessment.',
+      'A set of images covering the wider context and close-up detail gives the assessor a complete picture of the installation.',
   },
   {
     id: 7,
-    question: 'What is the consequence of submitting incomplete documentation?',
+    question: 'What is the likely consequence of submitting incomplete documentation?',
     options: [
-      'Automatic approval',
-      'Application delay or rejection',
-      'Reduced grant amount',
-      'No consequences',
+      'The grant is automatically approved at a reduced rate',
+      'The portal silently completes the missing fields for you',
+      'The application is delayed or rejected pending resubmission',
+      'There is no impact, as documents are reviewed later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Incomplete documentation leads to application delays or outright rejection, requiring resubmission and potentially delaying grant payments.',
   },
   {
     id: 8,
-    question: 'How long should installers retain copies of submitted documents?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 2,
+    question: 'Why should installers keep their own copies of all submitted grant documents?',
+    options: [
+      'To resell the data to third parties',
+      'Because the portal deletes everything after 24 hours',
+      'It is optional and serves no real purpose',
+      'To support possible OZEV audits and compliance checks',
+    ],
+    correctAnswer: 3,
     explanation:
-      'Installers should retain copies of all submitted documents for at least 5 years to support potential audits and compliance checks.',
+      'Retaining copies of submitted documentation lets installers respond to any later OZEV audit or compliance query.',
   },
 ];
 

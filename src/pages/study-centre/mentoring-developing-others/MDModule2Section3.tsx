@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'pendleton-first-step',
     question: 'In Pendleton\u2019s Rules, who speaks first about what went well?',
     options: [
-      'The observer (mentor)',
       'The learner',
+      'The observer (mentor)',
       'A neutral third party',
       'It does not matter who goes first',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'In Pendleton\u2019s Rules, the learner always reflects first \u2014 both on what went well and on what could be improved. This ensures the learner is actively involved in their own assessment rather than passively receiving judgement. The observer then adds their own observations.',
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: 'What does "SBI" stand for in the SBI feedback model?',
     options: [
       'Summary, Benefit, Instruction',
-      'Situation, Behaviour, Impact',
       'Specific, Brief, Immediate',
+      'Situation, Behaviour, Impact',
       'Standard, Baseline, Improvement',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'SBI stands for Situation (when and where), Behaviour (what you observed), and Impact (what effect it had). This structure keeps feedback factual and non-judgemental, focusing on observable actions rather than personality.',
   },
@@ -37,11 +37,11 @@ const quickCheckQuestions = [
     question: 'In the Johari Window, what is a "blind spot"?',
     options: [
       'Something known to the person but hidden from others',
-      'Something unknown to both the person and others',
       'Something known to others but not known to the person themselves',
+      'Something unknown to both the person and others',
       'Something known to both the person and others',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A blind spot is something that others can see about you but you cannot see yourself. For example, an apprentice who consistently rushes through testing may not realise they are doing it until a mentor points it out. Feedback helps to reduce blind spots by expanding the Open area of the Johari Window.',
   },
@@ -75,12 +75,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the correct sequence in Pendleton\u2019s Rules?',
     options: [
-      'Observer identifies positives \u2192 observer identifies improvements \u2192 action plan',
       'Learner reflects on positives \u2192 observer adds positives \u2192 learner identifies improvements \u2192 observer suggests improvements \u2192 action plan',
+      'Observer identifies positives \u2192 observer identifies improvements \u2192 action plan',
       'Observer tells learner what went wrong \u2192 learner agrees \u2192 action plan',
       'Learner writes a self-assessment \u2192 observer grades it \u2192 discussion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pendleton\u2019s Rules follow a structured sequence: the learner reflects on what went well first, then the observer adds their positives. Next, the learner identifies what could be improved, and the observer adds their suggestions. Finally, they agree an action plan together.',
   },
@@ -89,11 +89,11 @@ const quizQuestions = [
     question: 'In the SBI model, what does "Situation" refer to?',
     options: [
       'The overall context of the mentoring relationship',
-      'The specific time, place, and circumstances when the behaviour occurred',
       'The learner\u2019s general attitude towards their work',
+      'The specific time, place, and circumstances when the behaviour occurred',
       'The standard of work expected on the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In SBI, the Situation describes when and where the behaviour occurred \u2014 it grounds the feedback in a specific, observable event. For example: "When you were terminating the board this morning..." This prevents feedback from feeling vague or general.',
   },
@@ -102,19 +102,19 @@ const quizQuestions = [
     question: 'Who developed the Johari Window model?',
     options: [
       'Sir John Whitmore',
-      'Stephen Covey',
       'Joseph Luft and Harrington Ingham',
+      'Stephen Covey',
       'David Kolb',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Johari Window was created by psychologists Joseph Luft and Harrington Ingham in 1955. The name "Johari" is a combination of their first names: Jo(seph) and Hari(ngton).',
   },
   {
     id: 4,
     question: 'Which Johari Window quadrant is reduced by giving and receiving feedback?',
-    options: ['Open area', 'Blind spot', 'Hidden area', 'Unknown area'],
-    correctAnswer: 1,
+    options: ['Open area', 'Hidden area', 'Unknown area', 'Blind spot'],
+    correctAnswer: 3,
     explanation:
       'Feedback from others reduces the Blind Spot \u2014 the area that others can see but you cannot see yourself. As the blind spot shrinks, the Open area (known to self and others) expands, leading to better self-awareness and more effective working relationships.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 5,
     question: 'When giving constructive feedback on a construction site, you should:',
     options: [
-      'Give it publicly so everyone can learn from the mistake',
-      'Wait until the annual performance review',
       'Give it privately, promptly, and with specific examples',
+      'Wait until the annual performance review',
+      'Give it publicly so everyone can learn from the mistake',
       'Start with a compliment, give the criticism, then end with another compliment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Constructive feedback should be given privately (to preserve dignity), promptly (while the event is fresh), and with specific examples (so the learner knows exactly what to change). Public criticism damages trust and the mentoring relationship.',
   },
@@ -136,11 +136,11 @@ const quizQuestions = [
     question: 'What is the problem with vague feedback like "Good job today"?',
     options: [
       'It is too positive',
-      'The learner does not know specifically what they did well, so they cannot replicate it',
       'It takes too long to say',
+      'The learner does not know specifically what they did well, so they cannot replicate it',
       'Vague feedback is actually the most effective type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Vague feedback, whether positive or negative, is ineffective because the learner does not know what specifically they did well (or poorly). Compare "Good job today" with "The way you stripped back and terminated those tails in the consumer unit was really neat and efficient \u2014 well done." The second version tells the learner exactly what to keep doing.',
   },
@@ -150,11 +150,11 @@ const quizQuestions = [
       'According to the principle "praise in public, correct in private", when should you give positive feedback?',
     options: [
       'Only during formal reviews',
-      'Only when the learner asks for it',
       'Publicly and as close to the event as possible',
+      'Only when the learner asks for it',
       'Privately, after the working day has finished',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Positive feedback should be given publicly (in front of colleagues when appropriate) and as close to the event as possible. Public recognition reinforces the desired behaviour, builds the learner\u2019s confidence, and shows others what good practice looks like.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'Why is the feedback sandwich considered problematic by many mentoring experts?',
     options: [
       'Because it takes too long',
-      'Because people learn to expect the pattern and discount both the positive and constructive elements',
       'Because it does not include enough positive feedback',
       'Because it was designed for children, not adults',
+      'Because people learn to expect the pattern and discount both the positive and constructive elements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The feedback sandwich (positive-negative-positive) becomes predictable. Learners learn to ignore the opening praise ("here comes the but..."), brace for the criticism, and then dismiss the closing compliment. This undermines both the positive recognition and the constructive feedback.',
   },

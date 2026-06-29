@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'What is the relationship between kVAr rating of a capacitor connected in star versus delta?',
     options: [
-      'Approximately 25% of the end-to-end reading',
-      'It heats the air while removing moisture',
+      'Star provides approximately 3x more kVAr',
+      'Both connections provide identical kVAr',
       'Delta provides approximately 3x more kVAr',
-      'Causes degradation and brittleness',
+      'Delta provides approximately half the kVAr',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why might fixed capacitor banks cause problems with variable loads?',
     options: [
-      'It can damage conductors and reduce connection integrity',
+      'They cannot be sized correctly for any inductive load',
       'They can cause leading power factor during light load periods',
-      'Valid, Authentic, Current, Sufficient, Reliable',
-      'The bill of quantities or material schedule',
+      'They always resonate with the supply at the fundamental frequency',
+      'They draw more real power than the load they are correcting',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main disadvantage of central power factor correction?',
     options: [
-      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
+      'It cannot achieve a power factor better than 0.85 at the supply',
       'Reactive current still flows through all cables between loads and central capacitors',
-      'The willingness to try new experiences, take appropriate risks, and connect with others for support',
-      'Document the change, get written approval, and issue a variation or change order',
+      'It requires a separate capacitor switched with every individual motor contactor',
+      'It always over-corrects the installation to a leading power factor',
     ],
     correctAnswer: 1,
     explanation:
@@ -314,7 +314,7 @@ const HNCModule3Section2_5 = () => {
 
           <RegsCallout
             source="BS EN 61921 — Power capacitors. Low-voltage power factor correction banks"
-            clause="Detuned reactors shall be selected to provide a tuning frequency below the lowest harmonic present (typically 134 Hz for 7 % detuning or 189 Hz for 14 % detuning) to prevent series resonance with system harmonics and to limit current distortion in the capacitor."
+            clause="Detuned reactors shall be selected to provide a tuning frequency below the lowest harmonic present (typically 189 Hz for 7 % detuning or 134 Hz for 14 % detuning) to prevent series resonance with system harmonics and to limit current distortion in the capacitor."
             meaning={
               <>
                 Plain capacitor banks on a system with significant harmonic content can

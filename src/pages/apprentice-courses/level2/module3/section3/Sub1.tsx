@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       'A radial final circuit is best described as:',
     options: [
-      'Detecting short circuits and cross-faults in the input wiring by sending test pulses',
       'A circuit with a single cable going from the consumer unit to the last accessory, with branches off as needed',
-      'Ib <= In <= Iz, where Ib is design current and Iz is cable current-carrying capacity',
-      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
+      'A circuit whose cable leaves the protective device, daisies through every accessory and returns to the same device',
+      'A circuit protected by two separate devices sharing the load between parallel conductors',
+      'A circuit fed from a fused connection unit rather than directly from a protective device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Radial = one cable leaves the protective device and runs out to the loads, branching at accessories rather than looping back. Most lighting and dedicated appliance circuits in UK domestic are radials.',
   },
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'A 32 A ring final circuit wired in 2.5 mm² T&E to BS 7671 must comply with 433.1.204. Which protective devices are permitted?',
     options: [
-      'The employer (or self-employed person, or person in control of the premises)',
-      'Installing sensors, relays, and control circuits for system integration',
+      'BS 1362 cartridge fuses rated at 13 A only',
+      'BS EN 60269-3 fuses rated above 45 A',
       'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
-      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
+      'Any device rated 40 A or higher, provided RCD protection is fitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'In a 3-plate (loop-in) lighting installation, the permanent line, neutral and switched-line all terminate at:',
     options: [
-      'Conductor resistance and current',
+      'The wall switch back-box',
       'The ceiling rose / loop-in box',
-      'Face shield and hearing protection',
-      '4000K-5000K (neutral to cool white)',
+      'A junction box buried in the wall',
+      'The consumer unit neutral bar',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'A heat-only domestic boiler with a 3 A internal fuse is wired:',
     options: [
-      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'Both lamp depreciation and luminaire/room dirt accumulation',
-      'Logged, assigned owners, target dates set, and verified closed',
+      'Direct to a dedicated 32 A radial with no local fuse',
+      'Off the lighting circuit via a 6 A junction box',
+      'Through a 13 A plug into the nearest ring-final socket',
       'Off a switched FCU on the ring final, with the 3 A fuse inside the FCU',
     ],
     correctAnswer: 3,

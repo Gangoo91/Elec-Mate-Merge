@@ -92,20 +92,25 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: Steel conduit can act as an earth path.',
-    options: ['True', 'False'],
+    question: 'Which statement about steel conduit and earthing is correct?',
+    options: [
+      'Steel conduit can serve as the circuit protective conductor if joints are continuous',
+      'Steel conduit must never be connected to earth',
+      'Steel conduit only needs earthing when installed outdoors',
+      'Steel conduit cannot carry fault current to earth',
+    ],
     correctAnswer: 0,
     explanation:
-      'True. Steel conduit, when properly installed with electrical continuity between all joints, can serve as the protective conductor (earth path) for the circuit.',
+      'Steel conduit, when installed with electrical continuity between all joints, can serve as the protective conductor (earth path) for the circuit.',
   },
   {
     id: 4,
     question: 'Give one disadvantage of recessed conduit installation.',
     options: [
       'More labour-intensive and harder to modify later',
-      '230V single phase, 400V three phase',
-      'Carry out a suitable and sufficient fire risk assessment',
-      'Inspected for damage, cleaned if necessary and stored safely',
+      'It cannot be used with PVC conduit',
+      'It offers no mechanical protection',
+      'It is only suitable for industrial sites',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,9 +146,9 @@ const quizQuestions = [
     id: 7,
     question: 'Name one situation where surface-mounted conduit is preferred.',
     options: [
-      'Power exchanged between source and reactive components',
-      'Work in special locations or involving new circuits',
-      'Reference Method B (enclosed in conduit on a wall)',
+      'A high-end domestic living room',
+      'A new-build office where finish is critical',
+      'A hotel bedroom with concealed services',
       'Industrial settings or retrofit installations',
     ],
     correctAnswer: 3,
@@ -152,16 +157,16 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Which regulation covers conduit installation in the UK?',
+    question: 'Which standard covers conduit installation in the UK?',
     options: [
       'BS 7671 (IET Wiring Regulations)',
-      'SCOP of 2.5 (for wet heating systems)',
-      'In Schedule 2 of CDM 2015',
-      'Longer length increases resistance',
+      'BS 5839 (Fire detection and alarm)',
+      'BS EN 12464 (Lighting of workplaces)',
+      'BS 6701 (Telecommunications cabling)',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including conduit systems, support spacing, and earthing requirements.',
+      'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including conduit systems, support spacing and earthing requirements.',
   },
 ];
 

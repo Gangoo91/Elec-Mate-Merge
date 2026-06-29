@@ -14,16 +14,16 @@ const Module6Section3_3 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: 'Why must instruments be zeroed before testing?',
+      question: 'Why must a continuity instrument be zeroed before testing?',
       options: [
-        'Both temperature and humidity',
-        'To correct for internal resistance',
-        'Weekly or more frequent readings',
-        'Written health and safety policy',
+        'To save battery power during the test',
+        'To correct for lead and internal resistance',
+        'To select the correct test voltage',
+        'To speed up the auto-ranging function',
       ],
       correctAnswer: 1,
       explanation:
-        'Zeroing corrects for internal resistance and ensures accurate readings by establishing a known reference point.',
+        'Zeroing (nulling) cancels the resistance of the test leads and instrument so the displayed value reflects only the circuit being measured.',
     },
     {
       id: 2,
@@ -113,16 +113,16 @@ const Module6Section3_3 = () => {
     },
     {
       id: 9,
-      question: 'When should you re-check zeroing?',
+      question: 'When should you re-check the zeroing of an instrument?',
       options: [
-        'Ensure only the device nearest the fault operates',
-        'After moving or dropping the instrument',
-        'Narrow plan perpendicular to prevailing wind',
-        'Yes, with appropriate IP rating',
+        'Only at the start of each calendar month',
+        'After moving, dropping, or a significant temperature change',
+        'Only when the battery is replaced',
+        'Never, once it has been zeroed at the start',
       ],
       correctAnswer: 1,
       explanation:
-        'Instruments should be re-zeroed after being moved, dropped, or exposed to temperature changes that could affect calibration.',
+        'Instruments should be re-zeroed after being moved, dropped, or exposed to temperature changes that could affect the lead resistance or calibration.',
     },
     {
       id: 10,

@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'You are working from a MEWP on an outdoor site when a colleague reports seeing lightning approximately 8 miles away. The sky above you is currently clear. What is the correct action?',
     options: [
-      'Continue working — the lightning is 8 miles away and the sky is clear above',
       'Cease all elevated work immediately — lightning within 10 miles requires operations to stop',
+      'Continue working — the lightning is 8 miles away and the sky is clear above',
       'Move to a lower working height as a precaution',
       'Continue but keep one person on the ground as a lookout',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Lightning within 10 miles requires all elevated MEWP work to cease immediately. Lightning can strike well ahead of the storm front, and a MEWP elevated to working height acts as a significant conductor. The fact that the sky above you is clear does not mean you are safe — lightning can travel horizontally for miles. Lower the platform, vacate the machine, and move to a safe shelter.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'When using a boom-type MEWP with outriggers, when are spreader plates required?',
     options: [
-      'Only on soft ground such as grass or mud',
-      'Only when the outrigger load exceeds 5 tonnes',
       'ALWAYS — spreader plates must be used with boom-type MEWPs on outriggers',
+      'Only when the outrigger load exceeds 5 tonnes',
+      'Only on soft ground such as grass or mud',
       'Only when specified by the site manager',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Spreader plates (pads) MUST always be used with boom-type MEWPs on outriggers. This is a mandatory requirement regardless of the ground condition. The pads distribute the concentrated outrigger load over a larger area, reducing the ground bearing pressure. IPAF provides a Spreader Pad Calculator to help determine the correct pad size for the machine and ground conditions.',
   },
@@ -123,8 +123,8 @@ const quizQuestions = [
   {
     id: 4,
     question: 'The maximum design wind speed for outdoor-rated MEWPs is:',
-    options: ['8.0 m/s (18 mph)', '10.0 m/s (22 mph)', '12.5 m/s (28 mph)', '15.0 m/s (34 mph)'],
-    correctAnswer: 2,
+    options: ['8.0 m/s (18 mph)', '10.0 m/s (22 mph)', '15.0 m/s (34 mph)', '12.5 m/s (28 mph)'],
+    correctAnswer: 3,
     explanation:
       'The maximum design wind speed for outdoor-rated MEWPs is 12.5 m/s (28 mph). If the wind speed exceeds this limit while the platform is elevated, the operator must lower the platform immediately and cease all elevated operations. Wind speed increases with height, so ground-level measurements may underestimate the wind at the working position.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
     question: 'When travelling a MEWP on a slope, which end should face uphill?',
     options: [
       'The lighter end, to improve steering',
-      'The heavy end, to maintain stability',
       'Either end — it makes no difference',
+      'The heavy end, to maintain stability',
       'The end with the platform, to protect the operator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "When travelling on slopes, always travel with the heavy end facing uphill. This maintains the machine's centre of gravity over the base and reduces the risk of tipping. The heavy end is typically the end with the engine and counterweight. The operator's manual will specify the maximum travel gradient and the correct orientation for slope travel.",
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'Why should you NOT increase the platform surface area by attaching sheeting, boards, or signs?',
     options: [
-      'It adds too much weight to the platform',
       "It increases the wind loading area, which can exceed the machine's design limits",
+      'It adds too much weight to the platform',
       "It obscures the operator's view",
       'It is not permitted by the Highway Code',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Attaching sheeting, boards, signs, or any other material that increases the platform surface area dramatically increases the wind loading on the machine. The MEWP's stability calculations are based on the standard platform area. Increasing this area can cause the wind force to exceed the machine's design limits, leading to overturning. Even a small increase in area can have a significant effect at height where wind speeds are higher.",
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'What is the general rule for safe distance from an excavation edge when positioning a MEWP?',
     options: [
       'At least 1 metre from the edge in all cases',
-      'Distance from the edge should equal the depth of the excavation',
       'At least 3 metres from the edge in all cases',
       'There is no specific rule — use your judgement',
+      'Distance from the edge should equal the depth of the excavation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The general rule is that the safe distance from an excavation edge should be at least equal to the depth of the excavation. For example, if the excavation is 2 metres deep, the MEWP should be positioned at least 2 metres from the edge. Ground near excavation edges is weakened and may not support concentrated loads. A geotechnical assessment may be required for deep excavations or poor ground conditions.',
   },

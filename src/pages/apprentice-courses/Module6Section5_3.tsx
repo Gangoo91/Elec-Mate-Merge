@@ -22,10 +22,10 @@ const Module6Section5_3 = () => {
       id: 1,
       question: 'What must be done before starting an insulation resistance test?',
       options: [
-        'Start testing immediately',
-        'Isolate circuit and prove dead',
-        'Just switch off the lights',
-        'Check the weather',
+        'Begin testing as soon as the supply is switched on',
+        'Isolate the circuit and prove it dead',
+        'Switch off only the lighting circuit at the board',
+        'Connect a temporary supply to the circuit',
       ],
       correctAnswer: 1,
       explanation:
@@ -35,10 +35,10 @@ const Module6Section5_3 = () => {
       id: 2,
       question: 'Which instrument is used for insulation resistance testing?',
       options: [
-        'Isolate circuit and prove dead',
-        'To avoid forgetting or mixing up readings',
-        'Insulation resistance tester (megger)',
-        'Borrowed neutrals not properly isolated',
+        'A two-pole voltage indicator',
+        'A clamp meter set to read current',
+        'An insulation resistance tester (megger)',
+        'An earth fault loop impedance tester',
       ],
       correctAnswer: 2,
       explanation:
@@ -46,12 +46,12 @@ const Module6Section5_3 = () => {
     },
     {
       id: 3,
-      question: 'Which conductors are tested in a single-phase circuit?',
+      question: 'Which conductor combinations are tested in a single-phase circuit?',
       options: [
-        'To avoid forgetting or mixing up readings',
-        'Investigate and rectify before energising',
-        'Borrowed neutrals not properly isolated',
-        'Line to neutral, line to earth, neutral to earth',
+        'Line to earth only',
+        'Neutral to earth only',
+        'Line to neutral only',
+        'Line to neutral, line to earth, and neutral to earth',
       ],
       correctAnswer: 3,
       explanation:
@@ -73,12 +73,12 @@ const Module6Section5_3 = () => {
     },
     {
       id: 5,
-      question: 'What does a high resistance reading indicate?',
+      question: 'What does a high insulation resistance reading indicate?',
       options: [
-        'Adapting to technical progress',
-        'Good insulation condition',
-        'Concealed conduit in walls',
-        'Hard hat and safety glasses',
+        'A short circuit between line and neutral',
+        'That the insulation is in good condition',
+        'That the test voltage was set too low',
+        'Moisture present within the cable',
       ],
       correctAnswer: 1,
       explanation:
@@ -86,12 +86,12 @@ const Module6Section5_3 = () => {
     },
     {
       id: 6,
-      question: 'What does a low resistance reading suggest?',
+      question: 'What does a low insulation resistance reading suggest?',
       options: [
-        'Investigate and rectify before energising',
-        'To avoid forgetting or mixing up readings',
+        'The circuit is correctly isolated',
+        'The test leads are too long',
         'Possible insulation damage or contamination',
-        'Borrowed neutrals not properly isolated',
+        'The instrument battery is fully charged',
       ],
       correctAnswer: 2,
       explanation:
@@ -101,10 +101,10 @@ const Module6Section5_3 = () => {
       id: 7,
       question: 'What should be done if an IR test result is below the required minimum?',
       options: [
-        'To avoid forgetting or mixing up readings',
-        'Isolate circuit and prove dead',
-        'Possible insulation damage or contamination',
-        'Investigate and rectify before energising',
+        'Record it and energise the circuit anyway',
+        'Lower the test voltage and repeat the test',
+        'Accept the reading if it is close to the minimum',
+        'Investigate and rectify the fault before energising',
       ],
       correctAnswer: 3,
       explanation:
@@ -113,25 +113,25 @@ const Module6Section5_3 = () => {
     {
       id: 8,
       question:
-        'True or False: Insulation resistance testing can be carried out on a live circuit.',
+        'On what state of circuit may an insulation resistance test be carried out?',
       options: [
-        'False',
-        'Sometimes',
-        'True',
-        'Only at low voltage',
+        'Only on a circuit isolated and proved dead',
+        'On any circuit, whether live or dead',
+        'On a live circuit if the voltage is below 230 V',
+        'On a live circuit if PPE is worn',
       ],
       correctAnswer: 0,
       explanation:
-        'False. Insulation resistance testing must never be carried out on live circuits. The circuit must always be isolated first.',
+        'Insulation resistance testing must never be carried out on live circuits; the circuit must always be isolated and proved dead first.',
     },
     {
       id: 9,
       question: 'Why is it important to record results immediately after testing?',
       options: [
-        'Isolate circuit and prove dead',
-        'To avoid forgetting or mixing up readings',
-        'Possible insulation damage or contamination',
-        'Insulation resistance tester (megger)',
+        'It allows the test voltage to be reduced',
+        'To avoid forgetting or mixing up the readings',
+        'It removes the need to sign the certificate',
+        'It speeds up the discharge of the circuit',
       ],
       correctAnswer: 1,
       explanation:
@@ -142,10 +142,10 @@ const Module6Section5_3 = () => {
       question:
         'In the real-world example, what caused the electrician to misinterpret the results?',
       options: [
-        'To avoid forgetting or mixing up readings',
-        'Possible insulation damage or contamination',
-        'Borrowed neutrals not properly isolated',
-        'Line to neutral, line to earth, neutral to earth',
+        'Using a test voltage that was too high',
+        'A faulty insulation resistance tester',
+        'Borrowed neutrals not being properly isolated',
+        'Testing only one conductor combination',
       ],
       correctAnswer: 2,
       explanation:

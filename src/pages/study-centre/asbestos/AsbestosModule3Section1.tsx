@@ -69,8 +69,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical asbestos content of asbestos cement (AC)?',
-    options: ['1-5%', '10-15%', '25-40%', '50-60%'],
-    correctAnswer: 1,
+    options: ['1-5%', '25-40%', '50-60%', '10-15%'],
+    correctAnswer: 3,
     explanation:
       'Asbestos cement typically contains 10-15% chrysotile asbestos bound in Portland cement. This is significantly lower than AIB (25-40%), and the cement matrix locks the fibres in place, making AC non-friable when intact.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which type of asbestos is most commonly found in Asbestos Insulating Board (AIB)?',
     options: [
+      'Amosite (sometimes with chrysotile or crocidolite)',
       'Chrysotile only',
       'Crocidolite only',
-      'Amosite (sometimes with chrysotile or crocidolite)',
       'Tremolite',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'AIB typically contains amosite (brown asbestos), sometimes mixed with chrysotile or crocidolite. Amosite was preferred for insulating board because of its thermal properties and was the second most commonly used asbestos type in the UK.',
   },
@@ -106,11 +106,11 @@ const quizQuestions = [
       'Which of the following is a characteristic of asbestos cement that distinguishes it from AIB?',
     options: [
       'AC is soft and can be indented with a thumbnail',
-      'AC is lightweight and sounds hollow when tapped',
       'AC is hard, heavy, and cannot be indented with a fingernail',
+      'AC is lightweight and sounds hollow when tapped',
       'AC is always blue in colour',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Asbestos cement is hard, heavy (density ~1500-2000 kg/m\u00b3), and cannot be indented with a fingernail. It sounds solid when tapped. In contrast, AIB is relatively soft, lighter, and can be indented with a thumbnail or screwdriver.',
   },
@@ -121,10 +121,10 @@ const quizQuestions = [
     options: [
       'Any time you touch it',
       'Only when removing entire roof sheets',
-      'When using power tools to drill, cut, or grind AC',
       'Only when the AC is damaged',
+      'When using power tools to drill, cut, or grind AC',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Work on asbestos cement using power tools (drilling, cutting, grinding) is classified as NNLW because the power tools break up the cement matrix and release asbestos fibres. NNLW requires notification to the HSE, medical surveillance, and a register of work.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     id: 6,
     question: 'In which of these locations would you be MOST likely to find AIB rather than AC?',
     options: [
+      'Ceiling tiles and partition walls inside a building',
       'Corrugated roof sheets on a garage',
       'Gutters and downpipes',
-      'Ceiling tiles and partition walls inside a building',
       'External wall cladding on an industrial unit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Ceiling tiles and partition walls inside buildings are common locations for AIB. It was widely used for fire protection, thermal insulation, and sound insulation in internal applications. Corrugated roof sheets, gutters, downpipes, and external wall cladding are much more likely to be asbestos cement.',
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
     question: 'What is the approximate density of Asbestos Insulating Board (AIB)?',
     options: [
       '200-400 kg/m\u00b3',
-      '700-1,000 kg/m\u00b3',
       '1,500-2,000 kg/m\u00b3',
+      '700-1,000 kg/m\u00b3',
       '2,500-3,000 kg/m\u00b3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'AIB has a relatively low density of approximately 700-1,000 kg/m\u00b3, which is one reason it feels lightweight for its size. Asbestos cement, by contrast, has a much higher density of approximately 1,500-2,000 kg/m\u00b3, making it noticeably heavier.',
   },

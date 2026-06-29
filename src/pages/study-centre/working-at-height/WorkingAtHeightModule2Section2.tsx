@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: 'How often must a scaffold be formally inspected once it is in use?',
     options: [
       'Every 3 days',
-      'Every 7 days, after adverse weather, and after any modification',
       'Every 14 days',
       'Only once — before first use',
+      'Every 7 days, after adverse weather, and after any modification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Work at Height Regulations 2005 (Schedule 7) require scaffold inspections before first use, at intervals not exceeding 7 days, after any event likely to have affected strength or stability (e.g. adverse weather), and after any modification. Results must be recorded and kept on site.',
   },
@@ -106,8 +106,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What colour scaffold tag indicates the scaffold is safe to use?',
-    options: ['Red', 'Amber', 'Green', 'Blue'],
-    correctAnswer: 2,
+    options: ['Green', 'Amber', 'Red', 'Blue'],
+    correctAnswer: 0,
     explanation:
       'GREEN indicates the scaffold has been inspected and is safe to use. AMBER indicates caution — there may be restrictions. RED means do not use — the scaffold is incomplete, damaged, or undergoing modification.',
   },
@@ -116,11 +116,11 @@ const quizQuestions = [
     question: 'What is the purpose of toe boards on a scaffold platform?',
     options: [
       'To provide a handhold when climbing',
-      'To prevent materials and tools from falling off the platform edge',
       'To increase the load-bearing capacity of the platform',
       'To mark the edge of the scaffold for visibility',
+      'To prevent materials and tools from falling off the platform edge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Toe boards (minimum 150mm high) prevent tools, materials, and debris from being kicked or rolling off the scaffold platform. Falling objects from scaffolds can cause serious injury or death to persons below.',
   },
@@ -153,8 +153,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the maximum gap permitted between scaffold boards on a working platform?',
-    options: ['10mm', '15mm', '25mm', '50mm'],
-    correctAnswer: 2,
+    options: ['10mm', '15mm', '50mm', '25mm'],
+    correctAnswer: 3,
     explanation:
       'The maximum permissible gap between scaffold boards is 25mm. Larger gaps risk tools, materials, or feet slipping through. If gaps exceed 25mm, additional boards must be fitted or the gap closed with appropriate infill.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'A scaffold must be re-inspected after which of the following events?',
     options: [
-      'A scaffold board is replaced like-for-like',
-      'A delivery of materials is made to the platform',
       'Adverse weather conditions (high winds, heavy rain, frost)',
+      'A delivery of materials is made to the platform',
+      'A scaffold board is replaced like-for-like',
       'A tea break lasting more than 30 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Adverse weather — including high winds, heavy rain, snow, and frost — can affect the structural integrity and stability of a scaffold. A formal inspection must be carried out after any such event before the scaffold is used again.',
   },

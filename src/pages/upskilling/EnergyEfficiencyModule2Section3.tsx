@@ -47,12 +47,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does kW (kilowatt) measure?',
     options: [
-      'The total power drawn from the supply',
       'The real power that performs useful work',
-      'The energy consumed over time',
-      'The reactive power in the circuit',
+      'The total apparent power drawn from the supply',
+      'The energy consumed over a period of time',
+      'The reactive power circulating in the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'kW measures real power - the power that actually performs useful work like heating, turning motor shafts, or producing light.',
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 4,
     question: 'In the power triangle, which side represents apparent power (kVA)?',
     options: [
+      'The hypotenuse',
       'The adjacent side (horizontal)',
       'The opposite side (vertical)',
-      'The hypotenuse',
-      'It is not shown on the triangle',
+      'It is not represented on the triangle',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In the power triangle, kVA (apparent power) is the hypotenuse, kW (real power) is the adjacent side, and kVAr (reactive power) is the opposite side.',
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 5,
     question: 'A facility has a power factor of 0.7. What does this indicate?',
     options: [
-      '70% of apparent power is doing useful work',
-      'The supply voltage is 70% of nominal',
-      'Energy consumption is 70% efficient',
-      'The equipment is 70% loaded',
+      'The supply voltage is running at 70% of nominal',
+      '70% of the apparent power is doing useful work',
+      'Energy is being consumed at 70% efficiency',
+      'The connected equipment is 70% loaded',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'A power factor of 0.7 means that only 70% of the apparent power drawn is converted to useful work. The remaining 30% is reactive power.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why might a commercial customer face power factor surcharges from their supplier?',
     options: [
-      'They are using too much energy',
+      'They are simply consuming too much energy overall',
+      'Surcharges are mandatory for every business connection',
       'Their low power factor increases current flow and network losses',
-      'Power factor surcharges are mandatory for all businesses',
-      'They have too many resistive loads',
+      'They have connected too many resistive loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Low power factor means higher currents for the same useful power, causing increased losses and requiring larger infrastructure. Suppliers charge for this extra burden.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which type of load typically has a power factor close to 1.0?',
     options: [
-      'Induction motors',
-      'Fluorescent lighting with magnetic ballasts',
       'Resistive heaters and incandescent lamps',
+      'Lightly loaded induction motors',
+      'Fluorescent lighting with magnetic ballasts',
       'Air conditioning compressors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Resistive loads like heaters and incandescent lamps have power factor close to 1.0 because current and voltage are in phase - all power drawn does useful work.',
   },
@@ -129,8 +129,8 @@ const quizQuestions = [
     id: 8,
     question:
       'A 50 kVA transformer operates at 0.85 power factor. What is the maximum kW load it can supply?',
-    options: ['50 kW', '42.5 kW', '58.8 kW', '85 kW'],
-    correctAnswer: 1,
+    options: ['50 kW', '85 kW', '58.8 kW', '42.5 kW'],
+    correctAnswer: 3,
     explanation:
       "kW = kVA x Power Factor = 50 x 0.85 = 42.5 kW. The transformer's kVA rating limits the real power it can deliver.",
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'What happens to the current drawn when power factor decreases (for the same kW load)?',
     options: [
-      'Current decreases',
-      'Current stays the same',
-      'Current increases',
-      'Current becomes DC',
+      'The current decreases proportionally',
+      'The current increases',
+      'The current stays exactly the same',
+      'The current effectively becomes DC',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Lower power factor means higher current for the same real power. Current = kVA / Voltage, and kVA = kW / PF, so as PF decreases, current increases.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 10,
     question: 'Power factor correction capacitors work by:',
     options: [
-      'Reducing the real power consumed',
-      'Increasing the supply voltage',
+      'Reducing the real power consumed by loads',
+      'Raising the incoming supply voltage',
       'Supplying reactive power locally to reduce current from the supply',
-      'Converting AC to DC',
+      'Converting the AC supply into DC',
     ],
     correctAnswer: 2,
     explanation:

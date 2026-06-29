@@ -7,113 +7,114 @@ import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 const quizData = [
   {
     question:
-      'Which SPD type is specifically designed to protect against direct lightning strikes?',
-    answers: ['Type 1 SPDs', 'Type 2 SPDs', 'Type 3 SPDs', 'Type 4 SPDs'],
+      'Which SPD type is specifically designed to handle the energy of a direct lightning strike?',
+    answers: ['Type 1 SPD', 'Type 2 SPD', 'Type 3 SPD', 'Type 4 SPD'],
     correctAnswer: 0,
     explanation:
-      'Type 1 SPDs are designed for direct lightning protection, tested with 10/350μs current waveforms and capable of handling the high energy content of direct lightning strikes.',
+      'Type 1 SPDs are designed for partial direct lightning current, tested with the 10/350μs waveform and capable of handling the high energy of a direct strike.',
   },
   {
-    question: 'What is the maximum recommended total lead length for SPD connections?',
-    answers: ['0.25 metres', '0.5 metres', '1.0 metre', '1.5 metres'],
-    correctAnswer: 1,
+    question: 'What is the maximum recommended total connecting lead length for an SPD?',
+    answers: ['0.25 metres', '1.5 metres', '0.5 metres', '1.0 metre'],
+    correctAnswer: 2,
     explanation:
-      'SPD connecting leads should be kept as short as possible, ideally less than 0.5m total length (0.25m each way) to minimise inductance and maintain protection effectiveness.',
+      'SPD connecting leads should be as short as possible, ideally a total of 0.5m or less, to minimise added inductance that would raise the protective voltage level.',
   },
   {
     question: 'Which current waveform is used to test Type 2 SPDs?',
     answers: [
       '10/350μs impulse current',
-      '8/20μs impulse current',
+      'Combination wave 1.2/50μs – 8/20μs',
       '1.2/50μs voltage wave',
-      'Combination wave 1.2/50μs - 8/20μs',
+      '8/20μs impulse current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Type 2 SPDs are tested with 8/20μs impulse current waveforms, representing indirect lightning effects and switching surges in electrical installations.',
+      'Type 2 SPDs are tested with the 8/20μs impulse current waveform, representing indirect lightning effects and switching surges within an installation.',
   },
   {
     question:
-      'What is the minimum distance required between protection stages for proper SPD coordination?',
-    answers: ['5 metres', '10 metres', '15 metres', '20 metres'],
-    correctAnswer: 1,
+      'What is the minimum separation between SPD protection stages required for proper coordination (without decoupling)?',
+    answers: ['10 metres', '5 metres', '15 metres', '20 metres'],
+    correctAnswer: 0,
     explanation:
-      'A minimum distance of 10m is required between SPD protection stages to ensure proper energy coordination, unless decoupling inductors are used.',
+      'Around 10m of cable is needed between SPD stages for proper energy coordination, unless a decoupling inductor is fitted to provide the equivalent impedance.',
   },
   {
-    question: 'According to BS 7671, when is surge protection required for electrical circuits?',
+    question:
+      'BS 7671 bases the need for surge protection on the rated impulse withstand voltage of the equipment supplied. What is the Category II value for 230/400V equipment?',
     answers: [
-      'For all circuits regardless of equipment type',
-      'Only for outdoor installations',
-      'For circuits supplying equipment with impulse withstand voltage less than 2.5kV',
-      'Only in areas with high lightning activity',
+      '1.5kV',
+      '4.0kV',
+      '2.5kV',
+      '6.0kV',
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 requires surge protection for circuits supplying equipment with rated impulse withstand voltage less than 2.5kV, which includes most EV charging equipment.',
+      'Equipment in overvoltage Category II at 230/400V has a rated impulse withstand voltage of 2.5kV, the benchmark used when assessing the need for surge protection.',
   },
   {
-    question: 'What technology is typically used in Type 2 SPDs for EV charging applications?',
+    question: 'Which technology is most commonly used in Type 2 SPDs for EV charging applications?',
     answers: [
       'Spark gaps',
-      'Gas discharge tubes',
       'Metal oxide varistors (MOVs)',
+      'Gas discharge tubes',
       'Silicon avalanche diodes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Type 2 SPDs commonly use metal oxide varistor (MOV) technology, providing fast response times and appropriate energy handling for indirect lightning protection.',
+      'Type 2 SPDs commonly use metal oxide varistor (MOV) technology, giving fast response and suitable energy handling for indirect lightning and switching surges.',
   },
   {
     question:
       'Which additional protection is specifically important for EV charging control circuits?',
     answers: [
-      'DC surge protection only',
+      'DC surge protection of the supply only',
+      'Harmonic filtering on the AC supply',
       'Control pilot signal (CP/PP line) protection',
-      'Motor protection devices',
-      'Harmonic filters',
+      'Motor protection of the charger fan',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The control pilot and proximity pilot (CP/PP) signal lines manage safe charging communication, so they benefit from dedicated surge protection of these low-voltage circuits.',
+  },
+  {
+    question:
+      'What is a primary consideration when selecting SPDs for DC rapid charging stations?',
+    answers: [
+      'Only the reduced voltage of the DC side',
+      'Enhanced AC-side protection plus dedicated DC output surge protection',
+      'Lower current handling than for AC chargers',
+      'Simplified single-stage protection only',
     ],
     correctAnswer: 1,
     explanation:
-      'EV charging systems require specific protection for control pilot signals (CP/PP lines) which are essential for safe charging communication between vehicle and charger.',
+      'DC rapid chargers need enhanced AC-side protection for the higher power level and dedicated DC output surge protection for the high-voltage DC circuits.',
+  },
+  {
+    question: 'How should backup protection for an SPD normally be provided?',
+    answers: [
+      'A dedicated overcurrent device for each SPD',
+      'The same MCB shared with other final circuits',
+      'No backup overcurrent protection is needed',
+      'Protection shared with the lighting circuits',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Each SPD should have its own backup overcurrent device, not shared with other circuits, so a failed SPD can be isolated without losing other protection.',
   },
   {
     question:
-      'What is the primary consideration when selecting SPDs for DC rapid charging stations?',
+      'What must be considered about SPDs in relation to RCD selection for EV charging?',
     answers: [
-      'Lower voltage requirements only',
-      'Reduced current handling capability',
-      'Enhanced AC side protection and DC output surge protection',
-      'Simplified installation requirements',
+      'SPDs remove the need for an RCD',
+      'Only Type AC RCDs may be used alongside SPDs',
+      'The RCD should be bypassed where an SPD is fitted',
+      'SPD earth leakage characteristics must inform the RCD type chosen',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'DC rapid charging stations require both enhanced AC side protection due to higher power levels and specific DC output surge protection for the high-voltage DC circuits.',
-  },
-  {
-    question: 'How should SPD backup protection be provided?',
-    answers: [
-      'Using the same MCB as other circuits',
-      'No backup protection required',
-      'Dedicated MCB for each SPD',
-      'Shared protection with lighting circuits',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Each SPD should have dedicated MCB protection, not shared with other circuits, to ensure proper fault isolation and protection coordination.',
-  },
-  {
-    question:
-      'What is a key consideration when installing SPDs in relation to RCD protection for EV charging?',
-    answers: [
-      'SPDs eliminate the need for RCDs',
-      'Use only AC type RCDs with SPDs',
-      'SPD earth leakage characteristics must be considered in RCD selection',
-      'RCDs should be bypassed when SPDs are installed',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'SPDs can cause temporary earth leakage during operation, so their leakage characteristics must be considered when selecting RCD types (A or B) suitable for EV charging applications.',
+      'SPDs can briefly divert current to earth, so their leakage behaviour must be considered when selecting an RCD type (such as Type A or Type B) for EV charging.',
   },
 ];
 

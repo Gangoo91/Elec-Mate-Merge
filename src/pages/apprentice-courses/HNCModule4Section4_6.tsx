@@ -47,10 +47,10 @@ const quickCheckQuestions = [
     id: 'part-l-efficacy',
     question: 'What is the minimum luminaire efficacy required by Part L for general lighting?',
     options: [
-      '50 llm/W',
-      '70 llm/W',
-      '95 llm/W',
-      '120 llm/W',
+      '50 lm/W',
+      '70 lm/W',
+      '95 lm/W',
+      '120 lm/W',
     ],
     correctIndex: 2,
     explanation:
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     id: 'leni-definition',
     question: 'What does LENI measure in building performance?',
     options: [
-      'Maximum disconnection times for safety',
-      'Protective for safety, functional for operation',
-      'Usually significantly less than 100A due to diversity',
+      'The peak electrical demand of the lighting circuits',
+      'The average illuminance level achieved across a room',
+      'The colour rendering quality of the installed luminaires',
       'Annual lighting energy consumption per unit floor area',
     ],
     correctIndex: 3,
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the formula for calculating LENI?',
     options: [
-      'They must be CAT III or CAT IV rated with finger guards',
-      'To smooth out the pulsating DC into a near-steady DC voltage for the load.',
+      'LENI = Floor area / (Installed power × Annual hours)',
+      'LENI = Installed power × Floor area × Efficacy',
       'LENI = (Installed power × Annual hours × Controls factor) / Floor area',
-      'To continuously reassess risks as conditions change during the work',
+      'LENI = Annual hours / (Installed power × Controls factor)',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'What Part L requirement relates to lighting controls in spaces over 30m²?',
     options: [
-      'Comprehensive logging and diagnostic capabilities',
-      'Insulation monitoring device verification',
-      'Regular physical exercise and maintaining a routine',
+      'A minimum of two lighting circuits per room',
+      'Emergency lighting on every luminaire',
+      'Manual dimmer switches at every doorway',
       'Occupancy sensing and/or daylight dimming',
     ],
     correctAnswer: 3,
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'Why is colour rendering index (CRI) important when selecting energy efficient lighting?',
     options: [
-      'Dimming artificial lights proportionally to daylight contribution',
+      'Higher CRI always means higher luminaire efficacy',
       'Good CRI ensures visual quality despite lower illuminance',
-      'The speed of the rotating magnetic field',
-      'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
+      'CRI determines the annual operating hours used in LENI',
+      'CRI sets the maximum power factor of the LED driver',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of constant light output (CLO) control?',
     options: [
-      'Level 3 Diploma in Installing Electrotechnical Systems',
-      'To identify unsafe conditions that could make testing hazardous',
+      'Switching luminaires off when a space is unoccupied',
+      'Dimming luminaires in response to available daylight',
       'Compensating for lamp depreciation to save energy',
-      'Verify RCD operation time and trip current',
+      'Holding the colour temperature constant as lamps age',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: "What does 'parasitic power' refer to in lighting systems?",
     options: [
-      'Cross-linked polyethylene - high-temperature insulation',
-      'Loose connections or corroded terminals',
-      'Hot spots indicating high resistance joints or overloading',
+      'The power lost as heat in the LED chip itself',
+      'The peak inrush current when luminaires switch on',
+      'The reactive power drawn by a poor power factor',
       'Power consumed by controls, sensors and standby',
     ],
     correctAnswer: 3,
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What LED driver feature improves energy efficiency at reduced light levels?',
     options: [
-      'Incorrect OR logic instead of AND/NOT logic',
-      'Meets user needs and is practical',
+      'A higher rated output current than the load needs',
+      'A fixed output that cannot be dimmed at all',
       'High power factor at all dim levels',
-      '15-30 minutes, once or twice daily',
+      'A built-in step-down transformer on the mains side',
     ],
     correctAnswer: 2,
     explanation:

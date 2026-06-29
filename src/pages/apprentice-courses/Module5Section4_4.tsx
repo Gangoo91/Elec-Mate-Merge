@@ -107,10 +107,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is one cause of shortages?',
     options: [
-      'Uninterruptible supply (no-break)',
-      'Protect people and property',
+      'Ordering with a generous safety margin',
+      'Reviewing drawings thoroughly before ordering',
       'Underestimating requirements',
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended method',
+      'Maintaining a daily updated stock log',
     ],
     correctAnswer: 2,
     explanation:
@@ -142,11 +142,11 @@ const quizQuestions = [
     question: 'Why should offcuts be reused where possible?',
     options: [
       'To save storage space',
-      'To reduce waste and save costs',
       'To finish projects faster',
       'To impress clients',
+      'To reduce waste and save costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reusing suitable offcuts reduces waste and saves costs by maximizing material utilization.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What should a stock log be used for?',
     options: [
-      'Be tested by appropriate specialists',
-      'CDM 2007 replaced it with the CDM Co-ordinator',
+      'Recording the names of site visitors',
+      'Logging staff working hours for payroll',
       'Monitoring and updating material levels daily',
-      'A current source in parallel with a resistance',
+      'Tracking the location of company vehicles',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What type of area should materials be stored in?',
     options: [
-      'Equipment with variable frequency drives',
-      'Balance loads across all three phases',
-      'Motors and variable speed drives (VSDs)',
+      'Open, unsheltered ground near the site entrance',
+      'Any spare corner, regardless of conditions',
+      'A damp basement to keep materials cool',
       'Dry, secure, ventilated storage',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What is a benefit of holding buffer stock?',
     options: [
       'Prevents delays if deliveries are late',
-      'Fire-resistant cable (e.g., MICC, FP cables)',
-      'Financial Conduct Authority (FCA)',
-      'Reduce, Reuse, Recycle, Recover, Dispose',
+      'Eliminates the need to keep a stock log',
+      'Removes all material storage costs',
+      'Guarantees materials never need recycling',
     ],
     correctAnswer: 0,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'Who should be informed immediately if shortages occur?',
     options: [
-      'Detailed records with locations',
-      'AFDD presence/justification for each circuit',
+      'The building occupants or end client',
+      'Only the apprentice on site',
       'The site supervisor or project manager',
-      'Broken conductor, open circuit, or disconnection',
+      'No one, until the next weekly meeting',
     ],
     correctAnswer: 2,
     explanation:

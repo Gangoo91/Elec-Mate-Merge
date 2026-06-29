@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'The "day rate illusion" refers to:',
     options: [
-      'The fact that self-employed day rates are always lower than employed hourly rates',
       'The tendency to compare self-employed gross day rates against employed gross salaries without accounting for the hidden costs of self-employment',
+      'The fact that self-employed day rates are always lower than employed hourly rates',
       'The illusion that employed workers earn more because of their benefits',
       'The fact that day rates fluctuate throughout the year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "day rate illusion" describes the common error of comparing a self-employed gross day rate (e.g. &pound;280/day) directly against an employed gross salary (e.g. &pound;44,000/year) without accounting for the substantial hidden costs of self-employment. These hidden costs include: no paid holidays, no sick pay, no employer pension contributions, business insurances, van costs, admin time, accountancy fees, and the higher financial risk of self-employment. When these costs are properly accounted for, the apparent advantage of the higher day rate is often significantly reduced or even reversed.',
   },
@@ -97,11 +97,11 @@ const quizQuestions = [
       'A JIB Approved Electrician earns &pound;44,000 gross per year. With the full JIB benefits package (pension, insurances, holidays, allowances), the total package is worth approximately:',
     options: [
       '&pound;44,000 &mdash; the benefits are worth nothing',
-      '&pound;46,000&ndash;&pound;48,000',
       '&pound;53,000&ndash;&pound;58,000',
+      '&pound;46,000&ndash;&pound;48,000',
       '&pound;70,000&ndash;&pound;80,000',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The full JIB employment package typically adds 25&ndash;35% to the gross salary. For an Approved Electrician on &pound;44,000 gross, this brings the total package value to approximately &pound;53,000&ndash;&pound;58,000. The additional value comes from: employer NI contributions (&pound;4,200), EPID pension contributions (&pound;1,500&ndash;&pound;2,500), death-in-service benefit (value of equivalent insurance premium), income protection insurance (&pound;500&ndash;&pound;1,000 equivalent premium), paid annual leave (&pound;4,700 at the daily rate), travel allowances, and tool allowances. This is the figure that a self-employed day rate must exceed, after all business costs, to represent a genuine financial improvement.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       'Which of the following is NOT a hidden cost of self-employment that should be factored into a like-for-like comparison with employment?',
     options: [
       'Holiday pay provision &mdash; the lost earning capacity when taking unpaid leave',
-      'Income Tax &mdash; which is paid by both employed and self-employed individuals',
       'Employer pension contributions &mdash; which the self-employed must self-fund',
       'Professional indemnity insurance &mdash; which the employer provides in PAYE employment',
+      'Income Tax &mdash; which is paid by both employed and self-employed individuals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Income Tax is not a hidden cost of self-employment because it is paid by both employed and self-employed individuals (albeit at different effective rates). It is part of the comparison, not unique to one side. Holiday pay provision, employer pension contributions, and professional indemnity insurance are all genuine hidden costs because they are provided by the employer in a PAYE arrangement but must be self-funded by the self-employed individual. The like-for-like comparison should include all costs that are borne by one party but not the other.',
   },
@@ -132,8 +132,8 @@ const quizQuestions = [
     id: 5,
     question:
       'An employed electrician earns &pound;44,000 gross. After PAYE tax (&pound;6,286), employee NI (&pound;2,594), and a 5% pension contribution (&pound;2,200), their monthly take-home pay is approximately:',
-    options: ['&pound;3,667', '&pound;2,743', '&pound;2,200', '&pound;3,100'],
-    correctAnswer: 1,
+    options: ['&pound;2,743', '&pound;3,667', '&pound;2,200', '&pound;3,100'],
+    correctAnswer: 0,
     explanation:
       'Gross salary: &pound;44,000. Minus PAYE Income Tax: &pound;6,286. Minus employee NI: &pound;2,594. Minus employee pension contribution (5%): &pound;2,200. Net annual take-home: &pound;44,000 - &pound;6,286 - &pound;2,594 - &pound;2,200 = &pound;32,920. Monthly: &pound;32,920 / 12 = &pound;2,743. This is the amount that actually arrives in the employed electrician&rsquo;s bank account each month. Note that the employer is also paying an additional 3% pension contribution (&pound;1,320) and employer NI (&pound;4,200) on top of this &mdash; money that benefits the employee but does not appear on their payslip.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     id: 6,
     question:
       'A self-employed electrician working 220 days per year at &pound;280/day wants to take 28 days of annual leave, save 5% of earnings for a pension, and set aside 5 days for sickness. The effective number of productive earning days is:',
-    options: ['220 days', '192 days', '187 days', '200 days'],
-    correctAnswer: 2,
+    options: ['220 days', '187 days', '192 days', '200 days'],
+    correctAnswer: 1,
     explanation:
       '220 available working days minus 28 days annual leave minus 5 days sickness provision = 187 productive earning days. At &pound;280/day, this generates &pound;52,360 in gross income (not &pound;61,600 based on 220 days). The pension contribution (5% of &pound;52,360 = &pound;2,618) further reduces the available income. This is a more realistic picture of self-employed earning capacity. The employed electrician, by contrast, earns their &pound;44,000 regardless of holidays and sick days, and their pension is partially funded by the employer.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     options: [
       '&pound;220/day (&pound;44,000 / 200 days)',
       '&pound;275/day (&pound;55,000 / 200 days)',
-      '&pound;335/day ((&pound;55,000 + &pound;12,000) / 200 days)',
       '&pound;375/day ((&pound;55,000 + &pound;12,000 + risk margin) / 200 days)',
+      '&pound;335/day ((&pound;55,000 + &pound;12,000) / 200 days)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'To match the &pound;55,000 total package, the self-employed income must cover: the &pound;55,000 equivalent value PLUS the &pound;12,000 in business expenses that the employed person does not pay. Total required gross income: &pound;67,000. Divided by 200 productive days: &pound;335/day. This is the break-even figure &mdash; the point at which self-employment matches employment financially. To be genuinely better off, the rate would need to exceed this, ideally with a risk margin on top (option D at &pound;375/day would provide an approximate 12% risk margin). This calculation demonstrates why a &pound;250/day rate, which looks much higher than the employed equivalent, may actually represent a pay cut.',
+      'To match the &pound;55,000 total package, the self-employed income must cover: the &pound;55,000 equivalent value PLUS the &pound;12,000 in business expenses that the employed person does not pay. Total required gross income: &pound;67,000. Divided by 200 productive days: &pound;335/day. This is the break-even figure &mdash; the point at which self-employment matches employment financially. To be genuinely better off, the rate would need to exceed this, ideally with a risk margin on top (&pound;375/day would provide an approximate 12% risk margin). This calculation demonstrates why a &pound;250/day rate, which looks much higher than the employed equivalent, may actually represent a pay cut.',
   },
 ];
 

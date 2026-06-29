@@ -19,7 +19,7 @@ const quizQuestions: QuizQuestion[] = [
     options: [
       'Higher hourly rates',
       'Access to grant-funded projects',
-      'Exemption from building regulations',
+      'Discounted equipment from charger manufacturers',
       'Guaranteed work allocation',
     ],
     correctAnswer: 1,
@@ -43,20 +43,20 @@ const quizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'What type of business registration is typically required for OZEV approval?',
     options: [
-      'Limited company registration only',
-      'Sole trader registration',
       'Valid electrical contractor registration',
+      'Limited company registration only',
+      'Sole trader registration only',
       'Charity registration',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Valid electrical contractor registration with an appropriate trade body is required to demonstrate professional standing and competency in electrical installation work.',
   },
   {
     id: 4,
     question: 'How long does the typical OZEV approval process take?',
-    options: ['2-4 weeks', '4-6 weeks', '6-12 weeks', '3-6 months'],
-    correctAnswer: 2,
+    options: ['6-12 weeks', '2-4 weeks', '4-6 weeks', '3-6 months'],
+    correctAnswer: 0,
     explanation:
       'The OZEV approval process typically takes 6-12 weeks, depending on the completeness of the application and the time required for document review and assessment.',
   },
@@ -64,12 +64,12 @@ const quizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'What happens if an OZEV approved installer fails to maintain standards?',
     options: [
-      'Warning letter only',
-      'Temporary suspension',
       'Approval may be revoked',
-      'Financial penalty',
+      'A warning letter only',
+      'Temporary suspension only',
+      'A financial penalty only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'OZEV approval may be revoked if installers fail to maintain required standards, comply with obligations, or meet ongoing requirements, as this protects the integrity of grant schemes.',
   },

@@ -125,16 +125,16 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'A 15 kW motor with 90% efficiency runs at full load for 2000 hours per year. What is the annual energy cost at 20p/kWh?',
+      'A 15 kW motor with 90% efficiency runs at full load for 2000 hours per year. What is the annual energy cost at 18p/kWh?',
     options: [
       '3,000 GBP',
-      '3,333 GBP',
       '6,000 GBP',
+      '5,400 GBP',
       '2,700 GBP',
     ],
     correctAnswer: 1,
     explanation:
-      'Input power = Output / Efficiency = 15 / 0.90 = 16.67 kW. Annual energy = 16.67 x 2000 = 33,333 kWh. Annual cost = 33,333 x 0.20 = 6,667 GBP. Wait — let us recalculate: 16.67 kW x 2000 h = 33,340 kWh x 0.20 GBP = 6,668 GBP. Actually the correct answer is 3,333 GBP which would be at 10p/kWh. At 20p: the input is 16.67 kW for 2000 hours = 33,333 kWh at 0.20 = 6,667 GBP. The answer 3,333 GBP uses the output power directly: 15 x 2000 x 0.20/1.8. The point is: always use input power (output/efficiency) for energy cost calculations.',
+      'Always use INPUT power for cost. Input power = Output / Efficiency = 15 / 0.90 = 16.67 kW. Annual energy = 16.67 x 2000 = 33,333 kWh. Annual cost = 33,333 x 0.18 = 6,000 GBP. Using the 15 kW output directly would understate the cost, because the 10% lost as heat is still paid for.',
   },
   {
     id: 6,
@@ -168,9 +168,9 @@ const quizQuestions = [
       'During an energy audit, a maintenance technician identifies a motor running at 50% load for most of its operating time. What action should be recommended?',
     options: [
       'Consider replacing with a correctly sized motor or fitting a variable speed drive',
-      'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
-      'Typically degree-level qualification plus relevant experience',
-      'Can sustain at low currents below protective device thresholds',
+      'Increase the supply voltage to bring the motor up to full load',
+      'Leave it unchanged, as part-load running is always most efficient',
+      'Fit a larger motor to provide additional power headroom',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'What is the relationship between heat dissipation and cable current-carrying capacity?',
     options: [
-      'Corrective addresses existing problems; preventive stops potential problems',
+      'Heat dissipation has no effect on a cable current-carrying capacity',
       'Better heat dissipation allows higher current capacity because I²R losses can be removed more effectively',
-      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
-      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
+      'Poorer heat dissipation always allows a higher current to be carried',
+      'Current-carrying capacity depends only on the cable colour coding',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,22 +195,22 @@ const quizQuestions = [
     question:
       'A factory replaces ten 5.5 kW IE1 motors (88% efficient) with IE3 motors (92.6% efficient). The motors run 4000 hours per year at full load. What is the approximate annual energy saving?',
     options: [
-      '1,380 kWh',
-      '6,900 kWh',
-      '13,800 kWh',
+      '1,240 kWh',
+      '6,200 kWh',
+      '12,400 kWh',
       '27,500 kWh',
     ],
     correctAnswer: 2,
     explanation:
-      'IE1 input per motor: 5.5/0.88 = 6.25 kW. IE3 input per motor: 5.5/0.926 = 5.94 kW. Saving per motor: 6.25 - 5.94 = 0.31 kW. For 10 motors over 4000 hours: 0.31 x 10 x 4000 = 12,400 kWh. Closest answer is 13,800 kWh (the difference is due to rounding in the options). At 20p/kWh, this saves approximately 2,760 GBP per year.',
+      'IE1 input per motor: 5.5/0.88 = 6.25 kW. IE3 input per motor: 5.5/0.926 = 5.94 kW. Saving per motor: 6.25 - 5.94 = 0.31 kW. For 10 motors over 4000 hours: 0.31 x 10 x 4000 = 12,400 kWh. At 20p/kWh, this saves approximately 2,480 GBP per year.',
   },
   {
     id: 11,
     question: 'No-load losses in a transformer are also known as:',
     options: [
-      'BS 5266-1 and BS EN 50172',
-      'Track progress across all visits',
-      'Follow manufacturer instructions',
+      'Copper losses (I²R losses)',
+      'Friction and windage losses',
+      'Stray load losses',
       'Iron losses (core losses)',
     ],
     correctAnswer: 3,
@@ -223,9 +223,9 @@ const quizQuestions = [
       'Which instrument is most commonly used for energy monitoring on existing installations without disconnection?',
     options: [
       'Clamp-on power analyser with CTs and voltage leads',
-      'Output power divided by input power, multiplied by 100%',
-      'Hysteresis losses and eddy current losses in the core',
-      'Has approximately 5-15% lower energy losses',
+      'An insulation resistance tester (megohmmeter)',
+      'A low-resistance ohmmeter (micro-ohmmeter)',
+      'A proving unit and approved voltage indicator',
     ],
     correctAnswer: 0,
     explanation:

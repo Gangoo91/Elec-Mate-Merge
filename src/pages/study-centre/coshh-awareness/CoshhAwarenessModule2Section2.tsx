@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 6 of the COSHH Regulations 2002, when must an employer carry out a COSHH risk assessment?',
     options: [
-      'Only after a worker has reported ill health',
       'Before any work begins that is liable to expose employees to hazardous substances',
+      'Only after a worker has reported ill health',
       'Only when the HSE requests one during an inspection',
       'Once a year, during the annual health and safety review',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 6 requires the employer to carry out a suitable and sufficient assessment of the risk to health created by work which is liable to expose employees to hazardous substances BEFORE that work begins. The assessment must be in place before exposure occurs — it is not a reactive measure.',
   },
@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'competent-person',
     question: 'Who should carry out a COSHH risk assessment?',
     options: [
-      'Only a qualified chemist or occupational hygienist',
-      'Any employee who happens to be available on the day',
-      'A competent person with sufficient training, knowledge, and experience of the work and the substances involved',
-      'The HSE inspector assigned to the workplace',
+      'Only a fully qualified chemist or registered occupational hygienist',
+      'Any employee who happens to be available on site on the day',
+      'A competent person with training and experience of the work and substances',
+      'The HSE inspector assigned to oversee the workplace at the time',
     ],
     correctIndex: 2,
     explanation:
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'What standard must a COSHH risk assessment meet under Regulation 6?',
     options: [
-      'It must be approved by the HSE before work begins',
       "It must be 'suitable and sufficient'",
+      'It must be approved by the HSE before work begins',
       'It must be signed by a NEBOSH-qualified person',
       'It must be reviewed by an occupational hygienist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Regulation 6 requires the assessment to be 'suitable and sufficient' — meaning it must be appropriate for the work being assessed, cover all significant risks, identify who is at risk and how, and lead to practical decisions about control measures. It does not need HSE pre-approval or a specific qualification, although competence is required.",
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'An electrician uses PVC solvent cement for 20 minutes in a well-ventilated plant room. A colleague uses the same product for 4 hours in a small, unventilated cupboard. Can the same COSHH assessment cover both tasks?',
     options: [
-      'Yes — the substance is the same, so one assessment covers all uses',
-      'No — the exposure conditions are significantly different, so separate assessments (or separate sections within the same assessment) are needed',
-      'Yes — generic assessments always cover all situations',
-      'No — COSHH assessments cannot cover the same substance used in different locations',
+      'Yes — the substance is identical, so a single assessment covers every use of it',
+      'Yes — a generic assessment automatically covers all situations and locations',
+      'No — a COSHH assessment can never cover the same substance in two locations',
+      'No — the exposure conditions differ significantly, so separate assessments are needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Although the substance is the same, the risk to health is significantly different because the duration of exposure and the ventilation conditions differ substantially. The 4-hour task in an unventilated cupboard presents a much higher risk than the 20-minute task in a ventilated room. Either separate assessments or separate sections within the same assessment are needed to address the different exposure scenarios and their respective control measures.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'What does EH40 provide?',
     options: [
-      'A list of approved PPE manufacturers',
       'Workplace Exposure Limits (WELs) for hazardous substances',
+      'A list of approved PPE manufacturers',
       'COSHH assessment templates for download',
       'Training requirements for COSHH assessors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EH40 is the HSE publication 'Workplace Exposure Limits' — it lists the workplace exposure limits (WELs) for hundreds of hazardous substances. WELs are the maximum concentrations of airborne substances that workers may be exposed to over specified reference periods (usually 8-hour TWA and 15-minute STEL). It is an essential reference document for anyone carrying out COSHH assessments.",
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: 'When recording a COSHH assessment, which of the following must be included?',
     options: [
-      'Only the name of the substance and the date of the assessment',
-      'The significant findings, the groups of employees at risk, and the steps taken to prevent or adequately control exposure',
-      'A photograph of the substance packaging only',
-      'The name and qualifications of every employee in the building',
+      'Only the name of the substance involved and the date the assessment was done',
+      'The significant findings, the groups at risk, and the steps taken to control exposure',
+      'A clear photograph of the substance packaging and its hazard label only',
+      'The full name and qualifications of every employee working in the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,8 +166,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Which HSE tool helps small businesses carry out COSHH assessments without specialist knowledge?',
-    options: ['EH40', 'COSHH Essentials', 'The Asbestos Register', 'RIDDOR Online Reporting'],
-    correctAnswer: 1,
+    options: ['EH40', 'The Asbestos Register', 'COSHH Essentials', 'RIDDOR Online Reporting'],
+    correctAnswer: 2,
     explanation:
       'COSHH Essentials is a free, web-based tool provided by the HSE. It uses a simple step-by-step approach — asking about the substance, the task, and the conditions — to generate guidance on the level of control needed. It is designed for small and medium-sized businesses that may not have access to specialist occupational hygiene advice, though it should not replace a full assessment for complex or high-risk work.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'A COSHH assessment for flux fumes during soldering was last reviewed 14 months ago. No changes have occurred in the work, the substance, or the workplace. Is the assessment still valid?',
     options: [
-      'No — all COSHH assessments expire after exactly 12 months',
-      'Yes — there is no fixed expiry period, but the employer should review it soon as annual review is good practice',
-      'No — COSHH assessments must be renewed every 6 months',
-      'Yes — COSHH assessments never need reviewing unless the HSE requests it',
+      'No — every COSHH assessment expires automatically after exactly 12 months',
+      'No — a COSHH assessment must be renewed in full at least every 6 months',
+      'Yes — a COSHH assessment never needs reviewing unless the HSE requests it',
+      'Yes — there is no fixed expiry, but a review is now due as annual review is good practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'There is no fixed statutory expiry period for COSHH assessments. An assessment remains valid as long as the work, substances, and conditions have not changed and no new information has become available. However, annual review is widely regarded as good practice. At 14 months without review, the assessment is not automatically invalid, but the employer should arrange a review promptly to confirm it is still current.',
   },

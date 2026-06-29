@@ -9,8 +9,8 @@ const quizData: QuizQuestion[] = [
     id: 1,
     question:
       'What is the minimum insulation resistance required for a 400V EV charging circuit under BS 7671?',
-    options: ['0.5 MΩ', '1.0 MΩ', '1.5 MΩ', '2.0 MΩ'],
-    correctAnswer: 1,
+    options: ['1.0 MΩ', '0.5 MΩ', '1.5 MΩ', '2.0 MΩ'],
+    correctAnswer: 0,
     explanation:
       'BS 7671 requires a minimum of 1.0 MΩ insulation resistance for circuits operating at 400V nominal voltage.',
   },
@@ -18,22 +18,22 @@ const quizData: QuizQuestion[] = [
     id: 2,
     question:
       'During earth fault loop impedance testing for EV charging points, what is the maximum Zs value for a 32A Type B MCB?',
-    options: ['0.87Ω', '1.15Ω', '1.37Ω', '1.44Ω'],
+    options: ['0.87Ω', '1.15Ω', '1.44Ω', '1.37Ω'],
     correctAnswer: 3,
     explanation:
-      'For a 32A Type B MCB, the maximum Zs value is 1.44Ω to ensure disconnection within the required time.',
+      'Under BS 7671:2018+A4:2026 the maximum Zs for a 32A Type B MCB is 1.37Ω (using Cmin = 0.95), ensuring disconnection within the required time.',
   },
   {
     id: 3,
     question:
       'Which test method is preferred for earth fault loop impedance testing on EV charging circuits?',
     options: [
-      'Direct test method only',
       'No-trip test method',
+      'Direct test method only',
       'External fault loop test only',
-      'Any method is acceptable',
+      'Any method is equally acceptable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The no-trip test method is preferred for EV charging circuits to avoid nuisance tripping of RCDs and ensure circuit protection remains active.',
   },
@@ -41,12 +41,12 @@ const quizData: QuizQuestion[] = [
     id: 4,
     question: 'What additional verification is required for smart EV charging systems?',
     options: [
-      'Only electrical testing',
-      'Communication protocols and environmental monitoring',
+      'Only the standard electrical tests',
       'Visual inspection only',
-      'Standard electrical tests are sufficient',
+      'Communication protocols and environmental monitoring',
+      'No additional verification beyond a new installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smart EV charging systems require verification of communication protocols, environmental monitoring systems, and integration with grid management systems.',
   },
@@ -68,11 +68,11 @@ const quizData: QuizQuestion[] = [
     question: 'Emergency stop systems on EV charging points must be tested to ensure:',
     options: [
       'They stop charging within 5 seconds',
+      'They only reduce the charging current',
+      'They sound an audible alarm only',
       'They completely isolate the supply within the required time',
-      'They only reduce charging current',
-      'They sound an alarm only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Emergency stop systems must completely isolate the supply within the specified time to ensure user safety and compliance with BS 7671.',
   },
@@ -80,8 +80,8 @@ const quizData: QuizQuestion[] = [
     id: 7,
     question:
       'What is the required test voltage for insulation resistance testing on EV charging circuits rated at 230V?',
-    options: ['250V DC', '500V DC', '750V DC', '1000V DC'],
-    correctAnswer: 1,
+    options: ['250V DC', '750V DC', '500V DC', '1000V DC'],
+    correctAnswer: 2,
     explanation:
       'For circuits rated up to 500V including 230V, the test voltage should be 500V DC according to BS 7671.',
   },
@@ -89,12 +89,12 @@ const quizData: QuizQuestion[] = [
     id: 8,
     question: 'Pre-testing safety requirements for EV charging installations include:',
     options: [
-      'Visual inspection only',
       'Safe isolation, securing, and visual inspection',
+      'Visual inspection alone',
       'Just turning off the main switch',
-      'Testing with power on',
+      'Testing with the supply left energised',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pre-testing safety requires proper isolation, securing against re-energisation, and thorough visual inspection before any electrical testing begins.',
   },

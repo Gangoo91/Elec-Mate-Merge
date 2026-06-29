@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What constitutes a valid variation under most standard form contracts?',
     options: [
       'A written instruction from the contract administrator',
-      'Enter premises, examine, investigate, issue notices, prosecute',
-      'Interactive trend charts showing data over time',
-      'Site transformers and motor starters (autostart)',
+      'A verbal request from any member of the design team',
+      'A decision taken at a site progress meeting',
+      'An entry made by the contractor in the site diary',
     ],
     correctIndex: 0,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'valuation-hierarchy',
     question: 'What is the preferred order for valuing variations under JCT contracts?',
     options: [
-      'Diversity factors based on simultaneous use probability',
-      'Look for patterns — time, temperature, weather, specific loads',
+      'Daywork rates, then fair valuation, then contract rates',
+      'Fair valuation, then contract rates, then pro-rata rates',
       'Contract rates, then pro-rata rates, then fair valuation',
-      'The temperature swing inside is 30% of that outside',
+      'Whichever method gives the contractor the highest return',
     ],
     correctIndex: 2,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'notice-requirements',
     question: 'Why are contractual notice requirements critically important for claims?',
     options: [
+      'They are just administrative formalities with no legal weight',
       'Failure to comply may bar the claim entirely',
-      'They are just administrative formalities',
-      'They only apply to large claims',
-      'The employer can waive them retrospectively',
+      'They only apply to claims above a fixed monetary threshold',
+      'The employer can always waive them retrospectively',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Contractual notice requirements are conditions precedent to entitlement. Failure to give proper notice within the specified timeframe may completely bar a claim, regardless of its merit. Courts and adjudicators generally enforce these strictly.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'contemporaneous-records',
     question: 'Contemporaneous records are essential for claims because they:',
     options: [
+      'Remove the need to give any contractual notice of the claim',
+      'Allow the contractor to value the variation at daywork rates',
+      'Guarantee that the full sum claimed will always be awarded',
       'Provide objective evidence created at the time of events',
-      'Manual Handling Operations Regulations 1992 (as amended)',
-      'Current readings are always zero or \\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\'',
-      'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Contemporaneous records are created at or near the time of events and provide objective, credible evidence. Records created later from memory are less reliable and carry less weight in dispute resolution.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Under JCT DB 2016, who has authority to issue variation instructions?',
     options: [
-      "Hydrogen and oxygen (potentially explosive mixture)",
+      "The main contractor's site manager",
       "The employer or employer's representative",
-      "To avoid forgetting or mixing up readings",
-      "One switch position won't work",
+      "Any consultant appointed on the project",
+      "The contractor's quantity surveyor",
     ],
     correctAnswer: 1,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 3,
     question: 'When valuing variations using contract rates, which principle applies?',
     options: [
-      'Acceptable only when events are so intertwined they cannot be separated',
-      'To present claims and responses in a structured tabular format',
-      'Labour, materials, plant, with times and signatures',
-      'Rates apply only if work is identical in character and conditions',
+      'Rates may be freely increased to reflect the contractor’s desired margin',
+      'Rates always default to daywork once any change is instructed',
+      'Rates are fixed for the project and can never be adjusted',
+      'Rates apply only if work is similar in character and conditions',
     ],
     correctAnswer: 3,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'A daywork sheet must typically include:',
     options: [
       'Labour, materials, plant, with times and signatures',
-      'Rates apply only if work is identical in character and conditions',
-      'To convert an oral instruction into a written record',
-      'Affects productivity without necessarily extending time',
+      'Only the total lump sum agreed for the varied work',
+      'A copy of the original tender pricing document',
+      'The contractor’s projected profit on the whole contract',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Loss and expense claims under JCT require proof of:',
     options: [
-      'Acceptable only when events are so intertwined they cannot be separated',
-      'Rates apply only if work is identical in character and conditions',
+      'A fixed percentage uplift applied to every variation order',
+      'The contractor’s anticipated profit on future projects',
       'Direct loss and/or expense for which the contractor would not otherwise be reimbursed',
-      'To present claims and responses in a structured tabular format',
+      'Any general overhead the contractor wishes to recover',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: "The 'global claim' approach is generally:",
     options: [
-      'Rates apply only if work is identical in character and conditions',
-      'To convert an oral instruction into a written record',
-      'At contract rates, but the contractor may claim for changed conditions',
+      'The preferred method for presenting all construction claims',
+      'Mandatory under JCT contracts for any loss and expense claim',
+      'Always rejected outright by adjudicators in every case',
       'Acceptable only when events are so intertwined they cannot be separated',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: "What is the purpose of the 'Scott Schedule' in claims?",
     options: [
       'To present claims and responses in a structured tabular format',
-      'Unabsorbed head office overheads during delay',
-      'Rates apply only if work is identical in character and conditions',
-      'To convert an oral instruction into a written record',
+      'To calculate unabsorbed head office overheads during a delay',
+      'To record the daily labour, plant and materials on site',
+      'To convert a verbal instruction into a written record',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Disruption differs from prolongation in that disruption:',
     options: [
-      'Acceptable only when events are so intertwined they cannot be separated',
+      'Always extends the overall contract completion date',
       'Affects productivity without necessarily extending time',
-      'Rates apply only if work is identical in character and conditions',
-      'At contract rates, but the contractor may claim for changed conditions',
+      'Can only be claimed under NEC compensation events',
+      'Relates solely to head office overhead recovery',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'When installing mechanical services, a variation adding 20% more pipework would typically be valued:',
     options: [
-      'Direct loss and/or expense for which the contractor would not otherwise be reimbursed',
-      'To present claims and responses in a structured tabular format',
+      'Entirely on daywork, regardless of the contract rates available',
+      'By fair valuation only, ignoring the existing contract rates',
       'At contract rates, but the contractor may claim for changed conditions',
-      'To convert an oral instruction into a written record',
+      'At a fixed lump sum agreed before any work begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -232,9 +232,9 @@ const quizQuestions = [
     question: "The 'Emden formula' is used to calculate:",
     options: [
       'Unabsorbed head office overheads during delay',
-      'Affects productivity without necessarily extending time',
-      'To convert an oral instruction into a written record',
-      'Labour, materials, plant, with times and signatures',
+      'The fair valuation rate for a varied work item',
+      'The number of days of extension of time to award',
+      'The daywork percentage additions for labour and plant',
     ],
     correctAnswer: 0,
     explanation:

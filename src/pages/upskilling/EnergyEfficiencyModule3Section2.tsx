@@ -46,12 +46,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       id: 'qc1-m3s2',
       question: 'What is the primary advantage of SMETS2 meters over SMETS1 meters in the UK?',
       options: [
-        'They use less electricity',
         'They can switch suppliers without losing smart functionality',
-        'They are cheaper to install',
-        'They only record monthly readings',
+        'They consume less electricity in their own right',
+        'They are noticeably cheaper to install',
+        'They only ever record monthly readings',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'SMETS2 meters communicate via the Data Communications Company (DCC) network, allowing them to maintain smart functionality when switching energy suppliers, unlike SMETS1 meters which often went "dumb" after switching.',
     },
@@ -72,12 +72,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       id: 'qc3-m3s2',
       question: 'What does a Consumer Access Device (CAD) connect to for real-time energy data?',
       options: [
-        'The electricity grid directly',
         'The Home Area Network (HAN) of the smart meter',
-        'The internet via WiFi only',
-        'The distribution network operator',
+        'The electricity grid supply directly',
+        'The internet via the home WiFi router only',
+        'The local distribution network operator',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         "A CAD connects to the smart meter's Home Area Network (HAN) using ZigBee protocol, allowing real-time access to consumption data without going through the supplier or DCC.",
     },
@@ -88,100 +88,120 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
       question:
         'How often should manual meter readings be taken for effective energy monitoring in commercial premises?',
       options: [
-        'Once per year for billing purposes',
         'Weekly or monthly depending on consumption patterns',
-        'Only when the energy supplier requests',
-        'Every five years during meter replacement',
+        'Once per year purely for billing purposes',
+        'Only when the energy supplier specifically requests one',
+        'Every five years when the meter is replaced',
       ],
       correctAnswer: 'Weekly or monthly depending on consumption patterns',
+      explanation:
+        'For meaningful trend analysis, manual readings are typically taken weekly or monthly so that changes in consumption can be spotted and acted on, not just reconciled at year end.',
     },
     {
       question:
         'What is the standard data format for half-hourly electricity consumption data in the UK?',
       options: [
-        'JSON files with timestamps',
+        'JSON files with embedded timestamps',
+        'Simple CSV files with date and usage columns',
         'D0010 and D0036 industry data flows',
-        'Simple CSV with date and usage columns',
-        'PDF reports from suppliers',
+        'PDF consumption reports issued by suppliers',
       ],
       correctAnswer: 'D0010 and D0036 industry data flows',
+      explanation:
+        'Half-hourly electricity data is exchanged using standardised industry data flows such as D0010 and D0036, which is why third-party software is usually needed to parse them.',
     },
     {
       question: 'What information should be recorded alongside a manual meter reading?',
       options: [
-        'Only the kWh value displayed',
+        'Only the kWh value displayed on the meter',
+        'Just the date and the reading',
+        'Only the prevailing weather conditions',
         'Date, time, meter serial number, reading value, and any anomalies',
-        'Just the date and reading',
-        'The weather conditions only',
       ],
       correctAnswer: 'Date, time, meter serial number, reading value, and any anomalies',
+      explanation:
+        'Recording the date, time, meter serial number, the reading and any anomalies makes the data traceable and auditable, and lets faults or tampering be identified later.',
     },
     {
       question: 'Which protocol do SMETS2 smart meters use for the Home Area Network?',
       options: ['WiFi 6', 'Bluetooth Low Energy', 'ZigBee', 'LoRaWAN'],
       correctAnswer: 'ZigBee',
+      explanation:
+        'SMETS2 smart meters form their Home Area Network over ZigBee, which is what an in-home display or Consumer Access Device joins to read real-time consumption.',
     },
     {
       question:
         'What is the typical data resolution available from UK smart meters for domestic properties?',
       options: [
-        'Hourly readings only',
         'Half-hourly readings',
-        'Daily totals',
-        '15-minute intervals',
+        'Hourly readings only',
+        'Daily totals only',
+        '15-minute interval readings',
       ],
       correctAnswer: 'Half-hourly readings',
+      explanation:
+        'UK domestic smart meters typically make consumption available at half-hourly resolution, which is the granularity used for settlement and time-of-use analysis.',
     },
     {
       question: 'When validating energy data, what indicates a potential meter fault?',
       options: [
-        'Readings that increase over time',
+        'Readings that steadily increase over time',
+        'Higher usage during normal working hours',
+        'Expected seasonal variations in consumption',
         'Negative consumption values or sudden reading reversals',
-        'Higher usage during working hours',
-        'Seasonal variations in consumption',
       ],
       correctAnswer: 'Negative consumption values or sudden reading reversals',
+      explanation:
+        'A genuine cumulative meter reading should never go backwards, so negative consumption or sudden reversals point to a meter fault, data error or wiring problem.',
     },
     {
       question:
         'What is the recommended approach for sub-meter placement in a commercial building?',
       options: [
-        'One meter at the main incomer only',
         'Meters on each major load type and floor/zone',
-        'Random placement throughout the building',
-        'Only on lighting circuits',
+        'A single meter at the main incomer only',
+        'Meters only on circuits that are recharged to tenants',
+        'Meters on the lighting circuits only',
       ],
       correctAnswer: 'Meters on each major load type and floor/zone',
+      explanation:
+        'Placing sub-meters by major load type and by floor/zone lets consumption be attributed and benchmarked, which a single incomer meter or a lighting-only scheme cannot achieve.',
     },
     {
       question: 'How can Building Management System data complement electricity meter data?',
       options: [
         'BMS data is not relevant to energy analysis',
+        'It removes the need for electricity meters entirely',
         'It provides context like occupancy, temperatures, and equipment schedules',
-        'It replaces the need for electricity meters',
-        'It only monitors fire alarms',
+        'It only monitors the fire alarm system',
       ],
       correctAnswer: 'It provides context like occupancy, temperatures, and equipment schedules',
+      explanation:
+        'BMS data adds the operational context — occupancy, temperatures and plant schedules — that explains why metered energy use changed, rather than replacing the meters.',
     },
     {
       question: 'What is the Data Communications Company (DCC) role in UK smart metering?',
       options: [
-        'Manufacturing smart meters',
+        'Manufacturing the smart meters themselves',
+        'Setting national electricity prices',
+        'Physically installing meters in homes',
         'Providing the secure network linking smart meters to energy suppliers',
-        'Setting electricity prices',
-        'Installing meters in homes',
       ],
       correctAnswer: 'Providing the secure network linking smart meters to energy suppliers',
+      explanation:
+        'The Data Communications Company (DCC) runs the secure national network that connects SMETS2 meters to suppliers and authorised parties; it does not make, fit or price meters.',
     },
     {
       question: 'Which data cleaning technique helps identify outliers in energy consumption data?',
       options: [
-        'Deleting all data and starting fresh',
         'Statistical analysis using standard deviation and percentile methods',
-        'Ignoring any unusual values',
-        'Averaging all readings to a single value',
+        'Deleting all the data and starting again from scratch',
+        'Ignoring any values that look unusual',
+        'Averaging every reading down to a single value',
       ],
       correctAnswer: 'Statistical analysis using standard deviation and percentile methods',
+      explanation:
+        'Outliers are best found with statistical techniques such as standard-deviation and percentile thresholds, which flag suspect points objectively rather than discarding or hiding data.',
     },
   ];
 

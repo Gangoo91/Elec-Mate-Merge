@@ -44,42 +44,42 @@ const checks = [
     question:
       "What does MHSWR 1999 Reg 5 (Health and Safety arrangements) actually require?",
     options: [
-      "That every employer makes and gives effect to such arrangements as are appropriate, having regard to the nature of his activities and the size of his undertaking, for the effective planning, organisation, control, monitoring and review of the preventive and protective measures. Where there are five or more employees these arrangements must be recorded.",
-      "A through G cover non-insulation install methods (clipped, in conduit, in trunking, in cable tray, buried, free air); 100–103 cover the cases where the cable is in thermal insulation. The two families exist because in-insulation derating is built into the tabulated value rather than applied as a separate Ci.",
-      "Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme",
-      "Explicit consent, given freely, in writing, in advance — separate from the consent to do the work. The customer must be able to refuse without it affecting the work, and to withdraw consent later. Legitimate interest is sometimes used but is harder to defend for marketing because the customer's reasonable expectation is that you photograph for the job, not for advertising.",
+      "Effective planning, organisation, control, monitoring and review of the preventive and protective measures — recorded where there are five or more employees.",
+      "That every employer carry out a risk assessment before any work begins and record only the hazards that cannot be eliminated entirely.",
+      "That every employer provide and maintain personal protective equipment free of charge to all employees and any visitors to site.",
+      "That every employer notify the HSE of any project lasting more than thirty days before construction work starts.",
     ],
     correctIndex: 0,
     explanation:
-      "Reg 5 is the operational backbone — Reg 3 says 'do the assessment'; Reg 5 says 'now actually run the system that delivers the controls'. In a real firm, Reg 5 manifests as the H&S management system, the toolbox talks, the near-miss reporting, the audit cycle. At L3 you start to be visible inside Reg 5 — your sign-off contributes to it.",
+      "Reg 5 requires the employer to make and give effect to such arrangements as are appropriate to the nature and size of the undertaking for the planning, organisation, control, monitoring and review of the preventive and protective measures. Reg 3 says 'do the assessment'; Reg 5 says 'now run the system that delivers the controls' — the H&S management system, toolbox talks, near-miss reporting, audit cycle. At L3 you start to be visible inside Reg 5; your sign-off contributes to it.",
   },
   {
     id: 'l3-m1-s1-sub3-cdm-contractor',
     question:
       "You're an L3 apprentice running a small two-day commercial socket installation job for a high-street retail client. No principal contractor is appointed. Are you a CDM 2015 'Contractor'?",
     options: [
-      "NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm's ability to trade collapses.",
-      "Potentially yes. CDM 2015 Reg 2 defines a 'contractor' as any person (including a company) who in the course or furtherance of a business carries out, manages or controls construction work. If your firm is the only one carrying out construction work for the client, your firm is the contractor. As the operative on site you carry the Reg 8 (general worker) and Reg 15 (cooperation) duties, plus your firm carries Reg 9 (contractor duties — plan, manage, monitor). Contractor status is a function of the role, not the title.",
-      "Compliance with the Building Regulations 2010 — specifically Approved Document P (Electrical Safety — Dwellings) which references BS 7671. The inspector is checking that the work was carried out by a competent person (or has been inspected and certified by a third party) and that it complies with BS 7671. They'll also check related Approved Documents (B for fire, M for accessibility, L for energy where relevant).",
-      "They look similar on the roof but do completely different jobs. PV converts sunlight into DC electricity that an inverter turns into AC for the property and the grid. Solar thermal absorbs sunlight as heat and uses it to preheat domestic hot water (DHW) via a heat exchanger in a twin-coil cylinder. PV is electricity-out, governed by BS 7671 Section 712 + MCS MIS 3002. Solar thermal is heat-out, governed by Building Regs Part L + MCS MIS 3001. PV has overtaken solar thermal in the UK because PV electricity now runs the immersion or heat pump that heats the water — one collector, two jobs.",
+      "No — CDM 2015 only applies to projects over £50,000 in value or lasting more than thirty days, so a two-day job falls outside it entirely.",
+      "Potentially yes — if your firm is the one carrying out the construction work, your firm is the contractor and you carry the worker duties.",
+      "No — only the client can be a contractor under CDM; the firm doing the work is always classed as a worker.",
+      "No — CDM 2015 applies to new-build construction only, so a socket installation in an existing shop is excluded.",
     ],
     correctIndex: 1,
     explanation:
-      "CDM 2015 covers any 'construction work' — install, alteration, refurbishment, demolition. The £50k threshold doesn't exist. The trap is assuming CDM is 'big-site stuff' — a two-day socket install in a retail shop is construction work and CDM applies. The L2-to-L3 shift is realising your firm becomes the Contractor by default on small jobs, and your supervisor (and increasingly you) carry the Reg 9 duties.",
+      "CDM 2015 defines a 'contractor' as any person (including a company) who in the course of a business carries out, manages or controls construction work. If your firm is the only one doing the work, your firm is the contractor (Reg 9 — plan, manage, monitor) and you as the operative carry the worker/cooperation duties (Reg 15). CDM covers any construction work — install, alteration, refurbishment, demolition; the £50k threshold doesn't exist. Contractor status is a function of the role, not the title. The L2-to-L3 shift is realising your firm becomes the Contractor by default on small jobs, and increasingly you carry the Reg 9 duties on its behalf.",
   },
   {
     id: 'l3-m1-s1-sub3-mhswr-r3',
     question:
       "Under MHSWR Reg 3, who must the risk assessment cover?",
     options: [
-      "As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared",
-      "Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber's work easier while solving the cable routing problem, and offering to help with the adjustment",
-      "(a) Employees while at work; AND (b) persons not in the employer's employment but who may be affected by the work. So it covers your apprentice mate, your customer, the customer's family, the public passing the work area, and any other trades on site.",
-      "Regular inspection and testing to BS 7671 (every 5 years for commercial premises), avoiding overloaded circuits, maintaining PAT regimes, using correct fuse/MCB ratings, considering AFDDs in high-risk locations, and ensuring cable installation complies with current standards",
+      "Only the employer's own employees while they are physically on site; anyone else affected is covered by separate legislation.",
+      "Only members of the public; employees are assumed to be protected by their training and so fall outside the risk assessment.",
+      "Both employees at work AND persons not in the employer's employment who may be affected by the work.",
+      "Only those persons named on the construction phase plan; anyone not listed is the principal contractor's responsibility.",
     ],
     correctIndex: 2,
     explanation:
-      "Reg 3(1) explicitly covers both employees AND non-employees affected by the work — the same scope as HASAWA s.2 + s.3 combined. The 'suitable and sufficient' qualifier is the technical bar. The 5+ employees recording threshold (Reg 3(6)) is the same threshold HASAWA s.2 uses for the written safety policy.",
+      "Reg 3(1) explicitly covers both employees AND non-employees affected by the work — your apprentice mate, the customer, the customer's family, the public passing the work area, any other trades on site. Same scope as HASAWA s.2 + s.3 combined. The 'suitable and sufficient' qualifier is the technical bar. The 5+ employees recording threshold (Reg 3(6)) is the same threshold HASAWA s.2 uses for the written safety policy.",
   },
 ];
 
@@ -88,106 +88,106 @@ const quizQuestions = [
     id: 1,
     question: "Why is MHSWR 1999 Reg 3 the foundation of the modern UK risk-assessment regime?",
     options: [
-      "Micro-expressions reveal genuine emotions that a person may be trying to conceal, providing empathic individuals with additional emotional data. Recognising a flash of fear or contempt that someone is hiding can help you respond to their actual emotional state rather than just their words",
-      "Because it requires every employer (and self-employed person) to make a 'suitable and sufficient' assessment of the risks to employees and to non-employees affected by the work, AND to record the significant findings where there are 5+ employees. This is the legal source of every risk assessment, RAMS, dynamic assessment and toolbox talk.",
-      "The plan must rely entirely on self-rescue and on-site assisted rescue by trained personnel with rescue equipment, a satellite communication device should be provided, and the nearest emergency services response time must be factored into planning",
-      "Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.",
+      "Because it sets the maximum penalties a court may impose for failing to carry out a workplace risk assessment.",
+      "Because it requires every employer to make a 'suitable and sufficient' assessment of the risks to employees and non-employees, recorded where there are 5+ employees.",
+      "Because it was the first regulation to ban live working entirely, replacing all earlier electrical safety rules.",
+      "Because it transfers the duty to assess risk from the employer onto the individual worker on every job.",
     ],
     correctAnswer: 1,
     explanation:
-      "Remember from L2 — Reg 3 is the risk-assessment hook. At L3 the depth: 'suitable and sufficient' is a legal test, not a corporate phrase. After an incident the inspector reads the assessment and judges whether it was 'suitable and sufficient' against the actual hazards present. Templates and copy-paste don't satisfy it.",
+      "Reg 3 (which also binds the self-employed) is the legal source of every risk assessment, RAMS, dynamic assessment and toolbox talk. 'Suitable and sufficient' is a legal test, not a corporate phrase — after an incident the inspector reads the assessment and judges it against the actual hazards present. Templates and copy-paste don't satisfy it.",
   },
   {
     id: 2,
     question: "What does MHSWR Reg 5 (Health and safety arrangements) add beyond Reg 3?",
     options: [
-      "Zs = Ze + (R1 + R2 × temperature multiplier), where Ze is the declared external earth fault loop impedance, R1 is the line conductor resistance, R2 is the CPC resistance, and the multiplier (typically 1.20 for 70 °C thermoplastic) brings the cold cable resistance up to operating temperature.",
-      "The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first",
-      "It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies.",
-      "Yes — Building Regulations Part P. New circuits and CU replacements in dwellings are notifiable. The handyman should have either been on a competent person scheme (self-certifying) or notified Local Authority Building Control before starting. Safe work doesn't excuse the notification breach.",
+      "It sets the qualifications a person must hold before they can be appointed as a competent person under the regulations.",
+      "It requires the risk assessment to be reviewed and reissued every twelve months regardless of whether anything has changed.",
+      "It requires effective planning, organisation, control, monitoring and review of the preventive measures — running the management system, not just the assessment.",
+      "It extends the risk assessment duty to cover members of the public for the first time, which Reg 3 did not.",
     ],
     correctAnswer: 2,
     explanation:
-      "Reg 5 is what an HSE inspector audits during a 'systems' visit — not just the paper, but the cycle of planning, doing, checking and reviewing. The 'POCMR' acronym (Plan, Organise, Control, Monitor, Review) maps directly to ISO 45001 and HSG65.",
+      "Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies. Reg 5 is what an HSE inspector audits during a 'systems' visit — not just the paper, but the cycle of planning, doing, checking and reviewing. The POCMR acronym (Plan, Organise, Control, Monitor, Review) maps directly to ISO 45001 and HSG65.",
   },
   {
     id: 3,
     question: "What does MHSWR Reg 7 require?",
     options: [
-      "Cross — the connection is not electrically and mechanically sound (Reg 542.4.2). Comment: corrosion at MET connection. Action: clean, retighten with anti-corrosion compound, retest continuity, recommend regular re-inspection.",
-      "Per Reg 544.2.1 — conductance not less than the smaller protective conductor connected to the exposed-conductive-parts. If the smaller CPC is e.g. 1.5 mm², the supplementary bond can be 1.5 mm² provided it has equivalent mechanical protection.",
-      "Hand the Schedule of Inspections to the supervisor for review, fix the ✗ item, decide whether to record the two LIM items as observations on the EIC or revisit them, then proceed to Section 6 dead testing.",
-      "That every employer appoint one or more competent persons to assist them in undertaking the measures needed to comply with the requirements and prohibitions imposed on them by the relevant statutory provisions. Often this is a designated H&S manager or external consultant.",
+      "That every employer provide free health surveillance to all employees exposed to electrical hazards at least once a year.",
+      "That every employer display the current employer's liability insurance certificate prominently at the workplace.",
+      "That every employer report all dangerous occurrences to the HSE within fifteen days of becoming aware of them.",
+      "That every employer appoint one or more competent persons to assist in complying with the statutory health and safety requirements.",
     ],
     correctAnswer: 3,
     explanation:
-      "Reg 7 is the 'competent person' regulation — every employer must have someone with the technical know-how to advise them on H&S. In a small electrical firm this is usually the Qualified Supervisor or the JIB-graded contracts manager.",
+      "Reg 7 is the 'competent person' regulation — every employer must appoint one or more people with the technical know-how to assist them in undertaking the measures needed to comply with their statutory duties. Often this is a designated H&S manager or external consultant; in a small electrical firm it is usually the Qualified Supervisor or the JIB-graded contracts manager.",
   },
   {
     id: 4,
     question: "What does MHSWR Reg 14 place on the employee?",
     options: [
-      "(a) To use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided in accordance with any training in the use of that equipment and the instructions respecting that use; AND (b) to inform the employer of any work situation which a person with the training and instruction given to them would reasonably consider represented a serious and immediate danger to health and safety, AND of any matter which a person with the training given would reasonably consider represented a shortcoming in the employer's protection arrangements.",
-      "Three layers. (1) Confirm the circuit is fully isolated AND proved dead with a separate two-pole tester — the MFT is a tester, not a prover. (2) Confirm there are no electronic loads on the circuit (LED drivers, presence sensors, dimmer modules) that 500 V will damage; if there are, disconnect them or test at 250 V on the MFT. (3) Confirm no parallel paths back to other circuits via shared neutrals; a 500 V test current finds those paths and can damage equipment on the OTHER circuit. The IR test is one of the highest-energy tests on the MFT and the rules around it are layered for a reason.",
-      "Reg 4(2) puts the duty on every employer and on every employee — and Reg 16 on every person working with electrical systems. For the L3 apprentice doing fault diagnosis: (1) the system you're working on must be assessed for its 'as-found' safety BEFORE work starts (visual inspection of CU, supply, bonding, signs of damage); (2) any departures from safe construction must be recorded and not made worse by your work; (3) when you correct the fault, the corrected system must satisfy Reg 4 — i.e. you don't leave the installation in a worse state than you found it; (4) any defect that you can't fix safely is escalated for further work or for advisory documentation to the customer.",
-      "Header (your business name, address, VAT number if registered, contact details), customer details (name, address), invoice number (sequential), invoice date and payment due date, work description (line items: labour days/hours, materials line items, any extras), subtotal, VAT (if applicable, 20%), total, payment terms (e.g. 'Net 30'), payment methods (BACS details, cheque). Invoices over £250 must include a statement of how to complain (Consumer Rights Act 2015 for domestic).",
+      "To use equipment and safety devices in line with the training and instruction given, and to report serious dangers and shortcomings in the employer's arrangements.",
+      "A duty to provide their own personal protective equipment and to keep it maintained at their own expense throughout their employment.",
+      "A duty to carry out a written risk assessment for every task before starting, and to record it whether or not the employer requires it.",
+      "A duty to supervise any less experienced workers on site and to take legal responsibility for their conduct under the regulations.",
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 14 is the employee's MHSWR duty — sister to HASAWA s.7 and EAWR Reg 3(2). The reporting duty (limb b) is the legal basis for raising near-misses and shortcomings — and ERA 1996 s.44 protects you from detriment for doing so.",
+      "Reg 14 has two limbs: (a) use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device in accordance with the training and instruction given; and (b) inform the employer of any situation a trained person would reasonably consider a serious and immediate danger, and of any shortcoming in the employer's protection arrangements. It is the employee's MHSWR duty — sister to HASAWA s.7 and EAWR Reg 3(2). The reporting duty (limb b) is the legal basis for raising near-misses; ERA 1996 s.44 protects you from detriment for doing so.",
   },
   {
     id: 5,
     question: "Under CDM 2015, what's the key threshold for a 'notifiable' project?",
     options: [
-      "MCS handles the technical certification. HIES (Home Insulation and Energy Systems Contractors Scheme) and RECC (Renewable Energy Consumer Code) handle the consumer-protection side — installer-customer contracts, deposit protection, dispute resolution, complaints handling. MCS-registered installers must also be members of one of these consumer codes. They're complementary regulatory layers.",
-      "Construction work expected to (a) last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR (b) exceed 500 person-days. The client must notify the HSE via Form F10 before the work starts. CDM still applies to non-notifiable projects — only the F10 notification differs.",
-      "All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability",
-      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
+      "Any construction work where the contract value exceeds £50,000, regardless of duration or the number of workers on site.",
+      "Work expected to last longer than 30 working days with more than 20 workers at once, OR to exceed 500 person-days — notified to the HSE on Form F10.",
+      "Any project on which more than two trades are present at any time, irrespective of how long the work takes.",
+      "Any construction work carried out in an occupied dwelling, because the presence of residents always triggers notification.",
     ],
     correctAnswer: 1,
     explanation:
-      "Notifiability triggers the F10. CDM duties apply regardless — Reg 4 (client), Reg 8 (general duties), Reg 9 (contractor duties), Reg 13 (principal contractor on multi-contractor projects), Reg 15 (worker duties). A small one-day job is still a 'project' and CDM applies; only the F10 falls away.",
+      "The client must notify the HSE via Form F10 before the work starts. CDM still applies to non-notifiable projects — only the F10 notification differs. The duties apply regardless: Reg 4 (client), Reg 8 (general duties), Reg 9 (contractor duties), Reg 13 (principal contractor on multi-contractor projects), Reg 15 (worker duties). A small one-day job is still a 'project' and CDM applies; only the F10 falls away.",
   },
   {
     id: 6,
     question: "Under CDM 2015 Reg 9, what are a contractor's main duties?",
     options: [
-      "CPS-registered firms can self-certify notifiable Part P work and issue compliance certificates direct to the Local Authority on the homeowner's behalf. The LABC route requires a Building Notice or Building Regulations application before work starts, plus an LABC inspection during/after work — typically £150-300 per job and several weeks of LABC scheduling delay. Self-certification removes the cost and the delay.",
-      "A formal written authorisation that defines the isolation, the work to be done, the personnel authorised, the time period, and the sign-off conditions. Used for high-hazard or complex isolations (multiple sources, large industrial sites, safety-critical systems). Issued by the issuing authority; signed-on by the operative; signed-off when complete and safe to re-energise.",
-      "Plan, manage and monitor construction work carried out either by the contractor or by workers under their control, to ensure that, so far as reasonably practicable, it is carried out without risks to health or safety. Includes complying with any directions of the principal designer / principal contractor and applying the general principles of prevention.",
-      "Operating temperature — typically 70 °C for thermoplastic-insulated cable. The values apply when the cable is fully loaded and warm. Measured Zs is at ambient (cool) conductor temperature; the standard correction is to require measured Zs ≤ 0.8 × table Zs to allow for the resistance increase as the cable warms in service.",
+      "Notify the HSE before every job using Form F10, regardless of the project's size or duration.",
+      "Prepare the health and safety file for the building and hand it to the client at the end of the project.",
+      "Plan, manage and monitor construction work by the contractor or workers under their control so it is carried out without risk so far as reasonably practicable.",
+      "Appoint the principal designer and principal contractor on every project, even where only one contractor is involved.",
     ],
     correctAnswer: 2,
     explanation:
-      "Reg 9 is the contractor's planning and oversight duty. The L2-to-L3 step: at L2 you were a 'worker' under Reg 15. At L3 your firm (and increasingly you, as you supervise junior trades) sit inside Reg 9.",
+      "Reg 9 is the contractor's planning and oversight duty — it also requires complying with any directions of the principal designer / principal contractor and applying the general principles of prevention. The L2-to-L3 step: at L2 you were a 'worker' under Reg 15; at L3 your firm (and increasingly you, as you supervise junior trades) sit inside Reg 9.",
   },
   {
     id: 7,
     question: "Under CDM 2015 Reg 15, what duty does a worker owe?",
     options: [
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
-      "The Building Regulations 2010 (England) — Part P specifically deals with electrical safety in dwellings. Part P sits alongside Part A (structural), Part B (fire safety), Part J (combustion appliances), Part L (energy efficiency), Part M (accessibility) and others. The Approved Documents (e.g. AD-P) provide guidance on how to comply with the corresponding Part of the Building Regulations.",
-      "On any multi-discipline project of meaningful size, BIM is how electrical coordinates with structural, mechanical, architectural and fire engineering disciplines. The L3 designer who cannot read or contribute to a BIM model is locked out of a growing share of commercial, public sector and HRRB work where BIM is the procurement default.",
-      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
+      "To plan, manage and monitor all construction work on site, the same duty that Reg 9 places on the contractor.",
+      "To appoint a competent principal designer at the outset of the project and confirm their competence in writing.",
+      "To prepare and keep the construction phase plan up to date for the duration of the project.",
+      "To co-operate with the others performing CDM duties, report anything likely to endanger health or safety, and comply with CDM.",
     ],
     correctAnswer: 3,
     explanation:
-      "Reg 15 is the personal duty for everyone on a CDM site — sister duty to HASAWA s.7. Co-operation includes attending site induction, following site rules, raising near-misses through the contractor's reporting route. Knowing Reg 15 by name lets you push back on 'just crack on' instructions with regulatory authority.",
+      "Reg 15 requires the worker to co-operate with the client, principal designer, principal contractor, contractor and any other person performing a CDM duty; to report to the principal contractor (or contractor where there is none) anything likely to endanger their own or another's health or safety; and to comply with CDM. It is the personal duty for everyone on a CDM site — sister to HASAWA s.7. Co-operation includes attending site induction, following site rules, raising near-misses. Knowing Reg 15 by name lets you push back on 'just crack on' with regulatory authority.",
   },
   {
     id: 8,
     question:
       "What's the L2-to-L3 conceptual shift in how CDM 2015 applies to you?",
     options: [
-      "At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be 'the Contractor' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm's representative) is the planning-duty step.",
-      "Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment",
-      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
-      "Stop. Either fetch the hi-vis from the van, borrow a spare from the site office (most large sites keep loaners), or step off site until properly equipped. Working without required PPE is a breach of HASAWA s.7 (failure to co-operate with the employer's safety arrangements) AND a breach of CDM 2015 Reg 15 (worker's duties). It's also a fast way to get sent home by the principal contractor and recorded against the firm's safety performance.",
+      "You move from Reg 15 (worker) towards carrying weight inside Reg 9 (contractor) as you run small jobs and act as the firm's representative.",
+      "At L3 CDM 2015 stops applying to you, because the regulations only bind labourers and L2 apprentices on a site.",
+      "At L3 you automatically become the principal contractor on every job, taking on Reg 13 duties regardless of the project size.",
+      "At L3 the worker duties under Reg 15 no longer apply, because you are now expected to plan rather than carry out the work.",
     ],
     correctAnswer: 0,
     explanation:
-      "The L3 step is moving from 'someone else plans, I just do' to 'I'm starting to carry the planning duty too'. Reg 9 contractor duties are about the system, not just the task. Pre-task briefings, dynamic risk assessments, near-miss reporting upwards — all sit inside Reg 9.",
+      "At L2 you sat firmly inside Reg 15 (worker). At L3 you may run a small job alone, be the senior trade on site, or have your firm be 'the Contractor' for a domestic job where the homeowner is the client. The step is moving from 'someone else plans, I just do' to 'I'm starting to carry the planning duty too'. Reg 9 contractor duties are about the system, not just the task — pre-task briefings, dynamic risk assessments, near-miss reporting upwards all sit inside Reg 9.",
   },
 ];
 

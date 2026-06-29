@@ -12,14 +12,14 @@ export const certificationPurposeQuizData: QuizQuestion[] = [
     question:
       'Under which regulation is there a legal duty to maintain electrical systems to prevent danger?',
     options: [
-      'Electrical Installation Certificate',
+      'BS 7671:2018+A2:2022 Wiring Regulations',
       'Electricity at Work Regulations 1989',
-      'For the life of the electrical installation',
-      'City & Guilds 2391 Inspection and Testing',
+      'Building Regulations 2010, Part P',
+      'Health and Safety at Work etc. Act 1974',
     ],
     correctAnswer: 1,
     explanation:
-      'The Electricity at Work Regulations 1989, specifically Regulation 4(2), places a legal duty on duty holders to maintain electrical systems in a safe condition to prevent danger.',
+      'The Electricity at Work Regulations 1989, specifically Regulation 4(2), places a legal duty on duty holders to maintain electrical systems in a safe condition to prevent danger. BS 7671 is a non-statutory standard and Part P covers building work, not ongoing maintenance.',
   },
   {
     id: 2,
@@ -61,16 +61,16 @@ export const certificationPurposeQuizData: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Under the Housing Act 2004 and associated regulations, electrical installations in private rental properties in England must be inspected every 5 years by a qualified electrician.',
+      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, electrical installations in private rental properties in England must be inspected and tested at least every 5 years by a qualified person.',
   },
   {
     id: 5,
     question: 'Who accepts responsibility when signing an Electrical Installation Certificate?',
     options: [
-      'Electrical Installation Certificate or Minor Works Certificate',
+      'Only the client who ordered and paid for the work',
       'All parties who sign accept responsibility for their respective roles',
-      'When work is performed by registered competent person scheme members',
-      'Potential criminal liability and civil responsibility',
+      'Only the competent person scheme operator overseeing the contractor',
+      'Solely the inspector and tester who completes the final verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,9 +107,9 @@ export const certificationPurposeQuizData: QuizQuestion[] = [
     question: 'What is the consequence of signing an inaccurate electrical certificate?',
     options: [
       'Potential criminal liability and civil responsibility',
-      'Electrical Installation Certificate or Minor Works Certificate',
-      'When work is performed by registered competent person scheme members',
-      'Immediately make safe and do not energise until repaired',
+      'A written warning from the competent person scheme only',
+      'The certificate is simply voided with no further consequence',
+      'Liability passes entirely to the client who commissioned the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -133,10 +133,10 @@ export const certificationPurposeQuizData: QuizQuestion[] = [
     id: 10,
     question: 'How long should electrical certificates be retained?',
     options: [
-      'Electricity at Work Regulations 1989',
-      'Potential criminal liability and civil responsibility',
+      'For a minimum of 2 years after issue',
+      'Until the next periodic inspection is completed',
       'For the life of the electrical installation',
-      'City & Guilds 2391 Inspection and Testing',
+      'For 6 years to match statutory limitation periods',
     ],
     correctAnswer: 2,
     explanation:

@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'You are about to test a 30 mA Type A RCBO. Which order do you run the three trip-time tests, and why does the order matter?',
     options: [
-      '×5 first, then ×1, then ×0.5 — fast-clear the device first.',
-      '×0.5 first (must NOT trip within 2 s), then ×1 (must trip within 200 ms), then ×5 (must trip within 40 ms). Running ×0.5 first confirms the device is not over-sensitive before you stress it.',
-      'Order is irrelevant — record whichever you do first.',
-      '×1 first, then ×0.5, then ×5.',
+      '×5 first, then ×1, then ×0.5 — fast-clear the device under load first.',
+      '×0.5 (no trip in 2 s), then ×1 (trip <200 ms), then ×5 (trip <40 ms) — low to high.',
+      'Order is irrelevant — record whichever test you happen to run first.',
+      '×1 first, then ×0.5, then ×5 — verify the duty point before the limits.',
     ],
     correctIndex: 1,
     explanation:
@@ -37,24 +37,24 @@ const inlineChecks = [
     question:
       'Your meter shows 18 ms at 0° and 47 ms at 180° on a ×5 test of a 30 mA non-delayed RCBO. What do you record on column 28 and what is the implication?',
     options: [
-      'Record 18 ms — that is the better reading.',
-      'Record the average (32.5 ms) — pass.',
-      'Record 47 ms (the longer of the pair) — that is just within the 40 ms limit so the device has failed and must be replaced. The asymmetry itself is also diagnostic of internal magnetic-circuit asymmetry.',
-      'Record both readings; the device passes if either is below 40 ms.',
+      'Record 18 ms — that is the better of the two readings.',
+      'Record the average of 32.5 ms — comfortably a pass.',
+      'Record 47 ms (the longer reading) — over the 40 ms limit, so a fail and replace.',
+      'Record both readings; the device passes if either one is below 40 ms.',
     ],
     correctIndex: 2,
     explanation:
-      'Column 28 of the GN3 model form takes the longer of the 0° / 180° pair. 47 ms exceeds the 40 ms ×5 limit for a 30 mA non-delayed device providing additional protection — that is a fail. Polarity asymmetry alone is also a defect indicator even when both readings are within limit.',
+      'Column 28 of the GN3 model form takes the longer of the 0° / 180° pair. 47 ms exceeds the 40 ms ×5 limit for a 30 mA non-delayed device providing additional protection — that is a fail. Polarity asymmetry alone is also a defect indicator, since it points to internal magnetic-circuit asymmetry, even when both readings are within limit.',
   },
   {
     id: 'mod6-s2-type-mismatch',
     question:
       'You test a 30 mA Type B RCBO using your tester set to "Type A". The result is 165 ms at ×1, just within the 200 ms limit. Is the result valid?',
     options: [
-      'Yes — Type A test current is a subset of Type B response, so a Type B device must also pass a Type A test.',
-      "No. A Type-A test setting injects only AC and pulsating-DC waveforms. The Type B device's smooth-DC and high-frequency detection paths are never exercised. The reading is meaningless for the protection actually claimed on the certificate.",
-      'Yes — the result is conservative.',
-      'Only if the IΔn matches.',
+      'Yes — Type A current is a subset of Type B response, so the device must also pass a Type A test.',
+      'No — a Type A setting injects only AC and pulsating DC, leaving the Type B smooth-DC paths untested.',
+      'Yes — the AC-only result is conservative, so it is safe to record on the certificate.',
+      'Only if the IΔn setting on the meter matches the device IΔn exactly.',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'On a 30 mA Type S time-delayed RCD upstream of 30 mA non-delayed RCBOs, the ×1 test reads 280 ms. Pass or fail, and why?',
     options: [
-      'Fail — exceeds the 200 ms limit for a 30 mA device.',
-      'Fail — exceeds the 300 ms general limit in Reg 643.8.',
-      'Pass — Type S devices have a 130-500 ms acceptance window at ×1 IΔn (BS EN 61008-1 / 61009-1). 280 ms sits inside that window.',
-      'Pass — any reading under 500 ms is acceptable for any RCD type.',
+      'Fail — it exceeds the 200 ms ×1 limit for a 30 mA non-delayed device.',
+      'Fail — it exceeds the 300 ms general non-delay limit in Reg 643.8.',
+      'Pass — a Type S device has a 130-500 ms ×1 window, and 280 ms sits inside it.',
+      'Pass — any reading under 500 ms is acceptable for any RCD type at all.',
     ],
     correctIndex: 2,
     explanation:
@@ -90,8 +90,8 @@ const quizQuestions = [
     id: 2,
     question:
       'For a 30 mA non-delayed RCD providing additional protection per Reg 415.1.1, what is the maximum permitted trip time at 5×IΔn (i.e. 150 mA)?',
-    options: ['300 ms', '200 ms', '40 ms', '500 ms'],
-    correctAnswer: 2,
+    options: ['40 ms', '200 ms', '300 ms', '500 ms'],
+    correctAnswer: 0,
     explanation:
       'BS EN 61008-1 / 61009-1 require a 30 mA non-delayed RCD to operate within 40 ms at 5×IΔn. The 5×IΔn test specifically verifies the device can clear the high-residual-current scenario fast enough to provide additional protection within the 40 ms safety window.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       'The IΔn × 0.5 test is a non-tripping test. What does the device have to do (or not do) for a pass?',
     options: [
-      'Trip within 300 ms',
+      'Trip within 300 ms, the general non-delay limit at half-rated current',
+      'Trip within 40 ms, the same window as the 5×IΔn additional-protection test',
+      'Trip within 2 seconds, confirming the device still operates at reduced current',
       'NOT trip — it must remain closed for at least 2 seconds at the half-rated residual current',
-      'Trip within 40 ms',
-      'It does not matter as long as it eventually trips',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 0.5×IΔn test confirms the device does not nuisance-trip below its rated threshold. The product standards require the RCD shall not operate at 50% of rated tripping current. The test instrument applies the half-rated residual current for the test duration; tripping during this test is a fail — the device is over-sensitive.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       'When testing a Type A RCD on a 1×IΔn AC test, why must the test be performed at both 0° and 180° start positions?',
     options: [
-      'Because the test instrument requires it',
-      'Because the device may have an asymmetric response — a fault that develops on the positive half-cycle may be cleared faster than one on the negative half-cycle. The longer of the two trip times is the value recorded',
-      'Because Reg 643.8 says so explicitly',
-      "It's only required for Type B devices",
+      'Because the test instrument firmware will not record a result from only a single polarity',
+      'Because Reg 643.8 explicitly mandates two start positions for every kind of RCD test',
+      'Because the device may respond asymmetrically per half-cycle; record the longer trip time',
+      'Because two readings are only ever needed on Type B devices, never on Type A devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 61557-6 test instruments inject the residual-current waveform starting at either the 0° (positive) or 180° (negative) crossing of the supply voltage. An RCD whose pickup coil or magnetic latch responds asymmetrically can have very different trip times on each half-cycle. Recording the longer of the two values is the BS EN 61008-1 / 61009-1 rule and is what column 28 of the Schedule of Test Results captures.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       "An RCD trips at 25 ms when tested at 0° start position, but does not trip within 2 seconds when tested at 180° start position. What's the correct interpretation?",
     options: [
-      'Pass — the 0° reading is within limit',
       'Fail — the device has a defective trip mechanism that responds to one half-cycle but not the other. Replace the device',
-      'Re-test until both readings are similar',
-      'Average the two readings',
+      'Pass — the 25 ms reading at 0° is well within the limit, so the device is acceptable',
+      'Re-test repeatedly until the two start positions return similar readings',
+      'Average the two results and record the mean as the trip time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An RCD that trips at one polarity but not the other is electrically dangerous — half of all earth faults will see the slow / non-tripping half-cycle, with disconnection times far exceeding the Reg 411.3.2.2 / 411.3.2.4 limits. The device must be replaced. This is exactly what the 0° / 180° pair test exists to catch — a single-polarity test would have falsely passed it.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why does an RCD test at 1×IΔn drop the load voltage during the test, even briefly?',
     options: [
-      'It does not — the test current goes via a separate path',
-      'The instrument injects the test current through the RCD between line and earth (or line and CPC) for the duration needed to trip the device. While that current flows the upstream supply sees a brief earth-fault loop current — Zs / Ze paths are momentarily energised. The device should clear it well within the time limit',
-      'Because the test isolates the supply',
-      'Only Type B testing affects the load',
+      'It does not — the test current is generated internally and never reaches the load circuit',
+      'Because the instrument first isolates the supply, then injects current into the dead circuit',
+      'Because only Type B testing draws current through the load; Type A and AC tests do not',
+      'The injected residual flows in the earth-fault loop, briefly energising Zs / Ze until the RCD clears it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The test instrument injects a real residual current between live and earth (or live and the CPC) sized to IΔn (or 0.5× / 5×). For the duration of the test that current flows in the earth-fault loop. The instrument measures the time from current onset to RCD opening. A long Zs path or a degraded RCD will both extend the trip time.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       "A Type B RCD test using a Type A test instrument has been recorded on the Schedule of Test Results. What's the issue?",
     options: [
-      "There's no issue — Type B and Type A test the same way",
-      'The test instrument standard requirement (BS EN 61557-6) means the meter must support the RCD type under test. A Type A-only instrument cannot generate the smooth-DC and rectified-DC test waveforms needed to verify Type B operation — the recorded result only shows AC response, not the Type B-specific response',
-      'Re-test next week',
-      'Only the 5×IΔn result is invalid',
+      'A Type A-only meter cannot make the smooth-DC waveforms, so Type B operation was never verified',
+      'There is no issue — a Type A instrument tests a Type B device in exactly the same way',
+      'The result is valid but should be re-confirmed at the next periodic inspection visit',
+      'Only the 5×IΔn reading is invalid; the 1×IΔn reading still stands as Type B evidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Type A-only instrument can only verify the AC and pulsating-DC response of an RCD. It cannot test the smooth-DC, polarity-independent response that Type B is built for. Recording a Type B test result with a Type A-only instrument means the Type B-specific characteristic was never verified — the certificate is misleading. The test must be repeated with a multi-type instrument.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     question:
       'You test a 100 mA Type S (time-delayed) RCD at 1×IΔn (100 mA). The trip time is 200 ms. Pass or fail?',
     options: [
-      'Fail — must be under 40 ms',
-      'Fail — must be under 300 ms',
-      'Pass — Type S devices have a designed time delay; the BS EN 61008-1 / 61009-1 product standard for Type S has a longer permitted operating time at IΔn (typically 130-500 ms band) to give selectivity over downstream non-delayed devices',
-      'Cannot be tested at 1×IΔn',
+      'Fail — a 30 mA device must operate in under 40 ms',
+      'Fail — it must operate in under the 300 ms general limit',
+      'Pass — a Type S device has a designed 130-500 ms ×1 band, and 200 ms sits inside it',
+      'Cannot be tested at 1×IΔn — only the ×5 test applies',
     ],
     correctAnswer: 2,
     explanation:
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'For a domestic 30 mA RCBO providing both fault protection (Reg 411.4) and additional protection (Reg 415.1.1), the trip-time evidence required to record on the schedule is:',
     options: [
-      'Only the 1×IΔn AC test',
-      "Two readings at 1×IΔn (0° and 180°) and two readings at 5×IΔn (0° and 180°), recording the longer of each pair. The 0.5×IΔn non-tripping check is also performed but not always recorded numerically — the result is 'did not trip in 2 s' which gets a tick or comment",
-      'Only the 5×IΔn test for additional protection',
-      'Only the 0.5×IΔn non-tripping test',
+      'Only the 1×IΔn AC reading, since that covers fault and additional protection together',
+      'Only the 5×IΔn test reading, because additional protection is the binding requirement here',
+      'Only the 0.5×IΔn non-tripping test, to confirm the device is not over-sensitive at all',
+      'Both 1×IΔn and 5×IΔn at 0° and 180°, recording the longer of each pair (plus the 0.5× non-trip check)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A 30 mA RCD providing additional protection needs the 5×IΔn (≤40 ms) evidence on top of the 1×IΔn (≤200 ms for 30 mA non-delayed) test. Both tests are repeated at 0° and 180° — column 28 of the Schedule of Test Results captures the longer of each pair. The 0.5×IΔn test confirms non-operation at half-rated and is the third element of the BS EN 61557-6 sequence.',
   },

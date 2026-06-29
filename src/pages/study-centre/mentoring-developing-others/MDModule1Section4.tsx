@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice takes great pride in producing neat, compliant work and feels satisfied when they solve a complex fault independently. According to Self-Determination Theory, which type of motivation is this?',
     options: [
-      'Extrinsic motivation driven by external rewards',
       'Intrinsic motivation driven by competence and autonomy',
+      'Extrinsic motivation driven by external rewards',
       'Amotivation caused by lack of external incentives',
       'Conditional motivation dependent on praise',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Self-Determination Theory (Deci & Ryan, 1985) identifies three innate psychological needs: autonomy, competence, and relatedness. When a learner feels satisfaction from solving problems independently and producing quality work, they are experiencing intrinsic motivation driven by feelings of competence and autonomy.',
   },
@@ -51,10 +51,10 @@ const quickCheckQuestions = [
     question:
       'Under the Health and Safety at Work etc. Act 1974, section 2(2)(c), employers have a legal duty to provide which of the following?',
     options: [
-      'Free college education for all employees',
-      'Annual performance reviews for all staff',
-      'Such information, instruction, training and supervision as is necessary to ensure health and safety',
-      'Formal mentoring relationships for every apprentice',
+      'Free college education for all of their employees, regardless of role',
+      'Annual performance reviews and appraisals for every member of staff',
+      'Information, instruction, training and supervision necessary for health and safety',
+      'A formal, documented mentoring relationship for each and every apprentice',
     ],
     correctIndex: 2,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'In Maslow\u2019s hierarchy, which need must be satisfied before a learner can focus on self-actualisation?',
     options: [
-      'Physiological needs only',
-      'Safety needs only',
       'All lower-level needs (physiological, safety, belonging, esteem)',
-      'Belonging needs only',
+      'Physiological needs only, with the others being optional',
+      'Safety needs only, regardless of the other lower levels',
+      'Belonging needs only, once esteem has been set aside',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Maslow\u2019s hierarchy proposes that needs must be met in order: physiological, safety, belonging, esteem, and then self-actualisation. A learner who is hungry, cold, feeling unsafe, or excluded cannot focus on higher-level growth.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'An apprentice is unmotivated by classroom theory but becomes fully engaged when fault-finding on a live installation. What does this suggest about their motivation?',
     options: [
-      'They are lazy and need more discipline',
+      'They are simply lazy and need much firmer discipline to engage',
+      'They have a learning difficulty that prevents any engagement with theory',
+      'They are unsuitable and should be removed from the training programme',
       'They are intrinsically motivated by practical, problem-centred tasks',
-      'They have a learning difficulty that prevents engagement with theory',
-      'They should be removed from the training programme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a classic example of intrinsic motivation activated by problem-centred, practical learning (Knowles\u2019 andragogy principle). The apprentice is not unmotivated \u2014 they are motivated by different types of activity. A good mentor uses practical tasks as the entry point and connects theory to those real experiences.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which of the following is NOT a common barrier to learning in construction?',
     options: [
+      'Excessive access to training resources',
       'Negative previous school experiences',
       'Physical fatigue from manual labour',
       'Machismo culture that stigmatises asking for help',
-      'Excessive access to training resources',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Common barriers in construction include negative school experiences, fatigue, machismo culture, literacy difficulties, time pressure, dyslexia, and fear of failure. Excessive access to resources is not typically a barrier \u2014 in fact, lack of access to resources is more common.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'Section 2(2)(c) of the Health and Safety at Work etc. Act 1974 requires employers to provide:',
     options: [
-      'Personal protective equipment only',
-      'Risk assessments for all tasks',
+      'Personal protective equipment only, with no further duty beyond that',
+      'Written risk assessments covering every task carried out on site',
+      'Formal recognised qualifications for all workers before they start',
       'Information, instruction, training, and supervision for health and safety',
-      'Formal qualifications for all workers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'HSWA 1974 s.2(2)(c) specifically requires employers to provide "such information, instruction, training and supervision as is necessary to ensure, so far as is reasonably practicable, the health and safety at work of employees." This is the legal foundation for workplace training obligations.',
   },

@@ -13,34 +13,34 @@ const quickCheckQuestions = [
   {
     question: 'What is the primary advantage of Home Assistant over proprietary hub systems?',
     options: [
-      'Lower purchase price',
-      'Better customer support',
       'Open-source flexibility and wide device compatibility',
-      'Simpler setup process',
+      'A lower up-front purchase price than any other hub',
+      'Dedicated manufacturer support and a phone helpline',
+      'The simplest out-of-the-box setup process',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Home Assistant is open-source, allowing maximum flexibility and compatibility with thousands of devices from different manufacturers, though it requires more technical knowledge to set up and maintain.',
+      'Home Assistant is open-source, giving maximum flexibility and compatibility with thousands of devices from different manufacturers, though it demands more technical knowledge to set up and maintain.',
   },
   {
     question:
-      'Which type of hub would you recommend for a customer who wants simple setup and prefers a single brand ecosystem?',
-    options: ['Home Assistant', 'SmartThings', 'Proprietary single-brand hub', 'Custom-built hub'],
-    correctAnswer: 2,
+      'Which type of hub would you recommend for a customer who wants simple setup and prefers a single-brand ecosystem?',
+    options: ['Home Assistant', 'A proprietary single-brand hub', 'A self-built server hub', 'A multi-vendor bridge stack'],
+    correctAnswer: 1,
     explanation:
-      'Proprietary hubs from single brands offer the simplest setup and guaranteed compatibility within their ecosystem, ideal for customers who prefer ease of use over flexibility.',
+      'Proprietary single-brand hubs offer the simplest setup and guaranteed compatibility within their own ecosystem, ideal for customers who value ease of use over flexibility.',
   },
   {
     question: 'What is a key consideration when choosing SmartThings as a hub solution?',
     options: [
-      'It only works offline',
-      'It requires cloud connectivity for most features',
-      'It cannot integrate with third-party devices',
-      'It requires professional installation',
+      'It operates only when fully offline',
+      'It cannot integrate with any third-party devices',
+      'It requires cloud connectivity for many of its features',
+      'It can only be commissioned by an approved installer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'SmartThings relies heavily on cloud connectivity for automations and integrations. While it supports local control for some functions, many features require an internet connection.',
+      'SmartThings relies heavily on cloud connectivity for automations and integrations. While some functions run locally, many features need an internet connection.',
   },
 ];
 
@@ -48,58 +48,58 @@ const quizQuestions = [
   {
     question: 'What distinguishes a hub from a bridge in smart home terminology?',
     options: [
-      'Hubs are wireless, bridges are wired',
-      'Hubs control multiple protocols and devices, bridges typically translate one protocol',
-      'Hubs are more expensive',
-      'Bridges support more devices',
+      'Hubs are always wireless, whereas bridges are always wired',
+      'Hubs manage multiple protocols and devices, while a bridge typically translates one protocol',
+      'Hubs are inherently more expensive than bridges',
+      'Bridges can support a far larger number of devices than hubs',
     ],
     correctAnswer: 1,
     explanation:
-      'A hub is the central controller that manages multiple protocols and device types, whilst a bridge typically translates between one specific protocol (like Hue Zigbee) and the home network.',
+      'A hub is the central controller that manages multiple protocols and device types, whereas a bridge typically translates between one specific protocol (such as Hue Zigbee) and the home network.',
   },
   {
-    question: 'Which protocol does SmartThings support natively without additional hardware?',
-    options: ['Z-Wave only', 'Zigbee only', 'Both Zigbee and Z-Wave', 'Neither - bridges required'],
-    correctAnswer: 2,
+    question: 'Which protocols does a SmartThings hub support natively without additional hardware?',
+    options: ['Z-Wave only', 'Zigbee only', 'Neither, as bridges are always required', 'Both Zigbee and Z-Wave'],
+    correctAnswer: 3,
     explanation:
-      'SmartThings hubs include built-in radios for both Zigbee and Z-Wave protocols, allowing direct connection to devices using either standard without additional bridges.',
+      'SmartThings hubs include built-in radios for both Zigbee and Z-Wave, allowing direct connection to devices using either standard without an extra bridge.',
   },
   {
     question: 'What is the main trade-off when choosing a proprietary ecosystem?',
     options: [
-      'Higher cost for less features',
-      'Simpler setup but limited device choice',
-      'Better support but slower updates',
-      'More features but complex setup',
+      'Simpler setup but a more limited choice of devices',
+      'A higher cost in exchange for fewer overall features',
+      'Stronger support but noticeably slower firmware updates',
+      'More features at the expense of a complex setup',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      "Proprietary ecosystems offer simpler setup and guaranteed compatibility within their brand, but limit device choice to that manufacturer's range and certified partners.",
+      "Proprietary ecosystems offer simpler setup and guaranteed compatibility within their brand, but they limit device choice to that manufacturer's range and certified partners.",
   },
   {
     question:
       'Why might an electrician recommend Home Assistant for a technically confident customer?',
     options: [
-      "It's the cheapest option",
-      'It offers maximum customisation and local control',
-      'It has the best mobile app',
-      'It requires no maintenance',
+      'It is guaranteed to be the cheapest option in every case',
+      'It comes with the most polished mobile app available',
+      'It offers maximum customisation and full local control',
+      'It needs no ongoing maintenance once installed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Home Assistant provides maximum customisation, works with thousands of devices, and can operate entirely locally without cloud dependency - ideal for technically confident users who want full control.',
+      'Home Assistant provides maximum customisation, works with thousands of devices and can run entirely locally without cloud dependency, ideal for confident users who want full control.',
   },
   {
     question: 'What happens to SmartThings automations if the internet connection fails?',
     options: [
-      'All automations continue normally',
-      'Only local automations continue, cloud-based ones stop',
-      'The entire system stops working',
-      'Devices continue but cannot be controlled',
+      'Every automation continues to run normally',
+      'The entire system shuts down until connectivity returns',
+      'Only local automations continue, while cloud-based ones stop',
+      'Devices keep running but cannot be controlled at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'SmartThings supports some local automations that continue during internet outages, but many cloud-based routines and integrations stop working until connectivity is restored.',
+      'SmartThings runs some automations locally so they continue during an outage, but many cloud-based routines and integrations stop working until connectivity is restored.',
   },
 ];
 

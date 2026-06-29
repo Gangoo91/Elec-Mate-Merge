@@ -45,8 +45,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Singlemode fibre is designated with the prefix:',
-    options: ['OM', 'OS', 'SM', 'MM'],
-    correctAnswer: 1,
+    options: ['OS', 'OM', 'SM', 'MM'],
+    correctAnswer: 0,
     explanation:
       'Singlemode fibre uses the OS (Optical Singlemode) designation, such as OS1 and OS2.',
   },
@@ -69,16 +69,16 @@ const quizQuestions = [
   {
     id: 4,
     question: 'OM4 multimode fibre has a core diameter of:',
-    options: ['9 micrometres', '50 micrometres', '62.5 micrometres', '125 micrometres'],
-    correctAnswer: 1,
+    options: ['9 micrometres', '62.5 micrometres', '125 micrometres', '50 micrometres'],
+    correctAnswer: 3,
     explanation:
       'OM4 (and OM3) multimode fibre has a 50um core. The 125um is the cladding diameter, common to all standard fibre.',
   },
   {
     id: 5,
     question: 'For a 300m 10Gbps link in a building, which fibre would typically be used?',
-    options: ['Singlemode only', 'OM3 or OM4 multimode', 'OM1 multimode', 'Copper is better'],
-    correctAnswer: 1,
+    options: ['OM3 or OM4 multimode', 'Singlemode only', 'OM1 multimode', 'Copper twisted pair'],
+    correctAnswer: 0,
     explanation:
       'OM3/OM4 can handle 10Gbps at 300-400m and is more cost-effective than singlemode for building backbones.',
   },
@@ -100,19 +100,19 @@ const quizQuestions = [
     question: 'Which statement about multimode fibre is TRUE?',
     options: [
       'It has a smaller core than singlemode',
-      'It can use less expensive LED light sources',
-      'It has longer distance capability',
-      'It has lower modal dispersion',
+      'It has longer distance capability than singlemode',
+      'It has lower modal dispersion than singlemode',
+      'It can use less expensive LED or VCSEL light sources',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multimode fibre can use LED or VCSEL sources which are less expensive than the lasers required for singlemode.',
   },
   {
     id: 8,
     question: 'OS2 singlemode fibre is specified for use at which wavelengths?',
-    options: ['850nm only', '1310nm and 1550nm', 'Visible light only', 'Any wavelength'],
-    correctAnswer: 1,
+    options: ['1310nm and 1550nm', '850nm only', 'Visible light only', 'Any wavelength equally'],
+    correctAnswer: 0,
     explanation:
       'OS2 singlemode fibre is optimised for 1310nm and 1550nm wavelengths used in long-distance communications.',
   },

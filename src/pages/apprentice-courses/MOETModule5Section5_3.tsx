@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is a zero adjustment on a transmitter?',
     options: [
       'Adjusting the output at the low end of the range so it reads correctly at the zero/minimum input',
-      'Building log book with O&M manuals, commissioning records and energy metering data',
-      'Material prices and labour rates change; an open-ended quote can leave the contractor on the hook for old prices',
-      'Different characteristics: AC motors are simpler, DC motors offer better speed control',
+      'Adjusting the gain so the output is correct at the maximum input',
+      'Correcting the curvature of the output across the mid-range',
+      'Resetting the transmitter to its factory default configuration',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: 'What is a span adjustment?',
     options: [
-      'Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc',
+      'Adjusting the offset so the output is correct at the minimum input',
       'Adjusting the output at the high end of the range so it reads correctly at the maximum input',
-      'To verify that all functions operate correctly and safely before the operator is at height',
-      'The method statement describes how to implement the controls identified in the risk assessment',
+      'Adding correction factors at intermediate points across the range',
+      'Setting the time delay before the output responds to a change',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'qc3',
     question: 'Why should zero always be adjusted before span?',
     options: [
-      'No — voltage rating must equal or exceed the original. Underrated caps fail (often explosively) under mains-side stress.',
-      'Never — they must not leave until all entrants have exited and the permit has been closed, unless a competent replacement takes over',
+      'Because span adjustment is more time-consuming and should be left until last',
+      'Because the span screw is physically harder to access than the zero screw',
       'Because zero offset affects the entire range, and adjusting span first would be invalidated when zero is subsequently adjusted',
-      'When the work will last longer than 30 working days with more than 20 workers at any one time, or exceeds 500 person-days',
+      'Because the manufacturer void the warranty if span is adjusted first',
     ],
     correctIndex: 2,
     explanation:
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: 'What is the difference between sensor trim and output trim on a HART transmitter?',
     options: [
-      'Nulled (zeroed) by short-circuiting them together and subtracting the lead resistance from subsequent readings',
-      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
-      'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
+      'Sensor trim corrects the 4-20 mA output; output trim corrects the digital reading of the input',
+      'Both perform the same correction but at different temperatures',
+      'Sensor trim is for pressure devices; output trim is for temperature devices',
       'Sensor trim corrects the input measurement (A/D conversion); output trim corrects the 4-20 mA output signal (D/A conversion)',
     ],
     correctIndex: 3,
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: "What does a 'sensor trim' do on a HART transmitter?",
     options: [
-      "The ratio of the maximum to minimum span that can be set, indicating the flexibility of the transmitter's configuration",
-      "Output trim first (at 4 mA and 20 mA), then sensor trim at reference points",
+      "Adjusts the 4-20 mA current output to match a precision milliamp meter",
+      "Resets the transmitter's range to its default upper and lower values",
       "Adjusts the transmitter's sensor reading to match a known reference value, correcting sensor drift",
-      "Temperature cycling, vibration, aging of electronic components, mechanical stress on sensor elements, and corrosion",
+      "Applies a fixed damping value to smooth the output signal",
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is linearity error?',
     options: [
-      'Zero first, then span, then re-check zero, iterate until both are within tolerance, then check linearity',
-      'Bench calibration removes the instrument for testing on a workbench; in-situ calibration tests the instrument installed in the process without removal',
-      'Sensors need time to reach equilibrium; rushing readings before stabilisation introduces errors that appear as linearity problems',
+      'A constant offset that shifts the entire output curve up or down',
+      'An incorrect gain that makes the full-scale output too high or low',
+      'A difference between the upscale and downscale readings at the same point',
       'The output deviates from a straight-line relationship between input and output, with the error varying across the range',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Can linearity errors be corrected by zero and span adjustments alone?',
     options: [
       'No -- linearity errors require multi-point characterisation or sensor replacement',
-      'Adjusts the transmitter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s sensor reading to match a known reference value, correcting sensor drift',
-      'Output trim first (at 4 mA and 20 mA), then sensor trim at reference points',
-      'Zero first, then span, then re-check zero, iterate until both are within tolerance, then check linearity',
+      'Yes -- adjusting zero corrects any curvature in the output',
+      'Yes -- adjusting span removes mid-range deviation entirely',
+      'Yes -- iterating zero and span will always flatten the error',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: "What is a 'bench calibration' versus an 'in-situ calibration'?",
     options: [
-      'Sensors need time to reach equilibrium; rushing readings before stabilisation introduces errors that appear as linearity problems',
+      'Bench calibration is done by the manufacturer; in-situ calibration is done by the end user',
       'Bench calibration removes the instrument for testing on a workbench; in-situ calibration tests the instrument installed in the process without removal',
-      'Temperature cycling, vibration, aging of electronic components, mechanical stress on sensor elements, and corrosion',
-      'As-found readings, adjustments made, as-left readings, reference standards used, and environmental conditions',
+      'Bench calibration uses digital tools; in-situ calibration uses only analogue screws',
+      'Bench calibration checks zero only; in-situ calibration checks span only',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'When adjusting a pneumatic transmitter, what does the zero spring adjustment do?',
     options: [
-      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended method',
-      'Changeover to battery, duration under load, and charging',
+      'Sets the output pressure at the maximum measurement input',
+      'Corrects the curvature of the output across the mid-range',
       'Adjusts the output pressure at minimum input',
-      'Load requirements and current demand',
+      'Increases the speed at which the output responds to change',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the recommended sequence for a full calibration adjustment?',
     options: [
-      'The ratio of the maximum to minimum span that can be set, indicating the flexibility of the transmitter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s configuration',
-      'As-found readings, adjustments made, as-left readings, reference standards used, and environmental conditions',
-      'No -- linearity errors require multi-point characterisation or sensor replacement',
+      'Span first, then zero, with no need to re-check either afterwards',
+      'Check linearity first, then adjust zero and span together in one step',
+      'Adjust only whichever of zero or span is furthest out of tolerance',
       'Zero first, then span, then re-check zero, iterate until both are within tolerance, then check linearity',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: "What does 'rangeability' mean for a transmitter?",
     options: [
       "The ratio of the maximum to minimum span that can be set, indicating the flexibility of the transmitter's configuration",
-      "As-found readings, adjustments made, as-left readings, reference standards used, and environmental conditions",
-      "Bench calibration removes the instrument for testing on a workbench; in-situ calibration tests the instrument installed in the process without removal",
-      "Adjusts the transmitter's sensor reading to match a known reference value, correcting sensor drift",
+      "The maximum process pressure the sensor can withstand before damage",
+      "The distance over which a wireless transmitter can send its signal",
+      "The number of test points used during a five-point calibration check",
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'After completing zero and span adjustments, what must you document?',
     options: [
-      'Adjusts the transmitter\\\\\\\\\\\\\\\'s sensor reading to match a known reference value, correcting sensor drift',
+      'Only the final as-left readings, since the as-found data is no longer relevant',
       'As-found readings, adjustments made, as-left readings, reference standards used, and environmental conditions',
-      'The ratio of the maximum to minimum span that can be set, indicating the flexibility of the transmitter\\\\\\\\\\\\\\\'s configuration',
-      'Zero first, then span, then re-check zero, iterate until both are within tolerance, then check linearity',
+      'Only the serial number of the HART communicator used for the work',
+      'Only the date and the technician name, with readings kept verbally',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is stabilisation time important at each test point during calibration?',
     options: [
-      'Temperature cycling, vibration, aging of electronic components, mechanical stress on sensor elements, and corrosion',
-      'Bench calibration removes the instrument for testing on a workbench; in-situ calibration tests the instrument installed in the process without removal',
+      'It allows the HART communicator to download the new configuration',
+      'It prevents the reference standard from drifting out of calibration',
       'Sensors need time to reach equilibrium; rushing readings before stabilisation introduces errors that appear as linearity problems',
-      'Zero first, then span, then re-check zero, iterate until both are within tolerance, then check linearity',
+      'It gives the output electronics time to warm up to operating temperature',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'On a HART transmitter, which trim should be performed first?',
     options: [
-      'Induced EMF is proportional to the rate of change of flux linkage',
-      'Creating technical drawings and designs using computer software',
-      'Automatically adjusting artificial light based on available daylight',
+      'Sensor trim first, because the output trim depends on the sensor reading',
+      'Either order, because the two trims always interact and must be iterated',
+      'Neither -- HART transmitters do not require trimming, only re-ranging',
       'Output trim first (at 4 mA and 20 mA), then sensor trim at reference points',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     question: "What causes drift in a transmitter's zero and span over time?",
     options: [
       'Temperature cycling, vibration, aging of electronic components, mechanical stress on sensor elements, and corrosion',
-      'Adjusts the transmitter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s sensor reading to match a known reference value, correcting sensor drift',
-      'The output deviates from a straight-line relationship between input and output, with the error varying across the range',
-      'As-found readings, adjustments made, as-left readings, reference standards used, and environmental conditions',
+      'A correctly calibrated transmitter that has simply not been used recently',
+      'The use of a HART communicator to read the output during normal service',
+      'Documenting the as-found and as-left readings at each calibration',
     ],
     correctAnswer: 0,
     explanation:

@@ -46,9 +46,9 @@ const checks = [
       "You've got a brand-new RCBO sat in front of you and the test sequence on the OSG doesn't quite match what the device looks like. Where do you go FIRST to confirm how to test it?",
     options: [
       "The manufacturer's installation instructions for that specific RCBO",
-      "Provide small directional adjustment for final alignment",
-      "Electrical Installation Certificate and user documentation",
-      "A formal documented authorisation for work on or near isolated electrical equipment",
+      "The On-Site Guide ready-reckoner tables",
+      "Guidance Note 3, for the generic test sequence",
+      "The blank model forms in BS 7671 Appendix 6",
     ],
     correctIndex: 0,
     explanation:
@@ -120,9 +120,9 @@ const quizQuestions = [
     question:
       "BS 7671:2018+A4:2026 introduced a new regulation, 514.9.2, about diagrams and charts. What does it actually require?",
     options: [
-      "Identify where work interfaces with others and specify coordination measures",
-      "A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point",
-      "Zinc or copper fumes from welding, brazing, or galvanised steel cutting",
+      "That every installation must include a full single-line diagram on A3 paper",
+      "That diagrams must be hand-drawn rather than produced on a computer",
+      "That a copy of every drawing must be left inside the consumer unit",
       "That all diagrams, charts and information notices comply with the applicable standards specified",
     ],
     correctAnswer: 3,
@@ -135,9 +135,9 @@ const quizQuestions = [
       "The manufacturer's installation instructions for an RCBO say 'torque each terminal to 1.2 Nm'. The OSG quotes 0.8-1.5 Nm as a typical range. What do you do?",
     options: [
       "Use 1.2 Nm — the manufacturer's specific figure overrides the generic guidance",
-      "How much a material resists or slows down the flow of current",
-      "Enhanced mechanical protection due to potential vandalism",
-      "Calculating optimal temperature and humidity for human comfort",
+      "Use the OSG range — published guidance always takes priority over a single maker",
+      "Use the midpoint of the OSG range as a sensible compromise between the two",
+      "Use whichever value is highest to be sure the terminal is tight enough",
     ],
     correctAnswer: 0,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     question:
       "You've found a non-standard four-pole isolator on a refurb and need to know its short-circuit withstand rating. Where will the answer definitely be?",
     options: [
-      "Back-to-back thyristors (SCRs)",
-      "Depression severity over the past two weeks",
+      "BS 7671 Appendix 3 time/current characteristics",
+      "The On-Site Guide standard circuit tables",
       "The manufacturer's product datasheet",
-      "Certificate of Making Good Defects",
+      "Guidance Note 3 inspection schedules",
     ],
     correctAnswer: 2,
     explanation:
@@ -190,9 +190,9 @@ const quizQuestions = [
       "On site, you spot the certification scheme (NICEIC / NAPIT / Stroma) has issued a technical bulletin about a specific manufacturer's consumer unit being recalled. What's the correct response?",
     options: [
       "Read it, log it, and apply it on relevant jobs — bulletins reflect current best practice and the scheme audits against them",
-      "Allowing pauses gives the speaker time to think and often encourages them to share more detail",
-      "Risk assessment names the hazards and controls; method statement says how the work will be done in safe order",
-      "Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified",
+      "Ignore it — only changes to BS 7671 itself have any force",
+      "Wait for the next BS 7671 amendment before changing anything you do",
+      "Apply it only if a customer specifically asks you to",
     ],
     correctAnswer: 0,
     explanation:

@@ -71,25 +71,25 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'Which PPE is essential when cutting metal trunking with a grinder?',
+    question: 'Which single PPE item is the most critical when cutting metal trunking with an angle grinder?',
     options: [
-      'Safety glasses or face shield',
-      'All of the above',
-      'Dust mask',
-      'Earplugs',
+      'A face shield or safety glasses against flying sparks',
+      'Anti-vibration gloves to reduce hand fatigue',
+      'A high-visibility vest to alert other workers',
+      'Steel toe-cap boots in case the grinder is dropped',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Grinding metal produces sparks (eye protection), noise (hearing protection), and metal particles (respiratory protection), requiring all listed PPE.',
+      'Grinding throws off high-velocity sparks and metal fragments straight at the face, so eye and face protection is the most safety-critical item, though hearing and respiratory protection are also needed.',
   },
   {
     id: 2,
     question: 'What is the main function of insulated gloves?',
     options: [
-      'Modulating valve actuator',
-      'Specific locations of air leakage paths',
+      'Protect against cuts from sharp cable ends',
+      'Improve grip when handling oily components',
       'Protect against electric shock',
-      'Any safety-critical fault',
+      'Shield the hands from welding heat and sparks',
     ],
     correctAnswer: 2,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which type of footwear is generally required on construction sites?',
     options: [
-      'Cavity fixings or toggle bolts',
+      'Lightweight canvas trainers',
       'Safety boots with toe caps',
-      'V_line = V_phase x sqrt(3)',
-      'If = kVA × 100 / (√3 × V × Z%)',
+      'Slip-on rubber overshoes',
+      'Standard leather work shoes',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is high-visibility clothing important in certain environments?',
     options: [
-      'Isolate immediately and investigate',
-      'Criminal prosecution, including fines and imprisonment',
+      'It provides insulation against electric shock',
+      'It protects the wearer from flying debris',
       'Improves visibility to reduce collision risk',
-      'Update risk assessments and method statements',
+      'It keeps the wearer warm in cold conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -144,11 +144,11 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Name one maintenance step for PPE.',
+    question: 'Name one correct maintenance step for PPE.',
     options: [
-      'Ignore manufacturer instructions',
-      'Store in damp conditions',
-      'Use damaged equipment until replacement',
+      'Sharing items between several workers to save cost',
+      'Leaving cleaning until an item visibly fails',
+      'Storing gloves rolled up inside a tool pouch',
       'Cleaning after use and proper storage',
     ],
     correctAnswer: 3,
@@ -159,12 +159,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which regulation requires employers to provide and maintain suitable PPE in the UK?',
     options: [
+      'COSHH Regulations 2002',
+      'PUWER 1998',
       'PPE at Work Regulations 1992',
-      'Up to 1000V AC or 1500V DC',
-      'Analog signals (0-10V or 4-20mA)',
-      'At a Pearson VUE test centre',
+      'The Electricity at Work Regulations 1989',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'The PPE at Work Regulations 1992 (as amended) require employers to provide and maintain suitable PPE where risks cannot be controlled by other means.',
   },

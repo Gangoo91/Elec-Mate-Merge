@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'single-line',
     question: 'In a single-line (one-line) diagram, what does a single line typically represent?',
     options: [
-      'Daily or weekly log of completed work not yet invoiced',
-      'Adequate temporary lighting for safe working',
+      'Only the line (phase) conductors, with neutral shown separately',
+      'A single-core cable used in the installation',
       'All conductors of a circuit (live, neutral, and earth)',
-      'Even profitable businesses can fail without cash',
+      'The physical route the cable takes through the building',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The BS EN 60617 symbol for a normally open (NO) contact is:',
     options: [
-      'The reference year against which emission reductions are measured',
+      'A circle with a diagonal line through it',
       'Two parallel lines with a gap (the moving contact shown open)',
-      'To prevent electric shock during maintenance work',
-      'Non-linear effects (Brillouin/Raman scattering)',
+      'A rectangle with a curved line across the top',
+      'Two crossed lines forming an X at the contact point',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a circuit diagram, the symbol for a fuse is:',
     options: [
-      'Productivity, profitability, and customer satisfaction',
-      '2-4 weeks before anticipated practical completion',
+      'A zigzag line between two terminals',
+      'A circle with a sine wave inside it',
       'A rectangle with a line through the centre',
-      'Report the discrepancy and obtain correct materials',
+      'Two semicircles facing each other',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     question:
       'An MCB (miniature circuit breaker) symbol differs from a simple switch symbol by the addition of:',
     options: [
-      'A mechanical connection, future work, or a component boundary',
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'Normally Closed (contact is closed when the relay is de-energised)',
+      'A diagonal line drawn through the basic switch symbol',
+      'A circle enclosing the basic switch symbol',
+      'A dashed rectangle drawn around the basic switch symbol',
       'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'On a single-line diagram, a transformer is typically represented by:',
     options: [
       'Two coils side by side (or two circles with parallel lines between them)',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'A mechanical connection, future work, or a component boundary',
+      'A single circle with the letter T inside it',
+      'A triangle and star symbol joined by a horizontal line',
+      'A rectangle with a diagonal arrow drawn through it',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'The IEC symbol for an RCD (residual current device) includes:',
     options: [
-      'Two coils side by side (or two circles with parallel lines between them)',
+      'A rectangle with a straight line drawn through its centre',
       'A switch symbol with a test button and current-sensing element (toroid)',
-      'A mechanical connection, future work, or a component boundary',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'A switch symbol with a small rectangle (thermal trip element) only',
+      'A circle with a sine wave drawn inside it',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'In electrical drawings, a dashed line typically represents:',
     options: [
-      'Normally Closed (contact is closed when the relay is de-energised)',
-      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
+      'A live conductor carrying the main load current',
+      'The protective earthing (PE) conductor of a circuit',
       'A mechanical connection, future work, or a component boundary',
-      'A switch symbol with a test button and current-sensing element (toroid)',
+      'A three-phase busbar within a switchboard',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'On a control circuit diagram, a relay coil is shown as:',
     options: [
-      'A switch symbol with a test button and current-sensing element (toroid)',
+      'A pair of open switch contacts labelled with the relay designation',
       'A rectangle representing the coil, labelled with the relay designation',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
-      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
+      'A circle with the letter K inside, drawn at each contact location',
+      'A zigzag line representing the resistance of the coil winding',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: "What does the abbreviation 'NC' mean when applied to a relay contact?",
     options: [
-      'Two coils side by side (or two circles with parallel lines between them)',
-      'A mechanical connection, future work, or a component boundary',
+      'Not Connected (the contact terminal is unused on this device)',
+      'No Continuity (the contact has failed open and must be replaced)',
       'Normally Closed (contact is closed when the relay is de-energised)',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'Neutral Conductor (the contact switches the neutral of the circuit)',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     id: 11,
     question: 'IEC terminal designation for a motor star-delta starter typically includes:',
     options: [
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
-      'A rectangle representing the coil, labelled with the relay designation',
+      'Terminals R, Y, B for the three line connections and a single N terminal',
+      'Terminals L1, L2, L3 at one end and PE1, PE2, PE3 at the other',
+      'Terminals A1 and A2 for each of the three phase windings',
       'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
     ],
     correctAnswer: 3,
@@ -216,9 +216,9 @@ const quizQuestions = [
     question: "When reading a manufacturer's control panel drawing, 'cross-referencing' means:",
     options: [
       'Tracing a relay coil to its associated contacts by matching designation numbers shown on the drawing',
-      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
-      'A switch symbol with a test button and current-sensing element (toroid)',
-      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'Comparing the panel drawing against the manufacturer of a competing control panel',
+      'Checking that each cable colour on the drawing matches the BS 7671 colour code',
+      'Converting the IEC symbols on the drawing into the equivalent ANSI symbols',
     ],
     correctAnswer: 0,
     explanation:

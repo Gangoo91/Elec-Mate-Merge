@@ -55,9 +55,9 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 3,
       question: 'What does the IF function do in a spreadsheet?',
       options: [
-        'Cutting the sides of an excavation back to a safe angle to prevent collapse',
-        'To maintain an open airway and allow fluids to drain',
-        'How much a material resists or slows down the flow of current',
+        'Combines the text from two or more cells into one cell',
+        'Counts how many cells in a range contain numeric values',
+        'Looks up a value in a table and returns a matching result',
         'Returns one value if a condition is true and another if it is false',
       ],
       correctAnswer: 3,
@@ -70,9 +70,9 @@ const FunctionalSkillsModule3Section2 = () => {
         'When building a material takeoff spreadsheet, what should you include for each item?',
       options: [
         'Item description, quantity, unit, unit cost, and total cost',
-        'Terre-Neutre-Separés (separate earth and neutral)',
-        'Avoid working at height where you can — do it from the ground if possible',
-        'Refrigerant velocity and pressure drop affecting system capacity',
+        'Item description and total cost only, to keep the sheet simple',
+        'Just the supplier name and an overall lump-sum price',
+        'Quantity and unit cost, with totals worked out separately by hand',
       ],
       correctAnswer: 0,
       explanation:
@@ -96,10 +96,10 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 6,
       question: 'What is the purpose of freezing the top row in a spreadsheet?',
       options: [
-        'A 26-metre spider lift with non-marking rubber tracks',
-        'Verification based on tested components plus design rules',
+        'It prevents anyone from editing the values in the top row',
+        'It automatically sorts the data into alphabetical order',
         'It keeps the header row visible while scrolling through data below',
-        'Move the casualty into fresh air, ensuring it is safe for you to approach',
+        'It locks the formulae in that row so they cannot be deleted',
       ],
       correctAnswer: 2,
       explanation:

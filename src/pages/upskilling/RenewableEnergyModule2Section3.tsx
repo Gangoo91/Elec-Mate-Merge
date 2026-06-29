@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A PV string of 12 modern 60-cell modules connected in series, each with V_oc = 41.6 V and I_sc = 12.5 A at STC. What are the string V_oc and string I_sc?',
     options: [
-      'String V_oc = 41.6 V, string I_sc = 12.5 × 12 A',
-      'Series connection adds voltages, current is shared: string V_oc = 12 × 41.6 V = 499 V, string I_sc = 12.5 A (the same as a single module — current does NOT add in series)',
-      'String V_oc = 41.6 V / 12, string I_sc = 12.5 A',
-      'Both V and I multiply by 12',
+      'String V_oc = 41.6 V (unchanged), string I_sc = 12 × 12.5 = 150 A',
+      'String V_oc = 12 × 41.6 = 499 V, string I_sc = 12.5 A (current does not add in series)',
+      'String V_oc = 41.6 / 12 ≈ 3.5 V, string I_sc = 12.5 A (voltage divides in series)',
+      'String V_oc = 12 × 41.6 = 499 V and string I_sc = 12 × 12.5 = 150 A',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'The same 12-module string (V_oc 41.6 V per module at STC, V_oc temperature coefficient -0.27 %/°C) on a UK winter morning with cell temperature of -5°C. What is the cold-morning string V_oc, and what design check does this drive?',
     options: [
-      '499 V — same as STC',
-      'At -5°C (30°C below STC reference 25°C), V_oc rises: 12 × 41.6 × (1 + 30 × 0.0027) ≈ 540 V. The design check: 540 V must remain below the inverter\'s absolute maximum DC input voltage (typically 600 V or 1000 V) with margin',
-      '300 V',
-      '1000 V',
+      'About 499 V — V_oc is unchanged from the STC value on a cold morning',
+      'About 540 V — V_oc rises ~8% at -5°C; check it stays below the inverter\'s maximum DC input',
+      'About 300 V — V_oc falls on a cold morning, easing the inverter input margin',
+      'About 1000 V — V_oc roughly doubles at low cell temperature on a sunny morning',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.431 sets the requirement for PV string overcurrent protective devices. What is the exemption for small arrays?',
     options: [
-      'No exemption — every string needs an overcurrent protective device',
-      'In a PV array with one PV string or two PV strings in parallel, no overcurrent protective device is required for the strings. The string-protection rules apply only to arrays with more than two strings in parallel',
-      'Exemption only for off-grid systems',
-      'Exemption only for arrays under 1 kWp',
+      'No exemption — every string needs its own overcurrent protective device',
+      'With one or two strings in parallel, no per-string overcurrent protective device is required',
+      'The exemption applies only to off-grid systems, not grid-tied arrays',
+      'The exemption applies only to arrays rated under 1 kWp total',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'In a PV array with more than 2 strings in parallel, Reg 712.431 applies an inequality to determine when string-level protection is required. What is it?',
     options: [
-      'V_oc > 600 V',
-      'Protective devices shall be provided to protect each PV string where: 1.35 × Imop_max_ocer < (Ns - 1) × Isc_max — i.e. where the scaled maximum operating current is less than the back-feed current from the other (Ns-1) parallel strings',
-      'P_max > 10 kW',
-      'Number of modules > 24',
+      'Protection is required wherever the string V_oc exceeds 600 V',
+      'Protect each string where 1.35 × Imop_max_ocer < (Ns − 1) × Isc_max (back-feed exceeds scaled operating current)',
+      'Protection is required wherever the array P_max exceeds 10 kW',
+      'Protection is required wherever the number of modules in the array exceeds 24',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'A string of 12 modules — 11 modules from Manufacturer A with V_oc 41.6 V, I_sc 12.5 A, and 1 replacement module from Manufacturer B with V_oc 40.0 V, I_sc 13.3 A (different make, different electrical characteristics). What is the mismatch impact on the string?',
     options: [
-      'No impact — modules in series average out',
-      'The series string is limited by the weakest module. The 13.3 A I_sc module is limited to carry only 12.5 A (the rest-of-string current), losing 0.8 A of its capacity. The voltage difference also creates a small loss as the operating point shifts. Typical mismatch losses on the order of 2–5% per mixed module',
-      'The string voltage doubles',
-      'The whole array shuts down',
+      'No impact — module currents and voltages average out across a series string',
+      'The string is limited by the weakest module, so the odd module loses capacity — typically 2–5% loss',
+      'The string voltage roughly doubles because the modules no longer match',
+      'The whole array shuts down until the mismatched module is removed',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A customer has PV modules across two roof pitches at different orientations (south and east). What is the right architectural decision?',
     options: [
-      'Connect all modules into one string',
-      'Run the two banks as separate strings, either into an inverter with multiple MPPT inputs (one MPPT per orientation) or into two separate inverters / micro-inverters / power optimisers. Each bank operates at its own MPP without mismatch loss',
-      'Tilt all modules to face south',
-      'Refuse the install',
+      'Connect all modules from both pitches into one combined series string',
+      'Run the two banks as separate strings, one MPPT input per orientation, so each runs at its own MPP',
+      'Re-mount every module to face due south regardless of the existing roof pitches',
+      'Refuse the install because mixed orientations cannot be wired compliantly',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'When sizing a PV string against an inverter, three voltage parameters must align. What are they, and what\'s the design rule for each?',
     options: [
-      'Just V_oc',
-      'V_oc string at cold-morning minimum cell temperature must be BELOW the inverter\'s absolute maximum DC input voltage (with margin); V_mp string at MPP operating temperature must sit within the inverter\'s MPPT voltage range (between MPPT min and MPPT max); V_mp string at the hottest operating temperature must remain above the inverter\'s MPPT minimum voltage',
-      'Only the MPPT maximum matters',
-      'Voltage doesn\'t matter, only power',
+      'Only the string V_oc against the inverter input matters',
+      'Cold-morning V_oc < inverter max input; hot-day V_mp > MPPT minimum; cool-day V_mp < MPPT maximum',
+      'Only the inverter MPPT maximum voltage needs to be checked',
+      'Voltage is not a design constraint; only the array power rating matters',
     ],
     correctIndex: 1,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'A residential PV install proposes a single string of 14 modules (V_oc 41.6 V per module at STC, V_oc temperature coefficient -0.27%/°C) into a hybrid inverter with absolute maximum DC input of 600 V. The design minimum cell temperature for the site is -10°C. What is the cold-morning string V_oc and is the design compliant?',
     options: [
-      'String V_oc = 582 V at STC, design compliant',
-      'STC string V_oc = 14 × 41.6 = 582 V. Cold-morning rise: 35°C below STC × 0.27%/°C = 9.45% increase. Cold-morning V_oc = 582 × 1.0945 ≈ 637 V. This EXCEEDS the inverter\'s 600 V absolute maximum — the string is one module too long; reduce to 13 modules',
-      'String V_oc = 200 V, design compliant',
-      'String V_oc = 1000 V, design compliant',
+      'String V_oc = 582 V at STC, so the design is compliant as drawn',
+      'STC V_oc = 582 V; cold-morning rise of 9.45% gives ≈ 637 V — over the 600 V limit, so reduce to 13 modules',
+      'String V_oc ≈ 200 V at STC, so the design is comfortably compliant',
+      'String V_oc ≈ 1000 V, which is within the inverter input rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'A 6 kWp domestic PV system uses 4 parallel strings of 4 modules each (4 × 4 = 16 modules), each module 380 W. Reg 712.431 applies the inequality 1.35 × Imop_max_ocer < (Ns - 1) × Isc_max. Is per-string overcurrent protection required?',
     options: [
-      'No — single string only',
-      'Yes — 4 parallel strings > 2 triggers the inequality check. With typical residential module values (Imop_max ≈ 11 A, Isc_max ≈ 12 A, Ns = 4): 1.35 × 11 = 14.85 A vs (4-1) × 12 = 36 A. 14.85 < 36 → inequality met, per-string protection required',
-      'Only if string voltage > 1000 V',
-      'No protection required at any string count',
+      'No — this is treated as a single-string array, which is exempt from the rule',
+      'Per-string protection is required only where the string voltage exceeds 1000 V',
+      'No per-string protection is ever required, regardless of the number of strings',
+      'Yes — 4 strings > 2, and 1.35 × 11 = 14.85 < 3 × 12 = 36, so protection is required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Four parallel strings exceeds the two-string exemption, so Reg 712.431 inequality applies. With typical module values the inequality is comfortably met (14.85 < 36), so per-string overcurrent protective devices are required. The practical implementation: per-string fuses in the array combiner box (typically gPV fuses to BS EN 60269-6, rated per the calculation — usually 1.25–1.5× Isc_max). For 1 or 2 string designs, no string-level overcurrent protection is required regardless of the inequality result.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A customer with a two-pitch roof (south and east) asks for PV across both. The east-facing bank gets morning sun; the south bank gets midday-to-afternoon sun. What is the right design architecture?',
     options: [
-      'Combine all modules into a single string',
-      'Two separate strings — south bank as one string, east bank as another. Connect each string to a separate MPPT input on the inverter (most modern residential hybrid inverters have 2 MPPTs). Each string operates independently at its own MPP without dragging the other',
-      'Use only the south-facing roof',
-      'Mix the strings randomly',
+      'Two separate strings — south and east — each on its own MPPT input, so each runs at its own MPP without dragging the other',
+      'Combine all the modules from both pitches into one series string',
+      'Use only the south-facing roof and leave the east pitch unused',
+      'Mix modules from both pitches randomly across the strings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Multi-orientation arrays demand multi-MPPT architecture. Combining modules at different orientations into one string forces mismatch losses — the lower-irradiance bank drags the higher-irradiance bank down. Two-MPPT inverters (the typical residential hybrid configuration in 2026) accept two independent strings, each operating at its own MPP. The east-facing string optimises on its own irradiance profile in the morning; the south-facing string optimises on its midday-afternoon profile. Total yield is meaningfully higher than the single-MPPT alternative.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A field-replacement scenario: a module in a 12-module string fails. The same model is no longer available. The available replacement has V_oc 40.0 V (vs the existing 41.6 V) and I_sc 13.3 A (vs the existing 12.5 A). What\'s the right approach?',
     options: [
-      'Fit the replacement module in the same string',
-      'Don\'t mix in the same string. Options: (a) replace the entire 12-module string with current-generation modules of matched characteristics, (b) move the replacement module to a separate string on a separate MPPT input, or (c) source a true match from the secondary market. Mixing makes/models in one string drives mismatch losses of 2–5% per mixed module',
-      'It doesn\'t matter — modules in series are all equivalent',
-      'Reverse the polarity of the replacement',
+      'Fit the mismatched replacement module straight into the existing series string',
+      'It does not matter — all modules wired in series are electrically equivalent',
+      'Don\'t mix in one string: replace the whole string, or move the odd module to a separate MPPT',
+      'Reverse the polarity of the replacement module before fitting it into the string',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Series strings are current-limited by the weakest cell, and module-to-module mismatch in V_mp / I_mp drives the operating point off-MPP for every mismatched module. The PWI common mistakes list flags "mixing different Voc modules in the same string" explicitly. On a 5–10 year old install where the original module is no longer manufactured, the practical move is usually a whole-string replacement with matched current-generation modules. Where that\'s commercially impractical, the mismatched module goes on a separate MPPT input.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A 3-string parallel array commissioning test shows string A produces V_oc 498 V and 12.6 A, string B produces V_oc 497 V and 12.5 A, string C produces V_oc 470 V and 11.5 A at the same moment under similar irradiance. What does this most likely indicate?',
     options: [
-      'Normal variation',
-      'String C is materially below A and B — most likely cause is a loose connection, a faulty module, a wiring fault dropping voltage, or a partial-shade condition. Investigation: isolate string C, test each module individually for V_oc, check all DC connections at the combiner box, check the MC4 connectors on each module pair',
-      'String C is producing more power',
-      'The inverter is faulty',
+      'Normal variation between strings under similar field irradiance conditions',
+      'String C is actually producing more power than strings A and B combined',
+      'The inverter itself is faulty and is dragging string C down to a lower output',
+      'String C is materially low — likely a loose connection, faulty module or shade to investigate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A 28 V V_oc deficit on string C (the equivalent of one missing module of ~28 V V_oc — roughly two-thirds of a typical 41.6 V module V_oc) indicates a partial fault. The PWI grounding flags this exact pattern: significantly lower power generation indicating "possible loose wire connection or a short circuit between solar panels within the array". The investigation discipline: isolate the affected string, test each module individually, check MC4 connections, check combiner box wiring. Don\'t test the string only as a whole — module-level diagnostics catch the fault location.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Reg 712.433.101.1 defines how Upc_max (maximum continuous PV circuit voltage) and Isc_max (maximum short-circuit current) are determined. Where do these values feed into the design?',
     options: [
-      'Nowhere — they are informational',
-      'Upc_max drives the cold-morning V_oc string sizing AND the blocking diode reverse voltage rating (≥ 2 × Upc_max). Isc_max drives the per-string overcurrent protective device sizing (typically 1.25–1.5 × Isc_max) AND the blocking diode rated current (≥ 1.1 × Isc_max)',
-      'They define the MCS Product List eligibility only',
-      'They apply only to off-grid systems',
+      'Nowhere — they are purely informational datasheet values',
+      'They define the module\'s MCS Product List eligibility only',
+      'Upc_max drives cold-day V_oc sizing and blocking-diode reverse rating (≥2×); Isc_max drives string OCPD sizing and blocking-diode current (≥1.1×)',
+      'They apply only to off-grid (non-grid-tied) PV systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Upc_max and Isc_max are the two design-driving parameters at the PV string level. Upc_max feeds the cold-day V_oc calculation (against the inverter\'s absolute maximum), the blocking diode reverse voltage rating, and the insulation system selection. Isc_max feeds the per-string overcurrent protective device sizing, the DC cable thermal rating, and the blocking diode rated current. Both are calculated per Reg 712.433.101.1\'s method (typically involving the module datasheet I_sc and V_oc with temperature and irradiance scaling factors).',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'A small off-grid PV install proposes 2 modules in parallel (rather than series) feeding a 12V battery via a PWM charge controller. Reg 712.431 says no overcurrent protection required for 1 or 2 parallel strings. Is the design compliant?',
     options: [
-      'No — parallel-only is non-compliant',
-      'Yes on the string-protection point — 2 strings in parallel are exempt from Reg 712.431 overcurrent requirements. Other design checks still apply: cable sizing to handle 2 × I_sc, blocking diode protection if used (with the BS 7671 ≥2×Upc_max / ≥1.1×Isc_max ratings), and the Section 551 / Chapter 82 / Chapter 57 framework if the system grid-ties or battery-couples',
-      'Only if the modules are < 100 W',
-      'No — overcurrent protection always required',
+      'No — a parallel-only string arrangement is non-compliant under Reg 712.431',
+      'Yes on string protection — 2 strings are exempt; cable, diode and battery rules still apply',
+      'It is compliant only where each PV module is rated below 100 W',
+      'No — per-string overcurrent protection is always required regardless of string count',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'A PV string commissioning test should record what baseline values for future fault diagnosis?',
     options: [
-      'Just the inverter\'s self-test result',
-      'String-level V_oc, string-level I_sc (or short-circuit current measured per BS EN 62446-1 methodology), insulation resistance to earth (typically > 1 MΩ), continuity of the protective conductor, and the date/time/irradiance/temperature conditions of the test. Combined with the BS 7671 Section 712 inspection items and the IET CoP for Grid-Connected Solar PV procedures',
-      'Just the inverter LED indicators',
-      'The customer\'s satisfaction rating',
+      'String V_oc, I_sc, insulation resistance, continuity and the test conditions (per BS EN 62446-1)',
+      'Only the inverter\'s internal self-test pass/fail result recorded at commissioning',
+      'Only the state of the inverter front-panel LED status indicators at handover',
+      'Only the customer\'s satisfaction rating recorded at the handover visit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Baseline test values are the diagnostic gold-standard for future faults. A later EICR can compare current string V_oc / I_sc / IR readings against the commissioning baseline at similar conditions and detect drift, partial faults, or module degradation. The PWI grounding flags "not recording baseline Voc/Isc for comparison" as a common-mistake item. The baseline package: V_oc, I_sc (or measured short-circuit current per BS EN 62446-1), insulation resistance, continuity, and the conditions at test. The IET CoP for Grid-Connected Solar Photovoltaic Installations is the operational reference.',
   },

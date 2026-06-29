@@ -16,9 +16,9 @@ const quickCheckQuestions = [
     question: 'What is electricity?',
     options: [
       'The flow of electric charge through a circuit',
-      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\'s instructions',
-      'Communication errors, RCD trips, or contactor failures',
-      'A tax calculation from HMRC showing your annual income',
+      'The pressure that holds atoms together',
+      'A type of magnetic field around a wire',
+      'The heat given off by a resistor',
     ],
     correctIndex: 0,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 'ac-vs-dc',
     question: "What's the difference between AC and DC?",
     options: [
-      'They cannot verify compliance due to limitations',
-      'Dressed neatly with no tangles',
-      'Materials compatibility and fire safety',
+      'AC is safer than DC at all voltages',
+      'AC carries more charge per electron than DC',
+      'AC is only used in batteries, DC in the mains',
       'AC changes direction, DC flows one way',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is electricity?',
     options: [
-      'Very small diameter tubing for blown fibre installation',
+      'A liquid that flows through copper pipes',
       'A form of energy created by the movement of electrons',
-      'Domestic Class 2 double-insulated lighting',
-      'Verify RCD operation time and trip current',
+      'A gas that builds up inside cables',
+      'A chemical reaction inside a switch',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of these are sources of electricity?',
     options: [
-      'Assume RCD protection is compromised',
-      'Inside the bath or shower basin',
-      'Green and yellow bi-colour',
+      'Switches and sockets',
+      'Cables and conduit',
+      'Fuses and circuit breakers',
       'Power stations and solar panels',
     ],
     correctAnswer: 3,
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 9,
     question: "What happens if there's a break anywhere in an electrical circuit?",
     options: [
-      'Practical installation, inspection, and testing scenarios',
+      'The current flows faster to compensate',
       'Nothing works because the circuit is incomplete',
-      'To subtract lead resistance from readings',
-      'To advise the employer on health and safety matters',
+      'The voltage doubles across the break',
+      'Only the lights stay on, not the sockets',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is it important for apprentice electricians to understand what electricity is?',
     options: [
-      'Burn caused by electric arc/flash producing intense heat',
-      'When they have a mortgage or dependants who rely on their income',
+      'It is only needed to pass the final exam',
+      'It removes the need to follow safety procedures',
       'It helps with material selection, safety, and fault finding',
-      'The supplier or manufacturer of the hazardous substance',
+      'It allows them to work without supervision immediately',
     ],
     correctAnswer: 2,
     explanation:

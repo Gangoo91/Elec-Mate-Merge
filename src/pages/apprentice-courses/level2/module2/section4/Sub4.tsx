@@ -38,9 +38,9 @@ const checks = [
     question:
       'You’re reducing a network that has parallel branches in the middle of a series chain. Which do you reduce first?',
     options: [
-      'To prevent stress on electrical connections from cable movement',
-      'To verify that the protective conductor can withstand fault currents',
-      'Tell the appointed first aider so the bottle is replaced before the next person needs it',
+      'Add all the resistors together first, then divide by how many there are',
+      'Reduce the series resistors first, then combine the parallel branches',
+      'Start with the largest resistor and work down to the smallest',
       'Reduce the parallel sections first, then add the series resistors to the result',
     ],
     correctIndex: 3,

@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A fusion splicer rejects a cleave with the message "cleave angle 2.4°". What is the technician\u2019s correct response?',
     options: [
-      'Force-splice anyway — 2.4° is close enough.',
-      'Re-cleave. The cleave angle is the deviation from perpendicular at the fibre endface; modern fusion splicers reject angles above ~1° (typical pass: ≤ 0.5° for SM, ≤ 1.0° for MM). A poor cleave angle introduces fibre-to-fibre offset at the splice and either fails the fusion arc-test or splices with elevated loss. Strip back further, clean with IPA, re-cleave, re-inspect.',
-      'Reduce the splicer arc duration.',
-      'Adjust the polish grade.',
+      'Force-splice anyway — 2.4° is close enough to perpendicular for a good joint.',
+      'Re-cleave — splicers reject angles above ~1°; strip back, clean and re-cleave.',
+      'Reduce the splicer arc duration and power to compensate for the cleave angle.',
+      'Adjust the connector polish grade on the ferrule before completing the splice.',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'A small retrofit job needs four fibre terminations. Time pressure is high; the team has no fusion splicer. Which termination method is the appropriate fallback?',
     options: [
-      'Epoxy-and-polish field connectors — fastest of all options.',
-      'Pre-polished field connectors (mechanical-splice or fusion-splice-on style) — 2-5 minutes per termination, factory-polished ferrule stub, mechanical-splice or in-connector fusion bonds the field fibre. Higher per-connector loss (~0.5 dB) and shorter service life than pigtailed fusion, but appropriate for time-constrained small jobs.',
-      'Bare-fibre crimp connectors.',
-      'Twist the cores together.',
+      'Epoxy-and-polish field connectors, treated here as the fastest of all the options.',
+      'Pre-polished field connectors — 2-5 min each on a factory-polished stub.',
+      'Bare-fibre crimp connectors for a rapid no-splice mechanical termination.',
+      'Twist the cleaved fibre cores together and sleeve the resulting joint.',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'You are presented with a 2 m fibre cable, polished LC connector at one end, bare cleaved fibre at the other. What is this assembly called and how is it used?',
     options: [
-      'A duplex patch cord — used to patch two switches together.',
-      'A pigtail — a factory-terminated single-ended assembly used as the demountable interface in fusion-splice-on terminations. The bare end is fusion-spliced to the field fibre inside a splice tray; the LC end then plugs into a patch panel. Pigtailed-fusion is the professional default for permanent fibre cable terminations.',
-      'A scrap reel.',
-      'An OTDR launch cord.',
+      'A duplex patch cord, used to patch two network switches directly together.',
+      'A pigtail — single-ended; the bare end fusion-splices to the field fibre.',
+      'A scrap reel of offcut fibre awaiting disposal at the end of the job.',
+      'An OTDR launch cord, used to set the dead-zone test reference point.',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'A 200 m OS2 link has 6 fusion splices and 4 connector pairs. Using typical loss values, what is the approximate end-to-end insertion loss budget the link should be tested against?',
     options: [
-      '0.1 dB total.',
-      'Approximately: 200 m × 0.4 dB/km (OS2) ≈ 0.08 dB fibre + 6 × 0.1 dB ≈ 0.6 dB splice + 4 × 0.3 dB ≈ 1.2 dB connector pairs ≈ 1.9 dB total. Tested at 1310 nm; OS2 attenuation specification is the dominant variable, splice and connector loss should be measured and compared against typical values.',
-      'Exactly 6 dB.',
-      'It depends only on cable length.',
+      'About 0.1 dB total for the whole 200 m link across all components.',
+      '≈1.9 dB — 0.08 dB fibre + 0.6 dB splices + 1.2 dB connector pairs.',
+      'Exactly 6 dB regardless of the splices, connectors or fibre length.',
+      'It depends only on the cable length and nothing else about the link.',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the difference between a "fusion splice" and a "mechanical splice"?',
     options: [
-      'Fusion splice uses electricity; mechanical splice uses glue.',
-      'A fusion splice fuses the two cleaved fibre ends together with a precisely-controlled electric arc inside a fusion splicer — the result is a continuous glass fibre with typically 0.05-0.1 dB loss and very high long-term reliability. A mechanical splice physically aligns the two cleaved fibres in a small mechanical fixture (often gel-filled, sometimes with a clamping mechanism), giving typically 0.1-0.2 dB loss; quicker to install in the field, more consumable cost, less robust over decades.',
-      'They are the same thing.',
-      'Fusion is for multimode only.',
+      'Fusion arc-welds the cleaved ends into continuous glass; a mechanical splice clamps them.',
+      'A fusion splice uses an electric arc while a mechanical splice uses optical index glue.',
+      'They are simply two different trade names for exactly the same jointing process.',
+      'Fusion splicing can only ever be used on multimode fibre, never single-mode.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fusion is the higher-quality, higher-tooling-cost option (a fusion splicer is £3-15k of equipment); the splice loss is very low and the joint behaves as a continuous glass fibre. Mechanical splice is field-friendly (no high-tooling investment, gel-filled aligner does the geometry), at the cost of higher loss and lower long-term reliability — gel can dry out, mechanical components can shift over years. The professional default for permanent terminations is fusion. Mechanical is a fallback for emergency repairs or budget-constrained jobs.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does a fibre cleaver actually do, and why is cleaver geometry critical?',
     options: [
-      'It cuts the fibre with a sharp blade.',
-      'It scores the cladding with a precisely-positioned diamond or ceramic blade and applies a controlled tensile / bending force to fracture the fibre cleanly across a single perpendicular plane. The geometry of the cleave (angle ≤ 0.5-1° from perpendicular, no hackles, no chips) determines splice loss because the cleaved face is what the splicer fuses or what the connector ferrule bonds against. A poor cleave guarantees a poor termination.',
-      'It strips the buffer coating.',
-      'It polishes the endface.',
+      'It simply cuts straight through the glass fibre with a single sharp diamond blade.',
+      'It strips the buffer coating back to expose the bare glass before splicing.',
+      'It scores then fractures the glass to a clean perpendicular face for splicing.',
+      'It polishes the cleaved fibre endface to the required ferrule contact grade.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A cleaver does NOT "cut" the fibre — it scores and fractures the glass under controlled tension to give a clean, perpendicular endface. Production-grade cleavers achieve cleave angles routinely under 0.5°. Hand-held cleavers are operator-dependent. Modern fusion splicers inspect the cleave automatically and reject poor geometries. Cleaver maintenance (blade rotation / replacement, debris cleaning, V-groove cleanliness) directly drives splice quality.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'What is the typical insertion-loss contribution of a single fusion splice in a single-mode link?',
     options: [
-      '0.5-1.0 dB.',
-      'Typically 0.05-0.1 dB. A modern fusion splicer with good cleaves achieves &lt; 0.1 dB routinely; production-grade SM-SM splices can be 0.02-0.05 dB. This is an order of magnitude better than a connector pair (~0.2-0.5 dB) which is why fusion-spliced pigtails into a connector panel are the lowest-loss permanent termination.',
-      '1-3 dB.',
-      'There is no loss at a fusion splice.',
+      'Typically 0.5-1.0 dB of insertion loss per single fusion splice.',
+      'Typically 1-3 dB of insertion loss per single fusion splice.',
+      'There is effectively no measurable insertion loss at a fusion splice.',
+      'Typically 0.05-0.1 dB — well below a single mated connector pair.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A clean fusion splice with proper cleaves is typically 0.05-0.1 dB on SM, 0.1-0.2 dB on MM. The splicer reports an estimated splice loss based on automated image analysis of the fused joint — this is an estimate, not a measurement; bidirectional OTDR is the way to get a true splice-loss measurement. Loss is dominated by core misalignment and contamination at the cleave faces.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Why is "pigtailed-fusion" the modern professional default for permanent fibre terminations?',
     options: [
-      'Because pigtails are cheaper than patch cords.',
-      'Because the pigtail brings a factory-polished, factory-inspected connector ferrule to the cable termination, fusion-spliced to the field fibre — combining the lowest-loss permanent joint (fusion splice ~0.05-0.1 dB) with the highest-quality demountable interface (factory-polished connector). Field-polished connectors and mechanical-splice connectors cannot match either of these on quality, consistency or long-term reliability.',
-      'It is the cheapest method.',
-      'It avoids the need for a fusion splicer.',
+      'It pairs the lowest-loss permanent fusion joint with a factory-polished connector.',
+      'Because a single-ended pigtail costs less to buy than a double-ended patch cord.',
+      'Because it is simply the cheapest available fibre termination method on the market.',
+      'Because it avoids the need to own or hire a fusion splicer for the job at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pigtailed-fusion combines two factory-controlled processes (pigtail polish, factory inspection) with one field-controlled process (the fusion splice itself, which is highly automated). Loss budget: ~0.05-0.1 dB fusion + ~0.2-0.5 dB connector pair at the demountable interface. Compare to field-polished epoxy connectors (~0.5-1 dB per connector with widely variable consistency) or mechanical-splice connectors (~0.5-1 dB, lower long-term reliability). Pigtailed-fusion is also the most maintainable — a damaged connector is replaced by re-splicing onto a new pigtail, no field polishing required.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the appropriate fibre handling protocol from drum to splice tray?',
     options: [
-      'Pull and splice — the speed of installation is the priority.',
-      'Pull cable to the enclosure within manufacturer pulling-tension and bend-radius limits (BS EN 50174-2), strip outer jacket and aramid back to expose the buffered fibres, route the fibres into the splice tray with appropriate slack (300 mm minimum loop for tray-handling), strip the 900 µm or 250 µm buffer to bare fibre, clean with lint-free wipe and 99 % IPA, cleave, fusion-splice to the pigtail, sleeve-protect with a heat-shrink splice protector, lay into the splice tray, and close. Bend radius and slack management are not optional.',
-      'Strip everything in the field, splice on site, lay loose in the bottom of the box.',
-      'Use only outdoor-rated cable.',
+      'Pull and splice as fast as possible — installation speed is the only priority here.',
+      'Strip everything in the field, splice on site, and lay the bare fibres loose in the box.',
+      'Pull within limits, route with slack, clean, cleave, splice, sleeve and lay in the tray.',
+      'Insist on outdoor-rated armoured cable for the whole route regardless of the path.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fibre handling is process-driven. Pull tension and bend radius limits in BS EN 50174-2 protect the cable mechanical integrity during install. Slack management at the splice tray is what protects the fibres from minimum-bend-radius violations as the tray is opened, repositioned, or has additional splices added later. Cleanliness at the cleave (lint-free wipe + IPA) is what gives the splicer a clean glass surface to fuse. Heat-shrink splice protectors mechanically and environmentally protect the bare-glass joint. Skipping any step costs splice loss, reliability, or both.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a "fusion-splice-on connector" (FSOC) and where is it used?',
     options: [
-      'A connector that is itself fusion-spliced to the cable.',
-      'A field-installable connector that contains a factory-polished short fibre stub inside the connector body, with a small fusion-splice cavity at its rear. The installer cleaves the field fibre, inserts it, the integral fusion splicer (or a separate splicer) fuses field fibre to stub, and the splice is captured inside the connector. Combines pigtail-quality polish with field-installable convenience — typical loss 0.1-0.2 dB, higher than pigtailed-fusion in a tray but lower than mechanical-splice connectors.',
-      'A device for joining two patch panels.',
-      'A measurement tool.',
+      'A fibre connector permanently moulded onto the cable end at the factory.',
+      'A passive coupling device used purely to join two fibre patch panels together.',
+      'A handheld measurement tool for checking field termination insertion loss.',
+      'A field connector with a factory-polished stub the field fibre fusion-splices to.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'FSOCs are the modern fast-deployment field connector. They give close-to-pigtail quality (factory polish on the connector ferrule end, fusion bond inside the connector body) without needing a separate splice tray. Used for retrofits, OPS (outside-plant) field repairs, FTTH access drops. Compared with mechanical-splice connectors, FSOCs have lower loss and longer service life; compared with pigtailed-fusion in a tray, they are slightly higher loss and have a shorter service life because the splice is constrained inside the connector. The right tool depends on the installation context.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'A junior asks: "the cleaver blade looks fine — why does my cleaver keep producing &gt; 2° cleaves?"',
     options: [
-      'The fibre is faulty.',
-      'Cleaver maintenance issues. Most likely: the blade has cycled past its rated number of cleaves and the diamond / ceramic edge is worn even though it visually looks fine; or the V-groove that holds the fibre is contaminated with debris from previous cleaves; or the clamping force is mis-set; or the fibre has not been stripped to the correct length before insertion. Service the cleaver: clean the V-groove with lint-free wipe, advance the blade to a fresh angular position (rotational cleavers have multiple positions), check the clamping fixtures, and re-test.',
-      'The fibre is multimode.',
-      'The cleaver needs to be returned to the manufacturer.',
+      'Cleaver maintenance — a worn blade, contaminated V-groove or mis-set clamping.',
+      'The fibre itself is faulty along that section and the reel needs discarding.',
+      'The fibre is multimode rather than single-mode and cannot be cleaved cleanly.',
+      'The cleaver is beyond field repair and must be returned to the manufacturer.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A cleaver is a precision tool with a hard service-cycle life. Production cleavers track blade-cycle counts and prompt blade rotation or replacement at thresholds. V-groove contamination from previous cleaves is one of the most common causes of bad cleave angles — the fibre is not held perpendicular to the score-and-fracture path. Cleaning protocol: lint-free wipe with IPA on the V-groove between every few cleaves, blade rotation per manufacturer guidance, periodic full service.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'A field connector kit advertises "0.3 dB typical loss". What does that mean in practice for a 4-connector channel?',
     options: [
-      'The total channel loss is 0.3 dB.',
-      'Each connector pair is typically 0.3 dB; over 4 connectors that is 1.2 dB of channel loss from connectors alone, before adding cable attenuation and splice loss. Whether this fits inside the channel budget depends on the link design (length, fibre type, services). On a tight Ethernet budget (e.g. 10GBASE-SR with 2.6 dB total budget for OM4 at 300 m), four 0.3 dB connectors leaves only 1.4 dB for fibre + splices. Plan the budget BEFORE picking the connector grade.',
-      'It only applies to single-mode links.',
-      'It is a marketing figure with no technical meaning.',
+      'The total channel loss is 0.3 dB shared across all four connector pairs.',
+      'The figure applies only to single-mode links and never to multimode links.',
+      'It is 0.3 dB per pair — four pairs is 1.2 dB before fibre and splice loss.',
+      'It is a pure marketing figure with no real technical meaning for budgets.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Connector loss adds up. A "typical 0.3 dB" connector pair across 4 mating points consumes 1.2 dB of channel budget — meaningful on a tight Ethernet link. The discipline: calculate the link budget (fibre loss + splice loss + connector loss × number of connector pairs) and compare against the standard\u2019s allowed channel loss for the target service. Budget headroom should be at least 1 dB to absorb future patching, ageing, and minor contamination. If the budget is tight, choose lower-loss connectors (factory-polished pigtails) over higher-loss field connectors.',
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'What is the role of a "splice protector" sleeve, and why must one be applied to every fusion splice?',
     options: [
-      'Decorative — colour-codes the fibre.',
-      'Mechanical and environmental protection. The fusion-spliced bare-glass joint is mechanically fragile (no buffer coating, no jacket) — any flexion or stress will fracture the glass at the splice. A heat-shrink splice protector contains a bonded-in stainless steel reinforcement rod and an inner adhesive that, when shrunk, captures the splice in a rigid, sealed, environmentally-protected sleeve. The sleeve is then laid into the splice tray. No splice goes into a tray without one.',
-      'Electrical insulation only.',
-      'Optional in dry environments.',
+      'It is decorative, colour-coding each spliced fibre as it sits in the splice tray.',
+      'It provides electrical insulation of the spliced joint and nothing more.',
+      'It is optional, and is only really needed in damp or outdoor environments.',
+      'It mechanically and environmentally protects the fragile bare-glass joint.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A splice protector is mandatory. The fused glass joint is fragile until the protector is applied — even small bends will fracture it. Standard protector: 40 mm or 60 mm transparent heat-shrink with internal stainless reinforcement, adhesive lining. Apply BEFORE moving the fibre, shrink with the splicer\u2019s integral oven, allow to cool, then route into the splice tray. Production splicers track and prompt the protector application step automatically.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'For a permanent termination on a critical infrastructure link (e.g. a campus backbone), which termination method is the most appropriate?',
     options: [
-      'Mechanical-splice field connector for speed.',
-      'Pigtailed fusion-splice into a patch panel — lowest-loss, highest-reliability, longest-service-life option. Each fibre terminates with a fusion splice (~0.05-0.1 dB) onto a factory-polished pigtail (factory-controlled connector polish), captured in a splice tray, with an LC connector at the patch panel for the demountable interface. This is the professional default for any permanent or critical termination.',
-      'Pre-polished field connector for cost.',
-      'Bare-fibre crimp.',
+      'Pigtailed fusion-splice into a patch panel — lowest-loss and longest service life.',
+      'A mechanical-splice field connector chosen mainly for fast installation speed.',
+      'A pre-polished field connector chosen mainly to keep the material cost down.',
+      'A bare-fibre crimp connector chosen for a quick on-site mechanical termination.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For critical or long-life terminations, pigtailed fusion is the right answer. Total per-termination loss is 0.25-0.6 dB (fusion + connector pair); long-term reliability is the highest of any field termination method; replacement of a damaged connector is a single re-splice onto a new pigtail. Mechanical-splice and pre-polished connectors are appropriate for time-pressured or budget-constrained small jobs, OPS repairs, or temporary terminations — not for critical permanent infrastructure.',
   },

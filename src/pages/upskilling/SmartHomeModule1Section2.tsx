@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'hvac-efficiency',
     question: 'How do smart HVAC systems improve energy efficiency?',
     options: [
-      'By running continuously at maximum power',
       'Through zone control and learning user patterns',
+      'By running continuously at maximum power',
       'By disabling all automation features',
       'Through manual-only temperature adjustments',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Smart HVAC systems improve efficiency through zone control, learning user patterns, and adjusting temperatures based on occupancy and external conditions.',
   },
@@ -42,11 +42,11 @@ const quickCheckQuestions = [
       'Which feature makes smart homes particularly beneficial for users with mobility limitations?',
     options: [
       'Complex touch screen controls',
-      'Voice control and automated assistance',
       'Manual switches throughout the property',
       'Reduced device functionality',
+      'Voice control and automated assistance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Voice control and automated assistance allow users with mobility limitations to control their home environment without physical interaction with switches or controls.',
   },
@@ -56,8 +56,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What percentage of energy savings can smart lighting systems typically achieve?',
-    options: ['5-10%', '15-25%', '30-60%', '80-90%'],
-    correctAnswer: 2,
+    options: ['30-60%', '5-10%', '15-25%', '80-90%'],
+    correctAnswer: 0,
     explanation:
       'Smart lighting systems can typically achieve 30-60% energy savings through occupancy sensing, daylight harvesting, and automated scheduling.',
   },
@@ -67,11 +67,11 @@ const quizQuestions = [
       'Which smart lighting feature adjusts artificial light based on natural daylight levels?',
     options: [
       'Colour temperature control',
-      'Daylight harvesting',
       'Motion sensing',
+      'Daylight harvesting',
       'Scene programming',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Daylight harvesting automatically adjusts artificial lighting levels based on the amount of natural daylight entering a space, reducing unnecessary energy consumption.',
   },
@@ -80,11 +80,11 @@ const quizQuestions = [
     question: 'What is zone control in smart HVAC systems?',
     options: [
       'Heating the entire building uniformly',
-      'Independent temperature control for different areas',
       'Manual thermostat adjustment',
       'Single-point temperature sensing',
+      'Independent temperature control for different areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Zone control allows different areas of a building to be heated or cooled independently, optimising comfort and reducing energy waste in unoccupied zones.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 5,
     question: 'What type of smart home feature can detect water leaks and prevent flooding?',
     options: [
-      'Smart lighting',
       'Environmental sensors',
+      'Smart lighting',
       'Voice assistants',
       'Entertainment systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Environmental sensors can detect water leaks, humidity changes, and other conditions that might indicate flooding risk, allowing for early intervention.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'What accessibility benefit do voice-controlled smart home systems provide?',
     options: [
       'Louder audio feedback',
-      'Hands-free control of home functions',
       'More physical switches',
       'Complex menu navigation',
+      'Hands-free control of home functions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Voice control enables hands-free operation of lighting, climate, entertainment, and security systems, particularly beneficial for users with mobility or dexterity limitations.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'What type of sensor is commonly used to optimise HVAC operation based on room usage?',
     options: [
-      'Light sensors',
       'Occupancy and presence sensors',
+      'Light sensors',
       'Smoke detectors',
       'Water sensors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Occupancy and presence sensors detect whether rooms are in use, allowing HVAC systems to reduce heating or cooling in unoccupied spaces.',
   },

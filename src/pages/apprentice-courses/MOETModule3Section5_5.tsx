@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 'load-priority',
     question: 'How are electrical loads typically categorised for critical load management?',
     options: [
-      'Into priority tiers: life safety (highest — fire alarm, emergency lighting), critical (essential operations — IT, medical, process), essential (important but deferrable — HVAC, general lighting) and non-essential (lowest — convenience loads)',
-      'Heart rate exceeding approximately 100 beats per minute (outside of physical exertion), accompanied by difficulty thinking clearly, tunnel vision, or an urge to flee or fight',
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
-      '6 mm² — IET GN1 method is BS 7671-aligned and is what the EIC will be judged against. The manufacturer datasheet is product-specific minimum; BS 7671 cable selection is installation-specific worst-case (with all derating factors). Specify the higher of the two.',
+      'Into priority tiers: life safety, critical, essential and non-essential',
+      'By the colour of the circuit cable used to supply each load',
+      'By the order in which the circuits appear on the distribution board chart',
+      'By the physical floor area served by each circuit, largest first',
     ],
     correctIndex: 0,
     explanation:
@@ -30,10 +30,10 @@ const quickCheckQuestions = [
     id: 'demand-response',
     question: 'What is the purpose of automated load shedding during generator operation?',
     options: [
-      "MCBs to BS EN 60898 (Types B, C and D), and similar overcurrent devices to BS EN 61009-1 (RCBOs) at U₀ = 230 V.",
-      "Provide a thorough verbal briefing backed up by written documentation covering work completed, outstanding issues and safety status",
-      "To prevent the generator from being overloaded by automatically disconnecting non-essential loads when the total demand exceeds the generator's rated capacity",
-      "EAWR (almost always Reg 4, sometimes Reg 14 or 16) — brought by the Health and Safety Executive (HSE), or in a domestic context the Local Authority. HASAWA s.7 may be charged in parallel.",
+      "To balance the load evenly across all three phases of the generator",
+      "To improve the power factor of the loads supplied by the generator",
+      "To prevent generator overload by shedding non-essential loads when demand exceeds its rated capacity",
+      "To switch the load back to the mains supply as soon as it is restored",
     ],
     correctIndex: 2,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     question:
       'What does a power quality analyser measure that is relevant to critical load management?',
     options: [
-      '09:00 — half an hour early. Gives you time to use the toilet, settle nerves, sign in, get briefed, and not start the paper with adrenaline still spiking from a rushed arrival.',
-      'The ability to trace the complete history of an asset\\\\\\\\\\\\\\\'s maintenance back to specific dates, personnel and documentation',
-      'In must be at or above Ib so it does not nuisance-trip; Iz must be at or above In so the cable can carry the trip current long enough for the device to operate without cooking the cable.',
-      'Voltage, current, power factor, harmonics, voltage dips and swells, frequency variations and transient events — providing a comprehensive picture of the supply quality',
+      'Only the total energy consumed in kWh over a billing period',
+      'Only the insulation resistance of the cables supplying each load',
+      'Only the peak demand recorded during the working day',
+      'Voltage, current, power factor, harmonics, dips, swells, frequency and transient events',
     ],
     correctIndex: 3,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'restoration-sequence',
     question: 'Why must loads be restored in a controlled sequence after a power outage?',
     options: [
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
-      'Recommended for final circuits in dwellings, with mandatory installation in higher-risk residential buildings (HRRBs) under the Building Safety Act 2022',
-      'Ensuring, so far as reasonably practicable, the H&S of all employees — including safe systems, training, premises and a written policy where 5+ employees',
-      'Simultaneous re-energisation causes massive inrush currents from motors, transformers and capacitors — potentially overloading the supply or generator and tripping protection devices, causing a second outage',
+      'To allow the electricity supplier time to reset the maximum demand indicator',
+      'To give priority to whichever circuits tripped most recently before the outage',
+      'To reduce the standing charge applied to the supply during the outage period',
+      'Simultaneous re-energisation causes massive inrush that can overload the supply and re-trip protection',
     ],
     correctIndex: 3,
     explanation:
@@ -76,10 +76,10 @@ const quizQuestions = [
     id: 1,
     question: 'A load schedule for critical load management should include:',
     options: [
-      'Because UKAS accreditation ensures the laboratory meets standards for competence, quality and reliability of results',
-      'Every circuit listed with its connected load, diversity factor, demand load, priority category and the supply source (normal, essential, critical, life safety)',
-      'The physical position and arrangement of components within the panel enclosure, including DIN rails, cable ducts, and mounting locations',
-      'A statutory fallback scheme that implies payment and adjudication terms into construction contracts that do not already comply with the Construction Act',
+      'Only the total maximum demand of the building, with no breakdown by circuit',
+      'Each circuit with its connected load, diversity, demand load, priority category and supply source',
+      'Only the circuits connected to the standby generator, ignoring all others',
+      'Only the cable type and length for each circuit, with no load information',
     ],
     correctAnswer: 1,
     explanation:
@@ -89,23 +89,23 @@ const quizQuestions = [
     id: 2,
     question: 'Diversity factor in load management calculations represents:',
     options: [
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      'Causing additional heating in cables, transformers and generators, reducing their effective capacity and potentially causing nuisance tripping of protection devices',
-      'The ratio of actual maximum demand to the total connected load, accounting for the fact that not all loads operate simultaneously at full power',
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
+      'The proportion of a generator’s output that is lost as heat during operation',
+      'The percentage of harmonic current produced by non-linear loads',
+      'The ratio of actual maximum demand to total connected load, since not all loads run at once',
+      'The number of separate supply sources feeding a single distribution board',
     ],
     correctAnswer: 2,
     explanation:
-      'Diversity recognises that not all connected loads operate simultaneously. For example, a building with 100 kW of connected lighting load may have a diversity factor of 0.7, meaning the actual maximum demand is 70 kW. BS 7671 Appendix 1 provides typical diversity factors for different installation types. Accurate diversity estimation is critical for generator sizing — overestimating diversity leads to an undersized generator; underestimating leads to an oversized (and inefficient) generator.',
+      'Diversity recognises that not all connected loads operate simultaneously. For example, a building with 100 kW of connected lighting load may have a diversity factor of 0.7, meaning the actual maximum demand is 70 kW. The IET On-Site Guide provides typical diversity allowances for different installation types. Accurate diversity estimation is critical for generator sizing — overestimating diversity leads to an undersized generator; underestimating leads to an oversized (and inefficient) generator.',
   },
   {
     id: 3,
     question: 'Power factor correction is important for critical load management because:',
     options: [
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      'Poor power factor increases apparent power demand (kVA) for the same real power (kW), reducing the effective capacity of generators, UPS systems and distribution equipment',
+      'It increases the real power (kW) drawn by each load on the system',
+      'It removes the need for a standby generator on critical installations',
+      'It eliminates harmonic currents produced by non-linear loads',
+      'Poor power factor raises kVA demand for the same kW, cutting generator, UPS and distribution capacity',
     ],
     correctAnswer: 3,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 4,
     question: 'Harmonic distortion affects critical load management by:',
     options: [
-      'Causing additional heating in cables, transformers and generators, reducing their effective capacity and potentially causing nuisance tripping of protection devices',
-      'Only the device nearest to a fault operates, isolating the faulty circuit while maintaining supply to all other circuits — preventing a single fault from causing a total blackout',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+      'Heating cables, transformers and generators, derating them and causing nuisance tripping',
+      'Improving the power factor of the non-linear loads connected to the system',
+      'Increasing the autonomy time available from the standby battery bank',
+      'Reducing the inrush current drawn by induction motors when they start',
     ],
     correctAnswer: 0,
     explanation:
@@ -129,10 +129,10 @@ const quizQuestions = [
     question:
       'During an emergency (generator operation with load shedding active), the maintenance technician must:',
     options: [
-      'Poor power factor increases apparent power demand (kVA) for the same real power (kW), reducing the effective capacity of generators, UPS systems and distribution equipment',
-      'Monitor the generator loading continuously, verify that all life-safety and critical loads are energised, confirm load shedding has disconnected the correct non-essential circuits, and be prepared to manually intervene if automatic systems fail',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
-      'Providing centralised monitoring and control of all building services, enabling automated load shedding, demand limiting, scheduling of non-essential loads, and real-time power monitoring with alarm management',
+      'Immediately restore all non-essential loads to keep the building fully operational',
+      'Monitor generator loading, confirm life-safety and critical loads are fed, and stand by to intervene',
+      'Shut down the generator to conserve fuel until the mains supply returns',
+      'Disconnect the life-safety loads first to reduce the generator loading',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 6,
     question: 'A building management system (BMS) contributes to critical load management by:',
     options: [
-      'Causing additional heating in cables, transformers and generators, reducing their effective capacity and potentially causing nuisance tripping of protection devices',
-      'Only the device nearest to a fault operates, isolating the faulty circuit while maintaining supply to all other circuits — preventing a single fault from causing a total blackout',
-      'Providing centralised monitoring and control of all building services, enabling automated load shedding, demand limiting, scheduling of non-essential loads, and real-time power monitoring with alarm management',
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+      'Physically isolating each circuit during a fault using its own protective device',
+      'Generating standby power directly when the mains supply fails',
+      'Centralised monitoring and control enabling load shedding, demand limiting, scheduling and alarms',
+      'Correcting the power factor of every load connected to the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 7,
     question: "The maximum demand indicator (MDI) on a building's metering system shows:",
     options: [
-      'The ratio of actual maximum demand to the total connected load, accounting for the fact that not all loads operate simultaneously at full power',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      'A controlled sequence: life-safety loads first, then critical loads, then essential loads, with time delays between groups to prevent simultaneous inrush current from overloading the supply or generator',
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+      'The instantaneous current being drawn at the moment of reading',
+      'The total energy in kWh consumed since the meter was installed',
+      'The lowest power demand recorded during the off-peak overnight period',
+      'The highest half-hourly average demand since reset, used by the DNO for billing and capacity',
     ],
     correctAnswer: 3,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     question:
       'Selective coordination (discrimination) of protective devices in a critical power system ensures:',
     options: [
-      'Only the device nearest to a fault operates, isolating the faulty circuit while maintaining supply to all other circuits — preventing a single fault from causing a total blackout',
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
+      'Only the device nearest the fault operates, isolating that circuit and avoiding a total blackout',
+      'All protective devices in the chain operate together to isolate the whole installation',
+      'The main incoming device always trips first to give the fastest disconnection time',
+      'Only the device furthest from the fault operates, leaving the fault still energised',
     ],
     correctAnswer: 0,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     id: 9,
     question: 'Energy storage systems (batteries, flywheels) support critical load management by:',
     options: [
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
-      'Poor power factor increases apparent power demand (kVA) for the same real power (kW), reducing the effective capacity of generators, UPS systems and distribution equipment',
+      'Permanently replacing the need for a mains supply to the whole building',
+      'Ride-through power during generator start-up, peak shaving, and frequency regulation',
+      'Increasing the total connected load that the installation can support',
+      'Correcting the harmonic distortion produced by the non-linear loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 10,
     question: 'A critical load audit for an existing building should assess:',
     options: [
-      'Poor power factor increases apparent power demand (kVA) for the same real power (kW), reducing the effective capacity of generators, UPS systems and distribution equipment',
-      'The ratio of actual maximum demand to the total connected load, accounting for the fact that not all loads operate simultaneously at full power',
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
+      'Only the loads connected to the standby generator, ignoring mains-only loads',
+      'Only the age and manufacturer of each item of electrical equipment',
+      'Every load: its rating, priority, supply arrangement, and whether backup matches its criticality',
+      'Only the loads that have caused a fault or outage in the past year',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 11,
     question: 'The generator sizing margin for a critical installation is typically:',
     options: [
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
-      'Only the device nearest to a fault operates, isolating the faulty circuit while maintaining supply to all other circuits — preventing a single fault from causing a total blackout',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      '20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics',
+      'Exactly equal to the calculated maximum demand, with no additional margin',
+      'About 50% below the calculated maximum demand to keep running costs low',
+      'Double the total connected load, ignoring diversity and load shedding',
+      '20-30% above calculated demand, allowing for inrush, growth, power factor and harmonics',
     ],
     correctAnswer: 3,
     explanation:
@@ -221,10 +221,10 @@ const quizQuestions = [
     id: 12,
     question: 'Load restoration after a power outage should follow:',
     options: [
-      'A controlled sequence: life-safety loads first, then critical loads, then essential loads, with time delays between groups to prevent simultaneous inrush current from overloading the supply or generator',
-      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+      'A controlled sequence — life-safety, then critical, then essential — with delays to limit inrush',
+      'Simultaneous re-energisation of all circuits to restore the building as fast as possible',
+      'Non-essential loads first, so that comfort systems are available before critical ones',
+      'A random order, since the sequence of restoration makes no practical difference',
     ],
     correctAnswer: 0,
     explanation:

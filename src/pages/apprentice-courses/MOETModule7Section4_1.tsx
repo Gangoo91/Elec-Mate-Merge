@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'team-role-clarity',
     question: 'Why is role clarity important within an electrical maintenance team?',
     options: [
-      'Status indicator (healthy/fault), backup protection intact, connections tight, and SPD rating appropriate for the installation',
-      'Investigate why the deviation occurs, as it may reveal a flaw in the original procedure or unassessed risks',
       'It ensures every team member knows their responsibilities, reducing duplication and preventing safety gaps',
-      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
+      'It allows the most senior technician to take all decisions, removing the need for the rest of the team to communicate',
+      'It means each member can work in complete isolation, so no time is lost coordinating or briefing one another',
+      'It guarantees the job is finished faster by encouraging everyone to attempt the same critical task at once',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Role clarity ensures that every team member understands their specific responsibilities within a task. In electrical maintenance, unclear roles can lead to safety-critical tasks being missed or duplicated. For example, if two technicians both assume the other has carried out safe isolation, neither may actually do it — with potentially fatal consequences.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'toolbox-talk-purpose',
     question: 'What is the primary purpose of a toolbox talk before a maintenance task?',
     options: [
-      'Assumptions, unclear instructions, and failure to confirm understanding',
-      'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
+      'To formally record each technician\'s working hours and allocate the labour cost to the correct job number',
       'To brief the team on the task scope, hazards, roles and safety measures',
-      'Steel wire armoured (SWA) or equivalent mechanical protection',
+      'To allow the supervisor to issue verbal warnings to underperforming members in front of the group',
+      'To complete the permit-to-work paperwork so that no further isolation checks are needed on site',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A toolbox talk is a short, focused briefing that ensures every team member understands the task scope, specific hazards, individual roles, safety measures and emergency procedures before work begins. It is a key collaborative safety practice and a behaviour assessed in the EPA.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'A colleague disagrees with your approach to a fault-finding task. What is the most professional response?',
     options: [
+      'Insist on your own method and proceed, since the person who spotted the fault first should always decide',
+      'Stop speaking to the colleague and report them to the supervisor for being difficult to work with',
       'Listen to their reasoning, discuss the options and agree the safest and most effective approach together',
-      'When the enjoyable activity was exclusively available during the target behaviour',
-      'To provide a structured method for combining likelihood and severity to produce a risk rating',
-      'Electric shock, arc flash burns, potential fatality — and personal liability under EAWR 1989 Reg 14',
+      'Carry on with both methods at the same time and see which one finds the fault quickest',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Professional teamwork requires the ability to listen, discuss and negotiate. Disagreements about approach are normal in maintenance work. The correct response is to hear your colleague out, evaluate both approaches against safety and effectiveness criteria, and reach agreement. If agreement cannot be reached, escalation to a supervisor is appropriate — but only after genuine discussion.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'When working in a cross-functional maintenance team, why is it important to understand other disciplines?',
     options: [
+      'So that you can take over the mechanical and instrumentation tasks yourself and avoid relying on other trades',
+      'Because cross-functional teams remove the need for any safe isolation, as each trade trusts the others completely',
       'To coordinate work safely, understand interfaces between systems and communicate effectively across disciplines',
-      'Stopping at the first technical answer without exploring human and organisational factors',
-      'Adjusting flow temperature based on difference between room and setpoint temperature',
-      'To photograph and digitise receipts for automatic data extraction and accounting software integration',
+      'So you can identify which trade to blame if a fault recurs after the maintenance window closes',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Cross-functional understanding enables safe coordination. An electrical technician working alongside mechanical, instrumentation or HVAC engineers needs to understand how their systems interact. For example, isolating an electrical supply affects the mechanical equipment it powers — both teams must coordinate to ensure safety.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: "Belbin's team role theory suggests that effective teams need:",
     options: [
-      'Automated scheduling, searchable databases, error checking, and audit trails',
+      'Every member to adopt the same dominant role so that the team speaks with a single voice',
       'A balance of different roles including thinkers, doers and people-focused contributors',
-      'Only when direct pressure has failed to control catastrophic limb bleeding',
-      'The cumulative wear and tear on the body from chronic activation of stress response systems',
+      'As many people as possible, since larger teams always outperform smaller ones',
+      'Only highly experienced specialists, with no place for generalists or coordinators',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the primary benefit of collaborative problem-solving in fault diagnosis?',
     options: [
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
-      'It helps colleagues improve their performance, builds trust and strengthens team capability',
-      'Tasks are matched to individual competence, clearly communicated and monitored for progress',
+      'It removes the need to follow a structured diagnostic process, as the group can simply guess the cause together',
+      'It spreads the blame if the diagnosis turns out to be wrong, protecting individual technicians',
+      'It always reaches a conclusion more cheaply, because more people working means fewer labour hours overall',
       'It combines different knowledge, experience and perspectives to reach a more accurate diagnosis faster',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ const quizQuestions = [
       'A new apprentice joins your maintenance team. The best approach to supporting them is:',
     options: [
       'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
-      'Conflict, disagreement and jostling for position as team members establish working relationships',
-      'Providing a thorough verbal and written handover covering work completed, outstanding items, safety status and any issues encountered',
+      'Leave them to learn by trial and error so they develop independence as quickly as possible',
+      'Give them only menial tasks away from the team until they have completed their qualification',
+      'Let them carry out live testing unsupervised so they gain confidence working under pressure',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: "In the Tuckman model of team development, the 'storming' stage is characterised by:",
     options: [
-      'It helps colleagues improve their performance, builds trust and strengthens team capability',
+      'Polite, cautious behaviour as members get to know one another and roles remain unclear',
       'Conflict, disagreement and jostling for position as team members establish working relationships',
-      'Stop work, assess the situation together, share information and agree a safe way forward',
-      'It combines different knowledge, experience and perspectives to reach a more accurate diagnosis faster',
+      'Settled, productive working patterns with roles accepted and mutual respect established',
+      'The team disbanding once the project or shutdown has been completed',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'When delegating tasks within a maintenance team, the team leader should ensure:',
     options: [
-      'Stop work, assess the situation together, share information and agree a safe way forward',
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
+      'The most difficult tasks are always given to the newest members to accelerate their learning',
+      'Tasks are shared out equally by headcount, regardless of each person\'s skills or experience',
       'Tasks are matched to individual competence, clearly communicated and monitored for progress',
-      'Conflict, disagreement and jostling for position as team members establish working relationships',
+      'Once a task is handed over, the leader steps back entirely and does not check on progress',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,9 +151,9 @@ const quizQuestions = [
     question:
       'Which of the following is an example of positive team behaviour during a complex maintenance task?',
     options: [
-      'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
-      'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
-      'It helps colleagues improve their performance, builds trust and strengthens team capability',
+      'Keeping a useful fault-finding shortcut to yourself so you remain the only one who can fix that machine',
+      'Focusing solely on your own allocated task and ignoring how the wider job is progressing',
+      'Waiting to be asked before helping, even when you can see a colleague is struggling',
       'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
       'When handing over a maintenance task to the next shift, the most important action is:',
     options: [
       'Providing a thorough verbal and written handover covering work completed, outstanding items, safety status and any issues encountered',
-      'Conflict, disagreement and jostling for position as team members establish working relationships',
-      'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
-      'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
+      'Leaving a brief note on the job card and heading home, trusting the next shift to work the rest out',
+      'Telling only the incoming shift supervisor verbally, so the information stays between the two of you',
+      'Completing all outstanding work yourself before leaving, even if it means overrunning the isolation window',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which behaviour demonstrates respect for diversity within a maintenance team?',
     options: [
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
+      'Expecting every colleague to communicate in exactly the same way you do, regardless of their background',
       'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
-      'Working effectively with others, contributing to team objectives and supporting colleagues',
-      'It helps colleagues improve their performance, builds trust and strengthens team capability',
+      'Letting only the most confident voices set the approach, since quieter members rarely have useful input',
+      'Assuming that experienced technicians always have nothing to learn from newer or differently trained colleagues',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under ST1426, which teamwork behaviour is specifically assessed in the EPA?',
     options: [
-      'Conflict, disagreement and jostling for position as team members establish working relationships',
-      'Stop work, assess the situation together, share information and agree a safe way forward',
+      'The ability to complete every task entirely alone without needing input from anyone else',
+      'A detailed theoretical knowledge of organisational psychology models such as Belbin and Tuckman',
       'Working effectively with others, contributing to team objectives and supporting colleagues',
-      'Clear, timely communication of progress, delays and safety issues to all team members',
+      'The number of overtime hours volunteered during planned shutdowns over the apprenticeship',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
       'Why is giving constructive feedback to colleagues considered a valuable teamwork skill?',
     options: [
       'It helps colleagues improve their performance, builds trust and strengthens team capability',
-      'Clear, timely communication of progress, delays and safety issues to all team members',
-      'Working effectively with others, contributing to team objectives and supporting colleagues',
-      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
+      'It establishes who is at fault so that responsibility for any defect can be recorded formally',
+      'It allows you to point out weaknesses publicly, which motivates the whole team to work harder',
+      'It removes the need for any further training, since feedback alone is enough to correct unsafe practice',
     ],
     correctAnswer: 0,
     explanation:

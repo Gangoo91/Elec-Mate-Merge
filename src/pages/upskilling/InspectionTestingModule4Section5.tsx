@@ -22,12 +22,12 @@ const inlineChecks = [
     id: 'mod4-s5-floor-bands',
     question: 'A 230 V circuit reads 50 MΩ at 500 V DC. Which reading band is this in?',
     options: [
-      'At the floor — borderline pass, investigate before recording',
       'Healthy but worth monitoring — well above the 1 MΩ floor but an order of magnitude below the hundreds-of-MΩ band a new dry installation typically delivers',
+      'At the floor — borderline pass, investigate before recording',
       'Off-the-scale ideal — record and move on',
       'Fail — below the Table 64 minimum',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '50 MΩ is a comfortable pass against the 1 MΩ Table 64 minimum, but it is not the hundreds-of-MΩ a new thermoplastic cable in dry conditions delivers. It sits in the middle band — pass, but with the cable somewhere along its degradation curve. On periodic inspection it is worth flagging for monitoring. On new work, investigate why it is not higher.',
   },
@@ -37,11 +37,11 @@ const inlineChecks = [
       'A circuit reads 0.6 MΩ. You disconnect a connected halogen transformer and re-test — the reading rises to 220 MΩ. What does this tell you?',
     options: [
       'The cable is failing',
-      "The low reading was a TEMPORARY cause (the transformer's internal leakage path), not a structural cable defect. Record the cable-alone value, document the transformer disconnection in comments, and apply the 250 V DC post-connection step per Reg 643.3.3",
       'The meter was wrong on the first reading',
+      "The low reading was a TEMPORARY cause (the transformer's internal leakage path), not a structural cable defect. Record the cable-alone value, document the transformer disconnection in comments, and apply the 250 V DC post-connection step per Reg 643.3.3",
       'Both readings should be averaged',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Temporary causes — connected equipment, moisture, surface contamination, SPDs — vanish when the cause is removed. Structural causes — mechanical damage, thermal damage, age-degraded insulation — persist. The recovery from 0.6 MΩ to 220 MΩ on disconnection is diagnostic: the cable is healthy; the transformer's internal earth-leakage path was loading the test.",
   },
@@ -51,11 +51,11 @@ const inlineChecks = [
       'On a 200 m run of T&E you apply 500 V DC and the reading climbs steadily for several seconds before stabilising. What is happening, and what value do you record?',
     options: [
       'Faulty meter — discard',
-      'Cable capacitance is charging and dielectric absorption is decaying. Wait for the reading to stabilise (the meter typically holds the test voltage for a fixed dwell or you observe the live reading until it stops climbing) and record the steady-state value',
-      'Record the first reading you see',
       'Average the climb',
+      'Record the first reading you see',
+      'Cable capacitance is charging and dielectric absorption is decaying. Wait for the reading to stabilise (the meter typically holds the test voltage for a fixed dwell or you observe the live reading until it stops climbing) and record the steady-state value',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A long cable run is a long capacitor. Initial charging current and dielectric absorption combine to depress the early reading; the meter shows it climbing as the dielectric polarises. The steady-state value (after the climb stops) is the true insulation resistance. On modern testers the dwell is automatic; on simpler instruments you watch and record.',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'During an EICR you measure 0.3 MΩ on a 230 V circuit. Equipment has been disconnected. What EICR code applies?',
     options: [
-      'C3 — improvement recommended',
       'C2 — potentially dangerous, urgent remedial action required (insulation has degraded below the Table 64 minimum, fault loop integrity is compromised and continued service exposes occupants to risk)',
+      'C3 — improvement recommended',
       'C1 — danger present, immediate action',
       'No code — record and move on',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A measured IR below the Table 64 minimum on a final circuit is, by default, a C2: the protection-by-insulation principle is no longer satisfied, so a single further deterioration could create a phase-to-earth fault path. C1 is reserved for an immediately dangerous situation actually present (e.g. exposed live conductor); a low IR is rarely C1. C3 is for sub-optimal but compliant — a low-but-passing reading.',
   },
@@ -81,10 +81,10 @@ const quizQuestions = [
     question:
       'BS 7671 Table 64 sets the minimum insulation resistance values. What are the three thresholds?',
     options: [
-      '0.5 MΩ for everything',
-      'SELV/PELV: 250 V DC test, 0.5 MΩ minimum. Up to and including 500 V (excluding the above): 500 V DC test, 1.0 MΩ minimum. Above 500 V: 1000 V DC test, 1.0 MΩ minimum',
-      '1.0 MΩ on all circuits at 500 V DC',
-      'Test voltage and minimum value are decided by the inspector',
+      'A single 0.5 MΩ minimum applies to every circuit regardless of nominal voltage',
+      'SELV/PELV 0.5 MΩ; up to 500 V 1.0 MΩ; above 500 V 1.0 MΩ (at 250/500/1000 V DC)',
+      'A single 1.0 MΩ minimum on all circuits, all tested at 500 V DC',
+      'The test voltage and minimum value are left to the inspector&rsquo;s judgement',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'A 500 V DC test on a domestic ring final reads 1.4 MΩ between line conductors with all sensitive equipment disconnected. What is the correct call?',
     options: [
-      'Pass — above the 1.0 MΩ Table 64 minimum, record and move on',
-      'Fail — below 200 MΩ',
-      'Investigate further before passing — 1.4 MΩ on a clean cabling-only test is well below typical values (200+ MΩ on new T&E) and is a strong indicator of a developing fault, contamination or a load that has not been disconnected. Strictly compliant but operationally suspicious',
-      'Pass and add an SPD',
+      'Pass — it is above the 1.0 MΩ Table 64 minimum, so record it and move on',
+      'Fail — anything below 200 MΩ on a final circuit is non-compliant',
+      'Pass, but fit an SPD to the board to bring the reading up next time',
+      'Investigate before passing — 1.4 MΩ on clean cabling is compliant but operationally suspicious',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reg 643.3.2 says the result is "satisfactory" if not less than the Table 64 value. So 1.4 MΩ technically passes. But experienced inspectors recognise this as a yellow flag. Clean copper cabling with no SERDs in the path should read tens to hundreds of MΩ. Single-figure MΩ on cabling-only is the level at which "investigate" is the professional answer, even though "pass" is the regulatory answer.',
   },
@@ -108,8 +108,8 @@ const quizQuestions = [
     id: 3,
     question:
       'You are testing a SELV strip-light circuit (12 V DC LED). Per Table 64 first row, what test voltage and what minimum value apply?',
-    options: ['500 V DC, 1.0 MΩ', '250 V DC, 0.5 MΩ', '12 V DC, 0.1 MΩ', '1000 V DC, 1.0 MΩ'],
-    correctAnswer: 1,
+    options: ['500 V DC, 1.0 MΩ', '12 V DC, 0.1 MΩ', '250 V DC, 0.5 MΩ', '1000 V DC, 1.0 MΩ'],
+    correctAnswer: 2,
     explanation:
       'SELV and PELV circuits get the lowest test voltage (250 V DC) and the lowest minimum value (0.5 MΩ). The reasoning: SELV cabling is often smaller, less heavily insulated, and may include accessories that cannot withstand 500 V DC. The 0.5 MΩ floor reflects the lower nominal voltage and the consequence of a partial leakage being correspondingly less dangerous.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 has its own minimum value separate from Table 64. What is it, and when does it apply?',
     options: [
-      'Same as Table 64 — there is no separate value',
-      '≥ 1 MΩ at 250 V DC, applied between live conductors and CPC after the equipment is connected, where the equipment was disconnected for the Table 64 stage',
-      '≥ 0.5 MΩ at 500 V DC',
-      '≥ 100 MΩ for new installations only',
+      '≥ 1 MΩ at 250 V DC, lives-to-CPC, after reconnecting equipment removed for Table 64',
+      'The same value as Table 64 — there is no separate post-connection figure',
+      '≥ 0.5 MΩ at 500 V DC, applied once the equipment is back in circuit',
+      '≥ 100 MΩ, but only on brand-new installations being certified for the first time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3.3 is the post-connection verification. After equipment that was disconnected for the Table 64 test is reconnected, a single 250 V DC test is applied between live conductors and the protective conductor connected to the earthing arrangement. The acceptance criterion is ≥ 1 MΩ — this is independent of Table 64 and is the minimum the regulation accepts for any circuit with reconnected sensitive equipment.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'GN3 commentary identifies certain installation conditions where insulation resistance can be temporarily depressed. Which of these is a temporary cause that may resolve on its own?',
     options: [
-      'Crushed cable behind a screw fixing',
-      'Damp ingress at a saturated junction box following a leak — once dried out, the IR returns to normal. The remediation is to find and fix the water source; the cable insulation itself may be undamaged',
-      'Wrong polarity at a CCU',
-      'A missing CPC at a socket',
+      'A cable crushed behind a screw fixing, mechanically damaging the insulation',
+      'A missing CPC connection at a socket outlet on the circuit',
+      'Reversed line and neutral polarity at a cooker control unit',
+      'Damp ingress at a saturated junction box — once dried out, the IR returns to normal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Damp installations are the textbook temporary case. GN3 highlights that water across an accessory or in a back box can drop IR by orders of magnitude, but once the source is found and the cable dries, the reading restores. A crushed cable, wrong polarity or missing CPC are structural problems — the IR will not improve until the physical defect is fixed.',
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'You record 0.6 MΩ between L and CPC on a 230 V circuit at 500 V DC, with all SERDs disconnected. Reg 643.3.2 says the result is "satisfactory if not less than the appropriate value given in Table 64." How does this read?',
     options: [
-      'Pass — close to 1 MΩ is good enough',
-      'Fail — Table 64 row 2 minimum is 1.0 MΩ. 0.6 MΩ is non-compliant. The certificate cannot be issued for this circuit until the cause is found and resolved',
-      'Pass after a retest at 250 V DC',
-      'Pass — Table 64 only applies to new installations',
+      'Pass — at 0.6 MΩ the circuit is close enough to 1 MΩ to be acceptable',
+      'Fail — the row 2 minimum is 1.0 MΩ, so no certificate until the cause is resolved',
+      'Pass, provided the circuit is then retested at 250 V DC and clears the lower threshold',
+      'Pass — Table 64 minimum values only apply to new installations, not periodic ones',
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'A multi-circuit test at the consumer unit gives a single combined reading of 1.5 MΩ for the whole installation tested at once. What does Reg 643.3.2 require you to do?',
     options: [
-      'Accept the combined reading and record once',
-      'Each distribution circuit must be tested separately, with all its final circuits connected but with current-using equipment disconnected. A single combined reading on the whole installation is not the test the regulation requires',
-      'Test only the live tails',
-      'Test at 250 V DC instead',
+      'Accept the single combined reading for the whole installation and record it once',
+      'Test only the meter tails and treat that as representative of the installation',
+      'Test each distribution circuit separately, final circuits connected, loads disconnected',
+      'Re-run the same combined test at 250 V DC instead of 500 V DC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.3.2 is specific: "the main switchboard and each distribution circuit tested separately, with all its final circuits connected but with current-using equipment disconnected." The reasoning: a parallel combination of acceptable circuits can mask one failing circuit. The headline reading is the geometric / parallel combination, not the worst-case circuit. Test individually.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'Capacitance settling on a 500 V DC test on a circuit with several LED drivers — what is the expected behaviour, and how do you record the result?',
     options: [
-      'Reading drops over time — record the lowest value',
-      'Reading climbs over 15–60 s as the capacitors fully charge — wait for the value to stabilise and record the steady reading. The instantaneous value at the start of the test is not the insulation resistance',
-      'Reading is instantaneous — record at t=0 always',
-      'Reading is meaningless on circuits with capacitors',
+      'Reading climbs over 15–60 s as the capacitors charge — wait, then record the steady value',
+      'Reading drops steadily over time — record the lowest value reached during the test',
+      'Reading is effectively instantaneous — always record the value at the moment of pressing test',
+      'Reading is meaningless on any circuit containing capacitors and should not be recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The test current is initially absorbed by the capacitor as charging current. As the capacitor approaches full charge, the absorbed current falls to zero and what remains is the genuine leakage. The displayed insulation resistance therefore climbs from a low instantaneous value to a stable final value over 15–60 s. The stable value is the insulation reading; the instant reading is not.',
   },
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       'On an EICR, you measure 0.8 MΩ at 500 V DC on a final socket circuit, sensitive equipment disconnected. What EICR observation code is most appropriate, and why?',
     options: [
-      'C3 — improvement recommended',
-      'C2 — potentially dangerous. The reading is below the Table 64 minimum (1.0 MΩ) and indicates degraded insulation; that is a fault condition that could become dangerous under fault, especially on an RCD-protected circuit where leakage near 1 MΩ approaches the trip threshold during normal use',
-      'No code — readings between 0.5 and 1.0 MΩ are acceptable',
-      'C1 — danger present',
+      'C3 — improvement recommended, since the reading is only slightly under the minimum',
+      'C2 — below the 1.0 MΩ minimum, degraded insulation that could become dangerous under fault',
+      'No code — readings between 0.5 and 1.0 MΩ are acceptable on a periodic inspection',
+      'C1 — danger present, requiring the circuit to be made safe immediately',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'Two adjacent socket circuits on the same RCBO read 95 MΩ and 4 MΩ respectively, both at 500 V DC with sensitive equipment disconnected. Both pass Table 64. Should the inspection note flag the 4 MΩ reading?',
     options: [
-      'No — both pass',
-      'Yes — the 24× difference between adjacent circuits, all things being equal in the cable run and termination quality, is a structural anomaly. The 4 MΩ circuit warrants a Method-2-style point-by-point investigation to localise the cause (damp, contamination, marginal cable damage). Flag in comments even though the reading itself passes',
-      'Test the 95 MΩ circuit again',
-      'Replace the RCBO',
+      'No — both readings pass Table 64, so neither needs flagging',
+      'Replace the shared RCBO, as the spread points to a faulty protective device',
+      'Re-test only the 95 MΩ circuit to confirm the higher reading is genuine',
+      'Yes — the 24× spread is a structural anomaly; flag the 4 MΩ circuit and investigate it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pass / fail is one dimension. Comparison across similar circuits is another. A 24× spread between adjacent circuits is a real signal, even when both pass. Skilled inspectors flag and investigate; lazy inspectors record both as pass and move on. The 4 MΩ may resolve on its own (transient damp) or it may be the start of a structural problem the next inspection finds at 0.6 MΩ.',
   },

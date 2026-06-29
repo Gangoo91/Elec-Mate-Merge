@@ -29,9 +29,9 @@ const quickCheckQuestions = [
       'According to the inverse square law, if you double the distance from a light source, the illuminance becomes:',
     options: [
       'One quarter of the original value',
-      'RF interference and spectrum management',
-      'Electricity at Work Regulations 1989',
-      'Continuing Professional Development',
+      'One half of the original value',
+      'One eighth of the original value',
+      'Double the original value',
     ],
     correctIndex: 0,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'cosine-correction',
     question: 'When does cosine correction become essential in point illuminance calculations?',
     options: [
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
+      'When the calculation point lies directly below the luminaire',
       'When the light ray strikes the surface at an angle other than perpendicular',
-      'Industry developments and new technology requirements',
-      'Record results and confirm whether that section is sound',
+      'When the luminaire output is measured in lumens rather than candelas',
+      'When the room surfaces have very high reflectance values',
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of using software like DIALux over manual calculations?',
     options: [
-      'Every time they are required to operate a type of MEWP they have not used before',
+      'It removes the need to use manufacturer photometric data files',
       'It can handle complex geometries, reflections, and multiple luminaires simultaneously',
-      'Equipment shall be of sufficient strength and capability for its purpose',
-      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
+      'It guarantees the design will comply with BS EN 12464-1 without verification',
+      'It eliminates the need to apply a maintenance factor to the results',
     ],
     correctIndex: 1,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
     question: 'What is the main limitation of manual point-by-point calculations?',
     options: [
       'They do not account for inter-reflected light from room surfaces',
-      'The source can be treated as a point source relative to the distance',
-      'The spacing and resolution of illuminance calculations across a surface',
-      'For task areas, emergency lighting verification, or complex room geometries',
+      'They cannot be used for any point directly below a luminaire',
+      'They require the room reflectances to all be set to zero',
+      'They always overestimate illuminance at the calculation point',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'In DIALux software, the calculation grid determines:',
     options: [
-      'For task areas, emergency lighting verification, or complex room geometries',
+      'The physical mounting positions of the luminaires in the room',
       'The spacing and resolution of illuminance calculations across a surface',
-      'They do not account for inter-reflected light from room surfaces',
-      'The source can be treated as a point source relative to the distance',
+      'The maximum number of luminaires the project may contain',
+      'The colour temperature assigned to each light source',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'The inverse square law applies most accurately when:',
     options: [
-      'They do not account for inter-reflected light from room surfaces',
-      'For task areas, emergency lighting verification, or complex room geometries',
-      'The spacing and resolution of illuminance calculations across a surface',
+      'The luminaire is a large luminous panel close to the surface',
+      'The light strikes the surface at a steep oblique angle',
+      'The room surfaces have very high reflectance values',
       'The source can be treated as a point source relative to the distance',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'Relux and DIALux both use which fundamental method to calculate illuminance?',
     options: [
       'Radiosity and ray tracing algorithms',
-      'When insulation resistance is low',
-      'Above 50 V AC up to 1000 V AC',
-      'To maintain battery charge',
+      'The lumen method applied to each room in turn',
+      'A fixed lookup table of standard illuminance values',
+      'Finite element analysis of the luminaire heat output',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'When calculating illuminance on a vertical surface, which formula applies?',
     options: [
-      'Building thermal decay rate',
+      'E = I × cos³θ / h²',
       'E = I × cos²θ × sinθ / h²',
-      'After second fix completion',
-      'BS 5266-1 and BS EN 50172',
+      'E = I × sin³θ / h²',
+      'E = I / (h² × cosθ)',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'In an isolux diagram, closely spaced contour lines indicate:',
     options: [
-      'Their employer or, for health and safety matters, the HSE',
-      'The rate of change of magnetic flux linkage',
+      'A region of uniform, evenly distributed illuminance',
+      'The exact positions of the luminaires on the ceiling',
       'A rapid change in illuminance (steep gradient)',
-      'Completing detailed M&E specifications',
+      'An area where the illuminance exceeds the design maximum',
     ],
     correctAnswer: 2,
     explanation:
@@ -233,9 +233,9 @@ const quizQuestions = [
     question: 'When should point-by-point calculations be used instead of the lumen method?',
     options: [
       'For task areas, emergency lighting verification, or complex room geometries',
-      'The source can be treated as a point source relative to the distance',
-      'The spacing and resolution of illuminance calculations across a surface',
-      'They do not account for inter-reflected light from room surfaces',
+      'Only for large open-plan offices with uniform regular grids',
+      'Whenever the average room illuminance is all that is required',
+      'Only when the room surface reflectances are already known',
     ],
     correctAnswer: 0,
     explanation:

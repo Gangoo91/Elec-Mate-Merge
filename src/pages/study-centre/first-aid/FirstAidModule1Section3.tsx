@@ -12,11 +12,11 @@ const quickCheckQuestions = [
       'How long must an employer retain completed accident book records under current guidance?',
     options: [
       '1 year from the date of the incident',
-      '3 years from the date of the last entry',
       '5 years from the date of the incident',
+      '3 years from the date of the last entry',
       'Indefinitely — they must never be destroyed',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Accident book records must be retained for at least 3 years from the date of the last entry. This aligns with the Limitation Act 1980, which sets a 3-year period for personal injury claims. After 3 years, records should be securely disposed of in line with GDPR requirements.',
   },
@@ -107,10 +107,10 @@ const quizQuestions = [
     options: [
       'Report immediately by telephone',
       'Report within 10 days',
-      'Report within 15 days of the incident',
       'No RIDDOR report is required for this duration',
+      'Report within 15 days of the incident',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Over-7-day incapacitation (where the worker is unable to carry out their normal duties for more than 7 consecutive days, not counting the day of the accident) must be reported within 15 days of the incident. This is different from specified injuries, which require immediate notification.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 4,
     question: 'How should RIDDOR reports be submitted to the HSE?',
     options: [
-      'By post only, using Form F2508',
-      'By telephoning the local council',
       "Online via the HSE's RIDDOR website, or by telephone for fatalities and specified injuries",
+      'By telephoning the local council',
+      'By post only, using Form F2508',
       'By email to the HSE regional office',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "RIDDOR reports are submitted online via the HSE's RIDDOR reporting website (www.hse.gov.uk/riddor). For fatal and specified injuries that require immediate notification, the HSE can also be contacted by telephone. Postal submissions using Form F2508 are no longer the standard method.",
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
       'Why is recording near-misses considered best practice, even though it is not a legal requirement?',
     options: [
       'Because the HSE can fine employers who do not record near-misses',
-      'Because near-miss data helps identify hazards before they cause actual injury',
       'Because near-misses must be reported under RIDDOR',
       'Because insurance companies require near-miss data for all claims',
+      'Because near-miss data helps identify hazards before they cause actual injury',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Near-miss recording is not legally required, but it is one of the most effective tools for preventing future accidents. Near-misses reveal hazards, unsafe behaviours, and system failures that could cause injury next time. Analysing near-miss data allows employers to take corrective action before someone is actually hurt.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'A worker loses consciousness after inhaling fumes in a confined space. Under RIDDOR, this is reportable because it falls under which category?',
     options: [
-      'Over-7-day incapacitation',
-      'Occupational disease',
       'Specified injury — loss of consciousness caused by asphyxia',
+      'Occupational disease',
+      'Over-7-day incapacitation',
       'Dangerous occurrence',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Loss of consciousness caused by asphyxia (lack of oxygen) is a specified injury under RIDDOR 2013. It must be reported immediately by the quickest practical means, followed by a written report within 10 days. This applies regardless of how quickly the worker recovers consciousness.',
   },
@@ -174,11 +174,11 @@ const quizQuestions = [
       'What is the primary advantage of a digital accident recording system over a paper BI510?',
     options: [
       'Digital systems do not need to comply with GDPR',
-      'Digital records are searchable, provide audit trails, and can be backed up securely',
       'Digital systems eliminate the need to record incidents',
+      'Digital records are searchable, provide audit trails, and can be backed up securely',
       'Paper records are no longer accepted by the HSE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Digital systems offer searchability (find patterns across incidents), automatic audit trails (who accessed or edited records and when), secure backup and encryption, and access controls. However, they must still comply with UK GDPR. Paper BI510 books remain perfectly acceptable — digital is an alternative, not a replacement mandated by law.',
   },

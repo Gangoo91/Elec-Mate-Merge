@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What do floorplans show in electrical drawings?',
     options: [
-      'Achieving net zero greenhouse gas emissions by 2050',
+      'Only the cable sizes for each circuit',
       'Building layout with positions of electrical equipment',
-      'Adding small amounts of impurities to control conductivity',
-      'Installing and commissioning solar photovoltaic systems',
+      'The test results for the installation',
+      'The project budget and material costs',
     ],
     correctIndex: 1,
     explanation:
@@ -30,10 +30,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should electrical layouts be cross-checked on-site?',
     options: [
-      'Flow-down clauses in the subcontract',
-      'Orders placed but not yet invoiced',
+      'To reduce the amount of cable used',
+      'To speed up the installation programme',
       'Buildings may differ from drawings',
-      'Achieve minimum energy efficiency standards',
+      'To avoid the need for a specification',
     ],
     correctIndex: 2,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the risk of ignoring safe cable zones?',
     options: [
-      'To allow maintenance without total shutdown',
-      'Distortion of the main field flux',
-      'Authorised supervisors/managers only',
+      'Higher voltage drop on the circuit',
+      'Slower delivery of materials to site',
+      'A larger cable size being required',
       'Accidental damage and safety hazards',
     ],
     correctIndex: 3,
@@ -63,10 +63,10 @@ const Module5Section1_4 = () => {
       id: 1,
       question: 'What do floorplans show in electrical drawings?',
       options: [
-        'Because RCD sensitivity varies with AC waveform phase',
+        'Only the protective device ratings',
         'Building layout with positions of electrical equipment',
-        'Boiler plant startup and staging sequence',
-        'Inductive loads (motors, transformers, solenoids)',
+        'The schedule of test results',
+        'The order in which trades work',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,12 +76,12 @@ const Module5Section1_4 = () => {
       id: 2,
       question: 'What do circuit layouts show?',
       options: [
-        'Reactive effects may need to be considered',
-        'Maximum demand during Triad periods',
         'How accessories connect to distribution boards',
-        'Accuracy and compliance with regulations',
+        'The cost of each circuit',
+        'The colour of each cable core',
+        'The age of the building',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Circuit layouts show how electrical accessories and equipment connect back to distribution boards and how circuits are organised.',
     },
@@ -110,12 +110,12 @@ const Module5Section1_4 = () => {
       id: 5,
       question: 'Why should electrical layouts be cross-checked on-site?',
       options: [
-        'In series, broken into the chain',
+        'To reduce the cost of the cable',
+        'To avoid testing the installation',
+        'To speed up the second fix',
         'Buildings may differ from drawings',
-        'To account for supply voltage tolerance',
-        'Individual device identification and status',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Buildings may differ slightly from drawings due to construction variations, making on-site verification essential for accurate installation.',
     },
@@ -150,9 +150,9 @@ const Module5Section1_4 = () => {
       question: 'What is the risk of ignoring safe cable zones?',
       options: [
         'Accidental damage and safety hazards',
-        'Conduct site survey and risk assessment',
-        'To avoid damaging the insulation',
-        '½ × IΔn (15mA for 30mA RCD)',
+        'A larger cable size being needed',
+        'Slower delivery of accessories',
+        'Higher voltage drop on the circuit',
       ],
       correctAnswer: 0,
       explanation:
@@ -162,10 +162,10 @@ const Module5Section1_4 = () => {
       id: 9,
       question: 'What must electricians do before transferring positions to site?',
       options: [
-        'Starting torque is reduced to one-third',
+        'Order extra materials in advance',
         'Measure and check against the drawing',
-        'When copper losses equal iron losses',
-        'Adequate temporary lighting for safe working',
+        'Energise the circuit to test it',
+        'Remove the existing wall finishes',
       ],
       correctAnswer: 1,
       explanation:

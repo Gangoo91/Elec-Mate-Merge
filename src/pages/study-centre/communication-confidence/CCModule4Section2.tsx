@@ -20,11 +20,10 @@ const quickCheckQuestions = [
       'A dispute arises over whether a verbal instruction was given on site three months ago. What document would provide the strongest contemporaneous evidence?',
     options: [
       'A text message sent to a colleague about the conversation',
-      'A site diary entry written on the day the instruction was given',
       'An email written from memory two weeks after the event',
-      'A witness statement prepared for the dispute hearing',
-    ],
-    correctIndex: 1,
+      'A site diary entry written on the day the instruction was given',
+      'A witness statement prepared for the dispute hearing'],
+    correctIndex: 2,
     explanation:
       'A site diary entry written on the day of the event is the strongest form of contemporaneous evidence. Courts and adjudicators place significant weight on records made at or near the time of the event, as they are less likely to be affected by memory distortion. Under both JCT and NEC contracts, contemporaneous records are essential for supporting claims, variations, and dispute resolution.',
   },
@@ -33,11 +32,10 @@ const quickCheckQuestions = [
     question: 'Which of the following is a factual statement suitable for a site diary entry?',
     options: [
       'The plasterer did a terrible job on the first-floor walls',
-      'Plastering to first-floor walls appeared uneven with visible trowel marks across approximately 4 m\u00B2',
-      'I think the plastering might not be up to standard',
       'The plasterer clearly does not care about quality',
-    ],
-    correctIndex: 1,
+      'I think the plastering might not be up to standard',
+      'Plastering to first-floor walls appeared uneven with visible trowel marks across approximately 4 m\u00B2'],
+    correctIndex: 3,
     explanation:
       'A factual statement describes what you observed using measurable, specific language. It avoids subjective judgements such as "terrible" or assumptions about intent. In site diaries and technical reports, factual writing protects you legally and ensures your records can withstand scrutiny during disputes or adjudication.',
   },
@@ -46,12 +44,11 @@ const quickCheckQuestions = [
     question:
       'When recording an observation on an EICR, which approach follows best practice for report writing?',
     options: [
-      'Write "Dodgy wiring in the loft that needs sorting"',
-      'Write "Cable installation in loft space does not comply with BS 7671 requirements"',
       'Write "Non-thermally suitable cable (flat twin 6242Y) routed through loft insulation without derating applied, contrary to Regulation 523.9"',
-      'Write "Cables in the loft are a fire risk"',
-    ],
-    correctIndex: 2,
+      'Write "Cable installation in loft space does not comply with BS 7671 requirements"',
+      'Write "Dodgy wiring in the loft that needs sorting"',
+      'Write "Cables in the loft are a fire risk"'],
+    correctIndex: 0,
     explanation:
       'Best practice for EICR observations requires you to state the specific deficiency, identify the cable or component, describe its location, and reference the relevant regulation. This removes ambiguity, enables the next electrician to locate and rectify the issue, and demonstrates professional competence. Vague descriptions such as "dodgy wiring" or unsupported claims like "fire risk" undermine the credibility of the report.',
   },
@@ -86,11 +83,10 @@ const quizQuestions = [
     question: 'Under JCT contracts, what is the primary purpose of keeping a site diary?',
     options: [
       'To provide entertainment during tea breaks',
-      'To create a contemporaneous record that supports claims, variations, and dispute resolution',
-      'To replace the need for formal contract correspondence',
       "To satisfy the site manager's curiosity about daily activities",
-    ],
-    correctAnswer: 1,
+      'To replace the need for formal contract correspondence',
+      'To create a contemporaneous record that supports claims, variations, and dispute resolution'],
+    correctAnswer: 3,
     explanation:
       'The primary purpose of a site diary under JCT contracts is to create a contemporaneous factual record that can support claims for loss and expense, evidence variations, and provide documentary proof in the event of disputes or adjudication. It is a legal document, not a substitute for formal correspondence.',
   },
@@ -99,12 +95,11 @@ const quizQuestions = [
     question:
       'Under NEC4, which clause requires the Contractor to give an early warning of matters that could affect cost, time, or quality?',
     options: [
-      'Clause 10.1 (Mutual trust and co-operation)',
       'Clause 15.1 (Early warning)',
+      'Clause 10.1 (Mutual trust and co-operation)',
       'Clause 60.1 (Compensation events)',
-      'Clause 36.1 (Acceleration)',
-    ],
-    correctAnswer: 1,
+      'Clause 36.1 (Acceleration)'],
+    correctAnswer: 0,
     explanation:
       'NEC4 Clause 15.1 requires the Contractor (and the Project Manager) to give an early warning as soon as they become aware of any matter which could increase the total of the Prices, delay Completion, delay meeting a Key Date, or impair the performance of the works in use. Failing to give an early warning can reduce the assessment of a compensation event.',
   },
@@ -143,10 +138,9 @@ const quizQuestions = [
     options: [
       'Start the work immediately to avoid delaying the programme',
       'Ignore the instruction because it was not in writing',
-      'Record the instruction in your site diary and send a written confirmation email the same day',
       'Wait until the end of the week to record it in your weekly report',
-    ],
-    correctAnswer: 2,
+      'Record the instruction in your site diary and send a written confirmation email the same day'],
+    correctAnswer: 3,
     explanation:
       'When you receive a verbal instruction on site, record it immediately in your site diary with the date, time, who gave the instruction, what was instructed, and any discussion about cost or programme impact. Then send a written confirmation email the same day. This creates a contemporaneous record and a written trail. Under both JCT and NEC contracts, verbal instructions should be confirmed in writing. Your site diary provides evidence if the instruction is later disputed.',
   },
@@ -154,12 +148,11 @@ const quizQuestions = [
     id: 6,
     question: 'What does "active voice" mean in the context of report writing?',
     options: [
-      'Writing in capital letters to emphasise important points',
       'The subject of the sentence performs the action (e.g. "The electrician tested the circuit")',
+      'Writing in capital letters to emphasise important points',
       'Using exclamation marks to make the writing more engaging',
-      'Writing reports while physically active on site',
-    ],
-    correctAnswer: 1,
+      'Writing reports while physically active on site'],
+    correctAnswer: 0,
     explanation:
       'Active voice means the subject of the sentence performs the action: "The electrician tested the circuit" (active) versus "The circuit was tested by the electrician" (passive). Active voice is generally clearer, more direct, and easier to understand. It also makes accountability explicit \u2014 it is clear who performed the action. The IET and most technical writing guides recommend active voice where possible, although passive voice is acceptable in formal reports where the focus is on the action rather than the person.',
   },

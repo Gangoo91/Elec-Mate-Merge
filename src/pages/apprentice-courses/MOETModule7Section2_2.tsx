@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the first step in a systematic fault diagnosis approach?',
     options: [
       'Gather information — symptoms, history, when the fault occurred, what changed',
-      'Professional ethics often exceed minimum legal requirements',
-      'When the goal is still valid but the current approach is not working',
-      'Large commercial buildings, hospitals, high-rise buildings',
+      'Replace the most expensive component first to rule it out',
+      'Begin an insulation resistance test on every conductor at once',
+      'Energise the circuit and observe which protective device trips',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'thinking-aloud',
     question: "Why is 'thinking aloud' important during the EPA fault diagnosis observation?",
     options: [
-      'Identify hazards, Decide who might be harmed, Evaluate risks, Record findings, Review',
-      'Provide workers with information, instruction, and training on the remaining risks and correct techniques',
-      'It provides additional support and stability to the lumbar spine during exertion',
-      'It allows the assessor to follow your reasoning and confirm you are using a logical, systematic approach',
+      'It speeds up the diagnosis by skipping unnecessary tests',
+      'It allows the assessor to complete the diagnosis on your behalf',
+      'It is the only way to record readings without writing them down',
+      'It lets the assessor follow your reasoning and confirm a systematic approach',
     ],
     correctIndex: 3,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'documenting-findings',
     question: 'Why should you document your findings during fault diagnosis?',
     options: [
-      'To ensure the rescue team can perform an effective rescue under stress, identify any deficiencies in equipment or procedures, and maintain competence',
-      'Documentation provides evidence of systematic work, aids in reporting to the client, and creates a record for future maintenance',
-      'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
-      'A potentially fatal condition caused by prolonged suspension in a harness, where blood pools in the legs and reduces cardiac output',
+      'Documentation removes the need to verify the repair afterwards',
+      'Documentation is only required if the fault cannot be rectified',
+      'It evidences systematic work, aids client reporting, and records the work for future maintenance',
+      'Documentation allows you to claim a longer time allocation from the assessor',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Documenting findings demonstrates professionalism, provides evidence for the assessor, creates a maintenance record, and enables clear communication with supervisors and clients. It is a key professional behaviour assessed in the EPA.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'half-split-advantage',
     question: 'What is the main advantage of the half-split fault-finding technique?',
     options: [
-      'They create automatic cue-response links that bypass the need for conscious deliberation',
-      'It efficiently narrows the fault location by halving the search area with each test, minimising diagnostic time',
-      'Removes earth reference, so a single-fault doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t create a shock hazard to a patient',
-      'The first-aider, appointed person, or the named responsible person in the workplace — replacement should be prompt and recorded',
+      'It allows the circuit to be tested while still live and energised',
+      'It halves the fault search area with each test, cutting diagnostic time',
+      'It removes the need to understand the circuit diagram beforehand',
+      'It guarantees the fault will be found on the very first measurement',
     ],
     correctIndex: 1,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The systematic approach to fault diagnosis follows which general sequence?',
     options: [
-      'Regulations are legally binding, guidance is advisory',
+      'Rectify, verify, test, identify, analyse, gather information',
       'Gather information, analyse, test, identify, rectify, verify',
-      'Proportional-Integral-Derivative control algorithm',
-      'When there\\\\\\\'s risk from flying particles, chemicals, radiation, or bright light',
+      'Replace components, energise, observe, document, repeat',
+      'Isolate, lock off, prove dead, repair, re-energise, leave site',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'During the EPA observation, the assessor values a logical approach because:',
     options: [
-      'A systematic diagnostic method, safe working practices, correct use of instruments, and clear communication',
-      'Review the circuit diagram, understand the intended operation, and identify test points',
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
-      'Explain to the assessor what you have done, what you have ruled out, and what your next steps would be',
+      'It is the fastest way to find any fault regardless of method',
+      'It avoids the need to use test instruments during the assessment',
+      'It proves competence to diagnose any fault, not just familiar ones',
+      'It allows the candidate to skip the verification stage of the repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'When using a multimeter for fault diagnosis, you should first:',
     options: [
-      'Explain to the assessor what you have done, what you have ruled out, and what your next steps would be',
-      'The symptoms, tests performed, readings obtained, fault identified, repair carried out, and verification results',
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
+      'Set it to the highest current range and probe likely points',
+      'Apply it to the live circuit in resistance mode to save time',
+      'Record the fault as found before taking any measurement',
+      'Select the correct function and range, check the leads, and confirm the meter reads correctly',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'If you cannot find the fault within the allocated time, you should:',
     options: [
-      'Explain to the assessor what you have done, what you have ruled out, and what your next steps would be',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
-      'Review the circuit diagram, understand the intended operation, and identify test points',
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
+      'Explain what you have done, what you have ruled out, and your next steps',
+      'Quietly stop and wait for the assessor to reveal the fault',
+      'Start again from the beginning using a completely different method',
+      'Replace components one by one until the system works again',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: "A 'half-split' technique in fault diagnosis involves:",
     options: [
-      'Review the circuit diagram, understand the intended operation, and identify test points',
+      'Testing every component in turn from one end of the circuit',
       'Testing at the midpoint of a system to determine which half contains the fault, then repeating',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
-      'The symptoms, tests performed, readings obtained, fault identified, repair carried out, and verification results',
+      'Splitting the supply voltage in half to reduce shock risk during testing',
+      'Dividing the work between two technicians to halve the diagnosis time',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'When documenting fault diagnosis findings, you should record:',
     options: [
-      'Fused leads, finger guards, protected tips with maximum 4 mm exposed, and a proving unit to confirm correct operation before and after use',
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
-      'The symptoms, tests performed, readings obtained, fault identified, repair carried out, and verification results',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
+      'Only the final fault and the part number of the replacement component',
+      'Just the time taken so the assessor can judge your speed',
+      'Symptoms, tests, readings, fault found, repair done, and verification',
+      'A note that the system is now working, with no further detail',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'Insulation resistance testing during fault diagnosis requires:',
     options: [
-      'Explain to the assessor what you have done, what you have ruled out, and what your next steps would be',
-      'Review the circuit diagram, understand the intended operation, and identify test points',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
+      'The circuit to remain live so a true working voltage is applied',
+      'All RCDs and electronic devices to be left connected in circuit',
+      'A low test voltage of 12 V DC to avoid damaging the conductors',
       'The circuit to be de-energised, disconnected from sensitive equipment, and all switches closed',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
       "A continuity test reading of 'OL' (over limit) on a circuit that should be continuous indicates:",
     options: [
       'An open circuit — a break in the conductor somewhere in the circuit',
-      'Installation Electrician JIB-registered Gold card',
-      'Slight differences in fibre backscatter characteristics',
-      'Temperature, humidity, and material storage conditions',
+      'A short circuit between line and neutral conductors',
+      'A healthy circuit with very low conductor resistance',
+      'An earth fault between the line conductor and earth',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'Before starting fault diagnosis on a motor control circuit, you should:',
     options: [
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
+      'Replace the contactor as the most common point of failure',
       'Review the circuit diagram, understand the intended operation, and identify test points',
-      'An open circuit — a break in the conductor somewhere in the circuit',
-      'Testing at the midpoint of a system to determine which half contains the fault, then repeating',
+      'Energise the motor to observe how it behaves under fault conditions',
+      'Disconnect all conductors before establishing the intended operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       'The EPA practical observation for fault diagnosis typically expects you to demonstrate:',
     options: [
-      'Fused leads, finger guards, protected tips with maximum 4 mm exposed, and a proving unit to confirm correct operation before and after use',
-      'Testing at the midpoint of a system to determine which half contains the fault, then repeating',
+      'Encyclopaedic recall of every possible fault on the equipment',
+      'The fastest possible diagnosis regardless of the method used',
       'A systematic diagnostic method, safe working practices, correct use of instruments, and clear communication',
-      'The symptoms, tests performed, readings obtained, fault identified, repair carried out, and verification results',
+      'The ability to repair the fault without any test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: "When using the 'input-to-output' fault-finding technique on a control system, you:",
     options: [
-      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
-      'Explain to the assessor what you have done, what you have ruled out, and what your next steps would be',
-      'A systematic diagnostic method, safe working practices, correct use of instruments, and clear communication',
-      'Check the input signal first, then trace it through each stage of the control system towards the output, identifying where the signal is lost',
+      'Start at the output and replace each component working backwards',
+      'Test only the input and output, ignoring the stages in between',
+      'Test at the midpoint first to halve the search area each time',
+      'Check the input first, then trace the signal through each stage to where it is lost',
     ],
     correctAnswer: 3,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 12,
     question: 'A GS38-compliant voltage indicator used during fault diagnosis must have:',
     options: [
-      'Fused leads, finger guards, protected tips with maximum 4 mm exposed, and a proving unit to confirm correct operation before and after use',
-      'The symptoms, tests performed, readings obtained, fault identified, repair carried out, and verification results',
-      'Check the input signal first, then trace it through each stage of the control system towards the output, identifying where the signal is lost',
-      'Select the correct function and range for the measurement, check leads, and confirm the meter is working',
+      'Fused leads, finger guards, shrouded tips, and proving before and after use',
+      'Unfused leads and long bare probe tips for easier access to terminals',
+      'A built-in battery check that removes the need to prove on a known source',
+      'A single combined probe so testing can be carried out one-handed',
     ],
     correctAnswer: 0,
     explanation:

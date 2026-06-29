@@ -830,9 +830,11 @@ const sections = [
                 </li>
                 <li>
                   <strong>RCD trip time:</strong> Verify that any 30 mA RCDs protecting GSHP-related
-                  circuits trip within 40 ms at I&Delta;n (per Table 3A of GN3). Test using a
-                  calibrated RCD tester at 1 &times; and 5 &times; rated tripping current; record
-                  results on the Schedule of Test Results.
+                  circuits operate effectively (Reg 643.8). Under BS 7671:2018+A4:2026 the historic
+                  Appendix 3 Table 3A and the 5 &times; I&Delta;n / 40 ms test have been withdrawn: a
+                  single a.c. test at the rated residual operating current (1 &times; I&Delta;n) now
+                  applies, and a general non-delay RCD must disconnect within 300 ms. Record results
+                  on the Schedule of Test Results.
                 </li>
               </ul>
             </div>

@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'Who developed the Mindfulness-Based Stress Reduction (MBSR) programme, and at which institution?',
     options: [
-      'Aaron Beck at the University of Pennsylvania',
       'Jon Kabat-Zinn at the University of Massachusetts Medical Center',
+      'Aaron Beck at the University of Pennsylvania',
       'Daniel Goleman at Harvard University',
       'Martin Seligman at the University of Pennsylvania',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Jon Kabat-Zinn developed MBSR in 1979 at the University of Massachusetts Medical Center. He created the programme to help patients with chronic pain and stress-related conditions, drawing on Buddhist meditation practices but framing them in a secular, evidence-based clinical context. The programme was formally published in his 1990 book Full Catastrophe Living.',
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'Which of the following statements about the evidence base for mindfulness is accurate?',
     options: [
       'Mindfulness has no recognised clinical evidence and is considered alternative medicine',
-      'NICE recommends mindfulness-based cognitive therapy for recurrent depression, and research shows mindfulness reduces cortisol levels',
       'Mindfulness is only effective for physical health conditions, not mental health',
       'The NHS does not recognise mindfulness as a valid therapeutic approach',
+      'NICE recommends mindfulness-based cognitive therapy for recurrent depression, and research shows mindfulness reduces cortisol levels',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The National Institute for Health and Care Excellence (NICE) recommends mindfulness-based cognitive therapy (MBCT) as a treatment for recurrent depression. Research has consistently shown that regular mindfulness practice reduces cortisol (the primary stress hormone), improves immune function, reduces blood pressure, and decreases symptoms of anxiety and depression. The NHS offers mindfulness-based programmes through IAPT services.',
   },
@@ -99,10 +99,10 @@ const quizQuestions = [
     options: [
       'Body scan meditation',
       'Sitting meditation',
-      'Transcendental mantras',
       'Mindful movement',
+      'Transcendental mantras',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Transcendental mantras are part of Transcendental Meditation (TM), not MBSR. The core practices of the MBSR programme are: the body scan, sitting meditation, mindful movement (gentle yoga-based stretching), and the three-minute breathing space. MBSR does not use mantras, chanting, or any specific spiritual or religious techniques.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does the "non-judgemental" component of mindfulness mean in practice?',
     options: [
-      'You should approve of everything that happens to you',
       'You observe thoughts and sensations without labelling them as good or bad',
+      'You should approve of everything that happens to you',
       'You should avoid making any decisions while practising mindfulness',
       'You must not criticise other people during mindfulness sessions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-judgemental awareness means observing your thoughts, feelings, and sensations as they arise without automatically categorising them as good or bad, right or wrong. You simply notice what is present in your experience. This does not mean you approve of everything or stop making decisions; it means you create a space between the experience and your reaction to it, which gives you more choice in how you respond.',
   },
@@ -138,11 +138,11 @@ const quizQuestions = [
     question: 'What is the three-minute breathing space designed to do?',
     options: [
       'Replace longer meditation sessions entirely',
-      'Provide a brief but structured mindfulness practice that can be used throughout the day to reconnect with the present moment',
       'Reduce blood pressure permanently after a single use',
       'Help you fall asleep quickly at night',
+      'Provide a brief but structured mindfulness practice that can be used throughout the day to reconnect with the present moment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The three-minute breathing space is a brief, structured practice designed to be used throughout the day as a "mini meditation." It has three phases: awareness (noticing what is present), gathering (focusing on the breath), and expanding (broadening awareness to the whole body). It is not a replacement for longer practice but a practical tool for pausing, reconnecting with the present, and breaking the cycle of automatic stress reactions during a busy working day.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following statements about mindfulness is FALSE?',
     options: [
-      'Mindfulness involves paying deliberate attention to the present moment',
       'Mindfulness requires you to clear your mind completely of all thoughts',
+      'Mindfulness involves paying deliberate attention to the present moment',
       'Mindfulness can improve immune function and reduce blood pressure',
       'Mindfulness is recommended by NICE for certain mental health conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The statement that mindfulness requires you to clear your mind completely is false. This is one of the most common misconceptions about mindfulness. Mindfulness does not involve achieving a blank mental state. Instead, it involves noticing thoughts as they arise, observing them without judgement, and gently returning attention to the present moment. Having thoughts during mindfulness practice is completely normal and expected; the skill is in how you relate to those thoughts, not in eliminating them.',
   },

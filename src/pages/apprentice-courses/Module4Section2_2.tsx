@@ -56,9 +56,9 @@ const quizQuestions = [
     question: 'Why should you mark centre lines when setting out conduit runs?',
     options: [
       'To keep runs straight and symmetrical',
-      'Chest compressions without rescue breaths',
-      'Sinusoidal wave over pulsating DC wave',
-      'Safety interlocks and fan proving',
+      'To reduce the cable bend radius required',
+      'To increase the current-carrying capacity',
+      'To avoid the need for fixing saddles',
     ],
     correctAnswer: 0,
     explanation:
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is one common mistake made when setting out accessory positions?',
     options: [
-      'Clearly and legibly in permanent ink or digitally',
-      'Maintained and reviewed at risk reduction meetings',
+      'Marking positions clearly with a pencil',
+      'Checking measurements against the drawings',
       'Measuring from different reference points',
-      'Performance 20% worse than the TM46 benchmark',
+      'Using a spirit level to confirm alignment',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,9 +108,9 @@ const quizQuestions = [
     question: 'What should be checked before marking containment positions on site?',
     options: [
       'Site measurements, obstructions, and surface suitability',
-      'Installation earthing + electrode resistance + supply earth return',
-      'From the platform below, reaching up through the open trapdoor',
-      'Durable and legible marking identifying each circuit',
+      'The earth fault loop impedance of each circuit',
+      'The insulation resistance of the cables to be installed',
+      'The disconnection time of the protective devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is it important to use a consistent reference point during setting out?',
     options: [
-      'Two parallel lines with S2',
-      'Verify operation of switches and controls',
+      'To reduce the number of fixings needed',
+      'To increase the cable current rating',
       'To maintain alignment and accuracy',
-      'Fail for safety and specification breach',
+      'To avoid using a spirit level',
     ],
     correctIndex: 2,
     explanation:

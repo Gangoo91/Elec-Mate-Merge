@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What is the key characteristic of a closed-loop daylight harvesting system?',
     options: [
       'The photosensor measures the combined daylight and artificial light in the space',
-      'Withhold final payment, leave a poor review, and never use you again — even if the work itself was fine',
-      'When the coil sides cut the field lines at right angles (perpendicular to the field)',
-      'The cable runs from the consumer unit to each luminaire in sequence, terminating at the last point',
+      'The photosensor measures only the incoming daylight from the sky',
+      'The system switches lighting fully on or off with no dimming',
+      'The control relies on a fixed time schedule rather than light levels',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'sensor-placement',
     question: 'Why should daylight sensors NOT be placed directly beneath rooflights?',
     options: [
-      'High electric field strength around conductors causing air ionization',
+      'The rooflight blocks the sensor field of view across the rest of the room',
       'Direct sunlight causes sensor reading spikes leading to unstable control',
-      'Reducing starting current of large three-phase motors',
-      'Progressively throughout construction as changes occur',
+      'Heat from the rooflight permanently damages the photosensor element',
+      'The sensor cannot communicate with the DALI controller in that position',
     ],
     correctIndex: 1,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question:
       'What does Building Regulations Approved Document L require regarding daylight-linked lighting control?',
     options: [
-      'Separation of terminals from busbars in addition to functional unit separation',
-      'It encourages design for disassembly, material reuse, and waste minimisation',
-      'A transient current spike may occur during changeover',
+      'Emergency lighting must be installed in every daylit area',
+      'All luminaires must be switched manually from a single wall plate',
+      'Lighting must run at full output during all occupied hours',
       'Automatic daylight-linked dimming in areas with adequate daylight',
     ],
     correctIndex: 3,
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'In an open-loop daylight harvesting system, where is the photosensor typically located?',
     options: [
-      'A dedicated DALI controller or application controller',
-      'North-facing (in northern hemisphere)',
+      'Recessed into the work plane facing upward at desk level',
+      'Inside each luminaire to read its own dimmed output',
       'On the exterior facade or rooftop facing the sky',
-      'A range around the setpoint where no adjustment occurs',
+      'On the rear wall furthest from any window or rooflight',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     question:
       'What is the primary disadvantage of open-loop daylight control compared to closed-loop?',
     options: [
-      'On the exterior facade or rooftop facing the sky',
-      'Sensor detecting its own controlled light changes, creating feedback loops',
-      'Daylight control should only operate when occupancy is detected',
+      'It requires one photosensor for every individual luminaire',
+      'It cannot be used with DALI-controlled dimmable luminaires',
+      'It only works in north-facing perimeter zones of a building',
       'Cannot account for furniture, blinds, or surface reflectance changes',
     ],
     correctAnswer: 3,
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'How should daylight zones be defined for control purposes?',
     options: [
-      'Daylight control should only operate when occupancy is detected',
-      'On the exterior facade or rooftop facing the sky',
+      'Based purely on the wiring layout of the lighting circuits',
+      'By dividing the floor area into equal-sized square zones',
       'Based on distance from windows and daylight availability patterns',
-      'A dedicated DALI controller or application controller',
+      'According to which department occupies each part of the floor',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: "What causes 'hunting' or oscillation in daylight harvesting systems?",
     options: [
-      'A dedicated DALI controller or application controller',
-      'A range around the setpoint where no adjustment occurs',
-      'Cannot account for furniture, blinds, or surface reflectance changes',
+      'Setting the dimming fade time too long for the luminaires',
+      'A deadband that is set too wide around the target setpoint',
+      'Using a north-facing sensor that receives only diffuse light',
       'Sensor detecting its own controlled light changes, creating feedback loops',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: "What is 'deadband' in daylight harvesting control?",
     options: [
       'A range around the setpoint where no adjustment occurs',
-      'On the exterior facade or rooftop facing the sky',
-      'Daylight control should only operate when occupancy is detected',
-      'A dedicated DALI controller or application controller',
+      'The minimum dimming level a luminaire can be driven to',
+      'The delay before lights switch off when a room is vacated',
+      'The maximum illuminance permitted before lights switch off',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'For DALI-based daylight harvesting, what device typically performs the control algorithm?',
     options: [
-      'On the exterior facade or rooftop facing the sky',
+      'The individual DALI driver inside each luminaire',
       'A dedicated DALI controller or application controller',
-      'Cannot account for furniture, blinds, or surface reflectance changes',
-      'Based on distance from windows and daylight availability patterns',
+      'The DALI bus power supply unit feeding the segment',
+      'The photosensor itself processes and dims the luminaires',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     question:
       'What is the recommended fade time for daylight-linked dimming to avoid occupant distraction?',
     options: [
-      'To identify and control emerging hazards',
-      'Accelerates insulation breakdown',
+      'Instant switching with no transition',
+      '1-2 seconds rapid transition',
       '10-30 seconds gradual transition',
-      'Protect conductors from thermal damage',
+      '5-10 minutes very slow transition',
     ],
     correctAnswer: 2,
     explanation:
@@ -222,9 +222,9 @@ const quizQuestions = [
     question:
       'Which orientation typically provides the most stable daylight for harvesting systems?',
     options: [
-      'On the exterior facade or rooftop facing the sky',
-      '10-30 seconds gradual transition',
-      '500 lux maintained at task level',
+      'South-facing (in the northern hemisphere)',
+      'East-facing (in the northern hemisphere)',
+      'West-facing (in the northern hemisphere)',
       'North-facing (in northern hemisphere)',
     ],
     correctAnswer: 3,

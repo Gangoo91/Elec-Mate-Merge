@@ -55,9 +55,9 @@ const checks = [
     question:
       'On a TN-C-S domestic install, the Schedule of Inspections item "presence of earth electrode" should be recorded as:',
     options: [
-      '7 days, 14 days, or 30 days depending on client type',
-      'To protect conductor ends and provide neat terminations',
-      'Working space, access, and lighting',
+      'LIM — the earth electrode applies but could not be accessed without disturbing the install.',
+      '✗ — non-compliant, because a TN-C-S install should always have an earth electrode fitted.',
+      '✓ — compliant, recording the electrode resistance measured at the cut-out.',
       'N/A — not applicable to this earthing arrangement.',
     ],
     correctIndex: 3,
@@ -70,9 +70,9 @@ const checks = [
       'You complete an inspection and find one terminal at the consumer unit with copper showing past the brass — clearly the conductor was overstripped. Where do you record it?',
     options: [
       'On the Schedule of Inspections, item 6 (connection of conductors), as ✗ with a brief description; flag the supervisor and fix before energising.',
-      'They indicate the maximum prospective fault current at key points, which determines the required breaking capacity of protective devices',
-      'Horizontal forces applied to the side of the tower (e.g. from pulling cables, using power tools against walls) can cause overturning',
-      'Take the report seriously, challenge the exclusionary behaviour, ensure equitable task allocation, and escalate if necessary',
+      'On the Schedule of Test Results, against the relevant circuit, as a measured value to be compared with the design prediction.',
+      'On the Schedule of Inspections, item 9 (notices and labels), as a LIM because the terminal was behind the busbar shroud.',
+      'Nowhere on the paperwork — simply re-strip and re-terminate the conductor, since a defect fixed on the day does not need to be recorded.',
     ],
     correctIndex: 0,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
       'Section 11 of the Schedule of Inspections covers earthing arrangements. The presence of an earth electrode and its resistance is verified there. On a TN-S install (separate earth from supplier), this item should be:',
     options: [
       'N/A — not applicable; earthing is provided by the supplier.',
-      'Serial communication for industrial devices',
-      'A possible parallel earth path or cross-connection',
-      'Create and document consistent organisational standards and processes',
+      '✓ — compliant; record the measured electrode resistance for the TN-S electrode.',
+      'LIM — the electrode applies but could not be accessed at the cut-out.',
+      '✗ — non-compliant; a TN-S install must always have its own earth electrode.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'You are inspecting a finished CU and the busbar shroud has been screwed in place such that you cannot see the line side of any RCBO. You should record items relating to those terminations as:',
     options: [
-      'Match standard switchboard ammeters and protective relays designed for 1 A or 5 A inputs',
+      '✓ — compliant; a sealed busbar shroud is evidence that the terminations behind it have been correctly made.',
       'LIM — limitation; could not access without disturbing the install. Note clearly what was limited and flag the supervisor.',
-      'The tower location, date, details of the inspection, any defects found, actions taken, and the name of the competent person',
-      'The area that has been changed since the previous revision — making it easy to spot what is new',
+      '✗ — non-compliant; any termination you cannot see must be treated as a defect until proven otherwise.',
+      'N/A — not applicable; terminations hidden by a shroud fall outside the scope of the inspection.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,25 +154,25 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'Section 9 of the Schedule of Inspections covers warning notices and labels. Which of these notices is checked there?',
+      'Section 9 of the Schedule of Inspections covers warning notices and labels. Which of the following is checked under a DIFFERENT section, not Section 9?',
     options: [
-      'CU way labels.',
-      'BS 951 "Safety Electrical Connection" label on bonding clamps.',
-      'All of the above.',
-      'RCD test notice.',
+      'CU way labels matching the circuit schedule.',
+      'The continuity of the main bonding conductor to the gas service.',
+      'The RCD test notice fitted at the consumer unit.',
+      'The BS 951 "Safety Electrical Connection" label on bonding clamps.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Section 9 covers all identification and warning notices — the CU way labels (so you know which way feeds which circuit), the BS 951 bonding clamp labels, the RCD test notice ("This installation, or part of it, is protected by a device which automatically switches off the supply if an earth fault develops..."), the periodic inspection notice, mixed-cable-colours notice if applicable. All checked here.',
+      'Section 9 covers identification and warning notices — CU way labels, the RCD test notice, the BS 951 bonding clamp labels, the periodic inspection notice and the mixed-cable-colours notice. The continuity of the main bonding conductor itself is a bonding check under Section 12, not a notice check; Section 9 only verifies the label is present, not the bond.',
   },
   {
     id: 7,
     question:
       'The Schedule of Inspections is signed by:',
     options: [
-      'Electrical Installation Certificate (EIC)',
-      'Dividing the system into independently controllable areas',
-      'Provides evidence of work done and aids future maintenance',
+      'The customer or duty holder, confirming they accept the installation.',
+      'The Building Control surveyor, confirming the work meets the Building Regulations.',
+      'The scheme assessor at the next annual assessment visit.',
       'The competent person who carried out the inspection.',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
       'You finish a Schedule of Inspections — every item is ✓ except two LIM (cable runs in finished plaster, you could not see them) and zero ✗. The next step is:',
     options: [
       'Hand to the supervisor for review, agree how the LIM items are recorded on the EIC, then proceed to dead testing (Sub 5.3 / Section 6).',
-      'Pair colour with shape and text — red circle with slash for prohibition, blue circle for mandatory, yellow triangle for warning',
-      'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
-      'Any person who is or may be lawfully on the premises, and any person in the immediate vicinity who is at risk from a fire on the premises',
+      'Re-mark the two LIM items as ✗ so the form shows a full set of findings, then issue the EIC and energise.',
+      'Energise the installation first, then carry out dead testing on the live circuits to save a second visit.',
+      'Issue the EIC immediately on the strength of a clean inspection — once there are no ✗ items, testing is not required.',
     ],
     correctAnswer: 0,
     explanation:

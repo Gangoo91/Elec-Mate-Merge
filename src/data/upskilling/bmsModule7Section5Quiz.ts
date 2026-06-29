@@ -31,9 +31,9 @@ export const bmsModule7Section5Quiz: QuizQuestion[] = [
     id: 3,
     question: 'Why must power stability be checked before testing controllers?',
     options: [
-      'Boiler plant startup and staging sequence',
-      'Verifying stable power supply to controllers',
-      'To ensure emergency shutdowns and safety systems work correctly',
+      'To speed up the overall commissioning programme',
+      'To reduce the number of I/O points that need checking',
+      'To allow software to be loaded before the wiring is complete',
       'To prevent controller damage and ensure reliable operation',
     ],
     correctAnswer: 3,
@@ -57,10 +57,10 @@ export const bmsModule7Section5Quiz: QuizQuestion[] = [
     id: 5,
     question: 'What is tested during functional commissioning?',
     options: [
-      'To provide documentation for O&M and future troubleshooting',
+      'Individual cable insulation resistance readings',
       'Complete sequences of operations and system integration',
-      'Boiler plant startup and staging sequence',
-      'To prevent controller damage and ensure reliable operation',
+      'The physical termination of field wiring at each controller',
+      'The supply voltage and earthing at the distribution board',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule7Section5Quiz: QuizQuestion[] = [
     id: 7,
     question: 'Why are alarm and fail-safe simulations carried out?',
     options: [
-      'To prevent controller damage and ensure reliable operation',
-      'To provide documentation for O&M and future troubleshooting',
-      'Pre-functional tests basic wiring and power; functional tests complete sequences',
+      'To reduce the energy consumption of the plant during normal running',
+      'To calibrate the analogue sensors against reference instruments',
+      'To confirm the controllers communicate over the BACnet network',
       'To ensure emergency shutdowns and safety systems work correctly',
     ],
     correctAnswer: 3,
@@ -109,10 +109,10 @@ export const bmsModule7Section5Quiz: QuizQuestion[] = [
     id: 9,
     question: 'Why must commissioning sheets be completed and stored?',
     options: [
-      'To prevent controller damage and ensure reliable operation',
+      'To satisfy the manufacturer warranty registration only',
       'To provide documentation for O&M and future troubleshooting',
-      'Complete sequences of operations and system integration',
-      'Verifying stable power supply to controllers',
+      'To replace the need for as-installed schematic drawings',
+      'To record the energy savings achieved against the design target',
     ],
     correctAnswer: 1,
     explanation:

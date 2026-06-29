@@ -74,9 +74,9 @@ const AM2Module6Section2 = () => {
       question: 'Which regulation makes safe isolation a legal requirement?',
       options: [
         'Electricity at Work Regulations 1989',
-        'Glaser method (BS EN ISO 13788)',
-        'Allows current to flow in one direction only.',
-        'Public Interest Disclosure Act 1998',
+        'Management of Health and Safety at Work Regulations 1999',
+        'Construction (Design and Management) Regulations 2015',
+        'Provision and Use of Work Equipment Regulations 1998',
       ],
       correctIndex: 0,
       explanation:
@@ -173,24 +173,29 @@ const AM2Module6Section2 = () => {
     },
     {
       id: 8,
-      question: 'Which TWO are examples of PPE relevant to electrical work?',
+      question: 'Which of these is an example of PPE relevant to electrical work?',
       options: [
-        'Safety boots and hard hat',
-        'Isolation locks and tags',
-        'Risk assessment forms',
-        'Voltage detector and multimeter',
+        'Safety boots and a hard hat',
+        'Isolation locks and warning tags',
+        'A completed risk assessment form',
+        'A voltage detector and a multimeter',
       ],
       correctAnswer: 0,
       explanation:
-        'Safety boots and hard hats are Personal Protective Equipment (PPE) for electrical work.',
+        'Safety boots and hard hats are Personal Protective Equipment (PPE); locks, tags, forms and test instruments are control measures or tools, not PPE.',
     },
     {
       id: 9,
-      question: 'True or false: The AM2 knowledge test is open book.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'Which best describes the use of reference material in the AM2 knowledge test?',
+      options: [
+        'You may bring any notes or textbooks you wish',
+        'You may use the internet for calculations',
+        'You are given a printed copy of every BS 7671 table',
+        'Most papers are closed book, with no access to BS 7671',
+      ],
+      correctAnswer: 3,
       explanation:
-        'False - the AM2 knowledge test is closed book, you cannot use BS 7671 during the exam.',
+        'The AM2 knowledge test is generally closed book; confirm with your centre, but you should not rely on having BS 7671 available during the exam.',
     },
     {
       id: 10,

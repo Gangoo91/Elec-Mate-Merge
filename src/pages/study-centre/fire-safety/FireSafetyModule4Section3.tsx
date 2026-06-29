@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     question:
       'Who has the authority to give the all-clear for re-entry to a building after a fire evacuation?',
     options: [
-      'The building manager',
-      'The most senior fire marshal on site',
       'The fire and rescue service or the Responsible Person',
+      'The most senior fire marshal on site',
+      'The building manager',
       'Any member of staff once the alarm stops',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The all-clear to re-enter a building after a fire evacuation can only be given by the fire and rescue service (if they have attended) or by the Responsible Person (RP) designated under the RRFSO. This is a critical safety control. The fire and rescue service has the legal authority under the Fire and Rescue Services Act 2004 to take charge of the scene and must confirm that the building is safe before anyone re-enters. If the fire service has not attended (for example, after a false alarm that was quickly confirmed), the Responsible Person may authorise re-entry once they are satisfied there is no risk. No other person, including fire marshals or building managers (unless they are the RP), has the authority to give this instruction.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the recommended minimum safe distance for an assembly point from the building?',
-    options: ['5-10 metres', '10-15 metres', '15-20 metres', '25-30 metres'],
-    correctAnswer: 2,
+    options: ['15-20 metres', '10-15 metres', '5-10 metres', '25-30 metres'],
+    correctAnswer: 0,
     explanation:
       'The recommended minimum safe distance for an assembly point from the building is 15-20 metres as a general rule. This distance is derived from fire safety guidance and is intended to protect evacuees from the effects of the fire, including radiant heat, falling debris, and smoke. The specific distance should be determined by the fire risk assessment and may need to be greater for buildings with large quantities of flammable materials, tall buildings where facades could collapse, or buildings with hazardous substances. The assembly point must also not obstruct fire service access routes.',
   },
@@ -114,11 +114,11 @@ const quizQuestions = [
       'Which method of roll call involves using electronic access data to determine who is in the building?',
     options: [
       'Name-check roll call',
+      'Electronic access data reconciliation',
       'Headcount by zone',
       'Badge count roll call',
-      'Electronic access data reconciliation',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Electronic access data reconciliation uses data from swipe-card, proximity-card, or biometric access control systems to generate a real-time list of everyone who has entered the building but not yet exited. This list can then be cross-referenced with those present at the assembly point. This method is particularly effective in large buildings with hundreds or thousands of occupants, where manual name-check roll calls would be extremely time-consuming. However, a manual fallback procedure must always be available in case the electronic system fails or loses power during the fire.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     options: [
       'The building owner',
       'The local authority',
-      'The senior fire marshal or incident controller, who then briefs the fire service',
       'Directly to 999 control room',
+      'The senior fire marshal or incident controller, who then briefs the fire service',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The assembly point communication chain follows a structured hierarchy: individual fire marshals report their zone-clear status to the assembly point coordinator, who compiles the building-wide status and reports to the senior fire marshal or incident controller. The senior fire marshal then briefs the fire and rescue service upon their arrival, providing a comprehensive picture of the evacuation status, any missing persons, the suspected fire location, and any hazards. This chain of command ensures that information is consolidated and verified before being passed to the fire service, reducing the risk of conflicting or inaccurate reports.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'Under what legislation does the fire and rescue service have authority to prevent re-entry to a building?',
     options: [
-      'The Health and Safety at Work Act 1974',
-      'The Regulatory Reform (Fire Safety) Order 2005',
       'The Fire and Rescue Services Act 2004',
+      'The Regulatory Reform (Fire Safety) Order 2005',
+      'The Health and Safety at Work Act 1974',
       'The Building Safety Act 2022',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Fire and Rescue Services Act 2004 gives the fire and rescue service the legal authority to take charge of the scene of a fire, control access to the building, and prevent re-entry until it is safe. Section 44 of the Act provides powers to do anything reasonably believed to be necessary for the purpose of extinguishing fires, protecting life, or protecting property. This includes establishing cordons, closing roads, and prohibiting entry to buildings. The Responsible Person under the RRFSO also has a duty to prevent re-entry as part of their emergency procedures under Article 15.',
   },
@@ -194,8 +194,8 @@ const quizQuestions = [
   {
     id: 8,
     question: 'What standard governs the signage used to identify assembly points?',
-    options: ['BS 5839', 'BS 9999', 'BS ISO 7010', 'BS EN 12845'],
-    correctAnswer: 2,
+    options: ['BS 5839', 'BS 9999', 'BS EN 12845', 'BS ISO 7010'],
+    correctAnswer: 3,
     explanation:
       'BS ISO 7010 is the international standard that governs safety signs, including the green and white assembly point sign (reference E007). This standard ensures that safety signs are universally recognisable regardless of language, using standardised pictograms. The assembly point sign features a group of people with an arrow pointing to a designated location, all in white on a green background (the colour for safe condition signs). Assembly point signs must be positioned at the assembly point itself and on evacuation route signage pointing towards it. Additional text in English (and other languages as appropriate) may supplement the pictogram but the pictogram alone must be sufficient for comprehension.',
   },

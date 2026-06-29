@@ -43,10 +43,10 @@ const checks = [
     question:
       'In the equation Zs = Ze + (R1 + R2), each term represents the impedance of a different physical path. Which option correctly identifies the three?',
     options: [
-      'The main contractor controls access, programme, payment, and future work opportunities, which can make subcontractors reluctant to raise legitimate disputes for fear of consequences',
-      'Move the bond connection to a clean section of the same pipe (still consumer side, still before any branch, within 600 mm of point of entry where practicable per Reg 544.1.2). Clean to bare metal, apply paste, fit clamp.',
-      'Ze = the external loop from the origin out through the supply transformer star point and back to the means of earthing; R1 = the line conductor from origin to the fault point; R2 = the protective conductor from the fault point back to the MET.',
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
+      'Ze = the final-circuit line conductor from origin to fault; R1 = the cpc back to the MET; R2 = the external supply loop back to the transformer.',
+      'Ze = the cpc inside the final circuit; R1 = the main bonding conductor to the MET; R2 = the earthing conductor at the supply origin.',
+      'Ze = the external supply loop back to the transformer; R1 = the line conductor from origin to fault; R2 = the cpc from fault back to the MET.',
+      'Ze = the installation earth electrode resistance; R1 = the circuit neutral conductor; R2 = the supply-cable line conductor.',
     ],
     correctIndex: 2,
     explanation:
@@ -58,9 +58,9 @@ const checks = [
       'You are calculating Zs for a 32 A radial in 4 mm² T+E (1.5 mm² cpc). The IET OSG resistance per metre at 20 degrees C is 12.10 + 12.10 = 24.20 mΩ/m for the loop. The cable is 35 m long. What is (R1 + R2) at the conductor operating temperature of 70 degrees C used for the design Zs check?',
     options: [
       'Apply a temperature factor of 1.20 (IET OSG Table I3 / Appendix B) to lift the 20 degrees C value to the 70 degrees C operating value: 0.847 × 1.20 ≈ 1.016 Ω.',
-      'To manage, schedule, and record all maintenance activities, including work orders, asset history, spare parts inventory, and maintenance KPIs',
-      'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
-      'The fresh air intake must be positioned in an area free from contamination, away from exhausts, generators, or other sources of hazardous gases',
+      'Use the 20 degrees C value directly: 24.20 × 35 / 1000 ≈ 0.847 Ω — no temperature factor is needed for the design Zs check.',
+      'Apply a temperature factor of 0.80 to reduce the cold value to the warm value: 0.847 × 0.80 ≈ 0.678 Ω, because warm copper carries current more easily.',
+      'Apply a temperature factor of 1.28 (the 90 degrees C thermosetting factor): 0.847 × 1.28 ≈ 1.084 Ω, used for all cable types.',
     ],
     correctIndex: 0,
     explanation:
@@ -71,14 +71,14 @@ const checks = [
     question:
       'For the design-stage Zs calc, where does the value of Ze legitimately come from?',
     options: [
-      'A short briefing to site workers about specific ecological risks, protected species, and the mitigation measures they must follow',
-      'Arc-rated clothing matched to the prospective incident energy, insulated gloves rated to the working voltage, eye/face protection, and insulated footwear',
-      'The DNO declared figure on Form 1 (or assumed maximum if no Form 1 is available — TN-C-S typically 0.35 Ω, TN-S typically 0.80 Ω). Measured Ze is for verification, not design.',
-      'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
+      'The measured Ze taken at the origin with the supply isolated, since only a real measurement is valid for the design calculation.',
+      'A nominal value of zero, because the external loop is negligible against the final-circuit cable resistance.',
+      'The DNO declared Ze on Form 1, or the BS 7671 assumed maximum where no Form 1 exists (0.35 Ω TN-C-S, 0.80 Ω TN-S).',
+      'The Table 41.3 maximum Zs for the protective device, since Ze must equal the device limit by definition.',
     ],
     correctIndex: 2,
     explanation:
-      "Design uses the DNO declared Ze because it is the contractually-binding figure from the network operator and the only number guaranteed to remain valid as the network evolves. Where no Form 1 exists, BS 7671 lets you assume the maximum typical figure (0.35 Ω for PME / TN-C-S; 0.80 Ω for TN-S; 21 Ω for TT but TT relies on RCD). Measured Ze at verification confirms the supply still meets the assumption — if the measured figure exceeds the design assumption, the design Zs is invalid and the disconnection times need rechecking.",
+      "Design uses the DNO declared Ze because it is the contractually-binding figure from the network operator and the only number guaranteed to remain valid as the network evolves. Measured Ze is for verification, not design. Where no Form 1 exists, BS 7671 lets you assume the maximum typical figure (0.35 Ω for PME / TN-C-S; 0.80 Ω for TN-S; 21 Ω for TT but TT relies on RCD). Measured Ze at verification confirms the supply still meets the assumption — if the measured figure exceeds the design assumption, the design Zs is invalid and the disconnection times need rechecking.",
   },
 ];
 
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which BS 7671 regulation states that an earth fault must be cleared automatically within a defined disconnection time on a TN system?',
     options: [
-      '7% words, 38% tone of voice, 55% body language — relevant when emotional content is at stake',
+      'Reg 433.1.1 — the cable current-carrying capacity must coordinate with the protective device rating.',
       'Reg 411.3.2.2 — for TN systems, a fault of negligible impedance shall be disconnected within the times stated in Table 41.1.',
-      'The recency effect combined with sleep consolidation — the brain processes and consolidates newly learned material during sleep',
-      'Re-prove dead independently using their own GS38 voltage indicator and known live proving unit',
+      'Reg 525 — the voltage drop between the origin and any point must not exceed the tabulated limits.',
+      'Reg 314.1 — every installation shall be divided into circuits to avoid danger and minimise inconvenience.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 411.4.5 of BS 7671:2018+A4:2026 says, in essence:',
     options: [
-      'Investigate the I/O signals using PLC monitoring software, check sensor outputs and wiring, review the PLC programme logic for timing issues, check for electrical noise from nearby VSDs, and examine the safety circuit for marginal switch contacts',
-      'Focus targeted revision on that specific area, seek help from your training provider or mentor, practise explaining the topic in your own words, and prepare to be honest in the discussion if asked about an area you find challenging',
-      'For each circuit on a TN system, the earth fault loop impedance Zs shall satisfy the equation Zs × Ia ≤ U0 × Cmin, where Ia is the current causing automatic operation in the required disconnection time and Cmin is 0.95.',
-      'The apprentice is withholding information, possibly due to low trust. The mentor should build rapport and create psychological safety to encourage self-disclosure',
+      'For each circuit on a TN system the loop impedance shall satisfy Zs × Ia ≥ U0, with no voltage factor and Ia as the device rated current In.',
+      'For each circuit the measured Zs shall not exceed the design Zs by more than 10 percent, whatever the protective device characteristic.',
+      'For each circuit on a TN system the loop impedance shall satisfy Zs × Ia ≤ U0 × Cmin, with Ia the operating current and Cmin 0.95.',
+      'For each circuit the prospective fault current shall be at least twice the device rated current In to guarantee a fast trip.',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'On a TN-C-S (PME) supply with no Form 1 available, the assumed value of Ze used for design is:',
     options: [
-      'Stigma, masculine norms, and the misconception that eating disorders only affect women make men less likely to seek help',
-      'Working effectively with others, contributing to team objectives and supporting colleagues',
-      'Interest typically continues to accrue, extending the agreement and increasing total cost',
+      '0.80 Ω — the recognised maximum, which is actually the TN-S figure rather than the TN-C-S figure.',
+      '21 Ω — the figure used for TT systems where the supply provides no metallic earth path.',
+      '1.37 Ω — the Table 41.3 maximum Zs for a B32 device, used directly as the assumed Ze.',
       '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
     ],
     correctAnswer: 3,
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: 'A line-to-earth fault on the far end of a final circuit drives current through which physical path?',
     options: [
-      'Through the line conductor (R1) from origin to fault, through the negligible arc resistance at the fault, back through the cpc (R2) to the MET, then through the external loop (Ze) back to the supply transformer and round to the line.',
-      'During fault diagnosis you discover the agreed scope must change (additional cabling required, asbestos found, hidden defects) — written variation captures cost, time and consent before extra work proceeds',
-      'Cover the wound and bone end with a sterile dressing without applying direct pressure over the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
+      'Line conductor (R1) out, arc at the fault, cpc (R2) back to the MET, then the external loop (Ze) back to the transformer and round to the line.',
+      'Neutral conductor only, returning to the transformer without involving the cpc or any earth path on the way back.',
+      'Out along the cpc to the fault and back along the same cpc to the MET, with the line conductor playing no part in the loop.',
+      'Through the main bonding conductors to the gas and water services, which form the return path to earth on a line-to-earth fault.',
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why does the design Zs check use (R1 + R2) at 70 degrees C, not at 20 degrees C?',
     options: [
-      'Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner',
-      'Because at the moment the fault occurs the cable is already at its operating temperature (typically 70 degrees C for 70-deg thermoplastic insulation), and the resistance of copper rises with temperature — using the cold value would understate Zs and make the disconnection time look better than it actually is at full load.',
-      'BS 7671 is non-statutory but compliance is treated by the courts as evidence of discharging the EAWR duty. It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'safe harbour\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' — follow BS 7671 and the prosecution has to work much harder to prove you breached EAWR. Depart from BS 7671 and you have to demonstrate the alternative is at least as safe.',
-      'MCS Certificate, manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s commissioning records, design documentation including heat-loss calculation, system schematic, controls programming details, maintenance instructions and a Building Regs compliance certificate',
+      'Because the test instrument injects its test current at 70 degrees C, so the resistance tables are calibrated to that temperature.',
+      'Because a fault at full load hits a cable already near 70 degrees C, where copper resistance is higher — the cold value would understate Zs.',
+      'Because copper resistance falls as it heats, so the 70 degrees C value gives the lowest Zs and the most conservative result.',
+      'Because BS 7671 fixes a standard 70 degrees C reference for all design calculations regardless of the actual conductor temperature.',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'A 30 m run of 2.5 mm² T+E (line) with 1.5 mm² cpc has resistance per metre at 20 degrees C of 7.41 + 12.10 = 19.51 mΩ/m. The Ze is 0.35 Ω (TN-C-S declared). What is the design-stage Zs at 70 degrees C operating temperature?',
     options: [
-      'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
-      'Eliminate → Substitute → Engineering controls → Administrative controls → PPE. PPE is the LAST line. The hierarchy applies across H&S regs (COSHH Reg 7, MHSWR ACOP, HSG48).',
-      '0.35 + (0.030 × 19.51 × 1.20) = 0.35 + 0.702 = 1.05 Ω (rounded). At 70 degrees C operating temperature, applying the 1.20 OSG correction.',
-      'Records of who was trained, the training content and date, the trainer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s competence, competence assessment outcomes, and scheduled refresher dates',
+      '0.35 + (30 × 19.51 / 1000) = 0.35 + 0.585 = 0.94 Ω — the cold value with no temperature correction applied to the cable.',
+      '30 × 19.51 × 1.20 / 1000 = 0.702 Ω — the corrected cable resistance alone, omitting the supply-side Ze term.',
+      '0.35 + (0.030 × 19.51 × 1.20) = 0.35 + 0.702 = 1.05 Ω — Ze plus (R1 + R2) corrected to 70 degrees C.',
+      '0.35 × 1.20 + (30 × 19.51 / 1000) = 0.42 + 0.585 = 1.01 Ω — applying the 1.20 factor to Ze rather than to the cable.',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: 'What is the relationship between Ia (current causing automatic operation) and the device characteristic for a Type B BS EN 60898 MCB?',
     options: [
-      'A poor termination somewhere along the circuit — a loose neutral block, a poorly tightened CPC, or a corroded joint adding extra resistance to the fault loop. Check every termination, retest after re-making.',
-      'Report the death immediately to the HSE by telephone, follow up with a written report within 10 days, secure and preserve the scene, conduct a thorough investigation to establish root cause, and implement corrective actions to prevent recurrence',
-      'A single incident commonly engages multiple statutory duties simultaneously — HASAWA s.2 (firm to employee) + s.3 (firm to non-employee) + s.7 (operative personal) + s.37 (director personal) + EAWR Regs + MHSWR Regs + specific daughter regs. Prosecution selects from the stack.',
-      'Ia is the magnetic-trip threshold = 5 × In for Type B (3 × In for Type A; 10 × In for Type C; 20 × In for Type D); for the Table 41.3 maximum Zs this is the current that gives a sub-100 ms disconnection — the upper-bound trip current at the steep end of the I-t curve.',
+      'Ia is the rated current In, so the loop need only pass the device design current to trip in the required time.',
+      'Ia is 1.45 × In for every curve, matching the overload coordination factor from Reg 433.1.1.',
+      'Ia is fixed at 3 × In for all MCB types, the magnetic threshold being independent of the trip curve.',
+      'Ia is the magnetic-trip threshold of 5 × In for Type B (10 × In Type C; 20 × In Type D).',
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: 'Why is the design pack expected to record both the Ze used and the source of (R1 + R2)?',
     options: [
-      'Because the EIC and any future EICR have to be able to trace the calculation back to a defensible source — DNO Form 1 or BS 7671 assumed maximum for Ze; OSG Table I1 / IET GN1 cable resistance tables for (R1 + R2) — and confirm the temperature correction was applied. Without the trace the design Zs is unverifiable.',
-      'Three: Category 1 (visitable dwellings — accessible to visitors), Category 2 (accessible and adaptable dwellings), Category 3 (wheelchair user dwellings, with sub-categories 3a and 3b for adaptable and accessible respectively).',
-      'The Construction Phase Plan is the Principal Contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.',
-      'Under Reg 443.4.1, protection against transient overvoltages shall be provided where the consequence could result in (a) serious injury to, or loss of, human life or (c) significant financial or data loss (limb (b) was deleted by the A2:2022 May 2023 corrigendum); for all other cases protection is provided unless the owner declares it not required and accepts the risk.',
+      'So the EIC and any future EICR can trace each Zs back to a defensible source and confirm the temperature correction was applied.',
+      'Because the test instrument needs both figures entered before it will display a measured Zs reading at verification.',
+      'Because the DNO requires both values on the connection application before it will declare the supply earthing arrangement.',
+      'Because Building Control rejects the completion certificate unless Ze and (R1 + R2) are printed on the consumer unit label.',
     ],
     correctAnswer: 0,
     explanation:
@@ -198,12 +198,12 @@ const faqs = [
   {
     question: 'Why does the regulation use Cmin 0.95 in the design check?',
     answer:
-      "Cmin (the voltage factor minimum) accounts for the fact that the supply voltage at the fault point during a fault may be lower than the declared U0 of 230 V — supply tolerance is +10 / -6 percent in the UK (216 to 253 V), and during a heavy fault the voltage at the load drops further due to the source impedance. BS 7671:2018+A4:2026 introduced Cmin 0.95 explicitly into Reg 411.4.5 — the design Zs has to satisfy Zs × Ia ≤ U0 × 0.95 = 218.5 V, not 230 V. The Table 41.3 max Zs values in A4:2026 are recalculated to incorporate the 0.95 factor, which is why the B32 max changed from the old 1.37 Ω (A2) to 1.37 Ω (A4:2026). Cmin is covered in detail in Sub2.",
+      "Cmin (the voltage factor minimum) accounts for the fact that the supply voltage at the fault point during a fault may be lower than the declared U0 of 230 V — supply tolerance is +10 / -6 percent in the UK (216 to 253 V), and during a heavy fault the voltage at the load drops further due to the source impedance. BS 7671:2018+A4:2026 introduced Cmin 0.95 explicitly into Reg 411.4.5 — the design Zs has to satisfy Zs × Ia ≤ U0 × 0.95 = 218.5 V, not 230 V. The Table 41.3 max Zs values in A4:2026 are recalculated to incorporate the 0.95 factor, which is why the B32 max changed from the old 1.44 Ω (A2) to 1.37 Ω (A4:2026). Cmin is covered in detail in Sub2.",
   },
   {
     question: 'What changed in Table 41.3 in A4:2026?',
     answer:
-      "A4:2026 recalculated all the Table 41.3 maximum Zs values using Cmin = 0.95 from Appendix 14, replacing the previous practice that did not explicitly apply Cmin in the table. The new values are about 5 percent lower than the old ones — for example a B32 MCB on TN went from 1.37 Ω (A2 / pre-A4) to 1.37 Ω (A4:2026). If you have an old design pack or an old Zs lookup app, the limits are tighter now. Always confirm you are working from the A4:2026 edition. The regulation that mandates this is unchanged in principle but the number is now demonstrably the right one for the supply tolerance.",
+      "A4:2026 recalculated all the Table 41.3 maximum Zs values using Cmin = 0.95 from Appendix 14, replacing the previous practice that did not explicitly apply Cmin in the table. The new values are about 5 percent lower than the old ones — for example a B32 MCB on TN went from 1.44 Ω (A2 / pre-A4) to 1.37 Ω (A4:2026). If you have an old design pack or an old Zs lookup app, the limits are tighter now. Always confirm you are working from the A4:2026 edition. The regulation that mandates this is unchanged in principle but the number is now demonstrably the right one for the supply tolerance.",
   },
   {
     question: 'Does Zs apply to circuits on a TT system?',

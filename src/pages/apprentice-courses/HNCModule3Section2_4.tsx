@@ -71,10 +71,10 @@ const quickCheckQuestions = [
     id: 'poor-pf-effect',
     question: 'What is a direct consequence of operating with a 0.7 power factor instead of unity?',
     options: [
-      '43% higher current for same power',
-      'Silicosis and lung cancer',
-      'Lagging, typically 0.8-0.9 at full load',
-      'Circuit completely dead, no power at all',
+      '43% higher current for the same real power',
+      '43% lower current for the same real power',
+      'No change in current, only in voltage',
+      'Real power doubles for the same current',
     ],
     correctIndex: 0,
     explanation:
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'What causes leading power factor?',
     options: [
-      'Danger, so far as is reasonably practicable',
-      'The electrical contractor controlling the work',
-      'Emergency Lighting Completion Certificate',
-      'Capacitor banks or synchronous motors',
+      'Lightly loaded induction motors',
+      'Resistive heating elements',
+      'Capacitor banks or over-excited synchronous motors',
+      'Transformers operating at full load',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Capacitor banks and over-excited synchronous motors cause leading power factor, where current leads voltage. This is used for power factor correction.',
   },

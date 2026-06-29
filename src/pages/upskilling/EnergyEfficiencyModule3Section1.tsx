@@ -47,12 +47,12 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       question:
         "Before conducting a walkthrough survey, what document should you review to understand the building's electrical infrastructure?",
       options: [
-        "The building's social media presence",
         'Single-line diagrams and distribution board schedules',
-        'Staff holiday rosters',
-        'Local council meeting minutes',
+        'The most recent staff holiday roster',
+        'The building maintenance contractor’s price list',
+        'Previous fire drill attendance records',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Single-line diagrams and distribution board schedules provide essential information about the electrical infrastructure, circuit allocation, and load distribution. This preparation ensures you can efficiently navigate the site and identify key areas for investigation during the walkthrough.',
     },
@@ -70,12 +70,12 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       question:
         'When documenting electrical equipment during an audit, which photograph angle provides the most useful information for future reference?',
       options: [
-        'Artistic wide-angle shots of the entire room',
+        'Wide-angle shots showing the entire room',
+        'Photos of damaged equipment only',
+        'Shots taken from the maximum possible distance',
         'Close-ups showing nameplate data and installation context',
-        'Only photos of damaged equipment',
-        'Photos taken from maximum distance',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Close-up photographs capturing nameplate data (manufacturer, model, ratings, serial number) alongside the installation context provide the most valuable documentation. This combination allows for accurate equipment identification, specification verification, and understanding of how equipment is integrated into the system.',
     },
@@ -85,96 +85,116 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
     {
       question: 'What is the primary purpose of a walkthrough survey in an energy audit?',
       options: [
-        'To meet health and safety regulations only',
         'To gather visual and contextual information about energy-using systems',
-        'To take photographs for marketing materials',
+        'To satisfy health and safety regulations and nothing more',
+        'To take photographs for marketing and brochure use',
         'To count the number of employees on site',
       ],
       correctAnswer: 'To gather visual and contextual information about energy-using systems',
+      explanation:
+        'The walkthrough is about understanding how energy is actually used on site — capturing visual and contextual information on plant, controls and operation that drawings alone cannot give.',
     },
     {
       question: 'Which BS EN standard specifically covers energy audit requirements?',
-      options: ['BS EN 7671', 'BS EN 16247', 'BS EN 62305', 'BS EN 50160'],
+      options: ['BS EN 50160', 'BS EN 16247', 'BS EN 62305', 'BS 7671'],
       correctAnswer: 'BS EN 16247',
+      explanation:
+        'BS EN 16247 is the standard series setting out energy audit requirements; BS 7671 is wiring regs, 62305 is lightning protection and 50160 is supply voltage characteristics.',
     },
     {
       question:
         'What tool is essential for measuring real-time electrical consumption during a survey?',
       options: [
-        'Spirit level',
+        'A spirit level',
+        'A tape measure',
         'Clamp meter or power analyser',
-        'Tape measure only',
-        'Sound level meter',
+        'A sound level meter',
       ],
       correctAnswer: 'Clamp meter or power analyser',
+      explanation:
+        'A clamp meter or power analyser measures live current and power draw, giving the real-time consumption figures an energy survey needs to size and verify savings.',
     },
     {
       question: 'What is a "quick win" in the context of an energy audit?',
       options: [
         'Completing the audit faster than scheduled',
+        'Finding a major piece of failed equipment',
+        'Winning the next contract against competitors',
         'A low-cost measure with rapid payback and immediate implementation potential',
-        'Finding major equipment failures',
-        'Winning a contract against competitors',
       ],
       correctAnswer: 'A low-cost measure with rapid payback and immediate implementation potential',
+      explanation:
+        'A "quick win" is a low-cost or no-cost measure that pays back rapidly and can be put in place straight away, building momentum and savings while bigger projects are planned.',
     },
     {
       question: 'When should you photograph electrical distribution boards during a survey?',
       options: [
-        'Only if they appear damaged',
         'Always, capturing labelling, condition, and thermal patterns if using IR',
-        'Never, due to safety concerns',
+        'Only if the board appears visibly damaged',
+        'Never, due to safety concerns about the board',
         'Only with written permission from the CEO',
       ],
       correctAnswer: 'Always, capturing labelling, condition, and thermal patterns if using IR',
+      explanation:
+        'Photographing every distribution board records labelling, condition and (with thermal imaging) hotspots, creating a baseline for both energy analysis and electrical condition.',
     },
     {
       question:
         'What percentage of lighting energy can typically be saved by upgrading from T8 fluorescent to LED?',
       options: ['10-20%', '20-30%', '40-60%', '90-100%'],
       correctAnswer: '40-60%',
+      explanation:
+        'Replacing T8 fluorescent tubes with LED equivalents typically cuts lighting energy by around 40-60%, with further savings where controls and daylight dimming are added.',
     },
     {
       question: 'What should be recorded for each item in an equipment inventory?',
       options: [
         'Only the manufacturer name',
+        'Just the equipment colour and physical size',
+        'Only the equipment that is currently running',
         'Location, nameplate data, operating hours, condition, and estimated consumption',
-        'Just the equipment colour and size',
-        'Only equipment that is currently running',
       ],
       correctAnswer:
         'Location, nameplate data, operating hours, condition, and estimated consumption',
+      explanation:
+        'A useful inventory records location, nameplate data, operating hours, condition and estimated consumption, so that energy use can be apportioned and savings prioritised.',
     },
     {
       question: 'Why is it important to conduct surveys during normal occupied hours?',
       options: [
-        'To ensure staff can make refreshments',
+        'So that staff are on hand to make refreshments',
         'To observe typical operational patterns and occupancy-related loads',
-        'Building access is only available during these times',
-        'Energy consumption is always lowest during occupied hours',
+        'Because building access is only available during these times',
+        'Because energy consumption is always lowest when occupied',
       ],
       correctAnswer: 'To observe typical operational patterns and occupancy-related loads',
+      explanation:
+        'Surveying during normal occupied hours captures real operating patterns and occupancy-driven loads — lighting, IT, HVAC in use — which an out-of-hours visit would miss.',
     },
     {
       question: 'What safety document should you review before conducting a site survey?',
       options: [
-        'The company newsletter',
         'Site-specific risk assessment and method statement (RAMS)',
+        'The company internal newsletter',
         'Equipment user manuals only',
-        'Previous energy bills',
+        'The previous quarter’s energy bills',
       ],
       correctAnswer: 'Site-specific risk assessment and method statement (RAMS)',
+      explanation:
+        'A site-specific risk assessment and method statement (RAMS) must be reviewed before surveying, so that hazards such as live plant, working at height and confined spaces are controlled.',
     },
     {
       question:
         'Which area is commonly overlooked during energy audits but often contains significant saving opportunities?',
       options: [
         'The main reception area',
+        'The executive office suite',
+        'The car park entrance barriers',
         'Plant rooms, risers, and roof-mounted equipment',
-        'Executive offices',
-        'Car park entrance barriers',
       ],
       correctAnswer: 'Plant rooms, risers, and roof-mounted equipment',
+      explanation:
+        'Plant rooms, risers and roof-mounted equipment house major energy users like pumps, fans and chillers, yet are easily skipped — making them rich sources of saving opportunities.',
     },
   ];
 

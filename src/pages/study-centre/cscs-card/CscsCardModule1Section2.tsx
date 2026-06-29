@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     id: 'green-card-requirements',
     question: 'What are the minimum requirements for a CSCS Green Labourer Card?',
     options: [
-      'NVQ Level 2 in a construction trade + Operatives HS&E test',
       'Pass the Operatives HS&E test + have achieved, be registered for, or have applied for a Level 1 qualification',
+      'NVQ Level 2 in a construction trade + Operatives HS&E test',
       'Pass the Managers & Professionals HS&E test + 5 years of site experience',
       'Complete a CITB apprenticeship + pass the Specialists HS&E test',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The CSCS Green Labourer Card requires passing the Operatives HS&E test and having achieved, being registered for, or having applied for a Level 1 qualification (or equivalent). It is the most common entry-level card and the minimum requirement for most site access. Over 500,000 green cards are currently in circulation.',
   },
@@ -86,8 +86,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What colour is the CSCS card for a general labourer?',
-    options: ['Red', 'Blue', 'Green', 'Gold'],
-    correctAnswer: 2,
+    options: ['Green', 'Blue', 'Red', 'Gold'],
+    correctAnswer: 0,
     explanation:
       'The Green Labourer Card is the most common entry-level CSCS card. It is issued to workers who have passed the Operatives HS&E test and have achieved, are registered for, or have applied for a Level 1 qualification. It is the minimum card for most site access.',
   },
@@ -134,8 +134,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'How long is a standard CSCS card valid for?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 2,
+    options: ['5 years', '3 years', '1 year', '10 years'],
+    correctAnswer: 0,
     explanation:
       'Standard CSCS cards (Green, Blue, Gold, Black, White) are valid for 5 years from the date of issue. After this period, the card must be renewed by passing the appropriate HS&E test again and providing evidence of current qualifications. Provisional cards are an exception, being valid for only 6 months.',
   },
@@ -167,11 +167,11 @@ const quizQuestions = [
       'An experienced worker with 15 years on site but no formal qualifications wants a CSCS card. What is their route?',
     options: [
       'They cannot obtain a CSCS card without formal qualifications',
-      'They can apply for an Experienced Worker card and must register and complete an assessment within a set period',
       'They automatically receive a Gold Advanced Craft card based on experience alone',
       'They must start a full apprenticeship before any card can be issued',
+      'They can apply for an Experienced Worker card and must register and complete an assessment within a set period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Experienced Worker route allows workers with extensive practical experience but no formal qualifications to obtain a CSCS card. They must register for and complete an appropriate assessment (typically an NVQ achieved through on-site assessment of existing competence) within a set period. This route recognises that many skilled workers gained their competence through years of practical work rather than formal education.',
   },

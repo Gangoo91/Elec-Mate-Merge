@@ -15,68 +15,68 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What does PEI stand for?',
+    question: 'What does the abbreviation PEI stand for in BS 7671?',
     options: [
       'Power Equipment Installation',
-      'Prosumer Electrical Installation',
       'Protected Electrical Infrastructure',
+      'Prosumer Electrical Installation',
       'Primary Energy Interface',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'PEI stands for Prosumer Electrical Installation - installations that both consume and produce electrical energy, such as solar PV systems with battery storage.',
-  },
-  {
-    id: 2,
-    question: "What's the main risk of backfeed?",
-    options: [
-      'Higher electricity bills',
-      'Energising supposedly dead lines, creating shock risk',
-      'Equipment running slower',
-      'Reduced system efficiency',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Backfeed occurs when locally generated power flows back into the grid, potentially energising lines that workers believe are dead, creating serious shock and electrocution risks.',
-  },
-  {
-    id: 3,
-    question: "What's islanding in electrical terms?",
-    options: [
-      'Installing equipment on actual islands',
-      'Separating loads into different zones',
-      'When local generation continues to supply local loads during a grid outage',
-      'Underground cable installation',
     ],
     correctAnswer: 2,
     explanation:
-      'Islanding occurs when local generation (like solar PV) continues to supply local loads even when the main grid supply is disconnected, which can be dangerous for utility workers.',
+      'PEI stands for Prosumer Electrical Installation — an installation that both consumes and produces electrical energy, such as solar PV with battery storage.',
+  },
+  {
+    id: 2,
+    question: 'What is the main safety risk associated with backfeed from local generation?',
+    options: [
+      'Energising conductors that workers believe are dead',
+      'A gradual increase in the customer’s electricity bills',
+      'Connected equipment running more slowly than rated',
+      'A small reduction in overall system efficiency',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Backfeed can keep conductors live from the generation side even after the supply is isolated, creating a serious shock risk to anyone working on supposedly dead lines.',
+  },
+  {
+    id: 3,
+    question: 'What does “islanding” mean in an installation with local generation?',
+    options: [
+      'Installing electrical equipment on offshore islands',
+      'Grouping loads into separately switched zones',
+      'Routing the supply through underground cabling',
+      'Local generation continuing to supply loads during a grid outage',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Islanding is when local generation keeps supplying local loads after the grid supply is lost; uncontrolled islanding is dangerous to network workers and must be prevented.',
   },
   {
     id: 4,
-    question: 'Are PEIs covered by Amendment 2?',
+    question: 'How does BS 7671 (as amended) address prosumer electrical installations?',
     options: [
-      "No, they're not mentioned",
-      'Yes, through the introduction of Part 8',
-      'Only for commercial installations',
-      'Only for battery systems',
+      'They are introduced through a dedicated Part 8',
+      'They are not referenced anywhere in the standard',
+      'They are covered only for commercial premises',
+      'They are addressed only where battery storage is fitted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Amendment 2 introduced Part 8 specifically to address Prosumer Electrical Installations and their unique requirements for safety and grid interaction.',
+      'A dedicated Part 8 was introduced to cover prosumer electrical installations, addressing their particular requirements for safety and interaction with the supply network.',
   },
   {
     id: 5,
-    question: 'What kind of EMS features are used?',
+    question: 'Which functions are typically provided by an energy management system (EMS) in a PEI?',
     options: [
-      'Only basic timers',
-      'Load balancing, energy storage management, and grid interaction control',
-      'Just monitoring functions',
-      'Only emergency shutdown',
+      'Only simple time-clock control of loads',
+      'Only basic monitoring with no control output',
+      'Load balancing, storage management and grid-interaction control',
+      'Only an emergency shutdown of the whole installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Energy Management Systems for PEIs include sophisticated features like load balancing, battery storage optimisation, grid interaction control, and demand response capabilities.',
+      'An EMS for a PEI typically balances loads, optimises battery storage and controls how the installation interacts with the grid, including demand-response functions.',
   },
 ];
 

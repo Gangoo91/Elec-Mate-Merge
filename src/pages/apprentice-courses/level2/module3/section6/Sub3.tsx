@@ -44,10 +44,10 @@ const checks = [
     question:
       'A customer is comparing two domestic battery options — one is described as LFP (lithium iron phosphate) and the other as NMC (nickel manganese cobalt). What is the safety-relevant difference for a UK domestic install?',
     options: [
-      'LFP has a more stable thermal runaway threshold (around 270 °C) and tends to vent rather than ignite, while NMC has a lower runaway threshold (around 200 °C) and a higher risk of self-sustaining fire. LFP is typically heavier per kWh but is the safer chemistry for in-home storage.',
-      'Verify the RAMS / SSoW matches the actual site, brief the operatives on the relevant content, confirm understanding, sign as the responsible supervisor. The signature is evidence the handover was done. Increasingly L3 contributes to writing RAMS for routine jobs.',
-      'Hazardous waste - double-bagged (red inner with asbestos label, clear outer with hazardous waste label), accompanied by Hazardous Waste Consignment Note, transported by licensed asbestos waste carrier, disposed of at permitted asbestos waste facility.',
-      'Reject — measured exceeds 0.8 × table max, which means the hot Zs in service will probably exceed Table 41.3 max. Investigate: confirm the device, recalculate the design Zs, and either upsize the cable or accept the device must be downrated.',
+      'LFP has the higher runaway threshold and tends to vent rather than ignite, making it the safer in-home chemistry.',
+      'NMC is the safer chemistry because the cobalt makes it self-extinguishing, while LFP vents hydrogen and needs ventilation.',
+      'There is no safety-relevant difference; the two behave identically in a fault and the choice is purely about energy density.',
+      'LFP has the lower runaway threshold and burns harder, which is why EVs use it, while NMC is the calmer in-home chemistry.',
     ],
     correctIndex: 0,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       'A 10 kWh lithium battery has a "BMS" inside it. What does the BMS do and why does it matter for safety?',
     options: [
-      'So the tester can verify the design assumptions during initial verification — measured Ze at the origin and measured Zs at each circuit end can be compared against the design values on the SLD. Mismatch flags either a measurement issue or a design assumption that did not hold (e.g. cable installed differently to design).',
-      'The Battery Management System monitors the voltage, current and temperature of every individual cell (or cell group), balances charge across cells, prevents over-charge and over-discharge, and shuts the pack down if any parameter goes out of safe range. Without a working BMS a lithium pack will eventually go into thermal runaway.',
-      'By first stating what they don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t mean ("I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m not saying your work is below standard overall") and then what they do mean ("I am saying this particular joint needs attention because it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t meet the specification")',
-      'Not directly. BS 7671 is a British Standard published by BSI and the IET — it\\\\\\\\\\\\\\\'s not an Act of Parliament. But for a domestic install in England, the Building Regulations 2010 Approved Document P treats compliance with BS 7671 as the way to meet the statutory requirement for electrical safety, so in practice the courts will expect the standard to have been followed. It\\\\\\\\\\\\\\\'s voluntary in name and effectively mandatory in court.',
+      'The Battery Mounting System is the bracketry that fixes the pack to a non-combustible wall at the required separation.',
+      'The Battery Management System monitors every cell, balances charge, prevents over-charge and over-discharge, and trips on a fault.',
+      'The Battery Metering System logs the kWh charged and discharged so the customer can claim the correct SEG payment.',
+      'The Building Management System is the inverter’s anti-islanding logic that disconnects within 200 ms of a loss of mains.',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const checks = [
     question:
       'You are wiring the AC supply circuit for a hybrid inverter that handles PV plus a 10 kWh LFP battery. The PCE manufacturer says nothing about RCD type in the manual. What does Reg 570.6.2.2 (battery side) and Reg 712.531.3.5.1 (PV side) point you to?',
     options: [
-      'Stop. The RAMS is the baseline; it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t cover what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s changed since the survey. Walk the site, identify the new hazards, write a dynamic risk assessment that supplements the RAMS, decide whether the work can safely proceed today. If the conditions are wildly different, escalate for a fresh RAMS rather than try to manage on the fly.',
-      'Type B RCD is the default for both. Both regs use almost identical wording — Type B per BS EN 62423 or BS EN 60947-2 unless (a) the PCE provides at least simple separation between AC and DC, (b) a transformer separates PCE from RCD, or (c) the PCE manufacturer explicitly states Type B is not required.',
-      'It continuously adjusts the operating voltage of the string so the panels deliver their peak power as light, temperature and partial shade change throughout the day. The peak power point sits below open-circuit voltage and at a current below short-circuit — the MPPT hunts for the sweet spot.',
-      'A 10-digit reference number issued by HMRC when you register for Self Assessment as a self-employed individual or when you register a limited company. You need it for tax returns and HMRC correspondence; partners and directors each have their own.',
+      'A Type AC RCD for both, because the hybrid inverter cleans up all the DC internally and presents only sinusoidal AC.',
+      'Type B is the default for both, unless the PCE provides separation or the manufacturer states Type B is not required.',
+      'A Type A for the PV side and a Type AC for the battery side, because the two sources leak different waveforms onto the AC.',
+      'No RCD on the supply circuit, because the hybrid inverter integrates its own residual-current monitoring internally.',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'Which battery chemistry currently dominates new UK domestic energy storage installs and why?',
     options: [
-      'The Type 1+2 at the origin handles the bulk of the transient energy; the downstream Type 2 (or Type 3) handles the residual surge that survives the upstream device, providing further reduction of the let-through voltage at the equipment terminals. Cascade requires coordination via manufacturer tables to avoid let-through that exceeds the downstream device\\\\\\\'s rating.',
-      'Lithium iron phosphate (LFP / LiFePO4), because its thermal stability is high, cycle life is long (typically 5,000–10,000 cycles), depth of discharge is near 100 %, and the cells do not contain cobalt — making it both the safest mainstream lithium chemistry and the most commercially attractive for in-home use.',
-      'Clear communication ensures safe handovers between shifts, accurate fault reporting for root cause analysis, effective coordination with production teams, correct documentation of maintenance activities, and professional interaction with colleagues, supervisors, and contractors',
-      'Ze on a TT system is typically 21 Ω or higher (electrode + soil + remote substation electrode), which exceeds the Table 41.3 max Zs for any practical MCB rating. RCDs are required for fault protection — Table 41.5 then applies.',
+      'Flooded lead-acid, because it is cheapest per kWh and its short cycle life is offset by being easy to recycle.',
+      'Lithium iron phosphate (LFP), for its high thermal stability, long cycle life, near-full discharge depth and no cobalt.',
+      'Nickel manganese cobalt (NMC), because its high energy density per kilogram suits fixed wall-mounted storage best.',
+      'Nickel-cadmium, because its tolerance of deep discharge and long shelf life make it the dominant home chemistry.',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'A typical UK domestic battery is rated at 10 kWh of usable capacity and 5 kW of continuous power. The "C-rate" is the ratio of charge or discharge current to capacity. What rough C-rate is that battery operating at when discharging at full power?',
     options: [
-      'Walk them through hazard identification on real jobs; ask "what hazards do you see here?"; explain reasoning behind controls; show them how to write a dynamic assessment note; review their attempts; correct calibration over time.',
-      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
-      '0.5C — discharging at 5 kW from a 10 kWh pack means it would take roughly 2 hours to fully discharge, which is a 0.5C rate. Higher C-rates (1C+) heat the pack harder and shorten cycle life.',
-      'Add specific details about what was learned, how it felt to overcome challenging concepts, analyse why RCD selection was previously a weakness, and create a concrete action plan with measurable steps',
+      '2C — discharging a 10 kWh pack at 5 kW empties it in about two hours, and the number of hours is the C-rate.',
+      '5C — the C-rate is simply the power output in kW, so a 5 kW discharge is a 5C rate regardless of pack capacity.',
+      '0.5C — 5 kW from a 10 kWh pack empties it in roughly two hours, which is a 0.5C continuous discharge rate.',
+      '1C — any battery discharging at its rated continuous power is by definition running at 1C, whatever the capacity.',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,10 +117,10 @@ const quizQuestions = [
     question:
       'A new PV plus battery install uses a single hybrid inverter handling both. The battery is "DC-coupled" to the PV. What does that mean and why is it preferred for new installs?',
     options: [
-      'Include a price variation clause in your quotation allowing adjustment for significant material price changes (e.g. copper, aluminium, key brands). Set a clear threshold (typical: changes over 5%) and define the calculation method. This protects both parties on long-running projects.',
-      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
-      'Verification of correct operation in all modes: normal (mains-powered), battery (mains-failure), bypass (maintenance), and transfer between modes, including verification of transfer times and output voltage/frequency under load',
-      'The battery and the PV strings both connect to the DC side of one inverter. PV power can charge the battery without first being inverted to AC and back, giving roughly 3–5 % higher round-trip efficiency than AC-coupling. Best for new PV plus battery installs that go in together.',
+      'The battery has its own separate inverter alongside the PV inverter, so each unit converts independently to AC.',
+      'The battery is wired in series with the PV strings on the roof, sharing one set of DC string cables to the inverter.',
+      'The battery stores DC only and can never export, so a DC-coupled system is by definition an off-grid installation.',
+      'The battery shares the DC bus of one hybrid inverter with the PV, so charging avoids a conversion step — more efficient.',
     ],
     correctAnswer: 3,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     question:
       'Which BS 7671 chapter introduced detailed requirements for stationary secondary battery installations under BS 7671:2018+A4:2026?',
     options: [
-      'Chapter 57 (Stationary Secondary Batteries) — Section 570 onwards covers scope, battery and PCE selection, energy management systems, isolation, fire and ventilation, labelling and warning notices.',
-      'Demonstrates your commitment to professional standards, provides formal recognition of your competence, requires ongoing CPD, and enhances your career prospects and professional credibility',
-      'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
-      'Self-regulation directly affects all four components: managing emotions maintains credibility, consistent behaviour builds reliability, emotional openness creates intimacy, and regulating self-interest reduces self-orientation — all of which build trust',
+      'Chapter 57 (Stationary Secondary Batteries) — Section 570 onwards covers selection, isolation, fire and labelling.',
+      'Chapter 71 (Stationary Secondary Batteries) — a new Part 7 special-location section alongside bathrooms and EV charging.',
+      'Section 712 (Solar Photovoltaic Power Supply Systems) — batteries are an extension of the PV rules with no separate chapter.',
+      'Chapter 55 (Other Equipment) — batteries are grouped with generators and transformers as miscellaneous fixed equipment.',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'Reg 570.6.7.203 says stationary secondary batteries in dwellings "shall be installed in a suitable location taking account of manufacturer\'s instructions and PAS 63100". What is PAS 63100?',
     options: [
-      'Brings the installed systems to life — energising, testing, setting parameters, demonstrating compliance, and signing the system over to the client. On a commercial project commissioning is a distinct phase after the install: the Commissioning Engineer runs the test sequence, configures the BMS, programmes the panels, sets the protection settings and produces the commissioning records that go in the O&M manual.',
-      'A BSI Publicly Available Specification — "PAS 63100:2024 Electrical installations. Protection against fire of battery energy storage systems intended for use in dwellings" — that sets out fire safety requirements for domestic battery storage, including location restrictions, separation distances from sleeping accommodation and escape routes, fire detection requirements and segregation from combustibles.',
-      'Reg 132.13 — \\\\\\\'The designer of the electrical installation shall provide ... the information necessary to allow the safe operation, inspection, alteration, repair, maintenance and dismantling of the electrical installation\\\\\\\'. The information has to be available to whoever is going to operate or maintain it. That is the BS 7671 hook for site-folder paperwork (single line diagram, schedule of circuits, certificate, schedule of test results, mfr data).',
-      'I apply the requirements of the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, and relevant ACoPs and British Standards such as BS 7671, through practical actions including risk assessment, safe isolation, use of appropriate PPE, maintenance of competence, and accurate record keeping',
+      'A BSI product standard defining the cell-level overcharge, short-circuit and crush tests a manufacturer must pass.',
+      'A BSI specification setting fire safety requirements for domestic battery storage — location, separation and detection.',
+      'An ENA Engineering Recommendation that sets the export limit and anti-islanding settings agreed with the DNO.',
+      'The MCS installation standard for battery storage, which an installer must hold to register a system for SEG.',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       'A 5.5 kW hybrid inverter on a new PV plus battery install draws 24 A per phase at 230 V at full export. The customer wants a 10 kWh battery. Which DNO process applies?',
     options: [
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
-      'Every 20-30 minutes, lasting 30 seconds to 2 minutes, involving stretching or posture change',
+      'G98 — informal notification within 28 days, because the install includes a battery and battery systems are always treated as G98 regardless of inverter rating.',
+      'No DNO process — the battery absorbs the surplus on site, so nothing is exported and the network operator does not need to be told.',
       'G99 — full pre-application to the DNO before install, because the per-phase output exceeds 16 A.',
-      'Observe, take notes for their own learning, and contribute when asked — not negotiate with the client',
+      'G98 — informal notification, because the 16 A threshold is measured on the battery charging current, not the inverter export current.',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     question:
       'Why is "thermal runaway" the headline safety concern with lithium batteries?',
     options: [
-      'Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.',
-      'The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.',
-      'Because the rate of fires originating from Li-ion batteries (e-bikes, e-scooters, power tools, solar storage) has risen sharply in recent years across the UK as the installed base has grown. Fires in vehicles, garages and small workshops are a recurring incident type. The guidance focuses on segregation, charging on non-combustible surfaces, not charging unattended overnight, and immediate isolation of damaged batteries. The same rules apply in proportion to a tradesperson van as to a battery storage warehouse.',
-      'A damaged or over-charged lithium cell can heat itself by internal short-circuit. Above a chemistry-dependent threshold (around 200 °C for NMC, around 270 °C for LFP) the cell\\\\\\\\\\\\\\\'s internal materials decompose exothermically — releasing more heat that propagates to neighbouring cells. The reaction is self-sustaining and standard water-based extinguishers do not stop it. Hence the emphasis on chemistry, BMS, segregation and detection.',
+      'Because a lithium pack vents flammable hydrogen continuously while charging, so any spark can ignite the room.',
+      'Because the high DC voltage means a single insulation fault is fatal, so electrocution rather than fire is the hazard.',
+      'Because the charging current’s magnetic field disables nearby smoke detectors, so detection must be hard-wired.',
+      'A stressed cell heats itself, decomposes exothermically above its threshold, and cascades to neighbours — self-sustaining.',
     ],
     correctAnswer: 3,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     question:
       'A 9-year-old domestic LFP battery has lost roughly 25 % of its original capacity. The customer asks whether to replace it. What is the realistic answer?',
     options: [
-      'Most LFP batteries are warrantied to retain at least 70–80 % of original capacity at 10 years (typically 6,000+ cycles). 75 % at 9 years is on or just below the warranty curve. The customer can either claim under warranty if still in coverage, replace the pack now, or carry on using the reduced capacity until economic payback drops below the cost of replacement. End-of-life packs go for proper UK lithium recycling under WEEE / battery regulations — they are not house-clearance waste.',
-      'The HEMS schedules the heat pump\\\\\\\'s main run-time toward cheap off-peak windows where possible (e.g. overnight on Octopus Go). The battery charges during the same off-peak window. During the expensive peak window (typically 16:00-19:00) the battery discharges to cover the property load, including any heat pump running, while the grid import drops to near zero. Net peak grid demand from the property falls; the customer\\\\\\\'s bill falls; the grid stress falls. Some smart tariffs explicitly reward this — Octopus Cosy, for example, has dedicated cheap windows aligned with heat-pump run preferences.',
-      'Because the single-pole switch on the circuit must still interrupt the LINE conductor — reverse polarity means the switch interrupts neutral, leaving the lampholder live when "off". Bayonet holders do not have the screw-thread access hazard of E14/E27, but the switch behaviour is still a safety issue. Polarity verified at every accessory regardless of holder type.',
-      'The 110 V supply on site is centre-tapped earthed (CTE), so the voltage between either leg and earth is only 55 V. A faulty tool that ends up with the case live to one leg only puts 55 V between the casing and the operative, not 230 V. Combined with a 30 mA RCD at the transformer this dramatically reduces shock energy and survivability if something goes wrong.',
+      'It is on or just below the typical warranty curve — claim, replace, or keep using the reduced capacity, then recycle.',
+      'A 25 % capacity loss means the pack is dangerous and must be removed the same day, as fade signals imminent runaway.',
+      'Nothing can be done — lithium packs cannot be replaced once installed, so the customer runs the PV without storage.',
+      'The homeowner should top the pack up with new cells to restore capacity, as routine maintenance rather than replacement.',
     ],
     correctAnswer: 0,
     explanation:

@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'ENA Engineering Recommendations G98 and G99 — what do they cover and where do they sit in the regulatory stack?',
     options: [
-      'All failures on Critical (A) assets, repeated failures on any asset, failures with safety or environmental consequences, and any failure that reveals a gap in the current maintenance programme — the goal is to learn from every significant failure and prevent recurrence',
+      'They are sections of BS 7671 itself — G98 and G99 are the reg numbers within Part 7 that cover the connection of micro-generation to the public network.',
       'They are Distribution Network Operator engineering recommendations governing how customer-owned generation is connected in parallel with the public supply network — separate from BS 7671 (a British Standard) and from MCS (a certification scheme).',
-      'Being punctual, properly prepared, dressed appropriately, communicating clearly and respectfully with the assessor, demonstrating safe working practices, and responding to questions honestly and thoughtfully',
-      'When the work is high-risk - typically removal of sprayed coatings, lagging, AIB beyond very small quantities, friable insulation. Detailed in CAR 2012 Reg 8 + HSE guidance L143.',
+      'They are MCS product standards that a panel or inverter must pass before it can be listed and sold for use on a certified installation.',
+      'They are Building Regulations approved documents that discharge the Part P notification for any renewable installation in England and Wales.',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'MCS — what does it stand for and what does it actually do?',
     options: [
-      'The single shared online platform where all project information is stored, controlled and exchanged — drawings, models, schedules, RFIs, change orders, all under structured access control and revision management. Examples include Autodesk Construction Cloud, Procore, Asite, Aconex, Viewpoint For Projects.',
-      'You are entitled to a retake — the assessment plan specifies the process and timeframe for retakes, and your training provider will support you in addressing the areas that need improvement before you reattempt',
+      'Mains Connection Standard — a DNO scheme that approves the meter and cut-out arrangement before any micro-generation can be connected to the supply.',
+      'Micro Combined Supply — an energy-supplier tariff that guarantees a fixed export price for the life of a renewable installation.',
       'Microgeneration Certification Scheme — a UK-government-backed certification scheme for installers and products of micro-generation. MCS is required to access most consumer financial schemes (including the Smart Export Guarantee) and is in practice mandatory for any commercial domestic install.',
-      'Risks during installation (working at height, manual handling of soil and materials), risks during maintenance (safe access for planting, irrigation system servicing), and risks during any future removal or replacement',
+      'Minimum Compliance Specification — the BS 7671 self-assessment checklist an installer signs to confirm a PV install meets Section 712.',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 712.410.101 says: “Electrical equipment on the DC side shall be considered to be energized, even when the AC side is disconnected from the grid or when the inverter is disconnected from the DC side.” What does this mean in practice?',
     options: [
-      'To record what was actually done on the visit — labour hours, materials used, parts replaced, tests performed, customer comments, photos. It\\\\\\\\\\\\\\\'s the contemporaneous record that supports the invoice, feeds into the cert, and protects the firm if there\\\\\\\\\\\\\\\'s a later complaint about scope or quality.',
-      'AC voltage can be stepped up and down by transformers — DC cannot — so AC is much cheaper to use across multiple voltage tiers. (HVDC is used selectively for very long subsea or interconnector links where AC line losses dominate.)',
-      'A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.',
+      'The DC side discharges automatically the moment the AC isolator is opened, because the inverter dumps the stored energy to earth — so the string is safe within a few seconds of switching off.',
+      'It means the DC cables only need isolating at night, since the regulation is concerned with stored charge in the inverter rather than live output from the panels.',
+      'It means a single isolator at the consumer unit kills both the AC and the DC sides at once, because they share the same protective device.',
       'Pulling the AC isolator at the consumer unit doesn’t kill the panels — the DC string is still live. You need to operate the DC isolator AND prove dead at DC before any work on the inverter, the combiner box or the string cables.',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
       'A 4 kW PV install on a TN-C-S supply — what’s the BS 7671 Reg 712.531.3.5.1 RCD type requirement?',
     options: [
       'A Type B RCD is required for the PV AC supply circuit, unless the inverter provides at least simple separation between AC and DC sides (which most modern transformerless inverters do not, but transformer-isolated inverters do), or the manufacturer states a Type B is not required.',
-      'A design pack: single-line diagram, cable schedule with calculated CCC / Vd / Zs / adiabatic for each circuit, protective-device specs, RCD types and ratings, EV-specific RCD/OPDP specification, future-load notes for the spare ways, and operating notes for the homeowner.',
-      'Stop. Lifting the tile is disturbance — even a corner. Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t touch it. Refer to the dutyholder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s asbestos register; if there isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t one, demand a survey is commissioned before any work above the ceiling continues.',
-      'They must take all reasonable steps to check the carrier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s registration, and if they knowingly or carelessly transfer waste to an unauthorised person, they commit an offence under the duty of care',
+      'A Type AC RCD is sufficient because the AC supply circuit only carries sinusoidal alternating current and the TN-C-S earthing arrangement removes any DC fault path.',
+      'No RCD is permitted on a TN-C-S supply feeding a PV inverter, because the PME earthing already provides automatic disconnection.',
+      'A 100 mA time-delayed RCD is required, selected for the TN-C-S arrangement to discriminate with the upstream main switch rather than for the inverter type.',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'ENA G98 vs G99 — what is the threshold and how do the connection processes differ?',
     options: [
-      'BS 7671 defines the technical standards against which electrical systems are designed, installed, tested and maintained — a maintenance technician must understand these standards to maintain systems safely',
+      'G98 covers single-phase generation only; G99 covers all three-phase generation regardless of the per-phase current, so the split is on phase count rather than current.',
       'G98 covers parallel-connected generation up to and including 16 A per phase (informal post-installation notification to the DNO); G99 covers generation greater than 16 A per phase (full pre-installation application to the DNO, with the DNO able to refuse or impose conditions).',
-      'Because the coil voltage is the CONTROL voltage — fed from a control transformer or a different supply, NOT the same as the load voltage being switched. 110 V control is standard in industrial environments for safety.',
-      'Chrysotile (white), Amosite (brown), Crocidolite (blue). All hazardous; crocidolite considered most carcinogenic. Most UK use was chrysotile in cement products and AIB; amosite in insulation board and pipe lagging; crocidolite in some sprayed insulation and specialist applications.',
+      'G98 covers PV only; G99 covers wind, hydro and CHP, so the split is by generation technology rather than by output.',
+      'G98 covers generation up to 50 kW with a pre-installation application; G99 covers anything above 50 kW with a simple notification after commissioning.',
     ],
     correctAnswer: 1,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     question:
       'Documentation handed over after a domestic PV install — what should the customer get?',
     options: [
-      'Reviewing your portfolio evidence thoroughly, practising explaining each piece in your own words, preparing examples for likely questions, and rehearsing with a colleague, mentor or training provider',
-      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
+      'Only the MCS certificate — it is the single document that covers the wiring, the grid connection and the building regulations all in one, so nothing else is handed over.',
+      'Only a verbal handover and a receipt for the deposit; the certificates are kept on file by the installer and issued to the DNO alone, not the customer.',
       'An EIC (Electrical Installation Certificate) for the new circuit, the inverter manufacturer’s commissioning sheet, the DNO G98/G99 commissioning notice (filed with the DNO), the MCS certificate (issued by the MCS scheme), and the building regulations notification.',
-      'Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant',
+      'A Minor Electrical Installation Works Certificate only, because adding PV to an existing consumer unit is classed as a minor alteration rather than a new circuit.',
     ],
     correctAnswer: 2,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     question:
       'A grid-tied PV inverter loses the grid (the DNO has dropped the supply for maintenance). What must the inverter do, and why?',
     options: [
-      'Most client duties (Reg 4) cascade from domestic homeowner to contractor (single-contractor) or principal contractor (multi-contractor). The homeowner remains client in name but contractor holds the operational duty. Non-domestic clients retain their duties.',
-      'The client is in breach of Regulation 4(4) and may be prosecuted by the HSE; additionally, designers and contractors may be unable to plan their work safely, leading to further foreseeable risks',
-      'Cognitive distortions amplify perceived threats, trigger stronger amygdala responses, and create misinterpretations that provoke defensive reactions from others, creating escalation spirals',
+      'Keep generating to support the local voltage — the inverter is designed to hold up the supply during a brownout so the customer’s lights stay on through the outage.',
+      'Ramp its output to maximum and export hard into the network to help the DNO restore the supply faster after the fault is cleared.',
+      'Switch to a stored-energy mode and feed the whole street from the customer’s battery until the grid engineer manually reconnects the section.',
       'Disconnect within 200 ms (anti-islanding) — if it didn’t, it would back-feed the dead network and put any DNO engineer working on the lines at risk of a fatal shock from “islanded” customer-side generation.',
     ],
     correctAnswer: 3,
@@ -186,9 +186,9 @@ const quizQuestions = [
       'A customer asks you to “just slap on” a PV system without going through MCS — they say they don’t care about SEG payments. Is it legal and is it sensible?',
     options: [
       'Legal, never sensible — selling a non-MCS install means the customer can never claim SEG, can’t sell the house with a renewables certificate, and may invalidate their building insurance. The DNO G98/G99 paperwork is still mandatory regardless of MCS status.',
-      'Actively imagining the situation from the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s viewpoint: they may have taken time off work, arranged for the kitchen to be cleared, and planned meals around the completion date — understanding that the delay has a ripple effect on their daily life that extends beyond the electrical work itself',
-      'The notice must be in writing, specify the ground(s) for suspension (non-payment of a sum due), allow at least 7 days before suspension takes effect, and identify the date payment was due',
-      'A factory-fitted (or field-installed) loop / ring at the end of large cable that the pulling rope attaches to — distributing the pulling force across the cable&rsquo;s mechanical termination, never the conductor directly.',
+      'Illegal — MCS certification is a statutory requirement under the Building Regulations, so installing PV without it is a criminal offence and the work would have to be removed.',
+      'Legal and entirely sensible — MCS adds cost for no benefit, and skipping it also removes the need to notify the DNO or building control, simplifying the whole job.',
+      'Legal only if the customer signs a waiver; once they accept they won’t claim SEG, the DNO and Part P notifications are also waived because MCS is what triggers them.',
     ],
     correctAnswer: 0,
     explanation:

@@ -42,10 +42,10 @@ const checks = [
     question:
       'A 400 V three-phase distribution transformer feeds a row of houses. The single-phase 230 V supply at each house is derived by:',
     options: [
-      'To plan, manage, and coordinate health and safety during the construction phase',
+      'Fitting a small step-down transformer at each property to drop 400 V to 230 V',
       'Connecting one phase conductor and the neutral (line-to-neutral = 400 / √3 ≈ 230 V)',
-      'Cherry-red colouration of the skin, along with headache and confusion',
-      'By promoting automation for lighting, HVAC, and shading systems',
+      'Connecting two phase conductors together (phase-to-phase ÷ 2 = 200 V)',
+      'Rectifying the three-phase supply to DC and then inverting it back to single-phase',
     ],
     correctIndex: 1,
     explanation:
@@ -56,9 +56,9 @@ const checks = [
     question:
       'An electrician measures 248 V at a domestic socket using a calibrated meter. Is this within the statutory envelope set by ESQCR?',
     options: [
-      'Duties that must be complied with regardless of cost or practicability',
-      'Using an EV battery to power home appliances, acting as a home battery',
-      'Investigation → meeting → decision → right to be accompanied → right of appeal',
+      'No — 248 V exceeds the +6% upper limit, so the DNO is in breach',
+      'No — the legal limit is a symmetric ±6%, giving 216 V to 244 V',
+      'It cannot be judged without also measuring the supply frequency',
       'Yes — the legal envelope at the supply terminals is 230 V −6% / +10%, which gives 216 V to 253 V',
     ],
     correctIndex: 3,
@@ -71,9 +71,9 @@ const checks = [
       'The pole-mounted or pad-mounted distribution transformer that feeds your street typically steps down from:',
     options: [
       '11 kV to 400 V three-phase / 230 V single-phase',
-      'By measuring actual work executed against bill rates',
-      'Dispose of properly according to waste regulations',
-      'It could not detect a broken neutral conductor',
+      '33 kV to 11 kV three-phase',
+      '400 kV to 132 kV three-phase',
+      '230 V single-phase to 400 V three-phase',
     ],
     correctIndex: 0,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'Why is the relationship between the 400 V three-phase line-to-line voltage and the 230 V single-phase line-to-neutral voltage equal to √3?',
     options: [
-      'Automatic fault detection triggering maintenance work orders, condition monitoring data feeding into the CMMS, and coordinated maintenance scheduling',
-      'The inspector, based on installation type, environment, intensity of use, and the GN3 frequency table — recorded as the inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "reasonable and informed decision" with the rationale documented.',
+      'Because the three phases are spaced 90° apart, and the cosine of 90° gives the √3 factor',
+      'Because the neutral carries √3 times the phase current, which sets the voltage ratio',
       'Because in a balanced star (Y) connected three-phase system, the line-to-line voltage is the vector sum of two line-to-neutral voltages 120° apart, which works out as √3 × line-to-neutral',
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
+      'Because the transformer turns ratio is fixed at √3 to 1 by the manufacturer',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'The DNO cut-out (the sealed fuse on the supply side of the meter) is owned by:',
     options: [
       'The Distribution Network Operator (DNO)',
-      'A percentage from 0% to 100%',
-      'Testing against a known reference standard',
-      'Tax, insurance, and business legal requirements',
+      'The Meter Operator (MOP)',
+      'The energy supplier',
+      'The customer',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'The reason ESQCR uses an ASYMMETRIC tolerance (−6% / +10%) rather than ±8% on the 230 V nominal is:',
     options: [
-      'A pre-use inspection sheet kept with the equipment — checks structural integrity, controls, fluids, signage; defects taken out of service',
-      'Express your views as opinions rather than disguised facts, using language like "I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m wondering..." or "It seems to me..."',
+      'To give more headroom on the low side because long rural feeders always sag below nominal',
+      'To match the asymmetric tolerance already used on the 400 kV transmission system',
       'To accommodate the old UK 240 V supplies (which are 240/230 = 1.043, just under +5%) without requiring transformer replacement, while still covering the old continental 220 V (−4.3%)',
-      'Make the relevant information available to anyone who is liable to disturb the asbestos-containing materials, including contractors and maintenance workers',
+      'Because solar PV export only ever pushes the voltage up, never down, so the +10% is purely for that',
     ],
     correctAnswer: 2,
     explanation:
@@ -183,9 +183,9 @@ const quizQuestions = [
       'Where exactly does BS 7671 take over from ESQCR in the supply chain?',
     options: [
       'At the consumer side of the supply terminals (the output terminals of the meter / the consumer unit)',
-      'Clear description, safety implications, recommended actions, and timeframes',
-      'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
-      'Maximum power is transferred when load resistance equals source resistance',
+      'At the secondary substation, where 11 kV is stepped down to 400 V',
+      'At the DNO cut-out fuse, on the supply side of the meter',
+      'At the grid supply point, where transmission hands over to distribution',
     ],
     correctAnswer: 0,
     explanation:

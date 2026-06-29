@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'A new client demands "annual PAT" for everything in their office. Is this the right answer under HSG107?',
     options: [
-      'Yes — annual PAT is the legal requirement.',
-      'No — annual is neither a legal requirement nor an automatic best practice. HSG107 + IET CoP 5th Ed. require a risk-based interval for each equipment category and environment. Many low-risk office items can run on extended intervals (24 months or more) provided they are subject to user checks. Other items in higher-risk environments need shorter intervals.',
-      'Yes for offices, no for sites.',
-      'Annual is the IET legal standard.',
+      'No — the interval is risk-based per equipment category and environment, not fixed annually.',
+      'Yes — annual PAT is a legal requirement under EAWR for all equipment.',
+      'Yes for offices, but six-monthly is the fixed legal interval for sites.',
+      'Annual is the IET-mandated legal standard for office equipment.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'There is no "annual PAT" rule in EAWR or HSG107. The duty is risk-based maintenance "so far as is reasonably practicable". IET CoP Table 7.1 provides starting frequencies that vary by equipment type and environment; intervals are then adjusted using failure-rate data per Section 7.',
+      'There is no "annual PAT" rule in EAWR or HSG107. The duty is risk-based maintenance "so far as is reasonably practicable". IET CoP Table 7.1 provides starting frequencies that vary by equipment type and environment; intervals are then adjusted using failure-rate data per Section 7. Many low-risk office items can run on extended intervals (24 months or more) with user checks, while higher-risk environments need shorter intervals.',
   },
   {
     id: 'patm5-s4-failure-rate',
     question:
       'A class of cordless drills on a construction site is recording a 6 % failure rate at annual test. Should the test interval be tightened or extended?',
     options: [
-      'Extended — a 6 % failure rate is normal.',
-      'Tightened — a 6 % failure rate is significantly above the typical low-risk threshold. IET CoP 5th Ed. Section 7 frames interval adjustment as data-driven: failure rates above category norms call for shorter intervals (move to 6-monthly or formal user checks plus combined inspection and test) until the rate is back within an acceptable band.',
-      'Leave at 12 months.',
-      'Move to 24 months — drills are robust.',
+      'Extended — a 6 % failure rate is normal for site drills.',
+      'Left at 12 months pending the next review cycle.',
+      'Tightened — 6 % is above the band, so shorten the interval.',
+      'Extended to 24 months — cordless drills are robust kit.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A high failure rate is the signal that the current interval is too long for the conditions. IET CoP 5th Ed. Section 7 requires intervals to be reviewed in light of failure data. The adjustment is downward (shorter interval) until the failure rate stabilises within the expected band for the category.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'On a high-risk environment (e.g. wet construction site), what is the "test before next use" rule?',
     options: [
-      'A formal full PAT before every use.',
-      'A user check (visual inspection of plug, flex, casing for damage) by the user before the equipment is connected — combined with shorter formal test intervals and/or combined inspection at receipt. The user check is the front-line defence between formal tests.',
-      'Continuous monitoring.',
-      'It does not exist.',
+      'A formal full PAT carried out before every single use.',
+      'Continuous instrumented monitoring of every appliance.',
+      'A documented monthly inspection by a competent person.',
+      'A user visual check of plug, flex and casing before connection.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'IET CoP 5th Ed. Chapter 7 introduces user checks as the most frequent layer of inspection in high-risk environments. The user inspects the equipment for visible damage before each use. Formal combined inspection and test happens at the IET CoP Table 7.1 interval, tightened from category baseline where the environment is harsh.',
   },
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'A duty holder has 600 items spread across 8 sites. Should test rounds be scheduled item-by-item to their individual due dates, or batched?',
     options: [
-      'Item-by-item — exact due dates only.',
-      'Batched. In practice, items are grouped by site / location and tested in rounds. Individual due dates may shift by a few weeks within the batch — that is acceptable provided the policy and the maximum drift are documented. Large estates that try to test exactly to date end up with constant testing logistics and worse coverage.',
-      'Random.',
-      'Only as items fail.',
+      'Item-by-item to each item&rsquo;s exact individual due date, with no tolerance.',
+      'Batched by site / location, with bounded drift documented in the policy.',
+      'In a randomised order each cycle to spread the workload evenly.',
+      'Only reactively, as individual items fail in service.',
     ],
     correctIndex: 1,
     explanation:
-      'Batched scheduling is the practical norm for any estate of size. The IET CoP does not require exact-date testing; what is required is that the policy is documented, the maximum permissible drift is bounded, and the next-test-due date is recalculated from the actual test date.',
+      'Batched scheduling is the practical norm for any estate of size. Items are grouped by site / location and tested in rounds; due dates may shift a few weeks within the batch. The IET CoP does not require exact-date testing; what is required is that the policy is documented, the maximum permissible drift is bounded, and the next-test-due date is recalculated from the actual test date so drift does not compound.',
   },
 ];
 
@@ -81,40 +81,40 @@ const quizQuestions = [
     id: 1,
     question: 'What is the legal basis for choosing PAT test intervals?',
     options: [
-      '12 months — it is the law',
-      'Risk-based intervals derived from EAWR Reg 4(2) ("so far as is reasonably practicable") and operationalised in IET CoP 5th Ed. Table 7.1 and Section 7. The interval depends on equipment category, environment, and historical failure data.',
-      'Whatever the customer asks for',
-      'Set by HSE annually',
+      'Risk-based intervals under EAWR Reg 4(2), set via IET CoP Table 7.1 and Section 7',
+      'A fixed 12-month interval mandated by the Electricity at Work Regulations',
+      'Whatever the customer specifies in the contract',
+      'A single interval published by the HSE each year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'There is no fixed interval in regulation. EAWR demands proportionate maintenance; the IET CoP Table 7.1 and Section 7 framework provides the practical methodology. Intervals are starting points adjusted by data.',
+      'There is no fixed interval in regulation. EAWR demands proportionate maintenance; the IET CoP Table 7.1 and Section 7 framework provides the practical methodology. The interval depends on equipment category, environment and historical failure data, and starting points are adjusted by data.',
   },
   {
     id: 2,
     question:
       'IET CoP 5th Ed. Table 7.1 gives starting test frequencies. The intervals for the same equipment in different environments differ because:',
     options: [
-      'Of arbitrary tradition',
-      'Equipment in harsher environments (wet, dusty, mobile, high-handling) wears faster and develops faults sooner. The interval has to reflect the rate at which faults are likely to develop between tests.',
-      'Manufacturers require it',
-      'It saves administrative effort',
+      'Arbitrary tradition carried over from earlier editions of the code',
+      'Equipment manufacturers contractually require shorter intervals for harsh sites',
+      'Harsher environments wear equipment faster, so faults develop sooner between tests',
+      'Shorter intervals in harsh environments simply reduce administrative effort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A drill in an office is in a different state of wear at 12 months than the same drill on a wet site. Table 7.1 captures this with environment-dependent intervals. The intervals are starting points; site-specific data adjusts them.',
+      'Equipment in wet, dusty, mobile or high-handling environments wears faster and develops faults sooner, so the interval has to reflect the rate at which faults are likely to develop. A drill in an office is in a different state of wear at 12 months than the same drill on a wet site. Table 7.1 captures this; the intervals are starting points that site-specific data adjusts.',
   },
   {
     id: 3,
     question:
       'IET CoP 5th Ed. Section 7 introduces a hierarchy of inspection types. What is the most frequent layer?',
     options: [
-      'Combined inspection and test',
-      'User check — a visual inspection of plug, flex, casing for visible damage by the user before each use, in higher-risk environments. Formal inspections / tests are less frequent and sit on top of the user check.',
-      'Formal visual inspection by an electrician',
-      'There is no hierarchy',
+      'Combined inspection and test with a calibrated PAT instrument',
+      'Formal visual inspection by a competent person at a documented interval',
+      'A monthly insulation-resistance test recorded against each asset ID',
+      'User check — a quick visual inspection by the user before each use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The IET CoP hierarchy: user checks (most frequent, by user) → formal visual inspections (regular, by competent person) → combined inspection and test (less frequent, full electrical test). User checks catch the gross damage that develops between formal tests.',
   },
@@ -123,39 +123,39 @@ const quizQuestions = [
     question:
       'A class of equipment in the asset register shows a 5+ % failure rate at the current annual interval. The correct response is:',
     options: [
-      'Leave the interval unchanged',
-      'Tighten the interval — move to 6-monthly or to a user-check + combined-test regime — until failure rate returns to the expected band. Document the adjustment and the data behind it.',
-      'Extend to 24 months',
-      'Stop testing the class',
+      'Tighten the interval until the failure rate returns to the expected band',
+      'Leave the interval unchanged until the next scheduled review cycle',
+      'Extend the interval to 24 months to reduce the testing burden',
+      'Stop testing the class altogether and rely on user checks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A high failure rate signals the current interval is too long for the conditions. IET CoP 5th Ed. Section 7: review intervals in light of failure-rate data and adjust. The adjustment is documented so the data-driven decision is auditable.',
+      'A high failure rate signals the current interval is too long for the conditions. Move to 6-monthly or to a user-check plus combined-test regime until the failure rate returns to the expected band, and document the adjustment and the data behind it. IET CoP 5th Ed. Section 7 requires intervals to be reviewed in light of failure-rate data so the data-driven decision is auditable.',
   },
   {
     id: 5,
     question: 'Why does the IET CoP not give a single fixed interval for all equipment?',
     options: [
-      'It is an oversight',
-      'Equipment risk varies by type, class, environment, usage and history. A single fixed interval would be either too short for low-risk items (wasteful) or too long for high-risk items (dangerous). The risk-based approach is what the EAWR "reasonably practicable" duty requires.',
-      'They could not agree',
-      'Manufacturers objected',
+      'It is an oversight in the drafting of the code',
+      'The committee members could not agree on a figure',
+      'Equipment risk varies by type, class, environment, usage and history',
+      'Equipment manufacturers objected to a single fixed figure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A blanket interval cannot satisfy the EAWR duty efficiently. The risk-based table-plus-review methodology lets the duty holder concentrate testing effort where the risk justifies it.',
+      'Equipment risk varies by type, class, environment, usage and history. A single fixed interval would be either too short for low-risk items (wasteful) or too long for high-risk items (dangerous). A blanket interval cannot satisfy the EAWR "reasonably practicable" duty efficiently; the risk-based table-plus-review methodology lets the duty holder concentrate testing effort where the risk justifies it.',
   },
   {
     id: 6,
     question:
       'For a hire fleet that goes to many different sites, what is the appropriate test point?',
     options: [
-      "Annual at the hire firm's depot",
-      'On return to the depot before the next hire (combined inspection and test on receipt back), plus user checks during hire. Inter-hire testing means each hire customer receives recently tested equipment regardless of how busy the asset has been.',
-      'On hire-out only',
-      'Never — the customer tests it',
+      "Annually at the hire firm's depot, regardless of hire activity",
+      'On hire-out only, just before the equipment leaves the depot',
+      'Never at the depot — the hire customer tests it on receipt',
+      'On return before the next hire, plus user checks during the hire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The hire-fleet model concentrates testing at the inter-hire interval — the equipment is tested on return, before the next hire. Combined with user checks during hire, this gives the next customer recently verified equipment, reducing the chance of a failure mid-hire.',
   },
@@ -164,40 +164,40 @@ const quizQuestions = [
     question:
       'A site requires "test before next use" for all 110 V site equipment. What does this mean in practice?',
     options: [
-      'A full electrical test before every plug-in',
-      'A user visual check before every use (looking for visible plug, flex, casing damage), combined with formal combined inspection and test at the IET CoP Table 7.1 interval for the environment (typically 3-monthly for the harshest construction environments).',
-      'Continuous monitoring',
-      'It is not practical',
+      'A user visual check before each use, plus combined I&T at the Table 7.1 interval',
+      'A full electrical test before every single plug-in on site',
+      'Continuous instrumented monitoring of every item in use',
+      'It is not practical to apply on a working construction site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'IET CoP 5th Ed. Section 7: user checks are the front-line layer for high-risk environments. They take seconds and catch visible damage. Formal tests sit on top at a documented short interval for the harshest sites.',
+      'A user visual check before every use (looking for visible plug, flex and casing damage) is combined with formal combined inspection and test at the IET CoP Table 7.1 interval for the environment — typically 3-monthly for the harshest construction sites. User checks are the front-line layer per Section 7: they take seconds and catch visible damage, while formal tests sit on top at a documented short interval.',
   },
   {
     id: 8,
     question:
       'A small business has 40 portable items and is contemplating extending the test interval from 12 to 24 months. What evidence do they need to do this defensibly?',
     options: [
-      'A management decision',
-      'Documented failure-rate data showing the items have been running clean at 12 months over multiple cycles, plus an environment / equipment-class assessment confirming the extended interval is consistent with IET CoP Table 7.1 starting frequencies for the category. The decision and its reasoning are recorded so an HSE inspector can see the methodology.',
-      'No evidence — extension is automatic',
-      'A vote of staff',
+      'A management decision recorded in the minutes',
+      'No evidence at all — the extension is automatic',
+      'Documented clean failure-rate data over multiple cycles plus a category assessment',
+      'A vote of the staff who use the equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Interval extension is defensible only when the data supports it. Document the failure-rate history, the environment/category assessment, and the conclusion. The "reasonably practicable" defence under HSAW Sec 2 needs the methodology to be visible.',
+      'Interval extension is defensible only when the data supports it. Document the failure-rate history showing the items running clean at 12 months over multiple cycles, an environment / equipment-class assessment confirming the extended interval is consistent with IET CoP Table 7.1 for the category, and the conclusion. The "reasonably practicable" defence under HSAW Sec 2 needs the methodology to be visible to an HSE inspector.',
   },
   {
     id: 9,
     question:
       'Test rounds across a multi-site estate are usually batched by site. The maximum acceptable drift from individual due dates is:',
     options: [
-      'Zero — tests must be on the day',
-      'Bounded and documented — typically a few weeks either side of the individual due date, with the policy stating the maximum drift permitted, to allow practical batched scheduling. The next-due date is recalculated from the actual test date so drift does not compound across cycles.',
-      'Three months',
-      'Whatever is convenient',
+      'Zero — every test must fall exactly on the individual due date',
+      'A flat three months either side of every individual due date',
+      'Whatever is convenient for the tester on the day of the visit',
+      'Bounded and documented — a few weeks, with next-due set from the actual test date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Item-by-item exact-date testing is impractical at scale. Batched scheduling is the norm; the IET CoP framework allows it provided the maximum drift is documented and bounded, and provided the schedule does not compound drift cycle to cycle.',
   },
@@ -205,14 +205,14 @@ const quizQuestions = [
     id: 10,
     question: 'What is the role of the user check in the test-interval framework?',
     options: [
-      'It replaces formal tests',
-      'It is the most frequent layer in the IET CoP 5th Ed. Section 7 hierarchy — a user-conducted visual inspection before each use that catches gross damage between formal tests, particularly in higher-risk environments. It supports, but does not replace, formal inspections and combined tests.',
-      'It is optional',
-      'It is the same as a PAT test',
+      'The most frequent layer — a user visual check before each use, supporting formal tests',
+      'It fully replaces formal inspections and combined tests in the regime',
+      'It is an optional extra with no defined role in the framework',
+      'It is the same procedure as a full combined inspection and test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'User checks are the front-line of IET CoP 5th Ed. Section 7. They are quick, frequent, and conducted by the user themselves. Formal inspection and combined inspection-and-test sit above the user check at progressively less frequent intervals, depending on category and environment.',
+      'The user check is the most frequent layer in the IET CoP 5th Ed. Section 7 hierarchy — a user-conducted visual inspection before each use that catches gross damage between formal tests, particularly in higher-risk environments. It is quick and conducted by the user themselves, and supports but does not replace formal inspections and combined inspection-and-test, which sit above it at progressively less frequent intervals.',
   },
 ];
 

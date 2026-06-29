@@ -87,12 +87,12 @@ const quizQuestions = [
     question:
       'Which of the following is the CORRECT order of the hierarchy of control under Regulation 6?',
     options: [
-      'Prevent falls, avoid height, minimise consequences',
       'Avoid height, prevent falls, minimise consequences',
+      'Prevent falls, avoid height, minimise consequences',
       'Minimise consequences, avoid height, prevent falls',
       'Use PPE, prevent falls, avoid height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct hierarchy is: (1) Avoid work at height, (2) Prevent falls using collective protection, (3) Minimise the distance and consequences of a fall.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     options: [
       'Work more than 8 hours at height',
       'Refuse to carry out a risk assessment',
-      'Intentionally or recklessly interfere with or misuse safety provisions',
       'Fail to display a health and safety poster',
+      'Intentionally or recklessly interfere with or misuse safety provisions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 8 makes it an offence for any person to intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety, or welfare.',
   },
@@ -143,8 +143,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Falls from height are the number one cause of what in UK workplaces?',
-    options: ['Minor injuries', 'Workplace fatalities', 'RIDDOR reports', 'Insurance claims'],
-    correctAnswer: 1,
+    options: ['Workplace fatalities', 'Minor injuries', 'RIDDOR reports', 'Insurance claims'],
+    correctAnswer: 0,
     explanation:
       'Falls from height remain the single largest cause of workplace fatalities in the United Kingdom, which is why the Work at Height Regulations impose strict duties on all parties involved.',
   },
@@ -154,10 +154,10 @@ const quizQuestions = [
     options: [
       'You must eliminate every risk regardless of cost',
       'You only need to act when the HSE tells you to',
-      'You must balance the level of risk against the cost and effort of reducing it',
       'You must follow the most expensive control measure available',
+      'You must balance the level of risk against the cost and effort of reducing it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reasonably practicable requires you to weigh the degree of risk against the sacrifice (time, cost, effort) needed to avert it. If the risk is significant, the cost of prevention must be grossly disproportionate before inaction is justified.',
   },

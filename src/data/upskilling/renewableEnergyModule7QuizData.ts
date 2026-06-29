@@ -43,16 +43,16 @@ export const section1Questions = [
   },
   {
     id: 4,
-    question: 'When should arc fault circuit interrupters (AFCIs) be installed?',
+    question: 'What does BS 7671 say about arc fault detection devices (AFDDs)?',
     options: [
-      'Only on commercial installations',
-      'Only when required by local planning',
-      'On all DC circuits as per BS 7671 requirements',
-      'They are optional safety devices',
+      'They are banned from use on any photovoltaic installation',
+      'They must be fitted to every circuit in a dwelling without exception',
+      'Their installation is recommended to mitigate the risk of fire in AC final circuits',
+      'They replace the need for any other overcurrent protective device',
     ],
     correct: 2,
     explanation:
-      'BS 7671 requires AFCI protection on DC circuits in PV installations to detect and interrupt dangerous arc faults that could cause fires.',
+      'BS 7671 Regulation 421.1.7 recommends (does not mandate) the installation of AFDDs to mitigate the risk of fire from arc faults in AC final circuits of a fixed installation; the wording is advisory rather than prescriptive.',
   },
   {
     id: 5,
@@ -395,6 +395,6 @@ export const section6Questions = [
     ],
     correct: 1,
     explanation:
-      'Rapid shutdown devices reduce DC voltages to safe levels (typically below 30V) within the PV array area, protecting emergency responders and maintenance personnel.',
+      'Rapid shutdown devices, such as module-level optimisers or DC isolators, reduce DC voltages to a safe level within the PV array area, protecting emergency responders and maintenance personnel who may otherwise face hazardous DC voltages even after AC isolation.',
   },
 ];

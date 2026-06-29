@@ -29,10 +29,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which type of voltage supply is permitted in Zone 0?',
     options: [
-      'Hacksaw or metal cutting saw',
-      'Series and parallel arc faults',
-      'SELV max 12V AC or 30V DC',
-      'BS 7671 (IET Wiring Regulations)',
+      'Standard 230V mains with RCD protection',
+      'Mains supply at reduced voltage (110V)',
+      'SELV at a maximum of 12V AC or 30V DC',
+      'Any supply provided the equipment is IPX7',
     ],
     correctAnswer: 2,
     explanation:
@@ -40,48 +40,53 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'True or False: Standard sockets are allowed in Zone 2 of a bathroom.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
-    explanation:
-      'False. Standard 13A sockets are not permitted anywhere in bathroom zones. Only shaver supply units complying with BS EN 61558-2-5 are allowed in specific locations.',
-  },
-  {
-    id: 4,
-    question: 'Name one protective measure for outdoor sockets.',
+    question: 'Are standard 13A sockets allowed in Zone 2 of a bathroom?',
     options: [
-      'IP66 weatherproof enclosure',
-      'Paint the socket white',
-      'Mount at head height only',
-      'Use indoor-rated equipment',
+      'No, standard 13A sockets are not permitted in bathroom zones',
+      'Yes, provided they have RCD protection',
+      'Yes, but only above 1.2m from the floor',
+      'Yes, provided they are switched',
     ],
     correctAnswer: 0,
     explanation:
-      'IP66 enclosures provide protection against powerful water jets and dust ingress. Other measures include RCD protection and weatherproof covers.',
+      'Standard 13A sockets are not permitted anywhere in bathroom zones. Only shaver supply units complying with BS EN 61558-2-5 are allowed in specific locations.',
+  },
+  {
+    id: 4,
+    question: 'Which of these is a recognised protective measure for outdoor sockets?',
+    options: [
+      'IP66 weatherproof enclosure',
+      'A larger conductor cross-section',
+      'A 100mA time-delay RCD',
+      'An IP20-rated front plate',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An IP66 weatherproof enclosure protects against powerful water jets and dust ingress. A larger conductor or an IP20 (indoor) front plate gives no weather protection, and additional protection for outdoor sockets requires a 30mA (not 100mA) RCD.',
   },
   {
     id: 5,
-    question: 'What minimum IP rating is recommended for outdoor sockets?',
+    question: 'What is the minimum IP rating for outdoor socket outlets?',
     options: [
       'IP54',
-      'IP65',
       'IP20',
       'IP44',
+      'IP65',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'IP65 minimum is recommended for outdoor sockets to provide adequate protection against rain, dust, and environmental conditions.',
+      'The minimum IP rating for outdoor socket outlets is IP44, with IP66 recommended for better protection against driving rain, dust, and powerful water jets.',
   },
   {
     id: 6,
-    question: 'Which section of BS 7671 covers bathrooms?',
+    question: 'Which section of BS 7671 covers locations containing a bath or shower?',
     options: [
-      'Section 409',
-      'Section 711',
-      'Section 701',
       'Section 709',
+      'Section 711',
+      'Section 714',
+      'Section 701',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Section 701 covers locations containing a bath or shower. Section 709 covers marinas and similar locations.',
   },
@@ -89,25 +94,25 @@ const quizQuestions = [
     id: 7,
     question: 'Give one example of mechanical protection for outdoor cables.',
     options: [
-      'In escape routes and public buildings',
-      'As Low As Reasonably Practicable',
-      'They must be competent or supervised',
+      'Wrapping the cable in extra PVC tape',
       'SWA (Steel Wire Armoured) cable',
+      'Increasing the cable cross-sectional area',
+      'Painting the cable a bright colour',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'SWA cable provides excellent mechanical protection with its steel wire armour. Other options include conduit, trunking, or protective covers.',
   },
   {
     id: 8,
-    question: 'Why is equipotential bonding important in bathrooms?',
+    question: 'Why is supplementary equipotential bonding important in bathrooms?',
     options: [
+      'It increases the supply voltage to the room',
+      'It allows standard sockets to be installed in zones',
       'It reduces voltage differences between conductive parts',
-      'Where there is risk of head injury from falling objects or impact',
-      'The boom, chassis, turntable, platform floor, and guardrails',
-      'UK GDPR and the Data Protection Act 2018',
+      'It removes the need for RCD protection',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Equipotential bonding connects all accessible conductive parts to the same potential, reducing dangerous voltage differences that could cause electric shock.',
   },
@@ -145,10 +150,10 @@ const quickCheckQuestions = [
     id: 'ip-rating',
     question: "What does the 'X' in IPX4 mean?",
     options: [
-      'P = sqrt(3) x V_L x I_L x cos(phi)',
-      'Danger present - immediate action required',
-      'No solid object protection specified',
-      'CPC connected to neutral bar',
+      'The highest level of solid object protection',
+      'The equipment is rated for submersion',
+      'No solid object protection is specified',
+      'The equipment is intrinsically safe',
     ],
     correctIndex: 2,
     explanation:
@@ -452,7 +457,7 @@ export default function Module3Section5_5() {
           {/* 2. Outdoor Installations */}
           <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <Cloud className="w-5 h-5" /> 2. Outdoor Installations (BS 7671 Section 714)
+              <Cloud className="w-5 h-5" /> 2. Outdoor Installations
             </h3>
 
             <div className="mb-6">

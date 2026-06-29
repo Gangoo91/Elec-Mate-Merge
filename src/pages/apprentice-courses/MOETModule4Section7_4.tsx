@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'The international standard that defines the minimum requirements for a genuine RCM process is:',
     options: [
-      'Effectiveness of control measures, changing conditions, worker compliance',
-      'SAE JA1011 — Evaluation Criteria for Reliability-Centered Maintenance (RCM) Processes',
-      'To prove the fault has been resolved and the circuit is safe',
-      'To estimate seasonal heating or cooling energy requirements based on external temperature data',
+      'BS EN 13306 — Maintenance Terminology',
+      'SAE JA1011 — Evaluation Criteria for RCM Processes',
+      'ISO 55000 — Asset Management Overview and Principles',
+      'BS EN 15341 — Maintenance Key Performance Indicators',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'In RCM best practice, a Computerised Maintenance Management System (CMMS) is essential because it:',
     options: [
-      'Provides the data infrastructure to schedule PM tasks, record failure history, track condition monitoring trends, manage spare parts, and generate the KPIs needed to measure and improve maintenance effectiveness',
-      'The print may have been resized (photocopy reduction or \\\\\\\\\\\\\\\'fit-to-page\\\\\\\\\\\\\\\'), so scale measurements are unreliable. Use the dimension lines and figures instead',
-      'Continuity test from L bus-bar at distribution board to LINE terminal of each accessory; from N bus-bar to NEUTRAL terminal; from MET to cpc terminal — proving correct identification at every termination',
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
+      'Provides the data backbone to schedule PMs, record failures, track trends and report KPIs',
+      'Removes the need for technicians to record any failure information by hand at all',
+      'Automatically performs the maintenance tasks itself without any human intervention',
+      'Replaces the requirement to carry out root cause analysis on significant failures',
     ],
     correctIndex: 0,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'continuous-improvement',
     question: 'Continuous improvement in maintenance best practice means:',
     options: [
-      'Cover today’s scope, the significant hazards relevant to today’s work, the controls in place, the emergency arrangements, and check understanding by asking questions back',
-      'Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.',
-      'The DNO. The cut-out fuse rating is determined by the declared maximum demand, the service cable capacity and the supply infrastructure — all DNO assets. The DNO will assess and either uprate or refuse.',
-      'Systematically analysing failures, reviewing maintenance effectiveness, adjusting strategies based on evidence, and embedding a culture where every breakdown is treated as a learning opportunity that leads to a specific improvement action',
+      'Keeping the maintenance programme completely fixed once it has been established',
+      'Increasing the frequency of every preventive task across every asset on the site',
+      'Replacing planned maintenance entirely with reactive repairs to cut the cost',
+      'Analysing failures and adjusting strategies so each breakdown drives an improvement',
     ],
     correctIndex: 3,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     id: 'reliability-culture',
     question: "A 'reliability culture' in a maintenance organisation is characterised by:",
     options: [
-      "An organisational mindset where everyone — from apprentice technician to site director — understands that reliability is everyone's responsibility, where data drives decisions, where failures are investigated without blame, and where continuous improvement is part of daily practice",
-      "Expand the sample to a higher percentage — typically 100% or until the defect rate falls — because a 30% defect rate in the sample indicates the sampling assumption (occasional rare defects) is broken. Document the expansion in the report. The original sample assumption no longer applies; broader inspection is needed to characterise the true defect rate.",
-      "A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay \\\\\\\\\\\\\\\"S\\\\\\\\\\\\\\\" type.",
-      "It breaks the CPC link in the ADS chain — any fault between line and exposed metal beyond the JB has no return path. The MCB will not trip and the metalwork will sit at line voltage until somebody touches it.",
+      "A shared mindset where reliability is everyone's job, data drives decisions and blame is avoided",
+      "A structure where only the senior reliability engineer is responsible for equipment performance and all decisions",
+      "An approach where maintenance is minimised to reduce cost and breakdowns are accepted as unavoidable",
+      "A system where failures are investigated mainly to identify which individual was at fault",
     ],
     correctIndex: 0,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'SAE JA1011 requires that an RCM process must:',
     options: [
-      'To provide a complete record of all maintainable assets including their location, criticality, technical specifications, maintenance history, and spare parts, enabling effective maintenance planning',
-      'Address all seven RCM questions in sequence for each asset in its operating context, use a structured decision logic for task selection, and produce documented maintenance strategies',
-      'Stop, treat it as a Step 5 trigger — assess the new circuit (different OCPD, different load, possibly different RCD requirement), brief the team, then continue',
-      'Whether there are underlying causes such as personal problems, wrong career choice, bullying, financial stress, or health issues',
+      'Apply the same generic maintenance plan to every asset regardless of its function',
+      'Answer all seven questions in sequence, use structured decision logic and document the result',
+      'Focus exclusively on reactive maintenance and run-to-failure strategies throughout',
+      'Be carried out only by an external consultant rather than by the in-house team',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'BS EN 13306 (Maintenance Terminology) is important because it:',
     options: [
-      'Investigate the complaint — check harness fit and size, provide training if needed, and ensure no worker is permitted to work at height without the required PPE; escalate to the subcontractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s management if necessary',
-      'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
-      'Provides standardised definitions for maintenance terms (corrective, preventive, condition-based, predictive, etc.) ensuring consistent communication within and between organisations',
-      'Ask \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly to trace back from the bearing failure to identify the root cause, such as misalignment, incorrect lubrication, or shaft current damage',
+      'Sets the legal limits for how long maintenance records must be retained on file',
+      'Specifies the mandatory test intervals for all electrical protective devices',
+      'Gives standard definitions for maintenance terms, so communication stays consistent',
+      'Defines the criticality rating that must be assigned to every single asset',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'ISO 55000 (Asset Management) relates to RCM because it:',
     options: [
-      'Use assessment evidence to demonstrate the gap \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 set a task that reveals the limit of their competence, and have a factual conversation about the specific risks',
-      'Continuous repetitive loading on the same structures exceeds tissue recovery rates, leading to cumulative micro-damage and eventual injury',
-      'Conclusion: identifying what they could have done differently (e.g., always use a cable detector); Action Plan: specific steps to prevent recurrence (e.g., purchase a CAT scanner, add pre-drill check to personal checklist)',
-      'Provides the overarching framework for managing physical assets over their entire lifecycle, within which RCM provides the specific methodology for determining maintenance requirements',
+      'Replaces RCM as a more detailed method for selecting individual maintenance tasks',
+      'Specifies the standard failure codes that must be used when recording breakdowns',
+      'Defines the wiring regulations that all maintenance work must comply with on site',
+      'Gives the lifecycle asset-management framework that RCM sits within',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'A well-configured CMMS should enable the maintenance team to:',
     options: [
-      'Schedule and track all PM tasks, record accurate failure data (failure codes, causes, actions), manage condition monitoring data, track spare parts, generate maintenance KPIs, and provide the data needed for continuous improvement analysis',
-      'Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively',
-      'Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own historical trends to identify improvement opportunities',
-      'Plan (analyse data, identify improvements, define actions), Do (implement the improvement), Check (measure the results — did MTBF improve? Did failures reduce?), Act (standardise successful improvements and address any remaining gaps) — then repeat',
+      'Schedule PMs, record failure data, manage spares, and generate KPIs for improvement',
+      'Eliminate the need for any preventive maintenance by predicting every single failure',
+      'Carry out repairs automatically on the plant without any technician attendance at all',
+      'Replace the whole asset register with a single rolling list of recent breakdowns',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'The most common reason that CMMS failure data is of poor quality is:',
     options: [
-      'Data analysis — Pareto analysis of failure data to identify the top failure modes, root cause analysis to understand why they occur, and targeted improvement actions with measurable outcomes',
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
-      'Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own historical trends to identify improvement opportunities',
-      'All failures on Critical (A) assets, repeated failures on any asset, failures with safety or environmental consequences, and any failure that reveals a gap in the current maintenance programme — the goal is to learn from every significant failure and prevent recurrence',
+      'The CMMS software is inherently incapable of storing any failure information',
+      'Poor training, or codes too vague or complex to record meaningful information quickly',
+      'There are simply too few failures occurring to provide any meaningful data at all',
+      'The data is deliberately falsified by management to improve the headline KPIs',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Benchmarking maintenance performance involves:',
     options: [
-      "Operators are trained to perform basic care tasks (visual inspections, cleaning, lubrication, minor adjustments) and to detect and report early signs of equipment deterioration, complementing the maintenance team's more specialised work",
-      "Provides standardised definitions for maintenance terms (corrective, preventive, condition-based, predictive, etc.) ensuring consistent communication within and between organisations",
-      "Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation's own historical trends to identify improvement opportunities",
-      "Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information",
+      "Recording only the failures that occur on the very most critical assets on the site",
+      "Setting all maintenance intervals purely from the manufacturer's recommendations",
+      "Comparing maintenance KPIs against industry standards, peers and your own trends",
+      "Replacing all the KPIs with a single overall cost figure for the whole department",
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'A maintenance improvement programme should be driven by:',
     options: [
-      'Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own historical trends to identify improvement opportunities',
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
-      'Provides the overarching framework for managing physical assets over their entire lifecycle, within which RCM provides the specific methodology for determining maintenance requirements',
-      'Data analysis — Pareto analysis of failure data to identify the top failure modes, root cause analysis to understand why they occur, and targeted improvement actions with measurable outcomes',
+      'The personal preferences of the longest-serving technician currently on the team',
+      'Whichever assets happen to fail most visibly in front of senior management',
+      'A fixed annual budget cut applied equally across all maintenance activities',
+      'Data analysis — Pareto and RCA on the top failure modes, with measurable actions',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: "The 'Plan-Do-Check-Act' (PDCA) cycle applies to maintenance improvement by:",
     options: [
-      'Plan (analyse data, identify improvements, define actions), Do (implement the improvement), Check (measure the results — did MTBF improve? Did failures reduce?), Act (standardise successful improvements and address any remaining gaps) — then repeat',
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
-      'Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own historical trends to identify improvement opportunities',
-      'Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively',
+      'Plan the action, Do (implement it), Check the results, Act to standardise — then repeat',
+      'Implementing improvements without ever measuring whether they actually worked',
+      'Planning improvements carefully but never putting any of them into actual practice',
+      'Acting on every idea immediately without any prior analysis or planning at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Operator-driven reliability (ODR) is a best practice where:',
     options: [
-      "Provides standardised definitions for maintenance terms (corrective, preventive, condition-based, predictive, etc.) ensuring consistent communication within and between organisations",
-      "Operators are trained to perform basic care tasks (visual inspections, cleaning, lubrication, minor adjustments) and to detect and report early signs of equipment deterioration, complementing the maintenance team's more specialised work",
-      "Schedule and track all PM tasks, record accurate failure data (failure codes, causes, actions), manage condition monitoring data, track spare parts, generate maintenance KPIs, and provide the data needed for continuous improvement analysis",
-      "Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation's own historical trends to identify improvement opportunities",
+      "Operators are kept entirely separate from any equipment care responsibilities at all",
+      "Operators do basic care tasks and report early deterioration, supporting the maintainers",
+      "The maintenance team carries out all of the production tasks as well as the repairs",
+      "Reliability decisions are made solely by external consultants without any site input",
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Root cause analysis (RCA) should be performed for:',
     options: [
-      'Data analysis — Pareto analysis of failure data to identify the top failure modes, root cause analysis to understand why they occur, and targeted improvement actions with measurable outcomes',
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
-      'All failures on Critical (A) assets, repeated failures on any asset, failures with safety or environmental consequences, and any failure that reveals a gap in the current maintenance programme — the goal is to learn from every significant failure and prevent recurrence',
-      'Plan (analyse data, identify improvements, define actions), Do (implement the improvement), Check (measure the results — did MTBF improve? Did failures reduce?), Act (standardise successful improvements and address any remaining gaps) — then repeat',
+      'Only the failures that result in the highest repair cost, regardless of consequence',
+      'Every minor fault on every non-critical asset to ensure completely full coverage',
+      'Critical-asset failures, repeats, safety/environmental events and gap-revealing faults',
+      'No failures at all, since the cause is usually obvious and analysis just wastes time',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     id: 11,
     question: 'Training and competence development is a best practice element because:',
     options: [
-      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
-      'All failures on Critical (A) assets, repeated failures on any asset, failures with safety or environmental consequences, and any failure that reveals a gap in the current maintenance programme — the goal is to learn from every significant failure and prevent recurrence',
-      'Operators are trained to perform basic care tasks (visual inspections, cleaning, lubrication, minor adjustments) and to detect and report early signs of equipment deterioration, complementing the maintenance team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s more specialised work',
-      'Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively',
+      'It is a regulatory box-ticking exercise with no real effect on equipment reliability',
+      'It allows the organisation to reduce the overall size of its maintenance team',
+      'It is only relevant to apprentices and not at all to experienced technicians',
+      'Effectiveness depends on competence — technicians need both technical and analytical skills',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     question:
       'In the context of ST1426 and the End Point Assessment, demonstrating knowledge of RCM best practices shows the assessor that you can:',
     options: [
-      'Understand the strategic context of maintenance (why different strategies exist for different assets), apply structured analytical techniques (RCA, FMEA, criticality analysis), contribute to continuous improvement, and articulate how maintenance effectiveness is measured and improved — demonstrating the knowledge, skills and behaviours expected of a competent maintenance technician',
-      'Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.',
-      'Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification. E.g. omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning.',
-      'The monthly review brings together the apprentice, the employer (or supervisor) and the training provider\\\\\\\'s tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship\\\\\\\'s compliance with the standards.',
+      'Grasp the strategy, apply RCA/FMEA/criticality, and explain how effectiveness is measured',
+      'Recite the numbers of every relevant standard from memory without explaining their purpose',
+      'Carry out maintenance tasks quickly without recording any of the findings afterwards',
+      'Follow instructions exactly as given without ever questioning whether they are effective',
     ],
     correctAnswer: 0,
     explanation:

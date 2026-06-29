@@ -3,10 +3,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 1,
     question: 'What is the purpose of a functional emergency lighting test?',
     options: [
-      'To demonstrate compliance during fire inspections and provide evidence for insurers',
+      'To confirm the batteries can sustain the full rated three-hour duration',
       'To ensure all luminaires switch into emergency mode when mains power fails',
-      'To avoid leaving the building unprotected while batteries recharge after the test',
-      'Only long enough to confirm operation (short duration)',
+      'To measure the illuminance achieved on each escape route in lux',
+      'To recharge the luminaire batteries fully before the next inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -29,9 +29,9 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 3,
     question: 'How long should monthly functional tests last?',
     options: [
-      'Network analyzer with Zigbee capabilities',
-      'Show the physical location of equipment on floor plans',
-      'Knowledge, training, experience, and understanding of hazards',
+      'The full rated duration of three hours',
+      'Exactly one hour every time',
+      'Half the rated battery duration',
       'Only long enough to confirm operation (short duration)',
     ],
     correctAnswer: 3,
@@ -43,9 +43,9 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     question: 'What is the purpose of the annual 3-hour duration test?',
     options: [
       'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
-      'To avoid leaving the building unprotected while batteries recharge after the test',
-      'To ensure all luminaires switch into emergency mode when mains power fails',
-      'To demonstrate compliance during fire inspections and provide evidence for insurers',
+      'To confirm the charging circuit restores the battery within 24 hours',
+      'To check that each luminaire switches across to emergency mode quickly',
+      'To recalibrate the photocells that control the maintained lighting',
     ],
     correctAnswer: 0,
     explanation:
@@ -55,10 +55,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 5,
     question: 'When must a 3-hour duration test also be completed besides annually?',
     options: [
-      'Insert connector and push forward with one motion',
+      'Only when an insurer specifically requests it',
       'At commissioning and after any system modifications',
-      'Limited access for tools and reduced working space',
-      'Implement responsive design with prioritised information',
+      'After every monthly functional test',
+      'Only when a luminaire is reported as faulty',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,10 +68,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 6,
     question: 'What standard governs testing requirements for emergency lighting?',
     options: [
-      'Automatic electronic lock',
-      'Uneven runs or missing fixings',
+      'BS 7671 and BS EN 60898',
+      'BS 5839-1 and BS EN 54',
       'BS 5266-1 and BS EN 50172',
-      'Weather conditions during test',
+      'BS 5499 and BS EN 1838',
     ],
     correctAnswer: 2,
     explanation:
@@ -81,9 +81,9 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 7,
     question: 'Why should duration tests be scheduled outside of occupied hours?',
     options: [
-      'To ensure all luminaires switch into emergency mode when mains power fails',
-      'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
-      'To demonstrate compliance during fire inspections and provide evidence for insurers',
+      'Because the test requires the entire building supply to be switched off',
+      'Because daylight would interfere with the illuminance readings taken',
+      'Because occupants must evacuate the building while the test is running',
       'To avoid leaving the building unprotected while batteries recharge after the test',
     ],
     correctAnswer: 3,
@@ -95,9 +95,9 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     question: 'Give one reason why a luminaire might fail a 3-hour test.',
     options: [
       'The battery is ageing and has lost capacity',
-      'A double set (kickback or offset bend)',
-      'Investigate the cause and do not proceed until resolved',
-      'Horizontal movement to the left',
+      'The luminaire is wired in the wrong polarity',
+      'The mains supply voltage is slightly high',
+      'The diffuser has a minor cosmetic scratch',
     ],
     correctAnswer: 0,
     explanation:
@@ -107,10 +107,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 9,
     question: 'Why must test results be recorded in the logbook?',
     options: [
-      'To ensure all luminaires switch into emergency mode when mains power fails',
+      'So the battery warranty period can be calculated from the install date',
       'To demonstrate compliance during fire inspections and provide evidence for insurers',
-      'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
-      'To avoid leaving the building unprotected while batteries recharge after the test',
+      'So the energy used by the luminaires can be billed back to the tenant',
+      'To allow the manufacturer to remotely monitor each luminaire',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 10,
     question: 'What happened in the Leeds care home case study?',
     options: [
-      'Lock off the main switch with a personal padlock and post a caution notice — and prove dead at the point of work',
-      'Do NOT touch the tower; warn others to stay clear; call the network operator and emergency services; do not approach until confirmed safe',
+      'Lights stayed on for the full three hours with no issues found',
+      'A wiring fault tripped the emergency circuit during the test',
       'Lights failed after 40 minutes during a drill because batteries were over 7 years old and annual duration tests had been neglected',
-      'Decline — provide a proper VAT invoice (or zero-VAT invoice if not registered) for tax compliance and to protect the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s warranty rights',
+      'The system passed but the logbook had been lost in an office move',
     ],
     correctAnswer: 2,
     explanation:

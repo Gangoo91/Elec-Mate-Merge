@@ -16,12 +16,12 @@ export const SmartHomeModule5Section1Quiz = () => {
     {
       question: 'What is a smart lock?',
       options: [
-        'A lock that can only be opened with a smartphone',
         'An electronic lock controlled via app, keypad, biometrics, or key fob',
-        'A mechanical lock with Bluetooth capability',
-        'A lock that automatically opens when you approach',
+        'A lock that can only ever be opened with a smartphone',
+        'A standard mechanical lock with a Bluetooth tag attached',
+        'A lock that opens automatically whenever anyone approaches',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Smart locks are electronic locks that can be controlled through multiple methods including apps, keypads, biometrics, or key fobs.',
     },
@@ -54,22 +54,22 @@ export const SmartHomeModule5Section1Quiz = () => {
       options: [
         'PIN code entry',
         'Bluetooth connectivity',
-        'Fingerprint recognition',
         'Mobile app control',
+        'Fingerprint recognition',
       ],
-      correct: 2,
+      correct: 3,
       explanation:
         'Fingerprint recognition is a biometric feature that identifies users based on their unique biological characteristics.',
     },
     {
       question: 'What is a benefit of keypad PIN entry?',
       options: [
-        'Faster entry than keys',
         'No physical keys needed and ability to create temporary codes',
-        'Better security than biometrics',
-        'Lower cost than traditional locks',
+        'It is always faster to use than a physical key',
+        'It is inherently more secure than biometrics',
+        'It always costs less than a traditional lock',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Keypad PIN entry eliminates the need for physical keys and allows creation of temporary codes for guests or service providers.',
     },
@@ -77,23 +77,23 @@ export const SmartHomeModule5Section1Quiz = () => {
       question: 'What is a drawback of using PIN codes?',
       options: [
         'They are too expensive to implement',
-        'Codes must be managed and changed for security, and code sharing reduces security',
         "They don't work in cold weather",
-        'They require internet connection',
+        'Codes must be managed and changed, and careless sharing reduces security',
+        'They require a constant internet connection',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'PIN codes need regular management and updates, and sharing codes carelessly can compromise security.',
     },
     {
       question: 'Name one way smart locks integrate with wider smart homes:',
       options: [
-        'They make other devices work faster',
-        'Unlocking can trigger security scenes like disarming alarms and turning on lights',
-        'They control the heating system',
-        'They manage internet connectivity',
+        'They make other devices respond faster',
+        'They take over control of the heating system',
+        'They manage the home’s internet connectivity',
+        'Unlocking can trigger scenes like disarming alarms and turning on lights',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Smart locks can trigger automation scenes, such as disarming security systems and turning on lights when unlocked.',
     },
@@ -112,12 +112,12 @@ export const SmartHomeModule5Section1Quiz = () => {
     {
       question: 'What should always be provided as a backup with smart locks?',
       options: [
-        'A second smart lock',
         'A mechanical key override',
-        'A smartphone app',
-        'A PIN code',
+        'A second smart lock fitted alongside',
+        'A dedicated smartphone app',
+        'A memorised PIN code',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'A mechanical key override is essential as a backup in case of electronic failure or battery depletion.',
     },
@@ -125,12 +125,12 @@ export const SmartHomeModule5Section1Quiz = () => {
       question:
         'Scenario: A family wants to let their cleaner in once a week without giving them a key. Which smart lock feature would you recommend?',
       options: [
-        'Permanent PIN code that never changes',
+        'A permanent PIN code that never changes',
+        'Registering the cleaner’s fingerprint for biometric access',
         'Temporary or scheduled PIN codes that can be time-limited',
-        'Biometric fingerprint access',
-        'Bluetooth proximity unlock',
+        'A Bluetooth proximity unlock tied to the cleaner’s phone',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'Temporary or scheduled PIN codes provide secure access for service providers without the security risks of permanent codes or physical keys.',
     },

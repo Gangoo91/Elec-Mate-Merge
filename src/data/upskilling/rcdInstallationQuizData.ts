@@ -9,16 +9,16 @@ export interface QuizQuestion {
 export const rcdInstallationQuizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Under BS 7671, RCD protection is mandatory for which type of socket outlets?',
+    question: 'Under BS 7671, additional protection by a 30 mA RCD is required for which socket-outlets?',
     options: [
-      'No discrimination issues and easier fault identification',
-      'Socket outlets rated up to 20A in domestic installations',
-      'Electrical Installation Certificate and test results',
-      'Ensuring balanced loading across all phases',
+      'Only socket-outlets installed within bathroom zones 1 and 2',
+      'Socket-outlets with a rated current not exceeding 32 A',
+      'Only socket-outlets supplying portable equipment used outdoors',
+      'Socket-outlets with a rated current exceeding 32 A',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Section 411.3.3 requires RCD protection for socket outlets with rated current not exceeding 20A in domestic installations.',
+      'Regulation 411.3.3 of BS 7671 requires additional protection by a 30 mA RCD for socket-outlets with a rated current not exceeding 32 A (with limited stated exceptions). Socket-outlets above 32 A instead require an RCD not exceeding 100 mA where used for fault protection.',
   },
   {
     id: 2,
@@ -50,29 +50,29 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
   {
     id: 4,
     question:
-      'What is the minimum discrimination time required between upstream and downstream RCDs?',
+      'How is selectivity (discrimination) between an upstream and a downstream RCD normally achieved?',
     options: [
-      '65ms',
-      '100ms',
-      '40ms',
-      '300ms',
+      'By fitting a time-delayed Type S RCD at the upstream position',
+      'By making the upstream RCD a lower IΔn than the downstream one',
+      'By using identical 30 mA instantaneous RCDs at both positions',
+      'By wiring the two RCDs on separate neutral bars only',
     ],
     correctAnswer: 0,
     explanation:
-      'A minimum of 65ms discrimination time is required between RCDs to ensure proper operation sequence and prevent unwanted tripping.',
+      'BS 7671 achieves selectivity by using a time-delayed Type S RCD (to BS EN 61008-1/61009-1) or a device with a time delay to BS EN 60947-2 upstream, so the downstream instantaneous RCD clears the fault first and the upstream device does not trip unnecessarily.',
   },
   {
     id: 5,
-    question: 'What is the main advantage of using RCBOs instead of traditional RCDs?',
+    question: 'What is the main advantage of using RCBOs instead of a shared front-end RCD?',
     options: [
-      'Ensuring balanced loading across all phases',
-      'No discrimination issues and easier fault identification',
-      'Socket outlets rated up to 20A in domestic installations',
-      'Electrical Installation Certificate and test results',
+      'They remove the need to test the residual current function',
+      'A fault on one circuit only disconnects that circuit, not the whole board',
+      'They allow a higher residual operating current to be used',
+      'They eliminate the need for overcurrent protection on the circuit',
     ],
     correctAnswer: 1,
     explanation:
-      'RCBOs provide individual circuit protection with no discrimination issues and make fault identification much easier compared to shared RCD protection.',
+      'An RCBO combines RCD and overcurrent protection in a single device per circuit, so a residual-current or overload fault only disconnects the affected circuit rather than tripping every circuit sharing a common RCD.',
   },
   {
     id: 6,
@@ -91,9 +91,9 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What can cause unwanted RCD tripping in installations?',
     options: [
-      'Ensuring balanced loading across all phases',
-      'Electrical Installation Certificate and test results',
-      'Socket outlets rated up to 20A in domestic installations',
+      'Using an RCD with too low a rated short-circuit capacity',
+      'Fitting the RCD on the load side of the main switch',
+      'Connecting all circuit CPCs to a single earth bar',
       'Mixing RCD-protected and non-protected neutrals',
     ],
     correctAnswer: 3,
@@ -117,10 +117,10 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
     id: 9,
     question: 'When installing three-phase RCDs, what is essential to prevent nuisance tripping?',
     options: [
-      'Burn gel sachets and trauma dressings',
+      'Fitting a separate neutral block for each outgoing circuit',
       'Ensuring balanced loading across all phases',
-      'Peak demand periods (late afternoon/early evening)',
-      'Metallic (ferrous and non-ferrous) materials only',
+      'Selecting a device with the lowest available IΔn',
+      'Connecting the phases in reverse rotation order',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,12 +128,12 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
   },
   {
     id: 10,
-    question: 'What documentation must be completed after RCD installation?',
+    question: 'What documentation must be completed after a new RCD-protected installation?',
     options: [
-      'No discrimination issues and easier fault identification',
-      'Socket outlets rated up to 20A in domestic installations',
-      'Electrical Installation Certificate and test results',
-      'Ensuring balanced loading across all phases',
+      'A risk assessment and method statement only',
+      'A verbal handover note to the client',
+      'An Electrical Installation Certificate with test results',
+      'A manufacturer warranty card for the device',
     ],
     correctAnswer: 2,
     explanation:

@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: 'For fully turbulent flow in rough pipes, the friction factor:',
     options: [
-      'Reynolds number and relative roughness',
-      'Determine friction factor for turbulent flow',
-      'The route with highest pressure drop',
+      'Depends only on the Reynolds number',
+      'Increases steadily as the Reynolds number increases',
+      'Is fixed at 64/Re regardless of roughness',
       'Depends only on relative roughness',
     ],
     correctAnswer: 3,
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'The Colebrook-White equation is used to:',
     options: [
       'Determine friction factor for turbulent flow',
-      'Length of straight pipe giving the same pressure drop',
-      'Depends only on relative roughness',
-      'The route with highest pressure drop',
+      'Calculate the flow rate from a measured pressure drop',
+      'Find the velocity head at a fitting',
+      'Convert head loss in metres into pressure in pascals',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'equivalent length' for fittings?",
     options: [
-      'Determine friction factor for turbulent flow',
+      'The physical length of the fitting measured end to end',
       'Length of straight pipe giving the same pressure drop',
-      'They create significant flow restrictions (high K values)',
-      'Reynolds number and relative roughness',
+      'The length of pipe between two consecutive fittings',
+      'The minimum straight length needed before a flow meter',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 10,
     question: "The 'index circuit' in a pipe system is:",
     options: [
-      'Reynolds number and relative roughness',
-      'Depends only on relative roughness',
+      'The route carrying the highest flow rate',
+      'The shortest route from pump to terminal',
       'The route with highest pressure drop',
-      'Determine friction factor for turbulent flow',
+      'The circuit nearest to the pump',
     ],
     correctAnswer: 2,
     explanation:

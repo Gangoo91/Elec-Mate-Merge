@@ -68,10 +68,10 @@ const quizQuestions = [
     id: 5,
     question: 'Load diversity factors are applied to:',
     options: [
-      'Heat transfer coefficient increases, improving heat output',
+      'Increase the cable size to allow for future load growth',
       'Account for the probability that all loads will not operate simultaneously',
-      'Equal to or greater than the actual PSCC at that point',
-      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'Ensure the protective device always trips before the cable overheats',
+      'Convert single-phase loads into an equivalent three-phase demand',
     ],
     correctAnswer: 1,
     explanation:

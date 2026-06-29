@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       "BS 7671 Section 712 is the regulatory framework for PV electrical installations. What's its scope?",
     options: [
-      'Just the modules',
-      'The DC side of grid-connected PV installations — from module up to and including the AC-side connection to the building installation. Covers selection / erection requirements: voltage / current sizing, fire and lightning protection, bonding and earthing, isolation, marking and labelling, fault protection, commissioning evidence. Does NOT cover wider building installation rules (those are in BS 7671 main body) but interacts with them at the AC-side boundary',
-      'Only commercial PV',
-      'Customer feelings',
+      'Only the PV modules themselves — their selection and mounting, but not the cabling or protective devices',
+      'The DC side of grid-connected PV, from module to the AC-side connection — sizing, fire / lightning protection, bonding, isolation, marking and fault protection',
+      'Only large commercial PV arrays above a defined kWp threshold, with domestic installs excluded',
+      'The AC distribution board and final circuits only, leaving the DC side entirely to the inverter standard',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     id: 'm3s8-712-512',
     question: 'Where does Reg 712.512.2.1 fit in the design / install workflow?',
     options: [
-      'Only at handover',
-      "At design (Module 3 Section 1 — site irradiance assessment) AND install (Module 3 Section 3 — 70-100 mm standoff for natural convection cooling). The reg makes the installer responsible for adequate heat dissipation under site's maximum solar radiation. Evidence path: site irradiance assessment + manufacturer mounting spec + as-installed standoff dimension + cert evidence bundle records all three",
-      'Never applies in UK',
-      "Customer's preference",
+      'Only at handover, when the commissioning paperwork is signed off by the customer',
+      'At both design (site irradiance assessment) and install (70-100 mm standoff for convection cooling)',
+      'Never in the UK, as solar radiation is too low to require a thermal-arrangement check',
+      'Only on commercial roofs above a set array size, not on domestic pitched roofs',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     id: 'm3s8-712-433',
     question: 'Where does Reg 712.433.101.1 fit in the design / install workflow?',
     options: [
-      'Customer satisfaction',
-      'At design (Module 3 Section 2 — inverter MPPT sizing). Sets the V_oc_max / Upc_max / Isc_max determination basis. Two paths: (a) manufacturer temperature coefficient + site temperature extremes; (b) conservative defaults V_oc_max = 1.2 × V_oc_stc, I_sc_max = 1.25 × I_sc_stc. Used in the three voltage-rule checks against inverter datasheet. Cert evidence bundle records the calculation methodology and result',
-      'Just at handover',
-      'No application',
+      'At commissioning only, when the inverter is energised and the output is measured',
+      'At design — it sets the V_oc_max / Upc_max / Isc_max basis for inverter MPPT sizing',
+      'Only at handover, recorded for the customer information pack but not used in design',
+      'It applies to the AC supply cable sizing rather than to the DC array voltages',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Where do Reg 712.431.101 / 712.431.102 / 712.432 / 712.432.101-103 fit in the design / install workflow?',
     options: [
-      'No fit',
-      'At design (Module 3 Section 2 — string-protection condition and device selection). Reg 712.431.101: protection required (above 2 strings) where condition 1.35 × I_mod_max_ocer < (Ns-1) × I_sc_max IS MET — 1 or 2 strings never need protection. Reg 712.432.103: device options include gPV per BS EN 60269-6, fuse-combination per BS EN 60947-3, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3. Reg 712.432 sizing: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer. Reg 712.432.101: both polarities protected. Reg 712.432.102: blocking diodes NOT acceptable',
-      'No application',
-      'AC fuses only',
+      'They have no place in the workflow — string protection is never required on UK PV',
+      'At design — string-protection condition and device selection (1 or 2 strings never need protection)',
+      'Only at commissioning, by functional-testing whatever fuses the installer happened to fit',
+      'They cover AC-side fuses only, with the DC strings left unprotected by design',
     ],
     correctIndex: 1,
     explanation:
@@ -78,10 +78,10 @@ const inlineChecks = [
     id: 'm3s8-712-421',
     question: 'Where does Reg 712.421 fit in the design / install workflow?',
     options: [
-      'Not applicable',
-      'Throughout — design (cable spec BS EN 50618 / 62930, connector spec BS EN 62852, isolator spec BS EN 60947-3); install (matched-brand MC4, manufacturer-torque crimping, correct flashing-tile, secure DC isolator placement); commissioning (functional test of isolator under load per BS EN 62446-1). Reg 712.421 = protection against fire caused by electrical equipment on the DC side. The PWI common-mistakes that violate this regulation are the most-flagged DC-side audit findings',
-      'Only fires',
-      'No relevance',
+      'It does not apply to PV — fire protection is covered solely by the building regulations',
+      'Throughout — design (cable / connector / isolator specs), install (matched MC4, torqued crimps) and commissioning',
+      'Only after a fire has occurred, as an investigation reference rather than a design rule',
+      'Only at the AC distribution board, not on the DC cabling or connectors',
     ],
     correctIndex: 1,
     explanation:
@@ -91,10 +91,10 @@ const inlineChecks = [
     id: 'm3s8-712-542',
     question: 'Where do Reg 712.542.102 and Reg 712.521.102 fit in the design / install workflow?',
     options: [
-      "Customer's preference",
-      'Reg 712.542.102 (functional bonding): at design (Module 3 Section 5 — check module manufacturer requirement and inverter galvanic isolation; single-point bonding only if both conditions met); install (route single bonding conductor from specified DC polarity to building MET). Reg 712.521.102 (lightning loop): at design (route DC + bonding side-by-side); install (cables strapped together / same conduit, minimising enclosed area)',
-      'AC side only',
-      'No application',
+      'Neither applies in the UK — both relate to off-grid systems covered elsewhere',
+      'Both at design and install — functional bonding (712.542.102) and lightning-loop minimisation (712.521.102)',
+      'Only on the AC side, governing the bonding of the consumer unit and meter tails',
+      'Only at commissioning, as a continuity test with no bearing on routing or layout',
     ],
     correctIndex: 1,
     explanation:
@@ -105,10 +105,10 @@ const inlineChecks = [
     question:
       "The cert evidence bundle is the audit trail for the install life. What's its structure?",
     options: [
-      'No structure',
-      '(1) MCS MIS 3002 design pack — site survey, yield modelling, schematic, schedule, MPPT calculations, cable sizing, string-fuse inequality, customer info pack. (2) Install photographs — DC, AC, mounting, flashing, labels, isolator placements. (3) BS EN 62446-1 commissioning records and SoTR. (4) MCS certificate. (5) EREC G98 / G99 / G100 application / approval / notification. (6) DNO confirmation. (7) Customer handover pack signed by customer. Archived for 25 years. Reference for MCS audit, EICR-style periodic inspection, and customer service',
-      'Just paperwork',
-      'No purpose',
+      'A single MCS certificate filed loosely, with no other documents retained',
+      'Seven parts: design pack, install photos, BS EN 62446-1 records, MCS cert, EREC docs, DNO confirmation, customer handover pack',
+      'Only the commissioning test sheet, kept by the installer rather than the customer',
+      'Just the DNO approval letter and the warranty, with no design or test records',
     ],
     correctIndex: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A new PV install is in progress. The installer is working on the DC side. Which Section 712 regulations does this stage of work touch?',
     options: [
-      'None',
-      'Multiple: 712.433.101.1 (V_oc_max / Isc_max basis from earlier design); 712.431.101 / 712.431.102 (string fuses if applicable); 712.421 (fire protection — cable spec, connectors, crimping, isolator); 712.512.2.1 (thermal arrangement — standoff dimension confirmed at install); 712.521.102 (lightning loop — DC + bonding routed side-by-side); 712.542.102 (functional bonding if applicable). Plus IET CoP for Grid-Connected Solar PV Installations operationalising these into install workflow',
-      'Only one',
-      'No regulations apply',
+      'Multiple — 712.433.101.1 sizing, 712.431 fuses, 712.421 fire protection, 712.512.2.1 standoff and 712.521.102 routing',
+      'Only Reg 712.421, since fire protection is the sole DC-side concern during installation',
+      'Only the AC-side regulations apply at this stage; the DC side is covered solely by the inverter standard',
+      'No Section 712 regulations apply during installation — they only apply at the design stage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A DC-side install touches multiple Section 712 regs simultaneously: voltage / current sizing (712.433.101.1 — design carrying through to install verification); string fuses where applicable (712.431.101 / 712.431.102); fire protection (712.421 — cable, connectors, isolator); thermal arrangement (712.512.2.1 — standoff dimension); lightning loop (712.521.102 — routing); functional bonding (712.542.102 — single-point if applicable). The IET CoP gives the operational workflow that integrates all these. The cert evidence bundle records compliance evidence per reg.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'A 6 kWp PV install is being commissioned. Which Section 712 regs are tested explicitly by BS EN 62446-1 commissioning?',
     options: [
-      'None',
-      '712.421 fire protection (functional test of DC isolator under load — confirms BS EN 60947-3 DC-21 working correctly); 712.433.101.1 (V_oc / I_sc per string measured at test conditions and translated to STC for comparison against design); 712.542.102 (continuity of equipotential bonding — confirms single-point bonding integrity); 712.512.2.1 (visual inspection of standoff dimension at install). Plus IR test (BS EN 62446-1) confirms no inadvertent DC-to-earth path. SoTR records each test result',
-      'No regs tested',
-      'Only customer satisfaction',
+      'Only the insulation-resistance test is carried out; no Section 712 regulation is verified at commissioning',
+      'Only the AC-side functional tests are run, with the DC side verified later by the customer',
+      '712.421 (DC isolator functional test), 712.433.101.1 (V_oc / I_sc per string) and 712.542.102 (bonding continuity), plus the IR test',
+      'No regulations are tested at commissioning — it is purely a customer satisfaction and handover step',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 62446-1 commissioning explicitly tests multiple Section 712 regs: (1) 712.421 — functional test of DC isolator under load confirms BS EN 60947-3 DC-21 operation; (2) 712.433.101.1 — V_oc / I_sc per string measured and translated to STC; (3) 712.542.102 — continuity test confirms bonding network integrity and single-point bonding; (4) 712.512.2.1 — visual inspection of standoff dimension; (5) IR test catches insulation breakdown. The SoTR records each test against the design pack reference.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       "An MCS auditor reviews a 12-month-old PV install. The cert evidence bundle is incomplete — missing the inverter MPPT calculations from the design pack. What's the audit finding?",
     options: [
-      'Pass',
-      'Major finding — Reg 712.433.101.1 not evidenced. The MCS MIS 3002 design pack must explicitly show the inverter MPPT sizing calculations (three voltage checks per Reg 712.433.101.1, plus current checks). Rectification: produce the calculations retrospectively (with the as-installed string and inverter), evidence against Reg 712.433.101.1, update the design pack, re-issue the cert evidence bundle. Customer informed about the rectification',
-      'No issue',
-      "Customer's fault",
+      'Pass — MPPT calculations are optional and need not appear in the MCS design pack',
+      'A minor observation only, since the install is already energised and generating correctly',
+      'Out of scope — MPPT sizing is the inverter manufacturer\'s responsibility, not the installer\'s',
+      'Major finding — Reg 712.433.101.1 not evidenced; the MPPT sizing calculations must be produced and the pack re-issued',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Missing inverter MPPT calculations is a major MCS audit finding — Reg 712.433.101.1 not evidenced in the design pack. Rectification: produce the calculations retrospectively, evidence against the as-installed string and inverter, update the design pack, re-issue the cert evidence bundle. The competent installer avoids this by including the MPPT calculations EXPLICITLY in the design pack at install — three voltage checks per Reg 712.433.101.1 with manufacturer temperature coefficients, site extremes, and resulting V_oc_max / V_mp / V_oc_max-vs-MPPT-max.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       "A 5-year-old PV install is being inspected after a customer report of inverter failure. The cert evidence bundle reveals: A4:2026 isn't referenced (install pre-dates A4); Reg 551.7.1(d) isn't addressed (single-RCD CU). Is this a finding?",
     options: [
-      'Always a finding',
-      'Not a finding for the original install — at the time of install, A4:2026 wasn\'t in force; the install complies with the regs effective at that date. The inspector MAY flag the arrangement as a "Code C2 — Potentially Dangerous" for the customer\'s information, recommending CU upgrade at next opportunity. The inverter failure investigation continues — root cause may be unrelated (component failure, lightning damage, etc.) or related (source-side RCD trip created hazardous conditions). Cert evidence bundle and EICR record the findings transparently',
-      'Customer at fault',
-      'Inverter problem',
+      'Yes — a non-compliance with A4:2026 is always a finding regardless of the original install date',
+      'Not a non-compliance for the original install (A4 was not in force); the inspector may flag the single-RCD arrangement for the customer\'s information',
+      'Yes — the customer is at fault for not upgrading the consumer unit when A4:2026 was published',
+      'No — the failure is purely an inverter fault and the consumer-unit arrangement is irrelevant',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       "IET CoP for Grid-Connected Solar PV Installations — what's its relationship to BS 7671 Section 712?",
     options: [
-      'They contradict each other',
-      'Complementary. BS 7671 Section 712 sets the regulatory framework — what the install must achieve. The IET CoP (5th edition) operationalises Section 712 into the day-to-day install workflow — worked examples, decision charts, design-pack templates, troubleshooting, photo records. The MCS MIS 3002 design pack typically references both. The cert evidence bundle archives compliance evidence per both. Section 712 + IET CoP together = the full UK PV install standard',
-      'No relationship',
-      'IET CoP overrides BS 7671',
+      'Complementary — Section 712 sets what the install must achieve; the IET CoP operationalises it into the workflow',
+      'They contradict each other, so the installer must choose which document to follow on each install',
+      'There is no relationship; the IET CoP applies only to commercial PV and Section 712 only to domestic',
+      'The IET CoP overrides BS 7671 Section 712 wherever the two documents differ',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Section 712 (regulatory framework: what to achieve) and the IET CoP for Grid-Connected Solar PV Installations (operational guidance: how to achieve it) are complementary. Section 712 sets the regs; the IET CoP gives the worked examples, decision charts, design-pack templates, and troubleshooting. The competent UK PV install workflow uses BOTH — Section 712 for compliance, IET CoP for operationalisation. MCS MIS 3002 design pack typically references both. Cert evidence bundle archives both.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       "A new PV install in 2026 must satisfy both BS 7671:2018+A4:2026 (regulatory) and MCS MIS 3002 (scheme). What's in common, and what's different?",
     options: [
-      'Identical',
-      'BS 7671:2018+A4:2026 = the legal regulatory framework for the electrical install (what the install must achieve to be safe and compliant). MCS MIS 3002 = the scheme requirements for grant-funded PV installs (the design pack contents, audit trail, customer information). They overlap (the design pack contents are largely the same — sizing calculations, schematic, schedule, commissioning records), but MCS MIS 3002 adds: scheme-specific reporting, MCS cert issuance, customer information pack format, MCS audit process. Both must be satisfied for a typical grant-funded install',
-      'BS 7671 not required',
-      'MCS not required',
+      'They are identical documents, so satisfying one automatically satisfies the other in full',
+      'Only BS 7671 is required; MCS MIS 3002 is voluntary even for grant-funded installations',
+      'Both apply and overlap on the design pack, but MCS adds scheme reporting, cert issuance and the audit process',
+      'Only MCS MIS 3002 is required for grant-funded work; BS 7671 does not apply to PV installs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671:2018+A4:2026 (the legal regulatory framework) and MCS MIS 3002 (the scheme requirements) overlap and complement. Both required for a typical UK grant-funded PV install. BS 7671 sets the regulatory safety requirements; MCS MIS 3002 adds scheme-specific reporting, MCS cert issuance, customer information pack format, audit process. The cert evidence bundle archives compliance evidence for BOTH — the audit trail covers the regulatory and the scheme dimensions.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'An EICR-style periodic inspection of a 7-year-old PV install. The inspector uses the cert evidence bundle as the reference. Which documents are key?',
     options: [
-      'None',
-      '(1) MCS MIS 3002 design pack — for the as-designed inputs (orientation, kWp, modules, inverter, string topology, V_oc / I_sc design values); (2) Install photographs — for the as-installed configuration (DC routing, AC connection, mounting, labels); (3) BS EN 62446-1 SoTR — for the baseline commissioning measurements (continuity, polarity, V_oc / I_sc, IR, functional tests). Inspector measures current values and compares against the SoTR baseline. Deviations identify degradation, faults, or operational issues',
-      "Customer's opinion only",
-      'No documents needed',
+      'No reference documents are needed; the inspector relies solely on present-day measurements',
+      'The customer\'s recollection of the original install is the primary reference document',
+      'The manufacturer warranty certificate alone, which records the original design parameters',
+      'The MCS design pack (as-designed inputs), install photographs and the BS EN 62446-1 SoTR baseline',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EICR-style periodic inspection uses the cert evidence bundle as the reference. Key documents: (1) MCS MIS 3002 design pack — as-designed inputs; (2) install photographs — as-installed configuration; (3) BS EN 62446-1 SoTR — baseline commissioning measurements. The inspector compares current measurements against the SoTR baseline; deviations identify degradation, faults, or operational issues. Without the bundle, the inspection starts from scratch — much harder, more expensive. The cert evidence bundle is the multi-decade investment that makes future inspections efficient.',
   },
@@ -220,12 +220,12 @@ const quizQuestions = [
     question:
       "The competent installer's end-to-end Section 712 workflow integrates all regs. What's the workflow sequence?",
     options: [
-      'No workflow',
-      'Design (712.433.101.1 sizing; 712.431.101 fuse inequality; 712.512.2.1 site irradiance; 712.542.102 bonding decision); Install (712.421 cable + connectors + isolator; 712.512.2.1 standoff; 712.521.102 routing; 712.542.102 single-point bonding); Commissioning (BS EN 62446-1 SoTR confirming all regs); Handover (cert evidence bundle for MCS audit + customer + future EICR); Periodic (5-yearly inspection vs SoTR baseline). Each stage cross-references the regs and the operational source (IET CoP)',
-      "Customer's choice only",
-      'Random order',
+      'Design → Install → Commissioning (BS EN 62446-1 SoTR) → Handover (cert bundle) → Periodic inspection vs the SoTR baseline',
+      'Install first, then design retrospectively once the customer has approved the finished array',
+      'There is no defined workflow; the regulations are applied in whatever order suits the install',
+      'Commissioning → Design → Handover → Install, with the periodic inspection done before energising',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The integrated Section 712 workflow: (1) Design — sizing calculations per Reg 712.433.101.1, string-fuse inequality per Reg 712.431.101 / 102, site irradiance per Reg 712.512.2.1, bonding decision per Reg 712.542.102; (2) Install — cable + connectors + isolator per Reg 712.421, standoff dimension per Reg 712.512.2.1, routing per Reg 712.521.102, single-point bonding per Reg 712.542.102; (3) Commissioning — BS EN 62446-1 SoTR confirming compliance; (4) Handover — cert evidence bundle; (5) Periodic inspection vs SoTR baseline. The IET CoP operationalises each stage.',
   },

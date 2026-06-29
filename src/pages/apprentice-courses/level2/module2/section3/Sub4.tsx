@@ -62,10 +62,10 @@ const checks = [
     id: 'vd-loop-length-check',
     question: "Calculating voltage drop using mV/A/m, the 'L' is:",
     options: [
-      'Both a 6 kW reduction and 50% improvement',
-      '3% of the nominal supply voltage',
       'The total loop length (out and back)',
-      '70-95% depending on size and type',
+      'The straight-line distance from the CU to the load',
+      'The one-way route length from origin to load',
+      'The route length divided by two',
     ],
     correctIndex: 2,
     explanation:
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: 'Method B uses the formula:',
     options: [
-      '5 g/year for F-gas systems',
-      'Both series and shunt fields',
+      'Vd = (mV/A/m × I × L) × 1000',
+      'Vd = mV/A/m ÷ (I × L)',
       'Vd = (mV/A/m × I × L) ÷ 1000',
-      'Overheating and increased losses',
+      'Vd = (mV/A/m + I + L) ÷ 1000',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,9 +156,9 @@ const quizQuestions = [
     id: 7,
     question: 'On a three-phase balanced load, voltage drop calculations use:',
     options: [
-      'Equipment is maintained in efficient state, working order and good repair',
-      'That employers prevent or adequately control exposure to hazardous substances',
-      'Licensed, notifiable non-licensed (NNLW), and non-licensed',
+      'The same mV/A/m value as the single-phase column',
+      'The single-phase mV/A/m value multiplied by three',
+      'The single-phase mV/A/m value plus the neutral current',
       'A different mV/A/m value from the three-phase column of Appendix 4',
     ],
     correctAnswer: 3,
@@ -170,9 +170,9 @@ const quizQuestions = [
     question: 'Why does excessive voltage drop matter beyond just regulations?',
     options: [
       'It cuts equipment output, makes motors struggle to start, dims lights and wastes energy as cable heat',
-      'The apprentice is at R1 readiness and needs S1 Directing — full step-by-step guidance and close supervision',
-      'Suitable first aid facilities and arrangements, including trained first aiders',
-      'A new installation OR an addition/alteration that introduces a new circuit',
+      'It raises the supply voltage at the load, risking damage to sensitive electronics',
+      'It increases the prospective fault current at the far end of the circuit',
+      'It has no real effect provided the circuit still passes its insulation test',
     ],
     correctAnswer: 0,
     explanation:

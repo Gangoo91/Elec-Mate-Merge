@@ -41,10 +41,10 @@ const checks = [
     question:
       'What is the function of the Main Earthing Terminal (MET) in the ADS chain?',
     options: [
-      'It’s the single common connection point inside the installation where the earthing conductor (back to the source/electrode), the main protective bonding conductors (out to extraneous parts) and the installation CPCs all meet — bringing every earthed and bonded conductor to the same potential.',
-      'Use an exclusion barrier at 9 metres from the power lines, limit boom functions to prevent any part of the MEWP reaching within 9 metres of the lines, appoint a banksman to monitor, and implement a traffic management plan for the road',
-      'Gateway 1 at planning (fire safety + access). Gateway 2 pre-construction (BSR design review; no construction without approval). Gateway 3 pre-occupation (BSR sign-off against design and golden thread; no occupation without approval).',
-      'The contractor (employer) for failing to provide adequate training under HSWA s.2 and WAH Regs; the supervisor for directing untrained persons; and potentially the principal contractor for failing to monitor under CDM 2015',
+      'The single common point where the earthing conductor, main bonding conductors and every CPC meet at one potential.',
+      'A current-limiting device that caps fault current before it reaches the protective device.',
+      'The point where the supply neutral is split into separate neutral and earth conductors by the DNO.',
+      'A dedicated earth electrode that gives the installation its own connection to the general mass of earth.',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     question:
       'Halfway through wiring a kitchen, you notice the previous electrician has terminated the CPC into a junction box but never connected the second leg out to the next socket. What does this break do to ADS?',
     options: [
-      'Where an offence by the company is committed with their consent, connivance or attributable to their neglect — they may be charged personally as well',
-      'It breaks the CPC link in the ADS chain — any fault between line and exposed metal beyond the JB has no return path. The MCB will not trip and the metalwork will sit at line voltage until somebody touches it.',
-      'Stay calm, restate the basis of the price (scope, time, materials), offer to revisit any specific item — and end the conversation if it stays abusive',
-      'Renewal every 3-5 years (varies by card band) with evidence of CPD and a current health-and-safety qualification (typically the ECS Health, Safety and Environmental Assessment or CSCS-equivalent).',
+      'Nothing serious — the gas and water main bonding gives the metalwork an alternative earth return.',
+      'It breaks the CPC link, so a fault beyond the junction box has no return path and the MCB cannot trip.',
+      'It only affects the neutral return, so the circuit still disconnects normally on an earth fault.',
+      'It raises Zs slightly but the RCD will still clear any fault within the required time.',
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'BS 7671 411.3.1.1 requires a CPC to be run to and terminated at every point in wiring and at every accessory, with one specific exception. What is it?',
     options: [
-      'That data is visible on both the source device and target system',
+      'A metal-clad socket-outlet fed from an all-plastic consumer unit.',
       'A lampholder having no exposed-conductive-parts and suspended from such a point.',
-      'Maintain positive communication and verify isolation at point of work',
-      'The wire number (24) — it is the same at both ends and everywhere along the wire',
+      'Any accessory mounted in a plastic back-box, since the box itself needs no earth.',
+      'A SELV light fitting supplied at 12 V from a remote transformer.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     question:
       'Walk the ADS fault loop on a TN-C-S supply in the order it actually flows — from the moment a phase touches an exposed metal case:',
     options: [
-      'CDM 2015 requires that pre-construction information — which must include details of any asbestos present — is provided, and that health and safety risks (including asbestos) are managed throughout a construction project',
-      'Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables',
-      'Source phase winding → line conductor → fault at appliance → exposed-conductive-part → CPC → MET → earthing conductor → service position → DNO PEN → source neutral terminal — protective device sees the high fault current and disconnects.',
-      'The Blind Spot quadrant — they should actively seek specific behavioural feedback to understand exactly what behaviours are creating the perception, then work on modifying those behaviours',
+      'Exposed-conductive-part → DNO PEN → source neutral → line conductor → fault → CPC → MET → source winding.',
+      'Line conductor → CPC → fault → exposed-conductive-part → MET → source winding → DNO PEN → earthing conductor.',
+      'Source phase winding → line conductor → fault → exposed-conductive-part → CPC → MET → earthing conductor → DNO PEN → source neutral.',
+      'Source neutral → DNO PEN → MET → line conductor → exposed-conductive-part → CPC → fault → source winding.',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'Why is the size of the main earthing conductor (typically 16 mm² Cu on a domestic PME supply) determined by the size of the supplier’s neutral, not by the installation’s line conductor size?',
     options: [
-      'Because in a broken-PEN fault the consumer’s earthing conductor may have to carry the full installation’s neutral return current back to ground via local earthing — sizing it to match the supply neutral ensures it doesn’t become the weak link.',
-      'No — site straightening of bent components can introduce hidden stress fractures and weakened areas; the component must be withdrawn from service and returned to the manufacturer for assessment',
-      'Document required by CDM Reg 12 (single contractor) or Reg 16 (multi-contractor / PC writes it). Sets out the H&S arrangements for the construction phase. Must be in place BEFORE construction starts. HSE CIS80 template suitable for small projects.',
-      'A suitably qualified person who can verify the technical accuracy of the findings, the appropriateness of the recommendations, and that the report meets organisational standards',
+      'Because in a broken-PEN fault it may have to carry the installation’s full neutral return current to ground, so it is sized to the supply neutral.',
+      'Because the earthing conductor carries the same load current as the line conductor does during normal everyday use.',
+      'Because BS 7671 simply sets a flat 16 mm² minimum for every earthing conductor regardless of the supply type.',
+      'Because the line conductor and the earthing conductor share one terminal, so the two must always be the same size.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'Which of these is part of the ADS chain on every UK installation, regardless of earthing system?',
     options: [
-      'A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated',
-      'The Main Earthing Terminal (MET) — the single common connection point for the earthing conductor, main bonding conductors and CPCs.',
-      'Refer them to the client (the landlord) — access is the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s decision, not the contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s; if agreed, escort and induct',
-      'Within the period stated in the subcontract following the main contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s receipt of payment',
+      'A surge protective device (SPD) fitted at the origin of the installation by the consumer unit.',
+      'The Main Earthing Terminal (MET) — the single common point where earthing conductor, bonding and CPCs meet.',
+      'An RCD on every single final circuit, fitted regardless of the earthing system actually in use.',
+      'An external lightning protection system bonded back to the building’s structural steelwork.',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'Reg 411.3.2.3 permits up to 5 s disconnection on a TN system distribution circuit. Why is the longer time acceptable here when final circuits get only 0.4 s?',
     options: [
-      'To describe in detail how the work will be carried out step-by-step, identifying hazards and controls at each stage, and defining the competencies and resources required',
-      'Physiological response to electric current passing through the body. Effects scale with current (mA): perception (1mA), pain (5-10mA), can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t-let-go (10-20mA), respiratory paralysis (20-50mA), ventricular fibrillation (50-100mA+). Duration matters — long exposure at lower current can be lethal.',
-      'Because someone touching exposed metalwork on a distribution circuit (sub-main supplying a downstream board) is far less likely than someone touching the casing of a kettle on a final circuit — the touch-current risk profile is lower.',
-      'A systematic process of looking beyond the immediate cause to identify the underlying organisational, procedural, or design failures that allowed the injury to occur',
+      'Because distribution circuits carry far less fault current, so they always take longer to trip the protective device.',
+      'Because the longer time gives the upstream device a chance to operate first, purely for discrimination reasons.',
+      'Because contact with a sub-main feeding a downstream board is far rarer than touching a kettle on a final circuit — lower touch-current risk.',
+      'Because distribution circuits are always RCD-protected anyway, so the overcurrent disconnection time becomes irrelevant.',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'On a TN-C-S domestic, the protective device’s job in the ADS chain is to:',
     options: [
-      'Create a mapping document or matrix that lists each KSB from the apprenticeship standard and clearly references the specific portfolio evidence that demonstrates achievement of each one',
-      'Insurance covering claims arising from professional advice, designs, specifications or instructions that cause financial loss. Electricians need it when providing design services, specifications, technical advice, or any advisory work beyond pure installation.',
-      'P1 provides detection throughout all areas of the building for property protection; P2 provides detection only in defined high-risk areas for property protection',
-      'Disconnect the supply within the time stated in Reg 411.3.2.2 (typically 0.4 s for a final circuit at 230 V) once a low-impedance line-to-earth fault produces sufficient fault current through the loop.',
+      'Limit the touch voltage on the metalwork by equalising potential across it during the fault.',
+      'Carry the fault current back to the source so the earth fault loop is complete.',
+      'Provide the earth reference point for the whole installation at the consumer unit.',
+      'Disconnect the supply within the Reg 411.3.2.2 time once the fault current through the loop is high enough.',
     ],
     correctAnswer: 3,
     explanation:
@@ -184,10 +184,10 @@ const quizQuestions = [
     question:
       'A first-year apprentice asks "if all the bonding is connected to the MET, why do we need a separate earthing conductor as well?". What’s the right answer?',
     options: [
-      'Main protective bonding equalises potential between extraneous-conductive-parts (gas, water, structure) and the MET. The earthing conductor connects the MET back to the source earth (PEN, sheath, or local electrode) so fault current can actually return to the source — without it, no current flows and no disconnection happens.',
-      'Treating someone less favourably because they have done a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'protected act\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' — typically making a discrimination complaint, supporting someone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s complaint, or giving evidence in a discrimination case. Victimisation is unlawful even if the original complaint was unsuccessful, provided it was made in good faith. The protection extends to apprentices, ex-employees and anyone else covered by the Act.',
-      'Revised to apply to socket-outlets with a rated current not exceeding 32 A. There is an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary.',
-      'An IET volunteer (typically MIET or above) in your local region who supports new and prospective members, advises on professional registration applications, and runs regional member activities. Free service. Particularly useful for vocational-route practitioners considering EngTech application — the ambassador can review your CV and tell you whether you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re eligible plus suggest what to strengthen.',
+      'Bonding equalises potential between extraneous parts and the MET; the earthing conductor links the MET back to the source earth so fault current can return.',
+      'They do the very same job — the earthing conductor is really just a spare in case a bonding conductor happens to fail.',
+      'Bonding carries the fault current back to source, while the earthing conductor only equalises the potential locally at the MET.',
+      'The earthing conductor is only ever needed on TT supplies; on TN systems the main bonding alone is entirely sufficient.',
     ],
     correctAnswer: 0,
     explanation:

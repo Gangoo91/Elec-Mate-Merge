@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'safety-culture-def',
     question: 'What best describes safety culture?',
     options: [
-      'Prevent people entering dangerous areas during operation',
-      'Weekly or fortnightly to prevent backlog',
+      'The number of written safety procedures an organisation holds',
+      'The legal duties placed on employers by the HSWA 1974',
       'Shared values, beliefs and behaviours regarding safety',
-      'To reduce the drive current to dim the LED output',
+      'The amount of money spent each year on safety equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -48,9 +48,9 @@ const quickCheckQuestions = [
     id: 'visible-leadership',
     question: 'Which action best demonstrates visible safety leadership?',
     options: [
-      'Final connection to vibrating equipment',
-      'Disagreement with the foreman about break times',
-      'Maximum power required at any given time',
+      'Issuing a written safety policy to all employees',
+      'Delegating all safety matters to the safety department',
+      'Displaying safety posters around the workplace',
       'Managers regularly walking the site discussing safety',
     ],
     correctIndex: 3,
@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     id: 'behavioural-safety',
     question: 'What is the primary focus of behavioural safety programmes?',
     options: [
-      'Offline UPS only switches to battery when mains fails',
-      'Thermal conductivity of surfaces',
+      'Increasing the number of safety procedures and rules',
+      'Identifying individuals to blame after an incident',
       'Observing and modifying at-risk behaviours',
-      'Remove it from service and report it immediately',
+      'Replacing engineering controls with personal protective equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'positive-indicator',
     question: 'Which is a positive indicator of good safety culture?',
     options: [
-      'Write \\\\\\\\\\\\\\\'CPC not connected at socket outlet\\\\\\\\\\\\\\\'',
-      'External earth fault loop impedance',
+      'A low number of reported near misses overall',
+      'Investigations that quickly identify who was at fault',
       'Workers voluntarily reporting near misses',
-      '1 hour minimum, 3 hours typical',
+      'Strict enforcement of penalties for any safety breach',
     ],
     correctIndex: 2,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: "Who first used the term 'safety culture' in the context of organisational safety?",
     options: [
-      'Adequate separation or protection from non-electrical services',
+      'The Health and Safety Executive in the Robens Report',
       'International Nuclear Safety Advisory Group (post-Chernobyl)',
-      'A relevant event entitling extension of time',
-      'Fast response time and high power capability',
+      'The International Labour Organization after the Bhopal disaster',
+      'The British Standards Institution in BS OHSAS 18001',
     ],
     correctAnswer: 1,
     explanation:
@@ -129,10 +129,10 @@ const quizQuestions = [
     id: 4,
     question: 'Which behaviour is most indicative of effective safety leadership?',
     options: [
-      'Balancing safety with production and never compromising on safety',
-      'As informal, two-way discussions focused on understanding',
-      'Distinguishing between honest errors and reckless behaviour',
-      'Workers actively participating in identifying and solving safety issues',
+      'Demonstrating that safety is not compromised under production pressure',
+      'Issuing more written rules whenever an incident occurs',
+      'Delegating safety entirely to a dedicated safety officer',
+      'Only discussing safety at the annual company meeting',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'just culture' in safety management?",
     options: [
-      'Safety is actively sought out and embedded in everything',
+      'Treating every error the same way and disciplining all of them',
       'Distinguishing between honest errors and reckless behaviour',
-      'Management commitment and leadership behaviour',
-      'Workers actively participating in identifying and solving safety issues',
+      'A culture where no one is ever held accountable for any mistake',
+      'Reporting all incidents only to the enforcing authority',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of safety observation programmes?',
     options: [
-      'Artefacts, espoused values, basic assumptions',
-      'Balancing safety with production and never compromising on safety',
-      'Workers actively participating in identifying and solving safety issues',
+      'To record evidence for disciplining workers who breach rules',
+      'To measure how many procedures each worker has read',
+      'To check that the correct PPE has been purchased for the site',
       'To identify at-risk behaviours and reinforce safe practices',
     ],
     correctAnswer: 3,
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is worker engagement in the context of safety culture?',
     options: [
-      'Balancing safety with production and never compromising on safety',
+      'Workers signing to confirm they have read the safety policy',
       'Workers actively participating in identifying and solving safety issues',
-      'To identify at-risk behaviours and reinforce safe practices',
-      'It focuses on human factors alongside engineering controls',
+      'Workers attending the legally required annual safety briefing',
+      'Workers wearing the correct PPE whenever they are on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'How should safety conversations be conducted for maximum effectiveness?',
     options: [
-      'Balancing safety with production and never compromising on safety',
-      'Focus on individual fault rather than system failures',
-      'Artefacts, espoused values, basic assumptions',
+      'As formal disciplinary interviews with written warnings',
+      'As one-way briefings where the manager does all the talking',
+      'Only after an accident has already occurred on site',
       'As informal, two-way discussions focused on understanding',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: "What characterises a 'blame culture' in safety management?",
     options: [
       'Focus on individual fault rather than system failures',
-      'Balancing safety with production and never compromising on safety',
-      'As informal, two-way discussions focused on understanding',
-      'Management commitment and leadership behaviour',
+      'Encouraging open reporting of near misses without fear',
+      'Treating every incident as a chance to improve the system',
+      'Sharing the lessons from incidents across the whole workforce',
     ],
     correctAnswer: 0,
     explanation:

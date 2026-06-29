@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why must all rectification work be re-tested?',
     options: [
-      'Recording your progress makes you more likely to improve',
-      'Listen empathically to understand the client\\\\\\\'s full concern before responding',
+      'To reduce the number of certificates that must be issued',
+      'To avoid having to isolate the circuit again',
       'To confirm the defect has been properly corrected and safety restored',
-      'Excessive circulating currents and possible damage',
+      'To shorten the time spent on the installation',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What regulation places a duty to maintain safe electrical systems?',
     options: [
-      'Like-for-like socket replacement',
-      'The budgeted cost of work actually performed',
-      'DC rapid chargers deliver DC to the vehicle',
+      'The Building Regulations 2010 Part P',
+      'The Provision and Use of Work Equipment Regulations 1998',
+      'The Construction (Design and Management) Regulations 2015',
       'Electricity at Work Regulations 1989',
     ],
     correctIndex: 3,
@@ -86,9 +86,9 @@ const Module4Section6_5 = () => {
       id: 3,
       question: 'What is the first step before rectifying a wiring defect?',
       options: [
-        'Insert meter in series with the circuit',
-        'Heat dissipation is severely restricted',
-        'Work-Related Upper Limb Disorder',
+        'Photograph the defect for the records',
+        'Notify the client that work is starting',
+        'Replace the affected accessory straight away',
         'Isolate and lock off the circuit',
       ],
       correctAnswer: 3,
@@ -100,9 +100,9 @@ const Module4Section6_5 = () => {
       question: 'Name two tools that may assist in defect identification.',
       options: [
         'Continuity tester and insulation resistance tester',
-        'The contractor who employs the injured worker',
-        'An explosive release of electrical energy',
-        'Grid-connected or island-mode inverters (PV systems)',
+        'Torque wrench and cable stripper',
+        'Conduit bender and draw tape',
+        'Crimping tool and hole saw',
       ],
       correctAnswer: 0,
       explanation:
@@ -112,10 +112,10 @@ const Module4Section6_5 = () => {
       id: 5,
       question: 'Which regulation requires installations to be maintained in a safe condition?',
       options: [
-        'Yes, including calibration date',
+        'The Building Regulations 2010 Part P',
         'Electricity at Work Regulations 1989',
-        'Meets European safety standards',
-        '2-9 units depending on system capacity',
+        'The Health and Safety (Display Screen) Regulations 1992',
+        'The Manual Handling Operations Regulations 1992',
       ],
       correctAnswer: 1,
       explanation:
@@ -125,10 +125,10 @@ const Module4Section6_5 = () => {
       id: 6,
       question: 'Why should replacement cables cover the full damaged section?',
       options: [
-        'Cable length × mΩ/m values for both conductors',
+        'To make the cable easier to route through containment',
         'To reduce cable runs and installation costs',
         'To ensure reliability and avoid unsafe splices',
-        'Achieving the most balanced load distribution possible',
+        'To match the colour of the surrounding cabling',
       ],
       correctAnswer: 2,
       explanation:
@@ -138,9 +138,9 @@ const Module4Section6_5 = () => {
       id: 7,
       question: 'What is one way to prevent recurrence of polarity defects?',
       options: [
-        'To record historical data for analysis',
-        'A refurbishment and demolition asbestos survey (R&D survey)',
-        'Enhanced IP ratings and RCD protection',
+        'Use a higher rated protective device on the circuit',
+        'Increase the cable size for the final circuit',
+        'Fit additional RCD protection to the circuit',
         'Double-check conductor connections before final fix',
       ],
       correctAnswer: 3,
@@ -152,9 +152,9 @@ const Module4Section6_5 = () => {
       question: 'Why should you address only one fault at a time during rectification?',
       options: [
         'To confirm each fault is resolved before moving on',
-        '"EICR_2024_Thompson_42-High-Street.pdf"',
-        'Proved on a known live source before AND after use',
-        'Permit to work details and compliance with site procedures',
+        'To keep the circuit energised between repairs',
+        'To reduce the number of test instruments needed',
+        'To avoid having to record each fault separately',
       ],
       correctAnswer: 0,
       explanation:
@@ -165,10 +165,10 @@ const Module4Section6_5 = () => {
       question:
         'Give one reason why photographs should be taken before and after defect correction.',
       options: [
-        'To prevent unexpected energisation during work',
+        'To speed up the rectification work itself',
         'To provide a clear record and proof of corrective action',
-        'To ensure safe working by identifying which circuits need to be isolated',
-        'Disconnect all appliances and attempt to reset',
+        'To remove the need to re-test the corrected circuit',
+        'To avoid having to isolate the circuit',
       ],
       correctAnswer: 1,
       explanation:

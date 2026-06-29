@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       "A colleague describes someone with a personality disorder as having a 'character flaw'. How should you understand personality disorders instead?",
     options: [
-      'They are a sign of weakness and poor upbringing',
       'They are deeply ingrained patterns of behaviour that affect cognition, emotional responses, interpersonal functioning, and impulse control',
+      'They are a sign of weakness and poor upbringing',
       'They are temporary mood problems that resolve on their own',
       'They only affect people who have experienced prison or homelessness',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Personality disorders are deeply ingrained patterns of behaviour that deviate from cultural expectations and affect cognition, emotional responses, interpersonal functioning, and impulse control. They usually emerge in adolescence or early adulthood. They are NOT a character flaw, a sign of weakness, or a choice. They are recognised mental health conditions that often have roots in adverse childhood experiences and trauma.',
   },
@@ -36,11 +36,11 @@ const quickCheckQuestions = [
     question: 'What is the key shift in thinking that a trauma-informed approach represents?',
     options: [
       "From 'what's your diagnosis?' to 'what medication do you need?'",
-      "From 'what's wrong with you?' to 'what happened to you?'",
       "From 'you need to try harder' to 'you need more willpower'",
       "From 'this is your fault' to 'this is your parents' fault'",
+      "From 'what's wrong with you?' to 'what happened to you?'",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The trauma-informed approach represents a fundamental shift from asking 'what's wrong with you?' to 'what happened to you?' This recognises that many behaviours associated with personality disorders are survival responses developed in the context of adverse childhood experiences. Rather than blaming the individual, it seeks to understand their experiences and how those experiences have shaped their responses to the world.",
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 1,
     question: 'Personality disorders typically first emerge during which life stage?',
     options: [
-      'Early childhood (ages 2-5)',
       'Adolescence or early adulthood',
+      'Early childhood (ages 2-5)',
       'Middle age (ages 40-50)',
       'Old age (ages 65+)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Personality disorders usually emerge during adolescence or early adulthood. This is the developmental period when personality consolidates and patterns of relating to others, managing emotions, and responding to stress become established. Whilst the roots often lie in childhood experiences (particularly adverse childhood experiences), the recognisable patterns of a personality disorder typically become apparent in adolescence and early adulthood.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: 'What does ACE stand for in the context of mental health and personality disorders?',
     options: [
       'Acute Clinical Episode',
-      'Adverse Childhood Experiences',
       'Anxiety and Cognitive Exhaustion',
       'Assessment of Clinical Effectiveness',
+      'Adverse Childhood Experiences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'ACE stands for Adverse Childhood Experiences. These are potentially traumatic events that occur during childhood (ages 0-17), including abuse (physical, emotional, sexual), neglect (physical, emotional), and household dysfunction (domestic violence, parental substance misuse, parental mental illness, parental separation, incarceration of a household member). Research has shown a strong link between the number of ACEs a person has experienced and their risk of developing mental health conditions, including personality disorders, in adulthood.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which specialist therapy was developed specifically for BPD/EUPD?',
     options: [
+      'Dialectical Behaviour Therapy (DBT)',
       'Cognitive Behavioural Therapy (CBT)',
       'Eye Movement Desensitisation and Reprocessing (EMDR)',
-      'Dialectical Behaviour Therapy (DBT)',
       'Person-Centred Counselling',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Dialectical Behaviour Therapy (DBT) was developed specifically for BPD/EUPD by Dr Marsha Linehan. It combines cognitive behavioural techniques with mindfulness and acceptance strategies. DBT teaches four key skill sets: mindfulness, distress tolerance, emotional regulation, and interpersonal effectiveness. It is the most researched and evidence-based treatment for BPD/EUPD. Whilst CBT, EMDR, and person-centred counselling can all be helpful for various mental health conditions, DBT was designed specifically to address the core difficulties of BPD/EUPD.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     options: [
       "'She's a borderline'",
       "'He's a personality disorder case'",
-      "'A person with BPD'",
       "'That difficult patient in bed 3'",
+      "'A person with BPD'",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Person-first language puts the person before the diagnosis: 'a person with BPD' rather than 'a borderline'. This is important because it recognises the person's full identity and dignity rather than reducing them to a diagnostic label. 'She's a borderline', 'he's a personality disorder case', and 'that difficult patient' are all examples of dehumanising, stigmatising language that should never be used. The person is always more than their diagnosis.",
   },

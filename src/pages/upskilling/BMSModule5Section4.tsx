@@ -10,26 +10,26 @@ const quickCheckQuestions = [
     id: 'knx-vendor-neutral',
     question: 'Why is KNX considered vendor-neutral?',
     options: [
-      "It's free to use",
       'Hundreds of manufacturers produce compatible devices',
-      'It only works with one brand',
+      "It's completely free to use",
+      'It works only with a single approved brand',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'KNX is vendor-neutral because hundreds of manufacturers produce KNX-compatible devices that work together seamlessly, ensuring competition, choice, and long-term availability.',
   },
   {
     id: 'knx-line-devices',
     question: 'How many devices can typically be supported on a KNX line?',
-    options: ['Up to 32 devices', 'Up to 64 devices', 'Up to 127 devices'],
-    correctIndex: 1,
+    options: ['Up to 32 devices', 'Up to 127 devices', 'Up to 64 devices'],
+    correctIndex: 2,
     explanation:
       'A KNX line can support up to 64 devices (including couplers), though the total current consumption must not exceed the power supply capacity.',
   },
   {
     id: 'knx-line-coupler',
     question: 'What type of KNX device is used to link two lines together?',
-    options: ['Gateway', 'Line coupler', 'USB interface'],
+    options: ['A protocol gateway', 'A line coupler', 'A USB interface'],
     correctIndex: 1,
     explanation:
       'Line couplers are used to connect lines within areas, allowing expansion beyond the 64-device limit per line while maintaining system integrity.',
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     id: 'knx-no-loops',
     question: 'Why are loops not allowed in KNX topology?',
     options: [
-      'They use too much power',
+      'They consume too much bus power',
+      'They are too expensive to wire',
       'They cause signal reflections and communication errors',
-      "They're too expensive",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Loops cause signal reflections and communication errors because telegrams would travel both directions and interfere with each other. Always maintain tree or star structure.',
   },

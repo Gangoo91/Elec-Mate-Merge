@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       "Under CDM 2015 Regulation 2, which of the following activities is explicitly included in the definition of 'construction work'?",
     options: [
+      'Fitting out, commissioning, renovation, repair, and maintenance of a structure',
       'Surface mineral extraction carried out at a mine',
-      'Fitting out, commissioning, renovation, repair, upkeep, redecoration, and maintenance of a structure',
       'Routine cleaning of windows using access equipment',
       'Manufacture of building products at a factory',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Regulation 2 defines 'construction work' very broadly. It explicitly includes building, civil engineering, alteration, conversion, fitting out, commissioning, renovation, repair, upkeep, redecoration, maintenance (including cleaning where it involves a structure), decommissioning, demolition, and the installation, commissioning, maintenance or removal of mechanical, electrical, gas, compressed air, hydraulic, telecommunications, computer or similar services. Surface mineral extraction at mines is specifically excluded from CDM.",
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       "What happens to a domestic client's CDM duties when they engage a contractor but do not appoint a principal designer or principal contractor?",
     options: [
       'The domestic client must carry out all CDM duties themselves',
-      'The duties automatically transfer to the contractor carrying out or managing the work',
       'The HSE takes on the duties on behalf of the client',
       'The domestic client is exempt from all CDM requirements',
+      'The duties automatically transfer to the contractor carrying out or managing the work',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Under CDM 2015 Regulation 7, domestic clients are not required to carry out client duties themselves. Where a domestic client has not appointed a principal designer (PD) or principal contractor (PC), the contractor carrying out or managing the construction work automatically assumes the client duties. If there is more than one contractor and a PD or PC has been appointed, the duties transfer to those appointees instead.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following correctly describes the notification threshold under CDM 2015?',
     options: [
+      'Longer than 30 working days with more than 20 workers at any one time, OR exceeding 500 person-days',
       'Any project lasting more than 14 days must be notified',
       'Any project with more than 5 workers must be notified',
-      'Projects lasting longer than 30 working days with more than 20 workers simultaneously at any point, OR exceeding 500 person-days of construction work',
       'Only projects valued at more than £250,000 must be notified',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'CDM 2015 Regulation 6 sets the notification threshold. A project must be notified to the HSE if the construction phase is likely to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days of construction work. Notification is made by submitting an F10 form to the HSE before the construction phase begins. There is no financial threshold — even low-value projects can trigger notification if they meet the time/worker criteria.',
   },
@@ -99,11 +99,11 @@ const quizQuestions = [
       "Which of the following is NOT included in the CDM 2015 definition of 'construction work'?",
     options: [
       'Demolition of a building',
-      'Surface mineral extraction at a mine',
       'Commissioning of a new electrical installation',
+      'Surface mineral extraction at a mine',
       'Maintenance of a bridge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Surface mineral extraction is specifically excluded from the CDM 2015 definition of construction work. Demolition, commissioning, and maintenance are all explicitly included in the Regulation 2 definition. Other exclusions include certain diving operations and offshore installations covered by separate regulations.',
   },
@@ -112,11 +112,11 @@ const quizQuestions = [
     question: "Under CDM 2015, which of the following best defines a 'structure'?",
     options: [
       'Only permanent buildings made of brick, stone, or concrete',
-      'Any building, timber/metal/concrete structure, railway, tramway, dock, harbour wall, bridge, viaduct, waterway, tunnel, shaft, pipeline, or scaffolding',
       'Only buildings that are occupied by people',
       'Any structure over 3 metres in height',
+      'Any building, railway, dock, bridge, tunnel, pipeline, fixed plant, or scaffolding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The CDM 2015 definition of 'structure' is deliberately very broad. It includes any building, timber, metal or concrete structure, railway line or siding, tramway line, dock, harbour, inland navigation, tunnel, shaft, bridge, viaduct, waterworks, reservoir, pipe or pipeline, cable, aqueduct, sewer, sewage works, gasholder, road, airfield, sea defence works, river works, drainage works, earthworks, lagoon, dam, wall, catwalk, mast, tower, pylon, underground tank, earth retaining structure, fixed plant (where its installation or removal is construction work), and scaffolding.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 3,
     question: "In CDM 2015, the term 'design' includes which of the following?",
     options: [
+      'Drawings, specifications, bills of quantities, and decisions about material selection and buildability',
       'Only architectural drawings and CAD models',
-      'Drawings, design details, specifications, bills of quantities, and decisions about material selection and buildability',
       'Only structural calculations signed off by an engineer',
       'Only documents produced by a chartered architect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CDM 2015 defines 'design' broadly to include drawings, design details, specifications, and bills of quantities relating to a structure, and calculations prepared for the purpose of a design. Crucially, it also includes decisions about material selection and buildability. Anyone who makes these decisions is acting as a designer under CDM, regardless of their job title — this can include architects, engineers, interior designers, building services consultants, and even contractors who specify materials or methods.",
   },
@@ -138,11 +138,11 @@ const quizQuestions = [
     question: "Who is the 'client' under CDM 2015?",
     options: [
       'The main contractor on site',
-      'Any person for whom a construction project is carried out',
       'Only commercial property developers',
+      'Any person for whom a construction project is carried out',
       'The Health and Safety Executive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under CDM 2015, the client is any person for whom a construction project is carried out. This includes commercial organisations, public bodies, developers, and domestic clients (homeowners). The client is the person who initiates the project, makes the key decisions, and commissions the design and construction work. On some projects, the client role may be shared by more than one organisation.',
   },
@@ -152,11 +152,11 @@ const quizQuestions = [
       'A construction project is planned to last 35 working days with a maximum of 15 workers on site at any one time. The total estimated effort is 450 person-days. Is this project notifiable to the HSE?',
     options: [
       'Yes — it exceeds 30 working days',
-      'No — it does not meet either notification threshold',
       'Yes — any project over 30 days is automatically notifiable',
       'It depends on the type of construction work',
+      'No — it does not meet either notification threshold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This project is NOT notifiable. To trigger notification, a project must exceed 30 working days AND have more than 20 workers simultaneously at any point, OR exceed 500 person-days. This project exceeds 30 days but never has more than 20 workers simultaneously (only 15), and the total effort is 450 person-days (below 500). Neither threshold is met, so no F10 notification is required.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'A homeowner (domestic client) engages two separate contractors to carry out a kitchen extension. No principal designer or principal contractor has been appointed. What happens to the client duties?',
     options: [
-      'The homeowner must carry out all CDM client duties personally',
       'The duties transfer to the contractor in charge of the construction phase of the project',
+      'The homeowner must carry out all CDM client duties personally',
       'The duties are shared equally between both contractors',
       'No CDM duties apply because it is a domestic project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under Regulation 7, where a domestic client has not appointed a principal designer or principal contractor, the CDM client duties transfer automatically to the contractor in charge of the construction phase. If no contractor is clearly in charge, the duties transfer to the contractor for each part of the project that they control. CDM 2015 always applies — the domestic client exemption does not remove duties, it transfers them.',
   },
@@ -180,11 +180,11 @@ const quizQuestions = [
       'Which of the following activities is specifically excluded from the scope of CDM 2015?',
     options: [
       'Installing a gas boiler in a domestic property',
-      'Demolishing a disused warehouse',
       'Exploration for and extraction of mineral resources by an offshore installation',
+      'Demolishing a disused warehouse',
       'Painting the exterior of a commercial building',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Offshore installations engaged in the exploration for and extraction of mineral resources are covered by separate offshore safety legislation (including the Offshore Installations and Pipeline Works (Management and Administration) Regulations 1995 and related regulations) and are therefore excluded from CDM 2015. Gas boiler installation, demolition, and painting are all construction work under CDM.',
   },
@@ -194,11 +194,11 @@ const quizQuestions = [
       "An interior designer specifies a particular type of suspended ceiling tile and a partition wall layout for a commercial office refurbishment. Under CDM 2015, is this person a 'designer'?",
     options: [
       'No — only chartered architects and structural engineers can be designers under CDM',
+      'Yes — anyone who prepares or modifies a design, including material and layout decisions, is a designer',
       'No — interior designers are specifically excluded from CDM duties',
-      'Yes — anyone who prepares or modifies a design, including material specifications and layout decisions, is a designer under CDM',
       'Only if the interior designer holds a CSCS card',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Under CDM 2015, a designer is any person (including a business) who prepares or modifies a design for a building, product, or system relating to construction work. The definition does not depend on job title or professional registration. An interior designer who specifies materials, layouts, and finishes is making design decisions that affect health and safety — for example, the choice of ceiling tile affects fire performance, and the partition layout affects means of escape. This person is a designer under CDM and must fulfil CDM designer duties.',
   },

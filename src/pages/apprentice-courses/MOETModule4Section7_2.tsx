@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'ppm-purpose',
     question: 'The primary purpose of planned preventive maintenance (PPM) is to:',
     options: [
-      'To ensure single-pole devices (switches, fuses, MCBs) are connected in the LINE conductor only (not neutral), preventing equipment remaining live when switched off',
-      'Because the speaker believes they have been heard and understood when they have not, leading to false confidence in the communication',
-      'Working above head height with restricted access means loads must be pushed up and manoeuvred in confined space, with risk of falling debris',
-      'Reduce the probability of failure by performing scheduled tasks that maintain equipment condition, detect deterioration, or replace wear-out components before they fail in service',
+      'Repair equipment as quickly as possible once it has already broken down in service',
+      'Reduce the maintenance budget by carrying out the minimum number of tasks possible',
+      'Replace all equipment on a fixed schedule regardless of how it is actually performing',
+      'Reduce the probability of failure with scheduled tasks done before failure occurs',
     ],
     correctIndex: 3,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'reactive-acceptable',
     question: 'Corrective (reactive) maintenance is an acceptable strategy when:',
     options: [
-      'The material assessment scores the condition and type of the ACM itself, while the priority assessment considers the likelihood of disturbance based on location and human activity',
-      'The consequences of the failure are low (no safety or environmental impact, minimal operational disruption) and the cost of preventive maintenance would exceed the cost of allowing the failure to occur and repairing it',
-      'Each test depends on the previous (continuity of CPC must be proven before IR can be interpreted; earthing must be proven before live tests rely on it; functional last because it confirms the whole system works)',
-      'G99 (which replaced G59 in 2019) — it requires formal application, technical assessment and DNO approval before connection, and specifies protection settings, power quality limits and anti-islanding requirements',
+      'The equipment is the most critical asset on the site and any failure would halt production',
+      'The failure consequences are low and preventing it would cost more than the repair',
+      'The equipment carries a safety function such as emergency lighting or fire detection',
+      'The failure mode follows a clear wear-out pattern that can be predicted from running hours',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'A typical target for the ratio of planned to unplanned maintenance in a well-managed electrical maintenance organisation is:',
     options: [
-      'Two-pole testers confirm voltage between points, not just presence',
-      'Snap the boxes onto the dado trunking using its integral mounting clips/plates — the trunking sets the level.',
+      '20% planned (or lower), 80% unplanned (or higher) — measured by work orders or labour hours',
+      '50% planned and 50% unplanned, split evenly across all equipment types',
       '80% planned (or higher), 20% unplanned (or lower) — measured by work orders or labour hours',
-      'Close the door immediately, remove the wedge, and report the issue',
+      '100% planned, with no unplanned breakdown work permitted at any time',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'Over-maintenance (performing preventive maintenance too frequently or on equipment that does not need it) is a problem because:',
     options: [
-      'Tell them clearly the comments are not OK, and report it to your supervisor or HR if it continues — this may be harassment under Equality Act 2010 s.26',
-      'It wastes resources that could be better spent on critical equipment, and can actually increase the failure rate by introducing infant mortality through unnecessary intervention (disturbing working equipment)',
-      'Activities that have the potential to pollute the environment, including waste operations, industrial emissions, water discharge and flood risk activities',
-      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
+      'It always extends equipment life and so can never really be considered a problem',
+      'It wastes resources and can raise failure rates by disturbing healthy equipment',
+      'It reduces the number of spare parts that need to be held in the main stores',
+      'It guarantees that no equipment will ever fail between scheduled maintenance visits',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'Planned preventive maintenance (PPM) includes which of the following task types?',
     options: [
-      'First secure a financial baseline that removes money anxiety, then progressively choose work that offers more autonomy, pursue mastery in a chosen specialism, and align work with personal purpose',
-      'Scheduled inspections, condition monitoring, lubrication, cleaning, calibration, component replacement at fixed intervals, and functional tests of protective devices',
-      'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
-      'They capture the waste heat from generation and use it for hot water and heating, raising overall efficiency to ~80%',
+      'Emergency repairs carried out only after equipment has already failed in service',
+      'Scheduled inspection, condition monitoring, servicing, calibration and component replacement',
+      'Replacing entire machines on a fixed schedule without inspecting their condition first',
+      'Stocking spare parts in the stores and simply waiting for breakdowns to occur',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'The key difference between time-based maintenance and condition-based maintenance is:',
     options: [
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
-      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
+      'Time-based tasks respond to detected deterioration, while condition-based tasks are carried out at fixed calendar intervals regardless of equipment condition',
+      'Time-based maintenance is always cheaper than condition-based maintenance because it requires no monitoring equipment or sensors of any kind',
       'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
+      'Time-based maintenance can be applied to any failure mode, whereas condition-based maintenance only works on electrical equipment and never on mechanical components',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 3,
     question: "The 'bathtub curve' describes a failure pattern where:",
     options: [
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'Applying the same maintenance strategy and frequency to all equipment regardless of criticality, function, failure modes, or operating context — the \\\\\\\\\\\\\\\'one size fits all\\\\\\\\\\\\\\\' approach',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
+      'The failure rate falls steadily throughout life, from high when new to almost zero at the end',
+      'The failure rate stays perfectly constant from installation to disposal, with no wear-out phase',
+      'Every item of equipment fails at exactly the same age regardless of how it is used',
+      'High early (infant mortality) failure, then a low constant rate, then a rising wear-out rate',
     ],
     correctAnswer: 3,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'If a maintenance team is spending 60% of its time on unplanned (reactive) work and 40% on planned work, this suggests:',
     options: [
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
-      'Explain the rationale for different maintenance strategies, carry out both planned and reactive maintenance tasks competently, provide feedback on equipment condition during PM visits, and contribute to continuous improvement of the maintenance programme',
+      'The PPM programme is not effective enough — too many preventable failures are occurring',
+      'The maintenance team is performing exceptionally well, since a healthy world-class operation should aim for around 60% reactive and 40% planned work',
+      'The split is ideal and requires no action, because an even balance between planned and reactive work always gives the lowest total maintenance cost',
+      'Too much planned maintenance is being carried out, and the team should reduce PM tasks to bring the reactive proportion higher',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'An effective way to determine whether a PPM task should be performed more or less frequently is to:',
     options: [
-      'Establish a baseline condition reading (vibration signature, insulation resistance, thermal profile) while the motor is in known good condition, then monitor at appropriate intervals to track changes from the baseline',
-      'Analyse the failure and condition monitoring history: if failures are occurring between PM intervals the frequency should be increased; if components are consistently in good condition at PM time the interval may be too short and can be extended',
-      'Explain the rationale for different maintenance strategies, carry out both planned and reactive maintenance tasks competently, provide feedback on equipment condition during PM visits, and contribute to continuous improvement of the maintenance programme',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
+      'Halve every PM interval across the site at the start of each year, since more frequent maintenance always improves reliability whatever the condition data shows',
+      'Use the failure and condition history: shorten if failures occur between visits, extend if always found in good condition',
+      'Always adopt the manufacturer recommended interval exactly and never change it, regardless of your own failure history or operating context',
+      'Set every PM interval to match the longest interval used anywhere on the site so that all tasks fall due on the same day',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'The total cost of a reactive (unplanned) breakdown typically exceeds the cost of a planned repair for the same failure because:',
     options: [
-      'Explain the rationale for different maintenance strategies, carry out both planned and reactive maintenance tasks competently, provide feedback on equipment condition during PM visits, and contribute to continuous improvement of the maintenance programme',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
+      'The spare part fitted during an emergency repair is always more expensive to manufacture than the identical part fitted during a planned repair',
+      'Reactive repairs must legally be carried out by a more highly qualified engineer than planned repairs, which raises the labour rate',
+      'Breakdowns add call-out, overtime, expedited parts, lost production and secondary damage',
+      'Reactive maintenance always requires the complete replacement of the machine, whereas planned maintenance only ever replaces a single component',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'A maintenance strategy that combines condition-based monitoring for critical failure modes, time-based replacement for wear-out failure modes, failure-finding for hidden failures, and run-to-failure for low-consequence items is an example of:',
     options: [
-      'Applying the same maintenance strategy and frequency to all equipment regardless of criticality, function, failure modes, or operating context — the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'one size fits all\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' approach',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'A balanced, RCM-informed maintenance strategy that applies the most appropriate technique to each failure mode based on its characteristics and consequences',
+      'A purely reactive strategy where every failure mode is simply allowed to run to failure',
+      'A purely time-based strategy where every component is replaced on a fixed calendar interval',
+      'A strategy that relies entirely on the manufacturer recommendations with no local analysis',
+      'A balanced, RCM-informed strategy matching the technique to each failure mode',
     ],
     correctAnswer: 3,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'Maintenance key performance indicators (KPIs) that help monitor the balance between planned and reactive work include:',
     options: [
-      'Planned maintenance compliance (percentage of scheduled PMs completed on time), reactive-to-planned work ratio, mean time between failures (MTBF), mean time to repair (MTTR), and maintenance cost as a percentage of asset replacement value',
-      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'Failures that are introduced by the maintenance activity itself — incorrect reassembly, contamination, overtightening, wrong parts, or disturbance of previously satisfactory components',
+      'PM compliance, planned-to-reactive ratio, MTBF, MTTR and cost as a percentage of RAV',
+      'The total number of maintenance staff employed, the size of the spare-parts store, and the floor area of the maintenance workshop',
+      'The age of the oldest piece of equipment on site and the year the maintenance department was first established',
+      'The number of manufacturer service bulletins received each year and the brand of CMMS software in use',
     ],
     correctAnswer: 0,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'When introducing condition-based maintenance to replace time-based PM on a motor, the first step should be:',
     options: [
-      'A balanced, RCM-informed maintenance strategy that applies the most appropriate technique to each failure mode based on its characteristics and consequences',
-      'Establish a baseline condition reading (vibration signature, insulation resistance, thermal profile) while the motor is in known good condition, then monitor at appropriate intervals to track changes from the baseline',
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
-      'Applying the same maintenance strategy and frequency to all equipment regardless of criticality, function, failure modes, or operating context — the \\\\\\\\\\\\\\\'one size fits all\\\\\\\\\\\\\\\' approach',
+      'Apply a generic RCM strategy to the motor without taking any readings first',
+      'Take a baseline reading in known good condition, then monitor for changes from it',
+      'Immediately stop all time-based tasks and rely on the motor running to failure',
+      'Replace the motor straight away so that monitoring begins on a brand new unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 10,
     question: 'A common mistake when developing a PPM programme is:',
     options: [
-      "There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out",
-      "The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes",
-      "Applying the same maintenance strategy and frequency to all equipment regardless of criticality, function, failure modes, or operating context — the 'one size fits all' approach",
-      "Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring",
+      "Basing the programme on the equipment's documented failure modes and criticality rather than on tradition or guesswork",
+      "Reviewing and adjusting PM intervals each year using condition data and feedback from the technicians who carry out the tasks",
+      "Applying the same strategy and frequency to every asset — a 'one size fits all' approach",
+      "Concentrating the most intensive preventive tasks on the most critical production equipment first",
     ],
     correctAnswer: 2,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 11,
     question: "The concept of 'maintenance-induced failures' refers to:",
     options: [
-      'There is a period of high early failure (infant mortality), then a period of low constant failure rate, then an increasing failure rate as the component wears out',
-      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'Failures that are introduced by the maintenance activity itself — incorrect reassembly, contamination, overtightening, wrong parts, or disturbance of previously satisfactory components',
+      'Failures that occur only because a planned maintenance task was skipped or carried out late rather than on schedule',
+      'Failures that the maintenance department predicts in advance using condition monitoring before they actually happen',
+      'Failures caused entirely by the operator misusing the equipment, with no involvement from the maintenance team',
+      'Failures introduced by the maintenance work itself — bad reassembly, contamination or wrong parts',
     ],
     correctAnswer: 3,
     explanation:
@@ -221,10 +221,10 @@ const quizQuestions = [
     id: 12,
     question: 'In the context of ST1426, a maintenance technician should be able to:',
     options: [
-      'Explain the rationale for different maintenance strategies, carry out both planned and reactive maintenance tasks competently, provide feedback on equipment condition during PM visits, and contribute to continuous improvement of the maintenance programme',
-      'Analyse the failure and condition monitoring history: if failures are occurring between PM intervals the frequency should be increased; if components are consistently in good condition at PM time the interval may be too short and can be extended',
-      'Time-based tasks are performed at fixed calendar or usage intervals regardless of condition, while condition-based tasks are triggered by evidence of deterioration detected through monitoring',
-      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
+      'Explain the strategies, perform planned and reactive tasks, and feed back PM findings',
+      'Follow the written PM instructions exactly without needing to understand why each task is carried out or what failure mode it manages',
+      'Set the strategic maintenance budget for the whole site and approve all capital expenditure on new plant',
+      'Carry out only reactive breakdown repairs and leave all planned preventive maintenance to a separate specialist contractor',
     ],
     correctAnswer: 0,
     explanation:

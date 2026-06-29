@@ -44,12 +44,12 @@ const FunctionalSkillsModule1Section2 = () => {
       question:
         'A rectangular distribution board cupboard measures 1.2 m wide and 0.6 m deep. What is its floor area?',
       options: [
-        '3.60 m²',
+        '0.72 m²',
         '1.80 m²',
         '0.18 m²',
-        '0.72 m²',
+        '3.60 m²',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
         'Area = length × width = 1.2 × 0.6 = 0.72 m². This is important when calculating required floor space for switchgear and ensuring adequate working clearance under BS 7671.',
     },
@@ -119,9 +119,9 @@ const FunctionalSkillsModule1Section2 = () => {
         '229.7 V to 233.1 V',
         '230.2 V to 232.6 V',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
-        '0.5% of 231.4 = 1.157 V ≈ 1.2 V (to 1 d.p.). True voltage range = 231.4 − 1.2 to 231.4 + 1.2 = 230.2 V to 232.6 V. Rounding to the same precision as the options, 230.0 V to 232.8 V accounts for the full tolerance band.',
+        '0.5% of 231.4 V = 1.157 V ≈ 1.2 V (to 1 d.p.). True voltage range = 231.4 − 1.2 to 231.4 + 1.2 = 230.2 V to 232.6 V.',
     },
   ];
 

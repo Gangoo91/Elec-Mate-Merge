@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'During star-delta starting, the voltage applied to each motor winding during the star connection phase is:',
     options: [
-      'All-Dielectric Self-Supporting aerial cable',
+      'The full line voltage (approximately 400 V)',
       'Line voltage divided by √3 (approximately 230 V)',
-      'Ensure tools are PAT tested and use RCD protection',
-      'Reducing heating/cooling setpoints during unoccupied periods',
+      'Line voltage multiplied by √3 (approximately 690 V)',
+      'Half the line voltage (approximately 200 V)',
     ],
     correctIndex: 1,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'soft-starter-principle',
     question: 'A soft starter reduces motor starting current by:',
     options: [
-      'LED forward voltage varies with temperature, making current control essential for consistent output',
-      'Customer premises equipment converting optical to electrical signals in PON',
+      'Connecting the windings in star during starting, then switching to delta',
+      'Inserting external resistance into the rotor circuit via slip rings',
       'Controlling the voltage applied to the motor using thyristors (phase-angle control)',
-      'To confirm work is complete, the area is safe, and controls can be removed',
+      'Reducing the supply frequency to limit the inrush current',
     ],
     correctIndex: 2,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'The primary advantage of using a variable speed drive (VSD) for motor starting, compared with a star-delta starter, is:',
     options: [
-      'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
+      'It requires no overload protection because the drive limits the current electronically',
       'Controlled starting current with full torque available from zero speed, and continuous speed control during running',
-      'A battery or generator backup that powers the hydraulic system when the main engine fails',
-      'The total carbon emissions from material extraction through to demolition and disposal',
+      'It eliminates the need for a six-terminal motor and a changeover timer',
+      'It produces a lower starting current but only one-third of the starting torque',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Direct-on-line (DOL) starting is suitable for motors up to approximately:',
     options: [
-      'Electricity at Work Regulations 1989',
+      '0.5 kW (depending on supply capacity)',
       '7.5 kW (depending on supply capacity)',
-      'Potential earth faults or deterioration',
-      'Centralised monitoring and supervision',
+      '75 kW (depending on supply capacity)',
+      '500 kW (depending on supply capacity)',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'A star-delta starter requires the motor to have:',
     options: [
-      'A current transient (spike) occurs at the star-to-delta changeover point',
-      'A contactor, an overload relay, and a control circuit (start/stop)',
+      'Only three terminals (U, V, W) brought out to the terminal box',
+      'A wound rotor with slip rings to add external resistance',
       'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
-      'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
+      'Windings internally connected in delta at the factory',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'The main disadvantage of star-delta starting is:',
     options: [
       'A current transient (spike) occurs at the star-to-delta changeover point',
-      'Smooth, stepless voltage ramp with no changeover transient',
-      'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
-      'Applying a reduced voltage from a tapped auto-transformer during starting',
+      'It draws a higher starting current than direct-on-line starting',
+      'It cannot be used on three-phase induction motors',
+      'It provides no overload protection for the motor windings',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'An auto-transformer starter reduces starting current by:',
     options: [
-      'A contactor, an overload relay, and a control circuit (start/stop)',
+      'Connecting the windings in star, then switching to delta for running',
       'Applying a reduced voltage from a tapped auto-transformer during starting',
-      'Smooth, stepless voltage ramp with no changeover transient',
-      'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
+      'Inserting external resistance into the rotor circuit during acceleration',
+      'Reducing the supply frequency applied to the motor during starting',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'A soft starter provides which advantage over a star-delta starter?',
     options: [
-      'A contactor, an overload relay, and a control circuit (start/stop)',
-      'Applying a reduced voltage from a tapped auto-transformer during starting',
+      'Continuous variable speed control of the motor during running',
+      'Full rated starting torque from a reduced starting current',
       'Smooth, stepless voltage ramp with no changeover transient',
-      'A current transient (spike) occurs at the star-to-delta changeover point',
+      'Lower running losses because no bypass contactor is needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     question: 'Rotor resistance starting is used with:',
     options: [
       'Wound-rotor (slip-ring) induction motors',
-      'Fire-resistant, LSZH, or MICC cable where required',
-      'Safe identification and isolation',
-      'To test on both halves of the AC waveform',
+      'Squirrel-cage induction motors with six terminals',
+      'Single-phase capacitor-start motors',
+      'Synchronous motors with a brushless exciter',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'Which motor starting method provides the lowest starting current drawn from the supply?',
     options: [
-      '1.25mm for LC, 2.5mm for SC/ST',
+      'Direct-on-line (DOL)',
       'Variable speed drive (VSD)',
-      'When circumstances change',
-      'Earth continuity connection',
+      'Star-delta starter',
+      'Auto-transformer starter',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'When selecting a motor starting method, which of the following is the MOST important consideration?',
     options: [
-      'Applying a reduced voltage from a tapped auto-transformer during starting',
-      'An overload protective device (for sustained overcurrent) and a short-circuit protective device (for fault current)',
+      'The colour of the motor terminal box and the cable gland size',
+      'The number of times the motor will be started each day only',
       'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
-      'A contactor, an overload relay, and a control circuit (start/stop)',
+      'The ambient temperature of the control panel during running only',
     ],
     correctAnswer: 2,
     explanation:
@@ -205,9 +205,9 @@ const quizQuestions = [
     id: 11,
     question: 'A DOL starter typically consists of:',
     options: [
-      'Applying a reduced voltage from a tapped auto-transformer during starting',
-      'A current transient (spike) occurs at the star-to-delta changeover point',
-      'Smooth, stepless voltage ramp with no changeover transient',
+      'Three contactors (main, star, delta) and a changeover timer',
+      'A tapped auto-transformer and a bypass contactor',
+      'Back-to-back thyristors in each phase and a heat sink',
       'A contactor, an overload relay, and a control circuit (start/stop)',
     ],
     correctAnswer: 3,
@@ -219,9 +219,9 @@ const quizQuestions = [
     question: 'BS 7671 requires that motor circuits are protected by:',
     options: [
       'An overload protective device (for sustained overcurrent) and a short-circuit protective device (for fault current)',
-      'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
-      'To separate oil and other hydrocarbons from surface water runoff before it enters the drainage system or watercourse',
-      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
+      'A single MCB sized to the motor full-load current for both overload and fault protection',
+      'A 30 mA RCD as the only protective device required for the motor circuit',
+      'An isolating transformer to separate the motor from the supply',
     ],
     correctAnswer: 0,
     explanation:

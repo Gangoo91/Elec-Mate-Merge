@@ -73,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of brushless DC (BLDC) motors over conventional DC motors?',
     options: [
-      'Public spaces and industrial environments',
-      'Employers (free of charge to employees)',
+      'Higher starting torque than a series motor',
+      'No need for any electronic control circuitry',
       'No brush wear and lower maintenance',
-      'Asbestos-containing materials',
+      'Ability to run on an AC supply without a converter',
     ],
     correctIndex: 2,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why must a DC series motor never be operated without a mechanical load?',
     options: [
-      'Loose or intermittent connections',
-      'Energy = (Slope × Degree days) + Base load',
       'It may overspeed and be damaged (runaway)',
-      'Higher IP rating for dust protection',
+      'The field winding will overheat and burn out',
+      'The brushes will fail to make contact',
+      'It will fail to develop any starting torque',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Series motors can run away to dangerous speeds at no load because speed is inversely proportional to field flux, which decreases as current drops. Belt-driven loads must never be used as belt slip can cause runaway.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'What type of DC generator excitation uses a portion of the output to energise the field?',
     options: [
-      'Measure downstream of suitable protection',
+      'Separately excited (external DC supply)',
       'Self-excited (shunt/series/compound)',
-      'To prevent cable insulation damage',
-      'Infinite or very high resistance',
+      'Permanent-magnet excited (no field winding)',
+      'Battery-excited with a dedicated cell bank',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'During regenerative braking of a DC motor, the machine operates as a:',
     options: [
-      'EIC for new work, EICR for existing installations',
-      'To share safety information and site updates',
+      'Transformer stepping the voltage down',
+      'Motor drawing increased current from the supply',
+      'Rectifier converting AC to DC',
       'Generator returning power to the supply',
-      'Balance loads across all three phases',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "During regenerative braking, the motor's inertia keeps it spinning faster than the equivalent supply-driven speed, so it generates EMF greater than the supply voltage and feeds current back to the supply as a generator.",
   },
@@ -169,9 +169,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which DC motor type is most commonly used in modern lift/elevator applications?',
     options: [
-      '6 metres (or as specified by the DNO)',
-      'Marks lost for BS 7671 space factor breach',
-      'Produce, implement, and communicate a mental health at work plan',
+      'DC series-wound traction motor',
+      'Single-phase capacitor-start induction motor',
+      'Wound-rotor slip-ring induction motor',
       'Gearless permanent magnet synchronous motor (PMSM)',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'What is the back-EMF in a DC motor?',
     options: [
       'The voltage induced in the armature opposing the supply voltage',
-      'To seek clarity on ITT requirements without gaining unfair advantage',
-      'Breaking a large network into smaller, manageable sections',
-      'A unit of solid angle in three-dimensional space',
+      'The voltage drop across the brushes and commutator',
+      'The reverse voltage produced when the supply is switched off',
+      'The voltage induced in the field winding by the armature',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'In a BLDC motor, what provides the commutation function that brushes perform in conventional DC motors?',
     options: [
-      'Stop, report it, get checked at A&E, log it under RIDDOR if it qualifies',
+      'A mechanical slip-ring assembly on the rotor shaft',
       'Electronic switching via Hall sensors or sensorless control',
-      'Additional optical power needed to overcome system impairments',
-      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\'t been damaged',
+      'A centrifugal switch that changes windings with speed',
+      'A rotating commutator with low-friction graphite brushes',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'A compound DC motor combines which characteristics?',
     options: [
-      'A document describing the content, boundaries, and deliverables of each WBS element',
-      'Opposition of a capacitor to AC, decreasing with frequency',
+      'Zero starting torque but very precise speed control',
+      'Low starting torque combined with poor speed regulation',
       'High starting torque of series and good speed regulation of shunt',
-      'Discharge capacitors and release mechanical energy safely',
+      'Constant torque at all speeds with no speed variation',
     ],
     correctAnswer: 2,
     explanation:

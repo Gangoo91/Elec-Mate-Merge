@@ -47,10 +47,10 @@ const inlineChecks = [
     question:
       'Reg 411.5.3 (TT with RCD): what is the second condition, alongside the disconnection time?',
     options: [
-      'Ze ≤ 1 Ω',
-      'IΔn × Zs ≤ 50 V — limiting touch voltage to band I',
-      'Ze × Ia ≤ 100 V',
-      'Ra × IΔn ≤ 50 V — keeping the earth-electrode contribution below the 50 V touch threshold',
+      'Ze ≤ 1 Ω — capping the external loop impedance at the cut-out',
+      'IΔn × Zs ≤ 50 V — limiting touch voltage via the total loop impedance',
+      'Ze × Ia ≤ 100 V — bounding the source-side fault energy',
+      'Ra × IΔn ≤ 50 V — limiting the earth-electrode touch voltage',
     ],
     correctIndex: 3,
     explanation:
@@ -61,24 +61,24 @@ const inlineChecks = [
     question:
       'You measure Zs at 20 °C as 1.10 Ω on a Type B 32 A circuit. Appendix 3 / OSG App I gives Zs(max) = 1.37 Ω. Is the circuit compliant?',
     options: [
-      'Yes — measured 1.10 < tabulated 1.37 — ADS demonstrated',
-      'Yes — but only just; expect a fail on retest under heat',
-      'Apply the 80% rule: Zs(max) operating ≈ 1.37 × 0.80 = 1.10 Ω. Measured 1.10 hits the corrected limit — borderline pass, no margin for measurement uncertainty',
-      'Fail — 1.10 exceeds the corrected operating Zs',
+      'Yes — measured 1.10 < tabulated 1.37, so ADS is demonstrated outright',
+      'Yes — comfortably, with plenty of margin against the limit',
+      'Borderline pass — the 80% rule gives a 1.10 Ω ceiling, which the measurement exactly hits',
+      'Fail — measured 1.10 exceeds the corrected operating ceiling',
     ],
     correctIndex: 2,
     explanation:
-      'Conductor resistance rises with temperature (~0.4% per °C for copper). Cables operate up to 70 °C (PVC) or 90 °C (XLPE), but you measure at ambient (~20 °C). The "80% rule" — measured Zs ≤ 0.80 × Appendix 3 Zs(max) — bakes in the temperature correction so the cold-measured value still gives ADS at full operating temperature. 1.10 Ω hitting 1.10 Ω corrected is technically a pass but leaves no headroom for measurement instrument tolerance (typically ±5%).',
+      'Apply the 80% rule: the corrected ceiling is 1.37 × 0.80 = 1.10 Ω, and the measured 1.10 Ω hits it exactly — a technical pass with no headroom for instrument tolerance (typically ±5%). Conductor resistance rises ~0.4% per °C for copper; cables operate up to 70 °C (PVC) or 90 °C (XLPE) but you measure at ambient (~20 °C). The 80% rule (measured Zs ≤ 0.80 × Appendix 3 Zs(max)) bakes in that temperature correction so the cold-measured value still gives ADS at full operating temperature.',
   },
   {
     id: 'm4s3-test-sequence',
     question:
       'You arrive at a new install ready to test. Reg 643.x dictates the order. Which test must be COMPLETED before you can do the Zs measurement?',
     options: [
-      'Insulation resistance only',
-      'Polarity only',
-      'Continuity of protective conductors (Reg 643.2) — without it, a Zs reading is meaningless',
-      'RCD operation timing',
+      'Insulation resistance (Reg 643.3) — proving the circuit is fault-free first',
+      'Polarity (Reg 643.6) — confirming line and neutral are not swapped',
+      'Continuity of protective conductors (Reg 643.2) — proving the CPC is intact',
+      'RCD operation timing (Reg 643.8) — proving the device clears in time',
     ],
     correctIndex: 2,
     explanation:
@@ -89,10 +89,10 @@ const inlineChecks = [
     question:
       'A TN distribution circuit feeds a sub-board 30 m away. What is the maximum disconnection time, and what is the design implication?',
     options: [
-      '0.4 s — same as final circuits',
-      '5 s per Reg 411.3.2 NOTE — meaning Zs(max) is much higher (the OPD has more time to operate, so a higher Zs is acceptable)',
-      '1 s per Reg 411.3.2.4',
-      '10 s — distribution circuits have no specific time limit',
+      '0.4 s — the same tight limit as TN final circuits',
+      '5 s per Reg 411.3.2 NOTE — so a much higher Zs(max) is acceptable',
+      '1 s per Reg 411.3.2.4 — as for TT distribution circuits',
+      '10 s — distribution circuits carry no specific time limit',
     ],
     correctIndex: 1,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'Reg 411.4.4 (TN with OPD): Zs × Ia ≤ U₀ × Cmin. What is Cmin, and what value does BS 7671 use?',
     options: [
-      "Cmin is the cable's circumference",
-      'Cmin is the voltage factor for ADS verification — typically 0.95 for general use, accounting for the lower end of supply-voltage tolerance',
-      'Cmin is the cable area in mm²',
-      'Cmin is the conductor temperature coefficient',
+      'The minimum demand factor applied to the design current Ib, scaling the load',
+      'The voltage factor for ADS verification, valued at 0.95 in BS 7671',
+      'The rated breaking-capacity multiplier applied to the protective device',
+      'The temperature-correction factor applied to the cold-measured Zs reading',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,54 +134,54 @@ const quizQuestions = [
     question:
       "Why does BS 7671 mandate the test sequence 'continuity → insulation resistance → polarity → Zs'?",
     options: [
-      'For administrative convenience',
-      'Because each test must succeed for the next to be meaningful — a broken CPC makes Zs meaningless, a poor IR could discharge during Zs, and a polarity error invalidates Zs',
-      'Because it matches alphabetical order of test names',
-      'Because instruments require it',
+      'Because each test must succeed for the next to be meaningful',
+      'Because every dead test must precede every live test, regardless of dependency',
+      'Because Zs is the slowest test and is best deferred to the end of the visit',
+      'Because the schedule of test results lists its columns in that fixed printed order',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The sequence is logical not bureaucratic. Reg 643.2 onwards: continuity confirms the test path exists. IR confirms there is no fault that would mask the loop reading or discharge the test instrument. Polarity confirms line and neutral are not swapped (a Zs reading on swapped polarity returns a wildly wrong value). ONLY THEN do you measure Zs and the result has any defensible meaning.',
+      'The sequence is logical, not bureaucratic. Reg 643.2 onwards: continuity confirms the test path exists. IR confirms there is no fault that would mask the loop reading or discharge the test instrument. Polarity confirms line and neutral are not swapped (a Zs reading on swapped polarity returns a wildly wrong value). Only then does Zs have any defensible meaning. It is not about a blanket dead-before-live rule, test duration, or matching the certificate layout.',
   },
   {
     id: 4,
     question:
       'A TT installation uses a 100 mA Type S RCD as the main disconnecting device on the consumer unit. The earth electrode resistance Ra is measured at 200 Ω. Does Reg 411.5.3 (Ra × IΔn ≤ 50 V) hold?',
     options: [
-      'Yes — 200 × 0.1 = 20 V, well below 50 V',
-      'No — 200 × 0.1 = 20 V, must be ≤ 50 V (it does hold, but check disconnection time too)',
-      'Cannot be determined without the disconnection time',
-      'Yes — and disconnection time is irrelevant once Reg 411.5.3 is satisfied',
+      'No — the product equals 50 V exactly, which is the ceiling rather than below it',
+      'Cannot be determined until Ze is measured at the cut-out and added to Ra',
+      'Yes — the touch-voltage product is 20 V, below the 50 V ceiling',
+      'No — Ra of 200 Ω exceeds the limit acceptable for any TT earth electrode',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      "Reg 411.5.3: Ra × IΔn ≤ 50 V. With Ra = 200 Ω and IΔn = 100 mA = 0.1 A, the product is 20 V — well below 50 V ✓. Don't forget the second limb of 411.5.3 — disconnection time per Reg 411.3.2.2 or 411.3.2.4 must also be met. Type S delays operation by up to 500 ms — if used as the SOLE protective device on a final circuit, it can fail the 0.4 s requirement. Type S is normally an upstream device with Type AC / A downstream for selectivity.",
+      "Reg 411.5.3: Ra × IΔn ≤ 50 V. With Ra = 200 Ω and IΔn = 100 mA = 0.1 A, the product is 20 V — well below 50 V. Don't forget the second limb of 411.5.3 — disconnection time per Reg 411.3.2.2 or 411.3.2.4 must also be met. A 200 Ω electrode is perfectly acceptable on TT; the regulation limits the touch-voltage product, not the absolute electrode resistance.",
   },
   {
     id: 5,
     question:
-      'Which sequence of steps gives the most accurate Zs reading for a final circuit furthest from the consumer unit?',
+      'On a circuit in service that already feeds sensitive load, which method gives the most defensible Zs at the furthest point?',
     options: [
-      'Use a wander lead from the CU and measure at the far point — this measures Ze + R1+R2 in one operation',
-      'Measure Ze at origin, measure R1+R2 by short-circuit method at the CU, then sum — Zs = Ze + (R1+R2)',
-      'Measure Zs in situ at the far point with a loop tester (live, two-wire or three-wire) — gives the actual operating Zs at that location',
-      'Both (b) and (c) are valid — (b) for design verification before energising, (c) for in-service measurement after',
+      'A direct live loop test at the far point with a multifunction tester',
+      'The dead-test Ze + R1+R2 sum, since a live in-service loop reading is never valid',
+      'Estimating Zs from cable length and CSA using the OSG resistance tables alone',
+      'Measuring only Ze at the origin and adding a fixed 0.5 Ω circuit allowance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      'Both methods are recognised. (b) Ze + R1+R2 is the dead-test approach — done before energising, used during initial verification. (c) Direct Zs by loop tester is the live-test approach — used in service, on EICR, and to corroborate the dead-test calculation. Both should agree; if they differ significantly, investigate (typical cause: parallel earth paths through bonded extraneous metalwork). The wander-lead method (a) is sometimes used but more error-prone over long runs.',
+      'A direct live loop test at the point of interest is the in-service method — it measures the real operating Zs at that location, which is what an EICR records. The dead-test Ze + R1+R2 sum is valid too (used before energising) and should corroborate the live reading; if the two disagree significantly, investigate parallel earth paths through bonded extraneous metalwork. Length-based estimates and fixed allowances are not defensible substitutes for measurement.',
   },
   {
     id: 6,
     question:
       'Reg 411.4.201 tabulates Zs(max) for fuses at 0.4 s; Reg 411.4.203 covers fuses at 5 s. Why are the 5 s values higher?',
     options: [
-      'Higher voltage allowed',
-      "Longer time means the fuse has more energy to absorb before clearing — a smaller current can clear in 5 s than in 0.4 s, so a higher Zs is acceptable on the OPD's inverse-time curve",
-      'Cables run cooler',
-      'A different formula applies',
+      'A higher nominal voltage is permitted for the 5 s case, raising the Zs(max) ceiling',
+      'The fuse element runs cooler over 5 s, so resistance and clearing current both fall',
+      'On the inverse-time curve a smaller current clears in 5 s, so a higher Zs is acceptable',
+      'A different ADS formula, using Cmax in place of Cmin, applies to the 5 s case',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Time-current curves for fuses are inverse — the longer the time, the lower the current at which the device operates. At 0.4 s a Type gG fuse needs a high prospective current to clear in time, dictating a low Zs. At 5 s, a much lower prospective current still clears in time, so a much higher Zs is acceptable. The same applies to MCBs (Reg 411.4.202 / 411.4.204): the 5 s Zs(max) values are typically 5-10× the 0.4 s values for the same device rating.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'A Type C 32 A MCB protects a TN final circuit feeding fixed equipment. Measured Zs (cold) = 0.80 Ω. Appendix 3 Zs(max) for Type C 32 A at 0.4 s is approximately 0.43 Ω. What does compliance look like?',
     options: [
-      'Pass — Zs is within an Ω of the limit',
-      'Fail — 0.80 Ω exceeds the 0.4 s Zs(max) of 0.43 Ω; ADS within 0.4 s cannot be demonstrated. Either redesign the circuit (shorten/upsize) or change the protection strategy (add 30 mA RCD to use the RCD route)',
-      'Pass — apply the 80% rule and 0.43 / 0.80 = OK',
-      'Pass — Type C tolerates 0.80 Ω',
+      'Pass — 0.80 Ω is within an ohm of the limit, which is close enough for fixed equipment',
+      'Pass — the 80% rule gives 0.43 ÷ 0.80, which falls inside the acceptable band',
+      'Pass — a Type C device has a wide magnetic band that tolerates 0.80 Ω at this rating',
+      'Fail — 0.80 Ω is nearly double the 0.43 Ω ceiling, so ADS is not demonstrated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Measured 0.80 Ω vs Zs(max) of 0.43 Ω is a fail by nearly 2×. The fault current at 0.80 Ω would be ~290 A — below the Type C 32 A magnetic threshold (5-10× In = 160-320 A), so ADS within 0.4 s isn't reliably achieved. Two practical fixes: (1) redesign the circuit (shorter run, larger CPC) to lower Zs, or (2) add a 30 mA RCD or RCBO so ADS is achieved by the RCD operating-time route, which is independent of Zs.",
   },
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'On a periodic inspection (EICR), measured Zs is 25% above the Appendix 3 maximum but everything else tests fine. What observation code is appropriate?',
     options: [
-      'No code — minor variations are acceptable',
-      'C3 — improvement recommended',
-      'C2 — potentially dangerous; ADS within the required time cannot be demonstrated, which is fault-protection failure',
-      'C1 — danger present, immediate action required',
+      'No code — a minor variation within acceptable tolerance',
+      'C3 — improvement recommended, no current-edition non-compliance',
+      'C2 — potentially dangerous; ADS within the required time cannot be demonstrated',
+      'C1 — danger present, immediate remedial action required',
     ],
     correctAnswer: 2,
     explanation:

@@ -19,11 +19,11 @@ const Module6Section4_1 = () => {
       id: 1,
       question: 'What does CPC stand for?',
       options: [
-        'Circuit Phase Conductor',
         'Circuit Protective Conductor',
+        'Circuit Phase Conductor',
         'Central Protective Cable',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation: 'CPC stands for Circuit Protective Conductor.',
     },
     {
@@ -32,82 +32,82 @@ const Module6Section4_1 = () => {
       options: [
         'It ensures lighting circuits operate correctly',
         'It provides a path for fault current to earth',
-        'It reduces energy consumption',
+        'It reduces the installation\'s energy consumption',
       ],
       correctAnswer: 1,
       explanation:
-        'CPC continuity provides a path for fault current to earth, enabling protective device operation.',
+        'CPC continuity provides a low-resistance path for fault current to earth, enabling the protective device to operate.',
     },
     {
       id: 3,
       question: 'Which test confirms both line and CPC continuity?',
-      options: ['r1 test', 'R1+R2 test', 'End-to-end test only'],
-      correctAnswer: 1,
-      explanation: 'The R1+R2 test confirms both line and CPC continuity simultaneously.',
+      options: ['An R2-only end-to-end test', 'An insulation resistance test', 'The R1+R2 test'],
+      correctAnswer: 2,
+      explanation: 'The R1+R2 test confirms both line conductor and CPC continuity in a single measurement.',
     },
     {
       id: 4,
       question: 'What instrument is commonly used for CPC continuity testing?',
-      options: ['Clamp meter', 'Multifunction tester', 'Thermal camera'],
-      correctAnswer: 1,
+      options: ['A multifunction tester (low-resistance ohmmeter)', 'A clamp meter', 'A thermal camera'],
+      correctAnswer: 0,
       explanation:
-        'A multifunction tester with low-resistance ohmmeter function is used for CPC testing.',
+        'A multifunction tester using its low-resistance ohmmeter function is used for CPC continuity testing.',
     },
     {
       id: 5,
       question: 'What should you do before testing?',
-      options: ['Connect the supply', 'Prove dead and isolate circuit', 'Record initial readings'],
-      correctAnswer: 1,
+      options: ['Connect the supply to the circuit', 'Record the initial readings', 'Isolate the circuit and prove dead'],
+      correctAnswer: 2,
       explanation:
-        'Always prove dead and isolate the circuit before conducting CPC continuity tests.',
+        'Always isolate the circuit and prove dead before carrying out CPC continuity tests.',
     },
     {
       id: 6,
       question: 'What does a high resistance value on the CPC indicate?',
-      options: ['Good continuity', 'Loose or broken connection', 'Oversized conductor'],
+      options: ['Good continuity', 'A loose or broken connection', 'An oversized conductor'],
       correctAnswer: 1,
       explanation:
-        'High resistance indicates loose connections, breaks, or other faults in the CPC.',
+        'An unexpectedly high resistance indicates a loose connection, a break, or another fault in the CPC.',
     },
     {
       id: 7,
       question: 'What document requires CPC continuity testing?',
-      options: ['EAWR 1989', 'BS 7671 Wiring Regulations', 'Health and Safety at Work Act'],
+      options: ['The Health and Safety at Work Act', 'BS 7671 (the Wiring Regulations)', 'The Building Act 1984'],
       correctAnswer: 1,
       explanation:
-        'BS 7671 Wiring Regulations require CPC continuity testing as part of verification procedures.',
+        'BS 7671 requires CPC continuity testing as part of the verification procedures.',
     },
     {
       id: 8,
       question: 'In an R1+R2 test, what is linked together at the distribution board?',
-      options: ['CPC and neutral', 'Line and CPC', 'Neutral and line'],
-      correctAnswer: 1,
+      options: ['The CPC and neutral', 'The neutral and line', 'The line conductor and CPC'],
+      correctAnswer: 2,
       explanation:
-        'In an R1+R2 test, the line conductor and CPC are linked together at the distribution board.',
+        'In an R1+R2 test the line conductor and the CPC are linked together at the distribution board.',
     },
     {
       id: 9,
-      question: 'Why should test instruments be zeroed before testing?',
+      question: 'Why should test instruments be zeroed (nulled) before testing?',
       options: [
-        'To confirm earth fault loop impedance',
-        'To remove lead resistance from results',
-        'To protect the tester',
+        'To remove the test lead resistance from the result',
+        'To confirm the earth fault loop impedance',
+        'To protect the tester from damage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
-        'Zeroing removes the resistance of test leads from the final results, ensuring accuracy.',
+        'Nulling removes the resistance of the test leads, so the reading reflects only the circuit under test.',
     },
     {
       id: 10,
       question: 'What is the main danger of a CPC not being continuous?',
       options: [
         'Circuit overload',
-        'Risk of electric shock from exposed metalwork',
         'Poor lighting levels',
+        'Exposed metalwork could become live during a fault',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
-        'A discontinuous CPC can result in exposed metalwork becoming live during fault conditions, creating a serious shock risk.',
+        'A discontinuous CPC can leave exposed metalwork live during a fault, creating a serious risk of electric shock.',
     },
   ];
 

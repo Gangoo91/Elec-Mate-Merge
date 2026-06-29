@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     id: 'fitness-3-point-contact',
     question: "What does the '3-point contact' rule mean when climbing a mobile tower?",
     options: [
-      'Contact three people before climbing',
-      'Always maintain three points of contact with the ladder — two hands and one foot, or two feet and one hand',
-      'Climb three rungs at a time for speed',
-      'Touch three different tower components during the climb',
+      'Keep three points of contact with the ladder at all times while climbing',
+      'Have at least three people present before beginning the climb',
+      'Climb at least three rungs at a time to reach the platform faster',
+      'Touch three different tower components in sequence as you ascend',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The 3-point contact rule requires that you always maintain contact with the ladder at three points simultaneously: either two hands and one foot, or two feet and one hand. This ensures stability and prevents falls during climbing. It also means you must never carry tools or materials while climbing — use a hoisting line instead.',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
     question: 'At what wind speed should work on a mobile tower cease?',
     options: [
       'Beaufort Force 2 (light breeze, 7 mph)',
+      'Work should continue regardless of wind speed',
       'Beaufort Force 4 (moderate breeze, 17 mph)',
       'Beaufort Force 8 (gale, 40 mph)',
-      'Work should continue regardless of wind speed',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Work on a mobile tower should cease at Beaufort Force 4 — a moderate breeze of approximately 17 mph (28 km/h). At this level, loose paper is blown about, small branches move, and dust is raised. At Beaufort Force 6 (28 mph / 45 km/h), the tower should be dismantled or tied to a permanent structure. Wind loads increase with the square of the wind speed, meaning even modest increases in wind create significantly greater forces on the tower.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       'Who is primarily responsible for assessing whether an operative is physically fit to work at height?',
     options: [
-      'The tower manufacturer',
-      'The Health and Safety Executive',
-      'Both the employer (through fitness assessment) and the individual (through honest self-assessment)',
-      'No one — fitness is not relevant to tower work',
+      'The tower manufacturer, through its product instructions',
+      'The Health and Safety Executive, through site inspections',
+      'Both the employer and the individual operative, together',
+      'The site first-aider, before each shift begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       "Which of the following medical conditions may affect a person's ability to work safely at height?",
     options: [
-      'A common cold with no other symptoms',
-      'Vertigo, epilepsy, heart conditions, balance disorders, and medication causing drowsiness',
-      'A minor skin rash on the arm',
-      'Previous dental surgery',
+      'Vertigo, epilepsy, heart conditions, and drowsiness-causing medication',
+      'A common head cold that has now fully cleared up',
+      'A minor, healed skin rash on the forearm',
+      'A routine dental filling completed last year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Conditions that affect balance (vertigo, inner ear disorders), consciousness (epilepsy, fainting disorders), cardiovascular function (heart conditions, blood pressure problems), or mental alertness (medication side effects causing drowsiness or dizziness) can all impair the ability to work safely at height. These conditions do not necessarily prevent tower work, but they require medical assessment and guidance.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'When climbing the internal ladder of a mobile tower, what must you NEVER do?',
     options: [
-      'Face the ladder rungs',
-      'Carry tools or materials in your hands, as this breaks the 3-point contact rule',
-      'Use both hands on the ladder',
-      'Climb one rung at a time',
+      'Face the ladder rungs squarely as you climb',
+      'Keep both hands free to grip the rungs',
+      'Climb deliberately, one rung at a time',
+      'Carry tools or materials up in your hands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'You must never carry tools or materials in your hands while climbing. This breaks the 3-point contact rule, as you can only maintain two points of contact with one hand occupied. All tools and materials must be raised and lowered using a hoisting line, tool bag, or gin wheel. Face the ladder, climb one rung at a time, and maintain three points of contact at all times.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'At Beaufort Force 6 (approximately 28 mph), what action should be taken regarding a mobile tower?',
     options: [
-      'Continue working but wear a high-visibility jacket',
-      'The tower should be dismantled or tied to a permanent structure to prevent overturning',
-      'Move the tower to a sheltered location and continue working',
-      'Add more weight to the platform to counteract the wind',
+      'Dismantle the tower or tie it to a permanent structure',
+      'Continue working, but put on a high-visibility jacket first',
+      'Wheel the tower to a sheltered spot and carry on working',
+      'Load extra weight onto the platform to resist the wind',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'At Beaufort Force 6 (approximately 28 mph / 45 km/h — a strong breeze that makes umbrellas difficult to use), the tower should be dismantled down to a safe height or tied to a permanent structure. Wind forces at this speed create significant lateral loads on the tower. Adding weight to the platform is dangerous as it raises the centre of gravity and increases the risk of structural failure.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'What is the correct standard for a safety helmet used during tower assembly?',
     options: [
       'EN 166 (eye protection)',
-      'EN 397 (industrial safety helmets)',
       'EN 388 (protective gloves)',
-      'There is no standard — any hat will do',
+      'EN 397 (industrial safety helmets)',
+      'EN ISO 20471 (high-visibility clothing)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety helmets used during tower assembly and dismantling must comply with EN 397, which covers industrial safety helmets. This standard specifies requirements for shock absorption, penetration resistance, and flame resistance. A chin strap should be used where there is a risk of the helmet being dislodged — for example, when looking up during assembly or in windy conditions.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'What should you do if you observe a colleague taking a shortcut that compromises safety on a mobile tower?',
     options: [
-      'Ignore it — it is not your responsibility',
-      'Wait until something goes wrong and then report it',
-      'Challenge the unsafe practice constructively, stop the work if necessary, and report it to the supervisor',
-      'Take a photograph and post it on social media',
+      'Ignore it, as policing colleagues is not your responsibility',
+      'Challenge it constructively, stop the work, and tell the supervisor',
+      'Wait until something actually goes wrong, then report it',
+      'Take a photograph and raise it informally some other day',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Every operative has a duty to challenge unsafe practices. This should be done constructively — explain what you have observed and why it is dangerous. If the person does not stop, exercise your stop-work authority. Report the incident to the supervisor so that it can be addressed through further training, briefing, or disciplinary action if appropriate. A culture where people feel comfortable challenging unsafe behaviour saves lives.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is hydration particularly important when working at height on a mobile tower?',
     options: [
-      'Water makes the tower weigh more and increases stability',
-      'Dehydration impairs concentration, reaction time, and grip strength — all critical for safe work at height',
-      'Drinking water prevents sunburn',
-      'Hydration is not important for tower work',
+      'Drinking water adds ballast that makes the tower more stable',
+      'Staying hydrated directly prevents sunburn on exposed skin',
+      'Hydration has no measurable effect on safe tower work',
+      'Dehydration impairs concentration, reaction time, and grip strength',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Even mild dehydration (2% body mass loss) measurably impairs cognitive function, concentration, reaction time, and physical grip strength. When working at height, a momentary lapse in concentration or a weakened grip can result in a fall or a dropped tool. Exposed platforms increase fluid loss through sweating and wind. Regular water intake is a genuine safety measure, not just a comfort.',
   },

@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'You discover a small chemical spill in the workplace. What is the FIRST thing you should do?',
     options: [
-      'Immediately mop it up with paper towels to prevent anyone slipping',
-      'Identify the substance from the container label or SDS, assess the hazard, and don personal protective equipment before approaching',
-      'Evacuate the entire building and call the fire brigade',
-      'Pour water over it to dilute the chemical',
+      'Identify the substance from the label or SDS and assess the hazard before approaching',
+      'Immediately mop it up with paper towels so that nobody slips on it',
+      'Evacuate the entire building and call the fire brigade straight away',
+      'Pour clean water over the spill to dilute the chemical at once',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Before approaching any chemical spill, you must first identify the substance and assess the hazard. Check the container label or Safety Data Sheet (SDS) to determine what you are dealing with and what PPE is required. Only then should you don appropriate PPE and begin containment. Approaching an unknown spill without protection could expose you to serious harm. Some chemicals react dangerously with water, so dilution may not be appropriate.',
   },
@@ -52,12 +52,12 @@ const quickCheckQuestions = [
     question:
       'Under RIDDOR, which of the following chemical exposure incidents MUST be reported to the HSE?',
     options: [
-      'Any incident where a worker notices a chemical smell in the workplace',
-      'Only incidents where the worker is hospitalised for more than 7 days',
-      'An acute illness requiring medical treatment that results from exposure to a hazardous substance, or an occupational disease diagnosed by a doctor',
-      'Only incidents involving substances classified as carcinogenic',
+      'Any incident where a worker notices a chemical smell anywhere in the workplace',
+      'Acute illness needing medical treatment from a hazardous substance, or a doctor-diagnosed disease',
+      'Only incidents where the worker is hospitalised for more than seven days',
+      'Only incidents involving substances that are classified as carcinogenic',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013) requires reporting of: acute illness requiring medical treatment caused by occupational exposure to a hazardous substance; occupational diseases prescribed by a doctor (such as occupational asthma or dermatitis); and dangerous occurrences such as the uncontrolled release of a hazardous substance. The duty to report falls on the employer, self-employed person, or person in control of the premises.',
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     question:
       'When dealing with a large chemical spill that is beyond the capability of site spill kits, what is the correct sequence of actions?',
     options: [
-      'Clean up what you can, then call for help if needed',
-      'Evacuate the area, prevent spread if safe to do so, call the emergency services, and arrange specialist clean-up',
-      'Ventilate the area by opening all windows and doors, then mop up the spill',
-      'Cover the spill with sand and leave it for the end of shift',
+      'Clean up as much as you safely can, then call for help if it is needed',
+      'Evacuate, prevent spread if safe, call emergency services, arrange specialist clean-up',
+      'Ventilate by opening all the windows and doors, then mop up the spill yourself',
+      'Cover the spill with sand and leave it to deal with at the end of the shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'What type of spill kit should be used for a mercury spill (e.g. from a broken thermometer)?',
     options: [
-      'A general-purpose absorbent spill kit',
-      'A solvent spill kit with polypropylene pads',
-      'A specialist mercury spill kit containing mercury-absorbing powder (such as sulphur or zinc powder)',
-      'An acid spill kit with neutralising granules',
+      'A general-purpose absorbent spill kit with polypropylene granules',
+      'A solvent spill kit fitted with polypropylene absorbent pads',
+      'A specialist mercury kit with mercury-absorbing powder (sulphur or zinc)',
+      'An acid spill kit with alkaline neutralising granules and resistant PPE',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A worker has inhaled toxic fumes and is coughing and feeling dizzy. What is the correct first aid response?',
     options: [
+      'Move them to fresh air, call 999 for significant exposure, give oxygen if trained',
       'Give them a glass of water and tell them to sit down in the contaminated area',
-      'Remove them from the contaminated area to fresh air, call 999 for significant exposures, and administer oxygen if available and trained to do so',
-      'Make them breathe into a paper bag to regulate their breathing',
-      'Apply a dust mask and send them back to work once they stop coughing',
+      'Make them breathe slowly into a paper bag to regulate their breathing',
+      'Fit a dust mask and send them back to work once they have stopped coughing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For inhalation of toxic fumes: (1) remove the casualty from the contaminated atmosphere to fresh air — ensure your own safety first and do not enter the area without appropriate RPE if fumes are still present; (2) call 999 for any significant exposure; (3) administer oxygen if available and you are trained; (4) keep the casualty at rest in a comfortable position; (5) if the casualty stops breathing, begin CPR. Never re-enter a contaminated area without appropriate respiratory protection.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'After a chemical exposure incident at work, an employee swallows a small quantity of a cleaning chemical. What should you do?',
     options: [
-      'Induce vomiting immediately to remove the chemical from the stomach',
-      'Give them milk to neutralise the chemical',
-      'Do NOT induce vomiting (unless the SDS specifically advises it), give sips of water if conscious, and call 999',
-      'Make them eat bread to absorb the chemical, then continue working',
+      'Induce vomiting immediately to clear the chemical out of the stomach',
+      'Give them plenty of milk straight away to neutralise the chemical',
+      'Do NOT induce vomiting unless the SDS advises it; give sips of water and call 999',
+      'Make them eat dry bread to absorb the chemical, then let them carry on working',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'During a fire involving hazardous chemicals, why might water be an inappropriate extinguishing agent?',
     options: [
-      'Water is always appropriate for chemical fires',
-      'Water reacts with some chemicals (e.g. alkali metals, metal fires), can spread burning oil, and may generate additional toxic fumes or explosive hydrogen gas',
-      'Water is too expensive to use on chemical fires',
-      'Water can only be used on paper fires',
+      'Water is always the appropriate extinguishing agent for any chemical fire',
+      'Water is far too expensive to be used on most types of chemical fire',
+      'Water is only ever effective when used on ordinary paper and wood fires',
+      'Water can react with some chemicals, spread burning oil, and release explosive hydrogen',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Water is inappropriate or dangerous for several types of chemical fire: (1) alkali metals (sodium, potassium, lithium) react violently with water, generating explosive hydrogen gas and intense heat; (2) metal fires (magnesium, aluminium powder) — water can cause steam explosions and intensify the fire; (3) oil and solvent fires — water spreads the burning liquid and can cause dangerous splattering; (4) some chemicals generate toxic fumes when they contact water. The SDS Section 5 specifies the correct extinguishing media for each substance. DSEAR assessments must also consider fire and explosion risks from hazardous substances.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of investigating a chemical exposure incident after it has been dealt with?',
     options: [
-      'To assign blame to the individual who caused the incident',
-      'To identify the root cause, implement corrective actions, and update the COSHH assessment to prevent recurrence',
-      'To complete the paperwork required by the insurance company',
-      'To determine whether the worker needs to be disciplined',
+      'To find the root cause and update the COSHH assessment to prevent recurrence',
+      'To assign blame to the individual who is judged to have caused the incident',
+      'To complete the accident paperwork required by the insurance company',
+      'To determine whether the worker involved needs to be formally disciplined',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of incident investigation is to identify the root cause of the incident and implement corrective actions to prevent it from happening again. This includes: reviewing and updating the COSHH risk assessment; checking whether control measures were adequate and properly implemented; identifying any training gaps; updating emergency procedures if necessary; and sharing lessons learnt with the workforce. Investigation should focus on systems and processes, not on blaming individuals. A blame culture discourages reporting and prevents learning.',
   },

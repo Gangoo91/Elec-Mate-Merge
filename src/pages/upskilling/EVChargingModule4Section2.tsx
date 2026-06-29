@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m4s2-check1',
     question: 'What is the typical VMR trip voltage threshold for EV charging installations?',
-    options: ['25V', '35-50V', '100V', '230V'],
-    correctIndex: 1,
+    options: ['35-50V', '25V', '70-90V', '110V'],
+    correctIndex: 0,
     explanation:
       'VMR trip thresholds for EV charging are typically set at 35-50V. This is lower than the general 50V limit due to outdoor installation and higher exposure risks associated with EV charging equipment.',
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     question:
       'A TN-C-S installation experiences an open PEN fault. What voltage could appear on exposed metalwork relative to true earth?',
     options: [
-      'Maximum 50V due to RCD protection',
+      'Maximum 50V, limited by the RCD protection',
       'Only a few volts from normal earth resistance',
-      'Up to 230V depending on load balance',
-      'No voltage as the system trips instantly',
+      'No voltage, as the system trips instantly',
+      'Up to 230V depending on the load balance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'During an open PEN fault in a TN-C-S system, the installation earth can rise to dangerous potentials up to 230V relative to true earth, depending on the load balance. This occurs because conventional protective devices may not trip, and the fault can persist for extended periods.',
   },

@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     question:
       'Why are combined controls from multiple levels of the hierarchy generally more effective than a single control?',
     options: [
-      'Carry out safe isolation — prove the tester on a known live source, isolate, lock-off, test dead',
-      'Gradually increasing work hours and physical demands over an agreed period, with regular review and modified duties as needed',
-      'Ensure a construction phase plan is drawn up by the contractor or principal contractor',
+      'Because using more controls always reduces the cost of the work',
+      'Because the law requires a minimum of three controls for every hazard',
+      'Because lower-level controls are inherently more reliable than higher-level ones',
       'Because if one control fails or is compromised, the remaining controls still provide some protection (defence in depth)',
     ],
     correctIndex: 3,
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'The hierarchy of controls is based on the principle that:',
     options: [
-      'It safely restores operation in the short term, is documented with clear limitations, and a permanent corrective action is planned and tracked to completion',
+      'The cheapest controls should always be applied before any others',
       'Controls that remove or reduce the hazard at source are more effective and reliable than those that rely on human behaviour',
-      'Weak areas identified through practice test analysis, while maintaining revision of strong areas',
-      'Yes — RA × IΔn = 180 × 0.1 = 18 V, which is comfortably below the 50 V touch-voltage limit. The criterion passes.',
+      'PPE is the most reliable control because it directly protects the worker',
+      'Controls only need to be applied to hazards rated as high risk',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'PPE is at the bottom of the hierarchy of controls because:',
     options: [
-      'No — socket testers are a wiring verification tool only. They do not provide the GS38-required indicator features (shrouded probes, current limiting, prove function) and cannot be considered a safe-isolation tool.',
+      'It is the most expensive control measure to implement and maintain',
       'It does nothing to reduce or remove the hazard — it only protects the individual wearing it, and its effectiveness depends entirely on correct selection, fitting, use and maintenance',
-      'A lone worker policy, periodic check-ins, GPS-tracked safety device or app, dynamic risk assessment, agreed escalation contact and avoidance of live working unless unavoidable and risk-assessed',
-      'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
+      'It can only be used by workers who have completed an end-point assessment',
+      'It is the only control that does not need to be reviewed or monitored',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,9 +155,9 @@ const quizQuestions = [
     question:
       'An interlocked isolator on a motor ensures that the motor cannot be started while the guard is open. This is:',
     options: [
-      'Signs of overheating, damage, or poor workmanship',
-      'A system that varies airflow to match zone cooling/heating loads',
-      'Store on proper supports and protect from damage',
+      'An administrative control because it relies on a documented procedure',
+      'Substitution because it replaces a more hazardous arrangement',
+      'A form of PPE because it protects the operator from contact',
       'An engineering control because it physically prevents the hazard',
     ],
     correctAnswer: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'Which of the following statements about residual risk is correct?',
     options: [
       'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
-      'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
-      'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
-      'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
+      'Residual risk is the risk present before any control measures are applied',
+      'Residual risk must always be reduced to zero before work can proceed',
+      'Residual risk only exists where PPE is the sole control measure',
     ],
     correctAnswer: 0,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'A construction site has exposed 400 V cables running across a pedestrian walkway. The best hierarchy response is:',
     options: [
-      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
+      'Put up warning signs and brief workers to take care when crossing',
       'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
-      'Part S (Infrastructure for electric vehicles) and Part P (Electrical Safety)',
-      'To detect and identify live traffic on a fibre without breaking the circuit',
+      'Issue high-visibility vests to everyone using the walkway',
+      'Cover the cables with a rubber mat and carry on as normal',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 10,
     question: 'When selecting controls for a hazard, you should:',
     options: [
-      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
-      'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
+      'Start with PPE and only add higher-level controls if it proves inadequate',
+      'Choose whichever single control is cheapest and quickest to put in place',
       'Start at the top of the hierarchy with elimination and work down, applying the most effective controls that are reasonably practicable',
-      'Recorded explicitly on the report so the reader understands the scope of what was NOT inspected and the implications',
+      'Apply only the control specified by the equipment manufacturer',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,9 +208,9 @@ const quizQuestions = [
     id: 11,
     question: 'Monitoring the effectiveness of control measures is important because:',
     options: [
-      'It does nothing to reduce or remove the hazard — it only protects the individual wearing it, and its effectiveness depends entirely on correct selection, fitting, use and maintenance',
-      'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
-      'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
+      'Once a control is installed it never needs to be checked again',
+      'It allows higher-level controls to be removed once PPE is in place',
+      'It is only required for administrative controls, not engineering ones',
       'Controls can degrade over time, be defeated or bypassed, or prove inadequate in practice — monitoring ensures they continue to work as intended',
     ],
     correctAnswer: 3,
@@ -222,9 +222,9 @@ const quizQuestions = [
     question: 'Under ST1426, a maintenance technician should be able to:',
     options: [
       'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
-      'Controls can degrade over time, be defeated or bypassed, or prove inadequate in practice — monitoring ensures they continue to work as intended',
-      'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
-      'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
+      'Delegate all control selection to the site safety officer without involvement',
+      'Rely solely on PPE for every hazard encountered on site',
+      'Bypass engineering controls where they slow down the work',
     ],
     correctAnswer: 0,
     explanation:

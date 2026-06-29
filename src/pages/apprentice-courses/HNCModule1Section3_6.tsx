@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'contractor-selection',
     question: 'What must a client assess when selecting contractors under CDM 2015?',
     options: [
-      'High fault currents and electromagnetic interference',
+      'The lowest tender price submitted for the work',
       'Skills, knowledge, experience and organisational capability',
-      'Competent person scheme registration and assessment',
-      'Switching to low or zero-carbon energy sources',
+      'Only the contractor that the principal designer recommends',
+      'The geographical distance from the contractor to the site',
     ],
     correctIndex: 1,
     explanation:
@@ -48,9 +48,9 @@ const quickCheckQuestions = [
     id: 'principal-contractor',
     question: 'When must a principal contractor be appointed under CDM 2015?',
     options: [
-      'General-purpose indoor cables (not plenum)',
-      'Test date, next test date, and tester ID',
-      'Construction (Design and Management)',
+      'Only on projects expected to last longer than 30 working days',
+      'On every project, regardless of how many contractors are involved',
+      'Only when the client chooses to delegate their own duties',
       'When there is more than one contractor',
     ],
     correctIndex: 3,
@@ -62,9 +62,9 @@ const quickCheckQuestions = [
     question: 'What must contractor site induction include?',
     options: [
       'Site rules, hazards, emergency procedures, and welfare arrangements',
-      'Moving desks and computers within a finished office',
-      'Appropriate PPE including breathing apparatus if required',
-      'Improving mental wellbeing and managing stress, anxiety, and low mood',
+      'A detailed breakdown of the project tender price',
+      'The contractor’s commercial profit margin on the works',
+      'A copy of every other contractor’s method statement',
     ],
     correctIndex: 0,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'What are the CDM 2015 client duties regarding contractor competence?',
     options: [
-      'The change in capacitance between the probe and the tank wall as the dielectric (liquid) level changes',
+      'Personally supervise all contractor work on the site each day',
       'Take reasonable steps to satisfy themselves that designers and contractors are competent',
-      'It continues to run but may overheat, or fails to start if stationary',
-      'Higher productivity, fewer reworks, better safety record, stronger team morale and repeat-customer business',
+      'Provide all the safety equipment that contractors need to work',
+      'Carry out the contractor’s risk assessments on their behalf',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of pre-qualification questionnaires (PQQs)?',
     options: [
-      'A formal meeting to review arrangements before work begins',
-      'A meeting to coordinate multiple permits and prevent conflicts',
+      'To record a contractor’s daily progress against the programme',
+      'To agree the final contract price once work is complete',
       'To assess contractor competence before inviting them to tender',
-      'Address it immediately through escalating action from warning to removal',
+      'To replace the need for a site induction before work begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'What information should be in the Construction Phase Plan?',
     options: [
-      'Risk assessments, method statements, training records, insurance',
-      'Through regular coordination meetings, clear demarcation, and permit systems',
-      'Ensure every worker receives suitable site induction',
+      'Only the agreed contract price and payment schedule for the works',
+      'The health and safety file for the completed building',
+      'A list of every operative’s home address and next of kin',
       'Site rules, emergency procedures, arrangements for managing risks',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: "What is a 'permit to work coordination meeting'?",
     options: [
       'A meeting to coordinate multiple permits and prevent conflicts',
-      'Take reasonable steps to ensure the matter is addressed',
-      'A formal meeting to review arrangements before work begins',
-      'Address it immediately through escalating action from warning to removal',
+      'A meeting to agree the contract value of permitted works',
+      'A meeting to issue every worker their individual permit card',
+      'A meeting held only after a permit-related incident has occurred',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'How should contractor performance be monitored on site?',
     options: [
-      'Risk assessments, method statements, training records, insurance',
+      'By relying on the contractor to report their own breaches',
       'Through regular inspections, observations, and documented checks',
-      'To assess contractor competence before inviting them to tender',
-      'Take reasonable steps to ensure the matter is addressed',
+      'By reviewing performance only at the end of the project',
+      'By checking the accreditation certificates once a year',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What should happen if a contractor fails to comply with site safety rules?',
     options: [
-      'A meeting to coordinate multiple permits and prevent conflicts',
-      'Ensure every worker receives suitable site induction',
+      'Wait until the next coordination meeting to raise it formally',
+      'Ignore minor breaches to avoid delaying the programme',
       'Address it immediately through escalating action from warning to removal',
-      'To assess contractor competence before inviting them to tender',
+      'Report the breach directly to the HSE before acting on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: "What is the principal contractor's duty regarding site induction?",
     options: [
-      'A formal meeting to review arrangements before work begins',
-      'A meeting to coordinate multiple permits and prevent conflicts',
-      'Through regular inspections, observations, and documented checks',
+      'Induct only their own directly employed operatives',
+      'Provide induction only to workers on high-risk activities',
+      'Delegate induction entirely to each individual contractor',
       'Ensure every worker receives suitable site induction',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'What documents should contractors provide before starting work?',
     options: [
       'Risk assessments, method statements, training records, insurance',
-      'Take reasonable steps to ensure the matter is addressed',
-      'Site rules, emergency procedures, arrangements for managing risks',
-      'Through regular inspections, observations, and documented checks',
+      'Their tender submission and a breakdown of profit margins',
+      'The completed health and safety file for the project',
+      'A copy of the client’s pre-construction information only',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "What is 'contractor pre-start' or 'kick-off' meeting?",
     options: [
-      'Address it immediately through escalating action from warning to removal',
+      'A meeting to negotiate the final price for the works',
       'A formal meeting to review arrangements before work begins',
-      'Through regular inspections, observations, and documented checks',
-      'Ensure every worker receives suitable site induction',
+      'A celebration held once the contract has been completed',
+      'A weekly progress review held throughout the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'How should multiple electrical contractors be coordinated on a large project?',
     options: [
-      'A meeting to coordinate multiple permits and prevent conflicts',
-      'A formal meeting to review arrangements before work begins',
+      'By letting each contractor manage their own area in isolation',
+      'By appointing the cheapest contractor as overall lead',
       'Through regular coordination meetings, clear demarcation, and permit systems',
-      'Site rules, emergency procedures, arrangements for managing risks',
+      'By relying on a single shared method statement for all trades',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'What records should be kept regarding contractor management?',
     options: [
-      'A formal meeting to review arrangements before work begins',
-      'A meeting to coordinate multiple permits and prevent conflicts',
-      'Through regular coordination meetings, clear demarcation, and permit systems',
+      'Only the signed contract and final invoice for the works',
+      'Just the contractor’s insurance certificate for the project',
+      'Only records of incidents that resulted in lost time',
       'Selection records, inductions, monitoring, non-conformances, meetings',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: "What is the client's duty if they become aware of contractor safety failings?",
     options: [
       'Take reasonable steps to ensure the matter is addressed',
-      'A formal meeting to review arrangements before work begins',
-      'A meeting to coordinate multiple permits and prevent conflicts',
-      'Site rules, emergency procedures, arrangements for managing risks',
+      'Take over the contractor’s safety management personally',
+      'Wait for the HSE to investigate before taking any action',
+      'Terminate the contract immediately regardless of severity',
     ],
     correctAnswer: 0,
     explanation:

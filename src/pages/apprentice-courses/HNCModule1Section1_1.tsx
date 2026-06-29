@@ -50,9 +50,9 @@ const quickCheckQuestions = [
     question: 'Under Section 7, what must employees do regarding health and safety?',
     options: [
       'Take reasonable care for themselves and others',
-      'To hydraulically decouple primary and secondary circuits',
-      'At least 5 minutes (check manufacturer\\\\\\\\\\\\\\\'s data)',
-      'Adjusting activity timing to avoid resource overallocation',
+      'Carry out their own annual risk assessments of the workplace',
+      'Provide their own personal protective equipment at their own cost',
+      'Report directly to the HSE if they witness an unsafe practice',
     ],
     correctIndex: 0,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Health and Safety at Work Act 1974 is primarily which type of legislation?',
     options: [
-      'Store safely for future reference',
+      'Prescriptive - specifies exact methods to follow',
       'Enabling - provides framework for regulations',
-      'True power divided by apparent power (cos φ)',
-      'Both options above are partly correct.',
+      'Civil - resolved through compensation claims',
+      'European - derived from EU directives',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       'Under Section 2, what must employers provide to employees regarding health and safety?',
     options: [
-      'Section 2(2)(a) - safe plant and systems of work',
-      'When there is risk of serious personal injury',
+      'Personal accident insurance for every member of staff',
+      'A guaranteed minimum number of rest breaks per shift',
       'Information, instruction, training and supervision',
-      'No - only employers with 5 or more employees',
+      'Free annual occupational health medical assessments',
     ],
     correctAnswer: 2,
     explanation:
@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: 'Section 3 of HSWA 1974 places duties on employers regarding which group?',
     options: [
-      'Health and Safety Executive (HSE)',
-      'No - only employers with 5 or more employees',
-      'Information, instruction, training and supervision',
+      'Only their own directly employed staff',
+      'Only sub-contractors with a formal written contract',
+      'Only employees working away from the main premises',
       'Non-employees who may be affected by the work',
     ],
     correctAnswer: 3,
@@ -133,9 +133,9 @@ const quizQuestions = [
     question: "What is the employee's duty under Section 7(a) of HSWA 1974?",
     options: [
       'To take reasonable care for their own health and safety and that of others',
-      'Require contraventions to be remedied within a specified time',
-      'They must balance risk reduction against cost, time and effort',
-      'Intentionally or recklessly interfere with safety provisions',
+      'To prepare the written health and safety policy for the workplace',
+      'To provide and maintain safe plant and systems of work',
+      'To conduct formal risk assessments before every task',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 5,
     question: 'What power does an HSE inspector have under an Improvement Notice?',
     options: [
-      'Section 2(2)(a) - safe plant and systems of work',
+      'Order the immediate cessation of all work on site',
       'Require contraventions to be remedied within a specified time',
-      'Information, instruction, training and supervision',
-      'No - only employers with 5 or more employees',
+      'Impose an on-the-spot fine on the duty holder',
+      'Withdraw the company trading licence pending review',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 6,
     question: 'When can an HSE inspector issue a Prohibition Notice?',
     options: [
-      'Health and Safety Executive (HSE)',
-      'Information, instruction, training and supervision',
+      'Only after a serious accident has already occurred',
+      'When minor record-keeping breaches are identified',
       'When there is risk of serious personal injury',
-      'No - only employers with 5 or more employees',
+      'Only with the prior agreement of a magistrate',
     ],
     correctAnswer: 2,
     explanation:
@@ -174,7 +174,7 @@ const quizQuestions = [
     options: [
       '6 months',
       '1 year',
-      'Unlimited',
+      '5 years',
       '2 years',
     ],
     correctAnswer: 3,
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: 'Under Section 8, what must employees NOT do?',
     options: [
-      'Require contraventions to be remedied within a specified time',
+      'Work overtime beyond the agreed contracted hours',
       'Intentionally or recklessly interfere with safety provisions',
-      'They must balance risk reduction against cost, time and effort',
-      'Section 2(2)(a) - safe plant and systems of work',
+      'Raise a safety concern without first informing a manager',
+      'Use personal protective equipment provided by the employer',
     ],
     correctAnswer: 1,
     explanation:
@@ -225,9 +225,9 @@ const quizQuestions = [
     id: 11,
     question: 'Which body is primarily responsible for enforcing HSWA 1974 on construction sites?',
     options: [
-      'When circumstances change',
-      'STOP all work immediately',
-      'To avoid damage from high test voltages',
+      'The local authority environmental health department',
+      'The Construction Industry Training Board (CITB)',
+      'The Health and Safety Commission',
       'Health and Safety Executive (HSE)',
     ],
     correctAnswer: 3,

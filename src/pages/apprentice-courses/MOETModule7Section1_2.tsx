@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     question: 'Why is it important to practise mock tests under realistic exam conditions?',
     options: [
       'To build familiarity with time pressure and reduce anxiety on the actual day',
-      'Demand-controlled ventilation based on occupancy and air quality',
-      'Efficacy limits, controls and upward light restrictions',
-      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\'s face',
+      'To guarantee you will achieve a perfect score on the day',
+      'To memorise the exact questions that will appear in the EPA',
+      'To avoid having to revise the underlying technical content',
     ],
     correctIndex: 0,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     question:
       'During a timed mock test, you realise you have spent 3 minutes on a single question. What should you do?',
     options: [
-      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
-      'At least 3-5 full timed tests spread over several weeks',
+      'Keep working on it until you are certain of the answer',
+      'Leave it blank and move on without selecting anything',
       'Flag the question, select your best answer, and move on immediately',
-      'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
+      'Restart the test to regain your composure',
     ],
     correctAnswer: 2,
     explanation:
@@ -85,9 +85,9 @@ const quizQuestions = [
     id: 3,
     question: "What is the purpose of a 'time checkpoint' during the exam?",
     options: [
-      'Flag the question, select your best answer, and move on immediately',
-      'Only change an answer if you have a clear reason to believe a different option is correct',
-      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
+      'To decide which questions to leave unanswered',
+      'To check that the room timer matches your own watch',
+      'To signal the invigilator that you need more time',
       'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
     ],
     correctAnswer: 3,
@@ -99,9 +99,9 @@ const quizQuestions = [
     question: 'When reviewing flagged questions at the end of the test, you should:',
     options: [
       'Only change an answer if you have a clear reason to believe a different option is correct',
-      'Flag the question, select your best answer, and move on immediately',
-      'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
-      'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
+      'Change every flagged answer, since your first guess was rushed',
+      'Leave flagged answers as they are without re-reading them',
+      'Change answers based on a gut feeling that they look wrong',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,9 +137,9 @@ const quizQuestions = [
     id: 7,
     question: "The 'two-pass' strategy for a timed exam involves:",
     options: [
-      'Pause briefly, take slow deep breaths, read the current question slowly, and focus on one question at a time',
-      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
-      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
+      'Reading the whole paper twice before answering anything',
+      'Answering the paper twice and comparing the two attempts',
+      'Splitting your time equally across all questions in two halves',
       'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
     ],
     correctAnswer: 3,
@@ -151,9 +151,9 @@ const quizQuestions = [
     question: 'What should you do in the final 5 minutes of the exam?',
     options: [
       'Review flagged questions, ensure every question has an answer, and check for obvious errors',
-      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
-      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
-      'Only change an answer if you have a clear reason to believe a different option is correct',
+      'Submit early and leave once you reach the last question',
+      'Re-read every question from the start to double-check it all',
+      'Change any answers you are unsure about to a different option',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'After completing a timed mock test, the most productive next step is to:',
     options: [
-      'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
+      'Note only the final score and move straight to the next test',
       'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
-      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
-      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
+      'Discard the test and rely on reading the material instead',
+      'Review only the questions you answered incorrectly',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       "If anxiety causes you to 'freeze' during a timed test, the recommended technique is to:",
     options: [
-      'Only change an answer if you have a clear reason to believe a different option is correct',
-      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
+      'Keep pushing through quickly to make up for lost time',
+      'Leave the room until you feel calm again',
       'Pause briefly, take slow deep breaths, read the current question slowly, and focus on one question at a time',
-      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
+      'Skip ahead to the calculation questions to regain confidence',
     ],
     correctAnswer: 2,
     explanation:
@@ -190,9 +190,9 @@ const quizQuestions = [
     id: 11,
     question: 'Calculation questions in the EPA test typically require:',
     options: [
-      "A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions",
-      "To verify you are on pace — e.g., 20 questions done by the 30-minute mark",
-      "At least 3-5 full timed tests spread over several weeks",
+      "Advanced calculus and complex differential equations",
+      "A scientific programmable calculator with stored formulae",
+      "Memorising every value from the BS 7671 tables",
       "Basic arithmetic using Ohm's law, power formulae, or simple unit conversions",
     ],
     correctAnswer: 3,
@@ -204,9 +204,9 @@ const quizQuestions = [
     question: 'What is the ideal environment for completing a timed mock test?',
     options: [
       'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
-      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
-      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
-      'Flag the question, select your best answer, and move on immediately',
+      'A relaxed setting with notes available and no time limit',
+      'A busy area to practise concentrating amid distractions',
+      'A group session where answers can be discussed as you go',
     ],
     correctAnswer: 0,
     explanation:

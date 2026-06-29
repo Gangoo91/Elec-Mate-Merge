@@ -45,10 +45,10 @@ const quickCheckQuestions = [
     id: 'fuel-storage',
     question: 'What is the primary reason biomass fuel stores must be kept dry?',
     options: [
-      'No - only employers with 5 or more employees',
+      'Damp fuel poses an electric shock risk to the feed auger',
       'Moisture reduces calorific value and combustion efficiency',
-      'Gradual exposure through progressively challenging speeches',
-      'Installing fibre units into pre-installed tubes using air pressure',
+      'Dry fuel is a legal requirement under the Clean Air Act',
+      'Wet pellets expand and jam the boiler ignition element',
     ],
     correctIndex: 1,
     explanation:
@@ -59,9 +59,9 @@ const quickCheckQuestions = [
     question:
       'What is the primary method of particulate emissions control in modern biomass boilers?',
     options: [
-      'To highlight changes and modifications',
-      'Green-sheathed twisted pair cable certified for KNX',
-      'Motors and variable speed drives (VSDs)',
+      'Catalytic converters fitted to the combustion chamber',
+      'Selective non-catalytic reduction (SNCR) urea injection',
+      'Activated carbon scrubbers in the condensate drain',
       'Electrostatic precipitators or cyclonic separators',
     ],
     correctIndex: 3,
@@ -132,9 +132,9 @@ const quizQuestions = [
       'What is the minimum recommended flue height above roof level for a biomass boiler installation?',
     options: [
       '1 metre above highest point within 10m',
-      'Pellet boiler with vacuum feed',
-      'Multi-zone stratified thermal store',
-      'Medium Combustion Plant Directive (MCPD)',
+      'Level with the ridge of the nearest roof',
+      '300mm above the point of penetration through the roof',
+      '5 metres above the highest point within 10m',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary purpose of a de-ashing system in a biomass boiler?',
     options: [
-      'Physical positions of equipment and cable routes',
-      'The actual measured value of the controlled condition',
+      'To filter particulates from the flue gases before discharge',
+      'To dry incoming fuel before it reaches the combustion chamber',
       'To automatically remove combustion residue from the grate',
-      'Someone with knowledge, training and experience',
+      'To remove condensate from the base of the flue system',
     ],
     correctAnswer: 2,
     explanation:
@@ -185,9 +185,9 @@ const quizQuestions = [
       'Which regulation specifically governs emissions from medium combustion plants including biomass boilers?',
     options: [
       'Medium Combustion Plant Directive (MCPD)',
-      '1 metre above highest point within 10m',
-      'Pellet boiler with vacuum feed',
-      'Multi-zone stratified thermal store',
+      'The Gas Safety (Installation and Use) Regulations',
+      'The Construction (Design and Management) Regulations',
+      'The Pressure Equipment (Safety) Regulations',
     ],
     correctAnswer: 0,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     id: 10,
     question: 'What safety device prevents fire spreading from the boiler back to the fuel store?',
     options: [
-      '1 metre above highest point within 10m',
-      'To automatically remove combustion residue from the grate',
+      'A pressure relief valve on the boiler flow connection',
+      'A flue gas spillage detector in the boiler room',
       'Drop tube or rotary valve with fire protection',
-      'Multi-zone stratified thermal store',
+      'A low-water cut-off on the buffer vessel',
     ],
     correctAnswer: 2,
     explanation:
@@ -238,9 +238,9 @@ const quizQuestions = [
       'Which thermal store configuration is most suitable for integrating biomass with solar thermal?',
     options: [
       'Multi-zone stratified thermal store',
-      'Pellet boiler with vacuum feed',
-      'Medium Combustion Plant Directive (MCPD)',
-      '1 metre above highest point within 10m',
+      'A single small buffer vessel sized only for anti-cycling',
+      'A direct unvented cylinder with no buffer at all',
+      'An open-vented header tank in the roof space',
     ],
     correctAnswer: 0,
     explanation:

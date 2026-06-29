@@ -12,59 +12,59 @@ const BS7671Module8Section3Quiz = () => {
 
   const questions = [
     {
-      question: 'What part of BS 7671 was added in Amendment 2?',
-      options: ['Part 6', 'Part 7', 'Part 8', 'Part 9'],
-      correct: 2,
+      question: 'Which Part of BS 7671 was added in Amendment 2?',
+      options: ['Part 8', 'Part 6', 'Part 7', 'Part 9'],
+      correct: 0,
       explanation:
-        'Part 8 was introduced in Amendment 2, covering Prosumer Electrical Installations (PEIs) - installations that both consume and generate energy.',
+        'Amendment 2 introduced Part 8, covering prosumer electrical installations (PEIs) that both consume and generate electrical energy.',
     },
     {
-      question: 'What installations now require AFDDs?',
+      question: 'Which premises were brought into the AFDD requirements by Amendment 2?',
       options: [
-        'All domestic properties',
-        'Student accommodation and HMOs',
+        'All domestic dwellings without exception',
         'Industrial premises only',
-        'Commercial offices',
+        'Houses in multiple occupation and student accommodation',
+        'General commercial offices',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Amendment 2 expanded AFDD requirements to include student accommodation, HMOs, care homes, and other high-risk sleeping accommodation.',
+        'Amendment 2 requires AFDDs on socket-outlet final circuits in higher-risk premises such as HMOs, purpose-built student accommodation and care homes.',
     },
     {
-      question: 'Name one documentation update introduced.',
+      question: 'Name one documentation change introduced by Amendment 2.',
       options: [
-        'Simplified certificates',
-        'PEI system documentation',
-        'Reduced test requirements',
-        'Optional design records',
+        'Simplified, shorter certificates',
+        'Reduced inspection and test requirements',
+        'New documentation for prosumer (PEI) systems',
+        'Design records made entirely optional',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        'Amendment 2 introduced comprehensive PEI system documentation requirements, including energy management system records and grid interaction settings.',
+        'Amendment 2 added documentation requirements for prosumer installations, including records of the energy management system and its grid-interaction settings.',
     },
     {
-      question: 'What does Part 8 focus on?',
+      question: 'What does Part 8 of BS 7671 focus on?',
       options: [
-        'Testing procedures',
-        'Special locations',
+        'Inspection and testing procedures',
         'Prosumer electrical installations',
-        'Maintenance schedules',
+        'Special installations and locations',
+        'Routine maintenance schedules',
       ],
-      correct: 2,
+      correct: 1,
       explanation:
-        'Part 8 focuses on Prosumer Electrical Installations (PEIs) - systems that both consume and generate energy, including solar PV, battery storage, and EV charging.',
+        'Part 8 addresses prosumer electrical installations that both consume and generate energy, such as PV, battery storage and EV charging combined on one supply.',
     },
     {
-      question: 'Why was fire safety re-emphasised?',
+      question: 'Why was fire safety given renewed emphasis in Amendment 2?',
       options: [
-        'New cable types available',
-        'Increased fire incidents in electrical installations',
-        'Enhanced escape route protection requirements',
-        'Cost reduction measures',
+        'New cable types had just become available',
+        'It was primarily a cost-reduction measure',
+        'It reflected a fall in installation fire incidents',
+        'To strengthen protection along escape routes',
       ],
-      correct: 2,
+      correct: 3,
       explanation:
-        'Fire safety was re-emphasised to improve protection in escape routes, requiring enhanced fire-resistant cables and better fire stopping measures.',
+        'The emphasis was on improving fire safety in escape routes, including more robust cable selection and support so cables do not fail prematurely in a fire.',
     },
   ];
 

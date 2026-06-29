@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'A trench 2 metres deep has been dug on site without any support to the sides. What is the most significant hazard?',
     options: [
-      'The trench may fill with rainwater overnight',
       'Collapse of the unsupported sides, which could bury workers and cause fatal crushing injuries',
+      'The trench may fill with rainwater overnight',
       'Workers may trip over the spoil heap next to the trench',
       'The trench will make it difficult for vehicles to move around the site',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Collapse of unsupported excavation sides is the most significant hazard and the leading cause of fatalities in excavation work. Even shallow trenches can collapse without warning, and the weight of soil is sufficient to cause fatal crushing injuries. All excavations must be assessed and, where necessary, supported by battering, stepping, shoring, or the use of trench boxes.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is the leading cause of death in excavation work?',
     options: [
-      'Flooding of the excavation from groundwater',
       'Collapse of the sides of the excavation, burying workers',
+      'Flooding of the excavation from groundwater',
       'Workers falling from ladders placed in the excavation',
       'Contact with contaminated soil or groundwater',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Collapse of the sides is the most common cause of fatal injuries in excavation work. Even a small volume of soil is extremely heavy — one cubic metre of soil weighs approximately 1.5 tonnes. An unsupported excavation can collapse without warning, trapping and crushing anyone inside. This is why all excavations must be assessed and, where necessary, supported.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
     question: 'What does a CAT (Cable Avoidance Tool) detect?',
     options: [
       'The depth of bedrock below the surface',
-      'Electromagnetic signals from live cables and radio frequency signals from metallic pipes',
       'The moisture content of the soil',
       'Whether the ground has been previously excavated',
+      'Electromagnetic signals from live cables and radio frequency signals from metallic pipes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A CAT detects electromagnetic signals emitted by live electricity cables (power mode), radio frequency signals re-radiated by metallic services such as gas and water pipes (radio mode), and signals applied to specific services by a Genny (signal generator mode). It should always be used in all three modes to maximise the chance of detecting all underground services.',
   },
@@ -126,8 +126,8 @@ const quizQuestions = [
     id: 4,
     question:
       'How close to a known underground service must you switch from mechanical to hand digging?',
-    options: ['Within 2 metres', 'Within 1 metre', 'Within 500mm', 'Within 100mm'],
-    correctAnswer: 2,
+    options: ['Within 2 metres', 'Within 1 metre', 'Within 100mm', 'Within 500mm'],
+    correctAnswer: 3,
     explanation:
       'HSG47 guidance states that mechanical excavation must stop and hand digging must be used within 500mm of a known underground service. This distance applies horizontally and vertically. Insulated hand tools should be used where electricity cables may be present, and operatives must be trained in safe digging practices.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'When must a competent person inspect an excavation?',
     options: [
+      'Before work starts each shift and after any event likely to affect stability',
       'Once a week during the excavation work',
       'Only after the excavation has been completed',
-      'Before work starts each shift and after any event likely to affect stability',
       'Only when a worker reports a problem',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A competent person must inspect the excavation before the start of work, at the start of every shift, and after any event that could affect stability — such as heavy rain, vibration from nearby plant or traffic, accidental surcharging, or ground movement. Written reports must be produced and kept on site for at least 7 days.',
   },

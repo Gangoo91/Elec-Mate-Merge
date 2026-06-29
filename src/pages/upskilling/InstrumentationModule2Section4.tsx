@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'Which level sensor technology is best for measuring corrosive liquids without contact?',
     options: [
-      'Float sensor with mechanical switch',
       'Ultrasonic or radar level sensor',
+      'Float sensor with mechanical switch',
       'Capacitive probe sensor',
       'Pressure differential gauge',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Ultrasonic and radar sensors measure level without contacting the liquid, making them ideal for corrosive substances where wetted materials would be damaged.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
     question: 'Why would you choose an encoder over a potentiometer for position feedback?',
     options: [
       'Encoders are always cheaper',
-      'Encoders provide digital output with no mechanical wear',
       'Potentiometers cannot measure rotation',
       'Encoders work without power',
+      'Encoders provide digital output with no mechanical wear',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Encoders provide digital position feedback with high resolution and no mechanical wear issues, unlike potentiometers which have wipers that wear over time.',
   },
@@ -57,20 +57,20 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main use of a proximity sensor?',
     options: [
-      'To measure temperature changes in objects',
       'To detect the presence or absence of objects without physical contact',
+      'To measure temperature changes in objects',
       'To measure electrical current flow',
       'To monitor pressure variations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Proximity sensors detect the presence or absence of objects without requiring physical contact, making them essential for automation, safety systems, and position feedback.',
   },
   {
     id: 2,
     question: 'Which type of sensor is ideal for measuring liquid level without contact?',
-    options: ['Float sensor', 'Ultrasonic level sensor', 'Mechanical gauge', 'Pressure switch'],
-    correctAnswer: 1,
+    options: ['Float sensor', 'Mechanical gauge', 'Ultrasonic level sensor', 'Pressure switch'],
+    correctAnswer: 2,
     explanation:
       'Ultrasonic level sensors are ideal for non-contact liquid level measurement. They use sound waves to measure the distance to the liquid surface.',
   },
@@ -79,11 +79,11 @@ const quizQuestions = [
     question: 'What is the difference between an encoder and a potentiometer?',
     options: [
       'There is no difference between them',
-      'Encoders provide digital output while potentiometers provide analogue output',
       'Encoders measure temperature while potentiometers measure position',
       'Potentiometers are more accurate than encoders',
+      'Encoders provide digital output while potentiometers provide analogue output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Encoders provide digital position feedback with high resolution and no wear issues, while potentiometers provide analogue voltage output but have limited life due to mechanical wipers.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why choose a non-contact sensor over a contact sensor?',
     options: [
-      'They are always cheaper than contact sensors',
       'To avoid contamination, wear, and mechanical interference',
+      'They are always cheaper than contact sensors',
       'They consume less power',
       'They are easier to install',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-contact sensors are chosen to avoid contamination (especially in food/medical applications), eliminate mechanical wear, and prevent interference with the measured object or process.',
   },
@@ -118,11 +118,11 @@ const quizQuestions = [
     question: 'What advantage does radar level sensing have over ultrasonic?',
     options: [
       'Radar sensors are cheaper',
-      'Radar is unaffected by temperature and can penetrate vapours',
       'Ultrasonic sensors require more power',
+      'Radar is unaffected by temperature and can penetrate vapours',
       'Radar sensors are smaller',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Radar level sensors are unaffected by temperature changes and can measure through vapours and foam, unlike ultrasonic sensors which can be affected by these conditions.',
   },
@@ -131,11 +131,11 @@ const quizQuestions = [
     question: 'What is an LVDT used for?',
     options: [
       'Measuring temperature',
-      'Highly accurate linear position measurement',
       'Detecting metallic objects',
       'Measuring electrical current',
+      'Highly accurate linear position measurement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Linear Variable Differential Transformers (LVDTs) are electromagnetic sensors providing extremely accurate linear position measurement with no physical contact and infinite resolution.',
   },
@@ -157,12 +157,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the difference between incremental and absolute encoders?',
     options: [
-      'Incremental encoders are more accurate',
       "Absolute encoders provide a unique position code and don't need a reference point",
+      'Incremental encoders are more accurate',
       'Incremental encoders work without power',
       'There is no practical difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Absolute encoders provide a unique digital code for each position and retain position data through power loss, while incremental encoders require homing to establish a reference position.',
   },

@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the notional building used for in SBEM calculations?',
     options: [
-      'System type, efficiency/COP, fuel type, and control strategy',
-      'By reducing the calculated BER through on-site generation offset',
+      'To record the actual installed services of the building',
+      'To calculate the renewable energy generated on site',
       'To establish the Target Emission Rate (TER) as a compliance benchmark',
-      'Improving HVAC efficiency and lighting power density',
+      'To produce the Energy Performance Certificate rating',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,9 +165,9 @@ const quizQuestions = [
     id: 7,
     question: 'How does SBEM account for renewable energy contributions?',
     options: [
-      'To establish the Target Emission Rate (TER) as a compliance benchmark',
-      'To provide an energy rating and recommendations for the building',
-      'Installed lighting power per unit floor area (W/m²)',
+      'By increasing the Target Emission Rate to allow for generation',
+      'By excluding renewables, which are assessed separately',
+      'By adding the generation to the notional building only',
       'By reducing the calculated BER through on-site generation offset',
     ],
     correctAnswer: 3,
@@ -179,9 +179,9 @@ const quizQuestions = [
     question: 'What information does SBEM require about HVAC systems?',
     options: [
       'System type, efficiency/COP, fuel type, and control strategy',
-      'By reducing the calculated BER through on-site generation offset',
-      'To establish the Target Emission Rate (TER) as a compliance benchmark',
-      'To provide an energy rating and recommendations for the building',
+      'The purchase cost and supplier of each unit',
+      'The colour and physical dimensions of the plant',
+      'The maintenance contract details for each system',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'What is the purpose of the EPC (Energy Performance Certificate) generated from SBEM?',
     options: [
-      'By reducing the calculated BER through on-site generation offset',
+      'To set the Target Emission Rate for the notional building',
       'To provide an energy rating and recommendations for the building',
-      'System type, efficiency/COP, fuel type, and control strategy',
-      'Improving HVAC efficiency and lighting power density',
+      'To record the as-built air permeability test result',
+      'To calculate the renewable energy offset contribution',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'When must SBEM calculations be submitted to Building Control?',
     options: [
-      'Full RCBO protection for each circuit',
-      'Cannot protect against live-neutral shock',
+      'At design stage only',
+      'At as-built stage only',
       'At design stage and as-built stage',
-      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
+      'Only if the building fails to achieve compliance',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,9 +218,9 @@ const quizQuestions = [
     id: 11,
     question: 'Which factor has the greatest impact on reducing BER in a typical office building?',
     options: [
-      'By reducing the calculated BER through on-site generation offset',
-      'The percentage by which BER is below TER',
-      'To provide an energy rating and recommendations for the building',
+      'Reducing the building footprint and floor area',
+      'Increasing the glazing ratio for more daylight',
+      'Specifying a larger water storage capacity',
       'Improving HVAC efficiency and lighting power density',
     ],
     correctAnswer: 3,

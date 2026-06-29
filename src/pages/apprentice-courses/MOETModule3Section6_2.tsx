@@ -14,23 +14,23 @@ const quickCheckQuestions = [
     id: 'wind-generation',
     question: 'How does a wind turbine generate electricity?',
     options: [
-      'Wind turns the rotor blades, which drive a generator (typically through a gearbox) to convert kinetic energy from the wind into electrical energy — either AC from a synchronous/asynchronous generator or variable-frequency AC converted to grid-frequency AC via power electronics',
-      'BS = British Standard, 7671 = standard number, 2018 = base edition publication year (the 18th Edition), A4 = the fourth amendment to that base edition, 2026 = year that fourth amendment was published.',
-      'Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.',
-      'The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions',
+      'Wind turns the rotor blades, which drive a generator through a shaft to convert kinetic energy into electrical energy',
+      'Wind pressure on the blades is converted directly to DC by piezoelectric crystals in the blade roots, then inverted to grid AC',
+      'The temperature difference between the windward and leeward blade faces drives a thermoelectric generator in the nacelle',
+      'Air drawn through ducts in the tower spins a small turbine charging a battery bank discharged via a grid-tie inverter',
     ],
     correctIndex: 0,
     explanation:
-      'Wind turbines extract kinetic energy from moving air. The rotor blades convert wind energy into rotational mechanical energy, which is transmitted (usually via a gearbox, though direct-drive turbines exist) to an electrical generator. Modern turbines typically use either a doubly-fed induction generator (DFIG) or a permanent magnet synchronous generator (PMSG) with full power conversion. The output is conditioned by power electronics to match grid voltage and frequency before export.',
+      'Wind turbines extract kinetic energy from moving air. The rotor blades convert wind energy into rotational mechanical energy, transmitted (usually via a gearbox, though direct-drive turbines exist) to an electrical generator. Modern turbines typically use either a doubly-fed induction generator (DFIG) or a permanent magnet synchronous generator (PMSG) with full power conversion. The output is conditioned by power electronics to match grid voltage and frequency before export.',
   },
   {
     id: 'heat-pump-cop',
     question: 'What does the Coefficient of Performance (COP) of a heat pump represent?',
     options: [
-      'Claims arising from professional advice, designs, specifications or instructions you provide that cause financial loss to a client. Distinct from Public Liability — PI covers economic loss from advice / design; PL covers injury / property damage from physical work.',
-      'Report it immediately, investigate using safe methods (thermal imaging if available), and if the smell is strong or worsening, consider de-energising the affected section',
-      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
-      'The ratio of useful heat output to electrical energy input — a COP of 3.0 means the heat pump delivers 3 kW of heat for every 1 kW of electricity consumed, by extracting additional energy from the air, ground or water source',
+      'The ratio of compressor electrical input to refrigerant flow rate, where a higher value means slower refrigerant movement',
+      'The percentage of building heat demand the pump can meet on the coldest design day, the rest from a back-up heater',
+      'The ratio of refrigerant condensing temperature to evaporating temperature in kelvin, setting the theoretical maximum',
+      'The ratio of useful heat output to electrical input, so a COP of 3.0 delivers 3 kW of heat per 1 kW of electricity',
     ],
     correctIndex: 3,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'What engineering recommendation governs the connection of renewable generation above 3.68 kW per phase to the UK distribution network?',
     options: [
-      'Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.',
-      'G99 (which replaced G59 in 2019) — it requires formal application, technical assessment and DNO approval before connection, and specifies protection settings, power quality limits and anti-islanding requirements',
-      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
-      'Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables',
+      'BS 7909, which sets requirements for temporary electrical generation and distribution at events and sites',
+      'G99, which requires formal application, technical assessment and DNO approval before connection',
+      'BS EN 50549, which allows connection above 3.68 kW per phase on a fit-and-notify basis with no prior DNO application',
+      'G98, which covers all single-premises generation regardless of rating on a notify-only basis after commissioning',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'micro-hydro',
     question: 'What type of generator is typically used in micro-hydro installations?',
     options: [
-      'An induction generator (connected to the grid, drawing magnetising current from the network) or a synchronous generator (self-exciting, can operate independently) — driven by a water turbine suited to the available head and flow rate',
-      'To monitor the emergency stop circuit for faults, provide redundant switching contacts, and ensure the machine cannot restart until the circuit is intentionally reset',
-      'Assess each task\\\\\\\\\\\\\\\'s urgency and impact — safety-critical and production-affecting faults take priority, followed by planned maintenance, then non-urgent improvements — and plan your day accordingly',
-      'Pause the content discussion, acknowledge the client\\\\\\\\\\\\\\\'s frustration, reaffirm respect (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I understand you\\\\\\\\\\\\\\\'re frustrated, and I respect that you\\\\\\\\\\\\\\\'re trying to manage your budget carefully\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), and then use contrasting to separate the concern from the generalisation',
+      'An induction generator (grid-connected) or a synchronous generator (off-grid capable), driven by a water turbine',
+      'A permanent-magnet DC generator only, because a water turbine rotates too slowly to produce usable AC without a gearbox',
+      'A high-speed gas-turbine alternator, run up to grid frequency by the water flow then declutched at synchronous speed',
+      'A linear generator, in which the rising and falling water level moves a magnet through a coil with no rotating machinery',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The main components of a horizontal-axis wind turbine electrical system are:',
     options: [
-      'Assess each task\\\\\\\'s urgency and impact — safety-critical and production-affecting faults take priority, followed by planned maintenance, then non-urgent improvements — and plan your day accordingly',
-      'Rotor and blades, gearbox (in geared designs), generator, power converter (rectifier/inverter), transformer, switchgear, control system and grid connection equipment',
-      'The Modbus serial protocol encapsulated in TCP/IP packets, widely used for simple device communication and SCADA integration where real-time determinism is not critical',
-      'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
+      'A photovoltaic array, charge controller, lead-acid battery bank and a standalone off-grid inverter sized to blade speed',
+      'Rotor and blades, gearbox, generator, power converter, transformer, switchgear, control system and grid connection equipment',
+      'A single fixed-speed alternator wired directly to the consumer unit, with no converter, transformer or dedicated protection',
+      'Rotor and blades feeding a hydraulic accumulator that drives a separate motor-generator set at the base of the tower',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'An air-source heat pump (ASHP) differs from a ground-source heat pump (GSHP) in that:',
     options: [
-      'Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC',
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
+      'An ASHP can only provide hot water, whereas a GSHP provides both space heating and hot water, so GSHPs are mandatory in new-build',
+      'An ASHP uses electricity to drive the compressor, while a GSHP runs on the ground-loop temperature alone and needs no electrical supply',
+      'An ASHP extracts heat from ambient air via an external evaporator, while a GSHP extracts it from buried ground loops',
+      'An ASHP delivers a higher flow temperature than a GSHP, suiting older radiators, while the GSHP only suits underfloor heating',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 3,
     question: 'A variable-speed wind turbine uses power electronics to:',
     options: [
-      'An abstraction licence from the Environment Agency (or Natural Resources Wales/SEPA in Scotland), planning permission, and DNO connection approval under G98 or G99 — plus Fish and Environmental Impact assessments for the watercourse',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
-      'Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation',
-      'Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC',
+      'Lock the rotor to a fixed speed in all wind conditions so the generator output is always exactly 50 Hz without conversion',
+      'Step the generator voltage up to 11 kV directly, removing the need for a distribution transformer at the turbine base',
+      'Mechanically vary the gearbox ratio in real time so the generator always turns at synchronous speed regardless of wind speed',
+      'Let the rotor vary speed for maximum energy capture while still delivering power at fixed grid frequency via AC-DC-AC conversion',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'The Boiler Upgrade Scheme (BUS) in the UK provides:',
     options: [
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
-      'Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation',
-      'Voltage magnitude, frequency (50 Hz), phase sequence and phase angle — these must match the grid supply within specified tolerances before the generator can be synchronised and connected',
-      'Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology',
+      'Capital grants towards installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings',
+      'A per-kWh export tariff paid to households feeding renewable heat into a district heating network over a 20-year period',
+      'Interest-free loans repaid through the electricity bill, covering the full cost of any low-carbon heating system regardless of property',
+      'A reduced rate of VAT on replacement gas boilers, intended to keep heating affordable during the transition from fossil fuels',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Micro-hydro installations in the UK typically require:',
     options: [
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
-      'An abstraction licence from the Environment Agency (or Natural Resources Wales/SEPA in Scotland), planning permission, and DNO connection approval under G98 or G99 — plus Fish and Environmental Impact assessments for the watercourse',
-      'Voltage magnitude, frequency (50 Hz), phase sequence and phase angle — these must match the grid supply within specified tolerances before the generator can be synchronised and connected',
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
+      'Only a building notice to the local authority, since flowing water is exempt from connection rules under permitted development',
+      'An abstraction licence, planning permission, DNO approval under G98/G99 and an environmental impact assessment for the watercourse',
+      'An Ofgem generation licence and a grid-balancing contract with National Grid ESO before any water can be diverted to the turbine',
+      'A water company trade-effluent consent, because the discharge from the tailrace is classified as industrial wastewater',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Biomass Combined Heat and Power (CHP) systems:',
     options: [
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
-      'Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation',
-      'Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology',
+      'Generate electricity only, venting all combustion heat to atmosphere, which limits overall efficiency to around 30-40%',
+      'Store biomass-generated electricity in a battery for later release, achieving high efficiency by avoiding any heat losses',
+      'Generate both electricity and useful heat from biomass fuel, reaching 70-85% overall efficiency by using the waste heat',
+      'Use biomass solely as a back-up fuel for a heat pump, with electrical generation handled entirely by a separate diesel set',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 7,
     question: 'The main electrical maintenance requirement for an ASHP is:',
     options: [
-      'Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation',
-      'Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC',
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
+      'Annual replacement of the permanent-magnet rotor in the compressor motor, which wears out within twelve months of running',
+      'Topping up the refrigerant charge at every visit, as ASHPs are designed to lose a fixed proportion of refrigerant each year',
+      'Re-balancing the three-phase supply by swapping line conductors, as ASHPs always draw uneven current across the phases',
+      'Regular inspection of the supply, control wiring, contactors, defrost operation and compressor current against commissioning data',
     ],
     correctAnswer: 3,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     id: 8,
     question: 'A doubly-fed induction generator (DFIG) in a wind turbine:',
     options: [
-      'Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system',
-      'Voltage magnitude, frequency (50 Hz), phase sequence and phase angle — these must match the grid supply within specified tolerances before the generator can be synchronised and connected',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
-      'Still largely at demonstration and pre-commercial stage in the UK, with several prototype devices being tested in Scottish waters and the Severn Estuary — they offer predictable generation but face engineering challenges from the harsh marine environment',
+      'Has its stator direct to the grid and its rotor via a partial-rated converter (about 30%), giving variable speed cheaply',
+      'Routes all output through a full-rated converter sized for 100% of machine power, with both stator and rotor isolated from the grid',
+      'Has both stator and rotor connected directly to the grid with no converter, relying on the gearbox alone to fix the frequency',
+      'Uses two separate stator windings fed from different supply phases to double the output voltage with no rotor connection',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'When connecting a renewable generator to the grid, the key electrical parameters that must be matched are:',
     options: [
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
-      'Voltage magnitude, frequency (50 Hz), phase sequence and phase angle — these must match the grid supply within specified tolerances before the generator can be synchronised and connected',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
-      'Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system',
+      'Only the voltage magnitude, since frequency, phase sequence and phase angle adjust themselves once the breaker is closed',
+      'Voltage magnitude, frequency, phase sequence and phase angle, all matched within tolerance before the generator connects',
+      'Only the phase sequence and cable colour coding, since the DNO sets the voltage and frequency at the point of connection',
+      'The harmonic content and power factor only, with voltage and frequency matching unnecessary for an induction generator',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 10,
     question: "The UK's target for net zero greenhouse gas emissions by 2050 means:",
     options: [
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
-      'Generate both electricity and useful heat simultaneously from biomass fuel (wood chip, pellets, agricultural waste), achieving overall efficiencies of 70-85% by utilising the waste heat from electricity generation',
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
-      'Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC',
+      'A move away from electricity towards gas and oil heating, since these produce fewer emissions per kWh when burned efficiently',
+      'That all existing electrical installations must be rewired to 110 V to reduce the energy lost in distribution to consumers',
+      'A large increase in renewable generation, heat pumps, EV charging and storage, all needing maintenance by skilled technicians',
+      'A reduction in the total electrical maintenance workload, as renewable systems are designed to be entirely maintenance-free',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 11,
     question: 'Tidal and wave energy technologies are:',
     options: [
-      'An abstraction licence from the Environment Agency (or Natural Resources Wales/SEPA in Scotland), planning permission, and DNO connection approval under G98 or G99 — plus Fish and Environmental Impact assessments for the watercourse',
-      'Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system',
-      'Capital grants towards the cost of installing heat pumps and certain biomass boilers in existing domestic and small non-domestic buildings, replacing fossil fuel heating systems — encouraging the transition to low-carbon heating',
-      'Still largely at demonstration and pre-commercial stage in the UK, with several prototype devices being tested in Scottish waters and the Severn Estuary — they offer predictable generation but face engineering challenges from the harsh marine environment',
+      'The single largest source of renewable electricity in the UK, supplying more than offshore wind and solar combined',
+      'Banned in UK waters under marine conservation law, so all research has now moved overseas to France and Norway',
+      'Unpredictable and intermittent in the same way as wind, making them no more reliable than other renewable sources',
+      'Still largely at demonstration stage, tested in Scottish waters and the Severn, offering predictable but hard-won generation',
     ],
     correctAnswer: 3,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Electricity at Work Regulations 1989, renewable energy systems:',
     options: [
-      'Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology',
-      'Regular inspection of the electrical supply, control wiring, contactor condition, defrost system operation, refrigerant pressure/temperature readings, and compressor current draw — comparing with commissioning data to identify degradation',
-      'Voltage magnitude, frequency (50 Hz), phase sequence and phase angle — these must match the grid supply within specified tolerances before the generator can be synchronised and connected',
-      'Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system',
+      'Are treated as any other electrical system, so the duty holder must ensure safe installation, maintenance and competent work',
+      'Are exempt from the Regulations because they generate electricity from natural sources rather than from the grid',
+      'Are covered only while connected to the grid, with no duties applying when the system is operating in island mode',
+      'Fall solely under the F-Gas Regulations, so the EAWR 1989 has no application at all to their electrical systems',
     ],
     correctAnswer: 0,
     explanation:

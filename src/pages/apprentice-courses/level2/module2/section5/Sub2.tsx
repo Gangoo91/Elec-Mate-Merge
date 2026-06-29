@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why do transformer cores use a high-permeability material like silicon steel?',
     options: [
-      'Recorded values on test schedule/certificate',
-      'Short safety discussion on specific topics relevant to current work',
+      'It is cheaper than copper and easier to wind',
+      'It insulates the windings from the core',
       'It carries far more flux for the same magnetising current',
-      'A person with relevant knowledge, skills, and experience',
+      'It stops the core rusting in damp conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question: 'Why does this matter for an electrician?',
     options: [
       'Transformer ratings, motor torque and RCD sensitivity all come from how much flux is produced and how dense it is',
-      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
-      'Inhale sharply while covering the filters to check the mask draws inward against the face',
-      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
+      'It sets the maximum length a cable run can be before voltage drop fails',
+      'It decides the disconnection time of a protective device on an earth fault',
+      'It fixes the insulation resistance minimum for a new circuit',
     ],
     correctAnswer: 0,
     explanation:

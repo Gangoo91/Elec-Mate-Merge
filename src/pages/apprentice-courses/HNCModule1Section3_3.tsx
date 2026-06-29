@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'permit-purpose',
     question: 'What is the primary purpose of a permit to work system?',
     options: [
-      'Replacing suspect components with known good ones',
+      'To record the hours worked by each operative for payroll purposes',
       'To ensure a formal check is made that a safe system is in place',
-      'They are unpredictable and likely to be drilled into',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
+      'To speed up high-risk work by removing the need for a risk assessment',
+      'To transfer all legal responsibility for safety onto the worker',
     ],
     correctIndex: 1,
     explanation:
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     id: 'loto-first',
     question: 'What is the first step in a Lockout/Tagout (LOTO) procedure?',
     options: [
-      'Environmental Impact Assessment',
-      'The business owner/last holder',
+      'Apply the personal lock to the isolation device',
+      'Prove the equipment dead with a voltage indicator',
       'Identify all energy sources',
-      'Domestic (household) premises only.',
+      'Notify the maintenance team that work is complete',
     ],
     correctIndex: 2,
     explanation:
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'hot-work',
     question: 'How long should fire watch continue after hot work is completed?',
     options: [
-      '30 minutes',
-      'No fire watch needed',
       'At least 60 minutes',
-      'Only during work',
+      'At least 30 minutes',
+      'At least 15 minutes',
+      'At least 5 minutes',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Fire watch should continue for at least 60 minutes after hot work is completed, as many fires start from smouldering materials after the work has finished.',
   },
@@ -74,9 +74,9 @@ const quickCheckQuestions = [
     id: 'permit-cancel',
     question: 'Who can cancel or close a permit to work?',
     options: [
-      'The value compared to BS 7671 maximum limits',
-      'Those working towards qualification with basic competence',
-      'Chest compressions without rescue breaths',
+      'Any worker who was named on the permit',
+      'The client or building owner once the work looks finished',
+      'The first person to arrive on site the following day',
       'The authorising person or competent designated person',
     ],
     correctIndex: 3,
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'When is a permit to work system required?',
     options: [
-      'They present complex control systems as easy-to-read graphics and summaries',
+      'For every task carried out on a construction site, however minor',
       'For high-risk activities where normal controls are insufficient',
-      'Enforcement notices, prohibition notices, or prosecution',
-      'Smart building systems including BMS and integrated controls',
+      'Only when an HSE inspector specifically requests one',
+      'For routine low-risk maintenance such as changing a light fitting',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'What are the key elements of an effective permit to work?',
     options: [
-      'Location, nature of work, fire precautions, fire watch requirements',
-      'A competent person with knowledge of the plant and authority to issue permits',
+      'Worker names, job titles, pay rates and shift patterns',
+      'A list of tools, materials and consumables to be used',
       'Hazard identification, precautions, authorisation, time limits, and handback',
-      'To formally document that systems are isolated and safe for work',
+      'The client contact details and the agreed completion date',
     ],
     correctAnswer: 2,
     explanation:
@@ -130,9 +130,9 @@ const quizQuestions = [
     question: "Who is the 'Authorising Person' in a permit system?",
     options: [
       'A competent person with knowledge of the plant and authority to issue permits',
-      'To formally document that systems are isolated and safe for work',
-      'Testing that no voltage is present using an approved voltage indicator',
-      'To ensure their personal safety - no one else can remove it',
+      'The most junior member of the team carrying out the work',
+      'Any person who happens to be present when the work begins',
+      'The client representative who commissioned the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "What is 'proving dead' in electrical isolation?",
     options: [
-      'Remains outside to maintain communication and initiate rescue',
-      'To formally document that systems are isolated and safe for work',
+      'Confirming the isolator is in the off position by sight alone',
+      'Switching off the supply at the main consumer unit',
       'Testing that no voltage is present using an approved voltage indicator',
-      'Location, nature of work, fire precautions, fire watch requirements',
+      'Applying a personal lock to the isolation device',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'What information must a hot work permit include?',
     options: [
-      'Hazard identification, precautions, authorisation, time limits, and handback',
-      'To control entry to dangerous areas during maintenance',
-      'Remains outside to maintain communication and initiate rescue',
+      'The cost of the work and the rates charged by the contractor',
+      'The names and contact details of every person on the site',
+      'The make and model of the welding equipment being used only',
       'Location, nature of work, fire precautions, fire watch requirements',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: "What is the purpose of a 'Limitation of Access' permit?",
     options: [
       'To control entry to dangerous areas during maintenance',
-      'Location, nature of work, fire precautions, fire watch requirements',
-      'Remains outside to maintain communication and initiate rescue',
-      'Cancel the existing permit and raise a new one',
+      'To limit the number of hours a worker may spend on a task',
+      'To restrict which tools may be brought onto the site',
+      'To cap the budget allocated to a maintenance activity',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "In confined space entry, what does the 'Top Man' or 'Standby Person' do?",
     options: [
-      'Testing that no voltage is present using an approved voltage indicator',
+      'Enters the space first to test the atmosphere before the others',
       'Remains outside to maintain communication and initiate rescue',
-      'Cancel the permit and reapply for a new one',
-      'To formally document that systems are isolated and safe for work',
+      'Supervises the work from the nearest control room by radio',
+      'Carries out the work inside while a colleague waits outside',
     ],
     correctAnswer: 1,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: "What is an 'isolation certificate' used for?",
     options: [
-      'Hazard identification, precautions, authorisation, time limits, and handback',
-      'Testing that no voltage is present using an approved voltage indicator',
-      'Remains outside to maintain communication and initiate rescue',
+      'To certify that a worker is competent to carry out isolation',
+      'To record the calibration date of the voltage indicator used',
+      'To confirm a building has been evacuated before work starts',
       'To formally document that systems are isolated and safe for work',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: 'Why must each worker apply their own personal lock during LOTO?',
     options: [
       'To ensure their personal safety - no one else can remove it',
-      'Location, nature of work, fire precautions, fire watch requirements',
-      'Remains outside to maintain communication and initiate rescue',
-      'To control entry to dangerous areas during maintenance',
+      'To identify which worker is the most senior on the team',
+      'To share the cost of the locks evenly across the team',
+      'To prove the worker has attended the toolbox talk',
     ],
     correctAnswer: 0,
     explanation:

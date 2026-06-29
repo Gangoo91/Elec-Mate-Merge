@@ -12,22 +12,22 @@ const quickCheckQuestions = [
   {
     question: 'Why should IoT devices be on a separate network from main computers and phones?',
     options: [
-      'To improve Wi-Fi speed for streaming',
+      'To improve Wi-Fi speed for video streaming',
+      'To reduce the home’s overall electricity usage',
+      'To make the initial device setup easier',
       'To isolate vulnerable devices and limit breach impact',
-      'To reduce electricity usage',
-      'To make setup easier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Network segmentation isolates IoT devices from sensitive devices like computers and phones. If an IoT device is compromised, the attacker cannot easily access banking details or personal files on other devices.',
   },
   {
     question: 'What is the primary privacy risk of cloud-connected smart home devices?',
     options: [
-      'Increased electricity bills',
-      'Data collection and potential third-party access to personal information',
-      'Slower device response times',
-      'Higher purchase costs',
+      'Increased monthly electricity bills',
+      'Data collection and possible third-party access to personal information',
+      'Slower response times from the devices',
+      'Higher upfront purchase costs for hardware',
     ],
     correctAnswer: 1,
     explanation:
@@ -36,10 +36,10 @@ const quickCheckQuestions = [
   {
     question: 'What should electricians recommend for router security?',
     options: [
-      'Using the default password for convenience',
-      'Disabling all encryption',
+      'Keeping the default password for convenience',
+      'Disabling all encryption on the network',
       'Using WPA3 encryption with a strong, unique password',
-      'Leaving the network open for easier setup',
+      'Leaving the network open to make setup easier',
     ],
     correctAnswer: 2,
     explanation:
@@ -63,12 +63,12 @@ const quizQuestions = [
   {
     question: 'Why is firmware updating important for smart home devices?',
     options: [
-      'To change the device colour',
+      'To change the colour of the device',
+      'To increase the device’s power consumption',
+      'To void the manufacturer’s warranty',
       'To patch security vulnerabilities and improve functionality',
-      'To increase power consumption',
-      'To void the warranty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Firmware updates patch security vulnerabilities discovered after manufacture, fix bugs, and may add new features. Keeping devices updated is essential for maintaining security.',
   },
@@ -76,10 +76,10 @@ const quizQuestions = [
     question:
       'What is the risk of using devices from manufacturers with poor security track records?',
     options: [
-      'Lower purchase price',
+      'A lower upfront purchase price',
       'Vulnerabilities may never be patched, leaving devices exposed',
-      'Better aesthetics',
-      'Faster setup',
+      'Better-looking hardware and packaging',
+      'A faster initial setup process',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,22 +88,22 @@ const quizQuestions = [
   {
     question: 'What is end-to-end encryption?',
     options: [
-      'Encrypting only the first data packet',
+      'Encrypting only the first data packet sent',
+      'Encryption that is applied only at night',
       'Data encrypted from source to destination, unreadable in transit',
-      'Encryption used only at night',
-      'A type of Wi-Fi protocol',
+      'A particular type of Wi-Fi connection protocol',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'End-to-end encryption ensures data is encrypted from the sending device to the receiving device, meaning even the service provider cannot read the data in transit.',
   },
   {
     question: 'What role should electricians play in smart home security?',
     options: [
-      'None - security is not their concern',
-      'Advising customers on basic security practices and secure configuration',
-      'Hacking into the system to test it',
-      'Installing antivirus software',
+      'None at all, since security is not their concern',
+      'Advising customers on basic security and secure configuration',
+      'Hacking into the system themselves to test its defences',
+      'Installing antivirus software on the customer’s devices',
     ],
     correctAnswer: 1,
     explanation:

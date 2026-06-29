@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'How does adjusting the DC excitation current of a synchronous motor affect its power factor?',
     options: [
-      'Risks should be weighed against the cost, time, and effort of reducing them',
-      'To carry out a suitable and sufficient assessment of the risks to employees and others affected by the undertaking',
+      'Changing excitation has no effect on power factor — only the mechanical load does',
+      'Reducing excitation below the normal value forces the motor to a leading power factor',
       'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
-      'Focuses on identifying and changing current thought patterns and behaviours, producing results in a structured timeframe',
+      'Increasing excitation always drives the power factor towards unity regardless of level',
     ],
     correctIndex: 2,
     explanation:
@@ -44,9 +44,9 @@ const quickCheckQuestions = [
       'Before connecting an alternator in parallel with the grid, which parameters must be matched?',
     options: [
       'Voltage magnitude, frequency, phase sequence, and phase angle',
-      'A temporary disturbance in brain function caused by a blow or jolt to the head',
-      'No - does not meet the 30 days with 20+ workers threshold',
-      'Noise, dust, vibration, weather conditions, contaminated ground',
+      'Voltage magnitude and frequency only — phase angle adjusts itself',
+      'Power factor, load current, winding temperature, and earth resistance',
+      'Frequency and phase angle only — voltage is matched after closing',
     ],
     correctIndex: 0,
     explanation:
@@ -60,10 +60,10 @@ const quizQuestions = [
     question:
       'What is the fundamental difference between a synchronous motor and an induction motor?',
     options: [
-      'Variation of system voltage and equipment impedance from nominal values',
+      'A synchronous motor has no rotor windings, relying entirely on the stator field',
       'A synchronous motor runs at exactly synchronous speed with no slip, using DC excitation on the rotor',
-      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
-      'Cool with water for 20+ minutes, cover with sterile dressing, seek medical help',
+      'A synchronous motor always runs faster than synchronous speed when loaded',
+      'A synchronous motor can only operate on a DC supply, not on AC',
     ],
     correctAnswer: 1,
     explanation:
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 2,
     question: 'The frequency of the output voltage of an alternator is determined by:',
     options: [
-      'Combined control achieving 30-50% energy savings',
-      'By preventing wasted effort on components that are not faulty',
+      'The DC field excitation current and the load power factor',
+      'The terminal voltage and the cross-sectional area of the stator windings',
       'The rotor speed and the number of poles: f = (p x N) / 120',
-      'Insulation monitoring, first fault indication, and maintenance procedures',
+      'The connected load and the rated kVA of the machine',
     ],
     correctAnswer: 2,
     explanation:
@@ -86,9 +86,9 @@ const quizQuestions = [
     id: 3,
     question: "What is a 'synchronous condenser'?",
     options: [
-      'Because it has no starting torque of its own — the rotor must be brought close to synchronous speed before it can lock into step with the rotating field',
-      'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
+      'A capacitor bank that is switched in step with the supply frequency',
+      'A device that converts the AC excitation supply into smooth DC for the rotor',
+      'A synchronous generator driven faster than synchronous speed to export power',
       'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
     ],
     correctAnswer: 3,
@@ -100,9 +100,9 @@ const quizQuestions = [
     question: 'Why does a synchronous motor require special starting arrangements?',
     options: [
       'Because it has no starting torque of its own — the rotor must be brought close to synchronous speed before it can lock into step with the rotating field',
-      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
-      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
-      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
+      'Because the DC field winding draws a dangerously high inrush current at standstill',
+      'Because the stator windings cannot be energised until the rotor is already turning',
+      'Because the supply frequency must be reversed before the rotor will accelerate',
     ],
     correctAnswer: 0,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the 'pull-out torque' of a synchronous motor?",
     options: [
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
+      'The torque produced by the damper windings during starting from standstill',
+      'The minimum torque needed to pull the rotor into synchronism at start-up',
       'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
-      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
+      'The torque lost to friction and windage when the motor runs unloaded',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,9 +154,9 @@ const quizQuestions = [
       "What is the purpose of 'damper windings' (amortisseur windings) on a synchronous motor rotor?",
     options: [
       'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
-      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
-      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
+      'To supply the DC excitation current directly to the main field poles',
+      'To increase the pull-out torque so the motor can carry heavier overloads',
+      'To regulate the output voltage as the mechanical load on the motor changes',
     ],
     correctAnswer: 0,
     explanation:
@@ -167,10 +167,10 @@ const quizQuestions = [
     question:
       'When an alternator is operating in parallel with the grid, increasing the prime mover fuel input causes:',
     options: [
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
+      'The output frequency to rise above the grid frequency',
       'The real power (kW) output to increase — the grid holds the frequency constant',
-      'The rotor speed and the number of poles: f = (p x N) / 120',
-      'A hydroelectric turbine at low speed (e.g., 150 rev/min)',
+      'The reactive power (kVAr) output to increase while real power stays fixed',
+      'The terminal voltage to rise while the power output stays unchanged',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'What instrument is used to determine the exact moment for closing the paralleling breaker when synchronising an alternator?',
     options: [
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
+      'A tachometer — it confirms the rotor has reached synchronous speed',
+      'A power factor meter — it confirms the machine is at unity power factor',
       'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
-      'The real power (kW) output to increase — the grid holds the frequency constant',
+      'A phase rotation meter — it confirms the phase sequence matches the busbar',
     ],
     correctAnswer: 2,
     explanation:
@@ -194,9 +194,9 @@ const quizQuestions = [
     id: 11,
     question: 'Hunting in a synchronous motor refers to:',
     options: [
-      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
-      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
+      'The gradual rise in winding temperature when the motor runs at full load',
+      'The search for the correct excitation level to achieve unity power factor',
+      'The momentary surge of current drawn the instant the motor is switched on',
       'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
     ],
     correctAnswer: 3,
@@ -209,9 +209,9 @@ const quizQuestions = [
       'What type of prime mover is typically used with a high-pole-number (e.g., 40-pole) synchronous generator?',
     options: [
       'A hydroelectric turbine at low speed (e.g., 150 rev/min)',
-      'Increased resistance causes overheating, arcing, and eventual failure',
-      'To maintain circuit integrity during fire',
-      'In the room containing the room thermostat',
+      'A steam turbine at high speed (e.g., 3,000 rev/min)',
+      'A gas turbine at high speed (e.g., 3,000 rev/min)',
+      'A high-speed two-pole aero-derivative turbine',
     ],
     correctAnswer: 0,
     explanation:

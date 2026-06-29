@@ -41,10 +41,10 @@ const checks = [
     id: 'm5-s1-sub6-purpose',
     question: 'Initial verification serves three primary purposes:',
     options: [
-      'The consequences of the failure are low (no safety or environmental impact, minimal operational disruption) and the cost of preventive maintenance would exceed the cost of allowing the failure to occur and repairing it',
-      'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
-      'To confirm the installation complies with BS 7671 before energising, to provide documented evidence for the duty holder, and to discharge the EAWR Reg 4(1) duty on the contractor.',
-      'Whether people understand their role in the organisation and whether the organisation ensures they do not have conflicting roles',
+      'To estimate the ongoing running cost of the installation for the client.',
+      'To register the completed installation with the supply distributor (DNO).',
+      'To confirm BS 7671 compliance before energising, evidence it, and discharge the EAWR duty.',
+      'To set the price for any future maintenance contract on the installation.',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     id: 'm5-s1-sub6-info-set',
     question: 'Per Reg 642.1, the inspector needs to know which of the following BEFORE starting initial verification?',
     options: [
-      'Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor\\\\\\\\\\\\\\\'s team. For a client representative the escort is usually the Project Manager or Site Manager because they\\\\\\\\\\\\\\\'ll want to talk through progress, snags and any commercial issues.',
-      'Maximum demand, number and type of live conductors, type of earthing arrangement, Ze, prospective short-circuit at the origin, type and rating of overcurrent protective devices, RCD types and IΔn values, conductor cross-sections and lengths.',
-      'Dedicated RCD column(s) on the per-circuit row of the STR — typically headed "RCD trip time at IΔn" with sub-columns for the test current used and the measured trip time. Plus a note that the user test facility was verified.',
-      'Confirm the design ultimate column (committed plus foreseeable future loads) does not exceed the 100 A intake. If ultimate is below 100 A with reasonable headroom, proceed; if approaching or exceeding, raise with the DNO for upgrade or load-management connection now while the CU is open.',
+      'Only the address of the property and the name of the paying client.',
+      'Max demand, conductor and earthing arrangement, Ze, PFC, device and RCD data, cable sizes.',
+      'Only the make and model of the consumer unit being installed on the job.',
+      'Only the date the work was completed and the installer\'s scheme membership number.',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The "purpose" of initial verification per Reg 641.1 is best described as:',
     options: [
-      'Care is a behaviour, not a control. Controls have to be physical, procedural or PPE, and the higher the risk the more substantive the control needs to be',
+      'To estimate the energy efficiency of the completed installation.',
       'To verify, so far as is reasonably practicable, that the requirements of the Regulations have been met, before the installation is put into service.',
-      'Post-Traumatic Growth across multiple domains including new possibilities, meaning, and appreciation of life',
-      'Adiabatic check (Reg 543.1.3) shows armour csa is sufficient: S >= sqrt(I²t)/k — and earth fault loop impedance verifies disconnection time is met',
+      'To record the cost of the materials and labour used.',
+      'To set the recommended date for the next periodic inspection only.',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'Initial verification differs from periodic inspection in that:',
     options: [
-      'Yes — design Zs ≤ Table 41.3 max, ADS will clear in time. The design should still target lower Zs (under 0.8 × 2.73 = 2.18 Ω) to leave headroom for measurement uncertainty and operating-temperature confidence at handover.',
-      'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
-      'Initial verification confirms a NEW installation (or addition/alteration) complies with current BS 7671 before service. Periodic inspection assesses an EXISTING installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ongoing safety.',
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
+      'Initial verification uses only visual inspection, while periodic inspection uses only testing.',
+      'Initial verification is carried out by the client, while periodic inspection is carried out by the electrician.',
+      'Initial verification confirms a NEW installation (or addition/alteration) complies with current BS 7671 before service. Periodic inspection assesses an EXISTING installation\'s ongoing safety.',
+      'Initial verification applies only to commercial work, while periodic inspection applies only to domestic work.',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'The Ze value the inspector needs is:',
     options: [
-      'Tell them clearly the comments are not OK, and report it to your supervisor or HR if it continues — this may be harassment under Equality Act 2010 s.26',
-      'TN-C-S (PNB) is the British term for what was loosely called "PME" — combined Protective Earth and Neutral conductor in the supply, separated at the cut-out — A4:2026 standardises the terminology and reinforces design rules',
-      'Initial verification confirms a NEW installation (or addition/alteration) complies with current BS 7671 before service. Periodic inspection assesses an EXISTING installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ongoing safety.',
-      'Either declared by the supply distributor (TN-S 0.8 Ω max, TN-C-S 0.35 Ω max are typical declared maxima) or measured at the supply intake. The actual value at the site informs the Zs calculations downstream.',
+      'The total earth fault loop impedance at the furthest socket on each final circuit.',
+      'The insulation resistance measured between line and earth at the origin of supply.',
+      'The prospective short-circuit current declared by the DNO for the supply.',
+      'Either declared by the DNO or measured at the supply intake, feeding the Zs calculations.',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'On a CU change, the inspector needs the original installation\'s as-built data because:',
     options: [
-      'To know the cable sizes and routes downstream of the CU — these affect circuit Zs, R1+R2 expectations, and protective device selection. Without this data the new CU might be incorrectly populated.',
-      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
-      'The principal designer should coordinate the designers to compare the risks of each approach, apply the general principles of prevention, and agree on the solution that best manages overall risk',
-      'Asbestos awareness training, refreshed regularly, before starting work — covering risks, types of ACMs, and what to do if they are encountered',
+      'To know the downstream cable sizes and routes, which drive Zs, R1+R2 and device selection.',
+      'To confirm the date the property was originally built and first wired.',
+      'To calculate the ongoing running cost of the existing installation for the client.',
+      'To identify the original installer of the installation for warranty purposes.',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Designer\'s data should include declared compliance with BS 7671 plus any "departures". A departure is:',
     options: [
-      'Below the 1.0 MΩ minimum from Table 64 → fail. Investigate: damaged cable insulation, water ingress at a back-box, a wired-up neutral that is touching earth somewhere, a trapped conductor under a pinch screw. Do not energise.',
-      'A specific aspect of the design that does not comply with BS 7671 but achieves equivalent safety via an alternative standard or technical justification — must be documented on the EIC with the alternative referenced.',
-      'Multiple hazards interact and compound each other — the combined effect can exceed the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety margin even when each individual hazard alone would not',
-      'A simplified representation of the power distribution system showing transformers, switchgear, cables, and protection devices using single lines to represent three-phase circuits',
+      'A circuit that has been left disconnected and has not yet been commissioned.',
+      'A design aspect that does not meet BS 7671 but achieves equivalent safety, recorded on the EIC.',
+      'A test result that falls just below the acceptable minimum value for the circuit.',
+      'A change of installer part-way through the construction phase of the project.',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'When initial verification information is incomplete or incorrect, the inspector\'s correct response is:',
     options: [
-      'Regularly eating large quantities of food very quickly to the point of discomfort, with a feeling of loss of control, without compensatory purging',
-      'Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.',
-      'Stop, escalate to the designer/contractor, get the missing data, then proceed. Where data cannot be provided, document the limitation on the EIC and assess whether verification can proceed at all.',
-      'Anyone working without close supervision (often by themselves on a site or in a property); needs check-in procedures, dynamic risk assessment, and a way to summon help',
+      'Estimate the missing values from experience and proceed without any comment.',
+      'Sign the EIC anyway, noting only that the work looked satisfactory on the day.',
+      'Stop, escalate to get the data, then proceed or record a limitation on the EIC.',
+      'Refuse to carry out any further work on the installation, permanently and outright.',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 7,
     question: 'For a new build housing development, initial verification is typically carried out:',
     options: [
-      'To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable',
-      'From the load side of the RCD between L and PE — at the furthest practicable point on each circuit it protects, with both 0° and 180° starting phase',
-      'For moderate to severe depression, or when the person has a history of recurrent depression and has previously responded well to antidepressants',
-      'In stages — during erection (first-fix verification of buried items before cover-up), at second-fix completion, and final at energisation. Reg 641.1 explicitly covers "during erection and on completion".',
+      'Only once, after the new occupants have already moved into the property.',
+      'Only at the design stage, before any of the cables have been installed.',
+      'Entirely by the building control officer rather than by the electrician.',
+      'In stages — during erection, at second-fix and finally at energisation, per Reg 641.1.',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'The information set for initial verification is also useful for:',
     options: [
-      'Future periodic inspections, future alterations, fault diagnosis, scheme audit response, and as part of the Reg 132.13 documentation pack handed to the user.',
-      'Use clear subject lines, keep messages short, only CC people who need it, and avoid sending sensitive info as attachments without checking the recipient',
-      'Escalate above the supervisor (your own employer, the principal contractor, your scheme provider) and record the conversation in writing',
-      'F10 notice (where required), site rules, fire plan, first-aid info, the H&S policy statement and current toolbox talk topics',
+      'Future EICRs, alterations, fault diagnosis, scheme audit and the Reg 132.13 user pack.',
+      'Calculating the VAT due on the installation and certification work.',
+      'Deciding the colour scheme for the new consumer unit enclosure.',
+      'Setting the client\'s electricity import tariff with their chosen supplier.',
     ],
     correctAnswer: 0,
     explanation:
@@ -730,10 +730,10 @@ export default function Sub6() {
             id="m5-s1-sub6-init-verif-three-purposes"
             question="An apprentice is asked &quot;why bother with initial verification on a small new circuit if you watched it being installed?&quot;. What&apos;s the honest answer?"
             options={[
-              "Because the boss says so.",
-              "Three converging reasons. Technical — BS 7671 Reg 641.1 requires every installation to be inspected and tested before being put into service. Legal — EAWR 1989 Reg 4(1) makes maintaining the system safe a statutory duty, and the EIC is the documentary evidence the duty was discharged at handover. Documentary — the customer / next inspector relies on the EIC for the design intent and the as-built measured values. Watching install ≠ verification.",
-              "Because the trainer wants to see the apprentice doing tests.",
-              "Verification is optional on small jobs.",
+              "Because the boss on the job says so and wants the paperwork filled in.",
+              "Three reasons — technical (Reg 641.1), legal (EAWR Reg 4(1)) and documentary (the EIC record).",
+              "Because the trainer wants to see the apprentice doing the tests for assessment.",
+              "Verification is optional on small jobs where you watched the whole install yourself.",
             ]}
             correctIndex={1}
             explanation="Initial verification is the legal, technical and documentary closure of every install. Reg 641.1 sets the technical duty; EAWR 1989 sits behind it as the statutory framework; the EIC is the deliverable. Watching the install gives no measured Zs, no IR readings, no recorded test data — none of which can be reconstructed later if a problem emerges."

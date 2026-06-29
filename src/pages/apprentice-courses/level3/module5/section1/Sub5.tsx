@@ -41,10 +41,10 @@ const checks = [
     id: 'm5-s1-sub5-tp-isolation',
     question: 'Safe isolation of a three-phase circuit requires you to prove dead between:',
     options: [
-      'National Grid Electricity Transmission (NGET) — the transmission owner. The independent operator is now the National Energy System Operator (NESO).',
-      'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
-      'Each line conductor (L1, L2, L3) to neutral, each line conductor to earth, and between every pair of line conductors (L1-L2, L2-L3, L1-L3) — ten readings minimum to confirm absolute isolation.',
-      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
+      'Only L1 to neutral, as the three line conductors are electrically identical to each other.',
+      'Only each line conductor to earth, ignoring the neutral and the line-to-line readings.',
+      'Every line to neutral, every line to earth and every line pair — ten readings minimum.',
+      'Only between L1 and L2, as proving one phase pair confirms that the rest are dead.',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     id: 'm5-s1-sub5-multi-supply',
     question: 'A commercial site has solar PV, a standby generator, and a UPS. To safely isolate a circuit fed from the main board:',
     options: [
-      'Identify ALL sources that could feed the circuit (mains, PV, generator, UPS), isolate every source point, lock off every isolator, and prove dead at the work location after every isolation step.',
-      'No, towers must always be erected on firm, level ground — the base must be levelled using adjustable legs within the manufacturer\\\\\\\\\\\\\\\'s specified range',
-      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
-      'Information about the existing site, including ground conditions, existing structures, hazardous substances (such as asbestos), and any relevant survey results',
+      'Identify every source, isolate and lock off each one, then prove dead at the work location.',
+      'Open the main switch only, since that single device disconnects the whole installation.',
+      'Isolate the mains and the generator, but leave the solar PV running while in daylight.',
+      'Switch off the UPS and rely on the RCD to cut off the remaining sources of supply.',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A "permit to work" is required when:',
     options: [
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
-      'The work involves additional risks beyond routine activities — typically live work, work on or near HV, work in confined spaces, work in dangerous atmospheres, or work where multiple trades interact and conflicts must be controlled.',
-      'Shadowing commercial electricians (vicarious experience), completing small commercial tasks under supervision (mastery experience), and managing anxiety about the transition (emotional regulation)',
-      'Designer (Reg 132.13 design pack) → installer (as-built records, mark-ups, materials register) → tester (Schedule of Test Results, RCD/Zs witness sheets) → certifier (EIC top-level signed declarations) → customer (full O&M pack including all of the above).',
+      'Every time any electrical work is carried out, however routine the task may be.',
+      'The work carries additional risks — live work, HV, confined spaces or interacting trades.',
+      'Only when an apprentice is carrying out the electrical work without direct supervision.',
+      'Only for electrical work that is expected to last longer than one full working day.',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'GS38 (HSE Guidance Note) addresses:',
     options: [
-      'Allow proper stabilisation time, control environmental conditions, check for mechanical wear or electrical noise, and implement shielding if necessary',
-      'Process them only for the agreed purpose (the cert), store them securely, share only with parties who need them (e.g. landlord, scheme provider), and have a privacy notice telling the customer what you do with their data',
-      'Test equipment leads, probes and accessories — limiting exposed metal at the probe tip, fused leads, no clip ends for live testing, current limiters, and the requirement for prove/test/prove on a known-good supply.',
-      'Ongoing, consistent maintenance of healthy habits, relationships, and coping strategies — treating wellbeing as a continuous practice, not a destination',
+      'The minimum insulation resistance values required for new electrical installations.',
+      'The maximum permitted disconnection times for final circuits under fault conditions.',
+      'Test leads, probes and accessories — exposed tip, fusing, no live clips, prove/test/prove.',
+      'The recommended frequency of periodic inspection for the different premises types.',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'A two-pole voltage indicator (rather than a multimeter) is preferred for proving dead because:',
     options: [
-      'You’re at the OSG limit. Adding more cables breaches the fill factor and likely the cable grouping (Cg) derate too — you need bigger trunking or a separate run',
-      'New circuits; consumer unit replacements; work in special locations (kitchens were removed from notifiable in 2013, but work in bathrooms / outdoors / swimming pools etc remains). Must be done by Competent Person Scheme registered installer OR notified to building control.',
-      'Verbally explain what was found and repaired, confirm the equipment is safe to operate, demonstrate correct operation, document the handover, and note any recommendations or limitations',
-      'It does not have selectable ranges that can be on the wrong setting, it indicates voltage by direct measurement (no battery dependency for the reading), and most include a current-limited indication that meets GS38.',
+      'It can also measure resistance and continuity at the same time as voltage.',
+      'It is cheaper than a multimeter and is therefore far more widely available.',
+      'It reads a much wider voltage range than any multimeter on the market.',
+      'It has no wrong range to select on, needs no battery to indicate, and meets GS38.',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'Lock-off devices on a CU breaker after isolation:',
     options: [
-      'Are essential — they prevent re-energisation by another person who might assume the breaker is off because of a tripped fault. Multiple lock-offs allow each person working on the circuit to fit their own padlock.',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
-      'Per CAR 2012 Reg 6 (assessment) + Reg 8 (licensed work) + HSE guidance L143. Considers: type of asbestos (chrysotile/amosite/crocidolite); friability; quantity; nature of work (removal vs encapsulation vs observation); duration; exposure level.',
-      'Tissue damage caused by current passing through the body OR by arc / flash heating the skin. Internal burns can be severe with small surface marking. Different from thermal burns (cooler at surface; hotter at depth).',
+      'Are essential — they stop another person re-energising the breaker while you work.',
+      'Are optional provided you can see the breaker from where you are actually working.',
+      'Are only needed on three-phase distribution boards, not on single-phase ones.',
+      'Are only required when working on the supply side of the consumer\'s meter.',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'The implications of NOT isolating before working include risk to:',
     options: [
-      'It is denser than air and accumulates at low levels, is an asphyxiant that displaces oxygen, and at higher concentrations acts as a direct toxin affecting the central nervous system',
-      'The electrician (shock, burn, arc flash), other personnel on site, customers/clients, the public if the work affects public-accessible parts, and building systems (consequential damage from arc faults, fire spread).',
-      'A DC isolator must be provided at each PV array adjacent to the inverter, suitable for switching DC under load and clearly identified for rapid emergency disconnection',
-      'Dated photographs (before, during, after), a completed minor works certificate, a witness testimony from the supervising electrician, and a reflective account',
+      'Only the electrician carrying out the work, and no other person on the site.',
+      'The electrician, other site personnel, clients, the public, and building systems.',
+      'Only the test instruments being used during the work, and no people at all.',
+      'Only the equipment being worked on, provided insulating gloves are worn.',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'When carrying out safe isolation in a domestic property where the occupier is at home, the implications to consider include:',
     options: [
-      'Stop immediately. Re-isolate at the correct point. Prove dead again. Investigate why the original isolation was incomplete (wrong device locked off, back-fed circuit, alternative supply source, parallel CPC path, induced voltage). Document the near-miss.',
-      's.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades, visitors. On a domestic install it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s s.3 that catches the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s family. On a commercial fit-out it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s s.3 that catches the trades next to you.',
-      'Loss of supply to lighting, heating, refrigeration, medical equipment, computers and security systems. Brief the occupier in advance, plan timing around their needs, provide temporary lighting if needed, and minimise duration.',
-      'HSE guidance "Electricity at Work — Safe Working Practices". Detailed practitioner guidance on EAWR compliance including isolation procedures, live working defences, competence and supervision. The non-statutory companion to EAWR.',
+      'Whether the occupier currently holds a valid EICR for the property being worked on.',
+      'Whether the supply is TN-S or TN-C-S at the cut-out feeding the installation.',
+      'Loss of supply to lighting, heating, refrigeration, medical equipment and computers.',
+      'Whether the consumer unit already meets the latest published amendment of BS 7671.',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 7,
     question: 'The implications of safe isolation on building systems can include:',
     options: [
-      'USB is a significant attack vector — controls include disabling unused ports, whitelisting approved devices, scanning all media before use, and restricting personal USB devices from OT areas',
-      'Evidence in your portfolio of planned approaches, prioritisation decisions, deadline management, and professional communication about timescales — demonstrated through activity logs, reflective accounts and witness statements',
-      'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
-      'Loss of fire alarm interfaces, loss of automatic doors, loss of emergency lighting (if isolated), interruption of process equipment, loss of computer-room cooling, loss of safety-critical controls in industrial environments. Plan and brief accordingly.',
+      'A permanent improvement in the building\'s overall energy performance rating.',
+      'An automatic increase in the supply\'s prospective fault current at the origin.',
+      'A measurable reduction in the earth fault loop impedance of every final circuit.',
+      'Loss of fire alarms, automatic doors, emergency lighting, cooling and process controls.',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'The prove-test-prove sequence with a known-good supply means:',
     options: [
-      'Prove the voltage indicator works on a known live source (often a proving unit), test the conductors at the work location to confirm dead, then re-prove the indicator on the known live source to confirm it didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fail during the test.',
-      'The architect must consider how the glazing will be safely cleaned throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries',
-      'Complete the portfolio before the gateway is opened — the portfolio is a gateway requirement and must meet the EPAO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s minimum standards before the submission can be made',
-      'Identify the discharged cells as defective (sulphation or open internal connection), test specific gravity, and replace as a matched set; never mix new and old cells in a series string',
+      'Prove the indicator on a known live source, test the conductors dead, then re-prove the indicator.',
+      'Test the circuit twice with a multimeter and average the two readings for accuracy.',
+      'Prove the circuit is dead, then briefly re-energise it to confirm the indicator works.',
+      'Test the indicator only at the very end, after all of the work has been completed.',
     ],
     correctAnswer: 0,
     explanation:
@@ -696,10 +696,10 @@ export default function Sub5() {
             id="m5-s1-sub5-multi-source-isolation"
             question="An EICR is booked on a domestic install with a 4 kWp PV array, a 10 kWh battery and a 7 kW EV charger. The inspector must isolate the installation for the dead-test stage. What does &quot;isolated&quot; mean here?"
             options={[
-              "Open the main switch — that&apos;s enough.",
-              "Open every source — DNO main switch, PV DC isolator at the array, PV AC isolator at the inverter, battery DC isolator, EV charger isolator, plus prove-dead at the work point. PV strings remain live in daylight even with the AC side open; the battery holds stored DC; the EV charger may have its own backfeed path. Single-source isolation is unsafe on multi-source installs.",
-              "Trip the RCD and walk away.",
-              "Only the DNO disconnects can fully isolate it.",
+              "Open the main switch alone — for a domestic install that is always enough.",
+              "Open every source — DNO, PV DC and AC, battery DC and EV charger — then prove dead.",
+              "Trip the 30 mA RCD on the consumer unit and walk away to start the dead tests.",
+              "Only the DNO’s own disconnection at the cut-out can fully isolate this install.",
             ]}
             correctIndex={1}
             explanation="Multi-source installations require every source to be addressed. Section 712 (PV) and Chapter 57 (battery) both require accessible DC isolation for the stored / generated energy. Failing to isolate the DC strings or the battery before working downstream of the inverter is the textbook way an apprentice gets a shock from a system that &quot;should be off&quot;."

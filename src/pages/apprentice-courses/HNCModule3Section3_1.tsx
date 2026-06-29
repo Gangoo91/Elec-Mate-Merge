@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'uk-peak-voltage',
     question: 'What is the peak voltage of the UK 230V RMS supply?',
     options: [
-      '325V',
       '253V',
+      '325V',
       '230V',
       '400V',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'UK supply is 230V RMS. Peak voltage = 230 x sqrt(2) = 230 x 1.414 = 325V. This is the maximum instantaneous voltage reached during each cycle.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'rms-conversion',
     question: 'What is the RMS value of a sinusoidal waveform with a peak value of 100V?',
     options: [
-      '70.7V',
-      '100V',
       '50V',
       '63.7V',
+      '70.7V',
+      '100V',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'RMS = Peak x 0.707 (or Peak / sqrt(2)). Therefore: 100V x 0.707 = 70.7V RMS. This is the equivalent DC voltage that would produce the same heating effect.',
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'why-rms',
     question: 'Why are AC voltages quoted as RMS values rather than peak values?',
     options: [
-      'Peak values are too high',
-      'RMS is required by regulations',
+      'Peak values are too high to display on a meter',
+      'RMS values are easier to measure than peak values',
+      'RMS is simply the value required by the wiring regulations',
       'RMS gives the equivalent DC heating effect',
-      'RMS values are easier to measure',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'RMS (Root Mean Square) represents the equivalent DC value that would produce the same power dissipation in a resistive load. This makes power calculations straightforward: P = V squared / R works directly with RMS values.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'A true RMS multimeter measures 230V on a distorted waveform. An average-responding meter reads 245V. What does this indicate?',
     options: [
-      'Reference Method E - on perforated cable tray',
+      'The true RMS meter is faulty and reading low',
       'The waveform has significant harmonic distortion',
-      'Low coercivity (soft magnetic material)',
-      'Daily or weekly log of completed work not yet invoiced',
+      'The supply voltage is exactly sinusoidal and both meters are correct',
+      'The circuit is carrying direct current rather than alternating current',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'Why might equipment insulation be rated for 400V even when operating on 230V RMS?',
     options: [
       'To withstand the 325V peak voltage with safety margin',
-      'Heat-shrink, clip-on tags, or printed labels',
-      'To ensure the health, safety and welfare of all persons at work',
-      'At least three times the area of the outrigger foot',
+      'Because RMS and peak voltage are the same value for a sine wave',
+      'To allow the equipment to be used on 400V three-phase supplies as well',
+      'Because insulation is always rated at double the nominal RMS voltage by convention',
     ],
     correctAnswer: 0,
     explanation:

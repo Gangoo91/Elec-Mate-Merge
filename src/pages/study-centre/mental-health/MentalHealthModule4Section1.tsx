@@ -20,8 +20,8 @@ const quickCheckQuestions = [
     id: 'mh-psychosis-prevalence',
     question:
       'Approximately how many people in the general population will experience a psychotic episode at some point in their lives?',
-    options: ['1 in 1,000', '3 in 100', '1 in 10', '1 in 2'],
-    correctIndex: 1,
+    options: ['3 in 100', '1 in 1,000', '1 in 10', '1 in 2'],
+    correctIndex: 0,
     explanation:
       'About 3 in 100 people will experience a psychotic episode at some point in their lives. Psychosis is more common than most people realise, and it is a treatable condition with good outcomes when identified early.',
   },
@@ -42,8 +42,8 @@ const quickCheckQuestions = [
     id: 'mh-first-episode-referral',
     question:
       'What is the NHS target timeframe for referral to an Early Intervention in Psychosis (EIP) service after a first episode of psychosis is identified?',
-    options: ['24 hours', '72 hours', '2 weeks', '6 weeks'],
-    correctIndex: 2,
+    options: ['24 hours', '2 weeks', '72 hours', '6 weeks'],
+    correctIndex: 1,
     explanation:
       'The NHS standard is a 2-week referral target for Early Intervention in Psychosis (EIP) services. Early intervention during the first episode is critical because research consistently shows that outcomes are significantly better when treatment begins promptly within the critical period of the first 3 to 5 years.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following best describes psychosis?',
     options: [
-      'A personality disorder characterised by mood swings and impulsivity',
       'A loss of contact with reality that may include hallucinations and delusions',
+      'A personality disorder characterised by mood swings and impulsivity',
       'A condition where someone has multiple distinct personalities',
       'A form of severe depression that does not respond to treatment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Psychosis is characterised by a loss of contact with reality. This may include hallucinations (perceiving things that are not there), delusions (fixed false beliefs), and disordered thinking. It is not the same as a personality disorder, multiple personalities, or treatment-resistant depression.',
   },
@@ -98,10 +98,10 @@ const quizQuestions = [
     options: [
       'Visual hallucinations (seeing things)',
       'Tactile hallucinations (feeling things on the skin)',
-      'Auditory hallucinations (hearing voices)',
       'Olfactory hallucinations (smelling things)',
+      'Auditory hallucinations (hearing voices)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Auditory hallucinations, particularly hearing voices, are the most common type of hallucination in psychosis. The voices may comment on the person's actions, talk to each other, or give commands. Visual, tactile, and olfactory hallucinations can also occur but are less common.",
   },
@@ -122,8 +122,8 @@ const quizQuestions = [
     id: 4,
     question:
       'Which substance is most strongly associated with an increased risk of drug-induced psychosis, particularly in its high-potency form?',
-    options: ['Alcohol', 'Caffeine', 'Cannabis (especially high-potency strains)', 'Nicotine'],
-    correctAnswer: 2,
+    options: ['Cannabis (especially high-potency strains)', 'Alcohol', 'Caffeine', 'Nicotine'],
+    correctAnswer: 0,
     explanation:
       "High-potency cannabis (often referred to as 'skunk') is most strongly associated with drug-induced psychosis. Research has shown that daily use of high-potency cannabis is associated with a five-fold increase in the risk of developing a psychotic disorder. Amphetamines and cocaine also carry significant risk.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 5,
     question: "In the context of psychosis, what does the term 'negative symptoms' refer to?",
     options: [
-      'Symptoms that make the person feel negative or pessimistic',
-      'Symptoms that are harmful or dangerous to others',
-      'A loss or reduction in normal functioning, such as flat affect, social withdrawal, and reduced motivation',
-      'Symptoms that occur only during the night',
+      'Symptoms that make the person feel negative, pessimistic, or low in mood',
+      'Symptoms that are harmful or dangerous to the people around them',
+      'Symptoms that come and go only during acute relapses of the illness',
+      'A loss or reduction in normal functioning, such as flat affect and withdrawal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Negative symptoms represent a loss or reduction in normal functioning. They include flat affect (reduced emotional expression), social withdrawal, reduced motivation (avolition), poverty of speech (alogia), and loss of pleasure in activities (anhedonia). They are called 'negative' because something is taken away from the person's normal experience, as opposed to 'positive' symptoms which add experiences such as hallucinations and delusions.",
   },

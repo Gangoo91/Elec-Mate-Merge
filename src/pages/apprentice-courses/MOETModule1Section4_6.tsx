@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'gs38-purpose',
     question: 'What is the purpose of HSE Guidance Note GS38?',
     options: [
-      'Material specifications, test results, compliance standards, and batch numbers',
-      'The flow coefficient -- the volume of water that will flow through the valve at a given pressure drop',
-      'Accidental leakage of gas causing death/injury or posing an immediate risk',
+      'It sets the inspection and testing intervals for fixed wiring installations',
+      'It specifies the colour coding for conductors in three-phase systems',
+      'It defines the competence requirements for electrical apprentices',
       'It specifies requirements for electrical test equipment used on low voltage systems to prevent danger',
     ],
     correctIndex: 3,
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'Under DSEAR (Dangerous Substances and Explosive Atmospheres Regulations), electrical equipment used in a Zone 1 hazardous area must be:',
     options: [
-      'Cables must not occupy more than 40% of the conduit internal cross-sectional area',
-      '35°C generally for floors regularly walked on barefoot (warmer permitted in border zones)',
+      'Double insulated and supplied through a 30 mA RCD',
+      'Rated to IP65 or higher against the ingress of dust and water',
       'Certified for use in explosive atmospheres (Ex-rated) appropriate to the zone classification',
-      'The gaseous form of a substance that is normally a liquid or solid at room temperature',
+      'Supplied at a reduced voltage of 110 V via a centre-tapped transformer',
     ],
     correctIndex: 2,
     explanation:
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'The Management of Health and Safety at Work Regulations 1999 require employers to carry out:',
     options: [
-      'Forecast, manage and record all waste produced on a construction or maintenance project',
-      'Adjusting energy consumption patterns in response to grid signals or time-of-use tariffs',
+      'A thorough examination of all lifting equipment every six months',
+      'Annual portable appliance testing of every item of electrical equipment',
       'Suitable and sufficient risk assessments of all significant risks arising from the work activity',
-      'Common applications like ring finals, radials, and lighting circuits',
+      'A written method statement for every individual maintenance task',
     ],
     correctIndex: 2,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'GS38 specifies that voltage indicator probes for use on LV systems must have:',
     options: [
-      'Explain clearly and calmly why the circuit was isolated, what the safety risk is, and what must happen before it can be safely re-energised',
-      'Fused probes with finger guards and a maximum of 2 mm exposed tip, plus a maximum current through the body limited by high-value resistors',
-      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
-      'Stop using the equipment immediately, report the defect, and not use it until it is repaired or replaced',
+      'Bare metal tips at least 20 mm long to ensure reliable electrical contact',
+      'Fused leads, finger guards and a maximum exposed tip of about 2 mm',
+      'A single combined lead so that only one connection point is required',
+      'An audible buzzer used in place of any form of visual voltage indication',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'HSG85 (Electricity at Work: Safe Working Practices) provides guidance on:',
     options: [
-      'Free, short guidance leaflets aimed at workers and employers — providing practical, accessible advice',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
+      'The classification of hazardous areas into ATEX zones',
+      'The selection and sizing of protective devices to BS 7671',
       'Safe isolation procedures, permit to work systems, and live working controls for electrical maintenance',
-      'Working in or near areas classified as hazardous zones due to the presence of flammable gases, vapours, mists or combustible dusts',
+      'The disposal of waste electrical and electronic equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     question:
       'GS6 (Avoidance of Danger from Overhead Electric Power Lines) is relevant to maintenance technicians when:',
     options: [
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-      'Free, short guidance leaflets aimed at workers and employers — providing practical, accessible advice',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Working near overhead power lines with cranes, MEWPs, scaffold towers, or other equipment that could approach the lines',
+      'Excavating trenches to install new underground supply cables to a building',
+      'Testing the insulation resistance of a de-energised final circuit',
+      'Working inside an enclosed substation on isolated, de-energised switchgear',
+      'Working near overhead power lines with cranes, MEWPs or scaffold towers',
     ],
     correctAnswer: 3,
     explanation:
@@ -113,10 +113,10 @@ const quizQuestions = [
     question:
       'HSG47 (Avoiding Danger from Underground Services) is relevant to electrical maintenance when:',
     options: [
-      'Excavating near or locating underground cables and services',
-      'The rotor speed and the number of poles: f = (p x N) / 120',
-      'Stop. Ask for the lock-off and the prove-dead. Won’t take long.',
-      'Reduced current spike during star-delta transition',
+      'Excavating near, or locating, underground cables and other buried services',
+      'Testing the insulation resistance of a newly installed final circuit',
+      'Replacing a faulty protective device inside an indoor distribution board',
+      'Carrying out a visual inspection of accessible surface-mounted trunking',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'The INDG series of publications from the HSE are:',
     options: [
-      'Working in or near areas classified as hazardous zones due to the presence of flammable gases, vapours, mists or combustible dusts',
+      'Legally binding regulations with the same force as an Act of Parliament',
       'Free, short guidance leaflets aimed at workers and employers — providing practical, accessible advice',
-      'One or more competent persons to assist with health and safety compliance',
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
+      'Detailed technical British Standards for the construction of equipment',
+      'Approved Codes of Practice that must be followed without exception',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Under CDM 2015, electrical maintenance work on a construction site requires the maintenance contractor to:',
     options: [
-      'Working in or near areas classified as hazardous zones due to the presence of flammable gases, vapours, mists or combustible dusts',
-      'Safe isolation procedures, permit to work systems, and live working controls for electrical maintenance',
+      'Take over the duties of the principal contractor for the whole site',
+      'Work entirely independently of the site safety management arrangements',
       'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
+      'Notify the HSE directly of every task before it is carried out',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,9 +154,9 @@ const quizQuestions = [
     question:
       'The Management of Health and Safety at Work Regulations 1999 require employers to appoint:',
     options: [
-      'Be connected through an RCD and comply with the relevant product standard',
-      'Networked systems provide real-time centralised monitoring with instant alerts',
-      'Higher efficiency and better temperature coefficient',
+      'A full-time safety officer for every site, regardless of its size',
+      'An external consultant approved by the HSE for all risk assessments',
+      'A trade union safety representative on every project',
       'One or more competent persons to assist with health and safety compliance',
     ],
     correctAnswer: 3,
@@ -169,9 +169,9 @@ const quizQuestions = [
       'DSEAR (Dangerous Substances and Explosive Atmospheres Regulations 2002) applies to electrical maintenance when:',
     options: [
       'Working in or near areas classified as hazardous zones due to the presence of flammable gases, vapours, mists or combustible dusts',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Free, short guidance leaflets aimed at workers and employers — providing practical, accessible advice',
-      'Safe working procedures on electricity distribution networks — including isolation, earthing, and permit to work for DNO-owned equipment',
+      'Working at height on a fragile roof or unprotected edge',
+      'Lifting heavy loads using cranes, hoists or other lifting accessories',
+      'Working in confined spaces where oxygen levels may be depleted',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     id: 9,
     question: 'The ATEX zone classification system categorises hazardous areas as:',
     options: [
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Zone 0, Zone 1 and Zone 2 for gases/vapours; Zone 20, Zone 21 and Zone 22 for dusts — based on the frequency and duration of the explosive atmosphere',
-      'Working in or near areas classified as hazardous zones due to the presence of flammable gases, vapours, mists or combustible dusts',
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
+      'Category 1, 2 and 3 areas based on the maximum surface temperature allowed',
+      'Zones 0, 1 and 2 for gases and Zones 20, 21 and 22 for combustible dusts',
+      'High, medium and low risk areas based on the number of workers present',
+      'Red, amber and green zones based on proximity to the nearest ignition source',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'The ENA (Energy Networks Association) technical standards are relevant to electrical maintenance technicians who:',
     options: [
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-      'Free, short guidance leaflets aimed at workers and employers — providing practical, accessible advice',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Safe working procedures on electricity distribution networks — including isolation, earthing, and permit to work for DNO-owned equipment',
+      'Carry out only domestic rewiring and consumer unit replacement work',
+      'Test and inspect portable appliances under an in-service testing regime',
+      'Work on or near DNO equipment, or interface with the public supply',
+      'Install fire detection and emergency lighting systems in office buildings',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 11,
     question: 'The Distribution Safety Rules (DSR) govern:',
     options: [
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Working near overhead power lines with cranes, MEWPs, scaffold towers, or other equipment that could approach the lines',
-      'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
-      'Safe working procedures on electricity distribution networks — including isolation, earthing, and permit to work for DNO-owned equipment',
+      'The design and sizing of final circuits in domestic installations',
+      'The safe storage and handling of dangerous substances on a site',
+      'The inspection and testing intervals for portable electrical equipment',
+      'Safe working on distribution networks: isolation, earthing and permit to work',
     ],
     correctAnswer: 3,
     explanation:
@@ -221,10 +221,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, knowledge of industry-specific guidance is important because:',
     options: [
-      'Maintenance technicians work across diverse environments and must understand the range of regulations, guidance and standards that apply to their specific work context',
-      'Work on or near distribution network operator (DNO) equipment, or carry out work that interfaces with the public electricity supply',
-      'Safe working procedures on electricity distribution networks — including isolation, earthing, and permit to work for DNO-owned equipment',
-      'Zone 0, Zone 1 and Zone 2 for gases/vapours; Zone 20, Zone 21 and Zone 22 for dusts — based on the frequency and duration of the explosive atmosphere',
+      'Technicians work across diverse settings, each with its own applicable guidance',
+      'It allows technicians to ignore the core regulations once they are qualified',
+      'Only the end-point assessor needs to know which guidance applies on site',
+      'Industry guidance always overrides statutory regulations where they conflict',
     ],
     correctAnswer: 0,
     explanation:

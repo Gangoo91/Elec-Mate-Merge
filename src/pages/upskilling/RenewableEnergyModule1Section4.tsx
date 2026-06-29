@@ -26,9 +26,9 @@ const inlineChecks = [
       'Is MCS (Microgeneration Certification Scheme) registration legally required to install a domestic solar PV system in the UK?',
     options: [
       'Yes — MCS is statutory under the Energy Act 2023',
-      'No — MCS is voluntary at statute, but commercially mandatory for SEG, BUS and ECO4 funding. The customer cannot claim the funding without an MCS-certified installer on the cert',
-      'Only for installs above 11.04 kW',
-      'Only in England — Scotland uses a different statutory scheme',
+      'No — MCS is voluntary at statute but mandatory for SEG, BUS and ECO4 funding',
+      'Only for installs rated above 11.04 kW peak output',
+      'Only in England — Scotland uses a separate statutory scheme',
     ],
     correctIndex: 1,
     explanation:
@@ -48,10 +48,10 @@ const inlineChecks = [
     question:
       'NICEIC, NAPIT, ELECSA and Stroma are Competent Person Schemes (CPS). How do CPS schemes relate to MCS?',
     options: [
-      'They are the same thing',
-      'They are separate. CPS schemes are the Part P self-certification route for general electrical work. MCS is the LCT installer scheme for SEG / BUS / ECO funding. An installer can be CPS-registered without MCS, MCS-registered without CPS, or both',
-      'CPS schemes have replaced MCS',
-      'MCS membership requires NICEIC membership first',
+      'They are the same scheme under two different names',
+      'They are separate — CPS handles Part P self-certification, MCS the funding gate',
+      'CPS schemes have replaced MCS for low-carbon technology work',
+      'MCS membership requires NICEIC CPS membership first',
     ],
     correctIndex: 1,
     explanation:
@@ -62,10 +62,10 @@ const inlineChecks = [
     question:
       'Which framing of MCS is most useful to the LCT installer business?',
     options: [
-      'MCS is bureaucratic compliance overhead that reduces margin',
-      'MCS is a market-segmentation mechanism — the exclusion of non-MCS competitors from the funded market (SEG, BUS, ECO) is the structural commercial feature',
-      'MCS is interchangeable with TrustMark',
-      'MCS is being phased out',
+      'MCS is bureaucratic compliance overhead that simply reduces margin',
+      'MCS is a market-segmentation mechanism that excludes non-MCS competitors from funding',
+      'MCS is interchangeable with TrustMark for funded work',
+      'MCS is being phased out over the next few years',
     ],
     correctIndex: 1,
     explanation:
@@ -76,10 +76,10 @@ const inlineChecks = [
     question:
       'MCS certifies both installers and products. What does the product-side certification cover?',
     options: [
-      'Only solar panels',
-      'The product certification (MPS — MCS Product Standards) covers the equipment used in MCS installs — modules, heat pump units, heat batteries. Funding-eligible installs require both MCS-certified installer AND MCS-listed product',
-      'Only inverters',
-      'The product certification is informational only',
+      'Only the solar PV modules themselves',
+      'The equipment used (modules, heat pump units, heat batteries) via MCS Product Standards',
+      'Only the inverters fitted on the AC side',
+      'Nothing binding — the product listing is informational only',
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const inlineChecks = [
     question:
       'What does an MCS audit actually check on a sampled installer job?',
     options: [
-      'Only the cert',
-      'A combination of design pack quality, install quality on site, commissioning evidence, customer documentation, and conformity to the relevant MIS — sampled across recent jobs',
-      'Only the installer\'s training certificates',
-      'The customer\'s satisfaction survey only',
+      'Only the electrical installation certificate for the job',
+      'Design pack, install quality, commissioning evidence, documentation and MIS conformity',
+      'Only the installer\'s training certificates and qualifications',
+      'Only the customer\'s satisfaction survey from handover',
     ],
     correctIndex: 1,
     explanation:
@@ -104,10 +104,10 @@ const inlineChecks = [
     question:
       'The IET Code of Practice for Grid-Connected Solar PV Installations and MIS 3002 (PV) both apply to a domestic PV install. How do they relate?',
     options: [
-      'They are interchangeable',
-      'They sit alongside each other. The IET CoP is the BS 7671-aligned technical operational reference. MIS 3002 is the MCS installer competence standard. Both are needed for a funded install',
-      'MIS 3002 has replaced the IET CoP',
-      'The IET CoP is for inspectors only; MIS 3002 is for installers only',
+      'They are interchangeable references for the same purpose',
+      'They sit alongside each other — IET CoP is the technical reference, MIS 3002 the scheme standard',
+      'MIS 3002 has replaced the IET Code of Practice',
+      'The IET CoP is for inspectors only and MIS 3002 for installers only',
     ],
     correctIndex: 1,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     question:
       'A customer wants to claim the Boiler Upgrade Scheme grant on their ASHP install. What is the most accurate combination of competence the install must demonstrate?',
     options: [
-      'An MCS-certified installer holding MIS 3003, with the heat pump unit on the MCS Product List, and the install evidenced against the MIS 3003 design and commissioning steps',
-      'Any qualified electrician — BUS does not require MCS',
-      'NICEIC membership only',
-      'A Building Control notification only',
+      'An MIS 3003 installer, the unit on the MCS Product List, evidenced against MIS 3003',
+      'Any qualified electrician, since BUS does not require MCS registration',
+      'NICEIC CPS membership alone, with no MCS certification needed',
+      'A Building Control notification alone, submitted before commencement',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'An installer holds CPS registration with NICEIC. They are not currently MCS-registered. A customer asks them to install a 4 kWp PV array and apply for SEG payments. What is the lawful position?',
     options: [
-      'The installer cannot lawfully install',
-      'The installer can lawfully install the PV system — but the customer cannot claim SEG payments because the supplier requires an MCS-certified installer cert',
-      'The installer must transfer the job to an MCS installer',
-      'NICEIC membership is automatically converted to MCS registration',
+      'The installer cannot lawfully install a PV array without first holding MCS registration',
+      'The installer must transfer the whole job to an MCS-registered installer to proceed',
+      'NICEIC CPS membership is automatically treated as MCS registration for SEG purposes',
+      'The install is lawful, but the customer cannot claim SEG because the supplier requires an MCS-certified cert',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CPS membership covers the Part P notification route. The PV install is lawful. What is missing for SEG eligibility is the MCS certification. Licensed electricity suppliers require an MCS installer on the cert as evidence of competent practice.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'An MCS auditor visits a sampled job on a 6 kWp PV install. The cert is correctly completed, the install is BS 7671 compliant, the customer is satisfied. The auditor flags a major finding. Most likely cause:',
     options: [
-      'The cert was signed in blue ink',
-      'The MIS 3002 design pack is missing a required element (shading analysis methodology, sizing calculation back-up, customer documentation pack) — the BS 7671 work was correct but the MCS scheme-conformity evidence was incomplete',
-      'The install was completed in fewer than three days',
-      'The inverter is the wrong colour',
+      'The electrical installation certificate was signed in blue ink rather than black',
+      'The whole install was completed in fewer than three working days on site',
+      'The MIS 3002 design pack is missing a required element such as the shading analysis or customer documentation pack',
+      'The inverter chassis is a different colour from the one shown in the original quotation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MCS audits look at the MIS conformity evidence bundle, not just the BS 7671 cert. Common major findings: missing shading analysis on PV, missing heat-loss calculations on heat pumps, missing customer documentation pack, product not on the MCS Product List.',
   },
@@ -162,8 +162,8 @@ const quizQuestions = [
     id: 4,
     question:
       'A heat pump installer holds MIS 3003 and is about to take on heat battery work. What scheme certification do they need to add?',
-    options: ['MIS 3002', 'MIS 3008 (added to the MCS scheme in 2023 to cover heat batteries)', 'MIS 3005', 'Heat batteries are not covered by MCS'],
-    correctAnswer: 1,
+    options: ['MIS 3008 — added to the MCS scheme in 2023 to cover heat batteries', 'MIS 3002 — the PV installation standard', 'MIS 3005 — the solar thermal hot-water standard', 'No extra certification — heat batteries are not covered by MCS'],
+    correctAnswer: 0,
     explanation:
       'MIS 3008 was added to the MCS scheme in 2023 to cover heat batteries — high-energy-density thermal storage units used to time-shift hot-water or space-heating load.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'On a domestic install where the homeowner is paying cash with no funding stream, is MCS registration required?',
     options: [
-      'Yes — MCS is mandatory for all LCT work',
-      'No — MCS is voluntary at statute. The cash install is lawful subject to BS 7671, Part P notification, DNO notification. MCS is only commercially necessary where the customer is claiming funding',
-      'Only for installs above 10 kW',
-      'Only for installs in England',
+      'Yes — MCS registration is mandatory in statute for all low-carbon technology work',
+      'Only for installs rated above 10 kW, below which MCS is not required',
+      'No — MCS is voluntary; the cash install is lawful under BS 7671, Part P and DNO notification only',
+      'Only for installs carried out in England, with the other UK nations exempt',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The statutory floor is BS 7671, Part P, and DNO notification. MCS sits above that as the commercial layer that unlocks funding. For a cash-paid install with no SEG / BUS / ECO claim, MCS is not commercially necessary.',
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'The MCS Service Company operates the scheme. Who actually administers the consumer-protection side of MCS work?',
     options: [
-      'MCS Service Company itself',
-      'TrustMark — the government-endorsed quality scheme that administers the MCS Consumer Code, providing dispute resolution and consumer-protection mechanisms',
-      'The IET',
-      'Trading Standards',
+      'The MCS Service Company itself administers the consumer-protection layer directly',
+      'The IET, through its membership and professional-conduct framework',
+      'Local authority Trading Standards departments under consumer-protection law',
+      'TrustMark — the government-endorsed scheme administering the MCS Consumer Code and dispute resolution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MCS sets the scheme rules and certifies installers and products. TrustMark administers the consumer-protection layer (the MCS Consumer Code), including dispute resolution between the customer and the installer.',
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     question:
       'The IET Code of Practice for Grid-Connected Solar PV Installations is currently in its 5th edition. MIS 3002 is also revised periodically. How do their revision cycles relate?',
     options: [
-      'They revise together',
-      'Independently — the IET CoP revises on the IET technology committee\'s cycle; MIS 3002 revises on the MCS Service Company\'s scheme governance cycle. Both should be tracked separately',
-      'They never revise',
-      'They revise on Building Regulations cycles',
+      'Independently — the IET CoP revises on the IET committee cycle and MIS 3002 on the MCS governance cycle; track both separately',
+      'They are revised together in a single coordinated release by the IET and MCS',
+      'Neither document is revised once published; both remain fixed at their first edition',
+      'Both revise in step with the Building Regulations amendment cycle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The IET CoP and the MIS revise on independent cycles. The IET CoP for Grid-Connected Solar PV Installations is currently in its 5th edition. MIS 3002 is revised by the MCS Service Company on its scheme governance cycle.',
   },
@@ -214,12 +214,12 @@ const quizQuestions = [
     question:
       'A small electrical contractor is deciding whether to invest in MIS 3003 (heat pump) training. The training cost is £2,500 plus 5–10 days off the tools. What is the most useful framing of the decision?',
     options: [
-      'It\'s compliance overhead — minimise spend',
-      'It\'s an investment in admission to the funded heat-pump market, where the supply / demand gap translates into structural pricing power for qualified MCS-registered installers',
-      'It\'s irrelevant unless the contractor is already in heat pumps',
-      'The cost-benefit is negative until 2030',
+      'Pure compliance overhead — the contractor should minimise the spend wherever possible',
+      'Irrelevant unless the contractor already has an established heat-pump customer base',
+      'Admission to the funded heat-pump market, where the supply/demand gap gives MCS installers pricing power',
+      'A negative cost-benefit until at least 2030, so the decision should be deferred',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The supply-constrained nature of the heat-pump market makes MIS 3003 a market-access investment, not a compliance overhead. The training cost is a small fraction of the margin available on funded jobs.',
   },

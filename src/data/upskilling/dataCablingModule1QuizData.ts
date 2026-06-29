@@ -11,10 +11,10 @@ export const dataCablingModule1Section1Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of structured cabling?',
     options: [
-      'To reduce cable costs',
-      'To provide a standardised telecommunications infrastructure',
-      'To increase internet speed',
-      'To eliminate the need for wireless networks',
+      'To minimise the total length of cable used in a building',
+      'To provide a standardised, vendor-neutral telecommunications infrastructure',
+      'To increase the raw data rate of every connected device',
+      'To remove the need for active network equipment',
     ],
     correct: 1,
     explanation:

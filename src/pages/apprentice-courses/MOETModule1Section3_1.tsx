@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'hazard-vs-risk',
     question: 'What is the key difference between a hazard and a risk?',
     options: [
-      'From left to right (and/or top to bottom) — representing the logical sequence of operation',
+      'A hazard is the likelihood of harm; a risk is the thing that causes it',
       'A hazard is something with the potential to cause harm; a risk is the likelihood and severity of that harm occurring',
-      'It automatically dims or switches off artificial lights when natural daylight is sufficient',
-      'Using smartphone location to automatically adjust heating when occupants leave or approach',
+      'A hazard applies only to electrical work; a risk applies to all work',
+      'There is no practical difference; the two terms mean the same thing',
     ],
     correctIndex: 1,
     explanation:
@@ -29,22 +29,22 @@ const quickCheckQuestions = [
       'Which of the following is an example of an ergonomic hazard in electrical maintenance?',
     options: [
       'Repetitive strain from pulling cables through conduit over extended periods',
-      'Table 4B1, the column for 70 °C general purpose thermoplastic insulation.',
-      'The location, height of the platform, number of casualties, and nature of the emergency',
-      'Electric shock, burns, fire, explosion, falls from height, manual handling',
+      'Inhaling solvent fumes while cleaning switchgear contacts',
+      'Electric shock from contact with an exposed live conductor',
+      'Legionella bacteria present in a water-cooled cooling system',
     ],
     correctIndex: 0,
     explanation:
-      "Ergonomic hazards relate to the physical demands of work and the body's ability to cope. Repetitive cable pulling, working in awkward postures inside ceiling voids, and prolonged overhead work are all ergonomic hazards common in electrical maintenance. The other options describe electrical, biological/chemical and psychological hazards respectively.",
+      "Ergonomic hazards relate to the physical demands of work and the body's ability to cope. Repetitive cable pulling, working in awkward postures inside ceiling voids, and prolonged overhead work are all ergonomic hazards common in electrical maintenance. The other options describe chemical, electrical and biological hazards respectively.",
   },
   {
     id: 'near-miss-reporting',
     question: 'Why is near-miss reporting important in a workplace safety system?',
     options: [
-      'Benefits, costs, public perception, legal requirements, available alternatives',
+      'They satisfy the legal duty to report all incidents to the HSE',
       'Near-misses identify hazards and weaknesses in controls before someone is actually harmed',
-      'That it is suitable for its intended purpose and properly maintained',
-      'The HSE service for receiving RIDDOR reports and providing reporting guidance',
+      'They provide a record of who was at fault for an incident',
+      'They are required before a permit to work can be issued',
     ],
     correctIndex: 1,
     explanation:
@@ -56,9 +56,9 @@ const quickCheckQuestions = [
       'During a workplace inspection for hazard identification, what is the most effective approach?',
     options: [
       'Walk the work area systematically, using a checklist and noting observed conditions',
-      'A more thorough overhaul carried out at intervals of 5 or 10 years depending on extinguisher type',
-      'A device that bridges between the wireless sensor network and the wired control system (DCS, PLC, or SCADA)',
-      'The ability to accurately identify, name, and describe emotions in oneself and others',
+      'Rely on the site induction briefing to cover all hazards present',
+      'Review the drawings and previous risk assessments without visiting the area',
+      'Ask the client to confirm verbally that the area is safe to work in',
     ],
     correctIndex: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'When carrying out a workplace inspection for hazard identification, which of the following should you do FIRST?',
     options: [
-      'All hazard categories including physical, chemical, biological, ergonomic and psychological hazards',
+      'Begin work immediately and identify hazards as you encounter them',
       'Review existing documentation such as site plans, previous risk assessments and incident reports',
-      'A short, focused briefing delivered at the point of work covering specific hazards and controls',
-      'A dangerous occurrence such as an electrical short circuit causing a fire, or an over-7-day injury',
+      'Issue a permit to work covering the whole area',
+      'Photograph the work area before doing anything else',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'Water ingress into an electrical panel presents which combination of hazards?',
     options: [
-      'Solvents used for cleaning switchgear contacts',
-      'Unrealistic deadline pressure leading to rushed, unsafe work',
+      'Manual handling and ergonomic strain only',
+      'A chemical hazard from the water itself',
       'Electrical (shock/short circuit) and fire (tracking/arcing)',
-      'Health and safety legislation and safe working practices',
+      'A biological hazard only, from contaminated water',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'Photographic evidence taken during hazard identification is useful because:',
     options: [
-      'All hazard categories including physical, chemical, biological, ergonomic and psychological hazards',
-      'A short, focused briefing delivered at the point of work covering specific hazards and controls',
-      'Review existing documentation such as site plans, previous risk assessments and incident reports',
+      'It removes the need to write a formal hazard report',
+      'It is a legal requirement under RIDDOR 2013',
+      'It proves that the hazard has been fully controlled',
       'It provides an objective, time-stamped record of site conditions that supports the written risk assessment',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question: 'An overloaded circuit is a hazard because:',
     options: [
       'Excessive current causes conductor heating, which can degrade insulation and lead to fire',
-      'A dangerous occurrence such as an electrical short circuit causing a fire, or an over-7-day injury',
-      'Review existing documentation such as site plans, previous risk assessments and incident reports',
-      'All hazard categories including physical, chemical, biological, ergonomic and psychological hazards',
+      'It reduces the voltage available to other circuits on the board',
+      'It causes the supply frequency to drift away from 50 Hz',
+      'It increases the earth fault loop impedance of the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,8 +180,8 @@ const quizQuestions = [
     options: [
       'Solvents used for cleaning switchgear contacts',
       'Unrealistic deadline pressure leading to rushed, unsafe work',
-      'Electrical (shock/short circuit) and fire (tracking/arcing)',
-      'Health and safety legislation and safe working practices',
+      'Noise from a standby diesel generator',
+      'Trailing leads creating a trip hazard',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under RIDDOR 2013, which of the following events MUST be reported to the HSE?',
     options: [
-      'A short, focused briefing delivered at the point of work covering specific hazards and controls',
-      'All hazard categories including physical, chemical, biological, ergonomic and psychological hazards',
+      'Any minor cut or graze that needs a plaster',
+      'A near-miss where a tool was dropped but nobody was hurt',
       'A dangerous occurrence such as an electrical short circuit causing a fire, or an over-7-day injury',
-      'It provides an objective, time-stamped record of site conditions that supports the written risk assessment',
+      'A first aid case treated on site and recorded in the accident book',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     id: 11,
     question: 'A hazard checklist used during workplace inspection should include:',
     options: [
-      'A short, focused briefing delivered at the point of work covering specific hazards and controls',
-      'A dangerous occurrence such as an electrical short circuit causing a fire, or an over-7-day injury',
-      'Review existing documentation such as site plans, previous risk assessments and incident reports',
+      'Only electrical hazards, as these are the technician\'s specialism',
+      'Only the hazards listed in the original risk assessment',
+      'Only physical and chemical hazards visible on the day',
       'All hazard categories including physical, chemical, biological, ergonomic and psychological hazards',
     ],
     correctAnswer: 3,

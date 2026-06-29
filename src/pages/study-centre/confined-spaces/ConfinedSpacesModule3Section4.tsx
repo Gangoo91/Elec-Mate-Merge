@@ -26,11 +26,11 @@ const quickCheckQuestions = [
       'When ventilating a confined space that contains a heavier-than-air gas, where should the ventilation duct be directed?',
     options: [
       'To the top of the space, because hot air rises',
-      'To the bottom of the space, because the gas settles at the lowest point',
       'Across the middle of the space for even distribution',
       'It does not matter — the fan will circulate air throughout the space regardless',
+      'To the bottom of the space, because the gas settles at the lowest point',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Heavier-than-air gases (such as hydrogen sulphide, carbon dioxide, and LPG) settle at the lowest points in a confined space. The ventilation duct must be directed to the bottom of the space to displace or extract these gases effectively. Placing the duct at the top would leave the dangerous gas layer undisturbed at floor level, where workers are most at risk.',
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'Why must ventilation equipment used in a potentially flammable atmosphere be ATEX-rated?',
     options: [
       'ATEX equipment is more powerful and moves air faster',
-      'Standard electrical equipment could produce sparks or hot surfaces that ignite a flammable atmosphere',
       'ATEX-rated equipment is quieter and more comfortable for workers',
+      'Standard electrical equipment could produce sparks or hot surfaces that ignite a flammable atmosphere',
       'It is only a recommendation, not a legal requirement',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'In a potentially flammable or explosive atmosphere, standard electrical equipment (fans, blowers, lighting) could produce sparks from motors, switches, or static discharge, or develop hot surfaces — any of which could ignite the flammable gas or vapour and cause an explosion. ATEX-rated (Atmospheres Explosibles) equipment is designed and certified to operate safely in such environments. Using ATEX-rated equipment in explosive atmospheres is a legal requirement under the Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR).',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of ventilating a confined space before and during entry?',
     options: [
-      'To cool the space down for worker comfort',
       'To remove or dilute atmospheric contaminants and maintain a breathable atmosphere',
+      'To cool the space down for worker comfort',
       'To dry out any standing water in the space',
       'To create positive pressure so the entry hatch stays open',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of ventilation in confined spaces is to remove or dilute atmospheric contaminants (toxic gases, flammable vapours, oxygen-depleting substances) and maintain a breathable atmosphere with oxygen levels between 19.5% and 23.5%. Whilst ventilation may also provide cooling, this is a secondary benefit — the critical function is ensuring the atmosphere is safe for workers to breathe.',
   },
@@ -93,11 +93,11 @@ const quizQuestions = [
     question: 'Which ventilation method is generally preferred for most confined space entries?',
     options: [
       'Natural ventilation through open hatches',
-      'Negative pressure ventilation (extraction only)',
       'Positive pressure ventilation (blowing clean air in)',
+      'Negative pressure ventilation (extraction only)',
       'Recirculation of existing air within the space',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Positive pressure ventilation — blowing clean air into the space — is the preferred method for most confined space entries. It dilutes contaminants throughout the space, provides a continuous supply of fresh air, slightly pressurises the space to help prevent ingress of external contaminants, and is effective for a wide range of hazard types. Negative pressure may be preferred in specific situations (e.g. known contaminant source), but positive pressure is the default choice.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'What is the most critical factor when selecting the air intake position for a ventilation system?',
     options: [
       'The intake must be close to the confined space entry point for convenience',
-      'The intake must draw air from a clean source, away from exhausts, contaminants, and traffic',
       'The intake must be at ground level to draw in the coolest air',
       'The intake position does not matter as long as the fan is powerful enough',
+      'The intake must draw air from a clean source, away from exhausts, contaminants, and traffic',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The air intake must draw from a CLEAN source — positioned well away from vehicle exhausts, generator fumes, chemical storage, dust, and any other source of contamination. If the intake air is contaminated, the ventilation system will actively pump hazardous substances INTO the confined space, creating a more dangerous situation than having no ventilation at all. This is one of the most common and most dangerous mistakes in confined space ventilation.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     id: 5,
     question: 'How should the effectiveness of ventilation in a confined space be verified?',
     options: [
+      'By continuous atmospheric monitoring using a calibrated four-gas monitor',
       'By checking that the fan is running and you can feel air movement',
       'By timing how long the fan has been running and comparing to a standard chart',
-      'By continuous atmospheric monitoring using a calibrated four-gas monitor',
       'By asking workers inside the space if the air feels fresh',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The ONLY reliable way to verify that ventilation is effective is through continuous atmospheric monitoring using a calibrated four-gas monitor. Feeling air movement confirms the fan is running, but not that contaminant levels are safe. Time-based calculations are estimates, not measurements. Subjective assessment by workers is unreliable — many toxic gases are odourless and undetectable by human senses. Continuous monitoring provides real-time, objective data on oxygen levels, toxic gas concentrations, and flammable gas levels.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
     question: 'Which of the following is a common mistake when ventilating a confined space?',
     options: [
       'Using a fan that is too powerful for the space',
-      'Positioning the air intake near a running generator or vehicle exhaust',
       'Running the ventilation system continuously during work',
       'Using atmospheric monitoring to verify ventilation effectiveness',
+      'Positioning the air intake near a running generator or vehicle exhaust',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Positioning the air intake near a source of contamination (such as a running generator, vehicle exhaust, or chemical store) is one of the most common and most dangerous mistakes in confined space ventilation. The system actively pumps contaminated air into the space, potentially introducing carbon monoxide, diesel fumes, or chemical vapours. The intake must always be positioned in clean air, well away from any potential source of contamination, and the air quality should be verified by monitoring inside the space.',
   },

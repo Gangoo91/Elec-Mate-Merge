@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'plc-systematic',
     question: 'What is the first step in systematic PLC troubleshooting?',
     options: [
-      'Protection from dismissal or detriment for making a qualifying disclosure about health and safety dangers',
+      'Replace the CPU module to rule out a hardware failure',
       'Gather information: observe symptoms, check fault LEDs, read the diagnostic buffer',
-      'The powder cloud severely reduces visibility, can cause breathing difficulties, and leaves residue',
-      'Moisture — from condensation, water ingress, or high humidity',
+      'Download a fresh copy of the programme to the controller',
+      'Force the suspected output on to confirm the field device works',
     ],
     correctIndex: 1,
     explanation:
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'A PLC communication fault is typically indicated by:',
     options: [
       'The COMM LED going off or flashing an error pattern, with loss of HMI and SCADA connectivity',
-      'Chronotype-aligned work scheduling &mdash; matching task difficulty to your natural energy cycles',
-      'Within 600 mm of the consumer side of the gas meter outlet, before any branch or tee, on a clean section of pipe.',
-      'Chronological filing, cross-indexing, retention schedules, and audit trails',
+      'The RUN LED illuminating steady green with all outputs energised',
+      'The backup battery LED indicating a low charge condition',
+      'A single output channel failing while the rest operate normally',
     ],
     correctIndex: 0,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'plc-battery',
     question: 'A low battery warning on a PLC typically means:',
     options: [
-      'A document containing information for future maintenance and construction work',
-      'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
+      'The mains power supply to the PLC has fallen below specification',
+      'The output modules are drawing more current than their rating allows',
       'The backup battery that maintains RAM contents during power loss needs replacing promptly',
-      'They provide accurate information for modifications, extensions, and maintenance',
+      'The CPU is overheating and has reduced its clock speed to compensate',
     ],
     correctIndex: 2,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
       'A PLC output LED is ON but the field device connected to that output is not operating. The fault is most likely:',
     options: [
       'In the field wiring, the output fuse, or the field device itself — downstream of the PLC output',
-      'Acknowledge they do not have the answer, commit to finding out, and follow up within an agreed timeframe',
-      'The time an activity can be delayed without affecting project completion',
-      'A diamond with a black image of a hand and a surface being eaten away by liquid drops',
+      'In the input module reading the wrong signal from the field sensor',
+      'In the programme logic failing to energise the output coil',
+      'In the communication link between the CPU and the HMI display',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The PLC diagnostic buffer contains:',
     options: [
-      'L and N should be similar, CPC may differ if different CSA',
+      'The live values of every input and output channel',
       'A chronological log of faults, errors and system events with timestamps',
-      'For high-risk activities or work in hazardous areas',
-      'Your direct line manager, then raise the conflict so the two managers can resolve it',
+      'The full ladder logic programme currently being executed',
+      'The IP address and network settings of connected devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'A PLC scan time that has suddenly increased may indicate:',
     options: [
-      'Using the diagnostic buffer timestamps, data logging, trend recording, and systematic environmental checks',
-      'Online monitoring in the PLC programming software to view programme execution in real time',
+      'A low backup battery affecting the retentive data registers',
+      'A blown output fuse on one of the digital output modules',
       'A programme fault causing excessive processing, a communication timeout, or added programme complexity',
-      'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
+      'A loose terminal connection on an input channel',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'To check if a PLC is executing its programme logic correctly, the primary tool is:',
     options: [
-      'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
-      'A communication failure between modules on the PLC backplane bus',
-      'Spurious input signals, communication errors, and data corruption',
+      'A multimeter reading the supply voltage at the power module',
+      'An insulation resistance tester on the field wiring',
+      'The diagnostic buffer fault history from the previous shift',
       'Online monitoring in the PLC programming software to view programme execution in real time',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'A watchdog timer in a PLC:',
     options: [
       'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
-      'Online monitoring in the PLC programming software to view programme execution in real time',
-      'Has halted programme execution — outputs are typically de-energised or held in a configured safe state',
-      'Spurious input signals, communication errors, and data corruption',
+      'Counts the number of times each output has been switched on',
+      'Maintains the real-time clock used for diagnostic timestamps',
+      'Delays programme start-up until all I/O modules have initialised',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'When replacing a PLC CPU module, the critical steps include:',
     options: [
-      'Using the diagnostic buffer timestamps, data logging, trend recording, and systematic environmental checks',
+      'Forcing all outputs off, then swapping the module while the rack is powered',
       'Backing up the programme, noting the hardware configuration, replacing the module, restoring the programme, and verifying operation',
-      'Check the programme logic online first, then check the output LED, then check field wiring and the field device',
-      'Checking terminal connections, cleaning ventilation filters, monitoring temperature, verifying backups and testing the battery',
+      'Replacing the module and relying on the new CPU to upload the programme from the HMI',
+      'Clearing the diagnostic buffer first, then fitting the new module without isolation',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'A PLC in STOP mode:',
     options: [
-      'A programme fault causing excessive processing, a communication timeout, or added programme complexity',
-      'Backing up the programme, noting the hardware configuration, replacing the module, restoring the programme, and verifying operation',
-      'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
+      'Continues to execute the programme but ignores all input changes',
+      'Loses the stored programme from memory until it is downloaded again',
+      'Holds all outputs in their last energised state indefinitely',
       'Has halted programme execution — outputs are typically de-energised or held in a configured safe state',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'Preventive maintenance for a PLC system should include:',
     options: [
       'Checking terminal connections, cleaning ventilation filters, monitoring temperature, verifying backups and testing the battery',
-      'Backing up the programme, noting the hardware configuration, replacing the module, restoring the programme, and verifying operation',
-      'Has halted programme execution — outputs are typically de-energised or held in a configured safe state',
-      'Systematic fault diagnosis, correct use of diagnostic tools, safe isolation, documentation and contribution to continuous improvement',
+      'Forcing each output in turn to confirm the field devices respond',
+      'Downloading a fresh copy of the programme at every visit',
+      'Leaving all forces active so the system can be tested quickly later',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       'When a PLC programme is running but an output is not activating as expected, the logical diagnostic sequence is:',
     options: [
-      'Systematic fault diagnosis, correct use of diagnostic tools, safe isolation, documentation and contribution to continuous improvement',
-      'Online monitoring in the PLC programming software to view programme execution in real time',
+      'Check the field device first, then the wiring, then the programme logic, then the output LED',
+      'Replace the output module first, then check the wiring and field device',
       'Check the programme logic online first, then check the output LED, then check field wiring and the field device',
-      'Has halted programme execution — outputs are typically de-energised or held in a configured safe state',
+      'Check the input signal first, then the CPU, then the communication network',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'Intermittent PLC faults are best diagnosed by:',
     options: [
-      'Checking terminal connections, cleaning ventilation filters, monitoring temperature, verifying backups and testing the battery',
-      'Systematic fault diagnosis, correct use of diagnostic tools, safe isolation, documentation and contribution to continuous improvement',
-      'Has halted programme execution — outputs are typically de-energised or held in a configured safe state',
+      'Immediately replacing the CPU and I/O modules one at a time',
+      'Downloading a new copy of the programme to clear any corruption',
+      'Leaving the fault until it becomes permanent and easier to find',
       'Using the diagnostic buffer timestamps, data logging, trend recording, and systematic environmental checks',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'Under ST1426, PLC troubleshooting competency includes:',
     options: [
       'Systematic fault diagnosis, correct use of diagnostic tools, safe isolation, documentation and contribution to continuous improvement',
-      'Using the diagnostic buffer timestamps, data logging, trend recording, and systematic environmental checks',
-      'Backing up the programme, noting the hardware configuration, replacing the module, restoring the programme, and verifying operation',
-      'Checking terminal connections, cleaning ventilation filters, monitoring temperature, verifying backups and testing the battery',
+      'Writing the original control programme from the machine specification',
+      'Designing the electrical panel layout and selecting the I/O modules',
+      'Commissioning the network infrastructure and configuring the SCADA server',
     ],
     correctAnswer: 0,
     explanation:

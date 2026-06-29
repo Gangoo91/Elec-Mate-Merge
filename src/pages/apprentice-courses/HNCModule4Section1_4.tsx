@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'thd-definition',
     question: 'Total Harmonic Distortion (THD) measures:',
     options: [
-      'Line voltage divided by √3 (approximately 230 V)',
-      'Before the building is occupied',
-      'Apply safe isolation to prove the circuit is dead',
+      'The ratio of reactive power to real power',
+      'The peak voltage of the supply waveform',
+      'The phase angle between voltage and current',
       'Distortion of waveform from pure sine wave',
     ],
     correctIndex: 3,
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: 'Engineering Recommendation G5/4-1 sets limits for:',
     options: [
       'Harmonic voltage and current emissions',
-      'RCD (Residual Current Device)',
-      'They allow analysis of complex circuits',
-      'Verbal commitments from the design team',
+      'Maximum prospective fault current at the origin',
+      'Earth fault loop impedance for final circuits',
+      'Minimum insulation resistance of new circuits',
     ],
     correctIndex: 0,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What causes harmonic currents in building electrical systems?',
     options: [
-      'To ensure all parties understand requirements before work commences',
+      'Purely resistive loads such as heaters and incandescent lamps',
       'Non-linear loads with rectifiers or switching power supplies',
-      'Areas with specific equipment and protection requirements',
-      'Switching off supply for mechanical maintenance of non-electrical parts',
+      'Balanced three-phase loads on a symmetrical supply',
+      'Long cable runs with high inductive reactance',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why is neutral conductor sizing critical in harmonic-rich environments?',
     options: [
-      'An area made safe from electrical and other hazards during work',
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
-      'Based on installation type, use, and condition found',
+      'The neutral carries the full fault current during an earth fault',
+      'Harmonics increase the supply voltage above the neutral rating',
+      'The neutral must match the protective conductor cross-section',
       'Triplen harmonics add in the neutral, potentially exceeding phase current',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Cable derating for harmonics is required because:',
     options: [
-      'By notifying building control before starting and arranging inspection',
+      'Harmonics raise the supply voltage and stress the insulation',
       'Harmonics cause additional heating due to skin and proximity effects',
-      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
-      'Unexpected twisting forces on the handler\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s spine as the load tilts',
+      'Harmonics increase the prospective short-circuit current',
+      'Harmonics reduce the cable impedance and increase voltage drop',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which equipment is most sensitive to harmonic voltage distortion?',
     options: [
-      'Overheating and increased losses',
-      'Complete failure to trip at any test current',
-      'Digital contact signal (dry contact)',
+      'Resistive heating elements',
+      'Incandescent lighting circuits',
+      'Mechanical contactors and relays',
       'Capacitor banks for power factor correction',
     ],
     correctAnswer: 3,
@@ -190,16 +190,16 @@ const quizQuestions = [
   },
   {
     id: 9,
-    question: 'BS 7671 requires oversized neutral conductors when:',
+    question: 'BS 7671 requires an increase in neutral conductor cross-section when:',
     options: [
-      'Close doors, signal for help, stay low, await rescue',
-      'Third harmonic content exceeds 15-33% depending on cable type',
-      'To plan electrical work at appropriate times and avoid delays',
-      'Inspection stages, hold points, acceptance criteria, and responsible parties',
+      'The phase conductors are reduced below 16 mm² copper',
+      'Triplen harmonic content exceeds 33% of the fundamental line current',
+      'The supply voltage rises more than 10% above nominal',
+      'The circuit is protected by a Type B RCD',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Appendix 11 requires consideration of neutral oversizing when third harmonic content exceeds certain thresholds. The neutral may need to be larger than phase conductors.',
+      'Where triplen harmonics exceed 33% of the fundamental line current, BS 7671 (Reg 523.6.3 and Appendix 4 Section 5.5) requires the neutral cross-sectional area to be increased, as the neutral may carry more current than the phases.',
   },
   {
     id: 10,

@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       'According to this section, what is the primary cause of most client disputes in the electrical trade?',
     options: [
-      'Faulty workmanship that does not comply with BS 7671',
       'Misaligned expectations between the electrician and the client',
+      'Faulty workmanship that does not comply with BS 7671',
       'Deliberate underquoting to win the job',
       'Clients who refuse to pay on principle',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The primary cause of most client disputes is misaligned expectations, not bad workmanship. When the client expects one thing and the electrician delivers another — even if the work is technically competent and compliant — the result is dissatisfaction and dispute. This can include expectations about timelines (when the job will be finished), scope (what is included), communication (how often they will be updated), and finish quality (what the completed work will look like). Setting clear expectations at every stage of the customer journey is the single most effective dispute prevention strategy.',
   },
@@ -36,11 +36,11 @@ const quickCheckQuestions = [
       'An electrician quotes 3 days for a job and finishes in 3 days. Another electrician quotes 4 days and finishes in 3 days. Both did identical work. Which client is more satisfied?',
     options: [
       'The first client, because 3 days is objectively faster',
-      'The second client, because they experienced a positive surprise of finishing early',
       'Both are equally satisfied because the work took the same time',
       'Neither is satisfied because domestic clients always want work done in one day',
+      'The second client, because they experienced a positive surprise of finishing early',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The second client is more satisfied because they experienced a positive surprise — the job was finished a day earlier than expected. The first client simply had their expectation met (not exceeded). This is the principle of under-promise, over-deliver: satisfaction is not about the absolute outcome, but about the gap between expectation and reality. Both electricians did identical work in identical time, but the one who set a slightly conservative timeline created a positive experience. This does not mean quoting absurdly long timelines — it means quoting realistic timelines rather than optimistic ones, and letting efficiency work in your favour.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the single most effective strategy for preventing client disputes?',
     options: [
-      'Underquoting to ensure the client feels they are getting value',
       'Setting clear, realistic expectations at every stage of the customer journey',
+      'Underquoting to ensure the client feels they are getting value',
       'Offering a money-back guarantee on all work',
       "Working faster to minimise the client's inconvenience",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Setting clear, realistic expectations at every stage of the customer journey is the single most effective dispute prevention strategy. Most disputes arise not from bad workmanship, but from a gap between what the client expected and what was delivered. By proactively managing expectations — about timelines, scope, cost, communication, and finish quality — you eliminate the conditions that cause disputes before they arise. This is far more effective than reactive strategies like guarantees, which only come into play after dissatisfaction has already occurred.',
   },
@@ -102,11 +102,11 @@ const quizQuestions = [
     question: 'Which stage of the customer journey is the most important for setting expectations?',
     options: [
       'The first contact / enquiry stage',
+      'Every stage is equally important',
       'The quoting stage',
       'The handover / completion stage',
-      'Every stage is equally important',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Every stage of the customer journey is equally important for expectation management, because different expectations are relevant at each stage. The first contact stage sets expectations about your responsiveness and professionalism. The quoting stage sets expectations about scope, cost, and timelines. The during-work stage sets expectations about communication, site cleanliness, and progress. The completion stage sets expectations about handover, certification, and aftercare. Neglecting any single stage creates a gap that can lead to dissatisfaction. Consistent, proactive communication throughout the entire journey is the key.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: 'What does the principle of "under-promise, over-deliver" mean in practice?',
     options: [
       'Quote a much higher price than necessary, then charge less',
-      'Quote realistic (not optimistic) timelines and let your efficiency create positive surprises',
       'Promise less than you intend to deliver to create a low-quality expectation',
+      'Quote realistic (not optimistic) timelines and let your efficiency create positive surprises',
       'Deliberately delay the start of work so that the actual duration seems shorter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under-promise, over-deliver means quoting realistic (rather than optimistic) timelines and then letting your efficiency create positive surprises. If you genuinely believe a job will take 3 days, quoting 3-4 days gives you a buffer for unexpected issues and means that finishing in 3 days feels like a win for the client. It does not mean quoting absurdly long timelines (which would lose you jobs) or promising poor quality (which is unprofessional). It means building a small, honest margin into your commitments so that you consistently meet or exceed expectations rather than falling short.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'A client has not heard from their electrician for three days during a week-long rewire. What is the client likely thinking?',
     options: [
       '"No news is good news — the job must be going well"',
-      '"Something has gone wrong, they are avoiding me, or they have forgotten about my job"',
       '"The electrician is clearly very busy and professional"',
       '"Three days is a perfectly normal communication gap during a rewire"',
+      '"Something has gone wrong, they are avoiding me, or they have forgotten about my job"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When a client has not heard from a tradesperson for an extended period, the "no news is bad news" perception takes hold. The client fills the silence with anxiety: something has gone wrong, the tradesperson has forgotten about them, or they are being avoided. This is true even when everything is going perfectly. The solution is proactive communication — a daily end-of-day text for domestic jobs ("Good progress today, first fix complete in the kitchen. Starting the bedrooms tomorrow") or weekly reports for commercial projects. This takes less than a minute and completely eliminates the anxiety that silence creates.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'What information should you communicate at the quoting stage to set expectations effectively?',
     options: [
+      'Scope, price, timeline, payment terms, exclusions, and what to expect during the work',
       'Price only — that is all the client cares about',
       'Price and timeline only',
-      'Scope, price, timeline, payment terms, exclusions, and what to expect during the work',
       'A generic terms and conditions document with no job-specific detail',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Effective expectation setting at the quoting stage requires communicating: the scope (exactly what work is included and excluded), the price (broken down if possible), the timeline (estimated start and completion dates), payment terms (when payment is due, accepted methods), exclusions (what is not included), and what to expect during the work (disruption, access requirements, noise). This comprehensive approach eliminates ambiguity and gives the client a complete picture of what they are agreeing to. A quote that only states a price leaves too many expectations unset.',
   },
@@ -156,11 +156,11 @@ const quizQuestions = [
     question: 'What is the recommended communication frequency for a domestic electrical job?',
     options: [
       'No communication needed unless there is a problem',
-      'One update at the start and one at the end of the job',
       'A brief daily end-of-day text or message summarising progress',
+      'One update at the start and one at the end of the job',
       'Hourly updates with photographs of every stage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'For domestic jobs, a brief daily end-of-day text or message summarising progress is the recommended communication frequency. This takes less than a minute to write ("Good progress today — first fix complete in the kitchen and lounge. Starting bedrooms tomorrow morning") but has a disproportionately positive effect on the client experience. It eliminates the "no news is bad news" anxiety, demonstrates professionalism, and provides a written record of progress. Hourly updates are excessive and impractical, while no communication creates anxiety and distrust.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
     question: 'What is the best way to communicate your working hours and availability to clients?',
     options: [
       'Do not mention it and deal with each situation as it arises',
-      'Include your working hours and contact preferences in your terms at the quoting stage, and reinforce when needed',
       'Wait until a client contacts you at an unreasonable hour, then tell them off',
+      'Include your working hours and contact preferences in your terms at the quoting stage, and reinforce when needed',
       'Be available 24/7 to demonstrate superior customer service',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The best approach is to include your working hours and contact preferences in your terms at the quoting stage, and then reinforce the boundary calmly when needed. Setting boundaries proactively (before they are tested) is far more effective than setting them reactively (after someone has already crossed them). A simple statement in your terms — "Available Monday to Friday, 7am-6pm. Messages outside these hours will be responded to on the next working day" — sets a clear, professional expectation that most clients will respect. For the few who do not, a calm, consistent reinforcement is sufficient.',
   },
@@ -184,10 +184,10 @@ const quizQuestions = [
     options: [
       'No impact — the client already knows what was done because they live there',
       'Negative impact — it looks like the electrician is trying too hard',
-      'Significant positive impact — it completes the communication loop, demonstrates professionalism, and creates a positive lasting impression',
       'Minor impact — clients never read handover messages',
+      'Significant positive impact — it completes the communication loop, demonstrates professionalism, and creates a positive lasting impression',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A comprehensive handover message has a significant positive impact because it completes the communication loop that began at the quoting stage, demonstrates a high level of professionalism that most tradespeople do not match, and creates a positive lasting impression. The handover is the client\'s final experience of working with you, and psychological research confirms that people judge experiences primarily by the ending (the "peak-end rule"). A strong handover means the client\'s final memory of your service is competence and care, which influences their likelihood of recommending you, leaving a review, and hiring you again in future.',
   },

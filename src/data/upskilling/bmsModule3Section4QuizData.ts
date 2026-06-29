@@ -31,9 +31,9 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is load shedding and when is it used?',
     options: [
-      'Reducing chilled water demand when outside air temperature is mild',
-      'By cutting non-critical circuits when power demand peaked, avoiding utility demand charges',
-      'Simulate high load conditions to verify automatic shedding triggers work correctly',
+      'Running all plant continuously to spread demand evenly through the day',
+      'Increasing output on every system to meet a forecast demand peak',
+      'Disconnecting the building from the grid and running on backup generation',
       'Temporarily reducing or switching off non-critical loads when demand is high',
     ],
     correctAnswer: 3,
@@ -44,10 +44,10 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     id: 4,
     question: 'Name one type of system that must never be shed.',
     options: [
-      'Life safety systems like emergency lighting and fire alarms',
-      'Reducing chilled water demand when outside air temperature is mild',
-      'Monitoring conditions in real time and supplying only what is needed',
-      'To prevent accidental shedding of safety-critical loads',
+      'Life safety systems such as emergency lighting and fire alarms',
+      'Comfort cooling serving general office areas',
+      'Decorative and external façade lighting circuits',
+      'Domestic hot water recirculation pumps',
     ],
     correctAnswer: 0,
     explanation:
@@ -97,9 +97,9 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     question: 'Why is it important to separate critical and non-critical circuits?',
     options: [
       'To prevent accidental shedding of safety-critical loads',
-      'It avoids peak demand charges and utility penalties',
-      'Reducing chilled water demand when outside air temperature is mild',
-      'Monitoring conditions in real time and supplying only what is needed',
+      'To reduce the total cable length needed across the installation',
+      'To allow all circuits to be shed simultaneously during a peak',
+      'To remove the need for separate metering of each circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step should be taken to test load shedding strategies?',
     options: [
-      'Temporarily reducing or switching off non-critical loads when demand is high',
-      'Simulate high load conditions to verify automatic shedding triggers work correctly',
-      'Monitoring conditions in real time and supplying only what is needed',
-      'Reducing chilled water demand when outside air temperature is mild',
+      'Disable the shedding logic so it cannot interfere with other tests',
+      'Simulate high load conditions to verify automatic shedding triggers operate correctly',
+      'Rely on the manufacturer factory test and skip on-site verification',
+      'Test only the critical circuits, since non-critical loads are low priority',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, how did load shedding protect the data centre from penalties?',
     options: [
-      'Temporarily reducing or switching off non-critical loads when demand is high',
-      'Monitoring conditions in real time and supplying only what is needed',
+      'By switching to on-site generators whenever grid demand peaked',
+      'By renegotiating its contracted demand limit upward with the utility',
       'By cutting non-critical circuits when power demand peaked, avoiding utility demand charges',
-      'Reducing chilled water demand when outside air temperature is mild',
+      'By shutting down the critical cooling plant during the peak period',
     ],
     correctAnswer: 2,
     explanation:

@@ -127,11 +127,11 @@ const quizQuestions = [
       'Which BS 7671 regulation is the headline rule that the cable type must be suitable for the installation conditions and the external influences it will encounter?',
     options: [
       'Reg 411.3.1 &mdash; protective earthing',
-      'Reg 521.5 &mdash; types of wiring system in relation to types of installation',
       'Reg 314.1 &mdash; division of installation',
+      'Reg 521.5 &mdash; types of wiring system in relation to types of installation',
       'Reg 433.1.1 &mdash; coordination of conductor and protective device',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 521.5 is the umbrella requirement that the type of wiring system selected shall be suitable for the type of installation, mode of installation, and the external influences encountered. It is the legal hook for everything that follows in 521 and 522 &mdash; cable type selection, mechanical impact (522.6), thermal effects (522.2), water/moisture (522.3), corrosive substances (522.5), and so on. Always cite 521.5 alongside the more specific regulation when justifying a cable choice.',
   },
@@ -169,11 +169,11 @@ const quizQuestions = [
       'Reg 525.201 sets a default voltage-drop limit for low-voltage installations supplied directly from a public LV system. What does Reg 525.202 add?',
     options: [
       'It removes the voltage-drop limit entirely for industrial systems',
-      'It increases the limit to 6% lighting / 8% other uses for private-supply systems where the run from origin is long',
       'It mandates a 1% margin for inrush',
       'It applies only to fire-alarm systems',
+      'It increases the limit to 6% lighting / 8% other uses for private-supply systems where the run from origin is long',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 525.202 covers installations not supplied from the public LV network &mdash; private generators, large industrial sites with own transformer, off-grid solar/battery systems. The cap rises to 6% lighting / 8% other uses, recognising that the run from the source is typically much longer. The same mV/A&middot;m calculation is used, just against the higher percentage of nominal voltage.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A circuit is protected by a BS 3036 rewireable fuse. Which correction factor must be applied to the cable&apos;s nominal current-carrying capacity, and at what value?',
     options: [
-      'No factor &mdash; BS 3036 fuses are no longer recognised',
       'Cf = 0.725 &mdash; multiplied into the Iz equation alongside Ca, Cg, Ci',
+      'No factor &mdash; BS 3036 fuses are no longer recognised',
       'Cf = 1.5 &mdash; the cable is uprated, not derated',
       'Cf = 0.50 &mdash; applied only when grouped',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 3036 rewireable (semi-enclosed) fuses have a notably higher fusing factor than HBC fuses or MCBs &mdash; they may carry up to ~2&times; rated current for extended periods before clearing. App 4 of BS 7671 prescribes Cf = 0.725 to be applied within Iz = It &times; Ca &times; Cg &times; Ci &times; Cf when a BS 3036 fuse protects the circuit. Modern installations rarely use BS 3036, but they are still encountered on EICRs of older properties &mdash; spotting it is part of the inspection.',
   },
@@ -225,11 +225,11 @@ const quizQuestions = [
       'Reg 522.8.10 (cables in or against the ground) refers you to Reference Method D. What is the typical minimum burial depth recommended for direct-buried cables, and what additional protection is normally specified?',
     options: [
       '50 mm depth, no extra protection',
-      '500 mm depth (deeper under driveways), with marker tape and/or cable tiles above the cable',
       '2 m depth, encased in concrete',
+      '500 mm depth (deeper under driveways), with marker tape and/or cable tiles above the cable',
       '100 mm depth, ducted in PVC only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 itself does not give a hard minimum depth (this is in the IET On-Site Guide and DNO/HSE guidance); the practical default is 500 mm under footpaths/lawns and 600&ndash;750 mm under vehicular access. Reg 522.8.10 requires the cable to be at sufficient depth to avoid damage from reasonably foreseeable disturbance, with marker tape (typically yellow or warning-printed) above the cable and cable tiles where the depth is below the typical recommendation. Reference Method D (Tables 4D4A / 4E4A) is the App 4 column to read for buried-cable CCC.',
   },

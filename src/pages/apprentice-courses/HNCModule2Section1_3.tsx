@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'stefan-boltzmann',
     question: 'In the Stefan-Boltzmann equation Q = εσAT⁴, what does the symbol σ represent?',
     options: [
-      'Measure and cut carefully',
-      'Health, safety and welfare',
+      'The surface emissivity',
+      'The radiating surface area',
       'Stefan-Boltzmann constant',
-      'SAP/SBEM (Part L compliance)',
+      'The absolute temperature',
     ],
     correctIndex: 2,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
       '1100W',
       '850W',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Net radiation Q = εσA(T₁⁴ - T₂⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (313⁴ - 293⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (9.60×10⁹ - 7.37×10⁹) = 680W',
+      'Net radiation Q = εσA(T₁⁴ - T₂⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (313⁴ - 293⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (9.60×10⁹ - 7.37×10⁹) = 0.95 × 5.67×10⁻⁸ × 10 × 2.23×10⁹ ≈ 1200W (nearest option 1100W).',
   },
   {
     id: 6,
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'Why do radiant heating panels provide better thermal comfort than convective heating?',
     options: [
-      'Separate different voltage levels and prevent interference',
-      'Annually or when systems change significantly',
-      'Any person who may need assistance to evacuate the building',
+      'They heat the air faster than convective systems',
+      'They raise humidity, which feels warmer to occupants',
+      'They circulate warm air more evenly around the room',
       'They directly warm occupants and surfaces, not air',
     ],
     correctAnswer: 3,

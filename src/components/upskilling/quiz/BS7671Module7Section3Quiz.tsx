@@ -15,63 +15,63 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What IP rating is generally required for outdoor switches?',
-    options: ['IP44', 'IP54', 'IP65', 'IP20'],
-    correctAnswer: 1,
+    question: 'What minimum IP rating is generally required for switchgear in damp outdoor locations?',
+    options: ['IP54', 'IP44', 'IP65', 'IP20'],
+    correctAnswer: 0,
     explanation:
-      'Outdoor switches generally require IP54 rating minimum to protect against dust ingress and water splashing from any direction.',
+      'Around IP54 is the usual minimum outdoors, giving protection against dust ingress and water splashing from any direction.',
   },
   {
     id: 2,
-    question: 'Why is bonding important in livestock buildings?',
+    question: 'Why is supplementary bonding particularly important in livestock buildings?',
     options: [
-      'For aesthetic purposes',
-      'To prevent potential differences that could affect animals',
-      'To reduce energy costs',
-      "It's not actually required",
+      'Mainly for the appearance of the installation',
+      'Animals tolerate much higher touch voltages than people',
+      'To prevent potential differences that can harm animals',
+      'It reduces the building’s energy consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Animals are more sensitive to electrical potential differences than humans. Proper bonding prevents dangerous potential differences that could harm livestock.',
+      'Livestock are far more sensitive to small potential differences than humans, so thorough bonding is used to keep touch voltages safely low.',
   },
   {
     id: 3,
-    question: 'What causes cable degradation in agricultural settings?',
+    question: 'What typically causes cable degradation in agricultural environments?',
     options: [
-      'Only mechanical damage',
-      'UV radiation, corrosive substances, and mechanical damage',
-      'Only temperature variations',
-      'Only moisture',
+      'Only mechanical damage from machinery',
+      'Only seasonal temperature variation',
+      'Only the presence of moisture',
+      'UV, corrosive substances and mechanical damage combined',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Agricultural environments expose cables to UV radiation, corrosive substances from animal waste, mechanical damage from machinery, and extreme temperature variations.',
+      'Farm cables face several stresses at once — UV from sunlight, corrosive animal waste, impact from machinery and wide temperature swings — so robust cable types are chosen.',
   },
   {
     id: 4,
-    question: 'What protective device considerations apply?',
+    question: 'What protective-device considerations apply to outdoor and agricultural circuits?',
     options: [
-      'Standard domestic devices are sufficient',
-      'RCD protection and appropriate discrimination',
-      'No special requirements',
-      'Only surge protection needed',
+      'Standard domestic devices are always sufficient',
+      'RCD protection with appropriate discrimination',
+      'No special requirements beyond fusing',
+      'Only surge protection is needed',
     ],
     correctAnswer: 1,
     explanation:
-      'Outdoor and agricultural installations require RCD protection and careful consideration of discrimination to prevent nuisance tripping while maintaining safety.',
+      'These circuits need RCD protection with careful discrimination so a single fault does not trip the whole installation, balancing safety against nuisance tripping.',
   },
   {
     id: 5,
-    question: 'How are underground cables protected?',
+    question: 'How are direct-buried underground cables usually protected from damage?',
     options: [
-      'No protection needed underground',
-      'Armoured cables and warning tape/tiles',
-      'Only plastic conduit required',
-      'Burial depth alone is sufficient',
+      'No protection is needed once underground',
+      'By armoured cable plus warning tape or tiles',
+      'By plastic conduit alone',
+      'By burial depth on its own',
     ],
     correctAnswer: 1,
     explanation:
-      'Underground cables require armoured construction and warning tape or tiles to alert future excavators and prevent accidental damage.',
+      'Buried cables are typically armoured and laid with warning tape or tiles above them, so future excavation is alerted before the cable is struck.',
   },
 ];
 

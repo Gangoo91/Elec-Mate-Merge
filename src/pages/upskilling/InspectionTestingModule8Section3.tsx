@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'On a TT installation the maximum permitted Zₛ in column 12 of the Schedule of Circuit Details is set by the requirement that the upstream RCD operates at IΔn, not by the BS 7671 Table 41.3 overcurrent values. What does the § footnote require you to do?',
     options: [
-      'Nothing — column 12 is just a number',
-      'State the source of the column 12 value in column 31 (Remarks) of the Schedule of Test Results, because it is taken from a source other than the tabulated values in Chapter 41',
-      'Round the value to the nearest 0.1 Ω',
-      'Use the Table 41.3 value anyway',
+      'State the source of the column 12 value in the Remarks column of the schedule',
+      'Nothing, because column 12 is treated simply as a number on the form',
+      'Round the column 12 value to the nearest 0.1 Ω before recording it',
+      'Use the Table 41.3 tabulated value anyway, regardless of the actual source',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The § footnote on column 12 is explicit: where the maximum permitted fault loop impedance is taken from a source other than Chapter 41, the source must be stated in column 31 (Remarks). On TT, that means recording “derived from RCD IΔn requirement” in Remarks. Without the declaration, the next inspector cannot judge whether the value is correct.',
   },
@@ -37,12 +37,12 @@ const inlineChecks = [
     question:
       'You are testing a final circuit fitted with an AFDD that does not have a manual test button. What entry goes in column 30 of the Schedule of Test Results?',
     options: [
-      'A ✓ — always tick column 30 if an AFDD is fitted',
-      'N/A or blank — the †† footnote on column 30 reads “Not all AFDDs have a test button”, so a test-button-less device legitimately leaves the column N/A. Item 4.23 of the Schedule of Inspection then captures the indicator-light check instead',
-      'X — record the absence of test button as a fail',
-      'The longest disconnection time at IΔn',
+      'A tick, because column 30 is always ticked wherever an AFDD is fitted',
+      'An X, recording the absence of a test button as a functional failure',
+      'N/A or blank, because a test-button-less AFDD legitimately leaves the column N/A',
+      'The longest measured disconnection time at the rated current IΔn',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Column 30 records manual test button operation. The †† footnote acknowledges that not every AFDD has one. N/A is the correct entry for a button-less device — not a tick of convenience, not an X. The schedule of inspection item 4.23 then handles the indicator-light operational confirmation.',
   },
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'A circuit reads col 21 (R1+R2) = 0.78 Ω, col 27 (max measured Zₛ) = 1.42 Ω, col 12 (max permitted Zₛ) = 1.37 Ω, header Zₑ = 0.35 Ω. Which cross-check fires and what action is required?',
     options: [
-      'No problem — both columns are within rounding',
-      'Two failures: predicted Zₛ = 0.35 + 0.78 = 1.13 Ω vs measured 1.42 Ω (a 0.29 Ω discrepancy), and measured Zₛ 1.42 Ω > col 12 limit 1.37 Ω. Investigate before signing — either Zₑ has shifted, a parallel path was lost, or a joint has degraded under live test current',
-      'Average the two readings and accept',
-      'Use whichever is lower',
+      'No problem, because both columns are within normal rounding tolerance',
+      'Use whichever of the predicted and measured values is the lower figure',
+      'Average the predicted and measured readings and accept the resulting mean',
+      'Two failures: measured Zₛ exceeds both the predicted value and the limit — investigate',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The dead-test sum (Zₑ + R1+R2) and the live measured Zₛ disagree by 0.29 Ω — substantial enough to matter. Worse, measured Zₛ exceeds the column 12 design limit. Reg 411.4 disconnection is not satisfied. Resolve the discrepancy before issuing any certificate.',
   },
@@ -65,12 +65,12 @@ const inlineChecks = [
     question:
       'You find a reversed-polarity socket on a new installation EIC. Can you record an X in column 26 of the Schedule of Test Results and continue?',
     options: [
-      'Yes — just add a comment in column 31',
-      'No — the # footnote on column 26 forbids X on a schedule attached to an EIC. Polarity must be corrected before the EIC is signed. X is permitted only on an EICR Schedule of Test Results, where existing non-compliances are exactly what the form records',
-      'Only on TT installations',
-      'Yes, provided the customer signs an acceptance',
+      'No, because an X is forbidden on an EIC schedule; correct polarity before signing',
+      'Yes, provided you also add an explanatory comment in the Remarks column',
+      'Only on TT installations, where reversed polarity is treated differently',
+      'Yes, provided the customer signs to accept the reversed-polarity socket',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The # footnote is direct: incorrect polarity (X) cannot be entered on a schedule when issued with an EIC. The EIC is a certificate of compliant work — a circuit with reversed polarity is not compliant and must be fixed before the EIC is issued. On an EICR, X is acceptable and drives a C1 or C2 in Section K.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'On the A4:2026 Generic Schedule of Test Results, which column number records the longest measured RCD disconnection time, and at what current is that test performed?',
     options: [
-      'Column 27 — at IΔn',
-      'Column 28 — at the rated residual operating current IΔn (with a footnote that RCD effectiveness is verified using an alternating-current test at rated IΔn)',
-      'Column 29 — at 5 × IΔn',
-      'Column 30 — at 0.5 × IΔn',
+      'Column 27, with the test performed at the rated current IΔn',
+      'Column 28, with the test performed at the rated current IΔn',
+      'Column 29, with the test performed at 5 × IΔn',
+      'Column 30, with the test performed at 0.5 × IΔn',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A T&E radial reads R1+R2 = 0.41 Ω at the furthest socket. The Schedule of Circuit Details lists the maximum permitted Zs for that circuit (column 12) as 1.37 Ω, and Ze on the Schedule of Test Results header reads 0.32 Ω. What goes in the "Maximum measured Zs" column (column 27), and is the circuit compliant?',
     options: [
-      '0.41 Ω; compliant because R1+R2 < max permitted Zs',
-      '0.73 Ω at 20°C; compliant because Ze + R1+R2 < column 12 limit (1.37 Ω) at the design temperature',
-      '1.37 Ω; that is the value to record',
-      '0.32 Ω; the Ze is what gets recorded',
+      '0.41 Ω; compliant because R1+R2 is below the max permitted Zs',
+      '0.32 Ω; the header Ze value is the figure that gets recorded',
+      '1.37 Ω; the max permitted figure is the value to record here',
+      '0.73 Ω; compliant because Ze + R1+R2 is below the column 12 limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Column 27 is the maximum measured Zs at the furthest point of the circuit. Ze + R1+R2 = 0.32 + 0.41 = 0.73 Ω at 20°C. With temperature correction (×1.20 for thermoplastic at 70°C operating temperature) Zs ≈ 0.88 Ω — still well inside the column 12 max-permitted-Zs of 1.37 Ω. Compliant. The column 12 design limit is what the column 27 measurement is judged against.',
   },
@@ -111,11 +111,11 @@ const quizQuestions = [
       'Column 30 of the A4:2026 Schedule of Test Results is new with this amendment. What does it record, and what is its footnote?',
     options: [
       'AFDD trip current at IΔn; footnote: AFDDs must be tested at rated current',
+      'Energy efficiency rating of the circuit; footnote: rate against the design load',
       'AFDD manual test button operation; footnote: "Not all AFDDs have a test button"',
-      'Energy efficiency rating',
-      'Surge protective device discharge time',
+      'Surge protective device discharge time; footnote: record against the SPD type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Column 30 records the manual test button operation of any AFDD installed on the circuit. The footnote on the schedule reads "Not all AFDDs have a test button" — so the column may legitimately be left blank or marked N/A on a circuit fitted with a test-button-less AFDD. The column was added at A4:2026 to align with the new Reg 421.1.7 AFDD requirement and item 4.23 of the Schedule of Inspection.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'On a ring final circuit, columns 18, 19 and 20 of the Schedule of Test Results record r₁, rₙ and r₂. The end-to-end r₁ reads 0.42 Ω, rₙ reads 0.42 Ω, and r₂ reads 0.70 Ω. The cable is 2.5/1.5 mm² T&E. What does the close match between r₁ and rₙ, and the higher r₂, tell you?',
     options: [
-      'There is a fault — r₁ and rₙ should never match',
-      'The r₁ = rₙ indicates the line and neutral are continuous loops of equal length, as expected for 2.5 mm² conductors. The r₂ being approximately 1.67× r₁ is the expected ratio for a 2.5/1.5 mm² T&E ring (12.10/7.41 ≈ 1.63), confirming a 1.5 mm² CPC is intact and the same length as the line/neutral',
-      'The r₂ reading is too high; reject',
-      'The ring is wired with reduced cross-section and must be rejected',
+      'Equal line and neutral lengths, with a healthy 1.5 mm² CPC intact around the ring',
+      'A fault is present, because the r₁ and rₙ readings should never match each other',
+      'The r₂ reading is far too high for this cable, so the ring should be rejected',
+      'The ring has been wired with a reduced cross-section and must therefore be rejected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For 2.5/1.5 mm² T&E, the ratio r₂/r₁ should approximate the ratio of conductor resistivities at the same length: 12.10 mΩ/m ÷ 7.41 mΩ/m ≈ 1.63. A measured ratio of 0.70/0.42 = 1.67 is well within tolerance. r₁ ≈ rₙ confirms equal line and neutral lengths around the ring. This three-reading cross-check is exactly why columns 18-20 exist on the schedule.',
   },
@@ -139,11 +139,11 @@ const quizQuestions = [
       'Columns 24 and 25 of the Schedule of Test Results record Insulation Resistance Live-Live and Live-Earth in MΩ, with column 23 recording the test voltage. For a 230 V final circuit per BS 7671 Table 64, what test voltage and minimum acceptable IR value go in those columns?',
     options: [
       '250 V DC, ≥ 0.5 MΩ',
-      '500 V DC, ≥ 1.0 MΩ',
-      '1000 V DC, ≥ 1.0 MΩ',
       '500 V AC, ≥ 1.0 MΩ',
+      '1000 V DC, ≥ 1.0 MΩ',
+      '500 V DC, ≥ 1.0 MΩ',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Per BS 7671 Table 64 (referenced by the schedule footnote ‡‡ "Where this schedule forms part of an Electrical Installation Certificate, insulation resistance testing should be performed at the test voltage stated in Table 64"), a 230 V LV final circuit is tested at 500 V DC with a minimum acceptance of 1.0 MΩ. SELV/PELV would be 250 V DC; circuits over 500 V would use 1000 V DC.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'On the Schedule of Circuit Details, column 12 is labelled "Maximum permitted Zₛ (Ω)". Where does that value come from, and how does it relate to BS 7671 Table 41.3?',
     options: [
-      'It is always the BS 7671 Table 41.3 raw value at 70°C',
-      'The footnote § states that where the value is taken from a source other than the tabulated values given in Chapter 41 of BS 7671:2018+A4:2026, the source is to be stated in the appropriate cell of column 31 (Remarks) of the Schedule of Test Results — so it can be the Table 41.3 value, an Annex A4 value, or a designer-set tighter limit, with the source declared',
-      'It is the measured Zs',
-      'It is always Ze',
+      'It is always the BS 7671 Table 41.3 raw value, taken directly at 70°C',
+      'It can be Table 41.3, an Annex value or a tighter design limit, with the source declared',
+      'It is the live-measured Zs from column 27, copied across to the circuit details',
+      'It is always the external earth fault loop impedance Ze for the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'Column 26 of the Schedule of Test Results records "Polarity". What does the # footnote on that column tell the inspector to do when polarity is incorrect?',
     options: [
-      "Mark with an X — but the footnote says 'An X denoting incorrect polarity, cannot be entered on to this schedule when issued with an Electrical Installation Certificate'",
-      'Mark X and continue',
-      'Polarity is recorded only as ✓',
-      'Leave blank if reversed',
+      'Record polarity only as a tick, never any other mark, on any schedule',
+      'Mark the cell with an X and continue to issue the certificate as normal',
+      'An X for incorrect polarity cannot be entered on a schedule issued with an EIC',
+      'Leave the polarity cell blank wherever the polarity is found to be reversed',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'The # footnote is direct: incorrect polarity (X) cannot be recorded on a schedule that forms part of an EIC. The reasoning: an EIC is a certificate of compliant work, and a circuit with incorrect polarity is not compliant — it must be corrected before the EIC is signed. The X is acceptable on a Schedule of Test Results that forms part of an EICR, where existing non-compliances are exactly what is being recorded.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'You are filling in the Schedule of Test Results header. The "Zₑ" field at the top of column 17 region records the Ze value for the supply. The form also shows a tick-box for "Operational status confirmed¶" and an N/A box. What is the ¶ footnote telling you?',
     options: [
-      'Tick the box if you have time',
-      'The footnote ¶ reads "Not all SPDs have visible functionality indication" — so where the SPD has no indicator, the N/A box is the correct entry, not the confirmed box',
-      'The box is for AFDDs only',
-      'Always tick confirmed',
+      'Not all SPDs have a visible indicator, so the N/A box is correct where there is none',
+      'Tick the confirmed box only if you have time during the test sequence',
+      'The operational-status box applies to AFDD circuits only, never to SPDs',
+      'Always tick confirmed, because every SPD carries a visible status indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The ¶ footnote on the SPD operational-status row is explicit: "Not all SPDs have visible functionality indication". Where the device has no indicator window or LED, you cannot honestly tick "Confirmed" — the N/A box is the correct entry, and the inspector relies on the manufacturer end-of-life expectation in lieu of an inspection check. This footnote was added at A4:2026 to align with Reg 651.4 (SPD indication) and stop inspectors fabricating ticks on devices that physically cannot be checked visually.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'A circuit on your schedule has the following readings: column 21 (R1+R2) = 0.78 Ω, column 27 (max measured Zs) = 1.42 Ω, column 12 (max permitted Zs from circuit details) = 1.37 Ω. Ze at the header is 0.35 Ω. What is the cross-check that should fire and what is the action?',
     options: [
-      'No problem — both columns are within rounding',
-      'Cross-check: Ze + R1+R2 = 0.35 + 0.78 = 1.13 Ω predicted, but measured Zs is 1.42 Ω — a 0.29 Ω discrepancy. Worse, measured Zs > max permitted Zs (1.42 > 1.37). The circuit fails the design limit and the discrepancy itself is diagnostic of either a parallel path lost during the live test, a degraded joint that has worsened between the dead and live tests, or a Ze value that has shifted. Investigate before signing',
-      'Just average the two readings',
-      'Use whichever is lower',
+      'No problem, because both columns are within normal rounding tolerance',
+      'Measured Zs (1.42 Ω) exceeds both the predicted 1.13 Ω and the limit — investigate',
+      'Just average the predicted and measured readings and accept the mean value',
+      'Use whichever of the two readings is the lower and record that figure',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'The Generic Schedule of Test Results header lists "Details of test instruments used (serial and/or asset numbers)" with rows for Multifunction, Continuity, Insulation resistance, Earth fault loop impedance, RCD, and Earth electrode resistance. Why does the form provide separate rows when most inspectors use one multifunction tester?',
     options: [
-      'To pad the form',
-      'Because traceability of calibration is per-instrument-per-test. If a different instrument was used for any sub-test (for example, a dedicated earth electrode tester for a TT installation), the serial number for that specific test must be recorded — not just the multifunction tester. This satisfies Reg 643 traceability and EAW Reg 16 due-diligence',
-      'Because multifunction testers are not allowed',
-      'For aesthetic reasons',
+      'So one calibration certificate can cover every test function at once',
+      'So the multifunction serial number need only be written down a single time',
+      'Because multifunction testers are not permitted for certification testing',
+      'Because where a separate instrument is used for a test, its serial must be recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Calibration certificates are issued per instrument per test function. Where one tester does everything, the same serial number goes in every row. But if a separate earth electrode tester or a separate insulation tester was used for any reason, that instrument's serial / asset number belongs in its own row. The schedule structure forces honest traceability — court-aware practice in any disputed installation.",
   },

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'protocol-purpose',
     question: 'What is the primary purpose of communication protocols in a BMS?',
     options: [
-      'To increase the cost of the system',
       'To enable different devices and systems to communicate and share data',
-      'To replace sensors with software',
-      'To eliminate the need for wiring',
+      'To increase the overall cost of the system',
+      'To replace physical sensors with software estimates',
+      'To remove the need for any field wiring',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Communication protocols provide standardised rules that enable diverse devices from different manufacturers to communicate and share data effectively, creating an integrated building automation system.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'electrician-role',
     question: "What is the electrician's primary role in BMS protocol implementation?",
     options: [
-      'Programming control logic',
-      'Designing network architecture',
+      'Programming the control logic',
+      'Designing the network architecture',
+      'Selecting which protocol the building will use',
       'Proper physical installation and cabling',
-      'Selecting which protocol to use',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'While commissioning engineers handle programming and network design, electricians are responsible for proper physical installation including cabling, terminations, shielding, and ensuring the physical infrastructure supports reliable protocol communication.',
   },

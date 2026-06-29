@@ -21,37 +21,37 @@ const quickCheckQuestions = [
     question:
       'Under the Confined Spaces Regulations 1997, which TWO conditions must both be present for a space to be classified as a confined space?',
     options: [
-      'It must be underground and have poor lighting',
+      'It must have restricted access and contain electrical or mechanical equipment',
       'It must be substantially enclosed and have a foreseeable risk of serious injury from hazardous conditions',
-      'It must be smaller than 2 metres wide and require a permit to enter',
-      'It must have restricted access and be located on a construction site',
+      'It must be below ground level and lack any form of natural ventilation',
+      'It must require breathing apparatus and be entered only with a permit to work',
     ],
     correctIndex: 1,
     explanation:
-      'Under the Confined Spaces Regulations 1997, a confined space must be substantially (but not necessarily entirely) enclosed AND there must be a reasonably foreseeable risk of serious injury from hazardous conditions within the space or from substances or conditions within it. Both conditions must be met. Size alone does not determine whether a space is confined.',
+      'Under the Confined Spaces Regulations 1997, a confined space must be substantially (but not necessarily entirely) enclosed AND there must be a reasonably foreseeable risk of serious injury from hazardous conditions within it. Both conditions must be met. Being below ground, poorly ventilated, or needing a permit may be features of some confined spaces but none of these alone defines one.',
   },
   {
     id: 'rescuer-fatalities',
     question:
       'What percentage of confined space fatalities involve would-be rescuers who enter without proper equipment or training?',
-    options: ['Approximately 20%', 'Approximately 40%', 'Approximately 60%', 'Approximately 80%'],
+    options: ['Approximately 15%', 'Approximately 35%', 'Approximately 60%', 'Approximately 90%'],
     correctIndex: 2,
     explanation:
-      'Approximately 60% of confined space fatalities involve would-be rescuers. This shocking statistic underlines why emergency rescue plans must be in place before entry, why non-entry rescue methods are preferred, and why untrained persons must never attempt rescue by entering a confined space. Proper rescue equipment such as tripods and winches allows extraction without additional persons entering the hazardous atmosphere.',
+      'Around 60% of confined space fatalities are would-be rescuers. This statistic underlines why emergency rescue plans must be in place before entry, why non-entry rescue methods are preferred, and why untrained persons must never attempt rescue by entering a confined space. Tripods and winches allow extraction without additional persons entering the hazardous atmosphere.',
   },
   {
     id: 'fire-extinguisher-types',
     question:
       'Which type of fire extinguisher should be used on a fire involving live electrical equipment?',
     options: [
-      'Water extinguisher (red band)',
-      'Foam extinguisher (cream band)',
       'CO2 extinguisher (black band)',
+      'Foam extinguisher (cream band)',
+      'Water extinguisher (red band)',
       'Wet chemical extinguisher (yellow band)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
-      'CO2 (carbon dioxide) extinguishers, identified by a black band on the red body, are safe to use on fires involving live electrical equipment because CO2 is a non-conductive gas. Water, foam, and wet chemical extinguishers must NEVER be used on live electrical equipment as they conduct electricity and could cause electrocution. Once the electrical supply is isolated, other extinguisher types may be appropriate depending on what is burning.',
+      'CO2 (carbon dioxide) extinguishers, identified by a black band on the red body, are safe on live electrical equipment because CO2 is a non-conductive gas that leaves no residue. Water, foam, and wet chemical agents must NEVER be used on live electrical equipment as they conduct electricity and risk electrocution. Once the supply is isolated, other types may be appropriate depending on what is burning.',
   },
 ];
 
@@ -83,79 +83,79 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is an example of a confined space on a construction site?',
     options: [
+      'A fenced storage compound in the car park',
       'An open-plan office on the third floor',
       'A cable duct running beneath the floor with restricted access',
-      'A fenced storage compound in the car park',
-      'A scaffolded external wall with sheeting',
+      'A loading bay open to the air on one side',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A cable duct running beneath the floor is a confined space because it is substantially enclosed and there is a foreseeable risk of serious injury from hazardous conditions such as oxygen depletion, toxic gases, or restricted movement. Open offices, fenced compounds, and scaffolded walls are not confined spaces as they are not substantially enclosed or do not present the specific confined space hazards.',
+      'A cable duct running beneath the floor is a confined space because it is substantially enclosed and presents a foreseeable risk of serious injury from hazardous conditions such as oxygen depletion, toxic gases, or restricted movement. Compounds, offices, and open loading bays are not substantially enclosed and do not present the specific confined space hazards.',
   },
   {
     id: 2,
     question: 'What is the FIRST priority when work needs to be done in a confined space?',
     options: [
-      'Ensure all workers have the correct PPE',
-      'Set up atmospheric monitoring equipment',
       'Avoid entry altogether if the work can be done from outside',
-      'Prepare a rescue plan and brief the entry team',
+      'Ensure all workers have the correct PPE before they go in',
+      'Set up the atmospheric monitoring equipment at the entry point',
+      'Prepare a rescue plan and brief the entry team thoroughly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'The hierarchy of control under the Confined Spaces Regulations 1997 places avoidance of entry as the first and most important consideration. If the work can be achieved without entering the confined space (for example, by using remote tools, CCTV inspection, or extending equipment from outside), then entry must not take place. Only when entry cannot reasonably be avoided should a safe system of work be established.',
+      'The hierarchy under the Confined Spaces Regulations 1997 places avoidance of entry as the first and most important consideration. If the work can be achieved without entering (for example using remote tools, CCTV, or extending equipment from outside), entry must not take place. Only when entry cannot reasonably be avoided should a safe system of work be established.',
   },
   {
     id: 3,
     question: 'Why are an estimated 60% of confined space fatalities among rescuers?',
     options: [
-      'Rescuers are usually less physically fit than the original workers',
-      'Rescue equipment is often faulty',
+      'Rescuers are usually less physically fit than the original entrants',
+      'Rescue equipment is frequently found to be faulty or poorly maintained',
+      'Emergency services typically take too long to reach the casualty',
       'Untrained rescuers enter the hazardous atmosphere without proper protection',
-      'Emergency services take too long to arrive',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'The majority of rescuer fatalities occur because well-meaning colleagues rush into a confined space to help a casualty without understanding the hazard, without breathing apparatus, and without proper rescue equipment. They are then overcome by the same toxic or oxygen-depleted atmosphere that affected the original casualty. This is why rescue plans must be in place before entry, non-entry rescue methods are preferred, and only trained rescue teams with breathing apparatus should carry out entry rescue.',
+      'Most rescuer fatalities occur because well-meaning colleagues rush in to help a casualty without understanding the hazard, without breathing apparatus, and without proper rescue equipment, then are overcome by the same toxic or oxygen-depleted atmosphere. This is why rescue plans must be ready before entry, non-entry rescue is preferred, and only trained teams with breathing apparatus should carry out entry rescue.',
   },
   {
     id: 4,
     question: 'What does the fire triangle consist of?',
     options: [
+      'Spark, smoke, and carbon dioxide',
       'Heat, fuel, and oxygen',
-      'Smoke, flame, and carbon dioxide',
-      'Electricity, gas, and water',
       'Ignition, combustion, and ventilation',
+      'Flame, pressure, and nitrogen',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'The fire triangle consists of heat (ignition source), fuel (combustible material), and oxygen (present in air). All three elements must be present for a fire to start and sustain itself. Remove any one element and the fire is extinguished. Fire prevention focuses on keeping these elements apart, whilst fire-fighting works by removing one or more elements.',
+      'The fire triangle consists of heat (an ignition source), fuel (combustible material), and oxygen (present in air at roughly 21%). All three must be present for a fire to start and sustain itself; remove any one and the fire is extinguished. Fire prevention keeps these elements apart, whilst fire-fighting works by removing one or more of them.',
   },
   {
     id: 5,
     question: 'A foam extinguisher (cream band) is suitable for which classes of fire?',
     options: [
-      'Class A (solids) and Class B (flammable liquids)',
       'Class B (flammable liquids) and Class C (flammable gases)',
-      'Class A (solids) and Class F (cooking oils)',
-      'Electrical fires and Class D (metals)',
+      'Class A (solids) and Class F (cooking oils and fats)',
+      'Class A (solids) and Class B (flammable liquids)',
+      'Class C (flammable gases) and Class D (metals)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'Foam extinguishers (identified by a cream-coloured band) are effective on Class A fires (solid combustible materials such as wood, paper, and textiles) and Class B fires (flammable liquids such as petrol, oil, and solvents). The foam creates a blanket over the burning material, smothering the fire and preventing re-ignition. Foam must NOT be used on live electrical equipment, cooking oil fires, or metal fires.',
+      'Foam extinguishers (cream-coloured band) are effective on Class A fires (solids such as wood, paper, and textiles) and Class B fires (flammable liquids such as petrol, oil, and solvents). The foam blankets the burning material, smothering it and preventing re-ignition. Foam must NOT be used on live electrical equipment, cooking oil fires, or metal fires.',
   },
   {
     id: 6,
     question: 'What is the purpose of a hot works permit on a construction site?',
     options: [
-      'To record the temperature on site each day',
       'To control fire risk from activities involving heat or flame such as welding, cutting, or soldering',
-      'To monitor the heating system in temporary site cabins',
-      'To certify that the building fire alarm system is working correctly',
+      'To certify that the building fire alarm and detection system is working correctly',
+      'To authorise the use of portable heaters in temporary site cabins',
+      'To record the maximum working temperature on site each day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'A hot works permit is a formal document that controls fire risk from any work involving heat sources, open flames, or sparks. This includes welding, cutting, grinding, soldering, brazing, and the use of bitumen boilers or hot-air guns. The permit specifies precautions such as removal of combustible materials, provision of fire extinguishers, fire watch duties during and after the work (typically 60 minutes), and ensures the area is checked before work begins.',
+      'A hot works permit is a formal document that controls fire risk from any work involving heat sources, open flames, or sparks, including welding, cutting, grinding, soldering, brazing, and bitumen boilers. It specifies precautions such as clearing combustibles, providing extinguishers, and a fire watch during and for a period after the work, and confirms the area is checked before work begins.',
   },
   {
     id: 7,
@@ -163,13 +163,13 @@ const quizQuestions = [
       'During an emergency evacuation of a construction site, which of the following should you do?',
     options: [
       'Collect your tools and personal belongings before leaving',
-      'Use the lift to evacuate quickly from upper floors',
-      'Proceed to the designated assembly point and report for roll call',
+      'Use the lift to evacuate quickly from the upper floors',
       'Return to your work area to check that no one has been left behind',
+      'Proceed to the designated assembly point and report for roll call',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'During an emergency evacuation, you should proceed calmly to the designated assembly point using the nearest safe escape route and report to the fire warden for roll call. You must NOT stop to collect belongings, use lifts (which may fail or fill with smoke), or re-enter the building. Checking for missing persons is the responsibility of fire wardens and the emergency services, not individual workers.',
+      'During an emergency evacuation, proceed calmly to the designated assembly point by the nearest safe escape route and report to the fire warden for roll call. You must NOT stop for belongings, use lifts (which may fail or fill with smoke), or re-enter the building. Checking for missing persons is the job of fire wardens and the emergency services, not individual workers.',
   },
   {
     id: 8,
@@ -177,13 +177,13 @@ const quizQuestions = [
       'What type of fire extinguisher has a yellow band and is specifically designed for Class F fires (cooking oils and fats)?',
     options: [
       'Dry powder extinguisher',
+      'Wet chemical extinguisher',
       'CO2 extinguisher',
       'Foam extinguisher',
-      'Wet chemical extinguisher',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'The wet chemical extinguisher is identified by a yellow band on the red body and is specifically designed for Class F fires involving cooking oils and fats. It works by creating a chemical reaction with the burning oil to form a soapy layer (saponification) that seals the surface, preventing oxygen from reaching the fire and stopping re-ignition. Wet chemical extinguishers are most commonly found in commercial kitchens and canteens on construction sites.',
+      'The wet chemical extinguisher has a yellow band on the red body and is designed for Class F fires involving cooking oils and fats. It reacts with the burning oil to form a soapy layer (saponification) that seals the surface, preventing oxygen from reaching the fire and stopping re-ignition. It is most commonly found in kitchens and canteens on construction sites.',
   },
 ];
 

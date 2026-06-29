@@ -43,24 +43,24 @@ const checks = [
     question:
       'A 690 V three-phase wind turbine sits next to a transformer that steps the voltage UP to 33 kV before sending it anywhere. Why bother stepping up at the turbine itself?',
     options: [
-      'Because cable losses are I-squared-R — at higher voltage the same power is carried at lower current, so I-squared-R losses on the cable run from the turbine to the substation are far smaller.',
-      'Pass on Ra × IΔn ≤ 50 V. 85 × 0.030 = 2.55 V — well below 50 V. The electrode passes Reg 411.5.3(b). Note: GN3 recommends keeping TT electrode resistance below 200 Ω for stability across seasonal soil moisture variations.',
-      'Acknowledge promptly, investigate fairly, respond in writing within a stated timescale, signpost to ADR (e.g. scheme provider) if unresolved',
-      'Stay calm, restate the basis of the price (scope, time, materials), offer to revisit any specific item — and end the conversation if it stays abusive',
+      'Higher voltage means lower current for the same power, so I-squared-R cable losses on the long run to the substation are far smaller.',
+      'The grid only accepts power at exactly 33 kV, so the turbine output must be matched before it can connect.',
+      'Stepping up the voltage also raises the frequency to the 50 Hz the grid requires for synchronisation.',
+      'Higher voltage makes the cable safer to bury, reducing the trench depth the regulations call for.',
     ],
     correctIndex: 0,
     explanation:
-      'Same physics that justifies the 400 kV super-grid (covered in Sub 5.2). Move the same power at higher voltage, the current drops, and line loss falls with the square of the current. A wind farm with cables running kilometres back to the on-shore grid connection has to step up early, otherwise the cable would have to be enormous and the losses crippling.',
+      'Same physics that justifies the 400 kV super-grid (covered in Sub 5.2): move the same power at higher voltage and the current drops, so line loss falls with the square of the current. A wind farm with cables running kilometres back to the onshore grid connection has to step up early, otherwise the cable would have to be enormous and the losses crippling. Frequency is set by the generator, not the transformer, and is unaffected by the voltage step.',
   },
   {
     id: 'm3s5s5-ownership-boundary',
     question:
       'On a typical UK domestic supply, who owns the service cable that runs from the secondary substation to the cut-out inside the meter cabinet?',
     options: [
-      '1.37 Ω — recalculated to incorporate Cmin = 0.95 explicitly. Designers using the old 1.44 Ω value for an A4:2026 design will under-call non-compliance.',
-      'The client, via the Principal Designer — it gives bidders the info they need to plan their work safely',
+      'The Meter Operator (MOP) owns it — the service cable is part of the metering installation.',
+      'The customer owns it — anything on their side of the property boundary is theirs.',
       'The Distribution Network Operator (DNO) owns it — service cable, cut-out and supplier earth terminal are all DNO assets.',
-      'Sensible heat changes temperature without phase change; latent heat changes phase without temperature change',
+      'The energy supplier owns it — they own everything up to the consumer unit.',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       'Why does every UK installation have to operate at 50 Hz exactly?',
     options: [
-      'Higher-criticality equipment receives more comprehensive, proactive maintenance strategies (condition monitoring, predictive techniques, comprehensive PM), while lower-criticality equipment receives simpler or reactive strategies',
-      'Final circuits supplying socket-outlets in higher-risk residential buildings (HRRBs), care homes, student accommodation, etc. (recommendation, not absolute requirement, in non-HRRB)',
-      'Because every generator on the GB grid is synchronously locked together — they all turn in step and produce 50 Hz simultaneously. Drift away from 50 Hz means the generator is no longer in sync and is automatically tripped off.',
-      'Step 1: end-to-end resistance of each conductor (r1, rn, r2). Step 2: cross-connect L outgoing to N return; measure L-N at each socket — should be ~constant. Step 3: cross-connect L outgoing to cpc return; measure L-cpc at each socket — gives R1+R2 for the ring',
+      'BS 7671 requires every consumer unit to be tested at exactly 50 Hz before it can be signed off.',
+      'Transformers can only step voltage up or down at a supply frequency of precisely 50 Hz.',
+      'Every generator on the GB grid is synchronously locked together, all turning in step at 50 Hz.',
+      'An RCD will only sense an earth fault and operate correctly at a supply frequency of 50 Hz.',
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'In order from generator to customer kettle, what is the typical voltage progression on a UK supply?',
     options: [
-      'Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days',
-      '690 V (or 11-25 kV) → 400 kV (transmission) → 132 kV / 33 kV (sub-transmission) → 11 kV (distribution) → 400/230 V (LV)',
-      'A document providing information about a hazardous substance including hazards, handling, and emergency measures',
-      'Maybe — depends if you’re still over the drink-drive limit, AND whether you’re mentally / physically sharp enough for live work',
+      '400 V (LV) → 11 kV → 33 kV → 132 kV → 400 kV → 690 V at the generator terminals',
+      '690 V or 11-25 kV (generation) → 400 kV → 132 / 33 kV → 11 kV → 400 / 230 V (LV)',
+      '230 V → 400 V → 400 kV → 11 kV → 33 kV → 132 kV at the customer end of the chain',
+      '11 kV (generator) → 400 V (transmission) → 33 kV → 132 kV → 230 V at the LV customer',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'A customer kettle pulls 13 A at 230 V. Roughly how much current does that same power draw represent on the 11 kV feeder upstream of the secondary substation (ignoring transformer losses)?',
     options: [
-      'Circuit number, description, protective device rating, cable size, and design current',
-      'The step-by-step work procedure, risk controls, emergency plans, and responsibilities',
-      'About 0.27 A — power is conserved (P = V x I), so stepping voltage up by ~48x cuts the current by the same factor.',
-      'Assess the situation calmly, contact HMRC about Time to Pay if needed, speak to StepChange or Citizens Advice, and adjust spending to essentials',
+      'About 13 A — the current is the same on both sides of the transformer',
+      'About 620 A — the current rises as the voltage rises towards transmission level',
+      'About 0.27 A — stepping the voltage up by ~48x cuts the current by the same factor',
+      'About 2.6 A — the current falls by a factor of five, matching the turns ratio',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     question:
       'Which organisation owns the 400 kV transmission lines (the super-grid pylons) in England and Wales?',
     options: [
-      'The justification for live working, specific hazards, controls, competence of persons, accompaniment and emergency procedures',
-      'Continuous mental reassessment of changing site conditions — new hazards, changing weather, fatigue, time pressure — adapting controls in real time and stopping work if needed',
-      'Direct emissions from sources owned or controlled by the organisation, such as company vehicles and on-site fuel combustion',
-      'National Grid Electricity Transmission (NGET) — the transmission owner. The independent operator is now the National Energy System Operator (NESO).',
+      'The local Distribution Network Operator (DNO) for that region',
+      'The energy supplier the customer pays their monthly bill to',
+      'The National Energy System Operator (NESO), which owns all transmission assets',
+      'National Grid Electricity Transmission (NGET) — the transmission asset owner',
     ],
     correctAnswer: 3,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       'What is the role of the DNO cut-out in the supply chain?',
     options: [
-      'It is the last DNO-owned device — a sealed BS 1361 / BS 88-3 fuse plus the supplier earth terminal — and the protective device that limits the prospective fault current entering the customer installation.',
-      'Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others',
-      'A serious risk of injury arising from conditions in or associated with a confined space, such as flammable atmospheres, toxic gases, or engulfment',
-      'Provide them with relevant parts of the construction phase plan, ensure they receive a site induction, verify their skills, knowledge, training and experience, and coordinate their work with other contractors',
+      'It is the last DNO-owned device — a sealed fuse plus the supplier earth terminal at the supply origin.',
+      'It is the customer’s main isolation switch, used to safely de-energise the whole installation.',
+      'It is the metering device that records the energy used and reports it back to the supplier.',
+      'It is the consumer unit’s main switch, owned and maintained by the electrician on site.',
     ],
     correctAnswer: 0,
     explanation:
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'A wind farm produces almost no power on a still summer afternoon. What happens to the grid?',
     options: [
-      'F2508 — main RIDDOR form for accidents involving death, specified injuries, dangerous occurrences. 10-day deadline. F2508A — for over-7-day injuries and reportable diseases. 15-day deadline.',
-      'Frequency starts to dip slightly. NESO automatically calls on reserve generation (gas peakers, pumped storage, interconnector imports) to balance demand. If unbalanced for too long, frequency excursions trigger automatic load shedding.',
-      'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
-      'Document all previous conversations, escalate to management as a formal safety concern, and make clear that continued refusal could have disciplinary and legal consequences under HSWA 1974',
+      'Nothing happens — the grid simply runs on less power until the wind picks up again',
+      'Frequency dips slightly and NESO calls on reserve generation to rebalance; if unbalanced too long, load shedding kicks in',
+      'The grid voltage rises sharply because there is less generation pulling it down',
+      'The frequency climbs above 50 Hz as the remaining generators speed up to compensate',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,10 +158,10 @@ const quizQuestions = [
     question:
       'On a TN-C-S (PME) supply, where does the customer\'s main earthing terminal (MET) ultimately get its earth reference from?',
     options: [
-      'Adequate fire safety training at the time of recruitment and on being exposed to new or increased risks, repeated periodically, and adapted to take account of new or changed risks',
-      'Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.',
-      'The supplier earth terminal on the cut-out, which is connected to the combined PEN conductor in the DNO service cable, ultimately referenced back to the multiple earths along the LV distributor and the secondary substation.',
-      'Securing all isolations (locks remain in place if any work is incomplete), making all enclosures safe (covers on, doors closed), tidying tools, sweeping the work area, signing the day&rsquo;s permit / RAMS as complete, briefing the next shift / next day.',
+      'A local earth electrode driven into the ground at the property by the customer',
+      'The metal water service pipe entering the building, bonded at the stop tap',
+      'The supplier earth terminal on the cut-out, connected to the combined PEN conductor in the DNO service cable',
+      'The separate metallic sheath of the supply cable, kept apart from the neutral throughout',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,10 +172,10 @@ const quizQuestions = [
     question:
       'What does the National Energy System Operator (NESO) do that NGET does NOT?',
     options: [
-      'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
-      'Class 1 is the main controller that cyclically exchanges I/O data with slaves; Class 2 is an engineering or diagnostic tool that accesses devices for configuration',
-      'Working out routing, clearances, fire-stopping, sequencing and access with mechanical, structural and architectural disciplines so that nobody\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s install conflicts with anyone else\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s.',
-      'Operates the second-by-second balancing of the GB power system — calling generators on and off, dispatching reserve, managing frequency and constraint payments. NGET is the asset OWNER; NESO is the system OPERATOR.',
+      'Owns the 400 kV pylons and substations across England and Wales',
+      'Bills the customer for the energy they consume each month',
+      'Installs and maintains the service cable and cut-out at each property',
+      'Operates the second-by-second balancing of the GB power system — NESO is the operator, NGET the owner',
     ],
     correctAnswer: 3,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'You start a project on a property fed by an old TN-S supply. You decide to add a sub-main and a 7 kW EV charger. Before designing the new circuits, what does BS 7671 require you to confirm about the existing installation and the supply?',
     options: [
-      'You must confirm that the rating and condition of the existing equipment, including that of the distributor (cut-out fuse, service cable capacity, declared earth fault loop impedance, declared maximum demand), is adequate for the altered circumstances. Only then do you design the addition.',
-      'Acknowledges that real meter cabinets and consumer-side pipework don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t always allow a connection within 600 mm of the meter outlet union — the regulation requires you to get as close as the site allows, document any deviation, and never bond on the supply side of the meter.',
-      'EN 60903 (and IEC 60903). Classes 00 / 0 / 1 / 2 / 3 / 4 by AC voltage rating: 500V / 1,000V / 7,500V / 17,000V / 26,500V / 36,000V. Visual inspection before each use. Periodic dielectric testing (typically 6-monthly per IEC 60903).',
-      'Original packaging protects against physical damage, moisture, dust and contamination; contains the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s identification, part number and batch information; and may include specific storage instructions',
+      'That the rating and condition of the existing equipment, including the distributor, is adequate for the altered circumstances.',
+      'You must upgrade the cut-out fuse to 100 A yourself before adding any new load to the supply.',
+      'You only need to confirm the new circuit complies; the existing installation is the previous installer’s responsibility.',
+      'You must convert the TN-S supply to TN-C-S before any EV charger can be connected to it.',
     ],
     correctAnswer: 0,
     explanation:

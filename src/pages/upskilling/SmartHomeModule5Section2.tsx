@@ -44,20 +44,20 @@ const quizQuestions = [
   {
     question:
       'Which camera type is best suited for monitoring large areas with the ability to track movement?',
-    options: ['Fixed bullet camera', 'PTZ (Pan-Tilt-Zoom) camera', 'Video doorbell', 'Dome camera'],
-    correctAnswer: 1,
+    options: ['Fixed bullet camera', 'Video doorbell', 'Dome camera', 'PTZ (Pan-Tilt-Zoom) camera'],
+    correctAnswer: 3,
     explanation:
       'PTZ cameras can rotate horizontally and vertically whilst zooming, making them ideal for covering large areas and tracking movement.',
   },
   {
     question: 'What does HDR stand for in camera specifications?',
     options: [
-      'High Definition Recording',
       'High Dynamic Range',
+      'High Definition Recording',
       'Hardware Data Rate',
       'Horizontal Display Resolution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HDR (High Dynamic Range) helps cameras capture detail in both bright and dark areas of the same scene, improving image quality in challenging lighting.',
   },
@@ -85,11 +85,11 @@ const quizQuestions = [
     question: 'What feature allows cameras to capture colour images in low light conditions?',
     options: [
       'Standard IR illumination',
-      'Colour night vision with supplemental lighting',
       'Digital zoom',
       'Motion masking',
+      'Colour night vision with supplemental lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Colour night vision cameras use supplemental white LED lighting or advanced sensor technology to capture colour images in low light, rather than switching to black and white IR mode.',
   },

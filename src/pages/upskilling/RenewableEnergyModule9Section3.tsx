@@ -24,12 +24,12 @@ const inlineChecks = [
     question:
       'Why is solar thermal NOT a Section 551 generating set?',
     options: [
-      'Random rule',
-      'Section 551 governs ELECTRICAL generating sets — Reg 551.1.1 lists power sources that generate electricity (PV, batteries, turbines, combustion engines). Solar thermal generates HEAT, not electricity — no electrical generation, no export, no anti-islanding consideration. But solar thermal still has real electrical install scope: differential-temperature controller, circulation pumps, sensors, drainback / pressurised system electrical elements. Reg 314 + Reg 415.1 + Reg 522.2.1 apply',
-      'No regulations',
-      'It is generation',
+      'It is an arbitrary BS 7671 rule with no real technical basis behind it',
+      'No BS 7671 regulations apply to solar thermal at all because it produces no electricity',
+      'Section 551 governs electrical generation; solar thermal makes heat, so no export or anti-islanding',
+      'Solar thermal is electrical generation and therefore does fall squarely within Section 551',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Section 551 of BS 7671 specifically governs electrical generating sets (Reg 551.1.1: combustion engines, turbines, electric motors, PV cells, batteries, other suitable sources — all producing electricity). Solar thermal is fundamentally different: solar irradiance → collector absorber → heat transfer fluid (water or water/glycol) → cylinder coil → DHW. NO electrical generation. NO grid export. NO anti-islanding consideration (nothing to disconnect). However, solar thermal install HAS real electrical install scope: (1) differential-temperature controller (compares collector vs cylinder temperature, starts/stops pump); (2) circulation pump(s) (typically 40-100 W single-phase, AC mains or DC from PV); (3) temperature sensors at collector + cylinder + outlet; (4) drainback / pressurised system electrical elements (pressure sensor, expansion vessel monitoring); (5) freeze protection (glycol antifreeze monitoring, or controller-managed dump cycle). BS 7671 framework applies to this electrical scope: Reg 314 dedicated controls way (or shared low-current way) + Reg 411.4 ADS + Reg 415.1 30 mA RCD + Reg 522.2.1 cable thermal protection (cable near hot pipework — solar primary flow can reach 90+ °C in summer stagnation).',
   },
@@ -38,12 +38,12 @@ const inlineChecks = [
     question:
       'Flat plate vs evacuated tube solar thermal collectors — what are the differences?',
     options: [
-      'Same',
-      'Flat plate: rectangular panel with metal absorber under glass cover; lower-cost, robust, lower thermal efficiency in cold conditions, suits UK retrofit common. Evacuated tube: parallel glass tubes with vacuum insulation around absorber; higher thermal efficiency especially in cold / low-irradiance conditions; higher cost; better for UK climate when good-quality. Both are solar thermal — both use the same controller / pump / cylinder architecture',
-      'Random',
-      'Flat plate is new',
+      'They are the same collector simply marketed under two different brand names',
+      'Flat plate is a newer technology that has entirely replaced evacuated tube collectors',
+      'Evacuated tube is lower cost but loses efficiency in cold weather, the opposite of flat plate',
+      'Flat plate is cheaper but weaker in the cold; evacuated tube is vacuum-insulated and more efficient',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Flat plate solar thermal collector: rectangular panel typically 1.5-2.5 m² with metal absorber (copper or aluminium, selectively coated to absorb solar irradiance + minimise re-radiation) under a transparent cover (low-iron glass); insulated rear. Heat transfer fluid flows through absorber pipes. Lower-cost, robust, typical UK 2025-26 cost £400-700 per panel. Lower thermal efficiency in cold + low-irradiance conditions (winter / cloudy days) due to heat loss through cover. Evacuated tube collector: parallel rows of glass tubes (typically 8-30 tubes per panel); inner absorber in vacuum-insulated tube → very low heat loss. Higher thermal efficiency across all conditions, especially cold + low-irradiance. Higher cost (£700-1,500 per equivalent panel). Better suits UK climate (frequent overcast / cold conditions). UK 2025-26 market: both still installed; evacuated tube preferred for performance, flat plate for cost-sensitive installs. Electrical install scope identical between types — same controller, pump, sensors, cylinder. BS EN 12975 (flat plate) + BS EN 12976 (factory-made solar heating systems) product standards.',
   },
@@ -52,12 +52,12 @@ const inlineChecks = [
     question:
       'How does the differential-temperature controller work?',
     options: [
-      'Random',
-      'Two temperature sensors — one at collector outlet (T1), one at cylinder coil (T2). Controller compares T1 vs T2. When T1 > T2 + delta-T threshold (typically 6-8 K), controller activates circulation pump to transfer heat from collector to cylinder. When T1-T2 drops to delta-T off (typically 2-4 K), controller stops pump. Also monitors over-temperature shutdown (cylinder reaches setpoint or collector overheats — stagnation protection)',
-      'Customer manual',
-      'Always on',
+      'It compares collector (T1) and cylinder (T2): pump runs above the on-threshold, stops near the off-threshold',
+      'It is operated manually by the customer, who switches the pump on whenever the sun is out',
+      'The pump simply runs continuously whenever the solar thermal system is powered on at the spur',
+      'It uses a single sensor at the cylinder and runs the circulation pump on a fixed daily timer',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Differential-temperature controller (DTC) is the brain of the solar thermal install. Logic: (1) T1 sensor at collector outlet / absorber — reads solar-heated fluid temperature; (2) T2 sensor at cylinder coil bottom / inlet — reads cylinder coil receiving temperature; (3) Controller compares T1 vs T2: when T1 > T2 + delta-T_on (typically 6-8 K — adjustable per manufacturer), activates circulation pump → heat transfers from collector to cylinder; (4) When T1-T2 drops to delta-T_off (typically 2-4 K), deactivates pump → prevents reverse circulation (cylinder cooling back to collector at night / shaded conditions); (5) Over-temperature shutdown — pump stops if cylinder reaches setpoint (typically 60-70 °C) OR if collector exceeds stagnation threshold (typically 130-150 °C — protects glycol fluid from degradation); (6) Drainback systems use the pump shutdown to automatically drain water back to a reservoir, preventing freezing. UK 2025-26 typical controllers: Resol DeltaSol BS / SLM / DL, SUN-LITE, Steca TR. Mains-powered (230 V AC, low current ~20-50 mA standby + pump load when active). Cert evidence bundle records controller model + sensor placements + delta-T settings + functional test.',
   },
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'Some solar thermal systems use a PV-direct DC circulation pump — what is this + why?',
     options: [
-      'Not real',
-      'A small PV panel (typically 20-50 W) directly powers a DC circulation pump via a controller — no AC supply needed for the pump. Solar irradiance drives the pump (more sun = more pumping = more heat transfer); naturally self-regulating. Eliminates the need for AC supply + reduces install electrical scope (still need DTC if temperature differential is the trigger; some systems use simpler PV-direct without DTC). UK 2025-26 emerging architecture for off-grid + simpler installs',
-      'Random',
-      'Not allowed',
+      'It is a marketing myth; no such PV-direct pumping system actually exists in practice',
+      'A small PV panel powers a DC pump directly, needing no AC supply and self-regulating with sun',
+      'It is prohibited under BS 7671 because the circulation pump must always be on an AC circuit',
+      'It refers to a battery that powers the circulation pump overnight when the sun has gone down',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Standard UK 2025-26 solar thermal install — what electrical scope does the BS 7671 electrician deliver?',
     options: [
-      'Nothing',
-      'Dedicated low-current circuit (6 A typical) from CU to controller location near cylinder; 230 V AC supply for differential-temperature controller; AC circulation pump (40-100 W); sensor cables (2-core LV) from controller to collector + cylinder + outlet; immersion / cylinder thermostat (if existing immersion remains as backup); Reg 314 division + Reg 415.1 30 mA RCD + Reg 522.2.1 cable thermal protection near hot pipework. Section 554 immersion regs if cylinder includes electric backup. NOT covered: collector mounting, hydraulic loop, freeze protection fluid',
-      'Just collectors',
-      'No work',
+      'There is no electrical scope at all; solar thermal is wholly a plumbing and heating job',
+      'Only mounting the collectors on the roof; everything else is the heating engineer work',
+      'A dedicated controller circuit, pump and sensor wiring, RCD, cable-thermal protection and immersion regs',
+      'No work at all, since the controller and pump come pre-wired and plug into a 13 A socket-outlet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 electrician scope on a standard solar thermal install: (1) Dedicated low-current circuit from CU to controller location (typically near DHW cylinder in airing cupboard / utility room); 6 A Type A RCBO C-curve typical; 1.5 mm² T+E. (2) 230 V AC supply for differential-temperature controller (Resol / SUN-LITE / Steca typical UK 2025-26 brands); controller draws ~20-50 mA standby + pump load when active. (3) AC circulation pump — typically 40-100 W single-phase, wired through controller (controller switches pump on/off based on delta-T logic). (4) Sensor cables — 2-core LV (0.5-0.75 mm² typical) from controller to collector temperature sensor (Pt1000 or similar NTC), cylinder temperature sensor (mounted on cylinder coil or thermowell), outlet temperature sensor (if used). (5) Existing immersion integration if cylinder includes electric backup (immersion thermostat + dedicated 16 A circuit per §8.6 pattern). BS 7671 anchors: Reg 314 dedicated circuit, Reg 411.4 ADS, Reg 415.1 30 mA RCD, Reg 522.2.1 cable thermal protection (cable near hot primary pipework — solar primary can reach 90+ °C in summer stagnation conditions), Section 554 immersion regs if electric backup retained. NOT in electrical scope: collector mounting / structural (MCS company or plumber), hydraulic loop / pressurised expansion (heating engineer), freeze protection fluid (glycol mix — heating engineer). Cert evidence bundle: controls circuit EIC + immersion circuit EIC (if applicable) + functional test of differential-temperature logic.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'Reg 522.2.1 — why does it matter for solar thermal cable routing?',
     options: [
-      'No relevance',
-      'Solar thermal primary flow temperature can reach 90+ °C in summer stagnation conditions (collector heating above DHW setpoint, pump stopped, fluid sitting in collector loop). Cable runs near this pipework experience elevated ambient. Reg 522.2.1 protection methods: (a) shielding, (b) distance, (c) higher-rated cable accounting for additional temperature rise, (d) local reinforcement. Most common: distance + selecting cable for the ambient',
-      'Random',
-      'No regulation',
+      'It has no relevance, as solar thermal pipework never runs hot enough to affect nearby cabling',
+      'It applies only to underground buried cables, not to cables routed near hot pipework',
+      'There is no such BS 7671 regulation governing cable proximity to external heat sources',
+      'Flow can reach 90+ °C in stagnation, so cables nearby need shielding, distance or a rated cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 522.2.1 applies because solar thermal pipework operates at significantly higher temperature than typical heating circuits: normal operation 60-80 °C; stagnation conditions (collector heated above cylinder setpoint, pump stopped) can reach 90-130 °C in flat plate collectors, 150+ °C in evacuated tube. Cable runs near this pipework (particularly in cylinder cupboard where collector primary loop interfaces with cylinder coil) experience elevated ambient. Reg 522.2.1 protection methods: (a) shielding — heat-resistant sleeve / fire blanket if cable forced close; (b) distance — most common, route cable distance from hot pipework; (c) higher-rated cable with Appendix 4 correction factor Ca per Table 4B1 (e.g. 90 °C-rated cable for high-ambient zones); (d) local reinforcement / substitution. Solar thermal install specific zones for Reg 522.2.1: (1) cylinder cupboard — cable for controller + pumps runs near solar primary flow + return pipework; (2) collector mounting — cable from controller to collector sensor runs alongside the primary loop on the roof; (3) loft / roof void where loop transitions from collectors to building. Cert evidence bundle records cable route + heat source proximity + chosen protection method.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'Drainback vs pressurised solar thermal systems — electrical implications?',
     options: [
-      'Same',
-      'Drainback: water (no glycol) drains by gravity back to a reservoir when pump stops; freeze protection inherent; simpler hydraulic; controller manages drain cycle. Pressurised: glycol-water mix continuously in collector loop; expansion vessel + pressure sensor required; freeze protection via glycol antifreeze; controller monitors pressure for leaks. Electrical: drainback often needs more powerful pump (lifts water back up); pressurised needs pressure-sensor input to controller',
-      'No difference',
-      'Random',
+      'Drainback drains water to a reservoir and needs a stronger pump; pressurised needs a pressure-sensor input',
+      'They are electrically identical and use exactly the same pump and controller sensor inputs',
+      'There is no electrical difference; the distinction is purely in the choice of collector glass',
+      'Both require the customer to manually drain the system each winter to prevent it freezing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Drainback solar thermal system: uses pure water (no glycol antifreeze); when pump stops, water in collector loop drains by gravity back to a reservoir tank (typically at the cylinder location); freeze protection is inherent (no water in collector when pump off, so cannot freeze); simpler hydraulic. Electrical implications: (1) Pump must be capable of lifting water back up to the collector when started (drainback head + flow → higher-power pump than pressurised, typically 100-200 W vs 40-80 W pressurised); (2) Controller manages drain cycle — pump runs longer at startup to prime + fill collector; (3) No pressure sensor input needed. Pressurised solar thermal: glycol-water mix continuously circulates in collector loop; expansion vessel accommodates thermal expansion (sized 5-10% of loop volume); pressure sensor monitors loop pressure (loop pressure drop indicates leak; pressure rise indicates expansion vessel failure or overheat). Electrical: (1) Lower-power pump (40-80 W typical); (2) Pressure sensor input to controller (4-20 mA or 0-10 V signal typical); (3) Some controllers integrate pressure alarm output; (4) Anti-freeze monitoring (glycol concentration / pH degrades over years — typically replaced 7-10 years). UK 2025-26 reality: pressurised more common (~70%); drainback ~30%, suits installs where freeze protection without glycol is preferred. Cert evidence bundle records system type + controller features + commissioning test.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'Customer asks "should I install solar thermal in 2025-26?" — honest installer answer?',
     options: [
-      'Always yes',
-      'Honest 2025-26 answer: solar thermal economic case has weakened vs the PV + heat pump combination. Heat pump (BUS grant £7,500, BUS-covered) does heating + DHW more efficiently than solar thermal does just DHW. PV + immersion diverter does free DHW from any surplus PV. Solar thermal niche: high DHW demand (large household, B&B / hospitality), no roof space for PV, off-grid properties, customer aesthetic / specific preference. ROI 12-20+ years vs PV 8-12 years',
-      'Always no',
-      'Random',
+      'Always recommend it; solar thermal is the best hot-water option for every property type',
+      'Never recommend it; solar thermal is fully obsolete and should never be installed now',
+      'Its case has weakened against PV, so it now suits niche cases with a longer payback than PV',
+      'It is impossible to advise without first installing it and measuring a full year of performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Honest UK 2025-26 customer answer: solar thermal economic case has weakened. Specific reasons: (1) Boiler Upgrade Scheme (BUS) grants heat pumps £7,500 typical — NOT solar thermal. Heat pump does heating AND DHW more efficiently than solar thermal does just DHW. (2) PV cost-collapse 2010-2024 made PV + immersion diverter the dominant retrofit path for DHW — surplus PV diverts to immersion for free DHW heating; PV also covers electricity for lighting, appliances, EV charging. (3) ROI: PV typical 8-12 years; solar thermal typical 12-20+ years. (4) Install complexity: solar thermal is multi-trade (plumber + heating engineer + electrician + roof structural); MCS MIS 3001 competence harder to find than MIS 3002 PV. Solar thermal NICHE viable use cases: (a) high DHW demand (large household, B&B / hospitality, small commercial like leisure centre / hotel); (b) no roof space for PV (south-facing PV not feasible but solar thermal can use east/west or different angles); (c) off-grid properties (no grid connection — direct DHW heating without electricity); (d) customer aesthetic / specific preference for direct-heat technology. Most UK 2025-26 domestic retrofit customers better served by PV + immersion diverter + (optional) heat pump for heating. The honest installer respects this in the quote conversation. Cert evidence bundle records the customer\'s informed choice.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'Differential-temperature controller commissioning — what do you verify?',
     options: [
-      'Nothing',
-      'Sensor connections + polarity at controller terminals; delta-T_on + delta-T_off thresholds set per manufacturer default + customer needs; sensor reading at commissioning (collector + cylinder + ambient) within ±2 °C of known thermometer; pump cycles on when collector heats above cylinder + delta-T_on; pump cycles off when delta drops to delta-T_off; over-temperature shutdown verified by simulated high-cylinder condition; reverse-flow prevention (pump does NOT run when cylinder > collector)',
-      'Customer tests',
-      'Random',
+      'Nothing needs verifying; the controller is factory-set and works straight out of the box',
+      'Only that the controller powers on; its switching behaviour is left for the customer to check',
+      'The system is left to run for a whole season and assessed afterwards rather than commissioned',
+      'Sensor readings, delta-T thresholds, pump cycling, over-temperature shutdown and reverse-flow prevention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Differential-temperature controller commissioning checklist: (1) Sensor connections + polarity at controller terminals — collector sensor (T1), cylinder sensor (T2), outlet sensor (T3 if used). Pt1000 / NTC sensors have specific orientation; controller display shows accurate readings. (2) Delta-T_on threshold set — typically 6-8 K factory default; adjust per customer / system needs. (3) Delta-T_off threshold set — typically 2-4 K; must be lower than delta-T_on (hysteresis). (4) Sensor reading verification at commissioning — compare controller display vs known thermometer at the sensor location; ±2 °C typical acceptable. (5) Pump engagement test — heat the collector sensor (controlled hot water bath / heat gun) above cylinder sensor + delta-T_on threshold; verify pump activates. (6) Pump deactivation test — let collector cool back; verify pump deactivates when delta drops to delta-T_off. (7) Over-temperature shutdown verified — simulate cylinder reaching setpoint (60-70 °C typical); verify pump stops. (8) Reverse-flow prevention — verify pump does NOT run when cylinder sensor reads higher than collector sensor (e.g. night when cylinder is warm but collector is cold ambient). (9) Functional check of any alarms (pressure, sensor failure, freeze-cycle activation if applicable). Cert evidence bundle: controller model + configuration + sensor calibration + functional test results.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'Existing immersion remaining as DHW backup on solar thermal install — what scope?',
     options: [
-      'Remove it',
-      'Existing immersion typically retained as backup for low-solar weeks + legionella pasteurisation cycle (HSE HSG274 framework). Electrical scope: existing 16 A immersion dedicated circuit retained (verify Section 554 compliance + Reg 554.2.1 thermal cut-out + Reg 415.1 30 mA RCD); cylinder thermostat coordinates with differential-temperature controller (solar primary heats cylinder first; immersion supplements if cylinder below setpoint). Cert evidence bundle integrates existing immersion + new solar controller',
-      'No immersion',
-      'Customer choice',
+      'Retain it as backup — verify its circuit, cut-out and RCD, and coordinate so solar heats first',
+      'Remove the immersion entirely, since solar thermal makes any electric backup fully redundant',
+      'Leave no hot-water backup at all and rely solely on the solar collectors all year round',
+      'Leave the decision entirely to the customer, with no electrical scope at all for the installer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Existing immersion retention on solar thermal install: standard practice in UK 2025-26 retrofit. Reasons: (1) Solar thermal alone cannot reliably maintain DHW in low-irradiance weeks (December-February UK) — immersion backup essential; (2) Legionella pasteurisation cycle per HSE HSG274 / ACOP L8 — DHW periodically raised to ≥60 °C; solar may not reach this in winter; immersion provides the boost. Electrical scope on existing immersion: (1) Verify existing 16 A dedicated circuit per Reg 314; (2) Section 554 compliance — immersion thermostat (Reg 554.x), over-temp thermal cut-out per Reg 554.2.1 (Mandatory + functional test); (3) Reg 415.1 30 mA RCD additional protection; (4) Cable + protective device verification per existing EIC. Coordination: cylinder thermostat (typically 60-65 °C setpoint) coordinates with solar differential-temperature controller — solar primary heats cylinder first (priority); immersion only activates if cylinder drops below the thermostat setpoint despite solar attempt. UK 2025-26 typical setup: customer can manually configure immersion-only override for emergencies (heat pump-style priority logic from §8.6). Cert evidence bundle: existing immersion EIC + new solar controls EIC + functional test of coordinated operation + Section 554 compliance verification + customer handover education.',
   },

@@ -8,25 +8,30 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'evcharging-m7s2-check1',
-    question: 'Which qualification is specifically required for EV charging installation?',
-    options: ['City & Guilds 2391', 'City & Guilds 2919', '18th Edition only', 'Part P only'],
-    correctIndex: 1,
+    question: 'Which qualification is the EV-specific requirement for OZEV-approved installation?',
+    options: [
+      'City & Guilds 2919',
+      'City & Guilds 2391-52',
+      'City & Guilds 2382 (18th Edition)',
+      'City & Guilds 2377 (PAT)',
+    ],
+    correctIndex: 0,
     explanation:
-      "City & Guilds 2919 (Level 3 Award in Electric Vehicle Charging Equipment Installation) is the specific qualification required. Other qualifications like 18th Edition and 2391 are also needed but aren't EV-specific.",
+      "City & Guilds 2919 (Level 3 Award in Electric Vehicle Charging Equipment Installation) is the EV-specific qualification. The 18th Edition (2382) and Inspection & Testing (2391-52) are also expected, but they aren't EV-specific.",
   },
   {
     id: 'evcharging-m7s2-check2',
-    question: 'What is the minimum public liability insurance required for OZEV approval?',
+    question: 'What is the minimum public liability insurance typically required for OZEV approval?',
     options: ['£500,000', '£1 million', '£2 million', '£5 million'],
     correctIndex: 2,
     explanation:
-      'OZEV requires minimum £2 million public liability insurance. Professional indemnity must be at least £500,000. These minimums protect both installers and customers.',
+      'OZEV approval typically requires a minimum of £2 million public liability cover, with professional indemnity of at least £500,000. These minimums protect both installers and customers.',
   },
   {
     id: 'evcharging-m7s2-check3',
     question: 'How many completed EV installations are typically required in a portfolio?',
-    options: ['None required', 'Minimum 3', 'Minimum 5', 'Minimum 10'],
-    correctIndex: 2,
+    options: ['Minimum 3', 'Minimum 5', 'Minimum 8', 'Minimum 10'],
+    correctIndex: 1,
     explanation:
       'A minimum of 5 completed EV charging installations with full documentation is typically required. This demonstrates practical competency and real-world experience.',
   },
@@ -62,13 +67,13 @@ const quizQuestions = [
       'An electrician wants to become OZEV approved but only has 18th Edition and 2391 qualifications. What is their most critical next step?',
     options: [
       'Apply immediately with current qualifications',
-      'Complete City & Guilds 2919 EV installation training',
       'Wait for automatic approval based on experience',
-      'Only install non-grant funded chargers',
+      'Complete City & Guilds 2919 EV installation training',
+      'Only install non-grant-funded chargers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'City & Guilds 2919 is mandatory for OZEV approval. Without this specific EV installation qualification, the application will be rejected regardless of other credentials.',
+      'City & Guilds 2919 is the EV-specific qualification expected for OZEV approval. Without it, an application is likely to be rejected regardless of holding the 18th Edition and 2391.',
   },
 ];
 

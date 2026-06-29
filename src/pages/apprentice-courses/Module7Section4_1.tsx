@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: "What should you do if initial tests don't reveal the fault?",
     options: [
-      'On all circuits before energising',
-      'May have additional requirements',
-      'A pump starter or fan relay',
+      'Re-energise and wait for the fault to recur',
+      'Replace the most expensive component first',
+      'Abandon testing and rewire the whole circuit',
       'Apply systematic subdivision',
     ],
     correctIndex: 3,
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     question: 'When should you verify repairs are effective?',
     options: [
       'Before re-energising the circuit',
-      'Short circuit causing flashover and burns',
-      'Too many devices on a single bus segment',
-      'Installation type, environment, and usage',
+      'Only if the customer reports a further fault',
+      'At the next periodic inspection, not before',
+      'After the circuit has been left live overnight',
     ],
     correctIndex: 0,
     explanation:
@@ -98,9 +98,9 @@ const Module7Section4_1 = () => {
       id: 3,
       question: 'What is systematic subdivision in fault finding?',
       options: [
-        'The number of complete cycles per second',
-        'ATEX or IECEx certification for equipment and installation methods',
-        'Equivalent resistance of parallel combinations',
+        'Replacing components one at a time until the fault clears',
+        'Testing every accessory in the order it was installed',
+        'Energising the circuit to observe where it fails',
         'Breaking the circuit into smaller testable sections',
       ],
       correctAnswer: 3,
@@ -124,10 +124,10 @@ const Module7Section4_1 = () => {
       id: 5,
       question: 'What should you verify before re-energising after repair?',
       options: [
-        'Replaced with a short circuit',
+        'That the customer has left the premises',
         'Test results confirm the fault is cleared',
-        '25% reduction in HVAC energy costs',
-        'Free personal protective equipment for all visitors',
+        'That the original protective device has been upgraded',
+        'That the supply tariff has been recorded',
       ],
       correctAnswer: 1,
       explanation:
@@ -137,10 +137,10 @@ const Module7Section4_1 = () => {
       id: 6,
       question: 'Why is documentation important in fault finding?',
       options: [
-        'A serious criminal offence where an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s failure causes death',
-        'The next 1–4 weeks of activity in detail, used at the weekly site meeting',
+        'It removes the need to carry out verification testing',
+        'It allows the work to be billed at a higher rate',
         'Provides evidence of work done and aids future maintenance',
-        'They extract renewable heat from the environment (air, ground, or water)',
+        'It transfers liability for the fault onto the customer',
       ],
       correctAnswer: 2,
       explanation:
@@ -150,9 +150,9 @@ const Module7Section4_1 = () => {
       id: 7,
       question: "What is the danger of 'shotgun' fault finding?",
       options: [
-        'Power loss due to current flowing through resistance',
-        'Mineral Insulated Copper Cable (MICC)',
-        'SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE',
+        'It always voids the manufacturer warranty',
+        'It is the fastest way to locate any fault',
+        'It guarantees the fault is found on the first attempt',
         'May cause additional faults and safety risks',
       ],
       correctAnswer: 3,
@@ -176,10 +176,10 @@ const Module7Section4_1 = () => {
       id: 9,
       question: 'What should be checked if a circuit worked before but fails after modification?',
       options: [
-        'Acting honestly, fairly, and transparently in professional relationships',
+        'Only the oldest part of the installation',
         'The modification work and its effect on existing circuits',
-        'Adjusting artificial lighting based on available natural light',
-        'Start a new email with a new subject line reflecting the current topic',
+        'Nothing - the fault must be unrelated to the new work',
+        'Only the incoming supply from the network operator',
       ],
       correctAnswer: 1,
       explanation:

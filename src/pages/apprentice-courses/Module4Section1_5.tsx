@@ -24,12 +24,12 @@ const Module4Section1_5 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: 'Which regulation requires safe working environments?',
+      question: 'Which Act is the primary legislation requiring safe working environments?',
       options: [
-        'Only competent and qualified persons',
-        'Health and Safety at Work Act 1974',
-        '£15,000 (6 months of essential outgoings)',
-        'Isolation procedures for electrical work',
+        'The Electricity at Work Regulations 1989',
+        'The Health and Safety at Work Act 1974',
+        'The Work at Height Regulations 2005',
+        'The Control of Asbestos Regulations 2012',
       ],
       correctAnswer: 1,
       explanation:
@@ -37,19 +37,24 @@ const Module4Section1_5 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Lighting levels are only important during testing.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
+      question: 'During which phases of electrical work is adequate lighting important?',
+      options: [
+        'Only during the final testing stage',
+        'Only during first-fix cable installation',
+        'Throughout all phases of the work',
+        'Only when working after dark',
+      ],
+      correctAnswer: 2,
       explanation:
-        'False - adequate lighting is important throughout all phases of electrical installation work to ensure safety, accuracy, and quality.',
+        'Adequate lighting is important throughout all phases of electrical installation work to ensure safety, accuracy, and quality.',
     },
     {
       id: 3,
       question: 'Name one safety measure to protect people from overhead work.',
       options: [
-        'Engineering control (mechanical aid)',
-        'Iron loss + magnetising VA',
-        'Apply safety factors to limits',
+        'Wearing hearing protection',
+        'Using insulated tools',
+        'Working only in daylight',
         'Barriers and exclusion zones',
       ],
       correctAnswer: 3,
@@ -60,10 +65,10 @@ const Module4Section1_5 = () => {
       id: 4,
       question: 'What is the first step when preparing to work near live circuits?',
       options: [
-        'Isolate and lock off power',
-        'All lighting installations',
-        '5500-6500K (cool white/daylight)',
-        'Construction Design Management',
+        'Isolate and lock off the power',
+        'Put on insulated gloves',
+        'Set up the temporary lighting',
+        'Lay out the tools and materials',
       ],
       correctAnswer: 0,
       explanation:
@@ -73,10 +78,10 @@ const Module4Section1_5 = () => {
       id: 5,
       question: 'Give one reason why adequate lighting is important in electrical work.',
       options: [
-        'Safe identification and isolation',
-        'Prevents mistakes and improves safety',
-        'Misreading questions and careless errors',
-        'The HSE (and local authorities)',
+        'It increases the supply voltage to the tools',
+        'It prevents mistakes and improves safety',
+        'It removes the need for risk assessment',
+        'It allows live working without isolation',
       ],
       correctAnswer: 1,
       explanation:
@@ -86,10 +91,10 @@ const Module4Section1_5 = () => {
       id: 6,
       question: 'Which type of lighting is commonly used for temporary site lighting?',
       options: [
-        'Halogen floodlight',
-        'Candle lamp',
-        'LED work light',
-        'Neon tube',
+        'A halogen floodlight',
+        'A candle lamp',
+        'An LED work light',
+        'A neon display tube',
       ],
       correctAnswer: 2,
       explanation:
@@ -99,9 +104,9 @@ const Module4Section1_5 = () => {
       id: 7,
       question: 'Name one factor to check before bringing materials into the work area.',
       options: [
-        'Track progress across all visits',
-        'An open-top skip in a well-ventilated yard',
-        'Operating and maintenance instructions',
+        'The colour of the packaging',
+        'The brand of the materials',
+        'The weather forecast for the week',
         'Available space and access routes',
       ],
       correctAnswer: 3,
@@ -113,9 +118,9 @@ const Module4Section1_5 = () => {
       question: 'Why should walkways be kept clear?',
       options: [
         'To prevent trips and ensure emergency access',
-        'Much higher speed (10–25 krpm vs 1500–3000)',
-        'It runs at exactly synchronous speed with zero slip',
-        'Ventricular fibrillation - potentially fatal',
+        'To improve the appearance of the site',
+        'To increase the available storage space',
+        'To reduce the cost of site lighting',
       ],
       correctAnswer: 0,
       explanation:
@@ -129,10 +134,10 @@ const Module4Section1_5 = () => {
       id: 'access-check',
       question: 'Why should trip hazards be removed before work begins?',
       options: [
-        'To enable safe jacket removal without cutting tools',
-        'General-purpose indoor cables (not plenum)',
+        'To make the work area look tidier',
+        'To create more room for storing materials',
         'To prevent accidents and ensure safe movement',
-        'Mark only what\\\\\\\\\\\\\\\'s complete - incomplete = lost marks',
+        'To reduce the amount of lighting needed',
       ],
       correctIndex: 2,
       explanation:

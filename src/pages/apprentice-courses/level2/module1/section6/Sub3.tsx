@@ -48,23 +48,23 @@ const checks = [
     question:
       'A bricklayer slips on Tuesday. He’s off work the rest of that week and the following Monday. Does that hit the RIDDOR over-7-day threshold?',
     options: [
-      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
-      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
-      'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'Yes — anything over 7 consecutive days off normal duties (excluding the day of the accident)',
+      'Yes — any injury that keeps someone off into a second week is reportable',
+      'No — that is 6 days off (the accident day is excluded), not more than 7',
+      'Yes — the old over-3-day rule still applies so this passed days ago',
+      'No — slips are never RIDDOR-reportable, only falls from height are',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
-      'Over-7-day means more than 7 consecutive days unable to do their normal work, NOT counting the day of the accident itself. Tuesday (excluded) + Wed–Mon = 6 days. Doesn’t hit RIDDOR yet. If he’s still off on the following Tuesday, that’s 7 days — still not over. He needs to be off into the day AFTER, then it’s reportable. Three-day injuries went out in 2012.',
+      'Over-7-day means MORE than 7 consecutive days unable to do normal work, NOT counting the day of the accident. Tuesday (excluded) + Wed–Mon = 6 days, so it does not hit RIDDOR yet. He would need to be off past 7 full days for it to become reportable. The old over-3-day threshold was scrapped in 2012.',
   },
   {
     id: 'riddor-who-reports-check',
     question:
       'You witness a serious accident on site. Who is legally required to make the RIDDOR report?',
     options: [
-      'Review existing documentation such as site plans, previous risk assessments and incident reports',
-      'All parties who sign accept responsibility for their respective roles',
-      'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
+      'You, the witness, because you saw it happen first-hand',
+      'The injured worker themselves, once they are well enough',
+      'Whichever first aider treated the casualty at the scene',
       'The "responsible person" — usually the employer, or the person in control of the premises',
     ],
     correctIndex: 3,
@@ -76,10 +76,10 @@ const checks = [
     question:
       'A worker breaks their wrist falling from a stepladder — definitely a specified injury. What’s the legal deadline to notify the HSE?',
     options: [
-      'Gnaw marks and stripped insulation',
+      'Within 24 hours of the accident',
       'Within 10 days of the accident',
-      '500W per m² or similar rules of thumb',
-      'Circuit will not function as intended',
+      'Within 15 days of the accident',
+      'Within 3 months of the accident',
     ],
     correctIndex: 1,
     explanation:
@@ -107,10 +107,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who has the legal duty to make a RIDDOR report?',
     options: [
-      'To ensure fire extinguishers, hoses, and equipment remain visible and accessible',
-      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
+      'The first aider who treated the casualty at the scene',
+      'Any worker who witnessed the accident happen',
       'The "responsible person" — typically the employer, self-employed person, or person in control of the premises',
-      'Regular inspections, staged testing, compliance checks, and documented reviews',
+      'The HSE inspector once they have been informed by phone',
     ],
     correctAnswer: 2,
     explanation:
@@ -120,9 +120,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a Specified Injury under RIDDOR Schedule 1?',
     options: [
-      'Icn = max interrupt (may damage), Ics = max without loss of performance',
-      'V × I (the product of RMS voltage and current)',
-      'The smallest change in voltage it can detect and display is 0.1 V',
+      'A small cut that needs a single plaster from the kit',
+      'A broken finger that lets the worker carry on as normal',
+      'Bruising to the forearm from brushing against a busbar',
       'A bone fracture (other than to fingers, thumbs and toes)',
     ],
     correctAnswer: 3,
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is a Dangerous Occurrence under RIDDOR Schedule 2?',
     options: [
-      'Simpler wiring using open/close signals without position feedback',
+      'A worker takes a week off after spraining an ankle on site',
       'An overhead crane collapses, even though nobody is hurt',
-      'Responding to changing technology and market conditions',
-      'To provide additional connection points for sensors and actuators',
+      'An electrician is diagnosed with occupational dermatitis',
+      'A labourer needs a single stitch after cutting his hand',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     question:
       'A worker is killed in a workplace accident. What is the legal reporting requirement?',
     options: [
-      'Resistance at mid-point approximately equal to end-to-end values',
-      'To provide a safe working environment, so far as is reasonably practicable',
+      'Record it in the accident book only; no HSE report is needed',
+      'Submit an online F2508 within 15 days, the same as an over-7-day injury',
       'Notify the HSE by quickest practical means (phone), confirmed in writing within 10 days',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
+      'Wait for the coroner’s verdict before notifying the HSE at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -175,9 +175,9 @@ const quizQuestions = [
     question:
       'You discover a worker fell ill 8 days ago and they’ve only just told you they were off normal duties for 9 days. The original incident was 17 days ago. What now?',
     options: [
-      'Coordinating between employer, college, and apprentice to ensure learning progresses',
-      'Test location, values, device ratings, and compliance status',
-      'Use non-damaging, removable marking methods and seek conservation advice',
+      'Don’t report it now — the 15-day window has passed so it no longer applies',
+      'Wait until the worker returns to confirm the exact number of days off',
+      'Log it in the accident book only, since the RIDDOR deadline is missed',
       'Submit the over-7-day RIDDOR report now and document why notification was late',
     ],
     correctAnswer: 3,
@@ -190,9 +190,9 @@ const quizQuestions = [
       'What is the difference between the company accident book and a RIDDOR report?',
     options: [
       'The accident book is internal (every injury, near-miss, first-aid event); RIDDOR is the legal external report to the HSE for serious incidents only',
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
-      'Incomplete scaffolds must not be used and must be marked with appropriate warning signs to prevent inadvertent use',
-      'Withdraw the harness from service as it has exceeded the 6-month formal inspection interval, obtain a currently inspected harness, and report the overdue inspection',
+      'They are two names for the same legal record — filling in one satisfies the other',
+      'The accident book goes to the HSE; the RIDDOR report stays with the employer',
+      'The accident book is only for serious injuries; RIDDOR covers minor ones',
     ],
     correctAnswer: 0,
     explanation:

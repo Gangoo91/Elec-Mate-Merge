@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'corrective-vs-preventive',
     question: 'The fundamental difference between a corrective action and a preventive action is:',
     options: [
-      'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
-      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'A corrective action is carried out by the technician; a preventive action is carried out by the operator',
+      'A corrective action is planned in advance; a preventive action is only ever done reactively after a breakdown',
       'A corrective action fixes the immediate problem; a preventive action addresses the root cause to stop the problem recurring',
-      'Airborne particles small enough to reach the gas exchange region of the lungs (alveoli)',
+      'A corrective action applies to electrical faults; a preventive action applies only to mechanical faults',
     ],
     correctIndex: 2,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'When selecting preventive actions, the most effective approach (in order of preference) is:',
     options: [
-      'A documented list of minor deficiencies, incomplete items, or non-conformances identified during commissioning that must be rectified before final handover or within an agreed period after handover',
+      'Start with the cheapest action available, then move to more expensive measures only if the fault recurs',
       'Eliminate the hazard through design change, then reduce the risk through engineering controls, then manage through procedural controls, and use administrative controls as a last resort',
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
-      'Compatibility of the LED driver with the dimmer (leading-edge vs trailing-edge, minimum load), neutral connection at the switch (for smart dimmers), driver minimum-load issue, and harmonic/DC supply asymmetry causing 100 Hz flicker',
+      'Always begin with retraining the operators, as human error is the most common cause of equipment failure',
+      'Implement every possible action at once, since applying more controls always gives the best protection',
     ],
     correctIndex: 1,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'After implementing a corrective or preventive action, verification is essential because:',
     options: [
-      'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
-      'That exposure to asbestos is prevented or, where this is not reasonably practicable, reduced to the lowest level reasonably practicable',
+      'It transfers responsibility for the fault from the maintenance team to the equipment manufacturer',
+      'It allows the original work order to be closed immediately so the job no longer appears as outstanding',
       'It confirms that the action has actually been implemented, is effective in preventing recurrence, and has not introduced new problems',
-      'The programme has been modified since the last backup — investigation and documentation are needed',
+      'It satisfies the supplier warranty terms by proving genuine parts were used in the repair',
     ],
     correctIndex: 2,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     id: 'temporary-permanent',
     question: 'A temporary repair (get-you-running fix) is acceptable when:',
     options: [
-      'The motor acts as a generator, converting kinetic energy to electrical energy and feeding it back to the supply',
-      'Lock off the main switch with a personal padlock and post a caution notice — and prove dead at the point of work',
-      'Renewal every 3-5 years (varies by card band) with evidence of CPD and a current health-and-safety qualification (typically the ECS Health, Safety and Environmental Assessment or CSCS-equivalent).',
+      'It is cheaper than the permanent repair, so it can be left in place indefinitely to save money',
+      'The equipment is non-critical, so no record of the repair needs to be made or followed up',
+      'It is approved verbally by a colleague, even if the limitations are not written down anywhere',
       'It safely restores operation in the short term, is documented with clear limitations, and a permanent corrective action is planned and tracked to completion',
     ],
     correctIndex: 3,
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'A CAPA system (Corrective Action / Preventive Action) is:',
     options: [
-      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+      'A scheduling tool that allocates maintenance tasks to technicians based on their availability and skills',
       'A structured management system that ensures root causes are identified, corrective and preventive actions are defined, implemented, verified and documented',
-      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
-      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      'A spare-parts inventory system that automatically reorders components when stock falls below a set level',
+      'A condition-monitoring system that uses sensors to predict when equipment is likely to fail',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'Replacing a failed motor bearing without investigating why it failed is an example of:',
     options: [
-      'The apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
+      'A preventive action, because fitting a new bearing reduces the chance of future failures',
       'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
       'A corrective action only — it fixes the immediate problem but does not prevent recurrence because the root cause has not been addressed',
-      'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
+      'A verification step, because the new bearing confirms whether the original diagnosis was correct',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,9 +98,9 @@ const quizQuestions = [
     id: 3,
     question: 'A design modification to eliminate a recurring failure mode is classified as:',
     options: [
-      'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
-      'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
-      'Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action',
+      'A corrective action, because the modification is carried out in direct response to the failure that occurred',
+      'An administrative control, because changing the design is essentially a paperwork and approval exercise',
+      'A temporary measure, because design modifications must always be reviewed and reversed at the next shutdown',
       'The most effective type of preventive action — elimination removes the failure mode entirely rather than relying on human intervention to manage it',
     ],
     correctAnswer: 3,
@@ -113,9 +113,9 @@ const quizQuestions = [
       'Adding a vibration monitoring system to a critical motor following a bearing failure is an example of:',
     options: [
       'A preventive action using engineering controls — it does not prevent the failure mode but enables early detection so that planned intervention can occur before catastrophic failure',
-      'Monitoring the equipment after implementation to confirm the fault does not recur within a defined review period, and checking that no new problems have been introduced',
-      'The apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
-      'Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact',
+      'An elimination action, because the monitoring system removes the possibility of the bearing ever failing',
+      'A purely administrative control, because it only alerts staff rather than changing the equipment',
+      'A corrective action, because it is fitted in direct response to the bearing that has already failed',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Updating a maintenance procedure following a fault investigation is a preventive action that addresses which category of root cause?',
     options: [
-      '5.6 weeks (28 days for a 5-day worker), which can include bank holidays',
+      'Material — it changes the components or materials used in the equipment',
       'Method (procedure) — it improves how the work is done to prevent the same error or omission recurring',
-      'To prevent large dark patches that could cause trips, falls, or disorientation',
-      'A specific risk assessment must be carried out for young persons before they start work',
+      'Machine — it modifies the equipment itself to remove the failure mode',
+      'Measurement — it changes how the condition of the equipment is monitored and recorded',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: "A preventive action that relies solely on 'retraining the operator' is considered:",
     options: [
-      'A preventive action using engineering controls — it does not prevent the failure mode but enables early detection so that planned intervention can occur before catastrophic failure',
-      'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
+      'The most effective preventive action available, because addressing operator competence removes the cause at source',
+      'An engineering control, because retraining changes the way the equipment itself behaves under fault conditions',
       'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
-      'Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact',
+      'A corrective action, because retraining is carried out only after the operator has already caused a failure',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ const quizQuestions = [
     id: 7,
     question: 'The timescale for implementing a preventive action should be based on:',
     options: [
-      'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
-      'Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action',
-      'A preventive action using engineering controls — it does not prevent the failure mode but enables early detection so that planned intervention can occur before catastrophic failure',
+      'The order in which faults were reported, so that the oldest outstanding action is always implemented first',
+      'The seniority of the person who requested the action, with managers\' requests addressed ahead of others',
+      'A fixed standard period of 12 months applied to every preventive action regardless of its risk or consequence',
       'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     question: 'When a temporary repair is implemented, it is essential to:',
     options: [
       'Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action',
-      'The root cause analysis reveals a cause that could affect other equipment of the same type, in the same environment, or maintained to the same procedure',
-      'A corrective action only — it fixes the immediate problem but does not prevent recurrence because the root cause has not been addressed',
-      'The apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
+      'Leave it in place without a record, since a temporary repair by definition will be noticed and replaced later',
+      'Treat it as the permanent solution once it has run reliably for a few weeks, with no further follow-up needed',
+      'Remove it from the maintenance history so it does not distort the equipment failure statistics',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'The effectiveness of a preventive action is best verified by:',
     options: [
-      'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
+      'Closing the work order as soon as the action has been carried out, since completion itself confirms effectiveness',
       'Monitoring the equipment after implementation to confirm the fault does not recur within a defined review period, and checking that no new problems have been introduced',
-      'A corrective action only — it fixes the immediate problem but does not prevent recurrence because the root cause has not been addressed',
-      'Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action',
+      'Obtaining sign-off from the manager who approved the action, which serves as proof that it has worked',
+      'Confirming that the action selected was the most expensive option, as cost is a reliable measure of effectiveness',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     question:
       'Systemic preventive actions (those applied across multiple similar assets) are particularly valuable when:',
     options: [
-      'A corrective action only — it fixes the immediate problem but does not prevent recurrence because the root cause has not been addressed',
-      'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
+      'The failure occurred on a single unique asset that has no equivalent anywhere else on the site',
+      'The corrective repair has already restored the failed equipment, so no wider review is needed',
       'The root cause analysis reveals a cause that could affect other equipment of the same type, in the same environment, or maintained to the same procedure',
-      'Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action',
+      'The failed equipment is scheduled for replacement, so applying the action elsewhere would be wasted effort',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,9 +206,9 @@ const quizQuestions = [
     question:
       'Under ST1426, the ability to recommend and implement preventive actions demonstrates:',
     options: [
-      "A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls",
-      "Document the temporary nature of the repair, specify any operational limitations, set a deadline for permanent repair, and track it as an open action",
-      "Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact",
+      "The apprentice's ability to work quickly under pressure to restore failed equipment to service",
+      "The apprentice's familiarity with the spare-parts stores and the procurement ordering process",
+      "The apprentice's willingness to identify which individual was responsible for each equipment failure",
       "The apprentice's understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician",
     ],
     correctAnswer: 3,

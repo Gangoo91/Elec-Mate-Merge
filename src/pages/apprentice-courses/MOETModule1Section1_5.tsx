@@ -16,9 +16,9 @@ const quickCheckQuestions = [
       "Which of the following correctly defines a 'confined space' under the Confined Spaces Regulations 1997?",
     options: [
       'A space that is substantially enclosed AND has a reasonably foreseeable risk of serious injury from hazardous conditions',
-      'Third-party confirmation of your competence from someone who observed your work, such as a supervisor or qualified colleague',
-      'Make proper use of control measures and PPE provided by the employer, and report defects',
-      'Investigate: check for loose terminations, broken cpc, damaged cable, parallel paths via metalwork — rectify before any live testing',
+      'Any room below ground level, regardless of the hazards present or the means of access',
+      'A space that can only be entered through an opening of less than 600 mm diameter',
+      'Any enclosed space in which a worker must work alone for more than one hour',
     ],
     correctIndex: 0,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'Which of the following is a confined space hazard that can kill WITHOUT any warning?',
     options: [
-      'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'Arc flash energy in a confined space has nowhere to dissipate, increasing blast pressure and thermal exposure',
+      'Water ingress — the rising level is visible and gives time to evacuate before it becomes critical',
+      'Heat stress — the rising temperature is felt by the worker well before it becomes dangerous',
       'Oxygen depletion — the atmosphere becomes oxygen-deficient without any detectable change in smell or visibility',
-      'Would-be rescuers enter without protection and are overcome by the same hazard that affected the first person',
+      'Restricted egress — the narrow access point is obvious and assessed before any entry is made',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,9 +100,9 @@ const quizQuestions = [
     id: 3,
     question: 'A safe system of work for confined space entry must include:',
     options: [
-      'Would-be rescuers enter without protection and are overcome by the same hazard that affected the first person',
+      'A single pre-entry atmospheric test, after which continuous monitoring is not required',
       'Forced (mechanical) ventilation using explosion-proof fans, providing a continuous supply of clean air',
-      'Arc flash energy in a confined space has nowhere to dissipate, increasing blast pressure and thermal exposure',
+      'A generic confined space risk assessment that covers all spaces on the site',
       'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
     ],
     correctAnswer: 3,
@@ -114,9 +114,9 @@ const quizQuestions = [
     question: "What is the role of the 'top man' (attendant/banksman) during confined space entry?",
     options: [
       'To remain at the entry point, maintain communication, monitor conditions, and initiate rescue if needed',
-      'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
-      'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
-      'Oxygen depletion — the atmosphere becomes oxygen-deficient without any detectable change in smell or visibility',
+      'To enter the space first to confirm it is safe, then signal the others to follow',
+      'To carry out the atmospheric testing and then leave once entry has been authorised',
+      'To be the first to enter the space and perform a hands-on rescue if a colleague collapses',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'A multi-gas detector used for confined space entry should monitor for a minimum of:',
     options: [
-      'Vishing (voice phishing) — a social engineering attack conducted over the phone',
+      'Oxygen and carbon dioxide only',
       'Oxygen, flammable gases (LEL), carbon monoxide, and hydrogen sulphide',
-      'Identify PPE type, performance standards, limitations, expiry dates',
-      '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Danger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' indicates more severe hazards; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Warning\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' indicates less severe hazards',
+      'Flammable gases (LEL) and temperature only',
+      'Carbon monoxide and humidity only',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Before entering an electrical cable tunnel for maintenance, which additional hazard must be specifically assessed?',
     options: [
-      'Arc flash energy in a confined space has nowhere to dissipate, increasing blast pressure and thermal exposure',
-      'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
+      'Wind chill from the through-draught created by the tunnel acting as a flue',
+      'Static electricity build-up on the worker’s clothing from walking along the tunnel',
       'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
+      'Ultraviolet exposure from the cable insulation degrading under load',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,9 +154,9 @@ const quizQuestions = [
     question:
       'What is the maximum recommended concentration of carbon monoxide (CO) for confined space entry?',
     options: [
-      'It creates a brief high current and measures voltage drop',
-      'Those entering the trade and working towards Level 3',
-      'Lower cable impedance between supply and fault point',
+      '500 ppm, the level at which symptoms first appear',
+      '200 ppm, matching the 15-minute short-term exposure limit',
+      '100 ppm, with no alarm required below this level',
       '30 ppm (the 8-hour WEL), with an alarm at 20 ppm for confined space work',
     ],
     correctAnswer: 3,
@@ -168,9 +168,9 @@ const quizQuestions = [
     question: 'Ventilation in a confined space should be:',
     options: [
       'Forced (mechanical) ventilation using explosion-proof fans, providing a continuous supply of clean air',
-      'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
-      'Oxygen depletion — the atmosphere becomes oxygen-deficient without any detectable change in smell or visibility',
+      'Natural ventilation through the open entry hatch, which is sufficient for most spaces',
+      'Provided only if the pre-entry atmospheric test shows the air is unsafe',
+      'Supplied from an oxygen cylinder to raise the oxygen level well above 21%',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'More people die attempting rescues in confined spaces than are killed by the initial incident. This is because:',
     options: [
-      'To remain at the entry point, maintain communication, monitor conditions, and initiate rescue if needed',
+      'Rescuers disturb the contaminated atmosphere, releasing trapped gases that were previously settled',
       'Would-be rescuers enter without protection and are overcome by the same hazard that affected the first person',
-      'Identification of the space, hazards, controls, atmospheric readings, entrant names, time limits, communication, and rescue arrangements',
-      'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
+      'Rescuers are usually less experienced than the original entrant and make more mistakes',
+      'The extra body heat from the rescuers accelerates the depletion of the remaining oxygen',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 10,
     question: 'An entry permit for a confined space must include:',
     options: [
-      'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'To remain at the entry point, maintain communication, monitor conditions, and initiate rescue if needed',
+      'Only the name of the entrant and the expected duration of the work',
+      'The contractor’s insurance details and the client’s method statement reference',
       'Identification of the space, hazards, controls, atmospheric readings, entrant names, time limits, communication, and rescue arrangements',
-      'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
+      'A general statement that the space has been deemed safe by the site manager',
     ],
     correctAnswer: 2,
     explanation:
@@ -208,9 +208,9 @@ const quizQuestions = [
     question:
       'When carrying out electrical work in a manhole or cable pit, what specific electrical hazard exists that does not apply in open-air situations?',
     options: [
-      'To remain at the entry point, maintain communication, monitor conditions, and initiate rescue if needed',
-      'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
+      'The supply voltage is automatically doubled when working below ground level',
+      'Earth fault loop impedance cannot be measured in any below-ground location',
+      'RCDs will not operate when the installation is in a damp underground environment',
       'Arc flash energy in a confined space has nowhere to dissipate, increasing blast pressure and thermal exposure',
     ],
     correctAnswer: 3,
@@ -223,9 +223,9 @@ const quizQuestions = [
       'Under the Confined Spaces Regulations 1997, who is responsible for ensuring a safe system of work is in place?',
     options: [
       'The employer (or self-employed person), who must ensure no employee enters a confined space without a safe system of work',
-      'A written risk assessment, entry permit, atmospheric monitoring, ventilation, communication, and rescue arrangements',
-      'Electromagnetic fields from energised cables, heat from cable runs, and the risk of arc flash in an enclosed space',
-      'Arc flash energy in a confined space has nowhere to dissipate, increasing blast pressure and thermal exposure',
+      'The individual entrant, who must devise their own safe system before each entry',
+      'The HSE inspector, who must approve the safe system of work before any entry',
+      'The emergency services, who set the safe system of work when they are notified',
     ],
     correctAnswer: 0,
     explanation:

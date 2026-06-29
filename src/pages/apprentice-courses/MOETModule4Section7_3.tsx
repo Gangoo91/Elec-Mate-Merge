@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'criticality-purpose',
     question: 'The primary purpose of criticality analysis in maintenance management is to:',
     options: [
-      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
-      'The existing fluorescent ballast must be bypassed or removed, and the circuit verified for compatibility with the LED driver',
-      'It is generally prohibited under the Housing Grants, Construction and Regeneration Act 1996 (as amended), except in cases of upstream insolvency',
-      'Rank equipment based on the consequences of its failure so that maintenance resources can be focused on the most important assets first',
+      'Schedule every asset for the same fixed preventive maintenance interval to keep the programme simple',
+      'Rank equipment by purchase cost so the most expensive assets always receive the most maintenance',
+      'Eliminate the need for any condition monitoring by simply running all equipment to failure',
+      'Rank equipment by failure consequence so effort goes to the most important assets first',
     ],
     correctIndex: 3,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'When assessing the criticality of a piece of electrical equipment, the key factors to consider include:',
     options: [
-      'Challenge the beliefs (B): \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\'ll call ahead, being late once is not a disaster, and \'always\' is an exaggeration\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
-      'The consequences of failure across multiple dimensions: safety impact, environmental impact, production impact, repair cost and time, and the availability of redundancy or backup',
-      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
-      'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
+      'Only the physical size and weight of the equipment, since larger equipment is always more critical',
+      'The failure consequences: safety, environment, production, repair time and redundancy',
+      'Only the original purchase price and current depreciated book value of the asset',
+      'Only the age of the equipment, since older equipment is always the most critical of all',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'criticality-categories',
     question: 'A typical criticality classification system categorises equipment as:',
     options: [
-      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
-      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
-      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
-      'Critical (A) — essential, no redundancy, high failure consequence; Important (B) — significant impact but some mitigation available; General (C) — low consequence, run-to-failure acceptable',
+      'New (A) — installed this year; Mid-life (B) — five years old; End-of-life (C) — due for replacement',
+      'Mains (A) — supplied from the grid; Standby (B) — supplied from generator; Battery (C) — supplied from UPS',
+      'Heavy (A) — over one tonne; Medium (B) — under one tonne; Light (C) — portable equipment',
+      'Critical (A) — no redundancy; Important (B) — some mitigation; General (C) — low consequence',
     ],
     correctIndex: 3,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'criticality-maintenance-link',
     question: 'The relationship between criticality and maintenance strategy is:',
     options: [
-      'Dedicated circuit(s) for each charging point with appropriate cable sizing; 30 mA Type A RCD as a minimum (or Type B where the EVSE does not contain integral DC fault protection); PME earthing considerations; labelling; and sizing for continuous load at the maximum rated output of the charger',
-      'Higher-criticality equipment receives more comprehensive, proactive maintenance strategies (condition monitoring, predictive techniques, comprehensive PM), while lower-criticality equipment receives simpler or reactive strategies',
-      'Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them',
-      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
+      'All equipment receives an identical maintenance strategy regardless of its criticality rating',
+      'Higher criticality earns more proactive maintenance; lower criticality earns simpler strategies',
+      'Higher-criticality equipment is deliberately run to failure to gather more reliability data',
+      'Lower-criticality equipment receives the most condition monitoring because it fails most often',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Criticality analysis should be performed:',
     options: [
-      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'As a systematic exercise covering all assets, and reviewed periodically or when operating conditions change, new equipment is added, or following significant failures that reveal previously underestimated consequences',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
+      'Only once, at the point of original installation, and never revisited afterwards at all',
+      'Across all assets, and reviewed periodically or when conditions or failures change the picture',
+      'Only on equipment that has already failed at least once during service on the site',
+      'Only on the most expensive items of plant, ignoring small or cheap components entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'A criticality matrix typically scores each asset against factors including:',
     options: [
-      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
-      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
-      'Always be ranked higher in criticality because safety consequences take priority over all other factors in the criticality assessment — safety is non-negotiable',
+      'The brand reputation of the manufacturer and the colour of the equipment housing',
+      'The original purchase price and the current resale value of the asset only',
+      'Safety, environment, production impact, failure frequency, detectability and repair time',
+      'The number of cables connected and the physical weight of the whole asset only',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     question:
       'In a criticality matrix, a motor on a critical production line with no standby backup would typically be rated:',
     options: [
-      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
-      'Asset identification, function, criticality rating (A/B/C), the basis for the rating (what consequences were considered), the assigned maintenance strategy, and review date',
-      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
+      'Low criticality (C) because a single motor is a relatively inexpensive item to replace',
+      'Medium criticality (B) because all motors are automatically Important whatever the context',
+      'Not rated at all, because motors are routinely excluded from criticality analysis',
+      'High criticality (A) because failure stops production and there is no redundancy',
     ],
     correctAnswer: 3,
     explanation:
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 4,
     question: 'A standby generator used for emergency power in a hospital would be classified as:',
     options: [
-      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
-      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
+      'High criticality (A) — failure when demanded has life-safety consequences despite low hours',
+      'Low criticality (C) because it only runs for a few hours each year and is rarely used',
+      'Medium criticality (B) because it is a backup system and backups are never more than Important',
+      'Exempt from criticality classification because it is not part of the normal production process',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "The concept of 'redundancy' affects criticality because:",
     options: [
-      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
-      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
-      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
+      'Redundancy means the backup system never needs to be maintained or tested at all',
+      'A working backup cuts the consequence of a single failure, but the backup must itself be maintained',
+      'Redundancy always raises an asset to the highest criticality category automatically',
+      'Redundancy has no effect on criticality, which is fixed by the equipment type alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'A Risk Priority Number (RPN) is calculated by:',
     options: [
-      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
-      'The transmission network meets the distribution network — typically stepping down from 400 kV or 275 kV to 132 kV or 33 kV',
-      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'The outgoing worker removes their lock and the incoming worker immediately applies theirs, maintaining continuous lockout',
+      'Adding Severity (S) and Occurrence (O) and subtracting Detection (D)',
+      'Dividing the repair cost by the mean time between failures',
+      'Multiplying Severity x Occurrence x Detection to rank each failure mode',
+      'Multiplying the asset purchase price by its remaining service life',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       'When two assets have the same production impact but one has a safety consequence and the other does not, the asset with the safety consequence should:',
     options: [
-      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
-      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
-      'Always be ranked higher in criticality because safety consequences take priority over all other factors in the criticality assessment — safety is non-negotiable',
+      'Be ranked the same as the other asset, since the production impact is identical',
+      'Be ranked lower, because safety issues are handled separately by the risk assessment',
+      'Be ranked lower only if it happens to be cheaper to replace than the other asset',
+      'Always be ranked higher, because safety takes priority over all other factors',
     ],
     correctAnswer: 3,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 8,
     question: 'A criticality register should contain, as a minimum:',
     options: [
-      'Asset identification, function, criticality rating (A/B/C), the basis for the rating (what consequences were considered), the assigned maintenance strategy, and review date',
-      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
-      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
+      'Asset ID, function, rating, the basis for it, the maintenance strategy and review date',
+      'Only the asset tag number and its physical location, with no rating recorded at all',
+      'Only the purchase date and the warranty expiry date of each individual asset',
+      'Only a list of past breakdowns, with no rating or assigned maintenance strategy',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'A common mistake in criticality analysis is:',
     options: [
-      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
+      'Involving operators and technicians who understand how the equipment actually fails',
+      'Rating by cost or size instead of by the consequences of failure in context',
+      'Reviewing the criticality register whenever the operating conditions change',
+      'Recording the basis for each rating so the decision is traceable and auditable',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'The maintenance strategy for a Critical (A) rated electrical panel would typically include:',
     options: [
-      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
-      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
-      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
+      'A simple run-to-failure approach with replacement only when a fault is reported',
+      'A single visual inspection every ten years with no testing at all in between',
+      'Condition monitoring, detailed PPM, priority spares and failure investigation',
+      'No planned maintenance at all, relying entirely on the manufacturer warranty',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,10 +204,10 @@ const quizQuestions = [
     question:
       'For a General (C) rated asset such as a convenience socket outlet in a storage area, the appropriate maintenance strategy is typically:',
     options: [
-      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
-      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
-      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
+      'Weekly functional testing and monthly thermographic surveys of the socket outlet',
+      'Priority spare parts holding and a fully documented emergency response plan',
+      'Comprehensive condition monitoring, detailed PPM and priority spares holding',
+      'Periodic inspection per BS 7671, with repair on fault report — run-to-failure is acceptable',
     ],
     correctAnswer: 3,
     explanation:
@@ -218,10 +218,10 @@ const quizQuestions = [
     question:
       'In the context of ST1426, understanding criticality analysis enables the maintenance technician to:',
     options: [
-      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
-      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
-      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
+      'Prioritise work by criticality, contribute to assessments, and explain why effort varies',
+      'Ignore asset priorities and complete maintenance tasks strictly in the order they were raised',
+      'Set criticality ratings alone without consulting any operations or engineering colleagues',
+      'Treat all assets identically so that no single asset is ever given preferential maintenance',
     ],
     correctAnswer: 0,
     explanation:

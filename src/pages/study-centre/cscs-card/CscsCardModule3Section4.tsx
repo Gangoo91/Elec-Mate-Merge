@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, which type of fall protection should always be considered first?',
     options: [
-      'Personal fall protection such as harnesses',
       'Collective fall protection such as guard rails and safety nets',
+      'Personal fall protection such as harnesses',
       'Soft landing systems such as airbags',
       'Administrative controls such as warning signs',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The hierarchy of controls requires that collective measures (guard rails, edge protection, safety nets) are always considered before personal measures (harnesses, lanyards). Collective protection safeguards everyone in the area without relying on individual action or training, making it inherently more reliable.',
   },
@@ -75,23 +75,23 @@ const quizQuestions = [
     question:
       'According to BS EN 13374, what is the minimum height for the top rail of a guard rail system?',
     options: [
+      '950mm above the working platform',
       '750mm above the working platform',
       '900mm above the working platform',
-      '950mm above the working platform',
       '1100mm above the working platform',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'BS EN 13374 specifies a minimum top rail height of 950mm. The system must also include an intermediate (mid) rail and a toe board of at least 150mm height to prevent tools and materials falling from the edge. Guard rails are a collective fall prevention measure and are preferred over personal protection because they protect everyone in the area without requiring individual training or equipment.',
   },
   {
     id: 2,
     question:
-      'What is the minimum anchor point strength for a single-person fall arrest system, unless the anchor is specifically designed and tested for the purpose?',
-    options: ['6kN', '10kN', '12kN', '15kN'],
-    correctAnswer: 2,
+      'BS EN 795 specifies the static strength an anchor device must withstand when tested for a single user. For a structural anchor point used for fall arrest (where it has not been individually designed and certified by an engineer), what is that minimum strength?',
+    options: ['6kN', '10kN', '15kN', '12kN'],
+    correctAnswer: 3,
     explanation:
-      'The minimum anchor point strength for a single-person fall arrest system is 12kN (approximately 1.2 tonnes), unless the anchor has been specifically designed, tested, and certified for use as a fall arrest anchor by a competent engineer. This high strength requirement accounts for the dynamic forces generated during a fall arrest — a falling person can generate peak forces of 6kN even with a shock absorber, and the 12kN requirement provides a safety factor of 2.',
+      'BS EN 795 sets the static strength test for anchor devices at 12kN (approximately 1.2 tonnes) for a single user, held for at least 3 minutes. This is the figure used for a generic structural anchor point unless that specific anchor has been individually designed, tested and certified by a competent engineer. The 12kN allows for the dynamic forces generated during a fall arrest — a shock-absorbing lanyard limits the force on the body to 6kN, and the 12kN anchor strength provides a safety factor of 2 above that.',
   },
   {
     id: 3,
@@ -113,11 +113,11 @@ const quizQuestions = [
       'How frequently must personal fall protection equipment (harnesses, lanyards, SRLs) undergo a thorough examination by a competent person?',
     options: [
       'Annually (every 12 months)',
-      'At least every 6 months',
       'Only when visible damage is found',
+      'At least every 6 months',
       'Every 3 years',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Personal fall protection equipment must undergo a thorough examination by a competent person at least every 6 months. This is in addition to the pre-use visual check that must be carried out by the user before every use. The thorough examination involves a detailed inspection of all components including webbing, stitching, buckles, D-rings, connectors, and shock absorber indicators. Records of all examinations must be maintained.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'What is suspension trauma, and why does it make rescue planning critical for work involving fall arrest equipment?',
     options: [
+      'It is a life-threatening condition where blood pools in the legs during harness suspension, potentially fatal within 15 to 30 minutes',
       'It is a psychological condition caused by fear of heights that resolves after rescue',
       'It is muscle soreness from wearing a harness all day that requires physiotherapy',
-      'It is a life-threatening condition where blood pools in the legs during harness suspension, potentially fatal within 15 to 30 minutes',
       'It is a minor bruising injury caused by the harness straps during a fall',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Suspension trauma (orthostatic intolerance) occurs when a person is suspended in a harness after a fall. The harness leg straps compress the femoral veins, blood pools in the legs, and the heart is deprived of adequate blood return. This can lead to unconsciousness and death within 15 to 30 minutes. This is why a rescue plan must be in place before work begins — the plan must enable rescue well within this critical window.',
   },
@@ -156,10 +156,10 @@ const quizQuestions = [
     options: [
       'Hoist the load',
       'Lower the load',
-      'Emergency stop — all operations cease',
       'Slew (rotate) to the right',
+      'Emergency stop — all operations cease',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A clenched fist held at head height is the standard signal for emergency stop — all crane operations must cease immediately. Banksman signals follow BS 7121 and must be clearly understood by both the banksman and the crane operator before lifting operations begin. The banksman must be a trained, competent person wearing high-visibility clothing and positioned where they can see both the load and the crane operator.',
   },

@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'A plumber has routed hot water pipes directly through a cable route you marked out two weeks ago. What is the most professional first step?',
     options: [
+      'Speak directly to the plumber, show your marked route, and discuss a solution together',
       'Rip the pipes out and reinstall your cables',
       'Go straight to the site manager and demand the plumber is removed from site',
-      'Speak directly to the plumber, show your marked route, and discuss a solution together',
       'Ignore it and route your cables around the pipes without telling anyone',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Direct conversation is always the correct first step in any inter-trade dispute. Approaching the plumber calmly, showing evidence of your marked route, and seeking a collaborative solution demonstrates professionalism and usually resolves the issue far faster than escalation. Most trade disputes arise from poor communication, not malice, and a face-to-face conversation often reveals that the other person was simply unaware of the conflict. Escalation to the site manager should only happen if direct conversation fails to produce a resolution.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'What is the single most common cause of disputes between different trades on a construction site?',
     options: [
+      'Poor communication and inadequate coordination of work sequences',
       'Personal grudges between individual tradespeople',
       "Deliberate sabotage of other trades' work",
-      'Poor communication and inadequate coordination of work sequences',
       'Different trades using incompatible materials',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The vast majority of inter-trade disputes arise from poor communication and inadequate coordination, not personal malice. When trades are not properly sequenced, when access arrangements are unclear, or when one trade does not know what another has installed, conflicts are inevitable. This is why CDM 2015 places such emphasis on the principal contractor's coordination duties — most site conflicts are systemic rather than personal.",
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
       'A plasterer has accidentally covered several of your back boxes with plaster. What is the correct professional response?',
     options: [
       'Dig out the back boxes yourself and send the plasterer the bill',
-      'Report the damage to the site manager and let them handle it',
       'Speak to the plasterer first, show them the affected areas, and ask them to carefully clear the plaster from the boxes',
+      'Report the damage to the site manager and let them handle it',
       'Leave it and fit the face plates on top of the plaster',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Direct conversation with the plasterer is the correct first step. They may not have realised the back boxes were there, or they may have assumed they would be relocated. A professional, face-to-face conversation gives them the opportunity to rectify the issue immediately — most plasterers will be happy to carefully remove the plaster from the boxes. Escalating to the site manager without first speaking to the plasterer skips a crucial step and can damage working relationships. Leaving the boxes covered is not an option as it compromises the quality and safety of the installation.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
       "Under CDM 2015, what is the principal contractor's duty regarding trade coordination?",
     options: [
       'They have no specific duty — each trade is responsible for their own coordination',
-      'They must plan, manage and coordinate health and safety and work sequences across all contractors',
       'They only need to coordinate trades if a dispute has already occurred',
+      'They must plan, manage and coordinate health and safety and work sequences across all contractors',
       'They must ensure all trades have the same working hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Under Regulation 13 of CDM 2015, the principal contractor must plan, manage and monitor the construction phase, including coordinating the work of all contractors to ensure health and safety. This explicitly includes sequencing work to prevent conflicts, managing access arrangements, and ensuring that one trade's activities do not create risks for another. The principal contractor's coordination duty is proactive — they should prevent conflicts before they arise, not merely react to them.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'You discover that a carpenter has drilled through one of your cables while fitting a stud wall. What should you do first?',
     options: [
-      'Isolate the affected circuit immediately to prevent any risk of electric shock',
       'Find the carpenter and confront them about the damage',
       'Continue working and deal with it at the end of the day',
       'Report it to the site manager by email',
+      'Isolate the affected circuit immediately to prevent any risk of electric shock',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Safety always comes first. A damaged cable represents an immediate risk of electric shock, short circuit or fire. Your first action must be to isolate the affected circuit at the distribution board to make it safe. Only after the circuit is isolated should you assess the extent of the damage, photograph it for your records, and then speak to the carpenter and the site manager. Continuing to work with a known damaged cable, or delaying the isolation to have a conversation, puts lives at risk.',
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'Which of the following is the best approach when documenting damage caused by another trade?',
     options: [
-      'Take a single photograph and mention it to a colleague',
       'Take multiple photographs showing the damage, the surrounding area, and any identification marks, noting the date, time and circumstances',
+      'Take a single photograph and mention it to a colleague',
       'Write a description from memory at the end of the week',
       'Ask the person who caused the damage to sign a confession',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thorough documentation includes multiple photographs showing the damage from different angles, the surrounding area for context, and any identification marks (circuit numbers, floor/room identifiers). Accompany the photographs with written notes recording the exact date, time, location, what was damaged, and what you observed. Do this immediately — memory fades and details become confused over time. This level of documentation will support your position if the dispute escalates to the contracts manager or beyond.',
   },
@@ -159,11 +159,11 @@ const quizQuestions = [
       'A heating engineer insists on running their pipes through the cable tray you have already installed. They claim they were on site first. What principle should guide your response?',
     options: [
       'Whoever was on site first has absolute priority over all routes',
-      'The trade with the more expensive materials takes priority',
       'The issue should be resolved based on the agreed programme, drawings and coordination plan, not on who arrived first',
+      'The trade with the more expensive materials takes priority',
       'You should remove your cable tray to avoid conflict',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The "who was here first" argument has no standing in professional construction. Routing priorities are determined by the agreed programme, the coordination drawings, and the principal contractor\'s site coordination plan — not by who physically installed their work first. If there is a genuine routing conflict, both trades should refer it to the site manager for resolution based on the project documentation. Removing your completed work to accommodate another trade\'s unplanned routing would be unprofessional and potentially costly.',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
       'Why is it important to handle inter-trade disputes professionally, even when the other party is clearly in the wrong?',
     options: [
       'Because you might get fired if you argue',
-      'Because your professional reputation follows you, and construction is a small industry',
       'Because the other trade might be physically larger than you',
+      'Because your professional reputation follows you, and construction is a small industry',
       'Because it does not matter who is right or wrong on site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The construction industry is remarkably small in terms of professional reputation. Site managers, contracts managers and project managers talk to each other, and your reputation as someone who handles disputes professionally — or unprofessionally — will follow you from job to job. An electrician known for being calm, factual and solution-oriented will always be preferred over one known for confrontation, even if the confrontational one is technically more skilled. Professional dispute handling is a career investment.',
   },
@@ -187,11 +187,11 @@ const quizQuestions = [
       'What is the recommended escalation sequence for an inter-trade dispute that cannot be resolved through direct conversation?',
     options: [
       'Social media post → union representative → solicitor',
-      'Direct conversation → site manager → written correspondence to contracts manager → formal dispute process',
       'Email to managing director → legal action → refusal to return to site',
       'Ignore the problem → complain to colleagues → leave the job',
+      'Direct conversation → site manager → written correspondence to contracts manager → formal dispute process',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct escalation sequence starts with direct conversation between the two parties, which resolves the majority of disputes. If this fails, the next step is to raise the issue with the site manager, who has the authority to coordinate between trades on site. If the site manager cannot resolve it, the dispute should be escalated in writing to the contracts manager, providing full documentation including photographs and a factual account. Only if all these steps fail should formal dispute processes such as adjudication or contractual claims be considered. Each step is more formal, more time-consuming and more relationship-damaging than the last — which is why starting with a direct conversation is so important.',
   },

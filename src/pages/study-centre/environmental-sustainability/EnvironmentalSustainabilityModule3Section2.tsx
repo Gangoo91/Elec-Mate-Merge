@@ -23,10 +23,10 @@ const quickCheckQuestions = [
     id: 'low-carbon-materials',
     question: 'Why is cross-laminated timber (CLT) considered a low carbon structural material?',
     options: [
-      'It is cheaper than steel and concrete',
+      'It is consistently cheaper to buy and install than both steel and concrete',
       'It stores carbon absorbed during tree growth and has lower manufacturing emissions',
-      'It does not require any energy to manufacture',
-      'It is only used in temporary structures',
+      'It does not require any energy at all to manufacture and process into panels',
+      'It is only ever used in temporary structures and never in permanent buildings',
     ],
     correctIndex: 1,
     explanation:
@@ -74,8 +74,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the approximate average carbon footprint per person per year in the UK?',
-    options: ['1.5 tonnes CO2e', '3.0 tonnes CO2e', '5.5 tonnes CO2e', '10.0 tonnes CO2e'],
-    correctAnswer: 2,
+    options: ['5.5 tonnes CO2e', '1.5 tonnes CO2e', '3.0 tonnes CO2e', '10.0 tonnes CO2e'],
+    correctAnswer: 0,
     explanation:
       'The average carbon footprint per person in the UK is approximately 5.5 tonnes of CO2 equivalent (CO2e) per year. This figure includes direct emissions from energy use and transport, as well as indirect emissions from goods and services consumed. The global average is approximately 4.7 tonnes, so the UK figure is above the world average. To meet the Paris Agreement targets, individual carbon footprints need to fall to approximately 2.3 tonnes CO2e per person by 2030.',
   },
@@ -84,11 +84,11 @@ const quizQuestions = [
     question: "Which RICS Whole Life Carbon stages represent 'upfront carbon' in a building?",
     options: [
       'B1–B7 (use stage)',
-      'C1–C4 (end of life)',
       'A1–A5 (product and construction)',
+      'C1–C4 (end of life)',
       'Module D (beyond the system boundary)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Upfront carbon corresponds to RICS Whole Life Carbon stages A1–A5. Stages A1–A3 cover the product stage (raw material extraction, transport to the factory, and manufacturing), while stages A4–A5 cover the construction process stage (transport to site and construction/installation activities). These emissions are 'locked in' at the point of construction and cannot be reduced after the building is complete, which is why reducing upfront embodied carbon is a critical priority.",
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
       'What is the primary benefit of using GGBS as a partial cement replacement in concrete?',
     options: [
       'It makes the concrete set faster',
-      'It significantly reduces the embodied carbon of the concrete mix',
       'It makes the concrete lighter in weight',
+      'It significantly reduces the embodied carbon of the concrete mix',
       'It eliminates the need for reinforcement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ground Granulated Blast-furnace Slag (GGBS) is a by-product of the steel industry that can replace up to 70–80% of the Portland cement in concrete. Since Portland cement production is responsible for approximately 8% of global CO2 emissions, replacing a significant proportion with GGBS dramatically reduces the embodied carbon of the concrete mix — typically by 40–60%. GGBS also improves the durability and chemical resistance of the concrete, though it does slow the early strength gain.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 5,
     question: 'How does passive design help reduce operational carbon in buildings?',
     options: [
-      'By using more mechanical heating and cooling systems',
-      'By maximising the use of natural light, ventilation, and thermal mass to reduce energy demand',
-      'By installing larger boilers and air conditioning units',
-      'By increasing the glazed area on all elevations equally',
+      'By maximising natural light, ventilation, and thermal mass to reduce energy demand',
+      'By relying on more powerful mechanical heating and cooling systems throughout',
+      'By installing larger boilers and additional air conditioning units across the building',
+      'By increasing the glazed area equally on all elevations regardless of orientation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Passive design reduces operational carbon by working with natural environmental conditions to minimise the need for mechanical heating, cooling, and lighting. Key strategies include optimising building orientation for solar gain, using thermal mass to store and release heat, designing for natural cross-ventilation, maximising natural daylight to reduce artificial lighting, and specifying high levels of insulation and air tightness. By reducing the energy demand of the building at the design stage, passive design delivers lower operational carbon throughout the building's entire lifespan.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       "What is 'modal shift' in the context of carbon reduction in transport and logistics?",
     options: [
-      'Changing from diesel to electric vehicles only',
-      'Moving freight from road to rail or water transport to reduce emissions per tonne-kilometre',
-      'Using larger lorries to carry more goods per journey',
-      'Switching all deliveries to overnight schedules',
+      'Changing the fleet from diesel to electric vehicles, with no change to transport mode',
+      'Moving freight from road to rail or water to cut emissions per tonne-kilometre',
+      'Using larger and heavier lorries to carry more goods on each individual journey',
+      'Switching all site deliveries to overnight schedules to avoid daytime congestion',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does SECR require qualifying UK companies to report?',
     options: [
-      'Only their renewable energy generation',
+      'Only the renewable energy that the company generates on its own sites',
+      'Only the company Scope 3 emissions arising across its wider supply chain',
+      'The individual carbon footprint of each and every employee in the company',
       'Their energy use, associated greenhouse gas emissions, and at least one intensity ratio',
-      'Only their Scope 3 supply chain emissions',
-      'The carbon footprint of every individual employee',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Streamlined Energy and Carbon Reporting (SECR) framework requires qualifying UK companies (quoted companies, large unquoted companies, and large LLPs meeting certain thresholds) to report their UK energy use, associated greenhouse gas emissions (Scope 1 and Scope 2 at minimum), and at least one intensity ratio (such as tonnes CO2e per £million turnover or per employee). SECR reporting must be included within the company's annual directors' report. It replaced the CRC Energy Efficiency Scheme and is designed to increase transparency and encourage organisations to implement energy efficiency measures.",
   },

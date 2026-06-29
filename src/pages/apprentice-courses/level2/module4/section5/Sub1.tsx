@@ -42,10 +42,10 @@ const checks = [
     question:
       'You are at the consumer unit on a finished first-fix domestic install. Which statement best separates inspection from testing under BS 7671 Part 6?',
     options: [
-      'Inspection is the visual + accessible-parts walk-round, normally with the install disconnected from supply, and it precedes testing per Reg 642.1.',
-      'Increase the proportion of study time allocated to electrical science while maintaining periodic H&S review',
-      'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
-      'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
+      'Inspection is the dead visual walk-round, and it precedes testing per Reg 642.1.',
+      'Inspection is the instrument stage, and it follows the visual testing done first while energised.',
+      'Inspection and testing are one combined step, recorded together in any order.',
+      'Inspection is done energised so live readings can be taken by eye, testing dead afterwards.',
     ],
     correctIndex: 0,
     explanation:
@@ -56,9 +56,9 @@ const checks = [
     question:
       'You open up a switched-fuse spur and find the fuse is sitting in the neutral conductor instead of the line. The Schedule of Inspections item that catches this is:',
     options: [
-      'One controller output operating two final control elements sequentially',
-      'Disconnected from all sources of electrical energy and unable to become live unintentionally',
-      'To reduce building CO2 emissions through improved energy performance beyond Building Regulations',
+      'Item 4.0 — identification of conductors, since the fuse colour does not match the conductor it is fitted in.',
+      'Item 6.0 — connection of conductors, because the termination at the fuse holder is on the wrong conductor.',
+      'Item 11.0 — earthing arrangements, as a fuse in the neutral disturbs the earth-fault return path.',
       'Item 8.0 — connection of single-pole devices for protection or switching in line conductors only.',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const checks = [
     question:
       'A finished consumer unit is taped up and labelled. The supervisor asks you to inspect the terminations on every RCBO without removing the busbar shroud. What is the right call?',
     options: [
-      'Ensuring that consumer units, distribution boards, socket outlets, switches, trunking runs and conduit are installed level and plumb for a professional finish and correct operation',
-      'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
-      'Inspect what is visible without disturbing the install where practicable, record any item where access was limited as a limitation in the Schedule of Inspections, and flag the supervisor.',
-      'Adequate and appropriate equipment, facilities, and personnel to enable first aid to be given to employees who are injured or become ill at work',
+      'Remove the busbar shroud anyway, since a thorough inspection requires every termination physically exposed.',
+      'Mark all the RCBO terminations compliant on the strength of the board looking neat and tidy.',
+      'Inspect what is visible, record the limited access as a LIM on the Schedule, and flag the supervisor.',
+      'Take a continuity reading through each RCBO and treat a good result as proof the terminations are sound.',
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 642.1 says inspection shall normally be done:',
     options: [
-      'To provide safety, visibility, and reassurance while occupants await assisted evacuation',
+      'With the installation fully energised, so live readings can be taken alongside the visual checks.',
       'With the part of the installation under inspection disconnected from the supply, before testing.',
-      'People who talk about suicide are just seeking attention and won\\\\\\\'t actually do it',
-      'The schedule that prescribes what must be included in a scaffold inspection report',
+      'After testing is complete, as a final visual confirmation before the certificate is issued.',
+      'At the same time as testing, with the order of the two steps left to the inspector\'s discretion.',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       'You are inspecting a new domestic CU. The label "Caution: this installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair" is a requirement under:',
     options: [
-      'Business skills, insurance, and scheme registration',
+      'Reg 522 — routing and protection of cables against mechanical damage.',
       'Reg 514 — identification, including warning notices.',
-      'To describe how a task will be carried out safely',
-      'Manufacturing plants, factories, and heavy industry',
+      'Reg 411 — protection against electric shock by automatic disconnection.',
+      'Reg 526 — connection of conductors and integrity of terminations.',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,9 +171,9 @@ const quizQuestions = [
     question:
       'On a finished install you find the line conductor of a lighting circuit landed in the neutral terminal of a switched ceiling rose, with the neutral landed in the line terminal. This is a:',
     options: [
-      'A reference line on the wall at a known height (typically 1 m above FFL) from which other heights are measured.',
-      'Regular cannabis use, particularly high-strength varieties, is linked to increased risk of anxiety, depression, and psychosis',
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
+      'Routing defect — the cable has been run outside a prescribed zone, caught by the inspection item "routing of cables" (Reg 522).',
+      'Connection defect — the conductors are loose in their terminals, caught by the inspection item "connection of conductors" (Reg 526).',
+      'Earthing defect — the CPC has been transposed with a live conductor, caught by the inspection item "earthing arrangements" (Reg 411).',
       'Polarity defect — would normally be caught at testing (Reg 643.6) but the inspection item "identification of conductors" should also catch it visually.',
     ],
     correctAnswer: 3,
@@ -185,10 +185,10 @@ const quizQuestions = [
     question:
       'You have completed a Section 642 inspection on a new install. Two items are LIM (limitations — could not access), one item is ✗ (non-compliant) and the rest are ✓. The next step is:',
     options: [
-      'Hand the Schedule of Inspections to the supervisor for review, fix the ✗ item, decide whether to record the two LIM items as observations on the EIC or revisit them, then proceed to Section 6 dead testing.',
-      'An uncontrolled release or escape of a substance that could cause injury (e.g., a counterweight falling from a crane being used for work at height)',
-      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
-      'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
+      'Fix the ✗ item, agree with the supervisor whether to revisit or record the two LIM items, then begin dead testing.',
+      'Energise straight away and rectify the single ✗ item on a return visit, leaving the LIM items unrecorded.',
+      'Start dead testing now and leave the ✗ item until the test results confirm whether it is really a problem.',
+      'Re-mark the ✗ item as a LIM so the form shows no non-conformances, then issue the EIC and go to live testing.',
     ],
     correctAnswer: 0,
     explanation:

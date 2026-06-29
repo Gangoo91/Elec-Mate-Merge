@@ -80,90 +80,111 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
 
   const quizQuestions = [
     {
-      question: 'According to IEC 60529, what level of solid object protection does IP6X provide?',
+      question: 'According to IEC 60529, what level of solid-object protection does IP6X provide?',
       options: [
         'Protected against objects greater than 12.5mm',
         'Protected against objects greater than 1mm',
-        'Dust-protected (limited ingress permitted)',
-        'Dust-tight (no ingress permitted)',
+        'Dust-protected, with limited ingress permitted',
+        'Dust-tight, with no ingress permitted',
       ],
-      correctAnswer: 'Dust-tight (no ingress permitted)',
+      correctAnswer: 'Dust-tight, with no ingress permitted',
+      explanation:
+        'A first digit of 6 is the highest solid-object rating: completely dust-tight. A digit of 5 (dust-protected) allows limited ingress that must not impair operation.',
     },
     {
       question: 'What IP rating is typically required for outdoor electrical enclosures in the UK?',
       options: ['IP44', 'IP54', 'IP65 or IP66', 'IP69K'],
       correctAnswer: 'IP65 or IP66',
+      explanation:
+        'Outdoor enclosures need to be dust-tight and withstand wind-driven rain and washdown, so IP65/IP66 is the usual minimum. IP69K is for high-pressure steam cleaning, beyond normal outdoor needs.',
     },
     {
       question:
-        'In Rittal thermal calculations, what is the typical heat transfer coefficient (k-value) for a painted steel enclosure?',
+        'In Rittal-style thermal calculations, what is the typical heat transfer coefficient (k-value) for a painted steel enclosure?',
       options: ['2.5 W/m²K', '5.5 W/m²K', '10 W/m²K', '15 W/m²K'],
       correctAnswer: '5.5 W/m²K',
+      explanation:
+        'Painted steel enclosures are taken at about 5.5 W/m²K. Stainless is slightly lower (~5.0) and insulating GRP lower still (~3.5), which is why material choice affects natural cooling.',
     },
     {
       question: 'What is the primary advantage of an air-to-air heat exchanger over filter fans?',
       options: [
-        'Lower initial cost',
-        'Higher cooling capacity',
-        'Maintains enclosure IP rating by keeping internal air separate',
-        'Requires less maintenance',
+        'It has a lower initial purchase cost',
+        'It maintains the IP rating by keeping internal and external air separate',
+        'It offers a higher absolute cooling capacity',
+        'It needs no maintenance at all',
       ],
-      correctAnswer: 'Maintains enclosure IP rating by keeping internal air separate',
+      correctAnswer: 'It maintains the IP rating by keeping internal and external air separate',
+      explanation:
+        'A heat exchanger transfers heat without mixing the two air streams, so the enclosure stays sealed and keeps its IP rating — unlike filter fans which draw contaminated ambient air inside.',
     },
     {
       question:
-        'At what internal/ambient temperature differential does condensation risk become significant?',
+        'At what point does condensation risk inside an enclosure become significant?',
       options: [
-        'When internal temp is 2°C above ambient',
-        'When internal temp is 5°C below ambient',
-        'When internal temp drops below dew point of ambient air',
-        'When ambient humidity exceeds 50%',
+        'When the internal temperature is 2°C above ambient',
+        'When the internal temperature is 5°C below ambient',
+        'When the internal surface temperature drops below the dew point of the ambient air',
+        'When ambient humidity simply exceeds 50%',
       ],
-      correctAnswer: 'When internal temp drops below dew point of ambient air',
+      correctAnswer:
+        'When the internal surface temperature drops below the dew point of the ambient air',
+      explanation:
+        'Condensation forms when a surface cools below the dew point, so moisture from the air condenses on it. This is why anti-condensation heaters are used to keep surfaces above dew point.',
     },
     {
       question:
-        'What ATEX zone classification indicates an area where explosive atmosphere is likely during normal operation?',
+        'Which ATEX zone classification indicates an area where an explosive gas atmosphere is likely during normal operation?',
       options: [
-        'Zone 0 (gas) or Zone 20 (dust)',
-        'Zone 1 (gas) or Zone 21 (dust)',
-        'Zone 2 (gas) or Zone 22 (dust)',
+        'Zone 0',
+        'Zone 1',
+        'Zone 2',
         'All zones equally',
       ],
-      correctAnswer: 'Zone 1 (gas) or Zone 21 (dust)',
+      correctAnswer: 'Zone 1',
+      explanation:
+        'Zone 1 (and Zone 21 for dust) means an explosive atmosphere is likely in normal operation. Zone 0/20 is continuous/frequent presence, and Zone 2/22 only in abnormal conditions.',
     },
     {
       question:
         'How often should filter mats in panel cooling fans typically be inspected in a standard industrial environment?',
-      options: ['Weekly', 'Monthly', 'Quarterly (every 3 months)', 'Annually'],
+      options: ['Weekly', 'Monthly', 'Quarterly', 'Annually'],
       correctAnswer: 'Monthly',
+      explanation:
+        'A monthly visual inspection catches clogging before airflow (and cooling) is compromised; the mat is then replaced when the pressure drop rises significantly or the mat is visibly blocked.',
     },
     {
       question:
-        'What is the formula for calculating heat dissipation through an enclosure surface?',
+        'Which formula calculates the heat dissipated through an enclosure surface?',
       options: ['Q = k × A × ΔT', 'Q = m × c × ΔT', 'Q = V × I × t', 'Q = P × η'],
       correctAnswer: 'Q = k × A × ΔT',
+      explanation:
+        'Q = k × A × ΔT multiplies the heat-transfer coefficient by the effective surface area and the internal-to-ambient temperature difference. Q = m × c × ΔT is for heating a mass, not surface dissipation.',
     },
     {
       question:
         'When installing a cooling unit on an enclosure, where should it be positioned for optimal performance?',
       options: [
         'At the bottom of the enclosure',
-        'At the top of the enclosure',
         'In the middle of the enclosure',
+        'At the top of the enclosure',
         'Position does not affect performance',
       ],
       correctAnswer: 'At the top of the enclosure',
+      explanation:
+        'Mounting the cooling unit high lets it draw off the hottest air, which naturally collects at the top, giving the most effective heat removal and even internal temperatures.',
     },
     {
       question: 'What additional protection does IP69K provide beyond IP66?',
       options: [
         'Protection against explosive atmospheres',
-        'Protection against high-pressure, high-temperature water jets',
         'Protection against electromagnetic interference',
+        'Protection against high-pressure, high-temperature water jets',
         'Protection against mechanical impact',
       ],
       correctAnswer: 'Protection against high-pressure, high-temperature water jets',
+      explanation:
+        'IP69K adds resistance to close-range high-pressure, high-temperature steam/water jets used in heavy washdown (e.g. food and pharma), which IP66 alone does not guarantee.',
     },
   ];
 

@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a simple machine?',
     options: [
-      'It enables you to anticipate, prepare for, and manage your responses to known stressors',
+      'A machine with an electric motor and at least one moving part',
       'A device that changes the size, direction or speed of a force to do useful work',
-      'Automatic ventilation adjustment based on occupancy or air quality sensors',
-      'A full inspection by a competent person before the tower is used again',
+      'Any tool that creates extra energy to make a heavy job easier',
+      'A machine made up of gears, with no levers or pulleys involved',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is mechanical advantage (MA)?',
     options: [
-      'Pilot wire integrity and in-cable control box function',
-      'To prevent a single fault from disabling all emergency lighting',
+      'The ratio of effort to load — how much harder you have to work',
+      'The total energy a machine adds to the load as it moves it',
       'The ratio of load to effort — how much the machine multiplies your force',
-      'Hazard, design decisions, residual risks, information for others',
+      'The distance the load moves divided by the time it takes',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'A single fixed pulley (the wheel hangs from above and you pull down) gives…',
     options: [
-      'Minimise and batch shallow work; protect time for deep work',
+      'MA of about 2 — it halves the effort needed to lift the load',
       'MA of about 1 — it just changes the direction of the force',
-      'It increases the current for a given real power, stressing infrastructure',
-      'The Principal Contractor (who co-ordinates all trades)',
+      'MA of about 4 — the same as a four-segment block and tackle',
+      'MA of less than 1 — you have to pull harder than the load weighs',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'In a gear train, which gear is the "driver"?',
     options: [
-      'Prove the tester works on a known live source',
-      'First 10A at 100%, remainder at 50%',
+      'The gear with the most teeth in the train',
+      'The gear connected to the output shaft or load',
       'The one connected to the motor or input shaft',
-      'To identify obvious faults safely before applying power',
+      'Whichever gear turns the fastest in the train',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,9 +158,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why does a drill have a gearbox between the motor and the chuck?',
     options: [
-      'Avoid danger, minimise inconvenience, and meet safety requirements',
-      'Rapid voltage fluctuations causing visible light variation',
-      'Eliminate the need for hazardous manual handling entirely',
+      'To trade some torque for far higher speed at the chuck',
+      'To let the chuck spin in either direction without rewiring the motor',
+      'To protect the motor from overheating under heavy load',
       'To trade some motor speed for more torque (turning force) at the chuck',
     ],
     correctAnswer: 3,

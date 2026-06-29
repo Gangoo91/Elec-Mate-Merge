@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'neuroplasticity-def',
     question: 'What does neuroplasticity mean in the context of resilience?',
     options: [
-      'The brain is fixed after childhood and cannot form new neural pathways',
       'The brain physically rewires itself in response to repeated behaviour and experience',
+      'The brain is fixed after childhood and cannot form new neural pathways',
       'Neuroplasticity only applies to learning academic subjects, not emotional skills',
       'The brain becomes less flexible and adaptable as you practise new behaviours',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Neuroplasticity refers to the brain's ability to physically reorganise itself by forming new neural connections throughout life. When you repeatedly practise resilient behaviours — such as reframing negative thoughts, seeking support, or maintaining perspective — you strengthen the neural pathways associated with those behaviours. Over time, resilient responses become more automatic and require less conscious effort.",
   },
@@ -24,11 +24,11 @@ const quickCheckQuestions = [
     question: "Which statement best reflects a growth mindset according to Carol Dweck's research?",
     options: [
       '"I\'m just not good at inspection and testing — it\'s not my thing"',
-      '"I can\'t do this yet, but I\'m getting better with each attempt"',
       '"Some people are naturally talented at this and I\'m not one of them"',
       '"I should be able to do this perfectly on the first attempt"',
+      '"I can\'t do this yet, but I\'m getting better with each attempt"',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The word "yet" is the hallmark of a growth mindset. Dweck\'s research shows that people with a growth mindset believe abilities can be developed through effort and learning. The statement "I can\'t do this yet" acknowledges the current difficulty while maintaining the belief that improvement is possible through practice — a core component of resilience.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 4,
     question: 'In Seligman\'s Learned Optimism model, what is "explanatory style"?',
     options: [
-      'The way you explain technical concepts to clients',
       'The habitual way you explain the causes of events to yourself',
+      'The way you explain technical concepts to clients',
       'A formal psychological assessment administered by a therapist',
       'The way you write reports and documentation at work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Explanatory style is the habitual way you explain the causes of events — good and bad — to yourself. Seligman identified three dimensions: permanent vs temporary, pervasive vs specific, and personal vs external. A pessimistic explanatory style sees bad events as permanent, pervasive, and personal. An optimistic style sees them as temporary, specific, and influenced by external factors. Your explanatory style directly affects your resilience.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'What are the 3 Ps identified by Sandberg and Grant?',
     options: [
       'Positivity, Persistence, and Patience',
-      'Personalisation, Pervasiveness, and Permanence',
       'Preparation, Practice, and Performance',
       'Perception, Processing, and Prevention',
+      'Personalisation, Pervasiveness, and Permanence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 3 Ps — Personalisation, Pervasiveness, and Permanence — are three cognitive traps that undermine resilience. Personalisation is blaming yourself entirely. Pervasiveness is believing the problem will affect every area of your life. Permanence is believing the negative effects will last forever. Recognising when you are falling into one of these traps allows you to challenge the thought and respond more adaptively.',
   },
@@ -157,14 +157,14 @@ const quizQuestions = [
     question:
       'A sparky who had their tools stolen from their van could demonstrate "bouncing forward" by:',
     options: [
+      'Using the insurance payout to upgrade to better tools and improving their van security to prevent future theft',
       'Giving up electrical work and retraining in a different trade',
       'Replacing the stolen tools with identical ones and carrying on as before',
-      'Using the insurance payout to upgrade to better tools and improving their van security to prevent future theft',
       'Refusing to work until the tools are recovered by the police',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Bouncing forward means using adversity as a catalyst for improvement rather than merely returning to your previous state. By upgrading their tools and improving van security, the electrician ends up in a better position than before the theft. Option B (replacing with identical tools) would be bouncing back, which is also resilient but does not involve the growth element.',
+      'Bouncing forward means using adversity as a catalyst for improvement rather than merely returning to your previous state. By upgrading their tools and improving van security, the electrician ends up in a better position than before the theft. Simply replacing the tools with identical ones would be bouncing back, which is also resilient but does not involve the growth element.',
   },
   {
     id: 8,
@@ -173,10 +173,10 @@ const quizQuestions = [
     options: [
       'Greater appreciation for life',
       'Improved relationships with others',
-      'Elimination of all negative emotions permanently',
       'Recognition of new possibilities and paths',
+      'Elimination of all negative emotions permanently',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Post-traumatic growth does NOT mean the elimination of all negative emotions. People who experience post-traumatic growth may still feel sadness, anxiety, or distress about their experience. Growth and distress can coexist. The five actual domains are: greater appreciation for life, improved relationships, increased personal strength, recognition of new possibilities, and spiritual or existential change.',
   },

@@ -39,10 +39,10 @@ const checks = [
     id: 'sub2-5-trip-cause-check',
     question: 'On a typical electrical fit-out, what causes the most trips?',
     options: [
-      'It can leave live conductors energised when switches are \\\\\\\'off\\\\\\\'',
-      'The order in which the phases reach their maximum values',
+      'Faulty RCDs nuisance-tripping on the board',
+      'Wet weather making the site floor slippery',
       'Trailing extension leads and tools left in walkways',
-      'To minimise DC cable runs and losses',
+      'Poor lighting in the corners of the work area',
     ],
     correctIndex: 2,
     explanation:
@@ -66,9 +66,9 @@ const checks = [
     question: 'Under MHOR 1992, what does the boss have to do FIRST?',
     options: [
       'Avoid the manual handling where reasonably practicable',
-      'Primary purpose - life vs property protection',
-      'A light switch wired into the neutral conductor instead of the line',
-      'Preserving the fire scene and any evidence for investigation',
+      'Issue every worker with a back-support belt',
+      'Train everyone in correct lifting technique',
+      'Carry out a written risk assessment of the lift',
     ],
     correctIndex: 0,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which regulation puts the legal duties on manual handling at work?',
     options: [
-      'Licensed, notifiable non-licensed (NNLW), and non-licensed',
+      'The Work at Height Regulations 2005',
       'Manual Handling Operations Regulations 1992 (as amended)',
-      'States how long the quoted price remains valid',
-      'Outputting fixed test signals for system testing',
+      'The Provision and Use of Work Equipment Regulations 1998',
+      'The Workplace (Health, Safety and Welfare) Regulations 1992',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'Under MHOR 1992 Reg 4, what is the FIRST duty on the employer?',
     options: [
-      'Electromagnetic interference between power cables and data/signal cables',
-      'To ensure the health, safety and welfare of all employees at work',
-      'It is a simple asphyxiant that displaces oxygen',
+      'Assess the risk of every manual handling operation in detail',
+      'Reduce the risk of injury to the lowest level practicable',
+      'Provide training in safe lifting technique to all staff',
       'Avoid hazardous manual handling so far as is reasonably practicable',
     ],
     correctAnswer: 3,
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'A consumer unit weighs about 8 kg. Why is it still a manual handling risk?',
     options: [
-      'Risks should be weighed against the cost, time, and effort of reducing them',
+      'Any load over 5 kg automatically breaches MHOR limits',
       'Awkward shape, lifted overhead, often with twist — small weight, bad posture',
-      'A goal focused on the type of person you want to become',
-      'How we unconsciously move from observing data to making assumptions and taking action',
+      'The metal casing makes it an electric shock risk while lifting',
+      'It must always be a two-person lift regardless of weight',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Best single defence against a slip on a wet plant-room floor?',
     options: [
-      'Compliance with drawings, workmanship quality, and safety requirements',
-      'The rate of change of magnetic flux linkage',
+      'Walking more slowly and carefully across the wet area',
+      'Wearing rubber gloves to improve your grip on handrails',
       'Non-slip safety footwear plus warning signage and clean-up',
-      'To confirm your voltage tester is working correctly',
+      'Switching off the lights to discourage anyone entering',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which of these is the MOST common trip hazard on a live electrical site?',
     options: [
-      'Exposure controls and personal protection',
-      'Overheating due to reduced current-carrying capacity',
-      'Use toolboxes or tie-down straps',
+      'Wet patches left by cleaning the floor',
+      'Raised thresholds between rooms and corridors',
+      'Loose floorboards lifted during second-fix',
       'Trailing extension leads and tool flexes',
     ],
     correctAnswer: 3,

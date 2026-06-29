@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'efficacy-definition',
     question: 'What does lamp efficacy measure?',
     options: [
-      'RTD (Resistance Temperature Detector)',
-      'To prevent damage from the high test voltage',
-      'The body\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
+      'The colour temperature of the light in kelvin',
+      'The total light output of the lamp in lumens',
+      'How accurately the lamp renders colours (CRI)',
       'Lumens produced per watt of electrical power (lm/W)',
     ],
     correctIndex: 3,
@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'fluorescent-operation',
     question: 'How does a fluorescent lamp produce light?',
     options: [
-      'High personal spending coincides with reduced business income',
+      'A heated tungsten filament glows white hot',
       'UV radiation from mercury discharge excites phosphor coating',
-      'Minimum optical power required for acceptable BER',
-      'Each lamp gets full voltage and operates independently',
+      'A semiconductor junction emits light when current flows',
+      'An arc between two carbon electrodes radiates visible light',
     ],
     correctIndex: 1,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the main advantage of T5 over T8 fluorescent tubes?',
     options: [
-      'LED (with compatible driver)',
-      'DALI (Digital Addressable Lighting Interface)',
-      'High-pressure sodium or metal halide',
+      'Lower mercury content for easier disposal',
+      'No control gear or ballast required',
+      'Longer rated life than any LED product',
       'Higher efficacy and smaller diameter',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'Why do discharge lamps like metal halide require control gear?',
     options: [
       'To limit current and provide starting voltage',
-      'Higher efficacy and smaller diameter',
-      'High-pressure sodium or metal halide',
-      'Mercury content requiring specialist disposal',
+      'To convert the AC supply to direct current',
+      'To dim the lamp smoothly from full output',
+      'To filter the ultraviolet light they emit',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'Which lamp type would traditionally be used for high-bay industrial lighting at 10m+ mounting height?',
     options: [
-      'Mercury content requiring specialist disposal',
-      'To limit current and provide starting voltage',
+      'Compact fluorescent (CFL)',
+      'Tungsten halogen floodlight',
       'High-pressure sodium or metal halide',
-      'Higher efficacy and smaller diameter',
+      'T5 linear fluorescent',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What causes the delay in metal halide lamps reaching full light output?',
     options: [
-      'Both higher rating AND time delay allow downstream to operate first',
-      'Elimination or substitution with a less hazardous substance',
-      'Normal operation, foreseeable faults, and misuse',
+      'The driver gradually ramps up the supply voltage',
+      'The phosphor coating must warm before it fluoresces',
+      'A soft-start circuit limits inrush current at switch-on',
       'Time for metal halides to vaporise and reach operating temperature',
     ],
     correctAnswer: 3,
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which lamp type is most suitable for dimming in a commercial building?',
     options: [
-      '50,000-100,000 hours',
+      'High-pressure sodium',
       'LED (with compatible driver)',
-      'High-pressure sodium or metal halide',
-      'Lumen maintenance (Lx)',
+      'Metal halide',
+      'Low-pressure sodium',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary environmental concern with fluorescent lamp disposal?',
     options: [
-      'Higher efficacy and smaller diameter',
-      'To limit current and provide starting voltage',
+      'Lead content in the control gear',
+      'Glass that cannot be recycled',
       'Mercury content requiring specialist disposal',
-      'DALI (Digital Addressable Lighting Interface)',
+      'High embodied carbon in the phosphor',
     ],
     correctAnswer: 2,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: 'Which control protocol is most commonly specified for commercial LED dimming?',
     options: [
       'DALI (Digital Addressable Lighting Interface)',
-      'High-pressure sodium or metal halide',
-      'To limit current and provide starting voltage',
-      'Higher efficacy and smaller diameter',
+      'Trailing-edge mains dimming',
+      'Pulse-width modulation at the socket',
+      'Simple two-way switching',
     ],
     correctAnswer: 0,
     explanation:

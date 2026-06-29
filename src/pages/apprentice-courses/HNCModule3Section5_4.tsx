@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What creates the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'To identify achievable credits and evidence requirements early in design',
+      'A DC field current supplied to the rotor windings',
       'Three-phase currents in spatially displaced stator windings',
-      'The building\\\\\\\'s responsible person (employer, owner or occupier)',
-      'Creates opportunities and support networks',
+      'Permanent magnets mounted on the rotor surface',
+      'Brushes and a commutator switching the stator current',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why must the rotor of an induction motor run slower than synchronous speed?',
     options: [
-      'Using reclaimed and refurbished components where standards permit',
-      'Work completed, problems encountered, materials used, and time spent',
+      'To limit the starting current drawn from the supply',
+      'To keep the rotor temperature within its insulation class',
       'To allow relative motion between rotor and field, inducing rotor current',
-      'Tax relief on business equipment and vehicle purchases spread over time',
+      'To reduce the magnetising current drawn by the stator',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: 'At what point on the torque-speed curve is maximum torque developed?',
     options: [
       'At the pull-out point (typically 20-30% slip)',
-      'Detailed justification and assessment of equivalent safety',
-      'To level the tower on slightly uneven ground',
-      'Decreases UGR (better glare control)',
+      'At synchronous speed (zero slip)',
+      'At the instant of starting (100% slip)',
+      'At full-load running speed (3-5% slip)',
     ],
     correctAnswer: 0,
     explanation:
@@ -182,9 +182,9 @@ const quizQuestions = [
       'Why might a wound rotor motor be specified instead of squirrel cage for a large pump?',
     options: [
       'Reduced starting current and adjustable starting torque',
-      'Stairwells are key escape routes requiring continuous illumination',
-      'It is still valid and they can apply for a card',
-      'Minimum distance after a reflective event where loss can be measured',
+      'Lower purchase cost and simpler construction',
+      'Higher running efficiency at full load',
+      'Lower maintenance with no brushes or slip rings',
     ],
     correctAnswer: 0,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary advantage of using a VSD with an HVAC fan motor?',
     options: [
-      'Related to phase conductor size per Table 54.7 or calculation',
-      'Remove from service and arrange repair or replacement',
+      'It eliminates the need for overload protection',
+      'It improves the motor power factor to unity',
       'Energy savings through speed control matching actual demand',
-      'Clients increasingly ask for systems that integrate with BMS',
+      'It allows the motor to run above synchronous speed',
     ],
     correctAnswer: 2,
     explanation:

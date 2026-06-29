@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'pump-bep',
     question: 'What is the Best Efficiency Point (BEP) of a pump?',
     options: [
-      '8% plus Bank of England base rate',
+      'The point of maximum head at zero flow',
       'Optimal operating point for efficiency',
-      'To prevent damage and get accurate results',
-      'Within 40 milliseconds for 30mA types',
+      'The maximum flow the pump can deliver',
+      'The speed at which the pump first primes',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What type of pump is most commonly used for HVAC heating and chilled water systems?',
     options: [
-      'Sharing current between parallel branches',
+      'Gear (positive displacement)',
       'Centrifugal (end-suction or inline)',
-      'Before each use and regularly during use',
-      'Retest to verify the correction',
+      'Diaphragm dosing pump',
+      'Axial flow propeller pump',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: 'A pump manufacturer states NPSHr = 3.5m. What does this mean?',
     options: [
-      'You produce higher quality work with less perceived effort and greater satisfaction',
-      'To assist with the safe evacuation of people and carry out fire prevention duties',
-      'Evacuation time, route effectiveness, alarm audibility, assembly procedures',
+      'The pump develops a maximum head of 3.5m at shutoff',
+      'The pump must be installed at least 3.5m above the liquid level',
+      'The suction pipe should be 3.5m long for correct priming',
       'The pump requires minimum 3.5m pressure at suction to avoid cavitation',
     ],
     correctAnswer: 3,
@@ -197,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'At what point on the pump curve is vibration typically lowest?',
     options: [
-      '0.3 L/s per m squared floor area',
+      'At shutoff head with zero flow',
       'At the Best Efficiency Point (BEP)',
-      'Pull, Aim, Squeeze, Sweep',
-      'Ionisation smoke detector',
+      'At maximum flow (runout)',
+      'During start-up before full speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,10 +210,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is specific speed (Ns) used to determine?',
     options: [
-      'To prevent cavitation damage and noise',
-      'At the Best Efficiency Point (BEP)',
+      'The motor speed needed to prime the pump',
+      'The maximum safe operating temperature of the pump',
       'The type of impeller design suited to the duty',
-      'Flow reduces to 80%, head to 64%, power to 51%',
+      'The electrical supply frequency for the drive',
     ],
     correctAnswer: 2,
     explanation:
@@ -238,9 +238,9 @@ const quizQuestions = [
     question: 'Why is it important to maintain NPSHa > NPSHr + margin in pump installations?',
     options: [
       'To prevent cavitation damage and noise',
-      'The type of impeller design suited to the duty',
-      'Flow reduces to 80%, head to 64%, power to 51%',
-      'At the Best Efficiency Point (BEP)',
+      'To increase the total head the pump develops',
+      'To allow the pump to run at higher speed',
+      'To reduce the motor starting current',
     ],
     correctAnswer: 0,
     explanation:

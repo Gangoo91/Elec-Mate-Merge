@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     id: 'ppe-last-resort',
     question: 'Where does PPE sit in the hierarchy of controls?',
     options: [
-      'It is the first control measure an employer should consider',
-      'It should be used alongside elimination and substitution as equal measures',
       'It is the last resort — used only when risks cannot be adequately controlled by other means',
+      'It should be used alongside elimination and substitution as equal measures',
+      'It is the first control measure an employer should consider',
       'It replaces the need for engineering controls on most construction sites',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'PPE is always the last resort in the hierarchy of controls. Employers must first consider elimination, substitution, engineering controls, and administrative controls before relying on PPE. It should only be used when residual risk remains after all higher-level controls have been applied.',
   },
@@ -52,11 +52,11 @@ const quickCheckQuestions = [
       'Why is face-fit testing essential for tight-fitting respiratory protective equipment?',
     options: [
       'It is only required for comfort — it does not affect the level of protection',
-      "It ensures the facepiece forms an adequate seal against the wearer's face so that contaminated air cannot leak in around the edges",
       'It is a legal requirement only when working with asbestos, not for other hazards',
       'It confirms that the filter cartridge is the correct type for the hazard',
+      "It ensures the facepiece forms an adequate seal against the wearer's face so that contaminated air cannot leak in around the edges",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Face-fit testing checks that a tight-fitting facepiece (disposable mask or reusable respirator) makes an adequate seal against the individual wearer's face. Without a proper seal, contaminated air can leak in around the edges, dramatically reducing the level of protection. Face-fit testing is required under COSHH and the Control of Asbestos Regulations for any tight-fitting RPE.",
   },
@@ -91,20 +91,20 @@ const quizQuestions = [
     question:
       'Under the PPE at Work Regulations 1992 (as amended 2022), when should PPE be provided?',
     options: [
-      'As the first line of defence against all workplace hazards',
-      'Only when employees specifically request it',
       'When risks cannot be adequately controlled by other means',
+      'Only when employees specifically request it',
+      'As the first line of defence against all workplace hazards',
       'Only for high-risk activities such as demolition and asbestos removal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'PPE should be provided when risks cannot be adequately controlled by other, more effective means — such as elimination, substitution, engineering controls, or safe systems of work. PPE is always the last resort in the hierarchy of controls.',
   },
   {
     id: 2,
     question: 'Which European standard applies to industrial safety helmets (hard hats)?',
-    options: ['EN 166', 'EN 388', 'EN 397', 'EN ISO 20345'],
-    correctAnswer: 2,
+    options: ['EN 166', 'EN 397', 'EN 388', 'EN ISO 20345'],
+    correctAnswer: 1,
     explanation:
       'EN 397 is the European standard for industrial safety helmets (hard hats). It specifies requirements for shock absorption, penetration resistance, and flame resistance. EN 166 covers eye protection, EN 388 covers protective gloves, and EN ISO 20345 covers safety footwear.',
   },
@@ -113,11 +113,11 @@ const quizQuestions = [
     question: 'What does the SNR rating on hearing protection indicate?',
     options: [
       'The safety number rating — an overall quality score',
-      'The Single Number Rating — the overall noise reduction in decibels',
       'The standardised noise resistance — the maximum noise level the protector can withstand',
+      'The Single Number Rating — the overall noise reduction in decibels',
       "The supplier's national registration number",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SNR stands for Single Number Rating. It indicates the overall noise reduction (attenuation) provided by the hearing protector in decibels. For example, hearing protection with an SNR of 30 dB will reduce the noise level reaching the ear by approximately 30 dB. In practice, the real-world attenuation is often lower, so a reduction factor is commonly applied.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     options: [
       '75 dB(A)',
       '80 dB(A) — the lower exposure action value',
-      '85 dB(A) — the upper exposure action value',
       '87 dB(A) — the exposure limit value',
+      '85 dB(A) — the upper exposure action value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'At the upper exposure action value of 85 dB(A), the employer must ensure that hearing protection is worn in designated hearing protection zones. At 80 dB(A) (the lower action value), hearing protection must be made available to workers who request it. The exposure limit value of 87 dB(A) must not be exceeded (taking hearing protection into account).',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'What do the EN 388 markings on protective gloves indicate?',
     options: [
-      "The glove's resistance to heat and flame",
-      "The glove's chemical permeation resistance",
       "The glove's mechanical performance — abrasion, cut, tear, and puncture resistance",
+      "The glove's chemical permeation resistance",
+      "The glove's resistance to heat and flame",
       "The glove's electrical insulation rating",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "EN 388 markings indicate the glove's mechanical performance across four key hazards: abrasion resistance, blade cut resistance, tear resistance, and puncture resistance. Each is rated on a scale (typically 1-4 or 1-5), with higher numbers indicating better performance. Some gloves also include ratings for impact protection (EN 388:2016 added a letter P for this).",
   },
@@ -182,10 +182,10 @@ const quizQuestions = [
     options: [
       'Training is only required for Category III (complex) PPE',
       'A written instruction sheet is sufficient — no practical training is needed',
-      'The employer must provide information, instruction, and training on the correct use, maintenance, and storage of all PPE provided',
       'Training is only required when an employee is under 18 years of age',
+      'The employer must provide information, instruction, and training on the correct use, maintenance, and storage of all PPE provided',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under the PPE at Work Regulations 1992 (as amended 2022), the employer must provide adequate information, instruction, and training to ensure that each employee who is provided with PPE knows the risks the PPE is designed to protect against, how to use it correctly, how to maintain and store it, and the limitations of the PPE. This applies to all categories of PPE, not just complex equipment.',
   },

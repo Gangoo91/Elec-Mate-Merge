@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Section 712 of BS 7671:2018+A4:2026 — what does it say about stand-alone (off-grid) PV?',
     options: [
-      'Fully covered',
-      'Reg 712.1 NOTE: "Requirements for PV power supply systems which are intended for stand-alone operation are under consideration." Section 712 covers grid-connected installs (parallel with grid, switched alternative, or supplying an installation not connected to the grid) but standalone PV systems are not yet fully regulated by Section 712 — off-grid design draws on Section 551 (generating sets), Section 414 (SELV/PELV), manufacturer specs, and the IET CoP for Stand-alone PV Systems',
-      'Always covered',
-      'Section 712 prohibits off-grid',
+      'Section 712 fully and explicitly covers stand-alone PV power supply systems in detail',
+      'Reg 712.1 NOTE: stand-alone systems are "under consideration" — design draws on Section 551 and the IET CoP',
+      'Section 712 covers stand-alone PV but defers grid-connected systems to Section 551',
+      'Section 712 prohibits off-grid PV altogether, so stand-alone installs are non-compliant',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Off-grid PV install — what does "autonomy days" mean and how does it drive battery sizing?',
     options: [
-      'Years',
-      'The number of days the battery storage must support the load WITHOUT any solar input. Off-grid sizing: pick autonomy days based on the worst-case sun period for the location (UK 3-5 days typical for general loads; up to 7 days for critical loads), then size the battery to (daily load × autonomy days × 1/DoD) where DoD is the depth-of-discharge limit',
-      'Customer\'s budget',
-      'Doesn\'t apply',
+      'The number of years the battery is warranted to last before it must be replaced',
+      'The days the battery must carry the load with no solar input; battery = daily load × days ÷ DoD',
+      'The customer\'s available budget expressed as a number of days of payback time',
+      'A grid-tied concept that does not apply to off-grid PV installations at all',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'For UK off-grid PV sizing, what does "peak sun hours" or "sun-hour equivalent" mean?',
     options: [
-      'Daylight hours',
-      'The daily equivalent of hours at standard solar irradiance (1,000 W/m²). UK varies geographically and seasonally: winter (Dec-Jan) ~0.5-1.5 PSH/day at UK latitudes; summer (Jun-Jul) ~4-6 PSH/day; annual average 2.5-3.0 PSH/day in southern England, lower further north. PV array sizing for off-grid uses the WORST-CASE month (typically December) to ensure adequate generation even in the lowest-sun period',
-      'Wattage of inverter',
-      'Customer\'s preference',
+      'The total number of daylight hours from sunrise to sunset at the site',
+      'Daily equivalent hours at 1,000 W/m²; off-grid sizing uses the worst-case month (UK December)',
+      'The rated wattage of the inverter divided by the array nameplate capacity',
+      'A figure the customer chooses based on how sunny they feel the site is',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Typical UK off-grid PV-to-battery sizing ratio — what range, and why?',
     options: [
-      '1:1',
-      'Typically 1 kWp PV per 2-4 kWh battery. The ratio depends on autonomy days and the location\'s winter PSH. UK off-grid: a 5 kWp array typically pairs with 15-25 kWh of battery (autonomy 3-5 days, daily load ~5 kWh). Lower ratios (1 kWp / 4+ kWh) extend autonomy for critical loads; higher ratios (1 kWp / 1-2 kWh) suit installs with longer summer runs and minimal winter operation',
-      '10:1 (PV:battery)',
-      'No relationship',
+      '1 kWp PV per 1 kWh battery, matched one-to-one regardless of location',
+      'Around 1 kWp PV per 2-4 kWh battery, set by autonomy days and the site\'s winter PSH',
+      'About 10 kWp PV per 1 kWh battery, since the array carries nearly all the autonomy',
+      'There is no relationship; PV and battery are sized completely independently',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'How does BS 7671 Section 551 (generating sets) apply to an off-grid PV install?',
     options: [
-      'Doesn\'t apply',
-      'Section 551 applies fully. Reg 551.1.1: generating sets explicitly include (d) photovoltaic cells and (e) batteries. Reg 551.2.3: off-grid generating sets (not connected to grid, or switched alternative) must have capacity / operating characteristics ensuring no danger / damage on load connection / disconnection due to V or frequency deviation; means provided to AUTOMATICALLY DISCONNECT parts on V / freq excursion. Plus Section 551 isolation, RCD provisions, and overcurrent protection per Reg 551.5',
-      'Only Section 712',
-      'No regs apply',
+      'It does not apply; Section 551 covers diesel generators only, never PV or batteries',
+      'It applies fully — Reg 551.1.1 lists PV cells and batteries; Reg 551.2.3 requires V/freq auto-disconnection',
+      'Only Section 712 applies to off-grid PV; Section 551 is reserved for grid-tied systems',
+      'No BS 7671 regulations apply to an off-grid install, as it has no public-grid connection',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'When does the SELV / PELV envelope (Reg 712.414.1.1) apply to a UK off-grid PV install?',
     options: [
-      'Always',
-      'Only when U_oc_max ≤ 120V DC AND nominal V ≤ 30V DC (for basic protection per Reg 712.414.4.5). Small off-grid installs (e.g. 12V / 24V / 48V battery systems on small PV arrays — boats, caravans, garden sheds, small remote cabins) typically fit the SELV / PELV envelope. Larger off-grid (rural homes, smallholdings) exceed 120V DC and operate as Class II per Reg 712.412.101 — same as grid-tied PV',
-      'Never',
-      'Only commercial',
+      'Always — every PV array DC side sits within the SELV / PELV envelope by definition',
+      'Only at low voltage (U_oc_max ≤ 120 V DC) — small 12/24/48 V installs; larger arrays use Class II',
+      'Never — the SELV / PELV envelope has no application to any photovoltaic installation',
+      'Only on commercial installs; domestic off-grid systems are exempt from the envelope',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'For an off-grid PV install, why does anti-islanding protection (the inverter\'s grid-tie trip) NOT apply?',
     options: [
-      'Customer doesn\'t want it',
-      'Anti-islanding is required for GRID-TIED inverters (the inverter must disconnect from the grid on grid loss to prevent backfeed). An off-grid inverter is the ONLY source — it can\'t be back-feeding a grid that doesn\'t exist. The inverter operates in a different mode (standalone / off-grid mode) without the EREC G98 / G99 anti-islanding requirement. The inverter must instead maintain V / freq within the envelope per Reg 551.2.3 to protect the connected loads',
-      'No standards',
-      'Magic',
+      'Because the customer simply chooses to switch the anti-islanding feature off',
+      'Anti-islanding prevents backfeed to a downed grid; with no grid to backfeed, it does not apply',
+      'Because no published standards cover off-grid inverter protection in any form',
+      'Off-grid inverters have no V/freq protection of any kind, so islanding cannot occur',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'IET Code of Practice for Stand-alone Photovoltaic Systems — what role does it play alongside BS 7671 Section 712 and Section 551 for off-grid PV?',
     options: [
-      'Replaces BS 7671',
-      'Complementary operational guidance. BS 7671 Section 712 covers the PV-electrical-equipment aspects but Reg 712.1 NOTE explicitly defers stand-alone PV power supply systems to "under consideration". The IET CoP for Stand-alone Photovoltaic Systems operationalises the design: PSH-based sizing methodology; autonomy days + DoD discipline; off-grid inverter selection; generator integration; SELV/PELV envelope application; commissioning workflow; customer information pack. Cross-references Section 551 (generating sets) + Section 414 (SELV/PELV) + Section 712 where applicable. Cert evidence bundle for MCS-certified off-grid installs references the IET CoP as the design methodology authority',
-      'Only for grid-tied',
-      'Optional reading',
+      'It replaces BS 7671 entirely as the legal standard for off-grid installations',
+      'It is complementary guidance, operationalising sizing, inverter selection and commissioning for off-grid',
+      'It applies only to grid-tied PV and has nothing to say about stand-alone systems',
+      'It is optional background reading with no role in the cert evidence bundle',
     ],
     correctIndex: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A UK off-grid customer (rural smallholding) has daily electricity load ~6 kWh. Worst-case design month December (PSH ~1.0). Autonomy 4 days. DoD limit 80%. Calculate PV kWp and battery kWh.',
     options: [
-      'Both 1 kWh',
-      'PV: daily load ÷ (PSH × system efficiency) = 6 ÷ (1 × 0.75) = 8 kWp December design point (larger array than grid-tied would size). Battery: daily load × autonomy ÷ DoD = 6 × 4 ÷ 0.8 = 30 kWh nameplate. Realistic spec: 8 kWp PV + 30 kWh BESS (or split into 2-3 battery units of 10-15 kWh each); generator backup for extended outages or critical winter periods recommended',
-      'Too much',
-      'Customer should reduce load',
+      'PV ~3 kWp, battery ~6 kWh — sized on annual-average PSH like a grid-tied system',
+      'PV ~8 kWp, battery ~30 kWh — sized on the December worst-case, generator backup advised',
+      'PV ~8 kWp, battery ~6 kWh — December array but only one day of autonomy',
+      'PV ~30 kWp, battery ~8 kWh — the array carries the autonomy, not the battery',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'Customer asks "can my off-grid PV install export to the grid as a backup?" Their property has no grid connection at all.',
     options: [
-      'Yes — connect when possible',
-      'No — there is no grid connection. Off-grid installs are NOT grid-tied. The installation operates as a standalone system per Reg 551.1.1 / 551.2.3; the inverter operates in off-grid mode, generating V and frequency for the property loads. If the customer wants to add grid backup (rare in UK, more common in remote installs), they\'d need to apply for a grid connection through the local DNO — a separate, often costly project. The current install operates as off-grid only',
-      'Sometimes',
-      'Need a transformer',
+      'Yes — the inverter can back-feed the grid whenever a connection becomes available',
+      'No — with no grid connection the install is standalone; adding grid export is a separate, costly DNO project',
+      'Yes — but only through a step-up transformer at the property boundary',
+      'Sometimes — export is possible on sunny days even without a metered connection',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'Customer\'s off-grid site has December PSH ~0.7 and daily load 4 kWh. PV sized at 6 kWp (designed for December). Annual generation modelled at 6,500 kWh (well above the 4 kWh × 365 = 1,460 kWh annual load). Is this oversized?',
     options: [
-      'Yes — way too big',
-      'No — off-grid sizing inherently oversizes for most of the year. Summer surplus (kWh well above daily load) charges the battery and goes unused once battery is full. The "wasted" summer surplus is the cost of December design adequacy. Modern off-grid installs use diverter loads (electric water heating, EV charging if applicable) to capture summer surplus productively. Generator backup may still be needed for extended winter dark periods even with the oversized array',
-      'Customer wasting money',
-      'Sell the surplus',
+      'Yes — the array is far too big and should be halved to match annual load',
+      'Yes — it wastes the customer\'s money to generate so much above annual demand',
+      'No — the oversize is intentional for the December design point; summer surplus is diverted',
+      'No — but only because the surplus can be sold back to the grid for income',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Off-grid PV oversize is INTENTIONAL — the December design point requires a large array; the rest of the year has surplus. Three approaches to manage the surplus: (1) accept it — the array is oversized for most of the year, battery charges quickly, modules sit idle once battery full; (2) divert summer surplus to controllable loads (water heating immersion, EV charging, UFH) capturing economic value; (3) accept summer surplus as overproduction insurance for early-cloud-weather days. Annual generation 6,500 kWh × 25-year life × marginal $ per kWh value = significant total value even with much "wasted" summer kWh.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Off-grid PV install — Reg 551.2.3 requires automatic disconnection on V / freq deviation. How does this practically work?',
     options: [
-      'Customer manually disconnects',
-      'The off-grid inverter monitors its own AC output: undervoltage (battery depleting, load too high) triggers a low-V trip; overvoltage (regulation fault) triggers a high-V trip; over/underfrequency (similarly) triggers a trip. The trip disconnects the inverter from the load circuits; alarm / status indication tells the customer / monitoring system. Modern off-grid inverters (Victron Multiplus / Quattro, Studer Xtender, OutBack Radian) have configurable trip thresholds and reporting via their app / display',
-      'No protection',
-      'Manual reset only',
+      'The customer manually disconnects the inverter when they notice a fault on the display',
+      'There is no automatic protection; the off-grid inverter relies on downstream MCBs only',
+      'The inverter monitors its output and trips off-load on V/freq excursion, with auto-restart on recovery',
+      'Protection exists but requires a manual reset every time before it can re-engage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Off-grid inverter V / freq protection per Reg 551.2.3: the inverter monitors its output; if V or frequency falls outside the operating envelope (typically 5-10% of nominal V; 1-2 Hz of nominal frequency), the inverter trips off-load. Causes: deep battery discharge (low-V trip; protects battery from damage and prevents reverse-current damage to loads); generator startup transient (transient over-V); overload (load draws beyond inverter capability, V sags). Modern off-grid inverters (Victron, Studer, OutBack, Sigenergy) have configurable thresholds, alarm reporting, and automatic restart on V / freq recovery. The cert evidence bundle records the trip thresholds.',
   },
@@ -196,26 +196,26 @@ const quizQuestions = [
     question:
       'Small off-grid PV install for a garden shed: 200W array, 12V battery, 12V DC + 230V AC inverter. Which BS 7671 framework applies?',
     options: [
-      'Section 712 only',
-      'Combination: the DC battery side typically fits SELV / PELV envelope (Reg 712.414 + 414 series; V_oc_max ≤ 120V DC; nominal ≤ 30V → no basic protection per 712.414.4.5; if nominal &gt; 30V DC, basic protection required). The AC inverter output is 230V — standard BS 7671 Class I or II applies. Plus Section 551 (generating sets, including PV cells and batteries) covers the overall off-grid arrangement. The IET CoP for Stand-alone PV Systems is the operational source',
-      'Not regulated',
-      'Customer\'s discretion',
+      'Section 712 alone covers everything in a stand-alone install at any voltage',
+      'A combination: SELV/PELV on the 12 V DC side, Class I/II on the 230 V AC side, Section 551 overall',
+      'Stand-alone PV is not regulated by BS 7671 at all once it is below 50 V AC',
+      'Only Section 551 applies; the DC side needs no protective-measure consideration',
     ],
     correctAnswer: 1,
     explanation:
-      'Small off-grid installs (boats, caravans, garden sheds, small cabins) typically operate at 12V / 24V / 48V on the DC side — within the SELV / PELV envelope per Reg 712.414.1.1 (U_oc_max ≤ 120V DC). Basic protection required per Reg 712.414.4.5 only where nominal V &gt; 30V DC (so 12V / 24V exempt; 48V requires basic protection). The AC inverter output is standard 230V — applies Class I or II protective measures per BS 7671. Section 551 governs the overall arrangement. The IET CoP for Stand-alone Photovoltaic Systems is the operational reference for design / install. The cert evidence bundle records the chosen envelope.',
+      'Small off-grid installs (boats, caravans, garden sheds, small cabins) typically operate at 12V / 24V / 48V on the DC side — within the SELV / PELV envelope (upper limit of Band I, 50 V AC / 120 V DC, Reg 414.11). For SELV in dry conditions, basic protection (insulation/barriers) is not required below 60 V DC ripple-free per Reg 414.4.5, so 12V / 24V / 48V DC are within that exemption. The AC inverter output is standard 230V — applies Class I or II protective measures per BS 7671. Section 551 governs the overall arrangement. The IET CoP for Stand-alone Photovoltaic Systems is the operational reference for design / install. The cert evidence bundle records the chosen envelope.',
   },
   {
     id: 6,
     question:
       'Customer wants to operate their off-grid PV install with their existing EV. Considerations?',
     options: [
-      'Just plug in',
-      'Off-grid EV charging is feasible but constrained: EV chargers typically require 6 A (1.4 kW) minimum continuous current — the off-grid inverter must be sized to supply this plus other concurrent loads. Standard 5 kVA off-grid inverter (~20A AC continuous) supports 6 A EV + ~12 A other loads simultaneously. For larger EVs needing 16-32 A charging (3.7-7.4 kW), the inverter must be sized accordingly. Battery state-of-charge becomes the binding constraint — depleting battery on EV charging triggers low-V trip',
-      'Impossible',
-      'Customer can\'t have EV',
+      'Just plug in — an EV charges the same way off-grid as it does on the grid',
+      'Impossible — EVs cannot be charged from any off-grid PV and battery system',
+      'Only with a dedicated second battery bank reserved solely for the EV charger',
+      'Feasible but constrained: inverter must cover EV plus other loads, and battery SoC is the binding limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Off-grid EV charging is technically feasible but practically constrained by inverter and battery sizing. A 5 kVA off-grid inverter can support 6-13 A EV charging plus normal household load. Faster EV charging (16-32 A) requires larger inverter (10-22 kVA) and larger battery to absorb the load without depleting. Smart energy management (Sigenergy SigenStor, Victron with Cerbo GX) can throttle EV charging based on real-time PV surplus and battery state. The cert evidence bundle records the EV charging mode and the inverter sizing rationale.',
   },
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'An off-grid site has battery undervoltage trip events at year 2 — battery depletes more quickly than year 1. Diagnostic approach?',
     options: [
-      'Replace battery',
-      'Battery degradation is the most likely cause but verify systematically: (a) check battery state-of-health (modern BMS reports SoH; typical Li-ion degrades ~2-3% per year); (b) review load profile (has consumption increased? new appliances?); (c) check PV array (any module damage / cable degradation / shading not present at year 1?); (d) check inverter (any efficiency degradation, fault codes); (e) seasonal effect (did the trip events start in winter, suggesting Dec PSH adequacy issue?). Replace battery only after confirming degradation as root cause',
-      'Customer\'s fault',
-      'Skip the diagnostic',
+      'Verify systematically first: check BMS state-of-health, load profile, PV array, inverter and season',
+      'Replace the battery immediately, since faster depletion always means a failed cell',
+      'Raise the inverter low-voltage trip threshold so the events simply stop being logged',
+      'Add a second PV array straight away without diagnosing the cause of the depletion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Off-grid battery trip events at year 2 are not necessarily battery failure. Systematic diagnostic: (1) SoH via BMS (Li-ion typical 2-3% per year, lead-acid 5-10% per year); (2) load profile changes (new appliances, occupancy changes); (3) PV array degradation (cable, module damage, shading); (4) inverter efficiency (fault codes, telemetry); (5) seasonal effect. Replace battery only after confirming. Premature battery replacement on diagnostic uncertainty is expensive (£5,000-£15,000 for typical 10-30 kWh UK off-grid battery) and may not resolve the issue. The cert evidence bundle records the diagnostic and the chosen rectification.',
   },
@@ -238,10 +238,10 @@ const quizQuestions = [
     question:
       'IET Code of Practice for Stand-alone Photovoltaic Systems — how does it relate to BS 7671 Section 712 for off-grid PV?',
     options: [
-      'Contradictory',
-      'Complementary. BS 7671 Section 712 covers PV electrical installations in scope (a)-(c) but explicitly defers stand-alone "to be considered". The IET CoP for Stand-alone Photovoltaic Systems is the operational guidance: sizing methodology (autonomy days, PSH, battery sizing); generator integration; protective measures (SELV / PELV envelope, Class II); off-grid commissioning workflow; customer information pack. MCS MIS 3002 design pack for off-grid installs typically references the IET CoP as the primary methodology source',
-      'No relationship',
-      'Same document',
+      'They contradict each other, so the installer must choose just one to follow',
+      'They are complementary — Section 712 sets the framework, the IET CoP the stand-alone methodology',
+      'They have no relationship; the IET CoP applies only to grid-tied PV installs',
+      'They are in fact the same document published under two different titles',
     ],
     correctAnswer: 1,
     explanation:

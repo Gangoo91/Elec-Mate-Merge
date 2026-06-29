@@ -16,9 +16,9 @@ const quickCheckQuestions = [
   },
   {
     id: 'evcharging-m3s4-check2',
-    question: 'What is the maximum fill factor for cables in conduit?',
-    options: ['20%', '40%', '60%', '80%'],
-    correctIndex: 1,
+    question: 'What is the maximum recommended space (fill) factor for cables in conduit?',
+    options: ['40%', '20%', '60%', '80%'],
+    correctIndex: 0,
     explanation:
       'Maximum 40% fill factor ensures cables can be pulled through without damage and allows for heat dissipation. Higher fill factors make installation difficult and cause thermal issues.',
   },
@@ -27,11 +27,11 @@ const quickCheckQuestions = [
     question: 'What is the minimum bend radius for SWA cable?',
     options: [
       '3 × cable diameter',
-      '6 × cable diameter',
       '8 × cable diameter',
+      '6 × cable diameter',
       '12 × cable diameter',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'SWA cable requires a minimum 6 × diameter bend radius during installation (8 × when fixed) to prevent damage to the steel wire armour and internal conductors.',
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     question:
       "You're installing a 7kW charger 25m from the consumer unit via an external wall and underground to a garage. What routing method should you use?",
     options: [
-      'PVC singles in conduit throughout',
-      'SWA cable clipped to wall, ducted underground, gland entry to garage',
-      'Extension lead from house socket',
-      'XLPE cable buried directly in soil',
+      'PVC singles drawn into surface conduit throughout the route',
+      'A long flexible lead plugged into an existing house socket',
+      'XLPE single-core cable buried directly in the soil unprotected',
+      'SWA cable clipped to the wall, ducted underground, gland entry to garage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWA provides mechanical protection for external runs and underground burial. Proper gland entries maintain IP ratings. Ducting underground allows future cable changes. This approach meets BS 7671 for protection, burial depth, and weatherproofing.',
   },

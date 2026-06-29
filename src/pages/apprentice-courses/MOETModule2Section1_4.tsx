@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'calibration',
     question: 'How often should portable electrical test instruments typically be calibrated?',
     options: [
-      'The opposition to current flow',
-      'To prevent electric shock',
-      'Daylight harvesting sensors',
+      'Only once, when first purchased',
+      'Every five years',
+      'Every month',
       'Annually (every 12 months)',
     ],
     correctIndex: 3,
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'A multimeter has a resolution of 0.1 V on its 600 V range. This means:',
     options: [
-      'By pressing the test button to see that it trips',
+      'The reading is guaranteed accurate to within 0.1 V',
       'The smallest change in voltage it can detect and display is 0.1 V',
-      'They cause signal reflections and communication errors',
-      'Hands-free device control for mobility-limited users',
+      'The instrument can only measure voltages above 0.1 V',
+      'The measurement uncertainty is fixed at 0.1 V',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Calibration traceability means that:',
     options: [
-      'Monitors the E-stop circuit, provides force-guided contacts, and prevents restart if a fault is detected',
-      'Recovery over evenings and weekends — the daily and weekly recovery periods between work shifts',
+      'The instrument records every measurement it has ever taken',
+      'The calibration can be tracked to the technician who performed it only',
       'Each calibration is traceable through an unbroken chain of comparisons to a national standard',
-      'That the SWL plate, warning labels, and control markings are legible and undamaged',
+      'The instrument can be located on site at any time via a tracking tag',
     ],
     correctAnswer: 2,
     explanation:

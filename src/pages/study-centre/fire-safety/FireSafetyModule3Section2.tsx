@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between conventional and addressable fire detection systems?',
     options: [
-      'Conventional systems use wireless detectors whilst addressable systems use wired detectors',
       'Addressable systems identify the exact individual detector in alarm, conventional systems identify the zone only',
+      'Conventional systems use wireless detectors whilst addressable systems use wired detectors',
       'Conventional systems are more expensive than addressable systems',
       'Addressable systems can only be used in domestic premises',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The fundamental difference is in device identification. In a conventional system, when a detector activates, the control panel can only identify which zone (group of detectors on a shared circuit) is in alarm — a fire warden must then physically search the zone to locate the fire. In an addressable system, every detector has a unique address, so the panel displays the exact device in alarm, enabling much faster response and pinpointing the fire location immediately.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'In a conventional fire detection system, what level of location information does the control panel provide when a detector activates?',
     options: [
-      'The exact room and detector that has activated',
       'The zone in which the activated detector is located',
+      'The exact room and detector that has activated',
       'The floor of the building only',
       'No location information — just that a fire has been detected somewhere',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Conventional fire detection systems organise detectors into zones. When any detector on a zone circuit activates, the control panel identifies that zone — but cannot distinguish which individual detector within the zone has triggered. Zone plans displayed near the panel help fire wardens identify the physical area to investigate. This zone-only identification is a key limitation compared to addressable systems.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does BS 5839 Part 1 Category P1 provide?',
     options: [
-      'Detection in escape routes only for life safety',
-      'Full automatic fire detection throughout all areas for property protection',
-      'Manual call points only with no automatic detection',
-      'Detection only in rooms that open onto escape routes',
+      'Automatic detection in escape routes only, for life safety',
+      'Manual call points only, with no automatic fire detection',
+      'Automatic detection only in rooms that open onto escape routes',
+      'Full automatic detection throughout all areas, for property protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Category P1 provides full automatic fire detection throughout all areas of the building for the purpose of property protection. The 'P' categories focus on protecting the building and its contents by detecting fires as early as possible, regardless of whether the area is occupied. P1 requires detection in all areas including voids. P2, by contrast, covers only specific high-risk areas identified in the fire risk assessment. Property protection categories may be specified by insurers to minimise damage and business interruption.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'How frequently must fire alarm systems be tested under BS 5839 Part 1?',
     options: [
-      'Daily — all detectors tested each day',
       'Weekly — a different manual call point each week, with quarterly and annual detector tests',
+      'Daily — all detectors tested each day',
       'Monthly — all call points tested once per month',
       'Annually — a single comprehensive test once per year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5839 Part 1 Section 6 establishes a structured testing and maintenance regime: weekly alarm tests using a different manual call point each week, monthly visual inspections of all devices, quarterly functional testing of 25% of all detectors (ensuring all are tested within a year), and a full annual test and inspection of the entire system. Records of all tests must be maintained in a fire alarm log book.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary advantage of an aspirating smoke detection system (VESDA)?',
     options: [
-      'It is the cheapest detection method available',
-      'It detects smoke at extremely low concentrations — far earlier than conventional point detectors',
-      'It does not require any cabling or power supply',
-      'It can extinguish fires automatically',
+      'It is the cheapest fire detection method available to install',
+      'It needs no cabling or external power supply to operate',
+      'It detects smoke at very low concentrations, far earlier than point detectors',
+      'It can extinguish a developing fire automatically without intervention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'VESDA (Very Early Smoke Detection Apparatus) aspirating systems continuously draw air samples through a pipe network into a highly sensitive laser detection chamber. They can detect smoke at concentrations far below the threshold of conventional point detectors, providing the earliest possible warning of a developing fire. This very early detection is critical in environments such as data centres, server rooms, heritage buildings, and clean rooms where even a small fire can cause catastrophic losses.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'What is the key advantage of analogue-addressable detection over standard addressable detection?',
     options: [
-      'Analogue-addressable systems are cheaper to install',
-      'Each detector continuously reports analogue values, allowing the panel to use algorithms for threshold decisions, drift compensation, and pre-alarm warnings',
-      'Analogue-addressable systems do not require a control panel',
-      'Analogue-addressable detectors only work with heat detection',
+      'Analogue-addressable systems are significantly cheaper to install',
+      'Analogue-addressable systems operate without any control panel',
+      'Analogue-addressable detectors work only with heat detection sensors',
+      'Each detector reports analogue values, enabling drift compensation and pre-alarm warnings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In an analogue-addressable system, each detector continuously reports its analogue sensing value (smoke density, temperature) to the control panel, rather than simply reporting an on/off alarm state. The panel uses sophisticated algorithms to determine alarm thresholds, provide pre-alarm warnings, compensate for detector drift (contamination build-up over time), and adjust sensitivity based on time of day. This dramatically reduces false alarms and provides far better system management than standard addressable systems.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What type of cable is required for fire alarm system wiring under BS 5839 Part 1?',
     options: [
-      'Standard PVC twin and earth cable',
-      'Fire-resistant cable complying with BS 5839, such as mineral insulated or fire-retardant rated cable',
-      'Any cable rated above 6mm\u00B2 cross-sectional area',
-      'Armoured cable with no specific fire rating',
+      'Fire-resistant cable to BS 5839, such as mineral insulated or fire-rated cable',
+      'Standard PVC twin and earth cable used for general wiring',
+      'Any cable rated above 6mm\u00B2 cross-sectional area, regardless of type',
+      'Steel-wire armoured cable with no specific fire-resistance rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5839 Part 1 requires that fire alarm cabling must maintain circuit integrity during a fire for a specified period to ensure the system continues to function when it is needed most. This means fire-resistant cables must be used — such as mineral insulated copper cable (MICC), or cables meeting the enhanced fire resistance requirements (e.g. BS 8434-2 Category 2 or equivalent). Standard PVC cables would fail early in a fire, potentially disabling the alarm system before evacuation is complete.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "During commissioning of a fire alarm system, what is 'cause-and-effect' testing?",
     options: [
-      'Testing whether the alarm is loud enough to wake sleeping occupants',
-      'Verifying that each input (detector activation, call point operation) produces the correct programmed output (sounder activation, door release, plant shutdown, fire service signal)',
-      'Checking that the backup batteries last for 24 hours',
-      'Measuring the distance between detectors to confirm correct spacing',
+      'Testing whether the alarm is loud enough to wake sleeping occupants at night',
+      'Checking that the standby backup batteries can sustain the system for 24 hours',
+      'Verifying that each input produces the correct programmed output across the system',
+      'Measuring the distance between adjacent detectors to confirm correct spacing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Cause-and-effect testing is a critical part of commissioning that verifies the system's programmed responses. For every possible input (each detector, each call point, each zone), the commissioning engineer confirms that the correct outputs are produced: the right sounders activate, fire doors release, ventilation systems shut down, lifts return to ground floor, fire shutters close, the monitoring centre receives the correct signal, and any other programmed actions occur. This ensures the system will respond correctly in a real fire scenario. The results are documented in the cause-and-effect matrix.",
   },

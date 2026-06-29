@@ -57,44 +57,44 @@ const quizQuestions = [
     id: 1,
     question: 'What is the function of a ferrule?',
     options: [
-      'To protect yourself and ensure consistent team understanding',
-      'Prevent strand separation in flexible conductors',
-      'Thermal imaging camera or IR thermometer',
-      'No harmful effects during normal operation including switching',
+      'To identify the cable core by colour',
+      'To prevent strand separation in flexible conductors',
+      'To provide environmental sealing at a cable entry',
+      'To increase the current rating of the conductor',
     ],
     correctAnswer: 1,
     explanation:
-      'Ferrules prevent fine strands from spreading when inserted into terminals, ensuring reliable connection.',
+      'Ferrules prevent fine strands from spreading when inserted into terminals, ensuring a reliable connection.',
   },
   {
     id: 2,
-    question: 'True or False: You can reuse a crimp terminal if it looks undamaged.',
+    question: 'Can a crimp terminal be reused if it looks undamaged?',
     options: [
-      'Only if tested first',
-      'True',
-      'False',
-      'Only for low current applications',
+      'Yes, if it is tested first',
+      'Yes, for low-current applications only',
+      'No, a deformed crimp cannot be reused',
+      'Yes, provided the same tool is used',
     ],
     correctAnswer: 2,
     explanation:
-      'False – once deformed during crimping, terminals cannot provide secure contact again and must not be reused.',
+      'Once deformed during crimping, a terminal cannot provide secure contact again and must not be reused.',
   },
   {
     id: 3,
-    question: 'Name one type of crimp terminal.',
+    question: 'Which of these is a type of crimp terminal?',
     options: [
-      'Butt crimp',
+      'Bootlace ferrule',
+      'Bending spring',
       'Ring crimp',
-      'Spade crimp',
-      'All of the above',
+      'Compression gland',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'Ring, spade, and butt crimps are all common types of crimp terminals used for different connection purposes.',
+      'Ring, spade and butt crimps are all common types of crimp terminals used for different connection purposes.',
   },
   {
     id: 4,
-    question: 'What rating must an outdoor gland meet to be weatherproof?',
+    question: 'Which IP rating provides protection against continuous immersion in water?',
     options: [
       'IP68',
       'IP54',
@@ -103,16 +103,16 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'IP68 provides protection against dust ingress and continuous immersion in water, suitable for outdoor/wet locations.',
+      'IP68 provides protection against dust ingress and continuous immersion in water, suitable for the most demanding wet locations.',
   },
   {
     id: 5,
     question: 'Why is correct conductor sizing important for ferrules?',
     options: [
-      'The tendency to underestimate the time needed to complete tasks',
-      'To ensure secure mechanical grip and good electrical contact',
-      'The tower must not be used until the defect is rectified by a competent person',
-      'Yes, they complement MCBs and RCDs as additional protection',
+      'It reduces the cost of the crimping tool',
+      'It ensures a secure mechanical grip and good electrical contact',
+      'It removes the need to earth metallic glands',
+      'It allows a higher fuse rating to be used',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'Which type of gland is commonly used for armoured cables?',
     options: [
       'Plastic gland',
-      'Rubber gland',
+      'Rubber grommet',
       'Metallic gland',
-      'Composite gland',
+      'Composite push-fit gland',
     ],
     correctAnswer: 2,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason why metallic glands must be earthed.',
     options: [
-      'To meet colour coding requirements',
-      'To improve conductivity',
-      'To reduce installation cost',
-      'To prevent it becoming live in a fault',
+      'To meet cable colour-coding requirements',
+      'To improve the electrical conductivity of the cable',
+      'To reduce the installation cost',
+      'To prevent the gland becoming live during a fault',
     ],
     correctAnswer: 3,
     explanation:
@@ -148,14 +148,14 @@ const quizQuestions = [
     id: 8,
     question: 'What tool should always be used for crimping?',
     options: [
-      'Ratchet crimping tool',
-      'Side cutters',
-      'Standard pliers',
-      'Wire strippers',
+      'A ratchet crimping tool',
+      'A pair of side cutters',
+      'A pair of standard pliers',
+      'A pair of wire strippers',
     ],
     correctAnswer: 0,
     explanation:
-      'Ratchet crimping tools provide the correct compression force and cannot be released until proper crimp is achieved.',
+      'Ratchet crimping tools provide the correct compression force and cannot be released until a proper crimp is achieved.',
   },
 ];
 

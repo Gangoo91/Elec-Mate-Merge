@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'mh-soler-model',
     question: "In the SOLER model for active listening, what does the 'L' stand for?",
     options: [
-      'Look away to give space',
       'Lean in slightly towards the speaker',
+      'Look away to give space',
       'Listen without responding',
       'Lower your voice when speaking',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The 'L' in the SOLER model stands for 'Lean in' — leaning slightly towards the person you are speaking with shows attentiveness and genuine interest in what they are saying. It signals that you are engaged and present in the conversation without being physically intrusive.",
   },
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
       'Which of the following is a judgemental response that should be avoided when someone discloses a mental health difficulty?',
     options: [
       '"That sounds really difficult — thank you for telling me."',
-      '"Have you tried just not thinking about it?"',
       '"I\'m here for you — take your time."',
       '"How long have you been feeling this way?"',
+      '"Have you tried just not thinking about it?"',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Saying 'Have you tried just not thinking about it?' is a minimising and judgemental response. It implies the person has not tried hard enough to help themselves and reduces a complex mental health experience to a simple act of willpower. Supportive alternatives acknowledge the person's feelings and encourage them to share at their own pace.",
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 1,
     question: "What does the 'S' in the SOLER active listening model stand for?",
     options: [
-      'Speak clearly and slowly',
       'Sit squarely — face the person',
+      'Speak clearly and slowly',
       'Stay silent until they finish',
       'Summarise what they have said',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'S' in SOLER stands for 'Sit squarely', meaning you should position yourself facing the person to show that you are giving them your full attention. This does not mean sitting rigidly — it means orienting your body towards them in an open, engaged posture.",
   },
@@ -141,11 +141,11 @@ const quizQuestions = [
     question: 'Which of the following is NOT a feature of a non-judgemental approach?',
     options: [
       'Suspending your own opinions and biases',
-      'Telling the person what they should do to feel better',
       "Validating the person's emotions as real and important",
       "Accepting the person's experience without trying to fix it",
+      'Telling the person what they should do to feel better',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Telling someone what they should do is directive and judgemental — it implies you know better than them how to manage their own experience. A non-judgemental approach involves listening, validating, and accepting without trying to fix, advise, or direct. You can offer information about available support, but the decision to act must remain with the person.',
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: "What is the 'funnelling technique' in the context of asking questions?",
     options: [
       'Asking the same question repeatedly until you get an answer',
-      'Starting with broad, open questions and gradually narrowing to more specific ones',
       'Using only closed questions to get factual information quickly',
       'Avoiding questions altogether and letting the person lead',
+      'Starting with broad, open questions and gradually narrowing to more specific ones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The funnelling technique involves starting a conversation with broad, open questions (such as 'How have you been feeling?') and gradually moving to more specific questions (such as 'When did you first notice these feelings?') as the person becomes more comfortable. This approach feels natural and non-intrusive, and allows the person to share at their own pace.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is silence sometimes beneficial during a mental health conversation?',
     options: [
-      'It makes the other person uncomfortable, which forces them to talk',
       'It gives both people time to process emotions and gather thoughts',
+      'It makes the other person uncomfortable, which forces them to talk',
       'It shows that you are not interested in what they are saying',
       'It is a technique used only by professional counsellors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comfortable silence allows the person time to process their emotions, gather their thoughts, and decide what they want to say next. Many people need a few moments to articulate difficult feelings. Rushing to fill silence with words can feel pressuring. Sitting quietly, maintaining gentle eye contact, and showing through your body language that you are present is a powerful form of support.',
   },

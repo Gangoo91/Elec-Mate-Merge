@@ -10,12 +10,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the catapult effect in relation to MEWP operations?',
     options: [
-      'The force created when a boom is extended too quickly',
       'A sudden machine movement from a pothole, collision or ground collapse that launches the occupant from the platform',
+      'The force created when a boom is extended too quickly',
       'The recoil effect when a scissor lift is lowered rapidly',
       'The force experienced during normal boom slewing operations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The catapult effect occurs when a sudden, unexpected movement at ground level — such as hitting a pothole, a vehicle collision, or ground collapse — is amplified along the length of the boom, launching the occupant out of the platform. This is why harnesses are mandatory on boom-type (Group B) MEWPs.',
   },
@@ -39,10 +39,10 @@ const quizQuestions = [
     options: [
       'Falls from the platform',
       'Electrocution',
-      'Overturn / tip-over',
       'Entrapment / crushing',
+      'Overturn / tip-over',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Overturn (tip-over) was the leading cause of MEWP accidents in 2024. It is frequently fatal and is caused by unsuitable ground conditions, slopes, overloading, wind loading, and improper outrigger deployment.',
   },
@@ -58,8 +58,8 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the IPAF-recommended minimum safe distance from any overhead power line when operating a MEWP?',
-    options: ['1 metre', '3 metres', '5 metres', '9 metres'],
-    correctAnswer: 1,
+    options: ['3 metres', '1 metre', '5 metres', '9 metres'],
+    correctAnswer: 0,
     explanation:
       'The absolute minimum safe distance from any overhead line is 3 metres. For cables on wooden poles, the distance increases to 9 metres plus the fully extended boom length. For pylons, it is 15 metres plus the fully extended boom length. Always contact the electricity supplier before working near power lines.',
   },

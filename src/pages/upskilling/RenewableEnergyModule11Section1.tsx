@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'What is Chapter 81 of BS 7671:2018+A4:2026, and why was it introduced?',
     options: [
-      'A new SPD chapter',
-      'Chapter 81 (Part 8-1: Functional aspects — Energy efficiency) is the new energy-efficiency chapter added by A4:2026. It replaced the deleted Appendix 17 and is essentially a signpost: it refers the reader to the Building Regulations and to BS HD 60364-8-1:2019 for energy-efficiency requirements. It sits inside Part 8 (Functional Requirements) alongside Chapter 82 (Prosumer\'s Low Voltage Electrical Installations, PEI). Its purpose: bring energy-efficient design into the scope of the wiring regulations — cable sizing, voltage drop, load-management, integration of LCT generation + storage — so that the install itself supports lower consumption, not just safety',
-      'A new lightning chapter',
-      'Same as old Chapter 81',
+      'The new energy-efficiency chapter (Part 8-1) added by A4:2026 — a signpost to the Building Regs and BS HD 60364-8-1:2019, sitting in Part 8 alongside Chapter 82 PEI',
+      'The new chapter setting out surge protective device (SPD) selection and coordination, consolidating Sections 443 and 534 into a single Part 8 chapter',
+      'The new chapter on lightning protection for exposed installations, importing the BS EN 62305 risk-assessment methodology directly into the wiring regulations',
+      'A renumbered version of the existing Part 8 functional-testing requirements, with no scope change beyond the new chapter number introduced at A4:2026',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A4:2026 added Chapter 81 (Part 8-1: Functional aspects — Energy efficiency) to formalise energy efficiency in BS 7671. It replaced the deleted Appendix 17 and acts as a signpost chapter — it points the reader to the Building Regulations (England & Wales / Scotland / NI) and to BS HD 60364-8-1:2019 for the detailed energy-efficiency requirements rather than restating them. The detailed design methodology (efficiency meshes, device selection, payback) lives in BS HD 60364-8-1:2019. Historically the regs were safety-only — energy efficiency widens the brief: cable cross-section choices that reduce I²R losses, voltage-drop margins that minimise dissipation, integration paths for LCT generation + storage, tariff-aware load shifting, and the records the designer keeps to show the efficiency rationale. Chapter 81 sits inside Part 8 (Functional Requirements) alongside Chapter 82 (Prosumer\'s Low Voltage Electrical Installations — PEI). For renewables, this matters because every M2-M10 technology now has an efficiency-design expectation alongside its safety expectation.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'How does Chapter 81 relate to the rest of BS 7671 — efficiency vs the traditional safety regs?',
     options: [
-      'Replaces them',
-      'Layered on top, not replacing. Chapters 1-7 (Part 1-7 scope, definitions, protection, selection, inspection, special installations) remain the safety + correctness baseline. Chapter 81 adds the energy-efficiency layer — designer + installer demonstrate the install is efficient, not just safe. Cable size meeting Reg 433 + Reg 434 + Reg 525 voltage drop is the safety + correctness baseline; Chapter 81 may drive a larger conductor than that baseline when efficiency justifies it',
-      'Replaces voltage drop',
-      'Only applies to PV',
+      'It replaces the traditional protection chapters, so once a design satisfies Chapter 81 the Part 4 protective-measure requirements no longer need to be demonstrated separately',
+      'It supersedes the Reg 525 voltage-drop limits, replacing the 3% / 5% figures with a single efficiency-based loss target applied across all circuit types',
+      'Layered on top — Parts 1-7 stay the safety baseline (Reg 433/434/525), and Chapter 81 may justify a larger conductor when efficiency supports it',
+      'It applies only to PV circuits, leaving heat pump, EV and general circuits to be designed exactly as they were before A4:2026 with no efficiency consideration',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Chapter 81 is layered, not substitutional. Reg 433 overload protection + Reg 434 short-circuit + Reg 525 voltage drop + the rest of Parts 1-7 remain the safety + correctness baseline. Chapter 81 adds: was the design also efficient? Cable example — Reg 525 caps voltage drop at 3% (lighting) / 5% (other) of nominal; safety + correctness says any conductor within that limit is compliant. Chapter 81 may justify upsizing the conductor beyond the Reg 525 limit if the I²R loss reduction over the install lifetime makes economic + carbon sense (cost vs energy saving payback). The designer records that rationale. Verifier looks at safety compliance + Chapter 81 evidence. For LCT installs (PV / BESS / heat pump / EV) where the design current is sustained, this matters more than for general lighting.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'Where does Chapter 81 sit within Part 8 of BS 7671 — and how does it relate to Chapter 82 PEI?',
     options: [
-      'Outside Part 8',
-      'Part 8 (Functional Requirements) is the prosumer / energy-efficient installation home. A4:2026 expanded Part 8 — Chapter 81 = energy efficiency (the signpost chapter that replaced Appendix 17, pointing to the Building Regulations + BS HD 60364-8-1:2019); Chapter 82 = Prosumer\'s Low Voltage Electrical Installations (PEI — multi-source architecture with public network + on-site generation + storage, including EEMS per Reg 825.1). The two chapters are designed to work together — efficient design (81) of a prosumer site (82)',
-      'Replaces Part 8',
-      'Different standard',
+      'Chapter 81 sits in Part 7 (Special Installations) and is unrelated to Chapter 82, which alone occupies Part 8 as the prosumer chapter',
+      'Chapter 81 and Chapter 82 are alternatives — an install is designed to one or the other, never both, depending on whether it generates on site',
+      'Both sit in Part 8 — Chapter 81 = energy efficiency (signpost), Chapter 82 = prosumer (PEI, EEMS per Reg 825.1); they work together: efficient design of a prosumer site',
+      'Chapter 81 belongs to BS HD 60364-8-1:2019 rather than BS 7671, so it is not part of Part 8 at all but a separate harmonised document',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Part 8 of BS 7671 (Functional Requirements) is the prosumer / energy-efficient installation home. A4:2026 expanded it. Chapter 81 (Energy Efficiency) is the signpost chapter that replaced the deleted Appendix 17 — it refers the reader to the Building Regulations + BS HD 60364-8-1:2019 for the detailed energy-efficiency requirements. Chapter 82 = Prosumer\'s Low Voltage Electrical Installations (PEI) — multi-source architecture with public network + on-site PV / BESS / wind / CHP, island mode capability (Reg 826.1.1.1 + 824.2), with the Electrical Energy Management System (EEMS) defined at Reg 825.1. The two sit together in Part 8: efficient design (Chapter 81) of a prosumer site (Chapter 82). For M11 we focus Chapter 81 + the safety-related anchors (lightning, SPDs, fault current, anti-islanding). M10 covered Chapter 82 in depth.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'What does the inspector now record for a Chapter 81 compliant LCT install?',
     options: [
-      'Nothing new',
-      'Energy-efficiency rationale: cable cross-section vs the Reg 525 minimum + the loss-reduction justification; load-shifting / tariff-aware design notes; EEMS integration (the Electrical Energy Management System defined at Reg 825.1, where applicable); LCT generation / storage / load split with annual energy estimate; voltage-drop margins beyond the Reg 525 cap (if applicable); monitoring points for post-install verification. This sits alongside the existing safety EIC + schedule of tests',
-      'Same as 2008 edition',
-      'Only safety',
+      'The efficiency rationale: cable CSA vs Reg 525, load-shifting notes, EEMS integration (Reg 825.1), LCT energy estimate, voltage-drop margins and monitoring points — alongside the safety EIC',
+      'Only the measured kWh output of each LCT source on the day of inspection, recorded as a single energy figure on the EIC with no supporting design rationale',
+      'A predicted carbon-saving figure supplied by the SAP assessor, copied onto the electrical certificate in place of the schedule of test results',
+      'Nothing beyond the existing safety records — Chapter 81 evidence is held entirely by the manufacturer and never appears in the inspector\'s documentation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A Chapter 81 install adds new records to the inspector / verifier scope (the detailed methodology sits in BS HD 60364-8-1:2019, which Chapter 81 signposts). Typical evidence: (1) Cable cross-section justification — designer chose larger than Reg 525 minimum where efficiency / payback supported it. (2) Voltage-drop margins — design voltage drop below the Reg 525 cap for efficiency. (3) Load-shifting design notes — tariff-aware (TOU / smart-tariff) circuits sized to off-peak EV / heat pump operation. (4) EEMS integration where the prosumer install uses one — the Electrical Energy Management System (Reg 825.1) covers PV / BESS / EV / heat pump in coordinated operation. (5) Annual energy estimate per LCT component — PV yield, heat pump SCOP, EV charge demand. (6) Monitoring points for post-install verification — sub-meter positions, CT clamps, smart-meter export. (7) Customer evidence bundle — efficiency rationale signed off. This is in addition to the traditional EIC + schedule of inspection + schedule of test results.',
   },
@@ -83,25 +83,25 @@ const quizQuestions = [
     question:
       'A customer asks for "the most efficient possible" PV install. How does Chapter 81 frame the designer\'s answer in BS 7671 terms?',
     options: [
-      'Just use the biggest cable possible',
-      'Energy-efficiency design (Chapter 81, detailed in BS HD 60364-8-1:2019) is a layered framework, not a single rule. Designer assesses: (1) PV array sizing vs load profile; (2) DC + AC cable losses (CSA upsizing where payback supports); (3) inverter selection + efficiency curve; (4) BESS integration if present; (5) EEMS coordination per Reg 825.1 where the prosumer install uses one; (6) voltage drop margins below the Reg 525 / Appendix 4 maximum; (7) lifetime energy + payback model. Records the efficiency rationale. Customer evidence bundle = traditional safety EIC + efficiency rationale',
-      'Just bigger inverter',
-      'Random',
+      'A layered framework: array sizing, cable losses, inverter choice, BESS and EEMS coordination, voltage-drop margins and a payback model — recorded as the efficiency rationale beside the safety EIC',
+      'Fit the largest CSA conductor and the highest-rated inverter available; oversized hardware is always the most efficient choice regardless of the load profile or payback period',
+      'Chapter 81 prescribes a single mandatory efficiency value the install must hit; the designer simply selects components from an approved list to reach that figure',
+      'Maximise the DC string voltage to the inverter input limit, since higher voltage always reduces losses and that alone satisfies the efficiency requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "most efficient possible" answer (Chapter 81 signposts the methodology in BS HD 60364-8-1:2019) is a layered design process, not a single component choice. (1) PV sizing — match array kWp to customer load profile + roof + budget. (2) DC + AC cable losses — typical PV string DC cable carries continuous current at near MPP for daylight hours; upsizing from minimum CSA reduces I²R; payback calculation drives the choice. (3) Inverter selection — efficiency curve at part-load matters (string inverters typically 96-98% peak efficiency; lower at very low light); manufacturer DoC. (4) BESS integration if present — round-trip efficiency 85-92% LFP typical; sizing matched to load profile. (5) EEMS coordination per Reg 825.1 where the prosumer install uses one — coordinated operation of PV + BESS + heat pump + EV. (6) Voltage drop margins — design below Reg 525 cap where efficiency / payback supports it. (7) Lifetime energy + payback model — installer records the assumptions + annual energy estimate. Cert evidence bundle for the customer = traditional safety EIC + efficiency rationale + monitoring plan.',
   },
   {
     question:
-      'Cable cross-section: when does Chapter 81 justify upsizing beyond the Reg 525 voltage-drop cap?',
+      'Cable cross-section: when does Chapter 81 justify upsizing beyond the Reg 525 voltage-drop minimum?',
     options: [
-      'Never',
-      'When the I²R loss reduction over the install lifetime + customer energy cost gives an economic + carbon payback. Typical worked case: PV DC + AC + heat pump + EV circuits run high continuous current for many hours per year. Reg 525 caps voltage drop (3% lighting / 5% other) — Chapter 81 says: go bigger if payback supports. Designer records the rationale + payback calculation. Cert evidence ties cable choice to efficiency design',
-      'Always upsize',
-      'Random',
+      'Only when the existing Reg 525 calculation already fails the 5% limit, so the conductor must be enlarged for compliance rather than for efficiency',
+      'Whenever the design current exceeds 16 A, since A4:2026 sets that as the fixed threshold above which conductors must be upsized one CSA step',
+      'When the lifetime I²R-loss reduction gives an economic and carbon payback — typically on sustained-current LCT circuits; the rationale is recorded',
+      'Only on lighting circuits, where the tighter 3% voltage-drop limit means upsizing always returns the largest efficiency benefit per metre of run',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 525 / Appendix 4 sets the maximum voltage drop (3% lighting / 5% other) — design must not exceed it. Chapter 81 is the upside — designer may upsize the conductor to drive the voltage drop well below that maximum when payback supports. Typical LCT cases where upsizing pays back: (1) PV DC + AC — long sustained-current operation through daylight hours; cable losses scale with I²R + time. Going from 4 mm² to 6 mm² on a sustained-current PV run can save tens of pounds per year in lost generation. (2) Heat pump dedicated supply — sustained high current in heating season. (3) EV charging dedicated supply — sustained 32 A or 7 kW for several hours per session. (4) BESS DC + AC — bidirectional sustained current. Payback calculation: extra cable cost £X; annual energy savings £Y at unit price; payback in N years. Chapter 81 records this rationale. Where the load is intermittent or low (general lighting, occasional socket use), upsizing rarely pays back — the Reg 525 minimum-compliant conductor is sufficient. Cert evidence bundle ties cable choice to Chapter 81 efficiency design.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'How does Chapter 81 interact with the Building Regulations + customer-facing performance certification (EPC)?',
     options: [
-      'No interaction',
-      'Chapter 81 is the BS 7671 design layer; the Building Regulations (Part L energy efficiency in England + equivalents) + EPC (Energy Performance Certificate) are the wider building-energy framework. Chapter 81 design records can feed into customer EPC re-assessment + Building Regs Part L compliance. They are separate documents but cross-reference: the electrical install efficiency design (Chapter 81) supports the building energy rating outcome (EPC)',
-      'Chapter 81 replaces EPC',
-      'Random',
+      'Chapter 81 supersedes Part L for any property with an LCT install, so a compliant Chapter 81 design removes the need for separate Building Control sign-off',
+      'Chapter 81 is the BS 7671 design layer; Part L and the EPC are the wider building-energy framework — separate documents, but the Chapter 81 records feed into EPC re-assessment and Part L',
+      'Chapter 81 mandates that the electrician issue the EPC themselves, since the efficiency design records now form the primary input to the SAP assessment',
+      'There is no overlap — Chapter 81 governs only the cable losses, and the EPC is produced solely from the building fabric with no reference to the electrical install',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'What is the relationship between Chapter 81 efficiency design + the Reg 643 Part 6 verification process?',
     options: [
-      'No relationship',
-      'Reg 643 Part 6 verifies the safety compliance (continuity, IR, polarity, RCD, EFLI, etc.) of the install. Chapter 81 verification is additional — designer / verifier confirms the efficiency design records exist + match the install. Typical Chapter 81 verification additions: cable CSA matches design rationale; voltage-drop calculation matches install; EEMS configuration matches design; monitoring points operational. M11 §8 covers the commissioning chain integrating Reg 643 safety + Chapter 81 efficiency',
-      'Same test',
-      'Replaces 643',
+      'Chapter 81 efficiency checks are folded into the existing Reg 643 tests, so no additional records are produced beyond the standard schedule of test results',
+      'Reg 643 is suspended on Chapter 81 installs and replaced by an energy-efficiency verification that measures losses instead of insulation resistance and continuity',
+      'The efficiency rationale is verified by the SAP assessor rather than the electrician, so Reg 643 and Chapter 81 sit in entirely separate sign-off chains with no overlap',
+      'Reg 643 verifies safety; Chapter 81 verification is additional — confirming the cable CSA, voltage drop, EEMS config and monitoring points match the efficiency design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 643 Part 6 is the safety + correctness verification — continuity of protective conductors, insulation resistance, polarity, RCD operation, earth fault loop impedance (EFLI), functional tests of switchgear, etc. Reg 643.3 was redrafted in A4:2026 for clarity. The efficiency verification layer adds: (1) cable CSA matches the design rationale (designer may have upsized beyond Reg 525 — verifier checks the install matches). (2) Voltage-drop calculation matches the install configuration. (3) EEMS configuration matches design (the Reg 825.1 Electrical Energy Management System, where the prosumer install uses one). (4) Monitoring points operational — sub-meters / CT clamps / smart-meter export wired + commissioned. (5) Annual energy estimate + payback model attached. Cert evidence bundle: Reg 643 safety tests + Chapter 81 efficiency verification + EIC. M11 §8 covers the full commissioning chain integrating these.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'What is the M11 module structure — why is "Chapter 81 + lightning + fault levels + anti-islanding" grouped together?',
     options: [
-      'Random',
-      'They share the post-A4:2026 safety + efficiency framework for LCT installs. Chapter 81 = efficiency. BS EN 62305 = lightning protection (PV / wind are exposed). Section 443 / 534 = SPDs (post-A4:2026 expanded triggers). Multi-source fault contribution = PSCC at the customer side now includes PV / BESS / wind / CHP. Reg 551.7.5 anti-islanding = the safety anchor when any source can export. Together they form the M11 design + verification stack',
-      'No reason',
-      'Different topics',
+      'They are grouped only because they were the four topics A4:2026 happened to renumber, with no shared design logic linking them on an install',
+      'They share one post-A4:2026 LCT design stack: efficiency (81), lightning (62305), SPDs (443/534), multi-source fault contribution and anti-islanding (551.7.5)',
+      'They are the only four BS 7671 topics that apply exclusively to PV and never to BESS, wind or CHP installations',
+      'They are grouped because each one is assessed by a different body — the DNO, the SAP assessor, Building Control and the MCS scheme respectively',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A customer with 6 kWp PV + 13 kWh BESS + 7 kW heat pump + 32 A EV charger asks: "is my install Chapter 81 compliant?" What is the honest answer?',
     options: [
-      'Yes always',
-      'Depends on the install date. Chapter 81 came in with BS 7671:2018+A4:2026. Installs designed + certified before A4:2026 applies are pre-Chapter 81 — safety-compliant under their installation amendment, but not Chapter 81-evidenced. Installs after the A4:2026 effective date should have Chapter 81 evidence in the cert bundle (efficiency rationale, monitoring plan, design records). EICR on a pre-Chapter 81 install does NOT need to retroactively impose Chapter 81 — but a designer adding a new circuit / LCT component now would design that scope to Chapter 81',
-      'No always',
-      'Random',
+      'Yes — any install with LCT generation and storage automatically satisfies Chapter 81, because the presence of renewables is itself the compliance evidence',
+      'No — Chapter 81 only applies to commercial premises, so a domestic install of this kind falls entirely outside its scope regardless of the install date',
+      'It depends on the install date — pre-A4:2026 installs are not Chapter 81-evidenced (and not retroactively failed); new post-A4:2026 work is designed to it',
+      'It cannot be Chapter 81 compliant until the customer obtains a fresh EPC, since the EPC is the document that certifies Chapter 81 status',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Honest customer answer: depends on the install date. Chapter 81 came in with BS 7671:2018+A4:2026 (Amendment 4, 2026). Installs designed + certified before A4:2026 effective date are pre-Chapter 81 — they\'re compliant under the amendment in force at install date, but the Chapter 81 efficiency evidence layer didn\'t exist then. Pre-A4:2026 install + post-A4:2026 EICR: the EICR verifies safety against the install\'s original amendment; it does NOT retroactively impose Chapter 81 (you can\'t fail an install for not having efficiency records that weren\'t required at install date). Post-A4:2026 install: should have Chapter 81 evidence — efficiency rationale, design records, monitoring plan. Mixed-age install: pre-existing PV (2020) + new BESS (2026): the new BESS scope is designed to Chapter 81; the existing PV scope remains compliant under its original amendment but the integrated PEI design should consider Chapter 81 for the combined operation. Honest framing: efficiency-evidenced is a feature of newer installs, not a retroactive failing of older ones. Cert evidence bundle records the install dates + amendment in force at design.',
   },

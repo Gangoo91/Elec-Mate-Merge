@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'swmp-purpose',
     question: 'What is the primary purpose of a Site Waste Management Plan (SWMP)?',
     options: [
-      'Average performance over a heating season',
+      'To record the noise levels measured at the site boundary',
       'To plan and monitor waste management throughout a project',
-      'Too frequent creates data overload; too slow misses important events',
-      'Heat generation, voltage drop, and potential fire risk',
+      'To list the environmental permits held by the principal contractor',
+      'To set out the dust suppression methods for masonry cutting',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quickCheckQuestions = [
     id: 'environmental-permit',
     question: 'When is an environmental permit typically required for building services work?',
     options: [
-      'The equipment operates correctly under normal conditions',
+      'Whenever any electrical installation work is carried out',
       'When working near watercourses or installing certain equipment',
-      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
-      'Appliances may not be safely isolated by their switches',
+      'Only for projects lasting longer than 30 working days',
+      'Whenever waste is removed from site by a licensed carrier',
     ],
     correctIndex: 1,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'What is the maximum permitted working time for noisy construction activities under typical Section 61 consent?',
     options: [
-      'Mechanical contact + sparking at the commutator surface',
+      '24 hours a day, seven days a week without restriction',
       '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
-      'kWh consumption correlated with occupancy patterns',
-      'Management commitment and leadership behaviour',
+      '09:00-17:00 every day including Sundays and Bank Holidays',
+      '06:00-22:00 weekdays with no weekend working at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,9 +169,9 @@ const quizQuestions = [
     question:
       'What is the primary purpose of dust suppression using water misting on construction sites?',
     options: [
-      'When waste is transferred from one party to another',
-      'Stop the source, contain the spill, report to the Environment Agency',
-      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
+      'To cool cutting tools and extend the life of the blades',
+      'To wash spilled fuel and oil away from drainage channels',
+      'To soften masonry so it can be cut more quickly',
       'To capture airborne particles and prevent them spreading',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'Which waste streams require segregation on a building services site?',
     options: [
       'Metals, wood, plastics, hazardous, and general waste',
-      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
-      'Assessment and appropriate storage, handling and disposal',
-      'To capture airborne particles and prevent them spreading',
+      'Only hazardous waste needs to be kept separate from the rest',
+      'Only copper cable, because of its high scrap value',
+      'No segregation is required if a licensed carrier is used',
     ],
     correctAnswer: 0,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does COSHH require regarding substances that could cause environmental harm?',
     options: [
-      'When waste is transferred from one party to another',
+      'That all substances are disposed of to landfill within 24 hours',
       'Assessment and appropriate storage, handling and disposal',
-      'Stop the source, contain the spill, report to the Environment Agency',
-      'Metals, wood, plastics, hazardous, and general waste',
+      'That a Section 61 consent is obtained before use on site',
+      'That substances are only used outside permitted working hours',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of an Environmental Aspects Register in ISO 14001?',
     options: [
-      'Coordinating aftercare activities and maintaining focus on performance outcomes',
-      'Because everyone starts from a different point and has different circumstances',
+      'To record the noise complaints received from local residents',
+      'To list every employee trained in environmental procedures',
       'To identify activities that interact with the environment and assess their significance',
-      'Unintended contact between line and neutral or line-to-line conductors',
+      'To schedule the calibration of dust and noise monitoring equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -221,9 +221,9 @@ const quizQuestions = [
     id: 11,
     question: 'When must a waste transfer note be provided?',
     options: [
-      'Metals, wood, plastics, hazardous, and general waste',
-      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
-      'To capture airborne particles and prevent them spreading',
+      'Only when hazardous waste leaves the site',
+      'Only when waste is sent directly to landfill',
+      'Only when the waste has a positive scrap value',
       'When waste is transferred from one party to another',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
     question: 'What action should be taken if a pollution incident occurs on site?',
     options: [
       'Stop the source, contain the spill, report to the Environment Agency',
-      'When waste is transferred from one party to another',
-      'To identify activities that interact with the environment and assess their significance',
-      'To capture airborne particles and prevent them spreading',
+      'Hose the spill into the nearest surface water drain to disperse it',
+      'Wait until the end of the shift before reporting it to the supervisor',
+      'Continue working and note the incident in the site diary only',
     ],
     correctAnswer: 0,
     explanation:

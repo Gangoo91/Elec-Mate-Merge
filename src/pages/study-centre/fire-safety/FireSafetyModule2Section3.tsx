@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'fra-qc-3',
     question: 'When must a fire risk assessment be reviewed?',
     options: [
-      'Only after a fire has occurred',
-      'Every five years as a legal minimum',
       'Regularly and whenever significant changes occur (annually minimum)',
+      'Every five years as a legal minimum',
+      'Only after a fire has occurred',
       'Only when requested by the fire service',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A fire risk assessment must be reviewed regularly -- annually as a minimum -- and whenever there are significant changes. Triggers for review include changes to the building layout, change of use, significant changes in staffing or occupancy, building works, after a fire or near-miss incident, or when the fire service identifies deficiencies. It is a living document, not a one-off exercise.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Under which Article of the Regulatory Reform (Fire Safety) Order 2005 is a fire risk assessment mandatory for all non-domestic premises?',
     options: [
-      'Article 5 -- Application to premises',
       'Article 9 -- Risk assessment',
+      'Article 5 -- Application to premises',
       'Article 14 -- Emergency routes and exits',
       'Article 21 -- Provision of information to employees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Article 9 of the RRFSO places a duty on the responsible person to make a suitable and sufficient assessment of the risks to which relevant persons are exposed for the purpose of identifying the general fire precautions needed. This is the foundational requirement from which all other fire safety duties flow.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     options: [
       'Ignition sources (heat, sparks, flames)',
       'Fuel sources (combustible materials)',
-      'Oxygen sources (air, ventilation, oxidising chemicals)',
       'Water sources (sprinkler systems, fire hydrants)',
+      'Oxygen sources (air, ventilation, oxidising chemicals)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'The three categories of fire hazard source are ignition sources, fuel sources, and oxygen sources -- the three elements of the fire triangle. Water sources such as sprinkler systems and hydrants are fire protection measures, not fire hazards. Step 1 focuses on identifying what could start a fire and what could allow it to grow, not on the measures to extinguish it.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     options: [
       'Only full-time employees who work regular hours',
       'Only visitors who have signed in at reception',
-      'Persons with disabilities, including those with mobility, sensory, or cognitive impairments',
       'Only contractors who hold a valid CSCS card',
+      'Persons with disabilities, including those with mobility, sensory, or cognitive impairments',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Persons with disabilities -- including those with mobility impairments, sensory impairments (hearing, vision), and cognitive impairments -- must be specifically considered because they may need assistance to evacuate. This includes the provision of Personal Emergency Evacuation Plans (PEEPs) or the adoption of general emergency evacuation plans that cater for people who may need assistance. The Equality Act 2010 also requires reasonable adjustments to be made.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'When must the significant findings of a fire risk assessment be recorded in writing?',
     options: [
-      'Only when the fire service specifically requests it',
       'If five or more persons are employed, or the premises has a licence or alterations notice',
+      'Only when the fire service specifically requests it',
       'Only for premises with a floor area greater than 500 square metres',
       'Only when flammable substances are stored on the premises',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Article 9(6) and (7) of the RRFSO requires the significant findings to be recorded if: (a) the responsible person employs five or more employees, (b) a licence under an enactment is in force in relation to the premises, or (c) an alterations notice requiring this has been issued. Best practice is always to record the assessment regardless, as a written record demonstrates compliance and provides a baseline for reviews.',
   },
@@ -165,11 +165,11 @@ const quizQuestions = [
     question: 'How often should a fire risk assessment be reviewed at a minimum?',
     options: [
       'Only when the building is extended or refurbished',
-      'Every five years in line with electrical testing intervals',
       'Annually as a minimum, and whenever significant changes occur',
+      'Every five years in line with electrical testing intervals',
       'Only after a fire or enforcement notice',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A fire risk assessment should be reviewed annually as a minimum. Additionally, it must be reviewed whenever there are significant changes such as alterations to the building layout, change of use, significant changes in occupancy or staffing, building works, after a fire or near-miss, or when the fire service identifies issues. The review ensures the assessment remains current and the fire precautions remain adequate.',
   },
@@ -179,11 +179,11 @@ const quizQuestions = [
       "What makes a person 'competent' to carry out a fire risk assessment under the RRFSO?",
     options: [
       'They must hold a university degree in fire engineering',
-      'They must have sufficient training, experience, knowledge, or other qualities',
       'They must be a serving or retired fire officer',
+      'They must have sufficient training, experience, knowledge, or other qualities',
       'They must be employed by the premises owner as a full-time safety officer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The RRFSO defines competence in terms of sufficient training, experience, knowledge, or other qualities. There is no single prescribed qualification. For simple premises, the responsible person with adequate knowledge may be competent. For complex or high-risk premises, a specialist assessor registered with a recognised body (such as the IFE, BAFE, or FPA) or qualified under the PAS 79 methodology is strongly recommended.',
   },
@@ -193,11 +193,11 @@ const quizQuestions = [
       'Which of the following is one of the most common failures found by fire inspectors during enforcement visits?',
     options: [
       'Premises having too many fire extinguishers installed',
-      'Inadequate fire risk assessment, blocked escape routes, and no emergency plan',
       'Having fire drills too frequently (more than twice per year)',
       'Installing fire detection systems that exceed the minimum BS 5839 standard',
+      'Inadequate fire risk assessment, blocked escape routes, and no emergency plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most common failures found by fire inspectors include: an inadequate or absent fire risk assessment, blocked or obstructed escape routes, poor housekeeping creating fire hazards, defective fire doors, no written emergency plan, no fire drills, inadequate fire detection and alarm systems, and failure to review the fire risk assessment after changes. Over-provision of fire safety measures (too many extinguishers, exceeding alarm standards, or frequent drills) is never cited as a failure.',
   },

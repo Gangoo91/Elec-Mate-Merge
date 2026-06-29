@@ -68,9 +68,9 @@ const AM2Module7Section1 = () => {
       question: 'How should you use practice test feedback effectively?',
       options: [
         'Review all explanations and identify knowledge gaps',
-        'To provide protection against electric shock',
-        'Fibre To The x (various deployment architectures)',
-        'Isolating the wrong circuit and creating safety hazards',
+        'Only review the questions you answered incorrectly',
+        'Memorise the answer letters rather than the reasoning',
+        'Ignore feedback and simply re-sit the test repeatedly',
       ],
       correctIndex: 0,
       explanation:
@@ -161,12 +161,12 @@ const AM2Module7Section1 = () => {
     },
     {
       id: 5,
-      question: 'Which test should be carried out first on a new installation?',
+      question: 'Which dead test should be carried out first on a new installation?',
       options: [
-        'Computer Aided Facilities Management',
+        'Earth fault loop impedance (Zs)',
         'Continuity of protective conductors',
-        'Prosecution and imprisonment',
-        'Working space, access, and lighting',
+        'RCD operation at rated residual current',
+        'Prospective fault current',
       ],
       correctAnswer: 1,
       explanation:
@@ -189,9 +189,9 @@ const AM2Module7Section1 = () => {
       id: 7,
       question: 'Which cable type requires an earth wire to be run separately?',
       options: [
-        'Horizontal movement to the left',
-        'Guard rails and safety nets',
-        'All of the listed verifications',
+        'Flat twin-and-earth (6242Y) cable',
+        'Steel wire armoured (SWA) cable using the armour as cpc',
+        'Three-core-and-earth flat cable',
         'Single core cables in conduit',
       ],
       correctAnswer: 3,
@@ -215,14 +215,14 @@ const AM2Module7Section1 = () => {
       id: 9,
       question: 'Which Part of BS 7671 covers inspection and testing?',
       options: [
-        'Part 6',
-        'Part 7',
-        'Part 5',
         'Part 4',
+        'Part 6',
+        'Part 5',
+        'Part 7',
       ],
       correctAnswer: 1,
       explanation:
-        'Part 7 of BS 7671 covers inspection and testing requirements - crucial for AM2 practical assessment understanding.',
+        'Part 6 of BS 7671 covers inspection and testing. Part 4 covers protection for safety, Part 5 selection and erection of equipment, and Part 7 special installations or locations.',
     },
     {
       id: 10,

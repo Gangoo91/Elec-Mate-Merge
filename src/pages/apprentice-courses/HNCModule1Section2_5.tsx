@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'ssow-definition',
     question: 'What is the primary purpose of a safe system of work?',
     options: [
-      'Manual Handling Operations Regulations 1992',
+      'To record the names of everyone who attended the site induction',
       'To identify hazards and implement controls to prevent harm',
-      'Stopping at the first answer instead of drilling deeper to the root cause',
-      'It is highly alkaline and toxic to aquatic life, and can block fish gills',
+      'To set out the productivity targets for each task',
+      'To list the tools and equipment required for a job',
     ],
     correctIndex: 1,
     explanation:
@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'In the hierarchy of controls, where does PPE (Personal Protective Equipment) sit?',
     options: [
       'Last resort when other controls are not reasonably practicable',
-      'Proved on a known live source before AND after use',
-      'To communicate specific safety information before work begins',
-      'Stop work, report the issue and review/revise the system',
+      'First, as it directly protects the individual worker',
+      'Second, immediately after elimination of the hazard',
+      'Equal in priority to engineering controls',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main purpose of a permit-to-work system?',
     options: [
-      'Working on circuits that have been safely isolated and proved dead',
+      'To record the hours worked by each operative for payroll',
       'To provide formal control for high-risk activities and ensure all precautions are taken',
-      'To communicate specific safety information before work begins',
-      'Last resort when other controls are not reasonably practicable',
+      'To grant general site access to visitors and contractors',
+      'To replace the need for a documented risk assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What should happen when a SSOW is found to be ineffective?',
     options: [
-      'Regularly, after incidents, and when circumstances change',
+      'Continue working but note the issue for the next review',
       'Stop work, report the issue and review/revise the system',
-      'Proved on a known live source before AND after use',
-      'Working on circuits that have been safely isolated and proved dead',
+      'Switch to a generic SSOW from another similar job',
+      'Issue additional PPE and carry on with the same method',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: "For electrical work, what does 'dead working' refer to?",
     options: [
-      'Stop work, report the issue and review/revise the system',
-      'To communicate specific safety information before work begins',
+      'Working on circuits late at night when the building is empty',
+      'Working on circuits while wearing full insulating PPE',
       'Working on circuits that have been safely isolated and proved dead',
-      'Regularly, after incidents, and when circumstances change',
+      'Working on circuits that carry no load but remain energised',
     ],
     correctAnswer: 2,
     explanation:
@@ -221,9 +221,9 @@ const quizQuestions = [
     id: 11,
     question: 'How often should safe systems of work be reviewed?',
     options: [
-      'Last resort when other controls are not reasonably practicable',
-      'Stop work, report the issue and review/revise the system',
-      'Proved on a known live source before AND after use',
+      'Only once, when the SSOW is first written',
+      'Only when an enforcement notice is served by the HSE',
+      'Every five years, regardless of any changes',
       'Regularly, after incidents, and when circumstances change',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
     question: "What is the purpose of a 'toolbox talk' in relation to safe systems of work?",
     options: [
       'To communicate specific safety information before work begins',
-      'Proved on a known live source before AND after use',
-      'Stop work, report the issue and review/revise the system',
-      'Last resort when other controls are not reasonably practicable',
+      'To formally authorise high-risk work in place of a permit',
+      'To record each operative’s competence and qualifications',
+      'To replace the written method statement for routine tasks',
     ],
     correctAnswer: 0,
     explanation:

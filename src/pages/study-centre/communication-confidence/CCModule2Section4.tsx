@@ -12,11 +12,10 @@ const quickCheckQuestions = [
       'A homeowner is visibly upset because an electrical fault caused a small fire in their kitchen. They are speaking rapidly, repeating themselves, and becoming increasingly agitated. According to Covey&rsquo;s empathetic listening approach, what should you do FIRST?',
     options: [
       'Immediately explain what likely caused the fault and how you will fix it',
-      'Listen without interrupting, acknowledge their feelings, and reflect back what you hear before discussing technical details',
       'Ask them to calm down so you can concentrate on diagnosing the fault',
-      'Hand them a complaints form and tell them to put it in writing',
-    ],
-    correctIndex: 1,
+      'Listen without interrupting, acknowledge their feelings, and reflect back what you hear before discussing technical details',
+      'Hand them a complaints form and tell them to put it in writing'],
+    correctIndex: 2,
     explanation:
       'Covey&rsquo;s empathetic listening means seeking first to understand before being understood. When someone is emotionally distressed, they need to feel heard before they can process technical information. Acknowledge their feelings (&ldquo;I can see this has been really frightening for you&rdquo;), reflect back what you hear, and only move to diagnosis and solutions once they feel understood. Jumping straight to technical explanations or asking them to calm down dismisses their emotional state and escalates the situation.',
   },
@@ -26,11 +25,10 @@ const quickCheckQuestions = [
       'You are receiving safety-critical instructions from a site supervisor about live working procedures near a high-voltage switchboard. A generator is running nearby and other trades are working loudly. Applying Julian Treasure&rsquo;s conscious listening principles, what is the BEST approach?',
     options: [
       'Nod along and figure out the details once you get to the switchboard',
-      'Ask the supervisor to move to a quieter location, give full attention, and repeat the instructions back to confirm understanding',
-      'Record the conversation on your phone so you can listen again later',
       'Ask a colleague to listen as well so they can fill in anything you miss',
-    ],
-    correctIndex: 1,
+      'Record the conversation on your phone so you can listen again later',
+      'Ask the supervisor to move to a quieter location, give full attention, and repeat the instructions back to confirm understanding'],
+    correctIndex: 3,
     explanation:
       'Treasure&rsquo;s RASA model (Receive, Appreciate, Summarise, Ask) requires you to actively create the conditions for conscious listening. For safety-critical instructions, this means removing environmental barriers first (move somewhere quieter), giving your full undivided attention (Receive), showing you are engaged (Appreciate), summarising what you heard back to the speaker (Summarise), and asking clarifying questions (Ask). Nodding along without truly hearing is &ldquo;pretend listening&rdquo; &mdash; dangerous when live working is involved.',
   },
@@ -39,12 +37,11 @@ const quickCheckQuestions = [
     question:
       'You are supervising an electrician whose first language is not English. You have just explained a complex isolation procedure, and they nodded and said &ldquo;yes, okay.&rdquo; You are not fully confident they understood. What should you do?',
     options: [
-      'Accept their confirmation at face value and let them proceed',
-      'Repeat the same explanation more slowly and loudly',
       'Ask them to explain the procedure back to you in their own words, use simple diagrams, and demonstrate the key steps',
-      'Assign the task to someone else to avoid the communication difficulty',
-    ],
-    correctIndex: 2,
+      'Repeat the same explanation more slowly and loudly',
+      'Accept their confirmation at face value and let them proceed',
+      'Assign the task to someone else to avoid the communication difficulty'],
+    correctIndex: 0,
     explanation:
       'Nodding and saying &ldquo;yes&rdquo; can be a politeness response rather than genuine confirmation of understanding, particularly across cultures. The safest approach is to ask them to explain the procedure back in their own words (teach-back method), supplement verbal instructions with simple diagrams or written steps, and physically demonstrate the key isolation steps. Speaking louder does not improve comprehension. Reassigning the task avoids the issue without addressing it and may be discriminatory.',
   },
@@ -80,11 +77,10 @@ const quizQuestions = [
     question: 'According to Stephen Covey, what is the HIGHEST level of listening?',
     options: [
       'Attentive listening &mdash; giving the speaker your full attention',
-      'Selective listening &mdash; hearing only the parts relevant to you',
       'Empathetic listening &mdash; understanding the speaker&rsquo;s feelings, meaning, and perspective',
-      'Active listening &mdash; paraphrasing what the speaker says back to them',
-    ],
-    correctAnswer: 2,
+      'Selective listening &mdash; hearing only the parts relevant to you',
+      'Active listening &mdash; paraphrasing what the speaker says back to them'],
+    correctAnswer: 1,
     explanation:
       'Covey identifies 5 levels of listening: ignoring, pretend listening, selective listening, attentive listening, and empathetic listening. Empathetic listening is the highest level because it goes beyond hearing words to genuinely understanding the other person&rsquo;s frame of reference, emotions, and underlying meaning. It requires you to &ldquo;seek first to understand, then to be understood&rdquo; (Habit 5 of The 7 Habits of Highly Effective People). In construction, this means understanding not just what a client or colleague is saying, but why it matters to them.',
   },
@@ -93,11 +89,10 @@ const quizQuestions = [
     question: 'Julian Treasure&rsquo;s RASA model stands for:',
     options: [
       'React, Analyse, Speak, Affirm',
-      'Receive, Appreciate, Summarise, Ask',
       'Record, Acknowledge, Solve, Act',
-      'Reflect, Absorb, Synthesise, Apply',
-    ],
-    correctAnswer: 1,
+      'Receive, Appreciate, Summarise, Ask',
+      'Reflect, Absorb, Synthesise, Apply'],
+    correctAnswer: 2,
     explanation:
       'RASA stands for Receive (pay attention, face the speaker), Appreciate (show you are listening through small sounds and gestures), Summarise (reflect back what you have heard, &ldquo;So what you are saying is&hellip;&rdquo;), and Ask (pose questions to deepen understanding). Treasure developed this as a framework for conscious listening &mdash; deliberately choosing to listen rather than simply hearing. On a construction site, RASA is particularly valuable during toolbox talks, safety briefings, and client consultations.',
   },
@@ -107,11 +102,10 @@ const quizQuestions = [
       'A client calls you back to a job because a circuit keeps tripping. They are angry and say &ldquo;Your work is rubbish &mdash; nothing works properly since you touched it.&rdquo; What is the BEST first response?',
     options: [
       '&ldquo;That is not fair &mdash; I tested everything before I left and it was all fine.&rdquo;',
-      '&ldquo;I can hear you are really frustrated. Tell me exactly what has been happening and I will get to the bottom of it.&rdquo;',
-      '&ldquo;It is probably something you have plugged in that is causing the trip.&rdquo;',
       '&ldquo;I will send you a copy of the test results to prove the work was done correctly.&rdquo;',
-    ],
-    correctAnswer: 1,
+      '&ldquo;It is probably something you have plugged in that is causing the trip.&rdquo;',
+      '&ldquo;I can hear you are really frustrated. Tell me exactly what has been happening and I will get to the bottom of it.&rdquo;'],
+    correctAnswer: 3,
     explanation:
       'The best response acknowledges the client&rsquo;s emotion first (&ldquo;I can hear you are really frustrated&rdquo;) and then invites them to share the details. This follows the empathetic listening approach: understand before responding. Defending yourself immediately (&ldquo;that is not fair&rdquo;) or deflecting blame (&ldquo;something you plugged in&rdquo;) escalates the conflict. Sending test results may be appropriate later but does not address the immediate emotional need to be heard.',
   },
@@ -120,12 +114,11 @@ const quizQuestions = [
     question:
       'During a post-accident debrief after an electric shock incident on site, which approach is MOST effective?',
     options: [
-      'Immediately identify who was at fault and focus the discussion on preventing their specific mistake',
       'Follow a structured debrief: facts first (what happened), feelings (emotional impact), findings (lessons), and future actions (changes needed)',
+      'Immediately identify who was at fault and focus the discussion on preventing their specific mistake',
       'Keep it brief and move on quickly so people can get back to work and not dwell on what happened',
-      'Let the site manager do all the talking while everyone else listens silently',
-    ],
-    correctAnswer: 1,
+      'Let the site manager do all the talking while everyone else listens silently'],
+    correctAnswer: 0,
     explanation:
       'A structured debrief framework (Facts, Feelings, Findings, Future) ensures all aspects of the incident are addressed properly. Starting with facts establishes a shared, blame-free understanding of what occurred. Addressing feelings acknowledges the emotional impact &mdash; essential after a shock incident where people may be shaken or frightened. Findings draw out learning points, and future actions create accountability. Rushing through or assigning immediate blame shuts down honest communication and prevents genuine learning.',
   },
@@ -135,11 +128,10 @@ const quizQuestions = [
       'You are explaining an isolation procedure to a colleague whose first language is Polish. They nod and say &ldquo;yes, okay&rdquo; but you are unsure they understood. The SAFEST approach is:',
     options: [
       'Accept their confirmation &mdash; they said they understood',
-      'Repeat the explanation more slowly and at a higher volume',
       'Ask them to explain the procedure back to you, use a diagram, and demonstrate the key steps',
-      'Send them a text message with the procedure written in English',
-    ],
-    correctAnswer: 2,
+      'Repeat the explanation more slowly and at a higher volume',
+      'Send them a text message with the procedure written in English'],
+    correctAnswer: 1,
     explanation:
       'The teach-back method (asking them to explain the procedure in their own words) is the gold standard for confirming understanding across language barriers. Supplement this with visual aids (diagrams, colour-coded labels) and physical demonstration of key steps. Speaking louder does not improve comprehension &mdash; it often increases anxiety. A written English text may help as a reference but does not confirm understanding. For safety-critical procedures like isolation, verbal confirmation alone is never sufficient.',
   },
@@ -149,11 +141,10 @@ const quizQuestions = [
       'Which of the following is an example of &ldquo;pretend listening&rdquo; according to Covey&rsquo;s five levels?',
     options: [
       'Putting your phone down and making eye contact while a colleague explains a fault',
-      'Nodding and saying &ldquo;mmm-hmm&rdquo; while actually thinking about what you need from the wholesaler',
       'Asking clarifying questions to make sure you understand an instruction correctly',
-      'Summarising what someone has said to check your understanding before responding',
-    ],
-    correctAnswer: 1,
+      'Nodding and saying &ldquo;mmm-hmm&rdquo; while actually thinking about what you need from the wholesaler',
+      'Summarising what someone has said to check your understanding before responding'],
+    correctAnswer: 2,
     explanation:
       'Pretend listening is the second level in Covey&rsquo;s hierarchy. It involves appearing to listen &mdash; making eye contact, nodding, making sounds of agreement &mdash; while actually being mentally elsewhere. On a construction site, this is particularly dangerous during safety briefings, isolation instructions, or when a colleague is describing a fault they have found. The listener gives the appearance of attention but retains little or nothing. In contrast, putting the phone down and making genuine eye contact is attentive listening, while asking questions and summarising are characteristics of active and empathetic listening.',
   },
@@ -163,11 +154,10 @@ const quizQuestions = [
       'A homeowner becomes tearful while explaining that their elderly mother had a fall in the dark during a power cut caused by a faulty consumer unit. How should you respond?',
     options: [
       'Focus on the technical fault &mdash; &ldquo;Let me look at the consumer unit and I will have it sorted quickly.&rdquo;',
-      'Pause, acknowledge their distress (&ldquo;I am sorry to hear about your mother &mdash; that must have been very worrying&rdquo;), listen fully, then explain what you will do',
-      'Tell them a similar story about another client to show you understand',
       'Suggest they make a formal complaint to the previous electrician&rsquo;s certifying body',
-    ],
-    correctAnswer: 1,
+      'Tell them a similar story about another client to show you understand',
+      'Pause, acknowledge their distress (&ldquo;I am sorry to hear about your mother &mdash; that must have been very worrying&rdquo;), listen fully, then explain what you will do'],
+    correctAnswer: 3,
     explanation:
       'When someone is emotionally distressed, they need acknowledgement before solutions. Pause to show you are not rushing past their feelings. A simple, sincere acknowledgement (&ldquo;I am sorry to hear about your mother &mdash; that must have been very worrying&rdquo;) validates their experience. Listen fully to everything they want to tell you. Only then transition to the technical response. Jumping straight to the fix dismisses their emotional experience. Sharing your own stories redirects attention to you. Suggesting formal complaints escalates rather than resolves.',
   },
@@ -176,12 +166,11 @@ const quizQuestions = [
     question:
       'Julian Treasure identifies several &ldquo;filters&rdquo; that distort our listening. In a construction context, which is the MOST common barrier to accurate listening?',
     options: [
-      'Cultural filters &mdash; different nationalities have different listening styles',
       'Assumptions and expectations &mdash; hearing what you expect to hear rather than what is actually said',
+      'Cultural filters &mdash; different nationalities have different listening styles',
       'Emotional filters &mdash; only hearing things that make you feel good',
-      'Vocabulary filters &mdash; not understanding any of the words being used',
-    ],
-    correctAnswer: 1,
+      'Vocabulary filters &mdash; not understanding any of the words being used'],
+    correctAnswer: 0,
     explanation:
       'Treasure identifies several listening filters including culture, language, values, beliefs, attitudes, expectations, and intentions. In construction, assumptions and expectations are the most common barrier: an experienced electrician may &ldquo;hear&rdquo; a standard instruction even when the actual instruction differs from the norm. For example, assuming a circuit is wired in the standard way and missing an instruction about a non-standard configuration. This filter is particularly dangerous during handovers, where the receiving electrician may assume the installation matches their expectations rather than listening carefully to what the previous worker actually did.',
   },

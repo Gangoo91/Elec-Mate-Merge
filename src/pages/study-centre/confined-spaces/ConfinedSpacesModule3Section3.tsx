@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'A standard 4-gas confined space monitor measures four channels. What are the four gases/properties it detects?',
     options: [
-      'Nitrogen, argon, carbon dioxide, and methane',
       'Oxygen (O\u2082), Lower Explosive Limit (LEL), carbon monoxide (CO), and hydrogen sulphide (H\u2082S)',
+      'Nitrogen, argon, carbon dioxide, and methane',
       'Oxygen (O\u2082), carbon dioxide (CO\u2082), nitrogen dioxide (NO\u2082), and sulphur dioxide (SO\u2082)',
       'Methane (CH\u2084), propane (C\u2083H\u2088), butane (C\u2084H\u2081\u2080), and hydrogen (H\u2082)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The standard 4-gas confined space monitor measures oxygen (O\u2082), flammable gases as a percentage of the Lower Explosive Limit (LEL), carbon monoxide (CO), and hydrogen sulphide (H\u2082S). These four channels cover the most common atmospheric hazards encountered in confined spaces.',
   },
@@ -25,11 +25,11 @@ const quickCheckQuestions = [
     question: 'What is the PRIMARY difference between a bump test and a full calibration?',
     options: [
       'A bump test replaces the sensors; a calibration only checks them',
-      'A bump test confirms the sensors respond to gas and alarms activate; a calibration adjusts sensor accuracy against a known concentration of certified gas',
       'A bump test is performed annually; a calibration is performed daily',
+      'A bump test confirms the sensors respond to gas and alarms activate; a calibration adjusts sensor accuracy against a known concentration of certified gas',
       'There is no difference \u2014 the terms are interchangeable',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A bump test is a quick functional check that exposes the sensors to a known gas to confirm they respond and that alarms activate. A full calibration goes further \u2014 it adjusts the sensor readings against a certified reference gas concentration to ensure accuracy. Bump tests are done daily before use; calibrations are typically done monthly (or per manufacturer guidance).',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'When performing pre-entry atmospheric monitoring, why must you test at different levels (top, middle, bottom) within the space?',
     options: [
       'To check whether the monitor is working at different heights',
-      'Because gases stratify by density \u2014 lighter gases accumulate at the top and heavier gases settle at the bottom',
       'Because the space must be tested from three positions by regulation',
       'To ensure the pump is drawing an adequate sample volume',
+      'Because gases stratify by density \u2014 lighter gases accumulate at the top and heavier gases settle at the bottom',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Gases stratify by density within a confined space. Lighter-than-air gases (e.g., methane, hydrogen) accumulate at the top, while heavier-than-air gases (e.g., hydrogen sulphide, carbon dioxide) settle at the bottom. Oxygen depletion may occur at any level. Testing at multiple levels ensures that hazardous pockets of gas are not missed.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 1,
     question: 'Why is atmospheric testing mandatory BEFORE entry into a confined space?',
     options: [
-      'Because the permit-to-work requires a signature confirming testing was done',
       'Because hazardous atmospheres are often invisible and odourless, and cannot be reliably detected by human senses',
+      'Because the permit-to-work requires a signature confirming testing was done',
       'Because the Health and Safety Executive requires a minimum of three readings before entry',
       'Because atmospheric testing activates the ventilation system automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Many hazardous gases are colourless and odourless \u2014 for example, carbon monoxide and oxygen deficiency cannot be detected by human senses. By the time you smell hydrogen sulphide at higher concentrations, the gas has already paralysed your sense of smell (olfactory fatigue). Atmospheric testing with calibrated instruments is the only reliable way to determine whether the atmosphere is safe for entry.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     options: [
       'Electrochemical cell',
       'Paramagnetic sensor',
-      'Catalytic bead (pellistor) sensor',
       'Photoionisation detector (PID)',
+      'Catalytic bead (pellistor) sensor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Catalytic bead sensors (also called pellistors) are used to detect flammable gases as a percentage of the Lower Explosive Limit (LEL). They work by oxidising (burning) the flammable gas on a heated catalytic surface and measuring the resulting temperature change. This type of sensor requires a minimum of approximately 10% oxygen in the atmosphere to function correctly.',
   },
@@ -121,11 +121,11 @@ const quizQuestions = [
       'When performing pre-entry atmospheric monitoring with a sample draw pump, why must you wait an adequate time before reading the results?',
     options: [
       'To allow the monitor to warm up its display backlight',
-      'To allow the pump to draw the sample through the tubing to the sensors, as longer tubing lengths increase the response time',
       'To allow the atmosphere inside the space to settle after opening the entry point',
+      'To allow the pump to draw the sample through the tubing to the sensors, as longer tubing lengths increase the response time',
       'Because the sensors need time to cool down between readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When using an extension probe or sample draw tubing, the pump must draw the atmosphere from inside the confined space through the full length of the tubing to the sensors. The longer the tubing, the longer this takes. If you read the display before the sample has reached the sensors, you will be reading the ambient atmosphere outside the space \u2014 not the atmosphere inside it. Always wait for the response time specified by the manufacturer for the tubing length being used.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'Which of the following is a limitation of gas detection instruments that operators must be aware of?',
     options: [
       'Gas monitors can only detect one gas at a time',
-      'Cross-sensitivity, where a sensor responds to gases other than its target gas, can cause false positive or false negative readings',
       'Gas monitors do not work in temperatures below 20\u00b0C',
       'Gas monitors cannot be used in spaces with any amount of moisture',
+      'Cross-sensitivity, where a sensor responds to gases other than its target gas, can cause false positive or false negative readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cross-sensitivity is a significant limitation of gas detection instruments. Electrochemical and catalytic bead sensors can respond to gases other than their target gas, potentially causing misleading readings. Other limitations include reduced accuracy at temperature extremes, humidity effects on sensor performance, sensor poisoning from exposure to certain chemicals (e.g., silicones can poison catalytic bead sensors), and inherent response time delays. Understanding these limitations is essential for correctly interpreting readings.',
   },

@@ -12,103 +12,123 @@ export const SmartHomeSection5Quiz = () => {
     {
       question: 'What is the main advantage of retrofit smart home installations?',
       options: [
-        'Professional aesthetic finish',
         'Lower upfront costs and minimal disruption',
-        'Comprehensive system integration',
-        'Future-proof infrastructure',
+        'A fully concealed, professional wiring finish',
+        'Comprehensive whole-property system integration',
+        'Structured cabling that future-proofs the home',
       ],
-      correct: 1,
+      correct: 0,
+      explanation:
+        'Retrofit uses mostly wireless devices fitted to an existing property, keeping cost and disruption low — the trade-off is less integration and visible hardware.',
     },
     {
-      question: 'Which installation approach is best for renters?',
+      question: 'Which installation approach is best suited to renters?',
       options: [
-        'New build integration',
-        'Hybrid approach',
-        'Retrofit with portable devices',
-        'Professional wired installation',
+        'New build structured-cabling integration',
+        'Retrofit using portable, removable devices',
+        'A hybrid wired-and-wireless system',
+        'A professionally hardwired installation',
       ],
-      correct: 2,
+      correct: 1,
+      explanation:
+        'Renters benefit from retrofit devices such as smart plugs and bulbs that need no rewiring and can be taken to the next property.',
     },
     {
       question: 'What is a key benefit of new build smart home integration?',
       options: [
-        'Lower initial costs',
-        'Immediate installation',
-        'Hidden wiring and professional finish',
-        'Easy device replacement',
+        'It has the lowest initial cost of any approach',
+        'It can be completed in a single afternoon',
+        'Hidden wiring and a professional finish',
+        'Devices are the easiest to swap out later',
       ],
       correct: 2,
+      explanation:
+        'Designing the system in during construction allows cables to be concealed in walls, giving a clean, professional finish that retrofit cannot match.',
     },
     {
       question: 'For a budget under £3,000, which approach is typically recommended?',
       options: [
-        'Comprehensive new build',
-        'Retrofit installation',
-        'Professional hybrid system',
-        'Commercial grade system',
+        'A comprehensive new build installation',
+        'A professionally cabled hybrid system',
+        'A commercial-grade control system',
+        'A retrofit installation',
       ],
-      correct: 1,
+      correct: 3,
+      explanation:
+        'Retrofit keeps costs low by avoiding building work, making it the realistic choice for modest budgets around £3,000.',
     },
     {
       question: 'What makes new build installations more future-proof?',
       options: [
-        'Wireless technology',
-        'Lower costs',
+        'They rely entirely on wireless technology',
+        'They are cheaper to expand later',
+        'They use a simpler initial setup',
         'Structured cabling and spare conduits',
-        'Simpler setup',
       ],
-      correct: 2,
+      correct: 3,
+      explanation:
+        'Running structured cabling and leaving spare conduit during construction lets the system be upgraded and expanded without disruptive rewiring later.',
     },
     {
       question: 'Which factor is most important when choosing between retrofit and new build?',
       options: [
-        'Brand preferences',
-        'Property status and budget',
-        'Colour schemes',
-        'Weather conditions',
-      ],
-      correct: 1,
-    },
-    {
-      question: 'What is typically the highest cost component in new build smart homes?',
-      options: [
-        'Smart bulbs',
-        'Voice assistants',
-        'Professional installation and structured cabling',
-        'Smart plugs',
+        'The customer’s preferred device brands',
+        'The room colour schemes',
+        'Property status and available budget',
+        'Local weather conditions',
       ],
       correct: 2,
+      explanation:
+        'Whether the property is owned, rented or being built, plus the budget available, are the decisive factors in choosing retrofit versus new build.',
+    },
+    {
+      question: 'What is typically the highest-cost component in new build smart homes?',
+      options: [
+        'Professional installation and structured cabling',
+        'The smart bulbs throughout the property',
+        'The voice assistant speakers',
+        'The smart plugs and adaptors',
+      ],
+      correct: 0,
+      explanation:
+        'Labour and the structured cabling infrastructure dominate the cost of a new build system, far outweighing individual devices like bulbs or plugs.',
     },
     {
       question:
         'For a growing family wanting security and energy management, which approach is recommended?',
       options: [
-        'Basic retrofit only',
-        'Hybrid retrofit with gradual expansion',
-        'Wait for new build opportunity',
-        'Commercial-grade system',
+        'Basic retrofit with no expansion planned',
+        'A hybrid retrofit with gradual expansion',
+        'Waiting for a future new build opportunity',
+        'A commercial-grade control system',
       ],
       correct: 1,
+      explanation:
+        'A hybrid retrofit lets a family add security and energy devices in stages, spreading cost while building toward a fuller system.',
     },
     {
       question: 'What is the typical disruption level for retrofit installations?',
       options: [
-        'Major construction work required',
-        'Complete rewiring needed',
-        'Minimal disruption with immediate use',
-        'Property must be vacated',
+        'Major structural construction is required',
+        'The whole property must be rewired',
+        'Minimal disruption with near-immediate use',
+        'The property must be vacated during work',
       ],
       correct: 2,
+      explanation:
+        'Because retrofit relies on wireless devices fitted to existing fixtures, disruption is minimal and the system is usable almost immediately.',
     },
     {
       question: 'Which scenario best suits comprehensive new build integration?',
       options: [
-        'Student accommodation',
-        'Short-term rental property',
-        'Permanent family home with high budget',
-        'Temporary living situation',
+        'A permanent family home with a high budget',
+        'Short-term student accommodation',
+        'A short-term rental property',
+        'A temporary living arrangement',
       ],
-      correct: 2,
+      correct: 0,
+      explanation:
+        'The cost and permanence of designed-in cabling only pay off in a long-term, owner-occupied home where the budget supports it.',
     },
   ];
 

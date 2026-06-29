@@ -53,10 +53,10 @@ const AM2Module3Section4 = () => {
       id: 'cpc-sleeving',
       question: 'When is CPC sleeving required?',
       options: [
-        'It requires preparation and deepens understanding',
+        'Only inside metal accessories and enclosures',
         'Everywhere - including plastic accessories',
-        'Enhanced IP ratings and RCD protection',
-        'If one circuit fails, others continue to work',
+        'Only on circuits above 32 A',
+        'Only where the CPC is visible to the user',
       ],
       correctIndex: 1,
       explanation:
@@ -66,10 +66,10 @@ const AM2Module3Section4 = () => {
       id: 'swa-glands',
       question: 'What provides the earthing connection for SWA cable armour?',
       options: [
-        'Banjo washer and earthing connection',
-        'Appropriate mechanical protection is provided',
-        'Self-declaration without evidence',
-        'The rate of flow of charge past a point',
+        'A banjo washer and earthing connection at the gland',
+        'The PVC outer sheath of the cable',
+        'The neutral conductor inside the cable',
+        'The cable cleats holding the cable in place',
       ],
       correctIndex: 0,
       explanation:
@@ -108,9 +108,9 @@ const AM2Module3Section4 = () => {
       id: 3,
       question: 'In AM2 assessment, CPC sleeving is required:',
       options: [
-        'To convert millivolts (mV) into volts (V).',
-        'Add capacitors to offset inductive effects',
-        'Cognitive Behavioural Therapy',
+        'Only at the distribution board',
+        'Only inside metal accessories',
+        'Only on the final ring circuit',
         'Everywhere, including plastic accessories',
       ],
       correctAnswer: 3,
@@ -134,10 +134,10 @@ const AM2Module3Section4 = () => {
       id: 5,
       question: 'Why must no copper be left exposed outside terminals?',
       options: [
-        'Affects product compliance requirements',
+        'It makes the cable harder to identify',
         'Risk of short circuit and shock',
-        'A measure of the sharpness of resonance',
-        'A to G (with A being most efficient)',
+        'It increases the resistance of the joint',
+        'It wastes copper and raises material costs',
       ],
       correctAnswer: 1,
       explanation:
@@ -160,9 +160,9 @@ const AM2Module3Section4 = () => {
       id: 7,
       question: 'What type of screwdriver should you use in a DB?',
       options: [
-        'Branch resistance and applied voltage',
-        'To allow safe shutdown of dangerous processes',
-        'A persistent fault still exists on the circuit',
+        'A flat-blade screwdriver tightened by feel',
+        'An insulated screwdriver tightened as hard as possible',
+        'Any screwdriver that fits the terminal',
         'Torque screwdriver for critical connections',
       ],
       correctAnswer: 3,

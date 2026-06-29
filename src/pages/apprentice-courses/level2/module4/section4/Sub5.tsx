@@ -39,10 +39,10 @@ const checks = [
     question:
       'What is the fundamental difference in purpose between main bonding and supplementary bonding?',
     options: [
-      'Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.',
-      'Main bonding equalises potential between extraneous-conductive-parts (gas, water, structural steel) and the MET at the building\\\\\\\\\\\\\\\'s intake — system-wide protection. Supplementary bonding equalises potential between exposed-conductive-parts and extraneous-conductive-parts at a specific high-risk location (bathroom, swimming pool) where ADS disconnection times alone aren\\\\\\\\\\\\\\\'t fast enough to prevent shock.',
-      'Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.',
-      'No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work.',
+      'There is no functional difference — main and supplementary bonding both connect the same extraneous-conductive-parts to the MET, and the two terms are simply the older and newer names for the same conductor. Modern BS 7671 keeps both words for historical reasons only.',
+      'Main bonding equalises potential between extraneous-conductive-parts (gas, water, structural steel) and the MET at the building\'s intake — system-wide protection. Supplementary bonding equalises potential between exposed-conductive-parts and extraneous-conductive-parts at a specific high-risk location (bathroom, swimming pool) where ADS disconnection times alone aren\'t fast enough to prevent shock.',
+      'Main bonding protects the cable against overcurrent by providing a low-impedance fault return path, while supplementary bonding protects against voltage drop by reinforcing the neutral. Main bonding is sized from the line conductor and supplementary bonding from the neutral conductor.',
+      'Main bonding is the earthing connection from the MET back to the supply source (the PEN, sheath or electrode), while supplementary bonding is the connection of each circuit\'s CPC to the earth bar. Main bonding carries fault current to the source and supplementary bonding distributes it to the circuits.',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       'Reg 701.415.2 allows supplementary bonding to be omitted in a room containing a bath or shower if which conditions are met?',
     options: [
-      'Politely tell the Site Manager you\\\\\\\'ve been tasked by your own supervisor on a different priority, and offer to ask your supervisor to come over so the two managers can re-prioritise. You take instructions on the work face from your own contractor\\\\\\\'s chain (Site Supervisor → Project Engineer → Contracts Manager). The main contractor\\\\\\\'s Site Manager co-ordinates between contractors but does not give direct instructions to a sub-contractor\\\\\\\'s apprentice.',
-      '(a) Don\\\\\\\'t carry out construction work unless you have the skills, knowledge, training and experience to do it safely (or are in the process of obtaining them); (b) report to the person in control anything you\\\\\\\'re aware of that\\\\\\\'s likely to endanger H&S; (c) co-operate with any other person working on or in connection with the project to enable that person to comply with their duties.',
+      'A single condition: the bathroom must be fitted with a 30 mA RCD on the lighting circuit only. Once the lighting is RCD-protected, supplementary bonding can always be omitted regardless of how the other circuits in the room are protected.',
+      'Two conditions: the building must be on a TN-C-S (PME) supply, and the main bonding must be upgraded to 10 mm². Supplementary bonding is only ever omittable on PME supplies, never on TN-S or TT, because the earthing arrangement is what carries the fault.',
+      'Three conditions: the room must contain no metal pipework, all accessories must be IP X4 rated, and the floor must be tiled rather than carpeted. When the room has no extraneous-conductive-parts and the right IP ratings, supplementary bonding serves no purpose and can be left out.',
       'Three conditions all met: (a) all final circuits of the location comply with the requirements for automatic disconnection per Reg 411.3.2; (b) all final circuits of the location have additional protection by means of an RCD per Reg 415.1.1 (typically 30 mA); (c) all extraneous-conductive-parts of the location are effectively connected to the protective equipotential bonding per Reg 411.3.1.2 (i.e. main bonding is in place and proven).',
-      'An Improver has completed the technical qualifications (often Level 3 NVQ or 2365-03) but has not yet passed AM2 — they work under the supervision of an Approved Electrician. An Electrician has passed AM2 and can work without direct supervision on routine work. Improver is therefore the post-college, pre-AM2 grade.',
     ],
     correctIndex: 3,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     question:
       'Reg 415.2.2 sets the resistance condition for supplementary bonding effectiveness. For an AC system, what is the formula?',
     options: [
-      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
-      'The leak must be sealed and the smoke test repeated — the enclosure must pass before any asbestos work can begin',
-      'Slightly lower accuracy than the high-current test (factor of 2-3 in resolution) but adequate for verifying compliance with Table 41.3',
+      'R < 25 V / I_a (the touch-voltage limit is halved to 25 V for AC supplementary bonding, because wet locations require a lower threshold than the general 50 V).',
+      'R < I_a / 50 V (the operating current is divided by the touch-voltage limit, giving the maximum conductance the bond must achieve rather than the maximum resistance).',
       'R < 50 V / I_a (where I_a is the operating current of the protective device — for RCDs, I_Δn; for overcurrent devices, the 5 s operating current).',
+      'R < 50 V × I_a (the touch-voltage limit is multiplied by the device operating current to give the maximum permitted bond resistance for an AC system).',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 415.2.2 (AC systems) — R < 50 V / I_a. The 50 V is the conventional touch voltage limit; I_a is the device that disconnects under fault. For a 30 mA RCD: R < 50 / 0.030 = 1667 ohm. For a 32 A B-type MCB at 5 s operation (~5×In = 160 A): R < 50/160 = 0.3125 ohm. The supplementary bond conductance must be sufficient to keep touch voltage under 50 V during the disconnection time.',
   },
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'A 1960s house has supplementary bonding cable visible between the bath, the towel rail and the copper pipes in the bathroom. The bathroom has all 30 mA RCD protection on every circuit. Main bonding to gas and water is in place and tests OK. What\'s the right approach to the existing supplementary bonding?',
     options: [
-      'Digital and durable — typically PDF for the drawings and schedules, native files (DWG, RVT, IFC) where the building owner has compatible software, and a structured index. Hard-copy printout if the building owner needs one. On HRRBs, format must support the BSA 2022 golden thread requirements (accessible, structured, digital).',
-      'Drilled within the centre third of the joist depth, in the middle 25-40% of the span, and not weaken the structural integrity. Notches allowed in top of joist within prescribed limits per Building Regulations Part A and BS 5268.',
-      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
-      'Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.',
+      'Remove it. Once the omission conditions of Reg 701.415.2 are met the supplementary bonding becomes a non-conformance and must be taken out, because the regulation prohibits supplementary bonding wherever the three conditions are satisfied.',
+      'Replace it with a 10 mm² conductor. Existing supplementary bonding in an older bathroom is undersized to modern standards, so it must be upgraded to main-bonding cross-section before the installation can be certified.',
+      'Code it C2 on the certificate. Supplementary bonding in a fully RCD-protected bathroom is potentially dangerous because it creates a parallel earth path, so it must be flagged as a defect requiring remedial action.',
+      'Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.',
     ],
     correctAnswer: 3,
     explanation:
@@ -127,9 +127,9 @@ const quizQuestions = [
       'On a NEW domestic install with all-RCD protection, the bathroom has the bath, the towel rail, copper hot/cold pipes and a heated towel rail circuit. The main bonding to gas and water at the building intake is in place. Do you need to install supplementary bonding cable in the bathroom?',
     options: [
       'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
-      'Close to specific sensitive equipment — usually within a few metres of the equipment terminals (server cabinet, medical equipment, AV / studio gear, specialised electronic plant). Provides the final stage of cascade reduction; typically combined with Type 2 upstream.',
-      's.2 is the duty to employees; s.3 is the duty to non-employees affected by the work — customers, the public, other trades, visitors. On a domestic install it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s s.3 that catches the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s family. On a commercial fit-out it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s s.3 that catches the trades next to you.',
-      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
+      'Yes — supplementary bonding is mandatory in every room containing a bath or shower without exception, because the wet environment always requires local equipotential bonding regardless of RCD protection or main bonding.',
+      'Yes — but only between the towel rail circuit and the copper pipes, because that is the one combination of metal parts that the 30 mA RCD does not cover. The bath and the other pipework can be left unbonded.',
+      'No — but only because the bathroom is a new build. On any existing dwelling supplementary bonding would still be required, as the omission permission of Reg 701.415.2 applies to new installations only.',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'What is the minimum CSA for a supplementary bonding conductor between two exposed-conductive-parts where mechanical protection is provided?',
     options: [
-      'The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate',
+      'A flat 4 mm² minimum in all cases, regardless of the CPC sizes — supplementary bonds between exposed-conductive-parts always use 4 mm² because that is the smallest cross-section permitted for any bonding conductor.',
       'Per Reg 544.2.1 — conductance not less than the smaller protective conductor connected to the exposed-conductive-parts. If the smaller CPC is e.g. 1.5 mm², the supplementary bond can be 1.5 mm² provided it has equivalent mechanical protection.',
-      'All business income (invoices issued, payments received), all business expenses (receipts, invoices), bank statements, mileage records if claiming vehicle expenses, capital purchases (tools, equipment, vehicle). Keep for at least 5 years after the 31 January filing deadline.',
-      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
+      'Half the cross-section of the larger CPC connected to the two exposed-conductive-parts, with a 6 mm² minimum, mirroring the sizing rule used for main protective bonding on a non-PME supply.',
+      'Equal to the line conductor of the circuit supplying the equipment, because a supplementary bond between two exposed-conductive-parts must be able to carry the full load current of the larger of the two circuits.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'In Reg 415.2.2, the "I_a" term for an overcurrent protective device is defined as:',
     options: [
-      'Ask the assessor to rephrase or clarify the question — this is completely acceptable and demonstrates professional communication rather than guessing and giving an irrelevant answer',
-      'Document the programme change and its impact, notify the main contractor in writing of any additional costs or delays, and follow up with a formal variation or claim if applicable',
+      'The rated current (In) printed on the device — for a 32 A MCB, I_a is simply 32 A, because the bond must keep touch voltage under 50 V at the device\'s nominal rating.',
+      'The 0.1 s operating current of the device — the current needed to clear the fault within the 0.1 s instantaneous-trip window, because supplementary bonding is designed for fast disconnection.',
       'The 5 s operating current of the device — the current that causes the device to operate within 5 seconds (typically the current at the magnetic-trip threshold for an MCB, or the BS 88 fuse 5 s curve current).',
-      'SAP is the statutory methodology for assessing dwelling energy performance and underpins EPC ratings, but heat pump SIZING uses BS EN 12831 heat-loss calculations — not SAP',
+      'The prospective fault current at the device — the maximum current the supply can deliver into a fault, because the bond resistance must be calculated against the worst-case fault the circuit could see.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     question:
       'Why does BS 7671 distinguish "main" bonding from "supplementary" bonding rather than treating all bonding as one concept?',
     options: [
-      'Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.',
-      'Hazardous Waste under EWC code 20 01 21* (the asterisk denotes hazardous). Fluorescent tubes contain mercury vapour — typically 3–5 mg in a 5-foot T8, less in modern T5 and CFL. Mercury is acutely toxic if inhaled and persistent in the environment. Producers of hazardous waste who generate over 500 kg / year must register with the Environment Agency; under that threshold the firm is exempt but still has the Duty of Care to use a licensed carrier and disposal route. Consignment Notes accompany the waste and are kept for three years.',
-      'The employer\\\\\\\'s firm needs Competent Person Scheme registration (NICEIC / NAPIT / ELECSA) to self-certify the firm\\\\\\\'s notifiable domestic work. The apprentice carries: (a) a JIB Industrial Determination card showing their grade and apprenticeship year (issued through the apprenticeship); (b) ECS card for site access on most major commercial sites; (c) evidence of their college enrolment and progression. The apprentice does NOT need personal CPS membership — that\\\\\\\'s a contractor-level registration.',
+      'Because they are sized from different conductors. Main bonding is sized from the line conductor of the largest circuit and supplementary bonding from the neutral, so BS 7671 separates them to make clear which conductor each is derived from.',
+      'Because they apply to different supply types. Main bonding is required only on TN-C-S (PME) supplies and supplementary bonding only on TT supplies, so the two terms exist to distinguish the earthing arrangements they belong to.',
+      'Because they are tested differently. Main bonding is verified by an insulation-resistance test and supplementary bonding by a continuity test, so the two names exist to indicate which test procedure applies to each.',
       'Because they serve different protective functions. Main bonding (411.3.1.2) is the ADS strategy at building intake — equalising potential of all extraneous-conductive-parts to the MET so a fault anywhere in the installation produces a controlled potential rise. Supplementary bonding (415.2) is "additional protection" at a specific location where touch-voltage risk is unusually high (wet skin, bare feet) and the ADS disconnection times alone may not be fast enough to prevent shock.',
     ],
     correctAnswer: 3,
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'A fully-RCD-protected bathroom has all extraneous-conductive-parts connected to main bonding at the MET. You decide to install supplementary bonding cable anyway, "for redundancy". Is this:',
     options: [
-      'Permitted — Reg 701.415.2 allows omission but doesn\\\\\\\\\\\\\\\'t prohibit installation. Many electricians fit supplementary as a defensive standard despite the omission permission, on the basis that an additional layer of protection costs little and provides margin against any future loss of RCD protection. Code C3 finding on EICR if absent in older bathrooms; never a finding for fitting it as additional protection.',
-      'When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.',
-      'Starting each week by asking your team: "What obstacles are you facing that I can help remove?" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves',
-      'You assess against current BS 7671 but use the C1/C2/C3 codes per Best Practice Guide 4. Departures that were compliant at installation but no longer meet the current edition (e.g. a fully metal CU on a 16th edition install) are typically C3 (improvement recommended) — not C1 or C2 — unless they present an actual present danger or potential danger. The EICR is not a vehicle for upgrading every old install to the latest edition.',
+      'Permitted — Reg 701.415.2 allows omission but doesn\'t prohibit installation. Many electricians fit supplementary as a defensive standard despite the omission permission, on the basis that an additional layer of protection costs little and provides margin against any future loss of RCD protection. Code C3 finding on EICR if absent in older bathrooms; never a finding for fitting it as additional protection.',
+      'Prohibited — once the omission conditions are met, fitting supplementary bonding becomes a breach of Reg 701.415.2 because the regulation forbids redundant bonding, and the additional conductor would have to be coded C2 on the certificate.',
+      'Permitted, but only if you uprate the bond to 10 mm². Supplementary bonding fitted for redundancy in a fully-bonded bathroom must match main-bonding cross-section, otherwise it is undersized and creates a non-conformance.',
+      'Prohibited — supplementary bonding in a fully RCD-protected bathroom introduces a parallel earth path that can carry circulating currents, so BS 7671 does not allow it to be fitted once the RCD provides additional protection.',
     ],
     correctAnswer: 0,
     explanation:

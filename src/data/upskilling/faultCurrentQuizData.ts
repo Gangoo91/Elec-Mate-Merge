@@ -5,10 +5,10 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of prospective fault current testing?',
     options: [
-      'Arc flash protection due to high energy levels',
+      'To measure the insulation resistance of the circuit',
       'To verify protective device breaking capacity adequacy',
-      'Prospective short-circuit current (Ipsc)',
-      'It decreases due to increased resistance',
+      'To confirm the polarity of the supply conductors',
+      'To establish the ambient operating temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -16,24 +16,24 @@ export const faultCurrentQuizData: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'Which fault current is typically higher?',
+    question: 'At a given point, which prospective fault current is typically higher?',
     options: [
       'Prospective earth fault current (Ipef)',
-      'They are always equal',
+      'The line-to-earth fault current via the CPC',
       'Prospective short-circuit current (Ipsc)',
-      'It depends on the cable length',
+      'The residual current detected by the RCD',
     ],
     correctAnswer: 2,
     explanation:
-      'Prospective short-circuit current (Ipsc) is typically higher because it does not include the additional resistance of the earth fault loop path that limits Ipef.',
+      'Prospective short-circuit current (Ipsc), measured line-to-neutral or line-to-line, is typically higher because it does not include the additional impedance of the protective conductor in the earth fault loop path that limits Ipef.',
   },
   {
     id: 3,
     question: 'What happens to fault current as conductor temperature increases?',
     options: [
-      'Prospective short-circuit current (Ipsc)',
-      'Arc flash protection due to high energy levels',
-      'Immediate remedial action required',
+      'It increases as resistance falls',
+      'It remains constant regardless of temperature',
+      'It rises sharply once the cable reaches 70°C',
       'It decreases due to increased resistance',
     ],
     correctAnswer: 3,
@@ -46,9 +46,9 @@ export const faultCurrentQuizData: QuizQuestion[] = [
       'If a Type B MCB has a 6kA breaking capacity and the measured fault current is 8kA, what action is required?',
     options: [
       'Immediate remedial action required',
-      'Ipsc = U₀ ÷ (Ze + circuit impedance)',
-      'It decreases due to increased resistance',
-      'Prospective short-circuit current (Ipsc)',
+      'No action; the 6kA rating provides ample margin',
+      'Downrate the MCB to a lower current rating',
+      'Re-test at a higher ambient temperature only',
     ],
     correctAnswer: 0,
     explanation:
@@ -58,10 +58,10 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     id: 5,
     question: 'What is the correct formula for calculating prospective short-circuit current?',
     options: [
-      'Immediate remedial action required',
+      'Ipsc = (Ze + circuit impedance) ÷ U₀',
       'Ipsc = U₀ ÷ (Ze + circuit impedance)',
-      'Arc flash protection due to high energy levels',
-      'Prospective short-circuit current (Ipsc)',
+      'Ipsc = U₀ × (Ze + circuit impedance)',
+      'Ipsc = U₀ ÷ (Ze − circuit impedance)',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,10 +71,10 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     id: 6,
     question: 'Why must fault current testing be performed on live circuits?',
     options: [
-      'Arc flash protection due to high energy levels',
-      'To verify protective device breaking capacity adequacy',
+      'Dead testing would damage the test instrument',
+      'It is a legal requirement to test everything live',
       'The test requires current flow through the complete fault path',
-      'At origin, distribution boards, and where device ratings change',
+      'Live testing is faster and avoids isolating the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,9 +84,9 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What should be included in fault current test documentation?',
     options: [
-      'To verify protective device breaking capacity adequacy',
-      'At origin, distribution boards, and where device ratings change',
-      'Arc flash protection due to high energy levels',
+      'Only the single highest reading at the origin',
+      'The make and model of the test instrument alone',
+      'A photograph of the consumer unit and nothing more',
       'Test location, values, device ratings, and compliance status',
     ],
     correctAnswer: 3,
@@ -95,12 +95,12 @@ export const faultCurrentQuizData: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: 'Where should fault current be tested in an installation?',
+    question: 'Where should prospective fault current be tested in an installation?',
     options: [
       'At origin, distribution boards, and where device ratings change',
-      'To verify protective device breaking capacity adequacy',
-      'The test requires current flow through the complete fault path',
-      'Arc flash protection due to high energy levels',
+      'Only at the final socket-outlet on each circuit',
+      'At a single midpoint of the longest cable run',
+      'Only at points where an RCD is installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What PPE consideration is specific to fault current testing?',
     options: [
-      'Prospective short-circuit current (Ipsc)',
+      'Hearing protection against instrument alarm tones',
       'Arc flash protection due to high energy levels',
-      'Immediate remedial action required',
-      'To verify protective device breaking capacity adequacy',
+      'Hi-vis clothing for working in low light',
+      'A dust mask for working near old cable sheathing',
     ],
     correctAnswer: 1,
     explanation:

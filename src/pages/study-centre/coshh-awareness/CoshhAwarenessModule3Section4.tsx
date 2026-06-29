@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'You accidentally sustain a needle-stick injury from a discarded needle found on a construction site. What is the correct immediate action?',
     options: [
-      'Squeeze the wound hard to force out as much blood as possible, then bandage it',
       'Encourage the wound to bleed freely, wash with soap and running water, cover with a waterproof dressing, and report immediately for medical assessment',
+      'Squeeze the wound hard to force out as much blood as possible, then bandage it',
       'Apply antiseptic cream and continue working — the risk is negligible',
       'Suck the wound to remove any contamination and apply a plaster',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'After a needle-stick injury, encourage the wound to bleed freely (do NOT suck the wound) and wash thoroughly with soap and running water. Do NOT scrub the area. Cover with a waterproof dressing and report immediately to your supervisor and occupational health. Attend A&E or an occupational health clinic urgently — post-exposure prophylaxis (PEP) for HIV must be started within 72 hours (ideally within 1 hour) if deemed necessary following a risk assessment.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
       'A construction worker develops flu-like symptoms, jaundice (yellowing of the skin and eyes), and kidney pain two weeks after working in a flooded drainage trench. Which disease should be suspected?',
     options: [
       "Legionnaires' disease",
-      "Leptospirosis (Weil's disease)",
       'Histoplasmosis',
       'Tetanus',
+      "Leptospirosis (Weil's disease)",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The combination of flu-like symptoms, jaundice, and kidney pain following contact with potentially rat-urine-contaminated water in a drainage trench is highly suggestive of leptospirosis (Weil's disease). The incubation period is typically 7\u201312 days. Leptospirosis is a notifiable disease in the UK \u2014 it MUST be reported to the local authority. Early diagnosis and antibiotic treatment are essential, as the severe form (Weil's disease) can cause liver and kidney failure and can be fatal.",
   },
@@ -146,12 +146,12 @@ const quizQuestions = [
     question:
       'Which biological hazard is most commonly associated with working in or around pigeon roosting areas on rooftops?',
     options: [
+      'Ornithosis (psittacosis) and histoplasmosis',
       'Leptospirosis',
       "Legionnaires' disease",
-      'Ornithosis (psittacosis) and histoplasmosis',
       'Tetanus',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Working near pigeon roosting areas presents risks of ornithosis (psittacosis) caused by Chlamydophila psittaci bacteria found in dried bird droppings, and histoplasmosis caused by the Histoplasma capsulatum fungus that grows in soil enriched with bird or bat droppings. Both diseases are contracted by inhaling contaminated dust. When working on rooftops with bird droppings, an FFP3 respirator should be worn, the droppings should be dampened before disturbance to suppress dust, and disposable coveralls should be used.',
   },
@@ -161,11 +161,11 @@ const quizQuestions = [
       'Which of the following is the correct procedure if you discover discarded needles or sharps on a construction site?',
     options: [
       'Pick them up carefully with gloves and dispose of them in a general waste bin',
-      'Leave them in place, mark and cordon off the area, and report it so that sharps can be collected using a proper sharps container and tongs or a litter-pick tool',
       'Cover them with rubble or soil so that nobody else can be injured',
       'Use pliers to pick them up and place them in a plastic bag for disposal',
+      'Leave them in place, mark and cordon off the area, and report it so that sharps can be collected using a proper sharps container and tongs or a litter-pick tool',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Discarded needles and sharps should NEVER be picked up by hand, even with gloves. The correct procedure is to leave them in place, mark and cordon off the area so that others are warned, and report the find to your supervisor. A trained person should then collect the sharps using tongs or a mechanical pick-up tool and place them in a proper rigid-walled sharps container (yellow, conforming to BS 7320). The sharps container should then be disposed of through a licensed clinical waste route.',
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'An electrician is working in a drainage pump station. Which vaccinations might their occupational health provider recommend?',
     options: [
-      'BCG (tuberculosis) only',
       'Hepatitis A and tetanus, with hepatitis B considered depending on risk assessment',
+      'BCG (tuberculosis) only',
       'Influenza and COVID-19 only',
       'No vaccinations are recommended for this type of work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Workers who may come into contact with sewage or wastewater should be offered hepatitis A vaccination (faecal-oral route of transmission), and their tetanus status should be confirmed as up to date. Hepatitis B vaccination may also be considered depending on the risk assessment, particularly if there is a risk of contact with sharps or blood-contaminated materials. Leptospirosis vaccination is not routinely available in the UK, so control relies on hygiene measures and PPE.',
   },
@@ -189,11 +189,11 @@ const quizQuestions = [
       'Which of the following control measures is MOST important when preventing biological hazards on construction sites?',
     options: [
       'Providing workers with antibiotics to take before entering contaminated areas',
-      'Good hygiene practices: handwashing before eating/drinking/smoking, covering cuts, and access to adequate welfare facilities',
       'Working faster so that exposure time is minimised',
+      'Good hygiene practices: handwashing before eating/drinking/smoking, covering cuts, and access to adequate welfare facilities',
       'Only employing workers who have natural immunity to common infections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Good hygiene practices are the single most important control measure for preventing biological hazards on construction sites. This includes thorough handwashing with soap and water before eating, drinking, or smoking; covering all cuts, abrasions, and skin conditions with waterproof dressings; access to adequate welfare facilities (clean running water, soap, toilets, drying facilities); and never eating, drinking, or smoking in contaminated areas. These basic measures prevent the vast majority of biological agent exposures on site.',
   },

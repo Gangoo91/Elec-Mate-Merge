@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'You are about to insulation-resistance test a Class I office printer. What test voltage does IET CoP specify for in-service equipment, and where is it applied?',
     options: [
-      '250 V DC, applied L to N',
-      '500 V DC, applied between the live conductors (L+N joined) and the protective conductor / accessible metal — IET CoP Chapter 15. The test stresses the insulation at well above operating voltage and reveals weakness before it becomes a fault',
-      '1000 V AC, applied L to E',
-      '230 V AC at mains frequency',
+      '250 V DC, applied between L and N',
+      '500 V DC, applied between the joined live conductors and the earth',
+      '1000 V AC, applied between L and E',
+      '230 V AC, applied at mains frequency',
     ],
     correctIndex: 1,
     explanation:
@@ -37,23 +37,23 @@ const inlineChecks = [
     question:
       'A Class I appliance reads 0.7 MΩ on the IR test. The IET CoP minimum for general appliances is 1 MΩ. What is the correct response?',
     options: [
-      'Pass — under 1 MΩ is fine',
-      'Fail. Investigate before re-testing. Common causes: damp insulation (run the appliance, allow it to warm and dry, retest), surface contamination at terminations, capacitive coupling from a switch-mode PSU (use substitute leakage instead), or genuine insulation breakdown',
-      'Pass with comment',
-      'Average with the next reading',
+      'Pass — a reading just under 1 MΩ is acceptable in practice',
+      'Fail, and investigate the cause before any re-testing',
+      'Pass with a comment noting the borderline reading',
+      'Average it with the next appliance reading and pass on the mean',
     ],
     correctIndex: 1,
     explanation:
-      'A reading below the IET CoP minimum (1 MΩ for general appliances) is a fail and triggers investigation. Damp, contamination and capacitance are recoverable causes; genuine insulation breakdown is not. Use substitute leakage (M4.4) where capacitance is the suspected cause on electronic kit.',
+      'A reading below the IET CoP minimum (1 MΩ for general appliances) is a fail and triggers investigation. Common causes: damp insulation (run the appliance to warm and dry it, then retest), surface contamination at terminations, capacitive coupling from a switch-mode PSU (use substitute leakage instead), or genuine insulation breakdown. Damp, contamination and capacitance are recoverable; genuine breakdown is not. Use substitute leakage (M4.4) where capacitance is the suspected cause on electronic kit.',
   },
   {
     id: 'patm4-s2-class-ii',
     question: 'You are testing a Class II hairdryer. Where do you connect the IR test probes?',
     options: [
-      'L+N to earth pin — same as Class I',
-      'L+N (joined at the plug) to any accessible conductive part of the casing or to a probe held against / wrapped in metal foil around the body. There is no protective conductor on a Class II appliance, so the second test point is the user-touchable metal directly',
-      'L to N only',
-      'Skip the test entirely — Class II does not need IR',
+      'L+N to the earth pin — exactly as you would for Class I',
+      'L+N to accessible metal, via a probe or a foil wrap on the body',
+      'L to N only, across the supply conductors at the plug',
+      'Skip the test entirely — Class II does not need an IR test',
     ],
     correctIndex: 1,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'A laptop power supply (Class I, switch-mode) repeatedly fails IR with a reading of 0.3 MΩ. Visual is fine and the unit works normally. What does IET CoP allow?',
     options: [
-      'Fail and discard the unit',
-      'Substitute leakage testing in lieu of the IR test, where IR cannot be performed reliably because of EMC components or capacitive coupling internal to the equipment. The substitute leakage test applies a low voltage and measures the leakage current at operating-equivalent voltage; an acceptance of ≤ 0.5 mA per IET CoP for Class I appliances confirms the equipment is safe',
-      'Re-test at 250 V instead',
-      'Test with the appliance unplugged',
+      'Fail the unit and remove it from service for disposal',
+      'Substitute leakage testing in lieu of the IR test',
+      'Re-test the unit at 250 V DC instead of 500 V DC',
+      'Test the unit with the appliance unplugged from the supply',
     ],
     correctIndex: 1,
     explanation:
@@ -89,8 +89,8 @@ const quizQuestions = [
     id: 2,
     question:
       'The IET CoP minimum insulation resistance for a general 230 V Class I appliance is what?',
-    options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
-    correctAnswer: 1,
+    options: ['0.5 MΩ', '2 MΩ', '5 MΩ', '1 MΩ'],
+    correctAnswer: 3,
     explanation:
       'IET CoP Chapter 15 sets the minimum at 1 MΩ for general appliances. The minimum rises to 2 MΩ for surgical / medical IT equipment (where the consequences of insulation failure are more severe). Class II tests are also held to the 1 MΩ minimum.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'For Class II equipment (no protective conductor), how is the IR test applied?',
     options: [
-      'It is not — Class II is exempt',
-      'L+N (linked) to a probe held against accessible conductive parts of the casing — typically a metal foil wrapped around the plastic enclosure, or a designated metal grip / handle',
-      'Earth pin to chassis only',
-      'L to N at 250 V',
+      'L+N (linked) to a probe on accessible metal, often a foil wrap on the casing',
+      'It is not applied at all — Class II equipment is exempt from IR testing',
+      'Earth pin to chassis only, since there is no live test point',
+      'L to N at 250 V DC, across the supply conductors at the plug',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Class II equipment has no earth pin, but the insulation between live parts and any accessible conductive surface still has to be tested. IET CoP directs the use of a contact probe — often via a metal foil wrap on plastic enclosures — to perform the test. The 1 MΩ minimum applies the same way.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS EN 61557-2 governs which type of test instrument?',
     options: [
-      'Low-resistance ohmmeters for earth continuity',
-      'Insulation resistance test instruments — the part of the BS EN 61557 series specifying performance requirements for IR testers used on low-voltage installations and equipment',
-      'Mains frequency test instruments',
-      'Earth-loop impedance testers',
+      'Low-resistance ohmmeters, used for the earth-continuity test',
+      'Insulation resistance test instruments, for low-voltage equipment',
+      'Mains-frequency test instruments, used for leakage measurement',
+      'Earth-loop impedance testers, used for Zs on the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A Class I PC tests at 0.4 MΩ on the 500 V IR test. Visual is sound and the PC functions correctly. The IT department confirm the unit is in daily use. What is the correct course of action per IET CoP?',
     options: [
-      'Fail and discard',
-      'Recognise that Y-capacitors and EMC components in the switch-mode PSU can produce a low-but-safe IR reading. Switch to substitute leakage testing per IET CoP — measure leakage at operating voltage and judge against the ≤ 0.5 mA acceptance value (Class I) or ≤ 0.25 mA (Class II)',
-      'Re-test at 250 V',
-      'Fail — IR is the only valid test',
+      'Fail the PC and discard it as electrically unsafe',
+      'Re-test the PC at 250 V DC instead of 500 V DC',
+      'Switch to substitute leakage testing per IET CoP — the EMC filter is the cause',
+      'Fail it — IR is the only valid test and 0.4 MΩ is below the floor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IET CoP Chapter 15 explicitly permits substitute leakage as an alternative to IR where internal EMC capacitance produces a misleading IR result. The substitute test applies a low test voltage, measures the leakage current at the equivalent of operating voltage, and judges against ≤ 0.5 mA (Class I) or ≤ 0.25 mA (Class II). A pass on substitute leakage is a valid pass.',
   },
@@ -151,8 +151,8 @@ const quizQuestions = [
     id: 7,
     question:
       'What does the IET CoP set as the minimum insulation resistance for surgical / medical IT equipment, distinct from general appliances?',
-    options: ['1 MΩ', '2 MΩ', '5 MΩ', '10 MΩ'],
-    correctAnswer: 1,
+    options: ['1 MΩ', '5 MΩ', '10 MΩ', '2 MΩ'],
+    correctAnswer: 3,
     explanation:
       'IET CoP raises the minimum to 2 MΩ for surgical IT equipment, recognising the higher consequence of insulation failure on patient-connected devices. Lab and dental kit may have their own equipment-specific limits; the 2 MΩ is the CoP baseline for medical IT.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 Reg 643.3 governs insulation resistance testing of the fixed installation. Why is it relevant to PAT?',
     options: [
-      'It directly governs PAT — Reg 643.3 sets PAT acceptance values',
-      "It governs the fixed installation, not PAT — but it is the parent principle: insulation resistance verified by application of a test voltage and measurement, with the live conductors disconnected from the supply. PAT applies the same principle to the appliance side, with acceptance set by IET CoP rather than BS 7671's 1 MΩ-per-circuit minimum",
-      'It exempts PAT from IR testing',
-      'It only applies to motors',
+      'It is the parent principle — IR verified by applied test voltage and measurement',
+      'It directly governs PAT, setting the PAT IR acceptance values to use',
+      'It exempts PAT-tested equipment from any IR testing at all',
+      'It applies only to motors and rotating machines, not appliances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.3 sets the IR duty for the fixed installation — typically 1 MΩ minimum for the relevant circuits. PAT carries the same principle to the appliance side, but with an acceptance value tuned to portable equipment. Same principle, different acceptance, same instrument category (BS EN 61557-2).',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     question:
       'You are testing an industrial vacuum cleaner (Class I, single-phase, 230 V). The IR reading is 14 MΩ. Pass or fail?',
     options: [
-      'Fail — too high, must be a fault',
-      'Pass — comfortably above the 1 MΩ minimum and consistent with sound, dry insulation. A high reading is the expected outcome on a healthy appliance with good insulation; the minimum is a floor, not a target',
-      'Investigate — anything over 10 MΩ is suspicious',
-      'Re-test',
+      'Fail — 14 MΩ is too high and must indicate a fault',
+      'Pass — comfortably above the 1 MΩ minimum, consistent with dry insulation',
+      'Investigate — any reading over 10 MΩ is suspicious and needs checking',
+      'Re-test — a reading this high should always be confirmed before passing',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'Why is the IR test always performed AFTER earth continuity in the IET CoP test sequence?',
     options: [
-      'Tradition only',
-      'Because the IR test applies 500 V DC to the appliance. If the protective conductor is broken (unknown until earth continuity has been confirmed), the test voltage can leave the chassis at 500 V with no fault path. Confirming earth continuity first means the IR test is performed on an appliance with a known-good protective path — safer for the operator and gives a meaningful result',
-      'Because IR is more accurate',
-      'Because it tests the same insulation',
+      'It is tradition only, with no real technical reason behind it',
+      'Because the IR test is the more accurate of the two measurements',
+      'Because both tests check the same insulation barrier anyway',
+      'Because a broken protective conductor leaves the chassis at 500 V with no fault path',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IET CoP Ch 15 sets the order deliberately: earth continuity → IR → polarity → leakage → functional. A failed earth continuity removes the appliance before IR is attempted because the test voltage on a chassis without a fault path is a safety risk. The order is procedural safety, not preference.',
   },

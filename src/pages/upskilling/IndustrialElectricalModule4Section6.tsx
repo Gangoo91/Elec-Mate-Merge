@@ -53,12 +53,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
       id: 'qc1-safety-plc-m4s6',
       question: 'What is the key architectural difference between a Safety PLC and a standard PLC?',
       options: [
-        'Safety PLCs are faster',
         'Safety PLCs use redundant processors with cross-checking',
-        'Safety PLCs have more I/O points',
-        'Safety PLCs use different programming languages',
+        'Safety PLCs simply run at a faster scan rate',
+        'Safety PLCs always have more I/O points',
+        'Safety PLCs use an entirely different programming language',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Safety PLCs use redundant (dual or triple) processors that continuously cross-check each other. If any discrepancy is detected, the system goes to a safe state. This architecture is fundamental to achieving the required Safety Integrity Levels (SIL) per IEC 61508.',
     },
@@ -80,12 +80,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
       id: 'qc3-safety-plc-m4s6',
       question: 'What is the purpose of proof testing in safety-related control systems?',
       options: [
-        'To verify production output',
+        'To verify production output rates',
+        'To calibrate sensors for measurement accuracy',
         'To detect dangerous undetected faults before they cause harm',
-        'To calibrate sensors for accuracy',
-        'To update the PLC firmware',
+        'To update the PLC firmware to the latest version',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Proof testing is performed at defined intervals to detect dangerous undetected faults that automatic diagnostics cannot find. The proof test interval is a critical factor in calculating the Probability of Failure on Demand (PFD) and maintaining the required SIL/PL over the equipment lifetime.',
     },
@@ -97,6 +97,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
         'Which standard specifically addresses functional safety of electrical/electronic/programmable electronic safety-related systems?',
       options: ['ISO 9001', 'IEC 61508', 'BS 7671', 'ISO 14001'],
       correctAnswer: 'IEC 61508',
+      explanation:
+        'IEC 61508 is the umbrella functional-safety standard for E/E/PE safety-related systems; ISO 9001 is quality, ISO 14001 environmental and BS 7671 the wiring regulations.',
     },
     {
       question: 'What does SIL stand for in functional safety?',
@@ -107,64 +109,82 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
         'Standard Industrial Limit',
       ],
       correctAnswer: 'Safety Integrity Level',
+      explanation:
+        'SIL stands for Safety Integrity Level — a measure (SIL 1 to SIL 4) of the risk-reduction reliability a safety function must achieve under IEC 61508/62061.',
     },
     {
       question:
         'In a Category 3 safety system per ISO 13849-1, what happens when a single fault occurs?',
       options: [
-        'The system stops immediately',
+        'The system stops immediately on every single fault',
+        'An alarm sounds but operation simply continues',
+        'The system always requires a manual reset first',
         'The safety function is still performed',
-        'An alarm sounds but operation continues',
-        'The system requires manual reset',
       ],
       correctAnswer: 'The safety function is still performed',
+      explanation:
+        'In an ISO 13849-1 Category 3 architecture a single fault must not lead to loss of the safety function; redundancy and monitoring keep the safety function available until the fault is detected.',
     },
     {
       question:
         'What is the minimum safety distance calculation for a light curtain primarily based on?',
       options: [
-        'The machine cycle time',
         'The hand speed constant and stopping time',
+        'The machine cycle time',
         'The production rate required',
-        'The light curtain resolution',
+        'The light curtain beam resolution',
       ],
       correctAnswer: 'The hand speed constant and stopping time',
+      explanation:
+        'The minimum safety distance (EN ISO 13855) is built on the hand approach speed constant and the machine stopping time, so a person cannot reach the hazard before it stops.',
     },
     {
       question:
         'What is the typical hand approach speed (K value) used in safety distance calculations per EN ISO 13855?',
       options: ['1000 mm/s', '1600 mm/s', '2000 mm/s', '2500 mm/s'],
       correctAnswer: '2000 mm/s',
+      explanation:
+        'EN ISO 13855 uses a hand/arm approach speed constant of 2000 mm/s for most detection-zone calculations (reducing to 1600 mm/s in defined cases), feeding directly into the safety distance.',
     },
     {
       question:
         'Which UK regulation specifically requires machinery to be safe and properly guarded?',
       options: ['COSHH Regulations', 'PUWER 1998', 'CDM Regulations', 'RIDDOR'],
       correctAnswer: 'PUWER 1998',
+      explanation:
+        'PUWER 1998 (Provision and Use of Work Equipment Regulations) requires work equipment to be safe, suitable and properly guarded; COSHH covers substances, CDM construction and RIDDOR incident reporting.',
     },
     {
       question:
         'What software tool is commonly used to calculate Performance Levels according to ISO 13849-1?',
-      options: ['AutoCAD', 'SISTEMA', 'MATLAB', 'LabVIEW'],
+      options: ['AutoCAD', 'MATLAB', 'LabVIEW', 'SISTEMA'],
       correctAnswer: 'SISTEMA',
+      explanation:
+        'SISTEMA (from the IFA) is the free tool engineers use to model safety functions and calculate the achieved Performance Level under ISO 13849-1.',
     },
     {
       question:
         'In two-hand control systems, what is the maximum allowable time between actuating both controls?',
       options: ['0.5 seconds', '1.0 second', '0.25 seconds', '2.0 seconds'],
       correctAnswer: '0.5 seconds',
+      explanation:
+        'Two-hand controls must require both buttons within 0.5 seconds of each other; otherwise the operation is cancelled, preventing one hand from being freed to enter the danger zone.',
     },
     {
       question:
         'What type of safety device would you use to detect a person standing in a hazardous area at floor level?',
       options: ['Light curtain', 'Safety mat', 'Interlock switch', 'Two-hand control'],
       correctAnswer: 'Safety mat',
+      explanation:
+        'A pressure-sensitive safety mat detects a person standing within a hazardous area at floor level and trips the machine, which a light curtain or interlock would not reliably do.',
     },
     {
       question:
         'According to IEC 62061, what is the maximum achievable SIL for a subsystem without redundancy (HFT=0)?',
-      options: ['SIL 1', 'SIL 2', 'SIL 3', 'SIL 4'],
+      options: ['SIL 1', 'SIL 3', 'SIL 4', 'SIL 2'],
       correctAnswer: 'SIL 2',
+      explanation:
+        'Under IEC 62061 a subsystem with a hardware fault tolerance of 0 (no redundancy) is limited to a maximum of SIL 2; achieving SIL 3 generally requires HFT of at least 1.',
     },
   ];
 

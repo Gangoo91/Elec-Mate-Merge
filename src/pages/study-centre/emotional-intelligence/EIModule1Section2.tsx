@@ -23,12 +23,12 @@ const quickCheckQuestions = [
     question:
       "According to LeDoux's research, why does the amygdala sometimes trigger an emotional response before the prefrontal cortex has finished processing?",
     options: [
-      'Because the amygdala is more important than the prefrontal cortex',
       'Because the direct pathway from thalamus to amygdala is faster than the cortical route',
+      'Because the amygdala is more important than the prefrontal cortex',
       'Because the prefrontal cortex only processes positive emotions',
       'Because the amygdala and prefrontal cortex are in different hemispheres',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "LeDoux's research showed that there are two pathways: a fast, direct route from the thalamus to the amygdala (the 'low road') and a slower route through the cortex (the 'high road'). The fast route means the amygdala can trigger a fight-or-flight response before the rational brain has had time to fully assess the situation.",
   },
@@ -45,11 +45,11 @@ const quickCheckQuestions = [
     question: 'In the cognitive triangle (from CBT), which three elements are interconnected?',
     options: [
       'Past, present, and future',
-      'Thoughts, emotions, and behaviours',
       'Id, ego, and superego',
+      'Thoughts, emotions, and behaviours',
       'Perception, understanding, and management',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The cognitive triangle, developed from Aaron Beck's cognitive model, shows that thoughts, emotions, and behaviours are all interconnected. Changing any one element affects the other two. This is a foundational concept in cognitive behavioural therapy and a practical tool for developing emotional intelligence.",
   },
@@ -118,8 +118,8 @@ const quizQuestions = [
     id: 4,
     question:
       'How long does the cortisol and adrenaline surge from an amygdala hijack typically last?',
-    options: ['About 6 seconds', 'About 20 minutes', 'About 2 hours', 'About 24 hours'],
-    correctAnswer: 1,
+    options: ['About 6 seconds', 'About 2 hours', 'About 24 hours', 'About 20 minutes'],
+    correctAnswer: 3,
     explanation:
       'The cortisol and adrenaline surge from an amygdala hijack typically takes about 20 minutes to fully subside. This is why it is so important to pause before responding in a heated situation — your neurochemistry is literally working against rational decision-making for those 20 minutes.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is emotional contagion?',
     options: [
-      'A mental health disorder that spreads through physical contact',
       'The tendency for emotions to spread from person to person through social interaction',
+      'A mental health disorder that spreads through physical contact',
       'A technique used in therapy to transfer positive emotions to patients',
       'The process by which the amygdala communicates with the prefrontal cortex',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Emotional contagion, researched by Hatfield, Cacioppo and Rapson, describes the tendency for emotions to spread from person to person through social interaction. We unconsciously mimic others' facial expressions, vocal tones, and body language, which triggers corresponding emotions in ourselves. This is why one stressed person can affect an entire team.",
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     options: [
       'The conscious route and the unconscious route',
       'The visual route and the auditory route',
-      'The fast, direct route (thalamus to amygdala) and the slow, cortical route (thalamus to cortex to amygdala)',
       'The left-brain route and the right-brain route',
+      'The fast, direct route (thalamus to amygdala) and the slow, cortical route (thalamus to cortex to amygdala)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "LeDoux identified two pathways: the fast 'low road' (thalamus directly to amygdala) which enables rapid emotional responses, and the slower 'high road' (thalamus to cortex to amygdala) which allows for more considered, rational processing. The fast route is why you can feel afraid before you consciously know what frightened you.",
   },

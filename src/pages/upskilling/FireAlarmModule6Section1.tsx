@@ -23,26 +23,26 @@ const inlineChecks = [
     question:
       'Under BS 5839-1:2025, who is responsible for the weekly user test of the fire alarm, and what is the minimum content of that test?',
     options: [
-      'The servicing organisation, who must attend weekly to test every device.',
-      'The designated responsible person under the Regulatory Reform (Fire Safety) Order 2005, in conjunction with premises management. The minimum content is to operate one manual call point (MCP) at a different location each week, confirm the system goes into alarm condition, confirm the sounders / VADs are audible / visible at the locations expected, confirm the alarm transmission to any ARC is received, and reset the system to normal. The user records the event in the logbook.',
-      'The fire and rescue service.',
-      'Anyone passing the panel; no specific role.',
+      'The designated responsible person under the RRO 2005, operating one rotated MCP, confirming alarm, sounders / VADs and ARC transmission, then resetting and logging the event.',
+      'The servicing organisation, attending weekly to functionally test every detector and call point in turn.',
+      'The fire and rescue service, who hold the statutory duty to carry out the routine weekly test.',
+      'Any occupier passing the panel, with no specific role nominated and no logbook entry required.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'The weekly user test is a duty of the responsible person (RRO 2005) — typically a member of premises management, trained by the commissioning / servicing organisation. The minimum content is the operation of one MCP, rotated through the building over successive weeks so every MCP is tested at least once per cycle, and verification that the sounders / VADs operate as expected. The event is recorded in the logbook.',
+      'The weekly user test is a duty of the responsible person (RRO 2005) — typically a member of premises management, trained by the commissioning / servicing organisation. The minimum content is the operation of one MCP at a different location each week, rotated through the building so every MCP is tested at least once per cycle, confirmation that the system goes into alarm, that the sounders / VADs operate as expected and that any ARC transmission is received, then a reset to normal. The user records the event in the logbook.',
   },
   {
     id: 'fam6-s1-tolerance',
     question:
       'A site has its acceptance certificate dated 14 January 2025. The servicing organisation has just attended for the first six-monthly inspection. What is the BS 5839-1:2025 acceptable date window for that visit?',
     options: [
-      'Strictly 14 July 2025 — no tolerance.',
-      '14 June 2025 to 14 August 2025 — a five-to-seven-month window calculated from the previous service / acceptance date. Clause 43.2.1 Note 1 of the 2025 revision permits the visit to be carried out any time between five and seven months after the previous inspection. The acceptance date is the datum (Note 2). A visit outside that window means the system is not being maintained in accordance with the standard.',
-      'Any time within the calendar year.',
-      'Within four weeks of the six-month anniversary.',
+      'Strictly 14 July 2025 — exactly six months from the acceptance date, with no tolerance permitted.',
+      'Any time before 31 December 2025, provided two service visits are completed within the calendar year.',
+      '14 June 2025 to 14 August 2025 — a five-to-seven-month window measured from the acceptance date as datum.',
+      'Within four weeks either side of the six-month anniversary — a tighter two-week-equivalent tolerance.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 5839-1:2025 clause 43.2.1 brings a long-standing custom and practice into the standard text — the six-monthly visit is acceptable any time between five and seven months after the previous one, with the acceptance date as the datum. The 2017 edition strictly required not more than six months; the 2025 edition recognises a one-month tolerance either side. Outside the window is non-compliant.',
   },
@@ -51,26 +51,26 @@ const inlineChecks = [
     question:
       'Across two consecutive six-monthly service visits, what proportion of devices and interfaces should have been functionally tested?',
     options: [
-      '50% over the two visits combined.',
-      '100% over the two visits combined — every detector, every MCP, every sounder, every VAD, every interface to ancillary equipment (fire dampers, AOVs, magnetic door holders, lift homing) should have been functionally tested at least once in any rolling twelve-month period. Each individual six-monthly visit functionally tests a representative sample; the two visits together must cover 100% of devices.',
-      '100% at every six-monthly visit.',
-      'No functional testing — only visual.',
+      '50% over the two visits combined, with the balance covered by the weekly user tests across the year.',
+      '100% at every six-monthly visit, so every device and interface is functionally tested twice a year.',
+      'No functional testing during servicing — a visual inspection of devices is sufficient at each visit.',
+      '100% over the two visits combined, each visit testing a representative sample of the device population.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'BS 5839-1 has long required that every device be functionally tested at least once per year. The 2025 standard retains this — the annual coverage is split across the two six-monthly visits in any pattern that suits the system size and layout. Recording which devices were tested at each visit, against the asset register, is how the servicing organisation evidences full annual coverage.',
+      'BS 5839-1 has long required that every device — every detector, MCP, sounder, VAD and interface to ancillary equipment (fire dampers, AOVs, magnetic door holders, lift homing) — be functionally tested at least once in any rolling twelve-month period. The 2025 standard retains this: the annual coverage is split across the two six-monthly visits in any pattern that suits the system size and layout. Recording which devices were tested at each visit, against the asset register, is how the servicing organisation evidences full annual coverage.',
   },
   {
     id: 'fam6-s1-ducts',
     question:
       'New in BS 5839-1:2025: at the twelve-monthly service visit, what additional functional test is now expected for any smoke detectors mounted in air-handling ductwork?',
     options: [
-      'No specific requirement.',
-      'Functional testing of the duct-mounted smoke detectors must now be carried out at the twelve-monthly visit (clause 43.2.1 list). Previously these detectors were often missed because access was awkward and they were treated as protected by the building-side detection. The 2025 standard explicitly adds them to the annual functional test list. Verification of the zone identification reported on the CIE against the zone plan is also added at the twelve-monthly visit.',
-      'Only a visual inspection through the access hatch.',
-      'A continuity test on the cabling only.',
+      'Functional testing of the duct-mounted smoke detectors must now be carried out at the twelve-monthly visit (clause 43.2.1 list).',
+      'No specific requirement — duct detectors remain outside the routine functional-test regime.',
+      'A visual inspection of the duct detector through the access hatch, with no functional test required.',
+      'A continuity test on the duct detector cabling only, leaving the head itself untested.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Two additions at the twelve-monthly visit are explicit in BS 5839-1:2025. First, smoke detectors in ventilation ducts must be functionally tested. Second, the zone descriptors / identification reported on the CIE must be verified against the current zone plan. Both close gaps that the 2017 wording did not formally require.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Who carries out the weekly fire alarm test under BS 5839-1:2025, and under what legislation does the duty arise?',
     options: [
-      'The maintenance contractor, under BS 5839 alone.',
-      'The designated responsible person (typically premises management or a trained occupier), under the Regulatory Reform (Fire Safety) Order 2005 (RRO 2005). BS 5839-1 sets out the recommended content of the test (operate one MCP, confirm alarm and signalling, reset, log) but the duty to perform it sits with the responsible person. The servicing organisation should train them at handover.',
-      'The fire and rescue service.',
-      'Anyone working in the building.',
+      'The maintenance contractor, whose six-monthly visits absorb the weekly test as part of the servicing contract.',
+      'The fire and rescue service, who hold the statutory duty to verify the alarm under fire-safety legislation.',
+      'The designated responsible person (typically premises management or a trained occupier), under the RRO 2005.',
+      'Any competent employee working in the building, with no specific role nominated to own the duty.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The responsible person under RRO 2005 owns the duty. BS 5839-1 spells out the recommended weekly test content. The servicing organisation trains the responsible person at handover and reviews the logbook at each service visit.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which statement most accurately describes the BS 5839-1:2025 weekly test method?',
     options: [
-      'Every MCP is tested every week.',
-      'One MCP is operated each week, rotated to a different location across consecutive weeks so that every MCP is tested at least once per cycle. The system is taken into alarm, the sounders / VADs are confirmed to operate, any ARC connection is confirmed, and the system is reset. The event is recorded in the logbook.',
-      'A detector is sprayed each week.',
-      'The panel is just visually inspected.',
+      'Every manual call point in the building is operated each week to confirm the whole system end to end.',
+      'A representative smoke detector is functionally tested with test smoke each week, rotated around the building.',
+      'The panel is visually inspected each week to confirm it shows a healthy condition with no fault indications.',
+      'One MCP is operated each week, rotated to a different location, taking the system to alarm before resetting and logging.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The weekly test is a one-MCP-per-week rolling test. The MCP is rotated so over time every MCP gets tested. The sounders / VADs and ARC signalling are verified at the same time. Time-of-day, identity of the operator, and outcome are recorded in the logbook.',
   },
@@ -109,26 +109,26 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 43.2.1 sets the interval between successive six-monthly servicing visits. What is the acceptable window?',
     options: [
-      'Strictly six months.',
-      'Approximately six months, with the visit acceptable any time between five and seven months after the previous service. The acceptance date is the datum. This brings a long-standing custom into the standard text and is a recognised change from the 2017 edition (which read "should not exceed six months").',
-      'Any time within twelve months.',
-      'Three to nine months.',
+      'Approximately six months, with the visit acceptable any time between five and seven months after the previous service.',
+      'Strictly six months to the day from the previous visit, with no tolerance permitted either side.',
+      'Any time within the same twelve-month period, provided two visits are completed before the year end.',
+      'A wide three-to-nine-month window, giving the servicing organisation flexibility around its schedule.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Five-to-seven-month tolerance window, datum = acceptance date. Visits outside this window do not meet the recommended servicing regime and should be flagged as a system departure.',
+      'Five-to-seven-month tolerance window, datum = the acceptance date. This brings a long-standing custom into the standard text and is a recognised change from the 2017 edition (which read "should not exceed six months"). Visits outside this window do not meet the recommended servicing regime and should be flagged as a system departure.',
   },
   {
     id: 4,
     question:
       'Across the two six-monthly service visits in any given year, what proportion of detectors / MCPs / sounders / VADs / interfaces should have been functionally tested?',
     options: [
-      '50% across the year.',
-      '100% across the year — split between the two visits in any pattern that suits the system. Every device and every interface must be functionally tested at least once in any rolling twelve-month period. The asset register is the means of evidencing that every device has been visited.',
-      '100% at each visit.',
-      '25% at each visit.',
+      '50% across the year, with the remaining half covered by the responsible person during the weekly tests.',
+      '100% at each individual six-monthly visit, so every device is functionally tested twice a year.',
+      '100% across the year, split between the two visits in any pattern that suits the system.',
+      '25% at each visit, completing full coverage over a rolling two-year cycle.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Annual full coverage = the two visits combined. Each visit tests a sample; the asset register tracks which devices were tested when. Over twelve months, every device should have been tested.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A 2025 service visit at a school includes a smoke detector mounted in an air-handling duct above the main hall ceiling. What is the BS 5839-1:2025 functional-test requirement for this detector at the twelve-monthly visit?',
     options: [
-      'Visual only.',
-      'It must be functionally tested at the twelve-monthly visit. BS 5839-1:2025 explicitly adds duct-mounted smoke detectors to the list of devices that must be functional-tested at the twelve-monthly visit. Previously these were often missed because of access difficulty; the 2025 wording removes that ambiguity. Access provision must therefore be designed in (hatch, sample port, dust-cover practice).',
-      'Only continuity tested.',
-      'Excluded from servicing.',
+      'Visual inspection only through the access hatch, since duct detectors are protected by the building-side detection.',
+      'A continuity test on the detector cabling only, with no functional test of the detector head itself.',
+      'Excluded from routine servicing entirely, as duct detectors form part of the ventilation system rather than the alarm.',
+      'It must be functionally tested at the twelve-monthly visit, with access provision designed in.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'New in 2025: duct smoke detectors are explicitly on the twelve-monthly functional test list. Access provisions must be available; if not, recorded as a service constraint and reported.',
   },
@@ -151,70 +151,70 @@ const quizQuestions = [
     question:
       'Also new at the twelve-monthly visit in BS 5839-1:2025: what verification of zone identification is now expected?',
     options: [
-      'Verify only every five years.',
-      'The zone identification reported on the CIE (the text descriptor or numeric zone label) should be verified against the current zone plan at the twelve-monthly service visit. This catches drift between as-installed labelling and post-modification reality. The premises management remains responsible for keeping the zone plan up to date when changes occur.',
-      'Only at acceptance.',
-      'Never — zone identification is set at commissioning and unchanged.',
+      'The zone identification reported on the CIE should be verified against the current zone plan at the twelve-monthly visit.',
+      'Zone identification need only be verified once every five years as part of a periodic full re-survey of the system.',
+      'Zone identification is checked only at acceptance and does not form part of any subsequent service visit.',
+      'Zone identification is fixed at commissioning and is not re-verified, since the descriptors cannot change in service.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 adds CIE zone-identification verification against the zone plan to the twelve-monthly visit. Catches mismatch caused by partition changes, room renumbering, addressable system reprogramming.',
+      'BS 5839-1:2025 adds verification of the CIE zone identification (the text descriptor or numeric zone label) against the zone plan to the twelve-monthly visit. This catches drift between as-installed labelling and post-modification reality — mismatch caused by partition changes, room renumbering or addressable system reprogramming. Premises management remains responsible for keeping the zone plan up to date.',
   },
   {
     id: 7,
     question:
       'During the weekly user test, the responsible person operates an MCP and the panel goes into alarm but no sounders activate. What is the appropriate immediate action?',
     options: [
-      'Ignore until the next service visit.',
-      'Treat as a fire-alarm fault; reset the system if safe and possible, log the event in detail (date, time, MCP location, observed behaviour), and notify the servicing organisation immediately. Pending repair, premises management should institute an interim measure (e.g. fire wardens, manual roving alarm) appropriate to the risk and recorded in writing. The fault must not be concealed or its indication suppressed (clause 23, BS 5839-1:2025).',
-      'Disable the panel.',
-      'Tell the user to keep operating the MCP until they hear something.',
+      'Record the result and leave it for the servicing organisation to investigate at the next routine six-monthly visit.',
+      'Disable the panel until the servicing organisation can attend, to prevent further nuisance from the faulty circuit.',
+      'Treat it as a fault: log it in detail, notify the servicing organisation immediately, and institute an interim measure.',
+      'Re-operate the same MCP repeatedly until the sounders activate, on the basis that the contacts may simply be sticking.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The weekly test is a finding mechanism, not a formality. A failed weekly test is a real failure. Immediate logging, immediate notification, interim risk management, no concealment of fault indication.',
+      'The weekly test is a finding mechanism, not a formality, and a failed weekly test is a real failure. Reset the system if safe and possible, log the event in detail (date, time, MCP location, observed behaviour), and notify the servicing organisation immediately. Pending repair, premises management institutes an interim measure (e.g. fire wardens, manual roving alarm) appropriate to the risk and recorded in writing. The fault must not be concealed or its indication suppressed (clause 23, BS 5839-1:2025).',
   },
   {
     id: 8,
     question:
       'Who is responsible for the monthly test of any standby generator or auxiliary supply that powers the fire alarm system, and what is the minimum content?',
     options: [
-      'Servicing organisation only.',
-      "Premises management / the responsible person, with the test typically carried out as part of the building's wider standby supply check. The minimum content is to start the generator (or transfer the supply), confirm load is taken, run for the manufacturer-recommended duration, transfer back, and log the event. The fire alarm panel's mains/battery indications during the test confirm the alarm system rides through the changeover.",
-      'No-one — generators are tested annually only.',
-      'The grid supplier.',
+      'The servicing organisation only, as part of its six-monthly fire-alarm maintenance visit.',
+      'No-one on a monthly basis — standby generators are tested annually under a separate regime.',
+      'The distribution network operator, who is responsible for any standby supply feeding life-safety systems.',
+      "Premises management / the responsible person, starting the generator on load and confirming the panel rides through the changeover.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "The monthly test is a building-side responsibility. The fire alarm should ride through the test seamlessly — the panel's mains-fail / battery indications during the change-over confirm correct operation of the alarm power architecture.",
+      "The monthly test is a building-side responsibility, typically carried out as part of the building's wider standby supply check. The minimum content is to start the generator (or transfer the supply), confirm load is taken, run for the manufacturer-recommended duration, transfer back, and log the event. The fire alarm should ride through the test seamlessly — the panel's mains-fail / battery indications during the change-over confirm correct operation of the alarm power architecture.",
   },
   {
     id: 9,
     question:
       'What three actions does the servicing organisation perform on the standby battery at every six-monthly visit?',
     options: [
-      'Replace the battery.',
-      "Visual inspection (case integrity, terminal corrosion, vent / seal condition, installation date label per BS 5839-1:2025), measure float voltage at the battery terminals (against the manufacturer specification for the panel's charger), and either perform or review evidence of an in-service load test (panel's own internal test, or off-line load test) confirming the battery still meets its design back-up duration. Replacement is at end of design life — typically four years — and is a separate action at the appropriate visit.",
-      'Only visual.',
-      'Only voltage.',
+      'Visual inspection, a float-voltage measurement at the terminals, and an in-service load test (or review of its evidence).',
+      'Replace the battery as a matter of routine at every six-monthly visit, regardless of its condition or age.',
+      'Carry out a visual inspection of the battery case and terminals only, deferring any electrical checks to the annual visit.',
+      'Measure the battery float voltage only, since a healthy voltage reading confirms the battery is fit for service.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Visual + float voltage + load-test evidence at every six-monthly visit. The installation-date label (now formally recommended in 2025) supports the end-of-life decision. Replacement at design life — typically four years — is a planned activity, not a "wait for failure" approach.',
+      "Visual + float voltage + load-test evidence at every six-monthly visit. The visual checks case integrity, terminal corrosion, vent / seal condition and the installation-date label (now formally recommended in 2025). Float voltage is measured at the terminals against the manufacturer specification for the panel's charger. The load test (panel's own internal test or an off-line test) confirms the battery still meets its design back-up duration. Replacement at design life — typically four years — is a planned activity, not a \"wait for failure\" approach.",
   },
   {
     id: 10,
     question:
       "A maintenance organisation's service report after a six-monthly visit. Which of the following must it include?",
     options: [
-      'Just the date and "system OK".',
-      'A full report identifying what was tested (with reference to the asset register), what was found (test results, faults observed, defects, unresolved issues from previous visits), what was done (any repairs / replacements), what was disabled and for how long (and whether premises management was informed), what remains outstanding (recommendations / quoted remedial works), and the conformity status of the system as left (any uncorrected variations or non-compliances). The report is signed by the competent person and entered in the logbook.',
-      'Only a list of faults.',
-      'Only a one-page certificate.',
+      'The visit date and a simple "system OK" statement signed by the attending engineer.',
+      'A list of any faults found during the visit, with no record of what was tested or left outstanding.',
+      'A full report covering what was tested, found, done, disabled and outstanding, plus the conformity status as left.',
+      'A single-page conformity certificate confirming the system meets BS 5839-1, without supporting test detail.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The service report is the audit trail. It links the asset register, the test outcomes, the fault list, the disablement record, the recommendations, and the conformity statement. It is the primary document the responsible person uses to demonstrate compliance to the AHJ or insurer.',
+      'The service report is the audit trail. A full report identifies what was tested (with reference to the asset register), what was found (test results, faults, defects, unresolved issues from previous visits), what was done (repairs / replacements), what was disabled and for how long (and whether premises management was informed), what remains outstanding (recommendations / quoted remedial works), and the conformity status of the system as left. It links the asset register, test outcomes, fault list, disablement record, recommendations and conformity statement, signed by the competent person and entered in the logbook. It is the primary document the responsible person uses to demonstrate compliance to the AHJ or insurer.',
   },
 ];
 

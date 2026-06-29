@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     question:
       'At solar noon in summer in the UK (latitude 52°N), approximately what is the maximum solar altitude?',
     options: [
-      '38°',
+      '61.5°',
       '90°',
       '52°',
-      '61.5°',
+      '38°',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Maximum altitude = 90° - latitude + declination. At summer solstice: 90° - 52° + 23.5° = 61.5°. The sun is never directly overhead in the UK.',
   },
@@ -63,11 +63,11 @@ const quickCheckQuestions = [
       'What percentage of total radiation on a heavily overcast day in the UK is typically diffuse?',
     options: [
       '10-20%',
-      '50-60%',
-      '30-40%',
       'Nearly 100%',
+      '30-40%',
+      '50-60%',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'On heavily overcast days, nearly all solar radiation reaching the ground is diffuse (scattered by clouds). Direct beam radiation is effectively zero under complete cloud cover.',
   },
@@ -105,10 +105,10 @@ const quizQuestions = [
     id: 2,
     question: 'What causes the variation in solar declination throughout the year?',
     options: [
-      "It can bulge or herniate, pressing on nearby nerves",
-      "Breathe in for 4, hold for 4, out for 4, hold for 4",
+      "The elliptical shape of Earth's orbit around the sun",
+      "The varying distance between the Earth and the sun across the seasons",
       "The tilt of Earth's axis at 23.5° to the orbital plane",
-      "Both a 6 kW reduction and 50% improvement",
+      "The rotation of the Earth on its axis once every 24 hours",
     ],
     correctAnswer: 2,
     explanation:
@@ -242,10 +242,10 @@ const quizQuestions = [
     question:
       'At what time does true solar noon occur in London (longitude 0°) during British Summer Time?',
     options: [
-      'It varies with the equation of time',
-      'A suitable site induction',
-      'Apply temperature correction factor',
-      'No continuity - open circuit',
+      'It varies with the equation of time, typically around 13:00-13:15',
+      'Exactly 12:00, since London sits on the prime meridian',
+      'Exactly 13:00 every day, due to the one-hour BST clock shift',
+      'It varies only with latitude, not with the time of year',
     ],
     correctAnswer: 0,
     explanation:

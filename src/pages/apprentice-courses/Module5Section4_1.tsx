@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it important to allow for 5–10% wastage when estimating?',
     options: [
-      'All earthing and bonding conductors to the means of earthing',
+      'To increase the profit margin on the job',
       'To account for cutting waste and unexpected needs',
-      'Leptospirosis bacteria from rat urine in contaminated water',
-      'By visually checking core colours at terminations',
+      'To meet the minimum order quantity from suppliers',
+      'To reduce the time spent measuring on site',
     ],
     correctIndex: 1,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the benefit of a site walkthrough compared to drawings alone?',
     options: [
-      'Travelling cable with enhanced flexibility',
-      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
-      'Low-level power and data distribution in offices',
+      'It removes the need to measure cable runs',
+      'It provides the scale for the drawings',
+      'It guarantees the materials are in stock',
       'Confirms actual site conditions and identifies obstacles',
     ],
     correctIndex: 3,
@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main risk of under-estimating materials?',
     options: [
-      'Torque reduces (field weakening)',
+      'Excess stock left over at the end',
       'Delays and project stoppages',
-      'A loss of contact with reality',
-      'Three phases and a neutral',
+      'Lower voltage drop on long circuits',
+      'Higher accuracy on future jobs',
     ],
     correctAnswer: 1,
     explanation:
@@ -69,12 +69,16 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'True or False: Drawings alone always give enough information for accurate estimating.',
-    options: ['True', 'False'],
-    correctAnswer: 1,
+    question: 'Are drawings alone enough for an accurate materials estimate?',
+    options: [
+      'Yes, drawings show every site condition',
+      'Yes, provided the scale is correct',
+      'Yes, if a wastage allowance is added',
+      'No, they miss obstacles and practical site conditions',
+    ],
+    correctAnswer: 3,
     explanation:
-      "Drawings don't show all site conditions, obstacles, or practical installation challenges.",
+      "Drawings don't show all site conditions, obstacles, or practical installation challenges, so a site walkthrough is also needed.",
   },
   {
     id: 3,
@@ -106,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is it important to check site conditions during estimation?',
     options: [
-      '90 minutes focused work followed by 15-20 minute break',
+      'To set the labour rate for the project',
       'To identify obstacles and additional material needs',
-      'Criminal prosecution — potentially imprisonment',
-      'Apprentice \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Core \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Approved \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Technician',
+      'To avoid having to read the drawings',
+      'To order materials before the survey is done',
     ],
     correctAnswer: 1,
     explanation:
@@ -119,10 +123,10 @@ const quizQuestions = [
     id: 6,
     question: 'Name one common error in estimating cable lengths.',
     options: [
-      'Two conductors at line terminal',
-      'An open circuit or break in the conductor',
+      'Adding too much wastage allowance',
+      'Measuring horizontal runs from the plan',
       'Forgetting vertical drops or rises',
-      'Test on a known live source',
+      'Rounding lengths up to the nearest metre',
     ],
     correctAnswer: 2,
     explanation:
@@ -146,9 +150,9 @@ const quizQuestions = [
     question: 'Who should verify the materials estimate for accuracy?',
     options: [
       'Team members or supervisors',
-      'I_line = sqrt(3) x I_phase',
-      'Store safely for future reference',
-      'To convert three-phase to two-phase',
+      'The materials supplier only',
+      'Nobody — the first estimate is final',
+      'The client who is paying for the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -158,10 +162,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a benefit of using digital estimating software?',
     options: [
-      'It\\\\\\\\\\\\\\\'s not safe for isolation work',
+      'It removes the need for a site walkthrough',
       'Faster calculations and fewer manual errors',
-      'Typically 5 years depending on type and use',
-      'Supervisory Control And Data Acquisition',
+      'It guarantees materials are always in stock',
+      'It sets the labour rate automatically',
     ],
     correctAnswer: 1,
     explanation:
@@ -171,10 +175,10 @@ const quizQuestions = [
     id: 10,
     question: 'Give one example of a consequence of poor estimating.',
     options: [
-      'Missed alerts due to system misconfiguration',
-      'Not all loads operate simultaneously at full load',
+      'Lower voltage drop on long circuits',
+      'Faster sign-off by building control',
       'Cost overruns, wasted materials, or delayed project completion',
-      'Corresponding adjustments to national inventories',
+      'Improved accuracy on future projects',
     ],
     correctAnswer: 2,
     explanation:

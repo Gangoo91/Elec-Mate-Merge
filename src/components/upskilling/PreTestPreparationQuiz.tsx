@@ -41,24 +41,29 @@ const PreTestPreparationQuiz = () => {
     },
     {
       id: 3,
-      question: 'True or False: You should prove your voltage tester both before and after use.',
-      options: ['True', 'False'],
-      correctAnswer: 0,
-      explanation:
-        "True - Proving your voltage tester before and after use ensures it's working correctly throughout the testing process, which is essential for safety.",
-    },
-    {
-      id: 4,
-      question: "What's one reason to post 'Do Not Switch On' signs?",
+      question: 'When should a voltage indicator (tester) be proved against a known source?',
       options: [
-        'To comply with insurance requirements',
-        "To prevent others from re-energising whilst you're testing",
-        "To show you're a professional electrician",
-        'To avoid paying for electricity used during testing',
+        'Only once at the very start of the working day',
+        'Both immediately before and immediately after use',
+        'Only if it appears to give an unexpected reading',
+        'Only after use, to confirm it was working',
       ],
       correctAnswer: 1,
       explanation:
-        "To prevent others from re-energising whilst you're testing - this prevents dangerous situations where circuits could be switched on while you're working.",
+        'Proving a voltage indicator before and after use confirms it was functioning throughout, so a genuine dead reading can be trusted.',
+    },
+    {
+      id: 4,
+      question: "What's the main reason to post 'Do Not Switch On' signs?",
+      options: [
+        'To satisfy the building’s insurance requirements',
+        "To demonstrate that you're a professional electrician",
+        'To avoid being charged for electricity used in testing',
+        "To stop others re-energising the circuit whilst you're testing",
+      ],
+      correctAnswer: 3,
+      explanation:
+        "Warning signs stop others re-energising the circuit while you are working, preventing a dangerous switch-on during testing.",
     },
     {
       id: 5,

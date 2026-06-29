@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'Under BS EN 12811, a Class 3 scaffold has a maximum uniformly distributed load of 200 kg/m\u00B2. What type of work is this class typically used for?',
     options: [
-      'Inspection and very light duties only',
       'General construction work such as bricklaying and rendering',
+      'Inspection and very light duties only',
       'Heavy-duty masonry work with significant material storage',
       'Special heavy-duty applications like stone cladding',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Class 3 (200 kg/m\u00B2) is the most commonly used scaffold load class on UK construction sites. It is suitable for general construction work including bricklaying, rendering, painting, and light material storage. Classes 1 and 2 are for inspection and light duties, whilst Classes 4, 5, and 6 cover progressively heavier applications such as masonry with heavy materials and special heavy-duty work like stone cladding.',
   },
@@ -37,11 +37,11 @@ const quickCheckQuestions = [
       'A scaffold user notices that a toe board is missing from a working platform. What should they do?',
     options: [
       'Remove a toe board from a lower level and use it to fill the gap',
-      'Continue working carefully and report it at the end of the shift',
       'Stop work on that platform, report the defect immediately, and do not use it until it is repaired by a competent person',
+      'Continue working carefully and report it at the end of the shift',
       'Fix the toe board themselves using materials found on site',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'You must NEVER modify a scaffold yourself, and you must NEVER work on a defective scaffold. Missing components \u2014 whether toe boards, guard rails, boards, or braces \u2014 mean the scaffold is incomplete and potentially unsafe. Stop work immediately, report the defect to your supervisor or the scaffold coordinator, and do not use the platform until a competent scaffolder has inspected and repaired it. Removing components from other parts of the scaffold would create a new hazard elsewhere.',
   },
@@ -51,11 +51,11 @@ const quickCheckQuestions = [
       'When storing materials on a scaffold platform, which of the following rules must ALWAYS be followed?',
     options: [
       'Materials can be stacked as high as needed, provided they are tied to the scaffold frame',
-      'Materials must be evenly distributed, must not block access or egress, and must not exceed the bay load limit',
       'Materials should be concentrated in the centre of the platform for stability',
+      'Materials must be evenly distributed, must not block access or egress, and must not exceed the bay load limit',
       'Storage is only permitted on ground-level bays, never on upper working platforms',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Materials stored on scaffold platforms must be evenly distributed across the bay to prevent point loading, must never block access routes, ladders, or emergency egress points, and must never exceed the maximum bay load stated on the scaffold load notice. Concentrating materials in one area creates dangerous point loads that can overload individual boards and ledgers. Storage is permitted on upper platforms provided these rules are observed and the scaffold has been designed to accommodate the load.',
   },
@@ -94,8 +94,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under BS EN 12811, what is the maximum uniformly distributed load for a Class 3 scaffold?',
-    options: ['75 kg/m\u00B2', '150 kg/m\u00B2', '200 kg/m\u00B2', '300 kg/m\u00B2'],
-    correctAnswer: 2,
+    options: ['200 kg/m\u00B2', '75 kg/m\u00B2', '150 kg/m\u00B2', '300 kg/m\u00B2'],
+    correctAnswer: 0,
     explanation:
       'A Class 3 scaffold under BS EN 12811 has a maximum uniformly distributed load of 200 kg/m\u00B2. This is the most common load class for general construction scaffolding in the UK, covering work such as bricklaying, rendering, painting, and light material storage. It is essential to know your scaffold\u2019s load class and never exceed it.',
   },
@@ -117,11 +117,11 @@ const quizQuestions = [
     question: 'Which of the following is a loading bay used for?',
     options: [
       'Storing surplus scaffold components',
-      'Providing a designated area for hoisting materials onto the scaffold safely',
       'Creating additional working space for operatives',
+      'Providing a designated area for hoisting materials onto the scaffold safely',
       'Allowing vehicles to park beneath the scaffold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A loading bay is a specially designed section of scaffolding with a hinged gate that provides a safe area for hoisting materials up to the working platform. It prevents materials being lifted over guard rails (which risks dropping them and requires removal of protection). Loading bays must be designed into the scaffold, have adequate load capacity, and be fitted with self-closing gates. They are not storage areas or working platforms.',
   },
@@ -132,10 +132,10 @@ const quizQuestions = [
     options: [
       'Step over the gap carefully and continue working',
       'Place a plank across the gap as a temporary fix',
-      'Stop work, report the defect, and do not use the platform until a competent scaffolder has repaired it',
       'Move to a different bay and report the issue at the end of the day',
+      'Stop work, report the defect, and do not use the platform until a competent scaffolder has repaired it',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Missing scaffold boards create an immediate fall hazard and indicate that the scaffold has been tampered with or not completed. You must stop work on that platform immediately and report the defect to your supervisor or scaffold coordinator. Do not attempt to repair the scaffold yourself \u2014 only a competent scaffolder may replace boards and must check why they were removed. Never work on or near an incomplete scaffold.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why is climbing the outside face of a scaffold strictly prohibited?',
     options: [
-      'It is only prohibited above 4 metres',
       'The scaffold face is not designed for climbing \u2014 it lacks hand holds, proper foot holds, and fall protection',
+      'It is only prohibited above 4 metres',
       'It is permitted if you maintain three points of contact',
       'It is only prohibited in wet weather conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Climbing the outside face of a scaffold is ALWAYS prohibited, regardless of height, weather, or circumstances. The scaffold frame is not designed to be used as a ladder. It does not have proper hand holds or foot holds, there is no fall protection on the outside face, and ledger and transom spacings are not designed for safe climbing. Falls from the scaffold face are a leading cause of scaffold-related fatalities. All access must be through designated internal ladders, stair towers, or hoists.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
     question: 'Which of the following actions is the scaffold user\u2019s responsibility?',
     options: [
       'Erecting and dismantling scaffold structures',
-      'Checking the scaffold visually before each use, reporting defects, and not overloading the platform',
       'Modifying the scaffold to suit their specific work requirements',
+      'Checking the scaffold visually before each use, reporting defects, and not overloading the platform',
       'Tightening scaffold fittings and replacing damaged components',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Scaffold users are responsible for carrying out a visual check before each use (looking for missing boards, guard rails, toe boards, damage, or instability), reporting any defects immediately, not exceeding the bay load limit, keeping the platform clear of debris, and using the correct access points. Erecting, dismantling, modifying, and repairing scaffolds are the responsibility of competent scaffolders \u2014 never the user.',
   },
@@ -184,11 +184,11 @@ const quizQuestions = [
       'What is the most likely consequence of placing a concentrated point load in the centre of a scaffold bay?',
     options: [
       'The scaffold will sway but remain stable',
-      'Individual scaffold boards or ledgers may fail, even if the total weight is within the bay\u2019s rated load',
       'Nothing \u2014 scaffold boards are designed to handle point loads',
       'The scaffold ties will loosen',
+      'Individual scaffold boards or ledgers may fail, even if the total weight is within the bay\u2019s rated load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A concentrated point load places all the stress on a small number of boards and the ledgers directly beneath them. Even if the total weight is within the bay\u2019s maximum distributed load rating, the localised stress can exceed the capacity of individual boards, causing them to deflect, crack, or break. This can lead to materials falling through, or a person falling through the platform. Always spread loads evenly across the full bay area.',
   },

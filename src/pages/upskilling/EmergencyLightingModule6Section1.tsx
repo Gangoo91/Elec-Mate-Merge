@@ -22,23 +22,23 @@ const inlineChecks = [
     id: 'elm6-s1-scope',
     question: 'BS 5266-1:2025 expanded the scope of "emergency lighting" — to which categories?',
     options: [
-      'Escape lighting only.',
-      'Escape lighting, standby lighting, and the new category — LOCAL AREA LIGHTING — for high-risk task areas. The 2025 revision broadens the umbrella so that all three categories sit under a single code of practice. The earlier edition treated standby lighting as a separate matter; the 2025 edition unifies the design, installation, commissioning, maintenance and certification framework across all three.',
-      'Escape lighting and standby lighting only.',
-      'Standby lighting and security lighting.',
+      'Escape lighting only, with standby and high-risk lighting left to other standards.',
+      'Escape lighting, standby lighting, and the new local area lighting category for high-risk task areas.',
+      'Escape lighting and standby lighting only, with no high-risk task category.',
+      'Standby lighting and external security lighting of the building perimeter.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5266-1:2025 §1 (Scope) explicitly extends the document to escape lighting + standby lighting + local area (high-risk) task lighting. The unification matters because the same luminaires, batteries and test cycles increasingly serve more than one purpose, and the code now provides a single coherent reference.',
+      'BS 5266-1:2025 §1 (Scope) extends the document to escape lighting + standby lighting + local area (high-risk) task lighting under a single code of practice. The earlier edition treated standby as a separate matter; 2025 unifies the design, installation, commissioning, maintenance and certification framework across all three. The unification matters because the same luminaires, batteries and test cycles increasingly serve more than one purpose.',
   },
   {
     id: 'elm6-s1-borrowed',
     question: 'What is the BS 5266-1:2025 position on "borrowed light" from adjacent compartments?',
     options: [
-      'Permitted as it always was.',
-      'EXCLUDED. Borrowed light — relying on emergency luminaires in an adjacent room or corridor to illuminate a stairway, lobby, or escape route — is no longer accepted as compliant emergency lighting under the 2025 revision. Each escape route must be illuminated by luminaires provided FOR that route. The change responds to fire-door closure, smoke ingress, and the post-Grenfell evidence that adjacent compartments cannot be relied on under fire conditions.',
-      'Permitted only for stairways.',
-      'Permitted only above 1 lx.',
+      'Permitted exactly as it always was under the earlier edition of the standard.',
+      'Excluded — each escape route must be illuminated by luminaires provided for that route, not by adjacent compartments.',
+      'Permitted only for stairways and protected lobbies, not for general corridors.',
+      'Permitted only where the borrowed source delivers more than 1 lx on the route.',
     ],
     correctIndex: 1,
     explanation:
@@ -48,27 +48,27 @@ const inlineChecks = [
     id: 'elm6-s1-1lx',
     question: 'BS EN 1838:2024 escape route minimum illuminance — what value, where measured?',
     options: [
-      '0.5 lx at the centre line (the superseded 2013 wording).',
-      '1 lx across the FULL WIDTH of the escape route at floor level, with edge exclusions: outer 0.5 m on routes wider than 2 m, outer ¼ width on routes 2 m or narrower. The 2013 edition specified 1 lx on the centre line + 0.5 lx on a 2 m central band; the 2024 update replaces this with the full-width rule plus edge exclusions.',
-      '5 lx full width.',
-      '0.5 lx full width.',
+      '0.5 lx at the centre line only, as in the superseded 2013 wording.',
+      '1 lx across the full width of the route at floor level, with defined edge exclusions.',
+      '5 lx across the full width of the escape route at floor level.',
+      '0.5 lx across the full width of the escape route at floor level.',
     ],
     correctIndex: 1,
     explanation:
-      'The 1 lx target is unchanged; the 2024 addition is the full-width rule with explicit edge exclusions, replacing the 2013 centre-line + central-band wording. The change reflects the reality that occupants under stress do not walk along the geometric centre line — they spread across the route. Designers must run photometric calculations across the full width and demonstrate 1 lx within the non-excluded boundary.',
+      'The 1 lx target is measured across the full width at floor level, with edge exclusions (outer 0.5 m on routes wider than 2 m, outer ¼ width on routes 2 m or narrower). The 2013 edition specified 1 lx on the centre line plus 0.5 lx on a 2 m central band; the 2024 update replaces this with the full-width rule. Occupants under stress spread across the route rather than walking the geometric centre line, so designers must demonstrate 1 lx within the non-excluded boundary.',
   },
   {
     id: 'elm6-s1-photometric',
     question: 'The new BS 5266-1:2025 5-year requirement is...',
     options: [
-      'Battery replacement.',
-      'PHOTOMETRIC VERIFICATION — at intervals not exceeding 5 years, the installation must be verified to still deliver the design illuminance levels measured in the field, not just on the original photometric calculation. Verification is by lux-meter measurement or commissioning-grade software with measured inputs, performed by a competent person, and recorded against the original design.',
-      'Full replacement.',
-      'Battery and luminaire replacement.',
+      'Mandatory replacement of every emergency luminaire battery on a fixed cycle.',
+      'Photometric verification that the installation still delivers the design illuminance, measured in the field.',
+      'Full replacement of the entire emergency lighting installation every five years.',
+      'Replacement of both the batteries and the luminaire bodies every five years.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5266-1:2025 introduces photometric verification at 5-year intervals because LED depreciation, surface reflectance changes (paint, furniture), and luminaire ageing cumulatively reduce in-service illuminance below the design figure. The original photometric calculation is a paper exercise; the 5-year check is empirical. Failures trigger remediation — relamping, repositioning, or supplementary luminaires.',
+      'BS 5266-1:2025 introduces photometric verification at intervals not exceeding 5 years — the installation must be verified, by lux-meter measurement or commissioning-grade software with measured inputs, to still deliver the design illuminance. LED depreciation, surface reflectance changes and luminaire ageing cumulatively reduce in-service illuminance below the design figure. The original calculation is a paper exercise; the 5-year check is empirical. Failures trigger remediation — relamping, repositioning, or supplementary luminaires.',
   },
 ];
 
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 1,
     question: 'BS 5266-1:2025 — what is the headline scope change versus the earlier edition?',
     options: [
-      'Smaller scope.',
-      'Broader scope — escape lighting + standby lighting + local area (high-risk task) lighting all sit under a single code of practice. The unification reflects the reality that the same luminaires, batteries and test cycles increasingly serve more than one purpose. The 2025 edition gives a single coherent framework across all three categories rather than treating standby separately.',
-      'Same scope.',
-      'Scope removed.',
+      'Broader scope — escape, standby and high-risk task lighting under one code.',
+      'A narrower scope, dropping standby lighting entirely.',
+      'No change in scope from the earlier edition.',
+      'The scope section has been removed altogether.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5266-1:2025 §1 (Scope) consolidates emergency lighting categories into one code of practice. Designers and installers benefit from a single reference; duty holders benefit from clearer obligations.',
   },
@@ -91,12 +91,12 @@ const quizQuestions = [
     question:
       'BS EN 1838:2024 — escape route illuminance: what is the 2024 update relative to the earlier edition?',
     options: [
-      'Centre-line only, 1 lx (the superseded 2013 wording).',
-      'FULL-WIDTH 1 lx coverage with edge exclusions. The 2013 edition specified 1 lx on the centre line + 0.5 lx on a 2 m central band; the 2024 edition replaces this with 1 lx across the full width of the route, with the outer 0.5 m on each side excluded for routes wider than 2 m, and the outer ¼ width on each side excluded for routes 2 m or narrower.',
-      'Centre-line only, 5 lx.',
-      'Removed.',
+      'Centre-line only at 1 lx (the superseded 2013 wording).',
+      'Centre-line only, raised to 5 lx.',
+      'Full-width 1 lx coverage with defined edge exclusions.',
+      'The escape route illuminance requirement is removed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 1838:2024 §4.2 raises the bar for escape route illumination — full width with edge exclusions, replacing the 2013 centre-line + central-band wording. Photometric calculations must reflect this. Existing centre-line-only installations may need supplementary luminaires to meet the new requirement.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 3,
     question: 'BS EN 1838:2024 anti-panic lighting minimum illuminance and uniformity?',
     options: [
-      '5 lx, 10:1.',
-      '0.5 lx minimum across the open area, with maximum-to-minimum ratio not exceeding 40:1. The purpose is to prevent panic in undefined open spaces (foyers, atria, halls) by ensuring occupants can perceive the space and locate escape routes. The 40:1 uniformity prevents glare and dark patches that disorientate occupants.',
-      '1 lx, 10:1.',
-      '15 lx, 40:1.',
+      '5 lx minimum, 10:1 max:min ratio.',
+      '1 lx minimum, 10:1 max:min ratio.',
+      '0.5 lx minimum, 40:1 max:min ratio.',
+      '15 lx minimum, 40:1 max:min ratio.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Anti-panic (open area) lighting per BS EN 1838:2024 §4.3 — 0.5 lx minimum, 40:1 max:min ratio. Different from escape route (1 lx) and high-risk task (15 lx or 10% of normal task illuminance, whichever higher).',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 4,
     question: 'BS EN 1838:2024 high-risk task area illuminance?',
     options: [
-      '1 lx.',
-      '15 lx OR 10% of the maintained task illuminance from the normal lighting, whichever is HIGHER. The 15 lx floor exists for tasks where 10% of the normal level would still be too low (a 100 lx normal task would only need 10 lx, which is insufficient for safe shutdown of dangerous machinery). High-risk task lighting also has a much shorter switch-on time — 0.5 s — to prevent operator harm during the brief darkness.',
-      '0.5 lx.',
-      '5 lx.',
+      '1 lx minimum.',
+      '0.5 lx minimum.',
+      '5 lx minimum.',
+      '15 lx, or 10% of the normal task illuminance, whichever is higher.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 1838:2024 §4.4 — high-risk task lighting must allow safe shutdown of processes that pose a hazard if abandoned in the dark. 15 lx or 10% of normal, whichever higher; 0.5 s switch-on; minimum duration as required by the process risk assessment.',
   },
@@ -130,10 +130,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS EN 1838:2024 switch-on times — escape route and high-risk task?',
     options: [
-      'Same for both.',
-      '5 s (50% of declared illuminance) and 60 s (full illuminance) for escape routes; 0.5 s (full illuminance) for HIGH-RISK task areas. The faster switch-on for high-risk reflects the immediate danger from operating machinery — even a 1 s blackout could cause serious harm. Escape routes tolerate 5 s because occupants need to react and orient before moving.',
-      '0.5 s for both.',
-      '60 s for both.',
+      'Identical switch-on times for both categories.',
+      'Escape routes 5 s to 50% / 60 s to 100%; high-risk task 0.5 s to 100%.',
+      '0.5 s to full illuminance for both categories.',
+      '60 s to full illuminance for both categories.',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       'BS 5266-1:2025 introduces a NEW maintenance obligation at intervals not exceeding 5 years — what is it?',
     options: [
-      'Battery replacement.',
-      'PHOTOMETRIC VERIFICATION. The installation must be verified to still deliver the design illuminance — measured by lux-meter in the field, or via commissioning-grade software with measured surface reflectances and luminaire outputs. The original photometric calculation is a paper exercise; the 5-year check confirms the in-service installation still meets EN 1838 levels after LED depreciation, paint changes, and luminaire ageing.',
-      'Cable replacement.',
-      'Earth bonding check.',
+      'Mandatory battery replacement.',
+      'A full cable replacement of the emergency circuits.',
+      'Photometric verification that design illuminance is still delivered.',
+      'An earth bonding continuity check.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1:2025 §10 (Maintenance) introduces 5-year photometric verification as a new mandatory check. The check catches the cumulative effect of LED lumen depreciation, surface reflectance changes, and luminaire ageing that the annual functional test does not detect.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'BS 5266-1:2025 — high-risk circuit redundancy: what is the new minimum architecture?',
     options: [
-      'One circuit, any size.',
-      'NOT FEWER THAN 2 CIRCUITS, with no more than 20 luminaires affected by a single fault. The earlier edition allowed a single circuit with reasonable luminaire count; 2025 hardens this for high-risk areas. The architecture protects against a single circuit failure removing all emergency lighting from a high-risk task area, where loss of light could cause serious harm.',
-      'One circuit, max 50 luminaires.',
-      'Three circuits minimum.',
+      'A single circuit of any size.',
+      'A single circuit, limited to 50 luminaires.',
+      'Not fewer than 2 circuits, max 20 luminaires affected by one fault.',
+      'A minimum of three independent circuits.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1:2025 §6 (Design) for high-risk task areas requires not fewer than 2 emergency lighting circuits, max 20 luminaires affected by a single fault. The redundancy is justified by the harm consequence — a process that requires safe shutdown cannot tolerate complete darkness.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'BS 5266-1:2025 explicit position on "borrowed light" from adjacent compartments?',
     options: [
-      'Permitted as before.',
-      'EXCLUDED. Each escape route must be illuminated by luminaires provided FOR that route. Borrowed light from adjacent rooms or corridors is no longer compliant. The change responds to evidence that fire doors, smoke layers, or compartment failures remove borrowed sources during a fire — the very moment the lighting is most needed.',
-      'Permitted with risk assessment.',
+      'Excluded — each route needs luminaires provided for that route.',
+      'Permitted exactly as in the earlier edition.',
+      'Permitted where a competent risk assessment supports it.',
       'Permitted for stairways only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Borrowed light is a closed loophole under BS 5266-1:2025. Existing installations relying on borrowed light require remediation; the 5-year photometric verification will flag deficient installations.',
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     id: 9,
     question: 'BS 5266-1 is a "Code of Practice" — what does that mean for compliance?',
     options: [
-      'Mandatory legislation.',
-      'A code of practice sets out what the relevant industry expert consensus regards as good practice. It is NOT statute, but courts and Fire and Rescue Service auditors treat it as the benchmark of reasonable practice under the RRO 2005 and the Fire Safety Act 2021. Departures must be justified by competent risk assessment showing that the alternative achieves an equivalent or better safety outcome. Unjustified departures are evidence of negligence.',
-      'Optional guidance only.',
-      'Manufacturer literature.',
+      'It is directly mandatory legislation.',
+      'It is purely optional guidance with no weight.',
+      'It is the benchmark of reasonable practice; departures must be justified.',
+      'It has the status of manufacturer literature.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 is not statute, but compliance with it is the benchmark by which reasonable practice is judged. Departures must be evidence-based and recorded. The court asks: did the duty holder act as a reasonable competent person would? BS 5266-1 defines what a reasonable competent person does.',
   },

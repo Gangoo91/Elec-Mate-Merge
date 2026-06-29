@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     id: 'pasma-cop-standing',
     question: 'What is the legal standing of the PASMA Code of Practice?',
     options: [
-      'It is a criminal law enforceable by the police',
       'It is not law but is considered best practice by the HSE',
+      'It is a criminal law enforceable by the police',
       'It is a European directive that overrides UK law',
       'It only applies to PASMA member companies',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The PASMA Code of Practice is not legislation, but it is widely recognised as industry best practice by the HSE. It is frequently referenced in court cases and enforcement action as the benchmark for competent tower use.',
   },
@@ -73,8 +73,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'When was PASMA founded?',
-    options: ['1964', '1974', '1984', '1994'],
-    correctAnswer: 1,
+    options: ['1974', '1981', '1988', '1996'],
+    correctAnswer: 0,
     explanation:
       'PASMA was founded in 1974, the same year as the Health and Safety at Work etc. Act. It has been setting standards for mobile tower safety for over 50 years.',
   },
@@ -115,8 +115,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the validity period of a PASMA Towers for Users card?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctAnswer: 2,
+    options: ['3 years', '5 years', '7 years', '10 years'],
+    correctAnswer: 1,
     explanation:
       'A PASMA card is valid for 5 years from the date of successful course completion. After 5 years, a refresher course must be taken to renew the certification.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     options: [
       'To book PASMA courses online',
       'To order replacement physical cards',
-      "To verify a person's PASMA certification status and validity",
       'To report accidents involving towers',
+      "To verify a person's PASMA certification status and validity",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The PASMA online verification portal allows employers, site managers, and clients to check whether a person holds a valid, current PASMA certification. This is essential for verifying competence before allowing someone to assemble or work from a tower.',
   },

@@ -93,11 +93,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of eustress in a construction context?',
     options: [
       'An apprentice feeling sick with worry for weeks about failing their end-of-year assessment',
-      'An electrician feeling energised and focused while racing to finish a rewire before the plasterers arrive',
       'A site manager unable to sleep because of ongoing disputes with a difficult client',
       'A self-employed sparky constantly worrying about where the next job will come from',
+      'An electrician feeling energised and focused while racing to finish a rewire before the plasterers arrive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Eustress is positive, motivating stress that enhances performance. The electrician feeling energised and focused to meet a short-term, manageable deadline is experiencing eustress \u2014 the challenge is clear, the timeframe is finite, and the person feels capable of meeting it. The other options describe distress: prolonged worry, sleep disruption, and chronic anxiety \u2014 all characterised by feeling overwhelmed rather than challenged.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       "In Lazarus and Folkman's Transactional Model, what happens during primary appraisal?",
     options: [
-      'The person evaluates whether they have the resources to cope with the stressor',
       'The person evaluates whether the event is irrelevant, benign-positive, or stressful (threat, challenge, or harm/loss)',
+      'The person evaluates whether they have the resources to cope with the stressor',
       'The person chooses a coping strategy such as problem-focused or emotion-focused coping',
       'The body automatically releases cortisol and adrenaline into the bloodstream',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In the Transactional Model, primary appraisal is the first evaluation: "What does this event mean for me?" The person assesses whether the event is irrelevant (no personal significance), benign-positive (beneficial), or stressful (a threat, a challenge, or a harm/loss). Only if the event is appraised as stressful does the person proceed to secondary appraisal, where they evaluate their coping resources. This two-stage appraisal process explains why the same event can provoke different stress responses in different people.',
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       'An experienced electrician has just failed an EICR on a property they inspected, and the client is furious. According to Lazarus and Folkman, their stress level will depend MOST on:',
     options: [
+      'Their appraisal of the threat and their perceived ability to cope with the situation',
       'How loud the client shouts at them',
       'Whether their van is parked nearby for a quick escape',
-      'Their appraisal of the threat and their perceived ability to cope with the situation',
       'The exact number of defects identified in the EICR report',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'According to the Transactional Model, stress is determined by the interaction between how the person appraises the event (primary appraisal: "How serious is this threat to me?") and how they appraise their coping resources (secondary appraisal: "Can I handle this?"). An electrician who has dealt with difficult clients before and knows they can explain the findings calmly will experience less stress than one who is new to this situation and doubts their ability to manage the confrontation. The objective details matter less than the subjective appraisal.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'Which stage of Selye\'s General Adaptation Syndrome most closely corresponds to "burnout" in a construction worker?',
     options: [
       'The Alarm stage',
-      'The Resistance stage',
       'The Exhaustion stage',
+      'The Resistance stage',
       "None \u2014 burnout is unrelated to Selye's model",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Burnout most closely corresponds to the Exhaustion stage. After prolonged stress during the Resistance stage (where the person appears to be coping), the body's adaptive resources become depleted. The person can no longer maintain their resistance to the stressor, leading to physical exhaustion, emotional depletion, reduced professional efficacy, and health breakdown \u2014 all hallmarks of burnout. This is why recognising the signs of chronic stress early (during Resistance) is so important: intervention at that point can prevent the progression to Exhaustion and burnout.",
   },
@@ -171,10 +171,10 @@ const quizQuestions = [
     options: [
       'Stress is always harmful and should be avoided completely',
       'Stress is a purely psychological phenomenon with no physical effects',
-      'Stress is a natural physiological and psychological response that can be positive (eustress) or negative (distress) depending on context and appraisal',
       'Stress only affects people who are mentally weak or emotionally fragile',
+      'Stress is a natural physiological and psychological response that can be positive (eustress) or negative (distress) depending on context and appraisal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Stress is a natural, universal human response involving both physiological changes (hormone release, increased heart rate, muscle tension) and psychological processes (appraisal, coping). It can be positive (eustress) when it enhances performance and motivation, or negative (distress) when it overwhelms coping resources. It is not always harmful, not purely psychological, and not a sign of weakness. Understanding stress accurately is the first step towards managing it effectively.',
   },

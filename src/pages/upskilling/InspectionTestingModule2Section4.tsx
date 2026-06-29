@@ -37,10 +37,10 @@ const quizQuestions = [
     question:
       'You are about to prove dead at a 230 V single-phase consumer unit. The voltage indicator is rated CAT III 600 V / CAT IV 300 V. Is this an appropriate selection?',
     options: [
-      'No — CAT II is required at consumer-unit level',
-      'Yes — a domestic consumer unit sits at CAT III, with CAT IV reserved for the origin of supply (between building entrance and primary distribution / consumer unit). A CAT IV 300 V / CAT III 600 V indicator covers both',
-      'No — CAT IV 600 V is mandatory for any domestic test',
-      'Yes, but only if you also wear arc-rated PPE',
+      'No — CAT II is the required category at consumer-unit level',
+      'Yes — CAT III 600 V / CAT IV 300 V covers a 230 V test at the consumer unit',
+      'No — CAT IV 600 V is mandatory for any domestic test, including at final circuits',
+      'Yes, but only once arc-rated PPE and insulating gloves are also worn',
     ],
     correctAnswer: 1,
     explanation:
@@ -50,28 +50,28 @@ const quizQuestions = [
     id: 3,
     question: 'What does the prove-test-prove sequence actually verify?',
     options: [
-      'That the circuit is dead (single confirmation)',
-      'Three separate things: (a) the indicator can read voltage — prove on a known source before; (b) the conductors at the point of work read no voltage — test; (c) the indicator was still functioning at the end — prove on the same known source after',
-      'That the circuit was disconnected at the meter',
-      'That the proving unit battery is good',
+      'That the indicator works before and after, and the conductors read zero in between',
+      'That the circuit is dead, in a single confirmation taken at the point of work',
+      'That the circuit was correctly disconnected back at the meter position',
+      'That the proving unit battery is in good condition before any testing starts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The whole point of prove-test-prove is that a single “test reads zero” result is ambiguous — it could be a dead circuit, or it could be a broken indicator. The two proves bracket the test: if the indicator reads voltage on the known source before AND after, you know it was working at both ends of the test, and the zero in the middle is real.',
+      'Prove-test-prove verifies three things: the indicator can read voltage (prove on a known source before), the conductors at the point of work read no voltage (test), and the indicator was still functioning at the end (prove on the same known source after). A single “test reads zero” result is ambiguous — it could be a dead circuit, or a broken indicator. The two proves bracket the test so the zero in the middle is real.',
   },
   {
     id: 4,
     question:
       'The first prove on a fresh proving unit shows the indicator displays voltage. The test at the consumer unit reads zero. The second prove fails — the indicator no longer responds. Which conclusion is correct?',
     options: [
-      'The circuit is dead, but the indicator died after the test — still safe to start work',
-      'The test result is unreliable. The indicator may have failed during the test, masking voltage. Stop. Replace the indicator with a known-good one. Repeat the entire prove-test-prove sequence',
-      'The proving unit is faulty — ignore the second prove',
-      'Only matters if voltage was actually expected',
+      'The circuit is dead and the indicator failed after the test — safe to start work',
+      'The test is unreliable; replace the indicator and repeat the whole sequence',
+      'The proving unit is faulty, so the second prove can be ignored on this circuit',
+      'It only matters if voltage was actually expected on this particular circuit',
     ],
     correctAnswer: 1,
     explanation:
-      'Prove-test-prove is binary: both proves must succeed for the test to be trusted. A failed second prove means you have no evidence the indicator was working when it read zero on the conductors. The procedural answer is to replace the instrument and re-do the whole sequence — you cannot reason your way past a failed second prove.',
+      'Prove-test-prove is binary: both proves must succeed for the test to be trusted. A failed second prove means you have no evidence the indicator was working when it read zero on the conductors — it may have failed during the test and masked live voltage. Stop, replace the instrument with a known-good one, and re-run the whole sequence. You cannot reason your way past a failed second prove.',
   },
   {
     id: 5,
@@ -91,14 +91,14 @@ const quizQuestions = [
     id: 6,
     question: 'Why is a non-contact voltage tester unsuitable for confirming a circuit is dead?',
     options: [
-      'It does not light at low voltage',
-      'It detects the presence of an electric field, not the absence of one. A null reading can mean dead, or shielded, or a flat battery, or an off-axis approach. It cannot distinguish between &lsquo;genuinely no voltage’ and &lsquo;not detected’',
-      'It is not CE-marked',
-      'It is too sensitive',
+      'It fails to light at the lower end of the low-voltage band',
+      'A null reading cannot distinguish a dead conductor from a non-detection',
+      'It is not CE-marked for use on fixed installations',
+      'It is too sensitive and over-reads on adjacent live cables',
     ],
     correctAnswer: 1,
     explanation:
-      'Non-contact testers are useful for screening (“is there a hot conductor in this wall?”) but they cannot prove dead. Their failure mode is silent — a flat battery, a screened cable, or a slightly wrong angle gives the same null reading as a genuinely dead conductor. Safe-isolation requires positive contact with the conductors, all-pole testing, and the prove-test-prove sequence with a contact-type voltage indicator.',
+      'A non-contact tester detects the presence of an electric field, not the absence of one. A null reading can mean dead, or shielded, or a flat battery, or an off-axis approach — it cannot tell “genuinely no voltage” from “not detected”. The failure mode is silent: a flat battery, a screened cable, or a slightly wrong angle gives the same null as a dead conductor. Proving dead requires positive contact, all-pole testing, and the prove-test-prove sequence with a contact-type voltage indicator.',
   },
   {
     id: 7,
@@ -119,10 +119,10 @@ const quizQuestions = [
     question:
       'On a TT system, Reg 537.3.3 requires isolation to disconnect all live conductors. For a 230 V single-phase TT circuit, which conductors does this include?',
     options: [
-      'Line only',
-      'Line and neutral — in TT (and IT) systems, isolation requires disconnection of all live conductors including the neutral',
-      'Line and earth',
-      'All three including earth',
+      'Line only — the neutral may remain connected on a TT supply',
+      'Line and neutral — all live conductors must be disconnected',
+      'Line and earth — the protective conductor is switched with the line',
+      'All three conductors including the protective earth conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'You prove dead on a circuit you isolated 30 seconds ago. The indicator shows 18 V AC L–E. What do you do?',
     options: [
-      'Start work — 18 V is below ELV',
-      'Start work but glove up',
-      'Stop. Investigate. 18 V is unexpected and could be induced voltage from a parallel cable, capacitive coupling, an incomplete isolation, or a backfeed from a UPS / PV / generator. Do not begin work until the source is identified and either eliminated or accepted with a documented assessment',
-      'Re-isolate the same breaker and try again',
+      'Start work — 18 V is below the extra-low-voltage shock threshold',
+      'Start work, but glove up for the first few terminations as a precaution',
+      'Stop and investigate the source before any work begins',
+      'Re-isolate the same breaker and re-test until the reading clears',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,11 +148,11 @@ const quizQuestions = [
       'OSG Chapter 10 / Appendix M direct you to two external sources for safe-isolation procedural detail. Which two?',
     options: [
       'BS EN 61557 and BS 7671 Appendix 6',
-      'HSE HSG85 (Electricity at Work: Safe Working Practices) and Electrical Safety First Best Practice Guide 2',
-      'IET Wiring Regulations Part 6 only',
-      'BS 7909 and BS 7430',
+      'BS 7909 (temporary systems) and BS 7430 (earthing)',
+      'IET Guidance Note 3 and BS 7671 Part 6 (inspection and testing)',
+      'HSE HSG85 (Safe Working Practices) and Electrical Safety First BPG 2',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OSG Appendix M cites HSE HSG85 and Electrical Safety First Best Practice Guide 2. BS 7671 sets the duty (Reg 462.3, 537.2.4, 537.3.3); HSG85 + BPG2 set the procedure including prove-test-prove. The two should be on every site’s reference shelf.',
   },
@@ -164,24 +164,24 @@ const inlineChecks = [
     question:
       'Prove (before): indicator reads 230 V on the proving unit. Test at the point of work: indicator reads 0 V on every pairing. Prove (after): indicator reads 0 V on the proving unit — it has died. What is the procedurally correct call?',
     options: [
-      'Accept the test — the second prove is a courtesy check, the test reading is the real evidence.',
-      'Stop. The test is unreliable. The indicator may have failed during the test, masking voltage on the conductors. Replace the indicator with a known-good one and repeat the entire prove-test-prove sequence from scratch.',
-      'Re-test using a different known source.',
-      'Accept the test if the lock-off is intact.',
+      'Accept the test — the second prove is only a courtesy check after the reading.',
+      'Stop, replace the indicator, and repeat the whole prove-test-prove sequence.',
+      'Re-test using a different known voltage source and keep the first reading.',
+      'Accept the test, provided the lock-off at the source is still intact.',
     ],
     correctIndex: 1,
     explanation:
-      'Prove-test-prove is binary: BOTH proves must succeed for the zero in the middle to be evidence. A failed second prove gives you no proof the indicator was working when it read zero on the conductors. Replace the instrument and run the whole sequence again. There is no reasoning past a failed second prove.',
+      'Prove-test-prove is binary: BOTH proves must succeed for the zero in the middle to be evidence. A failed second prove gives you no proof the indicator was working when it read zero on the conductors — it may have died during the test and masked live voltage. Replace the instrument with a known-good one and run the whole sequence again. There is no reasoning past a failed second prove.',
   },
   {
     id: 'mod2-s4-non-contact-tester',
     question:
       'A spark uses a non-contact voltage tester to "prove" his two-pole indicator: he holds the NCVT next to the indicator probes, the NCVT lights, he concludes the indicator is fine. What is wrong, and how could it kill someone?',
     options: [
-      'Nothing is wrong — NCVTs are recognised proving devices.',
-      'The NCVT detects an electric field; it is not a voltage source. It puts no signal on the indicator probes — the indicator is given nothing to display. If the conductors at the work point are actually live and the indicator has a flat battery, both readings show "no voltage" and the spark strips a live cable.',
-      'NCVTs are not CE-marked.',
-      'The NCVT is too sensitive.',
+      'Nothing is wrong — NCVTs are recognised proving devices for this purpose.',
+      'The NCVT is a detector, not a source, so it puts no signal on the indicator probes.',
+      'NCVTs are not CE-marked for use on fixed installations in the UK.',
+      'The NCVT is too sensitive and gives the indicator a false high reading.',
     ],
     correctIndex: 1,
     explanation:
@@ -192,28 +192,28 @@ const inlineChecks = [
     question:
       'You isolate the upstairs lighting MCB. Test at a ceiling rose: L–E reads 0 V, L–N reads 0 V. You skip N–E because the line is dead. You strip the neutral and get a 60 V belt. What did the missed reading reveal, and which Reg framing covers the duty?',
     options: [
-      'Nothing — the belt was static discharge.',
-      'A borrowed neutral. N–E would have read ~60 V because the downstairs lighting (still live) shares the upstairs neutral somewhere in the loft. Reg 537.3.3 (TT/IT) and Reg 462.2 require all live conductors — including N — to be isolated and verified; the three-reading set (L–E, L–N, N–E) at the point of work is what catches this on TN systems too.',
-      'Induced voltage from a parallel cable.',
-      'A capacitive coupling that is harmless.',
+      'Static discharge from your clothing against the metalwork.',
+      'A borrowed neutral, which the missed N–E reading would have shown.',
+      'Induced voltage coupled from a parallel cable run nearby.',
+      'Harmless capacitive coupling on a long final-circuit cable.',
     ],
     correctIndex: 1,
     explanation:
-      'Borrowed neutrals are common enough on older domestic rewires that the all-pole prove-dead set was designed specifically to catch them. The N–E test is the smoking-gun reading. Reg 537.3.3 makes "all live conductors" explicit on TT/IT and the same logic applies as a competence floor everywhere — the neutral can be a hazard regardless of system type if it is shared.',
+      'The N–E test is the smoking-gun reading: it would have shown ~60 V because the still-live downstairs lighting shares the upstairs neutral somewhere in the loft, returning current through the conductor you stripped. Borrowed neutrals are common enough on older domestic rewires that the all-pole prove-dead set (L–E, L–N, N–E) was designed specifically to catch them. Reg 537.3.3 makes "all live conductors" — including the neutral — explicit on TT/IT, and Reg 462.2 requires all live conductors to be isolated and verified; the same logic applies as a competence floor on TN systems too.',
   },
   {
     id: 'mod2-s4-cat-rating-meter-tails',
     question:
       'You are about to prove dead at the meter tails on the supply side of a domestic consumer unit. Your indicator is rated CAT III 600 V / CAT IV 300 V. Your leads are CAT III 1000 V. Is the test set-up appropriate, and what is the rule?',
     options: [
-      'Yes — CAT III 1000 V is the highest rating, so the set-up is CAT III 1000 V.',
-      'Yes — meter tails are a domestic location, CAT III applies.',
-      'No. GN3 Ch 1 places equipment between the building entrance and the primary distribution / consumer unit (cut-out, meter, meter tails) explicitly in CAT IV. The leads are CAT III only — and the test set-up rating is the LOWEST CAT in the chain. The whole arrangement is CAT III, which is below the CAT IV the location demands. Use CAT IV-rated leads.',
-      'No — only CAT II is acceptable in domestic premises.',
+      'Yes — CAT III 1000 V is the highest rating, so the set-up is CAT III 1000 V overall.',
+      'Yes — meter tails are a domestic location, so CAT III is sufficient throughout.',
+      'No — the CAT III leads make it a CAT III set-up, below the CAT IV the origin demands.',
+      'No — only CAT II is acceptable in domestic premises, so both items are over-rated.',
     ],
     correctIndex: 2,
     explanation:
-      'The test set-up rule is clear: the equivalent overvoltage category for a test arrangement is the lowest CAT of any item in the chain (instrument, leads, probes, adapters). A CAT IV instrument with CAT III leads is a CAT III set-up — and meter tails / cut-out / origin sit firmly in CAT IV territory per GN3 Ch 1. Match every item to the location.',
+      'The equivalent overvoltage category for a test arrangement is the lowest CAT of any item in the chain (instrument, leads, probes, adapters). A CAT IV instrument with CAT III leads is a CAT III set-up — and meter tails / cut-out / origin sit firmly in CAT IV territory per GN3 Ch 1, which places equipment between the building entrance and the primary distribution / consumer unit explicitly in CAT IV. Use CAT IV-rated leads so every item matches the location.',
   },
 ];
 

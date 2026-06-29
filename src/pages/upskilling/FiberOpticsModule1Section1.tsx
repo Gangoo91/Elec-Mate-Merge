@@ -45,10 +45,10 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does 'optical' refer to in optical fibre?",
-    options: ['Electricity-based', 'Light-based', 'Sound-based', 'Heat-based'],
-    correctAnswer: 1,
+    options: ['Light-based', 'Electricity-based', 'Sound-based', 'Heat-based'],
+    correctAnswer: 0,
     explanation:
-      'Optical refers to light-based transmission. Fibre optic cables use light pulses to transmit data.',
+      'Optical refers to light-based transmission. Fibre optic cables use pulses of light to transmit data.',
   },
   {
     id: 2,
@@ -62,12 +62,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the primary advantage of fibre optics over copper for long distances?',
     options: [
-      'Lower cost',
+      'Lower purchase cost per metre',
+      'Simpler field termination',
       'Much lower signal loss (attenuation)',
-      'Easier to install',
-      'Heavier weight',
+      'Heavier, more robust construction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fibre optics has much lower signal loss over distance compared to copper, making it ideal for long-haul communications.',
   },
@@ -87,8 +87,8 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What type of light is typically used in fibre optic communications?',
-    options: ['Visible white light', 'Infrared light', 'Ultraviolet light', 'X-ray light'],
-    correctAnswer: 1,
+    options: ['Infrared light', 'Visible white light', 'Ultraviolet light', 'X-ray radiation'],
+    correctAnswer: 0,
     explanation:
       'Infrared light at wavelengths like 850nm, 1310nm, and 1550nm is used because it experiences lower attenuation in glass.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is attenuation in fibre optics?',
     options: [
-      'Signal amplification',
+      'Amplification of the optical signal',
+      'An increase in available bandwidth',
+      'A change in the colour of the light',
       'Loss of signal strength over distance',
-      'Increase in bandwidth',
-      'Change in light colour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Attenuation is the loss of signal strength as light travels through the fibre, measured in dB/km.',
   },
@@ -125,20 +125,20 @@ const quizQuestions = [
     id: 9,
     question: 'Fibre optic cables are immune to which type of interference?',
     options: [
-      'Physical damage',
+      'Physical crushing damage',
+      'Temperature extremes',
       'Electromagnetic interference (EMI)',
-      'Temperature changes',
-      'Water damage',
+      'Water ingress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Since fibre uses light rather than electricity, it is completely immune to electromagnetic interference.',
+      'Since fibre carries light rather than electricity, it is completely immune to electromagnetic interference.',
   },
   {
     id: 10,
     question: 'What is the typical diameter of the cladding in standard telecommunications fibre?',
-    options: ['9 micrometres', '62.5 micrometres', '125 micrometres', '250 micrometres'],
-    correctAnswer: 2,
+    options: ['125 micrometres', '9 micrometres', '62.5 micrometres', '250 micrometres'],
+    correctAnswer: 0,
     explanation:
       'Standard telecommunications fibre has a cladding diameter of 125 micrometres regardless of core size.',
   },

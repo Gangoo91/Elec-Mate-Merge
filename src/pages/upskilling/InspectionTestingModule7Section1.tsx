@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       'Reg 643.6 places how many distinct verification duties on the polarity test, and which test stage catches the supplier-side reversal?',
     options: [
-      'One duty (wiring throughout) — caught by the dead Method 1 test',
-      'Four duties (supply at origin, single-pole devices on line, lampholder centre contacts, wiring throughout) — and only the live two-pole indicator at the origin catches a supplier-side reversal',
-      'Two duties (continuity and IR) — caught by the multifunction tester',
-      'Three duties — all caught by a plug-in socket tester',
+      'One duty (wiring connected throughout), fully caught by the dead Method 1 continuity test',
+      'Four duties (supply at origin, single-pole devices on line, lampholder centre contacts, wiring throughout); only the live origin check catches a supplier-side reversal',
+      'Two duties (continuity and insulation resistance), both caught by the multifunction tester',
+      'Three duties (line, neutral and earth presence), all caught by a plug-in socket tester',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'OSG Reg 10.3.4 ties the pre-energisation polarity test to which other test, and what is the practical consequence?',
     options: [
-      'To the RCD ramp test — you run the ramp first, then read polarity from the trip current',
-      'To Test Method 1 of continuity — line linked to CPC at the origin, ohmmeter at each accessory. Done in the right sequence, the polarity reading falls out of the Method 1 setup for free',
-      'To insulation resistance — polarity is a side-effect of a clean IR reading',
-      'To the Zs measurement at the furthest point',
+      'To the RCD ramp test — run the ramp first, then read polarity from the recorded trip current',
+      'To Test Method 1 of continuity — line linked to CPC at the origin, so polarity falls out of the same setup for free',
+      'To the insulation resistance test — polarity is read off as a side-effect of a clean IR result',
+      'To the Zs measurement taken at the furthest point of the final circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Why does OSG insist that lamps are removed before the pre-energisation polarity test on a lighting circuit?',
     options: [
-      'To stop the lamps drawing test current and damaging the meter',
-      'A lamp filament is a low-resistance path between line and neutral at the holder. With it in place, a swapped switch wire elsewhere on the circuit can read continuous via the lamp and mask the polarity fault. Empty holders force the test current down the actual circuit conductors',
-      'It is purely a cosmetic step — the test works either way',
-      'To prevent the lamp from glowing at low test voltage',
+      'To stop the lamps drawing test current and overloading the low-resistance ohmmeter',
+      'A lamp filament bridges line and neutral at the holder, so a swapped switch wire can read continuous via the lamp and mask the fault',
+      'Purely a cosmetic step that has no bearing on the resistance readings taken',
+      'To prevent the lamp glowing and giving a false continuity indication at low test voltage',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Every dead test passed. You energise. The two-pole indicator at the consumer unit reads 230 V N-to-E and 0 V L-to-E. What has happened, and what do you do?',
     options: [
-      "Swap the consumer unit's incoming tails to compensate, then re-energise",
-      "The supplier's tails are reversed at the cut-out. Isolate immediately, do NOT touch the cut-out (only the DNO may), call the DNO to remediate. Issue no certificate until the cut-out is corrected and the live test passes",
-      'Ignore — the dead test is the definitive one',
-      'Treat as a code C3 observation and continue',
+      "Swap the consumer unit's incoming tails to compensate, then re-energise and re-test",
+      "Supplier's tails are reversed at the cut-out: isolate, call the DNO to remediate, issue no certificate",
+      'Ignore the live reading and rely on the dead test as the definitive verification',
+      'Treat as a code C3 observation, note it on the certificate and continue testing',
     ],
     correctIndex: 1,
     explanation:
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'A pre-energisation polarity test before connecting the supply uses what method?',
     options: [
-      'A live two-pole voltage indicator at every accessory',
-      'The same setup as Test Method 1 of continuity — line linked to CPC at the origin, then a low-resistance ohmmeter check from line to earth at each point',
-      'An RCD ramp test with the supply on',
-      'A 500 V insulation resistance test L-to-N',
+      'The same setup as continuity Test Method 1 — line linked to CPC at the origin, ohmmeter line-to-earth at each point',
+      'A live two-pole voltage indicator applied at every accessory in turn around the circuit',
+      'An RCD ramp test at the consumer unit, reading polarity from the recorded trip current',
+      'A 500 V insulation resistance test taken line-to-neutral at the furthest accessory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OSG Reg 10.3.4 is explicit: prior to connecting the supply, the method of test for polarity shall be the same as Test Method 1 used for continuity of protective conductors. You get the polarity check for free if you have already done Method 1 properly — the L-to-CPC link at the board is doing both jobs.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Why is a single-pole device prohibited in the neutral conductor on an earthed-neutral system (Reg 132.14.1 / 132.14.2)?',
     options: [
-      'To save copper on the neutral conductor',
-      'Because a single-pole switch in the neutral leaves the line conductor connected when the switch is open — accessory contacts and downstream wiring stay live, defeating isolation and creating a shock hazard',
-      'Because RCDs cannot detect neutral faults',
-      'Because the neutral is bigger than the line',
+      'Because breaking the neutral first causes harmonic currents to circulate and overheat the conductor',
+      'Because an RCD upstream cannot detect a residual fault once the neutral has been opened by the switch',
+      'Because a single-pole switch in the neutral leaves the line connected when open — the accessory and downstream wiring stay live, defeating isolation and creating a shock hazard',
+      'Because the neutral is sized larger than the line conductor and a single-pole device cannot break it cleanly under load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 132.14.1 mandates that a single-pole fuse, switch or circuit-breaker shall be inserted in the line conductor only. Reg 132.14.2 prohibits an unlinked single-pole device in an earthed neutral. The polarity test (Reg 643.6(a)) is the practical verification that this design rule has been followed at every accessory.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'On an earthed-neutral system, where should the centre (live) contact of a centre-contact bayonet or Edison screw lampholder be connected?',
     options: [
-      'To neutral, in every case',
-      'To line, except for E14 and E27 lampholders to BS EN 60238 — which are excepted by Reg 643.6(b)',
-      'It does not matter on a domestic circuit',
-      'To the protective conductor',
+      'To line, except for E14 and E27 lampholders to BS EN 60238, which are excepted by Reg 643.6(b)',
+      'To neutral in every case, so the centre contact is dead when the lamp is being changed',
+      'Either terminal, since the non-reversible lampholder geometry fixes the orientation anyway',
+      'To the circuit protective conductor, to bond the lamp cap on double-insulated fittings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 643.6(b) requires that on earthed-neutral circuits, centre-contact BC and ES lampholders have their outer / screwed contact on neutral — i.e. the centre live contact is on line. The carve-out is for E14 / E27 lampholders to BS EN 60238, which are double-insulated at the shell and are excepted from this duty.',
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     question:
       'What is the correct sequence for the pre-energisation polarity test on a new lighting circuit, per OSG Ch 10?',
     options: [
-      'Energise → walk round with a two-pole tester → record',
-      'Continuity of protective conductors (Test Method 1) → remove all lamps → insulation resistance → continuity / polarity using the same Method-1 setup → visual confirmation at terminations',
-      'Insulation resistance only — polarity is purely visual',
-      'Use a phase-rotation tester at every switch',
+      'Energise the circuit, walk round with a two-pole tester at each point, then record the results',
+      'Continuity (Method 1) → remove lamps → insulation resistance → polarity via Method 1 → visual at terminations',
+      'Insulation resistance only, then confirm polarity purely by visual inspection of the terminals',
+      'Use a phase-rotation tester at every switch and read the polarity from the rotation indication',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       'Why must lamps be removed from a lighting circuit before pre-energisation polarity testing?',
     options: [
-      'To stop the lamps drawing test current',
-      'A lamp filament provides a low-resistance path between line and neutral. With a lamp in place, an incorrectly wired lampholder can read as continuous L-to-E via the lamp and the next holder — masking the reverse polarity',
-      'To protect the test instrument from inrush',
-      'It is not strictly required — only recommended',
+      'To stop the lamps drawing test current and skewing the low-resistance reading',
+      'A lamp bridges line and neutral, so a mis-wired holder can read continuous via the lamp and hide the reversal',
+      'To protect the test instrument from the lamp inrush current at switch-on',
+      'It is not strictly required and is only recommended as good practice on lighting circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'After the installation is energised, the polarity test does not stop. What is the live polarity step actually checking?',
     options: [
-      'That the RCD trips at 30 mA',
-      'That the indication on the device — the neon, the digital indicator, the LED, the socket-tester pattern — confirms line is on the line terminal and neutral is on the neutral terminal as the energised supply is presented',
-      'That the Zs reading falls below the Table 41.3 limit',
-      'That the cable temperature stays below 70°C',
+      'That the RCD trips at its rated residual operating current of 30 mA within the disconnection time',
+      'That the measured earth-fault loop impedance Zs at the origin falls below the Table 41.3 limit',
+      'That the cable operating temperature under load stays below the 70°C limit for general-purpose PVC',
+      'That the live indication at the device confirms line is on the line terminal and neutral on the neutral terminal as the energised supply is presented',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A pre-energisation Method-1 polarity check confirms the wiring is consistent — but it cannot tell you whether the incoming supply itself was presented L on line. The post-energisation step is where a two-pole indicator / approved socket tester reads the live supply at the origin and at representative points and confirms what each terminal actually is.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'You have completed Method 1 continuity on a radial. The L–CPC link is still in at the board. The reading at every accessory in turn comes back continuous L-to-E. What is the polarity status of the circuit?',
     options: [
-      'Confirmed — the readings are all continuous',
-      'Cannot be confirmed yet — Method 1 with L–CPC linked at the origin tells you line and CPC are continuous to each point, but it does not by itself tell you whether the conductor presented as line at the accessory is the same conductor that is line at the board. You also need a second check (continuity L-to-N with N–E linked, or visual at terminations) to close the polarity question',
-      'Failed — the link should not be in',
-      'Confirmed only on radials, never on rings',
+      'Confirmed — the readings are all continuous, so polarity is proven at every point',
+      'Not yet confirmed — Method 1 does not by itself prove the line conductor and switch wire were not swapped; a second check is needed',
+      'Failed — the L–CPC link should never be left in place during a polarity test',
+      'Confirmed on radial circuits only; Method 1 cannot verify polarity on ring final circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     question:
       'BS 1363 socket-outlets and BS EN 60309 industrial sockets are required to be non-reversible. How does that requirement interact with the Reg 643.6(c) duty to verify wiring is correctly connected throughout the installation?',
     options: [
-      'It removes the need for a polarity check at sockets',
-      'The non-reversible plug / socket geometry guarantees the appliance side cannot be presented in reverse polarity at the pins — but the cable feeding the socket-back can still be wired wrong. The polarity check at the socket-back terminals is what catches the wiring fault that the pin geometry cannot',
-      'It only applies to industrial sockets',
-      'It overrides Reg 643.6 entirely',
+      'The fixed pin geometry verifies the wiring, removing the need for a polarity check at sockets',
+      'The geometry fixes the appliance interface, but the cable at the socket-back can still be wired wrong — so the socket-back polarity check is still required',
+      'The non-reversibility duty applies only to BS EN 60309 industrial sockets, not to BS 1363',
+      'The non-reversible geometry overrides Reg 643.6(c) for circuits that terminate in sockets',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'On the A4:2026 Schedule of Test Results, where does the polarity result for a single-phase final circuit go, and what is the correct entry for a circuit that passes?',
     options: [
-      'There is no polarity column — record in comments only',
-      'A dedicated polarity column on the Generic Schedule of Test Results (Appendix 6 / GN3 schedule). A passing circuit is entered as a tick / pass mark — not a numeric value, because polarity is a yes/no verification, not a measurement',
-      'Record the line-to-earth resistance in the polarity column',
-      'Polarity is recorded only on the Schedule of Inspections, not the Schedule of Test Results',
+      'In the dedicated polarity column on the Generic Schedule of Test Results, entered as a tick',
+      'There is no polarity column; the pass is recorded as free text in the comments box for the circuit',
+      'The measured line-to-earth resistance in ohms is entered in the polarity column as the pass value',
+      'Polarity is visual, so it appears only on the Schedule of Inspections and never on the test schedule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Generic Schedule of Test Results carries a polarity column for each circuit. Polarity is a binary verification — pass / fail / N/A — so the entry is a tick, not an ohms reading. A failure entered in this column is a code C2 / non-compliance, not a deviation, because it identifies a wired-wrong installation that is unsafe to leave energised.',
   },

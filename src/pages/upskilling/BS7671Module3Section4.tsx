@@ -24,9 +24,9 @@ const inlineChecks = [
     question:
       'Under Reg 525.202 / Appendix 4 Section 6.4, what voltage drop limits are deemed to satisfy the general voltage requirement for a public LV-supply installation?',
     options: [
-      '5% lighting / 8% other circuits, measured from the cut-out to the far point',
-      '3% lighting / 5% other circuits, measured from the origin of the installation to the equipment terminals',
-      '2.5% lighting / 4% other circuits, measured at the consumer unit only',
+      '5% lighting / 8% other, measured from the cut-out to the far point',
+      '3% lighting / 5% other, measured from the origin to the equipment terminals',
+      '2.5% lighting / 4% other, measured at the consumer unit only',
       'No specified figures — voltage drop is left entirely to the designer',
     ],
     correctIndex: 1,
@@ -47,10 +47,10 @@ const inlineChecks = [
     question:
       'Which expression correctly yields the line-to-line voltage drop for a balanced three-phase circuit using BS 7671 Appendix 4 mV/A/m values?',
     options: [
-      'Vd = (mV/A/m × Ib × L) / 1000 — same as single-phase',
-      'Vd = (mV/A/m × Ib × L × 2) / 1000',
-      'Vd = (mV/A/m × Ib × L × √3) / 1000 — only when the tabulated mV/A/m is for line-to-neutral',
-      'Vd = (mV/A/m × Ib × L) / 1000, where the Appendix 4 three-phase mV/A/m column already accounts for the √3 factor',
+      'Vd = (mV/A/m × Ib × L) / 1000, using the single-phase mV/A/m column',
+      'Vd = (mV/A/m × Ib × L × 2) / 1000, doubled for the return path',
+      'Vd = (mV/A/m × Ib × L × √3) / 1000, adding √3 to a line-to-neutral figure',
+      'Vd = (mV/A/m × Ib × L) / 1000, using the three-phase column (√3 embedded)',
     ],
     correctIndex: 3,
     explanation:
@@ -61,9 +61,9 @@ const inlineChecks = [
     question:
       'A piece of fixed current-using equipment has a product standard that demands the supply voltage at its terminals never falls below 207 V. Your design satisfies Appendix 4 Section 6.4 (3% / 5% deemed-to-satisfy). Are you finished?',
     options: [
-      'Yes — Appendix 4 satisfies Reg 525.1 in all cases',
-      'Yes — the product standard is advisory only',
-      'No — Reg 525.1 is the over-arching duty: the voltage at the terminals must remain above the lower limit demanded by the equipment product standard, even if Appendix 4 percentages are met',
+      'Yes — Appendix 4 satisfies Reg 525.1 in all cases without exception',
+      'Yes — the equipment product standard is advisory guidance only',
+      'No — Reg 525.1 still requires the terminal voltage above the product-standard limit',
       'No — only because the percentages must be reduced to 2% / 4%',
     ],
     correctIndex: 2,
@@ -75,10 +75,10 @@ const inlineChecks = [
     question:
       'Why do Appendix 4 mV/A/m tables include separate columns for resistance only (mVr) and impedance (mVz) on larger cable sizes?',
     options: [
-      'For decorative purposes — designers always use mVz',
-      'Because at larger CSAs the cable reactance becomes significant; mVr is used at unity p.f., mVz at lagging p.f. with the appropriate cosφ correction',
-      'Because mVr is for AC and mVz is for DC',
-      'Because mVr is used in TN systems and mVz in TT',
+      'For presentation only — designers always just use the mVz column',
+      'At larger CSAs reactance matters: mVr at unity p.f., mVz with cosφ correction',
+      'Because mVr applies to AC circuits and mVz applies to DC circuits',
+      'Because mVr is used in TN systems and mVz in TT systems',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const inlineChecks = [
     question:
       'A 7 kW (32 A) single-phase EV charger is to be installed 60 m from a domestic CU on a public TN-C-S supply. Using 6 mm² T&E (mV/A/m ≈ 7.3), is the design likely to satisfy the voltage drop deemed-to-satisfy figures?',
     options: [
-      'Yes — well within 5 %',
-      'No — Vd ≈ 14.0 V (6.1 %), exceeds the 5 % limit; upsize to 10 mm² or use SWA with a larger CSA',
-      'No — but it is acceptable because EV chargers are exempt from Reg 525.202',
-      'Yes — the EV charger sets its own voltage internally so the cable drop does not matter',
+      'Yes — the drop sits well within the 5 % limit',
+      'No — Vd ≈ 14.0 V (6.1 %) exceeds the 5 % limit; upsize the conductor',
+      'No, but it is acceptable because EV chargers are exempt from Reg 525.202',
+      'Yes — the EV charger sets its own voltage, so cable drop does not matter',
     ],
     correctIndex: 1,
     explanation:
@@ -102,10 +102,10 @@ const inlineChecks = [
     id: 'm3s4-design-current',
     question: 'Which current value should you use as Ib in the voltage drop calculation?',
     options: [
-      'The protective device rating (In) — always',
+      'The protective device rating (In) — always, in every case',
       'The cable current-carrying capacity (Iz) — to be conservative',
-      'The design current (Ib) — Reg 311.1 — derived from the load assessment, applying diversity where appropriate',
-      'The prospective fault current at the origin',
+      'The design current (Ib) — Reg 311.1, after diversity assessment',
+      'The prospective fault current measured at the origin',
     ],
     correctIndex: 2,
     explanation:
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'Reg 525.1 sets the principal voltage drop duty in BS 7671:2018+A4:2026. Which option states it correctly?',
     options: [
-      'Voltage drop shall not exceed 4% on any final circuit',
-      'In the absence of any other consideration, under normal service conditions the voltage at the terminals of any fixed current-using equipment shall be greater than the lower limit corresponding to the product standard relevant to the equipment',
+      'Voltage drop shall never exceed 4% on any final circuit, in any installation',
       'Voltage drop shall be calculated using the line-to-line voltage on every circuit',
       'Voltage drop is solely a matter for the cable manufacturer, not the designer',
+      'The voltage at fixed equipment must stay above its product-standard lower limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 525.1 (verbatim, BS 7671:2018+A4:2026): "In the absence of any other consideration, under normal service conditions the voltage at the terminals of any fixed current-using equipment shall be greater than the lower limit corresponding to the product standard relevant to the equipment." Reg 525.201 then says where no product standard exists the voltage shall not impair safe functioning; Reg 525.202 gives Appendix 4 Section 6.4 as the deemed-to-satisfy route.',
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       'What is the correct Appendix 4 single-phase voltage drop formula using tabulated mV/A/m?',
     options: [
-      'Vd = mV/A/m × Ib × L × 2 / 1000',
-      'Vd = mV/A/m × Ib × L / 1000 — the tabulated figure already accounts for the return path',
-      'Vd = mV/A/m × In × L / 1000',
-      'Vd = mV/A/m × Iz × L / 1000',
+      'Vd = mV/A/m × Ib × L × 2 / 1000 (doubled for the return path)',
+      'Vd = mV/A/m × Ib × L / 1000 (return path already in the figure)',
+      'Vd = mV/A/m × In × L / 1000 (using the device rating In)',
+      'Vd = mV/A/m × Iz × L / 1000 (using the cable capacity Iz)',
     ],
     correctAnswer: 1,
     explanation:
@@ -160,8 +160,8 @@ const quizQuestions = [
     id: 4,
     question:
       'A balanced three-phase 80 A load is supplied via 80 m of 25 mm² SWA copper (Appendix 4 three-phase mVz ≈ 1.55 mV/A/m at full load). What is the approximate line-to-line voltage drop?',
-    options: ['6.4 V', '9.92 V', '17.2 V', '0.99 V'],
-    correctAnswer: 1,
+    options: ['6.4 V', '17.2 V', '9.92 V', '0.99 V'],
+    correctAnswer: 2,
     explanation:
       'Vd = (mV/A/m × Ib × L) / 1000 = (1.55 × 80 × 80) / 1000 = 9.92 V. Against a 400 V line-to-line nominal that is 2.48 % — well inside the 5 % limit. The Appendix 4 three-phase column already includes the √3 factor; never apply √3 again when using that column.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'Why are Appendix 4 mV/A/m tables sub-divided into mVr / mVx / mVz columns from approximately 25 mm² upwards?',
     options: [
-      'Cable colour conventions change at 25 mm²',
-      'Above ~16-25 mm², cable reactance becomes significant — mVr (resistance), mVx (reactance) and mVz (impedance) let the designer apply the cosφ × mVr + sinφ × mVx correction for the actual load power factor',
-      'They reflect different ambient temperature corrections',
-      'They are different limits for TN, TT and IT systems',
+      'Cable colour-coding conventions change at the 25 mm² size',
+      'Above ~25 mm² reactance matters — split into mVr, mVx and mVz',
+      'They reflect different ambient temperature correction factors',
+      'They are different voltage-drop limits for TN, TT and IT systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'A new 7 kW EV charger (32 A, 230 V, single-phase) sits 50 m from a domestic CU. The designer chooses 6 mm² T&E (mV/A/m ≈ 7.3). What is the voltage drop and what is the right call?',
     options: [
-      '5.8 V (2.5 %) — pass',
-      '11.7 V (5.1 %) — fails the 5 % deemed-to-satisfy limit; upsize to 10 mm² (giving ≈ 7.0 V / 3.0 %) or shorten the run',
-      '23.4 V (10.2 %) — must add a step-up transformer',
-      '1.17 V (0.5 %) — pass with margin',
+      '5.8 V (2.5 %) — comfortably passes the 5 % limit',
+      '23.4 V (10.2 %) — fails, must add a step-up transformer',
+      '1.17 V (0.5 %) — passes the 5 % limit with large margin',
+      '11.7 V (5.1 %) — fails the 5 % limit; upsize to 10 mm²',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Vd = (7.3 × 32 × 50) / 1000 = 11.68 V ≈ 11.7 V → 5.08 % at 230 V. Marginally over the 5 % limit. Sustained EV charging at 32 A for hours makes a worst-case Appendix 4 figure realistic, so do not lean on the margin. Standard fix: upsize to 10 mm² (mV/A/m ≈ 4.4) → Vd ≈ 7.04 V (3.06 %), well inside.',
   },
@@ -198,10 +198,10 @@ const quizQuestions = [
     question:
       'Which input to the voltage drop calculation is the Reg 311.1 design current Ib, and why does it matter?',
     options: [
-      'The protective device rating — voltage drop is always evaluated against the device limit',
-      'The cable current-carrying capacity — voltage drop is the worst case the cable can ever see',
-      'The actual design current after diversity — Reg 311.1 — using anything else either over-sizes the conductor or under-states the drop',
-      'The earth-fault loop current — voltage drop is a fault-condition calculation',
+      'The protective device rating In — always evaluated against the device limit',
+      'The cable current-carrying capacity Iz — the worst case the cable can ever see',
+      'The actual design current Ib after diversity (Reg 311.1)',
+      'The earth-fault loop current — voltage drop is a fault-condition check',
     ],
     correctAnswer: 2,
     explanation:
@@ -212,12 +212,12 @@ const quizQuestions = [
     question:
       'A long sub-main feeds a remote DB at 60 % of its current capacity. Which design discipline is most likely to overlook voltage drop on a sub-main?',
     options: [
+      'The sub-main and final circuit drops sum together from origin to terminals',
       'Voltage drop on a sub-main never matters — only final circuits count',
-      'It is a known trap: each leg eats some of the 5 % budget and final circuits downstream still need to satisfy 525.1; the sub-main, the final circuit and the equipment lower limit all sum together from origin to terminals',
-      'Sub-mains are exempt because they have no socket-outlets',
-      'BS 7671 only allocates voltage drop to final circuits',
+      'Sub-mains are exempt because they carry no socket-outlets directly',
+      'BS 7671 allocates the voltage-drop budget to final circuits only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 525.202 / Appendix 4 Section 6.4 measures voltage drop from the origin of the installation to the terminals of fixed current-using equipment — the WHOLE path, including every intervening sub-main. A sub-main running at 1.5 % drop already burns 30 % of a 5 % power-circuit budget; a 2 % final circuit then puts you at 3.5 % — fine on paper but only with margin. Designers who size each sub-main and final circuit independently against the same 5 % limit produce installations that fail at the equipment terminals.',
   },

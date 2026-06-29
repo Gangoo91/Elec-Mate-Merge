@@ -58,10 +58,10 @@ const checks = [
     question:
       "A lighting circuit Vd of 6.4 V on a 230 V single-phase supply equates to what percentage, and does it pass the lighting limit from BS 7671 Appendix 4 §6.4?",
     options: [
-      'Only HSE-licensed contractors holding a current asbestos licence',
+      '3.20 percent — fails (above the 3 percent lighting limit).',
       '2.78 percent — passes (below the 3 percent lighting limit).',
-      'The frequency range between -3dB points (f2 - f1)',
-      'Multiple variables and diagnostics over two wires',
+      '2.78 percent — fails, because lighting circuits are held to a 2 percent limit.',
+      '6.40 percent — fails, because the percentage equals the volt-drop figure directly.',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "What does the mV/A/m figure published in BS 7671 Appendix 4 actually represent for a single-phase two-core cable?",
     options: [
-      "Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow",
+      "The voltage drop in millivolts per amp of load, measured over the line conductor only — you double the route length yourself to account for the return path.",
       "The voltage drop in millivolts, per amp of load, per metre of route length, including both line and neutral conductors (the out-and-back loop).",
-      "To provide a path that will cause protective devices to operate immediately if the circuit is accidentally re-energised, protecting the worker",
-      "Removal / disturbance of sprayed coatings, lagging, large quantities of AIB, friable insulation, asbestos cement at significant scale. HSE-licensed contractor only - not optional.",
+      "The maximum voltage the cable can drop before the protective device trips, in millivolts per metre.",
+      "The resistance of the cable in milliohms per amp per metre, used directly as the voltage-drop figure.",
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "Why is the lighting Vd limit (3 percent) tighter than the non-lighting limit (5 percent)?",
     options: [
-      "The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours",
+      "Lighting circuits carry more current than socket circuits, so they need a tighter limit to keep the cable cool.",
       "Lighting load is voltage-sensitive — lamp output, colour temperature, dimming smoothness and (for older filament gear) lamp life all degrade noticeably below ~220 V at the lampholder. The 3 percent limit keeps the lampholder above that threshold.",
-      "Meets the minimum but warrants investigation per GN3 — sectional testing and visual inspection to determine if it represents normal length-related leakage or a developing fault",
-      "Use shorter conduit sections to reduce load length, knee pads for joint protection, frequent micro-breaks, and pre-position materials at the access point to minimise carrying distance in the restricted space",
+      "Lighting circuits are always longer than power circuits, so the tighter limit compensates for the extra route length.",
+      "The 3 percent limit is a legacy figure from when lighting ran at 110 V, and it has simply never been updated.",
     ],
     correctAnswer: 1,
     explanation:
@@ -188,9 +188,9 @@ const quizQuestions = [
       "A circuit just clears the Vd limit at 4.95 percent on a long radial. The customer adds a heat pump in three years that pushes the load up by 10 percent. What happens to the Vd, and is this a future compliance problem?",
     options: [
       "Vd scales with current, so a 10 percent load uplift gives a 10 percent Vd uplift, taking 4.95 percent to ~5.45 percent — the circuit is now non-compliant and the customer needs the cable upsized. This is exactly why designers leave headroom rather than scrape the limit.",
-      "The JIB National Working Rules set out agreed terms covering wages, working hours, overtime, travel, and conditions, providing a contractual framework for resolving disputes about these matters in the electrical contracting industry",
-      "A small generator (often a Stirling engine or fuel cell) burns gas to make heat AND electricity at the same time, with the heat captured for hot water and the electricity used in the house or exported.",
-      "Disconnect at the EV charger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).",
+      "Vd is independent of load current, so the 4.95 percent figure stays the same and there is no compliance problem.",
+      "Vd scales with the square of current, so a 10 percent uplift gives a 21 percent rise, taking 4.95 percent to about 6 percent — but this is not a compliance concern because the limit only applies at first install.",
+      "Vd falls as load rises because the cable warms and its resistance drops, so the circuit becomes more compliant over time.",
     ],
     correctAnswer: 0,
     explanation:

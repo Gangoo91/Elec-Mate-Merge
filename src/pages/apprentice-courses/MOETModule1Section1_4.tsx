@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, what is the FIRST step in the hierarchy of controls for working at height?',
     options: [
-      'ATEX or IECEx certification for equipment and installation methods',
+      'Issue every worker with a fall-arrest harness before they go up',
       'Avoid working at height altogether where it is reasonably practicable to do so',
-      'A luminaire containing its own battery, lamp, control gear, and test facility',
-      'To make the wearer visible in poor light or near moving vehicles',
+      'Fit guardrails and edge protection to the working platform',
+      'Install safety nets and airbags beneath the work area',
     ],
     correctIndex: 1,
     explanation:
@@ -29,9 +29,9 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when is it acceptable to use a ladder for maintenance work?',
     options: [
-      'It provides higher energy savings by requiring manual switch-on',
-      'A more thorough overhaul carried out at intervals of 5 or 10 years depending on extinguisher type',
-      'Use the time to review all answers, checking for misread questions and unanswered items',
+      'Whenever a platform would take longer to set up than the task itself',
+      'For any task, provided the worker keeps one hand on the ladder',
+      'Only for tasks above 2 metres, where a podium step cannot reach',
       'Only when the task is of short duration, low risk, and the site conditions are suitable',
     ],
     correctIndex: 3,
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'fragile-surface',
     question: "What is a 'fragile surface' in the context of work at height?",
     options: [
-      "Increased risk-taking and poor concentration leading to safety errors",
+      "Any roof surface that has not been inspected within the last 12 months",
       "A surface that would be liable to fail if a person's weight were to be applied to it",
-      "Hydrogen produced using renewable electricity through electrolysis of water",
-      "A test to verify equipment operates as intended when energised",
+      "A wet or icy surface that becomes slippery in poor weather",
+      "A surface made from any material other than reinforced concrete",
     ],
     correctIndex: 1,
     explanation:
@@ -56,9 +56,9 @@ const quickCheckQuestions = [
     question: 'When must a rescue plan be in place for work at height?',
     options: [
       'Before any work at height begins, as required by the Work at Height Regulations',
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\\\\\\\\\'s body (e.g., blood, urine)',
-      'Testing devices and verifying that field changes appear correctly on dashboards',
-      'Medium complexity projects with nominated subcontractors',
+      'Only for work above 6 metres, where a fall would be fatal',
+      'After a fall has occurred, once the casualty has been located',
+      'Only when a fall-arrest harness rather than a work-restraint system is used',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: "The Work at Height Regulations 2005 define 'work at height' as:",
     options: [
-      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
-      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
+      'Any work carried out more than 2 metres above the ground or floor level',
+      'Any work on a ladder, scaffold or MEWP, but not work at ground level',
       'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'It provides a stable, guarded platform allowing two-handed working at height',
+      'Any work above head height where overhead hazards are present',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     question: 'A podium step is preferable to a stepladder for electrical maintenance because:',
     options: [
       'It provides a stable, guarded platform allowing two-handed working at height',
-      'Protect people below from falling objects, tools, and materials',
-      'Avoid working at height, prevent falls, mitigate falls',
-      'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
+      'It is lighter and quicker to carry between work positions on site',
+      'It can be used at greater heights than any scaffold or MEWP',
+      'It removes the need for any pre-use inspection before work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Before using a ladder on site, the pre-use inspection must check for:',
     options: [
-      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
+      'The manufacturer\'s 6-monthly LOLER thorough examination certificate',
       'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
-      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
-      'It provides a stable, guarded platform allowing two-handed working at height',
+      'The current wind speed and weather forecast for the rest of the shift',
+      'A valid PASMA card held by the person erecting the ladder',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'A Mobile Elevating Work Platform (MEWP) must be operated by:',
     options: [
-      'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
-      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
+      'Any worker over 18, provided a supervisor is present at ground level',
+      'A person holding a current PASMA tower scaffold certificate',
       'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
-      'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
+      'Any competent electrician, as no specific operator licence is required',
     ],
     correctAnswer: 2,
     explanation:
@@ -150,9 +150,9 @@ const quizQuestions = [
     id: 7,
     question: 'When installing cable tray at height, what is the preferred access equipment?',
     options: [
-      'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
-      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
-      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
+      'A leaning ladder secured at the top and footed by a second worker',
+      'A swing-back stepladder used from the top two treads',
+      'A trestle and scaffold board spanning between two stepladders',
       'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: "What is 'suspension trauma' (harness hang syndrome)?",
     options: [
       'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
-      'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
-      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
+      'The shock loading placed on an anchor point at the moment a fall is arrested',
+      'A long-term back injury caused by repeatedly wearing a poorly fitted harness',
+      'The psychological stress experienced by a worker after a near-miss at height',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'An exclusion zone below work at height is required to:',
     options: [
-      'Above 25 mm² — anything where hand crimps cannot deliver the required compression',
+      'Give the worker at height more room to manoeuvre the access equipment',
       'Protect people below from falling objects, tools, and materials',
-      'Oval conduit or suitable protection against nails',
-      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
+      'Keep the work area dry by diverting pedestrians away from spillages',
+      'Mark out where the scaffold may be re-positioned during the task',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'How often must scaffolding be formally inspected under the Work at Height Regulations?',
     options: [
-      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
-      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
+      'Once a month, and after any modification to the structure',
+      'Every 6 months, in line with LOLER thorough examination intervals',
       'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
-      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
+      'Only before first use; no further inspections are required once erected',
     ],
     correctAnswer: 2,
     explanation:
@@ -204,9 +204,9 @@ const quizQuestions = [
     question:
       'When working near overhead busbars or busbar trunking at height, what additional electrical hazard must be considered?',
     options: [
-      'It provides a stable, guarded platform allowing two-handed working at height',
-      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
-      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
+      'The extra weight of the busbar trunking on the access platform',
+      'The need to wear hi-vis clothing when working at high level',
+      'Glare from the busbar enclosure reducing visibility of the work',
       'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ const quizQuestions = [
     question: 'A tower scaffold must not be used outdoors in wind speeds exceeding:',
     options: [
       'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
-      'It provides a stable, guarded platform allowing two-handed working at height',
-      'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
+      'Approximately 40 mph (force 8, a gale) for standard lightweight towers',
+      'Approximately 5 mph (force 2, a light breeze) for any tower scaffold',
+      'There is no wind speed limit, provided the tower is tied to the building',
     ],
     correctAnswer: 0,
     explanation:

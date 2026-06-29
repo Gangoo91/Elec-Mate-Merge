@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     question:
       'A colleague is going through a difficult divorce. You understand their perspective, feel their pain, and offer to help with their workload. Which type(s) of empathy are you demonstrating?',
     options: [
-      'Cognitive empathy only',
-      'Emotional empathy only',
-      'Compassionate empathy (which includes cognitive and emotional)',
-      'Sympathy, not empathy',
+      'Cognitive empathy only, with no emotional or action component',
+      'Emotional empathy only, with no understanding or action component',
+      'Compassionate empathy, combining understanding, feeling, and action',
+      'Sympathy rather than any genuine form of empathy at all',
     ],
     correctIndex: 2,
     explanation:
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     id: 'empathy-safety',
     question: 'How does empathy directly improve safety on a construction site?',
     options: [
-      'It makes people work faster so there is less time for accidents',
       'It helps you notice when someone is distracted, stressed or unfit to work safely',
+      'It makes people work faster so there is less time for accidents',
       'It replaces the need for formal safety procedures',
       'It only matters for managers, not for tradespeople',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Empathetic team members notice emotional and behavioural cues that indicate someone may not be working safely \u2014 distraction, stress, fatigue, withdrawal. By picking up these signals early, they can intervene before an accident occurs. Empathy does not replace safety procedures; it supplements them with human awareness.',
   },
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'Cognitive empathy is best described as:',
     options: [
-      'Feeling the same emotions as another person',
-      'Understanding what someone thinks and feels without necessarily feeling it yourself',
-      'Automatically crying when someone else cries',
-      'Agreeing with another person\u2019s point of view',
+      'Feeling exactly the same emotions as another person feels',
+      'Understanding what someone thinks and feels without feeling it yourself',
+      'Automatically crying whenever you see someone else start to cry',
+      'Agreeing fully with another person\u2019s point of view on a matter',
     ],
     correctAnswer: 1,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'According to Brene Brown, what is the key difference between empathy and sympathy?',
     options: [
-      'Empathy is stronger than sympathy',
-      'Sympathy requires more emotional intelligence than empathy',
-      'Empathy fuels connection; sympathy drives disconnection',
-      'There is no meaningful difference between them',
+      'Empathy is simply a stronger version of ordinary sympathy',
+      'Sympathy requires far more emotional intelligence than empathy does',
+      'Empathy fuels connection, whereas sympathy drives disconnection',
+      'There is no meaningful difference between the two responses',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 4,
     question: 'Mirror neurons are significant for empathy because:',
     options: [
-      'They allow us to literally mirror the physical appearance of others',
-      'They fire both when we perform an action and when we observe someone else performing it, helping us understand others\u2019 emotions',
-      'They are only found in humans, proving empathy is a uniquely human trait',
-      'They can be surgically enhanced to increase empathy',
+      'They allow us to literally mirror the physical appearance of other people',
+      'They fire when we act and when we watch others act, helping us read emotions',
+      'They are found only in humans, proving empathy is a uniquely human trait',
+      'They can be surgically enhanced to noticeably increase a person\u2019s empathy',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       'An apprentice fails their practical assessment and is visibly upset. Which response best demonstrates compassionate empathy?',
     options: [
-      '"Don\u2019t worry, it\u2019s not the end of the world." (Minimising)',
-      '"I failed mine too, so I know how it feels. Let me help you prepare for the resit." (Understanding + feeling + action)',
-      '"You should have studied harder." (Judgement)',
-      '"Just forget about it and move on." (Dismissal)',
+      '"Don\u2019t worry about it, it really is not the end of the world for you."',
+      '"You should have studied a good deal harder than you actually did."',
+      '"Just try to forget all about it and move straight on to the next thing."',
+      '"I failed mine too, so I get it. Let me help you prepare for the resit."',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Compassionate empathy combines understanding (\u201cI know how it feels\u201d), shared emotion (drawing on your own experience of failure), and action (\u201clet me help you prepare\u201d). The other responses either minimise, judge or dismiss the apprentice\u2019s emotional experience. Compassionate empathy validates the emotion and then does something constructive about it.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'Goleman\u2019s \u201cpolitical awareness\u201d empathy competency refers to:',
     options: [
-      'Understanding national politics and voting patterns',
-      'Reading the power dynamics, relationships, and unspoken rules within a group or organisation',
-      'Being careful about what you say in public',
-      'Supporting your colleagues in union activities',
+      'Reading the power dynamics and unspoken rules within a group or organisation',
+      'Understanding national politics, elections, and broad public voting patterns',
+      'Being careful and guarded about what you say in front of other people',
+      'Actively supporting your colleagues in their union and workplace activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Political awareness in Goleman\u2019s model means the ability to read the power dynamics, key relationships, and unspoken rules that operate within a team, organisation or industry. On a construction site, this means understanding who has influence (formal and informal), how decisions really get made, and which relationships matter most \u2014 skills that are essential for navigating complex multi-trade projects.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which statement about empathy and safety is best supported by research?',
     options: [
-      'Empathy is irrelevant to safety \u2014 only procedures and PPE matter',
-      'Empathetic teams tend to have fewer accidents because members notice when colleagues are distracted or unfit to work safely',
-      'Empathy makes sites less safe because people become too cautious',
-      'Safety and empathy are completely separate domains',
+      'Empathy is irrelevant to safety, since only procedures and PPE truly matter',
+      'Empathy actually makes sites less safe because people become far too cautious',
+      'Safety and empathy are completely separate domains with no real overlap',
+      'Empathetic teams have fewer accidents as members notice when colleagues are unfit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Research on psychological safety (Amy Edmondson, Harvard) shows that teams where members feel safe to speak up about concerns, where people notice and respond to each other\u2019s emotional states, and where there is genuine care for each other\u2019s wellbeing have significantly fewer accidents and near-misses. Empathy enables people to notice when a colleague is not in a fit state to work safely \u2014 something that no procedure or piece of PPE can do.',
   },

@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should access routes be kept clear?',
     options: [
-      'Wood, Bruner and Ross (1976)',
-      'Steel tape measure or laser measure',
-      'Regular inspection and maintenance',
+      'To reduce the cost of access equipment hire',
+      'To allow faster delivery of materials only',
+      'To improve the appearance of the site',
       'To prevent trips and accidents',
     ],
     correctIndex: 3,
@@ -59,10 +59,10 @@ const Module5Section3_3 = () => {
       id: 1,
       question: 'What is the main purpose of planning access routes?',
       options: [
-        'Minimum separation to detect two adjacent reflective events',
+        'To reduce the amount of cable needed on site',
         'To ensure work is completed safely and efficiently',
-        'They emit dense black smoke containing toxic halogens',
-        'Monthly functional tests and annual full duration tests',
+        'To avoid the need for a risk assessment',
+        'To speed up the inspection and testing stage',
       ],
       correctAnswer: 1,
       explanation:
@@ -70,11 +70,16 @@ const Module5Section3_3 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Ladders are suitable for long-duration high-level tasks.',
-      options: ['False', 'True'],
-      correctAnswer: 0,
+      question: 'For which type of task are leaning ladders generally suitable?',
+      options: [
+        'Long-duration work needing both hands free',
+        'Tasks requiring heavy tools and materials',
+        'Multiple workers on the same access point',
+        'Short-duration, low-risk work',
+      ],
+      correctAnswer: 3,
       explanation:
-        'False. Ladders should only be used for short-duration, low-risk work. Longer tasks require more stable platforms.',
+        'Ladders should only be used for short-duration, low-risk work. Longer or heavier tasks require more stable platforms.',
     },
     {
       id: 3,
@@ -119,10 +124,10 @@ const Module5Section3_3 = () => {
       id: 6,
       question: 'Why should walkways be kept clear of trailing cables?',
       options: [
-        'SWL 6.25 kN, slip load 9.1 kN',
-        'Test while flexing the cable',
+        'To protect the cables from being damaged',
+        'To keep the cables out of direct sunlight',
         'To prevent trips and accidents',
-        'Overfilling and creating sharp bends',
+        'To reduce voltage drop along the cable',
       ],
       correctAnswer: 2,
       explanation:
@@ -146,9 +151,9 @@ const Module5Section3_3 = () => {
       question: 'What should you do if access equipment is damaged?',
       options: [
         'Report it and do not use until repaired/replaced',
-        'Retake and pass the HS&E test before applying for renewal',
-        'The contract administrator or architect',
-        'Regular firmware updates and strong authentication',
+        'Continue using it carefully until the job is finished',
+        'Repair it yourself with whatever is to hand',
+        'Use it only for short-duration tasks',
       ],
       correctAnswer: 0,
       explanation:
@@ -158,10 +163,10 @@ const Module5Section3_3 = () => {
       id: 9,
       question: 'Why is coordination with other trades important when planning access?',
       options: [
-        'An advanced craft or supervisory worker with NVQ/SVQ Level 3',
+        'It removes the need for site induction',
         'To avoid conflicts and ensure smooth site operations',
-        'Essential to ensure design intent is correctly implemented',
-        'May require modified procedures and criteria',
+        'It allows ladders to be used for longer tasks',
+        'It reduces the number of inspections required',
       ],
       correctAnswer: 1,
       explanation:
@@ -171,10 +176,10 @@ const Module5Section3_3 = () => {
       id: 10,
       question: 'What is the safest principle when considering working at height?',
       options: [
-        'Benefits, costs, public perception, legal requirements, available alternatives',
-        'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
+        'Always use the tallest available platform',
+        'Only work at height in dry weather',
         'Avoid it where possible — complete work from ground level if feasible',
-        'To prevent signal reflections that cause communication errors',
+        'Wear a harness so any height is acceptable',
       ],
       correctAnswer: 2,
       explanation:

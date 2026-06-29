@@ -42,9 +42,9 @@ const checks = [
       'Which organisation publishes a Code of Conduct that applies to electrical engineers and technicians?',
     options: [
       'The Institution of Engineering and Technology (IET) — Rules of Conduct setting standards for integrity, competence, public safety, professional judgement and supporting others. Members are expected to behave in line with the Rules and can be subject to disciplinary action for breach.',
-      'Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.',
-      'The deliberate adjustment of electricity consumption by end users in response to price signals, grid conditions or direct requests from the system operator — shifting demand away from peak periods to reduce strain on the network and avoid the need for expensive peaking generation',
-      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
+      'The Health and Safety Executive (HSE) — its Code of Conduct is a statutory document that every electrician must sign before being allowed to work, with breaches enforced directly by HSE inspectors through improvement notices.',
+      'The British Standards Institution (BSI) — BS 7671 itself contains the profession\'s Code of Conduct in Part 1, which sets the ethical duties of integrity and competence alongside the technical wiring requirements.',
+      'Ofgem — the energy regulator publishes the Code of Conduct for electrical contractors as a condition of connecting installations to the network, and can revoke a contractor\'s right to work for serious breaches.',
     ],
     correctIndex: 0,
     explanation:
@@ -54,10 +54,10 @@ const checks = [
     id: 'mod7-s3-sub5-cash-vat',
     question: 'A client offers you cash to avoid VAT on a job. How should you respond?',
     options: [
-      'A4:2026 made Cmin = 0.95 explicit in the calculation. Old: max Zs = U0 / Ia = 230 / 160 = 1.44 Ω (no Cmin). New: max Zs = U0 × Cmin / Ia = 230 × 0.95 / 160 = 1.37 Ω. The 5 percent reduction is the Cmin factor working through.',
+      'Accept the cash but still record the job and pay the VAT yourself out of your own margin. The customer gets their discount, the tax is paid, and everyone is happy — there is no offence because the VAT reaches HMRC.',
       'Politely decline and explain you must work within the law. Tax evasion is a criminal offence under the Fraud Act 2006 and VAT legislation; accepting it puts your business, scheme registration and personal liability at serious risk. Decline firmly without lecturing the client.',
-      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
-      'A first fault to earth has occurred. The system stays energised by design (continuity of supply matters in critical settings) but the fault must be located and rectified as soon as practical, before a second fault on a different conductor causes auto-disconnection at TN/TT-style fault current levels',
+      'Agree, provided the job is under £1,000 — small cash jobs below the VAT threshold per transaction are exempt, so taking cash on a job of that size is within the rules.',
+      'Accept the cash and issue the customer a receipt marked "goodwill discount" rather than an invoice. As long as no VAT invoice is produced, the transaction sits outside the VAT system and no offence is committed.',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     id: 'mod7-s3-sub5-confidentiality',
     question: 'What does professional confidentiality typically cover on a domestic job?',
     options: [
-      "Compliance with HASAWA s.2(2)(a) — 'safe systems of work' for an electrical installation. Because EAWR is a regulation made under HASAWA, demonstrating EAWR compliance through BS 7671 also demonstrates discharge of the underlying HASAWA s.2 / s.3 duties for the electrical-system part of the work.",
-      "To discharge their CDM 2015 duty to ensure the workers on site are competent for the work. The ECS card is the industry-recognised proof of competence for electrical workers; main contractors use it to evidence that they checked competence before allowing entry. Failure to check competence (with no card or other evidence) leaves the main contractor exposed under CDM.",
+      "Only the customer's written contact details, because those are the sole category covered by the Data Protection Act 2018. Anything you simply see or overhear in the property — alarm codes, valuables, conversations — is not personal data and carries no duty of confidence.",
+      "Only information the customer has explicitly asked you to keep secret. If they have not said 'please keep this confidential' about a particular thing, you are free to discuss or share it with other customers and trades.",
       "Protecting the client's personal information, security arrangements (alarm codes, key locations, access routines) and any commercially or personally sensitive matters you become aware of during the work. Casual chat about 'they've got a nice setup' can enable theft and breach the Data Protection Act 2018 if shared further.",
-      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
+      "Only matters relating to the electrical installation itself — circuit details, test results and the condition of the wiring. Personal or security information about the household falls outside an electrician's professional confidentiality.",
     ],
     correctIndex: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       "You discover a colleague has been signing off work without completing proper tests. What's the professional response?",
     options: [
-      'PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.',
+      'Say nothing — it is not your job to police a more senior colleague, and raising it could be seen as undermining them. As long as you complete your own tests properly, their certificates are their own responsibility.',
       'Raise it with your supervisor or QS in line with the firm whistleblowing process; document what you saw, when and where. Falsified certificates are dangerous to the public and a criminal matter under EWR 1989 and the Fraud Act 2006. You have a duty under EWR Reg 3 not to be complicit.',
-      'A formal recognition that you hold the specialist solar PV competence — typically gained by passing AM2S (the Solar PV variant of AM2) or by completing an MCS-approved PV installer course alongside time-served PV installation experience. The endorsement allows you to work on PV installations under MCS-registered firms.',
-      'Sealing arrangements that maintain the fire resistance rating of the element penetrated — using tested intumescent products (pillows, mortar, putty, sleeves) appropriate to the fire rating, cable type, and bundle size.',
+      'Quietly re-test the affected circuits yourself and re-issue the certificates under your own name, without telling anyone. Fixing the paperwork discreetly resolves the safety risk without causing conflict on site.',
+      'Report it straight to the HSE and the police before speaking to anyone at the firm. Going to the authorities first protects you and avoids the firm covering up the falsified certificates internally.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary purpose of professional codes of conduct in the electrical industry?',
     options: [
-      "They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon",
-      "Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC",
+      "To set the prices electricians may charge, ensuring fair competition and preventing any one firm from undercutting the rest of the trade on labour rates.",
+      "To replace statutory law for the electrical trade — once a firm signs up to a code of conduct it is exempt from HASAWA and EWR enforcement because the scheme regulates it instead.",
       "To protect the public, maintain industry standards and uphold the profession's reputation. The codes formalise the link between technical competence and ethical behaviour — both are needed to be a competent electrician within the meaning of EWR 1989.",
-      "Meets the minimum but warrants investigation per GN3 — sectional testing and visual inspection to determine if it represents normal length-related leakage or a developing fault",
+      "To provide a marketing badge for firms — the main purpose is to give registered businesses a logo to display, with the conduct rules being a secondary formality that is rarely enforced.",
     ],
     correctAnswer: 2,
     explanation:
@@ -110,9 +110,9 @@ const quizQuestions = [
     id: 3,
     question: 'How should you represent your employer when dealing with clients?',
     options: [
-      "A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.",
-      "The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults",
-      "Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity",
+      "Tell the client whatever keeps them happy in the moment, even if you are not certain the firm can deliver it — managing expectations afterwards is the office's job, not yours on site.",
+      "Keep conversation to an absolute minimum and avoid answering questions, referring everything to the office. Saying as little as possible is the safest way to avoid misrepresenting the firm.",
+      "Be candid about any internal problems so the client trusts you — explaining that the office is disorganised or that a colleague made a mistake shows honesty and builds rapport.",
       "Behave professionally, maintain confidentiality about internal matters, never criticise colleagues or competitors, only promise what the firm can deliver and refer complex issues to the right person rather than guess. You're the firm's public face on every call.",
     ],
     correctAnswer: 3,
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'A homeowner asks you to install a socket outlet directly above their bathroom basin. What is the professional response?',
     options: [
-      "Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within zones, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.",
-      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
-      "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
-      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — treating the setback as permanent, pervasive, and entirely personal",
+      "Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within 2.5 m horizontally of the zone 1 boundary, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.",
+      "Fit the socket as asked but protect it with a 30 mA RCD and an IP44-rated faceplate. The RCD and weatherproof cover make a socket compliant in any bathroom zone, so the customer's request can be met safely.",
+      "Fit the socket as asked provided it is at least 600 mm above the basin. Height alone removes it from the special-location zones, so any standard socket is permitted once it clears that distance.",
+      "Decline the work without further discussion — it is not your place to explain the regulations to a customer, and giving reasons only invites an argument. Simply state you cannot do it and move on.",
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should you do if you make a mistake during an installation?',
     options: [
-      'Through the transfer of heat energy as electromagnetic waves (infrared radiation) that travel through air or vacuum',
+      'Quietly correct it if you can do so without anyone noticing, and only mention it if you are directly asked. Drawing attention to a mistake you have already fixed just damages your standing on site.',
       'Own up to it, put it right properly at your own expense, document the corrective action, and treat it as CPD — what went wrong and how to stop it recurring.',
-      'Longer cable = MORE insulation surface in parallel = LOWER measured IR. Test result expected to be inversely proportional to length',
-      'Confirm all personnel are clear, remove personal locks, remove danger notices, replace covers, then re-energise',
+      'Leave it for the next inspection to pick up — the EICR process exists precisely to catch defects, so flagging your own error duplicates work the system already does.',
+      'Carry on and let the firm bill the customer for the extra time to put it right, since the time spent correcting it is legitimate labour that has to be paid for somehow.',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       "You overhear confidential information about a commercial client's business plans while on site. What's the right action?",
     options: [
-      'Walk them through the key symbols, highlight what they care about (sockets, switches, locations) and offer to print a simplified version',
-      'Report it, investigate the root cause, share the lesson with the team — the same gap kills the next person if it isn’t closed',
+      'Mention it to your QS so the firm can use the information to win more work from the client, since intelligence gathered on site is a legitimate commercial advantage for your employer.',
+      'It is only confidential if it was marked or stated as confidential. Information you merely overheard was not entrusted to you, so you are free to repeat it.',
       'Treat it as confidential, do not disclose or use it, and do not record it. This is part of your professional duty even though the information was incidental to your work.',
-      'Electrical equipment, hot surfaces, friction, static electricity, hot work (welding/cutting), radiant heat, and naked flames',
+      'Pass it discreetly to a contact at a competing firm in exchange for a favour — as long as you gain nothing in cash, no Bribery Act issue arises.',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'How should you handle disagreements with other trades on a construction site?',
     options: [
-      "Because verbal changes leave no audit trail. Reg 644.1.1 requires the EIC to be backed by documentation that matches the install; a phone call between site and office does not produce that documentation. Structured RFIs produce the trail.",
-      "Carrying out any building, civil engineering or engineering construction work; including alteration, renovation, demolition, conversion, repair, maintenance, decoration, removal of structures, installation, removal, maintenance of mechanical / electrical / similar services.",
-      "Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.",
+      "Stand your ground firmly on site and refuse to continue until the other trade backs down — electrical work takes priority over other disciplines, so other trades should defer to you.",
+      "Go straight to the client to settle the disagreement, since the client is paying for the whole job and is the right person to arbitrate between the trades.",
+      "Resolve it informally with a quiet word and a handshake, keeping it off the record so nobody is embarrassed — written records of disputes between trades only create bad feeling.",
       "Discuss professionally with the trade contact first, escalate to the site manager / principal contractor if it affects your work, document any decisions that change scope, and never let it impact the customer's view of the project.",
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'What is the appropriate action if you are asked to work beyond your competence?',
     options: [
       'Politely decline and explain your limitation, suggesting a colleague or specialist who is qualified. Working outside competence breaches EWR 1989 Reg 16 and is also a scheme rule for CPS-registered firms.',
-      'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
-      'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
-      'Confirm L-PE = nominal voltage (~230V), N-PE = small voltage (typically <5V), and L-N = nominal — using approved voltage indicator at the cut-out or main switch',
+      'Have a go and learn on the job — practical experience is how competence is built, and refusing work makes you look unwilling. Any mistakes can be put right at the testing stage.',
+      'Accept the work but ask the customer to sign a disclaimer accepting the risk. A signed waiver transfers liability to the customer and means you cannot be held responsible if anything goes wrong.',
+      'Accept it as long as a more senior colleague is somewhere on site, even if they are not watching you. Their mere presence on the job satisfies the requirement for supervision regardless of what they are doing.',
     ],
     correctAnswer: 0,
     explanation:

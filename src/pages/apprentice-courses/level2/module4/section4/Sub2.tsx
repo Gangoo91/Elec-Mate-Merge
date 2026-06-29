@@ -38,38 +38,38 @@ const checks = [
     question:
       'You are landing a 10 mm² G/Y main bonding conductor into a brass MET busbar with a 12 mm cage clamp. The screw clamps directly onto the bare conductor. What is the right strip length?',
     options: [
-      'XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure',
-      'The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
-      'Strip just enough that the bare conductor fully fills the clamp depth (about 12 mm) and no bare conductor protrudes outside the terminal — typically strip 12 to 15 mm and trim flush after tightening.',
+      'Strip 40 to 50 mm so plenty of bare conductor wraps around the busbar.',
+      'Strip only 3 to 4 mm so the screw clamps mostly onto the insulation for grip.',
+      'Strip 25 to 30 mm so the bare conductor passes right through the terminal and out the far side.',
+      'Strip about 12 to 15 mm to fill the clamp depth, no bare conductor protruding.',
     ],
     correctIndex: 3,
     explanation:
-      'Strip the conductor to match the terminal depth. Bare conductor outside the terminal is exposed (insulation breach risk) and inside the terminal it should fill the clamp without leaving stranded wires waving free. 12-15 mm is a typical guide — always check the manufacturer instructions for the specific terminal block.',
+      'Strip the conductor to match the terminal depth so the bare conductor fully fills the clamp (about 12 mm here) with nothing protruding outside the terminal. Bare conductor outside the terminal is exposed (insulation breach risk) and inside it should fill the clamp without stranded wires waving free. 12-15 mm is a typical guide — always check the manufacturer instructions for the specific terminal block.',
   },
   {
     id: 'm4-s4-sub2-ferrule',
     question:
       'Why fit a bootlace ferrule on the end of a stranded 10 mm² G/Y conductor before landing into a screw-clamp earth bar?',
     options: [
-      'Worst-case — retail on the heaviest phase (38 A) plus flats balanced across the three phases: 38 + 18 + 18 = 74 A on the worst phase (two flats land on the same phase as retail), about 56 A on the other two.',
-      'To gather the strands together so the screw clamps a single solid pin rather than 49 individual strands — improves contact pressure, prevents stray strands escaping the terminal and reduces the risk of damage to the strands when tightened.',
-      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
-      'Stay out of the negotiation, carry on with your task, and let the supervisor and client resolve it — but record what you heard in case it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s asked about later',
+      'To insulate the conductor end so it cannot be touched once landed in the terminal.',
+      'To gather the strands into a single solid pin the screw can clamp evenly.',
+      'To increase the cross-sectional area of the conductor so it carries more fault current.',
+      'To colour-code the conductor end so it can be identified as a protective conductor.',
     ],
     correctIndex: 1,
     explanation:
-      'Cage-clamp and screw-clamp terminals are designed to compress a single solid pin. Crushing 49 stranded wires individually leads to broken strands, partial contact, and Reg 526.1 non-compliance for "durable electrical continuity". A bootlace ferrule (crimped with a hex die, not a square die — a square crush damages the conductor) presents a clean pin into the terminal.',
+      'Cage-clamp and screw-clamp terminals are designed to compress a single solid pin. The ferrule improves contact pressure, prevents stray strands escaping and reduces strand damage on tightening. Crushing the 49 stranded wires individually leads to broken strands, partial contact, and Reg 526.1 non-compliance for "durable electrical continuity". A bootlace ferrule (crimped with a hex die, not a square die — a square crush damages the conductor) presents a clean pin into the terminal.',
   },
   {
     id: 'm4-s4-sub2-no-joints',
     question:
       'You are running a 10 mm² G/Y main bonding from the MET in the meter cabinet to the gas service in the kitchen, but the cable is 1.5 m short. The customer asks if you can splice it with a junction box hidden inside the kitchen wall void to save another trip. What do you do?',
     options: [
-      'HASAWA s.7 — every employee has a personal duty to take reasonable care for themselves and anyone affected by their acts or omissions, AND to co-operate with the employer\\\\\\\\\\\\\\\'s safety arrangements (including not breaking a lock-off they\\\\\\\\\\\\\\\'ve put in place). Following an unsafe instruction does NOT discharge that personal duty.',
-      'Refuse. Reg 543.3.2 requires every connection or joint in a protective conductor to be accessible for inspection, testing and maintenance. A junction box buried in a wall void is not accessible. The right answer is to fit a continuous run by going back to the wholesaler for a longer length, or by terminating both ends at an accessible MJB inside the meter cabinet.',
-      'No — replacements, repairs and maintenance of existing accessories on existing circuits are NOT notifiable work under Part P, even in a kitchen. Notifiable work is new circuits and consumer unit replacements (and additions/alterations in special locations under the older interpretation).',
-      'GMB is a UK general trade union representing workers across construction, building services and many other industries. In the electrical sector GMB has historic presence particularly in maintenance, facilities-management and public-sector electrical work. GMB is a JIB signatory union alongside Unite for collective bargaining purposes — though Unite is the larger electrical-trade union.',
+      'Agree, but only if the junction box is a maintenance-free type so it never needs inspecting.',
+      'Refuse — a buried wall-void joint is not accessible, so fit a continuous run or move the joint into the meter cabinet.',
+      'Agree, since the bond will still pass a continuity test once the joint is made.',
+      'Agree, provided the splice is sleeved in green/yellow and the position is noted on the certificate.',
     ],
     correctIndex: 1,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       'You are stripping the outer insulation off a 10 mm² G/Y single-core conductor with a sharp knife. Which technique avoids damaging the conductor strands?',
     options: [
-      'Notify Building Control (or use a Competent Person Scheme) for new circuits, consumer unit replacements, and special-location work',
-      'Because effective coordination of diverse teams with different cultures, pressures, and priorities requires strong empathy, communication, and conflict resolution skills',
-      'Specified injury — unconsciousness arising from head impact OR from asphyxiation (including from electrical events causing respiratory failure). Even brief loss requires immediate notification.',
-      'Ring-cut the insulation around the conductor at the strip length, scoring only partway through to avoid touching the strands, then snap and pull off.',
+      'Score lengthways down the insulation to the conductor, then peel the two halves apart.',
+      'Squeeze cable cutters closed on the conductor at the strip point and pull the insulation off.',
+      'Heat the insulation with a lighter until it softens, then slide it off the strands.',
+      'Ring-cut around the conductor, scoring only partway through, then snap and pull off.',
     ],
     correctAnswer: 3,
     explanation:
@@ -125,24 +125,24 @@ const quizQuestions = [
     question:
       'When crimping a bootlace ferrule onto a 10 mm² stranded conductor, what crimper jaw profile must you use?',
     options: [
-      'Hex jaw — gives equal compression around the ferrule, maintains the round profile and the conductor cross-section.',
-      'Breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds, hold for 4 seconds',
-      'Use sole boards (spreader plates) under the castors to distribute the load over a larger area',
-      'Information about efficient operation of heating, ventilation, and hot water systems',
+      'A hex (six-sided) jaw, giving equal compression around the ferrule.',
+      'A flat jaw, crushing the ferrule completely flat for maximum contact area.',
+      'A knife jaw, cutting partway into the ferrule to lock it onto the strands.',
+      'A round jaw, leaving the ferrule fully circular with no compression applied.',
     ],
     correctAnswer: 0,
     explanation:
-      'Hex (six-sided) crimp die. Square dies deform the ferrule and conductor unevenly, leaving voids and reducing contact area. Manufacturer-specified ratchet crimpers with hex dies (Knipex, Klauke, Phoenix Contact, etc.) are the trade standard. The crimp should be tight enough to grip the ferrule firmly without flaring the brass tube.',
+      'A hex (six-sided) crimp die gives equal compression around the ferrule and maintains the round profile and the conductor cross-section. Square or flat dies deform the ferrule and conductor unevenly, leaving voids and reducing contact area. Manufacturer-specified ratchet crimpers with hex dies (Knipex, Klauke, Phoenix Contact, etc.) are the trade standard. The crimp should be tight enough to grip the ferrule firmly without flaring the brass tube.',
   },
   {
     id: 5,
     question:
       'You are terminating a 16 mm² G/Y bonding conductor at a BS 951 earth clamp using a copper compression lug. Which tool is correct?',
     options: [
-      'Resilience is not a permanent state — it fluctuates with life circumstances and requires ongoing maintenance, regardless of experience',
-      'A ratchet hydraulic crimper with the correct hex die for the lug barrel size — applies the manufacturer-specified compression force, releases only at full crimp.',
-      'When construction work is scheduled to last longer than 30 working days with more than 20 workers on site simultaneously, or exceed 500 person-days',
-      'Collaborating to find root causes, compromising on non-critical items, and competing only on safety-critical timelines',
+      'A pair of combination pliers, squeezing the lug barrel onto the conductor by hand.',
+      'A ratchet hydraulic crimper with the correct hex die for the lug barrel size.',
+      'A ball-pein hammer and steel anvil, flattening the lug barrel onto the strands.',
+      'A bench vice, slowly tightening the jaws to compress the lug onto the conductor.',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,42 +153,42 @@ const quizQuestions = [
     question:
       'You are landing a bonding conductor at a screw-terminal MET in a meter cabinet that is exposed to occasional moisture (external cabinet, condensation visible on metalwork). What additional measure should you take?',
     options: [
-      'Providing ride-through power during the gap between mains failure and generator startup, peak shaving to reduce maximum demand charges, and frequency regulation to support power quality',
-      'The fire risk assessment must include consideration of the hazardous properties of the substance, how it is used, stored, and transported, the likelihood of an explosive atmosphere occurring, and the adequacy of measures to prevent ignition',
-      'Apply petroleum jelly or non-acidic grease to the prepared conductor and the terminal threads to inhibit corrosion. Heatshrink the joint if there is any risk of dripping water reaching it. Tighten to the manufacturer torque spec.',
-      'Thank the assessor for their time, reflect on how the assessment went (what went well, what could be improved), and wait for the formal result through the proper channels — results typically take a few weeks to be confirmed',
+      'Leave the termination bare — copper is naturally corrosion-resistant and needs no protection.',
+      'Wrap the whole termination in PVC insulation tape, which seals out all moisture permanently.',
+      'Apply anti-corrosion grease to the conductor and terminal threads, and heatshrink the joint.',
+      'Solder the conductor into the terminal so no moisture can reach the contact surfaces.',
     ],
     correctAnswer: 2,
     explanation:
-      'Reg 522 covers external influences. Where moisture is a factor, anti-corrosion grease on the conductor and terminal threads is the trade response. Heatshrink over the termination keeps water off entirely. Soldering is not a recommended termination method for protective conductors (Reg 526.2 has restrictions). Tightening to torque spec is mandatory regardless of environment.',
+      'Reg 522 covers external influences. Where moisture is a factor, apply non-acidic anti-corrosion grease (petroleum jelly grade) to the prepared conductor and terminal threads, and heatshrink the joint where dripping water could reach it — this is the trade response. PVC tape traps moisture rather than excluding it. Soldering is not a recommended termination method for protective conductors (Reg 526.2 has restrictions). Tightening to torque spec is mandatory regardless of environment.',
   },
   {
     id: 7,
     question:
       'A bonding cable termination at an MET is not torqued to the manufacturer spec — the screw is hand-tight only. Three months later the cable lifts out under its own weight. What was the underlying failure mode?',
     options: [
-      'Management of Health and Safety at Work Regulations 1999, Reg 10 — every employer must provide employees with comprehensible and relevant information on the risks to their health and safety identified by the assessment, and on the preventive and protective measures. Regulation 11 covers co-operation and co-ordination on shared workplaces. The duty to communicate safety information is statutory, not optional.',
-      'It brings DC isolation requirements, additional DC overcurrent protection, fire-segregation considerations and (for grid-tied operation) the same G98/G99 anti-islanding requirements that apply to the PV inverter — typically all wrapped up by a hybrid inverter that handles PV plus battery.',
-      'Operating temperature — typically 70 °C for thermoplastic-insulated cable. The values apply when the cable is fully loaded and warm. Measured Zs is at ambient (cool) conductor temperature; the standard correction is to require measured Zs ≤ 0.8 × table Zs to allow for the resistance increase as the cable warms in service.',
-      'A loose terminal was not gas-tight, oxidisation built up at the contact face over weeks, contact resistance climbed, the joint heated under any current draw, the heat softened the terminal screw and conductor, and the connection failed mechanically. Reg 526.1 (durable electrical continuity and adequate mechanical strength) failure.',
+      'The conductor was undersized for the supply, so it overheated and annealed until it lifted out.',
+      'The insulation crept back over three months, exposing the conductor and breaking the terminal grip.',
+      'The brass busbar expanded under warm-weather thermal cycling and pushed the conductor out of the terminal.',
+      'The loose, non-gas-tight terminal oxidised, contact resistance and heating climbed, and the joint failed.',
     ],
     correctAnswer: 3,
     explanation:
-      'Loose joint to oxide film growth to contact resistance rise to I-squared-R heat at the joint under any current to thermal cycling weakens the metalwork to eventual mechanical failure. The classic loose-terminal failure cascade. Always torque to the manufacturer specification — most domestic terminals on G/Y bonding cable are 2.5 to 4.0 Nm depending on the terminal design. Buy a torque screwdriver, set it once, use it every time.',
+      'The classic loose-terminal cascade — a Reg 526.1 (durable continuity and adequate mechanical strength) failure: a loose terminal is not gas-tight, an oxide film builds at the contact face over weeks, contact resistance climbs, the joint heats under any current draw (I-squared-R), thermal cycling weakens the metalwork, and the connection eventually fails mechanically. Always torque to the manufacturer specification — most domestic terminals on G/Y bonding cable are 2.5 to 4.0 Nm depending on the terminal design. Buy a torque screwdriver, set it once, use it every time.',
   },
   {
     id: 8,
     question:
       'Why must the bonding conductor entering an MET busbar be insulated G/Y rather than bare strap, except inside an enclosure-as-CPC?',
     options: [
-      'Reg 543.3.201 — protective conductors up to and including 6 mm² shall be protected throughout by a covering at least equivalent to a single-core non-sheathed cable of voltage rating 450/750 V. The same insulation requirement extends to bonding conductors. Bare strap is only allowed where it forms part of a metallic conduit/enclosure used as the protective conductor itself.',
-      'A formal legal notice issued by an HSE inspector when the inspector is of the opinion that activities are being carried out involving (or likely to involve) a risk of serious personal injury. The notice prohibits the activity until the matters specified in it are remedied. Can take immediate effect — the work stops the moment the notice is served.',
-      'The insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s right, after paying your claim, to step into your legal position and pursue recovery from any third party who caused or contributed to the loss. This is why you shouldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t settle directly with a third party or admit liability — it can prejudice the insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recovery and void your cover.',
-      'Chrysotile (white), Amosite (brown), Crocidolite (blue). All hazardous; crocidolite considered most carcinogenic. Most UK use was chrysotile in cement products and AIB; amosite in insulation board and pipe lagging; crocidolite in some sprayed insulation and specialist applications.',
+      'Reg 543.3.201 requires a covering equivalent to a 450/750 V single-core cable, except as part of an enclosure-as-CPC.',
+      'Bare copper strap cannot carry as much fault current as insulated cable of the same cross-section.',
+      'Insulated conductors are easier to identify by colour than bare strap at the busbar.',
+      'BS 7671 prohibits any bare conductor inside a meter cabinet under all circumstances.',
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 543.3.201 sets the insulation requirement. Bare protective conductors in open routing are a fault risk (can touch live conductors during a disturbance, can be damaged mechanically). The standard G/Y single-core sleeved cable sold for bonding meets the 450/750 V cover requirement. Bare bonding strap is only seen inside metallic enclosures that are themselves the protective conductor (rare in modern domestic).',
+      'Reg 543.3.201 requires protective conductors up to and including 6 mm² to be protected throughout by a covering at least equivalent to a single-core non-sheathed cable of voltage rating 450/750 V; the same insulation requirement extends to bonding conductors, and bare strap is only allowed where it forms part of a metallic conduit/enclosure used as the protective conductor itself. Bare protective conductors in open routing are a fault risk (can touch live conductors during a disturbance, can be damaged mechanically). The standard G/Y single-core sleeved cable sold for bonding meets the 450/750 V cover requirement. Bare bonding strap is only seen inside metallic enclosures that are themselves the protective conductor (rare in modern domestic).',
   },
 ];
 

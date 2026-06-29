@@ -25,10 +25,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 1,
     question: 'What is the correct sequence for safe isolation of an electrical circuit?',
     options: [
-      'Continuity, polarity, insulation resistance, earth fault loop impedance',
+      'Test the circuit, isolate, secure, test the tester, retest the tester',
       'Isolate, secure, test the tester, test the circuit, retest the tester',
-      'The value should be consistent with cable length and cross-sectional area',
-      'All duty holders including client, designers, principal contractor, contractors',
+      'Secure, isolate, test the circuit, test the tester, retest the tester',
+      'Isolate, test the circuit, secure, retest the tester, lock off',
     ],
     correctAnswer: 1,
     explanation:
@@ -59,9 +59,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 3,
     question: 'What type of lock should be used for electrical isolation?',
     options: [
-      'Earth leakage or N-E fault',
-      'Insulation resistance tester',
-      '4 times the cable diameter',
+      'A shared master key lock held by the site supervisor',
+      'A combination padlock with the code recorded in the permit',
+      'A standard padlock with a spare key kept at the distribution board',
       'Unique key lock with danger label',
     ],
     correctAnswer: 3,
@@ -93,10 +93,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 5,
     question: 'When can electrical work commence after isolation?',
     options: [
-      'Line and neutral should be similar, earth may be higher',
+      'As soon as the main switch has been turned off at the board',
       'After completing full GS38 procedure and posting warning notices',
-      'Continuity, polarity, insulation resistance, earth fault loop impedance',
-      'Cables must be at least 50mm from surface or have mechanical protection',
+      'Once the circuit has been locked off, without proving dead',
+      'After the voltage indicator reads zero at the point of work only',
     ],
     correctAnswer: 1,
     explanation:
@@ -117,9 +117,9 @@ export const am2QuestionBank: AM2Question[] = [
       '0.86Ω',
       '2.30Ω',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'For a 32A Type B MCB, the maximum Zs is 1.44Ω (based on 0.4 second disconnection time and 5 × In = 160A).',
+      'For a 32A Type B MCB to BS EN 60898 the maximum Zs is 1.37Ω at 230V (Cmin = 0.95), based on 5 × In = 160A magnetic trip current. This figure applies to both the 0.4s and 5s disconnection criteria.',
     section: 'Protection',
     difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
@@ -153,9 +153,9 @@ export const am2QuestionBank: AM2Question[] = [
       'IPX5',
       'IPX7',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Zone 1 in bathrooms requires a minimum of IPX5 protection against water jets from any direction (Section 701).',
+      'Zone 1 in a bathroom requires a minimum of IPX4 (Section 701). IPX5 is only required where water jets are likely to be used for cleaning purposes.',
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
@@ -180,16 +180,16 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 80,
-    question: 'What is the maximum disconnection time for a TT system final circuit?',
+    question: 'What is the maximum disconnection time for a TT system final circuit at 230V (up to 63A)?',
     options: [
       '1.0 seconds',
       '0.4 seconds',
       '0.2 seconds',
       '5.0 seconds',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'TT systems require disconnection within 1.0 second for final circuits due to higher earth fault loop impedance (411.5.3).',
+      'BS 7671 Table 41.1 requires a maximum disconnection time of 0.2s for TT final circuits at 230V (50V < U0 ≤ 230V). The 1.0s figure applies to TT distribution circuits.',
     section: 'Protection',
     difficulty: 'intermediate',
     topic: 'Disconnection Times',
@@ -236,14 +236,14 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'When testing continuity of ring final circuit conductors, what should the readings be?',
     options: [
-      'Installation method, ambient temperature, grouping, thermal insulation',
+      'All three conductors should read exactly zero ohms',
       'Line and neutral should be similar, earth may be higher',
-      'After completing full GS38 procedure and posting warning notices',
-      'Gather information, analyse, hypothesise, test, rectify',
+      'The earth reading should always be lower than line and neutral',
+      'Line, neutral and earth should all read identical values',
     ],
     correctAnswer: 1,
     explanation:
-      'In ring final circuits, line and neutral conductor readings should be similar. Earth conductor readings may be slightly higher due to different conductor size.',
+      'In ring final circuits, line and neutral conductor readings should be similar. Earth conductor readings may be slightly higher due to the smaller CPC cross-sectional area.',
     section: 'Ring Final Circuits',
     difficulty: 'intermediate',
     topic: 'Continuity Testing',
@@ -270,9 +270,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 155,
     question: 'What is the maximum acceptable value for continuity of protective conductors?',
     options: [
-      'Installation method, ambient temperature, grouping, thermal insulation',
-      'All duty holders including client, designers, principal contractor, contractors',
-      'Gather information, analyse, hypothesise, test, rectify',
+      'A fixed maximum of 0.05 ohms applies to all protective conductors',
+      'It must never exceed 1.0 ohm regardless of circuit length',
+      'It must be below 0.5 megohms when tested at 500V DC',
       'The value should be consistent with cable length and cross-sectional area',
     ],
     correctAnswer: 3,
@@ -306,9 +306,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 227,
     question: 'What is the systematic approach to fault finding?',
     options: [
-      'After completing full GS38 procedure and posting warning notices',
-      'Isolate, secure, test the tester, test the circuit, retest the tester',
-      'Continuity, polarity, insulation resistance, earth fault loop impedance',
+      'Replace the protective device first, then test the circuit',
+      'Rectify, test, hypothesise, analyse, then gather information',
+      'Test every accessory in turn until the fault is found',
       'Gather information, analyse, hypothesise, test, rectify',
     ],
     correctAnswer: 3,
@@ -325,9 +325,9 @@ export const am2QuestionBank: AM2Question[] = [
       'A lighting circuit has some lamps working and others not. What should you check first?',
     options: [
       'Check individual switches and connections',
-      'Depends on cable type and weight',
-      'Galvanised steel conduit with weatherproof fittings',
-      'Unique key lock with danger label',
+      'Replace the circuit protective device at the board',
+      'Carry out an insulation resistance test on the whole circuit',
+      'Measure the earth fault loop impedance at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -341,10 +341,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 229,
     question: 'An MCB keeps tripping immediately when reset. This indicates:',
     options: [
-      '4 times the cable diameter',
+      'A gradual overload that builds up over several minutes',
       'Short circuit (L-N or L-E)',
-      'Depends on cable type and weight',
-      'Earth leakage or N-E fault',
+      'A high-resistance loose connection at a terminal',
+      'A small earth leakage current within the RCD threshold',
     ],
     correctAnswer: 1,
     explanation:
@@ -377,10 +377,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 301,
     question: 'What factors determine the current-carrying capacity of a cable?',
     options: [
-      'Line and neutral should be similar, earth may be higher',
+      'Supply voltage, frequency, and power factor of the load',
       'Installation method, ambient temperature, grouping, thermal insulation',
-      'After completing full GS38 procedure and posting warning notices',
-      'Isolate, secure, test the tester, test the circuit, retest the tester',
+      'Length of cable run, colour of insulation, and conductor shape',
+      'Prospective fault current, Zs, and protective device type',
     ],
     correctAnswer: 1,
     explanation:
@@ -412,9 +412,9 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'When installing cables in roof spaces, what protection is required against mechanical damage?',
     options: [
-      'Galvanised steel conduit with weatherproof fittings',
-      'Isolate, secure, test the tester, test the circuit, retest the tester',
-      'Line and neutral should be similar, earth may be higher',
+      'Cables may be left loose provided they are out of reach',
+      'Cables must be enclosed in galvanised steel conduit throughout',
+      'Cables must be clipped within 25mm of the surface for support',
       'Cables must be at least 50mm from surface or have mechanical protection',
     ],
     correctAnswer: 3,
@@ -431,9 +431,9 @@ export const am2QuestionBank: AM2Question[] = [
       'Which containment system is most suitable for outdoor cable runs exposed to weather?',
     options: [
       'Galvanised steel conduit with weatherproof fittings',
-      'After completing full GS38 procedure and posting warning notices',
-      'When significant changes occur, after incidents, or periodically',
-      'Line and neutral should be similar, earth may be higher',
+      'Standard white PVC trunking clipped to the wall',
+      'Unsheathed singles clipped direct to the surface',
+      'Plastic mini-trunking with push-fit joints',
     ],
     correctAnswer: 0,
     explanation:
@@ -447,10 +447,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 305,
     question: 'What is the maximum spacing for cable supports in vertical runs?',
     options: [
-      '4 times the cable diameter',
+      'A fixed 300mm for all cable types and sizes',
       'Depends on cable type and weight',
-      'Check individual switches and connections',
-      'Short circuit (L-N or L-E)',
+      'Twice the spacing used for horizontal runs',
+      'Four times the overall diameter of the cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -467,9 +467,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Under RIDDOR, which electrical incidents must be reported?',
     options: [
       'Major injuries, dangerous occurrences, and electrical incidents causing loss of consciousness',
-      'Installation method, ambient temperature, grouping, thermal insulation',
-      'Cables must be at least 50mm from surface or have mechanical protection',
-      'All duty holders including client, designers, principal contractor, contractors',
+      'Every minor shock and any blown fuse, regardless of injury',
+      'Only incidents that result in damage to the employer\'s equipment',
+      'Only fatalities, with all non-fatal incidents recorded internally only',
     ],
     correctAnswer: 0,
     explanation:
@@ -500,10 +500,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 378,
     question: 'Who is responsible for site safety under CDM Regulations?',
     options: [
-      'Major injuries, dangerous occurrences, and electrical incidents causing loss of consciousness',
-      'Cables must be at least 50mm from surface or have mechanical protection',
+      'The principal contractor alone holds all site safety duties',
+      'The client is solely responsible once work has started on site',
       'All duty holders including client, designers, principal contractor, contractors',
-      'When significant changes occur, after incidents, or periodically',
+      'Only the HSE inspector assigned to the project',
     ],
     correctAnswer: 2,
     explanation:
@@ -517,14 +517,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 379,
     question: 'What is the correct lifting technique for manual handling?',
     options: [
-      'Check individual switches and connections',
-      'Galvanised steel conduit with weatherproof fittings',
-      'Line and neutral should be similar, earth may be higher',
+      'Keep legs straight, bend at the waist, lift with the back',
+      'Hold the load at arm\'s length away from the body',
+      'Twist the body while lifting to speed up the movement',
       'Keep back straight, bend knees, lift with legs',
     ],
     correctAnswer: 3,
     explanation:
-      'Correct manual handling technique requires keeping the back straight, bending the knees, and lifting with leg muscles to prevent back injury.',
+      'Correct manual handling technique requires keeping the back straight, bending the knees, lifting with the leg muscles and holding the load close to the body to prevent back injury.',
     section: 'Manual Handling',
     difficulty: 'basic',
     topic: 'Lifting Technique',
@@ -535,9 +535,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'When must a risk assessment be reviewed?',
     options: [
       'When significant changes occur, after incidents, or periodically',
-      'After completing full GS38 procedure and posting warning notices',
-      'Continuity, polarity, insulation resistance, earth fault loop impedance',
-      'The value should be consistent with cable length and cross-sectional area',
+      'Only once, before the work first begins on site',
+      'Only when an HSE inspector requests to see it',
+      'Only at the end of the project during handover',
     ],
     correctAnswer: 0,
     explanation:

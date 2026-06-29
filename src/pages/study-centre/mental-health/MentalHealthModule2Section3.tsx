@@ -26,12 +26,12 @@ const quizQuestions = [
     id: 1,
     question: 'According to the HSE, what is stress defined as?',
     options: [
-      'A medical condition requiring immediate treatment',
-      'The adverse reaction people have to excessive pressures or demands placed upon them',
-      'A normal emotional response that is always beneficial',
-      'A personality trait that some people are born with',
+      'The adverse reaction to excessive pressures or demands placed on a person',
+      'A diagnosable medical condition requiring immediate clinical treatment',
+      'A normal emotional response that is always beneficial to performance',
+      'A fixed personality trait that some people are simply born with',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The HSE defines stress as 'the adverse reaction people have to excessive pressures or other types of demand placed upon them.' It is not an illness itself, but prolonged stress can lead to both physical and mental illness. The key word is 'adverse' \u2014 distinguishing harmful stress from normal, motivating pressure.",
   },
@@ -39,12 +39,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following best describes the difference between pressure and stress?',
     options: [
-      'They are the same thing \u2014 the terms are interchangeable',
-      "Pressure is motivating and helps performance; stress occurs when demands exceed a person's ability to cope and becomes harmful",
-      'Stress is always short-term; pressure is always long-term',
-      'Pressure only affects the body; stress only affects the mind',
+      'They are the same thing, and the terms are entirely interchangeable',
+      'Stress is always short-term, whereas pressure is always long-term',
+      'Pressure only affects the body, whereas stress only affects the mind',
+      'Pressure motivates, but stress is the harmful state when demands exceed coping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pressure, within reasonable limits, can be motivating and help people perform well. Stress occurs when the demands placed on a person exceed their perceived ability to cope, causing an adverse reaction. The distinction is crucial for workplace management \u2014 the goal is not to eliminate all pressure, but to prevent it becoming harmful stress.',
   },
@@ -53,19 +53,19 @@ const quizQuestions = [
     question: 'What are the three dimensions of the Maslach Burnout Model?',
     options: [
       'Anxiety, Depression, Fatigue',
-      'Emotional Exhaustion, Depersonalisation/Cynicism, Reduced Personal Accomplishment',
       'Physical Stress, Mental Stress, Social Stress',
+      'Emotional Exhaustion, Depersonalisation/Cynicism, Reduced Personal Accomplishment',
       'Workload, Control, Reward',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Maslach Burnout Inventory (MBI) measures burnout across three dimensions: Emotional Exhaustion (feeling drained and overwhelmed), Depersonalisation/Cynicism (detachment from work and colleagues), and Reduced Personal Accomplishment/Inefficacy (feeling ineffective and doubting the value of your work). All three dimensions must be considered together.',
   },
   {
     id: 4,
     question: 'Which hormone is most associated with chronic stress and long-term health damage?',
-    options: ['Insulin', 'Testosterone', 'Cortisol', 'Melatonin'],
-    correctAnswer: 2,
+    options: ['Insulin', 'Testosterone', 'Melatonin', 'Cortisol'],
+    correctAnswer: 3,
     explanation:
       'Cortisol is the primary stress hormone released during the stress response. While short-term cortisol release is a normal survival mechanism, chronically elevated cortisol levels damage the cardiovascular system, suppress the immune system, disrupt digestion, and contribute to anxiety and depression. Adrenaline is also released during acute stress but has shorter-term effects.',
   },
@@ -73,12 +73,12 @@ const quizQuestions = [
     id: 5,
     question: 'How many Management Standards does the HSE use for stress risk assessment?',
     options: [
+      '6 \u2014 Demands, Control, Support, Relationships, Role, Change',
       '4 \u2014 Demands, Control, Support, Change',
       '5 \u2014 Demands, Control, Support, Role, Change',
-      '6 \u2014 Demands, Control, Support, Relationships, Role, Change',
       '8 \u2014 Demands, Control, Support, Relationships, Role, Change, Pay, Hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The HSE Management Standards cover six key areas of work design that, if not properly managed, are associated with poor health, lower productivity, and increased sickness absence. They are: Demands, Control, Support, Relationships, Role, and Change. These standards represent a framework, not a legal requirement, but they reflect best practice.',
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question: 'Which of the following is a behavioural sign of stress?',
     options: [
       'Headaches and muscle tension',
-      'Irritability and mood swings',
       'Withdrawal from colleagues and increased substance use',
+      'Irritability and mood swings',
       'Poor concentration and indecisiveness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Withdrawal from colleagues and increased substance use are behavioural signs of stress \u2014 they are observable changes in what a person does. Headaches and muscle tension are physical signs. Irritability and mood swings are emotional signs. Poor concentration and indecisiveness are cognitive signs. Recognising the category helps you identify stress early across different domains.',
   },
@@ -100,11 +100,11 @@ const quizQuestions = [
     question: "Which construction-specific stressor is linked to the industry's 'macho culture'?",
     options: [
       'Tight deadlines and programme pressure',
-      'Reluctance to seek help or admit to struggling, for fear of being seen as weak',
       'Physical demands of manual labour',
+      'Reluctance to seek help or admit to struggling, for fear of being seen as weak',
       'Exposure to adverse weather conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The construction industry has a well-documented 'macho culture' that discourages workers from admitting to stress, mental health difficulties, or asking for help. This reluctance to seek support means problems often escalate to crisis point before they are addressed. Changing this culture through open conversation and visible leadership support is essential.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the HSE Indicator Tool used for?',
     options: [
-      'Measuring blood pressure of stressed workers',
-      'Calculating overtime hours to prevent burnout',
-      'A survey-based tool to help organisations assess how well they are managing the six Management Standards for work-related stress',
-      'Identifying individual employees who are most likely to develop stress',
+      'Measuring the blood pressure of workers who report feeling stressed',
+      'A survey assessing how well an organisation manages the six Standards',
+      'Calculating overtime hours worked to predict and prevent burnout',
+      'Identifying which individual employees are most likely to develop stress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The HSE Indicator Tool is a 35-item survey that asks employees about their working conditions across the six Management Standards. It produces scores that can be benchmarked against national data, helping organisations identify which areas need improvement. It is an organisational-level tool \u2014 it assesses working conditions, not individual vulnerability.',
   },
@@ -132,12 +132,12 @@ const quickCheckQuestions = [
     question:
       'A construction worker has been dealing with job insecurity, long hours, and financial worries for the past 18 months. He has started getting frequent colds and his blood pressure has increased. Is this person experiencing acute or chronic stress, and why?',
     options: [
-      'Acute stress \u2014 because the physical symptoms show it is severe',
-      'Chronic stress \u2014 because the stressors are ongoing and cumulative over a prolonged period, and the health effects (suppressed immune system, elevated blood pressure) are consistent with long-term cortisol exposure',
-      'Neither \u2014 this is just normal pressure that everyone experiences',
-      'Acute stress \u2014 because it has a specific trigger (job insecurity)',
+      'Chronic stress \u2014 the stressors are prolonged and the health effects fit long-term cortisol exposure',
+      'Acute stress \u2014 the physical symptoms show that the reaction is severe',
+      'Neither \u2014 this is just the normal pressure that everyone experiences at work',
+      'Acute stress \u2014 because it has a single specific trigger in job insecurity',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'This is chronic stress. The key indicators are: the stressors have been ongoing for 18 months (not a single, short-term event), they are cumulative (multiple stressors compounding), and the health effects \u2014 frequent infections (immune suppression) and raised blood pressure (cardiovascular strain) \u2014 are classic consequences of prolonged cortisol elevation associated with chronic stress.',
   },
@@ -146,12 +146,12 @@ const quickCheckQuestions = [
     question:
       'A site manager notices that several of his team are arriving late, taking more sick days, and seem irritable and withdrawn. One worker has started drinking more heavily after shifts. Using your knowledge of stress signs, which categories of signs are being displayed here?',
     options: [
-      'Only physical signs \u2014 the sickness absence proves they are physically ill',
-      'Behavioural signs (lateness, withdrawal, increased alcohol use, sickness absence) and emotional signs (irritability)',
-      'Cognitive signs only \u2014 they cannot concentrate on timekeeping',
-      'These are not signs of stress \u2014 the workers are just being lazy',
+      'Only physical signs \u2014 the sickness absence proves they are physically unwell',
+      'Cognitive signs only \u2014 they simply cannot concentrate on their timekeeping',
+      'These are not signs of stress at all \u2014 the workers are just being lazy',
+      'Behavioural signs (lateness, withdrawal, drinking) plus emotional signs (irritability)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The site manager is observing behavioural signs (lateness, withdrawal from the team, increased alcohol consumption, rising sickness absence) alongside emotional signs (irritability). A good manager trained in mental health awareness would recognise this cluster of changes as potential indicators of stress and initiate a supportive conversation rather than jumping to disciplinary action.',
   },
@@ -160,10 +160,10 @@ const quickCheckQuestions = [
     question:
       "An electrician tells you: 'I never know what's expected of me on site \u2014 every foreman tells me something different, and nobody explained my actual responsibilities when I started.' Which HSE Management Standard does this problem fall under?",
     options: [
-      'Demands \u2014 the workload is too high',
-      'Control \u2014 the worker has no autonomy',
-      'Role \u2014 the worker does not have a clear understanding of their role and responsibilities, and conflicting demands are being placed on them',
-      'Change \u2014 things keep changing on site',
+      'Demands \u2014 the volume of workload placed on them is too high',
+      'Control \u2014 the worker is given no autonomy over their own tasks',
+      'Role \u2014 the worker lacks a clear role and faces conflicting instructions',
+      'Change \u2014 things on the site keep changing without any warning',
     ],
     correctIndex: 2,
     explanation:

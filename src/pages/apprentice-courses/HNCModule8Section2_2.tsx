@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'Which filter grade combination would be appropriate for a hospital operating theatre?',
     options: [
-      'Verify the tester works correctly',
-      'To prevent cable damage and maintain compliance',
+      'A single G4 panel filter on the air intake',
+      'F7 main filter with no pre-filter or terminal filter',
       'G4 pre-filter, F7 intermediate, HEPA terminal',
-      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
+      'G4 pre-filter only, with HEPA fitted at the grille',
     ],
     correctIndex: 2,
     explanation:
@@ -55,9 +55,9 @@ const quickCheckQuestions = [
     question:
       'When selecting a cooling coil, what is the primary factor that determines the coil face velocity?',
     options: [
-      'The highest power drawn during a specified period',
-      'To maintain required illumination levels',
-      'Principal Accountable Person',
+      'The chilled water flow and return temperatures',
+      'The number of rows and the fin spacing of the coil',
+      'The dew point of the entering air stream',
       'Air volume flow rate and coil face area',
     ],
     correctIndex: 3,
@@ -193,14 +193,14 @@ const quizQuestions = [
     question:
       'What is the primary advantage of a draw-through AHU configuration compared to blow-through?',
     options: [
-      'A material property indicating resistance per unit length and area',
-      'Fan motor heat added after coils does not affect supply temperature',
-      'Independent body advising UK government on emissions targets and progress',
-      'Providing specific knowledge for products installed',
+      'It removes the need for a droplet eliminator after the cooling coil',
+      'It provides more even airflow distribution across the coil face',
+      'It allows lower-grade filters to be used throughout the unit',
+      'It eliminates fan motor heat being added to the supply air',
     ],
     correctAnswer: 1,
     explanation:
-      'In draw-through configuration, the fan is located downstream of the coils, so fan motor heat (typically 2-3°C rise) is added to already conditioned air. This must be accounted for in coil sizing. Blow-through places the fan before coils, avoiding this issue but requiring more robust filters.',
+      'In draw-through configuration the fan is downstream of the coils, drawing air evenly across the full coil face for good heat transfer. The trade-off is that fan motor heat (typically 2-3°C rise) is added to the conditioned air and must be allowed for in coil sizing. Blow-through avoids the added heat but gives less even airflow over the coils.',
   },
   {
     id: 10,
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'What document must be provided for AHU commissioning to verify system performance?',
     options: [
-      'Purchase, energy, maintenance, lamp replacement, and disposal costs',
-      'A small peer group that meets regularly to share challenges, ideas, and hold each other accountable',
-      'Waste electrical equipment disposal and energy efficiency',
+      'The manufacturer’s warranty certificate for the fan motor',
+      'The fire risk assessment for the plant room',
+      'The PAT testing records for the control panel',
       'Design data including air volumes, pressures, temperatures and electrical loads',
     ],
     correctAnswer: 3,
@@ -235,9 +235,9 @@ const quizQuestions = [
       'What is the typical maintenance interval for replacing F7 filters in a commercial AHU?',
     options: [
       '6-12 months depending on loading',
-      '½ × IΔn (15mA for 30mA RCD)',
-      'Test results confirm the fault is cleared',
-      'Anything using electrical energy',
+      'Every week regardless of loading',
+      'Once every 5-10 years over the AHU lifetime',
+      'Only when the fan motor is replaced',
     ],
     correctAnswer: 0,
     explanation:

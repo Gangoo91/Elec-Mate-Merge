@@ -23,10 +23,10 @@ const inlineChecks = [
     question:
       "A loop tester reports Zs = 0.42 Ω. Internally it measured Uo = 232 V open-circuit and Uloaded = 226 V with its internal load drawing 14.3 A. Confirm the meter's arithmetic.",
     options: [
-      'Zs = 232 / 14.3 ≈ 16.2 Ω',
-      'Zs = (Uo − Uloaded) / Itest = (232 − 226) / 14.3 ≈ 0.42 Ω — the displayed value',
-      'Zs = Uloaded / Uo ≈ 0.97 Ω',
-      'Zs = 226 × 14.3 / 1000 ≈ 3.23 Ω',
+      'Zs = Uo / Itest = 232 / 14.3 ≈ 16.2 Ω',
+      'Zs = (Uo − Uloaded) / Itest = (232 − 226) / 14.3 ≈ 0.42 Ω',
+      'Zs = Uloaded / Uo = 226 / 232 ≈ 0.97 Ω',
+      'Zs = Uloaded × Itest / 1000 = 226 × 14.3 / 1000 ≈ 3.23 Ω',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +37,10 @@ const inlineChecks = [
     question:
       'You select the high-current Zs mode on a circuit fed by a 30 mA RCBO. The injected test current is roughly 22 A line-to-earth. What does the RCBO see and why does it trip?',
     options: [
-      '22 A flowing on L and returning on N — RCBO does not detect this',
-      '22 A flowing on L returning on PE = 22 000 mA residual current. IΔn is 30 mA, so the residual is ~700× the trip threshold and the RCBO trips within milliseconds',
-      'Only when Zs > 1 Ω will the RCBO trip',
-      '0 mA residual — high-current mode bypasses the RCBO',
+      '22 A flowing out on L and returning on N — a balanced load the RCBO does not detect',
+      '22 A out on L returning on PE = a 22 000 mA residual, ~700× the 30 mA IΔn, so it trips at once',
+      'Nothing until Zs exceeds 1 Ω — only then does the RCBO see enough current to trip',
+      'Zero residual — the high-current mode bypasses the RCBO sensing coil internally',
     ],
     correctIndex: 1,
     explanation:
@@ -51,10 +51,10 @@ const inlineChecks = [
     question:
       'Reg 643.7.3 names a specific test that must be completed before any Zs measurement is taken. Which one and why?',
     options: [
-      'Insulation resistance — to prove the circuit is dry',
-      'Continuity of protective conductors per Reg 643.2 — Zs is measured through the CPC, so the loop only exists if the CPC is verified continuous first; a Zs reading on a broken CPC is unstable or actively misleading',
-      'Functional check of the RCBO',
-      'Polarity at the consumer unit only',
+      'Insulation resistance — to prove the circuit is dry before energising it',
+      'Continuity of protective conductors per Reg 643.2 — Zs is measured through the CPC',
+      'A functional check of the RCBO — to prove it will operate under the test current',
+      'Polarity at the consumer unit only — to confirm L and N are not transposed',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'Cold-cable Zs at 20 °C reads 1.18 Ω on a 32 A B-curve circuit. Table 41.3 maximum permitted Zs for that device at 70 °C is 1.37 Ω. Apply the 0.8 rule and state the verdict.',
     options: [
-      'Pass — 1.18 Ω < 1.37 Ω',
-      'Fail — 0.8 × 1.37 = 1.10 Ω, and 1.18 Ω exceeds that. The cold reading does not have enough headroom to remain compliant once corrected to 70 °C operating temperature',
-      'Pass — temperature correction is informative only',
-      'Fail — any reading above 1.00 Ω is non-compliant',
+      'Pass — 1.18 Ω is below the 1.37 Ω table value, so it complies',
+      'Fail — 0.8 × 1.37 = 1.10 Ω, and the cold 1.18 Ω exceeds that corrected limit',
+      'Pass — temperature correction is informative only and need not be applied',
+      'Fail — any Zs reading above a flat 1.00 Ω is non-compliant on a 32 A circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -82,26 +82,26 @@ const quizQuestions = [
     question:
       'A modern multifunction tester offers two live Zs modes: a high-current loop test and a low-current "no-trip" test. What is the principal reason the no-trip test exists?',
     options: [
-      'It is faster',
-      'It is required for cable lengths over 50 m',
-      'The high-current method draws enough current (typically 20–25 A for ~10–40 ms) to trip an upstream 30 mA RCD; the no-trip method uses a current pulse low enough to keep the RCD latched, so Zs can be measured live downstream of the RCD',
-      'It uses less battery',
+      'It runs faster than the high-current test on long radial circuits',
+      'It is mandatory for any cable run exceeding 50 m by Reg 643.7.3',
+      'It keeps the test current below the RCD IΔn, so Zs can be measured live downstream of a 30 mA RCD without tripping it',
+      'It draws less battery and so extends instrument runtime on site',
     ],
     correctAnswer: 2,
     explanation:
-      "The high-current loop test injects a current of around 20–25 A for a few mains cycles. That residual current is well above any 30 mA or 100 mA RCD's IΔn, so the RCD trips. The no-trip method uses a much smaller current (typically a few hundred mA) injected over many cycles, and the meter resolves the small voltage drop with signal-processing. The result is a measurement of the same Zs without disconnecting the supply downstream.",
+      "The high-current loop test injects a current of around 20–25 A for a few mains cycles. That residual current is well above any 30 mA or 100 mA RCD's IΔn, so the RCD trips. The no-trip method uses a much smaller current (typically a few hundred mA) injected over many cycles, and the meter resolves the small voltage drop with signal-processing — measuring the same Zs without disconnecting the supply downstream.",
   },
   {
     id: 2,
     question:
       'From first principles, how does any fault-loop-impedance tester actually arrive at a Zs reading?',
     options: [
-      'It measures resistance directly with an ohmmeter',
-      'It briefly creates a controlled connection between line and earth via an internal resistor, measures the voltage drop and the test current, and applies R = (Uo − Uloaded) / I to compute Zs',
-      'It compares the supply voltage to a reference value',
-      'It uses a Hall-effect coil around the live conductor',
+      'It briefly loads line-to-earth through a known internal resistor and applies R = (Uo − Uloaded) / I to the measured voltage drop and current',
+      'It measures the loop resistance directly with a low-ohms continuity ohmmeter on the dead, isolated circuit',
+      'It compares the live supply voltage against a stored 230 V reference and scales the difference into ohms',
+      'It clamps a Hall-effect coil around the live line conductor and derives the loop impedance from the field',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Every loop tester works on the same principle: connect a known load between L and earth for a brief moment, measure the open-circuit voltage Uo and the loaded voltage Uloaded across the supply, calculate the test current via the internal load, and apply Zs = (Uo − Uloaded) / Itest. The high-current and no-trip methods differ only in the size of the test current and how the meter filters out mains noise and load fluctuations.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'Reg 643.7.3 tells you to verify earth fault loop impedance and prospective fault current. NOTE 1 to the same regulation contains an explicit warning. What about?',
     options: [
-      'A warning about LED lighting',
+      'A warning that LED lighting drivers can inject harmonics that raise the measured Zs',
+      'A warning that test leads must be nulled before each loop measurement to avoid error',
+      'A warning that cold cables read low and must be temperature-corrected upward',
       'A warning that the validity of test readings taken with a fault loop impedance test instrument may be adversely affected by power converting equipment, such as inverters',
-      'A warning about test-lead null',
-      'A warning about cold cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'NOTE 1 to Reg 643.7.3 reads: "The validity of test readings taken with a fault loop impedance test instrument may be adversely affected by power converting equipment, such as inverters." That is the regulation acknowledging that PV / battery / EV-charger inverters can corrupt loop-tester readings. Reg 826.7 (prosumer installations) requires an alternative method where this applies.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'You are testing a kitchen socket circuit on a board where every final circuit is RCBO-protected (30 mA). You select the high-current Zs test on your meter and press Test. What happens, and what should you have done?',
     options: [
-      'The test runs cleanly — there is no issue',
-      'The RCBO trips. You should have selected the no-trip Zs mode (or the meter\'s "RCD" / "low" setting) so the test current stays below the RCBO IΔn and the breaker remains in service while the measurement is taken',
-      'The high-current test bypasses the RCBO and is preferred',
-      'The test gives a reading of zero',
+      'The test runs cleanly — the high-current method is unaffected by a downstream 30 mA RCBO',
+      'The RCBO trips; you should have selected the no-trip Zs mode so the test current stays below its IΔn',
+      'The high-current test bypasses the RCBO internally and is the preferred method on all RCBO boards',
+      'The test returns zero ohms because the RCBO momentarily shorts the loop during the measurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A no-trip Zs reading typically takes longer than a high-current reading and is slightly less precise. Why?',
     options: [
-      'The meter is slower',
-      'The test current is small (often hundreds of mA), so the voltage drop is small relative to mains noise. The meter has to integrate over many cycles and apply digital filtering to extract a stable Zs from a small signal — that is why it takes longer and why the resolution is typically 0.01 Ω rather than 0.001 Ω',
-      'No-trip tests use DC',
-      'The test leads are different',
+      'The meter runs a slower internal clock in no-trip mode for no underlying electrical reason',
+      'No-trip tests inject DC rather than AC, and DC loop measurements inherently take longer to settle',
+      'The no-trip mode needs a different, higher-resistance set of test leads that respond more slowly',
+      'The small test current gives a small voltage drop, so the meter must integrate over many cycles to extract a stable Zs from the noise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Smaller signal, more noise to reject, more averaging required. The trade-off is intentional: you accept a slightly slower test and a slightly coarser reading in exchange for not tripping the RCD. For most circuits this resolution is more than enough — a Zs of 0.42 Ω vs 0.43 Ω makes no compliance difference against a Table 41.3 limit of 1.37 Ω.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'Before any live Zs measurement, BS 7671 requires you to have completed a specific dead test first. Which one, and why?',
     options: [
-      'Polarity, because the loop tester needs the right L and N',
-      'Insulation resistance, because Zs is part of insulation',
-      'Continuity of protective conductors per Reg 643.2, because Zs depends on the integrity of the CPC and a loop test on a broken CPC will give a meaningless or dangerous reading',
-      'Functional, because the meter needs the breaker on',
+      'Polarity, because the loop tester needs the correct L and N at the test point',
+      'Insulation resistance, because Zs forms part of the overall insulation result',
+      'Continuity of protective conductors per Reg 643.2, because Zs is measured through the CPC',
+      'Functional testing, because the meter needs the breaker closed to read at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -166,26 +166,26 @@ const quizQuestions = [
     question:
       'GN3 Ch 2 sets out the live-test procedure for Zs. Which step is correct for a TN-C-S socket-outlet circuit?',
     options: [
-      'Switch off, isolate, then connect the loop tester between L and N',
-      'Connect the loop tester between L and PE at the test point with the circuit live (with the supply on, the protective device closed and continuity already verified). Take the reading. Confirm Zs against the relevant max-Zs limit in Table 41.2 / 41.3 / 41.4.',
-      'Connect between L and CPC at the consumer unit only',
-      'Use a megger on the lowest range',
+      'Live, with the protective device closed and continuity verified, connect L to PE at the test point and compare against the Table 41 max-Zs',
+      'Switch off and isolate the circuit, then connect the loop tester between L and N to read Zs',
+      'Connect between L and the CPC at the consumer unit only, never out at the final socket-outlet',
+      'Use an insulation-resistance tester on its lowest range to read the earth fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Live Zs testing is done at the test point of the circuit (typically the furthest socket-outlet for a final radial). The circuit is energised, the protective device closed, and the tester is plugged in or connected L to PE at the test point. Continuity must already have been verified per Reg 643.2. The reading is then compared against the relevant Table 41.2 / 41.3 / 41.4 / 41.5 max-Zs.',
+      'Live Zs testing is done at the test point of the circuit (typically the furthest socket-outlet for a final radial). The circuit is energised, the protective device closed, and the tester is connected L to PE at the test point. Continuity must already have been verified per Reg 643.2. The reading is then compared against the relevant Table 41.2 / 41.3 / 41.4 / 41.5 max-Zs.',
   },
   {
     id: 8,
     question:
       'You measure Zs at a socket as 1.42 Ω on a circuit protected by a 32 A Type B circuit-breaker. Table 41.3 max-permitted Zs is 1.37 Ω. Strictly, the reading fails. What is the correct next step before you write that on the schedule?',
     options: [
-      'Record as fail and move on',
-      'Apply the temperature correction (Note 2 to Table 41.3): readings taken with cold cables are higher than the design figure, which assumes maximum operating temperature. The 0.8 rule of thumb (or rigorous correction per Appendix 3) often brings a borderline reading inside the limit',
-      'Re-test until you get a passing reading',
-      'Use Table 41.5 instead',
+      'Record it as a straight fail and move on to the next circuit on the schedule',
+      'Re-test the same point repeatedly until the meter happens to return a passing reading',
+      'Switch to the Table 41.5 RCD limits instead, which give a higher permitted Zs',
+      'Apply temperature correction (Note 2 to Table 41.3) — cold cables read high; the 0.8 rule may bring it inside the limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Table 41.3 values are stated at maximum operating temperature (typically 70°C for thermoplastic) per Note 2. A Zs measured cold will read higher than the same Zs would at 70°C. BS 7671 Appendix 3 / OSG / GN3 publish the correction; a common shorthand is to compare measured Zs against 0.8 × Table 41.3 value, or correct the measurement back. Always document which approach was used.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'On a TT installation with a 30 mA RCD, Reg 411.5.3 NOTE 2 says "Where Ra is not known, it may be replaced by Zs." What does that allow you to do practically on site?',
     options: [
-      'Skip the Zs test entirely',
-      'Measure Zs at the test point and treat that as the Ra value when checking IΔn × Zs ≤ 50 V (or against the Table 41.5 figure of 1667 Ω for 30 mA)',
-      'Convert Ra to Zs using a chart',
-      'Use the supply Ze instead',
+      'Measure Zs at the test point and use it as Ra against the 1667 Ω Table 41.5 limit for a 30 mA RCD',
+      'Skip the Zs test entirely, since Ra is no longer needed once an RCD is fitted to the circuit',
+      'Convert the measured Ra to an equivalent Zs using a published conversion chart in Appendix 3',
+      'Use the supply Ze in place of Ra, ignoring the installation earth-electrode resistance altogether',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Where the earth-electrode resistance Ra has not been separately measured, the live Zs reading at the test point can stand in. A 30 mA RCD allows Zs up to 1667 Ω on Table 41.5 to satisfy the 50 V touch-voltage limit, although Note 2 to that table warns values above 200 Ω may not be stable in practice. The substitution is permitted by the regulation and is the routine approach in TT installations.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       "A loop tester reading on a circuit downstream of a Type AC 30 mA RCD reads cleanly with the no-trip mode, but the same reading taken with the inverter on a nearby PV system live shows a different value (varies by 20–40 %) when retried minutes apart. What's the correct response?",
     options: [
-      'Take the average of the two readings',
-      'Power down the inverter (and any battery/EV-charger inverter) before retesting per Reg 826.7. If readings still drift, document use of the alternative method (Ze + R1+R2 calculation) on the certificate. Loop-tester readings affected by power-converting equipment per Reg 643.7.3 NOTE 1 are not trustworthy',
-      'Use the lower reading',
-      'Use the higher reading',
+      'Take the arithmetic average of the two drifting readings and record that as Zs',
+      'Always use the lower of the two readings, since it gives the most favourable disconnection time',
+      'Power down the inverter per Reg 826.7 and retest; if it still drifts, use the calculated Ze + R1+R2 method',
+      'Always use the higher of the two readings, since it is the most conservative against the Zs limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.7.3 NOTE 1 explicitly warns that power-converting equipment can affect loop-tester validity. Reg 826.7 requires an alternative method in that case. The procedure is: isolate / power down the inverter, retest, and if the reading is still unstable, fall back to Zs = Ze + R1+R2 from a measured Ze and a calculated/measured R1+R2 corrected to operating temperature. Document the method used.',
   },

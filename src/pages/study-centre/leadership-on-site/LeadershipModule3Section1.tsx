@@ -19,12 +19,12 @@ const quickCheckQuestions = [
     question:
       'According to CITB/SSSTS guidance, how long should a well-structured toolbox talk typically last?',
     options: [
-      '5 minutes maximum to avoid taking workers away from the job',
       '10-15 minutes with focused content, discussion, and clear action items',
+      '5 minutes maximum to avoid taking workers away from the job',
       '30-45 minutes to cover all possible hazards in detail',
       'As long as it takes — there is no recommended timeframe',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'CITB/SSSTS guidance recommends toolbox talks last 10-15 minutes. This is long enough to deliver focused content and allow discussion, but short enough to maintain attention. Going over 15 minutes risks losing the audience, while under 10 minutes rarely allows meaningful engagement.',
   },
@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       'Which of the following is the MOST effective technique for keeping a toolbox talk audience engaged?',
     options: [
       'Reading directly from a printed handout to ensure accuracy',
-      "Using real examples and asking the team 'what would you do?' questions",
       'Keeping the talk as short as possible and skipping discussion',
+      "Using real examples and asking the team 'what would you do?' questions",
       'Only covering topics that have never been discussed before',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Interactive techniques — real examples, 'what would you do?' scenarios, and direct questions — are the most effective ways to engage construction workers who may have attended hundreds of toolbox talks. Reading from a sheet breeds cynicism and passive disengagement.",
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     question: 'Under CDM 2015, why is it a legal requirement to keep records of toolbox talks?',
     options: [
       'Only to satisfy insurance companies during annual audits',
-      'To provide evidence of information, instruction, and training as required by the regulations',
       'To track individual worker attendance for payroll purposes',
       'Records are recommended but not legally required',
+      'To provide evidence of information, instruction, and training as required by the regulations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'CDM 2015 requires duty holders to provide information, instruction, and training to workers. Toolbox talk records provide documented evidence that this duty has been fulfilled. In the event of an incident or HSE investigation, these records demonstrate compliance with legal obligations.',
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question: 'What is the primary purpose of a toolbox talk on a construction site?',
     options: [
       'To satisfy paperwork requirements for the principal contractor',
-      'To brief, educate, engage workers and build team cohesion around safety and work issues',
       'To give supervisors an opportunity to discipline poor performers',
       'To replace formal training courses required by legislation',
+      'To brief, educate, engage workers and build team cohesion around safety and work issues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Toolbox talks are the most regular leadership communication touchpoint on site. Their primary purpose is to brief, educate, and engage workers while building team cohesion. They are not a substitute for formal training, nor should they be used for disciplinary purposes.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       'When planning a toolbox talk, what is the recommended maximum number of key points to cover?',
     options: [
-      '1 key point only',
       '3 key points maximum',
+      '1 key point only',
       '5 key points for thoroughness',
       'As many as the topic requires',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Best practice is to limit a toolbox talk to a maximum of 3 key points. This ensures the message is focused and memorable. Covering too many points dilutes the impact and makes it harder for workers to retain the information. If the topic requires more, split it across multiple talks.',
   },
@@ -142,11 +142,11 @@ const quizQuestions = [
       'Which strategy is most effective for engaging construction workers who have attended hundreds of toolbox talks?',
     options: [
       'Making talks mandatory with penalties for non-attendance',
-      'Varying the format, involving team members as presenters, and using interactive scenarios',
       'Keeping every talk under 5 minutes so nobody gets bored',
       'Only covering topics that have never been discussed before on any site',
+      'Varying the format, involving team members as presenters, and using interactive scenarios',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Varying the format, involving team members as presenters, and using interactive techniques (scenarios, 'what would you do?' questions, demonstrations) keeps toolbox talks fresh and engaging. Experienced workers disengage when every talk follows the same monotonous pattern.",
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'Under CDM 2015, what must be recorded when delivering a toolbox talk?',
     options: [
-      'Only the topic title and date — nothing else is required',
       'Date, topic, key points covered, attendee signatures, and any actions raised',
+      'Only the topic title and date — nothing else is required',
       'Just a photograph of the group to prove attendance',
       'A video recording of the entire presentation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CDM 2015 requires evidence of information, instruction, and training. Best practice is to record the date, topic, key points covered, attendee names and signatures, and any actions raised. This creates a comprehensive record that demonstrates compliance in the event of an HSE investigation.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'What is the most appropriate timing for a toolbox talk?',
     options: [
       "Friday afternoon when the week's work is finishing up",
-      'At the start of the working day or shift, before work begins',
       "During lunch break so it doesn't take time away from productive work",
+      'At the start of the working day or shift, before work begins',
       'At the end of the day so workers can reflect on the week',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Toolbox talks are most effective at the start of the working day or shift, before work begins. Workers are fresh, alert, and the information is immediately relevant to the day's activities. Friday afternoons and end-of-day talks suffer from reduced attention, while lunch breaks should be protected rest time.",
   },

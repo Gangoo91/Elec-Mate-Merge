@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'How long must symptoms persist for a diagnosis of clinical depression (Major Depressive Disorder)?',
     options: [
+      'At least 2 weeks, most of the day, nearly every day',
       'A few days',
       'At least 1 week',
-      'At least 2 weeks, most of the day, nearly every day',
       'At least 6 months',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'According to ICD-11 and NICE guidelines, symptoms of depression must be present most of the day, nearly every day, for at least 2 weeks to meet the threshold for a diagnosis of Major Depressive Disorder. This duration criterion is what distinguishes clinical depression from normal low mood or sadness.',
   },
@@ -37,11 +37,11 @@ const quickCheckQuestions = [
       'Which type of depression is characterised by episodes recurring at the same time each year, typically during autumn and winter?',
     options: [
       'Persistent Depressive Disorder (dysthymia)',
-      'Postnatal Depression',
       'Seasonal Affective Disorder (SAD)',
+      'Postnatal Depression',
       'Bipolar Depression',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Seasonal Affective Disorder (SAD) is a form of depression that follows a seasonal pattern, most commonly beginning in autumn and continuing through winter when daylight hours are reduced. It is thought to be linked to reduced exposure to sunlight affecting the body&rsquo;s production of melatonin and serotonin.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the key difference between normal low mood and clinical depression?',
     options: [
-      'Low mood only affects your emotions, while depression also affects your body',
       'Clinical depression lasts at least 2 weeks, affects most of the day nearly every day, and impairs daily functioning',
+      'Low mood only affects your emotions, while depression also affects your body',
       'Low mood is caused by life events, while depression has no cause',
       'There is no real difference &mdash; they are the same thing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Clinical depression is distinguished from normal low mood by its duration (at least 2 weeks), pervasiveness (most of the day, nearly every day), severity (significantly impairs daily functioning), and the presence of multiple symptoms across emotional, physical, cognitive, and behavioural domains. Normal sadness is usually proportionate, temporary, and does not prevent someone from functioning.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     options: [
       'Fatigue and low energy',
       'Withdrawal from social activities',
-      'Poor concentration and indecisiveness',
       'Changes in appetite and weight',
+      'Poor concentration and indecisiveness',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Poor concentration, indecisiveness, negative thinking patterns, and memory problems are cognitive symptoms of depression. Fatigue is a physical symptom, withdrawal is a behavioural symptom, and appetite changes are physical symptoms. Understanding the four categories of symptoms (emotional, physical, cognitive, behavioural) helps in recognising depression.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'Which of the following is a risk factor for depression that is particularly relevant to the construction industry?',
     options: [
+      'Job insecurity, long hours, a culture of toughness, and time away from family',
       'Working in a well-lit office environment',
       'Regular social contact with colleagues',
-      'Job insecurity, long hours, a culture of toughness, and time away from family',
       'Having access to an Employee Assistance Programme',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Construction-specific risk factors include job insecurity (particularly for subcontractors and agency workers), long and unpredictable hours, a macho culture that discourages help-seeking, physical demands and chronic pain, time away from family on remote sites, financial pressures, and exposure to accidents or fatalities. These factors contribute to the construction industry having one of the highest rates of depression and suicide.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
     question: "What does 'presenteeism' mean in the context of depression in the workplace?",
     options: [
       'Being absent from work due to depression',
-      'Attending work while depressed, resulting in significantly reduced productivity and increased risk of errors',
       'Presenting a happy face to colleagues to hide depression',
       'Being present at all workplace mental health training sessions',
+      'Attending work while depressed, resulting in significantly reduced productivity and increased risk of errors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Presenteeism refers to attending work while unwell (physically or mentally), resulting in reduced productivity, impaired concentration, and increased risk of errors and accidents. Research suggests presenteeism from depression costs UK employers more than absenteeism because depressed workers may be at work but functioning at a fraction of their capacity. In safety-critical industries like electrical work, presenteeism can also pose a direct safety risk.',
   },

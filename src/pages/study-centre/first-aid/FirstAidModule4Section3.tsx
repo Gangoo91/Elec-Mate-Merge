@@ -18,8 +18,8 @@ const quickCheckQuestions = [
     id: 'high-voltage-distance',
     question:
       'You arrive at an incident where a casualty is lying near a downed overhead power line. What is the minimum safe distance you should maintain?',
-    options: ['5 metres', '10 metres', '25 metres', '50 metres'],
-    correctIndex: 2,
+    options: ['25 metres', '5 metres', '10 metres', '15 metres'],
+    correctIndex: 0,
     explanation:
       'You must stay at least 25 metres away from any high-voltage source (overhead power lines, substations, railway lines). High-voltage electricity can arc through the air over significant distances. Call 999 AND the Distribution Network Operator (DNO). Do NOT approach until the DNO has confirmed the supply is isolated and earthed.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'A colleague is in contact with a live 230V cable and cannot release their grip. You cannot find the isolator. What should you use to separate them from the source?',
     options: [
       'A metal bar wrapped in a cloth',
-      'A damp towel',
       'A dry wooden broom handle',
+      'A damp towel',
       'Your gloved hands',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Use a non-conductive object such as a dry wooden broom handle, dry rope, rolled-up newspaper, or a rubber/plastic mat to push or pull the casualty away from the source. Never use anything wet or metallic. Do not touch the casualty's bare skin until the contact is broken. Stand on dry insulating material (rubber mat, dry wood) if possible.",
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     options: [
       'Let them return to work if they can move normally',
       'Monitor them for 10 minutes, then allow them to continue',
-      'Call 999 &mdash; ALL electrical casualties must go to hospital',
       'Apply a cold compress to the contact point and monitor',
+      'Call 999 &mdash; ALL electrical casualties must go to hospital',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'ALL electrical casualties should be assessed at hospital, even if they appear well. Electric shock can cause cardiac arrhythmias (abnormal heart rhythms) that may not be immediately apparent and can develop hours after the initial shock. There may also be internal tissue damage that is not visible externally. Call 999 for every electric shock casualty.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'What is the FIRST action you should take when you discover a casualty in contact with an electrical source?',
     options: [
+      'Ensure your own safety &mdash; do NOT approach until you are certain the power is off',
       'Pull the casualty away from the source',
       'Call 999 immediately',
-      'Ensure your own safety &mdash; do NOT approach until you are certain the power is off',
       'Start CPR straight away',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Your own safety comes first. A dead rescuer cannot help anyone. You must ensure the power source is isolated before approaching the casualty. For high voltage (>1000V), stay at least 25 metres away and call 999 AND the DNO. For low voltage (<1000V), switch off at the mains, socket, or isolator before approaching.',
   },
@@ -123,11 +123,11 @@ const quizQuestions = [
     question: 'Electrical burns often have a characteristic pattern. What should you look for?',
     options: [
       'A single large burn on the chest',
-      'An entry wound AND an exit wound, often on opposite limbs or the feet',
       'Uniform redness across the entire body',
+      'An entry wound AND an exit wound, often on opposite limbs or the feet',
       'Burns only on the hands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electrical burns typically have an entry point (where the current entered the body) and an exit point (where the current left the body to reach earth), often on the opposite limb or the feet. The entry wound may appear small, but the internal damage between entry and exit can be severe &mdash; electricity follows the path of least resistance through nerves, blood vessels, and muscle, causing extensive deep tissue damage that is not visible externally.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which pathway of electric current through the body is considered MOST dangerous?',
     options: [
-      'Foot to foot',
       'Hand to hand (across the chest)',
+      'Foot to foot',
       'Hand to elbow on the same arm',
       'Finger to finger on the same hand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A hand-to-hand pathway is the most dangerous because the current passes directly across the chest, through the heart. This dramatically increases the risk of ventricular fibrillation (a life-threatening cardiac arrhythmia). Hand-to-foot pathways are also dangerous if the current passes through the torso. Foot-to-foot pathways are less likely to affect the heart but can still cause serious injury.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is an arc flash?',
     options: [
-      'A type of static electricity discharge that is harmless',
-      'A slow electrical leak from damaged insulation',
-      'An explosive release of energy from an electrical fault, causing thermal burns, blast injuries, and UV radiation',
-      'The visible spark when plugging in a device',
+      'A harmless static electricity discharge that gives a brief, mild tingle',
+      'A slow current leak through damaged insulation that warms the cable',
+      'An explosive release of energy from a fault, causing burns and blast injuries',
+      'The small visible spark seen when plugging a device into a socket',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 7,
     question: 'Why do UK construction sites use 110V centre-tapped earth systems instead of 230V?',
     options: [
-      'Because 110V equipment is cheaper to purchase',
-      'Because it reduces the maximum voltage to earth to 55V, significantly reducing the risk of fatal electric shock',
-      'Because 110V tools are lighter and easier to carry',
-      'Because 230V is not available on construction sites',
+      'Because 110V equipment is generally cheaper to buy and to replace',
+      'Because it limits the voltage to earth to 55V, reducing the shock risk',
+      'Because 110V power tools are noticeably lighter and easier to carry',
+      'Because a 230V mains supply is simply not available on building sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,8 +174,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Approximately how many UK workplace fatalities per year are caused by electrical incidents?',
-    options: ['Approximately 5', 'Approximately 15', 'Approximately 30', 'Approximately 100'],
-    correctAnswer: 2,
+    options: ['Approximately 5', 'Approximately 15', 'Approximately 100', 'Approximately 30'],
+    correctAnswer: 3,
     explanation:
       'Approximately 30 UK workplace fatalities per year are caused by electrical incidents. Around 10% of construction industry fatalities are electrical. Electricians, electrical engineers, and construction workers are at the highest risk. The most common scenarios include contact with overhead power lines, contact with underground cables, use of faulty equipment, and working on or near live equipment.',
   },

@@ -10,111 +10,131 @@ const quizQuestions = [
     id: 1,
     question: 'Why is it important to report faults immediately?',
     options: [
-      'They don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t give clear, measurable information about what has been completed',
+      'To avoid having to complete any written paperwork',
       'To prevent unsafe conditions and ensure they are addressed before work continues',
-      'It prevents unsafe equipment from being accidentally used',
-      'Over-reporting — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
+      'To delay the project until the fault is convenient to fix',
+      'To pass responsibility for the fault to someone else',
     ],
     correctAnswer: 1,
+    explanation:
+      'Immediate reporting prevents unsafe conditions from escalating and ensures hazards are addressed before work continues, protecting everyone on site.',
   },
   {
     id: 2,
     question: 'Name two common electrical faults that must be reported.',
     options: [
       'Late delivery and bad weather',
-      'Dirty tools and missing lunch',
+      'Dirty tools and a missed lunch break',
       'Damaged cables and reversed polarity',
       'Expensive materials and tight deadlines',
     ],
     correctAnswer: 2,
+    explanation:
+      'Damaged cables and reversed polarity are genuine electrical faults that create shock and fire risks, so both must be reported; the other options are not electrical faults.',
   },
   {
     id: 3,
     question: 'What three key details should always be included when reporting?',
     options: [
-      'It prevents unsafe equipment from being accidentally used',
-      'Leads to confusion, duplication of work, or project delays',
-      'Over-reporting — it\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
+      'The cost, the supplier, and the delivery date',
+      'The weather, the time, and the lunch arrangements',
+      'The brand of tools, the cable colour, and the room size',
       'Who found it, what the fault/risk is, and where it is located',
     ],
     correctAnswer: 3,
+    explanation:
+      'The who, what and where method ensures a report is complete: who discovered the issue, what the fault or risk is, and exactly where it is located.',
   },
   {
     id: 4,
     question: 'Give two examples of communication methods for reporting risks.',
     options: [
       'Verbal reports and written reports',
-      'Email and social media',
-      'Texting and phone calls',
-      'Drawing and sketching',
+      'Personal social media posts',
+      'Anonymous notes left on a noticeboard',
+      'Word of mouth among apprentices only',
     ],
     correctAnswer: 0,
+    explanation:
+      'Verbal reports suit urgent issues and written reports provide a permanent record; both are recognised, traceable methods for reporting risks.',
   },
   {
     id: 5,
     question: "Why is tagging equipment with 'Do Not Use' important?",
     options: [
-      'Over-reporting — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
+      'It speeds up the repair of the equipment',
       'It prevents unsafe equipment from being accidentally used',
-      'Who found it, what the fault/risk is, and where it is located',
-      'Leads to confusion, duplication of work, or project delays',
+      'It records who last used the equipment',
+      'It reduces the cost of replacement parts',
     ],
     correctAnswer: 1,
+    explanation:
+      'A clear "Do Not Use" tag warns others that the equipment is unsafe, preventing it from being picked up and used before it is repaired or replaced.',
   },
   {
     id: 6,
     question: 'What is the risk of not updating progress reports?',
     options: [
-      'Over-reporting — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
-      'It prevents unsafe equipment from being accidentally used',
-      'Leads to confusion, duplication of work, or project delays',
-      'Who found it, what the fault/risk is, and where it is located',
+      'Equipment becomes safer to use over time',
+      'Materials are delivered earlier than needed',
+      'It leads to confusion, duplication of work, or project delays',
+      'The fault automatically corrects itself',
     ],
     correctAnswer: 2,
+    explanation:
+      'Out-of-date progress information causes confusion, duplicated work and delays, because supervisors and other trades cannot plan around an accurate picture.',
   },
   {
     id: 7,
     question: 'What type of report is best for urgent hazards?',
     options: [
-      'Damaged cables and reversed polarity',
-      'Report it immediately to your supervisor',
-      'Reduced trust, confusion, and mistakes',
-      'Verbal report to the supervisor/foreman',
+      'A letter posted to the head office',
+      'An entry in the weekly progress board',
+      'An email sent at the end of the shift',
+      'A verbal report to the supervisor/foreman',
     ],
     correctAnswer: 3,
+    explanation:
+      'Urgent hazards need an immediate verbal report to the supervisor or foreman so action can be taken straight away; slower written methods risk delay.',
   },
   {
     id: 8,
     question: "Why should vague phrases like 'nearly done' be avoided in progress updates?",
     options: [
       "They don't give clear, measurable information about what has been completed",
-      "To prevent unsafe conditions and ensure they are addressed before work continues",
-      "Over-reporting — it's safer to raise issues than ignore them",
-      "It prevents unsafe equipment from being accidentally used",
+      "They take longer to say than a precise figure",
+      "They are not allowed under health and safety law",
+      "They make the report sound too formal",
     ],
     correctAnswer: 0,
+    explanation:
+      'Vague phrases like "nearly done" cannot be measured or planned around; specific updates such as "2 of 3 circuits tested" give clear, usable information.',
   },
   {
     id: 9,
     question: 'What can poor communication lead to between team members?',
     options: [
-      'Damaged cables and reversed polarity',
+      'Faster completion of every task',
       'Reduced trust, confusion, and mistakes',
-      'Verbal reports and written reports',
-      'Report it immediately to your supervisor',
+      'Lower material costs across the project',
+      'Automatic correction of installation faults',
     ],
     correctAnswer: 1,
+    explanation:
+      'Poor communication erodes trust, creates confusion and leads to mistakes, all of which harm both safety and the working relationship within the team.',
   },
   {
     id: 10,
     question: 'What is better: over-reporting or under-reporting issues?',
     options: [
-      "Leads to confusion, duplication of work, or project delays",
-      "They don't give clear, measurable information about what has been completed",
-      "Over-reporting — it's safer to raise issues than ignore them",
-      "Who found it, what the fault/risk is, and where it is located",
+      "Under-reporting, as it keeps paperwork to a minimum",
+      "Neither, as reporting should be avoided where possible",
+      "Over-reporting, as it is safer to raise issues than ignore them",
+      "It makes no difference which approach is taken",
     ],
     correctAnswer: 2,
+    explanation:
+      'Over-reporting is safer than under-reporting: raising an issue that turns out to be minor is far better than ignoring one that turns out to be dangerous.',
   },
 ];
 
@@ -149,10 +169,10 @@ const quickCheckQuestions = [
     id: 'faults3',
     question: 'What key information should be included when reporting a fault?',
     options: [
-      'The manufacturer\\\\\\\\\\\\\\\'s installation instructions for that specific RCBO',
+      'The cost of repairing the fault',
       'Who found it, what the fault/risk is, and where it is located',
-      'A hidden circuit path that isn\\\\\\\\\\\\\\\'t on the drawings',
-      'They reduce smoke production and eliminate toxic halogen gases during fire',
+      'The name of every worker on site that day',
+      'The brand of tools used during the work',
     ],
     correctIndex: 1,
     explanation:

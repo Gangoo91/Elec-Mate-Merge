@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What does optimum start control achieve?',
     options: [
-      'A dangerous occurrence that must be reported to the HSE',
-      'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
-      'Rating is appropriate for the circuit and cable',
+      'Runs plant at full output the moment the building opens',
+      'Starts heating at a fixed time every morning',
+      'Keeps the building at setpoint continuously overnight',
       'Pre-heats building to reach setpoint exactly at occupancy time',
     ],
     correctIndex: 3,
@@ -120,7 +120,7 @@ const quizQuestions = [
       'KNX',
       'Modbus RTU',
     ],
-    correctIndex: 3,
+    correctAnswer: 3,
     explanation:
       'Modbus RTU operates over RS-485 at 9600 baud (or higher) using master-slave communication, where only the master initiates data exchanges.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "In HVAC control, what is 'dead band'?",
     options: [
-      'The proportion of dangerous failures that are detected by automatic testing',
+      'The maximum temperature the system can reach',
       'A temperature range where neither heating nor cooling operates',
-      'The voltage induced in the armature opposing the supply voltage',
-      'Physical movement away from workspace, ideally outdoors',
+      'The difference between supply and return air temperature',
+      'The delay before a sensor responds to a change',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary advantage of daylight harvesting in lighting control?',
     options: [
-      'They identify isolations and hazards for the next team',
-      'Battery backup failure losing settings, or mechanism wear',
+      'It increases lighting output during cloudy weather',
+      'It switches all lighting off when the room is occupied',
       'Reduces artificial lighting when natural daylight is sufficient',
-      'Loss caused by a gap between fibre end-faces at a connection',
+      'It raises the colour temperature of the luminaires',
     ],
     correctAnswer: 2,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'Which sensor technology is most suitable for detecting occupancy in an open-plan office?',
     options: [
-      '13 A plugs, socket outlets and adaptors',
+      'A single ultrasonic sensor at the doorway',
       'Passive infrared (PIR) with microwave (dual-tech)',
-      'Viewing waveforms to diagnose complex signal problems',
-      'Telecommunications Grounding Busbar',
+      'A CO2 sensor used as the sole trigger',
+      'A manual push-button at each desk',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: "What is the purpose of BACnet's 'COV' (Change of Value) service?",
     options: [
-      'Negotiated annually between industry representatives',
-      'The time between placing an order and receiving the goods',
+      'Continuous polling of every device once per second',
+      'A scheduled report sent at fixed time intervals',
       'Event-driven notification when a value changes significantly',
-      'They must be removed before the tower is moved',
+      'A request to overwrite a value on a remote device',
     ],
     correctAnswer: 2,
     explanation:

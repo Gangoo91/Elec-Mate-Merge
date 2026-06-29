@@ -16,10 +16,10 @@ const Module7Section2_2 = () => {
       id: 1,
       question: 'What is a short circuit?',
       options: [
-        'By reducing current flow for the same real power, current squared losses decrease',
+        'When a circuit carries slightly more current than its rating',
         'When live conductors at different potentials come into direct contact',
-        'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
-        'Elimination, substitution, engineering controls, administrative controls, PPE',
+        'When a conductor breaks and stops current flowing entirely',
+        'When the line and neutral conductors are accidentally swapped',
       ],
       correctAnswer: 1,
       explanation:
@@ -68,10 +68,10 @@ const Module7Section2_2 = () => {
       id: 5,
       question: 'Why are short circuits dangerous?',
       options: [
-        'Return to rectify defects notified by the client at no additional cost',
+        'They slowly drain energy and raise the electricity bill',
         'They cause very high currents that can lead to fire and equipment damage',
-        'A device suitable for the motor starting current characteristics',
-        'Regulation 4(1) — construction of systems to prevent danger',
+        'They reduce the supply voltage to the whole installation',
+        'They cause lights to flicker without any real risk',
       ],
       correctAnswer: 1,
       explanation:
@@ -115,10 +115,10 @@ const Module7Section2_2 = () => {
       id: 9,
       question: 'What must an electrician do if a circuit trips repeatedly due to a short circuit?',
       options: [
-        'Industry developments and new technology requirements',
+        'Fit a higher-rated breaker so it stops tripping',
         'Never re-energise until the cause is identified and rectified',
-        'Signed statement of intent in the safety policy',
-        'Metal part of electrical equipment that can become live under fault',
+        'Keep resetting the breaker until the circuit holds',
+        'Bypass the protective device to restore the supply',
       ],
       correctAnswer: 1,
       explanation:
@@ -128,10 +128,10 @@ const Module7Section2_2 = () => {
       id: 10,
       question: 'In the real-world example, what mistake caused the lighting circuit to short?',
       options: [
-        'The person on whose behalf the inspection is carried out',
-        'Above the bath/shower to 2.25m from floor level',
+        'The wrong size cable was used for the lighting load',
+        'The switch was wired into the neutral conductor',
         'A cable was pinched by a screw when fixing a light fitting',
-        'Additions or alterations not requiring new circuits',
+        'The circuit was overloaded with too many fittings',
       ],
       correctAnswer: 2,
       explanation:

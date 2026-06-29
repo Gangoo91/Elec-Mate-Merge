@@ -13,23 +13,23 @@ const quickCheckQuestions = [
   {
     question: "What's the purpose of using a loop calibrator during diagnostics?",
     options: [
-      'To replace multimeters',
       'To inject known signals and isolate faults between sensor and controller sides',
-      'To generate random test values',
-      'To permanently modify loop settings',
+      'To replace the need for a multimeter when measuring loops',
+      'To generate random test values for stress testing the loop',
+      'To permanently modify the loop range and calibration settings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
   },
   {
     question:
       'If you inject 12mA with a calibrator and the controller shows exactly 50%, what does this confirm?',
     options: [
-      'The transmitter is faulty',
+      'The transmitter on the sensor side is faulty',
+      'The battery in the loop calibrator is running low',
       'The loop wiring and controller are functioning correctly',
-      'The calibrator is broken',
-      'The power supply is unstable',
+      'The loop power supply is unstable or undersized',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
   },
 ];
 
@@ -38,12 +38,12 @@ const quizQuestions = [
     id: 'im8s3-q1',
     question: 'What tool would you use to simulate a 12mA signal?',
     options: [
-      'A multimeter',
-      'A loop calibrator or process calibrator',
+      'A standard multimeter',
       'An oscilloscope',
-      'A power supply',
+      'A loop calibrator or process calibrator',
+      'A bench power supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A loop calibrator or process calibrator can generate precise current signals like 12mA to simulate transmitter outputs for testing purposes.',
   },
@@ -51,12 +51,12 @@ const quizQuestions = [
     id: 'im8s3-q2',
     question: 'Why is simulation useful during loop testing?',
     options: [
-      "It's cheaper than using real sensors",
-      'It provides known, controllable signals to isolate faults between sensor and controller sides',
-      "It's faster than other methods",
-      "It doesn't require any tools",
+      'It provides known signals to isolate sensor-side from controller faults',
+      'It is always cheaper than testing with the real installed plant sensors',
+      'It is faster than every other available diagnostic method on site',
+      'It requires no test tools or instruments at all to carry out the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Simulation provides known, controllable signals that help isolate whether faults are on the sensor side or controller side, eliminating guesswork in diagnostics.',
   },
@@ -64,12 +64,12 @@ const quizQuestions = [
     id: 'im8s3-q3',
     question: "What does it mean if a simulated signal works but the real signal doesn't?",
     options: [
-      'The controller is faulty',
-      'The wiring is damaged',
-      'The sensor/transmitter is likely faulty since the loop and controller respond correctly to known signals',
-      'The power supply is wrong',
+      'The controller input card is faulty',
+      'The loop wiring is open or damaged',
+      'The loop power supply voltage is wrong',
+      'The sensor or transmitter is the likely fault',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If the simulated signal works correctly, it proves the loop wiring and controller are functioning properly, indicating the fault lies in the sensor or transmitter.',
   },
@@ -77,10 +77,10 @@ const quizQuestions = [
     id: 'im8s3-q4',
     question: 'When would you use a multimeter vs a calibrator?',
     options: [
-      'Always use a multimeter first',
-      'Multimeter to measure existing signals; calibrator to generate known test signals',
-      'They do the same thing',
-      'Calibrators are only for digital signals',
+      'Always reach for a multimeter first in every situation',
+      'Multimeter to measure existing signals; calibrator to inject known ones',
+      'They both perform exactly the same diagnostic function',
+      'Calibrators are only ever used for digital communication signals',
     ],
     correctAnswer: 1,
     explanation:
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 'im8s3-q5',
     question: "What's the benefit of using loop-back testing?",
     options: [
-      'It tests only the sensor',
-      'It verifies the complete signal path from output back to input, testing end-to-end loop integrity',
-      "It's the cheapest method",
-      'It only works with digital signals',
+      'It tests only the sensor element in isolation',
+      'It is the cheapest available diagnostic method',
+      'It verifies the complete signal path end to end',
+      'It only works with digital communication signals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Loop-back testing connects the calibrator output to the system input, verifying the complete signal path and end-to-end loop integrity including cables and controller.',
   },

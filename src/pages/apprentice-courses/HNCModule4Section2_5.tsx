@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main disadvantage of standard PVC cables in a fire?',
     options: [
-      'Avoid resonance with supply harmonics that would amplify them',
-      'Electronics, motors, battery-powered devices',
+      'They lose their insulation rating above 30°C ambient',
+      'They cannot be used with steel wire armouring',
       'They emit dense black smoke containing toxic halogens',
-      'Ensure RCD operates within required time (typically Ra×IΔn ≤ 50V)',
+      'They have a lower current rating than XLPE cables',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,9 +129,9 @@ const quizQuestions = [
       'Which cable type is most suitable for a circuit feeding emergency lighting in a hospital corridor?',
     options: [
       'FP (fire performance) cable',
-      'Over-tightening gland nuts',
-      'The supervisor or site manager',
-      'Localised overheating and damage',
+      'Standard PVC twin and earth cable',
+      'Unarmoured XLPE singles in trunking',
+      'Flexible cord to H07RN-F',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is a key consideration when selecting LSF cables for a data centre?',
     options: [
-      'Still energised at 11 kV unless separately isolated',
-      'Luminaires, distribution boards, and test points',
+      'They allow a smaller cable size for the same load',
+      'They remove the need for any fire detection system',
       'Reduced smoke protects sensitive equipment and personnel',
-      'Before each use and regularly during use',
+      'They provide mechanical protection against impact',
     ],
     correctAnswer: 2,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'For external underground installation to an outbuilding, which cable type is most appropriate?',
     options: [
-      '5 g/year for F-gas systems',
+      'PVC twin and earth cable',
       'SWA (Steel Wire Armoured)',
       'FP (fire performance) cable',
-      'Multiple electrical measurements',
+      'Unarmoured flexible cord',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,10 +209,10 @@ const quizQuestions = [
     question:
       'What standard governs fire performance requirements for cables supporting emergency systems?',
     options: [
-      'Reduce emotional intensity so productive conversation can occur',
-      'Continuity, polarity, insulation resistance, earth fault loop impedance',
+      'BS 7671 (Wiring Regulations) alone',
+      'BS 6004 (PVC cables) and BS 5467 (armoured cables)',
       'BS 5839 (fire detection) and BS 5266 (emergency lighting)',
-      'Public commitment to develop science-based targets within 24 months',
+      'BS EN 60898 (circuit breakers) and BS 88 (fuses)',
     ],
     correctAnswer: 2,
     explanation:

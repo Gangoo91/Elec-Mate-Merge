@@ -13,49 +13,49 @@ const BS7671Module8Section1Quiz = () => {
 
   const questions = [
     {
-      question: 'What appendix lists Zs values?',
-      options: ['Appendix 3', 'Appendix 4', 'Appendix 12', 'Appendix 14'],
-      correct: 0,
-      explanation:
-        'The maximum Zs values themselves are tabulated in Chapter 41 (Tables 41.2 to 41.6). Among the appendices, Appendix 3 carries the protective-device time/current characteristics and earth fault loop impedance guidance used to apply them. In BS 7671:2018+A4:2026, Appendix 14 covers prospective fault current.',
-    },
-    {
-      question: 'What is Ca a correction factor for?',
-      options: ['Cable grouping', 'Ambient temperature', 'Installation method', 'Circuit length'],
+      question: 'Which appendix carries the protective-device time/current characteristics used with maximum Zs values?',
+      options: ['Appendix 4', 'Appendix 3', 'Appendix 12', 'Appendix 14'],
       correct: 1,
       explanation:
-        'Ca is the correction factor for ambient temperature, used when the installation temperature differs from the standard 30°C reference.',
+        'Maximum Zs figures are tabulated in Chapter 41, while Appendix 3 provides the device time/current characteristics and earth fault loop impedance guidance used to apply them.',
     },
     {
-      question: 'Which appendix covers volt drop limits?',
-      options: ['Appendix 3', 'Appendix 4', 'Appendix 12', 'Appendix 14'],
-      correct: 1,
+      question: 'What is the correction factor Ca applied for?',
+      options: ['Grouping of cables', 'The installation method', 'Ambient temperature', 'Circuit length'],
+      correct: 2,
       explanation:
-        'Appendix 4, Section 6.4 contains the voltage drop limits (3% for lighting, 5% for other circuits) and the mV/A/m values used to calculate volt drop.',
+        'Ca corrects a cable’s current-carrying capacity for ambient temperature when it differs from the standard 30°C reference used in the rating tables.',
     },
     {
-      question: "What's the consequence of an undersized conductor?",
+      question: 'Which appendix contains the voltage drop limits and mV/A/m data?',
+      options: ['Appendix 3', 'Appendix 12', 'Appendix 4', 'Appendix 14'],
+      correct: 2,
+      explanation:
+        'Appendix 4 holds the voltage drop limits (3% for lighting, 5% for other circuits) and the mV/A/m values used to calculate volt drop.',
+    },
+    {
+      question: 'What is the consequence of selecting an undersized line conductor?',
       options: [
-        'Higher installation cost',
-        'Overheating and voltage drop',
-        'Improved efficiency',
+        'A modest increase in installation cost',
+        'Overheating and excessive voltage drop',
+        'Improved energy efficiency',
         'Better fault protection',
       ],
       correct: 1,
       explanation:
-        'An undersized conductor will overheat due to excessive current and cause excessive voltage drop, potentially leading to equipment malfunction and fire risk.',
+        'An undersized conductor carries too much current for its rating, overheating and dropping excessive voltage, which risks equipment malfunction and fire.',
     },
     {
-      question: 'How do you determine cable current capacity?',
+      question: 'How is a cable’s suitable current-carrying capacity determined?',
       options: [
-        'Use Appendix 3 only',
-        'Apply design current directly',
-        'Use tabulated values with correction factors',
-        'Calculate from conductor resistance',
+        'By reading Appendix 3 on its own',
+        'By applying the design current directly',
+        'By calculating from conductor resistance',
+        'From tabulated ratings adjusted by correction factors',
       ],
-      correct: 2,
+      correct: 3,
       explanation:
-        'Cable current capacity is determined by finding the tabulated current-carrying capacity from Appendix 4 and applying relevant correction factors (Ca, Cg, Ci, etc.).',
+        'You take the tabulated current-carrying capacity from Appendix 4 and apply the relevant correction factors (Ca, Cg, Ci and so on) for the installation conditions.',
     },
   ];
 

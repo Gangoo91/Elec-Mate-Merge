@@ -44,9 +44,9 @@ const checks = [
     question: 'When should you carry out a pre-use inspection on power tools, ladders and PPE?',
     options: [
       'Before EVERY use, every shift, every time you pick it up after a break',
-      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
-      'Chromel and alumel (nickel-chromium / nickel-aluminium)',
-      'Test for oxygen first, then flammable gases, then toxic gases',
+      'Once a week, when the formal inspection is signed off',
+      'Only when the tool has obviously been dropped or damaged',
+      'At the annual PAT test, which covers it for the year',
     ],
     correctIndex: 0,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     id: 'lone-working-check',
     question: 'You’re sent to a vacant property to first-fix a CU. No-one else on site, no signal in the basement. What’s the safe-working baseline?',
     options: [
-      'Sequence and duration of each work activity, dependencies, milestones and the critical path',
-      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'Crack on alone — first-fixing a CU is dead work, so it’s fine',
+      'Wait outside until someone else happens to arrive on site',
       'Have a check-in plan with the office (set times to call/text) AND avoid live work until someone’s with you',
-      'An underlying belief such as "They think I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m incompetent" or "They are always looking for someone to blame"',
+      'Prop the basement door open and shout if anything goes wrong',
     ],
     correctIndex: 2,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     id: 'drugs-alcohol-check',
     question: 'You had three pints with dinner last night. You’re due on site at 8 am. Are you OK to work?',
     options: [
-      "To set out the organisation's commitment to environmental protection, compliance with legislation, and continual improvement",
-      "The maximum possible efficiency of a heat engine operating between two temperatures, η = 1 - (Tc/Th)",
-      "Maybe — depends if you’re still over the drink-drive limit, AND whether you’re mentally / physically sharp enough for live work",
-      "Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process",
+      "Yes — a full night’s sleep clears alcohol from your system completely",
+      "No — three pints means you’re banned from any site for a full 48 hours",
+      "Maybe — depends if you’re over the limit and sharp enough for live work",
+      "Yes — as long as you feel basically fine in yourself, you’re fit to work",
     ],
     correctIndex: 2,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which regulation requires pre-use inspection of work equipment (drills, ladders, MFTs)?',
     options: [
-      'The supervisor/manager and those undertaking the work',
+      'RIDDOR 2013 — Regulation 4',
       'PUWER 1998 (Provision and Use of Work Equipment Regulations) — Regulation 6',
-      'General electrical safety duties on duty-holders at work',
-      'Leading power factor causing voltage rise and potential utility penalties',
+      'BS 7671 Regulation 621 — periodic inspection',
+      'COSHH 2002 — Regulation 7',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a 110 V CTE construction site supply, your drill cord shows visible cuts in the outer sheath. What do you do?',
     options: [
-      "Ingress Protection - protection against solid objects and liquids",
-      "Damage, loose connections, burnt components, or signs of overheating",
+      "Wrap the cut in insulation tape and carry on using it",
+      "Use it for the rest of the day, then bin it tonight",
       "Take the drill out of service, label it, report it. Get a replacement",
-      "Upgrading existing buildings with improved insulation, heating, and technologies",
+      "Keep using it but avoid touching the damaged section",
     ],
     correctAnswer: 2,
     explanation:
@@ -113,9 +113,9 @@ const quizQuestions = [
     id: 3,
     question: 'A 110 V centre-tap-earthed (CTE) supply on construction sites means:',
     options: [
-      "Missing a single day has no measurable impact on long-term habit formation",
-      "Higher rates and consistent demand in specialist areas",
-      "At the end of the principal designer's appointment on the project, and at the end of the project",
+      "The whole supply runs at 55 V instead of 110 V",
+      "110 V between line and earth, halving the shock risk",
+      "Each conductor sits at 110 V to earth, the same as line-to-line",
       "55 V to earth from each conductor — so a worst-case shock is 55 V, not 230 V",
     ],
     correctAnswer: 3,
@@ -126,10 +126,10 @@ const quizQuestions = [
     id: 4,
     question: 'Lone working on electrical jobs is:',
     options: [
-      "Allowed for low-risk work but should be risk-assessed; generally avoided for live work",
-      "Adequate separation or protection from non-electrical services",
-      "Coefficient of Performance - ratio of heat output to electrical input",
-      "To demonstrate instruments are accurate and traceable to national standards",
+      "Allowed for low-risk work if risk-assessed; generally avoided for live work",
+      "Completely banned for everyone under the Electricity at Work Regulations",
+      "Always fine — an electrician is competent to work alone on anything at all",
+      "Only ever permitted if a written permit-to-work is issued each and every time",
     ],
     correctAnswer: 0,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "Why is fatigue an electrical safety issue and not just a comfort one?",
     options: [
-      "A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures",
-      "Fatigue impairs reaction time, decision-making, and the ability to follow procedure — directly increasing the chance of skipped isolation steps or mis-identification",
-      "Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions",
-      "Care is a behaviour, not a control. Controls have to be physical, procedural or PPE, and the higher the risk the more substantive the control needs to be",
+      "It only makes you uncomfortable — it has no real effect on your safety",
+      "It impairs reaction time and judgement, so isolation steps get skipped",
+      "It just slows you down a bit, so the work simply takes a little longer",
+      "It only matters for work at height, not for any electrical work at all",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Misuse and Drugs Act / company policy aside — what’s the SAFETY reason you don’t go on site under the influence?',
     options: [
-      "Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment",
-      "A full enclosure constructed from polythene sheeting with an airlock entry, maintained under negative pressure",
-      "Impaired judgment + reaction time means you’re more likely to make a fatal mistake on a live system; HASAWA s.7 makes it personally on you",
-      "The maximum concentration of the gas or vapour in air above which the mixture is too rich to support combustion",
+      "It’s only about being fair to the other workers on the site",
+      "It’s purely a disciplinary matter for the firm, not a safety one",
+      "Impaired judgement makes a fatal live-system mistake more likely — s.7 is on you",
+      "It mainly just affects your timekeeping and daily productivity",
     ],
     correctAnswer: 2,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 7,
     question: "Your friend at work seems off — quiet, not himself. Mentions he hasn’t slept properly in weeks. He’s about to climb a ladder to a roof junction box. What’s the right move?",
     options: [
-      "The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range",
-      "Follow strict live working procedures if justified, or postpone work until isolation is possible",
-      "An entry wound where current entered and an exit wound where it left the body",
-      "Quietly suggest he takes the job tomorrow / get the supervisor involved — climbing tired is how falls happen",
+      "Say nothing at all — it’s his own business, not really yours to raise",
+      "Tell him to just push through it and crack on with the job in hand",
+      "Report him straight to the supervisor as unfit and have him sent home",
+      "Quietly suggest he takes the job tomorrow and get the supervisor involved",
     ],
     correctAnswer: 3,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 8,
     question: 'PUWER inspections must be:',
     options: [
-      "Carried out by a competent person at suitable intervals AND a record kept where the equipment is used in conditions causing deterioration",
-      "They must report anything they are aware of that is likely to endanger their own health or safety or that of others to the person responsible",
-      "Recommended (the regulation uses recommending language; it strengthens to a requirement only in Higher-Risk Residential Buildings under the Building Safety Act 2022 framework).",
-      "Contact the supplier directly using a known phone number to verify the request before taking any action",
+      "Carried out by a competent person at suitable intervals, with a record kept",
+      "Carried out only once, before the equipment first enters service for use",
+      "Carried out by anyone who happens to be on site, with no record needed",
+      "Carried out annually, by the original manufacturer, on every single tool",
     ],
     correctAnswer: 0,
     explanation:

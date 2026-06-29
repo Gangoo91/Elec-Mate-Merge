@@ -53,9 +53,9 @@ const AM2Module5Section1 = () => {
       id: 'open-circuit',
       question: 'What is the most common symptom of an open circuit fault?',
       options: [
-        'Current cost performance trends will continue',
-        'Measure coil resistance with power off',
-        'The cpc may be a smaller cross-sectional area',
+        'The protective device trips the moment it is energised',
+        'A burning smell from an overheating terminal',
+        'Lights work but appear noticeably dimmer than normal',
         'Circuit completely dead, no power at all',
       ],
       correctIndex: 3,
@@ -66,10 +66,10 @@ const AM2Module5Section1 = () => {
       id: 'high-resistance',
       question: 'Which test would most likely detect a high resistance connection?',
       options: [
-        'Possible overheating due to a loose connection or excessive current',
+        'Insulation resistance test reading close to zero',
         'Continuity test showing higher than expected resistance',
-        'To maintain circuit integrity during a fire',
-        'High-density parallel connections for 40G/100G+',
+        'Polarity test confirming line and neutral are reversed',
+        'RCD test that fails to trip at five times rated current',
       ],
       correctIndex: 1,
       explanation:
@@ -80,9 +80,9 @@ const AM2Module5Section1 = () => {
       question:
         'What happens when you test insulation resistance on a circuit with a short circuit fault?',
       options: [
-        'At designated assembly points away from the building',
-        'Before the construction phase begins',
-        'The phase angle between voltage and current',
+        'The reading climbs steadily above 200 megohms',
+        'The meter shows infinity, indicating an open circuit',
+        'A normal reading of just over 1 megohm is obtained',
         'Reading close to zero or very low resistance',
       ],
       correctIndex: 3,
@@ -124,9 +124,9 @@ const AM2Module5Section1 = () => {
       question:
         'What would you expect to find during continuity testing on a high resistance connection?',
       options: [
-        'Correct indication of equipment status',
-        'Not all loads operate at maximum simultaneously',
-        'From day one, applied equally to everyone',
+        'A reading of exactly zero ohms across the joint',
+        'An open circuit with no continuity at all',
+        'A reading identical to a known good connection',
         'Higher than expected resistance reading',
       ],
       correctAnswer: 3,
@@ -138,9 +138,9 @@ const AM2Module5Section1 = () => {
       question: 'Where are open circuit faults typically introduced in AM2 setups?',
       options: [
         'At junction boxes or connection points',
-        'Flush-mounted and surface-mounted',
-        'Connect shield at both ends',
-        'To ensure continuous visibility',
+        'Only inside the consumer unit busbar',
+        'Within the sealed manufactured cable run',
+        'At the supply intake before the meter',
       ],
       correctAnswer: 0,
       explanation:
@@ -150,10 +150,10 @@ const AM2Module5Section1 = () => {
       id: 5,
       question: 'What is the main symptom of a short circuit fault?',
       options: [
-        'Retest to verify the correction',
+        'The circuit is completely dead with no tripping',
         'Protective device operates (MCB trips)',
-        'A government-backed default pension scheme',
-        'Local equipotential bonding',
+        'Lights on the circuit glow noticeably dimmer',
+        'A slow rise in earth fault loop impedance',
       ],
       correctAnswer: 1,
       explanation:
@@ -161,16 +161,16 @@ const AM2Module5Section1 = () => {
     },
     {
       id: 6,
-      question: 'During RCD testing, what would indicate a possible earth fault?',
+      question: 'On energising an RCD-protected circuit, what symptom points to an earth fault?',
       options: [
-        'RCD operates correctly',
-        'RCD fails to operate',
-        'RCD test gives inconsistent results',
-        'RCD operates too quickly',
+        'The MCB on the circuit trips but the RCD holds in',
+        'The circuit is dead with no protective device operating',
+        'The RCD trips immediately when the circuit is energised',
+        'Insulation resistance line-to-neutral reads near zero',
       ],
       correctAnswer: 2,
       explanation:
-        'Inconsistent RCD operation or unexpected tripping can indicate earth fault issues.',
+        'An earth fault provides a line-to-earth leakage path, so the RCD detects the imbalance and trips as soon as the circuit is energised.',
     },
     {
       id: 7,
@@ -190,9 +190,9 @@ const AM2Module5Section1 = () => {
       question: 'How are high resistance connections typically created in AM2 setups?',
       options: [
         'Loose terminals or poor connections',
-        'Annual energy savings exceeded £250,000',
-        'A silence period of 3.5 character times',
-        'Level the tower and lock all castors',
+        'Completely removing a conductor from a terminal',
+        'Bridging line and neutral inside an accessory',
+        'Reversing line and neutral at a socket outlet',
       ],
       correctAnswer: 0,
       explanation:
@@ -202,10 +202,10 @@ const AM2Module5Section1 = () => {
       id: 9,
       question: "What's the key difference between open circuit and high resistance faults?",
       options: [
-        'Electrical isolation and safe working practices',
+        'Open circuit trips the MCB, high resistance trips the RCD',
         'Open circuit = no continuity, high resistance = poor continuity',
-        'Either end of previous day or first thing in morning',
-        'Running a petrol-powered generator inside the space',
+        'Open circuit affects line only, high resistance affects earth only',
+        'Open circuit is found by IR testing, high resistance by polarity',
       ],
       correctAnswer: 1,
       explanation:
@@ -215,10 +215,10 @@ const AM2Module5Section1 = () => {
       id: 10,
       question: 'True or false: All AM2 installations will have exactly one deliberate fault.',
       options: [
-        'Risk of shock is increased, such as bathrooms',
-        'Ohmmeter or continuity tester',
+        'True - the rig always contains a single fault',
+        'True - a second fault would be unsafe to set',
         'False - there may be multiple faults',
-        'Live to earth and live to neutral',
+        'False - faults are never set, only inspected',
       ],
       correctAnswer: 2,
       explanation:

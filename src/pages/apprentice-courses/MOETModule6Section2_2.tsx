@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a single-line diagram (SLD)?',
     options: [
       'To provide a simplified overview of the power distribution system, showing the main equipment and connections using single lines to represent three-phase circuits',
-      'Make a written, dated note (your phone is fine) of who you spoke to, what you said, and what they said. Then escalate to the next level above (your own employer, the principal contractor, your scheme provider).',
-      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
-      'Battery condition, lead/probe integrity (no cracks, exposed metal), zero/null function (continuity), calibration date, and against a known reference where applicable',
+      'To show every individual conductor and terminal connection within a single control panel',
+      'To record the physical route of each cable through trunking and tray across the site',
+      'To list the test results from periodic inspection of the installation',
     ],
     correctIndex: 0,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a wiring diagram and a circuit (schematic) diagram?',
     options: [
-      'Brief residents (where they\\\\\\\\\\\\\\\'re affected by work) per the PAP\\\\\\\\\\\\\\\'s strategy. Provide information for newsletter / notices. Respond to resident questions about the work. Handle complaints via PAP\\\\\\\\\\\\\\\'s route.',
-      'A men\\\\\\\\\\\\\\\'s mental health charity running free, peer-support talking groups across the UK, meeting on Monday evenings',
+      'A wiring diagram shows the logical function while a circuit diagram shows physical terminals',
+      'A wiring diagram covers only power circuits while a circuit diagram covers only control circuits',
       'A wiring diagram shows physical connections with terminal numbers and wire references; a circuit diagram shows the logical function and operation of the circuit',
-      'It is a simple asphyxiant (displaces oxygen) and is highly flammable, creating an explosion risk when concentrations reach between 5% and 15% in air',
+      'A wiring diagram is drawn to scale while a circuit diagram never uses standard symbols',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     question: 'What information does a load schedule provide alongside a single-line diagram?',
     options: [
       'A tabulated list of all connected loads showing their ratings, circuit references, cable sizes, and protective device details',
-      'Quick access to quotes, specifications, certificates, photos for warranty claims or disputes',
-      'When the principal designer\\\\\\\\\\\\\\\'s appointment ends before the construction phase is complete',
-      'It uses the large quadriceps and gluteal muscles while reducing the moment arm on the lumbar spine',
+      'A scaled drawing of the physical layout of every cable tray across the building',
+      'A graphical representation of the switchgear symbols defined in BS EN 60617',
+      'A record of the periodic inspection and test results for the installation',
     ],
     correctIndex: 0,
     explanation:
@@ -54,9 +54,9 @@ const quickCheckQuestions = [
     id: 'interconnection-drawing-check',
     question: 'An interconnection wiring diagram is used to show:',
     options: [
-      'Harmonic distortion of the supply waveform due to the non-linear nature of the rectifier input stage',
-      'To displace flammable or toxic gases before ventilating with fresh air',
-      'Risk assessments identify hazards; method statements describe how to control them',
+      'The prospective fault current available at the origin of the installation',
+      'The internal wiring within a single control panel only',
+      'The simplified single-line overview of the whole distribution system',
       'The cable connections between separate items of equipment, showing terminal references at both ends',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A single-line diagram uses one line to represent:',
     options: [
-      'Electrical Installation Certificate or Minor Works Certificate as appropriate',
+      'Only the line conductor, with neutral and earth shown separately',
       'All conductors of a circuit (including three-phase and neutral), simplifying the diagram',
-      'Weather compensation OR load compensation OR smart thermostat with automation',
-      'The substance is a serious health hazard such as a carcinogen or respiratory sensitiser',
+      'A single radial final circuit feeding one item of equipment',
+      'The physical route taken by the cable between two points',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a single-line diagram, a transformer is typically shown as:',
     options: [
-      'The number of conductors in the circuit (e.g., three strokes for three-phase)',
-      'Incoming supply → main switchboard → sub-distribution boards → final circuits → loads',
+      'A single circle containing a cross, labelled only with its kVA rating',
+      'A rectangle divided into three sections representing the three phases',
       'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
-      'The cabling between separate items of equipment, with terminal references at each end',
+      'A triangle pointing downward, labelled with the secondary voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'The hierarchy of a typical industrial power distribution system shown on an SLD is:',
     options: [
-      'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
-      'The electrical point where the utility supply connects to the customer\\\\\\\\\\\\\\\'s installation',
-      'The preparation and presentation of documents used in electrotechnology, including wiring diagrams',
+      'Loads → final circuits → incoming supply → main switchboard → sub-distribution boards',
+      'Main switchboard → incoming supply → loads → sub-distribution boards → final circuits',
+      'Final circuits → loads → main switchboard → incoming supply → sub-distribution boards',
       'Incoming supply → main switchboard → sub-distribution boards → final circuits → loads',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Short diagonal strokes across a single line on an SLD indicate:',
     options: [
       'The number of conductors in the circuit (e.g., three strokes for three-phase)',
-      'The electrical point where the utility supply connects to the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation',
-      'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
-      'Uniquely identify every wire so it can be traced between its origin and destination terminals',
+      'The rated current of the cable in that section of the circuit',
+      'The presence of a transformer between two sections of the system',
+      'The point where a cable changes from one installation method to another',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Wire numbering (ferrule marking) on control circuit wires serves to:',
     options: [
-      'The generator symbol, automatic transfer switch (ATS), interlocking arrangements, and the circuits it supplies',
+      'Indicate the current-carrying capacity of each wire in the loom',
       'Uniquely identify every wire so it can be traced between its origin and destination terminals',
-      'The number of conductors in the circuit (e.g., three strokes for three-phase)',
-      'A thick horizontal line (or bar) from which multiple circuits are fed',
+      'Show the cross-sectional area of the conductor in square millimetres',
+      'Mark the voltage rating of the insulation on each control wire',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'A busbar on a single-line diagram is represented by:',
     options: [
-      'The number of conductors in the circuit (e.g., three strokes for three-phase)',
-      'The cabling between separate items of equipment, with terminal references at each end',
+      'A dashed line indicating an isolating link between two sections',
+      'A zig-zag symbol showing the impedance of the supply cable',
       'A thick horizontal line (or bar) from which multiple circuits are fed',
-      'Incoming supply → main switchboard → sub-distribution boards → final circuits → loads',
+      'A circle enclosing a cross marking the point of supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'BS EN 61082 provides standards for:',
     options: [
-      'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
-      'The cabling between separate items of equipment, with terminal references at each end',
-      'Uniquely identify every wire so it can be traced between its origin and destination terminals',
+      'The graphical symbols used on electrical diagrams and schematics',
+      'The minimum current rating of busbars in low-voltage switchgear',
+      'The reference designation system for items of equipment',
       'The preparation and presentation of documents used in electrotechnology, including wiring diagrams',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'A standby generator shown on an SLD will typically include:',
     options: [
       'The generator symbol, automatic transfer switch (ATS), interlocking arrangements, and the circuits it supplies',
-      'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
-      'The number of conductors in the circuit (e.g., three strokes for three-phase)',
-      'The electrical point where the utility supply connects to the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation',
+      'Only the generator symbol, with no indication of how it connects to the supply',
+      'The full internal winding arrangement and excitation circuit of the alternator',
+      'The fuel storage and delivery system feeding the generator set',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the significance of fault levels shown on a single-line diagram?',
     options: [
-      'A relevant failure (criminal offence, breach of legal obligation, miscarriage of justice, danger to H&S, environmental damage, or cover-up of the above)',
+      'They indicate the normal full-load current drawn by each circuit at that point',
       'They indicate the maximum prospective fault current at key points, which determines the required breaking capacity of protective devices',
-      'Use ties at intervals and positions specified by the manufacturer, secured to structurally adequate anchor points, with ties capable of resisting both tension and compression',
-      'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
+      'They indicate the rated voltage of the busbar at each section of the board',
+      'They indicate the earth fault loop impedance measured during periodic testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "When reading a utility company's single-line diagram, the 'point of common coupling' (PCC) refers to:",
     options: [
-      "A thick horizontal line (or bar) from which multiple circuits are fed",
-      "Uniquely identify every wire so it can be traced between its origin and destination terminals",
+      "The point where the highest prospective fault current occurs on the network",
+      "The location at which the main earthing terminal is connected to the supply",
       "The electrical point where the utility supply connects to the customer's installation",
-      "The preparation and presentation of documents used in electrotechnology, including wiring diagrams",
+      "The point at which the standby generator connects to the essential services board",
     ],
     correctAnswer: 2,
     explanation:
@@ -202,9 +202,9 @@ const quizQuestions = [
     question:
       'An interconnection diagram differs from an internal wiring diagram in that it shows:',
     options: [
-      'The electrical point where the utility supply connects to the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s installation',
-      'Incoming supply → main switchboard → sub-distribution boards → final circuits → loads',
-      'Two circles (or coils) with a core symbol between them, labelled with voltage ratio and rating',
+      'The connections within a single panel, terminal by terminal',
+      'The simplified single-line overview of the whole distribution system',
+      'The graphical symbols for switchgear defined in BS EN 60617',
       'The cabling between separate items of equipment, with terminal references at each end',
     ],
     correctAnswer: 3,
@@ -217,9 +217,9 @@ const quizQuestions = [
       'Why is a single-line diagram the first drawing a maintenance technician should consult when investigating a power supply problem?',
     options: [
       'Because it provides the overall system architecture, showing the supply path from source to load, enabling the technician to identify which section of the distribution is affected',
-      'Arc-rated clothing matched to the prospective incident energy, insulated gloves rated to the working voltage, eye/face protection, and insulated footwear',
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
-      'A specific risk assessment must be carried out for pregnant workers, and the task must be modified or avoided if a significant risk is identified',
+      'Because it lists every individual terminal connection inside each control panel on site',
+      'Because it records the physical route and length of each cable through the building',
+      'Because it shows the periodic inspection and test results for every final circuit',
     ],
     correctAnswer: 0,
     explanation:

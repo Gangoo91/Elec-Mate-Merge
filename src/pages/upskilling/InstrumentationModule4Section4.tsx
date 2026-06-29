@@ -17,8 +17,8 @@ const InstrumentationModule4Section4 = () => {
     {
       id: 1,
       question: 'Which tool visualises electrical waveforms?',
-      options: ['Multimeter', 'Clamp meter', 'Oscilloscope', 'Frequency counter'],
-      correct: 2,
+      options: ['Oscilloscope', 'Multimeter', 'Clamp meter', 'Frequency counter'],
+      correct: 0,
       explanation:
         'Oscilloscopes display voltage waveforms over time, allowing analysis of signal shape, timing, and characteristics that other instruments cannot show.',
     },
@@ -26,10 +26,10 @@ const InstrumentationModule4Section4 = () => {
       id: 2,
       question: 'Why use a clamp meter over direct current testing?',
       options: [
-        'More accurate readings',
-        'Cheaper to purchase',
+        'It gives more accurate readings',
+        'It is cheaper to purchase',
         'No need to break the circuit for measurement',
-        'Better for AC measurements only',
+        'It works only for AC measurements',
       ],
       correct: 2,
       explanation:
@@ -38,7 +38,7 @@ const InstrumentationModule4Section4 = () => {
     {
       id: 3,
       question: 'What feature protects a multimeter from overload?',
-      options: ['Auto-ranging', 'Fuse protection', 'Digital display', 'Probe leads'],
+      options: ['Auto-ranging', 'Fuse protection', 'The digital display', 'The probe leads'],
       correct: 1,
       explanation:
         "Fuse protection prevents damage to the meter's internal circuits when excessive current flows through the measurement path.",
@@ -48,11 +48,11 @@ const InstrumentationModule4Section4 = () => {
       question: 'When is an oscilloscope preferred over a DMM?',
       options: [
         'For basic voltage measurements',
-        'When you need to see waveform details and timing',
         'For resistance measurements',
         'For current measurements only',
+        'When you need to see waveform details and timing',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'Oscilloscopes excel at showing signal behaviour over time, revealing details like distortion, noise, and timing that DMMs cannot display.',
     },
@@ -62,8 +62,8 @@ const InstrumentationModule4Section4 = () => {
       options: [
         'Always use the highest range setting',
         'Check instrument ratings match circuit conditions',
-        'Only use digital instruments',
-        'Avoid using probes',
+        'Only ever use digital instruments',
+        'Avoid using probe leads',
       ],
       correct: 1,
       explanation:

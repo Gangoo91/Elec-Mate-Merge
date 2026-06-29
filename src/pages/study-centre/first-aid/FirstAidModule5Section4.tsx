@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'A colleague on site is experiencing a panic attack with rapid breathing, chest tightness, and tingling in their hands. What breathing technique should you encourage?',
     options: [
+      'Slow breathing: in for 4 seconds, hold for 4 seconds, out for 4 seconds',
       'Breathe as fast as possible to get more oxygen',
       'Hold their breath for as long as they can',
-      'Slow breathing: in for 4 seconds, hold for 4 seconds, out for 4 seconds',
       'Breathe into a paper bag to increase carbon dioxide levels',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "The recommended technique is slow, controlled breathing: in for 4 seconds, hold for 4 seconds, out for 4 seconds. This activates the parasympathetic nervous system, helping to calm the body's fight-or-flight response. Breathing into a paper bag is no longer recommended as it can reduce oxygen levels dangerously. A panic attack usually passes within 20 to 30 minutes.",
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'After attending a serious incident on site where a colleague was fatally injured, a first aider is experiencing flashbacks, difficulty sleeping, and emotional numbness two weeks later. What should they understand?',
     options: [
       'These symptoms mean they are not suited to being a first aider',
-      'They should ignore the symptoms and focus on getting back to normal',
       'These are normal reactions to an abnormal event &mdash; most people recover naturally, but they should seek help if symptoms persist beyond 4 to 6 weeks',
+      'They should ignore the symptoms and focus on getting back to normal',
       'They need to take medication immediately to prevent PTSD',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Flashbacks, difficulty sleeping, and emotional numbness are NORMAL reactions to an ABNORMAL event. Most people recover naturally within a few weeks. However, if symptoms persist beyond 4 to 6 weeks, are getting worse rather than better, or are affecting daily life, work, or relationships, the person should seek professional support through occupational health, their GP, or an Employee Assistance Programme.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'A colleague is experiencing a panic attack on site. Which of the following is the MOST appropriate response?',
     options: [
-      'Tell them to stop being silly and get back to work',
       'Move them to a calm environment, stay with them, and guide them through slow breathing (in for 4, hold for 4, out for 4)',
+      'Tell them to stop being silly and get back to work',
       'Give them a paper bag to breathe into and leave them to recover',
       'Call 999 immediately &mdash; all panic attacks require an ambulance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The most appropriate response is to move the person to a calm, quiet environment, stay with them, and guide them through slow, controlled breathing: in for 4 seconds, hold for 4, out for 4. Reassure them calmly and let them know the feeling will pass. Panic attacks usually resolve within 20 to 30 minutes. Breathing into a paper bag is no longer recommended. An ambulance is not usually required unless you suspect a medical cause or the person requests it.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     options: [
       '"Pull yourself together &mdash; others have it much worse."',
       '"Are you OK?" (closed question expecting a yes/no answer)',
-      '"I can see you\'re struggling. How are you feeling?" (non-judgemental, open question)',
       '"You need to calm down right now." (direct instruction)',
+      '"I can see you\'re struggling. How are you feeling?" (non-judgemental, open question)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Good communication in a mental health crisis uses non-judgemental language and open questions. "I can see you\'re struggling. How are you feeling?" acknowledges their distress without minimising it and invites them to share. "Pull yourself together" is dismissive and harmful. "Are you OK?" is a closed question that usually gets a "yes" even when someone is not OK. Telling someone to "calm down" can increase agitation.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'After a traumatic incident, a first aider is experiencing flashbacks and difficulty sleeping. These symptoms have been present for 10 days. What is the most accurate statement?',
     options: [
-      'They are developing PTSD and need immediate psychiatric treatment',
       'These are normal reactions to an abnormal event &mdash; most people recover naturally within weeks',
+      'They are developing PTSD and need immediate psychiatric treatment',
       'They should not be allowed to continue as a first aider',
       'These symptoms are a sign of personal weakness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Flashbacks, difficulty sleeping, irritability, and emotional numbness are NORMAL reactions to ABNORMAL events such as witnessing serious injury or death. Most people recover naturally within a few weeks. A diagnosis of PTSD is not usually considered until symptoms have persisted for at least 4 to 6 weeks and are not improving. Professional support should be sought if symptoms persist, worsen, or significantly affect daily life.',
   },
@@ -182,11 +182,11 @@ const quizQuestions = [
       'An employer has a duty to provide what for first aiders after a significant incident?',
     options: [
       'A pay bonus for attending the incident',
-      'Access to debriefing, emotional support, and professional help if needed',
       'A week off work with no questions asked',
       'Written confirmation that they will not face legal action',
+      'Access to debriefing, emotional support, and professional help if needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Employers have a duty to support the wellbeing of their first aiders. After a significant incident, this should include an operational debrief (ideally within 72 hours), emotional support and the opportunity to talk, peer support from colleagues, and access to professional support such as occupational health, counselling, or an Employee Assistance Programme (EAP). First aiders should not be expected to simply carry on without acknowledgement of the psychological impact.',
   },

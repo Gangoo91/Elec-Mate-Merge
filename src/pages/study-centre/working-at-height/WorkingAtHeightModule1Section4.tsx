@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     id: 'wah-hierarchy-first',
     question: 'What is the FIRST step in the hierarchy of controls for working at height?',
     options: [
-      'Provide personal fall protection (harness and lanyard)',
-      'Install guardrails and edge protection',
       'Avoid working at height altogether',
+      'Install guardrails and edge protection',
+      'Provide personal fall protection (harness and lanyard)',
       'Deploy safety nets below the work area',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The first step is always to avoid working at height altogether wherever it is reasonably practicable. This might mean redesigning the installation to be done at ground level, using pre-fabricated assemblies, or using extendable tools that eliminate the need to work above ground.',
   },
@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'Why is collective protection (e.g. guardrails) preferred over personal protection (e.g. harnesses)?',
     options: [
-      'Collective protection is always cheaper',
-      'Collective protection protects everyone in the area without relying on individual behaviour',
-      'Personal protection is illegal on construction sites',
-      'Harnesses are uncomfortable to wear',
+      'Collective protection is always the cheaper option to install',
+      'Personal protection is illegal on most construction sites',
+      'It protects everyone in the area without relying on individual behaviour',
+      'Harnesses are uncomfortable and slow workers down',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Collective protection measures such as guardrails, platforms, and edge protection protect everyone in the work area automatically, without relying on individuals to wear, inspect, and correctly use personal equipment. Personal fall protection (harnesses, lanyards) depends on each individual worker wearing it correctly, having it properly inspected, and having a suitable anchor point — introducing more opportunities for human error.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is an example of MITIGATING the consequences of a fall (the third level of the hierarchy)?',
     options: [
-      'Installing a guardrail around the roof edge',
-      'Redesigning the work to be done from ground level',
-      'Deploying a safety net below the work area to catch a falling person',
-      'Using a scaffold with a proper working platform',
+      'Installing a guardrail around the exposed roof edge',
+      'Deploying a safety net below the work area to catch a fall',
+      'Redesigning the work so it is done from ground level',
+      'Using a scaffold fitted with a proper working platform',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Safety nets are a mitigation measure — they do not prevent the fall from happening, but they reduce the distance fallen and minimise the consequences if a fall does occur. Guardrails and scaffold platforms are prevention measures (they stop the fall). Redesigning the work is avoidance (eliminating the need to work at height altogether).',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the correct order of the hierarchy of controls for working at height?',
     options: [
-      'Prevent > Mitigate > Avoid',
-      'Mitigate > Avoid > Prevent',
       'Avoid > Prevent > Mitigate',
+      'Mitigate > Avoid > Prevent',
+      'Prevent > Mitigate > Avoid',
       'Avoid > Mitigate > Prevent',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The correct hierarchy is: (1) Avoid work at height wherever reasonably practicable, (2) Prevent falls using collective protection such as guardrails and working platforms, (3) Mitigate the consequences of a fall using safety nets, airbags, or personal fall protection.',
   },
@@ -100,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is an example of AVOIDING work at height?',
     options: [
-      'Using a harness with a self-retracting lifeline',
-      'Installing guardrails around the roof perimeter',
-      'Assembling cable tray at ground level and lifting it into position as a complete unit',
-      'Deploying safety nets below the work area',
+      'Using a harness fitted with a self-retracting lifeline',
+      'Installing guardrails around the full roof perimeter',
+      'Assembling cable tray at ground level and lifting it up complete',
+      'Deploying safety nets in the area below the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'Why must a rescue plan be in place before any work at height using harnesses begins?',
     options: [
-      'Because the HSE requires a copy for their records',
-      'Because a person suspended in a harness after a fall can develop suspension trauma and die within minutes',
-      'Because harnesses always break during a fall',
-      'Because it is good practice but not legally required',
+      'Because the HSE requires a copy of it for their records',
+      'Because harnesses always break during the arrest of a fall',
+      'Because it is recommended good practice but not legally required',
+      'Because suspension trauma can kill a hanging worker within minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Suspension trauma is a life-threatening condition that can develop within minutes when a person hangs motionless in a harness. Without prompt rescue, the worker can lose consciousness within 5-15 minutes and die within 15-30 minutes. A rescue plan is both a legal requirement and a practical necessity.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Under the hierarchy of controls, when is personal fall protection (harnesses) appropriate?',
     options: [
-      'As the first choice for all work at height',
-      'Whenever it is cheaper than collective protection',
-      'Only when it is not reasonably practicable to prevent falls using collective protection',
-      'Only for work above 10 metres',
+      'Only when collective fall prevention is not reasonably practicable',
+      'Whenever it works out cheaper than collective protection',
+      'As the default first choice for all work at height',
+      'Only for work carried out above 10 metres',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Personal fall protection (harnesses, lanyards, self-retracting lifelines) should only be used when collective protection — such as guardrails, platforms, or scaffolds — is not reasonably practicable. The regulations require that collective protection is always given priority.',
   },
@@ -170,10 +170,10 @@ const quizQuestions = [
     options: [
       'An extension ladder',
       'A stepladder',
-      'A mobile tower scaffold or scissor lift MEWP',
       'A chair or desk',
+      'A mobile tower scaffold or scissor lift MEWP',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For a task of this duration, complexity, and height, a mobile tower scaffold or scissor lift MEWP is the most appropriate. They provide a stable working platform with edge protection, allow both hands free, and can be repositioned along the run. A ladder is not suitable for a task lasting two days at 4 metres that requires carrying and fixing heavy materials.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Which of the following practical measures helps an electrician AVOID working at height?',
     options: [
-      'Using a harness clipped to a roof anchor',
-      'Installing guardrails around the work area',
-      'Using an extendable paint roller to test smoke detectors from ground level',
-      'Wearing a hard hat in case of a fall',
+      'Using a harness clipped to a fixed roof anchor point',
+      'Using an extendable test pole to reach smoke detectors from the floor',
+      'Installing guardrails around the edge of the work area',
+      'Wearing a hard hat in case of a fall from height',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Using an extendable tool to carry out the task from ground level is an avoidance measure — it eliminates the need to work at height entirely. Guardrails are prevention. Harnesses are mitigation. A hard hat does not address the fall hazard.',
   },

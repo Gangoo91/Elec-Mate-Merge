@@ -25,9 +25,9 @@ const quickCheckQuestions = [
       'Why are flexible cords made with many fine strands rather than a single solid conductor?',
     options: [
       'Greater flexibility without breakage',
-      'To simulate mains failure for testing',
-      'In the reverse order to assembly (top down)',
-      'Skipping the re-prove step after isolation',
+      'Lower cost than a single solid conductor',
+      'Higher current rating for the same size',
+      'Easier to terminate without ferrules',
     ],
     correctIndex: 0,
     explanation:
@@ -51,9 +51,9 @@ const quickCheckQuestions = [
     question: 'What is the purpose of a cord grip at a flex outlet?',
     options: [
       'Prevent strain on conductor connections',
-      'Loose or intermittent connections',
-      'Dividing L-L fault current by 0.87',
-      'Prospective Short-Circuit Current',
+      'Increase the current rating of the flex',
+      'Provide earthing for the appliance',
+      'Reduce voltage drop along the flex',
     ],
     correctIndex: 0,
     explanation:
@@ -66,10 +66,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main difference between flexible cords and fixed wiring cables?',
     options: [
-      'Deteriorating connections or added cable length',
+      'Flexible cords always carry a higher current rating',
       'Use of multi-stranded conductors for flexibility',
-      '18-22% for standard panels, up to 25%+ for premium',
-      'A transient current spike may occur during changeover',
+      'Flexible cords do not require an earth conductor',
+      'Flexible cords are only available in PVC insulation',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which type of flex would you use for an outdoor tool exposed to mechanical wear?',
     options: [
-      '6 times cable diameter',
-      'Heat and oil resistant',
+      'Standard PVC flex',
+      'Heat-resistant silicone flex',
       'Rubber-sheathed HOFR flex',
-      'Cord grip or clamp',
+      'Flat twin flex',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,9 +101,9 @@ const quizQuestions = [
     question: 'Why is heat-resistant flex used for cookers and immersion heaters?',
     options: [
       'It withstands high operating temperatures',
-      'Contactor + overload + supply rated for inrush',
-      'Name of person, nature of work, date and time',
-      'An ID card confirming qualifications and competence',
+      'It carries a higher current than standard flex',
+      'It is cheaper than standard PVC flex',
+      'It removes the need for an earth conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 10,
     question: 'What causes most flexible cord failures?',
     options: [
-      'Heat and oil resistant',
-      '6 times cable diameter',
+      'Excessive current causing the conductors to fuse',
+      'Moisture ingress through the outer sheath',
       'Repeated bending at connections',
-      'Rubber-sheathed HOFR flex',
+      'Incorrect colour coding of the conductors',
     ],
     correctAnswer: 2,
     explanation:

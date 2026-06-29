@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What does BREEAM Hea 01 (Visual Comfort) primarily assess?',
     options: [
       'Daylighting levels and glare control in occupied spaces',
-      'Serious health hazard (CMR, sensitiser, STOT)',
-      'An upstream device clears a fault if the closer device fails',
-      'Format the cells as "Text" before entering the data',
+      'Background noise levels from building services plant',
+      'Fresh air supply rates and carbon dioxide concentrations',
+      'Operative temperature ranges for thermal comfort',
     ],
     correctIndex: 0,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'thermal-comfort',
     question: 'Which standard does BREEAM Hea 05 reference for thermal comfort criteria?',
     options: [
-      'Warehouse storing valuable goods',
+      'BS 5839 Fire detection and alarm systems',
       'BS EN 15251 / BS EN 16798',
-      'A semantic or language barrier',
-      'Double or reinforced insulation',
+      'BS 8233 Sound insulation and noise reduction',
+      'BS 7671 Requirements for electrical installations',
     ],
     correctIndex: 1,
     explanation:
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
       'What acoustic parameter does BREEAM Hea 06 primarily address for office environments?',
     options: [
       'Sound insulation between spaces and ambient noise levels',
-      'Primary purpose - life vs property protection',
-      'Adjusting temperature before occupancy based on schedule',
-      'Other branches continue to work normally',
+      'Average daylight factor and view out to the landscape',
+      'Carbon dioxide concentration in the breathing zone',
+      'Unified Glare Rating from artificial lighting',
     ],
     correctIndex: 0,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of glare control under BREEAM Hea 03?',
     options: [
-      'To assess occupant satisfaction and building performance after handover',
-      'VOC content below specified limits or certified low-emission products',
-      'The ratio of minimum to average illuminance',
+      'To maximise the average daylight factor regardless of brightness',
+      'To increase the fresh air supply rate to occupied spaces',
+      'To raise the colour rendering index of the artificial lighting',
       'To provide adjustable shading to prevent visual discomfort',
     ],
     correctAnswer: 3,
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does BREEAM require regarding VOC emissions from internal finishes?',
     options: [
-      'Adaptive comfort model allowing higher temperatures in summer',
+      'That all finishes be applied at least twelve months before occupation',
       'VOC content below specified limits or certified low-emission products',
-      'To provide adjustable shading to prevent visual discomfort',
-      'To assess occupant satisfaction and building performance after handover',
+      'That only solvent-based paints and adhesives are used throughout',
+      'That internal finishes are exempt provided ventilation is mechanical',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     question:
       'For naturally ventilated buildings, which thermal comfort approach does BREEAM accept?',
     options: [
-      'VOC content below specified limits or certified low-emission products',
-      'To provide adjustable shading to prevent visual discomfort',
+      'A fixed PMV/PPD model with the same temperature band all year',
+      'A requirement for mechanical cooling whenever outdoor temperatures rise',
       'Adaptive comfort model allowing higher temperatures in summer',
-      'To assess occupant satisfaction and building performance after handover',
+      'A single fixed setpoint of 21°C maintained in every season',
     ],
     correctAnswer: 2,
     explanation:
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which CIBSE document provides guidance on lighting quality referenced by BREEAM?',
     options: [
-      '3 minutes (or 5 minutes per BS 7671)',
+      'CIBSE Guide B (Heating, ventilation and air conditioning)',
       'CIBSE LG7 (SLL Lighting Guide 7)',
-      'Carefully to prevent damage',
-      'New installation certificate',
+      'CIBSE TM52 (Overheating risk assessment)',
+      'CIBSE Guide G (Public health and plumbing)',
     ],
     correctAnswer: 1,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     question:
       'What is the purpose of post-occupancy evaluation (POE) under BREEAM Health and Wellbeing?',
     options: [
-      'To provide adjustable shading to prevent visual discomfort',
-      'VOC content below specified limits or certified low-emission products',
-      'Adaptive comfort model allowing higher temperatures in summer',
+      'To set the artificial lighting illuminance levels at design stage',
+      'To certify the VOC content of materials before they are installed',
+      'To calculate the overheating risk before the building is occupied',
       'To assess occupant satisfaction and building performance after handover',
     ],
     correctAnswer: 3,

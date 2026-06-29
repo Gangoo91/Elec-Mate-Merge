@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'Under Part II of the Environmental Protection Act 1990, what does the "duty of care" require of anyone who produces, imports, keeps, stores, transports, treats, or disposes of controlled waste?',
     options: [
-      'They must notify the local council within 7 days of producing any waste',
-      'They must take all reasonable measures to prevent the unauthorised deposit, treatment, or disposal of waste and ensure it is transferred only to an authorised person',
-      'They must personally transport all waste to the nearest licensed landfill site',
-      'They must pay a flat-rate environmental levy for each tonne of waste produced',
+      'They must prevent unauthorised disposal and transfer waste only to an authorised person',
+      'They must notify the local council in writing within 7 days of producing any controlled waste',
+      'They must personally transport all of their waste to the nearest licensed landfill site',
+      'They must pay a flat-rate government environmental levy for each tonne of waste produced',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Section 34 of the Environmental Protection Act 1990 imposes a duty of care on anyone in the waste chain. This requires them to take all reasonable measures to prevent the escape of waste from their control, ensure waste is transferred only to an authorised person (a registered waste carrier), and provide an accurate written description of the waste via a waste transfer note. Breach of the duty of care is a criminal offence with unlimited fines.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary role of the Office for Environmental Protection (OEP), established under the Environment Act 2021?',
     options: [
-      'To issue planning permission for construction projects near SSSIs',
-      'To act as an independent watchdog scrutinising government environmental governance and enforcing environmental law',
-      'To manage the licensing of waste carriers across England and Wales',
-      'To fund local authority recycling programmes through central government grants',
+      'To issue planning permission for major construction projects located near or within SSSIs',
+      'To manage the registration and licensing of waste carriers across England and Wales',
+      'To act as an independent watchdog scrutinising environmental governance and enforcing the law',
+      'To fund local authority recycling programmes through ring-fenced central government grants',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The Office for Environmental Protection (OEP) was established by the Environment Act 2021 as an independent, statutory body. Its primary role is to scrutinise environmental governance, investigate complaints about public authorities failing to comply with environmental law, and take enforcement action where necessary. It replaced the oversight role previously held by the European Commission before the United Kingdom left the European Union.',
   },
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'Under the Hazardous Waste Regulations 2005, what document must accompany every movement of hazardous waste from a premises?',
     options: [
-      'A waste transfer note signed by both parties',
-      'A consignment note containing a unique code, full waste description, and details of the producer, carrier, and consignee',
-      'A COSHH assessment signed by the site manager',
-      'An Environment Agency permit application form',
+      'A standard waste transfer note signed and dated by both parties to the transfer',
+      'A consignment note giving a unique code, waste description, and producer, carrier, and consignee details',
+      'A COSHH assessment for the waste, signed off by the site manager or supervisor',
+      'A completed Environment Agency environmental permit application form for the premises',
     ],
     correctIndex: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Which part of the Environmental Protection Act 1990 deals specifically with waste on land?',
     options: [
-      'Part I — Integrated Pollution Control',
       'Part II — Waste on Land',
+      'Part I — Integrated Pollution Control',
       'Part III — Statutory Nuisances',
       'Part IV — Litter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part II of the Environmental Protection Act 1990 deals with waste on land. It establishes the licensing regime for waste management, the duty of care for waste (Section 34), and the offence of unauthorised or harmful depositing, treatment, or disposal of waste (Section 33). Part I covers integrated pollution control and air pollution control. Part III addresses statutory nuisances such as noise and odours.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       'Under the Clean Air Act 1993, what is a "smoke control area" and what restriction does it impose?',
     options: [
-      'An area where only electric vehicles are permitted',
-      'An area where local authorities can restrict the emission of smoke from chimneys by prohibiting the burning of unauthorised fuels',
-      'An area within 500 metres of a hospital where all emissions are banned',
-      'An area designated by the Environment Agency for continuous air quality monitoring',
+      'An area where only electric and other zero-emission vehicles are permitted to operate',
+      'An area within 500 metres of a hospital in which all chimney emissions are banned outright',
+      'An area where a local authority can restrict chimney smoke by prohibiting unauthorised fuels',
+      'An area designated by the Environment Agency for continuous, year-round air quality monitoring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under Section 18 of the Clean Air Act 1993, local authorities can declare smoke control areas in which it is an offence to emit smoke from a chimney of a building, or from a chimney serving a furnace of any fixed boiler or industrial plant, unless an authorised fuel is being burned or an exempt appliance is being used. The penalty for emitting smoke in a smoke control area is a fine of up to 1,000 pounds. Smoke control areas were first introduced under the Clean Air Act 1956 following the Great Smog of London in 1952.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     options: [
       'Abstract water from a river without a licence',
       'Discharge trade effluent into a public sewer without consent',
-      'Cause or knowingly permit poisonous, noxious, or polluting matter to enter controlled waters',
       'Fail to report a water leak to the water undertaker within 24 hours',
+      'Cause or knowingly permit poisonous, noxious, or polluting matter to enter controlled waters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 85 of the Water Resources Act 1991 creates the principal water pollution offence in England and Wales. It makes it a criminal offence to cause or knowingly permit any poisonous, noxious, or polluting matter, or any solid waste matter, to enter controlled waters (rivers, lakes, groundwater, estuaries, and coastal waters). The offence carries an unlimited fine and/or up to five years imprisonment on indictment. This section is the most commonly used provision for prosecuting water pollution incidents.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'Under the Wildlife and Countryside Act 1981, what is a Site of Special Scientific Interest (SSSI)?',
     options: [
-      'A site designated by the local planning authority for future industrial development',
+      'Land notified by Natural England for its flora, fauna, geological, or physiographical features',
+      'A site allocated by the local planning authority for future large-scale industrial development',
       'A site designated by the Health and Safety Executive as requiring special safety precautions',
-      'An area of land notified by Natural England as being of special interest by reason of its flora, fauna, geological, or physiographical features',
-      'A construction site where archaeological remains have been discovered',
+      'A construction or excavation site where significant archaeological remains have been discovered',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under Section 28 of the Wildlife and Countryside Act 1981 (as amended by the Countryside and Rights of Way Act 2000), Natural England has the power to notify areas of land as Sites of Special Scientific Interest (SSSIs) where they are of special interest by reason of their flora, fauna, geological, or physiographical features. There are over 4,100 SSSIs in England, covering approximately 8% of the land area. Owners and occupiers of SSSI land must obtain consent from Natural England before carrying out any operations likely to damage the special features of the site.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the "mixing prohibition" under the Hazardous Waste Regulations 2005?',
     options: [
-      'A prohibition on mixing hazardous waste with non-hazardous waste or with other categories of hazardous waste, unless permitted by an environmental permit',
-      'A prohibition on mixing different types of recyclable materials in the same container',
-      'A prohibition on combining waste from different construction sites in the same skip',
-      'A prohibition on transporting more than one type of waste in the same vehicle',
+      'A prohibition on mixing different types of recyclable material together in the same container',
+      'A prohibition on mixing hazardous with non-hazardous or other hazardous waste, unless permitted',
+      'A prohibition on combining waste from two or more different construction sites in the same skip',
+      'A prohibition on transporting more than one distinct category of waste in the same vehicle',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Regulation 19 of the Hazardous Waste Regulations 2005 prohibits the mixing of hazardous waste with non-hazardous waste, and the mixing of different categories of hazardous waste with each other, unless the mixing is carried out under an environmental permit that specifically authorises it. The purpose of the mixing prohibition is to prevent dangerous chemical reactions, to maintain the treatability of waste streams, and to ensure that hazardous waste can be properly characterised and managed through to final disposal. On construction sites, this means that hazardous waste such as asbestos, lead paint, waste oils, and fluorescent tubes must be segregated from each other and from general construction waste.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Under the Environmental Permitting Regulations 2016, which of the following activities would typically require an environmental permit?',
     options: [
-      'Installing a domestic consumer unit in a residential property',
-      'Operating a waste transfer station, discharging trade effluent to a watercourse, or operating a regulated industrial installation',
-      'Carrying out a periodic inspection and test on an existing electrical installation',
-      'Purchasing construction materials from a builders merchant',
+      'Installing a new domestic consumer unit in an existing residential property',
+      'Carrying out a periodic inspection and test on an existing fixed electrical installation',
+      'Operating a waste transfer station or discharging trade effluent to a watercourse',
+      'Purchasing bulk construction materials and components from a local builders merchant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Environmental Permitting (England and Wales) Regulations 2016 require an environmental permit for a wide range of activities including waste operations (storage, treatment, recovery, and disposal of waste), water discharge activities (discharging to surface water or groundwater), groundwater activities, radioactive substances activities, and certain industrial installations falling under the Industrial Emissions Directive. The permit system replaced the previous separate regimes for waste management licensing and water discharge consents, creating a single permitting framework administered by the Environment Agency.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'How should the principal designer under CDM 2015 address environmental constraints when preparing pre-construction information?',
     options: [
-      'Environmental constraints are not relevant to CDM 2015 and should be ignored',
-      'Environmental constraints should be delegated entirely to the client with no further action',
-      'Pre-construction information should identify environmental hazards and constraints including protected species, contaminated land, asbestos, proximity to watercourses, and planning conditions relating to environmental management',
-      'Environmental constraints only need to be considered if the project value exceeds 500,000 pounds',
+      'Environmental constraints are not relevant to CDM 2015 and can safely be ignored entirely',
+      'Environmental constraints should be delegated wholly to the client with no further designer action',
+      'Environmental constraints need consideration only where the project value exceeds 500,000 pounds',
+      'Pre-construction information should identify hazards such as protected species, contaminated land, and asbestos',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 12 of CDM 2015 requires the principal designer to plan, manage, and monitor the pre-construction phase and to prepare pre-construction information that includes all information relevant to the health and safety of the construction work. Environmental hazards and constraints directly affect the health and safety of the project — for example, contaminated land poses risks to workers, asbestos in existing buildings requires specialist removal, and protected species may require ecological surveys and mitigation that affect the construction programme. The pre-construction information package should identify these constraints so that designers can eliminate or reduce risks through design decisions and contractors can plan their work accordingly.',
   },

@@ -47,10 +47,10 @@ const checks = [
     question:
       'Per BS 7671 A4:2026 Table 41.3, what is the maximum permitted Zs for a Type B 32 A MCB on a 230 V single-phase supply?',
     options: [
-      'It should be presumed to contain asbestos-containing materials until a survey proves otherwise',
+      '1.44 Ω — the pre-A4 figure, which remains valid for design work under the current edition.',
       '1.37 Ω — A4:2026 tightened the figure to reflect the formal Cmin = 0.95 voltage factor in the underlying calculation.',
-      'Slightly lower accuracy than the high-current test (factor of 2-3 in resolution) but adequate for verifying compliance with Table 41.3',
-      'Provide specific, verifiable evidence of your competence and demonstrate that you understand acceptable parameters and can interpret results correctly',
+      '0.68 Ω — the value for a Type C 32 A device, which shares the same Zs limit as a Type B.',
+      '2.30 Ω — derived from the full 230 V nominal supply divided by the 100 A device threshold.',
     ],
     correctIndex: 1,
     explanation:
@@ -61,10 +61,10 @@ const checks = [
     question:
       'A B32 final circuit on a 230 V single-phase TN-C-S supply has Table 41.3 max Zs of 1.37 Ω. What is the maximum measured Zs that should be accepted at verification, applying the 0.8 acceptance criterion?',
     options: [
-      'Because L3 starts to be looked to as a quasi-supervisor and starts to influence others. Knowing where YOU sit in the duty stack — and where ELSE the duty sits — lets you make accurate decisions, escalate correctly, and avoid being unwittingly drawn into a duty cascade you didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t recognise.',
-      'The JIB National Working Rules set out agreed terms covering wages, working hours, overtime, travel, and conditions, providing a contractual framework for resolving disputes about these matters in the electrical contracting industry',
-      'Mandate secondary guarding devices on all boom-type MEWPs, deliver targeted toolbox talks on entrapment risks, ensure trained ground rescue persons are always present, update risk assessments to include entrapment scenarios, and establish a reporting system to track entrapment near-misses',
-      '0.8 × 1.37 = 1.096 Ω, often rounded to ~1.10 Ω. The acceptance criterion is "measured Zs ≤ 0.8 × Table 41.3 max" because the measurement is at ambient temperature (cable cold) but the table value was calculated at conductor operating temperature (cable hot at ~70 °C).',
+      '1.37 Ω — the full Table 41.3 figure is the verification limit, because the measurement is taken with the cable already at operating temperature.',
+      '1.71 Ω — that is 1.25 × 1.37, allowing a 25 percent uplift for measurement uncertainty and instrument tolerance at verification.',
+      '0.68 Ω — that is 0.5 × 1.37, because the measured value must be half the table maximum to allow for both temperature and grouping.',
+      '1.10 Ω — that is 0.8 × 1.37, because the measurement is taken cold but the table value assumes the conductor is hot at ~70 °C.',
     ],
     correctIndex: 3,
     explanation:
@@ -75,10 +75,10 @@ const checks = [
     question:
       'A B32 circuit measures Zs = 1.30 Ω at handover on a TN-C-S 230 V supply. Table 41.3 max = 1.37 Ω. The 0.8 acceptance figure = 1.10 Ω. The measurement (1.30) is below the table max but above the 0.8 figure. What is the correct response?',
     options: [
-      'Combine an IET mentor (expert guidance), a 4DX accountability partner (weekly commitments and scoreboard reviews), and a mastermind group (peer support) into a layered support structure with different review cadences',
-      'Reject — measured exceeds 0.8 × table max, which means the hot Zs in service will probably exceed Table 41.3 max. Investigate: confirm the device, recalculate the design Zs, and either upsize the cable or accept the device must be downrated.',
-      'Recommended (the regulation uses recommending language; it strengthens to a requirement only in Higher-Risk Residential Buildings under the Building Safety Act 2022 framework).',
-      'A massive increase in renewable generation, heat pumps, EV charging and battery storage — all requiring installation, maintenance and integration by electrical technicians, making emerging technology skills essential for the ST1426 maintenance technician',
+      'Accept — 1.30 Ω is below the 1.37 Ω table max, so ADS is satisfied and the 0.8 figure is only a design guideline, not a verification limit.',
+      'Reject — measured exceeds 0.8 × table max, so the hot Zs in service will probably exceed it; investigate the device and cable and upsize or downrate.',
+      'Accept — round the 1.30 Ω down to the 1.10 Ω acceptance figure, since the difference is within instrument tolerance.',
+      'Reject — the measured value must be at or below the full 1.37 Ω table max, which it exceeds, so the circuit fails outright.',
     ],
     correctIndex: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       'What does the maximum permitted Zs in BS 7671 Table 41.3 represent physically?',
     options: [
-      'Schemes (NICEIC, NAPIT, Stroma) publish their own branded forms which must contain all required fields from the model — and signing the form has the same legal weight regardless of brand.',
-      'The earth fault loop impedance at which the chosen protective device will just clear the fault within the maximum disconnection time required by Reg 411.3.2 (Table 41.1) — calculated with the Cmin factor applied to U0 to give the worst-case fault current.',
-      'A source of electrical energy that must be treated as live whenever daylight is present, requiring safe systems of work, competent persons, and appropriate isolation procedures — the duty holder has the same obligations as for any other electrical system',
-      'The preventive maintenance programme is not effective enough — too many failures are occurring that should be prevented by proactive tasks, or the PPM programme is not targeting the right failure modes',
+      'The earth fault loop impedance at which the cable just reaches its current-carrying capacity Iz under normal full load.',
+      'The highest loop impedance at which the device still clears the fault inside the Table 41.1 disconnection time, with Cmin applied to U0.',
+      'The minimum loop impedance below which the prospective fault current would exceed the protective device breaking capacity.',
+      'The loop impedance at which the voltage drop across the circuit just reaches the 5 percent limit set by Reg 525.',
     ],
     correctAnswer: 1,
     explanation:
@@ -106,10 +106,10 @@ const quizQuestions = [
     question:
       'What is the design-stage formula for Zs?',
     options: [
-      'It continuously adjusts the operating voltage of the string so the panels deliver their peak power as light, temperature and partial shade change throughout the day. The peak power point sits below open-circuit voltage and at a current below short-circuit — the MPPT hunts for the sweet spot.',
-      'All three line conductors plus neutral enter the meter cabinet as 400 V three-phase. A three-phase meter measures each phase. Single-phase loads inside the property are spread across the three phases to balance the supply.',
-      'Zs = Ze + (R1 + R2 × temperature multiplier), where Ze is the declared external earth fault loop impedance, R1 is the line conductor resistance, R2 is the CPC resistance, and the multiplier (typically 1.20 for 70 °C thermoplastic) brings the cold cable resistance up to operating temperature.',
-      'MCCBs typically have adjustable trip settings (Ir, Isd, Ii) that must be correctly configured for the specific application, and their higher breaking capacities require careful verification against prospective fault current',
+      'Zs = Ze − (R1 + R2), subtracting the cable resistance from the external impedance because the conductors run back toward the source.',
+      'Zs = (R1 + R2) × Ze, multiplying the cable resistance by the external impedance to give the total earth fault loop impedance.',
+      'Zs = Ze + (R1 + R2 × temperature multiplier), the multiplier (1.20 for 70 °C thermoplastic) lifting cold cable resistance to operating temperature.',
+      'Zs = Ze + R1 + R2 + Cmin, adding the 0.95 voltage factor to the loop impedance to allow for the worst-case supply tolerance.',
     ],
     correctAnswer: 2,
     explanation:
@@ -120,10 +120,10 @@ const quizQuestions = [
     question:
       'Why is the measured Zs at verification typically lower than the design-stage Zs?',
     options: [
-      'Each operative working on the isolated circuit fits their own lock to the isolation point (or to a hasp / multi-lock if multiple operatives). Tag identifies the operative, the circuit, the date / time, and the work. Lock removed only by the operative who fitted it (and only when their work is complete and safe to re-energise).',
-      'It is the quality assurance scheme for PV installations in the UK — only MCS-certified installers can register installations for Smart Export Guarantee (SEG) payments and access certain warranty provisions',
-      'Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures',
-      'Because the measurement is taken at ambient temperature with the cable cold (R1 + R2 at ambient ~20 °C), but the design Zs was calculated assuming the conductor is at its operating temperature (~70 °C for thermoplastic). The cold measurement is roughly 1/1.20 ≈ 0.83 of the hot figure.',
+      'Because the test instrument applies the Cmin 0.95 factor automatically, lowering the displayed reading below the design figure.',
+      'Because the measured value includes only the external Ze, whereas the design Zs adds the full final-circuit cable resistance on top.',
+      'Because the measurement is taken with the circuit energised under full load, warming the cable and lowering its resistance below design.',
+      'Because the measurement is taken cold at ~20 °C, but the design Zs assumes the conductor is hot at ~70 °C — cold is roughly 0.83 of hot.',
     ],
     correctAnswer: 3,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       'BS 7671 A4:2026 made what specific numerical change to the Table 41.3 figures compared to pre-A4 editions?',
     options: [
-      'A4:2026 formally applied the Cmin = 0.95 voltage factor to the calculation of maximum Zs, tightening the published figures by ~5 percent. So B32 went from 1.44 Ω (pre-A4) to 1.37 Ω (A4:2026).',
-      'Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays',
-      'Timestamped photographs of the damage, a written description of what was damaged and how, the estimated cost of repair, and a record of the conversation with the dry-liner or their supervisor',
-      'P1 provides detection throughout all areas of the building for property protection; P2 provides detection only in defined high-risk areas for property protection',
+      'It formally applied the Cmin = 0.95 voltage factor, tightening every figure by ~5 percent, so B32 went from 1.44 Ω to 1.37 Ω.',
+      'It relaxed every figure by ~5 percent by raising the assumed supply voltage, so B32 went from 1.37 Ω to 1.44 Ω.',
+      'It left the figures unchanged but added a separate column for the 0.8 verification acceptance values.',
+      'It doubled every figure for the higher fault currents on modern PME supplies, so B32 went from 1.37 Ω to 2.74 Ω.',
     ],
     correctAnswer: 0,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'A B16 final circuit on TN-C-S has design Zs = 2.55 Ω. Table 41.3 (A4:2026) max for B16 ≈ 2.73 Ω. Is the design compliant for ADS?',
     options: [
-      'No — socket testers are a wiring verification tool only. They do not provide the GS38-required indicator features (shrouded probes, current limiting, prove function) and cannot be considered a safe-isolation tool.',
-      'Yes — design Zs ≤ Table 41.3 max, ADS will clear in time. The design should still target lower Zs (under 0.8 × 2.73 = 2.18 Ω) to leave headroom for measurement uncertainty and operating-temperature confidence at handover.',
-      'A ratchet hydraulic crimper with the correct hex die for the lug barrel size — applies the manufacturer-specified compression force, releases only at full crimp.',
-      'The time limit set by the Limitation Act 1980 for bringing legal action — 6 years from breach for simple contracts; 12 years for contracts under deed; 3 years for personal injury claims from the date of injury or knowledge.',
+      'No — design Zs of 2.55 Ω exceeds the 0.8 acceptance figure of 2.18 Ω, so ADS will not clear in time and the design fails outright.',
+      'Yes — design Zs ≤ Table 41.3 max, so ADS clears in time, though the design should still target under 0.8 × 2.73 = 2.18 Ω for handover headroom.',
+      'No — a B16 device requires Zs below 1.37 Ω, the same limit as a B32, so 2.55 Ω is far too high.',
+      'Yes — but only because a 30 mA RCD is fitted; without it the 2.55 Ω design Zs would fail the ADS requirement.',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'What does Reg 411.4.5 require?',
     options: [
-      'Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.',
-      '90-95% — meaning 90-95% of the energy put into the battery during charging is available as output during discharging, with the 5-10% loss attributed to internal resistance, BMS power consumption and thermal management',
-      'It contains the design and verification acceptance criterion for ADS in TN systems — broadly, that the protective device must operate within the required disconnection time and that this must be demonstrated by calculation at the design stage and confirmed by measurement at verification.',
-      'Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.',
+      'It sets the maximum permitted voltage drop between the origin of the installation and any point of utilisation under normal load.',
+      'It defines the current-carrying capacity correction factors for cables grouped together or installed in thermal insulation.',
+      'It carries the ADS acceptance criterion for TN systems — demonstrated by calculation at design and confirmed by measurement at verification.',
+      'It requires that an arc fault detection device be installed on every AC final circuit supplying socket-outlets in a dwelling.',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'On a verification, you measure Zs = 0.95 Ω on a B32 TN-C-S circuit. Table 41.3 (A4:2026) max = 1.37 Ω; 0.8 × 1.37 = 1.10 Ω. What is the right call?',
     options: [
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
-      'Per Reg 544.2.1 — conductance not less than the smaller protective conductor connected to the exposed-conductive-parts. If the smaller CPC is e.g. 1.5 mm², the supplementary bond can be 1.5 mm² provided it has equivalent mechanical protection.',
-      'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
-      'Accept — 0.95 Ω is below both the table max (1.37) and the 0.8 acceptance figure (1.10). The hot Zs in service will be ~0.95 × 1.20 = 1.14 Ω, comfortably below 1.37. Document the result on the schedule of test results and sign off.',
+      'Reject — 0.95 Ω is too close to the 1.10 Ω acceptance figure, leaving insufficient margin for measurement uncertainty.',
+      'Reject — the measured value must be below 0.8 Ω for a B32 device, so 0.95 Ω fails the verification.',
+      'Accept only after re-measuring with the cable warmed to operating temperature, since cold readings cannot be used for sign-off.',
+      'Accept — 0.95 Ω is below both the table max (1.37) and the 0.8 figure (1.10), so the ~1.14 Ω hot Zs stays clear; document and sign off.',
     ],
     correctAnswer: 3,
     explanation:
@@ -191,13 +191,13 @@ const quizQuestions = [
       'You are inspecting a 5-year-old install. Measured Zs on a B32 circuit comes back at 1.20 Ω. Table 41.3 (A4:2026) max = 1.37 Ω; 0.8 × 1.37 = 1.10 Ω. The reading is below the table max but above the 0.8 figure. What code applies on the EICR?',
     options: [
       'C2 — potentially dangerous; the hot Zs in service will probably exceed the Table 41.3 max, meaning ADS may not clear in time at the worst case.',
-      'A structured framework of policies, processes, and procedures for managing an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s environmental impacts',
-      'It is the overarching functional safety standard for E/E/PE systems, from which sector-specific standards are derived',
-      'The branch of health care concerned with preventing and managing work-related ill health, disease, and injury',
+      'C1 — danger present; an immediate hazard exists requiring the circuit to be made safe on the day.',
+      'C3 — improvement recommended; the reading is non-compliant with best practice but presents no safety implication.',
+      'No code — the reading is below the full table max of 1.37 Ω, so the circuit is compliant and passes without comment.',
     ],
     correctAnswer: 0,
     explanation:
-      'A measured Zs above the 0.8 acceptance figure but below the table max should be coded C2 on an EICR. The reasoning: the measurement is cold; the cable in service will be hot; the hot Zs will probably exceed the Table 41.3 max; ADS may not clear in time at worst case. C2 (potentially dangerous) is the correct code because the install will be unsafe under fault conditions even though it is currently functional. C1 is reserved for "danger present" (immediate hazard, e.g. accessible live parts); C3 is reserved for non-compliance with no immediate safety implication. The remediation is the same as on a new install — investigate, upsize cable if needed, and re-test.',
+      'Consistent with the 0.8 acceptance pedagogy taught in this subsection, a measured Zs above the 0.8 figure but below the table max is coded C2. The reasoning: the measurement is cold; the cable in service will be hot; the hot Zs will probably exceed the Table 41.3 max; ADS may not clear in time at the worst case, so the install could be unsafe under fault conditions even though it is currently functional. Note that EICR coding is an inspector judgement (BS 7671 itself does not assign codes — the codes come from IET Guidance Note 3 and the industry Best Practice Guides); some inspectors take the view that a measured Zs below the Table 41.3 maximum satisfies ADS and would code it lower. The taught position here is C2 because the cold-to-hot temperature rise will likely push the in-service Zs past the table max. C1 is reserved for "danger present" (immediate hazard, e.g. accessible live parts); C3 is "improvement recommended" with no immediate safety implication. The remediation is the same as on a new install — investigate, upsize cable if needed, and re-test.',
   },
 ];
 

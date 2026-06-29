@@ -22,8 +22,8 @@ const quickCheckQuestions = [
     id: 'mewp-riddor-reporting-time',
     question:
       'A worker suffers a fractured wrist after being struck by a MEWP boom. Under RIDDOR, within what timescale must this specified injury be reported online to the HSE?',
-    options: ['Within 24 hours', 'Within 7 days', 'Within 10 days', 'Within 15 days'],
-    correctIndex: 2,
+    options: ['Within 24 hours', 'Within 7 days', 'Within 15 days', 'Within 10 days'],
+    correctIndex: 3,
     explanation:
       'Specified injuries (including fractures other than to fingers, thumbs, or toes) must be reported to the HSE online within 10 days of the incident. A fractured wrist is a specified injury under RIDDOR 2013. Deaths and dangerous occurrences must additionally be reported immediately by telephone.',
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'After a MEWP incident, which of the following should you do FIRST?',
     options: [
-      'Complete the RIDDOR online report form',
-      'Move the MEWP to a safe storage area',
       'Make the area safe and provide first aid to any injured persons',
+      'Move the MEWP to a safe storage area',
+      'Complete the RIDDOR online report form',
       'Take photographs of the damage to the machine',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The immediate priority after any incident is to make the area safe (isolate the machine, establish an exclusion zone) and provide first aid to anyone who is injured. RIDDOR reporting, photography, and machine relocation all come later. Moving the machine should NOT be done unless absolutely necessary for rescue, as the scene must be preserved for investigation.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'The primary purpose of an accident investigation is to:',
     options: [
+      'Identify the root cause and prevent recurrence',
       'Identify which individual was at fault and assign blame',
       'Satisfy the HSE inspector during a site visit',
-      'Identify the root cause and prevent recurrence',
       'Calculate the cost of the damage for insurance purposes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The primary purpose of any accident investigation is to identify the root cause of the incident and implement corrective actions to prevent it from happening again. Investigation is NOT about blame — it is about learning. If the investigation focuses on blame, people will be reluctant to report incidents and near misses, which undermines the entire safety management system.',
   },
@@ -166,10 +166,10 @@ const quizQuestions = [
     options: [
       'File the investigation report and take no further action',
       'Discipline the operator for not following the method statement',
-      'Revise the method statement, retrain personnel, and update the risk assessment',
       'Wait for the HSE to issue an improvement notice before making changes',
+      'Revise the method statement, retrain personnel, and update the risk assessment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Under the Plan-Do-Check-Act continuous improvement cycle, investigation findings (the 'Check' stage) must feed directly into corrective actions (the 'Act' stage). If the method statement was inadequate, it must be revised (updated plan), personnel must be retrained (updated 'Do'), and the risk assessment must be updated to reflect the new information. Waiting for the HSE or filing without action defeats the purpose of the investigation.",
   },
@@ -179,11 +179,11 @@ const quizQuestions = [
       'A worker is injured using a MEWP and is unable to work for 9 consecutive days (not counting the day of the accident). The injury is a soft tissue sprain, NOT a specified injury. Under RIDDOR, this must be reported:',
     options: [
       'Immediately by telephone',
-      'Online within 10 days',
       'Online within 15 days',
+      'Online within 10 days',
       'It does not need to be reported under RIDDOR',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Over-7-day incapacitation (where the worker cannot perform their normal duties for more than 7 consecutive days, not counting the day of the accident) must be reported online within 15 days. Since the injury is a soft tissue sprain and not on the specified injuries list, it falls into the over-7-day category rather than the specified injury category (which has a 10-day reporting window).',
   },

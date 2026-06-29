@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'nbs-purpose',
     question: 'What is the primary purpose of NBS specifications?',
     options: [
-      'Correct start/stop function and latching',
+      'To set out the contractor pricing and bill of quantities',
       'To communicate design requirements unambiguously',
-      'Tighten to manufacturer\'s torque specification',
-      'Regular cleaning, inspection, replacement when damaged or worn',
+      'To replace the need for construction drawings',
+      'To record test results during commissioning',
     ],
     correctIndex: 1,
     explanation:
@@ -60,9 +60,9 @@ const quickCheckQuestions = [
     question: "In NBS, what is a 'clause'?",
     options: [
       'An individual specification item within a work section',
-      'Carry out polarity, continuity, and insulation resistance tests',
-      'The effective diameter of the light-carrying region',
-      'Fully concentrating, understanding, responding, and remembering',
+      'A complete work section covering one building service',
+      'A reference to an external British Standard',
+      'A drawing showing the location of equipment',
     ],
     correctIndex: 0,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'What is the key advantage of a performance specification over a prescriptive specification?',
     options: [
-      'To show the project team structure and reporting relationships',
-      'Hazardous substances, exposure routes, health effects, control measures',
-      'Begin CPR immediately and call 999 — electric shock can cause cardiac arrest',
+      'It names the exact product the contractor must install',
+      'It removes the need to reference British Standards',
+      'It guarantees the lowest possible installation cost',
       'It allows contractor innovation while meeting required standards',
     ],
     correctAnswer: 3,
@@ -129,9 +129,9 @@ const quizQuestions = [
     question: "When should 'Preliminaries' clauses be included in an NBS specification?",
     options: [
       'At the start of each work section to set general requirements',
-      'To prevent signal reflections and communication errors',
-      'Data centre infrastructure and telecommunications standards',
-      'Creates a record for future reference and provides evidence of proper testing',
+      'Only at the very end, after all product clauses',
+      'Only when a performance specification is being used',
+      'Never - preliminaries belong in the drawings instead',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is NBS Create?',
     options: [
-      '5 years after the tax year they relate to',
+      'A British Standard for electrical installations',
       'A cloud-based specification writing platform',
-      'Complete failure to trip at any test current',
-      'To verify the integrity of the protective conductor',
+      'A type of performance specification clause',
+      'A drawing package for building services layouts',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'How should amendments to standard NBS clauses be handled?',
     options: [
-      'Fast response time and high power capability',
-      'Both ceiling height and furniture layout',
+      'Delete the standard clause and leave no record of the change',
+      'Issue amendments only verbally on site to save time',
       'Clearly identify amendments using project-specific text',
-      'Treat the material as if it contains asbestos and manage it accordingly',
+      'Apply amendments to the drawings rather than the specification',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What information should a prescriptive specification include for equipment?',
     options: [
-      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
-      'The risks, precautions, control measures, and results of any monitoring',
-      'Seek clarification from the design team before proceeding',
+      'Only the required performance outcomes, leaving the product open',
+      'The contractor pricing and labour allowances',
+      'The location and quantity of each item, as on the drawings',
       'Manufacturer, model, specific technical data and approval requirements',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Why is specification coordination with drawings critical?',
     options: [
       'Conflicting information causes disputes, delays and cost overruns',
-      'Radial is designed as one-way feed, broken ring is faulty two-way feed',
-      'How much the actual value can vary either side of the marked value.',
-      'Hard hat, high-visibility clothing, safety boots, and gloves',
+      'Drawings always legally override the specification in a contract',
+      'Specifications and drawings must contain identical wording',
+      'Coordination removes the need for any site supervision',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "What does 'equal and approved' mean in a specification?",
     options: [
-      'Systematic approach, safety first, proper documentation, and continuous improvement',
+      'Only the exact named product may be installed',
       'An equivalent product may be proposed subject to engineer approval',
-      'Replacing fossil fuel heating with electric systems like heat pumps',
-      'The task — what does it involve and can it be avoided or redesigned?',
+      'The contractor may choose any product without approval',
+      'The specification and drawings must be given equal weight',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'Which document typically takes precedence when there is a conflict between specification and drawings?',
     options: [
-      'It provides additional stiffness to the tower structure and serves as a rest point during climbing',
-      'Carpal tunnel syndrome from work involving hand-held vibrating tools',
+      'The drawings always take precedence in every situation',
+      'The most recently issued document always wins',
       'As defined in the contract preliminaries (often specification takes precedence for quality)',
-      'To allow temporary manual control for maintenance, emergencies, and special events',
+      'The document with the most detail always takes precedence',
     ],
     correctAnswer: 2,
     explanation:

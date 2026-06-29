@@ -23,12 +23,12 @@ const inlineChecks = [
     question:
       'In a multi-panel networked fire alarm system, what is the difference between a RING and a STAR network topology?',
     options: [
-      'Cable colour.',
-      'Voltage.',
-      'Ring (loop): each panel is connected to the next, with the cable returning to the first panel — a continuous loop. A single break in the network cable does NOT disconnect any panel because every panel is reachable from at least one direction. Star: all panels connect to a central hub / master panel; a single break disconnects only that one panel from the rest. Ring is fault-tolerant; star is simpler but loses fault tolerance for the affected panel.',
-      'Number of panels.',
+      'Ring loops the cable back so a single break drops no panel; star loses only the cut panel.',
+      'Ring and star describe the colour-coding scheme for the network cabling on the drawings.',
+      'Ring networks run at a higher signalling voltage than star networks to drive the cable loop.',
+      'The two terms describe whether the system has an odd or even number of networked panels.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Ring topology between fire alarm panels mirrors the Class A loop principle at the device level: redundancy through dual-feed wiring. A break is a single fault that the network survives. Star topology is sometimes used in retrofits where ring wiring is impractical; it accepts that a cable break disconnects one panel's reporting to the rest of the network. The fire-detection function within the affected panel continues to work locally.",
   },
@@ -36,12 +36,12 @@ const inlineChecks = [
     id: 'fam3-s5-cable',
     question: 'What cable specifications apply to network cables BETWEEN fire alarm panels?',
     options: [
-      'Standard CAT5.',
-      'Standard CAT5 with PVC.',
-      'Fire-resistant cable with at least the BS EN 50200 PH-30 grade (typical for general systems) or BS EN 50200 PH-120 / BS 8519 enhanced grade for higher-rated buildings (over 18 m, sleeping premises with vulnerable occupants, premises requiring higher fire integrity). Cable carries the network signalling between panels and must continue to function during a fire long enough for the system to coordinate evacuation.',
-      'Any data cable.',
+      'Standard Cat5 data cable, the same as the office structured-cabling system uses.',
+      'Standard Cat5 with a PVC sheath, provided it is run on dedicated containment.',
+      'Any general-purpose data cable, since the network only carries low-voltage signalling.',
+      'Fire-resistant cable to BS EN 50200 (PH-30, or enhanced grade for higher-risk buildings).',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'BS EN 50200 specifies fire-resistance categories for cables under fire conditions; PH-30 means the cable maintains circuit integrity for 30 minutes of fire exposure. BS 8519 extends to enhanced grades. The category required depends on the building risk profile. Fire alarm circuits — including network cables — are specified to the appropriate grade. Standard data cables would fail in minutes of fire exposure and are not acceptable for life-safety circuits.',
   },
@@ -50,10 +50,10 @@ const inlineChecks = [
     question:
       'BS 5839-1:2025 introduces clause 43.4 on remote services and cyber security. What does it require?',
     options: [
-      'Encryption everywhere.',
-      'Daily passwords.',
-      'Physical lock-off of the CIE cabinet, anti-tamper plugs on patch leads, authentication of any request to accept a remote connection, and a thorough risk assessment before performing remote service. Particularly when executing read / control / write functions, the responsible individual must ensure the system is fully operational on completion. The clause is a 2025 addition responding to the all-IP networks and connected CIEs becoming common.',
-      'No remote access.',
+      'Mandatory end-to-end encryption of every signal on the network, with no other measures.',
+      'A requirement to change the CIE engineer password every day the system stays networked.',
+      'Physical lock-off, anti-tamper plugs, authentication, and a risk assessment before remote work.',
+      'A blanket prohibition on any remote access to a CIE, requiring all service to be on site.',
     ],
     correctIndex: 2,
     explanation:
@@ -64,10 +64,10 @@ const inlineChecks = [
     question:
       'What is the difference between a DISTRIBUTED CIE architecture and a CENTRALISED CIE architecture in a multi-panel system?',
     options: [
-      'Number of CIEs.',
-      'Centralised: one master CIE displays all events for the whole system; remote panels are slaves that report to the master. Distributed: each panel has full CIE function locally — displays its own events, can be operated independently — and panels share status across the network. In distributed architecture, no single panel is the single point of failure; in centralised, the master is critical. Distributed is preferred for resilience; centralised is simpler to configure for smaller networks.',
-      'Cable type.',
-      'Power supply.',
+      'It is simply the count of CIEs — distributed systems always have more panels than centralised.',
+      'Centralised has one master displaying all events; distributed gives each panel full CIE function.',
+      'It refers to the cable type — distributed systems use fibre while centralised systems use copper.',
+      'It describes the standby power — distributed panels each have a battery, centralised share one.',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'Why are multi-panel networked fire alarm systems used instead of a single very large CIE?',
     options: [
-      'Cost.',
-      'Aesthetic.',
-      'Practical reasons: (1) physical scale — buildings too large for one CIE to cover all wiring runs efficiently; (2) reliability — distributed CIEs avoid a single point of failure; (3) campus / multi-building installations — one panel per building, networked together for unified indication; (4) phased installations — extending coverage by adding panels rather than replacing the central one. The network cable carries event data between panels.',
-      'Random choice.',
+      'Scale, resilience, multi-building campuses, and phased extension by adding panels.',
+      'Purely to reduce cost, since several small panels are always cheaper than one large CIE.',
+      'For aesthetic reasons, so each area can have a panel that matches its surrounding decor.',
+      'Because BS 5839-1 prohibits any single CIE from serving more than one fire compartment.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Multi-panel architecture solves the scale problem in fire alarm. Beyond a certain size, a single CIE is impractical (cable distances, loop loading, repair complexity). Networking multiple CIEs gives the same unified indication to occupants and fire-fighters while distributing the wiring efficiently. Common in hospitals, university campuses, large industrial sites, and high-rise residential blocks.',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does BS EN 54-13 specify for networked fire alarm systems?',
     options: [
-      'It does not apply.',
-      'Cable type only.',
-      'BS EN 54-13 governs system component compatibility — including the network components in a multi-panel system. The standard certifies that the panels, network protocol, repeaters, and other network-side components from a particular vendor work together correctly as an integrated system. Mixing networked panels from different vendors typically voids the BS EN 54-13 system certification.',
-      'Sounder colour.',
+      'BS EN 54-13 does not apply to networked systems, only to single-panel installations.',
+      'BS EN 54-13 specifies only the type of cable that may be run between networked panels.',
+      'BS EN 54-13 sets the colour and light output of sounders and VADs across the network.',
+      'BS EN 54-13 governs system compatibility, including the network components themselves.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BS EN 54-13 system compatibility applies just as strongly to networked systems as to single-panel addressable systems — perhaps more so, because the integration complexity is higher. A networked system is a vendor-tested combination; deviating from the certified combination is unsafe and uncertified.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       'What is the typical cable specification for fire alarm network cables under BS 8519?',
     options: [
-      'Cat5 / PVC.',
-      'Twin-and-earth.',
-      'Standard fire-resistant cable per BS EN 50200 (PH-30 or PH-60 for general systems) or BS 8519 enhanced grade (PH-120) for buildings of higher fire risk such as buildings over 18 m, premises with vulnerable sleeping occupants, and other categories per BS 9999 / BS 9991 fire engineering. The cable maintains network communication during fire exposure for the rated period.',
-      'Standard PVC twin.',
+      'Standard Cat5 data cable with a PVC sheath, run on its own dedicated containment.',
+      'Standard 6242Y twin-and-earth, the same cable used for fixed-wiring final circuits.',
+      'Fire-resistant cable to BS EN 50200, with BS 8519 enhanced grade for higher-risk buildings.',
+      'Standard PVC-insulated twin cable, provided it is clipped clear of any heat source.',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'In a ring (loop) network of 5 fire alarm panels, what happens if the network cable is cut between panels 2 and 3?',
     options: [
-      'All panels lose communication.',
-      'Only panel 1 keeps working.',
-      'No panel loses communication. The ring topology is fault-tolerant: each panel is reachable from both directions on the ring. Panel 3, 4, 5 reach the others via the unbroken cable in the other direction. The system reports the cable break as a fault but continues to function. This is the network-level analog of a Class A loop at the device level.',
-      'Only panels 2 and 3 stop working.',
+      'No panel loses communication; each stays reachable from the other direction on the ring.',
+      'All five panels lose communication with each other until the break has been repaired.',
+      'Only panel 1 keeps working; panels 2 to 5 drop off the network entirely on the break.',
+      'Panels 2 and 3 either side of the break stop working while the remaining three carry on.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Ring topology gives every panel two paths to every other panel. A single break leaves all panels still reachable. The fault is reported (so it can be repaired) but the network continues to operate. Ring redundancy is the standard for life-safety multi-panel networks; star and bus topologies are used in less demanding applications.',
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       'What is the purpose of fire alarm system network monitoring beyond the fault tolerance of the topology?',
     options: [
-      'Aesthetic.',
-      'Continuous monitoring of the network status — communication quality, panel status, response times — at the master CIE or distributed across panels. The fault response is automatic (cable break = fault reported), but ongoing monitoring catches degraded performance: cables operating but with high error rates, panels with intermittent faults, panels rebooting unexpectedly. These signal an emerging problem that should be investigated before it becomes a hard failure.',
-      'For statistics only.',
-      'It is unnecessary.',
+      'It serves an aesthetic purpose only, giving facilities staff a status screen to look at.',
+      'It is collected purely for long-term statistics and plays no part in maintaining the system.',
+      'It is unnecessary once the topology itself is fault-tolerant against a single cable break.',
+      'It catches degraded performance — high error rates, intermittent faults — before hard failure.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A fault-tolerant network with monitoring catches BOTH the hard failure (cable break, panel down) AND the soft signals (degrading communication quality). The latter is the more useful signal in mature systems — it gives advance warning of impending failure. Modern networked CIEs include extensive diagnostics; the maintenance organisation reviews them at every service.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'BS 5839-1:2025 clause 43.4 (cyber security) requires what before any remote service is performed?',
     options: [
-      'Manager approval.',
-      'A thorough risk assessment to evaluate the potential impact on the operation of the CIE, particularly when executing read, control, or write functions. The responsible individual must ensure the system is fully operational on completion of the remote service. The clause anticipates that connected CIEs allow remote intervention — and treats each intervention as a controlled change with proper risk management.',
-      'A coffee break.',
-      'Nothing required.',
+      'Written sign-off from a building manager before each remote login is permitted.',
+      'A change of the system password to a new value at the start of every remote session.',
+      'A risk assessment of the impact on CIE operation, with system state verified on completion.',
+      'Nothing in advance — the requirement applies only to verifying the system once work is done.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 2025 cyber security clause aligns with general IT-OT security best practice: privileged operations require risk assessment; system state must be verified after the operation; reads / writes / controls are different risk levels with proportionate controls. The fire alarm CIE is treated as a critical control system, not just a piece of building hardware.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is an "anti-tamper plug" on a network patch lead and why is it now expected?',
     options: [
-      'Aesthetic.',
-      'A physical device that secures a network patch lead to its socket so the lead cannot be unplugged without a key / tool. Used to prevent unauthorised disconnection of fire alarm network cabling. Per BS 5839-1:2025 clause 43.4, anti-tamper plugs are part of the physical-security baseline for cyber-security on connected CIEs — alongside locked cabinets and authentication for remote service.',
-      'For colour-coding.',
-      'Required by FCC.',
+      'A device locking a patch lead to its socket so it cannot be unplugged without a key or tool.',
+      'A coloured cap fitted to a patch lead so installers can identify fire-system cabling at a glance.',
+      'A moulded boot that protects the locking tab of the patch lead from snagging on adjacent cords.',
+      'A surge-protection plug that shields the network port from transients carried in on the cabling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cyber security has a physical-security component. An attacker (or, more commonly, an inadvertent maintenance error) that simply unplugs a network cable can isolate a panel, disrupt the network, or open a path for malicious traffic. Anti-tamper plugs raise the bar for physical access; combined with locked cabinets and authentication, they form the multi-layer baseline.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       'A campus university has 8 buildings, each with its own fire alarm panel, networked together. What architecture choices need to be made?',
     options: [
-      'No choices.',
-      'Topology (ring / star / bus / hybrid), centralised vs distributed CIE function, network cable specification (BS EN 50200 grade), cyber-security architecture (segregation, authentication, anti-tamper), failure modes and recovery (what happens if any single panel or cable fails), per-building autonomy (does each building work independently if the network fails), and integration with other campus systems (BMS, security, public address). The design package documents each choice and the rationale.',
-      'Cable colour only.',
-      'Battery type only.',
+      'None are needed; networking eight identical panels is a standard plug-together task.',
+      'Only the colour of the inter-building network cable, to keep it consistent across the estate.',
+      'Only the standby battery type for each panel, since every other parameter is fixed by the standard.',
+      'Topology, centralised vs distributed CIE, cable grade, cyber security, failure modes and integration.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Multi-building networks require coordinated design across all the listed dimensions. The 2025 standard's emphasis on accessibility, cyber security, and the cause-and-effect matrix (now mandatory at handover) all apply across the entire networked system. The university's estate management and the fire alarm designer work together over the network architecture.",
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       'In a distributed-CIE multi-panel system, what does each panel typically display when an event occurs anywhere on the network?',
     options: [
-      'Nothing.',
-      "Each panel typically displays the same information — fire indication for any panel's zone, fault indication for any panel's fault, isolation indication for any panel's isolation. The display is unified across the network so a fire-fighter at any panel sees the same picture. This is the resilience advantage of distributed CIE: no single point of failure, no need to find the \"right\" panel.",
-      "Only the local panel's events.",
-      'Only fire events.',
+      'Nothing — remote events are held at the master panel and not shown on the others.',
+      "Only the events originating from that panel's own detection zones, not those of other panels.",
+      'The same unified picture — fire, fault and isolation for any panel, shown at every panel.',
+      'Only fire events from across the network, with faults and isolations shown at the source panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Distributed CIE means every panel is functionally a master. Status is replicated across the network in real time. A fire-fighter approaching any panel can see the fire location, faults, and isolations across the whole site. This is the resilience advantage — and a small additional commissioning effort (every panel's display is configured the same way).",
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'What is the role of a system-level fire risk assessment for a networked multi-panel installation?',
     options: [
-      'It is not required.',
-      "A risk-based design review covering: the network architecture and its failure modes; the cyber-security posture of the connected CIE; the cause-and-effect matrix across the whole network; the integration with other building systems; the maintenance access for all interfaces and panels; the response of staff to alarms across the network. The 2025 standard's combined emphasis on accessibility (clause 7), cyber security (clause 43.4), and mandatory cause-and-effect documentation makes this kind of review more important than ever.",
-      'Visual inspection only.',
-      'Per-detector test.',
+      'A risk-based review of network architecture, cyber security, cause-and-effect and integration.',
+      'A system-level assessment is not required; the per-building fire risk assessments cover it all.',
+      'A visual inspection of each panel and its enclosure, with no review of the network as a whole.',
+      'A functional test of every individual detector on every panel, repeated across the whole network.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Networked systems have more failure modes and more design dimensions than single-panel systems. A risk-based design review at the system level (across the network) is the proportionate response. The fire risk assessment for the building informs the alarm system design; the alarm system design feeds back into the fire risk assessment. The two evolve together.',
   },

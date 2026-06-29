@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'embodied-carbon-definition',
     question: 'What is embodied carbon?',
     options: [
-      'Primary and secondary at the same voltage, no electrical connection between them',
-      'Standardised launch conditions for repeatable measurements',
+      'Carbon emissions from energy used to heat, cool and light the building in use',
+      'Carbon dioxide absorbed by timber and other bio-based materials over their life',
       'Carbon emissions from materials, construction, and end of life',
-      'To provide visual representation of electrical systems and component locations',
+      'The carbon offset purchased to make a development notionally net zero',
     ],
     correctIndex: 2,
     explanation:
@@ -44,9 +44,9 @@ const quickCheckQuestions = [
     id: 'life-cycle-stage-a1-a3',
     question: 'What do life cycle stages A1-A3 represent?',
     options: [
-      'Loading requirements, penetration needs, and support requirements',
-      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
-      'The Control of Asbestos Regulations 2012',
+      'Construction stage (transport to site and installation)',
+      'Use stage (maintenance, repair and replacement)',
+      'End-of-life stage (deconstruction, transport and disposal)',
       'Product stage (raw materials, transport, manufacturing)',
     ],
     correctIndex: 3,
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     id: 'epd-purpose',
     question: 'What is the purpose of an Environmental Product Declaration (EPD)?',
     options: [
-      'Annual energy consumption estimates representing typical conditions',
-      'That settings match designer\\\\\\\\\\\\\\\'s requirements',
-      'All escape routes and specified safety features',
+      'To certify that a product meets minimum energy efficiency standards',
+      'To list the hazardous substances a product contains for COSHH purposes',
+      'To guarantee a product carries a manufacturer warranty for its service life',
       'To provide verified environmental impact data for products',
     ],
     correctIndex: 3,
@@ -71,9 +71,9 @@ const quickCheckQuestions = [
     question: 'What does Module D represent in whole life carbon assessment?',
     options: [
       'Benefits beyond the building life cycle (reuse, recycling)',
-      'To provide rigidity and prevent the frame from racking (parallelogramming)',
-      '28 days, extendable to 42 days with the referring party\\\\\\\\\\\\\\\'s consent',
-      'Possible insulation breakdown or contamination',
+      'The product stage emissions from raw material extraction (cradle to gate)',
+      'The operational energy and water use during occupation',
+      'The construction-stage transport and installation emissions',
     ],
     correctIndex: 0,
     explanation:

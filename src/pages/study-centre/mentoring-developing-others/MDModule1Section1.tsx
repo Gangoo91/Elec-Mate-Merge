@@ -38,11 +38,11 @@ const quickCheckQuestions = [
       'Your apprentice can recite the disconnection times from BS 7671 Table 41.1 but cannot select the correct protective device for a given circuit. At which Bloom\u2019s level are they stuck?',
     options: [
       'Remember — they can recall but not yet understand',
-      'Understand — they grasp the theory but cannot apply it',
       'Apply — they can use it in familiar situations only',
+      'Understand — they grasp the theory but cannot apply it',
       'Analyse — they cannot break a problem into parts',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The apprentice can recall the data (Remember) and may understand the concept, but they cannot yet Apply it to a real scenario. The gap is between Understand and Apply — they need guided practice selecting devices for specific circuits to bridge that gap.',
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the key difference between pedagogy and andragogy?',
     options: [
-      'Pedagogy is for groups; andragogy is one-to-one',
       'Pedagogy is teacher-directed; andragogy is learner-centred',
+      'Pedagogy is for groups; andragogy is one-to-one',
       'Pedagogy uses written resources; andragogy uses practical tasks',
       'Pedagogy is for trade skills; andragogy is for academic study',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fundamental difference is direction of control. Pedagogy places the teacher in charge of what, when, and how learning happens. Andragogy recognises the adult learner as self-directing, with the mentor acting as a facilitator rather than an instructor.',
   },
@@ -148,8 +148,8 @@ const quizQuestions = [
     id: 7,
     question:
       'Which Bloom\u2019s level requires a learner to break information into component parts and examine relationships?',
-    options: ['Understand', 'Apply', 'Analyse', 'Evaluate'],
-    correctAnswer: 2,
+    options: ['Understand', 'Apply', 'Evaluate', 'Analyse'],
+    correctAnswer: 3,
     explanation:
       'Analyse requires breaking information into parts, finding patterns, and identifying relationships. For example, examining a fault and determining which part of the circuit is causing the problem.',
   },
@@ -157,8 +157,8 @@ const quizQuestions = [
     id: 8,
     question:
       'A mentor asks their apprentice: "Can you explain in your own words why we use an RCD on socket circuits?" Which Bloom\u2019s level is the mentor targeting?',
-    options: ['Remember', 'Understand', 'Apply', 'Evaluate'],
-    correctAnswer: 1,
+    options: ['Understand', 'Remember', 'Apply', 'Evaluate'],
+    correctAnswer: 0,
     explanation:
       '"Explain in your own words" is a classic Understand-level question. The learner must demonstrate comprehension by paraphrasing rather than simply recalling a memorised definition.',
   },

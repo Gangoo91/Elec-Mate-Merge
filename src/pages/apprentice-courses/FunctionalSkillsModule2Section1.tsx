@@ -40,10 +40,10 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 2,
       question: 'On a product datasheet, what does the rated voltage (Ue) indicate?',
       options: [
-        'Appropriate PPE including breathing apparatus if required',
-        'To show you can follow instructions precisely',
+        'The maximum fault current the device can interrupt',
+        'The test voltage used during factory production checks',
         'The nominal voltage at which the device is designed to operate',
-        'Escape route lighting at pedestrian walkways, exits, and stairs',
+        'The peak voltage the insulation can withstand momentarily',
       ],
       correctAnswer: 2,
       explanation:
@@ -53,12 +53,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 3,
       question: "What does 'Part P' of the Building Regulations specifically cover?",
       options: [
-        'Fire alarm installation standards',
-        'Structural requirements for cable routes',
-        'Energy efficiency of lighting',
         'Electrical safety in dwellings',
+        'Fire alarm installation standards',
+        'Energy efficiency of lighting',
+        'Structural requirements for cable routes',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
         'Part P of the Building Regulations (England and Wales) specifically covers electrical safety in dwellings. It sets out requirements for the design, installation, inspection and testing of electrical installations in domestic properties.',
     },
@@ -66,12 +66,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 4,
       question: 'What does an IP rating of IP65 tell you about a product?',
       options: [
+        'It is splash-proof but not protected against fine dust',
         'It is dust-tight and protected against water jets from any direction',
-        'Completion of all inspection and testing, satisfactory results recorded',
-        'Stop the source, contain the spill, report to the Environment Agency',
-        'Installing containment systems and routing cables',
+        'It is suitable for temporary immersion up to one metre deep',
+        'It is protected against tools and wires but not against moisture',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'IP65 means the product is completely protected against dust ingress (first digit 6) and protected against water jets from any direction (second digit 5). Understanding IP ratings is essential when selecting equipment for different environments such as bathrooms or outdoor locations.',
     },
@@ -80,11 +80,11 @@ const FunctionalSkillsModule2Section1 = () => {
       question: "In a method statement, what does the 'sequence of operations' section describe?",
       options: [
         'The order in which trades will arrive on site',
-        'The step-by-step process for carrying out the work safely',
         'The inspection dates for the project',
         'The schedule of materials to be ordered',
+        'The step-by-step process for carrying out the work safely',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The sequence of operations is the core of a method statement. It breaks down the task into numbered steps, describing exactly how the work will be carried out. Each step should identify any associated hazards and the control measures to be applied.',
     },
@@ -92,10 +92,10 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 6,
       question: 'Where would you typically find recommended maintenance intervals for an RCD?',
       options: [
-        'Stop work immediately and secure the area',
-        'Initial indication of voltage presence only',
+        'On the test certificate issued at handover',
+        'In the project programme or resource schedule',
         'In the Operation & Maintenance manual',
-        'Current flowing through the conductor',
+        'In the risk assessment for the original installation',
       ],
       correctAnswer: 2,
       explanation:
@@ -105,12 +105,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 7,
       question: 'What does the breaking capacity (Icn) of an MCB tell you?',
       options: [
-        'Overlapping design and construction phases to reduce total duration',
-        'Authorised staff can view and control BMS functions off-site',
-        'Diagnose mental health conditions or prescribe treatment',
         'The maximum fault current the device can safely interrupt',
+        'The continuous current the device can carry without tripping',
+        'The voltage at which the contacts are rated to operate',
+        'The number of times the device can be switched before wear',
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation:
         'Breaking capacity (Icn or Icu) is the maximum prospective fault current that the device can safely interrupt without damage. This must be equal to or greater than the prospective fault current at the point of installation.',
     },
@@ -119,12 +119,12 @@ const FunctionalSkillsModule2Section1 = () => {
       question:
         'When reading a cable schedule on a commercial project, which information would you NOT typically find?',
       options: [
-        'The electrician assigned to install it',
-        'The householder who commissioned the work',
-        'Line to neutral, line to earth, neutral to earth',
-        'Material properties and wall thickness',
+        'The circuit reference and cable type and size',
+        'The protective device type and rating',
+        'The name of the electrician assigned to install it',
+        'The cable route and reference installation method',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Cable schedules typically list the circuit reference, cable type and size, route, protective device rating, and design parameters. They do not normally include personnel assignments — that information would be found in a project programme or resource schedule.',
     },

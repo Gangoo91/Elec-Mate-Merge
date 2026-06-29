@@ -22,14 +22,14 @@ const inlineChecks = [
     id: 'fam1-s3-purpose',
     question: 'What does a Category M system under BS 5839-1:2025 consist of?',
     options: [
-      'Automatic detection only.',
+      'Automatic detection only, with no manual call points.',
       'A combination of manual call points and automatic detection.',
-      'Manual call points only — no automatic detection. The "M" category provides means for occupants to summon help by operating a call point; the system has no automatic detection element. Selection of M is appropriate where the FRA concludes that automatic detection adds no material benefit (very small premises, fully attended areas with high occupant alertness, premises where detection would be impractical and warning would propagate by other means).',
-      'Smoke control with manual override.',
+      'Manual call points only, with no automatic detection element.',
+      'Smoke control plant operated by a manual override switch.',
     ],
     correctIndex: 2,
     explanation:
-      '"M" = manual. Category M is the manual-only category. There is no automatic detection. Sounders, MCPs and a panel are present; smoke and heat detectors are not. The category is appropriate to limited circumstances where the FRA does not justify automatic detection.',
+      '"M" = manual. Category M is the manual-only category — sounders, MCPs and a panel, with no smoke or heat detectors. It provides a means for occupants to summon help by operating a call point. Selection of M is appropriate only where the FRA concludes automatic detection adds no material benefit: very small premises, fully attended areas with high occupant alertness, or premises where detection would be impractical and warning would propagate by other means.',
   },
   {
     id: 'fam1-s3-distance',
@@ -37,41 +37,41 @@ const inlineChecks = [
       'BS 5839-1:2025 simplified the manual-call-point distance rules. What are the maximum straight-line and actual-travel distances from any point in the protected area to the nearest MCP?',
     options: [
       '20 m straight line / 30 m actual travel.',
-      '30 m straight line and 45 m actual travel — these are maximums, not targets. Designers can specify shorter distances where the FRA, the building geometry or the occupant profile justify it (e.g. process areas with high ignition risk, premises with restricted-mobility occupants). The figures themselves are unchanged from custom and practice; the 2025 revision tidied the wording.',
+      '30 m straight line / 45 m actual travel.',
       '50 m straight line / 75 m actual travel.',
       '15 m straight line / 25 m actual travel.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5839-1:2025 simplified the distance rules to a clear pair: 30 m straight-line, 45 m actual-travel. They are limits — designers can be more demanding in higher-risk areas. MCPs in stairway landings (other than the final exit level) are now incorporated within the zone serving the adjacent accommodation per 12.1 a) — a 2025 wording clarification.',
+      'BS 5839-1:2025 simplified the distance rules to a clear pair: 30 m straight-line, 45 m actual-travel. These are maximums, not targets — designers can specify shorter distances where the FRA, the building geometry or the occupant profile justify it (process areas with high ignition risk, premises with restricted-mobility occupants). The figures are unchanged from custom and practice. MCPs in stairway landings (other than the final exit level) are now incorporated within the zone serving the adjacent accommodation per 12.1 a).',
   },
   {
     id: 'fam1-s3-height',
     question:
       'BS 5839-1:2025 clarified the manual-call-point mounting height. Mount-height is 1.4 m above floor level — what tolerance does the standard now allow?',
     options: [
-      'No tolerance — exactly 1.4 m.',
-      '+ / - 50 mm.',
-      '+200 mm and -300 mm — i.e. anywhere between 1.1 m and 1.6 m above floor level. The 2025 wording quantifies the tolerance that previous editions left implicit, removing arguments about whether a slightly high or low installation was a non-compliance. The asymmetry (more downward room than upward) reflects accessibility — slightly lower is always acceptable for occupants of lower stature or wheelchair users; slightly higher is acceptable up to the upper limit.',
-      '+/- 500 mm.',
+      'No tolerance at all — the MCP must be exactly 1.4 m above the floor.',
+      'Plus or minus 50 mm relative to the 1.4 m datum.',
+      'Plus 200 mm and minus 300 mm — a 1.1 m to 1.6 m window.',
+      'Plus or minus 500 mm relative to the 1.4 m datum.',
     ],
     correctIndex: 2,
     explanation:
-      'BS 5839-1:2025 12 (call points) clarified the tolerance: +200 mm / -300 mm relative to the 1.4 m datum. So 1.1 m to 1.6 m is the acceptable window. Outside that window the install is non-compliant. The downward asymmetry is deliberate, recognising accessibility requirements.',
+      'BS 5839-1:2025 12 (call points) clarified the tolerance as +200 mm / -300 mm relative to the 1.4 m datum, so 1.1 m to 1.6 m is the acceptable window; outside it the install is non-compliant. The 2025 wording quantifies a tolerance previous editions left implicit, removing arguments about whether a slightly high or low installation was a non-compliance. The downward asymmetry is deliberate — slightly lower is always acceptable for occupants of lower stature or wheelchair users.',
   },
   {
     id: 'fam1-s3-cover',
     question:
       'BS 5839-1:2025 introduced a 2017 recommendation as a now-firm specification for manual-call-point protective covers. What is the new recommendation?',
     options: [
-      'Covers must be permanently locked.',
-      'Covers should be transparent — the 2025 revision now firmly recommends transparent protective covers, building on the 2017 recommendation. Transparency lets occupants verify in an emergency that the device behind the cover is an MCP and operates as expected; opaque covers introduce hesitation. The cover prevents accidental and malicious activation while preserving immediate operability in genuine emergencies.',
-      'Covers must be metal.',
-      'Covers are no longer permitted.',
+      'Covers should be permanently locked to prevent any activation.',
+      'Covers should be transparent so the MCP behind them is visible.',
+      'Covers should be of solid metal to resist impact and tampering.',
+      'Covers are no longer permitted and should be removed from MCPs.',
     ],
     correctIndex: 1,
     explanation:
-      'The 2017 edition introduced protective covers as a recommendation; the 2025 revision now recommends those covers be transparent. The reason is operational — in a real emergency, an opaque cover slows recognition and operation; a transparent cover preserves the visual cue while still preventing casual or malicious activation.',
+      'The 2017 edition introduced protective covers as a recommendation; the 2025 revision now firmly recommends those covers be transparent. Transparency lets occupants verify in an emergency that the device behind the cover is an MCP and operates as expected, where an opaque cover introduces hesitation. The cover still prevents accidental and malicious activation while preserving immediate operability in a genuine emergency.',
   },
 ];
 
@@ -80,138 +80,138 @@ const quizQuestions = [
     id: 1,
     question: 'What does the "M" prefix denote in BS 5839-1:2025 system categorisation?',
     options: [
-      'Multiple zones.',
-      'Manual — the system uses manual call points only, with NO automatic detection. The whole category is built around occupants being able to summon help by operating an MCP. Selection of M is appropriate only where the FRA concludes automatic detection is not necessary or justified — typically very small premises with high occupant alertness or fully attended areas where occupants would discover a fire by direct observation before any detector would respond.',
-      'Manufactured.',
-      'Mains-powered.',
+      'Multiple zones — a multi-zone detection layout.',
+      'Manufactured — a factory-assembled panel type.',
+      'Mains-powered — a non-battery-backed supply.',
+      'Manual — manual call points only, with no automatic detection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      '"M" = manual. The category is the simplest under BS 5839-1:2025 — sounders, MCPs and a panel; no automatic detection. Selection is FRA-driven and limited.',
+      '"M" = manual. The category is the simplest under BS 5839-1:2025 — sounders, MCPs and a panel, with no automatic detection. The whole category is built around occupants summoning help by operating an MCP. Selection is FRA-driven and limited: typically very small premises with high occupant alertness, or fully attended areas where occupants would discover a fire by direct observation before any detector would respond.',
   },
   {
     id: 2,
     question: 'Which categories under BS 5839-1:2025 have NO automatic detection?',
     options: [
-      'L4 only.',
-      'M only — Category M is the only BS 5839-1:2025 category without automatic detection. L1, L2, L3, L4, L5, P1 and P2 all include automatic detection (the suffix number for L describes the extent; the suffix for P describes whether full or targeted). The /M suffix added to other categories ADDS manual call points to those categories; the "M" category alone is the standalone manual-only category.',
-      'L4 and L5.',
-      'P1 and P2.',
+      'L4 only, since it is the minimum-coverage L category.',
+      'L4 and L5, the two lowest-coverage L categories.',
+      'M only, the standalone manual-only category.',
+      'P1 and P2, since property cover does not need detection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'M is the only category without automatic detection. /M as a SUFFIX (P1/M, P2/M, L5/M) adds MCPs to a category that does not include them by default — but those categories still have their automatic detection. Standalone "M" has neither suffix nor automatic detection — it is the category itself.',
+      'Category M is the only BS 5839-1:2025 category without automatic detection. L1, L2, L3, L4, L5, P1 and P2 all include automatic detection (the L suffix describes the extent; the P suffix describes full or targeted). The /M suffix on other categories (P1/M, P2/M, L5/M) adds manual call points to a category that does not include them by default — but those categories still have their automatic detection. Standalone "M" has neither suffix nor automatic detection.',
   },
   {
     id: 3,
     question:
       'BS 5839-1:2025 simplified the manual-call-point distance rules. What is the maximum straight-line distance from any point in the protected area to the nearest MCP?',
     options: [
-      '20 m.',
-      '30 m straight-line distance — and 45 m actual-travel distance. These are the maximum limits. Designers can specify shorter distances where the building geometry, occupant profile or risk profile demands it. The 2025 simplification removed earlier conditional wording while retaining the underlying figures.',
-      '60 m.',
-      '100 m.',
+      '30 m straight-line distance (with 45 m actual travel).',
+      '20 m straight-line distance (with 30 m actual travel).',
+      '60 m straight-line distance (with 90 m actual travel).',
+      '100 m straight-line distance (with 150 m actual travel).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 distance limits: 30 m straight-line / 45 m actual-travel. Both apply — the MCP must satisfy both. If the building geometry produces situations where straight-line distance is short but actual-travel distance is long (winding corridors, staircases), the actual-travel figure is the binding constraint.',
+      'BS 5839-1:2025 distance limits: 30 m straight-line / 45 m actual-travel. Both apply — the MCP must satisfy each. These are maximum limits; designers can specify shorter distances where building geometry, occupant profile or risk demands it. The 2025 simplification removed earlier conditional wording while retaining the figures. Where straight-line distance is short but actual-travel is long (winding corridors, staircases), the actual-travel figure is the binding constraint.',
   },
   {
     id: 4,
     question: 'What mounting-height tolerance does BS 5839-1:2025 allow for manual call points?',
     options: [
-      'No tolerance.',
-      '+200 mm and -300 mm relative to the 1.4 m datum — so the MCP may be mounted anywhere between 1.1 m and 1.6 m above floor level. The downward asymmetry recognises accessibility for occupants of lower stature and wheelchair users. Outside this 1.1 m to 1.6 m window, the installation is non-compliant.',
-      '+/- 50 mm.',
-      '+/- 500 mm.',
+      'No tolerance — the MCP must be exactly 1.4 m above the floor.',
+      'Plus or minus 50 mm relative to the 1.4 m datum.',
+      'Plus or minus 500 mm relative to the 1.4 m datum.',
+      'Plus 200 mm and minus 300 mm — a 1.1 m to 1.6 m window.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 12 quantifies the tolerance that earlier editions left implicit. The 1.1 m to 1.6 m window is the acceptable range. Designers should aim for the 1.4 m datum and allow normal installation variation; tolerance is the install boundary, not the design target.',
+      'BS 5839-1:2025 12 quantifies the tolerance earlier editions left implicit: +200 mm / -300 mm relative to the 1.4 m datum, so the MCP may be mounted anywhere between 1.1 m and 1.6 m. Outside that window the installation is non-compliant. The downward asymmetry recognises accessibility for occupants of lower stature and wheelchair users. Designers should aim for the 1.4 m datum and allow normal installation variation; the tolerance is the install boundary, not the design target.',
   },
   {
     id: 5,
     question:
       'What change does BS 5839-1:2025 make to the protective covers fitted over manual call points?',
     options: [
-      'Removed the recommendation.',
-      'The 2017 recommendation for protective covers is retained, and the 2025 revision now recommends those covers be TRANSPARENT. The reasoning is operational — in a real emergency, a transparent cover lets occupants verify the device is an MCP and operates correctly without hesitation; an opaque cover slows recognition and reduces effectiveness. The cover continues to perform its anti-malicious-activation function.',
-      'Covers must be metal.',
-      'Covers must be locked.',
+      'It removed the cover recommendation introduced in 2017.',
+      'It requires the protective covers to be of solid metal.',
+      'It recommends the protective covers be transparent.',
+      'It requires the protective covers to be permanently locked.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'BS 5839-1:2025 strengthens the 2017 recommendation for covers and now specifies transparency. Transparent covers preserve the operational clarity (immediate visual confirmation of the MCP) while preventing accidental activation.',
+      'BS 5839-1:2025 retains the 2017 recommendation for protective covers and now recommends they be transparent. The reasoning is operational — in a real emergency a transparent cover lets occupants verify the device is an MCP and operates correctly without hesitation, whereas an opaque cover slows recognition. The cover continues to perform its anti-malicious-activation function while preserving immediate operability.',
   },
   {
     id: 6,
     question:
       'BS 5839-1:2025 12.1 a) clarifies how MCPs on stairway landings should be assigned to fire detection zones. What is the rule?',
     options: [
-      'Each MCP is its own zone.',
-      'If MCPs are located on the landings of a stairway (see 19.4), the manual call point on each level (other than at a final exit level from the stairway) should be incorporated within the ZONE THAT SERVES THE ADJACENT ACCOMMODATION on that level — not within the stairway zone itself. The 2025 revision removed an earlier reference to "enclosed stairway" that had caused interpretation disputes; the clearer wording focuses on accommodation-level zoning.',
-      'Each MCP belongs to the stairway zone.',
-      'MCPs in stairs are not zoned.',
+      'Each landing MCP belongs to the zone serving the adjacent accommodation.',
+      'Each landing MCP is allocated to its own dedicated single-device zone.',
+      'Each landing MCP belongs to the single zone covering the whole stairway.',
+      'MCPs located in stairways are exempt from zoning requirements entirely.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 12.1 a) ends the 2017 ambiguity about "enclosed stairway" by stating clearly that landing MCPs (except at final exits) belong to the adjacent accommodation\'s zone, not the stairway zone. The reasoning is operational — when an MCP is operated, the responding investigator needs to know which accommodation level the alarm came from, not just "somewhere in the stairway".',
+      'BS 5839-1:2025 12.1 a) states that a landing MCP on each level (other than at a final exit level) is incorporated within the zone that serves the adjacent accommodation on that level, not the stairway zone itself. The 2025 revision removed an earlier "enclosed stairway" reference that caused interpretation disputes. The reasoning is operational — when an MCP is operated, the responding investigator needs to know which accommodation level the alarm came from, not just "somewhere in the stairway".',
   },
   {
     id: 7,
     question:
       'A small standalone retail unit (single open-plan sales area, fully staffed during operating hours, no overnight occupation, fire risk assessment concludes minimal automatic-detection benefit) is being designed in 2026. The fire strategy specifies a Category M system. What does the designer install?',
     options: [
-      'Smoke detection throughout.',
-      'Manual call points only (sited per BS 5839-1:2025 distance and height rules: 30 m straight line / 45 m actual travel; mounted 1.4 m above floor level with +200 / -300 mm tolerance), sounders to provide audible warning across the protected area, a CIE (panel), standby battery support per BS EN 54-4 / BS EN 50131-6 Grade 4 if a separate PSU is used, alarm transmission to an ARC if specified by the FRA. NO automatic smoke or heat detectors.',
-      'Heat detection only.',
-      'Multi-sensor detection only.',
+      'Optical smoke detection throughout the open-plan sales area.',
+      'Heat detectors only, sited across the sales floor.',
+      'Multi-sensor detectors only, throughout the unit.',
+      'Manual call points, sounders and a panel — with no automatic detection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A standalone Category M system has MCPs, sounders, a panel and (typically) standby battery — but no automatic detection. The category exists for premises where the FRA concludes automatic detection is not justified. Selection of M for premises with overnight occupation or sleeping risk would be inappropriate; in those contexts the FRA almost always points to L category.',
+      'A standalone Category M system has MCPs (sited per the 30 m / 45 m distance and 1.4 m height rules), sounders providing audible warning across the protected area, a CIE (panel), standby battery support if a separate PSU is used, and alarm transmission to an ARC if the FRA specifies it — but no automatic smoke or heat detectors. The category exists for premises where the FRA concludes automatic detection is not justified. M would be inappropriate for premises with overnight occupation or sleeping risk; there the FRA points to an L category.',
   },
   {
     id: 8,
     question:
       'A 2026 night-club proposes a Category M system on the basis that "it is fully attended during opening hours". What is the most likely problem with this specification?',
     options: [
-      'Cost.',
-      'The FRA. A night-club has dim lighting, loud noise that can mask fire signs, high occupant density, alcohol-impaired occupants, restricted exits and a high inherent ignition load (cooking, smoking, electrical equipment). A suitable and sufficient FRA under the Regulatory Reform (Fire Safety) Order 2005 will almost certainly identify automatic detection as necessary; an M-only system would not meet the responsible person\'s duty. The FRA drives category selection — "fully attended" is not a sufficient justification on its own.',
-      'Cabling.',
-      'Battery type.',
+      'The installed cost of the chosen detection equipment.',
+      'The choice of fire-resistant cabling for the sounder circuits.',
+      'The fire risk assessment, which points away from a manual-only system.',
+      'The type of standby battery fitted to the control panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      '"Fully attended" is a starting point, not a complete answer. The FRA evaluates the actual conditions — visibility, audibility, occupant alertness, ignition load, exit restrictions — and concludes whether automatic detection is needed. A night-club almost always falls outside the M envelope; the FRA points to L-category cover.',
+      'A night-club has dim lighting, loud noise that masks fire signs, high occupant density, alcohol-impaired occupants, restricted exits and a high ignition load (cooking, smoking, electrical equipment). A suitable and sufficient FRA under the Regulatory Reform (Fire Safety) Order 2005 will almost certainly identify automatic detection as necessary, so an M-only system would not meet the responsible person\'s duty. "Fully attended" is a starting point, not a complete answer — the FRA drives category selection and here points to L-category cover.',
   },
   {
     id: 9,
     question:
       'What is the 2025 BS 5839-1 stance on the use of fire alarm sounders for non-fire signals (e.g. school class-change tones, lockdown alarms)?',
     options: [
-      'Strictly prohibited.',
-      'Now permitted (with conditions). The 2017 edition did not allow the same physical device to sound conflicting warnings; the 2025 revision permits it provided different tones / messages distinguish each warning. School class-change signals can use the same sounders, with the time allowed for class-change extended from 5 to 10 seconds to address data lag in addressable systems. Lockdown alarms are also acknowledged as a common school use, with FIA guidance referenced for design (Use of fire alarm systems for lockdown — specifically in schools).',
-      'Permitted only in schools.',
-      'Permitted with no restrictions.',
+      'Now permitted with conditions, where distinct tones distinguish each signal.',
+      'Strictly prohibited; fire sounders must never carry any non-fire signal.',
+      'Permitted only in schools, and only for class-change tones.',
+      'Permitted with no restrictions on tone, message or building type.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'BS 5839-1:2025 15.1.12 permits non-fire use of the sounders provided the response required is identical (immediate evacuation by all escape routes), or in schools where the signal is used for class-change or lockdown. The class-change duration is limited to 10 seconds; lockdown design is supported by separate FIA guidance.',
+      'BS 5839-1:2025 15.1.12 permits non-fire use of the sounders provided different tones or messages distinguish each warning (or the required response is identical — immediate evacuation by all escape routes). School class-change signals can use the same sounders, with the class-change duration extended from 5 to 10 seconds to address data lag in addressable systems. Lockdown alarms are acknowledged as a common school use, supported by separate FIA guidance.',
   },
   {
     id: 10,
     question:
       'BS 5839-1:2025 introduces a clarification on remote indicator LED colour. What does the standard now require?',
     options: [
-      'Any colour.',
-      'Red — for all remote indicators, the visual indication should be red. Remote indicators should be checked for correct operation at the annual service visit and verified that they have not been obstructed or painted over. The 2025 wording removes earlier ambiguity about LED colour and ensures consistency across installations.',
-      'Green.',
-      'Yellow.',
+      'Any colour, at the installer\'s discretion to suit the decor.',
+      'Green, to match emergency-exit signage conventions.',
+      'Yellow, to align with hazard and caution colour coding.',
+      'Red, the specified visual-indication colour for all remote indicators.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'BS 5839-1:2025 12 (remote indicators) now specifies red as the visual-indication colour. Annual service must verify the indicator is still visible (not obstructed or painted over) and operates correctly when the associated detector triggers.',
+      'BS 5839-1:2025 12 (remote indicators) now specifies red as the visual-indication colour for all remote indicators, removing earlier ambiguity and ensuring consistency across installations. Remote indicators should be checked for correct operation at the annual service visit and verified that they have not been obstructed or painted over.',
   },
 ];
 

@@ -29,9 +29,9 @@ const quickCheckQuestions = [
       'In the equal friction method of duct sizing, what parameter is kept constant throughout the duct system?',
     options: [
       'Pressure drop per unit length',
-      'Double-shielded or armoured cables',
-      'Better performance in diffuse light',
-      'Motor continuity testing stage',
+      'Air velocity in every duct branch',
+      'Cross-sectional area of each duct run',
+      'Volume flow rate at every terminal',
     ],
     correctIndex: 0,
     explanation:
@@ -47,9 +47,9 @@ const quickCheckQuestions = [
       'Class C',
       'Class D',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'Class C is the standard leakage class for low-pressure ductwork in commercial buildings per DW/144. Class A is the tightest (high-pressure systems), while Class D has the highest allowable leakage (used only where leakage is acceptable).',
+      'Class A is the standard leakage class for low-pressure ductwork in commercial buildings per DW/144. Class A is the loosest (0.027 × p^0.65), with the limit tightening through Class B and Class C to Class D, which is the tightest and reserved for the most demanding systems.',
   },
   {
     id: 'fire-damper-rating',
@@ -71,9 +71,9 @@ const quickCheckQuestions = [
       'What is the primary advantage of circular ductwork compared to rectangular ductwork of equal cross-sectional area?',
     options: [
       'Lower pressure drop and better airflow',
-      'NHS Talking Therapies (formerly IAPT)',
-      'Applied - total is less than 50 × individual ADMD',
-      'A load with unequal current draw on each phase',
+      'Easier to fit within shallow ceiling voids',
+      'Simpler branch connections off the main run',
+      'Lower material cost for the same airflow',
     ],
     correctIndex: 0,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     question:
       'What is the hydraulic diameter used for when calculating pressure drop in rectangular ducts?',
     options: [
-      'To isolate vibration and prevent transmission through ductwork',
-      'To prevent spread of smoke between fire compartments during fire conditions',
-      'Noise is proportional to velocity to the power of 5-6',
+      'Calculating the structural stiffening required for the duct walls',
+      'Determining the acoustic attenuation of a lined duct section',
+      'Setting the maximum permissible air velocity for the duct',
       'Converting rectangular duct dimensions to equivalent circular diameter',
     ],
     correctAnswer: 3,
@@ -127,16 +127,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'According to DW/144, what is the maximum allowable air leakage rate for Class C ductwork at 400 Pa test pressure?',
+      'According to DW/144, what is the maximum allowable air leakage limit for Class A (low-pressure) ductwork?',
     options: [
       '0.027 × p^0.65 (L/s per m²)',
       '0.009 × p^0.65 (L/s per m²)',
-      '0.081 × p^0.65 (L/s per m²)',
-      '0.243 × p^0.65 (L/s per m²)',
+      '0.003 × p^0.65 (L/s per m²)',
+      '0.001 × p^0.65 (L/s per m²)',
     ],
     correctAnswer: 0,
     explanation:
-      'Class C ductwork allows maximum leakage of 0.027 × p^0.65 L/s per m² of duct surface area, where p is the test pressure in Pa. At 400 Pa, this equates to approximately 1.32 L/s per m² of duct surface.',
+      'Class A is the loosest DW/144 leakage class and applies to standard low-pressure ductwork, with a limit of 0.027 × p^0.65 L/s per m² of duct surface. The classes get progressively tighter: Class B is 0.009, Class C is 0.003 and Class D is 0.001 × p^0.65.',
   },
   {
     id: 5,
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a smoke damper in HVAC ductwork systems?',
     options: [
-      'To isolate vibration and prevent transmission through ductwork',
-      'Converting rectangular duct dimensions to equivalent circular diameter',
+      'To balance airflow between competing duct branches',
+      'To attenuate fan noise carried along the ductwork',
       'To prevent spread of smoke between fire compartments during fire conditions',
-      'Noise is proportional to velocity to the power of 5-6',
+      'To isolate vibration transmitted from the air handling unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -171,7 +171,7 @@ const quizQuestions = [
     options: [
       'Noise is proportional to velocity',
       'Noise is proportional to velocity squared',
-      'There is no relationship between velocity and noise',
+      'Noise is proportional to velocity cubed',
       'Noise is proportional to velocity to the power of 5-6',
     ],
     correctAnswer: 3,
@@ -183,9 +183,9 @@ const quizQuestions = [
     question: 'What type of acoustic attenuator is most commonly used in HVAC ductwork?',
     options: [
       'Lined duct sections (splitter attenuators)',
-      'Device may fail to interrupt the fault safely',
-      'Prove dead with approved voltage indicator',
-      'It can bulge or herniate, pressing on nearby nerves',
+      'Active noise-cancellation loudspeaker units',
+      'Reactive expansion chamber silencers',
+      'Resonator-tuned Helmholtz absorber boxes',
     ],
     correctAnswer: 0,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the primary purpose of flexible duct connections at air handling units?',
     options: [
-      'To prevent spread of smoke between fire compartments during fire conditions',
-      'Converting rectangular duct dimensions to equivalent circular diameter',
-      'Noise is proportional to velocity to the power of 5-6',
+      'To allow thermal expansion of the duct without buckling',
+      'To provide an access point for duct cleaning and inspection',
+      'To act as a fire barrier where the duct leaves the plant room',
       'To isolate vibration and prevent transmission through ductwork',
     ],
     correctAnswer: 3,
@@ -250,10 +250,10 @@ const quizQuestions = [
     id: 13,
     question: 'What is the function of turning vanes in ductwork?',
     options: [
-      'Converting rectangular duct dimensions to equivalent circular diameter',
+      'To increase air velocity through the bend for better throw',
       'To reduce pressure drop and improve airflow through bends',
-      'Pressure decay or flow rate measurement test',
-      'Lined duct sections (splitter attenuators)',
+      'To stiffen the duct wall against pressure-induced flexing',
+      'To trap debris before it reaches the terminal grilles',
     ],
     correctAnswer: 1,
     explanation:
@@ -263,10 +263,10 @@ const quizQuestions = [
     id: 14,
     question: 'What test is performed to verify ductwork airtightness per DW/143?',
     options: [
-      'Lined duct sections (splitter attenuators)',
-      'Noise is proportional to velocity to the power of 5-6',
+      'Smoke release and visual leak detection test',
+      'Thermal imaging of the assembled duct run',
       'Pressure decay or flow rate measurement test',
-      'To reduce pressure drop and improve airflow through bends',
+      'Tracer gas concentration sampling test',
     ],
     correctAnswer: 2,
     explanation:
@@ -289,7 +289,7 @@ const faqs = [
   {
     question: 'What is the DW/144 specification and why is it important?',
     answer:
-      'DW/144 is the HVCA (now BESA) Specification for Sheet Metal Ductwork, setting standards for ductwork construction in the UK. It defines material thicknesses, joint types, support spacing, and critically, air leakage classifications (A, B, C, D). Specifying DW/144 ensures ductwork is constructed to recognised standards, with appropriate leakage limits for the system pressure class. Class C is standard for low-pressure commercial systems, while Classes A and B are required for higher pressure or energy-critical applications.',
+      'DW/144 is the HVCA (now BESA) Specification for Sheet Metal Ductwork, setting standards for ductwork construction in the UK. It defines material thicknesses, joint types, support spacing, and critically, air leakage classifications (A, B, C, D). Specifying DW/144 ensures ductwork is constructed to recognised standards, with appropriate leakage limits for the system pressure class. Class A is standard for low-pressure commercial systems, while the tighter Classes B, C and D are required for higher pressure or energy-critical applications.',
   },
   {
     question: 'How do fire dampers and smoke dampers differ in operation?',
@@ -304,7 +304,7 @@ const faqs = [
   {
     question: 'How is ductwork leakage tested and why does it matter?',
     answer:
-      'Leakage testing per DW/143 involves pressurising duct sections and measuring either pressure decay or the airflow needed to maintain test pressure. Leakage matters because it represents wasted fan energy, reduced system capacity, and potential comfort issues. A system with 10% leakage may require 20-30% more fan power. Modern buildings increasingly specify Class A or B tightness for energy compliance. Testing should occur before insulation to allow remedial sealing, with test sections typically limited to 100-200m² of duct surface area.',
+      'Leakage testing per DW/143 involves pressurising duct sections and measuring either pressure decay or the airflow needed to maintain test pressure. Leakage matters because it represents wasted fan energy, reduced system capacity, and potential comfort issues. A system with 10% leakage may require 20-30% more fan power. Modern buildings increasingly specify the tighter Class B or C limits for energy compliance rather than the basic Class A. Testing should occur before insulation to allow remedial sealing, with test sections typically limited to 100-200m² of duct surface area.',
   },
 ];
 
@@ -510,12 +510,12 @@ const HNCModule8Section2_5 = () => {
             </ul>
             <p><strong>DW/144 Ductwork Leakage Classes</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Class A:</strong> 0.009 × p^0.65 L/s per m² — High-pressure, energy-critical, cleanrooms</li>
-              <li><strong>Class B:</strong> 0.027 × p^0.65 L/s per m² — Medium-pressure, enhanced commercial</li>
-              <li><strong>Class C:</strong> 0.081 × p^0.65 L/s per m² — Standard low-pressure commercial</li>
-              <li><strong>Class D:</strong> 0.243 × p^0.65 L/s per m² — Where leakage is acceptable (rare)</li>
+              <li><strong>Class A:</strong> 0.027 × p^0.65 L/s per m² — Standard low-pressure commercial</li>
+              <li><strong>Class B:</strong> 0.009 × p^0.65 L/s per m² — Medium-pressure, enhanced commercial</li>
+              <li><strong>Class C:</strong> 0.003 × p^0.65 L/s per m² — High-pressure, energy-critical</li>
+              <li><strong>Class D:</strong> 0.001 × p^0.65 L/s per m² — Exceptionally tight, cleanrooms and special cases</li>
             </ul>
-            <p>Note: p = test pressure in Pa. For Class C at 400 Pa: 0.081 × 400^0.65 = 4.0 L/s per m² duct surface</p>
+            <p>Note: p = test pressure in Pa. For Class A at 400 Pa: 0.027 × 400^0.65 = 1.33 L/s per m² duct surface</p>
             <p><strong>Leakage Testing Procedure (DW/143)</strong></p>
             <p><strong>Pressure Decay Method</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -536,7 +536,7 @@ const HNCModule8Section2_5 = () => {
               <li>6. Divide by duct surface area, compare to limit</li>
             </ul>
             <p><strong>Energy Impact of Ductwork Leakage</strong></p>
-            <p>A system with 10% duct leakage requires approximately 20-30% more fan power to deliver the same airflow to terminals. Modern energy regulations increasingly require Class A or B tightness. Testing before insulation allows remedial sealing - test sections typically limited to 100-200m² of duct surface area for practical reasons.</p>
+            <p>A system with 10% duct leakage requires approximately 20-30% more fan power to deliver the same airflow to terminals. Modern energy regulations increasingly require the tighter Class B or C limits rather than the basic Class A. Testing before insulation allows remedial sealing - test sections typically limited to 100-200m² of duct surface area for practical reasons.</p>
             <p><strong>Best practice:</strong> Specify leakage testing in all ductwork contracts and witness testing on site. Remedial sealing after insulation is significantly more costly and may not achieve the required class.</p>
           </ConceptBlock>
 
@@ -576,18 +576,18 @@ const HNCModule8Section2_5 = () => {
             <p>
               <strong>Example 3: Ductwork Leakage Assessment</strong>
             </p>
-            <p><strong>Scenario:</strong> Verify Class C compliance for a duct section with 150 m² surface area tested at 400 Pa.</p>
-            <p>Class C leakage limit formula:</p>
-            <p>q = 0.081 × p^0.65 L/s per m²</p>
+            <p><strong>Scenario:</strong> Verify Class A compliance for a duct section with 150 m² surface area tested at 400 Pa.</p>
+            <p>Class A leakage limit formula:</p>
+            <p>q = 0.027 × p^0.65 L/s per m²</p>
             <p>At test pressure p = 400 Pa:</p>
-            <p>q = 0.081 × 400^0.65</p>
-            <p>q = 0.081 × 49.2</p>
-            <p>q = 3.98 L/s per m² of duct surface</p>
+            <p>q = 0.027 × 400^0.65</p>
+            <p>q = 0.027 × 49.2</p>
+            <p>q = 1.33 L/s per m² of duct surface</p>
             <p>For 150 m² duct surface:</p>
-            <p>Maximum allowable leakage = 3.98 × 150 = 597 L/s</p>
-            <p>Test result: Measured 420 L/s to maintain 400 Pa</p>
-            <p>✓ PASS - 420 L/s &lt; 597 L/s limit</p>
-            <p>Actual class achieved: 420/150 = 2.8 L/s per m²</p>
+            <p>Maximum allowable leakage = 1.33 × 150 = 199 L/s</p>
+            <p>Test result: Measured 140 L/s to maintain 400 Pa</p>
+            <p>✓ PASS - 140 L/s &lt; 199 L/s limit</p>
+            <p>Actual class achieved: 140/150 = 0.93 L/s per m²</p>
           </ConceptBlock>
 
           <SectionRule />
@@ -614,7 +614,7 @@ const HNCModule8Section2_5 = () => {
               <li>Maximum aspect ratio: <strong>4:1</strong> (preferably 2:1)</li>
               <li>Noise increases with velocity: <strong>v^5 to v^6</strong></li>
               <li>Fire damper position: within <strong>150mm</strong> of fire barrier</li>
-              <li>Standard commercial leakage class: <strong>Class C</strong></li>
+              <li>Standard commercial leakage class: <strong>Class A</strong></li>
             </ul>
           </ConceptBlock>
 

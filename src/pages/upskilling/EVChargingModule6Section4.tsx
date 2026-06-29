@@ -10,18 +10,18 @@ const quickCheckQuestions = [
     id: 'evcharging-m6s4-check1',
     question:
       'What is the maximum operating time for a 30mA RCD at five times rated current (150mA)?',
-    options: ['200ms', '100ms', '40ms', '300ms'],
-    correctIndex: 2,
+    options: ['40ms', '100ms', '200ms', '300ms'],
+    correctIndex: 0,
     explanation:
       'At five times rated current (5×IΔn), an RCD must operate within 40ms. This faster trip time ensures rapid disconnection during high fault currents.',
   },
   {
     id: 'evcharging-m6s4-check2',
     question: 'Which RCD type is required for DC fault detection in Mode 3 EV charging?',
-    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
-    correctIndex: 2,
+    options: ['Type AC', 'Type B', 'Type A', 'Type F'],
+    correctIndex: 1,
     explanation:
-      'Type B RCDs can detect smooth DC residual currents, which can be produced by EV charger electronics. Type A only detects pulsating DC up to 6mA, insufficient for DC charging applications.',
+      'A Type B RCD can detect smooth (pure) DC residual currents produced by EV charger electronics. Type A detects only AC and pulsating DC; where a Type A is used at a Mode 3 chargepoint it must be paired with a 6mA DC residual current detection device (RDC-DD).',
   },
   {
     id: 'evcharging-m6s4-check3',
@@ -62,12 +62,12 @@ const quizQuestions = [
     question:
       'An EV charger RCD trips intermittently during charging but passes all standard tests. What is the most likely cause?',
     options: [
-      'Faulty RCD requiring replacement',
+      'A faulty RCD requiring replacement',
+      'An incorrect RCD rating installed',
+      'A fault in the vehicle battery',
       'Cumulative earth leakage from charger EMI filters',
-      'Incorrect RCD rating installed',
-      'Vehicle battery fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Intermittent tripping with passing tests often indicates cumulative earth leakage approaching the trip threshold. EV charger EMI filters can contribute 3-5mA leakage per charger. A clamp meter on the earth conductor during charging can confirm this.',
   },

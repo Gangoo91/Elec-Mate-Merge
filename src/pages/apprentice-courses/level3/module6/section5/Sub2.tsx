@@ -41,10 +41,10 @@ const checks = [
     question:
       'The Cmin factor of 0.95 in Reg 411.4.5 represents:',
     options: [
-      'Specific, predetermined grading criteria defined in the assessment plan — each component is assessed against descriptors for pass and distinction grades based on the KSBs demonstrated, and component grades combine according to defined rules for the overall result',
-      'As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared',
-      'The voltage factor minimum — accounts for the fact that the supply voltage at the fault point during a heavy fault may be lower than the declared U0 of 230 V due to supply tolerance and source impedance, so the design uses U0 × Cmin = 230 × 0.95 = 218.5 V as the available driving voltage for the fault current.',
-      'Cumulative DC residual current from the EV charger and other loads could exceed the AC-only RCD threshold, plus DC residual currents may blind a Type AC RCD; a Type A or Type B RCD is required (BS 7671 722.531.3.101 / Section 722)',
+      'A safety margin on the cable resistance — (R1 + R2) is multiplied by 0.95 to allow for conductor cross-section manufacturing tolerance.',
+      'The voltage factor maximum — it lifts U0 to 230 × 1.05 = 241.5 V to give the worst-case high voltage for the fault calculation.',
+      'The voltage factor minimum — the design uses U0 × Cmin = 218.5 V as the driving voltage, allowing for low supply tolerance and source-impedance drop.',
+      'The supply power factor at the moment of the fault — a 0.95 lagging value typical of an inductive distribution network.',
     ],
     correctIndex: 2,
     explanation:
@@ -55,10 +55,10 @@ const checks = [
     question:
       'A B32 MCB on TN had a Table 41.3 max Zs of 1.44 Ω in BS 7671:2018+A2:2022 (the pre-A4 edition). In A4:2026 the value is 1.37 Ω. Why did it change?',
     options: [
-      'A4:2026 made Cmin = 0.95 explicit in the calculation. Old: max Zs = U0 / Ia = 230 / 160 = 1.44 Ω (no Cmin). New: max Zs = U0 × Cmin / Ia = 230 × 0.95 / 160 = 1.37 Ω. The 5 percent reduction is the Cmin factor working through.',
-      'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can constitute a valid variation, provided it is documented and agreed before proceeding',
-      'The architect must consider how the glazing will be safely cleaned throughout the building\\\\\\\\\\\\\\\'s life and, where reasonably practicable, design in safe access solutions such as permanent davit systems, walkways, or access gantries',
-      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
+      'A4:2026 made Cmin = 0.95 explicit: old max Zs = 230 / 160 = 1.44 Ω; new max Zs = 230 × 0.95 / 160 = 1.37 Ω, a 5 percent reduction.',
+      'A4:2026 raised the magnetic trip threshold for Type B from 5 × In to 6 × In, lowering the maximum permitted Zs by a fifth.',
+      'A4:2026 changed the nominal supply voltage from 230 V to 218.5 V, proportionally reducing every Table 41.3 figure by 5 percent.',
+      'A4:2026 added a 0.95 grouping factor to every circuit, reducing the permitted Zs to allow for grouped and bunched cables.',
     ],
     correctIndex: 0,
     explanation:
@@ -69,10 +69,10 @@ const checks = [
     question:
       'You are designing a 32 A B-curve RCBO on a 40 m radial in 4 mm² T+E (cpc 1.5 mm²). DNO Form 1 declares Ze = 0.30 Ω. OSG Table I1 mΩ/m at 20 degrees C: 4 mm² = 4.61 mΩ/m, 1.5 mm² = 12.10 mΩ/m. What is the design Zs at 70 degrees C operating temperature, and does it satisfy Reg 411.4.5 against the Table 41.3 max?',
     options: [
-      'Use 250V test voltage where the equipment manufacturer permits, OR test live conductors connected together to earth (without between live and neutral), interpreting accordingly',
+      'Cold (R1 + R2) = 40 × (4.61 + 12.10) / 1000 = 0.668 Ω used directly with no temperature correction. Design Zs = 0.30 + 0.668 = 0.97 Ω against the 1.37 Ω B32 limit. Pass.',
       'Cold (R1 + R2) = 40 × (4.61 + 12.10) / 1000 = 0.668 Ω. Hot at 70 degrees C: 0.668 × 1.20 = 0.802 Ω. Design Zs = 0.30 + 0.802 = 1.10 Ω. Table 41.3 max for B32 in A4:2026 = 1.37 Ω. Pass with 0.27 Ω margin.',
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'The equipment must be made dead and isolated wherever possible; if live work is unavoidable, a specific risk assessment and method statement for live working must be produced',
+      'Hot (R1 + R2) = 40 × (4.61 + 12.10) × 1.20 = 0.802 Ω, then apply Cmin: 0.802 × 0.95 = 0.762 Ω. Design Zs = 0.30 + 0.762 = 1.06 Ω against the 1.37 Ω limit. Pass.',
+      'Design Zs = Ze only = 0.30 Ω, because on a 40 m radial the cable resistance is negligible compared with the declared Ze. Pass comfortably.',
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671:2018+A4:2026 Appendix 14 deals with:',
     options: [
-      'It provides a permanent record of the installation\\\\\\\'s condition, enables comparison between inspections, demonstrates compliance with regulations, and provides evidence of due diligence',
-      'The voltage factors C used in the determination of fault currents and earth fault loop impedances — including Cmax (1.05 or 1.10) and Cmin (0.95) and the rationale for their use in Reg 411.4.5 and Reg 434.5 calculations.',
-      'Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14',
-      'Physical (electrical, mechanical, noise, vibration, height, slips, fire), chemical (substances, dust, fume), biological (bacteria, viruses, allergens), psychosocial (stress, violence, fatigue), ergonomic (manual handling, repetitive motion, posture).',
+      'The current-carrying capacity tables for cables under the different installation reference methods, equivalent to Appendix 4.',
+      'The voltage factors C — Cmax (1.05 or 1.10) and Cmin (0.95) — used in fault-current and earth fault loop impedance determination.',
+      'The model forms for the Electrical Installation Certificate and the associated Schedule of Test Results.',
+      'The maximum demand and diversity allowances applied across the different installation and circuit types.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'The pre-A4 BS 7671 (e.g. A2:2022) Table 41.3 value for a B32 MCB on TN was 1.44 Ω. The A4:2026 value is:',
     options: [
-      'De-escalate first (lower voice, acknowledge emotion, let them vent), then once calm use DESC model to address the issue',
-      'The collective understanding created when all parties freely contribute their ideas, opinions, and feelings to the dialogue',
+      '1.52 Ω — relaxed because A4:2026 reduced the magnetic trip threshold for Type B devices.',
+      '1.44 Ω — unchanged, because the Cmin factor only affects Type C and Type D devices.',
       '1.37 Ω — recalculated to incorporate Cmin = 0.95 explicitly. Designers using the old 1.44 Ω value for an A4:2026 design will under-call non-compliance.',
-      'Remove the clothing carefully, avoiding further skin contact, and follow decontamination procedures in the COSHH assessment',
+      '0.68 Ω — halved, because A4:2026 doubled the required fault current for ADS.',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 3,
     question: 'Cmax (the voltage factor maximum) is used in which type of calculation?',
     options: [
-      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work."',
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'Trips within the required time when a fault current of the rated sensitivity (e.g., 30 mA) is applied — tests at 50%, 100% and 500% (5x) of the rated residual current, plus ramp tests',
-      'Prospective fault current calculations — for Reg 434.5 (cable thermal withstand) and Section 543 (cpc adiabatic check). Cmax is typically 1.05 for low-voltage systems, lifting U0 for the worst-case current calc.',
+      'Earth fault loop impedance calculations — for Reg 411.4.5 (Zs satisfaction), lowering U0 to give the worst-case slow trip.',
+      'Voltage drop calculations — for Reg 525, raising the supply voltage to give the worst-case drop at the load.',
+      'Diversity calculations — for Reg 311.1, lifting the connected load to give the worst-case maximum demand.',
+      'Prospective fault current calculations — for Reg 434.5 (cable thermal) and Section 543 (cpc adiabatic), lifting U0 by Cmax 1.05.',
     ],
     correctAnswer: 3,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 4,
     question: 'When you calculate design Zs in the field for an A4:2026 design, where does Cmin appear in your numbers?',
     options: [
-      'You do NOT explicitly multiply anything by Cmin in the field calc — Cmin is already incorporated into the Table 41.3 max Zs values you compare against. Your design Zs is just Ze + (R1 + R2) at 70 degrees C; you compare against the A4:2026 Table 41.3 limit which has Cmin baked in.',
-      'Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks',
-      'Ib = 7000 / 230 = 30.4 A — round up to 32 A for the charger circuit. EV charging is essentially resistive (charger is a switchmode converter with near-unity power factor at full power) and continuous at full rating during a charging cycle, so no diversity applies on a dedicated EV circuit.',
-      'Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.',
+      'It does not appear in your numbers at all — it is already baked into the Table 41.3 limit, so your design Zs is simply Ze + (R1 + R2) at 70 degrees C.',
+      'You multiply your design Zs by 0.95 before comparing it against the Table 41.3 limit, applying Cmin to the calculated loop impedance.',
+      'You multiply only the Ze term by 0.95, because Cmin applies to the supply-side impedance but not to the final-circuit cable resistance.',
+      'You multiply the Table 41.3 limit by 0.95 yourself, because the published table values do not yet incorporate the Cmin voltage factor.',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'You calculate design Zs for a circuit and find it is at 1.40 Ω against an A4:2026 Table 41.3 max of 1.37 Ω for the B32 device fitted. The design has failed by 0.03 Ω. What is the most appropriate first response?',
     options: [
-      'Reg 4(1) is about system construction — building it safe. Reg 4(2) is about system maintenance — keeping it safe. A firm can install correctly (4(1)) and still breach (4(2)) by failing to inspect, test and maintain. EICR work is the legal mechanism for discharging Reg 4(2) on installations after the initial verification.',
-      'Redesign — options include increasing the cpc CSA (e.g. from 1.5 mm² to 2.5 mm² as a separate cpc on a single-cable run), shortening the route by relocating the device or the load, dropping to a lower-rated device (B25 max Zs = 1.75 Ω), or fitting a 30 mA RCD as the alternative path under Reg 411.4.204 if the circuit type allows it.',
-      'Unwanted conduct related to a relevant protected characteristic (age, race, sex, gender reassignment, religion or belief, sexual orientation, disability, marriage and civil partnership, pregnancy and maternity) that has the purpose or effect of violating the person\\\\\\\'s dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. Section 26 of the Act.',
-      'A pro forma is a quote-style document that looks like an invoice but doesn\\\\\\\'t trigger a tax point — typically used for upfront payment requests before work begins (e.g. materials deposit). Once the customer pays the pro forma, you issue the actual VAT invoice. Useful for cash-flow management on jobs where you need materials money upfront. Doesn\\\\\\\'t count toward turnover until converted to a real invoice.',
+      'Round the 1.40 Ω down to 1.37 Ω — a 0.03 Ω overshoot sits within measurement tolerance and can be accepted as compliant.',
+      'Redesign the circuit — larger cpc, shorter route, a lower-rated device, or a 30 mA RCD as the Reg 411.4.204 alternative path.',
+      'Use the pre-A4 limit of 1.44 Ω instead — the design passes against the older figure and that edition remains perfectly valid.',
+      'Upgrade the device to a Type C 32 A — the higher magnetic threshold gives a more permissive maximum Zs the design then passes.',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: 'The reason BS 7671 uses different voltage factors for fault current calc (Cmax) and Zs calc (Cmin) is:',
     options: [
-      'Three reasons. (1) Speed of selection — colour-coded ferrules let you grab the right size at a glance from a sorted ferrule kit. (2) Inspection — supervisor or QA can check at a glance that the ferrule colour matches the conductor CSA on every termination. (3) Standardisation — DIN 46228-4 is recognised across Europe, so any supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s ferrules match any other\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s. The colour code IS the inspection mechanism.',
-      'Most providers run 5-10 days of taught content (often a mix of classroom and practical lab) plus the exam and practical assessment at the end. Some intensive 5-day courses; some part-time evening or weekend formats over 10-12 weeks. Self-study is possible but rare because the practical assessment requires specific equipment and witness-by-assessor.',
-      'Each calculation has a different worst case. Fault current worst case is HIGH voltage (more energy, more thermal stress on cable) → use Cmax. Zs worst case is LOW voltage (smaller driving voltage, smaller fault current, slower trip) → use Cmin. Each factor pushes the calculation in the conservative direction for that specific design check.',
-      'Under the Equality Act 2010, an employer can be held liable if they knew or could reasonably have been expected to know about the employee\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s disability, and the duty to make reasonable adjustments can arise even without formal disclosure if there were indicators that the employer should have noticed',
+      'The two factors describe single-phase (Cmin) and three-phase (Cmax) supplies, so the designer picks the one matching the circuit type.',
+      'Cmax applies to new installations and Cmin to periodic inspection of existing installations, reflecting the ageing of the supply network.',
+      'Each calc has a different worst case: fault current is worst at HIGH voltage (Cmax), Zs is worst at LOW voltage (Cmin) — each conservative.',
+      'Cmax applies to TN systems and Cmin to TT systems, because the earthing arrangement determines the available fault voltage at the load.',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 7,
     question: 'For a TN-S supply with assumed Ze = 0.80 Ω (no Form 1 available), you design a 16 A B-curve MCB on a 50 m run of 1.5 mm² T+E (cpc 1.0 mm²). OSG Table I1: 1.5 mm² = 12.10 mΩ/m, 1.0 mm² = 18.10 mΩ/m. Will it pass the design Zs check?',
     options: [
-      'CPS-registered firms can self-certify notifiable Part P work and issue compliance certificates direct to the Local Authority on the homeowner\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s behalf. The LABC route requires a Building Notice or Building Regulations application before work starts, plus an LABC inspection during/after work — typically £150-300 per job and several weeks of LABC scheduling delay. Self-certification removes the cost and the delay.',
-      'Gateway 1 — at planning, considers fire safety and access. Gateway 2 — before construction, the BSR reviews the design and construction control plan; no construction can start without approval. Gateway 3 — before occupation, the BSR signs off the as-built building against the approved design and the golden thread; no occupation without approval.',
-      'Per CAR 2012 Reg 6 (assessment) + Reg 8 (licensed work) + HSE guidance L143. Considers: type of asbestos (chrysotile/amosite/crocidolite); friability; quantity; nature of work (removal vs encapsulation vs observation); duration; exposure level.',
-      'Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω. Hot at 70 degrees C: 1.51 × 1.20 = 1.812 Ω. Design Zs = 0.80 + 1.812 = 2.61 Ω. Table 41.3 max for B16 in A4:2026 = 2.73 Ω. Just passes (margin only 0.12 Ω) — design is borderline and any route-length error during install will push it over. Reconsider cable size or route.',
+      'Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω used directly with no temperature factor. Design Zs = 0.80 + 1.51 = 2.31 Ω. Table 41.3 max for B16 = 2.73 Ω. Comfortable pass with 0.42 Ω margin.',
+      'Cold (R1 + R2) = 50 × 12.10 / 1000 = 0.605 Ω, counting the line conductor only. Hot: 0.605 × 1.20 = 0.726 Ω. Design Zs = 0.80 + 0.726 = 1.53 Ω against the 2.73 Ω B16 limit. Easy pass.',
+      'Hot (R1 + R2) = 50 × (12.10 + 18.10) × 1.20 / 1000 = 1.812 Ω, then × Cmin 0.95 = 1.72 Ω. Design Zs = 0.80 + 1.72 = 2.52 Ω against 2.73 Ω. Pass.',
+      'Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω. Hot at 70 degrees C: 1.51 × 1.20 = 1.812 Ω. Design Zs = 0.80 + 1.812 = 2.61 Ω, against the B16 A4:2026 limit of 2.73 Ω — a marginal pass (0.12 Ω).',
     ],
     correctAnswer: 3,
     explanation:
@@ -176,14 +176,14 @@ const quizQuestions = [
     id: 8,
     question: 'Documenting the design Zs on the design pack should include:',
     options: [
-      'Ze source (Form 1 cited or BS 7671 assumed maximum cited); cable type, line CSA and cpc CSA; route length; OSG Table I1 mΩ/m at 20 degrees C cited; temperature factor applied (1.20 for 70-deg PVC, 1.28 for 90-deg thermosetting) cited; calculated cold (R1 + R2); calculated hot (R1 + R2); Ze + hot (R1 + R2) = design Zs; Table 41.3 max Zs cited (A4:2026 edition) for the device fitted; calculated margin; verification target (0.8 × Table 41.3 max for measured cold Zs).',
-      'The manufacturer\\\\\\\'s instructions — BS 7671 Reg 510.3 explicitly requires equipment to be selected and erected taking account of those instructions. \\\\\\\'How it\\\\\\\'s always been done\\\\\\\' isn\\\\\\\'t a defence under BS 7671 or in a warranty claim. If you genuinely think the instructions are wrong (rare), the right response is to contact the manufacturer in writing and seek written clarification before deviating.',
-      'Only when the demonstration would put the customer at risk (e.g. testing a high-voltage three-phase circuit where the customer shouldn\\\\\\\'t be in the work area). For domestic and most commercial work, the demonstration is the moment that confirms to the customer that the work is done. Skipping it leaves the customer uncertain — \\\\\\\'is it really fixed?\\\\\\\' — and creates the doubt that turns into complaints. The 5-second \\\\\\\'try plugging in your kettle now — see, no trip\\\\\\\' is worth the time.',
-      'The right of access under UK GDPR Article 15 (a \\\\\\\'subject access request\\\\\\\' or SAR). The firm has one calendar month to respond, free of charge in most cases. The response must include the personal data being processed, the purposes, the categories, the recipients, the retention period, and the source of the data if not from the data subject.',
+      'Every input cited to source plus the full working, through to design Zs, the Table 41.3 max, margin and the verification target.',
+      'The final design Zs figure alone, with the inputs and working kept by the designer and off the design pack entirely.',
+      'The device type and rating alone, with the Zs calculation performed and recorded only by the inspector at verification.',
+      'The measured Zs from the test instrument alone, since the handover measurement supersedes any design-stage calculation.',
     ],
     correctAnswer: 0,
     explanation:
-      "Full traceability is the audit trail that makes the design defensible. Each input is cited to its source. Each step shows the working. The verification target ties the design to what the inspector will measure at first inspection. The discipline takes a few extra minutes per circuit but pays off the first time a customer challenge or an EICR audit asks 'how did you arrive at this Zs?' — and you have the line-by-line answer in the design pack.",
+      "Full traceability is the audit trail that makes the design defensible. Each input is cited to its source and each step shows the working: Ze source (Form 1 or assumed maximum); cable type, line CSA and cpc CSA; route length; OSG Table I1 mΩ/m at 20 degrees C; temperature factor (1.20 for 70-deg PVC, 1.28 for 90-deg thermosetting); cold and hot (R1 + R2); design Zs; Table 41.3 max (A4:2026) for the device; margin; and the verification target (0.8 × Table 41.3 max). The discipline takes a few extra minutes per circuit but pays off the first time a customer challenge or an EICR audit asks 'how did you arrive at this Zs?'",
   },
 ];
 
@@ -206,7 +206,7 @@ const faqs = [
   {
     question: 'How do I check whether my Zs spreadsheet or app is on the A4:2026 edition?',
     answer:
-      "Look at the published Table 41.3 limit for any common device. B32 max Zs should be 1.37 Ω in A4:2026 (was 1.37 Ω pre-A4); C32 should be 0.69 Ω (was 0.72 Ω); D32 should be 0.34 Ω (was 0.36 Ω). If your tool gives the higher pre-A4 numbers it is out of date. Many free Zs lookup websites are still on the pre-A4 values. Trusted current sources: Megger / Fluke / Kewtech app updates, IET OSG online (current edition), the BS 7671 itself in print or PDF. If in doubt, calculate from first principles: max Zs = U0 × Cmin / Ia = 230 × 0.95 / (5 × In) for a Type B MCB. For B32: 230 × 0.95 / 160 = 1.366 Ω → rounded to 1.37 Ω.",
+      "Look at the published Table 41.3 limit for any common device. B32 max Zs should be 1.37 Ω in A4:2026 (was 1.44 Ω pre-A4); C32 should be 0.68 Ω (was 0.72 Ω); D32 should be 0.34 Ω (was 0.36 Ω). If your tool gives the higher pre-A4 numbers it is out of date. Many free Zs lookup websites are still on the pre-A4 values. Trusted current sources: Megger / Fluke / Kewtech app updates, IET OSG online (current edition), the BS 7671 itself in print or PDF. If in doubt, calculate from first principles: max Zs = U0 × Cmin / Ia = 230 × 0.95 / (5 × In) for a Type B MCB. For B32: 230 × 0.95 / 160 = 1.366 Ω → rounded to 1.37 Ω.",
   },
   {
     question: 'What does Cmin do for a circuit protected by a fuse rather than an MCB?',
@@ -470,7 +470,7 @@ export default function Sub2() {
             }
             doInstead={
               <>
-                Verify your Zs lookup tool is on the A4:2026 edition. Spot check: the published B32 max Zs should read 1.37 Ω, NOT 1.37 Ω. C32 should read 0.69 Ω, NOT 0.72 Ω. D32 should read 0.34 Ω, NOT 0.36 Ω. If the tool gives the higher pre-A4 numbers it is out of date. Use a current Megger / Fluke / Kewtech app, or the printed BS 7671:2018+A4:2026, or calculate from first principles every time (max Zs = 218.5 / Ia for any device). The 5-second check protects the design from being non-compliant the day it lands.
+                Verify your Zs lookup tool is on the A4:2026 edition. Spot check: the published B32 max Zs should read 1.37 Ω, NOT 1.44 Ω. C32 should read 0.68 Ω, NOT 0.72 Ω. D32 should read 0.34 Ω, NOT 0.36 Ω. If the tool gives the higher pre-A4 numbers it is out of date. Use a current Megger / Fluke / Kewtech app, or the printed BS 7671:2018+A4:2026, or calculate from first principles every time (max Zs = 218.5 / Ia for any device). The 5-second check protects the design from being non-compliant the day it lands.
               </>
             }
           />

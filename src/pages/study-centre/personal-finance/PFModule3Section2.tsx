@@ -434,12 +434,12 @@ export default function PFModule3Section2() {
             id="pf-3-2-check2"
             question="Which van finance option typically has the lowest monthly payments but requires a large payment at the end to own the vehicle?"
             options={[
-              'Hire Purchase (HP)',
               'Personal Contract Purchase (PCP)',
+              'Hire Purchase (HP)',
               'Contract Hire (Lease)',
               'Bank personal loan',
             ]}
-            correctIndex={1}
+            correctIndex={0}
             explanation="PCP has lower monthly payments because you only pay off the depreciation during the term. To own the van at the end, you must pay the balloon payment (Guaranteed Minimum Future Value), which can be several thousand pounds."
           />
 
@@ -752,12 +752,12 @@ export default function PFModule3Section2() {
                 question:
                   'Which of the following is the best example of "good debt" for an electrician?',
                 options: [
-                  'A payday loan to cover a cash flow gap',
                   'Financing a multifunction tester needed for testing work',
+                  'A payday loan to cover a cash flow gap',
                   'Putting a holiday on a credit card at 22% APR',
                   'Using BNPL to buy designer clothing',
                 ],
-                correctAnswer: 1,
+                correctAnswer: 0,
                 explanation:
                   'Financing essential test equipment is income-generating debt — the tool directly enables you to earn money from testing work, paying for itself quickly.',
               },
@@ -781,10 +781,10 @@ export default function PFModule3Section2() {
                 options: [
                   'PCP',
                   'Contract Hire (Lease)',
-                  'Hire Purchase (HP)',
                   'They are all the same',
+                  'Hire Purchase (HP)',
                 ],
-                correctAnswer: 2,
+                correctAnswer: 3,
                 explanation:
                   'HP has higher monthly payments because you are paying off the full value of the vehicle during the term. However, you own it outright at the end.',
               },
@@ -814,12 +814,12 @@ export default function PFModule3Section2() {
                 id: 6,
                 question: 'Which question is NOT part of the borrowing decision framework?',
                 options: [
+                  'Have my friends recommended this product?',
                   'Is this essential, or just desirable?',
                   'Will this borrowing make me better off in two years?',
-                  'Have my friends recommended this product?',
                   'Can I afford the repayments if my income drops 20%?',
                 ],
-                correctAnswer: 2,
+                correctAnswer: 0,
                 explanation:
                   'The five-question framework focuses on necessity, future benefit, affordability stress-testing, comparison shopping, and interest rate assessment — not peer recommendations.',
               },

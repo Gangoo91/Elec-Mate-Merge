@@ -16,12 +16,12 @@ export const polarityMethodsQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'What risk is posed by a switch connected in the neutral?',
+    question: 'What risk is posed by a switch connected in the neutral conductor?',
     options: [
-      'When line and neutral conductors are cross-connected',
-      'Low resistance (typically <0.5Ω)',
-      'The circuit remains live when switched off',
-      'The DB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s outgoing line terminal',
+      'The protective device will nuisance trip on every operation',
+      'The earth fault loop impedance will read artificially high',
+      'The circuit remains live at the load even when switched off',
+      'The line and neutral will appear reversed at the socket',
     ],
     correctAnswer: 2,
     explanation:
@@ -44,10 +44,10 @@ export const polarityMethodsQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What reference point is typically used for polarity testing?',
     options: [
-      "The DB's outgoing line terminal",
-      "A fault in the thermal trip mechanism",
-      "Pre-Construction Information",
-      "Accurate and safe measurements",
+      "The distribution board's outgoing line terminal",
+      "The main earthing terminal at the intake",
+      "The neutral bar in the consumer unit",
+      "The earth electrode connection point",
     ],
     correctAnswer: 0,
     explanation:
@@ -68,24 +68,24 @@ export const polarityMethodsQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: 'What test current range is typically used for polarity testing?',
+    question: 'A low-reading ohmmeter used for polarity and continuity testing should deliver a short-circuit current of at least what value?',
     options: [
-      '500 milliamps to 1 amp',
-      '1-5 Amps',
-      '4-200 milliamps',
-      '10-20 milliamps',
+      '25 milliamps',
+      '100 milliamps',
+      '200 milliamps',
+      '500 milliamps',
     ],
     correctAnswer: 2,
     explanation:
-      'Polarity testing uses a low test current typically between 4-200mA, which is safe for electronic components and provides reliable continuity indication.',
+      'A continuity/polarity test instrument should be derived from a 4–24 V no-load source with a short-circuit current of not less than 200 mA, in line with BS EN 61557-4. This ensures reliable measurement of low resistances.',
   },
   {
     id: 7,
     question: 'How should you test polarity on a two-way switching circuit?',
     options: [
-      'The circuit remains live when switched off',
-      'Correct the wiring error and retest before energisation',
-      'When line and neutral conductors are cross-connected',
+      'Test only with both switches in the up position',
+      'Energise the circuit and use a voltage indicator at the load',
+      'Disconnect the strappers and test each switch in isolation',
       'Test with switches in various positions to verify all paths',
     ],
     correctAnswer: 3,

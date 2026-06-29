@@ -66,10 +66,10 @@ const AM2Module5Section3 = () => {
       id: 'zero-leads',
       question: 'Why must leads be zeroed before continuity testing?',
       options: [
-        'Electricity consumed by devices when switched off but still plugged in',
+        'To charge the instrument battery to full before use',
         'To remove the resistance of the leads from the measurement',
-        'Participating — share ideas and facilitate decision-making together',
-        'Hazards during construction, maintenance, use and demolition',
+        'To set the test current to the required 200 mA',
+        'To confirm the leads meet GS38 shrouding requirements',
       ],
       correctIndex: 1,
       explanation:
@@ -79,10 +79,10 @@ const AM2Module5Section3 = () => {
       id: 'lamp-disconnection',
       question: 'Why must you disconnect lamps before insulation resistance testing?',
       options: [
-        'Energy = (Slope × Degree days) + Base load',
-        'Foam, vapours, and multiple reflections',
+        'To reduce the test voltage applied to the circuit',
+        'To allow the continuity leads to be zeroed first',
         'To prevent damage to equipment and get accurate results',
-        '5-15 minutes before suspension trauma becomes life-threatening',
+        'To ensure the RCD does not trip during the test',
       ],
       correctIndex: 2,
       explanation:
@@ -121,9 +121,9 @@ const AM2Module5Section3 = () => {
       id: 3,
       question: 'Why must continuity leads be zeroed?',
       options: [
-        'Better mixing improves heat transfer coefficient',
-        'Record the limitation in the report',
-        'No, they only work with changing (AC) currents',
+        'To set the test voltage to 500 V DC',
+        'To charge the instrument before testing',
+        'To check the leads are GS38 compliant',
         'To remove lead resistance from measurement',
       ],
       correctAnswer: 3,
@@ -135,9 +135,9 @@ const AM2Module5Section3 = () => {
       question: 'What test would you use to prove a short circuit?',
       options: [
         'Insulation resistance test',
-        'Use a spirit or laser level',
-        'PIR (Passive Infrared) sensor',
-        'Set time targets for each stage',
+        'Polarity test at each accessory',
+        'Earth fault loop impedance (Zs) test',
+        'Prospective fault current measurement',
       ],
       correctAnswer: 0,
       explanation:
@@ -160,10 +160,10 @@ const AM2Module5Section3 = () => {
       id: 6,
       question: 'What test would you use to identify high resistance joints?',
       options: [
-        'Failed timer or humidity sensor',
-        'Safety glasses and hard hat',
+        'Insulation resistance at 500 V DC',
+        'Polarity test at the socket outlet',
         'Zs (earth fault loop impedance)',
-        'Moisture ingress or corroded connections',
+        'RCD trip-time test at five times IΔn',
       ],
       correctAnswer: 2,
       explanation:
@@ -193,10 +193,10 @@ const AM2Module5Section3 = () => {
       id: 9,
       question: 'Why must you disconnect lamps before insulation resistance testing?',
       options: [
-        'Eliminate, substitute, engineer, admin, PPE',
+        'To reduce the test voltage to a safe level',
         'To prevent damage and get accurate results',
-        'The rectifier input draws non-sinusoidal current',
-        'Earth fault loop impedance (Zs)',
+        'To allow the leads to be zeroed correctly',
+        'To stop the RCD tripping during the test',
       ],
       correctAnswer: 1,
       explanation:
@@ -206,10 +206,10 @@ const AM2Module5Section3 = () => {
       id: 10,
       question: 'What do assessors expect you to do if you get an unrealistic reading?',
       options: [
-        'Consider higher rated RCDs or circuit division',
-        'Recognise excellence and raise professional profile',
+        'Record the reading and move on to the next test',
+        'Write down the value you expected instead',
         'Re-check instrument settings and connections',
-        'Connecting two tubes at any angle other than 90 degrees',
+        'Switch to a different instrument without checking',
       ],
       correctAnswer: 2,
       explanation:

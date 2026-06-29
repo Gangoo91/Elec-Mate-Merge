@@ -11,10 +11,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'How does ceiling height affect light distribution?',
     options: [
-      'Higher ceilings reduce light intensity at floor level but spread light over wider areas',
-      'Higher ceilings increase light intensity everywhere',
-      'Ceiling height has no effect on light distribution',
-      'Higher ceilings only affect colour temperature',
+      'Higher ceilings spread light over wider areas but reduce floor-level intensity',
+      'Higher ceilings increase light intensity uniformly across the whole space',
+      'Ceiling height has no measurable effect on light distribution',
+      'Higher ceilings affect only the perceived colour temperature',
     ],
     correct: 0,
     explanation:
@@ -24,10 +24,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'What risk occurs if luminaires are mounted too high?',
     options: [
-      'They become more expensive to operate',
+      'They become more expensive to run because the lamps draw more current',
       'Light intensity at floor level may be insufficient to meet required lux levels',
-      'They produce too much heat',
-      'Battery life is reduced',
+      'They produce too much heat for the surrounding ceiling void to dissipate',
+      'Battery life is reduced because the emergency duration test runs longer',
     ],
     correct: 1,
     explanation:
@@ -37,9 +37,9 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'What risk occurs if luminaires are mounted too low?',
     options: [
-      'Insufficient coverage area',
+      'Increased risk of overheating the luminaire',
       'Glare and uneven light distribution',
-      'Higher electricity costs',
+      'Higher standby power consumption',
       'Reduced emergency duration',
     ],
     correct: 1,
@@ -50,10 +50,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What is the purpose of polar curve diagrams?',
     options: [
-      'To show energy consumption patterns',
+      'To show the energy consumption patterns of the luminaire',
       'To display beam spread and light intensity distribution in all directions',
-      'To indicate battery charging cycles',
-      'To show colour temperature variations',
+      'To indicate the battery charging cycles of the fitting',
+      'To show colour temperature variations across the beam',
     ],
     correct: 1,
     explanation:
@@ -63,10 +63,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'What information do spacing tables provide?',
     options: [
-      'Cable lengths required for installation',
+      'The cable lengths required for the installation runs',
       'Maximum spacing between luminaires to achieve required lux levels',
-      'Battery replacement schedules',
-      'Mounting bracket specifications',
+      'The recommended battery replacement schedules for the fittings',
+      'The mounting bracket specifications for each luminaire type',
     ],
     correct: 1,
     explanation:
@@ -76,10 +76,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'Why is uniformity important in emergency lighting design?',
     options: [
-      'It reduces installation costs',
+      'It reduces the installation cost of the emergency lighting system',
       'It prevents bright and dark patches that can impair visibility during evacuation',
-      'It improves battery life',
-      'It meets aesthetic requirements',
+      'It improves the battery life of the emergency luminaires',
+      'It meets the building’s aesthetic and architectural requirements',
     ],
     correct: 1,
     explanation:
@@ -102,10 +102,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'Why must obstructions be considered in light distribution design?',
     options: [
-      'They affect the aesthetic appearance',
+      'They affect the overall aesthetic appearance of the space',
       'They can block light paths and create shadows, affecting required illumination levels',
-      'They increase maintenance costs',
-      'They change cable routing requirements',
+      'They increase the ongoing maintenance costs of the system',
+      'They change the cable routing requirements for the circuit',
     ],
     correct: 1,
     explanation:
@@ -115,10 +115,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'How do wall and ceiling colours affect lighting performance?',
     options: [
-      'Dark colours have no effect on lighting',
-      'Light-coloured surfaces reflect more light, improving distribution; dark surfaces absorb light',
-      'Only ceiling colour matters',
-      'Colour only affects aesthetics, not performance',
+      'Surface colour has no measurable effect on lighting performance',
+      'Light surfaces reflect more light while dark surfaces absorb it',
+      'Only the ceiling colour affects how light is distributed',
+      'Surface colour affects aesthetics but not lighting performance',
     ],
     correct: 1,
     explanation:
@@ -128,10 +128,10 @@ export const mountingHeightsPhotometricQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'Why should mounting heights be recorded in design drawings?',
     options: [
-      'For aesthetic coordination with architects',
+      'For aesthetic coordination with the architect’s ceiling layout',
       'To ensure installers mount fittings correctly and enable verification of design intent',
-      'To calculate cable lengths',
-      'To determine warranty periods',
+      'To calculate the cable lengths needed for each luminaire run',
+      'To determine the manufacturer warranty period for the fittings',
     ],
     correct: 1,
     explanation:

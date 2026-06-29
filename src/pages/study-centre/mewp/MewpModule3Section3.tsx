@@ -22,12 +22,12 @@ const quickCheckQuestions = [
     question:
       'When setting up a boom-type MEWP, is it ever acceptable to only partially deploy the outriggers?',
     options: [
+      'No — ALL outriggers must ALWAYS be fully deployed before elevating',
       'Yes, if the machine will only be used at low height',
       'Yes, provided the ground is firm and level',
-      'No — ALL outriggers must ALWAYS be fully deployed before elevating',
       'Yes, if the operator holds a valid PAL Card for that category',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Partial deployment of outriggers is NEVER acceptable. ALL outriggers must be fully extended and lowered before the platform is elevated. Partial deployment drastically reduces the stability envelope and is a leading cause of MEWP overturn incidents.',
   },
@@ -52,10 +52,10 @@ const quickCheckQuestions = [
     options: [
       'Bypass the interlock using the override key',
       'Ask a colleague to hold the interlock switch while elevating',
-      'Investigate and correct the outrigger deployment, then re-check before elevating',
       'Use the machine without outriggers deployed',
+      'Investigate and correct the outrigger deployment, then re-check before elevating',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The operator must NEVER bypass or defeat interlock systems. If an interlock prevents elevation, it is doing its job. The correct action is to investigate the cause, correct the outrigger deployment, and verify the interlock clears before attempting to elevate. Bypassing interlocks is an offence under HSWA 1974 Section 8.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'Before positioning a MEWP, you should check for underground services. Which tool is used on site to detect buried cables and pipes?',
     options: [
-      'A spirit level',
       'A Cable Avoidance Tool (CAT scanner)',
+      'A spirit level',
       'An anemometer',
       'A torque wrench',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Cable Avoidance Tool (CAT scanner) is used to detect buried services such as electrical cables, gas pipes, and water mains before any ground-loading or ground-penetrating activity. Utility maps should also be consulted, but a CAT scan provides real-time confirmation of what lies beneath the surface.',
   },
@@ -132,11 +132,11 @@ const quizQuestions = [
       'What is the general rule for the minimum distance a MEWP should be positioned from the edge of an excavation?',
     options: [
       'At least half the depth of the excavation',
-      'At least equal to the depth of the excavation',
       'Always 5 metres regardless of depth',
       "There is no rule — it is the operator's choice",
+      'At least equal to the depth of the excavation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The general rule is that the MEWP must be positioned at least a distance equal to the depth of the excavation away from the edge. This prevents the outrigger loads from causing the excavation sides to collapse. Site-specific conditions may require a greater standoff distance.',
   },
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'Which of the following is the CORRECT order for the practical outrigger setup procedure?',
     options: [
-      'Elevate platform, extend outriggers, place pads, level machine',
       'Place pads, extend outriggers fully, lower onto pads, level machine, check interlocks',
+      'Elevate platform, extend outriggers, place pads, level machine',
       'Level machine, extend outriggers, elevate platform, place pads',
       'Extend outriggers, elevate platform, then place pads under outriggers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct sequence is: place spreader pads at each outrigger position, extend outriggers fully, lower outriggers onto pads (check they are centred), level the machine, then verify all interlock indicators before elevating. The platform must NEVER be elevated before outriggers are fully deployed and the machine is level.',
   },

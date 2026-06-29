@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'competence-definition',
     question: "Under health and safety law, what constitutes 'competence'?",
     options: [
-      'The change in secondary voltage from no-load to full-load expressed as a percentage',
-      'A building at least 18 metres high or with at least 7 storeys, containing at least two residential units',
+      'Holding any recognised electrical qualification, regardless of the task',
+      'Having at least five years of continuous experience in the trade',
       'Having sufficient training, knowledge, experience, and ability to perform tasks safely',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'Being formally employed and registered with a contractor scheme',
     ],
     correctIndex: 2,
     explanation:
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'ecs-card-purpose',
     question: 'What is the primary purpose of the JIB/ECS card scheme in the electrical industry?',
     options: [
+      'To set the national pay rates for electrical operatives',
       'To verify and evidence competence and qualifications of electrical workers',
-      'The colour temperature (CCT) and colour rendering index (CRI)',
-      'Identify hazards, decide who might be harmed, evaluate risks, record findings, review and update',
-      'Investigate the cause as it\\\\\\\\\\\\\\\'s below the minimum requirement',
+      'To register electrical contractors as approved installers',
+      'To record the results of inspection and testing on site',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Electrotechnical Certification Scheme (ECS) provides a card-based system that verifies and evidences the competence of individuals working in the electrotechnical sector. It is increasingly required for site access and demonstrates compliance with industry standards.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'training-needs-analysis',
     question: 'What is the first step in conducting a Training Needs Analysis (TNA)?',
     options: [
+      'Booking the workforce onto an approved training course',
+      'Choosing the most cost-effective training provider',
       'Identifying the gap between current competence and required competence',
-      'Scope of work, exclusions, price, validity period and payment terms',
-      'The working height, reach distances, and layout should suit the range of workers using it',
-      'Mark as incomplete → lose marks, likely fail paperwork section',
+      'Evaluating the effectiveness of the training afterwards',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'TNA begins by identifying the gap between what workers can currently do safely and what they need to be able to do. This gap analysis considers job requirements, risk assessments, legal requirements, and individual capabilities to determine where training is needed.',
   },
@@ -74,12 +74,12 @@ const quickCheckQuestions = [
     id: 'refresher-training',
     question: 'Why is refresher training necessary even for experienced workers?',
     options: [
+      'Because experienced workers rarely follow safe procedures',
+      'Because it is only ever required to renew an ECS card',
       'To address knowledge decay, update skills for new hazards, and reinforce safe behaviours',
-      'Pretending that something negative did not happen or denying reality',
-      'Entry and exit wounds — a burn where the current entered the body and another where it left',
-      'It\\\\\\\\\\\\\\\'s vague and may cause misunderstandings or incorrect action',
+      'Because qualifications legally expire after a fixed number of years',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Refresher training addresses the natural decay of knowledge and skills over time, ensures workers are updated on new hazards, equipment, or regulations, and reinforces safe behaviours. Even experienced workers need periodic updates to maintain competence.',
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       'Under Regulation 13 of the Management of Health and Safety at Work Regulations 1999, employers must provide health and safety training:',
     options: [
-      'A government grant towards installing heat pumps or biomass boilers',
+      'Only once, during the worker\'s initial induction',
       'On recruitment, when exposed to new/increased risks, and as refresher training',
-      'For projects tendering in 12+ months with long construction periods',
-      'Early life (infant mortality), useful life (random failures) and wear-out (increasing failure rate)',
+      'Only when a worker requests it in writing',
+      'Only for workers under the age of 18',
     ],
     correctAnswer: 1,
     explanation:
@@ -118,9 +118,9 @@ const quizQuestions = [
     question:
       'Which ECS card level is appropriate for a qualified electrician who has completed an approved apprenticeship and holds AM2 certification?',
     options: [
-      'Continuity test from armouring to MET',
-      'Moving desks and computers within a finished office',
-      'Masonry bit with tungsten carbide tip',
+      'Trainee amber card',
+      'Provisional amber card',
+      'Experienced Worker grey card',
       'Installation Electrician JIB-registered Gold card',
     ],
     correctAnswer: 3,
@@ -144,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'A competent person under the Electricity at Work Regulations must:',
     options: [
-      'A variety including formal training, self-study, mentoring, technical reading, conferences',
+      'Hold a current first aid certificate before starting work',
       'Have technical knowledge and experience to prevent danger and recognise risk',
-      'Imagining the worst-case scenario and treating it as certain or likely',
-      'High-frequency components and specialised detection equipment',
+      'Be directly employed rather than working as a subcontractor',
+      'Carry a valid ECS card for every type of electrical work',
     ],
     correctAnswer: 1,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     id: 7,
     question: 'Training records should be retained for:',
     options: [
-      'To confirm work is complete, the area is safe, and controls can be removed',
-      'Benefits and loads beyond the system boundary, such as recycling credits',
-      'All entry points plus strategic interior backup sensors',
+      'Exactly 12 months from the date of training',
+      'Only until the worker passes their next assessment',
+      'Permanently, with no provision for ever destroying them',
       'The period of employment plus a reasonable period after (typically 3-6 years)',
     ],
     correctAnswer: 3,
@@ -184,9 +184,9 @@ const quizQuestions = [
     question: 'What is the Kirkpatrick Model used for?',
     options: [
       'Evaluating training effectiveness at four levels',
-      'Failed battery or charging circuit fault',
-      'Verify the circuit now meets regulatory requirements',
-      'Using active filters to inject compensating current',
+      'Calculating the cost of a training programme',
+      'Grading ECS card levels by qualification',
+      'Ranking hazards by likelihood and severity',
     ],
     correctAnswer: 0,
     explanation:
@@ -197,10 +197,10 @@ const quizQuestions = [
     question:
       'An electrical contractor assigns a worker to install three-phase equipment. The worker holds ECS qualifications but has only worked on single-phase domestic installations. What should the contractor do?',
     options: [
-      'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
+      'Allow the work, since holding any ECS card proves general competence',
       'Assess competence specifically for three-phase work and provide additional training if needed',
-      'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
-      'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
+      'Allow the work but ask another electrician to check it afterwards',
+      'Refuse the work outright, as three-phase competence cannot be developed',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,10 +211,10 @@ const quizQuestions = [
     question:
       'Under the Construction (Design and Management) Regulations 2015, what duty do principal contractors have regarding competence?',
     options: [
-      'Hazardous substances passing through the skin or mucous membranes into the bloodstream',
-      'Specify accuracy requirements, calibration status, and training needs',
+      'To provide all training in-house rather than using external providers',
+      'To verify the qualifications of the client and design team only',
       'To take reasonable steps to ensure workers have the skills, knowledge, and training for the work',
-      'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
+      'To assess competence solely through written examinations',
     ],
     correctAnswer: 2,
     explanation:

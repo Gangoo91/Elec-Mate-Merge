@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'audit-definition',
     question: 'What is the primary purpose of an energy audit?',
     options: [
-      'Allowing multiple people to apply their own padlocks to one isolation point',
-      'Direct-acting electric resistive heating as primary heat source (with limited exceptions)',
+      'To certify that a building meets the minimum fire safety standards',
+      'To calculate the rateable value of a commercial property',
       'To systematically analyse energy use and identify improvement opportunities',
-      'First fix completion, pressure testing, and commissioning sign-off',
+      'To verify that electrical installations comply with BS 7671',
     ],
     correctIndex: 2,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'esos-requirement',
     question: 'Which organisations must comply with ESOS regulations?',
     options: [
-      'On stranded conductors to prevent strand separation',
+      'Any business that occupies more than one floor of a building',
       'Large undertakings with 250+ employees or turnover >£44m',
-      'An individual specification item within a work section',
-      'Benefits greatly from hands-on electrical experience',
+      'All public sector bodies regardless of their size',
+      'Sole traders and micro-businesses with high energy bills',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'investment-grade',
     question: 'What distinguishes an investment-grade audit from a walk-through audit?',
     options: [
-      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
-      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
       'It includes detailed financial analysis and measurement data sufficient for funding decisions',
-      'Continuity of protective conductors (Regulation 643.2.1), including main and supplementary bonding',
+      'It relies only on the previous year utility bills with no site visit',
+      'It can be completed in a single afternoon without any measurements',
+      'It is carried out by the building occupants rather than a qualified assessor',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'An investment-grade audit (ASHRAE Level III) provides detailed engineering analysis, extensive sub-metering data, and rigorous financial modelling sufficient to support capital investment decisions and secure project funding.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'en-16247',
     question: 'EN 16247 is the European standard for:',
     options: [
-      'Verify instrument CAT rating and prove on a known source',
+      'The energy performance certification of dwellings',
+      'The design of building management control systems',
+      'The calibration of electrical test instruments',
       'Energy audits - requirements, methodology and reporting',
-      'Automatic daylight sensing and time scheduling',
-      'Quickly narrows down fault location by halving the problem',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'EN 16247 is the European standard series for energy audits, defining quality requirements, methodologies, deliverables, and competence requirements for energy auditors across buildings, industrial processes, and transport.',
   },
@@ -93,7 +93,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'ESOS operates on a 4-year compliance cycle. Qualifying organisations must conduct audits covering at least 90% of their total energy consumption and report compliance to the Environment Agency by the deadline.',
+      'ESOS operates on a 4-year compliance cycle. Qualifying organisations must conduct audits covering at least 95% of their total energy consumption (following the 2023 amendment effective from Phase 3) and report compliance to the Environment Agency by the deadline.',
   },
   {
     id: 2,
@@ -116,11 +116,11 @@ const quizQuestions = [
       '75%',
       '50%',
       '100%',
-      '90%',
+      '95%',
     ],
     correctAnswer: 3,
     explanation:
-      "ESOS requires audits to cover at least 90% of an organisation's total energy consumption. The remaining 10% can be excluded using de minimis provisions, allowing focus on significant energy users.",
+      "Following the 2023 amendment to the ESOS Regulations (effective from Phase 3), audits must cover at least 95% of an organisation's total energy consumption. Only up to 5% may be excluded under the reduced de minimis provision, focusing the audit on significant energy users.",
   },
   {
     id: 4,
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       "During a site survey, what is the purpose of identifying 'energy significant areas'?",
     options: [
-      'Current energy use, analysis, recommended measures with costs and savings',
+      'To identify which areas are exempt from the audit altogether',
       'To prioritise audit effort on areas with greatest saving potential',
-      'To adjust consumption data for weather variations',
-      'Needing quick identification of obvious inefficiencies',
+      'To allocate the energy bill fairly between different tenants',
+      'To decide where to install additional electrical socket-outlets',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'EN 16247-1 requires the energy audit report to include:',
     options: [
       'Current energy use, analysis, recommended measures with costs and savings',
-      'Quick-install connector using mechanical clamping without epoxy',
-      'The conduit may be used as CPC if verified for continuity',
-      'Understanding and interpreting human speech patterns and intent',
+      'The names and salaries of every member of the facilities team',
+      'A full structural survey of the building foundations',
+      'The planning history and title deeds of the property',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of degree day normalisation in energy analysis?',
     options: [
-      'To earth the armour and provide sealing',
+      'To convert gas consumption figures into electricity equivalents',
       'To adjust consumption data for weather variations',
-      'Clean, inspect, or dispose of according to contamination type',
-      'Door contact sensor showing open/closed',
+      'To allocate energy costs across a 365-day billing period',
+      'To correct meter readings for instrument calibration drift',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'Which metric expresses building energy performance as consumption per unit floor area?',
     options: [
-      'Electricity tariff prices',
-      'Inhalation and skin absorption',
+      'Power factor',
+      'Maximum demand',
       'Energy Use Intensity (EUI)',
-      'GHS06 — Acute Toxicity (severe)',
+      'Load factor',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'A walk-through audit (Level I) is most appropriate when:',
     options: [
-      'Give up to 5 back blows between the shoulder blades',
-      'Switching, dimming (if applicable), and correct operation of controls',
-      'To identify the conductor as live when switched on',
+      'Seeking finance for a major capital retrofit project',
+      'Detailed sub-metering of every circuit is required',
+      'A full dynamic simulation of the building is needed',
       'Needing quick identification of obvious inefficiencies',
     ],
     correctAnswer: 3,
@@ -350,7 +350,7 @@ const HNCModule6Section5_1 = () => {
             </ul>
             <p><strong>ESOS Coverage Requirements</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>• Audits must cover <strong>at least 90%</strong> of total energy consumption</li>
+              <li>• Audits must cover <strong>at least 95%</strong> of total energy consumption (5% de minimis since the 2023 amendment)</li>
               <li>• Includes buildings, industrial processes, and transport</li>
               <li>• De minimis threshold allows exclusion of small consumption areas</li>
               <li>• Alternative compliance routes: ISO 50001 certification, DECs, GDAs</li>

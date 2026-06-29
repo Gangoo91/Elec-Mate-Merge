@@ -59,10 +59,10 @@ const checks = [
     options: [
       '230 V',
       '693 V',
-      '400 V',
       'Zero',
+      '400 V',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In delta, each winding sits across a line-to-line pair, so phase voltage = line voltage = 400 V. There is no neutral connection in a true delta.',
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       'A 3-phase motor running anticlockwise. To reverse it you should:',
     options: [
-      'Slip ~15-20 % (depends on rotor R)',
-      'Specialisation, supervision, or technical roles',
+      'Increase the supply frequency to the motor',
       'Swap any two of the three line connections',
-      'Balance loads across all three phases',
+      'Disconnect and re-connect the neutral conductor',
+      'Reduce the supply voltage to all three lines',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Swap any two lines (e.g. L1↔L2). That reverses the phase rotation, reverses the rotating field, and reverses the rotor. Reversing all three would have no effect — same direction.",
   },
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'Star connection means each phase winding is connected:',
     options: [
-      'Heat cramps → heat exhaustion → heat stroke',
-      'Safety, accessibility, aesthetics, or compliance',
-      'Gather information about the symptoms and history',
+      'Across two of the three line conductors',
+      'In a closed loop with no common point',
+      'Directly between two adjacent phase windings',
       'Between a line and a common neutral point',
     ],
     correctAnswer: 3,
@@ -125,9 +125,9 @@ const quizQuestions = [
     question: 'Delta connection means the three windings form:',
     options: [
       'A closed triangle, each winding between two lines',
-      'A process with no heat transfer to or from the system',
-      'Combination of PIR, thermal imaging, and AI analysis',
-      'Power supplied to field devices through communication cables',
+      'Three windings joined at a common neutral point',
+      'A single winding tapped at three equal points',
+      'Three separate windings with no interconnection',
     ],
     correctAnswer: 0,
     explanation: 'Delta (Δ): each winding sits between two of the three lines, forming a triangle.',
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'Most UK industrial loads (motors, distribution) use:',
     options: [
-      'At the origin (supply intake)',
-      'Automatic electronic lock',
+      'Single-phase 230 V two-wire only',
+      'Corner-earthed delta with no neutral',
       '3-phase star with neutral',
-      'Testing insulation effectiveness',
+      'High-voltage DC distribution',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'The earth-fault loop path on a TN-S system runs from:',
     options: [
-      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
-      'That batteries can sustain illumination for the full 3-hour rated period',
-      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
+      'Fault → CPC → MET → installation earth electrode → general mass of earth → faulty phase',
+      'Fault → neutral conductor → consumer unit → meter tails → faulty phase',
+      'Fault → CPC → combined PEN conductor → cut-out only → faulty phase',
       'Fault → CPC → MET → cable sheath/earth conductor → transformer star point → faulty phase',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'Phase rotation matters for:',
     options: [
       '3-phase motors and synchronous generators',
-      'Visual and noise impact on communities',
-      'R_th = R_N and I_N = V_th/R_th',
-      'Socket outlets ≤32A and mobile equipment outdoors',
+      'Single-phase resistive heating loads',
+      'Battery-backed emergency lighting circuits',
+      'Domestic ring final socket circuits',
     ],
     correctAnswer: 0,
     explanation:

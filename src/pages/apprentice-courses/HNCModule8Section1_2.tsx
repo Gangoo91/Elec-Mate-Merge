@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'The COP of a heat pump typically decreases when:',
     options: [
-      'Temporarily reverses to remove ice from the outdoor coil',
-      'Adjusts flow temperature based on outdoor conditions to optimise efficiency',
+      'The flow temperature is reduced towards the source temperature',
+      'The building is very well insulated and loses little heat',
       'The temperature difference between source and sink increases',
-      'Ground temperatures are more stable and higher in winter',
+      'Underfloor heating is used instead of standard radiators',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'Ground source heat pumps (GSHPs) typically have higher COPs than ASHPs because:',
     options: [
       'Ground temperatures are more stable and higher in winter',
-      'The temperature difference between source and sink increases',
-      'Temporarily reverses to remove ice from the outdoor coil',
-      'Has lower GWP than R410A but is mildly flammable (A2L)',
+      'They use a more powerful compressor than air source units',
+      'They do not require any electrical supply to operate',
+      'They can deliver much higher flow temperatures efficiently',
     ],
     correctAnswer: 0,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'During a defrost cycle, an ASHP:',
     options: [
-      'No F-gas qualified installer required for installation',
-      'Ground temperatures are more stable and higher in winter',
+      'Shuts down completely until the ice melts naturally',
+      'Increases fan speed to blow the ice off the coil',
       'Temporarily reverses to remove ice from the outdoor coil',
-      'The temperature difference between source and sink increases',
+      'Sprays warm water over the outdoor coil to clear ice',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the typical electrical supply requirement for a domestic ASHP of 8-12kW?',
     options: [
-      'The electrician assigned to install it',
-      'Provide detailed test data',
-      'Prospective short-circuit current (Ipsc)',
+      'A 13A fused spur from a ring final circuit',
+      'A standard 6A lighting circuit connection',
+      'A low-voltage extra-low-voltage supply',
       'Single-phase 32A or three-phase',
     ],
     correctAnswer: 3,
@@ -176,9 +176,9 @@ const quizQuestions = [
     question: 'In a hybrid heat pump system, the boiler typically operates when:',
     options: [
       'Outdoor temperatures are very low or high-temperature DHW is needed',
-      'Has lower GWP than R410A but is mildly flammable (A2L)',
-      'Temporarily reverses to remove ice from the outdoor coil',
-      'Ground temperatures are more stable and higher in winter',
+      'Outdoor temperatures are mild and heat demand is low',
+      'The heat pump is operating at its highest COP',
+      'Electricity prices are lower than the gas tariff',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 10,
     question: 'Part L of the Building Regulations requires heat pumps to achieve a minimum:',
     options: [
-      'Both BS EN 61921 and BS EN 60831',
-      'Adverse Childhood Experience',
+      'SCOP of 1.5 (for wet heating systems)',
+      'COP of 4.0 measured at design conditions',
       'SCOP of 2.5 (for wet heating systems)',
-      'Total resistance increases',
+      'SCOP of 4.5 (for wet heating systems)',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,9 +215,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the primary advantage of a monobloc ASHP over a split system?',
     options: [
-      'The temperature difference between source and sink increases',
-      'Ground temperatures are more stable and higher in winter',
-      'Outdoor temperatures are very low or high-temperature DHW is needed',
+      'It can deliver much higher flow temperatures',
+      'It requires no electrical supply to the outdoor unit',
+      'It always achieves a higher SCOP than any split system',
       'No F-gas qualified installer required for installation',
     ],
     correctAnswer: 3,
@@ -229,9 +229,9 @@ const quizQuestions = [
     question: 'Weather compensation in heat pump systems:',
     options: [
       'Adjusts flow temperature based on outdoor conditions to optimise efficiency',
-      'Temporarily reverses to remove ice from the outdoor coil',
-      'The temperature difference between source and sink increases',
-      'Ground temperatures are more stable and higher in winter',
+      'Holds the flow temperature at a fixed value all year round',
+      'Switches the heat pump off whenever it rains or snows',
+      'Increases compressor speed to match indoor humidity levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -241,10 +241,10 @@ const quizQuestions = [
     id: 13,
     question: 'The refrigerant R32 commonly used in modern ASHPs:',
     options: [
-      'No F-gas qualified installer required for installation',
+      'Has a higher GWP than R410A and is completely non-flammable',
       'Has lower GWP than R410A but is mildly flammable (A2L)',
-      'Ground temperatures are more stable and higher in winter',
-      'Temporarily reverses to remove ice from the outdoor coil',
+      'Is a natural refrigerant exempt from F-gas regulations',
+      'Has the same GWP as R410A but is cheaper to produce',
     ],
     correctAnswer: 1,
     explanation:
@@ -254,10 +254,10 @@ const quizQuestions = [
     id: 14,
     question: 'When sizing radiators for a heat pump system designed for 40degC flow temperature:',
     options: [
-      'Ground temperatures are more stable and higher in winter',
-      'Has lower GWP than R410A but is mildly flammable (A2L)',
+      'Radiators should be approximately half the size of 75degC systems',
+      'Radiators can remain exactly the same size as 75degC systems',
       'Radiators should be approximately 2-2.5 times larger than for 75degC systems',
-      'The temperature difference between source and sink increases',
+      'Radiators should be replaced entirely with electric panel heaters',
     ],
     correctAnswer: 2,
     explanation:

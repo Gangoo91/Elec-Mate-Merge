@@ -9,8 +9,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the approximate width of a single-width mobile access tower?',
-    options: ['0.5 metres', '0.7 metres', '1.0 metres', '1.35 metres'],
-    correctAnswer: 1,
+    options: ['0.7 metres', '0.5 metres', '1.0 metres', '1.35 metres'],
+    correctAnswer: 0,
     explanation:
       'Single-width towers are approximately 0.7m wide. This narrower footprint makes them suitable for confined spaces such as corridors, stairwells, and between racking.',
   },
@@ -43,10 +43,10 @@ const quizQuestions = [
     options: [
       'Stairwell tower',
       'Standard aluminium tower',
-      'Low-level or folding tower',
       'GRP tower',
+      'Low-level or folding tower',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Low-level and folding towers are designed for work at lower heights, typically under 2.5m. They are ideal for areas with limited headroom such as beneath mezzanine floors or in rooms with low ceilings.',
   },
@@ -54,12 +54,12 @@ const quizQuestions = [
     id: 5,
     question: 'What makes a stairwell tower different from a standard tower?',
     options: [
-      'It uses different materials',
       'It has adjustable leg lengths to accommodate sloping or stepped surfaces',
+      'It uses different materials',
       'It is always narrower than a standard tower',
       'It does not require guardrails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Stairwell towers feature adjustable leg lengths, allowing the base to sit level on stairs or sloping ground. The legs can be extended independently to compensate for the change in level.',
   },
@@ -80,8 +80,8 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What standard governs the design and use of mobile access towers in the UK?',
-    options: ['BS 7671', 'BS EN 1004', 'CDM 2015', 'LOLER 1998'],
-    correctAnswer: 1,
+    options: ['BS 7671', 'CDM 2015', 'BS EN 1004', 'LOLER 1998'],
+    correctAnswer: 2,
     explanation:
       'BS EN 1004 is the European standard for mobile access towers. It specifies design requirements, structural calculations, and user guidance. The current version is BS EN 1004-1:2020.',
   },
@@ -90,11 +90,11 @@ const quizQuestions = [
     question: 'A folding tower is most likely to be used for which type of task?',
     options: [
       'Exterior cladding installation at 8m height',
-      'Painting a ceiling in a small office at 2m height',
       'Installing a fire alarm system in a warehouse at 6m',
       'Replacing roof-mounted plant equipment',
+      'Painting a ceiling in a small office at 2m height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Folding towers are compact, low-level platforms ideal for tasks at modest heights (typically up to 2-2.5m) in small or indoor spaces. They fold flat for easy storage and transport.',
   },
@@ -106,12 +106,12 @@ const quickCheckQuestions = [
     question:
       'You need to access a lighting fitting in a corridor that is 1.1m wide. Would you choose a single-width or double-width tower?',
     options: [
-      'Double-width (1.35m) — more stable',
       'Single-width (0.7m) — fits the space',
+      'Double-width (1.35m) — more stable',
       'Either width would work',
       'Neither — use a ladder instead',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A single-width tower at 0.7m will fit comfortably in a 1.1m corridor with clearance either side. A double-width tower at 1.35m would not fit. Always check the available space before selecting your tower.',
   },

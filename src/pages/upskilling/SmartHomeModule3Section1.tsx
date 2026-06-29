@@ -65,8 +65,8 @@ const quizQuestions = [
   },
   {
     question: 'Which protocol is commonly used in commercial centralised lighting control?',
-    options: ['Zigbee', 'Z-Wave', 'DALI', 'Bluetooth'],
-    correctIndex: 2,
+    options: ['DALI', 'Zigbee', 'Z-Wave', 'Bluetooth'],
+    correctIndex: 0,
     explanation:
       'DALI (Digital Addressable Lighting Interface) is the industry standard for commercial lighting control, offering reliable digital communication and individual fixture addressing.',
   },

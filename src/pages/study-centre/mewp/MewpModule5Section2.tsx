@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     question:
       'The main engine on a boom lift has failed completely, and the auxiliary power unit battery is flat. Which emergency lowering method would work in this situation?',
     options: [
-      'Use the primary platform controls to lower',
+      'Pull the manual lowering valve handle at the base',
+      'Use the primary platform controls in the basket',
       'Activate the auxiliary power unit (APU)',
-      'Pull the manual lowering valve handle at the base of the machine',
-      'Use the engine override procedure',
+      'Follow the electronic engine override procedure',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The manual lowering valve is a purely mechanical system that works even with total electrical and engine failure. It opens a valve that allows hydraulic fluid to bypass the control system, and gravity (the weight of the boom and platform) provides the lowering force. It does not require any electrical power or engine operation.',
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     question:
       'Before elevating the platform on any MEWP, which of the following should you have already confirmed during familiarisation?',
     options: [
-      'The colour of the emergency lowering handle',
-      'The location and operation of the ground controls, emergency lowering valve, APU, and hand pump for that specific machine',
-      'That the machine has been painted recently',
-      'The name of the hire company that supplied the machine',
+      'The colour of the emergency lowering handle on the panel',
+      'The location and operation of every emergency lowering system on that machine',
+      'The date the machine chassis was last repainted by the depot',
+      'The name of the hire company that delivered the machine',
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'How many distinct control systems can a MEWP be fitted with for redundancy?',
     options: [
-      'Two — platform controls and ground controls only',
-      'Three — platform, ground, and emergency lowering',
-      'Four — primary platform, primary ground, auxiliary platform, and emergency/auxiliary lowering',
-      'Five — including a remote control system',
+      'Two — primary platform controls and primary ground controls',
+      'Three — primary platform, primary ground, and emergency lowering',
+      'Four — primary platform, primary ground, auxiliary platform, and emergency lowering',
+      'Five — adding a separate radio remote-control handset',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     id: 3,
     question: 'What powers the auxiliary power unit (APU) on a MEWP?',
     options: [
-      'The main diesel or petrol engine',
-      'An external mains electricity connection',
-      "The machine's battery, driving an electric motor connected to a small hydraulic pump",
-      'A manual hand crank operated by the ground rescue person',
+      'The main diesel or petrol engine running at idle',
+      'An external mains electricity supply plugged in at the base',
+      "The machine's battery, via a small electric-motor hydraulic pump",
+      'A manual hand crank turned by the ground rescue person',
     ],
     correctAnswer: 2,
     explanation:
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'The manual lowering valve works even with total electrical and engine failure because:',
     options: [
-      'It has its own battery backup',
       'It is a purely mechanical system that uses gravity and the weight of the boom/platform',
+      'It has its own battery backup',
       'It connects to the mains electricity supply',
       'It uses compressed air stored in a tank',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The manual lowering valve is a purely mechanical system. Pulling the handle opens a valve that allows hydraulic fluid to bypass the control system. The weight of the boom and platform provides the lowering force, assisted by gravity. No electrical power, engine, or battery is required — making it effective even with total system failure.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 5,
     question: 'A hand pump is best described as:',
     options: [
-      'A powered electric pump that operates automatically',
-      'A manual hydraulic pump where the operator physically pumps a lever to generate hydraulic pressure',
-      'A pneumatic pump that uses compressed air',
-      'A water pump used to clean the machine',
+      'A powered electric pump that operates the boom automatically',
+      'A pneumatic pump driven by compressed air from a stored tank',
+      'A water pump used to wash down and clean the machine',
+      'A manual hydraulic pump worked by hand to build pressure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A hand pump is a manual hydraulic pump, usually located at the base of the machine, where the operator physically pumps a lever to generate hydraulic pressure. It is very slow but works with total power failure. It is used as a last-resort method when the APU and manual lowering valve are unavailable.',
   },
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       'During familiarisation on a specific MEWP, which of the following questions about emergency lowering must you answer?',
     options: [
-      'Only where the ground controls are located',
-      'Only whether the machine has an APU',
-      'Where the ground controls are, how they are activated, where the emergency lowering valve is, whether it has an APU, where the hand pump is, and the engine override procedure',
-      'Only the colour of the emergency lowering handle',
+      'The location and operation of every emergency lowering system on the machine',
+      'Only where the primary ground control panel is located',
+      'Only whether the machine has an auxiliary power unit fitted',
+      'Only the colour and shape of the emergency lowering handle',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Familiarisation must cover ALL emergency lowering systems for that specific make and model: the location and activation of ground controls, the emergency lowering valve location, whether the machine has an APU, the hand pump location, and the engine override procedure. Every machine is different, and all answers should be in the manufacturer's operator manual.",
   },
@@ -172,11 +172,11 @@ const quizQuestions = [
       'Why is it important that the ground rescue person activating ground controls can OVERRIDE the platform controls?',
     options: [
       'It makes the machine go faster',
-      'It prevents the incapacitated operator from inadvertently interfering with the rescue',
       'It saves battery power',
       'It is not important — both sets of controls should work simultaneously',
+      'It prevents the incapacitated operator from inadvertently interfering with the rescue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Ground control override is a critical safety feature. If the operator is incapacitated (unconscious, injured, or suffering a medical episode), they may be slumped against the platform controls. If both sets of controls worked simultaneously, the platform controls could interfere with the ground rescue person's attempts to lower the platform. Override ensures the ground rescue person has full, unimpeded control.",
   },
@@ -185,10 +185,10 @@ const quizQuestions = [
     question:
       "The manufacturer's operator manual MUST be present on the MEWP at all times because:",
     options: [
-      'It is required for insurance purposes only',
-      'It contains the specific emergency lowering procedures, control locations, and limitations for that exact make and model',
-      'The hire company needs it for billing',
-      'It is only needed during the annual service',
+      'It is required by the insurer purely for policy documentation',
+      'It holds the emergency procedures and limits for that exact machine',
+      'The hire company needs it on board to raise the rental invoice',
+      'It is only consulted by the engineer during the annual service',
     ],
     correctAnswer: 1,
     explanation:

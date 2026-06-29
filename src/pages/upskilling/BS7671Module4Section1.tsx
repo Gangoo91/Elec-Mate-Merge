@@ -27,12 +27,12 @@ const inlineChecks = [
     question:
       'Basic protection has failed — a live conductor has come into contact with the metal casing of a Class I appliance. Which protective measure is now responsible for keeping the user safe?',
     options: [
-      'Basic protection — the insulation will recover',
       'Fault protection — earthing, bonding and automatic disconnection of supply',
-      'The user must keep clear; no protection is required',
-      'Functional earthing of the appliance',
+      'Basic protection — the damaged insulation will recover on its own',
+      'No protective measure applies; the user must simply keep clear of the casing',
+      'Functional earthing of the appliance keeps the user safe',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 layers protection: basic protection (Section 416 — insulation per Reg 416.2.1, barriers, enclosures) prevents contact in normal use; fault protection (Section 411) takes over once basic has been compromised. For ADS, fault protection is delivered by protective earthing + protective equipotential bonding + automatic disconnection (Reg 411.3.1.1, 411.3.1.2, 411.3.2).',
   },
@@ -41,12 +41,12 @@ const inlineChecks = [
     question:
       'You are designing a new lighting circuit for a kitchen in a private dwelling. Under BS 7671:2018+A4:2026, must the circuit be RCD-protected?',
     options: [
-      'No — Reg 411.3.3 only mandates RCDs on socket-outlet circuits up to 32 A',
-      'Yes — Reg 411.3.4 (new in A4) requires 30 mA RCD additional protection on AC final circuits supplying luminaires within domestic (household) premises',
-      'Only if the lighting points are inside a bathroom zone',
-      'Only if the cables are buried in walls less than 50 mm deep',
+      'No — Reg 411.3.3 only mandates RCDs on socket-outlet circuits rated up to 32 A',
+      'Only where one or more of the lighting points sit inside a bathroom or shower zone',
+      'Yes — Reg 411.3.4 (new in A4) requires 30 mA RCD protection for domestic luminaire final circuits',
+      'Only where the circuit cables are buried in walls at a depth of less than 50 mm',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 411.3.4 is one of the headline A4 additions. Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. It is independent of Reg 411.3.3 (sockets and mobile equipment) and applies whether or not the lighting points sit in a special location.',
   },
@@ -54,8 +54,8 @@ const inlineChecks = [
     id: 'm4s1-tn-disconnection',
     question:
       'A 32 A TN final circuit with socket-outlets is protected by a Type B MCB. What is the maximum permitted disconnection time for ADS to be deemed effective?',
-    options: ['0.2 s', '0.4 s', '1 s', '5 s'],
-    correctIndex: 1,
+    options: ['0.2 s', '1 s', '5 s', '0.4 s'],
+    correctIndex: 3,
     explanation:
       'Reg 411.3.2 / Table 41.1: in TN systems, final circuits with one or more socket-outlets rated up to 63 A — and final circuits up to 32 A supplying fixed connected current-using equipment — must disconnect within 0.4 s. 5 s applies to TN distribution circuits (Reg 411.3.2 NOTE); 1 s applies to TT distribution (Reg 411.3.2.4).',
   },
@@ -64,12 +64,12 @@ const inlineChecks = [
     question:
       'You are adding a new EV charging point to a domestic property fed from a TN-C-S (PME) supply. What does BS 7671 specifically prohibit you from doing in the EV circuit?',
     options: [
-      'Using an RCD with rated residual operating current ≤ 30 mA',
-      'Using a Type A RCD',
       'Including a PEN conductor in the EV charging circuit (Reg 722.312.2.1)',
-      'Bonding the EV charging chassis to the consumer unit MET',
+      'Using an RCD with a rated residual operating current of 30 mA or less',
+      'Using a Type A RCD on the EV charging circuit',
+      'Bonding the EV charging equipment chassis to the consumer unit MET',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Reg 722.312.2.1: a circuit supplying charging equipment for electric vehicles in a TN system shall NOT include a PEN conductor. Either provide a TN-S configuration to the EV (split N and PE before the EV circuit) or apply one of the alternative protective measures listed in Section 722 (e.g. open-PEN detection device, separate earth electrode). Reg 461.2 separately prohibits switching or isolating the PEN within TN-C / TN-C-S anywhere upstream.',
   },
@@ -78,10 +78,10 @@ const inlineChecks = [
     question:
       'A 24 V control circuit is derived from a 230 V auto-transformer (single winding tapped). The customer asks you to mark the circuit "SELV" on the cert. What is the right call?',
     options: [
-      'Mark it SELV — the voltage is below 50 V AC',
-      'Mark it PELV — earthing is permitted',
-      'Refuse — there is no safety isolation between primary and secondary, so the circuit is FELV, and FELV is not a protective measure',
-      'Mark it FELV and treat as a protective measure',
+      'Mark it SELV — the secondary voltage is below 50 V AC, which is all that matters',
+      'Mark it PELV — earthing of an extra-low-voltage control circuit is always permitted',
+      'Refuse — with no isolation between windings the circuit is FELV, which is not a protective measure',
+      'Mark it FELV and rely on it as a recognised BS 7671 protective measure',
     ],
     correctIndex: 2,
     explanation:
@@ -92,12 +92,12 @@ const inlineChecks = [
     question:
       'You are wiring a 7 kW EV charge point. The charger has built-in 6 mA DC fault detection. Which RCD type is required UPSTREAM at the consumer unit?',
     options: [
-      'Type AC',
+      'Type AC, which is adequate for a modern domestic EV charging circuit',
+      'Type B — it is always required for any EV charging installation',
+      'No upstream RCD is needed — the charger handles all detection internally',
       'Type A — sufficient because the charger handles the DC residual itself',
-      'Type B — always required for any EV install',
-      'No RCD needed — the charger handles all detection internally',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Where the EV charger has its own internal 6 mA DC fault detection (a "PCE with simple separation"), Type A upstream is sufficient. Type B is required only where the charger cannot handle smooth DC residual itself. Type AC is essentially obsolete domestically — it cannot detect pulsating DC produced by LED drivers, phone chargers and most consumer electronics. Always confirm against the EV-charger manufacturer\'s installation manual.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     question:
       'Under Section 411 (Reg 411.3.1.1, 411.3.1.2, 411.3.2), the protective measure "automatic disconnection of supply" is built from four ingredients. Which option lists them correctly?',
     options: [
-      'Basic insulation, barriers, enclosures, supplementary bonding',
       'Basic protection, protective earthing, protective equipotential bonding, automatic disconnection in case of a fault',
-      'Class II equipment, SELV, PELV, ADS',
-      'RCD, MCB, fuse, AFDD',
+      'Basic insulation, barriers, enclosures, and supplementary equipotential bonding',
+      'Class II equipment, SELV, PELV, and automatic disconnection of supply',
+      'RCD, MCB, fuse, and arc fault detection device (AFDD)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 411 (BS 7671 ADS protective measure): ADS is basic protection (Section 416) plus fault protection by protective earthing (Reg 411.3.1.1), protective equipotential bonding (Reg 411.3.1.2) and automatic disconnection in case of a fault (Reg 411.3.2), applied per the system earthing arrangement (Reg 411.4.4 TN, 411.5.3 TT or 411.6.3 IT).',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'Which document is the prosecutorial route if an installation defect causes injury — and where does BS 7671 sit in that picture?',
     options: [
-      'BS 7671 itself; departures are a criminal offence',
+      'BS 7671 itself is the statutory route, and any departure from it is a criminal offence',
+      'Building Regulations Part P only, as it is the sole statutory instrument for electrical work',
       'EAWR 1989 (and HSWA 1974) is the statutory route; BS 7671 compliance is the evidence used to demonstrate the duty was discharged',
-      'Building Regulations Part P only',
-      'The IET Code of Practice',
+      'The IET Code of Practice is the statutory route used to prosecute defective work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 is non-statutory. Prosecution comes through EAWR 1989 (Reg 4 in particular) and HSWA 1974. BS 7671 compliance is the benchmark courts and HSE use to assess whether the statutory duty was discharged. Reg 120.3 permits a designed departure but the burden of justification then sits with the designer/installer.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'A new domestic lighting circuit is wired on a Type B 6 A MCB with no RCD. From 15 April 2026 onwards, what BS 7671 observation code applies on an EICR?',
     options: [
-      'C3 — improvement recommended; non-compliance is historic only',
-      'C2 — potentially dangerous; A4 brings 411.3.4 into force and the absence of 30 mA RCD additional protection on a domestic luminaire circuit is now non-compliant',
-      'No code — lighting circuits never need RCDs',
-      'C1 — danger present, requires immediate action',
+      'C3 — improvement recommended only, as the missing RCD is a purely historic non-compliance',
+      'No code applies, because domestic lighting circuits never require RCD protection at all',
+      'C1 — danger present and immediate remedial action required before the circuit can be used',
+      'C2 — potentially dangerous, since A4 makes 30 mA RCD protection of domestic luminaires mandatory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4 (published 15 April 2026, replacing A3 from 15 October 2026) makes 411.3.4 a mandatory ("shall") requirement for AC final circuits supplying luminaires within domestic (household) premises. GN3 (Section K) requires every observation to be coded C1 / C2 / C3 / FI; "satisfactory" overall is not permitted with any C1 or C2 present. A new dwelling lighting circuit installed without 30 mA RCD protection is non-compliant with the current edition — typically C2 (potentially dangerous) where the absence increases real-world shock risk, C3 where the install is historic and otherwise sound.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'Reg 411.3.3 mandates 30 mA RCD additional protection on socket-outlets up to 32 A. Which exception does the regulation actually allow?',
     options: [
-      'No exception — RCDs are mandatory in every case',
-      'An exception to socket-outlets in dwellings only',
-      'An exception to (b) — sockets in non-dwelling locations — where a documented risk assessment by a skilled person (electrically) determines RCD protection is not necessary; (a) sockets used by ordinary persons / children and (c) mobile equipment outdoors cannot be excepted',
-      'An exception only for industrial 110 V CTE supplies',
+      'Category (b) sockets in other locations may be excepted by a documented risk assessment',
+      'No exception at all — 30 mA RCDs are mandatory on every socket-outlet in every case',
+      'An exception that applies to socket-outlets within dwellings (household premises) only',
+      'An exception that applies only to industrial 110 V centre-tapped-earth (RLV) supplies',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Reg 411.3.3 lists three categories. Only category (b) — sockets in other locations — is exceptable, and only where the risk assessment is documented, signed off by a skilled person (electrically) and attached to the EIC. (a) BA1/BA2 locations and (c) mobile equipment outdoors must always have 30 mA RCD additional protection.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'In a TN system, an installer measures Zs = 1.43 Ω at the furthest point of a 32 A Type B MCB circuit. Reference Zs (corrected) for ADS within 0.4 s on a Type B 32 A is approximately 1.37 Ω. What is the right call?',
     options: [
-      "Pass — it's close enough",
+      "Pass — at 1.43 Ω against 1.37 Ω it is close enough to accept",
+      'Re-test using a long-lead Zs method to obtain a lower reading',
       'Fail — measured Zs exceeds the maximum permitted value, so disconnection within the required time cannot be demonstrated; redesign or add an RCD to provide ADS',
-      'Re-test using a long-lead Zs',
-      'Increase MCB rating to relax the Zs limit',
+      'Increase the MCB rating to relax the maximum permitted Zs limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GN3 makes verification of EFLI the primary evidence that Reg 411.3.2 disconnection times can be met. If measured Zs exceeds the published maximum for that device (Reg 411.4.4 / OSG / manufacturer data), ADS via the MCB is not demonstrable. The fix is design — supplementing with a 30 mA RCD lets you rely on the RCD operating-time route; raising MCB rating breaks coordination with the cable.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which combination correctly describes SELV under Section 414?',
     options: [
-      'Up to 50 V AC / 120 V DC, earthed midpoint, basic protection by enclosure only',
-      'Up to 50 V AC / 120 V DC, no intentional connection to earth, fed by a safety isolating source (per Reg 414.4.4), exposed-conductive-parts not connected to earth',
-      'Up to 230 V AC, fed by an isolating transformer, earthed at the secondary',
-      'Functional earthing only; no isolation requirement',
+      'Up to 50 V AC / 120 V DC, with an earthed midpoint and basic protection by enclosure only',
+      'Up to 230 V AC, fed by an isolating transformer and earthed at the secondary winding',
+      'Functional earthing of the secondary only, with no electrical separation from other circuits',
+      'Up to 50 V AC / 120 V DC, no earth connection, fed by a safety isolating source per Reg 414.4.4',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SELV is band I (≤50 V AC / 120 V DC ripple-free), with no earth reference and complete electrical separation from any other circuit. The source must be a safety isolating transformer (BS EN 61558-2-6) or equivalent. Reg 414.4.4 also requires basic protection where the nominal voltage exceeds 25 V AC / 60 V DC ripple-free or where equipment is immersed.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'A Class II portable luminaire (no earth terminal, double square symbol) is being inspected. Which test is NOT required and which observation would warrant a code?',
     options: [
-      'Continuity of CPC required; missing earth = C1',
-      'Earth continuity NOT required; presence of an unauthorised earth connection (i.e. someone has wired one in) would be coded — the equipment is being relied on as Class II per Section 412 (Reg 412.1.2 / 412.2.1.3)',
-      'Insulation resistance test not required',
-      'No tests apply to Class II equipment at all',
+      'Earth continuity not required; an added unauthorised earth connection would be coded (Section 412)',
+      'Continuity of the CPC is still required, and a missing earth connection would be coded C1',
+      'The insulation resistance test is not required for this Class II double-insulated luminaire',
+      'No electrical tests apply to Class II equipment during inspection and testing at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Section 412 protective measure (double / reinforced insulation, Reg 412.1.2) is invalidated the moment an earth path is introduced — the measure relies on no single earth-fault path. Insulation resistance testing is still required during initial verification; earth continuity is not, because there is no CPC to verify.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       'Which protective measure should NOT be used as the sole protective measure on a circuit feeding a socket-outlet that the user can change equipment on?',
     options: [
-      'Automatic Disconnection of Supply',
-      'Double or reinforced insulation as the sole measure (Reg 412.1.2) — because the user could plug in Class I equipment, defeating the measure',
-      'SELV',
-      '30 mA RCD additional protection',
+      'Automatic Disconnection of Supply (ADS) using earthing, bonding and a protective device',
+      'Separated Extra-Low Voltage (SELV) from a safety isolating source feeding the circuit',
+      'Double or reinforced insulation as the sole measure (Reg 412.1.2), defeated by a Class I plug-in',
+      '30 mA RCD additional protection applied to the socket-outlet final circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 412.1.2 explicitly forbids using double / reinforced insulation as the sole protective measure on any circuit that includes a socket-outlet with earthing contact, LSC, DCL, cable coupler, or anywhere the user can change equipment without authorisation. The reason is that the protective measure depends on the entire circuit being Class II — one Class I plug-in defeats it.',
   },

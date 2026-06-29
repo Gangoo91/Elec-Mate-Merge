@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'single-line-purpose',
     question: 'What is the primary purpose of a single line diagram?',
     options: [
-      'Your employer (line manager or office contact), with your training provider as a secondary route',
+      'To show the exact physical position of every cable and accessory in the building',
       'To provide a simplified representation of the electrical distribution system',
-      'It is dust-tight and protected against water jets from any direction',
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\'s body (e.g., blood, urine)',
+      'To record the test results for each final circuit on the installation',
+      'To detail the internal wiring connections within each item of switchgear',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'eic-requirement',
     question: 'When must an Electrical Installation Certificate (EIC) be issued?',
     options: [
-      'By scheduling operation based on occupancy and weather conditions',
-      'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
+      'Only when an existing installation is being periodically inspected',
+      'For minor alterations that do not introduce any new circuits',
       'For any new installation or addition to an existing installation',
-      'Periodic synchronization signals from coordinators',
+      'Whenever an appliance is connected to an existing socket outlet',
     ],
     correctIndex: 2,
     explanation:
@@ -67,9 +67,9 @@ const quickCheckQuestions = [
     question: 'As-built drawings differ from construction drawings because they:',
     options: [
       'Show the installation exactly as constructed including all variations',
-      'Phase-shift the start winding current to create a temporary 2-phase field for starting',
-      'The test current passes through earth causing imbalance',
-      'When investigating supply problems or intermittent faults',
+      'Show the intended design before any site changes are made',
+      'Contain only the single line diagram and nothing else',
+      'Are produced by the client rather than the installing contractor',
     ],
     correctIndex: 0,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What information must a distribution schedule contain for each circuit?',
     options: [
-      'Operating instructions, maintenance schedules, as-built drawings, and test certificates',
-      'For additions or alterations that do not extend to new circuits',
+      'The name of the installer and the date the circuit was energised only',
+      'A photograph of the completed termination at the distribution board',
       'Circuit number, description, protective device rating, cable size, and design current',
-      'As-built drawings incorporate all variations and changes made during construction',
+      'The manufacturer warranty period for each item of installed equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'Who is responsible for signing Section 1 (Declaration by Designer) of an EIC?',
     options: [
-      'Potentially dangerous - urgent remedial action required',
-      'Cable type, size, length, route, origin, and destination',
-      'For the working life of the installation',
+      'The client who commissioned the electrical installation work',
+      'The person who carried out the inspection and testing',
+      'The DNO representative who connected the incoming supply',
       'The person responsible for the design of the installation',
     ],
     correctAnswer: 3,
@@ -123,9 +123,9 @@ const quizQuestions = [
     question: 'What is the purpose of a Minor Electrical Installation Works Certificate (MEIWC)?',
     options: [
       'For additions or alterations that do not extend to new circuits',
-      'Cable type, size, length, route, origin, and destination',
-      'Potentially dangerous - urgent remedial action required',
-      'The person responsible for the design of the installation',
+      'For certifying a complete new installation in a domestic property',
+      'For reporting the overall condition of an existing installation',
+      'For recording the periodic inspection of a commercial premises',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'An EICR classification code C2 indicates:',
     options: [
-      'Cable type, size, length, route, origin, and destination',
+      'Danger present - immediate remedial action required',
       'Potentially dangerous - urgent remedial action required',
-      'The person responsible for the design of the installation',
-      'For additions or alterations that do not extend to new circuits',
+      'Improvement recommended - action at discretion',
+      'Further investigation required without delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'O&M manuals for electrical installations should include:',
     options: [
-      'For additions or alterations that do not extend to new circuits',
-      'Circuit number, description, protective device rating, cable size, and design current',
+      'Only the manufacturer data sheets for the installed equipment',
+      'A copy of the original quotation and the signed contract',
       'Operating instructions, maintenance schedules, as-built drawings, and test certificates',
-      'Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD operation',
+      'The single line diagram and nothing further is required',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,9 +161,9 @@ const quizQuestions = [
     id: 7,
     question: 'According to BS 7671, how long must EICs and associated test results be retained?',
     options: [
-      '6× cable overall diameter (factory minimum).',
-      'Section 8 — Exposure controls/personal protection',
-      'Regular inspection for corrosion and weathering',
+      'For a minimum of 12 months after completion',
+      'Until the next periodic inspection is carried out',
+      'For 6 years to match standard contract law limits',
       'For the working life of the installation',
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
     question: 'What distinguishes as-built drawings from construction issue drawings?',
     options: [
       'As-built drawings incorporate all variations and changes made during construction',
-      'Operating instructions, maintenance schedules, as-built drawings, and test certificates',
-      'Circuit number, description, protective device rating, cable size, and design current',
-      'The person responsible for the design of the installation',
+      'As-built drawings are always produced at a larger drawing scale',
+      'As-built drawings omit the cable routes to keep them simple',
+      'As-built drawings are issued before construction work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 10,
     question: 'A cable schedule should record which of the following?',
     options: [
-      'For additions or alterations that do not extend to new circuits',
-      'The person responsible for the design of the installation',
+      'The EICR classification code assigned to each cable',
+      'The maintenance frequency recommended for each cable',
       'Cable type, size, length, route, origin, and destination',
-      'For the working life of the installation',
+      'The warranty period offered by the cable manufacturer',
     ],
     correctAnswer: 2,
     explanation:
@@ -228,9 +228,9 @@ const quizQuestions = [
     question: 'Which test results must be recorded on Schedule of Test Results?',
     options: [
       'Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD operation',
-      'Circuit number, description, protective device rating, cable size, and design current',
-      'As-built drawings incorporate all variations and changes made during construction',
-      'Operating instructions, maintenance schedules, as-built drawings, and test certificates',
+      'Only the insulation resistance and continuity values for each circuit',
+      'The ambient temperature and humidity recorded on the day of testing',
+      'The make and model of the test instruments used for the inspection',
     ],
     correctAnswer: 0,
     explanation:

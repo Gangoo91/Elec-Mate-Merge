@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'What did A4:2026 change in Reg 643.3 (insulation resistance test)?',
     options: [
-      'No change',
-      'Reg 643.3 was redrafted in A4:2026. Requirements for testing IR where equipment is likely to influence the verification test or be damaged have been clarified — reference is made to a 250 V DC test following the connection of equipment. Sequence: 500 V DC IR test before equipment connected → connect equipment → 250 V DC follow-on test to confirm IR remains acceptable without risking electronic equipment damage. Critical for LCT installs with PV inverters, BESS, EV chargers, heat pump VSDs',
-      'Random',
-      'Cancelled IR',
+      'It now requires every installation to be tested at 1000 V DC regardless of equipment, raising the voltage to improve fault detection on LCT circuits',
+      'It clarified a 250 V DC follow-on test after equipment is connected, alongside the 500 V DC test done before connection',
+      'It was deleted, so insulation resistance testing is no longer required where electronic equipment such as PV inverters or EV chargers is connected',
+      'It now mandates an AC insulation resistance test in place of the DC test to avoid polarising the electronics in connected LCT equipment',
     ],
     correctIndex: 1,
     explanation:
@@ -38,24 +38,24 @@ const inlineChecks = [
     question:
       'What did A4:2026 change about RCD testing and Table 3A?',
     options: [
-      'Cancelled testing',
-      'A4:2026 deleted Table 3A (Time / current performance criteria for tests of RCDs) from Appendix 3. The previous requirement to test against that table no longer applies — instead a single alternating current test at the rated residual operating current (IΔn) verifies the RCD\'s effectiveness regardless of Type (AC / A / F / B). A functional test is still carried out at commissioning + on EICR. RCD Type is still selected per Reg 531.3.3 (e.g. Type B where smooth DC residual paths exist — BESS, EV charger, heat pump VSD). Cert evidence: per-RCD test result',
-      'Random',
-      'No tests required',
+      'It deleted Table 3A, so a single AC test at IΔn now verifies any RCD; Type is still selected per Reg 531.3.3',
+      'It expanded Table 3A with separate tripping-time columns for Type F and Type B, and testing is now done against the device-specific row',
+      'It retained Table 3A but added a requirement to test every RCD at five times IΔn as well as at IΔn against smooth DC residual currents',
+      'It removed the requirement to test RCDs at commissioning, replacing it with a manufacturer self-certification declaration for each device',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'A4:2026 deleted Table 3A (Time / current performance criteria for tests of RCDs) from Appendix 3. Under the revised Reg 643.3 + associated Appendix 3 changes, a single alternating current test at the rated residual operating current (IΔn) is now used to verify RCD effectiveness regardless of RCD Type — the device shall trip at IΔn. Practitioners should no longer rely on Table 3A for pass/fail criteria. RCD Type is still SELECTED per Reg 531.3.3: (1) Type AC — alternating sinusoidal residual. (2) Type A — AC + pulsating DC residual. (3) Type F — AC + composite + high-frequency (covers VSD-supplied loads). (4) Type B — AC + pulsating DC + smooth DC residual (covers full LCT electronics range). LCT installs often use Type B RCDs (BESS, EV chargers, heat pump VSDs may produce a smooth DC component) — but the verification test is the single AC test at IΔn. Cert evidence bundle: per-RCD test result on schedule of test, including Type identification + measured operating time at IΔn.',
+      'A4:2026 deleted Table 3A (Time / current performance criteria for tests of RCDs) from Appendix 3. Under Reg 643.8 + associated Appendix 3 changes, a single alternating current test at the rated residual operating current (IΔn) is now used to verify RCD effectiveness regardless of RCD Type — a general non-delay RCD must disconnect within 300 ms at IΔn (Reg 643.8 NOTE). Practitioners should no longer rely on Table 3A for pass/fail criteria. RCD Type is still SELECTED per Reg 531.3.3: (1) Type AC — alternating sinusoidal residual. (2) Type A — AC + pulsating DC residual. (3) Type F — AC + composite + high-frequency (covers VSD-supplied loads). (4) Type B — AC + pulsating DC + smooth DC residual (covers full LCT electronics range). LCT installs often use Type B RCDs (BESS, EV chargers, heat pump VSDs may produce a smooth DC component) — but the verification test is the single AC test at IΔn. Cert evidence bundle: per-RCD test result on schedule of test, including Type identification + measured operating time at IΔn.',
   },
   {
     id: 'm11s8-evidence-bundle',
     question:
       'What goes into the M11 commissioning cert evidence bundle for an LCT install?',
     options: [
-      'Just EIC',
-      'Multi-document bundle: (1) Reg 643 Part 6 schedule of inspection + schedule of test results. (2) Chapter 81 efficiency design records + EEMS commissioning + monitoring plan. (3) BS EN 62305 risk assessment + LPS records (where applicable). (4) Section 443 + 534 SPD records + manufacturer DoCs. (5) Reg 826.1.2.1 multi-source fault assessment. (6) Anti-islanding test record + G98 / G99 reference + DNO sign-off. (7) Manufacturer DoCs per LCT component. (8) Final EIC. The bundle is the complete M11 verification chain',
-      'Random',
-      'Owner notes',
+      'The EIC alone, since the schedule of inspection and schedule of test results already capture everything required for an LCT install',
+      'A multi-document bundle: Part 6 test records, Chapter 81 efficiency records, SPD and LPS records, fault assessment, anti-islanding test, DoCs and the EIC',
+      'The DNO connection agreement plus the inverter manufacturer DoC, which between them satisfy all BS 7671 verification requirements for the install',
+      'A single combined MCS certificate that covers the design, installation and verification of every low-carbon technology on the project',
     ],
     correctIndex: 1,
     explanation:
@@ -66,12 +66,12 @@ const inlineChecks = [
     question:
       'What does the EICR scope for an LCT install verify in years 5-10 post-install?',
     options: [
-      'Nothing new',
-      'EICR scope verifies safety against the install\'s amendment + reviews Chapter 81 / 82 records (including the EEMS per Reg 825.1) for consistency. Specifically: SPD status (visual indicators), anti-islanding functional test (inverter self-test where available), RCD operation by a single AC test at IΔn (Table 3A deleted in A4:2026), IR test, continuity, polarity, EFLI, LPS visual inspection cycle (BS EN 62305-3 Annex E) + earth resistance measurement, manufacturer DoCs cross-referenced. EICR codes (C1/C2/C3/FI) per safety reg breach against install-date amendment',
-      'Customer-led',
-      'Random',
+      'Only the items recorded on the original EIC schedule of test results, repeated identically with no review of SPDs, anti-islanding or LPS records',
+      'The energy performance against the Chapter 81 design only, since safety verification belongs to the original installer and is not revisited at EICR',
+      'Safety against the install-date amendment plus SPD status, anti-islanding, the standard Part 6 tests and the LPS records, with EICR codes applied',
+      'Full compliance with the latest amendment in force at the EICR date, coding any divergence from current standards as C2 regardless of install date',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'EICR scope for LCT install in years 5-10 post-install: (1) Verifies safety against install-date amendment — EICR codes (C1 immediate danger, C2 potentially dangerous, C3 improvement recommended, FI further investigation) per Chapter 65 + Appendix 6 against the BS 7671 amendment in force at original install. (2) Reviews Chapter 81 / 82 records (including the EEMS per Reg 825.1) — for consistency with install + customer use (year-1 verification record + ongoing monitoring); Chapter 81 records do not retroactively impose efficiency requirements on pre-A4:2026 installs but post-A4:2026 EICR may flag absent Chapter 81 evidence as C3 (improvement). (3) SPD status — visual indicators on each SPD; flagged failures = replacement; cert evidence updated. (4) Anti-islanding functional test — modern inverter self-test mode + manufacturer DoC review; failure = generator disconnect until repaired. (5) A4:2026 test methods — Reg 643.3 redrafted IR sequence (500 V DC pre-equipment + 250 V DC post-equipment); RCD verification by a single AC test at IΔn (Table 3A deleted). (6) LPS visual inspection per BS EN 62305-3 Annex E cycle (1-4 years per LPL); earth resistance measurement; LPS specialist may be appropriate. (7) Manufacturer DoCs cross-referenced to current install state. (8) EICR report references the install\'s amendment + the EICR\'s amendment + any divergence in current state.',
   },
@@ -82,10 +82,10 @@ const quizQuestions = [
     question:
       'A new-build domestic LCT install post-A4:2026: PV + BESS + heat pump + EV charger. What is the full commissioning chain?',
     options: [
-      'Random',
-      'Full chain: (1) Pre-install design records — Chapter 81 per-circuit design + Reg 826.1.2.1 multi-source fault assessment + BS EN 62305-2 risk summary + SPD selection rationale + G99 connection offer (where applicable). (2) Install — per design + manufacturer DoCs. (3) Reg 643 Part 6 — schedule of inspection + IR (500 V DC pre + 250 V DC post per A4:2026 redraft) + continuity + polarity + RCD verification by a single AC test at IΔn (Table 3A deleted) + EFLI + functional. (4) Anti-islanding test — G98 simulated or G99 DNO-witnessed; verify within G99 time. (5) EEMS commissioning (Reg 825.1) + monitoring plan + customer training. (6) Cert evidence bundle + EIC + customer handover',
-      'Just IR test',
-      'No commissioning',
+      'A reduced chain: install per the manufacturer instructions, do IR and EFLI tests and notify the DNO — no Chapter 81, SPD or anti-islanding records',
+      'Design records, install, Part 6 verification, anti-islanding test, EEMS commissioning, then the cert bundle, EIC and handover',
+      'The full chain but with the IR test omitted, because connecting PV inverters, BESS and EV chargers makes insulation resistance testing unreliable',
+      'The full chain but with anti-islanding replaced by a visual check of the inverter display, since G98 and G99 do not apply to domestic installs',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +95,12 @@ const quizQuestions = [
     question:
       'How does the LPS inspection cycle integrate with EICR + ongoing customer maintenance?',
     options: [
-      'Separate forever',
-      'LPS inspection cycle per BS EN 62305-3 Annex E: visual + measurement at 1-4 year intervals per LPL. LPS specialist (UK 2025-26 ATLAS-accredited typical). EICR cycle per BS 7671 / customer / property type: typical 5-10 years residential, 5 years commercial. Two separate cycles — but related. EICR scope reviews LPS evidence + reflects in EICR report. Customer maintenance plan integrates both. After known significant lightning event: out-of-cycle inspection for both LPS + electrical install',
-      'Random',
-      'Same cycle',
+      'The LPS inspection and the EICR run on the same cycle and are done together by the same competent person, producing a single combined certificate',
+      'The LPS is inspected only once at installation; thereafter it is covered entirely by the periodic EICR and needs no separate inspection cycle',
+      'Two separate but related cycles: the LPS on its 1-4 year Annex E interval and the EICR on its own period, with the EICR reviewing LPS evidence',
+      'The two cycles are entirely separate and must never be cross-referenced, so the EICR makes no mention of the LPS status or inspection records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LPS inspection cycle (BS EN 62305-3 Annex E) + EICR (BS 7671) are separate but related: (1) LPS inspection cycle — visual + measurement at intervals: LPL I = 1 year visual + 1 year detailed; LPL II = 1 year visual + 2 year detailed; LPL III = 2 year visual + 4 year detailed; LPL IV = 4 year both. UK 2025-26 ATLAS-accredited specialist or chartered engineer with LPS competency. Inspection certificate retained with property records + insurance. (2) EICR cycle — per BS 7671 / Building Regs / property type. Typical 5-10 years residential; 5 years commercial; specific durations per landlord regs / business sector. (3) Two cycles — separate documents + dates + competent persons. EICR scope reviews LPS evidence for consistency (LPS certificate within cycle? Last inspection visible damage? Earth termination test current?) + reflects findings in EICR report (e.g. C3 improvement note if LPS overdue). (4) After significant lightning event — out-of-cycle inspection recommended for both LPS (visual + earth) + electrical install (SPD status + IR + RCD functional). (5) Customer maintenance plan — should integrate both LPS + EICR cycles + insurance reporting requirements. (6) Cert evidence bundle — both documents in the customer\'s property file.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       'Chapter 81 verification at commissioning — what specifically does the verifier confirm?',
     options: [
-      'Random',
-      'Cable CSA matches design records (per-circuit Chapter 81 table); voltage drop calculation matches install; EEMS / smart control configured per design; monitoring points (sub-meters + CT clamps + smart-meter export) operational; annual energy estimate per LCT component documented; payback model attached; year-1 verification trigger set. Together with Reg 643 Part 6 safety verification, the commissioning chain demonstrates compliance + efficiency design. Cert evidence bundle integrates',
-      'No verification',
-      'Only safety',
+      'Only that the installed equipment matches the quotation; energy efficiency is assessed later at the year-1 visit, not at commissioning',
+      'That cable sizes, voltage drop, EEMS configuration and monitoring points match the design, with the energy estimate and payback model recorded',
+      'Only the safety items in Reg 643 Part 6, because Chapter 81 is design guidance and is not verified at commissioning of the installation',
+      'That the predicted payback period is under ten years, since this is the single pass/fail criterion Chapter 81 sets for an LCT install',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'What is the relationship between commissioning + the Year-1 verification visit?',
     options: [
-      'Same thing',
-      'Commissioning = initial verification at install completion (Reg 643 + Chapter 81 records). Year-1 verification = follow-up visit (or remote review) typically 12 months post-install to compare actual energy use + LCT performance to Chapter 81 design assumptions. Significant deviation triggers investigation. Year-1 verification is a Chapter 81 design construct (not a separate BS 7671 reg) — designer\'s assumption validation. Cert evidence bundle: original commissioning records + year-1 verification report',
-      'Random',
-      'Not done',
+      'Commissioning is the initial verification at install; year-1 then compares actual energy use to the Chapter 81 design, with deviation triggering review',
+      'Commissioning and the year-1 verification are the same event under different names, both carried out on the day the installation is energised',
+      'Year-1 verification is a mandatory BS 7671 regulation requiring a full repeat of the Reg 643 Part 6 safety tests exactly 12 months after commissioning',
+      'Commissioning covers the energy design while year-1 covers the electrical safety tests, which are deferred until the system has run for a full year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Commissioning vs Year-1 verification: (1) Commissioning — Reg 643 Part 6 initial verification at install completion + Chapter 81 design records confirmation + manufacturer DoCs collected + customer handover. Single event at install end. (2) Year-1 verification — follow-up at typically 12 months post-install: (a) Review actual annual energy use per LCT component (PV kWh generated; BESS kWh in/out; heat pump kWh consumed; EV kWh consumed). (b) Compare to Chapter 81 design assumption. (c) Significant deviation (typical threshold >20%) triggers investigation: customer load profile differs from assumption; equipment performance differs from manufacturer claim; tariff change; install fault. (d) Designer / installer engages with customer + may update design records. (3) Year-1 verification is a Chapter 81 design construct — not a separate BS 7671 reg. Designer\'s assumption-validation good practice + Chapter 81 monitoring plan typically defines it. (4) Documentation — year-1 verification report attached to original cert evidence bundle; updated payback model where applicable; customer-facing update. (5) Customer relationship — year-1 verification reinforces installer / customer relationship + builds trust in design process; future LCT add-ons + EICR easier with established record. (6) Cert evidence bundle: commissioning records + year-1 verification report + ongoing monitoring data summary.',
   },
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       'How does the EICR report handle a post-A4:2026 install vs a pre-A4:2026 install?',
     options: [
-      'Same way',
-      'EICR codes (C1/C2/C3/FI) apply against the install\'s amendment, not the EICR\'s amendment. Pre-A4:2026 install + post-A4:2026 EICR: verifies safety per install-date amendment; Chapter 81 absence is NOT a safety code (was not required at install date). Post-A4:2026 install + post-A4:2026 EICR: full A4:2026 scope; Chapter 81 records reviewed + flagged C3 (improvement) if missing. EICR records install-date amendment + EICR-date amendment for traceability',
-      'Random',
-      'Always fail older',
+      'Both are assessed identically against the latest amendment in force at the EICR date, so a pre-A4:2026 install is coded C2 wherever it falls short',
+      'Codes apply against the install-date amendment, so missing Chapter 81 records are not a safety code on a pre-A4:2026 install but may be C3 on a newer one',
+      'A pre-A4:2026 install is automatically coded C1 (immediate danger) at any post-A4:2026 EICR because it predates the current edition of BS 7671',
+      'The amendment dates are irrelevant to EICR coding; codes are assigned solely on the inspector\'s judgement without reference to the standard in force',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'What is the M11 module\'s contribution to the broader renewable energy course (M1-M12)?',
     options: [
-      'No contribution',
-      'M11 covers the post-A4:2026 design + verification stack for LCT installs: Chapter 81 (efficiency) + BS EN 62305 (lightning) + Section 443 / 534 (SPDs) + Reg 826.1.2.1 (multi-source fault) + Reg 551.7.5 (anti-islanding) + Reg 643 (commissioning). Together they apply to every M1-M10 technology — PV, BESS, EV, heat pump, wind, CHP, solar thermal, biomass, micro-hydro. M11 is the integrating design + verification layer. M12 closes with full testing + commissioning + handover detail across all LCT',
-      'Random',
-      'Just lightning',
+      'M11 covers only the lightning protection (BS EN 62305) for LCT installs; the efficiency, fault and anti-islanding topics belong to other modules',
+      'M11 simply repeats the technology-specific content of M1-M10 as a revision module, adding no new design or verification material at all',
+      'M11 covers the financial payback and customer sales case for LCT installs, with the technical design and verification handled entirely in M12',
+      'It is the integrating design and verification layer — efficiency, lightning, SPDs, multi-source fault, anti-islanding and commissioning across every LCT',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'M11 in the renewable energy course context: (1) M1-M10 covered the specific LCT technologies — PV (M2-M4), BESS (M5), EV (M6-M7), heat pumps (M8), other LCT (M9), hybrid + EMS + smart export (M10). Each module covers the technology-specific scope. (2) M11 covers the integrating post-A4:2026 design + verification stack that applies to every LCT install: (a) Chapter 81 efficiency design — applies to every install. (b) BS EN 62305 lightning + Section 443 / 534 SPDs — applies wherever the LCT install needs protection. (c) Reg 826.1.2.1 multi-source fault contribution — applies to every PEI. (d) Reg 551.7.5 anti-islanding — applies to every grid-paralleled generator. (e) Reg 643 commissioning — applies to every install. (3) M11 §8 ties the chain together — the commissioning verification integrates Chapter 81 + lightning + SPDs + fault + anti-islanding + the BS 7671 safety verification into one cert evidence bundle. (4) M12 (next module) covers full testing + commissioning + handover detail across all LCT — IV / IR on DC, BESS health, PEN faults, MCS handover packs, EICR follow-up. M12 is the closing detail module. (5) Together M11 + M12 = the design + verification + handover framework for any LCT install. M11 sets the post-A4:2026 stack; M12 closes the testing detail.',
   },
@@ -218,7 +218,7 @@ export default function RenewableEnergyModule11Section8() {
             points={[
               'M11 §8 integrates the full M11 commissioning chain — Chapter 81 + lightning + SPDs + multi-source fault + anti-islanding + Reg 643 Part 6 verification.',
               'Reg 643.3 redrafted in A4:2026: IR test sequence around electronics — 500 V DC pre-equipment connection + 250 V DC post-equipment to confirm IR without risking damage.',
-              'Table 3A (RCD time/current performance criteria) deleted in A4:2026: a single AC test at IΔn now verifies the RCD regardless of Type (AC / A / F / B) per the revised Reg 643.3 + Appendix 3. RCD Type is still selected per Reg 531.3.3.',
+              'Table 3A (RCD time/current performance criteria) deleted in A4:2026: a single AC test at IΔn now verifies the RCD regardless of Type (AC / A / F / B) per Reg 643.8 + Appendix 3 (general non-delay RCD must disconnect within 300 ms). RCD Type is still selected per Reg 531.3.3.',
               'Chapter 81 verification: per-circuit cable CSA matches design + voltage drop matches install + EEMS configured per design + monitoring points operational + annual energy estimate documented.',
               'BS EN 62305 LPS inspection cycle (Annex E): 1-4 years per LPL; UK 2025-26 ATLAS specialist; separate from EICR cycle but cross-referenced.',
               'SPD records: per location + Type + Uc + Up + In/Iimp + Iscc + manufacturer DoCs + visual status indicators checked periodically.',
@@ -530,8 +530,8 @@ export default function RenewableEnergyModule11Section8() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · RCD verification — Table 3A deleted (revised Reg 643.3 + Appendix 3)"
-            clause="Table 3A (Time/current performance criteria for tests of RCDs) in Appendix 3 has been DELETED in A4:2026. The previous requirement to test according to that table is no longer applicable; instead a single alternating current test at the rated residual operating current (IΔn) is used to verify the RCD's effectiveness regardless of RCD Type. A functional test is also carried out at commissioning."
+            source="BS 7671:2018+A4:2026 · RCD verification — Table 3A deleted (Reg 643.8 + Appendix 3)"
+            clause="Table 3A (Time/current performance criteria for tests of RCDs) in Appendix 3 has been DELETED in A4:2026. The previous requirement to test according to that table is no longer applicable; instead, under Reg 643.8, a single alternating current test at the rated residual operating current (IΔn) is used to verify the RCD's effectiveness regardless of RCD Type — a general non-delay RCD must disconnect within 300 ms (Reg 643.8 NOTE). A functional test is also carried out at commissioning."
             meaning="A4:2026 deleted Table 3A and simplified RCD verification: regardless of RCD Type, an AC test at IΔn confirms the device trips and is effective — practitioners should NOT rely on the deleted Table 3A for pass/fail criteria. RCD Type is still SELECTED per Reg 531.3.3: (a) Type AC — alternating sinusoidal residual; (b) Type A — alternating + pulsating DC residual; (c) Type F — alternating + composite + high-frequency (covers VSD-supplied loads); (d) Type B — alternating + pulsating DC + smooth DC residual (covers full LCT electronics range). For LCT installs: BESS inverters, EV chargers, heat pump VSDs may produce smooth DC residual under fault conditions → a Type B RCD is selected per manufacturer DoC — but the verification test is the single AC test at IΔn, not a per-Type time/current profile. Modern multifunction testers (Fluke, Megger, Metrel etc.) perform the AC test at IΔn. Cert evidence bundle: schedule of test records RCD Type + measured operating time at IΔn + tester manufacturer DoC + last calibration."
           />
 
@@ -700,7 +700,7 @@ export default function RenewableEnergyModule11Section8() {
             points={[
               'M11 §8 integrates the full M11 commissioning chain — Chapter 81 + BS EN 62305 + Section 443/534 SPDs + Reg 826.1.2.1 multi-source fault + Reg 551.7.5 anti-islanding + Reg 643 Part 6 verification.',
               'Reg 643.3 A4:2026 redraft: IR test sequence — 500 V DC pre-equipment + 250 V DC post-equipment. Both results recorded.',
-              'Table 3A deleted in A4:2026: RCD verification is now a single AC test at IΔn regardless of Type (per the revised Reg 643.3 + Appendix 3). RCD Type still selected per Reg 531.3.3.',
+              'Table 3A deleted in A4:2026: RCD verification is now a single AC test at IΔn regardless of Type (per Reg 643.8 + Appendix 3; general non-delay RCD must disconnect within 300 ms). RCD Type still selected per Reg 531.3.3.',
               'Chapter 81 verification at commissioning: cable CSA matches design + voltage drop matches install + EEMS configured per design + monitoring operational + annual energy estimate documented.',
               'BS EN 62305 LPS inspection cycle (Annex E): 1-4 years per LPL. Separate from EICR cycle but cross-referenced. ATLAS specialist UK 2025-26.',
               'SPD records: per location + Type + Uc + Up + In/Iimp + Iscc + manufacturer DoCs + visual status indicators + Reg 443.4.1 + Reg 534.4 family compliance.',

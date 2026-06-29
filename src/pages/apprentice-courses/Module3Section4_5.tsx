@@ -48,12 +48,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'True or False: Plastic cable clips are acceptable as the sole fixing method in escape routes.',
-    options: ['True', 'False'],
+    question: 'Are plastic cable clips acceptable as the sole fixing method in escape routes?',
+    options: [
+      'Yes - plastic clips are permitted everywhere',
+      'No - non-combustible supports are required in escape routes',
+      'Yes - provided they are heat-resistant plastic',
+      'Yes - if spaced more closely than normal',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. The 18th Edition requires non-combustible supports in escape routes. Plastic clips must be combined with metal fixings.',
+      'The 18th Edition requires non-combustible supports in escape routes. Plastic clips must be combined with metal fixings.',
   },
   {
     id: 4,

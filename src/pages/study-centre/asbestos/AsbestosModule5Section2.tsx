@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'double-bag-fill-level',
     question: 'To what level should asbestos waste bags be filled before sealing?',
     options: [
-      'No more than two-thirds full',
       'Completely full to avoid wasting bags',
+      'No more than two-thirds full',
       'Half full at most',
       'It does not matter as long as the bag can be sealed',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Asbestos waste bags should be filled to no more than two-thirds of their capacity. This allows sufficient space at the top to create a secure goose-neck twist and tape seal, forming an airtight closure. Overfilling bags makes it impossible to seal them properly and increases the risk of bags splitting during handling and transport.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'Who is legally permitted to transport asbestos waste from a work site to a disposal facility?',
     options: [
-      'Only a licensed waste carrier registered with the Environment Agency',
       'Any contractor with a van large enough to carry the waste',
       'The electrician who carried out the work, provided they use sealed bags',
+      'Only a licensed waste carrier registered with the Environment Agency',
       'The building owner or dutyholder',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Asbestos waste can ONLY be transported by a waste carrier holding a valid licence issued by the Environment Agency (or SEPA in Scotland, NRW in Wales). The waste producer has a legal duty of care to verify that the carrier holds a current licence before handing over the waste. Transporting asbestos waste without a licence is a criminal offence.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     question:
       'In the 7-step personal decontamination sequence, what is the correct order for removing protection?',
     options: [
-      'Remove RPE first, then coverall, then gloves',
       'Damp-wipe suit, remove boot covers, remove outer gloves, peel off coverall inside-out, remove RPE, remove inner gloves, bag all waste',
+      'Remove RPE first, then coverall, then gloves',
       'Remove all items simultaneously and place them in a single waste bag',
       'Remove coverall first, then RPE, then gloves and boot covers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The correct 7-step sequence is: (1) damp-wipe the suit, (2) remove boot covers, (3) remove outer gloves, (4) peel off coverall inside-out, (5) remove RPE, (6) remove inner gloves, (7) bag all waste as asbestos waste. RPE is always the last item of protection removed, ensuring the worker continues to breathe filtered air whilst potentially contaminated items are being removed.',
   },
@@ -94,11 +94,11 @@ const quizQuestions = [
       'What is the minimum thickness required for the inner red polythene asbestos waste sack?',
     options: [
       '100 gauge',
-      '250 gauge (or 1000 gauge for sharp materials)',
       '500 gauge for all types of waste',
+      '250 gauge (or 1000 gauge for sharp materials)',
       'There is no minimum thickness requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The inner red polythene waste sack must be a minimum of 250 gauge thickness for standard asbestos waste. For sharp or abrasive materials that could puncture the bag (such as broken asbestos cement sheets), a heavier gauge of 1000 gauge is required. Using bags below the minimum gauge increases the risk of puncture, tearing, and fibre release during handling and transport.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     options: [
       'Less than 0.1 fibres per cm\u00B3',
       'Less than 0.05 fibres per cm\u00B3',
-      'Less than 0.01 fibres per cm\u00B3',
       'Zero fibres per cm\u00B3',
+      'Less than 0.01 fibres per cm\u00B3',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The clearance air test (Stage 3 of the 4-stage clearance procedure) must demonstrate that the airborne fibre concentration is below 0.01 fibres per cm\u00B3. This is the clearance indicator level and is ten times lower than the workplace control limit of 0.1 fibres per cm\u00B3. The area cannot be reoccupied until this level is achieved and a site clearance certificate (Stage 4) is issued.',
   },
@@ -120,8 +120,8 @@ const quizQuestions = [
     id: 4,
     question:
       'What European Waste Catalogue (EWC) code applies to construction materials containing asbestos, such as asbestos cement products?',
-    options: ['17 06 01', '17 06 05', '20 01 01', '15 01 01'],
-    correctAnswer: 1,
+    options: ['17 06 05', '17 06 01', '20 01 01', '15 01 01'],
+    correctAnswer: 0,
     explanation:
       'EWC code 17 06 05 applies to construction materials containing asbestos, such as asbestos cement products (roof sheets, guttering, flue pipes, cladding). EWC code 17 06 01 applies to insulation materials containing asbestos (pipe lagging, sprayed coatings, AIB). The correct EWC code must be recorded on the hazardous waste consignment note for every load of asbestos waste.',
   },
@@ -130,11 +130,11 @@ const quizQuestions = [
     question: 'How should asbestos waste bags be sealed?',
     options: [
       'Tied in a simple knot at the top',
-      'Stapled shut with heavy-duty staples',
       'Sealed with a goose-neck twist and tape to create an airtight seal',
+      'Stapled shut with heavy-duty staples',
       'Left open at the top for inspection purposes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Asbestos waste bags must be sealed using a goose-neck twist and tape. This involves twisting the neck of the bag tightly and folding it over, then wrapping it firmly with tape to create an airtight seal. This method prevents fibres from escaping during handling and transport. Both the inner red bag and the outer clear bag must each be individually sealed in this manner.',
   },
@@ -143,11 +143,11 @@ const quizQuestions = [
     question: "What is the waste producer's legal 'duty of care' in relation to asbestos waste?",
     options: [
       'To dispose of the waste themselves without involving third parties',
-      "To check the waste carrier's licence and ensure waste goes to a licensed hazardous waste landfill",
       'To notify the local council before starting any asbestos work',
       'To keep the waste on site indefinitely until the Environment Agency collects it',
+      "To check the waste carrier's licence and ensure waste goes to a licensed hazardous waste landfill",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The waste producer has a legal duty of care to verify that the waste carrier holds a valid licence issued by the Environment Agency (or SEPA/NRW) and to ensure that the waste is taken to a licensed hazardous waste landfill site. The producer must also complete consignment notes, retain copies for at least 3 years, and ensure waste is properly packaged and labelled before handover.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
       'Which of the following items must also be disposed of as asbestos waste after asbestos work?',
     options: [
       'Only the asbestos-containing material itself',
-      'Contaminated PPE, cleaning cloths, and Type H vacuum bags',
       'Only items that are visibly covered in dust',
+      'Contaminated PPE, cleaning cloths, and Type H vacuum bags',
       'Tools that were used within 10 metres of the work area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All contaminated PPE (coveralls, gloves, boot covers), disposable cleaning cloths, and Type H vacuum filters and bags must be disposed of as asbestos waste. These items may carry asbestos fibres even if contamination is not visible to the naked eye. Disposable tools used during asbestos work should also be bagged and disposed of as asbestos waste. Items that cannot be adequately decontaminated must likewise be treated as asbestos waste.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
     question: 'What is the maximum penalty for fly-tipping asbestos waste in the UK?',
     options: [
       'A fixed penalty notice of \u00A3400',
-      'A fine of up to \u00A310,000',
       'An unlimited fine and up to 5 years imprisonment',
+      'A fine of up to \u00A310,000',
       'A community service order only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Fly-tipping asbestos waste is a serious criminal offence carrying a maximum penalty of an unlimited fine and up to 5 years imprisonment. Asbestos is classified as hazardous waste, so illegal disposal carries the most severe penalties available. In addition to criminal sanctions, the offender may be liable for the full cost of clean-up, environmental remediation, and any health consequences arising from the illegal dumping.',
   },

@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is polarity important for safety?',
     options: [
-      'To enable safe shutdown and evacuation',
-      'As part of routine maintenance records',
+      'It increases the current-carrying capacity',
+      'It reduces the cable bend radius required',
       'To prevent live parts on equipment casings',
-      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
+      'It removes the need for an earth conductor',
     ],
     correctIndex: 2,
     explanation:
@@ -71,17 +71,16 @@ const Module4Section6_2 = () => {
     },
     {
       id: 2,
-      question:
-        'True or False: Polarity checks confirm that conductors are connected to the correct terminals.',
+      question: 'What do polarity checks confirm?',
       options: [
-        'Only for domestic installations',
-        'Only for industrial installations',
-        'True',
-        'False',
+        'The insulation resistance of each conductor',
+        'The current drawn by the connected load',
+        'That conductors are connected to the correct terminals',
+        'The earth fault loop impedance of the circuit',
       ],
       correctAnswer: 2,
       explanation:
-        'True - Polarity checks verify that live, neutral, and earth conductors are connected to their designated terminals.',
+        'Polarity checks verify that live, neutral, and earth conductors are connected to their designated terminals.',
     },
     {
       id: 3,
@@ -126,10 +125,10 @@ const Module4Section6_2 = () => {
       id: 6,
       question: 'Why is sleeving used on switched live conductors?',
       options: [
-        'To produce chilled water for cooling',
-        'A 22 mm copper incoming water service pipe',
+        'To increase the current rating of the conductor',
+        'To improve the insulation resistance reading',
         'To identify the conductor as live when switched on',
-        'Adequate support to prevent mechanical damage from cable weight',
+        'To provide mechanical support to the cable',
       ],
       correctAnswer: 2,
       explanation:
@@ -139,9 +138,9 @@ const Module4Section6_2 = () => {
       id: 7,
       question: 'What should you do before carrying out a continuity test?',
       options: [
-        '45m (or 25m if only one exit available)',
-        'Significantly reduced energy consumption',
-        'Any voltage that could cause injury',
+        'Energise the circuit to confirm it is working',
+        'Connect a load to the circuit under test',
+        'Increase the test current to maximum',
         'Isolate the circuit and verify isolation',
       ],
       correctAnswer: 3,
@@ -150,16 +149,16 @@ const Module4Section6_2 = () => {
     },
     {
       id: 8,
-      question: 'True or False: Functional checks replace the need for full certification testing.',
+      question: 'Do functional checks replace the need for full certification testing?',
       options: [
-        'False',
-        'Only for simple circuits',
-        'True',
-        'Only for experienced electricians',
+        'No - they supplement but do not replace certification testing',
+        'Yes - for simple final circuits',
+        'Yes - they fully replace certification testing',
+        'Yes - if performed by an experienced electrician',
       ],
       correctAnswer: 0,
       explanation:
-        'False - Functional checks are preliminary tests that supplement but do not replace formal certification testing required under BS 7671.',
+        'Functional checks are preliminary tests that supplement but do not replace formal certification testing required under BS 7671.',
     },
   ];
 

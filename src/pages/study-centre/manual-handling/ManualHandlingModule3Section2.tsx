@@ -20,12 +20,12 @@ const quickCheckQuestions = [
     question:
       'When observing workers performing manual handling tasks, what should you specifically look for?',
     options: [
-      'Only whether they are lifting loads above the HSE guideline weights',
       'Poor postures, twisting, stooping, overreaching, rushing, and signs of fatigue or discomfort',
+      'Only whether they are lifting loads above the HSE guideline weights',
       'Whether they are wearing safety boots',
       'Only the weight of the loads and nothing else',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Workplace observation should look at the full range of manual handling risk indicators including poor postures (stooping, twisting, overreaching), signs of rushing or taking shortcuts, visible discomfort or fatigue, and whether workers are using mechanical aids where available. Weight alone does not determine risk.',
   },
@@ -48,11 +48,11 @@ const quickCheckQuestions = [
       'Why is consulting workers considered one of the most valuable sources of hazard information?',
     options: [
       'Because it is a legal requirement and nothing more',
-      'Because workers who do the tasks daily know the practical problems, workarounds, and pain points better than anyone',
       'Because it saves the assessor from having to visit the workplace',
       'Because worker opinions override all other forms of assessment',
+      'Because workers who do the tasks daily know the practical problems, workarounds, and pain points better than anyone',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Workers are the people who actually perform the manual handling tasks day after day. They experience the practical difficulties, develop workarounds (which may introduce new risks), know which tasks cause discomfort, and can identify problems that may not be visible during a brief observation. Their insight is invaluable for a thorough assessment.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'The HSE MAC tool uses four colour-coded risk bands. What are they?',
     options: [
-      'Blue, yellow, orange, red',
       'Green, amber, red, purple',
+      'Blue, yellow, orange, red',
       'White, green, amber, red',
       'Green, yellow, red, black',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The MAC tool uses green (low risk), amber (medium risk -- further assessment needed), red (high risk -- prompt action required), and purple (very high risk -- activities should be stopped until improvements are made).',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
     question: 'What does RAPP stand for in the context of HSE manual handling assessment tools?',
     options: [
       'Risk Assessment of Posture and Position',
-      'Risk Assessment of Pushing and Pulling',
       'Rapid Assessment of Physical Performance',
+      'Risk Assessment of Pushing and Pulling',
       'Review and Assessment of Personal Protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'RAPP stands for Risk Assessment of Pushing and Pulling. It is an HSE-published tool specifically designed to assess the risks associated with push and pull operations, which are not covered by the MAC tool.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the ART tool used for?',
     options: [
-      'Assessing the risk of lifting heavy loads',
       'Assessing the risk of repetitive tasks involving the upper limbs',
+      'Assessing the risk of lifting heavy loads',
       'Measuring the strength of individual workers',
       'Calculating the maximum weight a team can safely lift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ART stands for Assessment of Repetitive Tasks. It is an HSE-published tool designed to assess the risk of upper limb disorders from repetitive work such as assembly, packing, and (for electricians) tasks like cable stripping, crimping, and repetitive terminations.',
   },

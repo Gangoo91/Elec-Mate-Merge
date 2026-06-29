@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     id: 'review-frequency',
     question: 'When must a risk assessment be reviewed?',
     options: [
-      'Equipment remains live when switched \\\\\\\'off\\\\\\\'',
-      'Open plan offices over 60m² and sports halls',
+      'Only when the HSE specifically requests it',
+      'Only at the very start of a project, before work begins',
       'When circumstances change or at regular intervals',
-      'Limited access for tools and reduced working space',
+      'Never, once it has been recorded in writing',
     ],
     correctIndex: 2,
     explanation:
@@ -118,9 +118,9 @@ const quizQuestions = [
     question:
       'Which group of people must be specifically considered when identifying who might be harmed?',
     options: [
-      'A crane, chain block, or hydraulic gantry rated for the transformer\\\\\\\\\\\\\\\'s weight',
-      'A persistent fault still exists on the circuit',
-      'At least 10 years after the last machine in the series is manufactured',
+      'Only the workers directly carrying out the task',
+      'Only the employer and senior management',
+      'Only those who have completed safety training',
       'Employees, contractors, visitors, and members of the public',
     ],
     correctAnswer: 3,
@@ -158,10 +158,10 @@ const quizQuestions = [
     id: 6,
     question: 'What must be included when recording significant findings?',
     options: [
-      'By showing how BMS improves compliance and efficiency',
-      'Unique circuit references, load descriptions, and protective device coordination',
+      'Only the name of the person who carried out the assessment',
+      'Only the date the assessment was completed',
       'Hazards, people at risk, existing controls, and further actions needed',
-      'All metered energy including electricity, gas, oil, and district heating',
+      'Only a list of the PPE issued to each worker',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     question:
       'For a cable installation project in a busy office, which hazard would typically have the HIGHEST likelihood rating?',
     options: [
-      'By paying Class 2 voluntary contributions',
+      'Electrocution from contact with live conductors',
       'Manual handling injuries from cable drums',
-      'If they employ 5 or more people',
-      'PIR (Passive Infrared) sensor',
+      'Structural collapse of the office building',
+      'Explosion from a build-up of flammable gas',
     ],
     correctAnswer: 1,
     explanation:

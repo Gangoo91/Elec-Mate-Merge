@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     options: [
       'Q = V × I',
       'Q = U × A × ΔT',
-      'Q = P × t',
       'Q = 0.33 × n × V × ΔT',
+      'Q = P × t',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'Ventilation heat loss Q = 0.33 × n × V × ΔT where 0.33 is the volumetric specific heat of air (Wh/m³K), n is air changes per hour, V is room volume (m³), and ΔT is temperature difference.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does the U-value represent in heat loss calculations?',
     options: [
-      'Hearing only parts of the conversation that interest you or confirm your existing views',
+      'The total heat stored within a building element',
       'The rate of heat transfer through a material per unit area per degree temperature difference',
-      'Material prices and labour rates change; an open-ended quote can leave the contractor on the hook for old prices',
-      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
+      'The thickness of insulation required for a wall',
+      'The surface area of a building element exposed to the outside',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is a margin typically added to calculated heat loads?',
     options: [
-      'Large, complex, or high-occupancy sites like hospitals and airports',
-      'Noise radiating through duct walls into surrounding spaces',
+      'To reduce the size of the heat emitters required',
+      'To allow for future reductions in insulation standards',
       'To account for pre-heat requirements and system losses',
-      'Test each conductor individually then cross-connect and test',
+      'To compensate for inaccurate U-value measurements only',
     ],
     correctAnswer: 2,
     explanation:

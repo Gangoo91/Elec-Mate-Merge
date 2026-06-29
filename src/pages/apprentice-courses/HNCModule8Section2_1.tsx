@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of ventilation in occupied buildings?',
     options: [
-      'Convert units, write values, choose formula, calculate, round',
+      'To heat the incoming outdoor air to room temperature',
       'To dilute and remove indoor air pollutants whilst supplying fresh air',
-      'Support structure - tray has solid/perforated base, ladder has rungs',
-      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
+      'To pressurise the building against external wind loads',
+      'To filter out all airborne bacteria and viruses entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which contaminant is primarily controlled by kitchen extract ventilation?',
     options: [
-      'Openings are on opposite or adjacent walls',
-      'Uncontrolled air leakage through the building envelope',
+      'Radon gas rising from the ground beneath the building',
+      'Fine construction dust from adjacent building works',
       'Grease-laden air, odours and combustion products',
-      'The buoyancy-driven air movement due to temperature difference',
+      'Static electricity build-up on metal surfaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "What does the term 'infiltration' refer to in ventilation terminology?",
     options: [
-      'Openings are on opposite or adjacent walls',
+      'The deliberate supply of fresh air through window vents',
       'Uncontrolled air leakage through the building envelope',
       'The buoyancy-driven air movement due to temperature difference',
-      'Grease-laden air, odours and combustion products',
+      'Mechanically extracted air drawn from wet rooms',
     ],
     correctAnswer: 1,
     explanation:
@@ -235,9 +235,9 @@ const quizQuestions = [
     question: 'What is the purpose of demand-controlled ventilation (DCV)?',
     options: [
       'To adjust ventilation rates based on actual occupancy or pollutant levels',
-      'The proximity of the workplace to emergency medical services',
-      'To assign unique short addresses (0-63) to each control gear',
-      'The cable from distribution point to individual customer premises',
+      'To run fans at maximum speed continuously for safety',
+      'To recover heat from the exhaust air stream only',
+      'To balance supply and extract airflows automatically',
     ],
     correctAnswer: 0,
     explanation:

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'revision-strategy',
     question: 'What is the most effective approach to final revision before the EPA?',
     options: [
-      'The problem and its impact, your diagnostic approach, the options you considered, why you chose the solution you did, how you implemented it, and the outcome — including any follow-up actions',
-      'The fire point is the temperature at which a liquid produces enough vapour to sustain continuous combustion, typically a few degrees above the flash point',
-      'Focused revision targeting the areas most likely to be assessed, using your portfolio as a guide — reviewing your evidence, practising discussion answers, and refreshing practical skills through hands-on practice',
-      'Acknowledge their concern, explore interests, use objective criteria: "I understand price is important. What does that quote include? My price is based on NICEIC standards and full certification"',
+      'Reading every textbook from cover to cover to ensure no topic is missed',
+      'Concentrating only on the areas you already feel most confident about',
+      'Focused revision targeting the areas most likely to be assessed, using your portfolio as a guide',
+      'Leaving all preparation until the final two days to keep the material fresh',
     ],
     correctIndex: 2,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'revision-mock',
     question: 'Why are mock assessments valuable for EPA preparation?',
     options: [
-      'Allow capacitors to discharge through a bleed resistor before contact, treat large capacitor banks as energised even after isolation, and use instruments rated for the frequency present',
-      'They simulate the real assessment conditions, helping you identify areas of weakness, practise under time pressure, experience the format and type of questions, and build confidence through familiarity',
-      'First secure a financial baseline that removes money anxiety, then progressively choose work that offers more autonomy, pursue mastery in a chosen specialism, and align work with personal purpose',
-      'Updated Schedule of Inspections columns to reflect new requirements, AFDD presence to be checked where Reg 421.1.7 recommends them (HRRBs require under Building Safety Act 2022), and SPD presence/type checked per Section 443.',
+      'They guarantee a pass in the real assessment if you score well in the mock',
+      'They simulate real assessment conditions, helping you find weaknesses and build confidence through familiarity',
+      'They replace the need for any further revision once completed successfully',
+      'They are marked by the same assessor who will conduct your real EPA',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'revision-anxiety',
     question: 'Assessment anxiety before the EPA is:',
     options: [
-      'Under-torque causes high-resistance joints leading to overheating; over-torque damages conductors and terminal components, both creating fire and failure risks',
-      'A normal response to an important assessment that most people experience — the key is managing it through preparation, familiar routines, positive self-talk, and understanding that some nervousness actually improves performance',
-      'Acknowledge the mistake promptly and honestly, take corrective action where possible, inform your supervisor if there are safety or quality implications, and learn from the experience to prevent recurrence',
-      'A combination of factors including job insecurity, peripatetic working, macho culture inhibiting help-seeking, financial pressures of self-employment, and access to means',
+      'A sign that you are not ready and should request that your EPA be postponed',
+      'A normal response that most people experience — the key is managing it, not eliminating it',
+      'Something that can only be removed by taking medication before the assessment',
+      'A problem that affects only apprentices who have not prepared thoroughly',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'revision-confidence',
     question: 'Genuine confidence for the EPA is built on:',
     options: [
-      'A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation',
-      'Construction work expected to (a) last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR (b) exceed 500 person-days. The client must notify the HSE via Form F10 before the work starts. CDM still applies to non-notifiable projects — only the F10 notification differs.',
-      'Per CAR 2012 Reg 6 (assessment) + Reg 8 (licensed work) + HSE guidance L143. Considers: type of asbestos (chrysotile/amosite/crocidolite); friability; quantity; nature of work (removal vs encapsulation vs observation); duration; exposure level.',
-      'Three pillars: thorough preparation (you have revised effectively), positive evidence (gateway sign-off, completed qualifications, strong portfolio), and practice (successful mock assessments and rehearsals that prove you can perform under assessment conditions)',
+      'Telling yourself repeatedly that you will pass, regardless of how prepared you are',
+      'Comparing yourself favourably to other apprentices who seem less prepared',
+      'Avoiding thinking about the assessment until the day itself arrives',
+      'Three pillars: thorough preparation, positive evidence such as sign-off and a strong portfolio, and practice',
     ],
     correctIndex: 3,
     explanation:
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Effective final revision for the EPA should be:',
     options: [
-      'Tell them clearly the behaviour is not OK, withdraw if needed, and report it to your line manager — this is bullying, not "banter"',
-      'Structured and focused — planned over several weeks, targeting specific areas based on your self-assessment, and including both knowledge review and practical skills practice',
-      'The general duty to ensure skills, knowledge, training and experience, and organisational capability of those appointed or engaged',
-      'It does not have selectable ranges that can be on the wrong setting, it indicates voltage by direct measurement (no battery dependency for the reading), and most include a current-limited indication that meets GS38.',
+      'Intensive cramming concentrated into the final two or three days',
+      'Structured and focused — planned over several weeks and targeting your weaker areas',
+      'Limited to re-reading your portfolio without any practical or discussion practice',
+      'Focused entirely on the topics you already understand best',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'When revising for the professional discussion, the best approach is:',
     options: [
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
-      'Maintain a balanced routine — light review of key topics, brief practical practice, adequate sleep, healthy eating, and activities that help you relax and maintain perspective',
-      'Reviewing your portfolio evidence thoroughly, practising explaining each piece in your own words, preparing examples for likely questions, and rehearsing with a colleague, mentor or training provider',
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
+      'Writing out a word-for-word script and memorising it to recite on the day',
+      'Memorising the assessment criteria so you can quote them back to the assessor',
+      'Knowing your portfolio thoroughly, practising explaining each piece, and rehearsing with a mentor',
+      'Preparing answers only for the topics you find most interesting',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 3,
     question: 'A revision plan for the EPA should include:',
     options: [
-      'Reviewing your portfolio evidence thoroughly, practising explaining each piece in your own words, preparing examples for likely questions, and rehearsing with a colleague, mentor or training provider',
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'Knowledge revision only, since the practical and discussion cannot be prepared for',
+      'A single intensive session covering everything the night before the assessment',
+      'Whatever topics happen to come up during your normal working week',
+      'Time for knowledge revision, practical practice, portfolio review, mocks and rest — balanced across all components',
     ],
     correctAnswer: 3,
     explanation:
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 4,
     question: 'Mock professional discussions help you to:',
     options: [
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Prepare thoroughly (reduces uncertainty), practise relaxation techniques, maintain normal routines before the assessment, visualise successful outcomes, and remind yourself that you have been signed off because you are ready',
-      'Focus targeted revision on that specific area, seek help from your training provider or mentor, practise explaining the topic in your own words, and prepare to be honest in the discussion if asked about an area you find challenging',
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'Practise articulating your experience, find gaps in explaining your evidence, and build confidence',
+      'Memorise a fixed set of answers that the real assessor is certain to ask',
+      'Avoid having to review your portfolio in detail before the real discussion',
+      'Reduce the length of the real professional discussion on the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'When refreshing practical skills before the EPA, you should focus on:',
     options: [
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'The core practical competences most likely to be assessed: safe isolation procedures, systematic fault diagnosis, use of test equipment, component replacement techniques, and proper documentation',
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Replacing negative thoughts (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'I am going to fail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\') with realistic positive ones (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'I have been signed off because I am ready, I have prepared well, and I know my portfolio inside out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'Only the most advanced or unusual tasks you rarely carry out at work',
+      'The core competences most likely to be assessed: safe isolation, fault diagnosis, testing and documentation',
+      'Theory revision alone, as practical skills cannot be improved with practice',
+      'Whichever tasks the assessor decides to set on the day, which cannot be anticipated',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'To manage assessment anxiety effectively, you should:',
     options: [
-      'Focus targeted revision on that specific area, seek help from your training provider or mentor, practise explaining the topic in your own words, and prepare to be honest in the discussion if asked about an area you find challenging',
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Prepare thoroughly (reduces uncertainty), practise relaxation techniques, maintain normal routines before the assessment, visualise successful outcomes, and remind yourself that you have been signed off because you are ready',
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'Stay awake the night before to fit in as much last-minute revision as possible',
+      'Avoid all preparation so that the assessment feels less significant',
+      'Prepare thoroughly, practise relaxation techniques, keep normal routines, and trust that you are ready',
+      'Drink extra caffeine on the morning of the assessment to stay sharp',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,10 +147,10 @@ const quizQuestions = [
     id: 7,
     question: "A 'knowledge refresh' before the EPA should prioritise:",
     options: [
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Maintain a balanced routine — light review of key topics, brief practical practice, adequate sleep, healthy eating, and activities that help you relax and maintain perspective',
-      'Key technical areas that underpin the assessment: safety legislation, relevant regulations, fundamental electrical principles, maintenance procedures, and the specific technical knowledge related to your workplace activities and portfolio evidence',
+      'Obscure topics that are unlikely to appear but might catch you out',
+      'Memorising regulation numbers without understanding their purpose',
+      'Only the subjects covered in the most recent week of your training',
+      'Key technical areas: safety legislation, relevant regulations, electrical principles and maintenance procedures',
     ],
     correctAnswer: 3,
     explanation:
@@ -160,10 +160,10 @@ const quizQuestions = [
     id: 8,
     question: 'Feedback from mock assessments should be:',
     options: [
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'Replacing negative thoughts (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'I am going to fail\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\') with realistic positive ones (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'I have been signed off because I am ready, I have prepared well, and I know my portfolio inside out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
-      'Reviewing your portfolio evidence thoroughly, practising explaining each piece in your own words, preparing examples for likely questions, and rehearsing with a colleague, mentor or training provider',
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'Reviewed carefully, used to identify areas for improvement, and addressed through targeted practice',
+      'Ignored if it is critical, since mocks do not count towards the final result',
+      'Treated as the final verdict on whether you will pass or fail the EPA',
+      'Set aside until after the real assessment so it does not undermine your confidence',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,10 +173,10 @@ const quizQuestions = [
     id: 9,
     question: 'In the final days before the EPA, you should:',
     options: [
-      'The core practical competences most likely to be assessed: safe isolation procedures, systematic fault diagnosis, use of test equipment, component replacement techniques, and proper documentation',
-      'Maintain a balanced routine — light review of key topics, brief practical practice, adequate sleep, healthy eating, and activities that help you relax and maintain perspective',
-      'Replacing negative thoughts (\\\\\\\\\\\\\\\'I am going to fail\\\\\\\\\\\\\\\') with realistic positive ones (\\\\\\\\\\\\\\\'I have been signed off because I am ready, I have prepared well, and I know my portfolio inside out\\\\\\\\\\\\\\\')',
-      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'Attempt to learn several entirely new topics you have not covered before',
+      'Maintain a balanced routine — light review, brief practice, adequate sleep and relaxing activities',
+      'Revise intensively through the night to make the most of the remaining time',
+      'Stop all preparation completely and avoid thinking about the assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'Positive self-talk before the EPA means:',
     options: [
-      "Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components",
-      "The core practical competences most likely to be assessed: safe isolation procedures, systematic fault diagnosis, use of test equipment, component replacement techniques, and proper documentation",
-      "Replacing negative thoughts ('I am going to fail') with realistic positive ones ('I have been signed off because I am ready, I have prepared well, and I know my portfolio inside out')",
-      "Maintain a balanced routine — light review of key topics, brief practical practice, adequate sleep, healthy eating, and activities that help you relax and maintain perspective",
+      "Convincing yourself you will pass effortlessly without any preparation",
+      "Ignoring any weaknesses and pretending you are fully expert in every area",
+      "Replacing negative thoughts with realistic positive ones grounded in your preparation and sign-off",
+      "Telling others you are certain to fail so expectations are kept low",
     ],
     correctAnswer: 2,
     explanation:
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 11,
     question: 'If you identify a significant knowledge gap during final revision, you should:',
     options: [
-      'Key technical areas that underpin the assessment: safety legislation, relevant regulations, fundamental electrical principles, maintenance procedures, and the specific technical knowledge related to your workplace activities and portfolio evidence',
-      'Reviewed carefully, used to identify specific areas for improvement, incorporated into your revision plan, and addressed through targeted practice before the real assessment',
-      'The core practical competences most likely to be assessed: safe isolation procedures, systematic fault diagnosis, use of test equipment, component replacement techniques, and proper documentation',
-      'Focus targeted revision on that specific area, seek help from your training provider or mentor, practise explaining the topic in your own words, and prepare to be honest in the discussion if asked about an area you find challenging',
+      'Ignore it and hope the topic does not come up during the assessment',
+      'Withdraw from the EPA and restart your apprenticeship from the beginning',
+      'Plan to bluff your way through if the topic is raised in the discussion',
+      'Focus targeted revision on that area, seek help from your provider or mentor, and be honest if asked about it',
     ],
     correctAnswer: 3,
     explanation:
@@ -212,10 +212,10 @@ const quizQuestions = [
     id: 12,
     question: 'The most reliable source of confidence before the EPA is:',
     options: [
-      'The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness',
-      'The core practical competences most likely to be assessed: safe isolation procedures, systematic fault diagnosis, use of test equipment, component replacement techniques, and proper documentation',
-      'Practise articulating your experience clearly, identify gaps in your ability to explain your evidence, experience the questioning style, and build confidence in discussing your competence',
-      'Prepare thoroughly (reduces uncertainty), practise relaxation techniques, maintain normal routines before the assessment, visualise successful outcomes, and remind yourself that you have been signed off because you are ready',
+      'Thorough preparation, successful mocks, gateway sign-off, completed qualifications and a strong portfolio',
+      'Reassurance from friends and family who are not involved in the assessment',
+      'A general feeling of optimism on the morning of the assessment',
+      'Believing that the assessor will go easy on you because you are nervous',
     ],
     correctAnswer: 0,
     explanation:

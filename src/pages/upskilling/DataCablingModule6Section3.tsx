@@ -25,12 +25,12 @@ const inlineChecks = [
     question:
       'A specifier writes "comply with BS EN 50173 and BS EN 50174". Which combination of parts must a UK office fit-out actually satisfy?',
     options: [
-      'BS EN 50173-1 only.',
-      'BS EN 50173-1 (general requirements) + BS EN 50173-2 (offices) for cabling performance, AND BS EN 50174-1 (specification & QA) + BS EN 50174-2 (planning & practices inside buildings) for installation. Plus BS EN 50310 (ICT bonding) if the building has communicating equipment, which is implicit in any structured cabling job.',
-      'BS EN 50174-3 only — outside-buildings is the general standard.',
-      'BS EN 50173-5 (data centres) on every job.',
+      'BS EN 50173-1 + -2 (performance) and BS EN 50174-1 + -2 (installation), plus BS EN 50310 (ICT bonding).',
+      'BS EN 50173-1 alone — the application parts are advisory only on a UK office fit-out.',
+      'BS EN 50174-3 alone — the outside-buildings part is the general installation standard.',
+      'BS EN 50173-5 (data centres) plus BS EN 50174-3 — the office-grade parts do not apply.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS EN 50173-1 is the umbrella performance standard and BS EN 50173-2 is the office-specific application part — both apply to a UK office. BS EN 50174-1 (QA, documentation) and BS EN 50174-2 (planning, pulling, separation, supports) apply on every install inside a building. BS EN 50310 (ICT bonding) is implicit because BS 7671 §444.410 makes it mandatory. -174-3 (outside buildings) only applies if the cabling crosses property boundaries or is buried externally. -173-5 (data centres) only applies to actual data-centre work.',
   },
@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 §444.1.3 sets a maximum mesh size for the common meshed bonding star network used for protection of high-density communicating equipment. What is the maximum mesh size verbatim from the regulation?',
     options: [
-      '1 m × 1 m.',
-      '2 m × 2 m — verbatim: "Where concerns exist, the mesh size should be adapted to the dimensions of the installation to be protected, but should not exceed 2 m × 2 m in areas where equipment susceptible to electromagnetic environmental interferences is installed."',
-      '5 m × 5 m.',
-      'There is no maximum.',
+      '1 m × 1 m maximum mesh size in EMI-susceptible areas.',
+      '3 m × 3 m maximum, scaled to the size of the comms room.',
+      '2 m × 2 m maximum where susceptible equipment is installed.',
+      '5 m × 5 m maximum, matching the typical comms-room footprint.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '§444.1.3 verbatim — "should not exceed 2 m × 2 m in areas where equipment susceptible to electromagnetic environmental interferences is installed". This is the meshed equipotential bonding network for ICT-dense installations: PABX, centralised data processing, comms rooms with susceptible equipment. Above the 2 m × 2 m mesh size, common-mode currents have too much loop area to remain bounded.',
   },
@@ -53,12 +53,12 @@ const inlineChecks = [
     question:
       'A campus has three separate buildings, each with its own equipotential bonding system. What does BS 7671:2018+A4:2026 §444.4.9 say about signal and data transmission between them?',
     options: [
-      'Use copper cabling — it is cheaper.',
-      'Verbatim: "Where different buildings have separate equipotential bonding systems, metal-free optical fibre cables or other non-conducting systems are preferred for signal and data transmission, for example, microwave signal transformer for isolation in accordance with BS EN 61558-2-1, 2-4, 2-6, 2-15 and either BS EN 60950-1 or BS EN IEC 62368-1."',
-      'Run a single bonding conductor between all buildings before any cable is pulled.',
-      'No requirement — all options are equivalent.',
+      'Armoured copper data cable is preferred — the armour screens out earth-potential differences.',
+      'A single bonding conductor must link all buildings before any data cable is pulled.',
+      'Either copper or fibre is acceptable, provided each building is independently earthed.',
+      'Metal-free optical fibre (or other non-conducting systems) is preferred for the data transmission.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       '§444.4.9 verbatim states that metal-free optical fibre or other non-conducting systems are preferred for inter-building data transmission when buildings have separate equipotential bonding. The reason: copper between buildings creates a low-impedance path between two earthing systems that may be at different potentials, allowing earth-fault currents (or lightning-induced surges) to flow through the data cable. Metal-free fibre — no conducting elements at all — gives complete galvanic isolation. Microwave / RF transformer isolation is an alternative for short reaches.',
   },
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'BS 7671:2018+A4:2026 §545 (NEW IN A4:2026) introduces functional earthing of ICT equipment. Per §545.1.2, what is the minimum cross-sectional area of a functional earthing or functional bonding conductor in COPPER, with mechanical protection?',
     options: [
-      '1.5 mm².',
-      '2.5 mm² copper if mechanical protection is provided; 4 mm² copper if not — verbatim from §545.1.2(a) and (b). (16 mm² aluminium for both cases. Note: BS EN 50310 requires copper, so the aluminium option is rarely used.)',
-      '6 mm².',
-      '10 mm².',
+      '1.5 mm² copper with mechanical protection; 2.5 mm² without.',
+      '2.5 mm² copper with mechanical protection; 4 mm² copper without.',
+      '6 mm² copper with mechanical protection; 10 mm² without.',
+      '10 mm² copper with mechanical protection; 16 mm² without.',
     ],
     correctIndex: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'Which BS EN 50174 part covers INSTALLATION PLANNING AND PRACTICES INSIDE BUILDINGS — bend radii, supports, separation from power, pulling tensions?',
     options: [
-      'BS EN 50174-1 — specification & QA.',
       'BS EN 50174-2 — installation planning and practices inside buildings.',
+      'BS EN 50174-1 — specification & QA.',
       'BS EN 50174-3 — installation planning and practices outside buildings.',
-      'BS EN 50310 — bonding.',
+      'BS EN 50310 — telecommunications bonding networks.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN 50174-2 is the inside-buildings install practice. -1 covers specification, QA, documentation discipline. -3 covers outside-buildings (buried, aerial, between buildings). All three are in the same series and BS 7671 §444.410 names -1 and -2 by paragraph as mandatory inside UK buildings.',
   },
@@ -110,8 +110,8 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the BS 7671:2018+A4:2026 §444.1.3 verbatim mesh-size limit for the common meshed bonding star network in ICT-dense installations?',
-    options: ['1 m × 1 m.', '2 m × 2 m — verbatim from §444.1.3 NOTE.', '3 m × 3 m.', 'No limit.'],
-    correctAnswer: 1,
+    options: ['1 m × 1 m.', '3 m × 3 m.', '2 m × 2 m.', '5 m × 5 m.'],
+    correctAnswer: 2,
     explanation:
       '§444.1.3 verbatim sets the mesh size at 2 m × 2 m maximum in areas where equipment susceptible to electromagnetic environmental interferences is installed. This is the bonding network for high-density communicating equipment — the kind found in modern comms rooms and data centres. The mesh limits common-mode loop area between bonded items.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 §444.4.9 prefers what type of cable for data transmission between separate buildings with their own equipotential bonding systems?',
     options: [
-      'Single-mode copper.',
+      'Screened twisted-pair copper.',
+      'Armoured copper backbone cable.',
+      'Coaxial cable with a bonded screen.',
       'Metal-free optical fibre cables (or other non-conducting systems).',
-      'Armoured copper.',
-      'Coaxial cable.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§444.4.9 verbatim: metal-free optical fibre cables or other non-conducting systems are preferred. The rationale is galvanic isolation — copper between two separately bonded buildings creates a path for earth-potential differences and lightning-induced surges to flow through the data cable. Metal-free fibre eliminates the path entirely.',
   },
@@ -162,26 +162,26 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 §716.1 (the scope clause for PoE) verbatim refers to which standard for the cabling on which the PoE / ELV DC is distributed?',
     options: [
-      'BS EN 50346.',
-      'BS EN 50173-1 — Information technology — Generic cabling for customer premises — Part 1: General requirements.',
-      'BS 6701.',
-      'BS 7430.',
+      'BS EN 50346 — testing of installed cabling.',
+      'BS 6701 — customer-premises telecoms wiring.',
+      'BS 7430 — code of practice for protective earthing.',
+      'BS EN 50173-1 — generic cabling for customer premises, general requirements.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      '§716.1 verbatim: "The particular requirements of this section apply to the distribution of ELV DC power using balanced, information technology cables and accessories primarily designed for data transmission, as specified in BS EN 50173-1." The scope of §716 is wired into BS EN 50173-1 — the generic cabling standard. §716.2(a) lists BS EN 50173-1 as a normative reference.',
+      '§716.1 scopes PoE / ELV DC to "balanced, information technology cables and accessories primarily designed for data transmission, as specified in BS EN 50173-1". The scope of §716 is wired into BS EN 50173-1 — the generic cabling standard. §716.2(a) lists BS EN 50173-1 as a normative reference.',
   },
   {
     id: 8,
     question:
       'A campus job runs cabling between three buildings. Which BS EN 50174 part covers PLANNING AND PRACTICES OUTSIDE BUILDINGS — buried, aerial, between buildings?',
     options: [
-      'BS EN 50174-1.',
-      'BS EN 50174-2.',
       'BS EN 50174-3 — Installation planning and practices outside buildings.',
-      'BS EN 50346.',
+      'BS EN 50174-1 — specification & QA.',
+      'BS EN 50174-2 — installation planning and practices inside buildings.',
+      'BS EN 50346 — testing of installed cabling.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'BS EN 50174-3 covers outside-buildings work: buried cables, aerial spans, building-to-building runs, environmental protection, lightning protection of external runs. §444.410 names -1 and -2 verbatim but not -3 — the outside-buildings standard is implicit on any campus job that crosses property or building boundaries.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'A specifier asks "what UK standard covers customer-premises telecommunications wiring — the bit between the carrier demarcation and the rest of the building?". What is the answer?',
     options: [
-      'BS EN 50173-1 — generic cabling.',
-      'BS 6701:2016+A1:2017 — Telecommunications equipment and telecommunications cabling — Specification for installation, operation and maintenance.',
-      'BS EN 50174-3 — outside buildings.',
-      'BS 7671 §716.',
+      'BS EN 50173-1 — generic cabling for customer premises.',
+      'BS EN 50174-3 — installation outside buildings.',
+      'BS 6701:2016+A1:2017 — telecommunications equipment and cabling, installation and maintenance.',
+      'BS 7671 §716 — PoE / ELV DC over balanced cabling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 6701 is the UK customer-premises telecoms standard. It governs the in-building wiring discipline from the carrier demarcation onwards, the demarcation itself, and operating / maintenance practice. It is parallel to BS EN 50173 (which assumes the customer-premises infrastructure exists and specifies how it must perform).',
   },
@@ -204,14 +204,14 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 §444.6.2 sets a minimum separation between ICT cables and certain lamps. Which lamps and what distance, verbatim?',
     options: [
-      '50 mm separation from any LED lamp.',
-      '130 mm minimum separation between ICT cables and discharge, neon and mercury vapour (or other high-intensity discharge) lamps. CFLs are also included as gas discharge sources.',
-      '300 mm from any luminaire.',
-      'No minimum separation.',
+      '50 mm from any LED luminaire, with no requirement for other lamp types.',
+      '300 mm from every luminaire, regardless of lamp technology.',
+      '100 mm from fluorescent tubes only; discharge lamps are unrestricted.',
+      '130 mm from discharge, neon and mercury vapour (or other HID) lamps; CFLs count as discharge sources.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      '§444.6.2 verbatim: 130 mm minimum separation. The lamps in scope are discharge / neon / mercury vapour / other HID — and CFLs are explicitly to be considered as gas discharge sources. The clause also requires data wiring racks and electrical equipment to always be separated. The 130 mm number is a hard one to remember — it is one of the rare specific distances in §444.',
+      '§444.6.2 sets a 130 mm minimum separation. The lamps in scope are discharge / neon / mercury vapour / other HID — and CFLs are explicitly to be considered as gas discharge sources. The clause also requires data wiring racks and electrical equipment to always be separated. The 130 mm figure is one of the rare specific distances in §444.',
   },
 ];
 

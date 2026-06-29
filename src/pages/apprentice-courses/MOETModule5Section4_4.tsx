@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the primary function of a control valve?',
     options: [
       'To regulate the flow of fluid in response to a control signal',
-      'When cables pass through or are surrounded by thermal insulation',
-      'By trained personnel to evacuate people who cannot use stairs independently',
-      'To allow safe shutdown of dangerous processes',
+      'To measure the flow rate of fluid passing through a pipeline',
+      'To filter contaminants out of the process fluid',
+      'To boost the pressure of the fluid in the system',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: "What does 'fail-safe' mean for a control valve actuator?",
     options: [
-      'Use certified equipment and follow specific installation procedures',
+      'The valve locks in its last position when the signal is lost',
       'The valve moves to a predetermined safe position on loss of signal or power',
-      'To document defects requiring remediation before handover',
-      'No notification required if installer is registered with competent person scheme',
+      'The valve sounds an alarm but does not change position on failure',
+      'The valve continues to modulate using a backup battery supply',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: 'What does Cv (or Kv) represent for a control valve?',
     options: [
-      'The existing fluorescent ballast must be bypassed or removed, and the circuit verified for compatibility with the LED driver',
-      'An addition or alteration that does NOT extend an existing circuit by adding a new one',
-      'The speed of the rotating magnetic field, determined by supply frequency and number of poles',
+      'The maximum pressure the valve body can safely withstand',
+      'The closing speed of the valve when the actuator fails',
+      'The temperature rating of the valve seat material',
       'The flow coefficient -- the volume of water that will flow through the valve at a given pressure drop',
     ],
     correctIndex: 3,
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the characteristic curve of a valve?',
     options: [
-      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
-      'Large-diameter, low-pressure applications where cost and weight are important',
+      'The relationship between the inlet and outlet pressures across the valve',
+      'The maximum flow rate the valve can pass when fully open',
       'The relationship between valve stem position (travel) and flow rate',
-      'It operates near its closed position where control is poor and wear increases',
+      'The time the actuator takes to drive the valve from open to closed',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,9 +95,9 @@ const quizQuestions = [
     id: 3,
     question: 'An equal-percentage valve characteristic means:',
     options: [
-      'The relationship between valve stem position (travel) and flow rate',
-      'It operates near its closed position where control is poor and wear increases',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'Equal increments of stem travel produce equal increments of flow',
+      'The valve passes the same percentage of flow whether open or closed',
+      'Both halves of the valve travel deliver exactly 50% of the flow each',
       'Equal increments of stem travel produce equal percentage changes in flow',
     ],
     correctAnswer: 3,
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a positioner on a control valve?',
     options: [
-      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
+      'A mechanical stop that limits the maximum travel of the valve stem',
       'A device that compares the control signal with the actual valve position and adjusts the actuator output accordingly',
-      'Formation and collapse of vapour bubbles due to pressure dropping below vapour pressure, causing damage',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'A spring that returns the valve to its fail-safe position on loss of power',
+      'A sensor that measures the flow rate passing through the valve body',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is cavitation in a control valve?',
     options: [
-      'Large-diameter, low-pressure applications where cost and weight are important',
-      'It operates near its closed position where control is poor and wear increases',
+      'Gradual erosion of the valve seat caused by abrasive particles in the fluid',
+      'A build-up of scale and deposits that restricts flow through the valve',
       'Formation and collapse of vapour bubbles due to pressure dropping below vapour pressure, causing damage',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'Excessive vibration of the valve stem caused by high upstream pressure',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +162,9 @@ const quizQuestions = [
       'What advantage does a smart valve positioner provide over a conventional positioner?',
     options: [
       'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
-      'The relationship between valve stem position (travel) and flow rate',
-      'Equal increments of stem travel produce equal percentage changes in flow',
-      'It operates near its closed position where control is poor and wear increases',
+      'It removes the need for any instrument air supply to the actuator',
+      'It allows the valve to operate without an actuator fitted',
+      'It eliminates the need to size the valve correctly for the duty',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'When would you select a butterfly valve for control applications?',
     options: [
-      'It operates near its closed position where control is poor and wear increases',
+      'High-pressure steam service requiring precise throttling near the seat',
       'Large-diameter, low-pressure applications where cost and weight are important',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
-      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
+      'Applications demanding the widest possible rangeability and tight shut-off',
+      'Small-bore dosing lines where very fine flow control is essential',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'What happens if a control valve is significantly oversized for the application?',
     options: [
-      'The relationship between valve stem position (travel) and flow rate',
-      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'It operates near its fully open position with smooth, accurate control',
+      'It automatically restricts the flow to match the design rate',
       'It operates near its closed position where control is poor and wear increases',
-      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
+      'It improves rangeability and reduces wear on the seat and plug',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,9 +200,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is partial stroke testing (PST) used for?',
     options: [
-      'The relationship between valve stem position (travel) and flow rate',
-      'Equal increments of stem travel produce equal percentage changes in flow',
-      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
+      'Calibrating the positioner so the valve travels its full range accurately',
+      'Measuring the flow coefficient (Cv) of the valve while in service',
+      'Setting the fail-safe position the valve adopts on loss of signal',
       'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
     ],
     correctAnswer: 3,
@@ -214,9 +214,9 @@ const quizQuestions = [
     question: 'Which standard covers control valve sizing calculations?',
     options: [
       'ISA-75.01 / IEC 60534-2-1',
-      'Using waste to generate energy',
-      'Investment cost ÷ Annual savings',
-      '6 months of practical completion',
+      'BS 7671 / IET Wiring Regulations',
+      'ISO 9001 / Quality Management',
+      'IEC 61131 / PLC Programming Languages',
     ],
     correctAnswer: 0,
     explanation:

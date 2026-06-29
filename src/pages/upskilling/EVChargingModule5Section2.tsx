@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m5s2-check1',
     question: 'What is the primary benefit of HEMS integration with EV charging?',
     options: [
-      'Faster charging speeds',
       'Maximised renewable energy self-consumption',
-      'Reduced installation costs',
-      'Simplified wiring',
+      'Faster peak charging speeds at the chargepoint',
+      'Reduced cable and installation costs',
+      'Simpler wiring with fewer protective devices',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'HEMS enables maximum utilisation of renewable solar energy for EV charging, reducing electricity costs by up to 80% whilst minimising grid dependency and carbon footprint.',
   },
@@ -23,8 +23,8 @@ const quickCheckQuestions = [
     id: 'evcharging-m5s2-check2',
     question:
       'What solar PV system size typically provides sufficient energy for daily EV charging?',
-    options: ['1-2kW', '4-6kW', '15-20kW', '50kW+'],
-    correctIndex: 1,
+    options: ['1-2kW', '15-20kW', '4-6kW', '50kW+'],
+    correctIndex: 2,
     explanation:
       'A typical 4-6kW solar system can provide 15-25kWh daily generation, sufficient for 60-100 miles of daily EV driving. Larger systems enable complete energy independence.',
   },
@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'evcharging-m5s2-check3',
     question: 'How does battery storage enhance EV charging integration?',
     options: [
-      'By increasing charging speed',
+      'By increasing the charger output current',
+      'By reducing the cable size required to the charger',
+      'By removing the need for any grid connection',
       'By extending solar availability beyond daylight hours',
-      'By reducing cable requirements',
-      'By eliminating the need for grid connection',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Battery storage extends the availability of solar energy for EV charging beyond daylight hours, provides backup power during outages, and enables participation in grid services for additional revenue.',
   },

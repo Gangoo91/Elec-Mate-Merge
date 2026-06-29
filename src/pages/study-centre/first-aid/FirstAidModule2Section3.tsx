@@ -22,12 +22,12 @@ const quizQuestions = [
     id: 2,
     question: 'When should the recovery position be used?',
     options: [
-      'Whenever a casualty is lying down',
       'When a casualty is unresponsive but breathing normally',
+      'Whenever a casualty is lying down',
       'When a casualty is not breathing',
       'Only when a spinal injury is suspected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The recovery position is used when a casualty is unresponsive BUT breathing normally. If they are not breathing, you must start CPR instead. If a spinal injury is suspected, maintain manual inline stabilisation rather than rolling them.',
   },
@@ -64,10 +64,10 @@ const quizQuestions = [
     options: [
       'Continue to wait — fainting can take up to 10 minutes to resolve',
       'Splash cold water on their face',
-      'Call 999 — failure to recover within 2 minutes suggests a more serious cause',
       'Sit them upright and give them a hot drink',
+      'Call 999 — failure to recover within 2 minutes suggests a more serious cause',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Simple fainting (vasovagal syncope) typically resolves within 1-2 minutes. If the casualty does not regain consciousness within 2 minutes, you should call 999 as this suggests a more serious underlying cause such as a cardiac event, stroke, or significant head injury.',
   },
@@ -75,12 +75,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is the left lateral (recovery) position preferred for a pregnant casualty?',
     options: [
-      'It is easier to roll a pregnant person onto their left side',
       'It prevents the weight of the uterus compressing the inferior vena cava, which could reduce blood return to the heart',
+      'It is easier to roll a pregnant person onto their left side',
       'It reduces morning sickness',
       'It is only a preference — either side is equally safe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In later pregnancy, the weight of the uterus can compress the inferior vena cava (the large vein returning blood to the heart) when the casualty lies on their back or right side. Placing them on their left side relieves this compression and maintains adequate blood flow to both the mother and the baby.',
   },
@@ -104,11 +104,11 @@ const quizQuestions = [
       'A casualty with a suspected spinal injury is unresponsive but breathing normally. What is the correct action?',
     options: [
       'Place them in the recovery position immediately',
-      'Maintain manual inline stabilisation of the head and neck — only use the recovery position if you must leave to get help',
       'Start CPR regardless of breathing',
       'Sit them upright and support the head',
+      'Maintain manual inline stabilisation of the head and neck — only use the recovery position if you must leave to get help',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'With a suspected spinal injury, you should maintain manual inline stabilisation (holding the head, neck and spine in alignment) rather than rolling them. The recovery position should only be used if you absolutely must leave the casualty unattended to summon help, as the risk of airway obstruction then outweighs the risk of spinal movement.',
   },
@@ -123,12 +123,12 @@ const quickCheckQuestions = [
     question:
       'A casualty opens their eyes when you speak to them loudly but cannot tell you their name and appears confused. What is their AVPU level?',
     options: [
-      'A — Alert',
       'V — Voice (responds to verbal stimulus but is confused)',
+      'A — Alert',
       'P — Pain',
       'U — Unresponsive',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The casualty responds to your voice (opens eyes, shows some awareness) but is confused. This places them at 'V' — Voice on the AVPU scale. They are not fully alert (would need to be orientated and talking) and they respond to voice, so they have not deteriorated to Pain or Unresponsive.",
   },
@@ -152,11 +152,11 @@ const quickCheckQuestions = [
       'A colleague faints at work. They regain consciousness after about 30 seconds. What is the most appropriate immediate action?',
     options: [
       'Tell them to stand up and get back to work',
-      'Keep them lying flat, raise their legs 15-30 cm, loosen tight clothing, and ensure fresh air',
       'Place them in the recovery position',
+      'Keep them lying flat, raise their legs 15-30 cm, loosen tight clothing, and ensure fresh air',
       'Give them a hot cup of tea immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'After a simple faint, keep the casualty lying flat with legs raised 15-30 cm to help blood return to the brain. Loosen any tight clothing (collar, tie, belt) and ensure adequate fresh air. Once they are fully conscious and feeling better, they can sit up slowly. Advise them to see their GP if this is the first episode or if it recurs.',
   },

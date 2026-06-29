@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'smart-grid-definition',
     question: 'What is a smart grid?',
     options: [
-      'Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.',
-      'An electricity network that uses digital communication technology, sensors, automation and data analytics to monitor and manage the transport of electricity from all generation sources to meet the varying electricity demands of end users — enabling two-way power flow and real-time network optimisation',
-      'Describe your specific role and contributions within the team, the communication and coordination involved, and how the team activity demonstrates professional behaviours such as teamwork, communication and responsibility',
-      'Culpability (very high / high / medium / low) × harm category (level A — life-threatening / fatal, level B — serious, level C — minor) — then mapped against the company\\\\\\\\\\\\\\\'s turnover band (large / medium / small / micro). The starting point and range are then adjusted for aggravating and mitigating factors.',
+      'A high-voltage transmission network carrying electricity only from large power stations to substations',
+      'A network using digital communications, sensors and automation to manage two-way power flow in real time',
+      'A backup generator system that automatically supplies a building whenever the mains supply fails',
+      'A protective scheme that disconnects the whole network whenever a single fault is detected anywhere',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'smets2-meter',
     question: 'What does SMETS2 stand for and why is it significant?',
     options: [
-      'G98 — single-phase PV up to and including 16 A per phase falls under ENA Engineering Recommendation G98 \\\\\\\\\\\\\\\'Connect and Notify\\\\\\\\\\\\\\\'. The MCS-certified installer notifies the DNO within 28 days of commissioning using the standard G98 form. No prior approval is required for G98 connections.',
-      'Smart Metering Equipment Technical Specifications version 2 — the current UK standard ensuring all smart meters can communicate via the Data Communications Company (DCC) national network, operate with any energy supplier, and provide consumers with real-time energy usage data',
-      'Step 1: end-to-end resistance of each conductor (r1, rn, r2). Step 2: cross-connect L outgoing to N return; measure L-N at each socket — should be ~constant. Step 3: cross-connect L outgoing to cpc return; measure L-cpc at each socket — gives R1+R2 for the ring',
-      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
+      'Standard Metering and Energy Transfer System 2, a tariff scheme guaranteeing consumers a fixed electricity price',
+      'Smart Metering Equipment Technical Specifications version 2, the UK standard for DCC-connected, any-supplier meters',
+      'Smart Meter Electrical Test Sequence 2, the mandatory commissioning test on every new meter before energisation',
+      'Secondary Metering and Export Tariff Specification 2, the rules governing how exported solar generation is paid for',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'demand-side-response',
     question: 'What is demand-side response (DSR)?',
     options: [
-      'Because it informs the supervisor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s framing — "the consequence cascade isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t hypothetical; it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s structured by the Sentencing Council guideline; here\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s roughly where this incident would land". Plus director liability under s.37 + Sentencing Council means the L3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s observations to senior management land with weight.',
-      'The likelihood that harm from a specific hazard will occur, combined with the severity of the harm. Risk = function of likelihood × severity. Modified by the population exposed and the controls in place.',
-      'The deliberate adjustment of electricity consumption by end users in response to price signals, grid conditions or direct requests from the system operator — shifting demand away from peak periods to reduce strain on the network and avoid the need for expensive peaking generation',
-      'A mask that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t seal properly to the face provides much less protection than its rated assigned protection factor. Face-fit testing (qualitative or quantitative) confirms the fit. HSE INDG479 is the guide. Fit-test required at first issue and on changes (weight, dental work, beard growth).',
+      'The automatic increase of generation output by power stations whenever consumer demand rises',
+      'The statutory obligation on suppliers to respond to consumer complaints within a fixed timescale',
+      'Deliberate adjustment of consumption by end users in response to price signals or grid conditions, shifting demand off peak',
+      'The disconnection of a consumer’s supply by the network operator when their electricity bill is unpaid',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'dcc-communications',
     question: 'How do SMETS2 smart meters communicate with energy suppliers?',
     options: [
-      "A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay \\\\\\\\\\\\\\\"S\\\\\\\\\\\\\\\" type.",
-      "Via the Data Communications Company (DCC) national network — using a dedicated wide-area network (cellular for most areas, long-range radio for rural areas) that is separate from the household internet, ensuring secure, reliable communication independent of the consumer's broadband",
-      "A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation",
-      "Could result in serious injury to, or loss of, human life. This is the headline mandatory case — life-safety circuits, medical premises, fire alarm and detection systems. SPD protection shall be provided regardless of installation type or location.",
+      "By sending data over the consumer's home broadband router, which must stay connected at all times",
+      "Via the DCC national network on a dedicated wide-area link (cellular or radio), separate from the home internet",
+      "Through the mains wiring itself, using power-line carrier signals injected onto the consumer's final circuits",
+      "By a manual meter reader visiting the property and transcribing the digital display once each quarter",
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'The transition from DNO (Distribution Network Operator) to DSO (Distribution System Operator) involves:',
     options: [
-      'IT systems still have exposed-conductive-parts that must be earthed (locally or interconnected via a protective conductor — see Reg 411.6.2). They still need protective equipotential bonding of extraneous parts. The "I" in IT means the source is isolated (or earthed via high impedance), not that the installation has no earthing',
-      'Moving from passive network management (simply delivering power from source to consumer) to active network management — using real-time monitoring, flexible connections, and automated control to optimise power flows, manage constraints, and integrate distributed generation and storage',
-      'True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance',
-      'Living document - updated when significant changes occur (alterations, replacements, occupancy changes), after incidents / near-misses, periodically (PAP determines but typically annually). BSR can request review.',
+      'Replacing all distribution cables with higher-voltage transmission lines to carry more power',
+      'Moving from passive to active network management, using real-time monitoring and automated control of power flows',
+      'Transferring ownership of the local distribution network from the supplier to the individual consumer',
+      'Removing all protective devices from the network so that power can flow freely in both directions',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'A smart meter installation comprises:',
     options: [
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
-      'An electricity meter, a gas meter (if applicable), a communications hub (connecting to the DCC network), and an in-home display (IHD) showing real-time energy usage and cost information',
-      'Solar PV, wind turbines, battery storage, EV chargers, heat pumps, micro-CHP, and demand-side response — all connected at distribution level and managed by the DSO as part of a flexible, integrated energy system',
+      'A single combined gas-and-electricity meter with no separate display or communications module',
+      'An electricity meter and an in-home display only, with the gas meter still read manually as before',
+      'An electricity meter, a gas meter if applicable, a communications hub to the DCC, and an in-home display',
+      'A communications hub and a battery backup unit, with the existing analogue meters left in place',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 3,
     question: 'Network automation in a smart grid enables:',
     options: [
-      'Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme',
-      'Artificial intelligence and machine learning for predictive network management, digital twin technology for network planning, blockchain for peer-to-peer energy trading, 5G communications for ultra-low-latency control, and internet of things (IoT) sensors for comprehensive real-time monitoring',
-      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
+      'Manual switching of the entire network from a single central control-room operator',
+      'Permanent disconnection of any distribution feeder that has ever experienced a fault',
+      'Higher supply voltages everywhere to reduce the current carried by the distribution cables',
+      'Automatic fault detection, location and isolation (FLISR), reconfiguring the network to limit power cuts',
     ],
     correctAnswer: 3,
     explanation:
@@ -109,10 +109,10 @@ const quizQuestions = [
     id: 4,
     question: 'The Home Area Network (HAN) in a smart meter system uses:',
     options: [
-      'ZigBee (IEEE 802.15.4) — a low-power, short-range wireless protocol operating at 2.4 GHz that connects the electricity meter, gas meter, in-home display and potentially future smart appliances within the home',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
-      'Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme',
+      'ZigBee (IEEE 802.15.4), a low-power 2.4 GHz wireless protocol linking the meters, display and home devices',
+      'The household Wi-Fi router, which must remain switched on for the meter to record any data',
+      'A wired Ethernet connection run from the meter to every electrical appliance in the dwelling',
+      'The DCC cellular wide-area network, the same link that is used to reach the energy supplier',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Smart grid voltage optimisation reduces energy consumption by:',
     options: [
-      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
-      'Maintaining supply voltage at the lower end of the statutory range (216.2-253 V, with a nominal of 230 V) — since many electrical devices consume less power at lower voltage, reducing voltage from 245 V to 225 V can reduce energy consumption by 5-10% without affecting equipment performance',
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
-      'Solar PV, wind turbines, battery storage, EV chargers, heat pumps, micro-CHP, and demand-side response — all connected at distribution level and managed by the DSO as part of a flexible, integrated energy system',
+      'Disconnecting consumers during peak periods to force a reduction in total demand',
+      'Holding supply voltage near the lower end of the statutory range, so resistive loads draw less power',
+      'Raising the supply voltage so that the same useful power is delivered at a lower current',
+      'Converting the supply from AC to DC, which eliminates reactive power losses entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'Cybersecurity in smart grid systems is critical because:',
     options: [
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
-      'ZigBee (IEEE 802.15.4) — a low-power, short-range wireless protocol operating at 2.4 GHz that connects the electricity meter, gas meter, in-home display and potentially future smart appliances within the home',
-      'Unauthorised access to grid control systems could enable: remote disconnection of millions of consumers; manipulation of demand-side response to cause grid instability; theft of consumer data; interference with energy billing; and potentially cascading failures across interconnected networks',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
+      'Smart meters consume large amounts of electricity that must itself be protected from theft',
+      'The ZigBee protocol cannot be encrypted at all, leaving consumer data permanently exposed',
+      'Unauthorised access to grid control could disconnect millions, destabilise the grid or steal consumer data',
+      'Cyberattacks on the grid can only ever affect billing accuracy, never the physical electricity supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 7,
     question: 'A Consumer Access Device (CAD) connected to the smart meter HAN:',
     options: [
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme',
-      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
-      'Allows third-party devices and energy management systems to access real-time energy consumption data from the smart meter via the ZigBee Home Area Network — enabling automated energy management, tariff optimisation and demand-side response',
+      'Replaces the electricity meter entirely and takes over the consumer billing function',
+      'Provides the wide-area communications link between the meter and the DCC national network',
+      'Is a simple display that only shows the current unit cost of electricity, with no data output',
+      'Lets third-party energy management systems read real-time consumption data via the ZigBee HAN',
     ],
     correctAnswer: 3,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     id: 8,
     question: 'When a maintenance technician encounters a smart meter during electrical work:',
     options: [
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
-      'Artificial intelligence and machine learning for predictive network management, digital twin technology for network planning, blockchain for peer-to-peer energy trading, 5G communications for ultra-low-latency control, and internet of things (IoT) sensors for comprehensive real-time monitoring',
-      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
+      'They must not tamper with, remove or bypass the meter without supplier authority, as interference is an offence',
+      'They may freely remove the meter to make their own work easier, provided they refit it afterwards',
+      'They should reset the meter to clear any stored consumption data before they start the work',
+      'They are required to recalibrate the meter against a portable reference before re-energising it',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'Distributed Energy Resources (DER) in a smart grid include:',
     options: [
-      'Stop, ask the supervisor, do not drill into a wall the drawing pack does not cover until you have either an as-built or a cable detector confirms the area is clear',
-      'Solar PV, wind turbines, battery storage, EV chargers, heat pumps, micro-CHP, and demand-side response — all connected at distribution level and managed by the DSO as part of a flexible, integrated energy system',
-      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
-      'Striking a concealed live cable can cause fatal electric shock, and striking a gas pipe can cause an explosion — detection before drilling prevents these potentially fatal incidents',
+      'The large central power stations and transmission lines that form the backbone of the grid',
+      'Solar PV, wind, battery storage, EV chargers, heat pumps and demand response, connected at distribution level',
+      'Only the protective devices and switchgear contained within a consumer’s distribution board',
+      'The metering and billing systems that record how much energy each individual consumer uses',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,10 +187,10 @@ const quizQuestions = [
     id: 10,
     question: 'Smart meter data can be used by maintenance technicians to:',
     options: [
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'Artificial intelligence and machine learning for predictive network management, digital twin technology for network planning, blockchain for peer-to-peer energy trading, 5G communications for ultra-low-latency control, and internet of things (IoT) sensors for comprehensive real-time monitoring',
-      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
-      'Solar PV, wind turbines, battery storage, EV chargers, heat pumps, micro-CHP, and demand-side response — all connected at distribution level and managed by the DSO as part of a flexible, integrated energy system',
+      'Remotely operate the network switchgear to isolate faults on the distribution feeder',
+      'Set the consumer’s electricity tariff and issue their bills on behalf of the energy supplier',
+      'Analyse consumption patterns to spot faults, assess load profiles and verify efficiency measures',
+      'Override the recorded meter readings to correct any errors found during a periodic inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,10 +200,10 @@ const quizQuestions = [
     id: 11,
     question: 'The Electricity Act 1989 (as amended) gives Ofgem the power to:',
     options: [
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'Maintaining supply voltage at the lower end of the statutory range (216.2-253 V, with a nominal of 230 V) — since many electrical devices consume less power at lower voltage, reducing voltage from 245 V to 225 V can reduce energy consumption by 5-10% without affecting equipment performance',
-      'Allows third-party devices and energy management systems to access real-time energy consumption data from the smart meter via the ZigBee Home Area Network — enabling automated energy management, tariff optimisation and demand-side response',
-      'Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme',
+      'Design and install electrical systems directly within individual consumers’ premises',
+      'Set the technical wiring requirements that are published within the BS 7671 standard',
+      'Operate the national transmission network and dispatch power-station generation in real time',
+      'Regulate the electricity industry, licensing suppliers and networks, setting price controls and protecting consumers',
     ],
     correctAnswer: 3,
     explanation:
@@ -213,10 +213,10 @@ const quizQuestions = [
     id: 12,
     question: 'The future smart grid will increasingly use:',
     options: [
-      'Artificial intelligence and machine learning for predictive network management, digital twin technology for network planning, blockchain for peer-to-peer energy trading, 5G communications for ultra-low-latency control, and internet of things (IoT) sensors for comprehensive real-time monitoring',
-      'Regulate the electricity industry including: licensing of suppliers and network operators; setting price controls for networks; establishing standards of service; enforcing competition; protecting consumer interests; and overseeing the smart meter rollout programme',
-      'Automatic fault detection, location and isolation (FLISR — Fault Location, Isolation and Service Restoration) — reducing the number of customers affected by faults and the duration of power cuts by automatically reconfiguring the network',
-      'Unauthorised access to grid control systems could enable: remote disconnection of millions of consumers; manipulation of demand-side response to cause grid instability; theft of consumer data; interference with energy billing; and potentially cascading failures across interconnected networks',
+      'AI and machine learning, digital twins, blockchain trading, 5G control and IoT sensors for monitoring',
+      'A return to manual meter reading and paper-based network records to improve overall reliability',
+      'Fewer sensors and less data collection in order to reduce the cybersecurity attack surface',
+      'A single national fuse that disconnects the whole country during any period of high demand',
     ],
     correctAnswer: 0,
     explanation:

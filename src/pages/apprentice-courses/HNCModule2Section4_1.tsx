@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is light?',
     options: [
-      'Class EN 131 Professional — suitable for trade use',
+      'A flow of charged particles through a conductor',
       'Electromagnetic radiation visible to the human eye',
-      'Different types have different instantaneous trip levels',
-      'Prove tester, test dead, prove tester',
+      'A mechanical pressure wave that travels through air',
+      'A form of stored chemical energy released as heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'Why is the S/P ratio important in lighting design?',
     options: [
       'It affects visual performance at mesopic light levels',
-      'At all safety signs, changes of level, and intersection points',
-      'Ensure power is isolated and use appropriate IP-rated equipment',
-      'Identify the correct circuit using drawings/spec',
+      'It sets the maximum illuminance permitted on a working plane',
+      'It determines the colour rendering index of a light source',
+      'It fixes the glare rating (UGR) of a luminaire installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the Purkinje shift?',
     options: [
-      'Substitute the substance with a less hazardous alternative',
-      'Change in eye sensitivity towards blue at low light levels',
-      'Multiple methods: landline, mobile, radio, alarms',
-      'Inspection is visual, testing uses instruments',
+      'A change in eye sensitivity towards red at high light levels',
+      'A change in eye sensitivity towards blue at low light levels',
+      'The narrowing of the pupil when bright light enters the eye',
+      'The loss of acuity that occurs as the eye lens yellows with age',
     ],
     correctAnswer: 1,
     explanation:

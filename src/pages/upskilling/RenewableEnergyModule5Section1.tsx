@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'BESS — Battery Energy Storage System. In the UK 2025-2026 domestic context, what is it and what regulatory chapter governs it?',
     options: [
-      'Just a battery',
-      'A BESS is a stationary secondary battery installation that stores electrical energy for later use — typically charging from PV surplus, off-peak grid tariff, or a generator, and discharging to the loads or back to the grid. UK 2025-2026 domestic BESS is dominated by Li-ion (overwhelmingly LFP chemistry — LiFePO4) in 5-15 kWh packs. The primary regulatory authority is Chapter 57 (Stationary Secondary Batteries) — NEW in BS 7671:2018+A4:2026 — supported by BS EN IEC 62485 series, PAS 63100:2024 for UK domestic installs, and Chapter 82 (PEIs) for the integrated prosumer install.',
-      'Only for off-grid',
-      'A diesel generator',
+      'Any battery connected anywhere in the installation, governed by Section 551',
+      'A stationary secondary battery installation that stores energy, governed by Chapter 57 (new in A4:2026)',
+      'A storage system used only in off-grid installations, governed by Section 712',
+      'A diesel-fuelled standby generator set with a starter battery, governed by Section 551',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'Reg 570.1 sets the scope of Chapter 57. Which of these is NOT covered by Chapter 57?',
     options: [
-      'Hybrid PV+BESS',
-      'A battery wholly within an emergency lighting system conforming to the BS 5266 series — Reg 570.1 explicitly excludes (b)(vi) these from Chapter 57. Also excluded: (i) pluggable UPS per BS EN [IEC] 62040; (ii) central safety power supply systems per BS EN 50171; (iii) fire detection / fire alarm systems per BS 5839 series; (iv) alarm systems per BS EN 50132; (v) machinery per BS EN [IEC] 60204 series. The NOTE clarifies: for EV supply to the fixed installation, refer to Section 722 and Chapter 82',
-      'A home BESS retrofit',
-      'A 10 kWh LFP pack',
+      'A hybrid PV+BESS installation in a dwelling',
+      'A battery wholly within an emergency lighting system to BS 5266',
+      'A standalone home BESS added by retrofit to existing PV',
+      'A 10 kWh LFP pack on a domestic single-phase supply',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Reg 570.5.1 lists battery selection criteria. Which factor is MOST often skipped or mis-applied in UK domestic install practice?',
     options: [
-      'Customer preference',
-      'The combination of (g) charge / discharge profiles + (h) cyclic operation capability — the chemistry\'s C-rate limits and cycle life under the customer\'s actual usage pattern. Installers often spec on nameplate kWh capacity alone, missing that an LFP cell rated at 0.5C can deliver 5 kW from a 10 kWh pack but not 15 kW; or that a battery cycled daily to 90% DoD will last 5-8 years while one cycled to 60% DoD will last 12-15 years. Reg 570.5.1 (a)-(j) requires ALL ten factors to be considered — the design pack should record each',
-      'Battery colour',
-      'No factors apply',
+      'The customer\'s stated brand preference at the survey',
+      'Charge/discharge profiles and cyclic operation capability — the C-rate limits and cycle life under real usage',
+      'The colour and external finish of the battery enclosure',
+      'The nominal kWh on the manufacturer\'s nameplate, taken on its own',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'LFP (LiFePO4) vs NMC (NCM, NMC811) Li-ion chemistry — which dominates UK domestic BESS, and why?',
     options: [
-      'NMC dominates',
-      'LFP dominates UK domestic BESS overwhelmingly (~95%+ market share 2025-2026). Reasons: (a) thermal-runaway threshold ~270°C vs ~210°C for NMC — safer in the home; (b) longer cycle life ~6,000-10,000 cycles at 80% DoD vs NMC ~2,000-3,000 cycles; (c) no cobalt (lower cost + ethical supply chain); (d) cell-level chemistry stable at full charge. NMC has higher energy density (~250 Wh/kg vs LFP ~160 Wh/kg) — preferred for EVs where weight matters; not material for fixed BESS. UK domestic LFP: GivEnergy, Tesla Powerwall 3, Sigenergy SigenStor, Huawei LUNA, FoxESS, Enphase IQ Battery — all LFP',
-      'They\'re the same',
-      'Lead-acid dominates',
+      'NMC dominates UK domestic BESS for its higher energy density and lower cost',
+      'LFP dominates for its higher thermal-runaway threshold, longer cycle life and cobalt-free cost',
+      'LFP and NMC have identical safety and cycle-life characteristics in practice',
+      'Lead-acid still dominates the UK domestic BESS market on price',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'When does lead-acid (or flow battery) still make sense for a UK BESS install in 2025-2026?',
     options: [
-      'Always',
-      'Lead-acid (VRLA / AGM / Gel): legacy off-grid (existing system being maintained); very low-cost / very-low-cycling resilience installs where capex matters more than cycle life; specific marine / industrial applications. Flow batteries (vanadium redox): very long-duration storage (8+ hour discharge), commercial/grid-scale only — not domestic. For a NEW UK domestic BESS in 2025-2026, the default is LFP — lead-acid is virtually never the right choice for new domestic install',
-      'Lead-acid for everything',
-      'Flow batteries for homes',
+      'In every new domestic install lead-acid remains the right cost choice',
+      'Mainly legacy off-grid, very-low-cycling backup, or marine/industrial niches; flow is grid-scale only',
+      'Lead-acid should be specified for all new domestic storage applications',
+      'Flow batteries are now the standard choice for domestic homes',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'A customer asks why LFP packs are larger than the equivalent NMC pack would be. What\'s the practical answer?',
     options: [
-      'LFP is broken',
-      'Energy density: LFP ~160 Wh/kg (~330 Wh/L) vs NMC ~250 Wh/kg (~700 Wh/L). For a 10 kWh pack: LFP ~62 kg / ~30 L; NMC ~40 kg / ~14 L. LFP is roughly 50% heavier and 2&times; the volume of NMC at the same kWh. For a fixed wall-mounted domestic BESS, this is rarely material — the install location accommodates it. For EVs, the energy density gap matters (weight = range). The trade-off LFP takes (lower energy density) for the gains (safety + cycle life + cost) is the right choice for stationary storage',
-      'Customer error',
-      'They\'re identical',
+      'The larger LFP pack indicates a manufacturing or assembly fault',
+      'LFP has lower energy density (~160 vs ~250 Wh/kg), so it is bulkier per kWh — fine for a fixed pack',
+      'The customer has mis-measured the two packs against the datasheet',
+      'LFP and NMC packs are identical in size and weight per kWh',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'Customer has a server rack with a tower UPS connected via plug-in cord. The UPS contains a sealed Pb-acid battery. Does Chapter 57 apply?',
     options: [
-      'Yes — full Chapter 57',
-      'No — Reg 570.1 excludes (b)(i) pluggable UPS conforming to the BS EN [IEC] 62040 series. A plug-in tower UPS is a self-contained product within scope of its own product standard, not a stationary battery installation in the Chapter 57 sense. Customer still must comply with the product\'s instructions and any applicable regs for the host installation, but Chapter 57\'s install requirements (570.5.x / 570.6.x) don\'t apply to the UPS battery itself',
-      'Customer\'s choice',
-      'No regs apply',
+      'Yes — the full Chapter 57 install requirements apply to the UPS battery',
+      'No — Reg 570.1 excludes pluggable UPS to BS EN IEC 62040 as a self-contained product',
+      'Whether Chapter 57 applies is left to the customer\'s choice at survey',
+      'No regulations of any kind apply to the host installation around it',
     ],
     correctIndex: 1,
     explanation:
@@ -123,10 +123,10 @@ const inlineChecks = [
     question:
       'Cycle life vs calendar life — what\'s the difference, and why do BOTH matter for sizing an LFP BESS?',
     options: [
-      'Same thing',
-      'Cycle life: number of full charge/discharge cycles before capacity falls below threshold (typically 80% of original). LFP ~6,000-10,000 cycles at 80% DoD. Calendar life: number of years before capacity falls below threshold REGARDLESS of cycling. LFP ~15-20 years typical. The battery hits whichever limit comes first. Daily-cycled 10 kWh LFP at 80% DoD: 6,000 cycles / 365 cycles/year &asymp; 16 years cycle life. Calendar life ~15-20 years. So cycle and calendar lives are well-matched for daily domestic cycling. For low-cycling installs (weekend cottage, off-grid backup), calendar life is the binding constraint',
-      'Customer doesn\'t care',
-      'No relationship',
+      'They are two terms describing exactly the same degradation limit',
+      'Cycle life is cycles-to-threshold; calendar life is years-to-threshold — the battery hits whichever comes first',
+      'Neither matters to the customer when sizing a domestic pack',
+      'There is no relationship between the two for any battery chemistry',
     ],
     correctIndex: 1,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Customer wants a 10 kWh BESS to pair with their 6 kWp PV. They\'re cost-sensitive and want the best safety profile. Recommend chemistry + brand?',
     options: [
-      'NMC for cost',
-      'LFP (LiFePO4) — the dominant UK domestic chemistry for safety + cycle life + cost. Brand options: GivEnergy (UK-designed/manufactured, dominant market share, good app + integration), Sigenergy SigenStor (modular, premium-tier), FoxESS (value-tier LFP), Tesla Powerwall 3 (premium-tier LFP — Powerwall 2 was NMC, Powerwall 3 changed to LFP). For cost-conscious customer with 10 kWh need: GivEnergy or FoxESS. Cost range UK 2025-2026: £4,500-£6,500 for 10 kWh LFP installed (battery + PCE if separate, integration, scaffolding, electrics)',
-      'Lead-acid for backup',
-      'Flow battery',
+      'NMC, chosen for its lower per-kWh cost than other lithium chemistries',
+      'LFP — the dominant UK domestic chemistry for safety, cycle life and cost',
+      'Lead-acid, as it is the safest option for domestic backup storage',
+      'A vanadium flow battery, for the best domestic safety profile available',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A customer\'s current installation has a server room with a hardwired data centre UPS containing 50 sealed Pb-acid batteries. Does Chapter 57 apply?',
     options: [
-      'No — UPS excluded',
-      'YES — a hardwired stationary UPS battery installation IS in Chapter 57 scope. The Reg 570.1(b)(i) exclusion is specifically for PLUGGABLE UPS systems conforming to BS EN [IEC] 62040 series. A fixed / hardwired UPS battery — typical data centre, broadcast facility, hospital UPS room — is a stationary secondary battery installation subject to Chapter 57. Reg 570.5.1 selection criteria; Reg 570.6.x protection / earthing / ventilation / fault current / isolation / location all apply. Plus BS EN IEC 62485 series and any application-specific standards',
-      'Customer\'s choice',
-      'No regs apply',
+      'No — every UPS system of any kind is excluded from Chapter 57',
+      'No — only the BS EN IEC 62485 series applies to a UPS battery room, never BS 7671',
+      'Yes — the exclusion covers only pluggable UPS; a hardwired stationary UPS is in scope',
+      'No — battery rooms are covered solely by data-centre product standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 570.1(b)(i) exclusion is for PLUGGABLE UPS — tower units, desktop units, portable backup. A fixed / hardwired UPS — data centre UPS room with hardwired DC distribution to the racks — IS in Chapter 57 scope. The whole 570.6.x family applies: 570.6.1.1.1 BS EN IEC 62485 conformance; 570.6.1.1.2 terminal voltage always present; 570.6.1.2.1/2 earthing; 570.6.3 ventilation (Pb-acid hydrogen emission significant — full BS EN IEC 62485-2 Annex A calculation); 570.6.4 fault current (battery + PCE contribution); 570.6.5 isolation (Section 462); 570.6.7 hazards (arcing, explosion); 570.6.8.x warning notices. Cert evidence bundle records the full Chapter 57 compliance package.',
   },
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'Customer\'s 10 kWh LFP battery shows 92% capacity at year 5. They ask if this is normal or if the battery is faulty.',
     options: [
-      'Faulty',
-      'Normal — LFP calendar degradation is ~2-3% per year typical; cycle degradation adds ~0.5-1% per 365 cycles at 80% DoD. So 5 years &times; 2-3% = 10-15% calendar; plus ~3-5% cycling = ~13-20% total. 92% remaining capacity at year 5 is within the normal range. Manufacturer warranty typically guarantees 70-80% remaining at year 10 — well on track. Confirm by reading the BMS / app capacity log and comparing to manufacturer\'s SoH spec. Cert evidence bundle includes the commissioning capacity baseline for comparison',
-      'Replace immediately',
-      'Customer error',
+      'The battery is faulty — 92% at year 5 indicates premature failure',
+      'It is normal — confirm against the BMS state-of-health log and warranty curve',
+      'It must be replaced immediately under the manufacturer warranty',
+      'It is customer error in reading the figure shown in the app',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A customer\'s installer recommends mixing two different battery brands in series (Battery A + Battery B sharing the same DC bus). Compatibility?',
     options: [
-      'Always compatible',
-      'NEVER mix chemistries, brands, or even different production batches of the same chemistry in series within a single battery system. The BMS treats the pack as one logical battery; mismatched cells have different internal resistance, voltage curves, and degradation rates — leading to uneven cell-level cycling, accelerated degradation of the weakest cells, and potential safety issues. Reg 570.5.1(a)-(j) requires the battery be selected appropriately; mixing batteries fails the criterion. Parallel installation of separate complete BESS units (each with its own BMS) is sometimes possible if the manufacturer explicitly supports it',
-      'OK if same voltage',
-      'Customer\'s preference',
+      'Compatible — any two batteries can safely share a DC bus in series',
+      'Acceptable, provided both batteries carry the same nominal terminal voltage',
+      'It is purely the customer\'s choice and not a technical concern at all',
+      'Never mix brands or batches in series — only manufacturer-supported parallel units may be combined',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Never mix series-connected battery cells / packs / brands. Different chemistries (LFP vs NMC), different production batches (even same chemistry), different ages — all create cell-imbalance issues. The BMS cell-balancing function can compensate for SMALL variations (typical manufacturing tolerance) but not gross mismatches. PARALLEL installation of complete BESS units (each with own BMS) is sometimes valid — e.g. two GivEnergy 9.5 kWh batteries paralleled per manufacturer instructions. But series mixing is always wrong. Cert evidence bundle records the battery configuration; any deviation from manufacturer spec is a major audit finding.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'Customer wants a BESS for genuine off-grid backup only (PV + grid + occasional backup use; battery cycled ~30 times/year not daily). Sizing implications?',
     options: [
-      'Same as daily-cycle',
-      'For low-cycling backup use, CALENDAR LIFE becomes the binding constraint, not cycle life. LFP ~15-20 year calendar life; the 6,000-10,000 cycle life is far in excess of 30 cycles/year &times; 15 years = 450 cycles. So size based on: (a) backup duration needed (autonomy hours/days); (b) calendar-life expectations (replace ~year 15); (c) avoid expensive over-spec on cycle life that won\'t be used. May actually favour a smaller, cheaper pack — the customer doesn\'t need the cycle life that a daily-cycled install would',
-      'Larger battery',
-      'Doesn\'t matter',
+      'Size it exactly as a daily-cycled install, ignoring the low cycle count',
+      'Specify a deliberately larger battery to compensate for the infrequent cycling',
+      'Calendar life is the binding constraint here, so size on autonomy duration and accept a smaller, cheaper pack',
+      'Sizing makes no practical difference at all for backup-only duty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Backup-only BESS sizing inverts the priorities vs daily-cycled. Daily-cycled: cycle life binding (size for ~6,000 cycle target = 15+ years). Backup-only: calendar life binding (size for autonomy duration; cycle life vastly exceeds need). Implication: customer can spec a smaller / cheaper pack for the same useful life. UK pricing 2025-2026: 5 kWh LFP £3,500-£4,500 installed vs 10 kWh £4,500-£6,500. The competent surveyor models the customer\'s actual cycling against both cycle and calendar lives; sells the right size, not the largest. Cert evidence bundle records the design rationale + expected cycling.',
   },
@@ -210,10 +210,10 @@ const quizQuestions = [
     question:
       'Customer\'s existing 4-year-old PV install uses a Solis Mini 4G inverter. They want to retrofit a BESS. What chemistry / topology / coupling decision is right?',
     options: [
-      'DC-coupled hybrid',
-      'AC-coupled LFP retrofit. The Solis Mini 4G is NOT a hybrid inverter and won\'t accept a DC battery on its DC side. So retrofit must be AC-coupled: separate battery PCE (e.g. GivEnergy AC battery, Tesla Powerwall 2/3, SolarEdge AC battery, Enphase IQ Battery if Enphase PV) installed on the AC side. LFP chemistry for safety + cycle life. Existing Solis stays in place; new battery has its own PCE + monitoring + EREC paperwork (likely G99 application if combined output &gt; 16 A, or G100 export limit to stay G98). Chapter 82 PEI design applies to the now-PEI install per Section 4.5',
-      'Lead-acid retrofit',
-      'New hybrid replace inverter',
+      'DC-couple an LFP battery directly to the existing Solis Mini 4G inverter',
+      'AC-coupled LFP retrofit — the Solis Mini 4G is PV-only, so the battery needs its own AC-side PCE',
+      'Retrofit a lead-acid bank on the existing PV DC string instead',
+      'Always strip out the Solis and fit a brand-new DC-coupled hybrid',
     ],
     correctAnswer: 1,
     explanation:
@@ -224,12 +224,12 @@ const quizQuestions = [
     question:
       'Reg 570.5.1 lists ten battery selection factors. Which three best capture &ldquo;chemistry-determined&rdquo; selection drivers?',
     options: [
-      'None',
-      '(a) nature of demand, (g) charge/discharge profiles, (h) load profiles + cyclic operation. Demand nature (high-power-burst vs sustained-discharge vs deep-cycle backup) drives the C-rate spec. Charge/discharge profiles (rates, voltage curves) determine the BMS + PCE compatibility. Load profiles + cyclic operation (daily DoD, expected cycle count) drive the chemistry choice (LFP for high-cycle, NMC for weight-critical, lead-acid for legacy/cost-only). The NOTE specifically calls out chemistry consideration: &ldquo;type of battery might include consideration of battery chemistry and construction, for example cell plate configuration and possibility of evolution of flammable, or harmful, gases&rdquo;',
-      'Customer\'s budget only',
-      'No factors apply',
+      'Battery voltage, utilisation voltage range and the PCE coupling mode',
+      'Suitability for fixed installation, external influences and the earthing arrangement',
+      'Nature of demand, charge/discharge profiles and cyclic operation capability',
+      'The customer\'s available budget, brand preference and warranty period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 570.5.1 ten factors: (a) demand; (b) voltage; (c) charge/discharge time; (d) generation profiles; (e) PCE coupling mode; (f) utilization voltage range; (g) charge/discharge profiles; (h) load profiles + cyclic operation; (i) suitability for fixed install; (j) external influences. The chemistry-determined factors are (a) + (g) + (h) — these together encode the customer\'s use case (high-power vs deep-cycle, daily vs occasional) which maps onto the chemistry decision (LFP vs NMC vs lead-acid vs flow). The NOTE makes chemistry explicit. Cert evidence bundle records each factor + the chemistry rationale.',
   },
@@ -238,10 +238,10 @@ const quizQuestions = [
     question:
       'When did Chapter 57 (Stationary Secondary Batteries) become a distinct chapter in BS 7671?',
     options: [
-      'Always existed',
-      '15 April 2026 — Chapter 57 is NEW in BS 7671:2018+A4:2026 (Amendment 4). Before A4:2026, BESS regulations were scattered: parts of Section 551 (generating sets), the now-DELETED Reg 551.8 (which was the placeholder for BESS), and references in Section 712 (PV). A4:2026 consolidates BESS into Chapter 57 — alongside Chapter 82 (PEIs) and Appendix 17 (energy efficiency). New installs from 15 April 2026 onwards should comply with Chapter 57; existing pre-A4 installs are not retrospectively non-compliant',
-      '2018',
-      '2030',
+      'It has been a distinct chapter ever since the 17th Edition of BS 7671',
+      '15 April 2026 — Chapter 57 is new in A4:2026; before A4 it sat in Section 551',
+      'With the original publication of BS 7671:2018 in that year',
+      'It is scheduled to arrive only in the next edition, due in 2030',
     ],
     correctAnswer: 1,
     explanation:

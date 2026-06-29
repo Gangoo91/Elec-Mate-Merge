@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'professional-responsibility',
     question: "Under ST1426, 'professional responsibility' for a maintenance technician means:",
     options: [
-      'Unhealthy responses to feeling unsafe — withdrawing from dialogue (silence) or trying to force meaning into the pool (violence)',
-      'The contractor may remain liable for maintenance failures, face legal disputes, and be required to revisit at their own expense',
-      'To track instrument drift over time, identify instruments that are going out of specification between calibration intervals, and provide evidence of calibration accuracy',
-      'Taking ownership of your work quality, safety decisions, continued learning, and the impact of your actions on colleagues, clients, and the public',
+      'Following every instruction from your supervisor without ever once questioning it',
+      'Completing each task in the shortest possible time in order to maximise productivity',
+      'Passing responsibility for any safety decisions upward to your line manager',
+      'Owning your work quality, safety decisions, learning, and your impact on others',
     ],
     correctIndex: 3,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       "During a team maintenance task, you disagree with a colleague's approach. The most professional response is to:",
     options: [
-      'It structures a clinical/safety handover so nothing important is missed — increasingly used in construction safety briefings too',
-      'T = source directly earthed, N = installation exposed parts connected to that source earth via PE, C = combined N+PE in part of the system, S = separated N and PE in another part',
-      'Raise your concern calmly and constructively, explain your reasoning, listen to their perspective, and if necessary involve the supervisor to reach a decision',
-      'A formal notice requiring a dutyholder to remedy a contravention of health and safety law within a specified time',
+      'Go along with their approach to avoid conflict, then raise it later if it goes wrong',
+      'Carry on with your own preferred method separately without telling them at all',
+      'Raise it calmly, explain your reasoning, listen, and involve the supervisor if needed',
+      'Stop the task entirely until a manager arrives to settle the disagreement for you',
     ],
     correctIndex: 2,
     explanation:
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'Why is Continuing Professional Development (CPD) important for maintenance technicians?',
     options: [
-      'Phase rotation/sequence (L1-L2-L3 = positive/clockwise rotation) using a phase-rotation indicator, especially before energising motors and rotating machinery',
-      'Underground services should be identified using cable avoidance tools and service plans before driving any ground-penetrating anchors or stabilisers',
-      'Correct material and csa per Reg 543, secure connection at MET (BS 951 clamp) with a label per Reg 514.13.1, and protection against mechanical/corrosion damage',
-      'Regulations, technology, and best practices evolve continuously. CPD ensures your knowledge and skills remain current, safe, and compliant',
+      'It is a legal requirement that must be completed before every individual maintenance task',
+      'It guarantees an automatic pay rise each year regardless of the work you carry out',
+      'It removes the need for any supervision once you have become qualified',
+      'Regulations and technology change, so CPD keeps your skills current and safe',
     ],
     correctIndex: 3,
     explanation:
@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: "A maintenance technician's professional behaviour is assessed under ST1426 because:",
     options: [
-      'A management survey locates ACMs that could be disturbed during normal occupancy; a refurbishment/demolition survey is fully intrusive to find all ACMs before major works',
-      'Professional behaviour directly affects safety outcomes, team effectiveness, client relationships, and the reputation of the engineering profession',
-      'Document all previous conversations, escalate to management as a formal safety concern, and make clear that continued refusal could have disciplinary and legal consequences under HSWA 1974',
-      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
+      'Behaviour is easier to mark in an exam than practical or technical skills are',
+      'It directly affects safety, teamwork, client relationships and the profession',
+      'Employers prefer behaviour assessments to reduce the cost of practical testing',
+      'It allows technical shortcomings to be overlooked where the conduct is good',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 2,
     question: 'When working as part of a maintenance team, effective teamwork requires:',
     options: [
-      'Efficient use of time means more work is completed safely, planned schedules are maintained, and resources (including your colleagues\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' time) are used responsibly',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
-      'Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality',
-      'Report it honestly and immediately, assess the safety impact, take corrective action, and learn from the error to prevent recurrence',
+      'Each member working entirely independently to avoid getting in one another’s way',
+      'Leaving all safety decisions and concerns to the most senior person who is present',
+      'Communication, mutual support, shared awareness and collective responsibility',
+      'Competing with colleagues to complete tasks fastest to prove individual ability',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 3,
     question: 'Ethical behaviour in maintenance includes:',
     options: [
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
-      'Efficient use of time means more work is completed safely, planned schedules are maintained, and resources (including your colleagues\\\\\\\\\\\\\\\' time) are used responsibly',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
+      'Recording the readings the client expects to see, to avoid difficult conversations',
+      'Carrying out extra chargeable work whenever there is an opportunity to do so',
+      'Completing tasks quickly, even where some of the test steps have to be skipped',
+      'Reporting honestly, recording accurately, declaring limits and never signing unverified work',
     ],
     correctAnswer: 3,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'A colleague asks you to sign a test certificate for work they completed but you did not witness. You should:',
     options: [
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'Efficient use of time means more work is completed safely, planned schedules are maintained, and resources (including your colleagues\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' time) are used responsibly',
-      'Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
+      'Refuse firmly — signing a certificate you cannot verify is fraudulent and unsafe',
+      'Sign it, as your colleague is competent and you trust their work was done correctly',
+      'Sign it on condition that they re-test the installation in your presence next week',
+      'Ask another colleague to sign it instead so the responsibility does not fall on you',
     ],
     correctAnswer: 0,
     explanation:
@@ -111,10 +111,10 @@ const quizQuestions = [
     id: 5,
     question: 'Maintaining a positive attitude in a maintenance team means:',
     options: [
-      'Report it honestly and immediately, assess the safety impact, take corrective action, and learn from the error to prevent recurrence',
-      'Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear',
-      'Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
+      'Never raising any problems so the team always appears to be performing well',
+      'Tackling challenges constructively, supporting colleagues and sharing concerns openly',
+      'Agreeing with every decision the supervisor makes in order to keep morale high',
+      'Avoiding the difficult tasks so that the working day remains entirely stress-free',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 6,
     question: 'When mentoring a less experienced colleague, you should:',
     options: [
-      'Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear',
-      'Valuing different perspectives and experiences, treating all colleagues with dignity, challenging discriminatory behaviour, and supporting an inclusive working environment',
-      'Share your knowledge and experience patiently, explain the reasoning behind procedures (not just the steps), supervise safety-critical tasks, and encourage them to ask questions',
-      'Report it honestly and immediately, assess the safety impact, take corrective action, and learn from the error to prevent recurrence',
+      'Give them only the steps to follow, as the reasoning will confuse them at this stage',
+      'Let them learn entirely by trial and error so that the lessons stick more firmly',
+      'Explain the reasoning not just the steps, supervise safety-critical work, invite questions',
+      'Leave them to attempt safety-critical tasks alone to build their confidence quickly',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 7,
     question: 'Under HASAWA 1974 Section 7, every employee has a duty to:',
     options: [
-      'Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality',
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
-      'Share your knowledge and experience patiently, explain the reasoning behind procedures (not just the steps), supervise safety-critical tasks, and encourage them to ask questions',
-      'Take reasonable care for their own health and safety and that of others who may be affected by their acts or omissions, and cooperate with their employer on safety matters',
+      'Provide and maintain safe plant, safe systems of work, and a written safety policy',
+      'Carry out a suitable and sufficient risk assessment for every task they undertake',
+      'Report all workplace injuries and dangerous occurrences directly to the HSE',
+      'Take reasonable care for self and others, and cooperate with the employer on safety',
     ],
     correctAnswer: 3,
     explanation:
@@ -150,10 +150,10 @@ const quizQuestions = [
     id: 8,
     question: 'Time management on maintenance tasks demonstrates professionalism because:',
     options: [
-      "Efficient use of time means more work is completed safely, planned schedules are maintained, and resources (including your colleagues' time) are used responsibly",
-      "Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality",
-      "Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear",
-      "Technical knowledge, communication skills, safety awareness, ethical judgement, teamwork ability, and a commitment to continuous learning — alongside physical tools and equipment",
+      "More work done safely, schedules kept, and everyone's time used responsibly",
+      "It allows safety-critical checks to be shortened so that deadlines are always met",
+      "It proves that you can complete a task faster than any other member of the team",
+      "It removes the need to communicate delays, since everything is finished on time",
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'If you make a mistake during a maintenance task, the professional response is to:',
     options: [
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'Report it honestly and immediately, assess the safety impact, take corrective action, and learn from the error to prevent recurrence',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
-      'Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear',
+      'Quietly correct it yourself and say nothing, since no harm was actually done',
+      'Report it at once, assess the safety impact, correct it, and learn to prevent recurrence',
+      'Wait until the very end of the job to mention it, in case it resolves itself first',
+      'Record it in your own notes but avoid telling the supervisor, to prevent any blame',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 10,
     question: 'Respect for diversity and inclusion in a maintenance team means:',
     options: [
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
-      'Valuing different perspectives and experiences, treating all colleagues with dignity, challenging discriminatory behaviour, and supporting an inclusive working environment',
-      'Clear communication, mutual support, shared situational awareness, and collective responsibility for safety and work quality',
+      'Treating everyone identically and ignoring any differences between colleagues entirely',
+      'Allocating the most demanding tasks only to the most experienced of workers',
+      'Valuing diverse views, treating all with dignity and challenging discrimination',
+      'Keeping personal opinions about colleagues to yourself and never raising any concerns',
     ],
     correctAnswer: 2,
     explanation:
@@ -189,10 +189,10 @@ const quizQuestions = [
     id: 11,
     question: "A professional maintenance technician's toolkit includes:",
     options: [
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
-      'Valuing different perspectives and experiences, treating all colleagues with dignity, challenging discriminatory behaviour, and supporting an inclusive working environment',
-      'Technical knowledge, communication skills, safety awareness, ethical judgement, teamwork ability, and a commitment to continuous learning — alongside physical tools and equipment',
+      'Only the hand tools and test instruments needed to complete the physical work',
+      'Technical knowledge and test instruments, but soft skills are left to supervisors',
+      'A calibrated multifunction tester, its calibration certificates, and nothing else',
+      'Knowledge, communication, safety, ethics, teamwork and learning, plus the tools',
     ],
     correctAnswer: 3,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     id: 12,
     question: 'At the completion of your ST1426 apprenticeship, you are expected to demonstrate:',
     options: [
-      'Competence across all knowledge, skills, and behaviours defined in the standard — including professional conduct, communication, teamwork, and independent judgement in real workplace situations',
-      'Honest reporting of findings, accurate recording of test results, declaring when work is beyond your competence, and never signing off work you have not verified',
-      'Refuse politely but firmly — explain that signing a certificate you cannot verify is fraudulent and could have serious legal and safety consequences',
-      'Valuing different perspectives and experiences, treating all colleagues with dignity, challenging discriminatory behaviour, and supporting an inclusive working environment',
+      'Competence across all the knowledge, skills and behaviours defined in the standard',
+      'Technical knowledge alone, as practical skills are assessed separately by the employer',
+      'A completed portfolio of evidence, with no need for any end-point assessment',
+      'The ability to pass a written multiple-choice examination on BS 7671 only',
     ],
     correctAnswer: 0,
     explanation:

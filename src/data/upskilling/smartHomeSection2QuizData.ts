@@ -31,9 +31,9 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'How can smart HVAC systems anticipate heating or cooling needs?',
     options: [
-      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
-      'They provide remote access control and activity monitoring',
-      'Through voice control, automation, and remote monitoring capabilities',
+      'By heating every room to a fixed maximum temperature continuously',
+      'By relying solely on the user manually adjusting the thermostat',
+      'By switching off whenever no motion is detected anywhere',
       'By integrating with weather forecasts and learning household patterns',
     ],
     correctAnswer: 3,
@@ -45,9 +45,9 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     question: "What does 'zoning' mean in smart HVAC systems?",
     options: [
       'Dividing the house into different temperature-controlled areas',
-      'False - many can operate locally but lose remote features without internet',
-      'By integrating with weather forecasts and learning household patterns',
-      'They provide remote access control and activity monitoring',
+      'Running the whole system from a single central thermostat',
+      'Scheduling the entire property to one daily on/off timer',
+      'Boosting the boiler output to heat all rooms simultaneously',
     ],
     correctAnswer: 0,
     explanation:
@@ -83,9 +83,9 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: "How can smart technology support elderly residents' independence?",
     options: [
-      'By integrating with weather forecasts and learning household patterns',
-      'False - many can operate locally but lose remote features without internet',
-      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
+      'By requiring residents to use a smartphone app for every action',
+      'By removing all manual controls in favour of touchscreens',
+      'By restricting access to a single carer-held control unit',
       'Through voice control, automation, and remote monitoring capabilities',
     ],
     correctAnswer: 3,

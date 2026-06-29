@@ -70,12 +70,12 @@ const checks = [
     question:
       'UK transmission is three-phase end-to-end. Compared with single-phase, three-phase transmission:',
     options: [
-      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\'s tasks to support them',
-      'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
-      'Arrange exposure to three-phase work on site and liaise with the college to coordinate practical and theoretical learning',
       'Delivers smoother power (no zero crossings on the combined waveform), uses less conductor for the same power, and runs large rotating loads without flicker',
+      'Needs twice as many conductors for the same power, but is more reliable',
+      'Runs at a higher frequency, so the conductors can be made thinner',
+      'Only works over short distances because the three phases interfere at long range',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Three balanced phases give continuous power delivery (the sum of three sinusoids 120° apart never falls to zero), need only three live conductors instead of six for the same power, and start/run large motors smoothly. That is why every transmission and primary distribution voltage in the UK is three-phase.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'A typical pylon-mounted 400 kV three-phase line will carry how many conductors per circuit?',
     options: [
-      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
+      'A single solid conductor per phase = 3 power conductors plus 1 earth wire',
       'Two or four bundled conductors per phase, plus an earth wire on top = 6–12 power conductors plus 1–2 earth',
-      'To draw a measured volume of air through a filter or sorbent tube in the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s breathing zone to measure exposure',
-      '6 boxes + 4 socket plates + 2 FCU plates + ~42 m of 2.5 mm² T&E (35 m × 1.20 routing) + grommets, fixings, sleeving.',
+      'One combined conductor carrying all three phases plus a separate neutral',
+      'Twelve conductors per phase to share the current, plus no earth wire',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'A grid supply point (GSP) is the substation where:',
     options: [
-      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
-      'The two faults create a phase-to-phase fault through earth, requiring immediate disconnection',
+      'Two distribution feeders are joined together to share the load across a town',
+      'A power station connects its generators directly into the 400 kV super-grid',
       'The transmission network meets the distribution network — typically stepping down from 400 kV or 275 kV to 132 kV or 33 kV',
-      'Deliberately limiting screen time and digital device use to reduce stimulation and allow genuine mental recovery',
+      'A customer’s 230 V supply is metered before entering the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,9 +170,9 @@ const quizQuestions = [
     question:
       'Why does GB transmission use AC and not DC for cross-country transfers?',
     options: [
-      'Circuit 2 (ring final) — socket in living room shows signs of overheating at the neutral terminal. Circuit isolated and labelled. Requires further investigation before energising',
-      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
-      'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
+      'DC cannot be generated at the power station, so AC is the only option available',
+      'DC is far more dangerous to handle, so the regulations prohibit it on the grid',
+      'AC travels faster down the conductors than DC, reducing transmission delays',
       'AC voltage can be stepped up and down by transformers — DC cannot — so AC is much cheaper to use across multiple voltage tiers. (HVDC is used selectively for very long subsea or interconnector links where AC line losses dominate.)',
     ],
     correctAnswer: 3,
@@ -185,9 +185,9 @@ const quizQuestions = [
       'An electrician working on a domestic install is unlikely to ever touch a 400 kV conductor. Why does it matter that they understand transmission voltages?',
     options: [
       'Because the voltage at the cut-out is one end of an unbroken chain that starts at 400 kV — understanding the chain explains why supply is stable, where it can fail, and why ESQCR statutory limits exist on the 230 V you actually work with',
-      'Death that occurs after rescue from suspension, caused by the sudden redistribution of pooled blood overwhelming the heart — prevented by adopting a semi-seated recovery position rather than laying the casualty flat',
-      'EN 149 — FFP1 (assigned protection factor 4), FFP2 (APF 10), FFP3 (APF 20). FFP3 is the standard for respirable crystalline silica, asbestos-disturbance work (where licensed), wood dust. Face-fit test required.',
-      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
+      'Because the electrician is responsible for maintaining the 400 kV pylons in their local area',
+      'Because BS 7671 requires the transmission voltage to be recorded on the EIC for every install',
+      'Because domestic consumer units are routinely fed directly from the 132 kV network',
     ],
     correctAnswer: 0,
     explanation:

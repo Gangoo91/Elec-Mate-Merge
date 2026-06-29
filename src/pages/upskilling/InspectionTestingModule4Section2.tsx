@@ -32,14 +32,14 @@ const inlineChecks = [
     question:
       'A FELV (functional extra-low voltage) circuit operates at 24 V from a non-isolating source. Which row of Table 64 applies?',
     options: [
-      'SELV/PELV row — 250 V DC, 0.5 MΩ',
-      'FELV is tested at the same test voltage as the primary side of the source and must meet all the test requirements for low-voltage circuits — typically 500 V DC, 1.0 MΩ',
-      'No insulation test is required',
-      '1000 V DC, 1.0 MΩ',
+      'SELV/PELV row — 250 V DC, 0.5 MΩ minimum',
+      'Same as the LV primary side — 500 V DC, 1.0 MΩ minimum',
+      'No insulation test is required for FELV circuits',
+      'Above-500 V row — 1000 V DC, 1.0 MΩ minimum',
     ],
     correctIndex: 1,
     explanation:
-      'Reg 643.3.2 closing wording is explicit: FELV circuits shall be tested at the same test voltage as that applied to the primary side of the source and shall meet all the test requirements for LV circuits. FELV is NOT the SELV/PELV row — the lack of safe isolation from the primary is what bumps it up.',
+      'FELV is tested at the same test voltage as the primary side of the source and must meet all the LV test requirements — for a 230/400 V primary that is 500 V DC, 1.0 MΩ. Reg 643.3.2 closing wording is explicit on this. FELV is NOT the SELV/PELV row: the lack of safe isolation from the primary is what bumps it up.',
   },
   {
     id: 'mod4-s2-geometry',
@@ -77,12 +77,12 @@ const quizQuestions = [
     question:
       'A 230 V single-phase final circuit. Per Reg 643.3.2 and Table 64, what test voltage and minimum acceptance value apply?',
     options: [
-      '250 V DC, minimum 0.5 MΩ',
       '500 V DC, minimum 1.0 MΩ',
+      '250 V DC, minimum 0.5 MΩ',
       '1000 V DC, minimum 1.0 MΩ',
       '500 V AC, minimum 1.0 MΩ',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Table 64 splits by circuit nominal voltage. 230 V sits in the "up to and including 500 V" band, so the test voltage is 500 V DC and the minimum insulation resistance is 1.0 MΩ. AC is never the answer — Reg 643.3.2 mandates DC.',
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'Reg 643.3.3 was redrafted in A4:2026. What two-step sequence does it now spell out where connected equipment is likely to influence the test or be damaged?',
     options: [
-      'Test at 500 V with equipment connected, then again at 250 V if the first reading fails',
-      'Test at the Table 64 voltage with the equipment disconnected, then after re-connecting the equipment apply a 250 V DC test between live conductors and the protective conductor with a minimum of 1 MΩ',
-      'Test at 250 V first, then at 500 V if the equipment is undamaged',
-      'Skip the Table 64 test if equipment cannot be safely disconnected',
+      'Test at 500 V with the equipment connected, then again at 250 V only if the first reading fails',
+      'Test at 250 V first, then again at 500 V once the equipment is shown to be undamaged',
+      'Table 64 test with the equipment disconnected, then a 250 V DC re-test (≥ 1 MΩ) live conductors to CPC with it re-connected',
+      'Skip the Table 64 test entirely where equipment cannot be safely disconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.3.3 sets up two distinct tests. Step one: with the influencing / damageable equipment disconnected, do the full Table 64 test. Step two: re-connect the equipment, then apply a 250 V DC test between live conductors and the CPC and verify ≥ 1 MΩ. Both readings get recorded — the redraft removed the old "use judgement" wording.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why does Table 64 specify DC test voltages rather than AC?',
     options: [
-      'DC is cheaper to generate in a portable instrument',
-      'AC test voltages would charge cable capacitance, the meter would read a falling resistance over the test duration, and the dielectric would be stressed at the peak (not the RMS) value of the AC waveform — making readings inconsistent and over-stressful',
-      'AC is reserved for HV equipment',
-      'BS 7671 follows IEC 60364, which prefers DC for legacy reasons only',
+      'DC is cheaper to generate in a portable test instrument than an equivalent AC source',
+      'AC is reserved for HV equipment, so DC is used by default for all LV testing',
+      'BS 7671 follows IEC 60364, which has historically specified DC purely for legacy reasons',
+      'AC would mix capacitive impedance into the reading and over-stress the dielectric at the peak',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A DC stress is steady. Cable capacitance charges to a stable voltage, conduction current settles, the reading stabilises. AC continuously charges and discharges the cable capacitance — the apparent "resistance" reading would mix capacitive impedance with the genuine leakage path, and the dielectric sees the peak voltage (≈1.41× RMS), not the nominal. DC removes both confounders.',
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'A 400 V three-phase distribution circuit feeds a sub-board. What test voltage does Table 64 require, and across which conductor combinations is the test applied?',
     options: [
-      '1000 V DC, between each line and earth only',
       '500 V DC, between live conductors (L-L, L-N) and between live conductors and the protective conductor',
+      '1000 V DC, between each line and earth only',
       '250 V DC, between live conductors only',
       '500 V AC, line-to-line only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '400 V is "up to and including 500 V" — Table 64 row two: 500 V DC. Reg 643.3.1 sets the geometry: between (a) live conductors and (b) live conductors and the protective conductor connected to the earthing arrangement. Lines may be linked together for the L–E test. Earth-only is not the regulation — both legs of 643.3.1 must be tested.',
   },
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       'A test on a 230 V circuit at 500 V DC reads 2.3 MΩ. The same circuit re-tested with the immersion heater re-connected reads 0.8 MΩ. What does Reg 643.3.3 require you to do?',
     options: [
-      'Record 2.3 MΩ as the only acceptance value — the second reading is irrelevant',
-      'Record both: the 2.3 MΩ first-test value (Table 64 acceptance, ≥ 1 MΩ — pass) and the 0.8 MΩ post-connection reading. The post-connection reading fails the 1 MΩ floor for the 250 V re-test, so investigate the immersion element',
-      'Record 0.8 MΩ as a fail outright and condemn the circuit',
-      'Average the two readings',
+      'Record 2.3 MΩ as the only acceptance value, since the second reading is irrelevant',
+      'Record both readings; the 0.8 MΩ post-connection value fails the 250 V re-test floor, so investigate the immersion element',
+      'Record 0.8 MΩ as an outright fail and condemn the cable run as defective',
+      'Average the two readings and record 1.55 MΩ as the circuit acceptance value',
     ],
     correctAnswer: 1,
     explanation:
@@ -172,9 +172,9 @@ const quizQuestions = [
     id: 8,
     question: 'Why does Reg 643.3.3 set the post-connection test at 250 V DC rather than 500 V DC?',
     options: [
-      '250 V is below the working voltage of 230 V circuits, so no equipment is stressed',
-      "It's an instrument limitation",
-      '250 V DC is below the withstand voltage of typical electronic loads, MOV-based SPDs, dimmer thyristor packs, smoke alarm electronics, and similar devices that would otherwise be punctured by a 500 V DC stress, while still being well above the working AC peak of a 230 V circuit (≈325 V) so a real insulation defect still shows',
+      '250 V is below the working voltage of a 230 V circuit, so no equipment is stressed at all',
+      'It is an instrument limitation — testers cannot deliver 500 V into a connected load',
+      'Low enough to spare connected electronics, but still above the working AC peak so a defect shows',
       '250 V is the standard test voltage in the rest of Europe and BS 7671 is harmonising',
     ],
     correctAnswer: 2,
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'You have a 230 V circuit with an SPD installed at the consumer unit. What sequence does Reg 643.3.3 (A4:2026 redraft) tell you to apply?',
     options: [
-      'Test at 500 V DC with the SPD in circuit — modern SPDs are rated for it',
-      'Skip the IR test on this circuit',
-      'Disconnect the SPD, perform the 500 V DC test against Table 64, re-connect the SPD, then apply the 250 V DC test (≥ 1 MΩ) between live conductors and the protective conductor. Record both results, and note the SPD disconnection in the comments column',
-      'Test only at 250 V DC throughout',
+      'Test at 500 V DC with the SPD in circuit — modern SPDs are rated to withstand it',
+      'Skip the IR test on this circuit because the SPD makes it unreliable',
+      'Disconnect the SPD, do the 500 V Table 64 test, re-connect, then a 250 V DC re-test (≥ 1 MΩ)',
+      'Test only at 250 V DC throughout to avoid damaging the SPD',
     ],
     correctAnswer: 2,
     explanation:

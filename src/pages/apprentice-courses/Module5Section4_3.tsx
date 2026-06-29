@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it unsafe to use the wrong tool for a task?',
     options: [
-      'The metalwork becomes live and dangerous',
+      'It always invalidates the manufacturer warranty',
       'It increases risk of injury and poor workmanship',
-      'Pilot wire integrity and in-cable control box function',
-      'No, they only work with changing (AC) currents',
+      'It saves time but voids your public liability cover',
+      'It is acceptable as long as the job still passes testing',
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is it important to use the correct tool for each task?',
     options: [
-      'Potentially dangerous - urgent remedial action required',
+      'To keep the tool warranty valid at all times',
       'To ensure safety, accuracy, and prevent damage',
-      'Maintain adequate clearance or use heat-resistant cables',
-      'A diode (must be forward biased to turn the transistor on)',
+      'To reduce the number of tools needed on site',
+      'To avoid the need for calibration certificates',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,9 +82,9 @@ const quizQuestions = [
     id: 3,
     question: 'What type of tool is a multimeter?',
     options: [
-      '50% of rated residual current',
-      'Voltage and current are in phase',
-      'Prevents obstruction and rework',
+      'A cutting and stripping tool',
+      'A fixing and fastening tool',
+      'A conduit bending tool',
       'Measuring and testing tool',
     ],
     correctAnswer: 3,
@@ -117,10 +117,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why should torque screwdrivers be calibrated?',
     options: [
-      'Work from supply to load, isolating sections systematically',
-      'They increase the chance of accidental drilling',
+      'To make the tool quicker to use on site',
+      'To allow them to be used on live circuits',
       'To ensure accurate tightening to required specifications',
-      'Amtech, Trimble, DIALux, spreadsheet templates',
+      'To extend the life of the screwdriver tips',
     ],
     correctAnswer: 2,
     explanation:
@@ -130,9 +130,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is a risk of not having spare essential tools?',
     options: [
-      'Specific gas constant for the gas',
-      'Triple-N harmonics add in neutral',
-      'Dust tight and water jet protected',
+      'Tools wear out more quickly when shared',
+      'Calibration certificates expire sooner',
+      'Storage costs increase significantly',
       'Work delays if tools break or are lost',
     ],
     correctAnswer: 3,
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 9,
     question: "What's a consequence of poor tool planning?",
     options: [
-      'Either end of previous day or first thing in morning',
+      'Lower material costs across the project',
       'Delays, poor workmanship, or failed inspections',
-      'Near exits and at changes of direction',
-      'Delta primary, star secondary with 11 o\\\\\\\\\\\\\\\'clock phase shift',
+      'Reduced need for calibration of instruments',
+      'Improved security of stored tools',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     id: 10,
     question: 'Who is responsible for checking tool condition before use?',
     options: [
-      'Three phases with no neutral',
-      'Ratio of average load to peak load',
+      'Only the site supervisor each morning',
+      'Only the tool hire company',
       'The individual using the tool',
-      'The rate of flow of electric charge',
+      'Only the calibration provider',
     ],
     correctAnswer: 2,
     explanation:

@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 722.531.2 / 722.531.3.101 sets the RCD architecture for EV circuits. Which two architectures satisfy the regulation?',
     options: [
-      'Just Type AC',
-      '(1) Type B RCD per BS EN 62423 or BS EN 60947-2 on the EV final circuit. OR (2) Type A RCD (BS EN 61008 / 61009) combined with an RDC-DD (Residual Direct Current — Detecting Device) per BS EN IEC 62955 with a 6 mA DC threshold integrated into the wallbox. Both architectures detect the smooth DC fault current that a transformerless EV charging station could produce',
-      'Type AC plus any 30 mA RCD',
-      'No RCD required',
+      'A single Type AC 30 mA RCD on the final circuit, sufficient for any EV charging arrangement',
+      'A Type B RCD, or a Type A RCD combined with a 6 mA RDC-DD per BS EN IEC 62955 in the wallbox',
+      'A Type F RCD alone, since Type F covers the mixed-frequency current an EV charger produces',
+      'Two Type AC RCDs in series, providing redundancy that together cover the DC fault profile',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'What is the trigger threshold of an RDC-DD per BS EN IEC 62955?',
     options: [
-      '30 mA AC',
-      '6 mA DC — the RDC-DD detects smooth DC residual current at 6 mA threshold, triggering disconnection. This complements a Type A RCD (which handles AC and pulsating DC) so that smooth DC fault currents are also covered without needing a more expensive Type B RCD',
-      '100 mA DC',
-      '300 mA AC',
+      '30 mA DC — matching the additional-protection threshold used on the AC side',
+      '6 mA DC — detecting smooth DC residual current to complement an upstream Type A RCD',
+      '100 mA DC — a delayed threshold chosen to avoid nuisance tripping on charging transients',
+      '300 mA DC — the same value as a fire-protection RCD on the supply',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'Why is Type A + RDC-DD often preferred over standalone Type B RCD in UK 2025-26 domestic EV installs?',
     options: [
-      'No reason',
-      'Type B RCD is ~3-5× the cost of Type A. Where the wallbox includes an integrated 6 mA RDC-DD (per BS EN IEC 62955), a Type A RCD upstream provides the same fault profile coverage as Type B at lower install cost. The RDC-DD is part of the wallbox kit (no separate purchase); the upstream RCD/RCBO is a standard Type A. Both architectures satisfy Reg 722.531',
-      'Type B is dangerous',
-      'Type B is only for industrial',
+      'Because a standalone Type B RCD cannot be used on a domestic supply, being restricted to three-phase',
+      'Type B is ~3-5× the cost of Type A, and a wallbox-integrated RDC-DD lets a cheaper Type A give the same coverage',
+      'Because Type B RCDs nuisance-trip on EV charging current and so are avoided wherever possible',
+      'Because the Type A + RDC-DD combination gives a faster disconnection time than Type B on the same fault',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'Reg 722.421.1.7.201 — AFDD requirement and exception. What does it say?',
     options: [
-      'AFDD always required',
-      'EV circuits generally need AFDD per the Section 421 requirements, BUT there is an exception in 722.421.1.7.201: where the EV charging equipment conforms to BS EN 61851 series AND incorporates socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2, the AFDD requirement is waived. Both conformities (61851 AND 62196-2) needed simultaneously for the exception to apply',
-      'AFDD never needed',
-      'AFDD only for three-phase',
+      'AFDD is mandatory on every EV circuit with no exception, as for a care-home socket-outlet circuit',
+      'The AFDD requirement is waived where the equipment conforms to both BS EN 61851 series and BS EN IEC 62196-2',
+      'AFDD is never required on an EV circuit because the wallbox electronics inherently suppress arc faults',
+      'AFDD is required only on three-phase EV circuits; single-phase domestic wallboxes are always exempt',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'A UK domestic 7 kW Mode 3 wallbox install. The wallbox includes integrated 6 mA RDC-DD per BS EN IEC 62955. Which upstream RCD is correct?',
     options: [
-      'Type AC',
-      'Type A RCD (or Type A RCBO) on the dedicated EV final circuit. The wallbox’s integrated RDC-DD handles smooth DC fault detection at 6 mA threshold. Type A handles AC and pulsating DC at 30 mA. Combined coverage matches the Type B fault profile at lower kit cost. Cert evidence bundle records the architecture choice and the wallbox manufacturer DoC',
-      'Type B always',
-      'No RCD',
+      'Type AC — sufficient because the wallbox RDC-DD covers DC, leaving only AC for the upstream device',
+      'Type A RCD (or RCBO) on the dedicated final circuit, the wallbox RDC-DD handling the smooth DC',
+      'A Type B RCD upstream as well, so the circuit has both a Type B and the RDC-DD for redundancy',
+      'A 100 mA time-delayed RCD, to provide discrimination with the household 30 mA devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'A customer’s preferred wallbox does NOT include an integrated RDC-DD. The installer needs to provide equivalent fault coverage. What is the upstream protection?',
     options: [
-      'Type AC RCD',
-      'Type B RCD on the EV circuit (BS EN 62423 or BS EN 60947-2). Type B detects AC + pulsating DC + smooth DC fault currents directly, providing the complete fault profile coverage that Reg 722.531 requires for an EV circuit without integrated RDC-DD',
-      'Type A RCD',
-      'No RCD needed',
+      'Type AC RCD on the circuit, since a 30 mA Type AC covers shock protection for any final circuit',
+      'Type A RCD alone, accepting that smooth DC faults are too rare to design for on a domestic wallbox',
+      'Type B RCD (BS EN 62423 or 60947-2), covering AC, pulsating DC and smooth DC fault currents directly',
+      'A 6 mA standalone RDC-DD wired into the consumer unit, in place of any RCD on the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wallbox without integrated RDC-DD → Type B RCD upstream provides the complete fault profile. Type B per BS EN 62423 (RCD with integral overcurrent protection — RCBO equivalent) or BS EN 60947-2 (circuit-breaker integrating Type B residual current). Type B costs more than Type A (~3-5×) but provides the smooth-DC detection that the RDC-DD-less wallbox lacks. Cert evidence bundle records Type B selection and the rationale (wallbox doesn’t include RDC-DD).',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'An installer fits a Type AC RCD on a Mode 3 EV charging circuit (transformerless wallbox, no RDC-DD). EICR three years later — what code applies?',
     options: [
-      'Pass',
-      'C2 — potential danger. Type AC RCD only detects sinusoidal AC residual current; it is BLIND to smooth DC fault current that a transformerless EV wallbox can produce. In a smooth-DC fault condition, the Type AC RCD will not operate, ADS is not achieved, and the customer is exposed to shock risk. Reg 712.411.3.2.1.2 and Reg 722.531 require Type B (or Type A + RDC-DD)',
-      'C3 — improvement recommended',
-      'No issue',
+      'Satisfactory — a 30 mA Type AC RCD provides additional protection, so the circuit passes',
+      'C2 — potential danger, the Type AC being blind to the smooth DC fault a transformerless wallbox can produce',
+      'C3 — improvement recommended only, since the Type AC RCD still operates for ordinary AC faults',
+      'FI — further investigation, since the fault profile cannot be assessed without dismantling the wallbox',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'Reg 722.421.1.7.201 AFDD exception — what conformities must the EV charging equipment satisfy for the exception to apply?',
     options: [
-      'BS EN 61851 only',
-      'Both BS EN 61851 series AND BS EN IEC 62196-2 (the Type 2 connector standard). The exception is conjunctive — BOTH conformities required simultaneously. Manufacturer DoC must declare both. If only one is declared, AFDD per Section 421 is still required',
-      'BS EN 62196-2 only',
-      'No exception exists',
+      'BS EN 61851 series alone — the connector standard is not part of the AFDD exception',
+      'BS EN IEC 62196-2 alone — the Type 2 connector conformity is what waives the AFDD requirement',
+      'Both BS EN 61851 series and BS EN IEC 62196-2, declared together — the exception is conjunctive',
+      'No exception exists — AFDD is mandatory on every EV charging circuit without qualification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 722.421.1.7.201 is a conjunctive exception — BOTH BS EN 61851 series AND BS EN IEC 62196-2 conformities required simultaneously. The regulation’s wording links them with AND: "where the EV charging equipment conforms to BS EN 61851 series and incorporates socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2". UK 2025-26 reality: every reputable wallbox brand declares both (they use Type 2 connectors per 62196-2 and conform to 61851-1 + -22). The exception is the standard route; AFDD is rarely fitted on UK domestic EV circuits. Cert evidence bundle records both DoC references.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       'The Control Pilot (CP) wire in a Mode 3 install — what does it actually do?',
     options: [
-      'Carries power',
-      'Carries a low-voltage signal (typically ±12 V PWM duty-cycle modulated) between the wallbox and the vehicle. Communicates: vehicle plugged in, ready to charge, current limit announcement, charging in progress, error states. The CP signal coordinates the wallbox’s contactor closure with the vehicle’s readiness; without a healthy CP, the wallbox does not close the contactor and no power flows to the vehicle',
-      'Carries earth',
-      'Carries neutral',
+      'Carries the charging current to the vehicle — it is the live conductor of the Type 2 connector',
+      'Acts as the protective earth path for the vehicle chassis during charging',
+      'Carries a low-voltage PWM signal coordinating plug-in, current-limit and contactor closure between wallbox and vehicle',
+      'Carries the neutral return for the single-phase charging circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CP = Control Pilot. ±12 V PWM signal between wallbox and vehicle per BS EN 61851-1 / IEC 61851-1. Function: (1) vehicle plug detection (CP-PE voltage changes from 12 V open-circuit to 9 V when vehicle plugged in); (2) PWM duty cycle announces max available current from wallbox (e.g. 53% duty = 32 A available); (3) vehicle confirms ready-to-charge by transitioning to lower CP voltage; (4) wallbox closes the contactor; (5) charging progresses, CP continues to monitor; (6) any fault or unplug triggers contactor open. Section 6.6 covers CP/PP signalling in depth.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'Why does the Type B + RDC-DD requirement specifically apply to TRANSFORMERLESS EV wallboxes?',
     options: [
-      'No reason',
-      'Transformerless wallboxes lack the galvanic isolation between AC supply and DC charging circuits that a transformer-isolated design provides. In fault conditions, a transformerless wallbox can feed smooth DC residual current back into the AC supply, which is invisible to Type AC and Type A RCDs. Type B or Type A + RDC-DD are needed to detect that smooth DC fault. Where the manufacturer declares the wallbox is designed not to feed DC fault currents (rare exception), Type AC / A may suffice',
-      'Transformerless are cheaper',
-      'Only legal in commercial sites',
+      'Because transformerless wallboxes draw more current, so a more sensitive RCD is needed for the higher load',
+      'Lacking galvanic isolation, they can feed smooth DC back into the AC supply that only Type B or RDC-DD detects',
+      'Because transformerless wallboxes are cheaper, and the regulations require costlier protection to offset that',
+      'Because a transformerless design has no neutral connection, so a standard RCD cannot sense the return current',
     ],
     correctAnswer: 1,
     explanation:

@@ -16,8 +16,8 @@ const questions: Question[] = [
   {
     id: 1,
     question: 'Which certificate is used for a full new electrical installation?',
-    options: ['EICR', 'EIC', 'MEIWC', 'Risk Assessment Form'],
-    correctAnswer: 1,
+    options: ['EIC', 'EICR', 'MEIWC', 'Risk Assessment Form'],
+    correctAnswer: 0,
     explanation:
       'The Electrical Installation Certificate (EIC) is used for new installations and major electrical work such as full rewires or new consumer units.',
   },
@@ -46,12 +46,12 @@ const questions: Question[] = [
     id: 4,
     question: "What's required on all electrical certificates?",
     options: [
-      'Client approval',
-      'Site manager initials',
       "Competent person's signature",
+      'Site manager initials',
+      'Client approval',
       'A drawing of the installation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'All electrical certificates must be signed by a competent person who has either carried out or verified the work and testing. This signature makes the certificate legally valid.',
   },
@@ -60,11 +60,11 @@ const questions: Question[] = [
     question: 'Why is test documentation important?',
     options: [
       'For marketing purposes',
-      'To get faster payment',
       'To prove compliance and protect against liability',
+      'To get faster payment',
       'To reduce the cost of testing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Test documentation is legally required to prove compliance with BS 7671 and protects both the installer and client against liability. These documents serve as legal evidence that proper testing was completed.',
   },
@@ -73,11 +73,11 @@ const questions: Question[] = [
     question: 'What does a C1 observation code indicate in an EICR?',
     options: [
       'Improvement recommended',
-      'Danger present - immediate action required',
       'Further investigation needed',
+      'Danger present - immediate action required',
       'Satisfactory condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "C1 indicates 'Danger Present' meaning there is an immediate risk of injury and urgent remedial action is required. The installation should not remain in service until the danger is removed.",
   },
@@ -87,10 +87,10 @@ const questions: Question[] = [
     options: [
       'One - the installer',
       'Two - installer and client',
-      'Three - designer, installer, and inspector/tester',
       'Four - including building control',
+      'Three - designer, installer, and inspector/tester',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'An EIC requires three signatures: the Designer, the Installer, and the Inspector & Tester. These may be the same person if they have carried out all three roles competently.',
   },
@@ -107,11 +107,11 @@ const questions: Question[] = [
     question: 'What type of work would typically require a MEIWC?',
     options: [
       'Complete house rewire',
-      'New consumer unit installation',
       'Adding sockets to an existing ring circuit',
+      'New consumer unit installation',
       'Installing a new sub-main distribution board',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A MEIWC is used for minor work such as adding sockets to existing circuits, installing additional lighting points, or replacing accessories like-for-like.',
   },
@@ -119,12 +119,12 @@ const questions: Question[] = [
     id: 10,
     question: 'What must be included in all electrical certificates?',
     options: [
-      'Only the test results',
       'Installation details, test results, and competent person signature',
+      'Only the test results',
       'Just the installation address',
       'Only the date of testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'All electrical certificates must include: installation details, description of work, test results and methods, test equipment details, dates, and the signature of the competent person taking responsibility.',
   },

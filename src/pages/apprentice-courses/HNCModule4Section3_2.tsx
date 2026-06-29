@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'hrc-fuse-advantage',
     question: 'What is the main advantage of HRC fuses over MCBs for high fault levels?',
     options: [
-      'Gateway or protocol converter',
-      'Double-shielded or armoured cables',
-      'Current-limiting capability',
-      'Asbestos Mines of South Africa',
+      'They can be reset after operating without replacement',
+      'They have adjustable thermal and magnetic trip settings',
+      'Current-limiting capability with very high breaking capacity',
+      'They provide built-in residual current protection',
     ],
     correctIndex: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: "What does the 'gG' classification mean for HRC fuses?",
     options: [
-      'Complexity and achievement levels of qualifications',
-      'Protective device operates (MCB trips)',
-      'Viewing waveforms to diagnose complex signal problems',
+      'Motor circuit protection, short-circuit only',
+      'Semiconductor protection for rectifiers and drives',
+      'Partial-range protection requiring a backup device',
       'General purpose, full-range breaking capacity',
     ],
     correctAnswer: 3,
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: "What characteristic makes BS 88 HRC fuses 'current-limiting'?",
     options: [
-      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
-      'Energy efficiency and carbon emissions targets',
-      'A condition involving persistent, excessive worry about many different things',
+      'They have an adjustable magnetic trip setting',
+      'They reset automatically after the fault has cleared',
+      'They operate slowly to allow downstream devices to trip first',
       'They clear faults before the current reaches its prospective peak',
     ],
     correctAnswer: 3,
@@ -193,10 +193,10 @@ const quizQuestions = [
     question:
       'What is the primary selection criterion when choosing between Type B and Type C MCBs?',
     options: [
-      'Voice alarm and public address systems',
+      'Physical size of the consumer unit',
       'Expected inrush current of load',
-      'Traditional with specialist subcontracts',
-      'Architectural enhancement and identity',
+      'Colour of the cable insulation',
+      'Length of the final circuit cable',
     ],
     correctAnswer: 1,
     explanation:

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     question:
       'What is the minimum bunding capacity required for secondary containment of hazardous substance stores?',
     options: [
-      '110% of the volume of the largest container stored within the bund',
       '100% of the total volume of all containers stored within the bund',
       '50% of the volume of the largest container stored within the bund',
+      '110% of the volume of the largest container stored within the bund',
       'Equal to the volume of the smallest container stored within the bund',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Secondary containment (bunding) must be capable of holding at least 110% of the volume of the largest single container stored within the bund. This extra 10% accounts for potential rainwater ingress and ensures that even a complete container failure can be fully contained without overflow into the surrounding environment.',
   },
@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     id: 'acid-dilution',
     question: 'When diluting a concentrated acid, what is the correct procedure?',
     options: [
-      'Always add acid to water, never water to acid',
       'Always add water to acid, never acid to water',
+      'Always add acid to water, never water to acid',
       'It does not matter which is added to which, as long as you stir continuously',
       'Always use equal volumes of acid and water simultaneously',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "The golden rule of acid dilution is 'always add acid to water' — never the other way around. Adding water to concentrated acid causes a violent exothermic reaction, generating intense localised heat that can cause the mixture to boil and spit concentrated acid. Adding acid slowly to a large volume of water disperses the heat safely across the water mass. Remember the mnemonic: 'Do as you oughta — add acid to water.'",
   },
@@ -90,12 +90,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following chemical combinations must NEVER be stored together?',
     options: [
-      'Oxidisers and flammable liquids',
       'Two different brands of the same solvent',
+      'Oxidisers and flammable liquids',
       'Neutral pH cleaning agents and neutral pH detergents',
       'Water-based paints and water-based adhesives',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Oxidisers and flammable liquids must NEVER be stored together. Oxidisers supply oxygen that dramatically accelerates combustion — if a flammable liquid comes into contact with a strong oxidiser, it can ignite spontaneously or cause a violent fire. Chemical segregation rules also require acids to be separated from alkalis, and water-reactive substances to be isolated from any source of moisture.',
   },
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 3,
     question: 'What type of storage cabinet should be used for flammable liquids?',
     options: [
-      'A purpose-built flammable liquids cabinet with self-closing doors and integral bunding',
       'Any metal filing cabinet with a lock',
       'A wooden cupboard lined with plastic sheeting',
+      'A purpose-built flammable liquids cabinet with self-closing doors and integral bunding',
       'A standard chemical storage shelf with a drip tray',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Flammable liquids must be stored in purpose-built flammable liquids cabinets that comply with BS EN 14470-1. These cabinets feature fire-resistant construction (minimum 30 minutes), self-closing doors, integral bunding to contain spills, ventilation points, clear labelling, and are designed to limit the consequences of fire. Standard metal cabinets, wooden cupboards, and open shelves do not provide adequate protection.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'When decanting a hazardous substance from a bulk container to a smaller one, what is the MOST important control measure?',
     options: [
-      'Minimising exposure by using closed transfer systems, funnels with lids, and appropriate PPE',
       'Working as quickly as possible to reduce the time the container is open',
       'Performing the transfer outdoors where natural ventilation will disperse fumes',
       'Using a standard plastic funnel and pouring slowly',
+      'Minimising exposure by using closed transfer systems, funnels with lids, and appropriate PPE',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The most important control when decanting hazardous substances is to minimise exposure using engineering controls: closed transfer systems (pumps, taps), funnels with lids to prevent splashing and vapour release, local exhaust ventilation, and appropriate PPE (chemical-resistant gloves, goggles, apron). Speed alone does not control exposure, outdoor work may spread contamination, and a standard funnel without a lid allows vapour release and splashing.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'What are European Waste Catalogue (EWC) codes used for?',
     options: [
-      'Classifying and identifying different types of waste, including hazardous waste, for correct disposal',
       'Labelling chemical products for retail sale under CLP',
+      'Classifying and identifying different types of waste, including hazardous waste, for correct disposal',
       'Grading the toxicity of substances for COSHH assessments',
       'Categorising PPE by the level of protection provided',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'European Waste Catalogue (EWC) codes are six-digit codes used to classify and identify waste types for disposal purposes. Each waste stream has a unique code, and codes marked with an asterisk (*) indicate hazardous waste. Waste producers must assign the correct EWC code when completing consignment notes, and the code determines which disposal routes and licensed facilities can accept the waste. Using the wrong code is a breach of duty of care.',
   },
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: 'What must be done with empty containers that previously held hazardous substances?',
     options: [
-      'Triple rinse the container, deface the label, and dispose of via the correct waste route',
       'Reuse them immediately for storing a different chemical',
       'Place them directly into the general waste skip',
+      'Triple rinse the container, deface the label, and dispose of via the correct waste route',
       'Leave them in the COSHH store until the next scheduled collection',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Empty containers that held hazardous substances must be triple rinsed to remove residues (the rinsate itself must be disposed of as hazardous waste). The label must then be defaced — typically by crossing through it — so the container cannot be confused with a full one. The container is then disposed of via the correct waste route, which may still be the hazardous waste stream depending on the substance and any remaining contamination. Empty containers must NEVER be reused for different chemicals without proper decontamination.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under the duty of care for waste, what is the waste producer responsible for?',
     options: [
-      'Ensuring waste is correctly described, stored securely, and transferred only to a licensed carrier with a valid consignment note',
       'Only ensuring the waste leaves the premises — the carrier is responsible after that',
       'Disposing of the waste personally at the nearest landfill site',
       'Telephoning the Environment Agency each time a waste collection occurs',
+      'Ensuring waste is correctly described, stored securely, and transferred only to a licensed carrier with a valid consignment note',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Under the Environmental Protection Act 1990 duty of care, the waste producer must: correctly describe and classify the waste (including EWC codes), store it securely to prevent escape, ensure it is transferred only to an authorised (licensed) waste carrier, complete a consignment note for hazardous waste, and retain records for at least three years. The duty of care follows the waste from cradle to grave — the producer cannot simply hand it over and forget about it.',
   },

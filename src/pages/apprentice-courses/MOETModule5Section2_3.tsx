@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'no-contact',
     question: 'A normally open (NO) contact passes power when:',
     options: [
-      'The associated input is OFF',
+      'The associated input or coil is ON (energised)',
+      'The associated input is OFF (de-energised)',
       'The rung is disabled by the programme',
       'It always passes power regardless of state',
-      'The associated input or coil is ON (energised)',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'A NO contact closes and passes power when its associated bit is ON, mirroring a physical NO relay contact. When the bit is OFF, the contact is open and blocks power flow through the rung.',
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'Two contacts in series on a ladder logic rung represent:',
     options: [
       'A timer function with two stages',
-      'OR logic — either contact can activate the output',
-      'NOT logic — one inverts the other',
       'AND logic — both must be true for the output to energise',
+      'NOT logic — one inverts the other',
+      'OR logic — either contact can activate the output',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'Series contacts create AND logic — power can only flow through the rung if ALL series contacts are closed (true). This directly mirrors series-connected relay contacts in traditional hard-wired circuits.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     options: [
       'A fixed time delay expires automatically',
       'The input signal remains continuously held',
-      'The PLC restarts from a power cycle',
       'A momentary input pulse, requiring a separate input to turn OFF',
+      'The PLC restarts from a power cycle',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'A latch (seal-in) keeps the output energised after a momentary start press. The output remains ON until a separate stop input breaks the circuit. This is the fundamental start/stop motor control pattern.',
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     question: 'If the same output coil appears on two different rungs, what happens?',
     options: [
       'Both rungs control the output equally',
-      'Only the last rung scanned determines the final output state',
       'The output alternates between the two rung states each scan',
       'The PLC generates a compilation error and will not run',
+      'Only the last rung scanned determines the final output state',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The PLC scans top to bottom. Each rung writes to the output, but only the last rung scanned determines the final state written to the output image table. This 'double coil' condition is a common programming error flagged by most PLC software.",
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Ladder logic was originally designed to resemble:',
     options: [
-      'The additional point loads and dynamic forces can exceed the scaffold\\\\\\\'s design capacity, causing failure',
+      'A flowchart showing the sequence of machine operations step by step',
       'A ladder with two power rails and horizontal rungs containing contacts and coils',
-      'To provide a formal documented system of checks and authorisations before high-risk work begins',
-      'Dynamic assessments are performed in real-time to address changing conditions',
+      'A block diagram of interconnected function blocks and data flows',
+      'A line of structured text statements similar to a computer programme',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A normally closed (NC) contact passes power when:',
     options: [
-      'Leaks, corrosion, backpressure and lagging condition',
-      'Time-current characteristic curves',
+      'The associated input is ON (energised)',
+      'The rung above it has already energised its coil',
       'The associated input is OFF (de-energised)',
-      'Increased light output from luminaires',
+      'The PLC is in programming mode rather than run mode',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'The stop button in a motor start/stop circuit should use:',
     options: [
       'A normally closed (NC) contact for fail-safe design per BS EN 60204-1',
-      'Produce a single scan pulse on the rising or falling edge of an input transition',
-      'Top to bottom, left to right, starting from rung 1',
-      'Store intermediate logic states without driving physical outputs',
+      'A normally open (NO) contact so the rung is broken only when pressed',
+      'An internal memory bit rather than any physical contact',
+      'A one-shot edge instruction to register a single button press',
     ],
     correctAnswer: 0,
     explanation:
@@ -147,9 +147,9 @@ const quizQuestions = [
     id: 7,
     question: 'Emergency stop functions in machinery should be:',
     options: [
-      'Read and interpret ladder logic, use online monitoring for fault diagnosis, and understand programme structure',
-      'An NO contact of the output coil wired in parallel with the start button to maintain the circuit',
-      'Store intermediate logic states without driving physical outputs',
+      'A single NO contact read by the PLC as a standard input',
+      'Implemented entirely in software for fastest possible response',
+      'A latched memory bit reset by the operator after each stop',
       'NC hardwired contacts that break safety circuits directly, not relying solely on PLC logic',
     ],
     correctAnswer: 3,
@@ -161,9 +161,9 @@ const quizQuestions = [
     question: 'Online monitoring in PLC software helps maintenance by:',
     options: [
       'Displaying live contact and coil states so you can trace exactly which condition blocks an output',
-      'Find every location in the programme where a specific address is used',
-      'NC hardwired contacts that break safety circuits directly, not relying solely on PLC logic',
-      'Read and interpret ladder logic, use online monitoring for fault diagnosis, and understand programme structure',
+      'Automatically rewriting the programme to correct any detected fault',
+      'Permanently logging every input change to an external database',
+      'Increasing the PLC scan speed while a fault is being diagnosed',
     ],
     correctAnswer: 0,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     id: 10,
     question: 'A seal-in (latch) contact in a motor start circuit is:',
     options: [
-      'Displaying live contact and coil states so you can trace exactly which condition blocks an output',
-      'NC hardwired contacts that break safety circuits directly, not relying solely on PLC logic',
+      'An NC contact of the stop button wired in series with the start button',
+      'A one-shot instruction that pulses the output coil for a single scan',
       'An NO contact of the output coil wired in parallel with the start button to maintain the circuit',
-      'A normally closed (NC) contact for fail-safe design per BS EN 60204-1',
+      'A separate timer that holds the output on for a fixed period',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ const quizQuestions = [
     id: 11,
     question: 'A one-shot (edge detection) instruction in ladder logic is used to:',
     options: [
-      'NC hardwired contacts that break safety circuits directly, not relying solely on PLC logic',
-      'Displaying live contact and coil states so you can trace exactly which condition blocks an output',
-      'OR logic — any one contact being true activates the output',
+      'Hold an output on continuously for as long as the input stays true',
+      'Combine several inputs so any one of them activates the output',
+      'Delay an output by a fixed time after the input becomes true',
       'Produce a single scan pulse on the rising or falling edge of an input transition',
     ],
     correctAnswer: 3,
@@ -213,9 +213,9 @@ const quizQuestions = [
     question: 'Under ST1426, a maintenance technician is expected to:',
     options: [
       'Read and interpret ladder logic, use online monitoring for fault diagnosis, and understand programme structure',
-      'NC hardwired contacts that break safety circuits directly, not relying solely on PLC logic',
-      'Displaying live contact and coil states so you can trace exactly which condition blocks an output',
-      'An NO contact of the output coil wired in parallel with the start button to maintain the circuit',
+      'Design and write the complete control programme for new machinery',
+      'Carry out structural modifications to the machine guarding and frame',
+      'Approve and sign off the electrical installation certificate for the panel',
     ],
     correctAnswer: 0,
     explanation:

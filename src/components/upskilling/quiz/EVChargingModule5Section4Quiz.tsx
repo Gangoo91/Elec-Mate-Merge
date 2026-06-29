@@ -22,8 +22,8 @@ const quizQuestions: QuizQuestion[] = [
   {
     question:
       'Which diversity factor is typically applied for workplace EV charging installations?',
-    options: ['0.3-0.5', '0.6-0.7', '0.8-1.0', '1.0-1.2'],
-    correctAnswer: 1,
+    options: ['0.3-0.5', '0.8-1.0', '1.0-1.2', '0.6-0.7'],
+    correctAnswer: 3,
     explanation:
       'Workplace charging typically uses 0.6-0.7 diversity factor due to predictable usage patterns and 8-hour dwell times.',
   },
@@ -43,8 +43,8 @@ const quizQuestions: QuizQuestion[] = [
   {
     question:
       'What minimum power factor is typically required for three-phase EV charging installations?',
-    options: ['0.85 lagging', '0.90 lagging', '0.95 lagging', '1.00 unity'],
-    correctAnswer: 2,
+    options: ['0.95 lagging', '0.85 lagging', '0.90 lagging', '1.00 unity'],
+    correctAnswer: 0,
     explanation:
       'Most grid codes require a minimum power factor of 0.95 lagging for three-phase installations to maintain grid power quality.',
   },
@@ -64,8 +64,8 @@ const quizQuestions: QuizQuestion[] = [
   {
     question:
       'What is the maximum individual harmonic distortion typically allowed for EV charging installations?',
-    options: ['1%', '3%', '5%', '8%'],
-    correctAnswer: 1,
+    options: ['1%', '5%', '8%', '3%'],
+    correctAnswer: 3,
     explanation:
       'Individual harmonics should be limited to less than 3% to maintain power quality, while total harmonic distortion (THD) should be under 5%.',
   },
@@ -73,12 +73,12 @@ const quizQuestions: QuizQuestion[] = [
     question:
       'How does load balancing work for single-phase vehicles on three-phase infrastructure?',
     options: [
-      'All vehicles charge on the same phase',
-      'Vehicles are manually assigned to phases',
       'Smart systems automatically distribute loads across phases',
+      'All vehicles are placed on the same phase',
+      'Vehicles are manually assigned to phases by the installer',
       'Single-phase vehicles cannot use three-phase infrastructure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Modern charging systems automatically balance single-phase vehicles across the three phases to maintain system balance and prevent overloading.',
   },
@@ -105,8 +105,8 @@ const quizQuestions: QuizQuestion[] = [
   {
     question:
       'What is the typical frequency tolerance range that EV charging systems must operate within?',
-    options: ['49-51Hz', '47.5-52Hz', '45-55Hz', '48-52Hz'],
-    correctAnswer: 1,
+    options: ['49-51Hz', '45-55Hz', '48-52Hz', '47.5-52Hz'],
+    correctAnswer: 3,
     explanation:
       'UK grid codes typically require equipment to operate within 47.5-52Hz frequency range, with specific response requirements for frequency excursions.',
   },

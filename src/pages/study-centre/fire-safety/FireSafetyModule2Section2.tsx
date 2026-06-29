@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'rp-competent-person',
     question: 'Under which Article must the responsible person appoint competent persons?',
     options: [
-      'Article 9 — Fire risk assessment',
-      'Article 14 — Emergency routes and exits',
       'Article 18 — Competent persons',
+      'Article 14 — Emergency routes and exits',
+      'Article 9 — Fire risk assessment',
       'Article 21 — Training',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Article 18 of the RRFSO requires the responsible person to appoint one or more competent persons to assist them in undertaking the preventive and protective measures required by the Order. A competent person must have sufficient training, experience, and knowledge to carry out the function.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'Under Article 5 of the RRFSO, which of the following is NOT listed as a responsible person?',
     options: [
-      'The employer in a workplace',
-      'A person who has control of the premises in connection with a trade or business',
       'The local fire and rescue authority',
+      'A person who has control of the premises in connection with a trade or business',
+      'The employer in a workplace',
       'The owner of the premises',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Article 5 defines the responsible person as (a) the employer, if the premises are a workplace, (b) any person who has control of the premises in connection with a trade, business, or undertaking, or (c) the owner. The fire and rescue authority is the enforcing authority, not the responsible person.',
   },
@@ -127,10 +127,10 @@ const quizQuestions = [
     options: [
       'The external consultant only',
       'Both the consultant and the responsible person equally',
-      'The responsible person',
       'The fire and rescue authority',
+      'The responsible person',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The responsible person can delegate tasks but cannot delegate their legal responsibility. If the fire risk assessment is inadequate, the responsible person retains liability. They may also have a civil claim against the consultant, but the criminal liability under the RRFSO remains with the RP.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'In a multi-tenanted office building, who is typically the responsible person for the common stairwells and corridors?',
     options: [
-      'Each individual tenant shares equal responsibility',
-      'The tenant nearest to the stairwell',
       'The landlord or managing agent',
+      'The tenant nearest to the stairwell',
+      'Each individual tenant shares equal responsibility',
       'The local authority building control',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In multi-occupancy buildings, the landlord or managing agent is typically the responsible person for common areas such as stairwells, corridors, lobbies, and shared plant rooms. Each tenant is the responsible person for their own demise. Article 22 requires all responsible persons to cooperate and coordinate.',
   },
@@ -165,8 +165,8 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the maximum prison sentence for a responsible person convicted of a fire safety offence under the RRFSO?',
-    options: ['6 months', '1 year', '2 years', '5 years'],
-    correctAnswer: 2,
+    options: ['6 months', '1 year', '5 years', '2 years'],
+    correctAnswer: 3,
     explanation:
       "Under the RRFSO, a person found guilty of a fire safety offence on indictment can face up to 2 years' imprisonment and/or an unlimited fine. For offences tried summarily in the magistrates' court, the maximum sentence is a fine (unlimited since the Legal Aid, Sentencing and Punishment of Offenders Act 2012 removed the cap).",
   },
@@ -174,8 +174,8 @@ const quizQuestions = [
     id: 8,
     question:
       'Under which Article must the responsible person provide fire safety information to non-employees such as visitors and contractors?',
-    options: ['Article 11', 'Article 18', 'Article 19', 'Article 20'],
-    correctAnswer: 3,
+    options: ['Article 11', 'Article 18', 'Article 20', 'Article 19'],
+    correctAnswer: 2,
     explanation:
       'Article 20 requires the responsible person to provide comprehensible and relevant information to non-employees (such as visitors, contractors, and members of the public) about the risks to them, the fire safety measures in place, and the identity of the competent persons appointed under Article 18. Article 19 covers information to employees specifically.',
   },

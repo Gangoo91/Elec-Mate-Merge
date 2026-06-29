@@ -3,10 +3,10 @@ export const emergencyExitSignsQuizData = [
     id: 1,
     question: 'What is the main function of emergency exit signage?',
     options: [
-      'Test results, illumination status, legibility checks, and any maintenance performed',
+      'To indicate the location of fire extinguishers and call points',
       'To guide occupants safely towards final exits during emergencies',
-      'At final exits, direction changes, and decision points',
-      'Public buildings such as theatres, cinemas, or hospitals',
+      'To display the maximum occupancy figure for each room',
+      'To mark the boundaries of designated assembly points outside',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,11 +27,11 @@ export const emergencyExitSignsQuizData = [
   },
   {
     id: 3,
-    question: 'Where must exit signs be placed in a building?',
+    question: 'Where must exit signs be placed along an escape route?',
     options: [
-      'To ensure they point in the correct direction towards actual exits',
-      'Public buildings such as theatres, cinemas, or hospitals',
-      'To guide occupants safely towards final exits during emergencies',
+      'Only above the final exit door to the outside',
+      'At every light switch position throughout the building',
+      'Solely at the entrance to each fire-protected stairwell',
       'At final exits, direction changes, and decision points',
     ],
     correctAnswer: 3,
@@ -43,9 +43,9 @@ export const emergencyExitSignsQuizData = [
     question: 'What is the difference between maintained and non-maintained exit signs?',
     options: [
       'Maintained signs remain illuminated at all times, non-maintained signs only illuminate during mains failure',
-      'To protect the motor windings from damage caused by sustained overcurrent (overload) conditions',
-      'Condition monitoring, maintenance planning and continuous improvement competences',
-      'Equipment to be isolated, secured against re-energisation, and proved dead before work begins',
+      'Maintained signs run from the mains, non-maintained signs run permanently from their own battery',
+      'Maintained signs are battery-backed, non-maintained signs are fed only from the mains supply',
+      'Maintained signs use LED sources, non-maintained signs use fluorescent tubes',
     ],
     correctAnswer: 0,
     explanation:
@@ -53,12 +53,12 @@ export const emergencyExitSignsQuizData = [
   },
   {
     id: 5,
-    question: 'Why must exit signs be illuminated at all times?',
+    question: 'Why must maintained exit signs remain illuminated even when the mains is healthy?',
     options: [
-      'To guide occupants safely towards final exits during emergencies',
-      'To ensure visibility during mains power failure and emergency conditions',
-      'Test results, illumination status, legibility checks, and any maintenance performed',
-      'At final exits, direction changes, and decision points',
+      'To reduce the standby load on the central battery system',
+      'To ensure they are visible to occupants at all times, including the moment mains fails',
+      'To keep the sign batteries permanently in a discharged state',
+      'To allow the photoluminescent backing to recharge continuously',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,9 +95,9 @@ export const emergencyExitSignsQuizData = [
     question: 'Why should directional arrows be carefully checked during installation?',
     options: [
       'To ensure they point in the correct direction towards actual exits',
-      'Test results, illumination status, legibility checks, and any maintenance performed',
-      'To guide occupants safely towards final exits during emergencies',
-      'At final exits, direction changes, and decision points',
+      'To confirm the running-man pictogram faces the same way as the arrow',
+      'To verify the arrow colour matches the building decor scheme',
+      'To check the arrow is brighter than the surrounding signage',
     ],
     correctAnswer: 0,
     explanation:
@@ -105,12 +105,12 @@ export const emergencyExitSignsQuizData = [
   },
   {
     id: 9,
-    question: 'Give one example of a building type where maintained exit signs are mandatory.',
+    question: 'In which type of premises are maintained exit signs typically required?',
     options: [
-      'To guide occupants safely towards final exits during emergencies',
-      'Public buildings such as theatres, cinemas, or hospitals',
-      'To ensure they point in the correct direction towards actual exits',
-      'At final exits, direction changes, and decision points',
+      'Small lock-up retail units occupied by a single trader',
+      'Public assembly buildings such as theatres, cinemas, or hospitals',
+      'Private domestic dwellings and individual flats',
+      'Unmanned outdoor electrical substation compounds',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const emergencyExitSignsQuizData = [
     id: 10,
     question: 'What must be recorded in the emergency lighting logbook regarding exit signage?',
     options: [
-      'To ensure they point in the correct direction towards actual exits',
-      'Maintained signs remain illuminated at all times, non-maintained signs only illuminate during mains failure',
+      'The purchase price and supplier of each individual sign',
+      'The wattage rating and colour temperature of every lamp',
       'Test results, illumination status, legibility checks, and any maintenance performed',
-      'To guide occupants safely towards final exits during emergencies',
+      'The manufacturer warranty start date for each luminaire',
     ],
     correctAnswer: 2,
     explanation:

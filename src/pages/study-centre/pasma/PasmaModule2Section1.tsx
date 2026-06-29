@@ -49,11 +49,11 @@ const quickCheckQuestions = [
       'You are replacing a luminaire directly above a live busbar chamber in a switchroom. Which tower material must you use?',
     options: [
       'Standard aluminium — it is lighter and easier to move',
-      'GRP (fibreglass) — it is non-conductive',
       'Either material — both are equally safe near electrical equipment',
       'Steel scaffold — it is the strongest option',
+      'GRP (fibreglass) — it is non-conductive',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'GRP (Glass Reinforced Plastic) towers are non-conductive and must be used when working near live electrical equipment. An aluminium tower could become energised if it contacts a live conductor, creating a fatal shock hazard.',
   },
@@ -103,8 +103,8 @@ const quizQuestions = [
     id: 3,
     question:
       'Which tower type uses two or more standard towers connected together with linking braces?',
-    options: ['Bridge tower', 'Linked tower', 'High clearance tower', 'Cantilever tower'],
-    correctAnswer: 1,
+    options: ['Linked tower', 'Bridge tower', 'High clearance tower', 'Cantilever tower'],
+    correctAnswer: 0,
     explanation:
       'A linked tower consists of two or more standard towers joined together with horizontal linking braces. This creates a wider working area and increased structural stability for larger tasks.',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     options: [
       'GRP towers are lighter and easier to transport',
       'GRP towers can reach greater heights',
-      'GRP towers are non-conductive, safer near live electrical equipment',
       'GRP towers are cheaper to purchase',
+      'GRP towers are non-conductive, safer near live electrical equipment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'GRP (Glass Reinforced Plastic) towers are non-conductive, making them essential when working near live electrical installations. Aluminium towers conduct electricity and must never be used where contact with live conductors is possible.',
   },
@@ -139,19 +139,19 @@ const quizQuestions = [
     question: 'A high clearance tower is characterised by which feature?',
     options: [
       'A wider platform than standard towers',
-      'A raised base height to clear obstructions at ground level',
       'Non-conductive materials throughout',
       'Internal staircase access to the platform',
+      'A raised base height to clear obstructions at ground level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High clearance towers have a raised base section, allowing the tower to straddle obstructions such as machinery, conveyors, or workbenches at ground level. The working platform is positioned above these obstructions.',
   },
   {
     id: 7,
     question: 'What is the typical maximum platform height of a folding or pop-up tower?',
-    options: ['1.0 metres', '2.0 to 2.5 metres', '5.0 metres', '8.0 metres'],
-    correctAnswer: 1,
+    options: ['2.0 to 2.5 metres', '1.0 metres', '5.0 metres', '8.0 metres'],
+    correctAnswer: 0,
     explanation:
       'Folding and pop-up towers are designed for low-level work, with typical maximum platform heights of 2.0m to 2.5m. They are compact, quick to set up, and ideal for tasks where a full-height tower would be impractical.',
   },

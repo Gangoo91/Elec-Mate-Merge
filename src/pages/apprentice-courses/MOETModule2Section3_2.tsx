@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'What is the PRIMARY advantage of a squirrel cage induction motor over a wound rotor motor?',
     options: [
-      'The effect of harmonic distortion on total power factor',
+      'Higher starting torque at lower starting current',
       'Robust construction, low maintenance, no brushes or slip rings',
-      'Class EN 131 Professional — suitable for trade use',
-      'Length of straight pipe giving the same pressure drop',
+      'Smooth speed control without the need for a variable speed drive',
+      'The ability to run reliably from a single-phase supply',
     ],
     correctIndex: 1,
     explanation:
@@ -43,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'Which of the following is an early indication of bearing failure in an induction motor?',
     options: [
-      'Limit current and provide starting voltage',
+      'A gradual rise in the motor power factor towards unity',
       'Increased vibration levels and elevated bearing temperature',
-      'You personally, the supervisor and the company — all three',
-      'Fire alarm testing begins unexpectedly during your installation work',
+      'A reduction in the starting current drawn at switch-on',
+      'An increase in the synchronous speed of the rotating field',
     ],
     correctIndex: 1,
     explanation:
@@ -59,10 +59,10 @@ const quizQuestions = [
     id: 1,
     question: 'What creates the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'Only one cable run is needed — both emitter and receiver are in the same housing',
+      'A DC excitation current fed to the rotor through slip rings',
       'Three-phase currents in the stator windings, displaced 120 degrees apart',
-      'Excessive internal temperature due to inadequate thermal management',
-      'Category C2 - restricted distribution (second environment)',
+      'A permanent magnet rotor spun by the single supply phase',
+      'A capacitor that shifts the supply current by 90 degrees',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,9 +85,9 @@ const quizQuestions = [
     id: 3,
     question: 'Why can an induction motor rotor NEVER reach synchronous speed?',
     options: [
-      'Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s process for suggesting improvements',
-      'Because they generate extreme heat, sparks, and molten metal that can travel significant distances and ignite combustible materials',
-      'H&S basics, fire procedure, first aid, reporting routes, key policies (D&A, equality, IT, social media), site rules and named manager',
+      'Because the rotor bars are not connected to the supply and carry no current',
+      'Because friction and windage losses always limit the rotor to about 75% of synchronous speed',
+      'Because the centrifugal switch opens and removes power before the rotor reaches full speed',
       'If the rotor reached synchronous speed, there would be no relative motion between rotor and stator field, so no EMF would be induced and no torque produced',
     ],
     correctAnswer: 3,
@@ -99,9 +99,9 @@ const quizQuestions = [
     question: 'On a motor nameplate, the designation IP55 refers to:',
     options: [
       'The degree of protection against solid objects (5) and water (5)',
-      'Details of the incident, actions taken, injuries, and lessons learned',
-      'Outdoor runs subject to wind/thermal expansion',
-      'Failed internal electronics or connection issues',
+      'The insulation class and the maximum permitted winding temperature',
+      'The rated input power in kilowatts at full load on both shafts',
+      'The starting current as a multiple of the full-load current',
     ],
     correctAnswer: 0,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'A single-phase capacitor-start motor uses a capacitor connected in series with the start winding to:',
     options: [
-      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
+      'Limit the start-winding current to protect it from overheating at standstill',
       'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
-      'It has windings on the rotor connected to external resistance via slip rings and brushes',
-      'A blown fuse or open conductor on one phase, causing the motor to run on two phases with increased current and overheating',
+      'Correct the running power factor of the motor towards unity',
+      'Store energy to keep the motor turning briefly during a supply interruption',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,9 +138,9 @@ const quizQuestions = [
     id: 7,
     question: 'A wound rotor induction motor differs from a squirrel cage motor because:',
     options: [
-      'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
-      'The degree of protection against solid objects (5) and water (5)',
-      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
+      'It requires a DC excitation supply to magnetise the rotor field',
+      'It runs at exactly synchronous speed under all load conditions',
+      'It uses a centrifugal switch to disconnect a start winding at speed',
       'It has windings on the rotor connected to external resistance via slip rings and brushes',
     ],
     correctAnswer: 3,
@@ -164,10 +164,10 @@ const quizQuestions = [
     id: 9,
     question: "What causes 'single phasing' in a three-phase motor, and what are its effects?",
     options: [
-      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
+      'A worn bearing causing the rotor to drag, drawing balanced extra current on all three phases',
       'A blown fuse or open conductor on one phase, causing the motor to run on two phases with increased current and overheating',
-      'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
-      'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
+      'An over-tight drive belt loading the motor and reducing its running speed below normal',
+      'A loose terminal on the earth conductor, causing the frame to become live during operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'When performing an insulation resistance test on a motor, which tests should be carried out?',
     options: [
-      'By visually checking core colours at terminations',
-      'Common wiring faults like reversed polarity, missing earth',
+      'Line to neutral only, with the windings still connected to the supply',
+      'A continuity test between the three winding terminals only',
       'Phase to earth, and phase to phase on all combinations',
-      'The employer, with duties on employees to cooperate',
+      'A single test from one phase terminal to the motor shaft only',
     ],
     correctAnswer: 2,
     explanation:
@@ -192,9 +192,9 @@ const quizQuestions = [
     question:
       'What is the purpose of the centrifugal switch in a single-phase capacitor-start motor?',
     options: [
-      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
-      'Installing a new electrical distribution board in an existing factory',
-      'The inability to stand upright forces stooped or kneeling postures, dramatically increasing spinal loading',
+      'To protect the motor by tripping if the winding temperature becomes excessive',
+      'To reverse the direction of rotation when the supply phases are swapped',
+      'To switch the run capacitor into circuit once the motor is up to speed',
       'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
     ],
     correctAnswer: 3,
@@ -206,9 +206,9 @@ const quizQuestions = [
     question: 'Shaft misalignment between a motor and its driven load causes:',
     options: [
       'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
-      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
-      'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
-      'It has windings on the rotor connected to external resistance via slip rings and brushes',
+      'An increase in the synchronous speed and a reduction in the motor slip',
+      'A leading power factor and reduced reactive power drawn from the supply',
+      'A higher insulation resistance reading and improved winding cooling',
     ],
     correctAnswer: 0,
     explanation:

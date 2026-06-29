@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'Reg 722.411.4 — what does it prohibit for outdoor EV charging points on a PME (TN-C-S) supply?',
     options: [
-      'Nothing — PME is fine for all installs',
-      'A PME earthing facility shall NOT be used as the means of earthing for the protective conductor contact(s) of a charging point located outdoors (or that might reasonably be expected to be used to charge a vehicle outdoors), unless one of the alternative methods listed in Regulation 722.411.4 (b) to (e) is used',
-      'PME is prohibited for indoor charging',
-      'PME is prohibited only for three-phase installs',
+      'PME is permitted for any EV charging point provided a 30 mA RCD is fitted on the circuit',
+      'PME shall not earth the protective conductor contact of an outdoor charging point unless an alternative method (b)–(e) is used',
+      'PME is prohibited indoors but permitted outdoors where the earth is bonded to the array frame',
+      'PME is prohibited only for three-phase EV installs; single-phase domestic wallboxes may use it freely',
     ],
     correctIndex: 1,
     explanation:
@@ -38,12 +38,12 @@ const inlineChecks = [
     id: 'm6s2-pen-in-tn',
     question: 'Reg 722.312.2.1 — what does it specifically prohibit on an EV charging circuit?',
     options: [
-      'Any RCD',
-      'A circuit supplying charging equipment for electric vehicles in a TN system shall not include a PEN conductor. The combined PEN (neutral + earth in one conductor) is forbidden on the dedicated EV circuit; separate L, N and PE conductors required throughout',
-      'Type 2 connectors',
-      'Tethered cables',
+      'A PEN conductor on the EV circuit — separate L, N and PE conductors are required throughout',
+      'Any RCD on the EV final circuit, because it interferes with the open-PEN detection logic',
+      'Type 2 connectors in a TN system, requiring a tethered cable to be used instead',
+      'A tethered charging cable, requiring a socketed connector so the cable can be unplugged',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 722.312.2.1 — "A circuit supplying charging equipment for electric vehicles in a TN system shall not include a PEN conductor". Even where the upstream supply is PME (PEN conductor combined), the DEDICATED EV CIRCUIT downstream must use separate L, N and PE conductors. The Henley block / consumer unit becomes the split point: PEN enters, separate N and PE leave to the EV circuit. This is the structural fix in the install — the lost-PEN hazard from §6.2 still has to be addressed by one of the Reg 722.411.4 (b)-(e) alternatives.',
   },
@@ -51,10 +51,10 @@ const inlineChecks = [
     id: 'm6s2-opdd-function',
     question: 'OPDD (Open PEN Detection Device) — what does it do?',
     options: [
-      'Detects open windows',
-      'Continuously monitors L-N voltage and L-N-PE voltage relationships; on detecting an open PEN condition (voltage anomaly indicating the supply earth has been lost), the OPDD opens contactors to disconnect both L and N from the EV charging equipment, isolating the vehicle from the hazardous earth before fault current can flow',
-      'Counts how often the wallbox opens',
-      'A type of RCD',
+      'Detects when the charging cable is unplugged and logs the event for the export meter',
+      'Monitors the L-N-PE voltage relationship and, on an open-PEN condition, disconnects both L and N from the equipment',
+      'Measures prospective fault current at the wallbox and trips if it exceeds the device breaking capacity',
+      'A type of RCD that senses residual current and disconnects the line conductor only',
     ],
     correctIndex: 1,
     explanation:
@@ -65,10 +65,10 @@ const inlineChecks = [
     question:
       'A customer’s PME supply means the standard wallbox install would invoke Reg 722.411.4. The installer chooses to install a dedicated TT earth electrode for the EV circuit. What does this involve?',
     options: [
-      'Use the PME earth electrode',
-      'Drive a dedicated earth electrode at the wallbox location, separate from the PME supply earth. The EV circuit’s PE conductor connects to this dedicated electrode (NOT to the PME earth). RCD protection on the EV circuit ensures ADS works against the TT electrode’s impedance. The PME earth and the TT electrode must be electrically separated to prevent voltage transfer in a fault scenario',
-      'Connect the chassis to a buried iron pipe',
-      'Use the same earth as the consumer unit',
+      'Bond the wallbox PE to the existing PME earth at the consumer unit, then add a rod nearby as back-up',
+      'Drive a dedicated earth electrode for the EV circuit, with its PE on that electrode and separated from the PME earth',
+      'Connect the EV circuit PE to a nearby buried metal water pipe as a low-resistance independent earth',
+      'Use the same main earthing terminal as the rest of the installation, one electrode serving the property',
     ],
     correctIndex: 1,
     explanation:
@@ -81,12 +81,12 @@ const quizQuestions = [
     question:
       'A standard UK domestic PME (TN-C-S) supply. Customer wants a 7 kW outdoor wallbox on the driveway. The installer cannot use PME directly per Reg 722.411.4. Which alternative routes are available?',
     options: [
-      'No alternative — refuse the job',
-      'Reg 722.411.4 lists alternatives (b) to (e): (b) install on a TN-S system (where available — rare in UK 2025-26); (c) install on a TT system with dedicated earth electrode at the wallbox; (d) install using an OPDD (Open PEN Detection Device) — the dominant UK 2025-26 wallbox approach since OPDD is now standard in many wallboxes; (e) another method that provides equivalent protection. (d) is the dominant choice for new domestic installs; (c) for sites where OPDD-equipped kit isn’t practical',
-      'Use any RCD',
-      'Switch to Mode 2',
+      'No compliant route exists on a PME supply, so refuse the job until the DNO converts it to TN-S',
+      'Fit a 30 mA Type A RCD on the EV circuit to disconnect on the earth fault the lost PEN creates',
+      'The Reg 722.411.4 alternatives (b)–(e): TN-S supply, a dedicated TT electrode, an OPDD, or another equivalent method',
+      'Switch the customer to a Mode 2 granny lead, which is exempt from the PME-on-EV requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 722.411.4 (b)-(e) are the four routes. (b) TN-S is rare in UK 2025-26 (most domestic supplies are TN-C-S / PME). (c) TT with dedicated electrode is a legitimate route — installer drives a rod, configures the EV circuit as TT, separated from the PME at the MET. (d) OPDD route — wallbox includes Open PEN Detection Device that disconnects on lost PEN; this is the dominant UK 2025-26 approach since many wallboxes (MyEnergi Zappi, Hypervolt, Andersen, etc.) include OPDD as standard. (e) is the safety net for novel arrangements with equivalent protection. The OPDD route is preferred because it doesn’t require a separate earth rod (saving install time and customer cost) and provides automatic disconnection on the actual lost-PEN event.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     question:
       'A site has TN-S supply (the supply cable has a separate earth conductor back to the supply transformer). Why is TN-S not subject to the same PME hazard as TN-C-S?',
     options: [
-      'TN-S is the same as TN-C-S',
-      'TN-S has a SEPARATE earth conductor from the supply transformer to the property’s MET. The neutral and earth are separate throughout the supply. There is no combined PEN that can open and propagate a lost-PEN fault to the property’s earth. The EV install on a TN-S supply uses the supply earth directly without the Reg 722.411.4 alternative — the hazard the regulation addresses simply doesn’t apply',
-      'TN-S has more current',
-      'TN-S uses TT',
+      'TN-S earths through a local rod rather than the supply cable, so the wallbox is effectively a TT install',
+      'TN-S has a separate earth conductor throughout, so there is no combined PEN that can open and propagate a fault',
+      'TN-S combines neutral and earth only at the cut-out, so the PEN is too short to give a hazardous voltage rise',
+      'TN-S runs at a higher nominal voltage, letting the wallbox protection clear a lost-PEN fault before any shock',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'An installer fits a wallbox to a customer’s outdoor garage wall on a TN-C-S (PME) supply WITHOUT invoking any of the Reg 722.411.4 (b)-(e) alternatives — just connects the wallbox PE to the consumer unit PEN-derived earth. What is the EICR code at next inspection?',
     options: [
-      'Pass',
-      'C1 — DANGER PRESENT. The "lost PEN" fault hazard is real, demonstrable, and immediately puts the customer at risk of a fatal shock if a supply PEN failure occurs. The install must be remediated urgently before the wallbox is energised again. This is the most serious code an EV install can attract',
-      'C3 — improvement recommended',
-      'C2 — potential danger',
+      'Satisfactory — bonding the wallbox PE to the consumer unit earth is the normal arrangement and meets Section 722',
+      'C3 — improvement recommended, since the lost-PEN scenario is unlikely and only a best-practice shortfall',
+      'C2 — potential danger, because the hazard exists but becomes real only if the supply PEN fails',
+      'C1 — danger present, exposing the customer to a fatal shock on a lost-PEN event; remediate before re-energising',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 722.411.4 PME-on-EV outdoor without alternative protection is a Code C1 — danger present. The "lost PEN" failure mode is not theoretical — it has caused UK deaths; supply PEN failures happen (transformer faults, supply cable damage during groundworks, lightning damage). With a vehicle plugged in outdoors and an open PEN, the vehicle body can rise to L-N voltage; anyone touching the vehicle simultaneous with a true earth (wet ground, garden tap) experiences a 230 V shock through their body. The OPDD route (or TT electrode, or TN-S) is the safety case. C1 = immediate remediation; the wallbox is isolated until fixed. EICR for this finding is unsatisfactory.',
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'OPDD vs dedicated TT electrode — what is the practical UK 2025-26 install decision usually based on?',
     options: [
-      'Random choice',
-      'OPDD is the dominant UK 2025-26 choice because: (i) the wallbox itself ships with OPDD integrated (no extra kit cost), (ii) no earth rod to drive (saves install time + groundworks cost), (iii) no need to dig up driveway for electrode, (iv) Reg 722.411.4(d) compliance documented via manufacturer DoC. Dedicated TT electrode (route c) appears when the wallbox model doesn’t include OPDD, or where the site has specific earth-electrode constraints making OPDD unsuitable',
-      'Cost of the customer’s vehicle',
-      'Weather forecast',
+      'The TT electrode is always preferred, a physical earth rod being more reliable than electronic detection',
+      'The DNO sets it, mandating a TT electrode on every PME supply before an EV charger may be connected',
+      'It is driven by charge rate — 7 kW units use OPDD and 22 kW units require a TT electrode regardless of model',
+      'OPDD usually wins on practical grounds (integrated, no rod, no groundworks); a TT electrode is the no-OPDD fallback',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OPDD route (Reg 722.411.4(d)) wins on practical grounds for the typical UK 2025-26 domestic install: integrated into the wallbox kit (no separate device to buy), no earth electrode to drive (no groundworks, no Ra measurement), no electrode separation worry. Many UK wallbox brands (MyEnergi Zappi, Hypervolt, Andersen, certain Wallbox / EO Charging models) include OPDD as standard. The TT route (722.411.4(c)) appears when: customer’s preferred wallbox model doesn’t include OPDD; site has very low PEN failure tolerance (e.g. rural area with intermittent PEN issues); or customer prefers the TT electrode for reasons of their own. Cert evidence bundle records the chosen route and the rationale.',
   },
@@ -133,10 +133,10 @@ const quizQuestions = [
     question:
       'Why does Reg 722.411.4 specifically target OUTDOOR charging points (and those that "might reasonably be expected to be used to charge a vehicle outdoors")?',
     options: [
-      'No reason',
-      'The lost-PEN hazard requires three conditions: (1) PEN opens upstream; (2) property earth rises toward L-N voltage; (3) someone touches BOTH the vehicle AND a true earth simultaneously. Condition (3) is much more likely outdoors — wet ground, garden tap, neighbouring metalwork, all give a path to true earth that an indoor garage floor (timber, dry concrete) usually does not. Indoor charging points still face the underlying PME risk but the fatality pathway is less probable',
-      'The regulation hates outdoor things',
-      'Outdoor is dryer',
+      'Because outdoor wallboxes draw more current than indoor ones, raising the lost-PEN voltage to a worse level',
+      'A person outdoors is far more likely to also be in contact with true earth, completing the shock circuit',
+      'Because outdoor charging points are exposed to rain, and water ingress is the mechanism of the lost-PEN shock',
+      'Because the PME earth ends at the building envelope, so outdoor equipment sits outside the earthing system',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'A site survey discovers the supply is TN-C-S (PME). The customer has an integral garage with brick walls and concrete floor (no external doors used for vehicle access — separate driveway). The wallbox is in the integral garage. Reg 722.411.4 still applies if the wallbox "might reasonably be expected to be used to charge a vehicle outdoors". How does the installer make this judgement?',
     options: [
-      'Always assume indoor only',
-      'Survey-stage assessment: does the customer have a cable that reaches the driveway? Does the integral garage have a door that can be left open with the cable extending out to a parked car on the drive? Most installs answer YES to one or both — so Reg 722.411.4 applies and one of (b)-(e) alternatives is needed. When in doubt, treat as outdoor / invoke 722.411.4 — the upside of compliance is small cost; the downside of mis-treatment is C1 finding + fatality risk',
-      'Customer’s call',
-      'Ask the supply DNO',
+      'Treat it as indoor by default because it is inside the garage, invoking 722.411.4 only if the customer asks to charge outside',
+      'Assess whether the cable could reach a car on the drive; if so, treat as outdoor and invoke 722.411.4',
+      'Leave the decision to the customer, recording their choice on the certificate as acceptance of the lost-PEN risk',
+      'Ask the DNO to rule on indoor vs outdoor, since the earthing arrangement is the supplier’s responsibility',
     ],
     correctAnswer: 1,
     explanation:

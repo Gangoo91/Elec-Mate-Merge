@@ -23,38 +23,38 @@ const inlineChecks = [
     question:
       'You press the integral test button on a 30 mA RCD and the device trips immediately. What has the test button verified — and what has it NOT verified?',
     options: [
-      'It has verified the RCD trips at exactly 30 mA — no further testing needed',
-      'It has verified the mechanical trip mechanism, the test-circuit shunt resistor, and the indicator. It has NOT verified the trip current threshold or the disconnection time at the rated residual operating current — those require an instrument-driven RCD ramp / time test under Reg 643.8',
-      'It has verified the earth-fault loop impedance at the device',
-      'It has verified the IR of the upstream wiring',
+      'The device trips at exactly 30 mA, so no instrument-driven test is needed',
+      'The mechanical trip mechanism and test path work, but NOT the trip current threshold or disconnection time at IΔn',
+      'The earth-fault loop impedance and disconnection time at the device terminals are within limits',
+      'The insulation resistance and polarity of the upstream final-circuit wiring are confirmed sound',
     ],
     correctIndex: 1,
     explanation:
-      'The test button injects an artificial residual current via an internal shunt resistor — sufficient to operate the trip mechanism. It confirms the moving parts work and the test circuit is healthy, but says nothing about the device tripping at 30 mA / within the BS EN 61008 / 61009 disconnection time. The instrument-driven RCD test (Reg 643.8) is the numeric verification.',
+      'The test button injects an artificial residual current via an internal shunt resistor — sufficient to operate the trip mechanism. It confirms the moving parts work and the test circuit is healthy, but says nothing about the device tripping at 30 mA / within the BS EN 61008 / 61009 disconnection time. The instrument-driven RCD test (Reg 643.8) is the numeric verification of trip current threshold and disconnection time at the rated residual operating current.',
   },
   {
     id: 'mod7-s5-mcb-walk',
     question:
       'On the board walk for an MCB, what physical operations does Reg 643.10 require you to verify, beyond the numeric Zs / disconnection-time check at 643.7?',
     options: [
-      'Only that the MCB is the correct rating per the design',
-      'Manual on / off operation, that the toggle returns to the correct position, that any shared trip bar / busbar is engaged, that the lock-off facility (if fitted) accepts the lock and prevents inadvertent re-closure, and that any indication (flag / colour / window) reads correctly',
-      'A controlled short-circuit test at rated breaking capacity',
-      'Insulation resistance line-to-load on the MCB',
+      'Only that the MCB is the correct rating and curve type per the circuit design schedule',
+      'Manual on / off operation, toggle return, busbar / DIN engagement, lock-off action and correct indication',
+      'A controlled short-circuit test at rated breaking capacity, timed against the device characteristic',
+      'Insulation resistance line-to-load across the open MCB contacts at 500 V d.c.',
     ],
     correctIndex: 1,
     explanation:
-      'Functional verification of an MCB under 643.10 is the operational layer above the trip-time test. Manual switching, toggle return, busbar / DIN engagement, lock-off action, and indication state all have to work — because all of them are part of how the user / electrician operates the device safely day-to-day, not just at fault clearance.',
+      'Functional verification of an MCB under 643.10 is the operational layer above the trip-time test. Manual switching, toggle return to the correct position, busbar / DIN engagement, the lock-off facility accepting the lock to prevent inadvertent re-closure, and correct indication (flag / colour / window) all have to work — because all of them are part of how the user / electrician operates the device safely day-to-day, not just at fault clearance.',
   },
   {
     id: 'mod7-s5-afdd-status',
     question:
       'A4:2026 brings AFDDs into the functional verification scope. After pressing the AFDD test button, what should the indication on a healthy device show?',
     options: [
-      'Nothing — AFDDs do not have status indication',
-      'The device should trip on the test (confirming the arc-fault detection electronics are healthy), reset cleanly when the toggle is operated, and the status / armed indication LED should return to the design-intended healthy state once reset',
-      'The status LED should stay off permanently after the test',
-      'The device should not trip — the test button only checks the toggle',
+      'Nothing — AFDDs do not carry any form of status indication on the device',
+      'It trips on the test, resets cleanly on the toggle, and the status LED returns to its healthy/armed state',
+      'The status LED should stay off permanently once the test has been carried out',
+      'The device should not trip at all, because the test button only exercises the toggle',
     ],
     correctIndex: 1,
     explanation:
@@ -65,14 +65,14 @@ const inlineChecks = [
     question:
       'During an EICR you find an RCD whose integral test button does not cause the device to trip. The instrument-driven test at IΔn confirms the RCD does trip within the standard disconnection time. What is the correct classification?',
     options: [
-      'C3 — improvement recommended only, since the device performs electrically',
-      'C2 — potentially dangerous. The test button is the user-accessible verification of the protective device. A non-functional test button means the duty-holder has no way to verify the device on the recommended six-monthly basis (BS 7671 user instruction). The RCD is electrically OK today but unverifiable tomorrow',
-      'No classification — the device works',
-      'C1 — danger present',
+      'C3 — improvement recommended, since the device still performs electrically at IΔn',
+      'C2 — potentially dangerous, because the user-side six-monthly verification is defeated',
+      'No classification — the device trips within the standard time, so it is satisfactory',
+      'C1 — danger present, as the protective device cannot clear an earth fault',
     ],
     correctIndex: 1,
     explanation:
-      "Reg 643.10 requires verification of the manually operated test facility per the manufacturer's recommendations, and the BS 7671 user notice instructs occupants to test their RCDs every six months via the integral test button. A test button that does not operate the device defeats that user-side verification entirely — C2 (potentially dangerous) is the standard classification.",
+      "Reg 643.10 requires verification of the manually operated test facility per the manufacturer's recommendations, and the BS 7671 user notice instructs occupants to test their RCDs every six months via the integral test button. A test button that does not operate the device defeats that user-side verification entirely — even though the RCD is electrically OK today, it is unverifiable tomorrow. C2 (potentially dangerous) is the standard classification; C1 is wrong because no immediate danger is present, and C3/no-code understate the loss of the user verification path.",
   },
 ];
 
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 643.10 names a specific verification step for AFDDs. What does the regulation actually require?',
     options: [
-      'A controlled arc-fault injection at rated current',
-      'Verification of the effectiveness of any manually operated test facility in accordance with the manufacturers’ recommendations',
-      'A 5 IΔn ramp test as for an RCD',
-      'Visual inspection only — AFDDs are exempt from functional testing',
+      'A controlled arc-fault injection at the rated current of the device, timed against its characteristic',
+      'A 5 IΔn ramp test at the device terminals, as carried out on an RCD for additional protection',
+      'Verification of the effectiveness of any manually operated test facility per the manufacturers’ recommendations',
+      'Visual inspection only, because AFDDs are exempt from the functional testing requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.10 (A4:2026) is precise: "Where an AFDD is installed the effectiveness of any manually operated test facility shall be verified in accordance with the manufacturers’ recommendations." It is the integral test button — pressed per the manufacturer — that the regulation makes you verify. There is no field-injectable arc-fault test in BS 7671 because there is no test instrument that produces a representative arc fault on a live circuit.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Reg 643.10 imposes a separate duty on devices used for fault and additional protection. Which sentence captures it?',
     options: [
-      'Protective devices shall be replaced every five years irrespective of test outcome',
-      'Protective devices shall be submitted to a test of their function, as necessary, to check that they are properly installed and adjusted; for an RCD the effectiveness of any test facility incorporated in the device shall be verified',
-      'Protective devices need only be visually inspected',
-      'Protective devices need only be tested when the schedule of inspections flags an item',
+      'Protective devices shall be replaced every five years irrespective of the functional test outcome',
+      'Protective devices need only be visually inspected for correct selection, rating and curve type',
+      'Protective devices need only be tested when the schedule of inspections specifically flags an item',
+      'Protective devices shall be function-tested to check they are properly installed; any RCD test facility shall be verified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Quoted from Reg 643.10: "Protective devices shall be submitted to a test of their function, as necessary, to check that they are properly installed and adjusted. Where fault protection and/or additional protection is provided by an RCD, the effectiveness of any test facility incorporated in the device shall be verified." That is the regulatory hook for the RCD test-button check on top of the BS EN 61557-6 trip-time test from Reg 643.7.3.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'For an MCB or RCBO overcurrent characteristic, how does Reg 643.7.3 say verification is to be done?',
     options: [
-      'By an instrument-driven primary-injection trip test on every breaker, recorded to the schedule',
-      'By visual inspection or other appropriate methods (i.e. short-time or instantaneous tripping setting for circuit-breakers, current rating and type for fuses)',
-      'By simulating a 5 kA short-circuit at the breaker terminals',
-      'By comparing nameplate to design only',
+      'By an instrument-driven primary-injection trip test on every breaker, recorded to the schedule of results',
+      'By simulating a 5 kA short-circuit at the breaker terminals and timing the clearance against the curve',
+      'By visual inspection or other appropriate methods — tripping setting for breakers, rating and type for fuses',
+      'By comparing the device nameplate to the design schedule only, with no further verification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 643.7.3, dealing with overcurrent protective devices: "for overcurrent protective devices, by visual inspection or other appropriate methods (i.e. short-time or instantaneous tripping setting for circuit-breakers, current rating and type for fuses)." The ADS evidence for an MCB on a final circuit comes from the Zs measurement vs Table 41.3, not from a primary-injection trip test on every device.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'A typical SPD has a green / red status indicator. The visual check at periodic inspection finds the indicator showing red on one cartridge in the array. What is the correct action under BS 7671?',
     options: [
-      'Code C3 only — the SPD is still passing surge currents',
-      'Treat as end-of-life: the cartridge has reached its operational limit and is no longer providing the declared voltage protection level. Replace the cartridge / module per manufacturer instruction; record on the report and re-inspect',
-      'Re-test by injecting an impulse current via the multifunction tester',
-      'Bypass the SPD until the next periodic',
+      'Record as Code C3 only, since the SPD is still passing surge currents safely to earth',
+      'Re-test by injecting an impulse current via the multifunction tester to confirm the fault',
+      'Bypass the SPD until it can be attended to at the next scheduled periodic inspection',
+      'Treat as end-of-life — the module no longer provides the declared Up; replace per manufacturer, record and re-inspect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A red status indicator means the SPD has reached the end of its service life and no longer guarantees the declared Up. Reg 534.4.4.1 requires that the SPD’s voltage protection level (Up) is matched to the equipment rated impulse withstand voltage (Uw); a depleted SPD breaks that match. Replace the affected module and re-inspect. SPDs are not field-impulse-tested — the status indicator is the verification means.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'A bank of three SPD cartridges (L1-PE, L2-PE, L3-PE) on a TN-S board. L1 and L2 are green, L3 is red. The OCPD upstream has not operated. Continuity of supply to the equipment is fine. What does Reg 534.4.5.2 tell you about the protection state?',
     options: [
-      'Continuity is unaffected and protection against further overvoltages is still intact',
-      'Continuity of supply is unaffected, but neither the installation nor the equipment is protected against possible further overvoltages on that mode — replace before re-inspect',
-      'The whole SPD assembly must be replaced even if only one cartridge has failed',
-      'No action — only one mode out of three is depleted',
+      'Supply continuity is unaffected, but that mode no longer protects against further overvoltages — replace it',
+      'Continuity is unaffected and protection against further overvoltages remains fully intact on that mode',
+      'The whole SPD assembly must be replaced, even though only one cartridge has reached end-of-life',
+      'No action is needed at all, because only one mode out of the three has actually depleted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 534.4.5.2 (verbatim): "In case of OCPD operation arising from SPD failure, the continuity of the supply to the equipment is unaffected. However, neither the installation nor the equipment is protected against possible further overvoltages." The same logic applies when the indicator shows end-of-life: power keeps flowing, surge protection on that mode does not.',
   },
@@ -180,10 +180,10 @@ const quizQuestions = [
     question:
       'Reg 537.2.4 covers prevention of unwanted or unintentional closure of isolators. Which of these does the regulation explicitly accept as compliance methods?',
     options: [
-      'Lockable space or lockable enclosure, padlocking, or other suitable means',
-      'Padlocking only',
-      'Verbal instruction to site personnel',
-      'A printed sticker stating "Do not operate"',
+      'A lockable space or lockable enclosure, padlocking, or other suitable means',
+      'Padlocking only, with no other method accepted by the regulation',
+      'Verbal instruction to site personnel not to operate the device',
+      'A printed sticker on the device stating "Do not operate"',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'On the Schedule of Test Results for an RCBO-protected circuit, where do the trip-time verification numbers from M6 actually go?',
     options: [
-      'Nowhere — the M6 numbers are working notes only',
-      'Into the dedicated "RCD operating time at IΔn" column on the test results schedule, against the circuit; the test-button verification is recorded as a tick in the function-test column',
-      'Only into the comments column',
-      'Only on the EICR Schedule of Inspections, not the Schedule of Test Results',
+      'Nowhere — the M6 numbers are working notes that are never transcribed to the certificate',
+      'Only into the comments column on the schedule, alongside any other observations',
+      'Only on the EICR Schedule of Inspections, and never on the Schedule of Test Results',
+      'Into the "RCD operating time at IΔn" column, with the test-button check a tick in the function-test column',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A4:2026 model forms keep a discrete column for the RCD operating time at IΔn (the BS EN 61557-6 reading from M6). The test-button check from Reg 643.10 is a separate tick in the function-test column — they are not the same evidence. Record both. An RCBO that trips at IΔn but whose test button is mechanically jammed is still a defect, even if it would clear an earth fault.',
   },
@@ -208,12 +208,12 @@ const quizQuestions = [
     question:
       'Reg 643.10 NOTE 2 contains a critical caveat about the functional test required by 643.10. What does it say?',
     options: [
-      'The 643.10 functional test replaces all factory testing',
       'This functional test does not replace the functional test indicated by the relevant standards',
-      'The 643.10 functional test is only required at periodic, not initial verification',
-      'The 643.10 functional test is optional for low-risk circuits',
+      'The 643.10 functional test replaces all factory and type testing of the device',
+      'The 643.10 functional test is only required at periodic inspection, not initial verification',
+      'The 643.10 functional test is optional for low-risk final circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Verbatim Reg 643.10 NOTE 2: "This functional test does not replace the functional test indicated by the relevant standards." The point is sharp: pressing the AFDD test button or operating the main switch is the BS 7671 verification of installation, mounting and adjustment. It does not stand in for the type-test the device passes against its product standard (e.g. BS EN 62606 for AFDDs, BS EN 61009 for RCBOs).',
   },

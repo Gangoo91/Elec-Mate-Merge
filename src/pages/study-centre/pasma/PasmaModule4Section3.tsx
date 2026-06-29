@@ -18,12 +18,12 @@ const quickCheckQuestions = [
     id: 'pasma-storage-cleaning',
     question: 'Why should components be cleaned before they are put into storage?',
     options: [
-      'To make them look nice for the next job',
       'Cleaning removes contaminants and reveals hidden defects',
+      'To make them look nice for the next job',
       'Because the manufacturer requires daily polishing',
       'To reduce the weight of the components',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cleaning components before storage removes contaminants such as concrete, plaster, and paint that can cause corrosion and conceal defects. The cleaning process itself often reveals cracks, bends, and damage that would otherwise go unnoticed.',
   },
@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'Why should tower components be segregated by type during storage?',
     options: [
       'It looks more professional to visitors',
-      'It makes assembly faster and prevents selection of wrong components',
       'Different component types need different temperatures',
       'It is a fire regulation requirement',
+      'It makes assembly faster and prevents selection of wrong components',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Segregating components by type — frames, braces, platforms, castors, stabilisers — makes the next assembly significantly faster and prevents the wrong component being selected. Mixed storage leads to time wasted searching and increases the risk of incorrect components being used.',
   },
@@ -98,11 +98,11 @@ const quizQuestions = [
       'Which contaminant is most commonly found on tower components that must be removed before storage?',
     options: [
       'Oil from machinery',
-      'Concrete, plaster, and paint splashes',
       'Food waste from operatives',
       'Rust inhibitor spray',
+      'Concrete, plaster, and paint splashes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Concrete, plaster, and paint are the most common contaminants found on tower components after use on construction sites. These must be removed because they trap moisture against the metal surface causing corrosion, and they can interfere with lock mechanisms and connection points.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Where should tower components ideally be stored?',
     options: [
-      'Directly on the ground in the open air',
       'Under cover, off the ground, on racking in a ventilated area',
+      'Directly on the ground in the open air',
       'In a sealed, airtight container',
       'In direct sunlight to keep them dry',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Components should be stored under cover to protect from rain, off the ground to prevent moisture damage and corrosion, on racking for organisation and accessibility, and in a ventilated area to prevent condensation buildup.',
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     options: [
       'Any competent welder on site',
       'The PASMA-trained operative who found the defect',
-      'Only the manufacturer or a manufacturer-approved repair centre',
       'The site maintenance team',
+      'Only the manufacturer or a manufacturer-approved repair centre',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Tower components can only be repaired by the manufacturer or a manufacturer-approved repair centre. On-site repairs such as welding or straightening compromise the structural integrity and void the warranty and certification.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of segregating components by type in storage?',
     options: [
-      'To use less storage space',
       'To make the next assembly faster and prevent wrong component selection',
+      'To use less storage space',
       'To separate heavy items from light items',
       'To comply with COSHH regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Segregating components by type — frames, braces, platforms, castors, stabilisers — speeds up the assembly process because operatives can quickly find the right component. It also prevents the wrong component being selected, which could compromise the tower's structural integrity.",
   },

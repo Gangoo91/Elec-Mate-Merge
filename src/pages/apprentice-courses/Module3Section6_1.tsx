@@ -28,33 +28,38 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'True or False: SWA cables can have a wider support spacing than PVC-sheathed cables.',
-    options: ['True', 'False'],
-    correctAnswer: 0,
+      'How does the support spacing for SWA compare with PVC-sheathed cable?',
+    options: [
+      'SWA needs much closer spacing than PVC',
+      'Both need exactly the same spacing',
+      'SWA can be spaced wider than PVC',
+      'SWA cannot be clipped and must be buried',
+    ],
+    correctAnswer: 2,
     explanation:
-      'True. Steel Wire Armoured (SWA) cables are mechanically stronger and can span greater distances - up to 450mm horizontally vs 300mm for standard PVC cables.',
+      'Steel Wire Armoured (SWA) cables are mechanically stronger and can span greater distances - up to 450mm horizontally vs 300mm for standard PVC cables.',
   },
   {
     id: 3,
     question: 'Which type of cable support is required in escape routes?',
     options: [
-      'Construction (Design and Management)',
-      '60 seconds and 30 seconds into the test',
-      'Loss when joining fibres with different core sizes',
+      'Standard plastic clips fixed at half spacing',
+      'Cable ties used on their own',
+      'Adhesive clips rated for the cable weight',
       'Metal fixings or non-combustible supports',
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 18th Edition Amendment 2 requires non-combustible supports in escape routes to prevent cable collapse during fire.',
+      'BS 7671 requires non-combustible supports in escape routes to prevent cables collapsing and obstructing the route during a fire.',
   },
   {
     id: 4,
     question: 'What is the main reason for closer support spacing on flexible cables?',
     options: [
       'They sag more between fixings due to construction',
-      'No, because all three line currents must be equal',
-      'To reduce touch voltage between simultaneously accessible parts',
-      'Place it in a clearly labelled asbestos waste bag for disposal',
+      'They carry more current than rigid cables',
+      'They are more likely to overheat in service',
+      'They have a lower voltage rating than rigid cables',
     ],
     correctAnswer: 0,
     explanation:

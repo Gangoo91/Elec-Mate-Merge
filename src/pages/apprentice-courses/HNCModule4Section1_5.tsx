@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'technology-change',
     question: 'When planning for technology changes, which approach is most appropriate?',
     options: [
-      'At least 12 months to capture seasonal variations',
-      'Planning to maintain operations during and after emergencies',
+      'Design only for the technologies in use today',
+      'Specify the exact equipment expected in 20 years',
       'Design for flexibility with adequate spare capacity',
-      'Compression, condensation, expansion, evaporation',
+      'Avoid spare capacity to minimise capital cost',
     ],
     correctIndex: 2,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which element is typically most difficult to upgrade later?',
     options: [
-      'Size, type, route, and condition',
-      'Clarity, accuracy, legibility',
+      'Final circuit accessories and faceplates',
+      'Individual circuit breakers in a distribution board',
       'Main cable routes and risers',
-      'Before any electrical testing',
+      'Lighting and small power final circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -131,9 +131,9 @@ const quizQuestions = [
     question: 'For a new residential development, EV charging provision should consider:',
     options: [
       'Building Regulations requirements and future EV adoption',
-      'L1, L2, L3 (with N for neutral and PE for protective earth)',
-      'HMRC refunds the £5,000 overpayment after filing the tax return',
-      'Equipment limitations for high current pulses',
+      'Only the number of cars currently owned by residents',
+      'The colour coding of the final ring circuit cables',
+      'Whether the dwellings use gas or electric cooking',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'future-proofing' in electrical installation design?",
     options: [
-      'Dispose of properly according to waste regulations',
+      'Installing the cheapest equipment that meets today’s load',
       'Designing infrastructure that can adapt to changing requirements',
-      'Metallic (ferrous and non-ferrous) materials only',
-      'Resume CPR immediately for 2 minutes before the AED re-analyses',
+      'Sizing every cable to the absolute minimum permitted',
+      'Avoiding any spare capacity to reduce capital cost',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'Heat pump adoption is driving increased electrical demand because:',
     options: [
-      'Carry out safe isolation: isolate, lock off, prove dead, and display warning notices',
-      'Listen respectfully — they may have observed something useful — then explain your professional assessment politely',
+      'Heat pumps draw a large standing current even when switched off',
+      'Heat pumps require a dedicated three-phase supply in every dwelling',
       'Replacing gas heating with electric heat pumps significantly increases electricity demand',
-      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
+      'Heat pumps operate at a much lower efficiency than gas boilers',
     ],
     correctAnswer: 2,
     explanation:
@@ -185,9 +185,9 @@ const quizQuestions = [
       'Which factor has most significantly increased office small power allowances in recent years?',
     options: [
       'IT equipment density and personal devices',
-      'Both operational and embodied carbon emissions',
-      'Design to industry benchmarks with flexibility',
-      'Short-circuit AND earth fault conditions',
+      'Increased use of natural daylighting',
+      'Wider adoption of LED lighting schemes',
+      'Improved building thermal insulation standards',
     ],
     correctAnswer: 0,
     explanation:
@@ -198,10 +198,10 @@ const quizQuestions = [
     question:
       'For a speculative office development (unknown tenant), what approach to electrical design is appropriate?',
     options: [
-      'Support roles assisting qualified electricians',
+      'Design only to the minimum load a single tenant could need',
       'Design to industry benchmarks with flexibility',
-      'Guaranteeing you will pass the actual EPA',
-      'Test quarterly or recommended test frequency',
+      'Delay all electrical design until a tenant is secured',
+      'Fit out fully for one specific assumed tenant type',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,10 +211,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the main challenge with battery energy storage system (BESS) provision?',
     options: [
-      'Controlled breathing, lowering your voice, and maintaining open body language',
-      'Risks should be weighed against the cost, time, and effort of reducing them',
+      'Batteries can only be charged from on-site solar generation',
+      'Battery systems must be located outside the building boundary',
       'Space, weight, ventilation, and connection capacity requirements',
-      'Incorrect polarity can damage components or prevent proper operation',
+      'Battery storage cannot be connected to a three-phase supply',
     ],
     correctAnswer: 2,
     explanation:

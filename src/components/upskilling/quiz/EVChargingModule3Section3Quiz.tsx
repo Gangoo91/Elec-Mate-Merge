@@ -15,50 +15,50 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: 'What is the minimum RCD type required for EV charging installations under BS 7671?',
-    options: ['Type AC RCD', 'Type A RCD', 'Type B RCD', 'No RCD required'],
-    correctAnswer: 1,
+    question: 'What is the minimum RCD type normally required to protect an EV charging point?',
+    options: ['A Type AC RCD', 'No RCD is required', 'A Type A RCD', 'A Type B RCD'],
+    correctAnswer: 2,
     explanation:
-      'Type A RCD is the minimum requirement for EV charging installations, providing protection against AC residual currents and pulsating DC. Type B RCD is preferred for enhanced protection.',
+      'A Type A RCD is the minimum, protecting against AC and pulsating DC residual currents; a Type B RCD (or equivalent DC-fault detection) is used where smooth DC fault current can occur.',
   },
   {
     id: 2,
-    question: 'For a 7.4kW (32A) EV charging installation, what MCB rating should be selected?',
-    options: ['32A Type B', '40A Type B', '32A Type C', '50A Type B'],
+    question: 'For a 7.4 kW (32 A) EV charging circuit, which protective device rating is suitable?',
+    options: ['A 32 A Type C MCB', 'A 40 A Type B MCB', 'A 32 A Type B MCB', 'A 50 A Type B MCB'],
     correctAnswer: 1,
     explanation:
-      'A 40A Type B MCB should be selected to provide adequate protection while allowing for sustained 32A loading. The MCB rating must be greater than the design current.',
+      'A 40 A Type B device suits a sustained 32 A load, providing headroom above the design current while still meeting the cable’s protection requirements.',
   },
   {
     id: 3,
     question:
-      'When installing EV charging equipment in livestock areas, what is the minimum mounting height to prevent animal interference?',
-    options: ['1.8m', '2.0m', '2.5m', '3.0m'],
-    correctAnswer: 2,
+      'What minimum mounting height is recommended for EV charging equipment in livestock areas?',
+    options: ['1.8 m', '2.0 m', '3.0 m', '2.5 m'],
+    correctAnswer: 3,
     explanation:
-      'A minimum height of 2.5m is recommended for equipment in livestock areas to prevent animal contact and damage whilst maintaining reasonable access for humans.',
+      'Around 2.5 m is recommended so animals cannot contact or damage the equipment, while it remains reasonably accessible for people.',
   },
   {
     id: 4,
-    question: 'What is the minimum depth required for direct burial of EV charging supply cables?',
-    options: ['450mm', '600mm', '750mm', '900mm'],
-    correctAnswer: 1,
+    question: 'What is a sensible minimum burial depth for an EV charging supply cable in open ground?',
+    options: ['450 mm', '900 mm', '600 mm', '300 mm'],
+    correctAnswer: 2,
     explanation:
-      'Direct burial cables must be installed at a minimum depth of 600mm, with 750mm required under driveways and areas subject to vehicle traffic.',
+      'A minimum of about 600 mm is used in open ground, increasing to around 750 mm under driveways and other areas subject to vehicle traffic.',
   },
   {
     id: 5,
     question:
-      'Which material consideration is most critical for outdoor EV charging equipment longevity?',
+      'Which material property is most critical for the longevity of outdoor EV charging equipment?',
     options: [
-      'Cost effectiveness',
-      'Aesthetic appearance',
-      'UV resistance',
-      'Electrical conductivity',
+      'Its overall cost effectiveness',
+      'UV (ultraviolet) resistance',
+      'Its aesthetic appearance',
+      'Its electrical conductivity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'UV resistance is critical as UV radiation degrades plastic components, cable sheaths, and protective coatings, leading to safety risks and premature equipment failure.',
+      'UV resistance is critical because sunlight degrades plastics, cable sheaths and coatings over time, leading to cracking, exposed conductors and premature failure.',
   },
 ];
 

@@ -40,9 +40,9 @@ const checks = [
       'You are pulling 6 × 2.5 mm² T&E through 10 m of 25 mm PVC conduit with 3 × 90° bends. The cable jams partway through the second bend. Best response:',
     options: [
       'Stop. Reverse the pull (back the cable out), check for blockages, add more lubricant, consider adding a pulling box at the worst bend, then re-attempt.',
-      'The storage container must be within a secondary containment system (bund) capable of holding 110% of the container\\\\\\\\\\\\\\\'s capacity',
-      'That all persons and loose materials have been removed from the platform, and the tower height does not exceed the safe height-to-base ratio',
-      'BSR (always); residents (rights under BSA 2022); contractors working on the building (so they can integrate their work safely); fire and rescue service (RRFSO 2005 powers).',
+      'Apply maximum force on the rope to drive the bundle through the jam in one strong pull.',
+      'Cut the conduit open at the bend, free the cable, then sleeve the cut with tape.',
+      'Strip one cable out of the bundle and pull the remaining five through the jam first.',
     ],
     correctIndex: 0,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       'You need to pull a 6 mm² T&E onto a tray run of ~30 m. The right method to attach the cable to the pulling rope is:',
     options: [
-      'A platform-independent, secure, standard interface for data exchange between automation systems, MES, and enterprise IT systems',
-      'Mechanically protected (capping/conduit), OR enclosed in earthed metallic covering, OR provided with 30mA RCD additional protection',
-      'The defect must be recorded in the report and the machine must be taken out of service immediately, as a cracked boom weld is a critical structural defect that could lead to catastrophic failure',
-      'Use a pulling grip ("Chinese finger trap") that grips the cable&rsquo;s OUTER SHEATH evenly along its length, distributing the pull force without stressing the conductor.',
+      'Strip back the outer sheath and tie the pulling rope directly around the bare conductors.',
+      'Crimp a ring lug onto the stripped conductor and clip the pulling rope to the lug.',
+      'Wrap several turns of insulation tape around the cable end and tie the rope to the tape.',
+      'Use a pulling grip ("Chinese finger trap") that grips the cable&rsquo;s outer sheath, distributing the force without stressing the conductor.',
     ],
     correctIndex: 3,
     explanation:
@@ -67,10 +67,10 @@ const checks = [
     question:
       'You are about to pull SWA cable through a route with one tight bend that does not respect the cable&rsquo;s 8× OD minimum bend radius. The right action is:',
     options: [
-      'By verifying that they have the skills, knowledge, training, experience, and organisational capability to carry out the work safely',
-      'Add a draw box at the tight bend so the pull is split into two segments and the cable can be re-routed in two straight pulls; OR re-route the cable to avoid the tight bend entirely.',
-      'An Insulated-Gate Bipolar Transistor — used in industrial inverters, EV chargers and VFDs to switch hundreds of volts at hundreds of amps.',
-      'Segregate WEEE from general waste, store in suitable conditions, transfer only to authorised facilities under a Waste Transfer Note, and keep records for at least 2 years',
+      'Pull the cable slowly and steadily through the tight bend, on the basis that speed causes the damage.',
+      'Add a draw box at the tight bend so the pull splits into two straight segments, or re-route to avoid it.',
+      'Apply extra lubricant at the bend so the cable slides round the tighter radius without any harm.',
+      'Warm the cable with a hot-air gun so the sheath flexes more easily around the tight bend.',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'Maximum pulling tension for stranded copper conductors using a stocking grip (Chinese-finger trap) is approximately:',
     options: [
-      'Take their concern seriously as a potential warning sign, ask directly if they are thinking of suicide, encourage them to tell a trusted person or professional, and consider means restriction by suggesting they give excess medication to someone for safekeeping',
-      'Approximately 50 N/mm² (≈ 5 kg per mm² of conductor CSA) per the published manufacturer / IET Electrical Installation Design Guide figure when pulling via a stocking grip on the cable sheath. Pulling on the conductor itself (rather than via a grip) drops this to ~30 N/mm². Many sites use a conservative 1.5-2 kg/mm² no-thinking-required field rule.',
-      'Three tests, ALL of which must be satisfied: (a) it is unreasonable in all the circumstances for the conductor to be dead, AND (b) it is reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken to prevent injury. All three — not any one. Most fault diagnosis live working passes test (a) (you need voltage to measure) but tests (b) and (c) are where most risk-assessment failures sit.',
-      'Stop, locate the SDS for both products (manufacturer website, the firm\\\\\\\\\\\\\\\'s COSHH register, or in the product packaging), read at least Section 2 (hazards), Section 4 (first aid) and Section 8 (exposure controls / PPE). Confirm you have the right PPE for both products. Only then start. COSHH 2002 Reg 6 requires the assessment to happen BEFORE exposure, not after.',
+      'Approximately 200 N/mm² (≈ 20 kg per mm² of conductor CSA), matching the conductor short-circuit rating.',
+      'Approximately 50 N/mm² (≈ 5 kg per mm² of conductor CSA) for copper pulled via a stocking grip on the sheath.',
+      'Approximately 5 N/mm² (≈ 0.5 kg per mm² of conductor CSA), keeping well clear of any conductor strain.',
+      'There is no defined limit — copper conductors withstand any pulling force without lasting damage.',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +98,10 @@ const quizQuestions = [
     question:
       'Cable pulling lubricant should be:',
     options: [
-      'Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals',
-      'Plan the apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s involvement to maximise learning, match the tasks to NVQ units, and coordinate with the college for theory support',
-      'A purpose-formulated cable-pulling lubricant — wax-free for plastic conduit (some lubes attack PVC), and PVC-compatible. Polywater is a common brand.',
-      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
+      'WD-40, sprayed liberally into the conduit immediately before the pull.',
+      'Washing-up liquid diluted with water, on the basis that it is cheap and readily available.',
+      'A purpose-formulated cable-pulling lubricant — wax-free and PVC-compatible, such as Polywater.',
+      'Engine oil, on the basis that it stays slick for the whole duration of a long pull.',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     question:
       'Long-pull tactics — for a pull longer than ~30 m or with multiple bends:',
     options: [
-      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
-      'Insufficient maintenance resources, poor planning, or too many reactive tasks consuming planned maintenance time',
-      'Work with asbestos that does NOT need a licence — the basic precautions and which task sheets (a1–a40) cover specific jobs.',
-      'Use intermediate pulling boxes / draw boxes every ~30 m or at any complex set of bends; pull cable into one box, then start the next pull from that box.',
+      'Pull the entire length in one operation but put two people on the rope for the extra force.',
+      'Increase the conduit size by one diameter for the whole run to reduce the overall friction.',
+      'Pull the cable in from both ends simultaneously to halve the effective pulling distance.',
+      'Use intermediate draw boxes every ~30 m or at complex bends, pulling into one box then starting the next pull from it.',
     ],
     correctAnswer: 3,
     explanation:
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'Cable dressing on a basket / tray run should be:',
     options: [
-      'Cables laid parallel to the run, segregated by service type (mains separate from data separate from fire alarm), spaced for thermal dissipation per Reg 522.6 grouping factors, secured periodically with metal cable ties.',
-      'The total generation capacity exceeds 3.68 kW per phase (16 A per phase), requiring formal application to the DNO for connection approval before installation',
-      'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
-      'Check the light curtain alignment, clean the lenses, inspect for environmental contaminants (dust, coolant mist), verify the safety relay status, check wiring connections, review the maintenance history for recurring issues, and ensure the safety distance calculation is still valid',
+      'Laid parallel, segregated by service type, spaced for thermal dissipation, and secured with metal ties.',
+      'Bundled together as tightly as possible with plastic ties to keep the run compact and neat.',
+      'Mains and data cables twisted together so they can share the same support points along the run.',
+      'Left loose on the tray without any ties so they can be repositioned freely at any later time.',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A draw rope is left in a conduit run after a cable is pulled because:',
     options: [
-      'Inspection records provide evidence of the scaffold\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s condition and whether it was properly maintained',
-      'It is the next person&rsquo;s draw rope — leaves a path through the conduit for future cable additions without re-roding.',
-      'Strategies that involve escaping from or denying the stressor rather than addressing it, such as substance use or withdrawal',
-      'National Grid Electricity Transmission (NGET) — the transmission owner. The independent operator is now the National Energy System Operator (NESO).',
+      'BS 7671 requires a spare draw rope to remain in every conduit run for earthing purposes.',
+      'It is the next person&rsquo;s draw rope — a ready path for future cable additions without re-roding.',
+      'The rope absorbs moisture and helps keep the inside of the conduit dry over time.',
+      'The rope holds the installed cables in position and stops them sliding back out of the conduit.',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 522.8.1 covers:',
     options: [
-      'It establishes BS 7671 as a means of demonstrating compliance with EAWR — meaning a court will treat following BS 7671 as strong evidence of having met the EAWR duty, and ignoring it as strong evidence of not having met it. BS 7671 itself remains non-statutory.',
-      'The amount you pay towards each claim before the insurer pays. Higher excess = lower premium and vice versa. Some policies have separate excesses for different claim types (e.g. theft excess higher than damage excess).',
-      'Wiring system mechanical stress — selection and erection to avoid damage to the sheath or insulation of cables and their terminations during installation, use or maintenance. Lubricants that damage the cable are not permitted.',
-      'Heat-pump-ready electrical infrastructure (typically a 16-32 A radial spare way), EV charging provision (Approved Document S), PV and battery enabling (capped cables, suitably sized supply), and zero gas connections from 2025 in many new builds.',
+      'Earth fault loop impedance limits for each type of protective device on the circuit.',
+      'The minimum insulation resistance values to be achieved on a completed circuit.',
+      'Wiring-system mechanical stress — erection to avoid damage to sheath, insulation and terminations.',
+      'The maximum number of conductors permitted in a single screw terminal connection.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     question:
       'A "pulling eye" is:',
     options: [
-      'Washing facilities must include a supply of hot and cold (or warm) running water, soap or other suitable means of cleaning, and towels or other suitable means of drying',
-      'Frequency starts to dip slightly. NESO automatically calls on reserve generation (gas peakers, pumped storage, interconnector imports) to balance demand. If unbalanced for too long, frequency excursions trigger automatic load shedding.',
-      'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
-      'A factory-fitted (or field-installed) loop / ring at the end of large cable that the pulling rope attaches to — distributing the pulling force across the cable&rsquo;s mechanical termination, never the conductor directly.',
+      'A small inspection hole in the side of a conduit box for checking the cable position.',
+      'The eyelet on a draw tape that the conduit rod clips into during roding.',
+      'A protective grommet fitted to the entry of a back-box to prevent sheath damage.',
+      'A factory-fitted loop at the end of a large cable that the pulling rope attaches to, loading the termination not the conductor.',
     ],
     correctAnswer: 3,
     explanation:
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'Conduit fill (spacing factor) limits how much cable you can pull through. Typical maximum fill for cable installation is:',
     options: [
-      'Approximately 40-45 % — allows the cables to slide past each other during the pull and provides some thermal dissipation room.',
-      'Allocate roughly 15 minutes for reading/planning, 60 minutes for calculations and working, 30 minutes for writing the report, and 15 minutes for checking',
-      'To the Main Earthing Terminal (MET) — directly, with a continuous run of suitably sized conductor.',
-      'The laptop must be password-protected, the data encrypted, and the electrician must be able to demonstrate what data they hold and why',
+      'Approximately 40-45 %, leaving room for the cables to slide past each other and dissipate heat.',
+      'Approximately 90 %, filling the conduit almost solidly to use the available space efficiently.',
+      'Approximately 10 %, on the basis that only one or two cables should ever share a single conduit.',
+      'There is no fill limit at all, provided the cables physically fit inside the conduit bore.',
     ],
     correctAnswer: 0,
     explanation:

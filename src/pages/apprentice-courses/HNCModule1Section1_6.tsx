@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of the Environmental Protection Act 1990?',
     options: [
-      'Because you must give type, location, and rectification - assessor needs detail',
+      'To set minimum wage rates for construction workers',
       'To control emissions, waste management, and environmental contamination',
-      'A defined point when changes become significantly more costly',
-      'Leads to confusion, duplication of work, or project delays',
+      'To regulate the design of electrical installations',
+      'To enforce energy efficiency standards in new buildings',
     ],
     correctAnswer: 1,
     explanation:
@@ -119,9 +119,9 @@ const quizQuestions = [
     id: 3,
     question: "What does the 'duty of care' under EPA 1990 require of contractors handling waste?",
     options: [
-      'Windowless rooms represent potential entrapment areas requiring illuminated escape routes',
-      'Indoor temperature, outdoor temperature, and historical data',
-      'Identifying the location of underground services using plans, a CAT scanner, and trial holes',
+      'Disposing of all waste through the general site skip',
+      'Recovering refrigerant gases before scrapping equipment',
+      'Notifying Building Control before any waste leaves site',
       'Ensuring waste is transferred only to authorised persons with correct documentation',
     ],
     correctAnswer: 3,
@@ -134,9 +134,9 @@ const quizQuestions = [
       'When installing a new circuit for an electric shower in a bathroom, what Building Control action is required?',
     options: [
       'Notification to Building Control or registration via competent person scheme',
-      'The code of practice for emergency lighting design, installation, and maintenance',
-      'To ensure illumination from both directions regardless of which end occupants enter from',
-      'Tags are supplementary warnings — they must be used with locks, not instead of them',
+      'No action is required as bathroom work is exempt from Part P',
+      'Only verbal notification to the property owner is needed',
+      'A waste transfer note must be issued before work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,9 +174,9 @@ const quizQuestions = [
     question:
       'Which certificate must be issued upon completion of notifiable electrical work in a dwelling?',
     options: [
-      'Keep them still, apply manual inline stabilisation to the head and neck, and call 999',
-      'To prove the fault has been eliminated and the installation is safe',
-      'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
+      'A Minor Electrical Installation Works Certificate only',
+      'A waste consignment note for the old wiring removed',
+      'An Energy Performance Certificate for the dwelling',
       'Electrical Installation Certificate AND Building Regulations Compliance Certificate',
     ],
     correctAnswer: 3,
@@ -188,9 +188,9 @@ const quizQuestions = [
     question: 'What type of waste would old fluorescent tubes containing mercury be classified as?',
     options: [
       'Hazardous waste requiring special disposal',
-      'Approved Authorised Treatment Facility',
-      'NICEIC, NAPIT, or equivalent electrical scheme',
-      'Waste Transfer Note or Consignment Note',
+      'General waste suitable for the site skip',
+      'Inert waste that can go to any landfill',
+      'Recyclable waste collected with scrap metal',
     ],
     correctAnswer: 0,
     explanation:
@@ -201,10 +201,10 @@ const quizQuestions = [
     question:
       'Which competent person scheme allows electricians to self-certify Part P notifiable work?',
     options: [
-      'Approved Authorised Treatment Facility',
+      'The Environment Agency waste carrier register',
       'NICEIC, NAPIT, or equivalent electrical scheme',
-      'Waste Transfer Note or Consignment Note',
-      'Energy efficiency and carbon emissions targets',
+      'The F-gas Category I-IV certification scheme',
+      'The Energy Performance Certificate register',
     ],
     correctAnswer: 1,
     explanation:
@@ -214,10 +214,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the maximum penalty for illegal dumping (fly-tipping) under the EPA 1990?',
     options: [
-      'Hazardous waste requiring special disposal',
-      'Approved Authorised Treatment Facility',
+      'A written warning from the local council',
+      'A fixed fine of £200 with no further action',
       'Unlimited fine and/or up to 5 years imprisonment',
-      'Waste Transfer Note or Consignment Note',
+      'Removal from the competent person scheme only',
     ],
     correctAnswer: 2,
     explanation:
@@ -227,9 +227,9 @@ const quizQuestions = [
     id: 11,
     question: 'What document must accompany waste when transferred to a licensed carrier?',
     options: [
-      'Hazardous waste requiring special disposal',
-      'Energy efficiency and carbon emissions targets',
-      'NICEIC, NAPIT, or equivalent electrical scheme',
+      'An Electrical Installation Certificate',
+      'A Building Regulations Compliance Certificate',
+      'An F-gas recovery record',
       'Waste Transfer Note or Consignment Note',
     ],
     correctAnswer: 3,
@@ -242,9 +242,9 @@ const quizQuestions = [
       'Under Part L Building Regulations, what must be considered when upgrading building services?',
     options: [
       'Energy efficiency and carbon emissions targets',
-      'Unlimited fine and/or up to 5 years imprisonment',
-      'NICEIC, NAPIT, or equivalent electrical scheme',
-      'Approved Authorised Treatment Facility',
+      'The duty of care for waste disposal',
+      'Maximum approved fly-tipping penalties',
+      'Refrigerant leak checking frequencies',
     ],
     correctAnswer: 0,
     explanation:

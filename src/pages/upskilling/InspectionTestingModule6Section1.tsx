@@ -23,24 +23,24 @@ const inlineChecks = [
     question:
       'You are designing a new lighting circuit using LED drivers. The site spark wants to fit Type AC RCBOs because they are cheaper and in stock. Is that compliant under A4:2026?',
     options: [
-      'Yes — lighting is a fixed load, so Type AC is fine.',
-      'No. LED drivers contain switch-mode supplies that produce DC components. Reg 531.3.3 fails the "no DC components" test — Type A is the minimum.',
-      'Yes, provided each driver is below 25 W.',
-      'Only if the lighting is on a separate distribution board.',
+      'No — LED drivers are switch-mode and produce DC, so Reg 531.3.3 rules out Type AC; Type A is the minimum.',
+      'Yes — lighting is a fixed load, so Type AC satisfies Reg 531.3.3 whatever the luminaire type.',
+      'Yes, provided each individual LED driver in the circuit is rated below 25 W output.',
+      'Only where the lighting is supplied from a distribution board separate to the socket circuits.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Reg 531.3.3 limits Type AC to fixed equipment where the load is known to contain no DC components. Electronic LED drivers fail that condition. Type A is the new floor for general-purpose work.',
+      'Reg 531.3.3 limits Type AC to fixed equipment where the load is known to contain no DC components. Electronic LED drivers contain switch-mode supplies that produce DC components, so they fail that condition. Type A is the new floor for general-purpose work.',
   },
   {
     id: 'mod6-s1-ev-charger',
     question:
       'A 7 kW domestic EV charge point\'s installation manual says "Type B RCD upstream OR Type A where the unit incorporates an integrated RDC-DD". The charger has no RDC-DD. The board has a 30 mA Type A RCBO upstream. EICR code?',
     options: [
-      'C3 — improvement recommended only.',
-      'No code — Type A is always acceptable for sockets.',
-      'C2 — potentially dangerous. The Type A cannot detect smooth DC residual current from the on-board charger; without an RDC-DD this fails Section 722.',
-      'C1 — danger present.',
+      'C3 — improvement recommended, as Type A is broadly suitable here.',
+      'No code — Type A is always acceptable for any socket or charge-point circuit.',
+      'C2 — the Type A cannot see the charger\'s smooth DC and there is no RDC-DD (Section 722).',
+      'C1 — danger present, immediate disconnection of the charge point required.',
     ],
     correctIndex: 2,
     explanation:
@@ -51,12 +51,12 @@ const inlineChecks = [
     question:
       'On a TT origin you have a 100 mA non-delayed Type A RCD upstream of 30 mA non-delayed Type A RCBOs. Does this give selectivity?',
     options: [
-      'Yes — the 100 mA is more than triple the 30 mA, so the upstream device will hold.',
-      'No. The current ratio alone is not enough — the upstream device must be time-delayed (Type S). A 100 mA non-delayed RCD can race the 30 mA downstream device on the same residual current and both can trip.',
-      'Yes, provided the upstream device is on a separate phase.',
-      'Only if the downstream device is Type B.',
+      'Yes — the 100 mA rating is over triple the 30 mA, so the upstream device holds while the other clears.',
+      'Yes, provided the upstream 100 mA device sits on a separate phase to the downstream RCBOs.',
+      'Only where each downstream device is a Type B RCBO rather than a Type A RCBO.',
+      'No — without a time delay (Type S), a non-delayed 100 mA RCD can race the 30 mA and both trip.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 536.4.1.4 requires both ingredients: a current ratio AND a time delay. Type S devices to BS EN 61008-1 / 61009-1 are time-delayed in their product standard. A non-delayed 100 mA over a non-delayed 30 mA gives no real selectivity.',
   },
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'Reg 531.3.3 (A4:2026) restricts the use of Type AC RCDs. What is the precise condition under which a Type AC RCD may still be used?',
     options: [
-      'On any final circuit, provided it is upstream of a 30 mA RCBO',
       'Only to serve fixed equipment, where it is known that the load current contains no DC components',
-      'Only on lighting circuits in domestic premises',
-      'Only on circuits rated above 32 A',
+      'On any final circuit, provided it is installed upstream of a 30 mA Type A RCBO',
+      'Only on lighting circuits within domestic premises, where the load is fixed',
+      'Only on final circuits with a rated current above 32 A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 531.3.3 in BS 7671:2018+A4:2026 limits Type AC to fixed equipment where it is known the load current contains no DC components. Socket-outlet circuits and any circuit feeding equipment that may contain power electronics fail this test, which is why Type AC has effectively been ruled out of new general-purpose work.',
   },
@@ -96,24 +96,24 @@ const quizQuestions = [
     question:
       'A new build domestic socket circuit has been wired to a Type AC RCBO. A subsequent inspection by another contractor flags this. Why?',
     options: [
-      'Type AC is fine on socket circuits, the inspector is wrong',
-      'Socket-outlets may serve portable equipment containing rectifiers, switch-mode supplies or VFD-style loads. Reg 531.3.3 forbids Type AC where the load current may contain DC components — Type A is the minimum for socket circuits',
-      'Type AC is only forbidden in commercial premises',
-      'Only Type B is permitted on socket circuits',
+      'Type AC is acceptable on socket circuits, so the inspector has flagged it in error',
+      'Type AC is only forbidden on socket circuits within commercial premises, not domestic ones',
+      'Only Type B RCDs are now permitted on any socket-outlet final circuit',
+      'Sockets can feed DC-producing loads, so Reg 531.3.3 forbids Type AC — Type A is the minimum',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Socket-outlets are general-purpose connection points; portable equipment (laptop chargers, LED drivers, induction-hob plug appliances) routinely produces residual currents with DC components that can blind a Type AC RCD. The product-standard route via BS 7288 even excludes Type AC SRCDs on socket-outlets for that reason. Type A is now the practical minimum.',
+      'Socket-outlets are general-purpose connection points; portable equipment (laptop chargers, LED drivers, induction-hob plug appliances) routinely produces residual currents with DC components that can blind a Type AC RCD. Reg 531.3.3 forbids Type AC where the load current may contain DC components, so Type A is the practical minimum. The product-standard route via BS 7288 even excludes Type AC SRCDs on socket-outlets for that reason.',
   },
   {
     id: 3,
     question:
       'The definition of Type B in BS 7671 (with reference to BS EN 62423) covers which residual-current waveforms?',
     options: [
-      'Only sinusoidal AC up to 50 Hz',
-      'AC and pulsating DC only',
-      'Type F capabilities plus residual sinusoidal AC up to 1 kHz, AC superimposed on smooth DC, pulsating DC superimposed on smooth DC, rectified DC from two or more phases, and smooth DC independent of polarity',
-      'Smooth DC only',
+      'Only residual sinusoidal AC up to 50 Hz, as Type AC does',
+      'Sinusoidal AC plus pulsating DC only, as Type A does',
+      'Type F waveforms plus AC to 1 kHz, AC and pulsating DC on smooth DC, multi-phase rectified DC, and smooth DC',
+      'Residual smooth DC only, independent of polarity',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Why does an EV charging point (mode 3, AC) typically need either a Type B RCD or a Type A RCD with an RDC-DD?',
     options: [
-      'Because the cable run is long',
-      'Because the in-vehicle rectifier produces smooth DC fault currents that a Type A would not detect; BS 7671 cross-references BS IEC 62955 for the RDC-DD as an alternative to a Type B',
-      'Because EV chargers run at high voltage',
-      'Because the car is portable equipment',
+      'The in-vehicle rectifier produces smooth DC faults a Type A misses; an RDC-DD to BS IEC 62955 is the alternative to Type B',
+      'The cable run to an EV charge point is typically long enough to need enhanced fault protection',
+      'EV charge points operate above the standard 230 V single-phase supply, beyond a Type A rating',
+      'The vehicle is portable equipment, so the circuit is treated as a socket-outlet needing Type B',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On-board EV rectifiers can present smooth DC residual currents during a fault. Type A is blinded by DC above ~6 mA. BS 7671 (Section 722) requires either a Type B RCD or, where a Type A is used, a residual DC detection device (RDC-DD) to BS IEC 62955 to handle the DC component. A bare Type A with no RDC-DD is non-compliant.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'A 3-phase VFD-fed motor circuit. Why is selecting a Type B RCD important and what would Type A miss?',
     options: [
-      'Type A is fine — VFDs only generate AC',
-      'A VFD produces residual currents that include rectified DC from multiple phases and high-frequency components beyond 50/60 Hz. Type A is not specified for those waveforms — it can be desensitised or fail to detect a fault. Type B is specified for residual rectified DC from two or more phases and AC up to 1 kHz',
-      'Only Type F is needed for VFDs',
-      'Type B is only needed on inverter-fed lifts',
+      'Type A is sufficient because a VFD only ever produces sinusoidal AC residual currents',
+      'A single-phase Type F device handles every fault waveform a three-phase VFD can produce',
+      'A VFD produces multi-phase rectified DC and high-frequency residuals Type A is not specified for, but Type B is',
+      'Type B is only required where the inverter feeds a lift rather than a general motor load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 3-phase VFD on the load side produces residual currents with smooth DC and rectified DC from multiple phases, plus higher-frequency components. The BS EN 62423 Type B definition explicitly covers these. Type A only covers sinusoidal AC and pulsating DC — neither matches the VFD residual-current spectrum.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'On the consumer-unit design for a new-build flat, an RCBO per final circuit is being proposed instead of a single 30 mA RCD covering the whole board. Which BS 7671 regulation explicitly supports this approach?',
     options: [
-      'Reg 411.3.4',
+      'Reg 411.3.4 — the requirement for additional protection by 30 mA RCD on domestic socket-outlets',
+      'Reg 421.1.7 — the requirement for AFDD protection on certain higher-risk final circuits',
+      'Reg 643.8 — the test requirement for the operation of residual current devices',
       'Reg 531.3.2 indent (b) — RCBOs for individual final circuits in residential premises to minimise unwanted tripping',
-      'Reg 421.1.7',
-      'Reg 643.8',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 531.3.2(b) calls out the use of RCBOs on individual final circuits in residential premises specifically to minimise unwanted tripping — the per-circuit approach also localises faults rather than dropping a whole side of the board on a single residual-current event.',
   },
@@ -194,26 +194,26 @@ const quizQuestions = [
     question:
       'A retrofit on a TT origin: 30 mA RCBO per circuit downstream of a 100 mA time-delayed Type S RCD at the origin. Why this arrangement?',
     options: [
-      'For aesthetic reasons',
-      'To provide selectivity (discrimination) — the 30 mA per-circuit RCBOs clear final-circuit faults; the 100 mA time-delayed Type S at the origin only operates for upstream / supply-side faults the per-circuit devices cannot see, and lets downstream devices clear first. Reg 536.4.1.4 covers selectivity',
-      'Because TT systems forbid 30 mA RCBOs',
-      'Because Type S is required on every TT circuit',
+      'For aesthetic reasons, to keep the consumer unit layout tidy and consistent across the board',
+      'Because a TT earthing system prohibits the use of 30 mA RCBOs on individual final circuits',
+      'To give selectivity — the time-delayed origin device holds while the 30 mA RCBOs clear first (Reg 536.4.1.4)',
+      'Because a Type S device is mandatory on every individual circuit of a TT installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'A TT origin needs RCD fault-protection for the supply-side conductors. A 100 mA time-delayed Type S device at the origin gives that, while letting the 30 mA per-circuit RCBOs clear final-circuit faults first. Reg 536.4.1.4 (and the RCD selectivity rules) make this the standard pattern.',
+      'A TT origin needs RCD fault-protection for the supply-side conductors. A 100 mA time-delayed Type S device at the origin gives that, while letting the 30 mA per-circuit RCBOs clear final-circuit faults first. The time delay means the origin device only operates for upstream faults the per-circuit devices cannot see. Reg 536.4.1.4 and the RCD selectivity rules make this the standard pattern.',
   },
   {
     id: 10,
     question:
       'Which of these is a defensible justification on an EICR comments column for keeping an existing Type AC RCBO in service on an unaltered pre-existing circuit?',
     options: [
-      'Type AC is always fine if it was compliant when installed',
-      'A documented assessment that the connected fixed load contains no DC components, that no socket-outlets are served by the circuit, and the circuit has not been altered — recorded against Reg 531.3.3 and the relevant amendment of BS 7671',
-      'The customer prefers it',
-      'Type AC is exempt from inspection',
+      'Type AC is always acceptable provided it complied with the standard in force when installed',
+      'The customer prefers to retain the existing device rather than pay for a replacement',
+      'Type AC devices are exempt from assessment during a periodic inspection of an installation',
+      'A documented assessment that the fixed load has no DC components, no sockets are served and nothing altered (Reg 531.3.3)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 amendments are not retrospective, but Reg 531.3.3 sets the conditions under which Type AC is acceptable: fixed equipment, no DC components in the load. An EICR comment that records the load assessment, the absence of socket-outlets and the unaltered status is the defensible position. Anything less is a code C3 at best.',
   },

@@ -23,56 +23,56 @@ const inlineChecks = [
     question:
       'Per BS 5839-1:2025 clause 21.2, what are the maximum centre-to-centre and detector-to-wall distances for a SMOKE detector mounted on a flat ceiling, and how do they compare to a HEAT detector?',
     options: [
-      'They are the same.',
-      'For a SMOKE detector: maximum 7.5 m centre-to-centre (giving an effective coverage radius of 7.5 m / √2 ≈ 5.3 m), maximum 5.3 m from any wall. For a HEAT detector the corresponding values are TIGHTER: maximum 5.3 m centre-to-centre and maximum 3.7 m from any wall (effective radius 3.7 m). The reason the heat numbers are tighter is that a heat detector responds only to localised temperature rise — heat dissipates more rapidly than smoke spreads, so the detector needs to be physically closer to the fire to respond in time.',
-      '5.3 m for both.',
-      '10 m for both.',
+      'Smoke and heat use identical spacing: 7.5 m centre-to-centre and 5.3 m to wall for both.',
+      'Smoke is 7.5 m c/c and 5.3 m to wall; heat is tighter at 5.3 m c/c and 3.7 m to wall.',
+      '5.3 m centre-to-centre and 3.7 m to wall for both smoke and heat detectors.',
+      '10 m centre-to-centre and 7 m to wall for both smoke and heat detectors.',
     ],
     correctIndex: 1,
     explanation:
-      'These spacings come from BS 5839-1:2025 clause 21.2 and are unchanged from earlier editions. The 7.5 m / 5.3 m smoke versus 5.3 m / 3.7 m heat differential is one of the load-bearing rules of detector siting. A heat detector spaced as a smoke detector will fail to respond in time to a real fire — the fire will be well established before the localised temperature rise reaches the device.',
+      'For a smoke detector: maximum 7.5 m centre-to-centre (effective radius ≈ 5.3 m) and 5.3 m from any wall. For a heat detector the values are tighter: 5.3 m centre-to-centre and 3.7 m from any wall. Heat numbers are tighter because a heat detector responds only to localised temperature rise — heat dissipates faster than smoke spreads, so it must be closer to the fire to respond in time. These come from clause 21.2 (unchanged from earlier editions); a heat detector spaced as a smoke detector will respond too late.',
   },
   {
     id: 'fam2-s2-element',
     question:
       'BS 5839-1:2025 clause 21.2.4 states that a smoke detector must have its sensitive element 25 mm to 600 mm below the ceiling, and a heat detector 25 mm to 150 mm. Why the lower-bound 25 mm, and why the tighter 150 mm upper bound for heat?',
     options: [
-      'Decoration.',
-      "The 25 mm LOWER bound exists because the layer of air immediately at the ceiling is a 'dead zone' for smoke and heat — buoyant smoke flows along the ceiling but is partially trapped in a static boundary layer, and a detector hard against the ceiling surface may not see the smoke layer until it has thickened significantly. The 25 mm offset puts the sensitive element below the boundary layer, in the active smoke-flow region. The 150 mm UPPER bound for heat exists because heat dissipates with distance and time — a heat detector 600 mm below the ceiling would be too far from the rising plume to respond in useful time. Smoke is more persistent in the descending layer, so the upper bound is more relaxed at 600 mm.",
-      'Decoration choice.',
-      'Manufacturing tolerance.',
+      'Decoration only — the offset is purely an aesthetic choice with no detection significance.',
+      'The 25 mm clears the ceiling boundary-layer dead zone; the 150 mm cap keeps heat detectors near the plume.',
+      'The offset is chosen to suit the decorator and the finished ceiling tile depth.',
+      'The offset reflects only the manufacturing tolerance of the detector base.',
     ],
     correctIndex: 1,
     explanation:
-      'The 25 mm lower bound is sometimes overlooked at installation when detectors are recessed flush into ceilings — the sensitive element ends up at 0-15 mm below the ceiling surface, in the dead zone. Always check at commissioning that the element offset is within the 25-600 mm (smoke) / 25-150 mm (heat) envelope.',
+      'The 25 mm lower bound exists because the air immediately at the ceiling is a static boundary-layer "dead zone" — a detector hard against the surface may not see the smoke layer until it has thickened. The 25 mm offset puts the element in the active flow region. The 150 mm upper bound for heat exists because heat dissipates with distance and time; a heat detector 600 mm down would be too far from the plume to respond usefully. Smoke is more persistent in the descending layer, so its upper bound is relaxed to 600 mm. Recessed flush installs often land at 0-15 mm — check the offset at commissioning.',
   },
   {
     id: 'fam2-s2-void',
     question:
       'A 1.4 m deep ceiling void contains cabling and is being protected with smoke detectors. Per the BS 5839-1:2025 clause 21.2.7 figure for voids, where should the detector be mounted?',
     options: [
-      'On the lower (room-side) ceiling.',
-      'Within the TOP 10 percent of the void depth. The 2025 figure for detectors in voids gives three cases: (a) void up to 1.25 m deep — detector top 125 mm; (b) void more than 1.25 m and up to 1.5 m — detector in TOP 10 PERCENT of the void; (c) void more than 1.5 m — treat as a normal-height room and apply standard ceiling detector rules. For the 1.4 m case here, rule (b) applies: the detector should be within the top 10 percent of the void = within the top 140 mm. Mounting it at the void floor (the lower ceiling) leaves the detector below the smoke layer that will accumulate at the void apex.',
-      'In the centre of the void.',
-      'On the room-side ceiling, not in the void.',
+      'On the lower (room-side) ceiling, below the void smoke layer.',
+      'Within the top 10 percent of the void depth — i.e. the top 140 mm.',
+      'In the vertical centre of the void, midway between the two ceilings.',
+      'On the room-side ceiling only, with no detection inside the void.',
     ],
     correctIndex: 1,
     explanation:
-      'The clause 21.2.7 void figure is NEW in BS 5839-1:2025 — replacing earlier text-only guidance that frequently caused on-site interpretation errors. The figure gives three clear depth bands and the corresponding detector position. Print the figure and bring it to site for any void detection design.',
+      'The 2025 void figure (clause 21.2.7) gives three cases: void up to 1.25 m — detector in the top 125 mm; void more than 1.25 m and up to 1.5 m — detector in the top 10 percent; void more than 1.5 m — treat as a normal-height room. The 1.4 m case falls in band (b), so the detector should sit within the top 10 percent = the top 140 mm. Mounting it at the void floor leaves the detector below the smoke layer that accumulates at the apex. The figure is new in 2025, replacing text-only guidance that caused on-site errors.',
   },
   {
     id: 'fam2-s2-obstacle',
     question:
       'BS 5839-1:2025 clause 21.2.12 introduces a "treat as a wall" rule for ceiling-mounted obstructions. What are the two conditions that must BOTH be met before an obstruction (e.g. ducting) is treated as a wall for spacing purposes?',
     options: [
-      'Only one condition.',
-      'BOTH conditions in clause 21.2.12: (a) the gap between the TOP of the obstruction and the ceiling above is less than 300 mm; AND (b) the obstruction is deeper than 10 percent of the overall ceiling height. Both must hold. If either fails — gap above the obstruction is 300 mm or more, OR the obstruction is shallower than 10 percent of ceiling height — the obstruction is NOT treated as a wall. Smoke and heat will flow over and around it without significant obstruction; the detector may be sited as if the obstruction were not there. This rule is one of the more useful 2025 clarifications because the previous edition left "obstacle" undefined.',
-      'Only the depth.',
-      'Only the gap.',
+      'Only a single condition has to be met before the obstruction counts as a wall.',
+      'Both: the gap above is under 300 mm AND the obstruction is deeper than 10 percent of ceiling height.',
+      'Only the depth condition — the obstruction must exceed 10 percent of ceiling height.',
+      'Only the gap condition — the clearance above must be less than 300 mm.',
     ],
     correctIndex: 1,
     explanation:
-      'Clause 21.2.12 is a 2025 clarification of previously informal guidance. The two-test (gap AND depth) makes the rule unambiguous. A 200 mm-deep beam with 350 mm clearance to the ceiling is NOT a wall (gap fails). A 200 mm-deep beam with 250 mm clearance to the ceiling is also NOT a wall in a 4 m ceiling (10 percent depth fails: 200 mm < 400 mm). Both tests must pass.',
+      'Clause 21.2.12 requires both: (a) the gap between the top of the obstruction and the ceiling above is less than 300 mm; AND (b) the obstruction is deeper than 10 percent of the overall ceiling height. If either fails, the obstruction is not treated as a wall — smoke and heat flow over and around it, and the detector is sited as if it were not there. A 200 mm beam with 350 mm clearance is not a wall (gap fails); a 200 mm beam with 250 mm clearance in a 4 m ceiling is also not a wall (200 mm < 400 mm depth test). This clarifies guidance the previous edition left undefined.',
   },
 ];
 
@@ -82,110 +82,110 @@ const quizQuestions = [
     question:
       'What is the maximum CENTRE-TO-CENTRE spacing for a smoke detector on a flat ceiling per BS 5839-1:2025 clause 21.2?',
     options: [
-      '5.3 m.',
-      '7.5 m. The corresponding maximum distance from any wall is 5.3 m. Together these define a 7.5 m × 7.5 m detection grid with each detector centred in a 7.5 m × 7.5 m area; effective coverage radius is 7.5 / √2 = approximately 5.3 m. The numbers are calibrated against expected smoke spread for typical UK ceiling heights and combustion signatures. They are NOT changed in the 2025 edition; they remain the load-bearing flat-ceiling spacing rule.',
-      '10.5 m.',
-      '12 m.',
+      '7.5 m centre-to-centre, 5.3 m to any wall.',
+      '5.3 m centre-to-centre, 3.7 m to any wall.',
+      '10.5 m centre-to-centre, 7.5 m to any wall.',
+      '12 m centre-to-centre, 8 m to any wall.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Smoke detector flat-ceiling rule: 7.5 m centre-to-centre, 5.3 m to wall. Heat detector rule: 5.3 m centre-to-centre, 3.7 m to wall. The two rule sets are different because heat spreads less reliably than smoke; a heat detector must be closer to the fire to respond.',
+      'Smoke detector flat-ceiling rule: 7.5 m centre-to-centre, 5.3 m to wall — the standard smoke-detection grid, unchanged in the 2025 edition. Heat detector rule is tighter at 5.3 m centre-to-centre, 3.7 m to wall, because heat spreads less reliably than smoke; a heat detector must be closer to the fire to respond.',
   },
   {
     id: 2,
     question:
       'Per BS 5839-1:2025 clause 21.2.4, what is the permitted RANGE of distance between the sensitive element and the ceiling for a SMOKE detector?',
     options: [
-      '0 to 25 mm.',
-      '25 mm to 600 mm. The 25 mm minimum keeps the element out of the static boundary-layer "dead zone" at the ceiling surface where smoke flow can be impeded; the 600 mm maximum keeps the element within the active smoke-spread region descending from the ceiling. For HEAT detectors the corresponding range is tighter (25 mm to 150 mm) because heat dissipates with distance — a heat detector hung too far below the ceiling will not respond fast enough.',
-      '0 to 150 mm.',
-      '600 mm to 1 m.',
+      '0 to 25 mm below the ceiling.',
+      '0 to 150 mm below the ceiling.',
+      '25 mm to 600 mm below the ceiling.',
+      '600 mm to 1 m below the ceiling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'Element position is one of the most commonly missed details at installation. Recessed flush-fitting detectors can put the element at less than 25 mm offset; pendant-mounted heat detectors can exceed 150 mm. Both are non-compliant with clause 21.2.4. Verify at commissioning.',
+      'For a smoke detector the element sits 25-600 mm below the ceiling: the 25 mm minimum clears the ceiling boundary-layer dead zone, the 600 mm maximum keeps the element in the active smoke region (heat detectors are tighter, 25-150 mm). Element position is one of the most commonly missed details at installation. Recessed flush-fitting detectors can put the element at less than 25 mm offset; pendant-mounted heat detectors can exceed 150 mm. Both are non-compliant with clause 21.2.4. Verify at commissioning.',
   },
   {
     id: 3,
     question:
       'A multi-sensor detector is configured to operate on heat AND smoke (both must trigger). What ceiling-height limit applies?',
     options: [
-      'Smoke detector limit.',
-      'The HEAT-detector limit, per BS 5839-1:2025 clause 17 (Table 3). Where a multi-sensor is configured in AND-logic, the slowest-responding element controls the device behaviour, so the ceiling height limit is the more conservative heat value (typically 7.5 m or 9 m depending on class). The smoke-detector limit (typically 10.5 m for class A1R smoke) does NOT apply when the smoke element is gated by the heat element. Designers using AND-logic in tall spaces must work the height limit explicitly.',
-      'Multi-sensor has no limit.',
-      'Beam-detector limit.',
+      'The smoke-detector ceiling-height limit (the faster element governs).',
+      'The beam-detector ceiling-height limit (the largest coverage governs).',
+      'No ceiling-height limit applies to AND-logic multi-sensors.',
+      'The heat-detector limit (clause 17 / Table 3).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Clause 17 / Table 3 was clarified in the 2025 edition specifically to address this multi-sensor question. AND-logic gives strong false-alarm immunity but constrains ceiling height. The designer must record the operating mode (clause 20.11) so commissioning can verify the height assumption.',
+      'In AND-logic both elements must trigger, so the slowest element governs and the more conservative heat-detector ceiling-height value applies (clause 17 / Table 3). Clause 17 / Table 3 was clarified in the 2025 edition specifically to address this multi-sensor question. AND-logic gives strong false-alarm immunity but constrains ceiling height. The designer must record the operating mode (clause 20.11) so commissioning can verify the height assumption.',
   },
   {
     id: 4,
     question:
       'In BS 5839-1:2025, "closely spaced" structural beams are now defined as beams approximately how far apart, centre-to-centre?',
     options: [
-      '3 m or more.',
-      '1 m or less. This is a NEW definition introduced in the 2025 revision (clause 21 commentary). Previous editions referred to "closely spaced beams" without defining the threshold, leading to inconsistent on-site interpretation. The 2025 figure of approximately 1 m centre-to-centre defines the cellular-ceiling regime, where each cell may be treated as a small enclosed area for detection purposes rather than the beams being treated as obstructions on a flat ceiling. The clarification removes a long-standing ambiguity.',
-      '5 m apart.',
-      '500 mm apart.',
+      'Approximately 3 m or more apart.',
+      'Approximately 1 m or less apart.',
+      'Approximately 5 m or more apart.',
+      'Approximately 500 mm or less apart.',
     ],
     correctAnswer: 1,
     explanation:
-      'The 1 m closely-spaced threshold drives whether you treat the ceiling as a single flat ceiling with obstructions (beams >1 m apart) or as a series of small cells (beams ≤1 m apart). The two regimes have different detection rules. The 2025 clarification finally pins the threshold down.',
+      'Beams approximately 1 m or less apart are now defined as "closely spaced" — a new 2025 definition setting the cellular-ceiling threshold and removing a long-standing ambiguity. The threshold drives whether you treat the ceiling as a single flat ceiling with obstructions (beams >1 m apart) or as a series of small cells (beams ≤1 m apart). The two regimes have different detection rules.',
   },
   {
     id: 5,
     question:
       'Per BS 5839-1:2025 clause 21.2 — for STRUCTURAL beams or other isolated ceiling attachments not exceeding 250 mm depth — what is the spacing rule for nearby detectors?',
     options: [
-      'No rule.',
-      'Detectors should not be mounted closer to the obstruction than TWICE the depth of the obstruction. For a 200 mm beam, no detector within 400 mm. For a 250 mm beam, no detector within 500 mm. The rationale: smoke and heat flow rounds an obstruction in a turbulent pattern that creates a localised "shadow" zone immediately downstream of the obstacle; detectors in that shadow have impaired response. The 2× depth rule keeps the detector clear of the shadow. NOTE: where a beam is ≤ 250 mm AND there is more than 300 mm gap above it to the ceiling, the new clause 21.2.12 note clarifies the beam is not treated as an obstacle at all.',
-      '1 m clear.',
-      'Same as wall spacing.',
+      'No spacing rule applies to obstructions of 250 mm depth or less.',
+      'No detector closer to the obstruction than twice its depth (400 mm for a 200 mm beam).',
+      'No detector within a fixed 1 m clearance of any such obstruction.',
+      'The same 5.3 m / 3.7 m wall-distance rule applies to the obstruction.',
     ],
     correctAnswer: 1,
     explanation:
-      'The 2× depth rule is unchanged from earlier editions; the 2025 addition is the clarification that beams with adequate clearance above (>300 mm) and modest depth are not treated as obstacles at all — formalising what good designers had been doing informally.',
+      'Detectors should be no closer to the obstruction than twice its depth: a 200 mm beam → no detector within 400 mm; a 250 mm beam → 500 mm. Smoke and heat flow round an obstruction turbulently, creating a localised "shadow" downstream where detector response is impaired; the 2× depth rule keeps the detector clear. The 2025 addition (clause 21.2.12 note) clarifies that a beam ≤ 250 mm with more than 300 mm gap above is not treated as an obstacle at all — formalising what good designers already did.',
   },
   {
     id: 6,
     question:
       'Per BS 5839-1:2025 (the new figure for detectors in voids), where do you mount a detector in a 0.8 m deep ceiling void?',
     options: [
-      'In the middle.',
-      'Within the TOP 125 mm of the void (i.e. close to the structural ceiling above the void). This is rule (a) in the new clause 21.2.7 figure: void up to and including 1.25 m deep — detector top 125 mm. The remaining void depth between 125 mm and the lower ceiling is irrelevant for detector siting; the detector watches the smoke that will collect at the apex of the void. The lower ceiling (which forms the room ceiling on its other side) requires its own room-side detection if the void is being protected as a separate compartment.',
-      'On the lower ceiling.',
-      'Anywhere in the void.',
+      'In the middle of the void depth, between both ceilings.',
+      'On the lower (room-side) ceiling of the void.',
+      'Anywhere within the void depth is acceptable.',
+      'Within the top 125 mm of the void, at the structural ceiling.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'The new void figure handles three depth bands: ≤1.25 m → top 125 mm; >1.25 m and ≤1.5 m → top 10 percent; >1.5 m → treat as normal-height room. The figure replaces previous text-only guidance and removes a frequent on-site error.',
+      'For a void up to 1.25 m deep the detector sits within the top 125 mm, close to the structural ceiling where smoke collects at the apex (rule (a)). The new void figure handles three depth bands: ≤1.25 m → top 125 mm; >1.25 m and ≤1.5 m → top 10 percent; >1.5 m → treat as normal-height room. The figure replaces previous text-only guidance and removes a frequent on-site error.',
   },
   {
     id: 7,
     question:
       'Why are heat detectors no longer permitted in sleeping rooms for new L1, L2 or L3 systems under BS 5839-1:2025?',
     options: [
-      'Cost.',
-      'Because typical sleeping-room fires are smouldering, low-temperature events. A discarded cigarette igniting bedding, an overheating phone charger, a fire in soft furnishings — these produce LARGE quantities of toxic smoke at temperatures FAR below the response point of a heat detector. The smoke kills the sleeping occupant well before the heat threshold (typically 54-65 °C for the lowest static class) is reached. Coroner inquest data and FRS fatality statistics support the change. New L1, L2 and L3 work must use SMOKE or MULTI-SENSOR detection in sleeping rooms; existing systems are grandfathered until new work occurs.',
-      'Heat detectors are unreliable.',
-      'They cost too much.',
+      'Because heat detectors cost more per device than smoke detectors.',
+      'Because sleeping-room fires are smouldering, low-temperature events that kill by smoke first.',
+      'Because heat detectors are inherently unreliable in sleeping accommodation.',
+      'Because the tighter heat-detector spacing makes them uneconomic in bedrooms.',
     ],
     correctAnswer: 1,
     explanation:
-      'The change is one of the most consequential of the 2025 edition. Sleeping fires are characteristically slow and smoke-dominated; the heat threshold is reached too late. Specify smoke or multi-sensor for new bedrooms, hotel rooms, dorms, halls of residence, care home rooms, hospital wards.',
+      'Typical sleeping-room fires — a discarded cigarette in bedding, an overheating charger, a soft-furnishing fire — produce large quantities of toxic smoke at temperatures far below the heat-detector response point (typically 54-65 °C for the lowest static class). The smoke kills the sleeping occupant well before the heat threshold is reached; coroner inquest data and FRS fatality statistics support the change. New L1, L2 and L3 work must use smoke or multi-sensor detection in sleeping rooms; existing systems are grandfathered until new work occurs.',
   },
   {
     id: 8,
     question:
       'A horizontal ceiling has a series of small cells (closely spaced beams ≤ 1 m centre-to-centre). What is the detector siting rule?',
     options: [
-      'Treat as a flat ceiling.',
-      'Treat each cell — or a group of cells — as the detection area, NOT the overall ceiling. With closely spaced beams, smoke and heat are constrained within each cell and do not flow freely along the overall ceiling. Detectors are sited based on the cellular geometry. The 2025 edition (clause 21.2 commentary) clarifies the closely-spaced threshold (≈ 1 m) and points to the appropriate detection-area rules. For sparse beams (>1 m apart) the overall ceiling is treated as flat, with the beams as obstructions assessed under clauses 21.2.12 / 21.2.14.',
-      'Treat as a high ceiling.',
-      'Treat as a void.',
+      'Treat each cell (or group of cells) as the detection area, because smoke is constrained within each cell.',
+      'Treat the whole ceiling as one flat ceiling and apply the standard 7.5 m smoke grid across it.',
+      'Treat the ceiling as a high-ceiling space and apply the Table 3 height-limit rules.',
+      'Treat each cell as if it were a separate ceiling void with apex detection.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cellular ceilings are common in older industrial buildings and in some modern coffered architectural ceilings. The 1 m threshold (new in 2025) settles the long-standing question of when to treat each cell separately versus when to treat the whole ceiling as flat with obstructions.',
   },
@@ -194,28 +194,28 @@ const quizQuestions = [
     question:
       'A 4 m high room has a 200 mm deep ducting strip running across the ceiling, with a 350 mm gap between the top of the duct and the ceiling above. Is the ducting an OBSTACLE under clause 21.2.12?',
     options: [
-      'Yes.',
-      'NO. Clause 21.2.12 sets two tests that BOTH must pass for the duct to be treated as a wall: (a) gap above the obstruction LESS than 300 mm — here the gap is 350 mm, so test (a) FAILS. Even if test (b) (depth ≥ 10 percent of ceiling height = 400 mm) had passed, the obstruction would still NOT be treated as a wall because both tests must pass. The ducting is therefore not an obstacle for spacing purposes; smoke and heat will flow over and around it. Detectors may be sited as if the duct were not there. NOTE: this does not exempt the area DIRECTLY UNDER the duct from any localised shadow consideration if the duct is wide.',
-      'Only if it is metal.',
-      'Only on the underside.',
+      'Yes — both depth and gap satisfy the obstacle tests.',
+      'Only if the duct is made of metal rather than plastic.',
+      'Only the underside surface is treated as an obstacle.',
+      'No — the 350 mm gap fails the gap test, so it is not an obstacle.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      "Clause 21.2.12's two-test rule is one of the more useful 2025 clarifications. Many on-site interpretation arguments arose from the 2017 edition's vague 'where there is sufficient gap above the obstruction' phrasing; the 2025 numbers (300 mm gap AND 10 percent depth) make the rule auditable.",
+      "Clause 21.2.12 needs BOTH a gap < 300 mm AND depth ≥ 10 percent of ceiling height; the 350 mm gap fails the first test, so the duct is not treated as an obstacle. This two-test rule is one of the more useful 2025 clarifications. Many on-site interpretation arguments arose from the 2017 edition's vague 'where there is sufficient gap above the obstruction' phrasing; the 2025 numbers (300 mm gap AND 10 percent depth) make the rule auditable.",
   },
   {
     id: 10,
     question:
       'Approximately how many smoke detectors does it take to cover a 30 m × 30 m office floor (flat ceiling, no obstructions)?',
     options: [
-      '4.',
-      '16. With smoke spacing of 7.5 m centre-to-centre and 5.3 m to wall, a 30 m × 30 m square accommodates a 4 × 4 grid of detectors. Each detector covers a 7.5 m × 7.5 m area = 56.25 m². Sixteen detectors cover 900 m². The first row centre is approximately 5.3 m from one wall and the last row centre is approximately 5.3 m from the opposite wall, leaving 30 - 10.6 = 19.4 m for the three centre-to-centre gaps of 7.5 m each = 22.5 m — not quite enough, so the spacing tightens slightly to fit. A 4 × 4 grid is the minimum valid configuration; some designs add a 5 × 5 grid to allow drop-out tolerance. The exact answer depends on detector class (smoke vs heat vs multi-sensor mode) and any obstructions.',
-      '8.',
-      '32.',
+      '4 detectors, on a 2 × 2 grid.',
+      '8 detectors, on a 2 × 4 grid.',
+      '16 detectors, on a 4 × 4 grid.',
+      '32 detectors, on a 4 × 8 grid.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      'The "30 × 30 = 16 detectors" rule of thumb is a useful sanity check. For heat detection on the same floor (5.3 m centre-to-centre, 3.7 m to wall), the corresponding number is approximately 36 detectors — more than double, reflecting the tighter spacing rules for heat.',
+      'At 7.5 m spacing and 5.3 m to wall, a 30 m × 30 m floor needs a 4 × 4 grid = 16 detectors; the usable 19.4 m span between wall offsets fits three 7.5 m gaps per row. The "30 × 30 = 16 detectors" rule of thumb is a useful sanity check. For heat detection on the same floor (5.3 m centre-to-centre, 3.7 m to wall), the corresponding number is approximately 36 detectors — more than double, reflecting the tighter spacing rules for heat.',
   },
 ];
 

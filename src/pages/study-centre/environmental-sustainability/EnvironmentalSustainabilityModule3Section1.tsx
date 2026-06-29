@@ -24,12 +24,12 @@ const quickCheckQuestions = [
     question:
       'Which energy source typically accounts for the largest share of energy consumption on a UK construction site?',
     options: [
-      'Grid electricity for lighting',
       'Diesel fuel for generators, plant, and vehicles',
+      'Grid electricity for lighting',
       'Natural gas for site office heating',
       'Renewable solar energy from temporary panels',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Diesel fuel for generators, plant, and vehicles typically accounts for 60-70% of total energy consumption on UK construction sites. This includes mobile plant such as excavators and telehandlers, fixed diesel generators providing temporary power, and site delivery vehicles. Reducing diesel dependency is therefore the single most impactful energy-saving measure available on most sites.',
   },
@@ -39,11 +39,11 @@ const quickCheckQuestions = [
       'What is the most effective way to reduce energy consumption in temporary site accommodation?',
     options: [
       'Running the heating continuously to maintain a steady temperature',
-      'Using fully insulated cabins with LED lighting, motion sensors, and timer controls',
       'Keeping all windows open to improve natural ventilation',
+      'Using fully insulated cabins with LED lighting, motion sensors, and timer controls',
       'Using portable fan heaters in every office and welfare unit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Fully insulated cabins with LED lighting, motion sensors, and timer controls dramatically reduce energy consumption in site accommodation. Modern eco-cabins can reduce energy use by up to 70% compared to standard uninsulated units. The combination of good insulation, efficient lighting, and automatic controls eliminates the largest sources of energy waste in temporary buildings.',
   },
@@ -95,8 +95,8 @@ const quizQuestions = [
     id: 1,
     question:
       'What percentage of total energy consumption on a typical UK construction site comes from diesel fuel?',
-    options: ['20-30%', '40-50%', '60-70%', '80-90%'],
-    correctAnswer: 2,
+    options: ['60-70%', '20-30%', '40-50%', '80-90%'],
+    correctAnswer: 0,
     explanation:
       'Diesel fuel typically accounts for 60-70% of total energy consumption on UK construction sites. This includes diesel for generators providing temporary electrical power, mobile plant such as excavators and cranes, and site delivery vehicles. The dominance of diesel makes it the primary target for energy reduction strategies on most construction projects.',
   },
@@ -120,11 +120,11 @@ const quizQuestions = [
       'What unit is commonly used to benchmark energy consumption on construction projects?',
     options: [
       'Litres of diesel per worker',
-      'kWh per square metre (kWh/m\u00B2) of gross floor area',
       'Tonnes of CO\u2082 per calendar month',
+      'kWh per square metre (kWh/m\u00B2) of gross floor area',
       'Megawatts per crane operating hour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'kWh per square metre (kWh/m\u00B2) of gross floor area is the standard benchmarking unit for construction site energy consumption. It normalises energy use against building size, allowing meaningful comparison between projects of different scales. Typical benchmarks for new-build projects range from 80-120 kWh/m\u00B2, though this varies by project type and complexity.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     options: [
       '20% compared to standard cabins',
       '40% compared to standard cabins',
-      '70% compared to standard cabins',
       '95% compared to standard cabins',
+      '70% compared to standard cabins',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Modern eco-cabins can reduce energy consumption by up to 70% compared to standard uninsulated site accommodation. The savings come from superior insulation reducing heating demand, LED lighting using 80% less energy than fluorescent tubes, motion sensors preventing lights being left on in unoccupied spaces, timer controls on heating systems, and solar panels supplementing grid or generator power.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     question:
       'What engine emission standard must modern off-road construction plant comply with in the UK?',
     options: [
-      'Euro 6 — the same standard as road vehicles',
       'Tier 4 Final / EU Stage V — specific to non-road mobile machinery',
+      'Euro 6 — the same standard as road vehicles',
       'BREEAM Outstanding — the highest sustainability rating',
       'BS 7671 18th Edition — the IET Wiring Regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Modern off-road construction plant must comply with Tier 4 Final (US standard) or EU Stage V emission standards for non-road mobile machinery (NRMM). These standards dramatically reduce particulate matter (PM) and nitrogen oxide (NOx) emissions compared to older engines. Many London boroughs and major clients now require all plant on site to meet Stage V as a minimum through NRMM Low Emission Zone requirements.',
   },
@@ -162,11 +162,11 @@ const quizQuestions = [
       'A diesel generator running at 25% load compared to one running at 75% load will typically:',
     options: [
       'Use the same amount of fuel per kWh of electricity produced',
-      'Use significantly less fuel because it is working less hard',
       'Waste up to 40% more fuel per kWh of electricity produced',
+      'Use significantly less fuel because it is working less hard',
       'Produce cleaner exhaust emissions due to lower combustion temperatures',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A diesel generator running at only 25% of its rated capacity wastes up to 40% more fuel per kWh of useful electricity generated compared to one running at 75% load. This is because the engine still consumes a base amount of fuel regardless of electrical output. Generator right-sizing — matching capacity to actual demand — is therefore critical for fuel efficiency and emissions reduction.',
   },
@@ -176,11 +176,11 @@ const quizQuestions = [
       'Which of the following is the most effective "good housekeeping" energy-saving measure on a construction site?',
     options: [
       'Painting all temporary buildings white to reflect sunlight',
-      'Switching off plant, equipment, and lighting when not in use',
       'Using the largest available generator to ensure power supply is never interrupted',
+      'Switching off plant, equipment, and lighting when not in use',
       'Running all equipment at maximum speed to complete tasks faster',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Switching off plant, equipment, and lighting when not in use is the single most effective good housekeeping measure for energy saving on construction sites. Studies show that plant and equipment idle time can account for 30-40% of operating hours on poorly managed sites. A disciplined switch-off culture, supported by awareness campaigns and energy champions, can reduce site energy consumption by 10-15% with zero capital cost.',
   },
@@ -191,10 +191,10 @@ const quizQuestions = [
     options: [
       'Wind micro-generation turbines mounted on tower cranes',
       'Hydrogen fuel cells powered by green hydrogen',
-      'Solar PV panels integrated with battery storage and hybrid generators',
       'Geothermal heat pumps installed beneath the site compound',
+      'Solar PV panels integrated with battery storage and hybrid generators',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Solar PV panels integrated with battery energy storage systems (BESS) and hybrid generators are the most commonly deployed renewable energy technology on UK construction sites today. Solar-hybrid systems combine solar panels, battery storage, and a small diesel generator — the solar panels charge the batteries during daylight hours, the batteries provide power during low-demand periods, and the generator only runs when demand exceeds stored capacity. This combination can reduce diesel consumption by 50-80% on suitable sites.',
   },

@@ -9,8 +9,8 @@ const quickCheckQuestions = [
   {
     id: 'evcharging-m6s5-check1',
     question: 'What is the minimum recommended duration for a comprehensive customer walkthrough?',
-    options: ['15 minutes', '30 minutes', '40 minutes', '60 minutes'],
-    correctIndex: 2,
+    options: ['40 minutes', '15 minutes', '30 minutes', '60 minutes'],
+    correctIndex: 0,
     explanation:
       'A comprehensive walkthrough should take 40 minutes minimum: 10 min system overview, 15 min operation demonstration, 10 min maintenance explanation, and 5 min documentation handover.',
   },
@@ -68,10 +68,10 @@ const quizQuestions = [
     options: [
       'Just the receipt for payment',
       "Only the manufacturer's user manual",
+      'A simple completion note confirming the work',
       'Installation certificate, test results, user manual, warranty info, and maintenance schedule',
-      'A simple completion note',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "A complete handover package includes: installation certificate with test results, manufacturer's user manual, warranty documentation, maintenance schedule, emergency contacts, and commissioning checklist. All must be provided within 28 days of completion.",
   },

@@ -28,9 +28,9 @@ export const SmartHomeModule5Section2Quiz = () => {
     },
     {
       question: "What resolution is 'Full HD'?",
-      options: ['720p', '1080p', '2K', '4K'],
-      correct: 1,
-      explanation: 'Full HD is 1920 × 1080 pixels.',
+      options: ['720p', '2K', '4K', '1080p'],
+      correct: 3,
+      explanation: 'Full HD is 1920 × 1080 pixels, commonly written as 1080p.',
     },
     {
       question: 'Which resolution gives the sharpest image?',
@@ -52,12 +52,12 @@ export const SmartHomeModule5Section2Quiz = () => {
     {
       question: 'Advantage of cloud storage:',
       options: [
-        'Unlimited storage for free',
         'Remote access from anywhere',
-        'Works without internet',
+        'Unlimited storage for free',
+        'Works without any internet',
         'Eliminates all security risks',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Cloud provides remote access and offsite resilience but needs internet and a subscription.',
     },
@@ -73,11 +73,16 @@ export const SmartHomeModule5Section2Quiz = () => {
       explanation: 'Cloud needs reliable upstream bandwidth and ongoing fees.',
     },
     {
-      question: 'SD card storage is ideal for long-term surveillance:',
-      options: ['True', 'False'],
+      question: 'How suitable is on-camera SD card storage for long-term surveillance?',
+      options: [
+        'Ideal — it offers effectively unlimited retention',
+        'Poor — limited capacity and easily lost or stolen with the camera',
+        'Ideal — it is the most tamper-proof option available',
+        'Poor — but only because it is slower than cloud storage',
+      ],
       correct: 1,
       explanation:
-        'SD cards are limited capacity and prone to loss/theft; not suitable for long retention.',
+        'SD cards have limited capacity and can be stolen along with the camera, so they are unsuitable for long retention.',
     },
     {
       question: 'Why must installers consider GDPR?',

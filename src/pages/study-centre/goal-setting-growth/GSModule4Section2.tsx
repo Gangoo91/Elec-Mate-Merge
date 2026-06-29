@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     question:
       'In David Kolb&rsquo;s Experiential Learning Cycle, what comes immediately after &ldquo;Reflective Observation&rdquo; (thinking about what happened)?',
     options: [
+      'Abstract Conceptualisation &mdash; forming theories and identifying principles from the reflection',
       'Concrete Experience &mdash; doing the task again immediately',
       'Active Experimentation &mdash; trying a new approach on site',
-      'Abstract Conceptualisation &mdash; forming theories and identifying principles from the reflection',
       'Evaluation &mdash; scoring your own performance out of ten',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Kolb&rsquo;s Experiential Learning Cycle follows a specific four-stage sequence: Concrete Experience (doing), Reflective Observation (thinking about what happened), Abstract Conceptualisation (forming theories, identifying principles, connecting to existing knowledge), and Active Experimentation (trying a new approach based on those theories). After reflecting on an experience, the learner moves into the conceptualisation stage where they ask &ldquo;Why did this happen?&rdquo; and &ldquo;What is the underlying principle?&rdquo; For example, after reflecting on why an RCD tripped during testing, the electrician would then conceptualise the issue &mdash; perhaps identifying that the earth fault loop impedance was too high because of a deteriorated earth rod, linking this to BS 7671 requirements for maximum Zs values. This conceptualisation then informs the next stage: actively experimenting with a different approach on the next similar job.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'gs-4-2-check3',
     question: 'In Gibbs&rsquo; Reflective Cycle, the &ldquo;Analysis&rdquo; stage asks:',
     options: [
-      '&ldquo;What happened?&rdquo; &mdash; a factual description of the event',
-      '&ldquo;How did I feel?&rdquo; &mdash; an exploration of emotions during the experience',
-      '&ldquo;What sense can I make of the situation?&rdquo; &mdash; connecting the experience to theory, regulations, or best practice to understand why things happened as they did',
-      '&ldquo;What will I do next time?&rdquo; &mdash; creating a specific action plan',
+      '&ldquo;What happened?&rdquo; &mdash; a plain factual description of the event itself',
+      '&ldquo;How did I feel?&rdquo; &mdash; an exploration of your emotions during the experience',
+      '&ldquo;What sense can I make of this?&rdquo; &mdash; connecting the experience to theory or best practice',
+      '&ldquo;What will I do next time?&rdquo; &mdash; creating a specific, concrete action plan',
     ],
     correctIndex: 2,
     explanation:
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       'David Kolb&rsquo;s Experiential Learning Cycle consists of four stages. Which of the following correctly lists all four stages in the correct order?',
     options: [
-      'Planning, Doing, Reviewing, Concluding',
       'Concrete Experience, Reflective Observation, Abstract Conceptualisation, Active Experimentation',
+      'Planning, Doing, Reviewing, Concluding',
       'Experience, Analysis, Theory, Application',
       'Observation, Hypothesis, Experiment, Conclusion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Kolb&rsquo;s Experiential Learning Cycle (1984) consists of four specific stages: Concrete Experience (having a direct, hands-on experience), Reflective Observation (thinking about and observing what happened during the experience), Abstract Conceptualisation (forming theories, identifying principles, and connecting the experience to existing knowledge and frameworks), and Active Experimentation (testing the new understanding by trying a different approach in a real situation). The cycle is continuous &mdash; the Active Experimentation stage creates a new Concrete Experience, which begins the cycle again. Kolb argued that effective learning requires engagement with all four stages. Many electricians are strong in the Concrete Experience and Active Experimentation stages (doing and trying) but weaker in Reflective Observation and Abstract Conceptualisation (thinking about why and connecting to theory). Developing all four stages leads to deeper, more transferable learning.',
   },
@@ -105,11 +105,11 @@ const quizQuestions = [
       'An electrician finishes a complex fault-finding job and drives home thinking &ldquo;I spent too long on that fault because I started by checking the wrong things &mdash; next time I should test the supply first before investigating downstream.&rdquo; According to Donald Sch&ouml;n, this is an example of:',
     options: [
       'Reflection-in-action &mdash; thinking on your feet during the work',
-      'Reflection-on-action &mdash; reviewing and learning after the event',
       'Abstract Conceptualisation &mdash; forming a theory about fault finding',
+      'Reflection-on-action &mdash; reviewing and learning after the event',
       'Metacognition &mdash; thinking about thinking in general',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This is a clear example of reflection-on-action as defined by Donald Sch&ouml;n. The electrician has completed the work (the action is over) and is now reviewing what happened, evaluating their approach, identifying what went wrong (starting with downstream checks rather than verifying the supply first), and forming a plan for improvement (test the supply first next time). Reflection-on-action happens after the event and involves deliberate, conscious review. By contrast, reflection-in-action would have been the electrician pausing mid-job and thinking &ldquo;Wait, I should check the supply first before going further downstream&rdquo; &mdash; adjusting their approach in real time. Both types of reflection are valuable. Reflection-on-action builds long-term professional knowledge; reflection-in-action allows you to respond adaptively in the moment.',
   },
@@ -129,10 +129,10 @@ const quizQuestions = [
     options: [
       'What went well today?',
       'What didn&rsquo;t go as planned?',
-      'Who is to blame for the problems today?',
       'What&rsquo;s my priority tomorrow?',
+      'Who is to blame for the problems today?',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The five daily debrief questions are: (1) What went well today? (2) What didn&rsquo;t go as planned? (3) What did I learn? (4) What would I do differently? (5) What&rsquo;s my priority tomorrow? The question &ldquo;Who is to blame for the problems today?&rdquo; is deliberately not included because blame-focused thinking is counterproductive to reflective practice. Reflective practice focuses on learning and improvement, not on assigning fault. When things go wrong, the growth-oriented question is &ldquo;What can I learn from this?&rdquo; and &ldquo;What would I do differently?&rdquo; rather than &ldquo;Whose fault was it?&rdquo; Blame creates defensiveness and discourages honest self-examination. The daily debrief is a brief, non-judgmental review that helps you extract lessons from every working day &mdash; both the successes and the setbacks &mdash; and carry them forward into improved future performance.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     question:
       'Anders Ericsson&rsquo;s research on deliberate practice found that the key difference between experts and non-experts is NOT:',
     options: [
-      'The total number of hours spent practising',
       'Innate natural talent that cannot be developed',
+      'The total number of hours spent practising',
       'The quality, focus, and intentionality of their practice',
       'Whether they receive feedback and adjust their approach',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ericsson&rsquo;s research challenged the assumption that expertise is primarily the result of innate talent. His studies across multiple domains (music, chess, sport, medicine) found that what distinguishes experts from competent practitioners is not natural ability but the nature of their practice. Experts engage in &ldquo;deliberate practice&rdquo; &mdash; focused, intentional effort on specific aspects of performance that are just beyond their current ability, combined with immediate feedback and continuous adjustment. Non-experts tend to reach a &ldquo;good enough&rdquo; level and then plateau, repeating comfortable routines without pushing themselves. While total hours of practice matter (Ericsson&rsquo;s work was the basis for Malcolm Gladwell&rsquo;s popular &ldquo;10,000 hours&rdquo; claim), hours alone are insufficient &mdash; it is the quality and intentionality of those hours that determines whether true expertise develops. For electricians, this means that 20 years of routine domestic installations does not automatically create expertise; but 5 years of varied, challenging work with deliberate reflection and skill development can create outstanding competence.',
   },
@@ -155,24 +155,24 @@ const quizQuestions = [
     question:
       'An apprentice notices that their cable terminations keep failing pull tests. A deliberate practice approach would involve:',
     options: [
-      'Repeating the same technique more times until it works through sheer repetition',
-      'Asking a colleague to do the terminations instead, since the apprentice is clearly not suited to the task',
-      'Identifying the specific fault in their technique (with feedback from a supervisor), practising the corrected technique with full concentration, and checking each termination to verify improvement',
-      'Moving on to a different task and coming back to terminations when they feel more confident',
+      'Repeating exactly the same technique more times until it works through sheer repetition',
+      'Asking a colleague to do the terminations instead, since the apprentice is not suited to it',
+      'Moving on to a different task and returning to terminations once they feel more confident',
+      'Identifying the specific fault with a supervisor, then practising the correction and checking results',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
-      'Option C describes the deliberate practice approach: (1) identifying the specific weakness (what exactly is wrong with the termination technique?), (2) getting expert feedback (a supervisor or experienced electrician observes and identifies the fault), (3) practising the corrected technique with full concentration (not on autopilot, but with deliberate focus on the specific correction), and (4) checking each result to verify that the corrected technique is producing better outcomes. This is fundamentally different from Option A (na&iuml;ve practice &mdash; mindless repetition of the same incorrect technique), Option B (fixed mindset avoidance), and Option D (postponement without improvement). Deliberate practice requires that you confront weaknesses directly, seek accurate feedback, and practise with intentional focus on improvement. It is not comfortable &mdash; it requires sustained effort at the edge of your ability &mdash; but it is the most effective path to genuine skill development.',
+      'The deliberate practice approach is: (1) identifying the specific weakness (what exactly is wrong with the termination technique?), (2) getting expert feedback (a supervisor or experienced electrician observes and identifies the fault), (3) practising the corrected technique with full concentration (not on autopilot, but with deliberate focus on the specific correction), and (4) checking each result to verify that the corrected technique is producing better outcomes. This is fundamentally different from mindless repetition of the same incorrect technique (na&iuml;ve practice), from handing the task to a colleague (fixed-mindset avoidance), and from simply postponing the task without improvement. Deliberate practice requires that you confront weaknesses directly, seek accurate feedback, and practise with intentional focus on improvement. It is not comfortable &mdash; it requires sustained effort at the edge of your ability &mdash; but it is the most effective path to genuine skill development.',
   },
   {
     id: 7,
     question:
       'A qualified electrician keeps a professional development journal where they record key learnings from each week. According to the principles of reflective practice, the PRIMARY benefit of this habit is:',
     options: [
-      'It satisfies CPD requirements for professional registration',
-      'It provides evidence in case of legal disputes about workmanship',
-      'It transforms experience into conscious, transferable learning by forcing you to articulate what you know and what you need to develop',
-      'It impresses clients and employers during job interviews',
+      'It satisfies the CPD requirements needed for ongoing professional registration',
+      'It provides documentary evidence in case of any legal dispute about workmanship',
+      'It turns raw experience into conscious, transferable learning you can articulate',
+      'It impresses prospective clients and employers during job interviews and tenders',
     ],
     correctAnswer: 2,
     explanation:
@@ -183,14 +183,14 @@ const quizQuestions = [
     question:
       'An experienced electrician mentors a second-year apprentice. When the apprentice makes a wiring error on a lighting circuit, the most effective reflective learning approach for the mentor to use is:',
     options: [
-      'Fix the error themselves and move on to save time',
-      'Point out the error, explain the correct method, and then ask the apprentice to describe what went wrong and what they will do differently &mdash; encouraging reflection-on-action',
-      'Shout at the apprentice to ensure they remember not to make the same mistake',
-      'Ignore the error and let the apprentice discover it during testing',
+      'Quietly fix the error themselves and move on to the next task in order to save time',
+      'Explain the correct method, then ask the apprentice to reflect on what they will do differently',
+      'Shout at the apprentice to make sure they remember never to make the same mistake again',
+      'Ignore the error entirely and let the apprentice discover it for themselves during testing',
     ],
     correctAnswer: 1,
     explanation:
-      'Option B demonstrates the reflective mentoring approach. The mentor first ensures the apprentice understands the error and the correct method (direct instruction), but then goes further by asking the apprentice to reflect on what happened and articulate what they will do differently in future (guided reflection-on-action). This approach has several advantages over the alternatives: it gives the apprentice ownership of the learning rather than making them a passive recipient of correction; it develops their reflective capacity so they can learn independently in future; it creates a specific, memorable learning experience that is more likely to be retained than a simple instruction. Option A (fix it and move on) misses the learning opportunity entirely. Option C (shouting) creates fear and defensiveness, which inhibit learning. Option D (let them discover it during testing) risks safety issues and also misses the chance for guided reflection while the experience is fresh.',
+      'Pointing out the error, explaining the correct method, and then asking the apprentice to reflect demonstrates the reflective mentoring approach. The mentor first ensures the apprentice understands the error and the correct method (direct instruction), but then goes further by asking the apprentice to reflect on what happened and articulate what they will do differently in future (guided reflection-on-action). This approach has several advantages over the alternatives: it gives the apprentice ownership of the learning rather than making them a passive recipient of correction; it develops their reflective capacity so they can learn independently in future; it creates a specific, memorable learning experience that is more likely to be retained than a simple instruction. Fixing the error and moving on misses the learning opportunity entirely. Shouting creates fear and defensiveness, which inhibit learning. Letting them discover it during testing risks safety issues and also misses the chance for guided reflection while the experience is fresh.',
   },
 ];
 

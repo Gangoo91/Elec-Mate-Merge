@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 551.7.1(d) (NEW in A4:2026) sets a source-connection rule for PV / generation. What does it require?',
     options: [
-      'No rule applies',
-      'The generating source (PV inverter, BESS inverter) must NOT be connected on the load side of an RCD that protects the rest of the installation. The source-side RCD would see the generator current as residual current under fault conditions and trip — disconnecting the generator from its own protective device. The source needs a dedicated RCBO (RCD + MCB) on its own circuit, NOT downstream of the existing CU RCD',
-      'Always use the same RCD',
-      'No RCD anywhere',
+      'No source-connection rule applies to PV or generation circuits',
+      'The source must not be connected on the load side of an RCD protecting the rest of the installation',
+      'The source must always share the existing main RCD with all other circuits',
+      'No RCD protection is permitted anywhere on a generation circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'BS 7671 Reg 712.531.3.5.1 specifies the RCD type for the PV AC supply circuit. What\'s the default, and what are the permitted exceptions?',
     options: [
-      'Type AC always',
-      'Default: Type B RCD per BS EN 62423 or BS EN 60947-2. Three permitted exceptions allow a different type: (a) the inverter provides at least simple separation between AC and DC sides; (b) the installation provides at least simple separation between inverter and RCD by separate transformer windings; (c) the inverter does not require a Type B RCD as stated by the manufacturer. NOTE 1 to the reg cross-refs Reg 531.3.3 (the general rule restricting Type AC to fixed equipment with no DC components in the load current). NOTE 2 recommends installation methods that don\'t require additional RCD protection at all',
-      'Type AC only — no Type B',
-      'No RCD needed',
+      'Type AC is always required, regardless of the inverter type',
+      'Type B by default, with three exceptions allowing a different type',
+      'Type AC only; a Type B RCD is never permitted on a PV circuit',
+      'No RCD is needed at all on the PV AC supply circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'PV inverter AC output cable sizing per Reg 712.433.104 — what\'s the inverter design current?',
     options: [
-      'Same as DC',
-      'Per Reg 712.433.104: the inverter design current is either the maximum AC current given by the inverter manufacturer or, if not available, 1.1 times its rated AC current. The OCPD rated current is set against this design current; cable I_z must be ≥ OCPD rated current at installed conditions. Sizing also accounts for voltage drop (typically 1-3% of nominal AC) and BS 7671 Appendix 4 corrections for grouping / ambient / reference method',
-      'Customer\'s budget',
-      'Half the DC current',
+      'The same value as the DC string current from the array',
+      'The maximum AC current from the manufacturer, or 1.1 times rated AC current',
+      'Whatever AC current best fits the customer\'s installation budget',
+      'Half of the DC string current, allowing for inverter conversion',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'AC-side SPD selection for a typical UK residential PV install. What\'s the standard spec and location?',
     options: [
-      'No SPD on AC',
-      'Type-2 (Class II) SPD per BS EN 61643-11. Located at the consumer unit (covers the inverter AC circuit and the rest of the CU) OR at the inverter AC output (covers the inverter AC stage specifically). Spec: In = 5-20 kA, Imax = 20-40 kA, Up coordinated with inverter and downstream equipment. Sacrificial — replace after a strike event',
-      'High-voltage SPD only',
-      'No protection needed',
+      'No surge protection is required on the AC side of a domestic PV install',
+      'A Type-2 (Class II) SPD at the consumer unit or inverter AC output',
+      'A high-voltage transmission-class SPD rated for the grid supply',
+      'No protective device beyond the existing main switch is needed',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'EREC G98 (≤16 A single-phase or ≤16 A per phase three-phase) — what\'s the DNO process for connecting a small generating unit?',
     options: [
-      'No DNO contact needed',
-      'Fit-and-notify: install the unit, then notify the DNO within 28 days of commissioning. The notification includes the G98 form (commissioning details, generator type, capacity, MCS cert reference). DNO can object if local network constraints make the connection problematic — rarely happens for typical sub-4 kWp PV. EREC G98 is part of the Distribution Code; current edition is G98 Issue 1 Amendment 8 (or successor) per the ENA',
-      'Wait 5 years for permission',
-      'Connect and never inform DNO',
+      'No DNO contact is needed at any stage for a small generating unit',
+      'Fit-and-notify: install, then notify the DNO within 28 days of commissioning',
+      'Apply and wait several years for the DNO to grant permission first',
+      'Connect the unit and never inform the DNO at any point',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'EREC G99 (>16 A single-phase) — what\'s the DNO process for connecting a larger generating unit?',
     options: [
-      'Same as G98',
-      'Apply-and-wait: submit the G99 application to the DNO BEFORE installation. DNO assesses local network impact, may approve / approve with conditions (e.g. export limitation) / reject. Typical assessment timescale: 4-8 weeks. After install and commissioning, the G99 commissioning notification is submitted. EREC G99 is part of the Distribution Code; current edition tracks ENA publication',
-      'Wait 100 years',
-      'No process exists',
+      'Identical to the G98 fit-and-notify process for small units',
+      'Apply-and-wait: submit the G99 application to the DNO before installation',
+      'Wait an indefinite period of decades for the DNO to respond',
+      'No connection process exists for larger generating units',
     ],
     correctIndex: 1,
     explanation:
@@ -109,10 +109,10 @@ const inlineChecks = [
     question:
       'EREC G100 — export limitation. What is it and when does it apply?',
     options: [
-      'Customer\'s choice only',
-      'EREC G100 is the export-limitation standard. The PV install\'s AC output capacity exceeds the EREC G98 threshold (>16 A single-phase) but the install is configured to LIMIT export to or below a DNO-approved threshold, keeping the install within the G98 fit-and-notify regime (or within a G99-approved export limit). The export-limitation is implemented by the inverter\'s built-in export control or by a separate export-control device measuring grid-export current and modulating inverter output',
-      'No such thing',
-      'Customer dies if exceeded',
+      'A purely optional setting left entirely to the customer\'s preference',
+      'The export-limitation standard, capping grid export to a DNO-approved threshold',
+      'A historical document with no current application to UK PV installs',
+      'A grid-protection scheme operated solely by the network operator',
     ],
     correctIndex: 1,
     explanation:
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A 5 kW PV inverter on a UK single-phase domestic supply. Rated AC current = 5,000 / 230 = ~21.7 A. What\'s the correct AC-side OCPD?',
     options: [
-      'No protection',
-      'A dedicated RCBO (RCD + MCB) on a dedicated circuit from the consumer unit, sized to coordinate with the inverter AC current and cable I_z. Typical: 25 A RCBO, Type B RCD per Reg 712.531.3.5.1 (BS EN 62423 or BS EN 60947-2) unless one of the three exceptions applies, on 4 mm² or 6 mm² T&E cable depending on route length. NOT downstream of the existing CU main RCD (Reg 551.7.1(d) new in A4:2026)',
-      'Always 100 A',
-      '1 A fuse',
+      'A dedicated 25 A Type B RCBO on its own circuit, not downstream of the main RCD',
+      'A 6 A Type B MCB only, with no residual current protection on the inverter circuit',
+      'A 100 A main switch shared with the rest of the consumer unit',
+      'A 13 A BS 1362 fused connection unit spurred from the nearest ring final circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AC-side OCPD for a 5 kW inverter: dedicated RCBO on a dedicated circuit. 25 A RCBO is typical — accommodates inverter overload to ~110% rated. Type B RCD per Reg 712.531.3.5.1 (BS EN 62423 or BS EN 60947-2) unless one of the three exceptions applies (inverter simple separation, transformer-winding separation, manufacturer declares Type B not required). Cable size 4 mm² (short routes) or 6 mm² (longer routes) sized for I_z ≥ 25 A at installed conditions. Critical: the RCBO goes on the CU bus, NOT downstream of the existing CU main RCD (Reg 551.7.1(d) new in A4:2026). The cert evidence bundle records the design.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'PV install plan: connect the inverter AC output to a spare way on the consumer unit, downstream of the CU\'s main 30 mA RCD. Is this acceptable in A4:2026?',
     options: [
-      'Yes — always acceptable',
-      'NOT acceptable per Reg 551.7.1(d) (new in A4:2026). Connecting the inverter on the load side of the CU\'s main RCD creates a problem: under fault conditions, the inverter\'s contribution to fault current is seen by the RCD as residual current — tripping the RCD and disconnecting the inverter from its own protective device. Solution: install a dedicated RCBO on its own way on the CU bus (NOT downstream of the main RCD), or substitute the consumer unit with a split-load design that provides a dedicated source connection',
-      'Customer\'s choice',
-      'Always required',
+      'Yes — connecting any spare way downstream of the main RCD is always acceptable',
+      'Yes, provided the inverter circuit is fitted with its own 30 mA RCBO downstream of the main RCD',
+      'No — Reg 551.7.1(d) bars the source on the load side of the main RCD; use a dedicated way on the bus',
+      'Acceptable only where the inverter rated AC output is below 16 A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 551.7.1(d) (new in A4:2026) prohibits connecting a generating source (PV / BESS inverter) on the load side of an RCD that protects the rest of the installation. The failure mode: under earth fault on the generator side, the inverter\'s contribution to fault current flows through the source-side RCD as residual current, tripping it. The fix: dedicated RCBO on the CU bus (NOT downstream of the main RCD), or split-load CU design providing a dedicated source connection.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A customer has a Hager / MK / Wylex CU with a single main 30 mA RCD protecting all 6 ways. PV install proposed. What\'s the design response per A4:2026?',
     options: [
-      'Just plug it in',
-      'Modify the CU arrangement to provide a dedicated source connection for the PV inverter NOT downstream of the main RCD. Options: (a) substitute the CU for a split-load design (one main RCD on existing ways + dedicated RCBO direct from busbar for PV); (b) substitute the CU for a fully-RCBO design (each circuit has its own RCBO; PV gets its own); (c) install a separate distribution unit / sub-board for the PV connection. The MCS MIS 3002 design pack records the chosen design and the Reg 551.7.1(d) compliance evidence',
-      'Ignore A4:2026',
-      'No design change needed',
+      'Connect the inverter to the spare sixth way and notify the DNO afterwards',
+      'No design change is needed because the existing main RCD already protects the PV circuit',
+      'Fit a second main RCD in series with the first to share the inverter fault current',
+      'Provide a dedicated source connection not downstream of the main RCD, via a split-load or all-RCBO CU',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The single-RCD CU is the most common UK domestic CU type pre-A4:2026. After A4:2026, PV connection to this CU triggers Reg 551.7.1(d) — the inverter can\'t be on the load side of the main RCD. Three design options: (a) substitute CU for split-load (cost £150-£300 + installation labour); (b) substitute CU for all-RCBO design (cost £200-£400 + installation labour); (c) install a separate distribution unit / sub-board with a dedicated incoming feed before the main RCD. The MCS MIS 3002 design pack records the chosen approach.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A modern transformerless PV inverter datasheet states: "Inverter provides simple separation between AC and DC sides per BS EN 62109-2". Customer asks about RCD type per Reg 712.531.3.5.1.',
     options: [
-      'Always Type B',
-      'Reg 712.531.3.5.1 exception (a) applies — inverter provides simple separation between AC and DC sides. A Type B RCD is NOT required; a different type may be used per the manufacturer\'s evidence. The cert evidence bundle records the manufacturer datasheet extract as the design justification. This is one of three exceptions (other two: separate transformer windings between inverter and RCD; manufacturer declares Type B RCD not required)',
-      'No RCD at all',
-      'Type B only',
+      'Exception (a) applies — simple separation is declared, so a Type B RCD is not required',
+      'A Type B RCD is still mandatory because the inverter is transformerless',
+      'No RCD is required on the AC supply circuit once simple separation is declared',
+      'A Type AC RCD must be fitted to detect the AC residual current from the inverter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 712.531.3.5.1 default is Type B but allows three exceptions: (a) the inverter itself provides simple separation between AC and DC; (b) separate transformer windings provide separation between inverter and RCD; (c) the inverter manufacturer states a Type B RCD is not required. Where ANY of these apply with manufacturer evidence, a different RCD type may be selected per the manufacturer\'s instructions. The general rule Reg 531.3.3 still applies — Type AC only where the load current is known to contain no DC components.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Customer\'s PV install design has 6 kWp on a single-phase 100 A supply. Inverter rated AC = 5 kW (~21.7 A). Above EREC G98 16 A threshold. Options?',
     options: [
-      'Just install',
-      'Three options: (a) limit the inverter\'s AC output to ≤16 A by inverter configuration or external export-limitation device per EREC G100 — keeps the install under G98 (fit-and-notify); (b) submit EREC G99 application to the DNO before install — wait 4-8 weeks for assessment; (c) reduce the PV kWp to fit within G98 by selecting a smaller inverter (3.68 kW = 16 A AC). The customer\'s preference, install timeline, and DNO acceptance set the choice. The cert evidence bundle records the chosen path and the DNO confirmation',
-      'No options',
-      'Use 3-phase only',
+      'Install as designed and notify the DNO within 28 days under EREC G98',
+      'Convert the supply to three-phase before the inverter can be connected at all',
+      'Limit export to 16 A under G100, apply under G99, or fit a smaller sub-16 A inverter',
+      'Split the array across two separate G98 inverters on the same phase to stay compliant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For a 5 kW inverter (~21.7 A AC) on single-phase, above EREC G98 16 A threshold, three options: (a) export-limitation per EREC G100 — limit inverter AC output to ≤16 A by configuration or external device, keeping the install under G98 fit-and-notify; (b) EREC G99 application — apply to DNO, wait 4-8 weeks for assessment; (c) reduce kWp to fit within G98 by using a 3.68 kW inverter (16 A AC). The customer\'s preference (install speed vs full export capacity), the DNO\'s likely response, and the financial case set the choice. The MCS MIS 3002 design pack records the path.',
   },
@@ -196,12 +196,12 @@ const quizQuestions = [
     question:
       'PV install commissioning. The dedicated PV RCBO trips on first inverter start-up. Diagnosis?',
     options: [
-      'Install failed',
-      'Common causes: (a) wrong RCD type (Type AC fitted where Type B required per Reg 712.531.3.5.1 — DC residual current trips the AC RCD instantly on inverter start); (b) earth fault on the inverter AC side (wiring fault, terminations); (c) RCD trip threshold mismatched to inverter leakage spec. Diagnose: check RCD type vs manufacturer spec; insulation-test the AC cable; check terminations; verify RCD coordination with inverter leakage rating',
-      'Always normal',
-      'Inverter is broken',
+      'A first-start trip is normal inverter behaviour and can be reset and ignored',
+      'The inverter is faulty and must be returned to the manufacturer immediately',
+      'The PV array is undersized for the inverter and the strings must be re-arranged',
+      'Usually wrong RCD type, an AC-side earth fault, or RCD leakage mismatch — diagnose each',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PV RCBO trip on first start-up is most commonly: (a) wrong RCD type for the inverter (Type AC on a transformerless inverter that produces DC residual — Reg 712.531.3.5.1 violation); (b) earth fault in the AC wiring; (c) RCD coordination issue. The diagnosis: read the inverter datasheet for the required RCD type (Type B unless one of the three exceptions applies); verify the installed RCD type matches; insulation-test the AC cable; check terminations. The cert evidence bundle records the RCD type, the design justification, and the commissioning result.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     question:
       'EREC G99 application response: DNO approves with export-limitation condition limiting export to 11 kW (single-phase three-phase at 16 A per phase). What does the installer do?',
     options: [
-      'Ignore the limit',
-      'Implement EREC G100 export limitation. The inverter (or external export-control device) limits exported AC current to ≤16 A per phase, summed to 11 kW max. The limitation is verified at commissioning per EREC G100 test procedure (simulate over-export conditions, confirm the limit holds). The cert evidence bundle records the export limit, the implementation method, the verification test result, and the DNO G99 approval document',
-      'Install bigger inverter',
-      'No action',
+      'Implement EREC G100 export limitation and verify the limit holds at commissioning',
+      'Disregard the export condition once the G99 application has been approved',
+      'Install a larger inverter to make use of the full approved export capacity',
+      'Treat the export limit as advisory and rely on the customer to self-consume the surplus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EREC G99 approval with export-limitation condition triggers EREC G100 compliance. The export-control device (inverter built-in or external) limits exported AC current to the DNO-approved threshold. EREC G100 specifies the requirements for the export-control device: (a) measurement accuracy; (b) response time; (c) failure mode (default to limit-active on device failure); (d) verification testing at commissioning. The cert evidence bundle records: export limit, implementation method, EREC G100 verification test result, and DNO G99 approval document.',
   },
@@ -224,10 +224,10 @@ const quizQuestions = [
     question:
       'The PWI common-mistakes list flags four high-frequency AC-side faults on UK PV installs in 2025-2026. What are they?',
     options: [
-      'None',
-      '(1) PV inverter circuit on the load side of the existing CU main RCD (Reg 551.7.1(d) violation, new in A4:2026); (2) Wrong RCD type — Type AC where Type B required per Reg 712.531.3.5.1 (without permitted exception); (3) AC SPD missing or wrong type; (4) EREC G98 / G99 process skipped (no DNO notification). Each is a regulatory / safety concern and a high-frequency MCS audit finding',
-      'Customer satisfaction',
-      'Module colour',
+      'Loose DC connectors, dirty modules, undersized roof anchors, and cable UV ageing',
+      'Source on the load side of the main RCD, wrong RCD type, missing AC SPD, and skipped DNO notification',
+      'Incorrect inverter firmware, mismatched module brands, and shading on the array',
+      'Wrong string voltage, reversed DC polarity, and missing DC isolator labelling',
     ],
     correctAnswer: 1,
     explanation:

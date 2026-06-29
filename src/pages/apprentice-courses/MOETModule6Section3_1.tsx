@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'logbook-purpose',
     question: 'What is the primary purpose of maintaining a maintenance logbook?',
     options: [
-      'Correct value, units, and real-time update from field devices',
-      'The site manager updates the RA, briefs the team in a toolbox talk, and amends the MS so it cannot recur',
-      'Records of all reportable incidents must be kept for at least 3 years from the date of the incident',
+      'To calculate the labour cost of each maintenance task for invoicing',
+      'To list the spare parts held in the stores for stock control purposes',
+      'To record the training certificates held by each maintenance technician',
       'To provide a chronological, auditable record of all maintenance activities on an asset',
     ],
     correctIndex: 3,
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'When completing a CMMS work order, which detail is most critical to include?',
     options: [
       'A clear description of what was found, what was done, and what parts were used',
-      'The enable input going FALSE before the preset is reached, causing the timer to reset',
-      'Check for breathing/circulation, give CPR if needed, treat for shock',
-      'Experience as a resource \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 build on what they already know',
+      'The personal opinion of the technician on the quality of the original installation',
+      'The make and model of every tool carried in the technician’s van',
+      'The weather conditions on site during the period the work was carried out',
     ],
     correctIndex: 0,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'What should you do if you cannot fully complete a maintenance task during your shift?',
     options: [
-      'Self-contained breathing apparatus (SCBA) or airline breathing apparatus',
-      'Current flows through the body between two points at different potential, disrupting normal biological function',
+      'Close the work order and raise a new one only if the fault recurs later',
+      'Delete the work order so it does not appear as overdue on the system',
       'Leave the work order open, record what was completed, and note outstanding actions for handover',
-      'To perform critical safety shutdowns and control access during emergencies',
+      'Mark the work order complete and finish the remaining work informally next visit',
     ],
     correctIndex: 2,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'asset-history',
     question: 'Why is accurate asset history recording important for maintenance planning?',
     options: [
-      'Enabling enterprise-level monitoring whilst maintaining detailed luminaire control',
-      'Acknowledging the emotional impact before attempting to gather factual details about the incident',
+      'It removes the need to carry out any further inspections on the asset',
+      'It allows the manufacturer to extend the equipment warranty indefinitely',
       'It enables trend analysis, supports condition-based maintenance decisions and justifies capital expenditure',
-      'External lighting uses weather-resistant luminaires and covers external escape routes',
+      'It guarantees that the asset will never fail during its working life',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A maintenance logbook entry should include:',
     options: [
-      "Slight asymmetry causing different propagation speeds for light polarisation states",
+      'Only the date and the name of the technician who attended',
       "Date, time, asset identification, work performed, findings, parts used, and the technician's signature",
-      "Use the worst section — the cable can only be as good as its hottest point — and apply the dominant Ca, Cg and Ci together.",
-      "The type of asbestos, its condition, the extent of work, and the likelihood of fibre release",
+      'A general note that the equipment was checked, with no further detail',
+      'The cost of the parts used and nothing else about the work done',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,9 +96,9 @@ const quizQuestions = [
     id: 3,
     question: 'When recording a fault repair in a CMMS, you should:',
     options: [
-      'Inspection findings, measurements taken, condition assessments, any defects found, and recommended follow-up actions',
-      'Every work order is tracked from creation through completion and formal close-out with verification',
-      'Unique asset numbers, equipment tags, or location codes from the asset register',
+      'Record only that the equipment is now working again',
+      'Record the name of the supplier who provided the replacement part only',
+      'Record the time the callout was received but not what was done',
       'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
     ],
     correctAnswer: 3,
@@ -110,9 +110,9 @@ const quizQuestions = [
     question: 'Which of the following is a consequence of poor work recording?',
     options: [
       'Loss of asset history, repeated faults, compliance failures and increased downtime',
-      'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
-      'Specific fault symptoms, diagnostic steps taken, root cause found, and the successful repair method',
-      'Unique asset numbers, equipment tags, or location codes from the asset register',
+      'Faster fault diagnosis because technicians rely on memory instead',
+      'Reduced spare parts holding because usage is no longer tracked unnecessarily',
+      'Improved audit results because there is less paperwork to review',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'A work order typically progresses through which status sequence?',
     options: [
-      'Use laminated cores in transformers',
+      'Closed, completed, scheduled, planned, in progress',
       'Planned, scheduled, in progress, completed, closed',
-      'Safety, temperature effects, and component ratings',
-      'Different qualification and competence levels',
+      'In progress, planned, closed, scheduled, completed',
+      'Scheduled, closed, planned, completed, in progress',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under ST1426, maintenance technicians must demonstrate they can:',
     options: [
-      'As soon as reasonably practicable, ideally before leaving the work area or completing the shift',
-      'Inspection findings, measurements taken, condition assessments, any defects found, and recommended follow-up actions',
+      'Design new electrical installations from first principles without supervision',
+      'Manage the entire maintenance budget for the organisation',
       'Accurately record and report on maintenance activities using appropriate systems and documentation',
-      'Every work order is tracked from creation through completion and formal close-out with verification',
+      'Write the company maintenance policy and approve other technicians’ work',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,9 +148,9 @@ const quizQuestions = [
     id: 7,
     question: 'When recording preventive maintenance in a logbook, you should note:',
     options: [
-      'Maintained, updated, and made available for inspection throughout the life of the installation',
-      'As soon as reasonably practicable, ideally before leaving the work area or completing the shift',
-      'Loss of asset history, repeated faults, compliance failures and increased downtime',
+      'Only the date the next preventive visit is due',
+      'Only confirmation that the planned task was carried out',
+      'Only the name of the technician who completed the schedule',
       'Inspection findings, measurements taken, condition assessments, any defects found, and recommended follow-up actions',
     ],
     correctAnswer: 3,
@@ -162,9 +162,9 @@ const quizQuestions = [
     question: 'Asset identification in maintenance records should use:',
     options: [
       'Unique asset numbers, equipment tags, or location codes from the asset register',
-      'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
-      'Loss of asset history, repeated faults, compliance failures and increased downtime',
-      'Accurately record and report on maintenance activities using appropriate systems and documentation',
+      'An informal description such as "the big motor in the corner"',
+      'The name of the manufacturer and the year the equipment was made',
+      'The colour of the enclosure and its approximate position in the room',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'How soon after completing a maintenance task should the work record be updated?',
     options: [
-      'Maintained, updated, and made available for inspection throughout the life of the installation',
+      'At the next scheduled audit, whenever that takes place',
       'As soon as reasonably practicable, ideally before leaving the work area or completing the shift',
-      'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
-      'Inspection findings, measurements taken, condition assessments, any defects found, and recommended follow-up actions',
+      'Only if a fault is later reported on the same equipment',
+      'At the end of the month when all records are written up together',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     question:
       "Which information helps future technicians most when recorded in an asset's maintenance history?",
     options: [
-      'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
-      'Accurately record and report on maintenance activities using appropriate systems and documentation',
+      'The total time the asset has been in service since installation',
+      'The name of the supervisor who approved the original work order',
       'Specific fault symptoms, diagnostic steps taken, root cause found, and the successful repair method',
-      'Loss of asset history, repeated faults, compliance failures and increased downtime',
+      'The purchase price of the asset and its current book value',
     ],
     correctAnswer: 2,
     explanation:
@@ -201,9 +201,9 @@ const quizQuestions = [
     id: 11,
     question: 'A closed-loop work order system means:',
     options: [
-      'Record the symptom, root cause identified, corrective action taken, parts used, and time spent',
-      'Maintained, updated, and made available for inspection throughout the life of the installation',
-      'Unique asset numbers, equipment tags, or location codes from the asset register',
+      'Work orders are issued only for emergency breakdowns, never planned work',
+      'Work orders are closed automatically after a fixed period whether done or not',
+      'Work orders are kept on a separate isolated network for security',
       'Every work order is tracked from creation through completion and formal close-out with verification',
     ],
     correctAnswer: 3,
@@ -215,9 +215,9 @@ const quizQuestions = [
     question: 'BS 7671 requires that records of electrical installations are:',
     options: [
       'Maintained, updated, and made available for inspection throughout the life of the installation',
-      'Every work order is tracked from creation through completion and formal close-out with verification',
-      'Specific fault symptoms, diagnostic steps taken, root cause found, and the successful repair method',
-      'Inspection findings, measurements taken, condition assessments, any defects found, and recommended follow-up actions',
+      'Destroyed once the installation has been energised and handed over',
+      'Held only by the original designer and not shared with the duty holder',
+      'Replaced entirely each time a periodic inspection is carried out',
     ],
     correctAnswer: 0,
     explanation:

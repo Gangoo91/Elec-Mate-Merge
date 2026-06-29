@@ -23,52 +23,52 @@ const inlineChecks = [
     question:
       'A 32 A Type B RCBO at Up = 230 V. Which BS 7671 table holds the max-permitted Zs and what is the value?',
     options: [
-      'Table 41.2 — fuses, 0.4 s. Value not listed',
-      'Table 41.3 — circuit-breakers (Type B / C / D to BS EN 60898 + RCBOs to BS EN 61009-1). Value: 0.69 Ω at 230 V',
-      'Table 41.4 — fuses, 5 s. Value: 1.37 Ω',
-      'Table 41.5 — RCDs only. Value: 1667 Ω',
+      'Table 41.2 — fuses at 0.4 s. The 32 A Type B value is not listed here',
+      'Table 41.3 — circuit-breakers (Type B / C / D) and RCBOs. Value: 1.37 Ω at 230 V',
+      'Table 41.4 — fuses at 5 s. The 32 A Type B value is 0.69 Ω here',
+      'Table 41.5 — RCDs only. The 32 A Type B value is 1667 Ω here',
     ],
     correctIndex: 1,
     explanation:
-      'Table 41.3 covers Type B / C / D circuit-breakers and the overcurrent characteristic of RCBOs. For a 32 A Type B at 230 V the maximum permitted Zs is 0.69 Ω. Table 41.5 (RCDs) covers the residual-current characteristic of an RCBO, which is the parallel compliance route on TT.',
+      'Table 41.3 covers Type B / C / D circuit-breakers and the overcurrent characteristic of RCBOs. For a 32 A Type B at 230 V the maximum permitted Zs is 1.37 Ω. Table 41.5 (RCDs) covers the residual-current characteristic of an RCBO, which is the parallel compliance route on TT.',
   },
   {
     id: 'mod5-s4-temp-correct',
     question:
-      'Cold-cable Zs reads 0.62 Ω on a 32 A Type B circuit. Table 41.3 limit is 0.69 Ω at 70 °C. Apply the Appendix 3 0.8 factor.',
+      'Cold-cable Zs reads 1.20 Ω on a 32 A Type B circuit. Table 41.3 limit is 1.37 Ω at 70 °C. Apply the Appendix 3 0.8 factor.',
     options: [
-      'Pass — 0.62 Ω is below 0.69 Ω, full stop',
-      'Fail — 0.8 × 0.69 ≈ 0.55 Ω is the corrected limit; 0.62 Ω exceeds it. The same circuit at full operating temperature would sit ~0.62 × 1.20 ≈ 0.74 Ω, above the table value',
-      'Pass — temperature correction is informative only',
-      'Pass — 0.8 applies only to fuses',
+      'Pass — 1.20 Ω is below the 1.37 Ω table value, full stop',
+      'Fail — 0.8 × 1.37 ≈ 1.10 Ω is the corrected limit, and 1.20 Ω exceeds it',
+      'Pass — temperature correction is informative only and need not be applied',
+      'Pass — the 0.8 factor applies only to fuse circuits, not circuit-breakers',
     ],
     correctIndex: 1,
     explanation:
-      'NOTE 2 to Tables 41.2 and 41.3 makes the temperature derating explicit. Either correct the measurement up (×1.20) or correct the limit down (×0.8). 0.8 × 0.69 = 0.552 Ω — measured 0.62 Ω fails. Investigate before signing off; common causes are longer-than-designed runs, undersized CPC, or a high-resistance termination.',
+      'NOTE 2 to Tables 41.2 and 41.3 makes the temperature derating explicit. Either correct the measurement up (×1.20) or correct the limit down (×0.8). 0.8 × 1.37 = 1.10 Ω — measured 1.20 Ω fails. The same circuit at full operating temperature would sit ~1.20 × 1.20 ≈ 1.44 Ω, above the table value. Common causes are longer-than-designed runs, an undersized CPC, or a high-resistance termination.',
   },
   {
     id: 'mod5-s4-tt-route',
     question:
       'A TT installation has a 30 mA RCD on every final circuit. Why is Table 41.3 effectively irrelevant for the overcurrent disconnection check, and what governs instead?',
     options: [
-      'TT systems have no protective devices — no table applies',
-      'Electrode-only earth makes Zs too high for an overcurrent device to disconnect within the required time. Reg 411.5.3 / Table 41.5 govern instead — Zs ≤ 1667 Ω at IΔn = 30 mA, plus Ra × IΔn ≤ 50 V',
-      'Table 41.3 only covers TN-S — never applies to TT',
-      'Table 41.3 limits double on TT systems',
+      'TT systems have no protective devices, so no Zs table applies at all',
+      'Electrode-only earth makes Zs too high for an overcurrent trip, so Reg 411.5.3 / Table 41.5 govern instead',
+      'Table 41.3 only covers TN-S installations and never applies to TT systems',
+      'Table 41.3 maximum Zs limits are simply doubled on TT systems',
     ],
     correctIndex: 1,
     explanation:
-      'A typical TT electrode resistance of 80–200 Ω cannot satisfy a 0.69 Ω Type B 32 A limit by any margin. The overcurrent device will not see enough fault current to operate within 0.4 s. RCD-based fault protection is the design intent on TT — Reg 411.5.3 / Table 41.5 set the loop impedance ceilings, both of which any electrode in working order satisfies.',
+      'A typical TT electrode resistance of 80–200 Ω cannot satisfy a 1.37 Ω Type B 32 A limit by any margin. The overcurrent device will not see enough fault current to operate within 0.4 s. RCD-based fault protection is the design intent on TT — Reg 411.5.3 / Table 41.5 set the loop impedance ceilings (Zs ≤ 1667 Ω at IΔn = 30 mA, plus Ra × IΔn ≤ 50 V), both of which any electrode in working order satisfies.',
   },
   {
     id: 'mod5-s4-design-tighter',
     question:
-      'The A4:2026 Schedule of Circuit Details shows a max permitted Zs of 0.45 Ω for a 32 A Type B circuit (raw Table 41.3 = 0.69 Ω). The verifier measures Zs = 0.58 Ω corrected. Compliant?',
+      'The A4:2026 Schedule of Circuit Details shows a max permitted Zs of 0.45 Ω for a 32 A Type B circuit (raw Table 41.3 = 1.37 Ω). The verifier measures Zs = 0.58 Ω corrected. Compliant?',
     options: [
-      'Pass — measured Zs is below the raw Table 41.3 value of 0.69 Ω',
-      'Fail — the design value (0.45 Ω) is the verification target. The designer tightened the limit for a reason (selectivity, voltage drop, future load) and the certificate must evidence compliance with the design intent, not the raw table',
-      'Pass — schedule-of-circuit-details columns are informative',
-      'Fail — but only because Table 41.5 also applies',
+      'Pass — measured Zs is well below the raw Table 41.3 value of 1.37 Ω',
+      'Fail — the design value of 0.45 Ω is the verification target, and 0.58 Ω exceeds it',
+      'Pass — schedule-of-circuit-details columns are informative only',
+      'Fail — but only because Table 41.5 RCD limits also apply here',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     question:
       'BS 7671 splits the maximum Zs tables across four numbered tables (41.2, 41.3, 41.4, 41.5). Which device-and-time combination does Table 41.3 cover?',
     options: [
-      'Fuses, 0.4 s disconnection, 230 V',
       'Circuit-breakers (Type B / C / D to BS EN 60898) for both 0.4 s and 5 s disconnection at Up = 230 V',
+      'Fuses, 0.4 s disconnection, 230 V',
       'RCDs only, all rated residual currents',
       'Distribution-circuit fuses, 5 s disconnection, 230 V',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 411.4.202 / Table 41.3 set the maximum Zs values for circuit-breakers (Type B, Type C, Type D to BS EN 60898 and the overcurrent characteristics of RCBOs to BS EN 61009-1) at Up = 230 V, providing the disconnection-time verification alternative to the calculation in Reg 411.4.4. Table 41.2 covers fuses at 0.4 s; Table 41.4 covers fuses at 5 s; Table 41.5 covers RCDs.',
   },
@@ -95,22 +95,22 @@ const quizQuestions = [
     id: 2,
     question:
       'For a 32 A Type B circuit-breaker / RCBO at Up = 230 V, what does BS 7671 give as the maximum permitted Zs?',
-    options: ['0.23 Ω', '0.69 Ω', '1.09 Ω', '0.87 Ω'],
-    correctAnswer: 1,
+    options: ['0.69 Ω', '1.09 Ω', '1.37 Ω', '0.87 Ω'],
+    correctAnswer: 2,
     explanation:
-      "Type B 32 A → 0.69 Ω at 230 V (Reg 411.4.202(a)). The values track the magnetic trip threshold: Type B trips magnetically at 5× rated current, so a 32 A Type B needs Ia ≥ 160 A and Zs ≤ 230 / 160 ≈ 1.44 Ω before the table's 0.95 Cmin factor brings it down to ~0.69 Ω. The 0.23 Ω option is wrong; 1.09 Ω is the 16 A entry; 0.87 Ω is a Type C value.",
+      "Type B 32 A → 1.37 Ω at 230 V (Table 41.3(a), 0.4 s). The values track the magnetic trip threshold: a Type B trips at 5× rated current, so a 32 A device needs Ia ≥ 160 A, and with the 0.95 Cmin factor the maximum permitted Zs works out at 1.37 Ω. The 0.69 Ω value belongs to the 63 A entry; 1.09 Ω is the 40 A entry; 0.87 Ω is the 50 A entry.",
   },
   {
     id: 3,
     question:
       'NOTE 2 to Tables 41.2 and 41.3 states that the Zs values shall not be exceeded when the line conductors are at the appropriate maximum permitted operating temperature (Table 52.2) and the CPCs are at the appropriate assumed initial temperature (Tables 54.2 to 54.5). What does this mean for a measurement taken on a cold installation?',
     options: [
-      'You can ignore temperature — the meter does it for you',
-      'A measurement at 20°C must be temperature-corrected (typically by a factor like ×1.20 for 70°C thermoplastic cable) before being compared with the table value, OR — equivalently — multiply the table limit by a temperature factor before comparison. Appendix 3 gives the procedure.',
-      'You must let the cable warm up to 70°C before testing',
-      'The table values already include a 20°C-to-70°C correction',
+      'You can ignore temperature — the meter applies the correction for you automatically',
+      'You must let the cable warm up to 70°C in service before any Zs test is valid',
+      'The table values already bake in a 20°C-to-70°C correction, so no adjustment is needed',
+      'Correct the cold measurement up (≈×1.20 for 70°C thermoplastic), or the limit down, per Appendix 3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The table values are stated at maximum operating temperature. Cables in service warm up; cables under test are usually cold. NOTE 2 read with NOTE 3 and Appendix 3 require a temperature correction — the canonical 0.4 %/°C copper coefficient gives roughly ×1.20 for 20°C → 70°C. Either correct the measurement upward or correct the table limit downward; the relationship is the same.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'Appendix 3 states the verification acceptance equation Zs(measured) ≤ 0.8 × (Up × Cmin / Ia). What is the role of the 0.8 factor?',
     options: [
-      'It is a tester accuracy allowance',
-      'It is a thermal/voltage rule-of-thumb safety margin used in Appendix 3 to account for the difference between the measurement at ambient temperature and the design assumption at maximum operating temperature, providing a single-step check against the calculated maximum',
-      'It accounts for parallel earth paths',
-      'It is the manufacturer tolerance for MCB trip current',
+      'A rule-of-thumb margin for the gap between ambient-temperature measurement and the hot design assumption',
+      'A built-in allowance for the accuracy tolerance of the loop-impedance tester',
+      'A correction that accounts for parallel earth paths via bonded metalwork',
+      'The manufacturer tolerance band on the MCB magnetic trip current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 0.8 factor in the Appendix 3 verification expression rolls together the temperature derating and voltage variability into a single rule-of-thumb when comparing a measured ambient-temperature Zs against the calculated maximum from Reg 411.4.4. It is not a meter tolerance, not a parallel-path correction, and not a manufacturer tolerance — it is the conventional safety margin BS 7671 uses for the verification arithmetic.',
   },
@@ -142,68 +142,68 @@ const quizQuestions = [
     question:
       'A4:2026 introduced a new column on the Schedule of Circuit Details. What does it record and why does it matter?',
     options: [
-      'A new column for AFDD presence — informational only',
-      'A maximum permitted Zs column on the Schedule of Circuit Details, capturing the design Zs limit for each circuit so that the verification step has the design intent visible alongside the measured Zs — the limit can be tighter than Table 41.3 if the designer set it that way',
-      'A column for the manufacturer of each MCB',
-      'A column duplicating the Reference Method',
+      'A new column recording AFDD presence on each circuit, for information only',
+      'A column naming the manufacturer of each MCB for traceability',
+      'A max-permitted-Zs column carrying the design Zs limit per circuit, visible at verification',
+      'A column duplicating the Reference Method already on the design schedule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 redrafted the model forms — the schedule of circuit details and schedule of test results are now separate pages — and the schedule of circuit details now carries a maximum-permitted-Zs column. The verifier reads measured Zs from the schedule of test results and compares it against the design-intent maximum in the circuit-details column. Where the designer has tightened the limit below the raw Table 41.3 value (for selectivity, longer cables, future load growth), the tighter design value is what compliance is judged against — not the raw table.',
   },
   {
     id: 7,
     question:
-      'You measure Zs = 0.62 Ω at the furthest point on a 32 A Type B circuit. The cable is at ambient (20°C). Is the circuit compliant against the Table 41.3 limit of 0.69 Ω?',
+      'You measure Zs = 1.20 Ω at the furthest point on a 32 A Type B circuit. The cable is at ambient (20°C). Is the circuit compliant against the Table 41.3 limit of 1.37 Ω?',
     options: [
-      'Yes — 0.62 Ω is below 0.69 Ω, that is all that matters',
-      'You must temperature-correct: at 70°C the measured Zs would be approximately 0.62 × 1.20 = 0.74 Ω, which exceeds 0.69 Ω → fail. Alternatively apply the Appendix 3 0.8 factor to the table limit (0.69 × 0.8 = 0.55 Ω) and the measured 0.62 Ω fails on that basis too. Investigate the design',
-      'Yes — temperature correction is informative only',
-      'No — the table is for hot cables, so the limit doubles for cold testing',
+      'No — corrected to 70°C (×1.20 → 1.44 Ω) it exceeds 1.37 Ω, and 0.8 × 1.37 = 1.10 Ω also fails',
+      'Yes — 1.20 Ω is below 1.37 Ω, and that is all that matters',
+      'Yes — temperature correction is informative only and need not be applied',
+      'No — the table is for hot cables, so the limit doubles when testing cold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Two equivalent ways to fail this circuit. The conservative on-site approach: correct the measurement (×1.20 for 70°C → 0.74 Ω, > 0.69 Ω → fail). The Appendix 3 verification expression: corrected limit = 0.8 × 0.69 ≈ 0.55 Ω, measured 0.62 Ω → fail. Either way the circuit needs investigation — likely a cable run longer than designed, an under-sized CPC, or a high-resistance termination.',
+      'Two equivalent ways to fail this circuit. The conservative on-site approach: correct the measurement (×1.20 for 70°C → 1.44 Ω, > 1.37 Ω → fail). The Appendix 3 verification expression: corrected limit = 0.8 × 1.37 ≈ 1.10 Ω, measured 1.20 Ω → fail. Either way the circuit needs investigation — likely a cable run longer than designed, an under-sized CPC, or a high-resistance termination.',
   },
   {
     id: 8,
     question:
       'On a TT system with a 30 mA RCD on the final circuits, why is Table 41.3 effectively irrelevant for the overcurrent disconnection check?',
     options: [
-      'Because TT does not require disconnection',
-      'Because on TT the loop impedance is so dominated by the installation electrode that the overcurrent device cannot achieve disconnection in the required time. Reg 411.4 / Table 41.3 limits are not realistically achievable, so Reg 411.5.3 / Table 41.5 (RCD-based limits with Ra × IΔn ≤ 50 V) become the compliance route',
-      'Because Table 41.3 only applies to TN-S',
-      'Because TT has no protective devices',
+      'Because a TT installation does not require fault disconnection at all',
+      'Because Table 41.3 applies only to TN-S installations, never to TT',
+      'Because a TT installation has no overcurrent protective devices fitted',
+      'Because the electrode-dominated loop is far too high for the overcurrent device, so Table 41.5 governs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'A TT installation electrode of 80 Ω (typical) cannot satisfy a 0.69 Ω Type B 32 A limit by any margin — the overcurrent device will not see enough fault current to disconnect within 0.4 s. That is why TT installations are RCD-protected by design; the disconnection question is then judged against Table 41.5 (1667 Ω at 30 mA) and Ra × IΔn ≤ 50 V, both of which any electrode in working order satisfies.',
+      'A TT installation electrode of 80 Ω (typical) cannot satisfy a 1.37 Ω Type B 32 A limit by any margin — the overcurrent device will not see enough fault current to disconnect within 0.4 s. That is why TT installations are RCD-protected by design; the disconnection question is then judged against Table 41.5 (1667 Ω at 30 mA) and Ra × IΔn ≤ 50 V, both of which any electrode in working order satisfies.',
   },
   {
     id: 9,
     question:
       'Type C and Type D circuit-breakers have looser magnetic trip thresholds than Type B (10× and 20× rated current respectively, vs 5× for Type B). What does this mean for the corresponding Table 41.3 maximum Zs values?',
     options: [
-      'Type C and Type D have higher (more permissive) maximum Zs values',
-      'Type C and Type D have lower (tighter) maximum Zs values, because the magnetic trip needs more fault current, so the loop impedance must be lower for the same disconnection time',
-      'They are identical',
-      'Type C and Type D are not in Table 41.3',
+      'Lower (tighter) max Zs, because the higher magnetic trip needs more fault current and so a lower loop',
+      'Higher (more permissive) maximum Zs values than the equivalent Type B device',
+      'Identical maximum Zs values to the equivalent Type B rating',
+      'No entry at all — Type C and Type D are not covered by Table 41.3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'For the same rating, a Type C needs ~10× rated current to trip magnetically and a Type D needs ~20×. To achieve those higher fault currents the loop impedance must be lower, so the Table 41.3 maximum Zs values for Type C and Type D are tighter than Type B. Examples: at 6 A — Type B 7.67 Ω, Type C 3.64 Ω, Type D 1.82 Ω (0.4 s).',
+      'For the same rating, a Type C needs ~10× rated current to trip magnetically and a Type D needs ~20×. To achieve those higher fault currents the loop impedance must be lower, so the Table 41.3 maximum Zs values for Type C and Type D are tighter than Type B. Examples at 6 A: Type B 7.67 Ω, Type C 3.64 Ω, Type D 1.82 Ω.',
   },
   {
     id: 10,
     question:
-      'You are verifying a circuit where the designer has written a maximum permitted Zs of 0.45 Ω in the new A4:2026 schedule-of-circuit-details column, even though the protective device is a 32 A Type B (raw Table 41.3 value = 0.69 Ω). What is the compliance test?',
+      'You are verifying a circuit where the designer has written a maximum permitted Zs of 0.45 Ω in the new A4:2026 schedule-of-circuit-details column, even though the protective device is a 32 A Type B (raw Table 41.3 value = 1.37 Ω). What is the compliance test?',
     options: [
-      'Compare measured Zs against 0.69 Ω — the design value is informative',
-      'Compare measured Zs (corrected to operating temperature) against 0.45 Ω. The designer has tightened the limit for a reason (selectivity, voltage drop margin, future load) and that tighter value is the design intent the certificate has to evidence. Failing at 0.69 Ω would still pass Table 41.3 but fail the design',
-      'Use whichever is higher',
-      'The schedule-of-circuit-details column has no compliance role',
+      'Compare measured Zs against 1.37 Ω — the tighter design value is informative only',
+      'Use whichever of the two limits is higher as the compliance threshold',
+      'Compare measured Zs (corrected to temperature) against the tighter design value of 0.45 Ω',
+      'The schedule-of-circuit-details column has no compliance role at verification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The whole point of the A4:2026 maximum-permitted-Zs column on the schedule of circuit details is to capture the design intent and make it visible during verification. A designer can tighten below Table 41.3 for legitimate reasons; once they have, the verification step is judged against the design value, not the raw table. This is why the new column matters for inspectors — it pins down the limit the design was built to.',
   },
@@ -278,9 +278,10 @@ const InspectionTestingModule5Section4 = () => {
               disconnection time, and <strong>Cmin</strong> is the minimum voltage factor (taken as
               0.95 in the BS 7671 table derivations — see NOTE 1 to Table 41.2). For Up = 230 V and
               a Type B 32 A MCB with Ia ≈ 160 A (5× rated current for the magnetic trip), the
-              formula gives 230 × 0.95 / 160 ≈ 1.37 Ω. The table value is then further conditioned
-              by the temperature assumption that NOTE 2 describes, landing at the published 0.69 Ω
-              at Up = 230 V for the same device.
+              formula gives 230 × 0.95 / 160 ≈ 1.37 Ω — which is exactly the published Table 41.3
+              value at Up = 230 V for that device. NOTE 2 then governs how a field measurement taken
+              cold is compared against that limit, not a separate derating of the table figure
+              itself.
             </p>
           </ConceptBlock>
 
@@ -566,7 +567,7 @@ const InspectionTestingModule5Section4 = () => {
                 fontSize="9"
                 fontWeight="bold"
               >
-                0.69
+                1.37
               </text>
 
               <rect x="35" y="135" width="340" height="22" fill="rgba(255,255,255,0.02)" />
@@ -647,7 +648,7 @@ const InspectionTestingModule5Section4 = () => {
                 fontSize="9"
                 fontWeight="bold"
               >
-                0.69
+                1.37
               </text>
 
               <rect x="35" y="210" width="340" height="22" fill="rgba(255,255,255,0.02)" />
@@ -1098,36 +1099,36 @@ const InspectionTestingModule5Section4 = () => {
               </li>
             </ol>
             <p>
-              For a 32 A Type B (Table 41.3 limit 0.69 Ω): cold-measurement ceiling = 0.69 × 0.8 ≈
-              0.55 Ω. Anything below 0.55 Ω cold is comfortably compliant; anything between 0.55 Ω
-              and 0.69 Ω needs the explicit temperature correction; anything above 0.69 Ω cold fails
+              For a 32 A Type B (Table 41.3 limit 1.37 Ω): cold-measurement ceiling = 1.37 × 0.8 ≈
+              1.10 Ω. Anything below 1.10 Ω cold is comfortably compliant; anything between 1.10 Ω
+              and 1.37 Ω needs the explicit temperature correction; anything above 1.37 Ω cold fails
               on inspection.
             </p>
           </ConceptBlock>
 
           <Scenario
             title="Worked Zs verification — 32 A Type B kitchen ring final"
-            situation="A 32 A Type B B-curve MCB protects a kitchen ring final wired in 2.5/1.5 mm² T&E. Ze at the origin is 0.32 Ω. Measured R1+R2 (from Section 3.1 work) at the worst-case socket, taken cold at 20°C, is 0.43 Ω. You need to verify the circuit Zs against Table 41.3."
+            situation="A 32 A Type B B-curve MCB protects a kitchen ring final wired in 2.5/1.5 mm² T&E. Ze at the origin is 0.32 Ω. Measured R1+R2 (from Section 3.1 work) at the worst-case socket, taken cold at 20°C, is 0.95 Ω. You need to verify the circuit Zs against Table 41.3."
             whatToDo={
               <>
                 <span className="block">
                   <strong>Step 1 — calculate predicted Zs at 70°C:</strong> Zs = Ze + (R1+R2 × 1.20)
-                  = 0.32 + (0.43 × 1.20) = 0.32 + 0.52 = 0.84 Ω.
+                  = 0.32 + (0.95 × 1.20) = 0.32 + 1.14 = 1.46 Ω.
                 </span>
                 <span className="block">
-                  <strong>Step 2 — compare to Table 41.3 raw limit (32 A Type B):</strong> 0.84 Ω vs
-                  0.69 Ω → fail at 70°C.
+                  <strong>Step 2 — compare to Table 41.3 raw limit (32 A Type B):</strong> 1.46 Ω vs
+                  1.37 Ω → fail at 70°C.
                 </span>
                 <span className="block">
                   <strong>Step 3 — sanity-check via the Appendix 3 0.8 method:</strong> cold
-                  compliance ceiling = 0.69 × 0.8 = 0.55 Ω. Measured cold Zs ≈ Ze + R1+R2 = 0.32 +
-                  0.43 = 0.75 Ω. 0.75 Ω &gt; 0.55 Ω → fail by both methods.
+                  compliance ceiling = 1.37 × 0.8 = 1.10 Ω. Measured cold Zs ≈ Ze + R1+R2 = 0.32 +
+                  0.95 = 1.27 Ω. 1.27 Ω &gt; 1.10 Ω → fail by both methods.
                 </span>
                 <span className="block">
                   <strong>Step 4 — investigate.</strong> Likely: cable run longer than designed,
                   joint degradation, or design error. Either re-design the circuit (larger CPC,
                   shorter run) or change the protective device (Type C will not help — Table 41.3 32
-                  A C = 0.69 Ω is unchanged; smaller rating? RCD-only fault protection? consider
+                  A C = 0.69 Ω is tighter still; smaller rating? RCD-only fault protection? consider
                   TT-style RCD compliance via Table 41.5).
                 </span>
               </>
@@ -1195,19 +1196,19 @@ const InspectionTestingModule5Section4 = () => {
 
           <CommonMistake
             title="Comparing measured Zs against the raw Table 41.3 value when the design intent is tighter"
-            whatHappens="The designer wrote 0.45 Ω as the max permitted Zs for circuit 2 in the A4:2026 schedule of circuit details, because the cable is long and the voltage-drop budget tightened the limit. You measure 0.62 Ω, see that it is below the raw Table 41.3 value of 0.69 Ω for a 32 A Type B, and tick the box. The certificate now says compliant against a limit the design did not set. Two years later a load-extension causes a real disconnection failure — and the records show the original verification did not evidence the design intent."
+            whatHappens="The designer wrote 0.45 Ω as the max permitted Zs for circuit 2 in the A4:2026 schedule of circuit details, because the cable is long and the voltage-drop budget tightened the limit. You measure 0.62 Ω, see that it is below the raw Table 41.3 value of 1.37 Ω for a 32 A Type B, and tick the box. The certificate now says compliant against a limit the design did not set. Two years later a load-extension causes a real disconnection failure — and the records show the original verification did not evidence the design intent."
             doInstead="Always read the max-permitted-Zs column on the circuit details page. If the column is empty or shows the raw Table 41.3 value, you compare against that. If it shows a tighter value, you compare against that. The verifier's responsibility is to evidence the design as designed, not the design as the regulation minimum permits."
           />
 
           <CommonMistake
             title="Forgetting to apply the temperature correction"
-            whatHappens="You measure Zs = 0.65 Ω cold on a 32 A Type B circuit, see it is below the raw 0.69 Ω limit, record 0.65 Ω, tick compliant. At 70°C operating temperature the actual Zs is 0.65 × 1.20 ≈ 0.78 Ω — over the limit. The MCB will not disconnect within 0.4 s under a real fault when the cable is loaded. The certificate is wrong, the disconnection time is non-compliant, and the evidence trail says it was compliant the day you signed."
+            whatHappens="You measure Zs = 1.20 Ω cold on a 32 A Type B circuit, see it is below the raw 1.37 Ω limit, record 1.20 Ω, tick compliant. At 70°C operating temperature the actual Zs is 1.20 × 1.20 ≈ 1.44 Ω — over the limit. The MCB will not disconnect within 0.4 s under a real fault when the cable is loaded. The certificate is wrong, the disconnection time is non-compliant, and the evidence trail says it was compliant the day you signed."
             doInstead="Every Zs comparison gets a temperature correction. Either correct the measurement (×1.20 for 70°C cable) and compare to the raw limit, or correct the limit (×0.8 via Appendix 3) and compare to the cold measurement. Most modern multifunction testers offer a corrected-Zs view if you tell the meter the cable temperature — use it."
           />
 
           <CommonMistake
             title="Applying Table 41.3 to a TT installation"
-            whatHappens="A TT installation has a 32 A Type B MCB protecting a final circuit. You measure Zs and read 95 Ω (Ze ≈ 95 Ω because the TT electrode dominates). You compare against Table 41.3 (0.69 Ω) and fail the circuit. You spend the morning chasing electrodes and recommending impossible upgrades. The whole exercise is misframed: TT compliance is RCD-driven, not overcurrent-driven."
+            whatHappens="A TT installation has a 32 A Type B MCB protecting a final circuit. You measure Zs and read 95 Ω (Ze ≈ 95 Ω because the TT electrode dominates). You compare against Table 41.3 (1.37 Ω) and fail the circuit. You spend the morning chasing electrodes and recommending impossible upgrades. The whole exercise is misframed: TT compliance is RCD-driven, not overcurrent-driven."
             doInstead="On TT, default to Table 41.5 + Ra × IΔn ≤ 50 V. For the 30 mA RCD that protects the circuit, max Zs is 1667 Ω — 95 Ω is fine. Confirm the RCD trip time under a fault simulation (Reg 643.7 / 643.8) and the touch-voltage check (Ra × IΔn = 95 × 0.03 = 2.85 V, well below 50 V). The Reg 411.4 / Table 41.3 path simply does not apply on TT."
           />
 
@@ -1334,7 +1335,7 @@ const InspectionTestingModule5Section4 = () => {
               'Four Zs tables in Chapter 41: 41.2 fuses 0.4 s, 41.3 circuit-breakers (B/C/D) for both 0.4 s and 5 s, 41.4 fuses 5 s, 41.5 RCDs.',
               'All values stated at Up = 230 V and at maximum operating temperature. NOTE 2 mandates temperature correction when comparing against a cold measurement.',
               'On-site shorthand: cold-measurement ceiling = table value × 0.8 (Appendix 3). Or correct the measurement ×1.20 for 70°C and compare against the raw table.',
-              'Common Type B Zs limits to memorise: 6 A → 7.67 Ω, 16 A → 2.73 Ω, 20 A → 2.18 Ω, 32 A → 0.69 Ω, 40 A → 1.09 Ω.',
+              'Common Type B Zs limits to memorise: 6 A → 7.67 Ω, 16 A → 2.73 Ω, 20 A → 2.18 Ω, 32 A → 1.37 Ω, 40 A → 1.09 Ω.',
               'Type C ≈ half the Type B limit for the same rating; Type D ≈ half the Type C. Tighter trip threshold demands lower loop impedance.',
               'A4:2026 split the schedule into circuit details + test results, with a max-permitted-Zs column on the circuit details page. The design value, not the raw table, is the verification target.',
               'On TT, Table 41.3 is irrelevant — the electrode-dominated loop cannot meet overcurrent disconnection. Compliance routes via Reg 411.5.3 / Table 41.5 + Ra × IΔn ≤ 50 V.',
@@ -1346,9 +1347,9 @@ const InspectionTestingModule5Section4 = () => {
             items={[
               {
                 question:
-                  'Where do the table values come from? Why is a 32 A Type B 0.69 Ω and not, say, 1.0 Ω?',
+                  'Where do the table values come from? Why is a 32 A Type B 1.37 Ω and not, say, 1.0 Ω?',
                 answer:
-                  'The values come from Reg 411.4.4: Zs = Up × Cmin / Ia. For a Type B 32 A, the magnetic trip is at Ia ≈ 5 × 32 = 160 A. With Up = 230 V and Cmin = 0.95, Zs(max) ≈ 230 × 0.95 / 160 ≈ 1.37 Ω. The table further conditions this for the assumption that conductors are at maximum operating temperature — which is what NOTE 2 makes explicit — landing the published table value at 0.69 Ω. The "raw" 1.37 Ω is the formula limit before the temperature/voltage assumptions; the 0.69 Ω is what the table publishes for direct comparison.',
+                  'The values come from Reg 411.4.4: Zs = Up × Cmin / Ia. For a Type B 32 A, the magnetic trip is at Ia ≈ 5 × 32 = 160 A. With Up = 230 V and Cmin = 0.95, Zs(max) ≈ 230 × 0.95 / 160 ≈ 1.37 Ω — and that is exactly the value Table 41.3 publishes for the device. NOTE 2 does not derate the table figure; it governs how a field measurement taken cold is compared against the published 1.37 Ω, since the cable in service runs hotter than at test.',
               },
               {
                 question:
@@ -1358,9 +1359,9 @@ const InspectionTestingModule5Section4 = () => {
               },
               {
                 question:
-                  'My meter accuracy spec is ±5%. The table value is 0.69 Ω. Where is the genuine pass / fail line?',
+                  'My meter accuracy spec is ±5%. The table value is 1.37 Ω. Where is the genuine pass / fail line?',
                 answer:
-                  'A measured 0.69 Ω with ±5% accuracy is genuinely between 0.65 Ω and 0.72 Ω. Apply the cold-measurement ceiling (0.69 × 0.8 = 0.55 Ω) and you have plenty of margin against meter tolerance below the ceiling. Anywhere between 0.55 Ω and 0.69 Ω cold needs the explicit temperature correction. Above 0.69 Ω cold is a fail regardless of meter tolerance — the table assumes 70°C, your cold reading already exceeds the worst-case operating-temperature limit.',
+                  'A measured 1.37 Ω with ±5% accuracy is genuinely between 1.30 Ω and 1.44 Ω. Apply the cold-measurement ceiling (1.37 × 0.8 = 1.10 Ω) and you have plenty of margin against meter tolerance below the ceiling. Anywhere between 1.10 Ω and 1.37 Ω cold needs the explicit temperature correction. Above 1.37 Ω cold is a fail regardless of meter tolerance — the table assumes 70°C, your cold reading already exceeds the worst-case operating-temperature limit.',
               },
               {
                 question: 'What if the protective device is a Type B 32 A RCBO instead of an MCB?',
@@ -1387,9 +1388,9 @@ const InspectionTestingModule5Section4 = () => {
               },
               {
                 question:
-                  'I have a circuit where measured Zs is 1.2 Ω, the protective device is a 32 A Type B (table limit 0.69 Ω), but it is RCD-protected by a 30 mA RCD. Compliant?',
+                  'I have a circuit where measured Zs is 1.6 Ω, the protective device is a 32 A Type B (table limit 1.37 Ω), but it is RCD-protected by a 30 mA RCD. Compliant?',
                 answer:
-                  'Yes — via the RCD route. Reg 411.5.3 permits compliance through the RCD where the overcurrent limit cannot be met. The Table 41.5 limit at 30 mA is 1667 Ω; 1.2 Ω is comfortably within it. Document that compliance is via 411.5.3 / Table 41.5 in the comments, and check the RCD trip time under fault conditions on the schedule of test results. This is exactly the route that Reg 411.5 was written to provide for situations where Table 41.3 cannot be met.',
+                  'Yes — via the RCD route. Reg 411.5.3 permits compliance through the RCD where the overcurrent limit cannot be met. The Table 41.5 limit at 30 mA is 1667 Ω; 1.6 Ω is comfortably within it. Document that compliance is via 411.5.3 / Table 41.5 in the comments, and check the RCD trip time under fault conditions on the schedule of test results. This is exactly the route that Reg 411.5 was written to provide for situations where Table 41.3 cannot be met.',
               },
             ]}
           />

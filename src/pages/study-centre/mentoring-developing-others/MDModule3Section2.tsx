@@ -34,11 +34,11 @@ const quickCheckQuestions = [
       'In the VACSR evidence quality framework, what does the "C" (Current) criterion mean?',
     options: [
       'The evidence must relate to the current version of BS 7671',
-      "The evidence must be recent enough to reflect the apprentice's current level of competence",
       'The evidence must be collected during the current academic year only',
+      "The evidence must be recent enough to reflect the apprentice's current level of competence",
       'The evidence must show work on current (live) electrical circuits',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The "C" in VACSR stands for Current, meaning the evidence must be recent enough to demonstrate the apprentice\'s current level of competence. Evidence from two years ago may not reflect what the apprentice can do today. Generally, evidence should be from within the last 12 months to be considered current, though this may vary depending on the awarding body.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'An apprentice submits 20 photographs of identical twin socket installations as evidence for their NVQ portfolio. What is the main problem with this evidence?',
     options: [
-      'Photographs are not accepted as NVQ evidence',
       'The evidence lacks range — it shows repetition of the same task rather than breadth of competence',
+      'Photographs are not accepted as NVQ evidence',
       'The apprentice should have submitted 30 photographs instead',
       'Socket installations are too simple to count as evidence',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The main problem is lack of range. While the 20 photographs prove the apprentice can install twin sockets, they do not demonstrate breadth of competence across different types of work. The NVQ requires evidence of competence across a range of activities, environments, and complexity levels. The portfolio should include diverse evidence — different circuits, different environments (domestic, commercial), different types of accessories and containment.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does the "V" in the VACSR evidence quality framework stand for?',
     options: [
-      'Verified — the evidence has been checked by the assessor',
       'Valid — the evidence is relevant to the assessment criteria being claimed',
+      'Verified — the evidence has been checked by the assessor',
       'Visual — the evidence includes photographs or video',
       'Voluntary — the evidence was produced without prompting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The "V" stands for Valid, meaning the evidence must be relevant to the specific assessment criteria being claimed. Evidence that demonstrates excellent competence but does not relate to the unit being assessed is not valid for that unit. The mentor should help the apprentice map each piece of evidence to the correct assessment criteria.',
   },
@@ -128,11 +128,11 @@ const quizQuestions = [
       'A mentor spots an opportunity for NVQ evidence during a domestic consumer unit change. What should they do?',
     options: [
       'Wait until the job is finished and then write a brief note about it',
-      'Brief the apprentice before starting, identify which NVQ units apply, capture evidence during the work, and write a detailed witness testimony afterwards',
       'Tell the apprentice to take a photograph of the finished consumer unit',
       'Let the NVQ assessor decide whether it counts as evidence',
+      'Brief the apprentice before starting, identify which NVQ units apply, capture evidence during the work, and write a detailed witness testimony afterwards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The best approach is proactive: brief the apprentice before starting (so they know which competencies they are demonstrating), identify the relevant NVQ units and assessment criteria, capture evidence during the work (photographs at key stages, not just the finished product), and write a detailed witness testimony afterwards that references specific assessment criteria. This planned approach produces much higher quality evidence than retrospective note-taking.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
       'What is the biggest risk of leaving NVQ portfolio building until the final year of the apprenticeship?',
     options: [
       'The college may charge an additional fee for late submission',
-      'Critical evidence opportunities from earlier stages will have been missed and cannot be recreated',
       'The apprentice will have forgotten how to write English',
       'The NVQ assessor will refuse to assess a late portfolio',
+      'Critical evidence opportunities from earlier stages will have been missed and cannot be recreated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The biggest risk is that evidence opportunities from earlier stages — particularly Stage 1 foundation work and Stage 2 development work — will have been missed entirely. You cannot retrospectively create evidence for work that was done two years ago without a witness testimony or photographs. Portfolio building should start from day one and continue throughout the apprenticeship, with the mentor actively identifying and capturing evidence opportunities at every stage.',
   },

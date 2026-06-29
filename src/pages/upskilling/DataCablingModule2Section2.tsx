@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'Decode the cable shield code F/UTP correctly.',
     options: [
-      'Foil overall, foil per pair, twisted pair.',
-      'Foil overall, unshielded pairs, twisted pair — i.e. an overall foil screen and no per-pair shielding inside.',
-      'Foil per pair only, no overall shield.',
-      'Plain UTP.',
+      'Foil overall AND foil per pair, twisted pair.',
+      'Foil overall, unshielded pairs — an overall foil screen, no per-pair shielding.',
+      'Foil per pair only, with no overall shield.',
+      'Plain unshielded twisted pair, no foil anywhere.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Why is "balance" — not the screen — the primary noise-rejection mechanism in twisted pair?',
     options: [
-      'Because shields rust over time.',
-      'Because differential signalling plus the twist rejects common-mode noise by subtraction at the receiver. The screen is a SECONDARY mechanism: it adds protection against very high-frequency or very strong external fields, raises noise margin in dense bundles (alien crosstalk), and helps under sustained high-current PoE — but the pair would still work without it in ordinary office EMI.',
-      'Because shields cause earth loops.',
-      'Because UK regulations forbid shielded cable.',
+      'Differential signalling plus the twist cancels common-mode noise at the receiver.',
+      'A screen reflects external fields, whereas balance only attenuates them.',
+      'Shielding adds capacitance that degrades the signal more than it protects it.',
+      'The screen carries the return current, so the pair balance is irrelevant.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Balance is the primary rejection mechanism — covered in M2S1. Differential signalling means the receiver subtracts the two wire voltages; common-mode noise (identical on both wires) cancels in the subtraction. The twist guarantees the two conductors share the same noise field along the run. Shielding adds margin on top of that — it is not the primary mechanism. This is why U/UTP works fine in ordinary office EMI: the balance is doing the work.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'What is the practical difference between F/UTP and U/FTP at the same Cat6A performance class?',
     options: [
-      'They are identical.',
-      'F/UTP has ONE foil — an overall screen around all four pairs — and is somewhat easier and cheaper to terminate. U/FTP has FOUR foils — one per pair — and gives better alien-crosstalk and inter-pair isolation, especially at the higher end of Cat6A bandwidth (above 250 MHz) and for Cat7 / Cat7A constructions.',
-      'F/UTP is for fibre, U/FTP is for copper.',
-      'F/UTP is older than U/FTP.',
+      'They are electrically identical, only the jacket colour differs.',
+      'F/UTP uses four per-pair foils; U/FTP uses one overall foil.',
+      'F/UTP has one overall foil; U/FTP has four per-pair foils for better isolation.',
+      'F/UTP is rated for fibre, U/FTP only for copper.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'F/UTP wraps a single foil around the whole core (all four pairs together). Cheaper, slightly easier to strip and terminate. Adequate for most Cat6A work where alien crosstalk is the main shielding driver. U/FTP wraps each pair individually — four foils inside one jacket. More expensive, more termination care, but better isolation between pairs (NEXT margin) and excellent alien-crosstalk control. U/FTP is the standard construction for Cat7 / Cat7A and is a common premium Cat6A choice for high-density / high-PoE / long-run jobs.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'When does the BS 7671 framework actively REQUIRE a metallic screen / shielded cabling?',
     options: [
-      'Always.',
-      'Never — the regs leave the choice to designers.',
-      'BS 7671 does not directly mandate "shielded cable" but §444.5.3.1 mandates that any metallic screen / sheath / armouring of data cables that IS present must be bonded to the equipotential bonding network. EMC drivers come from §444 (sources of disturbance, segregation, separation tables) and §528 (proximity to other circuits). Where a fully-enclosed bonded metallic containment is impractical and EMC separation cannot be achieved by distance alone, a shielded cable is the practical answer.',
-      'Only on jobs over 1000 m\u00b2.',
+      'On every data installation, without exception.',
+      'On any installation larger than 1000 square metres.',
+      'It never mandates a screen, but 444.5.3.1 requires bonding any screen that is present.',
+      'Only where a horizontal cable run exceeds 90 m.',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'On a screened Cat6A install, which BS 7671 clause is the "bond the foil" hook?',
     options: [
-      '§411.3.1.1.',
-      '§444.5.3.1 — verbatim: "The following parts shall be connected to the equipotential bonding network: (a) metallic containment, conductive screens, conductive sheaths or armouring of data transmission cables or of information and communications technology equipment...".',
-      '§528.1.',
-      '§543.7.',
+      'Reg 411.3.1.1 (protective equipotential bonding for ADS).',
+      'Reg 528.1 (proximity of wiring systems to other services).',
+      'Reg 543.7 (high protective conductor current circuits).',
+      'Reg 444.5.3.1 (parts connected to the equipotential bonding network).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Verbatim from §444.5.3.1: "The following parts shall be connected to the equipotential bonding network: (a) metallic containment, conductive screens, conductive sheaths or armouring of data transmission cables or of information and communications technology equipment; (b) functional earthing conductors of antenna systems; (c) conductors of the earthed pole of a DC supply for information and communications technology equipment; (d) functional earthing conductors; (e) protective conductors." This is the regulatory hook for bonding the foil / braid of any screened ICT cable on a UK installation.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A designer proposes "U/UTP Cat6A inside continuous bonded steel cable basket" with no separate cable screen. Why is this defensible under BS 7671 + BS EN?',
     options: [
-      'Steel basket supplies its own EMI.',
-      'BS 7671 Annex A444 Table A444.1 recognises containment type as part of the screening solution: open metallic containment reduces required Band I / II separation to 200 mm, perforated to 150 mm, and fully-enclosed solid metallic containment can replace physical separation entirely. With the containment bonded per §444.5.3.1, it is itself the EMC barrier — and the cable inside can be unshielded.',
-      'BS EN 50174-2 forbids shielded cable in steel basket.',
-      'Because the steel reflects all EMI back outwards.',
+      'Bonded fully-enclosed containment is itself a recognised screen under Annex A444.',
+      'Steel basket generates its own EMI that masks external interference.',
+      'BS EN 50174-2 forbids shielded cable inside steel basket anyway.',
+      'The steel reflects all incoming EMI back outwards.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Annex A444 Table A444.1 explicitly trades containment performance against physical separation: open metallic containment 200 mm, perforated 150 mm, fully-enclosed (solid) requires no separation other than containment itself. §444.5.3.1 mandates the containment be bonded to the equipotential bonding network. Together, bonded containment is recognised as the screen — and unshielded cable inside it is a defensible engineering choice. The trade-off is real (containment cost vs cable cost) and either approach can be the right answer depending on the route, the labour rate, and the EMI environment.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'Why does sustained Type 4 PoE++ make alien crosstalk a practical concern in dense bundles?',
     options: [
-      'Higher current produces higher-frequency noise.',
-      'Sustained DC current per conductor heats the cable, raising insertion loss and degrading every channel parameter — including alien crosstalk margins. In dense bundles, multiple loaded channels pump heat into the same air pocket; the temperature rise compounds. Cat6A alien-crosstalk specifications were written for cool cable; under hot, fully-loaded bundles, F/UTP or U/FTP construction restores margin and per-pair foils block coupling between adjacent cables.',
-      'PoE current is AC.',
-      'Alien crosstalk is unrelated to PoE.',
+      'The higher DC current produces higher-frequency noise on the pair.',
+      'PoE current is alternating, so it couples directly into adjacent pairs.',
+      'Sustained DC current heats the bundle, raising insertion loss and eroding crosstalk margins.',
+      'Alien crosstalk is unrelated to PoE current entirely.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PoE current is DC, but sustained DC carries heat — every loaded conductor dissipates I\u00b2R losses as heat, and dense bundles trap that heat. Cable temperature rise raises insertion loss (BS 7671 §716.523.1.101 NOTE 1 spells this out) and erodes every other channel parameter. Alien crosstalk between adjacent cables (the Cat6A speciality) is one of those parameters. Shielded cables (per-pair foils especially) restore alien-crosstalk margin even in hot bundles. For sustained Type 4 PoE++ across dense bundles, an F/UTP or U/FTP Cat6A is a defensible engineering choice — and BS 7671 §716.523.2.101 still caps per-conductor current at 750 mA regardless.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'A client insists on S/FTP Cat7A for a standard office. What\u2019s the right professional response?',
     options: [
-      'Refuse the job.',
-      'Educate, then comply if they still want it. Explain that for ordinary office EMI, U/UTP Cat6A delivers Class EA at less cost, less labour and less termination risk; S/FTP Cat7A is genuinely warranted for heavy industrial / broadcast / medical / dense high-PoE / very long-run cases. If after the conversation they still want S/FTP Cat7A, deliver it correctly: full braid + foil bonding at every termination, screened keystones throughout, rack-bond bar bonded to the TBB, and Class FA channel certification at handover.',
-      'Quote it as Cat6A and substitute on site.',
-      'Tell them BS 7671 mandates Cat6A.',
+      'Refuse the job outright as over-specified.',
+      'Quote for Cat7A but quietly substitute Cat6A on site.',
+      'Tell them BS 7671 mandates Cat6A for offices.',
+      'Explain the trade-offs, then deliver Cat7A correctly if they still want it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Client autonomy is real — but informed consent is the contractor\u2019s job. The conversation is: "U/UTP Cat6A is the 2026 default for ordinary office because of [bandwidth, balance, cost, termination simplicity]. S/FTP Cat7A genuinely buys you something in [list of demanding cases]. Your environment is [office]. Here are the costs of each approach. Which would you like to proceed with?" If they still pick Cat7A — fine, deliver it well. If they pick Cat6A — that was the intention. The wrong moves are silent substitution (fraud) and refusal without explanation (rude).',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'Earthing the cable screen at BOTH ends used to be considered bad practice (earth-loop concerns). What is the modern UK position?',
     options: [
-      'Always single-end earth.',
-      'Modern UK practice (BS EN 50310 / BS EN 50174-2 / BS 7671 §444 + §545) for ICT cable screens is BOTH-end bonding into a properly meshed equipotential bonding network. The old "single-end earth" rule applied to audio-frequency analogue circuits where mains-frequency loop currents were the concern; for ICT screens the dominant threats are at much higher frequencies, where both-end bonding is essential to provide a low-impedance return path. The mesh / ring construction of the bonding network (§444.1.3 — mesh ≤ 2 m × 2 m) suppresses the loop-current concern.',
-      'Earth at neither end.',
-      'Earth at both ends but only on Tuesdays.',
+      'Always earth the screen at a single end only.',
+      'Leave the screen unearthed at both ends.',
+      'Earth at one end for runs over 30 m, both ends below that.',
+      'Bond both ends into a properly meshed equipotential bonding network.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "single-end earth to avoid earth loops" rule comes from analogue audio practice — at 50 Hz, loop currents flowing in screens caused hum. ICT screens face high-frequency disturbances where the screen needs a low-impedance return at both ends to be effective at all. BS 7671 §444.1.3 specifies a meshed bonding network (mesh ≤ 2 m × 2 m for high-density ICT areas) which all-but eliminates the mains-frequency loop concern. BS EN 50310 / BS EN 50174-2 align: bond ICT screens at both ends into a properly designed bonding network. §444.5.3.1 is the BS 7671 hook.',
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which TWO factors most cleanly justify upgrading from U/UTP to a shielded variant?',
     options: [
-      'The cable looks shinier.',
-      'Heavy industrial / broadcast / medical EMI that exceeds the balance margin of the pair, AND high-density bundles under sustained high-current PoE where alien crosstalk would otherwise erode the channel — both validated by site EMC survey, segregation calculation against BS 7671 Annex A444 Tables A444.1 / A444.2, and bundle thermal modelling against §716.523.1.101 NOTE.',
-      'The site has nice ceilings.',
-      'The client has a preference for the colour blue.',
+      'Heavy industrial / broadcast / medical EMI, plus dense bundles under sustained high-current PoE.',
+      'A shorter horizontal run, plus the use of LSZH jacketing.',
+      'A larger conductor gauge, plus a higher Category rating.',
+      'A neater containment route, plus a single equipment room.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The two cleanest engineering justifications for screening are: (1) an EMI environment that exceeds what balance alone can handle (heavy contactor switching, industrial drives, broadcast / medical equipment, proximity to high-current LV that cannot be separated per Annex A444 Tables A444.1 / A444.2), and (2) dense bundles under sustained high-current PoE where alien crosstalk erodes the channel (TIA TSB-184-A bundle modelling, §716.523.1.101 NOTE on temperature rise increasing insertion loss). Both are real engineering drivers; "always shield" or "never shield" are both wrong.',
   },

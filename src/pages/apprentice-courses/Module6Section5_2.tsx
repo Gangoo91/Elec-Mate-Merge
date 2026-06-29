@@ -22,14 +22,14 @@ const Module6Section5_2 = () => {
       id: 1,
       question: 'What instrument is used to perform insulation resistance tests?',
       options: [
-        'To ensure safety and accurate readings',
-        'Insulation resistance tester (megger)',
-        'Damage to connected equipment',
-        'The electrician performing the test',
+        'A clamp meter set to the ohms range',
+        'An insulation resistance tester (megger)',
+        'A two-pole voltage indicator',
+        'A standard digital multimeter',
       ],
       correctAnswer: 1,
       explanation:
-        "An insulation resistance tester, commonly called a 'megger', is the specific instrument used to perform insulation resistance tests.",
+        "An insulation resistance tester, commonly called a 'megger', applies a high DC voltage and is the specific instrument used to perform insulation resistance tests.",
     },
     {
       id: 2,
@@ -46,12 +46,12 @@ const Module6Section5_2 = () => {
     },
     {
       id: 3,
-      question: 'Why must circuits be isolated before testing?',
+      question: 'Why must circuits be isolated before insulation resistance testing?',
       options: [
-        'To prevent damage from high test voltages',
-        'The electrician performing the test',
-        'Insulation resistance tester (megger)',
-        'To ensure safety and accurate readings',
+        'To allow the test to be carried out at a higher voltage',
+        'So the megger can charge its internal battery from the supply',
+        'To speed up the testing of multiple circuits at once',
+        'To ensure safety of personnel and obtain accurate readings',
       ],
       correctAnswer: 3,
       explanation:
@@ -61,10 +61,10 @@ const Module6Section5_2 = () => {
       id: 4,
       question: 'Why should sensitive equipment be disconnected before testing?',
       options: [
-        'To prevent damage from high test voltages',
-        'To ensure safety and accurate readings',
-        'Insulation resistance tester (megger)',
-        'Testing without disconnecting sensitive equipment',
+        'High DC test voltages can permanently damage electronic components',
+        'It reduces the time taken to complete the insulation resistance test',
+        'Connected equipment increases the measured insulation resistance',
+        'The megger cannot generate a test voltage while equipment is connected',
       ],
       correctAnswer: 0,
       explanation:
@@ -86,16 +86,16 @@ const Module6Section5_2 = () => {
     {
       id: 6,
       question:
-        'True or False: It is safe to test a live circuit with an insulation resistance tester.',
+        'What must the state of the circuit be before an insulation resistance test is carried out?',
       options: [
-        'True',
-        'Sometimes',
-        'False',
-        'Only at low voltage',
+        'Energised so the tester can read the working voltage',
+        'Partially energised on the neutral conductor only',
+        'Isolated and proved dead before any test is applied',
+        'Connected to a temporary low-voltage supply',
       ],
       correctAnswer: 2,
       explanation:
-        'False. It is never safe to test a live circuit with an insulation resistance tester. The circuit must always be isolated first.',
+        'It is never safe to test a live circuit with an insulation resistance tester; the circuit must always be isolated and proved dead first.',
     },
     {
       id: 7,
@@ -112,12 +112,12 @@ const Module6Section5_2 = () => {
     },
     {
       id: 8,
-      question: 'Name one risk of carrying out an IR test incorrectly.',
+      question: 'What is one risk of carrying out an IR test incorrectly?',
       options: [
-        'Damage to connected equipment',
-        'Discharge it to earth',
-        'Test voltage is present',
-        'The electrician performing the test',
+        'Damage to sensitive connected equipment',
+        'A permanent increase in the circuit impedance',
+        'The supply fuse rating being reduced',
+        'The earth electrode resistance rising',
       ],
       correctAnswer: 0,
       explanation:
@@ -127,10 +127,10 @@ const Module6Section5_2 = () => {
       id: 9,
       question: 'Who is responsible for ensuring safe testing procedures are followed?',
       options: [
-        'Damage to connected equipment',
+        'The manufacturer of the test instrument',
         'The electrician performing the test',
-        'To prevent damage from high test voltages',
-        'Insulation resistance tester (megger)',
+        'The client who commissioned the work',
+        'The supplier of the electrical materials',
       ],
       correctAnswer: 1,
       explanation:
@@ -140,14 +140,14 @@ const Module6Section5_2 = () => {
       id: 10,
       question: 'In the real-world example, what mistake led to damage of computer equipment?',
       options: [
-        'To prevent damage from high test voltages',
-        'Insulation resistance tester (megger)',
+        'Using a test voltage that was too low for the circuit',
+        'Connecting the test leads to the wrong conductors',
         'Testing without disconnecting sensitive equipment',
-        'The electrician performing the test',
+        'Failing to discharge the circuit after the test',
       ],
       correctAnswer: 2,
       explanation:
-        'The apprentice tested without disconnecting computers, and the 500V DC test voltage damaged the computer power supplies.',
+        'The apprentice tested without disconnecting computers still plugged in, and the 500V DC test voltage damaged their power supplies.',
     },
   ];
 

@@ -39,12 +39,12 @@ const inlineChecks = [
     question:
       'Reg 570.6.5.201 — what does it require for Power Conversion Equipment (PCE) that is NOT incorporated inside the battery assembly?',
     options: [
-      'A 30 mA RCD on the AC port only',
       'A means of isolation for all power ports of the PCE',
+      'A 30 mA RCD on the AC port only',
       'A warning notice at the consumer unit',
       'A bonding conductor to the battery enclosure',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 570.6.5.201 — "To allow maintenance and replacement of PCE not incorporated in a battery assembly, a means of isolation shall be provided for all power ports of the PCE." Where the inverter is a separate box from the battery (typical AC-coupled and many hybrid installs), every port — DC battery side, DC PV side (if hybrid), AC grid side, any backup/EPS port — needs its own means of isolation. Topology drives the count of ports, and therefore the isolation count.',
   },
@@ -67,12 +67,12 @@ const inlineChecks = [
     question:
       'Chapter 82 (PEI) requires that protective measures continue to operate when the supply configuration changes (e.g. grid → island mode). Why is this a topology question, not just a setting?',
     options: [
-      'It is just a setting — the inverter handles it',
-      'Because the source of supply moves between grid and battery, and earthing reference, neutral handling and fault level all depend on which source is live — that is set by the topology choice',
-      'Because the customer has to switch a manual selector',
-      'Because the DNO requires it',
+      'It is purely a firmware setting that the inverter handles without any hardware impact',
+      'Because the customer must physically switch a manual changeover selector on each outage',
+      'Because the DNO mandates a specific menu configuration on every prosumer install',
+      'Because the live source moves between grid and battery, and earthing, neutral and fault level all depend on which source is live',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Chapter 82 (Prosumer’s Electrical Installation) — in case of change of any energy supply configuration, all protective measures shall continue to be operational or shall be automatically replaced by other protective measures providing an equivalent level of safety. Reg 826.1.1.2.2 specifically addresses neutral conductor handling on the island side — typically a contactor re-bonds N-PE inside the BESS / EPS so that ADS (automatic disconnection of supply) still works against the local source. Section 5.7 covers the commissioning checklist for the topology choice.',
   },
@@ -97,11 +97,11 @@ const quizQuestions = [
       'Reg 570.5.1 lists ten battery selection factors. Which two factors most directly constrain the topology decision (DC-coupled vs AC-coupled vs hybrid)?',
     options: [
       '(a) nature of demand and (b) battery voltage',
-      '(e) PCE connection and coupling mode, and (d) generation profiles of locally connected generators',
       '(i) suitability for fixed installation, and (j) external influences',
       '(g) charge/discharge profiles, and (h) load profiles + cyclic operation',
+      '(e) PCE connection and coupling mode, and (d) generation profiles of locally connected generators',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Factor (e) — "power conversion equipment connection and coupling mode" — is the explicit topology-naming factor. Factor (d) — "generation profiles of locally connected generators" — pins it down further: if the customer already has a PV inverter on site, that profile pushes the topology to AC-coupled retrofit; greenfield with no PV inverter yet leaves DC-coupled / hybrid open. The other factor pairs matter for sizing and selection but not for the topology choice itself.',
   },
@@ -109,10 +109,10 @@ const quizQuestions = [
     question:
       'On a hybrid (all-in-one) inverter install, where does Reg 570.6.5.201 require isolation?',
     options: [
-      'Only on the AC grid port',
-      'Only between the battery and the hybrid inverter',
-      'On every power port of the PCE — DC PV, DC battery, AC grid, and any EPS / backup port — provided the PCE is not incorporated inside the battery assembly',
-      'Not required because the hybrid inverter is one device',
+      'Only on the AC grid port, with the DC and EPS ports left unisolated',
+      'Only between the battery and the hybrid inverter, with no AC-side isolation',
+      'On every power port of the PCE — DC PV, DC battery, AC grid and any EPS port — where the PCE is not inside the battery assembly',
+      'Not required at all, because the hybrid inverter is treated as a single sealed device',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A DC-coupled BESS shares the same DC bus as the PV array via a single hybrid charge controller. Which Reg 712.x requirement is changed by the addition of the battery on the same DC bus?',
     options: [
-      'Nothing — adding a battery to the PV DC bus has no AC-side regulatory effect',
-      'Reg 712.433.104 — the AC supply cable’s overcurrent protective device must be sized against the inverter’s design current, which now reflects both PV generation AND battery discharge — not just PV output',
-      'Reg 712.433.103 — the PV array DC cable must be doubled in size',
-      'Reg 712.521 — lightning loop minimisation no longer applies',
+      'Reg 712.433.104 — the AC OCPD must be sized against the inverter’s design current, now reflecting PV plus battery discharge',
+      'Nothing changes — adding a battery to the PV DC bus has no AC-side regulatory effect at all',
+      'Reg 712.433.103 — the PV array DC cable cross-section must be doubled to carry the battery current',
+      'Reg 712.521 — lightning loop minimisation no longer applies once a battery is present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 712.433.104 — when defining the rated current of the AC-side OCPD, the design current of the inverter shall be taken into account. On a DC-coupled hybrid, the inverter’s AC output current can swing higher than PV-only design — PV + battery discharge can both push power to the AC port simultaneously. The OCPD selection must reflect the COMBINED design current, not just the PV nameplate. Mis-sizing here is a common topology-change defect on retrofits.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'A customer wants single-phase 230 V backup during a grid outage from their existing AC-coupled BESS. Which topology change is required?',
     options: [
-      'No change — standard AC-coupled inverters always provide backup',
-      'A change to single-port BESS configuration',
-      'An EPS (Emergency Power Supply) topology variant — the battery inverter must be the type that disconnects from the DNO supply on outage and then re-energises a dedicated EPS port or a switched sub-board, with neutral handling per Reg 826.1.1.2.2 and anti-islanding per Reg 551.7.5',
-      'A second consumer unit',
+      'No change — standard AC-coupled grid-tied inverters always provide outage backup by default',
+      'A simple change from a dual-port to a single-port BESS configuration',
+      'An EPS topology variant — an inverter that drops the DNO supply on outage and re-energises an EPS sub-board, per Reg 826.1.1.2.2 and Reg 551.7.5',
+      'A second consumer unit fed directly from the existing battery inverter output',
     ],
     correctAnswer: 2,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'On a hybrid install where the battery cabinet houses both the cells AND the inverter (a single sealed BESS unit), how does Reg 570.6.5.201 apply?',
     options: [
-      'Every internal port of the sealed cabinet needs an external isolator',
-      'The rule does not apply, because PCE incorporated within the battery assembly is excluded from the 570.6.5.201 isolation duty — the manufacturer’s built-in disconnect is taken as compliant; the installer still provides external isolation on the AC connection',
-      'A separate DC isolator must be added between cells and inverter',
-      'Two RCDs in series on the AC port',
+      'Every internal port of the sealed cabinet needs its own added external isolator',
+      'A separate DC isolator must be retrofitted between the cells and the internal inverter',
+      'Two RCDs must be fitted in series on the external AC port for redundancy',
+      'PCE incorporated in the battery assembly is excluded — the built-in disconnect is compliant; the installer isolates the external AC connection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 570.6.5.201 applies "to PCE not incorporated in a battery assembly". A sealed BESS unit with PCE inside the cabinet is incorporated PCE — the manufacturer’s integrated isolation arrangement is treated as compliant for the internal ports. The installer’s duty is then on the EXTERNAL connections: an AC isolator on the grid port, and any EPS port, sized for the inverter’s design current per Reg 712.433.104. Cert evidence bundle records the manufacturer model and the external isolation provision.',
   },

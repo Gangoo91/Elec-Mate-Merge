@@ -14,14 +14,14 @@ const quickCheckQuestions = [
     question:
       'An electrician knows they should always test dead before working on a circuit, but they frequently skip this step on &ldquo;quick jobs&rdquo; because it saves a few minutes. According to James Clear&rsquo;s inversion of the 4 Laws of Behaviour Change, which strategy would be MOST effective for breaking this dangerous habit?',
     options: [
-      'Telling themselves they will do better next time and relying on willpower',
-      'Making it difficult &mdash; integrating the voltage tester into a formal lock-off kit so that proceeding without testing requires actively bypassing a physical system',
-      'Writing a motivational note on their van dashboard about safety',
-      'Watching a safety training video once a year during CPD',
+      'Telling themselves they will do better next time and relying purely on willpower',
+      'Making it difficult by integrating the voltage tester into a formal lock-off kit',
+      'Writing a motivational note about safety on their van dashboard as a daily reminder',
+      'Watching a safety training video once a year during their scheduled CPD time',
     ],
     correctIndex: 1,
     explanation:
-      'Clear&rsquo;s third law inverted says: make the bad habit difficult by increasing friction. If skipping the dead test means you have to actively override a physical system (such as a lock-off kit that requires test results before the lock is removed, or a voltage tester physically clipped to your isolation kit so you encounter it every single time), you are far less likely to skip it. This works because it moves the decision from the willpower level to the systems level. Willpower alone (option A) is unreliable because it depletes under stress and fatigue &mdash; exactly the conditions on a busy job site. A motivational note (option C) and an annual video (option D) are too weak and too infrequent to override a deeply embedded automatic behaviour. The most effective combined strategy would layer multiple inverted laws: make the bad habit difficult (integrate testing into the physical workflow), make it unattractive (read HSE fatality reports of electricians who died from not testing dead), and make it unsatisfying (implement a buddy system where your colleague witnesses and signs off on dead testing, creating social cost for skipping).',
+      'Clear&rsquo;s third law inverted says: make the bad habit difficult by increasing friction. If skipping the dead test means you have to actively override a physical system (such as a lock-off kit that requires test results before the lock is removed, or a voltage tester physically clipped to your isolation kit so you encounter it every single time), you are far less likely to skip it. This works because it moves the decision from the willpower level to the systems level. Willpower alone is unreliable because it depletes under stress and fatigue &mdash; exactly the conditions on a busy job site. A motivational note and an annual video are too weak and too infrequent to override a deeply embedded automatic behaviour. The most effective combined strategy would layer multiple inverted laws: make the bad habit difficult (integrate testing into the physical workflow), make it unattractive (read HSE fatality reports of electricians who died from not testing dead), and make it unsatisfying (implement a buddy system where your colleague witnesses and signs off on dead testing, creating social cost for skipping).',
   },
   {
     id: 'gs-3-3-check2',
@@ -35,21 +35,21 @@ const quickCheckQuestions = [
     ],
     correctIndex: 0,
     explanation:
-      'Temptation bundling, developed by Katherine Milkman at the Wharton School, University of Pennsylvania, works by linking a behaviour you need to do (but tend to avoid) with a behaviour you want to do (but don&rsquo;t need). The critical constraint is that the enjoyable activity is ONLY available during the less enjoyable task, creating a genuine incentive. Option A is a textbook example: the electrician needs to do paperwork (filing certificates, invoicing) but dislikes it, and they enjoy listening to their favourite podcast. By making the rule that they can only listen to that specific podcast while doing admin, the admin becomes associated with pleasure rather than drudgery. Over time, the electrician starts looking forward to admin time because it means podcast time. Option B is not temptation bundling &mdash; it is a general reward that is disconnected from the specific behaviour and does not pair the activities simultaneously. Option C is procrastination, not bundling. Option D is simply relaxation, not a strategic pairing. The key distinction is simultaneity and exclusivity: the enjoyable activity happens at the same time as the required task and is not available at any other time.',
+      'Temptation bundling, developed by Katherine Milkman at the Wharton School, University of Pennsylvania, works by linking a behaviour you need to do (but tend to avoid) with a behaviour you want to do (but don&rsquo;t need). The critical constraint is that the enjoyable activity is ONLY available during the less enjoyable task, creating a genuine incentive. Listening to a favourite podcast solely while doing admin is a textbook example: the electrician needs to do paperwork (filing certificates, invoicing) but dislikes it, and they enjoy the podcast. By making the rule that they can only listen to that specific podcast while doing admin, the admin becomes associated with pleasure rather than drudgery. Over time, the electrician starts looking forward to admin time because it means podcast time. A takeaway after every job is not temptation bundling &mdash; it is a general reward disconnected from the specific behaviour that does not pair the activities simultaneously. Scrolling at the door is procrastination, not bundling, and evening television is simply relaxation, not a strategic pairing. The key distinction is simultaneity and exclusivity: the enjoyable activity happens at the same time as the required task and is not available at any other time.',
   },
   {
     id: 'gs-3-3-check3',
     question:
       'James Clear&rsquo;s &ldquo;never miss twice&rdquo; rule states that if you break a habit streak, the most important thing is to:',
     options: [
-      'Start the entire habit-building process again from scratch with a new system',
-      'Accept that you are not disciplined enough and lower your expectations permanently',
-      'Get back on track immediately the next day &mdash; one missed day is an accident, two missed days is the start of a new (bad) habit',
-      'Punish yourself severely so you remember not to miss again',
+      'Start the entire habit-building process again from scratch with a completely new system',
+      'Accept that you are not disciplined enough and lower your expectations of yourself permanently',
+      'Get back on track immediately the next day, because a single missed day is just an accident',
+      'Punish yourself severely for the slip so that you remember not to ever miss again',
     ],
     correctIndex: 2,
     explanation:
-      'The &ldquo;never miss twice&rdquo; rule is one of the most practical and psychologically sound principles in Atomic Habits. Clear argues that missing one day of a habit is inevitable &mdash; life intervenes, energy fluctuates, unexpected events occur. Missing one day has virtually no impact on your long-term progress. Phillippa Lally&rsquo;s research at University College London confirmed that a single missed day had no detectable effect on long-term habit automaticity. But missing two days in a row is dangerous because it begins to form a new pattern. The second miss makes the third easier, and before long you have abandoned the habit entirely. The rule is simple: if you miss once, your only job is to show up the next day, even in a reduced form. If you missed your evening study session, do just 10 minutes the next night. If you skipped your morning planning routine, do a shortened version tomorrow. The goal is to maintain the identity of someone who does this habit, not to achieve perfection. Option A is unnecessarily extreme and wastes the progress already made. Option B is a fixed mindset response that attributes the miss to a permanent character trait rather than a temporary circumstance. Option D relies on punishment, which research consistently shows is less effective than positive reinforcement for habit formation and can create anxiety-based avoidance of the habit itself.',
+      'The &ldquo;never miss twice&rdquo; rule is one of the most practical and psychologically sound principles in Atomic Habits. Clear argues that missing one day of a habit is inevitable &mdash; life intervenes, energy fluctuates, unexpected events occur. Missing one day has virtually no impact on your long-term progress. Phillippa Lally&rsquo;s research at University College London confirmed that a single missed day had no detectable effect on long-term habit automaticity. But missing two days in a row is dangerous because it begins to form a new pattern. The second miss makes the third easier, and before long you have abandoned the habit entirely. The rule is simple: if you miss once, your only job is to show up the next day, even in a reduced form. If you missed your evening study session, do just 10 minutes the next night. If you skipped your morning planning routine, do a shortened version tomorrow. The goal is to maintain the identity of someone who does this habit, not to achieve perfection. Restarting from scratch is unnecessarily extreme and wastes the progress already made; lowering your expectations is a fixed-mindset response that blames a permanent character trait rather than a temporary circumstance; and punishment is consistently less effective than positive reinforcement and can create anxiety-based avoidance of the habit itself.',
   },
 ];
 
@@ -105,10 +105,10 @@ const quizQuestions = [
     question:
       'Shawn Achor&rsquo;s &ldquo;20-second rule&rdquo; is based on the principle that reducing friction by just 20 seconds can make a behaviour significantly more likely. How would you apply this rule to break the habit of not filing electrical certificates promptly?',
     options: [
-      'Set a 20-second timer and try to complete the certificate within that time',
-      'Wait 20 seconds before deciding whether to file the certificate',
-      'Make filing immediate and frictionless &mdash; use a digital template that auto-fills common fields, keep it open on your tablet, and complete it on site before leaving',
-      'File certificates only on the 20th of each month to create a routine',
+      'Set a 20-second timer and try to complete the whole certificate before it runs out',
+      'Wait a full 20 seconds before deciding whether or not to file the certificate now',
+      'Make filing frictionless with an auto-filling template you complete on site before leaving',
+      'File certificates only on the 20th of each month to build a fixed monthly routine',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,24 +132,24 @@ const quizQuestions = [
     question:
       'An electrician has developed a habit of procrastinating on quotes and follow-ups. They often think about doing them in the evening but end up watching television instead. According to environmental design principles, which intervention is most likely to succeed?',
     options: [
-      'Setting a firm mental commitment to do quotes every evening at 7pm',
-      'Asking their partner to remind them to do quotes every evening',
-      'Creating a dedicated &ldquo;quotes station&rdquo; &mdash; laptop open, pricing book out, template loaded &mdash; in a specific location separate from the television, with the television unplugged or remote placed in another room',
-      'Downloading a productivity app that sends motivational notifications',
+      'Setting a firm mental commitment to sit down and do the quotes every evening at 7pm sharp',
+      'Asking their partner to remind them to do the quotes every single evening after dinner',
+      'Setting up a dedicated quotes station, with the television unplugged and the remote elsewhere',
+      'Downloading a productivity app that sends regular motivational notifications and nudges',
     ],
     correctAnswer: 2,
     explanation:
-      'Environmental design is the most powerful lever for behaviour change because it works regardless of motivation, willpower, or mood. Option C applies multiple principles simultaneously. First, it creates a dedicated space associated with the desired behaviour (quoting), which serves as a visual cue. Second, it reduces friction for the good habit by having all materials ready (laptop open, pricing book out, template loaded) &mdash; this is Shawn Achor&rsquo;s 20-second rule in action. Third, it increases friction for the competing bad habit (watching television) by making the television harder to access (unplugged, remote in another room). This combination of reducing friction for the desired behaviour and increasing friction for the competing behaviour is far more effective than mental commitments (option A), external reminders (option B), or digital tools (option D). The environment does the work, so willpower does not have to.',
+      'Environmental design is the most powerful lever for behaviour change because it works regardless of motivation, willpower, or mood. A dedicated quotes station applies multiple principles simultaneously. First, it creates a dedicated space associated with the desired behaviour (quoting), which serves as a visual cue. Second, it reduces friction for the good habit by having all materials ready (laptop open, pricing book out, template loaded) &mdash; this is Shawn Achor&rsquo;s 20-second rule in action. Third, it increases friction for the competing bad habit (watching television) by making the television harder to access (unplugged, remote in another room). This combination of reducing friction for the desired behaviour and increasing friction for the competing behaviour is far more effective than relying on a mental commitment, an external reminder, or a digital tool alone. The environment does the work, so willpower does not have to.',
   },
   {
     id: 5,
     question:
       'The resistance cycle describes why behaviour change feels difficult in the early stages. Which of the following best explains the concept of homeostasis in the context of habit breaking?',
     options: [
-      'Homeostasis is the brain&rsquo;s reward system that makes bad habits feel pleasurable',
+      'Homeostasis is the brain&rsquo;s reward system that makes performing bad habits feel pleasurable',
       'Homeostasis is a state of extreme motivation that drives people to change their behaviour quickly',
-      'Homeostasis is the body and mind&rsquo;s tendency to maintain the current state &mdash; any change from the established norm triggers resistance, discomfort, and a pull back towards familiar patterns',
-      'Homeostasis is a medical condition caused by excessive stress at work',
+      'Homeostasis is the body and mind&rsquo;s tendency to maintain the current state and resist change',
+      'Homeostasis is a medical condition caused by prolonged excessive stress in the workplace',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,40 +160,40 @@ const quizQuestions = [
     question:
       'An apprentice electrician wants to break the habit of scrolling social media during tea breaks and replace it with studying for their AM2. Which combination of strategies would be most effective?',
     options: [
-      'Willpower alone &mdash; simply decide to study instead of scrolling and stick to it',
-      'Make it invisible (delete social media apps from phone) + make it easy (keep a pocket study guide in their site bag) + temptation bundling (only listen to favourite music while studying)',
-      'Set a financial penalty for every time they are caught scrolling social media on site',
-      'Ask their supervisor to confiscate their phone at the start of each shift',
+      'Willpower alone &mdash; simply decide each break to study instead of scrolling and stick to it',
+      'Set yourself a financial penalty for every time you are caught scrolling social media on site',
+      'Ask your supervisor to confiscate your phone from you at the very start of each shift',
+      'Delete the social media apps, keep a pocket study guide in your bag, and bundle study with music',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
-      'Option B combines three evidence-based strategies that work together to create a powerful system for behaviour change. First, making the bad habit invisible (deleting social media apps) removes the cue that triggers scrolling &mdash; if the app is not on your phone, you cannot mindlessly open it. This is the first inverted law of behaviour change. Second, making the good habit easy (keeping study materials accessible in the site bag) reduces the friction for studying &mdash; the 20-second rule means that if the study guide is right there in your bag, you are far more likely to open it than if you have to go to the van to find it. Third, temptation bundling (pairing study with favourite music) makes the study session more enjoyable by linking it to an activity you already look forward to. This combination addresses the problem at the environmental level (removing cues, reducing friction) and the motivational level (making the desired behaviour more attractive), which is far more reliable than willpower alone.',
+      'The most effective answer combines three evidence-based strategies that work together to create a powerful system for behaviour change. First, making the bad habit invisible (deleting social media apps) removes the cue that triggers scrolling &mdash; if the app is not on your phone, you cannot mindlessly open it. This is the first inverted law of behaviour change. Second, making the good habit easy (keeping study materials accessible in the site bag) reduces the friction for studying &mdash; the 20-second rule means that if the study guide is right there in your bag, you are far more likely to open it than if you have to go to the van to find it. Third, temptation bundling (pairing study with favourite music) makes the study session more enjoyable by linking it to an activity you already look forward to. This combination addresses the problem at the environmental level (removing cues, reducing friction) and the motivational level (making the desired behaviour more attractive), which is far more reliable than willpower alone.',
   },
   {
     id: 7,
     question:
       'An experienced electrician recognises that stress is triggering their bad habit of eating fast food on site every day. According to the substitution strategy, what should they do?',
     options: [
-      'Simply stop eating fast food and eat nothing during the work day instead',
-      'Identify that the underlying need is convenience and comfort during a stressful day, then find a substitute that meets the same needs &mdash; such as meal prepping on Sunday evening, keeping healthy snacks in the van, and filling a thermos with soup or coffee',
-      'Use punishment by calculating the annual cost of fast food and putting that number on the van dashboard',
-      'Ignore the stress and focus purely on changing the eating habit in isolation',
+      'Simply stop buying fast food and eat nothing at all during the working day instead',
+      'Identify the underlying need for convenience and comfort, then meet it with prepared food',
+      'Use punishment by calculating the annual cost of fast food and posting it on the van dashboard',
+      'Ignore the stress trigger and focus purely on changing the eating habit in isolation',
     ],
     correctAnswer: 1,
     explanation:
-      'The substitution strategy requires understanding the function of the bad habit before attempting to replace it. Fast food on site typically serves multiple functions: it is convenient (no preparation required), it provides comfort (warm, tasty, satisfying), it is fast (minimal break time used), and it may serve a social function (going to the shop with colleagues). Simply removing the fast food without addressing these underlying needs will fail because the needs remain unmet. Option B works because it substitutes a healthier behaviour that meets the same needs: meal prepping provides convenience (food is ready to eat), healthy snacks provide comfort and energy, a thermos provides warmth. Critically, option B also addresses the stress trigger by acknowledging it and building the alternative around it &mdash; meal prep on a low-stress day (Sunday evening) ensures the healthy option is available when the high-stress work week makes willpower-based decisions unreliable.',
+      'The substitution strategy requires understanding the function of the bad habit before attempting to replace it. Fast food on site typically serves multiple functions: it is convenient (no preparation required), it provides comfort (warm, tasty, satisfying), it is fast (minimal break time used), and it may serve a social function (going to the shop with colleagues). Simply removing the fast food without addressing these underlying needs will fail because the needs remain unmet. The substitution approach works because it swaps in a healthier behaviour that meets the same needs: meal prepping provides convenience (food is ready to eat), healthy snacks provide comfort and energy, and a thermos provides warmth. Critically, it also addresses the stress trigger by acknowledging it and building the alternative around it &mdash; meal prep on a low-stress day (Sunday evening) ensures the healthy option is available when the high-stress work week makes willpower-based decisions unreliable.',
   },
   {
     id: 8,
     question:
       'Accountability research shows that sharing your commitment with someone else increases your likelihood of following through. Which type of accountability arrangement is most effective for breaking a bad habit?',
     options: [
-      'Posting your commitment on social media where hundreds of people can see it',
-      'Making a specific, measurable commitment to one trusted person who will check in with you regularly and with whom you have a genuine relationship',
-      'Telling as many people as possible about your goal so that social pressure prevents you from failing',
+      'Posting your commitment publicly on social media where hundreds of people can see it',
+      'Telling as many people as possible so that broad social pressure prevents you from failing',
       'Hiring a professional coach, regardless of whether you have a genuine relationship with them',
+      'Making a specific, measurable commitment to one trusted person who checks in regularly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Research on accountability consistently shows that the quality of the accountability relationship matters far more than the quantity of people who know about your goal. In fact, some research (notably by Peter Gollwitzer at New York University) suggests that publicly announcing goals to a large audience can actually reduce follow-through because the social recognition of the announcement provides a premature sense of accomplishment. The most effective accountability arrangement involves one or two trusted individuals with whom you have a genuine relationship, making a specific and measurable commitment (not vague &ldquo;I&rsquo;m going to be healthier&rdquo; but concrete &ldquo;I will meal prep every Sunday and bring lunch to site five days a week&rdquo;), and regular check-ins (weekly is usually effective). For electricians, an accountability partner might be a colleague, a mate in the trade, a partner, or a study group member. The key is that you care about what this person thinks of you, and that they will actually follow up.',
   },
